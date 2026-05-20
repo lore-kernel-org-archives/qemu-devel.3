@@ -4,77 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D6B4CD4F5E
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 06:48:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E057ACD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 06:49:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPaja-0002wv-Sk; Wed, 20 May 2026 02:48:50 -0400
+	id 1wPajG-0002ts-Is; Wed, 20 May 2026 02:48:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wPajY-0002va-D9; Wed, 20 May 2026 02:48:48 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wPajU-0001OZ-U3; Wed, 20 May 2026 02:48:48 -0400
-Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
- [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64K6lnbj096590
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 20 May 2026 15:48:18 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=zvZRcDF6rPXqdkFSL8eojNejDsFaH8xzSLM1gva1gm8=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1779259698; v=1;
- b=mtR9ZjV6NjwySTemO5TY7tjHCZOn6Xo1I6DGiR8UqEVBdKR7ouqK7BWTDp6zAk6/
- jfN6PDNJThiNcZ+cO+3ABcQabLBDf9vn4Kz+Sn1m1qwVPaiY+UjTfTrBi7PnIJCk
- BxFbIYREAXtx+xZ8fc2tZIAV+j1deBeug7LjieA1xQaQ9MwZroSbWPS0jRI+V4t6
- XZEUz76oaokywvu5NJXJAPUIuLBiZm5Grzh9Jrzamg90MTBC21R7BhaPnR5ZU0Ul
- B8RSSlDss1e6W80eBSvVuUXJO6hvx6k28zmbGDDaAmzuQR+W+o5647LM/6w8yHdN
- o+7lC0m4Tgwmq6IVF+rHMA==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 20 May 2026 15:48:05 +0900
-Subject: [PATCH v3 22/29] ui/input-linux: Use Linux key codes
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1wPajE-0002td-4H
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 02:48:28 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1wPajB-0001GT-3Q
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 02:48:27 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8DxRekqWQ1q4n4LAA--.27633S3;
+ Wed, 20 May 2026 14:48:11 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJDx6+AYWQ1qMWuJAA--.65162S3;
+ Wed, 20 May 2026 14:47:52 +0800 (CST)
+Subject: Re: [PATCH v2 3/4] target/loongarch: Add kvm support dintc
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org, lixianglai@loongson.cn, chenhuacai@loongson.cn
+References: <20260507092358.2479135-1-gaosong@loongson.cn>
+ <20260507092358.2479135-4-gaosong@loongson.cn>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <6750a31c-ee34-076e-eb89-f01b398b0a3b@loongson.cn>
+Date: Wed, 20 May 2026 14:44:52 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260520-input-v3-22-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
-References: <20260520-input-v3-0-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260520-input-v3-0-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Jan Kiszka <jan.kiszka@web.de>,
- Peter Maydell <peter.maydell@linaro.org>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Thomas Huth <th.huth+qemu@posteo.eu>,
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-arm@nongnu.org, xen-devel@lists.xenproject.org, qemu-ppc@nongnu.org,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.16-dev-16047
-X-Developer-Signature: v=1; a=openpgp-sha256; l=947;
- i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=kRJ/7J804Tn8eBdIewmzxF/6sh/dIs4sMW2m0FcJ+rk=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZvpIZQuYhM5A6ZihB/zzWLur/qvmOaenmR+by13zlSP
- 5mVPmPsKGVhEONikBVTZEkp2s2tEV37qTAhvgVmDisTyBAGLk4BmIhaJsNvVsOLcRmia38t6viZ
- 2REnpyEipLztyTGVM637ORmYJfPWMvxkvB/Zl3t8xpab3M0xHuJt/VwMcr/+7Of/zSQVG3jUezU
- zAA==
-X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
- fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+In-Reply-To: <20260507092358.2479135-4-gaosong@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJDx6+AYWQ1qMWuJAA--.65162S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3JFWUtFW3WF4fKr1UAF15ZFc_yoW7CF1fpr
+ sxAFZ0kFWUtFZrA3Z3XF909r13Xr4xKa129F4xGry2yF1DWrWUXF18KanxJFy5C34ruFWS
+ vF4rCa15uanrJacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE
+ 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
+ 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUzsqW
+ UUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,31 +81,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QemuInputEvent now stores Linux key codes for key events. Use those
-codes directly instead of translating between internal key code
-representations.
 
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
- ui/input-linux.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/ui/input-linux.c b/ui/input-linux.c
-index 74bc8511428a..f4eee1ffd7ec 100644
---- a/ui/input-linux.c
-+++ b/ui/input-linux.c
-@@ -166,8 +166,7 @@ static void input_linux_handle_keyboard(InputLinux *il,
- 
-         /* send event to guest when grab is active */
-         if (il->grab_active && !input_linux_should_skip(il, event)) {
--            int qcode = qemu_input_linux_to_qcode(event->code);
--            qemu_input_event_send_key_qcode(NULL, qcode, event->value);
-+            qemu_input_event_send_key_linux(NULL, event->code, event->value);
-         }
- 
-         /* hotkey -> record switch request ... */
+On 2026/5/7 下午5:23, Song Gao wrote:
+> This patch adds Kvm put/get msgint CSRs and check msgint feature.
+> 
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> ---
+>   target/loongarch/cpu.c     |  5 ++-
+>   target/loongarch/cpu.h     |  1 +
+>   target/loongarch/kvm/kvm.c | 69 ++++++++++++++++++++++++++++++++++++++
+>   3 files changed, 72 insertions(+), 3 deletions(-)
+> 
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index e22568c84a..fe60c9b92b 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -443,9 +443,6 @@ static void loongarch_max_initfn(Object *obj)
+>   
+>       cpu->ptw = ON_OFF_AUTO_AUTO;
+>       if (tcg_enabled()) {
+> -        cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, 1);
+> -        cpu->msgint = ON_OFF_AUTO_AUTO;
+> -
+>           uint32_t data = cpu->env.cpucfg[2];
+>           data = FIELD_DP32(data, CPUCFG2, HPTW, 1);
+>           /* Enable LA v1.1 instructions */
+> @@ -456,6 +453,8 @@ static void loongarch_max_initfn(Object *obj)
+>           data = FIELD_DP32(data, CPUCFG2, SCQ, 1);
+>           cpu->env.cpucfg[2] = data;
+>       }
+> +    cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, 1);
+> +    cpu->msgint = ON_OFF_AUTO_AUTO;
+>   }
+>   
+>   #if defined(CONFIG_KVM)
+> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+> index 096d778928..e6bbcded95 100644
+> --- a/target/loongarch/cpu.h
+> +++ b/target/loongarch/cpu.h
+> @@ -301,6 +301,7 @@ enum loongarch_features {
+>       LOONGARCH_FEATURE_PV_IPI,
+>       LOONGARCH_FEATURE_STEALTIME,
+>       LOONGARCH_FEATURE_PTW,
+> +    LOONGARCH_FEATURE_MSGINT,
+>   };
+>   
+>   typedef struct  LoongArchBT {
+> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+> index 9d844c4905..dad260636a 100644
+> --- a/target/loongarch/kvm/kvm.c
+> +++ b/target/loongarch/kvm/kvm.c
+> @@ -35,6 +35,13 @@ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
+>       KVM_CAP_LAST_INFO
+>   };
+>   
+> +static bool kvm_cpu_has_msgint(CPUState *cs)
+> +{
+> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+> +
+> +    return FIELD_EX64(cpu->env.cpucfg[1], CPUCFG1, MSG_INT);
+> +}
+> +
+>   static int kvm_get_stealtime(CPUState *cs)
+>   {
+>       CPULoongArchState *env = cpu_env(cs);
+> @@ -358,6 +365,20 @@ static int kvm_loongarch_get_csr(CPUState *cs)
+>   
+>       ret |= kvm_loongarch_get_pmu(cs);
+>   
+> +    if (kvm_cpu_has_msgint(cs)) {
+Would you like to add some comments that CSR register MSGIS getting must 
+be put after CSR register CSR_ESTAT? Since register CSR_ESTAT will sync 
+software pending MSGINT status to hardware register and modify HW CSR 
+MSGIS registers.
 
--- 
-2.54.0
+So this piece of code should put after CSR_ESTAT register reading.
+
+Regards
+Bibo Mao
+
+> +        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
+> +                               &env->CSR_MSGIS[0]);
+> +
+> +        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
+> +                               &env->CSR_MSGIS[1]);
+> +
+> +        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
+> +                               &env->CSR_MSGIS[2]);
+> +
+> +        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
+> +                               &env->CSR_MSGIS[3]);
+> +    }
+> +
+>       ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TVAL),
+>                              &env->CSR_TVAL);
+>   
+> @@ -533,6 +554,20 @@ static int kvm_loongarch_put_csr(CPUState *cs, KvmPutState level)
+>   
+>       ret |= kvm_loongarch_put_pmu(cs);
+>   
+> +    if (kvm_cpu_has_msgint(cs)) {
+> +        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
+> +                               &env->CSR_MSGIS[0]);
+> +
+> +        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
+> +                               &env->CSR_MSGIS[1]);
+> +
+> +        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
+> +                               &env->CSR_MSGIS[2]);
+> +
+> +        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
+> +                               &env->CSR_MSGIS[3]);
+> +    }
+> +
+>       /*
+>        * timer cfg must be put at last since it is used to enable
+>        * guest timer
+> @@ -982,6 +1017,12 @@ static bool kvm_feature_supported(CPUState *cs, enum loongarch_features feature)
+>           ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
+>           return (ret == 0);
+>   
+> +    case LOONGARCH_FEATURE_MSGINT:
+> +        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
+> +        attr.attr = KVM_LOONGARCH_VM_FEAT_MSGINT;
+> +        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
+> +        return (ret == 0);
+> +
+>       default:
+>           return false;
+>       }
+> @@ -1155,6 +1196,28 @@ static int kvm_cpu_check_pv_features(CPUState *cs, Error **errp)
+>       return 0;
+>   }
+>   
+> +static int kvm_cpu_check_msgint(CPUState *cs, Error **errp)
+> +{
+> +    CPULoongArchState *env = cpu_env(cs);
+> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+> +    bool kvm_supported;
+> +
+> +    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_MSGINT);
+> +    env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 0);
+> +    if (cpu->msgint == ON_OFF_AUTO_ON) {
+> +        if (kvm_supported) {
+> +            env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 1);
+> +        } else {
+> +            error_setg(errp, "'msgint' feature not supported by KVM on this host");
+> +            return -ENOTSUP;
+> +        }
+> +    } else if ((cpu->msgint == ON_OFF_AUTO_AUTO) && kvm_supported) {
+> +        env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 1);
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+>   int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
+>   {
+>       return 0;
+> @@ -1210,6 +1273,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
+>           return ret;
+>       }
+>   
+> +    ret = kvm_cpu_check_msgint(cs, &local_err);
+> +    if (ret < 0) {
+> +        error_report_err(local_err);
+> +        return ret;
+> +    }
+> +
+>       return 0;
+>   }
+>   
+> 
 
 
