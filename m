@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74919CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:52:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E050CD4F5E
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:52:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPopj-0004U3-4f; Wed, 20 May 2026 17:52:07 -0400
+	id 1wPoq0-0005iF-ME; Wed, 20 May 2026 17:52:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wPopi-0004PH-0O
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:52:06 -0400
+ id 1wPopy-0005Z6-Gt
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:52:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wPopc-0004gJ-Ci
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:52:05 -0400
+ id 1wPops-0004l8-TO
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:52:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779313919;
+ s=mimecast20190719; t=1779313936;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ufZAiVzqJFOxVoQfwy4RilsYE7GTwcD7lNPFl/Uo2EQ=;
- b=ZIv4GzsyRX5rqNOnwZfDGWoQY1ztSnMx6Y8FaNbEQTaXHrWUUWC17VCT/yWuqcqTWCzyyc
- FiexKi3NWr+lw5IdWWsIfOz4ZHd39z2Zrcq0xTZLqSBdYkINHI6z9yCm8PHB3VYsM17JOq
- E/dkrs5ISlLXKLq6/uDJIeVxx8U1csE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ZP/vlaSsKakh9nwYd/UnexPrmYFT0jPzQuj7CDSztJo=;
+ b=BUfYEyGdzHd3soYoJaO/DBydP37DKPnpWrjEotxMkMGBF7DqYWRMoCKuLqRulIgEkz3A3t
+ fSM3xj7zRhe131UmyRMHYWv19MRQCymYuuPi3LCg0hLlv/uWLKCw7qOzEkBvlMDTBv3OSg
+ 1tMLWLpNiFR4SeeEejnsdrTgK+fCR1k=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-591-rkhK3qHwMBSMyRvLkIvMRA-1; Wed,
- 20 May 2026 17:51:57 -0400
-X-MC-Unique: rkhK3qHwMBSMyRvLkIvMRA-1
-X-Mimecast-MFC-AGG-ID: rkhK3qHwMBSMyRvLkIvMRA_1779313916
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-161-0COpcffgPla6CBI2mSuDqQ-1; Wed,
+ 20 May 2026 17:52:14 -0400
+X-MC-Unique: 0COpcffgPla6CBI2mSuDqQ-1
+X-Mimecast-MFC-AGG-ID: 0COpcffgPla6CBI2mSuDqQ_1779313933
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7E4201956080
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 21:51:56 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B83681956096
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 21:52:13 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.26])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7158519560A2; Wed, 20 May 2026 21:51:54 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4BC701956053; Wed, 20 May 2026 21:52:11 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 21 May 2026 01:49:19 +0400
-Subject: [PATCH 18/40] tests/qemu-iotests/186: convert from HMP to QMP
+Date: Thu, 21 May 2026 01:49:22 +0400
+Subject: [PATCH 21/40] RFC: qtest: add qemu-io command to the qtest
+ protocol
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260521-qemu-no-hmp-v1-18-d104f809e145@redhat.com>
+Message-Id: <20260521-qemu-no-hmp-v1-21-d104f809e145@redhat.com>
 References: <20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com>
 In-Reply-To: <20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=55242;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3233;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=SJeNraDDmveXGbgl/jOyBph6ScrwdGQk14rgIwS0MM8=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqDiyDfWs2hMvIUlw3ncIVlxpZwOUWh8yRo4yTv
- YZ4iRbMv9yJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCag4sgwAKCRDa6OEJdZac
- 5VuFEACmC8Q37+25gdfH8RPV7JAd8hLxS4Khl1AKSuGIFPmJpxmdgU1/VBmRYeCcS3KgygZvXX8
- vBXdDR4NV9b5K9arbK3NeMI47/8/crqUJWfzZE3p0UpuROaF25zVkqDPx1DmrSFunAwDwYaCvYC
- al07qOISoeQtztrarhC5Lc9zishojUz8rD1bEDsOr9gXYhc0dCAiF4aM2NyCQ1ZwUovEdIiPFYn
- rJNG9EKxs8vYrecZgdml/73Gm8l74LSNsNMaqTfs/635/LBqJ23PUnoPcOoLnrdTy4K1Qyn6zd0
- qCVedHAFlbxb7O1Wc49eTWWbGOkEGjod6ERmbGAx7dy8Zseo+0ZEPL0q4V5HK3wG+wv4grAGZtl
- arF08TQNQE+pF5VBUYAHDelF4UM0wiomdVVZOE3AgBDUpK3LbR2L+LkmYbKH4SgrIedRMCCWSVU
- o3lqsjutQGzXN850euql/igAMrzusxI53THCN7cPozSU2gAPb5Z3HUguwuzvkT47pjtpsXc5D20
- ggeLQmTfeBFmfvVnYUETi5ocUY5uVL09RaKuXQpx72gBURDwxRbpw3P2e8iQ2IlH54Vahg3tAsH
- eerLrLq4rrR8TPR5t3lLKYnEVQLmRxZbTL5PRbD77qzT1Upam6c3WWtfCB7Jdku0zePlFh9CwrI
- KCE8evZJENwmbIA==
+ bh=TH0GcsZ6il8ZtxeGOOCNWywd3aQP6tbV17VNL87VHmU=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqDiyDPx4MQ0JYMxfPegsc7obhdCAitiH1IvjrU
+ Txl3C1HVQiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCag4sgwAKCRDa6OEJdZac
+ 5XjMEACoorUxYQ886N2UeqmM7GhvNNCfR8nZSiIfPCwUPSEC/BqBvzmvikcrNVKTcabU4yvuG8W
+ HKDMdAPRlRTWOcYZ/lTh36N4naCVosrLQW6qvK9J/wrJL9ja1y6zlubSBmqOaIFAUR1ogPkPaQl
+ l6keAPq+fyXbVKQp1edicHKPBUBHO3YCRMSYfzwTmBoU9M7FMaXvx4fR9POkBy8eVapVcTeydOV
+ Ci4sPQOlD6rXPB+2H7QxTSOTYx9Xh4MZA0I//vXzHvZa0xcP+uTZereuGT5dyaSz5OS7WXt/xv2
+ FrOhJbJ1mLbkDK59p+aWyT7vj/LJzptxm/3eQYeDFZ+Yq64IxySa6JJdESZW1cDbrW2e+RkCcfo
+ JX3n0eMiOeVtTjZJa7jLxu1ZwK+00aE9TXZqlTXn7Cs1kSw7BrahltNivVFTXKZJ8F5mnAFXPxM
+ LLOPap+qx+GjdlQiRDLvfy2su8FknnVD1Rbyc6xm+6/crLP3nx3zviQ3g76FcRtHenZDjRc3ZeV
+ WrYJJAX1Q684QtEYaf0hOrpCU1ist4RUROUsMhL634Hy+9JC1e1uYWf50lgg7vYtktPbFXOW4Gg
+ miesFALG5HCHEV6tslmLfWoNzK5N2PxJtnY+by5GXzDIvAYpr9JzSEotJPOzR5r86/JApJ6aLIj
+ fv4Vg89EG3bPDXQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -103,629 +104,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace HMP 'info block' with QMP 'query-block' so the test works
-with --disable-hmp builds. Use -qmp stdio instead of -monitor stdio,
-send JSON commands via printf, and filter with _filter_qmp and
-_filter_qmp_empty_return instead of _filter_hmp.
+Add a "qemu-io" command to the qtest protocol so that tests can issue
+block layer I/O commands without going through the HMP monitor's
+"human-monitor-command" QMP, or use QMP at all.
+
+Unfortunately, many tests will prefer to use QMP as they also monitor
+and log other events. It's easier if it is pipelined in the same stream.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/qemu-iotests/186     |  20 +--
- tests/qemu-iotests/186.out | 440 +++++++++++----------------------------------
- 2 files changed, 108 insertions(+), 352 deletions(-)
+ tests/qtest/libqtest.h | 11 +++++++++++
+ system/qtest.c         | 14 ++++++++++++++
+ tests/qtest/libqtest.c | 14 ++++++++++++++
+ 3 files changed, 39 insertions(+)
 
-diff --git a/tests/qemu-iotests/186 b/tests/qemu-iotests/186
-index eaf13c7a334..fa77319614b 100755
---- a/tests/qemu-iotests/186
-+++ b/tests/qemu-iotests/186
-@@ -1,7 +1,7 @@
- #!/usr/bin/env bash
- # group: rw auto
- #
--# Test 'info block' with all kinds of configurations
-+# Test 'query-block' with all kinds of configurations
- #
- # Copyright (C) 2017 Red Hat, Inc.
- #
-@@ -50,22 +50,18 @@ do_run_qemu()
- {
-     echo Testing: "$@"
+diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
+index 950ea2baafa..647a8a095a1 100644
+--- a/tests/qtest/libqtest.h
++++ b/tests/qtest/libqtest.h
+@@ -424,6 +424,17 @@ char *qtest_hmp(QTestState *s, const char *fmt, ...) G_GNUC_PRINTF(2, 3);
+ char *qtest_vhmp(QTestState *s, const char *fmt, va_list ap)
+     G_GNUC_PRINTF(2, 0);
  
--    (
--        if ! test -t 0; then
--            while read cmd; do
--                echo $cmd
--            done
--        fi
--        echo quit
--    ) | $QEMU -S -display none -device virtio-scsi-pci -monitor stdio "$@" 2>&1
-+    printf '{"execute":"qmp_capabilities"}\n{"execute":"query-block"}\n{"execute":"quit"}\n' |
-+    $QEMU -S -display none -device virtio-scsi-pci -monitor none -qmp stdio "$@" 2>&1
-     echo
++/**
++ * qtest_qemu_io:
++ * @s: #QTestState instance to operate on.
++ * @device: block device node-name or BlockBackend name.
++ * @fmt: qemu-io command to send, formats arguments like sprintf().
++ *
++ * Send a qemu-io command via the qtest protocol.
++ */
++void qtest_qemu_io(QTestState *s, const char *device,
++                   const char *fmt, ...) G_GNUC_PRINTF(3, 4);
++
+ void qtest_module_load(QTestState *s, const char *prefix, const char *libname);
+ 
+ /**
+diff --git a/system/qtest.c b/system/qtest.c
+index 1fb35ae36bc..1b7a7b6b8b8 100644
+--- a/system/qtest.c
++++ b/system/qtest.c
+@@ -31,6 +31,7 @@
+ #include "qemu/cutils.h"
+ #include "qemu/target-info.h"
+ #include "qom/object_interfaces.h"
++#include "qapi-commands-block.h"
+ 
+ #define MAX_IRQ 256
+ 
+@@ -763,6 +764,19 @@ static void qtest_process_command(CharFrontend *chr, gchar **words)
+         new_ns = qemu_clock_advance_virtual_time(ns);
+         qtest_sendf(chr, "%s %"PRIi64"\n",
+                     new_ns == ns ? "OK" : "FAIL", new_ns);
++    } else if (strcmp(words[0], "qemu-io") == 0) {
++        const char *io_dev;
++        g_autofree char *io_cmd = NULL;
++        Error *err = NULL;
++
++        g_assert(words[1] && words[2]);
++        io_dev = words[1];
++        io_cmd = g_strjoinv(" ", &words[2]);
++
++        qmp_x_qemu_io(io_dev, NULL, io_cmd, &err);
++        qtest_sendf(chr, err ? "FAIL %s\n" : "OK\n",
++                    err ? error_get_pretty(err) : NULL);
++        error_free(err);
+     } else if (process_command_cb && process_command_cb(chr, words)) {
+         /* Command got consumed by the callback handler */
+     } else {
+diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+index b1e06ea364e..363fc3028d3 100644
+--- a/tests/qtest/libqtest.c
++++ b/tests/qtest/libqtest.c
+@@ -1012,6 +1012,20 @@ char *qtest_hmp(QTestState *s, const char *fmt, ...)
+     return ret;
  }
  
- check_info_block()
++void qtest_qemu_io(QTestState *s, const char *device,
++                   const char *fmt, ...)
++{
++    va_list ap;
++    g_autofree char *cmd = NULL;
++
++    va_start(ap, fmt);
++    cmd = g_strdup_vprintf(fmt, ap);
++    va_end(ap);
++
++    qtest_sendf(s, "qemu-io %s %s\n", device, cmd);
++    qtest_rsp(s);
++}
++
+ const char *qtest_get_arch(void)
  {
--    echo "info block" |
--    do_run_qemu "$@" | _filter_win32 | _filter_hmp | _filter_qemu |
--        _filter_generated_node_ids | _filter_qom_path
-+    do_run_qemu "$@" | _filter_win32 | _filter_qemu | _filter_qmp |
-+        _filter_qmp_empty_return |
-+        grep -v '"event"' |
-+        _filter_generated_node_ids |
-+        sed 's/device\[[0-9]\+\]/device[N]/g'
- }
- 
- 
-diff --git a/tests/qemu-iotests/186.out b/tests/qemu-iotests/186.out
-index 01530040e5f..952b0c7a0a0 100644
---- a/tests/qemu-iotests/186.out
-+++ b/tests/qemu-iotests/186.out
-@@ -4,458 +4,218 @@ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
- === Empty drives ===
- 
- Testing: -device floppy
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--/machine/peripheral-anon/device[1]: [not inserted]
--    Attached to:      /machine/peripheral-anon/device[N]
--    Removable device: not locked, tray closed
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"device": "", "locked": false, "removable": true, "qdev": "/machine/peripheral-anon/device[N]", "type": "unknown"}]}
- 
- Testing: -device floppy,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--qdev_id: [not inserted]
--    Attached to:      qdev_id
--    Removable device: not locked, tray closed
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"device": "", "locked": false, "removable": true, "qdev": "qdev_id", "type": "unknown"}]}
- 
- Testing: -device ide-cd
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--/machine/peripheral-anon/device[1]: [not inserted]
--    Attached to:      /machine/peripheral-anon/device[N]
--    Removable device: not locked, tray closed
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "", "locked": false, "removable": true, "qdev": "/machine/peripheral-anon/device[N]", "tray_open": false, "type": "unknown"}]}
- 
- Testing: -device ide-cd,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--qdev_id: [not inserted]
--    Attached to:      qdev_id
--    Removable device: not locked, tray closed
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "", "locked": false, "removable": true, "qdev": "qdev_id", "tray_open": false, "type": "unknown"}]}
- 
- Testing: -device scsi-cd
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--/machine/peripheral-anon/device[1]: [not inserted]
--    Attached to:      /machine/peripheral-anon/device[N]
--    Removable device: not locked, tray closed
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "", "locked": false, "removable": true, "qdev": "/machine/peripheral-anon/device[N]", "tray_open": false, "type": "unknown"}]}
- 
- Testing: -device scsi-cd,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--qdev_id: [not inserted]
--    Attached to:      qdev_id
--    Removable device: not locked, tray closed
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "", "locked": false, "removable": true, "qdev": "qdev_id", "tray_open": false, "type": "unknown"}]}
- 
- 
- === -blockdev/-device=<node-name> ===
- 
- Testing: -blockdev driver=null-co,read-zeroes=on,node-name=null -device ide-hd,drive=null
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--null: json:{"read-zeroes": true, "driver": "null-co"} (null-co)
--    Attached to:      /machine/peripheral-anon/device[N]
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "", "locked": false, "removable": false, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}"}, "qdev": "/machine/peripheral-anon/device[N]", "type": "unknown"}]}
- 
- Testing: -blockdev driver=null-co,read-zeroes=on,node-name=null -device ide-hd,drive=null,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--null: json:{"read-zeroes": true, "driver": "null-co"} (null-co)
--    Attached to:      qdev_id
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "", "locked": false, "removable": false, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}"}, "qdev": "qdev_id", "type": "unknown"}]}
- 
- Testing: -blockdev driver=null-co,read-zeroes=on,node-name=null -device scsi-hd,drive=null
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--null: json:{"read-zeroes": true, "driver": "null-co"} (null-co)
--    Attached to:      /machine/peripheral-anon/device[N]
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "", "locked": false, "removable": false, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}"}, "qdev": "/machine/peripheral-anon/device[N]", "type": "unknown"}]}
- 
- Testing: -blockdev driver=null-co,read-zeroes=on,node-name=null -device scsi-hd,drive=null,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--null: json:{"read-zeroes": true, "driver": "null-co"} (null-co)
--    Attached to:      qdev_id
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "", "locked": false, "removable": false, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}"}, "qdev": "qdev_id", "type": "unknown"}]}
- 
- Testing: -blockdev driver=null-co,read-zeroes=on,node-name=null -device virtio-blk-pci,drive=null
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--null: json:{"read-zeroes": true, "driver": "null-co"} (null-co)
--    Attached to:      /machine/peripheral-anon/device[N]/virtio-backend
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "", "locked": false, "removable": false, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}"}, "qdev": "/machine/peripheral-anon/device[N]/virtio-backend", "type": "unknown"}]}
- 
- Testing: -blockdev driver=null-co,read-zeroes=on,node-name=null -device virtio-blk-pci,drive=null,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--null: json:{"read-zeroes": true, "driver": "null-co"} (null-co)
--    Attached to:      /machine/peripheral/qdev_id/virtio-backend
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "", "locked": false, "removable": false, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}"}, "qdev": "/machine/peripheral/qdev_id/virtio-backend", "type": "unknown"}]}
- 
- Testing: -blockdev driver=null-co,read-zeroes=on,node-name=null -device floppy,drive=null
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--null: json:{"read-zeroes": true, "driver": "null-co"} (null-co)
--    Attached to:      /machine/peripheral-anon/device[N]
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"device": "", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}"}, "qdev": "/machine/peripheral-anon/device[N]", "type": "unknown"}]}
- 
- Testing: -blockdev driver=null-co,read-zeroes=on,node-name=null -device floppy,drive=null,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--null: json:{"read-zeroes": true, "driver": "null-co"} (null-co)
--    Attached to:      qdev_id
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"device": "", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}"}, "qdev": "qdev_id", "type": "unknown"}]}
- 
- Testing: -blockdev driver=null-co,read-zeroes=on,node-name=null -device ide-cd,drive=null
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--null: json:{"read-zeroes": true, "driver": "null-co"} (null-co)
--    Attached to:      /machine/peripheral-anon/device[N]
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}"}, "qdev": "/machine/peripheral-anon/device[N]", "tray_open": false, "type": "unknown"}]}
- 
- Testing: -blockdev driver=null-co,read-zeroes=on,node-name=null -device ide-cd,drive=null,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--null: json:{"read-zeroes": true, "driver": "null-co"} (null-co)
--    Attached to:      qdev_id
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}"}, "qdev": "qdev_id", "tray_open": false, "type": "unknown"}]}
- 
- Testing: -blockdev driver=null-co,read-zeroes=on,node-name=null -device scsi-cd,drive=null
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--null: json:{"read-zeroes": true, "driver": "null-co"} (null-co)
--    Attached to:      /machine/peripheral-anon/device[N]
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}"}, "qdev": "/machine/peripheral-anon/device[N]", "tray_open": false, "type": "unknown"}]}
- 
- Testing: -blockdev driver=null-co,read-zeroes=on,node-name=null -device scsi-cd,drive=null,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--null: json:{"read-zeroes": true, "driver": "null-co"} (null-co)
--    Attached to:      qdev_id
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": true, \"driver\": \"null-co\"}"}, "qdev": "qdev_id", "tray_open": false, "type": "unknown"}]}
- 
- 
- === -drive if=none/-device=<node-name> ===
- 
- Testing: -drive if=none,driver=null-co,read-zeroes=on,node-name=null -device ide-hd,drive=null,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0 (null): json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--
--null: json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Attached to:      qdev_id
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"device": "none0", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "type": "unknown"}, {"io-status": "ok", "device": "", "locked": false, "removable": false, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "vi
- rtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "qdev": "qdev_id", "type": "unknown"}]}
- 
- Testing: -drive if=none,driver=null-co,read-zeroes=on,node-name=null -device scsi-hd,drive=null,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0 (null): json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--
--null: json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Attached to:      qdev_id
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"device": "none0", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "type": "unknown"}, {"io-status": "ok", "device": "", "locked": false, "removable": false, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "vi
- rtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "qdev": "qdev_id", "type": "unknown"}]}
- 
- Testing: -drive if=none,driver=null-co,read-zeroes=on,node-name=null -device virtio-blk-pci,drive=null,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0 (null): json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--
--null: json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Attached to:      /machine/peripheral/qdev_id/virtio-backend
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"device": "none0", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "type": "unknown"}, {"io-status": "ok", "device": "", "locked": false, "removable": false, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "vi
- rtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "qdev": "/machine/peripheral/qdev_id/virtio-backend", "type": "unknown"}]}
- 
- Testing: -drive if=none,driver=null-co,read-zeroes=on,node-name=null -device floppy,drive=null,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0 (null): json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--
--null: json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Attached to:      qdev_id
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"device": "none0", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "type": "unknown"}, {"device": "", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741
- 824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "qdev": "qdev_id", "type": "unknown"}]}
- 
- Testing: -drive if=none,driver=null-co,read-zeroes=on,node-name=null -device ide-cd,drive=null,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0 (null): json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--
--null: json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Attached to:      qdev_id
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"device": "none0", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "type": "unknown"}, {"io-status": "ok", "device": "", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "vir
- tual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "qdev": "qdev_id", "tray_open": false, "type": "unknown"}]}
- 
- Testing: -drive if=none,driver=null-co,read-zeroes=on,node-name=null -device scsi-cd,drive=null,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0 (null): json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--
--null: json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Attached to:      qdev_id
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"device": "none0", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "type": "unknown"}, {"io-status": "ok", "device": "", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "vir
- tual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "qdev": "qdev_id", "tray_open": false, "type": "unknown"}]}
- 
- 
- === -drive if=none/-device=<bb-name> (with medium) ===
- 
- Testing: -drive if=none,driver=null-co,read-zeroes=on,node-name=null -device ide-hd,drive=none0
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0 (null): json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Attached to:      /machine/peripheral-anon/device[N]
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "none0", "locked": false, "removable": false, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "qdev": "/machine/peripheral-anon/device[N]", "type": "unknown"}]}
- 
- Testing: -drive if=none,driver=null-co,read-zeroes=on,node-name=null -device ide-hd,drive=none0,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0 (null): json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Attached to:      qdev_id
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "none0", "locked": false, "removable": false, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "qdev": "qdev_id", "type": "unknown"}]}
- 
- Testing: -drive if=none,driver=null-co,read-zeroes=on,node-name=null -device scsi-hd,drive=none0
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0 (null): json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Attached to:      /machine/peripheral-anon/device[N]
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "none0", "locked": false, "removable": false, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "qdev": "/machine/peripheral-anon/device[N]", "type": "unknown"}]}
- 
- Testing: -drive if=none,driver=null-co,read-zeroes=on,node-name=null -device scsi-hd,drive=none0,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0 (null): json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Attached to:      qdev_id
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "none0", "locked": false, "removable": false, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "qdev": "qdev_id", "type": "unknown"}]}
- 
- Testing: -drive if=none,driver=null-co,read-zeroes=on,node-name=null -device virtio-blk-pci,drive=none0
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0 (null): json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Attached to:      /machine/peripheral-anon/device[N]/virtio-backend
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "none0", "locked": false, "removable": false, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "qdev": "/machine/peripheral-anon/device[N]/virtio-backend", "type": "unknown"}]}
- 
- Testing: -drive if=none,driver=null-co,read-zeroes=on,node-name=null -device virtio-blk-pci,drive=none0,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0 (null): json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Attached to:      /machine/peripheral/qdev_id/virtio-backend
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "none0", "locked": false, "removable": false, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "qdev": "/machine/peripheral/qdev_id/virtio-backend", "type": "unknown"}]}
- 
- Testing: -drive if=none,driver=null-co,read-zeroes=on,node-name=null -device floppy,drive=none0
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0 (null): json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Attached to:      /machine/peripheral-anon/device[N]
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"device": "none0", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "qdev": "/machine/peripheral-anon/device[N]", "type": "unknown"}]}
- 
- Testing: -drive if=none,driver=null-co,read-zeroes=on,node-name=null -device floppy,drive=none0,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0 (null): json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Attached to:      qdev_id
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"device": "none0", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "qdev": "qdev_id", "type": "unknown"}]}
- 
- Testing: -drive if=none,driver=null-co,read-zeroes=on,node-name=null -device ide-cd,drive=none0
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0 (null): json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Attached to:      /machine/peripheral-anon/device[N]
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "none0", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "qdev": "/machine/peripheral-anon/device[N]", "tray_open": false, "type": "unknown"}]}
- 
- Testing: -drive if=none,driver=null-co,read-zeroes=on,node-name=null -device ide-cd,drive=none0,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0 (null): json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Attached to:      qdev_id
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "none0", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "qdev": "qdev_id", "tray_open": false, "type": "unknown"}]}
- 
- Testing: -drive if=none,driver=null-co,read-zeroes=on,node-name=null -device scsi-cd,drive=none0
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0 (null): json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Attached to:      /machine/peripheral-anon/device[N]
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "none0", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "qdev": "/machine/peripheral-anon/device[N]", "tray_open": false, "type": "unknown"}]}
- 
- Testing: -drive if=none,driver=null-co,read-zeroes=on,node-name=null -device scsi-cd,drive=none0,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0 (null): json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Attached to:      qdev_id
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "none0", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "null", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "qdev": "qdev_id", "tray_open": false, "type": "unknown"}]}
- 
- 
- === -drive if=none/-device=<bb-name> (without medium) ===
- 
- Testing: -drive if=none
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0: [not inserted]
--    Removable device: not locked, tray closed
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"device": "none0", "locked": false, "removable": true, "type": "unknown"}]}
- 
- Testing: -drive if=none -device floppy,drive=none0
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0: [not inserted]
--    Attached to:      /machine/peripheral-anon/device[N]
--    Removable device: not locked, tray closed
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"device": "none0", "locked": false, "removable": true, "qdev": "/machine/peripheral-anon/device[N]", "type": "unknown"}]}
- 
- Testing: -drive if=none -device floppy,drive=none0,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0: [not inserted]
--    Attached to:      qdev_id
--    Removable device: not locked, tray closed
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"device": "none0", "locked": false, "removable": true, "qdev": "qdev_id", "type": "unknown"}]}
- 
- Testing: -drive if=none -device ide-cd,drive=none0
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0: [not inserted]
--    Attached to:      /machine/peripheral-anon/device[N]
--    Removable device: not locked, tray closed
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "none0", "locked": false, "removable": true, "qdev": "/machine/peripheral-anon/device[N]", "tray_open": false, "type": "unknown"}]}
- 
- Testing: -drive if=none -device ide-cd,drive=none0,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0: [not inserted]
--    Attached to:      qdev_id
--    Removable device: not locked, tray closed
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "none0", "locked": false, "removable": true, "qdev": "qdev_id", "tray_open": false, "type": "unknown"}]}
- 
- Testing: -drive if=none -device scsi-cd,drive=none0
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0: [not inserted]
--    Attached to:      /machine/peripheral-anon/device[N]
--    Removable device: not locked, tray closed
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "none0", "locked": false, "removable": true, "qdev": "/machine/peripheral-anon/device[N]", "tray_open": false, "type": "unknown"}]}
- 
- Testing: -drive if=none -device scsi-cd,drive=none0,id=qdev_id
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--none0: [not inserted]
--    Attached to:      qdev_id
--    Removable device: not locked, tray closed
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "none0", "locked": false, "removable": true, "qdev": "qdev_id", "tray_open": false, "type": "unknown"}]}
- 
- 
- === -drive if=... ===
- 
- Testing: -drive if=floppy
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--floppy0: [not inserted]
--    Attached to:      /machine/unattached/device[N]
--    Removable device: not locked, tray closed
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"device": "floppy0", "locked": false, "removable": true, "qdev": "/machine/unattached/device[N]", "type": "unknown"}]}
- 
- Testing: -drive if=floppy,driver=null-co,read-zeroes=on
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--floppy0 (NODE_NAME): json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Attached to:      /machine/unattached/device[N]
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"device": "floppy0", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "NODE_NAME", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "qdev": "/machine/unattached/device[N]", "type": "unknown"}]}
- 
- Testing: -drive if=ide,driver=null-co,read-zeroes=on
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--ide0-hd0 (NODE_NAME): json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Attached to:      /machine/unattached/device[N]
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "ide0-hd0", "locked": false, "removable": false, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "NODE_NAME", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "qdev": "/machine/unattached/device[N]", "type": "unknown"}]}
- 
- Testing: -drive if=ide,media=cdrom
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--ide0-cd0: [not inserted]
--    Attached to:      /machine/unattached/device[N]
--    Removable device: not locked, tray closed
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "ide0-cd0", "locked": false, "removable": true, "qdev": "/machine/unattached/device[N]", "tray_open": false, "type": "unknown"}]}
- 
- Testing: -drive if=ide,driver=null-co,read-zeroes=on,media=cdrom
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--ide0-cd0 (NODE_NAME): json:{"read-zeroes": "on", "driver": "null-co"} (null-co, read-only)
--    Attached to:      /machine/unattached/device[N]
--    Removable device: not locked, tray closed
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "ide0-cd0", "locked": false, "removable": true, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": true, "children": [], "node-name": "NODE_NAME", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "qdev": "/machine/unattached/device[N]", "tray_open": false, "type": "unknown"}]}
- 
- Testing: -drive if=virtio,driver=null-co,read-zeroes=on
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--virtio0 (NODE_NAME): json:{"read-zeroes": "on", "driver": "null-co"} (null-co)
--    Attached to:      /machine/peripheral-anon/device[N]/virtio-backend
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"io-status": "ok", "device": "virtio0", "locked": false, "removable": false, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1073741824, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "NODE_NAME", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\"}"}, "qdev": "/machine/peripheral-anon/device[N]/virtio-backend", "type": "unknown"}]}
- 
- Testing: -drive if=pflash,driver=null-co,read-zeroes=on,size=1M
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) info block
--pflash0 (NODE_NAME): json:{"read-zeroes": "on", "driver": "null-co", "size": "1M"} (null-co)
--    Attached to:      /machine/system.flash0
--    Cache mode:       writeback
--(qemu) quit
-+QMP_VERSION
-+{"return": [{"device": "pflash0", "locked": false, "removable": false, "inserted": {"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 512, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": 1048576, "filename": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\", \"size\": \"1M\"}", "format": "null-co", "actual-size": 0}, "iops_wr": 0, "ro": false, "children": [], "node-name": "NODE_NAME", "backing_file_depth": 0, "drv": "null-co", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "json:{\"read-zeroes\": \"on\", \"driver\": \"null-co\", \"size\": \"1M\"}"}, "qdev": "/machine/system.flash0", "type": "unknown"}]}
- 
- *** done
+     /*
 
 -- 
 2.54.0
