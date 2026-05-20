@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74459CD5BAA
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:26:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89FCECD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:26:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPkgd-0007OY-Cs; Wed, 20 May 2026 13:26:29 -0400
+	id 1wPkeh-0004kF-Me; Wed, 20 May 2026 13:24:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkgM-0007Ff-Ki
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:26:12 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkeg-0004iO-RT
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:24:26 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkgK-0004NJ-Gr
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:26:10 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-48fe26a177cso38963365e9.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:26:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkee-0003fu-PD
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:24:26 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-488b150559bso39943755e9.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:24:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779297967; x=1779902767; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779297862; x=1779902662; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xXzCopTSmSQWKIgzAKEm3uSJ5DjZpN+QCvZ2us+CYFc=;
- b=AJ2qzkYkxwZ9Baig3WTkXeum5Bof4RwhvugbOnX3RSi1jsZ2mzuVb2ZWAnzUx/YoqW
- rIFnDQxV/iViEqxXzg2qyJ3pk/yhCCny8imHYa6CTGArvKlGDWrjx2FnColET1SIB9kN
- NLz/GpozjCnk+KqfH5pMK7MbOC9NeOseG1MXnJcMhvZD0ewOlUH2KuJyO25fmkLuZcnv
- g+Ps68vQqJ8p+ZuPZRvrmfCU/JyoUYj6mU+bwY9ADU5fKUa9VI7XF+ksD9Qy2fnWfqj6
- n+J0bYnKmy10ZbkjU30GpPEYwulKp414dglakcehIPZvEUoPxG/K96dxvqT289gmvJqP
- /eTA==
+ bh=F9vRnvnV5C9I2ltCn+ugALI+ERIDROE+jpEU5rU5xpQ=;
+ b=suiDtjW44V/rNMdat11J/Z0iSyaikoBGVspC3jbgkcQrVKE7jfQAiHRKJM90Hx3aZb
+ n0PrnVApx5ArbHVIRsd+yLcEp7nodX2SHr0sG1bIwsP23nN99YENzmFyIkaRg3kSnyIA
+ 7pwdTzoQ7S+JGA/E0xKZIN51OyESXRowHtcNgArRyFG6JV//ZQMO4fdRUF6Ae6I1KGcM
+ ONmX8jofeSTvvyyQ0WtQkkqp5WIu6SYJRClL07tr3XPX7Ya/qngUmXkS8ygSS6X36i6y
+ P1Dw8X68SNSBM23Luk3pRqiLXgaNt6zm0egJ7NkG1zeJxYosGoz2WfuTGj9QMXLt16fj
+ +U8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779297967; x=1779902767;
+ d=1e100.net; s=20251104; t=1779297862; x=1779902662;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=xXzCopTSmSQWKIgzAKEm3uSJ5DjZpN+QCvZ2us+CYFc=;
- b=Ia7T1/+UyoERnYPkYfKpYCq3aNhkeaQg27at7I6lfEvprBrVPrqvK1vLIsmws5sS4U
- SrBuEOPhXbv4o44mjf3EUo92lYR4MRkzA9QH3ffeCzuTppzJ8erEvUtqH/+tEzdofqmv
- u/g4ZFKHn6ZGMELQ+W3iHj8kFdCRifQRKvquL6qdpDBjjbowAK3rUM6vnlyrcP417S99
- wZgBbnR5YJWirgfJNN303g7vVmt8kFNhnNAuQpzeuK5UxeqoFtwet6ev8ZfmavoTHTzU
- 6ZoLIG3xAbyMptajPov9VDWCGCZ47ixgqrcQc+6jQLeViMMmcVD5acyQa6lzzQ6eeplj
- vNPQ==
-X-Gm-Message-State: AOJu0Yzeq4Xr4PTzdzkIXG7khTkMPJpNlAEE1KItQXyJN0l5QN8Y3M6t
- JmgSvIw4HQBbD6gj83JSI+2pBOrzQe+3+f1/Yp9xvK1WW1ikKASuK7aAoTkW7+++v6uWPkVAdDG
- tLThPNeQ=
-X-Gm-Gg: Acq92OGLTmZgQYibpE7YD/kp0XIkMM1m8Jcc2u0ouNXFnUNDnPiUeKNiCXy+mVwDISG
- HdJpPTpk1D5S57dy1SoKMMP77LHdTD7KPJsl+fAxq6PDQAUd3XreUfXmO5Sp1RBj4pM9pYRfTCM
- L5Hc2kTYJO2oU/bDQspE2gJjLK1azEcV1OiP0bR3yOs8LvgizLfZw9BCLf3eY33FGhVQVdurOzt
- QAi44yDutsV4WZdcic5HFBZ7F/chawBBkSZvz2+J1RXwYuXf010XargEKq38VUsigLRbufQy7Fb
- feWoQfX2r6rWXYDF+BW+ChuXxxD8j9EdqmAgd51x4/F+gZeCRzqSMPUfyV1UZ91wSdM2Dz85i5n
- U/nCZG9JC+2CAtz9JkOniPi7wtjqyh83pOY9Nu6yku0ypqX399figYFkftxiadOqIWb1bKbLSpk
- goSvm4SRSTqxKu/HeLFdhFlGIYOdNl5laTQ3w4BVccQttEZQVqxekgw2liavcRR6gyZ+Q88gzc
-X-Received: by 2002:a05:600c:3e1b:b0:48a:6fd4:d3d4 with SMTP id
- 5b1f17b1804b1-48fe6626c48mr340766155e9.29.1779297966605; 
- Wed, 20 May 2026 10:26:06 -0700 (PDT)
+ bh=F9vRnvnV5C9I2ltCn+ugALI+ERIDROE+jpEU5rU5xpQ=;
+ b=iTObC0e9hGIZzld1S9qggSf1krPjKEN3XiieVCpZB0Lk2u1G+o5/b0Mb8XxDfStPQK
+ T7CUuxE6lAEtnsjUQTdas3oXBvY+x+T8b7j3CJF++v/C/E2+osRwDBSrlLAcVF3Xd/yl
+ La4a0BP5/G9E1REyt2jtLc2LeResNOgLMadK4LwJ0yNVZ5HBCRoNAZ1jEVLrJXCXJhGp
+ ruTws2ib1/vDYjysrlQpGJ9voEjymFQ1yt1hwxW3K8EPaPVq0noQkHv36WJDOHxnDPRn
+ KkrLff+fSrk8ClsW93hWatNS3zyfw1ZlabFDqULHxapg2QsSa7g0BHclIJKpzEuRNjvz
+ GDvA==
+X-Gm-Message-State: AOJu0Yw2k6phpn6oH2Tvu5ZojaCuGFO3Yv+W0u/dvMoVo1eda76Dnr7m
+ YFX6+STr1XN5ZJnfpgYEsYtONIkmpYM6QUKzaOAslbZoaGvbEZ/fzzfjVO3N3CfvJL2WzRoEWyh
+ V6HnBMSk=
+X-Gm-Gg: Acq92OE3Pn+eZQg086O8DNLsnB2e5jrzvQ/ZX1zuK6ApXUhracDW0xwm1P8dAjyvkjq
+ Ui+V/8lPTAq/9toT4NXJm62Ylg1vo92fnnNzybn9BjqYJdEEUh1eKVzwzHil7A11VMg7jOcxX+p
+ BZatOlbcaQGx0jOSmLMys4mj2gJHvb4utAlKPDFVtxAJKmqFlTfNPdvleY8kLX3bXv/SA0jT8ti
+ G5RkIBfGQi8wpU9C5l1zVvG1nKEe6r+FbMYBNkNNhGmaxVb1//E81rejkD2Yw/j4miqcHSpYGvu
+ Tk19GMK2ofw+3GWvRStW/RadI6Gy5wh9+33Or1WaiIP9NW+9MzVDFlcs537cbKuAzkU0DCgd8S2
+ TkwQZPLJByc7XoGsIkV6DEWRS5CtxsgIq49halqrBzlm0wblTNuvwtzcfQ6KWxPvk/6zjxeTzFZ
+ sl/sJWsJHL50WfT27dHRPnTjDxNJlvfH3N0MHZu1aqF5/tTFZu//KHYA7lC7jomi8KuCu67z23
+X-Received: by 2002:a05:600c:46cf:b0:48e:8974:c377 with SMTP id
+ 5b1f17b1804b1-48fe6626ba1mr363520245e9.29.1779297861904; 
+ Wed, 20 May 2026 10:24:21 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49033d52c8bsm7019815e9.8.2026.05.20.10.26.05
+ 5b1f17b1804b1-49033d8e25bsm5580785e9.11.2026.05.20.10.24.20
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 20 May 2026 10:26:05 -0700 (PDT)
+ Wed, 20 May 2026 10:24:20 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: James Hilliard <james.hilliard1@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v12 23/24] target/mips: add Octeon QMAC instructions
-Date: Wed, 20 May 2026 19:23:11 +0200
-Message-ID: <20260520172313.23777-24-philmd@linaro.org>
+Subject: [PATCH v12 09/24] target/mips: split Octeon SEQI/SNEI decode
+Date: Wed, 20 May 2026 19:22:57 +0200
+Message-ID: <20260520172313.23777-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520172313.23777-1-philmd@linaro.org>
 References: <20260520172313.23777-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,116 +102,92 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: James Hilliard <james.hilliard1@gmail.com>
 
-QMAC.0x and QMACS.0x multiply the selected signed Q15 halfword lane from
-rs by rt<15:0> and accumulate the Q31 product into the Octeon HI/LO
-accumulator state.
+Decode the equality and inequality forms as explicit SEQI/SNEI
+instructions rather than using shared generated SEQNEI entries.
 
-QMAC updates the full 64-bit HI/LO accumulator. QMACS saturates the
-32-bit Q31 result in LO and keeps HI<0> as the sticky saturation flag.
+The explicit decoder names match the architectural mnemonics, which
+makes the translator entry points and trace/debug output easier to
+correlate with the instruction set.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-[PMD: Add min32/max32 in trans_QMACS()]
+[PMD: Split SEQNE vs SEQNEI (this patch)]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/mips/tcg/octeon.decode      |  4 ++
- target/mips/tcg/octeon_translate.c | 62 ++++++++++++++++++++++++++++++
- 2 files changed, 66 insertions(+)
+ target/mips/tcg/octeon.decode      |  4 +++-
+ target/mips/tcg/octeon_translate.c | 27 +++++++++++++--------------
+ 2 files changed, 16 insertions(+), 15 deletions(-)
 
 diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index 4d0ad058347..2d02b4e0bc3 100644
+index 2c54901f77e..a2bfd0751d3 100644
 --- a/target/mips/tcg/octeon.decode
 +++ b/target/mips/tcg/octeon.decode
-@@ -28,6 +28,8 @@ BBIT         11 set:1 . 10 rs:5 ..... offset:s16 p=%bbit_p
- # SEQI rt, rs, immediate
- # SNE rd, rs, rt
+@@ -30,6 +30,7 @@ BBIT         11 set:1 . 10 rs:5 ..... offset:s16 p=%bbit_p
  # SNEI rt, rs, immediate
-+# QMAC.0x rs, rt
-+# QMACS.0x rs, rt
  
  @r3          ...... rs:5 rt:5 rd:5 ..... ......
- &cmpi        rs rt imm
-@@ -43,6 +45,8 @@ SEQ          011100 ..... ..... ..... 00000 101010 @r3
- SNE          011100 ..... ..... ..... 00000 101011 @r3
- SEQI         011100 rs:5 rt:5 imm:s10 101110 &cmpi
- SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
-+QMACS        011100 rs:5 rt:5 00000 000 lane:2 010010
-+QMAC         011100 rs:5 rt:5 00000 100 lane:2 010010
++&cmpi        rs rt imm
+ %bitfield_p  0:1 6:5
+ @bitfield    ...... rs:5 rt:5 lenm1:5 ..... ..... . p=%bitfield_p
  
- &r2          rs rt
- @r2          ...... rs:5 rt:5 ..... ..... ...... &r2
+@@ -40,7 +41,8 @@ CINS         011100 ..... ..... ..... ..... 11001 . @bitfield
+ POP          011100 rs:5 00000 rd:5 00000 10110 dw:1
+ SEQ          011100 ..... ..... ..... 00000 101010 @r3
+ SNE          011100 ..... ..... ..... 00000 101011 @r3
+-SEQNEI       011100 rs:5 rt:5 imm:s10 10111 ne:1
++SEQI         011100 rs:5 rt:5 imm:s10 101110 &cmpi
++SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
+ 
+ &lx          base index rd
+ @lx          ...... base:5 index:5 rd:5 ...... ..... &lx
 diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index 7ec942fa347..90bd68cbf25 100644
+index dfbb55e3fc3..5497ddfb108 100644
 --- a/target/mips/tcg/octeon_translate.c
 +++ b/target/mips/tcg/octeon_translate.c
-@@ -355,3 +355,65 @@ static bool trans_V3MULU(DisasContext *ctx, arg_V3MULU *a)
-     gen_store_gpr(tmp, a->rd);
+@@ -132,29 +132,28 @@ static bool trans_SNE(DisasContext *ctx, arg_SNE *a)
+     return do_seq_sne(ctx, a, TCG_COND_NE);
+ }
+ 
+-static bool trans_SEQNEI(DisasContext *ctx, arg_SEQNEI *a)
++static bool do_seqi_snei(DisasContext *ctx, const arg_cmpi *a, TCGCond cond)
+ {
+     TCGv_i64 t0;
+ 
+-    if (a->rt == 0) {
+-        /* nop */
+-        return true;
+-    }
+-
+     t0 = tcg_temp_new_i64();
+-
+     gen_load_gpr(t0, a->rs);
+ 
+-    /* Sign-extend to 64 bit value */
+-    target_ulong imm = a->imm;
+-    if (a->ne) {
+-        tcg_gen_setcondi_i64(TCG_COND_NE, cpu_gpr[a->rt], t0, imm);
+-    } else {
+-        tcg_gen_setcondi_i64(TCG_COND_EQ, cpu_gpr[a->rt], t0, imm);
+-    }
++    tcg_gen_setcondi_i64(cond, t0, t0, a->imm);
++    gen_store_gpr(t0, a->rt);
      return true;
  }
-+
-+static bool trans_QMAC(DisasContext *ctx, arg_QMAC *a)
+ 
++static bool trans_SEQI(DisasContext *ctx, arg_SEQI *a)
 +{
-+    TCGv_i64 t0 = tcg_temp_new_i64();
-+    TCGv_i64 t1 = tcg_temp_new_i64();
-+
-+    gen_load_gpr(t0, a->rt);
-+    gen_load_gpr(t1, a->rs);
-+
-+    /* t0 = rt<0> * rs<lane> * 2 */
-+    tcg_gen_ext16s_i64(t0, t0);
-+    tcg_gen_sextract_i64(t1, t1, a->lane * 16, 16);
-+    tcg_gen_mul_i64(t0, t0, t1);
-+    tcg_gen_add_i64(t0, t0, t0);
-+
-+    /* Saturate -0x8000 * -0x8000 * 2 = 0x80000000 -> 0x7fffffff */
-+    tcg_gen_smin_i64(t0, t0, tcg_constant_i64(INT32_MAX));
-+
-+    /* HI:LO += t0 */
-+    tcg_gen_concat32_i64(t1, cpu_LO[0], cpu_HI[0]);
-+    tcg_gen_add_i64(t0, t0, t1);
-+    tcg_gen_sextract_i64(cpu_LO[0], t0, 0, 32);
-+    tcg_gen_sextract_i64(cpu_HI[0], t0, 32, 32);
-+    return true;
++    return do_seqi_snei(ctx, a, TCG_COND_EQ);
 +}
 +
-+static bool trans_QMACS(DisasContext *ctx, arg_QMACS *a)
++static bool trans_SNEI(DisasContext *ctx, arg_SNEI *a)
 +{
-+    TCGv_i64 min32 = tcg_constant_i64(INT32_MIN);
-+    TCGv_i64 max32 = tcg_constant_i64(INT32_MAX);
-+    TCGv_i64 t0 = tcg_temp_new_i64();
-+    TCGv_i64 t1 = tcg_temp_new_i64();
-+
-+    gen_load_gpr(t0, a->rt);
-+    gen_load_gpr(t1, a->rs);
-+
-+    /* t0 = rt<0> * rs<lane> * 2 */
-+    tcg_gen_ext16s_i64(t0, t0);
-+    tcg_gen_sextract_i64(t1, t1, a->lane * 16, 16);
-+    tcg_gen_mul_i64(t0, t0, t1);
-+    tcg_gen_add_i64(t0, t0, t0);
-+
-+    /*
-+     * Saturate -0x8000 * -0x8000 * 2 = 0x80000000 -> 0x7fffffff.
-+     * Accumulate overflow in HI[0].
-+     */
-+    tcg_gen_smin_i64(t1, t0, max32);
-+    tcg_gen_setcond_i64(TCG_COND_NE, t0, t0, t1);
-+    tcg_gen_or_i64(cpu_HI[0], cpu_HI[0], t0);
-+
-+    /*
-+     * LO = sat32(LO + t0)
-+     * Accumulate overflow in HI[0].
-+     */
-+    tcg_gen_ext32s_i64(t0, cpu_LO[0]);
-+    tcg_gen_add_i64(t0, t0, t1);
-+    tcg_gen_smin_i64(cpu_LO[0], t0, max32);
-+    tcg_gen_smax_i64(cpu_LO[0], cpu_LO[0], min32);
-+    tcg_gen_setcond_i64(TCG_COND_NE, t0, t0, cpu_LO[0]);
-+    tcg_gen_or_i64(cpu_HI[0], cpu_HI[0], t0);
-+    return true;
++    return do_seqi_snei(ctx, a, TCG_COND_NE);
 +}
++
+ static bool trans_lx(DisasContext *ctx, arg_lx *a, MemOp mop)
+ {
+     gen_lx(ctx, a->rd, a->base, a->index, mop);
 -- 
 2.53.0
 
