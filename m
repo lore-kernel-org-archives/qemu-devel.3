@@ -4,96 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 177A7CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 14:09:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1FADCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 14:13:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPhbn-0001pu-6X; Wed, 20 May 2026 10:09:15 -0400
+	id 1wPhfS-0002yD-Tk; Wed, 20 May 2026 10:13:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPhbZ-0001gK-7u
- for qemu-devel@nongnu.org; Wed, 20 May 2026 10:09:03 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPhbW-0001xL-3g
- for qemu-devel@nongnu.org; Wed, 20 May 2026 10:08:59 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2babfd18435so20694035ad.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 07:08:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wPhfP-0002xc-7d
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 10:12:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wPhfN-0003lC-4P
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 10:12:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779286375;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=QJpy3Of6Ab7dIfz0nYpEYn3A/l+pskMm2rECtyHs6cM=;
+ b=RchuDF3+d0xOPNfb30kLoAqbR1/MZdtraC+6yOwPI85BvKZxE9Z8r9eqdecQ1y11VVeJOP
+ WnOjNPW12BIuc9CX7ZFV92fJuw+mtV9i8BRpfbeiAq56K6ShswRG8uoz8dYbFtf3akKPbS
+ IYGqGd2YnmBpCvCQpKSoYvnkTc8NbzE=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-221-duet3cQnMy6uIxUSTpxDzA-1; Wed, 20 May 2026 10:12:50 -0400
+X-MC-Unique: duet3cQnMy6uIxUSTpxDzA-1
+X-Mimecast-MFC-AGG-ID: duet3cQnMy6uIxUSTpxDzA_1779286369
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-bbfaa3ad205so509750066b.0
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 07:12:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779286136; x=1779890936; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=BQRq2mpiaeZaxOV5Iv8VnmEEkNN84wAx6k8GfeMGLy8=;
- b=z2uW//sbI9pqYSExnrB+fkZF3tc5vozqyts8AuuTguvyHdEq124qTc05Frehy7cR9C
- 3zgZ1BK97mq8JngQGdsEJXSeIZOlS0Y9j1N9vMCe5rrvhD3hy6p7Q4/XoI81oy+U32s7
- UmVThWTTh/aQSxIJrLqhITCVmhl/o/PMDq65eaeciHzb9ghy89xwPSCwih8FZgFoEB2o
- 5SN6cx+6iTMQQbgm8ClMx7PQq71UOIXhMmaZ5PQt/Qx08yuGuVoRaUoLT6kBEwL3LzSD
- uNz+LEyIiExrGLo3wz8PU8HOBupppoeqSLzlEAw4qsDHCKzSG0VJX9VwtPMS1VIqRpoX
- 6XGw==
+ d=redhat.com; s=google; t=1779286369; x=1779891169; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=QJpy3Of6Ab7dIfz0nYpEYn3A/l+pskMm2rECtyHs6cM=;
+ b=QCe7lHSMxuyKfD/L0IqryqQTZeDvWSNIwq22moWtmHF956MoRFepy31pHvrhi1JFfd
+ Fnbr0iNGCwGEbRWpD5WBmv+tN1fzfzFDA4zX//NO01lCOGV+22qZqauZHehfR0KJ3irL
+ mCzxzu4mETY6ie3ULJTceyenNK9nvx9Axa306gfBnwNLCbiI/J2oMgCfOXQ65WokICKl
+ jmSAHNDLj4tiQphhn6RXJtBTMOPh2XgVa0akQ3QPIzGsZBN/9BXTKcTj51S+/iD/P7aw
+ k97K54CtBeV0aNFQq2fc3cvSQOEOCXKPp7efg/soCSndY8PyjBr4umllbYp7dpFS04xu
+ 5KAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779286136; x=1779890936;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BQRq2mpiaeZaxOV5Iv8VnmEEkNN84wAx6k8GfeMGLy8=;
- b=Nokx3x+XgtP/RNNPll9wygMgcSDv52N1Za7p3jPISgVl6fbrtYIeo+30yBiXr9Mtrs
- JvrndTqHhHLyGHA3SyNK+wBPx56roZo9TtIMqv7Hj4BRhRdfB6sXlDZ4R1Zu42O+5KGr
- ezVUxGDZ4hxbp66ZejNVrcvt0+2bgWUmJIMAYxRCouTjCxYGXo1BcHuZqQRKMVJWrzzN
- 4yUNm1cjJ49hmmpXGH6kOPqapV+EisfNx5CBY4lQTEaEv7Bk0ooealNF6NiqHi79VZER
- 2l8g1Lgbfth/INoisvK8hnDlcRkiQ/puZdUNFFWPo00QsQvZF3Wm9mzr9zrYXni97mz3
- ptGg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+NRsKyCWBoy5fmNX//IM/LHejRNeCNqOCbDdFQFDarZ6fw3XnMXrWgyyEff8ZxCCblk0jcys0KW/Z8@nongnu.org
-X-Gm-Message-State: AOJu0YyOIKhATC7ydVHwP8mDWwYWcnynHxESFriVWnjS+rOUtw2vnQPY
- Ky3cdiF72iwgtYFCgEk1Pa21Twh/5ZKoImgliDr3sjF1YXB3hQWjriX3Vpw/GHh7J/E=
-X-Gm-Gg: Acq92OGXVnNsS5ybTsDnrCIv1dv8iIbOALUZbsD5Rx0pHP0XLK/opCySho2e5Im4uCb
- qZjMp6nX99h2EUA/FZmwHQOqRDPFh2NXRdrIOF9hW48lrVgIUby2jrMeUL74potktGBLLa1wf42
- x2DhTkQEmBz8lwjqn+KhNdSn9G7GPHRshl/bM7cE6pV1BqN+fdle1tWNISrdq997bPaOMrZZSa5
- QmYSqycfJBBAwwuJK+doAIh/dBxIODnI3WrNhqraMG5ti7doG1rns0/2u49eGQq5V5l8LpLegda
- 8/c6K+LSn/XUIHBU7YTqwlbPlGVW2WaM8Zvljxsaqp7ptp2gWEbyg74J0yXEv5LCiKYfbVetjc7
- UUCSe0R+5LrF14Y0PYyKqa6xa//yFOLYcIL8LpeqZ9gtxtGLaV88X3cZlImMWIAuBMJUBrqOPW5
- cKP9e9PbjInlQHH0DuM2CkOC2eR79lRomi7cxx
-X-Received: by 2002:a17:903:2b0c:b0:2bd:aafb:d0c7 with SMTP id
- d9443c01a7336-2bdaafbd216mr176011435ad.7.1779286135914; 
- Wed, 20 May 2026 07:08:55 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2bd5bd5f291sm229662695ad.15.2026.05.20.07.08.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 May 2026 07:08:55 -0700 (PDT)
-Message-ID: <1eb21dcd-12d0-48a8-9877-f8dcb26fa27c@linaro.org>
-Date: Wed, 20 May 2026 07:08:53 -0700
+ d=1e100.net; s=20251104; t=1779286369; x=1779891169;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QJpy3Of6Ab7dIfz0nYpEYn3A/l+pskMm2rECtyHs6cM=;
+ b=V6Pe7dcFhYYFEEtIYxMm2usgk3avt0Ou90IXHl/vc4hf84iL7Imwia9S7Nv5nljajM
+ HhsMFJbeQAW5m8DKt6+Iby72Vb2gusV2iB4H/e+hhlTOG3+zk9pCvNNqIAx822Nia3Ii
+ GuESAaNIdKHrWWArUE0swWh8MYI6hxhW6Ejs8asS1FEDkG/7IikfsVcc1O1A+69hHWlN
+ v1+lI50d64UHH9U6SHimhfTT0BKPSg6nFwWASbAc/nW//Z+PWzM0K+yn9VrLUq34Jlkv
+ vZYJ8bLrN8PyV18BVEraLXWYSeuORbsh0qV8+7EYGhIUwBwDRca63BaJLjohy3DN5UVr
+ KzVQ==
+X-Gm-Message-State: AOJu0Yz5pk9yRVAmVn0qIxxn6ua4mn7S/ExIYGBKpBPTmG5ZkzDNBcW9
+ YSplhm5Wf9U7tWMs6dXEfOEounelo48Rdpq4ljsbT67aMgHCpAFknfuhddVuzI8BHDVGHOUL2zH
+ OYYLOn92cBqZD2NPTQ/6/ueiZ295iVJ1XrH8aTBjkqVbsnCZQISgW85a6
+X-Gm-Gg: Acq92OFDtp7Fckv76LdCwgc9XZf2MmGNr8/zo4mkpiA65CajLYTbfigHhaz98tka1UB
+ 5LbqJ58FQIDdY3Prqr5/hUoKX9qpxWFqkMG9oemyRDvkO1Hu7qjztPVqic6UweXM5tZvlLxTWfh
+ lEbodajbq+CPmFDooYMLFq/UzPSQwQxjfD7wgCD1Jzzl+LbmVNKcFFE6v9uDfV1BiJLw3LdkKjL
+ ZqtSg0kwxOyL01dtkmTpbE5i9b72DE+fF380ueZqtFYu6xkHNEbYVBij4dEIZUetpOzKZ+xUC3U
+ Rl7HlehIvluB2ed4AR0NjcnGuQWSl/y0MKmRv4at1Pg42Hn3KgsCSaSQ16hJX+PMuTQS0nMHr9D
+ xbP5WiYt3V/LWLpPxFKy0PQ==
+X-Received: by 2002:a17:907:8707:b0:bd5:7c2:7616 with SMTP id
+ a640c23a62f3a-bd51553bee6mr924785166b.23.1779286368603; 
+ Wed, 20 May 2026 07:12:48 -0700 (PDT)
+X-Received: by 2002:a17:907:8707:b0:bd5:7c2:7616 with SMTP id
+ a640c23a62f3a-bd51553bee6mr924783066b.23.1779286367990; 
+ Wed, 20 May 2026 07:12:47 -0700 (PDT)
+Received: from redhat.com ([31.187.78.37]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-bd4f4eaef0asm864313866b.57.2026.05.20.07.12.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 20 May 2026 07:12:47 -0700 (PDT)
+Date: Wed, 20 May 2026 10:12:44 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "philmd@linaro.org" <philmd@linaro.org>,
+ "alistair23@gmail.com" <alistair23@gmail.com>,
+ "thuth@redhat.com" <thuth@redhat.com>
+Subject: Re: [PATCH v9 0/7] Add RISC-V big-endian target support
+Message-ID: <20260520101034-mutt-send-email-mst@kernel.org>
+References: <20260511083819.206216-1-djordje.todorovic@htecgroup.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 19/24] target/mips: add Octeon MTP instructions
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Aleksandar Rikalo <arikalo@gmail.com>,
- James Hilliard <james.hilliard1@gmail.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Aurelien Jarno <aurelien@aurel32.net>
-References: <20260520101807.9971-1-philmd@linaro.org>
- <20260520101807.9971-20-philmd@linaro.org>
- <2a725a41-4ea2-4336-afb2-13251f975670@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <2a725a41-4ea2-4336-afb2-13251f975670@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260511083819.206216-1-djordje.todorovic@htecgroup.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,68 +120,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/20/26 03:41, Philippe Mathieu-Daudé wrote:
-> On 20/5/26 12:18, Philippe Mathieu-Daudé wrote:
->> From: James Hilliard <james.hilliard1@gmail.com>
->>
->> Add the MTP0, MTP1, and MTP2 forms. MTP0 loads the low Octeon3
->> partial-product pair from rs/rt into P[0]/P[3], MTP1 loads the middle
->> pair into P[1]/P[4], and MTP2 loads the high pair into P[2]/P[5].
->> For MTP0, also set P[1] to zero for backward compatibility with
->> Octeon2 VMULU.
->>
->> Legacy single-source encodings have rt encoded as $zero, so the same
->> translator path also preserves the older Octeon behavior.
->>
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   target/mips/tcg/octeon.decode      |  4 ++++
->>   target/mips/tcg/octeon_translate.c | 23 +++++++++++++++++++++++
->>   2 files changed, 27 insertions(+)
->>
->> diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
->> index 5139543b153..bb0a9f1d99a 100644
->> --- a/target/mips/tcg/octeon.decode
->> +++ b/target/mips/tcg/octeon.decode
->> @@ -51,6 +51,10 @@ MTM0         011100 ..... ..... 00000 00000 001000 @r2
->>   MTM1         011100 ..... ..... 00000 00000 001100 @r2
->>   MTM2         011100 ..... ..... 00000 00000 001101 @r2
->> +MTP0         011100 ..... ..... 00000 00000 001001 @r2
->> +MTP1         011100 ..... ..... 00000 00000 001010 @r2
->> +MTP2         011100 ..... ..... 00000 00000 001011 @r2
->> +
->>   &saa         base rt
->>   @saa         ...... base:5 rt:5 ................ &saa
->>   SAA          011100 ..... ..... 00000 00000 011000 @saa
->> diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
->> index aae6e9811c8..36d268e09c4 100644
->> --- a/target/mips/tcg/octeon_translate.c
->> +++ b/target/mips/tcg/octeon_translate.c
->> @@ -242,3 +242,26 @@ static bool trans_mtm(DisasContext *ctx, arg_r2 *a, unsigned int 
->> index)
->>   TRANS(MTM0, trans_mtm, 0);
->>   TRANS(MTM1, trans_mtm, 1);
->>   TRANS(MTM2, trans_mtm, 2);
->> +
->> +static bool trans_mtp(DisasContext *ctx, arg_r2 *a, unsigned int index)
->> +{
->> +    /*
->> +     * Octeon3 two-source MTP forms load lane index from rs and lane index + 3
->> +     * from rt.  Legacy one-source forms encode rt as $zero.
->> +     */
->> +    gen_load_gpr(oct_p[index], a->rs);
->> +    gen_load_gpr(oct_p[index + 3], a->rt);
->> +
->> +    /*
->> +     * Octeon3 clears P1 with P0 so that VMULU sequences remain
+On Mon, May 11, 2026 at 08:38:26AM +0000, Djordje Todorovic wrote:
+> Rebase on top of master.
+
+is Linux going to support this, ever? given this history:
+
+https://lore.kernel.org/lkml/CAHk-%3DwgYcOiFvsJzFb%2BHfB4n6Wj6zM5H5EghUMfpXSCzyQVSfA@mail.gmail.com/t/#mce138059dc56014643bbda330810183031ef5c06
+
+pls include a cover letter explaining why we should bother with this.
+
+
+> Djordje Todorovic (7):
+>   target/riscv: Define MSTATUS_SBE and MSTATUS_MBE bit masks
+>   target/riscv: Add big-endian CPU configuration field and reset logic
+>   target/riscv: Implement runtime data endianness via MSTATUS bits
+>   hw/riscv: Make boot code endianness-aware at runtime
+>   target/riscv: Fix page table walk endianness for big-endian harts
+>   target/riscv: Expose big-endian CPU property and add documentation
+>   target/riscv: Add endianness test for RISC-V BE
 > 
-> I think you meant s/P0/$0/ here. Otherwise:
+>  docs/system/target-riscv.rst                  | 24 ++++++
+>  hw/riscv/boot.c                               | 81 ++++++++++++++++---
+>  include/hw/riscv/boot.h                       |  1 +
+>  target/riscv/cpu.c                            | 11 +--
+>  target/riscv/cpu.h                            | 23 ++++++
+>  target/riscv/cpu_bits.h                       |  2 +
+>  target/riscv/cpu_cfg_fields.h.inc             |  1 +
+>  target/riscv/cpu_helper.c                     | 28 +++++--
+>  target/riscv/insn_trans/trans_rva.c.inc       |  4 +-
+>  target/riscv/insn_trans/trans_rvd.c.inc       |  4 +-
+>  target/riscv/insn_trans/trans_rvf.c.inc       |  4 +-
+>  target/riscv/insn_trans/trans_rvi.c.inc       |  8 +-
+>  target/riscv/insn_trans/trans_rvzacas.c.inc   |  4 +-
+>  target/riscv/insn_trans/trans_rvzalasr.c.inc  |  4 +-
+>  target/riscv/insn_trans/trans_rvzce.c.inc     |  4 +-
+>  target/riscv/insn_trans/trans_rvzfh.c.inc     |  4 +-
+>  target/riscv/insn_trans/trans_rvzicfiss.c.inc |  4 +-
+>  target/riscv/insn_trans/trans_xmips.c.inc     |  8 +-
+>  target/riscv/insn_trans/trans_xthead.c.inc    | 16 ++--
+>  target/riscv/insn_trans/trans_zilsd.c.inc     |  4 +-
+>  target/riscv/internals.h                      |  9 +--
+>  target/riscv/tcg/tcg-cpu.c                    |  3 +
+>  target/riscv/translate.c                      | 22 ++---
+>  tests/functional/riscv64/meson.build          |  1 +
+>  tests/functional/riscv64/test_endianness.py   | 57 +++++++++++++
+>  25 files changed, 251 insertions(+), 80 deletions(-)
+>  create mode 100644 tests/functional/riscv64/test_endianness.py
+> 
+> -- 
+> 2.34.1
 
-No. MTP0 writes P0 and clears P1.
-Perhaps better as "...clears P1 with a write to P0..."
-
-r~
 
