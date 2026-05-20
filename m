@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25799CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 09:14:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30337CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 09:15:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPd0s-0004nd-9b; Wed, 20 May 2026 05:14:50 -0400
+	id 1wPd0i-0004ji-8U; Wed, 20 May 2026 05:14:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wPd0k-0004ka-KD
- for qemu-devel@nongnu.org; Wed, 20 May 2026 05:14:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wPd0b-0004iX-3d
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 05:14:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wPd0i-0005jh-Rb
- for qemu-devel@nongnu.org; Wed, 20 May 2026 05:14:42 -0400
+ id 1wPd0Y-0005hv-Mc
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 05:14:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779268480;
+ s=mimecast20190719; t=1779268470;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=B7c5l9KxYlqTVQavHSDIGnpaQmuIRpDFa29K67QxinQ=;
- b=KIqDJArrT0XCTbkKxsuYw/78GQgpyoExd08JvRGmZu7/9hPhEkX1OQWBNCERHO+31lTgr0
- sQUfnDnJSiRqhjYVPxoFMRoTHC3raUsZDIHny5Pw9Dg/7icu7+vD5wihStJvJNAT5zej6S
- KTr9E+t8/q07uGADoy8yG5awXs/T5tU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=Llt01sfV1uMijeO9+B9YU6bVdoSwllDNDiw/k0nL1mE=;
+ b=B/1OHImiFVUIjhTqeY6Nka8oS/0PFwvW2JsHG+iVBNWMfKs7fLOHXc6zsTx6nAj4bDBzA9
+ mi6hVHF33wFEG1meIvDnrN3AL2ngj43+5r1rWHW4nW0Kwd5RNXqE9/zyggvXBFLK8bn2f/
+ zKcK6SQGyVDBh6Gr2IroorB+IGDi6ok=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-81-T_HDf5xgO7Kt4wmNfKhcJg-1; Wed,
- 20 May 2026 05:14:36 -0400
-X-MC-Unique: T_HDf5xgO7Kt4wmNfKhcJg-1
-X-Mimecast-MFC-AGG-ID: T_HDf5xgO7Kt4wmNfKhcJg_1779268475
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-584-9Tv9c86qNo2MLyKunwEP3A-1; Wed,
+ 20 May 2026 05:14:26 -0400
+X-MC-Unique: 9Tv9c86qNo2MLyKunwEP3A-1
+X-Mimecast-MFC-AGG-ID: 9Tv9c86qNo2MLyKunwEP3A_1779268465
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 92E9618002D0; Wed, 20 May 2026 09:14:35 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 70EC11956089; Wed, 20 May 2026 09:14:25 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.49.211])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 32BA918004A3; Wed, 20 May 2026 09:14:30 +0000 (UTC)
+ id E32A01800347; Wed, 20 May 2026 09:14:20 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -58,25 +58,26 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  John Snow <jsnow@redhat.com>, John Levon <john.levon@nutanix.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Cleber Rosa <crosa@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PULL 07/29] iotests: ensure all qcow2 I/O tests are able to be run
- via make
-Date: Wed, 20 May 2026 10:13:29 +0100
-Message-ID: <20260520091351.1160442-8-berrange@redhat.com>
+Subject: [PULL 05/29] iotests: print reason when I/O test is skipped in TAP
+ mode
+Date: Wed, 20 May 2026 10:13:27 +0100
+Message-ID: <20260520091351.1160442-6-berrange@redhat.com>
 In-Reply-To: <20260520091351.1160442-1-berrange@redhat.com>
 References: <20260520091351.1160442-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,97 +93,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For block formats marked as 'quick', only tests in the 'auto' group are
-added to the meson test suite.
+The TAP output on a skipped test:
 
-The result of this is that qcow2 tests not in the 'auto' group cannot be
-run at all, even if passing SPEED=slow or SPEED=thorough.
+  ok raw 181 # SKIP
 
-To fix this we need todo two passes over the I/O test list. First add
-all tests from 'auto' group into the 'block' suite, so they are run by
-default. Then on the second pass add any tests which were not in 'auto'
-into the 'block-slow' suite, so they get run when SPEED=slow or
-SPEED=thorough.
+is not informative.
+
+The test program included a reason, and that should be displayed
+in TAP mode (it is already shown in non-TAP mode):
+
+  ok raw 181 # SKIP Postcopy is not supported
 
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/qemu-iotests/meson.build | 48 ++++++++++++++++++++++++++++++----
- 1 file changed, 43 insertions(+), 5 deletions(-)
+ tests/qemu-iotests/testrunner.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/qemu-iotests/meson.build b/tests/qemu-iotests/meson.build
-index bf588cc2c9..1a24d801a3 100644
---- a/tests/qemu-iotests/meson.build
-+++ b/tests/qemu-iotests/meson.build
-@@ -30,16 +30,48 @@ endforeach
- qemu_iotests_check_cmd = files('check')
+diff --git a/tests/qemu-iotests/testrunner.py b/tests/qemu-iotests/testrunner.py
+index e2a3658994..dbe2dddc32 100644
+--- a/tests/qemu-iotests/testrunner.py
++++ b/tests/qemu-iotests/testrunner.py
+@@ -174,7 +174,7 @@ def test_print_one_line(self, test: str,
+             elif status == 'fail':
+                 print(f'not ok {self.env.imgfmt} {test}')
+             elif status == 'not run':
+-                print(f'ok {self.env.imgfmt} {test} # SKIP')
++                print(f'ok {self.env.imgfmt} {test} # SKIP {description}')
+             return
  
- foreach format, speed: qemu_iotests_formats
-+  # Formats tagged 'quick' get the subset of tests in the 'auto'
-+  # group, run by default with 'make check' / 'make check-block'
-+  seen = []
-   if speed == 'quick'
--    suites = 'block'
-+    args = ['-tap', '-' + format, '-g', 'auto']
-+    suites = ['block']
-+
-+    rc = run_command(
-+      [python, qemu_iotests_check_cmd] + args + ['-n'],
-+      check: true,
-+    )
-+
-+    foreach item: rc.stdout().strip().split()
-+      seen += item
-+      args = [qemu_iotests_check_cmd,
-+              '-tap', '-' + format, item,
-+              '--source-dir', meson.current_source_dir(),
-+              '--build-dir', meson.current_build_dir()]
-+      # Some individual tests take as long as 45 seconds
-+      # Bump the timeout to 3 minutes for some headroom
-+      # on slow machines to minimize spurious failures
-+      test('io-' + format + '-' + item,
-+           python,
-+           args: args,
-+           depends: qemu_iotests_binaries,
-+           env: qemu_iotests_env,
-+           protocol: 'tap',
-+           timeout: 180,
-+           suite: suites)
-+    endforeach
-+  endif
-+
-+  suites = []
-+  # Any format tagged quick or slow also gets added to slow
-+  # otherwise its tagged thorough
-+  if speed != 'thorough'
-+    suites += ['block-slow']
-   else
--    suites = ['block-' + speed]
-+    suites += ['block-thorough']
-   endif
- 
-   args = ['-tap', '-' + format]
--  if speed == 'quick'
--      args += ['-g', 'auto']
--  endif
- 
-   rc = run_command(
-       [python, qemu_iotests_check_cmd] + args + ['-n'],
-@@ -47,6 +79,12 @@ foreach format, speed: qemu_iotests_formats
-   )
- 
-   foreach item: rc.stdout().strip().split()
-+      # Skip any tests already added from the 'auto' group
-+      # as they're run in the 'quick' suite already
-+      if item in seen
-+          continue
-+      endif
-+
-       args = [qemu_iotests_check_cmd,
-               '-tap', '-' + format, item,
-               '--source-dir', meson.current_source_dir(),
+         if lasttime:
 -- 
 2.54.0
 
