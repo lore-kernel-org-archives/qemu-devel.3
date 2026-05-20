@@ -4,103 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D23CDCD5BA4
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 19:38:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30DF2CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 19:39:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPmk7-00078b-3N; Wed, 20 May 2026 15:38:11 -0400
+	id 1wPmlR-000850-3R; Wed, 20 May 2026 15:39:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <infra.ai.cloud@bitdeer.com>)
- id 1wPmjj-000727-Sq
- for qemu-devel@nongnu.org; Wed, 20 May 2026 15:37:57 -0400
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <infra.ai.cloud@bitdeer.com>)
- id 1wPmjh-0006Ix-Jj
- for qemu-devel@nongnu.org; Wed, 20 May 2026 15:37:47 -0400
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-5a877510541so6246112e87.2
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 12:37:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779305863; cv=none;
- d=google.com; s=arc-20240605;
- b=ICO9Nnr8VTMczIiR2O7HS2iUE/q/vywsJyAFtlDCkj4ymt0I3zSDIJKjFl4/envuVM
- DgJIxfSXDJcPr2XJA5EELeD6Gc6qPkZmG7v7KVC73EdP2ny0Hsjin/c5A9ETZjiazjdw
- zRduZaQvc/xrTvK8K0080VR86Qz0efCW8KNbMD08+me60aPvd+Hb+416ChdiBI97r/et
- 5fzAR53Tqmm38AjjSzr+K7mccQNlwx0PQkvcIuYsjWEos+6eBId87FC9s6r9R2DaiuG8
- mBJezQ9SGyMIzDGhwCMiKoISAPCSZ28XRJAhq0K3Rhxxra4j5cTr+HPtreQu2K4sDcC4
- XtjQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=pR7YPrifZPPRywBGt8eDjeNPQr6b6EZrFjHBZYUFTzI=;
- fh=7d+eDs1Zqko+mFtjv8NQI3f4QimVpmTOMJe4tPdyAlc=;
- b=EH5OskV12Wc1EUZlhcB6k4RLCTzBxucn1vh3UHr764Wfzdu7NchXoxIpspI+JbOA3L
- mmCT3cyaZtqej5f7TPLHQ3e0Giohgv2DGO4eKlffx40+OrjbocHgMpObnWHExseXDWyE
- O0b+BTCqKw1HX6iO38sgCaxdNl4FDS0sFuHi+2mu21z+p2w13bnZBzKfz9Zi+sOXD3rJ
- 130fWxzs1C3Nnmr1SpDUTUouggno86JozfFKKU8Mra8pjRzJpk26eP60iPNGX45eFiUY
- KDw9lmiBR+00bdWauSzmOJGigF5fqsPRXvAU9jaDLakBYrgcltBXYlec9f2CSRwWNotr
- cd4A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bitdeer.com; s=google; t=1779305863; x=1779910663; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=pR7YPrifZPPRywBGt8eDjeNPQr6b6EZrFjHBZYUFTzI=;
- b=Isg5BXs0vJ7xz8F6Iu7VzTmrkk+HGnKBqRFCxgSZr6WKYduiCxVFuUz6yTyshK+VG5
- gvSAjqE92oKb5JqaQyYDq3CMxJV1KsdQmnotI6xFZOQ/sbPbtSpBxpFXoICI3Xye0w9i
- IWnuimYMjxzZNb2xYShTvkKvsUvws/9jD9HMuAUUxkk+W7owdxblBtya50MDnexaUwHL
- plG+2VZR50lgLhQFp6QDkKH4WLXQCiX+h+V8oNZ0/WUiyVR7kKPLVsdBL0JViu2r4inr
- 85rCzb1sm/GNsTAgZp6pCAXFhlvBIR/bZaQKznNXHkE2J+u8opK4fct4239UOWpwGghL
- UrKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779305863; x=1779910663;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pR7YPrifZPPRywBGt8eDjeNPQr6b6EZrFjHBZYUFTzI=;
- b=EmvH5LHMeiPkhB4cfM9rISOZNkKwo6UxWjUBMXEbwInG1zS910XW+BBE81SJZgPi5L
- D2KGzRKJdrMv9rSX0LbfvF6QmQY91SPGrB9LAtH7UdzuE+Jk0uPRxd0JzBv0aw6vHk6b
- diEPMMPOiWFiH5jrOFzuYxoGEZnvKPoFwNEkZd42L+jcpwOOw6HAz/D0ClpGN3CLb+E4
- FIpcqMlq2i/015Y/+ZC/WkI09jBk6THPf/Z6YeSyxqB1soqbBDWDyG2uSmEWvXu/XIGQ
- 9LcS0ddEdzWx3/Yu5xFk7BeurS37bXs2UhKx2JZNVBTbhRlaUZjHEGxU98dpSeheJhcO
- Y/Ww==
-X-Gm-Message-State: AOJu0YzLTQ0dtPZ8Th/UKxhs2TzfR/88wEpJP0cvEearxA+CpOCwr1kg
- VsTdkClLDeyH5kyMpqYpVgLSS4zISejq6yNqREGbc4WAYI4yeSYcoQbu4hqeoum3WuKKPeOCX+V
- XLFPxKu5mLc0D5EY66ryQ+p2XZNsS9F6Zvl/DarsKKg==
-X-Gm-Gg: Acq92OGQR2uXuDJmLTDFtK0FbNqbBtzrlPJdBzK5m0MfG5PowC9P8z3nJmNJLFDlBqF
- 174mX4qEkZ9IuDW4asTp9rwCeS7tUm50ZtkCNziAf3aOJeYabK2Yet7/ndzSMQBsNMOWtmK4rns
- du1fKVfuXZ1JcuZ1ouusIr063EZxYTC+r5trb0VDD7gwutMAjjXO/Xl6OI0gSP2I/XkhrRX7Uix
- /xboWxmjfXhj3tOdUXUnbiV6WaF0q3+NMWJ7app/RlUihSRvSNYqoH6ZXw/rIBH8rVT9g1cfnwf
- rwMX9DlvCKBrk2pNoCnEzaVxtew1lx8=
-X-Received: by 2002:a05:6512:39cb:b0:5a8:d1ef:caad with SMTP id
- 2adb3069b0e04-5aa0e733fb7mr7391152e87.4.1779305863314; Wed, 20 May 2026
- 12:37:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>)
+ id 1wPmkv-000826-3c; Wed, 20 May 2026 15:39:09 -0400
+Received: from relay.virtuozzo.com ([130.117.225.111])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>)
+ id 1wPmkq-0006X4-3P; Wed, 20 May 2026 15:38:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
+ Content-Type; bh=G4mrBi8Rzir1MfeN7SipZShukzuC4rGhcZ3/jiXw2sU=; b=md7eegowdV3R
+ fSt+Yj40+JcdDbJayat33KKATuaGPhdcR2QfSOFplha5RGSOqaxr2ijw8s4MzZSdhRbAlzaoOYIXQ
+ xq1HlYPBzfR72bop1jMO7DqIiU47ltocQ5GFa6RwxDyzxI/LkouqWFxV9212ii84Ka3QTQokpENbK
+ Y9GCW7Jub4ELNcI5xH4pA4DLSDgM/pbavDWem9V7K/sEzMshITnWQnY5XNOQK3enU19pjNeNnvbsx
+ Nma92XQvZT8uP9k9tDJkO8ENvnb0iGaJ1essqb12jBLts0iAoOjLgQKxJmBCLOgauR2BboHY2Qz7P
+ EppwjHPY40wsoH0jWl05uQ==;
+Received: from ch-demo-asa.virtuozzo.com ([130.117.225.8] helo=iris.sw.ru)
+ by relay.virtuozzo.com with esmtp (Exim 4.96)
+ (envelope-from <den@openvz.org>) id 1wPmhP-000JWT-1i;
+ Wed, 20 May 2026 21:38:49 +0200
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org, kwolf@redhat.com,
+ hreitz@redhat.com, stefanha@redhat.com, "Denis V. Lunev" <den@openvz.org>
+Subject: [PATCH v2 0/1] coroutine: fix lost wakeup in qemu_co_sleep_wake()
+Date: Wed, 20 May 2026 21:38:48 +0200
+Message-ID: <20260520193849.467936-1-den@openvz.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-References: <b3bd81c3d9f425bb750a76d7bad7ad0284e55123.1779178180.git.infra.ai.cloud@bitdeer.com>
- <ag4HBdzJXGdKgy50@x1.local>
-In-Reply-To: <ag4HBdzJXGdKgy50@x1.local>
-From: Hy Man <infra.ai.cloud@bitdeer.com>
-Date: Thu, 21 May 2026 03:37:32 +0800
-X-Gm-Features: AVHnY4KU8zWrlxAlBh9tDVNTKixRF5CSHwUEoH9HhnPQGdxzNxzIWyi2IHfheMU
-Message-ID: <CAFWXh4y9OO6z-5TDtw6GxnzZ19t+SYRn_YNjFFVj2gdpp3cqsg@mail.gmail.com>
-Subject: Re: [PATCH] MAINTAINERS: Update email of Yong Huang
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Markus Armbruster <armbru@redhat.com>, Hyman Huang <yong.huang@bitdeer.com>
-Content-Type: multipart/alternative; boundary="000000000000ee1073065244ed25"
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=infra.ai.cloud@bitdeer.com; helo=mail-lf1-x129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: softfail client-ip=130.117.225.111; envelope-from=den@openvz.org;
+ helo=relay.virtuozzo.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HEXHASH_WORD=2.602, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_SOFTFAIL=0.665 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,138 +59,100 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Denis V. Lunev" <den@openvz.org>
+From:  "Denis V. Lunev" via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ee1073065244ed25
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Changes since v1
+----------------
 
-Yes, infra.ai.cloud@bitdeer.com works!
+v1 was a two-patch series tracking two independent missed-wakeup
+races on the qemu shutdown path.
 
-Peter Xu <peterx@redhat.com>=E4=BA=8E2026=E5=B9=B45=E6=9C=8821=E6=97=A5 =E5=
-=91=A8=E5=9B=9B03:10=E5=86=99=E9=81=93=EF=BC=9A
+  * Patch 1, "block/graph-lock: fix missed wakeup in
+    bdrv_graph_co_rdunlock()", was applied as e3082ab3b3 by Kevin
+    and is now in tree. This v2 carries only the remaining race.
 
-> Hi, Yong,
->
-> On Tue, May 19, 2026 at 04:18:12PM +0800, infra.ai.cloud@bitdeer.com
-> wrote:
-> > From: Hyman Huang <yong.huang@bitdeer.com>
->
-> Just to mention you still have this different address ^^^.
->
-> Do you want to stick with infra.ai.cloud@bitdeer.com?  What is the best
-> address to reach you?
->
-> Thanks,
->
-> >
-> > I left SmartX two weeks ago. Update my email to stay reachable.
-> >
-> > Signed-off-by: Hyman Huang <infra.ai.cloud@bitdeer.com>
-> > ---
-> >  MAINTAINERS | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index b75f3222f2..1308ee5a0b 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -3784,7 +3784,7 @@ F: migration/rdma*
-> >  F: scripts/rdma-migration-helper.sh
-> >
-> >  Migration dirty limit and dirty page rate
-> > -M: Hyman Huang <yong.huang@smartx.com>
-> > +M: Hyman Huang <infra.ai.cloud@biitdeer.com>
-> >  S: Maintained
-> >  F: system/dirtylimit.c
-> >  F: include/system/dirtylimit.h
-> > @@ -3794,7 +3794,7 @@ F: include/system/dirtyrate.h
-> >  F: docs/devel/migration/dirty-limit.rst
-> >
-> >  Detached LUKS header
-> > -M: Hyman Huang <yong.huang@smartx.com>
-> > +M: Hyman Huang <infra.ai.cloud@biitdeer.com>
-> >  S: Maintained
-> >  F: tests/qemu-iotests/tests/luks-detached-header
-> >  F: docs/devel/luks-detached-header.rst
-> > --
-> > 2.43.0
-> >
->
-> --
-> Peter Xu
->
->
+  * Per Kevin's review of v1 patch 2 [1], the cache_clean_timer
+    hang is no longer worked around inside block/qcow2.c. Instead,
+    the underlying primitive -- qemu_co_sleep_wake() -- is fixed,
+    closing the lost-wakeup window for every caller
+    (cache_clean_timer, block_copy_kick, ...) rather than just
+    qcow2. Cancellation latency through qemu_co_sleep_wake() drops
+    from "next 1 s tick" (v1 workaround) to aio_co_wake().
 
---000000000000ee1073065244ed25
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+[1] https://lore.kernel.org/qemu-devel/agcYkmTWud8euTds@redhat.com/
 
-<div dir=3D"auto">Yes, <a href=3D"mailto:infra.ai.cloud@bitdeer.com">infra.=
-ai.cloud@bitdeer.com</a> works!</div><div><br><div class=3D"gmail_quote gma=
-il_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">Peter Xu &lt;<a h=
-ref=3D"mailto:peterx@redhat.com">peterx@redhat.com</a>&gt;=E4=BA=8E2026=E5=
-=B9=B45=E6=9C=8821=E6=97=A5 =E5=91=A8=E5=9B=9B03:10=E5=86=99=E9=81=93=EF=BC=
-=9A<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;b=
-order-left:1px #ccc solid;padding-left:1ex">Hi, Yong,<br>
-<br>
-On Tue, May 19, 2026 at 04:18:12PM +0800, <a href=3D"mailto:infra.ai.cloud@=
-bitdeer.com" target=3D"_blank">infra.ai.cloud@bitdeer.com</a> wrote:<br>
-&gt; From: Hyman Huang &lt;<a href=3D"mailto:yong.huang@bitdeer.com" target=
-=3D"_blank">yong.huang@bitdeer.com</a>&gt;<br>
-<br>
-Just to mention you still have this different address ^^^.<br>
-<br>
-Do you want to stick with <a href=3D"mailto:infra.ai.cloud@bitdeer.com" tar=
-get=3D"_blank">infra.ai.cloud@bitdeer.com</a>?=C2=A0 What is the best<br>
-address to reach you?<br>
-<br>
-Thanks,<br>
-<br>
-&gt; <br>
-&gt; I left SmartX two weeks ago. Update my email to stay reachable.<br>
-&gt; <br>
-&gt; Signed-off-by: Hyman Huang &lt;<a href=3D"mailto:infra.ai.cloud@bitdee=
-r.com" target=3D"_blank">infra.ai.cloud@bitdeer.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 MAINTAINERS | 4 ++--<br>
-&gt;=C2=A0 1 file changed, 2 insertions(+), 2 deletions(-)<br>
-&gt; <br>
-&gt; diff --git a/MAINTAINERS b/MAINTAINERS<br>
-&gt; index b75f3222f2..1308ee5a0b 100644<br>
-&gt; --- a/MAINTAINERS<br>
-&gt; +++ b/MAINTAINERS<br>
-&gt; @@ -3784,7 +3784,7 @@ F: migration/rdma*<br>
-&gt;=C2=A0 F: scripts/rdma-migration-helper.sh<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 Migration dirty limit and dirty page rate<br>
-&gt; -M: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com" target=3D=
-"_blank">yong.huang@smartx.com</a>&gt;<br>
-&gt; +M: Hyman Huang &lt;<a href=3D"mailto:infra.ai.cloud@biitdeer.com" tar=
-get=3D"_blank">infra.ai.cloud@biitdeer.com</a>&gt;<br>
-&gt;=C2=A0 S: Maintained<br>
-&gt;=C2=A0 F: system/dirtylimit.c<br>
-&gt;=C2=A0 F: include/system/dirtylimit.h<br>
-&gt; @@ -3794,7 +3794,7 @@ F: include/system/dirtyrate.h<br>
-&gt;=C2=A0 F: docs/devel/migration/dirty-limit.rst<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 Detached LUKS header<br>
-&gt; -M: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com" target=3D=
-"_blank">yong.huang@smartx.com</a>&gt;<br>
-&gt; +M: Hyman Huang &lt;<a href=3D"mailto:infra.ai.cloud@biitdeer.com" tar=
-get=3D"_blank">infra.ai.cloud@biitdeer.com</a>&gt;<br>
-&gt;=C2=A0 S: Maintained<br>
-&gt;=C2=A0 F: tests/qemu-iotests/tests/luks-detached-header<br>
-&gt;=C2=A0 F: docs/devel/luks-detached-header.rst<br>
-&gt; -- <br>
-&gt; 2.43.0<br>
-&gt; <br>
-<br>
--- <br>
-Peter Xu<br>
-<br>
-</blockquote></div></div>
+Problem
+-------
 
---000000000000ee1073065244ed25--
+The qemu shutdown / blockdev-close path can deadlock permanently on
+upstream master. The main thread enters ppoll(timeout=-1) holding
+BQL, no other thread has a wake source that points back at it, and
+qemu has to be SIGKILLed. The hang has no timeout -- it is a hard
+deadlock, not a slow operation; behind BQL, RCU, VCPUs and every
+iothread path that needs BQL stall with it.
+
+Two independent missed-wakeup races in the block layer contributed
+to the symptom on v1. Both shared the same shape: a waiter arms on
+one side, the waker reads stale state on its fast path and silently
+skips the kick, and nothing else on the AioContext fires to
+recover. The first (block/graph-lock) was fixed by e3082ab3b3 and
+is now in tree. This patch closes the second one, exposed in
+qcow2's cache_clean_timer cancellation path:
+
+  ppoll -> aio_poll -> cache_clean_timer_del_and_wait -> qcow2_close
+
+The race diagram and the exact stale-state read are in the patch's
+commit message.
+
+Reproducer
+----------
+
+Environment: 4-vCPU VM guest, kernel 6.12.x, upstream master at
+e3082ab3b3 (with the graph-lock fix already applied). On modern
+bare-metal the window is narrow enough that the hang rarely
+reproduces without a VM -- a VM guest under full CPU saturation is
+what makes the timing reliable.
+
+    # reproducer
+    stress-ng --cpu "$(nproc)" --timeout 0 &
+    for r in $(seq 20); do
+        timeout 120 ./build/tests/qemu-iotests/check -qcow2 iothreads-create
+    done
+    kill %1
+
+With `stress-ng --cpu $(nproc)` the race surfaces. With
+`stress-ng --cpu $(($(nproc) - 1))` or without a stressor it does
+not reproduce reliably across 20 iterations.
+
+When the race fires, the Python QMP client times out on
+vm.run_job() after 5 s, the qemu process keeps running but never
+makes forward progress, and the outer `timeout 120` eventually
+kills it. Attach gdb before the timeout kills qemu to capture the
+stack.
+
+Results
+-------
+
+Same guest, 20 iterations of the loop above, master at e3082ab3b3:
+
+  without this patch:  reproduces reliably (qcow2_close in ppoll)
+  with this patch:     20/20 PASS
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Cc: Kevin Wolf <kwolf@redhat.com>
+Cc: Hanna Reitz <hreitz@redhat.com>
+
+Denis V. Lunev (1):
+  coroutine: fix lost wakeup in qemu_co_sleep_wake()
+
+ include/qemu/coroutine.h    | 17 ++++++++---
+ util/qemu-coroutine-sleep.c | 60 +++++++++++++++++++++++++++----------
+ 2 files changed, 58 insertions(+), 19 deletions(-)
+
+-- 
+2.51.0
+
 
