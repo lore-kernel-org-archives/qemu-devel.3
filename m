@@ -4,105 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02D7FCD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:35:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54173CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:35:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPoYN-0000xi-AL; Wed, 20 May 2026 17:34:11 -0400
+	id 1wPoZA-0001vF-5R; Wed, 20 May 2026 17:35:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoYM-0000xG-9j
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoZ8-0001qJ-Nm
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoYK-00078d-1d
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:10 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoZ6-0007MJ-8Y
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779312847;
+ s=mimecast20190719; t=1779312895;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Av+kt2qGFE219m05KfncIX215HPEdoJL5n4U5TvcwDk=;
- b=gOV8oTZAil0j6eukrcqZiyiFcMO8NRBKy51Yf5gBeDtSYKEuXF+x1NRB4gMLPN7eQ8AFGY
- aSp7arPoM0dxSIErN8U6B+UkiF6Y6Th+EfrRaqs2dpQ3kDQtDydeHXy9Xl97TruNC4Om1O
- OF/M4Pebo75V0X1pJoYr7A2HVBwAouA=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=83YP1CTDB1l8nweWCTL+KtTHSWasfSnrTDsQIEgOH2E=;
+ b=RH0to2asx9n3+R4rvBvW0Lodr7ppn+R54wNJ8zaCTXw1UMPJMmzQJkVl3PZW1deDJmL3g+
+ U5m73rDshrpRF/+4ns+W8zll1J9gqkeRx73VU2BIaI8sizhIP1oGF1LH5VgoPRQrONi7mB
+ 8CSjakqEF4BisJHThApCtrGBeZN+fh4=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-211-CKZnYt-fPvKEmd9wiwUtzA-1; Wed, 20 May 2026 17:34:05 -0400
-X-MC-Unique: CKZnYt-fPvKEmd9wiwUtzA-1
-X-Mimecast-MFC-AGG-ID: CKZnYt-fPvKEmd9wiwUtzA_1779312845
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8aca29dcd69so155636726d6.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 14:34:05 -0700 (PDT)
+ us-mta-460-LdO-kpz1PF6JICxKW-S2Bw-1; Wed, 20 May 2026 17:34:52 -0400
+X-MC-Unique: LdO-kpz1PF6JICxKW-S2Bw-1
+X-Mimecast-MFC-AGG-ID: LdO-kpz1PF6JICxKW-S2Bw_1779312892
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-8b1f39c5827so130284866d6.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 14:34:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779312845; x=1779917645; darn=nongnu.org;
+ d=redhat.com; s=google; t=1779312891; x=1779917691; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Av+kt2qGFE219m05KfncIX215HPEdoJL5n4U5TvcwDk=;
- b=Kejsqi1aC0EJTCkBG7SjmoFcijfGZJGxhuKWi+C/FJCyn4FScq80U6sBwfGfdSkTkI
- IasJYP3btZBgv+8TwUyZRQnQwv59Q9dr7N6ug1ZrwbElMZUCd8mwfFh13HaOyFRmvjCg
- 7GuJJp254nsQQmLK/xgnVX94ew7cmCxtrlrJMjRJPb3ECxEulz9TKi4z6P1kVnXt5MHZ
- GItMPr1Y1pGi56G6zMChmz3xwIV93Ismu4TnQqmH/qJ8jYzT1EOBIKe7qbk3Dpu7O6PQ
- qFXxYT0tTg+2vwP78WtoHij5Sahqb3s80G2RkjR4WCiOYjhQYu3FqPp80WRxphbUv5u9
- fscw==
+ bh=83YP1CTDB1l8nweWCTL+KtTHSWasfSnrTDsQIEgOH2E=;
+ b=YhYe9Mit4TTbfMN/Ioc98mc9yeBvVcMzuFdCQBDFm30Y1syonZ0Anq8vh3fgITQnFL
+ I2PeCv0lZVlvt1rEZjv3+zIm79uLbCOYcdCA27JvywogLk4Yva7vfeLndyUNAsjJr8pu
+ wM+0GKdprg2uykxj59gm9eCTTQZmVu2TMa2CPsseM4kqbY0T3ex8UWFfSjh91HaA72LX
+ +mK0t/Ozvf8z/bi0kv8MOJUzymYKN9xzrfw7Uaw5TKoMNZc34+1Gm7CnjenLMFcLzMps
+ 2TAE7G4pEFDk7K3Po9imH/0AnxF94525loaokS3I50gA91ynaGftYCaxtXA8dYDI7HV6
+ +K0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779312845; x=1779917645;
+ d=1e100.net; s=20251104; t=1779312891; x=1779917691;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Av+kt2qGFE219m05KfncIX215HPEdoJL5n4U5TvcwDk=;
- b=ZOOT5STV4vRoZUcfPsrDqHbN3QpIEOe7901ntAlMyhWMBiIC5W017mpZXJew2hRHTt
- CIMTXQWHv1O8954AwOHImmAdNMXzK12Fg6v6eyO9YTFSgKNHuj1ZLtRJgg5yD2cmM/Rt
- UaRR0jxQCEDyAzZpNgsK0efCRDReA+++YS4mbdF3TJCDUBn3CS0HGl7XmxbVkih2/jL5
- c1DhMXZP6+mB0iwB0QrIqLA2alX7SHxzPk2GBlgpDzXF6hZupQ7/13oKm+XUvzgXgc87
- 0LHazvnM4lLFiBiLEH2b1vaV+JFjSH3LOPmv3BIdDavghIfmbmpxiSvWtYCfzhtdHqMy
- LuQQ==
-X-Gm-Message-State: AOJu0Ywq9pV4nGgImTRvFVJjGXlpafnCj/rBDs/0QjYxvbVNvW+43Tic
- glIpLK49HDlnKvujEBU0xJhrvMLK/E8vkn5v5gpJAZHAEdlCvON5Ip7WPf8+CnWtIlxddVKvXWY
- WFPeiwjsezooulDmlSjFRVuO+dp9JIL+pqfYsAB+uQf/eFteCtRE7O6dA1cFw9P9JrTdf2ycYEb
- Zwj0+D80wG3DlptzE4SUbndKZggC/lMsoAfA56yw==
-X-Gm-Gg: Acq92OH2Mhg//jiu6z3a58qJhtPcximpjBE+cXHuMaHYF7Z89O5P+YfMpJlORorcPvu
- M62zf/bG8QrxZ8rISnAVu59fw2Q+C4pDhPVtGqe58tgkftg+S0bMPO8H4HcOfmBhs/IKBqu70Fx
- L4lwuHQx8Cspxyr0xVpB8iIY5nTmlmC+hzRtvK6QxFl6vkVSFA9rtB5WkAm6JuY/sYe+m5io7vA
- z9O1pHtJj6V+qE1V9cfJ5A9YiiwOedQLV+5AxsR/W5LrfUKJbVGhNKuqTKynfYGbIFDP2+nDh6r
- H65Yjle7r0kFMbJYoJcXEaOuuFNEH2PaOUHnSxudUv3tn1RxIt0EH7YvP99m5ezob/kSuEDW7Qh
- I2Ao1a8xYKs2tSQQ1jEeC2xd1uAcqPAG/eE/Kea2Pys7n9wsU+njcaxM=
-X-Received: by 2002:a05:6214:4884:b0:8ca:105f:91d6 with SMTP id
- 6a1803df08f44-8cc6e347507mr4567186d6.21.1779312844961; 
- Wed, 20 May 2026 14:34:04 -0700 (PDT)
-X-Received: by 2002:a05:6214:4884:b0:8ca:105f:91d6 with SMTP id
- 6a1803df08f44-8cc6e347507mr4566366d6.21.1779312844390; 
- Wed, 20 May 2026 14:34:04 -0700 (PDT)
+ bh=83YP1CTDB1l8nweWCTL+KtTHSWasfSnrTDsQIEgOH2E=;
+ b=k+A577qwzGNlWn675ZvvGpg5gyl3H1aWZEMydLKEuvIBTJbH+4/yZ+cZWEgeOFC4pV
+ 8nf74BOvdrz45+BlaDuzIHW/ZZt8ujpk0rsn3DuI6RJE2E/OuZbm95blBZ2mg5gHs/HL
+ XmhWIENR1ZbLzBX0zpcGlGipKvwcZrI3m8IHXQQvGzgduI1BpmaREt47swVYg7W7UqJ4
+ 4K3uYU6xwjTi3++SDuHnLaQFB2kTTbVd6zFmwc5t9dRaEk0jV/t+Ut6r6RDCnJ3FucDN
+ rnAR3VR3oKj13i3QseMmVxwckZjbeAUG7jE3OzTT1Y/Xhd3P8B1yXP9mazwhosKgt6BO
+ G/cw==
+X-Gm-Message-State: AOJu0Yx/1cMszpvj2kpHY9bd6Hem4Dt3Icc+XvDjGFYwF5hnHXgy2y+D
+ 38lRrYtZa6+mrBugrsyR6t0xYxOsHm3o4bt5xddiIZuijiG6KFAYz6bSFZm/dEcT/cYNr1HdDk8
+ dL4qlQEj1dqSmpj4ytsY6tw36YlTYTNsrKJUcN/vACJmhWuuqYKzOaEYL1AeNYaIphPPZqrZj2v
+ s/I4Z/cKVTb2rM0PvWSUpJWTaPWohfpzIsr6m8ZQ==
+X-Gm-Gg: Acq92OEnn1DDJPXtuNkOUFG+MqYU8lIxoXqkYYruXu8ArS0KMR6eH7YGbsLnQXAXIa3
+ 5PrRgRiB3cw7SDtitSZ8BKITwurFUK/wyywxlYhz9Q0iidERNSZTlBxEbipjHZ2dVm6IjkThW8u
+ xwL93UGbZJ++6wvAq3ngx4XAkv2WiFXzaYo9h50gDZ2hrT9pqROXIgN/B/PMe36kl9xLayMShB8
+ 8K4F62uJr8hnUk8qRCJaLGYwexfwA+0+gV7WP0xOn2lIYI7EoQuM1oVZwC48/+bdpF/PwwYDKqF
+ Fje7T8PIkVwxdMTQWPN8zF9Mxy8T9yDZKynoHJvKGoSQO0fPC1/ABa2rlHcqRMowwXOVIufNS/4
+ 5cXROlISFjnnUw8PfEDBm9BFUxygCDEzF2Pk4+aWjWrsQ
+X-Received: by 2002:a05:6214:590f:b0:8c7:76cf:5088 with SMTP id
+ 6a1803df08f44-8cc6e205d13mr6190846d6.0.1779312891174; 
+ Wed, 20 May 2026 14:34:51 -0700 (PDT)
+X-Received: by 2002:a05:6214:590f:b0:8c7:76cf:5088 with SMTP id
+ 6a1803df08f44-8cc6e205d13mr6190166d6.0.1779312890419; 
+ Wed, 20 May 2026 14:34:50 -0700 (PDT)
 Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8ca360b362fsm133062716d6.22.2026.05.20.14.34.00
+ 6a1803df08f44-8ca360b362fsm133062716d6.22.2026.05.20.14.34.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 14:34:01 -0700 (PDT)
+ Wed, 20 May 2026 14:34:49 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 01/29] migration: Fix crash on second migration when cancel
- early
-Date: Wed, 20 May 2026 17:33:29 -0400
-Message-ID: <20260520213357.40646-2-peterx@redhat.com>
+ Lukas Straub <lukasstraub2@web.de>
+Subject: [PULL 20/29] tests/qtest/migration: Stop passing URI into
+ migrate_start
+Date: Wed, 20 May 2026 17:33:48 -0400
+Message-ID: <20260520213357.40646-21-peterx@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520213357.40646-1-peterx@redhat.com>
 References: <20260520213357.40646-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,185 +118,286 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Marc-André reported an issue on QEMU crash when retrying a cancelled
-migration during early setup phase, see "Link:" for more information, and
-also easy way to reproduce.
+From: Fabiano Rosas <farosas@suse.de>
 
-This patch is a replacement of the prior fix proposed by not only switching
-to migration_cleanup(), but also fixing it from CPR side, so that we track
-hup_source properly to know if src QEMU is waiting or the HUP signal.
+Don't allow changing the default -incoming URI via migrate_start. The
+default is now -incoming defer. If a test really needs to alter this
+(such as with CPR), the target_opts variable is still available to
+change the command line.
 
-To put it simple: this chunk of special casing in migration_cancel() should
-not affect normal migration, but only cpr-transfer migration to cover the
-small window when the src QEMU is waiting for a HUP signal on cpr
-channel (so that src QEMU can continue the migration on the main channel).
+(aside from the larger goal of using defer, this change is a step
+towards allowing migrate_start() to be invoked only once for all
+tests)
 
-To achieve that, we'll also need to remember to detach the hup_source
-whenenver invoked: after that point, we should always be able to cleanup
-the migration.
-
-It's not a generic operation to explicitly detach a gsource from its
-context while in its dispatch() function.  But it should be safe, because
-gsource disptch() will only happen with a boosted refcount for the
-dispatcher so that the gsource will not be freed until the callback
-completes. It's also safe to return G_SOURCE_REMOVE after the gsource is
-detached, as glib will simply ignore the G_SOURCE_REMOVE.
-
-One can refer to latest 2.86.5 glib code in g_main_dispatch() for that:
-
-https://github.com/GNOME/glib/blob/2.86.5/glib/gmain.c#L3592
-
-When at this, add a bunch of assertions to make sure nothing surprises us.
-
-After this patch applied, the 2nd migration will not crash QEMU, instead
-it'll be in CANCELLING until the socket connection times out (it will take
-~2min on my Fedora default kernel).  During this process no 2nd migration
-will be allowed, and after it timed out migration can be restarted.
-
-It's because so far we don't have control over socket_connect_outgoing(),
-or anything yet managed by a task executed in qio_task_run_in_thread().
-Speeding up the cancellation to be left for future.
-
-I also tested cpr-transfer by only providing cpr channel not the main
-channel (with -incoming defer), kickoff migration on source, then cancel it
-on source directly without providing the main channel.  It keeps working.
-
-I wanted to add an unit test for that but it'll need to refactor current
-cpr-transfer tests first; let's leave it for later.
-
-Link: https://lore.kernel.org/r/20260417184742.293061-1-marcandre.lureau@redhat.com
-Reported-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Tested-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20260421175820.302795-1-peterx@redhat.com
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Lukas Straub <lukasstraub2@web.de>
+Tested-by: Lukas Straub <lukasstraub2@web.de>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Link: https://lore.kernel.org/r/20260505160915.25558-15-farosas@suse.de
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- include/migration/cpr.h  |  1 +
- migration/migration.h    |  5 +++++
- migration/cpr-transfer.c | 10 ++++++++++
- migration/migration.c    | 31 +++++++++++++++++++++++--------
- 4 files changed, 39 insertions(+), 8 deletions(-)
+ tests/qtest/migration/framework.h     |  5 ++---
+ tests/qtest/migration/colo-tests.c    |  2 +-
+ tests/qtest/migration/cpr-tests.c     |  6 +++---
+ tests/qtest/migration/file-tests.c    |  3 +--
+ tests/qtest/migration/framework.c     | 17 ++++++++---------
+ tests/qtest/migration/misc-tests.c    | 10 +++++-----
+ tests/qtest/migration/precopy-tests.c | 12 ++++++------
+ 7 files changed, 26 insertions(+), 29 deletions(-)
 
-diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-index 96ce26e711..56fb67e6b4 100644
---- a/include/migration/cpr.h
-+++ b/include/migration/cpr.h
-@@ -57,6 +57,7 @@ QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
- void cpr_transfer_add_hup_watch(MigrationState *s, QIOChannelFunc func,
-                                 void *opaque);
- void cpr_transfer_source_destroy(MigrationState *s);
-+bool cpr_transfer_source_active(MigrationState *s);
+diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
+index 8d5331a860..d7e5db2cfe 100644
+--- a/tests/qtest/migration/framework.h
++++ b/tests/qtest/migration/framework.h
+@@ -231,9 +231,8 @@ void wait_for_serial(const char *side);
+ void migrate_prepare_for_dirty_mem(QTestState *from);
+ void migrate_wait_for_dirty_mem(QTestState *from, QTestState *to);
  
- void cpr_exec_init(void);
- QEMUFile *cpr_exec_output(Error **errp);
-diff --git a/migration/migration.h b/migration/migration.h
-index a5e064a1ac..841f49b215 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -512,6 +512,11 @@ struct MigrationState {
+-int migrate_args(char **from, char **to, const char *uri, MigrateStart *args);
+-int migrate_start(QTestState **from, QTestState **to, const char *uri,
+-                  MigrateStart *args);
++int migrate_args(char **from, char **to, MigrateStart *args);
++int migrate_start(QTestState **from, QTestState **to, MigrateStart *args);
+ void migrate_end(QTestState *from, QTestState *to, bool test_dest);
  
-     bool postcopy_package_loaded;
+ void test_postcopy_common(MigrateCommon *args);
+diff --git a/tests/qtest/migration/colo-tests.c b/tests/qtest/migration/colo-tests.c
+index 4add4a014b..a3d27e7bf6 100644
+--- a/tests/qtest/migration/colo-tests.c
++++ b/tests/qtest/migration/colo-tests.c
+@@ -45,7 +45,7 @@ static int test_colo_common(MigrateCommon *args,
+     args->start.caps[MIGRATION_CAPABILITY_RETURN_PATH] = true;
+     args->start.caps[MIGRATION_CAPABILITY_X_COLO] = true;
  
-+    /*
-+     * When set, it means cpr-transfer is waiting for the HUP signal from
-+     * destination to continue the 2nd step of migration via the main
-+     * channel.
-+     */
-     GSource *hup_source;
+-    if (migrate_start(&from, &to, "defer", &args->start)) {
++    if (migrate_start(&from, &to, &args->start)) {
+         return -1;
+     }
  
-     /*
-diff --git a/migration/cpr-transfer.c b/migration/cpr-transfer.c
-index 61d5c9dce2..9defe7bad7 100644
---- a/migration/cpr-transfer.c
-+++ b/migration/cpr-transfer.c
-@@ -6,6 +6,7 @@
-  */
+diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
+index 9091a84213..fc09dad9c0 100644
+--- a/tests/qtest/migration/cpr-tests.c
++++ b/tests/qtest/migration/cpr-tests.c
+@@ -60,7 +60,7 @@ static int test_transfer(MigrateCommon *args, const char *cpr_channel,
+     obj = migrate_str_to_channel(cpr_channel);
+     qlist_append(channels_list, obj);
  
- #include "qemu/osdep.h"
-+#include "qemu/main-loop.h"
- #include "qapi/clone-visitor.h"
- #include "qapi/error.h"
- #include "qapi/qapi-visit-migration.h"
-@@ -79,6 +80,7 @@ QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp)
- void cpr_transfer_add_hup_watch(MigrationState *s, QIOChannelFunc func,
-                                 void *opaque)
+-    if (migrate_start(&from, &to, "defer", &args->start)) {
++    if (migrate_start(&from, &to, &args->start)) {
+         return -1;
+     }
+ 
+@@ -179,7 +179,7 @@ static void set_cpr_exec_args(QTestState *who, MigrateCommon *args)
+      */
+     g_assert(args->start.hide_stderr == false);
+ 
+-    ret = migrate_args(&from_args, &to_args, args->listen_uri, &args->start);
++    ret = migrate_args(&from_args, &to_args, &args->start);
+     g_assert(!ret);
+     qtest_from_args = qtest_qemu_args(from_args);
+ 
+@@ -230,7 +230,7 @@ static void test_cpr_exec(MigrateCommon *args)
+     g_autofree char *filename = g_strdup_printf("%s/%s", tmpfs,
+                                                 FILE_TEST_FILENAME);
+ 
+-    if (migrate_start(&from, NULL, "defer", &args->start)) {
++    if (migrate_start(&from, NULL, &args->start)) {
+         return;
+     }
+ 
+diff --git a/tests/qtest/migration/file-tests.c b/tests/qtest/migration/file-tests.c
+index 4b6a2eeb7b..36109d30ba 100644
+--- a/tests/qtest/migration/file-tests.c
++++ b/tests/qtest/migration/file-tests.c
+@@ -47,8 +47,7 @@ static void test_file_connect_outgoing_fd_leak(char *name, MigrateCommon *args)
+         return;
+     }
+ 
+-    args->listen_uri = "defer";
+-    if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
++    if (migrate_start(&from, &to, &args->start)) {
+         return;
+     }
+ 
+diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+index b1bf8ea8ae..b92e6b7df1 100644
+--- a/tests/qtest/migration/framework.c
++++ b/tests/qtest/migration/framework.c
+@@ -308,7 +308,7 @@ static char *migrate_mem_type_get_opts(MemType type, const char *memory_size)
+     return opts;
+ }
+ 
+-int migrate_args(char **from, char **to, const char *uri, MigrateStart *args)
++int migrate_args(char **from, char **to, MigrateStart *args)
  {
-+    assert(bql_locked());
-     s->hup_source = qio_channel_create_watch(cpr_state_ioc(), G_IO_HUP);
-     g_source_set_callback(s->hup_source,
-                           (GSourceFunc)func,
-@@ -89,9 +91,17 @@ void cpr_transfer_add_hup_watch(MigrationState *s, QIOChannelFunc func,
+     /* options for source and target */
+     g_autofree gchar *arch_opts = NULL;
+@@ -423,11 +423,11 @@ int migrate_args(char **from, char **to, const char *uri, MigrateStart *args)
+                                  "-name target,debug-threads=on "
+                                  "%s "
+                                  "-serial file:%s/dest_serial "
+-                                 "-incoming %s "
++                                 "-incoming defer "
+                                  "%s %s %s %s",
+                                  kvm_opts ? kvm_opts : "",
+                                  machine, machine_opts,
+-                                 memory_backend, tmpfs, uri,
++                                 memory_backend, tmpfs,
+                                  events,
+                                  arch_opts ? arch_opts : "",
+                                  args->opts_target ? args->opts_target : "",
+@@ -474,8 +474,7 @@ static void migrate_mem_type_cleanup(MemType type)
+     }
+ }
  
- void cpr_transfer_source_destroy(MigrationState *s)
+-int migrate_start(QTestState **from, QTestState **to, const char *uri,
+-                  MigrateStart *args)
++int migrate_start(QTestState **from, QTestState **to, MigrateStart *args)
  {
-+    assert(bql_locked());
-     if (s->hup_source) {
-         g_source_destroy(s->hup_source);
-         g_source_unref(s->hup_source);
-         s->hup_source = NULL;
-     }
- }
-+
-+bool cpr_transfer_source_active(MigrationState *s)
-+{
-+    /* Whenever the HUP gsource is available, it's active. */
-+    assert(bql_locked());
-+    return s->hup_source;
-+}
-diff --git a/migration/migration.c b/migration/migration.c
-index ecc69dc4d2..b6f78eb3ac 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1502,14 +1502,19 @@ void migration_cancel(void)
+     g_autofree gchar *cmd_source = NULL;
+     g_autofree gchar *cmd_target = NULL;
+@@ -490,7 +489,7 @@ int migrate_start(QTestState **from, QTestState **to, const char *uri,
+     bootfile_create(qtest_get_arch(), tmpfs, args->suspend_me);
+     src_state.suspend_me = args->suspend_me;
+ 
+-    if (migrate_args(&cmd_source, &cmd_target, uri, args)) {
++    if (migrate_args(&cmd_source, &cmd_target, args)) {
+         return -1;
      }
  
-     /*
--     * If migration_connect_outgoing has not been called, then there
--     * is no path that will complete the cancellation. Do it now.
--     */
--    if (setup && !s->to_dst_file) {
--        migrate_set_state(&s->state, MIGRATION_STATUS_CANCELLING,
--                          MIGRATION_STATUS_CANCELLED);
--        cpr_state_close();
--        cpr_transfer_source_destroy(s);
-+     * This is cpr-transfer specific processing.
-+     *
-+     * If this is true, it means cpr-transfer migration is waiting for the
-+     * destination to send HUP event on CPR channel to continue the next
-+     * phase.  If so, do the cleanup proactively to avoid get stuck in
-+     * CANCELLING state.
-+     */
-+    if (cpr_transfer_source_active(s)) {
-+        assert(migrate_mode() == MIG_MODE_CPR_TRANSFER);
-+        assert(setup && !s->to_dst_file);
-+        migration_cleanup(s);
-+        /* Now all things should have been released */
-+        assert(!cpr_transfer_source_active(s));
-     }
- }
+@@ -563,7 +562,7 @@ static int migrate_postcopy_prepare(QTestState **from_ptr,
+     args->start.caps[MIGRATION_CAPABILITY_POSTCOPY_BLOCKTIME] = true;
+     args->start.caps[MIGRATION_CAPABILITY_POSTCOPY_RAM] = true;
  
-@@ -2045,12 +2050,22 @@ static gboolean migration_connect_outgoing_cb(QIOChannel *channel,
-     MigrationState *s = migrate_get_current();
-     Error *local_err = NULL;
- 
-+    /*
-+     * Detach and release the GSource right after use.  We rely on this to
-+     * detect this small cpr-transfer window of "waiting for HUP event".
-+     */
-+    cpr_transfer_source_destroy(s);
-+
-     migration_connect_outgoing(s, opaque, &local_err);
- 
-     if (local_err) {
-         migration_connect_error_propagate(s, local_err);
+-    if (migrate_start(&from, &to, "defer", &args->start)) {
++    if (migrate_start(&from, &to, &args->start)) {
+         return -1;
      }
  
-+    /*
-+     * This is redundant as we do cpr_transfer_source_destroy() at the
-+     * entry, but it's benign; glib will just skip the detach.
-+     */
-     return G_SOURCE_REMOVE;
- }
+@@ -842,7 +841,7 @@ int test_precopy_common(MigrateCommon *args)
+         args->listen_uri = "tcp:127.0.0.1:0";
+     }
+ 
+-    if (migrate_start(&from, &to, "defer", &args->start)) {
++    if (migrate_start(&from, &to, &args->start)) {
+         return -1;
+     }
+ 
+@@ -991,7 +990,7 @@ void test_file_common(MigrateCommon *args, bool stop_src)
+     bool check_offset = false;
+     g_autofree char *uri = NULL;
+ 
+-    if (migrate_start(&from, &to, "defer", &args->start)) {
++    if (migrate_start(&from, &to, &args->start)) {
+         return;
+     }
+ 
+diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
+index 8216b5d79d..e5d5fc4959 100644
+--- a/tests/qtest/migration/misc-tests.c
++++ b/tests/qtest/migration/misc-tests.c
+@@ -28,7 +28,7 @@ static void test_baddest(char *name, MigrateCommon *args)
+ 
+     args->start.hide_stderr = true;
+ 
+-    if (migrate_start(&from, &to, "defer", &args->start)) {
++    if (migrate_start(&from, &to, &args->start)) {
+         return;
+     }
+ 
+@@ -54,7 +54,7 @@ static void test_analyze_script(char *name, MigrateCommon *args)
+         return;
+     }
+ 
+-    if (migrate_start(&from, &to, "defer", &args->start)) {
++    if (migrate_start(&from, &to, &args->start)) {
+         return;
+     }
+ 
+@@ -115,7 +115,7 @@ static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
+     g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
+     QTestState *from, *to;
+ 
+-    if (migrate_start(&from, &to, "defer", args)) {
++    if (migrate_start(&from, &to, args)) {
+         return;
+     }
+ 
+@@ -180,7 +180,7 @@ static void do_test_validate_uri_channel(MigrateCommon *args)
+     QTestState *from, *to;
+     QObject *channels;
+ 
+-    if (migrate_start(&from, &to, "defer", &args->start)) {
++    if (migrate_start(&from, &to, &args->start)) {
+         return;
+     }
+ 
+@@ -234,7 +234,7 @@ static void test_validate_caps_pair(char *test_path, MigrateCommon *args)
+     args->start.hide_stderr = true;
+     args->start.only_source = true;
+ 
+-    if (migrate_start(&from, &to, "defer", &args->start)) {
++    if (migrate_start(&from, &to, &args->start)) {
+         return;
+     }
+ 
+diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
+index e915b21712..3161e5f247 100644
+--- a/tests/qtest/migration/precopy-tests.c
++++ b/tests/qtest/migration/precopy-tests.c
+@@ -268,7 +268,7 @@ static void test_auto_converge(char *name, MigrateCommon *args)
+     int64_t percentage;
+     const int64_t init_pct = 5, inc_pct = 25, max_pct = 95;
+ 
+-    if (migrate_start(&from, &to, "defer", &args->start)) {
++    if (migrate_start(&from, &to, &args->start)) {
+         return;
+     }
+ 
+@@ -414,7 +414,7 @@ static void test_multifd_tcp_cancel(MigrateCommon *args, bool postcopy_ram)
+ 
+     args->start.hide_stderr = true;
+ 
+-    if (migrate_start(&from, &to, "defer", &args->start)) {
++    if (migrate_start(&from, &to, &args->start)) {
+         return;
+     }
+ 
+@@ -460,7 +460,7 @@ static void test_multifd_tcp_cancel(MigrateCommon *args, bool postcopy_ram)
+ 
+     args->start.only_target = true;
+ 
+-    if (migrate_start(&from, &to2, "defer", &args->start)) {
++    if (migrate_start(&from, &to2, &args->start)) {
+         return;
+     }
+ 
+@@ -634,7 +634,7 @@ static void test_cancel_src_after_status(char *test_path, MigrateCommon *args)
+ 
+     args->start.hide_stderr = true;
+ 
+-    if (migrate_start(&from, &to, "defer", &args->start)) {
++    if (migrate_start(&from, &to, &args->start)) {
+         return;
+     }
+ 
+@@ -973,7 +973,7 @@ static void test_dirty_limit(char *name, MigrateCommon *args)
+     args->connect_uri = uri;
+ 
+     /* Start src, dst vm */
+-    if (migrate_start(&from, &to, "defer", &args->start)) {
++    if (migrate_start(&from, &to, &args->start)) {
+         return;
+     }
+ 
+@@ -1021,7 +1021,7 @@ static void test_dirty_limit(char *name, MigrateCommon *args)
+     args->start.use_dirty_ring = true;
+ 
+     /* Restart dst vm, src vm already show up so we needn't wait anymore */
+-    if (migrate_start(&from, &to, "defer", &args->start)) {
++    if (migrate_start(&from, &to, &args->start)) {
+         return;
+     }
  
 -- 
 2.53.0
