@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96B4DCD5BA4
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 18:57:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FEF9CD5BA4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 19:10:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPm6D-0000TM-DG; Wed, 20 May 2026 14:56:57 -0400
+	id 1wPmIy-0002gU-NY; Wed, 20 May 2026 15:10:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPm69-0000T6-7Z
- for qemu-devel@nongnu.org; Wed, 20 May 2026 14:56:53 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPmIx-0002g4-7d
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 15:10:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPm67-0002bU-Kf
- for qemu-devel@nongnu.org; Wed, 20 May 2026 14:56:52 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPmIv-00066O-0z
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 15:10:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779303410;
+ s=mimecast20190719; t=1779304203;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=cYBlNQjJfudsQ1dmmZeBDOz4w6QRCYHPeqOnV6hUn2g=;
- b=a65/wHUkj3EitowDXdtBEm0IVET0M1t1nJ++/IME97qKqVJZbbLrK9OBOkMURwI8vrcNYt
- QJOQ7gBaU10/3FzXPMNKX/bUmWYGbhS19BulFkoKb7b0OGTDtgIQHrIVI/UMbYAVVsKGux
- 80FOkP3NVUXoCJF1SP3vQz7nAuwnQWw=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=gNMEOkBvDZzya4Iu4MTr/RjUqoIcIAHteT1dXC+w29Q=;
+ b=hw8PvmmJbwr7wf4DzNPgjcq1mu5f4DCywmmfrhBqGxyzFr5XOuI+XRK6mxBjy6/ehOfr41
+ MxNvrc2ml2dP5/bp2zAi8GS64lSgDXvG6PWjLZCzvv7SzutCia2pEwJCehGDqSfAP0PoHf
+ orjhxhGu6LJeBO8UmZ7VkdTT9o02LF0=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-628-C6UqAo45O3SKGyWfox-SIw-1; Wed, 20 May 2026 14:56:48 -0400
-X-MC-Unique: C6UqAo45O3SKGyWfox-SIw-1
-X-Mimecast-MFC-AGG-ID: C6UqAo45O3SKGyWfox-SIw_1779303408
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-50d6bf346adso117370901cf.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 11:56:48 -0700 (PDT)
+ us-mta-130-SFoiDeUgNaWSgxy6XGAj7Q-1; Wed, 20 May 2026 15:10:01 -0400
+X-MC-Unique: SFoiDeUgNaWSgxy6XGAj7Q-1
+X-Mimecast-MFC-AGG-ID: SFoiDeUgNaWSgxy6XGAj7Q_1779304201
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-8b5f089a5c3so158723836d6.3
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 12:10:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779303408; x=1779908208; darn=nongnu.org;
+ d=redhat.com; s=google; t=1779304201; x=1779909001; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=cYBlNQjJfudsQ1dmmZeBDOz4w6QRCYHPeqOnV6hUn2g=;
- b=AtQA7mea0osu2y07MAMWX4YdAPEaiNZUCt/p179y16O1yFn0ycchTuS3sZ3WKlkFkB
- CYNGLSutzaoxojmXQPPS3LQ0xtAiAhVCMDaQLNCo9/CauisF+XkFt3mtURJ9fKbRuFGj
- akhO2sSX3uEBYz4q0GPoPBd+Y1egWN2p2Cs0laAGcBjblM5NJy9aRkz44h7wdnRlUdIN
- p1vagOTX/CpaPonVoMcAHc8hifWQtieF2Q++jdm8HF6TL5jZd37i4etQ104jT7rTFIUp
- iQbUCJpHTlnKFCYIEnzhFZW4fN75F0c3nFWY5j33Di4x2yO/p/bKJXGDWpYiO934Wwh3
- /oQQ==
+ bh=gNMEOkBvDZzya4Iu4MTr/RjUqoIcIAHteT1dXC+w29Q=;
+ b=WEtXS+COME/rPBGicN3xzDm4zvNd60tCP2lW8uAWMTHPfTnNa0oXbVlM3Dktdtv5FW
+ 12vc+9xGNsLZiPEyKrDk8PkDdPgRSJfCodt69DYxrmRfC+G5YZ4fokn6BalzPVJ1KJOt
+ bvpTL6WQb8qegh7jFUVSVy4gR6e/jIIONK2yFOhRwWRY2aB/se7eWVNqrdrWxmRZ5Tkd
+ EtmMMR2o078PRfjUR7JqfH0sIwtFrA7iOzpVjGFksu1QgCl41IXVs8OFb1aJ+FZB1U+z
+ +8n+SYP9hVWmNqLn73Pco5z/jRCBuHKhVU9IBY4g081E/5rwQQ6uYxLxn+j2pTsBB02Z
+ GEeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779303408; x=1779908208;
+ d=1e100.net; s=20251104; t=1779304201; x=1779909001;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cYBlNQjJfudsQ1dmmZeBDOz4w6QRCYHPeqOnV6hUn2g=;
- b=rDoPapey+zQmLWM3NX9uM95nWSQYddtWjJKxqUpekHX/845MU9fFQWYg9LtKwUWMOf
- vBMKuEiVOQuy5jbHjElUL7WE8FAT2+Nauzk3CuFiJoK/6sZqUXxiO3phY07VKs4Mu7GE
- b9JPKP3emhjQr+MSAR5o60zzHP1fs/wYEu/v5Mg8Q6OGokg3yo+0v9WsYce4mOy+NzXk
- wD9xx/QUpx0osSnn9MiS73YPVTTkBkA6jBmydn3lRB24sGLw21xpjT7GNJ+BGCRuRbFm
- sz2Yb86bGca3tWpXFPnOkmfkHvh6l0Ylbfi7ektDNCY5fwB+GaKU2olxHv1G3FUX/sB/
- pMDw==
-X-Gm-Message-State: AOJu0YxRdcif6bsX+Yu1sx4oQJfY/awEp0r2valNJoEtlgJ/KMzAROfV
- gqhph2mIpu6ys81t5gk4ImNbgAQ5nm8mU2sfJ8zS3OERWdpuRBnzEnJbtrLQgDZwntKKfYQjaUq
- XydUHX6RGYilCMRa1kSjvumhTacQQAvWvlH82HoQPdxcs/rQmzkM2kbKa
-X-Gm-Gg: Acq92OHwfSRRvtmnsgGeJ3FHlbjN2FgcdMVhEU1Y6UogipoPrFbMMcRT8xG/DHBBpnu
- hlcr2Fs+xJstkwGj/uii1tKuMKS2UQ9R/VbveEYJ6UyPW+DtiDRzZofJKNY9nwoZAVvSSI089/7
- X8nbhZOFohpwn5PA8+W9gkXMBZzZ/MGvKkc2tPKtkyfAWMAYPWHRbEslTIaNBNxVpPHNTDKtc5N
- FjWEWfcMtSlClTcdPA2FkKoTZekrgVgJh3/3vVnyqHgHL7h+rTppElr+ZxcWbQHpIaprIDqoSLu
- /J7KXdDs3XGGYNn9ofqHx9hovV11AS74Tayx/A1MYUf1CUC4sMjq9kMRJEUl/roZrzfhu/iDqWn
- 9PltACl4UPbGxMFj4kCxNF4VeVjJzsi/qzkmHCcBuKkIj4Yw=
-X-Received: by 2002:ac8:5d89:0:b0:50d:7aa1:f405 with SMTP id
- d75a77b69052e-5165a01227cmr341106401cf.9.1779303408087; 
- Wed, 20 May 2026 11:56:48 -0700 (PDT)
-X-Received: by 2002:ac8:5d89:0:b0:50d:7aa1:f405 with SMTP id
- d75a77b69052e-5165a01227cmr341105851cf.9.1779303407365; 
- Wed, 20 May 2026 11:56:47 -0700 (PDT)
+ bh=gNMEOkBvDZzya4Iu4MTr/RjUqoIcIAHteT1dXC+w29Q=;
+ b=SPVTfWNu0DIuF1f/OFV7Z2+WdhVonVktNrCB/3gv7kgVPdCKaSyi5S4UTzIMXJ+y1n
+ yvEPmDDgSm2oNmZonSf1w4YzaNzywZ+I1bs4YiKvVBcV+68/sMfNEWVB3QKUGql+x4EQ
+ H8BUODUqVWWy89d7Wlm47jHzQ9wgaGDkxdCpUwA8qVsmt8Jc4MYizY/KThrQFYDeNfnN
+ 0KhLaeJT879RRlWVkV/gj79905EG2nPIFTDqEI8GAPdpdlZOZvbRqqY3QzVScjnbcE8S
+ e/WW//SuUOREW07VteWvGwa/MWq2X5qwI1UsEZtJDR25WSxxdMVJw5gH5wFgYzKmYMo1
+ 5ewQ==
+X-Gm-Message-State: AOJu0YypHW7w4eXUQVUbKJulF/9eoGm78DiTpdOpc97fGdvr0IMaujXH
+ BO5gosx9GpCaHPhm6rGYgnuRXAHU85UqwPqNijWFILbCoDeEOJ3b0/z5sfGHaBAfDdj3NBnI9eA
+ wuFDgk4Z+KfJT/Qd2/fRMD4clAPXREB01QJWlbspZ3Lo7M/+q8inNwcZ2
+X-Gm-Gg: Acq92OFY2ZtbH2zy6YsJm3OT+tpC0jEZUzI/fDeTZeNxyqY89jX4GsVmTW5zBWrOHfT
+ gVHJAsl3ShRhn8acA5TWQeiyl2RYh/BHlRvzOD+bNTbN/3SvAGG4z9LuWDABK3QnP8YlYPFnv+R
+ p/wBJ8X2I0syiRzzf4vF5f2MFHP2FUo7PX4stNTKDsPxAL4bdWPJAlFUbpqrrgSNEhOsivNzYtp
+ Mnp35zM3ctuDqJvQmqrsRD+TuP4QV1rsmcEfebCeJM0MINhiA1UJtg4ygklw/rj2WcYwcGgyM4O
+ tZw77jSrCTPXNQRUDp8gvUvpt4332Gx84x1UObSF9xA13RaKiRM1RlfrolLiMDmhFCbGGeWp0YH
+ s98KubW/TDAoha4cytO6qoPGXmr73Ow4puWISlGGbKEHqhkc=
+X-Received: by 2002:a05:6214:4c8f:b0:8ac:a9f1:6cf4 with SMTP id
+ 6a1803df08f44-8ca0f6ac24amr352505966d6.37.1779304200731; 
+ Wed, 20 May 2026 12:10:00 -0700 (PDT)
+X-Received: by 2002:a05:6214:4c8f:b0:8ac:a9f1:6cf4 with SMTP id
+ 6a1803df08f44-8ca0f6ac24amr352505296d6.37.1779304200132; 
+ Wed, 20 May 2026 12:10:00 -0700 (PDT)
 Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8ca3619dbc2sm129949856d6.38.2026.05.20.11.56.46
+ 6a1803df08f44-8ca361bcb15sm137267376d6.47.2026.05.20.12.09.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 11:56:47 -0700 (PDT)
-Date: Wed, 20 May 2026 14:56:45 -0400
+ Wed, 20 May 2026 12:09:59 -0700 (PDT)
+Date: Wed, 20 May 2026 15:09:57 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v1 00/15] tests/qtest/migration: Always defer
-Message-ID: <ag4D7Zue4U9P6QKS@x1.local>
-References: <20260505160915.25558-1-farosas@suse.de>
+To: infra.ai.cloud@bitdeer.com
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Hyman Huang <yong.huang@bitdeer.com>
+Subject: Re: [PATCH] MAINTAINERS: Update email of Yong Huang
+Message-ID: <ag4HBdzJXGdKgy50@x1.local>
+References: <b3bd81c3d9f425bb750a76d7bad7ad0284e55123.1779178180.git.infra.ai.cloud@bitdeer.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260505160915.25558-1-farosas@suse.de>
+In-Reply-To: <b3bd81c3d9f425bb750a76d7bad7ad0284e55123.1779178180.git.infra.ai.cloud@bitdeer.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -113,14 +115,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 05, 2026 at 01:08:59PM -0300, Fabiano Rosas wrote:
-> As discussed before, change the tests to always use -incoming
-> defer. Also remove one of the uris from MigrateCommon, a single uri is
-> enough.
-> 
-> CI run: https://gitlab.com/farosas/qemu/-/pipelines/2501387628
+Hi, Yong,
 
-queued, thanks!
+On Tue, May 19, 2026 at 04:18:12PM +0800, infra.ai.cloud@bitdeer.com wrote:
+> From: Hyman Huang <yong.huang@bitdeer.com>
+
+Just to mention you still have this different address ^^^.
+
+Do you want to stick with infra.ai.cloud@bitdeer.com?  What is the best
+address to reach you?
+
+Thanks,
+
+> 
+> I left SmartX two weeks ago. Update my email to stay reachable.
+> 
+> Signed-off-by: Hyman Huang <infra.ai.cloud@bitdeer.com>
+> ---
+>  MAINTAINERS | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index b75f3222f2..1308ee5a0b 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3784,7 +3784,7 @@ F: migration/rdma*
+>  F: scripts/rdma-migration-helper.sh
+>  
+>  Migration dirty limit and dirty page rate
+> -M: Hyman Huang <yong.huang@smartx.com>
+> +M: Hyman Huang <infra.ai.cloud@biitdeer.com>
+>  S: Maintained
+>  F: system/dirtylimit.c
+>  F: include/system/dirtylimit.h
+> @@ -3794,7 +3794,7 @@ F: include/system/dirtyrate.h
+>  F: docs/devel/migration/dirty-limit.rst
+>  
+>  Detached LUKS header
+> -M: Hyman Huang <yong.huang@smartx.com>
+> +M: Hyman Huang <infra.ai.cloud@biitdeer.com>
+>  S: Maintained
+>  F: tests/qemu-iotests/tests/luks-detached-header
+>  F: docs/devel/luks-detached-header.rst
+> -- 
+> 2.43.0
+> 
 
 -- 
 Peter Xu
