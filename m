@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F774CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:35:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAFEECD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:35:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPoZW-0002pp-BT; Wed, 20 May 2026 17:35:22 -0400
+	id 1wPoYw-0001Hj-9p; Wed, 20 May 2026 17:34:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoZO-0002Ka-PJ
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:35:16 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoYu-0001H9-I8
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoZM-0007fU-PK
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:35:14 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoYs-0007KF-F1
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779312912;
+ s=mimecast20190719; t=1779312881;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qWydiIYQqrKb1lrC/Ixqufpo2JBJY982VhMLteFOhE4=;
- b=dv+Q1DO+ACNei4JTfsAyyhWrQlE7p1dkLX3vALaTEMud/aFPkq8eoutTu4P7VJH5/9bjhb
- 020bcEt8nFuB9nr3IbbFHHCtcvft7FUqvwX5pvzx6Z3QcJYBoyfYtYMwj74HXu232JoXok
- vSmysPvML4QPhTfxPBRFso12OkBlKy8=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=u0x3Ay0P3vXrHy1/36SANeDG2Z3InXKa4XI7f+qoQ2A=;
+ b=VdBDXX+S3Ocm6gwzuigi0HzIBsNLbVAYBsHKYLeS034PpIVzvkXkgaw55S/MHaMLBxJmJf
+ gfGojwoaG8/CWHB7B/SoiW2P5Ac82UBwOp6nLf06iFfRUOuZ5xrWdm5Ln91KjYs4cYg13b
+ KHlWJl7Ms8z0ezGC769/Dq6jTqrxzaI=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-8-ywsRgMYVNFKBkkpao4tPYA-1; Wed, 20 May 2026 17:35:10 -0400
-X-MC-Unique: ywsRgMYVNFKBkkpao4tPYA-1
-X-Mimecast-MFC-AGG-ID: ywsRgMYVNFKBkkpao4tPYA_1779312910
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-8ca122dade4so66413616d6.2
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 14:35:10 -0700 (PDT)
+ us-mta-622-QpDUrLE8OnKtbrX53Oi6Sg-1; Wed, 20 May 2026 17:34:40 -0400
+X-MC-Unique: QpDUrLE8OnKtbrX53Oi6Sg-1
+X-Mimecast-MFC-AGG-ID: QpDUrLE8OnKtbrX53Oi6Sg_1779312880
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8b7a1ea06bfso167951036d6.3
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 14:34:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779312910; x=1779917710; darn=nongnu.org;
+ d=redhat.com; s=google; t=1779312879; x=1779917679; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qWydiIYQqrKb1lrC/Ixqufpo2JBJY982VhMLteFOhE4=;
- b=aN1kMkajV1XtsLyQuPxC56v5EZ2MKitZ+9ySwHd7U0PD7V28DEahPOIAAslsviOjZv
- JvPR5nWc60LFfI/qTo22tZzTwWTystXBiKKY0SRjSJgcQ9RdeYt1IsnRLxZpHxU+z8cu
- WfBXwmLSAEMEhSDrRTwgIyu9dE7eiJQPtblkLi9knEorinKyWiOOqvWLh4fNEkLKl8dK
- 1FWUUvd2OPEt5WY3th7SpkS8eSIVdCvNvUc7S4Fuxc7k2U8b27bYdbh7pbm6QdZWpYkZ
- P7vyRJ+cwoOi7ENp7DEgslOWo26bf6GX/y1TxKoSFB36DdyRPVPAoEdpUgZiGs1k8i+D
- P8QA==
+ bh=u0x3Ay0P3vXrHy1/36SANeDG2Z3InXKa4XI7f+qoQ2A=;
+ b=C9jMd3Gpjn7tIIn0Q1HCdNcA4bEcx5Ase/G4MRjwCXqUFzwwrTiJsfc4jYvzHCgcPu
+ M5O8s3yTVKFeMsqpXjH94Oun6FBiDraitQLy3YwYFGRWJELC4o3OMsU2odr1Yi2CNOJu
+ BBH9QPUFG9rm+F7aUXyg8dZFx1oOBO2wuzP+/0OZE2uPyhph1/469L1wZRN5o1ijRFP/
+ wzc0y/1D+1BztZ9/C6B/aQ1QVVJdPg/qusuEOu+ythDI5dRfOjKQBdsBtg2HS5v0nkQP
+ MvgpYWfCVlClRttprHOaB7KZRaXObK06RqsvpzJ+OdOw0ZdZj4+SIFdfv/2vbA5o/uNI
+ 7sxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779312910; x=1779917710;
+ d=1e100.net; s=20251104; t=1779312879; x=1779917679;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=qWydiIYQqrKb1lrC/Ixqufpo2JBJY982VhMLteFOhE4=;
- b=njDAb7wC0jzK7hqwz7b+7IKvb9c7zM/GplqLa7jJsNjwLpfSgIN4guRyQyClRGNccR
- wIodQvx0eM4Vrp3P9zy+3RtUDn1DmSYCylmxRNUEj9V95euJnf40SMPf6vVvoIQrNSL0
- Qz3zHYVXCYZUGihLdOBjMzEOb7V+ojTahitWvkU/k2zhlimsmWXAiWvSfewXeQpTRx39
- 1ZaPs2G3m3kpGan/xkPYDWt+QuVnUvx5Q9LZodS8AWb6u0yO2YDkvvypAG0Eaw7JWXO6
- 2Qgg9+ZfSgyhfsE1WQH0LcGVO+lJkxxNpL41YutELOScbd7FjOwG/eU7pMUI+KrFIXj+
- yNDg==
-X-Gm-Message-State: AOJu0YxcgV/ELkCBZ6myR5yzkUnzacfsOEHBeltTuVsc97mHi/DV+++x
- ySzNB7taxoKRU9EqtE4w8mT5PPfYeGRtHpvLX9/Yjj5u2KamS+HFROpOB3mLmMybfKIAyTK6qJP
- ZulGF7881688GaWo9v5YVkrDyrF/lswPoELQqpFBv2JMFuHf+yaH8sCuTVxvIqiAetWgJ3C4kfB
- y00a+8OfezEuNObKA8J2RXi+aPRIDOM+edHkxqBw==
-X-Gm-Gg: Acq92OG+ijshfzWe+tG9/HLMoLPrxxdj5QX2puMh4VDALzbWy7mjU6v6xmrLJpuNxac
- Gqaede3Ic6p+8Zf30OT8XVK+HWch1CkQOL822bPqZ7Qv4paRL29jy8hE1t30HobtbrGkKot5FvN
- X4mP0dbYJUIJjqvMFgdXaiXf2kU1jCv6s03nmZuxaPx8wmY26RCbknAD/m6b1hWeUrW4+r5B+Wi
- X1gpSUNmB0kJby7zoAOyrumpMulrl2C3j+bPtNbwTyLFkJiWGYdxkpSxDrECJuScBP3V6JT02Tt
- EBTrcYyCdhEtkUuneJCglL5r2QnnwFiBZtDvAYAbwe0nLjfmEO1nOvmSDMb/l4v3Wq1SnjWggCX
- XyC9pWYCxPvdkmgxxX+FBoanj0DNl+suEKh3VrrEt2OUs
-X-Received: by 2002:a05:6214:1305:b0:8cc:2a92:48ec with SMTP id
- 6a1803df08f44-8cc6e37ec21mr3895996d6.34.1779312909629; 
- Wed, 20 May 2026 14:35:09 -0700 (PDT)
-X-Received: by 2002:a05:6214:1305:b0:8cc:2a92:48ec with SMTP id
- 6a1803df08f44-8cc6e37ec21mr3895126d6.34.1779312908832; 
- Wed, 20 May 2026 14:35:08 -0700 (PDT)
+ bh=u0x3Ay0P3vXrHy1/36SANeDG2Z3InXKa4XI7f+qoQ2A=;
+ b=dBy9rvDi8nNf4rJ/yc0VlSEignjTkocxSPIIPFO8F4N9bO6t1vj0Fvp+Ronkx1CyTp
+ HiwBy5psgYTfLQrha7W+aATPZZ9REacfASZEaaB4WVKITC8fve5Wy5JDDXhAH6CN+tXH
+ tO+ZPHP5p+MeB629sULxlqpryLfPvS2LLtXfXMvoR99ClHZrrqcTXEKcy3V5F53UgzeB
+ obk0L6cJKoMhI+vfl2aZyH8TTAe4hfUg7b79DNV0O6jnAIx4buyXjNULYSGSM8NGlxxA
+ bluL/+Mps5iEHSi1H6aoA/FRpYwQbG9DkeHSz8nh9tYr1/Gy8fxerGX5bdVxluI1gIQZ
+ aNRg==
+X-Gm-Message-State: AOJu0YzhbABDPDfpFiWS181uHSdEi7ivoFoSvXQusEndqYbmn6xSDFbV
+ x6DqF3og0ku00LPIcyBR05F/yBOlMQBxC9A6k90IjtmRU9Oh1dr+W5zEM5HHKeUev+qQOS57SFl
+ Ho5rX2qyWGLyQD9+me8o6PO50Sdo72MvOY9n88QYpEJrbnxkgq0djYPZhq8tZUDpfxh1TSugsgE
+ XCbQPBuabmXM/7TmvDO2B9Nk4HK8+L4jABCVihPQ==
+X-Gm-Gg: Acq92OGV7oH43u1mMZjxCSW15mVpX9T9eVxyHD6MdoUf5zQBzSS3PN9r1fRsKhP5rrl
+ BI2ELE99MRuy9hFc/N2Ru0D3oS3usw87RO7sbsDcf+4ly87c039wXWEXbQOOjXf2qwLEhVQmsTN
+ oSqygNEsYQOc5d5tTYHTQY+LshHIjswf/hN7KEruOungd1NF5FwGRoNlH3ojUBw/ie6aa73plIZ
+ 0iT9Fk8+nIwbx2wbIN5T3q76PTasd/Kmdz+ot9oILdxmi9yFYH71UbBJOvDcg8IoRjME7vriDp9
+ lCzmR3zjJY9L0vqKoie2JhWUPbe1jGqlRGJX9pfY3LPDKvCLPzDaasqgfdgtEJqCwGczKW51s5c
+ nNr7gbMs9lCBkKo2Hg62W6cxggwEQWJxbvh8lmDXzcPgI
+X-Received: by 2002:a05:6214:20a1:b0:8ac:abc5:8754 with SMTP id
+ 6a1803df08f44-8cc6e36241emr4370366d6.30.1779312878786; 
+ Wed, 20 May 2026 14:34:38 -0700 (PDT)
+X-Received: by 2002:a05:6214:20a1:b0:8ac:abc5:8754 with SMTP id
+ 6a1803df08f44-8cc6e36241emr4369636d6.30.1779312878110; 
+ Wed, 20 May 2026 14:34:38 -0700 (PDT)
 Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8ca360b362fsm133062716d6.22.2026.05.20.14.35.07
+ 6a1803df08f44-8ca360b362fsm133062716d6.22.2026.05.20.14.34.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 14:35:07 -0700 (PDT)
+ Wed, 20 May 2026 14:34:37 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
- hongmianquan <hongmianquan@bytedance.com>
-Subject: [PULL 28/29] migration/cpr: use hashtable for cpr fds
-Date: Wed, 20 May 2026 17:33:56 -0400
-Message-ID: <20260520213357.40646-29-peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>,
+	Peter Xu <peterx@redhat.com>
+Subject: [PULL 15/29] tests/qtest/migration: Remove multifd compression hook
+Date: Wed, 20 May 2026 17:33:43 -0400
+Message-ID: <20260520213357.40646-16-peterx@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520213357.40646-1-peterx@redhat.com>
 References: <20260520213357.40646-1-peterx@redhat.com>
@@ -117,219 +117,238 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: hongmianquan <hongmianquan@bytedance.com>
+From: Fabiano Rosas <farosas@suse.de>
 
-Use a GHashTable to store cpr fds to reduce the time
-consumption of `cpr_find_fd` in scenarios with a large
-number of fds. The time complexity for `cpr_find_fd` is
-reduced from O(N) to O(1).
-Keep cpr fds lookups in a GHashTable during normal runtime
-while preserving the existing QLIST migration ABI. Build a
-temporary QLIST from the hash table in pre_save and rebuild
-the hash table from the loaded QLIST in post_load.
+Take advantage of the default compression method for multifd being
+"none" and remove the common compression hook.
 
-To demonstrate the performance improvement, we tested the total time
-consumed by `cpr_find_fd` (called N times for N fds) under our real-world
-business scenarios with different numbers of file descriptors. The results
-are measured in nanoseconds:
-
-| Number of FDs | Total time with QLIST (ns) | Total time with GHashTable (ns) |
-|---------------|----------------------------|---------------------------------|
-| 540           | 936,753                    | 393,358                         |
-| 2,870         | 24,102,342                 | 2,212,113                       |
-| 7,530         | 152,715,916                | 5,474,310                       |
-
-As shown in the data, the lookup time grows exponentially with the QLIST
-as the number of fds increases. With the GHashTable, the time consumption
-remains linear (O(1) per lookup), significantly reducing the downtime during
-the CPR process.
-
-Signed-off-by: hongmianquan <hongmianquan@bytedance.com>
-Link: https://lore.kernel.org/r/20260519134315.27997-1-hongmianquan@bytedance.com
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Link: https://lore.kernel.org/r/20260505160915.25558-10-farosas@suse.de
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/cpr.c | 116 ++++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 98 insertions(+), 18 deletions(-)
+ tests/qtest/migration/framework.h     |  3 --
+ tests/qtest/migration/framework.c     |  9 ----
+ tests/qtest/migration/precopy-tests.c | 11 ----
+ tests/qtest/migration/tls-tests.c     | 74 +++------------------------
+ 4 files changed, 8 insertions(+), 89 deletions(-)
 
-diff --git a/migration/cpr.c b/migration/cpr.c
-index 05266dfcfd..bca43e9bf3 100644
---- a/migration/cpr.c
-+++ b/migration/cpr.c
-@@ -24,6 +24,7 @@
- /* cpr state container for all information to be saved. */
+diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
+index 825209ee74..8d5331a860 100644
+--- a/tests/qtest/migration/framework.h
++++ b/tests/qtest/migration/framework.h
+@@ -242,9 +242,6 @@ void test_postcopy_recovery_common(MigrateCommon *args,
+ int test_precopy_common(MigrateCommon *args);
+ void test_precopy_unix_common(MigrateCommon *args);
+ void test_file_common(MigrateCommon *args, bool stop_src);
+-void *migrate_hook_start_precopy_tcp_multifd_common(QTestState *from,
+-                                                    QTestState *to,
+-                                                    const char *method);
  
- CprState cpr_state;
-+static GHashTable *cpr_fds_hash;
- 
- /****************************************************************************/
- 
-@@ -48,6 +49,84 @@ static const VMStateDescription vmstate_cpr_fd = {
-     }
- };
- 
-+static guint cpr_fd_hash(gconstpointer v)
-+{
-+    const CprFd *elem = v;
-+
-+    return g_str_hash(elem->name) ^ elem->id;
-+}
-+
-+static gboolean cpr_fd_equal(gconstpointer a, gconstpointer b)
-+{
-+    const CprFd *elem_a = a;
-+    const CprFd *elem_b = b;
-+
-+    return !strcmp(elem_a->name, elem_b->name) && elem_a->id == elem_b->id;
-+}
-+
-+static void cpr_fd_destroy(gpointer data)
-+{
-+    CprFd *elem = data;
-+
-+    g_free(elem->name);
-+    g_free(elem);
-+}
-+
-+static GHashTable *get_cpr_fds_hash(void)
-+{
-+    if (!cpr_fds_hash) {
-+        cpr_fds_hash = g_hash_table_new_full(cpr_fd_hash, cpr_fd_equal,
-+                                             cpr_fd_destroy, NULL);
-+    }
-+
-+    return cpr_fds_hash;
-+}
-+
-+static void cpr_fd_hash_insert(CprFd *elem)
-+{
-+    /* Use the same CprFd as key and value. */
-+    g_hash_table_insert(get_cpr_fds_hash(), elem, elem);
-+}
-+
-+static int cpr_fd_pre_save(void *opaque)
-+{
-+    CprState *state = (CprState *)opaque;
-+    GHashTableIter iter;
-+    CprFd *elem;
-+
-+    QLIST_INIT(&state->fds);
-+
-+    g_hash_table_iter_init(&iter, get_cpr_fds_hash());
-+    while (g_hash_table_iter_next(&iter, (gpointer *)&elem, NULL)) {
-+        QLIST_INSERT_HEAD(&state->fds, elem, next);
-+    }
-+
-+    return 0;
-+}
-+
-+static int cpr_fd_post_load(void *opaque, int version_id)
-+{
-+    CprState *state = (CprState *)opaque;
-+    CprFd *elem;
-+
-+    while ((elem = QLIST_FIRST(&state->fds))) {
-+        QLIST_REMOVE(elem, next);
-+
-+        /*
-+         * Preserve legacy QLIST lookup semantics if duplicate keys exist in
-+         * the incoming stream: the first matching entry wins.
-+         */
-+        if (g_hash_table_contains(get_cpr_fds_hash(), elem)) {
-+            cpr_fd_destroy(elem);
-+            continue;
-+        }
-+
-+        cpr_fd_hash_insert(elem);
-+    }
-+
-+    return 0;
-+}
-+
- void cpr_save_fd(const char *name, int id, int fd)
- {
-     CprFd *elem = g_new0(CprFd, 1);
-@@ -57,37 +136,34 @@ void cpr_save_fd(const char *name, int id, int fd)
-     elem->namelen = strlen(name) + 1;
-     elem->id = id;
-     elem->fd = fd;
--    QLIST_INSERT_HEAD(&cpr_state.fds, elem, next);
-+    cpr_fd_hash_insert(elem);
+ typedef struct QTestMigrationState QTestMigrationState;
+ QTestMigrationState *get_src(void);
+diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+index 5da39eac76..b1bf8ea8ae 100644
+--- a/tests/qtest/migration/framework.c
++++ b/tests/qtest/migration/framework.c
+@@ -1063,15 +1063,6 @@ finish:
+     migrate_end(from, to, args->result == MIG_TEST_SUCCEED);
  }
  
--static CprFd *find_fd(CprFdList *head, const char *name, int id)
-+static CprFd *find_fd(const char *name, int id)
- {
--    CprFd *elem;
-+    CprFd key = {
-+        .name = (char *)name,
-+        .id = id,
-+    };
- 
--    QLIST_FOREACH(elem, head, next) {
--        if (!strcmp(elem->name, name) && elem->id == id) {
--            return elem;
--        }
--    }
+-void *migrate_hook_start_precopy_tcp_multifd_common(QTestState *from,
+-                                                    QTestState *to,
+-                                                    const char *method)
+-{
+-    migrate_set_parameter_str(from, "multifd-compression", method);
+-    migrate_set_parameter_str(to, "multifd-compression", method);
 -    return NULL;
-+    return g_hash_table_lookup(get_cpr_fds_hash(), &key);
+-}
+-
+ QTestMigrationState *get_src(void)
+ {
+     return &src_state;
+diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
+index b73b73a807..246f9fd555 100644
+--- a/tests/qtest/migration/precopy-tests.c
++++ b/tests/qtest/migration/precopy-tests.c
+@@ -322,18 +322,10 @@ static void test_auto_converge(char *name, MigrateCommon *args)
+     migrate_end(from, to, true);
  }
  
- void cpr_delete_fd(const char *name, int id)
+-static void *
+-migrate_hook_start_precopy_tcp_multifd(QTestState *from,
+-                                       QTestState *to)
+-{
+-    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
+-}
+-
+ static void *
+ migrate_hook_start_precopy_tcp_multifd_zero_page_legacy(QTestState *from,
+                                                         QTestState *to)
  {
--    CprFd *elem = find_fd(&cpr_state.fds, name, id);
-+    CprFd key = {
-+        .name = (char *)name,
-+        .id = id,
-+    };
- 
--    if (elem) {
--        QLIST_REMOVE(elem, next);
--        g_free(elem->name);
--        g_free(elem);
--    }
-+    g_hash_table_remove(get_cpr_fds_hash(), &key);
- 
-     trace_cpr_delete_fd(name, id);
+-    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
+     migrate_set_parameter_str(from, "zero-page-detection", "legacy");
+     return NULL;
+ }
+@@ -342,14 +334,12 @@ static void *
+ migrate_hook_start_precopy_tcp_multifd_no_zero_page(QTestState *from,
+                                                     QTestState *to)
+ {
+-    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
+     migrate_set_parameter_str(from, "zero-page-detection", "none");
+     return NULL;
  }
  
- int cpr_find_fd(const char *name, int id)
+ static void test_multifd_tcp_uri_none(char *name, MigrateCommon *args)
  {
--    CprFd *elem = find_fd(&cpr_state.fds, name, id);
-+    CprFd *elem = find_fd(name, id);
-     int fd = elem ? elem->fd : -1;
+-    args->start_hook = migrate_hook_start_precopy_tcp_multifd;
+     /*
+      * Multifd is more complicated than most of the features, it
+      * directly takes guest page buffers when sending, make sure
+@@ -394,7 +384,6 @@ static void test_multifd_tcp_no_zero_page(char *name, MigrateCommon *args)
  
-     trace_cpr_find_fd(name, id, fd);
-@@ -96,7 +172,7 @@ int cpr_find_fd(const char *name, int id)
- 
- void cpr_resave_fd(const char *name, int id, int fd)
+ static void test_multifd_tcp_channels_none(char *name, MigrateCommon *args)
  {
--    CprFd *elem = find_fd(&cpr_state.fds, name, id);
-+    CprFd *elem = find_fd(name, id);
-     int old_fd = elem ? elem->fd : -1;
+-    args->start_hook = migrate_hook_start_precopy_tcp_multifd;
+     args->live = true;
+     args->connect_channels = ("[ { 'channel-type': 'main',"
+                              "    'addr': { 'transport': 'socket',"
+diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
+index 275d0b84d4..f45f4c4b0c 100644
+--- a/tests/qtest/migration/tls-tests.c
++++ b/tests/qtest/migration/tls-tests.c
+@@ -593,67 +593,9 @@ static void test_precopy_tcp_tls_x509_reject_anon_client(char *name,
+ }
+ #endif /* CONFIG_TASN1 */
  
-     if (old_fd < 0) {
-@@ -125,9 +201,11 @@ int cpr_open_fd(const char *path, int flags, const char *name, int id,
- 
- bool cpr_walk_fd(cpr_walk_fd_cb cb)
+-static void *
+-migrate_hook_start_multifd_tcp_tls_psk_match(QTestState *from,
+-                                             QTestState *to)
+-{
+-    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
+-    return migrate_hook_start_tls_psk_match(from, to);
+-}
+-
+-static void *
+-migrate_hook_start_multifd_tcp_tls_psk_mismatch(QTestState *from,
+-                                                QTestState *to)
+-{
+-    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
+-    return migrate_hook_start_tls_psk_mismatch(from, to);
+-}
+-
+-#ifdef CONFIG_TASN1
+-static void *
+-migrate_hook_start_multifd_tls_x509_default_host(QTestState *from,
+-                                                 QTestState *to)
+-{
+-    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
+-    return migrate_hook_start_tls_x509_default_host(from, to);
+-}
+-
+-static void *
+-migrate_hook_start_multifd_tls_x509_override_host(QTestState *from,
+-                                                  QTestState *to)
+-{
+-    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
+-    return migrate_hook_start_tls_x509_override_host(from, to);
+-}
+-
+-static void *
+-migrate_hook_start_multifd_tls_x509_mismatch_host(QTestState *from,
+-                                                  QTestState *to)
+-{
+-    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
+-    return migrate_hook_start_tls_x509_mismatch_host(from, to);
+-}
+-
+-static void *
+-migrate_hook_start_multifd_tls_x509_allow_anon_client(QTestState *from,
+-                                                      QTestState *to)
+-{
+-    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
+-    return migrate_hook_start_tls_x509_allow_anon_client(from, to);
+-}
+-
+-static void *
+-migrate_hook_start_multifd_tls_x509_reject_anon_client(QTestState *from,
+-                                                       QTestState *to)
+-{
+-    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
+-    return migrate_hook_start_tls_x509_reject_anon_client(from, to);
+-}
+-#endif /* CONFIG_TASN1 */
+-
+ static void test_multifd_tcp_tls_psk_match(char *name, MigrateCommon *args)
  {
-+    GHashTableIter iter;
-     CprFd *elem;
+-    args->start_hook = migrate_hook_start_multifd_tcp_tls_psk_match;
++    args->start_hook = migrate_hook_start_tls_psk_match;
+     args->end_hook = migrate_hook_end_tls_psk;
  
--    QLIST_FOREACH(elem, &cpr_state.fds, next) {
-+    g_hash_table_iter_init(&iter, get_cpr_fds_hash());
-+    while (g_hash_table_iter_next(&iter, (gpointer *)&elem, NULL)) {
-         g_assert(elem->fd >= 0);
-         if (!cb(elem->fd)) {
-             return false;
-@@ -141,6 +219,8 @@ static const VMStateDescription vmstate_cpr_state = {
-     .name = CPR_STATE,
-     .version_id = 1,
-     .minimum_version_id = 1,
-+    .pre_save = cpr_fd_pre_save,
-+    .post_load = cpr_fd_post_load,
-     .fields = (VMStateField[]) {
-         VMSTATE_QLIST_V(fds, CprState, 1, vmstate_cpr_fd, CprFd, next),
-         VMSTATE_END_OF_LIST()
+     args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
+@@ -663,7 +605,7 @@ static void test_multifd_tcp_tls_psk_match(char *name, MigrateCommon *args)
+ 
+ static void test_multifd_tcp_tls_psk_mismatch(char *name, MigrateCommon *args)
+ {
+-    args->start_hook = migrate_hook_start_multifd_tcp_tls_psk_mismatch;
++    args->start_hook = migrate_hook_start_tls_psk_mismatch;
+     args->end_hook = migrate_hook_end_tls_psk;
+     args->result = MIG_TEST_FAIL;
+ 
+@@ -676,7 +618,7 @@ static void test_multifd_tcp_tls_psk_mismatch(char *name, MigrateCommon *args)
+ static void test_multifd_postcopy_tcp_tls_psk_match(char *name,
+                                                     MigrateCommon *args)
+ {
+-    args->start_hook = migrate_hook_start_multifd_tcp_tls_psk_match;
++    args->start_hook = migrate_hook_start_tls_psk_match;
+     args->end_hook = migrate_hook_end_tls_psk;
+ 
+     args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
+@@ -689,7 +631,7 @@ static void test_multifd_postcopy_tcp_tls_psk_match(char *name,
+ static void test_multifd_tcp_tls_x509_default_host(char *name,
+                                                    MigrateCommon *args)
+ {
+-    args->start_hook = migrate_hook_start_multifd_tls_x509_default_host;
++    args->start_hook = migrate_hook_start_tls_x509_default_host;
+     args->end_hook = migrate_hook_end_tls_x509;
+ 
+     args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
+@@ -700,7 +642,7 @@ static void test_multifd_tcp_tls_x509_default_host(char *name,
+ static void test_multifd_tcp_tls_x509_override_host(char *name,
+                                                     MigrateCommon *args)
+ {
+-    args->start_hook = migrate_hook_start_multifd_tls_x509_override_host;
++    args->start_hook = migrate_hook_start_tls_x509_override_host;
+     args->end_hook = migrate_hook_end_tls_x509;
+ 
+     args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
+@@ -724,7 +666,7 @@ static void test_multifd_tcp_tls_x509_mismatch_host(char *name,
+      * to load migration state, and thus just aborts the migration
+      * without exiting.
+      */
+-    args->start_hook = migrate_hook_start_multifd_tls_x509_mismatch_host;
++    args->start_hook = migrate_hook_start_tls_x509_mismatch_host;
+     args->end_hook = migrate_hook_end_tls_x509;
+     args->result = MIG_TEST_FAIL;
+ 
+@@ -737,7 +679,7 @@ static void test_multifd_tcp_tls_x509_mismatch_host(char *name,
+ static void test_multifd_tcp_tls_x509_allow_anon_client(char *name,
+                                                         MigrateCommon *args)
+ {
+-    args->start_hook = migrate_hook_start_multifd_tls_x509_allow_anon_client;
++    args->start_hook = migrate_hook_start_tls_x509_allow_anon_client;
+     args->end_hook = migrate_hook_end_tls_x509;
+ 
+     args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
+@@ -748,7 +690,7 @@ static void test_multifd_tcp_tls_x509_allow_anon_client(char *name,
+ static void test_multifd_tcp_tls_x509_reject_anon_client(char *name,
+                                                          MigrateCommon *args)
+ {
+-    args->start_hook = migrate_hook_start_multifd_tls_x509_reject_anon_client;
++    args->start_hook = migrate_hook_start_tls_x509_reject_anon_client;
+     args->end_hook = migrate_hook_end_tls_x509;
+     args->result = MIG_TEST_FAIL;
+ 
 -- 
 2.53.0
 
