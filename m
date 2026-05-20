@@ -4,182 +4,154 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AC83CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 08:49:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E44DCD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 08:50:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPcbO-00082K-87; Wed, 20 May 2026 04:48:30 -0400
+	id 1wPcce-0008KF-M1; Wed, 20 May 2026 04:49:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1wPcb5-00081T-Tc
- for qemu-devel@nongnu.org; Wed, 20 May 2026 04:48:17 -0400
-Received: from mgamail.intel.com ([192.198.163.7])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wPccL-0008E1-MJ
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 04:49:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1wPcb1-0007pw-IM
- for qemu-devel@nongnu.org; Wed, 20 May 2026 04:48:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1779266887; x=1810802887;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=WPAe4sipFRH0NMyFKBBqv9Qz5Z3C2ixk1oPi5q+J5+U=;
- b=et417c7UHiOdNHl3ElquA8A1HGxr7k9ro00/bEbaRwdn3JRhxCbPVy2h
- Iv9NQo7/UZBnWejyAWeQsDLlt4mi3MeUqfPailU6z/LfJPdGhwqC3dJ8W
- bmI4cavTCwtK4vHjEIoGimUCTRVc/5Fwb0iX86r+cc3V+YZUX5N0TNywW
- rxM+qumzLtZ3tD7EYws1yxLxguM0HWfSaylfQ/JCzh1FHgLm3zX0EywF/
- wvzDR+QwHh6ugq3B1tgk1rZ7WljkxoeaGn7hCPWXLqSHKqnF5G+eYmhTz
- 1huCbLQkhghfqlni5yhh4nFJFYXdUFH/qzH1e+T5GorTCjubGEj5fJLhC g==;
-X-CSE-ConnectionGUID: kmQx4OKaTOOUgZqODawSRw==
-X-CSE-MsgGUID: XI8DEDbvT0GJV5ufw06RMA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11791"; a="105616971"
-X-IronPort-AV: E=Sophos;i="6.23,244,1770624000"; d="scan'208";a="105616971"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 May 2026 01:48:02 -0700
-X-CSE-ConnectionGUID: uHruN/VeQzOIRH3hWUUgqA==
-X-CSE-MsgGUID: t4/WANQSS1u94UMjDolJkQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,244,1770624000"; d="scan'208";a="239089153"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
- by orviesa006.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 May 2026 01:48:03 -0700
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Wed, 20 May 2026 01:48:02 -0700
-Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Wed, 20 May 2026 01:48:02 -0700
-Received: from DM5PR21CU001.outbound.protection.outlook.com (52.101.62.43) by
- edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Wed, 20 May 2026 01:48:01 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZzfRO+RNElUT90TsXXmlDfHpBtSt6JOhjldTRss9/xNtAtZQ5I+EIqvYvteRWGAvc6O+Kj8SBjhtHD4heKydxwSdjEQ6ShyEQxRL5K6l2lSq7PZIFzE4C3u9HHEerkxfpswxRTYJGfykQp538Njby/DBKAtZGUdUyywunJ+rQM77UVXTMLo0JI3rbJgttrIAT59Zvl5Rlban4Mq1vJALSxcyVCFz5V/P/uNlCsA7pLZIFo/mkxOLkAVn8f3v16KYevkVPjzrJAJfxgCl8iNAl8yXRKlnKzxfRxm8AFiG9nRXhWpo/1P+iJE1Hgg8QxjI3sPXF1f0urZ2BaMnubeGUA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TSWNXVHaHcdO6H+exTjzjROc0lgwaB1lKU9guOeK1Nw=;
- b=dPvjEgDKmY6frQ+MyLoyLvHN7ioF4kqPhEplfcXKUvbHirudkhYGFXE0OF1FSB8hPYcmSBdKB6LyhQJWW+YmT1QoJQ5Ha5yHEaltm/8Nj+5Z+v8l47qLqCIiczvTGR6Hazq4FGhEKJ2v7gwDDTuv/dPadG1QRm8RGdULoS1ZA3p3aIEvrj/sW4U/lBoQTuS65DfUFz3TCWjyoCK8QSv4QfMfeGVUB03iaH1Q6KAt23a6Bd/fwDj6QHCrkgnu1Xzrz5xvYJrahw54K4bDfFNcjNqUXlFlTpilhXjkx0DYvrH/KxLdxyKlcwlhvbS/OOZbt0gDfj8JLmubxQs15BaXeQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from LV8PR11MB8509.namprd11.prod.outlook.com (2603:10b6:408:1e6::15)
- by CY8PR11MB7729.namprd11.prod.outlook.com (2603:10b6:930:70::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.21; Wed, 20 May
- 2026 08:47:59 +0000
-Received: from LV8PR11MB8509.namprd11.prod.outlook.com
- ([fe80::f5bd:4dde:4f2f:20b7]) by LV8PR11MB8509.namprd11.prod.outlook.com
- ([fe80::f5bd:4dde:4f2f:20b7%5]) with mapi id 15.21.0025.022; Wed, 20 May 2026
- 08:47:58 +0000
-Message-ID: <053b39b1-c522-491d-a36f-aa105485f916@intel.com>
-Date: Wed, 20 May 2026 16:56:04 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 08/15] intel_iommu: Refactor PASID processing to use
- IOMMU_NO_PASID internally
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>, 
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "mst@redhat.com"
- <mst@redhat.com>, "jasowang@redhat.com" <jasowang@redhat.com>,
- "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "clement.mathieu--drif@bull.com" <clement.mathieu--drif@bull.com>, "Tian,
- Kevin" <kevin.tian@intel.com>, "Hao, Xudong" <xudong.hao@intel.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20260509040819.1044702-1-zhenzhong.duan@intel.com>
- <20260509040819.1044702-9-zhenzhong.duan@intel.com>
- <eb419b7c-8fe9-421c-b0b9-d2dd5993e6d1@intel.com>
- <IA3PR11MB9136FA1C2BD60E9A028FC71692002@IA3PR11MB9136.namprd11.prod.outlook.com>
-Content-Language: en-US
-From: Yi Liu <yi.l.liu@intel.com>
-In-Reply-To: <IA3PR11MB9136FA1C2BD60E9A028FC71692002@IA3PR11MB9136.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SI2PR04CA0007.apcprd04.prod.outlook.com
- (2603:1096:4:197::19) To LV8PR11MB8509.namprd11.prod.outlook.com
- (2603:10b6:408:1e6::15)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wPccJ-0008Cd-Fv
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 04:49:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779266965;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=r9dG+XdyiWuOmAaN+EbNOJQCV8HWFrfD0lm7Tq9Vpak=;
+ b=J0xfeCOxcz5UvCf1GxpPhJdlJD1u+scZh5VIQofTDej+MFFdRKhTReOJmGopj0iF3L/irn
+ NVnZPXNHMBEuCapzLD5R+ZKpbc4x/YFu84eWGyeJyDs8awtaCjDFv58k0yjJuoeNhOhF5W
+ xw+6nPSGCIgSKchRXkvq+pp92iq/XJc=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-591-oD82037SPaezCvhIlawUeA-1; Wed, 20 May 2026 04:49:23 -0400
+X-MC-Unique: oD82037SPaezCvhIlawUeA-1
+X-Mimecast-MFC-AGG-ID: oD82037SPaezCvhIlawUeA_1779266962
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-45e55c44ac1so3707789f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 01:49:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1779266962; x=1779871762; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=r9dG+XdyiWuOmAaN+EbNOJQCV8HWFrfD0lm7Tq9Vpak=;
+ b=J/gStiBuk6OXgm7mwhl1fp3sPwpEl9iAGLlhbjYWMl0Mbnk0CT8ALUj8KICsm633BZ
+ wi49M+Q+V5VCocXgVuVkPUhNfe6ucoJl4VCB7lpsHrkRiSkGTzNYciar+gA/UPjMPI6J
+ xrJQm0abu1Qwz8lryVKeZoZuWapcCceHqEkWKLqqZLs1+Q+WOzPEvQ6WYaIa06pKlRFn
+ Zrgi0AzRRVobjETdJHUmxCCzr7mTC5mDtGalNKMUVL5yj7yoJ0WPXCo8UnVAKDdnaRxB
+ yBeT/GJsjyYboLK0e3GDRsz3i3Jw3nQtgmTVi7s5/jVHN6llsmg/L3/nNwLSp/WdZy22
+ ZCmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779266962; x=1779871762;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=r9dG+XdyiWuOmAaN+EbNOJQCV8HWFrfD0lm7Tq9Vpak=;
+ b=WzhZAwimijnsH7/ou4HBp4kd8xp1TsHSm4l9MG+XpxKqInlUO9JNZf9ktNspw0pARP
+ JX9Et+sUqqKFXqOzolLejxl95uQS+lnJTpXXNClClBIvgk7Ed9XE/tj4cXraOwYn+FNu
+ IfOhOlu2cnvk6RGM/oUY+qx/73yDQ5BHEjAO6iL95Txt2o+BiiysSYTSYAimbyCmQ5nL
+ kG/JbRLcijqWuU48muSHLa8sqXUTlWjzGOnIIXre4eAI1cMfZ3NKoUaOQYZTrzUiWiE8
+ RmcxTQ8cILtZPTbwft1IdMLAbcFHuKpowiBnyuXk9IJ5IeObsPXa4CkFzG30l7L4wNBZ
+ WERg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/bnr9NwyYRRfCr5Qypk6fgDwU9Y6tJHDZE+nLCkjHASDCNNYRNrw2ndO6BE0tzVq9uOuo5RRcB/2B/@nongnu.org
+X-Gm-Message-State: AOJu0Yx4C3FQJDnzwt6B9MGQ8RmLTfjG1uaqFLhb+qyHbuB5Tz/EnpXT
+ TP6Gu/oZdyyldp5DdaZKx/NJvoEJPORkTEBht2dav7E5kEHgIMmQCyc57wC8QP2/+bRVGDf21vJ
+ dDMMRghGitx1WJXGOkgmUexCNKT59/6hnWBVLTzRmWnqKREVugcFIL33t
+X-Gm-Gg: Acq92OF9CASZAFIGFoGJ6ihbwa8DoXgpJtp18eIQoN/nG/6noTyD9FH/5lbxCE/cym1
+ PG900J5Whfi3eh2njMTfEo0clB3Dk9cjy+q/XjErMmisVwij2/CxbXLw6QURmtbf8GDW5Whut0E
+ wQuZQ9aSSktOEtO/+Bp17uDK9jsiXGVS8FDToLPWX1FCpXBCDoM/OsNliS9sv6JZSEvp5HaU/AV
+ 4cus4ljLHWu1EIaS+F5YEEaVriFy5HSlQ1X7fk/nSzr5sZV9Alti2R0lDheqrsou0eaWCzItq6T
+ uvD5tOYqEclLvUPtAKyHin2b3DVeoTAPcQ90xNJPhYInX4fLK+Rr2ViKZ3Owq7zB4VCE0/QggUL
+ K7S6dmHp7awTaa8L7vuHhTs6vfz3e1s9ow+0Gi0OYBpmUxKJ5fPidFzNC2c/6gFTVWZVXDds=
+X-Received: by 2002:a05:600c:8184:b0:488:ffb1:494c with SMTP id
+ 5b1f17b1804b1-48fe60ed790mr344987285e9.12.1779266961811; 
+ Wed, 20 May 2026 01:49:21 -0700 (PDT)
+X-Received: by 2002:a05:600c:8184:b0:488:ffb1:494c with SMTP id
+ 5b1f17b1804b1-48fe60ed790mr344986885e9.12.1779266961317; 
+ Wed, 20 May 2026 01:49:21 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48feab2896bsm129686905e9.4.2026.05.20.01.49.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 20 May 2026 01:49:20 -0700 (PDT)
+Message-ID: <7ce88fad-1277-4512-be01-4a9fafd5e3d8@redhat.com>
+Date: Wed, 20 May 2026 10:49:19 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR11MB8509:EE_|CY8PR11MB7729:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2d25ae1c-66ee-43e7-b52f-08deb64c7e26
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|42112799006|7416014|376014|1800799024|366016|4143699003|22082099003|56012099003|18002099003|11063799006;
-X-Microsoft-Antispam-Message-Info: Lmx0gldO+CYJFAIL0DALpf7wgekmnsZ4HXfD4nhJEnGy9BSCmkQ+4CyZJgBkeiwVyGTxcUyg76cweS4Iq2KqVFKl//29uPJZqlcacWiAAkF2vGmohMoDEmQW9dDynR+bq74smOyamSe9EJLHuAb362XGEAyfrtFeAh6yqcBkVfgh/bAE7ECmlMOcGcW2lcbHMbiLbHEgq0KV4loqnA3NfOpHM6UAF5p6vB1z1bgh3aQxln9QxJFXYlK9uHyHeK1rAb7XV0ahjmgdxTHfJ3Z0/so5Fvc6puRWDfs0zjuK5OSfzKcGUdq96JWuYAmHJaR2tHMBpc4PH7mYCkSzeaKW2AnuVfQmJkjR/CvprkayP41Bugja8ymteLcXCIUvWxmxqUCiUyMaitRO9rs871jp+x+acv4S5wtSkkWBpFnSgE/+Zh4/WZPO8K3go+88aS9QeP7ys7JK89ILoLMKRgZCXmANAzNxB1zeGHBpvOarEY8y29j4lF1xh+D5jRQO+Sbj+UsjKRRfi3sTQehgud3F1kAtuiJ+VxnYoIx3cOe7ExcbpniN4YoS5qNkbaDHM/FuquLZn3HsaYxnQOIQy3YINkuqmCrIo1LKFuz79YUEB0G0l35QkSJhZ3YKHmfZAEgNAultEbaFh5wexT3TeEgA6OK/U+0sNESSth8UXiWlHlyH354EBwy/Zuz7WN9voPlc
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:LV8PR11MB8509.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(42112799006)(7416014)(376014)(1800799024)(366016)(4143699003)(22082099003)(56012099003)(18002099003)(11063799006);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cWk5NmRTcGdwejZ1aDNWdnMwWUw3ZFcwWG5taENjRjVKamt6T3ZlRWRud2JK?=
- =?utf-8?B?UWZNQWJvVDJxL0cvc3RMdjNsOEhZNzlJbkRyMTdIemk2Q21QMFV4TTFEdE8z?=
- =?utf-8?B?cWlkNDBPNjc5VXZaM05xbTVUbm9hb3R0YnA0L1k4WVhCRW5hZ2ZoYy81RW9p?=
- =?utf-8?B?NkVkSnpyNGFoOWFVZnVvUHgyK2JTUjVwdHZ3cGhVd3FIdjg0a2ptNnRIL1Jo?=
- =?utf-8?B?MDliSW54U3FQRlBGNVhxYzQzYmVQQll1cnlVeTJWdC8wbXRWOEJaOXpKTFJt?=
- =?utf-8?B?MXVyWmJ2VFdtYTI4dlhWSytwT3BwcXZtUzBSeGovR040RnVEWjdhTXVBYTAw?=
- =?utf-8?B?QVI1UVJ1RGpxNmN3N29PNTlHSDVZTTlBazE3WjIxUEdJUHVyM3RHVE1jNVhC?=
- =?utf-8?B?TTVJenUzeEVlbnYxV1NQK2tiVWdYZ3pMaVA0TTBaczcxVjdvOGNBUzQvaUtQ?=
- =?utf-8?B?SXBrUkttdGV5bEE3Rm9mRjg0WUV1MHpubzFCK1pWZDJxeUkwL2xyZTRlS1pY?=
- =?utf-8?B?Qm04aUg4RUlBWG83YlNUcmRQbEp0OHJMUGh6d2U4S1lhbDNjYzdtSDdBTjVr?=
- =?utf-8?B?OGZXb3FNNlRwQVVNdWlKcFgwSTZzUGFMVXdieExXZk5rVjVWUGdaOEZLK0Vo?=
- =?utf-8?B?S2ZtaG5YUXFnUytDWUFSMldRUW5Rb1JacHc2RWdRRTRHamh5ZmtKWGRtTitF?=
- =?utf-8?B?ZVBlTlZybnpINzZSdUpUTEFhOHRObmxkMkFsVEo4NWt0bFBRZm0za1RIWUVY?=
- =?utf-8?B?YU84RXN4ZXFlNWlFaHpOUEhBZ1ZpZHhRTExhMTNJbS9BRS82TWpLSWpHeGhV?=
- =?utf-8?B?NjZ4TFZlUGU5NDBPNStoWkZxMndMYUlCb216KzFZaE81T1RlRGFxcjNNRFZJ?=
- =?utf-8?B?VzZ3aWwveGoyOVczTy95Wi9vc0NNTXBzT295SVVNWlFZVHBUVlFFTk44RzR4?=
- =?utf-8?B?Y1pRWUxzaFc0aTUvWS9ES1dSTzBVOE9CeVdWb3I2MXZUQW8wZVNUZnBpSUJm?=
- =?utf-8?B?VlcwWC9HSjNvQi80RjdhZW9hb1kxUU9UazBoZGJqYjV2SlFtbXVJZytLcTlI?=
- =?utf-8?B?RWNXNmVUeHQ5UnVNMndqWFFMWEsyTGdQQXJuRzZvT2xNWXdINzNPcjJPN2sx?=
- =?utf-8?B?QUhrY1J4QzJSOUNYd1V2UDB5cndvSXpnVCtHbzRZK3BmVFpNV3p4RWZydnpq?=
- =?utf-8?B?bHB3RlFJc1FXenY0YmhuMk9oSTluRW1Nb01TUkQxdHgydURqRkw0aU1JblZF?=
- =?utf-8?B?YjFSdXg2Qi8zWDlXQzdDdkpXT3pwY2ZCL3ZGbUVuV2FyZzU0dldISkh6cEp6?=
- =?utf-8?B?M1VlOWJKU1ZERTZlQkZGRzRjNlQ4OEhRSjdPSDZ1SEp1cTBRN3pvVU5ObXc0?=
- =?utf-8?B?WVBCYUFINnR3U3ZqZ0dzTVFBVXlhcE1JbGhQRFc1bnRQS3dWd1N0MFBVVjc0?=
- =?utf-8?B?VkZYZ2lTL3RNcU1LYjYzSWVXam1VM2RBbFB2dU1Vc1haRTVYdGcyTmlTOUxU?=
- =?utf-8?B?ZXB0QmRGRzhMQzN4SmhiaVo4MWNxakdlSURxUlBJVldmeVB5b1o2eHlyQjFE?=
- =?utf-8?B?MFZEZHcxMndjT3lacEZBME1JUVErbS9nV2MwLy9ieXQyKzRLUzlkMVNaM1k0?=
- =?utf-8?B?ajhRb01tNlAvMDlVb0dkaFZlK0JLOW81WVVETnNRZXNRRDRLYTl3SHhtV3J3?=
- =?utf-8?B?KzMyMUs0Q1dTKzV3VkFSZWt6azhtOHlnOHE3US92SndnQS9Jb0VlUU9vWmtO?=
- =?utf-8?B?ZC8zeC9xWVpPZCt2cCt3S3ZXKzBLL0tLZzNmSjRxYlFWbmY4cFVxdFpMWlJN?=
- =?utf-8?B?VHdvR0trMm1jam91bWxqc2xUMEFQaDdjaWVVSVVGZjc2RHRXOGIrbDBzdms1?=
- =?utf-8?B?TzNxTnhuUkI3aDJaTCtRS0cxUitmbEN3Q3ljbVB2UUN6Q2Y0QVJZNzRwcXlD?=
- =?utf-8?B?VElKeTVNV1pzRTdJWTFkb1J3Yk5sZnY5UTFtS29IZkdmK1dNVENHOEZCRUZ4?=
- =?utf-8?B?bzBxbnJzamt6aUVuOFZzT0NHQ21ha2FRTHZYRk9aRFF1MHUyVXNiSTMza3Fz?=
- =?utf-8?B?ZmFucjdEUDN4VjhhTjVQSy91Z3lucGdLbm1TdmxFdkYzN25mL3B6ZlFkZlFO?=
- =?utf-8?B?bjhpbkxVMVQ0MWExV21ScDA1UFpGSVlhckFpSTRoYVFsbEtNMEVBNVd5UGNt?=
- =?utf-8?B?UGI2MU91eFc4OGVWY3pSZDBYcng1SVZ6VGMwbFVFdkNSVXlHOTBNL09GZFlB?=
- =?utf-8?B?WHdHQzNneCtac01HVVI2czRyRFBrTTVCNER5Ky9lZGdieGZ5Y3Q4b2tUaUxq?=
- =?utf-8?B?VGR4NHR2K1ZQazhxUmxOWXFqSzc4YzdJbFJjMmdTUytIT1ZiNGJSUT09?=
-X-Exchange-RoutingPolicyChecked: bD+eTaG5I3CG6vNUcGXL7aI0W+ZheCk0Hac8U+O7wN9C0NlKfYleSs+Ppj5nN5jgEpN7r4TMmwRowAAZT9a51Oq46q1Ze/e4/E5vq53EErR7xlkHJ3fGRegokFPCZReVCvGNIHIP7ys9qtCOeFtenMTWGkTg+/VeyE1L68bx+1x9rJEV5otRVYBF/+VV6C86QaphNBx7606lgbF/dlizvHcIvxHCso8t/1p6XO3BTBcnxPH/x6zCqIywEYcbzXJPR0Wft+KLtPs2zoS/TuWpfN3RkALd+8gch4oVy6qMjun+TUJNivbF3fRLN1gSCS+x66OtPAcH845rRU3LY1umYQ==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2d25ae1c-66ee-43e7-b52f-08deb64c7e26
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR11MB8509.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 May 2026 08:47:58.7107 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: j6PQ5dbr0iZkK7Qmrsax9g6sqNvCKPJ8FlAZwLcU7iV9YQ/YbSEdZRYvuOW91M+YxqaBoUfplJjVzZsNEr+WSA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR11MB7729
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.7; envelope-from=yi.l.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/vfio-user: use a valid object ID for iothread
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>
+References: <20260520082459.1132051-2-berrange@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260520082459.1132051-2-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -195,168 +167,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/19/26 15:20, Duan, Zhenzhong wrote:
+On 5/20/26 10:25, Daniel P. Berrangé wrote:
+> The objectg_new_with_propv/props methods failed to validate that the
+> QOM "id" was well formed. This allowed the vfio-user code to use an
+> invalid ID of "VFIO user" (space is not permitted) in its internal
+> code.
 > 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   hw/vfio-user/proxy.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
->> -----Original Message-----
->> From: Liu, Yi L <yi.l.liu@intel.com>
->> Subject: Re: [PATCH v5 08/15] intel_iommu: Refactor PASID processing to use
->> IOMMU_NO_PASID internally
->>
->> On 5/9/26 12:08, Zhenzhong Duan wrote:
->>> The PCI subsystem uses PCI_NO_PASID for requests-without-PASID, but VT-d
->>> uses IOMMU_NO_PASID internally. This leads to conversion and checking code
->>
->> s/VT-d uses IOMMU_NO_PASID internally/VT-d emulation uses
->> IOMMU_NO_PASID
->> internally (ecap.RPS==0)/
-> 
-> Will do.
-> 
->>
->>> between PCI_NO_PASID and IOMMU_NO_PASID throughout the
->> implementation.
->>>
->>> Refactor to use IOMMU PASID consistently within Intel IOMMU by storing
->>> IOMMU PASID value in vtd_as->pasid. After this change, PCI_NO_PASID is
->>> only used at three boundary points:
->>
->> a typo or the third boundary is missed?
-> 
-> Section 2 contains two points:
-> 
-> 1. Convert when notifying UNMAP events via memory_region_notify_iommu()
-> 2. Convert when returning IOMMUTLBEntry in vtd_iommu_translate()
+> diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
+> index 314dfd23d8..3d0d72e8b7 100644
+> --- a/hw/vfio-user/proxy.c
+> +++ b/hw/vfio-user/proxy.c
+> @@ -933,7 +933,7 @@ VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp)
+>       qemu_cond_init(&proxy->close_cv);
+>   
+>       if (vfio_user_iothread == NULL) {
+> -        vfio_user_iothread = iothread_create("VFIO user", errp);
+> +        vfio_user_iothread = iothread_create("vfio-user", errp);
+>       }
+>   
+>       proxy->ctx = iothread_get_aio_context(vfio_user_iothread);
 
-got it.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
->>
->>>
->>> 1. PCI_NO_PASID -> IOMMU_NO_PASID: Convert PCI PASID to IOMMU PASID in
->>>      vtd_find_add_as() and cache in vtd_as->pasid.
->>> 2. IOMMU_NO_PASID -> PCI_NO_PASID: Convert when notifying UNMAP events
->>>      via memory_region_notify_iommu() and returning IOMMUTLBEntry in
->>>      vtd_iommu_translate().
->>>
->>> This eliminates conversion/checks in PASID table lookups, simplifies
->>> invalidation logic with consistent PASID values, and improves code
->>> readability. The PCI subsystem interface remains unchanged to maintain
->>> compatibility with other IOMMU implementations that may not use PASID 0
->>> for requests-without-PASID.
->>>
->>> Suggested-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
->>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
->>> ---
->>>    include/system/memory.h     |   2 +-
->>>    hw/i386/intel_iommu.c       | 164 +++++++++++++++++-------------------
->>>    hw/i386/intel_iommu_accel.c |   2 +-
->>>    3 files changed, 80 insertions(+), 88 deletions(-)
->>>
->>> diff --git a/include/system/memory.h b/include/system/memory.h
->>> index 1417132f6d..1edb38b07d 100644
->>> --- a/include/system/memory.h
->>> +++ b/include/system/memory.h
->>> @@ -150,7 +150,7 @@ struct IOMMUTLBEntry {
->>>        hwaddr           translated_addr;
->>>        hwaddr           addr_mask;  /* 0xfff = 4k translation */
->>>        IOMMUAccessFlags perm;
->>> -    uint32_t         pasid;
->>> +    uint32_t         pasid; /* PCI pasid */
->>>    };
->>>
->>>    /*
->>> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
->>> index 5e5dcdc274..b50c556c40 100644
->>> --- a/hw/i386/intel_iommu.c
->>> +++ b/hw/i386/intel_iommu.c
->>> @@ -938,12 +938,8 @@ static int
->> vtd_get_pe_from_pasid_table(IntelIOMMUState *s,
->>>    int vtd_ce_get_pasid_entry(IntelIOMMUState *s, VTDContextEntry *ce,
->>>                               VTDPASIDEntry *pe, uint32_t pasid)
->>>    {
->>> -    dma_addr_t pasid_dir_base;
->>> +    dma_addr_t pasid_dir_base = VTD_CE_GET_PASID_DIR_TABLE(ce);
->>>
->>> -    if (pasid == PCI_NO_PASID) {
->>> -        pasid = IOMMU_NO_PASID;
->>> -    }
->>> -    pasid_dir_base = VTD_CE_GET_PASID_DIR_TABLE(ce);
->>>        return vtd_get_pe_from_pasid_table(s, pasid_dir_base, pasid, pe);
->>>    }
->>>
->>> @@ -953,15 +949,10 @@ static int vtd_ce_get_pasid_fpd(IntelIOMMUState *s,
->>>                                    uint32_t pasid)
->>>    {
->>>        int ret;
->>> -    dma_addr_t pasid_dir_base;
->>> +    dma_addr_t pasid_dir_base = VTD_CE_GET_PASID_DIR_TABLE(ce);
->>>        VTDPASIDDirEntry pdire;
->>>        VTDPASIDEntry pe;
->>>
->>> -    if (pasid == PCI_NO_PASID) {
->>> -        pasid = IOMMU_NO_PASID;
->>> -    }
->>> -    pasid_dir_base = VTD_CE_GET_PASID_DIR_TABLE(ce);
->>> -
->>>        /*
->>>         * No present bit check since fpd is meaningful even
->>>         * if the present bit is clear.
->>> @@ -1750,7 +1741,7 @@ static bool
->> vtd_switch_address_space(VTDAddressSpace *as)
->>>             *
->>>             * Need to disable ir for as with PASID.
->>>             */
->>> -        if (as->pasid != PCI_NO_PASID) {
->>> +        if (as->pasid != IOMMU_NO_PASID) {
->>>                memory_region_set_enabled(&as->iommu_ir, false);
->>>            } else {
->>>                memory_region_set_enabled(&as->iommu_ir, true);
->>> @@ -1780,7 +1771,7 @@ static bool
->> vtd_switch_address_space(VTDAddressSpace *as)
->>>         * We enable per as memory region (iommu_ir_fault) for catching
->>>         * the translation for interrupt range through PASID + PT.
->>>         */
->>> -    if (pt && as->pasid != PCI_NO_PASID) {
->>> +    if (pt && as->pasid != IOMMU_NO_PASID) {
->>>            memory_region_set_enabled(&as->iommu_ir_fault, true);
->>>        } else {
->>>            memory_region_set_enabled(&as->iommu_ir_fault, false);
->>> @@ -1892,7 +1883,7 @@ static VTDAddressSpace
->> *vtd_get_as_by_sid_and_pasid(IntelIOMMUState *s,
->>>
->>>    VTDAddressSpace *vtd_get_as_by_sid(IntelIOMMUState *s, uint16_t sid)
->>>    {
->>> -    return vtd_get_as_by_sid_and_pasid(s, sid, PCI_NO_PASID);
->>> +    return vtd_get_as_by_sid_and_pasid(s, sid, IOMMU_NO_PASID);
->>>    }
->>>
->>>    static void vtd_pt_enable_fast_path(IntelIOMMUState *s, uint16_t source_id)
->>> @@ -2121,10 +2112,6 @@ static bool
->> vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
->>>
->>>        vtd_iommu_lock(s);
->>>
->>> -    if (pasid == PCI_NO_PASID && s->root_scalable) {
->>> -        pasid = IOMMU_NO_PASID;
->>> -    }
->>> -
->>>        /* Try to fetch pte from IOTLB */
->>>        iotlb_entry = vtd_lookup_iotlb(s, source_id, pasid, addr);
->>>        if (iotlb_entry) {
->>> @@ -2235,7 +2222,7 @@ static bool
->> vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
->>>        if (ret_fr) {
->>>            if (!vtd_is_recoverable_fault(-ret_fr, iommu_idx)) {
->>>                vtd_report_fault(s, -ret_fr, is_fpd_set, source_id,
->>> -                            addr, is_write, pasid != PCI_NO_PASID, pasid);
->>> +                            addr, is_write, s->root_scalable, pasid);
->>
->> a typo here? s->root_scalable should be "pasid != IOMMU_NO_PASID"?
-> 
-> This is intentional.
-> pasid = vtd_as->pasid = iommu_pasid, so it never equals PCI_NO_PASID now.
+Thanks,
 
-not quite get. It can still possibly be IOMMU_NO_PASID, right? If not,
-this looks to have introduced functional change, which should not be
-expected by this patch.
+C.
+
 
