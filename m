@@ -4,73 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84658CD5BAA
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 19:24:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBEDECD5BA4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 19:24:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPmWA-00077h-Rg; Wed, 20 May 2026 15:23:47 -0400
+	id 1wPmWi-0007LT-Sx; Wed, 20 May 2026 15:24:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmW9-00077U-7x
- for qemu-devel@nongnu.org; Wed, 20 May 2026 15:23:45 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmWb-0007H4-Aa
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 15:24:13 -0400
 Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmW6-0001fp-Sc
- for qemu-devel@nongnu.org; Wed, 20 May 2026 15:23:44 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmWZ-0001oU-AL
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 15:24:13 -0400
 Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-45e6a4d0be0so2251969f8f.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 12:23:42 -0700 (PDT)
+ ffacd0b85a97d-44e1860558fso3355679f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 12:24:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779305021; x=1779909821; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=3aKzUQBJ++2IalTesb088AmEVGKGkK8xIJ0h17wPv1s=;
- b=iwpETKeyMT+WzCFoE8ACuFZmzkLunM9ITMJ49zBIxTW1fZe/sc2Sh9fRkqHhcZRBBx
- R7nIxBU+/5Rq3Arshe3GeHb1xMB6pKoZrZChiKTZMca35brT2hcNzS/b3MKZxIrpaohH
- 798yAbjaxhgPSLlHeUcm1oSv2fvyIKf7CpKJ8MOmKq8mMxp33iVhz6uwlNujxVseZL1O
- rze8LsrZBnCybes2N8kh3PKtM8RAdz4XNI6eT2/2K7wqwFL8aVdEgZ3VwR53cwmcT7s7
- 6DHyHcX55z+V9MDwqacbpQfPb15LMTAKkGzfL8P7KaA3LQv5XBiGzT7ghpWRVsMSzxhM
- i6Uw==
+ d=linaro.org; s=google; t=1779305049; x=1779909849; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=m4CFVBuY5FpXniBNOFBvMmlKaStuGCYzJte6nly+p94=;
+ b=WSj/ixCmatIib9sUkwwFhDM31X9SSDRGDaKFJDHhW9495xZAyifrIVsT+9vRhTf46I
+ FhhxzBCRRuqBSt7pWhffOmPXO7g5DXuBSRfcd1bDYu0NenickSwitJ7GY4Tg0mk4VHli
+ +fO4bc8HoQYHRiuuX1VqW4VwbQKOn/A4RFWp1E6MMwkxO5+QIrm0lqMo4eIe0Fy5CC69
+ XJZOgfjvLSzlui4UsQIDbyOZ1CAcOw/DzAWjShnsM2y9PgeecKoPAwodFTeZFok5vpSw
+ l1H32OCoX+hRFt3KYBCu5xVya04g8KWB3THz1prvdVn2JKjDsGxPSeLRwJG6cubOTeRt
+ qv3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779305021; x=1779909821;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3aKzUQBJ++2IalTesb088AmEVGKGkK8xIJ0h17wPv1s=;
- b=oMymFatz9RbjDpDHGUKMYTQY8ndHykwPAbKHQR3e0MucWSCo6ciHb9rSIi2BHPDFIQ
- 81uG3klR7oxb9ZPAECyK2ES26CW6jCmMzZk2kQtH9dagnfUxyMmEaTZB7T+VbA/vVbjm
- K3wSt2ZfTLbrCMU+tntrptdsUrJmfM+hzWsF7SZEYA8hwLRuD2ItunrBVctP3JYHuocq
- axGciKeZtpk6YK6hvhl19x3RMysB89DnBx4xEECiFNt+gnxBm+e+fnhGW1p3OzJScK3t
- jh5ViO2TNrbDPLY/1dWrbHufUqEgQMTBDHUHEpYn6a8HmGuJX5pJK/M9Hlhd1IP0ch6Z
- 9pEg==
-X-Gm-Message-State: AOJu0Yw3hz5KDBoxPN9WFXdzpBQhSHTATE4yAbVDpL71zWJKbgsH4KhL
- M+R+YMf6+Kz1J52VMosaIL6ZXgxe/RowJqcf9w0GZoIXzOtgQCShISM6WtlmuKy6XEMvAvVOP66
- nY/s1lPY=
-X-Gm-Gg: Acq92OF5XB2ILfhA7XxAuhFBiyNHEgCxJBIjcB/nzHgJJWqK7qFQs36fFQ6Kzw8n+HE
- eL6RNqd88S7orlqKkejbgbGBANee7R7PRQ5YywXpb2/sy+tPUsYsx43Bf5139FkUW926BPq2nKY
- 72PphAzg6oBM588BK896ZP2WRbshKZKoAHC2JGvsXQlV6UT3toN1gXa9Jl004s+eiICD/rq5850
- 6h1emcpFglR0GBBLfQgu6lgMPJpmVqFjpurBmDUU4Sk0iNTJ8wXBv7cX50gNhx0x+NkyG5aNEup
- F9+mAEzFEgXYDU2vnwrifOy92z3xKslNGOi8RaGtZnQaSRRHUWRF5OXGu8LUuyVogwDHL3IoLIH
- 91nMIRopVKKdwHJ++uWEg8DU2J1Nbm6ZgbnBnAh3RJP9DVWEWEFrtq9KQEHrgc2tfTFe9vTLVFe
- fcSlHRdR3GKp8wee/oSHs6ahcYsOXRGff54aDZXJXYSBCbFhqwYJ2D9MFKQNmg4MtGZs5IW6gJ
-X-Received: by 2002:a5d:5648:0:b0:45e:6594:261a with SMTP id
- ffacd0b85a97d-45e659427c8mr25594879f8f.35.1779305020579; 
- Wed, 20 May 2026 12:23:40 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779305049; x=1779909849;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=m4CFVBuY5FpXniBNOFBvMmlKaStuGCYzJte6nly+p94=;
+ b=F+rMQaQ0yYJuEbcGKxubK+XE5iorFjB5gF5lFTBgdVr95oOlDNQGTlDCjanF9lVGdt
+ KKSw2W4jpO5dRGlzIVwy5qWnIbqAxJPro2vrue0+qTSe4r1Dnoy8X7oC0fuXUP7jhndm
+ xqbBaEOTKpMIick92XTVWic/Bz3UhJF2/zs50f/W8Ij9muZde6+CcEdA6z5BWRBW4qkJ
+ 8xsmXpNgiSDvDB9WzpcdHQguy26CfdZNabpUXXTDSnte14hx7qDw7PUl5mFGGzQTvfLX
+ vaUSGDf0JHvdw77cAkqr4PzlJ8R5csOTlkZZ4P64L+pQWl6xz1Fhu4xBGIetFAGX+STn
+ Gwcw==
+X-Gm-Message-State: AOJu0YwbQbvTR9wkd/4cIdVeRBxRLV+RTHZlB1a4GqD5vwKttrOVPe18
+ txQgFOrPG/8fWkQ6410dqej8RgmQtu0H/s0uLQyfp6J3hwnkHKhrFWCNC2Q9e91VlntEs/hUGun
+ 4sPwaCQc=
+X-Gm-Gg: Acq92OFpDojDGD3jISHOiaDzMCCO6SHSVwjNxwr+G3xlvnFOqKSaAhg/KSSnIeAbCEp
+ J0p5eWzDxy8xpzVsDolTn88XNoQKK4KM0gYBKw62mDTPUNrC2GQKvlFA91EErmbaWm6uDqvOJfv
+ fxRxHifEfAaYyraCduT4XZlSg8IiRRxR+m051KmhBVVJ2b10+mlZ4+grEzgwVDPIVRG2aaz0I7N
+ o3AnX8wq6BbEbCyNJ9trp2HyRpbD5QobissNhYTu+3l6UjDD7oMIGm0Ecx347XiEOFDcMBLDkA5
+ 1H2IueZ7yWR+6bJwON7Dg1AfHhfeQQhMfXZR9BGuSQlIUhRBVWe5p8ZLuL2BAJsu113yrbL/7rk
+ YMH99jU+WMLCSg8rc6k5jZz+whHDEGew4oUEeL7vDDtzJVDt+nL0Qs8nacP+nm/Bg5u5WZ8+vdY
+ x9XpeiL0+G5Svz4COH+/PuDMlNo40oZ4d7pe7vEkRFb6P242YNqpQ2plJg4sYzyVUEuJx3gEXs/
+ 5rGpR9+5kA=
+X-Received: by 2002:a5d:6311:0:b0:45e:73a5:e7f4 with SMTP id
+ ffacd0b85a97d-45e73a61c59mr20779238f8f.37.1779305049040; 
+ Wed, 20 May 2026 12:24:09 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45d9ec39806sm55087388f8f.9.2026.05.20.12.23.39
+ ffacd0b85a97d-45da0fe2464sm57095865f8f.32.2026.05.20.12.24.08
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 20 May 2026 12:23:39 -0700 (PDT)
+ Wed, 20 May 2026 12:24:08 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/33] MIPS patches for 2026-05-20
-Date: Wed, 20 May 2026 21:23:05 +0200
-Message-ID: <20260520192338.40036-1-philmd@linaro.org>
+Subject: [PULL 04/33] buildsys: Remove support for MIPS hosts
+Date: Wed, 20 May 2026 21:23:09 +0200
+Message-ID: <20260520192338.40036-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260520192338.40036-1-philmd@linaro.org>
+References: <20260520192338.40036-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
  envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
@@ -96,160 +99,205 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit e89049b3ba5f1f0468bc0d294173345597514a1b:
+MIPS host support is deprecated since commit 269ffaabc84
+("buildsys: Remove support for 32-bit MIPS hosts"). Time
+to remove.
 
-  Merge tag 'for-upstream' of https://repo.or.cz/qemu/kevin into staging (2026-05-19 15:23:10 -0400)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20260511135312.38705-3-philmd@linaro.org>
+---
+ docs/about/deprecated.rst       |  8 --------
+ docs/about/removed-features.rst |  6 ++++++
+ configure                       | 19 -------------------
+ meson.build                     | 10 +---------
+ include/qemu/timer.h            | 30 ------------------------------
+ util/cacheflush.c               | 16 ----------------
+ 6 files changed, 7 insertions(+), 82 deletions(-)
 
-are available in the Git repository at:
-
-  https://github.com/philmd/qemu.git tags/mips-20260520
-
-for you to fetch changes up to 2f3eee6bda6190d3acacfeb11fd1b723e08c5a2c:
-
-  target/mips: add Octeon LA* atomic instructions (2026-05-20 21:22:56 +0200)
-
-----------------------------------------------------------------
-MIPS patches queue
-
-- Remove support for MIPS host
-- Avoid Coverity complaint in gic_write (CID 1547545)
-- Add various Octeon integer, multiplier, indexed memory, atomic instructions
-----------------------------------------------------------------
-
-James Hilliard (23):
-  linux-user/mips: implement sysmips(MIPS_FLUSH_CACHE)
-  linux-user/mips: implement sysmips(MIPS_ATOMIC_SET)
-  linux-user/mips, target/mips: honor MIPS_FIXADE for unaligned accesses
-  target/mips: expose Octeon68XX floating-point support
-  tests/tcg/mips: add Octeon instruction smoke test
-  target/mips: fix Octeon arithmetic destination handling
-  target/mips: drop Octeon zero-register fast paths
-  target/mips: split Octeon SEQ/SNE decode
-  target/mips: split Octeon SEQI/SNEI decode
-  target/mips: add Octeon LBX instruction
-  target/mips: add Octeon LHUX instruction
-  target/mips: add Octeon LWUX instruction
-  target/mips: add Octeon SAA instruction
-  target/mips: add Octeon SAAD instruction
-  target/mips: add Octeon ZCB and ZCBT instructions
-  target/mips: add Octeon multiplier state
-  target/mips: add Octeon MTM instructions
-  target/mips: add Octeon MTP instructions
-  target/mips: add Octeon VMULU instruction
-  target/mips: add Octeon VMM0 instruction
-  target/mips: add Octeon V3MULU instruction
-  target/mips: add Octeon QMAC instructions
-  target/mips: add Octeon LA* atomic instructions
-
-Peter Maydell (1):
-  hw/intc/mips_gic: Avoid Coverity complaint in VP writes
-
-Philippe Mathieu-Daudé (8):
-  docker: Remove LegacyKeyValueFormat warnings in non-generated files
-  docker: Remove LegacyKeyValueFormat warnings in generated files
-  buildsys: Remove MIPS cross containers
-  buildsys: Remove support for MIPS hosts
-  hw/mips: Include missing 'cpu.h' header
-  buildsys: Remove MIPS KVM
-  buildsys: Remove MIPS TCG backend
-  tcg: Introduce tcg_zero_i128()
-
-Richard Henderson (1):
-  tcg: Introduce tcg_gen_addN_i64
-
- MAINTAINERS                                   |   17 +-
- docs/about/deprecated.rst                     |    8 -
- docs/about/removed-features.rst               |    6 +
- docs/system/target-mips.rst                   |    2 -
- configure                                     |   20 -
- meson.build                                   |   12 +-
- include/qemu/timer.h                          |   30 -
- include/tcg/tcg-op-common.h                   |    3 +
- include/user/thunk.h                          |    2 +-
- linux-user/include/host/mips64/host-signal.h  |   75 -
- linux-user/mips/target_syscall.h              |    3 +
- linux-user/mips64/target_syscall.h            |    3 +
- target/mips/cpu.h                             |   16 +
- target/mips/kvm_mips.h                        |   28 -
- target/mips/tcg/translate.h                   |    2 +
- tcg/mips64/tcg-target-con-set.h               |   30 -
- tcg/mips64/tcg-target-con-str.h               |   20 -
- tcg/mips64/tcg-target-has.h                   |   69 -
- tcg/mips64/tcg-target-mo.h                    |   13 -
- tcg/mips64/tcg-target.h                       |   75 -
- tcg/mips64/tcg-target-opc.h.inc               |    1 -
- target/mips/tcg/octeon.decode                 |   54 +-
- hw/intc/mips_gic.c                            |   21 +-
- hw/mips/loongson3_virt.c                      |   67 +-
- hw/mips/malta.c                               |    1 -
- hw/mips/mips_int.c                            |    7 +-
- linux-user/mips/cpu_loop.c                    |    5 +
- linux-user/mmap.c                             |    2 +-
- linux-user/syscall.c                          |   56 +
- target/arm/tcg/translate-a64.c                |    5 +-
- target/mips/cpu.c                             |   15 +-
- target/mips/kvm.c                             | 1283 --------
- target/mips/system/cp0_timer.c                |   12 +-
- target/mips/system/machine.c                  |   33 +
- target/mips/system/physaddr.c                 |    1 -
- target/mips/tcg/octeon_translate.c            |  380 ++-
- target/mips/tcg/translate.c                   |   24 +-
- tcg/tcg-op.c                                  |   52 +
- tests/tcg/mips/user/isa/octeon/octeon-insns.c |  204 ++
- util/cacheflush.c                             |   16 -
- target/mips/cpu-defs.c.inc                    |   10 +-
- tcg/mips64/tcg-target.c.inc                   | 2605 -----------------
- tests/lcitool/refresh                         |   24 +-
- tests/docker/dockerfiles/alpine.docker        |    2 +-
- tests/docker/dockerfiles/centos9.docker       |    2 +-
- .../dockerfiles/debian-all-test-cross.docker  |   10 +-
- .../dockerfiles/debian-amd64-cross.docker     |    2 +-
- .../dockerfiles/debian-arm64-cross.docker     |    2 +-
- .../dockerfiles/debian-armhf-cross.docker     |    2 +-
- .../dockerfiles/debian-hexagon-cross.docker   |   14 +-
- .../dockerfiles/debian-i686-cross.docker      |    2 +-
- .../dockerfiles/debian-loongarch-cross.docker |   10 +-
- .../dockerfiles/debian-mips64el-cross.docker  |  186 --
- .../dockerfiles/debian-mipsel-cross.docker    |  186 --
- .../dockerfiles/debian-ppc64el-cross.docker   |    2 +-
- .../dockerfiles/debian-riscv64-cross.docker   |    2 +-
- .../dockerfiles/debian-s390x-cross.docker     |    2 +-
- .../dockerfiles/debian-tricore-cross.docker   |    6 +-
- .../dockerfiles/debian-xtensa-cross.docker    |    8 +-
- tests/docker/dockerfiles/debian.docker        |    2 +-
- .../dockerfiles/fedora-rust-nightly.docker    |    2 +-
- .../dockerfiles/fedora-win64-cross.docker     |    2 +-
- tests/docker/dockerfiles/fedora.docker        |    2 +-
- tests/docker/dockerfiles/opensuse-leap.docker |    2 +-
- tests/docker/dockerfiles/python.docker        |    5 +-
- .gitlab-ci.d/container-cross.yml              |    6 -
- .gitlab-ci.d/containers.yml                   |    1 -
- .gitlab-ci.d/crossbuilds.yml                  |   22 -
- common-user/host/mips64/safe-syscall.inc.S    |  114 -
- scripts/coverity-scan/coverity-scan.docker    |   12 +-
- scripts/git.orderfile                         |    4 +
- target/mips/meson.build                       |    6 +-
- tests/docker/Makefile.include                 |    1 -
- tests/tcg/mips64/Makefile.target              |   20 +
- tests/tcg/mips64el/Makefile.target            |    8 +
- 75 files changed, 924 insertions(+), 5035 deletions(-)
- delete mode 100644 linux-user/include/host/mips64/host-signal.h
- delete mode 100644 target/mips/kvm_mips.h
- delete mode 100644 tcg/mips64/tcg-target-con-set.h
- delete mode 100644 tcg/mips64/tcg-target-con-str.h
- delete mode 100644 tcg/mips64/tcg-target-has.h
- delete mode 100644 tcg/mips64/tcg-target-mo.h
- delete mode 100644 tcg/mips64/tcg-target.h
- delete mode 100644 tcg/mips64/tcg-target-opc.h.inc
- delete mode 100644 target/mips/kvm.c
- create mode 100644 tests/tcg/mips/user/isa/octeon/octeon-insns.c
- delete mode 100644 tcg/mips64/tcg-target.c.inc
- delete mode 100644 tests/docker/dockerfiles/debian-mips64el-cross.docker
- delete mode 100644 tests/docker/dockerfiles/debian-mipsel-cross.docker
- delete mode 100644 common-user/host/mips64/safe-syscall.inc.S
- create mode 100644 tests/tcg/mips64/Makefile.target
- create mode 100644 tests/tcg/mips64el/Makefile.target
-
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index e64328c5b2b..95bf7613295 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -177,14 +177,6 @@ The ``info capture`` command is deprecated and will be removed in a future relea
+ Host Architectures
+ ------------------
+ 
+-MIPS (since 10.2)
+-'''''''''''''''''
+-
+-MIPS is not supported by Debian 13 ("Trixie") and newer, making it hard to
+-maintain our cross-compilation CI tests of the architecture. As we no longer
+-have CI coverage support may bitrot away before the deprecation process
+-completes.
+-
+ TCG Plugin support not enabled by default with TCI (since 9.2)
+ ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index 1ee4ab07944..2021e85f56a 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -938,6 +938,12 @@ From 10.0, QEMU has disabled configuration of 64-bit guests on 32-bit hosts.
+ Debian 12 "Bookworm" removed support for 32-bit MIPS, making it hard to
+ maintain our cross-compilation CI tests of the architecture.
+ 
++64-bit MIPS (removed in 11.1)
++'''''''''''''''''''''''''''''
++
++Debian 13 "Trixie" removed support for MIPS, making it hard to maintain our
++cross-compilation CI tests of the architecture.
++
+ 32-bit PPC (removed in 10.2)
+ ''''''''''''''''''''''''''''
+ 
+diff --git a/configure b/configure
+index b6dd797de5b..e138d83bc9f 100755
+--- a/configure
++++ b/configure
+@@ -399,8 +399,6 @@ elif check_define _ARCH_PPC64 ; then
+   else
+     cpu="ppc64"
+   fi
+-elif check_define __mips64 ; then
+-  cpu="mips64"
+ elif check_define __s390__ ; then
+   if check_define __s390x__ ; then
+     cpu="s390x"
+@@ -446,12 +444,6 @@ case "$cpu" in
+     linux_arch=loongarch
+     ;;
+ 
+-  mips64*|mipsisa64*)
+-    cpu=mips64
+-    host_arch=mips64
+-    linux_arch=mips
+-    ;;
+-
+   ppc64)
+     host_arch=ppc64
+     linux_arch=powerpc
+@@ -1244,11 +1236,6 @@ EOF
+         rust_osvariant=${rust_osvariant}eabi
+       fi
+       ;;
+-
+-    mips64)
+-      # e.g. mips64-unknown-linux-gnuabi64
+-      rust_osvariant=${rust_osvariant}abi64
+-      ;;
+     esac
+     ;;
+ 
+@@ -1281,12 +1268,6 @@ EOF
+     test "$rust_arch" = arm && test "$rust_os" != linux && rust_arch=armv7
+     ;;
+ 
+-  mips)
+-    # preserve ISA version (mipsisa64r6 etc.) and include endianness
+-    rust_arch=${raw_cpu%el}
+-    test "$bigendian" = no && rust_arch=${rust_arch}el
+-    ;;
+-
+   riscv64)
+     # e.g. riscv64gc-unknown-linux-gnu, but riscv64-linux-android
+     test "$android" = no && rust_arch=${rust_arch}gc
+diff --git a/meson.build b/meson.build
+index 70613bf4afc..fe5211b2122 100644
+--- a/meson.build
++++ b/meson.build
+@@ -55,7 +55,7 @@ qapi_trace_events = []
+ bsd_oses = ['gnu/kfreebsd', 'freebsd', 'netbsd', 'openbsd', 'dragonfly', 'darwin']
+ supported_oses = ['windows', 'freebsd', 'netbsd', 'openbsd', 'darwin', 'sunos', 'linux', 'emscripten']
+ supported_cpus = ['ppc64', 's390x', 'riscv64', 'x86_64',
+-  'aarch64', 'loongarch64', 'mips64', 'sparc64', 'wasm64']
++  'aarch64', 'loongarch64', 'sparc64', 'wasm64']
+ 
+ cpu = host_machine.cpu_family()
+ 
+@@ -5013,14 +5013,6 @@ if host_arch == 'unknown'
+     message('configure has succeeded and you can continue to build, but')
+     message('QEMU will use a slow interpreter to emulate the target CPU.')
+   endif
+-elif host_arch == 'mips'
+-  message()
+-  warning('DEPRECATED HOST CPU')
+-  message()
+-  message('Support for CPU host architecture ' + cpu + ' is going to be')
+-  message('dropped as soon as the QEMU project stops supporting Debian 12')
+-  message('("Bookworm"). Going forward, the QEMU project will not guarantee')
+-  message('that QEMU will compile or work on this host CPU.')
+ endif
+ 
+ if not supported_oses.contains(host_os)
+diff --git a/include/qemu/timer.h b/include/qemu/timer.h
+index b931181f53d..ec03635dd34 100644
+--- a/include/qemu/timer.h
++++ b/include/qemu/timer.h
+@@ -922,36 +922,6 @@ static inline int64_t cpu_get_host_ticks (void)
+ #endif
+ }
+ 
+-#elif defined(__mips__) && \
+-    ((defined(__mips_isa_rev) && __mips_isa_rev >= 2) || defined(__linux__))
+-/*
+- * binutils wants to use rdhwr only on mips32r2
+- * but as linux kernel emulate it, it's fine
+- * to use it.
+- *
+- */
+-#define MIPS_RDHWR(rd, value) {                         \
+-        __asm__ __volatile__ (".set   push\n\t"         \
+-                              ".set mips32r2\n\t"       \
+-                              "rdhwr  %0, "rd"\n\t"     \
+-                              ".set   pop"              \
+-                              : "=r" (value));          \
+-    }
+-
+-static inline int64_t cpu_get_host_ticks(void)
+-{
+-    /* On kernels >= 2.6.25 rdhwr <reg>, $2 and $3 are emulated */
+-    uint32_t count;
+-    static uint32_t cyc_per_count = 0;
+-
+-    if (!cyc_per_count) {
+-        MIPS_RDHWR("$3", cyc_per_count);
+-    }
+-
+-    MIPS_RDHWR("$2", count);
+-    return (int64_t)(count * cyc_per_count);
+-}
+-
+ #elif defined(__alpha__)
+ 
+ static inline int64_t cpu_get_host_ticks(void)
+diff --git a/util/cacheflush.c b/util/cacheflush.c
+index c043c5f881a..247c4ce2980 100644
+--- a/util/cacheflush.c
++++ b/util/cacheflush.c
+@@ -301,22 +301,6 @@ void flush_idcache_range(uintptr_t rx, uintptr_t rw, size_t len)
+ }
+ #endif /* CONFIG_DARWIN */
+ 
+-#elif defined(__mips__)
+-
+-#ifdef __OpenBSD__
+-#include <machine/sysarch.h>
+-#else
+-#include <sys/cachectl.h>
+-#endif
+-
+-void flush_idcache_range(uintptr_t rx, uintptr_t rw, size_t len)
+-{
+-    if (rx != rw) {
+-        cacheflush((void *)rw, len, DCACHE);
+-    }
+-    cacheflush((void *)rx, len, ICACHE);
+-}
+-
+ #elif defined(__powerpc__)
+ 
+ void flush_idcache_range(uintptr_t rx, uintptr_t rw, size_t len)
 -- 
 2.53.0
 
