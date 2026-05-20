@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03FEECD5BAB
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:51:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5306DCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:51:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPooH-0006ti-1e; Wed, 20 May 2026 17:50:37 -0400
+	id 1wPoom-0007J7-70; Wed, 20 May 2026 17:51:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wPooF-0006tV-4y
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:50:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wPook-00079M-Ps
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:51:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wPooD-00047c-BZ
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:50:34 -0400
+ id 1wPooj-0004Kd-5b
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:51:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779313832;
+ s=mimecast20190719; t=1779313864;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Zgbilhy9vgfL87SyKBeKQoEo1Sfe5fdtx1DgdjZluhU=;
- b=FVD1fW3W3bhiekUX06drTyT9HI8NZ2ymoA+qW22qz3nuB0qvZxGuIW4unUOE6w9vdwK+yi
- W9t84z4uEscCCMe8mSPRHlVRqTv9cgralpbo2tA4ggvcwGsL5FFU8iPMg/LvltmPN12PWp
- 9YPZGLbUAjUbwtiaCsd2FxzcLxoqJfU=
+ bh=NV2lxj+kSafDI+Xt+W9HA0PH51XxNna6tbCIetfdZS8=;
+ b=XzWg14bkg25OAQL75hmNBPGObEgJVtn2G6phvVySU7KkmoxwsU4+iuxQRzsGaDDXXb3De/
+ dleFED+lurE8yl/i3BNo+OB8WZbaVWCAkX4OZHfAtLkMkm6IUyQo3sSuJMWUSfbi1ZKC2/
+ mmWW0dnKP9Z4TLjnXJZn5rh43/LjN8Y=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-673-suwx-5u5Pe2Y7SPG-x9WwA-1; Wed,
- 20 May 2026 17:50:31 -0400
-X-MC-Unique: suwx-5u5Pe2Y7SPG-x9WwA-1
-X-Mimecast-MFC-AGG-ID: suwx-5u5Pe2Y7SPG-x9WwA_1779313830
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-314-_WMrpovWOVe_Y1ANGGeDtg-1; Wed,
+ 20 May 2026 17:51:03 -0400
+X-MC-Unique: _WMrpovWOVe_Y1ANGGeDtg-1
+X-Mimecast-MFC-AGG-ID: _WMrpovWOVe_Y1ANGGeDtg_1779313862
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5418C1956046
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 21:50:30 +0000 (UTC)
+ id 437A11956048
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 21:51:02 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.26])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 06ACA1800591; Wed, 20 May 2026 21:50:28 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 453D31956053; Wed, 20 May 2026 21:51:00 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 21 May 2026 01:49:05 +0400
-Subject: [PATCH 04/40] target/i386: decouple cpu_x86_inject_mce() from Monitor
+Date: Thu, 21 May 2026 01:49:10 +0400
+Subject: [PATCH 09/40] monitor: move HMP-only fields from Monitor to MonitorHMP
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260521-qemu-no-hmp-v1-4-d104f809e145@redhat.com>
+Message-Id: <20260521-qemu-no-hmp-v1-9-d104f809e145@redhat.com>
 References: <20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com>
 In-Reply-To: <20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7642;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5676;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=yANMK/PMDx6+75gaRNXwSLaOhY0TlOLUb0ODWU3hzAA=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqDiyC0VDhpNkb3N+szmkH8l+vgUNLQ9kzAxlgR
- UxKyghhjLeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCag4sggAKCRDa6OEJdZac
- 5XG4EACZ8jjygagBpbH0xusHyhtp8tx9zEERx66akGZLzvIH/jdfv06q6mwDJan3wj/23GUuZtb
- krC567yjS4xtx01tV1fCPASvLOGb+QjqPqLmpVK2ewvSXdl2cZuoFAIZFHsdTN4/OxvgW0ApR1b
- WKIyX+Blu2WEz/2KpVlT3VnQZIbyswWabvZ8IHOaVAQdKxRhgPhfiGQNVIKK4Ei1KHTijYJ+cb+
- 6M5mgW1og4OrDcplu4rymetSK/tT7DSHnQODNw+NXVzULpB2HoHKI4NcEs+PtI7AYOmnNdBurfL
- m5D1SaxjXpNKMcAApfwghis5GpWSPY4wqIzWH+zJ6l/y5ENsJ4BcnowZPVQas4jrldvyL4pD+Kc
- 35W1ltvGlh12qWDgvq/vfma4l2LDHhkQBrDWcXlAkHmbXxVYSHFLdmJBE8QnAs2qYZcQyEJvtHO
- iqcc3cHpoYbUntcmr9QE9ocGykzqB40H30lPIps6/fB735cCKrRDea7U+z8NmkeFQosrIVm8WvG
- lSPsRDHybyzsB56O/W/GdPug4elF6P6H5wt3dh2rR/BGwvMd/DRosb7/cg7WJPKJ+VsOOezYUym
- ICKdEOTiVV7tuhsJ3nOxmw8jh8/EzPgSpbHgnhWdmREUow8gKM/pConbceav/ri3uWKoXmnFCfT
- dh/IwO5V8K70qTA==
+ bh=YgaR6uo3LHWF8Lt96k+ghSBepcAnzNcI9602SPUCXeY=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqDiyCFW3Xdz9JH9xqc4wVAp2zyuMZZinhfsqIm
+ UpN/yY6elWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCag4sggAKCRDa6OEJdZac
+ 5dTQD/9DgGIap7UrZzasCqvwn1HvRehz2tG5bk975juHcA6geajKXXdKLz+iKqYOysVbpwNVNBD
+ hQLcZho2uOr8DeL4lOd0MyYd+R3OSNoHg6810na/dtZdHwNw0pUsQInKCzr5ykCwRPGymJ50cMw
+ HRtvGZ9N3vc+1y590SwKbGdfWKGwyB4eb8thq35S3Z776RexDKhzK89AJYAxo+ZhscjyqWAQ+Ct
+ rexOMLUdTb/s05sGsz9NtRK+TmhK3Ycicpfrc/FWNzDOt+2XehLcjLpYWk5IpZn3rNtQGXWXtty
+ ZGt5jX8C6EA36aehgU7Y5bRd13n//UVviw3TYxOgShZeHRGvk02dMx7tk04qut51L2b0P7FvJaE
+ 9dZed29oWQafQYuFHk3Ktz4EtRoiKsVGcfVbIhDURItMa9v7UhIfHuEy8LTD31cvSxO6+O8UDFT
+ 1lmc1alNOAkJCUeakjY6ujlIqWCIzemG8c+1b8Aec19gPgjqBnG3i2x3OckiSyybW75TWjUJcUj
+ hlTYe0a6q4pqGp2hoQIC7leQCXXNZFXyV2z8r+bOi3kMUnQK/qdM4+M7tdF31BL/yKqw8cEs5lV
+ pQaSgiSKWBxNaAlYxRXkJMo6uLDbxF3tawjmiO/ypoad+X1Axwnq4QQ9h6o3YkK5Fa0jDSPephd
+ 2njMlGxJ9vDLikQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -85,7 +85,7 @@ X-Spam_score: 0.8
 X-Spam_bar: /
 X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -103,205 +103,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace monitor_printf() error reporting with the standard **errp
-pattern. Drop the Monitor *mon parameter and return bool to indicate
-success, improving the function usage from non-HMP contexts. Update the
-KVM MCE injection path and hmp_mce() accordingly.
-
-Notes:
- - we may want to print the error in KVM path too
- - multiple error prints are now accumulated with error hints
+mon_cpu_path and reset_seen are only used by HMP monitors; move them
+from the base Monitor struct into MonitorHMP to properly encapsulate
+HMP-specific state.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- target/i386/cpu.h     |  4 ++--
- target/i386/helper.c  | 49 ++++++++++++++++++++++++++++---------------------
- target/i386/kvm/kvm.c |  4 ++--
- target/i386/monitor.c |  6 ++++--
- 4 files changed, 36 insertions(+), 27 deletions(-)
+ monitor/monitor-internal.h |  4 ++--
+ monitor/hmp-cmds.c         | 17 ++++++++++-------
+ monitor/hmp.c              |  5 +++--
+ monitor/monitor.c          | 16 +++++++++++-----
+ 4 files changed, 26 insertions(+), 16 deletions(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index bdd4fff89d6..da9f51b85b7 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2842,9 +2842,9 @@ void do_cpu_init(X86CPU *cpu);
- #define MCE_INJECT_BROADCAST    1
- #define MCE_INJECT_UNCOND_AO    2
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index a5c4aba306e..e071ad3e2e8 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -108,7 +108,6 @@ struct Monitor {
+     bool skip_flush;
+     bool use_io_thread;
  
--void cpu_x86_inject_mce(Monitor *mon, X86CPU *cpu, int bank,
-+bool cpu_x86_inject_mce(X86CPU *cpu, int bank,
-                         uint64_t status, uint64_t mcg_status, uint64_t addr,
--                        uint64_t misc, int flags);
-+                        uint64_t misc, int flags, Error **errp);
+-    char *mon_cpu_path;
+     QTAILQ_ENTRY(Monitor) entry;
  
- uint32_t cpu_cc_compute_all(CPUX86State *env1);
+     /*
+@@ -124,7 +123,6 @@ struct Monitor {
+     GString *outbuf;
+     guint out_watch;
+     int mux_out;
+-    int reset_seen;
+ };
  
-diff --git a/target/i386/helper.c b/target/i386/helper.c
-index 8cc73f619a9..03265c80b0a 100644
---- a/target/i386/helper.c
-+++ b/target/i386/helper.c
-@@ -18,6 +18,7 @@
-  */
+ struct MonitorHMP {
+@@ -138,6 +136,8 @@ struct MonitorHMP {
+      * These members can be safely accessed without locks.
+      */
+     ReadLineState *rs;
++    char *mon_cpu_path;
++    int reset_seen;
+ };
  
- #include "qemu/osdep.h"
-+#include "qapi/error.h"
- #include "qapi/qapi-events-run-state.h"
- #include "cpu.h"
- #include "exec/cputlb.h"
-@@ -27,7 +28,6 @@
- #ifndef CONFIG_USER_ONLY
- #include "system/hw_accel.h"
- #include "system/memory.h"
--#include "monitor/monitor.h"
- #include "kvm/kvm_i386.h"
- #endif
- #include "qemu/log.h"
-@@ -377,7 +377,7 @@ out:
- }
- 
- typedef struct MCEInjectionParams {
--    Monitor *mon;
-+    GString *err;
-     int bank;
-     uint64_t status;
-     uint64_t mcg_status;
-@@ -424,9 +424,9 @@ static void do_inject_x86_mce(CPUState *cs, run_on_cpu_data data)
-          * reporting is disabled
-          */
-         if ((cenv->mcg_cap & MCG_CTL_P) && cenv->mcg_ctl != ~(uint64_t)0) {
--            monitor_printf(params->mon,
--                           "CPU %d: Uncorrected error reporting disabled\n",
--                           cs->cpu_index);
-+            g_string_append_printf(params->err,
-+                "CPU %d: Uncorrected error reporting disabled\n",
-+                cs->cpu_index);
-             return;
-         }
- 
-@@ -435,10 +435,9 @@ static void do_inject_x86_mce(CPUState *cs, run_on_cpu_data data)
-          * reporting is disabled for the bank
-          */
-         if (banks[0] != ~(uint64_t)0) {
--            monitor_printf(params->mon,
--                           "CPU %d: Uncorrected error reporting disabled for"
--                           " bank %d\n",
--                           cs->cpu_index, params->bank);
-+            g_string_append_printf(params->err,
-+                "CPU %d: Uncorrected error reporting disabled for bank %d\n",
-+                cs->cpu_index, params->bank);
-             return;
-         }
- 
-@@ -455,7 +454,7 @@ static void do_inject_x86_mce(CPUState *cs, run_on_cpu_data data)
-         if (need_reset) {
-             emit_guest_memory_failure(MEMORY_FAILURE_ACTION_RESET, ar,
-                                       recursive);
--            monitor_printf(params->mon, "%s", msg);
-+            g_string_append_printf(params->err, "%s\n", msg);
-             qemu_log_mask(CPU_LOG_RESET, "%s\n", msg);
-             qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-             return;
-@@ -484,14 +483,16 @@ static void do_inject_x86_mce(CPUState *cs, run_on_cpu_data data)
-     emit_guest_memory_failure(MEMORY_FAILURE_ACTION_INJECT, ar, recursive);
- }
- 
--void cpu_x86_inject_mce(Monitor *mon, X86CPU *cpu, int bank,
-+bool cpu_x86_inject_mce(X86CPU *cpu, int bank,
-                         uint64_t status, uint64_t mcg_status, uint64_t addr,
--                        uint64_t misc, int flags)
-+                        uint64_t misc, int flags, Error **errp)
+ typedef struct {
+diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+index 521ab8a641c..e7a02b1fddb 100644
+--- a/monitor/hmp-cmds.c
++++ b/monitor/hmp-cmds.c
+@@ -496,31 +496,34 @@ void hmp_dumpdtb(Monitor *mon, const QDict *qdict)
+ /* Set the current CPU defined by the user. Callers must hold BQL. */
+ int monitor_set_cpu(Monitor *mon, int cpu_index)
  {
-+    ERRP_GUARD();
-     CPUState *cs = CPU(cpu);
-     CPUX86State *cenv = &cpu->env;
-+    g_autoptr(GString) err = g_string_new(NULL);
-     MCEInjectionParams params = {
--        .mon = mon,
-+        .err = err,
-         .bank = bank,
-         .status = status,
-         .mcg_status = mcg_status,
-@@ -502,21 +503,21 @@ void cpu_x86_inject_mce(Monitor *mon, X86CPU *cpu, int bank,
-     unsigned bank_num = cenv->mcg_cap & 0xff;
++    assert(!monitor_is_qmp(mon));
++    MonitorHMP *hmp_mon = container_of(mon, MonitorHMP, common);
+     CPUState *cpu;
  
-     if (!cenv->mcg_cap) {
--        monitor_printf(mon, "MCE injection not supported\n");
--        return;
-+        error_setg(errp, "MCE injection not supported");
-+        return false;
+     cpu = qemu_get_cpu(cpu_index);
+     if (cpu == NULL) {
+         return -1;
      }
-     if (bank >= bank_num) {
--        monitor_printf(mon, "Invalid MCE bank number\n");
--        return;
-+        error_setg(errp, "Invalid MCE bank number");
-+        return false;
-     }
-     if (!(status & MCI_STATUS_VAL)) {
--        monitor_printf(mon, "Invalid MCE status code\n");
--        return;
-+        error_setg(errp, "Invalid MCE status code");
-+        return false;
-     }
-     if ((flags & MCE_INJECT_BROADCAST)
-         && !cpu_x86_support_mca_broadcast(cenv)) {
--        monitor_printf(mon, "Guest CPU does not support MCA broadcast\n");
--        return;
-+        error_setg(errp, "Guest CPU does not support MCA broadcast");
-+        return false;
-     }
+-    g_free(mon->mon_cpu_path);
+-    mon->mon_cpu_path = object_get_canonical_path(OBJECT(cpu));
++    g_free(hmp_mon->mon_cpu_path);
++    hmp_mon->mon_cpu_path = object_get_canonical_path(OBJECT(cpu));
+     return 0;
+ }
  
-     run_on_cpu(cs, do_inject_x86_mce, RUN_ON_CPU_HOST_PTR(&params));
-@@ -535,6 +536,12 @@ void cpu_x86_inject_mce(Monitor *mon, X86CPU *cpu, int bank,
-             run_on_cpu(other_cs, do_inject_x86_mce, RUN_ON_CPU_HOST_PTR(&params));
+ /* Callers must hold BQL. */
+ static CPUState *mon_get_cpu_sync(Monitor *mon, bool synchronize)
+ {
++    MonitorHMP *hmp_mon = container_of(mon, MonitorHMP, common);
+     CPUState *cpu = NULL;
+ 
+-    if (mon->mon_cpu_path) {
+-        cpu = (CPUState *) object_resolve_path_type(mon->mon_cpu_path,
++    if (hmp_mon->mon_cpu_path) {
++        cpu = (CPUState *) object_resolve_path_type(hmp_mon->mon_cpu_path,
+                                                     TYPE_CPU, NULL);
+         if (!cpu) {
+-            g_free(mon->mon_cpu_path);
+-            mon->mon_cpu_path = NULL;
++            g_free(hmp_mon->mon_cpu_path);
++            hmp_mon->mon_cpu_path = NULL;
          }
      }
-+    if (params.err->len) {
-+        error_setg(errp, "Failed to inject MCE");
-+        error_append_hint(errp, "%s", params.err->str);
-+        return false;
-+    }
-+    return true;
- }
+-    if (!mon->mon_cpu_path) {
++    if (!hmp_mon->mon_cpu_path) {
+         if (!first_cpu) {
+             return NULL;
+         }
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index cc4390486e1..de8804af51a 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -1453,6 +1453,7 @@ static void monitor_read(void *opaque, const uint8_t *buf, int size)
+ static void monitor_event(void *opaque, QEMUChrEvent event)
+ {
+     Monitor *mon = opaque;
++    MonitorHMP *hmp_mon = container_of(mon, MonitorHMP, common);
  
- static inline target_ulong get_memio_eip(CPUX86State *env)
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 9e352882c8c..d01519ef2f3 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -747,8 +747,8 @@ static void kvm_mce_inject(X86CPU *cpu, hwaddr paddr, int code)
-         flags = 0;
+     switch (event) {
+     case CHR_EVENT_MUX_IN:
+@@ -1467,7 +1468,7 @@ static void monitor_event(void *opaque, QEMUChrEvent event)
+     case CHR_EVENT_MUX_OUT:
+         qemu_mutex_lock(&mon->mon_lock);
+         if (!mon->mux_out) {
+-            if (mon->reset_seen && !mon->suspend_cnt) {
++            if (hmp_mon->reset_seen && !mon->suspend_cnt) {
+                 monitor_puts_locked(mon, "\n");
+             } else {
+                 monitor_flush_locked(mon);
+@@ -1482,7 +1483,7 @@ static void monitor_event(void *opaque, QEMUChrEvent event)
+         monitor_printf(mon, "QEMU %s monitor - type 'help' for more "
+                        "information\n", QEMU_VERSION);
+         qemu_mutex_lock(&mon->mon_lock);
+-        mon->reset_seen = 1;
++        hmp_mon->reset_seen = 1;
+         if (!mon->mux_out) {
+             /* Suspend-resume forces the prompt to be printed.  */
+             monitor_suspend(mon);
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index 00b93ed6124..2dec0e299af 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -541,12 +541,17 @@ static void monitor_accept_input(void *opaque)
+     Monitor *mon = opaque;
+ 
+     qemu_mutex_lock(&mon->mon_lock);
+-    if (!monitor_is_qmp(mon) && mon->reset_seen) {
++    if (!monitor_is_qmp(mon)) {
+         MonitorHMP *hmp_mon = container_of(mon, MonitorHMP, common);
+         assert(hmp_mon->rs);
+-        readline_restart(hmp_mon->rs);
++        bool reset_seen = hmp_mon->reset_seen;
++        if (reset_seen) {
++            readline_restart(hmp_mon->rs);
++        }
+         qemu_mutex_unlock(&mon->mon_lock);
+-        readline_show_prompt(hmp_mon->rs);
++        if (reset_seen) {
++            readline_show_prompt(hmp_mon->rs);
++        }
+     } else {
+         qemu_mutex_unlock(&mon->mon_lock);
      }
+@@ -622,12 +627,13 @@ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
  
--    cpu_x86_inject_mce(NULL, cpu, 9, status, mcg_status, paddr,
--                       (MCM_ADDR_PHYS << 6) | 0xc, flags);
-+    cpu_x86_inject_mce(cpu, 9, status, mcg_status, paddr,
-+                       (MCM_ADDR_PHYS << 6) | 0xc, flags, NULL);
- }
- 
- static void emit_hypervisor_memory_failure(MemoryFailureAction action, bool ar)
-diff --git a/target/i386/monitor.c b/target/i386/monitor.c
-index a536712c755..785a13dd710 100644
---- a/target/i386/monitor.c
-+++ b/target/i386/monitor.c
-@@ -580,6 +580,7 @@ void hmp_mce(Monitor *mon, const QDict *qdict)
-     uint64_t addr = qdict_get_int(qdict, "addr");
-     uint64_t misc = qdict_get_int(qdict, "misc");
-     int flags = MCE_INJECT_UNCOND_AO;
-+    Error *err = NULL;
- 
-     if (qdict_get_try_bool(qdict, "broadcast", false)) {
-         flags |= MCE_INJECT_BROADCAST;
-@@ -587,7 +588,8 @@ void hmp_mce(Monitor *mon, const QDict *qdict)
-     cs = qemu_get_cpu(cpu_index);
-     if (cs != NULL) {
-         cpu = X86_CPU(cs);
--        cpu_x86_inject_mce(mon, cpu, bank, status, mcg_status, addr, misc,
--                           flags);
-+        cpu_x86_inject_mce(cpu, bank, status, mcg_status, addr, misc,
-+                           flags, &err);
-+        hmp_handle_error(mon, err);
+ void monitor_data_destroy(Monitor *mon)
+ {
+-    g_free(mon->mon_cpu_path);
+     qemu_chr_fe_deinit(&mon->chr, false);
+     if (monitor_is_qmp(mon)) {
+         monitor_data_destroy_qmp(container_of(mon, MonitorQMP, common));
+     } else {
+-        readline_free(container_of(mon, MonitorHMP, common)->rs);
++        MonitorHMP *hmp_mon = container_of(mon, MonitorHMP, common);
++        readline_free(hmp_mon->rs);
++        g_free(hmp_mon->mon_cpu_path);
      }
- }
+     g_string_free(mon->outbuf, true);
+     qemu_mutex_destroy(&mon->mon_lock);
 
 -- 
 2.54.0
