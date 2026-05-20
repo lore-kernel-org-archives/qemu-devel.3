@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CB31CD5BAB
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 04:38:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1D0ECD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 04:38:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPYgz-0001Hk-1A; Wed, 20 May 2026 00:38:01 -0400
+	id 1wPYgs-0001Fg-Fx; Wed, 20 May 2026 00:37:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wPYgw-0001H2-RX
- for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:58 -0400
-Received: from mail-ot1-x330.google.com ([2607:f8b0:4864:20::330])
+ id 1wPYgp-0001Dv-2g
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:51 -0400
+Received: from mail-oi1-x232.google.com ([2607:f8b0:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wPYgt-0003ss-84
- for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:58 -0400
-Received: by mail-ot1-x330.google.com with SMTP id
- 46e09a7af769-7de4a9cb8eeso4337473a34.0
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 21:37:54 -0700 (PDT)
+ id 1wPYgm-0003rX-KU
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:50 -0400
+Received: by mail-oi1-x232.google.com with SMTP id
+ 5614622812f47-479dc6d26e3so2675255b6e.0
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 21:37:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779251874; x=1779856674; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779251866; x=1779856666; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=YGkMREpovA5ejOqORtg6PAp0FuWy5qxqo9ZMgTEzxZ4=;
- b=EV2VrMFBVnLcsTf59PtzLav/6glQV3L4IeCR/u1w5fU7GZEa/By+yy92xpvEidi/H0
- zXFYXcq+afDGEOt2TbkcH0tCMLeOugmTsnwpIwWY7V+AbeM1OywZlrhlZ5ZNpkQ+HCJZ
- 6lliN3p1Ze8xHvlhLdhaNQDFdvmKqhsyeMjOmX9oTSrwWulXhBl3WNFELSwfJBhEPAZm
- ELHzMss0ObCyY7AIFMDRwEbmWr9YLxCixwxZI8yEnzzTFxy6YcckLMg09kaub3E51CCc
- 60quWSqbd+L+UffpBhk4ijtBXepDeZlhRXqoWCYMf8VVmYenrmzeADgz+XDMrIo6UFQ0
- WNKQ==
+ :reply-to; bh=616bqmJMtxgdrwj6c9UkRD4vaulGvEtHPMYwNIUf+dE=;
+ b=gOEvmjZ842CSk/skIySLFY1hQq9wNg22IhxD8845FcYlD/Gjph5XXOt9qonqjh4Vtb
+ PmYSfXLkPB5foll3+XJRY+2tzjubRRGx+y7TFNEm4zoKoDEnau3gGCrthL6DeHuWcCkS
+ Q8wk7HnY+Kk352lc6dycEt3kQN1MAoMVSVTGww0Kpu5j1h9MbQxnX2xJqbRNBrMpMHNV
+ ZWCuwbpBxzdThjFUopvB2ZU64BHsl8IPlK7R6eSZo+oR2sOTb3gKwSJcL+GawoinbNIr
+ 8VARIKkM7sQVfaLry5Qh/z9wK+jtSllrklTmggy0k7QIymXepJa3N+L6eZ8X+5/KoS9N
+ ZkNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779251874; x=1779856674;
+ d=1e100.net; s=20251104; t=1779251866; x=1779856666;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=YGkMREpovA5ejOqORtg6PAp0FuWy5qxqo9ZMgTEzxZ4=;
- b=lR54Nwv0Ss7R5/R0sYkOOP8jze63eSl8asWXbZ8p5NOES8zjDEoiA78qI+Hr54xOJn
- axD9LVsaSFLUQysvRXHSWUaPi83aiJv9IUDgyL3sX+fzxWlPE3rehFfYajlIyEjBxhHf
- 4gCbHueyboS+dLrDkO4n17gHa71QuqARRNw2JsJ6dvqBVlrIceHRSuMr2GoO+O8TBMSH
- CQqJ7mYxktvm4CYEjyjCs+hjTm37ZWsoOOpphIjWIj/0rm/z1m4SBs3HORpTeCcB2D9N
- D4YCObJ5tFmlW+GC/6slSHfVc9HZGcWr4lBy6+W854qDLWz9KW13xu85VqK9XpZrcc18
- uMtQ==
-X-Gm-Message-State: AOJu0Ywx/Mnoot2WJeA5PIPoRi/AyLcs7nAns72Jzz9AXAwBUKiqdfyo
- xV1zeV+/Sxu2V7fEBkC4wf22KnYiQ2hdEoYWbgMKi+vsSS2XIB/LsxWg
-X-Gm-Gg: Acq92OEjtcyNXEhc3AunWBKJNSfc9zk6fbKt0GYs1u/DGO1RgnfLvoxFeL3qnxek0T3
- AjKuhKQtTD9ruDUkEytHSMgeGg7oLxBCqm1a2lgMUJXah46ooEonSWfvla96yS0x2iLezynivQ0
- DcbJnRF8MnCBKMPoAivc+56CtIv35EyBL9TPHKkJZFvb3Z2TaTMUxvbJYmB+qdSS5gJmCvgIhkp
- O9BdsQaFIohWu9mEvVr6fmXFpC2dt4jmNzWWYhGirAXCWjP5OswEzlCBjGLzLdGUGqYbmDqs/Qy
- MoWD3/vvmEIb2sKGZ59dDImWPYmGLTC/OMMy3D4l2vqP3Av83BWUtX9dywNgdd2CfA8RmjQaFaL
- w/7xgPOaMckcUKHGwbF2kxT5IOV3StoZ1m8NqZV8NDLwppZbdjopOXUis/1vWjevCKbBB8cGazy
- +5u0+B/rb0X7pRQTx7QC4/9tITTCuQulQ4weqib3siwgdKOqmS4SArSA0mgNTJWjXow8Bcxx8KR
- 7LpbWrZRKrIlTDuTCQXiy4/dP2CGs+k4ZvtWOJb5zE86GEZXA9btuS03hJ9ZnatJqa+
-X-Received: by 2002:a05:6830:6f8b:b0:7de:4f6b:9e10 with SMTP id
- 46e09a7af769-7e4de65bc6dmr15620774a34.0.1779251873598; 
- Tue, 19 May 2026 21:37:53 -0700 (PDT)
+ bh=616bqmJMtxgdrwj6c9UkRD4vaulGvEtHPMYwNIUf+dE=;
+ b=AdrAMQoeyWMvNf75kJGXGRnKVIEzE8WH6SNP04CV3cYriHdmh1coV6IpaXM3iVcWKD
+ DxtddVf6LemltKjQ9P8542jLl4Oz+bC6hOVA14Yvi8MtOWhqvJyBwCdsJPHybpx+gKON
+ ejwKtwepvzSwMqfLumaL99AOWWbS014kixysgB6GUf0SYWejnNUWCMEc7/bLgQyvGwdj
+ yUbnfscxH6uroakySglr+d0E8YQnW5wXVrifWAd3sD/QaYq1jypuZ6REHkuzbtLH63w1
+ M67sFvVzwlefim8gsOvEyarp10QBNgWA558IslaTnA0nF4loWnj0vAmoiUsygo4FcnPQ
+ y9mA==
+X-Gm-Message-State: AOJu0YxlfuwHx6qVzN1doT40kO0JvBaHnrpe6qeoqYWaXtv2NHgnJKR4
+ xMFirR8x5SytS+oOHDROr/hI95Jwb2A+t0QlCN/GXmYjpjQArzTAXpUN
+X-Gm-Gg: Acq92OFkvdMN6sERqCOt7YlfFV7pp7sZ1VzOGa/40yAuh+EDHIXkiS/uzZ5igVm7Gtx
+ Wld0z1jpi71n60S6FHe3N69/pXqxn2tN+J5XAAyIHbsaoliuaXqQSzWV0wVqyo1BlqFP17WVwXJ
+ c/tNjjw3IOO0tB10eFC+RIrOBjvme43hZ1cp23vsDQrMphHSHOVYiqQqpnJfmidKOEb/npnKMW1
+ okNsjGCyiw6PJ+j5v9hrfSJvGko5+s7i8rye7BeVjczYZu0HLoO5GIZEibyRorRJo95a0QSWXNJ
+ 7IWzk24UN18cUdvxT0lhyy9rns9yFjlXoq7V75N86BgeuwvcstFZ9EIDggubis+UCjHFavVMUSq
+ v85Q0cZqGSEtv+iq/jou3pr3QCRTaKIoI2lyHBPFpEsxK/UF5AHMrrk9NTqS7uXJGDPV0Zu+eJW
+ VpJuWKQA2dttPCkJOdrhz3SECXsuILIVWp19gxsgCV1Zo1tzpATVvEBybAdD4LWk6D7JSKxbg+0
+ x9hOE278RcCJtVK/6yoakfDr6MZsgRxY0GjJ6L7oB5swDX/IME36S0KWOpxOeGyMpxsP9AJnNiE
+ mdA=
+X-Received: by 2002:a05:6808:e698:b0:45c:8fa8:7497 with SMTP id
+ 5614622812f47-482e5771dd9mr10734432b6e.34.1779251866386; 
+ Tue, 19 May 2026 21:37:46 -0700 (PDT)
 Received: from mac.localdomain (184-96-146-19.hlrn.qwest.net. [184.96.146.19])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55bc4f04fsm11574634a34.27.2026.05.19.21.37.52
+ 46e09a7af769-7e55bc4f04fsm11574634a34.27.2026.05.19.21.37.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 May 2026 21:37:53 -0700 (PDT)
+ Tue, 19 May 2026 21:37:45 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Tue, 19 May 2026 22:37:27 -0600
-Subject: [PATCH v10 33/45] target/mips: add Octeon 3DES and KASUMI COP2 helpers
+Date: Tue, 19 May 2026 22:37:21 -0600
+Subject: [PATCH v10 27/45] target/mips: add Octeon GFM COP2 helpers
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260519-mips-octeon-missing-insns-v2-v10-33-306f9edfe15b@gmail.com>
+Message-Id: <20260519-mips-octeon-missing-insns-v2-v10-27-306f9edfe15b@gmail.com>
 References: <20260519-mips-octeon-missing-insns-v2-v10-0-306f9edfe15b@gmail.com>
 In-Reply-To: <20260519-mips-octeon-missing-insns-v2-v10-0-306f9edfe15b@gmail.com>
 To: qemu-devel@nongnu.org
@@ -84,8 +85,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::330;
- envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x330.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::232;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x232.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -109,512 +110,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add helper support for the Octeon 3DES and KASUMI operation selectors.
-The 3DES helpers implement ECB and CBC encrypt/decrypt over the shared
-3DES key, IV, and result bank. KASUMI reuses the same register bank and
-adds its own encrypt selectors.
+Add helper support for the Octeon GFM carryless multiply selectors. This
+models the normal and reflected multiplication paths, including the
+XOR-and-multiply forms that update the result/input state used by Octeon
+crypto code.
 
-Only the operation selectors require helper code. Simple key, IV, and
-result register transfers are handled by direct selector decode.
+Implement the reflected path with the same architectural 128-bit state
+model as the normal GFM helpers, avoiding target-local shadow state or
+a 64-bit reflected shortcut.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
+Changes v9 -> v10:
+  - Preserve the 64-bit UIA2 GFM reduction path used by SNOW3G F9.
+  - Rework reflected GFM helpers around the full 128-bit architectural state.
+  - Use direct RESINP XOR operations instead of target-local XOR shadow state.
+
 Changes v8 -> v9:
-  - Split 3DES/KASUMI operation selectors into their own COP2 helper patch.
-  - Replace generic selector dispatch with per-operation 3DES/KASUMI
-    helpers.
+  - Split GFM selector operations into their own COP2 helper patch.
+  - Expose per-operation helpers instead of a generic selector helper.
   - Add matching helper.h declarations with the helper implementation.
 ---
- target/mips/helper.h            |   6 +
- target/mips/tcg/octeon_crypto.c | 458 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 464 insertions(+)
+ target/mips/helper.h            |   4 ++
+ target/mips/tcg/octeon_crypto.c | 125 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 129 insertions(+)
 
 diff --git a/target/mips/helper.h b/target/mips/helper.h
-index 9ac102895f..035ba4087b 100644
+index e802f50fd6..7767556f79 100644
 --- a/target/mips/helper.h
 +++ b/target/mips/helper.h
-@@ -76,6 +76,12 @@ DEF_HELPER_2(octeon_cp2_mt_sms4_enc_cbc1, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_sms4_enc1, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_sms4_dec_cbc1, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_sms4_dec1, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_des3_enc_cbc, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_kas_enc_cbc, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_des3_enc, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_kas_enc, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_des3_dec_cbc, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_des3_dec, void, env, i64)
+@@ -38,6 +38,10 @@ DEF_HELPER_2(octeon_cp2_mt_crc_write_dword, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_crc_write_var, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_crc_write_dword_reflect, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_crc_write_var_reflect, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_gfm_xor0_reflect, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_gfm_xor0, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_gfm_xormul1_reflect, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_gfm_xormul1, void, env, i64)
  
  /* microMIPS functions */
  DEF_HELPER_4(lwm, void, env, tl, tl, i32)
 diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
-index 250a494b51..41241a3bd7 100644
+index 811f36f46a..d59bd8fdac 100644
 --- a/target/mips/tcg/octeon_crypto.c
 +++ b/target/mips/tcg/octeon_crypto.c
-@@ -1173,6 +1173,464 @@ void helper_octeon_cp2_mt_sms4_dec1(CPUMIPSState *env, uint64_t value)
-     octeon_sms4_crypt_common(crypto, false, false);
+@@ -11,6 +11,7 @@
+ #include "internal.h"
+ #include "exec/helper-proto.h"
+ #include "crypto/aes.h"
++#include "crypto/clmul.h"
+ #include "crypto/sm4.h"
+ #include "qemu/bitops.h"
+ #include "qemu/host-utils.h"
+@@ -75,11 +76,135 @@ static void octeon_crc_update_reflect(MIPSOcteonCryptoState *crypto,
+     octeon_crc_set_state_reflect(crypto, crc);
  }
  
-+static const uint8_t octeon_des_ip[64] = {
-+    58, 50, 42, 34, 26, 18, 10,  2,
-+    60, 52, 44, 36, 28, 20, 12,  4,
-+    62, 54, 46, 38, 30, 22, 14,  6,
-+    64, 56, 48, 40, 32, 24, 16,  8,
-+    57, 49, 41, 33, 25, 17,  9,  1,
-+    59, 51, 43, 35, 27, 19, 11,  3,
-+    61, 53, 45, 37, 29, 21, 13,  5,
-+    63, 55, 47, 39, 31, 23, 15,  7,
-+};
-+
-+static const uint8_t octeon_des_fp[64] = {
-+    40,  8, 48, 16, 56, 24, 64, 32,
-+    39,  7, 47, 15, 55, 23, 63, 31,
-+    38,  6, 46, 14, 54, 22, 62, 30,
-+    37,  5, 45, 13, 53, 21, 61, 29,
-+    36,  4, 44, 12, 52, 20, 60, 28,
-+    35,  3, 43, 11, 51, 19, 59, 27,
-+    34,  2, 42, 10, 50, 18, 58, 26,
-+    33,  1, 41,  9, 49, 17, 57, 25,
-+};
-+
-+static const uint8_t octeon_des_e[48] = {
-+    32,  1,  2,  3,  4,  5,
-+     4,  5,  6,  7,  8,  9,
-+     8,  9, 10, 11, 12, 13,
-+    12, 13, 14, 15, 16, 17,
-+    16, 17, 18, 19, 20, 21,
-+    20, 21, 22, 23, 24, 25,
-+    24, 25, 26, 27, 28, 29,
-+    28, 29, 30, 31, 32,  1,
-+};
-+
-+static const uint8_t octeon_des_p[32] = {
-+    16,  7, 20, 21, 29, 12, 28, 17,
-+     1, 15, 23, 26,  5, 18, 31, 10,
-+     2,  8, 24, 14, 32, 27,  3,  9,
-+    19, 13, 30,  6, 22, 11,  4, 25,
-+};
-+
-+static const uint8_t octeon_des_pc1[56] = {
-+    57, 49, 41, 33, 25, 17,  9,
-+     1, 58, 50, 42, 34, 26, 18,
-+    10,  2, 59, 51, 43, 35, 27,
-+    19, 11,  3, 60, 52, 44, 36,
-+    63, 55, 47, 39, 31, 23, 15,
-+     7, 62, 54, 46, 38, 30, 22,
-+    14,  6, 61, 53, 45, 37, 29,
-+    21, 13,  5, 28, 20, 12,  4,
-+};
-+
-+static const uint8_t octeon_des_pc2[48] = {
-+    14, 17, 11, 24,  1,  5,
-+     3, 28, 15,  6, 21, 10,
-+    23, 19, 12,  4, 26,  8,
-+    16,  7, 27, 20, 13,  2,
-+    41, 52, 31, 37, 47, 55,
-+    30, 40, 51, 45, 33, 48,
-+    44, 49, 39, 56, 34, 53,
-+    46, 42, 50, 36, 29, 32,
-+};
-+
-+static const uint8_t octeon_des_rotations[16] = {
-+    1, 1, 2, 2, 2, 2, 2, 2,
-+    1, 2, 2, 2, 2, 2, 2, 1,
-+};
-+
-+static const uint8_t octeon_des_sboxes[8][64] = {
-+    {
-+        14, 4, 13, 1,  2, 15, 11, 8,  3, 10, 6, 12, 5, 9, 0, 7,
-+         0, 15, 7, 4, 14,  2, 13, 1, 10,  6, 12, 11, 9, 5, 3, 8,
-+         4, 1, 14, 8, 13,  6,  2, 11, 15, 12, 9,  7, 3, 10, 5, 0,
-+        15, 12, 8, 2,  4,  9,  1, 7,  5, 11, 3, 14, 10, 0, 6, 13,
-+    },
-+    {
-+        15, 1,  8, 14, 6, 11, 3, 4,  9, 7, 2, 13, 12, 0, 5, 10,
-+         3, 13, 4, 7, 15, 2,  8, 14, 12, 0, 1, 10,  6, 9, 11, 5,
-+         0, 14, 7, 11, 10, 4, 13, 1,  5, 8, 12, 6,  9, 3,  2, 15,
-+        13, 8, 10, 1,  3, 15, 4, 2, 11, 6, 7, 12,  0, 5, 14, 9,
-+    },
-+    {
-+        10, 0,  9, 14, 6, 3, 15, 5,  1, 13, 12, 7, 11, 4, 2, 8,
-+        13, 7,  0, 9,  3, 4, 6,  10, 2, 8,  5, 14, 12, 11, 15, 1,
-+        13, 6,  4, 9,  8, 15, 3, 0, 11, 1,  2, 12,  5, 10, 14, 7,
-+         1, 10, 13, 0,  6, 9, 8, 7,  4, 15, 14, 3, 11, 5,  2, 12,
-+    },
-+    {
-+         7, 13, 14, 3,  0, 6, 9, 10, 1, 2, 8,  5, 11, 12, 4, 15,
-+        13, 8,  11, 5,  6, 15, 0, 3,  4, 7, 2, 12, 1,  10, 14, 9,
-+        10, 6,  9,  0, 12, 11, 7, 13, 15, 1, 3, 14, 5,  2,  8,  4,
-+         3, 15, 0,  6, 10, 1, 13, 8,  9, 4, 5, 11, 12, 7,  2,  14,
-+    },
-+    {
-+         2, 12, 4,  1,  7, 10, 11, 6,  8, 5, 3, 15, 13, 0, 14, 9,
-+        14, 11, 2,  12, 4, 7,  13, 1,  5, 0, 15, 10, 3,  9, 8,  6,
-+         4, 2,  1,  11, 10, 13, 7, 8, 15, 9, 12, 5,  6,  3, 0, 14,
-+        11, 8,  12, 7,  1, 14, 2, 13, 6, 15, 0,  9, 10, 4, 5,  3,
-+    },
-+    {
-+        12, 1,  10, 15, 9, 2,  6, 8,  0, 13, 3, 4, 14, 7, 5, 11,
-+        10, 15, 4,  2,  7, 12, 9, 5,  6, 1,  13, 14, 0, 11, 3, 8,
-+         9, 14, 15, 5,  2, 8,  12, 3,  7, 0,  4, 10, 1, 13, 11, 6,
-+         4, 3,  2,  12, 9, 5,  15, 10, 11, 14, 1, 7,  6, 0,  8, 13,
-+    },
-+    {
-+         4, 11, 2, 14, 15, 0, 8, 13, 3, 12, 9, 7,  5, 10, 6, 1,
-+        13, 0,  11, 7,  4, 9, 1, 10, 14, 3, 5, 12, 2, 15, 8, 6,
-+         1, 4,  11, 13, 12, 3, 7, 14, 10, 15, 6, 8,  0, 5,  9, 2,
-+         6, 11, 13, 8,  1, 4, 10, 7,  9, 5,  0, 15, 14, 2,  3, 12,
-+    },
-+    {
-+        13, 2,  8, 4,  6, 15, 11, 1, 10, 9, 3, 14, 5, 0, 12, 7,
-+         1, 15, 13, 8, 10, 3,  7,  4, 12, 5, 6, 11, 0, 14, 9,  2,
-+         7, 11, 4,  1,  9, 12, 14, 2, 0,  6, 10, 13, 15, 3, 5, 8,
-+         2, 1,  14, 7,  4, 10, 8,  13, 15, 12, 9, 0,  3,  5, 6, 11,
-+    },
-+};
-+
-+static const uint8_t octeon_kasumi_s7[128] = {
-+     54,  50,  62,  56,  22,  34,  94,  96,  38,   6,  63,  93,   2,  18,
-+    123,  33,  55, 113,  39, 114,  21,  67,  65,  12,  47,  73,  46,  27,
-+     25, 111, 124,  81,  53,   9, 121,  79,  52,  60,  58,  48, 101, 127,
-+     40, 120, 104,  70,  71,  43,  20, 122,  72,  61,  23, 109,  13, 100,
-+     77,   1,  16,   7,  82,  10, 105,  98, 117, 116,  76,  11,  89, 106,
-+      0, 125, 118,  99,  86,  69,  30,  57, 126,  87, 112,  51,  17,   5,
-+     95,  14,  90,  84,  91,   8,  35, 103,  32,  97,  28,  66, 102,  31,
-+     26,  45,  75,   4,  85,  92,  37,  74,  80,  49,  68,  29, 115,  44,
-+     64, 107, 108,  24, 110,  83,  36,  78,  42,  19,  15,  41,  88, 119,
-+     59,   3,
-+};
-+
-+static const uint16_t octeon_kasumi_s9[512] = {
-+    167, 239, 161, 379, 391, 334,   9, 338,  38, 226,  48, 358, 452, 385,
-+     90, 397, 183, 253, 147, 331, 415, 340,  51, 362, 306, 500, 262,  82,
-+    216, 159, 356, 177, 175, 241, 489,  37, 206,  17,   0, 333,  44, 254,
-+    378,  58, 143, 220,  81, 400,  95,   3, 315, 245,  54, 235, 218, 405,
-+    472, 264, 172, 494, 371, 290, 399,  76, 165, 197, 395, 121, 257, 480,
-+    423, 212, 240,  28, 462, 176, 406, 507, 288, 223, 501, 407, 249, 265,
-+     89, 186, 221, 428, 164,  74, 440, 196, 458, 421, 350, 163, 232, 158,
-+    134, 354,  13, 250, 491, 142, 191,  69, 193, 425, 152, 227, 366, 135,
-+    344, 300, 276, 242, 437, 320, 113, 278,  11, 243,  87, 317,  36,  93,
-+    496,  27, 487, 446, 482,  41,  68, 156, 457, 131, 326, 403, 339,  20,
-+     39, 115, 442, 124, 475, 384, 508,  53, 112, 170, 479, 151, 126, 169,
-+     73, 268, 279, 321, 168, 364, 363, 292,  46, 499, 393, 327, 324,  24,
-+    456, 267, 157, 460, 488, 426, 309, 229, 439, 506, 208, 271, 349, 401,
-+    434, 236,  16, 209, 359,  52,  56, 120, 199, 277, 465, 416, 252, 287,
-+    246,   6,  83, 305, 420, 345, 153, 502,  65,  61, 244, 282, 173, 222,
-+    418,  67, 386, 368, 261, 101, 476, 291, 195, 430,  49,  79, 166, 330,
-+    280, 383, 373, 128, 382, 408, 155, 495, 367, 388, 274, 107, 459, 417,
-+     62, 454, 132, 225, 203, 316, 234,  14, 301,  91, 503, 286, 424, 211,
-+    347, 307, 140, 374,  35, 103, 125, 427,  19, 214, 453, 146, 498, 314,
-+    444, 230, 256, 329, 198, 285,  50, 116,  78, 410,  10, 205, 510, 171,
-+    231,  45, 139, 467,  29,  86, 505,  32,  72,  26, 342, 150, 313, 490,
-+    431, 238, 411, 325, 149, 473,  40, 119, 174, 355, 185, 233, 389,  71,
-+    448, 273, 372,  55, 110, 178, 322,  12, 469, 392, 369, 190,   1, 109,
-+    375, 137, 181,  88,  75, 308, 260, 484,  98, 272, 370, 275, 412, 111,
-+    336, 318,   4, 504, 492, 259, 304,  77, 337, 435,  21, 357, 303, 332,
-+    483,  18,  47,  85,  25, 497, 474, 289, 100, 269, 296, 478, 270, 106,
-+     31, 104, 433,  84, 414, 486, 394,  96,  99, 154, 511, 148, 413, 361,
-+    409, 255, 162, 215, 302, 201, 266, 351, 343, 144, 441, 365, 108, 298,
-+    251,  34, 182, 509, 138, 210, 335, 133, 311, 352, 328, 141, 396, 346,
-+    123, 319, 450, 281, 429, 228, 443, 481,  92, 404, 485, 422, 248, 297,
-+     23, 213, 130, 466,  22, 217, 283,  70, 294, 360, 419, 127, 312, 377,
-+      7, 468, 194,   2, 117, 295, 463, 258, 224, 447, 247, 187,  80, 398,
-+    284, 353, 105, 390, 299, 471, 470, 184,  57, 200, 348,  63, 204, 188,
-+     33, 451,  97,  30, 310, 219,  94, 160, 129, 493,  64, 179, 263, 102,
-+    189, 207, 114, 402, 438, 477, 387, 122, 192,  42, 381,   5, 145, 118,
-+    180, 449, 293, 323, 136, 380,  43,  66,  60, 455, 341, 445, 202, 432,
-+      8, 237,  15, 376, 436, 464,  59, 461,
-+};
-+
-+static const uint16_t octeon_kasumi_constants[8] = {
-+    0x0123, 0x4567, 0x89ab, 0xcdef, 0xfedc, 0xba98, 0x7654, 0x3210,
-+};
-+
-+typedef struct OcteonKasumiSubkeys {
-+    uint16_t kli1[8];
-+    uint16_t kli2[8];
-+    uint16_t koi1[8];
-+    uint16_t koi2[8];
-+    uint16_t koi3[8];
-+    uint16_t kii1[8];
-+    uint16_t kii2[8];
-+    uint16_t kii3[8];
-+} OcteonKasumiSubkeys;
-+
-+static uint64_t octeon_des_permute(uint64_t input, const uint8_t *table,
-+                                   size_t output_bits, size_t input_bits)
++static void octeon_gfm_mul(const uint64_t x[2], const uint64_t y[2],
++                           uint16_t poly, uint64_t out[2])
 +{
-+    uint64_t out = 0;
++    uint64_t zh = 0, zl = 0;
++    uint64_t vh = y[0], vl = y[1];
++    uint64_t rh = (uint64_t)poly << 48;
++    int i;
 +
-+    for (size_t i = 0; i < output_bits; i++) {
-+        unsigned src = table[i] - 1;
++    /*
++     * Keep the reflected-shift formulation used by Octeon software: the
++     * selector polynomial is pre-positioned at the top of the high word before
++     * each carry reduction.
++     */
++    for (i = 0; i < 128; i++) {
++        bool bit;
++        bool lsb;
 +
-+        out = (out << 1) | ((input >> (input_bits - 1 - src)) & 1);
-+    }
-+    return out;
-+}
-+
-+static uint32_t octeon_des_rotate28(uint32_t v, unsigned shift)
-+{
-+    return ((v << shift) | (v >> (28 - shift))) & 0x0fffffffU;
-+}
-+
-+static void octeon_des_expand_subkeys(uint64_t key, uint64_t subkeys[16])
-+{
-+    uint64_t permuted = octeon_des_permute(key, octeon_des_pc1,
-+                                           ARRAY_SIZE(octeon_des_pc1), 64);
-+    uint32_t c = (permuted >> 28) & 0x0fffffffU;
-+    uint32_t d = permuted & 0x0fffffffU;
-+
-+    for (int i = 0; i < 16; i++) {
-+        c = octeon_des_rotate28(c, octeon_des_rotations[i]);
-+        d = octeon_des_rotate28(d, octeon_des_rotations[i]);
-+        subkeys[i] = octeon_des_permute(((uint64_t)c << 28) | d,
-+                                        octeon_des_pc2,
-+                                        ARRAY_SIZE(octeon_des_pc2), 56);
-+    }
-+}
-+
-+static uint32_t octeon_des_f(uint32_t r, uint64_t subkey)
-+{
-+    uint64_t expanded = octeon_des_permute(r, octeon_des_e,
-+                                           ARRAY_SIZE(octeon_des_e), 32);
-+    uint32_t out = 0;
-+
-+    expanded ^= subkey;
-+    for (int i = 0; i < 8; i++) {
-+        uint8_t sextet = (expanded >> (42 - i * 6)) & 0x3f;
-+        uint8_t row = ((sextet & 0x20) >> 4) | (sextet & 0x01);
-+        uint8_t col = (sextet >> 1) & 0x0f;
-+
-+        out = (out << 4) | octeon_des_sboxes[i][row * 16 + col];
-+    }
-+
-+    return octeon_des_permute(out, octeon_des_p, ARRAY_SIZE(octeon_des_p), 32);
-+}
-+
-+static uint64_t octeon_des_block_crypt(uint64_t block, uint64_t key,
-+                                       bool encrypt)
-+{
-+    uint64_t subkeys[16];
-+    uint64_t permuted = octeon_des_permute(block, octeon_des_ip,
-+                                           ARRAY_SIZE(octeon_des_ip), 64);
-+    uint32_t l = permuted >> 32;
-+    uint32_t r = permuted;
-+
-+    octeon_des_expand_subkeys(key, subkeys);
-+
-+    for (int i = 0; i < 16; i++) {
-+        uint32_t next = l ^ octeon_des_f(r, subkeys[encrypt ? i : 15 - i]);
-+
-+        l = r;
-+        r = next;
-+    }
-+
-+    return octeon_des_permute(((uint64_t)r << 32) | l,
-+                              octeon_des_fp, ARRAY_SIZE(octeon_des_fp), 64);
-+}
-+
-+static uint64_t octeon_3des_block_crypt(uint64_t block, const uint64_t keys[3],
-+                                        bool encrypt)
-+{
-+    if (encrypt) {
-+        block = octeon_des_block_crypt(block, keys[0], true);
-+        block = octeon_des_block_crypt(block, keys[1], false);
-+        block = octeon_des_block_crypt(block, keys[2], true);
-+    } else {
-+        block = octeon_des_block_crypt(block, keys[2], false);
-+        block = octeon_des_block_crypt(block, keys[1], true);
-+        block = octeon_des_block_crypt(block, keys[0], false);
-+    }
-+    return block;
-+}
-+
-+static void octeon_3des_crypt_common(MIPSOcteonCryptoState *crypto,
-+                                     uint64_t input_reg,
-+                                     bool encrypt, bool cbc)
-+{
-+    const uint64_t keys[3] = {
-+        crypto->des3_key[0],
-+        crypto->des3_key[1],
-+        crypto->des3_key[2],
-+    };
-+    uint64_t block = input_reg;
-+
-+    if (cbc) {
-+        if (encrypt) {
-+            block ^= crypto->des3_iv;
-+            block = octeon_3des_block_crypt(block, keys, true);
-+            crypto->des3_iv = block;
++        if (i < 64) {
++            bit = (x[0] >> (63 - i)) & 1;
 +        } else {
-+            block = octeon_3des_block_crypt(block, keys, false);
-+            block ^= crypto->des3_iv;
-+            crypto->des3_iv = input_reg;
++            bit = (x[1] >> (127 - i)) & 1;
 +        }
-+    } else {
-+        block = octeon_3des_block_crypt(block, keys, encrypt);
++        if (bit) {
++            zh ^= vh;
++            zl ^= vl;
++        }
++
++        lsb = vl & 1;
++        vl = (vh << 63) | (vl >> 1);
++        vh >>= 1;
++        if (lsb) {
++            vh ^= rh;
++        }
 +    }
 +
-+    crypto->des3_result = block;
++    out[0] = zh;
++    out[1] = zl;
 +}
 +
-+static inline uint16_t octeon_rol16(uint16_t value, unsigned int bits)
++static uint64_t octeon_gfm_reduce64(Int128 product, uint8_t poly)
 +{
-+    return (value << bits) | (value >> (16 - bits));
-+}
++    uint64_t lo = int128_getlo(product);
++    uint64_t hi = int128_gethi(product);
 +
-+static void octeon_kasumi_key_schedule(const uint64_t key_regs[2],
-+                                       OcteonKasumiSubkeys *subkeys)
-+{
-+    uint16_t key[8];
-+    uint16_t key_prime[8];
++    while (hi) {
++        int bit = 63 - clz64(hi);
 +
-+    key[0] = key_regs[0] >> 48;
-+    key[1] = key_regs[0] >> 32;
-+    key[2] = key_regs[0] >> 16;
-+    key[3] = key_regs[0];
-+    key[4] = key_regs[1] >> 48;
-+    key[5] = key_regs[1] >> 32;
-+    key[6] = key_regs[1] >> 16;
-+    key[7] = key_regs[1];
-+
-+    for (int i = 0; i < 8; i++) {
-+        key_prime[i] = key[i] ^ octeon_kasumi_constants[i];
++        hi ^= 1ULL << bit;
++        lo ^= (uint64_t)poly << bit;
++        if (bit > 56) {
++            hi ^= (uint64_t)poly >> (64 - bit);
++        }
 +    }
 +
-+    for (int i = 0; i < 8; i++) {
-+        subkeys->kli1[i] = octeon_rol16(key[i], 1);
-+        subkeys->kli2[i] = key_prime[(i + 2) & 7];
-+        subkeys->koi1[i] = octeon_rol16(key[(i + 1) & 7], 5);
-+        subkeys->koi2[i] = octeon_rol16(key[(i + 5) & 7], 8);
-+        subkeys->koi3[i] = octeon_rol16(key[(i + 6) & 7], 13);
-+        subkeys->kii1[i] = key_prime[(i + 4) & 7];
-+        subkeys->kii2[i] = key_prime[(i + 3) & 7];
-+        subkeys->kii3[i] = key_prime[(i + 7) & 7];
-+    }
++    return lo;
 +}
 +
-+static uint16_t octeon_kasumi_fi(uint16_t in, uint16_t subkey)
++static void octeon_gfm_mul64_uia2(const uint64_t x[2], const uint64_t y[2],
++                                  uint8_t poly, uint64_t out[2])
 +{
-+    uint16_t nine = in >> 7;
-+    uint16_t seven = in & 0x7f;
++    /*
++     * UIA2 uses the GFM datapath as a reflected 64-bit multiply in the low
++     * half of the 128-bit register pair.
++     */
++    uint64_t vx = revbit64(x[1]);
++    uint64_t vy = revbit64(y[0]);
++    Int128 product = clmul_64(vx, vy);
++    uint64_t res = octeon_gfm_reduce64(product, revbit32(poly) >> 24);
 +
-+    nine = octeon_kasumi_s9[nine] ^ seven;
-+    seven = octeon_kasumi_s7[seven] ^ (nine & 0x7f);
-+    seven ^= subkey >> 9;
-+    nine ^= subkey & 0x1ff;
-+    nine = octeon_kasumi_s9[nine] ^ seven;
-+    seven = octeon_kasumi_s7[seven] ^ (nine & 0x7f);
-+    return (seven << 9) | nine;
++    out[0] = 0;
++    out[1] = revbit64(res);
 +}
 +
-+static uint32_t octeon_kasumi_fo(uint32_t in, int index,
-+                                 const OcteonKasumiSubkeys *subkeys)
++static void octeon_gfm_mul_reflect(MIPSOcteonCryptoState *crypto)
 +{
-+    uint16_t left = in >> 16;
-+    uint16_t right = in;
-+
-+    left ^= subkeys->koi1[index];
-+    left = octeon_kasumi_fi(left, subkeys->kii1[index]);
-+    left ^= right;
-+    right ^= subkeys->koi2[index];
-+    right = octeon_kasumi_fi(right, subkeys->kii2[index]);
-+    right ^= left;
-+    left ^= subkeys->koi3[index];
-+    left = octeon_kasumi_fi(left, subkeys->kii3[index]);
-+    left ^= right;
-+
-+    return ((uint32_t)right << 16) | left;
-+}
-+
-+static uint32_t octeon_kasumi_fl(uint32_t in, int index,
-+                                 const OcteonKasumiSubkeys *subkeys)
-+{
-+    uint16_t left = in >> 16;
-+    uint16_t right = in;
-+    uint16_t a = left & subkeys->kli1[index];
-+    uint16_t b;
-+
-+    right ^= octeon_rol16(a, 1);
-+    b = right | subkeys->kli2[index];
-+    left ^= octeon_rol16(b, 1);
-+    return ((uint32_t)left << 16) | right;
-+}
-+
-+static uint64_t octeon_kasumi_block_encrypt(uint64_t block,
-+                                            const uint64_t key_regs[2])
-+{
-+    OcteonKasumiSubkeys subkeys;
-+    uint32_t left = block >> 32;
-+    uint32_t right = block;
-+
-+    octeon_kasumi_key_schedule(key_regs, &subkeys);
-+
-+    for (int i = 0; i < 8; ) {
-+        uint32_t temp = octeon_kasumi_fl(left, i, &subkeys);
-+
-+        temp = octeon_kasumi_fo(temp, i++, &subkeys);
-+        right ^= temp;
-+        temp = octeon_kasumi_fo(right, i, &subkeys);
-+        temp = octeon_kasumi_fl(temp, i++, &subkeys);
-+        left ^= temp;
-+    }
-+
-+    return ((uint64_t)left << 32) | right;
-+}
-+
-+static void octeon_kasumi_crypt_common(MIPSOcteonCryptoState *crypto,
-+                                       uint64_t input_reg, bool cbc)
-+{
-+    const uint64_t key_regs[2] = {
-+        crypto->des3_key[0],
-+        crypto->des3_key[1],
++    uint64_t in[2] = {
++        revbit64(crypto->gfm_reflect_resinp[0]),
++        revbit64(crypto->gfm_reflect_resinp[1]),
 +    };
-+    uint64_t block = input_reg;
++    uint64_t mul[2] = {
++        revbit64(crypto->gfm_reflect_mul[0]),
++        revbit64(crypto->gfm_reflect_mul[1]),
++    };
++    uint64_t out[2];
 +
-+    if (cbc) {
-+        block ^= crypto->des3_iv;
-+    }
-+
-+    block = octeon_kasumi_block_encrypt(block, key_regs);
-+    if (cbc) {
-+        crypto->des3_iv = block;
-+    }
-+    crypto->des3_result = block;
++    octeon_gfm_mul(in, mul, crypto->gfm_poly, out);
++    crypto->gfm_reflect_resinp[0] = revbit64(out[0]);
++    crypto->gfm_reflect_resinp[1] = revbit64(out[1]);
 +}
 +
-+void helper_octeon_cp2_mt_des3_enc_cbc(CPUMIPSState *env, uint64_t value)
-+{
-+    octeon_3des_crypt_common(&env->octeon_crypto, value, true, true);
-+}
-+
-+void helper_octeon_cp2_mt_kas_enc_cbc(CPUMIPSState *env, uint64_t value)
-+{
-+    octeon_kasumi_crypt_common(&env->octeon_crypto, value, true);
-+}
-+
-+void helper_octeon_cp2_mt_des3_enc(CPUMIPSState *env, uint64_t value)
-+{
-+    octeon_3des_crypt_common(&env->octeon_crypto, value, true, false);
-+}
-+
-+void helper_octeon_cp2_mt_kas_enc(CPUMIPSState *env, uint64_t value)
-+{
-+    octeon_kasumi_crypt_common(&env->octeon_crypto, value, false);
-+}
-+
-+void helper_octeon_cp2_mt_des3_dec_cbc(CPUMIPSState *env, uint64_t value)
-+{
-+    octeon_3des_crypt_common(&env->octeon_crypto, value, false, true);
-+}
-+
-+void helper_octeon_cp2_mt_des3_dec(CPUMIPSState *env, uint64_t value)
-+{
-+    octeon_3des_crypt_common(&env->octeon_crypto, value, false, false);
-+}
-+
- void helper_octeon_cp2_mt_snow3g_start(CPUMIPSState *env, uint64_t value)
+ uint64_t helper_octeon_cp2_mf_crc_iv_reflect(CPUMIPSState *env)
  {
-     octeon_snow3g_start(&env->octeon_crypto, value);
+     return octeon_crc_reflect32_by_byte(env->octeon_crypto.crc_iv);
+ }
+ 
++void helper_octeon_cp2_mt_gfm_xor0_reflect(CPUMIPSState *env, uint64_t value)
++{
++    env->octeon_crypto.gfm_reflect_resinp[0] ^= value;
++}
++
++void helper_octeon_cp2_mt_gfm_xor0(CPUMIPSState *env, uint64_t value)
++{
++    env->octeon_crypto.gfm_resinp[0] ^= value;
++}
++
++void helper_octeon_cp2_mt_gfm_xormul1_reflect(CPUMIPSState *env,
++                                              uint64_t value)
++{
++    MIPSOcteonCryptoState *crypto = &env->octeon_crypto;
++
++    crypto->gfm_reflect_resinp[1] ^= value;
++    octeon_gfm_mul_reflect(crypto);
++}
++
++void helper_octeon_cp2_mt_gfm_xormul1(CPUMIPSState *env, uint64_t value)
++{
++    MIPSOcteonCryptoState *crypto = &env->octeon_crypto;
++
++    crypto->gfm_resinp[1] ^= value;
++    if (crypto->gfm_poly <= 0xff && crypto->gfm_mul[1] == 0 &&
++        crypto->gfm_resinp[0] == 0) {
++        octeon_gfm_mul64_uia2(crypto->gfm_resinp, crypto->gfm_mul,
++                              crypto->gfm_poly, crypto->gfm_resinp);
++    } else {
++        octeon_gfm_mul(crypto->gfm_resinp, crypto->gfm_mul, crypto->gfm_poly,
++                       crypto->gfm_resinp);
++    }
++}
++
+ void helper_octeon_cp2_mt_crc_write_iv_reflect(CPUMIPSState *env,
+                                                uint64_t value)
+ {
 
 -- 
 2.54.0
