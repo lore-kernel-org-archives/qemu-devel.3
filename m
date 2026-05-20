@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 458DBCD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:56:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7E85CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:57:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPorR-0008Ow-Hn; Wed, 20 May 2026 17:53:54 -0400
+	id 1wPorR-0008PE-LD; Wed, 20 May 2026 17:53:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wPor5-0007rS-HL
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:53:33 -0400
+ id 1wPoqp-0007dh-Mp
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:53:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wPor4-000525-1I
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:53:31 -0400
+ id 1wPoqo-0004z2-4D
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:53:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779314009;
+ s=mimecast20190719; t=1779313992;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fEpLNtezLZ5gi9gc6tBA5aF7JHFme/l1NsetAdVdzOU=;
- b=A8U+aT3VFeRiOiyb5fL4+X4XnBPDsgJCbWpt6aERvctom+aI0XVpHz2n1mo1mdh2v3aTBs
- FXmjQvufuOIvrM/DLqWgIBKBDqXxXvkCvvlakNdlkjShJ9f2sbY6x5jPEj/pd2i4g0TxMJ
- LLQAgVd5wZsSrAUwopcd3cqP0kKR9AM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=3KUG4432JhTrb0PuW80xNY0zS5CkpLg7NX6P+/NnTq4=;
+ b=Q97PWMdX6Zz0DRLVwCkhYWEDBk9YkHYLc0efvT4nquMVcKAohRX3wZc+3Zo5Hoo8k2KmUN
+ aoLXSokbNq72q6ScsMXfsqroydSQXFcFn9ruUephaVypA0LR79E+1XMtlExMXGg4WqWyqX
+ dnyySyXqNaNkp8CD5VMBi/4GZ4U91LI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-520-f7jyiDZCMQ-Fd4_C0TlmBA-1; Wed,
- 20 May 2026 17:53:27 -0400
-X-MC-Unique: f7jyiDZCMQ-Fd4_C0TlmBA-1
-X-Mimecast-MFC-AGG-ID: f7jyiDZCMQ-Fd4_C0TlmBA_1779314007
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-474-7T6uL6ODNJKjpqYOrbDPPw-1; Wed,
+ 20 May 2026 17:53:10 -0400
+X-MC-Unique: 7T6uL6ODNJKjpqYOrbDPPw-1
+X-Mimecast-MFC-AGG-ID: 7T6uL6ODNJKjpqYOrbDPPw_1779313989
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E264E19560B4
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 21:53:26 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4B4F7195608D
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 21:53:09 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.26])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8A81E30001A2; Wed, 20 May 2026 21:53:25 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D828D18004A3; Wed, 20 May 2026 21:53:07 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 21 May 2026 01:49:35 +0400
-Subject: [PATCH 34/40] util: guard monitor_vprintf callers with CONFIG_HMP
+Date: Thu, 21 May 2026 01:49:32 +0400
+Subject: [PATCH 31/40] tests/qtest/drive_del-test: guard HMP-dependent
+ tests with CONFIG_HMP
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260521-qemu-no-hmp-v1-34-d104f809e145@redhat.com>
+Message-Id: <20260521-qemu-no-hmp-v1-31-d104f809e145@redhat.com>
 References: <20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com>
 In-Reply-To: <20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3044;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3445;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=HwWHsZFMKZdWXTYjOmgerggdHu8TDi5XpVZ7v+nyDlk=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqDiyEYRx+qsbU28Pdc7J8yrvkAvvS06c5QAvFG
- LNVeWI/VMOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCag4shAAKCRDa6OEJdZac
- 5Ve9EACUp+iPKWWmZmSVvxM0G00/aqmjBrek3BkDZeEevQSVZxWu5149MJiwoIqrpB8FwK236R8
- VgTvmpmCI4SKzqATEWX6Iv4kQOv8GmyfdolaS0AO2zUb7Jko7aZ7H5r+ItIbdJPNNHWt7wK6tb2
- ATqr4gP1UDa59HkshGCcg1dahOiODd3dtSt/1T+oHj7T/onN7KscZ4yeX2WwdNSiimzSfUI9jqC
- c3bDeoO9qn5u0Cy9WuLHugOeTF1X/tmMkaBKY+a2Llv4yJPCpi/yrhqCMZ8QIl6Cjddw0tegrtE
- DPXeOzRYtR4CE49ZoIdZ3kyWFOo2AP/Dev2dWESoZ6Pj+ahJMBZ1/mKkMySM41I/non1NBHq27s
- Ww3mEhHhTFzdYRfGXceGOBF/QRN7Qs47PcHGApF4Judt9IheYGMmL6Qdvw6F90Uw04Wm0Cea6ZV
- KnrS148uGfIKV4zF5E5aPmecFUsa8yUuKBf8rNZtOgRA4nX6SXSlEsFuSpCEVtytRzRDdHfeA4z
- EPSul6eWlsI6m2mJyf9K6vN+/gTiB/0I2BsAVuH/3wFEAGMxSkak3XPtG0zgY2sU4GneSo1InQ0
- SYgPy5M5uh8iCWkYQ6mgnbPo3Rag9gXqSAKy9F56Eu6ZuMgIlfGPj/8yZCkW4fK0hML/WdtpRiS
- mjxnZsofCab/G+g==
+ bh=9n36PJYlKJGC91zsIXys/gJy72dL3cNyBLFLxzQVzSE=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqDiyErCFQq0lbmS9OWR4wxhSc3KeytpqPvuEpX
+ BIW/12Qx7mJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCag4shAAKCRDa6OEJdZac
+ 5SuMEACXrOcPyWoIgD09m98sgj9mUIwLZJB/50k/PuzCITKxb8FKY+Nkn0iL7p2R8yBJpGrWI20
+ /wW9zDiloDFLYRFAvAppM/jizbAFhP7xeh3IeniyRQ3cmoUN7sId94rZOUUjL7e43P5OxalZE2U
+ K6j2bFmt3/a+O0ycv8Lr7E3AM4ETjfuynL1URp6jzTqaOeMAlWEFST2z0f2Q/TnjxcBI9voCLzp
+ uEOT5yM/7HvZCsEbO+cc32u57Z7lW0Pcb05jPiX824VBNhaAdhdXREVgbyIpOpkGkOYyMxfbddJ
+ ts+Q4hMNEVAYYTuanlkWKbf4KXSkexn15ptuAvUXRGdA/x/PozKqCqI8eme5CCqDAT0pDptC5D4
+ pwKg3pqGuv35Ybi9QLfI7p9zW0D6pKWWqGTdk9RxeCu5lK44fr+EdtmKfbBYFZnfVubhlDwtsI8
+ sSkxxvXSvK7kRIrRDWlE7VES6TAACUnTugVvUhX0ggFJX/Xq9uWaoNjLalLysjd3sENYjCQbbRs
+ lxpN5+AkTKQoaoF+ZF+UtJdIs/cRJL/2v0bkBU71kOedtX4nIyXXNKmbK7o2guuphU2+F5ELZPA
+ C0QyBUEku49icpViNUehD2bYXk5alzXF6wobESv4+9vZqMWbyL97Hu5KEjD1z+uUj06ZpBF3QsV
+ VWNSr9HaMcUrO5A==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -103,102 +104,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Guard calls to monitor_vprintf in error-report and qemu-print so
-they compile without HMP. When CONFIG_HMP is not set,
-error_vprintf_mon falls back directly to stderr and qemu_vfprintf
-returns -1 for NULL streams.
+These tests rely on HMP commands (drive_add, drive_del) that have no
+direct QMP equivalent. QMP's blockdev-del operates on node-names and
+rejects deletion of in-use nodes, whereas HMP's drive_del operates on
+BlockBackend IDs and can detach a drive from a device. The equivalent
+QMP-based tests already exist (test_blockdev_add_device_add_and_del*).
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/unit/test-util-sockets.c | 4 +++-
- tools/qemu-vnc/stubs.c         | 2 ++
- util/error-report.c            | 8 +++++---
- util/qemu-print.c              | 6 ++++++
- 4 files changed, 16 insertions(+), 4 deletions(-)
+ tests/qtest/drive_del-test.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/tests/unit/test-util-sockets.c b/tests/unit/test-util-sockets.c
-index b9f2453e299..23ebe1e26b5 100644
---- a/tests/unit/test-util-sockets.c
-+++ b/tests/unit/test-util-sockets.c
-@@ -73,8 +73,10 @@ int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp)
-  */
- Monitor *monitor_cur(void) { return cur_mon; }
- Monitor *monitor_set_cur(Coroutine *co, Monitor *mon) { abort(); }
--int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap) { abort(); }
- bool monitor_cur_is_qmp(void) { abort(); };
-+#ifdef CONFIG_HMP
-+int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap) { abort(); }
-+#endif
- 
- #ifndef _WIN32
- static void test_socket_fd_pass_name_good(void)
-diff --git a/tools/qemu-vnc/stubs.c b/tools/qemu-vnc/stubs.c
-index a865ce85f04..f476dd6d956 100644
---- a/tools/qemu-vnc/stubs.c
-+++ b/tools/qemu-vnc/stubs.c
-@@ -46,10 +46,12 @@ Monitor *monitor_set_cur(Coroutine *co, Monitor *mon)
-     return NULL;
+diff --git a/tests/qtest/drive_del-test.c b/tests/qtest/drive_del-test.c
+index 30d9451ddda..d78816d44a7 100644
+--- a/tests/qtest/drive_del-test.c
++++ b/tests/qtest/drive_del-test.c
+@@ -87,6 +87,7 @@ static void blockdev_add_with_media(QTestState *qts)
+     g_assert(has_blockdev(qts));
  }
  
 +#ifdef CONFIG_HMP
- int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap)
+ static void drive_add(QTestState *qts)
  {
-     return -1;
+     char *resp = qtest_hmp(qts, "drive_add 0 if=none,id=drive0");
+@@ -117,6 +118,7 @@ static void drive_del(QTestState *qts)
+     g_assert(!has_drive(qts));
+     g_free(resp);
  }
 +#endif
  
  /*
-  * Link-time stubs for VMState symbols referenced by VNC code.
-diff --git a/util/error-report.c b/util/error-report.c
-index f832ad9b6b6..e2e46281455 100644
---- a/util/error-report.c
-+++ b/util/error-report.c
-@@ -40,11 +40,13 @@ error_vprintf_mon(Monitor *cur_mon, const char *fmt, va_list ap)
-      * IOW this will only print if in HMP, otherwise we
-      * fallback to stderr for QMP / no-monitor scenarios.
-      */
-+#ifdef CONFIG_HMP
-     int ret = monitor_vprintf(cur_mon, fmt, ap);
--    if (ret == -1) {
--        ret = vfprintf(stderr, fmt, ap);
-+    if (ret != -1) {
-+        return ret;
-     }
--    return ret;
-+#endif
-+    return vfprintf(stderr, fmt, ap);
+  * qvirtio_get_dev_type:
+@@ -163,6 +165,7 @@ static void device_del(QTestState *qts, bool and_reset)
+     qtest_qmp_eventwait(qts, "DEVICE_DELETED");
  }
  
- /*
-diff --git a/util/qemu-print.c b/util/qemu-print.c
-index 7b9591035e5..ee80000722b 100644
---- a/util/qemu-print.c
-+++ b/util/qemu-print.c
-@@ -20,10 +20,12 @@
-  */
- int qemu_vprintf(const char *fmt, va_list ap)
- {
 +#ifdef CONFIG_HMP
-     Monitor *cur_mon = monitor_cur();
-     if (cur_mon) {
-         return monitor_vprintf(cur_mon, fmt, ap);
-     }
+ static void test_drive_without_dev(void)
+ {
+     QTestState *qts;
+@@ -245,6 +248,7 @@ static void test_drive_del_device_del(void)
+ 
+     qtest_quit(qts);
+ }
 +#endif
-     return vprintf(fmt, ap);
+ 
+ static void test_cli_device_del(void)
+ {
+@@ -391,6 +395,7 @@ static void test_device_add_and_del_q35(void)
+     qtest_quit(qts);
  }
  
-@@ -52,7 +54,11 @@ int qemu_printf(const char *fmt, ...)
- int qemu_vfprintf(FILE *stream, const char *fmt, va_list ap)
- {
-     if (!stream) {
 +#ifdef CONFIG_HMP
-         return monitor_vprintf(monitor_cur(), fmt, ap);
-+#else
-+        return -1;
-+#endif
-     }
-     return vfprintf(stream, fmt, ap);
+ static void test_drive_add_device_add_and_del(void)
+ {
+     QTestState *qts;
+@@ -443,6 +448,7 @@ static void test_drive_add_device_add_and_del_q35(void)
+ 
+     qtest_quit(qts);
  }
++#endif
+ 
+ static void test_blockdev_add_device_add_and_del(void)
+ {
+@@ -501,19 +507,25 @@ int main(int argc, char **argv)
+ {
+     g_test_init(&argc, &argv, NULL);
+ 
++#ifdef CONFIG_HMP
+     qtest_add_func("/drive_del/without-dev", test_drive_without_dev);
++#endif
+ 
+     if (qvirtio_get_dev_type() != NULL) {
++#ifdef CONFIG_HMP
+         qtest_add_func("/drive_del/after_failed_device_add",
+                        test_after_failed_device_add);
+         qtest_add_func("/drive_del/drive_del_device_del",
+                        test_drive_del_device_del);
++#endif
+         qtest_add_func("/device_del/drive/cli_device",
+                        test_cli_device_del);
+         qtest_add_func("/device_del/drive/device_add",
+                        test_device_add_and_del);
++#ifdef CONFIG_HMP
+         qtest_add_func("/device_del/drive/drive_add_device_add",
+                        test_drive_add_device_add_and_del);
++#endif
+         qtest_add_func("/device_del/empty",
+                        test_empty_device_del);
+         qtest_add_func("/device_del/blockdev",
+@@ -524,8 +536,10 @@ int main(int argc, char **argv)
+                            test_cli_device_del_q35);
+             qtest_add_func("/device_del/drive/device_add_q35",
+                            test_device_add_and_del_q35);
++#ifdef CONFIG_HMP
+             qtest_add_func("/device_del/drive/drive_add_device_add_q35",
+                            test_drive_add_device_add_and_del_q35);
++#endif
+             qtest_add_func("/device_del/blockdev_q35",
+                            test_blockdev_add_device_add_and_del_q35);
+         }
 
 -- 
 2.54.0
