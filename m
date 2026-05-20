@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6D7DCD5BA4
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:24:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D08F6CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:24:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPkeD-00049T-Sc; Wed, 20 May 2026 13:23:57 -0400
+	id 1wPkdk-0003dY-83; Wed, 20 May 2026 13:23:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkeC-000499-2y
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:23:56 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkdj-0003az-DP
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:23:27 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkeA-0003XE-7K
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:23:55 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-444826c16ffso4643633f8f.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:23:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkdf-0003Os-QD
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:23:27 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4891e86fabeso68526805e9.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:23:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779297832; x=1779902632; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779297802; x=1779902602; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WAL34/RRHyFc4Y9KYQeJGuf0H2THlwX/TfXdoppM+D0=;
- b=y6k2MFeb4bU8d3xYveS6ugtwyQd7zz0N+KV+nVwFiK84WtxjS1ljBMP8uVjSNeIdxc
- QBtJMz/pG0DjLga+IrmPG1SVzxYZ9zQ9XM8e/ILWpIurQ5QZnSDVo6Acr12dzdXTpZmF
- 8GhZsLPNh6Sl8OQfLBCXAWZp0Fjk7UyLhH6daSODo3T9dKSSQNwTVf4v49Jp8P8okk51
- XJ0zONwoFB/ydVOgSE3u6apv15DB9xtihqRkBTHr1glwVKONkrmlmYBPtF5O4EIUpu2r
- VpIm7hblTig/MDiEiuc4gxkl5ww6+DDo6lmXdVZlDxPbBWdtBVed35Uuv6PQfB3uWWJy
- p1AA==
+ bh=BfLMAKm0cFQ1CO5b899F9cGVNdd+gP0hQK4cGU9J1eo=;
+ b=YTK/Ix1CfxEEKIRiY0W9xHr9vujf7+wt7gnRY4I1lnGmfeMqlwDzffOmSV8jBmYkvO
+ 6ubdXexlFlyhAd/95FqJ/WlcjXTiOCi3U6HeYg4WXKyOZoi8KgZCYjlK8rDWJAtjZb9K
+ Yde9tfK3YjfOaPmHoggsyfTtRIc6nc5XM6bqnmsVsei2rWy7o8Kk0G32IXX37hbxg8M+
+ PIC4nwrJCdwP78gGJMNbcUs8rkP9daUEVgSJwNbrXSMqCsKw2N+9S0M3ouORx/PHA5/u
+ TH1z6Z2Gy4tx75HHVLRzowYNty4BWo0VQ1nplQ/nivZVseQI40roXGkxQtMkyZf49WAN
+ ik5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779297832; x=1779902632;
+ d=1e100.net; s=20251104; t=1779297802; x=1779902602;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=WAL34/RRHyFc4Y9KYQeJGuf0H2THlwX/TfXdoppM+D0=;
- b=MaBpSQhqoDHhU6EGKZQ3KjGWry7JpUh1mupF5oPq+haompXH7Ar7scxdqs0Eo8lDLN
- j5oF3UuPHzLgEenavdhwLoCPjqPuHiHbrmvitEqN7F/y4/DuKH3dlsbx9pL/CngmKiZi
- pFsRAAwGQjA/oFHCw+yKSoviqqFDYF6mVZvXkJrvg3A9C2rlCsr5hTvMwkvmdot1U4Me
- eGZt42kBduJfNLJ6d3qE8HRvBMJAySHD7YoSvbQFblm6uChu+EB79W2Z3oSg935VQ6ec
- deogtXLq54uf3OMB3pSc+8BEDeoKCOedZ618M/KX7JrBnilCsWyW8InG3Irl0HzPl/OJ
- f2hg==
-X-Gm-Message-State: AOJu0YwYlel/B1iaG7QxqIPrTIurY7JzIShmfEXDGvxHv+zuwYmwClTl
- ipqA+bLCjh+9D3oY/l1Vg2CAy4I0HxHV7aXMnnLKF9z58PFkuByxfuwlyuGgZ0tRzncSaQqmvFo
- A2Qj0c1s=
-X-Gm-Gg: Acq92OGKYuKlGzoOu9XfKmQuBlnZ1itp7dBgwrIGhGJRHzNnLAEn4g2LrXL3v9d4gTA
- 4V/Lcp1TMuIYmLlZSXeU4W40fVGBkmo8q6YyJe8EwE9HJK2+UQJUSbDrKODdk9EAMhDJtdf6ugq
- CUMBYKEwo8IvBfN+Xe0FbDABiGB92I0/163Dzcd1O1ABriJxsjY/2VJprN7/mzgLrn6oAhjzvqS
- y5bwc3ZbJLSvaP0KGcDX6uxDfDUtU80qGlpMWDvRut9M0jQ98bVL7oUGX5QwkWiQrLGriBQRN8G
- ZsVDXMfMwMsGFiy8hmLM1fmTopjFy35yERw7f0Bz674TKTyWQ8sbZgijNNANYdb7TwIWx92Ozz1
- S75s+A4G+nWXsTJeH+EsREK53Q1Km7Xtr1VucjVW66bqcvmk2wX2AmY3+qmqNbVnGg4ERFFdFPa
- 7xPrDtLZMCPAcmmKQGwqxycUH7hpgdIUrUhE2zNRmaw6XvNGgMppFA6jIp521gv0SKAAl2eG2A
-X-Received: by 2002:a05:6000:2485:b0:43f:dfb6:78e1 with SMTP id
- ffacd0b85a97d-45e5c3629femr40835901f8f.8.1779297832218; 
- Wed, 20 May 2026 10:23:52 -0700 (PDT)
+ bh=BfLMAKm0cFQ1CO5b899F9cGVNdd+gP0hQK4cGU9J1eo=;
+ b=MZgamFyBBuvUZxIvejWd5FxBe/Q/5aWocJRwg1OzJM8DFZTwtjMBbR2m6c1XuKJkYq
+ IIwqNX47hroaDGpZ9eRMjn8h9pVtg4TuVbSZjoKVyZ0RdiABWnlT07q1g2qUljKq8Z34
+ yYTMRmqKpRc1Vx8HUauR4cVc0/YCte6EBue0DsGsL8D8NMwBg7AtzWqMysUGS1+J3Kph
+ pa5GmmyqgzOgme+wiiRRDOMnuNV79u8fr+q7ORb3mcljRzznCKimBqNiihZlFK9NMGgp
+ BBFX85heGMJ12fY4BzDD2piUS+N+D023SSL+mLA/4k4YemwOnoZhvi2OHbrzUihmpBK0
+ NAow==
+X-Gm-Message-State: AOJu0Ywy9tQK9L3OMkt+gSPmqdJq+EYt+ks8dwMN6J77QQBqPG14Z0Fg
+ MhIDkNlfXcl76pNsiXmLcZO4Q2h8P3e1Qc2DpxfxJ17F6x49Uv6F6wmQr834RcmM2UtD5AijD2T
+ 6kWBXkG8=
+X-Gm-Gg: Acq92OHLnApo3BzWLX+bekow9GG9dz2kDz2Y/L42iqJ4acpmfgsZnJl3Jf1lCoF1ctO
+ tscegm58Ow6kqNzHqSUTuamX6ZZFIWhGChcvsPz9AJ9OZ+rIlpgIt0DFZLJNwxmf//z6gCj75BX
+ yg/U8+5M4uB04yzndMEqtP5y4ef+ujQuTqYr0VqmusQSMtp5JvG20orD1VEDpxeYiHxdQ20JYbu
+ 9whGNGam9miquPNPElAzS3/9C1yHBwiqbQbN19GEg1klKq2EGxak3DanvbEwJkgv/ZFwtxxAPVI
+ WpS6d2vKDW0snceeWDTVW0QUS+5dy6sz/KwiHo2MZT3GFGc67d+rFMaZ4998Rx5uDcR4hIt/OR+
+ /jma2YOSRE7HWDoJfhr9y0inai1+AkMQThKLyxphVPXby7RU+zpi1QAuXt22DVwOYkk94KWqYmf
+ GI4YEHnyDwT+gNtV2KYskWh0+ILvCjk8NjvMB4cXm9z+6wxVZtlMuqCnECKMQezRG4CgMMVfrqv
+ ODsZ5R9w9U=
+X-Received: by 2002:a05:600c:3104:b0:48d:35e:82cb with SMTP id
+ 5b1f17b1804b1-48fe651b2a9mr366137255e9.28.1779297802178; 
+ Wed, 20 May 2026 10:23:22 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da0fe13b4sm55964638f8f.28.2026.05.20.10.23.51
+ ffacd0b85a97d-45da0fe13b4sm55961400f8f.28.2026.05.20.10.23.21
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 20 May 2026 10:23:51 -0700 (PDT)
+ Wed, 20 May 2026 10:23:21 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: James Hilliard <james.hilliard1@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v12 05/24] tests/tcg/mips: add Octeon instruction smoke test
-Date: Wed, 20 May 2026 19:22:53 +0200
-Message-ID: <20260520172313.23777-6-philmd@linaro.org>
+Subject: [PATCH v12 01/24] linux-user/mips: implement sysmips(MIPS_FLUSH_CACHE)
+Date: Wed, 20 May 2026 19:22:49 +0200
+Message-ID: <20260520172313.23777-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520172313.23777-1-philmd@linaro.org>
 References: <20260520172313.23777-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,98 +103,81 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: James Hilliard <james.hilliard1@gmail.com>
 
-Add a mips64/mips64el linux-user TCG smoke test for representative
-Octeon instruction paths.
+Add the target sysmips dispatcher and implement MIPS_FLUSH_CACHE as a
+successful no-op for linux-user.
 
-Run the test with -cpu Octeon68XX and share the source between the
-mips64 and mips64el target directories.
+Self-modifying code is handled by QEMU's normal user-mode translation
+invalidation machinery, so the target ABI only needs the syscall command
+to be accepted.
 
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS                                   |  2 +-
- tests/tcg/mips/user/isa/octeon/octeon-insns.c | 13 ++++++++++++
- tests/tcg/mips64/Makefile.target              | 20 +++++++++++++++++++
- tests/tcg/mips64el/Makefile.target            |  8 ++++++++
- 4 files changed, 42 insertions(+), 1 deletion(-)
- create mode 100644 tests/tcg/mips/user/isa/octeon/octeon-insns.c
- create mode 100644 tests/tcg/mips64/Makefile.target
- create mode 100644 tests/tcg/mips64el/Makefile.target
+ linux-user/mips/target_syscall.h   |  1 +
+ linux-user/mips64/target_syscall.h |  1 +
+ linux-user/syscall.c               | 17 +++++++++++++++++
+ 3 files changed, 19 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index b75f3222f2f..d9e3ab03cb9 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -310,7 +310,7 @@ S: Odd Fixes
- F: target/mips/
- F: disas/*mips.c
- F: docs/system/cpu-models-mips.rst.inc
--F: tests/tcg/mips/
-+F: tests/tcg/mips*/
+diff --git a/linux-user/mips/target_syscall.h b/linux-user/mips/target_syscall.h
+index dfcdf320b7c..3f36c1695a5 100644
+--- a/linux-user/mips/target_syscall.h
++++ b/linux-user/mips/target_syscall.h
+@@ -10,6 +10,7 @@
+ #define TARGET_MCL_ONFAULT 4
  
- OpenRISC TCG CPUs
- M: Stafford Horne <shorne@gmail.com>
-diff --git a/tests/tcg/mips/user/isa/octeon/octeon-insns.c b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
-new file mode 100644
-index 00000000000..aef23fb9465
---- /dev/null
-+++ b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
-@@ -0,0 +1,13 @@
-+/*
-+ * Test Octeon-specific user-mode instructions.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include <assert.h>
-+#include <stdint.h>
-+
-+int main(void)
+ #define TARGET_FORCE_SHMLBA
++#define TARGET_SYSMIPS_FLUSH_CACHE     3
+ 
+ static inline abi_ulong target_shmlba(CPUMIPSState *env)
+ {
+diff --git a/linux-user/mips64/target_syscall.h b/linux-user/mips64/target_syscall.h
+index 9135bf5e8b6..20ea7c6ab9b 100644
+--- a/linux-user/mips64/target_syscall.h
++++ b/linux-user/mips64/target_syscall.h
+@@ -10,6 +10,7 @@
+ #define TARGET_MCL_ONFAULT 4
+ 
+ #define TARGET_FORCE_SHMLBA
++#define TARGET_SYSMIPS_FLUSH_CACHE     3
+ 
+ static inline abi_ulong target_shmlba(CPUMIPSState *env)
+ {
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 2d4a8aa182b..5a8e00337a0 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -6630,6 +6630,19 @@ static abi_long do_prctl_syscall_user_dispatch(CPUArchState *env,
+     }
+ }
+ 
++#ifdef TARGET_NR_sysmips
++static abi_long do_sysmips(CPUArchState *env, abi_long cmd, abi_long arg1,
++                           abi_long arg2)
 +{
-+    return 0;
++    switch (cmd) {
++    case TARGET_SYSMIPS_FLUSH_CACHE:
++        return 0;
++    default:
++        return -TARGET_EINVAL;
++    }
 +}
-diff --git a/tests/tcg/mips64/Makefile.target b/tests/tcg/mips64/Makefile.target
-new file mode 100644
-index 00000000000..042855844a8
---- /dev/null
-+++ b/tests/tcg/mips64/Makefile.target
-@@ -0,0 +1,20 @@
-+# -*- Mode: makefile -*-
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# MIPS64 - included from tests/tcg/Makefile.target
-+#
++#endif
 +
-+MIPS64_SRC=$(SRC_PATH)/tests/tcg/mips64
-+MIPS_OCTEON_SRC=$(SRC_PATH)/tests/tcg/mips/user/isa/octeon
-+
-+# Set search path for all sources
-+VPATH 		+= $(MIPS64_SRC) $(MIPS_OCTEON_SRC)
-+
-+MIPS64_TESTS=octeon-insns
-+
-+TESTS += $(MIPS64_TESTS)
-+
-+$(MIPS64_TESTS): CFLAGS+=-mabi=64
-+
-+run-octeon-insns: QEMU_OPTS+=-cpu Octeon68XX
-diff --git a/tests/tcg/mips64el/Makefile.target b/tests/tcg/mips64el/Makefile.target
-new file mode 100644
-index 00000000000..dbc5f8dc5fe
---- /dev/null
-+++ b/tests/tcg/mips64el/Makefile.target
-@@ -0,0 +1,8 @@
-+# -*- Mode: makefile -*-
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# MIPS64 little-endian - included from tests/tcg/Makefile.target
-+#
-+
-+include $(SRC_PATH)/tests/tcg/mips64/Makefile.target
+ static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
+                          abi_long arg3, abi_long arg4, abi_long arg5)
+ {
+@@ -12110,6 +12123,10 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+     case TARGET_NR_prctl:
+         return do_prctl(cpu_env, arg1, arg2, arg3, arg4, arg5);
+         break;
++#ifdef TARGET_NR_sysmips
++    case TARGET_NR_sysmips:
++        return do_sysmips(cpu_env, arg1, arg2, arg3);
++#endif
+ #ifdef TARGET_NR_arch_prctl
+     case TARGET_NR_arch_prctl:
+         return do_arch_prctl(cpu_env, arg1, arg2);
 -- 
 2.53.0
 
