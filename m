@@ -4,104 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACCF5CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:38:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3447CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:47:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPoYp-0001DU-O7; Wed, 20 May 2026 17:34:39 -0400
+	id 1wPol1-0004iq-Pu; Wed, 20 May 2026 17:47:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoYo-00019D-Lj
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wPol0-0004iP-Bk
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:47:14 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoYm-0007Fp-RC
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779312876;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bQxVEIAkWR2vrOFpn3uiifZT3gsCoVVKIdJuUCwFfHc=;
- b=HqP68PnRb9fbIRmjEQlj5jdGlJHnVtJOejT2A8qHdJLE5GTl1gXp4mT7UpDxChC1Ljb6N7
- ocJi27zjzfIUujr6tBsPDQ8r8tp2AgQd8VEDQUBmt+K9Xtj9npab0p/VrfQxqpi2bKTWP8
- /HxrqEX0tbwF9F9m0eNC500OayI/waY=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-117--DvtWjUBOj-RySnNmp5_KQ-1; Wed, 20 May 2026 17:34:34 -0400
-X-MC-Unique: -DvtWjUBOj-RySnNmp5_KQ-1
-X-Mimecast-MFC-AGG-ID: -DvtWjUBOj-RySnNmp5_KQ_1779312874
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8cc616cd846so18246746d6.2
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 14:34:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wPoky-0003Ag-H7
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:47:14 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64KFR2cj4115189
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 21:47:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=qcppdkim1; bh=0LUPazkY252ZfDmvIkH/3reOlRK37BNk1/G
+ ET75yJGI=; b=cDccgQmbK7deeeqzrhJ9JHP55yZBDBOKNIQ8zkpSAmkWbxWwo/R
+ aX2c65iTuADCL4yOFrI2a+nm0HJKXRlg2LU4pcsUdsBmt4XiFDd05h117GkY/MOA
+ OpYa7dU8trWgNOsMOLJ8r97rRWBoqmntPhe0ZN+K2siIE5/rUI89VSt2sjT6d7Yx
+ 3w5c/0TztRGmnVIvMF7ly3hXBpxSj0lXsoZ58x5V9w2/EILQTjSkkoolyYjguvKG
+ bF+ARXR7wyZPaiffufj8CGJ3doLoojuOFA7vYR8Imh5PkEGO3+iWwfVtW5mrbKqU
+ Jo/VzrxFY9CqUnROMcgLAHmKHyXw8Z0hcSA==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e99w0jyf0-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 21:47:10 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-90fbc9782c9so1318111285a.0
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 14:47:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779312874; x=1779917674; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bQxVEIAkWR2vrOFpn3uiifZT3gsCoVVKIdJuUCwFfHc=;
- b=AO61mmvfvR79/ElPY4rIY6nxfX+d7rnZG3Td/la7OiwTMrEV3tN7VtWBrz5e3XRfhc
- ipHUXS1QqXQi0e1gY2tQuZ8/wGT81sv+GdF8l3E2BqP8pUw43DcovCNYOVMGljouH84m
- PSvfQVEuPDjjYTzXcreOfPzhaY9HSLw2xyXf94M/EtqFOt58l3jm+Fv/HGhkQupqrb0n
- LvXfSIuHbz9efaqZCFvZjPfvxoUrVP30IZ+KvypZguQKzJFrCopFrw5B1+5DysoGicPL
- o8+ASm7d0GNVMCWvW4/1EqqAqpZUnpEsgIbbUZvftXPst8OiuHIZdFO5+RQMaLcRdRSW
- TSuw==
+ d=oss.qualcomm.com; s=google; t=1779313630; x=1779918430; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=0LUPazkY252ZfDmvIkH/3reOlRK37BNk1/GET75yJGI=;
+ b=Vp8Ykw0jrpQco1sRfbDmzGevjQ18MkJjPKQ63SnqlCxBuZblsSlO6KXRxxV2T8f0bc
+ dursV35SN87c/KtMRWbFFN33UV43LcOOU+Wu0/oOtFUHjpW2441rdHOkjEWn6h+nV9KQ
+ QdR/immA5XoTV5MUzJzkX4jnIuZKOJ3+Y4fTpKEr3vFr2vMfYv0n2q0EwcWqbHkbYyI9
+ SlveTkw1/hbehzSvtEkwmI/iNqGnzWSRqYzpqo88YV3kOc+/Dh59s4DWKSDkfZRipJd4
+ tlAHYBJE1h+0siJFBPPZli5NRgHOROLPhvMVn2Gd0GMUdWBUY0C/oNsCzPs/4qgdNvLc
+ NdVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779312874; x=1779917674;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=bQxVEIAkWR2vrOFpn3uiifZT3gsCoVVKIdJuUCwFfHc=;
- b=mqKPYVnWiMF1MQd/77bjMCBJvCTzTuDeQW0DD/IU/EGQJuKNmFNFkw1y4k0x9b94Xq
- 14yZrsfOa8soWTfn0X0E2UbetQ7kmu+g6x/7EFI0RrdmQ68iI82F3b9PH1lW9diIcJR7
- 1Nm16Y4N/1SxY9fhmj2ighqCRQJo/wm0dU+4SYzz9UHNEYfPfOCfQZkWlLtN4sKb6YG7
- OdswSiRUVuOak2m+e8uw5uHMshEoUxG+ELUZWu8ST1OafGq0BVRjJdSBnPvATdj1PsSL
- TekVLU5+2X+/Q7tu2ooOLwcp0QuapSoqzJtySpKDpmE9pBNJTCHGD3k1ebvA0jW1UK+9
- oteQ==
-X-Gm-Message-State: AOJu0YyiH59MAzQdJWMqk5KKtDkaOsvMKUtb8ZFPou4n88iPiC814YV0
- nX6fu9yaSEqxWOZZEj3VzA6wn1Alh5T00ATA1IsMj6+YQfIL45quNApzW/PJsl2/9+GbtcBcPTi
- vW5Hwj1YBRES+X7A+pX19/aMPc63AHRisZYf8Yyofe+Yf2biGcn/NOqMznmE3Lf3fWcqQA7AiLc
- bvoXPQLetQM1eHzi1AmJHdLFpC0m3qLTQ2utMfYA==
-X-Gm-Gg: Acq92OFeF++OZNKer1nRVczHQenlCADzOnZr94Jm3eJFqnT1qoe9SGa7rRyN+K1exzk
- 9IPD3/6nMo+77PKprlg9xNfPzKAmlWAcnSduEwIEZ/iDLK+HIGCV8dsowOD7oVlCNfwlCG8DY/R
- pYiEVjLE48uA10dr1zpwRMUg09YA0E7E2cvE0kP2hLdncUOxUHNcqL6ouWtlWNl7ZwVD9X8cqON
- jxnO7qcalCoAYAM5LlC04XVhL0BFLXz6J+PkjAXv2O0qI8Pa1LUXbz6TEfeRnXrk4o2I9SklWFt
- H5EVYAjnooMvewb7VewS0GbDfdJ8PcYs0orV4s47VrJmmm9q+hB3Fe2d/IEySfHWSKTL9djEr9f
- W1YGK98/evTmjirCZP/9vUgq4i0kgJcdfnrO5FNCHr9pO
-X-Received: by 2002:ad4:5b85:0:b0:8cc:2a92:48e4 with SMTP id
- 6a1803df08f44-8cc6e67b589mr3919946d6.32.1779312873884; 
- Wed, 20 May 2026 14:34:33 -0700 (PDT)
-X-Received: by 2002:ad4:5b85:0:b0:8cc:2a92:48e4 with SMTP id
- 6a1803df08f44-8cc6e67b589mr3919366d6.32.1779312873322; 
- Wed, 20 May 2026 14:34:33 -0700 (PDT)
-Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8ca360b362fsm133062716d6.22.2026.05.20.14.34.31
+ d=1e100.net; s=20251104; t=1779313630; x=1779918430;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0LUPazkY252ZfDmvIkH/3reOlRK37BNk1/GET75yJGI=;
+ b=TfF8RTS7TwvRcm2bKzb7vbsH+2UzfevcoPmCdRYYckMOOQECAqE9iASqdpC9J0RVl9
+ j9kdHxydiIxh2sEHUk5w+F9LjnBdckVOMQRfPRkIHHmkpluCfEqK343gP7tRowTORTOi
+ uT6GdWwPpNGuLrVE2W8vMUUgEKhghBYOeJV7EZHT2hbXncPsUC8b3Az4se4msWtyG5XG
+ tgGy99bxIzr8kw9oqh2b1g15Ok2b/8RRbvm9NACZAs7Nbtg+mAinzuSib4CHC4zc9VFj
+ HnJtN9gHMtaQFvL4bsNKFyReVgr8DqbNdpnL4eoojk04RrkvyW8vy6Ww91uIhaIDICH+
+ 3L3g==
+X-Gm-Message-State: AOJu0Yxxx/O6C2gQVUPWVMAtlzqjQnkAWtZz5RZai0+7bMvtWFVIQKb+
+ gNTIKq1QWYHgrR+8h3ifPDGcjVRVM/X1ZMZ7hyJKzWrQPl2wsohYClE+VKsx7wi60364phEd47k
+ 3iQ1JfvPcvi8MkRkl9C0LWFqng32ElNYSlvN6cNri47z/MER965vqnSxW0rK77NVK8g==
+X-Gm-Gg: Acq92OFMFSECugLTIhH+weI+MXajFAzIZ2/Vgq9fYSmQUum56CdYRz7aWaTOFrt16in
+ 45/gUe2QYHAA1TamCoIE0vOT9i7q7UkSTFi/205eQczVPUGW9zdQEMbuy/5pd/p61sUU6hqnV/5
+ GvQyieFdVtf3pF/0QmRF+Zn5qWxQlrkMTvYuiF7WRY0H4Ni2OB/azyPp8JVQHGJSrUqmIWufXxU
+ Ks25p9Dy11yrRhlROuvhmMl69cI8ZwutcaXQ/PDv/LX7bk1umKSST1mYwRwVY0XeqBfBI7kmDXy
+ 6G84esEJoLrljbCtYZD2lro999ZgyF+5rAxnmdHgaDAiMB7sDD0brUFJVEEN8Esxuj69Qb7u4cO
+ 1lpP0ZYMgmmBdefrgpEv0OaQwu1fyWJ/uBhjEj3QnYzPj2lJlXZun9WJf2Ihy
+X-Received: by 2002:a05:620a:19a1:b0:911:3e08:23fa with SMTP id
+ af79cd13be357-914a2a63a2dmr8328485a.19.1779313629546; 
+ Wed, 20 May 2026 14:47:09 -0700 (PDT)
+X-Received: by 2002:a05:620a:19a1:b0:911:3e08:23fa with SMTP id
+ af79cd13be357-914a2a63a2dmr8324985a.19.1779313629089; 
+ Wed, 20 May 2026 14:47:09 -0700 (PDT)
+Received: from QCOM-UWl2o8bcGT.qualcomm.com ([191.202.238.222])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8ca36190497sm132027896d6.29.2026.05.20.14.47.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 14:34:32 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
+ Wed, 20 May 2026 14:47:08 -0700 (PDT)
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>,
-	Peter Xu <peterx@redhat.com>
-Subject: [PULL 12/29] tests/qtest/migration: Use a default TCP URI for precopy
-Date: Wed, 20 May 2026 17:33:40 -0400
-Message-ID: <20260520213357.40646-13-peterx@redhat.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260520213357.40646-1-peterx@redhat.com>
-References: <20260520213357.40646-1-peterx@redhat.com>
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH] target/riscv/insn_trans/trans_rvzicbo.c.inc: save opcode
+ before helpers
+Date: Wed, 20 May 2026 18:47:04 -0300
+Message-ID: <20260520214704.1943652-1-daniel.barboza@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-Proofpoint-ORIG-GUID: oPrDIwX2D1jBGLRcuJa-qWbRUppkd_iw
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDIxMyBTYWx0ZWRfX7oxnml1JCQU1
+ KWw9EpJzfHD7rgnOADuFjUCKO47DMTj469556IZnl+o1VMNX41FnNjLmFpMt/rEwwApuhgrEhNA
+ 8bFzkbql9jLDtUZxoHddjZUJkt6mVo54jPdy5HNjCZZTG+FVAXO2EJ3bNqzBRbX0cTe7ma6zLly
+ hYuu9wEtLgGp0aVx75ED1PoKECir6726oeuLSqY4ODoh+ElhiZjVPc1DwuJle/psIvEhhWjvjuR
+ JhmT5erMNY/2JT/Il+6OVmNzN9zHKArSA2sxM8VVKdu1KbFI0f2oU/cq8ZfquIQ3o1i4OoOC6X8
+ wN8lVAlZcCTNS6sewOIUNJQBU9eSCjK4P55ZnFS2UASivXIXJNnFsQ45qBpxVvqWx55lzhy4i77
+ lOTrKbhahAboaVPmJWgCOjqz3NCg/dFtd712l+6o+/Kt4DM63deAEtwIT6IIl8csh+pFUKkwX5D
+ ACPU2kXH99zMu5IFzvQ==
+X-Authority-Analysis: v=2.4 cv=RZigzVtv c=1 sm=1 tr=0 ts=6a0e2bde cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=etEqFfc6qwXwpI8uT8rzbw==:17
+ a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=p0WdMEafAAAA:8
+ a=EUspDBNiAAAA:8 a=zPVu6S-7jbvgiBxhS2sA:9 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-GUID: oPrDIwX2D1jBGLRcuJa-qWbRUppkd_iw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-20_03,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0 clxscore=1015
+ priorityscore=1501 malwarescore=0 impostorscore=0 bulkscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605200213
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,132 +143,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+All helpers from this file can trigger ILLEGAL_INSN exceptions via
+check_zicbo_envcfg() directly, bypassing the usual exception code from
+translate.c.   If we don't save the opcode before each helper,
+riscv_raise_exception() is triggered and env->bins won't be unwind during
+cpu_loop_exit_restore() (code path cpu_restore_state ->
+cpu_restore_state_from_tb() -> restore_state_to_opc()).
 
-Using a localhost TCP URI for testing is quite common. Set it as a
-default for precopy tests that don't provide an URI.
+And finally, in riscv_cpu_do_interrupt(), we will set (m)tval = 0 when we can,
+instead, set it to the cbo opcode that generated the exception.
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/r/20260505160915.25558-7-farosas@suse.de
-Signed-off-by: Peter Xu <peterx@redhat.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3380
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 ---
- tests/qtest/migration/framework.c     | 4 ++++
- tests/qtest/migration/precopy-tests.c | 3 ---
- tests/qtest/migration/tls-tests.c     | 9 ---------
- 3 files changed, 4 insertions(+), 12 deletions(-)
+ target/riscv/insn_trans/trans_rvzicbo.c.inc | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-index 1d13b897a9..566437c17f 100644
---- a/tests/qtest/migration/framework.c
-+++ b/tests/qtest/migration/framework.c
-@@ -834,6 +834,10 @@ int test_precopy_common(MigrateCommon *args)
-     void *data_hook = NULL;
-     QObject *channels = NULL;
+diff --git a/target/riscv/insn_trans/trans_rvzicbo.c.inc b/target/riscv/insn_trans/trans_rvzicbo.c.inc
+index 15711c3140..096f7dde27 100644
+--- a/target/riscv/insn_trans/trans_rvzicbo.c.inc
++++ b/target/riscv/insn_trans/trans_rvzicbo.c.inc
+@@ -33,6 +33,8 @@ static bool trans_cbo_clean(DisasContext *ctx, arg_cbo_clean *a)
+     REQUIRE_ZICBOM(ctx);
+     TCGv src = get_address(ctx, a->rs1, 0);
  
-+    if (!args->listen_uri) {
-+        args->listen_uri = "tcp:127.0.0.1:0";
-+    }
-+
-     if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
-         return -1;
-     }
-diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-index 849aef3ed6..377597bc29 100644
---- a/tests/qtest/migration/precopy-tests.c
-+++ b/tests/qtest/migration/precopy-tests.c
-@@ -180,14 +180,11 @@ static void test_precopy_rdma_plain_ipv6(char *name, MigrateCommon *args)
- 
- static void test_precopy_tcp_plain(char *name, MigrateCommon *args)
- {
--    args->listen_uri = "tcp:127.0.0.1:0";
--
-     test_precopy_common(args);
++    /* The helper may raise ILLEGAL_INSN -- record binv for unwind. */
++    decode_save_opc(ctx, 0);
+     gen_helper_cbo_clean_flush(tcg_env, src);
+     return true;
  }
+@@ -42,6 +44,8 @@ static bool trans_cbo_flush(DisasContext *ctx, arg_cbo_flush *a)
+     REQUIRE_ZICBOM(ctx);
+     TCGv src = get_address(ctx, a->rs1, 0);
  
- static void test_precopy_tcp_switchover_ack(char *name, MigrateCommon *args)
- {
--    args->listen_uri = "tcp:127.0.0.1:0";
-     /*
-      * Source VM must be running in order to consider the switchover ACK
-      * when deciding to do switchover or not.
-diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
-index 0677ca661e..4a3c404349 100644
---- a/tests/qtest/migration/tls-tests.c
-+++ b/tests/qtest/migration/tls-tests.c
-@@ -459,7 +459,6 @@ static void test_precopy_unix_tls_x509_override_host(char *name,
++    /* The helper may raise ILLEGAL_INSN -- record binv for unwind. */
++    decode_save_opc(ctx, 0);
+     gen_helper_cbo_clean_flush(tcg_env, src);
+     return true;
+ }
+@@ -51,6 +55,8 @@ static bool trans_cbo_inval(DisasContext *ctx, arg_cbo_inval *a)
+     REQUIRE_ZICBOM(ctx);
+     TCGv src = get_address(ctx, a->rs1, 0);
  
- static void test_precopy_tcp_tls_psk_match(char *name, MigrateCommon *args)
- {
--    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_tls_psk_match;
-     args->end_hook = migrate_hook_end_tls_psk;
++    /* The helper may raise ILLEGAL_INSN -- record binv for unwind. */
++    decode_save_opc(ctx, 0);
+     gen_helper_cbo_inval(tcg_env, src);
+     return true;
+ }
+@@ -60,6 +66,8 @@ static bool trans_cbo_zero(DisasContext *ctx, arg_cbo_zero *a)
+     REQUIRE_ZICBOZ(ctx);
+     TCGv src = get_address(ctx, a->rs1, 0);
  
-@@ -468,7 +467,6 @@ static void test_precopy_tcp_tls_psk_match(char *name, MigrateCommon *args)
- 
- static void test_precopy_tcp_tls_psk_mismatch(char *name, MigrateCommon *args)
- {
--    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_tls_psk_mismatch;
-     args->end_hook = migrate_hook_end_tls_psk;
-     args->result = MIG_TEST_FAIL;
-@@ -488,7 +486,6 @@ static void *migrate_hook_start_no_tls(QTestState *from, QTestState *to)
- 
- static void test_precopy_tcp_no_tls(char *name, MigrateCommon *args)
- {
--    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_no_tls;
-     /* the no_tls start hook requires no cleanup actions */
-     args->end_hook = NULL;
-@@ -529,7 +526,6 @@ static void test_precopy_tcp_tls_no_hostname(char *name, MigrateCommon *args)
- static void test_precopy_tcp_tls_x509_default_host(char *name,
-                                                    MigrateCommon *args)
- {
--    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_tls_x509_default_host;
-     args->end_hook = migrate_hook_end_tls_x509;
- 
-@@ -539,7 +535,6 @@ static void test_precopy_tcp_tls_x509_default_host(char *name,
- static void test_precopy_tcp_tls_x509_override_host(char *name,
-                                                     MigrateCommon *args)
- {
--    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_tls_x509_override_host;
-     args->end_hook = migrate_hook_end_tls_x509;
- 
-@@ -563,7 +558,6 @@ static void test_precopy_tcp_tls_x509_mismatch_host(char *name,
- static void test_precopy_tcp_tls_x509_friendly_client(char *name,
-                                                       MigrateCommon *args)
- {
--    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_tls_x509_friendly_client;
-     args->end_hook = migrate_hook_end_tls_x509;
- 
-@@ -573,7 +567,6 @@ static void test_precopy_tcp_tls_x509_friendly_client(char *name,
- static void test_precopy_tcp_tls_x509_hostile_client(char *name,
-                                                      MigrateCommon *args)
- {
--    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_tls_x509_hostile_client;
-     args->end_hook = migrate_hook_end_tls_x509;
-     args->result = MIG_TEST_FAIL;
-@@ -586,7 +579,6 @@ static void test_precopy_tcp_tls_x509_hostile_client(char *name,
- static void test_precopy_tcp_tls_x509_allow_anon_client(char *name,
-                                                         MigrateCommon *args)
- {
--    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_tls_x509_allow_anon_client;
-     args->end_hook = migrate_hook_end_tls_x509;
- 
-@@ -596,7 +588,6 @@ static void test_precopy_tcp_tls_x509_allow_anon_client(char *name,
- static void test_precopy_tcp_tls_x509_reject_anon_client(char *name,
-                                                          MigrateCommon *args)
- {
--    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_tls_x509_reject_anon_client;
-     args->end_hook = migrate_hook_end_tls_x509;
-     args->result = MIG_TEST_FAIL;
++    /* The helper may raise ILLEGAL_INSN -- record binv for unwind. */
++    decode_save_opc(ctx, 0);
+     gen_helper_cbo_zero(tcg_env, src);
+     return true;
+ }
 -- 
-2.53.0
+2.43.0
 
 
