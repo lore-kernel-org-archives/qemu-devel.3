@@ -4,96 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3063ACD4F5E
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 04:42:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 822CECD4F5E
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 04:42:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPYgf-0001AS-Tc; Wed, 20 May 2026 00:37:42 -0400
+	id 1wPYhj-0002ME-VK; Wed, 20 May 2026 00:38:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wPYgd-00019G-S2
- for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:39 -0400
-Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wPYgb-0003oX-4h
- for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:39 -0400
-Received: by mail-ot1-x329.google.com with SMTP id
- 46e09a7af769-7dbca22dbfeso2244610a34.1
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 21:37:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779251855; x=1779856655; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=pdT1KFqbmJPaSXtIjTt6ff2nwOW3lgDDNcKqorOiIKY=;
- b=n3oKgP9wepw2j55S3tt/25iPYGwCPf1+571ksDP73mvjPt/wsz+LG7qnWcTHHhb7QF
- P9fZM+thdXm71vWaiYAmkWhtLRcjlGbercSx+K3PB/zubsYLwLMs87EhaGKpW/eB2yUt
- XWiU9VWNaKH1XFQUWr3jzJJ/IAaAe9IWGIN08nAlgD+EjIzlv9wFdbz/wj308FlbOmOc
- WoaqMnTR2rBAlg2IKdvW2GI09A/jYY3aNJ0Q5YuaZJBvmk082y6Ne0Lx3TB0XoDOIMor
- PDe69ziCRMoX1IvBgV0vJUWW5xl4AjVXcyNGl6rxuWMZ6KovBbQJPiJ3+f3uoL8m/6tu
- H+YQ==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wPYhd-0001om-Dq
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 00:38:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wPYhS-0003xr-4y
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 00:38:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779251909;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+xMby641YOdW9kytrOA6DwX49JRlCDWVNZo+mGZL9sU=;
+ b=MQKr5nckQk1HfpdNWtbdavlZDBL/2lCgO2OBPpp0edsGzFN6yw14zSL4uLgRdSV5tlabB1
+ MKcRQhdK6A6Wk6SrYvuTgWsDCNkEL6vGr4QdDIzXKAnlQLRsTPpP9zzt6q20ovZZEWjSoU
+ XO7hi/zxYowiLERyZ8UfRl7srDB9Z2k=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-564-IWtRzGTbPGCxAgAqXVvq2w-1; Wed, 20 May 2026 00:38:27 -0400
+X-MC-Unique: IWtRzGTbPGCxAgAqXVvq2w-1
+X-Mimecast-MFC-AGG-ID: IWtRzGTbPGCxAgAqXVvq2w_1779251907
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-48fd3dbd16aso35905885e9.0
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 21:38:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779251855; x=1779856655;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=pdT1KFqbmJPaSXtIjTt6ff2nwOW3lgDDNcKqorOiIKY=;
- b=WKZQmLjAOsU9tNbCJZnXjZHDcWRVl9pY3vM/2zenvCIVXX//X5ykQPN9IbxsPzOeYx
- kREbCUEXMe5vI1HHVoXdukb1J3G7KhWQjMjqWaiOCi9aW8O2t8/N1zsEC2Hoa51I34Rp
- PW2zYat65u1u/Wt74ONnP9C3yQzlEfuwidaAAbz6mZq/cBBXDvJx4b0Cd3/az7zhy+o6
- WiGe/ifFQE56X7AMLxT701nLVmdj8Tw8q0Mw1i+I3d0VtJoU6pFQ1r+QN+yj+GM5pqIt
- IJDTnM5ztXBT7KSDTC2/mCiXooFDT386ZMMNqVBG9XmbQDkk3zqnn75HHgfOUoD+3kL1
- lJNQ==
-X-Gm-Message-State: AOJu0YzEAgo3Xap4HaLjofqF5YyJyGY9u/Xolfpi+ndcCL8bK97GqTc3
- NMX4/MO8Qjc0tCRwX9aSaiehNsByjzoLErox3bg02c3VUC0hHEtJkJuQ
-X-Gm-Gg: Acq92OGGaA/o+/I0FbRDGvjmxMW/FiiAByEr6A4WhqtZoOTH6ChoMof7uBbcYHLb499
- 8TDhe5OjGbyfm5MMIuw823+ylVvOpZEADrs1U1S2k8XfYyUd198yRS4fWxVD0934d9txEdyHvao
- C1ymjCcw6fCdEuaJ8UQ5df3PRDs36xco4c5TFP8XHIGO1KOI45BU3PbKwt906ue3Dz48QD+AWpr
- a1UKWzLbLr70g+ezTziH99MHEDXWuAkc5wHc6Lqp7yhTk6mTYCX0WCADVd/z0RXLYKrYL1wUTjt
- YEPlcb682lOw6un6lzgEX3q3YbmW5qguqA5gsNH7TCf3D8YGs7H0MPSKyHIkeHCSwqzWyGpy6Uo
- bwmNHd6ixaAbBCBQSXh2Hbcnm38aDS9sc0hPE7q023lv7UBHB5hl5n2zo/Ut1jc6YgilYTbQH0u
- mesoPOiScfcN3i8hQ0//8XlnSLAJMl40sJ3hzBQUKcLMRcOVut8FIHbYMfuXm/swoQRjiffw8/F
- YJJI4q5At7uf73XGkJMN/oh47SI23+oh/A59MWqwu8lVQw3URyhNTtPF7qBuWw4xdJo
-X-Received: by 2002:a05:6830:6408:b0:7dc:c7aa:22c7 with SMTP id
- 46e09a7af769-7e4de65c157mr14478787a34.0.1779251854784; 
- Tue, 19 May 2026 21:37:34 -0700 (PDT)
-Received: from mac.localdomain (184-96-146-19.hlrn.qwest.net. [184.96.146.19])
+ d=1e100.net; s=20251104; t=1779251907; x=1779856707;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+xMby641YOdW9kytrOA6DwX49JRlCDWVNZo+mGZL9sU=;
+ b=bCdT9Oy7Ol7HeBMVMagykxYco3J5M0r1F1W4EN44ZfAEaasKdo392/O5LxmEY4f1KC
+ sCQPvrvbwL0r9m7dDW9d6tIep1Y3kCzbDvN//chSxxbmYmAHasIS0UdEPVa1wPAZiY05
+ y48uEetTzmxINQeaj+ckW+VEzE4svnLy9/EzTrvSdNbs4y4vAhCFGxUUe+2hOfONmwOy
+ itpmtkvJMTXBru2W7ZUNbYj9C7Q38jyO8cuhkBNLt8sgJVKbleppKxhDJUGQZrzezmuc
+ NBpD+u0StD3Y1hkVxBwGmz7IVaJfDsxrv03ziXwH5gCzqjYFJW0X8LA5GdtEll+SRQrg
+ UglA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+iCEr7VJL3qTPfDUzy6yvDsRQKAsfimdxsRrBxKf3xgW46eQF9l4dzqUcpdqJaH9blp+eCeGfIazoh@nongnu.org
+X-Gm-Message-State: AOJu0YwaYOSFpDD18rL4SzB1fm+rKpdQTn/mkGhEGFtx7BATHmMOJXQd
+ Ak8XmfGwxtqGZcDQGMcIk8mUpqzeZ7e5PwHO3p0cZO5ScvSlf3JSa/qxMNXVCGKMVCbWT2pWIQW
+ /fjddIkunM9INE5wTpzHdBt7Eh2gYPmJsIRXcDuDiEZeKP9iKCYi7A1qz
+X-Gm-Gg: Acq92OGiyBr4mQpYm+n7nowzKxDEHDxvYRnwdyZMsk60613OOeXCexZVSKq/dPiTTsq
+ 5Tb5o++SGRzpN9VjgqL/gn64y43FF+r+xdkHpgaAErC05XkoAjIcFsl+iTehnaC6UKufPRU+Tkv
+ Pfy8C/wb8x6JZuP/qvrViuLKD7sGMZOv2swzJyKwIuwESS6xLZwRCbv9V9BKXdT1/QobJANYTLI
+ ZIS0dr5p9luiuV2tsDPrrnAIo+DFXx+qNwigGPYpG3SRic5meNlVZ3wE+XX0x7Xtpl0x7hVn/bq
+ AORAyX1er9mRdpfCQLPxd5uH44x2RFDFE3oEXTdbTDZg9q3kxfSpF/7wLBHNZLBRRQiJ7wpn8ZA
+ zRMjrQfEbiJ/o1gd2AM8IzNKe0FFOjwU7V2eXGM/w1X+q1Avj+r+CZGgTt2zBY3m0+88tXJ0eGS
+ TJrguf
+X-Received: by 2002:a05:600c:8715:b0:490:b07:5f27 with SMTP id
+ 5b1f17b1804b1-4900b07600fmr225077105e9.24.1779251906786; 
+ Tue, 19 May 2026 21:38:26 -0700 (PDT)
+X-Received: by 2002:a05:600c:8715:b0:490:b07:5f27 with SMTP id
+ 5b1f17b1804b1-4900b07600fmr225076805e9.24.1779251906400; 
+ Tue, 19 May 2026 21:38:26 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55bc4f04fsm11574634a34.27.2026.05.19.21.37.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 May 2026 21:37:34 -0700 (PDT)
-From: James Hilliard <james.hilliard1@gmail.com>
-Date: Tue, 19 May 2026 22:37:11 -0600
-Subject: [PATCH v10 17/45] target/mips: add Octeon MTP instructions
+ 5b1f17b1804b1-48fe4c834besm399042185e9.3.2026.05.19.21.38.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 May 2026 21:38:25 -0700 (PDT)
+Message-ID: <f1141630-6f3f-4983-8f8d-9e4f08a15b68@redhat.com>
+Date: Wed, 20 May 2026 06:38:24 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260519-mips-octeon-missing-insns-v2-v10-17-306f9edfe15b@gmail.com>
-References: <20260519-mips-octeon-missing-insns-v2-v10-0-306f9edfe15b@gmail.com>
-In-Reply-To: <20260519-mips-octeon-missing-insns-v2-v10-0-306f9edfe15b@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Aurelien Jarno <aurelien@aurel32.net>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>, 
- James Hilliard <james.hilliard1@gmail.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>
-X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::329;
- envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x329.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 7/7] qemu-options.hx: Support "auto" for accel SMMUv3
+ properties
+Content-Language: en-US
+To: Nathan Chen <nathanc@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Matt Ochs <mochs@nvidia.com>,
+ Nicolin Chen <nicolinc@nvidia.com>,
+ Shameer Kolothum <skolothumtho@nvidia.com>
+References: <20260512193520.3109172-1-nathanc@nvidia.com>
+ <20260512193520.3109172-8-nathanc@nvidia.com>
+ <0e747538-5e87-40ba-ac44-bc7bbe89bc7f@redhat.com>
+ <33370934-a239-4215-87d9-2cc64648a258@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <33370934-a239-4215-87d9-2cc64648a258@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,91 +120,76 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the MTP0, MTP1, and MTP2 forms. MTP0 loads the low Octeon3
-partial-product pair from rs/rt into P[0]/P[3], MTP1 loads the middle
-pair into P[1]/P[4], and MTP2 loads the high pair into P[2]/P[5].
-For MTP0, also set P[1] to zero for backward compatibility with
-Octeon2 VMULU.
 
-Legacy single-source encodings have rt encoded as $zero, so the same
-translator path also preserves the older Octeon behavior.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On 5/19/26 10:53 PM, Nathan Chen wrote:
+> Hi Eric,
+>
+> On 5/19/2026 9:03 AM, Eric Auger wrote:
+>> Hi Nathan,
+>>
+>> On 5/12/26 9:35 PM, Nathan Chen wrote:
+>>> From: Nathan Chen<nathanc@nvidia.com>
+>>>
+>>> Update documentation now that "auto" is supported for accelerated
+>>> SMMUv3
+>>> properties.
+>>>
+>>> Signed-off-by: Nathan Chen<nathanc@nvidia.com>
+>>> ---
+>>>   qemu-options.hx | 25 +++++++++++++++++++------
+>>>   1 file changed, 19 insertions(+), 6 deletions(-)
+>>>
+>>> diff --git a/qemu-options.hx b/qemu-options.hx
+>>> index 96ae41f787..46b02a1bb3 100644
+>>> --- a/qemu-options.hx
+>>> +++ b/qemu-options.hx
+>>> @@ -1291,30 +1291,43 @@ SRST
+>>>           Enabling accel configures the host SMMUv3 in nested mode
+>>> to support
+>>>           vfio-pci passthrough.
+>>>   -     The following options are available when accel=on.
+>>> -     Note: 'auto' mode is not currently supported.
+>>> +     The following options will be set to auto by default if not
+>>> manually
+>>> +     set. When accel=on and these properties are set to auto, the
+>>> value is
+>>> +     derived from the host SMMUv3 capabilities via
+>>> IOMMU_GET_HW_INFO. With
+>>> +     accel=on, this requires at least one cold-plugged vfio-pci
+>>> device; if
+>>> +     none is present at machine init, QEMU will abort.
+>>>   -    ``ril=on|off`` (default: on)
+>>> +     If accel=off, auto values resolve to the non-accel defaults
+>>> given below.
+>> [*]
+>>> +
+>>> +    ``ril=on|off|auto`` (default: auto)
+>>>           Support for Range Invalidation, which allows the SMMUv3
+>>> driver to
+>>>           invalidate TLB entries for a range of IOVAs at once
+>>> instead of issuing
+>>>           separate commands to invalidate each page. Must match with
+>>> host SMMUv3
+>>>           Range Invalidation support.
+>>> +        - With accel=on, auto means the value is automatically
+>>> derived from the host SMMU.
+>> instead of repeating that sentence for all props you mean put it in [*]
+> I would like to omit this for all props since it is already mentioned
+> above "When accel=on and these properties are set to auto, the value
+> is derived from the host SMMUv3 capabilities via IOMMU_GET_HW_INFO".
+> Would that be OK? 
 
----
-Changes v2 -> v3:
-  - Split MTP0/MTP1/MTP2 out of the combined Octeon arithmetic and memory
-    instruction patch.  (requested by Richard Henderson)
+Yes then it sounds enough to me
 
-Changes v3 -> v4:
-  - Keep the Octeon3 two-source rt high-lane operand and document that
-    legacy one-source MTP encodings use rt == $zero.
-
-Changes v5 -> v6:
-  - Zero P1 after checking the CN71XX register-state table and
-    description.
-
-Changes v7 -> v8:
-  - Combine MTP0/MTP1/MTP2 in the v7.5 inline TCG translator form from
-    Richard Henderson.
----
- target/mips/tcg/octeon.decode      |  4 ++++
- target/mips/tcg/octeon_translate.c | 23 +++++++++++++++++++++++
- 2 files changed, 27 insertions(+)
-
-diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index 5139543b15..bb0a9f1d99 100644
---- a/target/mips/tcg/octeon.decode
-+++ b/target/mips/tcg/octeon.decode
-@@ -51,6 +51,10 @@ MTM0         011100 ..... ..... 00000 00000 001000 @r2
- MTM1         011100 ..... ..... 00000 00000 001100 @r2
- MTM2         011100 ..... ..... 00000 00000 001101 @r2
- 
-+MTP0         011100 ..... ..... 00000 00000 001001 @r2
-+MTP1         011100 ..... ..... 00000 00000 001010 @r2
-+MTP2         011100 ..... ..... 00000 00000 001011 @r2
-+
- &saa         base rt
- @saa         ...... base:5 rt:5 ................ &saa
- SAA          011100 ..... ..... 00000 00000 011000 @saa
-diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index aae6e9811c..36d268e09c 100644
---- a/target/mips/tcg/octeon_translate.c
-+++ b/target/mips/tcg/octeon_translate.c
-@@ -242,3 +242,26 @@ static bool trans_mtm(DisasContext *ctx, arg_r2 *a, unsigned int index)
- TRANS(MTM0, trans_mtm, 0);
- TRANS(MTM1, trans_mtm, 1);
- TRANS(MTM2, trans_mtm, 2);
-+
-+static bool trans_mtp(DisasContext *ctx, arg_r2 *a, unsigned int index)
-+{
-+    /*
-+     * Octeon3 two-source MTP forms load lane index from rs and lane index + 3
-+     * from rt.  Legacy one-source forms encode rt as $zero.
-+     */
-+    gen_load_gpr(oct_p[index], a->rs);
-+    gen_load_gpr(oct_p[index + 3], a->rt);
-+
-+    /*
-+     * Octeon3 clears P1 with P0 so that VMULU sequences remain
-+     * backward compatible with Octeon2.
-+     */
-+    if (index == 0) {
-+        tcg_gen_movi_i64(oct_p[1], 0);
-+    }
-+    return true;
-+}
-+
-+TRANS(MTP0, trans_mtp, 0);
-+TRANS(MTP1, trans_mtp, 1);
-+TRANS(MTP2, trans_mtp, 2);
-
--- 
-2.54.0
+Eric
+>
+> Thanks,
+> Nathan
+>
 
 
