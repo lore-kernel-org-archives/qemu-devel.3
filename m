@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B577CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 04:40:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 325ACCD4F5E
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 04:40:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPYgk-0001CK-6K; Wed, 20 May 2026 00:37:46 -0400
+	id 1wPYgX-000160-RQ; Wed, 20 May 2026 00:37:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wPYgi-0001Bv-VV
- for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:45 -0400
-Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
+ id 1wPYgV-00014X-Iz
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:31 -0400
+Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wPYgg-0003pj-08
- for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:44 -0400
-Received: by mail-ot1-x332.google.com with SMTP id
- 46e09a7af769-7de7c57b52cso4050302a34.3
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 21:37:40 -0700 (PDT)
+ id 1wPYgS-0003ms-VA
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:31 -0400
+Received: by mail-ot1-x32d.google.com with SMTP id
+ 46e09a7af769-7df05fc49e5so4626486a34.3
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 21:37:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779251859; x=1779856659; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779251846; x=1779856646; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=PvDFLIp/PQLu75d/Ks+DYHupg+MRvJEmazWLJtuvb4M=;
- b=bPmi892ZutPTRd/cWzE9y1LygTUl9oc1lyiwAI7IFQHFGYD5XCNkOOzN+o7bFFDW1J
- njxeEDCs9mw99XHo8WYSoJi9sEPtvuEFBT53WS+s8IUkW2t14nlOA5SFM9ejeQOMAMpE
- JKXp+fdBOBs7PPs0iZ8J+bBRrhDZ2t3iNSMvn7G+tixliHBKQyitxBS3dMk+Iv28sGAo
- vUjsfYylalqoszxhAgUs1kdBKtgdrKzKfgy8/l2y2RsqkRtiRNTsZfRc5+yIIk7+69bZ
- eTlIW7S/4BhfgwZDHgbvz7DW1T6lQJEakVsah0BuTLopjHM2u2OHvexdKN0gyFP+At1E
- 9F0Q==
+ :reply-to; bh=V+Z5Xa+4C9Lk0TNV9LgOzbpa9crqmSVwKd0svd97e8w=;
+ b=JrQVfw9HDf0VchnU6MOipQNHJpkvqZQDsGE9jpirga4tnDnvwYV9inq97aDAwGeEGb
+ JUhc8OwBBMAkGyX8/jeMoToOaG6s75zj6mc8f4JOOMTkfJTNsH9F2isVnCxXICSN2ErV
+ zy7Doi1PlQ5vx09VSlU7N/b3gLJiLYZIAaecaj0NznFbKfo1LUfNrHKRc/3zkJDgiilx
+ wXNm7E+DzQcIB/73FamTxebg0xDHxEjd5ZLX8EwFHbd3UDdusfNpGMHgIh9INC8i4F3x
+ 0EBGL/1l1wxp4PJg/BQeG6nEdsOv2XPff4LQn2tFKvN9ad0pl68m46uh6NKVG1d6Zb+X
+ ttqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779251859; x=1779856659;
+ d=1e100.net; s=20251104; t=1779251846; x=1779856646;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=PvDFLIp/PQLu75d/Ks+DYHupg+MRvJEmazWLJtuvb4M=;
- b=OUwCQ9INzNvk60oOKYeXVz4AITOpUT/097Z6qiG8AnuDTC8X07f3O4mxxdJZ1dL1J9
- S2afgWC1y/BAkRpDoXfmmwZJ6iCwwuEy0TjNOm/C+6OzmSUWuk+zxGDS8OqX+G+q5r8u
- fYWRR+QdCQNaiFmHv747bqWKDaQ4TXwV6Im2ng0Cojn7hSJcn4hy4qoHDTV2vFyEFjFG
- kYvTT01ygxJ5/YzQjXUNNsY5NFBESlPNJlU7Yclb9clo/rbRpL2gEVE8q5SzkF/w+3Ns
- BZ6LDd03UJfQCdhrAiYbLjidIq5YQPUX+k7gKi5hd5lgqk5RsF41o45ICn5Z6DBh63rr
- 1VKg==
-X-Gm-Message-State: AOJu0YxQmYSYZTxCswaomqFxIW0BdbbCKjfSyZXS2tg1DxdMjmC+IE3M
- htSQM4eA7otUFIGpD1QtvENDELmZo3Q/DRaBhCeG8+oEuAmn3hsTrIO4
-X-Gm-Gg: Acq92OE+9KeO/gCn56djaCJD/94/Q3+bz0kzr7yupHh3HYeWJCPT1i4bwdJMqD5doob
- k9wy4lNpckqNprhgpcXHrQgHJPJsaalqNJW3nO3wwYzY4tU2zyXSwg25ads9XdKWtG/U5czOrte
- eqmTQChxHifVJQawpNuydbnsrkrU1+YFe0ADXJhSMurKE/muEudrZobFyEKcu99JRhsnD+kB7VK
- KEFXcS9BO2YC2JNm659l0NklnGn1PKPtSPoF/5DRZUu3S5K2pBkvqF9UmjSTxrLDBtTLvnvzklw
- 8MidB2xmPvj1ToIPk4Ixifx8CrkzxHJmgTdCzbX9OOyAiJK7IIhjf7WyEgw0K+J4I+UlX02Fl65
- KtiYzKy9gJ/ZXmTqw6QlvXkUSUM9oQhxIrB8/yOktrwbIB01VtyxPmSfT9GqJyG8glidIY4a3SS
- lXLaZ53Cf7uFb+TW6C4AxbobjzySefksW31AWQIkqgIV/iEv2PRfCx8bcf36MngDqCGl6u43c8f
- mFtxNtXQfOCs4cIhCs2NIqiyCQIetzXxwdh5oragyiO0hP8DRnZHsuKIrPA/E+t0NhDq53GaZbX
- aO0=
-X-Received: by 2002:a05:6830:4991:b0:7dd:9b19:a87b with SMTP id
- 46e09a7af769-7e4ea072138mr15025826a34.4.1779251859480; 
- Tue, 19 May 2026 21:37:39 -0700 (PDT)
+ bh=V+Z5Xa+4C9Lk0TNV9LgOzbpa9crqmSVwKd0svd97e8w=;
+ b=mmKpTuNj4K+mrTNzBu180GyC01Mx1G2FoAdHzhLLZvKOIFsa8hQ1e3G4Kt8i7dm7XL
+ cdQrFaZN/P0YLo/H9xTAGXnKNM5HlBGyxpvu8z3r3z3nXOsNtIA54d5LfnuVUJ5LpO4j
+ J8AkC8A4y7MO9yVD49Bjl7LqssGZVVNscrjTtzDkoseXsgf6wIK4FTVBg4n3Y6N6h85l
+ sZZrUwY21jEldCu0SDmdrEAv+KUTTEycbhNZkIJ5Ld+GWpCCj0byadJAw9bQLWAdCfPp
+ JHXHsQHDGlAqPht3NoFTIeHLZs4ikrrGGEYZPkSIwzi9xtilaQdnWdclF0d2VQqfmH3z
+ PJ6A==
+X-Gm-Message-State: AOJu0Yzdnq1OYetdxRscC+S8x3TVUxm5oqpqnyve66+m/XviT3IkBDJw
+ TLHQvM+6cFgwo9bSwME5lQtsntNlE47ZVJpLnfJb1Jt/sPrM4nfQ1rAc
+X-Gm-Gg: Acq92OFYl20NAiXlpE0k7WoqmQLSKu+mrqrOFG37EMHDCYuy3HttH0eo8/n1YXfaxRG
+ +86rgRexfjaOtljUWfP35WCvHuObVVTHRpfFWr78mKT4OXZnJ2rcQ7Wsl4XRB3V2nD412ckiyV4
+ Ga4lDdS3gJrRiOfhopY6ARcBfOeigCsdqgZ5quf8xIWMMkXPcKYbt54fFBadarr2tE+wjXgb5Q2
+ WGPJ0HErKTu78Q3kJCRQkQhBsobL3qe4Fn9ug4MK/4Sd5wOuYbqznILfKSNNJu4W/ibd+yMt5Zp
+ Ft6Ti8L3yFginkt+YBGlBu3mnVp5T94DF2r7Wm5fcyQ4+OTVgwG07k6wksPzfScyOSvXgTZMrhJ
+ zooHcgpeuvZvjhCZmZYrP0o4RSmihHp5WPnmdF86oaOp/3Kd/Hu5hIQFdsTdeXzQ8RfovW8pVqy
+ pwYPh5d8a/GEhZ+2ezKYuL4FVK1c4nKa7SiemKx/N/pX98iAoPygj5IZASwuvJLdDRLn3W35fYc
+ 2LS/6rogSOosg+pG7JySjOtP3tcQSSddnq4MkBzI/fDfBbaDKQnkXKATrXsmYTXdfXI
+X-Received: by 2002:a05:6830:6205:b0:7e1:f7e9:327e with SMTP id
+ 46e09a7af769-7e4fa05ec7bmr16481899a34.22.1779251846518; 
+ Tue, 19 May 2026 21:37:26 -0700 (PDT)
 Received: from mac.localdomain (184-96-146-19.hlrn.qwest.net. [184.96.146.19])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55bc4f04fsm11574634a34.27.2026.05.19.21.37.38
+ 46e09a7af769-7e55bc4f04fsm11574634a34.27.2026.05.19.21.37.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 May 2026 21:37:38 -0700 (PDT)
+ Tue, 19 May 2026 21:37:25 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Tue, 19 May 2026 22:37:15 -0600
-Subject: [PATCH v10 21/45] target/mips: add Octeon QMAC instructions
+Date: Tue, 19 May 2026 22:37:04 -0600
+Subject: [PATCH v10 10/45] target/mips: add Octeon SAA instruction
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260519-mips-octeon-missing-insns-v2-v10-21-306f9edfe15b@gmail.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260519-mips-octeon-missing-insns-v2-v10-10-306f9edfe15b@gmail.com>
 References: <20260519-mips-octeon-missing-insns-v2-v10-0-306f9edfe15b@gmail.com>
 In-Reply-To: <20260519-mips-octeon-missing-insns-v2-v10-0-306f9edfe15b@gmail.com>
 To: qemu-devel@nongnu.org
@@ -85,8 +84,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::332;
- envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x332.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x32d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -110,118 +109,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QMAC.0x and QMACS.0x multiply the selected signed Q15 halfword lane from
-rs by rt<15:0> and accumulate the Q31 product into the Octeon HI/LO
-accumulator state.
+SAA atomically adds rt to the naturally aligned 32-bit word at base and
+discards the old memory value.
 
-QMAC updates the full 64-bit HI/LO accumulator. QMACS saturates the
-32-bit Q31 result in LO and keeps HI<0> as the sticky saturation flag.
+Implement the common SAA/SAAD translator with TCG atomic_fetch_add_i64.
+The MemOp selects the word or doubleword transaction size.  QEMU only has
+one Octeon CPU model today, so keep SAA/SAAD under the existing Octeon
+instruction feature bucket instead of adding a finer-grained Octeon+
+feature bit.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-
 ---
-Changes v5 -> v6:
-  - New patch.
+Changes v6 -> v7:
+  - Use MO_32 for the word-size atomic transaction; the signedness bits are
+    irrelevant for a discarded fetch-add result.  (suggested by Philippe
+    Mathieu-Daudé)
 
-Changes v7 -> v8:
-  - Use Richard Henderson's v7.5 inline TCG translator.
+Changes v2 -> v3:
+  - Split SAA out of the combined Octeon arithmetic and memory
+    instruction patch.  (requested by Richard Henderson)
+
+Changes v3 -> v4:
+  - Gate SAA/SAAD behind an Octeon+ feature bit.  (reported by Richard
+    Henderson)
+  - Use the i64 TCG atomic add path for both word and doubleword sizes.
+    (suggested by Richard Henderson)
+
+Changes v4 -> v5:
+  - Drop the separate Octeon+ feature bit; QEMU only has one Octeon CPU
+    model today.  (comment by Richard Henderson)
 ---
- target/mips/tcg/octeon.decode      |  4 +++
- target/mips/tcg/octeon_translate.c | 60 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 64 insertions(+)
+ target/mips/tcg/octeon.decode      |  4 ++++
+ target/mips/tcg/octeon_translate.c | 14 ++++++++++++++
+ 2 files changed, 18 insertions(+)
 
 diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index 4d0ad05834..2d02b4e0bc 100644
+index db7d5f55f0..d6b241de42 100644
 --- a/target/mips/tcg/octeon.decode
 +++ b/target/mips/tcg/octeon.decode
-@@ -28,6 +28,8 @@ BBIT         11 set:1 . 10 rs:5 ..... offset:s16 p=%bbit_p
- # SEQI rt, rs, immediate
- # SNE rd, rs, rt
- # SNEI rt, rs, immediate
-+# QMAC.0x rs, rt
-+# QMACS.0x rs, rt
- 
- @r3          ...... rs:5 rt:5 rd:5 ..... ......
- &cmpi        rs rt imm
-@@ -43,6 +45,8 @@ SEQ          011100 ..... ..... ..... 00000 101010 @r3
- SNE          011100 ..... ..... ..... 00000 101011 @r3
+@@ -44,6 +44,10 @@ SNE          011100 ..... ..... ..... 00000 101011 @r3
  SEQI         011100 rs:5 rt:5 imm:s10 101110 &cmpi
  SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
-+QMACS        011100 rs:5 rt:5 00000 000 lane:2 010010
-+QMAC         011100 rs:5 rt:5 00000 100 lane:2 010010
  
- &r2          rs rt
- @r2          ...... rs:5 rt:5 ..... ..... ...... &r2
++&saa         base rt
++@saa         ...... base:5 rt:5 ................ &saa
++SAA          011100 ..... ..... 00000 00000 011000 @saa
++
+ &lx          base index rd
+ @lx          ...... base:5 index:5 rd:5 ...... ..... &lx
+ LWX          011111 ..... ..... ..... 00000 001010 @lx
 diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index 04e51538f9..e068fd8698 100644
+index 401c4bd14b..f00692830a 100644
 --- a/target/mips/tcg/octeon_translate.c
 +++ b/target/mips/tcg/octeon_translate.c
-@@ -356,3 +356,63 @@ static bool trans_V3MULU(DisasContext *ctx, arg_V3MULU *a)
-     gen_store_gpr(tmp, a->rd);
+@@ -161,6 +161,20 @@ static bool trans_lx(DisasContext *ctx, arg_lx *a, MemOp mop)
      return true;
  }
-+
-+static bool trans_QMAC(DisasContext *ctx, arg_QMAC *a)
+ 
++static bool trans_saa(DisasContext *ctx, arg_saa *a, MemOp mop)
 +{
-+    TCGv_i64 t0 = tcg_temp_new_i64();
-+    TCGv_i64 t1 = tcg_temp_new_i64();
++    TCGv_i64 addr = tcg_temp_new_i64();
++    TCGv_i64 value = tcg_temp_new_i64();
++    TCGv_i64 old = tcg_temp_new_i64();
++    MemOp amo = mo_endian(ctx) | mop | MO_ALIGN;
 +
-+    gen_load_gpr(t0, a->rt);
-+    gen_load_gpr(t1, a->rs);
-+
-+    /* t0 = rt<0> * rs<lane> * 2 */
-+    tcg_gen_ext16s_i64(t0, t0);
-+    tcg_gen_sextract_i64(t1, t1, a->lane * 16, 16);
-+    tcg_gen_mul_i64(t0, t0, t1);
-+    tcg_gen_add_i64(t0, t0, t0);
-+
-+    /* Saturate -0x8000 * -0x8000 * 2 = 0x80000000 -> 0x7fffffff */
-+    tcg_gen_smin_i64(t0, t0, tcg_constant_i64(INT32_MAX));
-+
-+    /* HI:LO += t0 */
-+    tcg_gen_concat32_i64(t1, cpu_LO[0], cpu_HI[0]);
-+    tcg_gen_add_i64(t0, t0, t1);
-+    tcg_gen_sextract_i64(cpu_LO[0], t0, 0, 32);
-+    tcg_gen_sextract_i64(cpu_HI[0], t0, 32, 32);
++    gen_base_offset_addr(ctx, addr, a->base, 0);
++    gen_load_gpr(value, a->rt);
++    tcg_gen_atomic_fetch_add_i64(old, addr, value, ctx->mem_idx, amo);
 +    return true;
 +}
 +
-+static bool trans_QMACS(DisasContext *ctx, arg_QMACS *a)
-+{
-+    TCGv_i64 t0 = tcg_temp_new_i64();
-+    TCGv_i64 t1 = tcg_temp_new_i64();
-+
-+    gen_load_gpr(t0, a->rt);
-+    gen_load_gpr(t1, a->rs);
-+
-+    /* t0 = rt<0> * rs<lane> * 2 */
-+    tcg_gen_ext16s_i64(t0, t0);
-+    tcg_gen_sextract_i64(t1, t1, a->lane * 16, 16);
-+    tcg_gen_mul_i64(t0, t0, t1);
-+    tcg_gen_add_i64(t0, t0, t0);
-+
-+    /*
-+     * Saturate -0x8000 * -0x8000 * 2 = 0x80000000 -> 0x7fffffff.
-+     * Accumulate overflow in HI[0].
-+     */
-+    tcg_gen_smin_i64(t1, t0, tcg_constant_i64(INT32_MAX));
-+    tcg_gen_setcond_i64(TCG_COND_NE, t0, t0, t1);
-+    tcg_gen_or_i64(cpu_HI[0], cpu_HI[0], t0);
-+
-+    /*
-+     * LO = sat32(LO + t0)
-+     * Accumulate overflow in HI[0].
-+     */
-+    tcg_gen_ext32s_i64(t0, cpu_LO[0]);
-+    tcg_gen_add_i64(t0, t0, t1);
-+    tcg_gen_smin_i64(cpu_LO[0], t0, tcg_constant_i64(INT32_MAX));
-+    tcg_gen_smax_i64(cpu_LO[0], cpu_LO[0], tcg_constant_i64(INT32_MIN));
-+    tcg_gen_setcond_i64(TCG_COND_NE, t0, t0, cpu_LO[0]);
-+    tcg_gen_or_i64(cpu_HI[0], cpu_HI[0], t0);
-+    return true;
-+}
++TRANS(SAA,  trans_saa, MO_32);
+ TRANS(LBX,  trans_lx, MO_SB);
+ TRANS(LBUX, trans_lx, MO_UB);
+ TRANS(LHX,  trans_lx, MO_SW);
 
 -- 
 2.54.0
