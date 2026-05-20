@@ -4,104 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27D42CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:36:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB49BCD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:36:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPoZY-00033B-5b; Wed, 20 May 2026 17:35:24 -0400
+	id 1wPoZV-0002i6-G2; Wed, 20 May 2026 17:35:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoZW-0002ox-5f
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:35:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoZN-0002IA-Ez
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:35:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoZU-0007lz-17
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:35:21 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoZL-0007f2-Pp
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:35:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779312918;
+ s=mimecast20190719; t=1779312911;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cnCkeAl1JEVCHcp/i80JvKig343l2L+FI2gInquK9G8=;
- b=i2p6vajmaknBp4p6gPyew1+QQtCXgwudHMcQ1TAqxusO7ndSA/0iARcqUhS3H0S9ak/iFB
- vCbCpJM/IPNSrOffhA1KLv3954PvFRLriFiyMbZnGm3nz1tDDWqcHa3ShC83gBuXlkMsyV
- PrVF9jPGk4gxk6Rg4Mna7+QjTVIw4eQ=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=BN/SAy/s/zQ4OQntT5AIDwA9mLnJ4zwvh7mc8onZCok=;
+ b=O1qIjz1CTxLXk3XdG9eVcd5bXGrMYBzUxrlwdMr7T9v4KkDkZfbgJ7z46mDLJ6THGxlVuX
+ 80za0SS7360xUuruCXQC8ARD9mrbG4qCAGtI6Q0nyYXMg385LPPszjovhY249zsOBszz3g
+ Z6E5DMs/4+IYDBYNW6GDl0b9pZm95L8=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-568-2a9HaV4lMIGCr-O0UgEspA-1; Wed, 20 May 2026 17:35:13 -0400
-X-MC-Unique: 2a9HaV4lMIGCr-O0UgEspA-1
-X-Mimecast-MFC-AGG-ID: 2a9HaV4lMIGCr-O0UgEspA_1779312912
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-50f13da9684so70330221cf.3
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 14:35:13 -0700 (PDT)
+ us-mta-531-0DP-C-hdPiaFktSfEtG4eA-1; Wed, 20 May 2026 17:35:09 -0400
+X-MC-Unique: 0DP-C-hdPiaFktSfEtG4eA-1
+X-Mimecast-MFC-AGG-ID: 0DP-C-hdPiaFktSfEtG4eA_1779312909
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-514b673c8f1so58320071cf.3
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 14:35:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779312912; x=1779917712; darn=nongnu.org;
+ d=redhat.com; s=google; t=1779312909; x=1779917709; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cnCkeAl1JEVCHcp/i80JvKig343l2L+FI2gInquK9G8=;
- b=BWA8Z+Kktcy1hgN9TNCn8a9j02Y3oJbBkTH4kNyiDG15m2a9mM4wED0Vx5gvxJLlGa
- xyudw00b7ntWgZgHUAj7kvdWdkOvM8YRSNanuHkdrdMwwu2Uk7761Ph7RpU2KsGjzRRB
- RTQx/sGJb6NCJZbxHbR5HfdsfA+ChbUAcsvu5LTN5Z42aIHry1k026FpnQoHjd122cUP
- l1MdL3ECkuz+ol3BDnaLdYrbbPPd0KqWQaga4hNgN2QcRoA78I7TJQcHzhCovLU0Tisu
- Jo+8g/LyVSj1b+DtWOu+Etry0K5l6taUk4sTouithKmNp6afYKd5NEIQZpPax9lXHeA8
- K5sg==
+ bh=BN/SAy/s/zQ4OQntT5AIDwA9mLnJ4zwvh7mc8onZCok=;
+ b=FEoZMc/C/kaGCdbg9IRqeE4pj1bPgZyq+DtGC5XmrzIwMjAOizy52WShql14YmZmvV
+ tyzdypW2BJtCcLvQIJ0hNxTQiBQfl8s46pOvCunMX6nznbaqhyb4SFk2RL+PVGkoYlhn
+ hs2zSXelOYYEpy8iIhcLBJCaYc5emYTp46ZYynxdSXiTDzIYfKbGfUpkvMPK9rxQVa2o
+ JzuTjgnh1+JwyclEh9arrlbZR8cwrhfM1S/8Xabf8yoATJ0aCx4ztGsl4XSmS0HuIsEv
+ YhUcASRP84nqsoSvFIA3aaGRFwkvS684L2LGkPcTvLVcCmHyBLWsx+AGJpCTpPcG9MiL
+ xD/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779312912; x=1779917712;
+ d=1e100.net; s=20251104; t=1779312909; x=1779917709;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=cnCkeAl1JEVCHcp/i80JvKig343l2L+FI2gInquK9G8=;
- b=Nz0hOfjvMy3EY05PEXLgRO049xqPfsJZsLUHXoxRM6BzsaiI0oNhuDQSqbxk4R3z4+
- mn1g6MX+uoZ6JeG6xu+09JtcUNS1m+BO/yIp7yYm405TYFlIrXNO3STGpbh8ZYtzK9G4
- iEjGtG92r96SoRXN8IXm80ln1ao87Ybx2iv/8wi/S+rkZeNtOdCoGrPGgNUflX6EBpko
- kWKOkgUzSbed8VeVZrEa3c4Llc+z2T8q8M8ImQg/jnPWEJUhMoWo1SXxDw60+TLNn0d4
- 0KdLgmG+jLsMMgLqzTlgR6HwNaZILkj1/UkA0eHQe0bz7i2xDEskiMfHoVvtQGu0ZHkT
- mrgA==
-X-Gm-Message-State: AOJu0Yy47ULNVxEd46slMAHJBF2JlDMScHW/0aDVgmJVUDOohbc5eEah
- v/EQ5QlhaxTY4FVdxUxe5eSGQKDwUHvkhGMJ+JzklN8px8wXid/Z8PAQPFpJ+4l3OLWw+fpPH2W
- Q55zCAoBd4nKpRP+jiSYHoqxg0QZ9MZ92v+VM2xW4GnDA7Bjy98ZWTESQmmE0cg+7DYG6zDdBtJ
- vHxm87xBnxF3uFLVdFDBm802cOR+oKZsuq7uTKyQ==
-X-Gm-Gg: Acq92OEg2GOAk0eDtkOBwiZnjogBFq2hWR7lNQZzEaNIWhjHJijcRUwR+daaV4jj8kd
- ++MNaIU7hsl8SntTwOv1TqlN58SG7gZQbkB38m7VPRYTqltlp56HcCepq37G7d2w2mZSGYL6dwH
- 4PZ69Wjf+N8wzwXftZrLNJS8cvfrm7t7Qj52R0hpPOg/KHOIHjHjcFL3P4C5olDVYF7UKpjDODl
- kcy5VfPs17VSoshLuaXzdwt21oRxXDtnBEMXBOcFpxFCwYQGHw/9wyVEizgMoqlY5exoXTJJ0aJ
- PuqRpZQ3swgK0oefl/Y0QkKOg+trXQo6yhVUUVSndWvKM3BN5YCr3ZDH2230Dkj+G9DDp8ue0Aw
- iduqwvPXwRJ6W8tyaQgKQLjx6mrUNngRxcC9oEfXDl1jR
-X-Received: by 2002:a05:622a:4d95:b0:50e:62ba:3ff7 with SMTP id
- d75a77b69052e-516c5507428mr3897251cf.26.1779312912118; 
- Wed, 20 May 2026 14:35:12 -0700 (PDT)
-X-Received: by 2002:a05:622a:4d95:b0:50e:62ba:3ff7 with SMTP id
- d75a77b69052e-516c5507428mr3896661cf.26.1779312911527; 
- Wed, 20 May 2026 14:35:11 -0700 (PDT)
+ bh=BN/SAy/s/zQ4OQntT5AIDwA9mLnJ4zwvh7mc8onZCok=;
+ b=WZqa+AdMJQE0feVVBsiuP4BJ/vw77KAuaaWPdVQpmxssG14pyEymljhqeeWD8X6XaM
+ kP0vKxPqRiVCBccTwcU+3CmoadTRqFKwUH62A2mGVXdJairEW/EPt+tRo0lfRUFxEtgz
+ X2uDxINCEWaqv7mvVcthHRWmiEqv0vYWFc+/doYpw4B7QlvZGLigfr4yc5NJdxGm4XzB
+ SfrdGiGEN8fCpa3fxHHJOIAxuvjq7p9MldZJpQOaWuM38pBhjQFN1LmtdD05BuLl5qxU
+ KGo5HnMVlYfCU2iCIQMWlWw8mvaKjrnCp8YO8EtMciWigC7L5BqOkaXVVHt5O9q7B/O+
+ qVcA==
+X-Gm-Message-State: AOJu0YyDOMoIXXn0B3+IycMj1czS3CgzGTtXo2yfD/n6x79FQlRaa2VU
+ wXdUEh6iSt9/W/l87gtjNfo4sgR/uaRoAb40GaNsyWiV/kccEE5RizOZ5G2bF9p9mKd3yPPJBBs
+ nWG245RGKHcG3QxqO1SHXBwcwnG3oMG6OPBf8Chjv057o6bMGS9De7tnhtqqlU/A31MsmriwZkM
+ /LjmmFuiJi/cC1UMijvDluacJjB+z62tfMCdBHmw==
+X-Gm-Gg: Acq92OFhr0wmXOuimn6BJAAoTMYffpefZlO3VnqqbeBGMTNS+yPUrlw2EQ559OIY0qR
+ o7RW56Zyoq40mMDzs7GAxfSMGEhGFquwSlv9bNfY5gMvloSsKVWsOFic/cGsOOI9CFmfvPc1L2v
+ eUJqko4HLb1+KRZtHImqY/OPgpBaYrS+iYXEdVwTQy2m9+KDLkqu1rHEGOFQUwVdKsqep3W2Xq+
+ 5gGQqeXgyxIoqNH/ggVkS9TohmFBXb631KrbgKVcihC9iw6c+IahHU8szLgv4r9VxRrWvBVPHSP
+ JPBVMWfu+g6d2O3b29HAZOpn8L9hNQmDWslOCQA6RJJ6Bf3NRJmjITqhVP6CyyjAk1D+qLbJIVY
+ BsMttf3VYtGDn+u0u09fikSIEWOdb85AS7ozMxJPjMJ4h
+X-Received: by 2002:a05:622a:190e:b0:50f:b494:7887 with SMTP id
+ d75a77b69052e-516c55ba389mr3671231cf.51.1779312907931; 
+ Wed, 20 May 2026 14:35:07 -0700 (PDT)
+X-Received: by 2002:a05:622a:190e:b0:50f:b494:7887 with SMTP id
+ d75a77b69052e-516c55ba389mr3670401cf.51.1779312907230; 
+ Wed, 20 May 2026 14:35:07 -0700 (PDT)
 Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8ca360b362fsm133062716d6.22.2026.05.20.14.35.08
+ 6a1803df08f44-8ca360b362fsm133062716d6.22.2026.05.20.14.35.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 14:35:09 -0700 (PDT)
+ Wed, 20 May 2026 14:35:04 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
- Hyman Huang <yong.huang@bitdeer.com>,
- Hyman Huang <infra.ai.cloud@bitdeer.com>
-Subject: [PULL 29/29] MAINTAINERS: Update email of Yong Huang
-Date: Wed, 20 May 2026 17:33:57 -0400
-Message-ID: <20260520213357.40646-30-peterx@redhat.com>
+ Bin Guo <guobin@linux.alibaba.com>
+Subject: [PULL 27/29] migration/multifd: cache channel count in
+ multifd_send_sync_main
+Date: Wed, 20 May 2026 17:33:55 -0400
+Message-ID: <20260520213357.40646-28-peterx@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520213357.40646-1-peterx@redhat.com>
 References: <20260520213357.40646-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,40 +118,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hyman Huang <yong.huang@bitdeer.com>
+From: Bin Guo <guobin@linux.alibaba.com>
 
-I left SmartX two weeks ago. Update my email to stay reachable.
+multifd_send_sync_main() is called once per RAM synchronization round
+during live migration.  It iterates over all multifd channels twice
+(signal loop + wait loop), calling migrate_multifd_channels()
+independently in each loop header.
 
-Signed-off-by: Hyman Huang <infra.ai.cloud@bitdeer.com>
-Link: https://lore.kernel.org/r/b3bd81c3d9f425bb750a76d7bad7ad0284e55123.1779178180.git.infra.ai.cloud@bitdeer.com
-[peterx: fix address, s/biitdeer/bitdeer/]
+Cache migrate_multifd_channels() in a local thread_count variable at
+function entry, matching the pattern already used in
+multifd_send_setup() and multifd_recv_setup().  This eliminates 2
+redundant config lookups per sync call.
+
+Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/r/20260518110112.21395-9-guobin@linux.alibaba.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- MAINTAINERS | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ migration/multifd.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index c6ce786b5b..a8906677fc 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3785,7 +3785,7 @@ F: migration/rdma*
- F: scripts/rdma-migration-helper.sh
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 0ac3f5e719..dbad525d2a 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -611,13 +611,15 @@ static int multifd_zero_copy_flush(QIOChannel *c)
+ int multifd_send_sync_main(MultiFDSyncReq req)
+ {
+     int i;
++    int thread_count;
+     bool flush_zero_copy;
  
- Migration dirty limit and dirty page rate
--M: Hyman Huang <yong.huang@smartx.com>
-+M: Hyman Huang <infra.ai.cloud@bitdeer.com>
- S: Maintained
- F: system/dirtylimit.c
- F: include/system/dirtylimit.h
-@@ -3795,7 +3795,7 @@ F: include/system/dirtyrate.h
- F: docs/devel/migration/dirty-limit.rst
+     assert(req != MULTIFD_SYNC_NONE);
  
- Detached LUKS header
--M: Hyman Huang <yong.huang@smartx.com>
-+M: Hyman Huang <infra.ai.cloud@bitdeer.com>
- S: Maintained
- F: tests/qemu-iotests/tests/luks-detached-header
- F: docs/devel/luks-detached-header.rst
++    thread_count = migrate_multifd_channels();
+     flush_zero_copy = migrate_zero_copy_send();
+ 
+-    for (i = 0; i < migrate_multifd_channels(); i++) {
++    for (i = 0; i < thread_count; i++) {
+         MultiFDSendParams *p = &multifd_send_state->params[i];
+ 
+         if (multifd_send_should_exit()) {
+@@ -634,7 +636,7 @@ int multifd_send_sync_main(MultiFDSyncReq req)
+         qatomic_set(&p->pending_sync, req);
+         qemu_sem_post(&p->sem);
+     }
+-    for (i = 0; i < migrate_multifd_channels(); i++) {
++    for (i = 0; i < thread_count; i++) {
+         MultiFDSendParams *p = &multifd_send_state->params[i];
+ 
+         if (multifd_send_should_exit()) {
 -- 
 2.53.0
 
