@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AFB3CD5BA4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2E12CD5BA6
 	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 12:50:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPgNS-0004cb-VO; Wed, 20 May 2026 08:50:23 -0400
+	id 1wPgNk-00053V-GY; Wed, 20 May 2026 08:50:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1wPgMx-0004XQ-UF; Wed, 20 May 2026 08:49:53 -0400
+ id 1wPgNJ-0004bT-8r; Wed, 20 May 2026 08:50:16 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1wPgMv-0002cy-EK; Wed, 20 May 2026 08:49:51 -0400
+ id 1wPgNH-0002df-Ck; Wed, 20 May 2026 08:50:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=qKPf3HvIHXxfyIDjOPh6sqbGcYuK4t1NrcQzAHS+fUg=; b=Kk0SZ16Ob6/SJWn
- 3257OSLOGYOdFU+CenFFU7AgHLG2zAmBdtVwp4Qa9TATNxEBWDmO1yC3yzJI14e6tXPWY9vC3ZqHF
- TGyMqE/P6wngbLaykd2cqU1pHKfVKPRGqHltHX/S7H/Bg1TI8qmBVReHJaY4KoM1uvbZq1Hny+I2P
- Ls=;
+ List-Help; bh=1I3Bgv0SQHY8SsYW832jIY3xIe6YZKMN3LWNdtZDkRc=; b=VivVso/Goap9c+X
+ 3+g9CWavt8SCo4VEb5lGWub2TLWA7wWBnGcumBzkD3ErV76zm3s4NmugozED+bBcC6jxllyfT5YG1
+ 6IQ+n7dbMIAxVzI8+8J8QQGpBx8SXqJMvE/ONQUfNSI/p+hUYrRkol8TFIFxfMDS3QLesMxT3IJ0G
+ WY=;
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org,
  alistair.francis@wdc.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v7 09/27] target/riscv: Fix size of ssp
-Date: Wed, 20 May 2026 14:53:47 +0200
-Message-ID: <20260520125406.28693-10-anjo@rev.ng>
+Subject: [PATCH v7 13/27] target/riscv: Fix size of gei fields
+Date: Wed, 20 May 2026 14:53:51 +0200
+Message-ID: <20260520125406.28693-14-anjo@rev.ng>
 In-Reply-To: <20260520125406.28693-1-anjo@rev.ng>
 References: <20260520125406.28693-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -63,107 +63,133 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As ssp holds a pointer, fix to 64 bits in size and make sure stores from
-TCG use the correct size to avoid problems on big endian hosts.
-
-Note, the cpu/ssp VMSTATE version is bumped, breaking migration from
-older versions.
+geilen takes the values 31 or 63, fix it to 8 bits. hgeie and hgeip are
+at most 64 bits in size, fix to 64.  Update relevant function arguments
+and uses of hgeie and hgeip.  Note, masking is widened to 64-bit as
+geilen is already verified to be smaller than the target long size, and
+an out-of-bounds shift would be UB anyway.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h                            |  2 +-
- target/riscv/machine.c                        |  6 +++---
- target/riscv/insn_trans/trans_rvzicfiss.c.inc | 18 +++++++++++++-----
- 3 files changed, 17 insertions(+), 9 deletions(-)
+ target/riscv/cpu.h        | 10 +++++-----
+ target/riscv/cpu.c        |  4 ++--
+ target/riscv/cpu_helper.c |  4 ++--
+ target/riscv/csr.c        |  4 ++--
+ target/riscv/machine.c    |  4 ++--
+ 5 files changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 5ecae9b339..c93c8e3617 100644
+index 79d3e74b7a..a2ba5bef60 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -256,7 +256,7 @@ struct CPUArchState {
-     /* elp state for zicfilp extension */
-     bool      elp;
-     /* shadow stack register for zicfiss extension */
--    target_ulong ssp;
-+    uint64_t ssp;
-     /* env place holder for extra word 2 during unwind */
-     target_ulong excp_uw2;
-     /* sw check code for sw check exception */
+@@ -279,7 +279,7 @@ struct CPUArchState {
+ #ifndef CONFIG_USER_ONLY
+     /* This contains QEMU specific information about the virt state. */
+     bool virt_enabled;
+-    target_ulong geilen;
++    uint8_t geilen;
+     uint64_t resetvec;
+ 
+     uint64_t mhartid;
+@@ -356,8 +356,8 @@ struct CPUArchState {
+     uint64_t htval;
+     uint64_t htinst;
+     uint64_t hgatp;
+-    target_ulong hgeie;
+-    target_ulong hgeip;
++    uint64_t hgeie;
++    uint64_t hgeip;
+     uint64_t htimedelta;
+     uint64_t hvien;
+ 
+@@ -609,8 +609,8 @@ int riscv_cpu_mirq_pending(CPURISCVState *env);
+ int riscv_cpu_sirq_pending(CPURISCVState *env);
+ int riscv_cpu_vsirq_pending(CPURISCVState *env);
+ bool riscv_cpu_fp_enabled(CPURISCVState *env);
+-target_ulong riscv_cpu_get_geilen(CPURISCVState *env);
+-void riscv_cpu_set_geilen(CPURISCVState *env, target_ulong geilen);
++uint8_t riscv_cpu_get_geilen(CPURISCVState *env);
++void riscv_cpu_set_geilen(CPURISCVState *env, uint8_t geilen);
+ bool riscv_cpu_vector_enabled(CPURISCVState *env);
+ void riscv_cpu_set_virt_enabled(CPURISCVState *env, bool enable);
+ int riscv_env_mmu_index(CPURISCVState *env, bool ifetch);
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 27310a95d1..d7219edd87 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1064,9 +1064,9 @@ static void riscv_cpu_set_irq(void *opaque, int irq, int level)
+         }
+ 
+         /* Update HGEIP CSR */
+-        env->hgeip &= ~((target_ulong)1 << irq);
++        env->hgeip &= ~(1ULL << irq);
+         if (level) {
+-            env->hgeip |= (target_ulong)1 << irq;
++            env->hgeip |= 1ULL << irq;
+         }
+ 
+         /* Update mip.SGEIP bit */
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index ff4e941d94..e7c0ff49d0 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -712,7 +712,7 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env)
+     }
+ }
+ 
+-target_ulong riscv_cpu_get_geilen(CPURISCVState *env)
++uint8_t riscv_cpu_get_geilen(CPURISCVState *env)
+ {
+     if (!riscv_has_ext(env, RVH)) {
+         return 0;
+@@ -721,7 +721,7 @@ target_ulong riscv_cpu_get_geilen(CPURISCVState *env)
+     return env->geilen;
+ }
+ 
+-void riscv_cpu_set_geilen(CPURISCVState *env, target_ulong geilen)
++void riscv_cpu_set_geilen(CPURISCVState *env, uint8_t geilen)
+ {
+     if (!riscv_has_ext(env, RVH)) {
+         return;
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index ec08fbddce..0e84554f29 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -3768,7 +3768,7 @@ static RISCVException rmw_mip64(CPURISCVState *env, int csrno,
+ 
+     if (csrno != CSR_HVIP) {
+         gin = get_field(env->hstatus, HSTATUS_VGEIN);
+-        old_mip |= (env->hgeip & ((target_ulong)1 << gin)) ? MIP_VSEIP : 0;
++        old_mip |= (env->hgeip & (1ULL << gin)) ? MIP_VSEIP : 0;
+         old_mip |= env->vstime_irq ? MIP_VSTIP : 0;
+     }
+ 
+@@ -4953,7 +4953,7 @@ static RISCVException write_hgeie(CPURISCVState *env, int csrno,
+                                   target_ulong val, uintptr_t ra)
+ {
+     /* Only GEILEN:1 bits implemented and BIT0 is never implemented */
+-    val &= ((((target_ulong)1) << env->geilen) - 1) << 1;
++    val &= ((1ULL << env->geilen) - 1) << 1;
+     env->hgeie = val;
+     /* Update mip.SGEIP bit */
+     riscv_cpu_update_mip(env, MIP_SGEIP,
 diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 1cf744c5f0..c55794c554 100644
+index ce5e44325d..8a8f5be8d6 100644
 --- a/target/riscv/machine.c
 +++ b/target/riscv/machine.c
-@@ -390,11 +390,11 @@ static bool ssp_needed(void *opaque)
- 
- static const VMStateDescription vmstate_ssp = {
-     .name = "cpu/ssp",
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
-     .needed = ssp_needed,
-     .fields = (const VMStateField[]) {
--        VMSTATE_UINTTL(env.ssp, RISCVCPU),
-+        VMSTATE_UINT64(env.ssp, RISCVCPU),
-         VMSTATE_END_OF_LIST()
-     }
- };
-diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-index 0b6ad57965..40e5a1b7df 100644
---- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-@@ -32,7 +32,9 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-     TCGLabel *skip = gen_new_label();
-     uint32_t tmp = (get_xl(ctx) == MXL_RV64) ? 8 : 4;
-     TCGv data = tcg_temp_new();
--    tcg_gen_ld_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    TCGv_i64 wide_addr = tcg_temp_new_i64();
-+    tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_trunc_i64_tl(addr, wide_addr);
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
-     tcg_gen_qemu_ld_tl(data, addr, SS_MMU_INDEX(ctx),
-                        mxl_memop(ctx) | MO_ALIGN);
-@@ -45,7 +47,8 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-                   tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-     gen_set_label(skip);
-     tcg_gen_addi_tl(addr, addr, tmp);
--    tcg_gen_st_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_ext_tl_i64(wide_addr, addr);
-+    tcg_gen_st_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
- 
-     return true;
- }
-@@ -59,12 +62,15 @@ static bool trans_sspush(DisasContext *ctx, arg_sspush *a)
-     TCGv addr = tcg_temp_new();
-     int tmp = (get_xl(ctx) == MXL_RV64) ? -8 : -4;
-     TCGv data = get_gpr(ctx, a->rs2, EXT_NONE);
-+    TCGv_i64 wide_addr = tcg_temp_new_i64();
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
--    tcg_gen_ld_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_trunc_i64_tl(addr, wide_addr);
-     tcg_gen_addi_tl(addr, addr, tmp);
-     tcg_gen_qemu_st_tl(data, addr, SS_MMU_INDEX(ctx),
-                        mxl_memop(ctx) | MO_ALIGN);
--    tcg_gen_st_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_ext_tl_i64(wide_addr, addr);
-+    tcg_gen_st_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
- 
-     return true;
- }
-@@ -76,7 +82,9 @@ static bool trans_ssrdp(DisasContext *ctx, arg_ssrdp *a)
-     }
- 
-     TCGv dest = dest_gpr(ctx, a->rd);
--    tcg_gen_ld_tl(dest, tcg_env, offsetof(CPURISCVState, ssp));
-+    TCGv_i64 wide_addr = tcg_temp_new_i64();
-+    tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_trunc_i64_tl(dest, wide_addr);
-     gen_set_gpr(ctx, a->rd, dest);
- 
-     return true;
+@@ -91,8 +91,8 @@ static const VMStateDescription vmstate_hyper = {
+         VMSTATE_UINT64(env.htval, RISCVCPU),
+         VMSTATE_UINT64(env.htinst, RISCVCPU),
+         VMSTATE_UINT64(env.hgatp, RISCVCPU),
+-        VMSTATE_UINTTL(env.hgeie, RISCVCPU),
+-        VMSTATE_UINTTL(env.hgeip, RISCVCPU),
++        VMSTATE_UINT64(env.hgeie, RISCVCPU),
++        VMSTATE_UINT64(env.hgeip, RISCVCPU),
+         VMSTATE_UINT64(env.hvien, RISCVCPU),
+         VMSTATE_UINT64(env.hvip, RISCVCPU),
+         VMSTATE_UINT64(env.htimedelta, RISCVCPU),
 -- 
 2.52.0
 
