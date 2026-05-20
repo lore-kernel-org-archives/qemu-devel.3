@@ -4,112 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6EE5CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 13:52:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02F50CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 13:59:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPhL8-00051d-66; Wed, 20 May 2026 09:52:02 -0400
+	id 1wPhRZ-0006j1-LX; Wed, 20 May 2026 09:58:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1wPhL7-00050m-9L
- for qemu-devel@nongnu.org; Wed, 20 May 2026 09:52:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1wPhL5-0004hx-8M
- for qemu-devel@nongnu.org; Wed, 20 May 2026 09:52:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779285117;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2bmWERXMLXC3OvENsaGbZ8IdksW5Rs5cYZtgXlt7EfY=;
- b=M4YrwVYS64Af3X3OPgeES1eMm3qigxR7rejkqBZGabS5KRYztSosk6E3acOTHU5SmQjSxH
- cXGdLBC1r9GME8WoUZuetNbmQBNe/1AJ0lB+Hyuq7l7gFpY4UXWOQS1dswkTMWFf++K6Om
- 13NB1vDExr1wBwNMNdo5cxRV8Xs2Ark=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-36-m1_Y9AF2MtC2HqX0IwWJAA-1; Wed, 20 May 2026 09:51:56 -0400
-X-MC-Unique: m1_Y9AF2MtC2HqX0IwWJAA-1
-X-Mimecast-MFC-AGG-ID: m1_Y9AF2MtC2HqX0IwWJAA_1779285115
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-43fe791a398so3930375f8f.0
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 06:51:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPhRI-0006gr-08
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 09:58:27 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPhRE-0006jp-3b
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 09:58:23 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-44dd5cb0f81so4021072f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 06:58:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779285115; x=1779889915; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2bmWERXMLXC3OvENsaGbZ8IdksW5Rs5cYZtgXlt7EfY=;
- b=rDXDe6vX17+nvLDQKePadw+3K4NC1wwNqsPCFZk8ccmHRc1C3CmKfDhaGLc1jYd0RE
- NTjYADEcOokomKF5I0t6KAklrsQ828p2hWng/+HZpXA3LJCUKHqQYN+UGT6e0ohUL6xd
- RyWSJtZBeldyNfeYuq6QzbQAQv1/pXdVIzU6kq7K01oTNg0Q+dM+/qeOXoXS9Yp9elGM
- l7AwTRUWE5kIET791pjbOytzID5Tc6Vy5b0blBO2Um1F2SUTgefBxmmmgiywUS60UoUy
- +OQtTvtrA30e2MjsVdhPh02McLE1OE+BUaYhC5BdIgw7eqTy1zkBDf0U+e6jZwKQePiJ
- EY0Q==
+ d=linaro.org; s=google; t=1779285496; x=1779890296; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=6o2khAvW3lEZPhUnIImNulf53cY6xn5kqxuBlsdDrNQ=;
+ b=KMNm6eJ5HTzwARwb5ny9u0q+g36HVsVXlXz98A3e/tnEwcNzh5KXBEl4pHUdehGSa/
+ NxB2xWsaNzrt/nwDe83Yid6jC6V1etT7JoC/06u4Cnlx2BzIPqjWsqtyAd2giPIKqVj7
+ O+WAKoxfbTHpQdzIJKO5+0gROLnMW684lK3oCqcT9XvOm1ESjt+ZOnDF7froS1XqSxsu
+ QYufrYxDzFqhzbUzJHFSpun6fiXsf0whPmpLmYyF+fxmXv9OPDjca7pJQ98PTIgTpWuP
+ PyeEFZ6HEALA7gQditnGZH+LraaaB4bYuWaySPbW8Nb5vqofaK7ooZ0BIiP7RkTdaKTo
+ ajeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779285115; x=1779889915;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=2bmWERXMLXC3OvENsaGbZ8IdksW5Rs5cYZtgXlt7EfY=;
- b=j2N2jPWPQ2SAwVUXhNgZdGGyRJZvgIQkdZd/x1w13UyrXhfUX3JGYwCnrphT00yaEC
- dMTeliiZzjkzVHETPCFOwGLMqhtLudXbaziQZtOMJr7CO5+Mvzdco+xxC79GukcGR9oR
- HyQmELr4CE7Ma1jaQ5Xii0B3t+jlrVxBWplmD/PWvLCRoyBfBzu6f5Pzz3FfpKvbWYFy
- xHFfzr7q0fH/6Eo3Eq7SH+eGoGfAANeiCbVL7FoE63x0hpugreoWtyAFxrBi3nnDV9FH
- CeeMNx2CW6o/rv40Bh/TLpU+eLF4pwCXisf49prgkpt4j3tVfNIpRRyQaS8b7ThOl3Y+
- HAyw==
-X-Gm-Message-State: AOJu0Yx13X3/rR3CGOYAKU3lCFXM604A8pL+XFrEhhxKnlbzraU2sAQy
- AFgzUPAoRQMMjWKPVZavOrpzmpwXvIU2IPe6+f/YbFnR43bOpYA4anLr/597wuezYXO4trJ+KDh
- 9aRj17enDfTi1fiJ62LoDxuCZlBJS+HnCV2DW5e7CfGPq2GU6zAjRPge3
-X-Gm-Gg: Acq92OEwjpH0t78AgsJoKnPSOqMZ3zztZWBDPX0GW8XdlplNbiFR61ruZnWPrn1sanw
- QXA2XNbKKQwM0Ux/7/oXIOZ0suTAQEPXnlBz+EEf+WjYLcuvLczpzpDlsxUFKH8LLZ+uDeHmK5G
- f83akS343GVElN/EVqSO9mZR9NWNepsmm/tHZY+QvUj8znYB8jetX7GovliX/fGF7hFPndsG7b8
- 2/9Hnipbx/zG8LiHwLP+Gql4RCy2g5AWyY/GEhrZDNKAFitwx0ZDLFXrzRUbxXn87b8GNMrRSYE
- oCczPAG7fbNT+BvFQ/ou80u897UF3qASK7CHWazcwuPlcMrZPwbu22WiltDg7qi1WzqoWDVNeK2
- /vk9vxw==
-X-Received: by 2002:a05:6000:603:b0:455:7d77:1d25 with SMTP id
- ffacd0b85a97d-45e5c5fd588mr40938416f8f.27.1779285114582; 
- Wed, 20 May 2026 06:51:54 -0700 (PDT)
-X-Received: by 2002:a05:6000:603:b0:455:7d77:1d25 with SMTP id
- ffacd0b85a97d-45e5c5fd588mr40938340f8f.27.1779285114029; 
- Wed, 20 May 2026 06:51:54 -0700 (PDT)
-Received: from imammedo ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da0a17a22sm54749476f8f.22.2026.05.20.06.51.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 06:51:53 -0700 (PDT)
-Date: Wed, 20 May 2026 15:51:52 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org, Eric Auger <eric.auger@redhat.com>, Andrew Jones
- <ajones@ventanamicro.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Fabiano Rosas <farosas@suse.de>, Laurent Vivier
- <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v6 3/4] hw/arm/virt: Remove the lower bound of HighMem
- IO Regions
-Message-ID: <20260520155152.3652a6e9@imammedo>
-In-Reply-To: <20260520-virt-v6-3-d96180454fdf@rsg.ci.i.u-tokyo.ac.jp>
-References: <20260520-virt-v6-0-d96180454fdf@rsg.ci.i.u-tokyo.ac.jp>
- <20260520-virt-v6-3-d96180454fdf@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20251104; t=1779285496; x=1779890296;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=6o2khAvW3lEZPhUnIImNulf53cY6xn5kqxuBlsdDrNQ=;
+ b=lKjskQ6Xgeob6iz6hUU0BQBscG9Hsy6ZLWar1g18/7q+VFsImcCMLGFJcpIhV+PVvi
+ wjZ5LYQ/C8S+ah4U1nq8qRhMwKL5n2Wg2Q5Ul8Hjgh15Meo3iM3gRLqrVfltqXgk/D1Q
+ He1X4gMzRCOLcNwSFO3izmJ2E38f/Xu4DKXF8zC5qZwOoNrcIx063rhdJsUe3p3MILFw
+ GoPmhByIe6Rf+lWm1DpQT0UOeI/4WPff5o3o6nDIpILKScdNHMfT6tm7eL/SkmgjCDZT
+ TqyyeOEDDJH6mxKmWG1bQsOWKX2Xi3ytyK6a47vSQvVb3Wj+GTTNMhJUndGK8bDA/iid
+ vkqg==
+X-Gm-Message-State: AOJu0YzeqhSEc6BOUZ3kK6QJQ+/p8KIPr3ZfihBfaBIKcn58+awuR7ep
+ kx6z7UUSrbnyozLamvAtHVt2rwwpGaLt/ijMtTTg1QsAA2bKALp2S9QGb6uoww7/E9IibVC7dfe
+ JT3+BQDA=
+X-Gm-Gg: Acq92OHO2WkU/BwCUg7H1qYgNQe2yrJgODTzYD8AAww2H6F0Ubc/daqYyf8tCH4Pxvc
+ fZzQL36vxhN9kBGgD1zNy2+Ch33FnHV5C5gOYEZBG/Ggls/joo5nPmjgLvsb0GsYtlZIT0YKaXr
+ y8xhcC5wOEQ2jZ45lxdJ+mlyD7vFJkcLYe6dupI1mY6Ctwu0dRlEy3K8O0L2+ytF6sOeWhkCviy
+ RTYSqMIyvmFrs9SGA/8U4k06excYe0Oe3EpQwno2xi8z/14gWQFFYcaxh2dbAkVVr8HduKcs9T+
+ ZTyXFewNysfFJj8WiewF+4Xp/E1LVLxCUkhdngDfo53NwjeiJf/bdw3z6mGPe18SxbE+VDITxwJ
+ c0uko+H1zAUJFq5rPxra8whDDpoaTdul6Q2dRKgeBonlO6wnYTuhrkgMcLxOfU//G7W6kcakrXB
+ ueVakrE8boWqsqxQ0JbfcVIAc1n8AT1w4PLnWu1MHosB9Joi6kCjXcLmI4Ap1pNyaq2Q==
+X-Received: by 2002:a05:600c:33a3:b0:488:7d5b:125d with SMTP id
+ 5b1f17b1804b1-48fd63333f7mr256797105e9.7.1779285495708; 
+ Wed, 20 May 2026 06:58:15 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45d9adc2209sm51070938f8f.0.2026.05.20.06.58.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 20 May 2026 06:58:14 -0700 (PDT)
+Message-ID: <95f50fd5-9463-4108-b7a8-5b21804cbb27@linaro.org>
+Date: Wed, 20 May 2026 15:58:12 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- TVD_SUBJ_WIPE_DEBT=1.004 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 24/24] target/mips: add Octeon LA* atomic instructions
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: Aleksandar Rikalo <arikalo@gmail.com>,
+ James Hilliard <james.hilliard1@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Aurelien Jarno <aurelien@aurel32.net>
+References: <20260520101807.9971-1-philmd@linaro.org>
+ <20260520101807.9971-25-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260520101807.9971-25-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,137 +105,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 20 May 2026 18:56:32 +0900
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
-
-> Remove the lower bound of the Highmem IO Regions' addresses for the
-> latest machine version to increase the chance to fit the regions in the
-> PA space.
+On 20/5/26 12:18, Philippe Mathieu-Daudé wrote:
+> From: James Hilliard <james.hilliard1@gmail.com>
 > 
-> The lower bound was especially problematic when using virt-install on
-> Apple M2. virt-install 5.0.0 adds multiple pcie-root-port devices that
-
-it looks like with this patch everything would move down,
-with 'small' but, VIRT_HIGH_PCIE_MMIO that still won't fit into M2 PA and
-will get disabled.
-Is it intended (perhaps it should be mentioned in patch)
-
-
-> require sufficient space in the ECAM region. However, the Highmem ECAM
-> region did not fit in the limited PA space on the hardware, and the ECAM
-> region size was limited to 16 MiB. If virt-install had added more than
-> 16 devices to the root bridge, the region overflowed, which prevented
-> edk2-stable202505 from scanning PCI devices, including the boot disk,
-> causing boot failures.
+> Implement the Octeon LA* read-modify-write atomic instruction family:
+> LAI/LAID, LAD/LADD, LAA/LAAD, LAS/LASD, LAC/LACD, and LAW/LAWD.
 > 
-> Ideally, a virtual machine with more than 16 devices added to the root
-> bridge should just work so that users and management layers do not have
-> to care whether they use constrained hardware.
+> These operations are architecturally distinct from SAA/SAAD and are used
+> by existing Octeon user-mode code for atomic counters, bit operations,
+> and exchange-style updates.
 > 
-> The base address of the Highmem IO Regions was fixed when commit
-> f90747c4e8fb ("hw/arm/virt: GICv3 DT node with one or two redistributor
-> regions") added the first Highmem IO Region. Later, commit 957e32cffa57
-> ("hw/arm/virt: Dynamic memory map depending on RAM requirements")
-> allowed moving the Highmem IO Regions to higher addresses to accommodate
-> RAM more than 255 GiB, but the lower bound remained to keep the legacy
-> memory map.
-> 
-> Remove the lower bound for the latest machine version to accommodate
-> more devices with the root bridge. Keeping the lower bound for the old
-> machine versions ensures the compatibility is still maintained.
-> 
-> The hardcoded memory map in tests/qtest/libqos/generic-pcihost.c is also
-> updated.
-> 
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  include/hw/arm/virt.h                |  1 +
->  hw/arm/virt.c                        | 17 +++++++++++------
->  tests/qtest/libqos/generic-pcihost.c |  2 +-
->  3 files changed, 13 insertions(+), 7 deletions(-)
-> 
-> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-> index 3ba33b4bd274..6c8ba8f3185b 100644
-> --- a/include/hw/arm/virt.h
-> +++ b/include/hw/arm/virt.h
-> @@ -142,6 +142,7 @@ typedef enum VirtGICType {
->  
->  struct VirtMachineClass {
->      MachineClass parent;
-> +    hwaddr min_highmem_base;
->      bool no_tcg_its;
->      bool no_highmem_compact;
->      bool no_kvm_steal_time;
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index b090233893c5..78a85a966ad7 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -229,8 +229,7 @@ static const MemMapEntry base_memmap[] = {
->   * Highmem IO Regions: This memory map is floating, located after the RAM.
->   * Each MemMapEntry base (GPA) will be dynamically computed, depending on the
->   * top of the RAM, so that its base get the same alignment as the size,
-> - * ie. a 512GiB entry will be aligned on a 512GiB boundary. If there is
-> - * less than 256GiB of RAM, the floating area starts at the 256GiB mark.
-> + * ie. a 512GiB entry will be aligned on a 512GiB boundary.
->   * Note the extended_memmap is sized so that it eventually also includes the
->   * base_memmap entries (VIRT_HIGH_GIC_REDIST2 index is greater than the last
->   * index of base_memmap).
-> @@ -2479,6 +2478,7 @@ static void virt_set_high_memmap(VirtMachineState *vms,
->  static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
->  {
->      MachineState *ms = MACHINE(vms);
-> +    VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
->      hwaddr base, device_memory_base, device_memory_size, memtop;
->      int i;
->  
-> @@ -2505,8 +2505,7 @@ static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
->      /*
->       * We compute the base of the high IO region depending on the
->       * amount of initial and device memory. The device memory start/size
-> -     * is aligned on 1GiB. We never put the high IO region below 256GiB
-> -     * so that if maxram_size is < 255GiB we keep the legacy memory map.
-> +     * is aligned on 1GiB.
->       * The device region size assumes 1GiB page max alignment per slot.
->       */
->      device_memory_base =
-> @@ -2524,8 +2523,8 @@ static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
->          error_report("maxmem/slots too huge");
->          exit(EXIT_FAILURE);
->      }
-> -    if (base < vms->memmap[VIRT_MEM].base + LEGACY_RAMLIMIT_BYTES) {
-> -        base = vms->memmap[VIRT_MEM].base + LEGACY_RAMLIMIT_BYTES;
-> +    if (base < vmc->min_highmem_base) {
-> +        base = vmc->min_highmem_base;
->      }
->  
->      /* We know for sure that at least the memory fits in the PA space */
-> @@ -4367,6 +4366,12 @@ static void virt_machine_11_0_options(MachineClass *mc)
->      virt_machine_11_1_options(mc);
->      compat_props_add(mc->compat_props, hw_compat_11_0, hw_compat_11_0_len);
->      vmc->hvf_no_kernel_irqchip_default = true;
-> +
-> +    /*
-> +     * Do not put the high IO region below 256GiB so that if maxram_size is
-> +     * < 255GiB we keep the legacy memory map.
-> +     */
-> +    vmc->min_highmem_base = base_memmap[VIRT_MEM].base + LEGACY_RAMLIMIT_BYTES;
->  }
->  DEFINE_VIRT_MACHINE(11, 0)
->  
-> diff --git a/tests/qtest/libqos/generic-pcihost.c b/tests/qtest/libqos/generic-pcihost.c
-> index b77617524cac..287e8445ec5b 100644
-> --- a/tests/qtest/libqos/generic-pcihost.c
-> +++ b/tests/qtest/libqos/generic-pcihost.c
-> @@ -210,7 +210,7 @@ void qpci_init_generic(QGenericPCIBus *qpci, QTestState *qts,
->      qpci->bus.pio_limit = 0x10000;
->      qpci->bus.mmio_alloc_ptr = 0x10000000;
->      qpci->bus.mmio_limit = 0x2eff0000;
-> -    qpci->ecam_alloc_ptr = 0x4010000000;
-> +    qpci->ecam_alloc_ptr = 0x90000000;
->  
->      qpci->obj.get_driver = qpci_generic_get_driver;
->  }
-> 
+>   target/mips/tcg/octeon.decode      | 17 +++++++
+>   target/mips/tcg/octeon_translate.c | 75 ++++++++++++++++++++++++++++++
+>   2 files changed, 92 insertions(+)
 
+
+> diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+> index 684236b1a87..eff46c30a09 100644
+> --- a/target/mips/tcg/octeon_translate.c
+> +++ b/target/mips/tcg/octeon_translate.c
+> @@ -177,6 +177,68 @@ static bool trans_saa(DisasContext *ctx, arg_saa *a, MemOp mop)
+>   TRANS(SAA,  trans_saa, MO_32);
+>   TRANS(SAAD, trans_saa, MO_64);
+>   
+> +static bool trans_la_fetch_add(DisasContext *ctx, int base, int add_reg,
+> +                               int rd, int64_t imm, MemOp mop)
+> +{
+> +    TCGv_i64 addr = tcg_temp_new_i64();
+> +    TCGv_i64 value = tcg_temp_new_i64();
+> +    TCGv_i64 old = tcg_temp_new_i64();
+> +    MemOp amo = mo_endian(ctx) | mop | MO_ALIGN;
+> +
+> +    gen_base_offset_addr(ctx, addr, base, 0);
+> +
+> +    if (add_reg >= 0) {
+> +        gen_load_gpr(value, add_reg);
+> +    } else {
+> +        tcg_gen_movi_i64(value, imm);
+> +    }
+> +
+> +    tcg_gen_atomic_fetch_add_i64(old, addr, value, ctx->mem_idx, amo);
+> +    gen_store_gpr(old, rd);
+> +    return true;
+> +}
+> +
+> +static bool trans_la_xchg(DisasContext *ctx, int base, int add_reg, int rd,
+> +                          int64_t imm, MemOp mop)
+> +{
+> +    TCGv_i64 addr = tcg_temp_new_i64();
+> +    TCGv_i64 value = tcg_temp_new_i64();
+> +    TCGv_i64 old = tcg_temp_new_i64();
+> +    MemOp amo = mo_endian(ctx) | mop | MO_ALIGN;
+> +
+> +    gen_base_offset_addr(ctx, addr, base, 0);
+> +
+> +    if (add_reg >= 0) {
+> +        gen_load_gpr(value, add_reg);
+> +    } else {
+> +        tcg_gen_movi_i64(value, imm);
+> +    }
+> +
+> +    tcg_gen_atomic_xchg_i64(old, addr, value, ctx->mem_idx, amo);
+> +    gen_store_gpr(old, rd);
+> +    return true;
+> +}
+> +
+> +static bool do_la_imm_add(DisasContext *ctx, arg_la *a, int64_t imm, MemOp mop)
+> +{
+> +    return trans_la_fetch_add(ctx, a->base, -1, a->rd, imm, mop);
+> +}
+> +
+> +static bool do_la_reg_add(DisasContext *ctx, arg_laa *a, MemOp mop)
+> +{
+> +    return trans_la_fetch_add(ctx, a->base, a->add, a->rd, 0, mop);
+> +}
+> +
+> +static bool do_la_imm_xchg(DisasContext *ctx, arg_la *a, int64_t imm, MemOp mop)
+> +{
+> +    return trans_la_xchg(ctx, a->base, -1, a->rd, imm, mop);
+> +}
+> +
+> +static bool do_la_reg_xchg(DisasContext *ctx, arg_laa *a, MemOp mop)
+> +{
+> +    return trans_la_xchg(ctx, a->base, a->add, a->rd, 0, mop);
+> +}
+> +
+>   static bool trans_ZCB(DisasContext *ctx, arg_ZCB *a)
+>   {
+>       TCGv_i64 addr = tcg_temp_new_i64();
+> @@ -418,3 +480,16 @@ static bool trans_QMACS(DisasContext *ctx, arg_QMACS *a)
+>       tcg_gen_or_i64(cpu_HI[0], cpu_HI[0], t0);
+>       return true;
+>   }
+> +
+> +TRANS(LAI,  do_la_imm_add, 1, MO_SL);
+> +TRANS(LAID, do_la_imm_add, 1, MO_UQ);
+> +TRANS(LAD,  do_la_imm_add, -1, MO_SL);
+> +TRANS(LADD, do_la_imm_add, -1, MO_UQ);
+> +TRANS(LAA,  do_la_reg_add, MO_SL);
+> +TRANS(LAAD, do_la_reg_add, MO_UQ);
+> +TRANS(LAS,  do_la_imm_xchg, -1, MO_SL);
+> +TRANS(LASD, do_la_imm_xchg, -1, MO_UQ);
+> +TRANS(LAC,  do_la_imm_xchg, 0, MO_SL);
+> +TRANS(LACD, do_la_imm_xchg, 0, MO_UQ);
+> +TRANS(LAW,  do_la_reg_xchg, MO_SL);
+> +TRANS(LAWD, do_la_reg_xchg, MO_UQ);
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+Alternatively passing the atomic function by argument to TRANS():
+
+-- >8 --
++typedef void AtomicThreeOpFn(TCGv_i64, TCGv_va, TCGv_i64, TCGArg, MemOp);
++
++static bool do_atomic_ld(DisasContext *ctx, AtomicThreeOpFn *atomic_fn,
++                         int base, int add_reg, int rd, int64_t imm, 
+MemOp mop)
++{
++    TCGv_i64 addr = tcg_temp_new_i64();
++    TCGv_i64 value = tcg_temp_new_i64();
++    TCGv_i64 old = tcg_temp_new_i64();
++    MemOp amo = mo_endian(ctx) | mop | MO_ALIGN;
++
++    gen_base_offset_addr(ctx, addr, base, 0);
++
++    if (add_reg >= 0) {
++        gen_load_gpr(value, add_reg);
++    } else {
++        tcg_gen_movi_i64(value, imm);
++    }
++
++    atomic_fn(old, addr, value, ctx->mem_idx, amo);
++    gen_store_gpr(old, rd);
++    return true;
++}
++
++static bool do_atomic_la(DisasContext *ctx, arg_la *a, AtomicThreeOpFn *fn,
++                         int64_t imm, MemOp mop)
++{
++    return do_atomic_ld(ctx, fn, a->base, -1, a->rd, imm, mop);
++}
++
++static bool do_atomic_laa(DisasContext *ctx, arg_laa *a, 
+AtomicThreeOpFn *fn,
++                          int64_t imm, MemOp mop)
++{
++    return do_atomic_ld(ctx, fn, a->base, a->add, a->rd, imm, mop);
++}
++
++TRANS(LAI,  do_atomic_la,  tcg_gen_atomic_fetch_add_i64,  1, MO_SL);
++TRANS(LAID, do_atomic_la,  tcg_gen_atomic_fetch_add_i64,  1, MO_UQ);
++TRANS(LAD,  do_atomic_la,  tcg_gen_atomic_fetch_add_i64, -1, MO_SL);
++TRANS(LADD, do_atomic_la,  tcg_gen_atomic_fetch_add_i64, -1, MO_UQ);
++TRANS(LAA,  do_atomic_laa, tcg_gen_atomic_fetch_add_i64,  0, MO_SL);
++TRANS(LAAD, do_atomic_laa, tcg_gen_atomic_fetch_add_i64,  0, MO_UQ);
++TRANS(LAS,  do_atomic_la,  tcg_gen_atomic_xchg_i64,      -1, MO_SL);
++TRANS(LASD, do_atomic_la,  tcg_gen_atomic_xchg_i64,      -1, MO_UQ);
++TRANS(LAC,  do_atomic_la,  tcg_gen_atomic_xchg_i64,       0, MO_SL);
++TRANS(LACD, do_atomic_la,  tcg_gen_atomic_xchg_i64,       0, MO_UQ);
++TRANS(LAW,  do_atomic_laa, tcg_gen_atomic_xchg_i64,       0, MO_SL);
++TRANS(LAWD, do_atomic_laa, tcg_gen_atomic_xchg_i64,       0, MO_UQ);
+---
 
