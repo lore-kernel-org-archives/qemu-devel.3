@@ -4,79 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B643CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 12:15:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E962FCD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 12:17:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPfpI-00065A-N5; Wed, 20 May 2026 08:15:05 -0400
+	id 1wPfrA-0007O6-44; Wed, 20 May 2026 08:17:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPfpH-00064T-7W
- for qemu-devel@nongnu.org; Wed, 20 May 2026 08:15:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPfpF-0007vn-9h
- for qemu-devel@nongnu.org; Wed, 20 May 2026 08:15:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779279299;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Sm/E5egj6/J3NwKEAZpgJRBczfbzEeK+Db2s4PGDCDs=;
- b=EaFB4HfHy3By8qRKbkG1QTiuio1LMEeUWa89mtpJte0wdpuhb6jgv8r6NMklpOi2xWk/2r
- DqtPiuDlTTMa3DAIo7fg+PDGjY9GwpPbwnGTqGW6d5YdlCMxRo66qxp0gT1bsP/RuU2pn5
- HqVweOV/FcGBkYSTSecO9RIX2J2Zzk8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-527-ak78N2pMNZa_ebBKsXpTVw-1; Wed,
- 20 May 2026 08:14:57 -0400
-X-MC-Unique: ak78N2pMNZa_ebBKsXpTVw-1
-X-Mimecast-MFC-AGG-ID: ak78N2pMNZa_ebBKsXpTVw_1779279296
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E68781956095; Wed, 20 May 2026 12:14:55 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 44C201955D84; Wed, 20 May 2026 12:14:55 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E123C21E6A01; Wed, 20 May 2026 14:14:52 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-trivial@nongnu.org
-Cc: J. =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@9elements.com>,
- qemu-devel@nongnu.org,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: Re: [PATCH] docs/devel: Fix typo (s/exist paths/exit paths/)
-In-Reply-To: <20260520-exist-v1-1-535f929a87ae@9elements.com>
- ("J. =?utf-8?Q?Neusch=C3=A4fer=22's?= message of "Wed, 20 May 2026 08:44:12
- +0200")
-References: <20260520-exist-v1-1-535f929a87ae@9elements.com>
-Date: Wed, 20 May 2026 14:14:52 +0200
-Message-ID: <87se7mz39f.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPfr2-0007M5-Dt
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 08:16:53 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPfqz-00007i-UK
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 08:16:52 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-43fe62837baso2735155f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 05:16:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779279407; x=1779884207; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=1iwcJSNrUOiyTxOxV/al4D6PTsQbGMkX0qhlUuJJR8g=;
+ b=l7iF/mLzHiUDy8Y4DPeWsHrET6/VyFJGV5zS1NVw1peDDtrx/fEXD4xauKKAYExmqC
+ ScNdeByQjZVbtg4Uz+1Ye3OSHhe+iG8qGz2ixEHVZNB1PbnNKgHn9+626H14HtDjKvQp
+ oVz7mKFTFMXpplzjljE4wfjGJzwZ3/0u+YSJKBJYOa5ZNCxHOXYHgoTUX6AlchO6u16n
+ 9HSu1tqvjqQ32O8miXDsU8qvP42f9fsGx1mMrf/2sK9BihjiAzqyeLjWyIKQRX7HwsQh
+ YdV+R7p7k9SgUBK53mm6UJyDOaYIjKBo9wXc8kWy5zgtc1sM3MM0uIq6cSrqD4uzgqer
+ aLBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779279407; x=1779884207;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1iwcJSNrUOiyTxOxV/al4D6PTsQbGMkX0qhlUuJJR8g=;
+ b=CSWtf7/i8JdmMk8pIq+OyAV8LgcFm8XcaMjufhvLCI8V+yIoCdfpP4yDrscq6/g4R6
+ taklcilaF6LCnG2ZrDt77DATUg3EVdjgx3LJTr8DgXXx2wjwKb5zE4ZUFZVtZReXtX6O
+ VDU+87B05E4UtiWoXnqRjS5WiFI0uEERY/lieqQHBX00QoMh/bxpOyccGl0sUR6Docl4
+ szVPv6AKtn+JQxO48tvVUKvrhSMF46U15fW9QWeH/38v72WYXB0Hr3fVnAnG3V2gqqEI
+ vcy3GHo7T+gG+AR5n2T9ahZ991n9JDfywQMSj6Nl8fPiwqJaObt5duzJPSDhONB6M2gh
+ kLiQ==
+X-Gm-Message-State: AOJu0YxjG22f8v3QFkRMTcpRvFxxf0XTqVycwGowmoqsCpryxZ8QtDqZ
+ CS89xlddtNy6NOMFx/P7dXWvzbetXV3U8NTsHN0hhnGBQnSz+mxy3dczNKWcLahTPzackPuA/Lf
+ b//VULiQ=
+X-Gm-Gg: Acq92OHfYkUu540eajfivjO6rRoSt7oXQ/ABnad/CTqljrnRfrpQnKr8ip41hRaqaCf
+ wJ1ebXsoub6AsWb0z7TiV0h3HFVOwvw5VszoGSZq8v4TOzN5ooPRE3hhwC++ygkcBmYOEvWgTHu
+ 3gacfsA5BRbk/+KjQdKtUFCSk8e3PQ7aX93MqUn/066+bIz9ZzdQn8vFPChBs1mRJU8DiHTRJI+
+ SPDh7mpVotSUnF5mkGS1xKpcJcB+mQpssF/UA0Zv7JwycLxBV0cKdxMdRkimyGloKdSvOP4O3qU
+ bkzsEDu+aCti5xFBmA3i4f33XPVgDVNpUdxq6smTkexFE4ZZYu8tqWjPFFPAvoBVXsEW4CtraRY
+ +HJZSvq9WbEP7aGtp6T/P0j3Po0pfFtoB5RQgFHrvIwTkOBe7iz4zmqkNZyKVcEdwuIchkzz/zJ
+ aMb113KiCb8VIX+jPPNWXYGXC/hkvWwzMNqbnh4J75hDBGcqpY+7LZnb4+SEfIzeYA0x1zs8EDm
+ tOl0g==
+X-Received: by 2002:a05:6000:2311:b0:449:a07a:967f with SMTP id
+ ffacd0b85a97d-45e5c587a90mr39133222f8f.28.1779279406910; 
+ Wed, 20 May 2026 05:16:46 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45d9e767ee0sm50219449f8f.1.2026.05.20.05.16.45
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 20 May 2026 05:16:46 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: James Hilliard <james.hilliard1@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH] tcg: Factor tcg_zero_i128() helper out
+Date: Wed, 20 May 2026 14:16:44 +0200
+Message-ID: <20260520121644.10835-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,38 +101,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nominating for qemu-trivial.
+Extract tcg_zero_i128() helper for re-use.
 
-J. Neusch=C3=A4fer <j.neuschaefer@9elements.com> writes:
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/tcg/tcg-op-common.h    |  2 ++
+ target/arm/tcg/translate-a64.c |  6 +-----
+ tcg/tcg.c                      | 10 ++++++++++
+ 3 files changed, 13 insertions(+), 5 deletions(-)
 
-> In the discussion of control flow through a function, "exit paths" were m=
-eant.
->
-> Signed-off-by: J. Neusch=C3=A4fer <j.neuschaefer@9elements.com>
-> ---
->  docs/devel/style.rst | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/docs/devel/style.rst b/docs/devel/style.rst
-> index b8edcf9316f059fe15415543098118b28fcaf99c..f4da16a0e83ca6fed205e2516=
-fff4ac2cc941d04 100644
-> --- a/docs/devel/style.rst
-> +++ b/docs/devel/style.rst
-> @@ -469,7 +469,7 @@ for a time/space trade-off like ``tlb_mmu_resize_lock=
-ed`` in the
->  SoftMMU TLB code.
->=20=20
->  If the lifetime of the allocation is within the function and there are
-> -multiple exist paths you can also improve the readability of the code
-> +multiple exit paths you can also improve the readability of the code
->  by using ``g_autofree`` and related annotations. See :ref:`autofree-ref`
->  for more details.
->=20=20
->
-> ---
-> base-commit: 6d17fd91f6cf88df5cb2205e578640d72605cc43
-> change-id: 20260520-exist-b23e143e9bfe
->
-> Best regards,
+diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
+index e02f209c093..aff99754160 100644
+--- a/include/tcg/tcg-op-common.h
++++ b/include/tcg/tcg-op-common.h
+@@ -18,6 +18,8 @@ TCGv_vaddr tcg_constant_vaddr(uintptr_t val);
+ TCGv_vec tcg_constant_vec(TCGType type, unsigned vece, int64_t val);
+ TCGv_vec tcg_constant_vec_matching(TCGv_vec match, unsigned vece, int64_t val);
+ 
++TCGv_i128 tcg_zero_i128(void);
++
+ TCGv_i32 tcg_temp_new_i32(void);
+ TCGv_i64 tcg_temp_new_i64(void);
+ TCGv_ptr tcg_temp_new_ptr(void);
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 9a27c4c6ec7..506ebff508b 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -4804,18 +4804,14 @@ static bool do_STG(DisasContext *s, arg_ldst_tag *a, bool is_zero, bool is_pair)
+ 
+     if (is_zero) {
+         TCGv_i64 clean_addr = clean_data_tbi(s, addr);
+-        TCGv_i64 zero64 = tcg_constant_i64(0);
+-        TCGv_i128 zero128 = tcg_temp_new_i128();
+         int mem_index = get_mem_index(s);
+         MemOp mop = finalize_memop(s, MO_128 | MO_ALIGN);
+ 
+-        tcg_gen_concat_i64_i128(zero128, zero64, zero64);
+-
+         /* This is 1 or 2 atomic 16-byte operations. */
+         tcg_gen_qemu_st_i128(zero128, clean_addr, mem_index, mop);
+         if (is_pair) {
+             tcg_gen_addi_i64(clean_addr, clean_addr, 16);
+-            tcg_gen_qemu_st_i128(zero128, clean_addr, mem_index, mop);
++            tcg_gen_qemu_st_i128(tcg_zero_i128(), clean_addr, mem_index, mop);
+         }
+     }
+ 
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index 2ca44766f64..71c2500ab14 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -2265,6 +2265,16 @@ TCGv_i64 tcg_constant_i64(int64_t val)
+     return temp_tcgv_i64(tcg_constant_internal(TCG_TYPE_I64, val));
+ }
+ 
++TCGv_i128 tcg_zero_i128(void)
++{
++    TCGv_i64 zero64 = tcg_constant_i64(0);
++    TCGv_i128 zero128 = tcg_temp_new_i128();
++
++    tcg_gen_concat_i64_i128(zero128, zero64, zero64);
++
++    return zero128;
++}
++
+ TCGv_vaddr tcg_constant_vaddr(uintptr_t val)
+ {
+     return temp_tcgv_vaddr(tcg_constant_internal(TCG_TYPE_PTR, val));
+-- 
+2.53.0
 
 
