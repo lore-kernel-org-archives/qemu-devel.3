@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85AE6CD5BAC
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 04:38:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 082AACD4F5E
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 04:38:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPYgi-0001Bt-P7; Wed, 20 May 2026 00:37:44 -0400
+	id 1wPYgo-0001Dc-Qz; Wed, 20 May 2026 00:37:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wPYgh-0001BT-CH
- for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:43 -0400
-Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
+ id 1wPYgm-0001DE-Iq
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:48 -0400
+Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wPYge-0003pF-Ct
- for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:42 -0400
-Received: by mail-ot1-x335.google.com with SMTP id
- 46e09a7af769-7de46b8e432so4485270a34.1
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 21:37:38 -0700 (PDT)
+ id 1wPYgj-0003qK-JI
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:48 -0400
+Received: by mail-ot1-x329.google.com with SMTP id
+ 46e09a7af769-7de7c57b52cso4050342a34.3
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 21:37:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779251858; x=1779856658; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779251863; x=1779856663; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ktb//rSE3qSFthp8j7pO++7/bpM7M1LzWp5p9Hu2g0E=;
- b=qdOzy1giV44uzRnHwrtNCYdYXHPeVXXV3SKci0kbfi/YktlJ5jHdygkEDRN/495FWx
- kcWJ4ifNuptBQx5MwDpqJ0PHlyC2iINFTCjQsMPcWaZxi9Lr1JwPmYUSpxWmCMqzlhz5
- EQ8hoKss9zlPItDgL+7OOYDfVoGj6piLMl05KvuVdv5/ehxZgCJO6Rkd5F3ZZROiNoSj
- MM0qSECQ+nsvO5uYkH2N7KWQREJI2prWcjDOgYEryMuWZqlhKMMj1u6kdJcidBu/H+fo
- Z0xBLQ+oGG4mCka7qM1drahC5nRTLAixA3oGkBJtdDjzwnCa9TcWt85mpOnTs1GPVfyj
- Lp2w==
+ :reply-to; bh=Nr3FxQZz7OKL7DfXK1cm8SMgEzktB58VYgFBPF1B1YA=;
+ b=dVlc9eDKHs4qSGZ9RcztO0DLBE6wM6kme1Pm9XBoRekV/3PiqvSv2z5rcC2PXQTJa9
+ s3LImC2z+9/+5w3WEktu2JHJ/K3a6mVeczKo1/KqNO9O3W8NrXdvae8VGV0HoOO/z1ID
+ 7P8ChnFcmwhjeMX8AY1EywrukQ3dawoGTQf/iDzNjphv3Q1tcG74aw1MCaozH5kzb/oY
+ awCtfIsREghZfeWC1E6ds0+Q1g5LkRdeozleUyRizuPu/Aeb6pTA0wJV6oiWcRY7dTvb
+ 5eeyI2CR7og8xSIBCYWIua9QX7zwGFFuzDXmWIuL+RXAtbtjyXTDdjL7ZPqDkSl3a8fp
+ H66A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779251858; x=1779856658;
+ d=1e100.net; s=20251104; t=1779251863; x=1779856663;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=ktb//rSE3qSFthp8j7pO++7/bpM7M1LzWp5p9Hu2g0E=;
- b=OAjlxHfNyAvOHQ0pH1chYbnLQhhBlANXZvHVJcZ7CcW9zIS9wLM36of56eEQIswm+H
- dvYvx0YVlU56ENwzXrGCiDOj+hVny/iHgUrP08BshMidV1z1ytv5irjeHLFa76bIcgND
- wuYvViIkfS0YoGRDL+vCzIcctupqOutexReshEWVOCidMzWNf6C+DouexFyk61eyr/ke
- IoDfpTYCHYLA1n6/f/ruyzWtuReFXnQyC6wa8lPYBkYA74w7gRLGTGobvbEU3810Vq/F
- xn2Wxa/ze0+YZsN1yBnsqRehQMjY/fzBOgzgsf7Vw87aVT0okyUPE/1v15A20z0aB5p3
- nGkw==
-X-Gm-Message-State: AOJu0YxGWGISYAGLcTiXBERd8tG9IwmJsG+YB0dT5tkaXOEkqphDlJ/m
- cQYTCrKZ6WeSgTDemaSNuaGWuC4urO5bn/no6x8gtQHvhvOo7nEr06Ez
-X-Gm-Gg: Acq92OFvveHWnXcy4fkn0TQA5l0z15/s6PQHlHdOEYvL9RS7wItp4UK65Sx4EftuLXH
- 9ou8e1RcIHgD15qs2yviRzj0uSuxy92Eiulc66fOjIO0AF8Uv5NttJ3l/Vy4WSTYO/URMZeq9/U
- oSPwdhfGNqAqoJe4gi9RWUHOdxn/8cRou2ebJ3s/VSVqO8SSj4Ymhio/6kxcrNA+Qc0yiwDmRJr
- lARSq5moZTch73ASsyBwYFOAApGhUh7BKYrQOljg/xRTXPBOorHX0oxjuKiS4UQ3OZ533CnacsG
- 356H0sMCxXu5eUTVw7/u5RyUBYr2uaImTwA7DNwW4KIz+R3y+FSVlrmrY1PAbjk+zg8ik2Ngy19
- BtJt04D0q/+r26KvErazUyP0aHyWw9nHTCC0X8zQXFzSWVZrBcTpORH5ClPONN+5Uk548LOOuCL
- dMMC6QGfZfSKFzYIYtrMViMeckkCARffsFNk/7vRhrFgCNusPI9zERXzQStBBiTxhdoOFk7kUR8
- jGRvZuyiR8PzXyAjkwJEwezYZrQB1G1tYE4pdzlfWEe/klB5QrZNzsvH1gmbIYvqLsk
-X-Received: by 2002:a05:6830:67cf:b0:7dc:c338:d23d with SMTP id
- 46e09a7af769-7e4f2b2453dmr16870552a34.14.1779251858185; 
- Tue, 19 May 2026 21:37:38 -0700 (PDT)
+ bh=Nr3FxQZz7OKL7DfXK1cm8SMgEzktB58VYgFBPF1B1YA=;
+ b=Lo4azLiI/aQtm0neC7yN7AKP5Jjl6hJBL6O77Q4hN87GI//V5YdYYw0y6aFnh8+kj/
+ aaasT8NlgWBNBn1F4N81PCZZqEqDmEf30dYQkaOx8Y1C7+LmSLQi7EAdUEcnoAeo33yv
+ p0Kd3Wy8q8Kgi//3fxkYpy+JiKvbm2w9KjQjpBn/JUxlKf/iCFCtVjHQFsbvZs4WKx7n
+ BVGHkVLKDjMw+ID8Ozq/shlctqEhUd0soGrhMdyhzW6zuVyjkn8rqdUG+SLyi7aH/wL3
+ o1kYdSSRGjdlIKwk+KwUXIrBaBRBeVioOzifs2L5tsys2xfqO9O11jY/FlbltvjMhoB/
+ nWcA==
+X-Gm-Message-State: AOJu0YxquVCAlnvyWt1GgotTo7LaNhuyhCkHwn2xTCn6tesGYtt2ovxr
+ BiizyS0yeFQ2ypDcAWXhbskEiCS0za0KS5iZIsUo9TvznWfjqj0zmrFx
+X-Gm-Gg: Acq92OHlnoZ27hSG8gvCp56XVDEMItU3R7lB0d7XkUto1jwNDaJPvYy/7VU7mM+7Gdx
+ CJnD3uhoc7GQn48VGo33DhQPNE/mtrQCKddWIdDBii5OfPVPevh8ME66I1VNJZKDOQC7trE11qm
+ QQES2UFO1ghvTRu7velvGN6XNs0eOsKaLlCBSyWxTbxnyr8TlbbWF7hW4awy9w3DoQZZ9JiEzi+
+ KGmg3uUP5vbg1g1eos5w0/620G47bTRWHnAtnj5kImwzrVud/XN15Xnh6o6yvE4ar9OcfsFj7Cv
+ xCioTW6QHG26Yz3aQRQII/m3f2nh4bEHH033ieFnT5F6X2VqkFv9ycyD/cBWj+vUyCROPjKpZl9
+ yDMc8TfOnxSMF41Dfbr+fBecEFrD4saQV4JSofBvq/nghABXjAp6se2G2NjQEE/yk4pgAGwFvax
+ qW5FrAkT7YmmSRyeAmwc7rB8/0NeV+P4haMQL9lcDaMpJ9uUp0r6rEvV1u+Dq4dHFoBVRm0uP4j
+ ieccJ4FkGki4SXCVA8EZ86BW5pFg9LwHUbIwtJOl8HP3Cvkw+CcftZG67dNli0ggzfzo3N+Pth6
+ TDo=
+X-Received: by 2002:a05:6830:3812:b0:7e4:230:96ca with SMTP id
+ 46e09a7af769-7e4fa05a5bfmr17807566a34.21.1779251862977; 
+ Tue, 19 May 2026 21:37:42 -0700 (PDT)
 Received: from mac.localdomain (184-96-146-19.hlrn.qwest.net. [184.96.146.19])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55bc4f04fsm11574634a34.27.2026.05.19.21.37.36
+ 46e09a7af769-7e55bc4f04fsm11574634a34.27.2026.05.19.21.37.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 May 2026 21:37:37 -0700 (PDT)
+ Tue, 19 May 2026 21:37:42 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Tue, 19 May 2026 22:37:14 -0600
-Subject: [PATCH v10 20/45] target/mips: add Octeon V3MULU instruction
+Date: Tue, 19 May 2026 22:37:18 -0600
+Subject: [PATCH v10 24/45] target/mips: add Octeon COP2 crypto state
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260519-mips-octeon-missing-insns-v2-v10-20-306f9edfe15b@gmail.com>
+Message-Id: <20260519-mips-octeon-missing-insns-v2-v10-24-306f9edfe15b@gmail.com>
 References: <20260519-mips-octeon-missing-insns-v2-v10-0-306f9edfe15b@gmail.com>
 In-Reply-To: <20260519-mips-octeon-missing-insns-v2-v10-0-306f9edfe15b@gmail.com>
 To: qemu-devel@nongnu.org
@@ -84,8 +85,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::335;
- envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x335.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::329;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x329.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -109,93 +110,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-V3MULU extends VMULU across the full Octeon3 multiplier state, adding rt
-and queued partial products.
+Add the common architectural state needed by Octeon's selector-driven
+COP2 crypto interfaces. This includes storage for the base hash, AES,
+CRC, GFM, 3DES, KASUMI, and overlapping HSH/SHA512/SHA3/SNOW3G/ZUC
+selector windows.
 
-Return the low result while shifting the remaining accumulated limbs back
-into P[0] through P[5].
+Keep selector values and helper-local aliasing logic out of the CPU state
+header so the state definition remains limited to architectural storage.
+Helper code uses the same register banks instead of adding
+non-architectural shadow state.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Migrate the state in an Octeon-only subsection so non-Octeon CPU models
+do not grow migration data.
+
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-
 ---
-Changes v2 -> v3:
-  - Split V3MULU out of the combined Octeon arithmetic and memory
-    instruction patch.  (requested by Richard Henderson)
+Changes v9 -> v10:
+  - Drop non-architectural shared-mode, AES input/result split, GFM XOR,
+    and ZUC/SNOW3G shadow state.
+  - Model HSH/SHA512/SHA3/SNOW3G/ZUC overlap with the architectural HSH
+    DAT/IV register banks.
+  - Store CRCLEN as the architectural 4-bit state.
 
-Changes v3 -> v4:
-  - Keep the Octeon3 MPL3-MPL5/P3-P5 high lanes used by the two-source
-    MTM/MTP forms and Cavium SDK/runtime code.
+Changes v8 -> v9:
+  - Remove the MIPSOcteonCop2Sel enum; selector values are decoded by
+    decodetree or kept local to helper plumbing.
+  - Leave only COP2 state and migration data in this patch.
 
 Changes v7 -> v8:
-  - Use Richard Henderson's v7.5 inline TCG translator with
-    tcg_gen_addN_i64.
+  - Split COP2 crypto state and migration coverage out of the combined
+    COP2 crypto core patch.
 ---
- target/mips/tcg/octeon.decode      |  1 +
- target/mips/tcg/octeon_translate.c | 40 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 41 insertions(+)
+ target/mips/cpu.h            | 23 +++++++++++++++++++++++
+ target/mips/system/machine.c | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 52 insertions(+)
 
-diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index f9c32e1dee..4d0ad05834 100644
---- a/target/mips/tcg/octeon.decode
-+++ b/target/mips/tcg/octeon.decode
-@@ -57,6 +57,7 @@ MTP2         011100 ..... ..... 00000 00000 001011 @r2
+diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+index 346713705a..890734556f 100644
+--- a/target/mips/cpu.h
++++ b/target/mips/cpu.h
+@@ -537,6 +537,27 @@ struct TCState {
+ };
  
- VMULU        011100 ..... ..... ..... 00000 001111 @r3
- VMM0         011100 ..... ..... ..... 00000 010000 @r3
-+V3MULU       011100 ..... ..... ..... 00000 010001 @r3
+ struct MIPSITUState;
++typedef struct MIPSOcteonCryptoState {
++    uint64_t hsh_dat[16];
++    uint64_t hsh_iv[8];
++    uint64_t sha3_dat24;
++    uint64_t gfm_reflect_mul[2];
++    uint64_t gfm_reflect_resinp[2];
++    uint64_t des3_key[3];
++    uint64_t des3_iv;
++    uint64_t des3_result;
++    uint64_t aes_resinp[2];
++    uint64_t aes_iv[2];
++    uint64_t aes_key[4];
++    uint32_t crc_poly;
++    uint32_t crc_iv;
++    uint64_t gfm_mul[2];
++    uint64_t gfm_resinp[2];
++    uint16_t gfm_poly;
++    uint8_t aes_keylen;
++    uint8_t crc_len;
++} MIPSOcteonCryptoState;
++
+ typedef struct CPUArchState {
+     TCState active_tc;
+     CPUMIPSFPUContext active_fpu;
+@@ -558,6 +579,8 @@ typedef struct CPUArchState {
+ #define MSAIR_ProcID    8
+ #define MSAIR_Rev       0
  
- &saa         base rt
- @saa         ...... base:5 rt:5 ................ &saa
-diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index e51d3e6cf7..04e51538f9 100644
---- a/target/mips/tcg/octeon_translate.c
-+++ b/target/mips/tcg/octeon_translate.c
-@@ -316,3 +316,43 @@ static bool trans_VMM0(DisasContext *ctx, arg_VMM0 *a)
-     octeon_zero_partial_product_state();
-     return true;
- }
++    MIPSOcteonCryptoState octeon_crypto;
 +
-+static bool trans_V3MULU(DisasContext *ctx, arg_V3MULU *a)
-+{
-+    TCGv_i64 x[7], y[7], z[7];
-+    TCGv_i64 tmp = tcg_temp_new_i64();
-+
-+    for (int i = 0; i < 7; ++i) {
-+        z[i] = tcg_temp_new_i64();
-+        y[i] = tcg_temp_new_i64();
+ /*
+  * CP0 Register 0
+  */
+diff --git a/target/mips/system/machine.c b/target/mips/system/machine.c
+index f988b3695b..2447915750 100644
+--- a/target/mips/system/machine.c
++++ b/target/mips/system/machine.c
+@@ -279,6 +279,34 @@ static const VMStateDescription mips_vmstate_octeon_multiplier = {
+     }
+ };
+ 
++static const VMStateDescription mips_vmstate_octeon_crypto = {
++    .name = "cpu/octeon_crypto",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = mips_octeon_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64_ARRAY(env.octeon_crypto.hsh_dat, MIPSCPU, 16),
++        VMSTATE_UINT64_ARRAY(env.octeon_crypto.hsh_iv, MIPSCPU, 8),
++        VMSTATE_UINT64(env.octeon_crypto.sha3_dat24, MIPSCPU),
++        VMSTATE_UINT64_ARRAY(env.octeon_crypto.gfm_reflect_mul, MIPSCPU, 2),
++        VMSTATE_UINT64_ARRAY(env.octeon_crypto.gfm_reflect_resinp, MIPSCPU, 2),
++        VMSTATE_UINT64_ARRAY(env.octeon_crypto.des3_key, MIPSCPU, 3),
++        VMSTATE_UINT64(env.octeon_crypto.des3_iv, MIPSCPU),
++        VMSTATE_UINT64(env.octeon_crypto.des3_result, MIPSCPU),
++        VMSTATE_UINT64_ARRAY(env.octeon_crypto.aes_resinp, MIPSCPU, 2),
++        VMSTATE_UINT64_ARRAY(env.octeon_crypto.aes_iv, MIPSCPU, 2),
++        VMSTATE_UINT64_ARRAY(env.octeon_crypto.aes_key, MIPSCPU, 4),
++        VMSTATE_UINT32(env.octeon_crypto.crc_poly, MIPSCPU),
++        VMSTATE_UINT32(env.octeon_crypto.crc_iv, MIPSCPU),
++        VMSTATE_UINT64_ARRAY(env.octeon_crypto.gfm_mul, MIPSCPU, 2),
++        VMSTATE_UINT64_ARRAY(env.octeon_crypto.gfm_resinp, MIPSCPU, 2),
++        VMSTATE_UINT16(env.octeon_crypto.gfm_poly, MIPSCPU),
++        VMSTATE_UINT8(env.octeon_crypto.aes_keylen, MIPSCPU),
++        VMSTATE_UINT8(env.octeon_crypto.crc_len, MIPSCPU),
++        VMSTATE_END_OF_LIST()
 +    }
-+    memcpy(&x[0], z, 6 * sizeof(TCGv_i64));
-+    x[6] = tcg_constant_i64(0);
++};
 +
-+    /*
-+     * Z = rs * mpl -- 64x384->448 bit multiply
-+     * Compute even partial products into X and odd partial products into Y.
-+     * Include RT into the odd partial products, which are 0 in bits [63:0].
-+     */
-+    gen_load_gpr(tmp, a->rs);
-+    gen_load_gpr(y[0], a->rt);
-+    for (int i = 0; i < 6; i += 2) {
-+        tcg_gen_mulu2_i64(x[i + 0], x[i + 1], tmp, oct_mpl[i]);
-+        tcg_gen_mulu2_i64(y[i + 1], y[i + 2], tmp, oct_mpl[i + 1]);
-+    }
-+
-+    /* Sum even and odd to produce final product, plus rt. */
-+    tcg_gen_addN_i64(7, z, x, y);
-+
-+    /* X == (0 : p5 : p4 : p3 : p2 : p1 : p0) -- x[6] is still 0 */
-+    memcpy(&x[0], oct_p, 6 * sizeof(TCGv_i64));
-+
-+    /* Y == (p5 : p4 : p3 : p2 : p1 : p0 : tmp) */
-+    memcpy(&y[1], oct_p, 6 * sizeof(TCGv_i64));
-+    y[0] = tmp;
-+
-+    /* (p* : rd) = (0 : p*) + (rs * mpl + rt) */
-+    tcg_gen_addN_i64(7, y, x, z);
-+    gen_store_gpr(tmp, a->rd);
-+    return true;
-+}
+ const VMStateDescription vmstate_mips_cpu = {
+     .name = "cpu",
+     .version_id = 21,
+@@ -396,6 +424,7 @@ const VMStateDescription vmstate_mips_cpu = {
+     .subsections = (const VMStateDescription * const []) {
+         &mips_vmstate_timer,
+         &mips_vmstate_octeon_multiplier,
++        &mips_vmstate_octeon_crypto,
+         NULL
+     }
+ };
 
 -- 
 2.54.0
