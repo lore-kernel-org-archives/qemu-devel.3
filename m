@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F39DFCD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 16:09:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0662CCD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 16:09:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPjTp-0000co-7h; Wed, 20 May 2026 12:09:09 -0400
+	id 1wPjTX-0000B2-91; Wed, 20 May 2026 12:08:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wPjTB-0008HC-4A; Wed, 20 May 2026 12:08:33 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wPjSs-00082P-CK; Wed, 20 May 2026 12:08:11 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wPjT8-0002bV-Kn; Wed, 20 May 2026 12:08:28 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1wPjSq-0002Yw-6e; Wed, 20 May 2026 12:08:10 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64KBdqOF3067542; Wed, 20 May 2026 16:08:23 GMT
+ 64KEvefN072884; Wed, 20 May 2026 16:08:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=oyA1+XBA1Cgn/zC6X
- gUm5M3E9TX3Vj3I5TB1Db+sLEw=; b=ShJip1M5AA0G0w/3vTVZqMES2SaarCYlZ
- NhSAvYLqSH1udCux8e0clj13fldtEIUjrBwnmTdzyZCOoEpcIBHnojzxWwrKhDN7
- ohnc1wo4zWUM0wW06SU57rd24zM0sqzxlO8OYsyCTjOMQUkhvDHhzELbzmyKD843
- cziKp09RKILWoxXJbAk/9YQcXXbShaAV6+V5JWHspYMWbRHYsLKn/y20C0qTYcfL
- udcn/8fkfIzAu23KdsSJfw3Liq/Rd2Jjy4Mulk0q8iSkH7orTuEq3TaAi5xj5ghN
- RgN2efs3V/skgDRHFkSdKbo4AQENKnGhahM8lV9wrhrhUhBSvxwMA==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6haw9xnq-1
+ :mime-version:references:subject:to; s=pp1; bh=ggFfQY3VD8PaoTwi1
+ xKFNJODGIzJ9Bjtk77DJBTvZZ8=; b=GNLO3RG1TGfqoUfLYIzBuqguQ+4u0827G
+ m1IPTMuOKuC/O2755X2qENQeb9sEmlaaMSvLz7WvuXWtdFlAUdL218B05wCbJ/yX
+ 4mzpwXJxgoNS1eH9S2KWC8ktoH/ImWa8tFWT8/k/VLSDXv2UnsOtp5xS9/hdjWPt
+ dntA4+yA6M/rdkKqlKjiAbs09fsRa2DmdgvNZZ2TMqZ7YmV/A8UzE5PFOWovZr0V
+ XLxywf1Xk8U0R6Pfx9nyCz1fFpBqvgBd9T145tDTF+0cpohq9ylcWHBwLn2cMsqS
+ ry79e+vaAuB3kNcYdUKng0zavf8D3gBC1ZlS8rNLeahFYBkaOwtow==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h8mtw85-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 May 2026 16:08:22 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64KFs52K015340;
- Wed, 20 May 2026 16:08:22 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e73wk83f2-1
+ Wed, 20 May 2026 16:08:04 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64KFs56A007983;
+ Wed, 20 May 2026 16:08:03 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e72wq8aby-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 May 2026 16:08:22 +0000 (GMT)
+ Wed, 20 May 2026 16:08:03 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
  [10.20.54.100])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64KG8IBv48365964
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64KG80RE61211082
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 20 May 2026 16:08:18 GMT
+ Wed, 20 May 2026 16:08:00 GMT
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7C12320043;
- Wed, 20 May 2026 16:08:18 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id EAE6620043;
+ Wed, 20 May 2026 16:07:59 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4F3EF20040;
- Wed, 20 May 2026 16:08:13 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id ECB8C20040;
+ Wed, 20 May 2026 16:07:54 +0000 (GMT)
 Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
  [9.39.31.153]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 20 May 2026 16:08:13 +0000 (GMT)
+ Wed, 20 May 2026 16:07:54 +0000 (GMT)
 From: Chinmay Rath <rathc@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
  harshpb@linux.ibm.com, richard.henderson@linaro.org,
@@ -66,10 +66,9 @@ Cc: milesg@linux.ibm.com, vishalc@linux.ibm.com, tshah@linux.ibm.com,
  amachhiw@linux.ibm.com, sv@linux.ibm.com, shivani@linux.ibm.com,
  mkchauras@gmail.com, uverma@linux.ibm.com, nikhilks@linux.ibm.com,
  Chinmay Rath <rathc@linux.ibm.com>
-Subject: [RFC PATCH 05/28] target/ppc: Move vector pack instructions to
- decodetree
-Date: Wed, 20 May 2026 21:37:05 +0530
-Message-ID: <20260520160728.2283628-6-rathc@linux.ibm.com>
+Subject: [RFC PATCH 02/28] target/ppc: Migrate atomic loads to decodetree
+Date: Wed, 20 May 2026 21:37:02 +0530
+Message-ID: <20260520160728.2283628-3-rathc@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520160728.2283628-1-rathc@linux.ibm.com>
 References: <20260520160728.2283628-1-rathc@linux.ibm.com>
@@ -77,30 +76,30 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDE1NiBTYWx0ZWRfX8FQ6ovfYM9or
- /Vf9gxX/dxOToEZNzd4IUuDjy/urPgmNNe2wIiI7N9kftoXN9G3jHPU9y8nC5A6uHTSdX2Gzx0S
- Z0AHVxOUOq9+Dmom8nxlp1wJfo9Xi4E5MpOyUzXMobn5FAHvuIrnOnCbdWSYdv0fPuhmdv/wmi0
- WvQU/jbJlXP+xb3pnfRiHU/yImBscA54jWA+d+/B3WNszhHeU9T19kCf6xQ8Y0azSZtnD+x5Pvo
- 3gaLJdOWrw4hF3kh7kp3nTx2zXBCLRsoQCZSL5IeiXRdwXl4+5l+xwAIQ1jqRq+aDyRFlXd7/vV
- KziuSY31PO2nb33pR69+GmQfgq8JrrfYL2DvrKFzlrd9poT7m/dyqVm600PgoNB6LRNGG/0YkDJ
- 0Uc+HruAX4dH4trqNp2HreNu4NflzYjHbH4bud/rS9F9Kr00suxn6iH08WiomG74ADCvcd8adr+
- szEd2vmBFQf+Fa2mOJA==
-X-Authority-Analysis: v=2.4 cv=Np/htcdJ c=1 sm=1 tr=0 ts=6a0ddc77 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Proofpoint-GUID: JDWPDWgN--4ZxjaDjJbEsJsExj_CJoKB
+X-Authority-Analysis: v=2.4 cv=GYMnWwXL c=1 sm=1 tr=0 ts=6a0ddc64 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=opJmo4g-Z6A7KFUJZoIA:9
-X-Proofpoint-ORIG-GUID: -wxnOmix3ZjEMQT6CLzavL5gD0b4jmo_
-X-Proofpoint-GUID: cLMud6klyqqa62eJEwrGFZRcQvlHFoFJ
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=-DTolxHDGJQozeEdauoA:9
+X-Proofpoint-ORIG-GUID: l37ONq2GAJfpiD1j-2EjCoaqtwvuuwU4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDE1NiBTYWx0ZWRfX5PjsFa6ShpNy
+ 6BkH9w3x5NfePVBPEkRtWcd88B60NeY6rhAU8ohGQRcwK9D9dCd1NEL3/xf9dANdzZli3nTEtji
+ YHGyHox3RQGjGcAggbqdQvXYT0utcNKet0ecVXkDtc9pMk5zu0paAYy10Io5Rb+AZuCPnAXWZHM
+ u1TopO7PImRCJZoavwj3fbvC3+bSdymvbJHVzBUS9RXP9CQosVusjUeNRt8Hb7qLlKtyWPzwl5b
+ y5SUTAb3/2uVRoMnfBPhQAgasiqw6yk8a2nodZxZk+uw2LoMlQqu0JCZixiJEhyOtgpBTnz8lW7
+ CxkLQcjKZFZtjZir0QVjww91+0fAPU/2XKOcMn7fFoYil7xAok6h3HmlwgSyGrH/MZT69JLkfUa
+ 8SK6RfJARaQWcTeHMWYk5Ky4RUJDy+oMji5p1lnV1WtK87F7OPX2wa4zRvVcElLlIBXM0WpruSq
+ SX20PtCSObY/LbhNpXA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-20_03,2026-05-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
- lowpriorityscore=0 suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
+ phishscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ adultscore=0 suspectscore=0 spamscore=0 clxscore=1011 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605200156
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -123,239 +122,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aboorva Devarajan <aboorvad@linux.ibm.com>
+From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
 
-Move below instructions to decodetree specification:
+Migrate load-and-reserve instructions (lbarx, lharx, lwarx, ldarx,
+lqarx) to decodetree using the X-form layout.
 
-        vpkuhum, vpkuwum, vpkuhus, vpkuwus  : VX-form (PPC_ALTIVEC)
-        vpkshus, vpkswus, vpkshss, vpkswss  : VX-form (PPC_ALTIVEC)
-        vpkpx                                : VX-form (PPC_ALTIVEC)
-        vpkudum, vpkudus, vpksdus, vpksdss  : VX-form (PPC2_ALTIVEC_207)
+A shared helper (do_load_locked) is introduced for standard-width
+variants, while LQARX is handled separately due to its 128-bit
+semantics and register pairing constraints.
 
-The legacy GEN_VXFORM_ENV/GEN_VXFORM macros that generated gen_vpk*()
-functions reading register fields from ctx->opcode are replaced by new
-do_vpk_env()/do_vpk() helpers in vmx-impl.c.inc that use the
-pre-extracted decodetree argument fields (a->vrt, a->vra, a->vrb)
-directly.  The existing gen_helper_vpk*() implementations in
-int_helper.c are reused without changes.
+The implementation preserves legacy behavior, including:
+  - Reservation granularity and overwrite semantics
+  - Alignment requirements
+  - Invalid instruction cases for LQARX
 
-The changes were verified by validating that the tcg ops generated by
-those instructions remain the same, which were captured with the '-d
-in_asm,op' option before and after the patch.
+Testing:
+  - Verified TCG equivalence with legacy implementation
 
-Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Signed-off-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
 Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+[cr: ppc32 build fix, using @X_rc for decode]
 ---
- target/ppc/helper.h                 | 26 +++++++--------
- target/ppc/insn32.decode            | 16 +++++++++
- target/ppc/int_helper.c             | 28 ++++++++--------
- target/ppc/translate/vmx-impl.c.inc | 51 +++++++++++++++++++++--------
- target/ppc/translate/vmx-ops.c.inc  | 13 --------
- 5 files changed, 81 insertions(+), 53 deletions(-)
+ target/ppc/insn32.decode |   7 ++
+ target/ppc/translate.c   | 142 ++++++++++++++++++++++-----------------
+ 2 files changed, 87 insertions(+), 62 deletions(-)
 
-diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-index d23260ddd0..33bb9c9443 100644
---- a/target/ppc/helper.h
-+++ b/target/ppc/helper.h
-@@ -250,19 +250,19 @@ DEF_HELPER_FLAGS_4(VMSUMUBM, TCG_CALL_NO_RWG, void, avr, avr, avr, avr)
- DEF_HELPER_FLAGS_4(VMSUMMBM, TCG_CALL_NO_RWG, void, avr, avr, avr, avr)
- DEF_HELPER_FLAGS_4(VPERM, TCG_CALL_NO_RWG, void, avr, avr, avr, avr)
- DEF_HELPER_FLAGS_4(VPERMR, TCG_CALL_NO_RWG, void, avr, avr, avr, avr)
--DEF_HELPER_4(vpkshss, void, env, avr, avr, avr)
--DEF_HELPER_4(vpkshus, void, env, avr, avr, avr)
--DEF_HELPER_4(vpkswss, void, env, avr, avr, avr)
--DEF_HELPER_4(vpkswus, void, env, avr, avr, avr)
--DEF_HELPER_4(vpksdss, void, env, avr, avr, avr)
--DEF_HELPER_4(vpksdus, void, env, avr, avr, avr)
--DEF_HELPER_4(vpkuhus, void, env, avr, avr, avr)
--DEF_HELPER_4(vpkuwus, void, env, avr, avr, avr)
--DEF_HELPER_4(vpkudus, void, env, avr, avr, avr)
--DEF_HELPER_4(vpkuhum, void, env, avr, avr, avr)
--DEF_HELPER_4(vpkuwum, void, env, avr, avr, avr)
--DEF_HELPER_4(vpkudum, void, env, avr, avr, avr)
--DEF_HELPER_FLAGS_3(vpkpx, TCG_CALL_NO_RWG, void, avr, avr, avr)
-+DEF_HELPER_4(VPKSHSS, void, env, avr, avr, avr)
-+DEF_HELPER_4(VPKSHUS, void, env, avr, avr, avr)
-+DEF_HELPER_4(VPKSWSS, void, env, avr, avr, avr)
-+DEF_HELPER_4(VPKSWUS, void, env, avr, avr, avr)
-+DEF_HELPER_4(VPKSDSS, void, env, avr, avr, avr)
-+DEF_HELPER_4(VPKSDUS, void, env, avr, avr, avr)
-+DEF_HELPER_4(VPKUHUS, void, env, avr, avr, avr)
-+DEF_HELPER_4(VPKUWUS, void, env, avr, avr, avr)
-+DEF_HELPER_4(VPKUDUS, void, env, avr, avr, avr)
-+DEF_HELPER_4(VPKUHUM, void, env, avr, avr, avr)
-+DEF_HELPER_4(VPKUWUM, void, env, avr, avr, avr)
-+DEF_HELPER_4(VPKUDUM, void, env, avr, avr, avr)
-+DEF_HELPER_FLAGS_3(VPKPX, TCG_CALL_NO_RWG, void, avr, avr, avr)
- DEF_HELPER_5(VMHADDSHS, void, env, avr, avr, avr, avr)
- DEF_HELPER_5(VMHRADDSHS, void, env, avr, avr, avr, avr)
- DEF_HELPER_FLAGS_4(VMSUMUHM, TCG_CALL_NO_RWG, void, avr, avr, avr, avr)
 diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index d9cc191de5..8c8eca5e46 100644
+index 342e65dadf..26948e08a7 100644
 --- a/target/ppc/insn32.decode
 +++ b/target/ppc/insn32.decode
-@@ -1054,6 +1054,22 @@ VSTRIHR         000100 ..... 00011 ..... . 0000001101   @VX_tb_rc
- VCLRLB          000100 ..... ..... ..... 00110001101    @VX
- VCLRRB          000100 ..... ..... ..... 00111001101    @VX
+@@ -1309,6 +1309,13 @@ XVF64GERNN      111011 ... -- .... 0 ..... 11111010 ..-  @XX3_at xa=%xx_xa_pair
+ ##Extend Sign Word and Shift Left Immediate XS-form
+ EXTSWSLI         011111 ..... ..... ..... 110111101 . .         @XS
  
-+## Vector Pack Instructions
++## Load and Reserve Instructions
++LBARX           011111 ..... ..... ..... 0000110100 .   @X_rc
++LHARX           011111 ..... ..... ..... 0001110100 .   @X_rc
++LWARX           011111 ..... ..... ..... 0000010100 .   @X_rc
++LDARX           011111 ..... ..... ..... 0001010100 .   @X_rc
++LQARX           011111 ..... ..... ..... 0100010100 .   @X_rc
 +
-+VPKUHUM         000100 ..... ..... ..... 0000000111 0    @VX
-+VPKUWUM         000100 ..... ..... ..... 0000100111 0    @VX
-+VPKUDUM         000100 ..... ..... ..... 1000100111 0    @VX
-+VPKUHUS         000100 ..... ..... ..... 0001000111 0    @VX
-+VPKUWUS         000100 ..... ..... ..... 0001100111 0    @VX
-+VPKUDUS         000100 ..... ..... ..... 1001100111 0    @VX
-+VPKSHUS         000100 ..... ..... ..... 0010000111 0    @VX
-+VPKSWUS         000100 ..... ..... ..... 0010100111 0    @VX
-+VPKSDUS         000100 ..... ..... ..... 1010100111 0    @VX
-+VPKSHSS         000100 ..... ..... ..... 0011000111 0    @VX
-+VPKSWSS         000100 ..... ..... ..... 0011100111 0    @VX
-+VPKSDSS         000100 ..... ..... ..... 1011100111 0    @VX
-+VPKPX           000100 ..... ..... ..... 0110000111 0    @VX
-+
- # VSX Load/Store Instructions
+ ## Vector Division Instructions
  
- LXSD            111001 ..... ..... .............. 10    @DS
-diff --git a/target/ppc/int_helper.c b/target/ppc/int_helper.c
-index a3adf746bd..dc55ccadf7 100644
---- a/target/ppc/int_helper.c
-+++ b/target/ppc/int_helper.c
-@@ -1465,7 +1465,7 @@ void helper_VPMSUMD(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b)
- #else
- #define PKBIG 0
- #endif
--void helper_vpkpx(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b)
-+void helper_VPKPX(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b)
- {
-     int i, j;
-     ppc_avr_t result;
-@@ -1488,7 +1488,7 @@ void helper_vpkpx(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b)
+ VDIVSW          000100 ..... ..... ..... 00110001011    @VX
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index e802414fca..3f009cd9ca 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -2947,30 +2947,6 @@ static void gen_isync(DisasContext *ctx)
+     ctx->base.is_jmp = DISAS_EXIT_UPDATE;
  }
  
- #define VPK(suffix, from, to, cvt, dosat)                               \
--    void helper_vpk##suffix(CPUPPCState *env, ppc_avr_t *r,             \
-+    void helper_VPK##suffix(CPUPPCState *env, ppc_avr_t *r,             \
-                             ppc_avr_t *a, ppc_avr_t *b)                 \
-     {                                                                   \
-         int i;                                                          \
-@@ -1507,18 +1507,18 @@ void helper_vpkpx(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b)
-         }                                                               \
-     }
- #define I(x, y) (x)
--VPK(shss, s16, s8, cvtshsb, 1)
--VPK(shus, s16, u8, cvtshub, 1)
--VPK(swss, s32, s16, cvtswsh, 1)
--VPK(swus, s32, u16, cvtswuh, 1)
--VPK(sdss, s64, s32, cvtsdsw, 1)
--VPK(sdus, s64, u32, cvtsduw, 1)
--VPK(uhus, u16, u8, cvtuhub, 1)
--VPK(uwus, u32, u16, cvtuwuh, 1)
--VPK(udus, u64, u32, cvtuduw, 1)
--VPK(uhum, u16, u8, I, 0)
--VPK(uwum, u32, u16, I, 0)
--VPK(udum, u64, u32, I, 0)
-+VPK(SHSS, s16, s8, cvtshsb, 1)
-+VPK(SHUS, s16, u8, cvtshub, 1)
-+VPK(SWSS, s32, s16, cvtswsh, 1)
-+VPK(SWUS, s32, u16, cvtswuh, 1)
-+VPK(SDSS, s64, s32, cvtsdsw, 1)
-+VPK(SDUS, s64, u32, cvtsduw, 1)
-+VPK(UHUS, u16, u8, cvtuhub, 1)
-+VPK(UWUS, u32, u16, cvtuwuh, 1)
-+VPK(UDUS, u64, u32, cvtuduw, 1)
-+VPK(UHUM, u16, u8, I, 0)
-+VPK(UWUM, u32, u16, I, 0)
-+VPK(UDUM, u64, u32, I, 0)
- #undef I
- #undef VPK
- #undef PKBIG
-diff --git a/target/ppc/translate/vmx-impl.c.inc b/target/ppc/translate/vmx-impl.c.inc
-index 00b359f031..65230f3461 100644
---- a/target/ppc/translate/vmx-impl.c.inc
-+++ b/target/ppc/translate/vmx-impl.c.inc
-@@ -1070,19 +1070,44 @@ TRANS(VRLQMI, do_vector_rotl_quad, false, true)
+-static void gen_load_locked(DisasContext *ctx, MemOp memop)
+-{
+-    TCGv gpr = cpu_gpr[rD(ctx->opcode)];
+-    TCGv t0 = tcg_temp_new();
+-
+-    gen_set_access_type(ctx, ACCESS_RES);
+-    gen_addr_reg_index(ctx, t0);
+-    tcg_gen_qemu_ld_tl(gpr, t0, ctx->mem_idx, DEF_MEMOP(memop) | MO_ALIGN);
+-    tcg_gen_mov_tl(cpu_reserve, t0);
+-    tcg_gen_movi_tl(cpu_reserve_length, memop_size(memop));
+-    tcg_gen_mov_tl(cpu_reserve_val, gpr);
+-}
+-
+-#define LARX(name, memop)                  \
+-static void gen_##name(DisasContext *ctx)  \
+-{                                          \
+-    gen_load_locked(ctx, memop);           \
+-}
+-
+-/* lwarx */
+-LARX(lbarx, MO_UB)
+-LARX(lharx, MO_UW)
+-LARX(lwarx, MO_UL)
+-
+ static void gen_fetch_inc_conditional(DisasContext *ctx, MemOp memop,
+                                       TCGv EA, TCGCond cond, int addend)
+ {
+@@ -3219,42 +3195,9 @@ STCX(sthcx_, MO_UW)
+ STCX(stwcx_, MO_UL)
  
- GEN_VXFORM_TRANS(vsl, 2, 7);
- GEN_VXFORM_TRANS(vsr, 2, 11);
--GEN_VXFORM_ENV(vpkuhum, 7, 0);
--GEN_VXFORM_ENV(vpkuwum, 7, 1);
--GEN_VXFORM_ENV(vpkudum, 7, 17);
--GEN_VXFORM_ENV(vpkuhus, 7, 2);
--GEN_VXFORM_ENV(vpkuwus, 7, 3);
--GEN_VXFORM_ENV(vpkudus, 7, 19);
--GEN_VXFORM_ENV(vpkshus, 7, 4);
--GEN_VXFORM_ENV(vpkswus, 7, 5);
--GEN_VXFORM_ENV(vpksdus, 7, 21);
--GEN_VXFORM_ENV(vpkshss, 7, 6);
--GEN_VXFORM_ENV(vpkswss, 7, 7);
--GEN_VXFORM_ENV(vpksdss, 7, 23);
--GEN_VXFORM(vpkpx, 7, 12);
-+static bool do_vpk_env(DisasContext *ctx, arg_VX *a,
-+                       void (*gen_helper)(TCGv_ptr, TCGv_ptr,
-+                                          TCGv_ptr, TCGv_ptr))
+ #if defined(TARGET_PPC64)
+-/* ldarx */
+-LARX(ldarx, MO_UQ)
+ /* stdcx. */
+ STCX(stdcx_, MO_UQ)
+ 
+-/* lqarx */
+-static void gen_lqarx(DisasContext *ctx)
+-{
+-    int rd = rD(ctx->opcode);
+-    TCGv EA, hi, lo;
+-    TCGv_i128 t16;
+-
+-    if (unlikely((rd & 1) || (rd == rA(ctx->opcode)) ||
+-                 (rd == rB(ctx->opcode)))) {
+-        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
+-        return;
+-    }
+-
+-    gen_set_access_type(ctx, ACCESS_RES);
+-    EA = tcg_temp_new();
+-    gen_addr_reg_index(ctx, EA);
+-
+-    /* Note that the low part is always in RD+1, even in LE mode.  */
+-    lo = cpu_gpr[rd + 1];
+-    hi = cpu_gpr[rd];
+-
+-    t16 = tcg_temp_new_i128();
+-    tcg_gen_qemu_ld_i128(t16, EA, ctx->mem_idx, DEF_MEMOP(MO_128 | MO_ALIGN));
+-    tcg_gen_extr_i128_i64(lo, hi, t16);
+-
+-    tcg_gen_mov_tl(cpu_reserve, EA);
+-    tcg_gen_movi_tl(cpu_reserve_length, 16);
+-    tcg_gen_st_tl(hi, tcg_env, offsetof(CPUPPCState, reserve_val));
+-    tcg_gen_st_tl(lo, tcg_env, offsetof(CPUPPCState, reserve_val2));
+-}
+-
+ /* stqcx. */
+ static void gen_stqcx_(DisasContext *ctx)
+ {
+@@ -5741,6 +5684,86 @@ static bool trans_EXTSWSLI(DisasContext *ctx, arg_XS *a)
+     return true;
+ }
+ 
++/*
++ * Load-and-reserve core
++ */
++static bool do_load_locked(DisasContext *ctx, arg_X_rc *a, MemOp memop)
 +{
-+    TCGv_ptr ra, rb, rd;
-+    REQUIRE_VECTOR(ctx);
-+    ra = gen_avr_ptr(a->vra);
-+    rb = gen_avr_ptr(a->vrb);
-+    rd = gen_avr_ptr(a->vrt);
-+    gen_helper(tcg_env, rd, ra, rb);
++    TCGv EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
++    TCGv gpr = cpu_gpr[a->rt];
++
++    gen_set_access_type(ctx, ACCESS_RES);
++
++    tcg_gen_qemu_ld_tl(gpr, EA, ctx->mem_idx, memop | MO_ALIGN);
++
++    tcg_gen_mov_tl(cpu_reserve, EA);
++    tcg_gen_movi_tl(cpu_reserve_length, memop_size(memop));
++
++    tcg_gen_mov_tl(cpu_reserve_val, gpr);
++
 +    return true;
 +}
 +
-+static bool do_vpk(DisasContext *ctx, arg_VX *a,
-+                   void (*gen_helper)(TCGv_ptr, TCGv_ptr, TCGv_ptr))
++static bool trans_LBARX(DisasContext *ctx, arg_LBARX *a)
 +{
-+    TCGv_ptr ra, rb, rd;
-+    REQUIRE_VECTOR(ctx);
-+    ra = gen_avr_ptr(a->vra);
-+    rb = gen_avr_ptr(a->vrb);
-+    rd = gen_avr_ptr(a->vrt);
-+    gen_helper(rd, ra, rb);
++    REQUIRE_INSNS_FLAGS2(ctx, ATOMIC_ISA206);
++    return do_load_locked(ctx, a, DEF_MEMOP(MO_UB));
++}
++
++static bool trans_LHARX(DisasContext *ctx, arg_LHARX *a)
++{
++    REQUIRE_INSNS_FLAGS2(ctx, ATOMIC_ISA206);
++    return do_load_locked(ctx, a, DEF_MEMOP(MO_UW));
++}
++
++static bool trans_LWARX(DisasContext *ctx, arg_LWARX *a)
++{
++    return do_load_locked(ctx, a, DEF_MEMOP(MO_UL));
++}
++
++static bool trans_LDARX(DisasContext *ctx, arg_LDARX *a)
++{
++    REQUIRE_64BIT(ctx);
++    return do_load_locked(ctx, a, DEF_MEMOP(MO_UQ));
++}
++
++static bool trans_LQARX(DisasContext *ctx, arg_LQARX *a)
++{
++    REQUIRE_64BIT(ctx);
++    REQUIRE_INSNS_FLAGS2(ctx, ISA207S);
++#if defined(TARGET_PPC64)
++    TCGv EA;
++    TCGv_i128 t16;
++    /* Must use even register and avoid overlap */
++    if (unlikely((a->rt & 1) || (a->rt == a->ra) || (a->rt == a->rb))) {
++        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
++        return true;
++    }
++
++    gen_set_access_type(ctx, ACCESS_RES);
++    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
++    t16 = tcg_temp_new_i128();
++
++    tcg_gen_qemu_ld_i128(t16, EA, ctx->mem_idx,
++                         DEF_MEMOP(MO_128 | MO_ALIGN));
++
++    tcg_gen_extr_i128_i64(cpu_gpr[a->rt + 1],
++                         cpu_gpr[a->rt],
++                         t16);
++
++    tcg_gen_mov_tl(cpu_reserve, EA);
++    tcg_gen_movi_tl(cpu_reserve_length, 16);
++
++    tcg_gen_st_i64(cpu_gpr[a->rt],
++                   tcg_env, offsetof(CPUPPCState, reserve_val));
++    tcg_gen_st_i64(cpu_gpr[a->rt + 1],
++                   tcg_env, offsetof(CPUPPCState, reserve_val2));
++#else
++    qemu_build_not_reached();
++#endif
 +    return true;
 +}
 +
-+TRANS_FLAGS(ALTIVEC, VPKUHUM, do_vpk_env, gen_helper_VPKUHUM)
-+TRANS_FLAGS(ALTIVEC, VPKUWUM, do_vpk_env, gen_helper_VPKUWUM)
-+TRANS_FLAGS2(ALTIVEC_207, VPKUDUM, do_vpk_env, gen_helper_VPKUDUM)
-+TRANS_FLAGS(ALTIVEC, VPKUHUS, do_vpk_env, gen_helper_VPKUHUS)
-+TRANS_FLAGS(ALTIVEC, VPKUWUS, do_vpk_env, gen_helper_VPKUWUS)
-+TRANS_FLAGS2(ALTIVEC_207, VPKUDUS, do_vpk_env, gen_helper_VPKUDUS)
-+TRANS_FLAGS(ALTIVEC, VPKSHUS, do_vpk_env, gen_helper_VPKSHUS)
-+TRANS_FLAGS(ALTIVEC, VPKSWUS, do_vpk_env, gen_helper_VPKSWUS)
-+TRANS_FLAGS2(ALTIVEC_207, VPKSDUS, do_vpk_env, gen_helper_VPKSDUS)
-+TRANS_FLAGS(ALTIVEC, VPKSHSS, do_vpk_env, gen_helper_VPKSHSS)
-+TRANS_FLAGS(ALTIVEC, VPKSWSS, do_vpk_env, gen_helper_VPKSWSS)
-+TRANS_FLAGS2(ALTIVEC_207, VPKSDSS, do_vpk_env, gen_helper_VPKSDSS)
-+TRANS_FLAGS(ALTIVEC, VPKPX, do_vpk, gen_helper_VPKPX)
- GEN_VXFORM_ENV(vsum4ubs, 4, 24);
- GEN_VXFORM_ENV(vsum4sbs, 4, 28);
- GEN_VXFORM_ENV(vsum4shs, 4, 25);
-diff --git a/target/ppc/translate/vmx-ops.c.inc b/target/ppc/translate/vmx-ops.c.inc
-index b8f77d3d2c..2820976c0f 100644
---- a/target/ppc/translate/vmx-ops.c.inc
-+++ b/target/ppc/translate/vmx-ops.c.inc
-@@ -59,19 +59,6 @@ GEN_VXFORM_300(bcdtrunc, 0, 20),
- GEN_VXFORM_300(bcdutrunc, 0, 21),
- GEN_VXFORM(vsl, 2, 7),
- GEN_VXFORM(vsr, 2, 11),
--GEN_VXFORM(vpkuhum, 7, 0),
--GEN_VXFORM(vpkuwum, 7, 1),
--GEN_VXFORM_207(vpkudum, 7, 17),
--GEN_VXFORM(vpkuhus, 7, 2),
--GEN_VXFORM(vpkuwus, 7, 3),
--GEN_VXFORM_207(vpkudus, 7, 19),
--GEN_VXFORM(vpkshus, 7, 4),
--GEN_VXFORM(vpkswus, 7, 5),
--GEN_VXFORM_207(vpksdus, 7, 21),
--GEN_VXFORM(vpkshss, 7, 6),
--GEN_VXFORM(vpkswss, 7, 7),
--GEN_VXFORM_207(vpksdss, 7, 23),
--GEN_VXFORM(vpkpx, 7, 12),
- GEN_VXFORM(vsum4ubs, 4, 24),
- GEN_VXFORM(vsum4sbs, 4, 28),
- GEN_VXFORM(vsum4shs, 4, 25),
+ #include "translate/fixedpoint-impl.c.inc"
+ 
+ #include "translate/fp-impl.c.inc"
+@@ -5853,9 +5876,6 @@ GEN_HANDLER(lswx, 0x1F, 0x15, 0x10, 0x00000001, PPC_STRING),
+ GEN_HANDLER(stswi, 0x1F, 0x15, 0x16, 0x00000001, PPC_STRING),
+ GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
+ GEN_HANDLER(isync, 0x13, 0x16, 0x04, 0x03FFF801, PPC_MEM),
+-GEN_HANDLER_E(lbarx, 0x1F, 0x14, 0x01, 0, PPC_NONE, PPC2_ATOMIC_ISA206),
+-GEN_HANDLER_E(lharx, 0x1F, 0x14, 0x03, 0, PPC_NONE, PPC2_ATOMIC_ISA206),
+-GEN_HANDLER(lwarx, 0x1F, 0x14, 0x00, 0x00000000, PPC_RES),
+ GEN_HANDLER_E(lwat, 0x1F, 0x06, 0x12, 0x00000001, PPC_NONE, PPC2_ISA300),
+ GEN_HANDLER_E(stwat, 0x1F, 0x06, 0x16, 0x00000001, PPC_NONE, PPC2_ISA300),
+ GEN_HANDLER_E(stbcx_, 0x1F, 0x16, 0x15, 0, PPC_NONE, PPC2_ATOMIC_ISA206),
+@@ -5864,8 +5884,6 @@ GEN_HANDLER2(stwcx_, "stwcx.", 0x1F, 0x16, 0x04, 0x00000000, PPC_RES),
+ #if defined(TARGET_PPC64)
+ GEN_HANDLER_E(ldat, 0x1F, 0x06, 0x13, 0x00000001, PPC_NONE, PPC2_ISA300),
+ GEN_HANDLER_E(stdat, 0x1F, 0x06, 0x17, 0x00000001, PPC_NONE, PPC2_ISA300),
+-GEN_HANDLER(ldarx, 0x1F, 0x14, 0x02, 0x00000000, PPC_64B),
+-GEN_HANDLER_E(lqarx, 0x1F, 0x14, 0x08, 0, PPC_NONE, PPC2_LSQ_ISA207),
+ GEN_HANDLER2(stdcx_, "stdcx.", 0x1F, 0x16, 0x06, 0x00000000, PPC_64B),
+ GEN_HANDLER_E(stqcx_, 0x1F, 0x16, 0x05, 0, PPC_NONE, PPC2_LSQ_ISA207),
+ #endif
 -- 
 2.53.0
 
