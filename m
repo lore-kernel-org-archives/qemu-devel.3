@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74AB2CD5BA4
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:25:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DFE0CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:26:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPkeZ-0004hl-So; Wed, 20 May 2026 13:24:20 -0400
+	id 1wPkdg-0003Ob-S9; Wed, 20 May 2026 13:23:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkeY-0004hO-1K
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:24:18 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkdd-0003I9-0m
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:23:22 -0400
 Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkeW-0003e7-8D
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:24:17 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkda-0003OJ-Lt
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:23:20 -0400
 Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-43d7e23defbso2897591f8f.0
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:24:15 -0700 (PDT)
+ ffacd0b85a97d-444826c16ffso4643112f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:23:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779297854; x=1779902654; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=G7thKSWIjg5/qhPYDC+RiNGQD44Efn4uAyXrn4XVW5U=;
- b=idxffmkEYsADuaiHy4AJTNF0hgNX3+mz1G+/1NY+I7+SHmNmlJLyPyuegR7f+4TTHu
- dbtGYwpLvweKqr/7mutpzm3r1/T0zSEKX4mn7ZJ/9UYMp8uLY6Zh9mgJxYFp1x5KwE1D
- 9VFGYcx972gvoJWcyaT8XXaymhWByijnk46zpxF0iuaaE6lP0f5DPloCf3HqPPxJAmNc
- /jH37xJDEdvSxSAzvX8vzL+6nBlCjruyezxPX0GNcLOjDDiSXE9+KWW9Z+M8eGmjAqNm
- iTCSl7I8vJBihmXlJ7r8RjLBn+oIhCgoIoqf58NZU9Ppm7lME2kyJlo0anL+f+psG6tZ
- dWkQ==
+ d=linaro.org; s=google; t=1779297795; x=1779902595; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=C3+j/VboBBWTqP6JT6AzSI813AYe7UsE6MMZpzqeDGo=;
+ b=ex3Z8Gf80RcOpDD3CNSquQJFr9vHDJkCdpwocbljHfuoXFl73TTqh0UNGEiUZz8mgi
+ I0X2fNOU2L7Ir4vcyhszvladbMoeWROfprHM7FNJ0hluKYT4J1rqeoRDWuMofS5P3hfZ
+ xmyGyquf84CdRCM1qeKBEfP8CyPqSZwBjIdejTB1V73MIuRBpyWRMj7WNSq9KEmffkVN
+ 7S1a86v5daTF2FR1i8kpYmbGgU8sWO+nL+ceR7pmxMQ/H34V5eMIXD1b/I0l9lecbLW4
+ kS05TjiHm4N89We2CpM71aeDgyfy41RRw7a6M09nAVNwp6PjH2wjvM1K7oNvPm40vbV8
+ 7jpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779297854; x=1779902654;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=G7thKSWIjg5/qhPYDC+RiNGQD44Efn4uAyXrn4XVW5U=;
- b=mlLJOklCC5cWOJ+JJk+m7Vt4Gh0+RSEPKoWEgNG8lK6No9/YYQT7h9u33IjpVpenyf
- saaKy/8tu060qXuclVjkDBJbpgGXfhVQXcxp1h+gq+eXGi9KBECuUMc364enNfhHJtxm
- rScGcuQWO0BfGWzDwjqMNfL1/96cRS5KS+QZ65X7yCHspiG5u0vv8sraCls2M/ijiyDn
- NoJp0mfB4NCabpZC+N2beYGwf9plo3T65VsgnDrMheU33awQaiV0lgZE5Nsa9OXsAelY
- HVAIUQW/6cHvTRhvyqclNl82Ew0Eb4IHdVo9sbhp82GhQyoJJT3hbiULB6MwywU2dzqY
- y3gA==
-X-Gm-Message-State: AOJu0YzZ/7zBvUdhnCw35PEsXmazc0ROAaX7BgIh4K/jROVQ5rFZYeNa
- SqEMZvzQy+3RWrgKrhbo4aaJQi0oOAKsTrg5nNg80AsU9qUkbxuIYIQHZ+hebRFQad/d+0YXQMC
- ogqX2hgA=
-X-Gm-Gg: Acq92OFFGObgVBKtL4vAk95OXsHDOxUUaSfgDX7ZCkG/yz33uKFoXiHuaVY3ZdbqU5/
- 0hOlhtJMH8QL43+m1KnqOCFXvnhjupjt4f5F35S4VVHkI9FhW9boivcidvwRf9HEGOl7nEVnK1s
- 5ZNi1kaOIrmEb6U44yDoH0WKG9wT4n2qeR/m/3WFBIFjM+vvM3XAutUjElVmjQ4hV7lMo5Hmn3x
- rHcvy6l+FNHE2F25elVFZs5EhI9KUGphLILowq4gKrMObN5+vV4TihwjrNDDr9PhNwG7YgOcjcD
- lRukjUxMo0wtkyL6boTAUVA1t2T6bK3mq3gp2G6SIl3b1gsXgIq1p0sk7qTNaKQKQhco0qO+HTh
- 8S5DAXHXCRVwqhaKC9VISbUzCqBqkL3l9oc1FVbWMEu/wZxMTdXIiTyMNSRRVQoObeiUnWZATE7
- 43DGtlVTDg9pm/OSMNMz2lOIY7iEH8LrkaXEn+W/YmH8cSoF3gnw/VMaMGpQ5R4/7eDDXTcXOrq
- xi/P+EJhHk=
-X-Received: by 2002:a05:600c:3b12:b0:488:a824:fdff with SMTP id
- 5b1f17b1804b1-48fe61ed2cfmr366192695e9.22.1779297854350; 
- Wed, 20 May 2026 10:24:14 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779297795; x=1779902595;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=C3+j/VboBBWTqP6JT6AzSI813AYe7UsE6MMZpzqeDGo=;
+ b=eHkLQ8CeZJ2poEyE55+fsxUJy1WXf9SecUFIApvTA5T8YtS+thkJB2b6rptKT30f3F
+ ntNa4mYxq8GdN+CMHckKWY5ttKe0dRqyV7vVuV1V+/oZ4OMosALVFvDmTTp30+RXySjI
+ RosgRPIuM5qZ19jr4M5ARU7I4YTQMHEir/WWkYk7YOA19tzqonXqOkoXMN5b+EEtNNQQ
+ YN33/oeQx5baBr7/HfZfl/IbhPbnCdi7mrkEkY7F6Clw48296ZdaX93y2GaIXfEITi8f
+ 4Tqaq4xIa7agsu9FI4lh27ffeS44uw7gi4qMXj550WPUYx+J836qaBNEoQDc+/GmNs76
+ umFw==
+X-Gm-Message-State: AOJu0YzgUkaRfAn/U3fXL9JbgDwz4hg15jiw0RCBZt4rj94V9OvTBBpl
+ BL1l/jnv/H9LCfJ5YzzNPpKWFYrRL7Rnc0kKEuzRxUe0zJIbVWzz/rZQspAqa5iwQvBIQBObayR
+ zL5TXzkk=
+X-Gm-Gg: Acq92OGrLUmZPSIzjkgT7YI9NEGNPx99A9I68kAEWkKyc2VJXM3UEHdLbKcePEpnKOo
+ nLiXg59bc92sYDW4arL8RSAFE3ufG55CaBn5hCIIU+f3OUB4Mfl5OaJHIJqJKVov0jpYv4D6go7
+ 1WJX951guhQ3JOqsIz4utFDaZL6RzYpjOHyaHBDdNip5NiRURmRKxCyDkHytnwTvoyfGmrMRNMb
+ rZRwWQnh8l3LJbEQcEaiW1SqrwvGqyWSKYzy1YqUnCpFeiE3o6+/yhf9h69/hww7DWEBSpUcn7L
+ 77boYmL/BlUR05X4ulDxMhvaoAIOreCy45hsrygX0Uw7Fv2NnpbYHl9B8mzzDSntphoxZ+SX/po
+ 1qjmCgVDr2bQWF7DCWyoTVrEKdjkCmx91vHvlGwzUjdFfZG/c4gX7oPeSPWa/GPx4bmJKF+zr5E
+ MUUViSX+0Kr94de/CS47pwad5TXES9/zJ4kvrW0rMH2w//6ou9Uw4hqh7RyWXnCk5weZCM8RhzQ
+ xxJ8Zw6C/w=
+X-Received: by 2002:a05:6000:401e:b0:449:c5e2:a8b7 with SMTP id
+ ffacd0b85a97d-45e5c59ec1cmr39859280f8f.30.1779297795080; 
+ Wed, 20 May 2026 10:23:15 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49033d2fa0dsm6569005e9.2.2026.05.20.10.24.13
+ ffacd0b85a97d-45da0a1a22csm54926096f8f.19.2026.05.20.10.23.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 20 May 2026 10:24:13 -0700 (PDT)
+ Wed, 20 May 2026 10:23:14 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: James Hilliard <james.hilliard1@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v12 08/24] target/mips: split Octeon SEQ/SNE decode
-Date: Wed, 20 May 2026 19:22:56 +0200
-Message-ID: <20260520172313.23777-9-philmd@linaro.org>
+Subject: [PATCH v12 00/24] target/mips: add missing Octeon user-mode support
+ (first half)
+Date: Wed, 20 May 2026 19:22:48 +0200
+Message-ID: <20260520172313.23777-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260520172313.23777-1-philmd@linaro.org>
-References: <20260520172313.23777-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
  envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
@@ -101,140 +99,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: James Hilliard <james.hilliard1@gmail.com>
+Since v10:
+- addressed rth review comments (rewording comment)
+- pass gen_atomic_*() in do_atomic_ld()
+- use tcg_zero_i128() in ZCB*
+- re-order TRANS(trans_lx) lines
 
-Decode the equality and inequality forms as explicit SEQ/SNE
-instructions rather than using shared generated SEQNE entries.
+Respinning first half of James v10, adding tests with each
+patch modifying an instruction instead of all at the end.
+Split SEQNE/SEQNEI patch to ease review.
 
-The explicit decoder names match the architectural mnemonics, which
-makes the translator entry points and trace/debug output easier to
-correlate with the instruction set.
+Based-on: rth/tcg-next
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-[PMD: Split SEQNE (this patch) vs SEQNEI]
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/mips/tcg/octeon.decode                 |  3 +-
- target/mips/tcg/octeon_translate.c            | 25 +++++++------
- tests/tcg/mips/user/isa/octeon/octeon-insns.c | 36 +++++++++++++++++++
- 3 files changed, 52 insertions(+), 12 deletions(-)
+James Hilliard (23):
+  linux-user/mips: implement sysmips(MIPS_FLUSH_CACHE)
+  linux-user/mips: implement sysmips(MIPS_ATOMIC_SET)
+  linux-user/mips, target/mips: honor MIPS_FIXADE for unaligned accesses
+  target/mips: expose Octeon68XX floating-point support
+  tests/tcg/mips: add Octeon instruction smoke test
+  target/mips: fix Octeon arithmetic destination handling
+  target/mips: drop Octeon zero-register fast paths
+  target/mips: split Octeon SEQ/SNE decode
+  target/mips: split Octeon SEQI/SNEI decode
+  target/mips: add Octeon LBX instruction
+  target/mips: add Octeon LHUX instruction
+  target/mips: add Octeon LWUX instruction
+  target/mips: add Octeon SAA instruction
+  target/mips: add Octeon SAAD instruction
+  target/mips: add Octeon ZCB and ZCBT instructions
+  target/mips: add Octeon multiplier state
+  target/mips: add Octeon MTM instructions
+  target/mips: add Octeon MTP instructions
+  target/mips: add Octeon VMULU instruction
+  target/mips: add Octeon VMM0 instruction
+  target/mips: add Octeon V3MULU instruction
+  target/mips: add Octeon QMAC instructions
+  target/mips: add Octeon LA* atomic instructions
 
-diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index 102a05860df..2c54901f77e 100644
---- a/target/mips/tcg/octeon.decode
-+++ b/target/mips/tcg/octeon.decode
-@@ -38,7 +38,8 @@ DMUL         011100 ..... ..... ..... 00000 000011 @r3
- EXTS         011100 ..... ..... ..... ..... 11101 . @bitfield
- CINS         011100 ..... ..... ..... ..... 11001 . @bitfield
- POP          011100 rs:5 00000 rd:5 00000 10110 dw:1
--SEQNE        011100 rs:5 rt:5 rd:5 00000 10101 ne:1
-+SEQ          011100 ..... ..... ..... 00000 101010 @r3
-+SNE          011100 ..... ..... ..... 00000 101011 @r3
- SEQNEI       011100 rs:5 rt:5 imm:s10 10111 ne:1
- 
- &lx          base index rd
-diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index b7531653e58..dfbb55e3fc3 100644
---- a/target/mips/tcg/octeon_translate.c
-+++ b/target/mips/tcg/octeon_translate.c
-@@ -106,29 +106,32 @@ static bool trans_POP(DisasContext *ctx, arg_POP *a)
-     return true;
- }
- 
--static bool trans_SEQNE(DisasContext *ctx, arg_SEQNE *a)
-+static bool do_seq_sne(DisasContext *ctx, const arg_decode_ext_octeon1 *a,
-+                       TCGCond cond)
- {
-     TCGv_i64 t0, t1;
- 
--    if (a->rd == 0) {
--        /* nop */
--        return true;
--    }
--
-     t0 = tcg_temp_new_i64();
-     t1 = tcg_temp_new_i64();
- 
-     gen_load_gpr(t0, a->rs);
-     gen_load_gpr(t1, a->rt);
- 
--    if (a->ne) {
--        tcg_gen_setcond_i64(TCG_COND_NE, cpu_gpr[a->rd], t1, t0);
--    } else {
--        tcg_gen_setcond_i64(TCG_COND_EQ, cpu_gpr[a->rd], t1, t0);
--    }
-+    tcg_gen_setcond_i64(cond, t0, t1, t0);
-+    gen_store_gpr(t0, a->rd);
-     return true;
- }
- 
-+static bool trans_SEQ(DisasContext *ctx, arg_SEQ *a)
-+{
-+    return do_seq_sne(ctx, a, TCG_COND_EQ);
-+}
-+
-+static bool trans_SNE(DisasContext *ctx, arg_SNE *a)
-+{
-+    return do_seq_sne(ctx, a, TCG_COND_NE);
-+}
-+
- static bool trans_SEQNEI(DisasContext *ctx, arg_SEQNEI *a)
- {
-     TCGv_i64 t0;
-diff --git a/tests/tcg/mips/user/isa/octeon/octeon-insns.c b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
-index f406726fc11..3c3802ebfee 100644
---- a/tests/tcg/mips/user/isa/octeon/octeon-insns.c
-+++ b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
-@@ -54,11 +54,47 @@ static uint64_t octeon_dpop(uint64_t rs)
-     return rd;
- }
- 
-+static uint64_t octeon_seq(uint64_t rs, uint64_t rt)
-+{
-+    uint64_t rd;
-+
-+    asm volatile(
-+        "move $8, %[rs]\n\t"
-+        "move $9, %[rt]\n\t"
-+        ".word 0x7109502a\n\t" /* seq $10, $8, $9 */
-+        "move %[rd], $10\n\t"
-+        : [rd] "=r" (rd)
-+        : [rs] "r" (rs), [rt] "r" (rt)
-+        : "$8", "$9", "$10");
-+
-+    return rd;
-+}
-+
-+static uint64_t octeon_sne(uint64_t rs, uint64_t rt)
-+{
-+    uint64_t rd;
-+
-+    asm volatile(
-+        "move $8, %[rs]\n\t"
-+        "move $9, %[rt]\n\t"
-+        ".word 0x7109502b\n\t" /* sne $10, $8, $9 */
-+        "move %[rd], $10\n\t"
-+        : [rd] "=r" (rd)
-+        : [rs] "r" (rs), [rt] "r" (rt)
-+        : "$8", "$9", "$10");
-+
-+    return rd;
-+}
-+
- int main(void)
- {
-     assert(octeon_baddu(0x123, 0x0f0) == 0x13);
-     assert(octeon_dmul(0x12345678, 0x10) == 0x123456780);
-     assert(octeon_dpop(0xf0f0f0f0f0f0f0f0ULL) == 32);
-+    assert(octeon_seq(0xabc, 0xabc) == 1);
-+    assert(octeon_seq(0xabc, 0xdef) == 0);
-+    assert(octeon_sne(0xabc, 0xabc) == 0);
-+    assert(octeon_sne(0xabc, 0xdef) == 1);
- 
-     return 0;
- }
+Richard Henderson (1):
+  tcg: Introduce tcg_gen_addN_i64
+
+ MAINTAINERS                                   |   2 +-
+ include/tcg/tcg-op-common.h                   |   1 +
+ linux-user/mips/target_syscall.h              |   3 +
+ linux-user/mips64/target_syscall.h            |   3 +
+ target/mips/cpu.h                             |  16 +
+ target/mips/tcg/translate.h                   |   2 +
+ target/mips/tcg/octeon.decode                 |  54 ++-
+ linux-user/mips/cpu_loop.c                    |   5 +
+ linux-user/syscall.c                          |  56 +++
+ target/mips/cpu.c                             |  10 +-
+ target/mips/system/machine.c                  |  33 ++
+ target/mips/tcg/octeon_translate.c            | 384 +++++++++++++++---
+ target/mips/tcg/translate.c                   |  24 +-
+ tcg/tcg-op.c                                  |  42 ++
+ tests/tcg/mips/user/isa/octeon/octeon-insns.c | 204 ++++++++++
+ target/mips/cpu-defs.c.inc                    |  10 +-
+ tests/tcg/mips64/Makefile.target              |  20 +
+ tests/tcg/mips64el/Makefile.target            |   8 +
+ 18 files changed, 817 insertions(+), 60 deletions(-)
+ create mode 100644 tests/tcg/mips/user/isa/octeon/octeon-insns.c
+ create mode 100644 tests/tcg/mips64/Makefile.target
+ create mode 100644 tests/tcg/mips64el/Makefile.target
+
 -- 
 2.53.0
 
