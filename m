@@ -4,109 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10893CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 20:52:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73F77CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:06:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPnte-0000wa-3U; Wed, 20 May 2026 16:52:06 -0400
+	id 1wPo6X-0006Fa-Df; Wed, 20 May 2026 17:05:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wPntb-0000vj-OV
- for qemu-devel@nongnu.org; Wed, 20 May 2026 16:52:03 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wPntZ-0004F2-OQ
- for qemu-devel@nongnu.org; Wed, 20 May 2026 16:52:03 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-67cd93d8affso6867049a12.2
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 13:52:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779310319; cv=none;
- d=google.com; s=arc-20240605;
- b=ZJis2J1HQ7j2Mnyktg4CMlynMq2OwC4VEQXqI5Bi3Zd2mQ13v6cV3VemWQ8Knsu2q5
- brnCtEkLyAw2Mtjt3C5Cu28CiF1LHZHZJ+XBuChWrCd3PyUdWI0OguzK0hjz3gBNjpgo
- Vhe4miT7a21f92pVnttp/98dtnKgUwg/vWbya6cpjSn3ywVWpT3d7XUAiOXdfztQ4kkm
- tyjYT7GLFuRW5oQ45GBw8+uv6TYyhfo9pIyr9amKANlHCeM1wKjrXD5nOmTor7UDZmfS
- nvUFjKXNJpHSqYW+0K7aGcHaomIWrQBEspdblW0OXfCU+DYbAs9EUaXU8t7gHGf1BMWS
- G4vA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=L9e4lhOFQMiEvm2xzmmhkrZE9pPPr3Kg7fLvu9dwPds=;
- fh=rnLOuVZ13PZymAjPE6rmrIcvGtoFog51zAPZPt+8ds0=;
- b=CNMP/8flFMXStMiCX5L4hC4crkxWb4743br/LkLG2K62/cSy68GZnPxSqXEinW5wW3
- +KvkJj9Wlo2DUGPXFoYR4Y055CoASp4/M8fcds7TFG1LNG7gOJiLvUOTUryf8syY2NMp
- wuwuiHvvwBgGdFQBcZyh4IDsxN6IoQ4BeJ2/8fru1Sq1BFd9PQoifNq8CLcMDd+zeXXY
- ndzuAngb1Flecel8+YAySolda66yYDusmXHHlm8M+Ws1jkRJ6cQzRVKrh8pLB/AYi+LM
- j0j9J6rGi0yflqDDuKuXKy8jWgnL8U3cx1eWV0SRvWxKEu3GtgWSPKU5jEebaIqQNoqK
- 1bDA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPo6N-00069O-Do
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:05:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPo6I-0008Ly-JD
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:05:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779311108;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=YJtmFgLzK9kfBDWm4yDLTjmsni1UTJ8ZnKX7tyfPuFI=;
+ b=GE8WvxVU5rBg+2cYkstkpgL87z59XDTagY0OBRVVEJuDuNt6hLCt+jICExW+Ux/eyVWaKh
+ T0u0HW/lEkke6xxsCrCafICCR6HW2QHABl+YoPeoNqDke29ELIepDP2CLCR2QAkZ8vbA0b
+ st8zD6JZrKnDdCjOGRVVtwKZ4T+U9VI=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-45-22Gkw7VcO8i2PaCjAfDCZw-1; Wed, 20 May 2026 17:05:06 -0400
+X-MC-Unique: 22Gkw7VcO8i2PaCjAfDCZw-1
+X-Mimecast-MFC-AGG-ID: 22Gkw7VcO8i2PaCjAfDCZw_1779311106
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-90f03c426e7so944403085a.0
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 14:05:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779310319; x=1779915119; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=L9e4lhOFQMiEvm2xzmmhkrZE9pPPr3Kg7fLvu9dwPds=;
- b=LaUNzYJIWD3Ns29BQyYkPKN2m+qsMUJVNCndpoLDH50lOlu/bZktcDfrj7pobJ/10z
- zeiEpDNlrSeEKfSySP4TMbpayXW1SUTGwdMSdXJW1c9sEXxTyMhfDy4FvrLHWXXYRgbb
- iGBz25SK+kIK8vJGbIk5ah7HIPIkO1lq3S3OWSm+uHh7ysab/h1VLqdveDdnDGCiVXRC
- p6uKR0n6aptkBS56O3IhD7yDhpMuib/PEG6PDZGSdr1vCINJ3XBp7liZRTnB+uWptZp3
- wCx6A8FJTnPnBCsA8UdhfHKCZGP8aKwJ3vHLyOTuKoRLRoa3wAYWuM9jYwPl71muiat8
- QPPw==
+ d=redhat.com; s=google; t=1779311106; x=1779915906; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=YJtmFgLzK9kfBDWm4yDLTjmsni1UTJ8ZnKX7tyfPuFI=;
+ b=eFN9Pbdw9vwvI+VrvWDUuWkYhb+WKqz6h6Pz03g4UkB+3eU1jGJvKGtQj4RccJ32TU
+ qwmNo8D3KJxm9dcnOLcJMMjiMM6klahUEij32WZsL6BeBCCKh28imQ81GKkSB2YrXw80
+ gyxHIx0WnEUlCBUFDGOssNhIvWcujA2h1AYxt5BKSxyXbo5LwU4d2oX2klI36MG+w1kx
+ m6wGJVqr49e8p4Q+Nk8J8T9e5KGqm62FsS/eBllD5uWF9MhVYlEBtHT5ciHx5sXzsMf4
+ fbJeEwAIzOCSorogskBbHieDMlkNac7irl2DjttXOo/nlRUuqfLbreRd8gZNdHJ9+Bcz
+ XtKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779310319; x=1779915119;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=L9e4lhOFQMiEvm2xzmmhkrZE9pPPr3Kg7fLvu9dwPds=;
- b=QriqsLljJgQuZjMPLHWWY1mTYr9wXG7+yJgItL9gCvKr6URfVVcSFQjVXgY53Fjntu
- raF31Ycm/IHoAmSdyIS5kC1ufIeNFEv5D8wXBFmu3gesU3V6Mdd9cudBECAnfGspocQD
- gSQBiiOUCcO/M29dzxieLHKFnWUU88xgkzh0dlcEVCl8SdavkB9VFP2TQxSHqRUpOzUi
- SdOFjGTWhVD1vOr2YE4ufu2nKRyE2QLF1ugWmLif17R1UFBh6rfN8eeQev0WW0/adjSd
- X2uOaX//EEFmlITIdzyIuOZOM89dI2/x67cS+THpq2/emc/V66yZx4xB7mz9xO/PtzP2
- 2A3Q==
-X-Gm-Message-State: AOJu0Ywdl96238UCeiuRzt9yfhCQGmAFw9I3pyCbLQJOswfFOFI91jXe
- 7KYMFll7aQQKAv1L1Hqb9nD7Eeb4+W8aJsg6X5LHlp5pIdBTnIWpU11wftpTfODhh7um+iljwfT
- Cb0SilJ3dcP7IyMO+jLS4tUxWtF8KiCg=
-X-Gm-Gg: Acq92OEO/QK6OS8FtEeBDyci0b22w5AR43fzIvWh9wY5n4jb6oztI5bWrC9yQmetGgd
- GLmnrDbxtFBElGDq3Mpp4ddqtQ7i2kMydbX+1rtOee5nSd+1AYiqNFLpxOwF12/tIP4hNX6YyKv
- F7cHK/hR6CxzcRcVTts1Kzmu7F4dIBUVHsX7TbO0NsBZUfWPm3SWSlwcllrdmVi3pcAlPAJuHd8
- xZziBycNkjQZEmA0RHZayG42rdaMkFEpu0TCnyOWGkeKO/zkKySDuPnJgoUJ3LT02iTexbHZmgN
- cMBThw4eMIZFebmTXFYbE+BcGo7pOsynACelJL9hfg==
-X-Received: by 2002:aa7:d5d6:0:b0:67b:7a8f:3e2c with SMTP id
- 4fb4d7f45d1cf-683bd38d8b7mr10075744a12.25.1779310319315; Wed, 20 May 2026
- 13:51:59 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779311106; x=1779915906;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YJtmFgLzK9kfBDWm4yDLTjmsni1UTJ8ZnKX7tyfPuFI=;
+ b=ojyrRHNVxUtPjtR8aUnI5mKbXxPSN90LMBN/pHeGsmZLF1dw4tuJ1fGiP2ldus7M8z
+ se3A9ClNdF9+g9ixJmVW4b/CyM+7raPx9bsHEvztVojpCGBmYACy/B4Ar8JT7CaPxGDj
+ +1o1tEZLCrvR7Qlo4Mcp3wkF6zkj1ccjMo44l1S7ER1fUzOFbDFmkrn2cmTJJqB0qPeP
+ z3+dlUmVnVMZsm3/o/VXxsP6+xIBjtc6uaeeD/CJGr7gdTJkNT6eGZ+SWCN2S7JmlbEX
+ j2rSTEK77ZtWurMXxzpsWiqoxZp7TfKYlEUj/6I90nmTJs39eN4W1SK6v/MTHGOJvcof
+ Lc7g==
+X-Gm-Message-State: AOJu0YyPE3hoT2U577X5t1d7SZdHR8zpW1EQ5IzBieg+ZMXCBogS2s6I
+ 2OnuSXuXc8hVtVcToM914jMsbdCDdh2FzoIKWAJW/P96o2Y1odKMn6ZeR5xBBWqd8wzT77+Bpvu
+ 9hAfO4Y6YqvN0UhZhRR4zb9fYyrG9CqywDkzhtKZzHAStbbRxu7RnXDf3
+X-Gm-Gg: Acq92OFYvAKXyTv5bvIRYyriKDefu8mja4xwb3wgQoLHjdat32sHJEUU4aGi6Wdk9iA
+ TffFDOO1cSxPFzYV6wshRjPFyl1hIE4R/I+GFzSocDYhgMT5BFUMjT0bFAH/U91HSdXVJk+zjVr
+ xFRxcbkrCx1MbybTkwQ9PXlVEdkQhQqUqIKVsCiGHqn/YNWlgt+92MnffvrBe6ZYicLP8nTfs5a
+ Ob7m5l6kykeBZJY9aNuO5geGyt1PQZdXjYvOh8ObQxVrgTIHdKMLA/LeA0d5gxcL65hw7dE0GWX
+ git1op0yuCYNpThDFzTpX61csanFiEr+u62qVrsFup+oqX12TC1aDS3D/BwoMomL4LoZf0nQ7sa
+ 3c9E5U5ABWblMQrihL2x/cF/4Jk89bY9oYFtNWBmivdMiMdY=
+X-Received: by 2002:a05:620a:199b:b0:8f8:cdd0:df80 with SMTP id
+ af79cd13be357-911d0c5b55fmr3993905085a.59.1779311105754; 
+ Wed, 20 May 2026 14:05:05 -0700 (PDT)
+X-Received: by 2002:a05:620a:199b:b0:8f8:cdd0:df80 with SMTP id
+ af79cd13be357-911d0c5b55fmr3993897785a.59.1779311105192; 
+ Wed, 20 May 2026 14:05:05 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-910ba9454basm2264780185a.12.2026.05.20.14.05.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 20 May 2026 14:05:04 -0700 (PDT)
+Date: Wed, 20 May 2026 17:05:03 -0400
+From: Peter Xu <peterx@redhat.com>
+To: infra.ai.cloud@bitdeer.com
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Hyman Huang <yong.huang@bitdeer.com>
+Subject: Re: [PATCH] MAINTAINERS: Update email of Yong Huang
+Message-ID: <ag4h_-o7u9-0pdqN@x1.local>
+References: <b3bd81c3d9f425bb750a76d7bad7ad0284e55123.1779178180.git.infra.ai.cloud@bitdeer.com>
+ <ag4HBdzJXGdKgy50@x1.local>
 MIME-Version: 1.0
-References: <20260520091351.1160442-1-berrange@redhat.com>
-In-Reply-To: <20260520091351.1160442-1-berrange@redhat.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Wed, 20 May 2026 16:51:46 -0400
-X-Gm-Features: AVHnY4IjUeR_r23YDEpwSviadOS6ayYjetBmM-zt5_gLCeFSLgwkoTvOt1i-AEk
-Message-ID: <CAJSP0QWmfyiNYm0YXQysywq9Ry4Rt+xRCEC_d8PSJJxv9LPcug@mail.gmail.com>
-Subject: Re: [PULL 00/29] Misc next patches
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Thanos Makatos <thanos.makatos@nutanix.com>, qemu-block@nongnu.org, 
- Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- John Snow <jsnow@redhat.com>, John Levon <john.levon@nutanix.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Cleber Rosa <crosa@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ag4HBdzJXGdKgy50@x1.local>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,126 +116,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 20, 2026 at 5:14=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
->
-> The following changes since commit e89049b3ba5f1f0468bc0d294173345597514a=
-1b:
->
->   Merge tag 'for-upstream' of https://repo.or.cz/qemu/kevin into staging =
-(2026-05-19 15:23:10 -0400)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/berrange/qemu tags/misc-next-pull-request
->
-> for you to fetch changes up to 5236113844128157c68ea9230cbb56f2ab485f31:
->
->   qom: drop user_creatable_add_type method (2026-05-20 10:12:38 +0100)
->
-> ----------------------------------------------------------------
-> Misc patches for iotests, qom, crypt & io
->
->  * Fix client side anoymous TLS credentials
->  * Fix return value semantics for qio_channel_flush
->  * Add ID validation of internal QOM constructor
->  * Fix ability to create internal QOM objects
->    without a parent
->  * Merge user creatable object constructor into
->    main QOM file
->  * Print reason for skipping I/O tests
->  * Remove redundant meson suits for I/O tests
->  * Add optional suites for many block drivers I/O tests
->  * Run I/O tests for 10 block drivers in GitLab CI
+On Wed, May 20, 2026 at 03:09:57PM -0400, Peter Xu wrote:
+> > @@ -3784,7 +3784,7 @@ F: migration/rdma*
+> >  F: scripts/rdma-migration-helper.sh
+> >  
+> >  Migration dirty limit and dirty page rate
+> > -M: Hyman Huang <yong.huang@smartx.com>
+> > +M: Hyman Huang <infra.ai.cloud@biitdeer.com>
+> >  S: Maintained
+> >  F: system/dirtylimit.c
+> >  F: include/system/dirtylimit.h
+> > @@ -3794,7 +3794,7 @@ F: include/system/dirtyrate.h
+> >  F: docs/devel/migration/dirty-limit.rst
+> >  
+> >  Detached LUKS header
+> > -M: Hyman Huang <yong.huang@smartx.com>
+> > +M: Hyman Huang <infra.ai.cloud@biitdeer.com>
 
-Hi Dan,
-The following image format tests are failing:
-https://gitlab.com/qemu-project/qemu/-/jobs/14470148602
-https://gitlab.com/qemu-project/qemu/-/jobs/14470148603
+Both addresses are wrong.  I think you typed one more "i".  Well, I
+enriched my life by finding a bug in a maintainer file update..
 
-Please resend either together with fixes or with changes to the test
-set to keep the failing tests disabled for now.
+I'll fix it when sending the pull.
 
-Thanks,
-Stefan
+> >  S: Maintained
+> >  F: tests/qemu-iotests/tests/luks-detached-header
+> >  F: docs/devel/luks-detached-header.rst
+> > -- 
+> > 2.43.0
+> > 
+> 
+> -- 
+> Peter Xu
 
->  * Fix sudo check for LUKS I/O test
->  * Mark I/O test 185 as flaky
->  * Fix vfio-user iothread ID to be well-formed
->
-> ----------------------------------------------------------------
->
-> Daniel P. Berrang=C3=A9 (27):
->   crypto: fix client side anonymous TLS credentials
->   gitlab: ensure all meson jobs capture build/meson-logs by default
->   iotests: print reason when I/O test is skipped in TAP mode
->   iotests: remove redundant meson suite for iotests
->   iotests: ensure all qcow2 I/O tests are able to be run via make
->   scripts/mtest2make: ensure output has stable sorting
->   scripts/mtest2make: support optional tests grouping
->   iotests: add a meson suite / make target per block I/O tests format
->   docs/devel/testing: expand documentation for 'make check-block'
->   iotests: add nbd and luks to the I/O test suites
->   iotests: use 'driver' as collective term for either format or protocol
->   iotests: validate dmsetup result in test 128
->   iotests: fix check for sudo access in LUKS I/O test
->   iotests: mark 185 as a flaky test
->   gitlab: add jobs for thorough block tests
->   gitlab: remove I/O tests from build-tcg-disabled job
->   qom: add trace events for object/property lifecycle
->   hw/vfio-user: use a valid object ID for iothread
->   qom: validate ID format when creating objects
->   qom: make errp last param in methods taking va_list
->   qom: shorten name of object_set_properties_from_keyval
->   qom: have object_set_props_keyval return bool
->   qom: move object_set_prop_keyval into object.c
->   qom: add object_new_with_props_from_qdict
->   qom: fix ability to create objects without a parent
->   qom: allow object_new_with_prop* to trigger module loading
->   qom: drop user_creatable_add_type method
->
-> John Snow (1):
->   python: bump qemu.qmp to v0.0.6
->
-> Tejus GK (1):
->   io: invert the return semantics of qio_channel_flush
->
->  .gitlab-ci.d/buildtest-template.yml           |  30 ++-
->  .gitlab-ci.d/buildtest.yml                    |  27 +-
->  authz/listfile.c                              |   4 +-
->  crypto/tlscredsanon.c                         |   2 +
->  docs/devel/testing/main.rst                   |  26 +-
->  hw/vfio-user/proxy.c                          |   2 +-
->  include/io/channel-socket.h                   |   6 +-
->  include/io/channel.h                          |   4 +-
->  include/qom/object.h                          | 121 +++++++--
->  include/qom/object_interfaces.h               |  18 --
->  io/channel-socket.c                           |  16 +-
->  python/scripts/vendor.py                      |   4 +-
->  ...ny.whl =3D> qemu_qmp-0.0.6-py3-none-any.whl} | Bin 72263 -> 72379 byt=
-es
->  pythondeps.toml                               |   2 +-
->  qom/object.c                                  | 230 ++++++++++++++++--
->  qom/object_interfaces.c                       | 101 +-------
->  qom/trace-events                              |  12 +-
->  scripts/mtest2make.py                         |  30 ++-
->  system/qdev-monitor.c                         |   4 +-
->  system/vl.c                                   |   7 +-
->  tests/Makefile.include                        |   3 +-
->  tests/qemu-iotests/128                        |   6 +
->  tests/qemu-iotests/149                        |  13 +-
->  tests/qemu-iotests/185                        |   1 +
->  tests/qemu-iotests/common.rc                  |  16 ++
->  tests/qemu-iotests/meson.build                |  65 ++++-
->  tests/qemu-iotests/testrunner.py              |   2 +-
->  tests/unit/check-qom-proplist.c               |  97 ++++++--
->  tests/unit/test-crypto-tlssession.c           | 120 ++++++++-
->  29 files changed, 713 insertions(+), 256 deletions(-)
->  rename python/wheels/{qemu_qmp-0.0.5-py3-none-any.whl =3D> qemu_qmp-0.0.=
-6-py3-none-any.whl} (64%)
->
-> --
-> 2.54.0
->
->
+-- 
+Peter Xu
+
 
