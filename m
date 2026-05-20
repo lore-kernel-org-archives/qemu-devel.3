@@ -4,84 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AE76CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 16:33:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 459BACD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 16:34:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPjrT-0004YV-D4; Wed, 20 May 2026 12:33:35 -0400
+	id 1wPjry-0004iy-3P; Wed, 20 May 2026 12:34:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPjrR-0004Y8-Tw
- for qemu-devel@nongnu.org; Wed, 20 May 2026 12:33:33 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wPjrj-0004hb-9d
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 12:33:51 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPjrP-0004Ar-Mw
- for qemu-devel@nongnu.org; Wed, 20 May 2026 12:33:33 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-43d76dd4ee8so2033084f8f.2
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 09:33:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wPjrf-0004E4-5V
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 12:33:48 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-6587cee8b57so6059490d50.2
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 09:33:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779294826; cv=none;
+ d=google.com; s=arc-20240605;
+ b=O7uGjTulusgsNBrNILeJj7mVatoS2L5ja3nXta+eYSxAXy/I9IEmvU28cAgpWg4Vcx
+ PCsCI2tD6o66mb1FBJqIVHTh1n0tcSVyUsuybIiEqlQR+U2+Z9BmykT9cBnhDaBxPbLl
+ VabLD0iKaCDhFklrYmv7pWnwcjJlCmJ85YKid7+0OKVLWVVq3sccY0AqGvre7CCq1Qi2
+ X8EitXkEtuuHGjgR6YztCQ+hUWmbmszCfRFivyU06NSPWcxk7mzI4ZqQD8VkKC5Axl8N
+ WagzzZ6+mRQAy6dFG4pvFMYf9Fos6ECpl7cKGdzzxeZA+OYd4UrAzPbUxPu70w24Pz1X
+ yzpw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=ilXmKd4vt5E2uTWQGrfTbvCC8r36p1523wjeuX6smhY=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=VDftD0MjnZfhhmIuDK2O2ahGcnJoKqulaOVHdpFkEiTyesZj22A3PoVSQHUt4SXBWz
+ 8ezp/f+Q4t7Vj/04PB5jV0kodAOczEEGh2/qpafBSnD8IcodGHTcq0BFAScR1y0oHTfS
+ UHHp47C6Xt7xJ+VXR/YqEzVgzX5Td2wlMTRIXcjRjzhQgypGv8Eyix4jlzpxblXrjvWw
+ Txah7vIxM9LbX4NvhVEqgFEzC4doBJFI8uXmBRT78tKnZuwKKnKU2nUvr3+Oy2PdjYrK
+ etZKwg24YD/8uwgJlxTEly44xz+wE1hretnOZ8ahDdvkIAXzEkJDJkBt6QDb3pJ6JYne
+ xpzg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779294810; x=1779899610; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:cc:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lVgzQLWUSczJqkhziMmrUUsOjwRavGXj4utoM7mCPFE=;
- b=aXKqabPfQVnnwlAGzpn1/x4mLlm2x13Ion3W6/Fy7NaM6U0wXlYtoACm27f+Zlaq9U
- PsCZlWZj7cUbYfEhHrXfjVynJynSWhnm78mnjN5b/6dhj0Se14RJcF4/HulROFGpBunC
- znW+KkvmS3CzNA4kK13CziAuwWm1p+HjHcPepsvhNO5dlM07CE521cH7EJpd66/2fmey
- YTjmhM/1p7xTUuGNnDDvO2lP4XG7WSsRdJrVVP8YBh+PWt3pNAsGwV1D3fjnACNvgJy6
- PlfU8MhhF04kj0FtMzijXZXJ524tp0TQ1+vrvjoRhbot2Oi0pkSEkU1Ho2+OPbVXcdeK
- DCbQ==
+ d=linaro.org; s=google; t=1779294825; x=1779899625; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ilXmKd4vt5E2uTWQGrfTbvCC8r36p1523wjeuX6smhY=;
+ b=ydht2wzvCBx86FnaKnE3HX1aakgAt3ntMO8p36EFfbO2gskazRC7L1HLO9+vy5NQsg
+ 8LvyOSrg7wHk/tkmRhi+w5GPey8wkAUEKGPwlUvig0z1/GiaE0n7mTnM2E5brndlpfTH
+ /Q0T6BJosB2FiuiCE3lmVdXy+GmGmamrZ/wBpjIOVUlG1429zEUtuN+joSrGtSjM9c+G
+ DoxSAAazmQeciHhQTX5sP12uR+08q8GD8m5L9h9NiueX7pug2qDf/jbqgx6HTAwLPWCN
+ ZwZMr1f1WJkziM6yLaIwoOvWz/UO5PoLsQP9zLBwhq0How70gac8t9dkaX1B9fJ7CmWu
+ Jlkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779294810; x=1779899610;
- h=content-transfer-encoding:in-reply-to:cc:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lVgzQLWUSczJqkhziMmrUUsOjwRavGXj4utoM7mCPFE=;
- b=M+G2fs6N1GF+4rcP2BglMdMPo34/2sh1s8BKzGkGFSjcIZ2uC3ikkY5PwR2YNIStAb
- ZKDz7hNAqJcnTDzUYEnGlEa9bL73n3omWJYc0spXMofsnBsNeFjgkqJHLYBV9/Uk3k/8
- caC40kwqkpQ7L/3nBQTBdlNWReM6ghPDZE1chDCprG30FuPDVi18Vz4eDsQt3JD8AFcN
- QyW7kWTqUeF72DzKO8CPOteNePIQF27Q0oo3OnvnM9r6ZF2bFZNrm4JbFm4zk2r4d176
- 7yxV1Xt6reY2gJCM0dJK5L/RItW0RmGPrx64obPRfcgpxVFIHnWiT/YK0LlwgxY+Bs1y
- WMjg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+xSJ4agOH2QjSRchv7nOuTq29oB5esFBSiOQoZDgTuigp9KuYYQzvt5QkreulY9nmjUGlFVVkDktik@nongnu.org
-X-Gm-Message-State: AOJu0Yz0rWG8G4AzA5jBs0L0XTfPbt3NihLr4bWhRGT2fDHyDanNvXuP
- cLoq4EphOxIb3R8SZ+esVSxsM2O+QoEvgp0xXT8fDfKu7uCXnpDAtPNJdfOwTdBSXwc=
-X-Gm-Gg: Acq92OFHCkX64FuqxeyP9AQBgClOKC9EVUbeUIJCDfUP9yht4C0+7JaNu9Gf3TqsgIY
- SjTeur/E5oYUHL/gbLwe7VZl09BLt4PZoqeqNb/AJWbcBHQ4oh52wK+w71j0zZd72E/zmbonQRT
- 7L0GQ8U9rc9QLnX4jkUOOb8TP5e6KeaqBr9dDjAGB1FeAN7UC3DgaxhP2txbCoXvsRkTHyoPNnR
- S4QtFGphIE1B+Y5pE6xjvypZSMD+l8f1Bg9x9DMOXkd9Fp00wCnJwH8km764DybMhzb5P9jjMVY
- ATflzDH3BKHoX630NoqNR/eZuXj5+2vfXpdt8ECAemGiZHhddvqxdKg7qyZO/PlPbpOaWOihwsE
- b+DUddI7WR1hK6y/fsa7onTV2x8bPwAyyrku8Vn/iiCsd7Fl5BeGQXZBmX1R7UCK4PGhAGRDtXC
- 4vO9Uamykq7nzauM3if1mOErCU+0Z4HYS9voMsrOFLxY2we0s6pEf77DO3itsu+wG0qz6DhZuut
- ODikzF38w==
-X-Received: by 2002:a05:6000:2087:b0:43d:a37f:8d5c with SMTP id
- ffacd0b85a97d-45e5c367850mr39458483f8f.17.1779294809530; 
- Wed, 20 May 2026 09:33:29 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da0a178adsm58431129f8f.18.2026.05.20.09.33.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 May 2026 09:33:28 -0700 (PDT)
-Message-ID: <574480d1-49db-4ee9-981c-580d4c2db3b1@linaro.org>
-Date: Wed, 20 May 2026 18:33:27 +0200
+ d=1e100.net; s=20251104; t=1779294826; x=1779899626;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ilXmKd4vt5E2uTWQGrfTbvCC8r36p1523wjeuX6smhY=;
+ b=fvACsR51G/sK9J/MvJg9Yxr0UUnoOrmHNbcve3DW06rgjHmbdcm8nOT02+9r0O1XOi
+ UWeKKtvJTFDy0AqjWftHukEHw/kvfuO2XfL2dh8D20+HyyTgsB6iazoSCGUThU1P0UbB
+ 8GH3amn9Deva/K0NWuE2HayMRvn3JLKuQJmxyJlFqE5i6xFOSKt2Y+KrrQwErSZHVfnl
+ qFy2Vo9HfocPtM8/uNvp7o6zP9Dg1v21rFXB54h17XTBMqi0uSMkkPwCpzifA7ndUMwa
+ W8s8ABrv/GekfmmSQu9ac9vCPCDm+F5lzS/hE5vOIDkyC16K5bUbdLOkGfABg3que24w
+ HJcQ==
+X-Gm-Message-State: AOJu0YxX11o+X/0oB5Gbo6HDK2wBCaYUoPNUsxRFL5wszddbSs59vspI
+ hRGloq1xUnRPnfL79c6xgozbN7MUPyOFY2cpq9s7E3KXkm7u09AgWqwn2FVqxEP0zbyepDBEeOy
+ O3ztoAy34bP39UYkT6/9+zZq54ovdp1sBT0hccqxmsA==
+X-Gm-Gg: Acq92OESLu6sO6tddTdzKUts10XPmjp5lAn4SP1OvyykauVW2U0r8DD6uVQwjFkafbH
+ EhVPqgYaYwVTPdYWXV0LWak4GkJJqAgHp2clMfu5w2Yg5rtNx6PhTZEbOCp0MqUMO9boMWLYq3y
+ 9n2EK6XTyYMsx7KgUgfuLWCgq3XNR/JiJk6721oH2bVFaG7prH1EhhQcRGBOvb+wIIK0ZZqHL5a
+ 7z+SdmPws80BWdirkjfMGp2MUg0JRRS2VP75SsrMa/6LrmGVc1DVcvFhSv0yAekMZMaddKkJThQ
+ My/j9UH+aMEmQgRs2RjxnjUelP9NZmMOrwMBi++/oprO9LX703fT8i16gUS1pc9vyw8=
+X-Received: by 2002:a05:690e:419b:b0:650:7841:6dd with SMTP id
+ 956f58d0204a3-65e2284edfemr21837183d50.31.1779294825598; Wed, 20 May 2026
+ 09:33:45 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 39/63] hw/display: Add i.MX6UL LCDIF device model
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-References: <20260427124738.966578-1-peter.maydell@linaro.org>
- <20260427124738.966578-40-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Yucai Liu <1486344514@qq.com>
-In-Reply-To: <20260427124738.966578-40-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+References: <20260517003002.321430-1-richard.henderson@linaro.org>
+ <20260517003002.321430-46-richard.henderson@linaro.org>
+In-Reply-To: <20260517003002.321430-46-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 20 May 2026 17:33:33 +0100
+X-Gm-Features: AVHnY4K2AklTn3F9OotRAPjhpJILGgV9OVczu7Hx9StKnIOJRaPt27OijCdhr58
+Message-ID: <CAFEAcA_Qr+D+qrTd7q0s8Ka0YF5NVM01dDMHm3irQDxiZW0n6g@mail.gmail.com>
+Subject: Re: [PATCH v5 45/63] target/arm: Implement FMLALB, FMLALT for AdvSIMD
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,64 +114,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Yucai,
-
-On 27/4/26 14:47, Peter Maydell wrote:
-> From: Yucai Liu <1486344514@qq.com>
-> 
-> Implement a basic i.MX6UL LCDIF controller model with MMIO registers,
-> frame-done interrupt behavior, and framebuffer-backed display updates
-> for RGB565 and XRGB8888 input formats.
-> 
-> Place the LCDIF device under hw/display and build it via a dedicated
-> CONFIG_IMX6UL_LCDIF symbol. Model register fields with
-> registerfields.h helpers and provide migration support via vmstate.
-> 
-> Signed-off-by: Yucai Liu <1486344514@qq.com>
-> Message-id: 20260412110240.93116-2-yangyanglan718@gmail.com
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   MAINTAINERS                       |   2 +
->   hw/display/Kconfig                |   4 +
->   hw/display/imx6ul_lcdif.c         | 453 ++++++++++++++++++++++++++++++
->   hw/display/meson.build            |   1 +
->   include/hw/display/imx6ul_lcdif.h |  37 +++
->   5 files changed, 497 insertions(+)
->   create mode 100644 hw/display/imx6ul_lcdif.c
->   create mode 100644 include/hw/display/imx6ul_lcdif.h
-
-> diff --git a/hw/display/imx6ul_lcdif.c b/hw/display/imx6ul_lcdif.c
+On Sun, 17 May 2026 at 01:36, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
 
-> +static void imx6ul_lcdif_reset(DeviceState *dev)
+
+> +static FP8MulContext fp8_mul_start(CPUARMState *env, int scale_mask)
 > +{
-> +    IMX6ULLCDIFState *s = IMX6UL_LCDIF(dev);
+> +    uint64_t fpmr = env->vfp.fpmr;
 > +
-> +    memset(s->regs, 0, sizeof(s->regs));
-> +    s->regs[IMX6UL_LCDIF_REG_CTRL1] = LCDIF_RESET_CTRL1;
-> +    s->fb_base = 0;
-> +    s->src_width = 0;
-> +    s->rows = 0;
-> +    s->src_bpp = 0;
-> +    s->invalidate = true;
-> +    timer_del(s->frame_timer);
-> +    imx6ul_lcdif_update_irq(s);
+> +    FP8MulContext ret = {
+> +        .stat = env->vfp.fp_status[FPST_A64],
+> +        .fmt1 = fp8_input_fmt[FIELD_EX64(fpmr, FPMR, F8S1)],
+> +        .fmt2 = fp8_input_fmt[FIELD_EX64(fpmr, FPMR, F8S2)],
+> +        .scale = -(FIELD_EX64(fpmr, FPMR, LSCALE) & scale_mask),
+> +    };
+> +
+> +    set_flush_to_zero(0, &ret.stat);
+> +    set_flush_inputs_to_zero(0, &ret.stat);
+> +    set_default_nan_mode(true, &ret.stat);
+> +    set_float_rounding_mode(FIELD_EX64(fpmr, FPMR, OSM)
+> +                            ? float_round_nearest_even_max
+> +                            : float_round_nearest_even, &ret.stat);
+> +
+> +    return ret;
 > +}
 
-> +static void imx6ul_lcdif_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +
-> +    dc->realize = imx6ul_lcdif_realize;
-> +    dc->unrealize = imx6ul_lcdif_unrealize;
-> +    dc->vmsd = &vmstate_imx6ul_lcdif;
-> +    device_class_set_legacy_reset(dc, imx6ul_lcdif_reset);
+This use of float_round_nearest_even_max prompted me to look at
+the uses of it in fpu/, and it looks like the implementation is
+incomplete. Most importantly, although commit 72330260cdb420 added
+it to the first "switch (s->float_rounding_mode)" in uncanon_normal,
+it missed adding it to the one later in the same function, which
+I think means we will generate wrongly-rounded answers for
+denormals. A fix is probably:
 
-Please do not use the legacy API. See for example this commit
-to convert to the newer API:
-https://gitlab.com/qemu-project/qemu/-/commit/ce788d3740f
+diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+index efd130bf16..6cc9429ebe 100644
+--- a/fpu/softfloat-parts.c.inc
++++ b/fpu/softfloat-parts.c.inc
+@@ -450,6 +450,7 @@ static void partsN(uncanon_normal)(FloatPartsN *p,
+float_status *s,
+             /* Need to recompute round-to-even/round-to-odd. */
+             switch (s->float_rounding_mode) {
+             case float_round_nearest_even:
++            case float_round_nearest_even_max:
+                 if (N > 64 && frac_lsb == 0) {
+                     inc = ((p->frac_hi & 1) ||
+                            (p->frac_lo & round_mask) != frac_lsbm1
 
-> +    dc->desc = "i.MX6UL LCDIF";
-> +}
+There are also other places within fpu/ which switch on the
+rounding mode and have no support for the new even_nearest_max
+enum value. Those ones have a default case that asserts or
+aborts, so at least you'll know it if you run into them.
+They are round_to_int_normal, and roundAndPackFloatx80.
+Is it worth extending the support for this rounding mode to
+either of those?
+
+-- PMM
 
