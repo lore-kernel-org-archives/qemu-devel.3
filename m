@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F17FCD5BA4
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 12:53:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEB50CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 12:54:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPgNe-0004za-M7; Wed, 20 May 2026 08:50:34 -0400
+	id 1wPgNh-00052D-BO; Wed, 20 May 2026 08:50:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1wPgNR-0004dl-43; Wed, 20 May 2026 08:50:21 -0400
+ id 1wPgNR-0004dg-3z; Wed, 20 May 2026 08:50:21 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1wPgNN-0002h9-Rv; Wed, 20 May 2026 08:50:20 -0400
+ id 1wPgNN-0002h1-Nm; Wed, 20 May 2026 08:50:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:
  In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=YY+FF5GUN1f7CiIxiMFm+JhLmDs/39fJTab33RY0PfQ=; b=WnsrxVuzocDHQlV
- uPp1x43bRFjp21ZPL+DMdQfM2rsgdrT5XpD2Ru0h4ioFWhDRGiZ3TuwxIXwzdAhNutypgOOYYmOE5
- r0f7/M+ojYsZyyj5nh6dcmemF84WEgFXth/0ubF7eGD6NpDlx+8dggxSMaAr06wGwZ/6J5lR7haDg
- jY=;
+ List-Help; bh=w05TnQAJer0yssyMwympYAVQGQqEwXo9NSpRmLAkunE=; b=vdmnnnnFMhsJT2u
+ hPYz0UMMwOTJwmjQPoMZgp9Fdaos4LXdHACxwn09nlkyOGwYONddpT8si7aWC52vokpRqvTdyChic
+ Pn835AM/xD61I1I8l+nCiH0jJqkew11wTBUEAnwAKPchY3t7e3AXlIvcV9EPbiSi6MdIbYFVPth0Y
+ +k=;
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org,
  alistair.francis@wdc.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v7 21/27] target/riscv: Fix size of mseccfg
-Date: Wed, 20 May 2026 14:53:59 +0200
-Message-ID: <20260520125406.28693-22-anjo@rev.ng>
+Subject: [PATCH v7 20/27] target/riscv: Fix size of trigger data
+Date: Wed, 20 May 2026 14:53:58 +0200
+Message-ID: <20260520125406.28693-21-anjo@rev.ng>
 In-Reply-To: <20260520125406.28693-1-anjo@rev.ng>
 References: <20260520125406.28693-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -64,69 +64,73 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-mseccfg is defined in version 20250508 of the privileged specification
-to be 64 bits in size.  Update relevant function arguments.
+mcontext is at most 14 bits in size with the H extension, fix to 16
+bits. trigger_cur indexes into tdata*[RV_MAX_TRIGGERS] which holds 2
+elements, fix to 8 bits.
+
+This patch also adds a migration entry for mcontext which is used in
+tandem with other debug data that is already migrated.
+
+Note, the cpu/debug VMSTATE version is bumped, breaking migration from
+older versions.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h | 2 +-
- target/riscv/pmp.h | 4 ++--
- target/riscv/pmp.c | 4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ target/riscv/cpu.h     | 10 +++++-----
+ target/riscv/machine.c | 13 +++++++------
+ 2 files changed, 12 insertions(+), 11 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index ca383bcf4c..315bd736b5 100644
+index 69ef8b900a..ca383bcf4c 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -464,7 +464,7 @@ struct CPUArchState {
- 
-     /* physical memory protection */
-     pmp_table_t pmp_state;
--    target_ulong mseccfg;
-+    uint64_t mseccfg;
+@@ -467,11 +467,11 @@ struct CPUArchState {
+     target_ulong mseccfg;
  
      /* trigger module */
-     uint16_t mcontext;
-diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
-index 17307ef88a..91130289d8 100644
---- a/target/riscv/pmp.h
-+++ b/target/riscv/pmp.h
-@@ -71,8 +71,8 @@ void pmpcfg_csr_write(CPURISCVState *env, uint32_t reg_index,
-                       target_ulong val);
- target_ulong pmpcfg_csr_read(CPURISCVState *env, uint32_t reg_index);
+-    target_ulong trigger_cur;
+-    target_ulong tdata1[RV_MAX_TRIGGERS];
+-    target_ulong tdata2[RV_MAX_TRIGGERS];
+-    target_ulong tdata3[RV_MAX_TRIGGERS];
+-    target_ulong mcontext;
++    uint16_t mcontext;
++    uint8_t trigger_cur;
++    uint64_t tdata1[RV_MAX_TRIGGERS];
++    uint64_t tdata2[RV_MAX_TRIGGERS];
++    uint64_t tdata3[RV_MAX_TRIGGERS];
+     struct CPUBreakpoint *cpu_breakpoint[RV_MAX_TRIGGERS];
+     struct CPUWatchpoint *cpu_watchpoint[RV_MAX_TRIGGERS];
+     QEMUTimer *itrigger_timer[RV_MAX_TRIGGERS];
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 376075b2bd..c6ebb58882 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -239,15 +239,16 @@ static int debug_post_load(void *opaque, int version_id)
  
--void mseccfg_csr_write(CPURISCVState *env, target_ulong val);
--target_ulong mseccfg_csr_read(CPURISCVState *env);
-+void mseccfg_csr_write(CPURISCVState *env, uint64_t val);
-+uint64_t mseccfg_csr_read(CPURISCVState *env);
- 
- void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
-                        target_ulong val);
-diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-index 5391caa59c..bc4ab8ad15 100644
---- a/target/riscv/pmp.c
-+++ b/target/riscv/pmp.c
-@@ -659,7 +659,7 @@ target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index)
- /*
-  * Handle a write to a mseccfg CSR
-  */
--void mseccfg_csr_write(CPURISCVState *env, target_ulong val)
-+void mseccfg_csr_write(CPURISCVState *env, uint64_t val)
- {
-     int i;
-     uint64_t mask = MSECCFG_MMWP | MSECCFG_MML;
-@@ -705,7 +705,7 @@ void mseccfg_csr_write(CPURISCVState *env, target_ulong val)
- /*
-  * Handle a read from a mseccfg CSR
-  */
--target_ulong mseccfg_csr_read(CPURISCVState *env)
-+uint64_t mseccfg_csr_read(CPURISCVState *env)
- {
-     trace_mseccfg_csr_read(env->mhartid, env->mseccfg);
-     return env->mseccfg;
+ static const VMStateDescription vmstate_debug = {
+     .name = "cpu/debug",
+-    .version_id = 2,
+-    .minimum_version_id = 2,
++    .version_id = 3,
++    .minimum_version_id = 3,
+     .needed = debug_needed,
+     .post_load = debug_post_load,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_UINTTL(env.trigger_cur, RISCVCPU),
+-        VMSTATE_UINTTL_ARRAY(env.tdata1, RISCVCPU, RV_MAX_TRIGGERS),
+-        VMSTATE_UINTTL_ARRAY(env.tdata2, RISCVCPU, RV_MAX_TRIGGERS),
+-        VMSTATE_UINTTL_ARRAY(env.tdata3, RISCVCPU, RV_MAX_TRIGGERS),
++        VMSTATE_UINT16(env.mcontext, RISCVCPU),
++        VMSTATE_UINT8(env.trigger_cur, RISCVCPU),
++        VMSTATE_UINT64_ARRAY(env.tdata1, RISCVCPU, RV_MAX_TRIGGERS),
++        VMSTATE_UINT64_ARRAY(env.tdata2, RISCVCPU, RV_MAX_TRIGGERS),
++        VMSTATE_UINT64_ARRAY(env.tdata3, RISCVCPU, RV_MAX_TRIGGERS),
+         VMSTATE_END_OF_LIST()
+     }
+ };
 -- 
 2.52.0
 
