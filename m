@@ -4,101 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CD5BCD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 18:21:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49CFBCD5BA4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 18:22:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPlX9-0005z5-O5; Wed, 20 May 2026 14:20:47 -0400
+	id 1wPlYW-0006Me-D1; Wed, 20 May 2026 14:22:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wPlWt-0005qg-97
- for qemu-devel@nongnu.org; Wed, 20 May 2026 14:20:28 -0400
-Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wPlWr-0008Tx-DL
- for qemu-devel@nongnu.org; Wed, 20 May 2026 14:20:26 -0400
-Received: by mail-yx1-xb130.google.com with SMTP id
- 956f58d0204a3-651b4d09141so5116094d50.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 11:20:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779301224; cv=none;
- d=google.com; s=arc-20240605;
- b=R1/lcN6aHJbLMNhcsiawDuWRkY2p/6XImztxq9PxOLzNDX4mQBa9BoFqNtAhVC2PmB
- nPCAIwziqbeQaNOYvatwpH6/P2PaV6c4+KHDiu42gWH6/oCqaOLThdCeqlys8GHWDgjH
- V609LsqiNy2fJaQpos7kONPOMBMEA85PdDUP0LSK9i2QTejhxL9AsVMB9Iyo5QQjLktI
- bLOvuq2hhbD87NXhNVVbnp9soYV6s5YAH6+2GWwSpy47bVEy2L2DukoC7f47GOYDGOD0
- iU1+PmUt01xQJlRoa8kqJNCTfPm0qAAbCvy/x1Xl7xjfot8a+XjtF4bgOvVB37dwYHk2
- pz2g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=M6TCNz7Z02UK3RyghCSIVPYnEiC/l/Hc+ekVBWL18UU=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=Rx3G9QRuk73zE8ou9lzIce3ZkWno9N4KhQuxMlBNp3frW7VHrZebB7oKif8J6SWMMk
- ywydEdoNGfABDYXP+6OjNZvAqy+wLl30jlp5IXJoxPRdvBmRLUIf77peIGrCZDgzWDwz
- ifYGCQ2c4Drs31GIpbNnzCtAOtbCXZmgXXSKScB7np4u9lLJ+LTFrey46qka3+6aMHia
- X30COcJIeblfaBy1C7UlUEhP2vFGeMVsbgL26AdRA/49XJZNDDKxfhyD/ERYBGF5eaFy
- 4qSR82y0e6lM9UsZD3Vqr+d3Iqbgqe//nwEh82rrAuaEPQecO6hf+pHWBD1nKb7Aoy+O
- KaxA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPlXw-0006AD-ED
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 14:21:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPlXq-0000CT-0x
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 14:21:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779301282;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1AkXX33gPSH3AD5hiuD37VRAgcbfPProm/qe0uIHneM=;
+ b=OCm5hepCsrqn+X6zCguu6nuuJa/2HTIbp1TYvqPG6v4MOAWvzsVUYGdrOoWRqg5tjH45fd
+ pAvyYMNmlloXa7N/4Yew2/uSgBojvcrMOeummP+3q/VBWPN1dhHPRoS3l7m6UWnWAs/AAw
+ OL91NgkbTk4o+m90T05lunF533MEoeU=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-324-tXEUK8EcM0KoS5XM34R_NA-1; Wed, 20 May 2026 14:21:21 -0400
+X-MC-Unique: tXEUK8EcM0KoS5XM34R_NA-1
+X-Mimecast-MFC-AGG-ID: tXEUK8EcM0KoS5XM34R_NA_1779301281
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8ca1295e3a9so69438736d6.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 11:21:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779301224; x=1779906024; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=M6TCNz7Z02UK3RyghCSIVPYnEiC/l/Hc+ekVBWL18UU=;
- b=ZSMwu3ZlSDobnDAMwYFKvqS7EXZxbKw4t+JiQ+IZKT7xq+MoCd/73Fx7De4vPYx66e
- eDBZo7VhsxMhRWYM0vv8+aw0RqCIkCXF3py4vG4D5lNI8Xjaa1GAxOgtTCKOw3ALw6kx
- /Pb9nJArtH1RWVKmjh+3MwUycqoGNbvXB1h6O+JsEjU8ToZDUenb+AHxt2YiY+9b6Orw
- gfb0a2w6qsdpWRM3hwoMmJKrORgJTnNRju9ktmRnWC8PLtzZuoJdrRoVAldKMZ38nRck
- L4MJOZwE0ezIggckpeCAZpbX7irXIN5k7WFYU7001SDqJWaFqDq+Gn1WM+AGaOjllxwH
- bCMg==
+ d=redhat.com; s=google; t=1779301281; x=1779906081; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=1AkXX33gPSH3AD5hiuD37VRAgcbfPProm/qe0uIHneM=;
+ b=XH47MXsucZ+za+ERsq91S5Tr34WiLvbRl3IOF2dK/wCIZDUQ13R83tkCmtrbwjSjFN
+ TZ9zPN3t/UaRPI/TZoCOdxBy2Jt9NTX+9s40WvoD5CpqM15376Ryy5JbgOCXTRY2DQZ1
+ MZckfInCdLX5hz4jq0CNrydV3g2mJyTTZBsL5ghm5cGSZE8d+H4dGfmxrB5ly4lpR4x5
+ VHp/8uLedogFJPAUP2miXrLeWva2TFkeRGEign52r+dqt25stoMaueYb1QBgEDULwRmC
+ 22ueIEyKY2LQGUM4DxIpkt7OLm1Wc84YNNYVBVTy+PIHK9eTgSSLeRIDVTMKxfPFSKQB
+ TruA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779301224; x=1779906024;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=M6TCNz7Z02UK3RyghCSIVPYnEiC/l/Hc+ekVBWL18UU=;
- b=XcvKs3RemPqT6e+B2kh8gxbQOS9g+8YF4Ae8lQdPL+/+GR4jMmWHnBvHaEij9KJjog
- bot+XgzvjC2gaUO5ODeXwUQXQN6v0ahqM6qZPmIpC3Qxay1qmVyT7SE7b4R80d1janif
- Uzql4ANxsGmhurQD/EOFAybWJOz3Yt++0kf6zZwiWpb2X0FSW6Zonk3+TDfp9L6Z3piO
- XRCea64UkASaRXy8sSRrmI84FHneaU8bIhv8x0PHNYx+JcEkN9cyhU2LqQmxxMFCvgud
- X8Oe2jScucuz0aFIiVDQhmXQYiEyCy6IQup3PhYKLOdcN/P9jbkIIXqPDBWpxlHGlfGh
- WoTA==
-X-Gm-Message-State: AOJu0YwIaC1fi8H932+s1qEnW9XuwJGtRcfJ8TGZEjd4dlKSObWLi9Hg
- tzz1K9OtkfStsJdMVMtqdmle47jkIVws01xEtlZsw7UY5X69Iciv6g1brsERJ14B+rF/tQLan0m
- nMrP9a2jJ3e37J/VfY8gXKyg53vwxX6i2L1h5cc09oA==
-X-Gm-Gg: Acq92OFlwPjWcreMr6rS1WABKyUkC86kSKFM8DgT1I5hLdbU0nE6M3KSqXQ+ue6OHCc
- KFVbwd8rU5Xqwwqv9A9n8xPGnSfbqDvsHUMo6l7rXrrsSfjcUo1JLQ2W4nXxIiPMNa9b+wXychb
- g7dRG/GLnV3oYg/BIy09g7IKo25xZKgIGsf/ItvhbDQwtpx10SZUcn2rOdckZeLOL/oMMKx94Pu
- zmr7VJXk9n+6PcxtFYUs1p26ed0jcki7JQh+ZB6HLfU8//Vr4zkJO2vDNFcS7YUmJax/j1BuFHr
- kDOraJo9Lp+VDP5I9NQwIKn4IOuQgGWi3EJSQERH7ToRHysrWjXj7Ue5zBFjK2vkZrw=
-X-Received: by 2002:a05:690e:1282:b0:651:8abe:ce47 with SMTP id
- 956f58d0204a3-65ea81b1aa9mr597991d50.5.1779301223455; Wed, 20 May 2026
- 11:20:23 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779301281; x=1779906081;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=1AkXX33gPSH3AD5hiuD37VRAgcbfPProm/qe0uIHneM=;
+ b=VC1VWgvTW07F2o1h//nCvNt0ErKhMWtRdgpHRqc1+u6YIOnGVfAhiw49+EPE1j1V7H
+ QCMTxuHp/74QwrOKw62+++FiuPHTtLG7gdIyv0CBsPUCwSPKhJBsC0BirjmFc/iNUMvc
+ coXjOL0fKINID5gGr8R8Ej9qtirWO4N6ubf6XT7/L89RGYjYJxDk7NoBu3GflqyTu6k9
+ 83rhclngo4mJMiwZShM65fwE/YR7LH3UHJeRycbrhRqiVeWlqF9gm2dK2e8RpSOcmyz4
+ JT1hW7cE053ph7wcaZU4cnR3XK1cj5TVmciXdLZ2H84dD+b7oZXWg/pJ6qGJYFUme0sL
+ VQqQ==
+X-Gm-Message-State: AOJu0YwlRIQfZKqjY1gTaRkCW+GaBhpRUjkN0j27cgj1A5vfWAUPLX7d
+ s5JdJBOGR/qtc+qziE3FOKEmXQkefqpYiMAHIh5iUoFXp43zjKCFUDklAEJbohNy5f6lx75pzXM
+ TRtj0iUiympraiQOtzFJMPIgENaz1mQFRP2uyHWolOZDrCr9QUllwEqK2
+X-Gm-Gg: Acq92OHy1HVmm9koto7Zluo+2yA9c6l5miKnKwaf3dviWPR/breyFbk8sPFUfwjK3yK
+ xOLnbhqnTwiB/icW6BFSXgfoVk57h5DC0T/K5booZ8EFjF2EvZQmummylycFW6z/q2eVzlJ79LA
+ yT9mpHhJj4eT922UtGwCkaNuMOL3Q6HwCHNG6ATRTF824Now1GU72HT0rUTjsOsr8d56CwGmUKy
+ ig2T87mnZhcwKSkDfirEL4t+d+D41E/90eIAhUbUli1lNW8gAim/CIc9hont96HE/ZrssnTujRR
+ UddH2y4ortdScG0v8s9lo3u20+bi5DhgcvNpRvEPOGEtm8QrEUuNhbi2SjczNJidgK4IsRiHSbi
+ 0i96FXgnkCDMmd4gNHxt8UooL9MXilAEO9dYwN6svtaUJbKI=
+X-Received: by 2002:a05:6214:4ec3:b0:8ca:f1c:6493 with SMTP id
+ 6a1803df08f44-8ca0f631cb4mr383102886d6.1.1779301280436; 
+ Wed, 20 May 2026 11:21:20 -0700 (PDT)
+X-Received: by 2002:a05:6214:4ec3:b0:8ca:f1c:6493 with SMTP id
+ 6a1803df08f44-8ca0f631cb4mr383102426d6.1.1779301279980; 
+ Wed, 20 May 2026 11:21:19 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8cbf144a6a1sm29847996d6.49.2026.05.20.11.21.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 20 May 2026 11:21:19 -0700 (PDT)
+Date: Wed, 20 May 2026 14:21:17 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Lukas Straub <lukasstraub2@web.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>
+Subject: Re: [PATCH v1 14/15] tests/qtest/migration: Stop passing URI into
+ migrate_start
+Message-ID: <ag37nRX4X_wVBV7M@x1.local>
+References: <20260505160915.25558-1-farosas@suse.de>
+ <20260505160915.25558-15-farosas@suse.de>
 MIME-Version: 1.0
-References: <20260520171820.848839-1-richard.henderson@linaro.org>
- <20260520171820.848839-30-richard.henderson@linaro.org>
-In-Reply-To: <20260520171820.848839-30-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 20 May 2026 19:20:11 +0100
-X-Gm-Features: AVHnY4KkmMHmMhF2QBFUMhBxrOZFF4OlN2dsOs9_ESopZVRG2Ng80RJN6MkJ3Vc
-Message-ID: <CAFEAcA9tXNossXoMC=LSa7Aw0CZzsmtkppKqEGqcdSgy-X_GOw@mail.gmail.com>
-Subject: Re: [PATCH v5 29/30] fpu: Fix NaN encoding for E4M3 in parts64_uncanon
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260505160915.25558-15-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,92 +117,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 20 May 2026 at 18:18, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> There is only one NaN fractional encoding for E4M3.  Retain the
-> incoming sign, but force the outgoing fraction to the unique value.
->
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  fpu/softfloat.c           |  2 ++
->  fpu/softfloat-parts.c.inc | 29 ++++++++++++++++++++++++-----
->  2 files changed, 26 insertions(+), 5 deletions(-)
->
-> diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-> index be6b02d866..2c3bf01213 100644
-> --- a/fpu/softfloat.c
-> +++ b/fpu/softfloat.c
-> @@ -499,6 +499,8 @@ const FloatFmt float8_e4m3_params = {
->
->  /* 110 << frac_shift, with the implicit bit set */
->  #define E4M3_NORMAL_FRAC_MAX  0xe000000000000000ull
-> +/* 111 << frac_shift, no implicit bit */
-> +#define E4M3_NAN_FRAC         0x7000000000000000ull
->
->  const FloatFmt float8_e5m2_params = {
->      FLOAT_PARAMS(5, 2)
-> diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-> index 559e40d196..d6687df982 100644
-> --- a/fpu/softfloat-parts.c.inc
-> +++ b/fpu/softfloat-parts.c.inc
-> @@ -278,11 +278,16 @@ static void partsN(uncanon_e4m3_overflow)(FloatPartsN *p, float_status *s,
->                                            const FloatFmt *fmt, bool saturate)
->  {
->      assert(N == 64);
-> +    p->exp = fmt->exp_max;
->      if (saturate) {
-> -        p->exp = fmt->exp_max;
->          p->frac_hi = E4M3_NORMAL_FRAC_MAX;
->      } else {
-> -        *p = partsN(default_nan)(s);
-> +        /*
-> +         * The class isn't actually used after this point in uncanon,
-> +         * but for clarity while debugging, don't leave it set to normal.
-> +         */
-> +        p->cls = float_class_qnan;
-> +        p->frac_hi = E4M3_NAN_FRAC;
->      }
->  }
->
-> @@ -507,10 +512,24 @@ static void partsN(uncanon)(FloatPartsN *p, float_status *s,
->              return;
->          case float_class_qnan:
->          case float_class_snan:
-> -            assert(fmt->exp_max_kind != float_expmax_normal);
->              p->exp = fmt->exp_max;
-> -            fracN(shr)(p, fmt->frac_shift);
-> -            return;
-> +            switch (fmt->exp_max_kind) {
-> +            case float_expmax_e4m3:
-> +                /*
-> +                 * There is only one NaN encoding for E4M3, and with a
-> +                 * conversion from another format, the input NaN fraction
-> +                 * may not apply.
-> +                 */
-> +                assert(N == 64);
-> +                p->frac_hi = E4M3_NAN_FRAC;
-> +                /* fall through */
-> +            case float_expmax_ieee:
-> +                fracN(shr)(p, fmt->frac_shift);
-> +                return;
-> +            case float_expmax_normal:
+On Tue, May 05, 2026 at 01:09:13PM -0300, Fabiano Rosas wrote:
+> Don't allow changing the default -incoming URI via migrate_start. The
+> default is now -incoming defer. If a test really needs to alter this
+> (such as with CPR), the target_opts variable is still available to
+> change the command line.
+> 
+> (aside from the larger goal of using defer, this change is a step
+> towards allowing migrate_start() to be invoked only once for all
+> tests)
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-We used to assert() that exp_max_kind wasn't "expmax_normal",
-but now we don't. What does it mean to have a FloatPartsN that
-says it's a NaN when the format says there isn't a NaN
-representation ? Either way, the "break" here means we
-won't treat it like we do NaNs and we won't treat it
-like we do normals either...
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-> +                break;
-> +            }
-> +            g_assert_not_reached();
->          default:
->              break;
->          }
+-- 
+Peter Xu
 
-thanks
--- PMM
 
