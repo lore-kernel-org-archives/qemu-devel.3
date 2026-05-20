@@ -4,64 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB752CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 13:35:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E5CACD5BA4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 13:39:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPh52-000749-Rp; Wed, 20 May 2026 09:35:24 -0400
+	id 1wPh8R-00024h-BA; Wed, 20 May 2026 09:38:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wPh4F-0005dJ-3t
- for qemu-devel@nongnu.org; Wed, 20 May 2026 09:34:35 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPh8N-000245-PE
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 09:38:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wPh4C-0004ZM-Ut
- for qemu-devel@nongnu.org; Wed, 20 May 2026 09:34:34 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 10A6E40605;
- Wed, 20 May 2026 13:34:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D931F000E9;
- Wed, 20 May 2026 13:34:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779284071;
- bh=JJXjZmxx2na/Hmr+jSEXCqp1hYIjDPmF2n2UyTDMNAo=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=k8Md7CZbhd9g5wQTAaJzuza7y5JpM+I9euUIHJsArGSsAG2socICGJHf8HftV9ZZq
- 553+xJsByNQP2aJZk6Z5iLiS1hmyGWFRZW7QULtuMk1UM3QSVBs18EvKqIoWmJhoTy
- VXhNY3td0T61anQtABy2msG786zQtE4r4bjFxCsqxQoEXN0VkYtF9QcW4rX8Ckrj2p
- daMSfb2hM4jpwFJk5qfqvc4Qi9s0ytHIxZiXff5SdzMMiVbyCZtp2IkgBBOt96Ms91
- Q4HdBkYYCorAUQiZP/PknD9KeL4HtBhO5OAYQRIQTbRbiba4A9OzL02y6eIZD9sbZo
- HgnlUljBS0euA==
-From: "Naveen N Rao (AMD)" <naveen@kernel.org>
-To: Paolo Bonzini <pbonzini@redhat.com>,
-	qemu-devel <qemu-devel@nongnu.org>
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Nikunj A Dadhania <nikunj@amd.com>, Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>,
- Roy Hopkins <roy.hopkins@randomman.co.uk>,
- Srikanth Aithal <srikanth.aithal@amd.com>,
- Kim Phillips <kim.phillips@amd.com>, Joerg Roedel <joro@8bytes.org>
-Subject: [PATCH v4 8/9] target/i386: SEV: Add support for setting TSC
- frequency for Secure TSC
-Date: Wed, 20 May 2026 18:58:01 +0530
-Message-ID: <af688610978f213a456a7753e1d9fe7d3a51e80a.1779281646.git.naveen@kernel.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <cover.1779281646.git.naveen@kernel.org>
-References: <cover.1779281646.git.naveen@kernel.org>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPh8M-000771-2w
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 09:38:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779284328;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ccirNgtlNxMJjP1UOADxPd6UOCnjN5aqikc89wciFyw=;
+ b=XKQLlgf5O0uf3eCULydfasnpfphk4PG56f3aqehR5lUYftfzRjsuElDMII2oDJ2i86f7mw
+ 6n/4YaF4GohK4xvktnawA5Q9gG5XT8hDqE3c2ezQS6+wtnVlg4BzS2JB6jBmyXPyC8oXkF
+ +MrQibLk2iy5rlyf5sJRWOhVKgjzAt8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-Cm2orT8yOmqSX4jul1a6WQ-1; Wed,
+ 20 May 2026 09:38:40 -0400
+X-MC-Unique: Cm2orT8yOmqSX4jul1a6WQ-1
+X-Mimecast-MFC-AGG-ID: Cm2orT8yOmqSX4jul1a6WQ_1779284319
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9F5B9195608A; Wed, 20 May 2026 13:38:39 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2E3B71800767; Wed, 20 May 2026 13:38:39 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id CACFE21E6A01; Wed, 20 May 2026 15:38:36 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Brian Cain
+ <brian.cain@oss.qualcomm.com>
+Subject: Re: [PATCH] MAINTAINERS: Fix hexagon-linux-user.mak path
+In-Reply-To: <20260520123947.12711-1-philmd@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 20 May 2026 14:39:47
+ +0200")
+References: <20260520123947.12711-1-philmd@linaro.org>
+Date: Wed, 20 May 2026 15:38:36 +0200
+Message-ID: <87wlwyjj4z.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=naveen@kernel.org;
- helo=sea.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,144 +89,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for configuring the TSC frequency when Secure TSC is enabled
-in SEV-SNP guests through a new "tsc-frequency" property on SEV-SNP
-guest objects, similar to the vCPU-specific property used by regular
-guests and TDX. A new property is needed since SEV-SNP guests require
-the TSC frequency to be specified during early SNP_LAUNCH_START command
-before any vCPUs are created.
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-The user-provided TSC frequency is set through KVM_SET_TSC_KHZ before
-issuing KVM_SEV_SNP_LAUNCH_START.
+> Fixes: 812b31d3f91 ("configs: rename default-configs to configs and reorg=
+anise")
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  MAINTAINERS | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index b75f3222f2f..2a4d124fb3c 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -256,7 +256,7 @@ X: target/hexagon/gen_idef_parser_funcs.py
+>  F: linux-user/hexagon/
+>  F: tests/tcg/hexagon/
+>  F: disas/hexagon.c
+> -F: configs/targets/hexagon-linux-user/default.mak
+> +F: configs/targets/hexagon-linux-user.mak
+>  F: docker/dockerfiles/debian-hexagon-cross.docker
+>  F: gdbstub/gdb-xml/hexagon*.xml
+>  T: git https://github.com/quic/qemu.git hex-next
 
-Attempts to set TSC frequency on both the SEV_SNP object and the cpu
-object result in an error from KVM (on the vCPU ioctl), so do not add
-separate checks for the same.
+The file is already covered by
 
-Sample command-line:
-  -machine q35,confidential-guest-support=sev0 \
-  -object sev-snp-guest,id=sev0,cbitpos=51,reduced-phys-bits=1,secure-tsc=on,tsc-frequency=2500000000
+   F: configs/targets/*linux-user.mak
 
-Co-developed-by: Ketan Chaturvedi <Ketan.Chaturvedi@amd.com>
-Signed-off-by: Ketan Chaturvedi <Ketan.Chaturvedi@amd.com>
-Co-developed-by: Nikunj A Dadhania <nikunj@amd.com>
-Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
-Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
----
- target/i386/sev.c | 46 ++++++++++++++++++++++++++++++++++++++++++++++
- qapi/qom.json     |  6 +++++-
- 2 files changed, 51 insertions(+), 1 deletion(-)
+under "Linux user".  Covering it in more than one section is of course
+just fine.  But none of the other configs/targets/FOO-linux-user.mak is
+similarly covered by "FOO TCG CPUs", or anything other section.
 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 518f0eb91aa1..0009b03bdf7d 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -187,6 +187,7 @@ struct SevSnpGuestState {
-     char *id_auth_base64;
-     uint8_t *id_auth;
-     char *host_data;
-+    uint32_t tsc_khz;
- 
-     struct kvm_sev_snp_launch_start kvm_start_conf;
-     struct kvm_sev_snp_launch_finish kvm_finish_conf;
-@@ -551,6 +552,13 @@ static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
-                    __func__, sev_features, sev_common->supported_sev_features);
-         return -1;
-     }
-+    if (sev_snp_enabled() && SEV_SNP_GUEST(sev_common)->tsc_khz &&
-+        !(sev_features & SVM_SEV_FEAT_SECURE_TSC)) {
-+        error_setg(errp,
-+                   "%s: TSC frequency can only be set if Secure TSC is enabled",
-+                   __func__);
-+        return -1;
-+    }
-     return 0;
- }
- 
-@@ -1099,6 +1107,19 @@ sev_snp_launch_start(SevCommonState *sev_common)
-             return 1;
-     }
- 
-+    if (is_sev_feature_set(sev_common, SVM_SEV_FEAT_SECURE_TSC) &&
-+        sev_snp_guest->tsc_khz) {
-+        rc = -EINVAL;
-+        if (kvm_check_extension(kvm_state, KVM_CAP_VM_TSC_CONTROL)) {
-+            rc = kvm_vm_ioctl(kvm_state, KVM_SET_TSC_KHZ, sev_snp_guest->tsc_khz);
-+        }
-+        if (rc < 0) {
-+            error_report("%s: Unable to set Secure TSC frequency to %u kHz ret=%d",
-+                         __func__, sev_snp_guest->tsc_khz, rc);
-+            return 1;
-+        }
-+    }
-+
-     rc = sev_ioctl(sev_common->sev_fd, KVM_SEV_SNP_LAUNCH_START,
-                    start, &fw_error);
-     if (rc < 0) {
-@@ -3203,6 +3224,28 @@ static void sev_snp_guest_set_secure_tsc(Object *obj, bool value, Error **errp)
-     sev_set_feature(SEV_COMMON(obj), SVM_SEV_FEAT_SECURE_TSC, value);
- }
- 
-+static void
-+sev_snp_guest_get_tsc_frequency(Object *obj, Visitor *v, const char *name,
-+                                void *opaque, Error **errp)
-+{
-+    uint32_t value = SEV_SNP_GUEST(obj)->tsc_khz * 1000;
-+
-+    visit_type_uint32(v, name, &value, errp);
-+}
-+
-+static void
-+sev_snp_guest_set_tsc_frequency(Object *obj, Visitor *v, const char *name,
-+                                void *opaque, Error **errp)
-+{
-+    uint32_t value;
-+
-+    if (!visit_type_uint32(v, name, &value, errp)) {
-+        return;
-+    }
-+
-+    SEV_SNP_GUEST(obj)->tsc_khz = value / 1000;
-+}
-+
- static void
- sev_snp_guest_class_init(ObjectClass *oc, const void *data)
- {
-@@ -3241,6 +3284,9 @@ sev_snp_guest_class_init(ObjectClass *oc, const void *data)
-     object_class_property_add_bool(oc, "secure-tsc",
-                                   sev_snp_guest_get_secure_tsc,
-                                   sev_snp_guest_set_secure_tsc);
-+    object_class_property_add(oc, "tsc-frequency", "uint32",
-+                              sev_snp_guest_get_tsc_frequency,
-+                              sev_snp_guest_set_tsc_frequency, NULL, NULL);
- }
- 
- static void
-diff --git a/qapi/qom.json b/qapi/qom.json
-index 9c2966b68e8f..ef7df6b05a0b 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -1116,6 +1116,9 @@
- # @secure-tsc: enable Secure TSC
- #     (default: false) (since 11.1)
- #
-+# @tsc-frequency: set secure TSC frequency.  Only valid if Secure TSC
-+#     is enabled (default: zero) (since 11.1)
-+#
- # Since: 9.1
- ##
- { 'struct': 'SevSnpGuestProperties',
-@@ -1128,7 +1131,8 @@
-             '*author-key-enabled': 'bool',
-             '*host-data': 'str',
-             '*vcek-disabled': 'bool',
--            '*secure-tsc': 'bool' } }
-+            '*secure-tsc': 'bool',
-+            '*tsc-frequency': 'uint32' } }
- 
- ##
- # @TdxGuestProperties:
--- 
-2.54.0
+Observation, not objection.
 
 
