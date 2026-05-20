@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E29ACD4F5E
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:35:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B8AFCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:35:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPoYz-0001S8-2h; Wed, 20 May 2026 17:34:49 -0400
+	id 1wPoYY-00013F-Uz; Wed, 20 May 2026 17:34:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoYx-0001NU-QT
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:47 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoYX-000136-Qx
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoYw-0007L4-3k
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:47 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoYW-0007Ch-C7
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779312885;
+ s=mimecast20190719; t=1779312859;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oe2LBK8fDwEruVzCjrliSYntZKay/6ne0SQnWH9QpMA=;
- b=T7tm/IOUxcXT3lSF75QBihzn91vxljc3cfzHrX34UccznIu5e8NgLAaem6LfdqTvhgzupA
- wZeH6bgh4KDkRm6k9o+o8e25g17Ptu1+V5lTYOjrNELTRaG5MEjMNb7BzpA6A1iwv0GzqN
- UdgMo4Ml3lUdAL/F6tRXJ72Q2z46Ie8=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jZmhb6PYUi43jWKl53BP4O8oa2TIqANv/QwFF8GvUG4=;
+ b=gy92FxL7aUifPmi8RoOc6cOBbjsvQhRkOCDlWkrFO4Gm1fL4d3hCrCIUpXn857hTCZYAXx
+ wKcblPLfGtv9Y7+5vJxzPxSazmCbhzzD9qiSon9PlaVumUM9gO9HKaQzYWTotST/as5ivs
+ GCk1HoykV6Bf2ZjPxPzBbNsdwVyEna4=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-688-PactuG3sNGWc6mZfsQRw0A-1; Wed, 20 May 2026 17:34:43 -0400
-X-MC-Unique: PactuG3sNGWc6mZfsQRw0A-1
-X-Mimecast-MFC-AGG-ID: PactuG3sNGWc6mZfsQRw0A_1779312883
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-50fbc49bef6so108832371cf.0
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 14:34:43 -0700 (PDT)
+ us-mta-654-RUuFPPOLMXOmnyUO_tnEjg-1; Wed, 20 May 2026 17:34:18 -0400
+X-MC-Unique: RUuFPPOLMXOmnyUO_tnEjg-1
+X-Mimecast-MFC-AGG-ID: RUuFPPOLMXOmnyUO_tnEjg_1779312858
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-50d5d1c2289so160541211cf.2
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 14:34:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779312883; x=1779917683; darn=nongnu.org;
+ d=redhat.com; s=google; t=1779312857; x=1779917657; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oe2LBK8fDwEruVzCjrliSYntZKay/6ne0SQnWH9QpMA=;
- b=QsfnfJMU9nmuGIpzgIqq6DHKxwlz/EIEoAqVhGNqHVOJjFOjDY3Wt9u61z42QlBV8U
- 2Q3bFU0NSIaRPcm0xiLYeyf5rz0lJ1r66U1OVg/o7/4ygpqALIXH0DGOdBKsFNNa6svb
- dv+jU+Fq9pLQxO25qIjokO+TL34dA14XqAE4gN6oBjKy2OuzCa7dQMjxg3XCF9Y/i/Bb
- OxVIhc75QrsG/q7MzMFk/kfJprBN6/6HWwDrBGeTP3K1GOXIFiSf3SFbFwNNCzDJkQ0N
- WX0gN4lp3XbcYJ6qxBwzuw79xBSDmksiyr3hweitNYqXu1rwHmAfTkXepHaoCByu+Bql
- AcDA==
+ bh=jZmhb6PYUi43jWKl53BP4O8oa2TIqANv/QwFF8GvUG4=;
+ b=pULSRWRGkfzB8LXjrK717KuwO/K63AHPSL3DD6h8rOUqFD3UyjEAHrnyQgttvNNXc6
+ GEhQYKXu2KcAFlnz5/Sutj5y58I2a4d3ws2/od6MaiufaOx96/kxtyIIlYUeh03lcq5w
+ zsprzNfQ//cVSl02vTaMUSkXjB1GDhJMtBsjVINChPLigVh6qq9S8neinkeumHPmCCmn
+ 0eEYQeRnrNkmRlpM/17njeRQJstC2uaf3BDYRzz9vlGV1WxRfMenMxWn2wYvDfGAhzr/
+ h+W04/68VApBEmpJbH+jFSK6wrLQEQPiqSE977QLND2L4PFDYQ28W305XlEZj9TYbpCZ
+ kNOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779312883; x=1779917683;
+ d=1e100.net; s=20251104; t=1779312857; x=1779917657;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=oe2LBK8fDwEruVzCjrliSYntZKay/6ne0SQnWH9QpMA=;
- b=rAIWC407KeA9S36wErxItr9Eh86LZUuJa/tbIruMz6xA/byyO2cvP105zQyZpqCQ0u
- NPtM+Ksfob2I+uf0dmiBe69f9RKKY5bQe2RapMj7231qqUQLW/zaHLrQ65tn5DcLaCO6
- hpr050naWszO0LvnWLC6EPue6nhaCHfSgTMXMkJ3NxdlrFuMqjUosuDujl0Zm14sVQd+
- XCCnP32aWccBJLmRto8FgsmicugCG6iJ4/mmbHPmEQOhhV0ze8IvlTkMsgsYfB/6Zu7I
- ndY+tA4M72Sdp7ox89dL0JuK2GU1JgNchfUGYoNKvv6lica5PCkvk++hCgmat0N0Ji81
- CpBQ==
-X-Gm-Message-State: AOJu0YyTNJmr9gNMrpWY/3z3UIBdseCSOf0JtcPhvWDyJRDoP5Hl016c
- 0ngROJXqugXfb8eVhPKk+GnPPV2cwr8GYLz/mx4LIh01eST1e7G1lUr93qhy99tikphwKJktALb
- +Hna0disaAe2PT9DEXUnKSCVeDbmi7SLQhYvl6traLqIbGohhnTjD2LAruJbLs5Z1dd8nAZ6xh1
- v3nFvkSm1u1/9gf0YifqZIR8jVSYSqQN+GYSSPLg==
-X-Gm-Gg: Acq92OEzDQuhr2E/HK8jAuxMhGAdeKymyBc6idt9OoyYF+smteh0R/f44+libnvWi1d
- v+mYKf1S0BySTzFwTIYQi3vjwkFcfHcxjEsIQmDATRe8pJTDUprsxLWVy4cfBLrNz9MbOaR5X9p
- CWZ4+5jr6Zzcv4w79VOz3+K6sdTOAB6y6GYGL83FSRrysVjVPDKMvQA0blKVPuNYOqHg8kMzKrY
- vm4O0w7S8uY1eJcGHggvwIdpTdX4C5sTScmhppnmauYPNmKbOvjfDUbfQTGGfUcQ2YxBXBc2jM7
- W7o6WLjWrIMoUccZFFj+LKgbD9gNZH/N4H9M5Wyehu2RHRexo0mqInWvivCXyki7qnAjMt77I3u
- 7mFOTe5lHqWvejPZZvo7o19eN8fCaCtH2N5wKw+ZXE9kjHn/bmpqLVaI=
-X-Received: by 2002:a05:622a:4cc5:b0:50f:bc91:709 with SMTP id
- d75a77b69052e-516c559eccemr3413291cf.39.1779312883223; 
- Wed, 20 May 2026 14:34:43 -0700 (PDT)
-X-Received: by 2002:a05:622a:4cc5:b0:50f:bc91:709 with SMTP id
- d75a77b69052e-516c559eccemr3412871cf.39.1779312882705; 
- Wed, 20 May 2026 14:34:42 -0700 (PDT)
+ bh=jZmhb6PYUi43jWKl53BP4O8oa2TIqANv/QwFF8GvUG4=;
+ b=c1sWLnjgxu5DbwcaMeWkwB06bHfOoj7qTV5XzIpfQRNNJI+zcglfGGneaH/yUDWRFr
+ LjSLB1DTE4pH7Hb62UHFhDDW7Mib2w8jNnenwPBKDy3yTKKtPUAJDo1rddnOtmZZHvJf
+ qwN8Qrwr1Jmb7cWpgVoZIBhwBIFrW1kqlTm0uMMxMLKQTrFGc4kxeuq0jEip6TfPU4s1
+ Dd2pQmqtd97Qt/ipGV0ml4ak2HMCHU40wluVfF9oyfP2YbnrEmncrvWzFyz1e77DotDK
+ 6bdrAhYdLilTuu/sHXF/ThnYbL9VtXhhSEtwiazbq+EeRMHi4NKW8kmH0S5r66a6BM+4
+ OJ4w==
+X-Gm-Message-State: AOJu0Yzsj3B0KuDMKcGpiiuyNkoOE2YgPSPGkROer/JLOvRwj2pzziCF
+ nbb+Ble4rS7swiHDt55A6Cyu3pbIUPvqX8CIYCcop0yC+Y/Ejb3a0b+F4O7KdAGQ9RLOfTM1VtE
+ Wu/O179Jb4Q5ZRHXQZh0TSmFl9qiYCMSt3uNydiX+8HGb1HvYwqwVunHWoisXpSZtC29WB+CEPl
+ j8Q0J07Fz1hZdPzKKES0aCCyk5gl/p7mGu5QMbww==
+X-Gm-Gg: Acq92OFpNiGqShgiaP6Sy2GrGNvNUaFAWtImd9tbneulK595XeacfyXAzaLEUDBnddI
+ uBtq9oQEZclCqJO+DmJvwgJmUAY/o2JvM6num6j+dVN7dblMXcae3JDyv9vY0dlsDuuzzk8pk3Q
+ U7JcmMDjvARqenXVZYIjrdUT0wWcMtcG20XTf/UYVmKoxrS+L8lcf+umc+FJTK21u6/ZEu2XT7q
+ iPMWng2CJ0aybak6IGDuKXs4JJykgAIopPHxUlobY2kvTPJDFGAzVcA9Z/ssoFm0AtmL5ibmkie
+ dTxT4vONJ3oj+RIkgybs1DNnSQ4vYwyNum6Y395ez/1vLVC4aZm2kNGzp9aRsLP2FZdu8Pbi4EH
+ YtdT6d4ivuJesZDSc2OeXmYNlRFjHpIkTwNskRVk+3gKR
+X-Received: by 2002:a05:622a:2511:b0:50f:ca25:fb48 with SMTP id
+ d75a77b69052e-516c5611e72mr2843591cf.55.1779312856697; 
+ Wed, 20 May 2026 14:34:16 -0700 (PDT)
+X-Received: by 2002:a05:622a:2511:b0:50f:ca25:fb48 with SMTP id
+ d75a77b69052e-516c5611e72mr2842771cf.55.1779312855717; 
+ Wed, 20 May 2026 14:34:15 -0700 (PDT)
 Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8ca360b362fsm133062716d6.22.2026.05.20.14.34.39
+ 6a1803df08f44-8ca360b362fsm133062716d6.22.2026.05.20.14.34.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 14:34:40 -0700 (PDT)
+ Wed, 20 May 2026 14:34:13 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>,
-	Peter Xu <peterx@redhat.com>
-Subject: [PULL 17/29] tests/qtest/migration: Use defer for cpr-tests
-Date: Wed, 20 May 2026 17:33:45 -0400
-Message-ID: <20260520213357.40646-18-peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+ Aadeshveer Singh <aadeshveer07@gmail.com>
+Subject: [PULL 05/29] migration: Replace current_migration with
+ migrate_get_current()
+Date: Wed, 20 May 2026 17:33:33 -0400
+Message-ID: <20260520213357.40646-6-peterx@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520213357.40646-1-peterx@redhat.com>
 References: <20260520213357.40646-1-peterx@redhat.com>
@@ -117,71 +118,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: Aadeshveer Singh <aadeshveer07@gmail.com>
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/r/20260505160915.25558-12-farosas@suse.de
+Replaces the direct accesses to global variable `current_migration`
+with `migrate_get_current()` to ensure consistency across systems.
+
+Note: Following this only direct access to `current_migration` will be
+* `migrate_get_current()` itself
+* `migration_object_init()` initializes `current_migration`
+* `migration_shutdown()` to pair up with initialization
+* `migration_is_running()`, as there might be a case where this function
+  is called by a thread before object initialization
+
+Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
+Link: https://lore.kernel.org/r/20260513063513.250911-1-aadeshveer07@gmail.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- tests/qtest/migration/cpr-tests.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ migration/migration.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
-index 18217f0460..9091a84213 100644
---- a/tests/qtest/migration/cpr-tests.c
-+++ b/tests/qtest/migration/cpr-tests.c
-@@ -60,7 +60,7 @@ static int test_transfer(MigrateCommon *args, const char *cpr_channel,
-     obj = migrate_str_to_channel(cpr_channel);
-     qlist_append(channels_list, obj);
+diff --git a/migration/migration.c b/migration/migration.c
+index 05f10e4576..074d3f2c69 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1030,7 +1030,7 @@ bool migration_is_running(void)
  
--    if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
-+    if (migrate_start(&from, &to, "defer", &args->start)) {
-         return -1;
-     }
- 
-@@ -128,11 +128,17 @@ static void test_mode_transfer_common(MigrateCommon *args, bool incoming_defer)
-     int cpr_sockfd = qtest_socket_server(cpr_path);
-     g_assert(cpr_sockfd >= 0);
- 
--    opts_target = g_strdup_printf("-incoming cpr,addr.transport=socket,"
--                                  "addr.type=fd,addr.str=%d %s",
--                                  cpr_sockfd, opts);
-+    if (incoming_defer) {
-+        opts_target = g_strdup_printf("-incoming cpr,addr.transport=socket,"
-+                                      "addr.type=fd,addr.str=%d %s",
-+                                      cpr_sockfd, opts);
-+    } else {
-+        opts_target = g_strdup_printf("-incoming %s "
-+                                      "-incoming cpr,addr.transport=socket,"
-+                                      "addr.type=fd,addr.str=%d %s",
-+                                      uri, cpr_sockfd, opts);
-+    }
- 
--    args->listen_uri = incoming_defer ? "defer" : uri;
-     args->connect_channels = connect_channels;
- 
-     args->start.opts_source = opts;
-@@ -224,7 +230,7 @@ static void test_cpr_exec(MigrateCommon *args)
-     g_autofree char *filename = g_strdup_printf("%s/%s", tmpfs,
-                                                 FILE_TEST_FILENAME);
- 
--    if (migrate_start(&from, NULL, args->listen_uri, &args->start)) {
-+    if (migrate_start(&from, NULL, "defer", &args->start)) {
-         return;
-     }
- 
-@@ -274,10 +280,7 @@ static void test_mode_exec(char *name, MigrateCommon *args)
+ static bool migration_is_active(void)
  {
-     g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
-                                            FILE_TEST_FILENAME);
--    g_autofree char *listen_uri = g_strdup_printf("defer");
--
-     args->connect_uri = uri;
--    args->listen_uri = listen_uri;
-     args->start_hook = test_mode_exec_start;
+-    MigrationState *s = current_migration;
++    MigrationState *s = migrate_get_current();
  
-     args->start.only_source = true;
+     return (s->state == MIGRATION_STATUS_ACTIVE ||
+             s->state == MIGRATION_STATUS_POSTCOPY_DEVICE ||
+@@ -1657,7 +1657,7 @@ bool migration_in_bg_snapshot(void)
+ 
+ bool migration_thread_is_self(void)
+ {
+-    MigrationState *s = current_migration;
++    MigrationState *s = migrate_get_current();
+ 
+     return qemu_thread_is_self(&s->thread);
+ }
+@@ -3095,7 +3095,7 @@ static MigThrError postcopy_pause(MigrationState *s)
+ 
+ void migration_file_set_error(int ret, Error *err)
+ {
+-    MigrationState *s = current_migration;
++    MigrationState *s = migrate_get_current();
+ 
+     WITH_QEMU_LOCK_GUARD(&s->qemu_file_lock) {
+         if (s->to_dst_file) {
 -- 
 2.53.0
 
