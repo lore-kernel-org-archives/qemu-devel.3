@@ -4,90 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1F7FCD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 07:07:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1603FCD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 07:21:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPb17-0003eI-4L; Wed, 20 May 2026 03:06:58 -0400
+	id 1wPbF2-0006Fj-Pg; Wed, 20 May 2026 03:21:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wPb0S-0003Zd-W5
- for qemu-devel@nongnu.org; Wed, 20 May 2026 03:06:24 -0400
-Received: from mail-dy1-x1342.google.com ([2607:f8b0:4864:20::1342])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wPb0Q-0007EK-M0
- for qemu-devel@nongnu.org; Wed, 20 May 2026 03:06:16 -0400
-Received: by mail-dy1-x1342.google.com with SMTP id
- 5a478bee46e88-2bdcf5970cdso3077919eec.0
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 00:06:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779260772; x=1779865572; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=AHVypqN4bpVt55wueAlXRAEcRd3u6WTdMa3MYoLo8Ps=;
- b=QRBznan0qTIox1QmWOuD0/fES1IASfqGVb0C2siAx9J1NETvV8wTzyrK8R6hS0wufd
- AV6tlNCMpT85vZRCJMuHpJqj2SF06qwL1M28vIzPnxB36jH8kYfD5MkTYKOeG2ulA+K5
- GEH9IGPAhoFGtPlCOZi6hSs/uZrTksODhN6opVyLjNnFylN34rjPiNtQocKlxSIHEA+6
- acfPEQsj/jo6oqnzCNJ3c3dUiJ8Ue8dkhxYBxQKS7Jddm6k84GkB0HSEfiImrSJ4juCz
- 8RC/9GSVQVqCvY/XM7sccz6rFV8ts4S3MjlgJWGahn/ryMoM+GME7xJ1SacCM2GgBuyE
- ocrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779260772; x=1779865572;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=AHVypqN4bpVt55wueAlXRAEcRd3u6WTdMa3MYoLo8Ps=;
- b=CJOn51Osj8Am7TOBz/UvVwaByjgj9A+GO7Qn2xK3wF9GtI/DQImxDyyzE9p+JvsbxT
- +Oud7FHpZcZLPccfZZxPaCKIrK7g8vPx2CR3UKHUQ+LhCvOVSRTfWlP/y8D4Njf08kiC
- 4SJ6i3+sAX2u9mxFVnvPvd13nY609AnRDqnCtK70b+awhBg0sQLjHXkVcyCTsqTGiIHc
- PvawQhYWVwwWTijT2psLP+J91jNLNMCGa0EW4AT4rFZy7Z8cfR23lQ6zbE4wVqOzlmeW
- csGD5yw+lMdzPKlRKWez/jn1RLc5n2AT48TsjE7CY0zJ2LO66tWx/VE2WKaOvsihDBVM
- Ya2g==
-X-Gm-Message-State: AOJu0YwoZvRyscSwSH3rsRQFjL/BqoZa8tensUQ23s5HL8rln2uTlsn6
- JBnsVq+BktO4EJ4OJH2+jWtgjPeMnFmA3R0AvYbxDhcjgSm4qxVByliz
-X-Gm-Gg: Acq92OEH/kmI40Hx90B15sIQb5T5sMk6fV6vL9kGbXoF8wR8k+163+GpY2xKkqOeybG
- kpIU5cxXXCafiw5TJoH5OsRqtti4M3RzMeO8zzHfFB7XMpClLN07s/y79DWnoEIWHrFTmmZ8bC9
- FxJ+JMCzoe9vS+Xd33MfacB/wrjaZdK+PGmmGFIDA1mHPDJ/+mx14aX1120zKjQWXY4HTjxS0/c
- FLU2wYtYPze1PWczJiGIYUPenZ1pmPWgV+ctoU3kzZZKOAZPqjB50ouaB2wG4vsZf4Zv+IBMPbr
- B95j3Mf0zAPbxq1vwjtkniBwVXGfJNZ6ekzJ5GFJlh4eJltnvfzw2JjubmvHR1lh/dNBP5NQSG/
- lwXaQX3Ty17ZdCpZHB0Ptj2FGIK9jQi2ng2QgBsMSBPPwJ5LC7IDSdy9cEeGiuENS8TcyvvtKVk
- YjcLwHe2nGbXADuVNJOPVQXWkR0JZsVCp8Yx0g+0gldDntlCS3Za/GrubFn64=
-X-Received: by 2002:a05:7300:3212:b0:2ef:e4:c912 with SMTP id
- 5a478bee46e88-3026050ce16mr11829793eec.9.1779260772157; 
- Wed, 20 May 2026 00:06:12 -0700 (PDT)
-Received: from localhost ([64.186.250.142]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30296dcb6c3sm22632730eec.19.2026.05.20.00.06.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 00:06:11 -0700 (PDT)
-Date: Wed, 20 May 2026 15:06:09 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Jay Chang <jay.chang@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: Re: [PATCH v5 2/2] target/riscv: Improve PMP address alignment
- readability
-Message-ID: <ag1dVm-bG_bOJwJC@ChaodeMacBook-Pro.local>
-References: <20260520063606.36600-1-jay.chang@sifive.com>
- <20260520063606.36600-3-jay.chang@sifive.com>
+ (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
+ id 1wPbEq-0006DC-RW; Wed, 20 May 2026 03:21:08 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
+ id 1wPbEn-0002Sw-Tg; Wed, 20 May 2026 03:21:08 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64K0FQVv3229693; Wed, 20 May 2026 07:20:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=CWHW4G+bJiTkGDASW5s9yGbHzHVPCvGWmzAONejON
+ rw=; b=oLogdzRMZChaDFUeC0+9Dc+2e1+VbqvJhVl5QhDdERPKZJ6C1Rtse5W2l
+ CJ7DRO1WgCqbi2K0bbgdU/hKchDCy4fCRDfouPG0yUUaxgVJ3jJYJuXhkFkY2qo1
+ WL0VOZz55KFMrfrxYs00Mkwzrd+Quhc7w6l1OK/ozL5QHtjQowYmZOk0upzTTxQL
+ UUnaEyU3XPYWEV2kPIZnaxMEofhVtVBjUJtSfKKedTRf/P3EmVeuCGe6t7J1xnqn
+ XrcQsq+psOFitWFqI0hoVIjuUKBgP/2CYITbTJ8/8Q7XVgAKAs1O+Bp4ugO0U0WH
+ tfj7sP11/zGNgTStfOagDDYNW8/Pg==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h750vkc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 May 2026 07:20:59 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64K7965q029961;
+ Wed, 20 May 2026 07:20:58 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e754ge2t4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 May 2026 07:20:58 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64K7Kt9V53477838
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 20 May 2026 07:20:55 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0390A20043;
+ Wed, 20 May 2026 07:20:55 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D731B20040;
+ Wed, 20 May 2026 07:20:54 +0000 (GMT)
+Received: from funtu2.fritz.box (unknown [9.111.209.15])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 20 May 2026 07:20:54 +0000 (GMT)
+From: Harald Freudenberger <freude@linux.ibm.com>
+To: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ thuth@redhat.com
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, dengler@linux.ibm.com,
+ borntraeger@linux.ibm.com
+Subject: [PATCH v5 00/15] target/s390x: Extend qemu CPACF support
+Date: Wed, 20 May 2026 09:20:39 +0200
+Message-ID: <20260520072054.293306-1-freude@linux.ibm.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260520063606.36600-3-jay.chang@sifive.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1342;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1342.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=ffCdDUQF c=1 sm=1 tr=0 ts=6a0d60db cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=U7nrCbtTmkRpXpFmAIza:22 a=aEsR2f9HNtEaKEkkzVYA:9
+X-Proofpoint-ORIG-GUID: 6tEmlsjZBJcar1agVR0J9cBgtzyUIGS9
+X-Proofpoint-GUID: 6tEmlsjZBJcar1agVR0J9cBgtzyUIGS9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDA2NyBTYWx0ZWRfXxdCgytV9Y8sh
+ JjkxMAJ6XgCFu6Doe6LTHJ6hdSKvFgyD/B6Y8e11oiSyWHXkmUYrtUTT9QACZSOR0A/XRbh4OSj
+ BE1IXhHSZHDKH2StsdK6GwvbCS+df+NL+DsheCkVN0ETUrtPJBIbr3mqjshzvyr7DuYUmbJ98ho
+ KVh5DJDZ952SzeHnzqX4WgvFw1tuEexzJY7dRD/OnB9y4xoKqoys0ks4vbcfyT0cuKSS8CaCL0R
+ K+wlEh4XSSyfhzs3lyJrHz9cc2u8viemDjlPihcnvKtgjD2ePTQv+gRsM5v/U4zglvyLIk6zRCz
+ Ck9P8YT6u9503gyrXo/fEcO6jQ7XhDVhuMiWas89/x3bBnIun35K0wYuBzq5Qcj8U/EdyPChjxf
+ pGYXsV4BkBqVnPD+y+wk7PM9VhzJyJaw/RtCid4DjNzI169B/72V1KqQxgIK70uAjlqYMfxKWoL
+ cYY/yHjmlE8TdYuyMhA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-20_01,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 phishscore=0 suspectscore=0 adultscore=0
+ clxscore=1011 impostorscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605200067
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=freude@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,53 +115,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 20, 2026 at 02:36:06PM +0800, Jay Chang wrote:
-> Replace manual bit manipulation for better readability:
-> 
-> - TOR: Use ROUND_DOWN() to clear lower bits
-> - NAPOT: Use deposit64() to set lower bits
-> 
-> Signed-off-by: Jay Chang <jay.chang@sifive.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+This patch series extends the s390 qemu CPACF support to be able to
+run a subset of the CPACF instruction cross platform. There have been
+requests on the kernel crypto mailing list about a way to test
+s390 specific crypto implementations. For example a way to test
+s390 CPACF exploitation code like the s390_aes.ko kernel module.
 
-> ---
->  target/riscv/pmp.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
-> 
-> diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-> index 8adf7c9719..58a8923d0d 100644
-> --- a/target/riscv/pmp.c
-> +++ b/target/riscv/pmp.c
-> @@ -247,8 +247,9 @@ void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index)
->      case PMP_AMATCH_TOR:
->          /* Bits pmpaddr[G-1:0] do not affect the TOR address-matching logic. */
->          if (g >= 1) {
-> -            prev_addr &= ~((1ULL << g) - 1ULL);
-> -            this_addr &= ~((1ULL << g) - 1ULL);
-> +            uint64_t granule = 1ULL << g;
-> +            prev_addr = ROUND_DOWN(prev_addr, granule);
-> +            this_addr = ROUND_DOWN(this_addr, granule);
->          }
->          if (prev_addr >= this_addr) {
->              sa = ea = 0u;
-> @@ -641,13 +642,14 @@ target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index)
->          case PMP_AMATCH_TOR:
->              /* Bit [g-1:0] read all zero */
->              if (g >= 1 && g < TARGET_LONG_BITS) {
-> -                val &= ~((1ULL << g) - 1ULL);
-> +                uint64_t granule = 1ULL << g;
-> +                val = ROUND_DOWN(val, granule);
->              }
->              break;
->          case PMP_AMATCH_NAPOT:
->              /* Bit [g-2:0] read all one */
->              if (g >= 2 && g < TARGET_LONG_BITS) {
-> -                val |= ((1ULL << (g - 1)) - 1ULL);
-> +                val = deposit64(val, 0, g - 1, -1ULL);
->              }
->              break;
->          default:
-> -- 
-> 2.48.1
-> 
+So here now is a set of patches verified on x86 and s390 which
+over (slow but working) support for a subset of the subfunctions of
+some of the CPACF instructions.
+
+Test: As this series is more or less complete, a full blown linux
+can be run and the 'usual' in-kernel crpyto modules will be
+automatically loaded which run a bunch of test cases. So there
+is now support for these kernel modules:
+* sha256_s390x (autoloaded, sha256)
+* sha512_s390x (autoloaded, sha512)
+* aes_s390x (autoloaded, clear key aes ecb, cbc, ctr, xts)
+* pkey_pckmo (autoloaded, derive AES protected key from clear key)
+* paes_s390x (not autoloaded, protected key aes ecb, cbc, ctr, xts)
+All these modules run selftests if configured by the kernel (which is
+enabled by default). Failures are reported via syslog. Additionally
+the aes testcases from libica can be run either inside such an qemu
+environment or with a static build executed with the qemu tcg
+application qemu-s390x --cpu max <static-build-libica-test>.
+
+Changelog:
+v1: Initial version with
+    - Related code restructured
+    - Support KIMD SHA512 and thus SHA256
+    - Support KMC AES-128, AES-192 and AES-256 and thus have basic AES
+      support (ECB mode) enabled.
+    - Support PCC Compute-XTS-Parameter-AES-128 and
+      Compute-XTS-Parameter-AES-256 but only for block sequence number
+      0. This is a requirement for the next step:
+    - Support KM XTS-AES-128 and KM XTS-AES-256. Together with the
+      minimal PCC support this enables AES-XTS CPACF acceleration.
+v2: - Basic PCKMO support to be able to 'derive' an AES protected key
+      from clear key. See header details.
+    - Support protected key AES-ECB.
+    - Support protected key AES-CBC.
+    - Minimal protected key AES-XTS support for CPACF PCC.
+    - Support protected key AES-XTS.
+    - Support AES-CTR.
+    - Support protected key AES-CTR.
+v3: - Reordered patches as suggested by Finn.
+    - One small bug fix in CPACF_aes.c related to address translation.
+v4: - Rename of the parameters based on feedback from Janosch to
+      make clear these are registers or ptrs to registers.
+      Added Tested by from Holger. Fixed typo "face" -> "fake".
+v5: - Add documentation file docs/system/s390x/cpacf.rst which
+      describes the state of the CPACF instructions and which
+      functions are covered when this series is applied.
+      First version sent to public mailing list qemu-s390x.
+
+Harald Freudenberger (15):
+  target/s390x: Rework s390 cpacf implementations
+  target/s390x: Move cpacf sha512 code into a new file
+  target/s390x: Support cpacf sha256
+  target/s390x: Support AES ECB for cpacf km instruction
+  target/s390x: Support AES CBC for cpacf kmc instruction
+  target/s390x: Support AES CTR for cpacf kmctr instruction
+  target/s390x: Minimal AES XTS support for cpacf pcc instruction
+  target/s390x: Support AES XTS for cpacf km instruction
+  target/s390x: Support pckmo encrypt AES subfunctions
+  target/s390x: Support protected key AES ECB for cpacf km instruction
+  target/s390x: Support protected key AES CBC for cpacf kmc instruction
+  target/s390x: Support protected key AES CTR for cpacf kmctr
+    instruction
+  target/s390x: Minimal protected key AES XTS support for cpacf pcc
+    instruction
+  target/s390x: Support protected key AES XTS for cpacf km instruction
+  docs/s390: Document CPACF instructions support
+
+ docs/system/s390x/cpacf.rst      | 109 ++++
+ target/s390x/gen-features.c      |  31 +
+ target/s390x/tcg/cpacf.h         |  59 ++
+ target/s390x/tcg/cpacf_aes.c     | 992 +++++++++++++++++++++++++++++++
+ target/s390x/tcg/cpacf_sha256.c  | 229 +++++++
+ target/s390x/tcg/cpacf_sha512.c  | 241 ++++++++
+ target/s390x/tcg/crypto_helper.c | 416 +++++++------
+ target/s390x/tcg/insn-data.h.inc |   1 +
+ target/s390x/tcg/meson.build     |   3 +
+ target/s390x/tcg/translate.c     |   2 +
+ 10 files changed, 1869 insertions(+), 214 deletions(-)
+ create mode 100644 docs/system/s390x/cpacf.rst
+ create mode 100644 target/s390x/tcg/cpacf.h
+ create mode 100644 target/s390x/tcg/cpacf_aes.c
+ create mode 100644 target/s390x/tcg/cpacf_sha256.c
+ create mode 100644 target/s390x/tcg/cpacf_sha512.c
+
+
+base-commit: 9c23f2a7b0b45277693a14074b1aaa827eecdb92
+--
+2.43.0
+
 
