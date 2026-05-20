@@ -4,106 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9A1BCD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 11:29:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23D98CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 11:30:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPf7V-0005A3-Ug; Wed, 20 May 2026 07:29:50 -0400
+	id 1wPf7w-0005dv-5i; Wed, 20 May 2026 07:30:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
- id 1wPf7Q-000516-Nb; Wed, 20 May 2026 07:29:44 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
- id 1wPf7O-0004fh-Sf; Wed, 20 May 2026 07:29:44 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64JLiE6S552016; Wed, 20 May 2026 09:55:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=fLZtxzPiE//1Grmg/
- 9b6/lfDSHW7DBwxC8JordvpkLM=; b=OmsmAHX1x4whNGXUWG5bptoffrJIRsd79
- PFyjRgQJ2bhubbtyKzv7xF9laC0pyzZurCim7HS0HufA1YfqtTt1HjXVnoRdn+po
- pXbK0BEi7SDxEkwxe8B4bopo0/aJZ981O2XPCBfzUeWX7ots+iINOPJfylrkf44C
- /9zx0qqcXm28U4XWhB/9eJMaRUhogIgTLKoipOnoMpbszkL3o+z+Im2MQE6Ecmcb
- 7dgv/hUe1PIByroKNhSOa544mdYXY1uxtTpBxUKnZ2A0h3POo/va5rn83Ca3tFIF
- 3KxALiU3pCachxSXVHHcvwbBC9Qv2Gu06OHBLs7V4ocQjopTba2fQ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h9y1fpj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 May 2026 09:55:19 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64K9s6gh004432;
- Wed, 20 May 2026 09:55:18 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e754geja3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 May 2026 09:55:18 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64K9tFlE41943486
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 20 May 2026 09:55:15 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0B0A120043;
- Wed, 20 May 2026 09:55:15 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CC84E20040;
- Wed, 20 May 2026 09:55:12 +0000 (GMT)
-Received: from dhcp-9-123-10-31.bl1-in.ibm.com (unknown [9.123.10.31])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 20 May 2026 09:55:12 +0000 (GMT)
-From: Narayana Murty N <nnmlinux@linux.ibm.com>
-To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-Cc: npiggin@gmail.com, harshpb@linux.ibm.com, mahesh@linux.ibm.com,
- ganeshgr@linux.ibm.com, sbhat@linux.ibm.com, vaibhav@linux.ibm.com,
- anushree.mathur@linux.vnet.ibm.com, clg@redhat.com,
- pierrick.bouvier@oss.qualcomm.com, philmd@linaro.org
-Subject: [PATCH v3 6/6] MAINTAINERS: Add entry for sPAPR PCI VFIO EEH support
-Date: Wed, 20 May 2026 15:24:46 +0530
-Message-ID: <20260520095446.64206-7-nnmlinux@linux.ibm.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260520095446.64206-1-nnmlinux@linux.ibm.com>
-References: <20260520095446.64206-1-nnmlinux@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf7m-0005Lh-9W
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 07:30:06 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf7k-0004km-IB
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 07:30:05 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-67f7caa33easo10186961a12.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 04:30:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779276603; x=1779881403; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=MHj5KgKQwjOCBlbyQHbPjit+W0UarfSBsIQ5wbkhJlI=;
+ b=JBw6ahan/sa1yNPkPvkjjUjxO4MbplP68cflyin7cDHtRFsWtR2kNW5q2xVGxGAPFg
+ +xvbPOz7MDFoz4cqSZWJRZ+iU8iK+Xk5dmWYMwFT13JtedHOcYfmP2+JghwT3qVudHT5
+ AhStzRu2+SLPW/2krAG0Tll1KAovr3oDrABHltKgeiZw0x5nhDlartV/RwPr0V/0cSMO
+ HK0rG165LAMtvdwOfYqRaWFS1JX2VLpiWEmwmCzV2dVqD+DNDQ419zQ5WpdRw4n3X354
+ G3Q1dYS1Bob3OCyR/GWTWWYg9AD5i3hANzBx871dz8Dti3njSvNRuwFYZLmLcif3gQUU
+ 6ClA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779276603; x=1779881403;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MHj5KgKQwjOCBlbyQHbPjit+W0UarfSBsIQ5wbkhJlI=;
+ b=SwoW2prGm//WnXdSt5fU1bZJd32Qg0ND6b6Ig9K5cMK+/Qk0pT7P1QGE5YasTNcA/b
+ wBodtKQ+Cm1datDeKDhp0e6fzkNqe11g+VvD6J51H0JYhLYf5SH2sKyp+q/74lkaedHS
+ UtPNvyutu/LcZKV6EUQ5rSdyZUmhsvFOdJu8hrmiLoJvaNOFoqCOAOfK4nu/ud+5GFQI
+ t9Msd1PyumPvJNZ25mjwEocW6mHpeoAyUM6Iv43LRHIbB29yZnarZQ0D+GJyGYmqILW4
+ sSqlHHv9tBIAVK0EZl/FnMbQfPgcF/rnVYXyvyhSpez8HhnFkO+skyEYuehn1qhU+G3+
+ GQVQ==
+X-Gm-Message-State: AOJu0YxffVejpxDTWS2Lt/srvj2D5w9FGOtp/aG4P+Ezh35PUB+coMq9
+ M04J/lSL9E9/5uhmrakYal0VXavbCvOLQWypLfWvFb1AKiae1JmzH9y/UgND8vSya5rQyAi6N0r
+ m71nqjPY=
+X-Gm-Gg: Acq92OEHDzWYcUI6Hlfc6lqdVUmO8VcTh4fv73J5xvFzvQHjtnw/PyFkOQRrWyBzajJ
+ QTrwt9Ix8AubUsFZPoaHwmsi51zBKwBQHJJdjBlbkF+NeYlfNo7gME0HfJM5Z1vWvzOGE6DfKQL
+ BrKM+GSuKdTKbCGHPk02GTRi76Av97EBQGiKht9ZjT5cGpCFB8GEVx0U0Z4eJT+wP/ZKkEVyULc
+ S7jQpgiSCgrSG5vTmBVdNpYXu75Y9Cjl6g+8JRqFd+9gDuMWrSxppMQmJvM2xI/sRgKTkdca1od
+ oZaCmeORVi9Dhd56xm0m34CEWfVBCxaNj5V7zRAhG1NFE/2W97eP743QtWx9rn0L96kSiAcsKda
+ U9YQ6AgDYFyV07uthoNPPFW9R+Y+f8RsjIDyTWkaY8qxtwSNElUSOjWpGd/ekvNgPshKXN7IYhl
+ 7QqKyGBz3gpI+ZLQWVU978rZbY8Kc6QyMpAyEBGFSglm7PIaGtU27rVhWd0RhEZdVKhu/UokhHr
+ HZ1oxgK59M+aHCH
+X-Received: by 2002:a05:600c:4e47:b0:48f:d835:e0ff with SMTP id
+ 5b1f17b1804b1-48fe63265a1mr396876055e9.17.1779272289707; 
+ Wed, 20 May 2026 03:18:09 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48fe5ab52a6sm386586495e9.10.2026.05.20.03.18.08
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 20 May 2026 03:18:08 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Aleksandar Rikalo <arikalo@gmail.com>,
+ James Hilliard <james.hilliard1@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v11 00/24] target/mips: add missing Octeon user-mode support
+ (first half)
+Date: Wed, 20 May 2026 12:17:41 +0200
+Message-ID: <20260520101807.9971-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDA5MiBTYWx0ZWRfX57wHYTpLb0EU
- UGttwwp/U4SoKcLqi8sjx11cxnVW8vE5tb2rpTXdnsYXOP80OGJNG6mcDZjszUx3wTe9CMcgyph
- LQvPVeHadUcSrueaNm/LU8RW3Uy3hnp2xOsPNlb1pnvsvv0riMtjKjNREBsur202PIrKxhhPXdd
- EOAAWXNBUuuVBBVHGLtIrDO8t7NIjyoQRdPC1wQU/WEqSuG48ooR0r7fNkZ+YNUSTz8b2xq/A/x
- XPAunzIc//Q7nOQiOZLQhyl9pedBIdOQ+WxT3p5n5wgWk+si9zFEzHkAMD20Za9+Q6dCjYc0r/f
- bBEKnNZqf/tEJagM01Q61n/x8p1RAHFdyt+hsXis4CYO2n27PtZiD/qhVjXWe/e+CRVkMpfo/8x
- TmQpKjJy2tRhO8MBmwt/DFnwlBSAS611lL5nTptBr16FPesZ3Yqdf91eO2NOj7dEfG/5Kk+GDq6
- TlQFHR28minZEZsREIw==
-X-Authority-Analysis: v=2.4 cv=BNuDalQG c=1 sm=1 tr=0 ts=6a0d8507 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8 a=pGLkceISAAAA:8
- a=VcH14TYERV92i4gI124A:9 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-ORIG-GUID: vMORU3o3Yya-1QWTay3gV7ak3bFQNsFW
-X-Proofpoint-GUID: cJxZ9t-gQKZcPQmdpr4nUZo02Y9Mj7lY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-20_02,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 malwarescore=0 impostorscore=0 suspectscore=0
- lowpriorityscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605200092
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=nnmlinux@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,37 +102,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a dedicated MAINTAINERS entry for hw/ppc/spapr_pci_vfio_eeh.c,
-which implements Extended Error Handling (EEH) support for VFIO-based
-PCI devices on PowerPC sPAPR platforms.
+Respinning first half of James v10, adding tests with each
+patch modifying an instruction instead of all at the end.
+Split SEQNE/SEQNEI patch to ease review.
 
-EEH provides error detection, isolation, and recovery mechanisms for
-PCI devices, allowing the system to handle and recover from hardware
-errors without requiring a full system reboot.
+James Hilliard (23):
+  linux-user/mips: implement sysmips(MIPS_FLUSH_CACHE)
+  linux-user/mips: implement sysmips(MIPS_ATOMIC_SET)
+  linux-user/mips, target/mips: honor MIPS_FIXADE for unaligned accesses
+  target/mips: expose Octeon68XX floating-point support
+  tests/tcg/mips: add Octeon instruction smoke test
+  target/mips: fix Octeon arithmetic destination handling
+  target/mips: drop Octeon zero-register fast paths
+  target/mips: split Octeon SEQ/SNE decode
+  target/mips: split Octeon SEQI/SNEI decode
+  target/mips: add Octeon LBX instruction
+  target/mips: add Octeon LHUX instruction
+  target/mips: add Octeon LWUX instruction
+  target/mips: add Octeon SAA instruction
+  target/mips: add Octeon SAAD instruction
+  target/mips: add Octeon ZCB and ZCBT instructions
+  target/mips: add Octeon multiplier state
+  target/mips: add Octeon MTM instructions
+  target/mips: add Octeon MTP instructions
+  target/mips: add Octeon VMULU instruction
+  target/mips: add Octeon VMM0 instruction
+  target/mips: add Octeon V3MULU instruction
+  target/mips: add Octeon QMAC instructions
+  target/mips: add Octeon LA* atomic instructions
 
-Signed-off-by: Narayana Murty N <nnmlinux@linux.ibm.com>
----
- MAINTAINERS | 6 ++++++
- 1 file changed, 6 insertions(+)
+Richard Henderson (1):
+  tcg: Introduce tcg_gen_addN_i64
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 9d3d645953..03a638cab1 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1656,6 +1656,12 @@ F: tests/functional/ppc64/test_pseries.py
- F: tests/functional/ppc64/test_hv.py
- F: tests/functional/ppc64/test_tuxrun.py
- 
-+sPAPR PCI VFIO Extended Error handling (EEH)
-+M: Narayana Murty <nnmlinux@linux.ibm.com>
-+L: qemu-ppc@nongnu.org
-+S: Maintained
-+F: hw/ppc/spapr_pci_vfio_eeh.c
-+
- PowerNV (Non-Virtualized)
- M: Nicholas Piggin <npiggin@gmail.com>
- R: Aditya Gupta <adityag@linux.ibm.com>
+ MAINTAINERS                                   |   2 +-
+ include/tcg/tcg-op-common.h                   |   1 +
+ linux-user/mips/target_syscall.h              |   3 +
+ linux-user/mips64/target_syscall.h            |   3 +
+ target/mips/cpu.h                             |  16 +
+ target/mips/tcg/translate.h                   |   2 +
+ target/mips/tcg/octeon.decode                 |  54 ++-
+ linux-user/mips/cpu_loop.c                    |   5 +
+ linux-user/syscall.c                          |  56 +++
+ target/mips/cpu.c                             |  10 +-
+ target/mips/system/machine.c                  |  33 ++
+ target/mips/tcg/octeon_translate.c            | 411 +++++++++++++++---
+ target/mips/tcg/translate.c                   |  24 +-
+ tcg/tcg-op.c                                  |  42 ++
+ tests/tcg/mips/user/isa/octeon/octeon-insns.c | 204 +++++++++
+ target/mips/cpu-defs.c.inc                    |  10 +-
+ tests/tcg/mips64/Makefile.target              |  20 +
+ tests/tcg/mips64el/Makefile.target            |   8 +
+ 18 files changed, 844 insertions(+), 60 deletions(-)
+ create mode 100644 tests/tcg/mips/user/isa/octeon/octeon-insns.c
+ create mode 100644 tests/tcg/mips64/Makefile.target
+ create mode 100644 tests/tcg/mips64el/Makefile.target
+
 -- 
-2.54.0
+2.53.0
 
 
