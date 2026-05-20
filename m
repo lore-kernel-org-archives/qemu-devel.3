@@ -4,103 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAFEECD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:35:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02D7FCD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:35:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPoYw-0001Hj-9p; Wed, 20 May 2026 17:34:46 -0400
+	id 1wPoYN-0000xi-AL; Wed, 20 May 2026 17:34:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoYu-0001H9-I8
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoYM-0000xG-9j
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoYs-0007KF-F1
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:44 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoYK-00078d-1d
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779312881;
+ s=mimecast20190719; t=1779312847;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=u0x3Ay0P3vXrHy1/36SANeDG2Z3InXKa4XI7f+qoQ2A=;
- b=VdBDXX+S3Ocm6gwzuigi0HzIBsNLbVAYBsHKYLeS034PpIVzvkXkgaw55S/MHaMLBxJmJf
- gfGojwoaG8/CWHB7B/SoiW2P5Ac82UBwOp6nLf06iFfRUOuZ5xrWdm5Ln91KjYs4cYg13b
- KHlWJl7Ms8z0ezGC769/Dq6jTqrxzaI=
+ bh=Av+kt2qGFE219m05KfncIX215HPEdoJL5n4U5TvcwDk=;
+ b=gOV8oTZAil0j6eukrcqZiyiFcMO8NRBKy51Yf5gBeDtSYKEuXF+x1NRB4gMLPN7eQ8AFGY
+ aSp7arPoM0dxSIErN8U6B+UkiF6Y6Th+EfrRaqs2dpQ3kDQtDydeHXy9Xl97TruNC4Om1O
+ OF/M4Pebo75V0X1pJoYr7A2HVBwAouA=
 Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
  [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-622-QpDUrLE8OnKtbrX53Oi6Sg-1; Wed, 20 May 2026 17:34:40 -0400
-X-MC-Unique: QpDUrLE8OnKtbrX53Oi6Sg-1
-X-Mimecast-MFC-AGG-ID: QpDUrLE8OnKtbrX53Oi6Sg_1779312880
+ us-mta-211-CKZnYt-fPvKEmd9wiwUtzA-1; Wed, 20 May 2026 17:34:05 -0400
+X-MC-Unique: CKZnYt-fPvKEmd9wiwUtzA-1
+X-Mimecast-MFC-AGG-ID: CKZnYt-fPvKEmd9wiwUtzA_1779312845
 Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8b7a1ea06bfso167951036d6.3
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 14:34:40 -0700 (PDT)
+ 6a1803df08f44-8aca29dcd69so155636726d6.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 14:34:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779312879; x=1779917679; darn=nongnu.org;
+ d=redhat.com; s=google; t=1779312845; x=1779917645; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=u0x3Ay0P3vXrHy1/36SANeDG2Z3InXKa4XI7f+qoQ2A=;
- b=C9jMd3Gpjn7tIIn0Q1HCdNcA4bEcx5Ase/G4MRjwCXqUFzwwrTiJsfc4jYvzHCgcPu
- M5O8s3yTVKFeMsqpXjH94Oun6FBiDraitQLy3YwYFGRWJELC4o3OMsU2odr1Yi2CNOJu
- BBH9QPUFG9rm+F7aUXyg8dZFx1oOBO2wuzP+/0OZE2uPyhph1/469L1wZRN5o1ijRFP/
- wzc0y/1D+1BztZ9/C6B/aQ1QVVJdPg/qusuEOu+ythDI5dRfOjKQBdsBtg2HS5v0nkQP
- MvgpYWfCVlClRttprHOaB7KZRaXObK06RqsvpzJ+OdOw0ZdZj4+SIFdfv/2vbA5o/uNI
- 7sxA==
+ bh=Av+kt2qGFE219m05KfncIX215HPEdoJL5n4U5TvcwDk=;
+ b=Kejsqi1aC0EJTCkBG7SjmoFcijfGZJGxhuKWi+C/FJCyn4FScq80U6sBwfGfdSkTkI
+ IasJYP3btZBgv+8TwUyZRQnQwv59Q9dr7N6ug1ZrwbElMZUCd8mwfFh13HaOyFRmvjCg
+ 7GuJJp254nsQQmLK/xgnVX94ew7cmCxtrlrJMjRJPb3ECxEulz9TKi4z6P1kVnXt5MHZ
+ GItMPr1Y1pGi56G6zMChmz3xwIV93Ismu4TnQqmH/qJ8jYzT1EOBIKe7qbk3Dpu7O6PQ
+ qFXxYT0tTg+2vwP78WtoHij5Sahqb3s80G2RkjR4WCiOYjhQYu3FqPp80WRxphbUv5u9
+ fscw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779312879; x=1779917679;
+ d=1e100.net; s=20251104; t=1779312845; x=1779917645;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=u0x3Ay0P3vXrHy1/36SANeDG2Z3InXKa4XI7f+qoQ2A=;
- b=dBy9rvDi8nNf4rJ/yc0VlSEignjTkocxSPIIPFO8F4N9bO6t1vj0Fvp+Ronkx1CyTp
- HiwBy5psgYTfLQrha7W+aATPZZ9REacfASZEaaB4WVKITC8fve5Wy5JDDXhAH6CN+tXH
- tO+ZPHP5p+MeB629sULxlqpryLfPvS2LLtXfXMvoR99ClHZrrqcTXEKcy3V5F53UgzeB
- obk0L6cJKoMhI+vfl2aZyH8TTAe4hfUg7b79DNV0O6jnAIx4buyXjNULYSGSM8NGlxxA
- bluL/+Mps5iEHSi1H6aoA/FRpYwQbG9DkeHSz8nh9tYr1/Gy8fxerGX5bdVxluI1gIQZ
- aNRg==
-X-Gm-Message-State: AOJu0YzhbABDPDfpFiWS181uHSdEi7ivoFoSvXQusEndqYbmn6xSDFbV
- x6DqF3og0ku00LPIcyBR05F/yBOlMQBxC9A6k90IjtmRU9Oh1dr+W5zEM5HHKeUev+qQOS57SFl
- Ho5rX2qyWGLyQD9+me8o6PO50Sdo72MvOY9n88QYpEJrbnxkgq0djYPZhq8tZUDpfxh1TSugsgE
- XCbQPBuabmXM/7TmvDO2B9Nk4HK8+L4jABCVihPQ==
-X-Gm-Gg: Acq92OGV7oH43u1mMZjxCSW15mVpX9T9eVxyHD6MdoUf5zQBzSS3PN9r1fRsKhP5rrl
- BI2ELE99MRuy9hFc/N2Ru0D3oS3usw87RO7sbsDcf+4ly87c039wXWEXbQOOjXf2qwLEhVQmsTN
- oSqygNEsYQOc5d5tTYHTQY+LshHIjswf/hN7KEruOungd1NF5FwGRoNlH3ojUBw/ie6aa73plIZ
- 0iT9Fk8+nIwbx2wbIN5T3q76PTasd/Kmdz+ot9oILdxmi9yFYH71UbBJOvDcg8IoRjME7vriDp9
- lCzmR3zjJY9L0vqKoie2JhWUPbe1jGqlRGJX9pfY3LPDKvCLPzDaasqgfdgtEJqCwGczKW51s5c
- nNr7gbMs9lCBkKo2Hg62W6cxggwEQWJxbvh8lmDXzcPgI
-X-Received: by 2002:a05:6214:20a1:b0:8ac:abc5:8754 with SMTP id
- 6a1803df08f44-8cc6e36241emr4370366d6.30.1779312878786; 
- Wed, 20 May 2026 14:34:38 -0700 (PDT)
-X-Received: by 2002:a05:6214:20a1:b0:8ac:abc5:8754 with SMTP id
- 6a1803df08f44-8cc6e36241emr4369636d6.30.1779312878110; 
- Wed, 20 May 2026 14:34:38 -0700 (PDT)
+ bh=Av+kt2qGFE219m05KfncIX215HPEdoJL5n4U5TvcwDk=;
+ b=ZOOT5STV4vRoZUcfPsrDqHbN3QpIEOe7901ntAlMyhWMBiIC5W017mpZXJew2hRHTt
+ CIMTXQWHv1O8954AwOHImmAdNMXzK12Fg6v6eyO9YTFSgKNHuj1ZLtRJgg5yD2cmM/Rt
+ UaRR0jxQCEDyAzZpNgsK0efCRDReA+++YS4mbdF3TJCDUBn3CS0HGl7XmxbVkih2/jL5
+ c1DhMXZP6+mB0iwB0QrIqLA2alX7SHxzPk2GBlgpDzXF6hZupQ7/13oKm+XUvzgXgc87
+ 0LHazvnM4lLFiBiLEH2b1vaV+JFjSH3LOPmv3BIdDavghIfmbmpxiSvWtYCfzhtdHqMy
+ LuQQ==
+X-Gm-Message-State: AOJu0Ywq9pV4nGgImTRvFVJjGXlpafnCj/rBDs/0QjYxvbVNvW+43Tic
+ glIpLK49HDlnKvujEBU0xJhrvMLK/E8vkn5v5gpJAZHAEdlCvON5Ip7WPf8+CnWtIlxddVKvXWY
+ WFPeiwjsezooulDmlSjFRVuO+dp9JIL+pqfYsAB+uQf/eFteCtRE7O6dA1cFw9P9JrTdf2ycYEb
+ Zwj0+D80wG3DlptzE4SUbndKZggC/lMsoAfA56yw==
+X-Gm-Gg: Acq92OH2Mhg//jiu6z3a58qJhtPcximpjBE+cXHuMaHYF7Z89O5P+YfMpJlORorcPvu
+ M62zf/bG8QrxZ8rISnAVu59fw2Q+C4pDhPVtGqe58tgkftg+S0bMPO8H4HcOfmBhs/IKBqu70Fx
+ L4lwuHQx8Cspxyr0xVpB8iIY5nTmlmC+hzRtvK6QxFl6vkVSFA9rtB5WkAm6JuY/sYe+m5io7vA
+ z9O1pHtJj6V+qE1V9cfJ5A9YiiwOedQLV+5AxsR/W5LrfUKJbVGhNKuqTKynfYGbIFDP2+nDh6r
+ H65Yjle7r0kFMbJYoJcXEaOuuFNEH2PaOUHnSxudUv3tn1RxIt0EH7YvP99m5ezob/kSuEDW7Qh
+ I2Ao1a8xYKs2tSQQ1jEeC2xd1uAcqPAG/eE/Kea2Pys7n9wsU+njcaxM=
+X-Received: by 2002:a05:6214:4884:b0:8ca:105f:91d6 with SMTP id
+ 6a1803df08f44-8cc6e347507mr4567186d6.21.1779312844961; 
+ Wed, 20 May 2026 14:34:04 -0700 (PDT)
+X-Received: by 2002:a05:6214:4884:b0:8ca:105f:91d6 with SMTP id
+ 6a1803df08f44-8cc6e347507mr4566366d6.21.1779312844390; 
+ Wed, 20 May 2026 14:34:04 -0700 (PDT)
 Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8ca360b362fsm133062716d6.22.2026.05.20.14.34.37
+ 6a1803df08f44-8ca360b362fsm133062716d6.22.2026.05.20.14.34.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 14:34:37 -0700 (PDT)
+ Wed, 20 May 2026 14:34:01 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>,
-	Peter Xu <peterx@redhat.com>
-Subject: [PULL 15/29] tests/qtest/migration: Remove multifd compression hook
-Date: Wed, 20 May 2026 17:33:43 -0400
-Message-ID: <20260520213357.40646-16-peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 01/29] migration: Fix crash on second migration when cancel
+ early
+Date: Wed, 20 May 2026 17:33:29 -0400
+Message-ID: <20260520213357.40646-2-peterx@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520213357.40646-1-peterx@redhat.com>
 References: <20260520213357.40646-1-peterx@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,237 +119,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+Marc-André reported an issue on QEMU crash when retrying a cancelled
+migration during early setup phase, see "Link:" for more information, and
+also easy way to reproduce.
 
-Take advantage of the default compression method for multifd being
-"none" and remove the common compression hook.
+This patch is a replacement of the prior fix proposed by not only switching
+to migration_cleanup(), but also fixing it from CPR side, so that we track
+hup_source properly to know if src QEMU is waiting or the HUP signal.
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/r/20260505160915.25558-10-farosas@suse.de
+To put it simple: this chunk of special casing in migration_cancel() should
+not affect normal migration, but only cpr-transfer migration to cover the
+small window when the src QEMU is waiting for a HUP signal on cpr
+channel (so that src QEMU can continue the migration on the main channel).
+
+To achieve that, we'll also need to remember to detach the hup_source
+whenenver invoked: after that point, we should always be able to cleanup
+the migration.
+
+It's not a generic operation to explicitly detach a gsource from its
+context while in its dispatch() function.  But it should be safe, because
+gsource disptch() will only happen with a boosted refcount for the
+dispatcher so that the gsource will not be freed until the callback
+completes. It's also safe to return G_SOURCE_REMOVE after the gsource is
+detached, as glib will simply ignore the G_SOURCE_REMOVE.
+
+One can refer to latest 2.86.5 glib code in g_main_dispatch() for that:
+
+https://github.com/GNOME/glib/blob/2.86.5/glib/gmain.c#L3592
+
+When at this, add a bunch of assertions to make sure nothing surprises us.
+
+After this patch applied, the 2nd migration will not crash QEMU, instead
+it'll be in CANCELLING until the socket connection times out (it will take
+~2min on my Fedora default kernel).  During this process no 2nd migration
+will be allowed, and after it timed out migration can be restarted.
+
+It's because so far we don't have control over socket_connect_outgoing(),
+or anything yet managed by a task executed in qio_task_run_in_thread().
+Speeding up the cancellation to be left for future.
+
+I also tested cpr-transfer by only providing cpr channel not the main
+channel (with -incoming defer), kickoff migration on source, then cancel it
+on source directly without providing the main channel.  It keeps working.
+
+I wanted to add an unit test for that but it'll need to refactor current
+cpr-transfer tests first; let's leave it for later.
+
+Link: https://lore.kernel.org/r/20260417184742.293061-1-marcandre.lureau@redhat.com
+Reported-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Tested-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/r/20260421175820.302795-1-peterx@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- tests/qtest/migration/framework.h     |  3 --
- tests/qtest/migration/framework.c     |  9 ----
- tests/qtest/migration/precopy-tests.c | 11 ----
- tests/qtest/migration/tls-tests.c     | 74 +++------------------------
- 4 files changed, 8 insertions(+), 89 deletions(-)
+ include/migration/cpr.h  |  1 +
+ migration/migration.h    |  5 +++++
+ migration/cpr-transfer.c | 10 ++++++++++
+ migration/migration.c    | 31 +++++++++++++++++++++++--------
+ 4 files changed, 39 insertions(+), 8 deletions(-)
 
-diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
-index 825209ee74..8d5331a860 100644
---- a/tests/qtest/migration/framework.h
-+++ b/tests/qtest/migration/framework.h
-@@ -242,9 +242,6 @@ void test_postcopy_recovery_common(MigrateCommon *args,
- int test_precopy_common(MigrateCommon *args);
- void test_precopy_unix_common(MigrateCommon *args);
- void test_file_common(MigrateCommon *args, bool stop_src);
--void *migrate_hook_start_precopy_tcp_multifd_common(QTestState *from,
--                                                    QTestState *to,
--                                                    const char *method);
+diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+index 96ce26e711..56fb67e6b4 100644
+--- a/include/migration/cpr.h
++++ b/include/migration/cpr.h
+@@ -57,6 +57,7 @@ QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
+ void cpr_transfer_add_hup_watch(MigrationState *s, QIOChannelFunc func,
+                                 void *opaque);
+ void cpr_transfer_source_destroy(MigrationState *s);
++bool cpr_transfer_source_active(MigrationState *s);
  
- typedef struct QTestMigrationState QTestMigrationState;
- QTestMigrationState *get_src(void);
-diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-index 5da39eac76..b1bf8ea8ae 100644
---- a/tests/qtest/migration/framework.c
-+++ b/tests/qtest/migration/framework.c
-@@ -1063,15 +1063,6 @@ finish:
-     migrate_end(from, to, args->result == MIG_TEST_SUCCEED);
- }
+ void cpr_exec_init(void);
+ QEMUFile *cpr_exec_output(Error **errp);
+diff --git a/migration/migration.h b/migration/migration.h
+index a5e064a1ac..841f49b215 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -512,6 +512,11 @@ struct MigrationState {
  
--void *migrate_hook_start_precopy_tcp_multifd_common(QTestState *from,
--                                                    QTestState *to,
--                                                    const char *method)
--{
--    migrate_set_parameter_str(from, "multifd-compression", method);
--    migrate_set_parameter_str(to, "multifd-compression", method);
--    return NULL;
--}
--
- QTestMigrationState *get_src(void)
- {
-     return &src_state;
-diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-index b73b73a807..246f9fd555 100644
---- a/tests/qtest/migration/precopy-tests.c
-+++ b/tests/qtest/migration/precopy-tests.c
-@@ -322,18 +322,10 @@ static void test_auto_converge(char *name, MigrateCommon *args)
-     migrate_end(from, to, true);
- }
+     bool postcopy_package_loaded;
  
--static void *
--migrate_hook_start_precopy_tcp_multifd(QTestState *from,
--                                       QTestState *to)
--{
--    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
--}
--
- static void *
- migrate_hook_start_precopy_tcp_multifd_zero_page_legacy(QTestState *from,
-                                                         QTestState *to)
- {
--    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
-     migrate_set_parameter_str(from, "zero-page-detection", "legacy");
-     return NULL;
- }
-@@ -342,14 +334,12 @@ static void *
- migrate_hook_start_precopy_tcp_multifd_no_zero_page(QTestState *from,
-                                                     QTestState *to)
- {
--    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
-     migrate_set_parameter_str(from, "zero-page-detection", "none");
-     return NULL;
- }
++    /*
++     * When set, it means cpr-transfer is waiting for the HUP signal from
++     * destination to continue the 2nd step of migration via the main
++     * channel.
++     */
+     GSource *hup_source;
  
- static void test_multifd_tcp_uri_none(char *name, MigrateCommon *args)
- {
--    args->start_hook = migrate_hook_start_precopy_tcp_multifd;
      /*
-      * Multifd is more complicated than most of the features, it
-      * directly takes guest page buffers when sending, make sure
-@@ -394,7 +384,6 @@ static void test_multifd_tcp_no_zero_page(char *name, MigrateCommon *args)
+diff --git a/migration/cpr-transfer.c b/migration/cpr-transfer.c
+index 61d5c9dce2..9defe7bad7 100644
+--- a/migration/cpr-transfer.c
++++ b/migration/cpr-transfer.c
+@@ -6,6 +6,7 @@
+  */
  
- static void test_multifd_tcp_channels_none(char *name, MigrateCommon *args)
+ #include "qemu/osdep.h"
++#include "qemu/main-loop.h"
+ #include "qapi/clone-visitor.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-visit-migration.h"
+@@ -79,6 +80,7 @@ QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp)
+ void cpr_transfer_add_hup_watch(MigrationState *s, QIOChannelFunc func,
+                                 void *opaque)
  {
--    args->start_hook = migrate_hook_start_precopy_tcp_multifd;
-     args->live = true;
-     args->connect_channels = ("[ { 'channel-type': 'main',"
-                              "    'addr': { 'transport': 'socket',"
-diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
-index 275d0b84d4..f45f4c4b0c 100644
---- a/tests/qtest/migration/tls-tests.c
-+++ b/tests/qtest/migration/tls-tests.c
-@@ -593,67 +593,9 @@ static void test_precopy_tcp_tls_x509_reject_anon_client(char *name,
++    assert(bql_locked());
+     s->hup_source = qio_channel_create_watch(cpr_state_ioc(), G_IO_HUP);
+     g_source_set_callback(s->hup_source,
+                           (GSourceFunc)func,
+@@ -89,9 +91,17 @@ void cpr_transfer_add_hup_watch(MigrationState *s, QIOChannelFunc func,
+ 
+ void cpr_transfer_source_destroy(MigrationState *s)
+ {
++    assert(bql_locked());
+     if (s->hup_source) {
+         g_source_destroy(s->hup_source);
+         g_source_unref(s->hup_source);
+         s->hup_source = NULL;
+     }
  }
- #endif /* CONFIG_TASN1 */
++
++bool cpr_transfer_source_active(MigrationState *s)
++{
++    /* Whenever the HUP gsource is available, it's active. */
++    assert(bql_locked());
++    return s->hup_source;
++}
+diff --git a/migration/migration.c b/migration/migration.c
+index ecc69dc4d2..b6f78eb3ac 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1502,14 +1502,19 @@ void migration_cancel(void)
+     }
  
--static void *
--migrate_hook_start_multifd_tcp_tls_psk_match(QTestState *from,
--                                             QTestState *to)
--{
--    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
--    return migrate_hook_start_tls_psk_match(from, to);
--}
--
--static void *
--migrate_hook_start_multifd_tcp_tls_psk_mismatch(QTestState *from,
--                                                QTestState *to)
--{
--    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
--    return migrate_hook_start_tls_psk_mismatch(from, to);
--}
--
--#ifdef CONFIG_TASN1
--static void *
--migrate_hook_start_multifd_tls_x509_default_host(QTestState *from,
--                                                 QTestState *to)
--{
--    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
--    return migrate_hook_start_tls_x509_default_host(from, to);
--}
--
--static void *
--migrate_hook_start_multifd_tls_x509_override_host(QTestState *from,
--                                                  QTestState *to)
--{
--    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
--    return migrate_hook_start_tls_x509_override_host(from, to);
--}
--
--static void *
--migrate_hook_start_multifd_tls_x509_mismatch_host(QTestState *from,
--                                                  QTestState *to)
--{
--    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
--    return migrate_hook_start_tls_x509_mismatch_host(from, to);
--}
--
--static void *
--migrate_hook_start_multifd_tls_x509_allow_anon_client(QTestState *from,
--                                                      QTestState *to)
--{
--    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
--    return migrate_hook_start_tls_x509_allow_anon_client(from, to);
--}
--
--static void *
--migrate_hook_start_multifd_tls_x509_reject_anon_client(QTestState *from,
--                                                       QTestState *to)
--{
--    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
--    return migrate_hook_start_tls_x509_reject_anon_client(from, to);
--}
--#endif /* CONFIG_TASN1 */
--
- static void test_multifd_tcp_tls_psk_match(char *name, MigrateCommon *args)
- {
--    args->start_hook = migrate_hook_start_multifd_tcp_tls_psk_match;
-+    args->start_hook = migrate_hook_start_tls_psk_match;
-     args->end_hook = migrate_hook_end_tls_psk;
+     /*
+-     * If migration_connect_outgoing has not been called, then there
+-     * is no path that will complete the cancellation. Do it now.
+-     */
+-    if (setup && !s->to_dst_file) {
+-        migrate_set_state(&s->state, MIGRATION_STATUS_CANCELLING,
+-                          MIGRATION_STATUS_CANCELLED);
+-        cpr_state_close();
+-        cpr_transfer_source_destroy(s);
++     * This is cpr-transfer specific processing.
++     *
++     * If this is true, it means cpr-transfer migration is waiting for the
++     * destination to send HUP event on CPR channel to continue the next
++     * phase.  If so, do the cleanup proactively to avoid get stuck in
++     * CANCELLING state.
++     */
++    if (cpr_transfer_source_active(s)) {
++        assert(migrate_mode() == MIG_MODE_CPR_TRANSFER);
++        assert(setup && !s->to_dst_file);
++        migration_cleanup(s);
++        /* Now all things should have been released */
++        assert(!cpr_transfer_source_active(s));
+     }
+ }
  
-     args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
-@@ -663,7 +605,7 @@ static void test_multifd_tcp_tls_psk_match(char *name, MigrateCommon *args)
+@@ -2045,12 +2050,22 @@ static gboolean migration_connect_outgoing_cb(QIOChannel *channel,
+     MigrationState *s = migrate_get_current();
+     Error *local_err = NULL;
  
- static void test_multifd_tcp_tls_psk_mismatch(char *name, MigrateCommon *args)
- {
--    args->start_hook = migrate_hook_start_multifd_tcp_tls_psk_mismatch;
-+    args->start_hook = migrate_hook_start_tls_psk_mismatch;
-     args->end_hook = migrate_hook_end_tls_psk;
-     args->result = MIG_TEST_FAIL;
++    /*
++     * Detach and release the GSource right after use.  We rely on this to
++     * detect this small cpr-transfer window of "waiting for HUP event".
++     */
++    cpr_transfer_source_destroy(s);
++
+     migration_connect_outgoing(s, opaque, &local_err);
  
-@@ -676,7 +618,7 @@ static void test_multifd_tcp_tls_psk_mismatch(char *name, MigrateCommon *args)
- static void test_multifd_postcopy_tcp_tls_psk_match(char *name,
-                                                     MigrateCommon *args)
- {
--    args->start_hook = migrate_hook_start_multifd_tcp_tls_psk_match;
-+    args->start_hook = migrate_hook_start_tls_psk_match;
-     args->end_hook = migrate_hook_end_tls_psk;
+     if (local_err) {
+         migration_connect_error_propagate(s, local_err);
+     }
  
-     args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
-@@ -689,7 +631,7 @@ static void test_multifd_postcopy_tcp_tls_psk_match(char *name,
- static void test_multifd_tcp_tls_x509_default_host(char *name,
-                                                    MigrateCommon *args)
- {
--    args->start_hook = migrate_hook_start_multifd_tls_x509_default_host;
-+    args->start_hook = migrate_hook_start_tls_x509_default_host;
-     args->end_hook = migrate_hook_end_tls_x509;
- 
-     args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
-@@ -700,7 +642,7 @@ static void test_multifd_tcp_tls_x509_default_host(char *name,
- static void test_multifd_tcp_tls_x509_override_host(char *name,
-                                                     MigrateCommon *args)
- {
--    args->start_hook = migrate_hook_start_multifd_tls_x509_override_host;
-+    args->start_hook = migrate_hook_start_tls_x509_override_host;
-     args->end_hook = migrate_hook_end_tls_x509;
- 
-     args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
-@@ -724,7 +666,7 @@ static void test_multifd_tcp_tls_x509_mismatch_host(char *name,
-      * to load migration state, and thus just aborts the migration
-      * without exiting.
-      */
--    args->start_hook = migrate_hook_start_multifd_tls_x509_mismatch_host;
-+    args->start_hook = migrate_hook_start_tls_x509_mismatch_host;
-     args->end_hook = migrate_hook_end_tls_x509;
-     args->result = MIG_TEST_FAIL;
- 
-@@ -737,7 +679,7 @@ static void test_multifd_tcp_tls_x509_mismatch_host(char *name,
- static void test_multifd_tcp_tls_x509_allow_anon_client(char *name,
-                                                         MigrateCommon *args)
- {
--    args->start_hook = migrate_hook_start_multifd_tls_x509_allow_anon_client;
-+    args->start_hook = migrate_hook_start_tls_x509_allow_anon_client;
-     args->end_hook = migrate_hook_end_tls_x509;
- 
-     args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
-@@ -748,7 +690,7 @@ static void test_multifd_tcp_tls_x509_allow_anon_client(char *name,
- static void test_multifd_tcp_tls_x509_reject_anon_client(char *name,
-                                                          MigrateCommon *args)
- {
--    args->start_hook = migrate_hook_start_multifd_tls_x509_reject_anon_client;
-+    args->start_hook = migrate_hook_start_tls_x509_reject_anon_client;
-     args->end_hook = migrate_hook_end_tls_x509;
-     args->result = MIG_TEST_FAIL;
++    /*
++     * This is redundant as we do cpr_transfer_source_destroy() at the
++     * entry, but it's benign; glib will just skip the detach.
++     */
+     return G_SOURCE_REMOVE;
+ }
  
 -- 
 2.53.0
