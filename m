@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B906CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 13:34:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A5B3CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 13:35:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPh4E-0005ce-7a; Wed, 20 May 2026 09:34:35 -0400
+	id 1wPh3l-0005Z1-Id; Wed, 20 May 2026 09:34:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wPh40-0005b8-Tj
- for qemu-devel@nongnu.org; Wed, 20 May 2026 09:34:22 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wPh3j-0005Yt-VU
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 09:34:03 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wPh3z-0004XZ-A0
- for qemu-devel@nongnu.org; Wed, 20 May 2026 09:34:20 -0400
+ (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wPh3i-0004Vg-8r
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 09:34:03 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id B17D443A2F;
- Wed, 20 May 2026 13:34:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D77221F000E9;
- Wed, 20 May 2026 13:34:16 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 12052601FC;
+ Wed, 20 May 2026 13:34:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 062A71F000E9;
+ Wed, 20 May 2026 13:34:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779284057;
- bh=r1TWx6OCHBU6/kYeI4mdaP41W71LWq5ioxvn0KhGqiU=;
+ s=k20260515; t=1779284040;
+ bh=E0SC7AD4xg+opLCvydgBAIKYqb02rk7N/+pspd2LlVo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=VlX16vJR+OsPY8K2bC65yCeUtUTgbSZAt93A1ggcB5Dn00A5PbNEsI0zxW4+uE3eZ
- jg0fU5wCKHrYuc1V9cD684CDRFsYeeRQCzdwfDjNZoNN5ePjI5Zocc4Btakv9UgyNH
- lsT+FhKFwkro/A30v7Mis6h7UrMC3bnqeHJ3PZq6WPNkU+3oGypJ/0I3YgyWlP1mf/
- 6pshmsWOftoQTqQ4HhVN3KrfXWPTPWDKWry26hlx29c8pmdqDXXKFYkZnBNJvLMWdy
- 1L2VDLPwyX4gLbv6q/nA7WW2kMZ0AIARHJO3PKZmEzysPFFtNu0K1GeycGmO5+SyGU
- IOMbSGJFUa1tA==
+ b=GwsRL/bc/KfBjiBFuJXiCTq4Fh/w1aIecd2WZkBHQSzEM/933Oy8fvI7GomsPs376
+ PIkGs2/n6IA0tWq5jz+u+pwdlh/HZsfB7TqRq1TsjY0Kh6ob5nLWs0xA2d19g4u5OH
+ +KeRZe3cbFf+jNAMwZ+Y6pMpgNV/IQksyMBtFfGwd0bgwV3kiaR6H0Rm6z+YbZyxXO
+ GWQqcWFGkuMnRzTBkKbNu4oYW4CpIxxDKAdTJ6FvRG2MnaMAgOGq3GEE1tMQ2FtC7L
+ uRyerTVtMIduphf5LFU2JlI1spM03vdChPhci09VPNpQn+9AJOMmDfYW/VWybs1HI6
+ HHebWPMrGK6kw==
 From: "Naveen N Rao (AMD)" <naveen@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>,
 	qemu-devel <qemu-devel@nongnu.org>
@@ -45,17 +45,17 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Roy Hopkins <roy.hopkins@randomman.co.uk>,
  Srikanth Aithal <srikanth.aithal@amd.com>,
  Kim Phillips <kim.phillips@amd.com>, Joerg Roedel <joro@8bytes.org>
-Subject: [PATCH v4 4/9] target/i386: SEV: Validate that SEV-ES is enabled when
- VMSA features are used
-Date: Wed, 20 May 2026 18:57:57 +0530
-Message-ID: <11e34ae3db91643e45e097404d1aa949a820aa0d.1779281646.git.naveen@kernel.org>
+Subject: [PATCH v4 2/9] target/i386: SEV: Ensure SEV features are only set
+ through qemu cli or IGVM
+Date: Wed, 20 May 2026 18:57:55 +0530
+Message-ID: <6939de99f13d7170af68b74e711eb9f03f32f682.1779281646.git.naveen@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <cover.1779281646.git.naveen@kernel.org>
 References: <cover.1779281646.git.naveen@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=naveen@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=naveen@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -77,37 +77,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SEV features in the VMSA are only meaningful for SEV-ES and SEV-SNP
-guests, as they control aspects of the encrypted guest state that are
-not relevant for basic SEV guests.
+In preparation for qemu being able to set SEV features through the cli,
+add a check to ensure that SEV features are not also set if using IGVM
+files.
 
-Add a check in check_sev_features() to ensure that SEV-ES or SEV-SNP is
-enabled when any SEV features are specified.
-
-Reviewed-by: Nikunj A Dadhania <nikunj@amd.com>
 Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
 Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
 ---
- target/i386/sev.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ target/i386/sev.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 9857921e5a55..196a70b35c51 100644
+index 22c350fe14b7..641a295c42b7 100644
 --- a/target/i386/sev.c
 +++ b/target/i386/sev.c
-@@ -527,6 +527,12 @@ static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
-             __func__);
-         return -1;
-     }
-+    if (sev_features && !sev_es_enabled()) {
-+        error_setg(errp,
-+                   "%s: SEV features require either SEV-ES or SEV-SNP to be enabled",
-+                   __func__);
-+        return -1;
-+    }
-     if (sev_features & ~sev_common->supported_sev_features) {
-         error_setg(errp,
-                    "%s: VMSA contains unsupported sev_features: %lX, "
+@@ -1908,6 +1908,16 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+          * as SEV_STATE_UNINIT.
+          */
+         if (x86machine->igvm) {
++            /*
++             * Test only the user-set SEV features by masking out
++             * SVM_SEV_FEAT_SNP_ACTIVE which is set by default.
++             */
++            if (sev_common->sev_features & ~SVM_SEV_FEAT_SNP_ACTIVE) {
++                error_setg(errp,
++                           "%s: SEV features can't be specified when using IGVM files",
++                           __func__);
++                return -1;
++            }
+             if (IGVM_CFG_GET_CLASS(x86machine->igvm)
+                     ->process(x86machine->igvm, machine, true, errp) == -1) {
+                 return -1;
 -- 
 2.54.0
 
