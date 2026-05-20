@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F199CD4F54
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F63CCD4F5E
 	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 04:38:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPYgQ-00012x-Mg; Wed, 20 May 2026 00:37:26 -0400
+	id 1wPYga-00017k-Mo; Wed, 20 May 2026 00:37:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wPYgK-00012R-Gy
- for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:22 -0400
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
+ id 1wPYgY-00016k-DZ
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:34 -0400
+Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wPYgI-0003lC-5X
- for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:19 -0400
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-7dcdd1b492eso4499907a34.1
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 21:37:17 -0700 (PDT)
+ id 1wPYgV-0003nG-Ib
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:33 -0400
+Received: by mail-ot1-x333.google.com with SMTP id
+ 46e09a7af769-7dcd689829eso3753259a34.3
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 21:37:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779251835; x=1779856635; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779251849; x=1779856649; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=7jM1jwUY6doQWw7cNzzrKAiwqt9SLepu9Iq35gPFd94=;
- b=SXtQUzxG6wJtX/CG0AtvEro6EUoqjKDQcid+g1rMkCyK0P7qRqcoFUWhdC0j5dr+Ab
- RZakdeg62c7flP3UDw3/8Q6NCDKhJ8NcdQNsZzBMicT2DrGYbUpE9A5Rqi3aQ5f0fYLO
- oSUtV+kPV7C6T4qRbXndnhrQCp8vM5aJ3lfwCCdrYoIx3Hy/6C4v6qOR+KG8KLiyuKtv
- uA3nIQaj78H0WHWu6igufcAUk72PNgGCOon+PeuPagcgCojuKRdmy3KXBvZiy96swWYI
- FEV06O9wF3KuyiqFqwNOfIPsRVuwks0K2WafjT9lztLo2czEPFPcIKsWNQgQ4pFKRxKp
- X8PA==
+ :reply-to; bh=7r2JZOP407stREDmdSr8VFs+49L5cEL0rjNOeyyPOaQ=;
+ b=U7eFU6uzq6m9j4vXKY7p2IZJsu5Wj0v4ImqQAhzftIqXdq+LYGYhbl6pfQLftbP5jN
+ 8HO0VJM+JJJ7YumQ5Ynm7kcWcSCzd+73NiCzVWn4TvN9HCnFSB4Aeu90eyk4K4UaIuIl
+ qOP3bP7Y9W3N0/p5IVpapD++kgS4AsyW6fL4Gln2dUNuRebh8I6FYMWoo/Rt/b2ebp8s
+ caWnrQZYZYJ+cKo+gEUbRVNHUe+YHEy/0NquBmJzwoIfJwvDsF7e4WnptXEoGdqjH9d6
+ +k0A5h+nt3hC7GDCJQt+mvlfrElrJn4/eKEtyDfi6SnJqA26efNP2HnMwUBUJfLpzRc5
+ NfmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779251835; x=1779856635;
+ d=1e100.net; s=20251104; t=1779251849; x=1779856649;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=7jM1jwUY6doQWw7cNzzrKAiwqt9SLepu9Iq35gPFd94=;
- b=q6kZyBm/bWcpiqjMhwv/RCISHPWocoSB9brQfa9y6KM69P0ATY8LckPOzOttQ175q1
- 4NGGiJGUf2vxN3kuZf0NjpVgk1qs9C3TWRpGh7uW5yXkPMe/BpUIwOgBOWyJaGr4xvTa
- iY8FPXsP6WMQ/8ShLUUePD2/n/RLbwDs0ida+GCu0lCAN11kcW6prmx5pNF2EsNnFzf5
- Feqt90CG4RoXp/wHBX1B6jEjMwKMMzGWn7XZc/9duqF2wLE/EtLUI82uoL1ZW5TShN0G
- dGx4DvG0+he4x+5lcqjCCwRq2u5/oM3liOUN+jyApqSwCrHF6LlWcGRMBpiveSiAPqnQ
- VSNg==
-X-Gm-Message-State: AOJu0Yy/me8Qz+cK1bRJNGBqznXC44RopAQbJ9n13nryY9DUfjxSJ8/Q
- hkSNBI2TxWA1ucBtTHd00TMCr6LLssxq8TAQHB0qciUUyHQpsu7l20lv
-X-Gm-Gg: Acq92OESVLTTHElkb9w4pvg429cdOZogV1bOfMylbGBDqtEFVI0wSEH6iMjfVjm8aTW
- 93ru+oUXzM/KOgKovubDlQXnqxY4wxrq9s6Fy0aLTYrlF+RWBK/LCf2NYjUyrmjkJRnnTbhJGn/
- H7pl1HSS4f9hhmaNNaimMZyDunePDw+b8G29TAD6gVAOhzdfDqmfvEbRLKCYRqhtKj0EDhqPfo7
- 6YRIyN89NX46EIsQ2bLc6Y7p6MsaIAd2jdvw4D0bIu4Ei4KjN4d+/5Z/hLaj2gEBm7PoP2yNYkz
- p2OJuHWAj0DZvtKLLuG5Q+4rYTcipaqcRDeB8RBq65/+jrdTCIWS5iDCbLS8MvFPPyTm2+/7iAM
- lNvvdQas8knRvV+PTO6ln07oMFu5fWmpCpMRMTKYzE65AfOCU73RnEn0lgoY/2ocO7nheq76TOs
- Rc+yq294b1LD81n0OXcu77E4AeJP2SNPr1oq4jL0Kuto6bFLOAc9LpDf4y5l9Hor67Dx05ysdRc
- K3LqnWjaX5YHNDnRCQgMOg0aJ4RctrT9wv/VUpOoSygITnAEsyqoL+cFYzyG5EOJfxPULLx1LsF
- hcs=
-X-Received: by 2002:a05:6830:658b:b0:7db:a297:9e62 with SMTP id
- 46e09a7af769-7e3f1030402mr16126360a34.8.1779251835551; 
- Tue, 19 May 2026 21:37:15 -0700 (PDT)
+ bh=7r2JZOP407stREDmdSr8VFs+49L5cEL0rjNOeyyPOaQ=;
+ b=N488U6CDPzuwHO0TcvrPM0tZHJdFu16O2UvBk9dXMhjTSCGc4fcekAl/W4Ltj1Vcga
+ dLsCSRFj3cD0HwwXJIWoS0mXeBn8vTJvf2G5y4KoyWx4/WkrH1CtF+XlIIpWt8qwbNyF
+ z4itSk7EB6D1OQ/GKY2h5YwIVoVtORybpCB5TRtay/F8MOA8GEHaylziqOuhxY7jYteh
+ kE7j7hGNbqekuc6d9aUhzIHJ5hKARG8b6FVv919PALT5c7R8m6FPpbClWkcyBOvrPQBe
+ DGGUcYg0qp32K0fkpVvUb85ZSMB0GxUBYj+QE/7AIHA4bI2kkjYqJJqpA+QZT2fyOJeS
+ LrKw==
+X-Gm-Message-State: AOJu0Yz3i4gqH9eOuVP58OygnchPUIX/QIRtYM5Fw2CwvxOv1IkHEgGl
+ ceJ+yGDn4nQbK380Ej91Z9HFiMrLTC+pUiRZorm3LzyCdh2KZJz/EV/u
+X-Gm-Gg: Acq92OFMHIKFt89nC23paCxV/0/Mp/cEtxSgCecgfIQWmLWGe2PoBOHKy7E3Ern7w1x
+ iUSdQjzPncBmPGtaLNGU/g9tkRQSCZxrb3k/MNBj2KxObhjznXaQb2WVU2TpFCXeti7hlkn1cSK
+ l3YHFeJY3yK+yuoThv+HqWg6lR+idNaY5+isoBnr5ghXc8fqNzF4C4zozyKXYuML3jPYE4Xq45K
+ BZwHkQnd2LKrAmTcQ3vMh7/Iorzp9M8ube0MZ4i8Aiq9zhokWt/xTo+xs+hnTxwG3ryteXzTLV/
+ vm0TC+d+yaGL43lDaRxx4oEIB4nbkYloYwOP1xqVqM8SCJFVFubEpt4IbjV1FxlbaI8XKyo587g
+ YxXXX+r/6kz+JK2KFaRNhvaz1m3997IbwZIuhb0aJsgveYEfVxwhOVWYC1zdVmSMQNXRUI+E3go
+ YOUVBCCATLJCQPKv+w8w/Onafi9JIKikKKQDS6ghHwR1eDZpuTNLChbZIlJW+0069G2dHN+zlZN
+ uNI18Dx3Zm+7NFHEKjFqR5jtu3tiI1fAh5e7ZQ9GPKomCN0UhvdnZPn1ojrn/GA/TcA
+X-Received: by 2002:a05:6830:4394:b0:7dc:de56:d75a with SMTP id
+ 46e09a7af769-7e4ea04ccbemr16680607a34.4.1779251848911; 
+ Tue, 19 May 2026 21:37:28 -0700 (PDT)
 Received: from mac.localdomain (184-96-146-19.hlrn.qwest.net. [184.96.146.19])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55bc4f04fsm11574634a34.27.2026.05.19.21.37.14
+ 46e09a7af769-7e55bc4f04fsm11574634a34.27.2026.05.19.21.37.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 May 2026 21:37:15 -0700 (PDT)
+ Tue, 19 May 2026 21:37:28 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Tue, 19 May 2026 22:36:55 -0600
-Subject: [PATCH v10 01/45] linux-user/mips: implement sysmips(MIPS_FLUSH_CACHE)
+Date: Tue, 19 May 2026 22:37:06 -0600
+Subject: [PATCH v10 12/45] target/mips: add Octeon ZCB and ZCBT
+ instructions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260519-mips-octeon-missing-insns-v2-v10-1-306f9edfe15b@gmail.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260519-mips-octeon-missing-insns-v2-v10-12-306f9edfe15b@gmail.com>
 References: <20260519-mips-octeon-missing-insns-v2-v10-0-306f9edfe15b@gmail.com>
 In-Reply-To: <20260519-mips-octeon-missing-insns-v2-v10-0-306f9edfe15b@gmail.com>
 To: qemu-devel@nongnu.org
@@ -85,8 +85,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
- envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x32c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::333;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x333.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -110,84 +110,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the target sysmips dispatcher and implement MIPS_FLUSH_CACHE as a
-successful no-op for linux-user.
+ZCB zeros the 128-byte cache block containing the base address. ZCBT has
+the same user-mode-visible memory effect for QEMU purposes.
 
-Self-modifying code is handled by QEMU's normal user-mode translation
-invalidation machinery, so the target ABI only needs the syscall command
-to be accepted.
+Model both forms with a single decodetree wildcard entry, align the
+address down to a 128-byte line, and store eight zero 128-bit chunks to
+guest memory.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
-Changes v2 -> v3:
-  - Split MIPS_FLUSH_CACHE out of the combined sysmips/MIPS_FIXADE patch.
-    (suggested by Richard Henderson)
----
- linux-user/mips/target_syscall.h   |  1 +
- linux-user/mips64/target_syscall.h |  1 +
- linux-user/syscall.c               | 17 +++++++++++++++++
- 3 files changed, 19 insertions(+)
+Changes v9 -> v10:
+  - Hoist the zero-store MemOp into a local constant.
+  - Add Philippe's Reviewed-by tag.
 
-diff --git a/linux-user/mips/target_syscall.h b/linux-user/mips/target_syscall.h
-index dfcdf320b7..3f36c1695a 100644
---- a/linux-user/mips/target_syscall.h
-+++ b/linux-user/mips/target_syscall.h
-@@ -10,6 +10,7 @@
- #define TARGET_MCL_ONFAULT 4
+Changes v8 -> v9:
+  - Use MO_ATOM_NONE for the 128-bit zero stores so TCG does not
+    require unavailable 128-bit atomic stores on hosts that lack them.
+
+Changes v7 -> v8:
+  - Fold the ZCBT wildcard decode into the ZCB patch so the series does not
+    add a ZCB-only decode and rewrite it in the next patch.
+
+Changes v6 -> v7:
+  - Use 128-bit zero stores with MO_128 instead of sixteen 64-bit stores.
+    (suggested by Philippe Mathieu-Daudé)
+  - Fold ZCB and ZCBT into a single decodetree wildcard entry instead of
+    using a duplicate entry with a selector comment.  (suggested by Philippe
+    Mathieu-Daudé)
+
+Changes v2 -> v3:
+  - Split ZCB/ZCBT out of the combined Octeon arithmetic and memory
+    instruction patch.  (requested by Richard Henderson)
+---
+ target/mips/tcg/octeon.decode      |  3 +++
+ target/mips/tcg/octeon_translate.c | 27 +++++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+)
+
+diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+index d77717cd50..01ed3b50be 100644
+--- a/target/mips/tcg/octeon.decode
++++ b/target/mips/tcg/octeon.decode
+@@ -49,6 +49,9 @@ SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
+ SAA          011100 ..... ..... 00000 00000 011000 @saa
+ SAAD         011100 ..... ..... 00000 00000 011001 @saa
  
- #define TARGET_FORCE_SHMLBA
-+#define TARGET_SYSMIPS_FLUSH_CACHE     3
- 
- static inline abi_ulong target_shmlba(CPUMIPSState *env)
- {
-diff --git a/linux-user/mips64/target_syscall.h b/linux-user/mips64/target_syscall.h
-index 9135bf5e8b..20ea7c6ab9 100644
---- a/linux-user/mips64/target_syscall.h
-+++ b/linux-user/mips64/target_syscall.h
-@@ -10,6 +10,7 @@
- #define TARGET_MCL_ONFAULT 4
- 
- #define TARGET_FORCE_SHMLBA
-+#define TARGET_SYSMIPS_FLUSH_CACHE     3
- 
- static inline abi_ulong target_shmlba(CPUMIPSState *env)
- {
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index d3d9fffb54..73f09bb775 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -6630,6 +6630,19 @@ static abi_long do_prctl_syscall_user_dispatch(CPUArchState *env,
-     }
- }
- 
-+#ifdef TARGET_NR_sysmips
-+static abi_long do_sysmips(CPUArchState *env, abi_long cmd, abi_long arg1,
-+                           abi_long arg2)
-+{
-+    switch (cmd) {
-+    case TARGET_SYSMIPS_FLUSH_CACHE:
-+        return 0;
-+    default:
-+        return -TARGET_EINVAL;
-+    }
-+}
-+#endif
++&zcb         base
++ZCB          011100 base:5 00000 00000 1110- 011111 &zcb
 +
- static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
-                          abi_long arg3, abi_long arg4, abi_long arg5)
- {
-@@ -12102,6 +12115,10 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-     case TARGET_NR_prctl:
-         return do_prctl(cpu_env, arg1, arg2, arg3, arg4, arg5);
-         break;
-+#ifdef TARGET_NR_sysmips
-+    case TARGET_NR_sysmips:
-+        return do_sysmips(cpu_env, arg1, arg2, arg3);
-+#endif
- #ifdef TARGET_NR_arch_prctl
-     case TARGET_NR_arch_prctl:
-         return do_arch_prctl(cpu_env, arg1, arg2);
+ &lx          base index rd
+ @lx          ...... base:5 index:5 rd:5 ...... ..... &lx
+ LWX          011111 ..... ..... ..... 00000 001010 @lx
+diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+index d3dfef2e0c..b5ebad9804 100644
+--- a/target/mips/tcg/octeon_translate.c
++++ b/target/mips/tcg/octeon_translate.c
+@@ -176,6 +176,33 @@ static bool trans_saa(DisasContext *ctx, arg_saa *a, MemOp mop)
+ 
+ TRANS(SAA,  trans_saa, MO_32);
+ TRANS(SAAD, trans_saa, MO_64);
++
++static bool trans_ZCB(DisasContext *ctx, arg_ZCB *a)
++{
++    TCGv_i64 addr = tcg_temp_new_i64();
++    TCGv_i64 line = tcg_temp_new_i64();
++    TCGv_i64 zero64 = tcg_constant_i64(0);
++    TCGv_i128 zero128 = tcg_temp_new_i128();
++    const MemOp mop = mo_endian(ctx) | MO_128 | MO_ATOM_NONE;
++
++    gen_base_offset_addr(ctx, addr, a->base, 0);
++    tcg_gen_concat_i64_i128(zero128, zero64, zero64);
++
++    /*
++     * QEMU models ZCB/ZCBT as zeroing the containing 128-byte cache line
++     * in guest memory.
++     */
++    tcg_gen_andi_i64(line, addr, ~0x7fULL);
++
++    for (int i = 0; i < 8; i++) {
++        TCGv_i64 slot = tcg_temp_new_i64();
++
++        tcg_gen_addi_i64(slot, line, i * 16);
++        tcg_gen_qemu_st_i128(zero128, slot, ctx->mem_idx, mop);
++    }
++
++    return true;
++}
+ TRANS(LBX,  trans_lx, MO_SB);
+ TRANS(LBUX, trans_lx, MO_UB);
+ TRANS(LHX,  trans_lx, MO_SW);
 
 -- 
 2.54.0
