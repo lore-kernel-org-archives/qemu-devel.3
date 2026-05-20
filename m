@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9F80CD4F5E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD445CD5BAA
 	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 04:39:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPYgZ-00017H-Kr; Wed, 20 May 2026 00:37:35 -0400
+	id 1wPYgs-0001Fh-V4; Wed, 20 May 2026 00:37:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wPYgT-00013p-7c
- for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:30 -0400
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
+ id 1wPYgq-0001EY-EQ
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:52 -0400
+Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wPYgO-0003m5-Qa
- for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:28 -0400
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-7dd73b7c757so2132729a34.0
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 21:37:22 -0700 (PDT)
+ id 1wPYgn-0003rj-NF
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:52 -0400
+Received: by mail-ot1-x331.google.com with SMTP id
+ 46e09a7af769-7e363c6141dso3668625a34.2
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 21:37:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779251841; x=1779856641; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779251867; x=1779856667; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=iNGUkUQb5J29ukIe0u9qyTma9foPdK9x44s0U5JWP3E=;
- b=LkCyVf+COB5QTtc1waT4R/aZ+rx6nN1p66moMX4skVcv4z+i1r8gHQgtPBvrBImkov
- h46v+4qX/gbXh8sQ2+XcNoL9ZSd9qF7uOAAhWQqjVjwNfyj52KI7L/wnAfmvCGKWLowC
- Kv0oTcvRAHDeYFEMBsmobDxr09M7cCZOr+3cSzTsEklDWl9kZzNtUe4AkA9whyeq7I+V
- PsdOO2H/HaIyOjZSepl04BbgXftLE63l6tv75zKGN3MBADvo6jBXcIXuWK36BWC4xyJm
- qcb1LyeakAlDV5idAIuLvGdgUvttbT3hNuTM9Thko2lBGw0mSMBSUOvJ2GyAqOgeaEE/
- 8BNA==
+ :reply-to; bh=VvOEYbYQx4yLqf1C5vZlAY/usIq9VrwMWKsAkZ+uj44=;
+ b=fdQNTy2YMh+84Rhog/WFrLc1WPqRTHROjGn43+UfV6dTsx7tCFv9dNPanp+n+zI/Hc
+ vCN6XwgvqnQT9/x1Uq27xE+kiT+Bg3cpfollY0RE/WZSEpg1mElciWC3Ad2OpOIPnhq0
+ gA/KYcymzEyDsW11pH0GtminCJX+rCGIlE8WM+J1RuajJPB1gE6TI1WGs/S4Wey+uyP0
+ vJdSnyq4R5MGNMztixNVd3MmCaxJqsKAzfLQapbn0fGD9llTIDSmRECN8++nVT5Oxsip
+ 6lx4C+tfWiODKuzRN5qdMt2WK293HjdlZ53k/XnARKJkr5rg4Ybpn66gOKfo96PzJeVT
+ oBiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779251841; x=1779856641;
+ d=1e100.net; s=20251104; t=1779251867; x=1779856667;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=iNGUkUQb5J29ukIe0u9qyTma9foPdK9x44s0U5JWP3E=;
- b=O04nRr1pobyTMi65t5+WLecOzFEGfaIhb0y2V2ZTuZW/ADpD4JpvdFa84rHp9eFIa8
- r+fQBmBNgQkGvIiibVePY8XsiCDPX+vIdHHdKVM4kJk6jIXQbkpmZUNGts09yNEPk/TQ
- uhBbl+Qh7PUAUy+vRsYN4/Yu1iYtePPXL7GwGRm7UxFyDPE7Z0WrZDgqsPooZ9pjCOin
- 6TOFGADHUIBw8tKsMG/mzsPZrlilLRQkxHfS8w9W5NXAEWEN9dR41tduCH4FwgISEIg0
- zW85XgUM+THBvR1sUjfqYOA2bQJQvB9YnLqDTFScVoJajH12OvGdZ9xjWbYZoXfCgNtj
- LQgg==
-X-Gm-Message-State: AOJu0YyBaEwb5aHJC8F9oMAuG2sd1Jo9Bwe0GqFbG/Hyo6td+Jt0LPXB
- 6NCEfVhEif5GDmp5RndP7K5dqj65v3CjwPcdi3vBOIj2mhE0Ztx6DRfS
-X-Gm-Gg: Acq92OHGhbVwePqhtAAaX7tY1+wyHF1N0Csywd01oXHvy1cgm/a21slZos1KV52bYUb
- atWsZsiC0yzZj3Ygj68FOADnvGXoviI2ttfKSowXz2CPM17pg2fTTs8czIMKsUTPG4s3X1Wtcqk
- w2LzNpdW190jFeZGNMpjNVy0U+YkMGt7SEMG1b0aMd3BL8KYbBJTxZ6rp1ytjxEdPfuegVy/lND
- fjK5eEK4pFZml0vvOicIVIZvAWykYYlz8TiTH6xy4SWFMQ7AOMjRhdJfhnDoaVlz2OVVwDx2Sx1
- jAoOSm2WDeY7WTofOWF+q/eUSNoVE/9fSucCeJCFXQVMYT4VUWdgPym+JRwlifeqeaZURVILcNU
- o86j82jfbxABD995k4zz3m6Fp2tDqgjYvvIfmamAPQ256G6D0WVuSn/qK27xSGECAXJQFsaIshi
- M11W1hD9WJqWaPWmjVSjWIHH+kUnx7l2vItZbAaLTBqf2P5Tf4/nTCHPOu3U+Y2Q1n/7gemdgnf
- HhAM/lM1i7dwScBMJz4J9GKhsramAdQl0ZZdcNE769MLWetiGT8Wm6LTSNKnbK6d5Kt
-X-Received: by 2002:a05:6830:a8d:b0:7e5:68c3:6246 with SMTP id
- 46e09a7af769-7e568c3630fmr8921172a34.10.1779251841647; 
- Tue, 19 May 2026 21:37:21 -0700 (PDT)
+ bh=VvOEYbYQx4yLqf1C5vZlAY/usIq9VrwMWKsAkZ+uj44=;
+ b=KE3xS0cyBBreJQcm41OZeIj++2Q+63uJ75l18o9kSMC26oEynwlaCr16pLLKRjZQv2
+ O+u8tcrn2Cd0jqOktTSTw8R1FdSJIZ4PZANCHpaG5PsOtLMKhYlO5QfgWgeZtDo9lrcG
+ xQP7KkuqZwMP3fM2zSgzMXdbBN3msvwhId6FVW1lmG3ItbQTy8OpYu3pOTX0QwVtHLNb
+ sgqlwNjZqZzedp11Y4QSbaAOE5IAH786gziaiEr7/4PAUzONQG9+J6rZEanIMoTnclB+
+ NGjRxYVp1nn7FTC6eVqFk7k7Fe+i7l0ZmW7yI2vgaVqzgdlw3MlUoxhXpCrrENKA9/N5
+ /7gg==
+X-Gm-Message-State: AOJu0YyjpKhRph4qP+1t6q9RPglGpjU+M7YGnCn+qktg+U/ezbfComOo
+ yObkaZW6ORLl3ENEqlYQlOcIq6uH+6BDYrff48kmd74oO+3bRflofry5
+X-Gm-Gg: Acq92OFHx/GmP4q++sBBczuoWkktTA/OuF/+zv9+LAtnc+3aGaMtCkXOq8QPNbA5Lgk
+ fYZ5AE89q6HwHXBJVpCVLJFFVpgM/DhlxY50IFLrVDJ+KTxxzneoIwF0lNxHzWNNs6OpF3RsboV
+ ci1RLZ1Ejkn/fUdVaeJc8+626qzYUWgkplO18jZo0aGZOCBwAGF/r1MnvaR9qnGgZPub5lD3mxG
+ WeU3YiJcurFbC6vHsBsSuPFSMArJDxtJoKMtaBTHEyt1XNb7r5W4MbTZ1AxZFddKmUrQgDR5lhl
+ ay0Oq/Zk1DwToPfgqRTKzyuR7Sk//3AUkoqwpacgDLU57dpvyZtaqUamHj7Rac5SvUp980ViqWM
+ V1UlFzIrJzhxbw/s+/Zc/2WkSvhwhWRT1+TUy4g+D6WinlJ4fWCuvtHDlEcaN7aL5kqiXfo3kS9
+ nZc3ZmgmDGI1J+Wk7SM3uKNGFg3n5vLFfxUnXaZN7I+IAtOuy84SXuBdHatvI5sWmGSqUtN+/Uv
+ J7cI3zMz2oZAM2XEBmSM8euyPZM84x1BkovpE8IfSBkVOp1KsKQZqvk+Sx7lnIGZiOVuR4GYNl3
+ DTs=
+X-Received: by 2002:a05:6830:d11:b0:7d7:4002:1f21 with SMTP id
+ 46e09a7af769-7e4f2b6c3a7mr15243594a34.20.1779251867494; 
+ Tue, 19 May 2026 21:37:47 -0700 (PDT)
 Received: from mac.localdomain (184-96-146-19.hlrn.qwest.net. [184.96.146.19])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55bc4f04fsm11574634a34.27.2026.05.19.21.37.20
+ 46e09a7af769-7e55bc4f04fsm11574634a34.27.2026.05.19.21.37.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 May 2026 21:37:21 -0700 (PDT)
+ Tue, 19 May 2026 21:37:47 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Tue, 19 May 2026 22:37:00 -0600
-Subject: [PATCH v10 06/45] target/mips: split Octeon SEQ/SNE decode
+Date: Tue, 19 May 2026 22:37:22 -0600
+Subject: [PATCH v10 28/45] target/mips: add Octeon SHA3 COP2 helpers
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260519-mips-octeon-missing-insns-v2-v10-6-306f9edfe15b@gmail.com>
+Message-Id: <20260519-mips-octeon-missing-insns-v2-v10-28-306f9edfe15b@gmail.com>
 References: <20260519-mips-octeon-missing-insns-v2-v10-0-306f9edfe15b@gmail.com>
 In-Reply-To: <20260519-mips-octeon-missing-insns-v2-v10-0-306f9edfe15b@gmail.com>
 To: qemu-devel@nongnu.org
@@ -84,8 +85,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
- envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x32c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x331.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -109,139 +110,280 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Decode the equality and inequality forms as explicit SEQ/SNE and
-SEQI/SNEI instructions rather than using shared generated SEQNE/SEQNEI
-entries.
+Add the Octeon SHA3 register-window state and helper operations. Keep the
+shared HSH/SHA3/SHA512 write path coherent, model the dedicated 25-lane
+Keccak state, and implement the Keccak-f[1600] permutation for the
+STARTOP selector.
 
-The explicit decoder names match the architectural mnemonics, which makes
-the translator entry points and trace/debug output easier to correlate
-with the instruction set.
+The shared selector window still uses explicit selector-position
+arithmetic internally because multiple COP2 engines alias the same numeric
+window. Individual DMFC2/DMTC2 instruction decode stays outside the helper
+implementation.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
+Changes v8 -> v9:
+  - Split SHA3 selector operations into their own COP2 helper patch.
+  - Replace generic selector dispatch with per-operation SHA3 helpers.
+  - Use helper-local selector constants for shared-window position logic.
+  - Add matching helper.h declarations with the helper implementation.
+
 Changes v1 -> v2:
-  - Split the SEQ/SNE decode cleanup out of the Octeon arithmetic
-    instruction patch.  (suggested by Philippe Mathieu-Daudé)
+  - Use switch ranges and g_assert_not_reached() for SHA3 selector
+    position decoding.  (suggested by Philippe Mathieu-Daudé)
+  - Add selector dispatch updates in octeon_translate.c after moving
+    COP2 decode out of translate.c.  (suggested by Philippe
+    Mathieu-Daudé)
 
-Changes v2 -> v3:
-  - Remove the decoded ne field now that the instructions are split.
-  - Reuse @r3 for SEQ/SNE and pass the TCG condition into a shared
-    translator helper.  (suggested by Richard Henderson)
+Changes v5 -> v6:
+  - Rename SHA3 DAT15 selector aliases with MF/MT direction suffixes.
 ---
- target/mips/tcg/octeon.decode      |  7 +++--
- target/mips/tcg/octeon_translate.c | 52 ++++++++++++++++++++------------------
- 2 files changed, 32 insertions(+), 27 deletions(-)
+ target/mips/helper.h            |  22 +++++
+ target/mips/tcg/octeon_crypto.c | 172 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 194 insertions(+)
 
-diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index 102a05860d..a2bfd0751d 100644
---- a/target/mips/tcg/octeon.decode
-+++ b/target/mips/tcg/octeon.decode
-@@ -30,6 +30,7 @@ BBIT         11 set:1 . 10 rs:5 ..... offset:s16 p=%bbit_p
- # SNEI rt, rs, immediate
+diff --git a/target/mips/helper.h b/target/mips/helper.h
+index 7767556f79..31363fb8dd 100644
+--- a/target/mips/helper.h
++++ b/target/mips/helper.h
+@@ -27,6 +27,7 @@ DEF_HELPER_FLAGS_4(rotx, TCG_CALL_NO_RWG_SE, tl, tl, i32, i32, i32)
  
- @r3          ...... rs:5 rt:5 rd:5 ..... ......
-+&cmpi        rs rt imm
- %bitfield_p  0:1 6:5
- @bitfield    ...... rs:5 rt:5 lenm1:5 ..... ..... . p=%bitfield_p
+ /* Octeon COP2 selector operation helpers. */
+ DEF_HELPER_1(octeon_cp2_mf_crc_iv_reflect, i64, env)
++DEF_HELPER_1(octeon_cp2_mf_sha3_dat24, i64, env)
+ DEF_HELPER_2(octeon_cp2_mt_crc_write_iv_reflect, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_crc_write_byte, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_crc_write_half, void, env, i64)
+@@ -42,6 +43,27 @@ DEF_HELPER_2(octeon_cp2_mt_gfm_xor0_reflect, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_gfm_xor0, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_gfm_xormul1_reflect, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_gfm_xormul1, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sha3_dat24, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sha3_dat15, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sha3_xordat0, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sha3_xordat1, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sha3_xordat2, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sha3_xordat3, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sha3_xordat4, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sha3_xordat5, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sha3_xordat6, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sha3_xordat7, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sha3_xordat8, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sha3_xordat9, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sha3_xordat10, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sha3_xordat11, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sha3_xordat12, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sha3_xordat13, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sha3_xordat14, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sha3_xordat15, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sha3_xordat16, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sha3_xordat17, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sha3_startop, void, env, i64)
  
-@@ -38,8 +39,10 @@ DMUL         011100 ..... ..... ..... 00000 000011 @r3
- EXTS         011100 ..... ..... ..... ..... 11101 . @bitfield
- CINS         011100 ..... ..... ..... ..... 11001 . @bitfield
- POP          011100 rs:5 00000 rd:5 00000 10110 dw:1
--SEQNE        011100 rs:5 rt:5 rd:5 00000 10101 ne:1
--SEQNEI       011100 rs:5 rt:5 imm:s10 10111 ne:1
-+SEQ          011100 ..... ..... ..... 00000 101010 @r3
-+SNE          011100 ..... ..... ..... 00000 101011 @r3
-+SEQI         011100 rs:5 rt:5 imm:s10 101110 &cmpi
-+SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
+ /* microMIPS functions */
+ DEF_HELPER_4(lwm, void, env, tl, tl, i32)
+diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
+index d59bd8fdac..010baf3664 100644
+--- a/target/mips/tcg/octeon_crypto.c
++++ b/target/mips/tcg/octeon_crypto.c
+@@ -16,6 +16,8 @@
+ #include "qemu/bitops.h"
+ #include "qemu/host-utils.h"
  
- &lx          base index rd
- @lx          ...... base:5 index:5 rd:5 ...... ..... &lx
-diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index b7531653e5..5497ddfb10 100644
---- a/target/mips/tcg/octeon_translate.c
-+++ b/target/mips/tcg/octeon_translate.c
-@@ -106,52 +106,54 @@ static bool trans_POP(DisasContext *ctx, arg_POP *a)
-     return true;
- }
- 
--static bool trans_SEQNE(DisasContext *ctx, arg_SEQNE *a)
-+static bool do_seq_sne(DisasContext *ctx, const arg_decode_ext_octeon1 *a,
-+                       TCGCond cond)
++#define OCTEON_SHA3_DAT15 15
++
+ static inline uint32_t octeon_crc_reflect32_by_byte(uint32_t v)
  {
-     TCGv_i64 t0, t1;
- 
--    if (a->rd == 0) {
--        /* nop */
--        return true;
--    }
--
-     t0 = tcg_temp_new_i64();
-     t1 = tcg_temp_new_i64();
- 
-     gen_load_gpr(t0, a->rs);
-     gen_load_gpr(t1, a->rt);
- 
--    if (a->ne) {
--        tcg_gen_setcond_i64(TCG_COND_NE, cpu_gpr[a->rd], t1, t0);
--    } else {
--        tcg_gen_setcond_i64(TCG_COND_EQ, cpu_gpr[a->rd], t1, t0);
--    }
-+    tcg_gen_setcond_i64(cond, t0, t1, t0);
-+    gen_store_gpr(t0, a->rd);
-     return true;
+     return bswap32(revbit32(v));
+@@ -166,11 +168,129 @@ static void octeon_gfm_mul_reflect(MIPSOcteonCryptoState *crypto)
+     crypto->gfm_reflect_resinp[1] = revbit64(out[1]);
  }
  
--static bool trans_SEQNEI(DisasContext *ctx, arg_SEQNEI *a)
-+static bool trans_SEQ(DisasContext *ctx, arg_SEQ *a)
- {
--    TCGv_i64 t0;
-+    return do_seq_sne(ctx, a, TCG_COND_EQ);
-+}
- 
--    if (a->rt == 0) {
--        /* nop */
--        return true;
--    }
-+static bool trans_SNE(DisasContext *ctx, arg_SNE *a)
++static const uint64_t octeon_sha3_round_constants[24] = {
++    0x0000000000000001ULL, 0x0000000000008082ULL,
++    0x800000000000808aULL, 0x8000000080008000ULL,
++    0x000000000000808bULL, 0x0000000080000001ULL,
++    0x8000000080008081ULL, 0x8000000000008009ULL,
++    0x000000000000008aULL, 0x0000000000000088ULL,
++    0x0000000080008009ULL, 0x000000008000000aULL,
++    0x000000008000808bULL, 0x800000000000008bULL,
++    0x8000000000008089ULL, 0x8000000000008003ULL,
++    0x8000000000008002ULL, 0x8000000000000080ULL,
++    0x000000000000800aULL, 0x800000008000000aULL,
++    0x8000000080008081ULL, 0x8000000000008080ULL,
++    0x0000000080000001ULL, 0x8000000080008008ULL,
++};
++
++static const uint8_t octeon_sha3_rotation_constants[24] = {
++     1,  3,  6, 10, 15, 21, 28, 36, 45, 55,  2, 14,
++    27, 41, 56,  8, 25, 43, 62, 18, 39, 61, 20, 44,
++};
++
++static const uint8_t octeon_sha3_pi_lanes[24] = {
++    10,  7, 11, 17, 18,  3,  5, 16,  8, 21, 24,  4,
++    15, 23, 19, 13, 12,  2, 20, 14, 22,  9,  6,  1,
++};
++
++static uint64_t octeon_sha3_reg_to_lane(uint64_t value)
 +{
-+    return do_seq_sne(ctx, a, TCG_COND_NE);
-+}
- 
--    t0 = tcg_temp_new_i64();
-+static bool do_seqi_snei(DisasContext *ctx, const arg_cmpi *a, TCGCond cond)
-+{
-+    TCGv_i64 t0;
- 
-+    t0 = tcg_temp_new_i64();
-     gen_load_gpr(t0, a->rs);
- 
--    /* Sign-extend to 64 bit value */
--    target_ulong imm = a->imm;
--    if (a->ne) {
--        tcg_gen_setcondi_i64(TCG_COND_NE, cpu_gpr[a->rt], t0, imm);
--    } else {
--        tcg_gen_setcondi_i64(TCG_COND_EQ, cpu_gpr[a->rt], t0, imm);
--    }
-+    tcg_gen_setcondi_i64(cond, t0, t0, a->imm);
-+    gen_store_gpr(t0, a->rt);
-     return true;
- }
- 
-+static bool trans_SEQI(DisasContext *ctx, arg_SEQI *a)
-+{
-+    return do_seqi_snei(ctx, a, TCG_COND_EQ);
++    /*
++     * The COP2 register interface is consumed by big-endian MIPS code as
++     * 64-bit register values, while Keccak lanes are byte-little-endian.
++     */
++    return bswap64(value);
 +}
 +
-+static bool trans_SNEI(DisasContext *ctx, arg_SNEI *a)
++static uint64_t octeon_sha3_lane_to_reg(uint64_t value)
 +{
-+    return do_seqi_snei(ctx, a, TCG_COND_NE);
++    return bswap64(value);
 +}
 +
- static bool trans_lx(DisasContext *ctx, arg_lx *a, MemOp mop)
++static uint64_t octeon_sha3_get_lane(MIPSOcteonCryptoState *crypto,
++                                     unsigned int index)
++{
++    if (index < 16) {
++        return octeon_sha3_reg_to_lane(crypto->hsh_dat[index]);
++    }
++    if (index < 24) {
++        return octeon_sha3_reg_to_lane(crypto->hsh_iv[index - 16]);
++    }
++    return octeon_sha3_reg_to_lane(crypto->sha3_dat24);
++}
++
++static void octeon_sha3_set_lane(MIPSOcteonCryptoState *crypto,
++                                 unsigned int index, uint64_t value)
++{
++    value = octeon_sha3_lane_to_reg(value);
++    if (index < 16) {
++        crypto->hsh_dat[index] = value;
++    } else if (index < 24) {
++        crypto->hsh_iv[index - 16] = value;
++    } else {
++        crypto->sha3_dat24 = value;
++    }
++}
++
++static void octeon_sha3_permute(MIPSOcteonCryptoState *crypto)
++{
++    uint64_t state[25];
++
++    for (int i = 0; i < 25; i++) {
++        state[i] = octeon_sha3_get_lane(crypto, i);
++    }
++
++    for (int round = 0; round < 24; round++) {
++        uint64_t bc[5];
++        uint64_t temp;
++
++        for (int x = 0; x < 5; x++) {
++            bc[x] = state[x] ^ state[5 + x] ^ state[10 + x] ^
++                    state[15 + x] ^ state[20 + x];
++        }
++        for (int x = 0; x < 5; x++) {
++            temp = bc[(x + 4) % 5] ^ rol64(bc[(x + 1) % 5], 1);
++            for (int y = 0; y < 25; y += 5) {
++                state[y + x] ^= temp;
++            }
++        }
++
++        temp = state[1];
++        for (int i = 0; i < 24; i++) {
++            uint64_t next = state[octeon_sha3_pi_lanes[i]];
++
++            state[octeon_sha3_pi_lanes[i]] =
++                rol64(temp, octeon_sha3_rotation_constants[i]);
++            temp = next;
++        }
++
++        for (int y = 0; y < 25; y += 5) {
++            for (int x = 0; x < 5; x++) {
++                bc[x] = state[y + x];
++            }
++            for (int x = 0; x < 5; x++) {
++                state[y + x] = bc[x] ^ ((~bc[(x + 1) % 5]) & bc[(x + 2) % 5]);
++            }
++        }
++
++        state[0] ^= octeon_sha3_round_constants[round];
++    }
++
++    for (int i = 0; i < 25; i++) {
++        octeon_sha3_set_lane(crypto, i, state[i]);
++    }
++}
++
+ uint64_t helper_octeon_cp2_mf_crc_iv_reflect(CPUMIPSState *env)
  {
-     gen_lx(ctx, a->rd, a->base, a->index, mop);
+     return octeon_crc_reflect32_by_byte(env->octeon_crypto.crc_iv);
+ }
+ 
++uint64_t helper_octeon_cp2_mf_sha3_dat24(CPUMIPSState *env)
++{
++    return env->octeon_crypto.sha3_dat24;
++}
++
+ void helper_octeon_cp2_mt_gfm_xor0_reflect(CPUMIPSState *env, uint64_t value)
+ {
+     env->octeon_crypto.gfm_reflect_resinp[0] ^= value;
+@@ -205,6 +325,58 @@ void helper_octeon_cp2_mt_gfm_xormul1(CPUMIPSState *env, uint64_t value)
+     }
+ }
+ 
++void helper_octeon_cp2_mt_sha3_dat24(CPUMIPSState *env, uint64_t value)
++{
++    env->octeon_crypto.sha3_dat24 = value;
++}
++
++void helper_octeon_cp2_mt_sha3_dat15(CPUMIPSState *env, uint64_t value)
++{
++    env->octeon_crypto.hsh_dat[OCTEON_SHA3_DAT15] = value;
++}
++
++static void octeon_sha3_xordat(MIPSOcteonCryptoState *crypto,
++                               unsigned int index, uint64_t value)
++{
++    uint64_t lane = octeon_sha3_get_lane(crypto, index);
++
++    octeon_sha3_set_lane(crypto, index,
++                         lane ^ octeon_sha3_reg_to_lane(value));
++}
++
++#define OCTEON_SHA3_XORDAT_HELPER(N) \
++void helper_octeon_cp2_mt_sha3_xordat ## N(CPUMIPSState *env, uint64_t value) \
++{ \
++    octeon_sha3_xordat(&env->octeon_crypto, N, value); \
++}
++OCTEON_SHA3_XORDAT_HELPER(0)
++OCTEON_SHA3_XORDAT_HELPER(1)
++OCTEON_SHA3_XORDAT_HELPER(2)
++OCTEON_SHA3_XORDAT_HELPER(3)
++OCTEON_SHA3_XORDAT_HELPER(4)
++OCTEON_SHA3_XORDAT_HELPER(5)
++OCTEON_SHA3_XORDAT_HELPER(6)
++OCTEON_SHA3_XORDAT_HELPER(7)
++OCTEON_SHA3_XORDAT_HELPER(8)
++OCTEON_SHA3_XORDAT_HELPER(9)
++OCTEON_SHA3_XORDAT_HELPER(10)
++OCTEON_SHA3_XORDAT_HELPER(11)
++OCTEON_SHA3_XORDAT_HELPER(12)
++OCTEON_SHA3_XORDAT_HELPER(13)
++OCTEON_SHA3_XORDAT_HELPER(14)
++OCTEON_SHA3_XORDAT_HELPER(15)
++OCTEON_SHA3_XORDAT_HELPER(16)
++OCTEON_SHA3_XORDAT_HELPER(17)
++#undef OCTEON_SHA3_XORDAT_HELPER
++
++void helper_octeon_cp2_mt_sha3_startop(CPUMIPSState *env, uint64_t value)
++{
++    MIPSOcteonCryptoState *crypto = &env->octeon_crypto;
++
++    (void)value;
++    octeon_sha3_permute(crypto);
++}
++
+ void helper_octeon_cp2_mt_crc_write_iv_reflect(CPUMIPSState *env,
+                                                uint64_t value)
+ {
 
 -- 
 2.54.0
