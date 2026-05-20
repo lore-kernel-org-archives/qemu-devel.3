@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5FBBCD5BAB
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 18:33:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1B3FCD5BA4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 18:33:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPlcV-0004fC-Ok; Wed, 20 May 2026 14:26:17 -0400
+	id 1wPlZ3-0007GN-Hv; Wed, 20 May 2026 14:22:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPlc5-0003zh-Sc
- for qemu-devel@nongnu.org; Wed, 20 May 2026 14:25:50 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ id 1wPlYm-0006si-Hh
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 14:22:24 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPlc3-00021F-S5
- for qemu-devel@nongnu.org; Wed, 20 May 2026 14:25:49 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-c828daf83e2so2454062a12.2
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 11:25:47 -0700 (PDT)
+ id 1wPlYk-0000Un-H6
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 14:22:24 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-3697f25d26eso2679828a91.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 11:22:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779301546; x=1779906346; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779301341; x=1779906141; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rijKST64WZpELrwBb6/Q5we+Vkq4bBbLxG5KgrYkJ+U=;
- b=axyU+hdiZ/CLJGixeMVhStR0+ra5iADi8zjKl5EmgFrSzbQID1aNecdOMM3fG9ozWp
- zokfZCbdAl+rlDFe0x1vkX9S6rWi+/yp6IwhEbZ7PwZcMT7BlLKOrhrbWkRl3qB63skz
- l+CSgiRjJ7LwvrDytFGTBflRqcm8oqw5Im19c9yEv9KlFIzASbFsrOMXiCcsVooSVsO/
- zTBkE55g81/pwNjY4fwGf0Tv5r46P41RkoeWfuVcYEkpHkGJZWFAQnFUBFWSgUPJD+mG
- 36kTkYGu5p1fga86qUecEZ6rM+bu5MYWQiL7uynJ/dTKXPCuQr8UTBjiRjHot7tg6jP4
- ee4g==
+ bh=RgEwye1A/H/zER4vq4nD2iWWcMLX2i9wMfampUnYlVM=;
+ b=oo6RFte0wdn5iVdGvdzksGp9vXbHzatLM424balUatPMIiTFRgZA/ew2yH+JWPaWWH
+ NGOpifu+qtjbUQSK1PVLMijHu0/Kbfj+0rL5JzuV4uvvtM+XfgKT47NrzY8+3tcbF/bJ
+ qv374ZSmN1XLL13GvnVk1S7Oql6s8eh4ZT4pQTleOAeYUJVjgqq5Vbgwqn5cNDLY/bbV
+ yj6RMVq5zSrZktqNMyz0UVkCRVzW+CXdBWVHTKCZ1jNYrstlZjrngj/mFLHS0/T7hbi6
+ E/ppYkYtY80XnEWwgwuQCLRwhaYhBSd+pu0KJymESXY2yR9SpE7x645iwC1w8B1xqeU+
+ uDPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779301546; x=1779906346;
+ d=1e100.net; s=20251104; t=1779301341; x=1779906141;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=rijKST64WZpELrwBb6/Q5we+Vkq4bBbLxG5KgrYkJ+U=;
- b=hvHiv+SKHXfMB29UfqZG5hteW30lX56AN647esNnPVYnA55ztUzJB8ZxLeWK+C1XVt
- kWk7D5x4EgEMbl75A1iuTudutilmJalugn7aTX0eoRFtsJS1VigttSYpHxlFxM8l21aP
- 0O2Buz6a9ZpiTqDeeG/NKLGMkAsZu9Lh1dwF2Ug5S7I3IvR8j20xxHVZAihBviy160Fr
- eaN16L6eZGD31kex0Zgt+d+XyGE1IfDNAadudtwKaMoSWs3Jh9r6ItZCAEq/9NlY1UYz
- HFxuEdgFo4VNRL627YEs8x/meUSY5gXe1Ol7UxgQX0oJB7QkQdEoUQja7vsGK8+76bmc
- DZng==
-X-Gm-Message-State: AOJu0Yx5Pbav9CK3pU+Bcxf34D01YwjYZYJxp1jioiWxRQA/LJU/6XrA
- kXYL8IhJKe9C8bJlxL4itaSZiwxMiZjT3hq8SICvzkkG77WCtB2fg4XKqiz/+I56+vyPHwu/YkB
- gMpyGUpo=
-X-Gm-Gg: Acq92OEgAACsOqKpw7k0zNMeGUchinlII7uxdcnZ6GdidEAzPYVtP7pP89l9qamRc4C
- hs89dfwFggzNwQFthR0t0iNGONod7BLCVaMkNnwdk6SbjXCPSMITW81+2JuLfTVJOMbaK3ueq2I
- ohVyMrTNoVgGwO7DgR3rW18nmv2C+dPuq/SIHZmbOJNH8lYvBxqF3eTrD8uZj6ICZ889vEIqZvw
- 5CLRqOJs8nLgEmh8Vz0erZTbADHNKZUYyG0GnFjOuQtP45W9twcezWhmiO9T4nR+YaZmLICbUgh
- fcbsZuHuEjhTYi8Y+hyjXalLXi9ajWl/a0K1rvc0suy+5IZgRb5VIZPxiA/Hr7i5rEDAyBlKd91
- XJYdPIbxTlTas75HN2by6RVofhyImA7QgcUHTAMcG0/fr0wpqQW35WO6xwAF29GDxHlU4rVA9qP
- o/eCRpNb0WJ/c/+LSm/OhbuIBH4cUj
-X-Received: by 2002:a17:90b:58cb:b0:368:6998:b49e with SMTP id
- 98e67ed59e1d1-369519c3208mr22347809a91.9.1779301546157; 
- Wed, 20 May 2026 11:25:46 -0700 (PDT)
+ bh=RgEwye1A/H/zER4vq4nD2iWWcMLX2i9wMfampUnYlVM=;
+ b=s/3WdL46mYmmqi7v846gIcP6lAmnw3uWjesw0be8Jg/2VgeV8hArFQhv5JzbId4xbr
+ Z3ZwEhMdB1CkUKk30KKLvI0Yi/2zZ8pfXcW6a/FWdj+rMIGmRO8R3N+iRcNXZxuJSe+0
+ Ks8OiKNCF92fuSLl2yO924dlr2PksNsgMsT3aSmRbOOvCRkiSLdr1pU+jrJER4QZL/8n
+ J2Gao/9z2b0a56316PaJwGjD23RrspJphaZwmr8hK21D9zC1AEcmRjGoP4LiZ9NuHymV
+ u/GKJhz/iySH0b2p+CMjLbTkW7upRMv9Zgmg/Hd4Z6Qp1o56ZtJu0ByksBDzB433eubY
+ 1omQ==
+X-Gm-Message-State: AOJu0Ywh6Zu8j6xm5sA9GVxoWMAIiCAm/WEVZuJIS6F2iEds7VVvC9rn
+ gwOVCmPXdFSxFnsPStPkvTo2T/bsTcXr85zLxCuThkJcDt/rn3XP3yaKMxPksEkXBP0YNTapr4E
+ AbavuHf0=
+X-Gm-Gg: Acq92OGvvZbLmjsfVL9G1rKc1x5knQzBn3gDMUVPQJYi9cEMqQ09kCJpiEmakPILUQb
+ mDTyzdGtuySIauP7zubiVYL4bULjWDZDgyzPLTTf+fae6+lrwljTo3RqH+G6/nAQEDNtgEHIsPT
+ BY+DlZ2nOLHgDl/PIUtshelTzxo4GAurEXtXlulus8Q9rU9xK49RT/Pgbk0BT0TcWYIR8oM+TiX
+ sh3PD/YABmBpFjm6nlVQr0Bz76Rxf15qFSjFFM1kCrSXjPMKgbgEmd+j8ju4Nozb4XCJVe5VK6e
+ qWNfbERTn3iyOrrd8woml7mMy/ZSQJVjH4Z/BC0yVspnNVhBQxV9szCnrzc45wbLMuECwX3lrOv
+ Uka2i9wRSJctv+ZuWEMi9BEXPU0KujtlDhLG5YXnXu3ksawt3hXI+3JpAeTejVO8EMn8fe+YjHm
+ D72JHNfsVoiJzFZn4dwqk2XioQrmT3
+X-Received: by 2002:a17:90b:4a92:b0:368:a27f:9083 with SMTP id
+ 98e67ed59e1d1-369519c71e0mr21655080a91.7.1779301340891; 
+ Wed, 20 May 2026 11:22:20 -0700 (PDT)
 Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2bd5c0605ddsm217413925ad.32.2026.05.20.11.25.45
+ 98e67ed59e1d1-36a3d210b4esm274764a91.17.2026.05.20.11.22.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 11:25:45 -0700 (PDT)
+ Wed, 20 May 2026 11:22:20 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH v6 43/64] target/arm: Implement MOVT (vector to table)
-Date: Wed, 20 May 2026 11:21:52 -0700
-Message-ID: <20260520182213.872945-44-richard.henderson@linaro.org>
+Subject: [PATCH v6 09/64] target/arm: Update SCTLR bits for FEAT_FPMR
+Date: Wed, 20 May 2026 11:21:18 -0700
+Message-ID: <20260520182213.872945-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260520182213.872945-1-richard.henderson@linaro.org>
 References: <20260520182213.872945-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,69 +101,21 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpu-features.h      |  5 +++++
- target/arm/tcg/translate-sme.c | 18 ++++++++++++++++++
- target/arm/tcg/sme.decode      |  2 ++
- 3 files changed, 25 insertions(+)
+ target/arm/cpu.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 811f2a7291..29d0464a03 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -1570,6 +1570,11 @@ static inline bool isar_feature_aa64_sme_fa64(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64SMFR0, FA64);
- }
- 
-+static inline bool isar_feature_aa64_sme_lutv2(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64SMFR0, LUTv2);
-+}
-+
- static inline bool isar_feature_aa64_sme2(const ARMISARegisters *id)
- {
-     return FIELD_EX64_IDREG(id, ID_AA64SMFR0, SMEVER) != 0;
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 2f79c458e1..214427db1f 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -391,6 +391,24 @@ static bool do_movt(DisasContext *s, arg_MOVT_rzt *a,
- TRANS_FEAT(MOVT_rzt, aa64_sme2, do_movt, a, tcg_gen_ld_i64)
- TRANS_FEAT(MOVT_ztr, aa64_sme2, do_movt, a, tcg_gen_st_i64)
- 
-+static bool trans_MOVT_ztz(DisasContext *s, arg_MOVT_ztz *a)
-+{
-+    if (!dc_isar_feature(aa64_sme_lutv2, s)) {
-+        return false;
-+    }
-+    if (sme_sm_enabled_check(s) && sme2_zt0_enabled_check(s)) {
-+        int svl = streaming_vec_reg_size(s);
-+        int tsize = MIN(svl, 64);
-+        int offset = (a->off % (64 / tsize)) * tsize;
-+
-+        tcg_gen_gvec_mov(MO_64,
-+                         offsetof(CPUARMState, za_state.zt0) + offset,
-+                         vec_full_reg_offset(s, a->rt), tsize,
-+                         offset ? tsize : 64);
-+    }
-+    return true;
-+}
-+
- static bool trans_LDST1(DisasContext *s, arg_LDST1 *a)
- {
-     typedef void GenLdSt1(TCGv_env, TCGv_ptr, TCGv_ptr, TCGv, TCGv_i64);
-diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index 2b9e41a75a..339de72b8a 100644
---- a/target/arm/tcg/sme.decode
-+++ b/target/arm/tcg/sme.decode
-@@ -141,6 +141,8 @@ MOVAZ_zt4       11000000 11 00011 0 v:1 .. 00110 za:3 zr:3 00 \
- MOVT_rzt        1100 0000 0100 1100 0 off:3 00 11111 rt:5
- MOVT_ztr        1100 0000 0100 1110 0 off:3 00 11111 rt:5
- 
-+MOVT_ztz        1100 0000 0100 1111 00 off:2 00 11111 rt:5
-+
- ### SME Memory
- 
- &ldst           esz rs pg rn rm za off v:bool st:bool
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 498af7db08..c114510446 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1485,6 +1485,7 @@ void pmu_init(ARMCPU *cpu);
+ #define SCTLR_DSSBS_32 (1U << 31) /* v8.5, AArch32 only */
+ #define SCTLR_CMOW    (1ULL << 32) /* FEAT_CMOW */
+ #define SCTLR_MSCEN   (1ULL << 33) /* FEAT_MOPS */
++#define SCTLR_EnFPM   (1ULL << 34) /* FEAT_FPMR */
+ #define SCTLR_BT0     (1ULL << 35) /* v8.5-BTI */
+ #define SCTLR_BT1     (1ULL << 36) /* v8.5-BTI */
+ #define SCTLR_ITFSB   (1ULL << 37) /* v8.5-MemTag */
 -- 
 2.43.0
 
