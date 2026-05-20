@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBB27CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 16:22:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCB59CD5BAA
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 16:22:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPjgA-0006B8-PU; Wed, 20 May 2026 12:21:55 -0400
+	id 1wPjgI-0006Kt-H0; Wed, 20 May 2026 12:22:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wPjg1-0005tf-Rg
- for qemu-devel@nongnu.org; Wed, 20 May 2026 12:21:46 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wPjfu-0005qe-OK
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 12:21:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wPjfy-0008WM-F2
- for qemu-devel@nongnu.org; Wed, 20 May 2026 12:21:43 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wPjfm-0008UJ-9u
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 12:21:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779294098;
+ s=mimecast20190719; t=1779294087;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EGPeBunpbm8QEFeJGdbZqMQvXjlV/srJXK26/N5Gukc=;
- b=C+oQZSaG548jABtGaGps9ekVGBpDCEVzaZGd5TnbGQaNtcFYiJicx1Cvxh2NzUKiLoe4GC
- 1f0k4oNyud6SRr9pHDZ3rr1QdPT6qzMY6X+l0ivuC9CSGPkiXB++IFy3UdaiSDVYu7Rvri
- UzXnVTRgycz0wFQHXRFcXEkKOB0ZRds=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=YF5aWONhslK61UxnSzkuh8Pk2hNGcw48dh3ZUZxcAis=;
+ b=DvL0rxhVE+g7ISuoffOXNql1iN07SNc25doZr/Obdakaqm/FsQXdrP/Nx492PM0WBFZFaq
+ GuOcYP5p2oXeAzR8un4errcW+JeDy98RUUjv4bxIDmBnX9OcCjdb6/iDGQhKWfPFAnlDFL
+ /HCZUlMNT2SiHEd076NcbiAty92YdWk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-68-0zPzlx5KOY-CaLCqEhpvqw-1; Wed,
- 20 May 2026 12:21:32 -0400
-X-MC-Unique: 0zPzlx5KOY-CaLCqEhpvqw-1
-X-Mimecast-MFC-AGG-ID: 0zPzlx5KOY-CaLCqEhpvqw_1779294091
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-584-8_MsUdJJNr6BRU6EherKvA-1; Wed,
+ 20 May 2026 12:21:25 -0400
+X-MC-Unique: 8_MsUdJJNr6BRU6EherKvA-1
+X-Mimecast-MFC-AGG-ID: 8_MsUdJJNr6BRU6EherKvA_1779294084
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E5E2E195606E; Wed, 20 May 2026 16:21:30 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 50CBC1956080; Wed, 20 May 2026 16:21:24 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.34.136])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 229A819560A2; Wed, 20 May 2026 16:21:28 +0000 (UTC)
+ id 8F82A19560A2; Wed, 20 May 2026 16:21:22 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: John Levon <john.levon@nutanix.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+Cc: Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 05/11] hw/remote: update libvfio-user subproject
-Date: Wed, 20 May 2026 18:21:09 +0200
-Message-ID: <20260520162115.1613601-6-clg@redhat.com>
+Subject: [PULL 02/11] hw/vfio: Drop superfluous inclusion of hw-error.h
+Date: Wed, 20 May 2026 18:21:06 +0200
+Message-ID: <20260520162115.1613601-3-clg@redhat.com>
 In-Reply-To: <20260520162115.1613601-1-clg@redhat.com>
 References: <20260520162115.1613601-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -85,45 +85,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Levon <john.levon@nutanix.com>
+From: Thomas Huth <thuth@redhat.com>
 
-The currently wrapped version of libvfio-user has compilation issues on
-newer compilers; bump the library version.
+None of these files use the hw_error() function, so there is no
+need to include hw-error.h here.
 
-Signed-off-by: John Levon <john.levon@nutanix.com>
-Reviewed-by: Jagannathan Raman <jag.raman@oracle.com>
-Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Link: https://lore.kernel.org/qemu-devel/20260422140244.2147400-1-john.levon@nutanix.com
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Link: https://lore.kernel.org/qemu-devel/20260428163702.3224323-1-thuth@redhat.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/remote/vfio-user-obj.c     | 3 ++-
- subprojects/libvfio-user.wrap | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ hw/vfio/device.c      | 1 -
+ hw/vfio/helpers.c     | 1 -
+ hw/vfio/igd.c         | 1 -
+ hw/vfio/kvm-helpers.c | 1 -
+ 4 files changed, 4 deletions(-)
 
-diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
-index 49bf5ecae0c44c6a9432fefceec964139b5fb309..87fa7b65722e4d917481bd1bd8116cfd39b98261 100644
---- a/hw/remote/vfio-user-obj.c
-+++ b/hw/remote/vfio-user-obj.c
-@@ -800,7 +800,8 @@ static void vfu_object_init_ctx(VfuObject *o, Error **errp)
-         goto fail;
-     }
+diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+index 3ffd69a579b8ac135ef729d3d836c8545e36786b..ccf14743e954bdf23b76d4e4c3ab2647a428f050 100644
+--- a/hw/vfio/device.c
++++ b/hw/vfio/device.c
+@@ -24,7 +24,6 @@
+ #include "hw/vfio/vfio-device.h"
+ #include "hw/vfio/pci.h"
+ #include "hw/core/iommu.h"
+-#include "hw/core/hw-error.h"
+ #include "trace.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+index 65c6dba0428954170ce8a889edffa34ce9b24b13..c719864b92fb5b73170218a10c1eb66fdbe2edaa 100644
+--- a/hw/vfio/helpers.c
++++ b/hw/vfio/helpers.c
+@@ -24,7 +24,6 @@
  
--    ret = vfu_setup_device_dma(o->vfu_ctx, &dma_register, &dma_unregister);
-+    ret = vfu_setup_device_dma(o->vfu_ctx, LIBVFIO_USER_MAX_DMA_REGIONS,
-+                               &dma_register, &dma_unregister);
-     if (ret < 0) {
-         error_setg(errp, "vfu: Failed to setup DMA handlers for %s",
-                    o->device);
-diff --git a/subprojects/libvfio-user.wrap b/subprojects/libvfio-user.wrap
-index 416955ca4515c7da8080986681f69629046a749b..11db795f8abe9bf86e0405651970160629ed3f30 100644
---- a/subprojects/libvfio-user.wrap
-+++ b/subprojects/libvfio-user.wrap
-@@ -1,4 +1,4 @@
- [wrap-git]
- url = https://gitlab.com/qemu-project/libvfio-user.git
--revision = 0b28d205572c80b568a1003db2c8f37ca333e4d7
-+revision = 4d9f663450fa80ff375612dbbafe073700e3d3d8
- depth = 1
+ #include "exec/cpu-common.h"
+ #include "hw/vfio/vfio-device.h"
+-#include "hw/core/hw-error.h"
+ #include "qapi/error.h"
+ #include "vfio-helpers.h"
+ 
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index 6aacf27284f86da401fdd67e359500dd0545222b..e091f21b6a3aea0013e0b3094d2ca13588200c98 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -16,7 +16,6 @@
+ #include "qapi/error.h"
+ #include "qapi/qmp/qerror.h"
+ #include "hw/core/boards.h"
+-#include "hw/core/hw-error.h"
+ #include "hw/nvram/fw_cfg.h"
+ #include "pci.h"
+ #include "pci-quirks.h"
+diff --git a/hw/vfio/kvm-helpers.c b/hw/vfio/kvm-helpers.c
+index d71c9590aaa53dc4e436987a34575f57a6397c6b..5e73dddc418b51475c78489189bd1ba8f2b3038d 100644
+--- a/hw/vfio/kvm-helpers.c
++++ b/hw/vfio/kvm-helpers.c
+@@ -25,7 +25,6 @@
+ #include "system/kvm.h"
+ #include "exec/cpu-common.h"
+ #include "hw/vfio/vfio-device.h"
+-#include "hw/core/hw-error.h"
+ #include "qapi/error.h"
+ #include "vfio-helpers.h"
+ 
 -- 
 2.54.0
 
