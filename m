@@ -4,41 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69A60CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 12:53:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 439DECD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 12:53:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPgNh-00052p-UD; Wed, 20 May 2026 08:50:38 -0400
+	id 1wPgNj-000530-FJ; Wed, 20 May 2026 08:50:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1wPgNV-0004iw-7Z; Wed, 20 May 2026 08:50:27 -0400
+ id 1wPgN5-0004ZM-FV; Wed, 20 May 2026 08:50:04 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1wPgNR-0002iO-ON; Wed, 20 May 2026 08:50:23 -0400
+ id 1wPgN1-0002cp-R2; Wed, 20 May 2026 08:49:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:
- In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
+ s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
+ Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=AE0LEDo25VaZjHCaGcRulwuPv5MPC0rWK8D5yEfw+98=; b=ut6l2W5VezBF81B
- 4rfh7SFzSddTcl/cUif2bhid5h6K0r8uJbJZfrgmcSbbAAGxovyx9zFDDTtfdy0QTB84UH72AxBax
- AZuRokiYc7VgCy41WP1JUMbaonq1oFG28RiWscz70pR+ZUh0hcFwaPhf2IKpa9F3+Y6FWqc43Zp6H
- DI=;
+ List-Help; bh=AMcqkz5A6CJzcdkas/7AWl9nwVdJve9KArgdY7RKNoE=; b=OQl64vK8rbEUybN
+ JzBZQk+wTklBu7IIhRNHEschqZSVrwMbqUdiSfmhHRf//QWXG3Lu7ICrtWIjd18091U3kMqgIMgaG
+ 1tQ27GXA8facKFcR71Ss9DWf8qTRvtd+FmrHMJ/e9tj37tPOiOTDi0EmWJ98aYL1KVc4LEtL5bYhQ
+ Jg=;
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org,
- alistair.francis@wdc.com, Anton Johansson <anjo@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH v7 27/27] target/riscv: Fix pmp.h/cpu.h circular inclusion
-Date: Wed, 20 May 2026 14:54:05 +0200
-Message-ID: <20260520125406.28693-28-anjo@rev.ng>
+ alistair.francis@wdc.com, Anton Johansson <anjo@rev.ng>
+Subject: [PATCH v7 07/27] target/riscv: Fix size of priv_ver and vext_ver
+Date: Wed, 20 May 2026 14:53:45 +0200
+Message-ID: <20260520125406.28693-8-anjo@rev.ng>
 In-Reply-To: <20260520125406.28693-1-anjo@rev.ng>
 References: <20260520125406.28693-1-anjo@rev.ng>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
@@ -65,97 +63,72 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-pmp.h is only needed and included for system mode, however relevant
-macros (MAX_RISCV_PMPS, OLD_MAX_RISCV_PMPS, MIN_RISCV_PMP_GRANULARITY)
-are required unconditionally by cpu.c, and so are defined in cpu.h.
-pmp.h then defines pmp_table_t depending on these macros and so requires
-cpu.h, and cpu.h in turn uses pmp_table_t resulting in circular
-inclusion.
-
-Move PMP macros to pmp.h and only expose PMP properties in system mode.
+Fix these fields to 32 bits, also update corresponding priv_ver field
+in DisasContext as well as function arguments. 32 bits was chosen
+since it's large enough to fit all stored values and int/int32_t is
+used in RISCVCPUDef and a few functions.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h | 4 ----
- target/riscv/pmp.h | 4 +++-
- target/riscv/cpu.c | 6 ++++++
- 3 files changed, 9 insertions(+), 5 deletions(-)
+ target/riscv/cpu.h       | 6 +++---
+ target/riscv/machine.c   | 4 ++--
+ target/riscv/translate.c | 2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index de400437be..fb44f0485d 100644
+index 21f3400cd5..feacf19a5e 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -180,10 +180,6 @@ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[];
+@@ -239,8 +239,8 @@ struct CPUArchState {
  
- #define MMU_USER_IDX 3
+     uint64_t guest_phys_fault_addr;
  
--#define MAX_RISCV_PMPS (64)
--#define OLD_MAX_RISCV_PMPS (16)
--#define MIN_RISCV_PMP_GRANULARITY 4
--
- #if !defined(CONFIG_USER_ONLY)
- #include "pmp.h"
- #endif
-diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
-index eae305ac6f..4c95c2767a 100644
---- a/target/riscv/pmp.h
-+++ b/target/riscv/pmp.h
-@@ -22,7 +22,9 @@
- #ifndef RISCV_PMP_H
- #define RISCV_PMP_H
+-    target_ulong priv_ver;
+-    target_ulong vext_ver;
++    uint32_t priv_ver;
++    uint32_t vext_ver;
  
--#include "cpu.h"
-+#define MAX_RISCV_PMPS (64)
-+#define OLD_MAX_RISCV_PMPS (16)
-+#define MIN_RISCV_PMP_GRANULARITY 4
+     /* RISCVMXL, but uint32_t for vmstate migration */
+     uint32_t misa_mxl;      /* current mxl */
+@@ -844,7 +844,7 @@ bool riscv_cpu_eff_priv(CPURISCVState *env, int *priv, bool *virt)
+ }
  
- typedef enum {
-     PMP_READ  = 1 << 0,
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 753f92307f..36f9570f2d 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1127,7 +1127,9 @@ static void riscv_cpu_init(Object *obj)
-     cpu->cfg.cbop_blocksize = 64;
-     cpu->cfg.cboz_blocksize = 64;
-     cpu->cfg.pmp_regions = 16;
-+#ifndef CONFIG_USER_ONLY
-     cpu->cfg.pmp_granularity = MIN_RISCV_PMP_GRANULARITY;
-+#endif
-     cpu->env.vext_ver = VEXT_VERSION_1_00_0;
-     cpu->cfg.max_satp_mode = -1;
- 
-@@ -1550,6 +1552,7 @@ static const PropertyInfo prop_mmu = {
-     .set = prop_mmu_set,
- };
- 
-+#ifndef CONFIG_USER_ONLY
- static void prop_pmp_set(Object *obj, Visitor *v, const char *name,
-                          void *opaque, Error **errp)
+ static inline bool riscv_cpu_allow_16bit_insn(const RISCVCPUConfig *cfg,
+-                                              target_long priv_ver,
++                                              uint32_t priv_ver,
+                                               uint32_t misa_ext)
  {
-@@ -1658,6 +1661,7 @@ static const PropertyInfo prop_pmp_granularity = {
-     .get = prop_pmp_granularity_get,
-     .set = prop_pmp_granularity_set,
- };
-+#endif /* !CONFIG_USER_ONLY */
- 
- static int priv_spec_from_str(const char *priv_spec_str)
- {
-@@ -2666,9 +2670,11 @@ static const Property riscv_cpu_properties[] = {
-     {.name = "pmu-num", .info = &prop_pmu_num}, /* Deprecated */
- 
-     {.name = "mmu", .info = &prop_mmu},
-+#ifndef CONFIG_USER_ONLY
-     {.name = "pmp", .info = &prop_pmp},
-     {.name = "num-pmp-regions", .info = &prop_num_pmp_regions},
-     {.name = "pmp-granularity", .info = &prop_pmp_granularity},
-+#endif
- 
-     {.name = "priv_spec", .info = &prop_priv_spec},
-     {.name = "vext_spec", .info = &prop_vext_spec},
+     /* In priv spec version 1.12 or newer, C always implies Zca */
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 27034180c4..1cf744c5f0 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -439,8 +439,8 @@ const VMStateDescription vmstate_riscv_cpu = {
+         VMSTATE_UINT8(env.frm, RISCVCPU),
+         VMSTATE_UINT64(env.badaddr, RISCVCPU),
+         VMSTATE_UINT64(env.guest_phys_fault_addr, RISCVCPU),
+-        VMSTATE_UINTTL(env.priv_ver, RISCVCPU),
+-        VMSTATE_UINTTL(env.vext_ver, RISCVCPU),
++        VMSTATE_UINT32(env.priv_ver, RISCVCPU),
++        VMSTATE_UINT32(env.vext_ver, RISCVCPU),
+         VMSTATE_UINT32(env.misa_mxl, RISCVCPU),
+         VMSTATE_UINT32(env.misa_ext, RISCVCPU),
+         VMSTATE_UNUSED(4),
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index 1ea7faea4c..18a1e0ae99 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -59,7 +59,7 @@ typedef struct DisasContext {
+     DisasContextBase base;
+     target_ulong cur_insn_len;
+     target_ulong pc_save;
+-    target_ulong priv_ver;
++    uint32_t priv_ver;
+     RISCVMXL misa_mxl_max;
+     RISCVMXL xl;
+     RISCVMXL address_xl;
 -- 
 2.52.0
 
