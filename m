@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38CAACD4F3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 11:31:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2EDECD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 11:32:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPf8h-0006ud-Ef; Wed, 20 May 2026 07:31:16 -0400
+	id 1wPfA0-0007u7-WB; Wed, 20 May 2026 07:32:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf8e-0006lI-WF
- for qemu-devel@nongnu.org; Wed, 20 May 2026 07:31:01 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf9o-0007oZ-U1
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 07:32:19 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf8c-0005AR-V7
- for qemu-devel@nongnu.org; Wed, 20 May 2026 07:31:00 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-670ab084a39so10067144a12.3
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 04:30:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf9n-0005MQ-4n
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 07:32:12 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-44a14580111so3475581f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 04:32:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779276657; x=1779881457; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9P6kJLGlxBj21okoCV6Px71wWiHku6OLNHzb1zVa5zE=;
- b=Jdj2VmHhhd3d+anXPW/DdiBij+3+EP+KcnEOtSz76lblILNQnhyhxXjlWkHQe4w5WI
- cZ91ZH1IHuFBoIvxmc5+7KWKyU5nA2t+TaUUZHa3HCmTd/QUQIoLZrSO6toMO36VUdaz
- 1JouvJHiAumSgnVGpVfrRcZa1u7Fq5+0tTAkc5WrlbL+mySkGnEoU1MbB+ej7MjFQiJg
- 6Wtk6g0Td7YgU6Y78kqyiSpO+jbXfqxh/wB1UN3J979FPCgX2HKSS1UgX77oKlQHpBNr
- GDoeMILIR7trbks1d5D4AK+tR4+zBzI09OkEOjshYFhtv9sCgFJhDuoNC/W1Ai/GJkfD
- i4RA==
+ d=linaro.org; s=google; t=1779276729; x=1779881529; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BfLMAKm0cFQ1CO5b899F9cGVNdd+gP0hQK4cGU9J1eo=;
+ b=H4KBR6C43DisGAU9jIBYDyXUDkxeR3CA+LXPpTShesIS4tjMrmtL8wfQvbElI5RPvY
+ +YZlDvSIeCWskq6WJ+ONagOXVY9ajZ948yW1Cb7NYHSM9UPKA1PzHtt5cMdzEZyLVghl
+ gfpTqlzNwF1JngHqFFhg6xGP6xvPZUlQWoN464526T2DQ8G1q93pjlFxrZwdsjIWZgS0
+ iUnzZmEvoQIH6Q/SZMpwEeZ/nPZ6vJ3QVKRoQgNL3M/LDfbpEzVS9hSYul99EQr3Fn1o
+ iyVWHfw4P1hdrkx2kVcK7aGwsCOtM9E7TnGsX4BQAWXBBcIstubbqOzLLpDokyobpJ39
+ pXSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779276657; x=1779881457;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9P6kJLGlxBj21okoCV6Px71wWiHku6OLNHzb1zVa5zE=;
- b=XyRwCvxTq8+xj+eNquFfMmRYmfJpksf5Q2D0ov+SVDoXbMBgi+6v5WmWT1ubHzT3Mu
- B2ZGfvV+MoSrhWCbUewLHTgr2nB2FPg/WsB0pvn514ecpYzrF2ykmBBT2Qz4tc6Rlr6z
- v/jZlc06UOFHkwdAmpNYhnPx9VaMxBd217XscuyXAx2U02vzEKqH1onb4EIWp+DqJU+v
- A8vbFlHkfLvaQp5AD41d6jOXSPKt2SuZa2l1RHE67cHAOyXJxT+NI0wqUKCl5QtzyEEg
- 9bBXjrCN7P2uAqBbekce08KUV8887VCRzDrMYoWxKCPwQXncn/u+dA3RSetW7s5s02/I
- hu/A==
-X-Gm-Message-State: AOJu0YxO21wGuzvWTi3Aw4d5Npv1vkXVPWXmzLchGuY3yAWXCJ8XLSie
- J3MjKjqmM6AeAZ8hD0xfqOs+M0fDbyVVd95GRUv9PEvu9fF8X/WXTV+P/2r6Cu3nPK72OyyNEIR
- SYNEkAZg=
-X-Gm-Gg: Acq92OHnQR7pbHgSUn4e18AXcQECZrGfgHpTIBnvVg7Gc2jQ0rT3YRetTS7IlXxc4uT
- Mx2dAfzoxPoPffccjDwqtfOri3lQXN1yoVJSMaCCMyuFa8VEgXelZTK1vksA/SmesUWF9sqyQcT
- ZaTWFf9sBm3GaxGxZh1PLaJrQMSPEuhdlsV3pM4tcAGM9Oq/QOLGVAPKIBcuY4UQ0n2wJg1BlHH
- m2YtPNucn7In3wqhdpoM8oG5y+egZkEpQCGMbaBZmg/UnVhGRemyERyVxeHJUc+8Wn1Qc4d5ymf
- oDNqSfkBBqrcGSSuvC7ieeeFAreWlHlWNRLDIOFvqziA0NEDQkpnxHOFRIM48zDLX78Jd3LFiul
- q31u+EMerhGcGvv2CdsQOHDlGDUVb/pVp2OciEXYy9OgZe2gDd5kb3ETw7EuzTgWRqaaCGRw3BA
- lrjOUb/QcC0hhnaFaTiUvyTfdabx32dI1lRIdMGTxXmwibJRSCnRNVY0VmxUDQLeFz4OyAsK4=
-X-Received: by 2002:a05:600c:1512:b0:48f:e26a:1744 with SMTP id
- 5b1f17b1804b1-48fe60ecd67mr213745285e9.9.1779272645236; 
- Wed, 20 May 2026 03:24:05 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20251104; t=1779276729; x=1779881529;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=BfLMAKm0cFQ1CO5b899F9cGVNdd+gP0hQK4cGU9J1eo=;
+ b=Cgs1ExMzsCvt7FyqP+mr/2DgsEgLTLTF5B/765bNeEDsf8WWaOG7jqUd5e3W5dJRwi
+ 6Do8qShOGN0n2vjYksAAUN4cQd5MeAymvP0v+/VjEVmzhnphBW+ZjZSczf9ThA5rGMf4
+ 7enNeb8IsMxxuMc0K/42lRkudEvV58LbGT1qWiOOaHTmKWyBzs7Y/0762Gh2o2bllwft
+ SgCKLlxQUmMAl06V0pZloVLCxTEnU/Q/ZjwDln8b4oqmFqzaIKW65jbM2aYUBRyqI5Pc
+ GVN5g6NhHu5ZuCwJHMk1E/fsnhm4lamnpR5j0XHvMyGyiobSF6Y+X3pf/zHovRSyWxuB
+ CRpQ==
+X-Gm-Message-State: AOJu0YyJQ4Rzr8mXkhYh/UhR0r70QzNHWSIhXZhpqRxaIZFB4rNR4It0
+ 0i0NF7/oDsgkmopyhbyOlmfQkYRM5OgTZJHdby9Lvzs4po+uXcFBFt1UXlXUjKGvfPyyxtPN2cw
+ 2QIxktmw=
+X-Gm-Gg: Acq92OGR1Cnrk2FRittJt3TNcI6PobKit8C+UD9wZzPI5jsQDc3D6R/brA1bSBPEZkW
+ HaYXXBbID7TPTtr64eFl7Dosp/7uvIdlt8qNrcOyJjuW8ZG9qNFpjhBTMKI8VbOIWKCIp0HBCgP
+ w3dfWG5OUH8cAqRodGxOyn9HJ37cYTKjHBQg5fjb96D13oWNuQDjxJEa+vx9xhatiMFbRLPHG+d
+ 4/FifIP0TBGSFLKQSGCV9s/lBTxJngJwI7C6O6QjgYq4Y7jjVwzmCsZXwNU8ebsDofRJQ1KgG6G
+ YYVDtOD6ttv+yVZAM1+5BFibAoXpp408x4BD5gNsnkwUY7li0R7y41LtbDFP/Y6a9C7uPxkqXcS
+ CUBujWIUu+cpFyvTcBsAsWMxRUzQ/8KEVgXONlFQB/uRbB1NC7yHfFMHDTCP8jDHQr46ja6yLYN
+ CtJikKwj6T8aeyam4yTIvCl3PFI/ScsSwM+cM7fqlivUj99Vb2KyPtFE/PICNFUmAhs1hDLSzRQ
+ UNPSW+rpEHG4Fcv
+X-Received: by 2002:a05:6000:2c07:b0:45e:75c5:1a6a with SMTP id
+ ffacd0b85a97d-45e75c51b5emr23937852f8f.33.1779272298595; 
+ Wed, 20 May 2026 03:18:18 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da0fe2464sm54040882f8f.32.2026.05.20.03.24.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 May 2026 03:24:04 -0700 (PDT)
-Message-ID: <078d2012-a1cc-4cb8-87cd-95893070d2db@linaro.org>
-Date: Wed, 20 May 2026 12:24:03 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 09/24] target/mips: split Octeon SEQI/SNEI decode
-Content-Language: en-US
+ ffacd0b85a97d-45da0fe248dsm52092626f8f.30.2026.05.20.03.18.15
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 20 May 2026 03:18:17 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Aleksandar Rikalo <arikalo@gmail.com>,
  James Hilliard <james.hilliard1@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Aurelien Jarno <aurelien@aurel32.net>
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v11 01/24] linux-user/mips: implement sysmips(MIPS_FLUSH_CACHE)
+Date: Wed, 20 May 2026 12:17:42 +0200
+Message-ID: <20260520101807.9971-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260520101807.9971-1-philmd@linaro.org>
 References: <20260520101807.9971-1-philmd@linaro.org>
- <20260520101807.9971-10-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260520101807.9971-10-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,24 +106,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/5/26 12:17, Philippe Mathieu-Daudé wrote:
-> From: James Hilliard <james.hilliard1@gmail.com>
-> 
-> Decode the equality and inequality forms as explicit SEQI/SNEI
-> instructions rather than using shared generated SEQNEI entries.
-> 
-> The explicit decoder names match the architectural mnemonics, which
-> makes the translator entry points and trace/debug output easier to
-> correlate with the instruction set.
-> 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-> [PMD: Split SEQNE vs SEQNEI (this patch)]
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/mips/tcg/octeon.decode      |  4 +++-
->   target/mips/tcg/octeon_translate.c | 27 +++++++++++++--------------
->   2 files changed, 16 insertions(+), 15 deletions(-)
+From: James Hilliard <james.hilliard1@gmail.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Add the target sysmips dispatcher and implement MIPS_FLUSH_CACHE as a
+successful no-op for linux-user.
+
+Self-modifying code is handled by QEMU's normal user-mode translation
+invalidation machinery, so the target ABI only needs the syscall command
+to be accepted.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ linux-user/mips/target_syscall.h   |  1 +
+ linux-user/mips64/target_syscall.h |  1 +
+ linux-user/syscall.c               | 17 +++++++++++++++++
+ 3 files changed, 19 insertions(+)
+
+diff --git a/linux-user/mips/target_syscall.h b/linux-user/mips/target_syscall.h
+index dfcdf320b7c..3f36c1695a5 100644
+--- a/linux-user/mips/target_syscall.h
++++ b/linux-user/mips/target_syscall.h
+@@ -10,6 +10,7 @@
+ #define TARGET_MCL_ONFAULT 4
+ 
+ #define TARGET_FORCE_SHMLBA
++#define TARGET_SYSMIPS_FLUSH_CACHE     3
+ 
+ static inline abi_ulong target_shmlba(CPUMIPSState *env)
+ {
+diff --git a/linux-user/mips64/target_syscall.h b/linux-user/mips64/target_syscall.h
+index 9135bf5e8b6..20ea7c6ab9b 100644
+--- a/linux-user/mips64/target_syscall.h
++++ b/linux-user/mips64/target_syscall.h
+@@ -10,6 +10,7 @@
+ #define TARGET_MCL_ONFAULT 4
+ 
+ #define TARGET_FORCE_SHMLBA
++#define TARGET_SYSMIPS_FLUSH_CACHE     3
+ 
+ static inline abi_ulong target_shmlba(CPUMIPSState *env)
+ {
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 2d4a8aa182b..5a8e00337a0 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -6630,6 +6630,19 @@ static abi_long do_prctl_syscall_user_dispatch(CPUArchState *env,
+     }
+ }
+ 
++#ifdef TARGET_NR_sysmips
++static abi_long do_sysmips(CPUArchState *env, abi_long cmd, abi_long arg1,
++                           abi_long arg2)
++{
++    switch (cmd) {
++    case TARGET_SYSMIPS_FLUSH_CACHE:
++        return 0;
++    default:
++        return -TARGET_EINVAL;
++    }
++}
++#endif
++
+ static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
+                          abi_long arg3, abi_long arg4, abi_long arg5)
+ {
+@@ -12110,6 +12123,10 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+     case TARGET_NR_prctl:
+         return do_prctl(cpu_env, arg1, arg2, arg3, arg4, arg5);
+         break;
++#ifdef TARGET_NR_sysmips
++    case TARGET_NR_sysmips:
++        return do_sysmips(cpu_env, arg1, arg2, arg3);
++#endif
+ #ifdef TARGET_NR_arch_prctl
+     case TARGET_NR_arch_prctl:
+         return do_arch_prctl(cpu_env, arg1, arg2);
+-- 
+2.53.0
+
 
