@@ -4,91 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E78FDCD4F3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 11:29:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9A1BCD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 11:29:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPf6u-0003XQ-BE; Wed, 20 May 2026 07:29:12 -0400
+	id 1wPf7V-0005A3-Ug; Wed, 20 May 2026 07:29:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf6I-00039H-P6
- for qemu-devel@nongnu.org; Wed, 20 May 2026 07:28:36 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf6G-0004Vc-NM
- for qemu-devel@nongnu.org; Wed, 20 May 2026 07:28:34 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-bd373f83042so980657566b.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 04:28:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779276511; x=1779881311; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xj4LscJe5qbbyCvumcZkKMp4Wyep599tHoKrYhpUv9c=;
- b=LVNWN2g+dMPd2jrVaNqZc00XV/9gMQQjORJwfF50BK8LPiSdFIPnjVuk5FwObO/ISa
- SKs/FMM3W3kfYWPMJzWMRjVYp6xX/dUS525xaQqR0rrWeBb6PMVBnlLyhcgIIlSNM319
- +2lfKJGAZaXoKBW4zJanagxspzwL30UbxgXib11Xvpe6YO1AiNxcQ5OGFMmoJWyIeOWE
- +OzSqzIte5Hzl1teg9rNX61D6JNcCL3y7DZKgDaWPAlSeewl6oMonFeIsGLCTwEX7sNw
- Th9VkvdJ2UrmU5vhpCIhZMNjZmUgGAVUz0CEFZXm2rPHD2SCs5yhMv1l8dFIlHXEVQwQ
- BsZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779276511; x=1779881311;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=xj4LscJe5qbbyCvumcZkKMp4Wyep599tHoKrYhpUv9c=;
- b=QA12Dcj4URmYS/IjMlMcBMxn5zXQ/ikc9AyJhD3L49PEHCWsDz17Ni15dhyez+JTh2
- ilRsd1LH3bHVYgcj6Bo1nYnx1Mh4y39zBSARkyAo7SyPgn05nct2VP1p8185BJjO2rOP
- nS4CMkJCDDo75Vc3PWJmv/18Z7FjqAFcnpYfjx7UJHbGxiD2esgMk4PMTBPHT4n/Jb4x
- Nh6IROxBRgfRZ9yG3rhur/AvDegFE6q+LA8rhRa89LdCmt+7rIWrtBaj3j/eeAqtNzZh
- niR9Pwm0aaVGeI+NqYYDtt0s0rftaYhLeUd8e6kYuxya9hw8Ueb8heJEhs2SLdudaVgv
- /pRA==
-X-Gm-Message-State: AOJu0YyndTCywhEgrvPWQXYba4F23QvTpE4eh93hHclMYkV6nKNuLZZG
- HhnfVxiXclF6WC1Pl5uULrAR4Bd5dH+6RcIL2G8xR83JDM59K8YbpdHkdavyNqEDXETPptUPb+b
- 0RgX9wAE=
-X-Gm-Gg: Acq92OE+L2Oljsx8ruL/pucHDKVW+25MjQrnd1cx+3CPyRt1fFKJ7gMCrMI0BDIOVMx
- WSL3Y3aM1XtBGE0UGq7bod23o/CYiAqfQtQSFaLm/kWf0xPYf0SIHj5No76b1JWvt37vg0eMWcq
- pMy6t33T+KufwCEDd0QUnNwl6S//6Hsrb8d3UrS2nhvRqoJZ5LVHq5+cSq7MOnvAqFLYAQ/9mlX
- qhfCPpbODZpDNOz30ZnQr8Y+GhPAEQCqQk9qGBtR9SavzeZeDj9vv+2HS90Sid3crXeoqmiW7Cf
- MSw4amQL3SEf8ulsKX51RKy+wdvX6aqo+lDnOP1oysJGSwY2Yl/MTEpMSqSHqz+/pmrCheICXX2
- ZgD02U846tqc/CwH7h52yZsgF2gBe5J5dPABhdf/YBIWgxpI1Bg41jC6ZE2S0ZFnZK5MB0IFGXW
- uo6etUwBU9wnq8J3aiPUKVsahPAf/mrXjVJejzWepWO20P2C0Kqn94wQ/Ux2iiwXsq4bKM+yQrp
- hhfEQ==
-X-Received: by 2002:a05:600c:c10b:b0:48f:d1b8:9aa4 with SMTP id
- 5b1f17b1804b1-48fe5fcdef4mr275122225e9.7.1779272379308; 
- Wed, 20 May 2026 03:19:39 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fe5cab818sm403812035e9.14.2026.05.20.03.19.38
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 20 May 2026 03:19:38 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Aleksandar Rikalo <arikalo@gmail.com>,
- James Hilliard <james.hilliard1@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>
-Subject: [PATCH v11 12/24] target/mips: add Octeon LWUX instruction
-Date: Wed, 20 May 2026 12:17:53 +0200
-Message-ID: <20260520101807.9971-13-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260520101807.9971-1-philmd@linaro.org>
-References: <20260520101807.9971-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
+ id 1wPf7Q-000516-Nb; Wed, 20 May 2026 07:29:44 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
+ id 1wPf7O-0004fh-Sf; Wed, 20 May 2026 07:29:44 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64JLiE6S552016; Wed, 20 May 2026 09:55:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=fLZtxzPiE//1Grmg/
+ 9b6/lfDSHW7DBwxC8JordvpkLM=; b=OmsmAHX1x4whNGXUWG5bptoffrJIRsd79
+ PFyjRgQJ2bhubbtyKzv7xF9laC0pyzZurCim7HS0HufA1YfqtTt1HjXVnoRdn+po
+ pXbK0BEi7SDxEkwxe8B4bopo0/aJZ981O2XPCBfzUeWX7ots+iINOPJfylrkf44C
+ /9zx0qqcXm28U4XWhB/9eJMaRUhogIgTLKoipOnoMpbszkL3o+z+Im2MQE6Ecmcb
+ 7dgv/hUe1PIByroKNhSOa544mdYXY1uxtTpBxUKnZ2A0h3POo/va5rn83Ca3tFIF
+ 3KxALiU3pCachxSXVHHcvwbBC9Qv2Gu06OHBLs7V4ocQjopTba2fQ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h9y1fpj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 May 2026 09:55:19 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64K9s6gh004432;
+ Wed, 20 May 2026 09:55:18 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e754geja3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 May 2026 09:55:18 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64K9tFlE41943486
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 20 May 2026 09:55:15 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0B0A120043;
+ Wed, 20 May 2026 09:55:15 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CC84E20040;
+ Wed, 20 May 2026 09:55:12 +0000 (GMT)
+Received: from dhcp-9-123-10-31.bl1-in.ibm.com (unknown [9.123.10.31])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 20 May 2026 09:55:12 +0000 (GMT)
+From: Narayana Murty N <nnmlinux@linux.ibm.com>
+To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Cc: npiggin@gmail.com, harshpb@linux.ibm.com, mahesh@linux.ibm.com,
+ ganeshgr@linux.ibm.com, sbhat@linux.ibm.com, vaibhav@linux.ibm.com,
+ anushree.mathur@linux.vnet.ibm.com, clg@redhat.com,
+ pierrick.bouvier@oss.qualcomm.com, philmd@linaro.org
+Subject: [PATCH v3 6/6] MAINTAINERS: Add entry for sPAPR PCI VFIO EEH support
+Date: Wed, 20 May 2026 15:24:46 +0530
+Message-ID: <20260520095446.64206-7-nnmlinux@linux.ibm.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260520095446.64206-1-nnmlinux@linux.ibm.com>
+References: <20260520095446.64206-1-nnmlinux@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDA5MiBTYWx0ZWRfX57wHYTpLb0EU
+ UGttwwp/U4SoKcLqi8sjx11cxnVW8vE5tb2rpTXdnsYXOP80OGJNG6mcDZjszUx3wTe9CMcgyph
+ LQvPVeHadUcSrueaNm/LU8RW3Uy3hnp2xOsPNlb1pnvsvv0riMtjKjNREBsur202PIrKxhhPXdd
+ EOAAWXNBUuuVBBVHGLtIrDO8t7NIjyoQRdPC1wQU/WEqSuG48ooR0r7fNkZ+YNUSTz8b2xq/A/x
+ XPAunzIc//Q7nOQiOZLQhyl9pedBIdOQ+WxT3p5n5wgWk+si9zFEzHkAMD20Za9+Q6dCjYc0r/f
+ bBEKnNZqf/tEJagM01Q61n/x8p1RAHFdyt+hsXis4CYO2n27PtZiD/qhVjXWe/e+CRVkMpfo/8x
+ TmQpKjJy2tRhO8MBmwt/DFnwlBSAS611lL5nTptBr16FPesZ3Yqdf91eO2NOj7dEfG/5Kk+GDq6
+ TlQFHR28minZEZsREIw==
+X-Authority-Analysis: v=2.4 cv=BNuDalQG c=1 sm=1 tr=0 ts=6a0d8507 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8 a=pGLkceISAAAA:8
+ a=VcH14TYERV92i4gI124A:9 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-ORIG-GUID: vMORU3o3Yya-1QWTay3gV7ak3bFQNsFW
+X-Proofpoint-GUID: cJxZ9t-gQKZcPQmdpr4nUZo02Y9Mj7lY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-20_02,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 malwarescore=0 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605200092
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=nnmlinux@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,45 +120,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: James Hilliard <james.hilliard1@gmail.com>
+Add a dedicated MAINTAINERS entry for hw/ppc/spapr_pci_vfio_eeh.c,
+which implements Extended Error Handling (EEH) support for VFIO-based
+PCI devices on PowerPC sPAPR platforms.
 
-LWUX performs an indexed unsigned word load from base + index and
-zero-extends the result into rd.
+EEH provides error detection, isolation, and recovery mechanisms for
+PCI devices, allowing the system to handle and recover from hardware
+errors without requiring a full system reboot.
 
-Add the decode entry and route it through the common indexed-load
-translator with MO_UL.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Narayana Murty N <nnmlinux@linux.ibm.com>
 ---
- target/mips/tcg/octeon.decode      | 1 +
- target/mips/tcg/octeon_translate.c | 1 +
- 2 files changed, 2 insertions(+)
+ MAINTAINERS | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index 8a755075e8e..db7d5f55f0a 100644
---- a/target/mips/tcg/octeon.decode
-+++ b/target/mips/tcg/octeon.decode
-@@ -50,5 +50,6 @@ LWX          011111 ..... ..... ..... 00000 001010 @lx
- LHX          011111 ..... ..... ..... 00100 001010 @lx
- LHUX         011111 ..... ..... ..... 10100 001010 @lx
- LBUX         011111 ..... ..... ..... 00110 001010 @lx
-+LWUX         011111 ..... ..... ..... 10000 001010 @lx
- LBX          011111 ..... ..... ..... 10110 001010 @lx
- LDX          011111 ..... ..... ..... 01000 001010 @lx
-diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index f897b42807b..401c4bd14bb 100644
---- a/target/mips/tcg/octeon_translate.c
-+++ b/target/mips/tcg/octeon_translate.c
-@@ -166,4 +166,5 @@ TRANS(LBUX, trans_lx, MO_UB);
- TRANS(LHX,  trans_lx, MO_SW);
- TRANS(LHUX, trans_lx, MO_UW);
- TRANS(LWX,  trans_lx, MO_SL);
-+TRANS(LWUX, trans_lx, MO_UL);
- TRANS(LDX,  trans_lx, MO_UQ);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 9d3d645953..03a638cab1 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1656,6 +1656,12 @@ F: tests/functional/ppc64/test_pseries.py
+ F: tests/functional/ppc64/test_hv.py
+ F: tests/functional/ppc64/test_tuxrun.py
+ 
++sPAPR PCI VFIO Extended Error handling (EEH)
++M: Narayana Murty <nnmlinux@linux.ibm.com>
++L: qemu-ppc@nongnu.org
++S: Maintained
++F: hw/ppc/spapr_pci_vfio_eeh.c
++
+ PowerNV (Non-Virtualized)
+ M: Nicholas Piggin <npiggin@gmail.com>
+ R: Aditya Gupta <adityag@linux.ibm.com>
 -- 
-2.53.0
+2.54.0
 
 
