@@ -4,85 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93DB2CD5BAA
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 18:28:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFC67CD5BA4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 18:28:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPleF-0007bx-Gk; Wed, 20 May 2026 14:28:03 -0400
+	id 1wPlZU-0008GP-GB; Wed, 20 May 2026 14:23:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPlcO-0004Kk-ME
- for qemu-devel@nongnu.org; Wed, 20 May 2026 14:26:10 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPlcM-0002ET-GK
- for qemu-devel@nongnu.org; Wed, 20 May 2026 14:26:08 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2b45cb89f7eso35263475ad.0
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 11:26:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779301560; x=1779906360; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=W2+saFtU6sDCDywdiaR0c/2CKQQH+n8UBNRc/yHjQxk=;
- b=FKG8t7KyA2BmXWaJoHxB5YontGqK2yMt1beiZQn+F7jP3WsSlESGhWbU/LamuzA7cz
- UktptW3+m+AAL6OZacosl8M1npvqhS+n5X1OwjDMaFPiErb8xSlAm00w5Qb3ubM6+s5p
- j3p6waF7Xzc/etNg1wd58hT8zzbPfYVSHGDMAWN+g8nUhnb2E97cg9APcpCd9J2PanB8
- oYP6mORjMiu/a3OuchfKgdCZvY/DZujCSCn9DbnVihmLGTQ1Z7QMXime5BI4aTkCB6zU
- yB9McaUDL9kG52tFdKgX09HRwFBX1i+OzfWeH+UDut2KIY8dhmb8CJ+WDfhJrIBHKqel
- GSNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779301560; x=1779906360;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=W2+saFtU6sDCDywdiaR0c/2CKQQH+n8UBNRc/yHjQxk=;
- b=aPDuLW7VxSZpWus+LA4nn7Zy0/iTRKkKnDsEH5FNw4sG0Zu4FiYqezMEDqu0g2Et0t
- c3/x3E58MlA9fBlUd10CgPV/ml4pSttuYLq+PUuCPZjq6nwAM1vyrrKDVzXYOjMBcc6o
- WrHuB5iey7xEMN/AFWM36YzC4aYr9ZvQWIRm3XS10tdzobhDfSnavr3MlXvnILJN466y
- peOuaj1fYzpJegSMl462Qxlf0HGYfNreW2QoUFY51q0yOPAiQuSbgv7HBycwly9AQClG
- OaAuadhJxbA8id299HbbfH4Ye+zK5nMuSMIGzXnN7DnHS95pLGMnBsKBGOehAOK60jkt
- ZYBA==
-X-Gm-Message-State: AOJu0YzVmhRBpl6UxZK7CDYTVGa3AY0hjxU3kIkSHYdRNKWGbYQd86L2
- KsHA1ZgOdsCyujZBXFTbBJ/C7x6N3lsg3EWQr1xty20ezGEXEF0p1VPeE2mG2Cj22Ob87+eBtIR
- n+z34mmo=
-X-Gm-Gg: Acq92OE4DtzLdq0MsGaKdJHqLPsDXFA07v6YkYFHgFke0WrN5asqXrKo35PsxA+mJhm
- gbR3ct2vWVGWhmM2WWYgYIK3wahGDfNRFtK5SovMHN5/jiSG81f46GmALoKSZhGzonG68u6VsBF
- 92LgTVOXIvQcns+GNy08FDdOCT9yLHHMelujmEzoM8ASrJ0bmQWP2zHu6Xi1cmeHhIBMGGuQHRy
- fAoHjyiyEBUsubs4KAVHQNCrGcUVYuTi342cuHzilAk8u/UVctk8MIqgJ8Ea+Cz1fLZOM0QY6Gz
- tiO2m4ZRrY1FB8zCc1Ro4wBE/jrO1n9/1F3BmYfLLeG+U/KNNjFygA2rvC+KzaJneMl3AdALzgm
- RUTmxTh3XLHS5LaTBJn3cJFIFAPkzA8vhIuMTnSRO6R/FpKyaS3Xj4qnELLL6J0aaQcON254R/A
- m4MFgiENUcaLdfnG/Xt2tCaAuhFjml
-X-Received: by 2002:a17:902:d483:b0:2be:956f:144c with SMTP id
- d9443c01a7336-2be956f1dbbmr29658265ad.2.1779301559602; 
- Wed, 20 May 2026 11:25:59 -0700 (PDT)
-Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2bd5c0605ddsm217413925ad.32.2026.05.20.11.25.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 11:25:59 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH v6 61/64] target/arm: Implement FMMLA (FP8 to FP16) for SVE
-Date: Wed, 20 May 2026 11:22:10 -0700
-Message-ID: <20260520182213.872945-62-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260520182213.872945-1-richard.henderson@linaro.org>
-References: <20260520182213.872945-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wPlZK-0007lN-DJ
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 14:22:58 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wPlZB-0000h5-66
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 14:22:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=2GufbOugQ5ZGVodxdj7LE7O5HZSpJZi6FFRZkbgmLD8=; b=c1BdXF4YG7tk37Jq3fZScGCZhI
+ oX2XmWgNTw4c0WxwzyLsJJJSXV6X2y2lEyv86H5WC7ngET5kTHw+iQdtY1NoHQ5HH6nIcbc9AmwPR
+ Ek9+nGQKhSVdfExmDNNhtc+vYaih3u5QeYi0XQYXSaaS7gJ16Mpu7ogb/JCv/cy4PeZm1G09L1Sdf
+ BlpPw4QvHSEzCrriFfLhgz+d0aJJmkSE6aH7TERr4OMmqLm/Lj/1N07vos/drZScVryLjrHAALdxn
+ LzZmroY6IbJiOheGFt84HVsxvUk8PIzf5SpkWTItj84VtMaIDDh9ZWuDwK5EcDjh41UZD+z+0KAnW
+ Ubfe3Uh+7s0VXgrl+LNnNnKTH2opef8IM0Qra3OgVAPpSIzOF2R8fX14JJNlHsCeRtbDfl/ddQarP
+ Ns2mJ7G5j3JQ9sJFM9OE4PNwRkbsVYqDFHzBy2tJyLf7mI7eqGUPGabT/VwoQ8caDq6zp0DfDdevp
+ oiAYoPh3zTbuDin6KASV0t6EdVnV3e+NwsE01ArOajjbPlTo7iIZvvtszrQZaITvzPh4x57zCPcGR
+ Sx776WuLyabbfaF2ODuHEMY/2e1mNj20Sli4mMFhcbs9vsbMmpWLsuh7hAsnS5bum612zszJNlTW4
+ /iXtmzo3WCSh9fL1gxEqsrmHDyJ8GyzKmZ2rD/TvU=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: qemu-devel@nongnu.org, sin99xx <sinxx198@gmail.com>
+Cc: Greg Kurz <groug@kaod.org>
+Subject: Re: [PATCH] 9pfs: fix missing rename lock in v9fs_co_readdir_many
+ (CVE-2026-48004)
+Date: Wed, 20 May 2026 20:22:36 +0200
+Message-ID: <4735365.LvFx2qVVIh@weasel>
+In-Reply-To: <E1wPkYi-000adH-4E@kylie.crudebyte.com>
+References: <E1wPkYi-000adH-4E@kylie.crudebyte.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,52 +69,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/cpu-features.h      | 5 +++++
- target/arm/tcg/translate-sve.c | 2 ++
- target/arm/tcg/sve.decode      | 1 +
- 3 files changed, 8 insertions(+)
+On Wednesday, 20 May 2026 19:11:25 CEST Christian Schoenebeck wrote:
+> From: sin99xx <sinxx198@gmail.com>
+>=20
+> v9fs_co_readdir_many() dispatches do_readdir_many() to a worker thread
+> that reads V9fsFidState's path.data without holding a rename lock.
+>=20
+> A concurrent rename request, e.g. of its parent dir, causes the FID's
+> absolute path to be altered by freeing the old path string and
+> assigning a new one. This causes a heap-use-after-free race condition
+> while do_readdir_many() is still accessing the old object.
+>=20
+> This allows a DoS by an unprivileged guest user.
+>=20
+> Fix this by wrapping the worker thread dispatch block within a pair of
+> v9fs_path_read_lock() and v9fs_path_unlock() calls, like it's done at
+> other places.
+>=20
+> Fixes: 2149675b195f ("9pfs: add new function v9fs_co_readdir_many()")
+> Fixes: CVE-2026-48004
+> Reported-by: sin99xx <sinxx198@gmail.com>
+> [Christian Schoenebeck: add commit log message]
+> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index fce38dfbb0..3eb08da6df 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -1703,6 +1703,11 @@ static inline bool isar_feature_aa64_sve2_f8mm8(const ARMISARegisters *id)
-     return isar_feature_aa64_sve2(id) && isar_feature_aa64_f8mm8(id);
- }
- 
-+static inline bool isar_feature_aa64_sve2_f8mm4(const ARMISARegisters *id)
-+{
-+    return isar_feature_aa64_sve2(id) && isar_feature_aa64_f8mm4(id);
-+}
-+
- static inline bool
- isar_feature_aa64_sme2_or_sve2_faminmax(const ARMISARegisters *id)
- {
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 5bda5f6c01..2bce6a38a2 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -8458,3 +8458,5 @@ static bool do_fmmla_fp8(DisasContext *s, arg_rrrr_esz *a,
- 
- TRANS_FEAT_NONSTREAMING(FMMLA_sb, aa64_sve2_f8mm8, do_fmmla_fp8, a,
-                         gen_helper_gvec_fmmla_sb)
-+TRANS_FEAT_NONSTREAMING(FMMLA_hb, aa64_sve2_f8mm4, do_fmmla_fp8, a,
-+                        gen_helper_gvec_fmmla_hb)
-diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
-index 6610432528..b53fe6a58f 100644
---- a/target/arm/tcg/sve.decode
-+++ b/target/arm/tcg/sve.decode
-@@ -1809,6 +1809,7 @@ FMMLA_s         01100100 10 1 ..... 111 001 ..... .....  @rda_rn_rm_ex esz=2
- FMMLA_d         01100100 11 1 ..... 111 001 ..... .....  @rda_rn_rm_ex esz=3
- 
- FMMLA_sb        01100100 00 1 ..... 111 000 ..... .....  @rda_rn_rm_ex esz=2
-+FMMLA_hb        01100100 01 1 ..... 111 000 ..... .....  @rda_rn_rm_ex esz=1
- 
- ### SVE2 Memory Gather Load Group
- 
--- 
-2.43.0
+sin99xx, I forgot, may I add your Signed-off-by tag?
+
+  Signed-off-by: sin99xx <sinxx198@gmail.com>
+
+This is required [1] for making you the patch author:
+
+"Your patches must include a Signed-off-by: line. This is a hard requiremen=
+t=20
+because it=E2=80=99s how you say =E2=80=9CI=E2=80=99m legally okay to contr=
+ibute this and happy for it=20
+to go into QEMU=E2=80=9D. For full guidance, read the Code provenance docum=
+entation."
+
+[1] https://www.qemu.org/docs/master/devel/submitting-a-patch.html
+
+> ---
+>  hw/9pfs/codir.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>=20
+> diff --git a/hw/9pfs/codir.c b/hw/9pfs/codir.c
+> index bce7dd96e9..5568399343 100644
+> --- a/hw/9pfs/codir.c
+> +++ b/hw/9pfs/codir.c
+> @@ -220,13 +220,16 @@ int coroutine_fn v9fs_co_readdir_many(V9fsPDU *pdu,
+> V9fsFidState *fidp, bool dostat)
+>  {
+>      int err =3D 0;
+> +    V9fsState *s =3D pdu->s;
+>=20
+>      if (v9fs_request_cancelled(pdu)) {
+>          return -EINTR;
+>      }
+> +    v9fs_path_read_lock(s);
+>      v9fs_co_run_in_worker({
+>          err =3D do_readdir_many(pdu, fidp, entries, offset, maxsize, dos=
+tat);
+> });
+> +    v9fs_path_unlock(s);
+>      return err;
+>  }
+
 
 
