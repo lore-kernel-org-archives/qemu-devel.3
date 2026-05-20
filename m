@@ -4,46 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA891CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 12:56:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 506E8CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 12:56:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPgNZ-0004uf-Q7; Wed, 20 May 2026 08:50:29 -0400
+	id 1wPgP3-0007Ez-Eu; Wed, 20 May 2026 08:52:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1wPgN3-0004Z2-LC; Wed, 20 May 2026 08:50:03 -0400
-Received: from rev.ng ([94.130.142.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1wPgMv-0002c6-Fx; Wed, 20 May 2026 08:49:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:Date
- :Subject:Cc:To:From:Sender:Reply-To:Content-ID:Content-Description:
- Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
- In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=8oUBw4BPNcw1cS7EyqgJWIbubKHGWwZbf3XA93srS5I=; b=Qfa2WSGJn4G5ee/
- YWm0kmE7FtsfgRbH3BiV9LEAmM2k5kMHaS7OPEj6/5dpwRLUSnAlhGQHClmXbjLyZo0Ij8O9WcKH/
- fzBVya1qHZl6WTj7RqIW2LJKa4ESvxnSBifo47DUP35dX/U1KEOvVUgbWvNgGw7waoahTFh8i97dP
- SA=;
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPgP1-00074Q-7p
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 08:51:59 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPgOz-0003d6-GM
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 08:51:58 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-488ab2db91aso51414625e9.3
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 05:51:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779281516; x=1779886316; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KD0LwbPnEERREvv0kdN5YQBpyhPsKT2FNknCk4iL4as=;
+ b=ncKbYTihufUxTkmWnkYFOi3xFVCcYzD7+mTL++1jpC51SYLLPsmQfQVWmEx3v7d7RN
+ U1375c2a459JVE0mMiLmuFybc4Euc2yY8kCaDdLLrTbTB+NyYotLOoqXMkxNFc4QEQvf
+ KLDsPzvCHubG9espCTnEqp2zkwvgSLu/Y+LTL6hhcg/7Na0E84lAIePBREzzQ649O20i
+ mfLWwkIY9DOUPV+B1Zct/J33CULjjyjWWBuJZ1FcHqAjynaX3ICjSxcm4GGjQrc10qE7
+ raXgX3F59csnetJ1xXUck6pvqDwPNapfkvCRoL2wEsxM+B+DVuVr9Kpt2DVfq7GRvxFq
+ mX5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779281516; x=1779886316;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=KD0LwbPnEERREvv0kdN5YQBpyhPsKT2FNknCk4iL4as=;
+ b=laEOiUR51HLFU+qP3apJZ/oG55BEffiuoS28dSOMZfxz/uzJaZb9IkFBN9TQHapRbh
+ JQWWsxV+fu5udIaDYCFK0yANu1EoFkgkQB7eAytLIQzi6lY0hWhhZXQPfL2R4ToWIhXm
+ 8T6KiXo9ssbJ8KS/gskJ7Bt2mSN+T/VDlsguq1ySZ0MXPcsW12wzzm3sxW8thoyvNTPU
+ k2pkruCtKYInNe33LhB1suQ6S2m0GeNDucAULWbGgBldpvyxGNKbc0PaECTUE6haJ/Jh
+ OWrURMCyjH/JzkeDfxgw8qnyIFskRb/u56vSQisRl6UpUMqwwa7m5/la5vfe704pc7Og
+ gROQ==
+X-Gm-Message-State: AOJu0Yw9HfTQTYDAkZ235r6m+V6pKQt6PDuu8kqxeAydt3RMXnL3Bqj9
+ t7SZp3roJZCozZ+aZXliWN1mBllFRKpO+FsQ8qipl7npNlOoxGHskluP2HmMpnPhivwKYAZR1YV
+ tAO3BD9w=
+X-Gm-Gg: Acq92OHlaCXg4C0RJeslN1w/lzbF5CdvoqSVZidWbTNHnQjZJ1CwgMFAKXXtu+EUp+Q
+ pTn8iI+7Vu2PgSEAKGrKgCQRzZcumjEwM5n+4KUzxe/pToRZvsvK8ekGFmQ2igT/Ii1w9afulFE
+ rj9weKYv5+GPmgCE8yUbeDP/ZpXKHuFg77ZL3Mw/F457XsAjRPFZDL8nj1ItPWMa7xu0bN8T970
+ 2RUyilakrXRhhKQNJnDiLkVPO00LIo+XVMKnGl0m53oxvjzyHi1qPUT38P2eY8qXJS7dMSoIw2z
+ ycxO0XiRzkJnt6f+//Ag43Zj+cKfaC78SrpbJAAKWz6xAHTH2yDhsi4wTrB1do/l/+8wDvR6eG0
+ w5upEl43tWFs37iyvYXqkXbOWaHm1VhHZ6nFhNPuNVhC6gL8qZOptxAdnNGyK1MDIdnetZbr013
+ /1JBoWH+3onPJ8hUkB6Jr/rT69YlCaa8z9CyT6KwxWL5vjDSU2Jfg2flez08eWLRjRk0ZwJsAg6
+ JZOAsP6kV4=
+X-Received: by 2002:a05:600c:181c:b0:48f:d5b2:7c1a with SMTP id
+ 5b1f17b1804b1-48fe60eca66mr238393215e9.13.1779281515851; 
+ Wed, 20 May 2026 05:51:55 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48feaf0fb46sm129829755e9.11.2026.05.20.05.51.54
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 20 May 2026 05:51:55 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org,
- alistair.francis@wdc.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v7 00/27] single-binary: Make riscv cpu.h target independent
-Date: Wed, 20 May 2026 14:53:38 +0200
-Message-ID: <20260520125406.28693-1-anjo@rev.ng>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ James Hilliard <james.hilliard1@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v11 2/2] tcg: Optimize INDEX_op_mul[us]2 for 0 and 1
+Date: Wed, 20 May 2026 14:51:39 +0200
+Message-ID: <20260520125139.13352-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260520125139.13352-1-philmd@linaro.org>
+References: <20260520125139.13352-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -57,165 +99,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+From: Richard Henderson <richard.henderson@linaro.org>
 
-this is a first patchset moving towards single-binary support for riscv.
-Additional patchsets for hw/ and target/ are based on this one so it's
-best to make sure the approach taken is ok.  Most patches in this set
-concern fields in CPUArchState which are either widened (usually to
-uint64_t) or fixed to a smaller size which handles all use cases.
+Zero operands produce a zero high and low product. One operands produce
+a copy of the other operand and a zero or sign extension in the high
+half.
 
-General purpose registers and fields mapped to TCG are dealt with by
-widening the type and applying an offset to tcg_global_mem_new() to
-correctly handle 32-bit targets on big endian hosts.
+Fold those cases during TCG optimization so wide-multiply idioms used by
+target translators can collapse before code generation.
 
-Let me know what you think of the direction taken here and if you would
-prefer something else.
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ tcg/optimize.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-Changes in v2:
-  - Use BIT() to define misa extension bits in "Use 32 bits for misa
-    extensions";
-
-  - Squash "Fix size of mcause" into "Fix size of trivial CPUArchState
-    fields";
-
-  - Bump VMSTATE version_id and minimum_version_id for "cpu/pmp/entry",
-    "cpu/pmp", "cpu/hyper", "cpu/vector", "cpu/rv128", "cpu/debug",
-    "cpu/envcfg", "cpu/pmu", "cpu/jvt", "cpu/ssp", and "cpu".  Migration
-    from older versions is broken.
-
-Changes in v3:
-  - Fix formatting issues during printing;
-
-  - Move assert before extract64() in pmu_read_ctr();
-
-  - Added patch 5/34 fixing a bug in rmw_cd_ctr_cfg() where bit 30 is
-    zeroed instead of bit 62 (MHPMEVENTH_* vs MHPMEVENT_*);
-
-  - Added privilege_mode_t typedef for storing PRV_* fields;
-
-  - Added reviewed-bys.
-
-Changes in v4:
-  - Used target-specific includes (target/riscv/*) for csr.h and
-    debug.h (Philippe);
-
-  - Migrated mcontext (Philippe), migration entry is added to existing
-    patch modifiying mcontext (patch 29 "Fix size of trigger data");
-
-  - Added reviewed-bys and acked-bys.
-
-Changes in v5:
-  - Removed first 8 patches that were pulled out by Alistair;
-
-  - Rebased on 20251103033713.904455-1-alistair.francis@wdc.com;
-
-  - Added reviewed-bys and acked-bys.
-
-Changes in v6:
-  - Rebased on master since previous base has since been merged.
-
-  - Patch 2/27: `target/riscv: Fix size of vector CSRs`, changed
-    arguments of functions in vector_helper.c to match new expected
-    types.
-
-  - Patch 4/27: `target/riscv: Fix size of frm and fflags`, update
-    missed `rm` function arguments to match env type.
-
-  - Patch 10/27: `target/riscv: Fix size of excp_uw2`, update
-    missed `excp_uw2` function arguments to match env type.
-
-  - Patch 12/27: `target/riscv: Fix size of priv`, update
-    missed function arguments to use privilege_mode_t.
-
-  - Patch 13/27: `target/riscv: Fix size of gei fields`, masking when
-    assigning gei fields is widened to 64-bit as geilen is already
-    verified to be smaller than the target long size, and an
-    out-of-bounds shift would be UB anyway
-
-  - Added patch 26/27 `target/riscv: Pass address as uint64_t in
-    cpu_set_exception_base()` to handle a new exposed function in cpu.h
-
-  - Added patch 27/27 `target/riscv: Fix pmp.h/cpu.h circular inclusion`
-    to address a circular dependency between pmp.h and cpu.h.
-
-Changes in v7:
-  - Change return type of riscv_cpu_xlen() from int to uint16_t (Philippe)
-
-  - Update irq_overflow_left comment (Philippe)
-
-  - Return RISCVException in externally facing CSR functions (Philippe).
-
-Anton Johansson (27):
-  target/riscv: Fix size of gpr and gprh
-  target/riscv: Fix size of vector CSRs
-  target/riscv: Fix size of pc, load_[val|res]
-  target/riscv: Fix size of frm and fflags
-  target/riscv: Fix size of badaddr and bins
-  target/riscv: Fix size of guest_phys_fault_addr
-  target/riscv: Fix size of priv_ver and vext_ver
-  target/riscv: Fix size of retxh
-  target/riscv: Fix size of ssp
-  target/riscv: Fix size of excp_uw2
-  target/riscv: Fix size of sw_check_code
-  target/riscv: Fix size of priv
-  target/riscv: Fix size of gei fields
-  target/riscv: Fix size of [m|s|vs]iselect fields
-  target/riscv: Fix arguments to board IMSIC emulation callbacks
-  target/riscv: Fix size of irq_overflow_left
-  target/riscv: Indent PMUFixedCtrState correctly
-  target/riscv: Replace target_ulong in riscv_cpu_get_trap_name()
-  target/riscv: Replace target_ulong in riscv_ctr_add_entry()
-  target/riscv: Fix size of trigger data
-  target/riscv: Fix size of mseccfg
-  target/riscv: Move debug.h include away from cpu.h
-  target/riscv: Move CSR declarations to separate csr.h header
-  target/riscv: Introduce externally facing CSR access functions
-  target/riscv: Make pmp.h target_ulong agnostic
-  target/riscv: Pass address as uint64_t in cpu_set_exception_base()
-  target/riscv: Fix pmp.h/cpu.h circular inclusion
-
- target/riscv/cpu.h                            | 264 +++++++-----------
- target/riscv/csr.h                            | 102 +++++++
- target/riscv/debug.h                          |   2 -
- target/riscv/internals.h                      |   4 +-
- target/riscv/pmp.h                            |  23 +-
- target/riscv/pmu.h                            |   2 +-
- hw/intc/riscv_imsic.c                         |  34 +--
- hw/riscv/riscv_hart.c                         |   7 +-
- linux-user/riscv/signal.c                     |   5 +-
- target/riscv/cpu.c                            |  22 +-
- target/riscv/cpu_helper.c                     |  65 +++--
- target/riscv/csr.c                            |  93 +++---
- target/riscv/debug.c                          |   1 +
- target/riscv/fpu_helper.c                     |  10 +-
- target/riscv/gdbstub.c                        |   3 +-
- target/riscv/kvm/kvm-cpu.c                    |   1 +
- target/riscv/machine.c                        |  81 +++---
- target/riscv/mips_csr.c                       |   1 +
- target/riscv/monitor.c                        |   3 +-
- target/riscv/op_helper.c                      |  28 +-
- target/riscv/pmp.c                            |  14 +-
- target/riscv/pmu.c                            |   9 +-
- target/riscv/riscv-qmp-cmds.c                 |   1 +
- target/riscv/tcg/tcg-cpu.c                    |   1 +
- target/riscv/th_csr.c                         |   1 +
- target/riscv/translate.c                      |  60 ++--
- target/riscv/vector_helper.c                  | 125 +++++----
- .../riscv/insn_trans/trans_privileged.c.inc   |   2 +-
- target/riscv/insn_trans/trans_rvi.c.inc       |  16 +-
- target/riscv/insn_trans/trans_rvm.c.inc       |  16 +-
- target/riscv/insn_trans/trans_rvv.c.inc       |  22 +-
- target/riscv/insn_trans/trans_rvzicfiss.c.inc |  22 +-
- 32 files changed, 585 insertions(+), 455 deletions(-)
- create mode 100644 target/riscv/csr.h
-
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index ef5eb2cf175..fcdef25beed 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -2212,6 +2212,34 @@ static bool fold_multiply2(OptContext *ctx, TCGOp *op)
+             tcg_opt_gen_movi(ctx, op2, rh, h);
+             return true;
+         }
++
++        if (b == 0) {
++            op2 = opt_insert_before(ctx, op, 0, 2);
++            tcg_opt_gen_movi(ctx, op2, rl, 0);
++            tcg_opt_gen_movi(ctx, op, rh, 0);
++            return true;
++        }
++        if (b == 1) {
++            op2 = opt_insert_before(ctx, op, 0, 2);
++            tcg_opt_gen_mov(ctx, op2, rl, op->args[2]);
++
++            switch (op->opc) {
++            case INDEX_op_mulu2:
++                tcg_opt_gen_movi(ctx, op, rh, 0);
++                break;
++            case INDEX_op_muls2:
++                op->opc = INDEX_op_sar;
++                op->args[0] = rh;
++                op->args[1] = rl;
++                op->args[2] =
++                    arg_new_constant(ctx, tcg_type_size(ctx->type) * 8 - 1);
++                break;
++            default:
++                g_assert_not_reached();
++            }
++
++            return true;
++        }
+     }
+     return finish_folding(ctx, op);
+ }
 -- 
-2.52.0
+2.53.0
 
 
