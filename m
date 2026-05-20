@@ -4,79 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4CCDCD4F3C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EAE3CD4F3D
 	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 13:10:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPgg6-000710-K8; Wed, 20 May 2026 09:09:38 -0400
+	id 1wPgf0-0004kD-RC; Wed, 20 May 2026 09:08:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPgg5-0006zF-Bz
- for qemu-devel@nongnu.org; Wed, 20 May 2026 09:09:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
+ id 1wPgey-0004iT-Bj; Wed, 20 May 2026 09:08:28 -0400
+Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPgg3-0001zt-On
- for qemu-devel@nongnu.org; Wed, 20 May 2026 09:09:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779282575;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/zqVb2IQz5r+HEpxkJd7X8jW8hDW9f575CaZfXZUowU=;
- b=BIda9HTz8KvzIKydxobvCdpjJSKZBxT8RbjJ2XjuOGX3YXvueSL847obUGjt27LtBLNz44
- 9Wnjg94PN7oSzmujV1a+g8lavqBG51ZV+AWvU61ZiXknTBd3K2dtPAASshuk5fCyaboVIo
- e8kbNDlivTuEVJe3pvkv3wFDNGylnEk=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-628-TuI-hYwDOuW9MRzPu3rKmg-1; Wed,
- 20 May 2026 09:09:28 -0400
-X-MC-Unique: TuI-hYwDOuW9MRzPu3rKmg-1
-X-Mimecast-MFC-AGG-ID: TuI-hYwDOuW9MRzPu3rKmg_1779282564
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8786919560B4; Wed, 20 May 2026 13:09:24 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0C74819560A2; Wed, 20 May 2026 13:09:24 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A3FA421E6A01; Wed, 20 May 2026 15:09:21 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Brian Cain
- <brian.cain@oss.qualcomm.com>
-Subject: Re: [PATCH] MAINTAINERS: Fix hexagon-linux-user.mak path
-In-Reply-To: <57f7a25a-dce1-452f-8529-187d66a6d8de@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 20 May 2026 14:59:02
- +0200")
-References: <20260520123947.12711-1-philmd@linaro.org>
- <87fr3ms0oi.fsf@pond.sub.org>
- <f52ebf28-1921-4ada-a7c5-ec3342cd3acb@linaro.org>
- <57f7a25a-dce1-452f-8529-187d66a6d8de@linaro.org>
-Date: Wed, 20 May 2026 15:09:21 +0200
-Message-ID: <87fr3mkz26.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
+ id 1wPgew-000133-Eh; Wed, 20 May 2026 09:08:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=Cc:To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+ Message-Id:Date:Subject:From:Sender:Reply-To:Content-ID:Content-Description:
+ Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+ In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=rA0Piz/dDSiwSzNPDKiaz6w3T5sBkBR4dsNFyBT3VOI=; b=gyez8fG7se575AH
+ uctzKk6ymxjAcbqBhbSDFWuKj8HxtboAHGtZzUwtC5m54kKV5G21DNH4QNF2JLGfSjkGsbc+1E24W
+ UckKGAZ46lQ+hnyGjchX8ZPN3JzsCH+iTOm2xCM9PuU49ZJQyP3veRuA6VKeGX/rwuNDat2mc45W1
+ Ng=;
+Subject: [PATCH v3 00/14] single-binary: Compile hw/riscv once
+Date: Wed, 20 May 2026 15:12:52 +0200
+Message-Id: <20260520-hw-riscv-cpu-int-v3-0-d1123ea63d9c@rev.ng>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/22OQQ6CMBBFr0K6dkw7FAFX3sO4KHSA2RTTYtUQ7
+ m4h0Zjo8k3y3p9ZBPJMQRyzWXiKHHh0CfJdJtrBuJ6AbWKBEguFSsJwB8+hjdBeb8BuAnmgikj
+ VVOdSJO3qqePHljxfEg8cptE/t4Wo1us7Vv7GogIJFrXRUlc2N+aUntq7XqyliF82qj82JpsaX
+ dsS26LB7mMvy/ICfiOOWusAAAA=
+X-Change-ID: 20251210-hw-riscv-cpu-int-06e8ee19e930
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, philmd@linaro.org, 
+ pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com, 
+ alistair.francis@wdc.com
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779282793; l=4505;
+ i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
+ bh=WQ8L/h9nAA1HLU1+ckce/pX4+Rtr1edz4eOiFjt2Ky4=;
+ b=r1F8GWfuQrMVprZutKW/Q89bFCgif4aua4B+lzwPW3TwHl1iwHKxtM09q+x9OP7nXRlJ+1S6c
+ 02JWzf77T8oDS2vYW4XzqF4PIb8sw1039vCnBGMJ95ZeBBCnH7TaPO3
+X-Developer-Key: i=anjo@rev.ng; a=ed25519;
+ pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,62 +70,106 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+Compiles hw/riscv a single time for both qemu-system-riscv32 and
+qemu-system-riscv64 by adopting the TargetInfo API and by moving
+machine definitions to generic QOM interfaces. This is the same approach
+as taken by Philippe in
 
-> On 20/5/26 14:57, Philippe Mathieu-Daud=C3=A9 wrote:
->> On 20/5/26 14:52, Markus Armbruster wrote:
->>> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
->>>
->>>> Fixes: 812b31d3f91 ("configs: rename default-configs to configs and re=
-organise")
->>>> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->>>> ---
->>>> =C2=A0 MAINTAINERS | 2 +-
->>>> =C2=A0 1 file changed, 1 insertion(+), 1 deletion(-)
->>>>
->>>> diff --git a/MAINTAINERS b/MAINTAINERS
->>>> index b75f3222f2f..2a4d124fb3c 100644
->>>> --- a/MAINTAINERS
->>>> +++ b/MAINTAINERS
->>>> @@ -256,7 +256,7 @@ X: target/hexagon/gen_idef_parser_funcs.py
->>>> =C2=A0 F: linux-user/hexagon/
->>>> =C2=A0 F: tests/tcg/hexagon/
->>>> =C2=A0 F: disas/hexagon.c
->>>> -F: configs/targets/hexagon-linux-user/default.mak
->>>> +F: configs/targets/hexagon-linux-user.mak
->>>> =C2=A0 F: docker/dockerfiles/debian-hexagon-cross.docker
->>>
->>> This one's wrong, too.
->> Already fixed in Alex's tree:
->> https://lore.kernel.org/qemu-devel/20260518102222.80735-2-philmd@linaro.=
-org/
->> Pierrick suggested to repost patch dependencies already queued in
->> maintainer tree when posting series; while this seem counter
->> productive it could indeed have saved us time.
->>=20
->>> I have an unsent patch fixing both.=C2=A0 In fact, I have an unsent ser=
-ies
->>> fixing *all* F: patterns that don't resolve to any file.
->
-> I looked for your series without success, then realized you mentioned
-> it is "unsent". This patch is still valid then.
+    "single-binary: Make hw/arm/ common"
+    (20251021205741.57109-1-philmd@linaro.org).
 
-Yes.
+All in all, the number of compilation when building both
+riscv[32|64]-softmmu is reduced by 11, and the binary size of
+qemu-system-riscv[32|64] is increased by 0.11% and 0.026% respectively
+(corresponding to 65k and 14k bytes).
 
->                                                 Why mention unsent work?
+This patchset is based on:
 
-To avoid duplicated work.
+    "single-binary: Make riscv cpu.h target independent"
+    (20260520125406.28693-1-anjo@rev.ng).
 
->> Oh :( I already sent various patches about that yesterday :(
+Branch passing CI can be found here:
 
-I've been picking them into my tree as I went.  I may have missed the
-odd patch, but I'll fix that.
+  https://gitlab.com/AntonJohansson/qemu/-/pipelines/2215536778
 
->>>
->>>> =C2=A0 F: gdbstub/gdb-xml/hexagon*.xml
->>>> =C2=A0 T: git https://github.com/quic/qemu.git hex-next
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+---
+Changes in v3:
+- Dropped merged prequisite patchsets.
+- patch 5/14 "configs/target: Implement per-binary TargetInfo structure
+  for riscv": Use new target_info_init() TargetInfo registration.
+- patch 7/14 "target/riscv: Replace TYPE_RISCV_CPU_BASE": Rename
+  virt_default_cpu_type() -> riscv_default_cpu_type() and define in
+  machines-qom.h.
+- Dropped patch "[PATCH v2 11/14] target/riscv: Make pmu.h target-agnostic":
+  This patch replaced target_ulongs with privilege_mode_t and has been folded
+  into the prerequisite patchset introducing the typedef. 
+- Added patch 12/14 "target/riscv: Move target_long.h inclusion
+  away from cpu.h": Moves target_long.h inclusion to target specific
+  header. 
+- Link to v2: https://lore.kernel.org/qemu-devel/20251221-hw-riscv-cpu-int-v2-0-eb49d72c5b2f@rev.ng
+
+Changes in v2:
+- Inlined sifive_cpu.h runtime functions and removed header (Philippe);
+- Moved IRQ_LOCAL_GUEST_MAX macro to field in RISCVCPUDef (Philippe);
+- Added reviewed-bys;
+- Link to v1: https://lore.kernel.org/qemu-devel/20251217-hw-riscv-cpu-int-v1-0-d24a4048d3aa@rev.ng.
+
+---
+Anton Johansson (14):
+      hw/riscv: Register generic riscv[32|64] QOM interfaces
+      hw/riscv: Add macros and globals for simplifying machine definitions
+      hw/riscv: Filter machine types for qemu-system-riscv32/64 binaries
+      hw/core: Add riscv[32|64] to "none" machine
+      configs/target: Implement per-binary TargetInfo structure for riscv
+      target-info: Add target_riscv64()
+      target/riscv: Replace TYPE_RISCV_CPU_BASE
+      target/riscv: Remove ifdefs in cpu.h
+      target/riscv: Replace TARGET_LONG_BITS in header exposed to common code
+      target/riscv: Move riscv_pmu_read_ctr() to internal csr.h header
+      target/riscv: Stub out kvm functions
+      target/riscv: Move target_long.h inclusion away from cpu.h
+      hw/riscv: Define SiFive E/U CPUs using runtime conditions
+      hw/riscv: Compile once
+
+ include/hw/riscv/machines-qom.h   | 58 +++++++++++++++++++++++++++++++++++++++
+ include/hw/riscv/sifive_cpu.h     | 31 ---------------------
+ include/hw/riscv/sifive_e.h       |  1 -
+ include/hw/riscv/sifive_u.h       |  1 -
+ include/qemu/target-info.h        |  7 +++++
+ target/riscv/cpu.h                | 44 ++++++-----------------------
+ target/riscv/cpu_bits.h           |  2 --
+ target/riscv/csr.h                |  3 ++
+ target/riscv/internals.h          |  1 +
+ target/riscv/pmu.h                |  2 --
+ configs/targets/riscv32-softmmu.c | 26 ++++++++++++++++++
+ configs/targets/riscv64-softmmu.c | 26 ++++++++++++++++++
+ hw/core/null-machine.c            |  3 ++
+ hw/intc/riscv_imsic.c             |  4 ++-
+ hw/riscv/boston-aia.c             |  3 +-
+ hw/riscv/microblaze-v-generic.c   |  5 ++--
+ hw/riscv/microchip_pfsoc.c        |  2 ++
+ hw/riscv/opentitan.c              |  2 ++
+ hw/riscv/shakti_c.c               |  2 ++
+ hw/riscv/sifive_e.c               |  5 +++-
+ hw/riscv/sifive_u.c               |  9 ++++--
+ hw/riscv/spike.c                  |  4 ++-
+ hw/riscv/virt.c                   |  5 +++-
+ hw/riscv/xiangshan_kmh.c          |  2 ++
+ target-info-qom.c                 |  9 ++++++
+ target-info.c                     |  5 ++++
+ target/riscv/cpu.c                | 14 ++++++++--
+ target/riscv/kvm/kvm-stub.c       | 23 ++++++++++++++++
+ target/riscv/machine.c            | 17 ++++++++++++
+ target/riscv/pmu.c                |  1 +
+ configs/targets/meson.build       |  1 +
+ hw/riscv/meson.build              | 36 ++++++++++++------------
+ target/riscv/kvm/meson.build      |  1 +
+ 33 files changed, 254 insertions(+), 101 deletions(-)
 
 
