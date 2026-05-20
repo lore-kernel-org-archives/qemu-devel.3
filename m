@@ -4,90 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2915CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 08:02:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 247C6CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 08:03:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPbrB-0003qS-FC; Wed, 20 May 2026 04:00:45 -0400
+	id 1wPbtp-0006Ws-In; Wed, 20 May 2026 04:03:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1wPbqi-0003et-8e
- for qemu-devel@nongnu.org; Wed, 20 May 2026 04:00:22 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1wPbqT-00049d-08
- for qemu-devel@nongnu.org; Wed, 20 May 2026 04:00:08 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2ba1e9d3687so29765915ad.3
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 00:59:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779263997; x=1779868797; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=keXF5Y5f8VicSkJdCNSw0VaXFvzzvmv1oU3yOpECxHg=;
- b=qQrJoywcbonx2wiuCBSIyAWITPkf9nUEgmDbcAtEVXewfyMvSUJGYNEnS3mQf3Wdxs
- ici/JsFscIpPXgpZADlejyPBTtHpr9Ji7boUAGF4MfnEhMm8IWHW6CTBFkToVUfcQBL8
- kZ3NMEfK6l1LgbOVjgjssObCzH4FQ0EyMuM3W4OHm6GtrsAxoeMXG6D1vyoGWgaRwj1m
- JgksKWluSmAKwJHmpjh6cNXi8adkLrXPJ0kVm7bw3X10QkI2YbP7o8zjlwNBc8jnJyZK
- mqvuFvDnVy/1/vaiuPxr1AKslJ2rs34IHIYqYkOUv340thP9sz8L3CswnjrlT/1FQC+i
- +4WQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779263997; x=1779868797;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=keXF5Y5f8VicSkJdCNSw0VaXFvzzvmv1oU3yOpECxHg=;
- b=XD4wnlehbBUB5r9jAf7m2JBB9VQGx+NIdaWGc33UAx/+RjeWw7Z6ic+yYc9LEQKXjk
- R44B2KhQCTX4NEkgFaj6K5wgmhMO/iq3TKqr/jByUY9Ti2YD+/wMCAIu7yHuQAmG2WZS
- R3P4FbqkHkW5BOm8oPt7Y1cE8EmWwjnrFKJ/9F9AzX9YuebiRNB0N5J8/WoVmgYH7fr4
- RzQXhr6rtsykdHHZirL3nxc4ELgFyyfjXrUsqhVvK7hB2fjIPAtjqBZ60RFhfkx6Vfev
- RcdT4gs3zDD/1MkbX4Ec0h9uFjLoL01W1fj9iyTLfw2hKgMfL0vw5mKl1I+jGYvP5PN7
- 7S5A==
-X-Gm-Message-State: AOJu0YwNjWdRW0re70gIDZQk6aVBywoSf77b7cdY2wq+WGykIyN8T4Pv
- psCUo0G71yzPiemy3FUXHdlj0PWwgrNIPxvXkvZMPDVZlWs7CheXE/yLB/7zHg==
-X-Gm-Gg: Acq92OGHm+yWuvm9W2EYD+tVh/a2i9C3g2/+iKVmU2SY+amFyl2ZXE4ZKYOuUr/L5sK
- cdz1Bbjsh51NO3B/0PKznsDF8WiEXmdcYPgw/0ij6COqDTHWAM7vQPP4cv63cI7m6Rc8pHzSRed
- DkG6bVV3XpKykjNd9/y9krxsaTArQ32app1iHTcWf9QpMRp5Z0C/4W/HFjy6PifoshzXmcJHMNr
- Gd7ZLHXNjtv+W/MVCdPdRc7c5+/X/eoem62kJSh2BKEvyUN/XsPNSlhrdKUmuf9aySFyji51+qO
- eMtmcoZy3tQnfyfnRU6jCCMqQntWIsPWe+QcP37xSQuOgMKadL7cj+qCAvwam/5olRDFsCNOZ4O
- EWLpjJcCYs3fQyOJfiB57gOvMca+kwb7lnSq0NTowAVMYweo+6VT7PqSpF8lH8wE3ZgCEXTcsFy
- jhrOXIkPoYdWkGHYrHoAl2LuWpy3DH
-X-Received: by 2002:a17:902:ea01:b0:2bd:d7b5:83ed with SMTP id
- d9443c01a7336-2bdd7b5879cmr138691545ad.39.1779263997174; 
- Wed, 20 May 2026 00:59:57 -0700 (PDT)
-Received: from jeuk-MS-7D42.. ([211.226.54.223])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2bd5c05ffbesm216608435ad.27.2026.05.20.00.59.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 00:59:56 -0700 (PDT)
-From: Jeuk Kim <jeuk20.kim@gmail.com>
-To: qemu-devel@nongnu.org,
-	stefanha@redhat.com
-Cc: kwolf@redhat.com, hreitz@redhat.com, farosas@suse.de, lvivier@redhat.com,
- pbonzini@redhat.com, qemu-block@nongnu.org, jeuk20.kim@samsung.com,
- j-young.choi@samsung.com, jaemyung.lee@samsung.com,
- Jaemyung Lee <ldc.jml@gmail.com>
-Subject: [PULL 4/5] hw/ufs: Add UFS Write Booster Support
-Date: Wed, 20 May 2026 16:59:30 +0900
-Message-ID: <d9fe9d8e6b5dcf0a6d5651600e5a9f68817c67dd.1779263628.git.jeuk20.kim@samsung.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1779263628.git.jeuk20.kim@samsung.com>
-References: <cover.1779263628.git.jeuk20.kim@samsung.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1wPbsy-00067s-Hc
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 04:02:39 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1wPbsr-00054L-Vx
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 04:02:36 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8AxVul0ag1qR4ULAA--.27896S3;
+ Wed, 20 May 2026 16:01:57 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJCxWeByag1qRX+JAA--.64702S3;
+ Wed, 20 May 2026 16:01:54 +0800 (CST)
+Subject: Re: [PATCH v2 3/4] target/loongarch: Add kvm support dintc
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: qemu-devel@nongnu.org, lixianglai@loongson.cn, chenhuacai@loongson.cn
+References: <20260507092358.2479135-1-gaosong@loongson.cn>
+ <20260507092358.2479135-4-gaosong@loongson.cn>
+ <6750a31c-ee34-076e-eb89-f01b398b0a3b@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <05188f9a-f587-2b5d-5066-d09abe91c2bf@loongson.cn>
+Date: Wed, 20 May 2026 16:04:00 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <6750a31c-ee34-076e-eb89-f01b398b0a3b@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Language: en-US
+X-CM-TRANSID: qMiowJCxWeByag1qRX+JAA--.64702S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3AFWxWr4rJFykKFyUuF43XFc_yoW3XF43pr
+ 1kJrW5GFyUGrn7Jw17Jry5XryUXr1UG3WUXr1xXFyUAr4UJr1jqr10qr1qgF1UAw48Jr15
+ Ar18Zrsxur17JrgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE
+ 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
+ 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUzsqW
+ UUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,899 +82,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jaemyung Lee <ldc.jml@gmail.com>
+在 2026/5/20 下午2:44, Bibo Mao 写道:
+>
+>
+> On 2026/5/7 下午5:23, Song Gao wrote:
+>> This patch adds Kvm put/get msgint CSRs and check msgint feature.
+>>
+>> Signed-off-by: Song Gao <gaosong@loongson.cn>
+>> ---
+>>   target/loongarch/cpu.c     |  5 ++-
+>>   target/loongarch/cpu.h     |  1 +
+>>   target/loongarch/kvm/kvm.c | 69 ++++++++++++++++++++++++++++++++++++++
+>>   3 files changed, 72 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+>> index e22568c84a..fe60c9b92b 100644
+>> --- a/target/loongarch/cpu.c
+>> +++ b/target/loongarch/cpu.c
+>> @@ -443,9 +443,6 @@ static void loongarch_max_initfn(Object *obj)
+>>         cpu->ptw = ON_OFF_AUTO_AUTO;
+>>       if (tcg_enabled()) {
+>> -        cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, 
+>> MSG_INT, 1);
+>> -        cpu->msgint = ON_OFF_AUTO_AUTO;
+>> -
+>>           uint32_t data = cpu->env.cpucfg[2];
+>>           data = FIELD_DP32(data, CPUCFG2, HPTW, 1);
+>>           /* Enable LA v1.1 instructions */
+>> @@ -456,6 +453,8 @@ static void loongarch_max_initfn(Object *obj)
+>>           data = FIELD_DP32(data, CPUCFG2, SCQ, 1);
+>>           cpu->env.cpucfg[2] = data;
+>>       }
+>> +    cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, 
+>> MSG_INT, 1);
+>> +    cpu->msgint = ON_OFF_AUTO_AUTO;
+>>   }
+>>     #if defined(CONFIG_KVM)
+>> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+>> index 096d778928..e6bbcded95 100644
+>> --- a/target/loongarch/cpu.h
+>> +++ b/target/loongarch/cpu.h
+>> @@ -301,6 +301,7 @@ enum loongarch_features {
+>>       LOONGARCH_FEATURE_PV_IPI,
+>>       LOONGARCH_FEATURE_STEALTIME,
+>>       LOONGARCH_FEATURE_PTW,
+>> +    LOONGARCH_FEATURE_MSGINT,
+>>   };
+>>     typedef struct  LoongArchBT {
+>> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+>> index 9d844c4905..dad260636a 100644
+>> --- a/target/loongarch/kvm/kvm.c
+>> +++ b/target/loongarch/kvm/kvm.c
+>> @@ -35,6 +35,13 @@ const KVMCapabilityInfo 
+>> kvm_arch_required_capabilities[] = {
+>>       KVM_CAP_LAST_INFO
+>>   };
+>>   +static bool kvm_cpu_has_msgint(CPUState *cs)
+>> +{
+>> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+>> +
+>> +    return FIELD_EX64(cpu->env.cpucfg[1], CPUCFG1, MSG_INT);
+>> +}
+>> +
+>>   static int kvm_get_stealtime(CPUState *cs)
+>>   {
+>>       CPULoongArchState *env = cpu_env(cs);
+>> @@ -358,6 +365,20 @@ static int kvm_loongarch_get_csr(CPUState *cs)
+>>         ret |= kvm_loongarch_get_pmu(cs);
+>>   +    if (kvm_cpu_has_msgint(cs)) {
+> Would you like to add some comments that CSR register MSGIS getting 
+> must be put after CSR register CSR_ESTAT? Since register CSR_ESTAT 
+> will sync software pending MSGINT status to hardware register and 
+> modify HW CSR MSGIS registers.
+>
+> So this piece of code should put after CSR_ESTAT register reading.
+>
+I will correct it on v3.
 
-Add UFS Write Booster implementation which follows UFS 4.1 Spec.
-
-Signed-off-by: Jaemyung Lee <jaemyung.lee@samsung.com>
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
----
- hw/ufs/lu.c         | 102 +++++++++-
- hw/ufs/ufs.c        | 444 ++++++++++++++++++++++++++++++++++++++++++--
- hw/ufs/ufs.h        |  47 +++++
- include/block/ufs.h |  55 ++++++
- 4 files changed, 628 insertions(+), 20 deletions(-)
-
-diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
-index 709d6adcf6..f13fc6e342 100644
---- a/hw/ufs/lu.c
-+++ b/hw/ufs/lu.c
-@@ -58,13 +58,113 @@ static void ufs_build_scsi_response_upiu(UfsRequest *req, uint8_t *sense,
-                           status, data_segment_length);
- }
- 
-+#define UFS_GROUP_NUMBER_MASK 0x1F
-+#define UFS_WB_GROUP_NUMBER_DEFAULT 0x00 /* 00000b */
-+#define UFS_WB_GROUP_NUMBER_PINNED 0x18 /* 11000b */
-+static bool ufs_wb_check_write_pinned(UfsHc *u, UfsRequest *req)
-+{
-+    uint8_t cmd = req->req_upiu.sc.cdb[0];
-+    uint8_t group_number = UFS_WB_GROUP_NUMBER_DEFAULT;
-+
-+    if (u->attributes.wb_buffer_partial_flush_mode != UFS_WB_FLUSH_PINNED) {
-+        return false;
-+    }
-+
-+    if (cmd == WRITE_16) {
-+        group_number = req->req_upiu.sc.cdb[14] & UFS_GROUP_NUMBER_MASK;
-+
-+    } else if (cmd == WRITE_10) {
-+        group_number = req->req_upiu.sc.cdb[6] & UFS_GROUP_NUMBER_MASK;
-+    }
-+
-+    return (group_number == UFS_WB_GROUP_NUMBER_PINNED);
-+}
-+
-+static void ufs_wb_process_write_normal(UfsHc *u, uint32_t transfered_len)
-+{
-+    UfsWb *wb = &u->wb;
-+    uint64_t curr_bytes, used_bytes, remain_bytes;
-+
-+    if (!wb->curr_bytes) {
-+        return;
-+    }
-+
-+    curr_bytes = wb->curr_bytes - wb->pinned_curr_bytes;
-+    used_bytes = wb->used_bytes - wb->pinned_used_bytes;
-+
-+    if (used_bytes >= curr_bytes) {
-+        return;
-+    }
-+
-+    remain_bytes = curr_bytes - used_bytes;
-+    wb->used_bytes += MIN(remain_bytes, transfered_len);
-+}
-+
-+#define UFS_WB_TOTAL_WRITTEN_DIV (10 * 1024 * 1024) /* 10MiB */
-+static void ufs_wb_process_write_pinned(UfsHc *u, uint32_t transfered_len)
-+{
-+    UfsWb *wb = &u->wb;
-+    uint64_t remain_bytes, remain_data;
-+    uint32_t total_written;
-+
-+    if (!wb->pinned_curr_bytes) {
-+        ufs_wb_process_write_normal(u, transfered_len);
-+        return;
-+    }
-+
-+    if (wb->pinned_used_bytes >= wb->pinned_curr_bytes) {
-+        ufs_wb_process_write_normal(u, transfered_len);
-+        return;
-+    }
-+
-+    remain_bytes = wb->pinned_curr_bytes - wb->pinned_used_bytes;
-+    if (remain_bytes >= transfered_len) {
-+        wb->pinned_total_written_bytes += transfered_len;
-+        wb->pinned_used_bytes += transfered_len;
-+        wb->used_bytes += transfered_len;
-+        remain_data = 0;
-+
-+    } else {
-+        wb->pinned_total_written_bytes += remain_bytes;
-+        wb->pinned_used_bytes += remain_bytes;
-+        wb->used_bytes += remain_bytes;
-+        remain_data = transfered_len - remain_bytes;
-+    }
-+
-+    total_written = wb->pinned_total_written_bytes / UFS_WB_TOTAL_WRITTEN_DIV;
-+    u->attributes.pinned_wb_cumm_written_size = cpu_to_be32(total_written);
-+
-+    ufs_wb_process_write_normal(u, remain_data);
-+}
-+
-+static void ufs_wb_process_write_req(UfsRequest *req, uint32_t transfered_len)
-+{
-+    UfsHc *u = req->hc;
-+
-+    if (!u->flags.wb_en || !ufs_is_write_req(req)) {
-+        return;
-+    }
-+
-+    if (ufs_wb_check_write_pinned(u, req)) {
-+        ufs_wb_process_write_pinned(u, transfered_len);
-+    } else {
-+        ufs_wb_process_write_normal(u, transfered_len);
-+    }
-+
-+    ufs_wb_update_avail_buffer(u);
-+}
-+
- static void ufs_scsi_command_complete(SCSIRequest *scsi_req, size_t resid)
- {
-     UfsRequest *req = scsi_req->hba_private;
-     int16_t status = scsi_req->status;
--
-     uint32_t transfered_len = scsi_req->cmd.xfer - resid;
- 
-+    /* WB accounting should only happen for successful commands */
-+    if (status == GOOD) {
-+        ufs_wb_process_write_req(req, transfered_len);
-+    }
-+
-     ufs_build_scsi_response_upiu(req, scsi_req->sense, scsi_req->sense_len,
-                                  transfered_len, status);
- 
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index 237b410668..6780d73174 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -375,7 +375,12 @@ static void ufs_process_uiccmd(UfsHc *u, uint32_t val)
-         u->reg.hcs = FIELD_DP32(u->reg.hcs, HCS, UTMRLRDY, 1);
-         u->reg.ucmdarg2 = UFS_UIC_CMD_RESULT_SUCCESS;
-         break;
--    /* TODO: Revisit it when Power Management is implemented */
-+    /*
-+     * TODO: Revisit after PM implementation
-+     * Power Management is not supported in current QEMU-UFS,
-+     * So Write Booster's Flush during Hibern8 operation is also remained
-+     * as not considered.
-+     */
-     case UFS_UIC_CMD_DME_HIBER_ENTER:
-         u->reg.is = FIELD_DP32(u->reg.is, IS, UHES, 1);
-         u->reg.hcs = FIELD_DP32(u->reg.hcs, HCS, UPMCRS, UFS_PWR_LOCAL);
-@@ -940,6 +945,32 @@ static const MemoryRegionOps ufs_mmio_ops = {
-     },
- };
- 
-+static void ufs_wb_update_ee_status(UfsHc *u, uint16_t *ee_status)
-+{
-+    UfsWb *wb = &u->wb;
-+    uint64_t curr_bytes = wb->curr_bytes - wb->pinned_curr_bytes;
-+    uint64_t used_bytes = wb->used_bytes - wb->pinned_used_bytes;
-+
-+    if (curr_bytes != 0 && used_bytes >= curr_bytes) {
-+        *ee_status |= MASK_EE_WB_FLUSH_NEEDED;
-+    } else {
-+        *ee_status &= ~MASK_EE_WB_FLUSH_NEEDED;
-+    }
-+
-+    if (u->attributes.wb_buffer_resize_hint != UFS_WB_HINT_KEEP) {
-+        *ee_status |= MASK_EE_WB_RESIZE_HINT;
-+    } else {
-+        *ee_status &= ~MASK_EE_WB_RESIZE_HINT;
-+    }
-+
-+    if (wb->pinned_used_bytes != 0 &&
-+        wb->pinned_used_bytes >= wb->pinned_curr_bytes) {
-+        *ee_status |= MASK_EE_PINNED_WB_FULL;
-+    } else {
-+        *ee_status &= ~MASK_EE_PINNED_WB_FULL;
-+    }
-+}
-+
- static void ufs_update_ee_status(UfsHc *u)
- {
-     uint16_t ee_status = be16_to_cpu(u->attributes.exception_event_status);
-@@ -958,6 +989,8 @@ static void ufs_update_ee_status(UfsHc *u)
-         ee_status &= ~MASK_EE_TOO_LOW_TEMP;
-     }
- 
-+    ufs_wb_update_ee_status(u, &ee_status);
-+
-     u->attributes.exception_event_status = cpu_to_be16(ee_status);
- }
- 
-@@ -1064,11 +1097,16 @@ static const int flag_permission[UFS_QUERY_FLAG_IDN_COUNT] = {
-     [UFS_QUERY_FLAG_IDN_FPHYRESOURCEREMOVAL] = UFS_QUERY_FLAG_READ,
-     [UFS_QUERY_FLAG_IDN_BUSY_RTC] = UFS_QUERY_FLAG_READ,
-     [UFS_QUERY_FLAG_IDN_PERMANENTLY_DISABLE_FW_UPDATE] = UFS_QUERY_FLAG_READ,
--    /* Write Booster is not supported */
--    [UFS_QUERY_FLAG_IDN_WB_EN] = UFS_QUERY_FLAG_READ,
--    [UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_EN] = UFS_QUERY_FLAG_READ,
-+    [UFS_QUERY_FLAG_IDN_WB_EN] = UFS_QUERY_FLAG_READ | UFS_QUERY_FLAG_SET |
-+                                 UFS_QUERY_FLAG_CLEAR | UFS_QUERY_FLAG_TOGGLE,
-+    [UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_EN] =
-+        UFS_QUERY_FLAG_READ | UFS_QUERY_FLAG_SET | UFS_QUERY_FLAG_CLEAR |
-+        UFS_QUERY_FLAG_TOGGLE,
-+    /* TODO: Revisit after PM implementation */
-     [UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_DURING_HIBERN8] = UFS_QUERY_FLAG_READ,
--    [UFS_QUERY_FLAG_IDN_UNPIN_EN] = UFS_QUERY_FLAG_READ,
-+    [UFS_QUERY_FLAG_IDN_UNPIN_EN] = UFS_QUERY_FLAG_READ | UFS_QUERY_FLAG_SET |
-+                                    UFS_QUERY_FLAG_CLEAR |
-+                                    UFS_QUERY_FLAG_TOGGLE,
- };
- 
- static inline QueryRespCode ufs_flag_check_idn_valid(uint8_t idn, int op)
-@@ -1162,8 +1200,8 @@ static QueryRespCode ufs_write_flag_value(UfsHc *u, uint8_t idn, uint8_t value)
-     case UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_EN:
-         u->flags.wb_buffer_flush_en = value;
-         break;
--    case UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_DURING_HIBERN8:
--        u->flags.wb_buffer_flush_during_hibernate = value;
-+    case UFS_QUERY_FLAG_IDN_UNPIN_EN:
-+        u->flags.unpin_en = value;
-         break;
-     default:
-         return UFS_QUERY_RESULT_INVALID_VALUE;
-@@ -1257,17 +1295,20 @@ static const int attr_permission[UFS_QUERY_ATTR_IDN_COUNT] = {
-     [UFS_QUERY_ATTR_IDN_HID_PROG_RATIO] = UFS_QUERY_ATTR_READ,
-     [UFS_QUERY_ATTR_IDN_HID_STATE] = UFS_QUERY_ATTR_READ,
-     [UFS_QUERY_ATTR_IDN_WB_BUFF_RESIZE_HINT] = UFS_QUERY_ATTR_READ,
--    [UFS_QUERY_ATTR_IDN_WB_BUFF_RESIZE_EN] = UFS_QUERY_ATTR_READ,
-+    [UFS_QUERY_ATTR_IDN_WB_BUFF_RESIZE_EN] = UFS_QUERY_ATTR_WRITE,
-     [UFS_QUERY_ATTR_IDN_WB_BUFF_RESIZE_STATUS] = UFS_QUERY_ATTR_READ,
--    [UFS_QUERY_ATTR_IDN_WB_BUFF_PARTIAL_FLUSH_MODE] = UFS_QUERY_ATTR_READ,
--    [UFS_QUERY_ATTR_IDN_MAX_FIFO_WB_PARTIAL_FLUSH_MODE] = UFS_QUERY_ATTR_READ,
-+    [UFS_QUERY_ATTR_IDN_WB_BUFF_PARTIAL_FLUSH_MODE] =
-+        UFS_QUERY_ATTR_READ | UFS_QUERY_ATTR_WRITE,
-+    [UFS_QUERY_ATTR_IDN_MAX_FIFO_WB_PARTIAL_FLUSH_MODE] =
-+        UFS_QUERY_ATTR_READ | UFS_QUERY_ATTR_WRITE,
-     [UFS_QUERY_ATTR_IDN_CURR_FIFO_WB_PARTIAL_FLUSH_MODE] = UFS_QUERY_ATTR_READ,
-     [UFS_QUERY_ATTR_IDN_PINNED_WB_BUFF_CURR_ALLOC_UNITS] = UFS_QUERY_ATTR_READ,
-     [UFS_QUERY_ATTR_IDN_PINNED_WB_BUFF_AVAIL_PERCENT] = UFS_QUERY_ATTR_READ,
-     [UFS_QUERY_ATTR_IDN_PINNED_WB_CUMM_WRITTEN_SIZE] = UFS_QUERY_ATTR_READ,
--    [UFS_QUERY_ATTR_IDN_PINNED_WB_NUM_ALLOC_UNITS] = UFS_QUERY_ATTR_READ,
-+    [UFS_QUERY_ATTR_IDN_PINNED_WB_NUM_ALLOC_UNITS] =
-+        UFS_QUERY_ATTR_READ | UFS_QUERY_ATTR_WRITE,
-     [UFS_QUERY_ATTR_IDN_NON_PINNED_WB_MIN_NUM_ALLOC_UNITS] =
--        UFS_QUERY_ATTR_READ,
-+        UFS_QUERY_ATTR_READ | UFS_QUERY_ATTR_WRITE,
- };
- 
- static inline QueryRespCode ufs_attr_check_idn_valid(uint8_t idn, int op)
-@@ -1307,6 +1348,29 @@ static inline uint8_t ufs_read_device_temp(UfsHc *u)
-     return 0;
- }
- 
-+static inline uint32_t ufs_wb_read_flush_status(UfsHc *u)
-+{
-+    uint32_t value = u->attributes.wb_buffer_flush_status;
-+
-+    if (value == UFS_WB_FLUSH_SUSPENDED || value == UFS_WB_FLUSH_COMPLETED ||
-+        value == UFS_WB_FLUSH_FAILED) {
-+        u->attributes.wb_buffer_flush_status = UFS_WB_FLUSH_IDLE;
-+    }
-+
-+    return value;
-+}
-+
-+static inline uint32_t ufs_wb_read_resize_status(UfsHc *u)
-+{
-+    uint32_t value = u->attributes.wb_buffer_resize_status;
-+
-+    if (value == UFS_WB_RESIZE_COMPLETED || value == UFS_WB_RESIZE_FAILED) {
-+        u->attributes.wb_buffer_resize_status = UFS_WB_RESIZE_IDLE;
-+    }
-+
-+    return value;
-+}
-+
- static uint32_t ufs_read_attr_value(UfsHc *u, uint8_t idn)
- {
-     switch (idn) {
-@@ -1361,7 +1425,7 @@ static uint32_t ufs_read_attr_value(UfsHc *u, uint8_t idn)
-     case UFS_QUERY_ATTR_IDN_THROTTLING_STATUS:
-         return u->attributes.throttling_status;
-     case UFS_QUERY_ATTR_IDN_WB_FLUSH_STATUS:
--        return u->attributes.wb_buffer_flush_status;
-+        return ufs_wb_read_flush_status(u);
-     case UFS_QUERY_ATTR_IDN_AVAIL_WB_BUFF_SIZE:
-         return u->attributes.available_wb_buffer_size;
-     case UFS_QUERY_ATTR_IDN_WB_BUFF_LIFE_TIME_EST:
-@@ -1392,10 +1456,8 @@ static uint32_t ufs_read_attr_value(UfsHc *u, uint8_t idn)
-         return u->attributes.hid_state;
-     case UFS_QUERY_ATTR_IDN_WB_BUFF_RESIZE_HINT:
-         return u->attributes.wb_buffer_resize_hint;
--    case UFS_QUERY_ATTR_IDN_WB_BUFF_RESIZE_EN:
--        return u->attributes.wb_buffer_resize_en;
-     case UFS_QUERY_ATTR_IDN_WB_BUFF_RESIZE_STATUS:
--        return u->attributes.wb_buffer_resize_status;
-+        return ufs_wb_read_resize_status(u);
-     case UFS_QUERY_ATTR_IDN_WB_BUFF_PARTIAL_FLUSH_MODE:
-         return u->attributes.wb_buffer_partial_flush_mode;
-     case UFS_QUERY_ATTR_IDN_MAX_FIFO_WB_PARTIAL_FLUSH_MODE:
-@@ -1416,6 +1478,132 @@ static uint32_t ufs_read_attr_value(UfsHc *u, uint8_t idn)
-     return 0;
- }
- 
-+static void ufs_wb_resize_op(UfsHc *u, uint32_t value)
-+{
-+    if (u->attributes.wb_buffer_resize_status == UFS_WB_RESIZE_IN_PROGRESS) {
-+        return;
-+    }
-+
-+    if (value == UFS_WB_IDLE) {
-+        return;
-+    }
-+
-+    u->attributes.wb_buffer_resize_en = value;
-+    u->attributes.wb_buffer_resize_status = UFS_WB_RESIZE_IN_PROGRESS;
-+    u->attributes.wb_buffer_resize_hint = UFS_WB_HINT_KEEP;
-+}
-+
-+void ufs_wb_update_avail_buffer(UfsHc *u)
-+{
-+    UfsWb *wb = &u->wb;
-+    uint64_t non_pinned_curr_bytes, non_pinned_used_bytes;
-+    uint32_t units;
-+
-+    units = ufs_byte_to_unit(u, wb->fifo_curr_bytes);
-+    u->attributes.curr_fifo_wb_partial_flush_mode = cpu_to_be32(units);
-+
-+    units = ufs_byte_to_unit(u, wb->pinned_curr_bytes);
-+    u->attributes.pinned_wb_buffer_curr_alloc_units = cpu_to_be32(units);
-+
-+    if (wb->pinned_curr_bytes <= wb->pinned_used_bytes)
-+        u->attributes.pinned_wb_buffer_avail_percent = 0;
-+    else
-+        u->attributes.pinned_wb_buffer_avail_percent =
-+            (wb->pinned_curr_bytes - wb->pinned_used_bytes) * 10 /
-+            wb->pinned_curr_bytes;
-+
-+    non_pinned_curr_bytes = wb->curr_bytes - wb->pinned_curr_bytes;
-+    non_pinned_used_bytes = wb->used_bytes - wb->pinned_used_bytes;
-+
-+    units = ufs_byte_to_unit(u, non_pinned_curr_bytes);
-+    u->attributes.current_wb_buffer_size = cpu_to_be32(units);
-+
-+    if (!non_pinned_curr_bytes)
-+        u->attributes.available_wb_buffer_size = 0;
-+    else
-+        u->attributes.available_wb_buffer_size =
-+            (non_pinned_curr_bytes - non_pinned_used_bytes) * 10 /
-+            non_pinned_curr_bytes;
-+
-+    assert(wb->curr_bytes >= wb->pinned_curr_bytes);
-+    assert(wb->used_bytes >= wb->pinned_used_bytes);
-+}
-+
-+static void ufs_wb_sync_buffer_size(UfsHc *u)
-+{
-+    UfsWb *wb = &u->wb;
-+    uint64_t avail_bytes;
-+
-+    wb->fifo_curr_bytes = MIN(wb->curr_bytes, wb->fifo_max_bytes);
-+    avail_bytes = wb->curr_bytes - wb->used_bytes + wb->pinned_used_bytes;
-+
-+    if ((u->attributes.wb_buffer_partial_flush_mode != UFS_WB_FLUSH_PINNED) ||
-+        (wb->curr_bytes <= wb->non_pinned_min_bytes)) {
-+        wb->pinned_curr_bytes = 0;
-+        wb->pinned_used_bytes = 0;
-+
-+    } else if (avail_bytes <= wb->pinned_max_bytes) {
-+        wb->pinned_curr_bytes = avail_bytes;
-+        wb->pinned_used_bytes =
-+            MIN(wb->pinned_curr_bytes, wb->pinned_used_bytes);
-+
-+    } else {
-+        wb->pinned_curr_bytes = wb->pinned_max_bytes;
-+        wb->pinned_used_bytes =
-+            MIN(wb->pinned_curr_bytes, wb->pinned_used_bytes);
-+    }
-+
-+    ufs_wb_update_avail_buffer(u);
-+}
-+
-+static bool ufs_wb_max_fifo(UfsHc *u, uint32_t value)
-+{
-+    UfsWb *wb = &u->wb;
-+    uint64_t fifo_max_bytes = ufs_unit_to_byte(u, value);
-+
-+    if (fifo_max_bytes > wb->max_bytes) {
-+        return false;
-+    }
-+
-+    u->attributes.max_fifo_wb_partial_flush_mode = cpu_to_be32(value);
-+    wb->fifo_max_bytes = fifo_max_bytes;
-+    ufs_wb_sync_buffer_size(u);
-+
-+    return true;
-+}
-+
-+static bool ufs_wb_pinned_max_size(UfsHc *u, uint32_t value)
-+{
-+    UfsWb *wb = &u->wb;
-+    uint64_t pinned_max_bytes = ufs_unit_to_byte(u, value);
-+
-+    if (wb->max_bytes < wb->non_pinned_min_bytes + pinned_max_bytes) {
-+        return false;
-+    }
-+
-+    u->attributes.pinned_wb_num_alloc_units = cpu_to_be32(value);
-+    wb->pinned_max_bytes = pinned_max_bytes;
-+    ufs_wb_sync_buffer_size(u);
-+
-+    return true;
-+}
-+
-+static bool ufs_wb_pinned_min_size(UfsHc *u, uint32_t value)
-+{
-+    UfsWb *wb = &u->wb;
-+    uint64_t non_pinned_min_bytes = ufs_unit_to_byte(u, value);
-+
-+    if (wb->max_bytes < non_pinned_min_bytes + wb->pinned_max_bytes) {
-+        return false;
-+    }
-+
-+    u->attributes.non_pinned_wb_min_num_alloc_units = cpu_to_be32(value);
-+    wb->non_pinned_min_bytes = non_pinned_min_bytes;
-+    ufs_wb_sync_buffer_size(u);
-+
-+    return true;
-+}
-+
- static QueryRespCode ufs_write_attr_value(UfsHc *u, uint8_t idn, uint32_t value)
- {
-     switch (idn) {
-@@ -1452,6 +1640,34 @@ static QueryRespCode ufs_write_attr_value(UfsHc *u, uint8_t idn, uint32_t value)
-     case UFS_QUERY_ATTR_IDN_TIMESTAMP:
-         u->attributes.timestamp = cpu_to_be64(value);
-         break;
-+    case UFS_QUERY_ATTR_IDN_WB_BUFF_RESIZE_EN:
-+        if (value >= UFS_WB_RESIZE_OP_MAX) {
-+            return UFS_QUERY_RESULT_INVALID_VALUE;
-+        }
-+        ufs_wb_resize_op(u, value);
-+        break;
-+    case UFS_QUERY_ATTR_IDN_WB_BUFF_PARTIAL_FLUSH_MODE:
-+        if (value >= UFS_WB_FLUSH_MODE_MAX) {
-+            return UFS_QUERY_RESULT_INVALID_VALUE;
-+        }
-+        u->attributes.wb_buffer_partial_flush_mode = value;
-+        ufs_wb_sync_buffer_size(u);
-+        break;
-+    case UFS_QUERY_ATTR_IDN_MAX_FIFO_WB_PARTIAL_FLUSH_MODE:
-+        if (!ufs_wb_max_fifo(u, value)) {
-+            return UFS_QUERY_RESULT_INVALID_VALUE;
-+        }
-+        break;
-+    case UFS_QUERY_ATTR_IDN_PINNED_WB_NUM_ALLOC_UNITS:
-+        if (!ufs_wb_pinned_max_size(u, value)) {
-+            return UFS_QUERY_RESULT_INVALID_VALUE;
-+        }
-+        break;
-+    case UFS_QUERY_ATTR_IDN_NON_PINNED_WB_MIN_NUM_ALLOC_UNITS:
-+        if (!ufs_wb_pinned_min_size(u, value)) {
-+            return UFS_QUERY_RESULT_INVALID_VALUE;
-+        }
-+        break;
-     default:
-         g_assert_not_reached();
-         return 0;
-@@ -1870,10 +2086,136 @@ static void ufs_sendback_req(void *opaque)
-     ufs_irq_check(u);
- }
- 
-+static inline uint64_t ufs_wb_total_flush_bytes(UfsHc *u)
-+{
-+    UfsWb *wb = &u->wb;
-+    uint64_t no_flush_bytes;
-+
-+    switch (u->attributes.wb_buffer_partial_flush_mode) {
-+    case UFS_WB_FLUSH_NONE:
-+        no_flush_bytes = 0;
-+        break;
-+    case UFS_WB_FLUSH_FIFO:
-+        no_flush_bytes = wb->fifo_curr_bytes;
-+        break;
-+    case UFS_WB_FLUSH_PINNED:
-+        no_flush_bytes = (u->flags.unpin_en) ? 0 : wb->pinned_used_bytes;
-+        break;
-+    default:
-+        g_assert_not_reached();
-+        break;
-+    }
-+
-+    if (wb->used_bytes < no_flush_bytes) {
-+        return 0;
-+    }
-+
-+    return wb->used_bytes - no_flush_bytes;
-+}
-+
-+#define UFS_WB_FLUSH_BYTES (4096 * 1024)
-+static void ufs_wb_process_flush(UfsHc *u)
-+{
-+    UfsWb *wb = &u->wb;
-+    uint64_t flush_bytes, total_flush_bytes;
-+
-+    switch (u->attributes.wb_buffer_flush_status) {
-+    case UFS_WB_FLUSH_IDLE:
-+    case UFS_WB_FLUSH_SUSPENDED:
-+        if (!u->flags.wb_buffer_flush_en || !ufs_wb_total_flush_bytes(u)) {
-+            break;
-+        }
-+
-+        u->attributes.wb_buffer_flush_status = UFS_WB_FLUSH_IN_PROGRESS;
-+        /* fallthrough */
-+    case UFS_WB_FLUSH_IN_PROGRESS:
-+        if (!u->flags.wb_buffer_flush_en) {
-+            u->attributes.wb_buffer_flush_status = UFS_WB_FLUSH_SUSPENDED;
-+            break;
-+        }
-+
-+        total_flush_bytes = ufs_wb_total_flush_bytes(u);
-+        if (!total_flush_bytes) {
-+            u->attributes.wb_buffer_flush_status = UFS_WB_FLUSH_COMPLETED;
-+            break;
-+        }
-+
-+        /* Flush Pinned first */
-+        if (wb->pinned_used_bytes && u->flags.unpin_en) {
-+            flush_bytes = MIN(wb->pinned_used_bytes, UFS_WB_FLUSH_BYTES);
-+            wb->pinned_used_bytes -= flush_bytes;
-+            wb->used_bytes -= flush_bytes;
-+        } else {
-+            flush_bytes = MIN(total_flush_bytes, UFS_WB_FLUSH_BYTES);
-+            wb->used_bytes -= flush_bytes;
-+        }
-+
-+        u->attributes.wb_buffer_flush_status = UFS_WB_FLUSH_COMPLETED;
-+        /* fallthrough */
-+    case UFS_WB_FLUSH_COMPLETED:
-+        if (ufs_wb_total_flush_bytes(u)) {
-+            u->attributes.wb_buffer_flush_status =
-+                (u->flags.wb_buffer_flush_en) ? UFS_WB_FLUSH_IN_PROGRESS :
-+                                                UFS_WB_FLUSH_IDLE;
-+        }
-+    }
-+}
-+
-+static void ufs_wb_process_resize(UfsHc *u)
-+{
-+    UfsWb *wb = &u->wb;
-+
-+    if (u->attributes.wb_buffer_resize_status != UFS_WB_RESIZE_IN_PROGRESS) {
-+        return;
-+    }
-+
-+    switch (u->attributes.wb_buffer_resize_en) {
-+    case UFS_WB_IDLE:
-+        /* Do nothing. Complete resize directly. */
-+        break;
-+    case UFS_WB_DECREASE:
-+        if (wb->curr_bytes <= wb->min_bytes ||
-+            wb->curr_bytes <= wb->used_bytes) {
-+            u->attributes.wb_buffer_resize_status = UFS_WB_RESIZE_FAILED;
-+            return;
-+        }
-+
-+        if (wb->curr_bytes - wb->used_bytes >= wb->resize_bytes) {
-+            wb->curr_bytes -= wb->resize_bytes;
-+        } else {
-+            wb->curr_bytes = wb->used_bytes;
-+        }
-+
-+        if (wb->curr_bytes < wb->min_bytes) {
-+            wb->curr_bytes = wb->min_bytes;
-+        }
-+
-+        break;
-+    case UFS_WB_INCREASE:
-+        if (wb->curr_bytes >= wb->max_bytes) {
-+            u->attributes.wb_buffer_resize_status = UFS_WB_RESIZE_FAILED;
-+            return;
-+        }
-+
-+        wb->curr_bytes += wb->resize_bytes;
-+        if (wb->curr_bytes >= wb->max_bytes) {
-+            wb->curr_bytes = wb->max_bytes;
-+        }
-+
-+        break;
-+    default:
-+        g_assert_not_reached();
-+        break;
-+    }
-+
-+    u->attributes.wb_buffer_resize_status = UFS_WB_RESIZE_COMPLETED;
-+}
-+
- static void ufs_process_idle(UfsHc *u)
- {
--    /* Currently do nothing */
--    return;
-+    ufs_wb_process_flush(u);
-+    ufs_wb_process_resize(u);
-+    ufs_wb_sync_buffer_size(u);
- }
- 
- static inline bool ufs_check_idle(UfsHc *u)
-@@ -1954,6 +2296,11 @@ static bool ufs_check_constraints(UfsHc *u, Error **errp)
-         return false;
-     }
- 
-+    if (u->params.wb_min_size > u->params.wb_max_size) {
-+        error_setg(errp, "wb-min-size must be less than or equal wb-max-size");
-+        return false;
-+    }
-+
-     return true;
- }
- 
-@@ -1992,11 +2339,53 @@ static void ufs_init_state(UfsHc *u)
-     }
- }
- 
-+static void ufs_wb_init(UfsHc *u)
-+{
-+    UfsWb *wb = &u->wb;
-+    uint32_t max_units = u->params.wb_max_size;
-+    uint32_t min_units = u->params.wb_min_size;
-+
-+    wb->max_bytes = ufs_unit_to_byte(u, max_units);
-+    wb->min_bytes = ufs_unit_to_byte(u, min_units);
-+
-+    wb->curr_bytes = wb->max_bytes;
-+    wb->used_bytes = 0;
-+    wb->resize_bytes = (wb->max_bytes - wb->min_bytes) / 10;
-+
-+    u->attributes.wb_buffer_flush_status = UFS_WB_FLUSH_IDLE;
-+    u->attributes.available_wb_buffer_size = 0xA;
-+    u->attributes.wb_buffer_life_time_est = 0x1;
-+    u->attributes.current_wb_buffer_size = cpu_to_be32(max_units);
-+
-+    u->attributes.wb_buffer_resize_hint = UFS_WB_HINT_KEEP;
-+    u->attributes.wb_buffer_resize_status = UFS_WB_RESIZE_IDLE;
-+
-+    u->attributes.wb_buffer_partial_flush_mode = UFS_WB_FLUSH_NONE;
-+
-+    u->attributes.max_fifo_wb_partial_flush_mode = cpu_to_be32(max_units);
-+    u->attributes.curr_fifo_wb_partial_flush_mode = cpu_to_be32(max_units);
-+
-+    wb->fifo_max_bytes = ufs_unit_to_byte(u, max_units);
-+    wb->fifo_curr_bytes = ufs_unit_to_byte(u, max_units);
-+
-+    u->attributes.pinned_wb_num_alloc_units = cpu_to_be32(max_units);
-+    u->attributes.non_pinned_wb_min_num_alloc_units = 0;
-+
-+    wb->pinned_curr_bytes = 0;
-+    wb->pinned_used_bytes = 0;
-+    wb->pinned_max_bytes = ufs_unit_to_byte(u, max_units);
-+    wb->non_pinned_min_bytes = 0;
-+    wb->pinned_total_written_bytes = 0;
-+}
-+
- static void ufs_init_hc(UfsHc *u)
- {
-     uint32_t cap = 0;
-     uint32_t mcqconfig = 0;
-     uint32_t mcqcap = 0;
-+    uint32_t ext_wb_sup = WB_RESIZE | WB_FIFO | WB_PINNED;
-+    uint32_t ext_ufs_feat_sup =
-+        UFS_DEV_WB_SUPPORT | UFS_DEV_HIGH_TEMP_NOTIF | UFS_DEV_LOW_TEMP_NOTIF;
-     int64_t now = qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL_RT);
- 
-     u->reg_size = pow2ceil(ufs_reg_size(u));
-@@ -2058,8 +2447,13 @@ static void ufs_init_hc(UfsHc *u)
-         UFS_DEV_LOW_TEMP_NOTIF;
-     u->device_desc.queue_depth = u->params.nutrs;
-     u->device_desc.product_revision_level = 0x04;
-+    u->device_desc.extended_wb_support |= cpu_to_be16(ext_wb_sup);
-     u->device_desc.extended_ufs_features_support =
--        cpu_to_be32(UFS_DEV_HIGH_TEMP_NOTIF | UFS_DEV_LOW_TEMP_NOTIF);
-+        cpu_to_be32((ext_ufs_feat_sup));
-+    u->device_desc.write_booster_buffer_preserve_user_space_en = 0x01;
-+    u->device_desc.write_booster_buffer_type = 0x01;
-+    u->device_desc.num_shared_write_booster_buffer_alloc_units =
-+        cpu_to_be32(u->params.wb_max_size);
- 
-     memset(&u->geometry_desc, 0, sizeof(GeometryDescriptor));
-     u->geometry_desc.length = sizeof(GeometryDescriptor);
-@@ -2075,6 +2469,14 @@ static void ufs_init_hc(UfsHc *u)
-         0x0; /* out-of-order data transfer is not supported */
-     u->geometry_desc.max_context_id_number = 0x5;
-     u->geometry_desc.supported_memory_types = cpu_to_be16(0x8001);
-+    u->geometry_desc.write_booster_buffer_max_n_alloc_units =
-+        cpu_to_be32(u->params.wb_max_size);
-+    u->geometry_desc.device_max_write_booster_l_us = 0x1;
-+    u->geometry_desc.write_booster_buffer_cap_adj_fac = 0x3;
-+    u->geometry_desc.supported_write_booster_buffer_user_space_reduction_types =
-+        0x1;
-+    u->geometry_desc.supported_write_booster_buffer_types =
-+        0x1; /* lu-dedicated buffer type is not supported */
- 
-     memset(&u->attributes, 0, sizeof(u->attributes));
-     u->attributes.max_data_in_size = 0x08;
-@@ -2089,6 +2491,8 @@ static void ufs_init_hc(UfsHc *u)
-     memset(&u->flags, 0, sizeof(u->flags));
-     u->flags.permanently_disable_fw_update = 1;
- 
-+    ufs_wb_init(u);
-+
-     /*
-      * The temperature value is fixed to UFS_TEMPERATURE and does not change
-      * dynamically
-@@ -2156,6 +2560,8 @@ static const Property ufs_props[] = {
-     DEFINE_PROP_UINT8("nutmrs", UfsHc, params.nutmrs, 8),
-     DEFINE_PROP_BOOL("mcq", UfsHc, params.mcq, false),
-     DEFINE_PROP_UINT8("mcq-maxq", UfsHc, params.mcq_maxq, 2),
-+    DEFINE_PROP_UINT32("wb-max-size", UfsHc, params.wb_max_size, 0x400),
-+    DEFINE_PROP_UINT32("wb-min-size", UfsHc, params.wb_min_size, 0x100),
- };
- 
- static const VMStateDescription ufs_vmstate = {
-diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
-index 64144b556a..8743501810 100644
---- a/hw/ufs/ufs.h
-+++ b/hw/ufs/ufs.h
-@@ -91,6 +91,8 @@ typedef struct UfsParams {
-     bool mcq; /* Multiple Command Queue support */
-     uint8_t mcq_qcfgptr; /* MCQ Queue Configuration Pointer in MCQCAP */
-     uint8_t mcq_maxq; /* MCQ Maximum number of Queues */
-+    uint32_t wb_max_size; /* WB Maximum allocation units */
-+    uint32_t wb_min_size; /* WB Minimum allocation units */
- } UfsParams;
- 
- /*
-@@ -118,6 +120,26 @@ typedef struct UfsCq {
-     QTAILQ_HEAD(, UfsRequest) req_list;
- } UfsCq;
- 
-+/*
-+ * Extended features
-+ */
-+typedef struct UfsWb {
-+    uint64_t max_bytes;
-+    uint64_t min_bytes;
-+    uint64_t curr_bytes;
-+    uint64_t used_bytes;
-+    uint64_t resize_bytes;
-+
-+    uint64_t fifo_max_bytes;
-+    uint64_t fifo_curr_bytes;
-+
-+    uint64_t pinned_max_bytes;
-+    uint64_t non_pinned_min_bytes;
-+    uint64_t pinned_curr_bytes;
-+    uint64_t pinned_used_bytes;
-+    uint64_t pinned_total_written_bytes;
-+} UfsWb;
-+
- typedef struct UfsHc {
-     PCIDevice parent_obj;
-     UfsBus bus;
-@@ -147,6 +169,9 @@ typedef struct UfsHc {
-     UfsSq *sq[UFS_MAX_MCQ_QNUM];
-     UfsCq *cq[UFS_MAX_MCQ_QNUM];
- 
-+    /* Extended features */
-+    UfsWb wb;
-+
-     uint8_t temperature;
- 
-     QEMUTimer idle_timer;
-@@ -218,6 +243,27 @@ static inline bool ufs_mcq_cq_full(UfsHc *u, uint32_t qid)
-     return tail == ufs_mcq_cq_head(u, qid);
- }
- 
-+static inline uint64_t ufs_unit_to_byte(UfsHc *u, uint32_t unit)
-+{
-+    return (uint64_t)unit * u->geometry_desc.allocation_unit_size *
-+           be32_to_cpu(u->geometry_desc.segment_size) * BDRV_SECTOR_SIZE;
-+}
-+
-+static inline uint32_t ufs_byte_to_unit(UfsHc *u, uint64_t byte)
-+{
-+    return byte / BDRV_SECTOR_SIZE /
-+           be32_to_cpu(u->geometry_desc.segment_size) /
-+           u->geometry_desc.allocation_unit_size;
-+}
-+
-+static inline bool ufs_is_write_req(UfsRequest *req)
-+{
-+    uint8_t cmd = req->req_upiu.sc.cdb[0];
-+
-+    /* UFS 4.1 Specifiaction doesn't support WRITE_12 */
-+    return (cmd == WRITE_6) || (cmd == WRITE_10) || (cmd == WRITE_16);
-+}
-+
- #define TYPE_UFS "ufs"
- #define UFS(obj) OBJECT_CHECK(UfsHc, (obj), TYPE_UFS)
- 
-@@ -250,5 +296,6 @@ void ufs_build_upiu_header(UfsRequest *req, uint8_t trans_type, uint8_t flags,
-                            uint16_t data_segment_length);
- void ufs_build_query_response(UfsRequest *req);
- void ufs_complete_req(UfsRequest *req, UfsReqResult req_result);
-+void ufs_wb_update_avail_buffer(UfsHc *u);
- void ufs_init_wlu(UfsLu *wlu, uint8_t wlun);
- #endif /* HW_UFS_UFS_H */
-diff --git a/include/block/ufs.h b/include/block/ufs.h
-index 4dacfb776f..0f7cc9c21b 100644
---- a/include/block/ufs.h
-+++ b/include/block/ufs.h
-@@ -1126,11 +1126,24 @@ enum health_desc_param {
-     UFS_HEALTH_DESC_PARAM_LIFE_TIME_EST_B = 0x4,
- };
- 
-+/* Possible values for bUFSFeaturesSupport */
- enum {
-     UFS_DEV_HIGH_TEMP_NOTIF = BIT(4),
-     UFS_DEV_LOW_TEMP_NOTIF = BIT(5),
- };
- 
-+/* Possible values for dExtendedWriteBoosterSupport */
-+enum {
-+    WB_RESIZE = BIT(0),
-+    WB_FIFO = BIT(1),
-+    WB_PINNED = BIT(2),
-+};
-+
-+/* Possible values for dExtendedUFSFeaturesSupport */
-+enum {
-+    UFS_DEV_WB_SUPPORT = BIT(8),
-+};
-+
- /* WriteBooster buffer mode */
- enum {
-     UFS_WB_BUF_MODE_LU_DEDICATED = 0x0,
-@@ -1153,6 +1166,9 @@ enum ufs_lu_wp_type {
- enum {
-     MASK_EE_TOO_HIGH_TEMP = BIT(3),
-     MASK_EE_TOO_LOW_TEMP = BIT(4),
-+    MASK_EE_WB_FLUSH_NEEDED = BIT(5),
-+    MASK_EE_WB_RESIZE_HINT = BIT(8),
-+    MASK_EE_PINNED_WB_FULL = BIT(10),
- };
- 
- /* UTP QUERY Transaction Specific Fields OpCode */
-@@ -1207,6 +1223,45 @@ enum ufs_dev_pwr_mode {
-     UFS_DEEPSLEEP_PWR_MODE = 4,
- };
- 
-+/* UFS Write Booster */
-+enum ufs_wb_flush_status {
-+    UFS_WB_FLUSH_IDLE = 0,
-+    UFS_WB_FLUSH_IN_PROGRESS = 1,
-+    UFS_WB_FLUSH_SUSPENDED = 2,
-+    UFS_WB_FLUSH_COMPLETED = 3,
-+    UFS_WB_FLUSH_FAILED = 4,
-+    UFS_WB_FLUSH_STATUS_MAX,
-+};
-+
-+enum ufs_wb_flush_mode {
-+    UFS_WB_FLUSH_NONE = 0,
-+    UFS_WB_FLUSH_FIFO = 1,
-+    UFS_WB_FLUSH_PINNED = 2,
-+    UFS_WB_FLUSH_MODE_MAX,
-+};
-+
-+enum ufs_wb_resize_hint {
-+    UFS_WB_HINT_KEEP = 0,
-+    UFS_WB_HINT_DECREASE = 1,
-+    UFS_WB_HINT_INCREASE = 2,
-+    UFS_WB_RESIZE_HINT_MAX,
-+};
-+
-+enum ufs_wb_resize_op {
-+    UFS_WB_IDLE = 0,
-+    UFS_WB_DECREASE = 1,
-+    UFS_WB_INCREASE = 2,
-+    UFS_WB_RESIZE_OP_MAX,
-+};
-+
-+enum ufs_wb_resize_status {
-+    UFS_WB_RESIZE_IDLE = 0,
-+    UFS_WB_RESIZE_IN_PROGRESS = 1,
-+    UFS_WB_RESIZE_COMPLETED = 2,
-+    UFS_WB_RESIZE_FAILED = 3,
-+    UFS_WB_RESIZE_STATUS_MAX,
-+};
-+
- /*
-  * struct UtpCmdRsp - Response UPIU structure
-  * @residual_transfer_count: Residual transfer count DW-3
--- 
-2.43.0
+Thanks.
+Song Gao
+> Regards
+> Bibo Mao
+>
+>> +        ret |= kvm_get_one_reg(cs, 
+>> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
+>> +                               &env->CSR_MSGIS[0]);
+>> +
+>> +        ret |= kvm_get_one_reg(cs, 
+>> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
+>> +                               &env->CSR_MSGIS[1]);
+>> +
+>> +        ret |= kvm_get_one_reg(cs, 
+>> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
+>> +                               &env->CSR_MSGIS[2]);
+>> +
+>> +        ret |= kvm_get_one_reg(cs, 
+>> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
+>> +                               &env->CSR_MSGIS[3]);
+>> +    }
+>> +
+>>       ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TVAL),
+>>                              &env->CSR_TVAL);
+>>   @@ -533,6 +554,20 @@ static int kvm_loongarch_put_csr(CPUState *cs, 
+>> KvmPutState level)
+>>         ret |= kvm_loongarch_put_pmu(cs);
+>>   +    if (kvm_cpu_has_msgint(cs)) {
+>> +        ret |= kvm_set_one_reg(cs, 
+>> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
+>> +                               &env->CSR_MSGIS[0]);
+>> +
+>> +        ret |= kvm_set_one_reg(cs, 
+>> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
+>> +                               &env->CSR_MSGIS[1]);
+>> +
+>> +        ret |= kvm_set_one_reg(cs, 
+>> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
+>> +                               &env->CSR_MSGIS[2]);
+>> +
+>> +        ret |= kvm_set_one_reg(cs, 
+>> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
+>> +                               &env->CSR_MSGIS[3]);
+>> +    }
+>> +
+>>       /*
+>>        * timer cfg must be put at last since it is used to enable
+>>        * guest timer
+>> @@ -982,6 +1017,12 @@ static bool kvm_feature_supported(CPUState *cs, 
+>> enum loongarch_features feature)
+>>           ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
+>>           return (ret == 0);
+>>   +    case LOONGARCH_FEATURE_MSGINT:
+>> +        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
+>> +        attr.attr = KVM_LOONGARCH_VM_FEAT_MSGINT;
+>> +        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
+>> +        return (ret == 0);
+>> +
+>>       default:
+>>           return false;
+>>       }
+>> @@ -1155,6 +1196,28 @@ static int kvm_cpu_check_pv_features(CPUState 
+>> *cs, Error **errp)
+>>       return 0;
+>>   }
+>>   +static int kvm_cpu_check_msgint(CPUState *cs, Error **errp)
+>> +{
+>> +    CPULoongArchState *env = cpu_env(cs);
+>> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+>> +    bool kvm_supported;
+>> +
+>> +    kvm_supported = kvm_feature_supported(cs, 
+>> LOONGARCH_FEATURE_MSGINT);
+>> +    env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 0);
+>> +    if (cpu->msgint == ON_OFF_AUTO_ON) {
+>> +        if (kvm_supported) {
+>> +            env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, 
+>> MSG_INT, 1);
+>> +        } else {
+>> +            error_setg(errp, "'msgint' feature not supported by KVM 
+>> on this host");
+>> +            return -ENOTSUP;
+>> +        }
+>> +    } else if ((cpu->msgint == ON_OFF_AUTO_AUTO) && kvm_supported) {
+>> +        env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, 
+>> MSG_INT, 1);
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>>   int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
+>>   {
+>>       return 0;
+>> @@ -1210,6 +1273,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
+>>           return ret;
+>>       }
+>>   +    ret = kvm_cpu_check_msgint(cs, &local_err);
+>> +    if (ret < 0) {
+>> +        error_report_err(local_err);
+>> +        return ret;
+>> +    }
+>> +
+>>       return 0;
+>>   }
+>>
 
 
