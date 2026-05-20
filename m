@@ -4,100 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF830CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 11:21:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B787CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 11:24:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPev1-000185-UB; Wed, 20 May 2026 07:16:56 -0400
+	id 1wPf1x-0003e7-Ac; Wed, 20 May 2026 07:24:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <j.neuschaefer@9elements.com>)
- id 1wPeut-00013Q-38
- for qemu-devel@nongnu.org; Wed, 20 May 2026 07:16:49 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <j.neuschaefer@9elements.com>)
- id 1wPeuB-0000YS-Mh
- for qemu-devel@nongnu.org; Wed, 20 May 2026 07:16:46 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-488b0046078so42069395e9.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 04:15:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=9elements.com; s=google; t=1779275757; x=1779880557; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=QZGRA2ZojEl7XdcqtHZyPxFqLvZGrLtACN8c+gO8jGE=;
- b=XH59t/eatl+p2sIEhRmVMDqrszn0IGvDUpAy375z8/RLcp9wC1C++c7p9GPjNw8FRB
- OFlB9KaxTIBOGYoHuKuz25tJcKoiJkx/b/Npa9DmOvUXRsn87p3C9No6KaMwar8C9s09
- NQ/qzjnu4yXviYI0XRnM+JFaEj11AVI4fkP15qgTOGEurbqdYfQoYCnNkanCP2l+s0jp
- X/fzIjw/ceaX8xmzrRWK572XO7E6ynXyTaWWovzTvXv8EopKg63PhQkxcrpUhsPd5gsP
- hG8h7KD4bhu1An372MtB6uo2F0Wc+nV7PHZBXi2TLo2xiKVZK0osImk224JZZBOfDrLt
- YpGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779275757; x=1779880557;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QZGRA2ZojEl7XdcqtHZyPxFqLvZGrLtACN8c+gO8jGE=;
- b=ILvXK7G1w2mMZXadlC475xoU0JxZ+kN77WGxLwBcN7bDCfcEvB4ymJxUOsFs/lzz7D
- nuGvQZ2mgHN+Jbq5Pc6ephSZJkz5FMNPcFgNnew1IPTZA8mT9StsJYjPjNT19Hx6qcN7
- kKeBg5CG0a4Rpu5ZpijHFhw8hejJkmgyWNchPlpEQ6uMAfkatPxpCyr8tDNI1EnWRTpC
- aBInmABD52dkYXYWTwp/JSP9MzsMyFoHjlzTvQpeBwXYKbyB3IvtDFRd7+kCEsSjq4M1
- 5NnKGOQZ3Af67ElLeVAtBctZ+MjlHjuco7FAAB508C2tIciW1qpTQc9T4jO/uMFR/f6t
- WHcw==
-X-Gm-Message-State: AOJu0Yw4sFYsQhzn0k6LjbnAQ6GQ0GXcCiMoJjResG1cWUaLLMrqjrtk
- 1Olcq0mz8ulegv+hbsAKDMk6p6isEiZAVBQ215mO1kiqvoi1zxk5WS8J1819rNSwBzo=
-X-Gm-Gg: Acq92OGWtoGwwa7wubYvnEMaXJCTDzbB+r7w8/mBvv+nN7/42+UO/J9its36xgwjNH2
- kEBj8OLe6BGxWBOAseKLtPI0JAl7kK3nSsEadMXXvXYqnB5PCqYrpLZuOMOys11EW7WHAXVJOaR
- updch6bgRaVB68Ie0ORuDXKCPGAkMk7rFapuPGbHnNGOEKL25GZo7W+nE8zwMDzQ4ZIK6hrvbp6
- mka2/pZvaWh4ZXZ57FKa4jtLQvgwnRMbXQJEtaZPuAZV4xQ14Xc2EXH/6yLbOb5t78CASC4CDPy
- L4nPCwF1t8XiYs+6C4O9LVHqWK8K9f8r1bob5g7/teFGXUIp0cJmMkPtAqruPO1AMfK+YSeBG3f
- k2xa9T8yG8HfYXe69v1MyVKatw11p5a2pEw0Xm1vJsnBN6WsUVc6tfPCpbRaTEqEfyX+JSOxNbA
- g63vIjUT7lcJT8nEucF18ZHju05cjbhABuNEQ8xr9JnoSPdMCrg7dW1WR9csv0H8E8TjASZH1qX
- XPj1+9ZDXxkjtomxUHkw1qgKA==
-X-Received: by 2002:a05:600c:6592:b0:48a:557e:6b4f with SMTP id
- 5b1f17b1804b1-48fe62f8861mr378081455e9.23.1779275756850; 
- Wed, 20 May 2026 04:15:56 -0700 (PDT)
-Received: from [127.0.1.1]
- (2a0a-a54a-ed40-0-9db4-bb9-3f9b-5d0a.ipv6dyn.netcologne.de.
- [2a0a:a54a:ed40:0:9db4:bb9:3f9b:5d0a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fe5ab527asm435952445e9.11.2026.05.20.04.15.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 04:15:56 -0700 (PDT)
-From: =?utf-8?q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@9elements.com>
-Date: Wed, 20 May 2026 13:15:20 +0200
-Subject: [PATCH] docs/devel/qom: Fix some editing errors
+ (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
+ id 1wPexW-00027c-Gd; Wed, 20 May 2026 07:20:18 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
+ id 1wPexT-0001TU-8L; Wed, 20 May 2026 07:19:30 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64K6VPDw1839474; Wed, 20 May 2026 09:55:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=wyMUXuVoe5YB9/Gol
+ FFQ9m0XvZYCncQp31ovl4uyYoY=; b=pC4LIKPZPSargkSA6wcezPMmSloxkCjXS
+ ZRl3GLZyx479VdMXXiBPenH6jMYnYbfHs/WquSQYdcbBokpyr9D3XAiztmSK4j4f
+ mCVYhA7fCQbIs1D16AxeW/2gfojdpqAmkxRXTKyVQnlTixs/sZLYLH3apjGJd4W9
+ 3ZOajsAcY6dg62eIeJmeVyuib/Zt9PW6JPCEA8Z15ghvJht5RIYMYYF/FnYAP5/E
+ AOmkFCIUZCnX3RJ7A90GMFElrmvYLKv6JSKgfqIMexV6EnuJAwKucL8Fdi6NzSSR
+ hg84bJivoTzHWP62dEv9RcECsCOj/7pB6TqhxzYOK+31J2K5gpLGQ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h8mscr9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 May 2026 09:55:09 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64K9s9rU030679;
+ Wed, 20 May 2026 09:55:08 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e739vxw00-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 May 2026 09:55:06 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64K9t2tK61210940
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 20 May 2026 09:55:02 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 750D020040;
+ Wed, 20 May 2026 09:55:02 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3758F2004D;
+ Wed, 20 May 2026 09:55:00 +0000 (GMT)
+Received: from dhcp-9-123-10-31.bl1-in.ibm.com (unknown [9.123.10.31])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 20 May 2026 09:55:00 +0000 (GMT)
+From: Narayana Murty N <nnmlinux@linux.ibm.com>
+To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Cc: npiggin@gmail.com, harshpb@linux.ibm.com, mahesh@linux.ibm.com,
+ ganeshgr@linux.ibm.com, sbhat@linux.ibm.com, vaibhav@linux.ibm.com,
+ anushree.mathur@linux.vnet.ibm.com, clg@redhat.com,
+ pierrick.bouvier@oss.qualcomm.com, philmd@linaro.org
+Subject: [PATCH v3 1/6] ppc/spapr: Add VFIO EEH error injection backend
+Date: Wed, 20 May 2026 15:24:41 +0530
+Message-ID: <20260520095446.64206-2-nnmlinux@linux.ibm.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260520095446.64206-1-nnmlinux@linux.ibm.com>
+References: <20260520095446.64206-1-nnmlinux@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260520-qom-v1-1-baad87fefe4f@9elements.com>
-X-B4-Tracking: v=1; b=H4sIAMeXDWoC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDUyMD3cL8XF1zM1Nj85REM3PjJDMloMqCotS0zAqwKdGxtbUAH1iT+VU
- AAAA=
-X-Change-ID: 20260520-qom-76537da673b6
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?utf-8?q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@9elements.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1779275756; l=1488;
- i=j.neuschaefer@9elements.com; s=20260513; h=from:subject:message-id;
- bh=hHn+I2LChySRnTEdwAhplKu+rldCFOx+xxZIuYzAzKc=;
- b=10DCoiv0oGhAs9/nY7n2EOO9PQxrxs3UHd7XPBogOQWbQQ7SJ8afExwWmFyIixNLb6ML3w2j7
- UIPWRKAVsjrBOzn0hANhN63I4Wnkl4xXZYa4UiRfXyP8Bo7Fm7M7ssO
-X-Developer-Key: i=j.neuschaefer@9elements.com; a=ed25519;
- pk=mytxDu9ALv0FsWdexvpDMisghxetVpsZ8NdmY/FGsgY=
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=j.neuschaefer@9elements.com; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: Q9GMJtjtyCo7wQyl4Dm-p1x86-_PKFuq
+X-Authority-Analysis: v=2.4 cv=GYMnWwXL c=1 sm=1 tr=0 ts=6a0d84fd cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=qkVa7TRde7xkgx6zoNMA:9
+X-Proofpoint-ORIG-GUID: P_bVqYASFPbZw3ur18rlDugGerNZ02df
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDA5MiBTYWx0ZWRfX/fEk5fZ17EcE
+ ZItzAD9hKu+jbxVLEEcXsN8HB8qtcOgOIk/M0CUdV92IdiHrMBATPFnoYRSthn/KhgkVrHoQOX7
+ LELvbbSxv1YCtagX91O/cNTK90Wnsc0/dgnHKbKJ4wOlD850da/j6OX2dbUtuGEzjELqjXnYTRW
+ wwyfcmeauWKvibtMCHrTHmWyI9hQlu7w7hT/eQM/iCfMnR5pFP/MixmM9aCPrF4eT0ADkEcH2Ko
+ wd23+M9mRNfTckR8lICj4dKTbT8HxXnMQYHW5Yug2SQl6Xi0jAEsWPYlPUCZGhXZHJ+c7j48V3z
+ 4WCsQMg5WFfWLdPJi3CT0XXEWGoOkn44ae3xu4W3lsP8m3GyVkm5UD7bbbgO6qth0o2A6jyYEQS
+ Z+QNOs8c3tLcsI7+OpywklISRFDWI/r/zCeOxiSsJCo7bPLxOpRfn4sYrY26bkIAbELTPG3bz06
+ kCrv+D71BslgJwmoThQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-20_02,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ adultscore=0 suspectscore=0 spamscore=0 clxscore=1015 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605200092
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=nnmlinux@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,42 +119,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"devices have an two additional [...]" -> "devices have two additional",
-and also a case of "were" vs. "where".
+Introduce 'spapr_phb_vfio_errinjct()' to inject PCI PHB error events via
+the VFIO passthrough backend. This function translates RTAS error injection
+parameters into VFIO EEH injection commands suitable for hardware emulation.
 
-Signed-off-by: J. Neuschäfer <j.neuschaefer@9elements.com>
+The patch adds:
+    - A minimal 'enum rtas_err_type' for error types used in VFIO path
+    - EEH function code macros ('EEH_ERR_FUNC_...')
+    - Backend stub and integration into 'spapr_pci_vfio.c'
+    - Necessary header declarations for interfacing
+
+This forms the foundational layer for PCI error injection testing using VFIO
+passthrough devices on pseries guests.
+
+Signed-off-by: Narayana Murty N <nnmlinux@linux.ibm.com>
 ---
- docs/devel/qom.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/ppc/spapr_pci_vfio.c     | 53 +++++++++++++++++++++++++++++++++++++
+ include/hw/pci-host/spapr.h |  7 +++++
+ include/hw/ppc/spapr.h      | 44 ++++++++++++++++++++++++++++++
+ 3 files changed, 104 insertions(+)
 
-diff --git a/docs/devel/qom.rst b/docs/devel/qom.rst
-index 5870745ba27b108726da0756aa2b90109d5e0bd6..935bb1004a7839c8e963985e765c866d5b980c53 100644
---- a/docs/devel/qom.rst
-+++ b/docs/devel/qom.rst
-@@ -435,14 +435,14 @@ OBJECT_DEFINE_ABSTRACT_TYPE() macro can be used instead:
- Device Life-cycle
- =================
+diff --git a/hw/ppc/spapr_pci_vfio.c b/hw/ppc/spapr_pci_vfio.c
+index a748a0bf4c..ed0b22a84a 100644
+--- a/hw/ppc/spapr_pci_vfio.c
++++ b/hw/ppc/spapr_pci_vfio.c
+@@ -317,6 +317,55 @@ int spapr_phb_vfio_eeh_configure(SpaprPhbState *sphb)
+     return RTAS_OUT_SUCCESS;
+ }
  
--As class initialisation cannot fail devices have an two additional
-+As class initialisation cannot fail, devices have two additional
- methods to handle the creation of dynamic devices. The ``realize``
- function is called with ``Error **`` pointer which should be set if
- the device cannot complete its setup. Otherwise on successful
- completion of the ``realize`` method the device object is added to the
- QOM tree and made visible to the guest.
++int spapr_phb_vfio_errinjct(SpaprPhbState *sphb,
++                            uint32_t func, uint64_t addr,
++                            uint64_t mask, uint32_t type)
++{
++    VFIOLegacyContainer *container = vfio_eeh_as_container(&sphb->iommu_as);
++    struct vfio_eeh_pe_op op = {
++        .op = VFIO_EEH_PE_INJECT_ERR,
++        .argsz = sizeof(op),
++    };
++
++    /* Set error type, address, and mask */
++    op.err.type = type;
++    op.err.addr = addr;
++    op.err.mask = mask;
++
++    /* Validate and set function code */
++    switch (func) {
++    case EEH_ERR_FUNC_LD_MEM_ADDR:
++    case EEH_ERR_FUNC_LD_MEM_DATA:
++    case EEH_ERR_FUNC_LD_IO_ADDR:
++    case EEH_ERR_FUNC_LD_IO_DATA:
++    case EEH_ERR_FUNC_LD_CFG_ADDR:
++    case EEH_ERR_FUNC_LD_CFG_DATA:
++    case EEH_ERR_FUNC_ST_MEM_ADDR:
++    case EEH_ERR_FUNC_ST_MEM_DATA:
++    case EEH_ERR_FUNC_ST_IO_ADDR:
++    case EEH_ERR_FUNC_ST_IO_DATA:
++    case EEH_ERR_FUNC_ST_CFG_ADDR:
++    case EEH_ERR_FUNC_ST_CFG_DATA:
++    case EEH_ERR_FUNC_DMA_RD_ADDR:
++    case EEH_ERR_FUNC_DMA_RD_DATA:
++    case EEH_ERR_FUNC_DMA_RD_MASTER:
++    case EEH_ERR_FUNC_DMA_RD_TARGET:
++    case EEH_ERR_FUNC_DMA_WR_ADDR:
++    case EEH_ERR_FUNC_DMA_WR_DATA:
++    case EEH_ERR_FUNC_DMA_WR_MASTER:
++        op.err.func = func;
++        break;
++    default:
++        return RTAS_OUT_PARAM_ERROR;
++    }
++
++    /* Perform the ioctl to inject the error */
++    if (ioctl(container->fd, VFIO_EEH_PE_OP, &op) < 0) {
++        return RTAS_OUT_HW_ERROR;
++    }
++
++    return RTAS_OUT_SUCCESS;
++}
+ #else
  
--The reverse function is ``unrealize`` and should be were clean-up
-+The reverse function is ``unrealize`` and should be where clean-up
- code lives to tidy up after the system is done with the device.
+ bool spapr_phb_eeh_available(SpaprPhbState *sphb)
+@@ -349,4 +398,8 @@ int spapr_phb_vfio_eeh_configure(SpaprPhbState *sphb)
+     return RTAS_OUT_NOT_SUPPORTED;
+ }
  
- All devices can be instantiated by C code, however only some can
-
----
-base-commit: e89049b3ba5f1f0468bc0d294173345597514a1b
-change-id: 20260520-qom-76537da673b6
-
-Best regards,
++int spapr_phb_vfio_errinjct(SpaprPhbState *sphb, int option)
++{
++    return RTAS_OUT_NOT_SUPPORTED;
++}
+ #endif /* CONFIG_VFIO_PCI */
+diff --git a/include/hw/pci-host/spapr.h b/include/hw/pci-host/spapr.h
+index 0db87f1281..417d1f6c31 100644
+--- a/include/hw/pci-host/spapr.h
++++ b/include/hw/pci-host/spapr.h
+@@ -125,6 +125,8 @@ int spapr_phb_vfio_eeh_get_state(SpaprPhbState *sphb, int *state);
+ int spapr_phb_vfio_eeh_reset(SpaprPhbState *sphb, int option);
+ int spapr_phb_vfio_eeh_configure(SpaprPhbState *sphb);
+ void spapr_phb_vfio_reset(DeviceState *qdev);
++int spapr_phb_vfio_errinjct(SpaprPhbState *sphb, uint32_t func,
++                            uint64_t addr, uint64_t mask, uint32_t type);
+ #else
+ static inline bool spapr_phb_eeh_available(SpaprPhbState *sphb)
+ {
+@@ -151,6 +153,11 @@ static inline int spapr_phb_vfio_eeh_configure(SpaprPhbState *sphb)
+ static inline void spapr_phb_vfio_reset(DeviceState *qdev)
+ {
+ }
++static inline int spapr_phb_vfio_errinjct(SpaprPhbState *sphb, uint32_t func,
++                                   uint64_t addr, uint64_t mask, uint32_t type)
++{
++    return RTAS_OUT_HW_ERROR;
++}
+ #endif
+ 
+ void spapr_phb_dma_reset(SpaprPhbState *sphb);
+diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+index 9acda15d4f..fadb7cf7d9 100644
+--- a/include/hw/ppc/spapr.h
++++ b/include/hw/ppc/spapr.h
+@@ -682,6 +682,50 @@ void push_sregs_to_kvm_pr(SpaprMachineState *spapr);
+ #define RTAS_EEH_PE_UNAVAIL_INFO         1000
+ #define RTAS_EEH_PE_RECOVER_INFO         0
+ 
++/* EEH error types and functions */
++#define EEH_ERR_FUNC_MIN                0
++#define EEH_ERR_FUNC_LD_MEM_ADDR        0       /* Memory load  */
++#define EEH_ERR_FUNC_LD_MEM_DATA        1
++#define EEH_ERR_FUNC_LD_IO_ADDR         2       /* IO load      */
++#define EEH_ERR_FUNC_LD_IO_DATA         3
++#define EEH_ERR_FUNC_LD_CFG_ADDR        4       /* Config load  */
++#define EEH_ERR_FUNC_LD_CFG_DATA        5
++#define EEH_ERR_FUNC_ST_MEM_ADDR        6       /* Memory store */
++#define EEH_ERR_FUNC_ST_MEM_DATA        7
++#define EEH_ERR_FUNC_ST_IO_ADDR         8       /* IO store     */
++#define EEH_ERR_FUNC_ST_IO_DATA         9
++#define EEH_ERR_FUNC_ST_CFG_ADDR        10      /* Config store */
++#define EEH_ERR_FUNC_ST_CFG_DATA        11
++#define EEH_ERR_FUNC_DMA_RD_ADDR        12      /* DMA read     */
++#define EEH_ERR_FUNC_DMA_RD_DATA        13
++#define EEH_ERR_FUNC_DMA_RD_MASTER      14
++#define EEH_ERR_FUNC_DMA_RD_TARGET      15
++#define EEH_ERR_FUNC_DMA_WR_ADDR        16      /* DMA write    */
++#define EEH_ERR_FUNC_DMA_WR_DATA        17
++#define EEH_ERR_FUNC_DMA_WR_MASTER      18
++#define EEH_ERR_FUNC_DMA_WR_TARGET      19
++#define EEH_ERR_FUNC_MAX                EEH_ERR_FUNC_DMA_WR_TARGET
++
++/* RTAS PCI Error Injection Token Types */
++enum rtas_err_type {
++    RTAS_ERR_TYPE_FATAL                   = 0x1,
++    RTAS_ERR_TYPE_RECOVERED_RANDOM_EVENT  = 0x2,
++    RTAS_ERR_TYPE_RECOVERED_SPECIAL_EVENT = 0x3,
++    RTAS_ERR_TYPE_CORRUPTED_PAGE          = 0x4,
++    RTAS_ERR_TYPE_CORRUPTED_SLB           = 0x5,
++    RTAS_ERR_TYPE_TRANSLATOR_FAILURE      = 0x6,
++    RTAS_ERR_TYPE_IOA_BUS_ERROR           = 0x7,
++    RTAS_ERR_TYPE_PLATFORM_SPECIFIC       = 0x8,
++    RTAS_ERR_TYPE_CORRUPTED_DCACHE_START  = 0x9,
++    RTAS_ERR_TYPE_CORRUPTED_DCACHE_END    = 0xA,
++    RTAS_ERR_TYPE_CORRUPTED_ICACHE_START  = 0xB,
++    RTAS_ERR_TYPE_CORRUPTED_ICACHE_END    = 0xC,
++    RTAS_ERR_TYPE_CORRUPTED_TLB_START     = 0xD,
++    RTAS_ERR_TYPE_CORRUPTED_TLB_END       = 0xE,
++    RTAS_ERR_TYPE_IOA_BUS_ERROR_64        = 0xF,
++    RTAS_ERR_TYPE_UPSTREAM_IO_ERROR       = 0x10
++};
++
+ /* ibm,set-slot-reset */
+ #define RTAS_SLOT_RESET_DEACTIVATE       0
+ #define RTAS_SLOT_RESET_HOT              1
 -- 
-J. Neuschäfer <j.neuschaefer@9elements.com>
+2.54.0
 
 
