@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47100CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 09:16:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 927E2CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 09:16:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPd1T-00064R-Hb; Wed, 20 May 2026 05:15:28 -0400
+	id 1wPd1Y-0006Dy-ID; Wed, 20 May 2026 05:15:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wPd1N-0005uQ-SC
- for qemu-devel@nongnu.org; Wed, 20 May 2026 05:15:22 -0400
+ id 1wPd1W-000682-1L
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 05:15:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wPd1M-000671-G1
- for qemu-devel@nongnu.org; Wed, 20 May 2026 05:15:21 -0400
+ id 1wPd1U-00069W-C3
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 05:15:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779268519;
+ s=mimecast20190719; t=1779268527;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rC1gQ4KCww6UmwMM2Hg5rZTpCm9TVmnOV9UbYZ7eups=;
- b=gGe3PGYZa8V6WWMuq04jv7AS5LQr5kZVHmWlejuyKdXZH9LRyJ22WKxYYKLWXHIl4QElJ3
- g/ZSlaMvinT05+KGKnSBQEeG7WzVLGNw8C4irCvluZZIlLdyc2+0XFK2wZSOhsOEtm5U5H
- y9nFvW02BB4z9AM0KBsWgrEd8qGxURc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=7WmkbRyCOvc8KhMxUJJu07mhxWy5DTBCisJMQWdsY70=;
+ b=PUVUBj7tbnhEB8ID++9fNvvjXRDAVQlI7IXqDzMfM1OQQZo6QTDnMW6LCQVoebTrzhC/uv
+ 6+l4aBtMUyFy2J1Z48upnhiqbLbz6Be1yJfEOmKno5ITR2oWJ2HYWVX7iQqZ6peDn/brAj
+ PS5QbHGh5FoG+hdxkzd0LlUSThJelCg=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-182-u7DKdIsGNlylIxdaOtFSGQ-1; Wed,
- 20 May 2026 05:15:16 -0400
-X-MC-Unique: u7DKdIsGNlylIxdaOtFSGQ-1
-X-Mimecast-MFC-AGG-ID: u7DKdIsGNlylIxdaOtFSGQ_1779268515
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-Km88CWgxPAmA0sb9Q9aPQA-1; Wed,
+ 20 May 2026 05:15:26 -0400
+X-MC-Unique: Km88CWgxPAmA0sb9Q9aPQA-1
+X-Mimecast-MFC-AGG-ID: Km88CWgxPAmA0sb9Q9aPQA_1779268525
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6971E19560B0; Wed, 20 May 2026 09:15:15 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E9CEB1956053; Wed, 20 May 2026 09:15:24 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.49.211])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DD71A18001EF; Wed, 20 May 2026 09:15:10 +0000 (UTC)
+ id BBB251800347; Wed, 20 May 2026 09:15:20 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -57,10 +57,10 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  John Snow <jsnow@redhat.com>, John Levon <john.levon@nutanix.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Cleber Rosa <crosa@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PULL 15/29] iotests: fix check for sudo access in LUKS I/O test
-Date: Wed, 20 May 2026 10:13:37 +0100
-Message-ID: <20260520091351.1160442-16-berrange@redhat.com>
+ Cleber Rosa <crosa@redhat.com>
+Subject: [PULL 17/29] gitlab: add jobs for thorough block tests
+Date: Wed, 20 May 2026 10:13:39 +0100
+Message-ID: <20260520091351.1160442-18-berrange@redhat.com>
 In-Reply-To: <20260520091351.1160442-1-berrange@redhat.com>
 References: <20260520091351.1160442-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -92,42 +92,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The test did not cope with the possibility that 'sudo' was not installed
-at all, merely that it was not configured. This broke tests in any CI
-env which lacks 'sudo'.
+CI is only exercising the qcow2 'auto' tests currently. As a result we
+get no exposure of changes which cause regressions in other block format
+drivers.
 
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+This adds new CI jobs for each block format, that will run the target
+'make check-block-$FORMAT'. The jobs are separate so that we have the
+ability to make each format gating or not, depending on their level
+of reliability.
+
+The 'centos' image is used to run the I/O tests since several tests
+have an implicit dependency on x86_64-softmmu, and thus break with
+other architecture targets. The 'centos' build job is the only one
+that creates the x86_64-softmmu target in CI. Ideally this target
+portability in I/O tests would be fixed to avoid this limitation.
+
+Acked-by: Kevin Wolf <kwolf@redhat.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/qemu-iotests/149 | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ .gitlab-ci.d/buildtest.yml | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/tests/qemu-iotests/149 b/tests/qemu-iotests/149
-index c13343d7ef..6dff39a28a 100755
---- a/tests/qemu-iotests/149
-+++ b/tests/qemu-iotests/149
-@@ -95,11 +95,14 @@ def verify_passwordless_sudo():
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 4b1949a3a5..cf0281ecd6 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -174,6 +174,24 @@ build-system-centos:
+       x86_64-softmmu rx-softmmu sh4-softmmu
+     MAKE_CHECK_ARGS: check-build
  
-     args = ["sudo", "-n", "/bin/true"]
- 
--    proc = subprocess.Popen(args,
--                            stdin=subprocess.PIPE,
--                            stdout=subprocess.PIPE,
--                            stderr=subprocess.STDOUT,
--                            universal_newlines=True)
-+    try:
-+        proc = subprocess.Popen(args,
-+                                stdin=subprocess.PIPE,
-+                                stdout=subprocess.PIPE,
-+                                stderr=subprocess.STDOUT,
-+                                universal_newlines=True)
-+    except FileNotFoundError as e:
-+        iotests.notrun('requires sudo binary: %s' % e)
- 
-     msg = proc.communicate()[0]
- 
++
++# NB: block-XXX jobs use 'centos' since that is the build
++# job that provides the x86_64-softmmu.  Some I/O tests
++# are currently buggy and blindly assume characteristics
++# of x86 (such as PCIe) causing failures with other arches
++
++block:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: "check-block-$FORMAT"
++  parallel:
++    matrix:
++      - FORMAT: [luks, nbd, parallels, qcow2, qed, raw, vdi, vhdx, vmdk, vpc]
++
+ # Previous QEMU release. Used for cross-version migration tests.
+ build-previous-qemu:
+   extends: .native_build_job_template
 -- 
 2.54.0
 
