@@ -4,130 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DA05CD5BA4
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:36:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DA04CD5BA4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:37:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPkpY-0002nZ-IS; Wed, 20 May 2026 13:35:40 -0400
+	id 1wPkr8-0003Rq-Lq; Wed, 20 May 2026 13:37:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wPkpW-0002md-S5
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:35:38 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPkr3-0003RT-Js
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:37:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wPkpT-0006vc-FH
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:35:38 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64KGjMYd446901
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 17:35:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=qcppdkim1; bh=LKwHMwV5sY9HeeMU+0TTLT82xjmN8iEJXK1
- bIKU8aHg=; b=cr87fajwUPpeOffEOeC0Kvq4LL169UufVCoYCO3y2Bv/9w/HJDa
- srIv1jPuHk8Oa3/rK78sGa76qyd9Hn36bvf2TfKGvmGw69JKZ/OT7IoHF1ugsRhR
- iS1tyEEyx4a9+cNlhIpwU6gQjrcvwo6xFGsQ6FXQB3dO/KrT4kZBPQwcEgbr+/KH
- ZXif+T97wIANBEGUuHR/QAbKkpd4YHNlNYNDl3zZzOJUE/O8FLj+/8gyaZwum00T
- wDR2P57GuFa/x/olKF+rR6lm/nAsa6XevJAIc3/Ldhybt/pJkUUBw0nsxYKFCjCY
- GXEUDWBtRE7++i2BVH6ZUFcOZWiVBokGWZg==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e9anrhws9-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 17:35:28 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-8b58065ea15so152206596d6.2
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:35:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPkr1-0007HZ-UJ
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:37:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779298629;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=kVSPNdA8t+4+MQ2CNcHxWF57tfg2oIGxgJw0mgUs0eA=;
+ b=A9ULsci9D16ppEh1d/oEd4gNLwBRCAyg/45qGTOw9ANzJ242QO/X1JprCdXdfx5ntPk5AP
+ FnwmX/G3IoPO74CbMnuyerD/nR60V8xZ4RJj/0g+o3B5XohmwDV5Ts0Noa42cYbTV0cHIX
+ 6sAT90U9gsLPIn36HuullRYVahiW6DE=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-265-1bvw8pQEMlunR5PIBZu-8A-1; Wed, 20 May 2026 13:37:08 -0400
+X-MC-Unique: 1bvw8pQEMlunR5PIBZu-8A-1
+X-Mimecast-MFC-AGG-ID: 1bvw8pQEMlunR5PIBZu-8A_1779298628
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-910304978f3so1019192285a.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:37:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1779298527; x=1779903327; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=LKwHMwV5sY9HeeMU+0TTLT82xjmN8iEJXK1bIKU8aHg=;
- b=N41J6z3m4tg1at16p85lMX+zsd4EYGdQ+fV7V45Lp3yO3VRXV8tD8b/Z4NmlJa+rjh
- fmaln0zRITEp3e4xx3GeiKuDPLubvbtrR+tPKLLAnck73cRwtB6V9LMAqpB+H456YvN6
- CPdHeqwNa8JUyvFCB1Nx2zdS+tPjLpQOcSuZ1gehoRB3mdPy4QH/sozyWDsLAOKCnd3i
- tjS9nU4F/0V3zEtsuFzHXUGkarTGpiA9QeezT0zYBqYSRahBVe/oIqDGNwW/SpMm8Bvw
- jr95m2Uo+rCQptQ4i/sdLuXQTMP5Czb+4GHn//7TRh6Ta0MD8kXm5PYzZ5Tz9n6dcKBV
- 51zQ==
+ d=redhat.com; s=google; t=1779298627; x=1779903427; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=kVSPNdA8t+4+MQ2CNcHxWF57tfg2oIGxgJw0mgUs0eA=;
+ b=bS+RtFv5enYd+jEqvrpWoyhbcRgl2qDu6hqu3LwWHIwYqPczQkN80Qb5DjuwYiP6H0
+ 6vZMm/t/UJeG2DFUzfjeHYAoZk7HbjeS1GN3et1gIqL2wBGl3f3x6ZkXIX/tRwoKzkXt
+ tGJG3VgdyiNx1e1jx2R3oZXCgXV4HuJ3rpA+0KnmgHwpkZ7mluqFI/Evbcfa2vbCwxUu
+ Y3HhmzyxoFQnEJLd5/+JMteEXfwKlDuDKqNOLxuKEObiI41pSlI2uVjU72f5bNqXuL/y
+ aGgk8N2i+QO/TpMWWspac9Lq6K6aOq7Q4taWBuWBHgeCSclYU4aZSWE/rbcT3Mpmc19Y
+ iwUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779298527; x=1779903327;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LKwHMwV5sY9HeeMU+0TTLT82xjmN8iEJXK1bIKU8aHg=;
- b=OwZOcYTG7NuJAOMEI+H/rZgi0tk7qWdRFgHGpsIGao/OtdTpWqiEfs2KI21BYxFh06
- F77vVkI5xQtDwrsUGBGiF0BIIV4ERoTTpEQKeF4X2zfOnGX9ZDQh2WPGckQbR33qYZ6C
- b0+kT6+VbnVonmkLOpd8yirBm8UlKuvhy9zXT1fJhTbkbpxdInsLpF5nPUiTHW4CAiOk
- tYOsY84CWQmIPVWj8kCZ5rqkCuXnOp/SWaN0svOKn/NJ5g2mvPCgyzN/PFUhtf7tztu/
- AZYCHnHgs16vyRMfbNQB+LCUq5PthyVLipSEqryuzrsy4uxkPWyqXts5jaOJJHDdLgAW
- Fbug==
-X-Gm-Message-State: AOJu0YxckbVDYzpxHuM2EEkkRFzLhkKQria/dt19MhyTR6jLP/pkuJo5
- ktvOw+VaHx3C2zxi7dy4ID+jUelmA71ixOHJjEZKYGnPOWqTcA2xCGp3ofK+tYk9PrlG3R7KVH0
- reFWNEdBv56km8rE6NhE6jQeED1ZM/T963WQ5p9N0bZxbUSxnYO0YnN9sgeQ2ddGNTw==
-X-Gm-Gg: Acq92OF8kAJ3z8nyyDlFuQQIUmySD+kub073ActyyGFYoIGu+XnGcUgDvuEinj32JZa
- 92tGWJKeG+GaxZo7mw3oFnLoKN7daTb5LHHZc6tjhYn0mha5b1dCAYc7ZCc7eTg1pab8dv4ijXi
- RPYciFds3ckRmQ14jGihFgqZr8tgxUVK+ZHlRs3n52V0NIV0F17LDuZm/HJCKek3nsYwD+4dWux
- oVUDPSkocF0u15RaxqEXfRP2OJ9YJOQs0fxBxfVDkGZ4cgZDrpBA33nnet5wf/e3nRuJaeBbqgI
- LnsZAaozqeir/zQUAKpDcSzAkG26DGRX3XqnF84UXOq864X0qf60c43597XXwgsQHEXf5MZfyZc
- Kn2vDP3XGDPo4oTx1Jv4WzcS06PVnIIPuPNwWHjPAEiROXk/tQjSi8hdg6t8w
-X-Received: by 2002:a05:6214:5297:b0:8cc:f94:86af with SMTP id
- 6a1803df08f44-8cc0f9489damr41857106d6.50.1779298527190; 
- Wed, 20 May 2026 10:35:27 -0700 (PDT)
-X-Received: by 2002:a05:6214:5297:b0:8cc:f94:86af with SMTP id
- 6a1803df08f44-8cc0f9489damr41856066d6.50.1779298526464; 
- Wed, 20 May 2026 10:35:26 -0700 (PDT)
-Received: from QCOM-UWl2o8bcGT.qualcomm.com ([191.202.238.222])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8ca360b274bsm126854276d6.21.2026.05.20.10.35.24
+ d=1e100.net; s=20251104; t=1779298627; x=1779903427;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=kVSPNdA8t+4+MQ2CNcHxWF57tfg2oIGxgJw0mgUs0eA=;
+ b=FoZrgYPidxEOdFIuFcJXatyZ7ARK33elJLJPqBHLTzIg9gr16EVGCILvo3wUyAa6TV
+ +ZxMDXXXWL8AXpvPaLib8M20y9KD6Q8sHi/zceDzbvtVDWsbwSPc5SvL5sNN3KfGe0O8
+ PoTKYYMoIUMOj+j5LptgxPpeMO2nLmNJSfZXLddheK3HItqVR7SvKslL6eOjRMWgPI5u
+ SKf/QTKK+sd0QS/SmDBs2od+S3E1OnTXcHxZojyeX1G6dfJ5gdQPyagYVAkkNRy8nOIF
+ U4mDgRSo8BOqj9cmjrEyZcXbPAneb2PRoNDRdgCZCT/1D8b/w+Psi8M7DNEkQl1s9esq
+ P7zQ==
+X-Gm-Message-State: AOJu0Ywf7f9Wn2EvfpL6HOG77QEEeNEaMShRgqkAzguCa3RNlAm++7jS
+ kYCg5K+v4toSXc3p1r/YjyQWD6vm9yGKxKP5F/+APg4rQkUPfn7Byt4Zx6SHYZ1/oi+oAO1kQXE
+ +9mWSg5cLB/njLMWAfIY0bpQi8tmt7O6a9CiTvNTiYAfvLoHIikeMLnVi
+X-Gm-Gg: Acq92OGVS9nUdXGlS9vgactmGH23e6ogLDIZa0JvPgCBjgi4i9NtnoaPQi9437DXfwB
+ jQ/0ZxEaDtZ0Qa6SZwZgM3Ad+o0Nt7wi6WD3RAs8Rqp/0ZgzqoLry/DJJrE38J3bUKH8sNZxmKP
+ JMpEc+pg2SxSH3ItyHt0K1QAJoLNmBiXmfgTAdKrDfRYjPbAqcpGB/x+LTunOFzDNOk1bL4Z7jr
+ jf8XrFgWyG/bFRXC2UNLGH2xEGVG2jUtV3rgbQONMRrmmLhC3lBf+n7+LtrAHNPi8beyEpFk/yS
+ V7zx8JSgArD6wC7LBiQWpBND6cetVMdyenxvwvPwNKXgNhoBq/BJ9N4uBT744VNcZ0cy+5xXkT6
+ SettlmiGTLJsoWRz0AewSn6HkhH40aDlN8uX+BvL0URZB1ZZk6/fiCmCbzw==
+X-Received: by 2002:a05:620a:f0b:b0:8cd:c152:ee6b with SMTP id
+ af79cd13be357-914a01ffbb2mr78186685a.8.1779298627424; 
+ Wed, 20 May 2026 10:37:07 -0700 (PDT)
+X-Received: by 2002:a05:620a:f0b:b0:8cd:c152:ee6b with SMTP id
+ af79cd13be357-914a01ffbb2mr78180285a.8.1779298626863; 
+ Wed, 20 May 2026 10:37:06 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-910baf2236fsm2206668285a.20.2026.05.20.10.37.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 10:35:25 -0700 (PDT)
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Subject: [PATCH] target/riscv,disas/riscv: add insn len encodings > 64 bit
-Date: Wed, 20 May 2026 14:35:22 -0300
-Message-ID: <20260520173522.1794433-1-daniel.barboza@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
+ Wed, 20 May 2026 10:37:06 -0700 (PDT)
+Date: Wed, 20 May 2026 13:37:04 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Mark Kanda <mark.kanda@oracle.com>,
+ Ben Chaney <bchaney@akamai.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v1 11/15] tests/qtest/migration: Use defer for cpr-tests
+Message-ID: <ag3xQBVVv74srgKo@x1.local>
+References: <20260505160915.25558-1-farosas@suse.de>
+ <20260505160915.25558-12-farosas@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: iGsdcq1W1zCcQv6eMDwdsbrWFqgeOHoy
-X-Proofpoint-ORIG-GUID: iGsdcq1W1zCcQv6eMDwdsbrWFqgeOHoy
-X-Authority-Analysis: v=2.4 cv=UuJT8ewB c=1 sm=1 tr=0 ts=6a0df0e0 cx=c_pps
- a=wEM5vcRIz55oU/E2lInRtA==:117 a=etEqFfc6qwXwpI8uT8rzbw==:17
- a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=p0WdMEafAAAA:8
- a=EUspDBNiAAAA:8 a=p0CW7Bo4BwABr9lP6VwA:9 a=OIgjcC2v60KrkQgK7BGD:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDE3MSBTYWx0ZWRfXzPkc+ywW+es3
- 9FMA0yPwWVhNLx5WoykhRsfJeBSu1eiL45L9iYkdlBqX76vFioA/ZdvQZtuJn7VeerAxKavy3ST
- ywDrnRW1w2BSgbHYtAjO+7YZan7VTFVFP4OYwOKAt5dhPt2lrQB8UIRxqBfXzjAjMRTZhqmACbm
- Q2giFXZkh+n4HfZhVkA4erN+lobaxerPbkMaq05tlaGhKm+55YkcsIi7sZhcQhtodvIBNxNCfVL
- DRFLq3j58ULQsRWD6h4QDq+metb46ViaKQX1l8t4mVLzNCSCgACNP0CEzMFeT08OHTWQ7KKBqHa
- eZCFQ64vnARzMOe3OP5jDZBraEljTHBEHU+V3itp6g2IRB/WA6Ybj538ByXLJUoNw5fPIt3ZXYn
- ynsQl7spfFFkJoSFJIksUbeZs4NiDoUmjk3FUov6gnoZiEqmu/+Rb5QBv2p9K/aNGF2ROZc/Cyi
- eDvoM/17KXbs3uNs8XQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-20_03,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0
- priorityscore=1501 suspectscore=0 spamscore=0 malwarescore=0 bulkscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
- definitions=main-2605200171
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260505160915.25558-12-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,172 +116,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We're missing the "Expanded Instruction-Length Encoding" logic from the
-unpriv isa, meaning we're not detecting missing insn len > 8 bytes.
-This doesn't have impact in regular insn emulation because most (if not
-all) of the existing insns are 2 or 4 bytes.
+On Tue, May 05, 2026 at 01:09:10PM -0300, Fabiano Rosas wrote:
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  tests/qtest/migration/cpr-tests.c | 21 ++++++++++++---------
 
-However, running with "-d in_asm" will cause QEMU to run an infinite
-loop because our disas code can't handle the expanded length encoding,
-causing inst_length() to return '0' and target_disas() to loop forever
-since it's using the len to decrease the loop counter.
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Fixing just the disas code isn't enough.  target_disas() will do a
+Only one thing to double check:
 
-"if (size < count) {"
+>  1 file changed, 12 insertions(+), 9 deletions(-)
+> 
+> diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
+> index 18217f0460..9091a84213 100644
+> --- a/tests/qtest/migration/cpr-tests.c
+> +++ b/tests/qtest/migration/cpr-tests.c
+> @@ -60,7 +60,7 @@ static int test_transfer(MigrateCommon *args, const char *cpr_channel,
+>      obj = migrate_str_to_channel(cpr_channel);
+>      qlist_append(channels_list, obj);
+>  
+> -    if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
+> +    if (migrate_start(&from, &to, "defer", &args->start)) {
+>          return -1;
+>      }
+>  
+> @@ -128,11 +128,17 @@ static void test_mode_transfer_common(MigrateCommon *args, bool incoming_defer)
+>      int cpr_sockfd = qtest_socket_server(cpr_path);
+>      g_assert(cpr_sockfd >= 0);
+>  
+> -    opts_target = g_strdup_printf("-incoming cpr,addr.transport=socket,"
+> -                                  "addr.type=fd,addr.str=%d %s",
+> -                                  cpr_sockfd, opts);
+> +    if (incoming_defer) {
+> +        opts_target = g_strdup_printf("-incoming cpr,addr.transport=socket,"
+> +                                      "addr.type=fd,addr.str=%d %s",
+> +                                      cpr_sockfd, opts);
+> +    } else {
+> +        opts_target = g_strdup_printf("-incoming %s "
+> +                                      "-incoming cpr,addr.transport=socket,"
+> +                                      "addr.type=fd,addr.str=%d %s",
+> +                                      uri, cpr_sockfd, opts);
 
-check, where size = the insn length from the translator and count = the
-insn length from disas, and will warn about it during disassembling.  We
-need both places to use the same insn length logic.
+IIUC now in this path qtest will ultimately generate cmdline like this for
+dest:
 
-[1] https://gitlab.com/qemu-project/qemu/-/work_items/3479
+  -incoming defer \
+  -incoming unix:... \
+  -incoming cpr,addr...
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3479
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
----
- disas/riscv.c            | 50 +++++++++++++++++++++++++++++-----------
- target/riscv/internals.h | 33 ++++++++++++++++++++++++--
- target/riscv/translate.c |  7 +++++-
- 3 files changed, 73 insertions(+), 17 deletions(-)
+I am not sure if this is the intention, but it looks working indeed where
+the 1st defer will be an no-op, and "-incoming" allows overwrites.
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index d416a4d6b3..d32661c857 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -5057,26 +5057,48 @@ static bool check_constraints(rv_decode *dec, const rvc_constraint *c)
-     return true;
- }
- 
--/* instruction length */
--
-+/*
-+ * Note: basically a carbon copy of insn_len() from
-+ * target/riscv/internals.h.
-+ */
- static size_t inst_length(rv_inst inst)
- {
--    /* NOTE: supports maximum instruction size of 64-bits */
--
-     /*
--     * instruction length coding
-+     * "Expanded Instruction-Length Encoding" as in
-+     * unpriv isa section 1.5.1.
-      *
--     *      aa - 16 bit aa != 11
--     *   bbb11 - 32 bit bbb != 111
--     *  011111 - 48 bit
--     * 0111111 - 64 bit
-+     *               aa - 16 bit aa != 11
-+     *            bbb11 - 32 bit bbb != 111
-+     *           011111 - 48 bit
-+     *          0111111 - 64 bit
-+     * xnnnxxxxx1111111 - (80 + 16*nnn) bits, if nnn != 111
-+     * x111xxxxx1111111 - 192 bits
-      */
-+    if ((inst & 0b11) != 0b11) {
-+        return 2;
-+    } else if ((inst & 0b11100) != 0b11100) {
-+        return 4;
-+    } else if ((inst & 0b111111) == 0b011111) {
-+        return 6;
-+    } else if ((inst & 0b1111111) == 0b0111111) {
-+        return 8;
-+    } else if ((inst & 0b1111111) == 0b1111111) {
-+        uint32_t nnn = (inst >> 12) & 0b0111;
-+
-+        if (nnn == 0b111) {
-+            return 24;
-+        }
-+        return (16 * nnn + 80) / 8;
-+    }
- 
--    return (inst &      0b11) != 0b11      ? 2
--         : (inst &   0b11100) != 0b11100   ? 4
--         : (inst &  0b111111) == 0b011111  ? 6
--         : (inst & 0b1111111) == 0b0111111 ? 8
--         : 0;
-+    /*
-+     * Returning 0 if we don't find the right insn length will
-+     * cause an infinite loop in target_disas().  Return an
-+     * unrealistic length value instead, making target_disas()
-+     * trigger the "Disassembler disagrees with translator over
-+     * instruction" error path.
-+     */
-+    return 1024;
- }
- 
- /* format instruction */
-diff --git a/target/riscv/internals.h b/target/riscv/internals.h
-index 8c24af0d85..80c2f8f5f8 100644
---- a/target/riscv/internals.h
-+++ b/target/riscv/internals.h
-@@ -245,9 +245,38 @@ static inline target_ulong adjust_addr_virt(CPURISCVState *env,
-     return adjust_addr_body(env, addr, true);
- }
- 
--static inline int insn_len(uint16_t first_word)
-+static inline int insn_len(uint32_t opcode)
- {
--    return (first_word & 3) == 3 ? 4 : 2;
-+    /*
-+     * "Expanded Instruction-Length Encoding" as in
-+     * unpriv isa section 1.5.1.
-+     *
-+     *               aa - 16 bit aa != 11
-+     *            bbb11 - 32 bit bbb != 111
-+     *           011111 - 48 bit
-+     *          0111111 - 64 bit
-+     * xnnnxxxxx1111111 - (80 + 16*nnn) bits, if nnn != 111
-+     * x111xxxxx1111111 - 192 bits
-+     */
-+    if ((opcode & 0b11) != 0b11) {
-+        return 2;
-+    } else if ((opcode & 0b11100) != 0b11100) {
-+        return 4;
-+    } else if ((opcode & 0b111111) == 0b011111) {
-+        return 6;
-+    } else if ((opcode & 0b1111111) == 0b0111111) {
-+        return 8;
-+    } else if ((opcode & 0b1111111) == 0b1111111) {
-+        uint32_t nnn = (opcode >> 12) & 0b0111;
-+
-+        if (nnn == 0b111) {
-+            return 24;
-+        }
-+        return (16 * nnn + 80) / 8;
-+    }
-+
-+    /* Shouldn't happen, but ... */
-+    return -1;
- }
- 
- int riscv_monitor_get_register_legacy(CPUState *cs, const char *name,
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 1e4f340256..bd28ed3fcb 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -1255,6 +1255,7 @@ static void decode_opc(CPURISCVState *env, DisasContext *ctx)
- {
-     uint32_t opcode;
-     bool pc_is_4byte_align = ((ctx->base.pc_next % 4) == 0);
-+    int insn_length;
- 
-     ctx->virt_inst_excp = false;
-     if (pc_is_4byte_align) {
-@@ -1279,7 +1280,11 @@ static void decode_opc(CPURISCVState *env, DisasContext *ctx)
-     }
-     ctx->ol = ctx->xl;
- 
--    ctx->cur_insn_len = insn_len((uint16_t)opcode);
-+    insn_length = insn_len(opcode);
-+    if (insn_length < 0) {
-+        gen_exception_illegal(ctx);
-+    }
-+    ctx->cur_insn_len = insn_length;
-     /* Check for compressed insn */
-     if (ctx->cur_insn_len == 2) {
-         ctx->opcode = (uint16_t)opcode;
+We'll just need to remember this and be careful in the future on the order
+of these parameters. Say, if we accidentally move the first "-incoming
+defer" parameter to be after opts_target, then it might break, because then
+it's not no-op anymore but freeing the main channel we just set.
+
+But I think it's ok for now.
+
+> +    }
+>  
+> -    args->listen_uri = incoming_defer ? "defer" : uri;
+>      args->connect_channels = connect_channels;
+>  
+>      args->start.opts_source = opts;
+> @@ -224,7 +230,7 @@ static void test_cpr_exec(MigrateCommon *args)
+>      g_autofree char *filename = g_strdup_printf("%s/%s", tmpfs,
+>                                                  FILE_TEST_FILENAME);
+>  
+> -    if (migrate_start(&from, NULL, args->listen_uri, &args->start)) {
+> +    if (migrate_start(&from, NULL, "defer", &args->start)) {
+>          return;
+>      }
+>  
+> @@ -274,10 +280,7 @@ static void test_mode_exec(char *name, MigrateCommon *args)
+>  {
+>      g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
+>                                             FILE_TEST_FILENAME);
+> -    g_autofree char *listen_uri = g_strdup_printf("defer");
+> -
+>      args->connect_uri = uri;
+> -    args->listen_uri = listen_uri;
+>      args->start_hook = test_mode_exec_start;
+>  
+>      args->start.only_source = true;
+> -- 
+> 2.51.0
+> 
+
 -- 
-2.43.0
+Peter Xu
 
 
