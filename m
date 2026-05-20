@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AF4ECD5BAB
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:21:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FA95CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:21:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPkZS-0001lT-OI; Wed, 20 May 2026 13:19:02 -0400
+	id 1wPkZU-0001m2-2y; Wed, 20 May 2026 13:19:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPkZD-0001ZX-SC
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:47 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ id 1wPkZE-0001a2-Sl
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:48 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPkZ7-000204-52
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:47 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-36974217d4eso3215120a91.2
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:18:40 -0700 (PDT)
+ id 1wPkZ8-00020q-AQ
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:48 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-3697f25d26eso2646479a91.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:18:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779297520; x=1779902320; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779297521; x=1779902321; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2Y9B6zT/mx2Mvzh7dN19S7ANCk8vGCeBaMnJS1JCxZ8=;
- b=Tost7me5mqlv2zQeQP2l3mAN1Exog9I3YaWVTVPMWPijjDnPZKE+iA4/9ualMcM00T
- U4pz9376+Iys43Nm+mIcJ2dlNxXUrQU4NE1nkC2n7VSBWJm135X3ydjx4qd2VHG6hYxH
- YMKUKRvaLYULKzQX3r5B08wWtO2Urg8giE/mCe5Ha3WsPqMs26EefWxf5cwgfYpkIrAU
- Hx9tTd7SiOVWVAp7Zdoey9Coq/NCxJgapBf8Eo/5OIe4cFLrBt/SV1PM/1ekuEQLpstE
- rMhgA0VbJdeiQEBUo+2fEOqlYmLORIfoxFBzPxNPoIk1B7V0clwfQ1Fv20IVDeQP2Qsq
- p0iQ==
+ bh=cZFFZPDMpbzdsj37a9/p1FZxebig9+4EbrHozdK8lKs=;
+ b=FGBHIIsWjAWHTiYfsJzsz7B1BL+Mh13/bavrT+MWum8lksazwMyMjnN3FiCrns7fhp
+ D6VsvfP5oxeg/P6xq8v3IILet2ZkafpZOcXGz/fmSPYqZ7HoUz78vASQPgKPGcruzHqC
+ JVvOz0KNiopJP8TIaDfl7O3XQh9lzXWP9XBck6JvEU9W+rDAsK12IxmEK9dkCcjeIbKd
+ 5JzEimVk0VhUMjz8ZpM6Q8OuJJQMP3gyn0QL0yyE9sSrAwRWllTHgiL1N+Ul5ZjdVnsx
+ rzO96Obf94zee0MIh7OCfOTOOE04YnxvfnZ/8yKQC+A7NhUo+R8RJ46xg388rIbGcMqP
+ X1pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779297520; x=1779902320;
+ d=1e100.net; s=20251104; t=1779297521; x=1779902321;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=2Y9B6zT/mx2Mvzh7dN19S7ANCk8vGCeBaMnJS1JCxZ8=;
- b=pA5W6cllERQUFtpMoBXBonBAMVBwSK1FFa9bS1dnjHkdO7h8kCMpMQpLHh+HLGy5Qd
- 3/akdUxKx95Z1peGgu3S3NYG36rqMzf/4CxHlU6mFvPUI0fKlcDuBcXn7q30kyleTbOq
- 4iE2QutugBf3APCBd7hwDolKvaYu8SG0+ncgxIsPo8cWRCoNzCEVRGY5bmiUQhT6mR5v
- Ba1EOPmZmWoSrpu07MsaKFg52Lm1osjVD8crGrgvhvd7hw1qJQBHZwl20m1TRU2ZnLpK
- bgU18AMZtuctdOVZiUAc0SfhfyK81BBt6GMwDrdXdWcXzISwrQipbPPNf0iPD25GiQeN
- BO2g==
-X-Gm-Message-State: AOJu0YzRb7e1sFKHtxqKP09+tnJ2TUED9UxKUmmeCFDNjI7DQEHbA9DA
- Qq/ehRyBBSA49xKhEP24XP5KXOIjv405PPuF7bASSfnB5rZEVTrUsyXk4OW1OV4J7+8wngGW4vJ
- fi9YqEns=
-X-Gm-Gg: Acq92OFtcHFZW5OEQLdQKlQNiDf/i/R8D1rUyyMefYgALdyPdGryNgJ1+G+At6eHGQy
- I61qZgLiBlSxg5OIZlho6ec8tyqtOj56KAZmZ7QXV68lPu2cfkp6ZgT6bHUXyeO5h/etujanlFj
- HB/l9b82nDouZWhSfYlgByYjIINl/eQFzEsRTA3qH4NovpsQTdQ+/sa2iTIW6MzNrvhKGdAHqZN
- n+DOaSo3AQSHKV1SLNGRwHkLVWRZGBPSmN92luIopYj/axxotjH6TTPeXF12VHzdviMJjxu7i6w
- xo5W4fus2bSuk/EMltPa28hVhe0p24Mxs7khmkUy6S87pYzefQmG/a5sSqJvFL+abcI9JyqkZ6E
- 9GmRjbeyhjtn9QOloWCO0JOf5De0+EyxBKlGKI48OC9Bo5D0gs55SlaY8S3bxS6P5B0UonKeS8U
- IUfXZx734XsA5i9POk+5p6sF1Qdq3N
-X-Received: by 2002:a17:90b:2c90:b0:368:2289:42cc with SMTP id
- 98e67ed59e1d1-36951b9cb8bmr23102426a91.24.1779297519631; 
- Wed, 20 May 2026 10:18:39 -0700 (PDT)
+ bh=cZFFZPDMpbzdsj37a9/p1FZxebig9+4EbrHozdK8lKs=;
+ b=ov21kiY6e9+Vevse2nfGzGXbIBKt/LYYn1uX+IyqxYGqn2ghzba50s/bgqMwwFtKmh
+ hhKbTIFxkFDZfHuxfxcyBvD0WkSxHG6kwk+35gv0anGoypdkeqmRtSi0L7IrGPNZ6rRR
+ dXpayvYm/dTyjBDG3EUeeI0RHtDzk5oWvLFxHo8M02/TaeeixxxC0R9n/SwBjW6/+MXx
+ 04sZgZj1aUsD2IV23mkoO4d0eb8nsHTfPT2VuEtrVivCDaNBIBmIE9nic2LEGxnpsL2U
+ TLGkKmn9ljkbCvH1Q8UDEOOp3wLpf8yQXl4QxaT+CYNnr6xkLsdo/YjazkEhOnvGHH8L
+ 99qw==
+X-Gm-Message-State: AOJu0Yy5Cw6mrVwJGQyizifFLRK1t0X0fuCabuVMDdY5/7YL8DE1Xa9a
+ NoA0rnIVN7IPs6r1AJ77cUddT6zi5RiYT9pnC4XCe656hkqnjpEQcsab9yqms0CMTEmMQJ0XYzC
+ QlTeomyY=
+X-Gm-Gg: Acq92OFoSYfZcezPSn0JjPUL3DBjBwg2k2Lehnw9a18uBi9Iw6KJphH/5C3ITQM0mlX
+ WxNWkD2kLqkhX5qJdUcrx3UaxCf1PwYnPiJ0e0PlT2k+u9+kwsvvYxHOauhezBBbsgIO4YwU6iq
+ EMrikZz4Fea2oqNDHvRTvPM+0ri4/M0tZRkaLXVk4LJhMe74nypv7UlKALNSMD9sOZ/OHLglD0A
+ uTbsLo5HLKQhmESE1V12OdWbGgbSgugfH4TmrFSlF9joUZxIuLFz6PC3GXoSDA46tBeAEMSsu6p
+ Elmb7cIFU9JvvfpmdRW8XHKdn47F9d7AlObLESKZsJxp8HB4xQ4k4pZLZNfDDOorrhjucNHh/oE
+ xCba8TQ4vB46pL8/qZReXUGZIU33zQhw9IEJjVJSwSV26gmRQ5cZBfypklBKheC/eQGUbk60nOI
+ pysNO9FI/txSlGVXySJJGDR68YEoe3K3n9uo1fLdE=
+X-Received: by 2002:a17:90b:2f08:b0:369:996d:282c with SMTP id
+ 98e67ed59e1d1-369996d2ea1mr16182128a91.9.1779297520833; 
+ Wed, 20 May 2026 10:18:40 -0700 (PDT)
 Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-36a3c83f226sm254416a91.0.2026.05.20.10.18.39
+ 98e67ed59e1d1-36a3c83f226sm254416a91.0.2026.05.20.10.18.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 10:18:39 -0700 (PDT)
+ Wed, 20 May 2026 10:18:40 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v5 25/30] fpu: Use get_float_default_nan_pattern in
- partsN_default_nan
-Date: Wed, 20 May 2026 10:18:15 -0700
-Message-ID: <20260520171820.848839-26-richard.henderson@linaro.org>
+Subject: [PATCH v5 27/30] fpu: Reorg float_status
+Date: Wed, 20 May 2026 10:18:17 -0700
+Message-ID: <20260520171820.848839-28-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260520171820.848839-1-richard.henderson@linaro.org>
 References: <20260520171820.848839-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,57 +101,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move get_float_default_nan_pattern to softfloat-specialize.c.inc,
-since there are no external users.
+Use bitfields to compress float_status from 18 bytes down to 8 bytes.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/fpu/softfloat-helpers.h | 5 -----
- fpu/softfloat-specialize.c.inc  | 7 ++++++-
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ include/fpu/softfloat-types.h | 53 ++++++++++++++++++++++-------------
+ 1 file changed, 33 insertions(+), 20 deletions(-)
 
-diff --git a/include/fpu/softfloat-helpers.h b/include/fpu/softfloat-helpers.h
-index d36e3a24b1..49e04ffee9 100644
---- a/include/fpu/softfloat-helpers.h
-+++ b/include/fpu/softfloat-helpers.h
-@@ -172,11 +172,6 @@ get_float_infzeronan_rule(const float_status *status)
-     return status->float_infzeronan_rule;
- }
+diff --git a/include/fpu/softfloat-types.h b/include/fpu/softfloat-types.h
+index 67b7f38aef..c5a6684763 100644
+--- a/include/fpu/softfloat-types.h
++++ b/include/fpu/softfloat-types.h
+@@ -327,7 +327,7 @@ typedef enum __attribute__((__packed__)) {
+      * This is a flag which can be ORed in with any of the above
+      * DNaN behaviour options.
+      */
+-    float_infzeronan_suppress_invalid = (1 << 7),
++    float_infzeronan_suppress_invalid = (1 << 2),
+ } FloatInfZeroNaNRule;
  
--static inline uint8_t get_float_default_nan_pattern(const float_status *status)
--{
--    return status->default_nan_pattern;
--}
--
- static inline bool get_flush_to_zero(const float_status *status)
- {
-     return status->flush_to_zero;
-diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
-index bd6984282f..c1ed661f5e 100644
---- a/fpu/softfloat-specialize.c.inc
-+++ b/fpu/softfloat-specialize.c.inc
-@@ -89,6 +89,11 @@ static inline bool get_ftz_before_rounding(const float_status *status)
-     return status->ftz_before_rounding;
- }
+ /*
+@@ -402,22 +402,39 @@ typedef enum __attribute__((__packed__)) {
+  */
  
-+static inline uint8_t get_float_default_nan_pattern(const float_status *status)
-+{
-+    return status->default_nan_pattern;
-+}
+ typedef struct float_status {
+-    FloatExceptionFlags float_exception_flags;
+-    FloatRoundMode float_rounding_mode;
+-    FloatX80RoundPrec floatx80_rounding_precision;
+-    FloatX80Behaviour floatx80_behaviour;
+-    Float2NaNPropRule float_2nan_prop_rule;
+-    Float3NaNPropRule float_3nan_prop_rule;
+-    FloatInfZeroNaNRule float_infzeronan_rule;
+-    FloatSNaNRule float_snan_rule;
+-    bool tininess_before_rounding;
++    FloatExceptionFlags float_exception_flags : 16;
 +
- /*----------------------------------------------------------------------------
- | For the deconstructed floating-point with fraction FRAC, return true
- | if the fraction represents a signalling NaN; otherwise false.
-@@ -121,7 +126,7 @@ FloatParts64 parts64_default_nan(float_status *status)
- {
-     bool sign = 0;
-     uint64_t frac;
--    uint8_t dnan_pattern = status->default_nan_pattern;
-+    uint8_t dnan_pattern = get_float_default_nan_pattern(status);
++    /*
++     * Floating point status controls.
++     * Items that, in general, may be updated by writes to an architectural
++     * floating point control register.
++     */
++    FloatRoundMode float_rounding_mode : 3;
++    FloatX80RoundPrec floatx80_rounding_precision : 2;
+     /* should denormalised results go to zero and set output_denormal_flushed? */
+-    bool flush_to_zero;
+-    /* do we detect and flush denormal results before or after rounding? */
+-    bool ftz_before_rounding;
++    bool flush_to_zero : 1;
+     /* should denormalised inputs go to zero and set input_denormal_flushed? */
+-    bool flush_inputs_to_zero;
+-    bool default_nan_mode;
++    bool flush_inputs_to_zero : 1;
++    /* should default nans be produced instead of propagating an input nan? */
++    bool default_nan_mode : 1;
++    /* should overflowed results subtract re_bias to its exponent? */
++    bool rebias_overflow : 1;
++    /* should underflowed results add re_bias to its exponent? */
++    bool rebias_underflow : 1;
++
++    /*
++     * Floating point behaviour controls.
++     * Items that, in general, will be set at cpu realization because
++     * the behaviour is baked into the specific hardware implementation.
++     */
++    bool tininess_before_rounding : 1;
++    /* do we detect and flush denormal results before or after rounding? */
++    bool ftz_before_rounding : 1;
++    FloatSNaNRule float_snan_rule : 2;
++    Float2NaNPropRule float_2nan_prop_rule : 3;
++    Float3NaNPropRule float_3nan_prop_rule : 7;
++    FloatInfZeroNaNRule float_infzeronan_rule: 3;
++    FloatX80Behaviour floatx80_behaviour : 5;
+     /*
+      * The pattern to use for the default NaN. Here the high bit specifies
+      * the default NaN's sign bit, and bits 6..0 specify the high bits of the
+@@ -427,11 +444,7 @@ typedef struct float_status {
+      * this to the correct non-zero value, or we will assert when trying to
+      * create a default NaN.
+      */
+-    uint8_t default_nan_pattern;
+-    /* should overflowed results subtract re_bias to its exponent? */
+-    bool rebias_overflow;
+-    /* should underflowed results add re_bias to its exponent? */
+-    bool rebias_underflow;
++    unsigned default_nan_pattern : 8;
+ } float_status;
  
-     assert(dnan_pattern != 0);
- 
+ #endif /* SOFTFLOAT_TYPES_H */
 -- 
 2.43.0
 
