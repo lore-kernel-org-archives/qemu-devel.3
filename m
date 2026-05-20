@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BFA3CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 09:19:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6613ACD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 09:19:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPd11-00055O-83; Wed, 20 May 2026 05:14:59 -0400
+	id 1wPd3A-0008VK-J0; Wed, 20 May 2026 05:17:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wPd0z-000502-Qp
- for qemu-devel@nongnu.org; Wed, 20 May 2026 05:14:57 -0400
+ id 1wPd2h-0007lb-5j
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 05:16:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wPd0y-0005mJ-2p
- for qemu-devel@nongnu.org; Wed, 20 May 2026 05:14:57 -0400
+ id 1wPd2c-0006S1-RT
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 05:16:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779268495;
+ s=mimecast20190719; t=1779268598;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=g0mdRxEs7jIc/mN/FPdqHSCe8wZeMa+T1SuzpES74iw=;
- b=cDfmQ9WwcnyyRAFSX+zTN+RTTHrdCO8HtwHHu+APtIetlK0vJnDa52hTsyYFQEw0fHc1re
- yKQwSlj+Nw2t6x44/6yl4ltzNz6hnf8eaRBedY5SMJYmgUy7mShLv+zfx1Gd9QULE9vHy5
- 8Aw6fK070gHZfjPzWP4mAcgaMrRkgsI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=h9wLB4CLym9nrvKDYBwDKPAx6VH+gv3KlNnDNRnFKzg=;
+ b=i0zDDIMGONl1ERFZjuG13onUhUFcjcc1J4VyaHMK35WdFcFqiz1PBc40p5dLws44bxaqVN
+ LkG5UdfqEbdCX8rBAsEV/6uNJgadXT2sJKF9/aeFEm2i0l0AjkB4v8FjuWyYwfEY0hwUPF
+ wR2EfArnCugen7pY0DC37ly0ji80AhE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-609-KXGUWQXIP3aCD7nmOJoCNQ-1; Wed,
- 20 May 2026 05:14:51 -0400
-X-MC-Unique: KXGUWQXIP3aCD7nmOJoCNQ-1
-X-Mimecast-MFC-AGG-ID: KXGUWQXIP3aCD7nmOJoCNQ_1779268490
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-211-Dc18ffGSNgunqJbQSzcLoQ-1; Wed,
+ 20 May 2026 05:16:32 -0400
+X-MC-Unique: Dc18ffGSNgunqJbQSzcLoQ-1
+X-Mimecast-MFC-AGG-ID: Dc18ffGSNgunqJbQSzcLoQ_1779268591
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6B2AD195605B; Wed, 20 May 2026 09:14:50 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6CEDF1956046; Wed, 20 May 2026 09:16:31 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.49.211])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4FDF318004A3; Wed, 20 May 2026 09:14:45 +0000 (UTC)
+ id A78B118004A3; Wed, 20 May 2026 09:16:26 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -57,11 +57,12 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  John Snow <jsnow@redhat.com>, John Levon <john.levon@nutanix.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Cleber Rosa <crosa@redhat.com>
-Subject: [PULL 10/29] iotests: add a meson suite / make target per block I/O
- tests format
-Date: Wed, 20 May 2026 10:13:32 +0100
-Message-ID: <20260520091351.1160442-11-berrange@redhat.com>
+ Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 29/29] qom: drop user_creatable_add_type method
+Date: Wed, 20 May 2026 10:13:51 +0100
+Message-ID: <20260520091351.1160442-30-berrange@redhat.com>
 In-Reply-To: <20260520091351.1160442-1-berrange@redhat.com>
 References: <20260520091351.1160442-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -93,60 +94,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently each block format is classified as either 'quick', 'slow' or
-'thorough' and this controls whether its I/O tests are added to the meson
-suites 'block-quick', 'block-slow' or 'block-thorough'.
+This can be replaced by object_new_with_props_from_qdict, which does
+functionally the same job, but the caller does not own the returned
+reference, instead the parent object owns it.
 
-This suites are exposed the 'check-block' make target, accepting the
-optional SPEED variable.
+In one case we can use object_new_with_props_from_qdict_owned instead
+since the object is not intended to have any parent.
 
-As we add more formats to the 'thorough' group, however, it becomes
-increasingly large and time consuming to run. What is needed is a make
-target that can exercise all tests for an individual format, regardless
-of speed classification.
-
-This makes use of the previous enhancement to mtest2make.py to introduce
-new meson suites 'block-$FORMAT-optional', which translate to new top
-level make targets 'check-block-$FORMAT'. These new targets always run
-all tests and as such do not need the SPEED variable to be set, but are
-not triggered by 'make check' or 'make check-block'.
-
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/Makefile.include         | 3 ++-
- tests/qemu-iotests/meson.build | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ authz/listfile.c                |  4 +-
+ include/qom/object_interfaces.h | 18 ---------
+ qom/object_interfaces.c         | 70 ++-------------------------------
+ tests/unit/check-qom-proplist.c |  5 +--
+ 4 files changed, 7 insertions(+), 90 deletions(-)
 
-diff --git a/tests/Makefile.include b/tests/Makefile.include
-index f257288194..a820980bbe 100644
---- a/tests/Makefile.include
-+++ b/tests/Makefile.include
-@@ -14,7 +14,8 @@ check-help:
- 	@echo " $(MAKE) check-unit                    Run qobject tests"
- 	@echo " $(MAKE) check-qapi-schema             Run QAPI schema tests"
- 	@echo " $(MAKE) check-tracetool               Run tracetool generator tests"
--	@echo " $(MAKE) check-block                   Run block tests"
-+	@echo " $(MAKE) check-block                   Run block tests (all formats)"
-+	@echo " $(MAKE) check-block-FORMAT            Run block tests (only for FORMAT)"
- ifneq ($(filter $(all-check-targets), check-softfloat),)
- 	@echo " $(MAKE) check-softfloat               Run FPU emulation tests"
- 	@echo " $(MAKE) check-tcg                     Run TCG tests"
-diff --git a/tests/qemu-iotests/meson.build b/tests/qemu-iotests/meson.build
-index 1a24d801a3..16a5e39476 100644
---- a/tests/qemu-iotests/meson.build
-+++ b/tests/qemu-iotests/meson.build
-@@ -62,7 +62,8 @@ foreach format, speed: qemu_iotests_formats
-     endforeach
-   endif
+diff --git a/authz/listfile.c b/authz/listfile.c
+index 13741d5a72..23655f8663 100644
+--- a/authz/listfile.c
++++ b/authz/listfile.c
+@@ -79,8 +79,8 @@ qauthz_list_file_load(QAuthZListFile *fauthz, Error **errp)
  
--  suites = []
-+  # Every format gets put in the format specific suite
-+  suites = ['block-' + format + '-optional']
-   # Any format tagged quick or slow also gets added to slow
-   # otherwise its tagged thorough
-   if speed != 'thorough'
+     v = qobject_input_visitor_new(obj);
+ 
+-    ret = (QAuthZ *)user_creatable_add_type(TYPE_QAUTHZ_LIST,
+-                                            NULL, pdict, v, errp);
++    ret = QAUTHZ(object_new_with_props_from_qdict_parentless(
++                     TYPE_QAUTHZ_LIST, pdict, v, errp));
+ 
+  cleanup:
+     visit_free(v);
+diff --git a/include/qom/object_interfaces.h b/include/qom/object_interfaces.h
+index 02b11a7ef0..e2b8615617 100644
+--- a/include/qom/object_interfaces.h
++++ b/include/qom/object_interfaces.h
+@@ -69,24 +69,6 @@ bool user_creatable_complete(UserCreatable *uc, Error **errp);
+  */
+ bool user_creatable_can_be_deleted(UserCreatable *uc);
+ 
+-/**
+- * user_creatable_add_type:
+- * @type: the object type name
+- * @id: the unique ID for the object
+- * @qdict: the object properties
+- * @v: the visitor
+- * @errp: if an error occurs, a pointer to an area to store the error
+- *
+- * Create an instance of the user creatable object @type, placing
+- * it in the object composition tree with name @id, initializing
+- * it with properties from @qdict
+- *
+- * Returns: the newly created object or NULL on error
+- */
+-Object *user_creatable_add_type(const char *type, const char *id,
+-                                const QDict *qdict,
+-                                Visitor *v, Error **errp);
+-
+ /**
+  * user_creatable_add_qapi:
+  * @options: the object definition
+diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
+index e0a3cd8d0f..7080f85f95 100644
+--- a/qom/object_interfaces.c
++++ b/qom/object_interfaces.c
+@@ -44,75 +44,11 @@ bool user_creatable_can_be_deleted(UserCreatable *uc)
+     }
+ }
+ 
+-Object *user_creatable_add_type(const char *type, const char *id,
+-                                const QDict *qdict,
+-                                Visitor *v, Error **errp)
+-{
+-    ERRP_GUARD();
+-    Object *obj;
+-    ObjectClass *klass;
+-    Error *local_err = NULL;
+-
+-    if (id != NULL && !id_wellformed(id)) {
+-        error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "id", "an identifier");
+-        error_append_hint(errp, "Identifiers consist of letters, digits, "
+-                          "'-', '.', '_', starting with a letter.\n");
+-        return NULL;
+-    }
+-
+-    klass = module_object_class_by_name(type);
+-    if (!klass) {
+-        error_setg(errp, "invalid object type: %s", type);
+-        return NULL;
+-    }
+-
+-    if (!object_class_dynamic_cast(klass, TYPE_USER_CREATABLE)) {
+-        error_setg(errp, "object type '%s' isn't supported by object-add",
+-                   type);
+-        return NULL;
+-    }
+-
+-    if (object_class_is_abstract(klass)) {
+-        error_setg(errp, "object type '%s' is abstract", type);
+-        return NULL;
+-    }
+-
+-    assert(qdict);
+-    obj = object_new_with_class(klass);
+-    object_set_props_from_qdict(obj, qdict, v, &local_err);
+-    if (local_err) {
+-        goto out;
+-    }
+-
+-    if (id != NULL) {
+-        object_property_try_add_child(object_get_objects_root(),
+-                                      id, obj, &local_err);
+-        if (local_err) {
+-            goto out;
+-        }
+-    }
+-
+-    if (!user_creatable_complete(USER_CREATABLE(obj), &local_err)) {
+-        if (id != NULL) {
+-            object_property_del(object_get_objects_root(), id);
+-        }
+-        goto out;
+-    }
+-out:
+-    if (local_err) {
+-        error_propagate(errp, local_err);
+-        object_unref(obj);
+-        return NULL;
+-    }
+-    return obj;
+-}
+-
+ void user_creatable_add_qapi(ObjectOptions *options, Error **errp)
+ {
+     Visitor *v;
+     QObject *qobj;
+     QDict *props;
+-    Object *obj;
+ 
+     v = qobject_output_visitor_new(&qobj);
+     visit_type_ObjectOptions(v, NULL, &options, &error_abort);
+@@ -124,9 +60,9 @@ void user_creatable_add_qapi(ObjectOptions *options, Error **errp)
+     qdict_del(props, "id");
+ 
+     v = qobject_input_visitor_new(QOBJECT(props));
+-    obj = user_creatable_add_type(ObjectType_str(options->qom_type),
+-                                  options->id, props, v, errp);
+-    object_unref(obj);
++    object_new_with_props_from_qdict(ObjectType_str(options->qom_type),
++                                     object_get_objects_root(),
++                                     options->id, props, v, errp);
+     qobject_unref(qobj);
+     visit_free(v);
+ }
+diff --git a/tests/unit/check-qom-proplist.c b/tests/unit/check-qom-proplist.c
+index 954c898ce1..89de92b7d9 100644
+--- a/tests/unit/check-qom-proplist.c
++++ b/tests/unit/check-qom-proplist.c
+@@ -461,10 +461,9 @@ static void test_dummy_createlist_parentless(void)
+ static bool test_create_obj(QDict *qdict, Error **errp)
+ {
+     Visitor *v = qobject_input_visitor_new_keyval(QOBJECT(qdict));
+-    Object *obj = user_creatable_add_type(TYPE_DUMMY, "dev0", qdict, v, errp);
+-
++    Object *obj = object_new_with_props_from_qdict(
++        TYPE_DUMMY, object_get_objects_root(), "dev0", qdict, v, errp);
+     visit_free(v);
+-    object_unref(obj);
+     return !!obj;
+ }
+ 
 -- 
 2.54.0
 
