@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4379CCD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 11:27:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07A7CCD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 11:27:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPf5I-00028N-6Q; Wed, 20 May 2026 07:27:32 -0400
+	id 1wPf58-0001w7-5N; Wed, 20 May 2026 07:27:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf4o-0001VE-J2
- for qemu-devel@nongnu.org; Wed, 20 May 2026 07:27:04 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf4D-00018X-74
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 07:26:32 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf4f-00044C-9B
- for qemu-devel@nongnu.org; Wed, 20 May 2026 07:26:58 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-67be871ed3fso10565357a12.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 04:26:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf49-0003s4-Kx
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 07:26:23 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-5a87edf88b3so5094288e87.0
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 04:26:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779276410; x=1779881210; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779276380; x=1779881180; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Y2ftIcejqF7pf3PGV+e0jciQnSDe6xE1w0+bNOQvv6Q=;
- b=vfvDduzXkhwDvwFMZgdVBXr8x5ziYc7yLfXiPR+AeKl45oXrtyCZdlKOZuWY6icHOG
- B748t7I4yewL98GYoETjRE4v/GFBrufmyZgwpaVT1qGNKKCIkN920KFB3myHXJRokERZ
- 4djpJPsZuEOpHn4YOF2KQpuT6+4qHo51a3puri+5GVp/m7QrmhOsZ6DGUswiaAunyUOM
- XkCIIdyTvLsBdN+Zxk+asJ8lY5jwSVqDsTaeWtNTwhCpArS/4fF7T/pzQCw6o/mos5ZU
- lhcnilC0ODJphNz95OL3kZJlSjqPdlc4LPB53Ui3OonpzSg1eWrbvoZu0oK8LTxhLVV0
- 1ILw==
+ bh=Hrcak8XkkPSZfKxs46swbECTBnU0R7NtOAZ2oeIrnRE=;
+ b=caFFjp80rZFyz6SFtu61mif7LCLhrSSUfEBRJ5jGYAgzlCgHbQwPaW4zVT87deIELj
+ lN19Lhag+SSj8HcLfDHWuVC63pWuQIbhbo1at3yCTB2ICmP0IrUiFRBMPBjDvO1uu7+N
+ MhDdeVh2L5uTlAIuVynVGmRlcM10uLOyFy/PSrsympmtlxpgvRbqE/KE0vUyD/Aw70Ek
+ mk4s2tpqo3qHwzgXnX02/l7zUSJ1sLBQtQkV9Rq+xqaKBdYuOADCEXE3sfNEvn1abdjz
+ V2GeAKfDYztH1mY7QC/FszUG4W7NWCWBKtFLh9/EJ88YCwWU8JbAYiQF8v/ijTR0N4KU
+ PecQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779276410; x=1779881210;
+ d=1e100.net; s=20251104; t=1779276380; x=1779881180;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Y2ftIcejqF7pf3PGV+e0jciQnSDe6xE1w0+bNOQvv6Q=;
- b=FtLixnfWZ/NI0CZpLZq7GPvwxf+mRPs34vpPmPJp15xLx+I4J/jyGOnMwx6N3ZGkVu
- AnpZ6JpdhhSabDMwuWodysz0k0EAa+dLg/3kKFfrZQRdso3CzmUFgvlJ3XqDtkQVKwju
- 59hTd4YPONHIny2yGcmSjj1n7UZWndyOi2Fbx76Ea/9AXOH9JbqpnAfZ8nv3DBTGta0Z
- jgIOLEbOHZzYuShtGiwZ4n7RsJ86/pKTcz/KeozOvHyegeafj+XA5+EzvSO4swEMpV02
- vBsZohPdJlf1EsdiaCNVxnTcBWOfj5WciYWdVNUIY27Pe8AJY4OW2hTvy/J0Lp2V0asd
- ru+A==
-X-Gm-Message-State: AOJu0Yx/YUJbgG83jreWBvkfz6GoCh1CAMbZD4bedjihYQ3e653uOtSc
- W+fEQElRDob94F1SPCs6aX2zuAIuD1jeS0/w9O3Zpa1WFv6dB46ytxhjTgRuvoZN24vLU+YrC0a
- kE+3e3gE=
-X-Gm-Gg: Acq92OH4Xg/iQr4yh7nWiBqfF4TNlZzLNDL7V6JlZhhEqYros/DWTGb3r7oZh7oaMKQ
- 26rv5cJcUTIePfnMu+2ByO6J/53P4fUniu2DEt6g0XbduMEnqQhhPHr1CHqBGj67hYNpHkGBPk2
- dKHQb0fnt8P3/JYlAstyqKCEzzsw98hjL50lbLCuVX9nvfYyq/CmnfSCOYMN3CH8X0zLEpDaUc7
- /70rY/rhipaMBWWneMp9xNhz0bxV9bcwS4F3kQ3jS9ZZzdbpmJec7Z5XphTKBgO6fkK5MFTTYqM
- dr4qdkSlTk5knlHrUFIeo9q7cGblA084Q+aTDDmE6VDpAblt3Xru65nMmt28TWXMY+3A96VMNzA
- fu3CY/f8JHeV3NhFemIIBnQiK5W/YovXyKHSVn+LJJzF5AX92kLlPX/tjY5TwJ78rv8xTLkeJkW
- qUu4MsjTxJVhctgwXjDW71zZBHG+UJ8mTO+dn7Dv8cy5x565em65pZnx0xxUyFvvgNxS14B4rwz
- qi8Ww==
-X-Received: by 2002:a05:600c:6d2:b0:48f:f199:4c02 with SMTP id
- 5b1f17b1804b1-48ff1994c86mr182031885e9.9.1779272423651; 
- Wed, 20 May 2026 03:20:23 -0700 (PDT)
+ bh=Hrcak8XkkPSZfKxs46swbECTBnU0R7NtOAZ2oeIrnRE=;
+ b=bNFPyu8VAdzVgLzWXWpFcapOmLrk0E2BCuP0urNm1vU+oaP0TRsO9Bgz1NaF7xPuQY
+ 3HtoW89WwQkXDA3F8coBqsUt5Kr/r8jZHitS5dqMreta4MUnAuSl70S6e5X8BWVaXFki
+ mWEBSCrfeU9x2uDwCLWtw9Hhzb9OS1kFFhoENVQdIfwJKOkCLPp4SqylKPhpZIs0ctKC
+ MGv+fKkKZosFdtZQJ/8nXsecSEqobB+JEg/GxhdpGa/TwwnJLJngURUKzIL2FkoiX6yQ
+ gzXY8ZdxrtY6RO0nHTX4C24kxlUu5L8HdmQsq21YcJvno1x72SlY7+4swMkaSFFWVRX1
+ dwlQ==
+X-Gm-Message-State: AOJu0YwGUDyOAzRsua/p2k49E9FQ+sh+pRDI+wacZpOsiE0WVLsLyaQh
+ gc0efsR5VupcIu9HlFFVQmw2zh+uhAUjT88offETS63EXHAanfGZu/J3iI3oALB86Ikop9HMsJZ
+ aDIEGJn4=
+X-Gm-Gg: Acq92OECeFYQT0chHfzfwBK67ZWF1UvLAoxbhWUV+opmacDB40mjvAjkl8Ix1i3Znr2
+ 5YtjTant2KccQGjyDKaSkQorP32NFArVYigpAkpS4EhoaKwRAb3X0mtrXkozh12N/iF/a9zQlir
+ fI3m2oEhfVB6nzFnSoPXEyllWyzCpv66YIyiTd2025Ct8bsttCjQeWazEMXGm72Zr07cXy74UWf
+ agmshD3KAI8ZFoR/aoFmxJFuSjh5tFbhESkKWhTniF54JswMln5OneVcIpBGzRQF3AJow1zZOAa
+ dMWAywY/liXK/upwGJ79rVDLvpXsNAkazBbRP2DMfJNxToruvIJ9wFMeX/N6X1uNPN3y8Y21ZVk
+ PQ+P02GgiDShiBmNrYtBIYJ42pILZVhP6TGEO7rDjkz9QOFPvPGVdQSmJ8AfyuB28L3Sz2fd0dc
+ LhPUwqaAL/MDnAa6aY3cBSK18w7A55ak6JKtcl4u+u0BaUMgW/tXcoFlu9+k6HiHhRERdUYuh/3
+ Ia8jw==
+X-Received: by 2002:a5d:52cb:0:b0:45e:655d:6f7 with SMTP id
+ ffacd0b85a97d-45e655d0715mr24828444f8f.24.1779272416368; 
+ Wed, 20 May 2026 03:20:16 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48feb00e5easm127454855e9.13.2026.05.20.03.20.22
+ ffacd0b85a97d-45d9ed2f738sm51541404f8f.16.2026.05.20.03.20.15
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 20 May 2026 03:20:23 -0700 (PDT)
+ Wed, 20 May 2026 03:20:15 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Aleksandar Rikalo <arikalo@gmail.com>,
@@ -71,18 +71,18 @@ Cc: Aleksandar Rikalo <arikalo@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>
-Subject: [PATCH v11 18/24] target/mips: add Octeon MTM instructions
-Date: Wed, 20 May 2026 12:17:59 +0200
-Message-ID: <20260520101807.9971-19-philmd@linaro.org>
+ Aurelien Jarno <aurelien@aurel32.net>, Huacai Chen <chenhuacai@kernel.org>
+Subject: [PATCH v11 17/24] target/mips: add Octeon multiplier state
+Date: Wed, 20 May 2026 12:17:58 +0200
+Message-ID: <20260520101807.9971-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520101807.9971-1-philmd@linaro.org>
 References: <20260520101807.9971-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,81 +107,169 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: James Hilliard <james.hilliard1@gmail.com>
 
-Add the MTM0, MTM1, and MTM2 forms that load the Octeon3 multiplier
-operand pair from rs/rt into MPL[x] and MPL[x+3], then clear the partial
-products. For MPL0, also set MPL[1] to zero for backward compatibility
-with Octeon2 VMULU.
+Add per-thread Octeon multiplier state for the MPL and P limb banks used
+by the VMULU/VMM0/V3MULU instruction family.
 
-Legacy single-source encodings have rt encoded as $zero, so the same
-translator path also preserves the older Octeon behavior.
+Octeon3 extends the older MPL0-MPL2/P0-P2 state with high lanes
+MPL3-MPL5/P3-P5, programmed by the two-source MTM/MTP forms. Represent
+both banks as uint64_t arrays so the TC state matches the architected
+64-bit limb layout used by Octeon68XX user-mode code.
+
+Expose MPL/P as global TCG variables so the multiplier translators can
+expand inline without helper calls.
+
+Migrate the multiplier registers in an Octeon-only subsection so
+non-Octeon CPU models do not grow migration state.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/mips/tcg/octeon.decode      |  7 +++++++
- target/mips/tcg/octeon_translate.c | 32 ++++++++++++++++++++++++++++++
- 2 files changed, 39 insertions(+)
+ target/mips/cpu.h            | 12 ++++++++++++
+ target/mips/tcg/translate.h  |  2 ++
+ target/mips/system/machine.c | 33 +++++++++++++++++++++++++++++++++
+ target/mips/tcg/translate.c  | 18 ++++++++++++++++++
+ 4 files changed, 65 insertions(+)
 
-diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index 01ed3b50beb..5139543b153 100644
---- a/target/mips/tcg/octeon.decode
-+++ b/target/mips/tcg/octeon.decode
-@@ -44,6 +44,13 @@ SNE          011100 ..... ..... ..... 00000 101011 @r3
- SEQI         011100 rs:5 rt:5 imm:s10 101110 &cmpi
- SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
+diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+index b478f834c13..346713705a7 100644
+--- a/target/mips/cpu.h
++++ b/target/mips/cpu.h
+@@ -459,6 +459,14 @@ typedef struct mips_def_t mips_def_t;
  
-+&r2          rs rt
-+@r2          ...... rs:5 rt:5 ..... ..... ...... &r2
+ 
+ typedef struct TCState TCState;
 +
-+MTM0         011100 ..... ..... 00000 00000 001000 @r2
-+MTM1         011100 ..... ..... 00000 00000 001100 @r2
-+MTM2         011100 ..... ..... 00000 00000 001101 @r2
++/*
++ * Octeon3 adds a second bank of multiplier/product limbs used by the
++ * two-source MTM/MTP forms: MPL0..2/P0..2 from rs and MPL3..5/P3..5 from rt.
++ */
++#define OCTEON_MULTIPLIER_LANES 3
++#define OCTEON_MULTIPLIER_REGS (2 * OCTEON_MULTIPLIER_LANES)
 +
- &saa         base rt
- @saa         ...... base:5 rt:5 ................ &saa
- SAA          011100 ..... ..... 00000 00000 011000 @saa
-diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index b5ebad98048..aae6e9811c8 100644
---- a/target/mips/tcg/octeon_translate.c
-+++ b/target/mips/tcg/octeon_translate.c
-@@ -210,3 +210,35 @@ TRANS(LHUX, trans_lx, MO_UW);
- TRANS(LWX,  trans_lx, MO_SL);
- TRANS(LWUX, trans_lx, MO_UL);
- TRANS(LDX,  trans_lx, MO_UQ);
-+
-+static void octeon_zero_partial_product_state(void)
-+{
-+    for (int i = 0; i < OCTEON_MULTIPLIER_REGS; i++) {
-+        tcg_gen_movi_i64(oct_p[i], 0);
+ struct TCState {
+     target_ulong gpr[32];
+ #if defined(TARGET_MIPS64)
+@@ -497,6 +505,10 @@ struct TCState {
+     target_ulong CP0_TCScheFBack;
+     int32_t CP0_Debug_tcstatus;
+     target_ulong CP0_UserLocal;
++    struct {
++        uint64_t MPL[OCTEON_MULTIPLIER_REGS];
++        uint64_t P[OCTEON_MULTIPLIER_REGS];
++    } octeon;
+ 
+     int32_t msacsr;
+ 
+diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h
+index 89dde1e7124..ab2e2173674 100644
+--- a/target/mips/tcg/translate.h
++++ b/target/mips/tcg/translate.h
+@@ -189,6 +189,8 @@ void gen_crc32(DisasContext *ctx, int rd, int rs, int rt, int sz, int crc32c);
+ extern TCGv cpu_gpr[32], cpu_PC;
+ #if defined(TARGET_MIPS64)
+ extern TCGv_i64 cpu_gpr_hi[32];
++extern TCGv_i64 oct_mpl[OCTEON_MULTIPLIER_REGS];
++extern TCGv_i64 oct_p[OCTEON_MULTIPLIER_REGS];
+ #endif
+ extern TCGv cpu_HI[MIPS_DSP_ACC], cpu_LO[MIPS_DSP_ACC];
+ extern TCGv_i32 fpu_fcr0, fpu_fcr31;
+diff --git a/target/mips/system/machine.c b/target/mips/system/machine.c
+index 5880b401b07..f988b3695bc 100644
+--- a/target/mips/system/machine.c
++++ b/target/mips/system/machine.c
+@@ -120,6 +120,17 @@ static const VMStateDescription vmstate_inactive_tc = {
+     .fields = vmstate_tc_fields
+ };
+ 
++static const VMStateDescription vmstate_octeon_multiplier_tc = {
++    .name = "cpu/tc/octeon_multiplier",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64_ARRAY(octeon.MPL, TCState, OCTEON_MULTIPLIER_REGS),
++        VMSTATE_UINT64_ARRAY(octeon.P, TCState, OCTEON_MULTIPLIER_REGS),
++        VMSTATE_END_OF_LIST()
 +    }
++};
++
+ /* MVP state */
+ 
+ static const VMStateDescription vmstate_mvp = {
+@@ -247,6 +258,27 @@ static const VMStateDescription mips_vmstate_timer = {
+     }
+ };
+ 
++static bool mips_octeon_needed(void *opaque)
++{
++    MIPSCPU *cpu = opaque;
++
++    return cpu->env.insn_flags & INSN_OCTEON;
 +}
 +
-+static bool trans_mtm(DisasContext *ctx, arg_r2 *a, unsigned int index)
-+{
-+    /*
-+     * Octeon3 two-source MTM forms load lane index from rs and lane index + 3
-+     * from rt.  Legacy one-source forms encode rt as $zero.
-+     */
-+    gen_load_gpr(oct_mpl[index], a->rs);
-+    gen_load_gpr(oct_mpl[index + 3], a->rt);
-+
-+    /*
-+     * Octeon3 clears MPL1 with MPL0 so that VMULU sequences remain
-+     * backward compatible with Octeon2.
-+     */
-+    if (index == 0) {
-+        tcg_gen_movi_i64(oct_mpl[1], 0);
++static const VMStateDescription mips_vmstate_octeon_multiplier = {
++    .name = "cpu/octeon_multiplier",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = mips_octeon_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_STRUCT(env.active_tc, MIPSCPU, 1,
++                       vmstate_octeon_multiplier_tc, TCState),
++        VMSTATE_STRUCT_ARRAY(env.tcs, MIPSCPU, MIPS_SHADOW_SET_MAX, 1,
++                             vmstate_octeon_multiplier_tc, TCState),
++        VMSTATE_END_OF_LIST()
 +    }
++};
 +
-+    octeon_zero_partial_product_state();
-+    return true;
-+}
+ const VMStateDescription vmstate_mips_cpu = {
+     .name = "cpu",
+     .version_id = 21,
+@@ -363,6 +395,7 @@ const VMStateDescription vmstate_mips_cpu = {
+     },
+     .subsections = (const VMStateDescription * const []) {
+         &mips_vmstate_timer,
++        &mips_vmstate_octeon_multiplier,
+         NULL
+     }
+ };
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+index dac30aff8d3..123d2c89c3d 100644
+--- a/target/mips/tcg/translate.c
++++ b/target/mips/tcg/translate.c
+@@ -1179,6 +1179,8 @@ static TCGv cpu_lladdr, cpu_llval;
+ static TCGv_i32 hflags;
+ TCGv_i32 fpu_fcr0, fpu_fcr31;
+ TCGv_i64 fpu_f64[32];
++TCGv_i64 oct_mpl[OCTEON_MULTIPLIER_REGS];
++TCGv_i64 oct_p[OCTEON_MULTIPLIER_REGS];
+ 
+ static const char regnames_HI[][4] = {
+     "HI0", "HI1", "HI2", "HI3",
+@@ -15276,6 +15278,22 @@ void mips_tcg_init(void)
+                                                         active_tc.gpr_hi[i]),
+                                                rname);
+     }
 +
-+TRANS(MTM0, trans_mtm, 0);
-+TRANS(MTM1, trans_mtm, 1);
-+TRANS(MTM2, trans_mtm, 2);
++    for (unsigned i = 0; i < OCTEON_MULTIPLIER_REGS; ++i) {
++        static const char mpl_names[OCTEON_MULTIPLIER_REGS][5] = {
++            "MPL0", "MPL1", "MPL2", "MPL3", "MPL4", "MPL5",
++        };
++        static const char p_names[OCTEON_MULTIPLIER_REGS][3] = {
++            "P0", "P1", "P2", "P3", "P4", "P5",
++        };
++
++        oct_mpl[i] = tcg_global_mem_new_i64(
++            tcg_env, offsetof(CPUMIPSState, active_tc.octeon.MPL[i]),
++            mpl_names[i]);
++        oct_p[i] = tcg_global_mem_new_i64(
++            tcg_env, offsetof(CPUMIPSState, active_tc.octeon.P[i]),
++            p_names[i]);
++    }
+ #endif /* !TARGET_MIPS64 */
+     for (unsigned i = 0; i < 32; i++) {
+         int off = offsetof(CPUMIPSState, active_fpu.fpr[i].wr.d[0]);
 -- 
 2.53.0
 
