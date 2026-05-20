@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 927E2CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 09:16:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 235DDCD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 09:17:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPd1Y-0006Dy-ID; Wed, 20 May 2026 05:15:32 -0400
+	id 1wPd0w-0004sI-C7; Wed, 20 May 2026 05:14:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wPd1W-000682-1L
- for qemu-devel@nongnu.org; Wed, 20 May 2026 05:15:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wPd0q-0004nF-EY
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 05:14:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wPd1U-00069W-C3
- for qemu-devel@nongnu.org; Wed, 20 May 2026 05:15:29 -0400
+ id 1wPd0o-0005ka-Vi
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 05:14:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779268527;
+ s=mimecast20190719; t=1779268486;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7WmkbRyCOvc8KhMxUJJu07mhxWy5DTBCisJMQWdsY70=;
- b=PUVUBj7tbnhEB8ID++9fNvvjXRDAVQlI7IXqDzMfM1OQQZo6QTDnMW6LCQVoebTrzhC/uv
- 6+l4aBtMUyFy2J1Z48upnhiqbLbz6Be1yJfEOmKno5ITR2oWJ2HYWVX7iQqZ6peDn/brAj
- PS5QbHGh5FoG+hdxkzd0LlUSThJelCg=
+ bh=GPWPFWZBUfCl06aIYsOJIuqe4Yrra14lHq3PxtyVKIo=;
+ b=bwpr8iSLLHOGBng1akzOrxX2wqaBoHuu4D1zAn3k6fYIrsfdGiC0Wusn8BuhEdrNm9EE9r
+ wBxXQzsAElg15ADx8Ys1L4vsbxCSfb4+m8ibMu4r28x+N4cOLdow8JeWDriggC5LEWPkK7
+ Cjx8haAcMWAGAllgymxvs2FbrF153WI=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-Km88CWgxPAmA0sb9Q9aPQA-1; Wed,
- 20 May 2026 05:15:26 -0400
-X-MC-Unique: Km88CWgxPAmA0sb9Q9aPQA-1
-X-Mimecast-MFC-AGG-ID: Km88CWgxPAmA0sb9Q9aPQA_1779268525
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-539-IwYMXQFFOQeFXARwIFX9PQ-1; Wed,
+ 20 May 2026 05:14:42 -0400
+X-MC-Unique: IwYMXQFFOQeFXARwIFX9PQ-1
+X-Mimecast-MFC-AGG-ID: IwYMXQFFOQeFXARwIFX9PQ_1779268481
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E9CEB1956053; Wed, 20 May 2026 09:15:24 +0000 (UTC)
+ id 103EF19560BB; Wed, 20 May 2026 09:14:41 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.49.211])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BBB251800347; Wed, 20 May 2026 09:15:20 +0000 (UTC)
+ id 957601800347; Wed, 20 May 2026 09:14:35 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -57,24 +57,24 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  John Snow <jsnow@redhat.com>, John Levon <john.levon@nutanix.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Cleber Rosa <crosa@redhat.com>
-Subject: [PULL 17/29] gitlab: add jobs for thorough block tests
-Date: Wed, 20 May 2026 10:13:39 +0100
-Message-ID: <20260520091351.1160442-18-berrange@redhat.com>
+ Cleber Rosa <crosa@redhat.com>, Thomas Huth <thuth@redhat.com>
+Subject: [PULL 08/29] scripts/mtest2make: ensure output has stable sorting
+Date: Wed, 20 May 2026 10:13:30 +0100
+Message-ID: <20260520091351.1160442-9-berrange@redhat.com>
 In-Reply-To: <20260520091351.1160442-1-berrange@redhat.com>
 References: <20260520091351.1160442-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
 X-Spam_score: 0.8
 X-Spam_bar: /
 X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -92,57 +92,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CI is only exercising the qcow2 'auto' tests currently. As a result we
-get no exposure of changes which cause regressions in other block format
-drivers.
-
-This adds new CI jobs for each block format, that will run the target
-'make check-block-$FORMAT'. The jobs are separate so that we have the
-ability to make each format gating or not, depending on their level
-of reliability.
-
-The 'centos' image is used to run the I/O tests since several tests
-have an implicit dependency on x86_64-softmmu, and thus break with
-other architecture targets. The 'centos' build job is the only one
-that creates the x86_64-softmmu target in CI. Ideally this target
-portability in I/O tests would be fixed to avoid this limitation.
+When debugging mtest2make.py changes it is important to be able to
+compare the old and new output. This requires that any lists in the
+output have stable sort ordering.
 
 Acked-by: Kevin Wolf <kwolf@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- .gitlab-ci.d/buildtest.yml | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ scripts/mtest2make.py | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index 4b1949a3a5..cf0281ecd6 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -174,6 +174,24 @@ build-system-centos:
-       x86_64-softmmu rx-softmmu sh4-softmmu
-     MAKE_CHECK_ARGS: check-build
+diff --git a/scripts/mtest2make.py b/scripts/mtest2make.py
+index 4b252defc3..915f02d600 100644
+--- a/scripts/mtest2make.py
++++ b/scripts/mtest2make.py
+@@ -67,8 +67,10 @@ def process_tests(test, targets, suites):
+             suites[s].speeds.add('thorough')
  
-+
-+# NB: block-XXX jobs use 'centos' since that is the build
-+# job that provides the x86_64-softmmu.  Some I/O tests
-+# are currently buggy and blindly assume characteristics
-+# of x86 (such as PCIe) causing failures with other arches
-+
-+block:
-+  extends: .native_test_job_template
-+  needs:
-+    - job: build-system-centos
-+      artifacts: true
-+  variables:
-+    IMAGE: centos9
-+    MAKE_CHECK_ARGS: "check-block-$FORMAT"
-+  parallel:
-+    matrix:
-+      - FORMAT: [luks, nbd, parallels, qcow2, qed, raw, vdi, vhdx, vmdk, vpc]
-+
- # Previous QEMU release. Used for cross-version migration tests.
- build-previous-qemu:
-   extends: .native_build_job_template
+ def emit_prolog(suites, prefix):
+-    all_targets = ' '.join((f'{prefix}-{k}' for k in suites.keys()))
+-    all_xml = ' '.join((f'{prefix}-report-{k}.junit.xml' for k in suites.keys()))
++    all_targets = ' '.join((f'{prefix}-{k}'
++                            for k in sorted(suites.keys())))
++    all_xml = ' '.join((f'{prefix}-report-{k}.junit.xml'
++                        for k in sorted(suites.keys())))
+     print()
+     print(f'all-{prefix}-targets = {all_targets}')
+     print(f'all-{prefix}-xml = {all_xml}')
+@@ -81,12 +83,12 @@ def emit_prolog(suites, prefix):
+     print(f'\t$(MAKE) {prefix}$* MTESTARGS="$(MTESTARGS) --logbase {prefix}-report$*" && ln -f meson-logs/$@ .')
+ 
+ def emit_suite(name, suite, prefix):
+-    deps = ' '.join(suite.deps)
++    deps = ' '.join(sorted(suite.deps))
+     print()
+     print(f'.{prefix}-{name}.deps = {deps}')
+     print(f'.ninja-goals.check-build += $(.{prefix}-{name}.deps)')
+ 
+-    names = ' '.join(suite.names(name))
++    names = ' '.join(sorted(suite.names(name)))
+     targets = f'{prefix}-{name} {prefix}-report-{name}.junit.xml'
+     if not name.endswith('-slow') and not name.endswith('-thorough'):
+         targets += f' {prefix} {prefix}-report.junit.xml'
 -- 
 2.54.0
 
