@@ -4,95 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19234CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 01:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA602CD4F5B
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 02:14:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPVuI-0006AG-Kq; Tue, 19 May 2026 21:39:34 -0400
+	id 1wPWQr-0001Bt-7A; Tue, 19 May 2026 22:13:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPVuH-00069w-4A
- for qemu-devel@nongnu.org; Tue, 19 May 2026 21:39:33 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wPWQp-0001BX-Pd
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 22:13:11 -0400
+Received: from mail-dy1-x1341.google.com ([2607:f8b0:4864:20::1341])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPVuF-0006r1-D2
- for qemu-devel@nongnu.org; Tue, 19 May 2026 21:39:32 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2bd9c3b550aso28526925ad.2
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 18:39:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wPWQm-00048A-HR
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 22:13:11 -0400
+Received: by mail-dy1-x1341.google.com with SMTP id
+ 5a478bee46e88-2f7020a928eso6227078eec.1
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 19:13:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779241169; x=1779845969; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lNZybDa1C8D++o96VxOScMnNmZGPmYVntABV6bYZEas=;
- b=uJS9GnZfvMSOLC5Z9RqlnLe2WQHsc7QXLE3O1aKajuiVLPZCRz/QS0U/P4vgUhsHyu
- Fav9C+AncWt5r3Kd6ELFP2GXTxhd1NWNf7d3SN3wxzT/7RqkWu0iUs99CESoT2p0Kos6
- DfB//1ZAcel+l3rMmecolKmB2IOYTmTKvPgqyvoHjwVTGucc3pdT4ZoeafeEkcMrwHoJ
- Vb2oJBebAshB94DQgMCXqjoNnoCOWq8wBiqOmZemSBVheuo2ddSjA0BAio+7Af4gQMG8
- 4LfT0/KyWWYmojgjaGxrfvZNn+9HM6iLT13Raet8E6MZWr/SwGWsOv5mHkSyK3RRtjaY
- AsfQ==
+ d=gmail.com; s=20251104; t=1779243186; x=1779847986; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=XAkPYkid9ikq/b6KKuz/E3H8dCMEkrvqVZhA62nrtLQ=;
+ b=cy9hfW/0G0Z63w+B5S7x5N+d3i7CC333epjq2I/FkDMVQNH6qbsLIyWvSGRXNAnzPJ
+ X8ToRdBG0v7RCqTwYizJ7pYo4Eup5ino67PuNsF5shS50TOgMWIM7xymUTHG16qE1m6V
+ dQgvKB8D3VsCMC/X0qMK/AYKru0nmlBbiUx7Ab/HCCxUPvJMKJgueo+B9zaYr4XK/yTO
+ rX7f/d3o/35mBJEu4SnMIw7v9rGxSWIR6Gxr6Ylw23bzkXyNtrcBoSITXhLU4xw2okdu
+ ZNtaizmSyC6l+B0CBz8IcnkTQwGO+bnxvEz7J298kR+yclXDXHSTMZnGP92uyW4Pmvl9
+ 7o6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779241169; x=1779845969;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lNZybDa1C8D++o96VxOScMnNmZGPmYVntABV6bYZEas=;
- b=EOPTYSt7yl6HuuV+L89SXWwXpCVdhWOqgHEjkuwEJtaC5stSIYBdNBBu1QqIR3COLT
- db0u2I96u/2K2pa4ULrmgoP+xTQ3aLKBRjqva1NPpFon17I7J+L1rh7zd1BKgMuoPgwp
- i6zBEm/dNb9k33NDhThwF0Rr6G0LNNQT+axTskhdoOXftnAEE4cPCwPst8v3cjA4xUr+
- fRVrkSKce6DF0QbrUOygOmq/P29N/GaMHx03CK5jiw6RZ/6QgWfDKNPS9vhpBuvb/I2Y
- LtGYr73iL77FgOZiLH2WoZ358fsdX+NA4FKHzmcbE2ShqhuDjWsTAt04S9ITu72IeSe9
- QASg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9Ha6sRHeL2y6Mb9fb5UCZwdHfDJl50fbIaMQOUKtEZDHI3YBEf87ojIsy1N5eZaJBh6Yv/Waqd8+rD@nongnu.org
-X-Gm-Message-State: AOJu0YzA3sPXB2R8xdYBdc1NY+QjyYv7T+NM5+aAgRUFKTpsSU4HK8GQ
- x6r8ImGGZAfvzGf/aRdTPmSd2aahxko4sOBzfVf6hZVuFHuFL7TT7KbOrzPmE3HR1X0=
-X-Gm-Gg: Acq92OHLdlo6StpSPezXk8AhMOVCcSJRVASQBP0tPa3EnXpJ1lAJuLu0t3Nvnt5kAqe
- pr7lMXZK8j1XHfrd0ehvBFt81IX/SziTBmcAm7VSsr7tBFT6+LzHTZJTgzThCmwtDybI4H1WGK7
- 9uWRDKOL0bj7vjn7+t3/srZ0EC14SULfD4ZeSFzs8ZiYyN2Tu+xqlxncsqFOKJ74x1XvW5M1igs
- jSogEgYj5W2Fzi9KrPL5acUDK5K15oXjOYspnKD3/Zo6nmAGMXfbzU8lURJnwFQlHK7NQLAxavK
- hJDL7vaQ3JjLOVLghYUXovZd3eFJzd7/ZpUOiGgNzMw7/v8vDT4ThQmCSBnOheQFlM1C14GZkqB
- cpSVpbX2hc/IwnhUHOAF/gJY8zAlIMDHjT2oEIwd/reqqBqZ9Vpi+YVw9h5/sabJ085/DkZ4NnN
- omjfE3TH2PKcxvy89e/AGK83WBZ0g0e0DgWhVS
-X-Received: by 2002:a17:903:1b4e:b0:2b0:c59f:3b58 with SMTP id
- d9443c01a7336-2bd7e7b58a8mr237056575ad.9.1779241169381; 
- Tue, 19 May 2026 18:39:29 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2bd5c0605ddsm191989145ad.32.2026.05.19.18.39.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 May 2026 18:39:28 -0700 (PDT)
-Message-ID: <dba6c897-af66-45aa-a2d2-efe7aa26683d@linaro.org>
-Date: Tue, 19 May 2026 18:39:26 -0700
+ d=1e100.net; s=20251104; t=1779243186; x=1779847986;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=XAkPYkid9ikq/b6KKuz/E3H8dCMEkrvqVZhA62nrtLQ=;
+ b=byhvM9vr9IOQ9EtSb+rO6LAl1usepQhhb3Gli+EEX8MMvTT57giMU3IoX2G2ZZRsai
+ 6/y9yNePh/oOwndPYNP0RLSHwUY3uF+8Zdpp4rTzxHG/7vGjuo8XgTp7/Q278jOq+C15
+ FvuKIWhtAcguLKnfval1oaspz8ADLwpgQJTzQyB0Q0MVOTZUIHQenkbML36jJwugQv+j
+ P8iMhT0Xky7qi0xQOFG9ZtmZHAsRcnDmLqD4Crn+4gk4+BnJyJPCK6INwc7y1ElgbJ/w
+ 6qD+FeEWnBCGyNqcxxuZ+dDUKLUjVtwh4LDFmwU4670sOwhsb7FUhgAWcpKuFnx5wedU
+ TqDA==
+X-Gm-Message-State: AOJu0YywESGVCToWOoSr/yEr8seG+CrWmCwHPxel33sW1+Bm9STOvjDI
+ jVQtuQB3IciQ9PdtSJTQNJz0GmkW24KEVJg9yb1IDvvFd9SV9LKUEbEE
+X-Gm-Gg: Acq92OG6Fs4MfFZVlFvaLS/mGDLK3yYAgYcNVTbxyzdEzhp29wMXRu+SBsV+Nt6C91U
+ K2FWLU3J2ddMzsgyIayEOZL1V8SOUcWMyJ7UdTJf0GZYz0zIyVYc199fFgtSG46sJL9Xq8KB2mL
+ whES5yO13DRQGS8QOkuMtx1+ocQqrwU8qajpnGVXYHVHf9mXt9iOpCs1xCqbNsdzavEDXBzdlDn
+ 4MUKTlCg/bQ3+volhGtas2rQNFsQtaswOP0yjyVxARndQuDIZNuG2ovUzUMcA03bt+SB0D/5WRh
+ wb8I0hL6ayOAF/70IjTluz6zwZCnYwaT/5MGpsl5LWyHAvRa1pChIgEfItpZNC1BbZM+pE8Ang7
+ CPG4JBLW0kpuhPWj9A+CKq3KhKpz6PGbhAYtAL6h5idp5wJb5+B8kQiGcb463/X41cQOLU8APvv
+ Gz+lmfwfTGlLTysr5xY0H0D0xSm9DvAdBMwrq3GyIClI/FMCtfu2DSZCQcI00=
+X-Received: by 2002:a05:7300:8187:b0:2d9:5cd9:b8ff with SMTP id
+ 5a478bee46e88-3039818af3amr9875459eec.6.1779243185844; 
+ Tue, 19 May 2026 19:13:05 -0700 (PDT)
+Received: from localhost ([64.186.250.142]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3041ab8282bsm222561eec.31.2026.05.19.19.13.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 19 May 2026 19:13:05 -0700 (PDT)
+Date: Wed, 20 May 2026 10:13:02 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com
+Subject: Re: [PATCH] target/riscv/tcg: disable svpbmt if satp_mode < sv39
+Message-ID: <ag0Yn6otrO3_3N0h@ChaodeMacBook-Pro.local>
+References: <20260519114858.316532-1-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 31/40] target/mips: add Octeon AES COP2 helpers
-To: James Hilliard <james.hilliard1@gmail.com>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang
- <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>,
- Huacai Chen <chenhuacai@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20260519-mips-octeon-missing-insns-v2-v9-0-d7dd735ecddd@gmail.com>
- <20260519-mips-octeon-missing-insns-v2-v9-31-d7dd735ecddd@gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260519-mips-octeon-missing-insns-v2-v9-31-d7dd735ecddd@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260519114858.316532-1-daniel.barboza@oss.qualcomm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1341;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1341.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,56 +98,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/19/26 09:22, James Hilliard wrote:
-> Add helper support for the Octeon AES operation selectors. The direct
-> register-transfer selectors are handled later by the explicit decode
-> patch; this patch adds the ECB/CBC encrypt and decrypt operations that
-> consume the AES input, key, IV, and key-length state.
+On Tue, May 19, 2026 at 08:48:58AM +0800, Daniel Henrique Barboza wrote:
+> Priv spec chapter "Svpbmt Extension for Page-Based Memory Types, Version
+> 1.0" mentions that "The Svpbmt extension depends on the Sv39
+> extension.".
 > 
-> The AESRESINP direct write path keeps a separate input latch and readback
-> view. Later translator comments document that split where the direct TCG
-> stores are emitted.
+> We're not doing any satp checks when enabling svpbmt.  This causes
+> problems with the riscv32 'max' CPU that happens to be enabling svpbmt
+> even though it doesn't support the required satp mode.  In fact all rv32
+> CPUs are allowing menvcfg.PBMTE writes, which doesn't make sense for
+> them in any circunstance since svpbmt is not possible for rv32 at this
+> moment [1].
 > 
-> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+> This also impacts rv64 CPUs that are running in satp 'bare' mode and are
+> reporting svpbmt in the riscv,isa.
+> 
+> All these problems can be solved by disabling svpbmt if satp_mode is not
+> at least sv39.  The problem reported in [1] goes away because we'll
+> never enable MENVCFG_PBMTE write mask in write_menvcfgh().  We're also
+> become consistent with how svpbmt is enabled for rv64.
+> 
+> In case the user enables svpbmt in the command line using an invalid setup,
+> not just disable svpbmt but also throw a warning:
+> 
+> $ ./build/qemu-system-riscv64 -M virt,dumpdtb=fdt.dtb \
+>     -cpu max,sv39=off,sv48=off,sv57=off,sv64=off,svpbmt=on
+> qemu-system-riscv64: warning: svpbmt requires at least satp sv39, current satp mode: none
+> 
+> [1] https://gitlab.com/qemu-project/qemu/-/work_items/3473
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3473
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+
 > ---
-> Changes v8 -> v9:
->    - Split AES operation selectors into their own COP2 helper patch.
->    - Replace generic selector dispatch with per-operation AES helpers.
->    - Add matching helper.h declarations with the helper implementation.
-> ---
->   target/mips/cpu.h               |   5 ++
->   target/mips/helper.h            |   4 ++
->   target/mips/tcg/octeon_crypto.c | 141 ++++++++++++++++++++++++++++++++++++++++
->   3 files changed, 150 insertions(+)
+>  target/riscv/tcg/tcg-cpu.c | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
 > 
-> diff --git a/target/mips/cpu.h b/target/mips/cpu.h
-> index b57a7a0584..801893b67f 100644
-> --- a/target/mips/cpu.h
-> +++ b/target/mips/cpu.h
-> @@ -556,6 +556,11 @@ typedef struct MIPSOcteonCryptoState {
->       uint64_t sha3_state[25];
->       uint64_t aes_iv[2];
->       uint64_t aes_key[4];
-> +    /*
-> +     * AESRESINP is one architectural selector bank.  Keep a separate input
-> +     * latch so operation selectors can consume a pending block while DMFC2
-> +     * reads expose the latest result/readback value.
-> +     */
->       uint64_t aes_result[2];
->       uint64_t aes_input[2];
-
-Specific example?  Because this seems wrong to me.
-
-> @@ -763,6 +763,116 @@ static void octeon_snow3g_more(MIPSOcteonCryptoState *crypto)
->       octeon_set_shared_mode(crypto, OCTEON_SHARED_MODE_SNOW3G);
->       octeon_snow3g_queue_result(crypto);
->   }
-> +static int octeon_aes_key_bits(const MIPSOcteonCryptoState *crypto)
-
-Missing newline, multiple instances.
-
-Otherwise the actual operations look fine.
-
-
-r~
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index a358d91ca5..5b3e36d9ab 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -887,6 +887,17 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+>          return;
+>      }
+>  
+> +#ifndef CONFIG_USER_ONLY
+> +    if (cpu->cfg.ext_svpbmt && cpu->cfg.max_satp_mode < VM_1_10_SV39) {
+> +        cpu->cfg.ext_svpbmt = false;
+> +        if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_svpbmt))) {
+> +            warn_report("svpbmt requires at least satp sv39, "
+> +                        "current satp mode: %s",
+> +                        satp_mode_str(cpu->cfg.max_satp_mode,
+> +                                     riscv_cpu_is_32bit(cpu)));
+> +        }
+> +    }
+> +#endif
+>      /*
+>       * Disable isa extensions based on priv spec after we
+>       * validated and set everything we need.
+> -- 
+> 2.43.0
+> 
 
