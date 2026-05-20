@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89FCECD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:26:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2113CD5BA4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:26:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPkeh-0004kF-Me; Wed, 20 May 2026 13:24:27 -0400
+	id 1wPkgC-0006tD-GA; Wed, 20 May 2026 13:26:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkeg-0004iO-RT
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:24:26 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkg8-0006U0-4W
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:25:56 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkee-0003fu-PD
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:24:26 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-488b150559bso39943755e9.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:24:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkg6-0004Kw-5q
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:25:55 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4891c0620bcso33751255e9.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:25:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779297862; x=1779902662; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779297952; x=1779902752; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=F9vRnvnV5C9I2ltCn+ugALI+ERIDROE+jpEU5rU5xpQ=;
- b=suiDtjW44V/rNMdat11J/Z0iSyaikoBGVspC3jbgkcQrVKE7jfQAiHRKJM90Hx3aZb
- n0PrnVApx5ArbHVIRsd+yLcEp7nodX2SHr0sG1bIwsP23nN99YENzmFyIkaRg3kSnyIA
- 7pwdTzoQ7S+JGA/E0xKZIN51OyESXRowHtcNgArRyFG6JV//ZQMO4fdRUF6Ae6I1KGcM
- ONmX8jofeSTvvyyQ0WtQkkqp5WIu6SYJRClL07tr3XPX7Ya/qngUmXkS8ygSS6X36i6y
- P1Dw8X68SNSBM23Luk3pRqiLXgaNt6zm0egJ7NkG1zeJxYosGoz2WfuTGj9QMXLt16fj
- +U8A==
+ bh=iA7qLJwHyUwdD+HzuVX0t5HZjxEJazI/MyZxt4BIDYc=;
+ b=UyWHmfeNp/1q6RGvobL4FNo40eO8rzl7tHGHzDv3dr4OmL3X5wcWt5llDad2KFSf3c
+ PshUDYuZjESBUgSgQuOaEnvUMsWI5V7tRot2BcqKv+Zabg5rx/Et6sj0W0ZUNynRIncZ
+ QOPT605marryzy3vN49rwZcXbSgCDrSY3gWFOsA/+QKlrW9b+0qF5xzGg3v3U9COkqqd
+ mVx85ZkwshhvFKiz4Oyln+mQQ8N9iWI857DvS9CUml0HryxnwSOsuiQ9fVe1gb+i90tA
+ NnH+WDCxLNVcPVDOdQehLKhYL0aiDtsN7mJif0zQ7KG93f89qZ6rW49mDlTDjs6r/h+7
+ ZHDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779297862; x=1779902662;
+ d=1e100.net; s=20251104; t=1779297952; x=1779902752;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=F9vRnvnV5C9I2ltCn+ugALI+ERIDROE+jpEU5rU5xpQ=;
- b=iTObC0e9hGIZzld1S9qggSf1krPjKEN3XiieVCpZB0Lk2u1G+o5/b0Mb8XxDfStPQK
- T7CUuxE6lAEtnsjUQTdas3oXBvY+x+T8b7j3CJF++v/C/E2+osRwDBSrlLAcVF3Xd/yl
- La4a0BP5/G9E1REyt2jtLc2LeResNOgLMadK4LwJ0yNVZ5HBCRoNAZ1jEVLrJXCXJhGp
- ruTws2ib1/vDYjysrlQpGJ9voEjymFQ1yt1hwxW3K8EPaPVq0noQkHv36WJDOHxnDPRn
- KkrLff+fSrk8ClsW93hWatNS3zyfw1ZlabFDqULHxapg2QsSa7g0BHclIJKpzEuRNjvz
- GDvA==
-X-Gm-Message-State: AOJu0Yw2k6phpn6oH2Tvu5ZojaCuGFO3Yv+W0u/dvMoVo1eda76Dnr7m
- YFX6+STr1XN5ZJnfpgYEsYtONIkmpYM6QUKzaOAslbZoaGvbEZ/fzzfjVO3N3CfvJL2WzRoEWyh
- V6HnBMSk=
-X-Gm-Gg: Acq92OE3Pn+eZQg086O8DNLsnB2e5jrzvQ/ZX1zuK6ApXUhracDW0xwm1P8dAjyvkjq
- Ui+V/8lPTAq/9toT4NXJm62Ylg1vo92fnnNzybn9BjqYJdEEUh1eKVzwzHil7A11VMg7jOcxX+p
- BZatOlbcaQGx0jOSmLMys4mj2gJHvb4utAlKPDFVtxAJKmqFlTfNPdvleY8kLX3bXv/SA0jT8ti
- G5RkIBfGQi8wpU9C5l1zVvG1nKEe6r+FbMYBNkNNhGmaxVb1//E81rejkD2Yw/j4miqcHSpYGvu
- Tk19GMK2ofw+3GWvRStW/RadI6Gy5wh9+33Or1WaiIP9NW+9MzVDFlcs537cbKuAzkU0DCgd8S2
- TkwQZPLJByc7XoGsIkV6DEWRS5CtxsgIq49halqrBzlm0wblTNuvwtzcfQ6KWxPvk/6zjxeTzFZ
- sl/sJWsJHL50WfT27dHRPnTjDxNJlvfH3N0MHZu1aqF5/tTFZu//KHYA7lC7jomi8KuCu67z23
-X-Received: by 2002:a05:600c:46cf:b0:48e:8974:c377 with SMTP id
- 5b1f17b1804b1-48fe6626ba1mr363520245e9.29.1779297861904; 
- Wed, 20 May 2026 10:24:21 -0700 (PDT)
+ bh=iA7qLJwHyUwdD+HzuVX0t5HZjxEJazI/MyZxt4BIDYc=;
+ b=qKsz7zNdQIpstwtotDIt7mtLpAZJkxZPLrizDr1eUyopyBqob7kAtJvonH9yI+XAmN
+ Kdux4nhvxs5zB4yfRt2coHyhWDo5VUjOjQy0H/Nx/dJLH0PsSHmjJ0+W197+oTeHxxbw
+ Uew1zC7VpfGy6CIhsus/g975n5SexE7TujL+2RSmo9t9SCJpxwR5AmjmXo0K6ileDiJa
+ 3UHYOt0FgTLbVBYDlBb+jVbU+v94ZL2jnhzszHQBL+L8d8MyYOfW9xeU163SEqMVhXjy
+ WyomUyil8LAvbpT/x+cOr98bDHvesiw6AHpXTczcY7kucbzmaywRmJbSWjgkMWQVf+ko
+ E73A==
+X-Gm-Message-State: AOJu0YzJkB9l6n3Eg2TRQxpHgZc9yZZHgICGcJDcto5L5uq/qjc5pd3C
+ w8qTGghmPo+5uHxw0ze2J7AO9yMRNL7bvieFc3rd141K5c6sBlwHXWYQy8FsnuzvlJQNuyFQ9v9
+ 98NUIddM=
+X-Gm-Gg: Acq92OFu3cM3HwVSHTNZ5vrDB2AUjkc8LPXinkZisbOENKh6XdSjX0V9UkdcCIFnhzB
+ wHYD+Sy+bv7L8e86wQaxi9t/t85voTwz8+yOEc6IjWoFVQLjhC7xG+HLWhhdkLlvipURKYPwytQ
+ YjTGQjsl9KPhUdjBfhZ0ZNiza2+v8jSUgHs04tl2TLNvJwnaGzk/3TLCy6JgCBjyiKyMlHkudI1
+ /mvsqnK6a86J2wgC9coit9QAM8ViceXCnLG59rJLL8CfcsMN0SlP8hAcL3vrdJR8cNC3ynSDOSJ
+ p6GwcLbIqHnL/QEm5Yp17HJiHPoh2mTlQL5w7pHYjBtVTneYO55yVXppyRi+cDhIQVamEMnUwLm
+ mPFQ+r8ZuX82VKh40VwXfgB9wIvquAR+pdx9coSiy91OYG2jl1GWJX8f1axhPb9OyBjEiJ5mIHJ
+ qe7Myw+Ex2k2pRrYA9Go+uirbRAuQtvF/Si1HukG+uHiAS/2Bfiw3+Z6Xiqyl/0Ilww/o/uufF
+X-Received: by 2002:a05:600c:858d:b0:48f:e230:80a2 with SMTP id
+ 5b1f17b1804b1-48fe65148e1mr305030595e9.32.1779297952113; 
+ Wed, 20 May 2026 10:25:52 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49033d8e25bsm5580785e9.11.2026.05.20.10.24.20
+ 5b1f17b1804b1-48ffed68baesm138748665e9.0.2026.05.20.10.25.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 20 May 2026 10:24:20 -0700 (PDT)
+ Wed, 20 May 2026 10:25:50 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: James Hilliard <james.hilliard1@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v12 09/24] target/mips: split Octeon SEQI/SNEI decode
-Date: Wed, 20 May 2026 19:22:57 +0200
-Message-ID: <20260520172313.23777-10-philmd@linaro.org>
+Subject: [PATCH v12 21/24] target/mips: add Octeon VMM0 instruction
+Date: Wed, 20 May 2026 19:23:09 +0200
+Message-ID: <20260520172313.23777-22-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520172313.23777-1-philmd@linaro.org>
 References: <20260520172313.23777-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,92 +102,133 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: James Hilliard <james.hilliard1@gmail.com>
 
-Decode the equality and inequality forms as explicit SEQI/SNEI
-instructions rather than using shared generated SEQNEI entries.
+VMM0 multiplies MPL[0] by rs, adds rt and the queued P[0] partial
+product, returns the low result, and feeds that result back into MPL[0].
+It sets MPL[1] to zero and clears partial products.
 
-The explicit decoder names match the architectural mnemonics, which
-makes the translator entry points and trace/debug output easier to
-correlate with the instruction set.
+Include hardware-backed regression coverage for VMM0 MPL1 zeroing.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-[PMD: Split SEQNE vs SEQNEI (this patch)]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/mips/tcg/octeon.decode      |  4 +++-
- target/mips/tcg/octeon_translate.c | 27 +++++++++++++--------------
- 2 files changed, 16 insertions(+), 15 deletions(-)
+ target/mips/tcg/octeon.decode                 |  1 +
+ target/mips/tcg/octeon_translate.c            | 16 ++++++
+ tests/tcg/mips/user/isa/octeon/octeon-insns.c | 55 +++++++++++++++++++
+ 3 files changed, 72 insertions(+)
 
 diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index 2c54901f77e..a2bfd0751d3 100644
+index 36ced0bb333..f9c32e1dee1 100644
 --- a/target/mips/tcg/octeon.decode
 +++ b/target/mips/tcg/octeon.decode
-@@ -30,6 +30,7 @@ BBIT         11 set:1 . 10 rs:5 ..... offset:s16 p=%bbit_p
- # SNEI rt, rs, immediate
+@@ -56,6 +56,7 @@ MTP1         011100 ..... ..... 00000 00000 001010 @r2
+ MTP2         011100 ..... ..... 00000 00000 001011 @r2
  
- @r3          ...... rs:5 rt:5 rd:5 ..... ......
-+&cmpi        rs rt imm
- %bitfield_p  0:1 6:5
- @bitfield    ...... rs:5 rt:5 lenm1:5 ..... ..... . p=%bitfield_p
+ VMULU        011100 ..... ..... ..... 00000 001111 @r3
++VMM0         011100 ..... ..... ..... 00000 010000 @r3
  
-@@ -40,7 +41,8 @@ CINS         011100 ..... ..... ..... ..... 11001 . @bitfield
- POP          011100 rs:5 00000 rd:5 00000 10110 dw:1
- SEQ          011100 ..... ..... ..... 00000 101010 @r3
- SNE          011100 ..... ..... ..... 00000 101011 @r3
--SEQNEI       011100 rs:5 rt:5 imm:s10 10111 ne:1
-+SEQI         011100 rs:5 rt:5 imm:s10 101110 &cmpi
-+SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
- 
- &lx          base index rd
- @lx          ...... base:5 index:5 rd:5 ...... ..... &lx
+ &saa         base rt
+ @saa         ...... base:5 rt:5 ................ &saa
 diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index dfbb55e3fc3..5497ddfb108 100644
+index a21f96b5c2a..94f3cf9edd8 100644
 --- a/target/mips/tcg/octeon_translate.c
 +++ b/target/mips/tcg/octeon_translate.c
-@@ -132,29 +132,28 @@ static bool trans_SNE(DisasContext *ctx, arg_SNE *a)
-     return do_seq_sne(ctx, a, TCG_COND_NE);
- }
- 
--static bool trans_SEQNEI(DisasContext *ctx, arg_SEQNEI *a)
-+static bool do_seqi_snei(DisasContext *ctx, const arg_cmpi *a, TCGCond cond)
- {
-     TCGv_i64 t0;
- 
--    if (a->rt == 0) {
--        /* nop */
--        return true;
--    }
--
-     t0 = tcg_temp_new_i64();
--
-     gen_load_gpr(t0, a->rs);
- 
--    /* Sign-extend to 64 bit value */
--    target_ulong imm = a->imm;
--    if (a->ne) {
--        tcg_gen_setcondi_i64(TCG_COND_NE, cpu_gpr[a->rt], t0, imm);
--    } else {
--        tcg_gen_setcondi_i64(TCG_COND_EQ, cpu_gpr[a->rt], t0, imm);
--    }
-+    tcg_gen_setcondi_i64(cond, t0, t0, a->imm);
-+    gen_store_gpr(t0, a->rt);
+@@ -299,3 +299,19 @@ static bool trans_VMULU(DisasContext *ctx, arg_VMULU *a)
+     gen_store_gpr(tmp, a->rd);
      return true;
  }
++
++static bool trans_VMM0(DisasContext *ctx, arg_VMM0 *a)
++{
++    TCGv_i64 tmp = tcg_temp_new_i64();
++
++    gen_load_gpr(tmp, a->rs);
++    tcg_gen_mul_i64(oct_mpl[0], oct_mpl[0], tmp);
++    gen_load_gpr(tmp, a->rt);
++    tcg_gen_add_i64(oct_mpl[0], oct_mpl[0], tmp);
++    tcg_gen_add_i64(oct_mpl[0], oct_mpl[0], oct_p[0]);
++    gen_store_gpr(oct_mpl[0], a->rd);
++
++    tcg_gen_movi_i64(oct_mpl[1], 0);
++    octeon_zero_partial_product_state();
++    return true;
++}
+diff --git a/tests/tcg/mips/user/isa/octeon/octeon-insns.c b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
+index 4647e47f371..9153e37e9e0 100644
+--- a/tests/tcg/mips/user/isa/octeon/octeon-insns.c
++++ b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
+@@ -105,6 +105,59 @@ static uint64_t octeon_vmulu(uint64_t mpl0, uint64_t rs, uint64_t rt)
+     return rd;
+ }
  
-+static bool trans_SEQI(DisasContext *ctx, arg_SEQI *a)
++static uint64_t octeon_vmm0(uint64_t mpl0, uint64_t p0,
++                            uint64_t rs, uint64_t rt)
 +{
-+    return do_seqi_snei(ctx, a, TCG_COND_EQ);
++    uint64_t rd;
++
++    asm volatile(
++        "move $8, %[mpl0]\n\t"
++        "move $9, $0\n\t"
++        ".word 0x71090008\n\t" /* mtm0 $8, $9 */
++        "move $8, %[p0]\n\t"
++        "move $9, $0\n\t"
++        ".word 0x71090009\n\t" /* mtp0 $8, $9 */
++        "move $8, %[rs]\n\t"
++        "move $9, %[rt]\n\t"
++        ".word 0x71095010\n\t" /* vmm0 $10, $8, $9 */
++        "move %[rd], $10\n\t"
++        : [rd] "=r" (rd)
++        : [mpl0] "r" (mpl0), [p0] "r" (p0),
++          [rs] "r" (rs), [rt] "r" (rt)
++        : "$8", "$9", "$10");
++
++    return rd;
 +}
 +
-+static bool trans_SNEI(DisasContext *ctx, arg_SNEI *a)
++static uint64_t octeon_vmm0_zeroes_mpl1(void)
 +{
-+    return do_seqi_snei(ctx, a, TCG_COND_NE);
++    uint64_t rd;
++
++    asm volatile(
++        "move $8, %[mpl0]\n\t"
++        "move $9, $0\n\t"
++        ".word 0x71090008\n\t" /* mtm0 $8, $9 */
++        "move $8, %[mpl1]\n\t"
++        "move $9, $0\n\t"
++        ".word 0x7109000c\n\t" /* mtm1 $8, $9 */
++        "move $8, %[vmm0_rs]\n\t"
++        "move $9, $0\n\t"
++        ".word 0x71095010\n\t" /* vmm0 $10, $8, $9 */
++        "move $8, %[vmulu_rs]\n\t"
++        "move $9, $0\n\t"
++        ".word 0x7109500f\n\t" /* vmulu $10, $8, $9 */
++        "move $8, $0\n\t"
++        "move $9, $0\n\t"
++        ".word 0x7109500f\n\t" /* vmulu $10, $8, $9 */
++        "move %[rd], $10\n\t"
++        : [rd] "=r" (rd)
++        : [mpl0] "r" (1ULL), [mpl1] "r" (1ULL),
++          [vmm0_rs] "r" (2ULL), [vmulu_rs] "r" (1ULL)
++        : "$8", "$9", "$10");
++
++    return rd;
 +}
 +
- static bool trans_lx(DisasContext *ctx, arg_lx *a, MemOp mop)
+ static uint64_t octeon_mtp0_zeroes_p1(void)
  {
-     gen_lx(ctx, a->rd, a->base, a->index, mop);
+     uint64_t rd;
+@@ -143,6 +196,8 @@ int main(void)
+     assert(octeon_sne(0xabc, 0xabc) == 0);
+     assert(octeon_sne(0xabc, 0xdef) == 1);
+     assert(octeon_vmulu(5, 7, 11) == 46);
++    assert(octeon_vmm0(5, 13, 7, 11) == 59);
++    assert(octeon_vmm0_zeroes_mpl1() == 0);
+     assert(octeon_mtp0_zeroes_p1() == 0);
+ 
+     return 0;
 -- 
 2.53.0
 
