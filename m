@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58AFBCD5BAA
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 19:25:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7F8FCD5BAA
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 19:25:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPmXF-0008Av-Om; Wed, 20 May 2026 15:24:53 -0400
+	id 1wPmXX-0000ux-5o; Wed, 20 May 2026 15:25:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmX5-0007kc-2n
- for qemu-devel@nongnu.org; Wed, 20 May 2026 15:24:44 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmXR-0000i3-PB
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 15:25:06 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmX1-0001tU-EX
- for qemu-devel@nongnu.org; Wed, 20 May 2026 15:24:41 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4891e86fabeso70047715e9.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 12:24:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmXO-00020t-9j
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 15:25:05 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-44985f4ab0fso2844936f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 12:25:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779305078; x=1779909878; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779305101; x=1779909901; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=wMLJEwyeCLqgj1Jg/Gcg3sR4YMXmetqIBMHZ1a3Cpic=;
- b=XeaDaeOvi9FLRoDDeGqQLZKJYCEcvQ6sZ7szSNKvmW2S2JHnYk7ZOylyeaY3N9toLA
- eaeeq5wGLS4H2ilf5xFTc24NA4qL/70xkODGobr87v39wTiWXqX/DMORpWSiGzssW+cK
- 9kxCYMEp2+z6KkpI/MQvxqr9/3iyKsxsFMMNgm/lij6o6wDfX6EEsHy6PM3cjJu1/VAc
- FuOFSn6YDvD0Fvc3t438h/QUUaIo6ntRe59hw+7pA2kcnFV/vw7VMbgtTi6aZ4AAGAu9
- aevqTh6k13YJfSGZjRZAZSkJz7YF04D1DqWKWwmtnuGy1IeQmzoZOO9XN7ne/7uZJ7pW
- 11OA==
+ :reply-to; bh=3qwANRZBmfhl72g8qJbLId8AvrN+NTs16eU4PqpQK+8=;
+ b=PAWzkwbSQESU45WnLess42RNDEekHgs5POVD53K8ee+tGG5Bpz09H4R4y7Gzw6Nb+E
+ 4pLzxENEXNfedWctinbqLHu+4pyR5hXIMY33PScpVNc4aFnPP+A9n3+wiWho6ylHHyOs
+ JbuZsc7u1d3Ke2+LYWo5D90E++JqFK1/ZdeyPGMA9r3ZWK0yTVGDGfMb3GzN6cJK9fn7
+ 3mfFKjRW+yfEEfBOwfDv9D7Qe5Ffetio/0O5ZupT+H1zAANOchQ+pyP0iyWvvIvlNLP0
+ 5f08M9SW0WZRWy/3FJAZfFbODuKpOwpuhrNzu6LgtL6HS1AmC4CDv5K8mUmNyvl1X939
+ BqWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779305078; x=1779909878;
+ d=1e100.net; s=20251104; t=1779305101; x=1779909901;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=wMLJEwyeCLqgj1Jg/Gcg3sR4YMXmetqIBMHZ1a3Cpic=;
- b=EbYpKXQkd4rdQjtC7XUBWwGc2We6sk042nMkA2wNFtts6BMqUJqDQtc6dl6NDBdeUE
- lM58a/aoAHABFS/ztblh3RW26TzUaqPkIAkVcSB8lrLfypiZBm/0aok6OtPjCrrIobYZ
- JI5JjFUKd1E34kbOqB7xmiElMlDfabb8bTIA0lL/w1YVXcAHjB9Va7T8736vGGolR3ZP
- OWYajMlEV9L76LSbKlew3NMaTdLl7jTzDRDJYkFFg8fVZGvPGvhQDeIXpGfZGlH6C78T
- 86W9neWgLHnBeoAgizmwHvFjHLJ15yUHq965tsQWxNhCfO93jZPOX5RSF5bGj1Lu3Lig
- KqYA==
-X-Gm-Message-State: AOJu0YwE1G6WEU7kOy/FXc0dtyUp31bi+QgbQ0R+34C5ddH7MUxbWpLC
- A6SMuuN52tEJIXinnDOMNGtfmv9aKQnKFzQ9IsupddydN1RAgAwF7Y/ldsSD1YKLAbZLGB7YtSl
- fBLhC8uA=
-X-Gm-Gg: Acq92OEFpSvIwwbFnnt/6oZvKtaG2eARRXOvXYW7la2N7e99PCSP1Sfkd3+Iur51N9c
- N+seopenHd7SL6ZYieAFdRieTXBxYiTXaMgY6z/7li/g9I1HHxzSiUgpUMTMT/X6XBYCJ1njYYG
- Cw/GeeIqwSQHhpc1BuBWC6yawBcv8nsQH5AYAuR9tg0c5klB7LBbn0JBeuM/uEIAUrx6mYrwoZX
- +cOOudR20nxC/JFxQDTDtHpyl6jn6QgfFX3ycO1Fp/C/bGB1S1MZPfkVj824o0NGxZyKBgS8+YI
- KCXPhBtH0jyS0lnaE8fEf3Yq9yO7uSIgLZ9jbRJloKusvF2iRMIQrggjFCoWKGjYa5H6TkHwipD
- HBluNqhignC8Yl6Lp08wfF2mHNHCL+eD97aUSaSQ3XmQoZxit+Rt2Kli+IL61nXelj5FklfshjD
- HjwLXyNP86/mq4qqgeYXhcKc5p4ynB7MOntRd337lvOcvtvb7STfH4tVNkl/lxA9I/WWi4IQBB
-X-Received: by 2002:a05:600c:a11c:b0:48f:e468:1761 with SMTP id
- 5b1f17b1804b1-48fe60e47afmr289520305e9.2.1779305077737; 
- Wed, 20 May 2026 12:24:37 -0700 (PDT)
+ bh=3qwANRZBmfhl72g8qJbLId8AvrN+NTs16eU4PqpQK+8=;
+ b=msYsAMWF/dZ4RYFc+3O40EMnDedGHvzf+xotCiAtz8sy0m90bZj7vs7qSlCjUPs7zL
+ iq8LR3GMytyvmnrZxO+o3KMYlVFhTQLbHU2SNI5pXkKSLLBg84IQxRsKCqDYinshLgQd
+ H063D0P9kH1I1be8Je5CFEdCTw1L169RDMLzdhVfwLrTOoFqMCMHuO8gGHsq4iCtmKoA
+ Et5I1q9H3RegeCya6ft3xqeRXgcPaLgA0ZhVtUewBmshGDzXzIaIqCXTrvMZsWyMBn8z
+ 1SS4yRqnkiD9jIukxsayBh8HSeTwmwfEpXRCiPB6mvYk1KqLlV5ozRK/4+ZANfvVfEIY
+ drrQ==
+X-Gm-Message-State: AOJu0YzwdgLILS1d3MEhpeIEnhZNwpGf/p86G4Q3JaxvfhbY82HHiTXb
+ 8KqIp4VaLWiZArWktvW77e0Od0RkfcqC1UdXrdYVbzvEEhDHLBktBWF2h9EXut9nNR295p02VCg
+ 4MD8yIBM=
+X-Gm-Gg: Acq92OECes8iZZRjciuqvZmPynRe0km43+Jla3DeGxgMXuN4sPlnoDG4tRxQUnvYCJE
+ 59nQXyxGhH34geVXSUdIky/J7tzkclflHXWo+GzZFRzy+TXum6I4QGcfB1RNBzJaDmF3CSWtc5G
+ bgLDoz7v33LtJYyEOFijczwZUViw2dZQXSWQm7IwjYAkGj7JzULJGW4QUy/JjU5C2/g0qJdUWtQ
+ p8dzPsabPgvrCmWd8wXUh5ISU47wgnPqdiDBIYTH0qHyw1Vu2zf5VijrBERAYSganVS8IyQLNeJ
+ Nvcbyj/VyfVW+CgvEa+oKsyqqafcZDSuG5snAXqtftmeUkl8jk7oOSGmpTg96otdjgJ/VAl9FyL
+ F9+fMdhie4JiR4D0E7K270HLxXLfoQBErxpEjaiJHgf8kiFHVd57Ifa8JiaHLRiPOIVghyC5gpW
+ z77GaThQ4lt30SCSBzRkO4rQOT59zd8h8uIZwnQ5xx5yV+k4Yy2wnuPRUzgNA4PmMAOufNjdLC
+X-Received: by 2002:a05:600c:6992:b0:48e:6f39:f7be with SMTP id
+ 5b1f17b1804b1-48fe60ea533mr379722435e9.10.1779305100573; 
+ Wed, 20 May 2026 12:25:00 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da15a6454sm57518150f8f.34.2026.05.20.12.24.36
+ 5b1f17b1804b1-48febe6b60csm206582945e9.6.2026.05.20.12.24.59
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 20 May 2026 12:24:37 -0700 (PDT)
+ Wed, 20 May 2026 12:25:00 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/33] hw/intc/mips_gic: Avoid Coverity complaint in VP writes
-Date: Wed, 20 May 2026 21:23:13 +0200
-Message-ID: <20260520192338.40036-9-philmd@linaro.org>
+Subject: [PULL 11/33] linux-user/mips,
+ target/mips: honor MIPS_FIXADE for unaligned accesses
+Date: Wed, 20 May 2026 21:23:16 +0200
+Message-ID: <20260520192338.40036-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520192338.40036-1-philmd@linaro.org>
 References: <20260520192338.40036-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,56 +99,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: James Hilliard <james.hilliard1@gmail.com>
 
-The MIPS GIC does a check for a guest error in the write path for the
-SH_MAP*_VP registers which triggers a Coverity complaint because it
-assigns -1 to a uint64_t. The code doesn't misbehave because the -1
-case will be caught by the following OFFSET_CHECK(), but the code
-could be improved:
- * there is no need to special case to avoid passing 0 to ctz64(),
-   because (unlike the compiler builtins) QEMU defines that this
-   has a specific behaviour, returning 64
- * the OFFSET_CHECK() macro will go to the "bad_offset" label and
-   print an error implying that the guest wrote to an invalid
-   register offset. This is misleading about the actual problem,
-   which is that the guest wrote a bogus value to a valid register
-   offset
+Linux/MIPS enables software fixups for user-mode unaligned scalar
+accesses by default through MIPS_FIXADE/TIF_FIXADE.  QEMU linux-user did
+not model that ABI, so MIPS guests took fatal AdEL/AdES exceptions unless
+translation was forced to use unaligned host accesses.
 
-Make the error check print a better log message, and avoid the
-special casing on ctz64(); in passing, this should also make
-Coverity happier.
+Key MIPS translation blocks on the linux-user unaligned policy, implement
+sysmips(MIPS_FIXADE) to toggle that policy, and raise SIGBUS/BUS_ADRALN
+when fixups are disabled.
 
-CID: 1547545
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260512111536.3437645-1-peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20260520172313.23777-4-philmd@linaro.org>
 ---
- hw/intc/mips_gic.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ linux-user/mips/target_syscall.h   |  1 +
+ linux-user/mips64/target_syscall.h |  1 +
+ target/mips/cpu.h                  |  4 ++++
+ linux-user/mips/cpu_loop.c         |  5 +++++
+ linux-user/syscall.c               |  8 ++++++++
+ target/mips/cpu.c                  | 10 ++++++++--
+ target/mips/tcg/translate.c        |  6 +++++-
+ 7 files changed, 32 insertions(+), 3 deletions(-)
 
-diff --git a/hw/intc/mips_gic.c b/hw/intc/mips_gic.c
-index 23478df4b46..4777c70d6b4 100644
---- a/hw/intc/mips_gic.c
-+++ b/hw/intc/mips_gic.c
-@@ -317,9 +317,13 @@ static void gic_write(void *opaque, hwaddr addr, uint64_t data, unsigned size)
-         /* up to 32 bytes per a pin */
-         irq_src = (addr - GIC_SH_MAP0_VP_OFS) / 32;
-         OFFSET_CHECK(irq_src < gic->num_irq);
--        data = data ? ctz64(data) : -1;
--        OFFSET_CHECK(data < gic->num_vps);
--        gic->irq_state[irq_src].map_vp = data;
-+        if (ctz64(data) >= gic->num_vps) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "Bad data value 0x%" PRIx64
-+                          " at MAP VP register offset 0x%" PRIx64 "\n",
-+                          data, addr);
+diff --git a/linux-user/mips/target_syscall.h b/linux-user/mips/target_syscall.h
+index 9206694f4fb..be6942445a2 100644
+--- a/linux-user/mips/target_syscall.h
++++ b/linux-user/mips/target_syscall.h
+@@ -11,6 +11,7 @@
+ 
+ #define TARGET_FORCE_SHMLBA
+ #define TARGET_SYSMIPS_FLUSH_CACHE     3
++#define TARGET_SYSMIPS_FIXADE          7
+ #define TARGET_SYSMIPS_ATOMIC_SET   2001
+ 
+ static inline abi_ulong target_shmlba(CPUMIPSState *env)
+diff --git a/linux-user/mips64/target_syscall.h b/linux-user/mips64/target_syscall.h
+index e07687f8ac9..c11d0a08888 100644
+--- a/linux-user/mips64/target_syscall.h
++++ b/linux-user/mips64/target_syscall.h
+@@ -11,6 +11,7 @@
+ 
+ #define TARGET_FORCE_SHMLBA
+ #define TARGET_SYSMIPS_FLUSH_CACHE     3
++#define TARGET_SYSMIPS_FIXADE          7
+ #define TARGET_SYSMIPS_ATOMIC_SET   2001
+ 
+ static inline abi_ulong target_shmlba(CPUMIPSState *env)
+diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+index cbb9b3e1b1c..b478f834c13 100644
+--- a/target/mips/cpu.h
++++ b/target/mips/cpu.h
+@@ -1161,6 +1161,10 @@ typedef struct CPUArchState {
+ #define MIPS_HFLAG_ELPA  0x4000000
+ #define MIPS_HFLAG_ITC_CACHE  0x8000000 /* CACHE instr. operates on ITC tag */
+ #define MIPS_HFLAG_ERL   0x10000000 /* error level flag */
++#define MIPS_HFLAG_TB_MASK (MIPS_HFLAG_TMASK | MIPS_HFLAG_BMASK | \
++                            MIPS_HFLAG_HWRENA_ULR)
++
++#define TB_FLAG_MIPS_FIXADE  0x40000000
+     target_ulong btarget;        /* Jump / branch target               */
+     target_ulong bcond;          /* Branch condition (if needed)       */
+ 
+diff --git a/linux-user/mips/cpu_loop.c b/linux-user/mips/cpu_loop.c
+index fa264b27ec5..ff9d293c296 100644
+--- a/linux-user/mips/cpu_loop.c
++++ b/linux-user/mips/cpu_loop.c
+@@ -161,6 +161,11 @@ done_syscall:
+         case EXCP_DSPDIS:
+             force_sig(TARGET_SIGILL);
+             break;
++        case EXCP_AdEL:
++        case EXCP_AdES:
++            force_sig_fault(TARGET_SIGBUS, TARGET_BUS_ADRALN,
++                            env->CP0_BadVAddr);
 +            break;
+         case EXCP_INTERRUPT:
+             /* just indicate that signals should be handled asap */
+             break;
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 3df42aa159d..7d7a7b489cf 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -6663,9 +6663,17 @@ static abi_long do_sysmips_atomic_set(CPUArchState *env, abi_ulong addr,
+ static abi_long do_sysmips(CPUArchState *env, abi_long cmd, abi_long arg1,
+                            abi_long arg2)
+ {
++    CPUState *cs = env_cpu(env);
++
+     switch (cmd) {
+     case TARGET_SYSMIPS_ATOMIC_SET:
+         return do_sysmips_atomic_set(env, arg1, arg2);
++    case TARGET_SYSMIPS_FIXADE:
++        if (arg1 & ~3) {
++            return -TARGET_EINVAL;
 +        }
-+        gic->irq_state[irq_src].map_vp = ctz64(data);
-         break;
-     case VP_LOCAL_SECTION_OFS ... (VP_LOCAL_SECTION_OFS + GIC_VL_BRK_GROUP):
-         gic_write_vp(gic, vp_index, addr - VP_LOCAL_SECTION_OFS, data, size);
++        cs->prctl_unalign_sigbus = !(arg1 & 1);
++        return 0;
+     case TARGET_SYSMIPS_FLUSH_CACHE:
+         return 0;
+     default:
+diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+index 99d43613828..fccc7a711d3 100644
+--- a/target/mips/cpu.c
++++ b/target/mips/cpu.c
+@@ -560,11 +560,17 @@ static int mips_cpu_mmu_index(CPUState *cs, bool ifunc)
+ static TCGTBCPUState mips_get_tb_cpu_state(CPUState *cs)
+ {
+     CPUMIPSState *env = cpu_env(cs);
++    uint32_t flags = env->hflags & MIPS_HFLAG_TB_MASK;
++
++#ifdef CONFIG_USER_ONLY
++    if (!cs->prctl_unalign_sigbus) {
++        flags |= TB_FLAG_MIPS_FIXADE;
++    }
++#endif
+ 
+     return (TCGTBCPUState){
+         .pc = env->active_tc.PC,
+-        .flags = env->hflags & (MIPS_HFLAG_TMASK | MIPS_HFLAG_BMASK |
+-                                MIPS_HFLAG_HWRENA_ULR),
++        .flags = flags,
+     };
+ }
+ 
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+index 54ed253a7d0..dac30aff8d3 100644
+--- a/target/mips/tcg/translate.c
++++ b/target/mips/tcg/translate.c
+@@ -15070,6 +15070,7 @@ static void mips_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+ {
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
+     CPUMIPSState *env = cpu_env(cs);
++    uint32_t tb_flags = ctx->base.tb->flags;
+ 
+     ctx->page_start = ctx->base.pc_first & TARGET_PAGE_MASK;
+     ctx->saved_pc = -1;
+@@ -15092,7 +15093,7 @@ static void mips_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+     ctx->CP0_LLAddr_shift = env->CP0_LLAddr_shift;
+     ctx->cmgcr = (env->CP0_Config3 >> CP0C3_CMGCR) & 1;
+     /* Restore delay slot state from the tb context.  */
+-    ctx->hflags = (uint32_t)ctx->base.tb->flags; /* FIXME: maybe use 64 bits? */
++    ctx->hflags = tb_flags & MIPS_HFLAG_TB_MASK;
+     ctx->ulri = (env->CP0_Config3 >> CP0C3_ULRI) & 1;
+     ctx->ps = ((env->active_fpu.fcr0 >> FCR0_PS) & 1) ||
+              (env->insn_flags & (INSN_LOONGSON2E | INSN_LOONGSON2F));
+@@ -15112,6 +15113,9 @@ static void mips_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+     ctx->default_tcg_memop_mask = (!(ctx->insn_flags & ISA_NANOMIPS32) &&
+                                   (ctx->insn_flags & (ISA_MIPS_R6 |
+                                   INSN_LOONGSON3A))) ? MO_UNALN : MO_ALIGN;
++    if (tb_flags & TB_FLAG_MIPS_FIXADE) {
++        ctx->default_tcg_memop_mask = MO_UNALN;
++    }
+ 
+     /*
+      * Execute a branch and its delay slot as a single instruction.
 -- 
 2.53.0
 
