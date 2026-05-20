@@ -4,83 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49796CD4F5B
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 02:15:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F199CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 04:38:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPWSt-0001t5-E5; Tue, 19 May 2026 22:15:19 -0400
+	id 1wPYgQ-00012x-Mg; Wed, 20 May 2026 00:37:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wPWSr-0001sp-2f
- for qemu-devel@nongnu.org; Tue, 19 May 2026 22:15:17 -0400
-Received: from mail-dy1-x1341.google.com ([2607:f8b0:4864:20::1341])
+ (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
+ id 1wPYgK-00012R-Gy
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:22 -0400
+Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wPWSo-0004pj-ND
- for qemu-devel@nongnu.org; Tue, 19 May 2026 22:15:16 -0400
-Received: by mail-dy1-x1341.google.com with SMTP id
- 5a478bee46e88-303dbfbec77so4123356eec.0
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 19:15:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
+ id 1wPYgI-0003lC-5X
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:19 -0400
+Received: by mail-ot1-x32c.google.com with SMTP id
+ 46e09a7af769-7dcdd1b492eso4499907a34.1
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 21:37:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779243313; x=1779848113; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=4FruWjUR4VHf1LiwA3/aOkn5yZWpRxKPaeZzQVApbdo=;
- b=L4mHGdwcAq1tLdqDM3w2RUhM0cML/ngqCP8tCtH6li5ZNWcuejVQueQKqZF/h7zD8s
- l6YlP8pMI4rs2AOr+muvJrMfIuVGfm4XvZSaBSCRYU9jQ6qM0eabpQ9DognQXkyXJPQ2
- HRUWXSFhFRHGyOgI4kKG8ZN0f5456C33FrjjvUaNvwgJlENa2stss1UPKR4C7vXnygrj
- 7/LEJauz9qx/ckj+dAsq0Ec7SWZHkvxRj+aheZweS5x0d5Tgg9K8YelZv8LsTziUDXO/
- 7pCZ26fXLpKZk97utl3emkHm2wO0wT7jtySIjgwpRslH93yx3QLdZRtO8G2xoi8gdRdk
- kvMg==
+ d=gmail.com; s=20251104; t=1779251835; x=1779856635; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=7jM1jwUY6doQWw7cNzzrKAiwqt9SLepu9Iq35gPFd94=;
+ b=SXtQUzxG6wJtX/CG0AtvEro6EUoqjKDQcid+g1rMkCyK0P7qRqcoFUWhdC0j5dr+Ab
+ RZakdeg62c7flP3UDw3/8Q6NCDKhJ8NcdQNsZzBMicT2DrGYbUpE9A5Rqi3aQ5f0fYLO
+ oSUtV+kPV7C6T4qRbXndnhrQCp8vM5aJ3lfwCCdrYoIx3Hy/6C4v6qOR+KG8KLiyuKtv
+ uA3nIQaj78H0WHWu6igufcAUk72PNgGCOon+PeuPagcgCojuKRdmy3KXBvZiy96swWYI
+ FEV06O9wF3KuyiqFqwNOfIPsRVuwks0K2WafjT9lztLo2czEPFPcIKsWNQgQ4pFKRxKp
+ X8PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779243313; x=1779848113;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4FruWjUR4VHf1LiwA3/aOkn5yZWpRxKPaeZzQVApbdo=;
- b=OAu1JWMQmPSovJANgvGYg19k0Bp7cRA2zhMDsDwCWH7C/Q5JCfTyEZMWU4vnVvs/s9
- glGX2gws9lfVQMiBo4kgQij3dnPEoSflweWov0Qx9Zbf2WsxComCQRCcjKLqdPhbgcJc
- zqzrZ0unJYhDe9PFhYTKPhI7ki7/dXNUUiRegzOCKz+xYZeoa8Qfopf/giG5+B77SS0f
- RXlzQBrbYwBHV+AMozZbizO2eZHB/MUZ4wQV2H7cs40VEmXn/Kxnkb+TrK2cXTuhMXrX
- yDsGeGqpSXna3+IPs1SQf5+z7UbQiC4LXJFfdebvEJ35Sj9KBBsedbaa4p2h2qYYxkdm
- FYsg==
-X-Gm-Message-State: AOJu0YxFNraW8Ti9Y8qX8wpaRta+O8NQ3SWokG49NePwpgQHwJsL+DUo
- mlFgj2Nbk5bZ+4a7d/SOdeW8noKgZ8sgVz4icNV11CyUbsNPGKSDI+Sw
-X-Gm-Gg: Acq92OEESmru6BPetWShcdFTNEg2ZtPcEyfzUxegle51IPPDW2euVmAZsQIACZGfh6U
- Zkiox2dEvb0d5bwsgnU8dWyI3AFs8YzL4jEeHvIE1EjKI9bauoDKb3ksAFBZinAFDuAqf0DkKIq
- ZWxYNukULsX120M1/oVyKwcngIRjeiBjJbbEhKFwJJjT8Xikc0azqr4kakoSaIfOC6TqGC3bFXA
- Jj3AxdRe4n4INEspljelimZL1kDXRKOwuRUi/wKeXPfS/na7J+40GfXuV4HHH3o2VPblT1oew5b
- gVY0sJMp86vIGbMmqs3khzcal9FmtBpssBOJnEu1C6Ofem2h/AgFfUTsK5M05kps9J26Geq83fo
- +rjSi8/fpDb6pWvCivgedB1j/nUfCbx/wxRUMYRZ+icP4S5GZucUWOQrnWx2bkq9wHopkyZvfg1
- Zj7PzaWt9E2rAK+8y4TxHtSDXNoZy6JHKiDD7fBrjFxO6sNJgaHNDefaZNNVU=
-X-Received: by 2002:a05:7300:3212:b0:2ba:a2fb:403f with SMTP id
- 5a478bee46e88-30398618b93mr9357844eec.21.1779243312966; 
- Tue, 19 May 2026 19:15:12 -0700 (PDT)
-Received: from localhost ([64.186.250.142]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-302947e917dsm17433077eec.12.2026.05.19.19.15.12
+ d=1e100.net; s=20251104; t=1779251835; x=1779856635;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=7jM1jwUY6doQWw7cNzzrKAiwqt9SLepu9Iq35gPFd94=;
+ b=q6kZyBm/bWcpiqjMhwv/RCISHPWocoSB9brQfa9y6KM69P0ATY8LckPOzOttQ175q1
+ 4NGGiJGUf2vxN3kuZf0NjpVgk1qs9C3TWRpGh7uW5yXkPMe/BpUIwOgBOWyJaGr4xvTa
+ iY8FPXsP6WMQ/8ShLUUePD2/n/RLbwDs0ida+GCu0lCAN11kcW6prmx5pNF2EsNnFzf5
+ Feqt90CG4RoXp/wHBX1B6jEjMwKMMzGWn7XZc/9duqF2wLE/EtLUI82uoL1ZW5TShN0G
+ dGx4DvG0+he4x+5lcqjCCwRq2u5/oM3liOUN+jyApqSwCrHF6LlWcGRMBpiveSiAPqnQ
+ VSNg==
+X-Gm-Message-State: AOJu0Yy/me8Qz+cK1bRJNGBqznXC44RopAQbJ9n13nryY9DUfjxSJ8/Q
+ hkSNBI2TxWA1ucBtTHd00TMCr6LLssxq8TAQHB0qciUUyHQpsu7l20lv
+X-Gm-Gg: Acq92OESVLTTHElkb9w4pvg429cdOZogV1bOfMylbGBDqtEFVI0wSEH6iMjfVjm8aTW
+ 93ru+oUXzM/KOgKovubDlQXnqxY4wxrq9s6Fy0aLTYrlF+RWBK/LCf2NYjUyrmjkJRnnTbhJGn/
+ H7pl1HSS4f9hhmaNNaimMZyDunePDw+b8G29TAD6gVAOhzdfDqmfvEbRLKCYRqhtKj0EDhqPfo7
+ 6YRIyN89NX46EIsQ2bLc6Y7p6MsaIAd2jdvw4D0bIu4Ei4KjN4d+/5Z/hLaj2gEBm7PoP2yNYkz
+ p2OJuHWAj0DZvtKLLuG5Q+4rYTcipaqcRDeB8RBq65/+jrdTCIWS5iDCbLS8MvFPPyTm2+/7iAM
+ lNvvdQas8knRvV+PTO6ln07oMFu5fWmpCpMRMTKYzE65AfOCU73RnEn0lgoY/2ocO7nheq76TOs
+ Rc+yq294b1LD81n0OXcu77E4AeJP2SNPr1oq4jL0Kuto6bFLOAc9LpDf4y5l9Hor67Dx05ysdRc
+ K3LqnWjaX5YHNDnRCQgMOg0aJ4RctrT9wv/VUpOoSygITnAEsyqoL+cFYzyG5EOJfxPULLx1LsF
+ hcs=
+X-Received: by 2002:a05:6830:658b:b0:7db:a297:9e62 with SMTP id
+ 46e09a7af769-7e3f1030402mr16126360a34.8.1779251835551; 
+ Tue, 19 May 2026 21:37:15 -0700 (PDT)
+Received: from mac.localdomain (184-96-146-19.hlrn.qwest.net. [184.96.146.19])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-7e55bc4f04fsm11574634a34.27.2026.05.19.21.37.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 May 2026 19:15:12 -0700 (PDT)
-Date: Wed, 20 May 2026 10:15:10 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com
-Subject: Re: [PATCH] disas/riscv.c: add 'cbo' insns to disassembler
-Message-ID: <ag0ZHdyMycEXi2GD@ChaodeMacBook-Pro.local>
-References: <20260519204714.1376551-1-daniel.barboza@oss.qualcomm.com>
+ Tue, 19 May 2026 21:37:15 -0700 (PDT)
+From: James Hilliard <james.hilliard1@gmail.com>
+Date: Tue, 19 May 2026 22:36:55 -0600
+Subject: [PATCH v10 01/45] linux-user/mips: implement sysmips(MIPS_FLUSH_CACHE)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260519204714.1376551-1-daniel.barboza@oss.qualcomm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1341;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1341.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260519-mips-octeon-missing-insns-v2-v10-1-306f9edfe15b@gmail.com>
+References: <20260519-mips-octeon-missing-insns-v2-v10-0-306f9edfe15b@gmail.com>
+In-Reply-To: <20260519-mips-octeon-missing-insns-v2-v10-0-306f9edfe15b@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Aurelien Jarno <aurelien@aurel32.net>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>, 
+ James Hilliard <james.hilliard1@gmail.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+X-Mailer: b4 0.15.2
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x32c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,93 +110,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 19, 2026 at 05:47:14PM +0800, Daniel Henrique Barboza wrote:
-> We forgot to add 'cbo' insns to disas/riscv.c.  The result is that the
-> disassembler recognizes all of them as 'lq', an insn that happens to
-> share the same opcode space.
-> 
-> While we're at it reorder cbo_* entries in insn32.decode using opcode
-> order instead of insn name.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3480
-> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Add the target sysmips dispatcher and implement MIPS_FLUSH_CACHE as a
+successful no-op for linux-user.
 
-> ---
->  disas/riscv.c              | 29 ++++++++++++++++++++++++++++-
->  target/riscv/insn32.decode |  2 +-
->  2 files changed, 29 insertions(+), 2 deletions(-)
-> 
-> diff --git a/disas/riscv.c b/disas/riscv.c
-> index d416a4d6b3..36609efdf5 100644
-> --- a/disas/riscv.c
-> +++ b/disas/riscv.c
-> @@ -985,6 +985,10 @@ typedef enum {
->      rv_op_ssamoswap_d = 953,
->      rv_op_c_sspush = 954,
->      rv_op_c_sspopchk = 955,
-> +    rv_op_cbo_inval = 956,
-> +    rv_op_cbo_clean = 957,
-> +    rv_op_cbo_flush = 958,
-> +    rv_op_cbo_zero = 959,
->  } rv_op;
->  
->  /* register names */
-> @@ -2255,6 +2259,10 @@ const rv_opcode_data rvi_opcode_data[] = {
->        rv_op_sspush, 0 },
->      { "c.sspopchk", rv_codec_cmop_ss, rv_fmt_rs1, NULL, rv_op_sspopchk,
->        rv_op_sspopchk, 0 },
-> +   { "cbo.inval", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
-> +   { "cbo.clean", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
-> +   { "cbo.flush", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
-> +   { "cbo.zero", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
->  };
->  
->  /* CSR names */
-> @@ -2876,7 +2884,26 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
->              switch ((inst >> 12) & 0b111) {
->              case 0: op = rv_op_fence; break;
->              case 1: op = rv_op_fence_i; break;
-> -            case 2: op = rv_op_lq; break;
-> +            case 2:
-> +               /*
-> +                * 'lq' shares the "(...) 010 ..... 0001111" opcode space
-> +                * with 'cbo' insns.  Check the next 5 bits to select
-> +                * what we want:
-> +                *
-> +                * cbo_inval  0000000 00000 ..... 010 00000 0001111
-> +                * cbo_clean  0000000 00001 ..... 010 00000 0001111
-> +                * cbo_flush  0000000 00010 ..... 010 00000 0001111
-> +                * cbo_zero   0000000 00100 ..... 010 00000 0001111
-> +                *
-> +                * Anything that doesn't match these will default to 'lq'.
-> +                */
-> +               switch ((inst >> 17) & 0b11111) {
-> +               case 0: op = rv_op_cbo_inval; break;
-> +               case 1: op = rv_op_cbo_clean; break;
-> +               case 2: op = rv_op_cbo_flush; break;
-> +               case 4: op = rv_op_cbo_zero; break;
-> +               default: op = rv_op_lq; break;
-> +               }
->              }
->              break;
->          case 4:
-> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-> index 6e35c4b1e6..21272fdb50 100644
-> --- a/target/riscv/insn32.decode
-> +++ b/target/riscv/insn32.decode
-> @@ -207,9 +207,9 @@ ldu      ............   ..... 111 ..... 0000011 @i
->  {
->    [
->      # *** RV32 Zicbom Standard Extension ***
-> +    cbo_inval  0000000 00000 ..... 010 00000 0001111 @sfence_vm
->      cbo_clean  0000000 00001 ..... 010 00000 0001111 @sfence_vm
->      cbo_flush  0000000 00010 ..... 010 00000 0001111 @sfence_vm
-> -    cbo_inval  0000000 00000 ..... 010 00000 0001111 @sfence_vm
->  
->      # *** RV32 Zicboz Standard Extension ***
->      cbo_zero   0000000 00100 ..... 010 00000 0001111 @sfence_vm
-> -- 
-> 2.43.0
-> 
+Self-modifying code is handled by QEMU's normal user-mode translation
+invalidation machinery, so the target ABI only needs the syscall command
+to be accepted.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+---
+Changes v2 -> v3:
+  - Split MIPS_FLUSH_CACHE out of the combined sysmips/MIPS_FIXADE patch.
+    (suggested by Richard Henderson)
+---
+ linux-user/mips/target_syscall.h   |  1 +
+ linux-user/mips64/target_syscall.h |  1 +
+ linux-user/syscall.c               | 17 +++++++++++++++++
+ 3 files changed, 19 insertions(+)
+
+diff --git a/linux-user/mips/target_syscall.h b/linux-user/mips/target_syscall.h
+index dfcdf320b7..3f36c1695a 100644
+--- a/linux-user/mips/target_syscall.h
++++ b/linux-user/mips/target_syscall.h
+@@ -10,6 +10,7 @@
+ #define TARGET_MCL_ONFAULT 4
+ 
+ #define TARGET_FORCE_SHMLBA
++#define TARGET_SYSMIPS_FLUSH_CACHE     3
+ 
+ static inline abi_ulong target_shmlba(CPUMIPSState *env)
+ {
+diff --git a/linux-user/mips64/target_syscall.h b/linux-user/mips64/target_syscall.h
+index 9135bf5e8b..20ea7c6ab9 100644
+--- a/linux-user/mips64/target_syscall.h
++++ b/linux-user/mips64/target_syscall.h
+@@ -10,6 +10,7 @@
+ #define TARGET_MCL_ONFAULT 4
+ 
+ #define TARGET_FORCE_SHMLBA
++#define TARGET_SYSMIPS_FLUSH_CACHE     3
+ 
+ static inline abi_ulong target_shmlba(CPUMIPSState *env)
+ {
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index d3d9fffb54..73f09bb775 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -6630,6 +6630,19 @@ static abi_long do_prctl_syscall_user_dispatch(CPUArchState *env,
+     }
+ }
+ 
++#ifdef TARGET_NR_sysmips
++static abi_long do_sysmips(CPUArchState *env, abi_long cmd, abi_long arg1,
++                           abi_long arg2)
++{
++    switch (cmd) {
++    case TARGET_SYSMIPS_FLUSH_CACHE:
++        return 0;
++    default:
++        return -TARGET_EINVAL;
++    }
++}
++#endif
++
+ static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
+                          abi_long arg3, abi_long arg4, abi_long arg5)
+ {
+@@ -12102,6 +12115,10 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+     case TARGET_NR_prctl:
+         return do_prctl(cpu_env, arg1, arg2, arg3, arg4, arg5);
+         break;
++#ifdef TARGET_NR_sysmips
++    case TARGET_NR_sysmips:
++        return do_sysmips(cpu_env, arg1, arg2, arg3);
++#endif
+ #ifdef TARGET_NR_arch_prctl
+     case TARGET_NR_arch_prctl:
+         return do_arch_prctl(cpu_env, arg1, arg2);
+
+-- 
+2.54.0
+
 
