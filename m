@@ -4,69 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 247C6CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 08:03:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E5CFCD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 08:18:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPbtp-0006Ws-In; Wed, 20 May 2026 04:03:29 -0400
+	id 1wPc7p-0000q5-Lx; Wed, 20 May 2026 04:17:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wPbsy-00067s-Hc
- for qemu-devel@nongnu.org; Wed, 20 May 2026 04:02:39 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wPbsr-00054L-Vx
- for qemu-devel@nongnu.org; Wed, 20 May 2026 04:02:36 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8AxVul0ag1qR4ULAA--.27896S3;
- Wed, 20 May 2026 16:01:57 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowJCxWeByag1qRX+JAA--.64702S3;
- Wed, 20 May 2026 16:01:54 +0800 (CST)
-Subject: Re: [PATCH v2 3/4] target/loongarch: Add kvm support dintc
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: qemu-devel@nongnu.org, lixianglai@loongson.cn, chenhuacai@loongson.cn
-References: <20260507092358.2479135-1-gaosong@loongson.cn>
- <20260507092358.2479135-4-gaosong@loongson.cn>
- <6750a31c-ee34-076e-eb89-f01b398b0a3b@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <05188f9a-f587-2b5d-5066-d09abe91c2bf@loongson.cn>
-Date: Wed, 20 May 2026 16:04:00 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wPc7f-0000op-65; Wed, 20 May 2026 04:17:48 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wPc7c-0000fA-1u; Wed, 20 May 2026 04:17:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1779265047; bh=BGKHDur2kAQ/4nCERdYhNGlNK8eQN7GWrmIKMLpilg8=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=e2ki3wTIKLhOK7uJxC/7Q8DG93BUYOWK32nlx5tAw1zneQmJea5PYoXRxW2ifdXJc
+ 6W29/LhmhC1p5KaQtqJd25r8zcxBmfcY8siXmsz7gkYfmOJ8Gs7jhRa4+vJX3HcF+p
+ +Z2hRQrXVOhHUDMIWt8eGuJrKhq0rf0joqybPFFdYUP1MJ8gyzSU6nvhxPI0LRO5a7
+ hhVJszoqLpjZgDsxyAtBo9tivSIbmfKHtmWX+OCu+OaOFeiqyt0LoDDxRD1mM1raH5
+ W1FpvWcMV74uHVW445U9GkBeCqtTMoyVIacAjZErRpX1YK6z9cTmfNcXy0WgYCUfwG
+ PYCuPPIYgQ7Bw==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 9F4771AE5F6;
+ Wed, 20 May 2026 11:17:26 +0300 (MSK)
+Message-ID: <8be38e04-5fda-4e8a-8df6-6d5b8a124ca5@tls.msk.ru>
+Date: Wed, 20 May 2026 11:17:30 +0300
 MIME-Version: 1.0
-In-Reply-To: <6750a31c-ee34-076e-eb89-f01b398b0a3b@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowJCxWeByag1qRX+JAA--.64702S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3AFWxWr4rJFykKFyUuF43XFc_yoW3XF43pr
- 1kJrW5GFyUGrn7Jw17Jry5XryUXr1UG3WUXr1xXFyUAr4UJr1jqr10qr1qgF1UAw48Jr15
- Ar18Zrsxur17JrgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE
- 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
- AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
- CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
- 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
- 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUzsqW
- UUUUU
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/7] ide: Fix deadlock between TRIM and drain
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Cc: hreitz@redhat.com, jsnow@redhat.com, qemu-devel@nongnu.org,
+ qemu-stable@nongnu.org
+References: <20260421161132.99878-1-kwolf@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260421161132.99878-1-kwolf@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,188 +110,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2026/5/20 下午2:44, Bibo Mao 写道:
->
->
-> On 2026/5/7 下午5:23, Song Gao wrote:
->> This patch adds Kvm put/get msgint CSRs and check msgint feature.
->>
->> Signed-off-by: Song Gao <gaosong@loongson.cn>
->> ---
->>   target/loongarch/cpu.c     |  5 ++-
->>   target/loongarch/cpu.h     |  1 +
->>   target/loongarch/kvm/kvm.c | 69 ++++++++++++++++++++++++++++++++++++++
->>   3 files changed, 72 insertions(+), 3 deletions(-)
->>
->> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
->> index e22568c84a..fe60c9b92b 100644
->> --- a/target/loongarch/cpu.c
->> +++ b/target/loongarch/cpu.c
->> @@ -443,9 +443,6 @@ static void loongarch_max_initfn(Object *obj)
->>         cpu->ptw = ON_OFF_AUTO_AUTO;
->>       if (tcg_enabled()) {
->> -        cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, 
->> MSG_INT, 1);
->> -        cpu->msgint = ON_OFF_AUTO_AUTO;
->> -
->>           uint32_t data = cpu->env.cpucfg[2];
->>           data = FIELD_DP32(data, CPUCFG2, HPTW, 1);
->>           /* Enable LA v1.1 instructions */
->> @@ -456,6 +453,8 @@ static void loongarch_max_initfn(Object *obj)
->>           data = FIELD_DP32(data, CPUCFG2, SCQ, 1);
->>           cpu->env.cpucfg[2] = data;
->>       }
->> +    cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, 
->> MSG_INT, 1);
->> +    cpu->msgint = ON_OFF_AUTO_AUTO;
->>   }
->>     #if defined(CONFIG_KVM)
->> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
->> index 096d778928..e6bbcded95 100644
->> --- a/target/loongarch/cpu.h
->> +++ b/target/loongarch/cpu.h
->> @@ -301,6 +301,7 @@ enum loongarch_features {
->>       LOONGARCH_FEATURE_PV_IPI,
->>       LOONGARCH_FEATURE_STEALTIME,
->>       LOONGARCH_FEATURE_PTW,
->> +    LOONGARCH_FEATURE_MSGINT,
->>   };
->>     typedef struct  LoongArchBT {
->> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
->> index 9d844c4905..dad260636a 100644
->> --- a/target/loongarch/kvm/kvm.c
->> +++ b/target/loongarch/kvm/kvm.c
->> @@ -35,6 +35,13 @@ const KVMCapabilityInfo 
->> kvm_arch_required_capabilities[] = {
->>       KVM_CAP_LAST_INFO
->>   };
->>   +static bool kvm_cpu_has_msgint(CPUState *cs)
->> +{
->> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
->> +
->> +    return FIELD_EX64(cpu->env.cpucfg[1], CPUCFG1, MSG_INT);
->> +}
->> +
->>   static int kvm_get_stealtime(CPUState *cs)
->>   {
->>       CPULoongArchState *env = cpu_env(cs);
->> @@ -358,6 +365,20 @@ static int kvm_loongarch_get_csr(CPUState *cs)
->>         ret |= kvm_loongarch_get_pmu(cs);
->>   +    if (kvm_cpu_has_msgint(cs)) {
-> Would you like to add some comments that CSR register MSGIS getting 
-> must be put after CSR register CSR_ESTAT? Since register CSR_ESTAT 
-> will sync software pending MSGINT status to hardware register and 
-> modify HW CSR MSGIS registers.
->
-> So this piece of code should put after CSR_ESTAT register reading.
->
-I will correct it on v3.
+On 21.04.2026 19:11, Kevin Wolf wrote:
+> Patches 2 and 4 are the core of the fix, see their commit message for
+> details.
+> 
+> Kevin Wolf (7):
+>    blkdebug: Add 'delay-ns' option
+>    block: Add blk_co_start/end_request() and BDRV_REQ_NO_QUEUE
+>    block: Add flags parameter to blk_*_pdiscard()
+>    ide: Minimal fix for deadlock between TRIM and drain
+>    ide: Clean up ide_trim_co_entry() to be idiomatic coroutine code
+>    ide-test: Factor out wait_dma_completion()
+>    ide-test: Test reset during TRIM
 
-Thanks.
-Song Gao
-> Regards
-> Bibo Mao
->
->> +        ret |= kvm_get_one_reg(cs, 
->> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
->> +                               &env->CSR_MSGIS[0]);
->> +
->> +        ret |= kvm_get_one_reg(cs, 
->> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
->> +                               &env->CSR_MSGIS[1]);
->> +
->> +        ret |= kvm_get_one_reg(cs, 
->> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
->> +                               &env->CSR_MSGIS[2]);
->> +
->> +        ret |= kvm_get_one_reg(cs, 
->> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
->> +                               &env->CSR_MSGIS[3]);
->> +    }
->> +
->>       ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TVAL),
->>                              &env->CSR_TVAL);
->>   @@ -533,6 +554,20 @@ static int kvm_loongarch_put_csr(CPUState *cs, 
->> KvmPutState level)
->>         ret |= kvm_loongarch_put_pmu(cs);
->>   +    if (kvm_cpu_has_msgint(cs)) {
->> +        ret |= kvm_set_one_reg(cs, 
->> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
->> +                               &env->CSR_MSGIS[0]);
->> +
->> +        ret |= kvm_set_one_reg(cs, 
->> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
->> +                               &env->CSR_MSGIS[1]);
->> +
->> +        ret |= kvm_set_one_reg(cs, 
->> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
->> +                               &env->CSR_MSGIS[2]);
->> +
->> +        ret |= kvm_set_one_reg(cs, 
->> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
->> +                               &env->CSR_MSGIS[3]);
->> +    }
->> +
->>       /*
->>        * timer cfg must be put at last since it is used to enable
->>        * guest timer
->> @@ -982,6 +1017,12 @@ static bool kvm_feature_supported(CPUState *cs, 
->> enum loongarch_features feature)
->>           ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
->>           return (ret == 0);
->>   +    case LOONGARCH_FEATURE_MSGINT:
->> +        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
->> +        attr.attr = KVM_LOONGARCH_VM_FEAT_MSGINT;
->> +        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
->> +        return (ret == 0);
->> +
->>       default:
->>           return false;
->>       }
->> @@ -1155,6 +1196,28 @@ static int kvm_cpu_check_pv_features(CPUState 
->> *cs, Error **errp)
->>       return 0;
->>   }
->>   +static int kvm_cpu_check_msgint(CPUState *cs, Error **errp)
->> +{
->> +    CPULoongArchState *env = cpu_env(cs);
->> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
->> +    bool kvm_supported;
->> +
->> +    kvm_supported = kvm_feature_supported(cs, 
->> LOONGARCH_FEATURE_MSGINT);
->> +    env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 0);
->> +    if (cpu->msgint == ON_OFF_AUTO_ON) {
->> +        if (kvm_supported) {
->> +            env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, 
->> MSG_INT, 1);
->> +        } else {
->> +            error_setg(errp, "'msgint' feature not supported by KVM 
->> on this host");
->> +            return -ENOTSUP;
->> +        }
->> +    } else if ((cpu->msgint == ON_OFF_AUTO_AUTO) && kvm_supported) {
->> +        env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, 
->> MSG_INT, 1);
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->>   int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
->>   {
->>       return 0;
->> @@ -1210,6 +1273,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
->>           return ret;
->>       }
->>   +    ret = kvm_cpu_check_msgint(cs, &local_err);
->> +    if (ret < 0) {
->> +        error_report_err(local_err);
->> +        return ret;
->> +    }
->> +
->>       return 0;
->>   }
->>
+Hi!
+
+Is this whole patchset supposed to go to qemu-stable, to be applied to
+stable qemu releases?  I'm a bit confused because only one of the patches
+has Cc: qemu-stable tag, but whole patchset has been Cc'd to qemu-stable,
+and at least patch 2 is also needed.
+
+I'd gladly add testing patches too, but I'd rather understand the inital
+intention.
+
+The actual fix - "ide: Minimal fix for deadlock between TRIM and drain"
+(commit 095c08a7ba in the master branch now) does not work in any of
+the qemu stable branches as-is, because even 11.0.x lacks
+blk_co_start_request() and BDRV_REQ_NO_QUEUE definition - so at least
+34a67637767d "block: Add blk_co_start/end_request() and BDRV_REQ_NO_QUEUE"
+is needed.
+
+Next, blk_co_pdiscard() lacks "flags" parameter, so another commit,
+53074ba0330a "block: Add flags parameter to blk_*_pdiscard()", is also
+needed.
+
+But this area received quite a lot of changes, so I don't know how far
+this can be applied to older stable qemu branches, and how well it all
+will work within older branches.  I'm especially interested in 10.0.x
+series, which has become an LTS.
+
+What do you think?
+
+I'm testing 11.0.x with whole this series and the above-mentioned 2
+changes, for now, and I'll let you know how it goes for 10.0 and 10.2,
+hopefully later today.
+
+Thanks,
+
+/mjt
+
+>   qapi/block-core.json              |   4 +
+>   include/block/block-common.h      |  11 ++-
+>   include/system/block-backend-io.h |   6 +-
+>   block/blkdebug.c                  |  15 +++-
+>   block/block-backend.c             |  47 +++++++---
+>   block/export/virtio-blk-handler.c |   2 +-
+>   block/mirror.c                    |   4 +-
+>   hw/ide/core.c                     | 110 +++++++++++-------------
+>   nbd/server.c                      |   2 +-
+>   qemu-io-cmds.c                    |   2 +-
+>   tests/qtest/ide-test.c            | 137 ++++++++++++++++++++++++------
+>   tests/unit/test-block-iothread.c  |   4 +-
+>   12 files changed, 236 insertions(+), 108 deletions(-)
+> 
 
 
