@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08E1DCD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:51:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20619CD5BAC
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:51:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPooM-0006uF-Tn; Wed, 20 May 2026 17:50:42 -0400
+	id 1wPooR-000715-Ca; Wed, 20 May 2026 17:50:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wPooL-0006u7-QI
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:50:41 -0400
+ id 1wPooQ-0006xQ-9f
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:50:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wPooK-000490-9n
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:50:41 -0400
+ id 1wPooO-0004A0-WF
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:50:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779313839;
+ s=mimecast20190719; t=1779313844;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ho9+bos+FxoxTK+kgywlHgnaViRN8O0JYKchFHfp2lE=;
- b=X9X5wQmpTLsXS5/eup1bZQULehXlX6zTOUjlCK0arcmSRgjS7AoccWEn1SQf1SMQVEofil
- 76l8uzxdXt1pNv34PTmhaPs90INWok3dFfXlBUfg9GrqQNNYnRHmRcEj5u5XOHkFMt+4mD
- 9ZJI5KYaSE+Wpndg1DVKxi1RNAasEzE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=mdeg6KZimag8UGjN/vDgHGgf4EKwXlKAmfn2EJzpOFM=;
+ b=SHoI6yxKNLPK6qJaIHZmZ9XskJ0ReNIhEJAA0oa5UlDfvGjB7rTFOGl4hLOJarKEu4MDZ4
+ n95hsfJm/0y4CxHzRWN2L75qChsofPK8A2hf9e1IQAAmt+2C6gorr7KBr5URah7/ad1vH5
+ 89HjWTbuwHi5LqoiopQuMBw0bQ97NSM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-304-npeDwFhzOtyNeGkKm6LFkQ-1; Wed,
- 20 May 2026 17:50:36 -0400
-X-MC-Unique: npeDwFhzOtyNeGkKm6LFkQ-1
-X-Mimecast-MFC-AGG-ID: npeDwFhzOtyNeGkKm6LFkQ_1779313836
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-30-5BJmYDtMNgi_Mdp79VrOVg-1; Wed,
+ 20 May 2026 17:50:42 -0400
+X-MC-Unique: 5BJmYDtMNgi_Mdp79VrOVg-1
+X-Mimecast-MFC-AGG-ID: 5BJmYDtMNgi_Mdp79VrOVg_1779313842
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F22FC1956053
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 21:50:35 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DBF3C1956080
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 21:50:41 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.26])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 907F61681; Wed, 20 May 2026 21:50:34 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7975630001A2; Wed, 20 May 2026 21:50:40 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 21 May 2026 01:49:06 +0400
-Subject: [PATCH 05/40] system: move gpa2hva() to system memory unit
+Date: Thu, 21 May 2026 01:49:07 +0400
+Subject: [PATCH 06/40] s390x: prevent crash if given invalid CPU#
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260521-qemu-no-hmp-v1-5-d104f809e145@redhat.com>
+Message-Id: <20260521-qemu-no-hmp-v1-6-d104f809e145@redhat.com>
 References: <20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com>
 In-Reply-To: <20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4236;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=630;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=xFi/sRUUClGuN6YVMPpbyquIv/44+h9uGV2sti/w3V0=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqDiyCtVSz0SER6KMLTZgpkQhIUq54+QMXIDU1W
- eNatMzRth+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCag4sggAKCRDa6OEJdZac
- 5cMBEACXLPuzBs3YjezmdQxV0ZJDL4KeKrgTFGfdprRePeU6WmqAuPhYXpO94w3ZUpomtDU9mL7
- 5v4RlBdIXJ27Vl+8DFoRPPYMzvd4JTF35DfrqzFq2DjxjCaF2w+d1U9IkJxYZXqnwiYjp+OeHK/
- V6p5HhEYGHuHe2P+Bna/ADcUlgvPlxWItUzVLMyaEbd6vRjCofHexxRN8Tu8HUAIvwHVYct4NiF
- SZsm7I1wm/N4aP1akyX88pxc6JIAmq9zRbH+ohsVlJuIkZti93yhEQREKvGkKLW8p7c9er/a/sy
- +YM13xl1B75/H3PP29btsyB2+xSTajT18n25XilK1HbEOMdz99ix4KjtevAZ2ruwXH3MbE9avOi
- +u3Bq/PlJ/G+DVq9U5Q8adpxQ03n0Hhf4DKWOwjVt2d9tczrJMpBu0WorIxoOO82lq3EKqIqQZg
- k0fg5Ffvt1oDI34rfElTfK8OvYGBwCdxuIUC8ArdslWUvNEhbKZGumHTIdI0I/s/7cJWYHEWifp
- PKlFs2kAIRoWxpABbZXGgUEu209wdef/Tpac01ssc8h8AxSnxzOojBh9CPDkHPnMFQJ4n7Qmktw
- cUu31tlutvaqBW5Ki7mKNaIIAqfwBHBt+b1k2b7LWisgqRKZQPVD5DglQU8nBgWpMPx9kU1ksBo
- HLO+DfP9Acx17Dw==
+ bh=RCG2TEBkp0lXDDkBP+4/T7m2pCFCYtedJ2NUBZ+T14M=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqDiyCeUpyYYR/MzgGz033z4WkmvVaneW1ZlBGp
+ pMwiIMEBGCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCag4sggAKCRDa6OEJdZac
+ 5clnD/9HhJl8/gAzGIHf+gKXoTMSt/AZVVRsoqiRDk0HLnuJ3P1XFvdVBBro7kI4WfBjqDszzYH
+ JilJUcxMx6GXS8WJ5oytNArOkvrB0PriiDeqDfmgJqOozTWXxW677B/OOQcc5uzyk64BTM3ZiLU
+ rUOfyvH+hSeAokwtQgG/yPIYweJ5qauuNq/ScqIUL0sJM3T9Pw4kQeocVPhLmgbOcODslX+VyYk
+ FqGVBBaM+KxRG53Otz45PXcUvok06gMvZXDbhESXw/2j6bOIuF7mhbvB06GtO7L3xg7q+xH4QgB
+ jwPQCsiVdxqlTKIPk08W7YKHbAcCCglsIy4JwZwExePN6f+OSdtTh/Nvmi2biMcL6oMK//jnP5L
+ +RLdj/Rvivxl5rhU1C0Yr1NkjUHv+zwC15xy5uNmDzBUJL0Ga98Ao7yN6AhPu6Tej7pxOpcN39k
+ hRyQQs5bZ9hxjsIdX1AnQafuYi+uDif5U0vGsOGonysyZo+ZNvXKmoWyAiNiYYGl1hEr+Wxdm8K
+ 4u39vrF5tNaWO8jzFMSF3m5pA/8zAbdAA4+PYHxh18yTq+EKwljHt2HLCVAnpVXO7KKIyjTCx8/
+ zu6gRP3N40BdfkuPBHs+EQHm9Gxpye4D9LSMc5APaUylAbFjKsGdyGhXx6uObAgYHQe8fs8uV9T
+ OrVWiYStbBYA4bQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -103,122 +103,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The function is now used by SEV code path. Move it to physmem.c rather
-than hmp-cmds.c.
-
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/monitor/monitor.h |  2 --
- include/system/memory.h   |  2 ++
- monitor/hmp-cmds.c        | 31 -------------------------------
- system/physmem.c          | 31 +++++++++++++++++++++++++++++++
- 4 files changed, 33 insertions(+), 33 deletions(-)
+ hw/s390x/s390-virtio-ccw.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
-index 55649a86641..17182e626a7 100644
---- a/include/monitor/monitor.h
-+++ b/include/monitor/monitor.h
-@@ -42,8 +42,6 @@ int monitor_get_cpu_index(Monitor *mon);
- int monitor_puts_locked(Monitor *mon, const char *str);
- void monitor_flush_locked(Monitor *mon);
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 4d35f9b10bc..d27d82a378a 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -729,6 +729,11 @@ static void s390_nmi(NMIState *n, int cpu_index, Error **errp)
+ {
+     CPUState *cs = qemu_get_cpu(cpu_index);
  
--void *gpa2hva(MemoryRegion **p_mr, hwaddr addr, uint64_t size, Error **errp);
--
- void monitor_read_command(MonitorHMP *mon, int show_prompt);
- int monitor_read_password(MonitorHMP *mon, ReadLineFunc *readline_func,
-                           void *opaque);
-diff --git a/include/system/memory.h b/include/system/memory.h
-index 1417132f6d9..e2724e38532 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -3063,4 +3063,6 @@ bool ram_block_discard_is_required(void);
- void ram_block_add_cpr_blocker(RAMBlock *rb, Error **errp);
- void ram_block_del_cpr_blocker(RAMBlock *rb);
- 
-+void *gpa2hva(MemoryRegion **p_mr, hwaddr addr, uint64_t size, Error **errp);
++    if (!cs) {
++        error_setg(errp, "CPU %d does not exist", cpu_index);
++        return;
++    }
 +
- #endif
-diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-index 443b8c785dc..521ab8a641c 100644
---- a/monitor/hmp-cmds.c
-+++ b/monitor/hmp-cmds.c
-@@ -709,37 +709,6 @@ void hmp_physical_memory_dump(Monitor *mon, const QDict *qdict)
-     memory_dump(mon, count, format, size, addr, true);
+     s390_cpu_restart(S390_CPU(cs));
  }
  
--void *gpa2hva(MemoryRegion **p_mr, hwaddr addr, uint64_t size, Error **errp)
--{
--    Int128 gpa_region_size;
--    MemoryRegionSection mrs = memory_region_find(get_system_memory(),
--                                                 addr, size);
--
--    if (!mrs.mr) {
--        error_setg(errp,
--                   "No memory is mapped at address 0x%" HWADDR_PRIx, addr);
--        return NULL;
--    }
--
--    if (!memory_region_is_ram(mrs.mr) && !memory_region_is_romd(mrs.mr)) {
--        error_setg(errp,
--                   "Memory at address 0x%" HWADDR_PRIx " is not RAM", addr);
--        memory_region_unref(mrs.mr);
--        return NULL;
--    }
--
--    gpa_region_size = int128_make64(size);
--    if (int128_lt(mrs.size, gpa_region_size)) {
--        error_setg(errp, "Size of memory region at 0x%" HWADDR_PRIx
--                   " exceeded.", addr);
--        memory_region_unref(mrs.mr);
--        return NULL;
--    }
--
--    *p_mr = mrs.mr;
--    return qemu_map_ram_ptr(mrs.mr->ram_block, mrs.offset_within_region);
--}
--
- void hmp_gpa2hva(Monitor *mon, const QDict *qdict)
- {
-     hwaddr addr = qdict_get_int(qdict, "addr");
-diff --git a/system/physmem.c b/system/physmem.c
-index 7bcbf875736..90bf857c9df 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -4477,3 +4477,34 @@ void ram_block_del_cpr_blocker(RAMBlock *rb)
- {
-     migrate_del_blocker(&rb->cpr_blocker);
- }
-+
-+void *gpa2hva(MemoryRegion **p_mr, hwaddr addr, uint64_t size, Error **errp)
-+{
-+    Int128 gpa_region_size;
-+    MemoryRegionSection mrs = memory_region_find(get_system_memory(),
-+                                                 addr, size);
-+
-+    if (!mrs.mr) {
-+        error_setg(errp,
-+                   "No memory is mapped at address 0x%" HWADDR_PRIx, addr);
-+        return NULL;
-+    }
-+
-+    if (!memory_region_is_ram(mrs.mr) && !memory_region_is_romd(mrs.mr)) {
-+        error_setg(errp,
-+                   "Memory at address 0x%" HWADDR_PRIx " is not RAM", addr);
-+        memory_region_unref(mrs.mr);
-+        return NULL;
-+    }
-+
-+    gpa_region_size = int128_make64(size);
-+    if (int128_lt(mrs.size, gpa_region_size)) {
-+        error_setg(errp, "Size of memory region at 0x%" HWADDR_PRIx
-+                   " exceeded.", addr);
-+        memory_region_unref(mrs.mr);
-+        return NULL;
-+    }
-+
-+    *p_mr = mrs.mr;
-+    return qemu_map_ram_ptr(mrs.mr->ram_block, mrs.offset_within_region);
-+}
 
 -- 
 2.54.0
