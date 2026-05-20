@@ -4,53 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7F10CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:27:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE792CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:34:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPoR2-0006ix-48; Wed, 20 May 2026 17:26:36 -0400
+	id 1wPoYL-0000x0-Db; Wed, 20 May 2026 17:34:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wPoR0-0006iC-Hc
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:26:34 -0400
-Received: from relay.virtuozzo.com ([130.117.225.111])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoYK-0000wq-Az
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wPoQx-0005YE-AQ
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:26:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
- Content-Type; bh=pH2FUvyhi+mHii53FUt0c0qNEmmfH14JumiyrbnsBpg=; b=ELS855UPMeCn
- UBuRhLm6puBh2wmA79bRrg98JTn61zJGYGadVirHaAm7zC3hU1MHkWUsK1i2dgVmkdBvDghxbYP7Y
- KBQ5FGMwJ5CvqwRVgvstZ7IqqTuNoLrtDCWHSIa5hwERVDMjYPmMIoRbckRhOi++aVUlNemqhmw6K
- YcPvpF5oCyZpj1b3CDirWEn/AQffYIVl91lx0jh24i+RNVodiCTxVU4WU9GCb/nc2m6Vba3Gzs/Ki
- WpmQNvPxU3BgdEOAaqycWIUOsAfJBypxzyqI6dipRE8T+w8U312FgF9ku79OHuMmxEBDF1l8RedL+
- sXQ7JEFsvPmBo/zSzoJkMA==;
-Received: from ch-demo-asa.virtuozzo.com ([130.117.225.8]
- helo=iris.astra-academy.ru)
- by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <den@openvz.org>) id 1wPoNa-003Cdo-1e;
- Wed, 20 May 2026 23:26:28 +0200
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoYI-00077d-FE
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779312843;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=3BsNqJu1R7ooa5iYn9h/mr67f7YjQnrlrdINHf4i/e0=;
+ b=QpFvS518iJH6ZfaRGHn9kUzFCQTQX2x7oagElOWPlnc6PmQR5uN6e9g+fORoatK24Yzxhf
+ x3OjvnYSZHW8E6BXxbvBdSdGANKC5lWcXqLWYHeVeBBh4b1+SEiJjpAhGwHgGi06wZvmLa
+ DNCcny4HMCa3/G28bU1Wd0tc06qMQlw=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-385-GN8dE76jMFG9OyZ80MoURg-1; Wed, 20 May 2026 17:34:02 -0400
+X-MC-Unique: GN8dE76jMFG9OyZ80MoURg-1
+X-Mimecast-MFC-AGG-ID: GN8dE76jMFG9OyZ80MoURg_1779312841
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-8c3bdb60dadso24075756d6.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 14:34:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1779312841; x=1779917641; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=3BsNqJu1R7ooa5iYn9h/mr67f7YjQnrlrdINHf4i/e0=;
+ b=XZYbP40GV1zDCdyndjMRvpsuSI5A6GHuDsktJ1+owFJYtMaQPqoEjuYpWUK/U2qqU0
+ jJwDQOaQ6VupKXOCNaSS05htIodSJnu13QUJjHBiN+BR66LpPE4lwDcI6L4jSxTtjoa4
+ FCj3sWa1ZxzFhQeBt2MTH5ZeKlfpkJqUzSqKtYiYG5lhwxU+oXIXH3G4k4sMIGAAfiXv
+ Uu/BOBFL/ahXky2B2i0Piqioig149s8CsuI1LxqfpllEO6DTa66KzXGVQex4L/ylAyWz
+ 8vbUZ6cJais+GfBHXiF1ABBwAP0bZTVWa1Kfp1XIVcH74ZlDk8BOQt2pvfI+Exs60O4w
+ UTnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779312841; x=1779917641;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3BsNqJu1R7ooa5iYn9h/mr67f7YjQnrlrdINHf4i/e0=;
+ b=RFPOQpFv7u1DHFktuT6pKrj36fhn95uUzxXS/KGTO5V3rjneeUR7Lij2BuQH+wxlUl
+ YBalCcHofEH9LkKzehYmKgDEXbh46olFGJyGxxxIico88rdXlK9fbk2j4NxPUDi+JMTK
+ YLF9rRsXHWA7twetc4Hd10qejChbKaWlw/olxL8VRfHk/iu+hG57eoWL4mWlgZrXGkMm
+ 8upRw6sj/TRqfDxTSk8lOMNJnHoX9D+qovpIygnYky0tzDc+3gskTg9UfQExC79yGmAI
+ EfNqwZQMHWT6M4c0gEZUmz1e5RltIhD5vfyIOf40RoKigTghtqu9/+i0wjjKSvxEu7iy
+ nEag==
+X-Gm-Message-State: AOJu0Yzf4Xk9w+mHZNut2hD4rATlA2aV2d3OpjgHdxH0eniXbNalDS4V
+ EL6sYr2XU576Xck9YnwzbclOffYw80fbOV2czjajqWxDoExkyLoC2OZs+AKIysSRcjb//4Oz9s3
+ AXTsGzNs7y53QzufQATkIx86HgDLUk1ORfDOIyFJRV7rXsFhJNJVGfhk0rgGfpOd4+ZkzCMeaJV
+ 3p1M/b58dBnf7pTQkalqfCANRXeNCgaAoW32GhIQ==
+X-Gm-Gg: Acq92OHSwUyL8G/gwQTNQHCmt3tbrwLPRir2rAZOJZ1zCBqJXoTGWxjIYe21k3q3+r5
+ uJjcKYzjyzAk7aBI9YPxWo+gyaJ56ao2PP5iacBShbvUKwfohHcc/AURJkI6Z++VynDFstVM/xT
+ nM/GjWgzjmlL5jaa2N07Ec937smYPPXm+cHPbOOQ764XgOuFADZLVBvIY4uDI9L50Y3XY46B2hi
+ H9CFxf7vvuoEyZpH6K1tqQuJujJwn+Lux0LHDppYXJoVSOMUrvkuPf8HE8jSgd341m2OQLZRtgV
+ WNAkgOI0PYKke0+oPBxv0eqcSJRkrbAjVuBw9ibO1kgkW+2D6sWGUIr1f2GWA6Yvh9A1Pw2BwKX
+ 9z9vQ06RlnDlDX/PxlJ89eMkUzJ1tQq5e3Ha+EJLpw1jK
+X-Received: by 2002:ad4:5ce8:0:b0:8cc:d61:3559 with SMTP id
+ 6a1803df08f44-8cc6e6b2b46mr3461616d6.46.1779312841301; 
+ Wed, 20 May 2026 14:34:01 -0700 (PDT)
+X-Received: by 2002:ad4:5ce8:0:b0:8cc:d61:3559 with SMTP id
+ 6a1803df08f44-8cc6e6b2b46mr3460946d6.46.1779312840714; 
+ Wed, 20 May 2026 14:34:00 -0700 (PDT)
+Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8ca360b362fsm133062716d6.22.2026.05.20.14.33.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 20 May 2026 14:33:59 -0700 (PDT)
+From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: den@openvz.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 2/2] tests/unit: add test-envlist covering setenv/unsetenv
- name matching
-Date: Wed, 20 May 2026 23:26:28 +0200
-Message-ID: <20260520212628.479772-3-den@openvz.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260520212628.479772-1-den@openvz.org>
-References: <20260520212628.479772-1-den@openvz.org>
+Cc: Fabiano Rosas <farosas@suse.de>,
+	Peter Xu <peterx@redhat.com>
+Subject: [PULL 00/29] Next patches
+Date: Wed, 20 May 2026 17:33:28 -0400
+Message-ID: <20260520213357.40646-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: softfail client-ip=130.117.225.111; envelope-from=den@openvz.org;
- helo=relay.virtuozzo.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_SOFTFAIL=0.665 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,250 +111,112 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  "Denis V. Lunev" <den@openvz.org>
-From:  "Denis V. Lunev" via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-util/envlist had no test coverage. Add tests/unit/test-envlist
-exercising the public envlist API and pinning down the prefix-match
-hazard fixed in the previous commit:
+The following changes since commit 343a88cb022e5cdb1d839a0499f9a33f8614598d:
 
-  - envlist_unsetenv("FOO") must not remove an entry named "FOOBAR";
-  - envlist_setenv("FOO=...") must not replace an existing "FOOBAR=..."
-    entry placed earlier in the list (envlist_setenv() inserts at the
-    head, so the first prefix match wins under the old strncmp rule).
+  Merge tag 'firmware-20260519-pull-request' of https://gitlab.com/kraxel/qemu into staging (2026-05-19 09:28:07 -0400)
 
-Also cover the rest of the contract: head-insertion order observed
-through envlist_to_environ(), replacement of an existing variable,
-the count argument of envlist_to_environ(), and the documented EINVAL
-paths (NULL inputs, setenv without '=', unsetenv with '=').
+are available in the Git repository at:
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
----
- tests/unit/meson.build    |   1 +
- tests/unit/test-envlist.c | 196 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 197 insertions(+)
- create mode 100644 tests/unit/test-envlist.c
+  https://gitlab.com/peterx/qemu.git tags/next-pull-request
 
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index de64f9501f..01cc540a45 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -49,6 +49,7 @@ tests = {
-   'test-qapi-util': [],
-   'test-interval-tree': [],
-   'test-fifo': [],
-+  'test-envlist': [],
- }
- 
- if have_system or have_tools
-diff --git a/tests/unit/test-envlist.c b/tests/unit/test-envlist.c
-new file mode 100644
-index 0000000000..53813dd4de
---- /dev/null
-+++ b/tests/unit/test-envlist.c
-@@ -0,0 +1,196 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * envlist tests
-+ *
-+ * Copyright 2026 Virtuozzo International GmbH
-+ *
-+ * Authors:
-+ *  Denis V. Lunev <den@openvz.org>
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/envlist.h"
-+
-+static void free_environ(char **env)
-+{
-+    char **p;
-+
-+    for (p = env; *p != NULL; p++) {
-+        g_free(*p);
-+    }
-+    g_free(env);
-+}
-+
-+static const char *find_env(char **env, const char *name)
-+{
-+    size_t name_len = strlen(name);
-+    char **p;
-+
-+    for (p = env; *p != NULL; p++) {
-+        if (strncmp(*p, name, name_len) == 0 && (*p)[name_len] == '=') {
-+            return *p + name_len + 1;
-+        }
-+    }
-+    return NULL;
-+}
-+
-+static void test_envlist_basic(void)
-+{
-+    envlist_t *el = envlist_create();
-+    char **env;
-+    size_t count;
-+
-+    /* empty list */
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 0);
-+    g_assert_null(env[0]);
-+    free_environ(env);
-+
-+    /* add */
-+    g_assert_cmpint(envlist_setenv(el, "A=1"), ==, 0);
-+    g_assert_cmpint(envlist_setenv(el, "B=2"), ==, 0);
-+
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 2);
-+    g_assert_cmpstr(find_env(env, "A"), ==, "1");
-+    g_assert_cmpstr(find_env(env, "B"), ==, "2");
-+    free_environ(env);
-+
-+    /* replace */
-+    g_assert_cmpint(envlist_setenv(el, "A=42"), ==, 0);
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 2);
-+    g_assert_cmpstr(find_env(env, "A"), ==, "42");
-+    g_assert_cmpstr(find_env(env, "B"), ==, "2");
-+    free_environ(env);
-+
-+    /* unset existing */
-+    g_assert_cmpint(envlist_unsetenv(el, "A"), ==, 0);
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 1);
-+    g_assert_null(find_env(env, "A"));
-+    g_assert_cmpstr(find_env(env, "B"), ==, "2");
-+    free_environ(env);
-+
-+    /* unset non-existing is a no-op success */
-+    g_assert_cmpint(envlist_unsetenv(el, "NOPE"), ==, 0);
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 1);
-+    free_environ(env);
-+
-+    envlist_free(el);
-+}
-+
-+/*
-+ * envlist_setenv() inserts at the head; envlist_to_environ() walks
-+ * head-to-tail, so the last setenv comes out first.
-+ */
-+static void test_envlist_head_insertion_order(void)
-+{
-+    envlist_t *el = envlist_create();
-+    char **env;
-+    size_t count;
-+
-+    g_assert_cmpint(envlist_setenv(el, "A=1"), ==, 0);
-+    g_assert_cmpint(envlist_setenv(el, "B=2"), ==, 0);
-+    g_assert_cmpint(envlist_setenv(el, "C=3"), ==, 0);
-+
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 3);
-+    g_assert_cmpstr(env[0], ==, "C=3");
-+    g_assert_cmpstr(env[1], ==, "B=2");
-+    g_assert_cmpstr(env[2], ==, "A=1");
-+    g_assert_null(env[3]);
-+
-+    free_environ(env);
-+    envlist_free(el);
-+}
-+
-+static void test_envlist_einval(void)
-+{
-+    envlist_t *el = envlist_create();
-+
-+    /* NULL list */
-+    g_assert_cmpint(envlist_setenv(NULL, "A=1"), ==, EINVAL);
-+    g_assert_cmpint(envlist_unsetenv(NULL, "A"), ==, EINVAL);
-+
-+    /* NULL string */
-+    g_assert_cmpint(envlist_setenv(el, NULL), ==, EINVAL);
-+    g_assert_cmpint(envlist_unsetenv(el, NULL), ==, EINVAL);
-+
-+    /* setenv: missing '=' */
-+    g_assert_cmpint(envlist_setenv(el, "NOEQ"), ==, EINVAL);
-+
-+    /* unsetenv: name must not contain '=' */
-+    g_assert_cmpint(envlist_unsetenv(el, "A=B"), ==, EINVAL);
-+
-+    envlist_free(el);
-+}
-+
-+/*
-+ * Regression: envlist_unsetenv("FOO") must not remove an entry named
-+ * "FOOBAR" -- the previous strncmp(entry, name, strlen(name)) lookup
-+ * prefix-matched. To trigger the bug, the longer-named entry has to
-+ * be ahead of the target in the list: envlist_setenv() inserts at
-+ * the head, so we add FOO first and FOOBAR last.
-+ */
-+static void test_envlist_unsetenv_no_prefix_match(void)
-+{
-+    envlist_t *el = envlist_create();
-+    char **env;
-+    size_t count;
-+
-+    g_assert_cmpint(envlist_setenv(el, "FOO=y"), ==, 0);
-+    g_assert_cmpint(envlist_setenv(el, "FOOBAR=x"), ==, 0);
-+
-+    g_assert_cmpint(envlist_unsetenv(el, "FOO"), ==, 0);
-+
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 1);
-+    g_assert_cmpstr(find_env(env, "FOOBAR"), ==, "x");
-+    g_assert_null(find_env(env, "FOO"));
-+
-+    free_environ(env);
-+    envlist_free(el);
-+}
-+
-+/*
-+ * envlist_setenv() must not replace a prior FOOBAR=... entry when
-+ * setting FOO=... The pre-fix code happened to be safe here only
-+ * because it included the trailing '=' byte in its strncmp length;
-+ * this test pins down the post-fix contract that the name boundary
-+ * is a property of the entry, not of the encoded form.
-+ */
-+static void test_envlist_setenv_no_prefix_match(void)
-+{
-+    envlist_t *el = envlist_create();
-+    char **env;
-+    size_t count;
-+
-+    g_assert_cmpint(envlist_setenv(el, "FOOBAR=x"), ==, 0);
-+    g_assert_cmpint(envlist_setenv(el, "FOO=y"), ==, 0);
-+
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 2);
-+    g_assert_cmpstr(find_env(env, "FOOBAR"), ==, "x");
-+    g_assert_cmpstr(find_env(env, "FOO"), ==, "y");
-+
-+    free_environ(env);
-+    envlist_free(el);
-+}
-+
-+int main(int argc, char *argv[])
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    g_test_add_func("/envlist/basic", test_envlist_basic);
-+    g_test_add_func("/envlist/head_insertion_order",
-+                    test_envlist_head_insertion_order);
-+    g_test_add_func("/envlist/einval", test_envlist_einval);
-+    g_test_add_func("/envlist/unsetenv_no_prefix_match",
-+                    test_envlist_unsetenv_no_prefix_match);
-+    g_test_add_func("/envlist/setenv_no_prefix_match",
-+                    test_envlist_setenv_no_prefix_match);
-+
-+    return g_test_run();
-+}
+for you to fetch changes up to 7a4b1c333ffe8358664430e1f5a676e1dee7175c:
+
+  MAINTAINERS: Update email of Yong Huang (2026-05-20 17:01:37 -0400)
+
+----------------------------------------------------------------
+Migration and mem pull request
+
+- Peter's fix on 2nd migration crashing if the 1st migration cancelled early
+- Phil's patch to remove VMS_MULTIPLY_ELEMENTS across tree
+- Peter's fix on possible division by zero in recent query-migrate change
+- Aadeshveer's cleanup for current_migration references
+- Fabiano's fix of auto-converge test
+- Maciej's maintainer file update for CPR
+- Fabiano's migration qtest refactor to stick with -incoming defer
+- Bin's cleanup / fix series all over migration (part of)
+- hongmianquan's cpr optimization to use ghash for fd bookkeeping
+- Yong's email address update
+
+----------------------------------------------------------------
+
+Aadeshveer Singh (1):
+  migration: Replace current_migration with migrate_get_current()
+
+Bin Guo (6):
+  migration/global_state: replace strcpy("") with explicit NUL
+    termination
+  migration/vmstate: avoid per-element heap churn in vmsd ptr marker
+    field
+  migration/savevm: use stack-allocated bitmap in
+    configuration_validate_capabilities
+  migration/multifd: fix off-by-one in recv channel ID validation
+  migration/multifd: cache migrate_multifd_channels() in send/recv hot
+    paths
+  migration/multifd: cache channel count in multifd_send_sync_main
+
+Fabiano Rosas (16):
+  tests/qtest/migration: Fix auto-converge test
+  tests/qtest/migration: Move cpr transfer logic into cpr-tests.c
+  tests/qtest/migration: Make file-tests defer by default
+  tests/qtest/migration: Set file URI by default
+  tests/qtest/migration: Group unix migration tests
+  tests/qtest/migration: Use precopy_unix_common for ignore-shared test
+  tests/qtest/migration: Use a default TCP URI for precopy
+  tests/qtest/migration: Defer by default in precopy_common
+  tests/qtest/migration: Set compression method in compression-tests
+  tests/qtest/migration: Remove multifd compression hook
+  tests/qtest/migration: Use defer for all tests
+  tests/qtest/migration: Use defer for cpr-tests
+  tests/qtest/migration: Use defer for auto-converge
+  tests/qtest/migration: Use defer in dirty_limit test
+  tests/qtest/migration: Stop passing URI into migrate_start
+  tests/qtest/migration: Unify URIs
+
+Hyman Huang (1):
+  MAINTAINERS: Update email of Yong Huang
+
+Maciej S. Szmigiero (1):
+  MAINTAINERS: Make Maciej CPR maintainer
+
+Peter Xu (2):
+  migration: Fix crash on second migration when cancel early
+  migration: Fix possible division by zero on calc expected downtime
+
+Philippe Mathieu-Daudé (1):
+  migration: Remove VMS_MULTIPLY_ELEMENTS and VMSTATE_VARRAY_MULTIPLY()
+
+hongmianquan (1):
+  migration/cpr: use hashtable for cpr fds
+
+ MAINTAINERS                               |   5 +-
+ include/migration/cpr.h                   |   1 +
+ include/migration/vmstate.h               |  22 +---
+ migration/migration.h                     |   5 +
+ tests/qtest/migration/framework.h         |  26 ++--
+ migration/cpr-transfer.c                  |  10 ++
+ migration/cpr.c                           | 116 ++++++++++++++---
+ migration/global_state.c                  |   2 +-
+ migration/migration.c                     |  57 +++++++--
+ migration/multifd.c                       |  27 ++--
+ migration/savevm.c                        |   5 +-
+ migration/vmstate.c                       |  45 +++----
+ tests/qtest/migration/colo-tests.c        |  16 +--
+ tests/qtest/migration/compression-tests.c |  34 ++---
+ tests/qtest/migration/cpr-tests.c         |  85 ++++++++++---
+ tests/qtest/migration/file-tests.c        |  56 +--------
+ tests/qtest/migration/framework.c         |  91 +++++---------
+ tests/qtest/migration/misc-tests.c        |  62 ++++------
+ tests/qtest/migration/precopy-tests.c     | 144 ++++------------------
+ tests/qtest/migration/tls-tests.c         | 110 ++---------------
+ rust/bindings/migration-sys/lib.rs        |   8 --
+ rust/migration/src/vmstate.rs             |   3 +-
+ rust/tests/tests/vmstate_tests.rs         |  55 ---------
+ 23 files changed, 396 insertions(+), 589 deletions(-)
+
 -- 
-2.51.0
+2.53.0
 
 
