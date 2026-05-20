@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B654ACD5BAB
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 06:50:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45C74CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 06:50:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPaje-00032f-S0; Wed, 20 May 2026 02:48:54 -0400
+	id 1wPaky-0004IV-JR; Wed, 20 May 2026 02:50:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wPajZ-0002xD-Vu; Wed, 20 May 2026 02:48:50 -0400
+ id 1wPak2-0003aL-DA; Wed, 20 May 2026 02:49:24 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wPajU-0001S3-W1; Wed, 20 May 2026 02:48:49 -0400
+ id 1wPajw-0001TV-QH; Wed, 20 May 2026 02:49:17 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64K6lnba096590
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64K6lnbc096590
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
  Wed, 20 May 2026 15:48:16 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=np+DDHtPXccYUqkjVcTnB/XI0jqPO74kxFNXv7P7G5A=; 
+DKIM-Signature: a=rsa-sha256; bh=f4nMAQnz85jIi6jdDFcVx4lxK79NORQbClAxHDODkiQ=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1779259696; v=1;
- b=UwG9ilZVjwzm/Sym8PIMQhY9PwMLXiw3iF1kPSw89oKI9/OoDPv41jnYUFS5B7Qf
- SkTPikqlyG5/k1wwQJhf1Al0iYMWCkjZx0KhsxZ7W11r6OQArSvv5Q3pK3WbK8jL
- PjvUliZgSZNlka9Z2GO42H2Z9H0tu8thJ7gIY0HpYzb5c8LHQ7XXacUAFhitVW53
- 45JaOf2uBFsHLAnQJSiHjzBQuOx+MJz39mXW19Zx/jU4+NUI+aB7p2V95SkbjNz6
- ttDV9IlQNheZWPxlMpZQBt+ukjB+oqfKnmohXhhZYbFQ2QcW25fMZ6OiMugD5qHj
- Ez8FA6bxjtXbDlxOa1FAtw==
+ s=rs20250326; t=1779259697; v=1;
+ b=RGXSAvTuPvf5H2W5E/0Vc0cdFsbl7fXk0UC8V3c1d7RRZzB/L8GL4lhx4vLJmUAA
+ G2iKzeNMUrJWLJhxyN5O5KOCFmZh1hk5hwTLlavjMGSShRjDOFrkg5i4BehV3kOm
+ sc5lutMq3LJmG0nyEOaIQLycnEa8aJ+5q5DKTJJM9jnPJCnRAT3xiyFifgyEA3iP
+ 13sF0J45qp0sxiKmLuAKpk1SfhUziLNOZXI3p6w3L1eHZDsMA4cU606F3AqzT9Tj
+ GPsQA/1h6Nfh5DOXGwH7Oc906/YUJI6qigjTm5PxAVR3w6ePQkQTwhVLX620Phc9
+ URfOpT4EuRLVoP0OlZPqrw==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 20 May 2026 15:47:56 +0900
-Subject: [PATCH v3 13/29] hw/input/ps2: Use Linux key codes
+Date: Wed, 20 May 2026 15:47:58 +0900
+Subject: [PATCH v3 15/29] hw/m68k/next-kbd: Use Linux key codes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260520-input-v3-13-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260520-input-v3-15-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260520-input-v3-0-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260520-input-v3-0-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -58,13 +58,13 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-16047
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7874;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5735;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=Ae9vuWLzKV99hiDeipjG2FLc+ZAAXG2DeDzyFVZrokg=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZvpJJDzb/dn6vv8n7ZqPf+gFqyscUTjtMZRwwE9l4RX
- tb7+1FaRykLgxgXg6yYIktK0W5ujejaT4UJ8S0wc1iZQIYwcHEKwEQunWb4HzfDyu/yikRF+6/7
- vujE3Zxw5ZhK1puyf38mLluxmvU6/09Ghi03fka8u5z3rmlC9allGT+cg9cVCVVcCn3ZJNyRneJ
- 3gBMA
+ bh=iyLiD2EoMRDRtaROtRWs8sE4KAkgfKNGzp5wMpy28GQ=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZvpLKcxfQNTz9y7zptG7KwMiFlUvVu0yeRtz4LVnG08
+ V1fVSrYUcrCIMbFICumyJJStJtbI7r2U2FCfAvMHFYmkCEMXJwCMJG0HkaGq38nPdpR57firNd/
+ 7Y57v+M/8x84+s16aYzBkh8JShESPxn++2WvkPGZefpxYROnG5+gx1+b1gu/1l29t3Xpb9Zj4WY
+ TuAA=
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -96,182 +96,171 @@ representations.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/input/ps2.c        | 51 +++++++++++++++++++++++++--------------------------
- hw/input/trace-events |  2 +-
- 2 files changed, 26 insertions(+), 27 deletions(-)
+ hw/m68k/next-kbd.c | 118 ++++++++++++++++++++++++++---------------------------
+ 1 file changed, 59 insertions(+), 59 deletions(-)
 
-diff --git a/hw/input/ps2.c b/hw/input/ps2.c
-index 93c3c7372054..f2523ff4bc78 100644
---- a/hw/input/ps2.c
-+++ b/hw/input/ps2.c
-@@ -28,6 +28,7 @@
+diff --git a/hw/m68k/next-kbd.c b/hw/m68k/next-kbd.c
+index 7efbd806b7c8..7be5ab2fb798 100644
+--- a/hw/m68k/next-kbd.c
++++ b/hw/m68k/next-kbd.c
+@@ -31,6 +31,7 @@
+ #include "qemu/log.h"
  #include "hw/core/sysbus.h"
- #include "hw/input/ps2.h"
- #include "migration/vmstate.h"
+ #include "hw/m68k/next-cube.h"
 +#include "standard-headers/linux/input-event-codes.h"
  #include "ui/console.h"
- #include "ui/input.h"
- #include "system/reset.h"
-@@ -123,20 +124,20 @@ static uint8_t translate_table[256] = {
-     0xf8, 0xf9, 0xfa, 0xfb, 0xfc, 0xfd, 0xfe, 0xff,
+ #include "migration/vmstate.h"
+ #include "qom/object.h"
+@@ -165,59 +166,59 @@ static const MemoryRegionOps kbd_ops = {
+     .endianness = DEVICE_BIG_ENDIAN,
  };
  
--static unsigned int ps2_modifier_bit(QKeyCode key)
-+static unsigned int ps2_modifier_bit(unsigned int key)
- {
-     switch (key) {
--    case Q_KEY_CODE_CTRL:
-+    case KEY_LEFTCTRL:
-         return MOD_CTRL_L;
--    case Q_KEY_CODE_CTRL_R:
-+    case KEY_RIGHTCTRL:
-         return MOD_CTRL_R;
--    case Q_KEY_CODE_SHIFT:
-+    case KEY_LEFTSHIFT:
-         return MOD_SHIFT_L;
--    case Q_KEY_CODE_SHIFT_R:
-+    case KEY_RIGHTSHIFT:
-         return MOD_SHIFT_R;
--    case Q_KEY_CODE_ALT:
-+    case KEY_LEFTALT:
-         return MOD_ALT_L;
--    case Q_KEY_CODE_ALT_R:
-+    case KEY_RIGHTALT:
-         return MOD_ALT_R;
-     default:
-         return 0;
-@@ -313,7 +314,6 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
-                                QemuInputEvent *evt)
- {
-     PS2KbdState *s = (PS2KbdState *)dev;
--    int qcode;
-     uint16_t keycode = 0;
-     int mod;
+-static const int qcode_to_nextkbd_keycode[] = {
+-    [Q_KEY_CODE_ESC]           = 0x49,
+-    [Q_KEY_CODE_1]             = 0x4a,
+-    [Q_KEY_CODE_2]             = 0x4b,
+-    [Q_KEY_CODE_3]             = 0x4c,
+-    [Q_KEY_CODE_4]             = 0x4d,
+-    [Q_KEY_CODE_5]             = 0x50,
+-    [Q_KEY_CODE_6]             = 0x4f,
+-    [Q_KEY_CODE_7]             = 0x4e,
+-    [Q_KEY_CODE_8]             = 0x1e,
+-    [Q_KEY_CODE_9]             = 0x1f,
+-    [Q_KEY_CODE_0]             = 0x20,
+-    [Q_KEY_CODE_MINUS]         = 0x1d,
+-    [Q_KEY_CODE_EQUAL]         = 0x1c,
+-    [Q_KEY_CODE_BACKSPACE]     = 0x1b,
+-
+-    [Q_KEY_CODE_Q]             = 0x42,
+-    [Q_KEY_CODE_W]             = 0x43,
+-    [Q_KEY_CODE_E]             = 0x44,
+-    [Q_KEY_CODE_R]             = 0x45,
+-    [Q_KEY_CODE_T]             = 0x48,
+-    [Q_KEY_CODE_Y]             = 0x47,
+-    [Q_KEY_CODE_U]             = 0x46,
+-    [Q_KEY_CODE_I]             = 0x06,
+-    [Q_KEY_CODE_O]             = 0x07,
+-    [Q_KEY_CODE_P]             = 0x08,
+-    [Q_KEY_CODE_RET]           = 0x2a,
+-    [Q_KEY_CODE_A]             = 0x39,
+-    [Q_KEY_CODE_S]             = 0x3a,
+-
+-    [Q_KEY_CODE_D]             = 0x3b,
+-    [Q_KEY_CODE_F]             = 0x3c,
+-    [Q_KEY_CODE_G]             = 0x3d,
+-    [Q_KEY_CODE_H]             = 0x40,
+-    [Q_KEY_CODE_J]             = 0x3f,
+-    [Q_KEY_CODE_K]             = 0x3e,
+-    [Q_KEY_CODE_L]             = 0x2d,
+-    [Q_KEY_CODE_SEMICOLON]     = 0x2c,
+-    [Q_KEY_CODE_APOSTROPHE]    = 0x2b,
+-    [Q_KEY_CODE_GRAVE_ACCENT]  = 0x26,
+-    [Q_KEY_CODE_Z]             = 0x31,
+-    [Q_KEY_CODE_X]             = 0x32,
+-    [Q_KEY_CODE_C]             = 0x33,
+-    [Q_KEY_CODE_V]             = 0x34,
+-
+-    [Q_KEY_CODE_B]             = 0x35,
+-    [Q_KEY_CODE_N]             = 0x37,
+-    [Q_KEY_CODE_M]             = 0x36,
+-    [Q_KEY_CODE_COMMA]         = 0x2e,
+-    [Q_KEY_CODE_DOT]           = 0x2f,
+-    [Q_KEY_CODE_SLASH]         = 0x30,
+-
+-    [Q_KEY_CODE_SPC]           = 0x38,
++static const int linux_to_nextkbd_keycode[] = {
++    [KEY_ESC]        = 0x49,
++    [KEY_1]          = 0x4a,
++    [KEY_2]          = 0x4b,
++    [KEY_3]          = 0x4c,
++    [KEY_4]          = 0x4d,
++    [KEY_5]          = 0x50,
++    [KEY_6]          = 0x4f,
++    [KEY_7]          = 0x4e,
++    [KEY_8]          = 0x1e,
++    [KEY_9]          = 0x1f,
++    [KEY_0]          = 0x20,
++    [KEY_MINUS]      = 0x1d,
++    [KEY_EQUAL]      = 0x1c,
++    [KEY_BACKSPACE]  = 0x1b,
++
++    [KEY_Q]          = 0x42,
++    [KEY_W]          = 0x43,
++    [KEY_E]          = 0x44,
++    [KEY_R]          = 0x45,
++    [KEY_T]          = 0x48,
++    [KEY_Y]          = 0x47,
++    [KEY_U]          = 0x46,
++    [KEY_I]          = 0x06,
++    [KEY_O]          = 0x07,
++    [KEY_P]          = 0x08,
++    [KEY_ENTER]      = 0x2a,
++    [KEY_A]          = 0x39,
++    [KEY_S]          = 0x3a,
++
++    [KEY_D]          = 0x3b,
++    [KEY_F]          = 0x3c,
++    [KEY_G]          = 0x3d,
++    [KEY_H]          = 0x40,
++    [KEY_J]          = 0x3f,
++    [KEY_K]          = 0x3e,
++    [KEY_L]          = 0x2d,
++    [KEY_SEMICOLON]  = 0x2c,
++    [KEY_APOSTROPHE] = 0x2b,
++    [KEY_GRAVE]      = 0x26,
++    [KEY_Z]          = 0x31,
++    [KEY_X]          = 0x32,
++    [KEY_C]          = 0x33,
++    [KEY_V]          = 0x34,
++
++    [KEY_B]          = 0x35,
++    [KEY_N]          = 0x37,
++    [KEY_M]          = 0x36,
++    [KEY_COMMA]      = 0x2e,
++    [KEY_DOT]        = 0x2f,
++    [KEY_SLASH]      = 0x30,
++
++    [KEY_SPACE]      = 0x38,
+ };
  
-@@ -324,10 +324,9 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+ static void nextkbd_put_keycode(NextKBDState *s, int keycode)
+@@ -246,15 +247,14 @@ static void nextkbd_event(DeviceState *dev, QemuConsole *src,
+                           QemuInputEvent *evt)
+ {
+     NextKBDState *s = NEXTKBD(dev);
+-    int qcode, keycode;
++    int keycode;
  
-     qemu_system_wakeup_request(QEMU_WAKEUP_REASON_OTHER, NULL);
-     assert(evt->type == INPUT_EVENT_KIND_KEY);
 -    qcode = qemu_input_linux_to_qcode(evt->key.key);
- 
--    mod = ps2_modifier_bit(qcode);
--    trace_ps2_keyboard_event(s, qcode, evt->key.down, mod,
-+    mod = ps2_modifier_bit(evt->key.key);
-+    trace_ps2_keyboard_event(s, evt->key.key, evt->key.down, mod,
-                              s->modifiers, s->scancode_set, s->translate);
-     if (evt->key.down) {
-         s->modifiers |= mod;
-@@ -336,7 +335,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+-    if (qcode >= ARRAY_SIZE(qcode_to_nextkbd_keycode)) {
++    if (evt->key.key >= ARRAY_SIZE(linux_to_nextkbd_keycode)) {
+         return;
      }
  
-     if (s->scancode_set == 1) {
--        if (qcode == Q_KEY_CODE_PAUSE) {
-+        if (evt->key.key == KEY_PAUSE) {
-             if (s->modifiers & (MOD_CTRL_L | MOD_CTRL_R)) {
-                 if (evt->key.down) {
-                     ps2_put_keycode(s, 0xe0);
-@@ -354,7 +353,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
-                     ps2_put_keycode(s, 0xc5);
-                 }
-             }
--        } else if (qcode == Q_KEY_CODE_PRINT) {
-+        } else if (evt->key.key == KEY_SYSRQ) {
-             if (s->modifiers & MOD_ALT_L) {
-                 if (evt->key.down) {
-                     ps2_put_keycode(s, 0xb8);
-@@ -401,12 +400,12 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
-                     ps2_put_keycode(s, 0xaa);
-                 }
-             }
--        } else if ((qcode == Q_KEY_CODE_LANG1 || qcode == Q_KEY_CODE_LANG2)
-+        } else if ((evt->key.key == KEY_HANGEUL || evt->key.key == KEY_HANJA)
-                    && !evt->key.down) {
-             /* Ignore release for these keys */
+     /* Shift key currently has no keycode, so handle separately */
+-    if (qcode == Q_KEY_CODE_SHIFT) {
++    if (evt->key.key == KEY_LEFTSHIFT) {
+         if (evt->key.down) {
+             s->shift |= KD_LSHIFT;
          } else {
--            if (qcode < qemu_input_map_qcode_to_atset1_len) {
--                keycode = qemu_input_map_qcode_to_atset1[qcode];
-+            if (evt->key.key < qemu_input_map_linux_to_atset1_len) {
-+                keycode = qemu_input_map_linux_to_atset1[evt->key.key];
-             }
-             if (keycode) {
-                 if (keycode & 0xff00) {
-@@ -418,11 +417,11 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
-                 ps2_put_keycode(s, keycode & 0xff);
-             } else {
-                 qemu_log_mask(LOG_UNIMP,
--                              "ps2: ignoring key with qcode %d\n", qcode);
-+                              "ps2: ignoring key %u\n", evt->key.key);
-             }
-         }
-     } else if (s->scancode_set == 2) {
--        if (qcode == Q_KEY_CODE_PAUSE) {
-+        if (evt->key.key == KEY_PAUSE) {
-             if (s->modifiers & (MOD_CTRL_L | MOD_CTRL_R)) {
-                 if (evt->key.down) {
-                     ps2_put_keycode(s, 0xe0);
-@@ -443,7 +442,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
-                     ps2_put_keycode(s, 0x77);
-                 }
-             }
--        } else if (qcode == Q_KEY_CODE_PRINT) {
-+        } else if (evt->key.key == KEY_SYSRQ) {
-             if (s->modifiers & MOD_ALT_L) {
-                 if (evt->key.down) {
-                     ps2_put_keycode(s, 0xf0);
-@@ -499,12 +498,12 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
-                     ps2_put_keycode(s, 0x12);
-                 }
-             }
--        } else if ((qcode == Q_KEY_CODE_LANG1 || qcode == Q_KEY_CODE_LANG2) &&
-+        } else if ((evt->key.key == KEY_HANGEUL || evt->key.key == KEY_HANJA) &&
-                    !evt->key.down) {
-             /* Ignore release for these keys */
-         } else {
--            if (qcode < qemu_input_map_qcode_to_atset2_len) {
--                keycode = qemu_input_map_qcode_to_atset2[qcode];
-+            if (evt->key.key < qemu_input_map_linux_to_atset2_len) {
-+                keycode = qemu_input_map_linux_to_atset2[evt->key.key];
-             }
-             if (keycode) {
-                 if (keycode & 0xff00) {
-@@ -516,12 +515,12 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
-                 ps2_put_keycode(s, keycode & 0xff);
-             } else {
-                 qemu_log_mask(LOG_UNIMP,
--                              "ps2: ignoring key with qcode %d\n", qcode);
-+                              "ps2: ignoring key %u\n", evt->key.key);
-             }
-         }
-     } else if (s->scancode_set == 3) {
--        if (qcode < qemu_input_map_qcode_to_atset3_len) {
--            keycode = qemu_input_map_qcode_to_atset3[qcode];
-+        if (evt->key.key < qemu_input_map_linux_to_atset3_len) {
-+            keycode = qemu_input_map_linux_to_atset3[evt->key.key];
-         }
-         if (keycode) {
-             /* FIXME: break code should be configured on a key by key basis */
-@@ -531,7 +530,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
-             ps2_put_keycode(s, keycode);
-         } else {
-             qemu_log_mask(LOG_UNIMP,
--                          "ps2: ignoring key with qcode %d\n", qcode);
-+                          "ps2: ignoring key %u\n", evt->key.key);
+@@ -262,7 +262,7 @@ static void nextkbd_event(DeviceState *dev, QemuConsole *src,
          }
      }
- }
-diff --git a/hw/input/trace-events b/hw/input/trace-events
-index 1484625565b5..43900914be28 100644
---- a/hw/input/trace-events
-+++ b/hw/input/trace-events
-@@ -30,7 +30,7 @@ pckbd_kbd_write_data(uint64_t val) "0x%02"PRIx64
  
- # ps2.c
- ps2_put_keycode(void *opaque, int keycode) "%p keycode 0x%02x"
--ps2_keyboard_event(void *opaque, int qcode, int down, unsigned int modifier, unsigned int modifiers, int set, int xlate) "%p qcode %d down %d modifier 0x%x modifiers 0x%x set %d xlate %d"
-+ps2_keyboard_event(void *opaque, unsigned int lnx, int down, unsigned int modifier, unsigned int modifiers, int set, int xlate) "%p lnx %u down %d modifier 0x%x modifiers 0x%x set %d xlate %d"
- ps2_read_data(void *opaque) "%p"
- ps2_set_ledstate(void *s, int ledstate) "%p ledstate %d"
- ps2_reset_keyboard(void *s) "%p"
+-    if (qcode == Q_KEY_CODE_SHIFT_R) {
++    if (evt->key.key == KEY_RIGHTSHIFT) {
+         if (evt->key.down) {
+             s->shift |= KD_RSHIFT;
+         } else {
+@@ -270,7 +270,7 @@ static void nextkbd_event(DeviceState *dev, QemuConsole *src,
+         }
+     }
+ 
+-    keycode = qcode_to_nextkbd_keycode[qcode];
++    keycode = linux_to_nextkbd_keycode[evt->key.key];
+     if (!keycode) {
+         return;
+     }
 
 -- 
 2.54.0
