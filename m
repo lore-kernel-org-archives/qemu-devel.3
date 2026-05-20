@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E02F6CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 13:10:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BCCECD5BA4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 13:10:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPgfc-0005PX-97; Wed, 20 May 2026 09:09:08 -0400
+	id 1wPgf3-0004oB-S5; Wed, 20 May 2026 09:08:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1wPgfN-00059M-IH; Wed, 20 May 2026 09:08:53 -0400
+ id 1wPgez-0004jL-W9; Wed, 20 May 2026 09:08:30 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1wPgfM-00015D-2V; Wed, 20 May 2026 09:08:53 -0400
+ id 1wPgey-00013b-CQ; Wed, 20 May 2026 09:08:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=l0dNl03bS3E1wsW+at3KYU1yqaTTF87IgSaAeL+9S1Q=; b=NIkAAUXiNtuJUAZ
- h+SugKXX1/V2X1C4xkUhy2/z2nXWjmkTQZroyno4Sl5C2l6pWRGUtvWkfyfbPXZtMc+N7jMUIM29q
- 7adO5Bgj8YllR8vx529OeWXekDeIMk4quI+MFs8VmgF3mtyCsBEG9YmcYzk+p3jsrcUxWh3LyszjW
- to=;
-Date: Wed, 20 May 2026 15:13:03 +0200
-Subject: [PATCH v3 11/14] target/riscv: Stub out kvm functions
+ List-Help; bh=tTFqSlsc848J218/Yx+Iadsv+fdY1crVFnW2i8y2H0U=; b=ZAhtxR190sPSesn
+ f7Q9ixy3j20cZm0OisR2jhHtNkcCHlp0pxf9oXe8BvlZ69JXPjNhiu8v5Y+xcroRT3IWWI1GiBOqy
+ jAO+Y87/2nFdDgkdFBrhW8w+mIp+4g4NPqy3yynSur8sSY3/rP5PcDMypK0wdjV+VwPNp46bl5+2q
+ Mc=;
+Date: Wed, 20 May 2026 15:12:57 +0200
+Subject: [PATCH v3 05/14] configs/target: Implement per-binary TargetInfo
+ structure for riscv
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260520-hw-riscv-cpu-int-v3-11-d1123ea63d9c@rev.ng>
+Message-Id: <20260520-hw-riscv-cpu-int-v3-5-d1123ea63d9c@rev.ng>
 References: <20260520-hw-riscv-cpu-int-v3-0-d1123ea63d9c@rev.ng>
 In-Reply-To: <20260520-hw-riscv-cpu-int-v3-0-d1123ea63d9c@rev.ng>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, philmd@linaro.org, 
  pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com, 
  alistair.francis@wdc.com
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1779282793; l=1527;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779282793; l=2712;
  i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=GpfNmK0ODkxi2G+VC/KRFKwa2B0IWnVNhBfX6455AEQ=;
- b=Yyl5hCDq0Z4dMDn0e8MYvRd0GeZhCcVxdEtozgoUTOtr/J+L6mL0KE3l4iQmjiIv9FEfhC9Cs
- BTQ0HwJMGTEDin0tpSaiPSG1Knlybv8Lcdnpj+bnLGepEldVEbVSWoI
+ bh=+2x91c/ot0C95ECpKcincB2R1tj+hcOjCJaTZEr9mQ8=;
+ b=+gB9xGHErQjW3nT4kXi7FUDdrluQNd93+RMc5J4DEjJhQ8WDIMsN7IISwoTxw0v8AkNGvx3UF
+ wWQM+wrp/uPCvN3Vw8RWoweWAnkLko6bUxXpWjOkreyDmmlQl+NQW2v
 X-Developer-Key: i=anjo@rev.ng; a=ed25519;
  pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
@@ -72,24 +73,24 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Functions used externally by hw/riscv are stubbed out for non-kvm
-configurations, allowing a single compilation of hw/riscv.
+Defines TargetInfo for 32- and 64-bit riscv binaries.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/riscv/kvm/kvm-stub.c  | 23 +++++++++++++++++++++++
- target/riscv/kvm/meson.build |  1 +
- 2 files changed, 24 insertions(+)
+ configs/targets/riscv32-softmmu.c | 26 ++++++++++++++++++++++++++
+ configs/targets/riscv64-softmmu.c | 26 ++++++++++++++++++++++++++
+ configs/targets/meson.build       |  1 +
+ 3 files changed, 53 insertions(+)
 
-diff --git a/target/riscv/kvm/kvm-stub.c b/target/riscv/kvm/kvm-stub.c
+diff --git a/configs/targets/riscv32-softmmu.c b/configs/targets/riscv32-softmmu.c
 new file mode 100644
-index 0000000000..64e39c96d8
+index 0000000000..752c813077
 --- /dev/null
-+++ b/target/riscv/kvm/kvm-stub.c
-@@ -0,0 +1,23 @@
++++ b/configs/targets/riscv32-softmmu.c
+@@ -0,0 +1,26 @@
 +/*
-+ * QEMU RISCV specific KVM stubs
++ * QEMU binary/target API (qemu-system-riscv32)
 + *
 + *  Copyright (c) rev.ng Labs Srl.
 + *
@@ -97,27 +98,66 @@ index 0000000000..64e39c96d8
 + */
 +
 +#include "qemu/osdep.h"
-+#include "target/riscv/kvm/kvm_riscv.h"
++#include "qemu/target-info-impl.h"
++#include "qemu/target-info-init.h"
++#include "hw/riscv/machines-qom.h"
++#include "target/riscv/cpu-qom.h"
++#include "target/riscv/cpu-param.h"
 +
-+void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
-+                          uint64_t aia_irq_num, uint64_t aia_msi_num,
-+                          uint64_t aplic_base, uint64_t imsic_base,
-+                          uint64_t guest_num)
-+{
-+    g_assert_not_reached();
-+}
++static const TargetInfo target_info_riscv32_system = {
++    .target_name = "riscv32",
++    .target_arch = SYS_EMU_TARGET_RISCV32,
++    .long_bits = 32,
++    .cpu_type = TYPE_RISCV_CPU,
++    .machine_typename = TYPE_TARGET_RISCV32_MACHINE,
++    .endianness = ENDIAN_MODE_LITTLE,
++    .page_bits_init = TARGET_PAGE_BITS,
++};
 +
-+uint64_t kvm_riscv_get_timebase_frequency(RISCVCPU *cpu)
-+{
-+    g_assert_not_reached();
-+}
-diff --git a/target/riscv/kvm/meson.build b/target/riscv/kvm/meson.build
-index 7e92415091..d3f395f431 100644
---- a/target/riscv/kvm/meson.build
-+++ b/target/riscv/kvm/meson.build
-@@ -1 +1,2 @@
-+riscv_ss.add(when: 'CONFIG_KVM', if_false: files('kvm-stub.c'))
- riscv_ss.add(when: 'CONFIG_KVM', if_true: files('kvm-cpu.c'))
++target_info_init(target_info_riscv32_system)
+diff --git a/configs/targets/riscv64-softmmu.c b/configs/targets/riscv64-softmmu.c
+new file mode 100644
+index 0000000000..5150f0fe9d
+--- /dev/null
++++ b/configs/targets/riscv64-softmmu.c
+@@ -0,0 +1,26 @@
++/*
++ * QEMU binary/target API (qemu-system-riscv64)
++ *
++ *  Copyright (c) rev.ng Labs Srl.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/target-info-impl.h"
++#include "qemu/target-info-init.h"
++#include "hw/riscv/machines-qom.h"
++#include "target/riscv/cpu-qom.h"
++#include "target/riscv/cpu-param.h"
++
++static const TargetInfo target_info_riscv64_system = {
++    .target_name = "riscv64",
++    .target_arch = SYS_EMU_TARGET_RISCV64,
++    .long_bits = 64,
++    .cpu_type = TYPE_RISCV_CPU,
++    .machine_typename = TYPE_TARGET_RISCV64_MACHINE,
++    .endianness = ENDIAN_MODE_LITTLE,
++    .page_bits_init = TARGET_PAGE_BITS,
++};
++
++target_info_init(target_info_riscv64_system)
+diff --git a/configs/targets/meson.build b/configs/targets/meson.build
+index cca2514eb5..2ab4d27eaf 100644
+--- a/configs/targets/meson.build
++++ b/configs/targets/meson.build
+@@ -1,5 +1,6 @@
+ foreach target : [
+       'arm-softmmu', 'aarch64-softmmu',
++      'riscv32-softmmu', 'riscv64-softmmu'
+   ]
+   config_target_info += {target : files(target + '.c')}
+ endforeach
 
 -- 
 2.52.0
