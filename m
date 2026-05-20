@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3501CD5BA4
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:07:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E36BCD5BA4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:15:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPkO2-00070o-1d; Wed, 20 May 2026 13:07:14 -0400
+	id 1wPkVM-0000Fl-Ek; Wed, 20 May 2026 13:14:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPkO0-00070f-GX
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:07:12 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkVJ-0000FF-Oc
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:14:45 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPkNw-0006sq-BX
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:07:12 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-83ef1d17904so5121855b3a.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:07:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkVH-00013h-Vi
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:14:45 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-4526a8170ceso2477569f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:14:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779296827; x=1779901627; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779297281; x=1779902081; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Oa6gXKzaUxdwVFbXfUc377IX/7ZI8ebIrG3jmpClP9k=;
- b=X3ek8MZk1YxnByPlCjxQzxfc28ZOL8up3uZ4q2dMfe+pHnfW6kR6uQL8/OfI40c6yY
- ar9idjjdYRo6Wa8SlmIU1/XJtoIczXxN/ZB+azCUQcIgueeM+x1j+fjS3iBSL384XwGN
- 7cltcOmv7OgX07W9WM7Ctwk4lk3rmFxGNmIUVDNHbZ55VM0LJ+HQJk53WQZ3I7LwLwqP
- DdvBOaZm9Q22Muo4h2HuED9l2qDo8YdC1mXpyv6TB0b6KGvLXXDobbzX8hJYCfLTGdHz
- a5lpG6G94LxV3Kd4Fc5u7V5pj6/hNJtViwobKOa3teNvzamFi+5rXZxiyL9H1dQiONKf
- wXBw==
+ bh=T/o3jUfNAg4UU+hbdQIUcxK3NzNlALFbhTUeVflbY1Q=;
+ b=CjLaWvBuIbafn878XgCDdZHdbwf8jMvKLrCgj4kkGSSmbbCSK3kexV9iBADPMKAWCq
+ XxRTO9lVqoboG7jcnAFm9fcJVUvpwmQec5VoeopIdQbjCEcr5rFg5aj5sWkN3adPl6yQ
+ MB3EgjsN/uzey3hTAC356RcF4iKnpdAkTpyOee2psZV4G2lzuIfk0ahBxdRJvLcJ5bZv
+ GtELkLA1IhWZoMZXAIwm1QI0U9gqb7NWQ7nKBQQ7asfL2FHPhe8fJkapiyoPwriQrd9I
+ ahpdcHUHn85dQbkxXbVyNQrt1kn9F0tHt5srN00L0JAhQjoWpuesDbigQgd6K3GqQoMs
+ B0ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779296827; x=1779901627;
+ d=1e100.net; s=20251104; t=1779297281; x=1779902081;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Oa6gXKzaUxdwVFbXfUc377IX/7ZI8ebIrG3jmpClP9k=;
- b=STc+wQlSnEflrTIIo/EF2s9ywjnYqrNhfI24YMGpAA4eJjQ9o1CCOVAJjBWCouYRCa
- 9wlrRsKlUsVwwHv2CajAH7kZIPFdvIWDfcpgcIYaU/MH8E7bq0ORPPiNLgb3BxbipRdv
- Bm4CAC5slhPXgXqBgDkYn1H1EnKBNCel+rUKU4hmUWTqUNg7aGo5StoSCNv0sXOYxyLF
- SdstTYCd7937HRTA8XQvZ4aghbM1LXkUbOpFEmZCqxLjTRmDFpjXXWsfL/+U3eE3Xpno
- vqwC5TyyvenEgfENUnYNIebmEOry/KQFO3XQe61XJx4K3Ysv+TuVK0qI3mZoAAch1D26
- aFjQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9UoLnga/hX8ozI0Hys1yQB/Pq0sUPlW48Uy/UqyDL5iFg6Qwz1rcpUmB1KlthurPyuSiPVqPo7ijG7@nongnu.org
-X-Gm-Message-State: AOJu0YzZPXCgB7eZFiSXIjemGiiyLjDKIntQIMR5cL519ycnI3EKkJwb
- 2hc5HahHaTra/sQTeow8yfFWlHilPEU2XRQtqVGxzF+KJOZBGoKASDi+Hyj8QcSfFyM=
-X-Gm-Gg: Acq92OFByk2w8SgZXNYyOknCOH/swovCbcCpEGqdMzJt1o7lR2d5mTSxtkFKaqVoJ9F
- L0sM36t5Lsk6wJlGYPNoPYiu9j6ryhuGlyRmrmAeEZ/urqMF+kipmsD/bs0m2juUBQZiuHRoiZk
- r5r5gYsCf6OLtUXFaRe0scTummHr/EMJsySaKSsmqR2wRLL27zOmpu4mALT1Ig3+mjC+X81Vvnv
- LHYfpduouTSrklJz+jVAN0s8EEH3BAVy2ZCzTTtqyW/CpEuVPWD2svRIPhxej5E+UU80ZQYA//k
- mP10etFSa5zi6soNeRwaK62u4sbDyi2eXyMYEWBGR64R1adoJrlkzhbflO1RfbuVBDiGYuQ45Df
- VxMAJrN2noH0vH2lVSwAn4+0wS9ZvPOKs3Jq6vsZwc9IXFJ3IqzWFJmASdVYQvs4BMUjtMZ5UFF
- fLYmXsz/W0ZlJvYi0MW0GEQsNVgkLkkcwjn+Ok
-X-Received: by 2002:a05:6a00:1908:b0:82f:50cd:e586 with SMTP id
- d2e1a72fcca58-83f33cb2c40mr25627674b3a.13.1779296826883; 
- Wed, 20 May 2026 10:07:06 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-83f19c7c008sm20758469b3a.46.2026.05.20.10.07.06
+ bh=T/o3jUfNAg4UU+hbdQIUcxK3NzNlALFbhTUeVflbY1Q=;
+ b=SDha1AAtoBcQUU+Q5uF5TxUSDEV+S7jKZEmCrp9rIQ2N/npKX9+YFRrwSq+PRmMQjf
+ dy5utBgTuYeFvK5yv98mNU0qPsVyzn4xRY+m50apNZ16V4/mlP3SdzXFWBtZqRrTTH9Z
+ fxGMRKyfoGxv3TpZK3qNQ3fACK7aqOZ76leATzAxCfwW/zXsEyR5uWYshAdCSlYHjalp
+ onpmWGEcly5jQu3FcxThk68LfprnDc9z6jVlPDDC/+c9z3spQZapSOxm4yB53O1E/fM6
+ b1YtoBqvccNzC/iQlPqVwR5nfRoE1KtnZwF8AnwnMwLnMWlqvtNsempiyLfAjHxbQitI
+ 960Q==
+X-Gm-Message-State: AOJu0YwMaeq9qRG+6m71ttAP+ndgH7OuNZbeuxzNZFu9mDdXcb3wZ5bQ
+ kqTOPSTS1AS7vzSEzMrR8afJGgGyESBCLunHCNFW7LAWiH1h9BlCcNkbVf+1kM4Es+E=
+X-Gm-Gg: Acq92OFf6ApKO9VBghjRW4LtuNsYPXalHDY4XG2xMgiLKIlmFiDi7ZcYD5C633DrmdU
+ 7la51LAEUM6dCnTzrbbmH/zw0JOWMwZfpuhL6VSPEZRU1gXRYWXg/GWDGCMKzF79Na42IDq2z67
+ XZmd736kHnYCmZWw4VbI3dyOisUIqlusviDJPVB+/mQ4E8OQktUYoQ0RB3Xk1X1543+ibEEPXRq
+ tqR7gc3ASGS55R4jveQ6H9Q0hU/glw932GaIY+h8e8Po8bdNhrLVOlEbTBWF0xu13CQTCJGAHG5
+ v3d/J/5JRM+33KzxqHWi9eMyDz939ZjpU9nFm7ny2EwlUXb5FV9289hJvFb5cTAdeFtJyiuW4UL
+ q3/IDsDwK0J85Y5mrg9mGn8sXIqlk5z7OcsoIikPIxHvZkXEwFs3JOwuXafRzRIa2Pj/WV/Uidz
+ DkrExY2D08YzNNee2S7tLCJJCo9d4iI4dJSaOAPbSQu6rTMFQt1/u2chaEX2BwLWGCsA==
+X-Received: by 2002:a05:6000:c3:b0:45e:739e:499 with SMTP id
+ ffacd0b85a97d-45e739e04dfmr21518431f8f.13.1779297281426; 
+ Wed, 20 May 2026 10:14:41 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45da0fe0fecsm51081192f8f.26.2026.05.20.10.14.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 May 2026 10:07:06 -0700 (PDT)
-Message-ID: <bd64d8c4-d955-426e-9a86-b8b514878f60@linaro.org>
-Date: Wed, 20 May 2026 10:07:05 -0700
+ Wed, 20 May 2026 10:14:37 -0700 (PDT)
+Message-ID: <2e3da33f-1f47-4d7b-92bd-886c827a0f2e@linaro.org>
+Date: Wed, 20 May 2026 19:14:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 0/2] tcg: Optimize INDEX_op_mul[us]2 for 0 and 1
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: James Hilliard <james.hilliard1@gmail.com>
-References: <20260520125139.13352-1-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PULL 39/63] hw/display: Add i.MX6UL LCDIF device model
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Yucai Liu <1486344514@qq.com>
+References: <20260427124738.966578-1-peter.maydell@linaro.org>
+ <20260427124738.966578-40-peter.maydell@linaro.org>
+ <574480d1-49db-4ee9-981c-580d4c2db3b1@linaro.org>
+ <CAFEAcA8SN=H+d1OzcRWBZ6kBnhFqVAY0_77Z+PsjdxwAnT4gEw@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260520125139.13352-1-philmd@linaro.org>
+In-Reply-To: <CAFEAcA8SN=H+d1OzcRWBZ6kBnhFqVAY0_77Z+PsjdxwAnT4gEw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,19 +103,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/20/26 05:51, Philippe Mathieu-Daudé wrote:
-> Respin of Richard patch split to ease review.
+On 20/5/26 18:45, Peter Maydell wrote:
+> On Wed, 20 May 2026 at 17:33, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> Hi Yucai,
+>>
+>> On 27/4/26 14:47, Peter Maydell wrote:
+>>> +static void imx6ul_lcdif_class_init(ObjectClass *klass, const void *data)
+>>> +{
+>>> +    DeviceClass *dc = DEVICE_CLASS(klass);
+>>> +
+>>> +    dc->realize = imx6ul_lcdif_realize;
+>>> +    dc->unrealize = imx6ul_lcdif_unrealize;
+>>> +    dc->vmsd = &vmstate_imx6ul_lcdif;
+>>> +    device_class_set_legacy_reset(dc, imx6ul_lcdif_reset);
+>>
+>> Please do not use the legacy API. See for example this commit
+>> to convert to the newer API:
+>> https://gitlab.com/qemu-project/qemu/-/commit/ce788d3740f
 > 
-> Richard Henderson (2):
->    tcg: Massage fold_multiply2()
->    tcg: Optimize INDEX_op_mul[us]2 for 0 and 1
-> 
->   tcg/optimize.c | 90 +++++++++++++++++++++++++++++++++-----------------
->   1 file changed, 59 insertions(+), 31 deletions(-)
-> 
+> There's not really a problem with continuing to use the legacy
+> reset API for this kind of "leaf class" device. It has identical
+> semantics to just providing a 3-phase "hold" reset method, the
+> compatibility-code is trivial and not a big maintenance burden,
+> and we're unlikely to convert all 400+ existing users. (Unless
+> somebody figures out a Coccinelle script for it, in which case
+> it's just one more file being autoconverted. IIRC the hitch
+> I ran into was that you need to determine whether the reset
+> function is called by any other code -- those are probably
+> not autoconvertible in the way "function only used as the
+> argument to device_class_legacy_reset()" could be.)
 
-Ok, queued.
+Then I don't understand why we named it "legacy". Maybe rename
+as device_class_set_leaf_reset()...
 
+This is not about converting the 400 uses; I'd expect a legacy
+API to not be re-introduced over and over.
 
-r~
+What about gating this call via checkpatch.pl?
 
