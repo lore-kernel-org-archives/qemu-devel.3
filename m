@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB2D9CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 19:27:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0224DCD5BA4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 19:27:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPmZ0-0004Mj-PA; Wed, 20 May 2026 15:26:42 -0400
+	id 1wPmYk-0002O7-80; Wed, 20 May 2026 15:26:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmYy-0004As-Qt
- for qemu-devel@nongnu.org; Wed, 20 May 2026 15:26:40 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmY6-0001NQ-KI
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 15:25:48 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmYw-0002fT-Nj
- for qemu-devel@nongnu.org; Wed, 20 May 2026 15:26:40 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-488b3f8fa2bso50332255e9.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 12:26:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmY4-0002QP-53
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 15:25:45 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-488e1a8ac40so48914525e9.2
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 12:25:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779305197; x=1779909997; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779305142; x=1779909942; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=LGohp7dlyjWh+7CBb01fjLibw7y1O5nFqdvOmwWauJ8=;
- b=KCCJHp1AA2nhbfyNlVVb+zI4Mc+0qYHCameuPRtamq1YsKK5KFn2pOAcxaFOT45MNO
- vDRCKarr1hVBCU0ipPVSBdeMQxIG9/aFml9zIuFnY6SaUYthX+FSUcTpRkXc1ZWskE8w
- 6rI86r4OdIab6/FbXEuapZaPEMCWqsGFa8oSd6J4/GCZ0EUXMcz+uF3SmgeIobSVV6ZU
- 55TZchgutJBJZrDYxO6qf7tiA8wXeUHJD22/3EK2hVB9wjznzBqSDB9BXAS4L8Uo9gft
- Ak/zNaza6XUhktmEV+MosWAHbQHhKnQ5bmtA9cuVwgWqusI96O89RsiWsyy836OIfBFw
- Lcsg==
+ :reply-to; bh=U2Z40oWVLF/kpQasU7JFTmHMWs+RtYXMErFNxHICK6k=;
+ b=yHp8lnIGScqLJgY2iQnhTKQzdXzzbNLBlwS4vxnEMefAGk2VakugAvm9FVPdHQrx7m
+ aNBRjE2vNVKAQqlQab4WhgiCSkydqGZL2zZeDp1tJmSXw/M1yL5u8VdgNqkWgCI8FPZc
+ zbwVPKprXv+jVrIlv1a0zamq0tmBYYAcEes6B30VXgC4F7jxW2U/FEk99J5/M80b8yt/
+ DGmHayjwwwScjn8w1Y9Fror5fitAUh8iQLQLoU5hhVbNMHRnPJN/ba2uz1OdMt2NaO1Y
+ d6lfaj3z+7/QG8o4mG4uootak744EDzxx4bgmuymGHx3q2S4B+jyyi7ud5B2AX8XamZi
+ 3rPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779305197; x=1779909997;
+ d=1e100.net; s=20251104; t=1779305142; x=1779909942;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=LGohp7dlyjWh+7CBb01fjLibw7y1O5nFqdvOmwWauJ8=;
- b=fbVZbENfKOI9/y6VLA8h14tE4qIjDclz0aMszz/r2HKGLD1UX75CTpPtQ+cg8KCwiW
- IrC59/IHD3Q27L+nyFmXWvOmgaltzOP6l1tMrR0oFCLiM7Wl2kGb6qkeuL39G3Zfni/A
- OkjNUAVPHw4d16Y0UpYT/NE+Zx4dSj6V5t7khLd3QPEKEf/z4jfEltgTdnYd9OfZoIKZ
- PYZDzn5yB7T+8awhmpqPIOE9sfI3boWAPjx/A6F8Bn6+2Xf95Ly6BLv3c6HBmYM/lyYS
- onBrxxWJjKDwWeXCUhUtIokAy3ueZ+UOHFUfQ8p3mINeRaenyB8lQmWIAJkKld5iqgWI
- WwbQ==
-X-Gm-Message-State: AOJu0YyZW35idxvgiq83RyZoAwSm/z0EcbliVX2dDL7vJ5Jo/pFCiFxg
- xRx88Kcrgq17Ep7TQ6CLAyTbugZbhfSW15J4iOgJCgdJUll0m5Xd7w5UyNm6SLNOMvLJx4o5Vhp
- /sEoWkWM=
-X-Gm-Gg: Acq92OEUFbHTZC1756qO1BDm7nPB2T9Xie6zhBN4AyKulylWOg4CK6PShPIyLiDU5pF
- 4ECrWVBrU4tLyjUjKWc5kfhex8c9jlvM9IYnFD1Y+k0kTOXc3fphyyClSHJVSNmyeyNZIU25DjL
- aGTZeWjVAp8nZlr0I0PoYyjlVTcRMrQn+427h1wCTw06Fr0F//U20L5GAGCKm5Voyrd1gylUcGo
- 3nf8d0OCaaABYlpXCzn4PlEUJwRZvSlW4oLS4AaMXhrA2dNShjpfqS5IZnPlxIeW24w+WU8/q1s
- rHFSy5x4OnhkXdPgN2wmeW1xCYHV6LXN8LYYNldoE4BXzyrPMFSAq1CSwvsIBGcvUxdi+02cFLA
- JgJS3WSxuAEQwsWiPChBpVJtRHljj8tYtOtA023ZSoF7PQiC39e8RGfI35+AOwMbH9K+pbrJlOz
- pIkvLvduAwBH8CqJy+yoBl/sPr1qegp8V8kXp27ityA0j4WB1LjmHWnYhUuvpzpQDzbGLvB+I9T
- aK8fx9FmAc=
-X-Received: by 2002:a05:600c:6d83:b0:486:fcc7:6811 with SMTP id
- 5b1f17b1804b1-49033d568e2mr8411035e9.10.1779305196661; 
- Wed, 20 May 2026 12:26:36 -0700 (PDT)
+ bh=U2Z40oWVLF/kpQasU7JFTmHMWs+RtYXMErFNxHICK6k=;
+ b=Ixuh5ve/YzChMdzht3worFFL7AoOgY/+d7vtdBHnrEf4LlJ0axw00wHtmzbGBn1ya0
+ ycZs8uk/TMnS5hVdyPlWjDPQpbuzKtlymvuA+oZXSr9quslmrsK2voCn5wWs7VFWBOGm
+ prxNKDL3ys3NWrA5sPNhcNiiBgE6keYhGsAYq/s1UZuOOyURVmfCo3YmcT2iY9bHn3ep
+ hy32nX2xs6Szof2s9gbplAPlWIlc5TW0X9DJxwkfryIjDHmMZHwOkvSJNRCF6x7k5x5n
+ 8zDrmwFbynPGvFK8j80SBYGF/3CCJuu7SOW6KStfP1yz49yR5tad/o2WqfcJ+ll4qToq
+ a/mg==
+X-Gm-Message-State: AOJu0Yy0dtiDqgteR3f3ojnLXyRg1oH3DSrLyk46YdiZfGx7LlCYeUDw
+ 4mgTVqtEba1JalO3kbghbBv5LUc8qWXZ34mAWgbxHvbfuUswWW7QvP+xCtS/TdGaan58FdpiwI+
+ 3A5ydaS8=
+X-Gm-Gg: Acq92OFaZYLegyyqZ/QvUTtephhOjNA1qz9YsSkvK0VdEJamH+ATONFPKsw7JUL2boN
+ zUvObH0d5Ze8M78IN244y9ylaLgQSeWv4kAH4A2w/6f1/+Vpy/TsoBoydNjTae+ItpwvsAwaVhU
+ TeecFqDuXFTV4Lsra06VxPr8//dE90F8u2aRu1gkX14XzA5H4HWysI3NSRRXB+tApA/8jdBSiYf
+ 5rPHv4qVAyTE/3OMRweGFDwJfY1QJw1DUYv3u1AkPTRLufZUTujUiNIU/vPH6KX5grWfk61NVwU
+ namloUlc45/W8vZYMXHoviVhrvII9CtszarOMD6pFDUST7gF3WfvRQqhR6IbygMhrqR80ZuPjsu
+ oALjsbewk/EDs95xd6wymvBnexPjtnb6W4Y+rQhq6jqqsOgB5uF7hKQr6DAjG7/iH2hhXz8vOQw
+ 9DbVa1B8iAfJekOLUV0LYsuvwKyjuMgRFazQXh6IDPQQcamOtrP2ak4thiu3u0j3a3dmVDSlDK
+X-Received: by 2002:a05:600c:4fc9:b0:48a:7a10:4f17 with SMTP id
+ 5b1f17b1804b1-48fe60e50b9mr352759845e9.6.1779305141919; 
+ Wed, 20 May 2026 12:25:41 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da0a178adsm59648554f8f.18.2026.05.20.12.26.35
+ ffacd0b85a97d-45d9e767ee0sm52486183f8f.1.2026.05.20.12.25.41
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 20 May 2026 12:26:36 -0700 (PDT)
+ Wed, 20 May 2026 12:25:41 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 25/33] tcg: Introduce tcg_gen_addN_i64
-Date: Wed, 20 May 2026 21:23:30 +0200
-Message-ID: <20260520192338.40036-26-philmd@linaro.org>
+Subject: [PULL 17/33] target/mips: split Octeon SEQI/SNEI decode
+Date: Wed, 20 May 2026 21:23:22 +0200
+Message-ID: <20260520192338.40036-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520192338.40036-1-philmd@linaro.org>
 References: <20260520192338.40036-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,90 +98,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: James Hilliard <james.hilliard1@gmail.com>
 
-Add a helper for multi-limb 64-bit addition. The helper emits native
-carry-chain TCG ops when they are available and falls back to explicit
-carry propagation otherwise.
+Decode the equality and inequality forms as explicit SEQI/SNEI
+instructions rather than using shared generated SEQNEI entries.
 
-This lets target translators build wider integer accumulators inline
-without open-coding the same add-with-carry sequence at each use site.
+The explicit decoder names match the architectural mnemonics, which
+makes the translator entry points and trace/debug output easier to
+correlate with the instruction set.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+[PMD: Split SEQNE vs SEQNEI (this patch)]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20260520172313.23777-17-philmd@linaro.org>
+Message-Id: <20260520172313.23777-10-philmd@linaro.org>
 ---
- include/tcg/tcg-op-common.h |  1 +
- tcg/tcg-op.c                | 42 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 43 insertions(+)
+ target/mips/tcg/octeon.decode      |  4 +++-
+ target/mips/tcg/octeon_translate.c | 27 +++++++++++++--------------
+ 2 files changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
-index aff99754160..1fe342db0d4 100644
---- a/include/tcg/tcg-op-common.h
-+++ b/include/tcg/tcg-op-common.h
-@@ -253,6 +253,7 @@ void tcg_gen_sub2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 al,
-                       TCGv_i64 ah, TCGv_i64 bl, TCGv_i64 bh);
- void tcg_gen_addcio_i64(TCGv_i64 r, TCGv_i64 co,
-                         TCGv_i64 a, TCGv_i64 b, TCGv_i64 ci);
-+void tcg_gen_addN_i64(int n, TCGv_i64 *r, TCGv_i64 *a, TCGv_i64 *b);
- void tcg_gen_mulu2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 arg1, TCGv_i64 arg2);
- void tcg_gen_muls2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 arg1, TCGv_i64 arg2);
- void tcg_gen_mulsu2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 arg1, TCGv_i64 arg2);
-diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-index 971ac2fb359..bbcb510c764 100644
---- a/tcg/tcg-op.c
-+++ b/tcg/tcg-op.c
-@@ -2275,6 +2275,48 @@ void tcg_gen_addcio_i64(TCGv_i64 r, TCGv_i64 co,
-     }
+diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+index 2c54901f77e..a2bfd0751d3 100644
+--- a/target/mips/tcg/octeon.decode
++++ b/target/mips/tcg/octeon.decode
+@@ -30,6 +30,7 @@ BBIT         11 set:1 . 10 rs:5 ..... offset:s16 p=%bbit_p
+ # SNEI rt, rs, immediate
+ 
+ @r3          ...... rs:5 rt:5 rd:5 ..... ......
++&cmpi        rs rt imm
+ %bitfield_p  0:1 6:5
+ @bitfield    ...... rs:5 rt:5 lenm1:5 ..... ..... . p=%bitfield_p
+ 
+@@ -40,7 +41,8 @@ CINS         011100 ..... ..... ..... ..... 11001 . @bitfield
+ POP          011100 rs:5 00000 rd:5 00000 10110 dw:1
+ SEQ          011100 ..... ..... ..... 00000 101010 @r3
+ SNE          011100 ..... ..... ..... 00000 101011 @r3
+-SEQNEI       011100 rs:5 rt:5 imm:s10 10111 ne:1
++SEQI         011100 rs:5 rt:5 imm:s10 101110 &cmpi
++SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
+ 
+ &lx          base index rd
+ @lx          ...... base:5 index:5 rd:5 ...... ..... &lx
+diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+index dfbb55e3fc3..5497ddfb108 100644
+--- a/target/mips/tcg/octeon_translate.c
++++ b/target/mips/tcg/octeon_translate.c
+@@ -132,29 +132,28 @@ static bool trans_SNE(DisasContext *ctx, arg_SNE *a)
+     return do_seq_sne(ctx, a, TCG_COND_NE);
  }
  
-+void tcg_gen_addN_i64(int n, TCGv_i64 *r, TCGv_i64 *a, TCGv_i64 *b)
+-static bool trans_SEQNEI(DisasContext *ctx, arg_SEQNEI *a)
++static bool do_seqi_snei(DisasContext *ctx, const arg_cmpi *a, TCGCond cond)
+ {
+     TCGv_i64 t0;
+ 
+-    if (a->rt == 0) {
+-        /* nop */
+-        return true;
+-    }
+-
+     t0 = tcg_temp_new_i64();
+-
+     gen_load_gpr(t0, a->rs);
+ 
+-    /* Sign-extend to 64 bit value */
+-    target_ulong imm = a->imm;
+-    if (a->ne) {
+-        tcg_gen_setcondi_i64(TCG_COND_NE, cpu_gpr[a->rt], t0, imm);
+-    } else {
+-        tcg_gen_setcondi_i64(TCG_COND_EQ, cpu_gpr[a->rt], t0, imm);
+-    }
++    tcg_gen_setcondi_i64(cond, t0, t0, a->imm);
++    gen_store_gpr(t0, a->rt);
+     return true;
+ }
+ 
++static bool trans_SEQI(DisasContext *ctx, arg_SEQI *a)
 +{
-+    tcg_debug_assert(n > 2);
-+
-+    /* ??? Don't allow overlap for now. */
-+    for (int i = 0; i < n - 1; ++i) {
-+        for (int j = i + 1; j < n; ++j) {
-+            tcg_debug_assert(r[i] != a[j]);
-+            tcg_debug_assert(r[i] != b[j]);
-+        }
-+    }
-+
-+    if (tcg_op_supported(INDEX_op_addci, TCG_TYPE_I64, 0)) {
-+        tcg_gen_op3_i64(INDEX_op_addco, r[0], a[0], b[0]);
-+        for (int i = 1; i < n - 1; ++i) {
-+            tcg_gen_op3_i64(INDEX_op_addcio, r[i], a[i], b[i]);
-+        }
-+        tcg_gen_op3_i64(INDEX_op_addci, r[n - 1], a[n - 1], b[n - 1]);
-+    } else {
-+        TCGv_i64 t = tcg_temp_ebb_new_i64();
-+        TCGv_i64 c = tcg_temp_ebb_new_i64();
-+
-+        tcg_gen_add_i64(t, a[0], b[0]);
-+        tcg_gen_setcond_i64(TCG_COND_LTU, c, t, a[0]);
-+        tcg_gen_mov_i64(r[0], t);
-+
-+        for (int i = 1; i < n - 1; ++i) {
-+            tcg_gen_add_i64(t, a[i], c);
-+            tcg_gen_setcond_i64(TCG_COND_LTU, c, t, c);
-+            tcg_gen_add_i64(r[i], b[i], t);
-+            tcg_gen_setcond_i64(TCG_COND_LTU, t, r[i], t);
-+            tcg_gen_or_i64(c, c, t);
-+        }
-+
-+        tcg_gen_add_i64(r[n - 1], a[n - 1], b[n - 1]);
-+        tcg_gen_add_i64(r[n - 1], r[n - 1], c);
-+
-+        tcg_temp_free_i64(t);
-+        tcg_temp_free_i64(c);
-+    }
++    return do_seqi_snei(ctx, a, TCG_COND_EQ);
 +}
 +
- void tcg_gen_sub2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 al,
-                       TCGv_i64 ah, TCGv_i64 bl, TCGv_i64 bh)
++static bool trans_SNEI(DisasContext *ctx, arg_SNEI *a)
++{
++    return do_seqi_snei(ctx, a, TCG_COND_NE);
++}
++
+ static bool trans_lx(DisasContext *ctx, arg_lx *a, MemOp mop)
  {
+     gen_lx(ctx, a->rd, a->base, a->index, mop);
 -- 
 2.53.0
 
