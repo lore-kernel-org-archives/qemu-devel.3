@@ -4,49 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30BF5CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 14:42:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BEF0CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 14:43:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPi7Z-0002qc-0o; Wed, 20 May 2026 10:42:05 -0400
+	id 1wPi94-00045G-5P; Wed, 20 May 2026 10:43:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wPi7W-0002q8-NW
- for qemu-devel@nongnu.org; Wed, 20 May 2026 10:42:02 -0400
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPi8z-0003yh-94
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 10:43:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wPi7V-0002GL-2i
- for qemu-devel@nongnu.org; Wed, 20 May 2026 10:42:02 -0400
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wPi7K-00000001uqY-2awI; Wed, 20 May 2026 16:41:50 +0200
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-To: Alex Williamson <alex@shazbot.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
- qemu-devel@nongnu.org
-Subject: [PATCH 1/2] system/runstate: Allow adjustment of priority for VM
- state change handlers
-Date: Wed, 20 May 2026 16:41:37 +0200
-Message-ID: <b8f3cf976ebe8221d70e0ebcb55da60bfe2a141f.1779217494.git.maciej.szmigiero@oracle.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <cover.1779217494.git.maciej.szmigiero@oracle.com>
-References: <cover.1779217494.git.maciej.szmigiero@oracle.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPi8x-00038N-94
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 10:43:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779288210;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Xva2A+JP9GMXMX4xRTA3le4X47kLPWBYE55Uc9u/Mqs=;
+ b=L85Quk5vlJD/wdAjzptW/z6+3cu6tLmL9fQQCsOlVz4XVS5O2SIOKTWHFG3QCLJxwvZiHl
+ mtAI6gWc9C8Kou8t1LbXnTkeO941xcv44hEMU9sPRRKVOP7LoXqmjpCNqQFFPeMFt0GUEe
+ xZFiHXFq6wD1w2CyWUHsF9AJZFZceMc=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-604-X3Yb4V9MNb6uIL19JID76Q-1; Wed,
+ 20 May 2026 10:43:24 -0400
+X-MC-Unique: X3Yb4V9MNb6uIL19JID76Q-1
+X-Mimecast-MFC-AGG-ID: X3Yb4V9MNb6uIL19JID76Q_1779288203
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C423D18005BB; Wed, 20 May 2026 14:43:22 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 40ED81684; Wed, 20 May 2026 14:43:22 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id EBAFC21E6A01; Wed, 20 May 2026 16:43:19 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Brian Cain
+ <brian.cain@oss.qualcomm.com>
+Subject: Re: [PATCH] MAINTAINERS: Fix hexagon-linux-user.mak path
+In-Reply-To: <8bf4fb20-d675-4569-92c2-b8921b2991e4@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 20 May 2026 16:05:24
+ +0200")
+References: <20260520123947.12711-1-philmd@linaro.org>
+ <87fr3ms0oi.fsf@pond.sub.org>
+ <f52ebf28-1921-4ada-a7c5-ec3342cd3acb@linaro.org>
+ <57f7a25a-dce1-452f-8529-187d66a6d8de@linaro.org>
+ <87fr3mkz26.fsf@pond.sub.org>
+ <8bf4fb20-d675-4569-92c2-b8921b2991e4@linaro.org>
+Date: Wed, 20 May 2026 16:43:19 +0200
+Message-ID: <878q9ejg54.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,103 +93,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-A future patch will need an ability to register qdev VM state change
-handlers below and above the normal priority level for the registering
-device qdev tree depth, but still properly ordered with respect to handlers
-registered at other tree depths.
+> On 20/5/26 15:09, Markus Armbruster wrote:
+>> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+>>=20
+>>> On 20/5/26 14:57, Philippe Mathieu-Daud=C3=A9 wrote:
+>>>> On 20/5/26 14:52, Markus Armbruster wrote:
+>>>>> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+>>>>>
+>>>>>> Fixes: 812b31d3f91 ("configs: rename default-configs to configs and =
+reorganise")
+>>>>>> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>>>>>> ---
+>>>>>>  =C2=A0 MAINTAINERS | 2 +-
+>>>>>>  =C2=A0 1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>>>
+>>>>>> diff --git a/MAINTAINERS b/MAINTAINERS
+>>>>>> index b75f3222f2f..2a4d124fb3c 100644
+>>>>>> --- a/MAINTAINERS
+>>>>>> +++ b/MAINTAINERS
+>>>>>> @@ -256,7 +256,7 @@ X: target/hexagon/gen_idef_parser_funcs.py
+>>>>>>  =C2=A0 F: linux-user/hexagon/
+>>>>>>  =C2=A0 F: tests/tcg/hexagon/
+>>>>>>  =C2=A0 F: disas/hexagon.c
+>>>>>> -F: configs/targets/hexagon-linux-user/default.mak
+>>>>>> +F: configs/targets/hexagon-linux-user.mak
+>>>>>>  =C2=A0 F: docker/dockerfiles/debian-hexagon-cross.docker
+>>>>>
+>>>>> This one's wrong, too.
+>>>> Already fixed in Alex's tree:
+>>>> https://lore.kernel.org/qemu-devel/20260518102222.80735-2-philmd@linar=
+o.org/
+>>>> Pierrick suggested to repost patch dependencies already queued in
+>>>> maintainer tree when posting series; while this seem counter
+>>>> productive it could indeed have saved us time.
+>>>>
+>>>>> I have an unsent patch fixing both.=C2=A0 In fact, I have an unsent s=
+eries
+>>>>> fixing *all* F: patterns that don't resolve to any file.
+>>>
+>>> I looked for your series without success, then realized you mentioned
+>>> it is "unsent". This patch is still valid then.
+>>
+>> Yes.
+>>=20
+>>>                                                  Why mention unsent wor=
+k?
+>> To avoid duplicated work.
+>
+> I'm not sure this thread is making sense o_O
 
-To implement this split the priority argument passed to
-qemu_add_vm_change_state_handler_prio_full() into two parts:
-its 15 most significant bits will now carry the actual qdev tree depth
-while the 16 least significant bits will now carry the caller provided
-priority adjustment value.
+Are we talking past each other?
 
-Although this will limit the qdev tree to a depth of 32k such high limit
-shouldn't be a problem in practice.
+> Let's try to figure what you meant here. I'm not racing to get
+> this patch in nor enjoying duplicating work, but this is the
+> mailing list rules (due to the intrinsic email workflow latency,
+> not to mention subscriber processing their INBOX in FIFO mode).
 
-Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
----
- hw/core/vm-change-state-handler.c | 22 +++++++++++++++-------
- hw/vfio/migration.c               |  2 +-
- include/system/runstate.h         |  2 +-
- 3 files changed, 17 insertions(+), 9 deletions(-)
+Let me recap the obvious :)
 
-diff --git a/hw/core/vm-change-state-handler.c b/hw/core/vm-change-state-handler.c
-index 2c111350298d..3db0819984c6 100644
---- a/hw/core/vm-change-state-handler.c
-+++ b/hw/core/vm-change-state-handler.c
-@@ -19,9 +19,9 @@
- #include "hw/core/qdev.h"
- #include "system/runstate.h"
- 
--static int qdev_get_dev_tree_depth(DeviceState *dev)
-+static unsigned int qdev_get_dev_tree_depth(DeviceState *dev)
- {
--    int depth;
-+    unsigned int depth;
- 
-     for (depth = 0; dev; depth++) {
-         BusState *bus = dev->parent_bus;
-@@ -61,20 +61,28 @@ VMChangeStateEntry *qdev_add_vm_change_state_handler(DeviceState *dev,
-                                                      void *opaque)
- {
-     assert(!cb || !cb_ret);
--    return qdev_add_vm_change_state_handler_full(dev, cb, NULL, cb_ret, opaque);
-+    return qdev_add_vm_change_state_handler_full(dev, cb, NULL, cb_ret, opaque, 0);
- }
- 
- /*
-  * Exactly like qdev_add_vm_change_state_handler() but passes a prepare_cb
-- * and the cb_ret arguments too.
-+ * and the cb_ret arguments too and allows for adjustment of priority.
-  */
- VMChangeStateEntry *qdev_add_vm_change_state_handler_full(
-     DeviceState *dev, VMChangeStateHandler *cb, VMChangeStateHandler *prepare_cb,
--    VMChangeStateHandlerWithRet *cb_ret, void *opaque)
-+    VMChangeStateHandlerWithRet *cb_ret, void *opaque, int adj)
- {
--    int depth = qdev_get_dev_tree_depth(dev);
-+    unsigned int depth = qdev_get_dev_tree_depth(dev);
-+    int prio;
-+
-+    /* 32k depth should be enough for everyone */
-+    assert(depth <= INT16_MAX);
-+
-+    /* encode depth on 15 MSB and adj on 16 LSB */
-+    assert(adj >= INT16_MIN && adj <= INT16_MAX);
-+    prio = (depth << 16) + (adj - INT16_MIN);
- 
-     assert(!cb || !cb_ret);
-     return qemu_add_vm_change_state_handler_prio_full(cb, prepare_cb, cb_ret,
--                                                      opaque, depth);
-+                                                      opaque, prio);
- }
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index dbfd13b83a15..9889b20ad7dd 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -1227,7 +1227,7 @@ static int vfio_migration_init(VFIODevice *vbasedev, Error **errp)
-                      vfio_vmstate_change_prepare :
-                      NULL;
-     migration->vm_state = qdev_add_vm_change_state_handler_full(
--        vbasedev->dev, vfio_vmstate_change, prepare_cb, NULL, vbasedev);
-+        vbasedev->dev, vfio_vmstate_change, prepare_cb, NULL, vbasedev, 0);
-     migration_add_notifier(&migration->migration_state,
-                            vfio_migration_state_notifier);
- 
-diff --git a/include/system/runstate.h b/include/system/runstate.h
-index 929379adae41..306e2684c195 100644
---- a/include/system/runstate.h
-+++ b/include/system/runstate.h
-@@ -69,7 +69,7 @@ VMChangeStateEntry *qdev_add_vm_change_state_handler(DeviceState *dev,
-                                                      void *opaque);
- VMChangeStateEntry *qdev_add_vm_change_state_handler_full(
-     DeviceState *dev, VMChangeStateHandler *cb, VMChangeStateHandler *prepare_cb,
--    VMChangeStateHandlerWithRet *cb_ret, void *opaque);
-+    VMChangeStateHandlerWithRet *cb_ret, void *opaque, int adj);
- void qemu_del_vm_change_state_handler(VMChangeStateEntry *e);
- /**
-  * vm_state_notify: Notify the state of the VM
+1. First workable patch on the list has priority, with a generous
+interpretation of "workable".
+
+2. If a workable patch on the list overlaps with one I haven't sent, I
+rebase mine onto it.  No arguing, no whining.
+
+In fact, I did exactly that, and then told you: "I've been picking [your
+patches] into my tree".  When my patches are ready, I intend to post
+them with a bunch of Based-on: pointing to yours, or include yours with
+mine, whatever feels more convenient.
+
+Okay?
+
+> See for example last week at least 3 developers fixed the same
+> GCC warning issue. Generically, how could we improve that?
+
+I don't have better ideas than "watch the mailing list", and "let the
+right people know what you're doing".
+
+>>>> Oh :( I already sent various patches about that yesterday :(
+>>
+>> I've been picking them into my tree as I went.  I may have missed the
+>> odd patch, but I'll fix that.
+>>=20
+>>>>>
+>>>>>>  =C2=A0 F: gdbstub/gdb-xml/hexagon*.xml
+>>>>>>  =C2=A0 T: git https://github.com/quic/qemu.git hex-next
+>>=20
+
 
