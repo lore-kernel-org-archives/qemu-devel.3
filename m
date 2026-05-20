@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8FC6CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:25:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74AB2CD5BA4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:25:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPkZ7-0001SC-82; Wed, 20 May 2026 13:18:41 -0400
+	id 1wPkeZ-0004hl-So; Wed, 20 May 2026 13:24:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPkZ0-0001MZ-Dj
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:34 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkeY-0004hO-1K
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:24:18 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPkYw-0001ul-JK
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:34 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-36608b2f2dcso3178142a91.2
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:18:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkeW-0003e7-8D
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:24:17 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-43d7e23defbso2897591f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:24:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779297509; x=1779902309; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779297854; x=1779902654; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=N6pOylLIPPF3SzGGD/hO5sB9wT9twUN2F4g4tckWWxE=;
- b=JTOVlhN0hKj6eFfy2eKZhjK5YuTQYkM6LaBb0GQtIWgNarywX7EqqB3f+6NzzfE8QD
- /pBQK6pPp+HQziBz16KMipe3XsbLKgCXqQiu3h2wOI8sVRBJS4O7I9SoqB/hkSBYlM0I
- TqoJaSa6quvdlTNVvKQlsKVu/2eUmJFY+4vNe53SOQ+c6LYARtXgiWlyBfrnrRoqSLVc
- XBe0BMfzweqVxwEtJN47Cj3dcnO2DH1KX/O8MXWviHB5IYhVE1lVaE+1JQ0uHEBc9/9P
- hIdAdj8aIVvrErTVxMgXMX1AJH+fgyOH/Qj/zvBDK/1JTlF7VhYB609FvweXolbLg+Yj
- +WxA==
+ bh=G7thKSWIjg5/qhPYDC+RiNGQD44Efn4uAyXrn4XVW5U=;
+ b=idxffmkEYsADuaiHy4AJTNF0hgNX3+mz1G+/1NY+I7+SHmNmlJLyPyuegR7f+4TTHu
+ dbtGYwpLvweKqr/7mutpzm3r1/T0zSEKX4mn7ZJ/9UYMp8uLY6Zh9mgJxYFp1x5KwE1D
+ 9VFGYcx972gvoJWcyaT8XXaymhWByijnk46zpxF0iuaaE6lP0f5DPloCf3HqPPxJAmNc
+ /jH37xJDEdvSxSAzvX8vzL+6nBlCjruyezxPX0GNcLOjDDiSXE9+KWW9Z+M8eGmjAqNm
+ iTCSl7I8vJBihmXlJ7r8RjLBn+oIhCgoIoqf58NZU9Ppm7lME2kyJlo0anL+f+psG6tZ
+ dWkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779297509; x=1779902309;
+ d=1e100.net; s=20251104; t=1779297854; x=1779902654;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=N6pOylLIPPF3SzGGD/hO5sB9wT9twUN2F4g4tckWWxE=;
- b=Ks7wu9siw08aBMFbopAP8PosEFO7omtp9nj/Q70R2tynnCZhdHXMvhTMIiMBhOEqzM
- 6QnbHBSwNyusdtD87jh1fhe7zR3RQuN2u2Y2xplyQbs9iPI91nAZK7brPsFLjpwpWTpu
- kqXyS/jrYRaNBuS1lcgx4IC+ycFFMn7ABXOzPG/6nTEiXMt2Q+SBxkUXJcbg0gJP2AAW
- 4yOq6NG43BKcQeSG95hzJ1TchTaHikr6Y13q7x5UFGpSNipjTqDrP0KzL4orIHatUH05
- JrQmxPxtK8TIcXhOkng3dI7fj93zwKHlWX6RR1LiroccswjRS6lwjqP32jQAV1J5FlO7
- PlpA==
-X-Gm-Message-State: AOJu0Yx6/IUc4s91LI5Id4S9ejGUKqskzFEX7DUr5eeH4MKpCDqdFVAX
- DIhsVYW0ZhNQx7iFEF+Gmww2LDxUoyhJsdqmKyW78UAxGcbtD0C6Up8wiewLK95MuJglBx8zWzK
- mBoQV4rU=
-X-Gm-Gg: Acq92OHSZ/4cvNVxKi+qtada4WdImcdNz5LJI/9GeV2ah4SLLjFemKa89XUVu4YK9kE
- inrOC9686es/R6xzrZzkJbhRAeq9Wo+U5ocHMUCxco/hD+MTsoZxgyYwuYoNBBlEQYApyfxTHWa
- B5JrLCfqQfC1fPPahE7T0PtgmZ/wYZ0pt1mjfBpQOB6+xXUx13ZP5DXxJ3YUgFohq7ZvDo7H3wB
- ep4erwxreP4kXxx7wu221c7eCr0B+K+/hmC5AZvmoJcufLSq78qkzEQ8HUPZYaNXPDmnS9+XtBd
- qdBXW1yyiQjNwXe4P8jxew8c7qlutQRKd3CXJzyjisAokWAty0n3XDMDetEhk7W0CwrwRWT3RRe
- 2sp/Zpedvf/DKuuFAQDbmJPavswRcsRLnKw8B1nQLobX4NNPmkZwQqBJ27ixxmMOEB2sE5I9HRE
- /xD+OpR9ju3en6xR1EGZe/i/iAMtZq
-X-Received: by 2002:a17:90b:4a8a:b0:368:6998:b49d with SMTP id
- 98e67ed59e1d1-369519cbf0bmr24408819a91.10.1779297509011; 
- Wed, 20 May 2026 10:18:29 -0700 (PDT)
-Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-36a3c83f226sm254416a91.0.2026.05.20.10.18.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 10:18:28 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ bh=G7thKSWIjg5/qhPYDC+RiNGQD44Efn4uAyXrn4XVW5U=;
+ b=mlLJOklCC5cWOJ+JJk+m7Vt4Gh0+RSEPKoWEgNG8lK6No9/YYQT7h9u33IjpVpenyf
+ saaKy/8tu060qXuclVjkDBJbpgGXfhVQXcxp1h+gq+eXGi9KBECuUMc364enNfhHJtxm
+ rScGcuQWO0BfGWzDwjqMNfL1/96cRS5KS+QZ65X7yCHspiG5u0vv8sraCls2M/ijiyDn
+ NoJp0mfB4NCabpZC+N2beYGwf9plo3T65VsgnDrMheU33awQaiV0lgZE5Nsa9OXsAelY
+ HVAIUQW/6cHvTRhvyqclNl82Ew0Eb4IHdVo9sbhp82GhQyoJJT3hbiULB6MwywU2dzqY
+ y3gA==
+X-Gm-Message-State: AOJu0YzZ/7zBvUdhnCw35PEsXmazc0ROAaX7BgIh4K/jROVQ5rFZYeNa
+ SqEMZvzQy+3RWrgKrhbo4aaJQi0oOAKsTrg5nNg80AsU9qUkbxuIYIQHZ+hebRFQad/d+0YXQMC
+ ogqX2hgA=
+X-Gm-Gg: Acq92OFFGObgVBKtL4vAk95OXsHDOxUUaSfgDX7ZCkG/yz33uKFoXiHuaVY3ZdbqU5/
+ 0hOlhtJMH8QL43+m1KnqOCFXvnhjupjt4f5F35S4VVHkI9FhW9boivcidvwRf9HEGOl7nEVnK1s
+ 5ZNi1kaOIrmEb6U44yDoH0WKG9wT4n2qeR/m/3WFBIFjM+vvM3XAutUjElVmjQ4hV7lMo5Hmn3x
+ rHcvy6l+FNHE2F25elVFZs5EhI9KUGphLILowq4gKrMObN5+vV4TihwjrNDDr9PhNwG7YgOcjcD
+ lRukjUxMo0wtkyL6boTAUVA1t2T6bK3mq3gp2G6SIl3b1gsXgIq1p0sk7qTNaKQKQhco0qO+HTh
+ 8S5DAXHXCRVwqhaKC9VISbUzCqBqkL3l9oc1FVbWMEu/wZxMTdXIiTyMNSRRVQoObeiUnWZATE7
+ 43DGtlVTDg9pm/OSMNMz2lOIY7iEH8LrkaXEn+W/YmH8cSoF3gnw/VMaMGpQ5R4/7eDDXTcXOrq
+ xi/P+EJhHk=
+X-Received: by 2002:a05:600c:3b12:b0:488:a824:fdff with SMTP id
+ 5b1f17b1804b1-48fe61ed2cfmr366192695e9.22.1779297854350; 
+ Wed, 20 May 2026 10:24:14 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49033d2fa0dsm6569005e9.2.2026.05.20.10.24.13
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 20 May 2026 10:24:13 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v5 10/30] fpu: Introduce FloatExceptionFlags
-Date: Wed, 20 May 2026 10:18:00 -0700
-Message-ID: <20260520171820.848839-11-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260520171820.848839-1-richard.henderson@linaro.org>
-References: <20260520171820.848839-1-richard.henderson@linaro.org>
+Cc: James Hilliard <james.hilliard1@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v12 08/24] target/mips: split Octeon SEQ/SNE decode
+Date: Wed, 20 May 2026 19:22:56 +0200
+Message-ID: <20260520172313.23777-9-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260520172313.23777-1-philmd@linaro.org>
+References: <20260520172313.23777-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,124 +101,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have, in the past, used any of uint8_t, uint16_t or int
-to hold the set of exception flags.  Use a typedef instead.
+From: James Hilliard <james.hilliard1@gmail.com>
 
+Decode the equality and inequality forms as explicit SEQ/SNE
+instructions rather than using shared generated SEQNE entries.
+
+The explicit decoder names match the architectural mnemonics, which
+makes the translator entry points and trace/debug output easier to
+correlate with the instruction set.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+[PMD: Split SEQNE (this patch) vs SEQNEI]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/fpu/softfloat-helpers.h | 6 ++++--
- include/fpu/softfloat-types.h   | 4 +++-
- include/fpu/softfloat.h         | 2 +-
- fpu/softfloat.c                 | 2 +-
- fpu/softfloat-parts.c.inc       | 7 ++++---
- 5 files changed, 13 insertions(+), 8 deletions(-)
+ target/mips/tcg/octeon.decode                 |  3 +-
+ target/mips/tcg/octeon_translate.c            | 25 +++++++------
+ tests/tcg/mips/user/isa/octeon/octeon-insns.c | 36 +++++++++++++++++++
+ 3 files changed, 52 insertions(+), 12 deletions(-)
 
-diff --git a/include/fpu/softfloat-helpers.h b/include/fpu/softfloat-helpers.h
-index 90862f5cd2..745a49f07a 100644
---- a/include/fpu/softfloat-helpers.h
-+++ b/include/fpu/softfloat-helpers.h
-@@ -64,7 +64,8 @@ static inline void set_float_rounding_mode(FloatRoundMode val,
-     status->float_rounding_mode = val;
+diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+index 102a05860df..2c54901f77e 100644
+--- a/target/mips/tcg/octeon.decode
++++ b/target/mips/tcg/octeon.decode
+@@ -38,7 +38,8 @@ DMUL         011100 ..... ..... ..... 00000 000011 @r3
+ EXTS         011100 ..... ..... ..... ..... 11101 . @bitfield
+ CINS         011100 ..... ..... ..... ..... 11001 . @bitfield
+ POP          011100 rs:5 00000 rd:5 00000 10110 dw:1
+-SEQNE        011100 rs:5 rt:5 rd:5 00000 10101 ne:1
++SEQ          011100 ..... ..... ..... 00000 101010 @r3
++SNE          011100 ..... ..... ..... 00000 101011 @r3
+ SEQNEI       011100 rs:5 rt:5 imm:s10 10111 ne:1
+ 
+ &lx          base index rd
+diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+index b7531653e58..dfbb55e3fc3 100644
+--- a/target/mips/tcg/octeon_translate.c
++++ b/target/mips/tcg/octeon_translate.c
+@@ -106,29 +106,32 @@ static bool trans_POP(DisasContext *ctx, arg_POP *a)
+     return true;
  }
  
--static inline void set_float_exception_flags(int val, float_status *status)
-+static inline void
-+set_float_exception_flags(FloatExceptionFlags val, float_status *status)
+-static bool trans_SEQNE(DisasContext *ctx, arg_SEQNE *a)
++static bool do_seq_sne(DisasContext *ctx, const arg_decode_ext_octeon1 *a,
++                       TCGCond cond)
  {
-     status->float_exception_flags = val;
- }
-@@ -146,7 +147,8 @@ static inline FloatRoundMode get_float_rounding_mode(const float_status *status)
-     return status->float_rounding_mode;
+     TCGv_i64 t0, t1;
+ 
+-    if (a->rd == 0) {
+-        /* nop */
+-        return true;
+-    }
+-
+     t0 = tcg_temp_new_i64();
+     t1 = tcg_temp_new_i64();
+ 
+     gen_load_gpr(t0, a->rs);
+     gen_load_gpr(t1, a->rt);
+ 
+-    if (a->ne) {
+-        tcg_gen_setcond_i64(TCG_COND_NE, cpu_gpr[a->rd], t1, t0);
+-    } else {
+-        tcg_gen_setcond_i64(TCG_COND_EQ, cpu_gpr[a->rd], t1, t0);
+-    }
++    tcg_gen_setcond_i64(cond, t0, t1, t0);
++    gen_store_gpr(t0, a->rd);
+     return true;
  }
  
--static inline int get_float_exception_flags(const float_status *status)
-+static inline FloatExceptionFlags
-+get_float_exception_flags(const float_status *status)
- {
-     return status->float_exception_flags;
- }
-diff --git a/include/fpu/softfloat-types.h b/include/fpu/softfloat-types.h
-index ead146c22d..5048faa76f 100644
---- a/include/fpu/softfloat-types.h
-+++ b/include/fpu/softfloat-types.h
-@@ -181,6 +181,8 @@ enum {
-     float_flag_input_denormal_used = 0x4000,
- };
- 
-+typedef uint16_t FloatExceptionFlags;
++static bool trans_SEQ(DisasContext *ctx, arg_SEQ *a)
++{
++    return do_seq_sne(ctx, a, TCG_COND_EQ);
++}
 +
- /*
-  * Rounding precision for floatx80.
-  */
-@@ -385,7 +387,7 @@ typedef enum __attribute__((__packed__)) {
-  */
- 
- typedef struct float_status {
--    uint16_t float_exception_flags;
-+    FloatExceptionFlags float_exception_flags;
-     FloatRoundMode float_rounding_mode;
-     FloatX80RoundPrec floatx80_rounding_precision;
-     FloatX80Behaviour floatx80_behaviour;
-diff --git a/include/fpu/softfloat.h b/include/fpu/softfloat.h
-index 1580d956d5..4ae4ddc799 100644
---- a/include/fpu/softfloat.h
-+++ b/include/fpu/softfloat.h
-@@ -101,7 +101,7 @@ typedef enum {
- | Routine to raise any or all of the software IEC/IEEE floating-point
- | exception flags.
- *----------------------------------------------------------------------------*/
--static inline void float_raise(uint16_t flags, float_status *status)
-+static inline void float_raise(FloatExceptionFlags flags, float_status *status)
++static bool trans_SNE(DisasContext *ctx, arg_SNE *a)
++{
++    return do_seq_sne(ctx, a, TCG_COND_NE);
++}
++
+ static bool trans_SEQNEI(DisasContext *ctx, arg_SEQNEI *a)
  {
-     status->float_exception_flags |= flags;
+     TCGv_i64 t0;
+diff --git a/tests/tcg/mips/user/isa/octeon/octeon-insns.c b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
+index f406726fc11..3c3802ebfee 100644
+--- a/tests/tcg/mips/user/isa/octeon/octeon-insns.c
++++ b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
+@@ -54,11 +54,47 @@ static uint64_t octeon_dpop(uint64_t rs)
+     return rd;
  }
-diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index df94f299e1..391d8f3169 100644
---- a/fpu/softfloat.c
-+++ b/fpu/softfloat.c
-@@ -2976,7 +2976,7 @@ static int64_t float128_to_int64_scalbn(float128 a, FloatRoundMode rmode,
- static Int128 float128_to_int128_scalbn(float128 a, FloatRoundMode rmode,
-                                         int scale, float_status *s)
+ 
++static uint64_t octeon_seq(uint64_t rs, uint64_t rt)
++{
++    uint64_t rd;
++
++    asm volatile(
++        "move $8, %[rs]\n\t"
++        "move $9, %[rt]\n\t"
++        ".word 0x7109502a\n\t" /* seq $10, $8, $9 */
++        "move %[rd], $10\n\t"
++        : [rd] "=r" (rd)
++        : [rs] "r" (rs), [rt] "r" (rt)
++        : "$8", "$9", "$10");
++
++    return rd;
++}
++
++static uint64_t octeon_sne(uint64_t rs, uint64_t rt)
++{
++    uint64_t rd;
++
++    asm volatile(
++        "move $8, %[rs]\n\t"
++        "move $9, %[rt]\n\t"
++        ".word 0x7109502b\n\t" /* sne $10, $8, $9 */
++        "move %[rd], $10\n\t"
++        : [rd] "=r" (rd)
++        : [rs] "r" (rs), [rt] "r" (rt)
++        : "$8", "$9", "$10");
++
++    return rd;
++}
++
+ int main(void)
  {
--    int flags = 0;
-+    FloatExceptionFlags flags = 0;
-     Int128 r;
-     FloatParts128 p = float128_unpack_canonical(a, s);
+     assert(octeon_baddu(0x123, 0x0f0) == 0x13);
+     assert(octeon_dmul(0x12345678, 0x10) == 0x123456780);
+     assert(octeon_dpop(0xf0f0f0f0f0f0f0f0ULL) == 32);
++    assert(octeon_seq(0xabc, 0xabc) == 1);
++    assert(octeon_seq(0xabc, 0xdef) == 0);
++    assert(octeon_sne(0xabc, 0xabc) == 0);
++    assert(octeon_sne(0xabc, 0xdef) == 1);
  
-diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index 4715187017..bc348f75a3 100644
---- a/fpu/softfloat-parts.c.inc
-+++ b/fpu/softfloat-parts.c.inc
-@@ -297,7 +297,8 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
-     const uint64_t roundeven_mask = round_mask | frac_lsb;
-     uint64_t inc;
-     bool overflow_norm = saturate;
--    int exp, flags = 0;
-+    int exp;
-+    FloatExceptionFlags flags = 0;
- 
-     switch (s->float_rounding_mode) {
-     case float_round_nearest_even_max:
-@@ -1256,7 +1257,7 @@ static int64_t partsN(float_to_sint)(FloatPartsN *p, FloatRoundMode rmode,
-                                      int scale, int64_t min, int64_t max,
-                                      float_status *s)
- {
--    int flags = 0;
-+    FloatExceptionFlags flags = 0;
-     uint64_t r;
- 
-     switch (p->cls) {
-@@ -1324,7 +1325,7 @@ static int64_t partsN(float_to_sint)(FloatPartsN *p, FloatRoundMode rmode,
- static uint64_t partsN(float_to_uint)(FloatPartsN *p, FloatRoundMode rmode,
-                                       int scale, uint64_t max, float_status *s)
- {
--    int flags = 0;
-+    FloatExceptionFlags flags = 0;
-     uint64_t r;
- 
-     switch (p->cls) {
+     return 0;
+ }
 -- 
-2.43.0
+2.53.0
 
 
