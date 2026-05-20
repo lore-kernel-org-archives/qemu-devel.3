@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C3ADCD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 06:52:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F205FCD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 06:52:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPalQ-0005yu-9H; Wed, 20 May 2026 02:50:44 -0400
+	id 1wPalf-0007cZ-TA; Wed, 20 May 2026 02:51:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wPak0-0003Zr-F8; Wed, 20 May 2026 02:49:21 -0400
+ id 1wPak4-0003ek-Hj; Wed, 20 May 2026 02:49:24 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wPajv-0001Np-UO; Wed, 20 May 2026 02:49:16 -0400
+ id 1wPajy-0001Vo-6l; Wed, 20 May 2026 02:49:18 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64K6lnbp096590
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64K6lnbS096590
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 20 May 2026 15:48:20 +0900 (JST)
+ Wed, 20 May 2026 15:48:14 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=mBBHQ1VTf+2PlEkElrcvpPbx3CON12FYfmnvDI9gLjg=; 
+DKIM-Signature: a=rsa-sha256; bh=8a6bvlTuea84EBMqO+eyWCjGlVXfEUxyp3Wtr3y1GOc=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1779259700; v=1;
- b=WgFFOgryWGrtSOCJzq8FaimfoN+x4EwRYfivke1qh7ahwF/AoaH9s3e2amXWfCso
- hS+dCI7pBz6EuawH6d7DX3sSwuD0NhCHLhUl27SQEm7FbIr70mgjwXCFmLlbACB2
- GFrXQUnbNtFPOJK9M+PmxPv3+dlYldihTCn7eQNdn0u6bMdWYruxfBl/YXHlE7vC
- APnsPXumPjhPcnWdZ5hrTChXcp2n7I4XVLXT8IZS9dQyQ3yGZZyZ77aHjtBG0XAG
- ZU3k+MrQ9vZqRbBWQxa5tlwWPOTS62mOKFlsb4ytqvCK5Bi2/46NZEn+cJlLWj8d
- 8aQrrtXBXEHff0ZCrvyKGA==
+ s=rs20250326; t=1779259694; v=1;
+ b=pI7w8gUiARK/fqSyYKf/UsGgZuL6IgEqVGklB5+MjdJSpnwI/GoyMm+vkdEGNL6M
+ +k0J07OR8VAPWvbm2N1rZv9hrfoXk+zAZ46p+TjAySqmXoQrzt1dhs4vPaqVWN5L
+ NIq+vHm4FBoPsadm3vusHoQPXxll8EvrZu7AHc330w1xNLgHCn64zhhw2xy2Nhlc
+ TBe5kqAoH6Kb9voDdxVRVvajOb+abN1L4WrGWhEnrGjleblRLFez3Rr1hIv3mTAG
+ ogrkCJjXAxWDbKG4kGKjdzq/o96x3u2JwHVdjcrv51q4SdXfbaIeHpHD7frrPNcz
+ gCzQzsmbJ8Wk/DIAYoE71A==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 20 May 2026 15:48:11 +0900
-Subject: [PATCH v3 28/29] ui/console: Remove qemu_text_console_put_qcode()
+Date: Wed, 20 May 2026 15:47:48 +0900
+Subject: [PATCH v3 05/29] ui/input: Prohibit sending KEY_RESERVED
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260520-input-v3-28-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260520-input-v3-5-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260520-input-v3-0-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260520-input-v3-0-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -58,13 +58,13 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-16047
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1398;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=958;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=C63tP0iZbxdD8kjzxdJMHRp9M2ek6vZNjpjn0lEfMP4=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZvpHbKxTvV3OI13qGPBd7uPXp90Xq7z2L5Fy5btbJoz
- 1mRe92lo5SFQYyLQVZMkSWlaDe3RnTtp8KE+BaYOaxMIEMYuDgF4CJWDH9494dbPQnZ4Hd57Zqq
- MDWRC0+2GNxZ0BkZFcy32ds7as1Zhv8JBwOuevy+fPLs1EfH2v8dqK+csPzrZtWXDPtdpjs8TPb
- jAAA=
+ bh=7jBV47aBdF4xwrNjqZEVVcZEqPjD3R0oFvgoCupojQc=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZvpMxd84DbuSesfrlyWQj5pDROfyExZZPv/VfPt3D9E
+ rf/vvFJRykLgxgXg6yYIktK0W5ujejaT4UJ8S0wc1iZQIYwcHEKwET6jzMyrCuerP9bp4XPMa96
+ a4jiSv0Qz4Kg+uMyXrOnOPfusHOIYPhfHzzxbGC6NDPnuU8svm94L2WeLHzpL6c/rYF1VvfRlmU
+ 8AA==
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -90,43 +90,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is no longer used.
+xenfb and virtio-input no longer need key mapping because they operate
+on Linux key codes, but removing the key mapping code loses the ability
+to filter out KEY_RESERVED. Drop KEY_RESERVED at the common input event
+entry point so the logic is shared by both devices and no downstream
+input handler receives KEY_RESERVED accidentally.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- include/ui/console.h | 1 -
- ui/console.c         | 6 ------
- 2 files changed, 7 deletions(-)
+ ui/input.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 691040f5948d..a31c5a4995c6 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -108,7 +108,6 @@ bool qemu_mouse_set(int index, Error **errp);
- #define QEMU_KEY_CTRL_PAGEDOWN   0xe407
+diff --git a/ui/input.c b/ui/input.c
+index aeb7bf35e196..68c7ac6f1ccb 100644
+--- a/ui/input.c
++++ b/ui/input.c
+@@ -328,6 +328,10 @@ void qemu_input_event_send_impl(QemuConsole *src, QemuInputEvent *evt)
  
- void qemu_text_console_put_keysym(QemuTextConsole *s, int keysym);
--bool qemu_text_console_put_qcode(QemuTextConsole *s, int qcode, bool ctrl);
- bool qemu_text_console_put_linux(QemuTextConsole *s, unsigned int lnx,
-                                  bool ctrl);
- void qemu_text_console_put_string(QemuTextConsole *s, const char *str, int len);
-diff --git a/ui/console.c b/ui/console.c
-index 2dcb4660fbf8..a7c977d0c448 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -328,12 +328,6 @@ static const int ctrl_linux_to_keysym[] = {
-     [KEY_PAGEDOWN]   = QEMU_KEY_CTRL_PAGEDOWN,
- };
- 
--bool qemu_text_console_put_qcode(QemuTextConsole *s, int qcode, bool ctrl)
--{
--    unsigned int lnx = qemu_input_map_qcode_to_linux[qcode];
--    return qemu_text_console_put_linux(s, lnx, ctrl);
--}
--
- bool qemu_text_console_put_linux(QemuTextConsole *s, unsigned int lnx,
-                                  bool ctrl)
+ void qemu_input_event_send(QemuConsole *src, QemuInputEvent *evt)
  {
++    if (evt->type == INPUT_EVENT_KIND_KEY && !evt->key.key) {
++        return;
++    }
++
+     if (!runstate_is_running() && !runstate_check(RUN_STATE_SUSPENDED)) {
+         return;
+     }
 
 -- 
 2.54.0
