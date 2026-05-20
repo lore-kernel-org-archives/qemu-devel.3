@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD110CD5BA4
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:33:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 427B1CD5BA4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:33:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPkmb-00019b-QN; Wed, 20 May 2026 13:32:37 -0400
+	id 1wPkn8-0001E2-Mv; Wed, 20 May 2026 13:33:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkmZ-00017V-B2
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:32:35 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkmy-0001DP-IN
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:33:00 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkmX-0006Hl-TR
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:32:35 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-43d734223e4so3429523f8f.0
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:32:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkmw-0006Je-PY
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:33:00 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-48d146705b4so57353705e9.3
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:32:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779298351; x=1779903151; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779298375; x=1779903175; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=afRBcGJZaxZyWumDXRYkMJZ1DDVT72g/NpP4pLTAXMc=;
- b=AQvC+wFhaH0QkTRNytMOHn/q56eYJ/V2Xux/FU+3TGhxtZmW2YEgci0RHZk35Leh5U
- m0x6/EqT9Kx68TzCLQD1R/nlUgwQx2FGgwXy1o0b0AMdlgqK1W6O5uFhfivi+M/PWoWw
- it11WO01/SWf/cyN9yknNPBCh3XJHgETjlV1Qdi8+UJWyGrrAY3kHSwZ6pVCaKHwIw4i
- iND5I4VwsXnDducZMbtA74aHDnCRDtSKrG/2qh6QtTuEjXuLTHGMojdXK62tw0a2hRM6
- s6oOtbq/c7RdXqt3j0j2lh/2XQ8K1b44Yjqqm1ddBtR7RTkuUwA1RAGk9oNnn0J6Rhbi
- 9ajA==
+ bh=2NoS9s6sdPh7U1yDuUjUaHWiB1s4GMuflykDH1EecJs=;
+ b=YHj0PXUfAo36waW685/ljyNshODLuy6xUKkTZ+XGNoGR6jSjqRlyvtUltv6rl7Jg6u
+ Pds+wMWeWpbWLT+97RH/mRVNUM+OCbzo5yeg+p07RSow8+V9qhUNXimNqinR86p46QP7
+ B5wooXeNDKx77K7mbsg13EhEgUuqfnt5w891Uy3MMdD6uV4Xvl5/97wkeDId048Zdata
+ ZktIrbhQnyTofx8WGqPFc1Ub2o4bJpIJ1AG9QB/pV79QYIa8RkOCqsFwr/zSkLaorcGK
+ H4HYC1pn4gkLz18uoluzXedOGFZC//FfDtA056fnn36kb//MG+92U5bgVP+MLYGUDye4
+ J4Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779298351; x=1779903151;
+ d=1e100.net; s=20251104; t=1779298375; x=1779903175;
  h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=afRBcGJZaxZyWumDXRYkMJZ1DDVT72g/NpP4pLTAXMc=;
- b=F/EfG/8mQ+duGCiWs2hFg9GmzvgzyeGgRhuwdWxT5cnqfIK9QSh4GT0awnG1+1aOYb
- XYJuKnxid//94Z4ME5q5kOWGEfFxn12zl4VRsZOc1vlwGDl8qocqtMcLoJT+1SJ0wVvp
- 3q58btSlyQP5/NIvYLXlOoODa4HotdiQPQVTz65AnTodPTCoPREztefAt0rnJVTwp5IZ
- 81Hidtf9HczKX6bXbA/Yo/VKVAgICXjCVP/1DqcU5vtFr8XVrJPdcXL5zUX5uCYJDWf5
- m+aHCX+1q1ifDJMfB+p51fjR1sx/cT0Dg+nI6mhzpfwlLqjPdkRuWRyE0alh9r536UaX
- B5pw==
-X-Gm-Message-State: AOJu0YxwUA0WAb5Xh3RtxVw/0gZ7wKuUGtZdVb8rmvtKVHPxoYhNB+yr
- weDG4x/HYcYDIAT3FPJ24UqbsNbbDjTokwsruPAq/7wleTqs5k9oDwXEJjkqlFK8iT//8/jqLnl
- 2BN1xjAI=
-X-Gm-Gg: Acq92OExIBBztg3lnqnaOfX3PU2ZUv9ckePqFu4tV06qPJjfvyyYXFbUviiFWsydNMT
- 5mYhggmWL2vjTr+Ur6a6+nxTRE+c81NqmCgeEG0E8zQk7y77s0FkBgsMTxG4NqlrN9efDx+xDKd
- zMi1SUAEQ7BQNXVmuz42GHsCv/fBWWNIFuB7kVW+WantHakVTefPqLmigqkoqrkOJgpKPiZhdlE
- K0+GTrDzzgyjezeiSNiCupGh9CAHEm30r+puqACfk6oKlTLL6zm0pIxUh2YSh5x+TQvmeXgqEsx
- zHdDp1sSefYnu8BmkxxSr2O1BszWy1nv4iiWQntgEohXPT/1V+g8A0qCTgiZthLBRDvXVNWL5LV
- NCXu1rnW2i3WzIB/by+QEg6sqiZtaNlc2L99lovbfNVIqRsYxNRVgwO2SwLYKYowyIOzL+y0OAZ
- hrb/Mi5qd5QWrB/t9M+5T8t6KY6TUVPDNo7LjwyP/sk5lMxv33F8A5bRdqGkdpFizVhxl7R5mlj
- qXr
-X-Received: by 2002:a05:6000:471a:b0:452:f380:5508 with SMTP id
- ffacd0b85a97d-45ea0aac013mr717130f8f.0.1779298350661; 
- Wed, 20 May 2026 10:32:30 -0700 (PDT)
+ bh=2NoS9s6sdPh7U1yDuUjUaHWiB1s4GMuflykDH1EecJs=;
+ b=YZo7KuIoyfuZNDkAHmnSRjFWfRu4B1Q9LwsGI6YkXYf3hk4APt7wKaVEf2TPBLWAxS
+ FvRIaKOMIQZY95CAomFhtw7tFyFs+Q9uJLN5Qos0yFarKsxfzAHwWAzaqMG1k95h215+
+ yumEZyKXphcw1hYg1+8uS9YkMSvPuvZwmV3JPD0jJObQJ/QNuW6H8xgIBVuK0X/z5KDb
+ BhuEmYIp8QGWSvGCGsYFye43fPl/YoAokBes+wphz9MvsaZvfUbWgH/aomC6iE2qOm03
+ WGavcTE3eB98HoXQnxzYTZYymHG+EWaWGnO+cVJXzoU4qI2uTDBfHHgNUCYAOjxCLylK
+ Zvww==
+X-Gm-Message-State: AOJu0YxakEQgaw2sPKjbIB0ogsTuqRmGiJPUukyKOr6G6iPfbe0fA9DX
+ /8U69aq9EqXRt7s4c0DkH3pKP2anKlQrQo5dCacXCDlsN+VO8jlpm+7HmB6b+hESNPOVaRrpgge
+ lQ53DNoM=
+X-Gm-Gg: Acq92OGSbpz76bUA0LXR2Dj8FQ6NAOu3OJjAuikOnQDloFFxLwnAOPxQ/rQyvZHzRwP
+ poStlDBiBh45RTIlrOe3pOWczU9Q0vFySxBgVrFud6pKyUWMyKYRcsnAbNaKZA4/795dq+DOxkr
+ JQCAnBvdoZ26gPcIqr3qj6XPp65HSymbPC7/2W4J5qjSBjxHJOM94fnsn2peETL1YaV8qXV3yrL
+ jTJMR5B8v+1NOG8LOkV7UZcmtPEMFRuj1te2FiJhJ7eTCDb+90ciQ76CXe2ggO1g4ExWXViaAJl
+ LBvyvIn05FAJt5WQBjK955Y6KZDs9ZbxgxzO9arCHhjCcwMECdOVdKPMcoFdhwBVlpcd0CB8neO
+ UysSVLrBBTlpTjTH1JkesRuzxklGB4Q7KzNGhPQuhn8GYeJKg7ETvDypOacO0Ia8FqdS52wPWHL
+ ynJ4TuHLcFBtODTiZpxhM8yxYr0Z/hHG0ub06RUmwK3Ylzkeg/PxKwev5aRoHayzRLWg==
+X-Received: by 2002:a05:600c:a293:b0:48f:e6de:1cc6 with SMTP id
+ 5b1f17b1804b1-48fe6de1e03mr245337015e9.32.1779298375102; 
+ Wed, 20 May 2026 10:32:55 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da15a6449sm55497577f8f.37.2026.05.20.10.32.29
+ 5b1f17b1804b1-49033d34fd4sm7222485e9.2.2026.05.20.10.32.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 May 2026 10:32:30 -0700 (PDT)
-Message-ID: <a70840dc-3e51-43c7-bdb7-4ce0301d00d5@linaro.org>
-Date: Wed, 20 May 2026 19:32:29 +0200
+ Wed, 20 May 2026 10:32:54 -0700 (PDT)
+Message-ID: <8122b83b-e8d1-4ef4-981f-bef024ec1a63@linaro.org>
+Date: Wed, 20 May 2026 19:32:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 19/24] target/mips: add Octeon MTP instructions
+Subject: Re: [PATCH v12 15/24] target/mips: add Octeon ZCB and ZCBT
+ instructions
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: James Hilliard <james.hilliard1@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>
 References: <20260520172313.23777-1-philmd@linaro.org>
- <20260520172313.23777-20-philmd@linaro.org>
-In-Reply-To: <20260520172313.23777-20-philmd@linaro.org>
+ <20260520172313.23777-16-philmd@linaro.org>
+In-Reply-To: <20260520172313.23777-16-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,23 +107,20 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 20/5/26 19:23, Philippe Mathieu-Daudé wrote:
 > From: James Hilliard <james.hilliard1@gmail.com>
 > 
-> Add the MTP0, MTP1, and MTP2 forms. MTP0 loads the low Octeon3
-> partial-product pair from rs/rt into P[0]/P[3], MTP1 loads the middle
-> pair into P[1]/P[4], and MTP2 loads the high pair into P[2]/P[5].
-> For MTP0, also set P[1] to zero for backward compatibility with
-> Octeon2 VMULU.
+> ZCB zeros the 128-byte cache block containing the base address. ZCBT has
+> the same user-mode-visible memory effect for QEMU purposes.
 > 
-> Legacy single-source encodings have rt encoded as $zero, so the same
-> translator path also preserves the older Octeon behavior.
+> Model both forms with a single decodetree wildcard entry, align the
+> address down to a 128-byte line, and store eight zero 128-bit chunks to
+> guest memory.
 > 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Acked-by: Richard Henderson <richard.henderson@linaro.org>
 > Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/mips/tcg/octeon.decode      |  4 ++++
->   target/mips/tcg/octeon_translate.c | 23 +++++++++++++++++++++++
->   2 files changed, 27 insertions(+)
+>   target/mips/tcg/octeon.decode      |  3 +++
+>   target/mips/tcg/octeon_translate.c | 25 +++++++++++++++++++++++++
+>   2 files changed, 28 insertions(+)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
