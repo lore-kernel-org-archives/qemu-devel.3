@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0F22CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:53:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02A86CD4F5E
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:53:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPoqa-0007LN-NZ; Wed, 20 May 2026 17:53:04 -0400
+	id 1wPoqk-0007SL-VM; Wed, 20 May 2026 17:53:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wPoqK-0006c4-Dn
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:52:46 -0400
+ id 1wPoqR-0006xC-Rl
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:52:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wPoqG-0004rb-4R
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:52:43 -0400
+ id 1wPoqQ-0004ua-2P
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:52:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779313959;
+ s=mimecast20190719; t=1779313969;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ny5pfaZzFGmnGeeLq+0zzagTdWAYo/ZKZR1hucXAr/o=;
- b=KGTEECm9fbrZpdi43/WzYt3fwS/vo+chXEY/Eb5ZVHm6UP+03HMWBmK5rB53HRVU/zJRli
- WTIrkGH656GCLvpoaonUH3aUFi8XUWlpYSMiQ6ZQxHkGBytiFTUHkt4GGAfc7xEGRQEQpA
- zKSnqnVIAgdiO5875cddfkyb0ipnEC4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=UXCdTl3XnS/yX4EcgpbdGYdHJ0t5E9Vy5BN4DTXZ7Pk=;
+ b=dEH3rdYKj9Ycwrt+0XnWQKkauBL6IhqWmfrVAPXZ6SgLWHuxThdiRT+oZ7YUDlLSUCDvkm
+ FbY2FSI0N/tRK7RkO9I8x51km1g6MKFgm3qHfxrMwhcoLKPbXKMr7JW/hzM/Yp9VGsc+Hc
+ eIlWK4utKqMqNM2dH0gnWPGdmASBiGw=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-224-oncClGRANt69-Zel-2WzbQ-1; Wed,
- 20 May 2026 17:52:37 -0400
-X-MC-Unique: oncClGRANt69-Zel-2WzbQ-1
-X-Mimecast-MFC-AGG-ID: oncClGRANt69-Zel-2WzbQ_1779313956
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-178-CNevShqjPt-N63Pe09jgFg-1; Wed,
+ 20 May 2026 17:52:47 -0400
+X-MC-Unique: CNevShqjPt-N63Pe09jgFg-1
+X-Mimecast-MFC-AGG-ID: CNevShqjPt-N63Pe09jgFg_1779313967
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E78BC1956056
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 21:52:35 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 30BBE195609D
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 21:52:47 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.26])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 596051800576; Wed, 20 May 2026 21:52:33 +0000 (UTC)
+ id 2EB881800465; Wed, 20 May 2026 21:52:45 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 21 May 2026 01:49:26 +0400
-Subject: [PATCH 25/40] net: add x-query-network QMP command
+Date: Thu, 21 May 2026 01:49:28 +0400
+Subject: [PATCH 27/40] tests/qtest/cdrom-test: replace HMP "info block"
+ with QMP query-block
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260521-qemu-no-hmp-v1-25-d104f809e145@redhat.com>
+Message-Id: <20260521-qemu-no-hmp-v1-27-d104f809e145@redhat.com>
 References: <20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com>
 In-Reply-To: <20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=13500;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2121;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=mEYVeOV2ZIGJyvEI9qKJs0uDZEiQSgRpNCpRgeV0SYg=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqDiyDZ9dFwU7PunqOG9JNerHTuFYG07M1DSFRV
- P8HOZzmcAyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCag4sgwAKCRDa6OEJdZac
- 5UpQD/4tPB7DHYGVp567/uAXS15rfJCwTZ8zl44urI0FbtK/yKpl7VLpDAOaEHCdBu/ZOTZiAGq
- a97IyTqd/ANNClY8ktaQAT1E/b0G7nm8Ka4AAPPIJnSrK2KAyS7+xhx5rfPFgxgJ3edUwOWd0MF
- EXrnOK9qg+EoO34fCRAdo737L08kMNt6DXLx2e2JlU+9sbI4XEjOLssao+2eS3muNnA2uGpIYgb
- /b398oGmhqbwgeOj4LzvfT/H1TGIlcqvfBm+boSx/K0O3K+/Q6vod29TiBDA7AdrMelt1EwoLCz
- C527cCxZ2Intp2+h33C+55To/gTMOF2gbbkUtq4mHIileeahSgBw2y/mIU4C/zaC8qeH2mSV+im
- 7IBJ3+DP0k/+jqCYFIMESuCQLxakr45CvkwDgNINwzwEMTTMmdrY1RWouLj9h65qKDDyoIZxZ5p
- gAIJn5Lq8t7MKRdZhV0X70J5JGRoqtAIT+Qs50U67kM6iEX9vqTxl6kpVkuQ6eaJdTg2kK2ZId3
- p6MEpV56NcBePV0mjSNjsLkNZpUPyDd9mKXGteraxFcij9KJfzZPtRMEJ2gkJY/gbM1QmrUbAJ0
- JKqjENMMbenFBknMM+lHPWy9kVvNFYVLnPLEfEmM/1xGZfedHxhq5KYUe4DXXWf1GPhzRjKLjmj
- QYNk8Q3kIaa5SqA==
+ bh=28lV59NbZNzsPX8tOyozxy6UDf8rQI/n99c7klYsbi4=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqDiyDr8d7rBXS1WQWqBdrf08GX94PSCjYTDTAL
+ wzQe92E3y2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCag4sgwAKCRDa6OEJdZac
+ 5R61D/9fnlBbTgZeetXskKohEb1hXKQ7uQvbqq5tgj5CCnX48VdwYy7C5ot+P7Z/iO0yLFGt2rM
+ c3Ug+ql8w9CK3dgx7mN/dOuUHMIfoE9nww6d7uSdEGTwb5oM9FET9t7KrZXtTG2/wzabmKZ5p//
+ kBaQ+K5+TIxY1QQnC5MoFivPuv8yjFP/MXFrKH9FwyNTs+M5ElhI4p0yjRijL1GcHGEKORiajS4
+ aKPB+zQ4w2ztleWAd/vEjkeEwONM0SwpE8lXMgFFP8idXlEFql+nQVbcKjrEO7xmmb0SDaJNYTw
+ iOHs5tJ4oEFv4nuCvz/qSfo5fyPgcrUOnDm3lHKeEn4L602Eu7vcotI/izErEA5T5UNeB5oFQZa
+ zOKaw83FEiDI7JpXrrwV0AaR/k+EKNVdhHFIn/apcCYgQF7ZqGhY1otWBXSXR66uFqDoM0lb2Aa
+ cAiWpWrNjZT1aEdIuLc7WD4m4B0HrjRfsFRwDj7ozRLkw27+MTqdWmekYhB5DnQYDne/plueXt4
+ j3N5W+crrkdej7htH4XRLNY9FZPXWVxC7uLViDwd3yGOWEj99Oi262Y0sxCLqOvUKau7iD06oP9
+ 3A4qPfIOmJKgctbSgS6VR6fjkgbpbU6Imk3nyAzxlCJrzwGC/ZUr3ljpEhDudgaVXvGOXLLVz7q
+ FcApppfKaO/FnZw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
@@ -103,442 +104,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a structured x-query-network QMP command that returns network
-configuration as a NetworkInfo struct with pre-grouped hub information
-and a flat list of non-hub clients. Each hub includes its ports with
-inlined peer client info, and each client includes attached netfilter
-details.
-
-Refactor hmp_info_network() to consume only the QMP result instead of
-directly accessing internal net_clients state. This decouples HMP from
-internal data structures, making it possible to remove HMP support
-without losing programmatic network introspection.
+The test_cdrom_param() function uses qtest_hmp() to run "info block",
+which depends on the human-monitor-command QMP endpoint. Replace it
+with the QMP query-block command so the test works when HMP is
+disabled (-Dhmp=disabled).
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- qapi/net.json      | 122 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- include/net/net.h  |   3 +-
- net/hub.h          |   4 +-
- net/hub.c          |  29 +++++++------
- net/net-hmp-cmds.c |  59 +++++++++++++++++++-------
- net/net.c          |  70 +++++++++++++++++++++++-------
- 6 files changed, 243 insertions(+), 44 deletions(-)
+ tests/qtest/cdrom-test.c | 29 ++++++++++++++++++++++++-----
+ 1 file changed, 24 insertions(+), 5 deletions(-)
 
-diff --git a/qapi/net.json b/qapi/net.json
-index dd56215fd15..c329da9cec8 100644
---- a/qapi/net.json
-+++ b/qapi/net.json
-@@ -1235,3 +1235,125 @@
-   'returns': ['UsernetInfo'],
-   'if': 'CONFIG_SLIRP',
-   'features': [ 'unstable' ] }
-+
-+##
-+# @NetFilterInfo:
-+#
-+# Information about a netfilter attached to a network client.
-+#
-+# @name: filter object name (QOM path component)
-+#
-+# @type: QOM type name (e.g. "filter-mirror")
-+#
-+# @info: filter properties as comma-separated key=value pairs
-+#        (excluding @type)
-+#
-+# Since: 11.1
-+##
-+{ 'struct': 'NetFilterInfo',
-+  'data': {
-+    'name': 'str',
-+    'type': 'str',
-+    'info': 'str' } }
-+
-+##
-+# @NetworkClientInfo:
-+#
-+# Information about a network client.
-+#
-+# @name: unique network client identifier
-+#
-+# @queue-index: index of this queue (0 for single-queue clients)
-+#
-+# @type: network client driver type
-+#
-+# @info-str: driver-specific formatted information string (e.g.
-+#            "model=e1000,macaddr=52:54:00:12:34:56")
-+#
-+# @peer: the connected peer client (always a leaf; the peer's own
-+#        peer field is never populated)
-+#
-+# @filters: attached netfilters
-+#
-+# Since: 11.1
-+##
-+{ 'struct': 'NetworkClientInfo',
-+  'data': {
-+    'name': 'str',
-+    'queue-index': 'uint32',
-+    'type': 'NetClientDriver',
-+    'info-str': 'str',
-+    '*peer': 'NetworkClientInfo',
-+    'filters': ['NetFilterInfo'] } }
-+
-+##
-+# @NetHubPortInfo:
-+#
-+# Information about a hub port.
-+#
-+# @name: hub port identifier
-+#
-+# @peer: the network client connected through this port
-+#
-+# Since: 11.1
-+##
-+{ 'struct': 'NetHubPortInfo',
-+  'data': {
-+    'name': 'str',
-+    '*peer': 'NetworkClientInfo' } }
-+
-+##
-+# @NetHubInfo:
-+#
-+# Information about a network hub.
-+#
-+# @id: hub identifier
-+#
-+# @ports: list of ports on this hub
-+#
-+# Since: 11.1
-+##
-+{ 'struct': 'NetHubInfo',
-+  'data': {
-+    'id': 'int',
-+    'ports': ['NetHubPortInfo'] } }
-+
-+##
-+# @NetworkInfo:
-+#
-+# Information about the network configuration.
-+#
-+# @hubs: network hubs and their ports
-+#
-+# @clients: network clients not associated with a hub
-+#
-+# Since: 11.1
-+##
-+{ 'struct': 'NetworkInfo',
-+  'data': {
-+    'hubs': ['NetHubInfo'],
-+    'clients': ['NetworkClientInfo'] } }
-+
-+##
-+# @x-query-network:
-+#
-+# Query the network configuration including hubs and clients.
-+#
-+# Features:
-+#
-+# @unstable: This command is meant for debugging.
-+#
-+# Returns: @NetworkInfo describing hubs and clients.
-+#
-+# Since: 11.1
-+#
-+# .. qmp-example::
-+#
-+#     -> { "execute": "x-query-network" }
-+#     <- { "return": { "clients": [ { "name": "st0",
-+#                      "queue-index": 0, "type": "stream",
-+#                      "info-str": "listening" } ] } }
-+##
-+{ 'command': 'x-query-network',
-+  'returns': 'NetworkInfo',
-+  'features': [ 'unstable' ] }
-diff --git a/include/net/net.h b/include/net/net.h
-index 45bc86fc86b..0f0b524df00 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -274,7 +274,6 @@ DeviceState *qemu_create_nic_device(const char *typename, bool match_default,
- void qemu_create_nic_bus_devices(BusState *bus, const char *parent_type,
-                                  const char *default_model,
-                                  const char *alias, const char *alias_target);
--void print_net_client(Monitor *mon, NetClientState *nc);
- void net_socket_rs_init(SocketReadState *rs,
-                         SocketReadStateFinalize *finalize,
-                         bool vnet_hdr);
-@@ -325,6 +324,8 @@ void netdev_add(QemuOpts *opts, Error **errp);
+diff --git a/tests/qtest/cdrom-test.c b/tests/qtest/cdrom-test.c
+index a65854d2bc5..bf997be6d69 100644
+--- a/tests/qtest/cdrom-test.c
++++ b/tests/qtest/cdrom-test.c
+@@ -14,6 +14,7 @@
+ #include "libqtest.h"
+ #include "boot-sector.h"
+ #include "qobject/qdict.h"
++#include "qobject/qlist.h"
  
- int net_hub_id_for_client(NetClientState *nc, int *id);
+ static char isoimage[] = "cdrom-boot-iso-XXXXXX";
  
-+NetworkClientInfo *net_client_info(NetClientState *nc);
-+
- #define DEFAULT_NETWORK_SCRIPT CONFIG_SYSCONFDIR "/qemu-ifup"
- #define DEFAULT_NETWORK_DOWN_SCRIPT CONFIG_SYSCONFDIR "/qemu-ifdown"
- #define DEFAULT_BRIDGE_HELPER CONFIG_QEMU_HELPERDIR "/qemu-bridge-helper"
-diff --git a/net/hub.h b/net/hub.h
-index ce45f7b399d..cab6b1459b1 100644
---- a/net/hub.h
-+++ b/net/hub.h
-@@ -15,10 +15,12 @@
- #ifndef NET_HUB_H
- #define NET_HUB_H
- 
-+#include "qapi/qapi-types-net.h"
-+
- NetClientState *net_hub_add_port(int hub_id, const char *name,
-                                  NetClientState *hubpeer);
--void net_hub_info(Monitor *mon);
- void net_hub_check_clients(void);
- bool net_hub_flush(NetClientState *nc);
-+NetHubInfoList *net_hub_query_info(void);
- 
- #endif /* NET_HUB_H */
-diff --git a/net/hub.c b/net/hub.c
-index ee5881f6d5c..b53a4cc872c 100644
---- a/net/hub.c
-+++ b/net/hub.c
-@@ -14,7 +14,7 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
--#include "monitor/monitor.h"
-+#include "qapi/util.h"
- #include "net/net.h"
- #include "clients.h"
- #include "hub.h"
-@@ -199,26 +199,31 @@ NetClientState *net_hub_add_port(int hub_id, const char *name,
-     return &port->nc;
- }
- 
--/**
-- * Print hub configuration
-- */
--void net_hub_info(Monitor *mon)
-+NetHubInfoList *net_hub_query_info(void)
- {
-+    NetHubInfoList *head = NULL, **tail = &head;
-     NetHub *hub;
--    NetHubPort *port;
- 
-     QLIST_FOREACH(hub, &hubs, next) {
--        monitor_printf(mon, "hub %d\n", hub->id);
-+        NetHubInfo *hi = g_new0(NetHubInfo, 1);
-+        NetHubPortInfoList **ptail = &hi->ports;
-+        NetHubPort *port;
-+
-+        hi->id = hub->id;
-+
-         QLIST_FOREACH(port, &hub->ports, next) {
--            monitor_printf(mon, " \\ %s", port->nc.name);
-+            NetHubPortInfo *pi = g_new0(NetHubPortInfo, 1);
-+            pi->name = g_strdup(port->nc.name);
-             if (port->nc.peer) {
--                monitor_printf(mon, ": ");
--                print_net_client(mon, port->nc.peer);
--            } else {
--                monitor_printf(mon, "\n");
-+                pi->peer = net_client_info(port->nc.peer);
-             }
-+            QAPI_LIST_APPEND(ptail, pi);
-         }
-+
-+        QAPI_LIST_APPEND(tail, hi);
-     }
-+
-+    return head;
- }
+@@ -92,17 +93,35 @@ cleanup:
  
  /**
-diff --git a/net/net-hmp-cmds.c b/net/net-hmp-cmds.c
-index 2b24c9e6049..52ac8da770d 100644
---- a/net/net-hmp-cmds.c
-+++ b/net/net-hmp-cmds.c
-@@ -19,37 +19,66 @@
- #include "monitor/hmp-completion.h"
- #include "monitor/monitor.h"
- #include "net/net.h"
--#include "net/hub.h"
- #include "qapi/clone-visitor.h"
- #include "qapi/qapi-commands-net.h"
- #include "qapi/qapi-visit-net.h"
-+#include "qapi/error.h"
- #include "qobject/qdict.h"
- #include "qemu/config-file.h"
- #include "qemu/help_option.h"
- #include "qemu/option.h"
- 
--void hmp_info_network(Monitor *mon, const QDict *qdict)
-+static void hmp_print_client_info(Monitor *mon, NetworkClientInfo *ci)
+  * Check that at least the -cdrom parameter is basically working, i.e. we can
+- * see the filename of the ISO image in the output of "info block" afterwards
++ * see the filename of the ISO image in the output of "query-block" afterwards
+  */
+ static void test_cdrom_param(gconstpointer data)
  {
--    NetClientState *nc, *peer;
--    NetClientDriver type;
-+    NetFilterInfoList *f;
+     QTestState *qts;
+-    char *resp;
++    QDict *response;
++    QList *ret;
++    QListEntry *entry;
++    bool found = false;
+ 
+     qts = qtest_initf("-M %s -cdrom %s", (const char *)data, isoimage);
+-    resp = qtest_hmp(qts, "info block");
+-    g_assert(strstr(resp, isoimage) != 0);
+-    g_free(resp);
++    response = qtest_qmp(qts, "{'execute': 'query-block'}");
++    g_assert(response && qdict_haskey(response, "return"));
++    ret = qdict_get_qlist(response, "return");
 +
-+    monitor_printf(mon, "%s: index=%" PRIu32 ",type=%s,%s\n",
-+                   ci->name, ci->queue_index,
-+                   NetClientDriver_str(ci->type), ci->info_str);
-+    if (ci->filters) {
-+        monitor_printf(mon, "filters:\n");
-+        for (f = ci->filters; f; f = f->next) {
-+            monitor_printf(mon, "  - %s: type=%s%s%s\n",
-+                           f->value->name, f->value->type,
-+                           f->value->info[0] ? "," : "", f->value->info);
-+        }
-+    }
-+}
- 
--    net_hub_info(mon);
-+void hmp_info_network(Monitor *mon, const QDict *qdict)
-+{
-+    Error *err = NULL;
-+    g_autoptr(NetworkInfo) info = qmp_x_query_network(&err);
-+    NetHubInfoList *h;
-+    NetworkClientInfoList *entry;
- 
--    QTAILQ_FOREACH(nc, &net_clients, next) {
--        peer = nc->peer;
--        type = nc->info->type;
-+    if (hmp_handle_error(mon, err)) {
-+        return;
-+    }
- 
--        /* Skip if already printed in hub info */
--        if (net_hub_id_for_client(nc, NULL) == 0) {
--            continue;
-+    for (h = info->hubs; h; h = h->next) {
-+        NetHubPortInfoList *p;
-+
-+        monitor_printf(mon, "hub %d\n", (int)h->value->id);
-+        for (p = h->value->ports; p; p = p->next) {
-+            if (p->value->peer) {
-+                monitor_printf(mon, " \\ %s: ", p->value->name);
-+                hmp_print_client_info(mon, p->value->peer);
-+            } else {
-+                monitor_printf(mon, " \\ %s\n", p->value->name);
++    QLIST_FOREACH_ENTRY(ret, entry) {
++        QDict *entry_dict = qobject_to(QDict, entry->value);
++        QDict *inserted = qdict_get_qdict(entry_dict, "inserted");
++        if (inserted) {
++            const char *file = qdict_get_str(inserted, "file");
++            if (file && strstr(file, isoimage)) {
++                found = true;
++                break;
 +            }
-         }
++        }
 +    }
 +
-+    for (entry = info->clients; entry; entry = entry->next) {
-+        NetworkClientInfo *ci = entry->value;
- 
--        if (!peer || type == NET_CLIENT_DRIVER_NIC) {
--            print_net_client(mon, nc);
-+        if (!ci->peer || ci->type == NET_CLIENT_DRIVER_NIC) {
-+            hmp_print_client_info(mon, ci);
-         } /* else it's a netdev connected to a NIC, printed with the NIC */
--        if (peer && type == NET_CLIENT_DRIVER_NIC) {
-+        if (ci->peer && ci->type == NET_CLIENT_DRIVER_NIC) {
-             monitor_printf(mon, " \\ ");
--            print_net_client(mon, peer);
-+            hmp_print_client_info(mon, ci->peer);
-         }
-     }
- }
-diff --git a/net/net.c b/net/net.c
-index 2892f1730d1..2bcd229cd9d 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -1523,14 +1523,14 @@ void qmp_netdev_del(const char *id, Error **errp)
-     }
++    g_assert(found);
++    qobject_unref(response);
+     qtest_quit(qts);
  }
  
--static void netfilter_print_info(Monitor *mon, NetFilterState *nf)
-+static char *netfilter_get_info_str(NetFilterState *nf)
- {
-     char *str;
-     ObjectProperty *prop;
-     ObjectPropertyIterator iter;
-     Visitor *v;
-+    GString *buf = g_string_new(NULL);
- 
--    /* generate info str */
-     object_property_iter_init(&iter, OBJECT(nf));
-     while ((prop = object_property_iter_next(&iter))) {
-         if (!strcmp(prop->name, "type")) {
-@@ -1540,29 +1540,69 @@ static void netfilter_print_info(Monitor *mon, NetFilterState *nf)
-         object_property_get(OBJECT(nf), prop->name, v, NULL);
-         visit_complete(v, &str);
-         visit_free(v);
--        monitor_printf(mon, ",%s=%s", prop->name, str);
-+        if (buf->len > 0) {
-+            g_string_append_c(buf, ',');
-+        }
-+        g_string_append_printf(buf, "%s=%s", prop->name, str);
-         g_free(str);
-     }
--    monitor_printf(mon, "\n");
-+
-+    return g_string_free(buf, false);
- }
- 
--void print_net_client(Monitor *mon, NetClientState *nc)
-+static NetworkClientInfo *net_client_info_no_peer(NetClientState *nc)
- {
-+    NetworkClientInfo *info = g_new0(NetworkClientInfo, 1);
-     NetFilterState *nf;
- 
--    monitor_printf(mon, "%s: index=%d,type=%s,%s\n", nc->name,
--                   nc->queue_index,
--                   NetClientDriver_str(nc->info->type),
--                   nc->info_str);
-+    info->name = g_strdup(nc->name);
-+    info->queue_index = nc->queue_index;
-+    info->type = nc->info->type;
-+    info->info_str = g_strdup(nc->info_str);
-+
-     if (!QTAILQ_EMPTY(&nc->filters)) {
--        monitor_printf(mon, "filters:\n");
-+        NetFilterInfoList **ftail = &info->filters;
-+        QTAILQ_FOREACH(nf, &nc->filters, next) {
-+            NetFilterInfo *fi = g_new0(NetFilterInfo, 1);
-+            fi->name = g_strdup(
-+                object_get_canonical_path_component(OBJECT(nf)));
-+            fi->type = g_strdup(object_get_typename(OBJECT(nf)));
-+            fi->info = netfilter_get_info_str(nf);
-+            QAPI_LIST_APPEND(ftail, fi);
-+        }
-     }
--    QTAILQ_FOREACH(nf, &nc->filters, next) {
--        monitor_printf(mon, "  - %s: type=%s",
--                       object_get_canonical_path_component(OBJECT(nf)),
--                       object_get_typename(OBJECT(nf)));
--        netfilter_print_info(mon, nf);
-+
-+    return info;
-+}
-+
-+NetworkClientInfo *net_client_info(NetClientState *nc)
-+{
-+    NetworkClientInfo *info = net_client_info_no_peer(nc);
-+
-+    if (nc->peer) {
-+        info->peer = net_client_info_no_peer(nc->peer);
-     }
-+
-+    return info;
-+}
-+
-+NetworkInfo *qmp_x_query_network(Error **errp)
-+{
-+    NetworkInfo *info = g_new0(NetworkInfo, 1);
-+    NetworkClientInfoList **tail = &info->clients;
-+    NetClientState *nc;
-+
-+    info->hubs = net_hub_query_info();
-+
-+    QTAILQ_FOREACH(nc, &net_clients, next) {
-+        /* Skip if already gathered in hub info */
-+        if (net_hub_id_for_client(nc, NULL) == 0) {
-+            continue;
-+        }
-+        QAPI_LIST_APPEND(tail, net_client_info(nc));
-+    }
-+
-+    return info;
- }
- 
- RxFilterInfoList *qmp_query_rx_filter(const char *name, Error **errp)
 
 -- 
 2.54.0
