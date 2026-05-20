@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F145ECD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:19:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD25ECD5BA4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:19:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPkZE-0001Zn-4i; Wed, 20 May 2026 13:18:48 -0400
+	id 1wPkZQ-0001hX-Rk; Wed, 20 May 2026 13:19:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPkYy-0001Ld-Fn
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:33 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1wPkZ6-0001Qg-Ee
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:40 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPkYv-0001u4-IB
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:31 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-3664df30f53so3060373a91.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:18:28 -0700 (PDT)
+ id 1wPkZ1-0001xb-Gw
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:40 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-366375c4076so1991968a91.3
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:18:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779297508; x=1779902308; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779297514; x=1779902314; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=28S4s82CMOTDg2xJmEmm0cDg+zVY5zOgP1NUkaKd36M=;
- b=SvcgxZpw9A9X4wzEYg1KSPjMDz2Hw5SCTvSAKBaPq1sF1RG4sBZ9mb2Y6XRT6lI1UR
- w5DGICL7H5BuDBbgyHGtEIddlJEb8zTGnrpi40+ttDXlEraYGAWU/bzNgt2lZJyA+tjy
- KzfhBqYZ2KVoxApi8O7AGyhx7FmnOBW+WLcZIKmkjMmT+9nYNwkLv263r4OEFPYGxb0t
- pDhti3yTcu1MKlwMyhjR/Sgz7YW1nlMJJQgz3I6gmly1ZUeiGf9MDZVVNMMPEVgXXRFW
- q4ppJLLMkq44f8pGtdF/5Dszu9234RHqhrrvsYXY7YEAVK82sMu2n0QEQ19TflTjHH1B
- kw1w==
+ bh=gNRh84rUAghqHenrq+0cUxy5mrPbxSwReJ+c+zbc2c0=;
+ b=T51fXMyzBHgM9tR+FV3NOj9iEUhqfpDHbMC7b1gu2Afug/RgXy4k/2PXlB4Vmt2M8J
+ /kBRsviKZKEYtTDYdMtZm5nPidJUieAZvlMpIWLstt5fWP3MjX3WsNc2MAP4ci6oJ8jG
+ UcfptZj3i0vLuZ5XAiheFOn5MB6r1sZu3D0hPTNQp1VFGvqvykXzWF3sKs34A6cqg/B5
+ ZQSKZvm2ayM70dgx+QvbNzrk8PzjmBBf3UDfo7nwEWRYtkiv7XZHR/AwqZBq2Lmd925Z
+ jJdCh37lJQUIb7I0apWkuyclFguwoM+IhbbOtTmcLl5S3iJaLocbRmy+lP38CtBIFdId
+ HXIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779297508; x=1779902308;
+ d=1e100.net; s=20251104; t=1779297514; x=1779902314;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=28S4s82CMOTDg2xJmEmm0cDg+zVY5zOgP1NUkaKd36M=;
- b=UVg8qdhVZMFHBjGu2+Ea0Iva3PUf18zt/F8qCp+d8C9nA5el7QlWmgWg2TLOKdqDlu
- pG7RzLX/S/WKOCmd+lBSQpdr9W+j52MZu1/WkhyZf5s2lTBvMxm8bm7TuRrOQSk7IV7X
- qiiLhHji9vfBxMXcLOwf94rFdw2ul83423XniNITl9ylaKu1iu4q3LuUX77wLMRk8aqV
- 6Pa7EOPFvBtvQGZaht/IRNP5OR6gNDo4tUfk5kUxMpCwRSeqMj1hfWpXDif6Gd/kZ0oS
- X/t/kNq28Z1mGFsrd2t/4YoaK9WW7/sb/iy1WfTIO17YJ9ftXMiw2Oom5aGVEjmUT2zs
- s/oA==
-X-Gm-Message-State: AOJu0YxO2mMEa85p7li9RGMWKCTfJX0UDysO2yGs3fv/TTd21K/J5reD
- b6KJ6xt0M6fZm3D/iA55Tk2kQcNbi92DbE4zqP8KIcFUPQGbUgsUiX8+pqb/JvjlW/+15/9XFo1
- ONdeQ9Q8=
-X-Gm-Gg: Acq92OGXPwqU2g2p3SrcsQPTYvbNqSaxnd+JqTPBk6xW3ewhE1LKAmakgx5jxlRnVE2
- wEcfwI8WLfBqWEK6l9gqJZKOAlw7iHJmfluO82I/XCTvG9uUx5a+APKG8PzXFevnIPseIcTYfG6
- FzZEUrpYTCZrdFdgqN5houe/9Ex5xC4iFYYtjQ6/cizro7SHMKWpj5JFgaWeMYoX9qOcD4bVNSq
- cOCAt6qmi6Ina8zyrg7XG4nKMbzkZic9IK+dEzXR8M2EpENNwRt8wMGyvEaxINpOxJiIV/mBZWx
- nKyKu89ivMs10n/gBQLxplUKCsTJENmZ87Jtbjd+vne7zVtsUeDjoKkq0gkJrk7v2hvRdS3NYU5
- BJdB7SkQJzKFwrxIg6jZM4qbaEKM2YVXvtMn6oGQZl2zedY3oOBX7GM6ScMVqANX1zpb6/CcLVO
- Dyq51bD7I+TNxr4Bi9uSzzRFyt11HX
-X-Received: by 2002:a17:90b:1c82:b0:366:4782:1379 with SMTP id
- 98e67ed59e1d1-36951c9a00fmr25837305a91.24.1779297507565; 
- Wed, 20 May 2026 10:18:27 -0700 (PDT)
+ bh=gNRh84rUAghqHenrq+0cUxy5mrPbxSwReJ+c+zbc2c0=;
+ b=gXUSvpSyyRxdY/K/NZnkOeyfI75UaLsDC3nX4n4JP4gG579oTgIurnzprOUwlPQf+v
+ 2l5vRVlLZYbq52rOVpjyLJHlaTTcPnxRQfyEwb+KbuzC+eerSs1xNMTgAWz060+8tvea
+ LAHB48oWoVGeHZxCYiF+EUgbwBTcqMPnE8eif77OkmvThVqBOLLvTNb5RJkgiLw9ZHUv
+ 0wpJUUd1m1ZPHWNFE/RziSGCsirP+3mAKJqINsrQYJgyfnH1nCq+WvX7tqnUd4E+B/Mq
+ WXtn3Jj56hT8+IvnaIhzPJyNh7bVAE5rWTV9PxpcTblhrzWDAKIG0d7Ns6BUvhDasok4
+ K/mQ==
+X-Gm-Message-State: AOJu0Ywv3rmdrFIIoXYTSc14HBrfC7BAlQhncmWctTYpaLLDzy15g9D8
+ cpgqYLTY3RAYG+WbJgv/lZghf1c4ZJdjthLTaHbsbJwbu8ZResVCDW1xF7nJLydiopiUk5akAE1
+ Fo1OEkts=
+X-Gm-Gg: Acq92OG3a/7HD7H+PhJ6qKu1xjPi65KViWOKCeV+yN/JMnk80M5VZlG6BamcIYc3Ewp
+ KRxCBjkfbj0z6JpUJh9sTBPQMpgUhRHQv8G088mJ8wm/SZ9RW5zsRijPlY39BHRI2OO2fUvclhn
+ qJHGdsoXF36LATv/zquRP0C+9qWlQU55Df4C4JyKIntkGVe0eEac/QVm7/gTN2Gwcg2DhZfR4Qm
+ 4PZGEFKuGpwyS3NOcrf7QxYuCkCzbatus0LLytajmKW1F4hzDLJ4qpVQntfhZ9H+75Ko4Gblznn
+ sHy57temRhwJDXqn/f7VNCJSFzuYquYC50kKjebQ0LJLC9kr2BxLjd3c5pFWsb+bCmw64tnPvZe
+ H/svaotZpuNSQWuCVliWG56VasUqc3p/BgJY/fvZcJS0ohro23PlVYQk/KwG7HwZCzkAE3cSFzx
+ 8lQ8uHAjttGP5ndi+blJiAijEIOOz1CObEkeHFzSo=
+X-Received: by 2002:a17:90a:602:b0:369:96e8:c8ae with SMTP id
+ 98e67ed59e1d1-36996e8d08dmr11515642a91.19.1779297513805; 
+ Wed, 20 May 2026 10:18:33 -0700 (PDT)
 Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-36a3c83f226sm254416a91.0.2026.05.20.10.18.27
+ 98e67ed59e1d1-36a3c83f226sm254416a91.0.2026.05.20.10.18.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 10:18:27 -0700 (PDT)
+ Wed, 20 May 2026 10:18:33 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH v5 08/30] fpu: Introduce exp_scalbn
-Date: Wed, 20 May 2026 10:17:58 -0700
-Message-ID: <20260520171820.848839-9-richard.henderson@linaro.org>
+Cc: qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v5 16/30] fpu: Use get_floatx80_behaviour everywhere
+Date: Wed, 20 May 2026 10:18:06 -0700
+Message-ID: <20260520171820.848839-17-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260520171820.848839-1-richard.henderson@linaro.org>
 References: <20260520171820.848839-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,85 +101,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoid exponent overflow as well as checking that we don't lose information with
-opposing scaling.  Use it in partsN(scalbn) and partsN(round_to_int_normal).
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- fpu/softfloat.c           | 29 +++++++++++++++++++++++++++++
- fpu/softfloat-parts.c.inc |  5 ++---
- 2 files changed, 31 insertions(+), 3 deletions(-)
+ include/fpu/softfloat.h        | 10 ++++++----
+ fpu/softfloat.c                |  2 +-
+ fpu/softfloat-parts.c.inc      |  4 ++--
+ fpu/softfloat-specialize.c.inc |  2 +-
+ 4 files changed, 10 insertions(+), 8 deletions(-)
 
+diff --git a/include/fpu/softfloat.h b/include/fpu/softfloat.h
+index 4ae4ddc799..e08d1c374d 100644
+--- a/include/fpu/softfloat.h
++++ b/include/fpu/softfloat.h
+@@ -1018,7 +1018,7 @@ static inline bool floatx80_is_infinity(floatx80 a, float_status *status)
+     bool intbit = a.low >> 63;
+ 
+     if (!intbit &&
+-        !(status->floatx80_behaviour & floatx80_pseudo_inf_valid)) {
++        !(get_floatx80_behaviour(status) & floatx80_pseudo_inf_valid)) {
+         return false;
+     }
+     return (a.high & 0x7fff) == 0x7fff && !(a.low << 1);
+@@ -1112,6 +1112,8 @@ static inline bool floatx80_unordered_quiet(floatx80 a, floatx80 b,
+ *----------------------------------------------------------------------------*/
+ static inline bool floatx80_invalid_encoding(floatx80 a, float_status *s)
+ {
++    FloatX80Behaviour rule = get_floatx80_behaviour(s);
++
+     if ((a.low >> 63) || (a.high & 0x7fff) == 0) {
+         /* Anything with the Integer bit set or the exponent 0 is valid */
+         return false;
+@@ -1119,12 +1121,12 @@ static inline bool floatx80_invalid_encoding(floatx80 a, float_status *s)
+ 
+     if ((a.high & 0x7fff) == 0x7fff) {
+         if (a.low) {
+-            return !(s->floatx80_behaviour & floatx80_pseudo_nan_valid);
++            return !(rule & floatx80_pseudo_nan_valid);
+         } else {
+-            return !(s->floatx80_behaviour & floatx80_pseudo_inf_valid);
++            return !(rule & floatx80_pseudo_inf_valid);
+         }
+     } else {
+-        return !(s->floatx80_behaviour & floatx80_unnormal_valid);
++        return !(rule & floatx80_unnormal_valid);
+     }
+ }
+ 
 diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index a762f4b43a..df94f299e1 100644
+index d2a9f97089..f774ff278c 100644
 --- a/fpu/softfloat.c
 +++ b/fpu/softfloat.c
-@@ -461,6 +461,15 @@ typedef struct {
-     uint64_t frac_lo;
- } FloatParts256;
+@@ -1578,7 +1578,7 @@ floatx80 floatx80_round_pack_canonical(FloatParts128 *p, float_status *s)
  
-+/*
-+ * Minimum and maximum exponent for scalbn.
-+ * These are chosen to be much larger than the true exponent for any input format,
-+ * but also not at the bounds of INT32_{MIN,MAX} so that we can perform other
-+ * arithmetic on the exponent without overflowing, particularly during uncanon.
-+ */
-+#define SCALBN_EXP_MAX  0x0fffffff
-+#define SCALBN_EXP_MIN  (-SCALBN_EXP_MAX)
-+
- /* These apply to the most significant word of each FloatPartsN. */
- #define DECOMPOSED_BINARY_POINT    63
- #define DECOMPOSED_IMPLICIT_BIT    (1ull << DECOMPOSED_BINARY_POINT)
-@@ -601,6 +610,26 @@ static float128 QEMU_FLATTEN float128_pack_raw(const FloatParts128 *p)
- *----------------------------------------------------------------------------*/
- #include "softfloat-specialize.c.inc"
- 
-+static int32_t exp_scalbn(int32_t exp, int32_t scale)
-+{
-+    /*
-+     * Catch chains of scaling which lose information.
-+     * In particular, if the exponent has been saturated,
-+     * do not allow it to become unsaturated.
-+     */
-+    if (exp >= SCALBN_EXP_MAX) {
-+        assert(scale >= 0);
-+    } else if (exp <= SCALBN_EXP_MIN) {
-+        assert(scale <= 0);
-+    }
-+    if (sadd32_overflow(exp, scale, &exp)) {
-+        exp = scale < 0 ? SCALBN_EXP_MIN : SCALBN_EXP_MAX;
-+    } else {
-+        exp = MIN(MAX(exp, SCALBN_EXP_MIN), SCALBN_EXP_MAX);
-+    }
-+    return exp;
-+}
-+
- /*
-  * Helper functions for softfloat-parts.c.inc, per-size operations.
-  */
+     case float_class_inf:
+         /* x86 and m68k differ in the setting of the integer bit. */
+-        frac = s->floatx80_behaviour & floatx80_default_inf_int_bit_is_zero ?
++        frac = get_floatx80_behaviour(s) & floatx80_default_inf_int_bit_is_zero ?
+             0 : (1ULL << 63);
+         exp = fmt->exp_max;
+         break;
 diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index 45606f8402..4715187017 100644
+index 7311c3696e..fd3e79fd3e 100644
 --- a/fpu/softfloat-parts.c.inc
 +++ b/fpu/softfloat-parts.c.inc
-@@ -1098,8 +1098,7 @@ static bool partsN(round_to_int_normal)(FloatPartsN *a, FloatRoundMode rmode,
-     uint64_t frac_lsb, frac_lsbm1, rnd_even_mask, rnd_mask, inc;
-     int shift_adj;
+@@ -213,7 +213,7 @@ static void partsN(canonicalize)(FloatPartsN *p, float_status *status,
+      * how we uncanonicalize results.
+      */
+     bool has_pseudo_denormals = fmt->has_explicit_bit &&
+-        (status->floatx80_behaviour & floatx80_pseudo_denormal_valid);
++        (get_floatx80_behaviour(status) & floatx80_pseudo_denormal_valid);
  
--    scale = MIN(MAX(scale, -0x10000), 0x10000);
--    a->exp += scale;
-+    a->exp = exp_scalbn(a->exp, scale);
+     if (unlikely(p->exp == 0)) {
+         if (likely(fracN(eqz)(p))) {
+@@ -420,7 +420,7 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
+     } else {
+         bool is_tiny = s->tininess_before_rounding || exp < 0;
+         bool has_pseudo_denormals = fmt->has_explicit_bit &&
+-            (s->floatx80_behaviour & floatx80_pseudo_denormal_valid);
++            (get_floatx80_behaviour(s) & floatx80_pseudo_denormal_valid);
  
-     if (a->exp < 0) {
-         bool one;
-@@ -1623,7 +1622,7 @@ FloatPartsN partsN(scalbn)(const FloatPartsN *a, int n, float_status *s)
-     case float_class_normal:
-         {
-             FloatPartsN r = *a;
--            r.exp += MIN(MAX(n, -0x10000), 0x10000);
-+            r.exp = exp_scalbn(r.exp, n);
-             return r;
-         }
-     default:
+         if (!is_tiny) {
+             FloatPartsN discard;
+diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
+index 0b527302a5..4b6c17e433 100644
+--- a/fpu/softfloat-specialize.c.inc
++++ b/fpu/softfloat-specialize.c.inc
+@@ -221,7 +221,7 @@ floatx80 floatx80_default_inf(bool zSign, float_status *status)
+      * Whether the Integer bit is set in the default Infinity is
+      * target dependent.
+      */
+-    bool z = status->floatx80_behaviour & floatx80_default_inf_int_bit_is_zero;
++    bool z = get_floatx80_behaviour(status) & floatx80_default_inf_int_bit_is_zero;
+     return packFloatx80(zSign, 0x7fff, z ? 0 : (1ULL << 63));
+ }
+ 
 -- 
 2.43.0
 
