@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27A2ECD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:26:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 041AACD5BAA
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:26:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPkdy-0003oV-NL; Wed, 20 May 2026 13:23:42 -0400
+	id 1wPkeB-00048a-GE; Wed, 20 May 2026 13:23:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkdw-0003mZ-6n
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:23:40 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wPkeA-00048I-Dk
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:23:54 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkdu-0003SD-8R
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:23:39 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-44c350a5b87so3201099f8f.3
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:23:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wPke8-0003X0-Qb
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:23:54 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-8367df48711so2228621b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:23:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779297816; x=1779902616; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xwbeX9Gjy/xYaojYr56HIgP75nu+77FS6S64lDOm+r8=;
- b=EpbSssXGph2eBPXio6EACL14WaZV4csP2OTgPp/L2kpMk0rALXyp81M3xKjjKocjjW
- rxr1wH/i7i0v5cZpGjxCOLleIW+6TZVlg0TEc3Uo2CaytfxF5uo7rX9kChHJnRweS3rS
- bn6Q9MnENEGjDc459GbQvMpUcUj+Xc6zzoUzMIXuLUveJ88mx4IwwXvqaKT4LrPaMFQT
- /BYGnp5+3U7st2DrT4F8A3GBm4pAJPDlf8mV7PYzkewP27tuWdPEYq7Z6+wzjNViBFEr
- 23vOJpvrS/c+NqPGtJdXAnJ4Oullu1ga5QNe0MgZyguq6PQ3M4jk2mvNax9AWeaP84Nq
- RRdg==
+ d=linaro.org; s=google; t=1779297831; x=1779902631; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=d8zEbFzN4GE9idsF7GuF8QKRv6nn7yIYDKh0297jS1o=;
+ b=ZAqcQ5KyBq55VYC1GR61gnzY0dfck6UjUQssuaantW8ig6jLdRi9AIDZf1Ldm675Sh
+ vnUO0tGOaih/mEEsgB0lkB5urHQK0bPYiKU9CJvc9Lp3bWhUHnsDPSxf9dfIKPHECwI5
+ +u5HNbs7MjzP66hR2T0uUr2SpkNB4ZOXl8vO2kC2Z4/uvuV29OFe43akDCKxnb/mQLk3
+ I7hzKDTOIh5/xIhm1/QWT4SurMfDJwPSCFbUvK40KKJm29fjiHLRasTRjXF1b8nfFvQ8
+ IlYYhAEmUVSZNjnD/RSTmZtdQMHvc+Fewp5HXytrihsT8ppL8N2xi1y+dq5DPZcmQGjY
+ fLPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779297816; x=1779902616;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=xwbeX9Gjy/xYaojYr56HIgP75nu+77FS6S64lDOm+r8=;
- b=Jh/J0jTIrZcBOWr81SMKrEeneeTcelPA/ouGoNuO0NCb/bJrui7rZVa59fBzUgzijS
- OR4h57MCXyiopcUCvOq6CUnwuI3kkUNFUIdZNNboU+zg0y0U+NW5OQ1mMJj7vnsPkyfC
- hN/6XIEo03mpN6ZQ80O2NQcOA1YJvAVhuqTCE5WIlFDFQs/99efAZJD1TpXRcCKXOzBG
- T6v9Tql5m3+dF4dx/z/UeNZclRkwjyM5qvingvBVdvTTk8Ty9/9kr6KjUXGUtH1n49pa
- kaLnwYzxXbONgVt5wWEZ+tk5+27jufvA7RIWgvIeGB4RWSnCi8PQrFrIxWNGp+dCZ3O1
- Ct0g==
-X-Gm-Message-State: AOJu0YzUBJbH44j/e70PFJ9O9viI0/7WiDszQrgd1l2H/YX66DKr0vy1
- hmkweaMJmHa2pTpr8Yy0In6n0ouFCqHjqW2iI60wVrFp5IHKrSekclrSLZ2buHBJ1HGdHKSCwJl
- N3i+I+bI=
-X-Gm-Gg: Acq92OG5/yNVVH3CLpF/Ssjyv1/eljaCivtEXqfh3B+FKO4rdTMz4ss4gxE3q2k4MFM
- HQq5H0FFnD3E6Z6gKHUHg1/KtwhixWB6wpilO9dp3+9YPAQg8p8w5CD4UXFkQ2UDcl7XGh3vilz
- FZGa07M0ROLQAaGh2ibVM6B5z4uH59sr9iTdjyp4O+aO1uJPwiz0si00KUePjoypcDAvJ03JRD8
- iCMRcK46Rm6t2764dqxtZdYPVQxY1hTBkTtXQhS4x9eWe3yPnysVe5DR0xKIO66wMbMq78j+4PW
- uPn6oskq6nuTt/pz+8/4b9TqDb9LzrLG1cSH6ywwTG+mqB8KHoBK7feDaPkwckWK00mmKxDTM+w
- SfS+IfXZ3fqQejc3lAt6cvdeMA06nMVT1XENA/ZqlpRiItFqPnAG2TBiIEJ17K9/L/ZGaD1ZvZ9
- G3H3oQp4uLMlvaa7FqVbwvNcQnMv+GjiCEtIwnAhe6XLXHXhDkh8F0PO1CVIVhpEcBRscPkGky
-X-Received: by 2002:a05:6000:26c4:b0:45c:3f0b:be08 with SMTP id
- ffacd0b85a97d-45e5c5e2db1mr42208713f8f.23.1779297816264; 
- Wed, 20 May 2026 10:23:36 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da0a19b1dsm55047977f8f.17.2026.05.20.10.23.35
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 20 May 2026 10:23:35 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: James Hilliard <james.hilliard1@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v12 03/24] linux-user/mips,
- target/mips: honor MIPS_FIXADE for unaligned accesses
-Date: Wed, 20 May 2026 19:22:51 +0200
-Message-ID: <20260520172313.23777-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260520172313.23777-1-philmd@linaro.org>
-References: <20260520172313.23777-1-philmd@linaro.org>
+ d=1e100.net; s=20251104; t=1779297831; x=1779902631;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=d8zEbFzN4GE9idsF7GuF8QKRv6nn7yIYDKh0297jS1o=;
+ b=a2ZkEYEX28IZsvk1tWUY8PVB4OC38R1uMI/BCyrvFgbigxj/hoseJtW24eALnBq/w/
+ +DluFphHiYXvYwTMBSuwO1Yny/DDAu5JBxFjqG8ZTqRlbN6PlJ3frZa8WQyzS/58/gOU
+ Ce3srcic9F5XNB0XUXQ0H4M6N2nisaW+MN2vtAXdnbywT7DnGP9OHkmWoflK44ZnLYm9
+ wBw1Dkbc7ffJuKKXSAd4CHXWaWWbjviveOB6yxG0jk37aTs13nwrn0ZhnWqFA3WeJUwa
+ WxZB9pKa/EOVXaDFr/36HPmikPOgYdC1XCUhwnn6oVr2aUn0IB5Ls0HXGBOWIQjY/4ot
+ iZEQ==
+X-Gm-Message-State: AOJu0Yw4oEceCnPEj+2xMh8s0v+19APePP9n+NoKmA4qnPZRyKh6fwWf
+ HPYgpOZGy1aLEuxpJDubIFT/RUAnA4XbxiD+6Fy0MIfhM+xP8p0H4TapnzS/fMZv2o0=
+X-Gm-Gg: Acq92OGW/mBCUVlqLdS/9JnvAKJk9TjQMCeHbyxNJvfQ/JvtvIbSXrRBMqa4EzBCZpJ
+ R9wA1BttDnTVskxdxGr0FP+oCe2gBXsQPRvQdNAVEhQVu6J0uanoYsWOH91kFzOU11i/Y6kPVAm
+ g+PEBFZegVokd9DJEsJB/5BlKKbevAkHlCWQbnxBpT8BwEPARERY6X+q7VZGfBlfdg3xSlvmUNS
+ FkDW1AxQlav5hYiHXP+U1VJgdVi8kcsvc8A2rcW+vZxp16KScoPGFaOeZ7dzJvB9y0G30k9ar8q
+ /9AZIlr5nU6QVcPBCnZZITiN+J2vaKkPVvLVQOelhqp1zy2wNkMBwKpqhaHZO63TKHVucULwr9F
+ h5TwQPW7YfCdRTIXSeV/jKYRTagiW10mLIX7SEbUbIutOTJncpTLKudQF/A84YcfiwsNvsGhZ4T
+ 4vNERPbQ0CjN38hiGMKAyEKfAUmXvsb8bDZTzkj2BIMDN42l8=
+X-Received: by 2002:aa7:88d1:0:b0:835:6bdf:c87f with SMTP id
+ d2e1a72fcca58-83f33c3353bmr23806083b3a.9.1779297831108; 
+ Wed, 20 May 2026 10:23:51 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-83f8b9c2ea5sm8006074b3a.13.2026.05.20.10.23.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 20 May 2026 10:23:46 -0700 (PDT)
+Message-ID: <c9f4dcce-388c-4d36-9d8a-1fbad9cb933e@linaro.org>
+Date: Wed, 20 May 2026 10:23:40 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 45/63] target/arm: Implement FMLALB, FMLALT for AdvSIMD
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20260517003002.321430-1-richard.henderson@linaro.org>
+ <20260517003002.321430-46-richard.henderson@linaro.org>
+ <CAFEAcA_Qr+D+qrTd7q0s8Ka0YF5NVM01dDMHm3irQDxiZW0n6g@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA_Qr+D+qrTd7q0s8Ka0YF5NVM01dDMHm3irQDxiZW0n6g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,163 +104,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: James Hilliard <james.hilliard1@gmail.com>
+On 5/20/26 09:33, Peter Maydell wrote:
+> This use of float_round_nearest_even_max prompted me to look at
+> the uses of it in fpu/, and it looks like the implementation is
+> incomplete. Most importantly, although commit 72330260cdb420 added
+> it to the first "switch (s->float_rounding_mode)" in uncanon_normal,
+> it missed adding it to the one later in the same function, which
+> I think means we will generate wrongly-rounded answers for
+> denormals. A fix is probably:
+> 
+> diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+> index efd130bf16..6cc9429ebe 100644
+> --- a/fpu/softfloat-parts.c.inc
+> +++ b/fpu/softfloat-parts.c.inc
+> @@ -450,6 +450,7 @@ static void partsN(uncanon_normal)(FloatPartsN *p,
+> float_status *s,
+>               /* Need to recompute round-to-even/round-to-odd. */
+>               switch (s->float_rounding_mode) {
+>               case float_round_nearest_even:
+> +            case float_round_nearest_even_max:
+>                   if (N > 64 && frac_lsb == 0) {
+>                       inc = ((p->frac_hi & 1) ||
+>                              (p->frac_lo & round_mask) != frac_lsbm1
 
-Linux/MIPS enables software fixups for user-mode unaligned scalar
-accesses by default through MIPS_FIXADE/TIF_FIXADE.  QEMU linux-user did
-not model that ABI, so MIPS guests took fatal AdEL/AdES exceptions unless
-translation was forced to use unaligned host accesses.
+Thanks.
 
-Key MIPS translation blocks on the linux-user unaligned policy, implement
-sysmips(MIPS_FIXADE) to toggle that policy, and raise SIGBUS/BUS_ADRALN
-when fixups are disabled.
+> 
+> There are also other places within fpu/ which switch on the
+> rounding mode and have no support for the new even_nearest_max
+> enum value. Those ones have a default case that asserts or
+> aborts, so at least you'll know it if you run into them.
+> They are round_to_int_normal, and roundAndPackFloatx80.
+> Is it worth extending the support for this rounding mode to
+> either of those?
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- linux-user/mips/target_syscall.h   |  1 +
- linux-user/mips64/target_syscall.h |  1 +
- target/mips/cpu.h                  |  4 ++++
- linux-user/mips/cpu_loop.c         |  5 +++++
- linux-user/syscall.c               |  8 ++++++++
- target/mips/cpu.c                  | 10 ++++++++--
- target/mips/tcg/translate.c        |  6 +++++-
- 7 files changed, 32 insertions(+), 3 deletions(-)
+Probably should, since it's trivial, and then we wouldn't have to think about it.
 
-diff --git a/linux-user/mips/target_syscall.h b/linux-user/mips/target_syscall.h
-index 9206694f4fb..be6942445a2 100644
---- a/linux-user/mips/target_syscall.h
-+++ b/linux-user/mips/target_syscall.h
-@@ -11,6 +11,7 @@
- 
- #define TARGET_FORCE_SHMLBA
- #define TARGET_SYSMIPS_FLUSH_CACHE     3
-+#define TARGET_SYSMIPS_FIXADE          7
- #define TARGET_SYSMIPS_ATOMIC_SET   2001
- 
- static inline abi_ulong target_shmlba(CPUMIPSState *env)
-diff --git a/linux-user/mips64/target_syscall.h b/linux-user/mips64/target_syscall.h
-index e07687f8ac9..c11d0a08888 100644
---- a/linux-user/mips64/target_syscall.h
-+++ b/linux-user/mips64/target_syscall.h
-@@ -11,6 +11,7 @@
- 
- #define TARGET_FORCE_SHMLBA
- #define TARGET_SYSMIPS_FLUSH_CACHE     3
-+#define TARGET_SYSMIPS_FIXADE          7
- #define TARGET_SYSMIPS_ATOMIC_SET   2001
- 
- static inline abi_ulong target_shmlba(CPUMIPSState *env)
-diff --git a/target/mips/cpu.h b/target/mips/cpu.h
-index cbb9b3e1b1c..b478f834c13 100644
---- a/target/mips/cpu.h
-+++ b/target/mips/cpu.h
-@@ -1161,6 +1161,10 @@ typedef struct CPUArchState {
- #define MIPS_HFLAG_ELPA  0x4000000
- #define MIPS_HFLAG_ITC_CACHE  0x8000000 /* CACHE instr. operates on ITC tag */
- #define MIPS_HFLAG_ERL   0x10000000 /* error level flag */
-+#define MIPS_HFLAG_TB_MASK (MIPS_HFLAG_TMASK | MIPS_HFLAG_BMASK | \
-+                            MIPS_HFLAG_HWRENA_ULR)
-+
-+#define TB_FLAG_MIPS_FIXADE  0x40000000
-     target_ulong btarget;        /* Jump / branch target               */
-     target_ulong bcond;          /* Branch condition (if needed)       */
- 
-diff --git a/linux-user/mips/cpu_loop.c b/linux-user/mips/cpu_loop.c
-index fa264b27ec5..ff9d293c296 100644
---- a/linux-user/mips/cpu_loop.c
-+++ b/linux-user/mips/cpu_loop.c
-@@ -161,6 +161,11 @@ done_syscall:
-         case EXCP_DSPDIS:
-             force_sig(TARGET_SIGILL);
-             break;
-+        case EXCP_AdEL:
-+        case EXCP_AdES:
-+            force_sig_fault(TARGET_SIGBUS, TARGET_BUS_ADRALN,
-+                            env->CP0_BadVAddr);
-+            break;
-         case EXCP_INTERRUPT:
-             /* just indicate that signals should be handled asap */
-             break;
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 3df42aa159d..7d7a7b489cf 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -6663,9 +6663,17 @@ static abi_long do_sysmips_atomic_set(CPUArchState *env, abi_ulong addr,
- static abi_long do_sysmips(CPUArchState *env, abi_long cmd, abi_long arg1,
-                            abi_long arg2)
- {
-+    CPUState *cs = env_cpu(env);
-+
-     switch (cmd) {
-     case TARGET_SYSMIPS_ATOMIC_SET:
-         return do_sysmips_atomic_set(env, arg1, arg2);
-+    case TARGET_SYSMIPS_FIXADE:
-+        if (arg1 & ~3) {
-+            return -TARGET_EINVAL;
-+        }
-+        cs->prctl_unalign_sigbus = !(arg1 & 1);
-+        return 0;
-     case TARGET_SYSMIPS_FLUSH_CACHE:
-         return 0;
-     default:
-diff --git a/target/mips/cpu.c b/target/mips/cpu.c
-index 88bb59d506b..57935adea4b 100644
---- a/target/mips/cpu.c
-+++ b/target/mips/cpu.c
-@@ -565,11 +565,17 @@ static int mips_cpu_mmu_index(CPUState *cs, bool ifunc)
- static TCGTBCPUState mips_get_tb_cpu_state(CPUState *cs)
- {
-     CPUMIPSState *env = cpu_env(cs);
-+    uint32_t flags = env->hflags & MIPS_HFLAG_TB_MASK;
-+
-+#ifdef CONFIG_USER_ONLY
-+    if (!cs->prctl_unalign_sigbus) {
-+        flags |= TB_FLAG_MIPS_FIXADE;
-+    }
-+#endif
- 
-     return (TCGTBCPUState){
-         .pc = env->active_tc.PC,
--        .flags = env->hflags & (MIPS_HFLAG_TMASK | MIPS_HFLAG_BMASK |
--                                MIPS_HFLAG_HWRENA_ULR),
-+        .flags = flags,
-     };
- }
- 
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index 54ed253a7d0..dac30aff8d3 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -15070,6 +15070,7 @@ static void mips_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
- {
-     DisasContext *ctx = container_of(dcbase, DisasContext, base);
-     CPUMIPSState *env = cpu_env(cs);
-+    uint32_t tb_flags = ctx->base.tb->flags;
- 
-     ctx->page_start = ctx->base.pc_first & TARGET_PAGE_MASK;
-     ctx->saved_pc = -1;
-@@ -15092,7 +15093,7 @@ static void mips_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-     ctx->CP0_LLAddr_shift = env->CP0_LLAddr_shift;
-     ctx->cmgcr = (env->CP0_Config3 >> CP0C3_CMGCR) & 1;
-     /* Restore delay slot state from the tb context.  */
--    ctx->hflags = (uint32_t)ctx->base.tb->flags; /* FIXME: maybe use 64 bits? */
-+    ctx->hflags = tb_flags & MIPS_HFLAG_TB_MASK;
-     ctx->ulri = (env->CP0_Config3 >> CP0C3_ULRI) & 1;
-     ctx->ps = ((env->active_fpu.fcr0 >> FCR0_PS) & 1) ||
-              (env->insn_flags & (INSN_LOONGSON2E | INSN_LOONGSON2F));
-@@ -15112,6 +15113,9 @@ static void mips_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-     ctx->default_tcg_memop_mask = (!(ctx->insn_flags & ISA_NANOMIPS32) &&
-                                   (ctx->insn_flags & (ISA_MIPS_R6 |
-                                   INSN_LOONGSON3A))) ? MO_UNALN : MO_ALIGN;
-+    if (tb_flags & TB_FLAG_MIPS_FIXADE) {
-+        ctx->default_tcg_memop_mask = MO_UNALN;
-+    }
- 
-     /*
-      * Execute a branch and its delay slot as a single instruction.
--- 
-2.53.0
+I wish there were an annotation for default: that doesn't suppress the 
+switch-missed-enumerator warning, for use with g_assert_not_reached().
 
+
+r~
 
