@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA015CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 19:25:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58AFBCD5BAA
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 19:25:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPmX6-0007hN-Ud; Wed, 20 May 2026 15:24:47 -0400
+	id 1wPmXF-0008Av-Om; Wed, 20 May 2026 15:24:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmWk-0007MA-1q
- for qemu-devel@nongnu.org; Wed, 20 May 2026 15:24:22 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmX5-0007kc-2n
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 15:24:44 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmWi-0001qu-Gr
- for qemu-devel@nongnu.org; Wed, 20 May 2026 15:24:21 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-48e6db3ff7eso27341755e9.0
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 12:24:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmX1-0001tU-EX
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 15:24:41 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4891e86fabeso70047715e9.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 12:24:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779305057; x=1779909857; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779305078; x=1779909878; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=rsFCTUwzPo869q+hRCPooHsKqF8me+mFMwy9EFrvmCE=;
- b=Kg00meJ5TzNU0s9Ik/S/jOTVy7kkZqqqqSa7TUS7DrXbNPdO3H9RoD6otAVSq5T9E/
- rGy28kekGKMychUBcRk8p45uKLqxy8t2flQMefNnf5mHmgmCRimIRZ3IPsl8IswbH3uw
- /gY0xw2wAnGg1dUkfKzU08TU/xjn9sE0w9xFQwGylP8E1pHW3pFuBj0jONy5jv6G4ITv
- kR7gZVnlZuB4chBvmWbJVc8SxW70a/Du1N+lgptFq5TyyWNHT7Dvvfx38frsusBbEYNF
- MQkx9s5hViSz/qs6pOak/rPbJssaT2QWve7jYHz8xhu01t5l4jHN1QibqOlNYS0xV1+5
- GRHA==
+ :reply-to; bh=wMLJEwyeCLqgj1Jg/Gcg3sR4YMXmetqIBMHZ1a3Cpic=;
+ b=XeaDaeOvi9FLRoDDeGqQLZKJYCEcvQ6sZ7szSNKvmW2S2JHnYk7ZOylyeaY3N9toLA
+ eaeeq5wGLS4H2ilf5xFTc24NA4qL/70xkODGobr87v39wTiWXqX/DMORpWSiGzssW+cK
+ 9kxCYMEp2+z6KkpI/MQvxqr9/3iyKsxsFMMNgm/lij6o6wDfX6EEsHy6PM3cjJu1/VAc
+ FuOFSn6YDvD0Fvc3t438h/QUUaIo6ntRe59hw+7pA2kcnFV/vw7VMbgtTi6aZ4AAGAu9
+ aevqTh6k13YJfSGZjRZAZSkJz7YF04D1DqWKWwmtnuGy1IeQmzoZOO9XN7ne/7uZJ7pW
+ 11OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779305057; x=1779909857;
+ d=1e100.net; s=20251104; t=1779305078; x=1779909878;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=rsFCTUwzPo869q+hRCPooHsKqF8me+mFMwy9EFrvmCE=;
- b=qGN8l7GZSd7eYY2WaWiWhv0dZtMK7nnFrjPxxDxYUGYri5+DoZNVLJvYVYbSq62JK6
- cCe2DkVO51teZKyAhBC8zujiIF6zmNmYIMzgu2NLHtXcHgFaZozkHR+W6ygLQmXekiLc
- Kr7xJrekhX4Kt5QM9cAom76/sm4N5ZAmoBwbugle3zT4rTpDFuYYeBLXOYHWLEoy0bq2
- OrvZqp/0CVBhu/xQgTECPEiazPSGj1zG2nl6Y17doE0s9PH7kLaKptYxplgkILqF2VtQ
- iXocLiOp3us923TYfhUykxU+65LQP5M3VCM6gxC3SxZuxD/UT7Zc0cWUV++d7TGVhszi
- p0GQ==
-X-Gm-Message-State: AOJu0YyQZguS2aKrnQiUKQSLpT0Yn3r5W1QDexakXydZ4JnuEKCxhL1g
- nY7Ogkv6wkzzWVWiyT4tOx7jfDsmZuXYVODu2B7756skLspa7x4KEOFKPBKbDrcx3ItH/ieotoD
- 9BAN3RLk=
-X-Gm-Gg: Acq92OF1Z1GB8KqHGdHGta4OcSVrSmDC9qcv0xLoT/wZAsYX1olsWuAmBp+YpLeuFmg
- 5ADnyR6KhUJELgsuPdxSsvT1Rk4U2f/CSWE9gxbl9CYVL9cjt+a0ZPovVeT6cwJSKKzdO8HDnhn
- gE0ko0aca+YxH7fn0/bZEtPH5jp9DmfsAT0TLLZ6bdNqcrRR9eZ3XnB51JUpGh+HlK71+XrUpyi
- p2r9WHHr5BqT5QOUZDNunZHKbj+fGbMwhNcZ63FI/OJJU1HXmpKfCbgTMp77Uo9MC/qIXVTNOAA
- 4GvwEdezbSWJT/ATY5hbSHpy6bVw9yF3WKOdVXIMZSj3DZW7pcbNBV+xJBwPPbyHCKgC7zC0Dm5
- uagv/C4xNfk4ktojQhH6Ys3EgSNrMExYdtqXJvpQDN7Xq5LwGDGxgoYDSdGmxs5ZqDTCxywDxEM
- JFdh2bTGWbOx9ctirueY8Yntq+tvVyLYEqqD+l85OSH8k/ybSooK73Gl7mp01H1jpkOWwrMVV0
-X-Received: by 2002:a05:600c:17d1:b0:48a:54a6:b29f with SMTP id
- 5b1f17b1804b1-48feea9dda7mr215427515e9.17.1779305056741; 
- Wed, 20 May 2026 12:24:16 -0700 (PDT)
+ bh=wMLJEwyeCLqgj1Jg/Gcg3sR4YMXmetqIBMHZ1a3Cpic=;
+ b=EbYpKXQkd4rdQjtC7XUBWwGc2We6sk042nMkA2wNFtts6BMqUJqDQtc6dl6NDBdeUE
+ lM58a/aoAHABFS/ztblh3RW26TzUaqPkIAkVcSB8lrLfypiZBm/0aok6OtPjCrrIobYZ
+ JI5JjFUKd1E34kbOqB7xmiElMlDfabb8bTIA0lL/w1YVXcAHjB9Va7T8736vGGolR3ZP
+ OWYajMlEV9L76LSbKlew3NMaTdLl7jTzDRDJYkFFg8fVZGvPGvhQDeIXpGfZGlH6C78T
+ 86W9neWgLHnBeoAgizmwHvFjHLJ15yUHq965tsQWxNhCfO93jZPOX5RSF5bGj1Lu3Lig
+ KqYA==
+X-Gm-Message-State: AOJu0YwE1G6WEU7kOy/FXc0dtyUp31bi+QgbQ0R+34C5ddH7MUxbWpLC
+ A6SMuuN52tEJIXinnDOMNGtfmv9aKQnKFzQ9IsupddydN1RAgAwF7Y/ldsSD1YKLAbZLGB7YtSl
+ fBLhC8uA=
+X-Gm-Gg: Acq92OEFpSvIwwbFnnt/6oZvKtaG2eARRXOvXYW7la2N7e99PCSP1Sfkd3+Iur51N9c
+ N+seopenHd7SL6ZYieAFdRieTXBxYiTXaMgY6z/7li/g9I1HHxzSiUgpUMTMT/X6XBYCJ1njYYG
+ Cw/GeeIqwSQHhpc1BuBWC6yawBcv8nsQH5AYAuR9tg0c5klB7LBbn0JBeuM/uEIAUrx6mYrwoZX
+ +cOOudR20nxC/JFxQDTDtHpyl6jn6QgfFX3ycO1Fp/C/bGB1S1MZPfkVj824o0NGxZyKBgS8+YI
+ KCXPhBtH0jyS0lnaE8fEf3Yq9yO7uSIgLZ9jbRJloKusvF2iRMIQrggjFCoWKGjYa5H6TkHwipD
+ HBluNqhignC8Yl6Lp08wfF2mHNHCL+eD97aUSaSQ3XmQoZxit+Rt2Kli+IL61nXelj5FklfshjD
+ HjwLXyNP86/mq4qqgeYXhcKc5p4ynB7MOntRd337lvOcvtvb7STfH4tVNkl/lxA9I/WWi4IQBB
+X-Received: by 2002:a05:600c:a11c:b0:48f:e468:1761 with SMTP id
+ 5b1f17b1804b1-48fe60e47afmr289520305e9.2.1779305077737; 
+ Wed, 20 May 2026 12:24:37 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49033d2fd6bsm11694285e9.1.2026.05.20.12.24.15
+ ffacd0b85a97d-45da15a6454sm57518150f8f.34.2026.05.20.12.24.36
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 20 May 2026 12:24:15 -0700 (PDT)
+ Wed, 20 May 2026 12:24:37 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 05/33] hw/mips: Include missing 'cpu.h' header
-Date: Wed, 20 May 2026 21:23:10 +0200
-Message-ID: <20260520192338.40036-6-philmd@linaro.org>
+Subject: [PULL 08/33] hw/intc/mips_gic: Avoid Coverity complaint in VP writes
+Date: Wed, 20 May 2026 21:23:13 +0200
+Message-ID: <20260520192338.40036-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520192338.40036-1-philmd@linaro.org>
 References: <20260520192338.40036-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,53 +98,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"target/mips/cpu.h" is indirectly pulled in via the "system/kvm.h"
-header, which next commit will remove. Explicitly include the "cpu.h"
-header, otherwise we'd get:
+From: Peter Maydell <peter.maydell@linaro.org>
 
-  hw/mips/mips_int.c:29:5: error: use of undeclared identifier 'MIPSCPU'
-     29 |     MIPSCPU *cpu = opaque;
-        |     ^
-  hw/mips/mips_int.c:30:5: error: use of undeclared identifier 'CPUMIPSState'
-     30 |     CPUMIPSState *env = &cpu->env;
-        |     ^
+The MIPS GIC does a check for a guest error in the write path for the
+SH_MAP*_VP registers which triggers a Coverity complaint because it
+assigns -1 to a uint64_t. The code doesn't misbehave because the -1
+case will be caught by the following OFFSET_CHECK(), but the code
+could be improved:
+ * there is no need to special case to avoid passing 0 to ctz64(),
+   because (unlike the compiler builtins) QEMU defines that this
+   has a specific behaviour, returning 64
+ * the OFFSET_CHECK() macro will go to the "bad_offset" label and
+   print an error implying that the guest wrote to an invalid
+   register offset. This is misleading about the actual problem,
+   which is that the guest wrote a bogus value to a valid register
+   offset
 
-  hw/mips/loongson3_virt.c:156:39: error: unknown type name 'MIPSCPU'
-    156 | static uint64_t get_cpu_freq_hz(const MIPSCPU *cpu)
-        |                                       ^
+Make the error check print a better log message, and avoid the
+special casing on ctz64(); in passing, this should also make
+Coverity happier.
 
+CID: 1547545
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260512111536.3437645-1-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260511135312.38705-4-philmd@linaro.org>
 ---
- hw/mips/loongson3_virt.c | 1 +
- hw/mips/mips_int.c       | 1 +
- 2 files changed, 2 insertions(+)
+ hw/intc/mips_gic.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
-index cd94e9f5f77..c29cae86872 100644
---- a/hw/mips/loongson3_virt.c
-+++ b/hw/mips/loongson3_virt.c
-@@ -51,6 +51,7 @@
- #include "system/runstate.h"
- #include "system/system.h"
- #include "qemu/error-report.h"
-+#include "target/mips/cpu.h"
- 
- #define PM_CNTL_MODE          0x10
- 
-diff --git a/hw/mips/mips_int.c b/hw/mips/mips_int.c
-index 2b740afc4d8..fa9c78e74de 100644
---- a/hw/mips/mips_int.c
-+++ b/hw/mips/mips_int.c
-@@ -25,6 +25,7 @@
- #include "hw/core/irq.h"
- #include "system/kvm.h"
- #include "kvm_mips.h"
-+#include "target/mips/cpu.h"
- 
- static void cpu_mips_irq_request(void *opaque, int irq, int level)
- {
+diff --git a/hw/intc/mips_gic.c b/hw/intc/mips_gic.c
+index 23478df4b46..4777c70d6b4 100644
+--- a/hw/intc/mips_gic.c
++++ b/hw/intc/mips_gic.c
+@@ -317,9 +317,13 @@ static void gic_write(void *opaque, hwaddr addr, uint64_t data, unsigned size)
+         /* up to 32 bytes per a pin */
+         irq_src = (addr - GIC_SH_MAP0_VP_OFS) / 32;
+         OFFSET_CHECK(irq_src < gic->num_irq);
+-        data = data ? ctz64(data) : -1;
+-        OFFSET_CHECK(data < gic->num_vps);
+-        gic->irq_state[irq_src].map_vp = data;
++        if (ctz64(data) >= gic->num_vps) {
++            qemu_log_mask(LOG_GUEST_ERROR, "Bad data value 0x%" PRIx64
++                          " at MAP VP register offset 0x%" PRIx64 "\n",
++                          data, addr);
++            break;
++        }
++        gic->irq_state[irq_src].map_vp = ctz64(data);
+         break;
+     case VP_LOCAL_SECTION_OFS ... (VP_LOCAL_SECTION_OFS + GIC_VL_BRK_GROUP):
+         gic_write_vp(gic, vp_index, addr - VP_LOCAL_SECTION_OFS, data, size);
 -- 
 2.53.0
 
