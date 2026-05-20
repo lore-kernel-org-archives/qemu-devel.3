@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35A34CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 11:25:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69050CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 11:25:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPf2J-0004tw-T1; Wed, 20 May 2026 07:24:28 -0400
+	id 1wPf34-0006K0-Cm; Wed, 20 May 2026 07:25:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPezq-0002e9-AX
- for qemu-devel@nongnu.org; Wed, 20 May 2026 07:22:10 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf22-0003zX-B9
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 07:24:10 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPezf-0001qO-TC
- for qemu-devel@nongnu.org; Wed, 20 May 2026 07:21:50 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-bd01481e592so698194966b.2
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 04:20:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf1w-0002yT-G2
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 07:24:08 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-bd373f83042so979914666b.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 04:24:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779276035; x=1779880835; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=0A6aXXpeHKaMOwKOd1KEfwXQYsy2Fokvt3t2rQQDvLg=;
- b=d8KeEXAVXq/1af+ugzfx+Rp+9RVevhZjIOZrGOUdFW0sHZgx0ohsVA80jnfdS8Xq5j
- ksOUt0OT6e2Ta0mf10PxShxXiBaBsl+BVZM0D5E8LHi+VdtMrgO8FIj6EvECudi9qY61
- npkMYu+mjIfB61wf+dEKtjh8Z4FCNQyteD+T1zn5N3zB/JQ6Un+JWKUOVkDGizsots1J
- VF+GTQLxpV1cT/MR0SeoGQCr8WtQ6vWu5rKKJJ5gWxBIZnr/Ryo+hHTx5XKz6K7IDtap
- ICUkMH/dD74MaHKWRBfXQuyHwCtjV9ns0WjNpE5UaH9aqI9+V0pftF4O82yhp8FFtG21
- R6/w==
+ d=linaro.org; s=google; t=1779276242; x=1779881042; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RzVrX3+IqFTGVGRzZuphthGb6ztiIAMNQ+4ei3zT1o0=;
+ b=tdzvf2xem/G2uvtiSXP9GV3KEnwJTQSbbre/nxaB578EhBVzxNgX0elccsaGNO/VbD
+ A2R+p5tniUJm5vqcOiXBnquDi3oIS1Kg+UJKtUmLpo45ogl1IY5TlQl33L9so8EJ4sP1
+ FB8Lsg9yCkiWPEGGbsvNLU6DojZv7ZK368WToouOrWvkV4XAFS0PWrFtEQzRHxOkqP9u
+ OG0ouQt5aA/nv5vr1UAZcuQ4E9Bm7SvH8pDezaqaECWaqmMtoGUXYQDsITpwwbg/h7Zc
+ UZMM/DhCR/hraEuPVM6MZakEsz3ZT2OcB6BVAsZr9Kdtcfuko6AmLL2VF9aPQ07oUYtQ
+ ll9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779276035; x=1779880835;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0A6aXXpeHKaMOwKOd1KEfwXQYsy2Fokvt3t2rQQDvLg=;
- b=YkPOVZ7Xpguom90Z1/Y6AMfv8bhTHQ5JEyGhg0LGyErMvsDhQEBKDRF/mbLqT28uKc
- mG3Mk0yNVRvZBQsOgLUaGQ9MV/9cpUo4BaG3cGqMMqhvs+MXrlxnAQIpeGeqMoLLMffL
- AHV4xGQ8s3Xt7FGJwyL9/klKZRNNKtgG3G5YYJe17Q93AyYhmw9F72l7evTR+7zBtg5x
- o+Yob+lFQhxnSNIEvihxBrz4RVvq+eMzLiXKlSBLbCPfcImdjDWXJN84I8WJ72BioeTc
- /aROSE4ot0wlsKEhJGhbsuRAmwCJ/rrCestZfqvWL6q418jLJF+xoAoK+Olgp34WEGTp
- Ew6g==
-X-Gm-Message-State: AOJu0Yw6YZNTZYKdc5QtOzd+uTxAJkI+PLSMDJ+hiaJW+iEFTBTCNW3n
- pG99hGUXp30p46RFThxFBtvjDgYPo+wwcPEY3zJReXkhCIE1BFzeeaLZLW+XNmTuuCUjo13EK0u
- AWpdmdQU=
-X-Gm-Gg: Acq92OFc+jpZXQBHpqpihDJA5muiE/tGxCjm+pJegJncWZ1dBXtkYyMRfeHnwbuZ3dY
- Us8xVoN9ItynaAMZ2qhlsk3f1Hr6OcYsaKa18xpSXwuAKiYXriscj7m7ixf9wXIKLifUTS/DUHB
- 7N8Xwgu/nRPc4DfB/gX823TU9bEe3K/kHUGyFodbUMUQ8sPIhVgp1tKR3pkWEkuueA7rbUGEhks
- i/K2fEBoTOb48MVLMwbif4/6U8Nk6PHZZNYJc0axXmAvlzFfkLCHAs3v7YA2J0H80PJhOW8MPoG
- GWcYF4GNUPmadFoMFmurwiMutVLzveAKcTAhmRfKTyMbppU2TqKbIVZWtxysl6ESr6lPq09i36H
- 4IfCUmys4+UPLsoUw8vBCYowlS7jn6I8cuUTAgiATHwTCBZ/2M/uizyvFa3iACV+Wg7hipjxKvx
- +DHVkGZgy90/s7qc21S34Z8SZlv03nG+dTptZfYtQQvLNm0LSMo7UcOvF0GFN41SkhDx8KI6ynv
- SknZ04g1g==
-X-Received: by 2002:a05:6000:2902:b0:45a:e3dd:586b with SMTP id
- ffacd0b85a97d-45e5c59a269mr38455293f8f.18.1779272766604; 
- Wed, 20 May 2026 03:26:06 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20251104; t=1779276242; x=1779881042;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=RzVrX3+IqFTGVGRzZuphthGb6ztiIAMNQ+4ei3zT1o0=;
+ b=Dwf9nM1j4ERs/OhrbYI8HLIhmyiocPxN18GOmAlACmtR95G36mwyxlczRj9E6w9A7m
+ a0CCY3J8iIGOuzoIVjqM34U2jDI35pRa+ClsQN4DYu7uFbeL4s1JkbsgOBKp7T5eiu05
+ hn+QnHdYcqfNJ5rnRq0/lAAue0aLhtr8Uirp1DeYkTJOqz7hjsPKasqvkG2z0l8itag+
+ edaBWpWTpZozHV3WBpWrFq4AN3zmxtzJm52FDiXx7z81cuQ4MXmiyC1tBpr5q+88h0Ay
+ Sd+skb4DnnPPQPQDlwFfjscGH1KzaMhf/FHDjuANgilj03KP5ggN39CK3Dc0x/VYH0A4
+ qP9w==
+X-Gm-Message-State: AOJu0Yy/yrR8C+lUcI8i1uulGkPK79U4w+NHydarOVlk7GPoOMHRJMWl
+ bfJQIXWl1Q0XXI25QFQ5I1gSuKctHlGScZb9mcP6Hde9lpPqULqeeZGJxqrnt47QDyb9ujuAKbK
+ kyjval08=
+X-Gm-Gg: Acq92OH4QnsDrRlrCO8SXiwFxlHZ9Oz4Dsj3MVFmCJ2n22uyuNLlQhoRtKWYSJVNogL
+ 4j1fOkwOaO0rV6fvmf7VnlyJ0GKiAQm1Mvd8/cWcTa7DPk0yu1Gnr4SZ1zvGf9D5UITkRNv4qzz
+ o7yDO2Od0CckiP3hTQzRrIS286y6kCfAGCovhPg8s71EhzDAbl44vcdQGYSNmTvj1XfL0IVnMvf
+ i2NdgbDRNi3rbnJpXE9cvDYAazom8o7ZanW7l9LPppTbgwf+yXa2pnE+gSZuYrTr3etvPwaCbiG
+ jfhb63LpzKEN5BzEjHes8gzHkHFdHMviNhpLVwPFlbNRxCV5jDxDL89AoOwIkuKrSI4LhG3IGLp
+ k02jwMgxl1kWl4XWWD1tl87AlTTviVqg7Pem0EslzXjRsqt9OcprDm3JV7QwstXXApr2lTQAw/a
+ qAS6x7M7xDnIhdQVqS3qbyTi1ug3zjTNKuQGaQD6mlqYxgDfnXb0Qi8MDIdnpfRc3hRRQ6IClBR
+ 92Mr01HfCVggH5u
+X-Received: by 2002:a05:600c:1d0e:b0:48e:635a:18d9 with SMTP id
+ 5b1f17b1804b1-48fe60da96bmr354284145e9.15.1779272437949; 
+ Wed, 20 May 2026 03:20:37 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45d9e767d0bsm51198932f8f.3.2026.05.20.03.26.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 May 2026 03:26:05 -0700 (PDT)
-Message-ID: <8ad9c1a9-aa99-4ee9-ada2-4c3504578b8e@linaro.org>
-Date: Wed, 20 May 2026 12:26:05 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 16/24] tcg: Introduce tcg_gen_addN_i64
-Content-Language: en-US
+ 5b1f17b1804b1-48fe57944c1sm423923235e9.7.2026.05.20.03.20.36
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 20 May 2026 03:20:37 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Aleksandar Rikalo <arikalo@gmail.com>,
  James Hilliard <james.hilliard1@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>
+Subject: [PATCH v11 20/24] target/mips: add Octeon VMULU instruction
+Date: Wed, 20 May 2026 12:18:01 +0200
+Message-ID: <20260520101807.9971-21-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260520101807.9971-1-philmd@linaro.org>
 References: <20260520101807.9971-1-philmd@linaro.org>
- <20260520101807.9971-17-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260520101807.9971-17-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,23 +105,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/5/26 12:17, Philippe Mathieu-Daudé wrote:
-> From: Richard Henderson <richard.henderson@linaro.org>
-> 
-> Add a helper for multi-limb 64-bit addition. The helper emits native
-> carry-chain TCG ops when they are available and falls back to explicit
-> carry propagation otherwise.
-> 
-> This lets target translators build wider integer accumulators inline
-> without open-coding the same add-with-carry sequence at each use site.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/tcg/tcg-op-common.h |  1 +
->   tcg/tcg-op.c                | 42 +++++++++++++++++++++++++++++++++++++
->   2 files changed, 43 insertions(+)
+From: James Hilliard <james.hilliard1@gmail.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+VMULU multiplies the active Octeon multiplier state by rs, adds rt and
+queued partial products, returns the low result, and advances P[0]/P[1]
+with carry limbs.
+
+Expand the two-limb accumulator operation inline with TCG so the result
+and partial-product state stay visible to the optimizer.
+
+Add a mips64/mips64el linux-user TCG smoke test for representative
+Octeon multiplier instruction paths.
+Include hardware-backed regression coverage for MTP0 P1 zeroing.
+
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/mips/tcg/octeon.decode                 |  2 +
+ target/mips/tcg/octeon_translate.c            | 35 +++++++++++++
+ tests/tcg/mips/user/isa/octeon/octeon-insns.c | 49 +++++++++++++++++++
+ 3 files changed, 86 insertions(+)
+
+diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+index bb0a9f1d99a..36ced0bb333 100644
+--- a/target/mips/tcg/octeon.decode
++++ b/target/mips/tcg/octeon.decode
+@@ -55,6 +55,8 @@ MTP0         011100 ..... ..... 00000 00000 001001 @r2
+ MTP1         011100 ..... ..... 00000 00000 001010 @r2
+ MTP2         011100 ..... ..... 00000 00000 001011 @r2
+ 
++VMULU        011100 ..... ..... ..... 00000 001111 @r3
++
+ &saa         base rt
+ @saa         ...... base:5 rt:5 ................ &saa
+ SAA          011100 ..... ..... 00000 00000 011000 @saa
+diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+index 36d268e09c4..7b00bc994b1 100644
+--- a/target/mips/tcg/octeon_translate.c
++++ b/target/mips/tcg/octeon_translate.c
+@@ -265,3 +265,38 @@ static bool trans_mtp(DisasContext *ctx, arg_r2 *a, unsigned int index)
+ TRANS(MTP0, trans_mtp, 0);
+ TRANS(MTP1, trans_mtp, 1);
+ TRANS(MTP2, trans_mtp, 2);
++
++static bool trans_VMULU(DisasContext *ctx, arg_VMULU *a)
++{
++    TCGv_i64 x[3], y[3], z[3];
++    TCGv_i64 tmp = tcg_temp_new_i64();
++    TCGv_i64 zero = tcg_constant_i64(0);
++
++    z[0] = y[0] = tcg_temp_new_i64();
++    z[1] = y[1] = tcg_temp_new_i64();
++    z[2] = y[2] = tcg_temp_new_i64();
++    x[0] = tcg_temp_new_i64();
++    x[1] = tcg_temp_new_i64();
++    x[2] = zero;
++
++    /* Z = rs * (mpl1 : mpl0) + rt */
++    gen_load_gpr(tmp, a->rs);
++    gen_load_gpr(y[0], a->rt);
++    tcg_gen_mulu2_i64(x[0], x[1], tmp, oct_mpl[0]);
++    tcg_gen_mulu2_i64(y[1], y[2], tmp, oct_mpl[1]);
++    tcg_gen_addN_i64(3, z, y, x);
++
++    /* X == (0 : p1 : p0) */
++    x[0] = oct_p[0];
++    x[1] = oct_p[1];
++
++    /* Y == (p1 : p0 : tmp) */
++    y[0] = tmp;
++    y[1] = oct_p[0];
++    y[2] = oct_p[1];
++
++    /* (p1 : p0 : rd) = Z + (0 : p1 : p0) */
++    tcg_gen_addN_i64(3, y, z, x);
++    gen_store_gpr(tmp, a->rd);
++    return true;
++}
+diff --git a/tests/tcg/mips/user/isa/octeon/octeon-insns.c b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
+index 3c3802ebfee..4647e47f371 100644
+--- a/tests/tcg/mips/user/isa/octeon/octeon-insns.c
++++ b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
+@@ -86,6 +86,53 @@ static uint64_t octeon_sne(uint64_t rs, uint64_t rt)
+     return rd;
+ }
+ 
++static uint64_t octeon_vmulu(uint64_t mpl0, uint64_t rs, uint64_t rt)
++{
++    uint64_t rd;
++
++    asm volatile(
++        "move $8, %[mpl0]\n\t"
++        "move $9, $0\n\t"
++        ".word 0x71090008\n\t" /* mtm0 $8, $9 */
++        "move $8, %[rs]\n\t"
++        "move $9, %[rt]\n\t"
++        ".word 0x7109500f\n\t" /* vmulu $10, $8, $9 */
++        "move %[rd], $10\n\t"
++        : [rd] "=r" (rd)
++        : [mpl0] "r" (mpl0), [rs] "r" (rs), [rt] "r" (rt)
++        : "$8", "$9", "$10");
++
++    return rd;
++}
++
++static uint64_t octeon_mtp0_zeroes_p1(void)
++{
++    uint64_t rd;
++
++    asm volatile(
++        "move $8, %[mpl0]\n\t"
++        "move $9, $0\n\t"
++        ".word 0x71090008\n\t" /* mtm0 $8, $9 */
++        "move $8, %[p1]\n\t"
++        "move $9, $0\n\t"
++        ".word 0x7109000a\n\t" /* mtp1 $8, $9 */
++        "move $8, $0\n\t"
++        "move $9, $0\n\t"
++        ".word 0x71090009\n\t" /* mtp0 $8, $9 */
++        "move $8, $0\n\t"
++        "move $9, $0\n\t"
++        ".word 0x7109500f\n\t" /* vmulu $10, $8, $9 */
++        "move $8, $0\n\t"
++        "move $9, $0\n\t"
++        ".word 0x7109500f\n\t" /* vmulu $10, $8, $9 */
++        "move %[rd], $10\n\t"
++        : [rd] "=r" (rd)
++        : [mpl0] "r" (0ULL), [p1] "r" (1ULL)
++        : "$8", "$9", "$10");
++
++    return rd;
++}
++
+ int main(void)
+ {
+     assert(octeon_baddu(0x123, 0x0f0) == 0x13);
+@@ -95,6 +142,8 @@ int main(void)
+     assert(octeon_seq(0xabc, 0xdef) == 0);
+     assert(octeon_sne(0xabc, 0xabc) == 0);
+     assert(octeon_sne(0xabc, 0xdef) == 1);
++    assert(octeon_vmulu(5, 7, 11) == 46);
++    assert(octeon_mtp0_zeroes_p1() == 0);
+ 
+     return 0;
+ }
+-- 
+2.53.0
+
 
