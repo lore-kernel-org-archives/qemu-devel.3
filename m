@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20619CD5BAC
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:51:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03FEECD5BAB
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:51:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPooR-000715-Ca; Wed, 20 May 2026 17:50:47 -0400
+	id 1wPooH-0006ti-1e; Wed, 20 May 2026 17:50:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wPooQ-0006xQ-9f
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:50:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wPooF-0006tV-4y
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:50:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wPooO-0004A0-WF
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:50:46 -0400
+ id 1wPooD-00047c-BZ
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:50:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779313844;
+ s=mimecast20190719; t=1779313832;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mdeg6KZimag8UGjN/vDgHGgf4EKwXlKAmfn2EJzpOFM=;
- b=SHoI6yxKNLPK6qJaIHZmZ9XskJ0ReNIhEJAA0oa5UlDfvGjB7rTFOGl4hLOJarKEu4MDZ4
- n95hsfJm/0y4CxHzRWN2L75qChsofPK8A2hf9e1IQAAmt+2C6gorr7KBr5URah7/ad1vH5
- 89HjWTbuwHi5LqoiopQuMBw0bQ97NSM=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Zgbilhy9vgfL87SyKBeKQoEo1Sfe5fdtx1DgdjZluhU=;
+ b=FVD1fW3W3bhiekUX06drTyT9HI8NZ2ymoA+qW22qz3nuB0qvZxGuIW4unUOE6w9vdwK+yi
+ W9t84z4uEscCCMe8mSPRHlVRqTv9cgralpbo2tA4ggvcwGsL5FFU8iPMg/LvltmPN12PWp
+ 9YPZGLbUAjUbwtiaCsd2FxzcLxoqJfU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-30-5BJmYDtMNgi_Mdp79VrOVg-1; Wed,
- 20 May 2026 17:50:42 -0400
-X-MC-Unique: 5BJmYDtMNgi_Mdp79VrOVg-1
-X-Mimecast-MFC-AGG-ID: 5BJmYDtMNgi_Mdp79VrOVg_1779313842
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-673-suwx-5u5Pe2Y7SPG-x9WwA-1; Wed,
+ 20 May 2026 17:50:31 -0400
+X-MC-Unique: suwx-5u5Pe2Y7SPG-x9WwA-1
+X-Mimecast-MFC-AGG-ID: suwx-5u5Pe2Y7SPG-x9WwA_1779313830
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DBF3C1956080
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 21:50:41 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5418C1956046
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 21:50:30 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.26])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7975630001A2; Wed, 20 May 2026 21:50:40 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 06ACA1800591; Wed, 20 May 2026 21:50:28 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 21 May 2026 01:49:07 +0400
-Subject: [PATCH 06/40] s390x: prevent crash if given invalid CPU#
+Date: Thu, 21 May 2026 01:49:05 +0400
+Subject: [PATCH 04/40] target/i386: decouple cpu_x86_inject_mce() from Monitor
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260521-qemu-no-hmp-v1-6-d104f809e145@redhat.com>
+Message-Id: <20260521-qemu-no-hmp-v1-4-d104f809e145@redhat.com>
 References: <20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com>
 In-Reply-To: <20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=630;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7642;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=RCG2TEBkp0lXDDkBP+4/T7m2pCFCYtedJ2NUBZ+T14M=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqDiyCeUpyYYR/MzgGz033z4WkmvVaneW1ZlBGp
- pMwiIMEBGCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCag4sggAKCRDa6OEJdZac
- 5clnD/9HhJl8/gAzGIHf+gKXoTMSt/AZVVRsoqiRDk0HLnuJ3P1XFvdVBBro7kI4WfBjqDszzYH
- JilJUcxMx6GXS8WJ5oytNArOkvrB0PriiDeqDfmgJqOozTWXxW677B/OOQcc5uzyk64BTM3ZiLU
- rUOfyvH+hSeAokwtQgG/yPIYweJ5qauuNq/ScqIUL0sJM3T9Pw4kQeocVPhLmgbOcODslX+VyYk
- FqGVBBaM+KxRG53Otz45PXcUvok06gMvZXDbhESXw/2j6bOIuF7mhbvB06GtO7L3xg7q+xH4QgB
- jwPQCsiVdxqlTKIPk08W7YKHbAcCCglsIy4JwZwExePN6f+OSdtTh/Nvmi2biMcL6oMK//jnP5L
- +RLdj/Rvivxl5rhU1C0Yr1NkjUHv+zwC15xy5uNmDzBUJL0Ga98Ao7yN6AhPu6Tej7pxOpcN39k
- hRyQQs5bZ9hxjsIdX1AnQafuYi+uDif5U0vGsOGonysyZo+ZNvXKmoWyAiNiYYGl1hEr+Wxdm8K
- 4u39vrF5tNaWO8jzFMSF3m5pA/8zAbdAA4+PYHxh18yTq+EKwljHt2HLCVAnpVXO7KKIyjTCx8/
- zu6gRP3N40BdfkuPBHs+EQHm9Gxpye4D9LSMc5APaUylAbFjKsGdyGhXx6uObAgYHQe8fs8uV9T
- OrVWiYStbBYA4bQ==
+ bh=yANMK/PMDx6+75gaRNXwSLaOhY0TlOLUb0ODWU3hzAA=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqDiyC0VDhpNkb3N+szmkH8l+vgUNLQ9kzAxlgR
+ UxKyghhjLeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCag4sggAKCRDa6OEJdZac
+ 5XG4EACZ8jjygagBpbH0xusHyhtp8tx9zEERx66akGZLzvIH/jdfv06q6mwDJan3wj/23GUuZtb
+ krC567yjS4xtx01tV1fCPASvLOGb+QjqPqLmpVK2ewvSXdl2cZuoFAIZFHsdTN4/OxvgW0ApR1b
+ WKIyX+Blu2WEz/2KpVlT3VnQZIbyswWabvZ8IHOaVAQdKxRhgPhfiGQNVIKK4Ei1KHTijYJ+cb+
+ 6M5mgW1og4OrDcplu4rymetSK/tT7DSHnQODNw+NXVzULpB2HoHKI4NcEs+PtI7AYOmnNdBurfL
+ m5D1SaxjXpNKMcAApfwghis5GpWSPY4wqIzWH+zJ6l/y5ENsJ4BcnowZPVQas4jrldvyL4pD+Kc
+ 35W1ltvGlh12qWDgvq/vfma4l2LDHhkQBrDWcXlAkHmbXxVYSHFLdmJBE8QnAs2qYZcQyEJvtHO
+ iqcc3cHpoYbUntcmr9QE9ocGykzqB40H30lPIps6/fB735cCKrRDea7U+z8NmkeFQosrIVm8WvG
+ lSPsRDHybyzsB56O/W/GdPug4elF6P6H5wt3dh2rR/BGwvMd/DRosb7/cg7WJPKJ+VsOOezYUym
+ ICKdEOTiVV7tuhsJ3nOxmw8jh8/EzPgSpbHgnhWdmREUow8gKM/pConbceav/ri3uWKoXmnFCfT
+ dh/IwO5V8K70qTA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -85,7 +85,7 @@ X-Spam_score: 0.8
 X-Spam_bar: /
 X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -103,27 +103,205 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Replace monitor_printf() error reporting with the standard **errp
+pattern. Drop the Monitor *mon parameter and return bool to indicate
+success, improving the function usage from non-HMP contexts. Update the
+KVM MCE injection path and hmp_mce() accordingly.
+
+Notes:
+ - we may want to print the error in KVM path too
+ - multiple error prints are now accumulated with error hints
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/s390x/s390-virtio-ccw.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ target/i386/cpu.h     |  4 ++--
+ target/i386/helper.c  | 49 ++++++++++++++++++++++++++++---------------------
+ target/i386/kvm/kvm.c |  4 ++--
+ target/i386/monitor.c |  6 ++++--
+ 4 files changed, 36 insertions(+), 27 deletions(-)
 
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 4d35f9b10bc..d27d82a378a 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -729,6 +729,11 @@ static void s390_nmi(NMIState *n, int cpu_index, Error **errp)
- {
-     CPUState *cs = qemu_get_cpu(cpu_index);
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index bdd4fff89d6..da9f51b85b7 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2842,9 +2842,9 @@ void do_cpu_init(X86CPU *cpu);
+ #define MCE_INJECT_BROADCAST    1
+ #define MCE_INJECT_UNCOND_AO    2
  
-+    if (!cs) {
-+        error_setg(errp, "CPU %d does not exist", cpu_index);
-+        return;
-+    }
-+
-     s390_cpu_restart(S390_CPU(cs));
+-void cpu_x86_inject_mce(Monitor *mon, X86CPU *cpu, int bank,
++bool cpu_x86_inject_mce(X86CPU *cpu, int bank,
+                         uint64_t status, uint64_t mcg_status, uint64_t addr,
+-                        uint64_t misc, int flags);
++                        uint64_t misc, int flags, Error **errp);
+ 
+ uint32_t cpu_cc_compute_all(CPUX86State *env1);
+ 
+diff --git a/target/i386/helper.c b/target/i386/helper.c
+index 8cc73f619a9..03265c80b0a 100644
+--- a/target/i386/helper.c
++++ b/target/i386/helper.c
+@@ -18,6 +18,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qapi/error.h"
+ #include "qapi/qapi-events-run-state.h"
+ #include "cpu.h"
+ #include "exec/cputlb.h"
+@@ -27,7 +28,6 @@
+ #ifndef CONFIG_USER_ONLY
+ #include "system/hw_accel.h"
+ #include "system/memory.h"
+-#include "monitor/monitor.h"
+ #include "kvm/kvm_i386.h"
+ #endif
+ #include "qemu/log.h"
+@@ -377,7 +377,7 @@ out:
  }
  
+ typedef struct MCEInjectionParams {
+-    Monitor *mon;
++    GString *err;
+     int bank;
+     uint64_t status;
+     uint64_t mcg_status;
+@@ -424,9 +424,9 @@ static void do_inject_x86_mce(CPUState *cs, run_on_cpu_data data)
+          * reporting is disabled
+          */
+         if ((cenv->mcg_cap & MCG_CTL_P) && cenv->mcg_ctl != ~(uint64_t)0) {
+-            monitor_printf(params->mon,
+-                           "CPU %d: Uncorrected error reporting disabled\n",
+-                           cs->cpu_index);
++            g_string_append_printf(params->err,
++                "CPU %d: Uncorrected error reporting disabled\n",
++                cs->cpu_index);
+             return;
+         }
+ 
+@@ -435,10 +435,9 @@ static void do_inject_x86_mce(CPUState *cs, run_on_cpu_data data)
+          * reporting is disabled for the bank
+          */
+         if (banks[0] != ~(uint64_t)0) {
+-            monitor_printf(params->mon,
+-                           "CPU %d: Uncorrected error reporting disabled for"
+-                           " bank %d\n",
+-                           cs->cpu_index, params->bank);
++            g_string_append_printf(params->err,
++                "CPU %d: Uncorrected error reporting disabled for bank %d\n",
++                cs->cpu_index, params->bank);
+             return;
+         }
+ 
+@@ -455,7 +454,7 @@ static void do_inject_x86_mce(CPUState *cs, run_on_cpu_data data)
+         if (need_reset) {
+             emit_guest_memory_failure(MEMORY_FAILURE_ACTION_RESET, ar,
+                                       recursive);
+-            monitor_printf(params->mon, "%s", msg);
++            g_string_append_printf(params->err, "%s\n", msg);
+             qemu_log_mask(CPU_LOG_RESET, "%s\n", msg);
+             qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
+             return;
+@@ -484,14 +483,16 @@ static void do_inject_x86_mce(CPUState *cs, run_on_cpu_data data)
+     emit_guest_memory_failure(MEMORY_FAILURE_ACTION_INJECT, ar, recursive);
+ }
+ 
+-void cpu_x86_inject_mce(Monitor *mon, X86CPU *cpu, int bank,
++bool cpu_x86_inject_mce(X86CPU *cpu, int bank,
+                         uint64_t status, uint64_t mcg_status, uint64_t addr,
+-                        uint64_t misc, int flags)
++                        uint64_t misc, int flags, Error **errp)
+ {
++    ERRP_GUARD();
+     CPUState *cs = CPU(cpu);
+     CPUX86State *cenv = &cpu->env;
++    g_autoptr(GString) err = g_string_new(NULL);
+     MCEInjectionParams params = {
+-        .mon = mon,
++        .err = err,
+         .bank = bank,
+         .status = status,
+         .mcg_status = mcg_status,
+@@ -502,21 +503,21 @@ void cpu_x86_inject_mce(Monitor *mon, X86CPU *cpu, int bank,
+     unsigned bank_num = cenv->mcg_cap & 0xff;
+ 
+     if (!cenv->mcg_cap) {
+-        monitor_printf(mon, "MCE injection not supported\n");
+-        return;
++        error_setg(errp, "MCE injection not supported");
++        return false;
+     }
+     if (bank >= bank_num) {
+-        monitor_printf(mon, "Invalid MCE bank number\n");
+-        return;
++        error_setg(errp, "Invalid MCE bank number");
++        return false;
+     }
+     if (!(status & MCI_STATUS_VAL)) {
+-        monitor_printf(mon, "Invalid MCE status code\n");
+-        return;
++        error_setg(errp, "Invalid MCE status code");
++        return false;
+     }
+     if ((flags & MCE_INJECT_BROADCAST)
+         && !cpu_x86_support_mca_broadcast(cenv)) {
+-        monitor_printf(mon, "Guest CPU does not support MCA broadcast\n");
+-        return;
++        error_setg(errp, "Guest CPU does not support MCA broadcast");
++        return false;
+     }
+ 
+     run_on_cpu(cs, do_inject_x86_mce, RUN_ON_CPU_HOST_PTR(&params));
+@@ -535,6 +536,12 @@ void cpu_x86_inject_mce(Monitor *mon, X86CPU *cpu, int bank,
+             run_on_cpu(other_cs, do_inject_x86_mce, RUN_ON_CPU_HOST_PTR(&params));
+         }
+     }
++    if (params.err->len) {
++        error_setg(errp, "Failed to inject MCE");
++        error_append_hint(errp, "%s", params.err->str);
++        return false;
++    }
++    return true;
+ }
+ 
+ static inline target_ulong get_memio_eip(CPUX86State *env)
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 9e352882c8c..d01519ef2f3 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -747,8 +747,8 @@ static void kvm_mce_inject(X86CPU *cpu, hwaddr paddr, int code)
+         flags = 0;
+     }
+ 
+-    cpu_x86_inject_mce(NULL, cpu, 9, status, mcg_status, paddr,
+-                       (MCM_ADDR_PHYS << 6) | 0xc, flags);
++    cpu_x86_inject_mce(cpu, 9, status, mcg_status, paddr,
++                       (MCM_ADDR_PHYS << 6) | 0xc, flags, NULL);
+ }
+ 
+ static void emit_hypervisor_memory_failure(MemoryFailureAction action, bool ar)
+diff --git a/target/i386/monitor.c b/target/i386/monitor.c
+index a536712c755..785a13dd710 100644
+--- a/target/i386/monitor.c
++++ b/target/i386/monitor.c
+@@ -580,6 +580,7 @@ void hmp_mce(Monitor *mon, const QDict *qdict)
+     uint64_t addr = qdict_get_int(qdict, "addr");
+     uint64_t misc = qdict_get_int(qdict, "misc");
+     int flags = MCE_INJECT_UNCOND_AO;
++    Error *err = NULL;
+ 
+     if (qdict_get_try_bool(qdict, "broadcast", false)) {
+         flags |= MCE_INJECT_BROADCAST;
+@@ -587,7 +588,8 @@ void hmp_mce(Monitor *mon, const QDict *qdict)
+     cs = qemu_get_cpu(cpu_index);
+     if (cs != NULL) {
+         cpu = X86_CPU(cs);
+-        cpu_x86_inject_mce(mon, cpu, bank, status, mcg_status, addr, misc,
+-                           flags);
++        cpu_x86_inject_mce(cpu, bank, status, mcg_status, addr, misc,
++                           flags, &err);
++        hmp_handle_error(mon, err);
+     }
+ }
 
 -- 
 2.54.0
