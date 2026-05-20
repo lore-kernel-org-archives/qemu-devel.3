@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 133ADCD5BAA
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 18:28:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C48B3CD5BA4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 18:28:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPlZJ-0007kJ-I3; Wed, 20 May 2026 14:22:57 -0400
+	id 1wPlZD-0007Ye-N0; Wed, 20 May 2026 14:22:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPlZ4-0007HO-Gl
- for qemu-devel@nongnu.org; Wed, 20 May 2026 14:22:45 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1wPlYq-000738-0j
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 14:22:28 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPlYt-0000Yh-J6
- for qemu-devel@nongnu.org; Wed, 20 May 2026 14:22:42 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-365d8e43759so2814320a91.0
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 11:22:29 -0700 (PDT)
+ id 1wPlYm-0000WF-Kb
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 14:22:27 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-36622412e97so3784194a91.2
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 11:22:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779301348; x=1779906148; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779301343; x=1779906143; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+C8mEcK0Q/wuIBusokIyMGl5OxDZ+zgF0Mzf/nkafIE=;
- b=xuG8KstbNNiVXVpOWUr7KONkWfN7psWfzKeFINiuWbRDdk63GBGwG0ji2tojmls1nq
- 1502FrZM2eAnhWNbbL8kDSQfhQFQfEZzdWUta+xQTjV2UQz70O0fxumpcqUHOHL+86Eq
- cvABPSmKFbuZ4Yt7cDXeIynAWPHRmZwNYEwCOWyk+L8YaANrxANL/lWmZzjkfIYUemKW
- 8WX/Si8zXXNRlU11eQnbqR5azkWhaBoFOmzGcgIFy40qjXoa1FBVdlb3EFLlo5ag+Ys+
- YRXu0hjNj1s/bvOC1MScEjgXv00uSsrktHS8tRM+td8r53uxno35i1hUbBeWcNf8C01A
- wAaw==
+ bh=P2YowRxNRLBYS6ametaessFL4W/WU5kteC+kwFAECtE=;
+ b=pCGxw6h12kzG2cz6T9BgpiJOdK+Fvwii5hXO05m+jhYl/GMJxCcKInW6zI349/DRrM
+ b+x9DvTcmtsJYFjAimVyuHC19xpAjssb5bLvx0lsLoI0HhBSzMgvtiXxsXvE7v9OAmy2
+ hezjN0mgyzpWP6lpGiowzgHEGdcCLbCgyQ/4KkJhjF46imCDKgpX45wKTDTwj8n7SCIG
+ W9xW3gPNWUwUuh38AGx9SOl51EwvJi8QMkh8L+xNzDoY02cBHPJLYIa7AR6Iu+LmX96o
+ PbCMC50MC6gYav3k88cfhjzT0uekNViVLIAaxcjbJYQYCj1mQvChPjwDsu9WBdTtTBfb
+ GTlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779301348; x=1779906148;
+ d=1e100.net; s=20251104; t=1779301343; x=1779906143;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=+C8mEcK0Q/wuIBusokIyMGl5OxDZ+zgF0Mzf/nkafIE=;
- b=ac+MFYj2wF1wMTsCatnv/Tpa2mTvMbZokMgGA8QHgH6XRYCyHRiZ7pXCqrDKJfuUNh
- sIkcxRg8EfrzOOqdV5XtC2UZeXkc7hh64G0RhOFIuKnSgSLazVSG5OiL9dRA0eWyNmYJ
- EUVYIBzj56Rnsga8tkHQua01D2YBQSkbghCMXbkOBVqkRQYi1HRRTwseY3wuR7Nh1HMb
- S++k1MAmQGqyvSOzD5ZNewGp9yboLMOm1ms3vP67MElg30tEd2gXqE7e65hOh9V70k+i
- 2Vmk3dzWOScBNoaIXtodpRjpY4sOxkgW5OwMmMO7iZvTmUILK8grd/jWIebhEYXscSwQ
- wcQA==
-X-Gm-Message-State: AOJu0YzGcQc7iRUltrP3Ig/TFgTVmCTs5cLM421q2Bfat7Xyn/QwIabt
- VD4Na7BEad9s+e+aOHMXoyQjcCTltG7qgaom0cm0Z8wE3TkxySjCoT7RwjEh1zVk10f+6lNGKNa
- 4ybxB7wU=
-X-Gm-Gg: Acq92OGwxTJ7fZ6UaXIEcQS0B4gKy0Dv+qDl7itxwKm4uf0JW2KbUtI4DBBKOHYFxU0
- CRZoaZjHtqFJz2goHK3dqd91mwsXBCuPMqJ5saq6VAkiejl0ivPZ7EfUMm5oFlxHB1FueNPllDb
- XehIr9JnpFPPhMZqSW88TEVdq7w/hcia+sAZ6fx+t0hc6CRXlaAKhKWrwxaCGvlP8m+4wdPu3Ba
- F8UIST1ycmYXysdb+XHdOXJEINiGhx6zyGuZgtzarDV3NJzyVQDUgZu+hxzIwFpeQgQhn0MUfSv
- SnuixzHDY1uyloIJK993zPHWj3IWY84utuS8VCwmVEwvMROxCVpxUIsWoeXZxoLS4cEevub8rIe
- dBbdMfw96eWOZ68FqtJpSIRUeZrdckQUjfr/5t76rhq8NajTDGv33v/7ue6Tf8Kl2QwGIKYReL6
- r/CGEM76h6npt1LIcS9omDqKhlk6XP
-X-Received: by 2002:a17:90b:2e8f:b0:366:5283:cddf with SMTP id
- 98e67ed59e1d1-36a3cc8fc0fmr415494a91.9.1779301348198; 
- Wed, 20 May 2026 11:22:28 -0700 (PDT)
+ bh=P2YowRxNRLBYS6ametaessFL4W/WU5kteC+kwFAECtE=;
+ b=keg8FJbFtQk8SZBj1wPCffWc+M/kUf0q3E4+S8y1E29jIJNl9ooqpe1kA3Ddi4mxDu
+ oKjwA43FOdHNf4LFAlX+Fr5r97f0iNHuGLDHjRYplI7go9/ArWmo+0yfgwW2qZI2FAlv
+ NOQKi6wDxYXXylCKsEz2Z6wFeQ1/ZSG9CyMbhaRtWz+GkqIHxGX1ZGLj6Tpsw6XIsxpl
+ J4kGN03QJros7WJTeCS0zekaMg1i48vZclymvjU1QIZV0vv3WTbpDL7nRvQ7N2lFQ5uS
+ d1CwEpHLaLcBoxYE5yqOi7MDzznTa7XEO7q3vEuW/GU1vV99mb7HKZk4GyMhtibWnDKU
+ PKtQ==
+X-Gm-Message-State: AOJu0YxWWjq27ZbcjtKanFxSilAXt73M/v+xOaJ9XZbtDdrxaJZgwQaX
+ 6Iovq9pl/C0L9/eoFYjD8KNSPwAhURKId6xwR/TkYlQV8TX1QY9AutyESCzDkwsLSE3TtY86m7I
+ 69uw9xxE=
+X-Gm-Gg: Acq92OFv0qJK8xptb/xBVdC1BGKC2kpbCrWx1vhyUU6lbwNiRJ/r9ZfdVNY2JNvVyH2
+ Cp+lXzIuiKpYbycXDfnTjNwJZQOBsvNtV9vhbzyQ/LqRdmHA2zElB2PdPTy+CHtdoX9Jsoum4wo
+ ZC8wkswfYGsdLpQKDhP6u2QsvpMgpuud12DeUyhHm/UgQgTy2ndeJbHW/nP4AJO7UJB2vRO1vdx
+ GAb8hicJ48eKsK3sIXM64dNVNKFlOEIdVb7w44bozYhDV4g1E0RrId5m54EikuCFnlLl/J5wffr
+ katsnTx6+A9Pi8RIZ9buhZoE7DAw1vG2LbEOMyFY3WbXGcosKm3y58sQObfnPyJxKTD3v7u/zP1
+ nqFFbehn3hWhJcI1IUSC+sycULPZCLxjesDzUg/8u312wbjVQGN0exFz0nlTSAaXOnzSAeiVMke
+ sM9lyk5RJtxAXIOzgZ2Y7uyr8DlyGD
+X-Received: by 2002:a17:90b:5483:b0:364:78a5:8d40 with SMTP id
+ 98e67ed59e1d1-36951b92cdamr23209080a91.20.1779301343075; 
+ Wed, 20 May 2026 11:22:23 -0700 (PDT)
 Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-36a3d210b4esm274764a91.17.2026.05.20.11.22.27
+ 98e67ed59e1d1-36a3d210b4esm274764a91.17.2026.05.20.11.22.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 11:22:27 -0700 (PDT)
+ Wed, 20 May 2026 11:22:22 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH v6 20/64] target/arm: Implement FSCALE for SME
-Date: Wed, 20 May 2026 11:21:29 -0700
-Message-ID: <20260520182213.872945-21-richard.henderson@linaro.org>
+Subject: [PATCH v6 12/64] target/arm: Add FPMR_EL to TBFLAGS
+Date: Wed, 20 May 2026 11:21:21 -0700
+Message-ID: <20260520182213.872945-13-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260520182213.872945-1-richard.henderson@linaro.org>
 References: <20260520182213.872945-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,95 +99,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Prepare to perform access checks for direct and
+indirect uses of FPMR.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpu-features.h      |  5 +++++
- target/arm/tcg/translate-sme.c | 15 +++++++++++++--
- target/arm/tcg/sme.decode      |  6 ++++++
- 3 files changed, 24 insertions(+), 2 deletions(-)
+ target/arm/cpu.h               |  1 +
+ target/arm/tcg/translate.h     |  2 ++
+ target/arm/tcg/hflags.c        | 41 ++++++++++++++++++++++++++++++++++
+ target/arm/tcg/translate-a64.c |  1 +
+ 4 files changed, 45 insertions(+)
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 1fde3e9231..f9c979d20b 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -1622,6 +1622,11 @@ static inline bool isar_feature_aa64_sme2_faminmax(const ARMISARegisters *id)
-     return isar_feature_aa64_sme2(id) && isar_feature_aa64_faminmax(id);
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index c114510446..9e637c1d80 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -2567,6 +2567,7 @@ FIELD(TBFLAG_A64, ZT0EXC_EL, 39, 2)
+ FIELD(TBFLAG_A64, GCS_EN, 41, 1)
+ FIELD(TBFLAG_A64, GCS_RVCEN, 42, 1)
+ FIELD(TBFLAG_A64, GCSSTR_EL, 43, 2)
++FIELD(TBFLAG_A64, FPMR_EL, 45, 2)
+ 
+ /*
+  * Helpers for using the above. Note that only the A64 accessors use
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index 77fdc5f3a1..1648c2c96f 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -199,6 +199,8 @@ typedef struct DisasContext {
+     uint8_t gm_blocksize;
+     /* True if the current insn_start has been updated. */
+     bool insn_start_updated;
++    /* FMPR exception EL or 0 if enabled. */
++    uint8_t fpmr_el;
+     /* Offset from VNCR_EL2 when FEAT_NV2 redirects this reg to memory */
+     uint32_t nv2_redirect_offset;
+ } DisasContext;
+diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
+index 7e6f8d3647..6759b36f28 100644
+--- a/target/arm/tcg/hflags.c
++++ b/target/arm/tcg/hflags.c
+@@ -237,6 +237,43 @@ static int zt0_exception_el(CPUARMState *env, int el)
+     return 0;
  }
  
-+static inline bool isar_feature_aa64_sme2_f8cvt(const ARMISARegisters *id)
++/*
++ * Return the exception level to which exceptions should be taken for FPMR.
++ * C.f. the ARM pseudocode function CheckFPMREnabled.
++ */
++static int fpmr_exception_el(CPUARMState *env, int el)
 +{
-+    return isar_feature_aa64_sme2(id) && isar_feature_aa64_f8cvt(id);
++    switch (el) {
++    case 0:
++        if (el_is_in_host(env, el)) {
++            if (!(env->cp15.sctlr_el[2] & SCTLR_EnFPM)) {
++                return 2;
++            }
++            break;
++        }
++        if (!(env->cp15.sctlr_el[1] & SCTLR_EnFPM)) {
++            return 1;
++        }
++        /* fall through */
++    case 1:
++        if (!(arm_hcrx_el2_eff(env) & HCRX_ENFPM)) {
++            return 2;
++        }
++        break;
++    case 2:
++        break;
++    case 3:
++        return 0;
++    default:
++        g_assert_not_reached();
++    }
++    if (arm_feature(env, ARM_FEATURE_EL3)
++        && !(env->cp15.scr_el3 & SCR_ENFPM)) {
++        return 3;
++    }
++    return 0;
 +}
 +
- static inline bool isar_feature_aa64_sve_i8mm(const ARMISARegisters *id)
+ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
+                                         ARMMMUIdx mmu_idx)
  {
-     return isar_feature_aa64_sve(id) && isar_feature_aa64_sme_sve_i8mm(id);
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index a67501226f..e2d17de165 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -707,9 +707,12 @@ static bool do_z2z_n1_fpst(DisasContext *s, arg_z2z_en *a,
- {
-     int esz = a->esz, n, dn, vsz, mofs;
-     bool overlap = false;
--    gen_helper_gvec_3_ptr *fn;
-+    gen_helper_gvec_3_ptr *fn = fns[esz];
-     TCGv_ptr fpst;
- 
-+    if (fn == NULL) {
-+        return false;
-+    }
-     /* These insns use MO_8 to encode BFloat16. */
-     if (esz == MO_8 && !dc_isar_feature(aa64_sme_b16b16, s)) {
-         return false;
-@@ -719,7 +722,6 @@ static bool do_z2z_n1_fpst(DisasContext *s, arg_z2z_en *a,
+@@ -500,6 +537,10 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
+         }
      }
  
-     fpst = fpstatus_ptr(esz == MO_16 ? FPST_A64_F16 : FPST_A64);
--    fn = fns[esz];
-     n = a->n;
-     dn = a->zdn;
-     mofs = vec_full_reg_offset(s, a->zm);
-@@ -831,6 +833,15 @@ static gen_helper_gvec_3_ptr * const f_vector_famin[4] = {
- };
- TRANS_FEAT(FAMIN_nn, aa64_sme2_faminmax, do_z2z_nn_fpst, a, f_vector_famin)
- 
-+static gen_helper_gvec_3_ptr * const f_vector_fscale[4] = {
-+    NULL,
-+    gen_helper_gvec_fscale_h,
-+    gen_helper_gvec_fscale_s,
-+    gen_helper_gvec_fscale_d,
-+};
-+TRANS_FEAT(FSCALE_n1, aa64_sme2_f8cvt, do_z2z_n1_fpst, a, f_vector_fscale)
-+TRANS_FEAT(FSCALE_nn, aa64_sme2_f8cvt, do_z2z_nn_fpst, a, f_vector_fscale)
++    if (cpu_isar_feature(aa64_fpmr, env_archcpu(env))) {
++        DP_TBFLAG_A64(flags, FPMR_EL, fpmr_exception_el(env, el));
++    }
 +
- /* Add/Sub vector Z[m] to each Z[n*N] with result in ZA[d*N]. */
- static bool do_azz_n1(DisasContext *s, arg_azz_n *a, int esz,
-                       GVecGen3FnVar *fn)
-diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index 9dec7318a4..ee874be1a6 100644
---- a/target/arm/tcg/sme.decode
-+++ b/target/arm/tcg/sme.decode
-@@ -250,6 +250,9 @@ ADD_n1         1100000 1 .. 10 .... 1010.0 11000 .... 0    @z2z_4x1
- SQDMULH_n1     1100000 1 .. 10 .... 1010.1 00000 .... 0    @z2z_2x1
- SQDMULH_n1     1100000 1 .. 10 .... 1010.1 00000 .... 0    @z2z_4x1
+     return rebuild_hflags_common(env, fp_el, mmu_idx, flags);
+ }
  
-+FSCALE_n1      1100000 1 .. 10 .... 1010.0 01100 .... 0    @z2z_2x1
-+FSCALE_n1      1100000 1 .. 10 .... 1010.0 01100 .... 0    @z2z_4x1
-+
- ### SME2 Multi-vector Multiple Vectors SVE Destructive
- 
- %zm_ax2         17:4 !function=times_2
-@@ -291,6 +294,9 @@ FAMAX_nn       1100000 1 .. 1 ..... 1011.0 01010 .... 0    @z2z_4x4
- FAMIN_nn       1100000 1 .. 1 ..... 1011.0 01010 .... 1    @z2z_2x2
- FAMIN_nn       1100000 1 .. 1 ..... 1011.0 01010 .... 1    @z2z_4x4
- 
-+FSCALE_nn      1100000 1 .. 1 ..... 1011.0 01100 .... 0    @z2z_2x2
-+FSCALE_nn      1100000 1 .. 1 ..... 1011.0 01100 .... 0    @z2z_4x4
-+
- ### SME2 Multi-vector Multiple and Single Array Vectors
- 
- &azz_n          n off rv zn zm
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 3c6559964b..b013dd51cb 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -10726,6 +10726,7 @@ static void aarch64_tr_init_disas_context(DisasContextBase *dcbase,
+     dc->gcs_en = EX_TBFLAG_A64(tb_flags, GCS_EN);
+     dc->gcs_rvcen = EX_TBFLAG_A64(tb_flags, GCS_RVCEN);
+     dc->gcsstr_el = EX_TBFLAG_A64(tb_flags, GCSSTR_EL);
++    dc->fpmr_el = EX_TBFLAG_A64(tb_flags, FPMR_EL);
+     dc->vec_len = 0;
+     dc->vec_stride = 0;
+     dc->cp_regs = arm_cpu->cp_regs;
 -- 
 2.43.0
 
