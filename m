@@ -4,104 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C858ACD5BAB
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:37:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C900CCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:37:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPoYf-00014Y-9g; Wed, 20 May 2026 17:34:29 -0400
+	id 1wPoYc-00013s-OL; Wed, 20 May 2026 17:34:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoYd-000149-NI
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoYb-00013f-9Q
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoYb-0007ED-Qj
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:27 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoYZ-0007D2-Ph
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779312865;
+ s=mimecast20190719; t=1779312863;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hoHGI7NaPvj5cSGbscsqHu1zPlGjHvSW5S0lgsmipWo=;
- b=A4rkJlgx4VCAhIPMVf43N00ZMrzCtlGjvZpIUesA7ydTgA5jEcD7bPU9oBItXcgLbN0xy8
- pehrvW536aAqH5BjrQ6bR/cDB++HTKK9ujDnJKZun8IhGn8vKIZXS+37lvHD/ZYcgaT/76
- ArqTXe2cqojHV7PcV+rd1USXahFlGJY=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bHwQFxcGwUZK2npcYhrJfs4WcdI2M1xltYSZSmNE9Is=;
+ b=alcr/Gtnbb8pNpTcLtOBTflwujWwkeGY+g+04Y1ojgB7oU1tDV8v97WXlbeJOr8izP18ic
+ SKxvm00Q2X3ReZnoeXof94BeXlmPSwynDhUkKLHxvJzSvtRv689uRVd1jwFqGc2Yjon92P
+ zdwSIcig37J6A/sXeR+zIt2poy/UG5Y=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-577-klZegBDONta75IFPrhi52g-1; Wed, 20 May 2026 17:34:23 -0400
-X-MC-Unique: klZegBDONta75IFPrhi52g-1
-X-Mimecast-MFC-AGG-ID: klZegBDONta75IFPrhi52g_1779312863
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-8b46c014a26so168415756d6.0
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 14:34:23 -0700 (PDT)
+ us-mta-196-vg8yBJVuNoenXJPn6ft9Ig-1; Wed, 20 May 2026 17:34:21 -0400
+X-MC-Unique: vg8yBJVuNoenXJPn6ft9Ig-1
+X-Mimecast-MFC-AGG-ID: vg8yBJVuNoenXJPn6ft9Ig_1779312861
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-50faf575af4so145630251cf.0
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 14:34:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779312862; x=1779917662; darn=nongnu.org;
+ d=redhat.com; s=google; t=1779312861; x=1779917661; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hoHGI7NaPvj5cSGbscsqHu1zPlGjHvSW5S0lgsmipWo=;
- b=sqrOYyNaw7qykIKBXBQqr+kLHfBp4OwKBdhAdNbFMuRExNo3IXz7XM6ED9XqC0B3yT
- iryOJtT9Q0S3m1I8y9FTISKgeb+BXjKNfYCvpVVlehToQqH+gMfbcGH2lqNC7Zd8JiTA
- mU5NyvX67HvWXK07kaQKxMkkAY/N4SnG6Q6zlhMUIA5Tw26FtQSNf8Nv6dLnujO+esJp
- X8R/JMkQ138295I9B5qwb012m8sIFr0nPNOYausJRHIaoULw8JnUnL/863bDtrcBuglV
- oM3D/sW5pXZjm6zpHvJ2Uo7ishwEoCpf0gjVm+t50ZOXishEWWKIGVUSl/OFdPLtoI1v
- JR8Q==
+ bh=bHwQFxcGwUZK2npcYhrJfs4WcdI2M1xltYSZSmNE9Is=;
+ b=rp2aUcgHelQiW9t9LmPh4Ha+wPCDkre2PSiR33ousNh7O3VMQEEWA3Izei2VBdvoVI
+ 5Eetk8SkRHdp6qEZjkuxFdDObb/hPAfOp5M0Qyevu7Y074l7ox9cP8iwpC5EII8uJii7
+ wibE0N0Ew5mdh4jsYpNBoPZzQw0hVwJ9tlLnEw3C/lAiJKR2+tHX8mEKF1OnJ8/ApVjF
+ b2/xWo33A6SQD1z43CcsnJMb5J1eOePnU6QfHCvjL58FFJ3bBX69V7ugvFObxSUrSMES
+ zs3OJcb6EM3WwcMAGCrYWlgHU5SImF3QANZhzmVVnicxWHculpcSG1J38OCFySJqXU48
+ yqpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779312862; x=1779917662;
+ d=1e100.net; s=20251104; t=1779312861; x=1779917661;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=hoHGI7NaPvj5cSGbscsqHu1zPlGjHvSW5S0lgsmipWo=;
- b=id83GenS5+zJPbnAcAJ/iiRgSsm7IZkbZafmxoSDcyTt9Hig3PWWMaVfb8RL+DyGT9
- e6JFQKXCq9NbZaguXxXb7NOKKu57X0yJehgpyaobQQLyYE0ZjrRzpZBjOXJJlUKM9Wy/
- /+lWYM2xgnOSgOLNAOUgb5jA6Fdw56gGw5gpNVkMSQAvdPn8qEkufWkwa0IT+1y/fhuW
- ban+SY+GKfjGTdfFsr71EwXnRAouflku+g/5C51k5j/xKccngxEToQXSX4OQgOPjccMK
- VvKx9k81Cl4qX6xPI4emC/vCRSvVbIurk4cyCYM49jZBsAMZ5Ith9nRzRx/7YPAQrwYA
- 8cHw==
-X-Gm-Message-State: AOJu0YyAUyOPO/5abqeJQNjtobs4xx79f2ipyI8Khe4UA65VB/S5Ov65
- +ZidJYu726aC955zGNh47WuQziOJJQ4VJ3HVSZE84xN73PUfXDsHboH2tE36CCilcWxoj5FSw4U
- Q9rR/d6qFnZSDD3cXf2+uP2PWwa/MzmYACOwHvgCo9Yo6bBjob7/KkeRBjkmuRmK6U+iTVUYJB3
- 85OE4wOCZvOT4lhDMtPJLHNwH0T3lPRBkQ0xt1UQ==
-X-Gm-Gg: Acq92OEdFRbGiwSVMCdipPEZGZ5fS1ke7fsukqzOdDAGc8V1xaajChhYIdFfOCU+o2v
- QpPlN8mD1eCQEDiWeJik2KEsXZVxO1N6AjVglBFtZIGUbOJF+0vZwjLmrfRnq1XLqMqoWnZUO+b
- equr4eyCPA/6v8zWBG9aFJP9eml5uPxRIYwsLDvwJnoVP11bzYfjcDz005xnyQ7Ia3Wwc5HhIwy
- ylvYBVGOtJw+fHp3ZIjzITsFjkJ1bIcMX8QlRoQNR/1XjRG3AnmN7mbAVH6zeNeFcxRKcj3b4/1
- x/0fPL8TCW8tM5Dukt+JCElMZUSOHI0KzjxZ8anJxw+1UWst0imFfzfQmhyAX+j6GvOB1wKLBUx
- JRAPih6KssWr//BmG4p2XQ/QTNnd/4LEvHm3pZ6DZW+EW
-X-Received: by 2002:a05:6214:3bc7:b0:8c4:975c:25a7 with SMTP id
- 6a1803df08f44-8cc6e37e422mr3369696d6.25.1779312862510; 
- Wed, 20 May 2026 14:34:22 -0700 (PDT)
-X-Received: by 2002:a05:6214:3bc7:b0:8c4:975c:25a7 with SMTP id
- 6a1803df08f44-8cc6e37e422mr3369086d6.25.1779312861893; 
- Wed, 20 May 2026 14:34:21 -0700 (PDT)
-Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8ca360b362fsm133062716d6.22.2026.05.20.14.34.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=bHwQFxcGwUZK2npcYhrJfs4WcdI2M1xltYSZSmNE9Is=;
+ b=tIjQOoqlfkej+rWbDYS4efnKrBqiH0lumXXBpDK7faIfsUG73Csj5UWnF66Gbcbn5q
+ 7aJuSyCAk2nea1UUnEIzqM8k/U6GR6RGdNQpMdedRTYTBawE6w0XT1El1ZlyovO9IdGD
+ bkmIUYyDY/21/Y6271c0pDY/hApMuhkuiFmVmhokAxhIkrzdUEHu+aCw7S5h6fETYUTk
+ TLHHBpMQtW4iTQTc7mnoQuq+77ycXECEANCLhoVQEJmE0B4MrDQGn+3IGFNAPozLOZqo
+ ExDNpJZbUi0TH4f2fCDNGDoBSflrOk5xtDnodPyJ0Qp7ATEEtW33SsS4zwH82nZU089h
+ Wk/g==
+X-Gm-Message-State: AOJu0YwcYfDFXz93qX7KRXI9zPCLSlE8IeNlmqXNJiaaVZmomUvCF4tb
+ d1uUVf6ZH1dHmjwLrya/V7XYXyOZPamtymA7/tG1wMaDTb5l5iyhRVeo54XoyeXiDuSvHScOYNN
+ Jl0w7oTGN8IyHQV6L1+D0oe1V8vZJ/kOzp5Qy98DKkmTb9BCVCszjIVdCJn8lBgJRZa19uOQUwF
+ F6OOQDCfKETUVkwsBFqRGBlCsd7Mzm/Ir5uZY1bw==
+X-Gm-Gg: Acq92OEATeSG3kLhJv9chRYRl/j99vG5QTaHuO9KA7Z0M8DuhG5Vw34ePi9ZTW4MIjG
+ J7JU10IsENV8oC3fW89KQ2J+leSv9Lm9RYJPma3gt3qvBa0HxYR51zajECCvTi7Ui5Yr8/9uFVk
+ RxD/Foj4MjsB7clPuExDaieGiRjMGHBG8mDB90zBx2jyWNE5f342h7liAheBrHltL1pcezX7WVt
+ xGpC0oKZ0dWjPf+9uu9AdqxleL+F3mdluqPVfSxhuLJS+PhUmCQcW5tLYKG3y9iE58wqZ6GP0eq
+ yHSAMedBiRQ0gHxlj5z1FXdH35ktCOGddhbQMyRhyL2vmOFdDi299TpfGJBO6AusZ/hKFQ+FygZ
+ 72CWQ0k2MsG3XXQRQ6TDdBpV1bBIUNPYimNkcOx3ILUuL
+X-Received: by 2002:a05:622a:4249:b0:50f:6415:1eb4 with SMTP id
+ d75a77b69052e-516c55955d5mr3090611cf.49.1779312860749; 
  Wed, 20 May 2026 14:34:20 -0700 (PDT)
+X-Received: by 2002:a05:622a:4249:b0:50f:6415:1eb4 with SMTP id
+ d75a77b69052e-516c55955d5mr3090031cf.49.1779312859876; 
+ Wed, 20 May 2026 14:34:19 -0700 (PDT)
+Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8ca360b362fsm133062716d6.22.2026.05.20.14.34.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 20 May 2026 14:34:16 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>,
-	Peter Xu <peterx@redhat.com>
-Subject: [PULL 07/29] tests/qtest/migration: Move cpr transfer logic into
- cpr-tests.c
-Date: Wed, 20 May 2026 17:33:35 -0400
-Message-ID: <20260520213357.40646-8-peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Mark Kanda <mark.kanda@oracle.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 06/29] MAINTAINERS: Make Maciej CPR maintainer
+Date: Wed, 20 May 2026 17:33:34 -0400
+Message-ID: <20260520213357.40646-7-peterx@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520213357.40646-1-peterx@redhat.com>
 References: <20260520213357.40646-1-peterx@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,195 +120,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-There's some amount of cpr-transfer logic at precopy_common, which in
-retrospect was a bad idea. For just two tests, that's too much code to
-be in the common function. Move it to the cpr file. We'll need this
-cleanup for subsequent improvements.
+Since Steve has retired last year I will take the CPR maintainership - with
+kind help of Mark who remains a reviewer.
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/r/20260505160915.25558-2-farosas@suse.de
+Cc: Mark Kanda <mark.kanda@oracle.com>
+Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/r/ebe67053f4bdf92eedab1e5839603b7137e36970.1778687091.git.maciej.szmigiero@oracle.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- tests/qtest/migration/framework.h |  3 --
- tests/qtest/migration/cpr-tests.c | 57 ++++++++++++++++++++++++++++---
- tests/qtest/migration/framework.c | 36 +++----------------
- 3 files changed, 56 insertions(+), 40 deletions(-)
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
-index bb534b8110..3ccc6a99d2 100644
---- a/tests/qtest/migration/framework.h
-+++ b/tests/qtest/migration/framework.h
-@@ -181,9 +181,6 @@ typedef struct {
-      */
-     const char *connect_channels;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index eda1e84268..c6ce786b5b 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3195,6 +3195,7 @@ T: git https://gitlab.com/jsnow/qemu.git jobs
+ T: git https://gitlab.com/vsementsov/qemu.git block
  
--    /* Optional: the cpr migration channel, in JSON or dotted keys format */
--    const char *cpr_channel;
--
-     /* Optional: callback to run at start to set migration parameters */
-     TestMigrateStartHook start_hook;
-     /* Optional: callback to run at finish to cleanup */
-diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
-index 63ca5f3996..48c98f0089 100644
---- a/tests/qtest/migration/cpr-tests.c
-+++ b/tests/qtest/migration/cpr-tests.c
-@@ -15,6 +15,9 @@
- #include "migration/framework.h"
- #include "migration/migration-qmp.h"
- #include "migration/migration-util.h"
-+#include "qapi/error.h"
-+#include "qobject/qjson.h"
-+#include "qobject/qlist.h"
- 
- 
- static char *tmpfs;
-@@ -42,10 +45,56 @@ static void test_mode_reboot(char *name, MigrateCommon *args)
-     test_file_common(args, true);
- }
- 
--static void *test_mode_transfer_start(QTestState *from, QTestState *to)
-+static int test_transfer(MigrateCommon *args, const char *cpr_channel,
-+                         bool incoming_defer)
- {
-+    QTestState *from, *to;
-+    QObject *obj, *out_channels = qobject_from_json(args->connect_channels,
-+                                                    &error_abort);
-+    QList *channels_list;
-+
-+    /*
-+     * The cpr channel must be included in outgoing channels, but not in
-+     * migrate-incoming channels.
-+     */
-+    channels_list = qobject_to(QList, out_channels);
-+    obj = migrate_str_to_channel(cpr_channel);
-+    qlist_append(channels_list, obj);
-+
-+    if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
-+        return -1;
-+    }
-+
-     migrate_set_parameter_str(from, "mode", "cpr-transfer");
--    return NULL;
-+
-+    wait_for_serial("src_serial");
-+
-+    qtest_qmp_assert_success(from, "{ 'execute' : 'stop'}");
-+    wait_for_stop(from, get_src());
-+    migrate_ensure_converge(from);
-+
-+    migrate_qmp(from, to, NULL, out_channels, "{}");
-+
-+    qtest_connect(to);
-+    qtest_qmp_handshake(to, NULL);
-+    if (incoming_defer) {
-+        QObject *in_channels = qobject_from_json(args->connect_channels,
-+                                                 &error_abort);
-+
-+        migrate_incoming_qmp(to, NULL, in_channels, "{}");
-+    }
-+
-+    wait_for_migration_complete(from);
-+    wait_for_migration_complete(to);
-+
-+    qtest_qmp_assert_success(to, "{ 'execute' : 'cont'}");
-+
-+    wait_for_resume(to, get_dst());
-+    wait_for_serial("dest_serial");
-+
-+    migrate_end(from, to, true);
-+
-+    return 0;
- }
- 
- /*
-@@ -86,15 +135,13 @@ static void test_mode_transfer_common(MigrateCommon *args, bool incoming_defer)
- 
-     args->listen_uri = incoming_defer ? "defer" : uri;
-     args->connect_channels = connect_channels;
--    args->cpr_channel = cpr_channel;
--    args->start_hook = test_mode_transfer_start;
- 
-     args->start.opts_source = opts;
-     args->start.opts_target = opts_target;
-     args->start.defer_target_connect = true;
-     args->start.mem_type = MEM_TYPE_MEMFD;
- 
--    if (test_precopy_common(args) < 0) {
-+    if (test_transfer(args, cpr_channel, incoming_defer) < 0) {
-         close(cpr_sockfd);
-         unlink(cpr_path);
-     }
-diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-index 49c7f37e60..4cd07be1d5 100644
---- a/tests/qtest/migration/framework.c
-+++ b/tests/qtest/migration/framework.c
-@@ -20,7 +20,6 @@
- #include "ppc-util.h"
- #include "qapi/error.h"
- #include "qobject/qjson.h"
--#include "qobject/qlist.h"
- #include "qemu/bswap.h"
- #include "qemu/module.h"
- #include "qemu/option.h"
-@@ -833,10 +832,7 @@ int test_precopy_common(MigrateCommon *args)
- {
-     QTestState *from, *to;
-     void *data_hook = NULL;
--    QObject *in_channels = NULL;
--    QObject *out_channels = NULL;
--
--    g_assert(!args->cpr_channel || args->connect_channels);
-+    QObject *channels = NULL;
- 
-     if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
-         return -1;
-@@ -869,40 +865,16 @@ int test_precopy_common(MigrateCommon *args)
-         }
-     }
- 
--    /*
--     * The cpr channel must be included in outgoing channels, but not in
--     * migrate-incoming channels.
--     */
-     if (args->connect_channels) {
--        if (args->start.defer_target_connect &&
--            !strcmp(args->listen_uri, "defer")) {
--            in_channels = qobject_from_json(args->connect_channels,
--                                            &error_abort);
--        }
--        out_channels = qobject_from_json(args->connect_channels, &error_abort);
--
--        if (args->cpr_channel) {
--            QList *channels_list = qobject_to(QList, out_channels);
--            QObject *obj = migrate_str_to_channel(args->cpr_channel);
--
--            qlist_append(channels_list, obj);
--        }
-+        channels = qobject_from_json(args->connect_channels, &error_abort);
-     }
- 
-     if (args->result == MIG_TEST_QMP_ERROR) {
--        migrate_qmp_fail(from, args->connect_uri, out_channels, "{}");
-+        migrate_qmp_fail(from, args->connect_uri, channels, "{}");
-         goto finish;
-     }
- 
--    migrate_qmp(from, to, args->connect_uri, out_channels, "{}");
--
--    if (args->start.defer_target_connect) {
--        qtest_connect(to);
--        qtest_qmp_handshake(to, NULL);
--        if (!strcmp(args->listen_uri, "defer")) {
--            migrate_incoming_qmp(to, args->connect_uri, in_channels, "{}");
--        }
--    }
-+    migrate_qmp(from, to, args->connect_uri, channels, "{}");
- 
-     if (args->result != MIG_TEST_SUCCEED) {
-         bool allow_active = args->result == MIG_TEST_FAIL;
+ CheckPoint and Restart (CPR)
++M: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+ R: Peter Xu <peterx@redhat.com>
+ R: Fabiano Rosas <farosas@suse.de>
+ R: Mark Kanda <mark.kanda@oracle.com>
 -- 
 2.53.0
 
