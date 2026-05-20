@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CBEACD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 16:10:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31795CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 16:10:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPjTp-0000dA-9K; Wed, 20 May 2026 12:09:09 -0400
+	id 1wPjU0-0000ty-03; Wed, 20 May 2026 12:09:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wPjSy-00089S-NS; Wed, 20 May 2026 12:08:22 -0400
+ id 1wPjTQ-00008l-La; Wed, 20 May 2026 12:08:45 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wPjSv-0002a2-LV; Wed, 20 May 2026 12:08:16 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1wPjTO-0002jF-Qo; Wed, 20 May 2026 12:08:44 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64K40Psq1870853; Wed, 20 May 2026 16:08:12 GMT
+ 64KCRhe43865883; Wed, 20 May 2026 16:08:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=EOyzoXb0icHkzbj4P
- X7/+5HS/R2nnoJp2TCI+tnpaHo=; b=rwdbrbiRyxtxxuNx4zmtpTxc2RQ7RC48s
- ipVfSVZrZEmlqrthiKiodT25WXztSa0nefPr+LJ6ZPV/toIVMLygxNSFCMbu9O09
- O4Mo++SpakqaxeMuCbyGK6/qYH5KJXfDPE3eLmjWaj07WVdJSY9c+LADmFpJI9Qm
- NrTpIzWYlwKQRpu0RAGYkBCYSysLz3QdoimT5q2DtRDT4tOBA7eMwaGMKGl7B9Rl
- dyWXB6QpWIn4FD55iPT2Kr2RIEdtvdi26YkOlDqVU8ffEoRM16xpfDmGP30oVyC/
- GDV0oVmHvstuZEFeVfwacPQCKg7FLEYk3OvhXqh4R9IfubYoQvw/A==
+ :mime-version:references:subject:to; s=pp1; bh=bBUeqejePY5Q+WclV
+ dbl/al+F0wZpIZVpKtLMafF4ZQ=; b=H18EbgmznK2f83vn5IMfdD6pOsi/TA2oU
+ +2HOwu2YA8sA/l2rxEaQ92EG47lxRhBRkEXKoocf0CkSKdIO5GyyhyCQlv28JMRd
+ sWy2pQXP+WW0Unex1mvpX6RyR4/1Ci+6jj6LXNgQPmBXhEYBC9i8HeszqT6a54H6
+ Adi4s10JRFmtsuEcTf4A0zTSRRN2RYRMyBKbL0CP+H++UtVFra6HopQ8h18gmdLW
+ BelOlm0zcsLo51vzf7gLysNbd5ia0p0FHkzigqjVo7npt1zIJLChhMSZM0J/tWBC
+ 4K7IEifK7UWCxwIQJEXYxE0WxMviYnpGh4HmOBWZMcQ2PeOcLJNSQ==
 Received: from ppma22.wdc07v.mail.ibm.com
  (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h88hx12-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6hb8hw83-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 May 2026 16:08:11 +0000 (GMT)
+ Wed, 20 May 2026 16:08:40 +0000 (GMT)
 Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64KFs5Pi023890;
- Wed, 20 May 2026 16:08:10 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e739w06k5-1
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64KFs4mT023879;
+ Wed, 20 May 2026 16:08:40 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e739w06nr-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 May 2026 16:08:10 +0000 (GMT)
+ Wed, 20 May 2026 16:08:39 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
  [10.20.54.100])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64KG86JL29360736
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64KG8aOM40173850
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 20 May 2026 16:08:06 GMT
+ Wed, 20 May 2026 16:08:36 GMT
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 67F242004B;
- Wed, 20 May 2026 16:08:06 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 3410E20040;
+ Wed, 20 May 2026 16:08:36 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6B93320040;
- Wed, 20 May 2026 16:08:00 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 2BD6D20043;
+ Wed, 20 May 2026 16:08:30 +0000 (GMT)
 Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
  [9.39.31.153]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 20 May 2026 16:08:00 +0000 (GMT)
+ Wed, 20 May 2026 16:08:29 +0000 (GMT)
 From: Chinmay Rath <rathc@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
  harshpb@linux.ibm.com, richard.henderson@linaro.org,
@@ -66,9 +66,10 @@ Cc: milesg@linux.ibm.com, vishalc@linux.ibm.com, tshah@linux.ibm.com,
  amachhiw@linux.ibm.com, sv@linux.ibm.com, shivani@linux.ibm.com,
  mkchauras@gmail.com, uverma@linux.ibm.com, nikhilks@linux.ibm.com,
  Chinmay Rath <rathc@linux.ibm.com>
-Subject: [RFC PATCH 03/28] target/ppc: Convert cache instructions to decodetree
-Date: Wed, 20 May 2026 21:37:03 +0530
-Message-ID: <20260520160728.2283628-4-rathc@linux.ibm.com>
+Subject: [RFC PATCH 08/28] target/ppc: convert sraw[i] instruction via decode
+ spec
+Date: Wed, 20 May 2026 21:37:08 +0530
+Message-ID: <20260520160728.2283628-9-rathc@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520160728.2283628-1-rathc@linux.ibm.com>
 References: <20260520160728.2283628-1-rathc@linux.ibm.com>
@@ -76,29 +77,29 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: SF4OSHlTrEwqZjmlvFIRbTeym4SFoR-Z
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDE1NiBTYWx0ZWRfXxFMd0QpsCITN
- QYXrBx23KL2yRdRgCIBFs5E6QEm6a9e950jQZe9wUGXUCt4mcKf18fOr2iq76R19VCLdiBx3998
- ZifJBc+g7+RzdJxD73Gu5CVL59ZOkfnfhLp+6YLOMJXcpd4VykBRAXWIW7nR3lhSEDNGVNxEh1w
- +5y4PAJ3MFCUVDCLPuQaamJPZOSmRACdY99aQOmiNei9lBLUzIBoFXEKvn6XMyYBV0T7nfVQbI8
- 5yPbo012BTorU0vMnT2gEusEW2C0lrNDb18eYCEqCi5Hn+N3kQ8kUEmyvd4zu6fCcWK9EecFeGW
- jfxHoJXSQSHiVx+jB7b1WrPzXL+EDd43eo2MItEaU5UCaJT7K+P6y1EDWsJssmdCkceDxzrt6Rq
- XsvcjxK4HSY0MEsgnfBhYjpu7i0FcYQpLqNou4W62FvNNpjUXa4WGnQ26WTG4SnTeJkPP3PUwiE
- z/9w7v6omEgKidjFVIQ==
-X-Proofpoint-GUID: i2mIt1kYRa_d0m4aHUGWpKcrgU5c6Wps
-X-Authority-Analysis: v=2.4 cv=apyCzyZV c=1 sm=1 tr=0 ts=6a0ddc6b cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDE1NiBTYWx0ZWRfX1BNRJU2i3Ktc
+ Nx6uJGwVNe2Gw1/Sr8tWxA+WNMkayUO0oEvQ5HRjthEhwhigJz34mtzE7Nb21EiAw2dw2+jAbYW
+ QsSPcA4x/NiN+jlHv3W8rvb7uziT0XB5cCjC4GSQFcwTVymrYk8AVpB6rcdgPmE/e61EJz435Ae
+ YpkRnRMtLZFsyVGN8dAK33cjXhBeEWy65SdvRpD63tCuhiwC73TjDx7i5pmukY4MMCkg/ym7Wnk
+ w6lP+T5C30LHrvIXpg10COP6PJ/tW7NVjczG6Pe0ugerNZij99EwC2FzY9A4gFCk81Vq1zcVPGa
+ eCW2L91jxSq7pcjW2iTikdKBZAYDxopD2qZ9FvIjz/MRtmJiVIxXqYQ1s2tA56VHsgleDRBkx8v
+ soegzwWzbd9tY9ZrmwXmzWzWuUX/G0e64rp+3diUfbG58pFeWdNsBng1QBr2mKpVxrBh+nc0uDZ
+ LUumYMUmz+F3ncFkEmg==
+X-Proofpoint-GUID: m4EaB5kLJCDzxwYRvYHkV6TVdl39vl33
+X-Proofpoint-ORIG-GUID: U8dMITywmj08jl36B6HUBG_WEMNvj5d_
+X-Authority-Analysis: v=2.4 cv=aYBRWxot c=1 sm=1 tr=0 ts=6a0ddc89 cx=c_pps
  a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=k-Ty-wLQ3FecyFRW9R0A:9
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=pGLkceISAAAA:8 a=VnNF1IyMAAAA:8
+ a=8vnlzkHpZUhk_GZ0CsoA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-20_03,2026-05-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
- bulkscore=0 suspectscore=0 adultscore=0 spamscore=0 phishscore=0
- clxscore=1011 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
- definitions=main-2605200156
+ impostorscore=0 adultscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
+ clxscore=1015 spamscore=0 phishscore=0 priorityscore=1501 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605200156
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -123,639 +124,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+From: "Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>
 
-Convert cache management instructions to decodetree using the X-form
-layout and dedicated translation functions.
+Instruction converted:
 
-Legacy GEN_HANDLER-based implementations are removed.
+- sraw
+- srawi
 
-The implementation preserves legacy semantics, including:
-  - MMU-visible accesses for instructions treated as loads
-    (e.g. dcbt, dcbtst, dcbtep, dcbtstep)
-  - Supervisor and BookE-specific constraints
-  - Effective address computation via do_ea_calc()
-
-Instructions that were defined as no-ops in the legacy implementation
-remain no-ops here.
-
-Testing:
-  - Verified TCG equivalence for all cache operations
-
-Signed-off-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+Signed-off-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
 Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-[cr: linux user build, flag check, helper function fixes]
 ---
- target/ppc/helper.h      |   8 +-
- target/ppc/insn32.decode |  25 ++
- target/ppc/mem_helper.c  |   8 +-
- target/ppc/translate.c   | 484 +++++++++++++++++++++------------------
- 4 files changed, 288 insertions(+), 237 deletions(-)
+ target/ppc/helper.h                        |  2 +-
+ target/ppc/insn32.decode                   |  6 ++--
+ target/ppc/int_helper.c                    |  2 +-
+ target/ppc/translate.c                     | 42 ----------------------
+ target/ppc/translate/fixedpoint-impl.c.inc | 41 +++++++++++++++++++++
+ 5 files changed, 47 insertions(+), 46 deletions(-)
 
 diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-index e99c8c824b..37803ebb17 100644
+index 33bb9c9443..d5283344ba 100644
 --- a/target/ppc/helper.h
 +++ b/target/ppc/helper.h
-@@ -48,12 +48,12 @@ DEF_HELPER_FLAGS_3(stmw, TCG_CALL_NO_WG, void, env, tl, i32)
- DEF_HELPER_4(lsw, void, env, tl, i32, i32)
- DEF_HELPER_5(lswx, void, env, tl, i32, i32, i32)
- DEF_HELPER_FLAGS_4(stsw, TCG_CALL_NO_WG, void, env, tl, i32, i32)
--DEF_HELPER_FLAGS_3(dcbz, TCG_CALL_NO_WG, void, env, tl, int)
-+DEF_HELPER_FLAGS_3(DCBZ, TCG_CALL_NO_WG, void, env, tl, int)
- #ifdef TARGET_PPC64
--DEF_HELPER_FLAGS_2(dcbzl, TCG_CALL_NO_WG, void, env, tl)
-+DEF_HELPER_FLAGS_2(DCBZL, TCG_CALL_NO_WG, void, env, tl)
- #endif
--DEF_HELPER_FLAGS_2(icbi, TCG_CALL_NO_WG, void, env, tl)
--DEF_HELPER_FLAGS_2(icbiep, TCG_CALL_NO_WG, void, env, tl)
-+DEF_HELPER_FLAGS_2(ICBI, TCG_CALL_NO_WG, void, env, tl)
-+DEF_HELPER_FLAGS_2(ICBIEP, TCG_CALL_NO_WG, void, env, tl)
- DEF_HELPER_5(lscbx, tl, env, tl, i32, i32, i32)
+@@ -65,7 +65,7 @@ DEF_HELPER_4(DIVWE, tl, env, tl, tl, i32)
  
- #if defined(TARGET_PPC64)
+ DEF_HELPER_FLAGS_1(POPCNTB, TCG_CALL_NO_RWG_SE, tl, tl)
+ DEF_HELPER_FLAGS_2(CMPB, TCG_CALL_NO_RWG_SE, tl, tl, tl)
+-DEF_HELPER_3(sraw, tl, env, tl, tl)
++DEF_HELPER_3(SRAW, tl, env, tl, tl)
+ DEF_HELPER_FLAGS_2(CFUGED, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+ DEF_HELPER_FLAGS_2(PDEPD, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+ DEF_HELPER_FLAGS_2(PEXTD, TCG_CALL_NO_RWG_SE, i64, i64, i64)
 diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index 26948e08a7..0fbabefba9 100644
+index 6c3f737657..dd80a25472 100644
 --- a/target/ppc/insn32.decode
 +++ b/target/ppc/insn32.decode
-@@ -1306,6 +1306,31 @@ XVF64GERPN      111011 ... -- .... 0 ..... 10111010 ..-  @XX3_at xa=%xx_xa_pair
- XVF64GERNP      111011 ... -- .... 0 ..... 01111010 ..-  @XX3_at xa=%xx_xa_pair
- XVF64GERNN      111011 ... -- .... 0 ..... 11111010 ..-  @XX3_at xa=%xx_xa_pair
+@@ -507,8 +507,10 @@ HASHCHKP        011111 ..... ..... ..... 1010110010 .   @X_DW
  
-+## Cache Management Instructions
-+DCBF            011111 ..... ..... ..... 0001010110 -   @X
-+DCBFEP          011111 ..... ..... ..... 0001111111 -   @X
-+DCBI            011111 ..... ..... ..... 0111010110 -   @X
-+DCBST           011111 ..... ..... ..... 0000110110 -   @X
-+DCBSTEP         011111 ..... ..... ..... 0000111111 -   @X
-+DCBA            011111 ..... ..... ..... 1011110110 -   @X
-+
-+DCBT            011111 ..... ..... ..... 0100010110 -   @X
-+DCBTEP          011111 ..... ..... ..... 0100111111 -   @X
-+DCBTST          011111 ..... ..... ..... 0011110110 -   @X
-+DCBTSTEP        011111 ..... ..... ..... 0011111111 -   @X
-+
-+DCBTLS          011111 ..... ..... ..... 0010100110 -   @X
-+DCBLC           011111 ..... ..... ..... 0110000110 -   @X
-+
-+DCBZ            011111 ..... ..... ..... 1111110110 -   @X
-+DCBZEP          011111 ..... ..... ..... 1111111111 -   @X
-+ICBI            011111 ..... ..... ..... 1111010110 -   @X
-+ICBIEP          011111 ..... ..... ..... 1111011111 -   @X
-+
-+DST             011111 ..... ..... ..... 0101010110 -   @X
-+DSTST           011111 ..... ..... ..... 0101110110 -   @X
-+DSS             011111 ..... ..... ..... 1100110110 -   @X
-+
- ##Extend Sign Word and Shift Left Immediate XS-form
- EXTSWSLI         011111 ..... ..... ..... 110111101 . .         @XS
+ # Fixed-Point Shift Instructions
  
-diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
-index 119dc1df23..5d3d377261 100644
---- a/target/ppc/mem_helper.c
-+++ b/target/ppc/mem_helper.c
-@@ -319,13 +319,13 @@ static void dcbz_common(CPUPPCState *env, target_ulong addr,
-     clear_helper_retaddr();
+-SLW		011111 ..... ..... ..... 0000011000 .	@X_rc
+-SRW		011111 ..... ..... ..... 1000011000 .	@X_rc
++SLW             011111 ..... ..... ..... 0000011000 .   @X_rc
++SRAW            011111 ..... ..... ..... 1100011000 .   @X_rc
++SRAWI           011111 ..... ..... ..... 1100111000 .   @X_rc
++SRW             011111 ..... ..... ..... 1000011000 .   @X_rc
+ 
+ 
+ ## BCD Assist
+diff --git a/target/ppc/int_helper.c b/target/ppc/int_helper.c
+index dc55ccadf7..b161f930ec 100644
+--- a/target/ppc/int_helper.c
++++ b/target/ppc/int_helper.c
+@@ -235,7 +235,7 @@ target_ulong helper_CMPB(target_ulong rs, target_ulong rb)
  }
  
--void helper_dcbz(CPUPPCState *env, target_ulong addr, int mmu_idx)
-+void helper_DCBZ(CPUPPCState *env, target_ulong addr, int mmu_idx)
+ /* shift right arithmetic helper */
+-target_ulong helper_sraw(CPUPPCState *env, target_ulong value,
++target_ulong helper_SRAW(CPUPPCState *env, target_ulong value,
+                          target_ulong shift)
  {
-     dcbz_common(env, addr, mmu_idx, env->dcache_line_size, GETPC());
- }
- 
- #ifdef TARGET_PPC64
--void helper_dcbzl(CPUPPCState *env, target_ulong addr)
-+void helper_DCBZL(CPUPPCState *env, target_ulong addr)
- {
-     int dcbz_size = env->dcache_line_size;
- 
-@@ -341,7 +341,7 @@ void helper_dcbzl(CPUPPCState *env, target_ulong addr)
- }
- #endif
- 
--void helper_icbi(CPUPPCState *env, target_ulong addr)
-+void helper_ICBI(CPUPPCState *env, target_ulong addr)
- {
-     unsigned mmu_idx = cpu_mmu_index(env_cpu(env), false);
-     MemOpIdx oi = make_memop_idx(MO_UL | MO_UNALN, mmu_idx);
-@@ -357,7 +357,7 @@ void helper_icbi(CPUPPCState *env, target_ulong addr)
-     cpu_ldl_mmu(env, addr, oi, GETPC());
- }
- 
--void helper_icbiep(CPUPPCState *env, target_ulong addr)
-+void helper_ICBIEP(CPUPPCState *env, target_ulong addr)
- {
- #if !defined(CONFIG_USER_ONLY)
-     MemOpIdx oi = make_memop_idx(MO_UL | MO_UNALN, PPC_TLB_EPID_LOAD);
+     int32_t ret;
 diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 3f009cd9ca..ba1774a539 100644
+index d4f85b9be5..c9d04b4a3c 100644
 --- a/target/ppc/translate.c
 +++ b/target/ppc/translate.c
-@@ -4296,216 +4296,6 @@ static void gen_setb(DisasContext *ctx)
- }
- #endif
+@@ -2316,46 +2316,6 @@ GEN_PPC64_R4(rldimi, 0x1E, 0x06);
+ /***                             Integer shift                             ***/
  
--/***                         Cache management                              ***/
--
--/* dcbf */
--static void gen_dcbf(DisasContext *ctx)
--{
--    /* XXX: specification says this is treated as a load by the MMU */
--    TCGv t0;
--    gen_set_access_type(ctx, ACCESS_CACHE);
--    t0 = tcg_temp_new();
--    gen_addr_reg_index(ctx, t0);
--    gen_qemu_ld8u(ctx, t0, t0);
--}
--
--/* dcbfep (external PID dcbf) */
--static void gen_dcbfep(DisasContext *ctx)
--{
--    /* XXX: specification says this is treated as a load by the MMU */
--    TCGv t0;
--    CHK_SV(ctx);
--    gen_set_access_type(ctx, ACCESS_CACHE);
--    t0 = tcg_temp_new();
--    gen_addr_reg_index(ctx, t0);
--    tcg_gen_qemu_ld_tl(t0, t0, PPC_TLB_EPID_LOAD, DEF_MEMOP(MO_UB));
--}
--
--/* dcbi (Supervisor only) */
--static void gen_dcbi(DisasContext *ctx)
--{
--#if defined(CONFIG_USER_ONLY)
--    GEN_PRIV(ctx);
--#else
--    TCGv EA, val;
--
--    CHK_SV(ctx);
--    EA = tcg_temp_new();
--    gen_set_access_type(ctx, ACCESS_CACHE);
--    gen_addr_reg_index(ctx, EA);
--    val = tcg_temp_new();
--    /* XXX: specification says this should be treated as a store by the MMU */
--    gen_qemu_ld8u(ctx, val, EA);
--    gen_qemu_st8(ctx, val, EA);
--#endif /* defined(CONFIG_USER_ONLY) */
--}
--
--/* dcdst */
--static void gen_dcbst(DisasContext *ctx)
--{
--    /* XXX: specification say this is treated as a load by the MMU */
--    TCGv t0;
--    gen_set_access_type(ctx, ACCESS_CACHE);
--    t0 = tcg_temp_new();
--    gen_addr_reg_index(ctx, t0);
--    gen_qemu_ld8u(ctx, t0, t0);
--}
--
--/* dcbstep (dcbstep External PID version) */
--static void gen_dcbstep(DisasContext *ctx)
--{
--    /* XXX: specification say this is treated as a load by the MMU */
--    TCGv t0;
--    gen_set_access_type(ctx, ACCESS_CACHE);
--    t0 = tcg_temp_new();
--    gen_addr_reg_index(ctx, t0);
--    tcg_gen_qemu_ld_tl(t0, t0, PPC_TLB_EPID_LOAD, DEF_MEMOP(MO_UB));
--}
--
--/* dcbt */
--static void gen_dcbt(DisasContext *ctx)
--{
--    /*
--     * interpreted as no-op
--     * XXX: specification say this is treated as a load by the MMU but
--     *      does not generate any exception
--     */
--}
--
--/* dcbtep */
--static void gen_dcbtep(DisasContext *ctx)
--{
--    /*
--     * interpreted as no-op
--     * XXX: specification say this is treated as a load by the MMU but
--     *      does not generate any exception
--     */
--}
--
--/* dcbtst */
--static void gen_dcbtst(DisasContext *ctx)
--{
--    /*
--     * interpreted as no-op
--     * XXX: specification say this is treated as a load by the MMU but
--     *      does not generate any exception
--     */
--}
--
--/* dcbtstep */
--static void gen_dcbtstep(DisasContext *ctx)
--{
--    /*
--     * interpreted as no-op
--     * XXX: specification say this is treated as a load by the MMU but
--     *      does not generate any exception
--     */
--}
--
--/* dcbtls */
--static void gen_dcbtls(DisasContext *ctx)
--{
--    /* Always fails locking the cache */
--    TCGv t0 = tcg_temp_new();
--    gen_load_spr(t0, SPR_Exxx_L1CSR0);
--    tcg_gen_ori_tl(t0, t0, L1CSR0_CUL);
--    gen_store_spr(SPR_Exxx_L1CSR0, t0);
--}
--
--/* dcblc */
--static void gen_dcblc(DisasContext *ctx)
--{
--    /*
--     * interpreted as no-op
--     */
--}
--
--/* dcbz */
--static void gen_dcbz(DisasContext *ctx)
--{
--    TCGv tcgv_addr = tcg_temp_new();
--
--    gen_set_access_type(ctx, ACCESS_CACHE);
--    gen_addr_reg_index(ctx, tcgv_addr);
--
--#ifdef TARGET_PPC64
--    if (ctx->excp_model == POWERPC_EXCP_970 && !(ctx->opcode & 0x00200000)) {
--        gen_helper_dcbzl(tcg_env, tcgv_addr);
--        return;
--    }
--#endif
--
--    gen_helper_dcbz(tcg_env, tcgv_addr, tcg_constant_i32(ctx->mem_idx));
--}
--
--/* dcbzep */
--static void gen_dcbzep(DisasContext *ctx)
--{
--    TCGv tcgv_addr = tcg_temp_new();
--
--    gen_set_access_type(ctx, ACCESS_CACHE);
--    gen_addr_reg_index(ctx, tcgv_addr);
--    gen_helper_dcbz(tcg_env, tcgv_addr, tcg_constant_i32(PPC_TLB_EPID_STORE));
--}
--
--/* dst / dstt */
--static void gen_dst(DisasContext *ctx)
--{
--    if (rA(ctx->opcode) == 0) {
--        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
--    } else {
--        /* interpreted as no-op */
--    }
--}
--
--/* dstst /dststt */
--static void gen_dstst(DisasContext *ctx)
--{
--    if (rA(ctx->opcode) == 0) {
--        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
--    } else {
--        /* interpreted as no-op */
--    }
--
--}
--
--/* dss / dssall */
--static void gen_dss(DisasContext *ctx)
--{
--    /* interpreted as no-op */
--}
--
--/* icbi */
--static void gen_icbi(DisasContext *ctx)
--{
--    TCGv t0;
--    gen_set_access_type(ctx, ACCESS_CACHE);
--    t0 = tcg_temp_new();
--    gen_addr_reg_index(ctx, t0);
--    gen_helper_icbi(tcg_env, t0);
--}
--
--/* icbiep */
--static void gen_icbiep(DisasContext *ctx)
--{
--    TCGv t0;
--    gen_set_access_type(ctx, ACCESS_CACHE);
--    t0 = tcg_temp_new();
--    gen_addr_reg_index(ctx, t0);
--    gen_helper_icbiep(tcg_env, t0);
--}
--
--/* Optional: */
--/* dcba */
--static void gen_dcba(DisasContext *ctx)
--{
--    /*
--     * interpreted as no-op
--     * XXX: specification say this is treated as a store by the MMU
--     *      but does not generate any exception
--     */
--}
--
- /***                    Segment register manipulation                      ***/
- /* Supervisor only: */
  
-@@ -5764,6 +5554,261 @@ static bool trans_LQARX(DisasContext *ctx, arg_LQARX *a)
+-/* sraw & sraw. */
+-static void gen_sraw(DisasContext *ctx)
+-{
+-    gen_helper_sraw(cpu_gpr[rA(ctx->opcode)], tcg_env,
+-                    cpu_gpr[rS(ctx->opcode)], cpu_gpr[rB(ctx->opcode)]);
+-    if (unlikely(Rc(ctx->opcode) != 0)) {
+-        gen_set_Rc0(ctx, cpu_gpr[rA(ctx->opcode)]);
+-    }
+-}
+-
+-/* srawi & srawi. */
+-static void gen_srawi(DisasContext *ctx)
+-{
+-    int sh = SH(ctx->opcode);
+-    TCGv dst = cpu_gpr[rA(ctx->opcode)];
+-    TCGv src = cpu_gpr[rS(ctx->opcode)];
+-    if (sh == 0) {
+-        tcg_gen_ext32s_tl(dst, src);
+-        tcg_gen_movi_tl(cpu_ca, 0);
+-        if (is_isa300(ctx)) {
+-            tcg_gen_movi_tl(cpu_ca32, 0);
+-        }
+-    } else {
+-        TCGv t0;
+-        tcg_gen_ext32s_tl(dst, src);
+-        tcg_gen_andi_tl(cpu_ca, dst, (1ULL << sh) - 1);
+-        t0 = tcg_temp_new();
+-        tcg_gen_sari_tl(t0, dst, TARGET_LONG_BITS - 1);
+-        tcg_gen_and_tl(cpu_ca, cpu_ca, t0);
+-        tcg_gen_setcondi_tl(TCG_COND_NE, cpu_ca, cpu_ca, 0);
+-        if (is_isa300(ctx)) {
+-            tcg_gen_mov_tl(cpu_ca32, cpu_ca);
+-        }
+-        tcg_gen_sari_tl(dst, dst, sh);
+-    }
+-    if (unlikely(Rc(ctx->opcode) != 0)) {
+-        gen_set_Rc0(ctx, dst);
+-    }
+-}
+-
+ #if defined(TARGET_PPC64)
+ /* sld & sld. */
+ static void gen_sld(DisasContext *ctx)
+@@ -5754,8 +5714,6 @@ GEN_HANDLER_E(paste, 0x1F, 0x06, 0x1C, 0x03C00000, PPC_NONE, PPC2_ISA300),
+ GEN_HANDLER(rlwimi, 0x14, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
+ GEN_HANDLER(rlwinm, 0x15, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
+ GEN_HANDLER(rlwnm, 0x17, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
+-GEN_HANDLER(sraw, 0x1F, 0x18, 0x18, 0x00000000, PPC_INTEGER),
+-GEN_HANDLER(srawi, 0x1F, 0x18, 0x19, 0x00000000, PPC_INTEGER),
+ #if defined(TARGET_PPC64)
+ GEN_HANDLER(sld, 0x1F, 0x1B, 0x00, 0x00000000, PPC_64B),
+ GEN_HANDLER(srad, 0x1F, 0x1A, 0x18, 0x00000000, PPC_64B),
+diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
+index 9d04b96316..234404e459 100644
+--- a/target/ppc/translate/fixedpoint-impl.c.inc
++++ b/target/ppc/translate/fixedpoint-impl.c.inc
+@@ -1454,3 +1454,44 @@ static bool trans_SRW(DisasContext *ctx, arg_SRW *a)
+     }
      return true;
  }
- 
-+/*
-+ * Cache Management Instructions (decodetree)
-+ */
 +
-+static bool trans_DCBA(DisasContext *ctx, arg_X *a)
++/* sraw & sraw. */
++static bool trans_SRAW(DisasContext *ctx, arg_SRAW *a)
 +{
-+    REQUIRE_INSNS_FLAGS(ctx, CACHE_DCBA);
-+    return true;
-+}
-+
-+static bool trans_DCBT(DisasContext *ctx, arg_X *a)
-+{
-+    REQUIRE_INSNS_FLAGS(ctx, CACHE);
-+    return true;
-+}
-+
-+static bool trans_DCBTEP(DisasContext *ctx, arg_X *a)
-+{
-+    REQUIRE_INSNS_FLAGS2(ctx, BOOKE206);
-+    return true;
-+}
-+
-+static bool trans_DCBTST(DisasContext *ctx, arg_X *a)
-+{
-+    REQUIRE_INSNS_FLAGS(ctx, CACHE);
-+    return true;
-+}
-+
-+static bool trans_DCBTSTEP(DisasContext *ctx, arg_X *a)
-+{
-+    REQUIRE_INSNS_FLAGS2(ctx, BOOKE206);
-+    return true;
-+}
-+
-+static bool trans_DCBLC(DisasContext *ctx, arg_X *a)
-+{
-+    /* Requires either PPC_BOOKE or PPC2_BOOKE206 */
-+    if (!(ctx->insns_flags & PPC_BOOKE) &&
-+        !(ctx->insns_flags2 & PPC2_BOOKE206)) {
-+        return false;
++    gen_helper_SRAW(cpu_gpr[a->ra], tcg_env,
++                    cpu_gpr[a->rt], cpu_gpr[a->rb]);
++    if (unlikely(a->rc)) {
++        gen_set_Rc0(ctx, cpu_gpr[a->ra]);
 +    }
 +    return true;
 +}
 +
-+static bool trans_DSS(DisasContext *ctx, arg_X *a)
++/* srawi & srawi. */
++static bool trans_SRAWI(DisasContext *ctx, arg_SRAWI *a)
 +{
-+    REQUIRE_INSNS_FLAGS(ctx, ALTIVEC);
-+    return true;
-+}
-+
-+static bool trans_DCBTLS(DisasContext *ctx, arg_X *a)
-+{
-+    TCGv t0 = tcg_temp_new();
-+
-+    /* Requires either PPC_BOOKE or PPC2_BOOKE206 */
-+    if (!(ctx->insns_flags & PPC_BOOKE) &&
-+        !(ctx->insns_flags2 & PPC2_BOOKE206)) {
-+        return false;
++    TCGv dst = cpu_gpr[a->ra];
++    TCGv src = cpu_gpr[a->rt];
++    if (a->rb == 0) {
++        tcg_gen_ext32s_tl(dst, src);
++        tcg_gen_movi_tl(cpu_ca, 0);
++        if (is_isa300(ctx)) {
++            tcg_gen_movi_tl(cpu_ca32, 0);
++        }
++    } else {
++        TCGv t0;
++        tcg_gen_ext32s_tl(dst, src);
++        tcg_gen_andi_tl(cpu_ca, dst, (1ULL << a->rb) - 1);
++        t0 = tcg_temp_new();
++        tcg_gen_sari_tl(t0, dst, TARGET_LONG_BITS - 1);
++        tcg_gen_and_tl(cpu_ca, cpu_ca, t0);
++        tcg_gen_setcondi_tl(TCG_COND_NE, cpu_ca, cpu_ca, 0);
++        if (is_isa300(ctx)) {
++            tcg_gen_mov_tl(cpu_ca32, cpu_ca);
++        }
++        tcg_gen_sari_tl(dst, dst, a->rb);
 +    }
-+
-+    gen_load_spr(t0, SPR_Exxx_L1CSR0);
-+    tcg_gen_ori_tl(t0, t0, L1CSR0_CUL);
-+    gen_store_spr(SPR_Exxx_L1CSR0, t0);
-+
-+    return true;
-+}
-+
-+static bool trans_DST(DisasContext *ctx, arg_X *a)
-+{
-+    REQUIRE_INSNS_FLAGS(ctx, ALTIVEC);
-+
-+    if (a->ra == 0) {
-+        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
++    if (unlikely(a->rc)) {
++        gen_set_Rc0(ctx, dst);
 +    }
-+
 +    return true;
 +}
-+
-+static bool trans_DSTST(DisasContext *ctx, arg_X *a)
-+{
-+    REQUIRE_INSNS_FLAGS(ctx, ALTIVEC);
-+
-+    if (a->ra == 0) {
-+        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
-+    }
-+
-+    return true;
-+}
-+
-+static bool trans_DCBF(DisasContext *ctx, arg_X *a)
-+{
-+    TCGv EA;
-+
-+    REQUIRE_INSNS_FLAGS(ctx, CACHE);
-+
-+    if (a->rt != 0) {
-+        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
-+        return true;
-+    }
-+
-+    gen_set_access_type(ctx, ACCESS_CACHE);
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-+    gen_qemu_ld8u(ctx, EA, EA);
-+
-+    return true;
-+}
-+
-+static bool trans_DCBST(DisasContext *ctx, arg_X *a)
-+{
-+
-+    if (a->rt != 0) {
-+        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
-+        return true;
-+    }
-+
-+    /* Flags check overlaps with trans_DCBF */
-+    return trans_DCBF(ctx, a);
-+}
-+
-+static bool trans_DCBFEP(DisasContext *ctx, arg_X *a)
-+{
-+    TCGv EA;
-+
-+    REQUIRE_INSNS_FLAGS2(ctx, BOOKE206);
-+
-+    /* Per ISA: RT must be zero for cache management instructions */
-+    if (a->rt != 0) {
-+        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
-+        return true;
-+    }
-+
-+    REQUIRE_SV(ctx);
-+
-+    gen_set_access_type(ctx, ACCESS_CACHE);
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-+
-+    tcg_gen_qemu_ld_tl(EA, EA, PPC_TLB_EPID_LOAD, DEF_MEMOP(MO_UB));
-+
-+    return true;
-+}
-+
-+static bool trans_DCBSTEP(DisasContext *ctx, arg_X *a)
-+{
-+    /* Flags check overlaps with trans_DCBFEP */
-+    return trans_DCBFEP(ctx, a);
-+}
-+
-+static bool trans_DCBI(DisasContext *ctx, arg_X *a)
-+{
-+#if defined(CONFIG_USER_ONLY)
-+    gen_priv_opc(ctx);
-+    return true;
-+#else
-+    TCGv EA, val;
-+    REQUIRE_INSNS_FLAGS(ctx, CACHE);
-+
-+    if (a->rt != 0) {
-+        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
-+        return true;
-+    }
-+
-+    REQUIRE_SV(ctx);
-+    gen_set_access_type(ctx, ACCESS_CACHE);
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-+    val = tcg_temp_new();
-+
-+    gen_qemu_ld8u(ctx, val, EA);
-+    gen_qemu_st8(ctx, val, EA);
-+
-+    return true;
-+#endif
-+}
-+
-+static bool trans_ICBI(DisasContext *ctx, arg_X *a)
-+{
-+    TCGv EA;
-+
-+    REQUIRE_INSNS_FLAGS(ctx, CACHE_ICBI);
-+
-+    if (a->rt != 0) {
-+        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
-+        return true;
-+    }
-+
-+
-+    gen_set_access_type(ctx, ACCESS_CACHE);
-+
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-+    gen_helper_ICBI(tcg_env, EA);
-+
-+    return true;
-+}
-+
-+static bool trans_ICBIEP(DisasContext *ctx, arg_X *a)
-+{
-+    TCGv EA;
-+
-+    REQUIRE_INSNS_FLAGS2(ctx, BOOKE206);
-+    REQUIRE_SV(ctx);
-+
-+    gen_set_access_type(ctx, ACCESS_CACHE);
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-+
-+    gen_helper_ICBIEP(tcg_env, EA);
-+    return true;
-+}
-+
-+static bool trans_DCBZ(DisasContext *ctx, arg_X *a)
-+{
-+    TCGv EA;
-+
-+    REQUIRE_INSNS_FLAGS(ctx, CACHE_DCBZ);
-+
-+    if (a->rt != 0) {
-+        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
-+        return true;
-+    }
-+
-+
-+    gen_set_access_type(ctx, ACCESS_CACHE);
-+
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-+
-+#if defined(TARGET_PPC64)
-+    if (ctx->excp_model == POWERPC_EXCP_970 &&
-+        !(ctx->opcode & 0x00200000)) {
-+        gen_helper_DCBZL(tcg_env, EA);
-+        return true;
-+    }
-+#endif
-+
-+    gen_helper_DCBZ(tcg_env, EA, tcg_constant_i32(ctx->mem_idx));
-+    return true;
-+}
-+
-+static bool trans_DCBZEP(DisasContext *ctx, arg_X *a)
-+{
-+    TCGv EA;
-+
-+    REQUIRE_INSNS_FLAGS2(ctx, BOOKE206);
-+
-+    if (a->rt != 0) {
-+        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
-+        return true;
-+    }
-+
-+    REQUIRE_SV(ctx);
-+
-+    gen_set_access_type(ctx, ACCESS_CACHE);
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-+
-+    gen_helper_DCBZ(tcg_env, EA, tcg_constant_i32(PPC_TLB_EPID_STORE));
-+    return true;
-+}
-+
- #include "translate/fixedpoint-impl.c.inc"
- 
- #include "translate/fp-impl.c.inc"
-@@ -5928,25 +5973,6 @@ GEN_HANDLER_E(mcrxrx, 0x1F, 0x00, 0x12, 0x007FF801, PPC_NONE, PPC2_ISA300),
- #endif
- GEN_HANDLER(mtmsr, 0x1F, 0x12, 0x04, 0x001EF801, PPC_MISC),
- GEN_HANDLER(mtspr, 0x1F, 0x13, 0x0E, 0x00000000, PPC_MISC),
--GEN_HANDLER(dcbf, 0x1F, 0x16, 0x02, 0x03C00001, PPC_CACHE),
--GEN_HANDLER_E(dcbfep, 0x1F, 0x1F, 0x03, 0x03C00001, PPC_NONE, PPC2_BOOKE206),
--GEN_HANDLER(dcbi, 0x1F, 0x16, 0x0E, 0x03E00001, PPC_CACHE),
--GEN_HANDLER(dcbst, 0x1F, 0x16, 0x01, 0x03E00001, PPC_CACHE),
--GEN_HANDLER_E(dcbstep, 0x1F, 0x1F, 0x01, 0x03E00001, PPC_NONE, PPC2_BOOKE206),
--GEN_HANDLER(dcbt, 0x1F, 0x16, 0x08, 0x00000001, PPC_CACHE),
--GEN_HANDLER_E(dcbtep, 0x1F, 0x1F, 0x09, 0x00000001, PPC_NONE, PPC2_BOOKE206),
--GEN_HANDLER(dcbtst, 0x1F, 0x16, 0x07, 0x00000001, PPC_CACHE),
--GEN_HANDLER_E(dcbtstep, 0x1F, 0x1F, 0x07, 0x00000001, PPC_NONE, PPC2_BOOKE206),
--GEN_HANDLER_E(dcbtls, 0x1F, 0x06, 0x05, 0x02000001, PPC_BOOKE, PPC2_BOOKE206),
--GEN_HANDLER_E(dcblc, 0x1F, 0x06, 0x0c, 0x02000001, PPC_BOOKE, PPC2_BOOKE206),
--GEN_HANDLER(dcbz, 0x1F, 0x16, 0x1F, 0x03C00001, PPC_CACHE_DCBZ),
--GEN_HANDLER_E(dcbzep, 0x1F, 0x1F, 0x1F, 0x03C00001, PPC_NONE, PPC2_BOOKE206),
--GEN_HANDLER(dst, 0x1F, 0x16, 0x0A, 0x01800001, PPC_ALTIVEC),
--GEN_HANDLER(dstst, 0x1F, 0x16, 0x0B, 0x01800001, PPC_ALTIVEC),
--GEN_HANDLER(dss, 0x1F, 0x16, 0x19, 0x019FF801, PPC_ALTIVEC),
--GEN_HANDLER(icbi, 0x1F, 0x16, 0x1E, 0x03E00001, PPC_CACHE_ICBI),
--GEN_HANDLER_E(icbiep, 0x1F, 0x1F, 0x1E, 0x03E00001, PPC_NONE, PPC2_BOOKE206),
--GEN_HANDLER(dcba, 0x1F, 0x16, 0x17, 0x03E00001, PPC_CACHE_DCBA),
- GEN_HANDLER(mfsr, 0x1F, 0x13, 0x12, 0x0010F801, PPC_SEGMENT),
- GEN_HANDLER(mfsrin, 0x1F, 0x13, 0x14, 0x001F0001, PPC_SEGMENT),
- GEN_HANDLER(mtsr, 0x1F, 0x12, 0x06, 0x0010F801, PPC_SEGMENT),
 -- 
 2.53.0
 
