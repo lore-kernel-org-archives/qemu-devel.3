@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AC86CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 13:35:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59666CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 13:35:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPh4S-0005hS-O0; Wed, 20 May 2026 09:34:54 -0400
+	id 1wPh4P-0005hP-9c; Wed, 20 May 2026 09:34:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wPh44-0005bh-En
- for qemu-devel@nongnu.org; Wed, 20 May 2026 09:34:26 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wPh48-0005cR-Ov
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 09:34:31 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wPh42-0004YL-6g
- for qemu-devel@nongnu.org; Wed, 20 May 2026 09:34:23 -0400
+ (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wPh46-0004Yc-9s
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 09:34:27 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 3FD6260121;
- Wed, 20 May 2026 13:34:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460571F000E9;
- Wed, 20 May 2026 13:34:20 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 7E6C940D78;
+ Wed, 20 May 2026 13:34:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4F411F000E9;
+ Wed, 20 May 2026 13:34:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779284061;
- bh=rdJp/J3F9UFFZHU/Ts99uTkuRk+JOQWm2QJtbNtSatc=;
+ s=k20260515; t=1779284064;
+ bh=+k2jL4kdAXoAJqmY8Ukt1559hjuhb6dWxPx7lNS/EI0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=KR7GJyaTrnu51b7/fPXkXTheJd419p8gctqT7L7hS6xjvzLQzi2Uz4HOALVX+7ATP
- pXbSqYLXUg32RDm0BlDfNa+V1D4XwYfBkOp4pjA6Rt7gY1GoRHudSbjA8NixbHQ9fk
- 33msTcFV9QysOwO531pTSBq7N9GL3uXrD3DoSB6B3jieAuIq8V1R+WsOtwx9OEXd8l
- ygS8L+OiICFD60vWkS64F7KDk3uoSASTxGE3WqEpYbRg0utBT2eecw5h4Q46uUl+uY
- C9353JVKYEY+JHFWkxqT5tY1wAVAEuswVZ/EC6NV1ur0FVRRlBGgO8b/HXAEvd7Rxx
- Lw5vRHqx+ApdQ==
+ b=R1HuYS9/IvqImSOxoFGj9owcn/uIINPdJfg5qt7fmIMVuOwK+mwI41VJ6jY4dvDZF
+ /kd8IvNN7/o2vohaxvs7AgksaCofTPOuVcMlwFgtMOw9c0r48D+6zigL5Ugkz+Bss4
+ RoSTYce90YN35+rQCcO9zT/ODSuWSRjC+IjybMfLhjOQys91kl6KinzDWevxLjLEbB
+ 8PT0RHhOD+u36yeAOGc0h6YSQedgfmLt2Fq2hkYguM1BnZWiGzHsSPyn+3b7QjqcY/
+ mgWd3fN7qXGfGl6T8kds/26yMaZRdbrrDBXUN4v4Ok1H/2L+Mpc2JFuiSRW5NSqipZ
+ NuoYkPFXlmQ+A==
 From: "Naveen N Rao (AMD)" <naveen@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>,
 	qemu-devel <qemu-devel@nongnu.org>
@@ -45,17 +45,17 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Roy Hopkins <roy.hopkins@randomman.co.uk>,
  Srikanth Aithal <srikanth.aithal@amd.com>,
  Kim Phillips <kim.phillips@amd.com>, Joerg Roedel <joro@8bytes.org>
-Subject: [PATCH v4 5/9] target/i386: SEV: Enable use of KVM_SEV_INIT2 for
- SEV-ES guests
-Date: Wed, 20 May 2026 18:57:58 +0530
-Message-ID: <f2a7778ab26b11a8de90e170ff984ccd29dc05a0.1779281646.git.naveen@kernel.org>
+Subject: [PATCH v4 6/9] target/i386: SEV: Add support for enabling debug-swap
+ SEV feature
+Date: Wed, 20 May 2026 18:57:59 +0530
+Message-ID: <416e7b156e49f95958f8c5c8549b48a88c1995fc.1779281646.git.naveen@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <cover.1779281646.git.naveen@kernel.org>
 References: <cover.1779281646.git.naveen@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=naveen@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=naveen@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -77,32 +77,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation for allowing SEV-ES guests to enable VMSA SEV features,
-update sev_init2_required() to return true if any SEV features are
-requested. This enables qemu to use KVM_SEV_INIT2 for SEV-ES guests when
-necessary.
+Add support for enabling debug-swap VMSA SEV feature in SEV-ES and
+SEV-SNP guests through a new "debug-swap" boolean property on SEV guest
+objects. Though the boolean property is available for plain SEV guests,
+check_sev_features() has a check that rejects attempts to enable any SEV
+feature for a plain SEV guest.
 
-Reviewed-by: Nikunj A Dadhania <nikunj@amd.com>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Though this SEV feature is called "Debug virtualization" in the APM, KVM
+calls this "debug swap" so use the same name for consistency.
+
+Sample command-line:
+  -machine q35,confidential-guest-support=sev0 \
+  -object sev-snp-guest,id=sev0,cbitpos=51,reduced-phys-bits=1,debug-swap=on
+
+Restrict debug-swap to SEV-SNP guests at this time due to a
+compatibility issue with SEV-ES pflash devices.
+
 Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
 ---
- target/i386/sev.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ target/i386/sev.h |  1 +
+ target/i386/sev.c | 26 ++++++++++++++++++++++++++
+ qapi/qom.json     |  7 ++++++-
+ 3 files changed, 33 insertions(+), 1 deletion(-)
 
+diff --git a/target/i386/sev.h b/target/i386/sev.h
+index b84ca3ce0b67..d19a39669747 100644
+--- a/target/i386/sev.h
++++ b/target/i386/sev.h
+@@ -47,6 +47,7 @@ bool sev_snp_enabled(void);
+ #define SEV_SNP_POLICY_DBG      0x80000
+ 
+ #define SVM_SEV_FEAT_SNP_ACTIVE     BIT(0)
++#define SVM_SEV_FEAT_DEBUG_SWAP     BIT(5)
+ 
+ typedef struct SevKernelLoaderContext {
+     char *setup_data;
 diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 196a70b35c51..4553fe4d6e4a 100644
+index 4553fe4d6e4a..4532b1b6a484 100644
 --- a/target/i386/sev.c
 +++ b/target/i386/sev.c
-@@ -1701,8 +1701,7 @@ sev_vm_state_change(void *opaque, bool running, RunState state)
-  */
- static bool sev_init2_required(SevGuestState *sev_guest)
- {
--    /* Currently no KVM_SEV_INIT2-specific options are exposed via QEMU */
--    return false;
-+    return !!SEV_COMMON(sev_guest)->sev_features;
+@@ -328,6 +328,11 @@ sev_set_guest_state(SevCommonState *sev_common, SevState new_state)
+     sev_common->state = new_state;
  }
  
- static int sev_kvm_type(X86ConfidentialGuest *cg)
++static bool is_sev_feature_set(SevCommonState *sev_common, uint64_t feature)
++{
++    return !!(sev_common->sev_features & feature);
++}
++
+ static void sev_set_feature(SevCommonState *sev_common, uint64_t feature, bool set)
+ {
+     if (set) {
+@@ -527,6 +532,12 @@ static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
+             __func__);
+         return -1;
+     }
++    if (sev_features && sev_es_enabled() && !sev_snp_enabled()) {
++        error_setg(errp,
++                   "%s: SEV features are not supported with SEV-ES at this time",
++                   __func__);
++        return -1;
++    }
+     if (sev_features && !sev_es_enabled()) {
+         error_setg(errp,
+                    "%s: SEV features require either SEV-ES or SEV-SNP to be enabled",
+@@ -2800,6 +2811,16 @@ static int cgs_set_guest_policy(ConfidentialGuestPolicyType policy_type,
+     return 0;
+ }
+ 
++static bool sev_common_get_debug_swap(Object *obj, Error **errp)
++{
++    return is_sev_feature_set(SEV_COMMON(obj), SVM_SEV_FEAT_DEBUG_SWAP);
++}
++
++static void sev_common_set_debug_swap(Object *obj, bool value, Error **errp)
++{
++    sev_set_feature(SEV_COMMON(obj), SVM_SEV_FEAT_DEBUG_SWAP, value);
++}
++
+ static void
+ sev_common_class_init(ObjectClass *oc, const void *data)
+ {
+@@ -2825,6 +2846,11 @@ sev_common_class_init(ObjectClass *oc, const void *data)
+                                    sev_common_set_kernel_hashes);
+     object_class_property_set_description(oc, "kernel-hashes",
+             "add kernel hashes to guest firmware for measured Linux boot");
++    object_class_property_add_bool(oc, "debug-swap",
++                                   sev_common_get_debug_swap,
++                                   sev_common_set_debug_swap);
++    object_class_property_set_description(oc, "debug-swap",
++            "enable virtualization of debug registers");
+ }
+ 
+ static void
+diff --git a/qapi/qom.json b/qapi/qom.json
+index dd45ac1087c3..e2bb716b603e 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -1017,6 +1017,10 @@
+ #     designated guest firmware page for measured boot with -kernel
+ #     (default: false) (since 6.2)
+ #
++# @debug-swap: enable virtualization of debug registers,
++#     only supported on SEV-ES and SEV-SNP guests
++#     (default: false) (since 11.1)
++#
+ # Features:
+ #
+ # @confidential-guest-reset: If present, the hypervisor supports
+@@ -1028,7 +1032,8 @@
+   'data': { '*sev-device': 'str',
+             '*cbitpos': 'uint32',
+             'reduced-phys-bits': 'uint32',
+-            '*kernel-hashes': 'bool' },
++            '*kernel-hashes': 'bool',
++            '*debug-swap': 'bool' },
+   'features': ['confidential-guest-reset']}
+ 
+ ##
 -- 
 2.54.0
 
