@@ -4,82 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF545CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:21:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C104CD5BA4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:22:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPkZ9-0001Uq-Mw; Wed, 20 May 2026 13:18:43 -0400
+	id 1wPkaU-00036L-Rb; Wed, 20 May 2026 13:20:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPkZ8-0001T9-3r
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:42 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkZX-0001mq-Jd
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:19:08 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPkZ2-0001yK-Lv
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:41 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-3664df30f53so3060440a91.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:18:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkZV-000266-5J
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:19:07 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-48e6db3ff7eso26719275e9.0
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:19:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779297515; x=1779902315; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QD0lZ4gXN1fWzU8DAYp+qX7d5AOu5jrmEh8yc45jBSU=;
- b=SESmsV7CddNMEWl22IglVFrBXLnzb717Bu3UuFGctfbpYsCZ0oTVHAXMlNH6Pqew4P
- Uir075+3rxZO8ds4JYwDfjNxUepIphO5WDaznsPr3tXN5zkFk1XC7gA+MPQOHex3eYIC
- Vgi9K6oYo6g+vv4e11TVDzkrg8IECzO1YG2Kzl4iju8p1QL0ZPde6vIeyixIfdhz4T6H
- Cs501BCp8ad+9BDk4K+zsJ375zJFm10xzbguZt/T+suCh26DjS0X+oEi0n66whKv3fbn
- FMO02EmaDRarbE28WM9kf3Hxa9KOy4NuETQl3/AehYNS2/OohEDGExDoKvodTtBZBsKA
- zEwA==
+ d=linaro.org; s=google; t=1779297543; x=1779902343; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/kyaJ/nzemdvOsAG6Z3J6mmqZKXxa9crsXJirdrRsf8=;
+ b=OZeyV2+G+DsQQCBIlGZJJsqIYyvu8j2vOY8iAcdlynRhDX/Qb+sQbsHlq/xmVOdzz1
+ YlBnahUZ0zr/7OziH5w8XPBbb1aKxkj7201+42fK2Mz7ZqpiYlw9AY44fphbJ2wvAUT4
+ BKaALktYVkPAjXJpqMPh2wV0fYNrFpBou55nVsIrZcUfmg4YxcCdxPAFL9tugKaUkqv0
+ DHTxdhvIJFTVR24H/WvJfAKl6Knf9lliZvlGzeZ9GeaigGiQV2uBNMU8fnW+h5TlcEil
+ 3QgyCGE5i1eEdpSsFhgphbe2bfqmAwBvnVsswtvEEmZB9Vm5WrS/f2veH4Gdk6asxMHA
+ lqig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779297515; x=1779902315;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=QD0lZ4gXN1fWzU8DAYp+qX7d5AOu5jrmEh8yc45jBSU=;
- b=U+MQU2V9VrPlrk8/QSLL7xvnQOusUXisobpJIEx6XFspn/uupi4I5QR/Jof979IIdn
- qUwW9SD2QWqXAVNRtXKvUN2hrsgL2YNjhJgI1Xa2lZwiEbJGdQgFeNHKD/JawZBuS1+O
- 1InGi/H8MA9WsPtDDjjXG+MsV2TdBHscJg/wVJKq/28+LI3UuZ5fbB/aSQAuSBM79mmQ
- FMH93bxbVmYMHkUITty3kW8fVQK89m5insfFSCVB0PWFAPrRs7PwRv3V8IB9xqa3+QFa
- RsU5h98LFDjE5ECyNdsJn06Ma0ShgJKXnzz3yHqbiO56CAfvhby162Fhx8OYlIJ2S1Kj
- ZGCQ==
-X-Gm-Message-State: AOJu0YzUoJr38tIS5tMI8bVkykiEs1ATTuIgm0dN3jKfH1RoksQ3VF7t
- k3wvOEScQmok39e3SMKxWkydRoGml6hPbRJ3R73TaL4sg/hhPQ3Mn0RHb0d6xgn9lD/xZ6+S64L
- 13+Fpdkw=
-X-Gm-Gg: Acq92OHyk9K+16Uc9GdlIGK3olYb7OV/NUfZn1e/T/0CPvemIPmvLLjh+XZEC9HkeaL
- 6v/MPcQd+Hj7D0fPyXrD/bl+hCDmPF2uXoaFqzpjCUk3YebwgCyJc2lCQgmLRmo7U1H2sWMioIP
- EOjkLVQoziWGtj8+DjIFgsSZeSf27C/18GfjOYIcraJbHNDJ2Ola5C53ywKEcX1beNvMI56oY9P
- K9QT0ZCXIPMxEWIRGsgpsqJNcM9SEWMVcjjlJOJRmFbE5zZydCrzJhQXkUCNMIO1CFMA9KXSSMw
- W8Ira2PV40imjr7sxQOL1kC9xmX92KmaDBrydirVDtL/v8drYwceDP/o3RDgs0eGcmAloz4QVpe
- Ra3SM4KE1zIKouXLXAZ83Cu5VBD8Aw8VH/tXeonTlC01aLHqHNZQYYazJQIDLnOnUfRT9/NwAxE
- h2EyOppRNEtX44qJXJoCEDaPngvahn
-X-Received: by 2002:a17:90a:d446:b0:35b:8d89:719b with SMTP id
- 98e67ed59e1d1-369519af686mr20885994a91.1.1779297515114; 
- Wed, 20 May 2026 10:18:35 -0700 (PDT)
-Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-36a3c83f226sm254416a91.0.2026.05.20.10.18.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 10:18:34 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v5 18/30] fpu: Use get_float_3nan_prop_rule in
- partsN_pick_nan_muladd
-Date: Wed, 20 May 2026 10:18:08 -0700
-Message-ID: <20260520171820.848839-19-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260520171820.848839-1-richard.henderson@linaro.org>
-References: <20260520171820.848839-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20251104; t=1779297543; x=1779902343;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/kyaJ/nzemdvOsAG6Z3J6mmqZKXxa9crsXJirdrRsf8=;
+ b=cG0lDP+vzqCquGpGZWv3BeHQT5QxXhtWhQiyBiZc8JJkJoHgOHmLUBjO6v4knn5unl
+ ettlB4L9YlVGknYdhA6F1KFAbVAkDtYW1K5L+4VQqfP0i+wDLMp62MzBJOXs4DhvS3MK
+ zwcXK/Prgjc0Vwp8pmvKslfEZo1PVSwooSdQlnnHuyF9biJ6V+YLjWxw9u3D3LYtBrTw
+ IWz44bPNqoletg365fW4GnUHdLUTPtMszLWBfz49g1uLTubaYqQ6v1aIUiAVh2rJywdN
+ EW8BxH1EcHvVioENWne4Vj+l7C4ENcu/mvokNYdP7ykmHUk6gsKltd9+v6ilezPnM56C
+ 9/1g==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/iQGW9V1hixzfjbofjh/q9qb9MzDTPdaD1Hw7hqQuypTF1Bte3CpIQn1/s87jSQRPyeWK4d6HNnkSK@nongnu.org
+X-Gm-Message-State: AOJu0YzR0cZbkVZGh5adqpyx4msrox5ddMEdDuGrnr4iPUDW3GM21g/Y
+ i6hg/lFBz+yFM8PcV1q5zwtm3EP4KhCh9LtAfU0NgkVy69s5gzzPBlLXeIXxv1huUjk=
+X-Gm-Gg: Acq92OG0it2kpO/syurB3NucgkD8Lii96j1xzBJixC5As6h+mjhYRbdlzKWWUc2MDlU
+ ltU43A7KzJeqTaGLpU9QFgHiiSF1IzaugkeHbJyRzAHICRhyqUV/QiQQi1Q6vuLuDEcMsmLdYNV
+ PkwoB3pkRU4+SEMl3jfMdgdDR8AVW6ZHrDGgy0XfTJeWQobYPPDhrvV64L8lRxb8/fYpUNxdU3H
+ T2lge6rIDvSZmS6lLUp/4tLtxjs5u6Y3YR+o8N1CaB4yL8S/Cd8/aAm0QDfjiaQeyPb92Ty2tST
+ KfAWxc2n2b6Hz8gUxcwOTDo1Lue7RpFFtRW0ivH7SLmvuTDlaSLl36K+mW06QHbhJq7FwDrb8Ll
+ ZRoJXZHx6Wcp4dkeMqDC5EJyp5hY58uZdoVzesQE7Cang2IR03Fr/cnzCKYwE0xdlaZkpnlTZXK
+ pAoOm2ACvrITPsEqy1NJXec5w5AW6Wx+9yOtgWVsKfu2qXS0X8RsZ9DJAh0YiCDLa31ylMmVNR3
+ XMR
+X-Received: by 2002:a05:600c:6288:b0:490:32da:30d with SMTP id
+ 5b1f17b1804b1-49032da04e9mr25340955e9.9.1779297542789; 
+ Wed, 20 May 2026 10:19:02 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49031731733sm30037185e9.0.2026.05.20.10.19.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 20 May 2026 10:19:02 -0700 (PDT)
+Message-ID: <4533011a-4128-4823-bfd1-cabd3bd0e646@linaro.org>
+Date: Wed, 20 May 2026 19:19:01 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 0/7] Add RISC-V big-endian target support
+Content-Language: en-US
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "alistair23@gmail.com" <alistair23@gmail.com>,
+ "thuth@redhat.com" <thuth@redhat.com>
+References: <20260511083819.206216-1-djordje.todorovic@htecgroup.com>
+ <5d2b27bb-f8d0-4992-b8dd-719b7a17b516@htecgroup.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <5d2b27bb-f8d0-4992-b8dd-719b7a17b516@htecgroup.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,26 +110,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- fpu/softfloat-parts.c.inc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 20/5/26 16:08, Djordje Todorovic wrote:
+> Hi all,
+> 
+> I am wondering, if there is any comment on v9. :)
+> 
+> Thanks a lot!
+> Djordje
+> 
+> 
+> On 5/11/26 10:38, Djordje Todorovic wrote:
+>> Rebase on top of master.
 
-diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index f40a950b41..7781e16122 100644
---- a/fpu/softfloat-parts.c.inc
-+++ b/fpu/softfloat-parts.c.inc
-@@ -163,7 +163,7 @@ static FloatPartsN partsN(pick_nan_muladd)(const FloatPartsN *a,
-         ret = c;
-     } else {
-         const FloatPartsN *val[R_3NAN_1ST_MASK + 1] = { a, b, c };
--        Float3NaNPropRule rule = s->float_3nan_prop_rule;
-+        Float3NaNPropRule rule = get_float_3nan_prop_rule(s);
- 
-         assert(rule != float_3nan_prop_none);
-         if (have_snan && (rule & R_3NAN_SNAN_MASK)) {
--- 
-2.43.0
+More than a "rebase" comment I was hoping to read what was the
+conclusion on previous versions about wired endianness bits.
+
+>>
+>> Djordje Todorovic (7):
+>>     target/riscv: Define MSTATUS_SBE and MSTATUS_MBE bit masks
+>>     target/riscv: Add big-endian CPU configuration field and reset logic
+>>     target/riscv: Implement runtime data endianness via MSTATUS bits
+>>     hw/riscv: Make boot code endianness-aware at runtime
+>>     target/riscv: Fix page table walk endianness for big-endian harts
+>>     target/riscv: Expose big-endian CPU property and add documentation
+>>     target/riscv: Add endianness test for RISC-V BE
+>>
+>>    docs/system/target-riscv.rst                  | 24 ++++++
+>>    hw/riscv/boot.c                               | 81 ++++++++++++++++---
+>>    include/hw/riscv/boot.h                       |  1 +
+>>    target/riscv/cpu.c                            | 11 +--
+>>    target/riscv/cpu.h                            | 23 ++++++
+>>    target/riscv/cpu_bits.h                       |  2 +
+>>    target/riscv/cpu_cfg_fields.h.inc             |  1 +
+>>    target/riscv/cpu_helper.c                     | 28 +++++--
+>>    target/riscv/insn_trans/trans_rva.c.inc       |  4 +-
+>>    target/riscv/insn_trans/trans_rvd.c.inc       |  4 +-
+>>    target/riscv/insn_trans/trans_rvf.c.inc       |  4 +-
+>>    target/riscv/insn_trans/trans_rvi.c.inc       |  8 +-
+>>    target/riscv/insn_trans/trans_rvzacas.c.inc   |  4 +-
+>>    target/riscv/insn_trans/trans_rvzalasr.c.inc  |  4 +-
+>>    target/riscv/insn_trans/trans_rvzce.c.inc     |  4 +-
+>>    target/riscv/insn_trans/trans_rvzfh.c.inc     |  4 +-
+>>    target/riscv/insn_trans/trans_rvzicfiss.c.inc |  4 +-
+>>    target/riscv/insn_trans/trans_xmips.c.inc     |  8 +-
+>>    target/riscv/insn_trans/trans_xthead.c.inc    | 16 ++--
+>>    target/riscv/insn_trans/trans_zilsd.c.inc     |  4 +-
+>>    target/riscv/internals.h                      |  9 +--
+>>    target/riscv/tcg/tcg-cpu.c                    |  3 +
+>>    target/riscv/translate.c                      | 22 ++---
+>>    tests/functional/riscv64/meson.build          |  1 +
+>>    tests/functional/riscv64/test_endianness.py   | 57 +++++++++++++
+>>    25 files changed, 251 insertions(+), 80 deletions(-)
+>>    create mode 100644 tests/functional/riscv64/test_endianness.py
+>>
 
 
