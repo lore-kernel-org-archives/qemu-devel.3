@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45C74CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 06:50:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32A8FCD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 06:50:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPaky-0004IV-JR; Wed, 20 May 2026 02:50:20 -0400
+	id 1wPajc-00030A-M6; Wed, 20 May 2026 02:48:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wPak2-0003aL-DA; Wed, 20 May 2026 02:49:24 -0400
+ id 1wPajZ-0002x0-Tg; Wed, 20 May 2026 02:48:49 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wPajw-0001TV-QH; Wed, 20 May 2026 02:49:17 -0400
+ id 1wPajU-0001OT-Ki; Wed, 20 May 2026 02:48:49 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64K6lnbc096590
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64K6lnbo096590
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 20 May 2026 15:48:16 +0900 (JST)
+ Wed, 20 May 2026 15:48:19 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=f4nMAQnz85jIi6jdDFcVx4lxK79NORQbClAxHDODkiQ=; 
+DKIM-Signature: a=rsa-sha256; bh=1HZL/g+SoS2O30ERYe2Yb6nxo7jFOLr4qDArV1Di8vs=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1779259697; v=1;
- b=RGXSAvTuPvf5H2W5E/0Vc0cdFsbl7fXk0UC8V3c1d7RRZzB/L8GL4lhx4vLJmUAA
- G2iKzeNMUrJWLJhxyN5O5KOCFmZh1hk5hwTLlavjMGSShRjDOFrkg5i4BehV3kOm
- sc5lutMq3LJmG0nyEOaIQLycnEa8aJ+5q5DKTJJM9jnPJCnRAT3xiyFifgyEA3iP
- 13sF0J45qp0sxiKmLuAKpk1SfhUziLNOZXI3p6w3L1eHZDsMA4cU606F3AqzT9Tj
- GPsQA/1h6Nfh5DOXGwH7Oc906/YUJI6qigjTm5PxAVR3w6ePQkQTwhVLX620Phc9
- URfOpT4EuRLVoP0OlZPqrw==
+ s=rs20250326; t=1779259700; v=1;
+ b=rvt2CZyr4rUXEAOBQCy2GWIZbr6WSrR2ve+f3gSseaW/FLwn3zN4ynwUqOzHzDaE
+ wSwYd9LKvAziFg9CdRn5zvcYdPv6Gkj6Rptx0eS/+ibYwUrSlCdDOe00ZnOgxpG7
+ fBwHYlywUS6Dejy71Raw3Xgt7i+sEurdyjx3/tSuVdfh8MY3dL/ioA6/C4ictvpG
+ W42YqqZ0r2a5P1v65w4o/WCrL02ENc0L6vCQ8zeia/ydgtSAft8dQwHjGXTe7GSx
+ G9KOcNrvIhmacv98CzLxt7I+Nwi1ul131+FIJ1tnGct+wQnCSPC3JJACqD8AIZhp
+ zJ5khsuM+aR8p4QhWGtBcg==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 20 May 2026 15:47:58 +0900
-Subject: [PATCH v3 15/29] hw/m68k/next-kbd: Use Linux key codes
+Date: Wed, 20 May 2026 15:48:10 +0900
+Subject: [PATCH v3 27/29] qemu-keymap: Use Linux key codes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260520-input-v3-15-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260520-input-v3-27-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260520-input-v3-0-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260520-input-v3-0-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -58,13 +58,13 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-16047
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5735;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4832;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=iyLiD2EoMRDRtaROtRWs8sE4KAkgfKNGzp5wMpy28GQ=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZvpLKcxfQNTz9y7zptG7KwMiFlUvVu0yeRtz4LVnG08
- V1fVSrYUcrCIMbFICumyJJStJtbI7r2U2FCfAvMHFYmkCEMXJwCMJG0HkaGq38nPdpR57firNd/
- 7Y57v+M/8x84+s16aYzBkh8JShESPxn++2WvkPGZefpxYROnG5+gx1+b1gu/1l29t3Xpb9Zj4WY
- TuAA=
+ bh=gcrDwacqS5bkEtnqJY5QTRr0nAfP9KdzJWUdu+r+4i4=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZvpHbhgQItpbMW1+/PYhBVnjN1hmH6ReuKPFeB2V6P/
+ a67ux7uKGVhEONikBVTZEkp2s2tEV37qTAhvgVmDisTyBAGLk4BmIh7DSND67OsTw1hpnl+/6QV
+ 9v+/W+V+rVaQ4XeHru0En9XzPW1MGBnmnnfjkDXYOt3854yNgs86QxR23ssxyGdJEzFusTdPjWA
+ GAA==
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -96,171 +96,123 @@ representations.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/m68k/next-kbd.c | 118 ++++++++++++++++++++++++++---------------------------
- 1 file changed, 59 insertions(+), 59 deletions(-)
+ qemu-keymap.c | 41 ++++++++++++++++++++---------------------
+ 1 file changed, 20 insertions(+), 21 deletions(-)
 
-diff --git a/hw/m68k/next-kbd.c b/hw/m68k/next-kbd.c
-index 7efbd806b7c8..7be5ab2fb798 100644
---- a/hw/m68k/next-kbd.c
-+++ b/hw/m68k/next-kbd.c
-@@ -31,6 +31,7 @@
- #include "qemu/log.h"
- #include "hw/core/sysbus.h"
- #include "hw/m68k/next-cube.h"
+diff --git a/qemu-keymap.c b/qemu-keymap.c
+index d4dccf456ef3..d63b6be8ce32 100644
+--- a/qemu-keymap.c
++++ b/qemu-keymap.c
+@@ -11,6 +11,7 @@
+  */
+ #include "qemu/osdep.h"
+ #include "qemu/notify.h"
 +#include "standard-headers/linux/input-event-codes.h"
- #include "ui/console.h"
- #include "migration/vmstate.h"
- #include "qom/object.h"
-@@ -165,59 +166,59 @@ static const MemoryRegionOps kbd_ops = {
-     .endianness = DEVICE_BIG_ENDIAN,
- };
+ #include "ui/input.h"
  
--static const int qcode_to_nextkbd_keycode[] = {
--    [Q_KEY_CODE_ESC]           = 0x49,
--    [Q_KEY_CODE_1]             = 0x4a,
--    [Q_KEY_CODE_2]             = 0x4b,
--    [Q_KEY_CODE_3]             = 0x4c,
--    [Q_KEY_CODE_4]             = 0x4d,
--    [Q_KEY_CODE_5]             = 0x50,
--    [Q_KEY_CODE_6]             = 0x4f,
--    [Q_KEY_CODE_7]             = 0x4e,
--    [Q_KEY_CODE_8]             = 0x1e,
--    [Q_KEY_CODE_9]             = 0x1f,
--    [Q_KEY_CODE_0]             = 0x20,
--    [Q_KEY_CODE_MINUS]         = 0x1d,
--    [Q_KEY_CODE_EQUAL]         = 0x1c,
--    [Q_KEY_CODE_BACKSPACE]     = 0x1b,
--
--    [Q_KEY_CODE_Q]             = 0x42,
--    [Q_KEY_CODE_W]             = 0x43,
--    [Q_KEY_CODE_E]             = 0x44,
--    [Q_KEY_CODE_R]             = 0x45,
--    [Q_KEY_CODE_T]             = 0x48,
--    [Q_KEY_CODE_Y]             = 0x47,
--    [Q_KEY_CODE_U]             = 0x46,
--    [Q_KEY_CODE_I]             = 0x06,
--    [Q_KEY_CODE_O]             = 0x07,
--    [Q_KEY_CODE_P]             = 0x08,
--    [Q_KEY_CODE_RET]           = 0x2a,
--    [Q_KEY_CODE_A]             = 0x39,
--    [Q_KEY_CODE_S]             = 0x3a,
--
--    [Q_KEY_CODE_D]             = 0x3b,
--    [Q_KEY_CODE_F]             = 0x3c,
--    [Q_KEY_CODE_G]             = 0x3d,
--    [Q_KEY_CODE_H]             = 0x40,
--    [Q_KEY_CODE_J]             = 0x3f,
--    [Q_KEY_CODE_K]             = 0x3e,
--    [Q_KEY_CODE_L]             = 0x2d,
--    [Q_KEY_CODE_SEMICOLON]     = 0x2c,
--    [Q_KEY_CODE_APOSTROPHE]    = 0x2b,
--    [Q_KEY_CODE_GRAVE_ACCENT]  = 0x26,
--    [Q_KEY_CODE_Z]             = 0x31,
--    [Q_KEY_CODE_X]             = 0x32,
--    [Q_KEY_CODE_C]             = 0x33,
--    [Q_KEY_CODE_V]             = 0x34,
--
--    [Q_KEY_CODE_B]             = 0x35,
--    [Q_KEY_CODE_N]             = 0x37,
--    [Q_KEY_CODE_M]             = 0x36,
--    [Q_KEY_CODE_COMMA]         = 0x2e,
--    [Q_KEY_CODE_DOT]           = 0x2f,
--    [Q_KEY_CODE_SLASH]         = 0x30,
--
--    [Q_KEY_CODE_SPC]           = 0x38,
-+static const int linux_to_nextkbd_keycode[] = {
-+    [KEY_ESC]        = 0x49,
-+    [KEY_1]          = 0x4a,
-+    [KEY_2]          = 0x4b,
-+    [KEY_3]          = 0x4c,
-+    [KEY_4]          = 0x4d,
-+    [KEY_5]          = 0x50,
-+    [KEY_6]          = 0x4f,
-+    [KEY_7]          = 0x4e,
-+    [KEY_8]          = 0x1e,
-+    [KEY_9]          = 0x1f,
-+    [KEY_0]          = 0x20,
-+    [KEY_MINUS]      = 0x1d,
-+    [KEY_EQUAL]      = 0x1c,
-+    [KEY_BACKSPACE]  = 0x1b,
-+
-+    [KEY_Q]          = 0x42,
-+    [KEY_W]          = 0x43,
-+    [KEY_E]          = 0x44,
-+    [KEY_R]          = 0x45,
-+    [KEY_T]          = 0x48,
-+    [KEY_Y]          = 0x47,
-+    [KEY_U]          = 0x46,
-+    [KEY_I]          = 0x06,
-+    [KEY_O]          = 0x07,
-+    [KEY_P]          = 0x08,
-+    [KEY_ENTER]      = 0x2a,
-+    [KEY_A]          = 0x39,
-+    [KEY_S]          = 0x3a,
-+
-+    [KEY_D]          = 0x3b,
-+    [KEY_F]          = 0x3c,
-+    [KEY_G]          = 0x3d,
-+    [KEY_H]          = 0x40,
-+    [KEY_J]          = 0x3f,
-+    [KEY_K]          = 0x3e,
-+    [KEY_L]          = 0x2d,
-+    [KEY_SEMICOLON]  = 0x2c,
-+    [KEY_APOSTROPHE] = 0x2b,
-+    [KEY_GRAVE]      = 0x26,
-+    [KEY_Z]          = 0x31,
-+    [KEY_X]          = 0x32,
-+    [KEY_C]          = 0x33,
-+    [KEY_V]          = 0x34,
-+
-+    [KEY_B]          = 0x35,
-+    [KEY_N]          = 0x37,
-+    [KEY_M]          = 0x36,
-+    [KEY_COMMA]      = 0x2e,
-+    [KEY_DOT]        = 0x2f,
-+    [KEY_SLASH]      = 0x30,
-+
-+    [KEY_SPACE]      = 0x38,
- };
+ #include <xkbcommon/xkbcommon.h>
+@@ -32,19 +33,17 @@ static FILE *outfile;
  
- static void nextkbd_put_keycode(NextKBDState *s, int keycode)
-@@ -246,15 +247,14 @@ static void nextkbd_event(DeviceState *dev, QemuConsole *src,
-                           QemuInputEvent *evt)
+ /* ------------------------------------------------------------------------ */
+ 
+-static uint32_t qcode_to_number(uint32_t qcode)
++static uint32_t linux_to_number(uint32_t lnx)
  {
-     NextKBDState *s = NEXTKBD(dev);
--    int qcode, keycode;
-+    int keycode;
+-    KeyValue keyvalue;
+     uint32_t number;
  
--    qcode = qemu_input_linux_to_qcode(evt->key.key);
--    if (qcode >= ARRAY_SIZE(qcode_to_nextkbd_keycode)) {
-+    if (evt->key.key >= ARRAY_SIZE(linux_to_nextkbd_keycode)) {
-         return;
+-    keyvalue.type = KEY_VALUE_KIND_QCODE;
+-    keyvalue.u.qcode.data = qcode;
+-    number = qemu_input_key_value_to_number(&keyvalue);
++    assert(lnx < qemu_input_map_linux_to_qnum_len);
++    number = qemu_input_map_linux_to_qnum[lnx];
+     assert(number != 0);
+     return number;
+ }
+ 
+-static void print_sym(xkb_keysym_t sym, uint32_t qcode, const char *mod)
++static void print_sym(xkb_keysym_t sym, uint32_t lnx, const char *mod)
+ {
+     char name[64];
+ 
+@@ -54,7 +53,7 @@ static void print_sym(xkb_keysym_t sym, uint32_t qcode, const char *mod)
+     xkb_keysym_get_name(sym, name, sizeof(name));
+ 
+     /* TODO: make ui/keymap.c parser accept QKeyCode names */
+-    fprintf(outfile, "%s 0x%02x%s\n", name, qcode_to_number(qcode), mod);
++    fprintf(outfile, "%s 0x%02x%s\n", name, linux_to_number(lnx), mod);
+ }
+ 
+ static void walk_map(struct xkb_keymap *map, xkb_keycode_t code, void *data)
+@@ -84,37 +83,37 @@ static void walk_map(struct xkb_keymap *map, xkb_keycode_t code, void *data)
+     fprintf(outfile, "# evdev %d (0x%x), QKeyCode \"%s\", number 0x%x\n",
+             evdev, evdev,
+             QKeyCode_str(qcode),
+-            qcode_to_number(qcode));
++            linux_to_number(evdev));
+ 
+     /*
+      * check which modifier states generate which keysyms
+      */
+     xkb_state_update_mask(state,  0, 0, 0,  0, 0, 0);
+     kbase = xkb_state_key_get_one_sym(state, code);
+-    print_sym(kbase, qcode, "");
++    print_sym(kbase, evdev, "");
+ 
+     xkb_state_update_mask(state,  0, 0, numlock,  0, 0, 0);
+     knumlock = xkb_state_key_get_one_sym(state, code);
+     if (kbase != knumlock) {
+-        print_sym(knumlock, qcode, " numlock");
++        print_sym(knumlock, evdev, " numlock");
      }
  
-     /* Shift key currently has no keycode, so handle separately */
--    if (qcode == Q_KEY_CODE_SHIFT) {
-+    if (evt->key.key == KEY_LEFTSHIFT) {
-         if (evt->key.down) {
-             s->shift |= KD_LSHIFT;
-         } else {
-@@ -262,7 +262,7 @@ static void nextkbd_event(DeviceState *dev, QemuConsole *src,
-         }
+     xkb_state_update_mask(state,  shift, 0, 0,  0, 0, 0);
+     kshift = xkb_state_key_get_one_sym(state, code);
+     if (kbase != kshift && knumlock != kshift) {
+-        print_sym(kshift, qcode, " shift");
++        print_sym(kshift, evdev, " shift");
      }
  
--    if (qcode == Q_KEY_CODE_SHIFT_R) {
-+    if (evt->key.key == KEY_RIGHTSHIFT) {
-         if (evt->key.down) {
-             s->shift |= KD_RSHIFT;
-         } else {
-@@ -270,7 +270,7 @@ static void nextkbd_event(DeviceState *dev, QemuConsole *src,
-         }
+     xkb_state_update_mask(state,  altgr, 0, 0,  0, 0, 0);
+     kaltgr = xkb_state_key_get_one_sym(state, code);
+     if (kbase != kaltgr) {
+-        print_sym(kaltgr, qcode, " altgr");
++        print_sym(kaltgr, evdev, " altgr");
      }
  
--    keycode = qcode_to_nextkbd_keycode[qcode];
-+    keycode = linux_to_nextkbd_keycode[evt->key.key];
-     if (!keycode) {
-         return;
+     xkb_state_update_mask(state,  altgr | shift, 0, 0,  0, 0, 0);
+     kaltgrshift = xkb_state_key_get_one_sym(state, code);
+     if (kshift != kaltgrshift && kaltgr != kaltgrshift) {
+-        print_sym(kaltgrshift, qcode, " shift altgr");
++        print_sym(kaltgrshift, evdev, " shift altgr");
      }
+ }
+ 
+@@ -251,16 +250,16 @@ int main(int argc, char *argv[])
+             "# keysyms.  So append them here.\n"
+             "#\n"
+             "\n");
+-    print_sym(XKB_KEY_Print,            Q_KEY_CODE_SYSRQ,      "");
+-    print_sym(XKB_KEY_Sys_Req,          Q_KEY_CODE_SYSRQ,      "");
+-    print_sym(XKB_KEY_Execute,          Q_KEY_CODE_SYSRQ,      "");
++    print_sym(XKB_KEY_Print,            KEY_SYSRQ,    "");
++    print_sym(XKB_KEY_Sys_Req,          KEY_SYSRQ,    "");
++    print_sym(XKB_KEY_Execute,          KEY_SYSRQ,    "");
+ 
+-    print_sym(XKB_KEY_KP_Decimal,       Q_KEY_CODE_KP_DECIMAL, " numlock");
+-    print_sym(XKB_KEY_KP_Separator,     Q_KEY_CODE_KP_DECIMAL, " numlock");
++    print_sym(XKB_KEY_KP_Decimal,       KEY_KPDOT,    " numlock");
++    print_sym(XKB_KEY_KP_Separator,     KEY_KPDOT,    " numlock");
+ 
+-    print_sym(XKB_KEY_Alt_R,            Q_KEY_CODE_ALT_R,      "");
+-    print_sym(XKB_KEY_ISO_Level3_Shift, Q_KEY_CODE_ALT_R,      "");
+-    print_sym(XKB_KEY_Mode_switch,      Q_KEY_CODE_ALT_R,      "");
++    print_sym(XKB_KEY_Alt_R,            KEY_RIGHTALT, "");
++    print_sym(XKB_KEY_ISO_Level3_Shift, KEY_RIGHTALT, "");
++    print_sym(XKB_KEY_Mode_switch,      KEY_RIGHTALT, "");
+ 
+     fprintf(outfile,
+             "\n"
 
 -- 
 2.54.0
