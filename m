@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5DF0CD5BA4
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:22:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DFDBCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:23:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPkZA-0001W2-E0; Wed, 20 May 2026 13:18:44 -0400
+	id 1wPkZ5-0001Pm-Tq; Wed, 20 May 2026 13:18:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPkZ8-0001Tb-RX
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:42 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1wPkYy-0001Li-Py
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:33 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPkZ3-0001ya-6A
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:42 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-366330b6751so4100909a91.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:18:36 -0700 (PDT)
+ id 1wPkYv-0001uH-OM
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:32 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-3665a90bcd3so5404899a91.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:18:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779297516; x=1779902316; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779297508; x=1779902308; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=W2TQZHGKVgc2bDrawkrfHaeofSO+VDdLDbwQhXEPuBw=;
- b=Hka0hQj2x7QktpB3K7gwYBg7OFJw8WzFkKwQ2Whcs9seU/5GWeyEW6whi+5m3yHHLv
- uKQiiUN5kM5J5xJvT/F2NJsJGrChOagrr8hsvldZEqmwTChPsqf7+9l0x/3aXCSyKm9p
- 4oOLYLr4RgbxcadOL3SNz8IGp8gja/BIwP5195znQ0sX68pB6ekwRuF9vYftGmXMB4iQ
- UppM9DJkrhwf/Br3py99uY1wQ4V1xqaJUZQ8zPGvOJEFtR/5NebnqWALU799O/J3aGBU
- Ut2WiKnxiCQw7tqc3YukXw2CLTwYjVt5GhClQ6ovkv/j9cM/lHV90+CQwZe9gyoykoMV
- EUqA==
+ bh=eFuftV4ssvx9bSSs5jnFr2ka5o9L8dvlbwyKZe1RxvE=;
+ b=kj8+x92AyOKbSJX2QXiHlCpo+7K5tO4XuM8Wtgzf4W1/6HBcR+wCoWrxJ++Ii9n/WN
+ oSQXUDmXw7kQOcNrN7E+W/+GKxu30bp5MwXE6JCens5gAdIb7MLC5pMvgW4WG60Zz9nK
+ cgIZ7GdrdKYe8uDT4qmj7ZzPnmNX8O3lPezvRSiZTNJQF7VCbsRcgh64KRu76HDMp8S6
+ A/nSvKEEZRirO/ghuWzBOU+F12MDsHJBtWHFptEwu2NdDXupaBgatnHzlr9aXGE9YftD
+ dLQb0dlZLbfmkhvedNDgUpZZo6RZAFBtwJDebVxRkYZaPxXdNokvIQxx7uVdV0YRAJ4D
+ ftlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779297516; x=1779902316;
+ d=1e100.net; s=20251104; t=1779297508; x=1779902308;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=W2TQZHGKVgc2bDrawkrfHaeofSO+VDdLDbwQhXEPuBw=;
- b=VOJcfF2ge0jl6T47bcVjUuBPIgaLc9lfKapDsabgzQ9f+zw+00QBZpaaVRVvUyjXyK
- iiNv61bQsbPzQh5cHDIywxTJ0gLNYlXsYp5yeg0DWS9aATX4FHNQ2SQLM9MmKUfwF46P
- ajVnBrX0bbpzaOX4Rct5RWogooPynKCfY9UNylM2cIap8rKfpFm9YFGUhNO3vSfUDcUm
- zPWqIg5SmyQwbQvw4JL3pEJJz6UKmEtYG+m7jX+bTk5Fx5+wUJskWRJhhowZFwqbLbqP
- hnu4/Wup46Rcqu+RWNhsWHIj41rbeK9Vg2wHas79dQ++Ga7LY/JRwCVUQ1g+utzRLWi1
- nalQ==
-X-Gm-Message-State: AOJu0Yz1t0vHyfC3GbOUt7Yju0GAMOWOjKcW7JpsVGv2rF3rYBZuhq6X
- 0KWBwpQZXQmd2xJ2hTKPsOLy6gF4nBtLbI5yZPBTdxSgnEiWWo9hd05gB5/l4WVkMHjEj14G6bS
- G75MwgTQ=
-X-Gm-Gg: Acq92OF1sQizT8aB8F1uPLWnVU46qcNEBI1haNQlgprBhreoKvqNfTvVTKKKIfGdIxi
- B9TeGSXrfHos+410tlQcKoGfvKYhCn8Uey8ixde28I3q/F21c65vRGeVMOGf91+QCBkmxmL0Ogr
- tS1eRInkRhjs0b/9ZLvGMjVo1Dc/3Z+b3DhekQiiFJVUxQ1nQRHARWHLY8pB4u0OdPSKw5wF+jU
- /l6WY8HzY7BWzl6rkwKD7c3FzgxKy43iPQcx2X4H4uutq56SlPpPT8brU6fafzEPEJ4vttqVQWY
- HeXHAXJzzhxZkYtWdLILsyuyWFZq/h65cJBs5CzldUxDx58qaMbp7bsAKFEZ1zhuOb8FWXn5tsn
- EFWd9vbCwdH9fLmqZ6f50slgzOMY+t/M5WSny+JzdMsHzB0MnNo955oOFukBNa8zlqu8EOVEqfB
- J2nREYN4JQgiHvp9/aMqfSzOcHcbK1neGV30UTCQw=
-X-Received: by 2002:a17:90b:560b:b0:369:f48a:f245 with SMTP id
- 98e67ed59e1d1-369f48af48emr9846534a91.4.1779297515713; 
- Wed, 20 May 2026 10:18:35 -0700 (PDT)
+ bh=eFuftV4ssvx9bSSs5jnFr2ka5o9L8dvlbwyKZe1RxvE=;
+ b=jccWCzWOKfthA4zyTgeq29dYVeMAzUGVAGS54dcgjFAHXwHeLsGi23dJb2mRUrr271
+ VCdpVISgKdG8ZnENZSxIxNDcx5VUAFgq1tdYh3zCdr2He1f/35Loz8ASLZ/TXns2zVtR
+ EXXUDoh/DtAJoKVtC/c3px0ojUcd5cTvrT/UjkfZXdicRAVm7wYe6HOrhEBMOD6+j+/t
+ Ct/nXTeQnhcgW2WGeDVd4ZBDIzkO6SXgbbpTgLR+KUmLJALvl3H70a0kO0H5ry47EWPP
+ RFqWnmYFTt1ekIFoYYn2Hj2h+7p0nZ1FGNB5/yT8h5K7JDI+Q7gNNklXWTHwL2I6tNRA
+ BStQ==
+X-Gm-Message-State: AOJu0YzljtEp8Kx/TwzMNBdF9gXQ3l1g9FSGXo6BlOcrn8jacou8v0NV
+ 5MrlpPECyFXi2IbIUxq1Xif08HF8k8UcTLkyhqibVJVpFx/Q6oc7BIqZ8fSwyKwbacmN3txs6ZJ
+ aYqV3l+g=
+X-Gm-Gg: Acq92OHgKsCtqwoxVdYRS/At9CgE5k/iCE77oBN2EvblYNbG9WBb+JDJAHpHEFv92u3
+ FS1rDJ4tUQiNTloSZpUTuCStNLOH6pj/otdf3Bk5aHSMDQG9qLDlEaPiDkQO3LbP2bYxsRIP2AI
+ ct+DHDFpZ11+6FeTTskZ4KYR4sAhceBe2r0HT4+02Hl+bPT5K3sPhZN6fPQk41ahjaKUHtxNoRj
+ J6oxarHvb+cBKHxet8IaRiYKoi4NEPclZ2hEuiCUSYXH+V0voxtYvXrIwkWRvl4UryS2a5O2xI9
+ 8odKXQFffLOhbe3/oOsO+IJfz54Zmc47IbsP4pXCs5sjGmZFQq7daEulmPpr6jvVYjYpmAtYj/P
+ ItCWJXNPzlEuCc9mqYAWtqo/G6bg6k9vb0+dnk5uS47l5SvyWsHTCqq0u/2yM9gkOjV3zcwgX8r
+ /yI/KfFbr8jDTZYxqfdPnxbU3biPsy
+X-Received: by 2002:a17:90b:5385:b0:369:de03:29c8 with SMTP id
+ 98e67ed59e1d1-369de033084mr12519454a91.23.1779297508269; 
+ Wed, 20 May 2026 10:18:28 -0700 (PDT)
 Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-36a3c83f226sm254416a91.0.2026.05.20.10.18.35
+ 98e67ed59e1d1-36a3c83f226sm254416a91.0.2026.05.20.10.18.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 10:18:35 -0700 (PDT)
+ Wed, 20 May 2026 10:18:27 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v5 19/30] fpu: Use get_float_infzeronan_rule in
- partsN_pick_nan_muladd
-Date: Wed, 20 May 2026 10:18:09 -0700
-Message-ID: <20260520171820.848839-20-richard.henderson@linaro.org>
+Subject: [PATCH v5 09/30] target/alpha: Remove CONFIG_SOFTFLOAT_INLINE
+Date: Wed, 20 May 2026 10:17:59 -0700
+Message-ID: <20260520171820.848839-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260520171820.848839-1-richard.henderson@linaro.org>
 References: <20260520171820.848839-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,44 +101,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Deduplicate the uses to a local variable.
+Don't peek into float_status internals.
+Fix the helper calls that were missing an argument.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- fpu/softfloat-parts.c.inc | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ target/alpha/translate.c | 18 ++----------------
+ 1 file changed, 2 insertions(+), 16 deletions(-)
 
-diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index 7781e16122..1e92251761 100644
---- a/fpu/softfloat-parts.c.inc
-+++ b/fpu/softfloat-parts.c.inc
-@@ -122,14 +122,14 @@ static FloatPartsN partsN(pick_nan_muladd)(const FloatPartsN *a,
- {
-     bool infzero = (ab_mask == float_cmask_infzero);
-     bool have_snan = (abc_mask & float_cmask_snan);
-+    FloatInfZeroNaNRule izn_rule = get_float_infzeronan_rule(s);
-     const FloatPartsN *ret;
+diff --git a/target/alpha/translate.c b/target/alpha/translate.c
+index d2d1467a81..c66e3f9c14 100644
+--- a/target/alpha/translate.c
++++ b/target/alpha/translate.c
+@@ -34,7 +34,6 @@
+ #undef  HELPER_H
  
-     if (unlikely(have_snan)) {
-         float_raise(float_flag_invalid | float_flag_invalid_snan, s);
+ #undef ALPHA_DEBUG_DISAS
+-#define CONFIG_SOFTFLOAT_INLINE
+ 
+ #ifdef ALPHA_DEBUG_DISAS
+ #  define LOG_DISAS(...) qemu_log_mask(CPU_LOG_TB_IN_ASM, ## __VA_ARGS__)
+@@ -578,15 +577,7 @@ static void gen_qual_roundmode(DisasContext *ctx, int fn11)
+         break;
      }
  
--    if (infzero &&
--        !(s->float_infzeronan_rule & float_infzeronan_suppress_invalid)) {
-+    if (infzero && !(izn_rule & float_infzeronan_suppress_invalid)) {
-         /* This is (0 * inf) + NaN or (inf * 0) + NaN */
-         float_raise(float_flag_invalid | float_flag_invalid_imz, s);
+-#if defined(CONFIG_SOFTFLOAT_INLINE)
+-    /* ??? The "fpu/softfloat.h" interface is to call set_float_rounding_mode.
+-       With CONFIG_SOFTFLOAT that expands to an out-of-line call that just
+-       sets the one field.  */
+-    tcg_gen_st8_i32(tmp, tcg_env,
+-                    offsetof(CPUAlphaState, fp_status.float_rounding_mode));
+-#else
+-    gen_helper_setroundmode(tmp);
+-#endif
++    gen_helper_setroundmode(tcg_env, tmp);
+ }
+ 
+ static void gen_qual_flushzero(DisasContext *ctx, int fn11)
+@@ -609,12 +600,7 @@ static void gen_qual_flushzero(DisasContext *ctx, int fn11)
+         tcg_gen_movi_i32(tmp, 1);
      }
-@@ -147,7 +147,7 @@ static FloatPartsN partsN(pick_nan_muladd)(const FloatPartsN *a,
-          * Inf * 0 + NaN -- some implementations return the
-          * default NaN here, and some return the input NaN.
-          */
--        switch (s->float_infzeronan_rule & ~float_infzeronan_suppress_invalid) {
-+        switch (izn_rule & ~float_infzeronan_suppress_invalid) {
-         case float_infzeronan_dnan_never:
-             break;
-         case float_infzeronan_dnan_always:
+ 
+-#if defined(CONFIG_SOFTFLOAT_INLINE)
+-    tcg_gen_st8_i32(tmp, tcg_env,
+-                    offsetof(CPUAlphaState, fp_status.flush_to_zero));
+-#else
+-    gen_helper_setflushzero(tmp);
+-#endif
++    gen_helper_setflushzero(tcg_env, tmp);
+ }
+ 
+ static TCGv_i64 gen_ieee_input(DisasContext *ctx, int reg, int fn11, int is_cmp)
 -- 
 2.43.0
 
