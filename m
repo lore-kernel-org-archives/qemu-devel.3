@@ -4,93 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C52E9CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 11:27:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4379CCD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 11:27:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPf4y-0001j4-Tj; Wed, 20 May 2026 07:27:12 -0400
+	id 1wPf5I-00028N-6Q; Wed, 20 May 2026 07:27:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <j.neuschaefer@9elements.com>)
- id 1wPf3z-0000qS-Km
- for qemu-devel@nongnu.org; Wed, 20 May 2026 07:26:16 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf4o-0001VE-J2
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 07:27:04 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <j.neuschaefer@9elements.com>)
- id 1wPf3s-0003lx-6K
- for qemu-devel@nongnu.org; Wed, 20 May 2026 07:26:08 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-43d76dd4ee8so1733161f8f.2
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 04:26:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf4f-00044C-9B
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 07:26:58 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-67be871ed3fso10565357a12.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 04:26:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=9elements.com; s=google; t=1779276361; x=1779881161; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=lf3KASJOV92HjyIgUlj70uoKfquZBzI7Nc5bu+kBkVk=;
- b=cl59KJnTt0KO1VjgP8ddAy6Jyq5m3sLVHLkUgNRfu2gWkxqJAcbN0GxGs41dTJ1Czg
- VQff59TQnbKLhGUn9WUxqmSL0ULuXSpunRfOgKXxgq5CnVdcaN1oK40yjWm7A29ykw67
- 0CiJbrN//AH0VYdWXDKtzS+wSathp7pzFDLab85rh+1zTpothID7cZ5ELgbaRZBxq8FO
- mjXDEks7lhjqA4IU5Bbdp5GbYCa5F1X9/9GNHTgJXOZ6dPN6laaNVY2PF7zFOktMKbT+
- eU5Pl5Td9IRNhc5LZZ06DLSHLiQagzVG9h/qopKT4jeaauT72tfKJx3TdJCuAXZjlNrS
- Ft4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779276361; x=1779881161;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1779276410; x=1779881210; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lf3KASJOV92HjyIgUlj70uoKfquZBzI7Nc5bu+kBkVk=;
- b=SGj8AghoH42LH8YTn2wtAzK5KKhutzP4vySlCANFugq8fWxITTGqqHVAvonOt7rZUP
- pmkkDOuVBXKCgwZUpBHQGbCRuftmVuQYs/LcNHbL4sVwubfVL+95v9J2n1Bo1cGh3KvW
- rt2NsFT8WQX86f9SpSpQB6CP820/FnXVxoog+XkB3xBd4nv8XrfT8xN1n4Eu7ra3BeGc
- zkQgTDJAtYaIvyNpHBnQVbY28JgKnfDw+d8oIXuPJoVfA3v7ybcbzQ6kM8Pwzg3BNla9
- OKd/L2xXFClUpO6BUULEHxjJUFzEXyHjWLVj+U9B2/w8tqq30RO9NB70RqtwUyZWDBJy
- efbQ==
-X-Gm-Message-State: AOJu0YyiVZSsH8ZEvtJWHCGfGcHN9/LPA3jwlfaQ8aElVruHQt81evqy
- pHPSI1q4uNjYF3efHc0EqsTD40EOcASVXZ4F2BIVelRmrX8NJlhjvN/AsW6Fj9yUIS0qOjXH8Wf
- 5LA1eyhr18w==
-X-Gm-Gg: Acq92OF/DWqYy8cJGl+Ere+OmvmC0MwHJQ9UK1TufNTUserUe40L9/lwJNFhFoB607G
- HzqAx56wNzkUZ6mWzYNMJEBo2wyHKqaZN3nNtd5wQ7B1mONJTLIWeC4IZ+ST61sL15Otm9B/n9W
- kkQs+8ft5eS21ILKmLqvBzvDOr/WxJPc3a4xqeuUjTsGyypZT7TU+2WS05yhh7R2gDQKSiPPxRG
- 5BAu3R21svTxkaIeDvkwYmRz3YM6u5IdBRO0C5vA59BpyfcIwMT8V1iRSV1CAdpfN8ZScgvY/3b
- JCE72UOZp0g0jVLONAyVoXriki6YPkPQzNsZ+ek8F70ZqfIEc8cG43lgTiGGvxszNpr7I4v46Km
- +0zPCPxGqhORrNeSabJ+iHVVMLxGka+cRMw6VMMdbpfb+Oa4QWGcpUZ49SVH5iUMBGUyiam+5Ai
- odVS6cir5+FldI6CkSqS+VaiCV+78YSXM0kGv7u+hrKMa1IbJ+8lmVNVtScUaAM7SD0OMzz20EJ
- q7ruOY1Fe0nphVYKKik73UP6g==
-X-Received: by 2002:a05:6000:1845:b0:43b:5b25:67f8 with SMTP id
- ffacd0b85a97d-45e5c587110mr36686191f8f.20.1779276360785; 
- Wed, 20 May 2026 04:26:00 -0700 (PDT)
-Received: from [127.0.1.1]
- (2a0a-a54a-ed40-0-9db4-bb9-3f9b-5d0a.ipv6dyn.netcologne.de.
- [2a0a:a54a:ed40:0:9db4:bb9:3f9b:5d0a])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da0fe0f72sm56884432f8f.25.2026.05.20.04.26.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 04:26:00 -0700 (PDT)
-From: =?utf-8?q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@9elements.com>
-Date: Wed, 20 May 2026 13:25:49 +0200
-Subject: [PATCH] docs/code-provenance: Fix formatting of *-by tags
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260520-prov-v1-1-7a58af334b9c@9elements.com>
-X-B4-Tracking: v=1; b=H4sIADyaDWoC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDUyMD3YKi/DJdc+NkM8tUk1RLc8tkJaDSgqLUtMwKsDHRsbW1AGtALdt
- WAAAA
-X-Change-ID: 20260520-prov-73c69e4e979c
+ bh=Y2ftIcejqF7pf3PGV+e0jciQnSDe6xE1w0+bNOQvv6Q=;
+ b=vfvDduzXkhwDvwFMZgdVBXr8x5ziYc7yLfXiPR+AeKl45oXrtyCZdlKOZuWY6icHOG
+ B748t7I4yewL98GYoETjRE4v/GFBrufmyZgwpaVT1qGNKKCIkN920KFB3myHXJRokERZ
+ 4djpJPsZuEOpHn4YOF2KQpuT6+4qHo51a3puri+5GVp/m7QrmhOsZ6DGUswiaAunyUOM
+ XkCIIdyTvLsBdN+Zxk+asJ8lY5jwSVqDsTaeWtNTwhCpArS/4fF7T/pzQCw6o/mos5ZU
+ lhcnilC0ODJphNz95OL3kZJlSjqPdlc4LPB53Ui3OonpzSg1eWrbvoZu0oK8LTxhLVV0
+ 1ILw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779276410; x=1779881210;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Y2ftIcejqF7pf3PGV+e0jciQnSDe6xE1w0+bNOQvv6Q=;
+ b=FtLixnfWZ/NI0CZpLZq7GPvwxf+mRPs34vpPmPJp15xLx+I4J/jyGOnMwx6N3ZGkVu
+ AnpZ6JpdhhSabDMwuWodysz0k0EAa+dLg/3kKFfrZQRdso3CzmUFgvlJ3XqDtkQVKwju
+ 59hTd4YPONHIny2yGcmSjj1n7UZWndyOi2Fbx76Ea/9AXOH9JbqpnAfZ8nv3DBTGta0Z
+ jgIOLEbOHZzYuShtGiwZ4n7RsJ86/pKTcz/KeozOvHyegeafj+XA5+EzvSO4swEMpV02
+ vBsZohPdJlf1EsdiaCNVxnTcBWOfj5WciYWdVNUIY27Pe8AJY4OW2hTvy/J0Lp2V0asd
+ ru+A==
+X-Gm-Message-State: AOJu0Yx/YUJbgG83jreWBvkfz6GoCh1CAMbZD4bedjihYQ3e653uOtSc
+ W+fEQElRDob94F1SPCs6aX2zuAIuD1jeS0/w9O3Zpa1WFv6dB46ytxhjTgRuvoZN24vLU+YrC0a
+ kE+3e3gE=
+X-Gm-Gg: Acq92OH4Xg/iQr4yh7nWiBqfF4TNlZzLNDL7V6JlZhhEqYros/DWTGb3r7oZh7oaMKQ
+ 26rv5cJcUTIePfnMu+2ByO6J/53P4fUniu2DEt6g0XbduMEnqQhhPHr1CHqBGj67hYNpHkGBPk2
+ dKHQb0fnt8P3/JYlAstyqKCEzzsw98hjL50lbLCuVX9nvfYyq/CmnfSCOYMN3CH8X0zLEpDaUc7
+ /70rY/rhipaMBWWneMp9xNhz0bxV9bcwS4F3kQ3jS9ZZzdbpmJec7Z5XphTKBgO6fkK5MFTTYqM
+ dr4qdkSlTk5knlHrUFIeo9q7cGblA084Q+aTDDmE6VDpAblt3Xru65nMmt28TWXMY+3A96VMNzA
+ fu3CY/f8JHeV3NhFemIIBnQiK5W/YovXyKHSVn+LJJzF5AX92kLlPX/tjY5TwJ78rv8xTLkeJkW
+ qUu4MsjTxJVhctgwXjDW71zZBHG+UJ8mTO+dn7Dv8cy5x565em65pZnx0xxUyFvvgNxS14B4rwz
+ qi8Ww==
+X-Received: by 2002:a05:600c:6d2:b0:48f:f199:4c02 with SMTP id
+ 5b1f17b1804b1-48ff1994c86mr182031885e9.9.1779272423651; 
+ Wed, 20 May 2026 03:20:23 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48feb00e5easm127454855e9.13.2026.05.20.03.20.22
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 20 May 2026 03:20:23 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?utf-8?q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@9elements.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1779276360; l=3123;
- i=j.neuschaefer@9elements.com; s=20260513; h=from:subject:message-id;
- bh=I72F5Zy2uwMGcJa96sR/nZvgzFovgfK0zV/pNSZmXeo=;
- b=nkY/6Zlfjnl76aajNhmqIxH8dw+suqZv7XVJ/thDJo6op0HSQsjtsJSwA4oP3ffCPdzO4SvwV
- fAnOkwdjEu8B3Gtvppp3RdJaHdoClQWu/MJN0XPEN5U+anaSUFmRa6A
-X-Developer-Key: i=j.neuschaefer@9elements.com; a=ed25519;
- pk=mytxDu9ALv0FsWdexvpDMisghxetVpsZ8NdmY/FGsgY=
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=j.neuschaefer@9elements.com; helo=mail-wr1-x435.google.com
+Cc: Aleksandar Rikalo <arikalo@gmail.com>,
+ James Hilliard <james.hilliard1@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>
+Subject: [PATCH v11 18/24] target/mips: add Octeon MTM instructions
+Date: Wed, 20 May 2026 12:17:59 +0200
+Message-ID: <20260520101807.9971-19-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260520101807.9971-1-philmd@linaro.org>
+References: <20260520101807.9971-1-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,68 +105,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Applying both ``code`` and **bold** formatting doesn't have the intended
-outcome, instead Sphinx emits the backticks into the HTML.
+From: James Hilliard <james.hilliard1@gmail.com>
 
-Use only **bold** formatting to fix the HTML output.
+Add the MTM0, MTM1, and MTM2 forms that load the Octeon3 multiplier
+operand pair from rs/rt into MPL[x] and MPL[x+3], then clear the partial
+products. For MPL0, also set MPL[1] to zero for backward compatibility
+with Octeon2 VMULU.
 
-Signed-off-by: J. Neuschäfer <j.neuschaefer@9elements.com>
+Legacy single-source encodings have rt encoded as $zero, so the same
+translator path also preserves the older Octeon behavior.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
-I'm fine with either solution, keeping the bold or code formatting, and I'll
-switch to the other if requested. They just don't mix well.
----
- docs/devel/code-provenance.rst | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ target/mips/tcg/octeon.decode      |  7 +++++++
+ target/mips/tcg/octeon_translate.c | 32 ++++++++++++++++++++++++++++++
+ 2 files changed, 39 insertions(+)
 
-diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
-index 4e6a9afe0d672c544c069447a9978baa0b4a6212..65b8f232a08f6bc903c77fd0b1f7a5adad9fbe5d 100644
---- a/docs/devel/code-provenance.rst
-+++ b/docs/devel/code-provenance.rst
-@@ -99,13 +99,13 @@ Other commit tags
- While the ``Signed-off-by`` tag is mandatory, there are a number of other tags
- that are commonly used during QEMU development:
+diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+index 01ed3b50beb..5139543b153 100644
+--- a/target/mips/tcg/octeon.decode
++++ b/target/mips/tcg/octeon.decode
+@@ -44,6 +44,13 @@ SNE          011100 ..... ..... ..... 00000 101011 @r3
+ SEQI         011100 rs:5 rt:5 imm:s10 101110 &cmpi
+ SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
  
-- * **``Reviewed-by``**: when a QEMU community member reviews a patch on the
-+ * **Reviewed-by**: when a QEMU community member reviews a patch on the
-    mailing list, if they consider the patch acceptable, they should send an
-    email reply containing a ``Reviewed-by`` tag. Subsystem maintainers who
-    review a patch should add this even if they are also adding their
-    ``Signed-off-by`` to the same commit.
- 
-- * **``Acked-by``**: when a QEMU subsystem maintainer approves a patch that
-+ * **Acked-by**: when a QEMU subsystem maintainer approves a patch that
-    touches their subsystem, but intends to allow a different maintainer to
-    queue it and send a pull request, they would send a mail containing a
-    ``Acked-by`` tag. Where a patch touches multiple subsystems, ``Acked-by``
-@@ -113,18 +113,18 @@ that are commonly used during QEMU development:
-    maintainer wants to indicate they have done a full review they should use
-    a ``Reviewed-by`` tag.
- 
-- * **``Tested-by``**: when a QEMU community member has functionally tested the
-+ * **Tested-by**: when a QEMU community member has functionally tested the
-    behaviour of the patch in some manner, they should send an email reply
-    containing a ``Tested-by`` tag.
- 
-- * **``Reported-by``**: when a QEMU community member reports a problem via the
-+ * **Reported-by**: when a QEMU community member reports a problem via the
-    mailing list, or some other informal channel that is not the issue tracker,
-    it is good practice to credit them by including a ``Reported-by`` tag on
-    any patch fixing the issue. When the problem is reported via the GitLab
-    issue tracker, however, it is sufficient to just include a link to the
-    issue.
- 
-- * **``Suggested-by``**: when a reviewer or other 3rd party makes non-trivial
-+ * **Suggested-by**: when a reviewer or other 3rd party makes non-trivial
-    suggestions for how to change a patch, it is good practice to credit them
-    by including a ``Suggested-by`` tag.
- 
-
----
-base-commit: 6d17fd91f6cf88df5cb2205e578640d72605cc43
-change-id: 20260520-prov-73c69e4e979c
-
-Best regards,
++&r2          rs rt
++@r2          ...... rs:5 rt:5 ..... ..... ...... &r2
++
++MTM0         011100 ..... ..... 00000 00000 001000 @r2
++MTM1         011100 ..... ..... 00000 00000 001100 @r2
++MTM2         011100 ..... ..... 00000 00000 001101 @r2
++
+ &saa         base rt
+ @saa         ...... base:5 rt:5 ................ &saa
+ SAA          011100 ..... ..... 00000 00000 011000 @saa
+diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+index b5ebad98048..aae6e9811c8 100644
+--- a/target/mips/tcg/octeon_translate.c
++++ b/target/mips/tcg/octeon_translate.c
+@@ -210,3 +210,35 @@ TRANS(LHUX, trans_lx, MO_UW);
+ TRANS(LWX,  trans_lx, MO_SL);
+ TRANS(LWUX, trans_lx, MO_UL);
+ TRANS(LDX,  trans_lx, MO_UQ);
++
++static void octeon_zero_partial_product_state(void)
++{
++    for (int i = 0; i < OCTEON_MULTIPLIER_REGS; i++) {
++        tcg_gen_movi_i64(oct_p[i], 0);
++    }
++}
++
++static bool trans_mtm(DisasContext *ctx, arg_r2 *a, unsigned int index)
++{
++    /*
++     * Octeon3 two-source MTM forms load lane index from rs and lane index + 3
++     * from rt.  Legacy one-source forms encode rt as $zero.
++     */
++    gen_load_gpr(oct_mpl[index], a->rs);
++    gen_load_gpr(oct_mpl[index + 3], a->rt);
++
++    /*
++     * Octeon3 clears MPL1 with MPL0 so that VMULU sequences remain
++     * backward compatible with Octeon2.
++     */
++    if (index == 0) {
++        tcg_gen_movi_i64(oct_mpl[1], 0);
++    }
++
++    octeon_zero_partial_product_state();
++    return true;
++}
++
++TRANS(MTM0, trans_mtm, 0);
++TRANS(MTM1, trans_mtm, 1);
++TRANS(MTM2, trans_mtm, 2);
 -- 
-J. Neuschäfer <j.neuschaefer@9elements.com>
+2.53.0
 
 
