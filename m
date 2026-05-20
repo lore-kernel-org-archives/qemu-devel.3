@@ -4,104 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0726CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 19:17:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC325CD5BA4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 19:24:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPmPw-000524-7w; Wed, 20 May 2026 15:17:21 -0400
+	id 1wPmWK-00079Q-7F; Wed, 20 May 2026 15:23:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sinxx198@gmail.com>)
- id 1wPlci-0004vK-0t
- for qemu-devel@nongnu.org; Wed, 20 May 2026 14:26:33 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmWG-00078Q-G0
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 15:23:53 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sinxx198@gmail.com>)
- id 1wPlcf-0002VD-Dr
- for qemu-devel@nongnu.org; Wed, 20 May 2026 14:26:27 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-5a742b8b72eso6423007e87.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 11:26:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779301581; cv=none;
- d=google.com; s=arc-20240605;
- b=hZ76UcaGXWkMfjCTlcraUj4Ql0NhNXaZ+3MNzB9hlYSEyo5iyKaEi60dTCamvbjH4v
- 9nNmuK1qhVTxXyhDCOnioRYUwnWPBDiKSNh+MaxFaJzA6MrMPUhNbuntynxtRc+u5Cuh
- 9fqKc5JEwQ3IJYMaeSCqnHWrlWr8Q+4PnQz26Q49bHzsNGaPdnjfWdRoAlAxnWV4BzlU
- zovILlOyW8Q/QVuh8YaI/tfs6cXHMfWkQphUIcmjQIiHdZdwprGv1pHtnlztE0tozZ2L
- 7gYFjTnoW4HrET8R755FrFpBdgeHFZ/UGHP97QCNlq2eifv3XTHAN1mwujWhZ6s4fB+9
- 9fCw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=jeAoR4cxDmbfP95f/OMQmHTiGY3Q6VFFU4e+mYjR+U0=;
- fh=7R/RZGD+m7OAV6ynsYAfWZ1IG1hYR0cKwZ0GYuuX0rE=;
- b=bp8Opqb4Kgz5VOBfTjyZ5gRkadwJNnefoX/9JAzZxPWedR8Sl2gYf2lxmK1E37K+LG
- cwrdOnixALQOrQON41JaoGwvQkakJb7FQAfXYFE5/0q6IOvRkEnfPYnEqMpOZpaw0q4k
- MGUwWXD40jd7+PybsZXSKXFVkHmzGWzenpBhwRkn3WMgk2FqtUes0s+8TK0LYU/6HaGL
- CvHK4Nt+9zOBeP5NwbFVIATLk/Yf09/oA7z68EPpWbkZIYci+owAk1sx9457U4l5Vrc4
- XoeLwcBjfR53h4u05D67Ce1z9rRk8QHPq7XW61ojumf5FI2tyHlt6NWYHbQjoL4GUUaa
- y+3g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmWD-0001gp-VO
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 15:23:52 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4891e5b9c1fso46718675e9.2
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 12:23:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779301581; x=1779906381; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jeAoR4cxDmbfP95f/OMQmHTiGY3Q6VFFU4e+mYjR+U0=;
- b=oHesJupkR9wgf3OxLPjnl+am+76e+48ZW4VzyWX78DvDihicXSsupMTrl9DR9EgF5Z
- wDA5dFcPMEy1ZE6FG+rNX24W2PwXogMQeg09a6Sari4Kj6SBKkTTNR1YG3pOaUQsHzS1
- rFJNEXEud82GIr1cJ+CxYp/XhRdNlXWmTQl/udHerSEaX9AuBhAQj8hlp5959s0BOHeG
- qRZVkyvGXoBuDFGlGcoLIie5Umjcp3IOGb8KMXLbBt6CLHKvs852v6A87Ud2S9ufXfRt
- cnoqg5JZls8MMPyKFOFJMeuLG/438w/IelOwL+b4lyrVXBN6SGgFr706+Ter2Jm1yEh/
- OuJg==
+ d=linaro.org; s=google; t=1779305027; x=1779909827; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=pzFene+XPTuBXmA2I8ll8nMg8ewupOG9aMP0/WLLdZg=;
+ b=ZN9fzmDTZvIBChMVhrxsJW7yRuXNkMZjRxrM1Nk4aepIjumink882uvu0+6LiCWqfa
+ fK9debCxCZqpTYI/ZRuK92pcWnPujYxhcZ0Ow5/okzT9kqwdhMYfNGToZ2T0KqLx3g6g
+ qnNun1S4R5ASENZijkdGv76SIQoTkPmQIbI3KzYlTE3uROZXDj0V4swORKkVUyPch8it
+ uilhMsOAZg2XgjW+q/lHAw6sbPKV2vin4O67qEDMORI+rRizqtPd9uOJt/t305L1ueDr
+ tFX2EZbdrT1GZ6otaKSRSH/7s5crrDLmDkJL9ob5PBDBflXuP38yngE/rZ0zHOUpLcRq
+ 5rYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779301581; x=1779906381;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jeAoR4cxDmbfP95f/OMQmHTiGY3Q6VFFU4e+mYjR+U0=;
- b=Qii0YVKRxz34/lXIP210hxv3XQ6gGKvGHVyOvXX2na3kZogfKgddqxwWm2SC841WIe
- H/wlRIegRAuPbuWpOLJ9yJ3wirm6VVjfcbqjY5W34JdM1IUunX6gw5uRZqfq8OynEvdf
- b2MUB8qFL5pyZ71HQX+O6OibOaJNJ0WmfaaCKqtMgfE3+erEryuBDSP9/Y2Hvg0+eUWf
- HquZORe8U+kl7QsUpSOCqcw2wCYTX0PR730zphOHoOAmQaja45fLWvNKAS3XDCPbLZh+
- 3pg/RLuzJdxRRQ32UiF+Z+wAVEV3jPtF4JWs7SJhbyPB0KtrFzgPi0hzYzqkSLAKQyDy
- +/3A==
-X-Gm-Message-State: AOJu0YwVFuMoBq775aPw8v+C6LJIjaIAxMjBrbIqkp6qnGNohKkslJfZ
- g0hc7msGI2FM4XlSsYhzWg8jXpL8xFZQaXrAXoGptRbjIqdoRN9cy9vtJykgAEYRjyufmEiAcYg
- fLiOg7CY+aWtFMeuLoLrfvYhpqyv284k=
-X-Gm-Gg: Acq92OGTVeOWmZmQrME+GbT+wDeIPosfzyEJmI7j6gCORgofwwZCipjEiI0HJ3o7uNE
- 1dvOpOE0Rz29anI4OtG55SmK8Q64sWehagRAtnI/eVxLR7Hb7HA3cO65sAaeFgsB9krj6VDtJJ8
- xrqiguW4GJhgFb70CEfH85S6U1iW1FCYdOZGnKJkB/3zB21L58H9VqSmFPnxybPdojxMM1TlI6Q
- u1GP93dSLY4DtzZ9BZOTpkHNwjuXL0T5TjdDRSUH2mZrXv48rInbFLQIKBEDwmapEp5Jzy9J4vT
- o3oSfq0WwZONyyANiv8DoVEOdzEgq5y2KOwtLpdGQMpqzv0T2w==
-X-Received: by 2002:a05:6512:3e14:b0:5a2:b3dd:7a74 with SMTP id
- 2adb3069b0e04-5aa0e73edcbmr8816294e87.33.1779301581204; Wed, 20 May 2026
- 11:26:21 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779305027; x=1779909827;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=pzFene+XPTuBXmA2I8ll8nMg8ewupOG9aMP0/WLLdZg=;
+ b=AmM9JJRRO4npXNq4chJgLTZl7Vk+oDCQ3nKzHm0YZnjFk38iRQsaGWuep16C2rncdo
+ eJSZdMY4CFMeZ2Kkff34Ic8FzJtEpOyRYqhoMtizkYzLE2/30PjXIDQGGqPay0a1yyQQ
+ gWMBvsMeulQ2vFPLof1S3eITmRuLEPvVzJwxLCoQj/d3/MZMpuRO9g1cu4ijUp9+Hesv
+ Cf+SJtBjxI+6RuJ8gGN05NLsnXSoWhdXs9+sbQ3oT9pthj7FwqZYhTTmkiYyzt71gl4y
+ pDKRSYg9K4m4gwO2fhOOmY3mnRK80vB8GeKIIMhd5gmV66moeHUj2l2IVhnKzdmeQlJg
+ Ok/w==
+X-Gm-Message-State: AOJu0YxgAzKwi2/gz1t5zssZih+oSU+LZ/uZIbBnqENnVwwO2hIcGni7
+ t0kSsCqUL88cfhfVcswvBZ5Hqumm7288MFSSGpJt8BJD5uzRrmqs4YgM5WoVITEQd22IJZ7Me4a
+ m7OWu+8E=
+X-Gm-Gg: Acq92OHk3uWM09JI8+j87Imqk0ntC42c8qIrOjvGCJ6W61XAOyUy+DK2JbiOU3N7tOg
+ Ys2ut0CyhB2ZsH4sLFc8ftCuIA/hWL4qwQ06sNMcKLP6oc7LHrgjdjPqT5EjGHmctmDRQDrQBT0
+ yz5TCmEgg2Xspj4FgtxWFJMKb9thLh7+2vU4he25AnaPQIKaJC/38K41sOFY5dRdoBHtGeSwDts
+ lMQj8gPOJLDAN8+ii/Z9h+bXIlL6/5GYRTsMLI71Rmj2rGi0BSgOJpy3wJrq5+sd6sbkfD2rtEP
+ XcXv7VC9UXSzM3T0URJI1gMuiwtqcDVAWKMljZYgnIKEc8mgcBW6BA6KC/8uoDKIRFFsJagqd+7
+ bRdWPPy8lhPNuNUot3EdaFMbkYrk05RDTHMV0Ha85X0jEIvd637qNuCbHj/ZnPtnDmZvxImrKwS
+ Rn3L5DmMvdumlyiAi/dtEdsGSWbNisxbV6JM0jbHISQ1K+wa5v2wO+vBckZ/QAcocDdOLxo/46
+X-Received: by 2002:a05:600c:5ca:b0:48f:e6de:1cb9 with SMTP id
+ 5b1f17b1804b1-48fe6de1dd2mr243248675e9.19.1779305027450; 
+ Wed, 20 May 2026 12:23:47 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49033d2fd6bsm11667585e9.1.2026.05.20.12.23.46
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 20 May 2026 12:23:46 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 01/33] docker: Remove LegacyKeyValueFormat warnings in
+ non-generated files
+Date: Wed, 20 May 2026 21:23:06 +0200
+Message-ID: <20260520192338.40036-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260520192338.40036-1-philmd@linaro.org>
+References: <20260520192338.40036-1-philmd@linaro.org>
 MIME-Version: 1.0
-References: <E1wPkYi-000adH-4E@kylie.crudebyte.com> <4735365.LvFx2qVVIh@weasel>
-In-Reply-To: <4735365.LvFx2qVVIh@weasel>
-From: sin99xx <sinxx198@gmail.com>
-Date: Wed, 20 May 2026 14:26:09 -0400
-X-Gm-Features: AVHnY4IRimrgGpHp1pI0qWQQEsT73eoUdEimPRpdb7H4VX_B-D2_oNpOkwuO-NY
-Message-ID: <CAMX0No0JkKWL2ZPUqD8558FshhSNFJGjy6hsxqVwntRp9F3rUQ@mail.gmail.com>
-Subject: Re: [PATCH] 9pfs: fix missing rename lock in v9fs_co_readdir_many
- (CVE-2026-48004)
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Cc: qemu-devel@nongnu.org, Greg Kurz <groug@kaod.org>
-Content-Type: multipart/alternative; boundary="000000000000b22fc2065243ee09"
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=sinxx198@gmail.com; helo=mail-lf1-x133.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 20 May 2026 15:17:16 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -116,185 +99,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000b22fc2065243ee09
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Manually update Dockerfiles to not use legacy 'ENV key value' format:
+https://docs.docker.com/reference/build-checks/legacy-key-value-format/
 
-Yes, please go ahead and add my Signed-off-by tag. Also, if possible, could
-you use this email instead?
-Signed-off-by: sin99xx sin99xx@proton.me
+This removes warnings when building / using the containers:
 
-Thanks.
+ - LegacyKeyValueFormat: "ENV key=value" should be used instead of legacy "ENV key value" format (line 98)
+ - LegacyKeyValueFormat: "ENV key=value" should be used instead of legacy "ENV key value" format (line 64)
+ - LegacyKeyValueFormat: "ENV key=value" should be used instead of legacy "ENV key value" format (line 97)
 
-On Wed, May 20, 2026 at 2:22=E2=80=AFPM Christian Schoenebeck <
-qemu_oss@crudebyte.com> wrote:
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Message-ID: <20260518102222.80735-7-philmd@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ .../docker/dockerfiles/debian-hexagon-cross.docker | 14 +++++++-------
+ .../dockerfiles/debian-loongarch-cross.docker      | 10 +++++-----
+ .../docker/dockerfiles/debian-tricore-cross.docker |  6 +++---
+ .../docker/dockerfiles/debian-xtensa-cross.docker  |  8 ++++----
+ tests/docker/dockerfiles/python.docker             |  5 +++--
+ scripts/coverity-scan/coverity-scan.docker         | 12 ++++++------
+ 6 files changed, 28 insertions(+), 27 deletions(-)
 
-> On Wednesday, 20 May 2026 19:11:25 CEST Christian Schoenebeck wrote:
-> > From: sin99xx <sinxx198@gmail.com>
-> >
-> > v9fs_co_readdir_many() dispatches do_readdir_many() to a worker thread
-> > that reads V9fsFidState's path.data without holding a rename lock.
-> >
-> > A concurrent rename request, e.g. of its parent dir, causes the FID's
-> > absolute path to be altered by freeing the old path string and
-> > assigning a new one. This causes a heap-use-after-free race condition
-> > while do_readdir_many() is still accessing the old object.
-> >
-> > This allows a DoS by an unprivileged guest user.
-> >
-> > Fix this by wrapping the worker thread dispatch block within a pair of
-> > v9fs_path_read_lock() and v9fs_path_unlock() calls, like it's done at
-> > other places.
-> >
-> > Fixes: 2149675b195f ("9pfs: add new function v9fs_co_readdir_many()")
-> > Fixes: CVE-2026-48004
-> > Reported-by: sin99xx <sinxx198@gmail.com>
-> > [Christian Schoenebeck: add commit log message]
-> > Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
->
-> sin99xx, I forgot, may I add your Signed-off-by tag?
->
->   Signed-off-by: sin99xx <sinxx198@gmail.com>
->
-> This is required [1] for making you the patch author:
->
-> "Your patches must include a Signed-off-by: line. This is a hard
-> requirement
-> because it=E2=80=99s how you say =E2=80=9CI=E2=80=99m legally okay to con=
-tribute this and happy
-> for it
-> to go into QEMU=E2=80=9D. For full guidance, read the Code provenance
-> documentation."
->
-> [1] https://www.qemu.org/docs/master/devel/submitting-a-patch.html
->
-> > ---
-> >  hw/9pfs/codir.c | 3 +++
-> >  1 file changed, 3 insertions(+)
-> >
-> > diff --git a/hw/9pfs/codir.c b/hw/9pfs/codir.c
-> > index bce7dd96e9..5568399343 100644
-> > --- a/hw/9pfs/codir.c
-> > +++ b/hw/9pfs/codir.c
-> > @@ -220,13 +220,16 @@ int coroutine_fn v9fs_co_readdir_many(V9fsPDU *pd=
-u,
-> > V9fsFidState *fidp, bool dostat)
-> >  {
-> >      int err =3D 0;
-> > +    V9fsState *s =3D pdu->s;
-> >
-> >      if (v9fs_request_cancelled(pdu)) {
-> >          return -EINTR;
-> >      }
-> > +    v9fs_path_read_lock(s);
-> >      v9fs_co_run_in_worker({
-> >          err =3D do_readdir_many(pdu, fidp, entries, offset, maxsize,
-> dostat);
-> > });
-> > +    v9fs_path_unlock(s);
-> >      return err;
-> >  }
->
->
->
+diff --git a/tests/docker/dockerfiles/debian-hexagon-cross.docker b/tests/docker/dockerfiles/debian-hexagon-cross.docker
+index 91d4b71ac95..3c94f040b81 100644
+--- a/tests/docker/dockerfiles/debian-hexagon-cross.docker
++++ b/tests/docker/dockerfiles/debian-hexagon-cross.docker
+@@ -39,15 +39,15 @@ RUN apt-get update && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc && \
+     dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
+ 
+-ENV TOOLCHAIN_INSTALL /opt
+-ENV TOOLCHAIN_RELEASE 12.Dec.2023
+-ENV TOOLCHAIN_BASENAME "clang+llvm-${TOOLCHAIN_RELEASE}-cross-hexagon-unknown-linux-musl"
+-ENV TOOLCHAIN_URL https://codelinaro.jfrog.io/artifactory/codelinaro-toolchain-for-hexagon/${TOOLCHAIN_RELEASE}/${TOOLCHAIN_BASENAME}.tar.xz
+-ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
++ENV TOOLCHAIN_INSTALL=/opt
++ENV TOOLCHAIN_RELEASE=12.Dec.2023
++ENV TOOLCHAIN_BASENAME=clang+llvm-${TOOLCHAIN_RELEASE}-cross-hexagon-unknown-linux-musl
++ENV TOOLCHAIN_URL=https://codelinaro.jfrog.io/artifactory/codelinaro-toolchain-for-hexagon/${TOOLCHAIN_RELEASE}/${TOOLCHAIN_BASENAME}.tar.xz
++ENV CCACHE_WRAPPERSDIR=/usr/libexec/ccache-wrappers
+ 
+ RUN curl -#SL "$TOOLCHAIN_URL" | tar -xJC "$TOOLCHAIN_INSTALL"
+-ENV PATH $PATH:${TOOLCHAIN_INSTALL}/${TOOLCHAIN_BASENAME}/x86_64-linux-gnu/bin
+-ENV MAKE /usr/bin/make
++ENV PATH=$PATH:${TOOLCHAIN_INSTALL}/${TOOLCHAIN_BASENAME}/x86_64-linux-gnu/bin
++ENV MAKE=/usr/bin/make
+ # As a final step configure the user (if env is defined)
+ ARG USER
+ ARG UID
+diff --git a/tests/docker/dockerfiles/debian-loongarch-cross.docker b/tests/docker/dockerfiles/debian-loongarch-cross.docker
+index 55b3dbe4510..d2ba07972ce 100644
+--- a/tests/docker/dockerfiles/debian-loongarch-cross.docker
++++ b/tests/docker/dockerfiles/debian-loongarch-cross.docker
+@@ -40,12 +40,12 @@ RUN apt-get update && \
+ RUN curl -#SL https://github.com/loongson/build-tools/releases/download/2023.08.08/CLFS-loongarch64-8.1-x86_64-cross-tools-gcc-glibc.tar.xz \
+     | tar -xJC /opt
+ 
+-ENV PATH $PATH:/opt/cross-tools/bin
+-ENV LD_LIBRARY_PATH /opt/cross-tools/lib:/opt/cross-tools/loongarch64-unknown-linux-gnu/lib:$LD_LIBRARY_PATH
++ENV PATH=$PATH:/opt/cross-tools/bin
++ENV LD_LIBRARY_PATH=/opt/cross-tools/lib:/opt/cross-tools/loongarch64-unknown-linux-gnu/lib:$LD_LIBRARY_PATH
+ 
+-ENV QEMU_CONFIGURE_OPTS --disable-docs --disable-tools
+-ENV DEF_TARGET_LIST loongarch64-linux-user,loongarch64-softmmu
+-ENV MAKE /usr/bin/make
++ENV QEMU_CONFIGURE_OPTS="--disable-docs --disable-tools"
++ENV DEF_TARGET_LIST=loongarch64-linux-user,loongarch64-softmmu
++ENV MAKE=/usr/bin/make
+ 
+ # As a final step configure the user (if env is defined)
+ ARG USER
+diff --git a/tests/docker/dockerfiles/debian-tricore-cross.docker b/tests/docker/dockerfiles/debian-tricore-cross.docker
+index fd797dc7ee4..9e7ff321677 100644
+--- a/tests/docker/dockerfiles/debian-tricore-cross.docker
++++ b/tests/docker/dockerfiles/debian-tricore-cross.docker
+@@ -40,9 +40,9 @@ RUN curl -#SL https://github.com/bkoppelmann/package_940/releases/download/trico
+     | tar -xzC /usr/local/
+ 
+ # This image can only build a very minimal QEMU as well as the tests
+-ENV DEF_TARGET_LIST tricore-softmmu
+-ENV QEMU_CONFIGURE_OPTS --disable-user --disable-tools --disable-fdt
+-ENV MAKE /usr/bin/make
++ENV DEF_TARGET_LIST=tricore-softmmu
++ENV QEMU_CONFIGURE_OPTS="--disable-user --disable-tools --disable-fdt"
++ENV MAKE=/usr/bin/make
+ # As a final step configure the user (if env is defined)
+ ARG USER
+ ARG UID
+diff --git a/tests/docker/dockerfiles/debian-xtensa-cross.docker b/tests/docker/dockerfiles/debian-xtensa-cross.docker
+index ef63e44e2ef..d9130fc3378 100644
+--- a/tests/docker/dockerfiles/debian-xtensa-cross.docker
++++ b/tests/docker/dockerfiles/debian-xtensa-cross.docker
+@@ -19,16 +19,16 @@ RUN apt-get update && \
+         python3-minimal && \
+     dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
+ 
+-ENV CPU_LIST dc232b dc233c de233_fpu dsp3400
+-ENV TOOLCHAIN_RELEASE 2020.07
++ENV CPU_LIST="dc232b dc233c de233_fpu dsp3400"
++ENV TOOLCHAIN_RELEASE=2020.07
+ 
+ RUN for cpu in $CPU_LIST; do \
+         curl -#SL http://github.com/foss-xtensa/toolchain/releases/download/$TOOLCHAIN_RELEASE/x86_64-$TOOLCHAIN_RELEASE-xtensa-$cpu-elf.tar.gz \
+         | tar -xzC /opt; \
+     done
+ 
+-ENV PATH $PATH:/opt/$TOOLCHAIN_RELEASE/xtensa-dc232b-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-dc233c-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-de233_fpu-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-dsp3400-elf/bin
+-ENV MAKE /usr/bin/make
++ENV PATH=$PATH:/opt/$TOOLCHAIN_RELEASE/xtensa-dc232b-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-dc233c-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-de233_fpu-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-dsp3400-elf/bin
++ENV MAKE=/usr/bin/make
+ # As a final step configure the user (if env is defined)
+ ARG USER
+ ARG UID
+diff --git a/tests/docker/dockerfiles/python.docker b/tests/docker/dockerfiles/python.docker
+index 59e70a02484..79c554a2d87 100644
+--- a/tests/docker/dockerfiles/python.docker
++++ b/tests/docker/dockerfiles/python.docker
+@@ -4,7 +4,7 @@ FROM fedora:latest
+ MAINTAINER John Snow <jsnow@redhat.com>
+ 
+ # Please keep this list sorted alphabetically
+-ENV PACKAGES \
++ENV PACKAGES="\
+     gcc \
+     make \
+     python3 \
+@@ -15,7 +15,8 @@ ENV PACKAGES \
+     python3.11 \
+     python3.12 \
+     python3.13 \
+-    python3.9
++    python3.9 \
++    "
+ 
+ RUN dnf install -y $PACKAGES
+ RUN rpm -q $PACKAGES | sort > /packages.txt
+diff --git a/scripts/coverity-scan/coverity-scan.docker b/scripts/coverity-scan/coverity-scan.docker
+index 93e558c8623..30d154c0d86 100644
+--- a/scripts/coverity-scan/coverity-scan.docker
++++ b/scripts/coverity-scan/coverity-scan.docker
+@@ -152,12 +152,12 @@ exec "$@"' > /usr/bin/nosync && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/g++ && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
+ 
+-ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
+-ENV LANG "en_US.UTF-8"
+-ENV MAKE "/usr/bin/make"
+-ENV NINJA "/usr/bin/ninja"
+-ENV PYTHON "/usr/bin/python3"
+-ENV QEMU_CONFIGURE_OPTS --meson=internal
++ENV CCACHE_WRAPPERSDIR=/usr/libexec/ccache-wrappers
++ENV LANG=en_US.UTF-8
++ENV MAKE=/usr/bin/make
++ENV NINJA=/usr/bin/ninja
++ENV PYTHON=/usr/bin/python3
++ENV QEMU_CONFIGURE_OPTS=--meson=internal
+ 
+ RUN dnf install -y curl wget
+ ENV COVERITY_TOOL_BASE=/coverity-tools
+-- 
+2.53.0
 
---000000000000b22fc2065243ee09
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div style=3D"font-size:inherit" dir=3D"auto"><span style=3D"font-size:inhe=
-rit;font-family:-apple-system,sans-serif">Yes, please go ahead and add my S=
-igned-off-by tag. Also, if possible, could you use this email instead?</spa=
-n><br></div><div style=3D"font-size:inherit" dir=3D"auto">Signed-off-by: si=
-n99xx <a href=3D"mailto:sin99xx@proton.me">sin99xx@proton.me</a></div><div =
-style=3D"font-size:inherit" dir=3D"auto"><br></div><div style=3D"font-size:=
-inherit" dir=3D"auto">Thanks.=C2=A0</div><div style=3D"font-size:inherit" d=
-ir=3D"auto"><br></div><div class=3D"gmail_quote gmail_quote_container" dir=
-=3D"auto"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, May 20, 2026 at 2:2=
-2=E2=80=AFPM Christian Schoenebeck &lt;<a href=3D"mailto:qemu_oss@crudebyte=
-.com">qemu_oss@crudebyte.com</a>&gt; wrote:<br></div><blockquote class=3D"g=
-mail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-l=
-eft:1ex">On Wednesday, 20 May 2026 19:11:25 CEST Christian Schoenebeck wrot=
-e:<br>
-&gt; From: sin99xx &lt;<a href=3D"mailto:sinxx198@gmail.com" target=3D"_bla=
-nk">sinxx198@gmail.com</a>&gt;<br>
-&gt; <br>
-&gt; v9fs_co_readdir_many() dispatches do_readdir_many() to a worker thread=
-<br>
-&gt; that reads V9fsFidState&#39;s path.data without holding a rename lock.=
-<br>
-&gt; <br>
-&gt; A concurrent rename request, e.g. of its parent dir, causes the FID&#3=
-9;s<br>
-&gt; absolute path to be altered by freeing the old path string and<br>
-&gt; assigning a new one. This causes a heap-use-after-free race condition<=
-br>
-&gt; while do_readdir_many() is still accessing the old object.<br>
-&gt; <br>
-&gt; This allows a DoS by an unprivileged guest user.<br>
-&gt; <br>
-&gt; Fix this by wrapping the worker thread dispatch block within a pair of=
-<br>
-&gt; v9fs_path_read_lock() and v9fs_path_unlock() calls, like it&#39;s done=
- at<br>
-&gt; other places.<br>
-&gt; <br>
-&gt; Fixes: 2149675b195f (&quot;9pfs: add new function v9fs_co_readdir_many=
-()&quot;)<br>
-&gt; Fixes: CVE-2026-48004<br>
-&gt; Reported-by: sin99xx &lt;<a href=3D"mailto:sinxx198@gmail.com" target=
-=3D"_blank">sinxx198@gmail.com</a>&gt;<br>
-&gt; [Christian Schoenebeck: add commit log message]<br>
-&gt; Signed-off-by: Christian Schoenebeck &lt;<a href=3D"mailto:qemu_oss@cr=
-udebyte.com" target=3D"_blank">qemu_oss@crudebyte.com</a>&gt;<br>
-<br>
-sin99xx, I forgot, may I add your Signed-off-by tag?<br>
-<br>
-=C2=A0 Signed-off-by: sin99xx &lt;<a href=3D"mailto:sinxx198@gmail.com" tar=
-get=3D"_blank">sinxx198@gmail.com</a>&gt;<br>
-<br>
-This is required [1] for making you the patch author:<br>
-<br>
-&quot;Your patches must include a Signed-off-by: line. This is a hard requi=
-rement <br>
-because it=E2=80=99s how you say =E2=80=9CI=E2=80=99m legally okay to contr=
-ibute this and happy for it <br>
-to go into QEMU=E2=80=9D. For full guidance, read the Code provenance docum=
-entation.&quot;<br>
-<br>
-[1] <a href=3D"https://www.qemu.org/docs/master/devel/submitting-a-patch.ht=
-ml" rel=3D"noreferrer" target=3D"_blank">https://www.qemu.org/docs/master/d=
-evel/submitting-a-patch.html</a><br>
-<br>
-&gt; ---<br>
-&gt;=C2=A0 hw/9pfs/codir.c | 3 +++<br>
-&gt;=C2=A0 1 file changed, 3 insertions(+)<br>
-&gt; <br>
-&gt; diff --git a/hw/9pfs/codir.c b/hw/9pfs/codir.c<br>
-&gt; index bce7dd96e9..5568399343 100644<br>
-&gt; --- a/hw/9pfs/codir.c<br>
-&gt; +++ b/hw/9pfs/codir.c<br>
-&gt; @@ -220,13 +220,16 @@ int coroutine_fn v9fs_co_readdir_many(V9fsPDU *p=
-du,<br>
-&gt; V9fsFidState *fidp, bool dostat)<br>
-&gt;=C2=A0 {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 int err =3D 0;<br>
-&gt; +=C2=A0 =C2=A0 V9fsState *s =3D pdu-&gt;s;<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 if (v9fs_request_cancelled(pdu)) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -EINTR;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 v9fs_path_read_lock(s);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 v9fs_co_run_in_worker({<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 err =3D do_readdir_many(pdu, fidp, e=
-ntries, offset, maxsize, dostat);<br>
-&gt; });<br>
-&gt; +=C2=A0 =C2=A0 v9fs_path_unlock(s);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 return err;<br>
-&gt;=C2=A0 }<br>
-<br>
-<br>
-</blockquote></div>
-
---000000000000b22fc2065243ee09--
 
