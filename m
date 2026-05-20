@@ -4,90 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E36BCD5BA4
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:15:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CDF5CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:18:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPkVM-0000Fl-Ek; Wed, 20 May 2026 13:14:48 -0400
+	id 1wPkYw-0001Jo-Ad; Wed, 20 May 2026 13:18:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkVJ-0000FF-Oc
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:14:45 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wPkYs-0001JA-QB
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:26 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkVH-00013h-Vi
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:14:45 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-4526a8170ceso2477569f8f.2
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:14:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wPkYq-0001sI-9y
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:26 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-36a35e4eefeso421924a91.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:18:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779297281; x=1779902081; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=T/o3jUfNAg4UU+hbdQIUcxK3NzNlALFbhTUeVflbY1Q=;
- b=CjLaWvBuIbafn878XgCDdZHdbwf8jMvKLrCgj4kkGSSmbbCSK3kexV9iBADPMKAWCq
- XxRTO9lVqoboG7jcnAFm9fcJVUvpwmQec5VoeopIdQbjCEcr5rFg5aj5sWkN3adPl6yQ
- MB3EgjsN/uzey3hTAC356RcF4iKnpdAkTpyOee2psZV4G2lzuIfk0ahBxdRJvLcJ5bZv
- GtELkLA1IhWZoMZXAIwm1QI0U9gqb7NWQ7nKBQQ7asfL2FHPhe8fJkapiyoPwriQrd9I
- ahpdcHUHn85dQbkxXbVyNQrt1kn9F0tHt5srN00L0JAhQjoWpuesDbigQgd6K3GqQoMs
- B0ZA==
+ d=linaro.org; s=google; t=1779297502; x=1779902302; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=3gId/LKzXO/d5yiA5P9hPtHz0hbXIRm3UDXfLWl60Js=;
+ b=tDPqprA8hDaKOeqJTMu2i8QBA61Xi7irvXUp0see4+9YH8qXu31Im8kwceLiQjN5Mc
+ d5Uj1Ipeh7L/aGHApTcGhJ1H0cFXUXqewBrhorblNlcm7IrBqgV4m5ymK2WlRs3RM9NI
+ 5nXRp/xchP8ero9/Y0CXWiUcU0O9ItHajkY0rxGVAJrdsDFj6HEJpMrdz4zo5A9YW3cf
+ q8gx/IdQ8i2RKpfjH2LW3OV9X5BjGSfn3n+PhpYdUKdZqCoPgiB+Vwe+Dp5FNGwbQVaV
+ ZwuJmiFc4yAJ2oll/XzO/HLyjJFSXrBBb0JP4fmkP0ckVhzjePU05QPkaltVc+WYInb4
+ 3Hzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779297281; x=1779902081;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=T/o3jUfNAg4UU+hbdQIUcxK3NzNlALFbhTUeVflbY1Q=;
- b=SDha1AAtoBcQUU+Q5uF5TxUSDEV+S7jKZEmCrp9rIQ2N/npKX9+YFRrwSq+PRmMQjf
- dy5utBgTuYeFvK5yv98mNU0qPsVyzn4xRY+m50apNZ16V4/mlP3SdzXFWBtZqRrTTH9Z
- fxGMRKyfoGxv3TpZK3qNQ3fACK7aqOZ76leATzAxCfwW/zXsEyR5uWYshAdCSlYHjalp
- onpmWGEcly5jQu3FcxThk68LfprnDc9z6jVlPDDC/+c9z3spQZapSOxm4yB53O1E/fM6
- b1YtoBqvccNzC/iQlPqVwR5nfRoE1KtnZwF8AnwnMwLnMWlqvtNsempiyLfAjHxbQitI
- 960Q==
-X-Gm-Message-State: AOJu0YwMaeq9qRG+6m71ttAP+ndgH7OuNZbeuxzNZFu9mDdXcb3wZ5bQ
- kqTOPSTS1AS7vzSEzMrR8afJGgGyESBCLunHCNFW7LAWiH1h9BlCcNkbVf+1kM4Es+E=
-X-Gm-Gg: Acq92OFf6ApKO9VBghjRW4LtuNsYPXalHDY4XG2xMgiLKIlmFiDi7ZcYD5C633DrmdU
- 7la51LAEUM6dCnTzrbbmH/zw0JOWMwZfpuhL6VSPEZRU1gXRYWXg/GWDGCMKzF79Na42IDq2z67
- XZmd736kHnYCmZWw4VbI3dyOisUIqlusviDJPVB+/mQ4E8OQktUYoQ0RB3Xk1X1543+ibEEPXRq
- tqR7gc3ASGS55R4jveQ6H9Q0hU/glw932GaIY+h8e8Po8bdNhrLVOlEbTBWF0xu13CQTCJGAHG5
- v3d/J/5JRM+33KzxqHWi9eMyDz939ZjpU9nFm7ny2EwlUXb5FV9289hJvFb5cTAdeFtJyiuW4UL
- q3/IDsDwK0J85Y5mrg9mGn8sXIqlk5z7OcsoIikPIxHvZkXEwFs3JOwuXafRzRIa2Pj/WV/Uidz
- DkrExY2D08YzNNee2S7tLCJJCo9d4iI4dJSaOAPbSQu6rTMFQt1/u2chaEX2BwLWGCsA==
-X-Received: by 2002:a05:6000:c3:b0:45e:739e:499 with SMTP id
- ffacd0b85a97d-45e739e04dfmr21518431f8f.13.1779297281426; 
- Wed, 20 May 2026 10:14:41 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da0fe0fecsm51081192f8f.26.2026.05.20.10.14.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 May 2026 10:14:37 -0700 (PDT)
-Message-ID: <2e3da33f-1f47-4d7b-92bd-886c827a0f2e@linaro.org>
-Date: Wed, 20 May 2026 19:14:35 +0200
+ d=1e100.net; s=20251104; t=1779297502; x=1779902302;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3gId/LKzXO/d5yiA5P9hPtHz0hbXIRm3UDXfLWl60Js=;
+ b=lveOp9EuBz4e7m/j1JsrRWU1C3SabZVlnhMH6O/UdSRNQRCNeotucwV1+PPpeL9EVw
+ qs6F2qbhhQaVUes4a8BF8owHYBO966h4nKEq/K6AntzT3TbsEp79Xw91MIGVpmliDgRt
+ tld7G3cvX2ei9q8HOugqgtiC0aZ1Blq28OgAWms96CENsNGRLa1E4QFjGX0VqqJpQR/3
+ zxfFRChp2180CKJfBVH1ARt+y3oocwUPYrc5uaKdlQhSmEkcZs8pjI+FGuoevgwNY5OI
+ YLXm+GR8gN1KA9NVCPb81MXP2TWfN2A3aXeBqIHpt3LIhV8Rs5HUzXtAJvYA4H92q6KY
+ Xz3w==
+X-Gm-Message-State: AOJu0YzyQMjt7xTiqnSHSFpkrFknOdz38L6n+H98xJnbZ7HqdSDBqiuT
+ /+oGqA1K7o4gwXYAQBeG/Qp/W+efIQFFOosLg0tvsjo0LeKYy4DCwtFgpEj/xQi4sG0DSM36KIO
+ rmDaom2Y=
+X-Gm-Gg: Acq92OEeTJ9wBdDdk5GGxGuAQLPpwqT8yMUlNzkbUn1tRAG8RF/h2Gl8duFEdpH6Okt
+ BaDqZbhUbTiScsA9rI4+PjRPP4WwSPJtJ5ynQ2SX0j0m6VL2iyQoBaA3ej73F8Zq6ifN+06LWXh
+ hkgCD31ZrYoXOWqcDPVa3iBodExYyeDNraXiFCmkAj2gI1eWcIS3xGWVjkacZFhaw2FX0RnTD1Q
+ F+i0AI5RBcFdOKnyuBUrDFsZXSUrNIq6KG7jbAPxlFG0KlqI1aJ9MDTd1VScRRHJeRqxpoxobyR
+ N0iFih0biZJA+9+bwRdEzejMVr3axlBKjwH5rJnL8R4mrtT+JoXHxsnG5NpeSCQLng3VttxxA7m
+ ZBqem7M18bx5BahH2qv+G+V09TQpPkMglnWhyEA8TeVBpJgN0KiQ8K1Z2h2eecSj/Pn3h+V1rL9
+ kFEaOdyVUWMDewYQxCFNpcHYqhRKsl
+X-Received: by 2002:a17:90b:1d83:b0:366:10f1:3d91 with SMTP id
+ 98e67ed59e1d1-36951889fe9mr21815788a91.1.1779297501950; 
+ Wed, 20 May 2026 10:18:21 -0700 (PDT)
+Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-36a3c83f226sm254416a91.0.2026.05.20.10.18.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 20 May 2026 10:18:21 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+Subject: [PATCH v5 00/30] fpu: Export some internals for targets
+Date: Wed, 20 May 2026 10:17:50 -0700
+Message-ID: <20260520171820.848839-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 39/63] hw/display: Add i.MX6UL LCDIF device model
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Yucai Liu <1486344514@qq.com>
-References: <20260427124738.966578-1-peter.maydell@linaro.org>
- <20260427124738.966578-40-peter.maydell@linaro.org>
- <574480d1-49db-4ee9-981c-580d4c2db3b1@linaro.org>
- <CAFEAcA8SN=H+d1OzcRWBZ6kBnhFqVAY0_77Z+PsjdxwAnT4gEw@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA8SN=H+d1OzcRWBZ6kBnhFqVAY0_77Z+PsjdxwAnT4gEw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,42 +97,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/5/26 18:45, Peter Maydell wrote:
-> On Wed, 20 May 2026 at 17:33, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> Hi Yucai,
->>
->> On 27/4/26 14:47, Peter Maydell wrote:
->>> +static void imx6ul_lcdif_class_init(ObjectClass *klass, const void *data)
->>> +{
->>> +    DeviceClass *dc = DEVICE_CLASS(klass);
->>> +
->>> +    dc->realize = imx6ul_lcdif_realize;
->>> +    dc->unrealize = imx6ul_lcdif_unrealize;
->>> +    dc->vmsd = &vmstate_imx6ul_lcdif;
->>> +    device_class_set_legacy_reset(dc, imx6ul_lcdif_reset);
->>
->> Please do not use the legacy API. See for example this commit
->> to convert to the newer API:
->> https://gitlab.com/qemu-project/qemu/-/commit/ce788d3740f
-> 
-> There's not really a problem with continuing to use the legacy
-> reset API for this kind of "leaf class" device. It has identical
-> semantics to just providing a 3-phase "hold" reset method, the
-> compatibility-code is trivial and not a big maintenance burden,
-> and we're unlikely to convert all 400+ existing users. (Unless
-> somebody figures out a Coccinelle script for it, in which case
-> it's just one more file being autoconverted. IIRC the hitch
-> I ran into was that you need to determine whether the reset
-> function is called by any other code -- those are probably
-> not autoconvertible in the way "function only used as the
-> argument to device_class_legacy_reset()" could be.)
+Changes for v5:
+  - Drop target/arm changes as non-essential;
+    will be moved to another patch set.
+  - Incorporate "Export floatN_minmax" from the FEAT_FP8 patch set.
+  - Incorporate "fpu: Compress float_status", to avoid conflicts with...
+  - Introduce float_status.e4m3_nan_is_snan
+  - Fix NaN encoding for E4M3 in parts64_uncanon
 
-Then I don't understand why we named it "legacy". Maybe rename
-as device_class_set_leaf_reset()...
 
-This is not about converting the 400 uses; I'd expect a legacy
-API to not be re-introduced over and over.
+r~
 
-What about gating this call via checkpatch.pl?
+
+Richard Henderson (30):
+  fpu: Return struct from parts{64,128}_scalbn
+  fpu: Reorganize partsN(muladd)
+  fpu: Return struct from parts{64,128}_muladd
+  fpu: Hoist nan check in partsN_addsub
+  fpu: Simplify 0 +/- N case in parts_addsub
+  fpu: Use parts64_round_to_int in parts_s390_divide_to_integer
+  target/s390x: Move float{32,64}_s390_divide_to_integer
+  fpu: Introduce exp_scalbn
+  target/alpha: Remove CONFIG_SOFTFLOAT_INLINE
+  fpu: Introduce FloatExceptionFlags
+  target/alpha: Use FloatExceptionFlags
+  fpu: Introduce frac_msb_is_snan
+  fpu: Introduce FloatSNaNRule
+  fpu: Use {get,set}_float_rounding_mode everywhere
+  fpu: Use of {get,set}_floatx80_rounding_precision everywhere
+  fpu: Use get_floatx80_behaviour everywhere
+  fpu: Use get_float_2nan_prop_rule in partsN_pick_nan
+  fpu: Use get_float_3nan_prop_rule in partsN_pick_nan_muladd
+  fpu: Use get_float_infzeronan_rule in partsN_pick_nan_muladd
+  fpu: Use accessors for tininess_before_rounding
+  fpu: Use {get,set}_flush_to_zero everywhere
+  fpu: Use accessors for ftz_before_rounding
+  fpu: Use {get,set}_flush_inputs_to_zero everywhere
+  fpu: Use get_default_nan_mode everywhere
+  fpu: Use get_float_default_nan_pattern in partsN_default_nan
+  fpu: Add accessors for rebias_{underflow,overflow}
+  fpu: Reorg float_status
+  fpu: Introduce float_status.e4m3_nan_is_snan
+  fpu: Fix NaN encoding for E4M3 in parts64_uncanon
+  fpu: Export floatN_minmax
+
+ include/fpu/softfloat-helpers.h |  37 +--
+ include/fpu/softfloat-parts.h   |  12 +
+ include/fpu/softfloat-types.h   |  89 ++++---
+ include/fpu/softfloat.h         | 112 +++++----
+ target/i386/ops_sse.h           |  24 +-
+ target/mips/fpu_helper.h        |   3 +-
+ fpu/softfloat.c                 | 422 +++++++++++---------------------
+ target/alpha/fpu_helper.c       |   8 +-
+ target/alpha/helper.c           |   3 +-
+ target/alpha/translate.c        |  18 +-
+ target/arm/tcg/helper-a64.c     |  12 +-
+ target/arm/tcg/vfp_helper.c     |  38 +--
+ target/hexagon/fma_emu.c        |   6 +-
+ target/hppa/fpu_helper.c        |   2 +-
+ target/i386/tcg/fpu_helper.c    |  65 ++---
+ target/m68k/softfloat.c         | 380 ++++++++++++++--------------
+ target/mips/msa.c               |   4 +-
+ target/ppc/cpu.c                |   4 +-
+ target/ppc/fpu_helper.c         |  14 +-
+ target/riscv/vector_helper.c    |   6 +-
+ target/s390x/tcg/fpu_helper.c   | 139 ++++++++++-
+ target/sh4/cpu.c                |   2 +-
+ target/xtensa/cpu.c             |   3 +-
+ tests/fp/fp-bench.c             |   6 +-
+ tests/fp/fp-test.c              |   6 +-
+ fpu/softfloat-parts.c.inc       | 313 ++++++++++++-----------
+ fpu/softfloat-specialize.c.inc  | 117 +++++----
+ tests/fp/wrap.c.inc             |  12 +-
+ 28 files changed, 936 insertions(+), 921 deletions(-)
+
+-- 
+2.43.0
+
 
