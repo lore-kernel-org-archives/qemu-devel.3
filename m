@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B59DCD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 12:54:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7098ACD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 12:54:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPgNb-0004vp-C8; Wed, 20 May 2026 08:50:31 -0400
+	id 1wPgNf-00051L-Vu; Wed, 20 May 2026 08:50:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1wPgN5-0004ZN-GC; Wed, 20 May 2026 08:50:04 -0400
+ id 1wPgNN-0004ce-8m; Wed, 20 May 2026 08:50:20 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1wPgN2-0002cv-4a; Wed, 20 May 2026 08:49:58 -0400
+ id 1wPgNJ-0002eY-Dk; Wed, 20 May 2026 08:50:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=Dif4F/JSwsFoirBfR0Og1xVgR07gWDZRmkt3nSiTV88=; b=sZqr8tqokRxWxfk
- N80AVpEITHZ5nHgxkIaElOQPgSZGmejo3m+jUxE1EFY4nNj+oHARim+y7LtaVCFxXWAH74KKNrf/t
- lQHQh4kyLs9jDCGQh7s8frEGnXeBzzxVBO+grwXoAAk501izqjzoCMqaODtEFh5lDz3zgALIQDUFR
- gc=;
+ List-Help; bh=TniPkl0AjhdqY8W784UoZe7ScY3H847nJLbukad7Vlw=; b=L9kDHi/uBmvBmNP
+ mPYuyA/UQrvLi0oniTzChXZGeRfmIDjRyC06vF5wbdXTWVRqzzhWEq26EFOiykVaYzchBVt+QmEYK
+ f3d8hQZcRyPQvcFvNUNhKh+AFhTJqHHXzYdcS4+CQUhEGxlA+DbGOKiy1RNcWySMuo+iSCUpikC/V
+ zY=;
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org,
  alistair.francis@wdc.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v7 08/27] target/riscv: Fix size of retxh
-Date: Wed, 20 May 2026 14:53:46 +0200
-Message-ID: <20260520125406.28693-9-anjo@rev.ng>
+Subject: [PATCH v7 15/27] target/riscv: Fix arguments to board IMSIC emulation
+ callbacks
+Date: Wed, 20 May 2026 14:53:53 +0200
+Message-ID: <20260520125406.28693-16-anjo@rev.ng>
 In-Reply-To: <20260520125406.28693-1-anjo@rev.ng>
 References: <20260520125406.28693-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -63,119 +64,293 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-128-bit helpers only make sense for MXL_RV128, TARGET_RISCV64,
-and TCGv == TCGv_i64, therefore fix retxh to 64 bits.
-
-For the sake of being pedandic, update 128-bit instructions to access
-retxh via 64 bit TCG ops, even if they only make sense when TCGv ==
-TCGv_i64.
+In hw/ the relevant RISCVIMSICState fields
+eidelivery, eithreshold, eistate are uint32_t.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h                      |  2 +-
- target/riscv/insn_trans/trans_rvi.c.inc |  8 ++++++--
- target/riscv/insn_trans/trans_rvm.c.inc | 16 ++++++++++++----
- 3 files changed, 19 insertions(+), 7 deletions(-)
+ target/riscv/cpu.h        | 42 ++++++++++++++++++++-------------------
+ hw/intc/riscv_imsic.c     | 34 +++++++++++++++----------------
+ target/riscv/cpu_helper.c | 12 ++++-------
+ target/riscv/csr.c        | 24 ++++++++++++----------
+ 4 files changed, 57 insertions(+), 55 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index feacf19a5e..5ecae9b339 100644
+index 10afc617f8..9823d7d581 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -249,7 +249,7 @@ struct CPUArchState {
-     uint32_t xl;            /* current xlen */
+@@ -200,6 +200,24 @@ FIELD(VTYPE, VMA, 7, 1)
+ FIELD(VTYPE, ALTFMT, 8, 1)
+ FIELD(VTYPE, RESERVED, 9, sizeof(uint64_t) * 8 - 10)
  
-     /* 128-bit helpers upper part return value */
--    target_ulong retxh;
-+    uint64_t retxh;
++#ifndef CONFIG_USER_ONLY
++/* machine specific AIA ireg read-modify-write callback */
++#define AIA_MAKE_IREG(__isel, __priv, __virt, __vgein, __xlen)                 \
++    ((uint32_t)((((__xlen) & 0xff) << 24) |                                    \
++                (((__vgein) & 0x3f) << 20) |                                   \
++                (((__virt) & 0x1) << 18) |                                     \
++                (((__priv) & 0x3) << 16) |                                     \
++                  (__isel & 0xffff)))
++#define AIA_IREG_ISEL(__ireg) ((__ireg) & 0xffff)
++#define AIA_IREG_PRIV(__ireg) (((__ireg) >> 16) & 0x3)
++#define AIA_IREG_VIRT(__ireg) (((__ireg) >> 18) & 0x1)
++#define AIA_IREG_VGEIN(__ireg) (((__ireg) >> 20) & 0x3f)
++#define AIA_IREG_XLEN(__ireg) (((__ireg) >> 24) & 0xff)
++
++typedef int (*aia_ireg_rmw_fn)(void *arg, uint32_t reg, uint64_t *val,
++                               uint64_t new_val, uint64_t write_mask);
++#endif
++
+ typedef struct PMUCTRState {
+     /* Current value of a counter */
+     uint64_t mhpmcounter_val;
+@@ -465,20 +483,8 @@ struct CPUArchState {
+     void *rdtime_fn_arg;
  
-     uint64_t jvt;
+     /* machine specific AIA ireg read-modify-write callback */
+-#define AIA_MAKE_IREG(__isel, __priv, __virt, __vgein, __xlen) \
+-    ((((__xlen) & 0xff) << 24) | \
+-     (((__vgein) & 0x3f) << 20) | \
+-     (((__virt) & 0x1) << 18) | \
+-     (((__priv) & 0x3) << 16) | \
+-     (__isel & 0xffff))
+-#define AIA_IREG_ISEL(__ireg)                  ((__ireg) & 0xffff)
+-#define AIA_IREG_PRIV(__ireg)                  (((__ireg) >> 16) & 0x3)
+-#define AIA_IREG_VIRT(__ireg)                  (((__ireg) >> 18) & 0x1)
+-#define AIA_IREG_VGEIN(__ireg)                 (((__ireg) >> 20) & 0x3f)
+-#define AIA_IREG_XLEN(__ireg)                  (((__ireg) >> 24) & 0xff)
+-    int (*aia_ireg_rmw_fn[4])(void *arg, target_ulong reg,
+-        target_ulong *val, target_ulong new_val, target_ulong write_mask);
+-    void *aia_ireg_rmw_fn_arg[4];
++    aia_ireg_rmw_fn aia_ireg_rmw_cb[4];
++    void *aia_ireg_rmw_cb_arg[4];
  
-diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_trans/trans_rvi.c.inc
-index 2c82ae41a7..ff450d46f8 100644
---- a/target/riscv/insn_trans/trans_rvi.c.inc
-+++ b/target/riscv/insn_trans/trans_rvi.c.inc
-@@ -1030,10 +1030,12 @@ static bool do_csrr_i128(DisasContext *ctx, int rd, int rc)
-     TCGv destl = dest_gpr(ctx, rd);
-     TCGv desth = dest_gprh(ctx, rd);
-     TCGv_i32 csr = tcg_constant_i32(rc);
-+    TCGv_i64 wide_desth = tcg_temp_new_i64();
+     /* True if in debugger mode.  */
+     bool debugger;
+@@ -646,12 +652,8 @@ void riscv_cpu_interrupt(CPURISCVState *env);
+ #define BOOL_TO_MASK(x) (-!!(x)) /* helper for riscv_cpu_update_mip value */
+ void riscv_cpu_set_rdtime_fn(CPURISCVState *env, uint64_t (*fn)(void *),
+                              void *arg);
+-void riscv_cpu_set_aia_ireg_rmw_fn(CPURISCVState *env, privilege_mode_t priv,
+-                                   int (*rmw_fn)(void *arg,
+-                                                 target_ulong reg,
+-                                                 target_ulong *val,
+-                                                 target_ulong new_val,
+-                                                 target_ulong write_mask),
++void riscv_cpu_set_aia_ireg_rmw_cb(CPURISCVState *env, privilege_mode_t priv,
++                                   aia_ireg_rmw_fn rmw_fn,
+                                    void *rmw_fn_arg);
  
-     translator_io_start(&ctx->base);
-     gen_helper_csrr_i128(destl, tcg_env, csr);
--    tcg_gen_ld_tl(desth, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_ld_i64(wide_desth, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_trunc_i64_tl(desth, wide_desth);
-     gen_set_gpr128(ctx, rd, destl, desth);
-     return do_csr_post(ctx);
+ RISCVException smstateen_acc_ok(CPURISCVState *env, int index, uint64_t bit);
+diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
+index 7c9a012033..3ce9f146c0 100644
+--- a/hw/intc/riscv_imsic.c
++++ b/hw/intc/riscv_imsic.c
+@@ -88,11 +88,11 @@ static void riscv_imsic_update(RISCVIMSICState *imsic, uint32_t page)
  }
-@@ -1053,10 +1055,12 @@ static bool do_csrrw_i128(DisasContext *ctx, int rd, int rc,
-     TCGv destl = dest_gpr(ctx, rd);
-     TCGv desth = dest_gprh(ctx, rd);
-     TCGv_i32 csr = tcg_constant_i32(rc);
-+    TCGv_i64 wide_desth = tcg_temp_new_i64();
  
-     translator_io_start(&ctx->base);
-     gen_helper_csrrw_i128(destl, tcg_env, csr, srcl, srch, maskl, maskh);
--    tcg_gen_ld_tl(desth, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_ld_i64(wide_desth, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_trunc_i64_tl(desth, wide_desth);
-     gen_set_gpr128(ctx, rd, destl, desth);
-     return do_csr_post(ctx);
- }
-diff --git a/target/riscv/insn_trans/trans_rvm.c.inc b/target/riscv/insn_trans/trans_rvm.c.inc
-index 795f0ccf14..0e2da5bed2 100644
---- a/target/riscv/insn_trans/trans_rvm.c.inc
-+++ b/target/riscv/insn_trans/trans_rvm.c.inc
-@@ -169,8 +169,10 @@ static bool trans_mulhu(DisasContext *ctx, arg_mulhu *a)
- static void gen_div_i128(TCGv rdl, TCGv rdh,
-                          TCGv rs1l, TCGv rs1h, TCGv rs2l, TCGv rs2h)
+ static int riscv_imsic_eidelivery_rmw(RISCVIMSICState *imsic, uint32_t page,
+-                                      target_ulong *val,
+-                                      target_ulong new_val,
+-                                      target_ulong wr_mask)
++                                      uint64_t *val,
++                                      uint64_t new_val,
++                                      uint64_t wr_mask)
  {
-+    TCGv_i64 wide_rdh = tcg_temp_new_i64();
-     gen_helper_divs_i128(rdl, tcg_env, rs1l, rs1h, rs2l, rs2h);
--    tcg_gen_ld_tl(rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_ld_i64(wide_rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_trunc_i64_tl(rdh, wide_rdh);
+-    target_ulong old_val = imsic->eidelivery[page];
++    uint32_t old_val = imsic->eidelivery[page];
+ 
+     if (val) {
+         *val = old_val;
+@@ -106,11 +106,11 @@ static int riscv_imsic_eidelivery_rmw(RISCVIMSICState *imsic, uint32_t page,
  }
  
- static void gen_div(TCGv ret, TCGv source1, TCGv source2)
-@@ -212,8 +214,10 @@ static bool trans_div(DisasContext *ctx, arg_div *a)
- static void gen_divu_i128(TCGv rdl, TCGv rdh,
-                           TCGv rs1l, TCGv rs1h, TCGv rs2l, TCGv rs2h)
+ static int riscv_imsic_eithreshold_rmw(RISCVIMSICState *imsic, uint32_t page,
+-                                      target_ulong *val,
+-                                      target_ulong new_val,
+-                                      target_ulong wr_mask)
++                                      uint64_t *val,
++                                      uint64_t new_val,
++                                      uint64_t wr_mask)
  {
-+    TCGv_i64 wide_rdh = tcg_temp_new_i64();
-     gen_helper_divu_i128(rdl, tcg_env, rs1l, rs1h, rs2l, rs2h);
--    tcg_gen_ld_tl(rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_ld_i64(wide_rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_trunc_i64_tl(rdh, wide_rdh);
+-    target_ulong old_val = imsic->eithreshold[page];
++    uint32_t old_val = imsic->eithreshold[page];
+ 
+     if (val) {
+         *val = old_val;
+@@ -124,8 +124,8 @@ static int riscv_imsic_eithreshold_rmw(RISCVIMSICState *imsic, uint32_t page,
  }
  
- static void gen_divu(TCGv ret, TCGv source1, TCGv source2)
-@@ -244,8 +248,10 @@ static bool trans_divu(DisasContext *ctx, arg_divu *a)
- static void gen_rem_i128(TCGv rdl, TCGv rdh,
-                          TCGv rs1l, TCGv rs1h, TCGv rs2l, TCGv rs2h)
+ static int riscv_imsic_topei_rmw(RISCVIMSICState *imsic, uint32_t page,
+-                                 target_ulong *val, target_ulong new_val,
+-                                 target_ulong wr_mask)
++                                 uint64_t *val, uint64_t new_val,
++                                 uint64_t wr_mask)
  {
-+    TCGv_i64 wide_rdh = tcg_temp_new_i64();
-     gen_helper_rems_i128(rdl, tcg_env, rs1l, rs1h, rs2l, rs2h);
--    tcg_gen_ld_tl(rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_ld_i64(wide_rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_trunc_i64_tl(rdh, wide_rdh);
- }
+     uint32_t base, topei = riscv_imsic_topei(imsic, page);
  
- static void gen_rem(TCGv ret, TCGv source1, TCGv source2)
-@@ -289,8 +295,10 @@ static bool trans_rem(DisasContext *ctx, arg_rem *a)
- static void gen_remu_i128(TCGv rdl, TCGv rdh,
-                           TCGv rs1l, TCGv rs1h, TCGv rs2l, TCGv rs2h)
+@@ -149,11 +149,11 @@ static int riscv_imsic_topei_rmw(RISCVIMSICState *imsic, uint32_t page,
+ 
+ static int riscv_imsic_eix_rmw(RISCVIMSICState *imsic,
+                                uint32_t xlen, uint32_t page,
+-                               uint32_t num, bool pend, target_ulong *val,
+-                               target_ulong new_val, target_ulong wr_mask)
++                               uint32_t num, bool pend, uint64_t *val,
++                               uint64_t new_val, uint64_t wr_mask)
  {
-+    TCGv_i64 wide_rdh = tcg_temp_new_i64();
-     gen_helper_remu_i128(rdl, tcg_env, rs1l, rs1h, rs2l, rs2h);
--    tcg_gen_ld_tl(rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_ld_i64(wide_rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_trunc_i64_tl(rdh, wide_rdh);
+     uint32_t i, base, prev;
+-    target_ulong mask;
++    uint64_t mask;
+     uint32_t state = (pend) ? IMSIC_EISTATE_PENDING : IMSIC_EISTATE_ENABLED;
+ 
+     if (xlen != 32) {
+@@ -178,7 +178,7 @@ static int riscv_imsic_eix_rmw(RISCVIMSICState *imsic,
+             continue;
+         }
+ 
+-        mask = (target_ulong)1 << i;
++        mask = 1ull << i;
+         if (wr_mask & mask) {
+             if (new_val & mask) {
+                 prev = qatomic_fetch_or(&imsic->eistate[base + i], state);
+@@ -197,8 +197,8 @@ static int riscv_imsic_eix_rmw(RISCVIMSICState *imsic,
+     return 0;
  }
  
- static void gen_remu(TCGv ret, TCGv source1, TCGv source2)
+-static int riscv_imsic_rmw(void *arg, target_ulong reg, target_ulong *val,
+-                           target_ulong new_val, target_ulong wr_mask)
++static int riscv_imsic_rmw(void *arg, uint32_t reg, uint64_t *val,
++                           uint64_t new_val, uint64_t wr_mask)
+ {
+     RISCVIMSICState *imsic = arg;
+     uint32_t isel, priv, virt, vgein, xlen, page;
+@@ -383,7 +383,7 @@ static void riscv_imsic_realize(DeviceState *dev, Error **errp)
+         }
+ 
+         if (!kvm_irqchip_in_kernel()) {
+-            riscv_cpu_set_aia_ireg_rmw_fn(env, (imsic->mmode) ? PRV_M : PRV_S,
++            riscv_cpu_set_aia_ireg_rmw_cb(env, (imsic->mmode) ? PRV_M : PRV_S,
+                                           riscv_imsic_rmw, imsic);
+         }
+     }
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index e7c0ff49d0..90c126fdc2 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -816,17 +816,13 @@ void riscv_cpu_set_rdtime_fn(CPURISCVState *env, uint64_t (*fn)(void *),
+     env->rdtime_fn_arg = arg;
+ }
+ 
+-void riscv_cpu_set_aia_ireg_rmw_fn(CPURISCVState *env, privilege_mode_t priv,
+-                                   int (*rmw_fn)(void *arg,
+-                                                 target_ulong reg,
+-                                                 target_ulong *val,
+-                                                 target_ulong new_val,
+-                                                 target_ulong write_mask),
++void riscv_cpu_set_aia_ireg_rmw_cb(CPURISCVState *env, privilege_mode_t priv,
++                                   aia_ireg_rmw_fn rmw_fn,
+                                    void *rmw_fn_arg)
+ {
+     if (priv <= PRV_M) {
+-        env->aia_ireg_rmw_fn[priv] = rmw_fn;
+-        env->aia_ireg_rmw_fn_arg[priv] = rmw_fn_arg;
++        env->aia_ireg_rmw_cb[priv] = rmw_fn;
++        env->aia_ireg_rmw_cb_arg[priv] = rmw_fn_arg;
+     }
+ }
+ 
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 4bab7ec29f..837212b55f 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -2655,6 +2655,7 @@ static RISCVException rmw_xireg_aia(CPURISCVState *env, int csrno,
+     uint8_t *iprio;
+     privilege_mode_t priv;
+     uint32_t vgein;
++    uint64_t wide_val;
+ 
+     /* VS-mode CSR number passed in has already been translated */
+     switch (csrno) {
+@@ -2699,16 +2700,17 @@ static RISCVException rmw_xireg_aia(CPURISCVState *env, int csrno,
+         }
+     } else if (ISELECT_IMSIC_FIRST <= isel && isel <= ISELECT_IMSIC_LAST) {
+         /* IMSIC registers only available when machine implements it. */
+-        if (env->aia_ireg_rmw_fn[priv]) {
++        if (env->aia_ireg_rmw_cb[priv]) {
+             /* Selected guest interrupt file should not be zero */
+             if (virt && (!vgein || env->geilen < vgein)) {
+                 goto done;
+             }
+             /* Call machine specific IMSIC register emulation */
+-            ret = env->aia_ireg_rmw_fn[priv](env->aia_ireg_rmw_fn_arg[priv],
++            ret = env->aia_ireg_rmw_cb[priv](env->aia_ireg_rmw_cb_arg[priv],
+                                     AIA_MAKE_IREG(isel, priv, virt, vgein,
+                                                   riscv_cpu_mxl_bits(env)),
+-                                    val, new_val, wr_mask);
++                                    &wide_val, new_val, wr_mask);
++            *val = wide_val;
+         }
+     } else {
+         isel_reserved = true;
+@@ -2941,6 +2943,7 @@ static RISCVException rmw_xtopei(CPURISCVState *env, int csrno,
+     int ret = -EINVAL;
+     privilege_mode_t priv;
+     uint32_t vgein;
++    uint64_t wide_val;
+ 
+     /* Translate CSR number for VS-mode */
+     csrno = aia_xlate_vs_csrno(env, csrno);
+@@ -2966,7 +2969,7 @@ static RISCVException rmw_xtopei(CPURISCVState *env, int csrno,
+     };
+ 
+     /* IMSIC CSRs only available when machine implements IMSIC. */
+-    if (!env->aia_ireg_rmw_fn[priv]) {
++    if (!env->aia_ireg_rmw_cb[priv]) {
+         goto done;
+     }
+ 
+@@ -2979,10 +2982,11 @@ static RISCVException rmw_xtopei(CPURISCVState *env, int csrno,
+     }
+ 
+     /* Call machine specific IMSIC register emulation for TOPEI */
+-    ret = env->aia_ireg_rmw_fn[priv](env->aia_ireg_rmw_fn_arg[priv],
++    ret = env->aia_ireg_rmw_cb[priv](env->aia_ireg_rmw_cb_arg[priv],
+                     AIA_MAKE_IREG(ISELECT_IMSIC_TOPEI, priv, virt, vgein,
+                                   riscv_cpu_mxl_bits(env)),
+-                    val, new_val, wr_mask);
++                    &wide_val, new_val, wr_mask);
++    *val = wide_val;
+ 
+ done:
+     if (ret) {
+@@ -4486,7 +4490,7 @@ static RISCVException read_vstopi(CPURISCVState *env, int csrno,
+                                   target_ulong *val)
+ {
+     int irq, ret;
+-    target_ulong topei;
++    uint64_t topei = 0;
+     uint64_t vseip, vsgein;
+     uint32_t iid, iprio, hviid, hviprio, gein;
+     uint32_t s, scount = 0, siid[VSTOPI_NUM_SRCS], siprio[VSTOPI_NUM_SRCS];
+@@ -4501,13 +4505,13 @@ static RISCVException read_vstopi(CPURISCVState *env, int csrno,
+         if (gein <= env->geilen && vseip) {
+             siid[scount] = IRQ_S_EXT;
+             siprio[scount] = IPRIO_MMAXIPRIO + 1;
+-            if (env->aia_ireg_rmw_fn[PRV_S]) {
++            if (env->aia_ireg_rmw_cb[PRV_S]) {
+                 /*
+                  * Call machine specific IMSIC register emulation for
+                  * reading TOPEI.
+                  */
+-                ret = env->aia_ireg_rmw_fn[PRV_S](
+-                        env->aia_ireg_rmw_fn_arg[PRV_S],
++                ret = env->aia_ireg_rmw_cb[PRV_S](
++                        env->aia_ireg_rmw_cb_arg[PRV_S],
+                         AIA_MAKE_IREG(ISELECT_IMSIC_TOPEI, PRV_S, true, gein,
+                                       riscv_cpu_mxl_bits(env)),
+                         &topei, 0, 0);
 -- 
 2.52.0
 
