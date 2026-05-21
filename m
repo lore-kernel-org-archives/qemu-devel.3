@@ -4,82 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D037CD5BAC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:56:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42314CD5BAC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:57:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ3oK-0001am-Oo; Thu, 21 May 2026 09:51:40 -0400
+	id 1wQ3pK-0004ok-Pi; Thu, 21 May 2026 09:52:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wQ3oC-0001G0-Kf
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:51:36 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wQ3pI-0004YZ-4E
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:52:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wQ3o9-00065w-QU
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:51:32 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wQ3pG-0006de-1b
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:52:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779371488;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1779371557;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7C2Z2x5rN4Ack7PYt2FC2o/xoovv41BQKNbjaIQCsWI=;
- b=KxIf+It2+3vwZt3y+KGbUq7BgrmZqfGn8Q+GCKY17bgHWwBmTU6Cr0DmBDBgqdcCv84loJ
- QB+pC6oQiJlTaxTUWEMDIbKFijtJzCyJvEez/nr7xNDryypH4N7zojSziP2eGqPDIHbWjk
- yM3IWCQQ82oGHzQHNbiVZxH2OW4QkvE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-371-hrm-5nS7O4OFkk2soWs8lA-1; Thu,
- 21 May 2026 09:51:25 -0400
-X-MC-Unique: hrm-5nS7O4OFkk2soWs8lA-1
-X-Mimecast-MFC-AGG-ID: hrm-5nS7O4OFkk2soWs8lA_1779371482
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AEA7B1955F18; Thu, 21 May 2026 13:51:22 +0000 (UTC)
-Received: from berrange.com (unknown [10.44.33.98])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DCFDC1956053; Thu, 21 May 2026 13:51:17 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- John Levon <john.levon@nutanix.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 19/29] qom: add trace events for object/property lifecycle
-Date: Thu, 21 May 2026 14:49:33 +0100
-Message-ID: <20260521134943.1714527-20-berrange@redhat.com>
-In-Reply-To: <20260521134943.1714527-1-berrange@redhat.com>
-References: <20260521134943.1714527-1-berrange@redhat.com>
+ bh=Y7ul/ogmZIh7TnpXpCqXxFeP5s/7MMeW5pcW9MA+YzU=;
+ b=UaXHbQAxCQpMu3L2iswn9xtPfE6r23DN8HBKTKX09fGhoB/NitE3zuv87M8p3t19TjoUD/
+ n47y6foYJg2/Bm4FXOIsHAfSWz6q11HW/XzkDumft35PIAim7Yv2ujWF2xpC2TgEDglskL
+ z82/OAYTsP7Viu/3UaHR0YkcRe2+ulo=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-255-XGeW-U_2MUKfHTOSRDKxxg-1; Thu, 21 May 2026 09:52:35 -0400
+X-MC-Unique: XGeW-U_2MUKfHTOSRDKxxg-1
+X-Mimecast-MFC-AGG-ID: XGeW-U_2MUKfHTOSRDKxxg_1779371554
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-48fd3dbd16aso50609035e9.0
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 06:52:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779371554; x=1779976354;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Y7ul/ogmZIh7TnpXpCqXxFeP5s/7MMeW5pcW9MA+YzU=;
+ b=bCWkBkmGd9efMRoyKfOtPYXzDiuvYmvE1+btF68iTqRwcbDBui4pBODo3h0WlGEVY7
+ yoF7xByoMi4bjWfeWqJjSACTg8/DOVWHoPm0sqX1qMB+jWplJqdZzNjqFC3iWjF7H2vN
+ JdVHlOhM5pvFEWsOsPttViaHkQv04LPFpHy7FyjZ+7yYgYOifdOaCTG8nbuG34ZTyIdB
+ RoQDTO06luHqaHKWAH0K30i2NcUAax0WJ5V3PMVQ7mYcCn9Zc/4//KSmuBW3FtSV7q4d
+ 8kBXu7dURHXyfrARgG/1qxAeCa5c30AxoWj50h/G7yOhQ3EUx5MeK0rEKSchqkDwhvnU
+ 7gFw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ89nNCtxZ5P5EB3xVvl4GpkJhOH5aWUlU+DBeldxQ59UGd1y242HxwVvBG3lCtFLoYChkBdZKv7FeUn@nongnu.org
+X-Gm-Message-State: AOJu0Yxra01agra5u9y1ZDA0X8VuNJXh+VOFISeifurTu0ICbRpiq/M/
+ dGaFnFFdW0vy6J2nVKvps43OjkuILL24W57fx/eBaWJx0LvJ5AxHKsWTwGjuEsr+s6dBQFpe+WM
+ zOzA3yaukjjb/EfsWOwdme1CnHEHuoCTAkhzfu4WumFrGTPhioAVx4VXP
+X-Gm-Gg: Acq92OFXl3e9Zm2mlPJDMgRoHLox52d8EvVUGBIkUClL9/HqG/eL4WQ8mfKmdDrKn9q
+ O+9UgNdSO+Wg4rPHC4OKmkOtKcIxo9bhELhDRxnN+NHuC/S1tRnzPmNLiVig433ARau8QHKTyWQ
+ ffhjeDfAQZmjzj/pdn3GiPY1CLQlUUWJ/Hf+yDdQ7RmNuMftm+Gi3TYpXRjf2IfZIlbPwQsjWLs
+ LSMNlTpeksCxs9miK17JBOLNK3BUYsiuBIPN2a/qotw5r2x7pb9BMs/k6EPiTX4YLHPcGkLsYfm
+ EJkB/pViODxDBeHdGKhqZZlCYUhd0JFXdcnFu+vUO/kqQQuwFoBjpiiJkWKiOR8tEOctlHVphvN
+ ISC2S5zFVH+LqIOLNRms95LRDHO+i6gJCPZvTgG5dRR6tAiDWgCtQqwIwBoYKYyUPnAb6/A==
+X-Received: by 2002:a05:600c:848d:b0:48e:60a3:220a with SMTP id
+ 5b1f17b1804b1-49035fbac92mr43316595e9.0.1779371554460; 
+ Thu, 21 May 2026 06:52:34 -0700 (PDT)
+X-Received: by 2002:a05:600c:848d:b0:48e:60a3:220a with SMTP id
+ 5b1f17b1804b1-49035fbac92mr43316125e9.0.1779371554032; 
+ Thu, 21 May 2026 06:52:34 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4903cadc119sm22835675e9.11.2026.05.21.06.52.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 21 May 2026 06:52:33 -0700 (PDT)
+Message-ID: <2cfef4ff-6eca-4915-8d41-8d43139cea31@redhat.com>
+Date: Thu, 21 May 2026 15:52:32 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 22/32] hw/arm/tegra241-cmdqv: Map VINTF page0 into
+ guest MMIO space
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
+ nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
+ jgg@nvidia.com, zhenzhong.duan@intel.com, kjaju@nvidia.com,
+ phrdina@redhat.com
+References: <20260519103727.899332-1-skolothumtho@nvidia.com>
+ <20260519103727.899332-23-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260519103727.899332-23-skolothumtho@nvidia.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,161 +116,130 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This adds tracing around object allocation & finalization, the addition &
-deletion of properties, and the addition & deletion of children.
 
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- qom/object.c     | 34 +++++++++++++++++++++++++++-------
- qom/trace-events | 12 ++++++++++--
- 2 files changed, 37 insertions(+), 9 deletions(-)
 
-diff --git a/qom/object.c b/qom/object.c
-index dfdc5c8e42..4a15151c3b 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -594,6 +594,8 @@ static void object_property_del_all(Object *obj)
-         object_property_iter_init(&iter, obj);
-         while ((prop = object_property_iter_next(&iter)) != NULL) {
-             if (g_hash_table_add(done, prop)) {
-+                trace_object_property_del(obj, obj->class->type->name,
-+                                          prop->name, prop->opaque);
-                 if (prop->release) {
-                     prop->release(obj, prop->name, prop->opaque);
-                     released = true;
-@@ -612,10 +614,14 @@ static void object_property_del_child(Object *obj, Object *child)
-     GHashTableIter iter;
-     gpointer key, value;
- 
-+    trace_object_property_del_child(obj, obj->class->type->name,
-+                                    child, child->class->type->name);
-     g_hash_table_iter_init(&iter, obj->properties);
-     while (g_hash_table_iter_next(&iter, &key, &value)) {
-         prop = value;
-         if (object_property_is_child(prop) && prop->opaque == child) {
-+            trace_object_property_del(obj, obj->class->type->name,
-+                                      prop->name, prop->opaque);
-             if (prop->release) {
-                 prop->release(obj, prop->name, prop->opaque);
-                 prop->release = NULL;
-@@ -655,7 +661,7 @@ static void object_finalize(void *data)
- {
-     Object *obj = data;
-     TypeImpl *ti = obj->class->type;
--
-+    trace_object_finalize(obj, obj->class->type->name);
-     object_property_del_all(obj);
-     object_deinit(obj, ti);
- 
-@@ -705,6 +711,7 @@ static Object *object_new_with_type(Type type)
-     object_initialize_with_type(obj, size, type);
-     obj->free = obj_free;
- 
-+    trace_object_new(obj, obj->class->type->name);
-     return obj;
- }
- 
-@@ -835,8 +842,9 @@ Object *object_dynamic_cast(Object *obj, const char *typename)
- Object *object_dynamic_cast_assert(Object *obj, const char *typename,
-                                    const char *file, int line, const char *func)
- {
--    trace_object_dynamic_cast_assert(obj ? obj->class->type->name : "(null)",
--                                     typename, file, line, func);
-+    trace_object_dynamic_cast_assert(
-+        obj, obj ? obj->class->type->name : "(null)",
-+        typename, file, line, func);
- 
- #ifdef CONFIG_QOM_CAST_DEBUG
-     int i;
-@@ -926,8 +934,9 @@ ObjectClass *object_class_dynamic_cast_assert(ObjectClass *class,
- {
-     ObjectClass *ret;
- 
--    trace_object_class_dynamic_cast_assert(class ? class->type->name : "(null)",
--                                           typename, file, line, func);
-+    trace_object_class_dynamic_cast_assert(
-+        class ? class->type->name : "(null)",
-+        typename, file, line, func);
- 
- #ifdef CONFIG_QOM_CAST_DEBUG
-     int i;
-@@ -1211,6 +1220,8 @@ object_property_try_add(Object *obj, const char *name, const char *type,
-     prop->release = release;
-     prop->opaque = opaque;
- 
-+    trace_object_property_add(obj, obj->class->type->name,
-+                              prop->name, prop->opaque);
-     g_hash_table_insert(obj->properties, prop->name, prop);
-     return prop;
- }
-@@ -1249,6 +1260,8 @@ object_class_property_add(ObjectClass *klass,
-     prop->release = release;
-     prop->opaque = opaque;
- 
-+    trace_object_class_property_add(klass->type->name, prop->name,
-+                                    prop->opaque);
-     g_hash_table_insert(klass->properties, prop->name, prop);
- 
-     return prop;
-@@ -1337,6 +1350,8 @@ void object_property_del(Object *obj, const char *name)
- {
-     ObjectProperty *prop = g_hash_table_lookup(obj->properties, name);
- 
-+    trace_object_property_del(obj, obj->class->type->name, prop->name,
-+                              prop->opaque);
-     if (prop->release) {
-         prop->release(obj, name, prop->opaque);
-     }
-@@ -1625,8 +1640,11 @@ int object_property_get_enum(Object *obj, const char *name,
- bool object_property_parse(Object *obj, const char *name,
-                            const char *string, Error **errp)
- {
--    Visitor *v = string_input_visitor_new(string);
--    bool ok = object_property_set(obj, name, v, errp);
-+    Visitor *v;
-+    bool ok;
-+    trace_object_property_parse(obj, obj->class->type->name, name, string);
-+    v = string_input_visitor_new(string);
-+    ok = object_property_set(obj, name, v, errp);
- 
-     visit_free(v);
-     return ok;
-@@ -1757,6 +1775,8 @@ object_property_try_add_child(Object *obj, const char *name,
-     g_autofree char *type = NULL;
-     ObjectProperty *op;
- 
-+    trace_object_property_add_child(obj, obj->class->type->name, name,
-+                                    child, child->class->type->name);
-     assert(!child->parent);
- 
-     type = g_strdup_printf("child<%s>", object_get_typename(child));
-diff --git a/qom/trace-events b/qom/trace-events
-index b2e9f4a712..44c63e72af 100644
---- a/qom/trace-events
-+++ b/qom/trace-events
-@@ -1,5 +1,13 @@
- # See docs/devel/tracing.rst for syntax documentation.
- 
- # object.c
--object_dynamic_cast_assert(const char *type, const char *target, const char *file, int line, const char *func) "%s->%s (%s:%d:%s)"
--object_class_dynamic_cast_assert(const char *type, const char *target, const char *file, int line, const char *func) "%s->%s (%s:%d:%s)"
-+object_dynamic_cast_assert(void *obj, const char *type, const char *target, const char *file, int line, const char *func) "obj=%p type=%s->%s (%s:%d:%s)"
-+object_finalize(void *obj, const char *type) "obj=%p type=%s"
-+object_new(void *obj, const char *type) "obj=%p type=%s"
-+object_property_add(void *obj, const char *type, const char *name, void *value) "obj=%p type=%s name=%s value=%p"
-+object_property_add_child(void *obj, const char *type, const char *name, void *child, const char *childtype) "obj=%p type=%s name=%s child=%p child-type=%s"
-+object_property_del(void *obj, const char *type, const char *name, void *value) "obj=%p type=%s name=%s value=%p"
-+object_property_del_child(void *obj, const char *type, void *child, const char *childtype) "obj=%p type=%s child=%p child-type=%s"
-+object_property_parse(void *obj, const char *type, const char *name, const char *value) "obj=%p type=%s prop=%s value=%s"
-+object_class_dynamic_cast_assert(const char *type, const char *target, const char *file, int line, const char *func) "type=%s->%s (%s:%d:%s)"
-+object_class_property_add(const char *type, const char *name, void *value) "type=%s name=%s value=%p"
--- 
-2.54.0
+On 5/19/26 12:37 PM, Shameer Kolothum wrote:
+> From: Nicolin Chen <nicolinc@nvidia.com>
+>
+> Once a VCMDQ is allocated, map the mmap'd vintf_page0 region directly
+> into the guest-visible MMIO space at offset 0x30000 as a RAM-backed
+> MemoryRegion. This eliminates QEMU trapping for hot-path CONS/PROD
+> index updates.
+>
+> After this patch, the two VCMDQ apertures use different access paths:
+> the direct aperture (0x10000) remains QEMU-trapped and writes via
+> vintf_ptr, while the VI aperture (0x30000) is a direct guest RAM
+> mapping. Both paths write to the same underlying vintf_page0 memory,
+> so no synchronisation between the apertures is needed.
+
+Please further explain the rationale of having 2 separate paths
+
+Eric
+>
+> The mapping is installed lazily on first successful VCMDQ hardware
+> queue allocation and removed when CMDQV or VINTF is disabled.
+>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Co-developed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> ---
+>  hw/arm/tegra241-cmdqv.h |  1 +
+>  hw/arm/tegra241-cmdqv.c | 39 +++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 40 insertions(+)
+>
+> diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
+> index 7a8cb2ebc7..e9e1933a19 100644
+> --- a/hw/arm/tegra241-cmdqv.h
+> +++ b/hw/arm/tegra241-cmdqv.h
+> @@ -47,6 +47,7 @@ typedef struct Tegra241CMDQV {
+>      IOMMUFDVeventq *veventq;
+>      IOMMUFDHWqueue *vcmdq[TEGRA241_CMDQV_MAX_CMDQ];
+>      void *vintf_page0;
+> +    MemoryRegion *mr_vintf_page0;
+>  
+>      /* CMDQ-V Config page register cache */
+>      uint32_t config;
+> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
+> index a7e89905df..853c548e58 100644
+> --- a/hw/arm/tegra241-cmdqv.c
+> +++ b/hw/arm/tegra241-cmdqv.c
+> @@ -18,6 +18,40 @@
+>  #include "tegra241-cmdqv.h"
+>  #include "trace.h"
+>  
+> +static void tegra241_cmdqv_guest_unmap_vintf_page0(Tegra241CMDQV *cmdqv)
+> +{
+> +    if (!cmdqv->mr_vintf_page0) {
+> +        return;
+> +    }
+> +
+> +    memory_region_del_subregion(&cmdqv->mmio_cmdqv, cmdqv->mr_vintf_page0);
+> +    object_unparent(OBJECT(cmdqv->mr_vintf_page0));
+> +    g_free(cmdqv->mr_vintf_page0);
+> +    cmdqv->mr_vintf_page0 = NULL;
+> +}
+> +
+> +static void tegra241_cmdqv_guest_map_vintf_page0(Tegra241CMDQV *cmdqv)
+> +{
+> +    char *name;
+> +
+> +    if (cmdqv->mr_vintf_page0) {
+> +        return;
+> +    }
+> +
+> +    name = g_strdup_printf("%s vintf-page0",
+> +                           memory_region_name(&cmdqv->mmio_cmdqv));
+> +    cmdqv->mr_vintf_page0 = g_malloc0(sizeof(*cmdqv->mr_vintf_page0));
+> +    memory_region_init_ram_device_ptr(cmdqv->mr_vintf_page0,
+> +                                      memory_region_owner(&cmdqv->mmio_cmdqv),
+> +                                      name, VINTF_PAGE_SIZE,
+> +                                      cmdqv->vintf_page0);
+> +    memory_region_set_skip_iommu_map(cmdqv->mr_vintf_page0, true);
+> +    memory_region_add_subregion_overlap(&cmdqv->mmio_cmdqv,
+> +                                        CMDQV_VINTF_PAGE0_BASE,
+> +                                        cmdqv->mr_vintf_page0, 1);
+> +    g_free(name);
+> +}
+> +
+>  static void tegra241_cmdqv_free_vcmdq(Tegra241CMDQV *cmdqv, int index)
+>  {
+>      IOMMUFDViommu *viommu = cmdqv->s_accel->viommu;
+> @@ -130,6 +164,9 @@ static bool tegra241_cmdqv_setup_vcmdq(Tegra241CMDQV *cmdqv, int index,
+>      /* Pre-alloc cached writes survive the cache-to-hardware transition. */
+>      tegra241_cmdqv_sync_vcmdq(cmdqv, index);
+>  
+> +    /* Map the mmap'd VINTF page0 into guest MMIO space. */
+> +    tegra241_cmdqv_guest_map_vintf_page0(cmdqv);
+> +
+>      return true;
+>  }
+>  
+> @@ -449,6 +486,7 @@ static void tegra241_cmdqv_config_vintf_write(Tegra241CMDQV *cmdqv,
+>                  tegra241_cmdqv_setup_all_vcmdq(cmdqv, errp);
+
+I would rather put the     tegra241_cmdqv_guest_map_vintf_page0(cmdqv) here 
+to have symetric map/unmap
+>              }
+>          } else {
+> +            tegra241_cmdqv_guest_unmap_vintf_page0(cmdqv);
+>              tegra241_cmdqv_free_all_vcmdq(cmdqv);
+>              tegra241_cmdqv_munmap_vintf_page0(cmdqv, errp);
+>              cmdqv->vintf_status &= ~R_VINTF0_STATUS_ENABLE_OK_MASK;
+> @@ -566,6 +604,7 @@ static void tegra241_cmdqv_writel_mmio(Tegra241CMDQV *cmdqv, hwaddr offset,
+>               */
+>              tegra241_cmdqv_setup_all_vcmdq(cmdqv, &local_err);
+same
+>          } else {
+> +            tegra241_cmdqv_guest_unmap_vintf_page0(cmdqv);
+>              tegra241_cmdqv_free_all_vcmdq(cmdqv);
+>              cmdqv->status &= ~R_STATUS_CMDQV_ENABLED_MASK;
+>          }
+Thanks
+
+Eric
 
 
