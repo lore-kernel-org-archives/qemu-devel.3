@@ -4,123 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBB2CCD5BB1
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:53:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42D26CD5BB4
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:53:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ3pR-0005KF-2c; Thu, 21 May 2026 09:52:49 -0400
+	id 1wQ3np-0000yT-22; Thu, 21 May 2026 09:51:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kees@kernel.org>) id 1wQ3Wq-0001kF-5y
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:33:36 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wQ3nj-0000q6-QR
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:51:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kees@kernel.org>) id 1wQ3Wo-00057M-2k
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:33:35 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 9E93660210;
- Thu, 21 May 2026 13:33:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52B451F000E9;
- Thu, 21 May 2026 13:33:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779370406;
- bh=JMvTXrLi2fecyuCzobJPBmjEJITlU0vYIW862WydbuI=;
- h=From:To:Cc:Subject:Date;
- b=ENRvP//NxlPse9MxCJOFh1AogZslAel87SB2mSCIhsf3jItcOS+woGIBwiFJXxxJO
- /vrcLfGb5f9Zgybo+8/jwPpcfxzDdtk9qobrtYv1Jx7qF2CaHOv9To+pMFVf+CxBaj
- Txk/IJPdMMNkgGbRiVQjeh8OyeTtBQ2jV3/sTZSlJcvRZB5VWyLoc9rDPU3aPLI4HL
- h0jOm1f2w6p8YOUlM5pSaTCh9uIPDhngu0K2kHqivFsRg/751UQV/kKlDAKhtjc0hL
- ruCH8xG0ElU6V7TuBi+cEWySHRlk4t3CmGbCJy8V2gQGUgE/wtg5mB81jG8Jj8LiQq
- dMkB09LzsXQtw==
-From: Kees Cook <kees@kernel.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Kees Cook <kees@kernel.org>, Pengpeng Hou <pengpeng@iscas.ac.cn>,
- Petr Pavlu <petr.pavlu@suse.com>, Richard Weinberger <richard@nod.at>,
- Anton Ivanov <anton.ivanov@cambridgegreys.com>,
- Johannes Berg <johannes@sipsolutions.net>,
- "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>,
- Corey Minyard <corey@minyard.net>, Gabriel Somlo <somlo@cmu.edu>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Jani Nikula <jani.nikula@linux.intel.com>,
- Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
- Rodrigo Vivi <rodrigo.vivi@intel.com>,
- Tvrtko Ursulin <tursulin@ursulin.net>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>, Bart Van Assche <bvanassche@acm.org>,
- Jason Gunthorpe <jgg@ziepe.ca>, Leon Romanovsky <leon@kernel.org>,
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
- Hans de Goede <hansg@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Bjorn Helgaas <bhelgaas@google.com>, Hannes Reinecke <hare@suse.de>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>,
- Daniel Lezcano <daniel.lezcano@kernel.org>,
- Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Jiri Slaby <jirislaby@kernel.org>, Alan Stern <stern@rowland.harvard.edu>,
- Jason Wang <jasowang@redhat.com>, Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
- =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
- Jason Baron <jbaron@akamai.com>, Jim Cromie <jim.cromie@gmail.com>,
- Tiwei Bie <tiwei.btw@antgroup.com>,
- Benjamin Berg <benjamin.berg@intel.com>,
- =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
- "David E. Box" <david.e.box@linux.intel.com>,
- "Maciej W. Rozycki" <macro@orcam.me.uk>,
- Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
- Peter Zijlstra <peterz@infradead.org>, Heiko Carstens <hca@linux.ibm.com>,
- Vasily Gorbik <gor@linux.ibm.com>, Sean Christopherson <seanjc@google.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Gleixner <tglx@kernel.org>,
- Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
- Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
- "H. Peter Anvin" <hpa@zytor.com>, Vinod Koul <vkoul@kernel.org>,
- Frank Li <Frank.Li@kernel.org>, Daniel Gomez <da.gomez@kernel.org>,
- Sami Tolvanen <samitolvanen@google.com>,
- Aaron Tomlin <atomlin@atomlin.com>,
- Alexander Potapenko <glider@google.com>, Marco Elver <elver@google.com>,
- Dmitry Vyukov <dvyukov@google.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- John Johansen <john.johansen@canonical.com>,
- Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>,
- "Serge E. Hallyn" <serge@hallyn.com>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Georgia Garcia <georgia.garcia@canonical.com>, kvm@vger.kernel.org,
- dmaengine@vger.kernel.org, linux-modules@vger.kernel.org,
- kasan-dev@googlegroups.com, linux-mm@kvack.org, apparmor@lists.ubuntu.com,
- linux-security-module@vger.kernel.org, linux-um@lists.infradead.org,
- linux-acpi@vger.kernel.org, openipmi-developer@lists.sourceforge.net,
- qemu-devel@nongnu.org, intel-gfx@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, linux-rdma@vger.kernel.org,
- linux-media@vger.kernel.org, linux-pci@vger.kernel.org,
- linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
- linuxppc-dev@lists.ozlabs.org, linux-serial@vger.kernel.org,
- linux-usb@vger.kernel.org, usb-storage@lists.one-eyed-alien.net,
- virtualization@lists.linux.dev, linux-kernel@vger.kernel.org,
- linux-arch@vger.kernel.org, netdev@vger.kernel.org,
- linux-fsdevel@vger.kernel.org, linux-hardening@vger.kernel.org
-Subject: [PATCH 00/11] Convert moduleparams to seq_buf
-Date: Thu, 21 May 2026 06:33:13 -0700
-Message-Id: <20260521133315.work.845-kees@kernel.org>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wQ3ng-00051r-Cv
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:51:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779371459;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=g0mdRxEs7jIc/mN/FPdqHSCe8wZeMa+T1SuzpES74iw=;
+ b=aAmhkNhCZNuAoSpAQGCu23R28RCUHA7rFkx8lOQTtq5i4m+7igBfVD3z9JNWItRLYlsMGB
+ OrnEmkwiadZZzhWInrxOHbCBbGM1gSckDoHsKalr1fEtsIZGc9DOWd8xZF7gG6dqfLI5oJ
+ WqMl2FNh6LHgetC4jE6BqRDJCR2gdbk=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-383-2zg7yAfPOSGUi95OP5rY3Q-1; Thu,
+ 21 May 2026 09:50:53 -0400
+X-MC-Unique: 2zg7yAfPOSGUi95OP5rY3Q-1
+X-Mimecast-MFC-AGG-ID: 2zg7yAfPOSGUi95OP5rY3Q_1779371451
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EA73E1944DD7; Thu, 21 May 2026 13:50:40 +0000 (UTC)
+Received: from berrange.com (unknown [10.44.33.98])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 292A61956056; Thu, 21 May 2026 13:50:34 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Hanna Reitz <hreitz@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ John Levon <john.levon@nutanix.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>
+Subject: [PULL 10/29] iotests: add a meson suite / make target per block I/O
+ tests format
+Date: Thu, 21 May 2026 14:49:24 +0100
+Message-ID: <20260521134943.1714527-11-berrange@redhat.com>
+In-Reply-To: <20260521134943.1714527-1-berrange@redhat.com>
+References: <20260521134943.1714527-1-berrange@redhat.com>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8383; i=kees@kernel.org;
- h=from:subject:message-id; bh=iRiRSOifqAhDEW+rM5ucutf2vqbqOCl0n39wA2pC2nE=;
- b=owGbwMvMwCVmps19z/KJym7G02pJDFn8nPP5NjJqfrXdrfdzgRzzhL0cEUvVFLTFyz0Emuo2S
- cuk+1zsKGVhEONikBVTZAmyc49z8XjbHu4+VxFmDisTyBAGLk4BmMjpjYwMW1sezs9aJ6S4pvfM
- 9cD7+tJ32F5enlDXEpZXkNZ/g4mVnZFh3zrv5UmSl4OP8839kFvnc/3g3qNPdE9ob/yzv04h4/U
- XTgA=
-X-Developer-Key: i=kees@kernel.org; a=openpgp;
- fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=kees@kernel.org;
- helo=tor.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 21 May 2026 09:52:45 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -135,163 +94,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Currently each block format is classified as either 'quick', 'slow' or
+'thorough' and this controls whether its I/O tests are added to the meson
+suites 'block-quick', 'block-slow' or 'block-thorough'.
 
-I tried to trim the CC list here, but it's still pretty huge...
+This suites are exposed the 'check-block' make target, accepting the
+optional SPEED variable.
 
-We've had a long-standing issue with "write to a string pointer" callbacks
-that don't bounds check the destination (and for which the bounds is
-also not part of the callback prototype, even if it is "known" to be
-PAGE_SIZE, which sysfs_emit() depends on). Both moduleparams and sysfs
-use this pattern. As a first step, and to test the migration method,
-migrate moduleparams first.
+As we add more formats to the 'thorough' group, however, it becomes
+increasingly large and time consuming to run. What is needed is a make
+target that can exercise all tests for an individual format, regardless
+of speed classification.
 
-There are 2 "mechanical" treewide patches that are handled by Coccinelle:
-- treewide: Convert struct kernel_param_ops initializers to DEFINE_KERNEL_PARAM_OPS
-- treewide: Convert custom kernel_param_ops .get callbacks to seq_buf via cocci
+This makes use of the previous enhancement to mtest2make.py to introduce
+new meson suites 'block-$FORMAT-optional', which translate to new top
+level make targets 'check-block-$FORMAT'. These new targets always run
+all tests and as such do not need the SPEED variable to be set, but are
+not triggered by 'make check' or 'make check-block'.
 
-The last treewide patch is manual, and may need to be broken up into
-per-subsystem patches, though I'd prefer to avoid this, as it would
-extend the migration from 1 relase to at least 2 releases. (1 to
-release the migration infrastructure, then 1 release to collect all the
-subsystem changes, and possibly 1 more release to remove the migration
-infrastructure.)
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ tests/Makefile.include         | 3 ++-
+ tests/qemu-iotests/meson.build | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-Thoughts, questions?
-
--Kees
-
-Kees Cook (10):
-  panic: Replace panic_print_get() with generic helper
-  moduleparam: Add DEFINE_KERNEL_PARAM_OPS macro family
-  treewide: Convert struct kernel_param_ops initializers to
-    DEFINE_KERNEL_PARAM_OPS
-  moduleparam: Rename .get field to .get_str
-  moduleparam: Add seq_buf-based .get callback alongside .get_str
-  moduleparam: Route DEFINE_KERNEL_PARAM_OPS get pointer via _Generic
-  params: Convert generic kernel_param_ops .get helpers to seq_buf
-  treewide: Convert custom kernel_param_ops .get callbacks to seq_buf
-    via cocci
-  treewide: Manually convert custom kernel_param_ops .get callbacks
-  moduleparam: Drop legacy kernel_param_ops .get_str field and dispatch
-    logic
-
-Pengpeng Hou (1):
-  params: bound array element output to the caller's page buffer
-
- include/linux/dynamic_debug.h                 |   8 +-
- include/linux/moduleparam.h                   |  65 +++++++---
- security/apparmor/include/lib.h               |   3 +-
- mm/kfence/core.c                              |  15 ++-
- arch/powerpc/kvm/book3s_hv.c                  |   5 +-
- arch/s390/kernel/perf_cpum_sf.c               |  12 +-
- arch/um/drivers/vfio_kern.c                   |   9 +-
- arch/um/drivers/virtio_uml.c                  |  18 +--
- arch/x86/kernel/msr.c                         |  11 +-
- arch/x86/kvm/mmu/mmu.c                        |  28 ++--
- arch/x86/kvm/svm/avic.c                       |  14 +-
- arch/x86/kvm/vmx/vmx.c                        |  24 ++--
- arch/x86/platform/uv/uv_nmi.c                 |  24 ++--
- block/disk-events.c                           |   6 +-
- drivers/acpi/button.c                         |  19 ++-
- drivers/acpi/ec.c                             |  14 +-
- drivers/acpi/sysfs.c                          | 114 ++++++++--------
- drivers/block/loop.c                          |  12 +-
- drivers/block/null_blk/main.c                 |  12 +-
- drivers/block/rnbd/rnbd-srv.c                 |   6 +-
- drivers/block/ublk_drv.c                      |  12 +-
- drivers/char/ipmi/ipmi_msghandler.c           |  12 +-
- drivers/char/ipmi/ipmi_watchdog.c             |  50 +++----
- drivers/crypto/hisilicon/hpre/hpre_main.c     |  16 +--
- drivers/crypto/hisilicon/sec2/sec_main.c      |  23 +---
- drivers/crypto/hisilicon/zip/zip_crypto.c     |   5 +-
- drivers/crypto/hisilicon/zip/zip_main.c       |  21 +--
- drivers/dma/dmatest.c                         |  34 ++---
- drivers/edac/i10nm_base.c                     |   6 +-
- drivers/firmware/efi/efi-pstore.c             |   6 +-
- drivers/firmware/qcom/qcom_scm.c              |  18 +--
- drivers/firmware/qemu_fw_cfg.c                |  40 +++---
- drivers/gpu/drm/drm_panic.c                   |  13 +-
- drivers/gpu/drm/i915/i915_mitigations.c       |  31 ++---
- drivers/gpu/drm/imagination/pvr_fw_trace.c    |   6 +-
- drivers/hid/hid-cougar.c                      |   6 +-
- drivers/hid/hid-steam.c                       |   6 +-
- drivers/infiniband/hw/hfi1/driver.c           |  12 +-
- drivers/infiniband/ulp/iser/iscsi_iser.c      |   6 +-
- drivers/infiniband/ulp/isert/ib_isert.c       |   6 +-
- drivers/infiniband/ulp/srp/ib_srp.c           |  12 +-
- drivers/infiniband/ulp/srpt/ib_srpt.c         |   5 +-
- drivers/input/misc/ati_remote2.c              |  23 ++--
- drivers/input/mouse/psmouse-base.c            |  15 ++-
- drivers/md/md.c                               |   5 +-
- drivers/media/pci/tw686x/tw686x-core.c        |   6 +-
- drivers/media/usb/uvc/uvc_driver.c            |  14 +-
- drivers/misc/lis3lv02d/lis3lv02d.c            |   5 +-
- drivers/net/wireless/ath/wil6210/main.c       |  10 +-
- drivers/nvme/host/multipath.c                 |  17 +--
- drivers/nvme/host/pci.c                       |  18 +--
- drivers/nvme/target/rdma.c                    |   5 +-
- drivers/nvme/target/tcp.c                     |   5 +-
- drivers/pci/pcie/aspm.c                       |  17 ++-
- drivers/platform/x86/acerhdf.c                |   5 +-
- drivers/power/supply/bq27xxx_battery.c        |   6 +-
- drivers/power/supply/test_power.c             | 122 +++++++++---------
- drivers/scsi/fcoe/fcoe_transport.c            |  22 ++--
- drivers/scsi/sg.c                             |   6 +-
- drivers/target/target_core_user.c             |  25 ++--
- .../processor_thermal_soc_slider.c            |  24 ++--
- drivers/thermal/intel/intel_powerclamp.c      |  34 ++---
- drivers/tty/hvc/hvc_iucv.c                    |  24 ++--
- drivers/tty/sysrq.c                           |   6 +-
- drivers/ufs/core/ufs-fault-injection.c        |  12 +-
- drivers/ufs/core/ufs-mcq.c                    |  18 +--
- drivers/ufs/core/ufs-txeq.c                   |   5 +-
- drivers/ufs/core/ufshcd.c                     |  12 +-
- drivers/usb/core/quirks.c                     |   6 +-
- drivers/usb/gadget/legacy/serial.c            |   5 +-
- drivers/usb/storage/usb.c                     |  25 ++--
- drivers/vhost/scsi.c                          |  12 +-
- drivers/virt/nitro_enclaves/ne_misc_dev.c     |   6 +-
- drivers/virtio/virtio_mmio.c                  |  27 ++--
- fs/ceph/super.c                               |  10 +-
- fs/fuse/dir.c                                 |   5 +-
- fs/nfs/namespace.c                            |  12 +-
- fs/nfs/super.c                                |   6 +-
- fs/ocfs2/dlmfs/dlmfs.c                        |   5 +-
- fs/overlayfs/copy_up.c                        |   5 +-
- fs/ubifs/super.c                              |   6 +-
- kernel/locking/locktorture.c                  |  12 +-
- kernel/panic.c                                |  11 +-
- kernel/params.c                               | 122 +++++++++---------
- kernel/power/hibernate.c                      |   6 +-
- kernel/rcu/tree.c                             |  24 ++--
- kernel/sched/ext.c                            |  11 +-
- kernel/workqueue.c                            |  18 ++-
- lib/dynamic_debug.c                           |  16 ++-
- lib/test_dynamic_debug.c                      |  12 +-
- mm/damon/lru_sort.c                           |  33 +++--
- mm/damon/reclaim.c                            |  33 +++--
- mm/damon/stat.c                               |  16 +--
- mm/memory_hotplug.c                           |  30 +++--
- mm/page_reporting.c                           |  11 +-
- mm/shuffle.c                                  |   6 +-
- mm/zswap.c                                    |  14 +-
- net/batman-adv/bat_algo.c                     |   6 +-
- net/ceph/ceph_common.c                        |  10 +-
- net/ipv4/tcp_dctcp.c                          |   6 +-
- net/sunrpc/auth.c                             |  12 +-
- net/sunrpc/svc.c                              |   5 +-
- net/sunrpc/xprtsock.c                         |  18 +--
- samples/damon/mtier.c                         |   6 +-
- samples/damon/prcl.c                          |   6 +-
- samples/damon/wsse.c                          |   6 +-
- security/apparmor/lib.c                       |  27 ++--
- security/apparmor/lsm.c                       |  75 +++++------
- sound/hda/controllers/intel.c                 |   5 +-
- sound/usb/card.c                              |   7 +-
- 110 files changed, 854 insertions(+), 1066 deletions(-)
-
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index f257288194..a820980bbe 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -14,7 +14,8 @@ check-help:
+ 	@echo " $(MAKE) check-unit                    Run qobject tests"
+ 	@echo " $(MAKE) check-qapi-schema             Run QAPI schema tests"
+ 	@echo " $(MAKE) check-tracetool               Run tracetool generator tests"
+-	@echo " $(MAKE) check-block                   Run block tests"
++	@echo " $(MAKE) check-block                   Run block tests (all formats)"
++	@echo " $(MAKE) check-block-FORMAT            Run block tests (only for FORMAT)"
+ ifneq ($(filter $(all-check-targets), check-softfloat),)
+ 	@echo " $(MAKE) check-softfloat               Run FPU emulation tests"
+ 	@echo " $(MAKE) check-tcg                     Run TCG tests"
+diff --git a/tests/qemu-iotests/meson.build b/tests/qemu-iotests/meson.build
+index 1a24d801a3..16a5e39476 100644
+--- a/tests/qemu-iotests/meson.build
++++ b/tests/qemu-iotests/meson.build
+@@ -62,7 +62,8 @@ foreach format, speed: qemu_iotests_formats
+     endforeach
+   endif
+ 
+-  suites = []
++  # Every format gets put in the format specific suite
++  suites = ['block-' + format + '-optional']
+   # Any format tagged quick or slow also gets added to slow
+   # otherwise its tagged thorough
+   if speed != 'thorough'
 -- 
-2.34.1
+2.54.0
 
 
