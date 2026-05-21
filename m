@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98D5BCD4F3D
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 01:29:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89137CD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 01:31:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPsDs-0007RU-K7; Wed, 20 May 2026 21:29:16 -0400
+	id 1wPsFi-0008Di-7R; Wed, 20 May 2026 21:31:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1wPsDr-0007R3-9b; Wed, 20 May 2026 21:29:15 -0400
+ id 1wPsFY-0008DT-DO; Wed, 20 May 2026 21:31:00 -0400
 Received: from fhigh-a3-smtp.messagingengine.com ([103.168.172.154])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1wPsDp-0003Ei-Ic; Wed, 20 May 2026 21:29:15 -0400
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
- by mailfhigh.phl.internal (Postfix) with ESMTP id E49DE14000A7;
- Wed, 20 May 2026 21:29:10 -0400 (EDT)
+ id 1wPsFV-0004GJ-6f; Wed, 20 May 2026 21:30:59 -0400
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 4B81014000EC;
+ Wed, 20 May 2026 21:30:56 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-03.internal (MEProxy); Wed, 20 May 2026 21:29:10 -0400
+ by phl-compute-07.internal (MEProxy); Wed, 20 May 2026 21:30:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
- t=1779326950; x=1779413350; bh=7bINJ5VHmuf5D3gyNqvWroK4Xq1urmEu
- z+OvxsshJ7c=; b=sDdQxCG4Vt7PVCAk5wFoqv3iEpZN3rh4LOpzLI6ncO9TEVuC
- nIjduu9UXcTSD2cbshqenjQbr0NPuI87hOGjvM5Hy2PLfQwR2hMndvmEa8E/lIPy
- kBo/FLuUTfpPvd51o82LAOSzuyP4cfRpxmvzA4rSXgbmZ70vWH8ZD8CpvQXijlWt
- ts67XKBulUSiYJ6/+U36V/mZO9DyZuPt+AP3UVKqcSkJnh1HHyaK/UvOI6CCR9rJ
- c2g7taTpY9Z6ngGEjtY97ceINZ10kPixiyeK+IB/XxBZ4xKQhi/neFvz2tCq13I2
- RKZ81pLqkHJcvjyS82/UzxadjsLDw3JcKxsS6g==
+ t=1779327056; x=1779413456; bh=X4vr3y5P7uxElxeresXU7PPjABdWVi5p
+ 0gRn5cEe2Wc=; b=VWGkJL+S1ickipz/WWFTIQdeFwQ7hwl+tDkaqIL9o2TtN4DX
+ TdnvIP8YuRh9FYdZD5Pb9T20XwBOlnXBq4Az6bYSmWKJh8Mc93OItnLFP7L3A3Az
+ FOmSNy7DkzutQIA9GNfz6Er9ianv4+zwgSazaFEKbLE+DVsO2x9xbfRKLXLaYxhs
+ b5FSBnqJyTHfoWVWm4zO7R5RZLF0nGkOjF6RpBHj+XZ9M1AangkyJA1Wge1tmX0r
+ doQXEjOxRib6tckIXQVGqwbItljJL/YM7HW0DP6XV6z43p+Iu0y8T8MtnckHWw9o
+ FlVwjW0P22zf5YXVKFBSUAZGi7PpFN8SXiZsPw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779326950; x=
- 1779413350; bh=7bINJ5VHmuf5D3gyNqvWroK4Xq1urmEuz+OvxsshJ7c=; b=A
- f06FsbodrX1xSIdJW1zFeaEcHyZWll4cT1/Qu4pfkbAn8S4pq0p949EgKBlJzxw2
- dRcerU3HK3dFo4BcEX0siVCOm7kiaWo+gsKodm+sa3Mai2bRtHjWyKxHEiTGHjL3
- zlaIYFgNOANpEsu1nW8PBrg8jK3m/oZtpjbdUD/L8KsSK4r+DJItBU8rqCL8HhhH
- cFMKE21+jWGAL1/GkmgzWf55p3T34hzaIe+yynJgZL4coSNnFgamkck8KxJ3p7N3
- 6F9HCyW6KbbP1//A2L53D84WD1l7JmY6t7hEfQrEinYfqtPcRwAXhv+MQa8EiyrC
- Kkq3CYuJv/hcBL8Bw4a4A==
-X-ME-Sender: <xms:5l8OagCdTSpvXFbMPh2DFG2zxp97ztivJW7TcufrNhNPTDCmEaJtzw>
- <xme:5l8Oakzd53iZVv9R94jR7diyArErn-hGlEzlm0_beDLamX7FsBa6-Sq5n2B2Cu_hQ
- aK86q5fNfMFtK0UWu_Z4W3G9H4XhSW4qWbr02JLOtcPMyCXkRjU2Vw>
-X-ME-Received: <xmr:5l8Oal1d36A91wAd0cJIikIEbzZ5aIG7gw6bvU4lmDghZxFnchah9l8R-_HI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeeiudelucetufdoteggodetrf
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779327056; x=
+ 1779413456; bh=X4vr3y5P7uxElxeresXU7PPjABdWVi5p0gRn5cEe2Wc=; b=M
+ DVu4JbdPnQoFQ8/7enkEgmxdpKjp7Eu/I8yjHOYUdh78j2IwuLtgL8Ei26ogQDR1
+ rk3Y8RHy6qVa+sxtPVfRc4Fi+d5+RdaxGdU4OBBHdXaK5Nq/T+/BDI1z6tRhjDN5
+ VUGAXOTwB8LUII3GwcI13Mdtl+hua1OERyfQFV+KcpsSzTH6cDbyq57hczwULIt9
+ pCAIOrayo7U8Lsb8XeIAqi3O7BDvKBZbjP18HGsBODcZ+x9uulGS/x1dZPNmAVOJ
+ JdqfL46YR3yR+dRjy6FemQrK9zeRiCFbxdK1LtegfBb0fxQ4HPfsRuvGxxPW7Taj
+ M9cUjM64ZPVYZJsVCIx9g==
+X-ME-Sender: <xms:UGAOat5FWFubc3OmAJvkb0JRpGRc0oHSaH7ryBVVpuo6WfkweDxU_A>
+ <xme:UGAOatI30R72_pb9wUtvFF_N346fp4HQOygpGrnSuXhgXjICFA77IHibtdTDuvhOz
+ ADsc-OyvJ6ZiSK0B0iFgr4apc7SjJwQlu3XRjlCwmSeMQ5qVHtVMAA>
+X-ME-Received: <xmr:UGAOamtMF5RmllzJjvjOnH6AA98rgUuSORUG8IB7PTozKN4KOIu72hD9IUD3>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeeivddtucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
  rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
  hlucfvnfffucdljedtmdenucfjughrpegggfgtfffkvefuhffvofhfjgesthhqredtredt
@@ -59,39 +59,39 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeeiudelucetufdote
  honhhskhhirdighiiiqeenucggtffrrghtthgvrhhnpefhfeduffekffehudffteelvdek
  tedvjeehtdehkeethfehvdeghfehtefhffekgeenucevlhhushhtvghrufhiiigvpedtne
  curfgrrhgrmhepmhgrihhlfhhrohhmpegthhgrugesjhgrsghlohhnshhkihdrgiihiidp
- nhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrg
- gusehjrggslhhonhhskhhirdighiiipdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehn
- ohhnghhnuhdrohhrghdprhgtphhtthhopehjuhhnjhhivgdrtggrohesihhnthgvlhdrtg
- homhdprhgtphhtthhopegsvggrudgvsehprhhothhonhdrmhgvpdhrtghpthhtohepqhgv
- mhhuqdhsthgrsghlvgesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepsggrlhgrthhonh
- esvghikhdrsghmvgdrhhhupdhrtghpthhtohepphhhihhlmhgusehlihhnrghrohdrohhr
- gh
-X-ME-Proxy: <xmx:5l8Oasy8Z3N2ZSN9J4ChD87CuSt_GJfD2W1pk9RPJTl07KpX35ODjw>
- <xmx:5l8OakF_j5LRfKj6BaH20dG9nH8D55Q4jVfJmziBSUbjxS8PkqVI-w>
- <xmx:5l8Oanb0plOI6dsW-FXC3r6PwJW4XfMhw3k1FOyDoSLrFidC2xP2dg>
- <xmx:5l8OauB1WsL99yEAeezPZuJBJjasmBFVw76KVp2yibuMrtJ0TZDSWQ>
- <xmx:5l8OapsD9G4vk5pmSkhhH5JJ3sgkjvu0PTQ49R96cvmMbmGvtZpxgvUH>
+ nhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggrlh
+ grthhonhesvghikhdrsghmvgdrhhhupdhrtghpthhtohepphhhihhlmhgusehlihhnrghr
+ ohdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpd
+ hrtghpthhtohepqhgvmhhuqdhsthgrsghlvgesnhhonhhgnhhurdhorhhgpdhrtghpthht
+ ohepsggvrgduvgesphhrohhtohhnrdhmvgdprhgtphhtthhopegthhgrugesjhgrsghloh
+ hnshhkihdrgiihiidprhgtphhtthhopehjuhhnjhhivgdrtggrohesihhnthgvlhdrtgho
+ mh
+X-ME-Proxy: <xmx:UGAOasIZ58cM8tvz9t0BIbrFjd9uUar4k1qV7GFtfl5XlTnR5cN3kA>
+ <xmx:UGAOav8XFwEgNXnhRnu3N-ZKSURGEWbCcSfzlM8eLfWaqxRM2o_ESQ>
+ <xmx:UGAOalyxxcnd5v8GXEAIRUK6JK7VJQwWLTwERDm61-VwUUSSEi-Qsg>
+ <xmx:UGAOas6HL0NLPNb9BTdHeV1RBYY_3g3YARIqJ1d0FjGqdcVJndO6qw>
+ <xmx:UGAOahFj5BdkoD6RHwoGjH4m4i5c6ZS1UCIq0F-RlRZVkOV-rYLzwQNV>
 Feedback-ID: ib26944c1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 20 May 2026 21:29:09 -0400 (EDT)
+ 20 May 2026 21:30:55 -0400 (EDT)
 Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id b7d8531d;
- Thu, 21 May 2026 01:29:08 +0000 (UTC)
+ by chomposaur (OpenSMTPD) with ESMTPA id a64ba143;
+ Thu, 21 May 2026 01:30:55 +0000 (UTC)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 20 May 2026 21:29:08 -0400
-Message-Id: <DINYRFRS419I.1L81XJK6N9P6R@jablonski.xyz>
+Date: Wed, 20 May 2026 21:30:55 -0400
+Message-Id: <DINYSSO8JSHX.26JJ5ULW89BNC@jablonski.xyz>
 Cc: <balaton@eik.bme.hu>, <chad@jablonski.xyz>, <philmd@linaro.org>,
  <bea1e@proton.me>, <qemu-stable@nongnu.org>
-Subject: Re: [PATCH v2 1/2] hw/display/ati: reset host_data.next in write
- handler after flush
+Subject: Re: [PATCH v2 2/2] hw/display/ati: guard against zero bpp in
+ ati_host_data_flush
 From: "Chad Jablonski" <chad@jablonski.xyz>
 To: "Junjie Cao" <junjie.cao@intel.com>, <qemu-devel@nongnu.org>
 X-Mailer: aerc 0.21.0
 References: <20260519023937.439077-1-junjie.cao@intel.com>
- <20260519023937.439077-2-junjie.cao@intel.com>
-In-Reply-To: <20260519023937.439077-2-junjie.cao@intel.com>
+ <20260519023937.439077-3-junjie.cao@intel.com>
+In-Reply-To: <20260519023937.439077-3-junjie.cao@intel.com>
 Received-SPF: pass client-ip=103.168.172.154; envelope-from=chad@jablonski.xyz;
  helo=fhigh-a3-smtp.messagingengine.com
 X-Spam_score_int: -22
@@ -118,6 +118,4 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Reviewed-by: Chad Jablonski <chad@jablonski.xyz>
-
-Thanks for picking this up and sending a v2.
 
