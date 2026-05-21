@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 203A8CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 11:28:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36AC4CD5BA4
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 11:28:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ1Z4-0004a9-Gs; Thu, 21 May 2026 07:27:46 -0400
+	id 1wQ1Z6-0004bH-DP; Thu, 21 May 2026 07:27:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wQ1Yx-0004Vg-7U
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wQ1Yz-0004Vq-8Y
  for qemu-devel@nongnu.org; Thu, 21 May 2026 07:27:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wQ1Yu-0003Tx-HD
- for qemu-devel@nongnu.org; Thu, 21 May 2026 07:27:38 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wQ1Yx-0003UX-Nn
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 07:27:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779362854;
+ s=mimecast20190719; t=1779362858;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XtP/hXhv5FywDODea2xMa2tcAw1lOc5fEXgWxyXWOMw=;
- b=QdMAUYZBaBXELLcvZ+NWgp70js0Gv+OKM1+xT2gi7S7Q/I3y0o3t7sbGvAFk1SoUeXW7J7
- HX9Oiv97P25z8pVxvMnkN+hnhV4E0gl98HLTcjWvFJpuRw1BD6zNln85M1/hUIiRpb35Zn
- kVHXzrDl+AAj5of5b6pxYkF4iQVhfx8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=m98GjvT/Z7zZ58Xc8+906sXBSWVFQOOMfArpR13T7Lk=;
+ b=UcQK5bVPRDfqqUIC60vATI5z2GbnQIpLpJAHw0wuf3IdZQRAIdtxY380yIfHvNjrKmMinI
+ pMQVr19z3sn1hf5BvpYZ39Zz7Kabcm8RUmDeQ2EfHzwTJYePVDgJuy2wuzh3CMaMQW0LII
+ 9RPBkbjwoeBLC9do1iNoTpXeccqBGTU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-151-5MchhKS5MxyM0KcNMY3t_g-1; Thu,
- 21 May 2026 07:27:32 -0400
-X-MC-Unique: 5MchhKS5MxyM0KcNMY3t_g-1
-X-Mimecast-MFC-AGG-ID: 5MchhKS5MxyM0KcNMY3t_g_1779362852
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-606-yeEzSV9MPR-iWRhjLtgpFw-1; Thu,
+ 21 May 2026 07:27:33 -0400
+X-MC-Unique: yeEzSV9MPR-iWRhjLtgpFw-1
+X-Mimecast-MFC-AGG-ID: yeEzSV9MPR-iWRhjLtgpFw_1779362852
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2CF7819560A2
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 306C0195609D
  for <qemu-devel@nongnu.org>; Thu, 21 May 2026 11:27:32 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DC47E19560A3
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E06EF3002D2D
  for <qemu-devel@nongnu.org>; Thu, 21 May 2026 11:27:31 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4969721E6A02; Thu, 21 May 2026 13:27:29 +0200 (CEST)
+ id 5238A21E6A03; Thu, 21 May 2026 13:27:29 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 1/4] qapi/net: Rename NetDevPasstOptions to NetdevPasstOptions
-Date: Thu, 21 May 2026 13:27:26 +0200
-Message-ID: <20260521112729.1287282-2-armbru@redhat.com>
+Subject: [PULL 2/4] qapi/net: Wean passt off QAPI type String to improve
+ documentation
+Date: Thu, 21 May 2026 13:27:27 +0200
+Message-ID: <20260521112729.1287282-3-armbru@redhat.com>
 In-Reply-To: <20260521112729.1287282-1-armbru@redhat.com>
 References: <20260521112729.1287282-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
 X-Spam_score: 0.8
 X-Spam_bar: /
 X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -87,62 +88,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have eighteen QAPI type names starting with Netdev.  Commit
-854ee02b222 (net: Add passt network backend) added a first one
-starting with NetDev.  Rename it for consistency.
+String's doc comment is useless.  Replace its use in
+NetDevPasstOptions by identical types with hopefully useful
+documentation.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20260506105421.2461117-2-armbru@redhat.com>
+Message-ID: <20260506105421.2461117-3-armbru@redhat.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+[One Since: fixed up]
 ---
- qapi/net.json | 6 +++---
- net/passt.c   | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ qapi/net.json | 43 +++++++++++++++++++++++++++++++++++++++----
+ net/passt.c   |  8 ++++----
+ 2 files changed, 43 insertions(+), 8 deletions(-)
 
 diff --git a/qapi/net.json b/qapi/net.json
-index 118bd34965..8ed51b665c 100644
+index 8ed51b665c..c95aa909a0 100644
 --- a/qapi/net.json
 +++ b/qapi/net.json
-@@ -115,7 +115,7 @@
+@@ -114,6 +114,41 @@
+   'data': {
      'str': 'str' } }
  
++##
++# @PasstSearch:
++#
++# @str: DNS domain name suffix for host name lookup, or "none".  See
++#     passt(1) option --search.
++#
++# Since: 10.1
++##
++{ 'struct': 'PasstSearch',
++  'data': {
++    'str': 'str' } }
++
++##
++# @PasstPortForward:
++#
++# @str: passt port forwarding specification, see passt(1) option
++#     --tcp-ports and --udp-ports.
++#
++# Since: 10.1
++##
++{ 'struct': 'PasstPortForward',
++  'data': {
++    'str': 'str' } }
++
++##
++# @PasstParameter:
++#
++# @str: Additional arguments for the passt executable, see passt(1)
++#
++# Since: 10.1
++##
++{ 'struct': 'PasstParameter',
++  'data': {
++    'str': 'str' } }
++
  ##
--# @NetDevPasstOptions:
-+# @NetdevPasstOptions:
+ # @NetdevPasstOptions:
  #
- # Unprivileged user-mode network connectivity using passt
- #
-@@ -191,7 +191,7 @@
- #
- # Since: 10.1
+@@ -206,7 +241,7 @@
+     '*outbound-if4':       'str',
+     '*outbound-if6':       'str',
+     '*dns':                'str',
+-    '*search':             ['String'],
++    '*search':             ['PasstSearch'],
+     '*fqdn':               'str',
+     '*dhcp-dns':           'bool',
+     '*dhcp-search':        'bool',
+@@ -224,9 +259,9 @@
+     '*freebind':           'bool',
+     '*ipv4':               'bool',
+     '*ipv6':               'bool',
+-    '*tcp-ports':          ['String'],
+-    '*udp-ports':          ['String'],
+-    '*param':             ['String'] },
++    '*tcp-ports':          ['PasstPortForward'],
++    '*udp-ports':          ['PasstPortForward'],
++    '*param':              ['PasstParameter'] },
+     'if': 'CONFIG_PASST' }
+ 
  ##
--{ 'struct': 'NetDevPasstOptions',
-+{ 'struct': 'NetdevPasstOptions',
-   'data': {
-     '*path':               'str',
-     '*quiet':              'bool',
-@@ -877,7 +877,7 @@
-   'discriminator': 'type',
-   'data': {
-     'nic':      'NetLegacyNicOptions',
--    'passt':    { 'type': 'NetDevPasstOptions',
-+    'passt':    { 'type': 'NetdevPasstOptions',
-                   'if': 'CONFIG_PASST' },
-     'user':     'NetdevUserOptions',
-     'tap':      'NetdevTapOptions',
 diff --git a/net/passt.c b/net/passt.c
-index d3b5ab426c..223ccd1a1c 100644
+index 223ccd1a1c..45440c399b 100644
 --- a/net/passt.c
 +++ b/net/passt.c
-@@ -495,7 +495,7 @@ static int net_passt_vhost_user_init(NetPasstState *s, Error **errp)
- }
- #endif
+@@ -637,7 +637,7 @@ static GPtrArray *net_passt_decode_args(const NetdevPasstOptions *passt,
+     }
  
--static GPtrArray *net_passt_decode_args(const NetDevPasstOptions *passt,
-+static GPtrArray *net_passt_decode_args(const NetdevPasstOptions *passt,
-                                         gchar *pidfile, Error **errp)
- {
-     GPtrArray *args = g_ptr_array_new_with_free_func(g_free);
+     if (passt->has_search && passt->search) {
+-        const StringList *list = passt->search;
++        const PasstSearchList *list = passt->search;
+         GString *domains = g_string_new(list->value->str);
+ 
+         list = list->next;
+@@ -652,7 +652,7 @@ static GPtrArray *net_passt_decode_args(const NetdevPasstOptions *passt,
+     }
+ 
+     if (passt->has_tcp_ports && passt->tcp_ports) {
+-        const StringList *list = passt->tcp_ports;
++        const PasstPortForwardList *list = passt->tcp_ports;
+         GString *tcp_ports = g_string_new(list->value->str);
+ 
+         list = list->next;
+@@ -667,7 +667,7 @@ static GPtrArray *net_passt_decode_args(const NetdevPasstOptions *passt,
+     }
+ 
+     if (passt->has_udp_ports && passt->udp_ports) {
+-        const StringList *list = passt->udp_ports;
++        const PasstPortForwardList *list = passt->udp_ports;
+         GString *udp_ports = g_string_new(list->value->str);
+ 
+         list = list->next;
+@@ -682,7 +682,7 @@ static GPtrArray *net_passt_decode_args(const NetdevPasstOptions *passt,
+     }
+ 
+     if (passt->has_param && passt->param) {
+-        const StringList *list = passt->param;
++        const PasstParameterList *list = passt->param;
+ 
+         while (list) {
+             g_ptr_array_add(args, g_strdup(list->value->str));
 -- 
 2.54.0
 
