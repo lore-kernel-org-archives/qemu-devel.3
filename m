@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EA8FCD5BAB
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 20:09:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12CFCCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 20:09:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ9hV-00023C-7y; Thu, 21 May 2026 16:09:01 -0400
+	id 1wQ9hX-00023q-4k; Thu, 21 May 2026 16:09:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wQ9hU-00022w-Fq; Thu, 21 May 2026 16:09:00 -0400
+ id 1wQ9hV-00023F-NT; Thu, 21 May 2026 16:09:01 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wQ9hS-00071B-LD; Thu, 21 May 2026 16:09:00 -0400
+ id 1wQ9hU-00072U-6J; Thu, 21 May 2026 16:09:01 -0400
 Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64LCREhU883231; Thu, 21 May 2026 20:08:55 GMT
+ 64LEQ1N83300127; Thu, 21 May 2026 20:08:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=zhDPMDRihvGQu4mc/Qmu5/NjYOMEnpVRj5WvLc+H4
- B8=; b=g3h1WIh/3cCK7V9H3etBG7r15Ym02psfAgAwLmxgbyodoCGW64D+CMIss
- ISpz+PR7xSiJJXHCvyzwHqY3dpLyNeqrIIFwhSkSaLVvJEJjW2MOqm4/RjIf7/dv
- iIkhZgEuzvBTuGuNZLyT6gEIgicim7shJvQiHQ1F1TTcLDT78DT+Rriyl3uH2AjQ
- 0bXb9G4odeO/r4H+MxoQL1P8uesuQ9We4LoE5udkxSaBNhez7/ss2khujy/PIbTm
- TvNo/cQ8X5EKg9ll7AqW1E/aa1ZzaGo3UwcM7PpHHiBB/FmRRZvJvmcyjekKxNUB
- LkoGdP5QNUjt/7k5PbA36Vpyxvk3Q==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h8n0tpq-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=Ck2Gz1/ZCOXnZCSg/
+ vQ8lcmUhdYMnpKMhfvA/sg7l4k=; b=fdN/y+4zp61iA5qyFPSzZkYrhlnrPG9B/
+ xRzXAN5zF25gPhh6vEwf5hTZJZEtnUS+bNCycGZructKhq6kT6mMGHfrKybVQx7y
+ h+jYtedwLAGr5QhUViJBoZPFBkpXbbuW0AavVC+RQyA6/k6m5Z41RZYK+qV/G2ua
+ d6BnUTwuJhHd5kWIP/w0DSWgreHhZ08EmmIl5sKcJGNEhEzVPPDqmXHchkcv+M6p
+ PoTo6YXnldp9B6WRIbdcAGATpQX9xttR8FTvMogjpc9s8JhVI+EZ1/xVe0+kpDZo
+ lgDaC9Gt86QHRERpB9jHIIZxbkJcEdcAZAvg6ef1yUpdMEpd8RpRA==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h8n0tpw-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 21 May 2026 20:08:54 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64LJd87J021368;
- Thu, 21 May 2026 20:08:53 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e739w61jk-1
+ Thu, 21 May 2026 20:08:57 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64LJsFfu009887;
+ Thu, 21 May 2026 20:08:56 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e72wqe50f-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 21 May 2026 20:08:53 +0000 (GMT)
+ Thu, 21 May 2026 20:08:56 +0000 (GMT)
 Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
  [10.20.54.103])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64LK8nrs49676726
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64LK8r0v61931782
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 21 May 2026 20:08:50 GMT
+ Thu, 21 May 2026 20:08:53 GMT
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CCC3C2004B;
- Thu, 21 May 2026 20:08:49 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 89A8F20043;
+ Thu, 21 May 2026 20:08:53 +0000 (GMT)
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 92AF52004D;
- Thu, 21 May 2026 20:08:46 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 59E352004B;
+ Thu, 21 May 2026 20:08:50 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
  [9.39.29.116]) by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 21 May 2026 20:08:46 +0000 (GMT)
+ Thu, 21 May 2026 20:08:50 +0000 (GMT)
 From: Aditya Gupta <adityag@linux.ibm.com>
 To: <qemu-devel@nongnu.org>
 Cc: <qemu-ppc@nongnu.org>, Nicholas Piggin <npiggin@gmail.com>,
@@ -64,28 +64,30 @@ Cc: <qemu-ppc@nongnu.org>, Nicholas Piggin <npiggin@gmail.com>,
  Miles Glenn <milesg@linux.ibm.com>,
  Shivang Upadhyay <shivangu@linux.ibm.com>,
  Misbah Anjum N <misanjum@linux.ibm.com>
-Subject: [PATCH 0/2] ppc/pnv: Make Power11 as the default CPU
-Date: Fri, 22 May 2026 01:38:42 +0530
-Message-ID: <20260521200844.1449023-1-adityag@linux.ibm.com>
+Subject: [PATCH 1/2] ppc/pnv: Make PowerNV11 as the default powernv machine
+Date: Fri, 22 May 2026 01:38:43 +0530
+Message-ID: <20260521200844.1449023-2-adityag@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260521200844.1449023-1-adityag@linux.ibm.com>
+References: <20260521200844.1449023-1-adityag@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: SUGJr4qZTCcRwtn12eXlOsqSimveNMID
-X-Authority-Analysis: v=2.4 cv=GYMnWwXL c=1 sm=1 tr=0 ts=6a0f6657 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Proofpoint-GUID: IG6_JIRGzBHRMYlM_zVZbLWaSxJAL9xh
+X-Authority-Analysis: v=2.4 cv=GYMnWwXL c=1 sm=1 tr=0 ts=6a0f665a cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=p0WdMEafAAAA:8 a=06ATd3cQ_zJXQtLGZ5QA:9
-X-Proofpoint-ORIG-GUID: dpzaSISi2EoxM98BAeBYUWVhH9869jr0
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIxMDIwMiBTYWx0ZWRfX+me9aYKIIis7
- E3ci/POCxnfRQGjSZ1RXoIRgnpV/MRTXzORK84A+/OVr4kF5MBOZlx6M9ZOLshmq8WZ+E6tgd3e
- 4eixelN7WqL6k3dbdC+I8QSqihARNEucQT65FVJn73+hsIaaQRCTTF2irxJ2EMLvDdWrEngUPg/
- FaR0H2mqob7sKonRpRxKrtl4ygdbh/AUIBu6qE+tnsacS6Vp/vptL2XMFP2E6TJnf+Myz4Fg8AP
- 0x3mX7bI/xU064qefsPWs0GbBVkoWLMYQNiPfRxXuPGeKHjdaTdeylfsvkaSv3tCeM/XZVMFWL2
- BX6ug/+9+LioPIDB/3oTU7SDmxwORhJCOiH+j841n8dbRYcxeyDi5bUvVnpyzKeBUiywP/medab
- 8K4P1gMFGeizedscmeVJoU0yzY3BAyQ8roXFWR4PgrAdZlu90+O7LOj2QlQIbSUoNj65Gh/QZan
- eYUB09/ommyBep/XxXg==
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=YpvtxgsHfqG9jXpqftsA:9
+X-Proofpoint-ORIG-GUID: BNSkIckJ2R9nAjdJ4rDrePfYIk2IEvcw
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIxMDIwMiBTYWx0ZWRfXyusc9r/MkRzq
+ 03UhFbzJ2Sr40mB5THP0+4uVEodvl4JdpAsVkq5yO+wNKivbQWZbIUx7N22tV2WNPCq1pxwQPuX
+ YCFLjNGDkeYJmr3eriMOguB7P33p9Ff6HseTGbgDw1M+yfIgPpLXG0iz5xnu3IEP8jg3UcAN50z
+ LFswPX+TnNUrkaHd/ESOtW2g4tAiXHMkuY8fP20iDVilLtQPdDa4D52JSIt5hSvUIJcMl129l58
+ EIkPs2J5x80fa6zyoHJN33OL/Q7qQ4TBjrnlAaE8CGETijvnWNJh0hTlPSJMTrlLOOePl9Q4STK
+ K6JWhgGHvW+BoMWtz8/xrsEoN2OEdif7pLKdOQvMKPYaI+4h2QlJv2MyNt5O1VprzYbQ1nUqdHZ
+ JU7cGtnDzQraf6YxrYWoOSJAtfDJ7jI3ULzl7pEt4ABHTif/ru75U08I+6PGidpJYDla3JSYzrh
+ Z83aDXxzqWRg8Vbi6hA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-21_04,2026-05-18_01,2025-10-01_01
@@ -118,25 +120,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Overview
-========
+With Power11 being the newest supported Power processor in QEMU, and
+sufficiently tested, set powernv machine as an alias to powernv11
+machine
 
-Power11 is the newest supported Power processor merged last year.
-Make it the default processor for PSeries and PowerNV.
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+---
+ hw/ppc/pnv.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Testing
-=======
-1. Git tree with patches: https://gitlab.com/adi-g15-ibm/qemu/-/tree/feat_default_p11
-2. Gitlab Pipeline: https://gitlab.com/adi-g15-ibm/qemu/-/pipelines/2542576926/
-
-Aditya Gupta (2):
-  ppc/pnv: Make PowerNV11 as the default powernv machine
-  ppc/pseries: Make Power11 as default cpu for pseries
-
- hw/ppc/pnv.c   | 4 ++--
- hw/ppc/spapr.c | 3 ++-
- 2 files changed, 4 insertions(+), 3 deletions(-)
-
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 8306754d9ad8..9143f0aa6bc0 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -3478,8 +3478,6 @@ static void pnv_machine_p10_common_class_init(ObjectClass *oc, const void *data)
+     mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power10_v2.0");
+     compat_props_add(mc->compat_props, phb_compat, G_N_ELEMENTS(phb_compat));
+ 
+-    mc->alias = "powernv";
+-
+     pmc->compat = compat;
+     pmc->compat_size = sizeof(compat);
+     pmc->max_smt_threads = 4;
+@@ -3556,6 +3554,8 @@ static void pnv_machine_power11_class_init(ObjectClass *oc, const void *data)
+     mc->desc = "IBM PowerNV (Non-Virtualized) Power11";
+     mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power11_v2.0");
+ 
++    mc->alias = "powernv";
++
+     object_class_property_add_bool(oc, "big-core",
+                                    pnv_machine_get_big_core,
+                                    pnv_machine_set_big_core);
 -- 
 2.54.0
 
