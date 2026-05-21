@@ -4,106 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A96E3CD5BAB
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 20:26:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36E3CCD5BAF
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 20:29:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ9yG-0007ue-Pt; Thu, 21 May 2026 16:26:20 -0400
+	id 1wQA0n-0000Am-Tt; Thu, 21 May 2026 16:28:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
- id 1wQ9y0-0007ss-0X
- for qemu-devel@nongnu.org; Thu, 21 May 2026 16:26:06 -0400
-Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wQA0k-0000AI-SM
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 16:28:55 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
- id 1wQ9xy-00089v-Bz
- for qemu-devel@nongnu.org; Thu, 21 May 2026 16:26:03 -0400
-Received: by mail-ot1-x32d.google.com with SMTP id
- 46e09a7af769-7dbd801138eso4399234a34.1
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 13:26:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779395161; cv=none;
- d=google.com; s=arc-20240605;
- b=PzvzZC1TXydQL0rorrQsMkgTx9TPvLEf+g/RumZuAn48lIkRNlpYO5TCePn++44Ovm
- aC0wWDK/tta1Pv4X/HyDeVHrIEkyFdCtdAe3rUnWXgnTHVoCU8xOOgVexO0d+NP1uIPH
- r4IoC0x04J5gps0XOvyByGWZ7arakynEKEUnDad7S/oa0lqYAjT2hC237G9u44gm8/3L
- WOtkGsSKNf3QY1ctqqoRw3uRrckxOhtLVVouznEpbSBUi4Z+qmq9PVGEGrlHL1VsVFa3
- SpdfoDmlZYW2lYVIvphqDBE0dPYu9pbnyCUgjU0uUMjVjYWzuImioUUMygH4ByA2qiz+
- UWYw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=BnZKBgCkyetHodAb7HtYhzK5yHV7wQbsMypvHi4OobM=;
- fh=/aURJlcAzC93zQx7oUf7NbjdC5rKfo/4/8cj8BWsd8c=;
- b=VPt1s4OOrcg2O28hNsSvSxz7KaAQKKlbkF1LwjJE5ielfWFOpeHHVD6RrJ9V9/4khm
- V00ju2elTHeZs94gx5H/swFw8IWivdZknAROlJRdaIMYnkTAc0gDyLdVUhtphr91YZPR
- UwSqjP9zEeBO/eO74kHUpKBvapvWt7IzAfjwy5Sqm6Z3HkFQXcE0YP5JPQ95Hz+ybYkt
- ijCrY7siZEznxHaCYGF5rYIIeRuVm+hLpqVD5IyOD3EccNMZbChOr8x6uctmtDtDHCCj
- YdXPZFXAaPkaaIQ28lAZ80nNSuf3xCPYHXnBIpNuJsrm9JVbhyLMmiGoBKuzgyNkToCx
- ZkCA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wQA0i-0000sw-Rk
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 16:28:54 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4903974854dso10532995e9.3
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 13:28:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779395161; x=1779999961; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1779395331; x=1780000131; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BnZKBgCkyetHodAb7HtYhzK5yHV7wQbsMypvHi4OobM=;
- b=PgwJPt7NAKp9Ze3V5EmxQJszhXdSvuhm+CYDF4BD5ZMUgiZ3sfYE+tj4pBvYp4yKUP
- UgLvlqSkYmY4j/KMbkXxRiKus1dA5qEoEms7V4QFg5W2EThgUZnItVqutvaMzSlVe2+e
- y4MD2lsesWzbrhEiQ/a/DPZPWVEMQhZ+qMzDXZIZLcN2y+tCaUVbErbQ87SmUpMoZQl4
- t1kny3jr4JoHvOEV4u1kOiP6aaQcvB58zTBplM+sqDEJ3O053MiZ9txi6csylBmzQqwK
- /qrsxlLp3Bc8u6kBuyzbR5aA9nsASSJH+Bri0YVaD5Y/QPLrvPoIiX/lsPRANmoJQ1nx
- 0H/w==
+ bh=y7AlX1zOnsIRlw1I2xhuzDkfrP1AIvNyFk5r/QJiaPo=;
+ b=Vj0isDAW2ewh5r28Y2uQIyMZGy+YqbTGOzBOYX+mDZ3B++fsIdaqV35+k4W8s3GPlu
+ wMyP9ywCrvrZ7z6f8etqEEnwEM7uSMybXfYiBYHxeb1fsTOedt31WbOfXWh+PKYXfvOu
+ 8SHhSACLXQz/bXVaKceKJwtM57ededmDBK/8Pdb336I/ySzcsZmSxm6OBOepqA33UpjB
+ w8Vdm4HkpDz9qKNjlRaIggUK4s8fDcJ2eAb+CLY1cjRI9p2sS3DYrBJQ1Sq/OAFZL0E+
+ L4MxOuBmGcABTjbTZM+41wdg0rH069WSOvzOh3qf3vKKhx3zYv4QTRzNIpp5XxgQaE3z
+ LMPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779395161; x=1779999961;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=BnZKBgCkyetHodAb7HtYhzK5yHV7wQbsMypvHi4OobM=;
- b=Mi73kRu0f2XC/F8ObJwulk6/8AqMEeUFvSnUW1+XYj5gVmRcy5JOAuRp1ZBngPHHBN
- ZdqFcpb5Dse+GIIDEs+B29ZCu19qxBaVEweEUONuA09EYebota8D93nORBZGbUORQV8+
- cjkRMzpgIZCsHRkq8XuMe5fmgF++LqKEj4nA7pFbP5/84duFW1fvz8D76pE8Qu+n1fPg
- Q7yTlDsQ4snKMW1l0EYQpWqBNhWSaK1MSs2iPBRUtjD21hHvnxGgsL3Jpb/0tgBdwE/M
- nSnXwEtR9de0agDXFFFmTJha45b0IPyxpHQyvyVBjzsFsBQ3L+2wORG7T+c3p487aF+b
- BsvQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9TolHBwgRNa83uOulE45Na0KoDUt/hmo6adD+8LE7uWYa2lFWm2BYpwjD3rKXSVjjIAuITNe9K2yUL@nongnu.org
-X-Gm-Message-State: AOJu0YxyVBVRYqxIaFopSoptEHqo2BuxUk/ATWzHrUOxrv9HXjNXUX7R
- 9VmUFH0pK4geksafWeswrWci8hHqK6RPqn3aMcYsdIi+uDUJSEF3jFpbcGT2/a+OR9O6Ax/AU9d
- sVLDEOIbe4GK3f629qer4YqKohQtrCCpVzYZ4+lW+Yw==
-X-Gm-Gg: Acq92OHu8yKqo9etcRAi3h3GRzD0rrQg5pRNT/ngRqubPS/kQeTln0gFx1SAaeCprWW
- tMcWk/kQsHRhbzPawQ0XBiZKiiI114Cjyjb2Ve3ZL80ur5GRmESBpWZtHDmI8/aAeQtyQ/Z7Wk5
- ML03ge7Wi6RP96/uEbGRoO5QW8bmVExMmHJwmQ7Pa7bAw0wK8+VUaKQhToM3a88ltZl5Yqor0B/
- aSNuXDVgDcxno/io80IgCh2PYnFEtpK41BE127wNrKfNdA8voarwbIOyH81BcgBo/gImVSxSKFP
- LlxosRA=
-X-Received: by 2002:a05:6820:c0c7:20b0:695:94b4:d4cc with SMTP id
- 006d021491bc7-69d6dfeac42mr1557107eaf.1.1779395160738; Thu, 21 May 2026
- 13:26:00 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779395331; x=1780000131;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=y7AlX1zOnsIRlw1I2xhuzDkfrP1AIvNyFk5r/QJiaPo=;
+ b=ZHIANFOSIQQo4lHXXukbszACP85TRX+OUbH8x3Ict5ObKzyEJ9pFM4/iqKN21M6Pi/
+ HwcigtHW7g+U5uNQz84FfudHDHdvWXNnx6kz7GsJ1nOQwWXYZD8CVlXEaJ+rv7rnI9zh
+ LrQQe5HoZk8FvVo0Caa4yvHfcB+Qdq3IlML/iFPjxfvGZsvnDz0ClluuJIn6kyXF4Ib9
+ QEx7qFj1CGOiwO1NSwcIs05zXASKp1f0HkWliZzmU7D5zqwf4bosFSObyNA+HOPKxDZg
+ unVotFGW867HQFiWyM8xlTHBXmmGzwdrzhCaP9+21h7g9I8uzzWA4oPd8epigq53UjFO
+ Mraw==
+X-Gm-Message-State: AOJu0Yyav1wBQGRD0DouPbWl7vpYsdzD/dEG+i6bV748IrVok7ZlP2Qn
+ eA2xUBwysJs/fNQwJ6PXyhLEaFv7EAM99nprPR+uImonqjJgeV2/Hz2uM7x9T0d7qX9T8vB4Ny5
+ QDn/RJlY=
+X-Gm-Gg: Acq92OH6Bxe3FTDWRzXoFd2+hCs+r6XuFRgiHsI4PYg2M+nXCXC72s3Zxi22ZHUuqvE
+ kGUH98bFipOeGbsxndG1lJcoElcdBuFYt3AL4sIIhwTZG8orABj29PavqkiNwKjQGf1VtuAMfQH
+ TJejUI5UNx6Zz2Yy6XR8ZhzKmsJIkQMcQQNUT4i0ZirwQkW4FED7UvSb4MD2E2Davuo8CzKBYrh
+ v+HCbgp9HQxXXBzK939feGuh4mZnJlYPjheaR/uEUsdgKCjam/usVU87hmS/FiiTIEI49KiCgqb
+ fA84SuK816h439QMOoo2/mOZXoHnxEqAZwayR0yeHU3kn0RHaEc/VUEU9869eEBu6mVF6P0E2sW
+ nWfboTnn1x3Z++ieHmHjAIZ5RUJZc11uXp6eRkemC887DaOarNG5uV5rXlZJ5HNGsXz6muSyAWk
+ DUhQFZYMnNq89dmY9DUzScg/A=
+X-Received: by 2002:a05:600c:8599:b0:48a:93f8:dd02 with SMTP id
+ 5b1f17b1804b1-490426b49a3mr2698075e9.14.1779395331224; 
+ Thu, 21 May 2026 13:28:51 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45eaa7cf1c2sm5531479f8f.4.2026.05.21.13.28.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 21 May 2026 13:28:50 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id AB7805F886;
+ Thu, 21 May 2026 21:28:49 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: gustavo menezes <gumenezes2019@gmail.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [RFC] Add initial Qualcomm MSM7201A platform emulation
+In-Reply-To: <CA+YAEjo9BdN6RuRbg=bfVqke4kf24my21Jk3P4aJDzR8A5yqyw@mail.gmail.com>
+ (gustavo menezes's message of "Thu, 21 May 2026 15:30:11 -0300")
+References: <CA+YAEjo9BdN6RuRbg=bfVqke4kf24my21Jk3P4aJDzR8A5yqyw@mail.gmail.com>
+User-Agent: mu4e 1.14.1; emacs 30.1
+Date: Thu, 21 May 2026 21:28:49 +0100
+Message-ID: <87h5o0mrr2.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20260519-mips-octeon-missing-insns-v2-v10-0-306f9edfe15b@gmail.com>
- <52b9ca7a-9ac2-4e0b-8394-3e1f167560e0@linaro.org>
- <CAPMQPELA36GSuFhEfvgONzNYMcNQUzP6_m0FXbLjp2ZUeu-maQ@mail.gmail.com>
-In-Reply-To: <CAPMQPELA36GSuFhEfvgONzNYMcNQUzP6_m0FXbLjp2ZUeu-maQ@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Date: Thu, 21 May 2026 22:25:49 +0200
-X-Gm-Features: AVHnY4I3Y2kLFKw92dtoRHM4C3pt18Nm2WQDOkVIlJ4kfpIHqR9A4GMROba2IlU
-Message-ID: <CAPMQPE+peGvbRTZJWHzq3BXXju1zmr6gq77FOofr5vDBd8pbMQ@mail.gmail.com>
-Subject: Re: [PATCH v10 00/45] target/mips: add missing Octeon user-mode
- support
-To: James Hilliard <james.hilliard1@gmail.com>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Aurelien Jarno <aurelien@aurel32.net>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>, 
- Huacai Chen <chenhuacai@kernel.org>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
- envelope-from=philippe.mathieu-daude@linaro.org; helo=mail-ot1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -126,31 +104,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 21 May 2026 at 22:22, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
-> On Wed, 20 May 2026 at 12:00, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.=
-org> wrote:
-> > On 20/5/26 06:36, James Hilliard wrote:
-> > > This series updates MIPS linux-user unaligned-access behavior and fil=
-ls
-> > > in missing Octeon user-mode instruction support used by existing Octe=
-on
-> > > binaries.
+gustavo menezes <gumenezes2019@gmail.com> writes:
 
-> > Thanks for this series, I really appreciate your dedication and the
-> > quality of your patches. I have been trying to queue it since v7 but
-> > you keep respinning :) Since the first half is stable and reviewed,
-> > I'll queue that first and send in my next MIPS pull request; less for
-> > you to carry over.
+> Hello,
 >
-> Now merged as commits e83a42cbf72...006d624b948.
+> I am interested in developing initial support for the Qualcomm MSM7201A
+> SoC family in QEMU.
 >
-> Rebasing the rest shouldn't be too hard (changes are
-> obvious, I also moved the TRANS_LX block around).
-> Tell me if you have an issue rebasing your work and I'll
-> repost the remaining patches.
+> The goal is to emulate early Qualcomm MSM7K-based smartphones such as
+> the HTC Dream / T-Mobile G1 and related Windows Mobile devices.
 
-And I now notice your v13, this is perfect, I'll follow there, thank you!
-https://lore.kernel.org/qemu-devel/20260521-mips-octeon-missing-insns-v2-v1=
-3-0-5a4cb8ec9cd3@gmail.com/
+That sounds like quite a lot of work for one person. Have you done much
+device modelling or reverse engineering before?
+
+>
+> Initial targets would include:
+> - ARM1136 core support integration
+
+We already have at least one board that uses this so that is done.
+
+> - UART
+> - Interrupt controller
+> - Timers
+
+Are these all Arm IP blocks or something QC specific?
+
+> - NAND flash controller
+> - Minimal Linux/Android boot capability
+
+While Android can boot on QEMU (specifically the Cuttlefish Android
+target) you may need to model/stub a lot of devices to get through the
+boot of an unmodified image.
+
+> Longer term goals may include:
+> - LCD/framebuffer support
+> - Audio
+> - Modem/DSP stubs
+> - Power management
+> - Windows Mobile compatibility
+>
+> Potential use cases:
+> - Preservation of early smartphone platforms
+> - Android historical research
+> - Embedded Linux development
+> - Reverse engineering research
+
+For reverse engineering you should ensure any devices you model work
+appropriately with record/replay.=20
+
+>
+> I would appreciate feedback regarding:
+> - Existing related efforts
+
+There are a number of downstream forks of QEMU that model various things
+including at least one that claims to emulate a full iPhone so such
+things are possible. However most of the upstream models are either
+aimed at virtualisation, model various developer/reference boards and a
+large number of system controller boards.
+
+> - Preferred machine model structure
+
+I'll leave that for others - however the general advice is to be wary of
+copying and pasting for older models which often use old/legacy APIs and
+haven't bee converted.
+
+> - Maintainership expectations
+
+No one is expecting full security support for random board models (see
+security.rst) however neither are drive-by code dumps particularly
+useful to the project. Orphaned sections of code are liable to
+eventually get removed especially if there is little evidence of it
+being useful to people. You should be prepared to at least field bug
+reports and review incoming patches even if the patches are eventually
+merged through some higher level maintainer tree.
+
+> - Upstream acceptance concerns
+
+All code added to QEMU adds some degree to the maintenance burden. As
+code is likely to be re-factored by many people the most useful thing to
+address are:
+
+  - Good comments and references to source documents of what behaviour
+    should be
+  - Testing, having some way to ensure functionality doesn't bit rot
+  - Try and keep changes localised - QEMU is pretty modular but if you
+    need to make changes to wider code expect to justify it.
+
+Plus all the usual things about project coding and commit style and what
+developer focused documentation we have:
+
+  https://qemu.readthedocs.io/en/master/devel/index.html
+=20=20
+
+
+>
+> Thanks
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
