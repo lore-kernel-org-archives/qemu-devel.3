@@ -4,107 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F0AACD4F5E
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 12:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74AEECD4F5E
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 12:13:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ2F3-000502-9t; Thu, 21 May 2026 08:11:09 -0400
+	id 1wQ2Gn-0005Zg-7j; Thu, 21 May 2026 08:13:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wQ2F0-0004ze-Gg
- for qemu-devel@nongnu.org; Thu, 21 May 2026 08:11:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1wQ2GZ-0005X6-SM; Thu, 21 May 2026 08:12:44 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wQ2Ey-0001H1-5X
- for qemu-devel@nongnu.org; Thu, 21 May 2026 08:11:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779365462;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5ls/h+mBaYPKEcug4ENQoj5FSj8qrgO/Q/7qjGXBsW0=;
- b=ZzElLjCct18+64sulClNWQnC7GHK6QSrD4rvaKowr/52PxJ/tjtRCKIn/e4C50uBVuuc0D
- swe6MTceDQxTU2ToFjLIJdgYbvwk4Dc9209LRUSUFy16AsGy4WexsNKwYUa7DQeI+HFJmC
- /oUqpp07RVfhCbuMkBQvxnQuIDDx79U=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-595-EeGxpHz7NA6yx39ZbREV-w-1; Thu, 21 May 2026 08:10:59 -0400
-X-MC-Unique: EeGxpHz7NA6yx39ZbREV-w-1
-X-Mimecast-MFC-AGG-ID: EeGxpHz7NA6yx39ZbREV-w_1779365459
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-48fd233d1e2so55950815e9.1
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 05:10:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779365459; x=1779970259;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5ls/h+mBaYPKEcug4ENQoj5FSj8qrgO/Q/7qjGXBsW0=;
- b=lop/MAsp98+GdLZqHjCiJjUvNs/5gFxv5y1TmstgvOYoT5QhDIKI36ZvsE+7j6EN7b
- +EbP5dT8VilqF159+z7206SiHGcqWIXkoDvdrWlvYZTE0x9RLkHSU3XNBbfmedq7yw6l
- y9mfTIFtLrEirp5yANG24sMWOapCEUgiF4L+fwK5yOiY14VRY8SC1Fm6t+Ta1kf9Cew7
- d39OGpqtfdg5itGpxQhabV3ODLdVUgcAVA1uKRLcW9EZkgKF47FHXg3wOP1lR/8le0Sf
- fEJlTL6p2P3pXw7IISTlkfPpTz7Sdf8NpdmwEaZIgpc1wLgz/THqIprkFpffOCSol8vb
- 0x6Q==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9iGgnEBvIqZeBUTcQQhbUJlb+72Lk/QUHx4szb0dWRnsu60KzXyJqJ8UfjOKhzgu0hCNSeB2B9JRAJ@nongnu.org
-X-Gm-Message-State: AOJu0Yy35A9kgW5CQG2TYlEELGnpLmzMWVfUnabmLE+gW6r1PJtLxQQz
- Qcut72QOFGbfWR7lw9L/gB9BaQXJfejfi3JDjeIEMPHIXbh5ds4f6XKCoGJo0WJFUudR6+PTHJE
- 842U5ys7pOAWofpOLkIB8+28xP5BadN+qsEOlQNYDkpZNVnSlWxHDv4iu
-X-Gm-Gg: Acq92OGo7xZji0buVbKEuS45r97b57/e7hI2JgKfGqb6Kyr3B3WEDOvrTW75emKpkJF
- /37nVSc97o6ej3oQL51bY/3umHLuDW5PFy3joPrJ8SDffg424cxvr74G/nbj+N3+PIaepEE2YI+
- ZtFf+Dvm+ZfvHLbCYUOLsBeyxNp+dUqnQveNFC1aClbHOUWZxF6+0YYKrWq+7mJdiHFPD6oZVYO
- UlwFFIDWvdH9tVZkzmN+pZFR0as+M0upn4VTcNSUxRqWUNxaNducbW9oTORxPs9a1vezysr/Hc2
- SsEduP1GU0sLvHUzYbzL6ua0OAsuAj2yWpyFZOhsA/fzVJ9jTD77V3tyi8Nu0bN2DsCTofI5MiR
- VHGjRmQUCPeOwktsvL45/mgeHjZVibcuTW8qA9J8PpYCS1Mg1qCidVJlX/Tbc6teOsYwRziCqkM
- uVMlL0
-X-Received: by 2002:a05:600c:a04:b0:48a:97b6:7420 with SMTP id
- 5b1f17b1804b1-490360e46d3mr35720305e9.24.1779365458565; 
- Thu, 21 May 2026 05:10:58 -0700 (PDT)
-X-Received: by 2002:a05:600c:a04:b0:48a:97b6:7420 with SMTP id
- 5b1f17b1804b1-490360e46d3mr35719795e9.24.1779365458086; 
- Thu, 21 May 2026 05:10:58 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4903cae778asm20189015e9.13.2026.05.21.05.10.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 May 2026 05:10:57 -0700 (PDT)
-Message-ID: <4c820b96-0426-4839-82ab-70fc2d146406@redhat.com>
-Date: Thu, 21 May 2026 14:10:55 +0200
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1wQ2GN-0001On-Rn; Thu, 21 May 2026 08:12:34 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 514DB83159;
+ Thu, 21 May 2026 14:12:21 +0200 (CEST)
+Message-ID: <414848c6-3829-4120-b760-6db8d43c1ab5@proxmox.com>
+Date: Thu, 21 May 2026 14:12:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 21/32] memory: Allow RAM device regions to skip IOMMU
- mapping
+Subject: Re: [PATCH 3/4] qcow2: Fix corruption on discard during write with COW
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
+ Michael Tokarev <mjt@tls.msk.ru>
+Cc: hreitz@redhat.com, den@openvz.org, stefanha@redhat.com,
+ qemu-stable@nongnu.org, qemu-devel@nongnu.org,
+ Thomas Lamprecht <t.lamprecht@proxmox.com>
+References: <20260427170520.101242-1-kwolf@redhat.com>
+ <20260427170520.101242-4-kwolf@redhat.com>
 Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
- nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
- jgg@nvidia.com, zhenzhong.duan@intel.com, kjaju@nvidia.com,
- phrdina@redhat.com
-References: <20260519103727.899332-1-skolothumtho@nvidia.com>
- <20260519103727.899332-22-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260519103727.899332-22-skolothumtho@nvidia.com>
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <20260427170520.101242-4-kwolf@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1779365522979
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,120 +59,94 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
+Dear maintainers,
 
-On 5/19/26 12:36 PM, Shameer Kolothum wrote:
-> Some RAM device regions created with memory_region_init_ram_device_ptr()
-> are not intended to be P2P DMA targets.
->
-> The VFIO listener currently treats all RAM device regions as DMA
-> capable and attempts to map them into the IOMMU. For regions without
-> dma-buf backing this fails and prints warnings such as:
->
->   IOMMU_IOAS_MAP failed: Bad address, PCI BAR?
->
-> Introduce a MemoryRegion flag (ram_device_skip_iommu_map) to mark RAM
-> device regions that should not be IOMMU mapped, paired with
-> memory_region_skip_iommu_map() / memory_region_set_skip_iommu_map()
-> accessors. When the flag is set, the VFIO listener skips DMA mapping
-> for that region.
->
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> ---
->  include/system/memory.h | 21 +++++++++++++++++++++
->  hw/vfio/listener.c      |  4 ++++
->  system/memory.c         | 10 ++++++++++
->  3 files changed, 35 insertions(+)
->
-> diff --git a/include/system/memory.h b/include/system/memory.h
-> index af5f96f6ff..b11d6bf07f 100644
-> --- a/include/system/memory.h
-> +++ b/include/system/memory.h
-> @@ -864,6 +864,8 @@ struct MemoryRegion {
->  
->      /* For devices designed to perform re-entrant IO into their own IO MRs */
->      bool disable_reentrancy_guard;
-> +    /* RAM device region that does not require IOMMU mapping for P2P */
-> +    bool ram_device_skip_iommu_map;
->  };
->  
->  struct IOMMUMemoryRegion {
-> @@ -1743,6 +1745,25 @@ static inline bool memory_region_is_romd(const MemoryRegion *mr)
->   */
->  bool memory_region_is_protected(const MemoryRegion *mr);
->  
-> +/**
-> + * memory_region_skip_iommu_map: check whether a memory region is excluded
-> + *                               from IOMMU mapping
-> + *
-> + * Returns %true if @mr is a RAM device region marked to skip IOMMU mapping.
-> + *
-> + * @mr: the memory region being queried
-> + */
-> +bool memory_region_skip_iommu_map(const MemoryRegion *mr);
-> +
-> +/**
-> + * memory_region_set_skip_iommu_map: mark a RAM device region to skip IOMMU
-> + *                                   mapping
-> + *
-> + * @mr: the memory region being modified
-> + * @skip: %true to skip IOMMU mapping, %false to allow it
-> + */
-> +void memory_region_set_skip_iommu_map(MemoryRegion *mr, bool skip);
-> +
->  /**
->   * memory_region_has_guest_memfd: check whether a memory region has guest_memfd
->   *     associated
-> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-> index 0b72a2cf5e..18100e9897 100644
-> --- a/hw/vfio/listener.c
-> +++ b/hw/vfio/listener.c
-> @@ -610,6 +610,10 @@ void vfio_container_region_add(VFIOContainer *bcontainer,
->          }
->      }
->  
-> +    if (memory_region_skip_iommu_map(section->mr)) {
-Maybe add a trace-point just as above
-trace_vfio_listener_region_add_no_dma_map()
+Am 27.04.26 um 7:04 PM schrieb Kevin Wolf:
+> Most code in qcow2 that accesses (and potentially modifies) L2 tables
+> does so while holding s->lock.
+> 
+> There is one exception, which is allocating writes. They hold the lock
+> initially while allocating clusters, but drop it for writing the guest
+> payload before taking the lock again for updating the L2 tables. This
+> allows concurrent requests that touch other parts of the image file to
+> continue in parallel and is an important performance optimisation.
+> 
+> However, this means that other requests that run while the lock is
+> dropped for writing guest data must synchronise with the list of
+> allocating requests in s->cluster_allocs and wait if they would overlap.
+> For writes, this is done in handle_dependencies(), but discard and write
+> zeros operations neglect to synchronise with s->cluster_allocs.
+> 
+> This means that discard can free a cluster whose L2 entry will already
+> be modified in qcow2_alloc_cluster_link_l2() by a previously started
+> write. In the case of a pre-allocated zero cluster that is in the
+> process of being overwritten, this means that discard can lead to a
+> situation where the cluster is still mapped (because the write will
+> restore the L2 entry just without the zero flag), but its refcount has
+> been decreased, resulting in a corrupted image.
+> 
+> Add the missing synchronisation to qcow2_cluster_discard() and
+> qcow2_subcluster_zeroize() to fix the problem.
+> 
+> Cc: qemu-stable@nongnu.org
+> Reported-by: Denis V. Lunev <den@openvz.org>
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 
-Otherwise looks good to me.
+we had started rolling out a build of QEMU 11 with this patch already
+included. However, some of our users reported issues with VMs using
+qcow2 disks soon after [0][1]. I was able to reproduce the in-guest
+segfaults from [1] in a memory-constrained Debian 12 guest when using a
+swap partition on the same disk. Thanks to Thomas for the hunch with
+swap! After reverting this patch, I wasn't able to reproduce the issue
+anymore. I do not have a better reproducer yet and am not sure about the
+exact pattern causing the issue. It's related to the
+wait_for_dependencies() call in qcow2_subcluster_zeroize(), because if I
+revert just the one in qcow2_cluster_discard(), the issue still reproduces.
 
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
+Commandline for my reproducer VM [2]. The issue does not happen if I
+drop "detect-zeroes":"unmap". Note that I don't have discard-no-unref
+for the qcow2 image, so in zero_in_l2_slice(), the branch with
+qcow2_free_any_cluster() is taken. Could the conflict be related to that?
 
-Thanks
+I'm still trying to figure things out and come up with a better
+reproducer, but wanted to let you know early, also because of the
+upcoming stable releases. Of course, I'd also be happy for hints/hunches
+and am happy to test suggestions!
 
-Eric
-> +        return;
-> +    }
-> +
->      ret = vfio_container_dma_map(bcontainer, iova, int128_get64(llsize),
->                                   vaddr, section->readonly, section->mr);
->      if (ret) {
-> diff --git a/system/memory.c b/system/memory.c
-> index 739ba11da6..48245fd01b 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -1814,6 +1814,16 @@ bool memory_region_is_protected(const MemoryRegion *mr)
->      return mr->ram && (mr->ram_block->flags & RAM_PROTECTED);
->  }
->  
-> +bool memory_region_skip_iommu_map(const MemoryRegion *mr)
-> +{
-> +    return memory_region_is_ram_device(mr) && mr->ram_device_skip_iommu_map;
-> +}
-> +
-> +void memory_region_set_skip_iommu_map(MemoryRegion *mr, bool skip)
-> +{
-> +    mr->ram_device_skip_iommu_map = skip;
-> +}
-> +
->  bool memory_region_has_guest_memfd(const MemoryRegion *mr)
->  {
->      return mr->ram_block && mr->ram_block->guest_memfd >= 0;
+Best Regards,
+Fiona
+
+[0]: https://forum.proxmox.com/threads/183679/
+[1]: https://forum.proxmox.com/threads/183639/
+
+[2]:
+
+> ./qemu-system-x86_64 \
+>   -accel kvm \
+>   -chardev 'socket,id=qmp,path=/var/run/qemu-server/300.qmp,server=on,wait=off' \
+>   -mon 'chardev=qmp,mode=control' \
+>   -chardev 'socket,id=qmp-event,path=/var/run/qmeventd.sock,reconnect-ms=5000' \
+>   -mon 'chardev=qmp-event,mode=control' \
+>   -pidfile /var/run/qemu-server/300.pid \
+>   -smp '4,sockets=2,cores=2,maxcpus=4' \
+>   -nodefaults \
+>   -boot 'menu=on,strict=on,reboot-timeout=1000,splash=/usr/share/qemu-server/bootsplash.jpg' \
+>   -vnc 'unix:/var/run/qemu-server/300.vnc,password=on' \
+>   -cpu host,+kvm_pv_eoi,+kvm_pv_unhalt \
+>   -m 256 \
+>   -device 'pci-bridge,id=pci.1,chassis_nr=1,bus=pci.0,addr=0x1e' \
+>   -device 'pci-bridge,id=pci.2,chassis_nr=2,bus=pci.0,addr=0x1f' \
+>   -device 'pci-bridge,id=pci.3,chassis_nr=3,bus=pci.0,addr=0x5' \
+>   -device 'VGA,id=vga,bus=pci.0,addr=0x2' \
+>   -device 'virtio-scsi-pci,id=virtioscsi0,bus=pci.3,addr=0x1' \
+>   -blockdev '{"detect-zeroes":"unmap","discard":"unmap","driver":"qcow2","file":{"detect-zeroes":"unmap","discard":"unmap","driver":"file","filename":"/mnt/pve/dir/images/300/vm-300-disk-0.qcow2","node-name":"e377549e25f53abd39f9ba01c03653e"},"node-name":"drive-scsi0"}' \
+>   -device 'scsi-hd,bus=virtioscsi0.0,channel=0,scsi-id=0,lun=0,drive=drive-scsi0,id=scsi0,device_id=drive-scsi0,bootindex=100' \
+>   -netdev 'type=tap,id=net1,ifname=tap300i1,script=/usr/libexec/qemu-server/pve-bridge,downscript=/usr/libexec/qemu-server/pve-bridgedown,vhost=on' \
+>   -device 'virtio-net-pci,mac=BC:24:11:CA:B4:EF,netdev=net1,bus=pci.0,addr=0x13,id=net1,rx_queue_size=1024,tx_queue_size=256,host_mtu=1500'
+
+
 
 
