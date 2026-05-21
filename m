@@ -4,99 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DAA6CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 05:45:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F392ECD343F
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 05:49:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPwCj-0000tK-L5; Thu, 21 May 2026 01:44:21 -0400
+	id 1wPwHw-0001ro-QW; Thu, 21 May 2026 01:49:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wPwCY-0000re-P7; Thu, 21 May 2026 01:44:11 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wPwCV-00014X-R7; Thu, 21 May 2026 01:44:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779342241; bh=bD7i8ED9wvzu2Z67H9M3zTIcdXsXWRJMgOI4EmZijU8=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=J6qWwIKVklP09ZjlaLVI6PycWJgzWAPF4OANozfIpH1usXTws2uISncMaJJTdigSS
- RVCQEUnpKmh4M+3VnwAqnvJCI9fZDo0CVBHQVqe4J04+bV2MHV2XxGhEn6UeKq3c3S
- R9tPt+WMjunee/WSQyt9ysw5KACsCUR9jalRY4YLY1hBXZOEfCgEaUEoEgfPgL7ROM
- F615F6Z9a5iqoIoObxZz7CmAigHq9PMPzgIFyYzWYc4nfsjQibYAPsmsCTeZk1DdfV
- iyi+rEqs8o9NivJ4GL7IKm1Huk23X3c47kRIgnM4UiOmySfdReRoD5Qqte5wsrW7l5
- Q7BDXZwVCkLFw==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 52ED21AEC68;
- Thu, 21 May 2026 08:44:01 +0300 (MSK)
-Message-ID: <db8c70f3-bf65-4d9b-bed1-eb98543939d2@tls.msk.ru>
-Date: Thu, 21 May 2026 08:44:01 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPwHv-0001rX-MS
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 01:49:43 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPwHu-0002u8-1c
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 01:49:43 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-488b0046078so48851775e9.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 22:49:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779342580; x=1779947380; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=B3vnb7oSNxTJwfe4owQDCQnJtBVDrM0Aa5oWs1NNK2o=;
+ b=nRBwAZB/aDG8uYkL3Fe74jDECeuUCc5axiY39SAGuRbKYFvD6NuHnHQ5vaK0vDDkym
+ uhCLK1VZn3zKAI07nLdt41hjeXmIVW6PM3c2OD8erMK3i6j/mGjVU+fdh/WkaxvW1RE0
+ MAlxmLmaOe8etzUWGX29YK+O/PXe9UC2CI8glTAh4EYYUEgjgrKyN8+J7ghNzlire0V8
+ RPk/nE2VoD0yw8l9iSdfJszeolnpnt/hDod7adm+rNPSaINAqZO7kdXegoFXQPPmYk2z
+ g9VlswOhaQ2i+uYUNu0gRG787lMbMmSOP3imKPnGYoUN5nlhBm0LwQKWuvJVRzkvxQtD
+ gTYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779342580; x=1779947380;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=B3vnb7oSNxTJwfe4owQDCQnJtBVDrM0Aa5oWs1NNK2o=;
+ b=H2JKwcQ3Z+Wqrcjqc/VqcB9HCuDDrbIpfu4r5hU7D8Dz/N8m43Sch9tCIk17+8dr+R
+ J5pD5pKnRpIqibxNP+pETbZfRa2TucfB2kDSCV+ut+ZHctq6q5FtW+QaEyUlWuEEfQnQ
+ F3q1mL1Qb8lXGJt9md8mw+O8Zj7o1LRSQUcCFCS1z5niRO1ErLavf8+Ikv6SjedKkjAK
+ ujbniDj/7YKuuUV69wzN7gGsk9fVZZ/dt29fGjAR8i8G2fcCYKCypYi5oo+UigR6tPXy
+ ahUD4SF3OHgcGD5szRv56a9Z1Qo6TkCqBb8AIcfQggQir/b+GFJYqv5V8yILHlxdA4Pj
+ HUAQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8/aoslEq5kiOcNaoNBzEbP0XGR45+oq45ig51SDl4/OUfnojoUhl4UBwzEORA5RSKGHGckAHmKOKqt@nongnu.org
+X-Gm-Message-State: AOJu0Yy5RqRBKW7ATT0TPtFWelejw1FBjEyjP9ArF5vlJpaMsWDWsbLW
+ EkPY2KWFT6kAkF8bmsA1Rbl7UW/SWIiNW+3rsuo8Kkffu7/B0EHRaHfToat0WnSD4eo=
+X-Gm-Gg: Acq92OE1MYnO3zmaaJK1XOCk3NEhBvNO/CmUYZykq7Bhj9pvmZOkrmCy9W7Dm7rozMO
+ NF3yErAX6GQqAXY8+Ck8ZWYVd+hNgOvfOMFX5/O1OJ6tSYzOLjT4KDObws/l0w77R0L5vISek4n
+ 9W7d7Z8iWSOOsURiGdUP2pFMzhYk0cnEmpBYJQQcvyXqcXPsoG0Spai4hfq4TUG0T6+OVyCFxL+
+ b/UIy8WYsjJhhDLMYYPIf8H1lMgueITJYNSXgC4GzxWy85pOyC3Bz/nQxbe1MRYkkO2hMSQvY5o
+ k2mF/oP6jrA1bZyJhppeH/Xb+hH5GgXdRzYfsh7oc1lLeePl7UL71VN8GDxsLkTIa2ddpFSGOXn
+ RMuvhFLZBcJAyXAYiTqpusjvXM9ebq97p0y5QKeJYOoy1mAzZotYC3NQj9rOqUTmstD9xaJKUO9
+ shr51fKjtHx25c2cBwRz40zbrq53tFklHO/XgE9+jWMV6RMxuR0rypc9+JXP+M6p+EOiNUsfhW3
+ Yr3
+X-Received: by 2002:a05:600d:8:b0:490:778:4fe3 with SMTP id
+ 5b1f17b1804b1-490360ee151mr13934065e9.32.1779342579999; 
+ Wed, 20 May 2026 22:49:39 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49035ee5956sm8035275e9.28.2026.05.20.22.49.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 20 May 2026 22:49:39 -0700 (PDT)
+Message-ID: <c856e07c-0ab8-4043-a6b6-8a32f174f478@linaro.org>
+Date: Thu, 21 May 2026 07:49:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/1] coroutine: fix lost wakeup in qemu_co_sleep_wake()
-To: "Denis V. Lunev" <den@virtuozzo.com>, "Denis V. Lunev" <den@openvz.org>,
+Subject: Re: [PATCH 04/40] target/i386: decouple cpu_x86_inject_mce() from
+ Monitor
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org, kwolf@redhat.com,
- hreitz@redhat.com, stefanha@redhat.com
-References: <20260520193849.467936-1-den@openvz.org>
- <410459b5-ff3d-4d88-8b4e-ad226c7e5e49@tls.msk.ru>
- <98afd158-b155-4f57-ab43-235d77aed6ad@virtuozzo.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <98afd158-b155-4f57-ab43-235d77aed6ad@virtuozzo.com>
+References: <20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com>
+ <20260521-qemu-no-hmp-v1-4-d104f809e145@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260521-qemu-no-hmp-v1-4-d104f809e145@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,42 +105,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20.05.2026 23:11, Denis V. Lunev wrote:
-> On 5/20/26 21:57, Michael Tokarev wrote:
->> On 20.05.2026 22:38, Denis V. Lunev via wrote:
->>> Changes since v1
->>> ----------------
->>>
->>> v1 was a two-patch series tracking two independent missed-wakeup
->>> races on the qemu shutdown path.
->> Um.  The v1 has already been applied to the master branch, see commit
->> e3082ab3b3.
->>
->> And I already picked it up for stable, but not for 10.0.x
->>
->> So I guess the next step is to send a follow-up on top of v1, or
->> to revert v1 and have this v2 instead.
-..
-> It seems that I have written things wrong in description.
+On 20/5/26 23:49, Marc-André Lureau wrote:
+> Replace monitor_printf() error reporting with the standard **errp
+> pattern. Drop the Monitor *mon parameter and return bool to indicate
+> success, improving the function usage from non-HMP contexts. Update the
+> KVM MCE injection path and hmp_mce() accordingly.
 > 
-> v1 consists of 2 patches which were fixed very similar
-> but different patterns - 2 distinct hangs on cleanup:
-> * one in bdrv_graph_co_rdunlock() [1]
-> * and one in cache_clean_timer_del_and_wait() [2]
+> Notes:
+>   - we may want to print the error in KVM path too
+>   - multiple error prints are now accumulated with error hints
 > 
-> Patch [1] has been applied by Kevin to master.
-> Patch [2] has been reviewed with a proposal to revise
-> the approach.
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   target/i386/cpu.h     |  4 ++--
+>   target/i386/helper.c  | 49 ++++++++++++++++++++++++++++---------------------
+>   target/i386/kvm/kvm.c |  4 ++--
+>   target/i386/monitor.c |  6 ++++--
+>   4 files changed, 36 insertions(+), 27 deletions(-)
+
+
+> diff --git a/target/i386/monitor.c b/target/i386/monitor.c
+> index a536712c755..785a13dd710 100644
+> --- a/target/i386/monitor.c
+> +++ b/target/i386/monitor.c
+> @@ -580,6 +580,7 @@ void hmp_mce(Monitor *mon, const QDict *qdict)
+>       uint64_t addr = qdict_get_int(qdict, "addr");
+>       uint64_t misc = qdict_get_int(qdict, "misc");
+>       int flags = MCE_INJECT_UNCOND_AO;
+> +    Error *err = NULL;
+>   
+>       if (qdict_get_try_bool(qdict, "broadcast", false)) {
+>           flags |= MCE_INJECT_BROADCAST;
+> @@ -587,7 +588,8 @@ void hmp_mce(Monitor *mon, const QDict *qdict)
+>       cs = qemu_get_cpu(cpu_index);
+
+
+     if (!cs) {
+         error_setg(errp, "Invalid CPU %d", cpu_index);
+         return;
+     }
+
+?
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+>       if (cs != NULL) {
+>           cpu = X86_CPU(cs);
+> -        cpu_x86_inject_mce(mon, cpu, bank, status, mcg_status, addr, misc,
+> -                           flags);
+> +        cpu_x86_inject_mce(cpu, bank, status, mcg_status, addr, misc,
+> +                           flags, &err);
+> +        hmp_handle_error(mon, err);
+>       }
+>   }
 > 
-> This submission contains Patch [2] in a way proposed
-> by Kevin. Patch [1] is independent and stays merged.
 
-Aha, this makes sense.  Thank you for clarifying things!
-And indeed, I missed this part of your description - which
-is right in the part of your message which I quoted.  I'm
-sorry for the noise.
-
-Best,
-
-/mjt
 
