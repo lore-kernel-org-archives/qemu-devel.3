@@ -4,110 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CA28CD5BAC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 15:06:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58FDECD5BAF
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 15:13:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ4yB-00051b-Oz; Thu, 21 May 2026 11:05:55 -0400
+	id 1wQ54r-0006qs-06; Thu, 21 May 2026 11:12:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wQ4y8-0004zq-GC
- for qemu-devel@nongnu.org; Thu, 21 May 2026 11:05:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wQ4y6-0000g0-KW
- for qemu-devel@nongnu.org; Thu, 21 May 2026 11:05:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779375949;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2Q3t9Yeuq6DxysLkqSMiJKmEcJ7HmX7zk0pzvucmdbk=;
- b=L80nNrMR3k5FYTI6fB/XQqtxzSbPXvhP51TIYo6Q5VhS62R5t4L5/UQ8a6hZ/YuIEJwUnV
- Q6a3r6QhhmvaRwxVL3lFvIkBoNyYM/WgnipSdjyyH1nS6ksJ6DoQjp11YTXSOSMTqU1uiV
- 1tz/3+ruxL2wONK46tPXLN4ODQDUfVY=
-Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com
- [209.85.161.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-302-OdIyKrlsPcmBR6PMPO3nbA-1; Thu, 21 May 2026 11:05:48 -0400
-X-MC-Unique: OdIyKrlsPcmBR6PMPO3nbA-1
-X-Mimecast-MFC-AGG-ID: OdIyKrlsPcmBR6PMPO3nbA_1779375946
-Received: by mail-oo1-f70.google.com with SMTP id
- 006d021491bc7-69d4e84695dso7466765eaf.2
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 08:05:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wQ54p-0006pt-GL
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 11:12:47 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wQ54n-000873-IK
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 11:12:47 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-65c21049dafso5607389d50.2
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 08:12:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779376364; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ffsGfuzhG58gCeBdj+KfcBMIAL1pJLdhHW+lwaj8KIw+lkCL+KTKMvxNE22HIDg5zD
+ R6x9zpNqkke0ZF7v4BMr7bh8iz8Pv+l/MXnmXQzyz+oZknuxuKYKzDzroc4SqoWlQT8Y
+ aqQq3pBR0OPcH9EbzrqxLJPbEzTwD6eR/58oqWHfDIn+G32P3lYrwiHA/jrDMn0Y10D2
+ T+fLLzZajY59etAgDGO9tGLdd2d2jdixv+JsP14S5tzL0HMbExvZ0mthwrYyGCGnGvZZ
+ Jwo+2zr8dF06hSmj+98y1Q72hxHr/M2rzKaeZWPx5qRzAVHd0EfiGW4Q63mE+bPfIdcJ
+ VN1g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=9OAadUeLy3H2QW23jDPFfpyo6cNr1U8V3TIXlbNjzsE=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=ISlxawkl6Y3bZxeXlKNBUC1El+bdPqdThGvo3IeCzTTmfzWZiRrduVIhbdwjKHQgk6
+ 76cL/RwZgxdyxtoW/ycBln8BOgavSWDROhDUeXApXErK4nZlvrz75STzboogfik4sY/a
+ mJheeiuri4rpwzA1usfcLvf26KSqi1E56e/h1WwOnzqVwb7JeN2Vi0ExMeXQR7WuMRiP
+ h+cp3TfsmY5RdQWOYS3EUyY53jjQcTYIhI/VJjJf8o6E8EfswIK5VZo+ppi/3D+ot0AQ
+ sJagziTYXR+/Di69LCphU8gacMI4Ii+moD6L1sVsXWD+iK5K2WcV+JsIm6roBl/8gAOf
+ wzEw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779375946; x=1779980746; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=2Q3t9Yeuq6DxysLkqSMiJKmEcJ7HmX7zk0pzvucmdbk=;
- b=jl2gMMUbGGCpCcRI1bQJWzaZYXsABzpWdBvEI6e+SDxAAd82t5vBpD4/uC3bzNWAbB
- cG/D5yx5tkgWGnnz9jGcIBFwwHv4iou5ODm9H+TC7fuXLHQV7iTEQGPxvLUrcKR+SSwD
- dpSJ+Ap4qhPmojF8mDakGrv/yXWZDJQJpyNXXSdAY/ONvEDpZZJ5zUVbY+a3plzapYfz
- JaweRqgmDKLEfoGmJSbUc7jDH7qz57VWkwXKHyd9lbDb+AHpGNvvifKNiiauWcRUOkFb
- bheDrd1p6a3q1H5b9LjZxpKBq6GcQE8/SitJskxea7SCuuElinnx69wvYh7V8n26LBVG
- by4w==
+ d=linaro.org; s=google; t=1779376364; x=1779981164; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=9OAadUeLy3H2QW23jDPFfpyo6cNr1U8V3TIXlbNjzsE=;
+ b=zvwGce6immyr4sNtJjz5nLhAqf7Ty2ruomCDHhiyoMkaPRfY9o4jHaj9rV2uKmLhd+
+ hme0cWJY8KJXTkHJUINpYzUtTgVeXcfL/NpPRy3stX6aV9/PqZDrUNKpSkZHCpm0SdSl
+ ZBv7XT9iJtzmaLuI3DIJSu74Vlkv+5PR09UsUANbY3PvsjIsVvYwsrAu4pIs75VSumZf
+ DkXzFS0qoEqofgOSIiLnILbuv9Kj3MsPD5pcqaopCFUwcLpCzOKALP9f0oPnpLRcX7JC
+ yJNK10i1GkvtpP1Z62Awd4np3V/W5DUmc2hdrfdwH4k+mMeFn4LFoHd1zkUOPWitYPAj
+ Pokg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779375946; x=1779980746;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2Q3t9Yeuq6DxysLkqSMiJKmEcJ7HmX7zk0pzvucmdbk=;
- b=fLQkPY4XealNtcjM7xwaRpLVB6vunC8Rl9E0bVkcK8cNzXMSzIzCb9ZjsuGOmD0Eqv
- gbn3IQIKZE1RVAsrH5oGeJBJEr/splhHgcr/wqZPN83r98U3TlkWnnyloxHBaR80UBv2
- zko0EcdUjK50almjd4HmmNFJyXGs1+/SslJ+FW4asWBzJAkELz2DQJYRHWozjBHAgL2c
- Totf26T2shYSzxNrETLhWM0NA6CEFs2ktekUqHp2vHd6u1WUEJFjoh896I4gy3NgfYqI
- kkmkFIf2MA9uSNOXHm1fMIz63voOUTtF8IF+ZFc89+e/7ZOSZtGxlhHYriHb72AmcGw8
- qDzw==
-X-Gm-Message-State: AOJu0Yyg8HBCRtLaAqVyBaVj4nTL5oVbs+ovXtTVoeOb0y/COOxNHh/z
- mEpcUjd9jcbKJK4/MJMaPkPmVaLCDP4NcpNRMrmHMGSND79GS9Y1c7SAfVQrgPIqgAROKtG6v8b
- PzYiDvFz/X+sUE0lZWm3aj2AHfm67mHE7ej5+rINkMY5mLUJyz2PS2AaH
-X-Gm-Gg: Acq92OG6DMxr4NG84tqZezzHJpSuMxxtz5A8XoAA+qgDhehyfg08DiQz/D3UVRRVEPl
- ogCQMY6BGgBNDwLMsBVI5x/ymIpnEjeJMIL0rofdnyK4Fng2eqy0pCfRsFWmnMhJ3ultctvxjuu
- Va97C5GWDhOMAdyRc30/ytB33Qoh5X+g9XrwWfkLlsRIl1BOoAskhL1Ex9jdVa+uejEnQiaH9l5
- ClxZSMZD/IZu/1DgWkfssaow8NdsMbaakstVG9urG31FxFKvOgv443tlICgcLNXhn/ZVp+/3nux
- XdvgTzKarOY8p5Qx13SfohMqN4N6Jss4134Hpm8yMfpmJkJF0QAfLPmSa/IACvA0gzgvC4k0ft6
- 3M2D9U6GtuPaGVsSh1DsOekAJwSEMU0EdKnGyctiM0J9eOD0=
-X-Received: by 2002:a05:6820:f033:b0:69b:902d:d347 with SMTP id
- 006d021491bc7-69d6ee84475mr1477144eaf.27.1779375946146; 
- Thu, 21 May 2026 08:05:46 -0700 (PDT)
-X-Received: by 2002:a05:6820:f033:b0:69b:902d:d347 with SMTP id
- 006d021491bc7-69d6ee84475mr1477096eaf.27.1779375945660; 
- Thu, 21 May 2026 08:05:45 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8cc768d4ca8sm7150756d6.17.2026.05.21.08.05.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 08:05:44 -0700 (PDT)
-Date: Thu, 21 May 2026 11:05:43 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Maor Gottlieb <maorg@nvidia.com>
-Subject: Re: [PATCH 14/14] migration: Enable new switchover-ack
-Message-ID: <ag8fRzWkcLg9-brO@x1.local>
-References: <20260505081423.28326-1-avihaih@nvidia.com>
- <20260505081423.28326-15-avihaih@nvidia.com>
- <agzD1-wZ4MeKwgPT@x1.local>
- <66e26fcf-caef-4b30-aff2-6474f19013c8@nvidia.com>
+ d=1e100.net; s=20251104; t=1779376364; x=1779981164;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9OAadUeLy3H2QW23jDPFfpyo6cNr1U8V3TIXlbNjzsE=;
+ b=a0r3ZsxOBELDXT0/6TDwBbdu7+tjaR6q+n6SlpdpOprETDy4J1YUiND5QBAgf7g/RW
+ JoiR+h5IcZAdPlfX8sV7GZ6Q1Avx4K1iCiYI0gnYBWxdKA+jOlOW46yLPo4Z4tgSQIOZ
+ oH6A3BWARZI/vbIelCvsTvcu8pfoeAjykfq56d9/YoutVNbw7Ut0VK04RejmHLzrnbcK
+ JoGQUnjZTvtKXRRdqfI7+wxSBknjPDw9z5gkSl9vvxiQkaeTjoAPSoJRXWAQpqxJbs0Y
+ eQopcrpMxAWwRSkfncC9PEbqpt2HJHmv0AmgloZiZt87mz+/gQtd+JhDelscOepzee1o
+ 7UuQ==
+X-Gm-Message-State: AOJu0Yz/pXbvcWK+gLcE+7ZO4Gdle+nEk6d0e5+r3ojnVmpCuWTBkCGL
+ dQRkHSY53xvBPsuk1JXkz+EMFkM2lRwsia3uFH8PPR3fsKGwshlc4hRurI3273I0ZqEkypU3o+L
+ SGG/uiCYkX6V2G+gAuvibPdDs0vXsSR7A71sWYh5H2w==
+X-Gm-Gg: Acq92OE/yKYjdNK7NU7n421X0IU23wVIlh8UBqIY0bHvTN65mS0Mm+DJ9KNRKdkVVwe
+ CoYv/nG8H3RO/a981krWX5E+uXoHI/tESn2EQmXBXHPPBmjUKCaB6H7ENZRnmLQfHtjrAUrn/Nm
+ prj0R9k9dyazzXO/NxzPW4uPOoe7azYhierUmDkCSNz6ODKjWXQKlLXuYlKbLcbh835aoi2Snl9
+ OBV6kPR3IJUm5w/RbR3UMAYQD78Rc/YtjTM3TKU1H5qazD6QMZpJRZ4iGbtJpdGG+M5ZOLaTcFq
+ u0fLRigZbqydLE9ViRxg9bzi+7CRuj0XVmky3bKZor/M1aiHIMNHmDtes+C65ldsBNo=
+X-Received: by 2002:a05:690e:4847:b0:64a:ef61:188c with SMTP id
+ 956f58d0204a3-65eae151808mr2102040d50.47.1779376364154; Thu, 21 May 2026
+ 08:12:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <66e26fcf-caef-4b30-aff2-6474f19013c8@nvidia.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260520182213.872945-1-richard.henderson@linaro.org>
+ <20260520182213.872945-24-richard.henderson@linaro.org>
+In-Reply-To: <20260520182213.872945-24-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 21 May 2026 16:12:32 +0100
+X-Gm-Features: AVHnY4L-_FP65oNPsdG7TpyNI0NqE9vOFpZbaMaz7RhQFSYixuI62ot41KZ-IOA
+Message-ID: <CAFEAcA-KvaC0BVDFm6WPaGRLwHYVxF8UnPUa6SLK7utYJc8RXA@mail.gmail.com>
+Subject: Re: [PATCH v6 23/64] target/arm: Set e4m3_nan_is_snan
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,42 +114,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 21, 2026 at 05:00:44PM +0300, Avihai Horon wrote:
-> 
-> On 5/19/2026 11:11 PM, Peter Xu wrote:
-> > External email: Use caution opening links or attachments
-> > 
-> > 
-> > On Tue, May 05, 2026 at 11:14:23AM +0300, Avihai Horon wrote:
-> > > Now that VFIO has implemented new switchover-ack, enable it.
-> > > 
-> > > Signed-off-by: Avihai Horon <avihaih@nvidia.com>
-> > > ---
-> > >   migration/options.c | 3 +--
-> > >   1 file changed, 1 insertion(+), 2 deletions(-)
-> > > 
-> > > diff --git a/migration/options.c b/migration/options.c
-> > > index 44327c588f..91571f9d30 100644
-> > > --- a/migration/options.c
-> > > +++ b/migration/options.c
-> > > @@ -108,9 +108,8 @@ const Property migration_properties[] = {
-> > >                        preempt_pre_7_2, false),
-> > >       DEFINE_PROP_BOOL("multifd-clean-tls-termination", MigrationState,
-> > >                        multifd_clean_tls_termination, true),
-> > > -    /* Use legacy until VFIO implements new switchover-ack */
-> > Removing this line is fine because it's a very temporary thing.  But maybe
-> > it would be good we have some rich documentation on both the legacy and new
-> > behavior of switchover-ack.  Normally it would be qapi/migration.json, but
-> > in this case the user shouldn't need to choose, so I think when keeping
-> > qapi doc simple we need to have somewhere internal that document all these.
-> 
-> Sure, I can do that.
-> Would adding it as a comment above struct
-> MigrationState->switchover_ack_legacy be fine?
+On Wed, 20 May 2026 at 19:25, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> The unique e4m3 nan encoding is SNaN for Arm.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/tcg/vfp_helper.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/target/arm/tcg/vfp_helper.c b/target/arm/tcg/vfp_helper.c
+> index 8d3f6e3a2e..c10b085f08 100644
+> --- a/target/arm/tcg/vfp_helper.c
+> +++ b/target/arm/tcg/vfp_helper.c
+> @@ -46,6 +46,7 @@ void arm_set_default_fp_behaviours(float_status *s)
+>      set_float_3nan_prop_rule(float_3nan_prop_s_cab, s);
+>      set_float_infzeronan_rule(float_infzeronan_dnan_if_qnan, s);
+>      set_float_default_nan_pattern(0b01000000, s);
+> +    set_float_e4m3_nan_is_snan(true, s);
+>  }
+>
+>  /*
+> @@ -67,6 +68,7 @@ void arm_set_ah_fp_behaviours(float_status *s)
+>      set_float_infzeronan_rule(float_infzeronan_dnan_never |
+>                                float_infzeronan_suppress_invalid, s);
+>      set_float_default_nan_pattern(0b11000000, s);
+> +    set_float_e4m3_nan_is_snan(true, s);
+>  }
+>
+>  /* Convert host exception flags to vfp form.  */
 
-Sounds good!
+These functions are supposed to set only the bits of the
+FP config that change between AH=0 and AH=1; we call them
+when FPCR.AH is toggled. Conveniently, up until now all
+the FP config that remains the same across AH=0 and AH=1
+has been the same as the default fpu config, so we haven't
+needed a place to do "initialize float_status to the other
+parts of what Arm uses", and arm_cpu_reset_hold has been
+able to just call one or the other of these functions starting
+from a zeroed-out fp_status, and then adjust the default
+NaN mode and the ftz config for a few of the fp_status words.
 
--- 
-Peter Xu
+So ideally we should set the e4m3_nan_is_snan elsewhere,
+except that setting it on all 8 of our fp_status fields
+is a bit tedious. Maybe something like:
 
+/*
+ * Fully initialize an fp_status to the usual Arm
+ * behaviours. If you want the AH=1 choices you can
+ * call arm_set_ah_fp_behaviours() afterwards.
+ */
+arm_init_fp_status(float_status *s);
+
+and have the implementation be
+   *s = (float_status){};
+   arm_set_default_fp_behaviours(s);
+   set_float_e4m3_nan_is_snan(true, s);
+   /* We want 0 for all other settings */
+
+?
+
+Then reset can do
+    for (int i = 0; i < FPST_COUNT; i++) {
+        arm_init_fp_status(&env->vfp.fp_status[i]);
+    }
+    set_flush_to_zero(1, &env->vfp.fp_status[FPST_STD]);
+    set_flush_inputs_to_zero(1, &env->vfp.fp_status[FPST_STD]);
+    set_default_nan_mode(1, &env->vfp.fp_status[FPST_STD]);
+    set_default_nan_mode(1, &env->vfp.fp_status[FPST_STD_F16]);
+    set_default_nan_mode(1, &env->vfp.fp_status[FPST_ZA]);
+    set_default_nan_mode(1, &env->vfp.fp_status[FPST_ZA_F16]);
+    arm_set_ah_fp_behaviours(&env->vfp.fp_status[FPST_AH]);
+    set_flush_to_zero(1, &env->vfp.fp_status[FPST_AH]);
+    set_flush_inputs_to_zero(1, &env->vfp.fp_status[FPST_AH]);
+    arm_set_ah_fp_behaviours(&env->vfp.fp_status[FPST_AH_F16]);
+
+and the code we want to add for fp8 can init its local
+fp_status by calling arm_init_fp_status.
+
+thanks
+-- PMM
 
