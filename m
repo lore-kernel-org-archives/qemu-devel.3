@@ -4,101 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B965CD5BAC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 14:17:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EB1DCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 14:18:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ4DL-0006mo-5y; Thu, 21 May 2026 10:17:31 -0400
+	id 1wQ4EG-0007Zo-3R; Thu, 21 May 2026 10:18:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wQ4DA-0006hB-Dh
- for qemu-devel@nongnu.org; Thu, 21 May 2026 10:17:23 -0400
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wQ4D8-0000ec-70
- for qemu-devel@nongnu.org; Thu, 21 May 2026 10:17:19 -0400
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-65c7492a2ceso5418943d50.3
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 07:17:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779373036; cv=none;
- d=google.com; s=arc-20240605;
- b=TnHmNRRLFK9tF0rktJ6TddivGVJp/Kfym6JKWiV5tlJgBtPdF7W6bxSV1t71a6Yx8p
- wf1Z9UkDs+haFzwq6zBgHQN8YaY0KTHGFaKuCTZzBdJ88IvPWpC8WUzwGELuDzb+t4qB
- D+L/C9LAIpKNa9GhvO4Xdp2KnijqBvKEz4TBfk1meIC9bYI83nyZ22J/8NXqBgb/rUzI
- 3X50ZWc49w0brd3Ec5QjCF8k3JEewiJPss0oz57tYaLL4Z09z1zwrmdsl7JuQwYTps97
- 7EkB8nzvckhqKK5+DlMoiIZGXPwbwAleK5c/QbaTHLtZc0cYPXLF1qe4cMuM8yluVhIA
- dTxQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=B/R5nmoCOoJ66VRW1FPc4pkr0+6I0oidqAcJnl8VECM=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=DJws9uKNdT+PEk91L86noHVGA6ImrVv5A+P766lONZmByNX3c0xzYuNKdJLc5avf1G
- kiJ24UmXh3USIyc+g0KQFZGG4GbML/72h3bser5cRxs7qs7s2CI2DCyMBh6h/s/FbPTl
- gXo+jPR04Xh4FHhAeBlJ0DIpQ6p7NYZ/kv69u5l+0SIK2grCI5Ol5JsdgsDgrpWgnqWL
- VGLPt4g6BZWSQKqD7vMP1lhGvb201HV+4a+KZmt8QMT187AR/sFAUwS+gM/2daPoKNG1
- WboAt+LH3isKbfuaBKaSXPVJpT7i0l81MMKlj6z/Zzl3zJu2ovVLFD4k8mehPY114jdH
- 4tXg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779373036; x=1779977836; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=B/R5nmoCOoJ66VRW1FPc4pkr0+6I0oidqAcJnl8VECM=;
- b=OIECp/R69JahI1/ycKrAZ40rae9o6uCtVTY0u+La7G6G0ygW30ddCpWMcnb7sEDOBS
- Cz0L/GEH4EMvDcKS0Eg8X+3SaTycGCrdtk3Sv+d6PjFIZ1iGyIhEyVBu8WtsIX6fklWx
- kfwQAHh1dV1kMnKrrbNgDqWmm+w6C7OTaoHiZ3Z/8uH8IwCdO2n6fOWVqCk8UrPByX0g
- 4scFgrp6gyOkglI9lWVtOw1DqNVqVL+pqS7exgeS8Yq99+pJnowDOecTuZsvmk5KUcwS
- 4vD8kh56HuNNSXRKyZBikv3mtTwwNzS3QQI+GUXhJivfgE0i5ZnKNfuZ+W5cfOzADPwO
- M+Tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779373036; x=1779977836;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=B/R5nmoCOoJ66VRW1FPc4pkr0+6I0oidqAcJnl8VECM=;
- b=fi7F2frzbbAZWXp6/XriS83WQbGGoG1tlea4CUP2jAx2G05tSFRdzLmpmH21A1Wml9
- ZejcWDjs0DOzIbj7HUNB5LezSiORxa4eu9WAHhRKMlBoMo/8vSkslzAvWyaqMVIVI0KF
- 6cNia0hGpQPIXnUlZnXBMZE+DcjWkKPzh6jbbgMVTRqv6ml96O1RoRvIOceKqLD62zFO
- NLhEopaCWhsECTO6LU2Ii3yNcHzmuCzzOBF7SD6M8aMpk3JFyu3+vwGNhtRn7y0LS311
- Vau66gILdk22g+JehxaK5AgZQ6/C6goZ2p4xNSfDnfTSYnk3YjqfBeTQKYyvdhyJUkzZ
- 7evQ==
-X-Gm-Message-State: AOJu0YwWsWM29oAnpU7z60A0WITrJswjD8PKEPvAtp6K9xaWmnZ+YZwt
- gpwwGmQOic3sc/IQyaO4wXV5+c35dxVRlK091BZ6SV1P7pfop/RIXUwaBk8cAT4pFXkFCyCyrV4
- k3PrJrs3OPQqKU1sLobP5EUBkHr6+X9qj8eCKO0oX1w==
-X-Gm-Gg: Acq92OEnXNMLU2fsvAnl0g+FJGwkFJ5wVjPb/hIW0LG97lPDO1N9NvK0I4ILCLixmfe
- KCSLxCTj+1Ova9dHHSeJsiHU6AbCfBYuggbwOBGOJR8rAHp/bMzu73aXqWbYs4sTuI84QJ5mEQ9
- RnN/E/qSYXLCSIJ6DcMapQDwjG/BEhqkcR1cRWvhVnNSCA4H4XF2Dy8zE/BZ8b8Jk4LAseYDUT3
- R1BAMGyX+F+NCCWDBIY2cQBPh3NYSZSElS+AIcwdW3IEY2hWFsEP4TcRqo52TS8/mY5kGeKMTcc
- OWkwmwh7IDM5Oqh7X7Bb8/gFhyhSHcNEMDfUzEtJoRrY7empu37Vvq6L8qya0KqirjFZhO+28RC
- mTizldIDJaCl2
-X-Received: by 2002:a05:690e:418c:b0:650:4a79:f3ac with SMTP id
- 956f58d0204a3-65eadf36cb0mr2252646d50.9.1779373036353; Thu, 21 May 2026
- 07:17:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1wQ4E6-0007S6-OI; Thu, 21 May 2026 10:18:23 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1wQ4E0-0001Gq-Bz; Thu, 21 May 2026 10:18:16 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id C47E0836DE;
+ Thu, 21 May 2026 16:18:04 +0200 (CEST)
+Message-ID: <2fa73e56-f4b5-436e-ab25-5654e0837bce@proxmox.com>
+Date: Thu, 21 May 2026 16:18:03 +0200
 MIME-Version: 1.0
-References: <20260520182213.872945-1-richard.henderson@linaro.org>
- <20260520182213.872945-12-richard.henderson@linaro.org>
-In-Reply-To: <20260520182213.872945-12-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 21 May 2026 15:17:04 +0100
-X-Gm-Features: AVHnY4Kk6ABXHM7dhBLcu0KepWMwRXBxbijqYXT2_J5mfEx1NQjS1mzjHadPeUs
-Message-ID: <CAFEAcA-kqCYK9a=XA=YDEWTz7fQXSW3s2a17ZyYf0HThQFpPgw@mail.gmail.com>
-Subject: Re: [PATCH v6 11/64] target/arm: Clear FPMR on ResetSVEState
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] qcow2: Fix corruption on discard during write with COW
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
+ hreitz@redhat.com, den@openvz.org, stefanha@redhat.com,
+ qemu-stable@nongnu.org, qemu-devel@nongnu.org,
+ Thomas Lamprecht <t.lamprecht@proxmox.com>
+References: <20260427170520.101242-1-kwolf@redhat.com>
+ <20260427170520.101242-4-kwolf@redhat.com>
+ <414848c6-3829-4120-b760-6db8d43c1ab5@proxmox.com>
+ <ag8MzS2ULm8UTFlb@redhat.com>
+Content-Language: en-US
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <ag8MzS2ULm8UTFlb@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1779373066383
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,32 +64,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 20 May 2026 at 19:25, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> FPMR is cleared when entering or exiting Streaming Mode.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/helper.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index 7eb7031294..3d6e7f1ccc 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -4856,6 +4856,7 @@ static void arm_reset_sve_state(CPUARMState *env)
->      /* Recall that FFR is stored as pregs[16]. */
->      memset(env->vfp.pregs, 0, sizeof(env->vfp.pregs));
->      vfp_set_fpsr(env, 0x0800009f);
-> +    env->vfp.fpmr = 0;
->  }
->
->  void aarch64_set_svcr(CPUARMState *env, uint64_t new, uint64_t mask)
-> --
+Hi Kevin,
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Am 21.05.26 um 3:46 PM schrieb Kevin Wolf:
+> Am 21.05.2026 um 14:12 hat Fiona Ebner geschrieben:
+>> Am 27.04.26 um 7:04 PM schrieb Kevin Wolf:
+>>> Most code in qcow2 that accesses (and potentially modifies) L2 tables
+>>> does so while holding s->lock.
+>>>
+>>> There is one exception, which is allocating writes. They hold the lock
+>>> initially while allocating clusters, but drop it for writing the guest
+>>> payload before taking the lock again for updating the L2 tables. This
+>>> allows concurrent requests that touch other parts of the image file to
+>>> continue in parallel and is an important performance optimisation.
+>>>
+>>> However, this means that other requests that run while the lock is
+>>> dropped for writing guest data must synchronise with the list of
+>>> allocating requests in s->cluster_allocs and wait if they would overlap.
+>>> For writes, this is done in handle_dependencies(), but discard and write
+>>> zeros operations neglect to synchronise with s->cluster_allocs.
+>>>
+>>> This means that discard can free a cluster whose L2 entry will already
+>>> be modified in qcow2_alloc_cluster_link_l2() by a previously started
+>>> write. In the case of a pre-allocated zero cluster that is in the
+>>> process of being overwritten, this means that discard can lead to a
+>>> situation where the cluster is still mapped (because the write will
+>>> restore the L2 entry just without the zero flag), but its refcount has
+>>> been decreased, resulting in a corrupted image.
+>>>
+>>> Add the missing synchronisation to qcow2_cluster_discard() and
+>>> qcow2_subcluster_zeroize() to fix the problem.
+>>>
+>>> Cc: qemu-stable@nongnu.org
+>>> Reported-by: Denis V. Lunev <den@openvz.org>
+>>> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+>>
+>> we had started rolling out a build of QEMU 11 with this patch already
+>> included. However, some of our users reported issues with VMs using
+>> qcow2 disks soon after [0][1]. I was able to reproduce the in-guest
+>> segfaults from [1] in a memory-constrained Debian 12 guest when using a
+>> swap partition on the same disk. Thanks to Thomas for the hunch with
+>> swap! After reverting this patch, I wasn't able to reproduce the issue
+>> anymore. I do not have a better reproducer yet and am not sure about the
+>> exact pattern causing the issue. It's related to the
+>> wait_for_dependencies() call in qcow2_subcluster_zeroize(), because if I
+>> revert just the one in qcow2_cluster_discard(), the issue still reproduces.
+>>
+>> Commandline for my reproducer VM [2]. The issue does not happen if I
+>> drop "detect-zeroes":"unmap". Note that I don't have discard-no-unref
+>> for the qcow2 image, so in zero_in_l2_slice(), the branch with
+>> qcow2_free_any_cluster() is taken. Could the conflict be related to that?
+>>
+>> I'm still trying to figure things out and come up with a better
+>> reproducer, but wanted to let you know early, also because of the
+>> upcoming stable releases. Of course, I'd also be happy for hints/hunches
+>> and am happy to test suggestions!
+> 
+> Do you have any information about the options used with the image file?
+> In particular, is it using subclusters? Maybe just the 'qemu-img info'
+> output would already give a bit more context.
 
-thanks
--- PMM
+No subclusters if I'm not missing anything. When I created the image the
+output was:
+
+Formatting '/mnt/pve/dir/images/300/vm-300-disk-0.qcow2', fmt=qcow2
+cluster_size=65536 extended_l2=off preallocation=metadata
+compression_type=zlib size=4510973952 lazy_refcounts=off refcount_bits=16
+
+Our management layer doesn't log the command itself, but doing the same
+operation with logging added (and 301 instead of 300):
+
+/usr/bin/qemu-img create -o preallocation=metadata -f qcow2
+/mnt/pve/dir/images/301/vm-301-disk-0.qcow2 4405248K
+
+qemu-img info gives:
+
+{
+    "children": [
+        {
+            "name": "file",
+            "info": {
+                "children": [
+                ],
+                "virtual-size": 6018105344,
+                "filename": "/mnt/pve/dir/images/300/vm-300-disk-0.qcow2",
+                "format": "file",
+                "actual-size": 3794231296,
+                "format-specific": {
+                    "type": "file",
+                    "data": {
+                        "extent-size-hint": 1048576
+                    }
+                },
+                "dirty-flag": false
+            }
+        }
+    ],
+    "snapshots": [
+        {
+            "icount": 0,
+            "vm-clock-nsec": 0,
+            "name": "s0",
+            "date-sec": 1779354489,
+            "date-nsec": 415278000,
+            "vm-clock-sec": 0,
+            "id": "1",
+            "vm-state-size": 0
+        }
+    ],
+    "virtual-size": 4510973952,
+    "filename": "/mnt/pve/dir/images/300/vm-300-disk-0.qcow2",
+    "cluster-size": 65536,
+    "format": "qcow2",
+    "actual-size": 3794231296,
+    "format-specific": {
+        "type": "qcow2",
+        "data": {
+            "compat": "1.1",
+            "compression-type": "zlib",
+            "lazy-refcounts": false,
+            "refcount-bits": 16,
+            "corrupt": false,
+            "extended-l2": false
+        }
+    },
+    "dirty-flag": false
+}
+
+> Could you already locate the actual corruption and check what the
+> pattern looks like? Something like zeros where we would expect data or
+> the other way around? Or something less clear? (If you don't know,
+> that's a good answer too. I know well that this kind of things is hard
+> to debug.)
+
+Unfortunately not. I can only see the symptom of memory swapped back in
+being corrupt (at least that's what happens AFAIU), leading to segfaults
+in various processes as well as issues with heap allocations, e.g.:
+corrupted double-linked list
+free(): invalid pointer
+
+I'll write a small program which allocates memory with a fixed pattern
+and regularly dumps it, maybe that works to get an idea about the
+corruption.
+
+Best Regards,
+Fiona
+
 
