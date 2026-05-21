@@ -4,75 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C84C7CD4F5E
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 12:03:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE5C8CD5BA4
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 12:03:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ263-0003RF-HC; Thu, 21 May 2026 08:01:51 -0400
+	id 1wQ25O-0001bl-QI; Thu, 21 May 2026 08:01:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wQ25N-0001W7-MD
- for qemu-devel@nongnu.org; Thu, 21 May 2026 08:01:09 -0400
+ id 1wQ24a-0000V7-DO
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 08:00:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wQ25L-0005Lt-KJ
- for qemu-devel@nongnu.org; Thu, 21 May 2026 08:01:09 -0400
+ id 1wQ24Y-0005HO-9e
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 08:00:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779364866;
+ s=mimecast20190719; t=1779364817;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0mYuBzXaQnyYQD4vVCzWnr5MNADED1nGMSMkQhk5NIw=;
- b=PdNNlmlPjCTWnFyaSsS/xUyGvj3ZC9KCt4Q69v2YqtukaaWMmR/7OqtF9Oj5ivpu7ynZcr
- Uc6wIUSvEAykYrpMaNn40nzuzFjuLA+aAIzvzsaDgh+sjKj2KfCQkwsA8LWbuVmai1HzB2
- rORZ6i7R84AcmjetgaZmWJZmLoOS1t0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=P//1lSfTwWASDwdT7cXVvkeoU6XXunKppQjodyXsuCY=;
+ b=cBmEnHUxhy+VDD3cjsXWhBnGSgAtdTX29ivTyOwzmQKfwx0BXzqxvnh9uTpuv+z/SLKXJh
+ TfnbopnA6xQR0afXfiG1llrkKpqZcgQmjS8vPcGoE1pFFl0hr2N6Y5RzCTwh4CcFI9oZ1t
+ UshG4eXgTyoQNy32jB9ofegqbM4alGk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-391-NNKgCZQbOku4oUVrM19wEg-1; Thu,
- 21 May 2026 08:01:03 -0400
-X-MC-Unique: NNKgCZQbOku4oUVrM19wEg-1
-X-Mimecast-MFC-AGG-ID: NNKgCZQbOku4oUVrM19wEg_1779364862
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-501-2eD6iYGoPfiZbXaqmQZOhw-1; Thu,
+ 21 May 2026 08:00:13 -0400
+X-MC-Unique: 2eD6iYGoPfiZbXaqmQZOhw-1
+X-Mimecast-MFC-AGG-ID: 2eD6iYGoPfiZbXaqmQZOhw_1779364812
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1390F1956052; Thu, 21 May 2026 12:01:02 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A6CEF18005BE; Thu, 21 May 2026 12:00:12 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.26])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A5F5D18004A3; Thu, 21 May 2026 12:01:00 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 905F419560A3; Thu, 21 May 2026 12:00:11 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: stefanha@gmail.com, Dongwon Kim <dongwon.kim@intel.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 38/38] ui/gtk: Fix focus loss on re-attachment with single VC
-Date: Thu, 21 May 2026 15:57:15 +0400
-Message-ID: <20260521115717.1701482-39-marcandre.lureau@redhat.com>
+Cc: stefanha@gmail.com, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 29/38] ui/input-legacy: Use Linux key codes
+Date: Thu, 21 May 2026 15:57:06 +0400
+Message-ID: <20260521115717.1701482-30-marcandre.lureau@redhat.com>
 In-Reply-To: <20260521115717.1701482-1-marcandre.lureau@redhat.com>
 References: <20260521115717.1701482-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,42 +85,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dongwon Kim <dongwon.kim@intel.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-When QEMU is launched with a single virtual console (e.g., using
---nodefaults), detaching and then closing the detached window leaves
-the main window's notebook without an active focus target which makes
-keyboard unfunctional on re-attached VC.
+QemuInputEvent now stores Linux key codes for key events. Use those
+codes directly instead of translating between internal key code
+representations.
 
-Fix this by explicitly calling gtk_widget_grab_focus on the active
-VC's focus widget during the window close handler.
-
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
-Message-ID: <20260520002645.1910740-1-dongwon.kim@intel.com>
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260520-input-v3-21-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 ---
- ui/gtk.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ ui/input-legacy.c | 22 +++++-----------------
+ 1 file changed, 5 insertions(+), 17 deletions(-)
 
-diff --git a/ui/gtk.c b/ui/gtk.c
-index 9f9b2416c8a..4f706c6bbb2 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -1483,6 +1483,11 @@ static gboolean gd_tab_window_close(GtkWidget *widget, GdkEvent *event,
-         vc->gfx.ectx = NULL;
-     }
- #endif
-+
-+    if (vc == gd_vc_find_by_menu(s)) {
-+        gtk_widget_grab_focus(vc->focus);
-+    }
-+
-     return TRUE;
+diff --git a/ui/input-legacy.c b/ui/input-legacy.c
+index e2b48dd8f0a..193c9ae2ef9 100644
+--- a/ui/input-legacy.c
++++ b/ui/input-legacy.c
+@@ -71,23 +71,11 @@ int index_from_key(const char *key, size_t key_length)
+     return i;
  }
  
+-static KeyValue *copy_key_value(KeyValue *src)
+-{
+-    KeyValue *dst = g_new(KeyValue, 1);
+-    memcpy(dst, src, sizeof(*src));
+-    if (dst->type == KEY_VALUE_KIND_NUMBER) {
+-        QKeyCode code = qemu_input_key_number_to_qcode(dst->u.number.data);
+-        dst->type = KEY_VALUE_KIND_QCODE;
+-        dst->u.qcode.data = code;
+-    }
+-    return dst;
+-}
+-
+ void qmp_send_key(KeyValueList *keys, bool has_hold_time, int64_t hold_time,
+                   Error **errp)
+ {
+     KeyValueList *p;
+-    KeyValue **up = NULL;
++    unsigned int *up = NULL;
+     int count = 0;
+ 
+     if (!has_hold_time) {
+@@ -95,15 +83,15 @@ void qmp_send_key(KeyValueList *keys, bool has_hold_time, int64_t hold_time,
+     }
+ 
+     for (p = keys; p != NULL; p = p->next) {
+-        qemu_input_event_send_key(NULL, copy_key_value(p->value), true);
+-        qemu_input_event_send_key_delay(hold_time);
+         up = g_realloc(up, sizeof(*up) * (count+1));
+-        up[count] = copy_key_value(p->value);
++        up[count] = qemu_input_key_value_to_linux(p->value);
++        qemu_input_event_send_key_linux(NULL, up[count], true);
++        qemu_input_event_send_key_delay(hold_time);
+         count++;
+     }
+     while (count) {
+         count--;
+-        qemu_input_event_send_key(NULL, up[count], false);
++        qemu_input_event_send_key_linux(NULL, up[count], false);
+         qemu_input_event_send_key_delay(hold_time);
+     }
+     g_free(up);
 -- 
 2.54.0
 
