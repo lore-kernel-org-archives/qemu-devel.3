@@ -4,126 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B005CCD5BB1
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:56:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3430CCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:56:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ3pT-0005SD-Jc; Thu, 21 May 2026 09:52:51 -0400
+	id 1wQ3oT-0001zm-5S; Thu, 21 May 2026 09:51:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kees@kernel.org>) id 1wQ3Wq-0001kB-5z
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:33:36 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wQ3oR-0001tg-It
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:51:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kees@kernel.org>) id 1wQ3Wo-0005BA-2f
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:33:35 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 2B203445E1;
- Thu, 21 May 2026 13:33:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38751F00A3E;
- Thu, 21 May 2026 13:33:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779370406;
- bh=Mj7DVCvMStdFPb34OrcUAAH1hWW4OYzU+C7hp9VpbjY=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=eL7P5sQOnRUqovuCINXrhkkCMFQg4gJz9lHl+mo5l/7tWzuLIYX1MykUtmft4cIo2
- M+FcdXMoQ4rswOfqo73Od6nx4/NZcLe4hChmGlU7e8EHcktUR9bbKkyMDXjIyfyf9B
- eV78dkZWgUFtYC1qxRKZKBtpzjNh1YNv+xYbvGb/59goFKFuu3NOIeGjgRpvSgtIPo
- 8ivmmDGfUlUajD9Xi2Zb0jv40IpLIkZ1zlVqLGUDtdGxm942GdK2191iVOUAdgY/d9
- LkEDqWs4BcK2jEMPeiyQHLfliXA1m2lVAX62EVolUfTIC9T8HiuTytz5hngxpheUFV
- LHEYk2tMnbFvw==
-From: Kees Cook <kees@kernel.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Kees Cook <kees@kernel.org>, Pengpeng Hou <pengpeng@iscas.ac.cn>,
- Petr Pavlu <petr.pavlu@suse.com>, Richard Weinberger <richard@nod.at>,
- Anton Ivanov <anton.ivanov@cambridgegreys.com>,
- Johannes Berg <johannes@sipsolutions.net>,
- "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>,
- Corey Minyard <corey@minyard.net>, Gabriel Somlo <somlo@cmu.edu>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Jani Nikula <jani.nikula@linux.intel.com>,
- Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
- Rodrigo Vivi <rodrigo.vivi@intel.com>,
- Tvrtko Ursulin <tursulin@ursulin.net>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>, Bart Van Assche <bvanassche@acm.org>,
- Jason Gunthorpe <jgg@ziepe.ca>, Leon Romanovsky <leon@kernel.org>,
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
- Hans de Goede <hansg@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Bjorn Helgaas <bhelgaas@google.com>, Hannes Reinecke <hare@suse.de>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>,
- Daniel Lezcano <daniel.lezcano@kernel.org>,
- Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Jiri Slaby <jirislaby@kernel.org>, Alan Stern <stern@rowland.harvard.edu>,
- Jason Wang <jasowang@redhat.com>, Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
- =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
- Jason Baron <jbaron@akamai.com>, Jim Cromie <jim.cromie@gmail.com>,
- Tiwei Bie <tiwei.btw@antgroup.com>,
- Benjamin Berg <benjamin.berg@intel.com>,
- =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
- "David E. Box" <david.e.box@linux.intel.com>,
- "Maciej W. Rozycki" <macro@orcam.me.uk>,
- Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
- Peter Zijlstra <peterz@infradead.org>, Heiko Carstens <hca@linux.ibm.com>,
- Vasily Gorbik <gor@linux.ibm.com>, Sean Christopherson <seanjc@google.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Gleixner <tglx@kernel.org>,
- Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
- Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
- "H. Peter Anvin" <hpa@zytor.com>, Vinod Koul <vkoul@kernel.org>,
- Frank Li <Frank.Li@kernel.org>, Daniel Gomez <da.gomez@kernel.org>,
- Sami Tolvanen <samitolvanen@google.com>,
- Aaron Tomlin <atomlin@atomlin.com>,
- Alexander Potapenko <glider@google.com>, Marco Elver <elver@google.com>,
- Dmitry Vyukov <dvyukov@google.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- John Johansen <john.johansen@canonical.com>,
- Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>,
- "Serge E. Hallyn" <serge@hallyn.com>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Georgia Garcia <georgia.garcia@canonical.com>, kvm@vger.kernel.org,
- dmaengine@vger.kernel.org, linux-modules@vger.kernel.org,
- kasan-dev@googlegroups.com, linux-mm@kvack.org, apparmor@lists.ubuntu.com,
- linux-security-module@vger.kernel.org, linux-um@lists.infradead.org,
- linux-acpi@vger.kernel.org, openipmi-developer@lists.sourceforge.net,
- qemu-devel@nongnu.org, intel-gfx@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, linux-rdma@vger.kernel.org,
- linux-media@vger.kernel.org, linux-pci@vger.kernel.org,
- linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
- linuxppc-dev@lists.ozlabs.org, linux-serial@vger.kernel.org,
- linux-usb@vger.kernel.org, usb-storage@lists.one-eyed-alien.net,
- virtualization@lists.linux.dev, linux-kernel@vger.kernel.org,
- linux-arch@vger.kernel.org, netdev@vger.kernel.org,
- linux-fsdevel@vger.kernel.org, linux-hardening@vger.kernel.org
-Subject: [PATCH 06/11] moduleparam: Add seq_buf-based .get callback alongside
- .get_str
-Date: Thu, 21 May 2026 06:33:19 -0700
-Message-Id: <20260521133326.2465264-6-kees@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260521133315.work.845-kees@kernel.org>
-References: <20260521133315.work.845-kees@kernel.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wQ3oP-0006Se-SY
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:51:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779371505;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8+P2JDg2djh/jf+gYQ0Qt/KfwgHeJkU+Z2fiHgOikzU=;
+ b=TtTSLz+Bvga+HuMnAlPWcUCyLy4ZzlWC9oSpK04XLdQVTQU//093twJW4dtFzo+uix9+pe
+ 33wnyn+Rd0+FGnMJAAFeKVFLoxOkrEIxoUcaJYNM9C5ZRAETIb3SerggzT06YxygeFhMsT
+ MVgrILrfwBDf03vQfl2ZUuEuEP+kqns=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-159-QbgsHutRNceBwUKmAGTMyQ-1; Thu,
+ 21 May 2026 09:51:38 -0400
+X-MC-Unique: QbgsHutRNceBwUKmAGTMyQ-1
+X-Mimecast-MFC-AGG-ID: QbgsHutRNceBwUKmAGTMyQ_1779371497
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 15C1B19560BE; Thu, 21 May 2026 13:51:37 +0000 (UTC)
+Received: from berrange.com (unknown [10.44.33.98])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B7C0A1956053; Thu, 21 May 2026 13:51:32 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Hanna Reitz <hreitz@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ John Levon <john.levon@nutanix.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 22/29] qom: make errp last param in methods taking va_list
+Date: Thu, 21 May 2026 14:49:36 +0100
+Message-ID: <20260521134943.1714527-23-berrange@redhat.com>
+In-Reply-To: <20260521134943.1714527-1-berrange@redhat.com>
+References: <20260521134943.1714527-1-berrange@redhat.com>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3696; i=kees@kernel.org;
- h=from:subject; bh=T4N6FoAPN5e2cqvWSGS7oEs1xiLk99wdr1LKck0ur78=;
- b=owGbwMvMwCVmps19z/KJym7G02pJDFn8nIs2HH8iHuPEcem9X7HM2rJrS2LZVs8vP/M+reLdF
- K3trxtfdZSyMIhxMciKKbIE2bnHuXi8bQ93n6sIM4eVCWQIAxenAExEwZOR4alreLoXi13roV/i
- 9/tfrbvsVLZZb2L3Qh33TS8N1v2/U8fwT//2x1KTz9OUg91P7LvT39NrdVL4qeIHRzc9ZcnAHRc
- /cgAA
-X-Developer-Key: i=kees@kernel.org; a=openpgp;
- fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=kees@kernel.org;
- helo=sea.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 21 May 2026 09:52:45 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -138,108 +95,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a new struct kernel_param_ops::get callback whose signature
-takes a struct seq_buf instead of a raw char buffer:
+object_new_with_props can't put 'errp' last due to the use of
+variadic arguments. That constraint does not apply to the use
+of va_list with object_new_with_propv, so follow normal practice
+with 'errp' placement.
 
-  int (*get)(struct seq_buf *sb, const struct kernel_param *kp);
+The same rationale applies to object_set_propv.
 
-The previously-legacy .get field is now .get_str (char *buffer);
-.get is the new seq_buf-aware form.  param_attr_show() prefers .get
-when set, otherwise falls back to .get_str.  WARN_ON_ONCE() if both
-are set.  Return contract for .get:
-
-  < 0 : errno propagated to userspace; seq_buf contents discarded
-  = 0 : success; length derived from seq_buf_used()
-  > 0 : forbidden; the dispatcher WARN_ON_ONCE()s and treats as 0
-
-The default policy on seq_buf_has_overflowed() is silent truncation,
-matching scnprintf()/sysfs_emit() behaviour.  Callbacks that want a
-specific overflow errno can check seq_buf_has_overflowed() and
-return their preferred error.
-
-No callbacks use .get yet; the legacy path is still the only one in use
-after this commit. A subsequent commit teaches DEFINE_KERNEL_PARAM_OPS
-to route initializers by type.
-
-Signed-off-by: Kees Cook <kees@kernel.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/linux/moduleparam.h | 13 ++++++++++++-
- kernel/params.c             | 26 ++++++++++++++++++++++++--
- 2 files changed, 36 insertions(+), 3 deletions(-)
+ include/qom/object.h            | 10 +++++-----
+ qom/object.c                    | 20 ++++++++++----------
+ tests/unit/check-qom-proplist.c |  4 ++--
+ 3 files changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/include/linux/moduleparam.h b/include/linux/moduleparam.h
-index f5f4148e2504..c52120f6ac28 100644
---- a/include/linux/moduleparam.h
-+++ b/include/linux/moduleparam.h
-@@ -7,6 +7,7 @@
- #include <linux/build_bug.h>
- #include <linux/compiler.h>
- #include <linux/init.h>
-+#include <linux/seq_buf.h>
- #include <linux/stringify.h>
- #include <linux/sysfs.h>
- #include <linux/types.h>
-@@ -62,7 +63,17 @@ struct kernel_param_ops {
- 	unsigned int flags;
- 	/* Returns 0, or -errno.  arg is in kp->arg. */
- 	int (*set)(const char *val, const struct kernel_param *kp);
--	/* Returns length written or -errno.  Buffer is 4k (ie. be short!) */
-+	/*
-+	 * Format the parameter's value into @s.  Return 0 on success
-+	 * (length derived from seq_buf_used()) or -errno on error.
-+	 * Exactly one of .get and .get_str should be set; the dispatcher
-+	 * WARNs and prefers .get if both are.
-+	 */
-+	int (*get)(struct seq_buf *s, const struct kernel_param *kp);
-+	/*
-+	 * Returns length written or -errno.  Buffer is 4k (ie. be short!).
-+	 * Deprecated: callbacks should implement .get instead.
-+	 */
- 	int (*get_str)(char *buffer, const struct kernel_param *kp);
- 	/* Optional function to free kp->arg when module unloaded. */
- 	void (*free)(void *arg);
-diff --git a/kernel/params.c b/kernel/params.c
-index 6852caea1785..4eda2d23ddf2 100644
---- a/kernel/params.c
-+++ b/kernel/params.c
-@@ -553,12 +553,34 @@ static ssize_t param_attr_show(const struct module_attribute *mattr,
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 2a2829343d..a905a9e42f 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -689,16 +689,16 @@ Object *object_new_with_props(const char *typename,
+  * @typename:  The name of the type of the object to instantiate.
+  * @parent: the parent object
+  * @id: The unique ID of the object
+- * @errp: pointer to error object
+  * @vargs: list of property names and values
++ * @errp: pointer to error object
+  *
+  * See object_new_with_props() for documentation.
+  */
+ Object *object_new_with_propv(const char *typename,
+                               Object *parent,
+                               const char *id,
+-                              Error **errp,
+-                              va_list vargs);
++                              va_list vargs,
++                              Error **errp);
+ 
+ /**
+  * object_set_props:
+@@ -739,14 +739,14 @@ bool object_set_props(Object *obj, Error **errp, ...) G_GNUC_NULL_TERMINATED;
+ /**
+  * object_set_propv:
+  * @obj: the object instance to set properties on
+- * @errp: pointer to error object
+  * @vargs: list of property names and values
++ * @errp: pointer to error object
+  *
+  * See object_set_props() for documentation.
+  *
+  * Returns: %true on success, %false on error.
+  */
+-bool object_set_propv(Object *obj, Error **errp, va_list vargs);
++bool object_set_propv(Object *obj, va_list vargs, Error **errp);
+ 
+ /**
+  * object_initialize:
+diff --git a/qom/object.c b/qom/object.c
+index 08fc840f39..ecae322d2a 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -541,7 +541,7 @@ bool object_initialize_child_with_propsv(Object *parentobj,
+     object_initialize(childobj, size, type);
+     obj = OBJECT(childobj);
+ 
+-    if (!object_set_propv(obj, errp, vargs)) {
++    if (!object_set_propv(obj, vargs, errp)) {
+         goto out;
+     }
+ 
+@@ -740,7 +740,7 @@ Object *object_new_with_props(const char *typename,
+     Object *obj;
+ 
+     va_start(vargs, errp);
+-    obj = object_new_with_propv(typename, parent, id, errp, vargs);
++    obj = object_new_with_propv(typename, parent, id, vargs, errp);
+     va_end(vargs);
+ 
+     return obj;
+@@ -750,8 +750,8 @@ Object *object_new_with_props(const char *typename,
+ Object *object_new_with_propv(const char *typename,
+                               Object *parent,
+                               const char *id,
+-                              Error **errp,
+-                              va_list vargs)
++                              va_list vargs,
++                              Error **errp)
  {
- 	int count;
- 	const struct param_attribute *attribute = to_param_attr(mattr);
-+	const struct kernel_param_ops *ops = attribute->param->ops;
+     Object *obj;
+     ObjectClass *klass;
+@@ -776,7 +776,7 @@ Object *object_new_with_propv(const char *typename,
+     }
+     obj = object_new_with_type(klass->type);
  
--	if (!attribute->param->ops->get_str)
-+	if (!ops->get && !ops->get_str)
- 		return -EPERM;
+-    if (!object_set_propv(obj, errp, vargs)) {
++    if (!object_set_propv(obj, vargs, errp)) {
+         goto error;
+     }
  
-+	WARN_ON_ONCE(ops->get && ops->get_str);
-+
- 	kernel_param_lock(mk->mod);
--	count = attribute->param->ops->get_str(buf, attribute->param);
-+	if (ops->get) {
-+		struct seq_buf s;
-+
-+		seq_buf_init(&s, buf, PAGE_SIZE);
-+		count = ops->get(&s, attribute->param);
-+		if (count >= 0) {
-+			WARN_ON_ONCE(count > 0);
-+			count = seq_buf_used(&s);
-+			/* Make sure string is terminated. */
-+			seq_buf_str(&s);
-+			/*
-+			 * If overflowed, reduce count by 1 for trailing
-+			 * NUL byte.
-+			 */
-+			if (seq_buf_has_overflowed(&s))
-+				count--;
-+		}
-+	} else {
-+		count = ops->get_str(buf, attribute->param);
-+	}
- 	kernel_param_unlock(mk->mod);
- 	return count;
+@@ -804,14 +804,14 @@ Object *object_new_with_propv(const char *typename,
+ 
+ 
+ bool object_set_props(Object *obj,
+-                     Error **errp,
+-                     ...)
++                      Error **errp,
++                      ...)
+ {
+     va_list vargs;
+     bool ret;
+ 
+     va_start(vargs, errp);
+-    ret = object_set_propv(obj, errp, vargs);
++    ret = object_set_propv(obj, vargs, errp);
+     va_end(vargs);
+ 
+     return ret;
+@@ -819,8 +819,8 @@ bool object_set_props(Object *obj,
+ 
+ 
+ bool object_set_propv(Object *obj,
+-                     Error **errp,
+-                     va_list vargs)
++                      va_list vargs,
++                      Error **errp)
+ {
+     const char *propname;
+ 
+diff --git a/tests/unit/check-qom-proplist.c b/tests/unit/check-qom-proplist.c
+index ee3c6fb32b..7f31735459 100644
+--- a/tests/unit/check-qom-proplist.c
++++ b/tests/unit/check-qom-proplist.c
+@@ -373,8 +373,8 @@ static Object *new_helper(Error **errp,
+     obj = object_new_with_propv(TYPE_DUMMY,
+                                 parent,
+                                 "dummy0",
+-                                errp,
+-                                vargs);
++                                vargs,
++                                errp);
+     va_end(vargs);
+     return obj;
  }
 -- 
-2.34.1
+2.54.0
 
 
