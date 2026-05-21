@@ -4,100 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB6A2CD4F5E
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 08:19:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78710CD4F5E
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 08:19:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPyc5-00006m-7a; Thu, 21 May 2026 04:18:41 -0400
+	id 1wPycg-0000mW-0s; Thu, 21 May 2026 04:19:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wPyc3-00005f-DS
- for qemu-devel@nongnu.org; Thu, 21 May 2026 04:18:39 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wPyce-0000mD-RX
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 04:19:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wPyc1-00047z-7r
- for qemu-devel@nongnu.org; Thu, 21 May 2026 04:18:39 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wPycX-0004DR-W0
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 04:19:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779351516;
+ s=mimecast20190719; t=1779351549;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=HNeJVZ1Rc6A7hrZJ52mZsN822mJ/FP2TSqTjK4PmuOs=;
- b=EwPgHL1MN7Cl64Y9DQT/cLazDCF9hnNs0geZd+nb3JPNMRLkClCn2ao7oFI9nZSgYOYjt+
- o9vO1gRdmgD4E/rcIuKuud3TX9TzJemm48l4z689KFXoulWhaf8YKzCh0nTI0FtLMnf35m
- hD+gTaPOGvSIIY6i5/oBoZrWdyovohY=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Cs6nQ/kLNGu59KeqyKiDpXprztLUjKCGrWLBz7ePXvs=;
+ b=bGGCGdavWS1HwD9ewIQNdm98L7RuvZIaqP8Lt8roSWtYMqI9WQ1fxrGdXTCndNXeOv09t9
+ JBLGF9xVx5/SQ/TPNmzC+xcmEqXDUG/EMQwNzUd9Gt95/skKbXvzrOq3WQsLRUmU9g+hJN
+ MHBRTzSEoyUwmcuq/OmP0alhifd8hYA=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-526-shIqCSlbOb6Z-Lfxre3Ezg-1; Thu, 21 May 2026 04:18:35 -0400
-X-MC-Unique: shIqCSlbOb6Z-Lfxre3Ezg-1
-X-Mimecast-MFC-AGG-ID: shIqCSlbOb6Z-Lfxre3Ezg_1779351514
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-48feb029961so33054085e9.3
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 01:18:34 -0700 (PDT)
+ us-mta-556-83knrhtKPeKDwnll0rLwJw-1; Thu, 21 May 2026 04:19:07 -0400
+X-MC-Unique: 83knrhtKPeKDwnll0rLwJw-1
+X-Mimecast-MFC-AGG-ID: 83knrhtKPeKDwnll0rLwJw_1779351547
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-44dad1b938fso3619251f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 01:19:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779351514; x=1779956314; darn=nongnu.org;
+ d=redhat.com; s=google; t=1779351546; x=1779956346; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=HNeJVZ1Rc6A7hrZJ52mZsN822mJ/FP2TSqTjK4PmuOs=;
- b=PCrkEidttLBFW5ydcA9e/lNWeVS1UwOn8jaT7AmjpRXGc0asNsM9JmO11rwi9Kt1yb
- uynHESXvozKf6ZsACaJkP9xm+8eWFBVmUfiUZme+wcnNUVTp/ydxfD9i2a1BGBhS2sOO
- Y62P75JME/I4/OA9iFrK4z7Q0HYsj64L4bpH1Da113+kf7BKlK0hjAzIrSfx2qY17kVH
- Zb/r6E5gU/O7HkqIDjwGdH5gLOpouLg1jOUlPUhg8HIrGcorjxmjb+IWjL1EWVPd5c7B
- U0oXMWZgzAtIfDbDYPn4i1fJ6tywpn/7iP0vBAPzrlko1mfuU6oCiibBHzvrW4JrDzq3
- k7hw==
+ bh=Cs6nQ/kLNGu59KeqyKiDpXprztLUjKCGrWLBz7ePXvs=;
+ b=iKZWw/2kcTJgTA8lcU2P1Z9Qpo4en2ARww8k5wBdKE+N+lnNzKYILKxaRvvSX+259l
+ wud/dUNiU3VEVg84gfHSxbw2omp3QegQGl/kfpNdRYBzFHNUdXqCxbCSsYScfoYojX0m
+ /oRbEb888ndKziNJo9hna1LWjoTs5IcvXA1zoMKez2ua/PUzrdI+6uj5JjqIuBOLGVDE
+ i/g1GvAInx/NUXupxz0oB4jrH7+SzeZiWGWQEh5eLLFjfoti1wwKTpjigQmN4PfxMlr1
+ jBPxo46OqwbOSB/Zl8Q+KHKUVIQh41tctQ7vfCQD4pnim3HsFGey+Qt4LWDRu7GOiehj
+ n/SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779351514; x=1779956314;
+ d=1e100.net; s=20251104; t=1779351546; x=1779956346;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HNeJVZ1Rc6A7hrZJ52mZsN822mJ/FP2TSqTjK4PmuOs=;
- b=YH+ezBwYaZkiRtFLP0VF4Tzpt05ALtUqRy3mlrFRh492ZlsNrtB1RcI1OfJRBKZ0qp
- fbBeSOOyX63tUC8a7icIg9re+tiFz8M7XAiJSsPXZOsBFZK/fh7orhn1Ko2AdNBurZ8f
- XAGhq5i1ScNQ0of1lN9VJ0z1rVsDO5ta+raQlk0Is0b1m6A5k/3OQ3MR8Q3K1NJ2b2mY
- QMKdLnd3wT46DJwnB3pv0WCe1aQ0ije9wjTK/2fJyFgTC+KBZFbFVnUbuCium92kwoZ7
- 4Py6GOctJivg/KD4RasUgs7M7zos/FCbtDJi+uQxkPaHO7fPAaasATD7U1cVPYXUi/Ad
- khhw==
+ bh=Cs6nQ/kLNGu59KeqyKiDpXprztLUjKCGrWLBz7ePXvs=;
+ b=WArwifPajRYJz+Hibm5zZk/eA6XecpgS8CZa92tqQGm3J+tqZ1ykqkzoillhS2dOUg
+ rFHpNp06W5wGfOadK2bOSQObU4o+Ubo2qfCwnYdRX+dS7MkI6NDV4EH1eqsjGBu1fvWv
+ Qsgnpfx2Ex0BGfeU8T7vavpclyX27yZBsilM8QXaaTW6nmO7LjgH5euFrV+u0mOiU5+L
+ eIaaX4jJ0keTY+czF2GimuZ1iNRIXxNwxFETXOC5CPg2UOj1iKPknC7AGjSFFWfKnskU
+ OQ+ITuHaNCXNceAbIR2AbiG293YbqWn2qbLYcK+VLrLGI0GVAAYDFrW9Lzg0lP5PZjlU
+ 4cfw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/ioY0BY9QXKJDms1Qnmx5MidoYWxrRIdVV/yRvdZStywRgGdnfWlNLE/5ez6wbk05Lm8K2vS6vEjFa@nongnu.org
-X-Gm-Message-State: AOJu0YwHE3+tG+TZjif4PuwLBMuxTu0s+OqOK49w22Yn//3JIqOzPJdf
- cAC06vnZcKv0FSV2tKE4h1jOd6+hXDNraYOHVhEu9Dszw/2R+XByVapsSe4oRoJ1GLt2XF45T2v
- QYYpPV/kh5M4ohiSoF2iSArckb5HOq8+RIZYdzWqLQxTqNhzZklh1vOaR
-X-Gm-Gg: Acq92OGB8+DQKZFawx4ZFFbYKXN3UaoAwFnFa4AwCiCB210m1l7tH0YAfjm1zck/Rbk
- m3usdiqgAEuJBbIAfXYmpag+aSsbTRFsiYzoPNm33pU2Y6Kg63k8aseDvLMRUTHVRsPsrvGq7IR
- 7msG+DJJ16HnLnpiGEdIE0m3XhMJmCgykPNDqrqjdbxeLZBDrzrr5gYb5TXHAXr9MeuVOLNxui5
- DF9M7ctLC+KLE15rGHcgaPbI9V2RATibVrYfZcy3ljoaOfR+qxbBse14K0EHx8bgcBvpMI/xMO2
- MrY2IP58tkEJU1EhWN20tXXBVanjIfINAFsd4T3rmGq3mV342aJrrU5qaFIrc+SChun2nS+hWdU
- IRr6vJeG3PjC7Qq4tFzpmIiqYHjL+CDgadVjQnxjhTocw5tESNA9kQAhVvGrO
-X-Received: by 2002:a05:600c:8596:b0:48a:5339:ef0e with SMTP id
- 5b1f17b1804b1-4903604ccb3mr20228245e9.3.1779351513653; 
- Thu, 21 May 2026 01:18:33 -0700 (PDT)
-X-Received: by 2002:a05:600c:8596:b0:48a:5339:ef0e with SMTP id
- 5b1f17b1804b1-4903604ccb3mr20227625e9.3.1779351513136; 
- Thu, 21 May 2026 01:18:33 -0700 (PDT)
+ AFNElJ9t5g98tYv8He6N4pLNc+GeO68dJxjUMRKzOC5MV/MzZnxzWmxAy01TIwDDahcW+yu84uOR6RGS3S3T@nongnu.org
+X-Gm-Message-State: AOJu0YxwjYyNHeh5glVZDFx6deat2C5H5Z+gFBMnF28UekcyRhE5/jV5
+ 8oCe3abgNip3tc6+4QGDEmMiKJ2uCx3Nie+jb+WbiA4oLQOwuKhvd0r4xk5QTXV6CotGIcyXm0m
+ plxtb0OyaoTo5GnIdpvji+nsJ3+nOe96bO8+MKFCsjw/5ayzal+0aPhqX
+X-Gm-Gg: Acq92OGwlJCqqgeYY5VPlQh6nDEgldz9tghYshmZRxKgbheTGj5JiNwN6tk5ANx3qX1
+ MAb3/EPfM/HQYLU5FyngUipALm2UMOS4SvfPUmoGo4OK7tm+a96RxxetRJHVluIRebAGYcKkUo6
+ Y/l9qOmrB/+nWM6lfwmXGWZLwemPNtm1xlYx1VxEe+lUHPeB4C93LMXvg3A9Q8kPlGzRPLS9kKh
+ JZvPPkyMwFbz4gBdAnSu9rJX0NwI1twWpKhN4X9FTYTZq1HTadLSAw9ZnvHqCes740589cZ52jm
+ 0CB82Ki01jWbmvaGYbT8TsqBeQ9IE+CUiFvmlIEiohGmSJml8DLcFh74RYBtB3oO2cRM1ClA7vE
+ +z7SJIEKRMY0Zx43kMIxYeEt5vAZdPI5GOhKN7YWQSq/LOFQVKCmHZEocj5n1
+X-Received: by 2002:a05:600c:c086:b0:489:e696:8362 with SMTP id
+ 5b1f17b1804b1-4903605c9afmr17891585e9.13.1779351546409; 
+ Thu, 21 May 2026 01:19:06 -0700 (PDT)
+X-Received: by 2002:a05:600c:c086:b0:489:e696:8362 with SMTP id
+ 5b1f17b1804b1-4903605c9afmr17891065e9.13.1779351545889; 
+ Thu, 21 May 2026 01:19:05 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49035eec6casm10704715e9.33.2026.05.21.01.18.31
+ 5b1f17b1804b1-49035ea26b5sm10534785e9.22.2026.05.21.01.19.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 May 2026 01:18:32 -0700 (PDT)
-Message-ID: <4a2e8fe9-b20a-421d-adaf-8d8cbb270c44@redhat.com>
-Date: Thu, 21 May 2026 10:18:31 +0200
+ Thu, 21 May 2026 01:19:05 -0700 (PDT)
+Message-ID: <e16976a6-1e46-4ed0-b1af-439c05abd9f5@redhat.com>
+Date: Thu, 21 May 2026 10:19:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 11/32] hw/arm/tegra241-cmdqv: Implement CMDQV init
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: eric.auger@redhat.com, peter.maydell@linaro.org, alex@shazbot.org,
- nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
- jgg@nvidia.com, zhenzhong.duan@intel.com, kjaju@nvidia.com,
- phrdina@redhat.com
-References: <20260519103727.899332-1-skolothumtho@nvidia.com>
- <20260519103727.899332-12-skolothumtho@nvidia.com>
+Subject: Re: [PATCH 36/39] MAINTAINERS: Fix F: in "VFIO-USER"
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org, pierrick.bouvier@oss.qualcomm.com,
+ John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>
+References: <20260521080511.999266-1-armbru@redhat.com>
+ <20260521080511.999266-37-armbru@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -143,9 +141,9 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260519103727.899332-12-skolothumtho@nvidia.com>
+In-Reply-To: <20260521080511.999266-37-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -170,148 +168,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Shameer,
-
-On 5/19/26 12:36, Shameer Kolothum wrote:
-> From: Nicolin Chen <nicolinc@nvidia.com>
+On 5/21/26 10:05, Markus Armbruster wrote:
+> The commit adding the section added two bad F: lines:
+> include/hw/vfio-user/ never existed, and subprojects/libvfio-user had
+> long been replaced by subprojects/libvfio.wrap.  Drop the former, and
+> correct the latter.
 > 
-> Tegra241 CMDQV extends SMMUv3 with support for virtual command queues
-> (VCMDQs) exposed via a CMDQV MMIO region. The CMDQV MMIO space is split
-> into 64KB pages:
-> 
-> 0x00000  (CMDQ-V Config page)
-> 0x10000  (CMDQ-V CMDQ Page0)
-> 0x20000  (CMDQ-V CMDQ Page1)
-> 0x30000  (Virtual Interface Page0)
-> 0x40000  (Virtual Interface Page1)
-> 
-> This patch wires up the Tegra241 CMDQV init callback and allocates
-> vendor-specific CMDQV state. The state pointer is stored in
-> SMMUv3AccelState for use by subsequent CMDQV operations.
-> 
-> The CMDQV MMIO region and a dedicated IRQ line are registered with the
-> SMMUv3 device. The MMIO read/write handlers are currently stubs and will
-> be implemented in later patches.
-> 
-> The CMDQV interrupt is edge-triggered and indicates VCMDQ or VINTF
-> error conditions. This patch only registers the IRQ line. Interrupt
-> generation and propagation to the guest will be added in a subsequent
-> patch.
-> 
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> Co-developed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> Fixes: 9fca2b7d70 (vfio-user: add vfio-user class and container, 2025-06-25)
+> Cc: John Levon <john.levon@nutanix.com>
+> Cc: Thanos Makatos <thanos.makatos@nutanix.com>
+> Cc: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->   hw/arm/smmuv3-accel.h   |  1 +
->   hw/arm/tegra241-cmdqv.h | 18 ++++++++++++++++++
->   hw/arm/tegra241-cmdqv.c | 38 ++++++++++++++++++++++++++++++++++++--
->   3 files changed, 55 insertions(+), 2 deletions(-)
+>   MAINTAINERS | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
 > 
-> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
-> index f82a7112d8..49c10535cf 100644
-> --- a/hw/arm/smmuv3-accel.h
-> +++ b/hw/arm/smmuv3-accel.h
-> @@ -62,6 +62,7 @@ typedef struct SMMUv3AccelState {
->       bool auto_mode;
->       bool auto_finalised;
->       const SMMUv3AccelCmdqvOps *cmdqv_ops;
-> +    void *cmdqv;  /* vendor specific CMDQV state */
->   } SMMUv3AccelState;
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 7a1b1317cf..ca86e1410b 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -4468,8 +4468,7 @@ S: Supported
+>   F: docs/interop/vfio-user.rst
+>   F: docs/system/devices/vfio-user.rst
+>   F: hw/vfio-user/*
+> -F: include/hw/vfio-user/*
+> -F: subprojects/libvfio-user
+> +F: subprojects/libvfio-user.wrap
+>   F: tests/functional/x86_64/test_vfio_user_client.py
 >   
->   typedef struct SMMUS1Hwpt {
-> diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
-> index 38c8b27b4d..030f5758d5 100644
-> --- a/hw/arm/tegra241-cmdqv.h
-> +++ b/hw/arm/tegra241-cmdqv.h
-> @@ -14,6 +14,24 @@
->   #define CMDQV_NUM_CMDQ_LOG2       1
->   #define CMDQV_NUM_SID_PER_VI_LOG2 4
->   
-> +/*
-> + * Tegra241 CMDQV MMIO layout (64KB pages)
-> + *
-> + * 0x00000  (CMDQ-V Config page)
-> + * 0x10000  (CMDQ-V CMDQ Page0)
-> + * 0x20000  (CMDQ-V CMDQ Page1)
-> + * 0x30000  (Virtual Interface Page0)
-> + * 0x40000  (Virtual Interface Page1)
-> + */
-> +#define TEGRA241_CMDQV_IO_LEN 0x50000
-> +
-> +typedef struct Tegra241CMDQV {
-> +    struct iommu_viommu_tegra241_cmdqv cmdqv_data;
+>   EBPF
 
-This won't build on Windows.
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
 
 C.
-
-
-> +    SMMUv3AccelState *s_accel;
-> +    MemoryRegion mmio_cmdqv;
-> +    qemu_irq irq;
-> +} Tegra241CMDQV;
-> +
->   const SMMUv3AccelCmdqvOps *tegra241_cmdqv_get_ops(void);
->   
->   #endif /* HW_ARM_TEGRA241_CMDQV_H */
-> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
-> index 3a19a1af56..298671e0ce 100644
-> --- a/hw/arm/tegra241-cmdqv.c
-> +++ b/hw/arm/tegra241-cmdqv.c
-> @@ -13,6 +13,16 @@
->   #include "smmuv3-accel.h"
->   #include "tegra241-cmdqv.h"
->   
-> +static uint64_t tegra241_cmdqv_read_mmio(void *opaque, hwaddr offset, unsigned size)
-> +{
-> +    return 0;
-> +}
-> +
-> +static void tegra241_cmdqv_write_mmio(void *opaque, hwaddr offset, uint64_t value,
-> +                                 unsigned size)
-> +{
-> +}
-> +
->   static void tegra241_cmdqv_free_viommu(SMMUv3State *s)
->   {
->   }
-> @@ -29,10 +39,34 @@ static void tegra241_cmdqv_reset(SMMUv3State *s)
->   {
->   }
->   
-> +static const MemoryRegionOps mmio_cmdqv_ops = {
-> +    .read = tegra241_cmdqv_read_mmio,
-> +    .write = tegra241_cmdqv_write_mmio,
-> +    .endianness = DEVICE_LITTLE_ENDIAN,
-> +    .valid = {
-> +        .min_access_size = 4,
-> +        .max_access_size = 8,
-> +    },
-> +    .impl = {
-> +        .min_access_size = 4,
-> +        .max_access_size = 8,
-> +    },
-> +};
-> +
->   static bool tegra241_cmdqv_init(SMMUv3State *s, Error **errp)
->   {
-> -    error_setg(errp, "NVIDIA Tegra241 CMDQV is unsupported");
-> -    return false;
-> +    SysBusDevice *sbd = SYS_BUS_DEVICE(OBJECT(s));
-> +    SMMUv3AccelState *accel = s->s_accel;
-> +    Tegra241CMDQV *cmdqv;
-> +
-> +    cmdqv = g_new0(Tegra241CMDQV, 1);
-> +    memory_region_init_io(&cmdqv->mmio_cmdqv, OBJECT(s), &mmio_cmdqv_ops, cmdqv,
-> +                          "tegra241-cmdqv", TEGRA241_CMDQV_IO_LEN);
-> +    sysbus_init_mmio(sbd, &cmdqv->mmio_cmdqv);
-> +    sysbus_init_irq(sbd, &cmdqv->irq);
-> +    cmdqv->s_accel = accel;
-> +    accel->cmdqv = cmdqv;
-> +    return true;
->   }
->   
->   static bool tegra241_cmdqv_probe(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
 
 
