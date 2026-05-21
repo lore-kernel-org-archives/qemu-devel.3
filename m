@@ -4,60 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81BB5CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 12:54:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B856ACD5BAC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:07:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ2u0-0006cx-0J; Thu, 21 May 2026 08:53:28 -0400
+	id 1wQ37N-0001DW-4k; Thu, 21 May 2026 09:07:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sin99xx@proton.me>) id 1wPz3A-0006rh-Tx
- for qemu-devel@nongnu.org; Thu, 21 May 2026 04:46:40 -0400
-Received: from mail-08.mail-europe.com ([57.129.93.249])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wQ37J-0001Cd-7L
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:07:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sin99xx@proton.me>) id 1wPz38-00052K-6t
- for qemu-devel@nongnu.org; Thu, 21 May 2026 04:46:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
- s=z2lqxtfvl5g3jarz4fjuoiytzq.protonmail; t=1779353190; x=1779612390;
- bh=tkamdrAaDTWrrkR9kYHra8PGsTVyJBEK4fnu2eaMkvw=;
- h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
- Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
- Message-ID:BIMI-Selector;
- b=QtjLvqyrO3qtPf6MZSv3xrLLo07ABzY330OTR/nSkfF9vpxVo3Skxz7E3JPLOoDoX
- qFJlkJHIoNg+jj+2LrXA+w+cHNtOlb//n/1o9UpVVgHD68tgMcGDaEshp3CU4MKvF0
- iZfmpbEs96KKzdPhBL3KPeCmKAZjRsHdKCIrUHjofEquN7xeb8RtHdr2BQn+eOfOvu
- LSKdajJnW7emHTEHbOACx7n9hJ9ayYUL+a6riHXThOjrY5sJjr+xaW0eIAj9aGNZ80
- cxCG4opYWxwkvVX8b2PwvZ+6HbMNwXaJ3u9JS5BZ2LNIMvP1U6OEgsQKT/88/jbAlG
- 3OlZEk0wTLIoA==
-Date: Thu, 21 May 2026 08:46:25 +0000
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-From: sin99xx <sin99xx@proton.me>
-Cc: qemu-devel@nongnu.org, Greg Kurz <groug@kaod.org>,
- sin99xx <sinxx198@gmail.com>, qemu-stable@nongnu.org
-Subject: Re: [PATCH] 9pfs: fix missing rename lock in v9fs_co_readdir_many
- (CVE-2026-48004)
-Message-ID: <10uGXQrj_bUSBIeDEe9II6FlpXrJvu1JWp65PIgCWneOPK-9k9YMBzunh6oPOh-7Y1nQBfMZVALHdh4YUuR25NI7iWJu4_L8uUNqsrFRzg4=@proton.me>
-In-Reply-To: <6268548.lOV4Wx5bFT@weasel>
-References: <E1wPkYi-000adH-4E@kylie.crudebyte.com> <4735365.LvFx2qVVIh@weasel>
- <CAMX0No0JkKWL2ZPUqD8558FshhSNFJGjy6hsxqVwntRp9F3rUQ@mail.gmail.com>
- <6268548.lOV4Wx5bFT@weasel>
-Feedback-ID: 132738630:user:proton
-X-Pm-Message-ID: 0ecfd29ab8aef7a0f908585754bcba6d5489b880
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wQ37E-0005o8-GM
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:07:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779368826;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=YhJ19rgBePFj/AJvHy/AzeKpFvpyvnPZ205XOne6nQ8=;
+ b=e9sg/5LdXnq4xVe7tETjQKW5+7VamliueOgkvLbXNxBmbLhkVpVLiGawmIzpHFqrdPnZDT
+ O/jNonLRG+qT8ZSz3xF/hmgdIrLF/+qsPhmsUvSLzol/vLVusF5Jm1YRVVUCIaL0ql/aYQ
+ bHrtRjZsumKUq02O/vBEtY4qxU67HXg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-9-GwvtBzuWM06w9Z9GejqFpg-1; Thu,
+ 21 May 2026 09:07:00 -0400
+X-MC-Unique: GwvtBzuWM06w9Z9GejqFpg-1
+X-Mimecast-MFC-AGG-ID: GwvtBzuWM06w9Z9GejqFpg_1779368819
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E1EFE180056E; Thu, 21 May 2026 13:06:58 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.98])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 545D8300019F; Thu, 21 May 2026 13:06:56 +0000 (UTC)
+Date: Thu, 21 May 2026 14:06:52 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Mauro Matteo Cascella <mcascell@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-devel@nongnu.org,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: Re: RFC: GitLab issues for security disclosures
+Message-ID: <ag8DbJqLzvTlJRIe@redhat.com>
+References: <agxzKzzDOJm1EU_v@redhat.com>
+ <c9cd8228-0a18-49f7-b403-445affeaf972@oss.qualcomm.com>
+ <ag3OopKwGVUjSrrV@redhat.com>
+ <e7f1fd11-774d-4610-8cca-a434f508e472@oss.qualcomm.com>
+ <ag3xwssG6KZecv0o@redhat.com>
+ <20260520191235-mutt-send-email-mst@kernel.org>
+ <CAA8xKjWoMYBPedC5RP96=TOe2MzDwtsmBHFW=0Bq170YNsR9DQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=57.129.93.249; envelope-from=sin99xx@proton.me;
- helo=mail-08.mail-europe.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAA8xKjWoMYBPedC5RP96=TOe2MzDwtsmBHFW=0Bq170YNsR9DQ@mail.gmail.com>
+User-Agent: Mutt/2.3.1 (2026-03-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001, T_FILL_THIS_FORM_SHORT=0.01,
+ URG_BIZ=0.573 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 21 May 2026 08:53:24 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,122 +94,72 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-my bad,
-
-Confirmed =E2=80=94 please use this address (sin99xx@proton.me) for the
-Signed-off-by and From lines on the patch.
-
-Signed-off-by: sin99xx sin99xx@proton.me
-
-Regards,
-sin99xx
-
-
-Sent from Proton Mail for iOS.
-
--------- Original Message --------
-On Thursday, 05/21/26 at 04:30 Christian Schoenebeck <qemu_oss@crudebyte.co=
-m> wrote:
-On Wednesday, 20 May 2026 20:26:09 CEST sin99xx wrote:
-> Yes, please go ahead and add my Signed-off-by tag. Also, if possible, cou=
-ld
-> you use this email instead?
-> Signed-off-by: sin99xx sin99xx@proton.me
-
-Please confirm by replying with that proton email address then I will repla=
-ce
-your email address on this patch.
-
-CC-ing qemu-stable, as this patch should be applied on stable branches, too=
-.
-
-> On Wed, May 20, 2026 at 2:22=E2=80=AFPM Christian Schoenebeck <
->
-> qemu_oss@crudebyte.com> wrote:
-> > On Wednesday, 20 May 2026 19:11:25 CEST Christian Schoenebeck wrote:
-> > > From: sin99xx <sinxx198@gmail.com>
-> > >
-> > > v9fs_co_readdir_many() dispatches do_readdir_many() to a worker threa=
-d
-> > > that reads V9fsFidState's path.data without holding a rename lock.
-> > >
-> > > A concurrent rename request, e.g. of its parent dir, causes the FID's
-> > > absolute path to be altered by freeing the old path string and
-> > > assigning a new one. This causes a heap-use-after-free race condition
-> > > while do_readdir_many() is still accessing the old object.
-> > >
-> > > This allows a DoS by an unprivileged guest user.
-> > >
-> > > Fix this by wrapping the worker thread dispatch block within a pair o=
-f
-> > > v9fs_path_read_lock() and v9fs_path_unlock() calls, like it's done at
-> > > other places.
-> > >
-> > > Fixes: 2149675b195f ("9pfs: add new function v9fs_co_readdir_many()")
-> > > Fixes: CVE-2026-48004
-> > > Reported-by: sin99xx <sinxx198@gmail.com>
-> > > [Christian Schoenebeck: add commit log message]
-> > > Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+On Thu, May 21, 2026 at 02:45:08PM +0200, Mauro Matteo Cascella wrote:
+> On Thu, May 21, 2026 at 1:14 AM Michael S. Tsirkin <mst@redhat.com> wrote:
+> > something I was unaware of previously, is that gitlab is a CNA:
+> > https://about.gitlab.com/security/cve/
 > >
-> > sin99xx, I forgot, may I add your Signed-off-by tag?
-> >
-> >   Signed-off-by: sin99xx <sinxx198@gmail.com>
-> >
-> > This is required [1] for making you the patch author:
-> >
-> > "Your patches must include a Signed-off-by: line. This is a hard
-> > requirement
-> > because it=E2=80=99s how you say =E2=80=9CI=E2=80=99m legally okay to c=
-ontribute this and happy
-> > for it
-> > to go into QEMU=E2=80=9D. For full guidance, read the Code provenance
-> > documentation."
-> >
-> > [1] https://www.qemu.org/docs/master/devel/submitting-a-patch.html
-> >
-> > > ---
-> > >
-> > >  hw/9pfs/codir.c | 3 +++
-> > >  1 file changed, 3 insertions(+)
-> > >
-> > > diff --git a/hw/9pfs/codir.c b/hw/9pfs/codir.c
-> > > index bce7dd96e9..5568399343 100644
-> > > --- a/hw/9pfs/codir.c
-> > > +++ b/hw/9pfs/codir.c
-> > > @@ -220,13 +220,16 @@ int coroutine_fn v9fs_co_readdir_many(V9fsPDU
-> > > *pdu,
-> > > V9fsFidState *fidp, bool dostat)
-> > >
-> > >  {
-> > >
-> > >      int err =3D 0;
-> > >
-> > > +    V9fsState *s =3D pdu->s;
-> > >
-> > >      if (v9fs_request_cancelled(pdu)) {
-> > >
-> > >          return -EINTR;
-> > >
-> > >      }
-> > >
-> > > +    v9fs_path_read_lock(s);
-> > >
-> > >      v9fs_co_run_in_worker({
-> > >
-> > >          err =3D do_readdir_many(pdu, fidp, entries, offset, maxsize,
-> >
-> > dostat);
-> >
-> > > });
-> > > +    v9fs_path_unlock(s);
-> > >
-> > >      return err;
-> > >
-> > >  }
+> > so using gitlab issues means assigning CVE #s should be super easy.
+> 
+> Red Hat is a CNA too, QEMU CVEs are currently being reserved by Red Hat.
+> 
+> In fact, Red Hat is a root CNA:
+> https://www.cve.org/Media/News/item/blog/2023/01/10/Why-Red-Hat-Became-Root
+> 
+> Projects like glibc, postgresql and curl now operate as independent
+> CNAs under Red Hat, retaining complete end-to-end ownership over CVE
+> assignment. Is it time for QEMU to follow suit?
 
+Is there any guidance on the process & implications of taking that
+route, specifically as an OSS project ?
 
+I've found this:
+
+  https://github.com/ossf/wg-vulnerability-disclosures/blob/main/docs/guides/becoming-a-cna-as-an-open-source-org-or-project.md
+
+And there are obligations/requirements there which I would not be
+very comfortable with agreeing to with my QEMU hat on.
+
+ * CNA must provide a phone number for the primary POC.
+
+I'm guessing the phone number is intended for someone/org to escalate
+urgent issues ?
+
+Related to this I see
+
+ * CNA either should or must publish CVE Records within 24 hours
+   of publication of a CVE ID.
+
+and similarly in
+
+  https://www.cve.org/ResourcesSupport/AllResources/CNARules#section_2_sub_cnas
+
+   "3.2.2.2 The administrative POC MUST include both email
+    addresses and phone numbers and MAY include additional
+    contact methods."
+    
+   "3.2.2.5 The administrative POC MUST respond in a timely manner.
+    Automated responses do not qualify as “a timely manner.”"
+
+As a co-operative volunteer project, my view is that we do not owe
+anyone a guranteed or timely response. Yes, many of us are employed
+by vendors to work on QEMU, but our work in the upstream community
+context is still on a best effort basis. 
+
+If someone requires an urgent or guaranteed response, whether to a CVE
+or any other kind of issue, then the obligation needs to fall on the
+paid vendors who distribute QEMU rather than any individual upstream
+maintainers.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
