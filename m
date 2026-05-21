@@ -4,111 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E85CDCD5BAC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 14:24:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 695EDCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 14:24:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ4JD-0001Vd-Fm; Thu, 21 May 2026 10:23:35 -0400
+	id 1wQ4JF-0001fb-GQ; Thu, 21 May 2026 10:23:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wQ4IX-0001KQ-Th
- for qemu-devel@nongnu.org; Thu, 21 May 2026 10:22:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wQ4IV-000591-9m
- for qemu-devel@nongnu.org; Thu, 21 May 2026 10:22:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779373370;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RH05gHQfsO6XxElUEre8MjkhjJLcn3LTyidfBnh+DVI=;
- b=Y3L1exh4pxt4nvTzy/H7VmRu7GYpyweP4giZdpzf2hscnSLNpZSDSFiXa2Le6m9fY7mJfz
- xe3N0WKMvNgjWCnqRurzuEfyxYi/pmf/0i+GYNlSe27RfrPM+MKu92wARQeVbpsgFv8KCb
- OT/y+G7gqPPhslM3TcoldiBwuEicpt8=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-117-6ovOHBSmPzyGBwhClKHCDQ-1; Thu, 21 May 2026 10:22:41 -0400
-X-MC-Unique: 6ovOHBSmPzyGBwhClKHCDQ-1
-X-Mimecast-MFC-AGG-ID: 6ovOHBSmPzyGBwhClKHCDQ_1779373360
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-44f65835b77so4643979f8f.2
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 07:22:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wQ4J5-0001S2-5W
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 10:23:29 -0400
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wQ4Iz-0005aB-6G
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 10:23:23 -0400
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-65c52bb5dd7so6053971d50.2
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 07:23:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779373399; cv=none;
+ d=google.com; s=arc-20240605;
+ b=LtfhL0tWO7JLUVlSyl/Pw5XuSY2AlwCr8Ovzk3XtN4Cf/+uohd/YiBiz/SUevWn8w+
+ nqazc5AEfOol+K/yg6SetiwTPCKJseEXP5JV2vCM4U6Mec94+Kd8Rh9cn42EUVF3cCAJ
+ iPC00JXSpXUrnCW1M/OxGp1XGI0wFc98Z+px86kbrwDVg7ZEkQKCdLl/cDJ1pJcHm7B+
+ 8LQ2dxFDTy6oOOobH9YMYzqkQ1RmzwcjdyM046Tog9o8TuX9mB9wItPUgJ/YBD1X9+WN
+ 8zajJMQ/fA+xraS3Jl+3ViYvvBepYAwq1vsId0ChSFxYDl1quj9ntqvaO5twM5TCcbCE
+ w/Tg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=Tx00YSWoNN3QtonE9PblQbU/nys/V09n1+FQnSga8Kg=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=kijtzNpezTlbpk69pgbJgq0bJgzSsSEvGi38JWnqDTqiQwG5gbboocR6tCMYK45cLs
+ Y3Q7iyiF+ycilrU1vCfNl3YVqT3pw9ZOstPaT1K3HavSiAJYA2pRhfrn/ZRhxLNeFLfi
+ B7xM1jrY1G80Gba9VQTpOwZQde0yzxTsf7Jr0zTP/72hbgHjPPELHyvupGqfmLtl5IIP
+ vFm3FADxHhpL5IUUmrZ9PdOuWOR4IkmsAa0YC3xfntO8YapBxusQgyxBqzcy0fV6zs6/
+ ydmRL4L7A1CZPEO3D1sdqYxv+S/hu82a5SmOfCVUVELxSfEsHOSFBWQEFfZCayo05QpL
+ r4bQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779373360; x=1779978160; darn=nongnu.org;
- h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=RH05gHQfsO6XxElUEre8MjkhjJLcn3LTyidfBnh+DVI=;
- b=CbdJUvNa4X66t7bgVIlL4kdK7OLZSrwuvEtsoKFhcr+2vFJ8AbWVhZfb8hShhWvDTl
- 0KoK2AJeGUb8Y8Gi52kRd7UcHxSWknAU9oBJOTw84qAGEhHKK3fuhHC6Y8i5GXA4m46R
- gsmOa5G7g6xnNoQ8mPRhUAENN1x9t13/DgmbG8Fve5O4e2ZFPfNkPuyXo77/aTDkJJhq
- qTusAdnI6myb9bBnupdmjqCA4YiZbElKGeMk/6JdCV5oCu58UFtWYqRmzCEmmbuGonMH
- eDiODgMlU2R1sxA0/AuhEahUT1GPgT9kVA6PzN8HlRrxSyU6WWtsfoCt+y7QvMDPj7UX
- ITsg==
+ d=linaro.org; s=google; t=1779373399; x=1779978199; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Tx00YSWoNN3QtonE9PblQbU/nys/V09n1+FQnSga8Kg=;
+ b=LnqtjkoZ+jncM8SBQ2ue8TiHowIAledroqY4pev24bKAnZ47uZFpwrR5C+aAubEKLx
+ 4389+FkWiaP2cW9PDIh0OOErIJv9U7AGvMRsJsxH3H5qUODAvyB01kp2t6jq5dDcfbxC
+ 5L8uxMPOP1EnLTuuH8sGKp1zGABSUmeAqMU+o3j5fs7+RISUYItRjL3esA8Zbs8LyamI
+ K2nzSw9UY8tCZmO/uM7pcoBN8mcYDPfZQZJMpIh22TD0gzDEdrtjqB+cElWRXZbQ1mKo
+ dQK66Dvmd1wE/NapXThrXNGzG5ylNliXGZui7AEPUhn4Ds88C+SUjXTF7WgSZyACM4be
+ DkPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779373360; x=1779978160;
- h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=RH05gHQfsO6XxElUEre8MjkhjJLcn3LTyidfBnh+DVI=;
- b=o/HX6Vb9mrHQb7CTaYeokhe526BsX42G86RR2GCIdI0C2ViyBjJXoGEN2qCo2W7aH8
- dws/oCPjjfyekSJdPuUWlGJVlIaL0G4QF6bi/kQlRZTq/iMX4lZeefTBTsmjymtnY9fZ
- q53sWLGMyh6iFad1nd5mAP5qXqB86zPKyloqMfdKDXW3uJUowDczjZWE5UCcU36+z49w
- 9gWwa51wth88P63R5K5lLVmY3tFrkAhKrpwh9HAF50oElvBtoRStWkDxJYDkQ3EQQ+dn
- tffxqD/ar1kXd6s9U75twxMurbpI4nPpRKHvc79PljxAYEhiGaJq3DHPsDDbRa4Gol7+
- 6TXg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9cNom804jUf4lELVppeUiWQHUjNmxXgyulJ3A6EGvzHt/L+5VC38i4sBPY1dsECd3HsMJD0lcJUTdY@nongnu.org
-X-Gm-Message-State: AOJu0Yy8UD+zF2LmZ/MheU6IUjhAelXnDyLTkbrlhaY28qch4JqsBoxK
- PwIXbEoxcdGW63gn4g2S/sS2i69hO5nNgAJVfHd/JuzWTxR2r00b4z9WbEMk6M4SrvGJRIliRG0
- m7enQ/bGdIdCzyp59kgq4JQzYqK2j9kuXT/nrAQ+03JudKPA+8nO4kGub
-X-Gm-Gg: Acq92OFTX+XmWGrzo+jrqeQZ+AKIs/MNfbWIG5Pl8KQJmEaCBem0zC/4v+zCNpz/r11
- iCye+82GrB0OtTniZeP8NVWYmC4iq/LW4GxnsIxwNSAYnxYhNoOIb0Ci5NY2joxxwsZenUkCJbp
- F2T9SJHM2Z0Px3ZiCnhnGCPHEouMT6gDF73I8c3+qzsy0WFjMTAG7MytQ3cm4pI8l3Xk9iY/S41
- 4B2Mqr5IkysewqXt9XDyF6fqVtZEPVC+doI/1W1xbhlziLvU7oEF5W3wMlq+hIzUzVTg4+hXbb5
- roejoc965yYaBu3QKOgVB0hIz3sGy0sFP8yhfNq9Db3L3+afZcJ2xvAH9Xzgv7ENCsw8mJueALP
- pySLTLuM0IcSw77Ws7MIHkGkxjuJxhI5ALzyJCl4BHSj5bNK1RjYrcmKCgJxgCPWUFBLKDmE=
-X-Received: by 2002:a05:600c:1c0d:b0:48f:fe2a:107b with SMTP id
- 5b1f17b1804b1-49036048699mr56077795e9.7.1779373360385; 
- Thu, 21 May 2026 07:22:40 -0700 (PDT)
-X-Received: by 2002:a05:600c:1c0d:b0:48f:fe2a:107b with SMTP id
- 5b1f17b1804b1-49036048699mr56077065e9.7.1779373359969; 
- Thu, 21 May 2026 07:22:39 -0700 (PDT)
-Received: from rh (p200300f6af2a6100f239e076bbd76784.dip0.t-ipconnect.de.
- [2003:f6:af2a:6100:f239:e076:bbd7:6784])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49033d44705sm63687105e9.4.2026.05.21.07.22.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 07:22:39 -0700 (PDT)
-Date: Thu, 21 May 2026 16:22:38 +0200 (CEST)
-From: Sebastian Ott <sebott@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>
-cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- kvmarm@lists.linux.dev, peter.maydell@linaro.org, 
- shaju.abraham@nutanix.com, khushit.shah@nutanix.com, 
- yangjinqian1@huawei.com, cohuck@redhat.com, richard.henderson@linaro.org, 
- skolothumtho@nvidia.com, philmd@linaro.org, maz@kernel.org, 
- oliver.upton@linux.dev, pbonzini@redhat.com, armbru@redhat.com, 
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com
-Subject: Re: [PATCH v5 11/18] arm/kvm: Initialize all writable ID registers
- from host
-In-Reply-To: <20260519132905.145643-12-eric.auger@redhat.com>
-Message-ID: <f049616f-d221-5f0e-95a5-e40d61637e0e@redhat.com>
-References: <20260519132905.145643-1-eric.auger@redhat.com>
- <20260519132905.145643-12-eric.auger@redhat.com>
+ d=1e100.net; s=20251104; t=1779373399; x=1779978199;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Tx00YSWoNN3QtonE9PblQbU/nys/V09n1+FQnSga8Kg=;
+ b=jxz9O+Hh2H/vCUni4C8uSKV7TOUQ0aP26iSp2xQP73pVOd785nr2cSSVP8WXJJBPAz
+ bY7dDSNsqUomTSjICdcfSmacks84wh/6WJBgdkQdUh1d0VuD9rQV+7y/2jjCgohDLVKp
+ BSlCHVICKMq8bJ9B3uH7aZJA7TuFOgpFSjzrswib4Exri/wbP+4NtB+jC1BvuDl1K5JX
+ rVQ5sGivei5YGtPY0L67UqOZz4PzfalsUUdJnWsQwuiDAAgFQKd1oIqHl8YCjNXgnAMT
+ WMleNFHpFowD/mTV3gaqsxvCplSV+44+SnHr1mzc5qqEqDUA4e8/LLj9Pq7AwqQMg1id
+ 5Mcw==
+X-Gm-Message-State: AOJu0YyJ7Ebic6qSOSfkNaqQGXizIQcvWXnSDHThJMGJcJoA12CjoyfF
+ 3I7qu1BUmuIZtAnvM4ftGdtY/PawUpGaZz9MVNl/5uYcuzAi+x63QHhemzsFSXAk9d5UGP+EZ2m
+ iuMk9Gvbc+hmICABAlLVoVPOlpL3UBTs01qwWZeNz+A==
+X-Gm-Gg: Acq92OFKEnKTk8pxaMETjQfAD5xbqQ/RfcUctjUeVVdfZMax32bmE9mGn1zlqtvVsQ9
+ w30AD3IgkAMIQlbY5jiDqOwePM8A8w9x/Dh1rozrAiv7xv6lRlbma0bI9hbrvIA23pkeYbJ4ieh
+ npCkxCVZJQTVkD6okX8p6E8qGT9meHQA+wqoNRi5behsiJTttHTDR9Gxj/0LWCdQsoapnLMLnmC
+ 8yu9R/CDIuAiIVTz56nkE8faA5BRLiitWPeNmRniJX3wkK6qBLNgBxQPrF/Ck93qKHJY/RChEKT
+ zna1aqgaD2JnLBcWX9mq3MobPmcZ8NlPs41B4LuFkUi+metXETf8F8Yib2vpD7a5VY4=
+X-Received: by 2002:a53:acda:0:10b0:653:8ef:935 with SMTP id
+ 956f58d0204a3-65eae22f601mr2046041d50.54.1779373399358; Thu, 21 May 2026
+ 07:23:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sebott@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260520182213.872945-1-richard.henderson@linaro.org>
+ <20260520182213.872945-16-richard.henderson@linaro.org>
+In-Reply-To: <20260520182213.872945-16-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 21 May 2026 15:23:07 +0100
+X-Gm-Features: AVHnY4LZiB9EmzHWt3A8O2YvdeFvmhc7FKzXIKaX6bJjgb1HwUdI5bUErDsCrQk
+Message-ID: <CAFEAcA_96ThP1wcTUtESz6sEa7QWnh-1Fx4o8Ww2XZ0K8kCB7A@mail.gmail.com>
+Subject: Re: [PATCH v6 15/64] target/arm: Dump FPMR when present
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,22 +114,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 19 May 2026, Eric Auger wrote:
-> We want to allow overwriting writable fields of some ID registers.
-> However currently some of them are never touched, neither read nor
-> w. Examples are CLIDR_EL1, CTR_EL0, REVIDR_EL1, MIDR_EL1.
+On Wed, 20 May 2026 at 19:23, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> We want to initialize them from the host value, allow overwrite
-> and write back for kvm afterwards. This patch implements the
-> initialization.
->
-> Introduce a new get_host_cpu_idregs() helper that gets the host
-> values for all writable ID regs and store them in isar.idregs[].
->
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
->
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/cpu.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
 
-Reviewed-by: Sebastian Ott <sebott@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
+thanks
+-- PMM
 
