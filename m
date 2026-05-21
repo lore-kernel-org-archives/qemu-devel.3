@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3812ECD4F3D
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 15:33:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A678ECD5BB4
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 15:33:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ5OF-0003Dv-58; Thu, 21 May 2026 11:32:51 -0400
+	id 1wQ5P1-0003gX-IZ; Thu, 21 May 2026 11:33:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wQ5OD-0003CV-HO
- for qemu-devel@nongnu.org; Thu, 21 May 2026 11:32:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wQ5OB-0000vC-5o
- for qemu-devel@nongnu.org; Thu, 21 May 2026 11:32:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779377565;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PQ+0TTr00gBP3CeVZqlZUIpy7FOgAIyl/08IRwZcLe0=;
- b=WTyy53wObUrYnuqBzgRt/1ThNshAXjvD6qqBPV2FoOlBkR3IDvHpna9xQszwrsbzh56tb+
- QEbSl9RMKXau1mzX/XPSbfBnN0WMjYFSuSm9oM0kF3SkxeaXC6y94ZXh3J/CsLeCiqYee7
- sy2BKfBdJgVlJvI3c9hlae8Bc3TOIq0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-418-Trm_OF5aOGmo22mjxTdQqw-1; Thu,
- 21 May 2026 11:18:32 -0400
-X-MC-Unique: Trm_OF5aOGmo22mjxTdQqw-1
-X-Mimecast-MFC-AGG-ID: Trm_OF5aOGmo22mjxTdQqw_1779376711
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BE100195396C; Thu, 21 May 2026 15:18:17 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.143])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CA0493002D2D; Thu, 21 May 2026 15:18:16 +0000 (UTC)
-Date: Thu, 21 May 2026 11:18:13 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Sam Li <faithilikerun@gmail.com>
-Cc: dlemoal@kernel.org, qemu-devel@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- dmitry.fomichev@wdc.com, Kevin Wolf <kwolf@redhat.com>,
- cassel@kernel.org, Markus Armbruster <armbru@redhat.com>,
- qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, hare@suse.de,
- Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH v10 2/4] qcow2: add configurations for zoned format
- extension
-Message-ID: <20260521151813.GE464582@fedora>
-References: <20260510175059.311814-1-faithilikerun@gmail.com>
- <20260510175059.311814-3-faithilikerun@gmail.com>
- <20260514194906.GC1535937@fedora>
- <CAAAx-8K+12SGZqzpLGsxjsr6iGAHwQu-TUXe6Z6rtZA27OpjrQ@mail.gmail.com>
- <20260519154911.GB119642@fedora>
- <CAAAx-8Jooodx88LTJvVjHQYKj-SgkCxXkMTi1=ZdR3v3cpUvUg@mail.gmail.com>
- <20260520175905.GA384978@fedora>
- <CAAAx-8KMLBn1Fb1pMNHwsPsM2FKbJAhFFRFbjhvTvtbZ5FKfpA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wQ5Or-0003Y1-JX
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 11:33:32 -0400
+Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wQ5Om-00017N-6d
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 11:33:27 -0400
+Received: by mail-lj1-x22c.google.com with SMTP id
+ 38308e7fff4ca-38e7c3a2deaso58803481fa.2
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 08:33:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779377601; x=1779982401; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KimNAMyXmZNNTWWv9jeYJPSLYiMDb4bG0OyNT/B+qNg=;
+ b=DjWiZwo6vHuuFpCbA2AFvqjtLi/Dcn8X/BUHaQcHDpK78gsc/uQVAIcGrb/y08weQM
+ 9x1g6IgHTOlLwHMHy8CgwWvSfLqvdJU0Tmbg2/5vRNFc3VQujtfV/WiWUTmTulaLXuo3
+ 9E1PMVNAugwYu+lKfxTZcTCjtWApjwtMeqB8Mcz9wvwoNUfjnZuWUqsaTvmlPV4cYQ29
+ dHuQp0ytqwLB9ReV8sl+MbiHd97gWCCHy1zVBGiGW1c5HG7pW5cYGpuqicp3ekkS7CoG
+ 3C0lBb9zeN8FCJuZ14qK+ikPVBsi/b4wGNfObEmx9Go5w07kS4nrUars92uQvL24eK8v
+ aZjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779377601; x=1779982401;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KimNAMyXmZNNTWWv9jeYJPSLYiMDb4bG0OyNT/B+qNg=;
+ b=osPt7i4OWEn9P0VVwOMtd8lAoh8e2rcbj0IZtHXMAW/PPdwE494bgqaNIkSg+Jt5CS
+ 7OV+bHX4a1U+VOd0CljXNVaGTlmURVZiQfndAHXcUl78sN16LjHyhmDkq579Cm+rRzbM
+ UmJd2BosSK2qMDHzuKVAcrm+OtPEf6+PMxwNSOVvukD1Juey5IY4clNQCSI77aKqNqob
+ oqUskb6zzGz3Jznjw7pU9r11xNGgNDdOPfuxfK9XMomka3bT0RRpGPTLgWsdXFtuvV0g
+ t2Jbe1h/ny67NIZQNtMWo5OmyarYLC0+4x+0pYH+V2i5MmLOdoJndpQxOAybmqtkfWZm
+ SyXg==
+X-Gm-Message-State: AOJu0Yx4HxfKtQ3xkp7mcIs6ukdMWmCUBv4g6w7Rsys4FJ8y7hhyIAAU
+ pduWsZlZ1TzSA19JxwDghdpYI9bHExXiNHPxQjDadISUazWEKshEY7wJ63JaB91JuINLv8u0sph
+ 7m8WbKGE=
+X-Gm-Gg: Acq92OFvozCfo7+u8Dr/Uq9r/EGtLgCzXmtHqyUF+W+o/2akCnQr2wnIQvknjSrFbtE
+ MBYlakeadHZcB99okPOpqdlfdkcaTtwIo05GfjfpqUmB2naUSfA+iDy/V8FkmFIEOKKcnxcru14
+ uvPE7Krjlzvu884EVGEe981Oc1mIA0Mf/QAT8oBidU+qDj5h0UHIJLVVgpCafnvOe63VfuccHZh
+ TxJcqnvxJSTtQ31wHrJr8J+h9oH+w/cnzKr9Vo1QtOdr7eU/rAnDY7dZ2y5NpjxF2rVsVK5l0r2
+ bPNPH7qT7l317N5U7Ky0Xrr1vDVLIu46hXWkPawhrd0+5AOdxQiMr7uvaCLDq3+QaiaDFv9VT9X
+ JheSMwGHsQUCBMqmwhCkltphvxBz1pr6bFLspUpuaHu4/YhW4gcgeRXvPo2RDfUu0Puo68ozv1p
+ 8asmMMtRPFhffuzbR+M66sgMY=
+X-Received: by 2002:a05:600c:8585:b0:490:3890:605b with SMTP id
+ 5b1f17b1804b1-49038906125mr35734655e9.31.1779376943042; 
+ Thu, 21 May 2026 08:22:23 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49035c47b31sm18444115e9.14.2026.05.21.08.22.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 21 May 2026 08:22:22 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 61EFC5F886;
+ Thu, 21 May 2026 16:22:21 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org
+Subject: Re: [PATCH v6 01/64] target/arm: Implement ID_AA64ISAR3
+In-Reply-To: <20260520182213.872945-2-richard.henderson@linaro.org> (Richard
+ Henderson's message of "Wed, 20 May 2026 11:21:10 -0700")
+References: <20260520182213.872945-1-richard.henderson@linaro.org>
+ <20260520182213.872945-2-richard.henderson@linaro.org>
+User-Agent: mu4e 1.14.1; emacs 30.1
+Date: Thu, 21 May 2026 16:22:21 +0100
+Message-ID: <874ik0okia.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="OQY6/m2SOw3YvsTT"
-Content-Disposition: inline
-In-Reply-To: <CAAAx-8KMLBn1Fb1pMNHwsPsM2FKbJAhFFRFbjhvTvtbZ5FKfpA@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x22c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,162 +105,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Richard Henderson <richard.henderson@linaro.org> writes:
 
---OQY6/m2SOw3YvsTT
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/cpu-features.h    | 9 +++++++++
+>  target/arm/helper.c          | 8 ++++++--
+>  target/arm/cpu-sysregs.h.inc | 1 +
+>  3 files changed, 16 insertions(+), 2 deletions(-)
+>
+> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+> index 4e44245a8b..50776347a5 100644
+> --- a/target/arm/cpu-features.h
+> +++ b/target/arm/cpu-features.h
+> @@ -244,6 +244,15 @@ FIELD(ID_AA64ISAR2, CSSC, 52, 4)
+>  FIELD(ID_AA64ISAR2, LUT, 56, 4)
+>  FIELD(ID_AA64ISAR2, ATS1A, 60, 4)
+>=20=20
+> +FIELD(ID_AA64ISAR3, CPA, 0, 4)
+> +FIELD(ID_AA64ISAR3, FAMINMAX, 4, 4)
+> +FIELD(ID_AA64ISAR3, TLBIW, 8, 4)
+> +FIELD(ID_AA64ISAR3, PACM, 12, 4)
+> +FIELD(ID_AA64ISAR3, LSFE, 16, 4)
+> +FIELD(ID_AA64ISAR3, OCCMO, 20, 4)
+> +FIELD(ID_AA64ISAR3, LSUI, 24, 4)
+> +FIELD(ID_AA64ISAR3, FPRCVT, 28, 4)
+> +
+>  FIELD(ID_AA64PFR0, EL0, 0, 4)
+>  FIELD(ID_AA64PFR0, EL1, 4, 4)
+>  FIELD(ID_AA64PFR0, EL2, 8, 4)
+> diff --git a/target/arm/helper.c b/target/arm/helper.c
+> index 8240f1b384..6ad01b345f 100644
+> --- a/target/arm/helper.c
+> +++ b/target/arm/helper.c
+> @@ -6519,11 +6519,11 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+>                .access =3D PL1_R, .type =3D ARM_CP_CONST,
+>                .accessfn =3D access_tid3,
+>                .resetvalue =3D GET_IDREG(isar, ID_AA64ISAR2)},
+> -            { .name =3D "ID_AA64ISAR3_EL1_RESERVED", .state =3D ARM_CP_S=
+TATE_AA64,
+> +            { .name =3D "ID_AA64ISAR3_EL1", .state =3D ARM_CP_STATE_AA64,
+>                .opc0 =3D 3, .opc1 =3D 0, .crn =3D 0, .crm =3D 6, .opc2 =
+=3D 3,
+>                .access =3D PL1_R, .type =3D ARM_CP_CONST,
+>                .accessfn =3D access_tid3,
+> -              .resetvalue =3D 0 },
+> +              .resetvalue =3D GET_IDREG(isar, ID_AA64ISAR3) },
+>              { .name =3D "ID_AA64ISAR4_EL1_RESERVED", .state =3D ARM_CP_S=
+TATE_AA64,
+>                .opc0 =3D 3, .opc1 =3D 0, .crn =3D 0, .crm =3D 6, .opc2 =
+=3D 4,
+>                .access =3D PL1_R, .type =3D ARM_CP_CONST,
+> @@ -6752,6 +6752,10 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+>                                 R_ID_AA64ISAR2_BC_MASK |
+>                                 R_ID_AA64ISAR2_RPRFM_MASK |
+>                                 R_ID_AA64ISAR2_CSSC_MASK },
+> +            { .name =3D "ID_AA64ISAR3_EL1",
+> +              .exported_bits =3D R_ID_AA64ISAR3_FAMINMAX_MASK |
+> +                               R_ID_AA64ISAR3_LSFE_MASK |
+> +                               R_ID_AA64ISAR3_FPRCVT_MASK },
 
-On Wed, May 20, 2026 at 08:23:41PM +0200, Sam Li wrote:
-> On Wed, May 20, 2026 at 7:59=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.=
-com> wrote:
-> >
-> > On Tue, May 19, 2026 at 11:20:18PM +0200, Sam Li wrote:
-> > > On Tue, May 19, 2026 at 5:49=E2=80=AFPM Stefan Hajnoczi <stefanha@red=
-hat.com> wrote:
-> > > >
-> > > > On Mon, May 18, 2026 at 12:21:55AM +0200, Sam Li wrote:
-> > > > > On Thu, May 14, 2026 at 9:49=E2=80=AFPM Stefan Hajnoczi <stefanha=
-@redhat.com> wrote:
-> > > > > > On Sun, May 10, 2026 at 07:50:57PM +0200, Sam Li wrote:
-> > > > > > > +         48 - 55:  zonedmeta_offset
-> > > > > > > +                   The offset of zoned metadata structure in=
- the contained
-> > > > > > > +                   image, in bytes.
-> > > > > >
-> > > > > > Do you want to say anything about the order in which metadata is
-> > > > > > persisted to disk when zones used? I guess the data is written =
-into the
-> > > > > > image file first, then the non-zoned qcow2 L1/L2/refcount metad=
-ata is
-> > > > > > updated, and finally the write pointer is written. Write pointe=
-rs are
-> > > > > > not guaranteed to be updated on disk until the write request fo=
-llowed by
-> > > > > > a flush request are both completed.
-> > > > >
-> > > > > The current ordering is not like that. The write pointer is writt=
-en
-> > > > > persistently first, then the data writes and the non-zoned qcow2
-> > > > > L1/L2/refcount metadata updates. On IO failure, the corresponding
-> > > > > write pointer is re-read from disk. As noted in the previous comm=
-ent,
-> > > > > the wp must be updated when issuing the IO, under the assumption =
-that
-> > > > > the write IO will succeed.
-> > > > >
-> > > > > The ordering has been settled this way since v7 to deal with
-> > > > > concurrent zone append writes. If the wp was only updated after d=
-ata
-> > > > > I/O, two concurrent appends would both have read the same wp and =
-tried
-> > > > > to write to the same position.
-> > > > >
-> > > > > >
-> > > > > > (The idea is that the data must be visible in the qcow2 file be=
-fore it
-> > > > > > is safe to update the write pointer. Otherwise a power failure =
-would
-> > > > > > leave the file in an inconsistent state where the write pointer=
- has
-> > > > > > advanced but the data was not written.)
-> > > > >
-> > > > > The crash-consistency is a concern...
-> > > >
-> > > > Yes, I'm thinking about crash-consistency. The ordering you describ=
-ed
-> > > > can result in qcow2 images where the write pointer is ahead of the
-> > > > actually written data after a power failure or maybe a QEMU crash.
-> > > >
-> > > > QEMU's block layer must follow the same data integrity behavior that
-> > > > real devices guarantee.
-> > >
-> > > I may have found a solution to deal with both cases. The fix is to
-> > > update wp in memory instead of flushing it before qcow2 metadata and
-> > > data writes. The zone append write path would become:
-> > >
-> > > On submission:
-> > >
-> > > 1) wp_lock()
-> > > 2) Check write alignment
-> > > 3) wp_update (in memory)
-> > > 4) wp_unlock()
-> > > 5) Issue write
-> > >
-> > > And on completion:
-> > > 1) If no error: wp_flush with locks and return success
-> >
-> > The data may not be visible in the qcow2 file yet because qcow2's L1/L2=
-/refcount
-> > cache is not written back to the file until a flush request. I think the
-> > write pointer updates should have a dependency on the qcow2 metadata so
-> > that write pointers are only written after qcow2 metadata.
->=20
-> Indeed. The qcow2 cache was also my concern. Since wp should be
-> persisted after corresponding data is flushed, the cache dependency
-> would be qcow2 metadata -> data -> wp. Can we set wp's dependency on
-> the data so that wp is written after data is persisted? I might be
-> missing something here.
+With this definition should we also add it to arm_clear_aarch64_idregs()
+which clears the other ISARs with aarch64=3Doff?
 
-The cached metadata is written after the data, so you don't need to do
-anything special to ensure data -> qcow2 metadata -> wp ordering.
+>              { .name =3D "ID_AA64ISAR*_EL1_RESERVED",
+>                .is_glob =3D true },
+>          };
+> diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
+> index 3d1ed40f04..b99579f773 100644
+> --- a/target/arm/cpu-sysregs.h.inc
+> +++ b/target/arm/cpu-sysregs.h.inc
+> @@ -10,6 +10,7 @@ DEF(ID_AA64AFR1_EL1, 3, 0, 0, 5, 5)
+>  DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
+>  DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
+>  DEF(ID_AA64ISAR2_EL1, 3, 0, 0, 6, 2)
+> +DEF(ID_AA64ISAR3_EL1, 3, 0, 0, 6, 3)
+>  DEF(ID_AA64MMFR0_EL1, 3, 0, 0, 7, 0)
+>  DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
+>  DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
 
-One thing to consider is when to increment the write pointer in the
-cache. When there are concurrent requests, the wp written to file should
-reflect the last _completed_ data write and not in-flight data writes.
-
-It might be necessary to use additional state rather than incrementing
-the wp cache immediately when submitting a write request. For example,
-iterating over in-flight write requests to calculate the next wp based
-on the maximum offset + length and only falling back to the wp cache
-when there are no in-flight append requests in this zone.
-
->=20
-> >
-> > See block/qcow2-cache.c and qcow2_cache_set_dependency(). The idea is
-> > that one type of cached metadata can set a dependency on another type of
-> > cached metadata so that ordering is guaranteed.
->=20
-> Thanks, I'll check it out.
-
-By the way, I think this will require making the wp metadata a qcow2
-cache object that is created with qcow2_cache_create().
-
-Stefan
-
->=20
-> >
-> > > 2) else, wp_lock()
-> > > 3) read_wp (from disk) and use the read wp value as the current wp
-> > > 4) wp_unlock()
-> > > 5) return IO error
-> > >
-> > > Sam
-> > >
-> > > >
-> > > > Damien: Do real zoned block devices guarantee that the updated write
-> > > > pointer is persisted only after appended data has written been
-> > > > persisted?
-> > > >
-> > > > Stefan
-> > >
->=20
-
---OQY6/m2SOw3YvsTT
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmoPIjUACgkQnKSrs4Gr
-c8ipjQgAsIKsvuCTr3ENvxOJMs/FAgq61Iqzrqf9Kui91FYGgsM1k2xuqUStF2/1
-4Kd6vconGNxwTESginihOgdgnZKF+O0vL3qu/qNNEGJhOFDuwMXhCvb+DVlLXykn
-iayJ/H95S0YwqGwOikmWmGprehg5VCXhxj2czRT1X7UoVos8JChnY26V4GwzhqIb
-WQw49Ka3NyuCgx6Vm3FFvCa8BbhGhy9Cl0DHY1MpVQ0XjgStuUeonjvj2AbIEdPM
-gYOwHigGtD6RTNB5ufhd3Bh4FbpmZ8qYQblgmei29rpiBGDKlN3EOLWwtL38HJ6d
-0QI2QXDKT059/jqEaDChEJ0cqcRV7Q==
-=VL8x
------END PGP SIGNATURE-----
-
---OQY6/m2SOw3YvsTT--
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
