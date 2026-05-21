@@ -4,102 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AAF1CD4F5E
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 11:17:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06560CD4F5E
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 11:21:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ1PD-0002FF-Un; Thu, 21 May 2026 07:17:35 -0400
+	id 1wQ1Sm-0002vH-Og; Thu, 21 May 2026 07:21:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wQ1PB-0002Er-JY
- for qemu-devel@nongnu.org; Thu, 21 May 2026 07:17:33 -0400
-Received: from mail-dy1-x132f.google.com ([2607:f8b0:4864:20::132f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wQ1P9-00059k-Nh
- for qemu-devel@nongnu.org; Thu, 21 May 2026 07:17:33 -0400
-Received: by mail-dy1-x132f.google.com with SMTP id
- 5a478bee46e88-303f2fb7225so4287472eec.1
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 04:17:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779362250; cv=none;
- d=google.com; s=arc-20240605;
- b=fmeeJHt4YgzHlktA6ESkfujSJ2hZdxhVRtQqLZOAc9TjudXFOD8sZOpA2H5DVqGgGe
- lBlHFj+kN6ZGSBC2H5x8quIh8XX/7UimbJ+/GxoAZOdx/72fqQzTGscRH0jWuuQsF45Z
- au5E/lu4x/okrMJk9qHkkVTr9+6OA2pUaHxxQl0pqrSiwmtTYrNCT3vxEJZjHFkEGxVt
- rYXSgh9bsJNnHeG+8CrJSwnnGi/TG/wr5VH0ACwD75NJTce61W3oozB21FrXDRcRrepl
- 18jO+UHnnSXxN6xOBi616F/VNcpLGDxWARWCqIvujbdlw2igDi1AUUkdUkzh76qMPh+0
- gQSg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=nIX3NTj9INwIfv1Bi9RBLvg4HVeaythAzpOSfbT011o=;
- fh=cOsNULT/G3KmuphHDOpmhJ0EqPaEyNDPfyDGSK/csWI=;
- b=LHzTFt2/8IUuWBeOYyfOv5RdpBKGPgm4/DvXPtRDqzZRijHAwezzpEKJp9zudnHoBG
- r63CPN+Nhd0IN0NVonMnlK5Wf0ROKTTV/hJT3KByx2gNsyfEnPwG5NoE+C22QekKNf9g
- aYctvoXUouz6E4wbjWIsGhNE1b6J5OjhsWrujnVty9a3ZiMPgIvphsXzatFTpPU7QEoa
- r9qzPz/5sfIg6s6caWftMRrym56PvJhGJukbkrVRl96zD7MRDHuTe0GjtCdSqWcXdchY
- 8SOD1ACWVhYgBo+Rcbv5q+O220gbMc2trPUiLzIxkk9IQSmDnDk4TsGkpZZl5/Tc/fXZ
- sNxQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779362250; x=1779967050; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nIX3NTj9INwIfv1Bi9RBLvg4HVeaythAzpOSfbT011o=;
- b=YxD3T/BieM9W4BV/r99s5N5tMWp1HOhj7vCNPyvhK15hA561c07zKG7jZ2YpfTALWN
- WZ8Yu8WllUfjjEQ7Xj0Jeazbm2ZUDuVrF+bdhyJNu5fTzS3jdsARO/s3gcilo59dzNFu
- QhOnVf9BOeNxXN9VXdNoChJK3IqO+16ldOudfjGyQ+BF0e+WPjiLeeqXJcYDTWxyscrO
- rwGp6l7vvbuCvXKdtTCXC3lsJGXFXSauF0IBrVLmUhaFaghJncNxZ2kYHrtqXr/a9kuG
- RSUyVFPLNOiERB55eCh1GLEA/appF6fJp+4/CN3RG8njhf3dhlFGjO+z6acwX/UvXHMk
- BYsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779362250; x=1779967050;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=nIX3NTj9INwIfv1Bi9RBLvg4HVeaythAzpOSfbT011o=;
- b=WstzcTcxRQZ2hv40F3DlVsQD2pd0gyBFqhXUpb+qLlGtw8LzI1/OjsHteqBXXoEOZb
- 5PLYyfv8PlvfxJLcZLzAAvS3MtlMjKuoLp9LNBWhet0CFWVGOJDvePUOlU3dBs3JaJVu
- 8jiMeYrF10nQyxfKqlh7lczo3xrtkRqLK47KxZoLNsqoPRkYkdn3uGuptUtpxXNLbRip
- 1JBoaqezuAYOdQJ3VwGklxq4EjdFoRtsfWSTHzDakomdRzmcHOhsMU8QhL+3RAE3A2bD
- my+428THD+MhCjXQhmCMXWR/8fRNzD0vmWu3Qyr7TJYFMNabLP0fsSacxFSNq4Yc9N2o
- o2PQ==
-X-Gm-Message-State: AOJu0YzIfy8um+faOMPTffpjnb5pHACWFLZFbBK9I73Qr1WKYF+HK/Fk
- xBLPq6T98wdO3CHGOzSwrA1BZMT1tk4pnnVCAuG2hQfQzxceqMcefvUEYiecri/euvEw9cYYZE+
- 8rEtPcK/wr8aRjEk4d+Bmls5X2Qm5M80=
-X-Gm-Gg: Acq92OEVOsSsSt7xnnv5FrNtSQrVSaaJ5e5ilmxQ+DKGYVpzWFbLqzuyo1mkE3/HTXY
- 2HPqOJ2iLl1NRxhFEtTwbiYrRsgoHJ5hdKM6d4LDdHvGxBKJ3nWYTEjpNroRs4Xu/8VJs6wgp6I
- LCXu+5eNzIJluhXd49625albUxaRUTj/FDyKWeaCnmTKmk5vXbfyz05kW8hikXSgJkN6Crd3DSk
- QTMStnDd431Sv8r+ij2SuHsT5ZKabDXPqGdrYHPrU65JeQPdsiHP1GX6pUBznYq5oTdDE3g974m
- 1TW+r0j4HmqMNnyT34u63MJ0vKWfuYbI8VYkv7Y=
-X-Received: by 2002:a05:693c:2c0b:b0:2ed:e14:42ea with SMTP id
- 5a478bee46e88-3042faf598fmr1426563eec.35.1779362249930; Thu, 21 May 2026
- 04:17:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wQ1Sk-0002v1-Uo
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 07:21:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wQ1Si-0001XC-Lc
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 07:21:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779362470;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Wjc2B2hoE47u6nAwiaqiUZUqedqQIfR1vMl/KWhTFPk=;
+ b=IFlKjH35aNSfXVaM7X0CjkgI0JPauPaNd3kZyv0AFU/40L9pxp3rPa2KoOX73uEksml1x6
+ 63S3Y6+c3oTg4zK5iRd304+A43ZUkA4/aABNW/0cSmgxeAqtRJInEdOec8sdvMeuVYhnj+
+ HBLsFFX6q1vg1KZlxtBf5yQMWJl+t6c=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-12-KvyGfWTANoqytqvx-cy09A-1; Thu,
+ 21 May 2026 07:21:08 -0400
+X-MC-Unique: KvyGfWTANoqytqvx-cy09A-1
+X-Mimecast-MFC-AGG-ID: KvyGfWTANoqytqvx-cy09A_1779362467
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EAB0A180056E; Thu, 21 May 2026 11:21:06 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.98])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0C57C19560A3; Thu, 21 May 2026 11:21:04 +0000 (UTC)
+Date: Thu, 21 May 2026 12:21:01 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Mauro Matteo Cascella <mcascell@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: Re: RFC: GitLab issues for security disclosures
+Message-ID: <ag7qndP7ifyiX-BT@redhat.com>
+References: <agxzKzzDOJm1EU_v@redhat.com>
 MIME-Version: 1.0
-References: <20260521004226.1914121-1-dongwon.kim@intel.com>
-In-Reply-To: <20260521004226.1914121-1-dongwon.kim@intel.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Thu, 21 May 2026 15:17:17 +0400
-X-Gm-Features: AVHnY4J8w8DtBzMGHbyphsolzc_pTqWFlQqIfaz320JH1s9YbpvcOaS4MNNUWVU
-Message-ID: <CAJ+F1CLN+y6vopPwY2gE=dHPQAjptOxFjaapzf01aHmK1a+gVw@mail.gmail.com>
-Subject: Re: [PATCH] ui/egl: reset framebuffer state when creating new EGL
-To: dongwon.kim@intel.com
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132f;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x132f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <agxzKzzDOJm1EU_v@redhat.com>
+User-Agent: Mutt/2.3.1 (2026-03-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,55 +85,114 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On Tue, May 19, 2026 at 03:26:51PM +0100, Daniel P. Berrangé wrote:
+> This needs an issue tracker to cope with & email is not an issue tracker.
+> We faked an issue tracker with a shared spreadsheet to prevent us drowning
+> these past few months, but this is still not sustainable & probably won't
+> ever be.
 
-On Thu, May 21, 2026 at 4:48=E2=80=AFAM <dongwon.kim@intel.com> wrote:
->
-> From: Dongwon Kim <dongwon.kim@intel.com>
->
-> When an old EGL context is destroyed, its associated OpenGL textures
-> and framebuffer resource IDs are already implicitly freed by the
-> driver. However, the cached IDs and geometry attributes stored within
-> the egl_fb structures remain stale and invalid for the new context.
->
-> Call egl_fb_destroy() on the guest, cursor, and window framebuffers
-> in gd_egl_refresh() to safely clear these stale fields back to zero
-> before they are re-initialized under the new current context.
->
-> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Cc: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
-> ---
->  ui/gtk-egl.c | 6 ++++++
->  1 file changed, 6 insertions(+)
->
-> diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-> index 7c5c9b2428..fd14b391ed 100644
-> --- a/ui/gtk-egl.c
-> +++ b/ui/gtk-egl.c
-> @@ -163,6 +163,12 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
->              surface_gl_create_texture(vc->gfx.gls, vc->gfx.ds);
->          }
->  #ifdef CONFIG_GBM
-> +
-> +        /* resetting old ids to 0 for new egl context */
-> +        egl_fb_destroy(&vc->gfx.guest_fb);
-> +        egl_fb_destroy(&vc->gfx.cursor_fb);
-> +        egl_fb_destroy(&vc->gfx.win_fb);
-> +
+snip
 
-Hmm.. It looks like the whole block is flawed.. All the destruction
-should be done before the new context is created in gd_egl_init(). Or
-was gd_egl_init() intended to be called only once? Tbh, this is X11
-stuff I think we should get rid of..
+> We have some options IMHO
+> 
+>  1. Move all security disclosure to GitLab confidential issues
+>     no disclosures via email
+> 
+>  2. Move AI/fuzzer assisted disclosures to GitLab confidential
+>     issues, keep human discovered issues on qemu-security list
+> 
+>  3. Move AI/fuzzer assisted disclosures to GitLab public
+>     issues, keep human discovered issues on qemu-security list
+
+snip
+
+> Some downsides/implications
+> 
+>  * Every disclosure in a confidential issue will be visible to every
+>    maintainer who has joined the qemu-project repo on GitLab. IOW
+>    that is treating every maintainer as equally trusted.
+> 
+>    We do have qemu-security though we could be mailed if someone
+>    considered their disclosure to be severely impactful but the triage
+>    team can't make that decision.
+> 
+>  * We must NOT grant membership to qemu-project at a Reporter level
+>    for anyone whom is not an active maintainer. They must be limited
+>    to the "Guest" role at most.
+
+I did a query
+
+  $ glab api --paginate /projects/11167699/members/all | jq '.[].name' | sort > members.txt
+  $ IFS="                   
+  " ;  for line in $(cat members.txt | sed -e 's/"//g' ) ; do echo -n "$line: " ; grep $line MAINTAINERS | wc -l ; done | grep ': 0'
+
+Of the results without a match as a maintainer I see
+
+ * Qemu Janitor
+ * stsquad-gitlab-api-access
+
+   Bot accounts
 
 
+ * dgibson
+ * Hanna Czenczek
+ * MST
+
+   False negatives - just name mismatches between gitlab account
+   and MAINTAINERS files
 
 
---=20
-Marc-Andr=C3=A9 Lureau
+ * Eduardo Habkost
+ * Juan Quintela
+
+   Former maintainers, no longer active in QEMU AFAIK
+
+
+ * Peter Krempa
+ * Peter Krempa (work)
+
+   Libvirt maintainer, added to enable to move bugs between projects
+
+
+ * Anthony Roberts
+ * Bastian Koppelmann
+ * Emilio Cota
+ * Jim MacArthur
+ * Joaquin de Andres
+ * Paul Zimmerman
+
+   At least 1 code commit, but not maintainers
+
+
+ * Eldon
+
+   Provided us some CI hardware for a period of time
+
+ * Aihua Liang
+ * Lars D
+
+   Unclear
+
+
+The former maintainers can probably be removed at this point, given
+the length of time that's passed.
+
+If we want to use "Confidential" issues in any way, the question is
+whether the rest of the non-maintainers / non-bot accounts should
+retain "Reporter" role or be moved to "Guest" role ?
+
+Some contributors may be active enough that they're effectively
+maintainers, even if not listed in MAINTAINERS.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
