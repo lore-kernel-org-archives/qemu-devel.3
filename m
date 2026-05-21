@@ -4,106 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9FECCD4F3D
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 04:07:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 170B0CD343F
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 04:41:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPugC-00047Z-Ku; Thu, 21 May 2026 00:06:40 -0400
+	id 1wPvCz-0000c4-OV; Thu, 21 May 2026 00:40:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1wPugB-000479-11
- for qemu-devel@nongnu.org; Thu, 21 May 2026 00:06:39 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1wPug4-0007o8-42
- for qemu-devel@nongnu.org; Thu, 21 May 2026 00:06:35 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-c70e27e2b74so2339402a12.0
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 21:06:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779336390; cv=none;
- d=google.com; s=arc-20240605;
- b=iSloY8ZCxewd6buriHRTLZ8dT50YPSyQa2kd53e76q461GrpM0Ig++eslfZ17cC+4g
- 8agev7yWE+E3E9EMCjSNa8zRuUpxCsbZGUA3ETjUgyym+bOSpW7qpfSE81SPJ2Q0rh+B
- elObfgs61Acxr4nHiK1UvnpJZJkGFflwJOAOSWhIXttn9ndb7RNOGJ2zlhuifwrRqZd3
- ev4Sox0Cq6De4mbK2tbgmlVLpk07zDPKkSiAy430ZZi2uwaatG/N6gp0PSEOl9eGnAKx
- KC3V1VmTEVT+wrAxEDXVBrHmUHcUr1wuwdk/NC+yXrnF7c+HPyRV78syjeQAJFUDmS3w
- hv/Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=ejvFriw1FMTOseWxJMjltUsSxWejtkja8ZGck09p6Y0=;
- fh=GgdWH1IMUnLvapwZcybkO7EfHLm5mb76g3oTyXmM4bo=;
- b=VWgTkuuMmxxatzc7vAHqVSNbJaqRMzMGGrDHdGy8HFM/GReM2/YlIg27vcK/SudPvJ
- osMx/6fHH/nizH0lKF8FfqixlIb2QeeMdnbRMjFeOWRMZAellRDm2YrbHHIiDLyStpFx
- E8e4ereGtXxmHJ2/AccYRdsOm+f80YzGhfkoRmfbt+x2zaH3+sAwXA/bMw7MQImqkWJ7
- uoL8MlH6SEJL7SKwMJcpckWcRphQaOpcrvSe/jXgA6uuL2fP4l/mdJP85i7F1wVR/4HQ
- 1vY9DvQMTzL3YGGZIL0ozndIbyrSQN3gLbyLp4OVBm7vcenmQkEylHLflPkFFJG/91td
- n96g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779336390; x=1779941190; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ejvFriw1FMTOseWxJMjltUsSxWejtkja8ZGck09p6Y0=;
- b=dCL2aJbPhwG/VrKfTeRrv6/Ym3e5hCFl4sPary/6xgZCQg8NJ5VgQjHLgycurYGDTe
- 32gyQphOx61tfLLezdvZU33I2MweANr7B2/vBpfFEMhRIXPyABggoSKGLeaXYzdIZPJ/
- VaukfoFdjEEsMnpS473CQWs8DvuiS61HGoOf2QOuOx56jL2HihwoO64O0HfVOR+LUgcU
- yh6aB0yZUwnSR/Q3hWN0D6ffJOg7tf3vIdD+tG81osJgWR2vc2rvzIMfheMHGgL3LCBt
- nXFdtOBVDxNjnqu8bkwtOt1thC8vOfPv7Axcrt3zFY9Ej/5m1AiZGtK+0bvYjG6uValR
- uSvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779336390; x=1779941190;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ejvFriw1FMTOseWxJMjltUsSxWejtkja8ZGck09p6Y0=;
- b=a0hDoNWP4U1sDRPS68srAAvnxyPUaSn3NLHgDBlBqexacKVfHLLtNFYUbTgq5Mqkd1
- Nmyjbso34NwEFZkikoXmfqG+opw6veZWKkuOZDh2zCcYQVWJ6jdJJM2TEHNhXKOpHsqR
- totxl+vA+uOogE+eK7ZQgtfb7jr4eA5BYpr4+aO5Ii132CMShNIoOFoXJfKHesLZgb2d
- 07WIHUMrwltlM8jIElHD2d2omfXyPBPqOEat0cu/eDneiaMbs14Met4cFAYDkZJbYLfE
- e//6MZhRwShkqR2wN8MLkA6FO9Pa74jm/LZM8vL92eSYutAWV18o0+gR6ZLARR9E104Z
- oqYA==
-X-Gm-Message-State: AOJu0YyDTfHDy5m3wOhe0pDo9XZpffZpsji/HLk2LZGPhtA5w+7N0GL5
- ZcRJgKg8N1KOxTzPOt+/FBCz/XJ3HKdj8jnt3srLDbxuoew5pjZieJBSWkXpDMHw1Swsj72AdSF
- NGYDsLZ/lIgbY0wLZwk2RGGLie7rlUpbQp9Sd
-X-Gm-Gg: Acq92OH6zDBIHcVqtSOWYyW6Dvtgf9OgKnOEdvcbOBrL1gNRk8Gt24WhrOaXj2rVNMT
- 0GRRliEAyyjN1XfXlZQCLGeyihrOjCCKlg8hHRMe8o7BAnFmL5Mx0JD76kTM7EOIqdOUs6z0zy2
- 9OuhxcKr+H+vz1dBMEh9fqsOs2I/J4RolZcChY+oFdb4Wih+2YrxftrMOYnhoPbAamyue3HN52P
- oyM/JElnmCkLx6WjmAzTcrLlR/6Gj0RK+HGMksfVrZtXV3buPAz+LHLJIi0x/ZG00YVTw9696nv
- o0Iie8jdor+/tyf2bks=
-X-Received: by 2002:a05:6a20:6a0a:b0:39f:df57:ee7b with SMTP id
- adf61e73a8af0-3b30872e716mr1449138637.21.1779336389952; Wed, 20 May 2026
- 21:06:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wPvCu-0000aK-RW
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 00:40:29 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wPvCr-0002NT-EY
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 00:40:28 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64L4eB9U049903
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 21 May 2026 13:40:12 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=h7WrnxUuPJHua8njQQ+sd9PepppLuIchkhHEuuv9XeE=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1779338412; v=1;
+ b=ROyRPw2gYT8ijaoonxD2bxhXyj9HqeVEFPF1B2hUtVVEUa9isobvCNcRsARjHD+E
+ DpZrhyWGrpkobeIqr0f5+rJt4xujgXsiPJUmt9mSl0J65hiR8qp+JM4GReQ0TFOe
+ K7rYjXhDvh46G7/F/u+Zl9nD6pHzMO5oBdBUpjikz+BqdoyPSLnptzT8U4mp4BsY
+ UnEEB1jaFGdSnZDAlOq/rcAienVvc5lCvsTKLtK+7mKqYw4i21BiPUU1847bCh4f
+ tX3gdCsJzaRpH7XmnGq/bg9jDR/wGBPD3VzVrViiAY94soHqlpoi9gJY7sZDq0zZ
+ qCpX67f1L9SSlVS7+MpR3Q==
+Message-ID: <5de52cde-3872-4b5f-acbf-28ca300b7724@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 21 May 2026 13:40:11 +0900
 MIME-Version: 1.0
-References: <20260511-feat-mte4-v6-0-8557cc1313b9@gmail.com>
-In-Reply-To: <20260511-feat-mte4-v6-0-8557cc1313b9@gmail.com>
-From: Gabriel Brookman <brookmangabriel@gmail.com>
-Date: Thu, 21 May 2026 00:06:18 -0400
-X-Gm-Features: AVHnY4I_5vg1QUwLw-03cypjxT3bhZ68UlvEGNuaE5d9DoMmkSOODyxiPNQl7zg
-Message-ID: <CA+1f7BCt2-L4PomMK+boHS6Od1odN6SP0rTVJ3Pd10rFhVNP-Q@mail.gmail.com>
-Subject: Re: [PATCH v6 00/15] target/arm: add support for MTE4
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=brookmangabriel@gmail.com; helo=mail-pg1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] MAINTAINERS: Replace my amsat.org email address
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Thomas Huth <huth@tuxfamily.org>
+References: <20221017182005.43015-1-philmd@linaro.org>
+ <87pmeohtj1.fsf@pond.sub.org>
+ <3104a00e-4c13-4bf7-95a0-1f2840bec50d@linaro.org>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <3104a00e-4c13-4bf7-95a0-1f2840bec50d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_FILL_THIS_FORM_SHORT=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,146 +77,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping.
+On 2026/05/21 4:37, Philippe Mathieu-Daudé wrote:
+> On 19/10/22 14:44, Markus Armbruster wrote:
+>> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
+>>
+>>> The amsat.org domain is having issues with DMARC / SPF / DKIM:
+>>> https://lore.kernel.org/qemu-devel/ 
+>>> CAMVc7JUy5NeEN0q=4zfZvn_rppgqn9wicV1z=TsLuHKS3RY3Sw@mail.gmail.com/
+>>>
+>>> Consolidate all of my MAINTAINERS entries on my work address.
+>>>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>>   .mailmap    |  4 +++-
+>>>   MAINTAINERS | 62 ++++++++++++++++++++++++++---------------------------
+>>>   2 files changed, 34 insertions(+), 32 deletions(-)
+>>>
+>>> diff --git a/.mailmap b/.mailmap
+>>> index 1f7319b70b..35dddbe27b 100644
+>>> --- a/.mailmap
+>>> +++ b/.mailmap
+>>> @@ -70,7 +70,9 @@ Paul Burton <paulburton@kernel.org> 
+>>> <paul.burton@mips.com>
+>>>   Paul Burton <paulburton@kernel.org> <paul.burton@imgtec.com>
+>>>   Paul Burton <paulburton@kernel.org> <paul@archlinuxmips.org>
+>>>   Paul Burton <paulburton@kernel.org> <pburton@wavecomp.com>
+>>> -Philippe Mathieu-Daudé <f4bug@amsat.org> <philmd@redhat.com>
+>>> +Philippe Mathieu-Daudé <philmd@linaro.org> <f4bug@amsat.org>
+>>> +Philippe Mathieu-Daudé <philmd@linaro.org> <philmd@redhat.com>
+>>
+>> I think this retroactively credits all your contributions to Linaro.
+>> Intentional?
+> 
+> Certainly not intentional. I was seeing this as a git limitation, but
+> Alex pointed to me we are doing an invalid use of git-mailmap, since
+> it is described as:
+> 
+>    ... the file .mailmap [...] is used to map author and committer
+>    names and email addresses to canonical real names and email addresses.
+> 
+> so more for typos, not developers changing email addresses. So our
+> "replace old addresses by a more recent one" section might not be
+> the best use. I think it was useful for the get_maintainer.pl fallback
+> option: when a file is not cover in MAINTAINERS then the script look
+> at git history. If all files are well covered, then we shouldn't need
+> this fallback anymore, nor this .mailmap translation.
 
-https://lore.kernel.org/qemu-devel/20260511-feat-mte4-v6-0-8557cc1313b9@gma=
-il.com/
+Git's own .mailmap contains multiple "replace old addresses by a more 
+recent one" entries. For example, the latest commit for that file is 
+exactly for that purpose:
+https://github.com/git/git/commit/4aa72ea1f64e8ddcd1865c76b24591c0916c0b5d
 
-On Mon, May 11, 2026 at 10:01=E2=80=AFAM Gabriel Brookman
-<brookmangabriel@gmail.com> wrote:
->
-> This series implements ARM's Enhanced Memory Tagging Extension
-> (MTE4). MTE4 implies the presence of several subfeatures:
-> FEAT_MTE_CANONICAL_TAGS, FEAT_MTE_TAGGED_FAR, FEAT_MTE_STORE_ONLY,
-> FEAT_MTE_NO_ADDRESS_TAGS, and FEAT_MTE_PERM, none of which are
-> currently implemented in QEMU. This patch implements all five.
->
-> Testing:
->   - Included for FAR and STORE_ONLY.
->   - The MTE_CANONICAL/NAT test from v2, modified so MTE_CANONICAL is
->     enabled in user mode (removed from tree in v3).
->   - A bare-metal testsuite that sets up page tables for S1 and S2
->     translation, to test the Tagged NoTagAccess fault.
->   - The bare-metal testsuite also was used to test LDGM and similar
->     instructions not permitted in user-mode.
->   - The bare-metal testsuite also was used to test the mtx related
->     patches.
->
-> Thanks,
-> Gabriel Brookman
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3116
-> Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
-> ---
-> Changes in v6:
-> - Moved certain functions between patches (Richard)
-> - Added G_NORETURN to canonical_tag_write_fail
-> - Updated ldg and bounds check functions to Richard's versions, tested
->   these
-> - Link to v5: https://lore.kernel.org/qemu-devel/20260504-feat-mte4-v5-0-=
-232a648e63c6@gmail.com
->
-> Changes in v5:
-> - MTX check feature split into three commits as per Richard's suggestion
-> - MTX passed down to instruction helpers in a new argument
-> - allocation_tag_mem_probe checks for probe in MTEPERM case
-> - tbi helper combined into tbi_or_mtx_helper
-> - MTX checks added to sme and sve functions
-> - bug with type conversion in LDGM helper fixed
-> - fixed multi-page tag-check bug and multi-page ST2G bug
-> - removed erroneous changes to _stub functions
-> - reorganized PAuth & MTX interactions to make them more readable
-> - Link to v4: https://lore.kernel.org/qemu-devel/20260309-feat-mte4-v4-0-=
-daaf0375620d@gmail.com
->
-> Changes in v4:
-> - MTX now interacts with PAuth.
-> - Canonical tag checking only takes place in canonically tagged regions
-> - MTX bits enable tag checking
-> - MTX bits are placed in MTEDESC for access in mte_check helper
-> - Separate feature bits are used to delineate each feature
-> - PRCTL functions renamed and refactored as per Richard's suggestion
-> - Link to v3: https://lore.kernel.org/qemu-devel/20260105-feat-mte4-v3-0-=
-86a0d99ef2e4@gmail.com
->
-> Changes in v3:
-> - Added prctl for MTE_STORE_ONLY to linux-user
-> - mte_check is no longer generated on read when STORE_ONLY enabled
-> - Implemented LDGM instruction
-> - Removed "long" datatype as per Richard's suggestion
-> - Implemented masking for VA range checks when MTX bit enabled
-> - Implemented MTE_PERM, with NoTagAccess attribute
-> - Removed user-mode test for MTE_CANONICAL, since can't enable in
->   user-mode.
-> - Removed TBI from mte_check generation logic
-> - Link to v2: https://lore.kernel.org/qemu-devel/20251116-feat-mte4-v2-0-=
-9a7122b7fa76@gmail.com
->
-> Changes in v2:
-> - Added tests for STORE_ONLY.
-> - Refined commit messages.
-> - Added FEAT_MTE_CANONICAL_TAGS and FEAT_MTE_NO_ADDRESS_TAGS + tests.
-> - fixed TCSO bit macro names.
-> - Link to v1: https://lore.kernel.org/qemu-devel/20251111-feat-mte4-v1-0-=
-72ef5cf276f9@gmail.com
->
-> To: qemu-devel@nongnu.org
-> Cc: Peter Maydell <peter.maydell@linaro.org>
-> Cc: qemu-arm@nongnu.org
-> Cc: Laurent Vivier <laurent@vivier.eu>
-> Cc: Helge Deller <deller@gmx.de>
-> Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->
-> ---
-> Gabriel Brookman (15):
->       target/arm: implement MTE_PERM
->       target/arm: add TCSO bitmasks to SCTLR
->       target/arm: mte_check unemitted on STORE_ONLY load
->       linux-user: add MTE_STORE_ONLY to prctl
->       target/arm: emit tag check when MTX without TBI
->       target/arm: add MTX to MTEDESC and DisasContext
->       target/arm: add canonical tag check helper
->       target/arm: add canonical MTE check logic
->       target/arm: load on canonical tag loads ext bits
->       target/arm: fault on tag store to canonical tag
->       target/arm: skip tag bit bounds check if MTX is on
->       target/arm: tag is not a part of PAuth with MTX
->       docs: add MTE4 features to docs
->       tests/tcg: add test for MTE FAR
->       tests/tcg: add test for MTE_STORE_ONLY
->
->  docs/system/arm/emulation.rst        |   5 ++
->  linux-user/aarch64/mte_user_helper.c |  11 ++-
->  linux-user/aarch64/mte_user_helper.h |  14 ++--
->  linux-user/aarch64/target_prctl.h    |   6 +-
->  target/arm/cpu-features.h            |  15 ++++
->  target/arm/cpu.h                     |   5 ++
->  target/arm/gdbstub64.c               |   2 +-
->  target/arm/helper.c                  |  36 +++++++--
->  target/arm/internals.h               |  40 ++++++++--
->  target/arm/ptw.c                     |  60 ++++++++++++--
->  target/arm/tcg/cpu64.c               |   8 ++
->  target/arm/tcg/helper-a64-defs.h     |  16 ++--
->  target/arm/tcg/helper-a64.c          |   7 +-
->  target/arm/tcg/hflags.c              |  25 +++++-
->  target/arm/tcg/mte_helper.c          | 146 +++++++++++++++++++++++++++++=
-------
->  target/arm/tcg/pauth_helper.c        |  18 ++++-
->  target/arm/tcg/sme_helper.c          |   4 +-
->  target/arm/tcg/sve_helper.c          |   6 +-
->  target/arm/tcg/translate-a64.c       |  45 +++++++----
->  target/arm/tcg/translate.h           |   3 +
->  tests/tcg/aarch64/Makefile.target    |   2 +-
->  tests/tcg/aarch64/mte-10.c           |  49 ++++++++++++
->  tests/tcg/aarch64/mte-9.c            |  48 ++++++++++++
->  tests/tcg/aarch64/mte.h              |   7 +-
->  24 files changed, 487 insertions(+), 91 deletions(-)
-> ---
-> base-commit: ee7eb612be8f8886d48c1d0c1f1c65e495138f83
-> change-id: 20251109-feat-mte4-6740a6202e83
->
-> Best regards,
-> --
-> Gabriel Brookman <brookmangabriel@gmail.com>
->
+The situation looks same for .mailmap of Linux kernel too:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/.mailmap?id=1bb54043ff309795c90ccadd8a6e6b13ac40ec4e
+
+My understanding is that Git's handling of .mailmap is designed to find 
+out email addresses to be used to reach out. For example, someone may 
+git-blame and find I wrote some buggy commit, and ask me to review a fix 
+for it; in that case it is nicer if git-blame displays my latest contact 
+point (@rsg.ci.i.u-tokyo.ac.jp) instead of one for my previous employer 
+(@daynix.com), even though I authored the commit for Daynix.
+
+> 
+>>
+>>> +Philippe Mathieu-Daudé <philmd@linaro.org> <philmd@fungible.com>
+>>>   Stefan Brankovic <stefan.brankovic@syrmia.com> 
+>>> <stefan.brankovic@rt-rk.com.com>
+>>>   Yongbok Kim <yongbok.kim@mips.com> <yongbok.kim@imgtec.com>
+>>
+>> [...]
+>>
+> 
+
 
