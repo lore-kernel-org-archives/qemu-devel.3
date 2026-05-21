@@ -4,75 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10A17CD5BB4
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 18:07:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50F0DCD5BB5
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 18:07:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ7mz-0000Fu-W7; Thu, 21 May 2026 14:06:34 -0400
+	id 1wQ7mu-0000Au-S6; Thu, 21 May 2026 14:06:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wQ7my-0000EZ-2b
- for qemu-devel@nongnu.org; Thu, 21 May 2026 14:06:32 -0400
-Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
+ id 1wQ7mp-00009e-If
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 14:06:23 -0400
+Received: from mail-oi1-x22c.google.com ([2607:f8b0:4864:20::22c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wQ7mv-00023h-GF
- for qemu-devel@nongnu.org; Thu, 21 May 2026 14:06:31 -0400
-Received: by mail-ot1-x329.google.com with SMTP id
- 46e09a7af769-7de46b8e432so6326762a34.1
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 11:06:29 -0700 (PDT)
+ id 1wQ7ml-00020z-Sa
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 14:06:23 -0400
+Received: by mail-oi1-x22c.google.com with SMTP id
+ 5614622812f47-479eb8bcacbso4339223b6e.1
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 11:06:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779386788; x=1779991588; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=1/wDEtjpU6/JQCX42z91k/04b23uAyh66zeRkKaauFU=;
- b=swrB0LVk8RHjnHFiTrJYEqc/jPt0lFEV3JGKabMjNIunuPn3WoYEi7kkOQnmORe5Cx
- AGWwHqcyaJrWAO+1OJ5c6bNI2xglUYyubpY85l+JluKAfzrTZCw5P0w8MwV954uMQWgM
- GT6K1923o0PakbWAIGNCfKivIY/7WR2ysheicZUm1+lv19E7CX7Weq2bM0d3benLL3pp
- LMg6viSfxOBs8zuQmabhKp2AuN08dF6YqmD3ovs4iy1rQ8rBJPEgUHpn1c8YkUnV97Ps
- RV8UVvYvTiS21qWPpBBIhtCuwvntKQGmuMZUGJFsOzx6sx0PcUYUYBV3T7u5E8KHD4aM
- BJzA==
+ d=gmail.com; s=20251104; t=1779386778; x=1779991578; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=PWu5FDCGXtvLERfhaeb60N08AParktjlqNM5ROskBcY=;
+ b=XHOl3m83CPyQ2mgnQuLgtObx/pg5S8UZd4hRCLGelYuNQ/rwV81K4K37j43GtdPozo
+ I7/HTmkatFjQpBTQOQnQOdT5D4Nm/qpSaFHPdXOTjPnz8n7cQwBNdctKO09t02HiVGl5
+ jL2ZmSEmo6gMnTzC6wr9Me+OYwSA3NVeVaKrde6V3m9SM8qFCqrPcy5kUimsyhpetKsR
+ 5V9FHQIjIev5h6HY0SXFq9OM2oE7gh/uu+v6sRH9PSTYgpml7pp6jZecvi5sf5jUWVr+
+ PRjaEBTOs4fR37B8Dn5qic67k7UBW3hRpLjMQzitFPxU6NhXCsijJI6kP+Xif+2vdz/U
+ 6zbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779386788; x=1779991588;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=1/wDEtjpU6/JQCX42z91k/04b23uAyh66zeRkKaauFU=;
- b=UuWjoRAWwlg4BALtgeGscLOgzSTq5NGNhLjYzdsii4fe+XPlajQ2jL2/+9kK0Wt8p+
- UDKoNw9gKMyzILcM7UJuoKfLwW2JWDTcWAphC2/OokkktfrjdCwYiz6iJll+UYAjJ4iu
- +sWXrY/EBHv5iRgkpRRQ1MzLh1cvJwc4+MEpXGn82k6IYwo07FdZNb4ys38vBEVOX3sa
- G15gZasp7QMUS3yEujQUe3dwpXANfoHR4aGbJVn3ROF6JOMLeJsxLHlMDFKOGdZBS9Fb
- OvQ2yFQuy0MKOnMlZ8lc7QRYI2eb1lVPUekLuZlBf8xRTTctmTfhoKDLsEhtyR7xT4g9
- fB8A==
-X-Gm-Message-State: AOJu0YynWIQEShvV1+WCw7KbQpMQYFvt+qOVmLAzJqkl3ncBLBkC1MdF
- gCDFEWmP5HsSU3NxZ9xVrqGgHEGmG5ncSrt7Gdc1u/vJ/ATFXxAhQmTi
-X-Gm-Gg: Acq92OH6zTbmfaed0B4/OWpQMr0VsPeZ6JuUS3q3x0dtGU5sKR5QnVfzi9gc8W6p5SJ
- UB/P/goS3bpuYsgz2G8DyCyNQp3dM+LqiUTUpR11lVEcbjc/3M1/nssV16sbyl4DaP6wC/Eg/W7
- XRsbXcNvGoUcJ18NVCyM01JY5vFKY9XWScOzPv2VUzbKlb2x/eyRutwf/uUEch4CvPE4wwXB+DU
- lQqtY9ixmDyTSDCQQXwnfF8kEhzymT+HHcJfwWl0PyxJyC5tpwcfPASKWyGAYc5WHJFs0MpA3de
- CtUbd7X5Yi7MHoIO0uaUfG6UwG99VWnfkCn8iCHM7szC9Msvp/NDstsHy3R2JZDK0P1ReWMM0bo
- +nJQASU4EaTKQHYIn6L6ti+KcdRfCa7mpJjal+sWIpeLo0PJCIaN4sYu+fOtejcziON4bstKh0W
- VzUDPuzveMHq27u93plaGB8Pa35zQIzqd5GXSWmcaDTR6anamVNVMCiKtCFk25mg8BRKt5ZbBYy
- JfTgUoZFWRFUCfS0ZR8jZSaSpiJdC54ftWsZo7tKD5ytFrbbCpvsZkG1MEm9cZJ54og
-X-Received: by 2002:a05:6830:6285:b0:7df:5fc:3fd8 with SMTP id
- 46e09a7af769-7e5fed0ab9cmr157667a34.1.1779386788436; 
- Thu, 21 May 2026 11:06:28 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779386778; x=1779991578;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PWu5FDCGXtvLERfhaeb60N08AParktjlqNM5ROskBcY=;
+ b=cu00qjM3djGN98UlqxXO44IhzUTzYGNkUy4wmfi0FIPuoupuXlDBMrkJ51poD/tfzL
+ jU0qdQBobTHNlRfLa28pm7qHwmBG7sL4cNfvXIo1nsCZxyJ3sAonNAHyoOv/429RIF53
+ NTvSVzgDiiRnGv/unX34gftpNUILGhBGcHNPXwzH0tN6sRTAAwFH0/1L9wgvZ7SmErju
+ aU5AEcWFvbCQLozefWm1A55d+3Td/00VizPdYKvdzN+3NtuK1e0Hyvbwjl1y8Xu7K10e
+ xSLwXH4atW8TDCmdmBNAK4tFxmmhwXSQV7n11aWWPdXPFvxGwr3Z900ksXr1fNKKOP9M
+ nm9g==
+X-Gm-Message-State: AOJu0Yx6GpbmNMGPoF+5mGh4WEhYIGDvb1GGrYVN/pOekPUyRv2Z6zGD
+ +xCwDYnVVTEGFySFlqRb5XhiKJqSmSxXjmpN0gfunzK28OymD/iWztGS
+X-Gm-Gg: Acq92OHrCAlcaVTy+qZvjB8iEwHyqfmhsePfuPWZx3uTqjlCfOlMgsgAo+U27FGEGxY
+ 9cGjrLyOTquB2cGj1Qn+V41AzyWoAZ9tL29koLXyIiBqYqmJ21Chuk0T2Ujn2I/8L+P6c9lwEG2
+ Ql1IqPLct80sWOht3MBQGA/GI514YpRTw8UJ7bJ1heIBqIoEpTQfmmwcjDRk3Wx72avaRF7B/ia
+ vxtnlgvI6ocwbmrs7EYnaSzGT7sKAOn4xMEQs6EfxB5Y6cr18o2YAsmTnWZ/Zux8xLTJXvWJzzV
+ zpDQXNgpxeeCRIoLG72gJyQTeX0AOJw7Ocs81E2Bd6vtNZ9x1YswaLovQrYcOuEcEJcm4kZyVe5
+ D7TgnSy5GtdTz53Qg6WkBwlINQ0Bk1GFyBjOLi0MQlytNnH6s4YTyLwYzzXVuou9yvRPwXBQIXJ
+ QfkUsVufpLfqwehE3a0mduuBcS+cP73J9eULvbuMcz2sHaymV8oc0Pw7vxC5pTpNL+4E9RmkcZO
+ DY2qjO7l7yqAlXdNl6xFRGiOTua+atIW2Zq9H/sW5pKjPzgJqfhpOHqG5z0ETiXnB6CdZjJbgH+
+ /0Q=
+X-Received: by 2002:a05:6808:c2f5:b0:467:1458:2a8f with SMTP id
+ 5614622812f47-4854a48941amr36470b6e.37.1779386777527; 
+ Thu, 21 May 2026 11:06:17 -0700 (PDT)
 Received: from mac.localdomain (184-96-131-78.hlrn.qwest.net. [184.96.131.78])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e5f6ee286fsm903089a34.25.2026.05.21.11.06.27
+ 46e09a7af769-7e5f6ee286fsm903089a34.25.2026.05.21.11.06.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 11:06:28 -0700 (PDT)
+ Thu, 21 May 2026 11:06:16 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Thu, 21 May 2026 12:06:05 -0600
-Subject: [PATCH v13 12/22] target/mips: add Octeon Camellia COP2 helpers
+Subject: [PATCH v13 00/22] target/mips: add missing Octeon user-mode
+ support
+Date: Thu, 21 May 2026 12:05:53 -0600
+Message-Id: <20260521-mips-octeon-missing-insns-v2-v13-0-5a4cb8ec9cd3@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260521-mips-octeon-missing-insns-v2-v13-12-5a4cb8ec9cd3@gmail.com>
-References: <20260521-mips-octeon-missing-insns-v2-v13-0-5a4cb8ec9cd3@gmail.com>
-In-Reply-To: <20260521-mips-octeon-missing-insns-v2-v13-0-5a4cb8ec9cd3@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/5XTzU7DMAwA4FdBPZPKTpo/TnsPxKFN3C5obadmV
+ KBp704yQJQOUSHlkETxZ8tWzkWkKVAsHu7OxURziGEc0gHF/V3h9vXQEQs+XRQcuIKKA+vDMbL
+ RnWgc0j7GMHQsDHGIbOZMkrJCa3Atd0UijhO14fXqPz59nONL80zulM38Yh/iaZzergXMPL/7S
+ oV/p0oLWA3aom/RGGd3XV+HQ+nGvsipZvGNSTAbmEhY4xpyVgmp/Q1WLTG7gVUJ80pZ7zxIx9s
+ 1JhcYbnR0lhmTnitlPMq6WWNqiW31TCVMguLGWFd54daYXmLVBqYTxnNdqqHKEa4xs8T0BmYyB
+ golEmlNN5XZJbY1AJt7pr3XQpLz3q8xhP9oaUTABKjWkm8J5c0IEBccBwQ0oEtrNTJkx3049H5
+ 3CEM9jeU4dZ8x/GeM5gJFydPn0b8HXS6Xd2K2jMOuAwAA
+X-Change-ID: 20260420-mips-octeon-missing-insns-v2-5e693770cf2c
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
@@ -84,8 +92,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::329;
- envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x329.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22c;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x22c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -109,187 +117,257 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add helper support for the Octeon Camellia ROUND, FL, and FLINV
-selectors. The engine reuses the AES RESINP bank, and guest-managed key
-schedules drive the Camellia F-function and FL layers through these COP2
-operations.
+This series completes the remaining Octeon user-mode support work
+after v12 covered the sysmips/FIXADE pieces, Octeon integer/indexed
+memory/atomic instructions, multiplier/QMAC support, CP1 exposure, and
+per-instruction smoke tests.
 
-Implement the Camellia F-function and FL layers directly from RFC 3713.
+This series carries the remaining TCG optimization, Octeon COP2 crypto
+state and helpers, explicit COP2 selector decode, CHORD/LLM, CvmCount
+RDHWR support, and the extended Octeon smoke coverage.  The COP2 work is
+split into state, helper plumbing, per-engine helper patches, explicit
+selector decode by functional group, and smoke-test coverage so each
+functional block can be reviewed independently.
+
+Changes since v1:
+- Split BADDU/DMUL destination fixes into a separate patch.
+- Split the SEQ/SNE decode refactoring into a separate patch.
+- Moved Octeon multiplier state to uint64_t arrays and updated VMState.
+- Switched Octeon helper ABIs to i64/uint64_t where applicable.
+- Moved COP2 selector decode/support logic into octeon_translate.c.
+- Added in-tree TCG tests for mips64 and mips64el linux-user.
+- Used switch ranges and g_assert_not_reached() for SHA3/ZUC shared
+  selector handling.
+- Dropped Octeon prefixes from generic Camellia helper routines.
+- Reworked GFM helpers to keep the architectural 128-bit state and
+  direct RESINP XOR paths.
+- Moved the Octeon68XX CP1 CPU-model correction to the end of the
+  series.
+- Added migration coverage for Octeon COP2 crypto and LLM sparse state.
+- Split COP2 helper implementation by functional subcategory and added
+  helper.h declarations alongside the side-effecting selector
+  operations.
+- Removed the shared COP2 selector enum; selectors are now either
+  decoded by decodetree or kept as helper-local constants for shared
+  register-window arithmetic.
+- Used signed 32-bit DMFC2 direct loads for 32-bit COP2 register
+  readback.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
-Changes v8 -> v9:
-  - Split Camellia operation selectors into their own COP2 helper patch.
-  - Replace generic selector dispatch with per-operation Camellia helpers.
-  - Add matching helper.h declarations with the helper implementation.
+Changes in v13:
+- Rebased the remaining TCG/COP2/CvmCount patches on current qemu.git
+  staging after v12.
+- Dropped patches already covered by v12.
+- Kept the explicit Octeon COP2 selector decode split by register,
+  CRC/GFM, HSH/SHA3, stream-cipher, block-cipher, and CHORD/LLM groups.
+- Folded the COP2 state/decode review fixes into the series, including
+  architectural HSH shared-window state, direct reflected GFM register
+  helpers, CRC/AES length masking, and corrected selector naming.
+- Folded COP2 readback, reflected-selector, and CvmCount smoke coverage
+  into the related implementation commits.
+- Added standalone QMAC/QMACS smoke coverage.
+- Link to v12: https://lore.kernel.org/qemu-devel/20260520172313.23777-1-philmd@linaro.org/
 
-Changes v5 -> v6:
-  - Use RESINP wording for the Camellia shared selector aliases.
+Changes in v12:
+- Rebased v12 on rth/tcg-next.
+- Addressed Richard's review comments, including comment rewording.
+- Passed gen_atomic_*() through do_atomic_ld().
+- Used tcg_zero_i128() for ZCB/ZCBT zero stores.
+- Reordered the indexed-load TRANS() entries.
+- Link to v11: https://lore.kernel.org/qemu-devel/20260520101807.9971-1-philmd@linaro.org/
 
-Changes v1 -> v2:
-  - Drop the Octeon prefix from generic Camellia helper routines.
-    (suggested by Philippe Mathieu-Daudé)
-  - Add selector dispatch updates in octeon_translate.c after moving
-    COP2 decode out of translate.c.  (suggested by Philippe
-    Mathieu-Daudé)
+Changes in v11:
+- Split the previously submitted v10 series for review.
+- Added tests alongside each instruction patch instead of collecting all
+  instruction coverage at the end.
+- Split SEQNE/SEQNEI into separate SEQ/SNE and SEQI/SNEI decode patches
+  to ease review.
+- Link to v10: https://lore.kernel.org/qemu-devel/20260519-mips-octeon-missing-insns-v2-v10-0-306f9edfe15b@gmail.com
+
+Changes in v10:
+- Split the explicit Octeon COP2 selector decode patch into register,
+  CRC/GFM, HSH/SHA3, stream-cipher, block-cipher, and CHORD/LLM
+  patches.
+- Added Philippe's Reviewed-by tag and local MemOp cleanup for ZCB/ZCBT.
+- Added Philippe's Tested-by tags for VMULU, VMM0, and Octeon68XX CP1.
+- Restored the original constant-fold output ordering in the TCG mul[us]2
+  optimization patch.
+- Kept Octeon COP2 crypto state architectural by dropping shared-mode and
+  AES, GFM, SHA3, ZUC, and SNOW3G shadow state.
+- Ordered Octeon COP2 crypto CPU state and VMState fields by architectural
+  selector groups.
+- Reworked GFM reflected helpers around the full 128-bit architectural state
+  and direct RESINP XOR operations.
+- Preserved the 64-bit UIA2 GFM reduction path used by SNOW3G F9.
+- Added Richard's Reviewed-by tag for the CRC COP2 helpers and masked
+  variable-length CRC writes to CRCLEN<3:0>.
+- Link to v9: https://lore.kernel.org/qemu-devel/20260519-mips-octeon-missing-insns-v2-v9-0-d7dd735ecddd@gmail.com
+
+Changes in v9:
+- Used MO_ATOM_NONE for the 128-bit ZCB/ZCBT zero stores.
+- Reused octeon_zero_partial_product_state() in the VMM0 translator.
+- Removed the shared MIPSOcteonCop2Sel enum from CPU state headers.
+- Replaced generic selector-dispatch COP2 helpers with per-operation
+  helper functions.
+- Split COP2 helper implementation into smaller functional subcategory
+  patches: plumbing, CRC, GFM, SHA3, ZUC, SNOW3G, AES, SMS4, 3DES/KASUMI,
+  Camellia, HSH, and CHORD/LLM.
+- Added COP2 helper declarations to helper.h alongside the per-engine
+  helper implementation commits.
+- Used signed 32-bit DMFC2 direct loads for 32-bit COP2 register
+  readback.
+- Documented the AESRESINP direct register-transfer handling in the translator.
+- Combined COP2 selector readback with QMAC/CvmCount smoke coverage.
+- Link to v8: https://lore.kernel.org/qemu-devel/20260517-mips-octeon-missing-insns-v2-v8-0-206151ee77ec@gmail.com
+
+Changes in v8:
+- Incorporated Richard Henderson's v7.5 9-patch multiplier/QMAC rework
+  directly into the series.
+- Added the two v7.5 TCG prep patches as standalone patches:
+  tcg_gen_addN_i64 and mul[us]2 zero/one optimization.
+- Replaced the helper-backed Octeon multiplier/QMAC sequence with the
+  seven v7.5-shaped patches: multiplier state, MTM, MTP, VMULU, VMM0,
+  V3MULU, and QMAC.
+- Split Octeon COP2 crypto core support into state/migration, helper
+  implementation, explicit selector decode, and selector readback test
+  patches.
+- Decoded Octeon COP2 selectors explicitly in decodetree and used direct
+  TCG loads/stores for simple COP2 register moves.
+- Kept COP2 helper calls for operation selectors and shared-window state
+  that require side effects.
+- Folded ZCB/ZCBT into one patch so the decodetree wildcard is
+  introduced in final form.
+- Added new Reviewed-by tags from Richard Henderson for MTM/MTP, LA*,
+  CvmCount, and QMAC/CvmCount test patches.
+- Link to v7: https://lore.kernel.org/qemu-devel/20260514-mips-octeon-missing-insns-v2-v7-0-226686be4ce1@gmail.com
+
+Changes in v7:
+- Rebased on current qemu.git staging (edcc429e9e).
+- Reordered the zero-register cleanup after the BADDU/DMUL destination fix
+  and moved the multiplier-state patch next to the MTM/MTP instruction
+  patches.
+- Applied Philippe's MIPS_FIXADE TB-flag readability tweak.
+- Used explicit MO_32/MO_64 MemOps for SAA/SAAD atomic transaction sizes.
+- Folded ZCB/ZCBT decode with a decodetree wildcard and zero the cache
+  block with 128-bit stores.
+- Added new Reviewed-by tags from Philippe Mathieu-Daudé and Richard
+  Henderson.
+- Link to v6: https://lore.kernel.org/qemu-devel/20260511-mips-octeon-missing-insns-v2-v6-0-5062889c4d3c@gmail.com
+
+Changes in v6:
+- Added Octeon QMAC/QMACS fixed-point accumulator support and smoke
+  coverage.
+- Added Octeon RDHWR $31/CvmCount support and smoke coverage.
+- Clarified MTM0/VMM0 reset behavior against the CN71XX
+  register-state tables.
+- Fixed MTP0 to zero P1 per the CN71XX register-state table and added
+  smoke coverage.
+- Fixed VMM0 MPL1 reset handling and added smoke coverage for MPL1.
+- Cleaned up internal VMUL, LA*, COP2 payload/state, and COP2 selector
+  naming to better match hardware register/selector terminology.
+- Renamed the MIPS_FIXADE TB flag, HSH register word-packing helpers,
+  and sparse LLM backing fields to match ABI and hardware terminology.
+- Link to v5: https://lore.kernel.org/qemu-devel/20260510-mips-octeon-missing-insns-v2-v5-0-d5d2668d15ab@gmail.com
+
+Changes in v5:
+- Added Richard Henderson's Reviewed-by tags for LBX, LHUX, LWUX, SAA,
+  and SAAD, plus Acked-by tags for ZCB and ZCBT.
+- Dropped the separate Octeon+ feature bit; QEMU has a single Octeon CPU
+  model today, so SAA/SAAD stay under the existing Octeon feature bucket.
+- Folded ZCBT into the ZCB decodetree entry with a selector comment.
+- Link to v4: https://lore.kernel.org/qemu-devel/20260509-mips-octeon-missing-insns-v2-v4-0-d669dcd05c2f@gmail.com
+
+Changes in v4:
+- Added Richard Henderson's Reviewed-by tags to the reviewed sysmips and
+  Octeon translator cleanup patches.
+- Kept the Octeon3 MPL3-MPL5/P3-P5 high-lane multiplier state
+  documented by Cavium SDK/toolchain sources.
+- Documented the Octeon3 two-source MTM/MTP forms and preserved the rt
+  high-lane operands while legacy one-source encodings use rt == $zero.
+- Simplified SAA/SAAD translation to use the i64 TCG atomic add path for
+  both word and doubleword sizes.
+- Marked SAA/SAAD as Octeon+ instructions and gated them behind a
+  separate Octeon+ feature bit.
+- Simplified LA* translation to use i64 TCG atomic helpers for word and
+  doubleword operations, with MO_SL selecting word result sign-extension.
+- Link to v3: https://lore.kernel.org/qemu-devel/20260508-mips-octeon-missing-insns-v2-v3-0-bcbec96357d9@gmail.com
+
+Changes in v3:
+- Rebased on current qemu.git master.
+- Split sysmips support into separate MIPS_FLUSH_CACHE, MIPS_ATOMIC_SET,
+  and MIPS_FIXADE patches.
+- Made MIPS_ATOMIC_SET always use the MIPS separate error-result register
+  path for successful returns.
+- Removed redundant Octeon MIPS64 checks and target-long guards from the
+  translator paths.
+- Removed zero-register fast paths where gen_store_gpr() already handles
+  discarded writes.
+- Reworked SEQ/SNE decode and LA* translator helpers as requested.
+- Split the Octeon arithmetic/memory patch into narrower state, indexed
+  load, SAA/SAAD, ZCB/ZCBT, multiplier, and test patches.
+- Reworked Octeon multiplier limb accumulation as requested.
+- Link to v2: https://lore.kernel.org/qemu-devel/20260421-mips-octeon-missing-insns-v2-v2-0-a0791df188c9@gmail.com
+
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>
+Cc: Helge Deller <deller@gmx.de>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Cc: Aurelien Jarno <aurelien@aurel32.net>
+Cc: Aleksandar Rikalo <arikalo@gmail.com>
+Cc: Huacai Chen <chenhuacai@kernel.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+
 ---
- target/mips/helper.h            |   3 +
- target/mips/tcg/octeon_crypto.c | 126 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 129 insertions(+)
+James Hilliard (21):
+      target/mips: add Octeon COP2 crypto state
+      target/mips: add Octeon COP2 crypto helper plumbing
+      target/mips: add Octeon CRC COP2 helpers
+      target/mips: add Octeon GFM COP2 helpers
+      target/mips: add Octeon SHA3 COP2 helpers
+      target/mips: add Octeon ZUC COP2 helpers
+      target/mips: add Octeon SNOW3G COP2 helpers
+      target/mips: add Octeon AES COP2 helpers
+      target/mips: add Octeon SMS4 COP2 helpers
+      target/mips: add Octeon 3DES and KASUMI COP2 helpers
+      target/mips: add Octeon Camellia COP2 helpers
+      target/mips: add Octeon HSH COP2 helpers
+      target/mips: add Octeon CHORD and LLM COP2 helpers
+      target/mips: decode Octeon COP2 register selectors
+      target/mips: decode Octeon CRC and GFM COP2 selectors
+      target/mips: decode Octeon HSH and SHA3 COP2 selectors
+      target/mips: decode Octeon ZUC and SNOW3G COP2 selectors
+      target/mips: decode Octeon block-cipher COP2 selectors
+      target/mips: decode Octeon CHORD and LLM COP2 selectors
+      target/mips: add Octeon CvmCount RDHWR support
+      tests/tcg/mips: cover Octeon QMAC instructions
 
-diff --git a/target/mips/helper.h b/target/mips/helper.h
-index 444eeeb3ec..fbf8250932 100644
---- a/target/mips/helper.h
-+++ b/target/mips/helper.h
-@@ -88,6 +88,9 @@ DEF_HELPER_2(octeon_cp2_mt_des3_enc, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_kas_enc, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_des3_dec_cbc, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_des3_dec, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_camellia_fl, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_camellia_flinv, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_camellia_round, void, env, i64)
- 
- /* microMIPS functions */
- DEF_HELPER_4(lwm, void, env, tl, tl, i32)
-diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
-index 893f55d1e5..5bb21098fc 100644
---- a/target/mips/tcg/octeon_crypto.c
-+++ b/target/mips/tcg/octeon_crypto.c
-@@ -1614,6 +1614,132 @@ void helper_octeon_cp2_mt_des3_dec(CPUMIPSState *env, uint64_t value)
-     octeon_3des_crypt_common(&env->octeon_crypto, value, false, false);
- }
- 
-+static const uint8_t camellia_sbox1[256] = {
-+    112, 130,  44, 236, 179,  39, 192, 229, 228, 133,  87,  53, 234,  12,
-+    174,  65,  35, 239, 107, 147,  69,  25, 165,  33, 237,  14,  79,  78,
-+     29, 101, 146, 189, 134, 184, 175, 143, 124, 235,  31, 206,  62,  48,
-+    220,  95,  94, 197,  11,  26, 166, 225,  57, 202, 213,  71,  93,  61,
-+    217,   1,  90, 214,  81,  86, 108,  77, 139,  13, 154, 102, 251, 204,
-+    176,  45, 116,  18,  43,  32, 240, 177, 132, 153, 223,  76, 203, 194,
-+     52, 126, 118,   5, 109, 183, 169,  49, 209,  23,   4, 215,  20,  88,
-+     58,  97, 222,  27,  17,  28,  50,  15, 156,  22,  83,  24, 242,  34,
-+    254,  68, 207, 178, 195, 181, 122, 145,  36,   8, 232, 168,  96, 252,
-+    105,  80, 170, 208, 160, 125, 161, 137,  98, 151,  84,  91,  30, 149,
-+    224, 255, 100, 210,  16, 196,   0,  72, 163, 247, 117, 219, 138,   3,
-+    230, 218,   9,  63, 221, 148, 135,  92, 131,   2, 205,  74, 144,  51,
-+    115, 103, 246, 243, 157, 127, 191, 226,  82, 155, 216,  38, 200,  55,
-+    198,  59, 129, 150, 111,  75,  19, 190,  99,  46, 233, 121, 167, 140,
-+    159, 110, 188, 142,  41, 245, 249, 182,  47, 253, 180,  89, 120, 152,
-+      6, 106, 231,  70, 113, 186, 212,  37, 171,  66, 136, 162, 141, 250,
-+    114,   7, 185,  85, 248, 238, 172,  10,  54,  73,  42, 104,  60,  56,
-+    241, 164,  64,  40, 211, 123, 187, 201,  67, 193,  21, 227, 173, 244,
-+    119, 199, 128, 158,
-+};
-+
-+static inline uint8_t camellia_rotl8(uint8_t v, unsigned int shift)
-+{
-+    return (v << shift) | (v >> (8 - shift));
-+}
-+
-+static inline uint8_t camellia_sbox2(uint8_t x)
-+{
-+    return camellia_rotl8(camellia_sbox1[x], 1);
-+}
-+
-+static inline uint8_t camellia_sbox3(uint8_t x)
-+{
-+    return camellia_rotl8(camellia_sbox1[x], 7);
-+}
-+
-+static inline uint8_t camellia_sbox4(uint8_t x)
-+{
-+    return camellia_sbox1[camellia_rotl8(x, 1)];
-+}
-+
-+static uint64_t camellia_f(uint64_t input, uint64_t key)
-+{
-+    uint64_t x = input ^ key;
-+    uint8_t t1 = camellia_sbox1[x >> 56];
-+    uint8_t t2 = camellia_sbox2((x >> 48) & 0xff);
-+    uint8_t t3 = camellia_sbox3((x >> 40) & 0xff);
-+    uint8_t t4 = camellia_sbox4((x >> 32) & 0xff);
-+    uint8_t t5 = camellia_sbox2((x >> 24) & 0xff);
-+    uint8_t t6 = camellia_sbox3((x >> 16) & 0xff);
-+    uint8_t t7 = camellia_sbox4((x >> 8) & 0xff);
-+    uint8_t t8 = camellia_sbox1[x & 0xff];
-+    uint8_t y1 = t1 ^ t3 ^ t4 ^ t6 ^ t7 ^ t8;
-+    uint8_t y2 = t1 ^ t2 ^ t4 ^ t5 ^ t7 ^ t8;
-+    uint8_t y3 = t1 ^ t2 ^ t3 ^ t5 ^ t6 ^ t8;
-+    uint8_t y4 = t2 ^ t3 ^ t4 ^ t5 ^ t6 ^ t7;
-+    uint8_t y5 = t1 ^ t2 ^ t6 ^ t7 ^ t8;
-+    uint8_t y6 = t2 ^ t3 ^ t5 ^ t7 ^ t8;
-+    uint8_t y7 = t3 ^ t4 ^ t5 ^ t6 ^ t8;
-+    uint8_t y8 = t1 ^ t4 ^ t5 ^ t6 ^ t7;
-+
-+    return ((uint64_t)y1 << 56) | ((uint64_t)y2 << 48) |
-+           ((uint64_t)y3 << 40) | ((uint64_t)y4 << 32) |
-+           ((uint64_t)y5 << 24) | ((uint64_t)y6 << 16) |
-+           ((uint64_t)y7 << 8) | y8;
-+}
-+
-+static uint64_t camellia_fl(uint64_t input, uint64_t key)
-+{
-+    uint32_t x1 = input >> 32;
-+    uint32_t x2 = input;
-+    uint32_t k1 = key >> 32;
-+    uint32_t k2 = key;
-+
-+    x2 ^= rol32(x1 & k1, 1);
-+    x1 ^= x2 | k2;
-+    return ((uint64_t)x1 << 32) | x2;
-+}
-+
-+static uint64_t camellia_flinv(uint64_t input, uint64_t key)
-+{
-+    uint32_t y1 = input >> 32;
-+    uint32_t y2 = input;
-+    uint32_t k1 = key >> 32;
-+    uint32_t k2 = key;
-+
-+    y1 ^= y2 | k2;
-+    y2 ^= rol32(y1 & k1, 1);
-+    return ((uint64_t)y1 << 32) | y2;
-+}
-+
-+static void octeon_camellia_round(MIPSOcteonCryptoState *crypto, uint64_t key)
-+{
-+    uint64_t left = crypto->aes_resinp[0];
-+    uint64_t right = crypto->aes_resinp[1];
-+
-+    crypto->aes_resinp[0] = right ^ camellia_f(left, key);
-+    crypto->aes_resinp[1] = left;
-+}
-+
-+static void octeon_camellia_fl_layer(MIPSOcteonCryptoState *crypto,
-+                                     uint64_t key, bool inverse)
-+{
-+    uint64_t state = crypto->aes_resinp[inverse ? 1 : 0];
-+
-+    crypto->aes_resinp[inverse ? 1 : 0] = inverse ?
-+        camellia_flinv(state, key) :
-+        camellia_fl(state, key);
-+}
-+
-+void helper_octeon_cp2_mt_camellia_fl(CPUMIPSState *env, uint64_t value)
-+{
-+    octeon_camellia_fl_layer(&env->octeon_crypto, value, false);
-+}
-+
-+void helper_octeon_cp2_mt_camellia_flinv(CPUMIPSState *env, uint64_t value)
-+{
-+    octeon_camellia_fl_layer(&env->octeon_crypto, value, true);
-+}
-+
-+void helper_octeon_cp2_mt_camellia_round(CPUMIPSState *env, uint64_t value)
-+{
-+    octeon_camellia_round(&env->octeon_crypto, value);
-+}
-+
- void helper_octeon_cp2_mt_snow3g_start(CPUMIPSState *env, uint64_t value)
- {
-     octeon_snow3g_start(&env->octeon_crypto, value);
+Richard Henderson (1):
+      tcg: Optimize INDEX_op_mul[us]2 for 0 and 1
 
--- 
-2.54.0
+ target/mips/cpu.c                             |   68 +
+ target/mips/cpu.h                             |   26 +
+ target/mips/helper.h                          |   83 +
+ target/mips/internal.h                        |    3 +
+ target/mips/system/machine.c                  |   94 +
+ target/mips/tcg/meson.build                   |    1 +
+ target/mips/tcg/octeon.decode                 |  206 +++
+ target/mips/tcg/octeon_crypto.c               | 2432 +++++++++++++++++++++++++
+ target/mips/tcg/octeon_translate.c            |  340 ++++
+ target/mips/tcg/op_helper.c                   |   19 +-
+ target/mips/tcg/translate.c                   |   19 +
+ tcg/optimize.c                                |   92 +-
+ tests/tcg/mips/user/isa/octeon/octeon-insns.c |  198 ++
+ 13 files changed, 3548 insertions(+), 33 deletions(-)
+---
+base-commit: f5a2438405d4ae8b62de7c9b39fac0b2155ee544
+change-id: 20260420-mips-octeon-missing-insns-v2-5e693770cf2c
+
+Best regards,
+--  
+James Hilliard <james.hilliard1@gmail.com>
 
 
