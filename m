@@ -4,74 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44EDACD4F3D
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 19:49:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64063CD5BB3
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 20:09:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ9NT-0005Gn-OQ; Thu, 21 May 2026 15:48:19 -0400
+	id 1wQ9hh-000271-9c; Thu, 21 May 2026 16:09:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wQ9NR-0005G2-VU
- for qemu-devel@nongnu.org; Thu, 21 May 2026 15:48:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wQ9hg-00026V-1g; Thu, 21 May 2026 16:09:12 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wQ9NQ-0006fG-5C
- for qemu-devel@nongnu.org; Thu, 21 May 2026 15:48:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779392894;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ZrjSR6/jgQfvhvphefoPMveQElQflSuxBFvNz6cGgRA=;
- b=D8yGuB28zlL+xqjKKp3I1YprQXttZSYdpvkbjt1EtZ57/gHkDA93EDK97P+XcxfFARdikK
- kOeMQGBbNqpY6Kr5mbzO2GvB+NCkvxlBqevGzUNyBubswX3ogdoZ/X+L0fCAIJ7U/oTnqc
- h59E0ZOFtdq6vhtBYjA0OuMEG0cV42U=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-WT6pWO7JNU6AgfccL_HcgA-1; Thu,
- 21 May 2026 15:48:11 -0400
-X-MC-Unique: WT6pWO7JNU6AgfccL_HcgA-1
-X-Mimecast-MFC-AGG-ID: WT6pWO7JNU6AgfccL_HcgA_1779392890
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7D9591956054; Thu, 21 May 2026 19:48:10 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.143])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BC7AE180034E; Thu, 21 May 2026 19:48:09 +0000 (UTC)
-Date: Thu, 21 May 2026 10:56:31 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org,
- pierrick.bouvier@oss.qualcomm.com,
- Stefano Garzarella <sgarzare@redhat.com>, qemu-block@nongnu.org
-Subject: Re: [PATCH 35/39] MAINTAINERS: Drop stale F: from "Linux io_uring"
-Message-ID: <20260521145631.GD464582@fedora>
-References: <20260521080511.999266-1-armbru@redhat.com>
- <20260521080511.999266-36-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wQ9he-00073l-IB; Thu, 21 May 2026 16:09:11 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64LAJtSD709576; Thu, 21 May 2026 20:09:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=fQ37CIDkp9CqUV08H
+ I4IAZCvTEmlxlrYWrucHlCfiWc=; b=fIeGtDV+nU8QpXkkVvW4WWldfW3Zxme4H
+ xITcGb9hoQ7YTdIRcIT7ytPJ65umV688tckqpd4p5ZtasqclveNS0APZOpEPCP9M
+ hc4enKaGYsFsJ7XMXSPrWkC3PXuQcVp+tf9YuL6nkjdgSdA9FPYPlevNN2CsAoM/
+ pYnXwH9Eg8tnQEIJjwK+1OVBr0u+idwO4VVj+12S7nZSnZNKOFtkRxv1LBrVjHQl
+ a0CIiiejyIp18FG63ygd4jPbWLejJEzRWq9w9rL1Iq7nKAZZQgYmRPqyTJjfgCzF
+ ZB5YcfUlIUPNFowSrTqeSf6B85pQcHFjAVAknkc2g/V9yb5c69G4w==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h758u5t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 21 May 2026 20:09:01 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64LJs6sY014327;
+ Thu, 21 May 2026 20:09:00 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e75kydmxx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 21 May 2026 20:09:00 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64LK8vXq30802388
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 21 May 2026 20:08:57 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 28C132004B;
+ Thu, 21 May 2026 20:08:57 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3238020043;
+ Thu, 21 May 2026 20:08:54 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.39.29.116]) by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 21 May 2026 20:08:53 +0000 (GMT)
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: <qemu-devel@nongnu.org>
+Cc: <qemu-ppc@nongnu.org>, Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Miles Glenn <milesg@linux.ibm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>,
+ Misbah Anjum N <misanjum@linux.ibm.com>
+Subject: [PATCH 2/2] ppc/pseries: Make Power11 as default cpu for pseries
+Date: Fri, 22 May 2026 01:38:44 +0530
+Message-ID: <20260521200844.1449023-3-adityag@linux.ibm.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260521200844.1449023-1-adityag@linux.ibm.com>
+References: <20260521200844.1449023-1-adityag@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="Zpl7r9upFA5uwsET"
-Content-Disposition: inline
-In-Reply-To: <20260521080511.999266-36-armbru@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 24
-X-Spam_score: 2.4
-X-Spam_bar: ++
-X-Spam_report: (2.4 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
- DKIMWL_WL_HIGH=-0.445, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=ffCdDUQF c=1 sm=1 tr=0 ts=6a0f665d cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=wnoTkFhnbxb0mKSpKhwA:9
+X-Proofpoint-ORIG-GUID: wbVBTeTXTvfcj8D13uLHpe3CvVsLFldf
+X-Proofpoint-GUID: MNY0-uJVtWgru13riyXw3zSPODmCPJKx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIxMDIwMiBTYWx0ZWRfX01PoqloC2osp
+ kWIP5kHQ0c0jy93hPuP/V62v3Z7GI0oXMKfugDmF7Xi6EAaXW5GedQXP01vI29v0mgR232vd2jY
+ gkgEcOl0Myg2tSZGx4FRtzFFNs27Q3BNBgPkB+ImIUT8qe2vuJPCd3UEP0ysWEDhJXaJchVkPiJ
+ DzKH3jAN7kjO/w34MfgV36cbRw8M/BNOLvVl3iD/93EzB2uRsgDAv2MMCt66iHE0l0Clpt+yocj
+ Ur6sbSv7NLfqxfDhJgT5l4IKnBIMSsKQDywkW4RbeTcO1C97dv3MUCltxJvjCYzxBRzaSob7wgr
+ wV1W/iY9ZGKzYsfDT4WOXoW2izAphhrx3Jq/4yA3c8UnBF8AfNq+0mhvm0pscFqo2lbPAPq7Wm6
+ bjGqocrfLDETpWfxW2MnyL0Yj6n/MeK4JkgPF4IVDCAYoj860I6sL8lOjI/NGrydG7h2rZomSlr
+ jhfWZVitcJlxExW1kag==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-21_04,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 phishscore=0 suspectscore=0 adultscore=0
+ clxscore=1015 impostorscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605210202
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,43 +120,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+With Power11 being the newest support Power processor in QEMU, and
+sufficiently tested, make Power11 as default CPU type for pseries
+machine
 
---Zpl7r9upFA5uwsET
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Retain Power10 as default CPU for pseries-11.0 and older versions
 
-On Thu, May 21, 2026 at 10:05:07AM +0200, Markus Armbruster wrote:
-> We neglected to update MAINTAINERS when we dropped stubs/io_uring.c.
-> Update it now.
->=20
-> Fixes: 047dabef97 (block/io_uring: use aio_add_sqe(), 2025-11-03)
-> Cc: Julia Suvorova <jusual@redhat.com>
-> Cc: Stefan Hajnoczi <stefanha@redhat.com>
-> Cc: Stefano Garzarella <sgarzare@redhat.com>
-> Cc: qemu-block@nongnu.org
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> ---
->  MAINTAINERS | 1 -
->  1 file changed, 1 deletion(-)
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+---
+ hw/ppc/spapr.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-
---Zpl7r9upFA5uwsET
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmoPHR8ACgkQnKSrs4Gr
-c8i2Ngf+Ou0NPNQWSD6oc53GetoftTJxVbL18XxU1XUUtIHckb7zD0Ibq+AnNR/S
-UFyEge923ZaZGUoij4J5409v43JRORzgZDZdHDYIzSfdh1Q29U7oEkqztXwHCivG
-CTzIe7bkj5L2Jsr7D6rxB3tkx+dI762ql6Hywr0iNKEx88xUZRQ0GZA9FLjDixEt
-QaVuN095eBGktSpcfKwInWlsRQqRFL7lJAjoZMADf9/4+OBwdSvvDTziou1tnppB
-LFtHy1I1l+0th+v0QwSNIe/65hqEPUxdHfoyfgze2WkoQSvXmYPx5M9+yEq312v1
-l4kAYmFZoNsnRQ7xuz6ktyYY1+WHLQ==
-=9ZI1
------END PGP SIGNATURE-----
-
---Zpl7r9upFA5uwsET--
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index d40af312fae1..191f7431bdf5 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -4644,7 +4644,7 @@ static void spapr_machine_class_init(ObjectClass *oc, const void *data)
+     hc->unplug_request = spapr_machine_device_unplug_request;
+     hc->unplug = spapr_machine_device_unplug;
+ 
+-    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power10_v2.0");
++    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power11_v2.0");
+     mc->has_hotpluggable_cpus = true;
+     mc->nvdimm_supported = true;
+     smc->resize_hpt_default = SPAPR_RESIZE_HPT_ENABLED;
+@@ -4777,6 +4777,7 @@ static void spapr_machine_11_0_class_options(MachineClass *mc)
+ {
+     spapr_machine_11_1_class_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_11_0, hw_compat_11_0_len);
++    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power10_v2.0");
+ }
+ 
+ DEFINE_SPAPR_MACHINE(11, 0);
+-- 
+2.54.0
 
 
