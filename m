@@ -4,112 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E403CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:25:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94D99CD5BB3
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:25:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ3Og-0005R9-Jz; Thu, 21 May 2026 09:25:10 -0400
+	id 1wQ3Or-0005VN-NE; Thu, 21 May 2026 09:25:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wQ3Oe-0005NL-Av
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:25:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wQ3Op-0005V0-KC
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:25:19 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wQ3Ob-0002kZ-7s
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:25:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779369903;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=bthRsReiJ6bBSDWfUl4C+rA7io2uCIvhq3b4X9FNb5Y=;
- b=JsR9sei0N9hlEjQDVZ+U94ZVdaXDLtjjVvEzbLh+Mp7QYVFud04DhgfUfFHR34DJ0ul7Xs
- 0nEFSb8WEExyVglOSra63UpOw4WvAt6udbdyJ7LFYsQcDFYo14Y3F6ziyS9zZRCqNK+DjS
- giY6vikk52Y2nM/CPmR/lrsUUovMPPc=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-684-oetf-rn0NmG3lIkVy2gbRA-1; Thu, 21 May 2026 09:23:41 -0400
-X-MC-Unique: oetf-rn0NmG3lIkVy2gbRA-1
-X-Mimecast-MFC-AGG-ID: oetf-rn0NmG3lIkVy2gbRA_1779369820
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-447f2ce5556so4872231f8f.2
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 06:23:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wQ3Oo-0002oF-03
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:25:19 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64L9AMJv3556011
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 13:25:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 6qh32qqnamXR3fHGkVOEuuAN8/2DITsvrXG1ZAuUswk=; b=K/z+nYPm6szeojKz
+ N/MrDtP9R3IGw1vd9t+VPep5GdRPDdgfrlKGK8PDG2HeBElq1IalEqyRmf4nPF1e
+ Gj6ZMguwAWcgB6Isb31UICXEwgXmQon9jDRfhOjGs47pB6BqKElUwKmwArvNhPhW
+ tQ9Hvjmn2TF4XMsueyJKitvSQPNkVPQepwCxRMUWS/rHInIp9y5sj0i5UrFNHebu
+ SYH1SlKLjpVI2fMNLaqBDPYIgHX9mtWh1Sz9IIZdFD6CNZcTVNRq/C6AVbJ06Vsr
+ QLza3hQUc7m0Gluc87oBcJZUlEjN9wrgcw9zqctcrtLs/HdrgH29t1kHKgx7ENPA
+ DgNB+A==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e9fb6mpjy-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 13:25:16 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-90d6fe98316so1364318385a.3
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 06:25:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779369820; x=1779974620; darn=nongnu.org;
- h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=bthRsReiJ6bBSDWfUl4C+rA7io2uCIvhq3b4X9FNb5Y=;
- b=NPD7neiUR6nuM2r3JRtqsJ1oNtPyf0L2XpSRh8tm4bKf94AfU6f6bFK9JyN+wK3kUX
- UaWLJSuwMzE2twTCJ0VdaYNQvqoOaTgXn6YolzH1xHQWmjBk5R1WoIE/e4nDqUEfVUQM
- 77O0BrccogblJgVClQ6rt3Gf6gzq1ZS6WVSROunNtWgkCcnjAoxk0bdl1ueTFDsjrMrA
- C/TmbnI67ZX04GqNlwKTLykqCpcNg9qwY56q5vG211Df4GO94mGS6yAC4qQeNdBBDup1
- 8laR7FFjFfl2s9Ixvaeisfbp8fNlRSimBmFYntRjARBQoZEHRLu9RF2g5CpAJVMak8np
- RQMw==
+ d=oss.qualcomm.com; s=google; t=1779369915; x=1779974715; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=6qh32qqnamXR3fHGkVOEuuAN8/2DITsvrXG1ZAuUswk=;
+ b=eYYGM3m0ZSr7mnfDzw4ukAmheXs+xArZX0zRGmob0vfU5HdwGQr9dz1aTbwxScN11P
+ 6ehmcrDnIXzRG0AxTEOyo/rnUyk1vTdc4jIG8N428KaLlKAvFE/dPRXV/5Co1UkfO59N
+ GLA8creXjvJU3ge28sgkXN3Mgz8y762V8iFXy0rBPM+KHeaaaqZa7MP2F92OcNkP0AZ5
+ zZBWaobPOO/j5ZoZPE3ESLQizBXq/5zozat1wTx4FWjUM2UmQNWs7AaAsGq6X/7r3guN
+ 3CtFZi1EpzkLIEPAUEvdyT/7wtTLyGtz0VB03Nf25ml+/xOyaZIA2TlExjkHWcssLJQ4
+ KRhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779369820; x=1779974620;
- h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20251104; t=1779369915; x=1779974715;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=bthRsReiJ6bBSDWfUl4C+rA7io2uCIvhq3b4X9FNb5Y=;
- b=ZJZnuyGOSyXvEBasbuBSQtSPrGvcygM3pgGim8OCSHMOXRPmwBNwGFjfR4SOBke3vf
- 75obFATC6CKMLUBIISH8HX3bnhTlqZ3evHRuj6AF6t9Q3OH3X/mw6oC9FnkC+pZMmNC8
- dwVurGEjtgDtYuUsGzmJeefzj9L6qa4MosG4wJ3AKVR7jqV/AlSeuSOQrARJZmM2EZah
- kRxR2TQoAcli/VqjtP3tMljSHjjsxDWRwFhgU9hq6+uczDJkAgztqH8w+kjaCNmlYm2E
- tfDLvI+CrTrG/DhHd/RUNU0S6Ag/KK17RJV7bKO6Zg0lakCHRBx8o4bt3Vj0/jfmCYLb
- 8l4Q==
+ bh=6qh32qqnamXR3fHGkVOEuuAN8/2DITsvrXG1ZAuUswk=;
+ b=LFy3a17tLtQ4zWecNqWULFbSh6UQWigYmodmr776Hh4DddKtK4fuWzz2dECoA8fiRi
+ iUdPKD8GB/Ien1EkYVuRIQSV6dtGuwMaFKbl8p8RSwiN/nTU+KEADcPnJR7SyUvxdBUZ
+ pe5AXZvhCRdMiJFxhcPg2T8ajbmoPSwPBqvo1hX5TlIp55ZF8elyqFM+mi4Ed+Pvg/mQ
+ tIbUcWov5zlFlRJD/Qg419Z6ws9y5tTaAgiBgOSnwx8aFvRwLvL9UClWLIt81376GK8g
+ i6Ade5zuJo2G8s+pFM1ne345osVCvx6jz5Hu7BC2e40Me9NFTSJ4Bt/jhB59pwy1b+Km
+ y3Hw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+pe6Td6T8YblBE43rWL/XsLu26zbJoZtmxTBV7egPKMsABHL+3kWGVcgL9OzzU2fWFRMgElidmA2UI@nongnu.org
-X-Gm-Message-State: AOJu0YwhE+cLtwCnBF9QleJfzfIm9jSAwNr6KXlPKmP/zAZ/NZkOIAiP
- +8H/OsfUdTEwlyVuQsDLB8ZxvECsLnb3ssSK+tTupEuoTlDPBw6DDRlBenr3qzB9ZsxGYqHWK//
- 6760TZ/S9ijrhJ2KymrGQBtMie/+a7Vg9BRQiE/99jmgMpXoKL8AaUoZ8
-X-Gm-Gg: Acq92OH2StaWkn7vy6iVX3wpEIee3ZdnOg9k89TNP0PwfDnblFuZoZ1OMiQZHGMRL7F
- qQOAZ5ksy46HfVVQQKUXsXWk4Pe1WWHvWAePNyrx4hpyqX7Op2AmbWErG+y1IlzkA4mT27rWr3L
- IawntOIdHu6oLn0GvfXPSkHP0otEZ/3hca42IPfEFD9vW0alzowkpmj3CaFme7TTMICQKZXm/vF
- vt/Jcr2YvuM0NJvGO6RM/gnhe7csGPpz45/qrAD+cjpL9LzlVmYFpCtAijAecIDzF66mOkh7UWQ
- Z2AyxmQt/inG/jLId9tlDoI+tJikYzgB0ZosqE2LgHi8iIZvusaEBT950K2TRUaufOTvD8CXUrg
- C+tXH6cXVCDjnAaObGZ3A6ysZIlmG1c4PCaeak8hfAzKlitXclWH/i21XCnXG7UV5+P+TX5+BZM
- SJ/8RaGg==
-X-Received: by 2002:a05:6000:4808:b0:44d:1338:46b4 with SMTP id
- ffacd0b85a97d-45ea36b42d0mr5074888f8f.9.1779369819929; 
- Thu, 21 May 2026 06:23:39 -0700 (PDT)
-X-Received: by 2002:a05:6000:4808:b0:44d:1338:46b4 with SMTP id
- ffacd0b85a97d-45ea36b42d0mr5074819f8f.9.1779369819402; 
- Thu, 21 May 2026 06:23:39 -0700 (PDT)
-Received: from rh (p200300f6af2a6100f239e076bbd76784.dip0.t-ipconnect.de.
- [2003:f6:af2a:6100:f239:e076:bbd7:6784])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eaa93630asm2673560f8f.25.2026.05.21.06.23.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 06:23:39 -0700 (PDT)
-Date: Thu, 21 May 2026 15:23:37 +0200 (CEST)
-From: Sebastian Ott <sebott@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>
-cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- kvmarm@lists.linux.dev, peter.maydell@linaro.org, 
- shaju.abraham@nutanix.com, khushit.shah@nutanix.com, 
- yangjinqian1@huawei.com, cohuck@redhat.com, richard.henderson@linaro.org, 
- skolothumtho@nvidia.com, philmd@linaro.org, maz@kernel.org, 
- oliver.upton@linux.dev, pbonzini@redhat.com, armbru@redhat.com, 
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com
-Subject: Re: [PATCH v5 04/18] arm/cpu: Add infra to handle generated ID
- register definitions
-In-Reply-To: <20260519132905.145643-5-eric.auger@redhat.com>
-Message-ID: <c0644ecb-fc85-3180-e11e-99ec154a6e15@redhat.com>
-References: <20260519132905.145643-1-eric.auger@redhat.com>
- <20260519132905.145643-5-eric.auger@redhat.com>
+ AFNElJ+QF64KwiJQ9ChCs/bV5/CfNazn/6M3eNPvnw50w0Wk7VdGtzXux9xflaSQg8TA7AEr9kRSJV6BLSQi@nongnu.org
+X-Gm-Message-State: AOJu0YxiyQR8edc6gsnhbZxkGvs1fJLeN+XW7B2AzMl1vHlWA1w76pt+
+ LRvPoBf/4GUT41Yv/1IFlfSgUfht+PCdWzyALqDPHZb0ItWZqgfU49fqF0O3XtgK3DEckYSdMUm
+ lejRkOCaoDr2mIedlSv7KKQjrduqTrDRXZvPpC+41D5dgVxTgfNrOVjrpXg==
+X-Gm-Gg: Acq92OFvqjcRdUfDKMzYgPtQ256ID7QYShSh2Wl8mezvZihI94KSREFdQT7IOiKlSka
+ xIxRaVhEwsu3MZ3CjDRoybrhpjJAhwXvboYLVpyr3PeUUv3vZ1KbkQpn/Wj6Cnt7/C32KS1aX8F
+ igZufgwylYO64Xc2hhvgwTChPsTLk2k+vG7p8QkbqigQmmoRSrUFkYKdu5I01sJ+3pcE6eG6sSl
+ BhnVTdTdlYqbxGIcMmnAUzBqt42wUF/kbxSbJ6UpjwIaXftC0VzTOOU8ys2+HMriWxBMJB0IGnu
+ TE3ohVj4ouLxvRj55kidIgHuUxGtb1cUd8B9xAOC4cSW451Cn9rIDxLanWcRW2+pxtEJiPD2qet
+ IrozLQ0N7U6EaqDZGvqbgitXEvE/fJ3g8r8WLSj84W5eRy5kPQc5oDA==
+X-Received: by 2002:a05:620a:3729:b0:914:7b1e:a5db with SMTP id
+ af79cd13be357-914a2a2c93cmr384569485a.4.1779369914990; 
+ Thu, 21 May 2026 06:25:14 -0700 (PDT)
+X-Received: by 2002:a05:620a:3729:b0:914:7b1e:a5db with SMTP id
+ af79cd13be357-914a2a2c93cmr384560285a.4.1779369914200; 
+ Thu, 21 May 2026 06:25:14 -0700 (PDT)
+Received: from [10.157.3.27] ([97.64.79.159]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-914abb99240sm89185785a.26.2026.05.21.06.25.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 21 May 2026 06:25:13 -0700 (PDT)
+Message-ID: <96a48300-ec95-4291-8cb8-439d255de9aa@oss.qualcomm.com>
+Date: Thu, 21 May 2026 08:25:12 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sebott@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] gitlab: capture filesystem, CPU, memory and kernel info
+ in logs
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260521103624.1645809-1-berrange@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260521103624.1645809-1-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=do/rzVg4 c=1 sm=1 tr=0 ts=6a0f07bc cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=iFpTQzQ+bcdAZ+erNHz97w==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=8D4zzwVXToasGhQ33DgA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-ORIG-GUID: ft1Z0XtmxB4UoWrg-kOtO-9P8Ggkq00N
+X-Proofpoint-GUID: ft1Z0XtmxB4UoWrg-kOtO-9P8Ggkq00N
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIxMDEzNCBTYWx0ZWRfXyriC4GnipUBw
+ 9vx068rZ5oaYXZi7TOwGJcrfEyaO1S6pWPGqFQ2YyiU3EuWA8oyLsHlp92jDpzqOI0D4iiq7gJe
+ jrv1ymJeOoJLrxE2d8ZlQXOLqN6wefMerkGvgfM0/ayh6Ko/AwD+0QkxuPP2h+mLqa6jJ5/Vcix
+ /QMWCzRh8kg/rXv/SvujEdS53i+WP0WFa8xKAG45giUuwpOJCF30ZWkonFtQavxgWIspaZW6Gzk
+ QVeOg2wYImYBKPi+zH4u2M44Wa7SqXcAQP0Qa4hx+aMB5rT+TIL7KsBEqdrDxu5olUmtWA6Bm3u
+ 5KccSaaedbAFN28kbJJjzXUVtvd25lFPER6Je8LuPQBX+XHpfwKj7DdSCQybCZdIL6mZO7Of0Bv
+ Fj+mtIpIGFkqBFgyuVQBZRLZPgNokJrG0ggJEaFnWEAvzS39HbP4zpO3O8AI9RiZm1CxkZx0xxa
+ W1pQsjY6SSn9xwPBByg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-21_02,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 clxscore=1015
+ spamscore=0 malwarescore=0 phishscore=0 priorityscore=1501 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605210134
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,20 +152,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 19 May 2026, Eric Auger wrote:
-> The known ID regs are populated in a new initialization function
-> named initialize_cpu_sysreg_properties(). That code will be
-> automatically generated from AARCHMRS Registers.json. For the
-> time being let's just describe a single id reg, CTR_EL0. In this
-> description we only care about non RES/RAZ fields, ie. named fields.
->
-> The registers are populated in an array indexed by ARMIDRegisterIdx
-> and their fields are added in a sorted list.
->
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
->
+On 5/21/2026 5:36 AM, Daniel P. Berrangé wrote:
+> For tests we have often had wierd failures that are related to the
+> runner environment. For example, tests that fail only with specific
+> filesystem setups.
+> 
+> Since we don't control the runners directly, it is important to
+> capture info about the environment to aid in failure diagnosis.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>  .gitlab-ci.d/buildtest-template.yml | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+> 
 
-Reviewed-by: Sebastian Ott <sebott@redhat.com>
+Good idea,
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
+Maybe add a ls -al /dev and id -a, to sort out potential right issues to
+access devices?
+
+Regards,
+Pierrick
 
