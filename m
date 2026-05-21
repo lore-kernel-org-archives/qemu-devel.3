@@ -4,104 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1D3ACD5BB1
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:58:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2852CD5BAC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:58:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ3tE-0007iu-Ka; Thu, 21 May 2026 09:56:45 -0400
+	id 1wQ3ug-0004oe-I9; Thu, 21 May 2026 09:58:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wQ3t9-0007AR-E7
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:56:40 -0400
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wQ3t6-0000ld-9M
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:56:39 -0400
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-65c3ea2ebf7so7074174d50.0
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 06:56:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779371795; cv=none;
- d=google.com; s=arc-20240605;
- b=KOtzUbWl8ELGH/WgPV5MRYzpvk09raOD9Us3qypyGiOGoCJBCl+bmsaKeb/Ip9OkXA
- CiowNwc6jNYqqYLzlyf6XI/qmcoFrOMhfbSeks1/MgaynEljy9wcErOUw8SOIn2/dwxP
- Vws+wXZpXPNZSrNkwfvTd/hVR4bDON0cYmcIvbgiuM/9xTmfgoNhsPf5s0UnhLd22FqG
- erxNfU4Epggw56zlLs75bcnyKHnidG8KG8dmxS2rWKxoLsVbCUJ5+WU8y9iUW7xZnz64
- onqfRIA2b1oT3DBM4hCgB0x9FHRz6jRTbO71odJ9+yHvCfRkFrs2+vfie7fr37T0XfLf
- GZbg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=j1afOWLioth1c/QT3cgJWLgos5ClUpYjBi60y6SrEzw=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=NMy/0F6HLmyawJyEnLNWpVW1Y4plK2BGpKyCeT7nC9NbbHhqJy8x1vO8tzZ4GPEJf2
- Zg5sFg2hvTr2lpVouCqzoMei4WmHWvnfLHaGbzLJhwY5cT9+AZsHHi4NoYajlSNbirtZ
- zdytMd4Dx+X4rKNhSL1H15JhWqBUcB97L7fElrNYByrfKeuM4hdv4U+I290anZ3elQEE
- bjg/oK3skGpp7aQIMhUGc99JjUnG2w6WlmFUqZokSPyMWmOuc09PkHRQCRsMLeu8qoe4
- GYVpXODe6psQN4LgGYZgnBNUmp74irlWoa7dgXnQxmM+mNPBc+eymBvF366VNvwDMO7e
- XZuQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779371795; x=1779976595; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=j1afOWLioth1c/QT3cgJWLgos5ClUpYjBi60y6SrEzw=;
- b=DBRu28sA0KinOq+IAnMiA9RlaidpSbT6U/XrcEU7N6x8aMczZA1jTCGF0dQqigsCU4
- 5etWWjxJXxz0fZR1xYWqV3rSRO9QGC66D4ll+bJ5haWeN5YODWSA9chTDk4WVKicDK7B
- O4OIElW6Arn7tYal1smGh7uiAtvhDDK8UfQoW+12aZqA4spjSDW6TlLifitDZxgCFXcU
- oCAFAJk0/DSVi10fKI1eDzFhLhj88cpxRvVHfqYaGZ4/BWRo0ugUZpQVVkOBo2urI+Fh
- xXTqqQzmFl+PyB1ZHJijP3DwIfLE3C2vhRAU5dAQrpWcZx7a9L5ohe3MF/XA/Q7ZcCK+
- LNKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779371795; x=1779976595;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=j1afOWLioth1c/QT3cgJWLgos5ClUpYjBi60y6SrEzw=;
- b=QcxqWS8R2OMcu1FX+44dV3ilAHTrk4HQaS6nZdoU0Ig2YM5EZUwYn/cqxBpx+m7ETP
- 9lw6ixYHTM2yDQKVlCPVqNuvGpU2aYGEIxFHzB3tG8IqtcnGDa2Hh1IdI0+Ji1A0kaP1
- /VIbAyRTEWYXG2Ovhp+tHQy6tnshZ58onqwgI8kb02PTvD0o1Ed/tCUjg+QbHF0DRGkr
- p62p3EbG2T0iY/QqSD5+/QcQ3hK5he3iV5YoYEeLzJnhdWMBM6Wfl6NZMkKb9GekZeOQ
- WLtv1eU4eitoZQKwggKHyjvTTpaH7g8GtaQSxMEdfQmi2PC1Fdx7SVPFBxb/PfDISEew
- xHJQ==
-X-Gm-Message-State: AOJu0YyGsL6lCE1HSUKrrst1PTaxaXZN74oyhPBTxKaF5DajaabGyMC8
- iA4CAVcB+xId1dXPhJjPHm/G3Wg27F9Y3lIVmOG28OtHMprbrXcL9vtNHO18VTQCKYYQ/ErQXRs
- GrDCIOdY8Xyi+1HC0QW5iHkgRjY/pJWEPnNlcn3yuQA==
-X-Gm-Gg: Acq92OGDutMdVDXI2O73anpOY6v59KH/OIfsxkWwXW6GfM660ckgok6rojgdvCNTKjj
- SN6UDsdBOwLP3mrOYenG+c5BM2OcuoONMUmkcpLQIcwipf2arJIR0U8VJhuxIwPCmkx8Hr13uWD
- Dy8BcjvzE7Y5kwN8OgCSasV042yqKnB5ZqBVN2opvDon+U/fzm92SsPVFh1OXvrtu8HCphpkegQ
- 27bKpzJ2h4ouXMGLRi2iSlRUJTNvzcTxHbJoyWt8ZQP/FW1ovQRtzeFaYVqA3UT1xehqt/3qSVW
- HRsf6fwKdZg0bb/e9fuL4tWFxkVXw0ULcgva/VSkZK0S2Zk2GIvyUVfxXKz5LBLaAkCCb/REFdl
- 6Dg==
-X-Received: by 2002:a05:690e:251a:20b0:651:b8fc:5490 with SMTP id
- 956f58d0204a3-65eae2850bemr1941355d50.38.1779371794908; Thu, 21 May 2026
- 06:56:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wQ3ud-0004PP-4c
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:58:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wQ3ua-0001wi-VD
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:58:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779371887;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=T0U31hilbffMwpa0BEq59ZjijcKzDLFO9G55VI/Gf/k=;
+ b=IKD0/N/MdNsFbOp5d8WGsknru1Ylc2e+3x0a6tJaTWHg0v0Qz4m25Yv7UHGylUhx1IJEGH
+ rNlhMeeF+R9oXi4eAEe7/w9nt/s+3lREdmayRq6t4uRi09IIpDlbZcDs3HjXISM25G8pVR
+ lidtScd8FF+GwiT3udV+9zvfF9fcIlI=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-73-jTBtgIygMICGuhwAHKzN2Q-1; Thu,
+ 21 May 2026 09:58:05 -0400
+X-MC-Unique: jTBtgIygMICGuhwAHKzN2Q-1
+X-Mimecast-MFC-AGG-ID: jTBtgIygMICGuhwAHKzN2Q_1779371883
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 370F41955F29; Thu, 21 May 2026 13:58:03 +0000 (UTC)
+Received: from localhost (unknown [10.44.24.26])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E1656300019F; Thu, 21 May 2026 13:58:01 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: stefanha@gmail.com, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PULL v2 22/38] hw/input/virtio-input: Use Linux key codes
+Date: Thu, 21 May 2026 17:55:33 +0400
+Message-ID: <20260521135551.1752945-23-marcandre.lureau@redhat.com>
+In-Reply-To: <20260521135551.1752945-1-marcandre.lureau@redhat.com>
+References: <20260521135551.1752945-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-References: <20260520182213.872945-1-richard.henderson@linaro.org>
- <20260520182213.872945-5-richard.henderson@linaro.org>
-In-Reply-To: <20260520182213.872945-5-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 21 May 2026 14:56:22 +0100
-X-Gm-Features: AVHnY4J-YggElKj0VncB-UaBbh9Qwepu0hoF2CVao4P4i6Aq4H0AZ_beTWWU-Wg
-Message-ID: <CAFEAcA_uZsqTZn7uGrkL=o86_kzjO7MXsieYdCsEqALs9ZSQRg@mail.gmail.com>
-Subject: Re: [PATCH v6 04/64] target/arm: Implement FEAT_FAMINMAX for SVE
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,30 +86,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 20 May 2026 at 19:25, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-> diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sv=
-e.c
-> index aa7d72a35e..db32230595 100644
-> --- a/target/arm/tcg/translate-sve.c
-> +++ b/target/arm/tcg/translate-sve.c
-> @@ -4253,6 +4253,8 @@ DO_ZPZZ_AH_FP(FABD, aa64_sme_or_sve, sve_fabd, sve_=
-ah_fabd)
->  DO_ZPZZ_FP(FSCALE, aa64_sme_or_sve, sve_fscalbn)
->  DO_ZPZZ_FP(FDIV, aa64_sme_or_sve, sve_fdiv)
->  DO_ZPZZ_FP(FMULX, aa64_sme_or_sve, sve_fmulx)
-> +DO_ZPZZ_FP(FAMAX, aa64_sme2_or_sve2_faminmax, sve2_famax)
-> +DO_ZPZZ_FP(FAMIN, aa64_sme2_or_sve2_faminmax, sve2_famin)
+QemuInputEvent now stores Linux key codes for key events. Use those
+codes directly instead of translating between internal key code
+representations.
 
-Does this get the "OK in streaming-SVE mode only if SME2" check
- if IsFeatureImplemented(FEAT_SME2) then CheckSVEEnabled()=CD=BE else
-CheckNonStreamingSVEEnabled()=CD=BE end=CD=BE
-right? I have lost track of how we do the streaming checks...
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260520-input-v3-14-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
+---
+ hw/input/virtio-input-hid.c | 40 +++++++++++++++++++++----------------
+ 1 file changed, 23 insertions(+), 17 deletions(-)
 
+diff --git a/hw/input/virtio-input-hid.c b/hw/input/virtio-input-hid.c
+index 1d2e922567a..75fe45d89a2 100644
+--- a/hw/input/virtio-input-hid.c
++++ b/hw/input/virtio-input-hid.c
+@@ -83,23 +83,13 @@ static void virtio_input_handle_event(DeviceState *dev, QemuConsole *src,
+ {
+     VirtIOInput *vinput = VIRTIO_INPUT(dev);
+     virtio_input_event event;
+-    int qcode;
+ 
+     switch (evt->type) {
+     case INPUT_EVENT_KIND_KEY:
+-        qcode = qemu_input_linux_to_qcode(evt->key.key);
+-        if (qcode < qemu_input_map_qcode_to_linux_len &&
+-            qemu_input_map_qcode_to_linux[qcode]) {
+-            event.type  = cpu_to_le16(EV_KEY);
+-            event.code  = cpu_to_le16(qemu_input_map_qcode_to_linux[qcode]);
+-            event.value = cpu_to_le32(evt->key.down ? 1 : 0);
+-            virtio_input_send(vinput, &event);
+-        } else {
+-            if (evt->key.down) {
+-                fprintf(stderr, "%s: unmapped key: %d [%s]\n", __func__,
+-                        qcode, QKeyCode_str(qcode));
+-            }
+-        }
++        event.type  = cpu_to_le16(EV_KEY);
++        event.code  = cpu_to_le16(evt->key.key);
++        event.value = cpu_to_le32(evt->key.down ? 1 : 0);
++        virtio_input_send(vinput, &event);
+         break;
+     case INPUT_EVENT_KIND_BTN:
+         if ((evt->btn.button == INPUT_BUTTON_WHEEL_UP ||
+@@ -293,12 +283,28 @@ static void virtio_keyboard_init(Object *obj)
+ {
+     VirtIOInputHID *vhid = VIRTIO_INPUT_HID(obj);
+     VirtIOInput *vinput = VIRTIO_INPUT(obj);
++    virtio_input_config ext = {
++        .select = VIRTIO_INPUT_CFG_EV_BITS,
++        .subsel = EV_KEY,
++        .size = DIV_ROUND_UP(KEY_REPLY, 8)
++    };
++    unsigned int i;
+ 
+     vhid->handler = &virtio_keyboard_handler;
+     virtio_input_init_config(vinput, virtio_keyboard_config);
+-    virtio_input_extend_config(vinput, qemu_input_map_qcode_to_linux,
+-                               qemu_input_map_qcode_to_linux_len,
+-                               VIRTIO_INPUT_CFG_EV_BITS, EV_KEY);
++
++    /*
++     * Cover as many keys as possible since we cannot tell what keys the host
++     * supports. This follows Linux xen-kbdfront's approach:
++     * https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/diff/drivers/input/xen-kbdfront.c?id=4ee36dc08e5c4d16d078f59acd6d9d536f9718dd
++     *
++     * Stop before KEY_REPLY for migration compatibility.
++     */
++    for (i = KEY_ESC; i < KEY_REPLY; i++) {
++        ext.u.bitmap[i / 8] |= (1 << (i % 8));
++    }
++
++    virtio_input_add_config(vinput, &ext);
+ }
+ 
+ static const TypeInfo virtio_keyboard_info = {
+-- 
+2.54.0
 
-thanks
--- PMM
 
