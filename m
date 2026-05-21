@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FDFACD5BB4
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:51:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2854DCD5BB1
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:51:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ3n4-0000aO-Om; Thu, 21 May 2026 09:50:22 -0400
+	id 1wQ3nn-0000so-2w; Thu, 21 May 2026 09:51:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wQ3mz-0000ZK-77
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:50:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wQ3nL-0000hX-Rs
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:50:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wQ3mw-0004lH-Ew
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:50:16 -0400
+ id 1wQ3nJ-0004w1-4L
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:50:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779371411;
+ s=mimecast20190719; t=1779371436;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=j6ycJyS58u8wV36TEg6I3IuF42L1x613e3hNw/t4uT4=;
- b=HBcsD+/Gba74AQc66HUX2IO+z+dG5jbynsigB/dfpiEWukKK9hXiYJ9subgcO0gvIKcrFf
- b2+r6vmYC8iFWhBpuUoNNLsCNFsB7osJIxQqtGsebac56lZvWsR3FhZy+Tc+bBD8nsEiGe
- rWo86c00rnioRlU6LPPOAEILaFEYAz0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=2cMy89RUByGmpyRSjhTNYIbKdplVLNzNWvqU2dmcLSk=;
+ b=IK+8JTQGHKgv0TpEYauvc2h/kNbbPCJ5HeYY/s6P7awDti+j3BmqN6A/hElGaujq3wepbA
+ CxvRhCzJEwAVRfn6iHp18/DPKeKf4OJ/dQuZrJOjn6JgkwbKSNv3JlFUDBmQciRWqJ/V4w
+ q9AY8FML5EawQgOq08m6bph1jhvy2rs=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-449-NejNHv8MPN2RFjT9DTb9Ww-1; Thu,
- 21 May 2026 09:50:06 -0400
-X-MC-Unique: NejNHv8MPN2RFjT9DTb9Ww-1
-X-Mimecast-MFC-AGG-ID: NejNHv8MPN2RFjT9DTb9Ww_1779371405
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-444-uu2hr90wNhe7vYhaV8HBSQ-1; Thu,
+ 21 May 2026 09:50:27 -0400
+X-MC-Unique: uu2hr90wNhe7vYhaV8HBSQ-1
+X-Mimecast-MFC-AGG-ID: uu2hr90wNhe7vYhaV8HBSQ_1779371424
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4A37A1801359; Thu, 21 May 2026 13:49:55 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CDCBE1800578; Thu, 21 May 2026 13:50:19 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.33.98])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 97D951956053; Thu, 21 May 2026 13:49:50 +0000 (UTC)
+ id AD6971956053; Thu, 21 May 2026 13:50:15 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>,
@@ -58,25 +58,24 @@ Cc: Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  John Levon <john.levon@nutanix.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Cleber Rosa <crosa@redhat.com>, Peter Xu <peterx@redhat.com>,
- Tejus GK <tejus.gk@nutanix.com>
-Subject: [PULL 01/29] io: invert the return semantics of qio_channel_flush
-Date: Thu, 21 May 2026 14:49:15 +0100
-Message-ID: <20260521134943.1714527-2-berrange@redhat.com>
+ Cleber Rosa <crosa@redhat.com>, Thomas Huth <thuth@redhat.com>
+Subject: [PULL 06/29] iotests: remove redundant meson suite for iotests
+Date: Thu, 21 May 2026 14:49:20 +0100
+Message-ID: <20260521134943.1714527-7-berrange@redhat.com>
 In-Reply-To: <20260521134943.1714527-1-berrange@redhat.com>
 References: <20260521134943.1714527-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,109 +92,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tejus GK <tejus.gk@nutanix.com>
+If a test is in the 'block-slow' or 'block-thorough' suite, there is no
+need to also add it to the 'slow' or 'thorough' suites.
 
-With the kernel's zerocopy notification mechanism, the caller can
-determine whether
- * All syscalls successfully used zero copy
- * At least one syscall failed to use zero copy
-
-But, as of now QEMU's IO channel flush function semantics are like
- * 1 => all syscalls failed to use zero copy
- * 0 => at least one syscall successfully used zero copy
-
-This is not aligned with what the kernel reports, and ends up reporting
-false negatives for cases like when there's just a single successful
-zerocopy amongst a collection of deferred zero-copies during a flush.
-
-Fix this by inverting the return semantics of the IO flush function.
-
-Suggested-by: Peter Xu <peterx@redhat.com>
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Tejus GK <tejus.gk@nutanix.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Acked-by: Kevin Wolf <kwolf@redhat.com>
+Tested-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/io/channel-socket.h |  6 +-----
- include/io/channel.h        |  4 ++--
- io/channel-socket.c         | 16 ++++++++--------
- 3 files changed, 11 insertions(+), 15 deletions(-)
+ tests/qemu-iotests/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/io/channel-socket.h b/include/io/channel-socket.h
-index a1ef3136ea..b07cd61477 100644
---- a/include/io/channel-socket.h
-+++ b/include/io/channel-socket.h
-@@ -50,11 +50,7 @@ struct QIOChannelSocket {
-     ssize_t zero_copy_queued;
-     ssize_t zero_copy_sent;
-     bool blocking;
--    /**
--     * This flag indicates whether any new data was successfully sent with
--     * zerocopy since the last qio_channel_socket_flush() call.
--     */
--    bool new_zero_copy_sent_success;
-+    bool zero_copy_fallback;
- };
+diff --git a/tests/qemu-iotests/meson.build b/tests/qemu-iotests/meson.build
+index d7bae71ced..bf588cc2c9 100644
+--- a/tests/qemu-iotests/meson.build
++++ b/tests/qemu-iotests/meson.build
+@@ -33,7 +33,7 @@ foreach format, speed: qemu_iotests_formats
+   if speed == 'quick'
+     suites = 'block'
+   else
+-    suites = ['block-' + speed, speed]
++    suites = ['block-' + speed]
+   endif
  
- 
-diff --git a/include/io/channel.h b/include/io/channel.h
-index 287d10cd6f..98485c9280 100644
---- a/include/io/channel.h
-+++ b/include/io/channel.h
-@@ -1147,8 +1147,8 @@ int coroutine_mixed_fn qio_channel_writev_full_all(QIOChannel *ioc,
-  * If not implemented, acts as a no-op, and returns 0.
-  *
-  * Returns -1 if any error is found,
-- *          1 if every send failed to use zero copy.
-- *          0 otherwise.
-+ *          1 if at least one send failed to use zero copy.
-+ *          0 if every send successfully used zero copy.
-  */
- 
- int qio_channel_flush(QIOChannel *ioc,
-diff --git a/io/channel-socket.c b/io/channel-socket.c
-index 3053b35ad8..ea2ec84108 100644
---- a/io/channel-socket.c
-+++ b/io/channel-socket.c
-@@ -72,7 +72,7 @@ qio_channel_socket_new(void)
-     sioc->zero_copy_queued = 0;
-     sioc->zero_copy_sent = 0;
-     sioc->blocking = false;
--    sioc->new_zero_copy_sent_success = false;
-+    sioc->zero_copy_fallback = false;
- 
-     ioc = QIO_CHANNEL(sioc);
-     qio_channel_set_feature(ioc, QIO_CHANNEL_FEATURE_SHUTDOWN);
-@@ -880,9 +880,9 @@ static int qio_channel_socket_flush_internal(QIOChannel *ioc,
-         /* No errors, count successfully finished sendmsg()*/
-         sioc->zero_copy_sent += serr->ee_data - serr->ee_info + 1;
- 
--        /* If any sendmsg() succeeded using zero copy, mark zerocopy success */
--        if (serr->ee_code != SO_EE_CODE_ZEROCOPY_COPIED) {
--            sioc->new_zero_copy_sent_success = true;
-+        if (serr->ee_code == SO_EE_CODE_ZEROCOPY_COPIED) {
-+            /* If any sendmsg() fell back to a copy, mark fallback as true */
-+            sioc->zero_copy_fallback = true;
-         }
-     }
- 
-@@ -900,12 +900,12 @@ static int qio_channel_socket_flush(QIOChannel *ioc,
-         return ret;
-     }
- 
--    if (sioc->new_zero_copy_sent_success) {
--        sioc->new_zero_copy_sent_success = false;
--        return 0;
-+    if (sioc->zero_copy_fallback) {
-+        sioc->zero_copy_fallback = false;
-+        return 1;
-     }
- 
--    return 1;
-+    return 0;
- }
- 
- #endif /* QEMU_MSG_ZEROCOPY */
+   args = ['-tap', '-' + format]
 -- 
 2.54.0
 
