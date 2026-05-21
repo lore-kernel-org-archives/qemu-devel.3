@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15D77CD4F5E
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 11:13:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BA08CD5BA4
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 11:14:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ1LD-0000tk-Pf; Thu, 21 May 2026 07:13:29 -0400
+	id 1wQ1Lm-0001C2-F4; Thu, 21 May 2026 07:14:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wQ1L5-0000tV-QZ
- for qemu-devel@nongnu.org; Thu, 21 May 2026 07:13:20 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1wQ1Lk-00016v-Me
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 07:14:00 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wQ1L3-0003H8-Go
- for qemu-devel@nongnu.org; Thu, 21 May 2026 07:13:19 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-488b0e1b870so84746465e9.2
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 04:13:16 -0700 (PDT)
+ id 1wQ1Lj-0003jp-4b
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 07:14:00 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4903997fcb5so5131575e9.2
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 04:13:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779361995; x=1779966795; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779362038; x=1779966838; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MzUL4+j/hUs7gdHs8noVX7LzKE0nxzReYCZAT/zEFsU=;
- b=jxpo3Rw138xaaKBZ67Bk1pZtlGyEBkCVw+WoHuXdxESiM/UF1PlW1jXj01gp99bqP1
- WGdYMVt6X+GxPyZ0oCFCofPsD0+qt++DA/dMUo7FNApxdsh/w6tK93rsB1hOBfdQfq9H
- 0raAa/9zi9YP+DEZfSTkUkqyruum358O1ARLtW8+NsEO684DriHPVzqqG1GDtLuS7bBm
- txZ/uL7VA/moqOo67saeorZn7xRfQi1lj4R9VBch5u6hlPaRDxwKPb1KTZNSo9DQSm0u
- cmS3KbtHp+1JtxiYQFfLe1wpkwN99HYuyd+w5fRvDDYybq0Uc9v1fJ8ABx9kyYE1EZOe
- ZH7w==
+ bh=+KvkQqJnov9V4Hva9UpYiD4H2AGlW0T13U2owH8wRcY=;
+ b=eurW2ykGc6CW/Mz4StuRwhh8c6wFu7Yk4S1SNDX+zcA9sLhplSX7eXvLv4p7B3D0gX
+ qpSP0RdYjfD9k8kBDmyKUsSJdhIvexs+2ic3a5GHFdsOtcfRsOsvqr0nHfTpkDKDRVSD
+ lfbKrQXdKV8VkSW7GBTiXfftyIMmgNcLzUeZcS5C06ErGjEMxkAJ/jd/t+qKshgXh4kl
+ cKyifqZX+rSYQXhafp0fR4QJy6kL8Z+7SreQ3RY30zHyILZSqv/XbAaTshow/NbGpOvC
+ K/xZnHBYARbmzQHDO4bXFDpP9GdWf890idaJMUQtI2rzVmw31jyV3X34o+rgJe7AR7Wp
+ lo1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779361995; x=1779966795;
+ d=1e100.net; s=20251104; t=1779362038; x=1779966838;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MzUL4+j/hUs7gdHs8noVX7LzKE0nxzReYCZAT/zEFsU=;
- b=TiYvUC0nV/zmeAJMMJCmDR3EiHctq0J+vBCHrBe/axjQG5KnDp/lSdHiNOANwjE19R
- F4URiLl08t7PzQfPzfeBtHuzj4sy8wiVhD2wtMdt+ghIUl6mW5Xo6uKxr8cx98zGZrO8
- TXqNtO7KRV/f4sxo4OHAj/JqNN4FOY6KIO9eqwlxYGT5dpMZ6lvd00HFGDgyssibkNa0
- Y8N6LhCQOIm8Y4sMEi6BxRb1OiM+8N1BRDcp9ZXsA2+WzKwFiSI/N+xWlJuLADi9IVDv
- +gnrgA4odr6vsjKN2ZwG23FtJsvAsEXnaKkJ9glE6sUsLMAIsZS7nVq7OcE865Ag9v3D
- dTcQ==
-X-Gm-Message-State: AOJu0YwIdu0MNS9AEKKGir2sl/EPINvVlEyYY9Ok1pSKY8rygj34tEay
- QYovIuox/ystLr8+DE7ICgVrpfUQZFEod0ZmyWfOYwX3vSUfCQG36laBRKDHuTXbbJY=
-X-Gm-Gg: Acq92OFbZ73j75NU/Qs8O03cIJIstSD6xJzt0mk0eiIjHGjXv3vBZuffLNxGd3Sd54V
- UVJ45kHPUQ2EzgmaUe5nXk8GVdaoQ1HDKyhbkZoHUJ9NDQqIZyTuf8RzH1vBCjKbMvjcPR8sapC
- sF6rKKlGulqqfPtbDZRNXfYHkH5frg0q38yVy+R/H4IhTBhhIsKNukk7QkIe/1I4MeLqVHb3zzt
- DUJXh7angt+gi3Sbo4Fn3lIaUkVLAwyj0h83BbiCqOeJ5cc7E5rDzcZ/PkE0bIaMF3bMiJSN4di
- cz4kHxfwxMoQB6ZYopZSjlPmGxSo8F54NarBv5SbXxljNqVFRmy+EcSCBp9+edvwmIDpVVCiuem
- 1M4+JX8LQ0KTecvHWtH26XeviItPXbCTu0g1YUKAZNnwLvAKdMquwCZwUjzdFLUASYmwUaUhoCy
- B4TUQiDiV6/v8/msEr3ThVvQjw2jyBrS4T3A==
-X-Received: by 2002:a05:600c:828c:b0:485:4eaf:eb53 with SMTP id
- 5b1f17b1804b1-4903606b5b2mr36430785e9.19.1779361995207; 
- Thu, 21 May 2026 04:13:15 -0700 (PDT)
+ bh=+KvkQqJnov9V4Hva9UpYiD4H2AGlW0T13U2owH8wRcY=;
+ b=hK2XFR/kIrMXZCwxhABJ4YW0JU1/F54f1Lc5R2sl2B2OUKw9k3xR+VU06sQLXGF/LF
+ 1lEIv0nRHe9+00PDpLQPDt1P7JyWjV8NmaQZ4RYxhApEKziOHoz8b5unG3PqtgbXSosG
+ Uprq5dCrY0CIRZYjWyIOCc5uDdkxb+zaq2h7mj+eb3sfXtec+ozgpQlkpA2WiFaVJ8J1
+ lc5AlzWmjTt35JGpgysob1sdY7P3kmoVJlI9sztvyaK5pKEO1x9l3yy9hKu7H58Z8NS0
+ wn5HfN/r2ofvq0mtaiEWd6RaRpsrHxr3CptHDh+k5pjDgEF6urZlRLy35aN/u8xt2msp
+ rBJw==
+X-Gm-Message-State: AOJu0YxIXYgKO3glxqqzKbEB2z9X24tZ6K1JBMbyuaBE8uo0719NHv+Z
+ tHTA8r6koJldTb7uOIWa8XndBvUiTzVluGuSasPfXPop76PPKcBdRjd81TvErdqjDvk=
+X-Gm-Gg: Acq92OGefgEJRlbSmnZpSUqIU0BP25oxc9cCg8afmlSfaKSPKWXOStOdUhVXa153gmt
+ gOaSyYlZOWpwKHVf3v+pkM48WCFwX/1HXSSXRL7DINFpeOt057iXAS1HgU69OtJJqqpmphbyzV2
+ 91CjlsMnSglOujkLuijfxKaPhc7Up4dM9LEiFNVix13Jv7qFiXbXFw3QhgpcsknQayltqka5D5x
+ xVWqhgiqERSw3VUBZEFnlcR9PWbNJxeTZgnafPItB/TNwGvty8olyJC8iYiGBm5IDtLBODITjEu
+ KrmFgAqEeENJLwA76hPpLoQ0G7GAF01S4FxCojVllej1c68fqeYarZhKzxMT3qu5Wt4Q8RUEK8P
+ TjQ9RWJXf18P1+dqlXVT5vcvSXXOP91VIbq9d3R4x3RtMv6va0K9evcLhVMNtHOa1arhP1aDzNK
+ vj4Wl7wbNZvgig8f+tWytzvn0=
+X-Received: by 2002:a05:600c:8508:b0:490:32dc:61fa with SMTP id
+ 5b1f17b1804b1-490360cc732mr37344925e9.31.1779362037606; 
+ Thu, 21 May 2026 04:13:57 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eaa7da426sm2045348f8f.9.2026.05.21.04.13.14
+ 5b1f17b1804b1-4903c99cb43sm19126975e9.4.2026.05.21.04.13.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 04:13:14 -0700 (PDT)
+ Thu, 21 May 2026 04:13:57 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id BC8705F886;
- Thu, 21 May 2026 12:13:13 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 421155F886;
+ Thu, 21 May 2026 12:13:56 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org,  philmd@linaro.org,
- pierrick.bouvier@oss.qualcomm.com,  Gerd Hoffmann <kraxel@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,  Akihiko Odaki
- <odaki@rsg.ci.i.u-tokyo.ac.jp>,  Dmitry Osipenko
- <dmitry.osipenko@collabora.com>
-Subject: Re: [PATCH 25/39] MAINTAINERS: Fix F: in "virtio-snd" and "virtio-gpu"
-In-Reply-To: <20260521080511.999266-26-armbru@redhat.com> (Markus Armbruster's
- message of "Thu, 21 May 2026 10:04:57 +0200")
+ pierrick.bouvier@oss.qualcomm.com
+Subject: Re: [PATCH 02/39] MAINTAINERS: Delete trailing colons in section
+ headlines
+In-Reply-To: <20260521080511.999266-3-armbru@redhat.com> (Markus Armbruster's
+ message of "Thu, 21 May 2026 10:04:34 +0200")
 References: <20260521080511.999266-1-armbru@redhat.com>
- <20260521080511.999266-26-armbru@redhat.com>
+ <20260521080511.999266-3-armbru@redhat.com>
 User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Thu, 21 May 2026 12:13:13 +0100
-Message-ID: <87a4ttow1i.fsf@draig.linaro.org>
+Date: Thu, 21 May 2026 12:13:56 +0100
+Message-ID: <874ik1ow0b.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,18 +108,9 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Markus Armbruster <armbru@redhat.com> writes:
 
-> We neglected to update MAINTAINERS when we moved
-> docs/system/devices/virtio-snd.rst and
-> docs/system/devices/virtio-gpu.rst to docs/system/devices/virtio/.
-> Update it now.
+> These are harmless as far as I can tell, so this is just for
+> consistency.
 >
-> Fixes: 487ce6ce99 (docs/system: split VirtIO devices from the rest, 2025-=
-10-16)
-> Cc: Gerd Hoffmann <kraxel@redhat.com>
-> Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> Cc: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 
 Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
