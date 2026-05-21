@@ -4,82 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2C68CD5BAC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 09:07:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D375FCD5BA4
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 09:20:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPzMy-0004Ri-3k; Thu, 21 May 2026 05:07:08 -0400
+	id 1wPzZ5-00071g-TY; Thu, 21 May 2026 05:19:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wPzMx-0004RQ-4o
- for qemu-devel@nongnu.org; Thu, 21 May 2026 05:07:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
+ id 1wPzZ2-0006zp-Tc; Thu, 21 May 2026 05:19:36 -0400
+Received: from apollo.dupie.be ([51.159.20.238])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wPzMv-0004Df-0D
- for qemu-devel@nongnu.org; Thu, 21 May 2026 05:07:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779354424;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4mq4qjfbvw7WDgqQa0Il9u5KD5VTQPxfcl1OKGQzycA=;
- b=RO/1y8MqoQJy+H9ZpBPu+PoCzd6q9Inazpu2krsbLmgA89KvqTMzFN4/7kUUTka1mn3oEo
- 5w+PYgWApCvAzG03SCd5fo5VI2NLMMzIjtIY2PsdTrLdZvQNr+nettHxBzrSanX7kHlDoI
- ohVkV9uZQHXlXAB4pmPZoRpQVNsOrJ0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-687-S0HVkQRAPQWrAfftsrwqbQ-1; Thu,
- 21 May 2026 05:06:59 -0400
-X-MC-Unique: S0HVkQRAPQWrAfftsrwqbQ-1
-X-Mimecast-MFC-AGG-ID: S0HVkQRAPQWrAfftsrwqbQ_1779354418
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5A2EF1956059; Thu, 21 May 2026 09:06:58 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.98])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 248F61800357; Thu, 21 May 2026 09:06:53 +0000 (UTC)
-Date: Thu, 21 May 2026 10:06:49 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-devel@nongnu.org, Mauro Matteo Cascella <mcascell@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: Re: RFC: GitLab issues for security disclosures
-Message-ID: <ag7LKRmah6AAFDSY@redhat.com>
-References: <agxzKzzDOJm1EU_v@redhat.com>
- <c9cd8228-0a18-49f7-b403-445affeaf972@oss.qualcomm.com>
- <ag3OopKwGVUjSrrV@redhat.com>
- <e7f1fd11-774d-4610-8cca-a434f508e472@oss.qualcomm.com>
- <ag3xwssG6KZecv0o@redhat.com>
- <20260520191235-mutt-send-email-mst@kernel.org>
+ (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
+ id 1wPzZ0-00080k-DJ; Thu, 21 May 2026 05:19:36 -0400
+Received: from lt-jeanlouis (unknown
+ [IPv6:2a02:a03f:eaf9:5401:5fb3:a398:4351:5e57])
+ by apollo.dupie.be (Postfix) with ESMTPSA id 6A71F1520CC9;
+ Thu, 21 May 2026 11:19:29 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
+ t=1779355169;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=uEzEqjOVGStAJsYUw0m3AibY2k0OJdiY9cAjDAuLsSQ=;
+ b=Vvx8DXnTP8Wfynu4gE/ZQ5i3oWCT6Ht51MC+dkvxW62K2HyrvJHNEKs6YyxPYNdOTmgHel
+ NQxxRw0UBhJJHTTYFC/gMFZG0OJFYeL7iCwW0R0AeAqvdwPxOxWL18u4zDIX/7UTpURsxX
+ xdtZejWfPrTyyMErzeKJfNIEq8jR3svL8Dmuix+Av1lE8q5x1X2AL1yprNpKPzfmz1C2u7
+ lrejXCeFYY52Xxj2iDMGX+eEmzoB9nZZq1YhW8FbbmQU1RnKohkfH7v+OVOA8+8Pb7OX7o
+ 3zYEiOywcC8ZytH/9ZiYAWI6vLbRrXleoxRBpn9fChSqxXVWZ2Yve+EMQsvdJw==
+From: Jean-Louis Dupond <jean-louis@dupond.be>
+To: qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ John Snow <jsnow@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, Jean-Louis Dupond <jean-louis@dupond.be>
+Subject: [PATCH v2 0/2] qcow2: add a way to repair bitmaps
+Date: Thu, 21 May 2026 11:19:16 +0200
+Message-ID: <20260521091918.2366140-1-jean-louis@dupond.be>
+X-Mailer: git-send-email 2.54.0
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260520191235-mutt-send-email-mst@kernel.org>
-User-Agent: Mutt/2.3.1 (2026-03-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=51.159.20.238; envelope-from=jean-louis@dupond.be;
+ helo=apollo.dupie.be
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,105 +66,27 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 20, 2026 at 07:14:41PM -0400, Michael S. Tsirkin wrote:
-> On Wed, May 20, 2026 at 06:39:14PM +0100, Daniel P. Berrangé wrote:
-> > On Wed, May 20, 2026 at 12:33:16PM -0500, Pierrick Bouvier wrote:
-> > > On 5/20/2026 10:09 AM, Daniel P. Berrangé wrote:
-> > > > On Wed, May 20, 2026 at 10:01:14AM -0500, Pierrick Bouvier wrote:
-> > > >> Hi Daniel,
-> > > >>
-> > > >> On 5/19/2026 9:26 AM, Daniel P. Berrangé wrote:
-> > > >>> The qemu-security mailing list was created several years back now and
-> > > >>> traditionally saw 1-2 disclosures a month at worst. This was manageable.
-> > > >>>
-> > > >>> Since approx March 1st, the new normal is to see as many as 20 disclosures
-> > > >>> in one single day, more than 200 in total now. This is unsustainable.
-> > > >>> I was thinking we needed more people on qemu-security to triage, but IMHO
-> > > >>> this won't really fix the problem.
-> > > >>>
-> > > >>
-> > > >> Considering the increase in number of issues, would that be possible to
-> > > >> make stricter rules about what is expected?
-> > > >>
-> > > >> For instance, asking for a working exploit and optionally a VM image +
-> > > >> instructions to reproduce it. I am not expert on the topic, but what I
-> > > >> see is that if we have this, all duplicates would be eliminated at once.
-> > > > 
-> > > > With the new crop of AI assisted disclosures there is absolutely no
-> > > > lack of data provided.
-> > > > 
-> > > > Most come with reproducible exploits, detailed descriptions and analysis,
-> > > > and more - everything you could conceivably need to triage the disclosure.
-> > > > Reading and interpreting this takes significant mental effort and there's
-> > > > too much data to quickly/easily eliminate dupes.
-> > > >
-> > > 
-> > > Maybe we need to "standardize" this part then.
-> > > Or do something like asking a (GitLab) CI pipeline to be written to
-> > > expose the issue. If we can just run this with a specific qemu
-> > > remote/branch, it becomes trivial to rerun it when fixes are pushed.
-> > > 
-> > > It definitely does not solve the original scaling issue, but maybe can
-> > > help to absorb it, and spend time where it's useful: writing and
-> > > upstreaming a fix, and check it "broke" the exploit.
-> > > 
-> > > >>> This needs an issue tracker to cope with & email is not an issue tracker.
-> > > >>> We faked an issue tracker with a shared spreadsheet to prevent us drowning
-> > > >>> these past few months, but this is still not sustainable & probably won't
-> > > >>> ever be.
-> > > >>>
-> > > >>
-> > > >> Overall, you're right.
-> > > >> However, changing the tool won't solve the number of issues sent, and
-> > > >> for that, something additional is needed.
-> > > > 
-> > > > I don't expect there to be any change in submission rate. The proposal
-> > > > is based on the expectation that the submission rate will continue at
-> > > > a high level for a long time. Primarily the goal is to reduce the
-> > > > tracking and triage work overhead and to eliminate/reduce single person
-> > > > bottlenecks in the process
-> > > > 
-> > > >> I wonder also what is the percentage of duplicates there is from what
-> > > >> you observed in the last 2 months. Any rough idea of the number?
-> > > > 
-> > > > Definitely at least 10%, probably closer to 15%.
-> > > >
-> > > 
-> > > Ok, interesting number, thanks. I was expecting much more, but I'm
-> > > biased having heard Linus this morning talk about this for Linux kernel.
-> > 
-> > I expect the dupes to increase over time as more people run the
-> > same analysis across QEMU, especially given that most of the bugs
-> > are not yet fixed. 
-> 
-> something I was unaware of previously, is that gitlab is a CNA:
-> https://about.gitlab.com/security/cve/
-> 
-> so using gitlab issues means assigning CVE #s should be super easy.
+A v2 version of the patch.
+First of all a commit to move qcow2_check_bitmaps_refcounts lower into the code in order to make sure we can access update_ext_header_and_dir.
+Next I've moved the repair functionality into the existing qcow2_check_bitmaps_refcounts function.
 
-That's interesting, but I'm not sure it is a match for what we want
-in practice if you see their process & timeframes...
+Thanks
+Jean-Louis
 
-  "We will acknowledge receipt of CVE requests the next business
-   day and strive to send regular updates about our progress. Our
-   goal is to determine if the vulnerability is valid and communicate
-   back to the submitter within 30 business days."
+Jean-Louis Dupond (2):
+  qcow2: move qcow2_check_bitmaps_refcounts func
+  qcow2: add functionality to repair bitmaps
 
-We don't really need someone to spend time on additional analysis,
-as we'll already know the bug is valid at this point and just need
-a CVE assignment, ideally the same day.
+ block/qcow2-bitmap.c   | 194 +++++++++++++++++++++++++----------------
+ block/qcow2-refcount.c |   3 +-
+ block/qcow2.c          |  15 +++-
+ block/qcow2.h          |   3 +-
+ 4 files changed, 132 insertions(+), 83 deletions(-)
 
-
-
-With regards,
-Daniel
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.54.0
 
 
