@@ -4,112 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8570CCD5BA4
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 09:50:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C29B1CD5BAC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 09:53:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ02l-000758-GA; Thu, 21 May 2026 05:50:19 -0400
+	id 1wQ05O-0007m8-Sq; Thu, 21 May 2026 05:53:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1wQ02h-00074v-Op
- for qemu-devel@nongnu.org; Thu, 21 May 2026 05:50:15 -0400
-Received: from mail.weilnetz.de ([37.120.169.71]
- helo=mail.v2201612906741603.powersrv.de)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wQ05N-0007ld-8P
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 05:53:01 -0400
+Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1wQ02f-0003TR-D2
- for qemu-devel@nongnu.org; Thu, 21 May 2026 05:50:15 -0400
-Received: from [10.103.7.107] (unknown [213.146.76.173])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id 2C8FFDA06B1;
- Thu, 21 May 2026 11:50:08 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=weilnetz.de; s=dkim1; 
- t=1779357008;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=TVEV1iJsT4cBwZsp2Qfcgr1h0BSmMdIWR+r8wZi6DIo=;
- b=Vum6MtKv5hwTxtsLhRTojsnn2G2uNQCQYpA1tA+f7HPOjH7dwP4Rp4EmD4uc29ApRYEryp
- F+nVt2QcZrYMkiyBy74fOHkCxEfEQY5vpApu2qUEHXxRNnMzNLcGjCHER6e62BcuOr3Hqn
- tL6R175rC+F9eyiZZPJZPumnS4PON4U=
-Authentication-Results: ORIGINATING;
- auth=pass smtp.auth=stefan.weil@weilnetz.de smtp.mailfrom=sw@weilnetz.de
-Message-ID: <35c690cd-ebf7-44fa-bc8c-d4ed99d37447@weilnetz.de>
-Date: Thu, 21 May 2026 11:50:06 +0200
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wQ05L-0004v5-Oa
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 05:53:00 -0400
+Received: by mail-yx1-xb133.google.com with SMTP id
+ 956f58d0204a3-65c2cd216c9so5019713d50.3
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 02:52:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779357178; cv=none;
+ d=google.com; s=arc-20240605;
+ b=LzWSWI+dUeDIF+1fiAkBSTXoxEbGJEUObsPZvBkiFXbjYlKdLJZjyA215u1lzMrfTO
+ f9aoWGiGARaLsKZujAK6vNRbu7hgXaWjc6MzIVjrCdVjWp/ErBtSNFVCeo5ddbB89Hjs
+ Tj1oI/1oja6+55HyngYFDpOEDPknFtswDKsVEY/UeLjvplLU0fy9jt7X3MP6P6fRDThT
+ B7mD5uBq8vnKRywe1p4MIlvI87AjA4bIDEXJ+YYQWH4QOdcjSUKdm0LoM8hP7OxtNtrB
+ JnmoDRSAJIgg0QloLuakgNBpD55kSpRQAPV68JEelEWpZaaSfX63f66kuGfZ2oUJcX0X
+ JiWQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=nUgeBFh1V4EOv6CYNGi1f0MN9FXnwdnSuM0h+QguS+Q=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=h9blbY3duQOrGjT7HeTw1FcsGM0PkrOfr5g478UWLA+tXiQ+0WeP412DWt3qX0FP44
+ qDsiQtyZH+9tqLv0eCDD4bPImxtokQgcmgPFBCFC4jHFE0qM3Rc1lp19phX7LFLQULIn
+ mkveE0IdKIzUtwYV7Gc/0kTG1WcNr7HsbW/rKTm9dY5Sf3bszW8NSrJPYWqfEDvFlngg
+ oGq1E+SDJXDzDAodc+V2vW5twQ+LmugaaMSEmzAA4DuUj1bteIzyAMRpMSxADJS65OJ7
+ j9qvkLMXVDMRjwvKWdSQTXRynLmnR+mqW0XeNGqi20MNRcgnpbDuBKGvGAob436Bt83M
+ e2iA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779357178; x=1779961978; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=nUgeBFh1V4EOv6CYNGi1f0MN9FXnwdnSuM0h+QguS+Q=;
+ b=aN0Wc0TNzpmzN95B4bMfvrhcPWUw4ehjIBlMHdjslUgXRcE05oZUENeA1zjkSiD7Nz
+ w8KbTQNqYtd9IBUIxtNCe27K5sZFeW3YJLTjkcK8YEya+WlYchzmV5iwzOfIGgBwl/cN
+ vp/gG5Vio6DI8oO1QX9bikvo8Rh5NxDskWOoha4tMlkBE7F/hf3uTK1IQDShIjbx7yYt
+ tqNxAcFVOefEzq9XA6nMyzynFV+v0WEFx4vX9+LRhHW4GL3brDAhfAhlQRRl9lD364lF
+ /T6bgXu21Ub6kXL9ZriqeYrzqna2et3327nT3oK0x6WchA/uUro7QseQp0bT+b0vDqMg
+ Fakg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779357178; x=1779961978;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nUgeBFh1V4EOv6CYNGi1f0MN9FXnwdnSuM0h+QguS+Q=;
+ b=Q7nFXTaD0NiRVk+KAU+NFU0E6DfIuUGc5tDkDxWIyhu5jHmIh+RsYw16E9CiSJSfoM
+ YnHIA0ZJivGii1NXki7h2M5CCz3ab1s8t0lLtKEZQ9CZI0nyjposzdCsRT9gKgh5TgF0
+ BVZqrHH2Lb950yi14hF+iaUalzqYmqfnttqVpNU2W2WCVkh/A9C5WfO0HF46QIhaC/yQ
+ 2pyAhPa00gm2uHMtvMEguo9tls8r0764ZMXXaJtZ3Rixi8FGGFUiF8LtxECzYQuBR2P3
+ YV/3JzFpT/exW4NICTUCTsZIuenx2L2LmZXTiXDbMnZDKqw1E9RnTX0+SKDcokcoNLG7
+ Ui9Q==
+X-Gm-Message-State: AOJu0YwX95ojfkfoFWFklvDjjXPuh4eaSJJ8xfANX7GbriFZfivHcrFi
+ IOmhf0y9usoGNnsMlE5SGipH5cXMPvUX4gsFnquqYY2zyN3QauM6ZWfSg3xAxopoW2thJ4WZm8a
+ yV+d4VOhb/fwmD8TKFFde4cRerug95LqWnbEtRcbIqg==
+X-Gm-Gg: Acq92OHLVp5i8Da11Amp2cB9ltZ+N3g7FsbzA3mo2Rnt57fbAUxM27qsvbvSahkR+GN
+ wdwFSFvYMkIUZblZfmoax+rzmUQ00T+5wiQLYuGVb449mcKFh1AYmefjXv7OnIsILkNRi4IC9NC
+ hoZoVYx14ul0qKi7gam/smK1vEtDq53uhWemQs2X3dhQKMmScp7HTk6TyUWarRShGewMbKeqq0B
+ 86gZIgERItMtM2qapF+L22uYS8YruLzoITXp3Jmui/7CUMxUEY4lxox55fiLaAI5ikNFr3Ag6co
+ uTF2NZQ1WHKInpPh3pMgCrBAk1nuuxjN+QKY5PGi80bYlEuxRL4u90koVEQO2FbUs2g=
+X-Received: by 2002:a05:690e:191b:b0:650:1bf0:ca62 with SMTP id
+ 956f58d0204a3-65eadfbf3b1mr1632986d50.6.1779357178208; Thu, 21 May 2026
+ 02:52:58 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 34/39] MAINTAINERS: Drop stale F: from "TCI TCG target"
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: philmd@linaro.org, pierrick.bouvier@oss.qualcomm.com
-References: <20260521080511.999266-1-armbru@redhat.com>
- <20260521080511.999266-35-armbru@redhat.com>
-Autocrypt: addr=sw@weilnetz.de; keydata=
- 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
-In-Reply-To: <20260521080511.999266-35-armbru@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Server: v2201612906741603
-X-Rspamd-Queue-Id: 2C8FFDA06B1
-X-Spamd-Bar: ---
-X-Spamd-Result: default: False [-3.10 / 12.00]; BAYES_HAM(-3.00)[100.00%];
- MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_ZERO(0.00)[0];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; FROM_HAS_DN(0.00)[];
- DKIM_SIGNED(0.00)[weilnetz.de:s=dkim1]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=37.120.169.71; envelope-from=sw@weilnetz.de;
- helo=mail.v2201612906741603.powersrv.de
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260520182213.872945-1-richard.henderson@linaro.org>
+ <20260520182213.872945-61-richard.henderson@linaro.org>
+In-Reply-To: <20260520182213.872945-61-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 21 May 2026 10:52:46 +0100
+X-Gm-Features: AVHnY4KzFW7o7duDWfFFBk208fM3EgldrA5vL9H3OhtFIjRKgYUvaYDJcRGYe5E
+Message-ID: <CAFEAcA8+VBdRt3DO9zgwQccbH+O2PMZnK3o81zmX9M1GmgiseA@mail.gmail.com>
+Subject: Re: [PATCH v6 60/64] target/arm: Implement FMMLA (FP8 to FP16) for
+ AdvSIMD
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,40 +112,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Stefan Weil <sw@weilnetz.de>
-From:  Stefan Weil via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 21.05.26 um 10:05 schrieb Markus Armbruster:
-
-> We neglected to update MAINTAINERS when we dropped disas/tci.c.
-> Update it now.
+On Wed, 20 May 2026 at 19:29, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> Fixes: 59964b4f98 (tcg/tci: Implement the disassembler properly, 2021-01-30)
-> Cc: Stefan Weil <sw@weilnetz.de>
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> ---
->   MAINTAINERS | 1 -
->   1 file changed, 1 deletion(-)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 7862e2df0b..d3b79e3eeb 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -4177,7 +4177,6 @@ M: Stefan Weil <sw@weilnetz.de>
->   S: Maintained
->   F: tcg/tci/
->   F: tcg/tci.c
-> -F: disas/tci.c
->   
->   Block drivers
->   -------------
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
+> +void HELPER(gvec_fmmla_hb)(void *vd, void *vn, void *vm,
+> +                           CPUARMState *env, uint32_t desc)
 
-Thanks!
+This still has some lurking copy-and-paste issues from the _sb
+version:
 
-Reviewed-by: Stefan Weil <sw@weilnetz.de>
+> +{
+> +    FP8MulContext ctx = fp8_mul_start(env, 0xf);
+> +    size_t oprsz = simd_oprsz(desc);
+> +    size_t nseg = oprsz / 16;
 
+Each loop here handles 4 16-bit halfprec outputs == 8 bytes,
+so we want oprsz / 8.
 
+> +    uint32_t *n = vn;
+> +    uint32_t *m = vm;
+> +    float16 *d = vd;
+> +
+> +    for (size_t seg = 0; seg < nseg; seg++, d += 4, n += 2, m += 2) {
+> +        float16 d0 = f8dotadd_h(n[0], m[0], 4, d[H4(0)], &ctx);
+> +        float16 d1 = f8dotadd_h(n[0], m[1], 4, d[H4(1)], &ctx);
+> +        float16 d2 = f8dotadd_h(n[1], m[0], 4, d[H4(2)], &ctx);
+> +        float16 d3 = f8dotadd_h(n[1], m[1], 4, d[H4(3)], &ctx);
+> +
+> +        d[H4(0)] = d0;
+> +        d[H4(1)] = d1;
+> +        d[H4(2)] = d2;
+> +        d[H4(3)] = d3;
+
+The H macros here I think are wrong -- d is a float16 so we
+want H2(), and we need H4() macros for the n and m arrays.
+(I think in fact if you work it through then all the H macros
+cancel out and we could drop the lot, but since they're all
+acting on constant indexes there's no runtime cost and having
+them present is clearer for the reader.)
+
+thanks
+-- PMM
 
