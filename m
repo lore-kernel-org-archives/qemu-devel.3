@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74C7DCD5BA4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED622CD5BAE
 	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 08:07:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPyQC-0000TD-Pu; Thu, 21 May 2026 04:06:24 -0400
+	id 1wPyQ7-0000Ci-Qg; Thu, 21 May 2026 04:06:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPyPQ-0007iQ-21
- for qemu-devel@nongnu.org; Thu, 21 May 2026 04:05:37 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPyPO-0007gS-LZ
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 04:05:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPyPJ-0006z8-1o
- for qemu-devel@nongnu.org; Thu, 21 May 2026 04:05:33 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPyPI-0006y0-Vy
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 04:05:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1779350727;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=R3cMm9fBfnz//CS/uTkvPo/9rpJGn8/LFnBtWYw3Js4=;
- b=OINZVzl7DXlwZbBC9zt8tTM5Ph4N/ASpngzt5PEvAG+s/AoKiXuE9p2CKNiPNG/MKjb9Vh
- sbZZpNcfOH0z8W84xZ8D0cx+FaiLt+RIjXTTNCxVRNmmxj/Yeq7rzvihMCpSQq6gIZozY3
- hqac31pWGOAirGoB92mrMM9NQsdO1Ps=
+ bh=pIHKHsqnJaHDv2K22vOL0LSCXHmRoUJ3evV/FwXrYyE=;
+ b=Pj/yUgam1KCLyAnBkvdrh3RhjZ4JtUCkRNuzQ9WBVZyth7AoEb76QC9ggZW9MgKY3sRHse
+ rDzI6F+Ry6uWvWxVCLr0jTrdg4f+W0LLM0szoB6ZoXVY7iyB4mz+ZUC19blkqO0c8MzIOi
+ E23vr5sJosFTJZqmqDAfyTAnZvbcmt4=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-383-uWb4OV-pMzOR5Ryi_CxuDA-1; Thu,
- 21 May 2026 04:05:21 -0400
-X-MC-Unique: uWb4OV-pMzOR5Ryi_CxuDA-1
-X-Mimecast-MFC-AGG-ID: uWb4OV-pMzOR5Ryi_CxuDA_1779350720
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-357-Q8xG8UxyMOi5qba718RrSg-1; Thu,
+ 21 May 2026 04:05:24 -0400
+X-MC-Unique: Q8xG8UxyMOi5qba718RrSg-1
+X-Mimecast-MFC-AGG-ID: Q8xG8UxyMOi5qba718RrSg_1779350723
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B334A1956046; Thu, 21 May 2026 08:05:20 +0000 (UTC)
+ id 32ADB1956046; Thu, 21 May 2026 08:05:23 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6A4961956056; Thu, 21 May 2026 08:05:20 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E60C91800352; Thu, 21 May 2026 08:05:22 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1DEAB21E68B2; Thu, 21 May 2026 10:05:12 +0200 (CEST)
+ id 7324121E64AF; Thu, 21 May 2026 10:05:12 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org, pierrick.bouvier@oss.qualcomm.com,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org
-Subject: [PATCH 18/39] MAINTAINERS: Fix F: in "SiFive Machines"
-Date: Thu, 21 May 2026 10:04:50 +0200
-Message-ID: <20260521080511.999266-19-armbru@redhat.com>
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-rust@nongnu.org
+Subject: [PATCH 39/39] MAINTAINERS: Fix F: in "Rust build system integration"
+Date: Thu, 21 May 2026 10:05:11 +0200
+Message-ID: <20260521080511.999266-40-armbru@redhat.com>
 In-Reply-To: <20260521080511.999266-1-armbru@redhat.com>
 References: <20260521080511.999266-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -85,31 +84,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The MAINTAINERS update for moving tests into target-specific folders
-missed one file.  Correct that.
+We neglected to update MAINTAINERS when we moved rust/wrapper.h, and
+again when we split it up.  Update it now.
 
-Fixes: e1a8572a8d (tests/functional: Move riscv32/riscv64 tests into target-specific folders, 2025-08-19)
-Cc: Alistair Francis <Alistair.Francis@wdc.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: qemu-riscv@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-rust@nongnu.org
+Fixes: 1ae4ca0463 (rust: move rust.bindgen to qemu-api crate, 2025-06-13)
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
  MAINTAINERS | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 00a24612b7..6268ee1d73 100644
+index b7fe4fa58a..37bc1bab06 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1773,7 +1773,7 @@ S: Supported
- F: docs/system/riscv/sifive_u.rst
- F: hw/*/*sifive*.c
- F: include/hw/*/*sifive*.h
--F: tests/functional/test_riscv64_sifive_u.py
-+F: tests/functional/riscv64/test_sifive_u.py
+@@ -4629,7 +4629,7 @@ F: scripts/rust/
+ F: rust/.gitignore
+ F: rust/Kconfig
+ F: rust/meson.build
+-F: rust/wrapper.h
++F: rust/bindings/*/wrapper.h
  
- AMD Microblaze-V Generic Board
- M: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+ Miscellaneous
+ -------------
 -- 
 2.54.0
 
