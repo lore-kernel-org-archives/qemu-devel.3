@@ -4,93 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B912CD5BAC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 14:56:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57917CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 14:56:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ4oe-0000SV-Nk; Thu, 21 May 2026 10:56:04 -0400
+	id 1wQ4p9-00012Y-CW; Thu, 21 May 2026 10:56:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wQ4oc-0000Px-Cv
- for qemu-devel@nongnu.org; Thu, 21 May 2026 10:56:02 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wQ4oa-000288-HF
- for qemu-devel@nongnu.org; Thu, 21 May 2026 10:56:02 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-48984d29fe3so67601365e9.0
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 07:56:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779375359; x=1779980159; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QeLnYydOY6C1on1JYZ0Lljl2v6DuXTKrKNciKZSkIK4=;
- b=GX4tlpdsrovEN04HK3MI6rOCYy/NvpMRdWltHgo4qoZsSwboAybjF1g5sVaxcYwMo3
- REDRiy9kAZ1A+Xf92BVTnnh9fC5eY1eVC0JoNuraG+y1RfcO/ohCE7fmMLYRMJAyJdyy
- fhMVh4nT0sq+D+RNLhrOnulbYHoeHW5IKw/d0/V/QyY7Ug+RRrRKUeFnTafc7xT+DU7D
- BdneuXcejUJrWU1JM0Wt4ZfxfsbwthYazX1I5Ha4HW9YyLMIyM2yuLVkyLcmfAAi9G7N
- lJZANwe+hevlSJimIWD5P0Pv6nqy79ZcNWVzWApkvqRbtU3X22JnNKc9Ilmx0m3/GEzR
- 4lRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779375359; x=1779980159;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QeLnYydOY6C1on1JYZ0Lljl2v6DuXTKrKNciKZSkIK4=;
- b=DLEEAcIjA/pr6nh9gNroRhp7ETRD77+xSx4NmkIQ3bdBb6IKv3UXoNN72Cf0SN91rk
- IFKQDCcE4hVYgUlFTeC0+gEGcVhyXUKKzUWll1bphPdreNC8hvleNr6N5Cb1wwtRVZFu
- jw1cInq5Jmlfs/wWWSXz1dzpXX7X6obi/W9FcYwJuv+fQPV/EjIpuH4T2mgOcA3eVz5F
- bbR5uptAjYCHAgV92YFuvIYZjcyWufg/9MI8tSRCfvoe2kpASsbN7cVOiSs8JXRV2ESx
- R1W3YS+HaeLhz+CYxiqdxjfV4t4q5dDSns9b4oirJQGiUMmfS+rd9IwWgTEztuA5G/p9
- az6w==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+yrB2Gx9yb9Gt31oM1E4eMWDFwhOdJgX+zmJidZ0nT+/gM8QR5aatuEaB8SpMtsA7zIM/Ch0T+7Npg@nongnu.org
-X-Gm-Message-State: AOJu0YzngUF8CMl2IMAU70GuKiUtm1qlpTDlNNZfwOs/Dxapvnze5PCt
- pWAMBD2vLSo7cedJuKpChOS+sWC7kl2d/icVIJZX6OJb0MZHSuRoGil6dK3+cjHd8HY=
-X-Gm-Gg: Acq92OGa2ipHApo+AjAD3ylbDpNhfjm0FiGv0ypfb8SJUg6LKJ0A85KYB+iXLuuaggp
- 2Ofh23xM46xTNacqeAgRoO08T9tjyEwPAzrKafdgmmT3UNGvFBkVEzVDDcAdR80MNgaCBDo+KT9
- om0Nj/lBWWjyikpL/QmyIWH0nu/QyEzBJGy7ABXaDHCOcyuVarfnHbhvID2weJ+RCg5C19uXmPo
- ljxQNwfDeqJQWl3cwcRn0F/eKkSrvCRrndKjp8Kgz1HnMP2yVA4DtWnMYtmq/geVafaY19NbvAL
- LsFJdWo3gV0JUL+c7M/L6Llo+rNCdeDP8CCRg1LIJFZNtI1aZr2WfYrCKuX60FjoPUd7lelpiAm
- 70OIwdZ9qaxjlOnsJYjUyaPBBkywRTaBCst+QGc4SNVIWSEKP+TBcg6s6zjEgPaEBioOEDpRM//
- PrlxplnESIbUvS6TJErC23vOPjYOqjJUzjX/RFW0BdCVjk
-X-Received: by 2002:a05:600c:1f89:b0:488:d6eb:e63c with SMTP id
- 5b1f17b1804b1-4903607fd11mr43905065e9.15.1779375358449; 
- Thu, 21 May 2026 07:55:58 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4903cadc03esm29445545e9.9.2026.05.21.07.55.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 07:55:57 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AE3A15F886;
- Thu, 21 May 2026 15:55:56 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org,  qemu-devel@nongnu.org,  qemu-stable@nongnu.org
-Subject: Re: [PATCH 2/3] target/arm: Use FPST_A64_F16 for SVE FCVTLT_hs
-In-Reply-To: <20260521122913.1565011-3-peter.maydell@linaro.org> (Peter
- Maydell's message of "Thu, 21 May 2026 13:29:12 +0100")
-References: <20260521122913.1565011-1-peter.maydell@linaro.org>
- <20260521122913.1565011-3-peter.maydell@linaro.org>
-User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Thu, 21 May 2026 15:55:56 +0100
-Message-ID: <87mrxsolqb.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wQ4p3-0000y2-5g
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 10:56:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wQ4p1-0002b7-RH
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 10:56:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779375387;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1RYzJbjCiBvBs+vBjTpj3ysBtdHV7GoeIaSHzADXK24=;
+ b=V2xvRNgLys/CMr0HOA1/WHoZ23Zv/cAmoYxN5TGZ4Y6AOQHT4Jqx6+EbejnBnl5a8p4S8N
+ I7dWsBljQWJFwX6BRgyJcrKYYUI5Fy9bbTy/9RuZCMz9FaBw4uJ1VTiEYipO94PSYVG7zg
+ Hkfn56DRlD93bqhtZTLZDlfBCZUAS3U=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-120-YvStum0_NEuq8y4HoMgDpg-1; Thu,
+ 21 May 2026 10:56:18 -0400
+X-MC-Unique: YvStum0_NEuq8y4HoMgDpg-1
+X-Mimecast-MFC-AGG-ID: YvStum0_NEuq8y4HoMgDpg_1779375377
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E861B19560B7; Thu, 21 May 2026 14:56:16 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.143])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1A2E01800762; Thu, 21 May 2026 14:56:15 +0000 (UTC)
+Date: Thu, 21 May 2026 10:56:14 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org,
+ pierrick.bouvier@oss.qualcomm.com, Fam Zheng <fam@euphon.net>,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH 27/39] MAINTAINERS: Drop stale F: from "Block I/O path"
+Message-ID: <20260521145614.GC464582@fedora>
+References: <20260521080511.999266-1-armbru@redhat.com>
+ <20260521080511.999266-28-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="aGS4M20/R4rVCFiT"
+Content-Disposition: inline
+In-Reply-To: <20260521080511.999266-28-armbru@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,46 +87,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
 
-> The SVE FCVTLT_hs operation produces a halfprec result, so we should
-> use the FPST_A64_F16 fpstatus for it.
+--aGS4M20/R4rVCFiT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Maybe I'm reading the Arm ARM wrong (I can't find FCVTLT_hs but I can
-see FCVTLT in the SVE encodings). But these are all widening operations
-so I can see halfprec to single, not the other way around.
-
-> Getting this wrong means we
-> will incorrectly set FPCR.IDC for input-denormals when FPCR.AH=3D1.
->
-> We missed this instruction when we updated the halfproc-to-other
-> conversion insns to use FPST_A64_F16 in commit e07b48995aaa
-> as part of implementing FEAT_AHP.
->
-> Cc: qemu-stable@nongnu.org
-> Fixes: e07b48995aaa ("target/arm: Use FPST_A64_F16 for halfprec-to-other =
-conversions")a
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+On Thu, May 21, 2026 at 10:04:59AM +0200, Markus Armbruster wrote:
+> We neglected to update MAINTAINERS when we deleted
+> tests/unit/test-fdmon-epoll.c.  Update it now.
+>=20
+> Fixes: 60f782b6b7 (aio: remove aio_disable_external() API, 2023-05-16)
+> Cc: Stefan Hajnoczi <stefanha@redhat.com>
+> Cc: Fam Zheng <fam@euphon.net>
+> Cc: qemu-block@nongnu.org
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->  target/arm/tcg/translate-sve.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sv=
-e.c
-> index bf9f0ae179..59b8c494a8 100644
-> --- a/target/arm/tcg/translate-sve.c
-> +++ b/target/arm/tcg/translate-sve.c
-> @@ -7827,7 +7827,7 @@ TRANS_FEAT(BFCVTNT, aa64_sme_sve_bf16, gen_gvec_fps=
-t_arg_zpz,
->             s->fpcr_ah ? FPST_AH : FPST_A64)
->=20=20
->  TRANS_FEAT(FCVTLT_hs, aa64_sme_or_sve2, gen_gvec_fpst_arg_zpz,
-> -           gen_helper_sve2_fcvtlt_hs, a, 0, FPST_A64)
-> +           gen_helper_sve2_fcvtlt_hs, a, 0, FPST_A64_F16)
->  TRANS_FEAT(FCVTLT_sd, aa64_sme_or_sve2, gen_gvec_fpst_arg_zpz,
->             gen_helper_sve2_fcvtlt_sd, a, 0, FPST_A64)
+>  MAINTAINERS | 1 -
+>  1 file changed, 1 deletion(-)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+
+--aGS4M20/R4rVCFiT
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmoPHQ4ACgkQnKSrs4Gr
+c8gRQggAvlvKS7DWS4T0kcoCkN5Za31qyg1c3QMs3mdkcUlgbu+gv38QgSZM8efr
+h9uxb5yDFHhJKfztRY8r3sKtObcQ47Q24mV4Hf3pyMwOde9oiphPkMKBTFkbcYVt
+BW8YTRdssZv9xIcQi/j+F1SwTCPn8I36zGrm26WehnsvIUKqwC56cstkfsuaI5t0
+QR0TIBp7oCXxbQWnPLYC8Ued2OglmUIpdSGzBwT2lpudG2dqFPnqJF/wHhqE35Yb
+/bmxmsX/fRHWpPSPcAbGhL7BNRzniiphY/e20SF0Apuv0RieAh76BwwIklI/N24m
+iTGEsrYDGGeFBXQvflxvnFjMqp23+w==
+=KMqu
+-----END PGP SIGNATURE-----
+
+--aGS4M20/R4rVCFiT--
+
 
