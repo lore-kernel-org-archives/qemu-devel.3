@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67E39CD5BB0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B599FCD5BB4
 	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 16:52:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ6c1-0004OI-N2; Thu, 21 May 2026 12:51:09 -0400
+	id 1wQ6cW-0004VG-2G; Thu, 21 May 2026 12:51:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
- id 1wQ6bn-0004MB-Fn
- for qemu-devel@nongnu.org; Thu, 21 May 2026 12:50:57 -0400
+ id 1wQ6bt-0004Mj-KK
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 12:51:05 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wQ6bk-00070E-DO
- for qemu-devel@nongnu.org; Thu, 21 May 2026 12:50:55 -0400
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wQ6br-00076y-NX
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 12:51:01 -0400
 Received: from laptop.localdomain (unknown [86.121.140.206])
- by linux.microsoft.com (Postfix) with ESMTPSA id 9C22920B7168;
- Thu, 21 May 2026 09:50:41 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9C22920B7168
+ by linux.microsoft.com (Postfix) with ESMTPSA id B926520B7167;
+ Thu, 21 May 2026 09:50:49 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com B926520B7167
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1779382243;
- bh=G/N6a+EPTHHVm59twzRAAc8BmvLdSoWkzl5r46hF50w=;
+ s=default; t=1779382251;
+ bh=n4h4mYEWzTMHu9MUcHkhj8dUWbKeXfr2q3O9DzkwbGk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=PoLQp0V3kvkKtrWWmzuLbXpm4wCRRG3qFH+9awqs9QnhYBFW+Op9JFdkXtZjzLHBy
- 8VYpaJimZeVWVZhgQLxK6Yp9rT1Rk0BmVUzsgn4XQvI0tVt8Yj1begUISRvlEHk4OI
- JaX36uOioTagznu27a6S3V7TIzx6kNpu5vOl39eU=
+ b=segOrNIJt/gjcQZ+aJAfZJGOYsx+Iah+vOENb3+W0lYR1YMGyN8nBk71ow6Zwh9QN
+ g4Rcz887QhQ7gQAdmtDRZqXwVbYcDQGbmA01WPDV0eN+4dKle33HxL2X4hsbKnt6K/
+ u3W3mBtu7ONmN6FvBJquY73sJxx3dx3nQIhrqPNQ=
 From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
@@ -37,10 +37,10 @@ Cc: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
  Wei Liu <liuwe@microsoft.com>, Magnus Kulke <magnuskulke@microsoft.com>,
  Wei Liu <wei.liu@kernel.org>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PATCH v3 1/7] target/i386/mshv: remove duplicate function for
- reading vcpu registers
-Date: Thu, 21 May 2026 19:50:35 +0300
-Message-ID: <20260521165041.131477-2-dblanzeanu@linux.microsoft.com>
+Subject: [PATCH v3 4/7] target/i386/mshv: hv_vp_register_page setup for the
+ vcpu
+Date: Thu, 21 May 2026 19:50:38 +0300
+Message-ID: <20260521165041.131477-5-dblanzeanu@linux.microsoft.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260521165041.131477-1-dblanzeanu@linux.microsoft.com>
 References: <20260521165041.131477-1-dblanzeanu@linux.microsoft.com>
@@ -70,55 +70,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove function `fetch_guest_state` because it is a duplicate function
-of `mshv_load_regs` function.
+When the vcpu is created, call mmap to configure access to the register page.
+In case the call to mmap fails, we log an error and abort to signal
+there is something wrong with the system.
+Check the register page version and compare with the expected version and
+abort in case of a mismatch.
+
+Update CPUArchState to store a pointer to the mmapped hv_vp_register_page.
 
 Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
-Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Reviewed-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
 ---
- target/i386/mshv/mshv-cpu.c | 21 +--------------------
- 1 file changed, 1 insertion(+), 20 deletions(-)
+ target/i386/cpu.h           |  4 ++++
+ target/i386/mshv/mshv-cpu.c | 24 ++++++++++++++++++++++++
+ 2 files changed, 28 insertions(+)
 
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index bdd4fff89d..d772b4c4cc 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2214,6 +2214,10 @@ typedef struct CPUArchState {
+     struct {} end_reset_fields;
+ 
+     /* Fields after this point are preserved across CPU reset. */
++#ifdef CONFIG_MSHV
++    /* Shared register page */
++    struct hv_vp_register_page *regs_page;
++#endif
+ 
+     /* processor features (e.g. for CPUID insn) */
+     /* Minimum cpuid leaf 7 value */
 diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 4ed6e7548f..9defd05db6 100644
+index 9defd05db6..45dc6e6331 100644
 --- a/target/i386/mshv/mshv-cpu.c
 +++ b/target/i386/mshv/mshv-cpu.c
-@@ -1291,25 +1291,6 @@ static int handle_pio_non_str(const CPUState *cpu,
-     return 0;
- }
- 
--static int fetch_guest_state(CPUState *cpu)
--{
--    int ret;
--
--    ret = mshv_get_standard_regs(cpu);
--    if (ret < 0) {
--        error_report("Failed to get standard registers");
--        return -1;
--    }
--
--    ret = mshv_get_special_regs(cpu);
--    if (ret < 0) {
--        error_report("Failed to get special registers");
--        return -1;
--    }
--
--    return 0;
--}
--
- static int read_memory(const CPUState *cpu, uint64_t initial_gva,
-                        uint64_t initial_gpa, uint64_t gva, uint8_t *data,
-                        size_t len)
-@@ -1429,7 +1410,7 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
-     X86CPU *x86_cpu = X86_CPU(cpu);
+@@ -1587,6 +1587,7 @@ void mshv_arch_init_vcpu(CPUState *cpu)
      CPUX86State *env = &x86_cpu->env;
+     AccelCPUState *state = cpu->accel;
+     size_t page = HV_HYP_PAGE_SIZE;
++    void *regs_page;
+     void *mem = qemu_memalign(page, 2 * page);
  
--    ret = fetch_guest_state(cpu);
-+    ret = mshv_load_regs(cpu);
-     if (ret < 0) {
-         error_report("Failed to fetch guest state");
-         return -1;
+     /* sanity check, to make sure we don't overflow the page */
+@@ -1595,6 +1596,24 @@ void mshv_arch_init_vcpu(CPUState *cpu)
+                       + sizeof(hv_input_get_vp_registers)
+                       > HV_HYP_PAGE_SIZE));
+ 
++
++    /* mmap the registers page */
++    regs_page = mmap(NULL, page, PROT_READ | PROT_WRITE,
++                    MAP_SHARED, mshv_vcpufd(cpu),
++                    MSHV_VP_MMAP_OFFSET_REGISTERS * page);
++    if (regs_page == MAP_FAILED) {
++        /* This shouldn't fail, so we treat it as a fatal error */
++        error_report("register page mmap failed: %s", strerror(errno));
++        abort();
++    }
++    env->regs_page = (struct hv_vp_register_page *) regs_page;
++
++    if (env->regs_page->version != HV_VP_REGISTER_PAGE_VERSION_1) {
++        error_report("register page version mismatch: got %u, expected %u",
++                     env->regs_page->version, HV_VP_REGISTER_PAGE_VERSION_1);
++        abort();
++    }
++
+     state->hvcall_args.base = mem;
+     state->hvcall_args.input_page = mem;
+     state->hvcall_args.output_page = (uint8_t *)mem + page;
+@@ -1608,6 +1627,11 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
+     CPUX86State *env = &x86_cpu->env;
+     AccelCPUState *state = cpu->accel;
+ 
++    /* Unmap the register page */
++    if (env->regs_page) {
++        munmap(env->regs_page, HV_HYP_PAGE_SIZE);
++        env->regs_page = NULL;
++    }
+     g_free(state->hvcall_args.base);
+     state->hvcall_args = (MshvHvCallArgs){0};
+     g_clear_pointer(&env->emu_mmio_buf, g_free);
 -- 
 2.53.0
 
