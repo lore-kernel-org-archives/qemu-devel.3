@@ -4,46 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D375FCD5BA4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D725FCD5BB0
 	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 09:20:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPzZ5-00071g-TY; Thu, 21 May 2026 05:19:39 -0400
+	id 1wPzZ3-000706-OU; Thu, 21 May 2026 05:19:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1wPzZ2-0006zp-Tc; Thu, 21 May 2026 05:19:36 -0400
+ id 1wPzZ1-0006zP-TX; Thu, 21 May 2026 05:19:35 -0400
 Received: from apollo.dupie.be ([51.159.20.238])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1wPzZ0-00080k-DJ; Thu, 21 May 2026 05:19:36 -0400
+ id 1wPzYz-00080m-Kr; Thu, 21 May 2026 05:19:35 -0400
 Received: from lt-jeanlouis (unknown
  [IPv6:2a02:a03f:eaf9:5401:5fb3:a398:4351:5e57])
- by apollo.dupie.be (Postfix) with ESMTPSA id 6A71F1520CC9;
+ by apollo.dupie.be (Postfix) with ESMTPSA id C27DF1520E41;
  Thu, 21 May 2026 11:19:29 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
  t=1779355169;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=uEzEqjOVGStAJsYUw0m3AibY2k0OJdiY9cAjDAuLsSQ=;
- b=Vvx8DXnTP8Wfynu4gE/ZQ5i3oWCT6Ht51MC+dkvxW62K2HyrvJHNEKs6YyxPYNdOTmgHel
- NQxxRw0UBhJJHTTYFC/gMFZG0OJFYeL7iCwW0R0AeAqvdwPxOxWL18u4zDIX/7UTpURsxX
- xdtZejWfPrTyyMErzeKJfNIEq8jR3svL8Dmuix+Av1lE8q5x1X2AL1yprNpKPzfmz1C2u7
- lrejXCeFYY52Xxj2iDMGX+eEmzoB9nZZq1YhW8FbbmQU1RnKohkfH7v+OVOA8+8Pb7OX7o
- 3zYEiOywcC8ZytH/9ZiYAWI6vLbRrXleoxRBpn9fChSqxXVWZ2Yve+EMQsvdJw==
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/UZueQwEKSVCC9z0Ta2yndbxsEVnuw3VEoY91/2Rqek=;
+ b=S/fxK9zR6LSJ3JDbjqU9JaUoiJP6gjGJE3eS90UHkWrG88eeksTFFn4QTvjrbnvHfbArk8
+ 6rVQEk5g46q/LcrwEkoTTglVfDFtW5enzKWwTpgv0roxZaG8eExg/L/aJP/R9crz0ZC9J/
+ BV5h8fo2lqvtyUyFJHwomx9REU60wi/m7An9AJiHs7YRzG/4oxHiP+lQarVGtb0p++7gwc
+ rbQPw8shBhoeq6ERrrmtw7x8GsiiUg+WW8HCL3kdh649uWtV0eDmjh4yjwKwNByCtNtt1A
+ fu5IU/F96T4IagIYoo3hyVcrDRwh7dUsa2RUdihi5TvSshkW9WSIcC2UiEqtCg==
 From: Jean-Louis Dupond <jean-louis@dupond.be>
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, Eric Blake <eblake@redhat.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  John Snow <jsnow@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  qemu-block@nongnu.org, Jean-Louis Dupond <jean-louis@dupond.be>
-Subject: [PATCH v2 0/2] qcow2: add a way to repair bitmaps
-Date: Thu, 21 May 2026 11:19:16 +0200
-Message-ID: <20260521091918.2366140-1-jean-louis@dupond.be>
+Subject: [PATCH v2 1/2] qcow2: move qcow2_check_bitmaps_refcounts func
+Date: Thu, 21 May 2026 11:19:17 +0200
+Message-ID: <20260521091918.2366140-2-jean-louis@dupond.be>
 X-Mailer: git-send-email 2.54.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20260521091918.2366140-1-jean-louis@dupond.be>
+References: <20260521091918.2366140-1-jean-louis@dupond.be>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=51.159.20.238; envelope-from=jean-louis@dupond.be;
@@ -69,23 +71,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A v2 version of the patch.
-First of all a commit to move qcow2_check_bitmaps_refcounts lower into the code in order to make sure we can access update_ext_header_and_dir.
-Next I've moved the repair functionality into the existing qcow2_check_bitmaps_refcounts function.
+Move the qcow2_check_bitmaps_refcounts function in order to be able to
+call update_ext_header_and_dir from this function in the following patch.
 
-Thanks
-Jean-Louis
+Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
+---
+ block/qcow2-bitmap.c | 154 +++++++++++++++++++++----------------------
+ 1 file changed, 77 insertions(+), 77 deletions(-)
 
-Jean-Louis Dupond (2):
-  qcow2: move qcow2_check_bitmaps_refcounts func
-  qcow2: add functionality to repair bitmaps
-
- block/qcow2-bitmap.c   | 194 +++++++++++++++++++++++++----------------
- block/qcow2-refcount.c |   3 +-
- block/qcow2.c          |  15 +++-
- block/qcow2.h          |   3 +-
- 4 files changed, 132 insertions(+), 83 deletions(-)
-
+diff --git a/block/qcow2-bitmap.c b/block/qcow2-bitmap.c
+index 256ec99878..b87940bb43 100644
+--- a/block/qcow2-bitmap.c
++++ b/block/qcow2-bitmap.c
+@@ -652,83 +652,6 @@ fail:
+     return NULL;
+ }
+ 
+-int coroutine_fn
+-qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
+-                              void **refcount_table,
+-                              int64_t *refcount_table_size)
+-{
+-    int ret;
+-    BDRVQcow2State *s = bs->opaque;
+-    Qcow2BitmapList *bm_list;
+-    Qcow2Bitmap *bm;
+-
+-    if (s->nb_bitmaps == 0) {
+-        return 0;
+-    }
+-
+-    ret = qcow2_inc_refcounts_imrt(bs, res, refcount_table, refcount_table_size,
+-                                   s->bitmap_directory_offset,
+-                                   s->bitmap_directory_size);
+-    if (ret < 0) {
+-        return ret;
+-    }
+-
+-    bm_list = bitmap_list_load(bs, s->bitmap_directory_offset,
+-                               s->bitmap_directory_size, NULL);
+-    if (bm_list == NULL) {
+-        res->corruptions++;
+-        return -EINVAL;
+-    }
+-
+-    QSIMPLEQ_FOREACH(bm, bm_list, entry) {
+-        uint64_t *bitmap_table = NULL;
+-        int i;
+-
+-        ret = qcow2_inc_refcounts_imrt(bs, res,
+-                                       refcount_table, refcount_table_size,
+-                                       bm->table.offset,
+-                                       bm->table.size * BME_TABLE_ENTRY_SIZE);
+-        if (ret < 0) {
+-            goto out;
+-        }
+-
+-        ret = bitmap_table_load(bs, &bm->table, &bitmap_table);
+-        if (ret < 0) {
+-            res->corruptions++;
+-            goto out;
+-        }
+-
+-        for (i = 0; i < bm->table.size; ++i) {
+-            uint64_t entry = bitmap_table[i];
+-            uint64_t offset = entry & BME_TABLE_ENTRY_OFFSET_MASK;
+-
+-            if (check_table_entry(entry, s->cluster_size) < 0) {
+-                res->corruptions++;
+-                continue;
+-            }
+-
+-            if (offset == 0) {
+-                continue;
+-            }
+-
+-            ret = qcow2_inc_refcounts_imrt(bs, res,
+-                                           refcount_table, refcount_table_size,
+-                                           offset, s->cluster_size);
+-            if (ret < 0) {
+-                g_free(bitmap_table);
+-                goto out;
+-            }
+-        }
+-
+-        g_free(bitmap_table);
+-    }
+-
+-out:
+-    bitmap_list_free(bm_list);
+-
+-    return ret;
+-}
+-
+ /* bitmap_list_store
+  * Store bitmap list to qcow2 image as a bitmap directory.
+  * Everything is checked.
+@@ -1807,3 +1730,80 @@ uint64_t qcow2_get_persistent_dirty_bitmap_size(BlockDriverState *in_bs,
+ 
+     return bitmaps_size;
+ }
++
++int coroutine_fn
++qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
++                              void **refcount_table,
++                              int64_t *refcount_table_size)
++{
++    int ret;
++    BDRVQcow2State *s = bs->opaque;
++    Qcow2BitmapList *bm_list;
++    Qcow2Bitmap *bm;
++
++    if (s->nb_bitmaps == 0) {
++        return 0;
++    }
++
++    ret = qcow2_inc_refcounts_imrt(bs, res, refcount_table, refcount_table_size,
++                                   s->bitmap_directory_offset,
++                                   s->bitmap_directory_size);
++    if (ret < 0) {
++        return ret;
++    }
++
++    bm_list = bitmap_list_load(bs, s->bitmap_directory_offset,
++                               s->bitmap_directory_size, NULL);
++    if (bm_list == NULL) {
++        res->corruptions++;
++        return -EINVAL;
++    }
++
++    QSIMPLEQ_FOREACH(bm, bm_list, entry) {
++        uint64_t *bitmap_table = NULL;
++        int i;
++
++        ret = qcow2_inc_refcounts_imrt(bs, res,
++                                       refcount_table, refcount_table_size,
++                                       bm->table.offset,
++                                       bm->table.size * BME_TABLE_ENTRY_SIZE);
++        if (ret < 0) {
++            goto out;
++        }
++
++        ret = bitmap_table_load(bs, &bm->table, &bitmap_table);
++        if (ret < 0) {
++            res->corruptions++;
++            goto out;
++        }
++
++        for (i = 0; i < bm->table.size; ++i) {
++            uint64_t entry = bitmap_table[i];
++            uint64_t offset = entry & BME_TABLE_ENTRY_OFFSET_MASK;
++
++            if (check_table_entry(entry, s->cluster_size) < 0) {
++                res->corruptions++;
++                continue;
++            }
++
++            if (offset == 0) {
++                continue;
++            }
++
++            ret = qcow2_inc_refcounts_imrt(bs, res,
++                                           refcount_table, refcount_table_size,
++                                           offset, s->cluster_size);
++            if (ret < 0) {
++                g_free(bitmap_table);
++                goto out;
++            }
++        }
++
++        g_free(bitmap_table);
++    }
++
++out:
++    bitmap_list_free(bm_list);
++
++    return ret;
++}
 -- 
 2.54.0
 
