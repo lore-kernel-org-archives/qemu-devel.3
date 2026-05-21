@@ -4,52 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23EB2CD5BAC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 09:20:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7766FCD5BAC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 09:20:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPzZ4-00070o-Db; Thu, 21 May 2026 05:19:38 -0400
+	id 1wPzaH-0008SF-4Y; Thu, 21 May 2026 05:20:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1wPzZ2-0006zX-5h; Thu, 21 May 2026 05:19:36 -0400
-Received: from apollo.dupie.be ([2001:bc8:3f2a:101::1])
+ id 1wPzaF-0008Q4-1f; Thu, 21 May 2026 05:20:51 -0400
+Received: from apollo.dupie.be ([51.159.20.238])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1wPzYz-00080o-MI; Thu, 21 May 2026 05:19:35 -0400
-Received: from lt-jeanlouis (unknown
+ id 1wPzaC-00007N-Ec; Thu, 21 May 2026 05:20:50 -0400
+Received: from [IPV6:2a02:a03f:eaf9:5401:5fb3:a398:4351:5e57] (unknown
  [IPv6:2a02:a03f:eaf9:5401:5fb3:a398:4351:5e57])
- by apollo.dupie.be (Postfix) with ESMTPSA id 0DFFD1520E55;
- Thu, 21 May 2026 11:19:30 +0200 (CEST)
+ by apollo.dupie.be (Postfix) with ESMTPSA id 9EAC01520CC9;
+ Thu, 21 May 2026 11:20:46 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
- t=1779355170;
+ t=1779355246;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=12SoRCDB1RS02qM88GN7nYgdYvd+VCE11yxavWl8P8g=;
- b=Wqcx/1sQWBzfEBRoYUV1/Qs2/dfuFLARfRG+BUI6oV5Ab32abwXgqCAfggBTSidNWxfpex
- 9gzQsV+cd/bpTuTfrLildaFk8YW2jX6OORnieiLJwPPPYJeCKxTxhgsS6dSplG/WTDVsh8
- c4c92V8WM5A+hZgbskdNjFOnE87lpr30xsaSewxYGMGRuwSQoC5pJb91yXv1iBDKrNZ16S
- ZmgAANOfgru567FC0K8iN23vn9NgS1/EQU5mQuLNeYVLPbf16GaFGFXQZNjvxQr4QArxh4
- IPKupH1jmymyxa4/J8WtwS0S6mYmf56pk+4F/C+uhhy9LRRqvvHLpdbOkC9Lkg==
-From: Jean-Louis Dupond <jean-louis@dupond.be>
-To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, Jean-Louis Dupond <jean-louis@dupond.be>
-Subject: [PATCH v2 2/2] qcow2: add functionality to repair bitmaps
-Date: Thu, 21 May 2026 11:19:18 +0200
-Message-ID: <20260521091918.2366140-3-jean-louis@dupond.be>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260521091918.2366140-1-jean-louis@dupond.be>
-References: <20260521091918.2366140-1-jean-louis@dupond.be>
+ bh=ERUPhOki4qG7BYPq78ZRTVehSsi8P2KShM3cP5+63u4=;
+ b=OeZCyA8pNMZcav3hEENr08NSyP+0s6Gwutgn3yoTJWGMfUk+FHfBeu4124xLaCkPwhZUJR
+ KTHFKmm8t3Q5liYvSeTHUG5zU2d8bmwlJdvmi6VtuRG3t1+mgc/0BLc2laDmra4lIHGCAe
+ nVLR/EERjCpv4BBkQhlIlnoxdMxDdzw/wMnMul5wTlGRm07YSsG84BMRjtbYzlP9tUNtdu
+ 5SmCZv/FCNPYsa/72jPl4NHMMwj8atoeO1jrrbTwyjzVsDZ5QlCkTeBhMgRZZQjfP97Kc8
+ pOC31CkpGLKzAsBXVj0y3hEsuOzaWPNEw9KIuQY0lE9SMYrQ3/3mcYO/p6u0hw==
+Message-ID: <0ebce8a6-1db6-4bdb-8ca4-40e30e676238@dupond.be>
+Date: Thu, 21 May 2026 11:20:46 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] qcow2: add functionality to repair bitmaps
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-devel@nongnu.org
+Cc: Hanna Reitz <hreitz@redhat.com>, John Snow <jsnow@redhat.com>,
+ qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Eric Blake <eblake@redhat.com>
+References: <20260519075813.955333-1-jean-louis@dupond.be>
+ <9315f1ea-e590-4da6-9d11-5a640c578adc@yandex-team.ru>
+Content-Language: en-US, en-GB, nl-BE
+From: Jean-Louis Dupond <jean-louis@dupond.be>
+In-Reply-To: <9315f1ea-e590-4da6-9d11-5a640c578adc@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:bc8:3f2a:101::1;
- envelope-from=jean-louis@dupond.be; helo=apollo.dupie.be
+Received-SPF: pass client-ip=51.159.20.238; envelope-from=jean-louis@dupond.be;
+ helo=apollo.dupie.be
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -71,242 +74,230 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In some cases, it might happen that bitmaps become corrupt.
-For example when adding/removing bitmaps on a live image.
+Thanks for the review Vladimir.
+I've send a v2 patch with the fixes.
 
-Of course this should not happen, but in case this happens, the image is
-corrupt and even cannot be opened anymore. You'll get something like the
-following:
-qemu-img: Could not open 'disk.qcow2': Bitmap '' doesn't satisfy the constraints
+Thanks
+Jean-Louis
 
-So the image becomes useless, and cannot be repaired. This while in fact
-only (one) bitmap entry is corrupt, and the rest of the data is just
-intact.
-
-This commit adds a way to fix this corruption, by just replacing the
-bitmap list in the qcow2 image with the valid bitmaps, and dropping the
-bitmaps that are corrupt.
-
-$ qemu-img check disk.qcow2
-qemu-img: Check failed: Invalid argument
-qemu-img: Lost persistent bitmaps during inactivation of node '#block147': Bitmap '' doesn't satisfy the constraints
-
-$ qemu-img check -r all disk.qcow2
-qcow2_free_clusters failed: Invalid argument
-Leaked cluster 3 refcount=1 reference=0
-Leaked cluster 26 refcount=1 reference=0
-ERROR cluster 983214 refcount=0 reference=1
-Rebuilding refcount structure
-Repairing cluster 1 refcount=1 reference=0
-Repairing cluster 2 refcount=1 reference=0
-Repairing cluster 32768 refcount=1 reference=0
-Repairing cluster 65536 refcount=1 reference=0
-Repairing cluster 98304 refcount=1 reference=0
-Repairing cluster 131072 refcount=1 reference=0
-Repairing cluster 163840 refcount=1 reference=0
-Repairing cluster 196612 refcount=1 reference=0
-Repairing cluster 229377 refcount=1 reference=0
-Repairing cluster 262146 refcount=1 reference=0
-Repairing cluster 294915 refcount=1 reference=0
-Repairing cluster 327684 refcount=1 reference=0
-Repairing cluster 360449 refcount=1 reference=0
-Repairing cluster 393218 refcount=1 reference=0
-Repairing cluster 425987 refcount=1 reference=0
-Repairing cluster 458756 refcount=1 reference=0
-Repairing cluster 491521 refcount=1 reference=0
-Repairing cluster 524289 refcount=1 reference=0
-Repairing cluster 557058 refcount=1 reference=0
-Repairing cluster 589827 refcount=1 reference=0
-Repairing cluster 622596 refcount=1 reference=0
-Repairing cluster 655361 refcount=1 reference=0
-Repairing cluster 688130 refcount=1 reference=0
-Repairing cluster 720899 refcount=1 reference=0
-Repairing cluster 753668 refcount=1 reference=0
-Repairing cluster 786433 refcount=1 reference=0
-Repairing cluster 819202 refcount=1 reference=0
-Repairing cluster 851971 refcount=1 reference=0
-Repairing cluster 884740 refcount=1 reference=0
-Repairing cluster 917505 refcount=1 reference=0
-Repairing cluster 950274 refcount=1 reference=0
-Repairing cluster 983042 refcount=1 reference=0
-Repairing cluster 983214 refcount=1 reference=0
-The following inconsistencies were found and repaired:
-
-    2 leaked clusters
-    3 corruptions
-
-Double checking the fixed image now...
-No errors were found on the image.
-983056/1048576 = 93.75% allocated, 0.05% fragmented, 0.00% compressed clusters
-Image end offset: 64437878784
-
-And the image is valid again!
-Worst case you lose all bitmaps, but at least the image and the data
-itself is useable again.
-
-Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
----
- block/qcow2-bitmap.c   | 42 +++++++++++++++++++++++++++++++++++++++++-
- block/qcow2-refcount.c |  3 ++-
- block/qcow2.c          | 15 +++++++++++----
- block/qcow2.h          |  3 ++-
- 4 files changed, 56 insertions(+), 7 deletions(-)
-
-diff --git a/block/qcow2-bitmap.c b/block/qcow2-bitmap.c
-index b87940bb43..bcc9462feb 100644
---- a/block/qcow2-bitmap.c
-+++ b/block/qcow2-bitmap.c
-@@ -1734,11 +1734,14 @@ uint64_t qcow2_get_persistent_dirty_bitmap_size(BlockDriverState *in_bs,
- int coroutine_fn
- qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
-                               void **refcount_table,
--                              int64_t *refcount_table_size)
-+                              int64_t *refcount_table_size,
-+                              BdrvCheckMode fix)
- {
-     int ret;
-     BDRVQcow2State *s = bs->opaque;
-     Qcow2BitmapList *bm_list;
-+    Qcow2BitmapList *fixed_list = NULL;
-+    int valid_bitmaps = 0;
-     Qcow2Bitmap *bm;
- 
-     if (s->nb_bitmaps == 0) {
-@@ -1752,16 +1755,29 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
-         return ret;
-     }
- 
-+    if (fix & BDRV_FIX_ERRORS) {
-+        fixed_list = bitmap_list_new();
-+    }
-+
-     bm_list = bitmap_list_load(bs, s->bitmap_directory_offset,
-                                s->bitmap_directory_size, NULL);
-     if (bm_list == NULL) {
-         res->corruptions++;
-+
-+        if (fix & BDRV_FIX_ERRORS) {
-+            ret = update_ext_header_and_dir(bs, fixed_list);
-+            if (ret >= 0) {
-+                res->corruptions_fixed++;
-+            }
-+            goto out;
-+        }
-         return -EINVAL;
-     }
- 
-     QSIMPLEQ_FOREACH(bm, bm_list, entry) {
-         uint64_t *bitmap_table = NULL;
-         int i;
-+        bool bitmap_valid = true;
- 
-         ret = qcow2_inc_refcounts_imrt(bs, res,
-                                        refcount_table, refcount_table_size,
-@@ -1774,6 +1790,9 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
-         ret = bitmap_table_load(bs, &bm->table, &bitmap_table);
-         if (ret < 0) {
-             res->corruptions++;
-+            if (fix & BDRV_FIX_ERRORS) {
-+                continue;
-+            }
-             goto out;
-         }
- 
-@@ -1783,6 +1802,7 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
- 
-             if (check_table_entry(entry, s->cluster_size) < 0) {
-                 res->corruptions++;
-+                bitmap_valid = false;
-                 continue;
-             }
- 
-@@ -1799,10 +1819,30 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
-             }
-         }
- 
-+        if ((fix & BDRV_FIX_ERRORS) && bitmap_valid) {
-+            valid_bitmaps++;
-+            Qcow2Bitmap *bm_copy = g_new0(Qcow2Bitmap, 1);
-+            *bm_copy = *bm;
-+            bm_copy->name = g_strdup(bm->name);
-+            QSIMPLEQ_INSERT_TAIL(fixed_list, bm_copy, entry);
-+        }
-+
-         g_free(bitmap_table);
-     }
- 
-+    /* If fixing, update the bitmap directory with the repaired list */
-+    if ((fix & BDRV_FIX_ERRORS) && s->nb_bitmaps != valid_bitmaps) {
-+        ret = update_ext_header_and_dir(bs, fixed_list);
-+        if (ret >= 0) {
-+            res->corruptions_fixed += s->nb_bitmaps - valid_bitmaps;
-+        }
-+    }
-+
- out:
-+    if (fix & BDRV_FIX_ERRORS) {
-+        bitmap_list_free(fixed_list);
-+    }
-+
-     bitmap_list_free(bm_list);
- 
-     return ret;
-diff --git a/block/qcow2-refcount.c b/block/qcow2-refcount.c
-index 6512cda407..df7f6d2f23 100644
---- a/block/qcow2-refcount.c
-+++ b/block/qcow2-refcount.c
-@@ -2305,7 +2305,8 @@ calculate_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
-     }
- 
-     /* bitmaps */
--    ret = qcow2_check_bitmaps_refcounts(bs, res, refcount_table, nb_clusters);
-+    ret = qcow2_check_bitmaps_refcounts(bs, res, refcount_table,
-+                                        nb_clusters, fix);
-     if (ret < 0) {
-         return ret;
-     }
-diff --git a/block/qcow2.c b/block/qcow2.c
-index 81fd299b4c..dfb6b23932 100644
---- a/block/qcow2.c
-+++ b/block/qcow2.c
-@@ -1927,11 +1927,18 @@ qcow2_do_open(BlockDriverState *bs, QDict *options, int flags,
-     if (!(bdrv_get_flags(bs) & BDRV_O_INACTIVE)) {
-         /* It's case 1, 2 or 3.2. Or 3.1 which is BUG in management layer. */
-         bool header_updated;
--        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, errp)) {
--            ret = -EINVAL;
--            goto fail;
-+        Error *local_err = NULL;
-+        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, &local_err)) {
-+            /* Allow this to fail in check mode
-+             * because otherwise we can't open the image at all.
-+             */
-+            if (!(flags & BDRV_O_CHECK)) {
-+                ret = -EINVAL;
-+                error_propagate(errp, local_err);
-+                goto fail;
-+            }
-+            error_free(local_err);
-         }
--
-         update_header = update_header && !header_updated;
-     }
- 
-diff --git a/block/qcow2.h b/block/qcow2.h
-index 192a45d596..2d9c6929a7 100644
---- a/block/qcow2.h
-+++ b/block/qcow2.h
-@@ -1034,7 +1034,8 @@ void qcow2_cache_discard(Qcow2Cache *c, void *table);
- int coroutine_fn GRAPH_RDLOCK
- qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
-                               void **refcount_table,
--                              int64_t *refcount_table_size);
-+                              int64_t *refcount_table_size,
-+                              BdrvCheckMode fix);
- 
- bool coroutine_fn GRAPH_RDLOCK
- qcow2_load_dirty_bitmaps(BlockDriverState *bs, bool *header_updated,
--- 
-2.54.0
-
+On 20/05/2026 06:54, Vladimir Sementsov-Ogievskiy wrote:
+> On 19.05.26 10:58, Jean-Louis Dupond wrote:
+>> In some cases, it might happen that bitmaps become corrupt.
+>> For example when adding/removing bitmaps on a live image.
+>>
+>> Of course this should not happen, but in case this happens, the image is
+>> corrupt and cannot even be opened anymore. You get something like the
+>> following for example:
+>> qemu-img: Could not open 'disk.qcow2': Bitmap '' doesn't satisfy the 
+>> constraints
+>>
+>> So the image becomes useless, and cannot be repaired. This while in fact
+>> only (one) bitmap entry is corrupt, and the rest of the data is just
+>> intact.
+>>
+>> This commit adds a way to fix this corruption, by just replacing the
+>> bitmap list in the qcow2 image with the valid bitmaps, and dropping the
+>> bitmaps that are corrupt.
+>>
+>> qemu-img: Check failed: Invalid argument
+>> qemu-img: Lost persistent bitmaps during inactivation of node 
+>> '#block195': Bitmap '' doesn't satisfy the constraints
+>>
+>> qcow2_free_clusters failed: Invalid argument
+>> Leaked cluster 3 refcount=1 reference=0
+>> Leaked cluster 26 refcount=1 reference=0
+>> Repairing cluster 3 refcount=1 reference=0
+>> Repairing cluster 26 refcount=1 reference=0
+>> The following inconsistencies were found and repaired:
+>>
+>>      2 leaked clusters
+>>      1 corruptions
+>>
+>> Double checking the fixed image now...
+>> No errors were found on the image.
+>> 983056/1048576 = 93.75% allocated, 0.05% fragmented, 0.00% compressed 
+>> clusters
+>> Image end offset: 64435847168
+>>
+>> And the image is valid again!
+>> Worst case you lose all bitmaps, but at least the image and the data
+>> itself is useable again.
+>>
+>> Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
+>> ---
+>>   block/qcow2-bitmap.c | 78 ++++++++++++++++++++++++++++++++++++++++++++
+>>   block/qcow2.c        | 22 ++++++++++---
+>>   block/qcow2.h        |  4 +++
+>>   3 files changed, 100 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/block/qcow2-bitmap.c b/block/qcow2-bitmap.c
+>> index 256ec99878..f107de3301 100644
+>> --- a/block/qcow2-bitmap.c
+>> +++ b/block/qcow2-bitmap.c
+>> @@ -1807,3 +1807,81 @@ uint64_t 
+>> qcow2_get_persistent_dirty_bitmap_size(BlockDriverState *in_bs,
+>>         return bitmaps_size;
+>>   }
+>> +
+>> +/*
+>> + * qcow2_check_bitmaps - Check and optionally fix bitmap directory 
+>> and bitmaps
+>> + * This function is called during image check to detect bitmap 
+>> corruption.
+>> + * It attempts to load the bitmap directory and validates the 
+>> structures.
+>> + * If BDRV_FIX_ERRORS is set, it removes corrupted bitmaps.
+>> + */
+>> +int coroutine_fn GRAPH_RDLOCK
+>> +qcow2_check_bitmaps(BlockDriverState *bs, BdrvCheckResult *result,
+>> +                    BdrvCheckMode fix)
+>> +{
+>> +    BDRVQcow2State *s = bs->opaque;
+>> +    Qcow2BitmapList *bm_list;
+>> +    Qcow2BitmapList *fixed_list = NULL;
+>> +    Qcow2Bitmap *bm;
+>> +    int valid_bitmaps = 0;
+>> +    int ret = 0;
+>> +
+>> +    if (s->nb_bitmaps == 0) {
+>> +        /* No bitmaps - nothing to check */
+>> +        return 0;
+>> +    }
+>> +
+>> +    /* Try to load the bitmap directory */
+>> +    bm_list = bitmap_list_load(bs, s->bitmap_directory_offset,
+>> +                               s->bitmap_directory_size, NULL);
+>> +    if (bm_list == NULL) {
+>> +        /* Bitmap directory is corrupted */
+>> +        result->corruptions++;
+>> +
+>> +        if (fix & BDRV_FIX_ERRORS) {
+>> +            ret = update_ext_header_and_dir(bs, bitmap_list_new());
+>
+> This new empty list is leaked, bitmap_list_free() should be called for 
+> it.
+>
+>> +            if (ret < 0) {
+>> +                return ret;
+>> +            }
+>> +            result->corruptions_fixed++;
+>> +        }
+>> +
+>> +        return 0;
+>> +    }
+>> +
+>> +    if (fix & BDRV_FIX_ERRORS) {
+>> +        fixed_list = bitmap_list_new();
+>> +    }
+>> +
+>> +    /* Validate each bitmap */
+>> +    QSIMPLEQ_FOREACH(bm, bm_list, entry) {
+>> +        uint64_t *bitmap_table = NULL;
+>> +
+>> +        /* Try to load the bitmap table */
+>> +        ret = bitmap_table_load(bs, &bm->table, &bitmap_table);
+>> +        g_free(bitmap_table);
+>> +        if (ret < 0) {
+>> +            /* Bitmap table is corrupted */
+>> +            result->corruptions++;
+>> +            continue;
+>> +        }
+>> +
+>> +        if (fix & BDRV_FIX_ERRORS) {
+>> +            valid_bitmaps++;
+>> +            QSIMPLEQ_INSERT_TAIL(fixed_list, bm, entry);
+>> +        }
+>> +    }
+>> +
+>> +    bitmap_list_free(bm_list);
+>> +
+>> +    /* If fixing, update the bitmap directory with the repaired list */
+>> +    if ((fix & BDRV_FIX_ERRORS) && s->nb_bitmaps != valid_bitmaps) {
+>> +        ret = update_ext_header_and_dir(bs, fixed_list);
+>> +        bitmap_list_free(fixed_list);
+>> +        if (ret < 0) {
+>> +            return ret;
+>> +        }
+>> +        result->corruptions_fixed += s->nb_bitmaps - valid_bitmaps;
+>> +    }
+>
+> Hm, we leak fixed_list, if s->nb_bitmaps == valid_bitmaps.
+>
+>> +
+>> +    return 0;
+>> +}
+>
+>
+> Actually, in qcow2_check_bitmaps() you partly duplicate logic of
+> qcow2_check_bitmaps_refcounts(). Isn't it better to add fixing logic
+> directly to qcow2_check_bitmaps_refcounts()? It also goes further and
+> check also table entries.
+>
+That would be a good thing indeed!
+>
+>> \ No newline at end of file
+>> diff --git a/block/qcow2.c b/block/qcow2.c
+>> index 81fd299b4c..156fec5de3 100644
+>> --- a/block/qcow2.c
+>> +++ b/block/qcow2.c
+>> @@ -608,12 +608,20 @@ static int coroutine_fn GRAPH_RDLOCK
+>>   qcow2_co_check_locked(BlockDriverState *bs, BdrvCheckResult *result,
+>>                         BdrvCheckMode fix)
+>>   {
+>> +    BdrvCheckResult bitmap_res = {};
+>>       BdrvCheckResult snapshot_res = {};
+>>       BdrvCheckResult refcount_res = {};
+>>       int ret;
+>>         memset(result, 0, sizeof(*result));
+>>   +    /* Check and fix bitmaps */
+>> +    ret = qcow2_check_bitmaps(bs, &bitmap_res, fix);
+>> +    qcow2_add_check_result(result, &bitmap_res, false);
+>> +    if (ret < 0) {
+>> +        return ret;
+>> +    }
+>> +
+>>       ret = qcow2_check_read_snapshot_table(bs, &snapshot_res, fix);
+>>       if (ret < 0) {
+>>           qcow2_add_check_result(result, &snapshot_res, false);
+>> @@ -1927,11 +1935,17 @@ qcow2_do_open(BlockDriverState *bs, QDict 
+>> *options, int flags,
+>>       if (!(bdrv_get_flags(bs) & BDRV_O_INACTIVE)) {
+>>           /* It's case 1, 2 or 3.2. Or 3.1 which is BUG in management 
+>> layer. */
+>>           bool header_updated;
+>> -        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, errp)) {
+>> -            ret = -EINVAL;
+>> -            goto fail;
+>> +        Error *local_err = NULL;
+>> +        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, 
+>> &local_err)) {
+>> +            /* Allow this to fail in check mode
+>> +             * because otherwise we can't open the image at all.
+>> +             */
+>> +            if (!(flags & BDRV_O_CHECK)) {
+>> +                ret = -EINVAL;
+>> +                error_propagate(errp, local_err);
+>> +                goto fail;
+>> +            }
+>>           }
+>> -
+>>           update_header = update_header && !header_updated;
+>>       }
+>>   diff --git a/block/qcow2.h b/block/qcow2.h
+>> index 192a45d596..bf56b071fa 100644
+>> --- a/block/qcow2.h
+>> +++ b/block/qcow2.h
+>> @@ -1036,6 +1036,10 @@ qcow2_check_bitmaps_refcounts(BlockDriverState 
+>> *bs, BdrvCheckResult *res,
+>>                                 void **refcount_table,
+>>                                 int64_t *refcount_table_size);
+>>   +int coroutine_fn GRAPH_RDLOCK
+>> +qcow2_check_bitmaps(BlockDriverState *bs, BdrvCheckResult *result,
+>> +                    BdrvCheckMode fix);
+>> +
+>>   bool coroutine_fn GRAPH_RDLOCK
+>>   qcow2_load_dirty_bitmaps(BlockDriverState *bs, bool *header_updated,
+>>                            Error **errp);
+>
+>
 
