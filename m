@@ -4,55 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBA7CCD5BAC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:35:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58AE5CD5BAC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:37:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ3Y8-0002Ur-1L; Thu, 21 May 2026 09:34:56 -0400
+	id 1wQ3Zx-00036t-7B; Thu, 21 May 2026 09:36:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wQ3Xw-0002SH-K4
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:34:49 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wQ3Xu-0005Sp-EF
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:34:43 -0400
-Received: from DESKTOP-TUU1E5L.fritz.box (p508926a6.dip0.t-ipconnect.de
- [80.137.38.166])
- by linux.microsoft.com (Postfix) with ESMTPSA id 3B44020B7167;
- Thu, 21 May 2026 06:34:29 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 3B44020B7167
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1779370471;
- bh=a7EtJcaeszOWZCpp5YqQS4YLNVQ5b7sTn+HBpnI0Nag=;
- h=From:To:Cc:Subject:Date:From;
- b=khakCAse/5dIOrBY71aQvaxvwYL5xzV3VCoWnroZmL0hoQUagSX88UkHTcD29284G
- HWtMI+1sxyFJhE6rTDB08EwkZGeXHWRK8HvnD3OZsfNiVIXZQmP9xW4ZVSc47K4TAI
- 51UQEAoAoiPrPlDPlrfTvI2Ak/UwRTG7+fpuJYdg=
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: qemu-devel@nongnu.org
-Cc: Wei Liu <wei.liu@kernel.org>, Anirudh Rayabharam <anirudh@anirudhrb.com>,
- aastharawat@microsoft.com,
- =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Aastha Rawat <aastharawat@linux.microsoft.com>, magnuskulke@microsoft.com,
- Anirudh.Rayabharam@microsoft.com, liuwe@microsoft.com,
- doru.blanzeanu@microsoft.com, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH] accel/mshv: mitigate early boot vcpu exit race
-Date: Thu, 21 May 2026 15:34:33 +0200
-Message-Id: <20260521133433.48463-1-magnuskulke@linux.microsoft.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wQ3Zv-00036I-EB
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:36:47 -0400
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wQ3Zt-00069D-JO
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:36:46 -0400
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-651d6347a69so7193312d50.0
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 06:36:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779370604; cv=none;
+ d=google.com; s=arc-20240605;
+ b=eNoOyarct5SIhaPb3bAGB4VGlv4nDWkJTs77icdMV8T+KFTjgyq80wJ5G7sd9hYZ/C
+ S+CsZyRZ/23cTNmgpacbd2Xwc8uzdzsNS55L648Qv2rcdHNKIZSlevx2+NmlBomhuz3e
+ RsYBnhC/EslkGT6jdodD3cUOtkM4dUwYG2mdWoYg606vbZrKEoRb1xZvwRZp7kuQcgcQ
+ DsF0q5Lr/DQ2GCi5PSkIp2LvUnCxHW30zJsz7XGDnpKcNCChBcPOk1Rh8YKjgJvOMzF8
+ gmdBdY4wCJyyvsJDFRVcRjcmn+HkPWy0yvliATMCtDPJvBshN/a39wwC5CvOCtVR+K2S
+ D6pQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=rPrA6+viXeigP8WjQobrxNyXtwBzDxNCHHIJauZQCx0=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=EVNSIelWggnAuWQ0MTzu6e2XZEHxh943FxE2oi9B2r6tQ63dXTkLMz0Tf9JplUy+qs
+ g0ar2R3adgKANwvmKQZMSM3PEWKNVDBIdTx4EC7t9If5dJYMGAeeLtTxWBOXYVHlz0sK
+ U4g/IGGy5ZXH6CW/vumF2xwVfQK2gWDXgD+Su83oFof7KymYLZyViUgRksG4BEM0tril
+ nb323mFgFsTmDPmbd+sAOofqdK1SP1xum86GNCFxw8xFJGrrEW815N2GWCOnmNxVdW6H
+ z1IpLmLJIlzcMecjDhh0p+WitIGKtZ2/B5/KaPD1s4SigTDJlVCuF+LaMbzhvRav8Izf
+ ZlEA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779370604; x=1779975404; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=rPrA6+viXeigP8WjQobrxNyXtwBzDxNCHHIJauZQCx0=;
+ b=IDzHrJ56jUqYyBM/XKLvGd2I78Soaey+VrQweM/dmtErlqJ38UyCvNqicDwZC21/5+
+ S7H6VatOwANJjbW90DWy+4dxQ9ZI4AxVhomAnzefhnFLgpKqbx4AWVvlMznPjPhagHJD
+ nznYJXo5n4V+c4WtVy+o1/IT6e8HBToH4q6pisThkv2sw8sIYqxJdGRR7DzQQw7o3RP3
+ lr4KmGOV/fSRrQPm3WNZgZoxoFnbT2Bsl64tJ+JI/z0wkSjGJTgbnMflM6gK8r5wU/B3
+ OX3vyYFRQRtsz5BHBVA7rkx6GqvGUJltX85t9ieEgOlxiBx8dUsTBTmIfHY9DuuyUkPs
+ Kjlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779370604; x=1779975404;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rPrA6+viXeigP8WjQobrxNyXtwBzDxNCHHIJauZQCx0=;
+ b=dmI0bfS/UXbpVxvKcosg42jaMGlHEJ26TmjNiQI0ooove7jGGK2seP748SyMTUUUrV
+ oj3OtZMT90wxJj7/hcCa7jkk3RhRAQk2O/ERDgIBt7xmyPa92VBhT7c5XHYYmAcwyUGh
+ Ye6PKc1ddp+os9RoJIQRKiYVJCXugSEH2bqA4Ty5lcmnoylTg7Q2eK7Xib4ZyNG2b3Dm
+ 38bSVIY/ZQusHMv7/JxT0oP4srGRWMu3F+QqjpYwvqyfS83U1Ikkd81HKENe8iupO5v9
+ wqQo5NBVqCbhObowlHUiC0uQOJfhsXxjPms59Cw4CTCLT80a+7KZJm6KHzGAR/9MqHej
+ xkQQ==
+X-Gm-Message-State: AOJu0Yy1A0X4LxlOB4GkGU488rX3lwADVLqhnfZ65orDeRPszq6PMbZM
+ NcQSJfLK+2DN8dfWaXVHJw1i4dY8S9Kmvb+W936Pms8oI1S4TgzMWiR1ngPv0NjzmU2sGNCmR4E
+ XBnjxliBidql3xAMC1H2aJcKFK4kwhPilvkmySapCFw==
+X-Gm-Gg: Acq92OE2tSxJY8DY0f6yXDP/Px22xROKP52762+Q2j4p6OI7HGrS8uxpLY9shZB12Hu
+ L5woRwizEVJYNY+6Qr6ubwb7623m/Ex6Z248HxuP+yiZ1gJ6OW7lPPotSFtdVHnFynPJbJWt8hY
+ bIhHN6t4s6gGkzVqyNMzxkd0sskPEbcrptF9cyJKZhlorh0JdIuOgp0vJhcqJB+Kjejfen2zvmC
+ 6GfLuvd3HzGP32yhCnLFf55fVnasj5Lgslkvo/dadFU6DwYU91XWOSOCRSuD7ohBM2x9mho/z1L
+ 5jh4f3WiZKAC2Fji3osZZjvCnjmniJnopem6iXspANMl5nHd/m8dLgAPIO+wDZ9bSZs=
+X-Received: by 2002:a05:690e:14c4:b0:65e:3e40:ed9b with SMTP id
+ 956f58d0204a3-65ead053ce9mr2129897d50.44.1779370604330; Thu, 21 May 2026
+ 06:36:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20260520182213.872945-1-richard.henderson@linaro.org>
+ <20260520182213.872945-2-richard.henderson@linaro.org>
+In-Reply-To: <20260520182213.872945-2-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 21 May 2026 14:36:31 +0100
+X-Gm-Features: AVHnY4IV3591kgmAk00gURnbUy7QzSH7JEOyExI0if96mNYOdvaYuHdt59ZKofg
+Message-ID: <CAFEAcA-nNDpO5MvMsQSGOX_kRo95LmHLO3AeZ-V1uthLSPEFCA@mail.gmail.com>
+Subject: Re: [PATCH v6 01/64] target/arm: Implement ID_AA64ISAR3
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,113 +114,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When using the mshv accelerator, there is a high likelihood in early
-boot for a QMP execute::quit command to return w/o the QEMU process
-terminating.
+On Wed, 20 May 2026 at 19:22, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-The race is between SIG_IPI delivery and the vcpu thread's exec loop.
-qemu_cpu_kick() relies on SIG_IPI to make MSHV_RUN_VP return -EINTR so
-the vcpu thread can observe cpu->stop. During early boot, there are many
-PIO intercept exit produce MshvVmExitIgnore. That means the inner loop
-in mshv_cpu_exec() spins through RUN_VP ioctl -> handler -> RUN_VP
-ioctl, without being able to consult cpu->exit_request of cpu->stop.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-The qemu_cpu_kick_self() in sa_ipi_handler() was practically a no-op,
-since it calls cpus_kick_thread() which itsself issues a SIG_IPI, in the
-handler for that signal. Hence it has been removed a made a practial
-noop. Once we have a facility in MSHV to signal immediate_exit to the
-kernel it should be used in this handler.
-
-To mitigate we register a custom kick_vcpu_thread() impl for mshv, that
-will set cpu->exit_request before calling the generic kick_vcpu_thread()
-implement that will raise SIG_IPI.
-
-We then observe cpu->exit request in the mshv_cpu_exec() inner loop and
-break with EXCP_INTERRUPT when set.
-
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
----
- accel/mshv/mshv-all.c | 42 ++++++++++++++++++++++++++++++++++--------
- 1 file changed, 34 insertions(+), 8 deletions(-)
-
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index 58af674bd9..a3593c67db 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -502,6 +502,18 @@ static int mshv_cpu_exec(CPUState *cpu)
-     cpu_exec_start(cpu);
- 
-     do {
-+        /*
-+         * We consider a pending exit_request before re-entering the guest.
-+         * This condition is set by mshv_kick_vcpu_thread(), so we unset
-+         * thread_kicked to allow future kicks to interrupt the guest.
-+         */
-+        if (qatomic_load_acquire(&cpu->exit_request)) {
-+            qatomic_set(&cpu->exit_request, false);
-+            qatomic_set_mb(&cpu->thread_kicked, false);
-+            ret = EXCP_INTERRUPT;
-+            break;
-+        }
-+
-         if (cpu->accel->dirty) {
-             ret = mshv_arch_put_registers(cpu);
-             if (ret) {
-@@ -540,17 +552,17 @@ static int mshv_cpu_exec(CPUState *cpu)
- }
- 
- /*
-- * The signal handler is triggered when QEMU's main thread receives a SIG_IPI
-- * (SIGUSR1). This signal causes the current CPU thread to be kicked, forcing a
-- * VM exit on the CPU. The VM exit generates an exit reason that breaks the loop
-- * (see mshv_cpu_exec). If the exit is due to a Ctrl+A+x command, the system
-- * will shut down. For other cases, the system will continue running.
-+ * SIG_IPI handler for the vCPU thread. It's a noop currently. A decision to
-+ * leave the guest is communicated via cpu->exit_request, which is set by
-+ * mshv_kick_vcpu_thread() before it raises a SIG_IPI.
-+ *
-+ * Note: MSHV currently lacks an immediate_exit equivalent to KVM, there
-+ * remains a theoretical race window between userspace check and ioctl entry
-+ * in the vcpu loop. Once MSHV supports immediate_exit semantics, we should
-+ * invoke it here.
-  */
- static void sa_ipi_handler(int sig)
- {
--    /* TODO: call IOCTL to set_immediate_exit, once implemented. */
--
--    qemu_cpu_kick_self();
- }
- 
- static void init_signal(CPUState *cpu)
-@@ -605,6 +617,19 @@ cleanup:
-     return NULL;
- }
- 
-+/*
-+ * mshv-custom kick implementation:
-+ *
-+ * We set cpu->exit_request before the SIG_IPI is delivered to the vcpu
-+ * thread (as part of cpus_kick_thread()). It is consumed in the
-+ * mshv_cpu_exec loop.
-+ */
-+static void mshv_kick_vcpu_thread(CPUState *cpu)
-+{
-+    qatomic_set_mb(&cpu->exit_request, true);
-+    cpus_kick_thread(cpu);
-+}
-+
- static void mshv_start_vcpu_thread(CPUState *cpu)
- {
-     char thread_name[VCPU_THREAD_NAME_SIZE];
-@@ -719,6 +744,7 @@ static void mshv_accel_ops_class_init(ObjectClass *oc, const void *data)
-     AccelOpsClass *ops = ACCEL_OPS_CLASS(oc);
- 
-     ops->create_vcpu_thread = mshv_start_vcpu_thread;
-+    ops->kick_vcpu_thread = mshv_kick_vcpu_thread;
-     ops->synchronize_post_init = mshv_cpu_synchronize_post_init;
-     ops->synchronize_post_reset = mshv_cpu_synchronize_post_reset;
-     ops->synchronize_state = mshv_cpu_synchronize;
--- 
-2.34.1
-
+thanks
+-- PMM
 
