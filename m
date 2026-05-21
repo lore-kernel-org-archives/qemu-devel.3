@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61699CD343F
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 06:02:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18D3CCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 06:03:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPwU1-00068A-SN; Thu, 21 May 2026 02:02:13 -0400
+	id 1wPwUf-0006OW-Uo; Thu, 21 May 2026 02:02:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPwTz-00067l-3E
- for qemu-devel@nongnu.org; Thu, 21 May 2026 02:02:11 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPwUd-0006Lg-CL
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 02:02:51 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPwTx-00067d-A8
- for qemu-devel@nongnu.org; Thu, 21 May 2026 02:02:10 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-44985f4ab0fso3043813f8f.0
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 23:02:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPwUb-0006Iu-PC
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 02:02:50 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-49039a8851fso1158625e9.2
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 23:02:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779343327; x=1779948127; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779343368; x=1779948168; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Kf8uHWQIx+rhGhwVlOEmCrqlFf6F59bZiK9yJTexNF4=;
- b=JyOMJPhAyBr7+VRFq4UacRoGkT5WnV7eBRpyljoG9WQL82InJ2zT8+owcw68CD/ENL
- TNyzVggjEtFroZ/WOSSD7/mkpsLcIdm4JTrEdIZ+WHB0Acxfpf/BzoLbwAWZmr/EAwBs
- 6brX3vqIqjwBko7KX9VEzMXVCPRFDvSUEoVFzxo8JFYG/8tXAANNdm+XUXTvZ9IKxMIr
- g9G8r0P/92uNu6gzveCHorI/+kpp3D1wWb4PwBB5mZpcrszymyqLNELFlLYGnziJ5GDm
- rTwUhiR+4dBSHMJb/7FTJaQ5AIetrBURVZIOCVaCrYx+oOXx/8I5jRTFAP03J+jYkQz1
- TIOg==
+ bh=PnjyTG7/+dcGYmqLHSZ9QuqcFl7rCeFn8lBcTH1ol84=;
+ b=zGJ3sof3ImuBsusEE5MYoGIypYOQcC2NwqOczQJTyXb5uJOLFgbPeBSSden5MnI2b0
+ TSkBAm4BzXsdlmUWFFHCWp3n9gh2ai5JWT9O4XB8WZ8CvYqz6pGbgf/3qIcLPnk64YQZ
+ IaZNfmes1mU2qQsjWjBWl6euGqSCkiDIcErUQSlfc57F9N+uzGrpuxqJnaa5DjzbOA2u
+ VA3RqWO12z3h9Dn+zreGey1barYm3gLUMSre3sFO3WPQCXMafzPekKgVQp15yHLDXggi
+ xl7Eturlgptw++jUvp0hrB9kyEU2JHdW0xs0mUFxbO1GCVnmbMnuKIwEJC3WHRFRd4tO
+ V25A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779343327; x=1779948127;
+ d=1e100.net; s=20251104; t=1779343368; x=1779948168;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Kf8uHWQIx+rhGhwVlOEmCrqlFf6F59bZiK9yJTexNF4=;
- b=QSPMMUitX+yZiruObfZSL7s5YoLObjPi/g8wW0AzIzvc4CpOBvJwI8QIwkwszWAvk5
- DFG3GRoz33drVUZLwKpOTpLGF7f+jSjpDPXfX0KwPcJ/zVkdHkvCsegrAp4oQh3N7cBp
- 5H4PAPRpetDExU5I1pwwqQtWUfkGlr+g8p5BytA0GFnFjtyFYTdaiqNZgBXYf/em8Qv8
- miis8djDfAlVJER4XGs6384DEuinqvUi2zVh3icOVd4+J52HiLSij9J9Ej291u016Jsk
- HnHNEYAdJoWNm8q8hAigdPs+kI9jRnDu47w7v4M10Ai/OD+XAbZGusH19VmFuTkGhcyz
- QL8A==
+ bh=PnjyTG7/+dcGYmqLHSZ9QuqcFl7rCeFn8lBcTH1ol84=;
+ b=o+QmdFKJEI1vWJSuKwAWSpHm/Z/n9/SMdWDFkj7ywfT2KNlxDmxcOrWPiIur4VZ7mx
+ J/iBmSxlALripKsZWcljaoK9wR3pSC/HCONAisVj/oOPvdH6mcvPf7Ipvh7/njUCNPIJ
+ redaej/WlMYzNhgIzhI649/l5fLT/+Uch+wjGyOkhdM1JKWuZdvSrFiTU1IBKOyl6yFX
+ UP8tvHFoUfRr2NprhrILICOykb+i9Jtx04KjthM7psGbGr4824Kdzne26NRXydB8mcHW
+ TL/KyZwXTYOgKXI5bWUS61goLqKxGYLzkn9Di73MIhJaJRuu0clZcc49Ie/1ME68H9LE
+ 4W8Q==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8UB3Lmuz8ONp9HMiGs2vLg97KJCV2we82cl3ZGTn2fl+cqGtjMAwDVRrn0agp4zTSOQica2qxM4+Do@nongnu.org
-X-Gm-Message-State: AOJu0YwI3B4nuDRaWZGdUEBm9bCSsnfuKa7qCF7ssyz8XoYzXWOw9lFL
- J1tZ0QVscCNcIJFexRhUZoFPSvMsiuru+puge9PvR8o+JiFsAQClDxvag4CAVD+M6J+pWc2gp9r
- ocq1e5OM=
-X-Gm-Gg: Acq92OFxaARwrH/562QdEFYRWcPUDIetMbhswpIXQYcGtR82hjAZlN6ILVEODG3eBlk
- W/AyzlYv8kIjKU3tdK35hOHpUJ/FkL4HHET86ku4jdQOWztmOp549yzNY/fldbVqUeqZQZuEwy5
- g/BMghGeJiWAPcao9/8+x9LBIsS0XjwNfo/c9T4VL3JAsD6npwc6RTih/MWE2YlfJ1M8fI1NdrT
- kxEuIE7HM42MvIG1Fze8iVaeBv/kDPHuVfKWg9ZWUUMWfTs0WYVTORPCTnQotggsVHDsAv0UX8c
- mv2nO7KIwFjdcARGFBgw2jJVej/Gg0vLzQLUnshqGeNSPR1efGl2zYQCE/Jy3HmHlT7+xAJgxZm
- FSGdgi2Wy1jXUOxs9zm0UaEyYPJf9I/3MpSHnRCsHHOs9/aJeTTgVgfe4gh2HgUJEnREZzF/lBH
- ne8L5Y+Ay8ohHfIPgRf4eiCkfVQqntpDHyfwl/0mK9IZyertz9LxEfi6AuUoTeljpTvQ==
-X-Received: by 2002:a5d:5f91:0:b0:45a:e3dd:5869 with SMTP id
- ffacd0b85a97d-45ea41066a3mr1822013f8f.30.1779343327265; 
- Wed, 20 May 2026 23:02:07 -0700 (PDT)
+ AFNElJ81hnUzVizTIC5swWOP9+D6qdYOD28gbv/HqUhEg0q7SUsmVCLrFGboW6u6LnPrhIvDRBEI3fQQSfAm@nongnu.org
+X-Gm-Message-State: AOJu0YzV6VFsulMO1BfXAl3MlD6kfCY1v+LjR+OuRbT3JVLrp4cT11on
+ YBRoSASjC21bSKxoSJ9OjW5ZWzjUFSKylM9cTkavn3SHtqSmIuwuncxyres7JdKbuKYThv+G5x2
+ H7n8XOdw=
+X-Gm-Gg: Acq92OFSSjov7iEDAaZp8DAif3NBgME+Pcgp3EkSSuoDc6mR78Qv/YfeqYfVKL6kHLC
+ LgdVHCoOOtGv5B+qVuncWrJt1RPpqeYFqda7/UAnkSf4mqf67DouB5sWHWsqiKEUQVphhgllE/2
+ TUhnAdnCneaXPjntzzKtYk7Suq1VFbQok6MGPYmdUcmVpLi3HRM4fXlZUDqyF+Ewtl0slGIQN7P
+ 5yMBdwemhJHdcotxNiq3J7ELtcGPoEGrPJy/5nY9Cu2SB8xromPWxIACKchHaZ83FPD0ctC/N4z
+ 1XeM2WP1edKvfITdyHuJKgiaBjLtxHVCMaTDTyYMTHx69USza8oA66BXt14Qfze7nrjPCSFP49o
+ iN/II44NJTS4i7W384RGaTHjftbG+fXxYz6GfbyzEIzjrKNYPA6mMrbSckWnUmpHClCKfalupj6
+ aLGf8D26JF2BkHE4NJNtoJxfdJGb/ebNhSU21GJjefNu5aT7tm9xLT+wRFJsljnINn1A==
+X-Received: by 2002:a05:600c:c086:b0:489:e696:8362 with SMTP id
+ 5b1f17b1804b1-4903605c9afmr12341875e9.13.1779343368002; 
+ Wed, 20 May 2026 23:02:48 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eaa7d9daasm125702f8f.11.2026.05.20.23.02.05
+ 5b1f17b1804b1-49035c45734sm8474495e9.11.2026.05.20.23.02.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 May 2026 23:02:05 -0700 (PDT)
-Message-ID: <aa414d23-afe6-429b-ab20-1364ec5ecd45@linaro.org>
-Date: Thu, 21 May 2026 08:02:04 +0200
+ Wed, 20 May 2026 23:02:47 -0700 (PDT)
+Message-ID: <4ae2e509-9463-49c0-ab70-2d9095db5f89@linaro.org>
+Date: Thu, 21 May 2026 08:02:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/40] qemu-io: propagate errors through Error API instead
- of printf
+Subject: Re: [PATCH 24/40] tests/qtest/pnv: drop unnecessary -serial mon:stdio
 Content-Language: en-US
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 References: <20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com>
- <20260521-qemu-no-hmp-v1-14-d104f809e145@redhat.com>
+ <20260521-qemu-no-hmp-v1-24-d104f809e145@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260521-qemu-no-hmp-v1-14-d104f809e145@redhat.com>
+In-Reply-To: <20260521-qemu-no-hmp-v1-24-d104f809e145@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,88 +105,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 20/5/26 23:49, Marc-André Lureau wrote:
-> Convert the qemu-io command infrastructure to use QEMU's Error API
-> (Error **errp) for error propagation instead of printing directly to
-> stdout/stderr via printf/fprintf.
+> The pnv-xive2-test and pnv-host-i2c-test pass "-serial mon:stdio"
+> but never use HMP commands. The "mon:" chardev prefix creates an
+> HMP monitor mux, which fails when HMP is disabled. Other pnv tests
+> (e.g. pnv-spi-seeprom-test) don't specify -serial at all.
 > 
-> The cfunc_t typedef, all ~35 command functions, the dispatcher chain
-> (command/init_check_command/qemuio_command), and helper functions
-> (parse_pattern, create_iovec, qemu_io_alloc_from_file) all gain an
-> Error **errp parameter. Async completion callbacks (aio_read_done,
-> aio_write_done, aio_discard_done) use error_report() since they have
-> no Error path back to the caller.
-> 
-> Update tests:
-> - error_report_err() prepends qemu-io: prefix
-> - copy-before-write: check the HMP return value, rather than stdio
-> - other tests: update to check JSON {"return": "Error: error text"}
+> Drop the unnecessary -serial mon:stdio option.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   include/qemu-io.h                          |   4 +-
->   block/monitor/block-hmp-cmds.c             |   2 +-
->   qemu-io-cmds.c                             | 426 +++++++++++++++--------------
->   qemu-io.c                                  |  17 +-
->   tests/qemu-iotests/004.out                 |  20 +-
->   tests/qemu-iotests/021.out                 |  60 ++--
->   tests/qemu-iotests/060.out                 |  44 ++-
->   tests/qemu-iotests/071.out                 |  10 +-
->   tests/qemu-iotests/072.out                 |   2 +-
->   tests/qemu-iotests/080.out                 |   4 +-
->   tests/qemu-iotests/089.out                 |   4 +-
->   tests/qemu-iotests/114.out                 |   2 +-
->   tests/qemu-iotests/134.out                 |   2 +-
->   tests/qemu-iotests/137.out                 |   2 +-
->   tests/qemu-iotests/171                     |   2 +-
->   tests/qemu-iotests/171.out                 |  68 ++---
->   tests/qemu-iotests/214.out                 |   2 +-
->   tests/qemu-iotests/220.out                 |   2 +-
->   tests/qemu-iotests/244.out                 |  12 +-
->   tests/qemu-iotests/249.out                 |   6 +-
->   tests/qemu-iotests/271.out                 |  14 +-
->   tests/qemu-iotests/tests/copy-before-write |  66 +++--
->   22 files changed, 404 insertions(+), 367 deletions(-)
+>   tests/qtest/pnv-host-i2c-test.c | 2 +-
+>   tests/qtest/pnv-xive2-test.c    | 2 +-
+>   2 files changed, 2 insertions(+), 2 deletions(-)
 
-
-> diff --git a/qemu-io-cmds.c b/qemu-io-cmds.c
-> index de4c1966fea..5093aa4169a 100644
-> --- a/qemu-io-cmds.c
-> +++ b/qemu-io-cmds.c
-
-
-> -static int reopen_f(BlockBackend *blk, int argc, char **argv)
-> +static int reopen_f(BlockBackend *blk, int argc, char **argv, Error **errp)
->   {
->       BlockDriverState *bs = blk_bs(blk);
->       QemuOpts *qopts;
-
-> @@ -2609,37 +2624,41 @@ static int reopen_f(BlockBackend *blk, int argc, char **argv)
->           qdict_put_bool(opts, BDRV_OPT_CACHE_NO_FLUSH, flags & BDRV_O_NO_FLUSH);
->       }
->   
-> -    bdrv_reopen(bs, opts, true, &local_err);
-> -
-> -    if (local_err) {
-> -        error_report_err(local_err);
-> -        return -EINVAL;
-> +    {
-> +        Error *local_err = NULL;
-> +        bdrv_reopen(bs, opts, true, &local_err);
-> +        if (local_err) {
-> +            error_propagate(errp, local_err);
-> +            return -EINVAL;
-> +        }
->       }
-
-         if (bdrv_reopen(bs, opts, true, errp) < 0) {
-             return -EINVAL;
-         }
-
-Otherwise:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
->   
->       blk_set_enable_write_cache(blk, !writethrough);
->       return 0;
->   }
 
