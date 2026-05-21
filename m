@@ -4,62 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 368F8CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:59:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B592ECD4F3D
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:59:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ3vj-0007oQ-3S; Thu, 21 May 2026 09:59:24 -0400
+	id 1wQ3uL-00028F-RD; Thu, 21 May 2026 09:57:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wQ3vO-0007V4-0l
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:58:58 -0400
+ id 1wQ3uI-0001mJ-Cg
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:57:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wQ3vM-0002Yt-Mp
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:58:57 -0400
+ id 1wQ3uG-00012q-2C
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:57:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779371935;
+ s=mimecast20190719; t=1779371867;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sBZPAL2OmLnFOXytxhEUqPKK0xQUtQHNqYgdlRra34U=;
- b=fkwOgc6n7T8yJbCCaN5wNmU68w69hni2vzJIFqc3yygyFMcTcDev+BDBpHwOlX5xgAjQfM
- B4MloaCfvpSUN5hEMJNLReM7w9UNQePP5NGTQLx9TIfvb2OQKrhxRQnSJKlF0Rse7weEBp
- YF4KsjBpT9mcOvrrTn5J/s0qqXvU/+A=
+ bh=GzvGw9HB+8PugB6Z8oQMMVKJExk0hOER2A6QhEDEAZg=;
+ b=ccUcurf7or3LFT3tXKWkhktBBk1Wntluab2+ozMsnrKbad29MHNOGgmskjvg12Z5R44Li/
+ /+eFAHgRAxyB+m32l7UnqCVh40Z8/BvzUMBGMa2ZBlBpUwocZDAvgLM0BjXtxiQPP2dJQd
+ rxojaEMpy1dwoQ5tRXhMFn73C7BGAHc=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-281-vARaGS7gOPeuKNsHX-Wl8Q-1; Thu,
- 21 May 2026 09:58:48 -0400
-X-MC-Unique: vARaGS7gOPeuKNsHX-Wl8Q-1
-X-Mimecast-MFC-AGG-ID: vARaGS7gOPeuKNsHX-Wl8Q_1779371927
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-569-QIUWvFt0OjW9aurBGJgIEg-1; Thu,
+ 21 May 2026 09:57:42 -0400
+X-MC-Unique: QIUWvFt0OjW9aurBGJgIEg-1
+X-Mimecast-MFC-AGG-ID: QIUWvFt0OjW9aurBGJgIEg_1779371861
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 40B5918002EE; Thu, 21 May 2026 13:58:47 +0000 (UTC)
+ id 96BC818002CF; Thu, 21 May 2026 13:57:41 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.26])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D4DE11803A8F; Thu, 21 May 2026 13:58:45 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8CE361684; Thu, 21 May 2026 13:57:40 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL v2 30/38] ui/input-linux: Use Linux key codes
-Date: Thu, 21 May 2026 17:55:41 +0400
-Message-ID: <20260521135551.1752945-31-marcandre.lureau@redhat.com>
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ xen-devel@lists.xenproject.org (open list:X86 Xen CPUs)
+Subject: [PULL v2 18/38] hw/display/xenfb: Use Linux key codes
+Date: Thu, 21 May 2026 17:55:29 +0400
+Message-ID: <20260521135551.1752945-19-marcandre.lureau@redhat.com>
 In-Reply-To: <20260521135551.1752945-1-marcandre.lureau@redhat.com>
 References: <20260521135551.1752945-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -93,25 +96,48 @@ representations.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260520-input-v3-22-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <20260520-input-v3-10-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 ---
- ui/input-linux.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ hw/display/xenfb.c | 21 +++------------------
+ 1 file changed, 3 insertions(+), 18 deletions(-)
 
-diff --git a/ui/input-linux.c b/ui/input-linux.c
-index 74bc8511428..f4eee1ffd7e 100644
---- a/ui/input-linux.c
-+++ b/ui/input-linux.c
-@@ -166,8 +166,7 @@ static void input_linux_handle_keyboard(InputLinux *il,
+diff --git a/hw/display/xenfb.c b/hw/display/xenfb.c
+index 218f37f0740..ae302b217fe 100644
+--- a/hw/display/xenfb.c
++++ b/hw/display/xenfb.c
+@@ -191,29 +191,14 @@ static int xenfb_send_position(struct XenInput *xenfb,
+     return xenfb_kbd_event(xenfb, &event);
+ }
  
-         /* send event to guest when grab is active */
-         if (il->grab_active && !input_linux_should_skip(il, event)) {
--            int qcode = qemu_input_linux_to_qcode(event->code);
--            qemu_input_event_send_key_qcode(NULL, qcode, event->value);
-+            qemu_input_event_send_key_linux(NULL, event->code, event->value);
-         }
+-/*
+- * Send a key event from the client to the guest OS
+- * QEMU gives us a QCode.
+- * We have to turn this into a Linux Input layer keycode.
+- *
+- * Wish we could just send scancodes straight to the guest which
+- * already has code for dealing with this...
+- */
++/* Send a key event from the client to the guest OS */
+ static void xenfb_key_event(DeviceState *dev, QemuConsole *src,
+                             QemuInputEvent *evt)
+ {
+     struct XenInput *xenfb = (struct XenInput *)dev;
+-    int qcode = qemu_input_linux_to_qcode(evt->key.key);
+-    int lnx;
  
-         /* hotkey -> record switch request ... */
+-    if (qcode < qemu_input_map_qcode_to_linux_len) {
+-        lnx = qemu_input_map_qcode_to_linux[qcode];
+-
+-        if (lnx) {
+-            trace_xenfb_key_event(xenfb, lnx, evt->key.down);
+-            xenfb_send_key(xenfb, evt->key.down, lnx);
+-        }
+-    }
++    trace_xenfb_key_event(xenfb, evt->key.key, evt->key.down);
++    xenfb_send_key(xenfb, evt->key.down, evt->key.key);
+ }
+ 
+ /*
 -- 
 2.54.0
 
