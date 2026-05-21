@@ -4,152 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD286CD5BAC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 09:07:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2C68CD5BAC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 09:07:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPzMf-0004Lp-Jz; Thu, 21 May 2026 05:06:49 -0400
+	id 1wPzMy-0004Ri-3k; Thu, 21 May 2026 05:07:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wPzMe-0004Lb-64
- for qemu-devel@nongnu.org; Thu, 21 May 2026 05:06:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wPzMx-0004RQ-4o
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 05:07:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wPzMb-000458-CL
- for qemu-devel@nongnu.org; Thu, 21 May 2026 05:06:47 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wPzMv-0004Df-0D
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 05:07:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779354403;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1779354424;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=2noWBtuPgFh7MkUW4sqR1vRJYRpLXxZIDQdEnFYtFlc=;
- b=VQU62PyRwGr1JOCcC+YuT0H0apDOh/k6A9X8kj2e7pJxoQDsOdzDDYFvku9qlA1CoI8JMs
- jOiyz4JOCtqJHFBCDrYWMqeVxm42gGnib4l/Lluie1H/agbv0PhqYANVxQ+tSvvPlxyr0W
- zJvGOA0ZODZ/H+eg1qeeQsIDC2DBKqk=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-114-uvvFxGYjNmGIvRqeb_O90g-1; Thu, 21 May 2026 05:06:41 -0400
-X-MC-Unique: uvvFxGYjNmGIvRqeb_O90g-1
-X-Mimecast-MFC-AGG-ID: uvvFxGYjNmGIvRqeb_O90g_1779354400
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-48fd2b502e2so50353255e9.2
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 02:06:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779354400; x=1779959200; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=2noWBtuPgFh7MkUW4sqR1vRJYRpLXxZIDQdEnFYtFlc=;
- b=L0ooKjhtXc1jxwFWYvTRKCysOW1Dl2qXVeVr7WrbSKW1/PlHwVUL3K+mAMaAH3QH+g
- PDkivVas4PcsrPXr+5D91KiDMG23+mXFx/0kaYUh2HJVu4AfYAv4lbTt4UAhNUcKcBc5
- IZrZH5JltrCZMV2XrcLpPh8ydTTX4SDJtpPl92Vb7gEF2IrqO6NvmDuT74kySalsJUrb
- Fpb3GvgUpcxxYEVQsLtwfQZg10IRd6G9uaeXmCNhxUD09Q/uNeJc47APm4HyWdt7oi9C
- qAyk3TwlwbyJy2hLS1gjrzBzL6BgaVTZmYqYhw3syIcgPbMbAfBbOwHaGTQxo+a9b8DI
- 3l5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779354400; x=1779959200;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2noWBtuPgFh7MkUW4sqR1vRJYRpLXxZIDQdEnFYtFlc=;
- b=bKCsauKH6GJ4pnqC/Di4jvdH0Tm/TKDoRxdp3GqTE9h0/WW+W1LRsya91VTiC/FfR8
- Km0KkZ+cKI/PFNJvm4F8D0t/jMHMkczgeUqc8OJ97CnSoarkLQxOXUGuxm3TfV/n8P52
- CJe+BkK9VmM2J+YnS9KDjhzBFqN+Yki4Je9Wtw4TXqzHP/dBHw0FhCVCsNJAxmPA9WGf
- Vsg6GczjFmlsihPq6Q9vprTOni0vsZbP1C8KrQzs2YzeX0kvXJfGNwgMnVqRakzdkrzc
- heZd3rgqU70b0jKl83JnI+z0kVb6sq+4GZc+kZro1f17pJtpGjqEzdQyzqOqu58vR7ca
- ISGA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+xdoJzbJb3486YvD84pbchv5vULhPyGv8i5Oygv/dNqsAp7nTW5PvampBxbsp2U4LRNwnmfgtIK8jX@nongnu.org
-X-Gm-Message-State: AOJu0Yys6Q+j8LTz+Xzwyg13i8dtqizITOVeXA4Lnf3xPDSXAsRCQ7ak
- V8MmxXJrCu9LNtZN7Dmw/Q26t+4WVxAM64IcUfBWMaGCuLtR94BYJfKgwbehuuYKLAaEXtGjHb7
- 505M8HbZ/oIkmKbhJdvvVAyOb/ePnkOhHknzUE3i4hOaakE14WRnkhF2o
-X-Gm-Gg: Acq92OH3CWRPkYN1yL19DnKOs8oPAS5JzT0WUgNhpNWfsX1Hu6Oaj7D0shRbIPe529I
- eoUOLzpaK2yy7KXiTqKZsZkzvvcaVlo7qB42+Vi7DNxN5vuULRQprS7Z+hkS3YAYZCGdjtVl57W
- uzpt6JTzxpSrackaM0ewNtXkeY9h5EGiWrmFgLiHcVo5S2tbTXB5OhJ1I2Aer/9BQp5c5bndvg8
- T/LUYIfbOu/eYP7PNU2BAcMbr/5etM1iXIA52uo5f+lGGxw8iD8Ch5CG3kbH9bQdItf+KerB6CH
- 0lwWiM6jCltO50l57zDgG7OhOOCvmr+HT0aYTTVOB3GWZuk/SLUJ9JLxHSc0tVrWgoafEAD2ZtF
- 8Nt5TJdQQYipXHpwmRud4xs8egEQj7Q==
-X-Received: by 2002:a05:600d:10:b0:48f:e230:2a1b with SMTP id
- 5b1f17b1804b1-490360ecf11mr24140285e9.30.1779354400391; 
- Thu, 21 May 2026 02:06:40 -0700 (PDT)
-X-Received: by 2002:a05:600d:10:b0:48f:e230:2a1b with SMTP id
- 5b1f17b1804b1-490360ecf11mr24139895e9.30.1779354399975; 
- Thu, 21 May 2026 02:06:39 -0700 (PDT)
-Received: from [192.168.0.9] ([47.64.114.232])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49033d3515asm59195555e9.1.2026.05.21.02.06.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 May 2026 02:06:39 -0700 (PDT)
-Message-ID: <7468ff74-f558-434a-99b7-13dec1784f39@redhat.com>
-Date: Thu, 21 May 2026 11:06:38 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=4mq4qjfbvw7WDgqQa0Il9u5KD5VTQPxfcl1OKGQzycA=;
+ b=RO/1y8MqoQJy+H9ZpBPu+PoCzd6q9Inazpu2krsbLmgA89KvqTMzFN4/7kUUTka1mn3oEo
+ 5w+PYgWApCvAzG03SCd5fo5VI2NLMMzIjtIY2PsdTrLdZvQNr+nettHxBzrSanX7kHlDoI
+ ohVkV9uZQHXlXAB4pmPZoRpQVNsOrJ0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-687-S0HVkQRAPQWrAfftsrwqbQ-1; Thu,
+ 21 May 2026 05:06:59 -0400
+X-MC-Unique: S0HVkQRAPQWrAfftsrwqbQ-1
+X-Mimecast-MFC-AGG-ID: S0HVkQRAPQWrAfftsrwqbQ_1779354418
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5A2EF1956059; Thu, 21 May 2026 09:06:58 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.98])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 248F61800357; Thu, 21 May 2026 09:06:53 +0000 (UTC)
+Date: Thu, 21 May 2026 10:06:49 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-devel@nongnu.org, Mauro Matteo Cascella <mcascell@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: Re: RFC: GitLab issues for security disclosures
+Message-ID: <ag7LKRmah6AAFDSY@redhat.com>
+References: <agxzKzzDOJm1EU_v@redhat.com>
+ <c9cd8228-0a18-49f7-b403-445affeaf972@oss.qualcomm.com>
+ <ag3OopKwGVUjSrrV@redhat.com>
+ <e7f1fd11-774d-4610-8cca-a434f508e472@oss.qualcomm.com>
+ <ag3xwssG6KZecv0o@redhat.com>
+ <20260520191235-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8] iotests: mark 151, 181, 185 & 308 as flaky tests
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20260521085148.1492614-2-berrange@redhat.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260521085148.1492614-2-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+In-Reply-To: <20260520191235-mutt-send-email-mst@kernel.org>
+User-Agent: Mutt/2.3.1 (2026-03-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,40 +92,105 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/05/2026 10.51, Daniel P. Berrangé wrote:
-> Introduce a "_flaky_test" function for shell based I/O tests which
-> accepts a GitLab issue URL, and causes the I/O test to be skipped
-> unless the $QEMU_TEST_FLAKY_TESTS environment variable is set.
+On Wed, May 20, 2026 at 07:14:41PM -0400, Michael S. Tsirkin wrote:
+> On Wed, May 20, 2026 at 06:39:14PM +0100, Daniel P. Berrangé wrote:
+> > On Wed, May 20, 2026 at 12:33:16PM -0500, Pierrick Bouvier wrote:
+> > > On 5/20/2026 10:09 AM, Daniel P. Berrangé wrote:
+> > > > On Wed, May 20, 2026 at 10:01:14AM -0500, Pierrick Bouvier wrote:
+> > > >> Hi Daniel,
+> > > >>
+> > > >> On 5/19/2026 9:26 AM, Daniel P. Berrangé wrote:
+> > > >>> The qemu-security mailing list was created several years back now and
+> > > >>> traditionally saw 1-2 disclosures a month at worst. This was manageable.
+> > > >>>
+> > > >>> Since approx March 1st, the new normal is to see as many as 20 disclosures
+> > > >>> in one single day, more than 200 in total now. This is unsustainable.
+> > > >>> I was thinking we needed more people on qemu-security to triage, but IMHO
+> > > >>> this won't really fix the problem.
+> > > >>>
+> > > >>
+> > > >> Considering the increase in number of issues, would that be possible to
+> > > >> make stricter rules about what is expected?
+> > > >>
+> > > >> For instance, asking for a working exploit and optionally a VM image +
+> > > >> instructions to reproduce it. I am not expert on the topic, but what I
+> > > >> see is that if we have this, all duplicates would be eliminated at once.
+> > > > 
+> > > > With the new crop of AI assisted disclosures there is absolutely no
+> > > > lack of data provided.
+> > > > 
+> > > > Most come with reproducible exploits, detailed descriptions and analysis,
+> > > > and more - everything you could conceivably need to triage the disclosure.
+> > > > Reading and interpreting this takes significant mental effort and there's
+> > > > too much data to quickly/easily eliminate dupes.
+> > > >
+> > > 
+> > > Maybe we need to "standardize" this part then.
+> > > Or do something like asking a (GitLab) CI pipeline to be written to
+> > > expose the issue. If we can just run this with a specific qemu
+> > > remote/branch, it becomes trivial to rerun it when fixes are pushed.
+> > > 
+> > > It definitely does not solve the original scaling issue, but maybe can
+> > > help to absorb it, and spend time where it's useful: writing and
+> > > upstreaming a fix, and check it "broke" the exploit.
+> > > 
+> > > >>> This needs an issue tracker to cope with & email is not an issue tracker.
+> > > >>> We faked an issue tracker with a shared spreadsheet to prevent us drowning
+> > > >>> these past few months, but this is still not sustainable & probably won't
+> > > >>> ever be.
+> > > >>>
+> > > >>
+> > > >> Overall, you're right.
+> > > >> However, changing the tool won't solve the number of issues sent, and
+> > > >> for that, something additional is needed.
+> > > > 
+> > > > I don't expect there to be any change in submission rate. The proposal
+> > > > is based on the expectation that the submission rate will continue at
+> > > > a high level for a long time. Primarily the goal is to reduce the
+> > > > tracking and triage work overhead and to eliminate/reduce single person
+> > > > bottlenecks in the process
+> > > > 
+> > > >> I wonder also what is the percentage of duplicates there is from what
+> > > >> you observed in the last 2 months. Any rough idea of the number?
+> > > > 
+> > > > Definitely at least 10%, probably closer to 15%.
+> > > >
+> > > 
+> > > Ok, interesting number, thanks. I was expecting much more, but I'm
+> > > biased having heard Linus this morning talk about this for Linux kernel.
+> > 
+> > I expect the dupes to increase over time as more people run the
+> > same analysis across QEMU, especially given that most of the bugs
+> > are not yet fixed. 
 > 
-> The equivalent "skip_flaky" test decorator is added for python based
-> I/O tests with the same behaviour.
+> something I was unaware of previously, is that gitlab is a CNA:
+> https://about.gitlab.com/security/cve/
 > 
-> This is used by:
-> 
->    * Test 151 which fails in QEMU private AWS runners due to failure
->      to make progress in time
->    * Test 181 which fails with a non-responsive QEMU on AWS runners
->      with the QED format
->    * Test 185 which fails in GitLab shared runners
->    * Test 308 which fails to see disk usage increase after fallocate
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
-> 
-> Previously posted as part of the larger I/O tests series. Attempted
-> to merge but it failed on AWS private runners, while still passing
-> on GitLab shared runners.
-> 
->    https://lists.gnu.org/archive/html/qemu-devel/2026-05/msg04939.html
-> 
-> To skip the further tests we needed changes to iotests.py too, hence
-> posting for re-review before proposing for merge again
+> so using gitlab issues means assigning CVE #s should be super easy.
 
-Looks sane to me!
+That's interesting, but I'm not sure it is a match for what we want
+in practice if you see their process & timeframes...
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+  "We will acknowledge receipt of CVE requests the next business
+   day and strive to send regular updates about our progress. Our
+   goal is to determine if the vulnerability is valid and communicate
+   back to the submitter within 30 business days."
+
+We don't really need someone to spend time on additional analysis,
+as we'll already know the bug is valid at this point and just need
+a CVE assignment, ideally the same day.
+
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
