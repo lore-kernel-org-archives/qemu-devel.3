@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2F70CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:18:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91C22CD5BB5
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:18:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ3Hi-000449-Vh; Thu, 21 May 2026 09:17:59 -0400
+	id 1wQ3Hk-00045k-Iq; Thu, 21 May 2026 09:18:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wQ3Hh-00041x-3I
+ id 1wQ3Hh-00041z-3E
  for qemu-devel@nongnu.org; Thu, 21 May 2026 09:17:57 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wQ3HZ-0008RX-9t
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:17:54 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4896c22fcbaso51306215e9.0
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 06:17:45 -0700 (PDT)
+ id 1wQ3HZ-0008Qj-BE
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:17:53 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-44a14580111so4597525f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 06:17:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779369464; x=1779974264; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779369463; x=1779974263; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zDXJ8MMK1Q0dgtGgn75QMd7NdERnosrMLf1EdSQs/GE=;
- b=wTOtj9WCz7hWUSH0ke5xys9KQjDpOKc1kAtCfV+fuXX98hgwlTQJDq+b88Os8o4hJ5
- jJcFcmi2RErjuFBIr33n1IB9Lv8kyrQHgfw0j40Jjyy7Q1Rx6uEDmCvILBBzraUbGhjF
- 4w73WkQt7yql14UmJhqNYddlxEB1rzdyYntPxsnQ2amQzKNZ1FFEP03r7c6Dn578e5kh
- M/htu5PhvD9F3pMvCBow77Lj7DHhsVwo8zakWxNqOP1UTXguW9aBRb65ND34fRzlWKm4
- xUtXW/QJhjKY+AWgoKLqmEYsZ7Y1mf/rJyn+796Ph/wxMV0JHFI/DfyXlSBnwoxWplIU
- toiA==
+ bh=Dhi0yYpKFaxwEdsneAb6BI4LLBY0LWLrqFgh9GqtIPc=;
+ b=WMOICJicqIBlwMaUpuvPZuM3J380ZxI0ZRLmE2aDU0erD5m2YmVoHG2BxCZZNMR9nA
+ ha6lwUMPevGHkKAZ9DWi6I5RDF10g4undG3M3Vjl8PMmBMxEneHXPFbiqC1yAbSBBk/h
+ 24FqCJtn4yZoc+LANqb9IOzMTMPxHaMLZMMVF6y9LL+t+ipmo5Z8HUGGGlWKhtLmu+HK
+ irEzv6WEDo6HUjhxCeGUN0Q+PkBYWYNNJWfPX/PLZSoKurAROUj+Z6TyIuUJ5b8y+Y1+
+ q81RePZ5aMCdDGkPYrBsk4AT3N8uGatc5zvPfmI89f/evXzixvnN3b+nY9xk2AEr7iW9
+ nTqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779369464; x=1779974264;
+ d=1e100.net; s=20251104; t=1779369463; x=1779974263;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=zDXJ8MMK1Q0dgtGgn75QMd7NdERnosrMLf1EdSQs/GE=;
- b=hSbz4rqkh8loApFmw5mjprth+OfAKERDIdccaLd2boBBtGJLcbTNDENyZX35AfdjNR
- kmSAdTyYdr6p5rbf0z1NrEvidAYIjRfGRPBWN2nHz0suvYkDjZYGIz9kNiAUTdD6upp+
- 4InpUsSnMxptlMbj9WQQB4FNv9ZQc7oa4BIM/jxn+OOcckFE4ivkNXcmlzHbd3Ji1Ma6
- nILLfuVIl/rL4Pi0EJT0TVYIwYNzU4StUFx+EOD9KiRsJHLqJIBvCsxVxsCVMOLXXKeW
- 4oOZdcEzU4rSPzlJaF6bkQefCH0wvo4QOcZOKqIYSJ4Cm8SCDrLQO2bkeGWZu2qbljQZ
- q8Vw==
-X-Gm-Message-State: AOJu0YyuVheMXup6Q+qdhm0RqtiU9m9K+WLpAYK7csBN+eV7ckxrsM1o
- 6R2+o7SII5HiNb/DSNLpQBrZJD4WmU5c7ns+nOCuSEkBIOLAuH6jUKYipTxcLtH3uxw=
-X-Gm-Gg: Acq92OE00p059kYank6+7NWRVbFgyq9C6wZxzsWyGohBtFNNlRA3MAAaTV6ilbLEoc9
- pr08MASGe7LPGDS9gRW+AlIV6rWJ0CyVjhafPTvtWnlBfQxT9o/yaAHJ4SgC0RgfT931dTG49+X
- RG8XumhVkqZeELsELDQra79p8s1rBE7qjYJTg42YFu23D9+ll1/Pmc2N9ulrYplRF/J9rN3p166
- iuAL1rpKkC5dYJ9U80sRYCxHvv+4vMOb8RCXyZmBt9QBi24fNmnk9tn7ylGs6Vj1WSAwMuKZ88N
- xgXfSMiR6rCZffEA1eY1I6DYLpz7yoXg0kkbh4g7/5s6Qm86TP4U8osqlXRLVvIfCkQ6ZOtOzjt
- yG0hSnP9ZtF6ec8U046/cJ3iC7DifgRtZ5QQTfpl3CkCG+bo3/aS+elZjNiPtJGQZN8mtcyyrTN
- NhjN8vzZgvntInWv6jX3EJVPWKdj4BUtUcZA==
-X-Received: by 2002:a05:600c:a313:b0:48f:ed68:6760 with SMTP id
- 5b1f17b1804b1-490360e7949mr32055905e9.29.1779369464199; 
- Thu, 21 May 2026 06:17:44 -0700 (PDT)
+ bh=Dhi0yYpKFaxwEdsneAb6BI4LLBY0LWLrqFgh9GqtIPc=;
+ b=mkaIaaNMd6hXmq90vcb9LntY0V8XxIm/Cv7dRPROdECBxyKQbHv5h6bkYgondKsvEO
+ B6o3c/uyPqmTOBme0lz6Eyv0wQKoSbXy8qetZwqwug73SEs0eYmKX/mwqAr4UMn/ELmf
+ jtd8tDzig6UhAn/VcGApN6XQ1C+xhXyzBWVPLZhwfV+RbNaL37fZsp64Ox+5o7QxO0dy
+ ryeYIiD7zf9ZAI3Ocwb8bT5aaBGh1CG3q04BvyS5PByNrX9CYnWGzAPK8y4ElId7BMkC
+ hXGeqfMeytLBROCdVLloruDBTii4PVdMqee6B9oAGQQ3wAWkjhIGH8vsjJ2m6C9RQct8
+ B7GQ==
+X-Gm-Message-State: AOJu0Yy+V6HkZBq5i0FkCb5OH9bLD4XtmuvTbwSu6JH3+tqwr//egOdb
+ u7eFngZbA9j8XHk4qxnkbJbzyBz+5SFlukD86oY786l/Xt5NcNJeX0NfNbRQ2EjdNFc=
+X-Gm-Gg: Acq92OGiO9h3cFF2DhpQIILOJ0NL/gORQ3kII8ce3MaOEufYLz2AAfFPS/neO2jOs7H
+ BvHGk2IgbvFHXQ5nhWcfDMc1bV+N6EZ5kMznxjwdbZ+hvuvzm4YtveBcmDzf9y/s9nymvV5qFCj
+ wheSeOb+cbeFpiqIjkOEI9IvsuiccI9hMldYZ6oHh1VR4J5t27nhbf5zO3ZmjKV/rpB6Z4BzYmu
+ WMghHHFuSyLuTwSU5DGwoeGFiIWio+dFEyEEt75jmjxkCe456OT5sMxQCUYE9l5Ys8DbPzwnnGW
+ ak0ZdLvwRswD3f/OAOKTW1kFakzTNyHJ3QSQ6nuzZ1XdNue6FPgEXXjris1xb9Br7QyvEgTY1fI
+ +Fh0QggzBXIWkk77KrzSCRQOBvIHQGKsqFQiUmsh4eES16ORVAF+yrpI0M+4r+weQPwChaxIL1y
+ /lu+uZN6R6z3RAB55KoO2kD9cM3ttpjrc2eA==
+X-Received: by 2002:a05:6000:4205:b0:44f:db87:8919 with SMTP id
+ ffacd0b85a97d-45ea37be492mr4736360f8f.4.1779369462831; 
+ Thu, 21 May 2026 06:17:42 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4903c9b004csm16210975e9.6.2026.05.21.06.17.41
+ ffacd0b85a97d-45eaa92de9asm2805614f8f.17.2026.05.21.06.17.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 06:17:43 -0700 (PDT)
+ Thu, 21 May 2026 06:17:40 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D26275FC94;
+ by draig.lan (Postfix) with ESMTP id 838A25FA16;
  Thu, 21 May 2026 14:17:39 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -84,17 +84,18 @@ Cc: Peter Xu <peterx@redhat.com>,
  Brian Cain <brian.cain@oss.qualcomm.com>, Fabiano Rosas <farosas@suse.de>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org
-Subject: [PATCH v2 06/16] gitlab: add initial MacOS 15 on gitlab runner
-Date: Thu, 21 May 2026 14:17:28 +0100
-Message-ID: <20260521131739.540157-7-alex.bennee@linaro.org>
+Subject: [PATCH v2 03/16] tests/Makefile.include: add binary dependency to
+ run-tcg-tests-% rules
+Date: Thu, 21 May 2026 14:17:25 +0100
+Message-ID: <20260521131739.540157-4-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260521131739.540157-1-alex.bennee@linaro.org>
 References: <20260521131739.540157-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,150 +118,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The gitlab runners are currently in beta but available to projects on
-the Premium and Ultimate plans (which QEMU is via the Open Source
-program).
-
-We install some compilers via brew so we can run some of the check-tcg
-softmmu test cases.
-
-We disable rust as the version is too old.
-
-We disable plugins because we haven't taught the test harness about
-.dynlib vs .so yet.
-
-There is a discrepancy between the vars and version of MacOS because
-lcitool needs teaching about other versions (although I don't think it
-matters as brew is shared across versions).
+Explicitly set the appropriate QEMU binary as a dependency so we can
+ensure they get built. This is especially important for MacOS which
+otherwise only builds the unsigned binaries on a normal "make all"
+run.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
 ---
-v2
-  - call tcg run directly to work around makefile issues
-  - drop debug lines
----
- tests/lcitool/refresh         | 11 ++++++++
- .gitlab-ci.d/macos-14.vars    | 16 ++++++++++++
- .gitlab-ci.d/macos.yml        | 47 +++++++++++++++++++++++++++++++++++
- .gitlab-ci.d/qemu-project.yml |  1 +
- 4 files changed, 75 insertions(+)
- create mode 100644 .gitlab-ci.d/macos-14.vars
- create mode 100644 .gitlab-ci.d/macos.yml
+ tests/Makefile.include | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index fa4a16e3583..4289cc381a6 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -87,6 +87,12 @@ def generate_cirrus(target, trailer=None):
-     generate(filename, cmd, trailer)
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index ce6a0dccaf4..cf6f9e68245 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -57,6 +57,12 @@ RUN_TCG_TARGET_RULES=$(patsubst %,run-tcg-tests-%, $(TCG_TESTS_TARGETS))
+ $(foreach TARGET,$(TCG_TESTS_TARGETS), \
+         $(eval $(BUILD_DIR)/tests/tcg/config-$(TARGET).mak: config-host.mak))
  
- 
-+def generate_vars(target, trailer=None):
-+    filename = Path(src_dir, ".gitlab-ci.d", target + ".vars")
-+    cmd = lcitool_cmd + ["variables", "--format", "shell", target, "qemu"]
-+    generate(filename, cmd, trailer)
++# $1 = the stem (e.g., arm-softmmu or x86_64-linux-user)
++get-qemu-bin = $(if $(findstring softmmu,$1),qemu-system-$(subst -softmmu,,$1),qemu-$(subst -linux-user,,$1))
 +
++$(foreach TARGET,$(TCG_TESTS_TARGETS), \
++        $(eval .ninja-goals.run-tcg-tests-$(TARGET) += $(call get-qemu-bin,$(TARGET))))
 +
- def generate_pkglist(vm, target, project="qemu"):
-     filename = Path(src_dir, "tests", "vm", "generated", vm + ".json")
-     cmd = lcitool_cmd + ["variables", "--format", "json", target, project]
-@@ -312,6 +318,11 @@ try:
-     #
-     generate_cirrus("freebsd-14")
- 
-+    #
-+    # GitLab packages lists
-+    #
-+    generate_vars("macos-14")
-+
-     #
-     # VM packages lists
-     #
-diff --git a/.gitlab-ci.d/macos-14.vars b/.gitlab-ci.d/macos-14.vars
-new file mode 100644
-index 00000000000..def77cfdea5
---- /dev/null
-+++ b/.gitlab-ci.d/macos-14.vars
-@@ -0,0 +1,16 @@
-+# THIS FILE WAS AUTO-GENERATED
-+#
-+#  $ lcitool variables macos-14 qemu
-+#
-+# https://gitlab.com/libvirt/libvirt-ci
-+
-+CCACHE='/opt/homebrew/bin/ccache'
-+CPAN_PKGS=''
-+CROSS_PKGS=''
-+MAKE='/opt/homebrew/bin/gmake'
-+NINJA='/opt/homebrew/bin/ninja'
-+PACKAGING_COMMAND='brew'
-+PIP3='/opt/homebrew/bin/pip3'
-+PKGS='bash bc bindgen bison bzip2 capstone ccache cmocka coreutils ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 gtk-vnc jemalloc jpeg-turbo json-c libcbor libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python-setuptools python3 rpm2cpio rust sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 vulkan-tools xorriso zlib zstd'
-+PYPI_PKGS='PyYAML numpy pillow sphinx sphinx-rtd-theme tomli'
-+PYTHON='/opt/homebrew/bin/python3'
-diff --git a/.gitlab-ci.d/macos.yml b/.gitlab-ci.d/macos.yml
-new file mode 100644
-index 00000000000..c93bf12a294
---- /dev/null
-+++ b/.gitlab-ci.d/macos.yml
-@@ -0,0 +1,47 @@
-+.macos_job_template:
-+  extends: .base_job_template
-+  stage: build
-+  tags:
-+    - saas-macos-large-m2pro
-+  needs: []
-+  timeout: 80m
-+  artifacts:
-+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
-+    expire_in: 7 days
-+    paths:
-+      - build/meson-logs/
-+      - build/tests/tcg/
-+    reports:
-+      junit: build/meson-logs/*.junit.xml
-+    when: always
-+  before_script:
-+    - set -o allexport
-+    - source .gitlab-ci.d/macos-14.vars
-+    - set +o allexport
-+    - export PATH="$PATH_EXTRA:$PATH"
-+    - export PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
-+    - brew update
-+    - brew install $PKGS
-+    - brew install gdb aarch64-elf-gcc i686-elf-gcc x86_64-elf-gcc
-+    - if test -n "$PYPI_PKGS" ; then PYLIB=$($PYTHON -c 'import sysconfig; print(sysconfig.get_path("stdlib"))'); rm -f $PYLIB/EXTERNALLY-MANAGED; $PIP3 install --break-system-packages $PYPI_PKGS ; fi
-+  script:
-+    - mkdir build
-+    - cd build
-+    - ../configure --enable-werror $CONFIGURE_ARGS || { cat config.log meson-logs/meson-log.txt; exit 1; }
-+    - $MAKE -j$(sysctl -n hw.ncpu)
-+    - for TARGET in $TEST_TARGETS ; do $MAKE $TARGET ; done
-+
-+aarch64-macos-15-build:
-+  extends: .macos_job_template
-+  image: macos-15-xcode-16
-+  variables:
-+    NAME: macos-15
-+    PATH_EXTRA: /opt/homebrew/gettext/bin
-+    PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
-+    CONFIGURE_ARGS:
-+        --target-list=aarch64-softmmu,i386-softmmu,x86_64-softmmu
-+        --cross-prefix-aarch64=aarch64-elf-
-+        --cross-prefix-i386=i686-elf-
-+        --cross-prefix-x86_64=x86_64-elf-
-+        --disable-plugins
-+    TEST_TARGETS: check-unit run-tcg-tests-aarch64-softmmu run-tcg-tests-i386-softmmu run-tcg-tests-x86_64-softmmu
-diff --git a/.gitlab-ci.d/qemu-project.yml b/.gitlab-ci.d/qemu-project.yml
-index 4d914c4897b..9cbb5fe787f 100644
---- a/.gitlab-ci.d/qemu-project.yml
-+++ b/.gitlab-ci.d/qemu-project.yml
-@@ -19,3 +19,4 @@ include:
-   - local: '/.gitlab-ci.d/custom-runners.yml'
-   - local: '/.gitlab-ci.d/cirrus.yml'
-   - local: '/.gitlab-ci.d/windows.yml'
-+  - local: '/.gitlab-ci.d/macos.yml'
+ .PHONY: $(TCG_TESTS_TARGETS:%=build-tcg-tests-%)
+ $(TCG_TESTS_TARGETS:%=build-tcg-tests-%): build-tcg-tests-%: $(BUILD_DIR)/tests/tcg/config-%.mak
+ 	$(call quiet-command, \
 -- 
 2.47.3
 
