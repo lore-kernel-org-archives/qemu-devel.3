@@ -4,75 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36AC4CD5BA4
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 11:28:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ABBFCD4F5E
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 11:28:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ1Z6-0004bH-DP; Thu, 21 May 2026 07:27:48 -0400
+	id 1wQ1Zc-0005d0-2D; Thu, 21 May 2026 07:28:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wQ1Yz-0004Vq-8Y
- for qemu-devel@nongnu.org; Thu, 21 May 2026 07:27:43 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wQ1ZX-0005Qb-Vt
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 07:28:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wQ1Yx-0003UX-Nn
- for qemu-devel@nongnu.org; Thu, 21 May 2026 07:27:40 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wQ1ZW-0003aQ-57
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 07:28:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779362858;
+ s=mimecast20190719; t=1779362893;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=m98GjvT/Z7zZ58Xc8+906sXBSWVFQOOMfArpR13T7Lk=;
- b=UcQK5bVPRDfqqUIC60vATI5z2GbnQIpLpJAHw0wuf3IdZQRAIdtxY380yIfHvNjrKmMinI
- pMQVr19z3sn1hf5BvpYZ39Zz7Kabcm8RUmDeQ2EfHzwTJYePVDgJuy2wuzh3CMaMQW0LII
- 9RPBkbjwoeBLC9do1iNoTpXeccqBGTU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding;
+ bh=jsXBMxppuYqb59pZAIDEayTCiC/mL8eAo1U1SzX0jVw=;
+ b=UDG1ipwUhLHJAXCabbtTRsGi/1cBwIecqEC1lO3mol1KIsU9E7pa0pxTU6Pd9eMkdqGLfs
+ mqQROCqliSigReMeDs70c16RxtLPtXckny8vANI4T+rgqbt3tQNDkLqfICsm0KsGEQiIfZ
+ OjnhYOSx9TAQSzaiwOzu7p/spjCSfsw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-606-yeEzSV9MPR-iWRhjLtgpFw-1; Thu,
- 21 May 2026 07:27:33 -0400
-X-MC-Unique: yeEzSV9MPR-iWRhjLtgpFw-1
-X-Mimecast-MFC-AGG-ID: yeEzSV9MPR-iWRhjLtgpFw_1779362852
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-190-iFuFEMUTNoS3aN9x9FOVnQ-1; Thu,
+ 21 May 2026 07:28:09 -0400
+X-MC-Unique: iFuFEMUTNoS3aN9x9FOVnQ-1
+X-Mimecast-MFC-AGG-ID: iFuFEMUTNoS3aN9x9FOVnQ_1779362888
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 306C0195609D
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 11:27:32 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E06EF3002D2D
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 11:27:31 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5238A21E6A03; Thu, 21 May 2026 13:27:29 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 08E0918005B9; Thu, 21 May 2026 11:28:08 +0000 (UTC)
+Received: from dobby.home.kraxel.org (unknown [10.44.32.173])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 58AE119560A3; Thu, 21 May 2026 11:28:07 +0000 (UTC)
+Received: by dobby.home.kraxel.org (Postfix, from userid 1000)
+ id 2D3A37DC642; Thu, 21 May 2026 13:28:06 +0200 (CEST)
+From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 2/4] qapi/net: Wean passt off QAPI type String to improve
- documentation
-Date: Thu, 21 May 2026 13:27:27 +0200
-Message-ID: <20260521112729.1287282-3-armbru@redhat.com>
-In-Reply-To: <20260521112729.1287282-1-armbru@redhat.com>
-References: <20260521112729.1287282-1-armbru@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH 0/3] hw/arm: add support for shim loading
+Date: Thu, 21 May 2026 13:28:03 +0200
+Message-ID: <20260521112806.504961-1-kraxel@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,127 +85,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-String's doc comment is useless.  Replace its use in
-NetDevPasstOptions by identical types with hopefully useful
-documentation.
+Also little refactoring in preparation
+to avoid code duplication.
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20260506105421.2461117-3-armbru@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-[One Since: fixed up]
----
- qapi/net.json | 43 +++++++++++++++++++++++++++++++++++++++----
- net/passt.c   |  8 ++++----
- 2 files changed, 43 insertions(+), 8 deletions(-)
+Gerd Hoffmann (3):
+  hw/nvram: add load_image_to_fw_cfg_file()
+  hw/i386: switch shim loading to load_image_to_fw_cfg_file
+  hw/arm: add support for shim loading
 
-diff --git a/qapi/net.json b/qapi/net.json
-index 8ed51b665c..c95aa909a0 100644
---- a/qapi/net.json
-+++ b/qapi/net.json
-@@ -114,6 +114,41 @@
-   'data': {
-     'str': 'str' } }
- 
-+##
-+# @PasstSearch:
-+#
-+# @str: DNS domain name suffix for host name lookup, or "none".  See
-+#     passt(1) option --search.
-+#
-+# Since: 10.1
-+##
-+{ 'struct': 'PasstSearch',
-+  'data': {
-+    'str': 'str' } }
-+
-+##
-+# @PasstPortForward:
-+#
-+# @str: passt port forwarding specification, see passt(1) option
-+#     --tcp-ports and --udp-ports.
-+#
-+# Since: 10.1
-+##
-+{ 'struct': 'PasstPortForward',
-+  'data': {
-+    'str': 'str' } }
-+
-+##
-+# @PasstParameter:
-+#
-+# @str: Additional arguments for the passt executable, see passt(1)
-+#
-+# Since: 10.1
-+##
-+{ 'struct': 'PasstParameter',
-+  'data': {
-+    'str': 'str' } }
-+
- ##
- # @NetdevPasstOptions:
- #
-@@ -206,7 +241,7 @@
-     '*outbound-if4':       'str',
-     '*outbound-if6':       'str',
-     '*dns':                'str',
--    '*search':             ['String'],
-+    '*search':             ['PasstSearch'],
-     '*fqdn':               'str',
-     '*dhcp-dns':           'bool',
-     '*dhcp-search':        'bool',
-@@ -224,9 +259,9 @@
-     '*freebind':           'bool',
-     '*ipv4':               'bool',
-     '*ipv6':               'bool',
--    '*tcp-ports':          ['String'],
--    '*udp-ports':          ['String'],
--    '*param':             ['String'] },
-+    '*tcp-ports':          ['PasstPortForward'],
-+    '*udp-ports':          ['PasstPortForward'],
-+    '*param':              ['PasstParameter'] },
-     'if': 'CONFIG_PASST' }
- 
- ##
-diff --git a/net/passt.c b/net/passt.c
-index 223ccd1a1c..45440c399b 100644
---- a/net/passt.c
-+++ b/net/passt.c
-@@ -637,7 +637,7 @@ static GPtrArray *net_passt_decode_args(const NetdevPasstOptions *passt,
-     }
- 
-     if (passt->has_search && passt->search) {
--        const StringList *list = passt->search;
-+        const PasstSearchList *list = passt->search;
-         GString *domains = g_string_new(list->value->str);
- 
-         list = list->next;
-@@ -652,7 +652,7 @@ static GPtrArray *net_passt_decode_args(const NetdevPasstOptions *passt,
-     }
- 
-     if (passt->has_tcp_ports && passt->tcp_ports) {
--        const StringList *list = passt->tcp_ports;
-+        const PasstPortForwardList *list = passt->tcp_ports;
-         GString *tcp_ports = g_string_new(list->value->str);
- 
-         list = list->next;
-@@ -667,7 +667,7 @@ static GPtrArray *net_passt_decode_args(const NetdevPasstOptions *passt,
-     }
- 
-     if (passt->has_udp_ports && passt->udp_ports) {
--        const StringList *list = passt->udp_ports;
-+        const PasstPortForwardList *list = passt->udp_ports;
-         GString *udp_ports = g_string_new(list->value->str);
- 
-         list = list->next;
-@@ -682,7 +682,7 @@ static GPtrArray *net_passt_decode_args(const NetdevPasstOptions *passt,
-     }
- 
-     if (passt->has_param && passt->param) {
--        const StringList *list = passt->param;
-+        const PasstParameterList *list = passt->param;
- 
-         while (list) {
-             g_ptr_array_add(args, g_strdup(list->value->str));
+ hw/arm/boot.c             |  6 ++++++
+ hw/i386/x86-common.c      | 15 ++-------------
+ hw/nvram/fw_cfg.c         | 22 ++++++++++++++++++++++
+ include/hw/arm/boot.h     |  1 +
+ include/hw/nvram/fw_cfg.h | 15 +++++++++++++++
+ 5 files changed, 46 insertions(+), 13 deletions(-)
+
 -- 
 2.54.0
 
