@@ -4,92 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97B2ACD5BAC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 09:57:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00FB8CD4F5E
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 09:57:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ09d-0000tt-Mq; Thu, 21 May 2026 05:57:25 -0400
+	id 1wQ0A0-0001NB-2y; Thu, 21 May 2026 05:57:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wQ09b-0000oX-4X
- for qemu-devel@nongnu.org; Thu, 21 May 2026 05:57:24 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wQ09Z-0006r4-Hm
- for qemu-devel@nongnu.org; Thu, 21 May 2026 05:57:22 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4903dba5c3cso363925e9.0
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 02:57:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779357440; x=1779962240; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=v68qS+R0DxAkHf0xH3nI958dkcGkpy2PVL8LjqCbVWo=;
- b=j9Dt8WHww+B1gb6Iqp/2tgwEPvNMLK8FfmsTBvQ4Dk4uCgTCmBI+iO8JZGOon6UbQa
- wg39u+MG1WmO/p5ThdJmbRISgHV2fCwRRaNQMPUsaeQNqylHV1WOu0lLfV0nQUs8GcuM
- +5VAa1PFpy66kT2PIhzLke0YfbCR9s2mEr9FymUTQyQvDudZb/c7Vvnc2NMokvcqWFqN
- FrNO50diuSgcYtk4iKVLCE8bPZ7V68NjZmLyZaPh2PYqpCpgoax5l6o9sfkX3x8XKNEW
- ILow7YG3MLEP/2i/n5HzY6rXUXdpjzzkHLgkIHweGxWf2y8cZa2o/cqnHouHadMhr7Qc
- Wrwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779357440; x=1779962240;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=v68qS+R0DxAkHf0xH3nI958dkcGkpy2PVL8LjqCbVWo=;
- b=ocKSH2GoNnhAAWmSz+Cx9LmZf9Inp88fD33IlzyjsAEO/ktUBWXml5A5a1Wdjfwk1U
- QPyPMtZSjelCia42iz2qt+oPjHK7EiR+lcYkh1teQ+H62vkdCdHzIuamqek4ONWCtNlK
- hp5v1SdoGIjrj98aS2g1xKzC3jSTuFR7qjVjxx7IYFeZ0ZZxYB+trhEWrT38paR2wo7R
- oYDjYWhfDWKbv0Af9AB6vmLfgC7C55kbxL/8qzxJ8x0yankWcmDo/Ji+5wlolHKKbtlu
- is3yyM0I5jlNN7IV5Y/goWNkytanbjcj8qCcFMxyMbQxAEiY8JMqyh8iKWWBU1Igr7uz
- suMQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/vSyQ9MTzBVwp6jyLsGblNJliOqdVUJpzzkJ8qQiKLuXddIXlfPTycX0dlrP9sBeeSrX61OQ7WE4OZ@nongnu.org
-X-Gm-Message-State: AOJu0YzMoYKG/RBefaYB+xzH2yO04/3qIN1+ilqa2yXJJNn+sqfRs5QG
- Mvi9jiBCFzbgWEcQ5LoLyTbH4GbK1YHKB+aqzngnCYbfd/2e37W3mYMIor5DPqaWC92ztqQe4qp
- XDu8fnbg=
-X-Gm-Gg: Acq92OErIGaiBIsrSBA6lFzpkmrks9vetM1Ia/NwGqKx77tko1wenOjFF2cbsHBffKg
- b1YJJfOhk62vDjWtEEjAqxX8a7QiU3o2dXHeUE/1grS2SeXZjlpAcB0ZysAXJ99OQ9a/i30YWJw
- wW3cdBZzsHbmlnV6H3LaafMvhA5rkJtxdAhtl7PnlLvOFNtIjmzQV4yqbNRzkI6WpOcx10QSwt2
- HxKmOjiWBqhpO7L5uZuMN8UFMnbYGHK0y5zmORDltInLboaulj/VdxrHgdW121QMy8c4Q4k2NxN
- UDvibi3ZUNPHqdYnwu1wdhQqLJzKhMK6SS6uqDJPsJEA0VmROsUJebQJHsnQzUuX20cWgCwXCuS
- mHJLHoejHM3nTxdlPtglUc9u/L63m05+Pb7SN8+BkQHBWyjpXaAzuDkBz9igF+By//2afPDJfk0
- zt4akh+XcLO/ymWskhsgwq723OS1YSkev69i8OurDortFtQ5PcMqYIZXTND7RxS3Liaf+jDc/8c
- 1rU
-X-Received: by 2002:a05:600c:3147:b0:48f:d2fc:d025 with SMTP id
- 5b1f17b1804b1-49036035282mr27917655e9.6.1779357439689; 
- Thu, 21 May 2026 02:57:19 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49035eef87bsm13066855e9.34.2026.05.21.02.57.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 May 2026 02:57:18 -0700 (PDT)
-Message-ID: <1be388e4-b612-4e81-beb9-a81feff41bb6@linaro.org>
-Date: Thu, 21 May 2026 11:57:17 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wQ09y-0001Mn-QE
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 05:57:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wQ09w-0006ud-Fj
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 05:57:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779357463;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=HmnCA60Rn/YOtUo3qbO1bJuoxWl9y5OCIjaYMyPXGCQ=;
+ b=V1hS/zayQgxbCqrskcTYTDr920OTaw10Jz6qx55upbj8JAVbnkEWNxcy17ok+yqS9Od2lL
+ rwIVjGKXKjquiCVGRCBmSDovHooVEo2n0vOLbKDPJGqf89FuBy7JjiL6kYrVczTyWqgOGS
+ DEpz0Ladp/aahmkZ+ioPDYf4iHT+Zt0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-606-uZ1gxa7kMUGrWfiT06CgCQ-1; Thu,
+ 21 May 2026 05:57:39 -0400
+X-MC-Unique: uZ1gxa7kMUGrWfiT06CgCQ-1
+X-Mimecast-MFC-AGG-ID: uZ1gxa7kMUGrWfiT06CgCQ_1779357458
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 92D5D195608B; Thu, 21 May 2026 09:57:38 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 367ED1684; Thu, 21 May 2026 09:57:38 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C0E1321E6A01; Thu, 21 May 2026 11:57:35 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Laurent Vivier <lvivier@redhat.com>
+Cc: qemu-devel@nongnu.org,  philmd@linaro.org,
+ pierrick.bouvier@oss.qualcomm.com,  Amit Shah <amit@kernel.org>,  Mathieu
+ Poirier <mathieu.poirier@linaro.org>
+Subject: Re: [PATCH 23/39] MAINTAINERS: Fix bad / stale F: in "virtio-rng"
+In-Reply-To: <c27cb59f-db7c-4ee9-9035-464aecadbdb9@redhat.com> (Laurent
+ Vivier's message of "Thu, 21 May 2026 11:03:23 +0200")
+References: <20260521080511.999266-1-armbru@redhat.com>
+ <20260521080511.999266-24-armbru@redhat.com>
+ <c27cb59f-db7c-4ee9-9035-464aecadbdb9@redhat.com>
+Date: Thu, 21 May 2026 11:57:35 +0200
+Message-ID: <87ldddozjk.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Use float_raise
-To: Anton Blanchard <antonb@tenstorrent.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: alistair.francis@wdc.com
-References: <20260521074016.1065645-1-antonb@tenstorrent.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260521074016.1065645-1-antonb@tenstorrent.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,14 +88,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/5/26 09:40, Anton Blanchard wrote:
-> Use float_raise instead of open coding it.
-> 
-> Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
-> ---
->   target/riscv/vector_helper.c | 27 +++++++++++++--------------
->   1 file changed, 13 insertions(+), 14 deletions(-)
+Laurent Vivier <lvivier@redhat.com> writes:
 
-Please convert all uses within this file, otherwise:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Hi,
+>
+> it seems to be "vhost-user-rng" rather than "virtio-rng"
+
+Yes, my bad.  Thanks!
+
 
