@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AF52CD5BAC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 16:52:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 481A3CD5BAF
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 16:52:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ6cB-0004Q1-L7; Thu, 21 May 2026 12:51:21 -0400
+	id 1wQ6cH-0004RA-JS; Thu, 21 May 2026 12:51:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
- id 1wQ6bz-0004OG-KG
- for qemu-devel@nongnu.org; Thu, 21 May 2026 12:51:07 -0400
+ id 1wQ6bo-0004MF-3p
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 12:50:57 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wQ6bx-00078l-BY
- for qemu-devel@nongnu.org; Thu, 21 May 2026 12:51:07 -0400
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wQ6bm-00071k-Am
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 12:50:55 -0400
 Received: from laptop.localdomain (unknown [86.121.140.206])
- by linux.microsoft.com (Postfix) with ESMTPSA id 2D11620B7167;
- Thu, 21 May 2026 09:50:54 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 2D11620B7167
+ by linux.microsoft.com (Postfix) with ESMTPSA id 4732820B716A;
+ Thu, 21 May 2026 09:50:44 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 4732820B716A
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1779382257;
- bh=ra3UPx5dVax89EnvKy9scLgsiN2gpmwZB5nPfld3f80=;
+ s=default; t=1779382246;
+ bh=JlpbxG0l5HnNNZhi6MoHMmlFp4OaZ+gjEkjpeb/dFsw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=EnULu5qNW+qnlvyiD5n4vpPaXR2FCbguqnn9LKuXwdAoiLsStfzH78sfm1zDEBWzj
- rnH1dS631BLnAIMKEG3vgc9lqd0Uq1hrt3ZSYSzjEEnh2y8T9Aoor7W1WHhQtlZJMp
- lYFczlxSPrKxeNsclNkIq1EDxICR5OMBMGvlqejs=
+ b=EY678/l8Fj+U7XglZr5L4s9Qqym2YO/qwM7o13Fnd8+NNeEWwemHqXztf/5KEbhLA
+ Q91Dr0yrZwkVLJ0dPWBuBytZt6H8skstptdIQKVCfq0rC9VHlQWdgheO8COIHR5g/3
+ 9hxeL8tG+JGU7oNbGcSe1HXHvwGptF0RQmtJky4Y=
 From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
@@ -37,10 +37,10 @@ Cc: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
  Wei Liu <liuwe@microsoft.com>, Magnus Kulke <magnuskulke@microsoft.com>,
  Wei Liu <wei.liu@kernel.org>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PATCH v3 6/7] target/i386/mshv: use the register page to set
- registers
-Date: Thu, 21 May 2026 19:50:40 +0300
-Message-ID: <20260521165041.131477-7-dblanzeanu@linux.microsoft.com>
+Subject: [PATCH v3 2/7] accel/mshv: move vcpu arch specific initialization
+ after vcpu creation
+Date: Thu, 21 May 2026 19:50:36 +0300
+Message-ID: <20260521165041.131477-3-dblanzeanu@linux.microsoft.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260521165041.131477-1-dblanzeanu@linux.microsoft.com>
 References: <20260521165041.131477-1-dblanzeanu@linux.microsoft.com>
@@ -70,144 +70,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update mshv_store_regs to use the register page when it is mmapped and
-valid to set registers.
-Remove the ioctl based register retrieval and fail in case the register
-page is not correctly set or valid.
+Call mshv_arch_init_vcpu after the vcpu is created to ensure a valid
+vcpu fd.
 
 Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Reviewed-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
 ---
- include/system/mshv_int.h   |  2 +-
- target/i386/mshv/mshv-cpu.c | 70 ++++++++++++++++++++++++++-----------
- 2 files changed, 50 insertions(+), 22 deletions(-)
+ accel/mshv/mshv-all.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index a8a59ebf16..c2bc36ec60 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -86,7 +86,7 @@ int mshv_get_standard_regs(CPUState *cpu);
- int mshv_get_special_regs(CPUState *cpu);
- int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit);
- void mshv_load_regs(CPUState *cpu);
--int mshv_store_regs(CPUState *cpu);
-+void mshv_store_regs(CPUState *cpu);
- int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
-                           size_t n_regs);
- int mshv_arch_put_registers(const CPUState *cpu);
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 500967b53e..a2bc29abd4 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -285,17 +285,56 @@ static int set_standard_regs(const CPUState *cpu)
-     return 0;
- }
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index 58af674bd9..e3da583f21 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -415,13 +415,14 @@ static int mshv_init_vcpu(CPUState *cpu)
+     int ret;
  
--int mshv_store_regs(CPUState *cpu)
-+static void mshv_set_standard_regs_vp_page(CPUState *cpu)
- {
--    int ret;
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86cpu->env;
+     cpu->accel = g_new0(AccelCPUState, 1);
+-    mshv_arch_init_vcpu(cpu);
  
--    ret = set_standard_regs(cpu);
--    if (ret < 0) {
--        error_report("Failed to store standard registers");
--        return -1;
-+    env->regs_page->rax = env->regs[R_EAX];
-+    env->regs_page->rbx = env->regs[R_EBX];
-+    env->regs_page->rcx = env->regs[R_ECX];
-+    env->regs_page->rdx = env->regs[R_EDX];
-+    env->regs_page->rsi = env->regs[R_ESI];
-+    env->regs_page->rdi = env->regs[R_EDI];
-+    env->regs_page->rsp = env->regs[R_ESP];
-+    env->regs_page->rbp = env->regs[R_EBP];
-+    env->regs_page->r8  = env->regs[R_R8];
-+    env->regs_page->r9  = env->regs[R_R9];
-+    env->regs_page->r10 = env->regs[R_R10];
-+    env->regs_page->r11 = env->regs[R_R11];
-+    env->regs_page->r12 = env->regs[R_R12];
-+    env->regs_page->r13 = env->regs[R_R13];
-+    env->regs_page->r14 = env->regs[R_R14];
-+    env->regs_page->r15 = env->regs[R_R15];
-+    env->regs_page->rip = env->eip;
-+    lflags_to_rflags(env);
-+    env->regs_page->rflags = env->eflags;
-+
-+    env->regs_page->dirty |= (1u << HV_X64_REGISTER_CLASS_GENERAL)
-+                                | (1u << HV_X64_REGISTER_CLASS_IP)
-+                                | (1u << HV_X64_REGISTER_CLASS_FLAGS);
-+}
-+
-+void mshv_store_regs(CPUState *cpu)
-+{
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86cpu->env;
-+
-+    /* Check register page pointer and abort if in unexpected state */
-+    if (!env->regs_page) {
-+        error_report(
-+                "store regs: register page not set for vcpu %d",
-+                cpu->cpu_index);
-+        abort();
-+    }
-+    if (env->regs_page->isvalid == 0) {
-+        error_report(
-+                "store regs: register page invalid for vcpu %d",
-+                cpu->cpu_index);
-+        abort();
+     ret = mshv_create_vcpu(vm_fd, vp_index, &cpu->accel->cpufd);
+     if (ret < 0) {
+         return -1;
      }
  
--    return 0;
-+    mshv_set_standard_regs_vp_page(cpu);
- }
++    mshv_arch_init_vcpu(cpu);
++
+     cpu->accel->dirty = true;
  
- static void populate_standard_regs(const hv_register_assoc *assocs,
-@@ -1170,14 +1209,13 @@ static int set_memory_info(const struct hyperv_message *msg,
      return 0;
- }
- 
--static int emulate_instruction(CPUState *cpu,
-+static void emulate_instruction(CPUState *cpu,
-                                const uint8_t *insn_bytes, size_t insn_len,
-                                uint64_t gva, uint64_t gpa)
- {
-     X86CPU *x86_cpu = X86_CPU(cpu);
-     CPUX86State *env = &x86_cpu->env;
-     struct x86_decode decode = { 0 };
--    int ret;
-     x86_insn_stream stream = { .bytes = insn_bytes, .len = insn_len };
- 
-     mshv_load_regs(cpu);
-@@ -1185,13 +1223,7 @@ static int emulate_instruction(CPUState *cpu,
-     decode_instruction_stream(env, &decode, &stream);
-     exec_instruction(env, &decode);
- 
--    ret = mshv_store_regs(cpu);
--    if (ret < 0) {
--        error_report("failed to store registers");
--        return -1;
--    }
--
--    return 0;
-+    mshv_store_regs(cpu);
- }
- 
- static int handle_mmio(CPUState *cpu, const struct hyperv_message *msg,
-@@ -1227,13 +1259,9 @@ static int handle_mmio(CPUState *cpu, const struct hyperv_message *msg,
- 
-     instruction_bytes = info.instruction_bytes;
- 
--    ret = emulate_instruction(cpu, instruction_bytes, insn_len,
-+    emulate_instruction(cpu, instruction_bytes, insn_len,
-                               info.guest_virtual_address,
-                               info.guest_physical_address);
--    if (ret < 0) {
--        error_report("failed to emulate mmio");
--        return -1;
--    }
- 
-     *exit_reason = MshvVmExitIgnore;
- 
 -- 
 2.53.0
 
