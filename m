@@ -4,87 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5BD5CD5BAC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 12:54:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81BB5CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 12:54:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ2u0-0006dV-Mx; Thu, 21 May 2026 08:53:28 -0400
+	id 1wQ2u0-0006cx-0J; Thu, 21 May 2026 08:53:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
- id 1wQ22g-00060j-Oj
- for qemu-devel@nongnu.org; Thu, 21 May 2026 07:58:22 -0400
-Received: from mail-pl1-x643.google.com ([2607:f8b0:4864:20::643])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
- id 1wQ22e-00049N-To
- for qemu-devel@nongnu.org; Thu, 21 May 2026 07:58:22 -0400
-Received: by mail-pl1-x643.google.com with SMTP id
- d9443c01a7336-2b9ea536877so36664975ad.1
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 04:58:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779364698; x=1779969498; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=W2FeeLOoVdXBR2Rb1YkjqQG7mEPD3tMK8j89UuIwh40=;
- b=LSJbwRO/q9UXcJxZG6ncff1N+kFXcMI/25B4JA8V6jyPXe7UmlPkM3PvzM/waeD19U
- Pb1XMLK6ZrY9mCPsZdfAqaEQ159R9OD9LeNtBCI8iMwZxTRAKDVIDXd+B113tcmVaP56
- zSH12S/T/Jn5v/OPF2Qc5g0zcUZNEWRR47fBk9bPWZjYAu3LWlqqxbCBd6RmXYIWNm7R
- 2VdnyyHag1JrT5bQ6YKQ9zVteJHpgDXcQfED4rY6QasV77BnbXuHsGFl/6gL0J32Ch0l
- pmtAPBZyh5xvBbrrlxn7T0DljE4c4wcNRDifofCP5ExJ3JSdmAGzfyR/2zbAJICoeYeo
- Dw8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779364698; x=1779969498;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=W2FeeLOoVdXBR2Rb1YkjqQG7mEPD3tMK8j89UuIwh40=;
- b=q1lTyCrUEg0YTl8Ov2lMzWmaP2sJdF1lykta43KF82zwtMlhyb2MainCjbtZNDvIcT
- nns2n2VphbJaGQdeLdV5vkpYEWY7GjMj5nkHDdd+T67Z3rp3EoxUVkk5G5toYoUkEXjI
- FuaVAXuLZ9s+NRS7kfI0J6vAbWVL4J89zwfbnEdzCh7poZNsAMfr4GobXWjpAfOjwRpY
- eQYGqz2+wnIOzYdYUZoW6+doYQ1Q+SFiAJNzUktjNHoB3XWtvhtqX2AJePk5P2aqoTq+
- UCo7I4JwVXVJQwyhFnyZtJ8bx/OSKg/mWgG0etnkPFTH0Mulm96FPN+sUctr3TmGx6cc
- u68A==
-X-Gm-Message-State: AOJu0YzKfMgBx3wZBdaqcJtTnKa3WzBbiomlrlDHB07iC6iDuwa9zcYN
- ZrH1hupog/odgc4SDotdgNyAALh1IXpc8IqyTcBIHKrTNHBtmkxLf+bp8BqTHhM9+QFbnnnd
-X-Gm-Gg: Acq92OGttEftiwjEmxLv52w3kEsnQaLmii6jLBlyEoSmlQWIbftP10cl4dduDFVRoSB
- L+kbGLYShMr6o27yjTtioOKg/gZD7IOccHnmdq+/giAp+MzqalVZ2hgyYWhKRFlJsS6i+2zFoc3
- wPSodagJvkFlY8wMDRGbqEdjfEf5M38Lhvt7Qa9Y7cqTNrkrK0EFojC6o+wkw2X0GXSAwsHGEIx
- I97TMPyKHt0Kf3BWjPpbHT0q0J/Swb2WZevgu/yzTf0m1aR4YIIJBkkGJnuQG6BnR5snnbSfWsK
- 5aWZyn3r7aPnTOeY0YQgsbZUZU4jRWKQRUhVcRzq7EWHxAg1Ea/PvKHSpa/YnrTCEd3nwCQJF6Y
- srN/2mAxp7top3MhKYlFCVlx7D5HOMahs9eeuOJepwpbkkYs+nzQqpneJU0sxIRO73dviKLiYvd
- uioocH49Gsn6DjDwOSEOJMIvfpobMYSfQYrHSFMKD3wv8+qnswyQCJS6REvrRlhOIvQB/qStfXQ
- Fy2et+AC4ngw6x7Y0ZGsV2cwQs=
-X-Received: by 2002:a17:902:ce8f:b0:2bd:5ae4:26d1 with SMTP id
- d9443c01a7336-2bea229cbc2mr24423665ad.17.1779364698397; 
- Thu, 21 May 2026 04:58:18 -0700 (PDT)
-Received: from openkylin-pc.lan
- (ec2-52-74-255-244.ap-southeast-1.compute.amazonaws.com. [52.74.255.244])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2bea9a3c89csm8279415ad.83.2026.05.21.04.58.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 04:58:17 -0700 (PDT)
-From: Zephyr Li <fritchleybohrer@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, daniel.barbosa@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com
-Subject: [PATCH] target/riscv: Raise illegal instruction for Svinval in U-mode
-Date: Thu, 21 May 2026 19:57:49 +0800
-Message-ID: <20260521115749.28774-1-fritchleybohrer@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <sin99xx@proton.me>) id 1wPz3A-0006rh-Tx
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 04:46:40 -0400
+Received: from mail-08.mail-europe.com ([57.129.93.249])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sin99xx@proton.me>) id 1wPz38-00052K-6t
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 04:46:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+ s=z2lqxtfvl5g3jarz4fjuoiytzq.protonmail; t=1779353190; x=1779612390;
+ bh=tkamdrAaDTWrrkR9kYHra8PGsTVyJBEK4fnu2eaMkvw=;
+ h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+ Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+ Message-ID:BIMI-Selector;
+ b=QtjLvqyrO3qtPf6MZSv3xrLLo07ABzY330OTR/nSkfF9vpxVo3Skxz7E3JPLOoDoX
+ qFJlkJHIoNg+jj+2LrXA+w+cHNtOlb//n/1o9UpVVgHD68tgMcGDaEshp3CU4MKvF0
+ iZfmpbEs96KKzdPhBL3KPeCmKAZjRsHdKCIrUHjofEquN7xeb8RtHdr2BQn+eOfOvu
+ LSKdajJnW7emHTEHbOACx7n9hJ9ayYUL+a6riHXThOjrY5sJjr+xaW0eIAj9aGNZ80
+ cxCG4opYWxwkvVX8b2PwvZ+6HbMNwXaJ3u9JS5BZ2LNIMvP1U6OEgsQKT/88/jbAlG
+ 3OlZEk0wTLIoA==
+Date: Thu, 21 May 2026 08:46:25 +0000
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: sin99xx <sin99xx@proton.me>
+Cc: qemu-devel@nongnu.org, Greg Kurz <groug@kaod.org>,
+ sin99xx <sinxx198@gmail.com>, qemu-stable@nongnu.org
+Subject: Re: [PATCH] 9pfs: fix missing rename lock in v9fs_co_readdir_many
+ (CVE-2026-48004)
+Message-ID: <10uGXQrj_bUSBIeDEe9II6FlpXrJvu1JWp65PIgCWneOPK-9k9YMBzunh6oPOh-7Y1nQBfMZVALHdh4YUuR25NI7iWJu4_L8uUNqsrFRzg4=@proton.me>
+In-Reply-To: <6268548.lOV4Wx5bFT@weasel>
+References: <E1wPkYi-000adH-4E@kylie.crudebyte.com> <4735365.LvFx2qVVIh@weasel>
+ <CAMX0No0JkKWL2ZPUqD8558FshhSNFJGjy6hsxqVwntRp9F3rUQ@mail.gmail.com>
+ <6268548.lOV4Wx5bFT@weasel>
+Feedback-ID: 132738630:user:proton
+X-Pm-Message-ID: 0ecfd29ab8aef7a0f908585754bcba6d5489b880
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::643;
- envelope-from=fritchleybohrer@gmail.com; helo=mail-pl1-x643.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=57.129.93.249; envelope-from=sin99xx@proton.me;
+ helo=mail-08.mail-europe.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Thu, 21 May 2026 08:53:24 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,45 +72,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The RISC-V privileged specification requires SFENCE.W.INVAL and
-SFENCE.INVAL.IR to raise an illegal instruction exception when executed
-in U-mode. Check the current privilege mode during translation and reject these
-instructions in U-mode, so they are reported as illegal instructions.
+my bad,
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3493
+Confirmed =E2=80=94 please use this address (sin99xx@proton.me) for the
+Signed-off-by and From lines on the patch.
 
-Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
----
- target/riscv/insn_trans/trans_svinval.c.inc | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Signed-off-by: sin99xx sin99xx@proton.me
 
-diff --git a/target/riscv/insn_trans/trans_svinval.c.inc b/target/riscv/insn_trans/trans_svinval.c.inc
-index a06c3b214f..a9bf75c7e9 100644
---- a/target/riscv/insn_trans/trans_svinval.c.inc
-+++ b/target/riscv/insn_trans/trans_svinval.c.inc
-@@ -39,6 +39,10 @@ static bool trans_sfence_w_inval(DisasContext *ctx, arg_sfence_w_inval *a)
- {
-     REQUIRE_SVINVAL(ctx);
-     REQUIRE_EXT(ctx, RVS);
-+
-+    if (ctx->priv == PRV_U) {
-+        return false;
-+    }
-     /* Do nothing currently */
-     return true;
- }
-@@ -47,6 +51,10 @@ static bool trans_sfence_inval_ir(DisasContext *ctx, arg_sfence_inval_ir *a)
- {
-     REQUIRE_SVINVAL(ctx);
-     REQUIRE_EXT(ctx, RVS);
-+
-+    if (ctx->priv == PRV_U) {
-+        return false;
-+    }
-     /* Do nothing currently */
-     return true;
- }
--- 
-2.43.0
+Regards,
+sin99xx
+
+
+Sent from Proton Mail for iOS.
+
+-------- Original Message --------
+On Thursday, 05/21/26 at 04:30 Christian Schoenebeck <qemu_oss@crudebyte.co=
+m> wrote:
+On Wednesday, 20 May 2026 20:26:09 CEST sin99xx wrote:
+> Yes, please go ahead and add my Signed-off-by tag. Also, if possible, cou=
+ld
+> you use this email instead?
+> Signed-off-by: sin99xx sin99xx@proton.me
+
+Please confirm by replying with that proton email address then I will repla=
+ce
+your email address on this patch.
+
+CC-ing qemu-stable, as this patch should be applied on stable branches, too=
+.
+
+> On Wed, May 20, 2026 at 2:22=E2=80=AFPM Christian Schoenebeck <
+>
+> qemu_oss@crudebyte.com> wrote:
+> > On Wednesday, 20 May 2026 19:11:25 CEST Christian Schoenebeck wrote:
+> > > From: sin99xx <sinxx198@gmail.com>
+> > >
+> > > v9fs_co_readdir_many() dispatches do_readdir_many() to a worker threa=
+d
+> > > that reads V9fsFidState's path.data without holding a rename lock.
+> > >
+> > > A concurrent rename request, e.g. of its parent dir, causes the FID's
+> > > absolute path to be altered by freeing the old path string and
+> > > assigning a new one. This causes a heap-use-after-free race condition
+> > > while do_readdir_many() is still accessing the old object.
+> > >
+> > > This allows a DoS by an unprivileged guest user.
+> > >
+> > > Fix this by wrapping the worker thread dispatch block within a pair o=
+f
+> > > v9fs_path_read_lock() and v9fs_path_unlock() calls, like it's done at
+> > > other places.
+> > >
+> > > Fixes: 2149675b195f ("9pfs: add new function v9fs_co_readdir_many()")
+> > > Fixes: CVE-2026-48004
+> > > Reported-by: sin99xx <sinxx198@gmail.com>
+> > > [Christian Schoenebeck: add commit log message]
+> > > Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> >
+> > sin99xx, I forgot, may I add your Signed-off-by tag?
+> >
+> >   Signed-off-by: sin99xx <sinxx198@gmail.com>
+> >
+> > This is required [1] for making you the patch author:
+> >
+> > "Your patches must include a Signed-off-by: line. This is a hard
+> > requirement
+> > because it=E2=80=99s how you say =E2=80=9CI=E2=80=99m legally okay to c=
+ontribute this and happy
+> > for it
+> > to go into QEMU=E2=80=9D. For full guidance, read the Code provenance
+> > documentation."
+> >
+> > [1] https://www.qemu.org/docs/master/devel/submitting-a-patch.html
+> >
+> > > ---
+> > >
+> > >  hw/9pfs/codir.c | 3 +++
+> > >  1 file changed, 3 insertions(+)
+> > >
+> > > diff --git a/hw/9pfs/codir.c b/hw/9pfs/codir.c
+> > > index bce7dd96e9..5568399343 100644
+> > > --- a/hw/9pfs/codir.c
+> > > +++ b/hw/9pfs/codir.c
+> > > @@ -220,13 +220,16 @@ int coroutine_fn v9fs_co_readdir_many(V9fsPDU
+> > > *pdu,
+> > > V9fsFidState *fidp, bool dostat)
+> > >
+> > >  {
+> > >
+> > >      int err =3D 0;
+> > >
+> > > +    V9fsState *s =3D pdu->s;
+> > >
+> > >      if (v9fs_request_cancelled(pdu)) {
+> > >
+> > >          return -EINTR;
+> > >
+> > >      }
+> > >
+> > > +    v9fs_path_read_lock(s);
+> > >
+> > >      v9fs_co_run_in_worker({
+> > >
+> > >          err =3D do_readdir_many(pdu, fidp, entries, offset, maxsize,
+> >
+> > dostat);
+> >
+> > > });
+> > > +    v9fs_path_unlock(s);
+> > >
+> > >      return err;
+> > >
+> > >  }
+
+
 
 
