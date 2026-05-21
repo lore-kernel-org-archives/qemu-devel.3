@@ -4,57 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4C35CD5BA4
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 11:37:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E008CD5BA4
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 11:51:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ1i2-0000Tz-SR; Thu, 21 May 2026 07:37:02 -0400
+	id 1wQ1vn-0001kv-Ma; Thu, 21 May 2026 07:51:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wQ1i1-0000Tm-6l
- for qemu-devel@nongnu.org; Thu, 21 May 2026 07:37:01 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wQ1uj-0001YP-2o
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 07:50:11 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wQ1hy-0007Jf-Jg
- for qemu-devel@nongnu.org; Thu, 21 May 2026 07:37:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=6rbqKuAYSVMfINFaSE7h8eYm9kmCOkh+ab4/cd2iWXw=; b=GJQVjFdiYh0xJgU7
- JzXCRVtDfWkQO3p/ZtOjCfL1KsTsozAHD28PNKP/QVjqczjC9IqN1LCpuKgRSuvNjrHVmFfn/fWOc
- /AGziXHlf4bkB8N7BqIEzt4pIqri5+T4ahqtfPYDbhzt81PN/I6Cn2S4sj0+wKrRvHvQ5ml/5OKox
- +IV3oxT+CsRZcZ20jEpPAu7y4eLOw9gX8y6dioMm6xgyCGH//OSzw8muDbQrd7jIyCrp5/tnSEsgQ
- 1Ihep1zzO2IVkYyGeFusB22/eOYsODszyuyZEn88RCjmo+RaEjoYJkGXi6FnVtKn4V84s5LL0h0Rw
- aNxjXnbxmYXh9aHHEw==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1wQ1hu-00000001ZzG-2Dw1;
- Thu, 21 May 2026 11:36:54 +0000
-Date: Thu, 21 May 2026 11:36:54 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, pierrick.bouvier@oss.qualcomm.com
-Subject: Re: [PATCH 29/39] MAINTAINERS: Drop stale F: from "Human Monitor
- (HMP)"
-Message-ID: <ag7uVlPotmcl5wRI@gallifrey>
-References: <20260521080511.999266-1-armbru@redhat.com>
- <20260521080511.999266-30-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wQ1t8-0000Jh-GG
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 07:50:06 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64LBkxh1049025
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 21 May 2026 20:46:59 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=3hmhj7sLY3Yl68kHCPxgpyDGFrQxMm+KjRIriBcuInw=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1779364019; v=1;
+ b=kCQNavbkmCY0RMW84SYqgnRhb/DizmwZTAv5XFwgDpbh1i51yQWHkIRrDgG6lxwQ
+ BVcap6HSQLzXFFegFQbgs9ELchQDp1VwcqwbiwpNHPXAwYpVef/PtL9OIe/8GwVR
+ WArt4TdyhXAQyeOPXeYVurmyslB904Pp+Eh/ZVPGcsi/YUqL7YVRp5YjRLPOyqJQ
+ TuyPmkHA4PgcE59IMxJj/w6LgGgthMnmQy2Mz8BZDAGaqTaIgarLJeKO3I5O7PS0
+ XmOOg/C2z/put4lNNtMbRSmBybQiOKcNVLDKY3ExFxriePQcSjIlbg1dW5IXYDw8
+ i2yYnaeBngKhl/HOn/bDJA==
+Message-ID: <0ac7ff23-4cf4-4798-a9d1-cfa5dc9a96a6@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 21 May 2026 20:46:58 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <20260521080511.999266-30-armbru@redhat.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.88+deb13-amd64 (x86_64)
-X-Uptime: 11:36:49 up 5 days, 14:49, 2 users, load average: 0.00, 0.03, 0.00
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 25/39] MAINTAINERS: Fix F: in "virtio-snd" and "virtio-gpu"
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org, pierrick.bouvier@oss.qualcomm.com,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+References: <20260521080511.999266-1-armbru@redhat.com>
+ <20260521080511.999266-26-armbru@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260521080511.999266-26-armbru@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,40 +77,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Markus Armbruster (armbru@redhat.com) wrote:
-> We neglected to update MAINTAINERS when we moved hmp.h to
-> include/monitor/.  Commit 17dc3ae3e1 (monitor: Extract completion
-> declarations to 'monitor/hmp-completion.h', 2026-03-20) added the
-> missing entry without deleting the stale one.  Do that now.
+On 2026/05/21 17:04, Markus Armbruster wrote:
+> We neglected to update MAINTAINERS when we moved
+> docs/system/devices/virtio-snd.rst and
+> docs/system/devices/virtio-gpu.rst to docs/system/devices/virtio/.
+> Update it now.
 > 
-> Fixes: 275307aaab (hmp: Move hmp.h to include/monitor/, 2019-06-19)
-> Cc: Dr. David Alan Gilbert <dave@treblig.org>
+> Fixes: 487ce6ce99 (docs/system: split VirtIO devices from the rest, 2025-10-16)
+> Cc: Gerd Hoffmann <kraxel@redhat.com>
+> Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> Cc: Alex Bennée <alex.bennee@linaro.org>
+> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-> ---
->  MAINTAINERS | 1 -
->  1 file changed, 1 deletion(-)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 95dbd663d4..abffa4730e 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3418,7 +3418,6 @@ S: Maintained
->  F: monitor/monitor-internal.h
->  F: monitor/monitor.c
->  F: monitor/hmp*
-> -F: hmp.h
->  F: hmp-commands*.hx
->  F: include/monitor/hmp.h
->  F: include/monitor/hmp-completion.h
-> -- 
-> 2.54.0
-> 
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+Regards,
+Akihiko Odaki
 
