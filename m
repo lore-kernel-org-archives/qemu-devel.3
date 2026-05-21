@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FFF3CD5BAC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 15:04:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CA28CD5BAC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 15:06:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ4wv-0003vh-1L; Thu, 21 May 2026 11:04:37 -0400
+	id 1wQ4yB-00051b-Oz; Thu, 21 May 2026 11:05:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wQ4wt-0003vZ-N6
- for qemu-devel@nongnu.org; Thu, 21 May 2026 11:04:35 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wQ4y8-0004zq-GC
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 11:05:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wQ4wq-0007l3-JA
- for qemu-devel@nongnu.org; Thu, 21 May 2026 11:04:35 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wQ4y6-0000g0-KW
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 11:05:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779375870;
+ s=mimecast20190719; t=1779375949;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=4D507b+6WiZy2A/DOR+57cp5mAHYx97R/Rn05JqTByE=;
- b=H2F9vav2YAald2CtcmVLcarzEaL9gUxw6pD17JZFL5w02Za/lJaQRgnRVgE/+MY2ffGDWW
- kz9bYbQw/2B59mNkjrdGguq/IDNe/2NnUMh49/EzWcKTumYrOqTTuHAFuArlKX6qoUamEJ
- SwxEcOpJMLo0pF71llN1Cjqh7xtqy3g=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2Q3t9Yeuq6DxysLkqSMiJKmEcJ7HmX7zk0pzvucmdbk=;
+ b=L80nNrMR3k5FYTI6fB/XQqtxzSbPXvhP51TIYo6Q5VhS62R5t4L5/UQ8a6hZ/YuIEJwUnV
+ Q6a3r6QhhmvaRwxVL3lFvIkBoNyYM/WgnipSdjyyH1nS6ksJ6DoQjp11YTXSOSMTqU1uiV
+ 1tz/3+ruxL2wONK46tPXLN4ODQDUfVY=
+Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com
+ [209.85.161.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-314-xhtF30aJM5mtLW1g0IUtlQ-1; Thu, 21 May 2026 11:04:28 -0400
-X-MC-Unique: xhtF30aJM5mtLW1g0IUtlQ-1
-X-Mimecast-MFC-AGG-ID: xhtF30aJM5mtLW1g0IUtlQ_1779375868
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-90d2d8dc97bso1440270585a.2
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 08:04:28 -0700 (PDT)
+ us-mta-302-OdIyKrlsPcmBR6PMPO3nbA-1; Thu, 21 May 2026 11:05:48 -0400
+X-MC-Unique: OdIyKrlsPcmBR6PMPO3nbA-1
+X-Mimecast-MFC-AGG-ID: OdIyKrlsPcmBR6PMPO3nbA_1779375946
+Received: by mail-oo1-f70.google.com with SMTP id
+ 006d021491bc7-69d4e84695dso7466765eaf.2
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 08:05:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779375868; x=1779980668; darn=nongnu.org;
+ d=redhat.com; s=google; t=1779375946; x=1779980746; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=4D507b+6WiZy2A/DOR+57cp5mAHYx97R/Rn05JqTByE=;
- b=hl0Qv1mTPgQCQ5s+ZaFxWOTNs1cHaqmPVmny8rxMmDPeHF1NElowBikXN6tTjRtuAn
- ABgI+dFgMYlDpMULdx/PPqTSSLkl3lJiNd8XqVo3L3De/rS+gFWU9NbE8BggdbAK7nOZ
- yes+S6qZPRHBA732weDUDcn1FLo3C/9yw6sSCFp5bWlmkl13Ss22aXzQbnW1IejFCTiR
- dotXjaDv9L50Kgzco9kc9eVlhKaYI9abS57v834AuixH/b5jYT7M4yNHoCdvcEVRepe2
- SPP6DL3Kd/8ePFL0HTQMbE76AEvFd0bCH9oerkF8GdxLxTTkT17nAvyPuWjesoSIIaLw
- S0Jg==
+ bh=2Q3t9Yeuq6DxysLkqSMiJKmEcJ7HmX7zk0pzvucmdbk=;
+ b=jl2gMMUbGGCpCcRI1bQJWzaZYXsABzpWdBvEI6e+SDxAAd82t5vBpD4/uC3bzNWAbB
+ cG/D5yx5tkgWGnnz9jGcIBFwwHv4iou5ODm9H+TC7fuXLHQV7iTEQGPxvLUrcKR+SSwD
+ dpSJ+Ap4qhPmojF8mDakGrv/yXWZDJQJpyNXXSdAY/ONvEDpZZJ5zUVbY+a3plzapYfz
+ JaweRqgmDKLEfoGmJSbUc7jDH7qz57VWkwXKHyd9lbDb+AHpGNvvifKNiiauWcRUOkFb
+ bheDrd1p6a3q1H5b9LjZxpKBq6GcQE8/SitJskxea7SCuuElinnx69wvYh7V8n26LBVG
+ by4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779375868; x=1779980668;
+ d=1e100.net; s=20251104; t=1779375946; x=1779980746;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4D507b+6WiZy2A/DOR+57cp5mAHYx97R/Rn05JqTByE=;
- b=oUFPnp7+IyViliJdWUfYipq1OGFiaJJ17FMlpf2ChBPn90Ra0JPIciDXkqbPZt0Y28
- bvw4gbTf5NSnSsxbebGs+q6GE6CJkRsS8aKzFUlTzdE+qo7BFwVRde02juF+em+yWOLo
- C3RpGY4daxb0UrQy7IpAhGWiStU5sodwp9VLJ/kqAuaIZ93r8lcWywfwAswP1aAK+18Z
- yW5I5XATcybopNVQhf3y2SZkKfLt0X54LWnTWMwOXznQFK8zd3UZtNEx7bzfi5E62Qj8
- Pg73Pq52v6IAHdzwlC5iq+8wYg551w9aEBeCuxnd1Ep/Ef1GdSGaDUpWuhScx+NakU2S
- yNwA==
-X-Gm-Message-State: AOJu0YxWacBJ1pWSlT9YjePQI+wVJoq0epy3WZWPulXRGu7ALi9/aAj2
- PahbW0IpGA41zMwUHrhf7i2fzF3EJ91S9dCYKx0PVtmLYKxoXmtQErpBek3rMM42sJgo10csr0N
- nG5jeLHx1ahtLR4GNq6fxisGS6v/qwXjibV0KFor/64PG459nB2JigHt3
-X-Gm-Gg: Acq92OGmJqhP/zXE4cYiPNBMcQyjPOg2UWuhrEJw2xgFgbrHx/KBJGtpTjZ4bZYsWTa
- v7MpuOc7Luz0G5Mz6gq5baVBjKFAQZvotDwo1jppynQq/hCcszjZg75wWDIp9Z/iJUcKjE2ci/3
- sjb5S44AlGlMgUIiyxcy2/oSXq3k5zkA5xKxLvMo+PDVwh6xLdYQgBYhaVtTZbpgrzU82RM/F/N
- OLfBVpEqABlGsy4aPIdMa0n7genxj3wL+2ypzqA9jyOfK4XN9gJOYZTLzkrHCg86FPyf++PBa0q
- ffov3vs0nev4Qr3dy6cLbd37mtKzUN0RxiCVg31gOpvF9yxuayUdFe63KTyOzF9DRo7xbzg8xhQ
- 0qaT6ZIYFE3p1nDxtH+BizQZh/4PpIjBzCwQQRMd2yIOW5n0=
-X-Received: by 2002:a05:620a:4611:b0:8c6:ae78:f750 with SMTP id
- af79cd13be357-914a2a5dcd6mr443513885a.14.1779375867712; 
- Thu, 21 May 2026 08:04:27 -0700 (PDT)
-X-Received: by 2002:a05:620a:4611:b0:8c6:ae78:f750 with SMTP id
- af79cd13be357-914a2a5dcd6mr443502085a.14.1779375866742; 
- Thu, 21 May 2026 08:04:26 -0700 (PDT)
+ bh=2Q3t9Yeuq6DxysLkqSMiJKmEcJ7HmX7zk0pzvucmdbk=;
+ b=fLQkPY4XealNtcjM7xwaRpLVB6vunC8Rl9E0bVkcK8cNzXMSzIzCb9ZjsuGOmD0Eqv
+ gbn3IQIKZE1RVAsrH5oGeJBJEr/splhHgcr/wqZPN83r98U3TlkWnnyloxHBaR80UBv2
+ zko0EcdUjK50almjd4HmmNFJyXGs1+/SslJ+FW4asWBzJAkELz2DQJYRHWozjBHAgL2c
+ Totf26T2shYSzxNrETLhWM0NA6CEFs2ktekUqHp2vHd6u1WUEJFjoh896I4gy3NgfYqI
+ kkmkFIf2MA9uSNOXHm1fMIz63voOUTtF8IF+ZFc89+e/7ZOSZtGxlhHYriHb72AmcGw8
+ qDzw==
+X-Gm-Message-State: AOJu0Yyg8HBCRtLaAqVyBaVj4nTL5oVbs+ovXtTVoeOb0y/COOxNHh/z
+ mEpcUjd9jcbKJK4/MJMaPkPmVaLCDP4NcpNRMrmHMGSND79GS9Y1c7SAfVQrgPIqgAROKtG6v8b
+ PzYiDvFz/X+sUE0lZWm3aj2AHfm67mHE7ej5+rINkMY5mLUJyz2PS2AaH
+X-Gm-Gg: Acq92OG6DMxr4NG84tqZezzHJpSuMxxtz5A8XoAA+qgDhehyfg08DiQz/D3UVRRVEPl
+ ogCQMY6BGgBNDwLMsBVI5x/ymIpnEjeJMIL0rofdnyK4Fng2eqy0pCfRsFWmnMhJ3ultctvxjuu
+ Va97C5GWDhOMAdyRc30/ytB33Qoh5X+g9XrwWfkLlsRIl1BOoAskhL1Ex9jdVa+uejEnQiaH9l5
+ ClxZSMZD/IZu/1DgWkfssaow8NdsMbaakstVG9urG31FxFKvOgv443tlICgcLNXhn/ZVp+/3nux
+ XdvgTzKarOY8p5Qx13SfohMqN4N6Jss4134Hpm8yMfpmJkJF0QAfLPmSa/IACvA0gzgvC4k0ft6
+ 3M2D9U6GtuPaGVsSh1DsOekAJwSEMU0EdKnGyctiM0J9eOD0=
+X-Received: by 2002:a05:6820:f033:b0:69b:902d:d347 with SMTP id
+ 006d021491bc7-69d6ee84475mr1477144eaf.27.1779375946146; 
+ Thu, 21 May 2026 08:05:46 -0700 (PDT)
+X-Received: by 2002:a05:6820:f033:b0:69b:902d:d347 with SMTP id
+ 006d021491bc7-69d6ee84475mr1477096eaf.27.1779375945660; 
+ Thu, 21 May 2026 08:05:45 -0700 (PDT)
 Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-914abbb1af1sm107984985a.37.2026.05.21.08.04.24
+ 6a1803df08f44-8cc768d4ca8sm7150756d6.17.2026.05.21.08.05.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 08:04:25 -0700 (PDT)
-Date: Thu, 21 May 2026 11:04:24 -0400
+ Thu, 21 May 2026 08:05:44 -0700 (PDT)
+Date: Thu, 21 May 2026 11:05:43 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Avihai Horon <avihaih@nvidia.com>
 Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
@@ -89,17 +89,16 @@ Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
  Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Maor Gottlieb <maorg@nvidia.com>
-Subject: Re: [PATCH 09/14] vfio/migration: Re-query precopy size before
- sending VFIO_MIG_FLAG_DEV_INIT_DATA_SENT
-Message-ID: <ag8e-Czuujdt5hm1@x1.local>
+Subject: Re: [PATCH 14/14] migration: Enable new switchover-ack
+Message-ID: <ag8fRzWkcLg9-brO@x1.local>
 References: <20260505081423.28326-1-avihaih@nvidia.com>
- <20260505081423.28326-10-avihaih@nvidia.com>
- <agzAzawATnGGMIGO@x1.local>
- <e4803220-4d73-433a-b697-3aa67dc55e12@nvidia.com>
+ <20260505081423.28326-15-avihaih@nvidia.com>
+ <agzD1-wZ4MeKwgPT@x1.local>
+ <66e26fcf-caef-4b30-aff2-6474f19013c8@nvidia.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <e4803220-4d73-433a-b697-3aa67dc55e12@nvidia.com>
+In-Reply-To: <66e26fcf-caef-4b30-aff2-6474f19013c8@nvidia.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -124,121 +123,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 21, 2026 at 04:46:31PM +0300, Avihai Horon wrote:
+On Thu, May 21, 2026 at 05:00:44PM +0300, Avihai Horon wrote:
 > 
-> On 5/19/2026 10:58 PM, Peter Xu wrote:
+> On 5/19/2026 11:11 PM, Peter Xu wrote:
 > > External email: Use caution opening links or attachments
 > > 
 > > 
-> > On Tue, May 05, 2026 at 11:14:18AM +0300, Avihai Horon wrote:
-> > > When precopy initial_bytes reaches zero VFIO_MIG_FLAG_DEV_INIT_DATA_SENT
-> > > flag is sent to the destination to indicate that initial data has been
-> > > sent, so destination can indicate back to source when it finished
-> > > loading it.
-> > > 
-> > > To get a more accurate estimation of initial_bytes, re-query precopy
-> > > size before sending the flag. Extract the flag sending logic from
-> > > vfio_save_iterate() to a new helper for clarity.
-> > > 
-> > > This may prevent premature sending of VFIO_MIG_FLAG_DEV_INIT_DATA_SENT
-> > > flag if, for example, the previously queried initial_bytes was lower
-> > > than actually is. Additionally, it prevents sending the flag if
-> > > vfio_query_precopy_size() failed.
+> > On Tue, May 05, 2026 at 11:14:23AM +0300, Avihai Horon wrote:
+> > > Now that VFIO has implemented new switchover-ack, enable it.
 > > > 
 > > > Signed-off-by: Avihai Horon <avihaih@nvidia.com>
 > > > ---
-> > >   hw/vfio/migration.c  | 37 ++++++++++++++++++++++++++++++++-----
-> > >   hw/vfio/trace-events |  1 +
-> > >   2 files changed, 33 insertions(+), 5 deletions(-)
+> > >   migration/options.c | 3 +--
+> > >   1 file changed, 1 insertion(+), 2 deletions(-)
 > > > 
-> > > diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> > > index 2911583ee1..243624b5fe 100644
-> > > --- a/hw/vfio/migration.c
-> > > +++ b/hw/vfio/migration.c
-> > > @@ -456,6 +456,37 @@ static void vfio_update_estimated_pending_data(VFIOMigration *migration,
-> > >                                            data_size);
-> > >   }
-> > > 
-> > > +/* Returns true if the init data flag was sent, false otherwise */
-> > > +static bool vfio_send_init_data_flag(QEMUFile *f, VFIOMigration *migration)
-> > > +{
-> > > +    VFIODevice *vbasedev = migration->vbasedev;
-> > > +    int ret;
-> > > +
-> > > +    if (!migrate_switchover_ack()) {
-> > > +        return false;
-> > > +    }
-> > > +
-> > > +    if (migration->precopy_init_size || migration->initial_data_sent) {
-> > > +        return false;
-> > > +    }
-
-[1]
-
-> > > +
-> > > +    /*
-> > > +     * precopy_init_size holds an estimation of the initial data size, re-query
-> > > +     * precopy size to ensure it's really zero before sending init data flag.
-> > > +     * Don't send the flag if query fails.
-> > > +     */
-> > > +    ret = vfio_query_precopy_size(migration);
-> > > +    if (ret || migration->precopy_init_size) {
-> > > +        return false;
-> > > +    }
-> > IIUC this chunk isn't necessary?  If we don't expect REINIT to happen that
-> > much (when NIC reconfigures?), then we can still rely on the window where
-> > the "new switchover ack" will be requested later on during the exact sync.
-> > 
-> > Relying on that seems slightly cleaner.
+> > > diff --git a/migration/options.c b/migration/options.c
+> > > index 44327c588f..91571f9d30 100644
+> > > --- a/migration/options.c
+> > > +++ b/migration/options.c
+> > > @@ -108,9 +108,8 @@ const Property migration_properties[] = {
+> > >                        preempt_pre_7_2, false),
+> > >       DEFINE_PROP_BOOL("multifd-clean-tls-termination", MigrationState,
+> > >                        multifd_clean_tls_termination, true),
+> > > -    /* Use legacy until VFIO implements new switchover-ack */
+> > Removing this line is fine because it's a very temporary thing.  But maybe
+> > it would be good we have some rich documentation on both the legacy and new
+> > behavior of switchover-ack.  Normally it would be qapi/migration.json, but
+> > in this case the user shouldn't need to choose, so I think when keeping
+> > qapi doc simple we need to have somewhere internal that document all these.
 > 
-> Not sure I follow.
-> 
-> New switchover ack is requested in exact sync if we see new init_bytes > 0
-> (REINIT flag).
-> This flow happens only after the new switchover ack is requested in exact
-> sync, when init_bytes = 0 again.
-> 
-> So this chunk just makes sure we send the VFIO_MIG_FLAG_DEV_INIT_DATA_SENT
-> flag at the right time.
+> Sure, I can do that.
+> Would adding it as a comment above struct
+> MigrationState->switchover_ack_legacy be fine?
 
-AFAIU, what this chunk does is, we may save one switchover-ack if REINIT
-got here.  It doesn't provide much functional difference in reality.
-
-With this code there, when it happens to see REINIT, instead of sending an
-immediate VFIO_MIG_FLAG_DEV_INIT_DATA_SENT message, it falls back to send
-init data in the next iteration loop, saving that flag, and saving a
-"request switchover-ack" on src QEMU too.
-
-If above code removed, IIUC VFIO will send VFIO_MIG_FLAG_DEV_INIT_DATA_SENT
-immediately causing dest sends ACK.  vfio_query_precopy_size() will be
-postponed until the next sync query (which must happen at some point before
-final switchover), then it will be collected there, VFIO src will request
-for switchover-ack, then another VFIO_MIG_FLAG_DEV_INIT_DATA_SENT is
-expected.
-
-Both should work, but what I meant is, I think we don't need this random
-check, because it's optimistic, it's not functionally necessary, IIUC.
-
-IOW, see the current code and how it can still race with a REINIT anyway:
-
-             migration thread                                  some vfio driver thread
-
-    ret = vfio_query_precopy_size(migration);
-    if (ret || migration->precopy_init_size) {
-        return false;
-    }
-                                                                   got reconfigured,
-                                                                   set REINIT
-
-    qemu_put_be64(f, VFIO_MIG_FLAG_DEV_INIT_DATA_SENT);
-    migration->initial_data_sent = true;
-    trace_vfio_send_init_data_flag(vbasedev->name);
-
-It's the same to me if e.g. we try to vfio_query_precopy_size() in VFIO's
-iterative loops from time to time, it'll also work, it'll make sync more
-frequent, but it's not needed.
-
-Thanks,
+Sounds good!
 
 -- 
 Peter Xu
