@@ -4,100 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0A0ACD4F5E
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 08:26:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD2ECCD5BAC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 08:31:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPyj3-0002TA-AP; Thu, 21 May 2026 04:25:53 -0400
+	id 1wPynU-0003nv-TZ; Thu, 21 May 2026 04:30:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wPyj0-0002SP-UZ
- for qemu-devel@nongnu.org; Thu, 21 May 2026 04:25:50 -0400
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wPyiz-0006Hc-8M
- for qemu-devel@nongnu.org; Thu, 21 May 2026 04:25:50 -0400
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-65e39d1dd38so5321674d50.3
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 01:25:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779351948; cv=none;
- d=google.com; s=arc-20240605;
- b=F0BEht4+QqeNJyaXCGSXKNRZdwS3YuPrlA9GPj6CwuFpXAQPpZpwjcsEWFhH+8k+Qf
- sSB0VknWUBm5ZEMnTtzv1Jeg6PBwKcQm2saJiHz+BdooTnD74m3vV3JpGLuIRf7iRKwQ
- db//pmKeCOPMSDTwB/mlWJVsU5ejsRY/GgDWaJI2TDhia7IvCEPMmbm866vnYzqYUulj
- FqsGydCbORMlrXxfzfPAa1IKhJUgDTxj2QJS/8F8Zs5xWJ9LlOd8v4o3trv/+vxbWEng
- yjrDek5Onclbt04kqQqHMbERnKCqXNuVwrfb0a32WaXvn8lkIsDWTVIu43n6oLe3l972
- QB2g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=zviA81fpa7mw+EtXADcpJMm+mlojLlGfZyaJMSq+5XY=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=jNLnwUmJIpGa7KTE8yDG68A6YeUQCImZkLhTDEU0t/lwO6/HlAMeKOVred7VPr0ZOv
- XrOKs9xo62wzXrkl/Z4pw1DDN1qu8KueRGWc3WyizwgtTWFfSP6sbc6DqFb5kP8jK0M5
- 2/7ACkHRpjyVltNs2noLXEj4E8R7tQ0048IvU6BeBfFPp2qSYaRas9A7icHAud1pmaBc
- YSVXBkGmyF170OHkvirWqV0V0VJNHxa4HYTZ8Ldtpd/NYr1MXmH6+lbIiErDGZS4OY5N
- 0BnY5A6KzkkdRpw3kqaC+94gRdGY4Z8S/Q92tUc1JKedTFcY3BiM0gzTlSxcwsm5D1Mn
- /gxg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779351948; x=1779956748; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=zviA81fpa7mw+EtXADcpJMm+mlojLlGfZyaJMSq+5XY=;
- b=L4xUIrY8jWBmMcB3pei8HdTTKtLkl/sPWaRptPEXNqVO7br2c6r+FCfgxKguB0n7X1
- gbs78W+BrIsVnwU17AWpk47uLoB8ovrkw2SuccKpEB2/6BIl/FnLZAANSWVl/KtBl3Vc
- j1qPbe1vq48NhEduNSM3GiiBePmCZyCJh6xsKZcA0RM1pzHCXGW99eTLdB36VGqCwc4F
- awQ+0bFM0h4njLzM9Lu/J6EUz8n4aLLkDwpxotgq8rId49Aaxqf9x/IJ+7Bm88vHwUxy
- kfeKc8UJXWmYPrX6SbvFwtnclDJmjpvaxPJISyNzy79OtBlwMzp+oWkiYIPrhj0/k8TD
- AuSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779351948; x=1779956748;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zviA81fpa7mw+EtXADcpJMm+mlojLlGfZyaJMSq+5XY=;
- b=ZzrnHP7ieMyPR+vYaCmB1F+JLKPOEmunmj/Ol2/nkHAJ5X7rKg7XGJqz72ii/kgFe8
- 7EkAGg3NmnZCwhnRohYbG0t40gYLjAX5jNh0+R9DtjsByeJfu/LdmUai7PtBVSYB17BK
- Yk3Sb7UCNsKOLhYOdNaWZW1tXUIZBHcVZgDSYQnz2rUwJplYH0L7ZCLQeRu+7FIdZaGu
- Bzv4v7oblV5s6MSYUY571BpJzO4P6D39e6uC/OXnjw9N+4onnLa3FI0C9JKKtBcMBYLb
- VoIQkOmlFyx/WoRqk2oJTr+UenlvkCKTq+hvyHdqtAT1/aa1qYfeS4NY9ypYmderU8UB
- GRDQ==
-X-Gm-Message-State: AOJu0YwAqzUJJfMPRO+UcgotQPaOqqEcrFe5Sun3ZMlJ4r/FO8Z8X5yo
- 157LmSaPcHkzIc/Y8TgP+iQP7gsug9oknxQAk4CBDkz+NKoueDtPGSdbye8cQF293I1+o9noHt2
- r6vuFXDXdiEx99MaevvzwsaYOkUtBCbpY0Z1zZTymFmMFZLrK/extlbE=
-X-Gm-Gg: Acq92OEsRMekdPXtiMGzqtWbI/5Y3IdPGBWtoJlSBpYn9SLcb3hGGTS+FYwqyEvcUCd
- P7Qk69lnSHxq/S2gki6NJZSmQDHCGZ1JoO5Odot3sZbPLUDGHpzYXxE8DCLSWVwh4OnAWGk3ELU
- obWJ3H8wbfQB9jzLL2TIDbRa/brNN04YwCj20AVI7wBasd8iQ2sjytatJcjW0Ef6ktMWX6rvRL9
- oYA5JH1Lye03amBc/+N3uEbbKvcXWdTCNHk/Zh/HY85D0+LWXzCwaCzLMD/F5gCNlc4YLSGfdsx
- qWKPkotV0BCvZo7V/cBPS7KrsCwqdWjnNbu1MrWEBivKNNNghoIZUL2P/q+teeLUw0M=
-X-Received: by 2002:a05:690e:124a:b0:65c:ca50:e5 with SMTP id
- 956f58d0204a3-65eadff6929mr1508008d50.27.1779351947922; Thu, 21 May 2026
- 01:25:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wPynT-0003nZ-4F; Thu, 21 May 2026 04:30:27 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wPynR-0007rM-A6; Thu, 21 May 2026 04:30:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=UvWy8jeyKKeDs6RIRnkD3VYOZoPb0DRof5DWbAMVpjU=; b=LGbTViLlkLSj1fXP55Qw6uhqO3
+ I2en0LKb5ENC9hQ8kbrKTkUgl7DH8zlHlPy1VHVU3Qm214wkIvQx4jVQg+jRb07t5X4PmR5j9gQIs
+ ws9d5PD2oY0UhKNtoFHFGIbqXDbvzVisyM8Ef4aG9A45srMZ2vw9A1y7LyICJtsPE4wbaKccDqbZb
+ HGnYdiKF3A9J05jXxE4cLc9jsxypPB8tzCM20YY5pApBPZWfVPYNvDSYwcHlK4FuWZLxGjzoSuZkn
+ I9cD68EOEBZbKdFl6wKajmCuTmyEyXCXpio7Uonmw2SRd8N2TMiWfNfSYS024QnTqhDOES05j7PGZ
+ 9DToYH3zpH/zKG2T++hLT6RzGTUIFfS9pKIHwcjcfylqLPd9NI8F8UeT/vb+Gn7lPmQ6swmG0GP4H
+ z6m3ABqMESLSm9Ix+DPQT9t3EdXQyPrs8m8TQkf65YeHuv7tSUl+s9q9toZDSKXeuvFliLYDuvTOj
+ WobwKuWA32y5VCgrLMmBdZ6UchRByiPi4QjxwvvgnGuJHnmi++WIziScQJ064F4vatFbb4j6EUC/Y
+ Mv3z8P368lPUwR1AhJrCxa5FERNS8vOJTymfyGMHkrtNq/gpitMrAYp76Lp1Ai2huJklKcvC8e9tc
+ gR54PZj2HguYvKqyPbCP5p9/XzCrqnDUdPCW3DPnM=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: qemu-devel@nongnu.org, Greg Kurz <groug@kaod.org>, sin99xx@proton.me
+Cc: sin99xx <sinxx198@gmail.com>, qemu-stable@nongnu.org
+Subject: Re: [PATCH] 9pfs: fix missing rename lock in v9fs_co_readdir_many
+ (CVE-2026-48004)
+Date: Thu, 21 May 2026 10:30:13 +0200
+Message-ID: <6268548.lOV4Wx5bFT@weasel>
+In-Reply-To: <CAMX0No0JkKWL2ZPUqD8558FshhSNFJGjy6hsxqVwntRp9F3rUQ@mail.gmail.com>
+References: <E1wPkYi-000adH-4E@kylie.crudebyte.com> <4735365.LvFx2qVVIh@weasel>
+ <CAMX0No0JkKWL2ZPUqD8558FshhSNFJGjy6hsxqVwntRp9F3rUQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <20260520182213.872945-1-richard.henderson@linaro.org>
- <20260520182213.872945-3-richard.henderson@linaro.org>
-In-Reply-To: <20260520182213.872945-3-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 21 May 2026 09:25:35 +0100
-X-Gm-Features: AVHnY4IZkeR-CI4x3VhN5O0TS_DuJukHwWfS9frVZNicFa_xM0sbhaaxTnrBSdk
-Message-ID: <CAFEAcA_F72LXF9kWVrU=mSt4=v19jRkDt9XkznpE+7DjVV94kw@mail.gmail.com>
-Subject: Re: [PATCH v6 02/64] target/arm: Implement FEAT_FAMINMAX for AdvSIMD
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,41 +68,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 20 May 2026 at 19:22, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On Wednesday, 20 May 2026 20:26:09 CEST sin99xx wrote:
+> Yes, please go ahead and add my Signed-off-by tag. Also, if possible, cou=
+ld
+> you use this email instead?
+> Signed-off-by: sin99xx sin99xx@proton.me
 
-> +/*
-> + * Use float_minmax_ismag to get the absolute value min/max.
-> + * Avoid float_minmax_is{num,number} so that we get normal NaN processing.
-> + * If the result is not a nan, take the absolute value.
-> + *
-> + * Note this operation squashes FZ, FIZ, and AH to 0.
-> + * Create a fresh status with default behaviour and propagate exceptions.
-> + */
-> +#define DO_FAMINMAX(NAME, TYPE, MIN)                                    \
-> +TYPE TYPE##_##NAME(TYPE a, TYPE b, float_status *s)                     \
-> +{                                                                       \
-> +    float_status local = {};                                            \
-> +    arm_set_default_fp_behaviours(&local);                              \
+Please confirm by replying with that proton email address then I will repla=
+ce=20
+your email address on this patch.
 
-This misses that we need to keep the default_nan_mode setting
-from 's', otherwise we stop honouring FPCR.DN. This will fix it:
+CC-ing qemu-stable, as this patch should be applied on stable branches, too.
 
---- a/target/arm/tcg/vec_helper64.c
-+++ b/target/arm/tcg/vec_helper64.c
-@@ -155,6 +155,7 @@ TYPE TYPE##_##NAME(TYPE a, TYPE b, float_status
-*s)                     \
- {                                                                       \
-     float_status local = {};                                            \
-     arm_set_default_fp_behaviours(&local);                              \
-+    set_default_nan_mode(get_default_nan_mode(s), &local);              \
-     TYPE r = TYPE##_minmax(a, b, &local, MIN | float_minmax_ismag);     \
-     if (!TYPE##_is_any_nan(r)) {                                        \
-         r = TYPE##_abs(r);                                              \
+> On Wed, May 20, 2026 at 2:22=E2=80=AFPM Christian Schoenebeck <
+>=20
+> qemu_oss@crudebyte.com> wrote:
+> > On Wednesday, 20 May 2026 19:11:25 CEST Christian Schoenebeck wrote:
+> > > From: sin99xx <sinxx198@gmail.com>
+> > >=20
+> > > v9fs_co_readdir_many() dispatches do_readdir_many() to a worker thread
+> > > that reads V9fsFidState's path.data without holding a rename lock.
+> > >=20
+> > > A concurrent rename request, e.g. of its parent dir, causes the FID's
+> > > absolute path to be altered by freeing the old path string and
+> > > assigning a new one. This causes a heap-use-after-free race condition
+> > > while do_readdir_many() is still accessing the old object.
+> > >=20
+> > > This allows a DoS by an unprivileged guest user.
+> > >=20
+> > > Fix this by wrapping the worker thread dispatch block within a pair of
+> > > v9fs_path_read_lock() and v9fs_path_unlock() calls, like it's done at
+> > > other places.
+> > >=20
+> > > Fixes: 2149675b195f ("9pfs: add new function v9fs_co_readdir_many()")
+> > > Fixes: CVE-2026-48004
+> > > Reported-by: sin99xx <sinxx198@gmail.com>
+> > > [Christian Schoenebeck: add commit log message]
+> > > Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> >=20
+> > sin99xx, I forgot, may I add your Signed-off-by tag?
+> >=20
+> >   Signed-off-by: sin99xx <sinxx198@gmail.com>
+> >=20
+> > This is required [1] for making you the patch author:
+> >=20
+> > "Your patches must include a Signed-off-by: line. This is a hard
+> > requirement
+> > because it=E2=80=99s how you say =E2=80=9CI=E2=80=99m legally okay to c=
+ontribute this and happy
+> > for it
+> > to go into QEMU=E2=80=9D. For full guidance, read the Code provenance
+> > documentation."
+> >=20
+> > [1] https://www.qemu.org/docs/master/devel/submitting-a-patch.html
+> >=20
+> > > ---
+> > >=20
+> > >  hw/9pfs/codir.c | 3 +++
+> > >  1 file changed, 3 insertions(+)
+> > >=20
+> > > diff --git a/hw/9pfs/codir.c b/hw/9pfs/codir.c
+> > > index bce7dd96e9..5568399343 100644
+> > > --- a/hw/9pfs/codir.c
+> > > +++ b/hw/9pfs/codir.c
+> > > @@ -220,13 +220,16 @@ int coroutine_fn v9fs_co_readdir_many(V9fsPDU
+> > > *pdu,
+> > > V9fsFidState *fidp, bool dostat)
+> > >=20
+> > >  {
+> > > =20
+> > >      int err =3D 0;
+> > >=20
+> > > +    V9fsState *s =3D pdu->s;
+> > >=20
+> > >      if (v9fs_request_cancelled(pdu)) {
+> > >     =20
+> > >          return -EINTR;
+> > >     =20
+> > >      }
+> > >=20
+> > > +    v9fs_path_read_lock(s);
+> > >=20
+> > >      v9fs_co_run_in_worker({
+> > >     =20
+> > >          err =3D do_readdir_many(pdu, fidp, entries, offset, maxsize,
+> >=20
+> > dostat);
+> >=20
+> > > });
+> > > +    v9fs_path_unlock(s);
+> > >=20
+> > >      return err;
+> > > =20
+> > >  }
 
-(or we could go back to copying 's' into 'local').
 
--- PMM
 
