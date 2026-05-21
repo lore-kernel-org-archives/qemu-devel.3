@@ -4,74 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB7F5CD4F5E
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 11:11:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15D77CD4F5E
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 11:13:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ1JT-0000Lx-WB; Thu, 21 May 2026 07:11:40 -0400
+	id 1wQ1LD-0000tk-Pf; Thu, 21 May 2026 07:13:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wQ1JS-0000LY-1O
- for qemu-devel@nongnu.org; Thu, 21 May 2026 07:11:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wQ1JO-0000uq-2j
- for qemu-devel@nongnu.org; Thu, 21 May 2026 07:11:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779361892;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=INh+V5hHibHDk2Hqobss9ELj54NQNaDB6mzx1D1c3SE=;
- b=E+JH/atwnVIDD6d5XyhOmmelftpNI+jcwNdTlo3d2Tr4sLN18RBPhGljMPYgTCsV911NRW
- jONWgtaFMJLrlothoQ0x/MV39GdnSQ8nWbLpFBx77V7F9ZQ4iYs3rXFV9zm4kYmXv+Chlw
- 1mWWEDWUTyS9Yg5N4qmcZzAXPJ0oRXk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-676-X_U45vAhNfO2ScAHKRxW-g-1; Thu,
- 21 May 2026 07:11:30 -0400
-X-MC-Unique: X_U45vAhNfO2ScAHKRxW-g-1
-X-Mimecast-MFC-AGG-ID: X_U45vAhNfO2ScAHKRxW-g_1779361890
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C02EE18005B8; Thu, 21 May 2026 11:11:29 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4E0841681; Thu, 21 May 2026 11:11:29 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DE5BC21E6A01; Thu, 21 May 2026 13:11:26 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org,  jasowang@redhat.com,  lvivier@redhat.com,
- sbrivio@redhat.com,  samuel.thibault@ens-lyon.org
-Subject: Re: [PATCH 3/4] qapi/net: Wean SLIRP off QAPI type String to
- improve documentation
-In-Reply-To: <177813267025.2413233.2433763734158027693.b4-review@b4>
- (marcandre lureau's message of "Thu, 07 May 2026 09:44:30 +0400")
-References: <20260506105421.2461117-1-armbru@redhat.com>
- <20260506105421.2461117-4-armbru@redhat.com>
- <177813267025.2413233.2433763734158027693.b4-review@b4>
-Date: Thu, 21 May 2026 13:11:26 +0200
-Message-ID: <87tss1nhk1.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wQ1L5-0000tV-QZ
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 07:13:20 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wQ1L3-0003H8-Go
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 07:13:19 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-488b0e1b870so84746465e9.2
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 04:13:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779361995; x=1779966795; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MzUL4+j/hUs7gdHs8noVX7LzKE0nxzReYCZAT/zEFsU=;
+ b=jxpo3Rw138xaaKBZ67Bk1pZtlGyEBkCVw+WoHuXdxESiM/UF1PlW1jXj01gp99bqP1
+ WGdYMVt6X+GxPyZ0oCFCofPsD0+qt++DA/dMUo7FNApxdsh/w6tK93rsB1hOBfdQfq9H
+ 0raAa/9zi9YP+DEZfSTkUkqyruum358O1ARLtW8+NsEO684DriHPVzqqG1GDtLuS7bBm
+ txZ/uL7VA/moqOo67saeorZn7xRfQi1lj4R9VBch5u6hlPaRDxwKPb1KTZNSo9DQSm0u
+ cmS3KbtHp+1JtxiYQFfLe1wpkwN99HYuyd+w5fRvDDYybq0Uc9v1fJ8ABx9kyYE1EZOe
+ ZH7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779361995; x=1779966795;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MzUL4+j/hUs7gdHs8noVX7LzKE0nxzReYCZAT/zEFsU=;
+ b=TiYvUC0nV/zmeAJMMJCmDR3EiHctq0J+vBCHrBe/axjQG5KnDp/lSdHiNOANwjE19R
+ F4URiLl08t7PzQfPzfeBtHuzj4sy8wiVhD2wtMdt+ghIUl6mW5Xo6uKxr8cx98zGZrO8
+ TXqNtO7KRV/f4sxo4OHAj/JqNN4FOY6KIO9eqwlxYGT5dpMZ6lvd00HFGDgyssibkNa0
+ Y8N6LhCQOIm8Y4sMEi6BxRb1OiM+8N1BRDcp9ZXsA2+WzKwFiSI/N+xWlJuLADi9IVDv
+ +gnrgA4odr6vsjKN2ZwG23FtJsvAsEXnaKkJ9glE6sUsLMAIsZS7nVq7OcE865Ag9v3D
+ dTcQ==
+X-Gm-Message-State: AOJu0YwIdu0MNS9AEKKGir2sl/EPINvVlEyYY9Ok1pSKY8rygj34tEay
+ QYovIuox/ystLr8+DE7ICgVrpfUQZFEod0ZmyWfOYwX3vSUfCQG36laBRKDHuTXbbJY=
+X-Gm-Gg: Acq92OFbZ73j75NU/Qs8O03cIJIstSD6xJzt0mk0eiIjHGjXv3vBZuffLNxGd3Sd54V
+ UVJ45kHPUQ2EzgmaUe5nXk8GVdaoQ1HDKyhbkZoHUJ9NDQqIZyTuf8RzH1vBCjKbMvjcPR8sapC
+ sF6rKKlGulqqfPtbDZRNXfYHkH5frg0q38yVy+R/H4IhTBhhIsKNukk7QkIe/1I4MeLqVHb3zzt
+ DUJXh7angt+gi3Sbo4Fn3lIaUkVLAwyj0h83BbiCqOeJ5cc7E5rDzcZ/PkE0bIaMF3bMiJSN4di
+ cz4kHxfwxMoQB6ZYopZSjlPmGxSo8F54NarBv5SbXxljNqVFRmy+EcSCBp9+edvwmIDpVVCiuem
+ 1M4+JX8LQ0KTecvHWtH26XeviItPXbCTu0g1YUKAZNnwLvAKdMquwCZwUjzdFLUASYmwUaUhoCy
+ B4TUQiDiV6/v8/msEr3ThVvQjw2jyBrS4T3A==
+X-Received: by 2002:a05:600c:828c:b0:485:4eaf:eb53 with SMTP id
+ 5b1f17b1804b1-4903606b5b2mr36430785e9.19.1779361995207; 
+ Thu, 21 May 2026 04:13:15 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45eaa7da426sm2045348f8f.9.2026.05.21.04.13.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 21 May 2026 04:13:14 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id BC8705F886;
+ Thu, 21 May 2026 12:13:13 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org,  philmd@linaro.org,
+ pierrick.bouvier@oss.qualcomm.com,  Gerd Hoffmann <kraxel@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,  Akihiko Odaki
+ <odaki@rsg.ci.i.u-tokyo.ac.jp>,  Dmitry Osipenko
+ <dmitry.osipenko@collabora.com>
+Subject: Re: [PATCH 25/39] MAINTAINERS: Fix F: in "virtio-snd" and "virtio-gpu"
+In-Reply-To: <20260521080511.999266-26-armbru@redhat.com> (Markus Armbruster's
+ message of "Thu, 21 May 2026 10:04:57 +0200")
+References: <20260521080511.999266-1-armbru@redhat.com>
+ <20260521080511.999266-26-armbru@redhat.com>
+User-Agent: mu4e 1.14.1; emacs 30.1
+Date: Thu, 21 May 2026 12:13:13 +0100
+Message-ID: <87a4ttow1i.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,17 +108,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-marcandre.lureau@redhat.com writes:
+Markus Armbruster <armbru@redhat.com> writes:
 
-> On Wed, 06 May 2026 12:54:20 +0200, Markus Armbruster <armbru@redhat.com> wrote:
->> String's doc comment is useless.  Replace its use in NetdevUserOptions
->> by identical types with hopefully useful documentation.
->> 
->> While there, add a non-doc commment explaining why the port forwarding
->> interface is problematic.
+> We neglected to update MAINTAINERS when we moved
+> docs/system/devices/virtio-snd.rst and
+> docs/system/devices/virtio-gpu.rst to docs/system/devices/virtio/.
+> Update it now.
 >
-> commment -> comment
+> Fixes: 487ce6ce99 (docs/system: split VirtIO devices from the rest, 2025-=
+10-16)
+> Cc: Gerd Hoffmann <kraxel@redhat.com>
+> Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> Cc: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
 
-Fixed, thanks!
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
