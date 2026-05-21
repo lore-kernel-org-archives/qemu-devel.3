@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7E90CD5BB4
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:59:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E21C5CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:59:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ3v1-00070s-7k; Thu, 21 May 2026 09:58:35 -0400
+	id 1wQ3vQ-0007Yx-9v; Thu, 21 May 2026 09:59:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wQ3uw-0006Kf-Sl
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:58:30 -0400
+ id 1wQ3v9-0007SD-IQ
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:58:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wQ3uv-0002Ur-1V
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:58:30 -0400
+ id 1wQ3v6-0002We-G0
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:58:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779371908;
+ s=mimecast20190719; t=1779371919;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dCK5DNh3LVvKqOCn+8V9JDLnRLBNdd/SI6lBAcoZbH0=;
- b=OjQftxw+rJyQ5GDe7KKGOMcnjvbnu6VV3PudQEtpFHun3i8G2VHbDH6y/OgnXAfsTOrGD4
- zI+e2xaznzKOvsraDom3LOhFI86NpyJ2+T4siyn/gvFZ3RRtOBL6x4XZg/AMhhInw10gOb
- 3gw2B9QWSmkPRU0Gly1eDgw5PuOZ0WI=
+ bh=gDKvwn/SyrZXV3rhYL87Uo01VJytNE345XYube1Q1xU=;
+ b=Tct0Gql93ucBX4uLCHqFVVI/OCZxTpX/Wrt4gvvwCRbKpq1Vn6IDk/c/7s1i5tPoZ9tdeO
+ zQrao+NEzNB65rfqLCMHqXQEzDPAXLDGp4ohR7TLTnd4fdxjHHMBoo03JaAuTDAZPEeFjY
+ 2SX+Oj6zlCMsLCiR782yN8rZD/7a8EA=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-245-axvSDQwDNzOMJetFLgbkMQ-1; Thu,
- 21 May 2026 09:58:26 -0400
-X-MC-Unique: axvSDQwDNzOMJetFLgbkMQ-1
-X-Mimecast-MFC-AGG-ID: axvSDQwDNzOMJetFLgbkMQ_1779371905
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-583-g2UdaNEAO6eKnTzRs5SnhQ-1; Thu,
+ 21 May 2026 09:58:38 -0400
+X-MC-Unique: g2UdaNEAO6eKnTzRs5SnhQ-1
+X-Mimecast-MFC-AGG-ID: g2UdaNEAO6eKnTzRs5SnhQ_1779371916
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 848E418002FA; Thu, 21 May 2026 13:58:25 +0000 (UTC)
+ id 8466018002C7; Thu, 21 May 2026 13:58:36 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.26])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3C60319560A3; Thu, 21 May 2026 13:58:23 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 332FC1689; Thu, 21 May 2026 13:58:34 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL v2 26/38] ui/dbus: Use Linux key codes
-Date: Thu, 21 May 2026 17:55:37 +0400
-Message-ID: <20260521135551.1752945-27-marcandre.lureau@redhat.com>
+Subject: [PULL v2 28/38] ui/input-barrier: Use Linux key codes
+Date: Thu, 21 May 2026 17:55:39 +0400
+Message-ID: <20260521135551.1752945-29-marcandre.lureau@redhat.com>
 In-Reply-To: <20260521135551.1752945-1-marcandre.lureau@redhat.com>
 References: <20260521135551.1752945-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -93,43 +93,75 @@ representations.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260520-input-v3-18-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <20260520-input-v3-20-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 ---
- ui/dbus-console.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ ui/input-barrier.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/ui/dbus-console.c b/ui/dbus-console.c
-index 24f4542f312..21eceb24362 100644
---- a/ui/dbus-console.c
-+++ b/ui/dbus-console.c
-@@ -339,11 +339,11 @@ dbus_kbd_press(DBusDisplayConsole *ddc,
-                GDBusMethodInvocation *invocation,
-                guint arg_keycode)
+diff --git a/ui/input-barrier.c b/ui/input-barrier.c
+index 042f63cc5a1..d07027114af 100644
+--- a/ui/input-barrier.c
++++ b/ui/input-barrier.c
+@@ -84,11 +84,11 @@ static const char *cmd_names[] = {
+ 
+ static kbd_layout_t *kbd_layout;
+ 
+-static int input_barrier_to_qcode(uint16_t keyid, uint16_t keycode)
++static unsigned int input_barrier_to_linux(uint16_t keyid, uint16_t keycode)
  {
--    QKeyCode qcode = qemu_input_key_number_to_qcode(arg_keycode);
-+    unsigned int lnx = qemu_input_key_number_to_linux(arg_keycode);
+     /* keycode is optional, if it is not provided use keyid */
+-    if (keycode && keycode <= qemu_input_map_xorgkbd_to_qcode_len) {
+-        return qemu_input_map_xorgkbd_to_qcode[keycode];
++    if (keycode && keycode <= qemu_input_map_xorgkbd_to_linux_len) {
++        return qemu_input_map_xorgkbd_to_linux[keycode];
+     }
  
-     trace_dbus_kbd_press(arg_keycode);
+     if (keyid >= 0xE000 && keyid <= 0xEFFF) {
+@@ -99,10 +99,10 @@ static int input_barrier_to_qcode(uint16_t keyid, uint16_t keycode)
+     if (kbd_layout) {
+         keycode = keysym2scancode(kbd_layout, keyid, NULL, false);
  
--    qkbd_state_key_event(ddc->kbd, qemu_input_map_qcode_to_linux[qcode], true);
-+    qkbd_state_key_event(ddc->kbd, lnx, true);
+-        return qemu_input_key_number_to_qcode(keycode);
++        return qemu_input_key_number_to_linux(keycode);
+     }
  
-     qemu_dbus_display1_keyboard_complete_press(ddc->iface_kbd, invocation);
+-    return qemu_input_map_x11_to_qcode[keyid];
++    return qemu_input_map_x11_to_linux[keyid];
+ }
  
-@@ -355,11 +355,11 @@ dbus_kbd_release(DBusDisplayConsole *ddc,
-                  GDBusMethodInvocation *invocation,
-                  guint arg_keycode)
- {
--    QKeyCode qcode = qemu_input_key_number_to_qcode(arg_keycode);
-+    unsigned int lnx = qemu_input_key_number_to_linux(arg_keycode);
+ static int input_barrier_to_mouse(uint8_t buttonid)
+@@ -431,23 +431,23 @@ static gboolean writecmd(InputBarrier *ib, struct barrierMsg *msg)
  
-     trace_dbus_kbd_release(arg_keycode);
- 
--    qkbd_state_key_event(ddc->kbd, qemu_input_map_qcode_to_linux[qcode], false);
-+    qkbd_state_key_event(ddc->kbd, lnx, false);
- 
-     qemu_dbus_display1_keyboard_complete_release(ddc->iface_kbd, invocation);
- 
+     /* keyboard */
+     case barrierCmdDKeyDown:
+-        qemu_input_event_send_key_qcode(NULL,
+-                        input_barrier_to_qcode(msg->key.keyid, msg->key.button),
++        qemu_input_event_send_key_linux(NULL,
++                        input_barrier_to_linux(msg->key.keyid, msg->key.button),
+                                         true);
+         break;
+     case barrierCmdDKeyRepeat:
+         for (i = 0; i < msg->repeat.repeat; i++) {
+-            qemu_input_event_send_key_qcode(NULL,
+-                  input_barrier_to_qcode(msg->repeat.keyid, msg->repeat.button),
++            qemu_input_event_send_key_linux(NULL,
++                  input_barrier_to_linux(msg->repeat.keyid, msg->repeat.button),
+                                             false);
+-            qemu_input_event_send_key_qcode(NULL,
+-                  input_barrier_to_qcode(msg->repeat.keyid, msg->repeat.button),
++            qemu_input_event_send_key_linux(NULL,
++                  input_barrier_to_linux(msg->repeat.keyid, msg->repeat.button),
+                                             true);
+         }
+         break;
+     case barrierCmdDKeyUp:
+-        qemu_input_event_send_key_qcode(NULL,
+-                        input_barrier_to_qcode(msg->key.keyid, msg->key.button),
++        qemu_input_event_send_key_linux(NULL,
++                        input_barrier_to_linux(msg->key.keyid, msg->key.button),
+                                         false);
+         break;
+     default:
 -- 
 2.54.0
 
