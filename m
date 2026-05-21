@@ -4,103 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A01EACD5BA4
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 08:05:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBF48CD5BA4
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 08:05:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPyOp-0007Q2-5w; Thu, 21 May 2026 04:04:59 -0400
+	id 1wPyPV-0007if-JN; Thu, 21 May 2026 04:05:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wPyOn-0007PZ-D3
- for qemu-devel@nongnu.org; Thu, 21 May 2026 04:04:57 -0400
-Received: from mail-dy1-x132b.google.com ([2607:f8b0:4864:20::132b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wPyOl-0006ks-D4
- for qemu-devel@nongnu.org; Thu, 21 May 2026 04:04:57 -0400
-Received: by mail-dy1-x132b.google.com with SMTP id
- 5a478bee46e88-303f2fb7225so4094470eec.1
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 01:04:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779350693; cv=none;
- d=google.com; s=arc-20240605;
- b=lPFczp4fiuuBZ/SWup1o3fcXVztnR6P2gsbQjj88YT+kTa2m7nzMavIPTcsbtLTc1t
- /2o84yz7vwNI2iN1omn9jLIbjilTS0dIqABxETpOIyf6r1bn3EpF/8dQpExlNLsvJd7o
- 6CzTrTiD4jw6tM9hrtr2R06YG0ZM8n06+v16n03oZ0gQmbTyL2vY+idWMm7vqC68ePSp
- mtjVCqyaUNaCVoBAH2WnjdT5noiyW0SG2DxmFCBr2hpdVe+OcHTau+SU49Gtg9m7n7CP
- /KSljUzT046777QYuAfhqkFMkx5UOi5PEe7ktInwFV6h0rieA+jpVyQ83NSsNqfCcRfB
- kmrQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=4yNORtRbqxAXNVHTllcSnV1+At7HwPfpwPX4T3NASmE=;
- fh=Qpl77bHkcE0bYSjiKXT9vs9obKUyn+uhBwvH7ERnfRM=;
- b=KNXTjXSStBZBk2g9g5+4JKKEJpHiXmAQ5Tuv0tpc7bbcMWc5C85dpwFiqLpz6NFcXi
- Ez8eufotljIdpPRgn9sP3K9MRrX94ttj29nOM1SXsRnZGuKNKZVArh6NZr/j/dSJiBje
- llbZmpKLXC/aozH199E8xNVHsKO1ncGsVyO8A0tk0bRAOQLRj+GZqaIlgk+AnBbNtxSn
- EjDbPZR5K27jyIVYrwomrACy4Vi4MK6/ihTTk2EuQnyO/9ahN618iw0J44lQR+3OwkWC
- akNkXh2TBzbCwE7fJAY3MjAbf75fZUjszYsnLhZkaLjNGZk9/Ku9QJJviS5N+OnBp9m4
- TuJQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779350693; x=1779955493; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4yNORtRbqxAXNVHTllcSnV1+At7HwPfpwPX4T3NASmE=;
- b=kTnu2uBLaKq9e0HlxdVusxdffloJp17q5rpSnH1z5qb57Jx2oyxKqng7BZd1VyvENj
- ntseTmmPURNwTqPdy5/LaDkm96TyHctKNF4HegiY3ofYNXtQwtMZq/WmhBtw1jy90qyw
- lAw8cM0L5cV0mX83cxW371ARcLNWcsNko6sK8Cus0ZMCOCoqagutckQOQ2KFwR/rxPOp
- mr6xUaSoCKFCOj3ia3h7pMPmseQPT82LS2UNVXAxAaeG1NSBk+xwKSvBAm6BsfYiX6QA
- b/Nti449oZVntX8BU9jur7KWWemjVeVZdFy6EjvofAMT29uibWT3T8/QwrksGB/HXtQi
- vUwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779350693; x=1779955493;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=4yNORtRbqxAXNVHTllcSnV1+At7HwPfpwPX4T3NASmE=;
- b=Higp06dpEGuAwex2FZUZzAh3f2Ax4ioUbsy0gODpWE27nCllXqDVeQhlGr6wtwMZce
- mYBTX3dR3Ae5kyJMKREsBF/PB1Y0nCDcfVtjMDJX5eeO3tqkU9b6FVfkVgzouVux9rUg
- aLdsBTRSqWxwo3LzWyhnxZqnVrbAlEUCvYBW1xh6upqCthjIaBbZaZSwa43SbvRChaSS
- IOBPftPxciu7e16bbvgRB6ch+22iu3D0ZyqTAwKedpJANu5N2kXhzklLsLC+SGvubJqL
- QWyowp2aWDuqgRww4W1/OS0X4rOEj1J9QxMYY5nxBZTWAYZKnT/0CALS1mjfyLZBAnJo
- 9++Q==
-X-Gm-Message-State: AOJu0YwtKYUPZyHAp5vQc8/DGTO1SKrVr+mL4dta46M9DgnmNBtX++ik
- xIzjr+FsHGk1erwYoPdd5XpuLzw3fnP5jGkFHOYjHr1grnpLUrU+M6YLRybSgYcsFktXyjrih5K
- yKvjhxONVuBGlkQlpUvBllsxbmp+Y0qc=
-X-Gm-Gg: Acq92OG01A4BxODR9eebmOw9P24C7DnPOl/k7Y8++Sg3E0GQO+jky4mkctxnOdTGpQO
- 1ZyBgH61PnsBH/q+dJRhyNKgRKPKiqa/zDd4SlMowyD/WkLQFhhAubgMtBlU8+X3vru/UuDnaw8
- gD60OyKGZI3YnbBEvgc7wZhgEuejUE1YivOhQsviEZw4WLCJ64DyzBilOFoVVlkXR5B3e/9yMOF
- hB3Bg9CwHQKmz+wS2posUgzimcK9E/6SHhkBUkOk90r8X4K9whMp+kYHba1ASgzCOX1k0FEB9PE
- /AymtDW88F8eW3Bh3VdSntukPyicnAX3w9Fyjk0KqK7CvnhOIXpOvmN719hD
-X-Received: by 2002:a05:7300:ca7:b0:2c5:220c:5670 with SMTP id
- 5a478bee46e88-3042f4770b4mr1019399eec.2.1779350693168; Thu, 21 May 2026
- 01:04:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPyPE-0007c1-1h
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 04:05:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPyPB-0006rp-JE
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 04:05:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779350720;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sGtxIqL74yp3D/2Ygzu4rhf9A4jMIXImUOGrRgUsGkI=;
+ b=Jvc+cAg7Ivyx4K1NzdmPz4DQ8Mgdu9Enophn/HqUTqrY+TD9n8rqtW4qK5BahB2sP9404E
+ Il8M1NYZfHHV6F48MqN7YkWUfWLpH8ikk3nFY9X8w7ebPSSQbqEwDuOUfs2xOZ2p2ESKDs
+ dnRDzdMeGzx9KCkgA6NPHmyErcJr1rg=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-155-gGKNiqNRMOKW-UGahGNx6w-1; Thu,
+ 21 May 2026 04:05:18 -0400
+X-MC-Unique: gGKNiqNRMOKW-UGahGNx6w-1
+X-Mimecast-MFC-AGG-ID: gGKNiqNRMOKW-UGahGNx6w_1779350718
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DA3311956054; Thu, 21 May 2026 08:05:17 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7CE5B1800591; Thu, 21 May 2026 08:05:17 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id E98CE21E6A23; Thu, 21 May 2026 10:05:11 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org, pierrick.bouvier@oss.qualcomm.com,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 08/39] MAINTAINERS: Drop stale F: from "virtio"
+Date: Thu, 21 May 2026 10:04:40 +0200
+Message-ID: <20260521080511.999266-9-armbru@redhat.com>
+In-Reply-To: <20260521080511.999266-1-armbru@redhat.com>
+References: <20260521080511.999266-1-armbru@redhat.com>
 MIME-Version: 1.0
-References: <20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com>
- <ag66inUz7qe7YwrS@redhat.com>
-In-Reply-To: <ag66inUz7qe7YwrS@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Thu, 21 May 2026 12:04:40 +0400
-X-Gm-Features: AVHnY4LhbsJcTtIazX_tDmDPgaXqKXT6OTCISgwKCNpMwfkT518yL_jAARJV2BE
-Message-ID: <CAJ+F1CKrERf+fgBXNa8KBB+AS-6L7eRdVmnG21Gyi=+=q7gE+w@mail.gmail.com>
-Subject: Re: [PATCH 00/40] Make HMP optional (and later standalone)
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132b;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x132b.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,101 +84,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+We neglected to update MAINTAINERS when we deleted makefiles.  Update
+it now.
 
-On Thu, May 21, 2026 at 11:56=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@=
-redhat.com> wrote:
->
-> On Thu, May 21, 2026 at 01:49:01AM +0400, Marc-Andr=C3=A9 Lureau wrote:
-> > Hi,
-> >
-> > This series makes HMP compile-time optional via --disable-hmp. The
-> > resulting binary speaks only QMP - reducing the attack surface, binary
-> > size and enforcing a separation between machine-readable interface and
-> > interactive debugging console.
-> >
-> > QMP offers almost all the functionality HMP could provide, so a separat=
-e
-> > standalone "HMP-like" console could be implemented on top of it. The
-> > rough list of missing commands (+complexity estimation) after this
-> > series:
->
-> When you say "complexity estimation" is that an estimate for doing
-> a well designed QMP implementation ?
->
-> My view is that for anything still HMP-only, we should do a quick
-> & dirty hack, where we just expose the existing functionality
-> directly as QMP without any modelling, but mark it unstable. That
-> would make everything be largely easy.
+Fixes: be786d2f4a (meson: convert hw/virtio, 2019-08-15)
+Cc: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ MAINTAINERS | 1 -
+ 1 file changed, 1 deletion(-)
 
-If that's reasonable, we can have more x-unstable HumanReadableText command=
-s.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 9478a95194..caa849b98d 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2427,7 +2427,6 @@ virtio
+ M: Michael S. Tsirkin <mst@redhat.com>
+ S: Supported
+ F: hw/*/virtio*
+-F: hw/virtio/Makefile.objs
+ F: hw/virtio/trace-events
+ F: qapi/virtio.json
+ F: net/vhost-user.c
+-- 
+2.54.0
 
->
-> If we expect proper QMP design, then the job will never get finished.
-
-Yeah, I expect to have a bit better than just plain string though, for
-some commands. We can do it progressively.
-
-See for example x-query-usernet & x-query-network added in this
-series, they are structured, but a few info fields remain "free-form"
-(slirp data, etc).
-
-We could work on exposing the other missing commands in separate series.
-
->
->
-> > Debugging / introspection:
-> > - info registers (medium) - plus $reg expression handling
-> > - x/xp read memory (medium)
-> > - gpa2hpa/gpa2hva/gva2gpa address translation (medium)
-> > - info lapic (high) - deep x86 APIC state, lots of registers
-> > - info mem (high) - virtual memory mappings, different per arch
-> > - info tlb (high) - virt-to-phys mappings, also per arch
-> > - info mtree (high) - memory region tree, multiple view modes
-> > - info skeys (medium) - s390x storage keys
-> > - info cmma (medium) - s390x CMMA values
-> > - info qdm (easy) - could probably be folded into QOM introspection
-> > - info qtree (medium) - same, maybe QOM introspection is enough
-> > - info snapshots (medium)
-> > - info usbhost (medium)
-> > - info via (medium) -- VIA south bridge state
-> >
-> > Simple actions / settings:
-> > - gdbserver (trivial)
-> > - boot_set (easy)
-> > - mce (easy) - x86 MCE injection
-> > - sum (easy) - memory checksum
-> > - sync-profile (easy) - enable/disable/reset
-> > - info sync-profile (medium)
-> > - one-insn-per-tb (easy) - could be a QOM property on the accelerator
-> > - pcie_aer_inject_error (easy)
-> > - migration_mode (medium?)
-> > - i/o ioport read/write (easy)
-> > - hostfwd-add/hostfwd-remove (medium) - slirp port forwarding
-> > - log/logfile (medium)
-> > - trace-file (medium)
-> >
-> > Also, to let clients do disassembly on their side, it'd be useful to
-> > have something like "query-disassemble-info" that gives the client what
-> > architecture and endianness is used etc.
-> >
-> > In the meantime, being able to build without HMP is valuable and helps
-> > identifying the missing pieces. The series does so by steps:
-> >
-> > - preparatory cleanups and bug fixes
-> > - add commands without QMP equivalent and needed for tests
-> > - convert most iotests and qtests from HMP to QMP
-> > - guard HMP-only code paths
-> > - make HMP source files conditional in the build system
-> >
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
->
 
