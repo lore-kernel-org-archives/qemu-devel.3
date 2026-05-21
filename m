@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADB54CD5BB4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9FFDCD5BB1
 	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:54:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ3oJ-0001PK-0h; Thu, 21 May 2026 09:51:39 -0400
+	id 1wQ3os-0003uk-Ob; Thu, 21 May 2026 09:52:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wQ3nw-00016i-67
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:51:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wQ3or-0003to-4t
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:52:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wQ3nt-0005Hf-Su
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:51:15 -0400
+ id 1wQ3oo-0006Wo-Vf
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:52:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779371473;
+ s=mimecast20190719; t=1779371530;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6hh6vNFU4mb69vK9rw83JMfqECqtzobaB1xx4DG/LzU=;
- b=D2bAxXIq+yAA936LLWJpIFoWu9w1bBCQwfrXtGB4amMzugDwMljGPJFwaxfMdxmxMq3X8g
- GimGczfgWiRLfycg79wkzk63i4fVbZDpsGMzsf37zwTJa8MDB4LFjd8thHlU7JucElskrG
- f2z4B9krshp8vbxrsCKEwCu+cyodkSo=
+ bh=26FOAWe6CEIbzXUqveh6ti2zrWxtCUNKJmgkkPmlgVE=;
+ b=LpWFv2aCIMwc4LifL8Wncw23Yfio4WB7v7zM54HOtOAW6JBCWEko1XDZ8RQP4DUybJ2G2x
+ q558eZJHGsvvxV0NwTlPWyHOpalUDaj6RrDlbDLYZVkJ6RTh5h8SewHZHmwsajsaRc2497
+ qQRvuZkOcrf+lnWXJAztquuOXSjZumA=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-427-MPSuKJr1PeKNSns1M7gpFQ-1; Thu,
- 21 May 2026 09:51:09 -0400
-X-MC-Unique: MPSuKJr1PeKNSns1M7gpFQ-1
-X-Mimecast-MFC-AGG-ID: MPSuKJr1PeKNSns1M7gpFQ_1779371468
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-142-_kVd5xhNMlKizo9VG4VFAA-1; Thu,
+ 21 May 2026 09:52:06 -0400
+X-MC-Unique: _kVd5xhNMlKizo9VG4VFAA-1
+X-Mimecast-MFC-AGG-ID: _kVd5xhNMlKizo9VG4VFAA_1779371524
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 82D9518005B2; Thu, 21 May 2026 13:51:08 +0000 (UTC)
+ id E44DC18005B5; Thu, 21 May 2026 13:52:03 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.33.98])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 47FD61956053; Thu, 21 May 2026 13:51:03 +0000 (UTC)
+ id D97771956053; Thu, 21 May 2026 13:51:58 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>,
@@ -58,24 +58,26 @@ Cc: Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  John Levon <john.levon@nutanix.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Cleber Rosa <crosa@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PULL 16/29] iotests: mark 151, 181, 185 & 308 as flaky tests
-Date: Thu, 21 May 2026 14:49:30 +0100
-Message-ID: <20260521134943.1714527-17-berrange@redhat.com>
+ Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 27/29] qom: fix ability to create objects without a parent
+Date: Thu, 21 May 2026 14:49:41 +0100
+Message-ID: <20260521134943.1714527-28-berrange@redhat.com>
 In-Reply-To: <20260521134943.1714527-1-berrange@redhat.com>
 References: <20260521134943.1714527-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,136 +94,363 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a "_flaky_test" function for shell based I/O tests which
-accepts a GitLab issue URL, and causes the I/O test to be skipped
-unless the $QEMU_TEST_FLAKY_TESTS environment variable is set.
+object_new_with_propv allowed id/parent to be optional, in which case
+the caller was expected to own the returned object. Unfortunately a
+trailing object_unref() meant that the returned object was already
+freed.
 
-The equivalent "skip_flaky" test decorator is added for python based
-I/O tests with the same behaviour.
+It is confusing to have a single method with two different ownership
+scenarios for the returned object.
 
-This is used by:
+Make id/parent mandatory in object_new_with_propv once more, and add
+a new object_new_with_propv_parentless that does not accept id/parent
+at all and lets the caller own the returned reference.
 
-  * Test 151 which fails in QEMU private AWS runners due to failure
-    to make progress in time
-  * Test 181 which fails with a non-responsive QEMU on AWS runners
-    with the QED format
-  * Test 185 which fails in GitLab shared runners
-  * Test 308 which fails to see disk usage increase after fallocate
+The helper method has abstracted the way properties are represented
+and set in order to facilitate the subsequent commit.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Unit tests are added to address the root cause that allowed the bug
+to slip through in commit 6134d752.
+
+Fixes: 6134d7522e5 ("qom: don't require user creatable objects to be registered")
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/qemu-iotests/151        |  1 +
- tests/qemu-iotests/181        |  2 ++
- tests/qemu-iotests/185        |  1 +
- tests/qemu-iotests/308        |  2 ++
- tests/qemu-iotests/common.rc  | 16 ++++++++++++++++
- tests/qemu-iotests/iotests.py | 16 ++++++++++++++++
- 6 files changed, 38 insertions(+)
+ include/qom/object.h            | 47 ++++++++++++++++++
+ qom/object.c                    | 74 +++++++++++++++++++++++----
+ tests/unit/check-qom-proplist.c | 88 ++++++++++++++++++++++++++++-----
+ 3 files changed, 187 insertions(+), 22 deletions(-)
 
-diff --git a/tests/qemu-iotests/151 b/tests/qemu-iotests/151
-index 9b9c815db5..647194094a 100755
---- a/tests/qemu-iotests/151
-+++ b/tests/qemu-iotests/151
-@@ -308,6 +308,7 @@ class TestThrottledWithNbdExportBase(iotests.QMPTestCase):
- class TestLowThrottledWithNbdExport(TestThrottledWithNbdExportBase):
-     iops = 16
+diff --git a/include/qom/object.h b/include/qom/object.h
+index fb1cd92d97..11f55613fc 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -719,6 +719,53 @@ Object *object_new_with_props_from_qdict(const char *typename,
+                                          Visitor *v,
+                                          Error **errp);
  
-+    @iotests.skip_flaky("https://gitlab.com/qemu-project/qemu/-/work_items/3513")
-     def testUnderLoad(self):
-         '''
-         Throttle the source node, then issue a whole bunch of external requests
-diff --git a/tests/qemu-iotests/181 b/tests/qemu-iotests/181
-index dc90a10757..b904e8ce01 100755
---- a/tests/qemu-iotests/181
-+++ b/tests/qemu-iotests/181
-@@ -48,6 +48,8 @@ _unsupported_fmt qcow vdi vhdx vmdk vpc vvfat parallels
- _supported_proto generic
- _supported_os Linux
- 
-+_flaky_test https://gitlab.com/qemu-project/qemu/-/work_items/3515
++/**
++ * object_new_with_props_parentless:
++ * @typename:  The name of the type of the object to instantiate.
++ * @errp: pointer to error object
++ * @...: list of property names and values
++ *
++ * Behaviour as object_new_with_props(), except the object
++ * will not be added to any parent and thus the caller will
++ * own the returned instance. The caller must call
++ * object_unref when it is no longer required.
++ */
++Object *object_new_with_props_parentless(const char *typename,
++                                         Error **errp,
++                                         ...) G_GNUC_NULL_TERMINATED;
 +
- size=64M
- _make_test_img $size
- 
-diff --git a/tests/qemu-iotests/185 b/tests/qemu-iotests/185
-index 17489fb91c..a62ae8d329 100755
---- a/tests/qemu-iotests/185
-+++ b/tests/qemu-iotests/185
-@@ -50,6 +50,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- _supported_fmt qcow2
- _supported_proto file
- _supported_os Linux
-+_flaky_test https://gitlab.com/qemu-project/qemu/-/issues/3270
- 
- size=$((64 * 1048576))
- TEST_IMG="${TEST_IMG}.base" _make_test_img $size
-diff --git a/tests/qemu-iotests/308 b/tests/qemu-iotests/308
-index f4a06a522e..a2290825f4 100755
---- a/tests/qemu-iotests/308
-+++ b/tests/qemu-iotests/308
-@@ -53,6 +53,8 @@ _supported_proto file # We create the FUSE export manually
- _supported_os Linux # We need /dev/urandom
- _require_disk_usage
- 
-+_flaky_test https://gitlab.com/qemu-project/qemu/-/work_items/3514
++/**
++ * object_new_with_propv_parentless:
++ * @typename:  The name of the type of the object to instantiate.
++ * @vargs: list of property names and values
++ * @errp: pointer to error object
++ *
++ * Behaviour as object_new_with_propv(), except the object
++ * will not be added to any parent and thus the caller will
++ * own the returned instance. The caller must call
++ * object_unref when it is no longer required.
++ */
++Object *object_new_with_propv_parentless(const char *typename,
++                                         va_list vargs,
++                                         Error **errp);
 +
- # $1: Export ID
- # $2: Options (beyond the node-name and ID)
- # $3: Expected return value (defaults to 'return')
-diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
-index 731e4b2b99..298bc483e0 100644
---- a/tests/qemu-iotests/common.rc
-+++ b/tests/qemu-iotests/common.rc
-@@ -1088,5 +1088,21 @@ _qcow2_dump_header()
-     fi
++/**
++ * object_new_with_props_from_qdict_parentless:
++ * @typename:  The name of the type of the object to instantiate.
++ * @props: dictionary of property names and values
++ * @v: visitor to iterate over @props
++ * @errp: pointer to error object
++ *
++ * Behaviour as object_new_with_props_from_qdict(), except the
++ * object will not be added to any parent and thus the caller
++ * will own the returned instance. The caller must call
++ * object_unref when it is no longer required.
++ */
++Object *object_new_with_props_from_qdict_parentless(const char *typename,
++                                                    const QDict *props,
++                                                    Visitor *v,
++                                                    Error **errp);
++
+ /**
+  * object_set_props:
+  * @obj: the object instance to set properties on
+diff --git a/qom/object.c b/qom/object.c
+index a11f559445..5a7ac457c1 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -740,6 +740,8 @@ Object *object_new_with_props(const char *typename,
+     va_list vargs;
+     Object *obj;
+ 
++    assert(parent != NULL);
++    assert(id != NULL);
+     va_start(vargs, errp);
+     obj = object_new_with_propv(typename, parent, id, vargs, errp);
+     va_end(vargs);
+@@ -757,10 +759,14 @@ object_new_with_props_helper(const char *typename,
+                                               Error **errp),
+                              Error **errp)
+ {
++    ERRP_GUARD();
+     Object *obj;
+     ObjectClass *klass;
+     UserCreatable *uc;
+ 
++    assert((id != NULL && parent != NULL) ||
++           (id == NULL && parent == NULL));
++
+     if (id != NULL && !id_wellformed(id)) {
+         error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "id", "an identifier");
+         error_append_hint(errp, "Identifiers consist of letters, digits, "
+@@ -785,7 +791,10 @@ object_new_with_props_helper(const char *typename,
+     }
+ 
+     if (id != NULL) {
+-        object_property_add_child(parent, id, obj);
++        object_property_try_add_child(parent, id, obj, errp);
++        if (*errp) {
++            goto error;
++        }
+     }
+ 
+     uc = (UserCreatable *)object_dynamic_cast(obj, TYPE_USER_CREATABLE);
+@@ -798,7 +807,6 @@ object_new_with_props_helper(const char *typename,
+         }
+     }
+ 
+-    object_unref(obj);
+     return obj;
+ 
+  error:
+@@ -826,7 +834,8 @@ Object *object_new_with_propv(const char *typename,
+ {
+     Object *obj;
+     struct ObjectNewVargsData data;
+-
++    assert(parent != NULL);
++    assert(id != NULL);
+     va_copy(data.vargs, vargs);
+     obj = object_new_with_props_helper(typename,
+                                        parent,
+@@ -835,6 +844,9 @@ Object *object_new_with_propv(const char *typename,
+                                        object_new_with_propv_setter,
+                                        errp);
+     va_end(data.vargs);
++    if (obj) {
++        object_unref(obj);
++    }
+     return obj;
  }
  
-+# This must be referenced after any _require_  lines, so that
-+# test filtering happens first
-+_flaky_test()
-+{
-+    if test -z "$1"
-+    then
-+	echo "A GitLab issue URL must be provided for a flaky test"
-+	exit 1
-+    fi
-+
-+    if test -z "$QEMU_TEST_FLAKY_TESTS"
-+    then
-+	_notrun "Test is flaky (see $1) and \$QEMU_TEST_FLAKY_TESTS is not set"
-+    fi
+@@ -859,12 +871,56 @@ Object *object_new_with_props_from_qdict(const char *typename,
+                                          Error **errp)
+ {
+     struct ObjectNewQDictData data = { props, v };
+-    return object_new_with_props_helper(typename,
+-                                        parent,
+-                                        id,
+-                                        &data,
+-                                        object_new_with_qdict_setter,
+-                                        errp);
++    Object *obj;
++    assert(parent != NULL);
++    assert(id != NULL);
++    obj = object_new_with_props_helper(typename,
++                                       parent,
++                                       id,
++                                       &data,
++                                       object_new_with_qdict_setter,
++                                       errp);
++    if (obj) {
++        object_unref(obj);
++    }
++    return obj;
 +}
 +
- # make sure this script returns success
- true
-diff --git a/tests/qemu-iotests/iotests.py b/tests/qemu-iotests/iotests.py
-index 05274772ce..072be80e07 100644
---- a/tests/qemu-iotests/iotests.py
-+++ b/tests/qemu-iotests/iotests.py
-@@ -1603,6 +1603,22 @@ def func_wrapper(*args, **kwargs):
-             return func(*args, **kwargs)
-     return func_wrapper
- 
-+def skip_flaky(bugurl):
-+    '''Skip Test Decorator
-+       Always skips test due to unreliable design.
-+       Requires a bug report URL for historical record.'''
-+    def skip_test_decorator(func):
-+        def func_wrapper(*args, **kwargs):
-+            if os.environ.get("QEMU_TEST_FLAKY_TESTS", None) is None:
-+                case_notrun(
-+                    ('{}: test is flaky (see {}) and $QEMU_TEST_FLAKY_TESTS ' +
-+                     'is not set').format(args[0], bugurl))
-+                return None
-+            else:
-+                return func(*args, **kwargs)
-+        return func_wrapper
-+    return skip_test_decorator
++Object *object_new_with_props_parentless(const char *typename,
++                                         Error **errp,
++                                         ...)
++{
++    va_list vargs;
++    Object *obj;
 +
- # We need to filter out the time taken from the output so that
- # qemu-iotest can reliably diff the results against master output,
- # and hide skipped tests from the reference output.
++    va_start(vargs, errp);
++    obj = object_new_with_propv_parentless(typename, vargs, errp);
++    va_end(vargs);
++
++    return obj;
++}
++
++Object *object_new_with_propv_parentless(const char *typename,
++                                         va_list vargs,
++                                         Error **errp)
++{
++    Object *ret;
++    struct ObjectNewVargsData data;
++    va_copy(data.vargs, vargs);
++    ret = object_new_with_props_helper(typename, NULL, NULL, &data,
++                                       object_new_with_propv_setter, errp);
++    va_end(data.vargs);
++    return ret;
++}
++
++Object *object_new_with_props_from_qdict_parentless(const char *typename,
++                                                    const QDict *props,
++                                                    Visitor *v,
++                                                    Error **errp)
++{
++    struct ObjectNewQDictData data = { props, v };
++    return object_new_with_props_helper(typename, NULL, NULL, &data,
++                                        object_new_with_qdict_setter, errp);
+ }
+ 
+ bool object_set_props(Object *obj,
+diff --git a/tests/unit/check-qom-proplist.c b/tests/unit/check-qom-proplist.c
+index 7f31735459..954c898ce1 100644
+--- a/tests/unit/check-qom-proplist.c
++++ b/tests/unit/check-qom-proplist.c
+@@ -336,7 +336,7 @@ static QemuOptsList qemu_object_opts = {
+ };
+ 
+ 
+-static void test_dummy_createv(void)
++static void test_dummy_createv_tree(void)
+ {
+     Error *err = NULL;
+     Object *parent = object_get_objects_root();
+@@ -351,6 +351,7 @@ static void test_dummy_createv(void)
+                               NULL));
+ 
+     g_assert(err == NULL);
++    g_assert_cmpint(dobj->parent_obj.ref, ==, 1);
+     g_assert_cmpstr(dobj->sv, ==, "Hiss hiss hiss");
+     g_assert(dobj->bv == true);
+     g_assert(dobj->av == DUMMY_PLATYPUS);
+@@ -362,9 +363,30 @@ static void test_dummy_createv(void)
+ }
+ 
+ 
+-static Object *new_helper(Error **errp,
+-                          Object *parent,
+-                          ...)
++static void test_dummy_createv_parentless(void)
++{
++    Error *err = NULL;
++    DummyObject *dobj = DUMMY_OBJECT(
++        object_new_with_props_parentless(TYPE_DUMMY,
++                                         &err,
++                                         "bv", "yes",
++                                         "sv", "Hiss hiss hiss",
++                                         "av", "platypus",
++                                         NULL));
++
++    g_assert(err == NULL);
++    g_assert_cmpint(dobj->parent_obj.ref, ==, 1);
++    g_assert_cmpstr(dobj->sv, ==, "Hiss hiss hiss");
++    g_assert(dobj->bv == true);
++    g_assert(dobj->av == DUMMY_PLATYPUS);
++
++    object_unref(OBJECT(dobj));
++}
++
++
++static Object *new_helper_tree(Error **errp,
++                               Object *parent,
++                               ...)
+ {
+     va_list vargs;
+     Object *obj;
+@@ -379,19 +401,20 @@ static Object *new_helper(Error **errp,
+     return obj;
+ }
+ 
+-static void test_dummy_createlist(void)
++static void test_dummy_createlist_tree(void)
+ {
+     Error *err = NULL;
+     Object *parent = object_get_objects_root();
+     DummyObject *dobj = DUMMY_OBJECT(
+-        new_helper(&err,
+-                   parent,
+-                   "bv", "yes",
+-                   "sv", "Hiss hiss hiss",
+-                   "av", "platypus",
+-                   NULL));
++        new_helper_tree(&err,
++                        parent,
++                        "bv", "yes",
++                        "sv", "Hiss hiss hiss",
++                        "av", "platypus",
++                        NULL));
+ 
+     g_assert(err == NULL);
++    g_assert_cmpint(dobj->parent_obj.ref, ==, 1);
+     g_assert_cmpstr(dobj->sv, ==, "Hiss hiss hiss");
+     g_assert(dobj->bv == true);
+     g_assert(dobj->av == DUMMY_PLATYPUS);
+@@ -402,6 +425,39 @@ static void test_dummy_createlist(void)
+     object_unparent(OBJECT(dobj));
+ }
+ 
++static Object *new_helper_parentless(Error **errp,
++                                     ...)
++{
++    va_list vargs;
++    Object *obj;
++
++    va_start(vargs, errp);
++    obj = object_new_with_propv_parentless(TYPE_DUMMY,
++                                           vargs,
++                                           errp);
++    va_end(vargs);
++    return obj;
++}
++
++static void test_dummy_createlist_parentless(void)
++{
++    Error *err = NULL;
++    DummyObject *dobj = DUMMY_OBJECT(
++        new_helper_parentless(&err,
++                              "bv", "yes",
++                              "sv", "Hiss hiss hiss",
++                              "av", "platypus",
++                              NULL));
++
++    g_assert(err == NULL);
++    g_assert_cmpint(dobj->parent_obj.ref, ==, 1);
++    g_assert_cmpstr(dobj->sv, ==, "Hiss hiss hiss");
++    g_assert(dobj->bv == true);
++    g_assert(dobj->av == DUMMY_PLATYPUS);
++
++    object_unref(OBJECT(dobj));
++}
++
+ static bool test_create_obj(QDict *qdict, Error **errp)
+ {
+     Visitor *v = qobject_input_visitor_new_keyval(QOBJECT(qdict));
+@@ -658,8 +714,14 @@ int main(int argc, char **argv)
+     type_register_static(&dummy_bus_info);
+     type_register_static(&dummy_backend_info);
+ 
+-    g_test_add_func("/qom/proplist/createlist", test_dummy_createlist);
+-    g_test_add_func("/qom/proplist/createv", test_dummy_createv);
++    g_test_add_func("/qom/proplist/createlist/tree",
++                    test_dummy_createlist_tree);
++    g_test_add_func("/qom/proplist/createlist/parentless",
++                    test_dummy_createlist_parentless);
++    g_test_add_func("/qom/proplist/createv/tree",
++                    test_dummy_createv_tree);
++    g_test_add_func("/qom/proplist/createv/parentless",
++                    test_dummy_createv_parentless);
+     g_test_add_func("/qom/proplist/createcmdline", test_dummy_createcmdl);
+     g_test_add_func("/qom/proplist/badenum", test_dummy_badenum);
+     g_test_add_func("/qom/proplist/getenum", test_dummy_getenum);
 -- 
 2.54.0
 
