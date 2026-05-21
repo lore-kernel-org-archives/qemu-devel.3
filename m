@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34EE8CD343F
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 05:53:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BBF2CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 05:54:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPwLp-0003Mb-Rp; Thu, 21 May 2026 01:53:45 -0400
+	id 1wPwML-0003aS-5L; Thu, 21 May 2026 01:54:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPwLn-0003MP-8X
- for qemu-devel@nongnu.org; Thu, 21 May 2026 01:53:43 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPwMI-0003ZK-HY
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 01:54:15 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPwLl-0004G1-Cp
- for qemu-devel@nongnu.org; Thu, 21 May 2026 01:53:42 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-48fde648a71so40808825e9.0
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 22:53:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPwMG-0004JP-Hr
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 01:54:14 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4891e5b9c1fso49877625e9.2
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 22:54:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779342819; x=1779947619; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779342850; x=1779947650; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=GxSsFMPclGUrgOFtzjZKMnxovhNU50xHXhdhf59A2eA=;
- b=M5SrGMDtIDYwSbK8BGEqE7nzL7erca9TtDGlPb90X+AnMX9NXnxpWiw9zmNBN6MxDm
- 7tQaT1tS1DhG+xEc+zoXENMKk+X2mCTN5NvLpgFgmc9YxOZzf3tj2lbtOMgCJFr/V4vD
- KdBPmtAOkUDJXhVkD1ypXPoT1GggFxW8Hp5kpnb9VFSfWhA43gu7oFqRLYE20X9RXiLf
- WLHd6CBJUp/MjnZw6Hajk/TCeFQBsdk+MzL7NsAYP7RC0bgx56VLGIA2dItt+RrAz0M4
- by40gtmjx4jIZzKZ8BxqM9c0DT/Q38hfeXARTuhprgxXKqMMCd7bP4jf92Tgpm2bvyTI
- U+iw==
+ bh=8TrD97MLyc4ijScD+ozH9Iq2BkQSTQgoRtagh/gONGo=;
+ b=qGiG44GiN75+cNlRpIXc1eUkj1hEMXMOZAdzu1p4nVOrS/w2acivKqUjRUe5jQgguF
+ LKCuvwdiXraJYp6+u3pEXlq2FkD/gfgvr368f9AtnJvhUvJJ7vh6FwgObaJdDmopgSk5
+ byPYsP7xKeGKj9i+6ZZa1kN7Q7mey8D0qjis11kzNqLvN4XRnr43cVB2dsA16nJk/FQ5
+ yBwvrCrbZV1hPcMtzkUKBqYs4vQbHGfZs5E5RCSF8t7srEcVq5IEUnDgMYVXaH8u65jO
+ 9fuDvMHMO5tP70oE0ssLZ291V4Wqq4GL/9GRT8pXVtqePJFMwY8QT8u2yIJWjIRPd2yS
+ Tzng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779342819; x=1779947619;
+ d=1e100.net; s=20251104; t=1779342850; x=1779947650;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=GxSsFMPclGUrgOFtzjZKMnxovhNU50xHXhdhf59A2eA=;
- b=cD2VEZnBS58/3hOxNvFqSVZ6FdCdp4g/3nRbWpoZxynNr6Nkg47RA0ClcyZhefOreS
- MFxx7Z4xREFCajBV7C4YbZ8F90V6F2q9N34YufZ7mo3WVMjMHh1GVje59cfDk/60XLNU
- 5xwF+T986xTeHwoP1FYATz4VJb44dOkKbWjo6LZo6wmyU4u/HP1pRG47UnUaxVfCpUcw
- OTf94lDNZU9GIIxMEd4j1dFa2v+PXPlp7wAkrXlLWTWCQy9tYPUEpNKqiqHfUoi6/Bja
- GQLYlxfAv63d2GQVJNxzvOKPr1Y3GB+1s7Kp4XiXKiqCnkNB6ire3NcG40DYAZENAp8o
- no5w==
+ bh=8TrD97MLyc4ijScD+ozH9Iq2BkQSTQgoRtagh/gONGo=;
+ b=V5+0jUmB0+6RASeJgdbSGI88a4cNZYqw74BbA1qVH/MjHPQxGzXBNYHV6jOUDv70Z+
+ cG+jLK+Z1Qrs+UQyF3dLxpg78llZb2Xopyk6rHQr5fLqwdO05xWdA4RRG0vrz8eoWfnW
+ i9WdvEjdwna1aQ2fgSlaZ2zWXJWQNb40o6DLo9dSDWKEo8q6TSC+iJZhO3J7sbnePGeV
+ WGAryhvSPHCG0d5xCKZWJvg3PwRgumGSg3A5QwxMk7Fj0+mT2zqfnGovr1k15fE8abbH
+ aD2Asp3swW7/pZHV1uPsj4aKoyXO6yI80ysY9BfM+foVPojNNa/bBV8kdVFxYyXg9+qQ
+ UpKw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9nI10MYG9F+li02HpjBpnpX8Oh18TvDv7MGPWfIlOXaTN8+PiXuDJ55lCQ+564F5J40+6Nl6FbZAJ0@nongnu.org
-X-Gm-Message-State: AOJu0YzbasfXaMWLePd09RAXjNHVSGndZHvXog1O2S7dGnNj0Hc8AMbF
- b4WlSsUU4b1/gB2fw5zD6hoSgm8hD8PRkEoivYAZfJsp3cLQCWpK6a0EV8SoedcdUnQ=
-X-Gm-Gg: Acq92OFPvj5YkVxccefOEf5LoPs2vLX+FahDqKQ3Pw1dK16utYX2lG20EQxKLC41et6
- gpdY4W0PzWLiFqQxP5y+MQhTDMVwIVGxBlOk1M010jurjHxQ8V67IgUq+MpoBsnFMBbWWitQWea
- q+nHXNB4Qs2QtykvQo55ts/Tq343lB5DaT1REZzye222hur033ppkOpAT+5LOFSEVRBU9aalM+V
- oers4rN/Dkwitpceu/TbH+005PDjS1QpvOoMCBhRzNQlTTM0uSCj+HwLH3kx/ALGQ1u8X5HL50z
- mIu3dJ+bqeTuyRicDm6qLCmYTWPaSAA6OWXLd/O0MLWvUAenHIjUmZy+/wNHSfY4xha/bvJeB9v
- v7jCz8ji3vodk2Swvg8tgJDLvmOd3Lpq1U/NjLh1HF7Z90u2GnqzywMyVt9cbWhJ38A0eHO1dDa
- PrS43yKfRV2FXzSCmND99Jl8JElJ+Ms2aVXVLcC41hxcuif3RestZsIADlBscREs8d+w==
-X-Received: by 2002:a05:600c:5295:b0:485:3cef:d6ea with SMTP id
- 5b1f17b1804b1-490360d06d4mr13370905e9.13.1779342819361; 
- Wed, 20 May 2026 22:53:39 -0700 (PDT)
+ AFNElJ+gkKMCiclCwNLz98D6hEnFHAIHvnIUB6puCntKM5ZtTsN8bZHlA80Fm+9/G4j2meiXbyVVXZYrlzOA@nongnu.org
+X-Gm-Message-State: AOJu0YxCTi9Ib4kRHf2vrWD4iv+jtRJVuS+mdptrNgmfkFSlSemdG/tm
+ M1KYKNF05jVOoSXod9QcbI0I341sj6vgsbz2bfxUZ9YlY6KZSDsKPVv9cJmQynXGbtw=
+X-Gm-Gg: Acq92OF4xaWWhkLj0H5L42g0A1JTFhvzFTJoq1nnP+8ZJqkmC9XeSvCDxv49PazBW8D
+ Hnp/M5v/6+breN3L2itnr+n8omofNaB08KUPzW+AP7D3VN7dG3ISYtOldogCDlgb324wV4Y0M3/
+ yYwtH5U0uQqX/HHWoP2n07guNTV8+jsSCYvHs7bwN2q+SDzBL46G9PT5J5GhsVsuqQFkS0VgORd
+ iHlPvXectJUc/DsId6wkGjrSfMQGYhIaMWVjNiBJD6N+ENtNVBdaYDWrWPfEF1gqLNu/5r+7vzB
+ p4oaJRdSn9KVNsxlWSFyA06Eb32m0GqLzkkooux8NcNoVvLr0LQaskC1L8GLC3fNZxGA6oHvwda
+ zlC/1eRsm9/t05GgImRZ7CGO5bIXz6EPXdph7nygBzUzkQUIER1Hzxlv2r3Up8ilZIKLmAwTr2g
+ rW06zmmjOk22ovuLMJoeWmH0M/i5sYBgJWs3z381bLI49KcqZlxE+J1ZEtecA9WLJMQw==
+X-Received: by 2002:a05:600c:8592:b0:48a:93f8:dd02 with SMTP id
+ 5b1f17b1804b1-4903605d40emr13178335e9.14.1779342850535; 
+ Wed, 20 May 2026 22:54:10 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49035adf173sm10634275e9.0.2026.05.20.22.53.38
+ ffacd0b85a97d-45da0fe13a7sm62151109f8f.29.2026.05.20.22.54.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 May 2026 22:53:38 -0700 (PDT)
-Message-ID: <b2059395-9188-4621-a15c-cad1055e46a3@linaro.org>
-Date: Thu, 21 May 2026 07:53:37 +0200
+ Wed, 20 May 2026 22:54:09 -0700 (PDT)
+Message-ID: <31fecfcc-5629-49de-81a0-2f31ab50b2aa@linaro.org>
+Date: Thu, 21 May 2026 07:54:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/40] monitor: move HMP-only fields from Monitor to
- MonitorHMP
+Subject: Re: [PATCH 10/40] tests/functional: use query-version QMP command
+ instead of HMP
 Content-Language: en-US
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 References: <20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com>
- <20260521-qemu-no-hmp-v1-9-d104f809e145@redhat.com>
+ <20260521-qemu-no-hmp-v1-10-d104f809e145@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260521-qemu-no-hmp-v1-9-d104f809e145@redhat.com>
+In-Reply-To: <20260521-qemu-no-hmp-v1-10-d104f809e145@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,17 +105,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 20/5/26 23:49, Marc-André Lureau wrote:
-> mon_cpu_path and reset_seen are only used by HMP monitors; move them
-> from the base Monitor struct into MonitorHMP to properly encapsulate
-> HMP-specific state.
+> Replace the human-monitor-command based version test with the native
+> QMP query-version command, which returns structured version data.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   monitor/monitor-internal.h |  4 ++--
->   monitor/hmp-cmds.c         | 17 ++++++++++-------
->   monitor/hmp.c              |  5 +++--
->   monitor/monitor.c          | 16 +++++++++++-----
->   4 files changed, 26 insertions(+), 16 deletions(-)
+>   tests/functional/generic/test_version.py | 10 ++++++----
+>   1 file changed, 6 insertions(+), 4 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
