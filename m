@@ -4,79 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A580ECD343F
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 05:57:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 700F8CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 05:59:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPwPE-0004JQ-LX; Thu, 21 May 2026 01:57:16 -0400
+	id 1wPwQc-0004hG-9C; Thu, 21 May 2026 01:58:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wPwPD-0004JI-Sk
- for qemu-devel@nongnu.org; Thu, 21 May 2026 01:57:15 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ id 1wPwQY-0004gP-PZ
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 01:58:38 -0400
+Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wPwPC-00053s-6C
- for qemu-devel@nongnu.org; Thu, 21 May 2026 01:57:15 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-651c5d525f6so5906756d50.3
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 22:57:13 -0700 (PDT)
+ id 1wPwQW-0005I5-Uw
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 01:58:38 -0400
+Received: by mail-yx1-xb12b.google.com with SMTP id
+ 956f58d0204a3-65c0bda7f15so5709737d50.0
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 22:58:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779343032; x=1779947832; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779343115; x=1779947915; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=9WgwWsBQpiwXGC6wPWiI27XHB3HRkpy73BshEssfsZg=;
- b=pHxigMdhw3HkbSrQSSJYUOP04tJsskQR9cFN5rLpU6mruXo+kzgz8qCWi5OOPBKycb
- cP6i2WmQdz6/K6/Dyo6pfHdVMqKo1caZTF6/STZ7apuQQsX4y908IIpInMWuJEhswIyg
- 9/JaVYZ9ZaPWVytFp5yvR9dOxrmwPBey8Zg8fZM02iYxHNzuOd4+kj7CYN2Uv12vHc2T
- apNQ649eBLI3DvZzwOHm0KSjEGHt5A3Z8s9yD/wBNlwHwVWWOxQ27HBltdLg0V2aDdu6
- vrWPFxoBHqwsi5/GzyHYgJehOpF6Mk24uQypHNp0Ug8X069VmdMnhTd05YypfWsqSDCl
- sJzg==
+ bh=6c549bujclCLya+44+iHLpjNmLlWKpBjzAdA1lzSZtk=;
+ b=saqMeFPs8bz+OndwQvOvzU5z9kGWdHV4UH7+v12cQTEbgJaG2fg0NKZIyo8Uz+5l4R
+ gdH9sjZbRj6Ea91UL15g7J/6RmvZMcof9Ilol5U5pEM8eooPKWZKDHAORo9TCVW+wrb6
+ dpGKcegJb53ZQAA7aDfjBOrD9uyJGKVqigmc31BxBb5NXylxl312Kxpm5DalCHeKANI4
+ y72tt7PYCprg1crsd01I+VWZpWqAjLboCEe/2ZghS3JlpwDYKPyPwYqvxq8mLdTG1wsG
+ gHT/eV84J17dr0I6yUssEEeKxd1x0509tixBqFQ9NwgK3B6NYwCelu/+chMPNu8r2Hu8
+ 89PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779343032; x=1779947832;
+ d=1e100.net; s=20251104; t=1779343115; x=1779947915;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9WgwWsBQpiwXGC6wPWiI27XHB3HRkpy73BshEssfsZg=;
- b=pqn7k2P6feJ239ozqG6VTH7FGPBQ7y+VkYEDFr7Vj9J2R+NHKaUf0GcNxAzZw6B4YE
- gr9C47xhO+6FxGY8j790SEmwB/FR4cAQFEAD5c9ny96T9TEPfs+LCEaUDoxa5LTkaPVU
- qGe/jHMtCPKkn0qsoNe6Q0HcFZuvTXxwP98fB2hv4wbJOZwj/LZW3cCuxc8/qkmvVBVi
- /Nq1LNp+Kpm5K6VR2poMjc2UmRukC69brnOzDnDLaCt8g7YhuEbcitko+28hd2SATSOg
- 5CwwOy6HaBMQWWno9qM2tmcDLowKsLg/PB/U75xczBL0JgfXZgrKbtHjBxq6GX51fMDA
- 0hQQ==
-X-Gm-Message-State: AOJu0YydflZsJlenveFx30VItk1eQA8rrTeFavE/YOQ5fNQ/pboS73Sg
- co6jZjrjQvBYPiw1rKBQZW2I65LsUGDfL5Ph/bIIBdfsDW2p/fEvWwMqNQzmlixo
-X-Gm-Gg: Acq92OFDTf2XbYXPCTLPq9FzRPAzWT+c1u0stLffMl2LxRKJwwL6Dv3aNh9kJVO11OI
- ilTqWyrnMy+zcKBAcHXCdT29JgIpr/01AYmiGF0shK6NcvP7fFyaJnBtmWwMC0SldFpgfx/WCA6
- AuQOTna2tpOHMZttOZ5ybex/53rHxOJhRfjTVlF0ONB710EK91qFNcOpct53mzadmkd+FghyG1s
- OLPs19TRfPLWpl/VUx83yJtMNJCg582oxM3q8lpTdQVTZIfd68LYkZtohiR2Kw8NIeCSN/WIwAz
- eckvke9hP18N3+ebHPI0Ya5EbAJ+CSScnBY48GQ31wsPc25vfmcs7YS3P1zuNwI+HNPWgNR0Nyg
- LtDONR2Gc1W5fmgjIDehB7UUI/qxdEt/TOt2ZNHgVJs11MppDFZl0KG5k51CPrtePx1o9kE40nZ
- 3FXEMYgWETUYwvtKew3Eaf3upSz61r+b7kQAYZByLp7UR8bJbMYUiLsNoDmVGthz1qL1IvcX93M
- kA2sjWFRoWYXw==
-X-Received: by 2002:a05:690c:d19:b0:7bd:7b55:ebe1 with SMTP id
- 00721157ae682-7d20a99c3bcmr15884957b3.1.1779343032530; 
- Wed, 20 May 2026 22:57:12 -0700 (PDT)
+ bh=6c549bujclCLya+44+iHLpjNmLlWKpBjzAdA1lzSZtk=;
+ b=AJWuwnjy+Wfgaw2rL4dozz2jKMnA4Q9Tlc26RV0xerAyaPogHk079FNKRYu7yT320I
+ vnDt7SPY5W1ezgx2E/PzqwEKskiSZhPQS2OmOe4TmbsBVLIW5kCvGJVaqtdDX2l2r2SA
+ 5cxxXgVOEuZ3F8wqmqPcSM92wx2RoETzlwH+wUvto3vuxYCQLKm8Z4DyCi0o0whAnxRG
+ 1bs8cpzIZS35jLO0Sfg/+ZOcqNQgaUIDMdyNzF46y0knObl5xWPJfE/QXzjppL+pD7I2
+ QCuvbC4FE5Qwz+gxgWbQXu9Z9X6VQm9mn8X07ZsSpp1OYy2qNh4ZZ3A6CT922fnMqUe2
+ pEbg==
+X-Gm-Message-State: AOJu0YwM+cwWw3Vo7KVkG5SJOEml9cHy9rhr4HcN3gkK2z90zNhRB0kd
+ P4LAT+LXT+3k8iqGQR1b7vRTRlYedZ0WLhhYRF1ZYQfPfww1YS/C8B+w4IpWEMZG
+X-Gm-Gg: Acq92OHK2MQXRr3yNzgPPRQhNbavCYI1rACLWQ/v9i4EajG9nlpcl513t5+ti1WFItp
+ EJxzO/fPYG1HFF2Cwm9jM0kub5O8jfVKUCFKrFOhNKcGkvitYqPKrp/CqY64enzeSjJPZ8dYk5x
+ xorqDH5zxvvw/bjd2umSK9gbIA8whT3/LP7ZA8ERM68kQ0P1v7w7TaOQuRVbxwbS+L/LLbSBw6y
+ xHf/DBv1/22ii8O/L+q8d1/6X2FAEpNf2xioAtSDdtnHXHBwlsgLC136m+UQTRjSt4efm+yC9jS
+ tSSXYqB9FxUW5qve5T+6BoPljyA0h0cC1OhshH1wOFkIHmm17nS7MjEJ1+O3CplbgccjC6eYmqQ
+ R7DZFXSYKt29ASQbwoqmBaNP1QKJhy/wyJq1vnW6ILPQ7g0+sV5zDXww7FRBTQFF6poENRQ/Xlu
+ nWFmWyU9Ej4k/pPINEDanIVCpYeF6lfW8nPdLWV+TxMrUlSsckLQVC8rzRUx/4l0mjgT+Rb0IlX
+ qU=
+X-Received: by 2002:a05:690e:128c:b0:65c:65aa:df7e with SMTP id
+ 956f58d0204a3-65eadfe4ca6mr1103260d50.17.1779343114632; 
+ Wed, 20 May 2026 22:58:34 -0700 (PDT)
 Received: from localhost (107-220-129-194.lightspeed.chrlnc.sbcglobal.net.
  [107.220.129.194]) by smtp.gmail.com with ESMTPSA id
- 00721157ae682-7cc9cda1fbbsm62814057b3.44.2026.05.20.22.57.11
+ 956f58d0204a3-65e0db6f4f4sm10255358d50.15.2026.05.20.22.58.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 22:57:11 -0700 (PDT)
+ Wed, 20 May 2026 22:58:33 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Matt Turner <mattst88@gmail.com>
-Subject: [PATCH] linux-user/hppa: add coredump support
-Date: Thu, 21 May 2026 01:56:45 -0400
-Message-ID: <20260521055707.1380061-1-mattst88@gmail.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Matt Turner <mattst88@gmail.com>,
+ qemu-stable@nongnu.org
+Subject: [PATCH 1/2] linux-user/mips64: fix elf_core_copy_regs register layout
+ in core files
+Date: Thu, 21 May 2026 01:58:20 -0400
+Message-ID: <20260521055821.1380491-1-mattst88@gmail.com>
 X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=mattst88@gmail.com; helo=mail-yx1-xb12d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
+ envelope-from=mattst88@gmail.com; helo=mail-yx1-xb12b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -100,90 +104,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add HAVE_ELF_CORE_DUMP, target_elf_gregset_t (80 entries matching
-arch/parisc/include/uapi/asm/ptrace.h), and elf_core_copy_regs().
+mips64/elfload.c uses #include "../mips/elfload.c" to share code. When
+the compiler processes mips/elfload.c the quoted #include "target_elf.h"
+resolves relative to the including file's directory, so it picks up
+mips/target_elf.h instead of mips64/target_elf.h.  mips/target_elf.h
+pulls in mips/target_ptrace.h, whose target_pt_regs has a pad0[6] field
+before regs[].  As a result elf_core_copy_regs writes:
 
-The struct layout matches the kernel's struct user_regs_struct:
-  gr[0..31]    at indices [0..31]   (PSW in gr[0])
-  sr[0..7]     at indices [32..39]
-  iaoq[0..1]   at indices [40..41]  (instruction address queue)
-  iasq[0..1]   at indices [42..43]
-  sar          at index   [44]      (shift amount / CR11)
-  iir          at index   [45]      (interrupt instruction register)
-  isr          at index   [46]      (interrupt space register)
-  ior          at index   [47]      (interrupt offset register)
-  ipsw         at index   [48]      (interrupt PSW / CR22)
-  cr0          at index   [49]      (recovery counter)
-  cr24_31[8]   at indices [50..57]
-  cr8_15[6]    at indices [58..63]
-  pad[16]      at indices [64..79]
+  r->pt.regs[i]   -> reserved[6+i]   (shifted by 6 from the correct index)
+  r->pt.cp0_epc   -> reserved[40]    (correct mips64 N64 index is 34)
 
-elf_core_copy_regs() saves GRs, IAOQ (front/back), and SAR.
+The Linux kernel and glibc both use the mips64 N64 layout (no pad0): EPC
+at reserved[34].  Debuggers and libunwind reading the core with N64
+constants therefore see a completely wrong register set — EPC points to
+GP, RA holds the branch target instead of the link address, etc.
+
+Fix by:
+ - Guarding the mips32 elf_core_copy_regs in mips/elfload.c with #ifndef
+   TARGET_MIPS64 so it is not compiled for mips64/mipsn32 targets.
+ - Providing a mips64-specific elf_core_copy_regs in mips64/elfload.c
+   that writes directly to r->reserved[i] with the correct N64 indices,
+   bypassing the struct field names that are tainted by the wrong header
+   include.
+
+The mipsn32 (TARGET_ABI_MIPSN32) and mips64el targets are covered by the
+same mips64/elfload.c and benefit from the same fix.
 
 Signed-off-by: Matt Turner <mattst88@gmail.com>
+Cc: qemu-stable@nongnu.org
 ---
-I don't know if this is something that can go to stable?
+ linux-user/mips/elfload.c   |  2 ++
+ linux-user/mips64/elfload.c | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 31 insertions(+)
 
- linux-user/hppa/elfload.c    | 13 +++++++++++++
- linux-user/hppa/target_elf.h | 21 +++++++++++++++++++++
- 2 files changed, 34 insertions(+)
-
-diff --git ./linux-user/hppa/elfload.c ./linux-user/hppa/elfload.c
-index 7f7ece6dc1..3354e1b840 100644
---- ./linux-user/hppa/elfload.c
-+++ ./linux-user/hppa/elfload.c
-@@ -16,6 +16,19 @@ const char *get_elf_platform(CPUState *cs)
-     return "PARISC";
- }
+diff --git ./linux-user/mips/elfload.c ./linux-user/mips/elfload.c
+index cc5bbf05ab..1a46e180cf 100644
+--- ./linux-user/mips/elfload.c
++++ ./linux-user/mips/elfload.c
+@@ -131,6 +131,7 @@ const char *get_elf_base_platform(CPUState *cs)
+ #undef MATCH_PLATFORM_INSN
  
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPUArchState *env)
-+{
-+    int i;
-+
-+    memset(r, 0, sizeof(*r));
-+    for (i = 0; i < 32; i++) {
-+        r->gr[i] = tswapal(env->gr[i]);
-+    }
-+    r->iaoq[0] = tswapal(env->iaoq_f);
-+    r->iaoq[1] = tswapal(env->iaoq_b);
-+    r->sar     = tswapal(env->cr[CR_SAR]);
-+}
-+
- bool init_guest_commpage(void)
+ /* See linux kernel: arch/mips/kernel/process.c:elf_dump_regs.  */
++#ifndef TARGET_MIPS64
+ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
  {
-     /* If reserved_va, then we have already mapped 0 page on the host. */
-diff --git ./linux-user/hppa/target_elf.h ./linux-user/hppa/target_elf.h
-index 76930c9369..e1c5033242 100644
---- ./linux-user/hppa/target_elf.h
-+++ ./linux-user/hppa/target_elf.h
-@@ -12,6 +12,27 @@
- #define ELF_MACHINE             EM_PARISC
- 
- #define HAVE_ELF_PLATFORM       1
-+#define HAVE_ELF_CORE_DUMP      1
+     for (int i = 1; i < ARRAY_SIZE(env->active_tc.gpr); i++) {
+@@ -146,3 +147,4 @@ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
+     r->pt.cp0_status = tswapl(env->CP0_Status);
+     r->pt.cp0_cause = tswapl(env->CP0_Cause);
+ }
++#endif
+diff --git ./linux-user/mips64/elfload.c ./linux-user/mips64/elfload.c
+index b719555e65..d19e5f2439 100644
+--- ./linux-user/mips64/elfload.c
++++ ./linux-user/mips64/elfload.c
+@@ -1 +1,30 @@
+ #include "../mips/elfload.c"
 +
 +/*
-+ * Matches struct user_regs_struct from arch/parisc/include/uapi/asm/ptrace.h.
-+ * ELF_NGREG = 80; register indices match those used by libunwind and gdb.
++ * mips/elfload.c defines elf_core_copy_regs guarded by #ifndef TARGET_MIPS64.
++ *
++ * We must provide the mips64 version here.  We cannot use r->pt.regs[] because
++ * when mips/elfload.c is #include'd above its "#include "target_elf.h"" resolves
++ * to mips/target_elf.h (compiler searches the including file's directory first),
++ * which pulls in mips/target_ptrace.h.  That struct has pad0[6] before regs[],
++ * so r->pt.regs[i] writes to reserved[6+i] — offset by 6 from what the kernel
++ * and glibc expect for the N64 ABI (EPC at reserved[34], not reserved[40]).
++ *
++ * Write directly to reserved[] using the mips64 N64 index layout:
++ *   R0-R31 at reserved[0..31], LO at [32], HI at [33], EPC at [34].
 + */
-+typedef struct target_elf_gregset_t {
-+    abi_ulong gr[32];      /* gr[0..31]; PSW in gr[0]            [0..31] */
-+    abi_ulong sr[8];       /* space registers                    [32..39] */
-+    abi_ulong iaoq[2];     /* instruction address offset         [40..41] */
-+    abi_ulong iasq[2];     /* instruction address space          [42..43] */
-+    abi_ulong sar;         /* shift amount register (CR11)       [44] */
-+    abi_ulong iir;         /* interrupt instruction register     [45] */
-+    abi_ulong isr;         /* interrupt space register           [46] */
-+    abi_ulong ior;         /* interrupt offset register          [47] */
-+    abi_ulong ipsw;        /* interrupt PSW (CR22)               [48] */
-+    abi_ulong cr0;         /* recovery counter                   [49] */
-+    abi_ulong cr24_31[8];  /* cr24..cr31                         [50..57] */
-+    abi_ulong cr8_15[6];   /* cr8, cr9, cr12, cr13, cr10, cr15  [58..63] */
-+    abi_ulong pad[16];     /* pad to 80 elements                 [64..79] */
-+} target_elf_gregset_t;
- 
- #define LO_COMMPAGE             0
- #define STACK_GROWS_DOWN        0
++void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
++{
++    /* R0 is always 0; r->reserved is zero-initialised by the caller */
++    for (int i = 1; i < 32; i++) {
++        r->reserved[i] = tswapl(env->active_tc.gpr[i]);
++    }
++    r->reserved[26] = 0;   /* k0 */
++    r->reserved[27] = 0;   /* k1 */
++    r->reserved[32] = tswapl(env->active_tc.LO[0]);
++    r->reserved[33] = tswapl(env->active_tc.HI[0]);
++    r->reserved[34] = tswapl(env->active_tc.PC);
++    r->reserved[35] = tswapl(env->CP0_BadVAddr);
++    r->reserved[36] = tswapl(env->CP0_Status);
++    r->reserved[37] = tswapl(env->CP0_Cause);
++}
 -- 
 2.53.0
 
