@@ -4,86 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 247C3CD343F
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 07:41:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A133CD343F
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 07:52:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPy1F-0001vo-IT; Thu, 21 May 2026 03:40:37 -0400
+	id 1wPyCA-0003iv-Ta; Thu, 21 May 2026 03:51:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <antonb@tenstorrent.com>)
- id 1wPy1D-0001tz-Lu
- for qemu-devel@nongnu.org; Thu, 21 May 2026 03:40:35 -0400
-Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <antonb@tenstorrent.com>)
- id 1wPy1B-0006tS-N0
- for qemu-devel@nongnu.org; Thu, 21 May 2026 03:40:35 -0400
-Received: by mail-ot1-x32b.google.com with SMTP id
- 46e09a7af769-7e582b3bcaaso4880178a34.3
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 00:40:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1779349231; x=1779954031; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=JIndSBtKcf7EyF7TbFurJp+EB72gDaVv5fTRX1DJ+4I=;
- b=arjRVIy+Ls8YZuHl7//FIi471akAjBjSnkudbWHENerpa7rFoCCug7ktv6gNy8FNK8
- JW+inTJNG20nx7KiDeJD7NJdlskdgKXLcMK6Zk73IW5JSe/QA5JXlsy/8+6Cj8F0s1VK
- EHxi0wEJs9RiM5O3uT1DZXItnz97mDimirKdbIAKYhaX+S7vjhI99wQGv3NCfEqghosW
- v7AnwsWPSpJuS9defIzYLJZjNZYreL/L8lMBe3CH8Trbqx4tl9SBXrJYfIlbxpjYYhdW
- BrzUObo7IvtmNxCafHDH2H5sSmXoyoefcPIEAXoh6UpZtZDNiTTdt6tC+ryKBppSYrJD
- 8edQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779349231; x=1779954031;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JIndSBtKcf7EyF7TbFurJp+EB72gDaVv5fTRX1DJ+4I=;
- b=UxjgfygtK5bNyB0CIC5psQE1wJP/akjKNtTHU7ZtcA2o1U7SxbUZDvllG/E1i+mwgW
- EXFIkIJ5HwEKMVK5LIrU7y38/QaNR+8DCq9PAF+4o+sLctD6K57RoP7S/MRqxR62rMLU
- 50B0dsueEn/fv5rAT2juwOiarAPhQ0c6Iw6Ib2fRCTA0Joai1atNsqlANu/yZBaJOFTe
- K52LCzXm8e5IHJ1ePUT4zS58NNYwttsqNGTOszXOsI694LEjnrewB/sQQGqIX9Opqpul
- 3AFlAWUoenhrQuC0HNz/nhYjfGvFYFR7A0lkw0AtFSBAgKGvHWuU8bDApnqejlnA3F9W
- hUqQ==
-X-Gm-Message-State: AOJu0Yw4T0M1eqb599wB/AxNy8Rk/pfkoECxCinDkXeJKFlN4mR3iOFJ
- jyse3sMJwVRiCXTf77CFpXs0jVqAc/xTxBWXcl58gByU90f10yhZpTdXyRYwQL8jEPlAqwfEO5T
- wxTLiWdE=
-X-Gm-Gg: Acq92OFRAG8zfLZcUdSqCbfCewvs+r5mBl/QE8OWNedY+1+bP5OZ7H1uLq2YirEORz2
- Qqs+3iOHy69B33dw4Jg9jEus5DamjOVQYPIXnub9hN6ErKlWumaS6DRSjSyINgV3DuzaSOd/Vpx
- qD/vL1Qc+uStz+66mI63sPiKwloezq60ra7TENthIpUp3fsGW3so87aqNCeeJSOrafbs3GWTAip
- sKh+p1HSD3yAv4D3TuMTLJJuZMaysJrnko5/GIIX9q7r2c1ahLrRoW/JhfEPWQALfSnd9wBgEXm
- dQhzANStS0aMx3NJ79APDFmq1ne+qWEPfjPu2X+oq8JZont/29ceMJV9MTCGDVAoY6Boq08DmI+
- cTS495xFWRmlKWojQ8z7vxUhNp0PUJN7W9EEQBjC7eKlwhZPDc/t6oHsZlLnn5vOrJpkI1b2uGB
- VoQEVAaZSZU8DN1rB7tNKbi3+av5KtvmnDPcEZDxOtFI/f85CQgDatjSdqWg==
-X-Received: by 2002:a05:6830:a91:b0:7dc:e08d:d9ec with SMTP id
- 46e09a7af769-7e5ec43b7b4mr757223a34.15.1779349231476; 
- Thu, 21 May 2026 00:40:31 -0700 (PDT)
-Received: from ausc-rvsw-c-01-anton.tail89d63.ts.net ([38.104.49.66])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55bc13a0asm15149103a34.21.2026.05.21.00.40.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 00:40:30 -0700 (PDT)
-From: Anton Blanchard <antonb@tenstorrent.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: alistair.francis@wdc.com,
-	Anton Blanchard <antonb@tenstorrent.com>
-Subject: [PATCH] target/riscv: Use float_raise
-Date: Thu, 21 May 2026 07:40:16 +0000
-Message-Id: <20260521074016.1065645-1-antonb@tenstorrent.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wPyC8-0003ij-DK
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 03:51:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wPyC3-00028r-0I
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 03:51:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779349903;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=NSAaqI5GOBvTwddHCBU2ycMCV3ceGGhVa/3VhgfQYBo=;
+ b=CuT4m+g2VXMSRs2NInpOYvIM6JFtUGWFoRgEPa+hcHMR5cKR3jgGL4qN253ZB3tu4vVopF
+ xLiJ5yVAAgN9KNhh2TQ5i2dp8OeZT7r8PEzxRMxpHK3so98R+YGkyrHu2g8l1IWVQd+cQA
+ y9AH7Sy+WSjSQAgZj2Ef5+J5iPaMu5c=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-393-6gitc4obMiWKXJZOiHFj9Q-1; Thu,
+ 21 May 2026 03:51:41 -0400
+X-MC-Unique: 6gitc4obMiWKXJZOiHFj9Q-1
+X-Mimecast-MFC-AGG-ID: 6gitc4obMiWKXJZOiHFj9Q_1779349900
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E190A1956095; Thu, 21 May 2026 07:51:39 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.98])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D315E30001BE; Thu, 21 May 2026 07:51:37 +0000 (UTC)
+Date: Thu, 21 May 2026 08:51:33 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH] mailmap: Remove PhilMD redirect entries
+Message-ID: <ag65hXzDXFvpRBsy@redhat.com>
+References: <20260520195206.40679-1-philmd@linaro.org>
+ <CAAjaMXZMKbah6TrvSA2qy7ofp-eVyvuVxyOLo=-T+VaKcJc7Hw@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32b;
- envelope-from=antonb@tenstorrent.com; helo=mail-ot1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+In-Reply-To: <CAAjaMXZMKbah6TrvSA2qy7ofp-eVyvuVxyOLo=-T+VaKcJc7Hw@mail.gmail.com>
+User-Agent: Mutt/2.3.1 (2026-03-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_FILL_THIS_FORM_SHORT=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,133 +87,76 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use float_raise instead of open coding it.
+On Thu, May 21, 2026 at 09:20:49AM +0300, Manos Pitsidianakis wrote:
+> On Wed, May 20, 2026 at 10:52 PM Philippe Mathieu-Daudé
+> <philmd@linaro.org> wrote:
+> >
+> > Our ./scripts/get_maintainer.pl uses git .mailmap as a fallback:
+> >
+> >   $ ./scripts/get_maintainer.pl -h
+> >   usage: ./scripts/get_maintainer.pl [options] patchfile
+> >          ./scripts/get_maintainer.pl [options] -f file|directory
+> >
+> >     --git-fallback => use git when no exact MAINTAINERS pattern (default: 1)
+> >     --git-since => git history to use (default: 1-year-ago)
+> >     --mailmap => use .mailmap file (default: 1)
+> >     ...
+> >
+> >   Default options:
+> >     [--email --nogit --git-fallback --m --r --n --l --multiline
+> >      --pattern-depth=0 --remove-duplicates --rolestats]
+> >
+> > (see the '--git-fallback' used as default option).
+> >
+> > Per gitmailmap(5) man page:
+> >
+> >   ... the file .mailmap [...] is used to map author and
+> >   committer names and email addresses to canonical real
+> >   names and email addresses.
+> >
+> > I added my entries in the "replace old addresses by a more recent
+> > one" section for this script use case, but we have been doing a
+> > good cleanup at having all files covered in MAINTAINERS, so with
+> > retrospective these entries aren't needed anymore (besides, using
+> > them retroactively credits all my contributions to the latest
+> > employer).
+> >
+> 
+> 
+> Hey Philippe,
+> 
+> As I posted here
+> https://lore.kernel.org/qemu-devel/3104a00e-4c13-4bf7-95a0-1f2840bec50d@linaro.org/T/#t
+> 
+> > People who wish to use git log for employer attribution reasons must
+> > use --no-mailmap.
+> 
+> mailmap is for updating names/emails, not attribution. I do not think
+> your patch is necessary.
 
-Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
----
- target/riscv/vector_helper.c | 27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
+Attribution of committers to employers is something that is very
+much a loose heuristic that only works for relatively recent commits.
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index c4e150635e..72ea431746 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -4124,7 +4124,7 @@ static float16 frsqrt7_h(float16 f, float_status *s)
-         (float16_is_infinity(f) && sign) ||
-         (float16_is_normal(f) && sign) ||
-         (float16_is_zero_or_denormal(f) && !float16_is_zero(f) && sign)) {
--        s->float_exception_flags |= float_flag_invalid;
-+        float_raise(float_flag_invalid, s);
-         return float16_default_nan(s);
-     }
- 
-@@ -4135,7 +4135,7 @@ static float16 frsqrt7_h(float16 f, float_status *s)
- 
-     /* frsqrt7(+-0) = +-inf */
-     if (float16_is_zero(f)) {
--        s->float_exception_flags |= float_flag_divbyzero;
-+        float_raise(float_flag_divbyzero, s);
-         return float16_set_sign(float16_infinity, sign);
-     }
- 
-@@ -4164,7 +4164,7 @@ static float32 frsqrt7_s(float32 f, float_status *s)
-         (float32_is_infinity(f) && sign) ||
-         (float32_is_normal(f) && sign) ||
-         (float32_is_zero_or_denormal(f) && !float32_is_zero(f) && sign)) {
--        s->float_exception_flags |= float_flag_invalid;
-+        float_raise(float_flag_invalid, s);
-         return float32_default_nan(s);
-     }
- 
-@@ -4175,7 +4175,7 @@ static float32 frsqrt7_s(float32 f, float_status *s)
- 
-     /* frsqrt7(+-0) = +-inf */
-     if (float32_is_zero(f)) {
--        s->float_exception_flags |= float_flag_divbyzero;
-+        float_raise(float_flag_divbyzero, s);
-         return float32_set_sign(float32_infinity, sign);
-     }
- 
-@@ -4204,7 +4204,7 @@ static float64 frsqrt7_d(float64 f, float_status *s)
-         (float64_is_infinity(f) && sign) ||
-         (float64_is_normal(f) && sign) ||
-         (float64_is_zero_or_denormal(f) && !float64_is_zero(f) && sign)) {
--        s->float_exception_flags |= float_flag_invalid;
-+        float_raise(float_flag_invalid, s);
-         return float64_default_nan(s);
-     }
- 
-@@ -4215,7 +4215,7 @@ static float64 frsqrt7_d(float64 f, float_status *s)
- 
-     /* frsqrt7(+-0) = +-inf */
-     if (float64_is_zero(f)) {
--        s->float_exception_flags |= float_flag_divbyzero;
-+        float_raise(float_flag_divbyzero, s);
-         return float64_set_sign(float64_infinity, sign);
-     }
- 
-@@ -4285,8 +4285,7 @@ static uint64_t frec7(uint64_t f, int exp_size, int frac_size,
-              * Overflow to inf or max value of same sign,
-              * depending on sign and rounding mode.
-              */
--            s->float_exception_flags |= (float_flag_inexact |
--                                         float_flag_overflow);
-+            float_raise(float_flag_inexact | float_flag_overflow, s);
- 
-             if ((s->float_rounding_mode == float_round_to_zero) ||
-                 ((s->float_rounding_mode == float_round_down) && !sign) ||
-@@ -4370,13 +4369,13 @@ static float16 frec7_h(float16 f, float_status *s)
- 
-     /* frec7(+-0) = +-inf */
-     if (float16_is_zero(f)) {
--        s->float_exception_flags |= float_flag_divbyzero;
-+        float_raise(float_flag_divbyzero, s);
-         return float16_set_sign(float16_infinity, sign);
-     }
- 
-     /* frec7(sNaN) = canonical NaN */
-     if (float16_is_signaling_nan(f, s)) {
--        s->float_exception_flags |= float_flag_invalid;
-+        float_raise(float_flag_invalid, s);
-         return float16_default_nan(s);
-     }
- 
-@@ -4402,13 +4401,13 @@ static float32 frec7_s(float32 f, float_status *s)
- 
-     /* frec7(+-0) = +-inf */
-     if (float32_is_zero(f)) {
--        s->float_exception_flags |= float_flag_divbyzero;
-+        float_raise(float_flag_divbyzero, s);
-         return float32_set_sign(float32_infinity, sign);
-     }
- 
-     /* frec7(sNaN) = canonical NaN */
-     if (float32_is_signaling_nan(f, s)) {
--        s->float_exception_flags |= float_flag_invalid;
-+        float_raise(float_flag_invalid, s);
-         return float32_default_nan(s);
-     }
- 
-@@ -4434,13 +4433,13 @@ static float64 frec7_d(float64 f, float_status *s)
- 
-     /* frec7(+-0) = +-inf */
-     if (float64_is_zero(f)) {
--        s->float_exception_flags |= float_flag_divbyzero;
-+        float_raise(float_flag_divbyzero, s);
-         return float64_set_sign(float64_infinity, sign);
-     }
- 
-     /* frec7(sNaN) = canonical NaN */
-     if (float64_is_signaling_nan(f, s)) {
--        s->float_exception_flags |= float_flag_invalid;
-+        float_raise(float_flag_invalid, s);
-         return float64_default_nan(s);
-     }
- 
+Beyond .mailmap, the data we have in contrib/gitdm only ever reflects
+our current point-in-time understanding of employers. For cases where
+we map personal email addresses to employers, we are not keeping a
+historical record as people change jobs, so all historical commits
+from a personal email address get associated with the newest employer.
+
+IOW if you want to attribute accurately, you need to look at the state
+of contrib/gitdm & .mailmap, as they were when the commit you want to
+attribute was merged.
+
+
+With regards,
+Daniel
 -- 
-2.34.1
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
