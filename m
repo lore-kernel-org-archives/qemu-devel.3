@@ -4,107 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42314CD5BAC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76698CD5BB4
 	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:57:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ3pK-0004ok-Pi; Thu, 21 May 2026 09:52:42 -0400
+	id 1wQ3qL-0006in-Uh; Thu, 21 May 2026 09:53:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wQ3pI-0004YZ-4E
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:52:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kees@kernel.org>) id 1wQ3Wt-0001lL-8n
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:33:39 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wQ3pG-0006de-1b
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:52:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779371557;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Y7ul/ogmZIh7TnpXpCqXxFeP5s/7MMeW5pcW9MA+YzU=;
- b=UaXHbQAxCQpMu3L2iswn9xtPfE6r23DN8HBKTKX09fGhoB/NitE3zuv87M8p3t19TjoUD/
- n47y6foYJg2/Bm4FXOIsHAfSWz6q11HW/XzkDumft35PIAim7Yv2ujWF2xpC2TgEDglskL
- z82/OAYTsP7Viu/3UaHR0YkcRe2+ulo=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-255-XGeW-U_2MUKfHTOSRDKxxg-1; Thu, 21 May 2026 09:52:35 -0400
-X-MC-Unique: XGeW-U_2MUKfHTOSRDKxxg-1
-X-Mimecast-MFC-AGG-ID: XGeW-U_2MUKfHTOSRDKxxg_1779371554
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-48fd3dbd16aso50609035e9.0
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 06:52:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779371554; x=1779976354;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Y7ul/ogmZIh7TnpXpCqXxFeP5s/7MMeW5pcW9MA+YzU=;
- b=bCWkBkmGd9efMRoyKfOtPYXzDiuvYmvE1+btF68iTqRwcbDBui4pBODo3h0WlGEVY7
- yoF7xByoMi4bjWfeWqJjSACTg8/DOVWHoPm0sqX1qMB+jWplJqdZzNjqFC3iWjF7H2vN
- JdVHlOhM5pvFEWsOsPttViaHkQv04LPFpHy7FyjZ+7yYgYOifdOaCTG8nbuG34ZTyIdB
- RoQDTO06luHqaHKWAH0K30i2NcUAax0WJ5V3PMVQ7mYcCn9Zc/4//KSmuBW3FtSV7q4d
- 8kBXu7dURHXyfrARgG/1qxAeCa5c30AxoWj50h/G7yOhQ3EUx5MeK0rEKSchqkDwhvnU
- 7gFw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ89nNCtxZ5P5EB3xVvl4GpkJhOH5aWUlU+DBeldxQ59UGd1y242HxwVvBG3lCtFLoYChkBdZKv7FeUn@nongnu.org
-X-Gm-Message-State: AOJu0Yxra01agra5u9y1ZDA0X8VuNJXh+VOFISeifurTu0ICbRpiq/M/
- dGaFnFFdW0vy6J2nVKvps43OjkuILL24W57fx/eBaWJx0LvJ5AxHKsWTwGjuEsr+s6dBQFpe+WM
- zOzA3yaukjjb/EfsWOwdme1CnHEHuoCTAkhzfu4WumFrGTPhioAVx4VXP
-X-Gm-Gg: Acq92OFXl3e9Zm2mlPJDMgRoHLox52d8EvVUGBIkUClL9/HqG/eL4WQ8mfKmdDrKn9q
- O+9UgNdSO+Wg4rPHC4OKmkOtKcIxo9bhELhDRxnN+NHuC/S1tRnzPmNLiVig433ARau8QHKTyWQ
- ffhjeDfAQZmjzj/pdn3GiPY1CLQlUUWJ/Hf+yDdQ7RmNuMftm+Gi3TYpXRjf2IfZIlbPwQsjWLs
- LSMNlTpeksCxs9miK17JBOLNK3BUYsiuBIPN2a/qotw5r2x7pb9BMs/k6EPiTX4YLHPcGkLsYfm
- EJkB/pViODxDBeHdGKhqZZlCYUhd0JFXdcnFu+vUO/kqQQuwFoBjpiiJkWKiOR8tEOctlHVphvN
- ISC2S5zFVH+LqIOLNRms95LRDHO+i6gJCPZvTgG5dRR6tAiDWgCtQqwIwBoYKYyUPnAb6/A==
-X-Received: by 2002:a05:600c:848d:b0:48e:60a3:220a with SMTP id
- 5b1f17b1804b1-49035fbac92mr43316595e9.0.1779371554460; 
- Thu, 21 May 2026 06:52:34 -0700 (PDT)
-X-Received: by 2002:a05:600c:848d:b0:48e:60a3:220a with SMTP id
- 5b1f17b1804b1-49035fbac92mr43316125e9.0.1779371554032; 
- Thu, 21 May 2026 06:52:34 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4903cadc119sm22835675e9.11.2026.05.21.06.52.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 May 2026 06:52:33 -0700 (PDT)
-Message-ID: <2cfef4ff-6eca-4915-8d41-8d43139cea31@redhat.com>
-Date: Thu, 21 May 2026 15:52:32 +0200
+ (Exim 4.90_1) (envelope-from <kees@kernel.org>) id 1wQ3Wq-0005AR-P1
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:33:38 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by sea.source.kernel.org (Postfix) with ESMTP id E19D34460C;
+ Thu, 21 May 2026 13:33:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C9C71F0155A;
+ Thu, 21 May 2026 13:33:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1779370406;
+ bh=xIIxiknLSHVZBHNOKlLgNSXxWTGeUxPYBjk6/bNkxVs=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=F7Ykfcvp0h6C12Jt7BShNBYGEpfAXvBIAx55A0+93dBwBTPwWMwDWRrO5isUznkhU
+ itctVylBMPCseJ9S3+reU25bfhnxLGs81ROGkHDrSKeWpg/Rez1y63/E0p0lUE95MZ
+ f/u4MnqyDBhhEHDleXISBtEDS8S6m8ZqoBy++9FLbj+QOoOdhCrl4GIXgLtDV0fnor
+ mdHdAkA0VigFdnzXd0I0EUKIL42pTjUoBNZrx7zwWr/eWeE294mHLH60nGc7HBVsnN
+ mHi84Fj8xXC12VUh1R1/Dg14UV22HTZGInV0oKdkocpJo9YXz5btVupLw70hiUfFNW
+ gaqKIygTuUjnA==
+From: Kees Cook <kees@kernel.org>
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Kees Cook <kees@kernel.org>, Pengpeng Hou <pengpeng@iscas.ac.cn>,
+ Petr Pavlu <petr.pavlu@suse.com>, Richard Weinberger <richard@nod.at>,
+ Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+ Johannes Berg <johannes@sipsolutions.net>,
+ "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>,
+ Corey Minyard <corey@minyard.net>, Gabriel Somlo <somlo@cmu.edu>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Jani Nikula <jani.nikula@linux.intel.com>,
+ Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+ Rodrigo Vivi <rodrigo.vivi@intel.com>,
+ Tvrtko Ursulin <tursulin@ursulin.net>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>, Bart Van Assche <bvanassche@acm.org>,
+ Jason Gunthorpe <jgg@ziepe.ca>, Leon Romanovsky <leon@kernel.org>,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+ Hans de Goede <hansg@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Bjorn Helgaas <bhelgaas@google.com>, Hannes Reinecke <hare@suse.de>,
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>,
+ Daniel Lezcano <daniel.lezcano@kernel.org>,
+ Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jiri Slaby <jirislaby@kernel.org>, Alan Stern <stern@rowland.harvard.edu>,
+ Jason Wang <jasowang@redhat.com>, Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+ =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+ Jason Baron <jbaron@akamai.com>, Jim Cromie <jim.cromie@gmail.com>,
+ Tiwei Bie <tiwei.btw@antgroup.com>,
+ Benjamin Berg <benjamin.berg@intel.com>,
+ =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+ "David E. Box" <david.e.box@linux.intel.com>,
+ "Maciej W. Rozycki" <macro@orcam.me.uk>,
+ Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+ Peter Zijlstra <peterz@infradead.org>, Heiko Carstens <hca@linux.ibm.com>,
+ Vasily Gorbik <gor@linux.ibm.com>, Sean Christopherson <seanjc@google.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Gleixner <tglx@kernel.org>,
+ Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+ Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
+ "H. Peter Anvin" <hpa@zytor.com>, Vinod Koul <vkoul@kernel.org>,
+ Frank Li <Frank.Li@kernel.org>, Daniel Gomez <da.gomez@kernel.org>,
+ Sami Tolvanen <samitolvanen@google.com>,
+ Aaron Tomlin <atomlin@atomlin.com>,
+ Alexander Potapenko <glider@google.com>, Marco Elver <elver@google.com>,
+ Dmitry Vyukov <dvyukov@google.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ John Johansen <john.johansen@canonical.com>,
+ Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>,
+ "Serge E. Hallyn" <serge@hallyn.com>,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Georgia Garcia <georgia.garcia@canonical.com>, kvm@vger.kernel.org,
+ dmaengine@vger.kernel.org, linux-modules@vger.kernel.org,
+ kasan-dev@googlegroups.com, linux-mm@kvack.org, apparmor@lists.ubuntu.com,
+ linux-security-module@vger.kernel.org, linux-um@lists.infradead.org,
+ linux-acpi@vger.kernel.org, openipmi-developer@lists.sourceforge.net,
+ qemu-devel@nongnu.org, intel-gfx@lists.freedesktop.org,
+ dri-devel@lists.freedesktop.org, linux-rdma@vger.kernel.org,
+ linux-media@vger.kernel.org, linux-pci@vger.kernel.org,
+ linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
+ linuxppc-dev@lists.ozlabs.org, linux-serial@vger.kernel.org,
+ linux-usb@vger.kernel.org, usb-storage@lists.one-eyed-alien.net,
+ virtualization@lists.linux.dev, linux-kernel@vger.kernel.org,
+ linux-arch@vger.kernel.org, netdev@vger.kernel.org,
+ linux-fsdevel@vger.kernel.org, linux-hardening@vger.kernel.org
+Subject: [PATCH 03/11] moduleparam: Add DEFINE_KERNEL_PARAM_OPS macro family
+Date: Thu, 21 May 2026 06:33:16 -0700
+Message-Id: <20260521133326.2465264-3-kees@kernel.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260521133315.work.845-kees@kernel.org>
+References: <20260521133315.work.845-kees@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 22/32] hw/arm/tegra241-cmdqv: Map VINTF page0 into
- guest MMIO space
-Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
- nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
- jgg@nvidia.com, zhenzhong.duan@intel.com, kjaju@nvidia.com,
- phrdina@redhat.com
-References: <20260519103727.899332-1-skolothumtho@nvidia.com>
- <20260519103727.899332-23-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260519103727.899332-23-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3674; i=kees@kernel.org;
+ h=from:subject; bh=3qCwRbQEn6qV8q9ahXLM93O2aOukjHk7G2WsPfFNfHo=;
+ b=owGbwMvMwCVmps19z/KJym7G02pJDFn8nAuull67+C5txg2e1YGCbPvcujb6Wx/JN/xsvCs3x
+ vgezzqPjlIWBjEuBlkxRZYgO/c4F4+37eHucxVh5rAygQxh4OIUgIkYvWZkOH+4UFL72GLVDkfh
+ BLNPz5NZzv2JWSzlWpkxwSTGt4VrNiPD9r2rxE49blEzn3CRa4uBQPBb6Zti6VkbO1blT5RSdFv
+ EBQA=
+X-Developer-Key: i=kees@kernel.org; a=openpgp;
+ fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=kees@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 21 May 2026 09:52:46 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -116,130 +134,107 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Add macros that define a struct kernel_param_ops initializer through a
+macro so the underlying field layout can evolve without touching every
+call site. Three variants cover the three cases:
 
+ DEFINE_KERNEL_PARAM_OPS(name, set, get) // basic
+ DEFINE_KERNEL_PARAM_OPS_NOARG(name, set, get) // set KERNEL_PARAM_OPS_FL_NOARG
+ DEFINE_KERNEL_PARAM_OPS_FREE(name, set, get, free) // also set .free
 
-On 5/19/26 12:37 PM, Shameer Kolothum wrote:
-> From: Nicolin Chen <nicolinc@nvidia.com>
->
-> Once a VCMDQ is allocated, map the mmap'd vintf_page0 region directly
-> into the guest-visible MMIO space at offset 0x30000 as a RAM-backed
-> MemoryRegion. This eliminates QEMU trapping for hot-path CONS/PROD
-> index updates.
->
-> After this patch, the two VCMDQ apertures use different access paths:
-> the direct aperture (0x10000) remains QEMU-trapped and writes via
-> vintf_ptr, while the VI aperture (0x30000) is a direct guest RAM
-> mapping. Both paths write to the same underlying vintf_page0 memory,
-> so no synchronisation between the apertures is needed.
+Callers prefix their own visibility qualifiers, e.g.:
 
-Please further explain the rationale of having 2 separate paths
+  static DEFINE_KERNEL_PARAM_OPS(my_ops, my_set, my_get);
 
-Eric
->
-> The mapping is installed lazily on first successful VCMDQ hardware
-> queue allocation and removed when CMDQV or VINTF is disabled.
->
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Co-developed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> ---
->  hw/arm/tegra241-cmdqv.h |  1 +
->  hw/arm/tegra241-cmdqv.c | 39 +++++++++++++++++++++++++++++++++++++++
->  2 files changed, 40 insertions(+)
->
-> diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
-> index 7a8cb2ebc7..e9e1933a19 100644
-> --- a/hw/arm/tegra241-cmdqv.h
-> +++ b/hw/arm/tegra241-cmdqv.h
-> @@ -47,6 +47,7 @@ typedef struct Tegra241CMDQV {
->      IOMMUFDVeventq *veventq;
->      IOMMUFDHWqueue *vcmdq[TEGRA241_CMDQV_MAX_CMDQ];
->      void *vintf_page0;
-> +    MemoryRegion *mr_vintf_page0;
->  
->      /* CMDQ-V Config page register cache */
->      uint32_t config;
-> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
-> index a7e89905df..853c548e58 100644
-> --- a/hw/arm/tegra241-cmdqv.c
-> +++ b/hw/arm/tegra241-cmdqv.c
-> @@ -18,6 +18,40 @@
->  #include "tegra241-cmdqv.h"
->  #include "trace.h"
->  
-> +static void tegra241_cmdqv_guest_unmap_vintf_page0(Tegra241CMDQV *cmdqv)
-> +{
-> +    if (!cmdqv->mr_vintf_page0) {
-> +        return;
-> +    }
-> +
-> +    memory_region_del_subregion(&cmdqv->mmio_cmdqv, cmdqv->mr_vintf_page0);
-> +    object_unparent(OBJECT(cmdqv->mr_vintf_page0));
-> +    g_free(cmdqv->mr_vintf_page0);
-> +    cmdqv->mr_vintf_page0 = NULL;
-> +}
-> +
-> +static void tegra241_cmdqv_guest_map_vintf_page0(Tegra241CMDQV *cmdqv)
-> +{
-> +    char *name;
-> +
-> +    if (cmdqv->mr_vintf_page0) {
-> +        return;
-> +    }
-> +
-> +    name = g_strdup_printf("%s vintf-page0",
-> +                           memory_region_name(&cmdqv->mmio_cmdqv));
-> +    cmdqv->mr_vintf_page0 = g_malloc0(sizeof(*cmdqv->mr_vintf_page0));
-> +    memory_region_init_ram_device_ptr(cmdqv->mr_vintf_page0,
-> +                                      memory_region_owner(&cmdqv->mmio_cmdqv),
-> +                                      name, VINTF_PAGE_SIZE,
-> +                                      cmdqv->vintf_page0);
-> +    memory_region_set_skip_iommu_map(cmdqv->mr_vintf_page0, true);
-> +    memory_region_add_subregion_overlap(&cmdqv->mmio_cmdqv,
-> +                                        CMDQV_VINTF_PAGE0_BASE,
-> +                                        cmdqv->mr_vintf_page0, 1);
-> +    g_free(name);
-> +}
-> +
->  static void tegra241_cmdqv_free_vcmdq(Tegra241CMDQV *cmdqv, int index)
->  {
->      IOMMUFDViommu *viommu = cmdqv->s_accel->viommu;
-> @@ -130,6 +164,9 @@ static bool tegra241_cmdqv_setup_vcmdq(Tegra241CMDQV *cmdqv, int index,
->      /* Pre-alloc cached writes survive the cache-to-hardware transition. */
->      tegra241_cmdqv_sync_vcmdq(cmdqv, index);
->  
-> +    /* Map the mmap'd VINTF page0 into guest MMIO space. */
-> +    tegra241_cmdqv_guest_map_vintf_page0(cmdqv);
-> +
->      return true;
->  }
->  
-> @@ -449,6 +486,7 @@ static void tegra241_cmdqv_config_vintf_write(Tegra241CMDQV *cmdqv,
->                  tegra241_cmdqv_setup_all_vcmdq(cmdqv, errp);
+Also update module_param_call() and STANDARD_PARAM_DEF() to use
+DEFINE_KERNEL_PARAM_OPS internally so the generated ops table will go
+through the same macro as everything else.
 
-I would rather put the     tegra241_cmdqv_guest_map_vintf_page0(cmdqv) here 
-to have symetric map/unmap
->              }
->          } else {
-> +            tegra241_cmdqv_guest_unmap_vintf_page0(cmdqv);
->              tegra241_cmdqv_free_all_vcmdq(cmdqv);
->              tegra241_cmdqv_munmap_vintf_page0(cmdqv, errp);
->              cmdqv->vintf_status &= ~R_VINTF0_STATUS_ENABLE_OK_MASK;
-> @@ -566,6 +604,7 @@ static void tegra241_cmdqv_writel_mmio(Tegra241CMDQV *cmdqv, hwaddr offset,
->               */
->              tegra241_cmdqv_setup_all_vcmdq(cmdqv, &local_err);
-same
->          } else {
-> +            tegra241_cmdqv_guest_unmap_vintf_page0(cmdqv);
->              tegra241_cmdqv_free_all_vcmdq(cmdqv);
->              cmdqv->status &= ~R_STATUS_CMDQV_ENABLED_MASK;
->          }
-Thanks
+Subsequent commits convert all open-coded struct kernel_param_ops
+definitions to use these macros, in preparation for migrating to a
+seq_buf .get API.
 
-Eric
+Signed-off-by: Kees Cook <kees@kernel.org>
+---
+ include/linux/moduleparam.h | 36 ++++++++++++++++++++++++++++++++++--
+ kernel/params.c             |  6 ++----
+ 2 files changed, 36 insertions(+), 6 deletions(-)
+
+diff --git a/include/linux/moduleparam.h b/include/linux/moduleparam.h
+index 075f28585074..26bf45b36d02 100644
+--- a/include/linux/moduleparam.h
++++ b/include/linux/moduleparam.h
+@@ -68,6 +68,39 @@ struct kernel_param_ops {
+ 	void (*free)(void *arg);
+ };
+ 
++/*
++ * Define a const struct kernel_param_ops initializer. Callers prefix with
++ * any required visibility qualifiers (typically "static"):
++ *
++ *   static DEFINE_KERNEL_PARAM_OPS(my_ops, my_set, my_get);
++ *
++ * Routing the @_set and @_get function pointers through the macro
++ * (rather than naming the struct fields at every call site) lets the
++ * field layout change in one place when callbacks are migrated to a
++ * new signature.
++ */
++#define DEFINE_KERNEL_PARAM_OPS(_name, _set, _get)			\
++	const struct kernel_param_ops _name = {				\
++		.set = (_set),						\
++		.get = (_get),						\
++	}
++
++/* As DEFINE_KERNEL_PARAM_OPS, with KERNEL_PARAM_OPS_FL_NOARG set. */
++#define DEFINE_KERNEL_PARAM_OPS_NOARG(_name, _set, _get)		\
++	const struct kernel_param_ops _name = {				\
++		.flags = KERNEL_PARAM_OPS_FL_NOARG,			\
++		.set = (_set),						\
++		.get = (_get),						\
++	}
++
++/* As DEFINE_KERNEL_PARAM_OPS, with an additional .free callback. */
++#define DEFINE_KERNEL_PARAM_OPS_FREE(_name, _set, _get, _free)		\
++	const struct kernel_param_ops _name = {				\
++		.set = (_set),						\
++		.get = (_get),						\
++		.free = (_free),					\
++	}
++
+ /*
+  * Flags available for kernel_param
+  *
+@@ -311,8 +344,7 @@ struct kparam_array
+  * kernel_param_ops), use module_param_cb() instead.
+  */
+ #define module_param_call(name, _set, _get, arg, perm)			\
+-	static const struct kernel_param_ops __param_ops_##name =	\
+-		{ .flags = 0, .set = _set, .get = _get };		\
++	static DEFINE_KERNEL_PARAM_OPS(__param_ops_##name, _set, _get); \
+ 	__module_param_call(MODULE_PARAM_PREFIX,			\
+ 			    name, &__param_ops_##name, arg, perm, -1, 0)
+ 
+diff --git a/kernel/params.c b/kernel/params.c
+index 752721922a15..2cbad1f4dd06 100644
+--- a/kernel/params.c
++++ b/kernel/params.c
+@@ -222,10 +222,8 @@ char *parse_args(const char *doing,
+ 		return scnprintf(buffer, PAGE_SIZE, format "\n",	\
+ 				*((type *)kp->arg));			\
+ 	}								\
+-	const struct kernel_param_ops param_ops_##name = {			\
+-		.set = param_set_##name,				\
+-		.get = param_get_##name,				\
+-	};								\
++	DEFINE_KERNEL_PARAM_OPS(param_ops_##name,			\
++				param_set_##name, param_get_##name);	\
+ 	EXPORT_SYMBOL(param_set_##name);				\
+ 	EXPORT_SYMBOL(param_get_##name);				\
+ 	EXPORT_SYMBOL(param_ops_##name)
+-- 
+2.34.1
 
 
