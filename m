@@ -4,53 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 901FECD4F3D
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 15:15:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 075F4CD5BAC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 15:15:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ56k-0007bD-I9; Thu, 21 May 2026 11:14:46 -0400
+	id 1wQ57V-00089F-1q; Thu, 21 May 2026 11:15:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1wQ56i-0007Zt-8t; Thu, 21 May 2026 11:14:44 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wQ57E-0007zn-FK
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 11:15:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1wQ56f-0001je-JT; Thu, 21 May 2026 11:14:44 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id D12588360E;
- Thu, 21 May 2026 17:14:36 +0200 (CEST)
-Message-ID: <0131584f-2470-471d-b4c1-13881e913eca@proxmox.com>
-Date: Thu, 21 May 2026 17:14:35 +0200
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wQ57B-0002H0-Qc
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 11:15:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779376512;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=s/RX6nUCu2v+VXbDaH2r5CgLJbtbxDMBC70P2wfzW00=;
+ b=bv+O5/2R953vU1/DDJEf/daGGIeqMNFKaS/QrIyuzUDPJZ2uMqKA5d/fkekiQ5RWkDHR/J
+ eEGDdeHzYOkqQSKXIp+8eD2vLn5tZSDVw633o1tnxAKKeGNpF8yRgN8oVHA0julY7ef5bq
+ iJrUKGTd9H11/zwjAreaVIPVoZ/OPt4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-637--XZakbtsNs6jmfOeyojlsg-1; Thu, 21 May 2026 11:15:09 -0400
+X-MC-Unique: -XZakbtsNs6jmfOeyojlsg-1
+X-Mimecast-MFC-AGG-ID: -XZakbtsNs6jmfOeyojlsg_1779376508
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4903dcb32f8so3156885e9.0
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 08:15:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1779376508; x=1779981308; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=s/RX6nUCu2v+VXbDaH2r5CgLJbtbxDMBC70P2wfzW00=;
+ b=jmAL2CFV/QLqCrF/oa6EQQ3La700wdBEfSlON7/TNKHFIe4m1ZTHAN3Mc46al+q0Ew
+ zOOm4BlghQqRuR6aHcVqVeFEugEL66NxUSXE/6VqQ1jp7TYUquB6b3/skMvphuMHdxUf
+ iYy17/M1d67TtjPF8NSQbvEGvKOHdPsmVOnUt+alxtvKlh0ynRZpK2prKh4vO4Koj0ee
+ Incgq0iTNA4gXFb0QTgc6Yvp80gICCfZWnEuSxmEqbW1CMT4jQ2+Ne+vR1Mto43UCWu7
+ gFPVuiy9MqjLgbWZ7rVO355jzJxSryCH1WMBRPrjuys4zqg6WCAvx98ikKHRexEzz0qX
+ je1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779376508; x=1779981308;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=s/RX6nUCu2v+VXbDaH2r5CgLJbtbxDMBC70P2wfzW00=;
+ b=X1KFtpcVCEIQP1uANFUiALbYMp6WG/H1EVA+W9iYSEB+MKrEA6SLTZYeLIhhw9d3K+
+ 2Bf1TVy4lXE3edBlTxfqZiBFcQu5KDlTyI8HuofVqClJDwYtdvBa8UsdCuHi81N2gl0v
+ iq32qC3Tv3vUhj70pE4XaJrsEPC8297Svwl8QQKlcb3Lu/Bl5EA5ECtCE18M3ymJ/aMi
+ 5vUVVqIR8TH4FWrrzaN1clxPfqkcV7l+5Qe8uTkj1JOiHK0cj51f8tyG98OKQ16F8qXC
+ g0Dw7cEjTxJ33w1DkB0J+/HvbMPn3fXyAh4SWDnFRj6P5PLMc9NyoBAkxX6SiPj4bohi
+ z7vQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8fvRCK/aXAIPbbEqj3jfep434AeHSIJFZK8SXg2iCKj8Hw/M8ietj6EPKUDgoE8oYmdTP8ZXJkLRVu@nongnu.org
+X-Gm-Message-State: AOJu0YwbkZJG4h9C6F5V9KdLBpRYGmNzJ5LCqEtwjAkL5lf+UCGCKDqL
+ nrIaBpJpl8dsficDgqffrktgE+XNqlTgaCYbzMrAmBHRTnUuxqWFaFb1UpzhZ6mJVYgCWc/zy1x
+ HrFiz3HT3PvVUFKwjRiFAGZqAhMvBSid9+hsGZvgesklVWwaX6cI7uBDV
+X-Gm-Gg: Acq92OH52e6vXWnSbAOz487tyGkocZyLz4mulG7YIHNrnA2SbfVaBjyE3J6NIMaScZ2
+ rxOCniNvr5r8+8Z7ag/Az8X8/OgWJ2eUrZSOOmSAjGo8IYO7Xi3DMSKZ7mVC1vtRQ8lKM8tPEnB
+ GaidZRK6SpBI0Q4tU/jLIEtVoLslCwYdZrtAgklsXuubWUUX7Qx45bTizn2pB0N7/J/sUd6QuCZ
+ IYa7QM7676G3hxbtreXv2YcCEWBCdFVx4y4Rls4MYntbuV5k63Kq/q3ezXlLlmX5/1i8oMhOQO5
+ yxIUAO7y1gi+j9m2rgx88CukEj01nhi2PQxAnuAbnx/opJW7zfXJPupHxd4yMzXwfDh+79qiBT0
+ x+9WdwSr0+zCkM70bnc2wscUJ77ybthtS6gWwXqzs7yVvKNTwTb0Fr9sfERsZc/DoWF/7lN0=
+X-Received: by 2002:a05:600c:470d:b0:490:3df8:65cb with SMTP id
+ 5b1f17b1804b1-4903df866bfmr16873625e9.18.1779376507706; 
+ Thu, 21 May 2026 08:15:07 -0700 (PDT)
+X-Received: by 2002:a05:600c:470d:b0:490:3df8:65cb with SMTP id
+ 5b1f17b1804b1-4903df866bfmr16872935e9.18.1779376507163; 
+ Thu, 21 May 2026 08:15:07 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4903c99cb43sm32163825e9.4.2026.05.21.08.15.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 21 May 2026 08:15:06 -0700 (PDT)
+Message-ID: <f5dc77d4-7c01-45cd-b0bf-5665b2c8aa9c@redhat.com>
+Date: Thu, 21 May 2026 17:15:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] qcow2: Fix corruption on discard during write with COW
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- hreitz@redhat.com, den@openvz.org, stefanha@redhat.com,
- qemu-stable@nongnu.org, qemu-devel@nongnu.org,
- Thomas Lamprecht <t.lamprecht@proxmox.com>
-References: <20260427170520.101242-1-kwolf@redhat.com>
- <20260427170520.101242-4-kwolf@redhat.com>
- <414848c6-3829-4120-b760-6db8d43c1ab5@proxmox.com>
- <ag8MzS2ULm8UTFlb@redhat.com>
- <2fa73e56-f4b5-436e-ab25-5654e0837bce@proxmox.com>
- <ag8YGeNoYB-sanMh@redhat.com>
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <ag8YGeNoYB-sanMh@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1779376457993
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Subject: Re: [PATCH] MAINTAINERS: Mark Multi-process QEMU as Odd Fixes
+To: Jagannathan Raman <jag.raman@oracle.com>, qemu-devel@nongnu.org
+Cc: john.levon@nutanix.com, elena.ufimtseva@oracle.com,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260521143827.64285-1-jag.raman@oracle.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260521143827.64285-1-jag.raman@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,190 +169,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 21.05.26 um 4:35 PM schrieb Kevin Wolf:
-> Am 21.05.2026 um 16:18 hat Fiona Ebner geschrieben:
->> Am 21.05.26 um 3:46 PM schrieb Kevin Wolf:
->>> Am 21.05.2026 um 14:12 hat Fiona Ebner geschrieben:
->>>> Am 27.04.26 um 7:04 PM schrieb Kevin Wolf:
->>>> I'm still trying to figure things out and come up with a better
->>>> reproducer, but wanted to let you know early, also because of the
->>>> upcoming stable releases. Of course, I'd also be happy for hints/hunches
->>>> and am happy to test suggestions!
->>>
->>> Do you have any information about the options used with the image file?
->>> In particular, is it using subclusters? Maybe just the 'qemu-img info'
->>> output would already give a bit more context.
->>
->> No subclusters if I'm not missing anything. When I created the image the
->> output was:
->>
->> Formatting '/mnt/pve/dir/images/300/vm-300-disk-0.qcow2', fmt=qcow2
->> cluster_size=65536 extended_l2=off preallocation=metadata
->> compression_type=zlib size=4510973952 lazy_refcounts=off refcount_bits=16
->>
->> Our management layer doesn't log the command itself, but doing the same
->> operation with logging added (and 301 instead of 300):
->>
->> /usr/bin/qemu-img create -o preallocation=metadata -f qcow2
->> /mnt/pve/dir/images/301/vm-301-disk-0.qcow2 4405248K
->>
->> qemu-img info gives:
->> [...]
+On 5/21/26 16:38, Jagannathan Raman wrote:
+> Reflect the current maintenance expectations for Multi-process QEMU by
+> changing its status from Maintained to Odd Fixes.
 > 
-> Ok, looks like all default options.
+> Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
+> ---
+>   MAINTAINERS | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
->>> Could you already locate the actual corruption and check what the
->>> pattern looks like? Something like zeros where we would expect data or
->>> the other way around? Or something less clear? (If you don't know,
->>> that's a good answer too. I know well that this kind of things is hard
->>> to debug.)
->>
->> Unfortunately not. I can only see the symptom of memory swapped back in
->> being corrupt (at least that's what happens AFAIU), leading to segfaults
->> in various processes as well as issues with heap allocations, e.g.:
->> corrupted double-linked list
->> free(): invalid pointer
->>
->> I'll write a small program which allocates memory with a fixed pattern
->> and regularly dumps it, maybe that works to get an idea about the
->> corruption.
-> 
-> AI suggests a scenario that looks like a real bug to me, though I'm not
-> sure if it's yours. See the reproducer below.
-> 
-> Basically it boils down to a non-allocating write being in flight to a
-> cluster that is concurrently discarded, turning the write essentially
-> into a host-cluster use-after-free. If you then allocate a new cluster
-> at the same time, the host cluster will be reused and the write that was
-> for a different guest cluster still writes to it.
-> 
-> I'm not completely sure yet what the right synchronisation mechanism
-> would be for this.
-> 
-> Anyway, as it depends on a specific pattern of discard and cluster
-> allocation happening while a write request is in flight, it should be
-> possible to use tracing to find out if anything like that is happening
-> in your case.
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index b75f3222f2..863d409dbb 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -4447,7 +4447,7 @@ F: tests/tcg/aarch64/system/semiheap.c
+>   Multi-process QEMU
+>   M: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+>   M: Jagannathan Raman <jag.raman@oracle.com>
+> -S: Maintained
+> +S: Odd Fixes
+>   F: docs/devel/multi-process.rst
+>   F: docs/system/multi-process.rst
+>   F: hw/pci-host/remote.c
 
-I will try to do tracing. With the following program, I see that the
-corrupt memory reads back as zeroes:
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-> #include <stdbool.h>
-> #include <stdint.h>
-> #include <stdio.h>
-> #include <stdlib.h>
-> #include <string.h>
-> #include <unistd.h>
-> 
-> #define SIZE 1024
-> #define COUNT 100 * 1024
-> 
-> uint8_t data[COUNT * SIZE];
-> 
-> int main(void) {
->     while (true) {
->         for (uint32_t i = 0; i < COUNT; i++) {
->             memset(data + i * SIZE, (i % 100) + 1, SIZE);
->         }
->         sleep(10);
->         for (uint32_t i = 0; i < COUNT; i++) {
->             for (uint32_t j = 0; j < SIZE; j++) {
->                 if (data[i * SIZE + j] != (i % 100) + 1) {
->                     uint32_t start = j;
->                     uint32_t corrupt_val = data[i * SIZE + j];
->                     while (j + 1 < SIZE && data[i * SIZE + j + 1] == corrupt_val) {
->                         j++;
->                     }
->                     printf("corrupt block %u byte range %u - %u: val %u expected %u\n",
->                            i, start, j, corrupt_val, (i % 100) + 1);
->                 }
->             }
->         }
->     }
->     return 0;
-> }
+Thanks,
 
-Example output:
-
-> corrupt block 21495 byte range 928 - 1023: val 0 expected 96
-> corrupt block 21496 byte range 0 - 1023: val 0 expected 97
-> corrupt block 21497 byte range 0 - 1023: val 0 expected 98
-> corrupt block 21498 byte range 0 - 1023: val 0 expected 99
-> corrupt block 21499 byte range 0 - 1023: val 0 expected 100
-> corrupt block 21500 byte range 0 - 1023: val 0 expected 1
-> corrupt block 21501 byte range 0 - 1023: val 0 expected 2
-> corrupt block 21502 byte range 0 - 1023: val 0 expected 3
-> corrupt block 21503 byte range 0 - 1023: val 0 expected 4
-> corrupt block 21504 byte range 0 - 1023: val 0 expected 5
-> corrupt block 21505 byte range 0 - 1023: val 0 expected 6
-> corrupt block 21506 byte range 0 - 1023: val 0 expected 7
-> corrupt block 21507 byte range 0 - 1023: val 0 expected 8
-> corrupt block 21508 byte range 0 - 1023: val 0 expected 9
-> corrupt block 21509 byte range 0 - 1023: val 0 expected 10
-> corrupt block 21510 byte range 0 - 1023: val 0 expected 11
-> corrupt block 21511 byte range 0 - 927: val 0 expected 12
-> corrupt block 22727 byte range 928 - 1023: val 0 expected 28
-> corrupt block 22728 byte range 0 - 1023: val 0 expected 29
-> corrupt block 22729 byte range 0 - 1023: val 0 expected 30
-> corrupt block 22730 byte range 0 - 1023: val 0 expected 31
-> corrupt block 22731 byte range 0 - 1023: val 0 expected 32
-> corrupt block 22732 byte range 0 - 1023: val 0 expected 33
-> corrupt block 22733 byte range 0 - 1023: val 0 expected 34
-> corrupt block 22734 byte range 0 - 1023: val 0 expected 35
-> corrupt block 22735 byte range 0 - 1023: val 0 expected 36
-> corrupt block 22736 byte range 0 - 1023: val 0 expected 37
-> corrupt block 22737 byte range 0 - 1023: val 0 expected 38
-> corrupt block 22738 byte range 0 - 1023: val 0 expected 39
-> corrupt block 22739 byte range 0 - 1023: val 0 expected 40
-> corrupt block 22740 byte range 0 - 1023: val 0 expected 41
-> corrupt block 22741 byte range 0 - 1023: val 0 expected 42
-> corrupt block 22742 byte range 0 - 1023: val 0 expected 43
-> corrupt block 22743 byte range 0 - 1023: val 0 expected 44
-> corrupt block 22744 byte range 0 - 1023: val 0 expected 45
-> corrupt block 22745 byte range 0 - 1023: val 0 expected 46
-> corrupt block 22746 byte range 0 - 1023: val 0 expected 47
-> corrupt block 22747 byte range 0 - 1023: val 0 expected 48
-> corrupt block 22748 byte range 0 - 1023: val 0 expected 49
-> corrupt block 22749 byte range 0 - 1023: val 0 expected 50
-> corrupt block 22750 byte range 0 - 1023: val 0 expected 51
-> corrupt block 22751 byte range 0 - 927: val 0 expected 52
-> corrupt block 23451 byte range 928 - 1023: val 0 expected 52
-> corrupt block 23452 byte range 0 - 1023: val 0 expected 53
-> corrupt block 23453 byte range 0 - 1023: val 0 expected 54
-> corrupt block 23454 byte range 0 - 1023: val 0 expected 55
-> corrupt block 23455 byte range 0 - 1023: val 0 expected 56
-> corrupt block 23456 byte range 0 - 1023: val 0 expected 57
-> corrupt block 23457 byte range 0 - 1023: val 0 expected 58
-> corrupt block 23458 byte range 0 - 1023: val 0 expected 59
-> corrupt block 23459 byte range 0 - 1023: val 0 expected 60
-> corrupt block 23460 byte range 0 - 1023: val 0 expected 61
-> corrupt block 23461 byte range 0 - 1023: val 0 expected 62
-> corrupt block 23462 byte range 0 - 1023: val 0 expected 63
-> corrupt block 23463 byte range 0 - 1023: val 0 expected 64
-> corrupt block 23464 byte range 0 - 1023: val 0 expected 65
-> corrupt block 23465 byte range 0 - 1023: val 0 expected 66
-> corrupt block 23466 byte range 0 - 1023: val 0 expected 67
-> corrupt block 23467 byte range 0 - 1023: val 0 expected 68
-> corrupt block 23468 byte range 0 - 1023: val 0 expected 69
-> corrupt block 23469 byte range 0 - 1023: val 0 expected 70
-> corrupt block 23470 byte range 0 - 1023: val 0 expected 71
-> corrupt block 23471 byte range 0 - 1023: val 0 expected 72
-> corrupt block 23472 byte range 0 - 1023: val 0 expected 73
-> corrupt block 23473 byte range 0 - 1023: val 0 expected 74
-> corrupt block 23474 byte range 0 - 1023: val 0 expected 75
-> corrupt block 23475 byte range 0 - 1023: val 0 expected 76
-> corrupt block 23476 byte range 0 - 1023: val 0 expected 77
-> corrupt block 23477 byte range 0 - 1023: val 0 expected 78
-> corrupt block 23478 byte range 0 - 1023: val 0 expected 79
-> corrupt block 23479 byte range 0 - 1023: val 0 expected 80
-> corrupt block 23480 byte range 0 - 1023: val 0 expected 81
-> corrupt block 23481 byte range 0 - 1023: val 0 expected 82
-> corrupt block 23482 byte range 0 - 1023: val 0 expected 83
-> corrupt block 23483 byte range 0 - 1023: val 0 expected 84
-> corrupt block 23484 byte range 0 - 1023: val 0 expected 85
-> corrupt block 23485 byte range 0 - 1023: val 0 expected 86
-> corrupt block 23486 byte range 0 - 1023: val 0 expected 87
-> corrupt block 23487 byte range 0 - 927: val 0 expected 88
-
+C.
 
 
