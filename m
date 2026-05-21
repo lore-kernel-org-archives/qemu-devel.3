@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 696C7CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 320AFCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:55:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ3qI-0006OI-UX; Thu, 21 May 2026 09:53:43 -0400
+	id 1wQ3qJ-0006SL-Se; Thu, 21 May 2026 09:53:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kees@kernel.org>) id 1wQ3Wt-0001lT-Lx
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:33:39 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <kees@kernel.org>) id 1wQ3Wr-0001kr-Vj
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:33:38 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kees@kernel.org>) id 1wQ3Wq-0005CF-Qr
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:33:39 -0400
+ (Exim 4.90_1) (envelope-from <kees@kernel.org>) id 1wQ3Wq-0005AC-7N
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:33:37 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 33DD644634;
- Thu, 21 May 2026 13:33:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E58EF1F00A3D;
+ by sea.source.kernel.org (Postfix) with ESMTP id DE51E4460A;
+ Thu, 21 May 2026 13:33:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D611F01572;
  Thu, 21 May 2026 13:33:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779370407;
- bh=Z+Ub2Rsd9ANQzKOVawxbbCdlC+pecLG/P/kzOLcGitU=;
+ s=k20260515; t=1779370406;
+ bh=mCDvxzUe4SUE/8My5CdCqwCgEMUsyBtFnEQMMX6d/s8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ZpoUzNBkBmEW2LjaiIoOOC4s+n979icMv2wlmoYSc25V3dGNAjG0gbL9a5wg2u47P
- VMxYDF0mYXlyeJyFUXl8jiRf3bxPYJJCLvPOeZSAS7DGYujM6mps9FRxfnjPXWQxhX
- xRaSPhmPxfOjP6QLUe/QgXf9nn4rloFvMFaamf2Q86gUDNKjRzgCW+SsEmbE7ZNswt
- y17z+o7t1YKntzAEH8VfbQJr1zSboc8FGZbuD7YpeFtpKlorEPTAdUvz75ERJ5b83/
- QUEgdBC7DVG7whLHuJRPnbclLcdfN+VSV+tx+pv1gVT/04XqXEZRewE4Hdv/XUfpxv
- A6xTQa8PPiphg==
+ b=gKeaVp4g+fZOCB2d1zbjK4W3dvda303iCxWkDVj8H14UNIIGY3gLpzELeZZiKDuA0
+ 6JIfunc/nVUvSrBIfRk900oxZ2787B+gF2h77BXqscTXGWlKDLIlSThYYzXi6Zaf6k
+ rSGRMLv44XHHzSMHgbqg/hi8HytIpEFrRSPhR2+NF71x4bQnEWRMd+fmzjPChz9SHD
+ l99zEnTWxInewz9sw/ltbjS6dRQ4fdJNXiQJ67R4+Wc+4RYmFsK3aPla3MQMOLPRtt
+ Du0AZ41GslozrTV5c51WftQYxJqxNJ5tdYXIlfTZ4AdLpFEJ8Cy0CdC8iVcMT6c/cM
+ 6A9cOjvqn/5+A==
 From: Kees Cook <kees@kernel.org>
 To: Luis Chamberlain <mcgrof@kernel.org>
 Cc: Kees Cook <kees@kernel.org>, Pengpeng Hou <pengpeng@iscas.ac.cn>,
@@ -97,25 +97,24 @@ Cc: Kees Cook <kees@kernel.org>, Pengpeng Hou <pengpeng@iscas.ac.cn>,
  virtualization@lists.linux.dev, linux-kernel@vger.kernel.org,
  linux-arch@vger.kernel.org, netdev@vger.kernel.org,
  linux-fsdevel@vger.kernel.org, linux-hardening@vger.kernel.org
-Subject: [PATCH 07/11] moduleparam: Route DEFINE_KERNEL_PARAM_OPS get pointer
- via _Generic
-Date: Thu, 21 May 2026 06:33:20 -0700
-Message-Id: <20260521133326.2465264-7-kees@kernel.org>
+Subject: [PATCH 02/11] panic: Replace panic_print_get() with generic helper
+Date: Thu, 21 May 2026 06:33:15 -0700
+Message-Id: <20260521133326.2465264-2-kees@kernel.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260521133315.work.845-kees@kernel.org>
 References: <20260521133315.work.845-kees@kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3477; i=kees@kernel.org;
- h=from:subject; bh=2lh9CsqKOjpmr9LD0n2okA9BehPWair2DlPnlZ1PFPc=;
- b=owGbwMvMwCVmps19z/KJym7G02pJDFn8nIvObEzOv8f9Ny7fU3+K4MU31w3MLlQyBTD1ZzTfl
- utOmiLfUcrCIMbFICumyBJk5x7n4vG2Pdx9riLMHFYmkCEMXJwCMJH4IkaGFVpms4oL+z/8iFoh
- P+POhcufipWWltm+L/CUOcml8euoBcP/rN0OUi7qm2bpPqgPYTsts70rWLI43Obl45kHtE0r/7Q
- yAAA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=866; i=kees@kernel.org;
+ h=from:subject; bh=We2iaIAjr+4pDVj6nN4taHbnlsqb7PEX4Rc0M//7Kt8=;
+ b=owGbwMvMwCVmps19z/KJym7G02pJDFn8nAumTnkv6GXi6mHz69T5F/eS51xN2sf9+OYJ/5tKM
+ a7BKpWXOkpZGMS4GGTFFFmC7NzjXDzetoe7z1WEmcPKBDKEgYtTACZy9S/Db7YGn+v9lrVPV4gu
+ m3xhJm8Bs3PHO2Ofhg7+Rze8/k6O/Mzw3yuT8f9jHfbF7g9KrUVDtZlPT9yg9mVa1fd5W55tLpg
+ ayQcA
 X-Developer-Key: i=kees@kernel.org; a=openpgp;
  fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=kees@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=kees@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -138,89 +137,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make the DEFINE_KERNEL_PARAM_OPS family route their _get argument to
-either .get (struct seq_buf *) or .get_str (char *) at compile time
-based on the pointer's actual function signature. Two helper macros
-do the routing:
-
-  _KERNEL_PARAM_OPS_GET     - return the pointer if it has the seq_buf
-                              signature, otherwise NULL of that type
-  _KERNEL_PARAM_OPS_GET_STR - mirror image for the char * signature
-
-Both use _Generic; only the two valid function-pointer types are
-listed, so any third-party type is a compile error rather than
-silently falling through.
-
-Now a callback whose body has been migrated from char * to struct
-seq_buf * needs no change at its kernel_param_ops initialization site,
-because the macro picks up the new type automatically and assigns to
-the correct field.
+Since panic_print_get() just calls the ulong helper directly, there is
+no need for it to exist as a wrapper.
 
 Signed-off-by: Kees Cook <kees@kernel.org>
 ---
- include/linux/moduleparam.h | 33 ++++++++++++++++++++++++++-------
- 1 file changed, 26 insertions(+), 7 deletions(-)
+ kernel/panic.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/include/linux/moduleparam.h b/include/linux/moduleparam.h
-index c52120f6ac28..795bc7c654ef 100644
---- a/include/linux/moduleparam.h
-+++ b/include/linux/moduleparam.h
-@@ -85,15 +85,32 @@ struct kernel_param_ops {
-  *
-  *   static DEFINE_KERNEL_PARAM_OPS(my_ops, my_set, my_get);
-  *
-- * Routing the @_set and @_get function pointers through the macro
-- * (rather than naming the struct fields at every call site) lets the
-- * field layout change in one place when callbacks are migrated to a
-- * new signature.
-+ * @_get may be either of:
-+ *   int (*)(struct seq_buf *, const struct kernel_param *) (seq_buf)
-+ *   int (*)(char *, const struct kernel_param *)           (legacy)
-+ *
-+ * The macro uses _Generic to route the function pointer to the
-+ * matching field (.get or .get_str) at compile time, leaving the
-+ * other field NULL. Each helper matches the wrong prototype signature
-+ * and returns NULL, falling through to the default branch otherwise;
-+ * if @_get has neither expected signature the assignment to the
-+ * fields gets a normal compile-time type-mismatch error.
-  */
-+#define _KERNEL_PARAM_OPS_GET(_get)					\
-+	_Generic((_get),						\
-+	    int (*)(char *, const struct kernel_param *): NULL,		\
-+	    default: (_get))
-+
-+#define _KERNEL_PARAM_OPS_GET_STR(_get)					\
-+	_Generic((_get),						\
-+	    int (*)(struct seq_buf *, const struct kernel_param *): NULL, \
-+	    default: (_get))
-+
- #define DEFINE_KERNEL_PARAM_OPS(_name, _set, _get)			\
- 	const struct kernel_param_ops _name = {				\
- 		.set = (_set),						\
--		.get_str = (_get),					\
-+		.get = _KERNEL_PARAM_OPS_GET(_get),			\
-+		.get_str = _KERNEL_PARAM_OPS_GET_STR(_get),		\
- 	}
+diff --git a/kernel/panic.c b/kernel/panic.c
+index 20feada5319d..42e5ebde4585 100644
+--- a/kernel/panic.c
++++ b/kernel/panic.c
+@@ -1214,14 +1214,9 @@ static int panic_print_set(const char *val, const struct kernel_param *kp)
+ 	return  param_set_ulong(val, kp);
+ }
  
- /* As DEFINE_KERNEL_PARAM_OPS, with KERNEL_PARAM_OPS_FL_NOARG set. */
-@@ -101,14 +118,16 @@ struct kernel_param_ops {
- 	const struct kernel_param_ops _name = {				\
- 		.flags = KERNEL_PARAM_OPS_FL_NOARG,			\
- 		.set = (_set),						\
--		.get_str = (_get),					\
-+		.get = _KERNEL_PARAM_OPS_GET(_get),			\
-+		.get_str = _KERNEL_PARAM_OPS_GET_STR(_get),		\
- 	}
- 
- /* As DEFINE_KERNEL_PARAM_OPS, with an additional .free callback. */
- #define DEFINE_KERNEL_PARAM_OPS_FREE(_name, _set, _get, _free)		\
- 	const struct kernel_param_ops _name = {				\
- 		.set = (_set),						\
--		.get_str = (_get),					\
-+		.get = _KERNEL_PARAM_OPS_GET(_get),			\
-+		.get_str = _KERNEL_PARAM_OPS_GET_STR(_get),		\
- 		.free = (_free),					\
- 	}
+-static int panic_print_get(char *val, const struct kernel_param *kp)
+-{
+-	return  param_get_ulong(val, kp);
+-}
+-
+ static const struct kernel_param_ops panic_print_ops = {
+ 	.set	= panic_print_set,
+-	.get	= panic_print_get,
++	.get	= param_get_ulong,
+ };
+ __core_param_cb(panic_print, &panic_print_ops, &panic_print, 0644);
  
 -- 
 2.34.1
