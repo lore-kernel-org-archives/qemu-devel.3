@@ -4,106 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19406CD5BB4
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 15:34:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3336CD5BAF
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 15:34:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ5PR-0003uC-Hy; Thu, 21 May 2026 11:34:06 -0400
+	id 1wQ5P7-0003iC-If; Thu, 21 May 2026 11:33:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wQ5P6-0003j1-0B
- for qemu-devel@nongnu.org; Thu, 21 May 2026 11:33:45 -0400
-Received: from mail-qk1-x72b.google.com ([2607:f8b0:4864:20::72b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wQ5P3-0001MB-Kk
- for qemu-devel@nongnu.org; Thu, 21 May 2026 11:33:43 -0400
-Received: by mail-qk1-x72b.google.com with SMTP id
- af79cd13be357-90ca6f20872so869996185a.0
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 08:33:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779377619; cv=none;
- d=google.com; s=arc-20240605;
- b=OcZYn5V+CIlKyhfaPH9n2CX/NxE67OTIqty0FvaLHsXlg7nlIlTvWXGtYAYgLEmuKx
- NKFLI7MpmxK9sdTvmrOiPnjxDdyj4YmA2M37M+GGznqnefjx97VdkksrT0k7JWjdMSXP
- ZVNIUcqbil82JjfnM19ShYOzTeTukEnWOdygR50T+z7U/DnC/8AWGOe7A81q2brmJgZx
- HdxJCL5LXCKhxYoNkffYBOvktFf45ShCUIle93ZsULm0WOH/J46txjHBuLPPGTqaE7c2
- GXAAbB4LakLdUqejSrhh+duEP30nhfozJlgzLrgnA1IxFbheSQF3dDM5MfU6halyZ98S
- sauA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=peDINXBxcKWQYjVspnPJmH/goNDZV4Xd6bFqDbTEs+c=;
- fh=qz5jHiMNfVBJ88oqmstg9p/MLllNZlxY5VnP9u6Gy/E=;
- b=fSxLxiOEGP+5DT47N7H91urtmqsbDTYuv9j0jrxpVnUD58H+oT6cq/h+7gQJAiB+dF
- aiOkJ4c+2l+2brO4CV7xrcU34WNWU5npgeZLNzzlLp1YjhAuPDeanELqcIVT6M9WWiM5
- Y5lxN/1IwjBO9E6R89WHfCe41HtFbsSF/6yP3PODMCqdC1sMy4PnbmZqDpGP72OULKCK
- /qLoCOPQy5f8WnxsVrDcP7bVaZ5cdD/yCt7xikoVjWJ3DxEWX9BSGN4iZbITACB07a9Y
- lSC6jRJxJjrJABtpXUCowb5Es19eZGtNe7LWrSbzebirTaIBt/cmd++Uvhpcq5wM+qnW
- ZcsA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wQ5Om-0003X7-HJ
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 11:33:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wQ5Oa-0000zd-Ko
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 11:33:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779377581;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=mzjlZr+R4ObJ7iLyzh4BeKfen8hi75dcrlFM1IOlIYo=;
+ b=GEfFwY549rAE/hDsveLhncoqyAQveh7wGKB4FhRC7Ujn6bjqW1UkMmoKJhvCuQjGMBqnbN
+ arpFc9gHCi1QjkGAEa7lbfJ2gGi2UkLKFzjgvuRzOm+4RVAtNB7CDaSx5rs9q1nxlf+e86
+ FY/vTXBb3hmnEQQ8ENyWxE1fFsx/iSk=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-422-HoWVU8k6OUujTawC4HFZUQ-1; Thu, 21 May 2026 11:20:38 -0400
+X-MC-Unique: HoWVU8k6OUujTawC4HFZUQ-1
+X-Mimecast-MFC-AGG-ID: HoWVU8k6OUujTawC4HFZUQ_1779376838
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8b58065ea15so10422596d6.2
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 08:20:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779377619; x=1779982419; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=peDINXBxcKWQYjVspnPJmH/goNDZV4Xd6bFqDbTEs+c=;
- b=jitNQCdD4psjDLEOWx3wkF8MY87GOnC+0PB3wgrKuuBYAHbR90pGL9rI52UwjcEvGX
- t3UdviaORhtweupaQhG/oDXXWn82h9WW2lEnEfGhliSQeDwXBNwM6ieAji88ykibtmB6
- Hp4H7xpie19eVxrkIPMvm5IqE0cQtqCi4mEq/wBmMZ1xHyv0i0mWU+2OAK6Wax+7ja9s
- 3yVk4YNSICdxwlo925ndeNkXkcVH4QzbJBPWuPfIpsgap7AS5YoMNdz3EtypvClPu5cO
- cDlNrvi0dkwNiX7bNzDHdXdPlX1G7SKCyE6zbFDowvZk2IeLTZUiG9XPsx/Y9lPvldH1
- d5HA==
+ d=redhat.com; s=google; t=1779376838; x=1779981638; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=mzjlZr+R4ObJ7iLyzh4BeKfen8hi75dcrlFM1IOlIYo=;
+ b=S3vGyvVMFOogyPMU4pphoreA3wHmixXmLE4U1Qe9oX4WpKNqrXlx3YH/970v6llMOg
+ PwaCrBHLtRmfPvcghiVhS7jou57acMAC7AMJwyzWcJtBMPmLyPB+VNeFG6X4VUKvLmr9
+ Oc04+yeG1kf8C1bXfl7cysd2bLxhi76pF2P6e2u/57uIUJoc9V900c2DdN+BfPYCDnji
+ 57ZcRjGXFaKeFr+1f7bFNP0Gzbqe3ba5sL+MKB9BzbYlZdevA9VBj8tv0dsh3Nfdorv2
+ Z0UYJxwHqoWXT3jRXeQOuOhLO1iLvyvrDWoTY05wBtCN4nsle3bvvJRMGAtHDAvhVD5V
+ FxLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779377619; x=1779982419;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=peDINXBxcKWQYjVspnPJmH/goNDZV4Xd6bFqDbTEs+c=;
- b=duEtQD3Jhak3+RapdCiq41c5nGH+O/l2TTS+epQyOcZI0FtUg00iXRx09vXk3dHFJ/
- wN974ymmqQ9WCkm9dkD7s/fCcQx8Q55Pl7dhvJGU9o1WtWy4VjporYQJ6cNGIiVpJmG9
- HQ4ugqZCNuUts8EF/W2nr0kjvUbTWVuxY9SAZph6wNV8vXOp7M828hHLRkG4EQm6+2qg
- rNrJmbaC3i1Pi3gH3zfecwgBSsVkmZHXmEDYlqps37mMexyiCde/2oTUQGpobVlC86OU
- g/GmPCvRHecyZQCpiesDhM6HVuofHS2BNIbgKyGUizrLh3PzmvKUWKDZ2Zwc7KIhr2Oj
- pKjg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8nKx6/ol4XLM6nHmS+aFpfCA+R2s7PJWEB22Qphdz1FKD5Ce0Y29E9/KfnPhnKia/m0TrQM0sXxO5v@nongnu.org
-X-Gm-Message-State: AOJu0YwiuZavhwqyR52zzWjjX5H/7gEUXSMJKVHnpwYR53aNdise3iuL
- drmJVS3g9MKspJxzm3wBPdutIB8olcaZKwvucMhrrXhy8W7ez+5H1gFHcZcCpL3qTa0cv8NHx8H
- Nv4mliFI8nhwnFORHFH+vB/8Zn8PuhHLNbwIgotLaaAp1isf90X+fZ1M=
-X-Gm-Gg: Acq92OGxtVhntYBpiUyprIeijYcKzrH1H4UAQCIxmGH0MToM9lSKwY5HoniHK8fc295
- N536u2cBVraV/oWRceTqE3tyfhIX3nRfkURGcnFQX3+N4X0bJDfKDpt8TTOMBvpmnQAoXAHGGTF
- 7vKulWA2+G/aFjgLwgzS8hscFpKIIxOV+l1cZCX31//RYBjS8m6L6ecveftMvDuC84Zod6i/fzT
- jSpOt3O2/wrGGVwck66xzMDFXsDsmc7Sst/ez6r51cziBgxUc3KwsT1mycTU/2YUEa8HHXTcri6
- dHHiwi1ecLz45b/XXXBlQ37DA0nILapM6mqSCQ8A38bEVr7lpSar2g/dzRDLnz7W0ks=
-X-Received: by 2002:a05:690e:4106:b0:65e:28f3:4a51 with SMTP id
- 956f58d0204a3-65eacf4c084mr2450181d50.24.1779376891622; Thu, 21 May 2026
- 08:21:31 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779376838; x=1779981638;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mzjlZr+R4ObJ7iLyzh4BeKfen8hi75dcrlFM1IOlIYo=;
+ b=I4CbuU0lmWQ0Vyb9zJQBKY3NsPRpTGwylf3VpjPr1kt/C+bjKycK87eBFYtHaKLDHY
+ uJrZEa2XftX5cITOXlSJmsW3Qy8s51JZC+tYMQpI0Oi1RHCjC2KnnEps+TAsQSfghi61
+ iYBEB2iDW3scw5WB56oIRNuFCI2fCBJVWJVua35SRz2mb9W1HSXm67RVhn2+k4t2p3iZ
+ PGAHqiSzPB8nMhB1CcHMSVV+/ia4O2FskIKZ58LMkv6Rz9KC3GQFM3jFVI1Ln8upYdip
+ CSGkrI/ehDTtc+YnRcWfRFKq6MOSc2hyL5VvUGznytBSnvBXuBZarkt8AYxqvB6eOTAk
+ 07Yw==
+X-Gm-Message-State: AOJu0YwGtbmKmoYJdRI2+LHuzu11IWB6k3IENP8ap+jZ1olHuO9XlUjH
+ EWzBqUsUByYXnQikcKp78YRRp5orljEmp4UAn300YSsl5n+FofDGSKZV17p0Ye1kYPWtBj8+mTs
+ 8MvYIKSEFoLiIRIYHEse+bwGfNExMNjfKdP/abr8OPPpqyOamVgZYh51+
+X-Gm-Gg: Acq92OESHDf6MATEaw1p+YvJ1LLzFpP5znDYBN3pnimfZBPZBJOgD6SWZ1rXpzFZ9vp
+ j8V3+JYuYk8o7S2S4cPNatC1x+o8GTLOb4MwAATu8YsC7kvrWm9J20yDwCfrfAz4Z1z+C3uoGP/
+ DuQGZWwo+M0qJcYuNqFG2nDvNb73BYWlCIC62y5msqDbmqp2s5/RKnDFMUFuoZ9qi3dTmFZVEDo
+ ZJnd0qVzRULaaTHqwF6oCELDjLnc/4Xtw92FG7LXMD6NQgZFrg4muBfT6FegK+V6KYfDCQgVLSD
+ 67q2wIBh17mp0Dvm6fHEYTtSlqZT1YiZhhZUoF1cvEq46F7VmCPVXkZHXxZtzTXtp1STeAgyFTQ
+ 45MRnG8hIJuc5CHYHb/nB+ZCnndBOrP9yROZ8gUOElNzHw04=
+X-Received: by 2002:a05:6214:27c1:b0:8ca:1ddd:a69f with SMTP id
+ 6a1803df08f44-8cc6e2e8d74mr54933636d6.2.1779376837844; 
+ Thu, 21 May 2026 08:20:37 -0700 (PDT)
+X-Received: by 2002:a05:6214:27c1:b0:8ca:1ddd:a69f with SMTP id
+ 6a1803df08f44-8cc6e2e8d74mr54932526d6.2.1779376836745; 
+ Thu, 21 May 2026 08:20:36 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8cc768b71d2sm8088876d6.9.2026.05.21.08.20.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 21 May 2026 08:20:35 -0700 (PDT)
+Date: Thu, 21 May 2026 11:20:34 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Avihai Horon <avihaih@nvidia.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Maor Gottlieb <maorg@nvidia.com>
+Subject: Re: [PATCH 00/14] Make switchover-ack re-usable and add VFIO precopy
+ REINIT feature
+Message-ID: <ag8iwiwMz5IapU5i@x1.local>
+References: <20260505081423.28326-1-avihaih@nvidia.com>
+ <agzDdH5vClAqwjAs@x1.local>
+ <3a1d0bc7-7656-43f4-b763-5114d9dc57a0@nvidia.com>
 MIME-Version: 1.0
-References: <20260521122913.1565011-1-peter.maydell@linaro.org>
- <20260521122913.1565011-3-peter.maydell@linaro.org>
- <87mrxsolqb.fsf@draig.linaro.org>
-In-Reply-To: <87mrxsolqb.fsf@draig.linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 21 May 2026 16:21:19 +0100
-X-Gm-Features: AVHnY4Ii6rVxvA1qROzVPUpXFSIwUzts1U0lx8wgf2cfqvUYsOFufjyE9IZvlhs
-Message-ID: <CAFEAcA9JuUY-en-_ZOnO3bjtgqG-MHp2ESGskdm-D0+fqFng_Q@mail.gmail.com>
-Subject: Re: [PATCH 2/3] target/arm: Use FPST_A64_F16 for SVE FCVTLT_hs
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72b;
- envelope-from=peter.maydell@linaro.org; helo=mail-qk1-x72b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <3a1d0bc7-7656-43f4-b763-5114d9dc57a0@nvidia.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,46 +123,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 21 May 2026 at 15:55, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
->
-> Peter Maydell <peter.maydell@linaro.org> writes:
->
-> > The SVE FCVTLT_hs operation produces a halfprec result, so we should
-> > use the FPST_A64_F16 fpstatus for it.
->
-> Maybe I'm reading the Arm ARM wrong (I can't find FCVTLT_hs but I can
-> see FCVTLT in the SVE encodings). But these are all widening operations
-> so I can see halfprec to single, not the other way around.
+On Thu, May 21, 2026 at 04:53:54PM +0300, Avihai Horon wrote:
+> 
+> On 5/19/2026 11:09 PM, Peter Xu wrote:
+> > External email: Use caution opening links or attachments
+> > 
+> > 
+> > On Tue, May 05, 2026 at 11:14:09AM +0300, Avihai Horon wrote:
+> > > Performance tests were done by migrating a single VM with:
+> > > * 8 GB RAM
+> > > * 4 mlx5 VFIO devices:
+> > >    - One device with 1GB of device data (stopcopy data) that runs
+> > >      workload during precopy so VFIO_PRECOPY_INFO_REINIT is exercised
+> > >      (generate new initial_bytes chunks during precopy).
+> > Could you elaborate a bit more on what workload is executed, and how that
+> > will affect REINIT reportings (e.g. is only one REINIT generated, or it
+> > keeps generating)?
+> 
+> Basically, I create and destroy RDMA resources (MRs, QPs, CQs, etc.) on the
+> VFIO device in a loop for several iterations.
+> This generates several REINITs.
+> 
+> > 
+> > Can I understand it in this way: without REINIT, device is forced to put
+> > those data into stopcopy size; then with REINIT, some stopcopy size is
+> > essentially moved back to precopy phase?
+> 
+> Almost:
+> Without REINIT, the device is forced to put this data in precopy
+> dirty_bytes.
+> With REINIT, this data can be put in precopy init_bytes (and do the
+> switchover-ack dance again).
 
-Yes, I got the commit message wrong here; this is half to single,
-and we need to use the A64_F16 fpstatus for conversions from
-halfprec, not conversions to it. The e07b48995aaa commit message
-does a better job of explaining this than I did this time around.
+Hmm, then I don't understand why moving some chunk of data from
+precopy_bytes to init_bytes helps downtime.
 
-The _hs is how the QEMU decode file splits the half to single
-and the single to double encodings, which are the same insn
-mnememonic in the architecture.
+Essentially, QEMU makes the switchover decision based on the math of:
 
-Improved commit message:
+   init+dirty+stop
+   --------------- <= downtime_limit
+         bw
 
-=3D=3D=3Dbegin=3D=3D=3D
-We should be using the F16-specific float_status for conversions from
-half-precision, because halfprec inputs never set Input Denormal.
-If we use the FPST_A64 fpstatus then we will incorrectly set
-FPCR.IDC for input-denormals when FPCR.AH=3D1.
+The possible min of above is:
 
-In commit e07b48995aaa we updated most of the halfprec-to-other
-conversion insns to use FPST_A64_F16 as part of implementing FEAT_AHP.
-However we missed the SVE FCVTLT instruction, which has a
-halfprec-to-single encoding.
+        stop
+   ---------------
+         bw
 
-Correct the FPST we use for the hs variant of FCVTLT.
+Here whether some data would be in init or precopy portion shouldn't matter
+for a min downtime, since both portions are allowed to be moved during
+precopy phase.
 
-[cc, fixes, &c]
-=3D=3D=3Dendit=3D=3D=3D
+OTOH, if stop_bytes unchanged, min downtime is still the same before /
+after supporting REINIT, if we try harder.
 
+Say, with below testing results:
 
-thanks
--- PMM
+With VFIO_PRECOPY_INFO_REINIT:
+  1335ms total (~520ms from the VFIO device running the workload).
+
+Without VFIO_PRECOPY_INFO_REINIT:
+  2352ms total (~1600ms from the VFIO device running the workload).
+
+What is the downtime_limit you specified for both cases?  Have you tried to
+specify lower downtime_limit than what you specified, so that both results
+will become even closer (until they become, statistically, identical)?
+
+In general, I can understand the REINIT will stop converging too early, but
+it'll be the same IIUC just to turn the downtime_limit smaller..  IOW, I
+may still miss some important piece of info that how this REINIT feature
+helps downtime..
+
+Thanks,
+
+-- 
+Peter Xu
+
 
