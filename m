@@ -4,110 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3336CD5BAF
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 15:34:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB478CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 15:35:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ5P7-0003iC-If; Thu, 21 May 2026 11:33:48 -0400
+	id 1wQ5R3-00065t-Us; Thu, 21 May 2026 11:35:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wQ5Om-0003X7-HJ
- for qemu-devel@nongnu.org; Thu, 21 May 2026 11:33:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wQ5Oa-0000zd-Ko
- for qemu-devel@nongnu.org; Thu, 21 May 2026 11:33:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779377581;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mzjlZr+R4ObJ7iLyzh4BeKfen8hi75dcrlFM1IOlIYo=;
- b=GEfFwY549rAE/hDsveLhncoqyAQveh7wGKB4FhRC7Ujn6bjqW1UkMmoKJhvCuQjGMBqnbN
- arpFc9gHCi1QjkGAEa7lbfJ2gGi2UkLKFzjgvuRzOm+4RVAtNB7CDaSx5rs9q1nxlf+e86
- FY/vTXBb3hmnEQQ8ENyWxE1fFsx/iSk=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-422-HoWVU8k6OUujTawC4HFZUQ-1; Thu, 21 May 2026 11:20:38 -0400
-X-MC-Unique: HoWVU8k6OUujTawC4HFZUQ-1
-X-Mimecast-MFC-AGG-ID: HoWVU8k6OUujTawC4HFZUQ_1779376838
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8b58065ea15so10422596d6.2
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 08:20:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wQ5R2-00064X-3T
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 11:35:44 -0400
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wQ5R0-0002Fm-59
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 11:35:43 -0400
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-65c09c1d000so6062815d50.1
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 08:35:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779377741; cv=none;
+ d=google.com; s=arc-20240605;
+ b=IMCA6jvXIwW7ZA2AOgg09KUIrt4n63+CU8KEdK9kPKYzZ4Dp/kIvc59sG2OZCb1HNn
+ fYnI9Bk8lMdf7bQqFWyv3sfGB+uKHQu58cTYCfbvONQndnOEPYvYTQVP34e01IzPdmn9
+ MUbDRPP36z17yz6wwDSagiHq966mArsLGxGTvg5yy9ceoeACmCyUBDm6VYcw2YpRFmEs
+ o7BxMGMzkvqH3VzeWb45M84JQ8jAiXWTdnUHcua/0VcrxzqbYIA31+ESYGC2fobriFI9
+ 3r6+DudZHItGrFwXNqbbSNsZ2LLon6Y4CdhJA+0akBxIt2eZ/iWoUeCky0QrYgd3DTVf
+ vW8w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=5yMOeUX9LXsWWxDnUktmHP86kFYBVWfDYqfkqSHprjo=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=Sc1+wcEieRkzjiQa6DxKTqKWVbNvjVUWktrOWvhpnFHSWHPGs+6fyDCuQ5855bHl5t
+ tUk2sad/nnXneNXw94x+mzZ5GioKncAoR3XY7lEDVZOF0DzL7xby3Qca2ccxReCDafIA
+ 6uDz0r0TxyK0A7wnzItWoz8blLR2oLeowQBDxOy4vo7BQNWWpOZf9sjZhyaT/qdhK6Lr
+ TTNSjDv2XkqXhAZlFeWKg86T0eiiwU9Cgxwf1Gw0QtT4R2dIp8zIXyUJ/R6r4tBvardE
+ PnThX5ihkl/QHWZH/ALCnFJxtg4XS/hzxA1TqyHfB4LczzBP+id+bTjKbQlvv7pLcHrr
+ qCfw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779376838; x=1779981638; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=mzjlZr+R4ObJ7iLyzh4BeKfen8hi75dcrlFM1IOlIYo=;
- b=S3vGyvVMFOogyPMU4pphoreA3wHmixXmLE4U1Qe9oX4WpKNqrXlx3YH/970v6llMOg
- PwaCrBHLtRmfPvcghiVhS7jou57acMAC7AMJwyzWcJtBMPmLyPB+VNeFG6X4VUKvLmr9
- Oc04+yeG1kf8C1bXfl7cysd2bLxhi76pF2P6e2u/57uIUJoc9V900c2DdN+BfPYCDnji
- 57ZcRjGXFaKeFr+1f7bFNP0Gzbqe3ba5sL+MKB9BzbYlZdevA9VBj8tv0dsh3Nfdorv2
- Z0UYJxwHqoWXT3jRXeQOuOhLO1iLvyvrDWoTY05wBtCN4nsle3bvvJRMGAtHDAvhVD5V
- FxLQ==
+ d=linaro.org; s=google; t=1779377741; x=1779982541; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=5yMOeUX9LXsWWxDnUktmHP86kFYBVWfDYqfkqSHprjo=;
+ b=LBm2LeRMI/EFdr8BexqTDRN/3jVlFfECI6J1yoOI+MHXirIs8OXSXMX8VHlcQ3FqR0
+ zG/UmR8tndoo4Q1t9OCxDoDrr5tKkx0RrrBbUO1yBg+nu/CpbFCw3dli4NXKTqqklVUI
+ 7ip7qEsJLnEu9jg+OUBB7TmP/SUGIegIaBrvhJNgb4YgRKFw/iwHyWOnfRBWV8FLW9Ej
+ ZkhjGLD1QD++gzsvwY6A/XQBwWTM2n5MzpaFeWhwwFyXBB05dBp2ndhjheJMg3dRuO9L
+ qU2Bv9FitCF22I8ra9d2Y4OhzDDsDWKvZlka+VGvp5nZhBmBvQ5+ECl8D6B4mnOgTsCf
+ dvcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779376838; x=1779981638;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=mzjlZr+R4ObJ7iLyzh4BeKfen8hi75dcrlFM1IOlIYo=;
- b=I4CbuU0lmWQ0Vyb9zJQBKY3NsPRpTGwylf3VpjPr1kt/C+bjKycK87eBFYtHaKLDHY
- uJrZEa2XftX5cITOXlSJmsW3Qy8s51JZC+tYMQpI0Oi1RHCjC2KnnEps+TAsQSfghi61
- iYBEB2iDW3scw5WB56oIRNuFCI2fCBJVWJVua35SRz2mb9W1HSXm67RVhn2+k4t2p3iZ
- PGAHqiSzPB8nMhB1CcHMSVV+/ia4O2FskIKZ58LMkv6Rz9KC3GQFM3jFVI1Ln8upYdip
- CSGkrI/ehDTtc+YnRcWfRFKq6MOSc2hyL5VvUGznytBSnvBXuBZarkt8AYxqvB6eOTAk
- 07Yw==
-X-Gm-Message-State: AOJu0YwGtbmKmoYJdRI2+LHuzu11IWB6k3IENP8ap+jZ1olHuO9XlUjH
- EWzBqUsUByYXnQikcKp78YRRp5orljEmp4UAn300YSsl5n+FofDGSKZV17p0Ye1kYPWtBj8+mTs
- 8MvYIKSEFoLiIRIYHEse+bwGfNExMNjfKdP/abr8OPPpqyOamVgZYh51+
-X-Gm-Gg: Acq92OESHDf6MATEaw1p+YvJ1LLzFpP5znDYBN3pnimfZBPZBJOgD6SWZ1rXpzFZ9vp
- j8V3+JYuYk8o7S2S4cPNatC1x+o8GTLOb4MwAATu8YsC7kvrWm9J20yDwCfrfAz4Z1z+C3uoGP/
- DuQGZWwo+M0qJcYuNqFG2nDvNb73BYWlCIC62y5msqDbmqp2s5/RKnDFMUFuoZ9qi3dTmFZVEDo
- ZJnd0qVzRULaaTHqwF6oCELDjLnc/4Xtw92FG7LXMD6NQgZFrg4muBfT6FegK+V6KYfDCQgVLSD
- 67q2wIBh17mp0Dvm6fHEYTtSlqZT1YiZhhZUoF1cvEq46F7VmCPVXkZHXxZtzTXtp1STeAgyFTQ
- 45MRnG8hIJuc5CHYHb/nB+ZCnndBOrP9yROZ8gUOElNzHw04=
-X-Received: by 2002:a05:6214:27c1:b0:8ca:1ddd:a69f with SMTP id
- 6a1803df08f44-8cc6e2e8d74mr54933636d6.2.1779376837844; 
- Thu, 21 May 2026 08:20:37 -0700 (PDT)
-X-Received: by 2002:a05:6214:27c1:b0:8ca:1ddd:a69f with SMTP id
- 6a1803df08f44-8cc6e2e8d74mr54932526d6.2.1779376836745; 
- Thu, 21 May 2026 08:20:36 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8cc768b71d2sm8088876d6.9.2026.05.21.08.20.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 08:20:35 -0700 (PDT)
-Date: Thu, 21 May 2026 11:20:34 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Maor Gottlieb <maorg@nvidia.com>
-Subject: Re: [PATCH 00/14] Make switchover-ack re-usable and add VFIO precopy
- REINIT feature
-Message-ID: <ag8iwiwMz5IapU5i@x1.local>
-References: <20260505081423.28326-1-avihaih@nvidia.com>
- <agzDdH5vClAqwjAs@x1.local>
- <3a1d0bc7-7656-43f4-b763-5114d9dc57a0@nvidia.com>
+ d=1e100.net; s=20251104; t=1779377741; x=1779982541;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5yMOeUX9LXsWWxDnUktmHP86kFYBVWfDYqfkqSHprjo=;
+ b=B60y0SikHtgXsM9tG8rJiPXaUhKa4coa7QyuKnG3UmK8WBKsdBuq2If6PvvNVY6Mud
+ 5Kv+T80YcUySQ4B5kfi7cs1WXVSqcvfSx9pRUEhUfelglmFZYDVep9l2i3auKyFtJwgk
+ bZHWQHGQwnF/LgeKwG7FEA+lfZbLsG3TMWuqgV6dgFr4nZTYYrfmVsNNo7WVcz/Ac79r
+ MA5Y8TsPAq84ayYD90bJCqNJQJmEuWuI/quRxDqWNvy2KC9IIui83vzLf8GMM9DGGTre
+ hVSDHOlCkX4ICufGpY4ahIu2DBv8dY6rRhPYqmaZisA7c/vC6Xjd4Nb9enxveph4Fz2G
+ GxPA==
+X-Gm-Message-State: AOJu0Yxd5ubufx8MWCBKtJTRF9GpoJ25IeOboxjJlpKzu+A5uj5Je744
+ IXxgsvpdNBRC0yjtODe/jg+C7CUNpXtwhWe8vb/2EbORsnBU8SnA/j+URYLCIB1lU0XES/qwpDZ
+ lAsp8gEluOvq57xQaJ/miTLg0pdczPHw2zBodOhFbSV4XILMYYIci
+X-Gm-Gg: Acq92OHe4DbGhjBJFxKhYk9OK9BC6tbOF/wPPdmz0gHT/N3k0BwTun2JhBdZAmfyV3z
+ EaNu9EZYphh0enJC5eYSPjDR4r0IN+AfHoBOM36vSwgE5KA6KucI4+jn30o1Jt3aRUc6GKBfQjx
+ RncVnhj5Kk02FmXzYAW/95180tjQMKIvlDd0gKv/uF+Zak0P/bb99Zsz/cjnkk3l6BUbVGxSI8n
+ vv48HnFIb//oPNQet6Ws9ltQrEB91jnyNkfNkr5dJbDj3fX4I3ukEUCznhi7+a1Ed6KhWO5Vdrf
+ CbYSwexahDBEa74e6Jhc/kxeVm7pVB/991Obpv4vqmKKjLrWjmSRFU/qXh+S8A3/KjjTHFWwWe4
+ bVA==
+X-Received: by 2002:a05:690e:4093:b0:654:fd9:2e8c with SMTP id
+ 956f58d0204a3-65ead51abc1mr2663609d50.15.1779377740816; Thu, 21 May 2026
+ 08:35:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <3a1d0bc7-7656-43f4-b763-5114d9dc57a0@nvidia.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260520182213.872945-1-richard.henderson@linaro.org>
+ <20260520182213.872945-20-richard.henderson@linaro.org>
+In-Reply-To: <20260520182213.872945-20-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 21 May 2026 16:35:28 +0100
+X-Gm-Features: AVHnY4LlUYcG28qT8B5Dyf2dOP1Ygpq9c7q0rmLEdUtEErpmcXDRbmiIdLx0BRs
+Message-ID: <CAFEAcA-4yuOQgbP7AcV0_eOXNkh9ZtFjaLOxGZk=re8UvWGtXw@mail.gmail.com>
+Subject: Re: [PATCH v6 19/64] target/arm: Implement FSCALE for AdvSIMD
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,80 +115,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 21, 2026 at 04:53:54PM +0300, Avihai Horon wrote:
-> 
-> On 5/19/2026 11:09 PM, Peter Xu wrote:
-> > External email: Use caution opening links or attachments
-> > 
-> > 
-> > On Tue, May 05, 2026 at 11:14:09AM +0300, Avihai Horon wrote:
-> > > Performance tests were done by migrating a single VM with:
-> > > * 8 GB RAM
-> > > * 4 mlx5 VFIO devices:
-> > >    - One device with 1GB of device data (stopcopy data) that runs
-> > >      workload during precopy so VFIO_PRECOPY_INFO_REINIT is exercised
-> > >      (generate new initial_bytes chunks during precopy).
-> > Could you elaborate a bit more on what workload is executed, and how that
-> > will affect REINIT reportings (e.g. is only one REINIT generated, or it
-> > keeps generating)?
-> 
-> Basically, I create and destroy RDMA resources (MRs, QPs, CQs, etc.) on the
-> VFIO device in a loop for several iterations.
-> This generates several REINITs.
-> 
-> > 
-> > Can I understand it in this way: without REINIT, device is forced to put
-> > those data into stopcopy size; then with REINIT, some stopcopy size is
-> > essentially moved back to precopy phase?
-> 
-> Almost:
-> Without REINIT, the device is forced to put this data in precopy
-> dirty_bytes.
-> With REINIT, this data can be put in precopy init_bytes (and do the
-> switchover-ack dance again).
+On Wed, 20 May 2026 at 19:28, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/tcg/helper-a64-defs.h |  4 ++++
+>  target/arm/tcg/vec_internal.h    |  4 ++++
+>  target/arm/tcg/translate-a64.c   |  7 +++++++
+>  target/arm/tcg/vec_helper64.c    | 16 ++++++++++++++++
+>  target/arm/tcg/a64.decode        |  3 +++
+>  5 files changed, 34 insertions(+)
+>
+> diff --git a/target/arm/tcg/helper-a64-defs.h b/target/arm/tcg/helper-a64-defs.h
+> index 215df1201b..b7880f773e 100644
+> --- a/target/arm/tcg/helper-a64-defs.h
+> +++ b/target/arm/tcg/helper-a64-defs.h
+> @@ -152,6 +152,10 @@ DEF_HELPER_FLAGS_5(gvec_famin_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32
+>  DEF_HELPER_FLAGS_5(gvec_famax_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+>  DEF_HELPER_FLAGS_5(gvec_famin_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+>
+> +DEF_HELPER_FLAGS_5(gvec_fscale_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+> +DEF_HELPER_FLAGS_5(gvec_fscale_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+> +DEF_HELPER_FLAGS_5(gvec_fscale_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+> +
+>  #ifndef CONFIG_USER_ONLY
+>  DEF_HELPER_2(exception_return, void, env, i64)
+>  #endif
+> diff --git a/target/arm/tcg/vec_internal.h b/target/arm/tcg/vec_internal.h
+> index 5c3f51eed3..b647399b18 100644
+> --- a/target/arm/tcg/vec_internal.h
+> +++ b/target/arm/tcg/vec_internal.h
+> @@ -349,6 +349,10 @@ float32 float32_famin(float32, float32, float_status *);
+>  float64 float64_famax(float64, float64, float_status *);
+>  float64 float64_famin(float64, float64, float_status *);
+>
+> +#define float16_fscale  float16_scalbn
+> +#define float32_fscale  float32_scalbn
+> +float64 float64_fscale(float64, int64_t, float_status *);
+> +
+>  /*
+>   * Decode helper functions for predicate as counter.
+>   */
+> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+> index d2a4b0fadc..ac18ceeeab 100644
+> --- a/target/arm/tcg/translate-a64.c
+> +++ b/target/arm/tcg/translate-a64.c
+> @@ -6496,6 +6496,13 @@ static gen_helper_gvec_3_ptr * const f_vector_famin[3] = {
+>  };
+>  TRANS_FEAT(FAMIN, aa64_faminmax, do_fp3_vector, a, 0, f_vector_famin)
+>
+> +static gen_helper_gvec_3_ptr * const f_vector_fscale[3] = {
+> +    gen_helper_gvec_fscale_h,
+> +    gen_helper_gvec_fscale_s,
+> +    gen_helper_gvec_fscale_d,
+> +};
+> +TRANS_FEAT(FSCALE, aa64_f8cvt, do_fp3_vector, a, 0, f_vector_fscale)
+> +
+>  static bool do_fmlal(DisasContext *s, arg_qrrr_e *a, bool is_s, bool is_2)
+>  {
+>      if (fp_access_check(s)) {
+> diff --git a/target/arm/tcg/vec_helper64.c b/target/arm/tcg/vec_helper64.c
+> index dce5e0505e..7d403adfba 100644
+> --- a/target/arm/tcg/vec_helper64.c
+> +++ b/target/arm/tcg/vec_helper64.c
+> @@ -177,3 +177,19 @@ DO_3OP(gvec_famax_s, float32_famax, float32)
+>  DO_3OP(gvec_famin_s, float32_famin, float32)
+>  DO_3OP(gvec_famax_d, float64_famax, float64)
+>  DO_3OP(gvec_famin_d, float64_famin, float64)
+> +
+> +float64 float64_fscale(float64 n, int64_t m, float_status *s)
+> +{
+> +    /*
+> +     * Given the 'int' parameter of float64_scalbn, we have to saturate
+> +     * the 'int64_t' parameter of the operation to some value.  Since
+> +     * float64 has an 11-bit exponent, saturating to 12 bits is sufficient
+> +     * to ensure that DBL_TRUE_MIN can be made to overflow.
+> +     */
+> +    int sat_m = MIN(MAX(m, -0xfff), 0xfff);
+> +    return float64_scalbn(n, sat_m, s);
+> +}
+> +
 
-Hmm, then I don't understand why moving some chunk of data from
-precopy_bytes to init_bytes helps downtime.
+I just noticed that this seems to be reinventing the
+existing scalbn_d() in sve_helper.c. Could we share the code?
 
-Essentially, QEMU makes the switchover decision based on the math of:
-
-   init+dirty+stop
-   --------------- <= downtime_limit
-         bw
-
-The possible min of above is:
-
-        stop
-   ---------------
-         bw
-
-Here whether some data would be in init or precopy portion shouldn't matter
-for a min downtime, since both portions are allowed to be moved during
-precopy phase.
-
-OTOH, if stop_bytes unchanged, min downtime is still the same before /
-after supporting REINIT, if we try harder.
-
-Say, with below testing results:
-
-With VFIO_PRECOPY_INFO_REINIT:
-  1335ms total (~520ms from the VFIO device running the workload).
-
-Without VFIO_PRECOPY_INFO_REINIT:
-  2352ms total (~1600ms from the VFIO device running the workload).
-
-What is the downtime_limit you specified for both cases?  Have you tried to
-specify lower downtime_limit than what you specified, so that both results
-will become even closer (until they become, statistically, identical)?
-
-In general, I can understand the REINIT will stop converging too early, but
-it'll be the same IIUC just to turn the downtime_limit smaller..  IOW, I
-may still miss some important piece of info that how this REINIT feature
-helps downtime..
-
-Thanks,
-
--- 
-Peter Xu
-
+-- PMM
 
