@@ -4,127 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 343DECD5BB1
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:56:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D037CD5BAC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:56:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ3qK-0006Xv-CX; Thu, 21 May 2026 09:53:44 -0400
+	id 1wQ3oK-0001am-Oo; Thu, 21 May 2026 09:51:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kees@kernel.org>) id 1wQ3Ww-0001mD-2H
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:33:42 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wQ3oC-0001G0-Kf
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:51:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kees@kernel.org>) id 1wQ3Ws-0005D9-Rb
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:33:41 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 7322F44669;
- Thu, 21 May 2026 13:33:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC0C1F01579;
- Thu, 21 May 2026 13:33:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779370407;
- bh=xwIDnz4Pf2a/0Wouv4cV1Bk8/fwt1/yHjZ8WyMRsm0E=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=faqBkEGM4aU15rBNkXIkUKRG5AsCe1S2Aewj2Tv1k/O0IFENHWQB9BDl0qYlYUXx1
- yoSYnXrOdkYgaAvt93OzOSpjQt1HbLSZILUsO+WwAhtrliX5J0FzgX8CuujFmAl5jz
- X8uTF9W4laMnV0lw73DuAepv0e1Z18zWI5AlF6sh7C8rwcqpQzvp1cimaV2in+YUgi
- OE4BwyWmDWxhcTmmdjqIRpFm9oVrWPKzXOPW22NTkxkdTVTWD9EOmYqsfX8zmiSFqR
- Z0nWrODWYXeXSYKufMtwTaK1WxYbFWleRdtaUyw1XtWk0UguQM98XV3sxBpbdWcKqK
- 7ltRkG3vLauMQ==
-From: Kees Cook <kees@kernel.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Kees Cook <kees@kernel.org>, Pengpeng Hou <pengpeng@iscas.ac.cn>,
- Petr Pavlu <petr.pavlu@suse.com>, Richard Weinberger <richard@nod.at>,
- Anton Ivanov <anton.ivanov@cambridgegreys.com>,
- Johannes Berg <johannes@sipsolutions.net>,
- "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>,
- Corey Minyard <corey@minyard.net>, Gabriel Somlo <somlo@cmu.edu>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Jani Nikula <jani.nikula@linux.intel.com>,
- Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
- Rodrigo Vivi <rodrigo.vivi@intel.com>,
- Tvrtko Ursulin <tursulin@ursulin.net>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>, Bart Van Assche <bvanassche@acm.org>,
- Jason Gunthorpe <jgg@ziepe.ca>, Leon Romanovsky <leon@kernel.org>,
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
- Hans de Goede <hansg@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Bjorn Helgaas <bhelgaas@google.com>, Hannes Reinecke <hare@suse.de>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>,
- Daniel Lezcano <daniel.lezcano@kernel.org>,
- Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Jiri Slaby <jirislaby@kernel.org>, Alan Stern <stern@rowland.harvard.edu>,
- Jason Wang <jasowang@redhat.com>, Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
- =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
- Jason Baron <jbaron@akamai.com>, Jim Cromie <jim.cromie@gmail.com>,
- Tiwei Bie <tiwei.btw@antgroup.com>,
- Benjamin Berg <benjamin.berg@intel.com>,
- =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
- "David E. Box" <david.e.box@linux.intel.com>,
- "Maciej W. Rozycki" <macro@orcam.me.uk>,
- Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
- Peter Zijlstra <peterz@infradead.org>, Heiko Carstens <hca@linux.ibm.com>,
- Vasily Gorbik <gor@linux.ibm.com>, Sean Christopherson <seanjc@google.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Gleixner <tglx@kernel.org>,
- Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
- Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
- "H. Peter Anvin" <hpa@zytor.com>, Vinod Koul <vkoul@kernel.org>,
- Frank Li <Frank.Li@kernel.org>, Daniel Gomez <da.gomez@kernel.org>,
- Sami Tolvanen <samitolvanen@google.com>,
- Aaron Tomlin <atomlin@atomlin.com>,
- Alexander Potapenko <glider@google.com>, Marco Elver <elver@google.com>,
- Dmitry Vyukov <dvyukov@google.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- John Johansen <john.johansen@canonical.com>,
- Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>,
- "Serge E. Hallyn" <serge@hallyn.com>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Georgia Garcia <georgia.garcia@canonical.com>, kvm@vger.kernel.org,
- dmaengine@vger.kernel.org, linux-modules@vger.kernel.org,
- kasan-dev@googlegroups.com, linux-mm@kvack.org, apparmor@lists.ubuntu.com,
- linux-security-module@vger.kernel.org, linux-um@lists.infradead.org,
- linux-acpi@vger.kernel.org, openipmi-developer@lists.sourceforge.net,
- qemu-devel@nongnu.org, intel-gfx@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, linux-rdma@vger.kernel.org,
- linux-media@vger.kernel.org, linux-pci@vger.kernel.org,
- linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
- linuxppc-dev@lists.ozlabs.org, linux-serial@vger.kernel.org,
- linux-usb@vger.kernel.org, usb-storage@lists.one-eyed-alien.net,
- virtualization@lists.linux.dev, linux-kernel@vger.kernel.org,
- linux-arch@vger.kernel.org, netdev@vger.kernel.org,
- linux-fsdevel@vger.kernel.org, linux-hardening@vger.kernel.org
-Subject: [PATCH 11/11] moduleparam: Drop legacy kernel_param_ops .get_str
- field and dispatch logic
-Date: Thu, 21 May 2026 06:33:24 -0700
-Message-Id: <20260521133326.2465264-11-kees@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260521133315.work.845-kees@kernel.org>
-References: <20260521133315.work.845-kees@kernel.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wQ3o9-00065w-QU
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:51:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779371488;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7C2Z2x5rN4Ack7PYt2FC2o/xoovv41BQKNbjaIQCsWI=;
+ b=KxIf+It2+3vwZt3y+KGbUq7BgrmZqfGn8Q+GCKY17bgHWwBmTU6Cr0DmBDBgqdcCv84loJ
+ QB+pC6oQiJlTaxTUWEMDIbKFijtJzCyJvEez/nr7xNDryypH4N7zojSziP2eGqPDIHbWjk
+ yM3IWCQQ82oGHzQHNbiVZxH2OW4QkvE=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-371-hrm-5nS7O4OFkk2soWs8lA-1; Thu,
+ 21 May 2026 09:51:25 -0400
+X-MC-Unique: hrm-5nS7O4OFkk2soWs8lA-1
+X-Mimecast-MFC-AGG-ID: hrm-5nS7O4OFkk2soWs8lA_1779371482
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AEA7B1955F18; Thu, 21 May 2026 13:51:22 +0000 (UTC)
+Received: from berrange.com (unknown [10.44.33.98])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DCFDC1956053; Thu, 21 May 2026 13:51:17 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Hanna Reitz <hreitz@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ John Levon <john.levon@nutanix.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 19/29] qom: add trace events for object/property lifecycle
+Date: Thu, 21 May 2026 14:49:33 +0100
+Message-ID: <20260521134943.1714527-20-berrange@redhat.com>
+In-Reply-To: <20260521134943.1714527-1-berrange@redhat.com>
+References: <20260521134943.1714527-1-berrange@redhat.com>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6078; i=kees@kernel.org;
- h=from:subject; bh=cZc+JELjQTK8ycLqZtLTkP9aHNuVqrWgrD/YlzSeCsM=;
- b=owGbwMvMwCVmps19z/KJym7G02pJDFn8nEvufDYVreO77zyVZ9nKv/dmtn67mvlTQuv4kafPq
- puKFFykO0pZGMS4GGTFFFmC7NzjXDzetoe7z1WEmcPKBDKEgYtTACZyUpThn+GuD2261nV35Y9v
- WCSkdjztcECEh/yOmilbnsu+Me2RqGb4X3Y7PuFYwqXlesy7khtcFv4xWB144Q33rOMlXKUF6Yq
- CDAA=
-X-Developer-Key: i=kees@kernel.org; a=openpgp;
- fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=kees@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 21 May 2026 09:52:47 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -139,188 +95,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All struct kernel_param_ops .get callbacks have been migrated to using
-struct seq_buf. Drop the migration scaffolding.
+This adds tracing around object allocation & finalization, the addition &
+deletion of properties, and the addition & deletion of children.
 
-Signed-off-by: Kees Cook <kees@kernel.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/linux/moduleparam.h | 37 ++--------------------
- kernel/params.c             | 62 ++++++++++---------------------------
- 2 files changed, 20 insertions(+), 79 deletions(-)
+ qom/object.c     | 34 +++++++++++++++++++++++++++-------
+ qom/trace-events | 12 ++++++++++--
+ 2 files changed, 37 insertions(+), 9 deletions(-)
 
-diff --git a/include/linux/moduleparam.h b/include/linux/moduleparam.h
-index 38acb5aef56b..e6af6f051c93 100644
---- a/include/linux/moduleparam.h
-+++ b/include/linux/moduleparam.h
-@@ -66,15 +66,8 @@ struct kernel_param_ops {
- 	/*
- 	 * Format the parameter's value into @s.  Return 0 on success
- 	 * (length derived from seq_buf_used()) or -errno on error.
--	 * Exactly one of .get and .get_str should be set; the dispatcher
--	 * WARNs and prefers .get if both are.
- 	 */
- 	int (*get)(struct seq_buf *s, const struct kernel_param *kp);
--	/*
--	 * Returns length written or -errno.  Buffer is 4k (ie. be short!).
--	 * Deprecated: callbacks should implement .get instead.
--	 */
--	int (*get_str)(char *buffer, const struct kernel_param *kp);
- 	/* Optional function to free kp->arg when module unloaded. */
- 	void (*free)(void *arg);
- };
-@@ -84,33 +77,11 @@ struct kernel_param_ops {
-  * any required visibility qualifiers (typically "static"):
-  *
-  *   static DEFINE_KERNEL_PARAM_OPS(my_ops, my_set, my_get);
-- *
-- * @_get may be either of:
-- *   int (*)(struct seq_buf *, const struct kernel_param *) (seq_buf)
-- *   int (*)(char *, const struct kernel_param *)           (legacy)
-- *
-- * The macro uses _Generic to route the function pointer to the
-- * matching field (.get or .get_str) at compile time, leaving the
-- * other field NULL. Each helper matches the wrong prototype signature
-- * and returns NULL, falling through to the default branch otherwise;
-- * if @_get has neither expected signature the assignment to the
-- * fields gets a normal compile-time type-mismatch error.
-  */
--#define _KERNEL_PARAM_OPS_GET(_get)					\
--	_Generic((_get),						\
--	    int (*)(char *, const struct kernel_param *): NULL,		\
--	    default: (_get))
--
--#define _KERNEL_PARAM_OPS_GET_STR(_get)					\
--	_Generic((_get),						\
--	    int (*)(struct seq_buf *, const struct kernel_param *): NULL, \
--	    default: (_get))
--
- #define DEFINE_KERNEL_PARAM_OPS(_name, _set, _get)			\
- 	const struct kernel_param_ops _name = {				\
- 		.set = (_set),						\
--		.get = _KERNEL_PARAM_OPS_GET(_get),			\
--		.get_str = _KERNEL_PARAM_OPS_GET_STR(_get),		\
-+		.get = (_get),						\
- 	}
+diff --git a/qom/object.c b/qom/object.c
+index dfdc5c8e42..4a15151c3b 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -594,6 +594,8 @@ static void object_property_del_all(Object *obj)
+         object_property_iter_init(&iter, obj);
+         while ((prop = object_property_iter_next(&iter)) != NULL) {
+             if (g_hash_table_add(done, prop)) {
++                trace_object_property_del(obj, obj->class->type->name,
++                                          prop->name, prop->opaque);
+                 if (prop->release) {
+                     prop->release(obj, prop->name, prop->opaque);
+                     released = true;
+@@ -612,10 +614,14 @@ static void object_property_del_child(Object *obj, Object *child)
+     GHashTableIter iter;
+     gpointer key, value;
  
- /* As DEFINE_KERNEL_PARAM_OPS, with KERNEL_PARAM_OPS_FL_NOARG set. */
-@@ -118,16 +89,14 @@ struct kernel_param_ops {
- 	const struct kernel_param_ops _name = {				\
- 		.flags = KERNEL_PARAM_OPS_FL_NOARG,			\
- 		.set = (_set),						\
--		.get = _KERNEL_PARAM_OPS_GET(_get),			\
--		.get_str = _KERNEL_PARAM_OPS_GET_STR(_get),		\
-+		.get = (_get),						\
- 	}
- 
- /* As DEFINE_KERNEL_PARAM_OPS, with an additional .free callback. */
- #define DEFINE_KERNEL_PARAM_OPS_FREE(_name, _set, _get, _free)		\
- 	const struct kernel_param_ops _name = {				\
- 		.set = (_set),						\
--		.get = _KERNEL_PARAM_OPS_GET(_get),			\
--		.get_str = _KERNEL_PARAM_OPS_GET_STR(_get),		\
-+		.get = (_get),						\
- 		.free = (_free),					\
- 	}
- 
-diff --git a/kernel/params.c b/kernel/params.c
-index 25f0c8d5d19f..6b410189297b 100644
---- a/kernel/params.c
-+++ b/kernel/params.c
-@@ -461,8 +461,7 @@ static int param_array_get(struct seq_buf *s, const struct kernel_param *kp)
++    trace_object_property_del_child(obj, obj->class->type->name,
++                                    child, child->class->type->name);
+     g_hash_table_iter_init(&iter, obj->properties);
+     while (g_hash_table_iter_next(&iter, &key, &value)) {
+         prop = value;
+         if (object_property_is_child(prop) && prop->opaque == child) {
++            trace_object_property_del(obj, obj->class->type->name,
++                                      prop->name, prop->opaque);
+             if (prop->release) {
+                 prop->release(obj, prop->name, prop->opaque);
+                 prop->release = NULL;
+@@ -655,7 +661,7 @@ static void object_finalize(void *data)
  {
- 	const struct kparam_array *arr = kp->arr;
- 	struct kernel_param p = *kp;
--	char *elem_buf = NULL;
--	int i, ret = 0;
-+	int i, ret;
+     Object *obj = data;
+     TypeImpl *ti = obj->class->type;
+-
++    trace_object_finalize(obj, obj->class->type->name);
+     object_property_del_all(obj);
+     object_deinit(obj, ti);
  
- 	for (i = 0; i < (arr->num ? *arr->num : arr->max); i++) {
- 		size_t before = s->len;
-@@ -470,23 +469,9 @@ static int param_array_get(struct seq_buf *s, const struct kernel_param *kp)
- 		p.arg = arr->elem + arr->elemsize * i;
- 		check_kparam_locked(p.mod);
+@@ -705,6 +711,7 @@ static Object *object_new_with_type(Type type)
+     object_initialize_with_type(obj, size, type);
+     obj->free = obj_free;
  
--		if (arr->ops->get) {
--			ret = arr->ops->get(s, &p);
--			if (ret < 0)
--				goto out;
--		} else {
--			if (!elem_buf) {
--				elem_buf = kmalloc(PAGE_SIZE, GFP_KERNEL);
--				if (!elem_buf) {
--					ret = -ENOMEM;
--					goto out;
--				}
--			}
--			ret = arr->ops->get_str(elem_buf, &p);
--			if (ret < 0)
--				goto out;
--			seq_buf_putmem(s, elem_buf, ret);
--		}
-+		ret = arr->ops->get(s, &p);
-+		if (ret < 0)
-+			return ret;
- 
- 		/* Nothing got written (e.g. overflow) — stop. */
- 		if (s->len == before)
-@@ -496,10 +481,7 @@ static int param_array_get(struct seq_buf *s, const struct kernel_param *kp)
- 		if (i && s->buffer[before - 1] == '\n')
- 			s->buffer[before - 1] = ',';
- 	}
--	ret = 0;
--out:
--	kfree(elem_buf);
--	return ret;
-+	return 0;
++    trace_object_new(obj, obj->class->type->name);
+     return obj;
  }
  
- static void param_array_free(void *arg)
-@@ -570,32 +552,22 @@ static ssize_t param_attr_show(const struct module_attribute *mattr,
- 	int count;
- 	const struct param_attribute *attribute = to_param_attr(mattr);
- 	const struct kernel_param_ops *ops = attribute->param->ops;
-+	struct seq_buf s;
+@@ -835,8 +842,9 @@ Object *object_dynamic_cast(Object *obj, const char *typename)
+ Object *object_dynamic_cast_assert(Object *obj, const char *typename,
+                                    const char *file, int line, const char *func)
+ {
+-    trace_object_dynamic_cast_assert(obj ? obj->class->type->name : "(null)",
+-                                     typename, file, line, func);
++    trace_object_dynamic_cast_assert(
++        obj, obj ? obj->class->type->name : "(null)",
++        typename, file, line, func);
  
--	if (!ops->get && !ops->get_str)
-+	if (!ops->get)
- 		return -EPERM;
+ #ifdef CONFIG_QOM_CAST_DEBUG
+     int i;
+@@ -926,8 +934,9 @@ ObjectClass *object_class_dynamic_cast_assert(ObjectClass *class,
+ {
+     ObjectClass *ret;
  
--	WARN_ON_ONCE(ops->get && ops->get_str);
--
- 	kernel_param_lock(mk->mod);
--	if (ops->get) {
--		struct seq_buf s;
--
--		seq_buf_init(&s, buf, PAGE_SIZE);
--		count = ops->get(&s, attribute->param);
--		if (count >= 0) {
--			WARN_ON_ONCE(count > 0);
--			count = seq_buf_used(&s);
--			/* Make sure string is terminated. */
--			seq_buf_str(&s);
--			/*
--			 * If overflowed, reduce count by 1 for trailing
--			 * NUL byte.
--			 */
--			if (seq_buf_has_overflowed(&s))
--				count--;
--		}
--	} else {
--		count = ops->get_str(buf, attribute->param);
-+	seq_buf_init(&s, buf, PAGE_SIZE);
-+	count = ops->get(&s, attribute->param);
-+	if (count >= 0) {
-+		WARN_ON_ONCE(count > 0);
-+		count = seq_buf_used(&s);
-+		/* Make sure string is terminated. */
-+		seq_buf_str(&s);
-+		/* If overflowed, reduce count by 1 for trailing NUL byte. */
-+		if (seq_buf_has_overflowed(&s))
-+			count--;
- 	}
- 	kernel_param_unlock(mk->mod);
- 	return count;
+-    trace_object_class_dynamic_cast_assert(class ? class->type->name : "(null)",
+-                                           typename, file, line, func);
++    trace_object_class_dynamic_cast_assert(
++        class ? class->type->name : "(null)",
++        typename, file, line, func);
+ 
+ #ifdef CONFIG_QOM_CAST_DEBUG
+     int i;
+@@ -1211,6 +1220,8 @@ object_property_try_add(Object *obj, const char *name, const char *type,
+     prop->release = release;
+     prop->opaque = opaque;
+ 
++    trace_object_property_add(obj, obj->class->type->name,
++                              prop->name, prop->opaque);
+     g_hash_table_insert(obj->properties, prop->name, prop);
+     return prop;
+ }
+@@ -1249,6 +1260,8 @@ object_class_property_add(ObjectClass *klass,
+     prop->release = release;
+     prop->opaque = opaque;
+ 
++    trace_object_class_property_add(klass->type->name, prop->name,
++                                    prop->opaque);
+     g_hash_table_insert(klass->properties, prop->name, prop);
+ 
+     return prop;
+@@ -1337,6 +1350,8 @@ void object_property_del(Object *obj, const char *name)
+ {
+     ObjectProperty *prop = g_hash_table_lookup(obj->properties, name);
+ 
++    trace_object_property_del(obj, obj->class->type->name, prop->name,
++                              prop->opaque);
+     if (prop->release) {
+         prop->release(obj, name, prop->opaque);
+     }
+@@ -1625,8 +1640,11 @@ int object_property_get_enum(Object *obj, const char *name,
+ bool object_property_parse(Object *obj, const char *name,
+                            const char *string, Error **errp)
+ {
+-    Visitor *v = string_input_visitor_new(string);
+-    bool ok = object_property_set(obj, name, v, errp);
++    Visitor *v;
++    bool ok;
++    trace_object_property_parse(obj, obj->class->type->name, name, string);
++    v = string_input_visitor_new(string);
++    ok = object_property_set(obj, name, v, errp);
+ 
+     visit_free(v);
+     return ok;
+@@ -1757,6 +1775,8 @@ object_property_try_add_child(Object *obj, const char *name,
+     g_autofree char *type = NULL;
+     ObjectProperty *op;
+ 
++    trace_object_property_add_child(obj, obj->class->type->name, name,
++                                    child, child->class->type->name);
+     assert(!child->parent);
+ 
+     type = g_strdup_printf("child<%s>", object_get_typename(child));
+diff --git a/qom/trace-events b/qom/trace-events
+index b2e9f4a712..44c63e72af 100644
+--- a/qom/trace-events
++++ b/qom/trace-events
+@@ -1,5 +1,13 @@
+ # See docs/devel/tracing.rst for syntax documentation.
+ 
+ # object.c
+-object_dynamic_cast_assert(const char *type, const char *target, const char *file, int line, const char *func) "%s->%s (%s:%d:%s)"
+-object_class_dynamic_cast_assert(const char *type, const char *target, const char *file, int line, const char *func) "%s->%s (%s:%d:%s)"
++object_dynamic_cast_assert(void *obj, const char *type, const char *target, const char *file, int line, const char *func) "obj=%p type=%s->%s (%s:%d:%s)"
++object_finalize(void *obj, const char *type) "obj=%p type=%s"
++object_new(void *obj, const char *type) "obj=%p type=%s"
++object_property_add(void *obj, const char *type, const char *name, void *value) "obj=%p type=%s name=%s value=%p"
++object_property_add_child(void *obj, const char *type, const char *name, void *child, const char *childtype) "obj=%p type=%s name=%s child=%p child-type=%s"
++object_property_del(void *obj, const char *type, const char *name, void *value) "obj=%p type=%s name=%s value=%p"
++object_property_del_child(void *obj, const char *type, void *child, const char *childtype) "obj=%p type=%s child=%p child-type=%s"
++object_property_parse(void *obj, const char *type, const char *name, const char *value) "obj=%p type=%s prop=%s value=%s"
++object_class_dynamic_cast_assert(const char *type, const char *target, const char *file, int line, const char *func) "type=%s->%s (%s:%d:%s)"
++object_class_property_add(const char *type, const char *name, void *value) "type=%s name=%s value=%p"
 -- 
-2.34.1
+2.54.0
 
 
