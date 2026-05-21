@@ -4,104 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30535CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:23:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31555CD5BAC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:24:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ3MX-000444-Iv; Thu, 21 May 2026 09:22:57 -0400
+	id 1wQ3Ni-0004iz-9E; Thu, 21 May 2026 09:24:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wQ3MW-00043e-2K
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:22:56 -0400
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wQ3MU-0002Do-8a
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:22:55 -0400
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-651c5d525f6so6311532d50.3
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 06:22:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779369773; cv=none;
- d=google.com; s=arc-20240605;
- b=h0E7twlJddpP2LIR6oVOQazoRM/150G7nX/PJMU4LYeGkoz51lGrl7wGnaKp1ftxHv
- AELxW88iQU0k59/rKd17czqHH7eito8KxF/ln7imYxVQNUwVdcKsyIjyTbjwO8338pek
- PfX6eqfyCECORqB7O1k2557BP4ECePGuflRFWPtPVcvq52xLoTwPxD4FrNhLlzZOdjt5
- yh2byxNpFbC0HSqNtih+6Q3Mb4EGd7W4aymU3K9MFgYVjV3G80GiFYlcHPJnpOj4prtO
- ABMQwcnF3IPVM6kOM+sivxl8PPpguZpK704QDf0Xt8RKqQKXhqnJX4P9rOaVk44Qad1W
- qyHQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=M0NmGdmCuabLXz4JcTf7/j2hDfPUmh7EdopHdn0sNmY=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=PjfVwrdBAzrpfLknvcC7wLLw/5o/4hS9v4Jw7U6gmpQkj8geoHf82dyIVI4JWKB3/o
- ve1TNSlXpb6g4Dm/pgyqRhhFU5vInUji1ule4BbOGmt972bUZ+86wIZtGWlMdngswgUQ
- hz1KT+jq0JMbzuvsw7XZlPAwEUowAlg4/cLMgAxrMEnjmp97pXkYLQmdEu/4uWlPaLV4
- apW1GU1ezlJr0Sn/jjSvQVAi+DNu12btP9ZrG6FLj1esuzFypGzfdaeXlS/15UoNMgKy
- YvruxXBJzlfQgbiE8z5yHdxzw72TOQMz0HDyoL+Qh7llwc5qdyDIzLYMS90uKiFMormu
- aK6g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wQ3Ng-0004i7-Rm
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:24:08 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wQ3Nd-0002MW-As
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:24:08 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64L99uRd2491817
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 13:24:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ tZCO5yGDelcPY5dWMfFho53leLJGgDwI2KXlzUHP4A4=; b=fa2cwjo4IJ7H35iO
+ HM5qIDlWDegxI8Q9cvR8s0uStMUhC4PU5BdwhkHC0kXmhTvCpS6zhKcuZmIxKCBh
+ /4X5i0WWNpHTk5N5y8hjQFn2HJmpqtpCGDIUZsdUIptj7NEflVH/FYBuOqHbJCL/
+ ZXoYmCUjyPRkXkkY6FoCUVF699FNybQt8lhyaxsYyG6Cl3v6bNSUzzJQRjecnR3a
+ YwiSsNHussQTpzqyKn5ZWvsOhGu+BobHb0scCIY0TJJDePp/Jphh7NHzMrCwpmuo
+ B+TP78284QYtu6jU5mIdNtBMw/JzpiJdb/y1TjRarHhjt+MTykLeGjG7ISxiGv7Q
+ OD1y3A==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e9e9j559a-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 13:24:03 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-516cadacf92so7741591cf.2
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 06:24:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779369773; x=1779974573; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=M0NmGdmCuabLXz4JcTf7/j2hDfPUmh7EdopHdn0sNmY=;
- b=Cm3T6TOskADmYWQRiiidclMGY393rhoVqgPmIk4DC5FJfpTBf2PFhe2Mu3bAXjEXnD
- ynVjmVNqmOhiX3tEaK93ZIqw91D1IeIIvMmfEotTtjrml6lHVIFMGtdRVOT+rTf7rygl
- L9JTDjBOZe5s1BtK4bvRzva0UasIG5ldvz4BcWsrCduA+erunbdkkdSrXgJS8tgJmqQs
- O8+JcftDQA+QgPZo15klUhPyFekxtN5bGzQo47vXopiHBg5J+OgkhBuF6w4UIHm+JC4B
- YF14b89d6IipV2ZaerJhRrB4PJ8D3Q7OFOhGE0S/GuAb1Y2J+qG/OyOddYGW39NLyllu
- qbrg==
+ d=oss.qualcomm.com; s=google; t=1779369842; x=1779974642; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=tZCO5yGDelcPY5dWMfFho53leLJGgDwI2KXlzUHP4A4=;
+ b=SZyKO+Kf5BuYUjzNjwWRvub1bIEzpHoLzKyjSPNJdpgM79jt79+PCyAa8S4IMK2QXL
+ FH7mARJ+nwML2P9PBBREPMLzDcbKqJy9/Jta34SPvfPMenicuw5I2Cq35y83tQBFWctZ
+ rh/yowB1ZYj/AtXXOq4VoIYyJVvif17daoRLeSSbcmPuGppwThQWNiK8YOK282/53pPY
+ zqfLaZpZZblcDjP/hz8/gFcn2z4Sg4j8lPO9sFc+A2U+KSJnOXP/gHIEARBO73iNt3c5
+ 6A9aJKhwUel2XOLENkKUP6BpgkXNwzrpXv/TxwdtaqLCFW/k8K2yn+WGAcT02SGsmjSt
+ lSMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779369773; x=1779974573;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=M0NmGdmCuabLXz4JcTf7/j2hDfPUmh7EdopHdn0sNmY=;
- b=M9g5dduns8xvgUVqxxK08hKhosTWYjxjEwXEjBpL1EWkwPJ1DZSMJQQDh0yMTlBAfx
- LCRn43JMIAyxMfEnd+d6DNk0yKOSv6EXZv8HveHnXBz+Q4kuoyYxpNbqQVP5V2N2yqop
- DC365mZUShd2A22XjY1OclqlTyaUTvhgbYZq+67uOED4bIamSeat7vcxSkdIChZtEGBd
- ROrJHUqUpoPFJ+fo/ru4o8qIQSA7FEgXk4Htdlv133daLXM/Xhm9bR9ZQ8WdaZmgITkm
- Y/7ioNKMZM4x8/JTYxhXkjQs+2/uPWeyg/LS0VzDICzhmHftdNxq1goBmNwN6kIONIyq
- ju6g==
-X-Gm-Message-State: AOJu0Yw86qoOwsdM0w4f5EQ61blGkmM+eXozYGoNprh4afqmYCkXmNYn
- PXK04DihKyphh9wbNh0IVuyEdlKL6w77UfB8Vof0ph0CYlzYGwh5ujzLX+GkvINlRwzJ8sLwMoo
- Hk4OoX9y6qHHDcUkVVxQPtriQcUFq1dInISNmNtY6eg==
-X-Gm-Gg: Acq92OEps8UyWdEqrK48qoxdz+gdiVotk6/jL3s2FKav2NAVe9uJCDmOuJHmBpkDti9
- DrtVFgl+TArIssQ+JgnQGUGUJF/MpDlaNaNfcxKPZMJP3VJ1IIgglbv8v3cKpa4jOybovhugfVK
- NeljSyU/dI59H6pDVJgjplbbgO6vVLKLjRrJzGDlyNAKQuhnfAtpPPFJr4mjrk00FJeshxtYksh
- ElHAOnjyOK640bxsLr5h8ZUAcD7S6kH7zvGRBfu6wvjaxeF6YPRczypItmXqH+D5SDtiIh5EUWz
- HtIWDsBArZPWeByWQK21fV5K07UOLAjGoi4tTuRZMEp3Tszccuid/1BcskjYecr7Vwg=
-X-Received: by 2002:a05:690e:bca:b0:65c:6220:5fcf with SMTP id
- 956f58d0204a3-65eae3caf3bmr2370087d50.62.1779369772768; Thu, 21 May 2026
- 06:22:52 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779369842; x=1779974642;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tZCO5yGDelcPY5dWMfFho53leLJGgDwI2KXlzUHP4A4=;
+ b=K7Bmbke0SBMK8Pe5ZAqni6ucmcJdiU9m4eDGK1PHRmuJQwGtgXIxOfmQDgBqB/xEcU
+ JwSoNWSu+2RNLkcVNOMNZHeoiyGfsl0SIMKTcODNPL1L9WbKCFeJvV08OYV6rnvzhV+/
+ pY6BwfnKhwf4VBJZwpFpE/i8Fez+Czb4lRgx1esWBNYDp6Yzd4RHq4VU1sxlfjbGqXVg
+ Esv7LiIENmCDWE+WtiPniHGAWSeDOB4wvw3B/sN9adxjpGu6RI8RyHZtSuBuWzyln5/6
+ dQvC5Ed30qrvGLhGLwCPAbFX1aEEGoPoYJipPV3lZv5Z8MjU4N2Q2XLSFH8IG1/Tw4Oq
+ PpsA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+a1Xi+08fYlPxVo1XSF80pei0TmZSIELZ2QCc6KBB7WM8CcJCyOmUpEdTZPjipgZDZClBNdWinILLz@nongnu.org
+X-Gm-Message-State: AOJu0Yx0Zat29Z8x0oUBCMFoJ6gaZmLnKzTZ/WR+z3HqtL13nJFOyvmX
+ w+r+fhdfZfeqWjtbB1U400wh8ob/z1FPNt8qQ4KIVmE3gHylPTf3Hi8aNCzLRXKRnXtMBQ6QCEz
+ 7aL/zSGIoDHroOWmB4DhzYojHKb5iSWi3IXI9ZGL7g01y7snKImp4FzWnnQ==
+X-Gm-Gg: Acq92OF1Cfi5xpUnYFi6P4/r9P4NbSkP3EMkcatIxCxJOhbx/iXTXZQBeD4ZEwzxLoG
+ brB6Ow1syfBIdoFT38smQ/qE5mhd3b6vqfKsxM2oH3OsNYUBlgTVVmfdV4LMazZYYN1RfKIi7L5
+ wQWo8pz5hbdn9uWMPi2fkSDr6t0pa6Q8tvDy540/4ss7RM709xtoz5crvd2Z+lT+prC1rOiOIv+
+ ins3SvIPjxROhum0DSt7x/vmTmNem8nQmVnfX6JYFVg7lacoKlZTPinXkctXi5U/ziouVrGhjbS
+ msE6ebjvRfrDrNDH/rRdCI5X0zGrfe3xeHZ0lZgmPYkb1qztayJVAU7yKgTSllQoSROzTWkWvRY
+ zlIdUshoLv+LTOnLY2rMji2EUj+cUN3yr9whBgIxiR4COYUl+Sja+RtTr+g==
+X-Received: by 2002:ac8:5ad5:0:b0:50b:5056:fcc4 with SMTP id
+ d75a77b69052e-516c5461c0dmr39323091cf.4.1779369841786; 
+ Thu, 21 May 2026 06:24:01 -0700 (PDT)
+X-Received: by 2002:ac8:5ad5:0:b0:50b:5056:fcc4 with SMTP id
+ d75a77b69052e-516c5461c0dmr39322521cf.4.1779369841160; 
+ Thu, 21 May 2026 06:24:01 -0700 (PDT)
+Received: from [192.168.15.43] ([177.196.135.199])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8cc768ecb51sm4928446d6.21.2026.05.21.06.23.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 21 May 2026 06:24:00 -0700 (PDT)
+Message-ID: <7d5cca61-4f9b-4b32-a045-017002ec31b7@oss.qualcomm.com>
+Date: Thu, 21 May 2026 10:23:57 -0300
 MIME-Version: 1.0
-References: <20260520171820.848839-1-richard.henderson@linaro.org>
- <20260520171820.848839-30-richard.henderson@linaro.org>
- <CAFEAcA9tXNossXoMC=LSa7Aw0CZzsmtkppKqEGqcdSgy-X_GOw@mail.gmail.com>
- <CAFEAcA9X-2+_LgGaT3Jf3tC7p3RSH0qRQ0CK_3BhySzS_cxqWg@mail.gmail.com>
- <498188db-167b-479f-abec-1e7967f0b967@linaro.org>
-In-Reply-To: <498188db-167b-479f-abec-1e7967f0b967@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 21 May 2026 14:22:41 +0100
-X-Gm-Features: AVHnY4LLIGe_lxxBlkXeoMrU9u45OAVfXdroan_MjIh313jkxPh6E9kp9V2M8L8
-Message-ID: <CAFEAcA_nSN92zazbZ6LT43P=9PNwy=Qtix0n=bJgBxWnidqmzA@mail.gmail.com>
-Subject: Re: [PATCH v5 29/30] fpu: Fix NaN encoding for E4M3 in parts64_uncanon
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv: Raise illegal instruction for Svinval in
+ U-mode
+To: Zephyr Li <fritchleybohrer@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu.zevorn@gmail.com
+References: <20260521115749.28774-1-fritchleybohrer@gmail.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260521115749.28774-1-fritchleybohrer@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=bfhbluPB c=1 sm=1 tr=0 ts=6a0f0773 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=IOOwV0Eez6LtLsIbZioZZQ==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=p0WdMEafAAAA:8 a=pGLkceISAAAA:8 a=ra8Du2d4nFHyhCTLL4IA:9 a=QEXdDO2ut3YA:10
+ a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-GUID: u4QcJnAi7wvLhIfpVpzepjUhm_Q5NK8c
+X-Proofpoint-ORIG-GUID: u4QcJnAi7wvLhIfpVpzepjUhm_Q5NK8c
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIxMDEzMyBTYWx0ZWRfX2JTlwc8AE8UX
+ yJSWvLT8cq73W/+N+q+6rR0uIZipogaH6w9Kcj8nH6KDJztmHd9XDsd6M+yhgvmKcJdMjXVFuk4
+ kvIr72y9o23EiPh3VgsoZ/ckydWLZ/Ewxv56iqa4VDBnbdN0ZOMSCo9uMd2yJt160gCnz0oIN3L
+ kQR+FmXumk1BRy7uw6nr9uBLkTxp3ceNCd4QX4P6i9xa+zdT171jgGy14UV9/QTKy3HtoEFSS87
+ 8nislXZllD30JF2wLGhNcq7QGhxa9SmyyRs6MZRm23ildWsmatlfaFSdcOcYAAFP12mP6PkmPDJ
+ 18pdN/HwjDwglz2iC4F8n4qfmvBPhXF4/He46khUEZhLbD3F1d5uN8CJK+kIaATNHPvvvwT3tOv
+ /HSxKqBhu+vC4XHlh+eeLZbqrkw2aMZ9akisWvrJm8hU+zVeg+BtaOQ4rdgDR23JwKWvN+wS7lV
+ /TBw77pQb4B+37nIonQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-21_02,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 impostorscore=0 priorityscore=1501
+ bulkscore=0 clxscore=1015 adultscore=0 spamscore=0 malwarescore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
+ definitions=main-2605210133
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,31 +154,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 20 May 2026 at 19:26, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 5/20/26 11:21, Peter Maydell wrote:
-> >>> +                break;
-> >>> +            }
-> >>> +            g_assert_not_reached();
-> >
-> > ...ah, I misread it. I think it would be clearer to
-> > have the float_expmax_normal case be "g_assert_not_reached()"
-> > rather than "break, and rely on the thing immediately next
-> > after the switch to be g_assert_not_reached()", because
-> > it more obviously says "this case can't occur".
->
-> Mm.  I wrote the switch to let -Wall diagnose a missing enumerator, rather than
->
->      case float_expmax_normal:
->      default:
->          g_assert_not_reached();
+(note - my email was wrong in the CC)
 
-Since this is the last unreviewed patch in this series,
-you can have my
+On 5/21/2026 8:57 AM, Zephyr Li wrote:
+> The RISC-V privileged specification requires SFENCE.W.INVAL and
+> SFENCE.INVAL.IR to raise an illegal instruction exception when executed
+> in U-mode. Check the current privilege mode during translation and reject these
+> instructions in U-mode, so they are reported as illegal instructions.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3493
+> 
+> Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
+> ---
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reading the priv spec, right before the part that mentions sfence.w.inval and
+sfence.inval.ir:
 
-thanks
--- PMM
+"SINVAL.VMA, HINVAL.VVMA, and HINVAL.GVMA require the same permissions
+and raise the same exceptions as SFENCE.VMA, HFENCE.VVMA, and HFENCE.GVMA,
+respectively. In particular, an attempt to execute any of these instructions
+in U-mode always raises an illegal-instruction exception."
+
+So it seems to me that all insns from trans_svinval.c.inc needs this same
+U-mode check.
+
+To avoid copy/pasting that if check, the file trans_xthread.c.inc has the
+following macro:
+
+
+/* Test if priv level is M or S. */
+#define REQUIRE_PRIV_MS(ctx)                                    \
+do {                                                            \
+     if (ctx->priv == PRV_U) {                                   \
+         return false;                                           \
+     }                                                           \
+} while (0)
+
+
+I suggest doing the same here - adding the macro then doing a
+"REQUIRE_PRIV_MS(ctx)" in the relevant insns.
+
+
+Thanks,
+Daniel
+
+
+
+
+
+>   target/riscv/insn_trans/trans_svinval.c.inc | 8 ++++++++
+>   1 file changed, 8 insertions(+)
+> 
+> diff --git a/target/riscv/insn_trans/trans_svinval.c.inc b/target/riscv/insn_trans/trans_svinval.c.inc
+> index a06c3b214f..a9bf75c7e9 100644
+> --- a/target/riscv/insn_trans/trans_svinval.c.inc
+> +++ b/target/riscv/insn_trans/trans_svinval.c.inc
+> @@ -39,6 +39,10 @@ static bool trans_sfence_w_inval(DisasContext *ctx, arg_sfence_w_inval *a)
+>   {
+>       REQUIRE_SVINVAL(ctx);
+>       REQUIRE_EXT(ctx, RVS);
+> +
+> +    if (ctx->priv == PRV_U) {
+> +        return false;
+> +    }
+>       /* Do nothing currently */
+>       return true;
+>   }
+> @@ -47,6 +51,10 @@ static bool trans_sfence_inval_ir(DisasContext *ctx, arg_sfence_inval_ir *a)
+>   {
+>       REQUIRE_SVINVAL(ctx);
+>       REQUIRE_EXT(ctx, RVS);
+> +
+> +    if (ctx->priv == PRV_U) {
+> +        return false;
+> +    }
+>       /* Do nothing currently */
+>       return true;
+>   }
+
 
