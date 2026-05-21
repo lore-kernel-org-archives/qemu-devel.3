@@ -4,96 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C748CD5BAF
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 20:25:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A96E3CD5BAB
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 20:26:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ9wY-0007Dk-Cz; Thu, 21 May 2026 16:24:34 -0400
+	id 1wQ9yG-0007ue-Pt; Thu, 21 May 2026 16:26:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
- id 1wQ9wS-0007D9-Ks
- for qemu-devel@nongnu.org; Thu, 21 May 2026 16:24:30 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
+ id 1wQ9y0-0007ss-0X
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 16:26:06 -0400
+Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
- id 1wQ9wM-00070Y-IX
- for qemu-devel@nongnu.org; Thu, 21 May 2026 16:24:24 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-82f9fdfc965so3058591b3a.1
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 13:24:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
+ id 1wQ9xy-00089v-Bz
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 16:26:03 -0400
+Received: by mail-ot1-x32d.google.com with SMTP id
+ 46e09a7af769-7dbd801138eso4399234a34.1
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 13:26:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779395161; cv=none;
+ d=google.com; s=arc-20240605;
+ b=PzvzZC1TXydQL0rorrQsMkgTx9TPvLEf+g/RumZuAn48lIkRNlpYO5TCePn++44Ovm
+ aC0wWDK/tta1Pv4X/HyDeVHrIEkyFdCtdAe3rUnWXgnTHVoCU8xOOgVexO0d+NP1uIPH
+ r4IoC0x04J5gps0XOvyByGWZ7arakynEKEUnDad7S/oa0lqYAjT2hC237G9u44gm8/3L
+ WOtkGsSKNf3QY1ctqqoRw3uRrckxOhtLVVouznEpbSBUi4Z+qmq9PVGEGrlHL1VsVFa3
+ SpdfoDmlZYW2lYVIvphqDBE0dPYu9pbnyCUgjU0uUMjVjYWzuImioUUMygH4ByA2qiz+
+ UWYw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=BnZKBgCkyetHodAb7HtYhzK5yHV7wQbsMypvHi4OobM=;
+ fh=/aURJlcAzC93zQx7oUf7NbjdC5rKfo/4/8cj8BWsd8c=;
+ b=VPt1s4OOrcg2O28hNsSvSxz7KaAQKKlbkF1LwjJE5ielfWFOpeHHVD6RrJ9V9/4khm
+ V00ju2elTHeZs94gx5H/swFw8IWivdZknAROlJRdaIMYnkTAc0gDyLdVUhtphr91YZPR
+ UwSqjP9zEeBO/eO74kHUpKBvapvWt7IzAfjwy5Sqm6Z3HkFQXcE0YP5JPQ95Hz+ybYkt
+ ijCrY7siZEznxHaCYGF5rYIIeRuVm+hLpqVD5IyOD3EccNMZbChOr8x6uctmtDtDHCCj
+ YdXPZFXAaPkaaIQ28lAZ80nNSuf3xCPYHXnBIpNuJsrm9JVbhyLMmiGoBKuzgyNkToCx
+ ZkCA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779395058; x=1779999858; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=KN0OsPMDfQXie9k1JqGXzBUNthccIyZQhv7ABy281jo=;
- b=g5IyX1M9JBzofwimWc3SKLEQpNfLc20xjvsfXrzHtFWxpVh/9z/SylL/hKUrvKHzrx
- f21YD38ZK4grn2ICf6xO+6W34t5IidoCO8yDXlnDXWOWkIrcbQjYROjfuSpD0MNf3TbH
- 7dBDPRPgcD7FgXwigzPCadYmJpiKaU3bSmSk+JMEVleZa1/rCjYwZrc/DRQowxiiR1Nv
- BuKEEFXnKyDewCrBpadayyX7WKIqaEWx49+9N3+z5uJv8IPeqSqQmXI/S+iMS5ggTWo8
- zXKvug5l5IR992Os3UAfJH/R0pXds7PtbcDmFlgaXu95nkMYsBsHgZN3fLYGo6+aDGFG
- Ms8w==
+ d=linaro.org; s=google; t=1779395161; x=1779999961; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BnZKBgCkyetHodAb7HtYhzK5yHV7wQbsMypvHi4OobM=;
+ b=PgwJPt7NAKp9Ze3V5EmxQJszhXdSvuhm+CYDF4BD5ZMUgiZ3sfYE+tj4pBvYp4yKUP
+ UgLvlqSkYmY4j/KMbkXxRiKus1dA5qEoEms7V4QFg5W2EThgUZnItVqutvaMzSlVe2+e
+ y4MD2lsesWzbrhEiQ/a/DPZPWVEMQhZ+qMzDXZIZLcN2y+tCaUVbErbQ87SmUpMoZQl4
+ t1kny3jr4JoHvOEV4u1kOiP6aaQcvB58zTBplM+sqDEJ3O053MiZ9txi6csylBmzQqwK
+ /qrsxlLp3Bc8u6kBuyzbR5aA9nsASSJH+Bri0YVaD5Y/QPLrvPoIiX/lsPRANmoJQ1nx
+ 0H/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779395058; x=1779999858;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KN0OsPMDfQXie9k1JqGXzBUNthccIyZQhv7ABy281jo=;
- b=r45YwSfh5iOzM69lirUvFFio8WyWVpn/f8FjUX0ZiR/NXMD2Mvd7B0/a6h+QnTgMq2
- p3u+m/O07uaKGpzRiHVZmmPlJ74MM3DrQtVVjlF1lOda0zxGEEectWSwQqiaQV7InSdQ
- gmpOeZpstarvPv1/9vOex4ZpOx+th25VuLhypYnzXbJ2U3JoMPy8HoJtTtAFslX02dv5
- Z0SklIPNOMN62Zi2uu/CBk0NHa9wstb2NWMMnuBESKx1gCYdbgLym/JPN+WjNVfzBblx
- LYjBFYN38fjCF6l6r0tVySlBk9i3DwEn3lfk27bT3+HHoTCGvMi9qLcQ3G1G77bX/vjL
- CwBw==
+ d=1e100.net; s=20251104; t=1779395161; x=1779999961;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=BnZKBgCkyetHodAb7HtYhzK5yHV7wQbsMypvHi4OobM=;
+ b=Mi73kRu0f2XC/F8ObJwulk6/8AqMEeUFvSnUW1+XYj5gVmRcy5JOAuRp1ZBngPHHBN
+ ZdqFcpb5Dse+GIIDEs+B29ZCu19qxBaVEweEUONuA09EYebota8D93nORBZGbUORQV8+
+ cjkRMzpgIZCsHRkq8XuMe5fmgF++LqKEj4nA7pFbP5/84duFW1fvz8D76pE8Qu+n1fPg
+ Q7yTlDsQ4snKMW1l0EYQpWqBNhWSaK1MSs2iPBRUtjD21hHvnxGgsL3Jpb/0tgBdwE/M
+ nSnXwEtR9de0agDXFFFmTJha45b0IPyxpHQyvyVBjzsFsBQ3L+2wORG7T+c3p487aF+b
+ BsvQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8gYQmtAzBz+WpjlfcxzSsOcHMDFlHRJoRp2jiNK0mYDQdkWpUyeHU2NfQhQs2dlC96uAZorneyJbsR@nongnu.org
-X-Gm-Message-State: AOJu0YzrrIu8pgDRQoS7MqR9ZJ/8ZtoDYfOszKeGS7KP4vkyhgskoWQa
- bVXcp5RVVbgrJPi0Nk1tm2/FF2tDTENr5jWUdLWNHyHT7xKd1mJarhas
-X-Gm-Gg: Acq92OHkW6ybDMY4INMC3KPtKIMy/n9a7c0Gi9nrISMiq5+T+sbXVF6REl8UBMdO9Xi
- FnMj2rfS4zcuy6sPYKm3yjFK/DlNCggIfVBcqOwMQcakZf+5yoRxD4eB+2Z3DahzMft4My5u1zH
- cz31a0pey16ixBkvg3iT29ULA82phByDvUfYkWdJLfH/AJH0yUeNXdsZvdjJUnx10R+USjTlA9A
- VNNQ9wszNwpQBOJa6rDlPMFmgCcdwo8tz4sGmzL1l6T22aox6ms6iHzqvWuh6T/fz/H0Gtfr6cG
- ELSGLXexDT+ZbywAPNp9ibGZDGbgBB2QEAhaJIihWzVslK6kZNHKBnpIMFuAfU2r6Zx2sa9rxbj
- xZCbDRmnntvYKcUgW1ZtcSwz3812ey4dTFbNf4D8HfRya7+zoSoAqgSd11k1U4YZnyfk69Q2Sje
- pGPMDSVHVjh27e3t6c7ifB4bFpUZS08L1E8QCH
-X-Received: by 2002:a05:6a00:e8e:b0:82f:1b1b:e166 with SMTP id
- d2e1a72fcca58-8415f33b21emr729002b3a.33.1779395057652; 
- Thu, 21 May 2026 13:24:17 -0700 (PDT)
-Received: from google.com ([2402:7500:579:5981:b0bb:9ef6:6aa9:ac59])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-84154a000cdsm1914006b3a.17.2026.05.21.13.24.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 13:24:16 -0700 (PDT)
-Date: Fri, 22 May 2026 04:24:11 +0800
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
-To: Chao Liu <chao.liu.zevorn@gmail.com>
-Cc: pbonzini@redhat.com, marcandre.lureau@redhat.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, christoph.muellner@vrull.eu,
- farosas@suse.de, lvivier@redhat.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- jserv@ccns.ncku.edu.tw, eleanor15x@gmail.com, marscheng@google.com,
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Subject: Re: [PATCH v2 3/6] hw/misc: Add Sophgo CV1800B clock controller
-Message-ID: <ag9p62JNQi4IPumS@google.com>
-References: <20260514011528.1263665-1-visitorckw@gmail.com>
- <20260514011528.1263665-4-visitorckw@gmail.com>
- <agrjBBqnINoAOCYS@ChaodeMBP.bbrouter>
+ AFNElJ9TolHBwgRNa83uOulE45Na0KoDUt/hmo6adD+8LE7uWYa2lFWm2BYpwjD3rKXSVjjIAuITNe9K2yUL@nongnu.org
+X-Gm-Message-State: AOJu0YxyVBVRYqxIaFopSoptEHqo2BuxUk/ATWzHrUOxrv9HXjNXUX7R
+ 9VmUFH0pK4geksafWeswrWci8hHqK6RPqn3aMcYsdIi+uDUJSEF3jFpbcGT2/a+OR9O6Ax/AU9d
+ sVLDEOIbe4GK3f629qer4YqKohQtrCCpVzYZ4+lW+Yw==
+X-Gm-Gg: Acq92OHu8yKqo9etcRAi3h3GRzD0rrQg5pRNT/ngRqubPS/kQeTln0gFx1SAaeCprWW
+ tMcWk/kQsHRhbzPawQ0XBiZKiiI114Cjyjb2Ve3ZL80ur5GRmESBpWZtHDmI8/aAeQtyQ/Z7Wk5
+ ML03ge7Wi6RP96/uEbGRoO5QW8bmVExMmHJwmQ7Pa7bAw0wK8+VUaKQhToM3a88ltZl5Yqor0B/
+ aSNuXDVgDcxno/io80IgCh2PYnFEtpK41BE127wNrKfNdA8voarwbIOyH81BcgBo/gImVSxSKFP
+ LlxosRA=
+X-Received: by 2002:a05:6820:c0c7:20b0:695:94b4:d4cc with SMTP id
+ 006d021491bc7-69d6dfeac42mr1557107eaf.1.1779395160738; Thu, 21 May 2026
+ 13:26:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <agrjBBqnINoAOCYS@ChaodeMBP.bbrouter>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=visitorckw@gmail.com; helo=mail-pf1-x42f.google.com
+References: <20260519-mips-octeon-missing-insns-v2-v10-0-306f9edfe15b@gmail.com>
+ <52b9ca7a-9ac2-4e0b-8394-3e1f167560e0@linaro.org>
+ <CAPMQPELA36GSuFhEfvgONzNYMcNQUzP6_m0FXbLjp2ZUeu-maQ@mail.gmail.com>
+In-Reply-To: <CAPMQPELA36GSuFhEfvgONzNYMcNQUzP6_m0FXbLjp2ZUeu-maQ@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Date: Thu, 21 May 2026 22:25:49 +0200
+X-Gm-Features: AVHnY4I3Y2kLFKw92dtoRHM4C3pt18Nm2WQDOkVIlJ4kfpIHqR9A4GMROba2IlU
+Message-ID: <CAPMQPE+peGvbRTZJWHzq3BXXju1zmr6gq77FOofr5vDBd8pbMQ@mail.gmail.com>
+Subject: Re: [PATCH v10 00/45] target/mips: add missing Octeon user-mode
+ support
+To: James Hilliard <james.hilliard1@gmail.com>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>, 
+ Huacai Chen <chenhuacai@kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
+ envelope-from=philippe.mathieu-daude@linaro.org; helo=mail-ot1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,97 +126,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Chao,
+On Thu, 21 May 2026 at 22:22, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+> On Wed, 20 May 2026 at 12:00, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.=
+org> wrote:
+> > On 20/5/26 06:36, James Hilliard wrote:
+> > > This series updates MIPS linux-user unaligned-access behavior and fil=
+ls
+> > > in missing Octeon user-mode instruction support used by existing Octe=
+on
+> > > binaries.
 
-On Mon, May 18, 2026 at 06:13:58PM +0800, Chao Liu wrote:
-> On Thu, May 14, 2026 at 01:15:25AM +0800, Kuan-Wei Chiu wrote:
-> > Add a stub for the CV1800B clock controller. This is specifically
-> > required for the SDHCI controller to function correctly under Linux.
-> > 
-> > The Linux 'sophgo,cv1800-clk' driver probes this device to determine
-> > the clock tree configuration. This implementation sets the bypass
-> > registers (CLK_BYP_0 and CLK_BYP_1) to 0xFFFFFFFF during reset,
-> > matching the POR default state. This bypasses the PLLs and allows the
-> > SDHCI and other peripherals to operate using the 25MHz reference clock.
-> > 
-> > Without this device, the SD card driver fails to initialize, preventing
-> > the system from mounting the root filesystem from the SD card:
-> > 
-> > [    0.888739] Waiting for root device /dev/mmcblk0...
-> > [   10.727739] mmc0: Timeout waiting for hardware cmd interrupt.
-> > [   10.728042] mmc0: sdhci: ============ SDHCI REGISTER DUMP ===========
-> > [   10.728356] mmc0: sdhci: Sys addr:  0x00000002 | Version:  0x00002402
-> > [   10.728618] mmc0: sdhci: Blk size:  0x00000000 | Blk cnt:  0x00000000
-> > [   10.728919] mmc0: sdhci: Argument:  0x00000000 | Trn mode: 0x00000000
-> > [   10.729271] mmc0: sdhci: Present:   0x01ff0000 | Host ctl: 0x00000001
-> > [   10.729591] mmc0: sdhci: Power:     0x0000000f | Blk gap:  0x00000000
-> > [   10.729903] mmc0: sdhci: Wake-up:   0x00000000 | Clock:    0x00000000
-> > [   10.730223] mmc0: sdhci: Timeout:   0x00000000 | Int stat: 0x00000000
-> > [   10.730537] mmc0: sdhci: Int enab:  0x00ff0083 | Sig enab: 0x00ff0083
-> > [   10.730795] mmc0: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
-> > [   10.731005] mmc0: sdhci: Caps:      0x056900b9 | Caps_1:   0x00000000
-> > [   10.731211] mmc0: sdhci: Cmd:       0x00000000 | Max curr: 0x00000000
-> > [   10.731415] mmc0: sdhci: Resp[0]:   0x00000000 | Resp[1]:  0x00000000
-> > [   10.731636] mmc0: sdhci: Resp[2]:   0x00000000 | Resp[3]:  0x00000000
-> > [   10.731851] mmc0: sdhci: Host ctl2: 0x00000000
-> > [   10.732018] mmc0: sdhci: ADMA Err:  0x00000000 | ADMA Ptr: 0x00000000
-> > [   10.732229] mmc0: sdhci: ============================================
-> > 
-> > Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-> > ---
-> >  hw/misc/Kconfig               |  3 ++
-> >  hw/misc/cv1800b_clk.c         | 89 +++++++++++++++++++++++++++++++++++
-> >  hw/misc/meson.build           |  1 +
-> >  include/hw/misc/cv1800b_clk.h | 24 ++++++++++
-> >  4 files changed, 117 insertions(+)
-> >  create mode 100644 hw/misc/cv1800b_clk.c
-> >  create mode 100644 include/hw/misc/cv1800b_clk.h
-> > 
-> > diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-> > index 99bdf09219..42cdf771a4 100644
-> > --- a/hw/misc/Kconfig
-> > +++ b/hw/misc/Kconfig
-> > @@ -254,4 +254,7 @@ config IOSB
-> >  config XLNX_VERSAL_TRNG
-> >      bool
-> >  
-> > +config SOPHGO_CV1800B_CLK
-> > +    bool
-> > +
-> >  source macio/Kconfig
-> > diff --git a/hw/misc/cv1800b_clk.c b/hw/misc/cv1800b_clk.c
-> > new file mode 100644
-> > index 0000000000..738f0910db
-> > --- /dev/null
-> > +++ b/hw/misc/cv1800b_clk.c
-> > @@ -0,0 +1,89 @@
-> > +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> > +/*
-> > + * Sophgo CV1800B Clock Controller
-> > + *
-> > + * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
-> > + */
-> > +
-> > +#include "qemu/osdep.h"
-> > +#include "qemu/log.h"
-> > +#include "hw/misc/cv1800b_clk.h"
-> > +
-> > +#define REG_CLK_BYP_0  (0x030 / 4)
-> > +#define REG_CLK_BYP_1  (0x034 / 4)
-> I suggest using the REG_BYTE_WIDTH macro instead of the constant value 4
-> here and elsewhere.
-> 
-> #define REG_BYTE_WIDTH    (4)
-> #define REG_CLK_BYP_0     (0x030 / REG_BYTE_WIDTH)
-> #define REG_CLK_BYP_1     (0x034 / REG_BYTE_WIDTH)
-> 
-> You could also use `RegisterInfo` to define these register operations, so
-> we don’t have to manually define these helper macros. Since this hardware
-> is relatively simple, the current implementation is acceptable as well.
-> 
-Noted. Thanks.
-I'll make this change when I respin this patchset.
+> > Thanks for this series, I really appreciate your dedication and the
+> > quality of your patches. I have been trying to queue it since v7 but
+> > you keep respinning :) Since the first half is stable and reviewed,
+> > I'll queue that first and send in my next MIPS pull request; less for
+> > you to carry over.
+>
+> Now merged as commits e83a42cbf72...006d624b948.
+>
+> Rebasing the rest shouldn't be too hard (changes are
+> obvious, I also moved the TRANS_LX block around).
+> Tell me if you have an issue rebasing your work and I'll
+> repost the remaining patches.
 
-Regards,
-Kuan-Wei
+And I now notice your v13, this is perfect, I'll follow there, thank you!
+https://lore.kernel.org/qemu-devel/20260521-mips-octeon-missing-insns-v2-v1=
+3-0-5a4cb8ec9cd3@gmail.com/
 
