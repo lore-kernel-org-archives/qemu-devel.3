@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CFABCD5BB1
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 12:04:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2E14CD4F5E
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 12:04:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ25T-0002Gn-RF; Thu, 21 May 2026 08:01:15 -0400
+	id 1wQ25Q-0001mN-63; Thu, 21 May 2026 08:01:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wQ24v-0000tP-2H
- for qemu-devel@nongnu.org; Thu, 21 May 2026 08:00:48 -0400
+ id 1wQ254-0000wg-LX
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 08:00:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wQ24s-0005J4-VT
- for qemu-devel@nongnu.org; Thu, 21 May 2026 08:00:40 -0400
+ id 1wQ253-0005Jo-2a
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 08:00:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779364838;
+ s=mimecast20190719; t=1779364848;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eo/torMXRmw2KXbPEuUYi8EP3nU9GnWFaWfOmb/VO6s=;
- b=D62shcI76wCA6SXtJq/nHZXqfCfO/D6DRR5sck25NKhrfqaBxD+eHmbNKlWocamNJiXei4
- hntmQctxpo91A+7YuYcSg04ELxzIZqGwy7utNGbBTHFo3no1gYYhRNcZL50wDRBGr5f+Q+
- MEPazYT65HVSUoCUw2FExSdZGf8ypPc=
+ bh=vjoBPmei4647K9iNewDWHgX2To85h2zBJDJVBwfPIWo=;
+ b=aeNAFpPQ+4gOVLD/dHwI9ThqFztehiHi1z3HzRkRQors5guvzw2/11FMCOJwx17LlUVW+/
+ 0F/goSbSSwSTEV+ZB51UiO3INmsYfo6hM7wEMVuplt6dYbpV/6ZZJMlLDeY43PP/qXbIFX
+ c3c59+7F2Im+PLlipYJ2nm3U2YX7oMs=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-412-l3D9jmiRNiu5lWSJaH9bZQ-1; Thu,
- 21 May 2026 08:00:36 -0400
-X-MC-Unique: l3D9jmiRNiu5lWSJaH9bZQ-1
-X-Mimecast-MFC-AGG-ID: l3D9jmiRNiu5lWSJaH9bZQ_1779364834
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-136-ce1O40caOi2UexbAsiLCBQ-1; Thu,
+ 21 May 2026 08:00:46 -0400
+X-MC-Unique: ce1O40caOi2UexbAsiLCBQ-1
+X-Mimecast-MFC-AGG-ID: ce1O40caOi2UexbAsiLCBQ_1779364844
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 479A319560BE; Thu, 21 May 2026 12:00:34 +0000 (UTC)
+ id C8E7519560A2; Thu, 21 May 2026 12:00:44 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.26])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F29BD1800357; Thu, 21 May 2026 12:00:32 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id CEF2F1800576; Thu, 21 May 2026 12:00:43 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: stefanha@gmail.com, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 33/38] ui/spice: Use Linux key codes
-Date: Thu, 21 May 2026 15:57:10 +0400
-Message-ID: <20260521115717.1701482-34-marcandre.lureau@redhat.com>
+Cc: stefanha@gmail.com,
+	Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: [PULL 35/38] qemu-keymap: Use Linux key codes
+Date: Thu, 21 May 2026 15:57:12 +0400
+Message-ID: <20260521115717.1701482-36-marcandre.lureau@redhat.com>
 In-Reply-To: <20260521115717.1701482-1-marcandre.lureau@redhat.com>
 References: <20260521115717.1701482-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -94,32 +94,125 @@ representations.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260520-input-v3-25-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <20260520-input-v3-27-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 ---
- ui/spice-input.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ qemu-keymap.c | 41 ++++++++++++++++++++---------------------
+ 1 file changed, 20 insertions(+), 21 deletions(-)
 
-diff --git a/ui/spice-input.c b/ui/spice-input.c
-index a5c5d78474e..f0bb915fd77 100644
---- a/ui/spice-input.c
-+++ b/ui/spice-input.c
-@@ -20,6 +20,7 @@
- #include <spice.h>
- #include <spice/enums.h>
- 
+diff --git a/qemu-keymap.c b/qemu-keymap.c
+index d4dccf456ef..d63b6be8ce3 100644
+--- a/qemu-keymap.c
++++ b/qemu-keymap.c
+@@ -11,6 +11,7 @@
+  */
+ #include "qemu/osdep.h"
+ #include "qemu/notify.h"
 +#include "standard-headers/linux/input-event-codes.h"
- #include "ui/qemu-spice.h"
- #include "ui/console.h"
- #include "keymaps.h"
-@@ -61,7 +62,7 @@ static void kbd_push_key(SpiceKbdInstance *sin, uint8_t scancode)
-     if (scancode == pauseseq[kbd->pauseseq]) {
-         kbd->pauseseq++;
-         if (kbd->pauseseq == G_N_ELEMENTS(pauseseq)) {
--            qemu_input_event_send_key_qcode(NULL, Q_KEY_CODE_PAUSE, true);
-+            qemu_input_event_send_key_linux(NULL, KEY_PAUSE, true);
-             kbd->pauseseq = 0;
-         }
-         return;
+ #include "ui/input.h"
+ 
+ #include <xkbcommon/xkbcommon.h>
+@@ -32,19 +33,17 @@ static FILE *outfile;
+ 
+ /* ------------------------------------------------------------------------ */
+ 
+-static uint32_t qcode_to_number(uint32_t qcode)
++static uint32_t linux_to_number(uint32_t lnx)
+ {
+-    KeyValue keyvalue;
+     uint32_t number;
+ 
+-    keyvalue.type = KEY_VALUE_KIND_QCODE;
+-    keyvalue.u.qcode.data = qcode;
+-    number = qemu_input_key_value_to_number(&keyvalue);
++    assert(lnx < qemu_input_map_linux_to_qnum_len);
++    number = qemu_input_map_linux_to_qnum[lnx];
+     assert(number != 0);
+     return number;
+ }
+ 
+-static void print_sym(xkb_keysym_t sym, uint32_t qcode, const char *mod)
++static void print_sym(xkb_keysym_t sym, uint32_t lnx, const char *mod)
+ {
+     char name[64];
+ 
+@@ -54,7 +53,7 @@ static void print_sym(xkb_keysym_t sym, uint32_t qcode, const char *mod)
+     xkb_keysym_get_name(sym, name, sizeof(name));
+ 
+     /* TODO: make ui/keymap.c parser accept QKeyCode names */
+-    fprintf(outfile, "%s 0x%02x%s\n", name, qcode_to_number(qcode), mod);
++    fprintf(outfile, "%s 0x%02x%s\n", name, linux_to_number(lnx), mod);
+ }
+ 
+ static void walk_map(struct xkb_keymap *map, xkb_keycode_t code, void *data)
+@@ -84,37 +83,37 @@ static void walk_map(struct xkb_keymap *map, xkb_keycode_t code, void *data)
+     fprintf(outfile, "# evdev %d (0x%x), QKeyCode \"%s\", number 0x%x\n",
+             evdev, evdev,
+             QKeyCode_str(qcode),
+-            qcode_to_number(qcode));
++            linux_to_number(evdev));
+ 
+     /*
+      * check which modifier states generate which keysyms
+      */
+     xkb_state_update_mask(state,  0, 0, 0,  0, 0, 0);
+     kbase = xkb_state_key_get_one_sym(state, code);
+-    print_sym(kbase, qcode, "");
++    print_sym(kbase, evdev, "");
+ 
+     xkb_state_update_mask(state,  0, 0, numlock,  0, 0, 0);
+     knumlock = xkb_state_key_get_one_sym(state, code);
+     if (kbase != knumlock) {
+-        print_sym(knumlock, qcode, " numlock");
++        print_sym(knumlock, evdev, " numlock");
+     }
+ 
+     xkb_state_update_mask(state,  shift, 0, 0,  0, 0, 0);
+     kshift = xkb_state_key_get_one_sym(state, code);
+     if (kbase != kshift && knumlock != kshift) {
+-        print_sym(kshift, qcode, " shift");
++        print_sym(kshift, evdev, " shift");
+     }
+ 
+     xkb_state_update_mask(state,  altgr, 0, 0,  0, 0, 0);
+     kaltgr = xkb_state_key_get_one_sym(state, code);
+     if (kbase != kaltgr) {
+-        print_sym(kaltgr, qcode, " altgr");
++        print_sym(kaltgr, evdev, " altgr");
+     }
+ 
+     xkb_state_update_mask(state,  altgr | shift, 0, 0,  0, 0, 0);
+     kaltgrshift = xkb_state_key_get_one_sym(state, code);
+     if (kshift != kaltgrshift && kaltgr != kaltgrshift) {
+-        print_sym(kaltgrshift, qcode, " shift altgr");
++        print_sym(kaltgrshift, evdev, " shift altgr");
+     }
+ }
+ 
+@@ -251,16 +250,16 @@ int main(int argc, char *argv[])
+             "# keysyms.  So append them here.\n"
+             "#\n"
+             "\n");
+-    print_sym(XKB_KEY_Print,            Q_KEY_CODE_SYSRQ,      "");
+-    print_sym(XKB_KEY_Sys_Req,          Q_KEY_CODE_SYSRQ,      "");
+-    print_sym(XKB_KEY_Execute,          Q_KEY_CODE_SYSRQ,      "");
++    print_sym(XKB_KEY_Print,            KEY_SYSRQ,    "");
++    print_sym(XKB_KEY_Sys_Req,          KEY_SYSRQ,    "");
++    print_sym(XKB_KEY_Execute,          KEY_SYSRQ,    "");
+ 
+-    print_sym(XKB_KEY_KP_Decimal,       Q_KEY_CODE_KP_DECIMAL, " numlock");
+-    print_sym(XKB_KEY_KP_Separator,     Q_KEY_CODE_KP_DECIMAL, " numlock");
++    print_sym(XKB_KEY_KP_Decimal,       KEY_KPDOT,    " numlock");
++    print_sym(XKB_KEY_KP_Separator,     KEY_KPDOT,    " numlock");
+ 
+-    print_sym(XKB_KEY_Alt_R,            Q_KEY_CODE_ALT_R,      "");
+-    print_sym(XKB_KEY_ISO_Level3_Shift, Q_KEY_CODE_ALT_R,      "");
+-    print_sym(XKB_KEY_Mode_switch,      Q_KEY_CODE_ALT_R,      "");
++    print_sym(XKB_KEY_Alt_R,            KEY_RIGHTALT, "");
++    print_sym(XKB_KEY_ISO_Level3_Shift, KEY_RIGHTALT, "");
++    print_sym(XKB_KEY_Mode_switch,      KEY_RIGHTALT, "");
+ 
+     fprintf(outfile,
+             "\n"
 -- 
 2.54.0
 
