@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7953FCD5BAC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 16:52:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27297CD5BAF
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 16:52:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ6cV-0004U8-OG; Thu, 21 May 2026 12:51:39 -0400
+	id 1wQ6cW-0004Vf-8t; Thu, 21 May 2026 12:51:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
- id 1wQ6br-0004MZ-Vi
- for qemu-devel@nongnu.org; Thu, 21 May 2026 12:51:04 -0400
+ id 1wQ6c3-0004Ov-Ct
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 12:51:11 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wQ6bq-00074L-4U
- for qemu-devel@nongnu.org; Thu, 21 May 2026 12:50:59 -0400
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wQ6c1-00079H-H0
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 12:51:11 -0400
 Received: from laptop.localdomain (unknown [86.121.140.206])
- by linux.microsoft.com (Postfix) with ESMTPSA id D2F6C20B7169;
- Thu, 21 May 2026 09:50:46 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D2F6C20B7169
+ by linux.microsoft.com (Postfix) with ESMTPSA id D058120B7168;
+ Thu, 21 May 2026 09:50:57 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D058120B7168
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1779382248;
- bh=rLsIuWY8QSuZMRArxFUxp0Wfr3g+5w7YocoK+TcJu+Y=;
+ s=default; t=1779382259;
+ bh=XH+JRGJXKCFRmrWjSkiZ8RWMbcx1sY7JXUEnLVWDxwY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=j56EYP45qyLL0u4rM4AtG8HwnhLgjYhBqWjuhYXUq1jAaIzFC909JG1alsiJW5Alo
- d/jTqfcL9Wge10j1QI4xkp9TVlZuVW0LwyHq+aIJQCwgOudsI7loQRqZ3EzLb1iYOq
- o6ClPidlvqKe1BzCf6CAbmjzlVx/hnfQ8xRIVcWs=
+ b=G+zyRBy7klpv7kkG/pEwV6rfxqIqNn2YV4GmSSE/7F5gi7fz9mk5WOEeAyyPHGcHc
+ j1d03q2TzRseMwjQwbXGp3zG49d+wp9H1f6g8mxOuJ4uqfAqjurckvPQeT2VbZf8uh
+ 2HshEUP5bd8//5h1wCU3MkNU36NsGzsqeuIU/DzQ=
 From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
@@ -37,10 +37,10 @@ Cc: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
  Wei Liu <liuwe@microsoft.com>, Magnus Kulke <magnuskulke@microsoft.com>,
  Wei Liu <wei.liu@kernel.org>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PATCH v3 3/7] include/hw/hyperv: add hv_vp_register_page struct
- definition
-Date: Thu, 21 May 2026 19:50:37 +0300
-Message-ID: <20260521165041.131477-4-dblanzeanu@linux.microsoft.com>
+Subject: [PATCH v3 7/7] target/i386/mshv: fix pio handlers clobbering
+ device-modified registers
+Date: Thu, 21 May 2026 19:50:41 +0300
+Message-ID: <20260521165041.131477-8-dblanzeanu@linux.microsoft.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260521165041.131477-1-dblanzeanu@linux.microsoft.com>
 References: <20260521165041.131477-1-dblanzeanu@linux.microsoft.com>
@@ -70,154 +70,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define the `hv_vp_register_page` structure that the linux kernel uses
-to allow access to vcpu registers.
+When a device handler (e.g. vmport) calls cpu_synchronize_state() during
+I/O port dispatch, it sets cpu->accel->dirty = true and may modify
+registers directly in env. The old PIO code ignored this: it
+unconditionally wrote the stale info->rax from the VM-exit intercept
+message back to the hypervisor and then cleared dirty, discarding any
+register changes made by the device.
 
-This structure is going to be used in later patches to access vcpu
-registers.
+Bifurcate both handlers on cpu->accel->dirty:
+
+handle_pio_non_str:
+- dirty path: update env->eip directly. For reads (IN), merge the I/O
+  result into env->regs[R_EAX] (which may have been modified by the
+  device) rather than info->rax. For writes (OUT), leave RAX untouched.
+  Flush all registers via mshv_store_regs() and clear dirty.
+- non-dirty path: write RIP and RAX via set_x64_registers hypercall as
+  before.
+
+handle_pio_str:
+- dirty path: update env->eip and the appropriate index register
+  (RSI for OUTS, RDI for INS) directly. Flush via mshv_store_regs()
+  and clear dirty.
+- non-dirty path: write the index register and RIP via
+  set_x64_registers. Drop the RAX assignment that was here before;
+  string I/O does not modify RAX, and set_x64_registers is hardcoded
+  to write only 2 registers so the third slot was silently ignored
+  anyway.
+
+Remove the unconditional "cpu->accel->dirty = false" at the end of both
+handlers. In the non-dirty fast path it was redundant (already false).
+In the dirty path it was actively harmful: it told the vcpu run loop
+that env was clean when it was not, losing the device's modifications.
 
 Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- include/hw/hyperv/hvgdk.h |   2 +
- include/hw/hyperv/hvhdk.h | 106 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 108 insertions(+)
+ target/i386/mshv/mshv-cpu.c | 74 +++++++++++++++++++++++++------------
+ 1 file changed, 51 insertions(+), 23 deletions(-)
 
-diff --git a/include/hw/hyperv/hvgdk.h b/include/hw/hyperv/hvgdk.h
-index 71161f477c..e4be861716 100644
---- a/include/hw/hyperv/hvgdk.h
-+++ b/include/hw/hyperv/hvgdk.h
-@@ -9,6 +9,8 @@
- #ifndef HW_HYPERV_HVGDK_H
- #define HW_HYPERV_HVGDK_H
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index a2bc29abd4..60d21cedbb 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -1331,7 +1331,7 @@ static int pio_write(uint64_t port, const uint8_t *data, uintptr_t size,
+     return ret;
+ }
  
-+#include "hvgdk_mini.h"
-+
- #define HVGDK_H_VERSION         (25125)
+-static int handle_pio_non_str(const CPUState *cpu,
++static int handle_pio_non_str(CPUState *cpu,
+                               hv_x64_io_port_intercept_message *info)
+ {
+     size_t len = info->access_info.access_size;
+@@ -1340,10 +1340,12 @@ static int handle_pio_non_str(const CPUState *cpu,
+     uint32_t val, eax;
+     const uint32_t eax_mask =  0xffffffffu >> (32 - len * 8);
+     size_t insn_len;
+-    uint64_t rip, rax;
++    uint64_t rip;
+     uint32_t reg_names[2];
+     uint64_t reg_values[2];
+     uint16_t port = info->port_number;
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
  
- enum hv_unimplemented_msr_action {
-diff --git a/include/hw/hyperv/hvhdk.h b/include/hw/hyperv/hvhdk.h
-index 41af743847..39b1e2497b 100644
---- a/include/hw/hyperv/hvhdk.h
-+++ b/include/hw/hyperv/hvhdk.h
-@@ -9,7 +9,12 @@
- #ifndef HW_HYPERV_HVHDK_H
- #define HW_HYPERV_HVHDK_H
+     if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
+         union {
+@@ -1374,21 +1376,36 @@ static int handle_pio_non_str(const CPUState *cpu,
  
-+#include "hvgdk.h"
-+#include "hvhdk_mini.h"
-+
- #define HV_PARTITION_SYNTHETIC_PROCESSOR_FEATURES_BANKS 1
-+#define HV_VP_REGISTER_PAGE_VERSION_1  1u
-+#define HV_VP_REGISTER_PAGE_MAX_VECTOR_COUNT  7
+     /* Advance RIP and update RAX */
+     rip = info->header.rip + insn_len;
+-    rax = info->rax;
  
- struct hv_input_set_partition_property {
-     uint64_t partition_id;
-@@ -246,4 +251,105 @@ typedef struct hv_input_register_intercept_result {
-     union hv_register_intercept_result_parameters parameters;
- } QEMU_PACKED hv_input_register_intercept_result;
+-    reg_names[0] = HV_X64_REGISTER_RIP;
+-    reg_values[0] = rip;
+-    reg_names[1] = HV_X64_REGISTER_RAX;
+-    reg_values[1] = rax;
++    if (cpu->accel->dirty) {
++        env->eip = rip;
++        if (access_type != HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
++            /*
++             * For reads, merge the I/O result into the current RAX.
++             * Use env->regs[R_EAX] as the base since a device handler
++             * (e.g. vmport) may have called cpu_synchronize_state()
++             * and modified registers.
++             */
++            eax = (((uint32_t)env->regs[R_EAX]) & ~eax_mask)
++                  | (val & eax_mask);
++            env->regs[R_EAX] = (uint64_t)eax;
++        }
++        /* Sync modified standard registers back and clear dirty. */
++        mshv_store_regs(cpu);
++        cpu->accel->dirty = false;
++    } else {
++        reg_names[0] = HV_X64_REGISTER_RIP;
++        reg_values[0] = rip;
++        reg_names[1] = HV_X64_REGISTER_RAX;
++        reg_values[1] = info->rax;
  
-+/* Flags for dirty mask of hv_vp_register_page */
-+enum hv_x64_register_class_type {
-+    HV_X64_REGISTER_CLASS_GENERAL = 0,
-+    HV_X64_REGISTER_CLASS_IP = 1,
-+    HV_X64_REGISTER_CLASS_XMM = 2,
-+    HV_X64_REGISTER_CLASS_SEGMENT = 3,
-+    HV_X64_REGISTER_CLASS_FLAGS = 4,
-+};
-+
-+union hv_vp_register_page_interrupt_vectors {
-+    uint64_t as_uint64;
-+    struct {
-+        uint8_t vector_count;
-+        uint8_t vector[HV_VP_REGISTER_PAGE_MAX_VECTOR_COUNT];
-+    };
-+};
-+
-+struct hv_vp_register_page {
-+    uint16_t version;
-+    uint8_t isvalid;
-+    uint8_t rsvdz;
-+    uint32_t dirty;
-+
-+    union {
-+        struct {
-+            /* General purpose registers (HV_X64_REGISTER_CLASS_GENERAL) */
-+            union {
-+                struct {
-+                    uint64_t rax;
-+                    uint64_t rcx;
-+                    uint64_t rdx;
-+                    uint64_t rbx;
-+                    uint64_t rsp;
-+                    uint64_t rbp;
-+                    uint64_t rsi;
-+                    uint64_t rdi;
-+                    uint64_t r8;
-+                    uint64_t r9;
-+                    uint64_t r10;
-+                    uint64_t r11;
-+                    uint64_t r12;
-+                    uint64_t r13;
-+                    uint64_t r14;
-+                    uint64_t r15;
-+                } QEMU_PACKED;
-+
-+                uint64_t gp_registers[16];
-+            };
-+            /* Instruction pointer (HV_X64_REGISTER_CLASS_IP) */
-+            uint64_t rip;
-+            /* Flags (HV_X64_REGISTER_CLASS_FLAGS) */
-+            uint64_t rflags;
-+        } QEMU_PACKED;
-+
-+        uint64_t registers[18];
-+    };
-+    uint8_t reserved[8];
-+    /* Volatile XMM registers (HV_X64_REGISTER_CLASS_XMM) */
-+    union {
-+        struct {
-+            struct hv_u128 xmm0;
-+            struct hv_u128 xmm1;
-+            struct hv_u128 xmm2;
-+            struct hv_u128 xmm3;
-+            struct hv_u128 xmm4;
-+            struct hv_u128 xmm5;
-+        } QEMU_PACKED;
-+
-+        struct hv_u128 xmm_registers[6];
-+    };
-+    /* Segment registers (HV_X64_REGISTER_CLASS_SEGMENT) */
-+    union {
-+        struct {
-+            struct hv_x64_segment_register es;
-+            struct hv_x64_segment_register cs;
-+            struct hv_x64_segment_register ss;
-+            struct hv_x64_segment_register ds;
-+            struct hv_x64_segment_register fs;
-+            struct hv_x64_segment_register gs;
-+        } QEMU_PACKED;
-+
-+        struct hv_x64_segment_register segment_registers[6];
-+    };
-+    /* Misc. control registers (cannot be set via this interface) */
-+    uint64_t cr0;
-+    uint64_t cr3;
-+    uint64_t cr4;
-+    uint64_t cr8;
-+    uint64_t efer;
-+    uint64_t dr7;
-+    union hv_x64_pending_interruption_register pending_interruption;
-+    union hv_x64_interrupt_state_register interrupt_state;
-+    uint64_t instruction_emulation_hints;
-+    uint64_t xfem;
-+
-+    uint8_t reserved1[0x100];
-+
-+    /* Interrupts injected as part of HvCallDispatchVp. */
-+    union hv_vp_register_page_interrupt_vectors interrupt_vectors;
-+} QEMU_PACKED;
-+
- #endif /* HW_HYPERV_HVHDK_H */
+-    ret = set_x64_registers(cpu, reg_names, reg_values);
+-    if (ret < 0) {
+-        error_report("Failed to set x64 registers");
+-        return -1;
++        ret = set_x64_registers(cpu, reg_names, reg_values);
++        if (ret < 0) {
++            error_report("Failed to set x64 registers");
++            return -1;
++        }
+     }
+ 
+-    cpu->accel->dirty = false;
+-
+     return 0;
+ }
+ 
+@@ -1504,6 +1521,7 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
+     bool repop = info->access_info.rep_prefix == 1;
+     size_t repeat = repop ? info->rcx : 1;
+     size_t insn_len = info->header.instruction_length;
++    uint64_t rip;
+     bool direction_flag;
+     uint32_t reg_names[3];
+     uint64_t reg_values[3];
+@@ -1533,18 +1551,28 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
+         reg_values[0] = info->rdi;
+     }
+ 
+-    reg_names[1] = HV_X64_REGISTER_RIP;
+-    reg_values[1] = info->header.rip + insn_len;
+-    reg_names[2] = HV_X64_REGISTER_RAX;
+-    reg_values[2] = info->rax;
++    rip = info->header.rip + insn_len;
+ 
+-    ret = set_x64_registers(cpu, reg_names, reg_values);
+-    if (ret < 0) {
+-        error_report("Failed to set x64 registers");
+-        return -1;
+-    }
++    if (cpu->accel->dirty) {
++        env->eip = rip;
++        if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
++            env->regs[R_ESI] = info->rsi;
++        } else {
++            env->regs[R_EDI] = info->rdi;
++        }
++        /* Sync modified standard registers back and clear dirty. */
++        mshv_store_regs(cpu);
++        cpu->accel->dirty = false;
++    } else {
++        reg_names[1] = HV_X64_REGISTER_RIP;
++        reg_values[1] = rip;
+ 
+-    cpu->accel->dirty = false;
++        ret = set_x64_registers(cpu, reg_names, reg_values);
++        if (ret < 0) {
++            error_report("Failed to set x64 registers");
++            return -1;
++        }
++    }
+ 
+     return 0;
+ }
 -- 
 2.53.0
 
