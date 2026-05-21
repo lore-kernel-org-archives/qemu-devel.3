@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0041FCD5BAC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 18:08:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7239ECD5BAC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 18:08:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ7mv-0000BT-HF; Thu, 21 May 2026 14:06:29 -0400
+	id 1wQ7nF-0000Jm-Kv; Thu, 21 May 2026 14:06:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wQ7mq-00009u-9t
- for qemu-devel@nongnu.org; Thu, 21 May 2026 14:06:24 -0400
+ id 1wQ7n7-0000HR-Q3
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 14:06:42 -0400
 Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wQ7mn-00021h-Fg
- for qemu-devel@nongnu.org; Thu, 21 May 2026 14:06:23 -0400
+ id 1wQ7n5-000281-8N
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 14:06:41 -0400
 Received: by mail-ot1-x32a.google.com with SMTP id
- 46e09a7af769-7dbe07d3ec3so3350666a34.0
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 11:06:21 -0700 (PDT)
+ 46e09a7af769-7dea1272943so3175167a34.0
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 11:06:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779386780; x=1779991580; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779386798; x=1779991598; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=z9OZKj50dZv5s1heY9l5Z9IxHiDUoqE1DOEEF5VctYg=;
- b=U9yWTBg/+PljeJQQraIM9UstlhRLFC9eMGuUxy20ChXLEw8impxWPfOqtwUY48jpfy
- O94T3bh1+SJAv/ZhGVEMHiR4f+7k3prMl10J0UCiaP5JFnoeJQtKPI3RvApR7SWrEfSh
- uyhrNftEb0fT1aWts4c9A457VOIPlBEvhJfVPjvd4UYyJf2O/WRQQq8MzTfR7E/7LBbv
- 8+a/ulkl3uUxH2/3iWMil7W7olRQCnEdx1ghgLbRgdTPTdG/tB9FZX/GxO+JRldA7nN2
- YNuLqhWPTaj4B0jfDhn0bOjZRLe7u98F1C6Shzci/lAtwdaLh+7nT0xO40FgSGS4XtT5
- /itA==
+ :reply-to; bh=h/YjkLPN0ai0rp7srfOk+fhrJScHHUdUfM2SVxvqpR4=;
+ b=AjimbOAyXm1bJrZWwhNCDZyi6TBuv+Ah+7WqRvCITiAzdprNBTvmrjWHoM+2CPc8mH
+ Y5+efjyry7Cj5O+60+cUenJ3Osq2Y6RNo8968WrTNl9RwD+Q3KdLI/vzuozlVHvITfly
+ qKDUfZ23MgwchKuIlQiyDfxk0C5gzrvBtz4jym2zooqIxQC8NdbV66S1b2Qm7RaoQx2E
+ f7cgjsN/VZ+otgaOUtN1Dep80Z4V652cYqqquilBUi9ESMkEErxA7ZPPNGf3z6ynW/cK
+ QSB2uJZcH54yfMmXzT/MnC7hjCpkzI8fEcn82W6L+PedNy52dupAU/k0tyth1EUDu8tf
+ vfWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779386780; x=1779991580;
+ d=1e100.net; s=20251104; t=1779386798; x=1779991598;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=z9OZKj50dZv5s1heY9l5Z9IxHiDUoqE1DOEEF5VctYg=;
- b=l2bpWTCU+eXAqYRPY80i847ZYddJ01Xcy4AcLlKrK6Du9cN9XAopZqyA5/Utsnohr9
- io/PtZNFBjkMKoqIxSv0T3nj75xPBaDmiB7ghb10Mqcun76o5M8aNZHnWnp32MZI1E1n
- FGQd/p86D8KohvP71iMi1jDLaxNXzbTq0Skz7hYGX7JpgPHKN23kt4789xWILBe3qX7P
- 3hW9IYQCss2kdgw6hLVVR8rzkZ1jlp2t4ZpnkG8u6ySbeJbf2h+HLXB6custzPrIzL8R
- LHlbdwc06rh8AVZ85OyLlujHUSROu1EaIevt2nnT7hQUWbEPX/4tg3b7Au9DYBFxu5B1
- kgAA==
-X-Gm-Message-State: AOJu0YxtM3xD8KSvtltUJxqVRox4fuuWrXFzIq3X150z1g3Y88z51w1r
- dx0WfC9WcDtWdAKYDs5YcQ14GiLp35j30lL9+6eh74wjcnlcmrVaUKxH
-X-Gm-Gg: Acq92OGY5BjriO8gKAlYwFWZc9guDQN2jHZI9Zdu7PB0IHVhZjZ6/YvTtPPGXxExb1g
- Nt+c+2haVh3hJg3zo9OptBpgjc3M0vMF8ojC1v0dXc1J08RGfyoVQk77FXgMTQHgn72hm2Hs9rw
- AO5xKfRle+A4ciQLo48yUdEIHCjeNqTRKmSInQOvVtex9ymDVM+08oFQjw058pxSQvPBoRU2n2E
- 78s/Zx/Qne7RJtZ89WblQER/1hP9yjpyo6oQ4LptFK3CTSacAqKhx70F03DiQkawoAY8QSEe6HR
- mtnFYDOShwAEdpmBYFKcTxzXPNVT3l3TXIZ7ORjhF3QAEhnewNdQHbedR2V3TuroHkS0BTGSHib
- Mn74hDOuCiYbxnIpTOrNLnNoz8kQmWo2JrmvddEYHTU7qJ0FM7rmFw3AvrMyff2GW4Cb6+1y8Qm
- VolG9BELkjGZ4Jke4Kc4r9BF9xXwWZZDFPWSeQ++XGbmfz0pCV/rRYYNgM7hjt9e//r4WfT+yYY
- GjyJp6mNHTb0dEP0EHLxpLadK4A1QcwJ9YOzWhtfA8f3U5L1Vc4S4MYIe/GgEs+4v8Ubm81JH+U
- bWs=
-X-Received: by 2002:a05:6830:7186:b0:7d7:5113:f83a with SMTP id
- 46e09a7af769-7e5fef032bcmr129565a34.25.1779386780215; 
- Thu, 21 May 2026 11:06:20 -0700 (PDT)
+ bh=h/YjkLPN0ai0rp7srfOk+fhrJScHHUdUfM2SVxvqpR4=;
+ b=oiTgjGWBCKP4enZQ4tVLB3tnTaUz6f30jYWm8XT3zY+Z2loaIAcA6HWyrIPNhY2dTn
+ ZhSXl1WcGb8O8N2l+9Rr0n/EK6VmIxd4KJJZo/iE55nWMUKMrqIkqDVLsNDWY1hOPgrJ
+ EWw7dS/eFmDh6+qS6Fhrwra2tmumzl1DX/s76xp7asaYrA7+3ikrLs+ElgDyW9R51BXo
+ OHDdz8XH7V53TAGJ0WeppbUVfaRU996Pi+pl52cgP/fHwu2j9FG4E8LEpIarVIMwJjny
+ P3oHXg8gFSE4n0POAaAklgg8tn4+8Fl9d3KjqE+4z1RWSvWz6FRFp4YFcqPHz4QE8yNj
+ f8RA==
+X-Gm-Message-State: AOJu0YyoHEcgp2snGFX5ps9yn32vr7eL9wHSDuk2jo6oluLr2UUEg++r
+ OvuzOjuWdxEnGwTzL3szhL1YKFQjl6ezk4cidbPGsC6U6he/I8XhD7hB
+X-Gm-Gg: Acq92OHOXYIwza/9eAok8tdgMxNuc5B9dDgb5NYeKMMS6Zs05mI2S35VGoBZQGNZOzq
+ GYLIzEkjXmNJ2ICpZWgVeoioqVHbtjkzH9OEzVmDwqeVdtdLvINzH/gQc93MwOqOPyf0lTTIpv/
+ EGzO1fuMSaDXUrtxcUUilDdCd2/PNzoHt7COd2BJJmgqjEWyZQWcq3KrielBsz8E84p23shoP0S
+ znFYCRfwInjIWS3fQHgC5ZWfJiZRcj89PCnAoCtfMGbEeFMbp9KlDKVBabubKyPOLTQKH2UO+AV
+ kxHTevIC8mJiAtUVFvYSQemFsLj4//xy0V75MPyKkTg75iSPgHgTus/v8d32rGBHLqJLdv1u4+I
+ wJaIp8eXmd3uAf/VoECSRLnJev2zd+O7xn3/ofbB9NgxiaCKEkyG+NuNpn/aOESELLDnb46OusN
+ YkTiA8rZiJfftjxZvyui6ebacu4xwFaJe2gxVHXrlYII+6TDrRThhopNHQO38LkPX/KUdyUbwru
+ 5XmtHs1k+yOdqdQse6cDSNaIgrHIebbCERMXh3qBtV5fnHrmH3U0PsK4LyR1jz3WfG32vd15XAf
+ ISo=
+X-Received: by 2002:a05:6830:20ca:b0:7e5:6d2e:acd9 with SMTP id
+ 46e09a7af769-7e5fefcbc8dmr80712a34.12.1779386798119; 
+ Thu, 21 May 2026 11:06:38 -0700 (PDT)
 Received: from mac.localdomain (184-96-131-78.hlrn.qwest.net. [184.96.131.78])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e5f6ee286fsm903089a34.25.2026.05.21.11.06.19
+ 46e09a7af769-7e5f6ee286fsm903089a34.25.2026.05.21.11.06.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 11:06:19 -0700 (PDT)
+ Thu, 21 May 2026 11:06:37 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Thu, 21 May 2026 12:05:56 -0600
-Subject: [PATCH v13 03/22] target/mips: add Octeon COP2 crypto helper plumbing
+Date: Thu, 21 May 2026 12:06:14 -0600
+Subject: [PATCH v13 21/22] target/mips: add Octeon CvmCount RDHWR support
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260521-mips-octeon-missing-insns-v2-v13-3-5a4cb8ec9cd3@gmail.com>
+Message-Id: <20260521-mips-octeon-missing-insns-v2-v13-21-5a4cb8ec9cd3@gmail.com>
 References: <20260521-mips-octeon-missing-insns-v2-v13-0-5a4cb8ec9cd3@gmail.com>
 In-Reply-To: <20260521-mips-octeon-missing-insns-v2-v13-0-5a4cb8ec9cd3@gmail.com>
 To: qemu-devel@nongnu.org
@@ -110,61 +110,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the Octeon COP2 crypto helper source file and build it with the MIPS
-TCG target. This provides the common compilation unit for the COP2 engine
-helpers.
+Octeon exposes CvmCount through RDHWR register 31. Add the Octeon-only
+decode path, enable the corresponding HWREna bit for linux-user, and use
+an unsigned mask when checking HWREna so bit 31 is handled safely.
 
-The instruction dispatch itself remains fully decoded by decodetree, and
-operation selectors call per-operation helpers rather than a common
-selector-dispatch helper.
+For user-mode emulation, return host ticks as a monotonic counter source
+suitable for existing Octeon userspace code. In system mode, fall back to
+the existing CP0 Count value.
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
-Changes v9 -> v10:
-  - Remove shared-window selector constants and the shared-mode setter.
-
-Changes v8 -> v9:
-  - Split helper plumbing out of the former monolithic COP2 helper patch.
-  - Keep shared-window selector arithmetic local to octeon_crypto.c.
+Changes v5 -> v6:
+  - New patch.
 ---
- target/mips/tcg/meson.build     |  1 +
- target/mips/tcg/octeon_crypto.c | 16 ++++++++++++++++
- 2 files changed, 17 insertions(+)
+ target/mips/cpu.c                             |  1 +
+ target/mips/helper.h                          |  1 +
+ target/mips/tcg/op_helper.c                   | 13 ++++++++++++-
+ target/mips/tcg/translate.c                   | 11 +++++++++++
+ tests/tcg/mips/user/isa/octeon/octeon-insns.c | 17 +++++++++++++++++
+ 5 files changed, 42 insertions(+), 1 deletion(-)
 
-diff --git a/target/mips/tcg/meson.build b/target/mips/tcg/meson.build
-index fff9cd6c7f..4ee359874a 100644
---- a/target/mips/tcg/meson.build
-+++ b/target/mips/tcg/meson.build
-@@ -18,6 +18,7 @@ mips_ss.add(files(
-   'lmmi_helper.c',
-   'msa_helper.c',
-   'msa_translate.c',
-+  'octeon_crypto.c',
-   'op_helper.c',
-   'rel6_translate.c',
-   'translate.c',
-diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
-new file mode 100644
-index 0000000000..df5b0449ae
---- /dev/null
-+++ b/target/mips/tcg/octeon_crypto.c
-@@ -0,0 +1,16 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * MIPS Octeon crypto emulation helpers.
-+ *
-+ * Copyright (c) 2026 James Hilliard
-+ */
+diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+index b223b767c9..d72044aef6 100644
+--- a/target/mips/cpu.c
++++ b/target/mips/cpu.c
+@@ -320,6 +320,7 @@ static void mips_cpu_reset_hold(Object *obj, ResetType type)
+     env->CP0_HWREna |= 0x0000000F;
+     if (env->insn_flags & INSN_OCTEON) {
+         env->CP0_HWREna |= 0x40000000u;
++        env->CP0_HWREna |= 0x80000000u;
+     }
+     if (env->CP0_Config1 & (1 << CP0C1_FP)) {
+         env->CP0_Status |= (1 << CP0St_CU1);
+diff --git a/target/mips/helper.h b/target/mips/helper.h
+index 2902dde889..a755cc5ad5 100644
+--- a/target/mips/helper.h
++++ b/target/mips/helper.h
+@@ -277,6 +277,7 @@ DEF_HELPER_1(rdhwr_ccres, tl, env)
+ DEF_HELPER_1(rdhwr_performance, tl, env)
+ DEF_HELPER_1(rdhwr_xnp, tl, env)
+ DEF_HELPER_1(rdhwr_chord, tl, env)
++DEF_HELPER_1(rdhwr_cvmcount, tl, env)
+ DEF_HELPER_2(pmon, void, env, int)
+ DEF_HELPER_1(wait, void, env)
+ 
+diff --git a/target/mips/tcg/op_helper.c b/target/mips/tcg/op_helper.c
+index 3e586e3049..df1b5c3734 100644
+--- a/target/mips/tcg/op_helper.c
++++ b/target/mips/tcg/op_helper.c
+@@ -25,6 +25,7 @@
+ #include "exec/memop.h"
+ #include "fpu_helper.h"
+ #include "qemu/crc32c.h"
++#include "qemu/timer.h"
+ #include <zlib.h>
+ 
+ static inline target_ulong bitswap(target_ulong v)
+@@ -209,7 +210,7 @@ target_ulong helper_yield(CPUMIPSState *env, target_ulong arg)
+ 
+ static inline void check_hwrena(CPUMIPSState *env, int reg, uintptr_t pc)
+ {
+-    if ((env->hflags & MIPS_HFLAG_CP0) || (env->CP0_HWREna & (1 << reg))) {
++    if ((env->hflags & MIPS_HFLAG_CP0) || (env->CP0_HWREna & (1u << reg))) {
+         return;
+     }
+     do_raise_exception(env, EXCP_RI, pc);
+@@ -261,6 +262,16 @@ target_ulong helper_rdhwr_chord(CPUMIPSState *env)
+     return env->octeon_crypto.chord;
+ }
+ 
++target_ulong helper_rdhwr_cvmcount(CPUMIPSState *env)
++{
++    check_hwrena(env, 31, GETPC());
++#ifdef CONFIG_USER_ONLY
++    return cpu_get_host_ticks();
++#else
++    return (uint32_t)cpu_mips_get_count(env);
++#endif
++}
 +
-+#include "qemu/osdep.h"
-+#include "cpu.h"
-+#include "internal.h"
-+#include "exec/helper-proto.h"
-+#include "crypto/aes.h"
-+#include "crypto/sm4.h"
-+#include "qemu/bitops.h"
-+#include "qemu/host-utils.h"
+ void helper_pmon(CPUMIPSState *env, int function)
+ {
+     function /= 2;
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+index 1f44932882..e3467d1525 100644
+--- a/target/mips/tcg/translate.c
++++ b/target/mips/tcg/translate.c
+@@ -10933,6 +10933,17 @@ void gen_rdhwr(DisasContext *ctx, int rt, int rd, int sel)
+         gen_helper_rdhwr_chord(t0, tcg_env);
+         gen_store_gpr(t0, rt);
+         break;
++    case 31:
++        if (!(ctx->insn_flags & INSN_OCTEON)) {
++            gen_reserved_instruction(ctx);
++            break;
++        }
++        translator_io_start(&ctx->base);
++        gen_helper_rdhwr_cvmcount(t0, tcg_env);
++        gen_store_gpr(t0, rt);
++        gen_save_pc(ctx->base.pc_next + 4);
++        ctx->base.is_jmp = DISAS_EXIT;
++        break;
+     default:            /* Invalid */
+         MIPS_INVAL("rdhwr");
+         gen_reserved_instruction(ctx);
+diff --git a/tests/tcg/mips/user/isa/octeon/octeon-insns.c b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
+index 9ee4b8f990..d41115aab6 100644
+--- a/tests/tcg/mips/user/isa/octeon/octeon-insns.c
++++ b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
+@@ -314,6 +314,22 @@ static uint64_t octeon_cop2_gfm_mul_reflect_readback(uint64_t value)
+     return rd;
+ }
+ 
++static uint64_t octeon_rdhwr31_non_decreasing(void)
++{
++    uint64_t first, second;
++
++    asm volatile(
++        ".word 0x7c08f83b\n\t" /* rdhwr $8, $31 */
++        ".word 0x7c09f83b\n\t" /* rdhwr $9, $31 */
++        "move %[first], $8\n\t"
++        "move %[second], $9\n\t"
++        : [first] "=r" (first), [second] "=r" (second)
++        :
++        : "$8", "$9");
++
++    return second >= first;
++}
++
+ int main(void)
+ {
+     assert(octeon_baddu(0x123, 0x0f0) == 0x13);
+@@ -340,6 +356,7 @@ int main(void)
+                0x0123456789abcdefULL) == 0xf7b3d591e6a2c480ULL);
+     assert(octeon_cop2_gfm_mul_reflect_readback(
+                0xfedcba9876543210ULL) == 0x084c2a6e195d3b7fULL);
++    assert(octeon_rdhwr31_non_decreasing());
+ 
+     return 0;
+ }
 
 -- 
 2.54.0
