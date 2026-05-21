@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69C17CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:21:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1031BCD5BB3
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:21:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ3I5-0004P0-Sm; Thu, 21 May 2026 09:18:21 -0400
+	id 1wQ3I4-0004GK-1z; Thu, 21 May 2026 09:18:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wQ3Hh-00041u-0Q
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:17:57 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1wQ3Hj-00044P-BC
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:17:59 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wQ3HZ-0008RO-B3
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:17:53 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-43d75312379so5105936f8f.1
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 06:17:45 -0700 (PDT)
+ id 1wQ3Hg-0008VJ-OT
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:17:59 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-490388fd0dbso6026595e9.0
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 06:17:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779369464; x=1779974264; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779369469; x=1779974269; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bul/NPQCy5f4BoTanQnpnei+z/q7g1Dscne+o+Wvxt0=;
- b=wee2ghKEFwdJlNMbD1xRMHejlGX8tK5aSuv9urXuDbcbzMurayC5mKE1PyWfvzjM+9
- eB8alKx0vzBgXzZ7d15YpTMeiU/DtQdehAbK4JYtPasn7Yr3mm+fiFeJEBq3aYLxOvtC
- VckU8MBTtPslR+1f9GE57ayhcke0giUqWAHfdFOifOB/GBAWj1BGuZA9dWE5PwLu0an1
- A8wPelrXIvbgTLFNBEaBwrD01B4m7j7aiktuDPKcDyUszNrXo2n2LyVHM+KP5hovKFda
- Uaj+gAxySdpVl5t9cJTTZl+g/k+tBKGUTVobetQ3BnetmzT+o1hkqzbaOAGgGC/q1wun
- 1Q1g==
+ bh=rTVlKsaFgg0tIzupuoHVqOYQ+PBnu11p6ihQwnWRn+4=;
+ b=u5Xuve2wC1CvpX/ej4YU2PeE7Cg7x6KZFEQR6kjCKSw8irWL82S9+yQts288HeGnQJ
+ J3VdP8cXTXuMqF8K62Skw8ITusG4X9z+znrL9pNPn5m4NjM0PtnOIMHOfzxyLe7XvffJ
+ BUUkiDzhazjTK0w/VQjI5hRRFp4FzKKd1BVKX4vCSfXvpFimKxasjrswLhaS5rc2aJpY
+ A7siCR14aI+t1SRFG2sZ22f9X80WmieUbGza0DZ934n0uj7Gv3Mva/lcra1hRKM8Gnyd
+ S44q8p/Wy98On0MaRKkvHzA6F8tSLT0JPnj4D6eqSYVHL0IoPcOzdh54rnqZmnp522Oq
+ kmCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779369464; x=1779974264;
+ d=1e100.net; s=20251104; t=1779369469; x=1779974269;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=bul/NPQCy5f4BoTanQnpnei+z/q7g1Dscne+o+Wvxt0=;
- b=UVDH9jaLOzJGHfb/k4OgTXxHtxZ5zW2yNdN9lTa7RNi5h1XuegFRqic9wl5rdHH6ab
- VkP5v9B1YXuLlU4R155+Gw3nMhuxe/TBlPP09KQooXeMcMlo+AFg73yHprToGp0s2llD
- S9AU7MZmzRR7jNmRbc7bCENtUz94aBTfnoODGvLskzDTT0wDuf3y3ak37gxY1oU07ZZD
- dzbKowVbBdK7Y6zygaG7olQ3iG3736r3IIzQxNz9t99Jk7MP1xrBx09pFbDyqvrRlgm8
- bY0c5ig0KS9+8lX0K5NyhrTKfkp2zAj/r9nGGlKO6yAaqaqHSCOUJY0XZjSyAZnN6xUx
- RxQw==
-X-Gm-Message-State: AOJu0YzTrignK04S0v5PznWS4q77xWfE6/L2b/Tg4dS+KO56uMIDIRUs
- W36xK8Rs5y+pmMbD9WBkGTYWwRZKPJSvpZ5iwVX9S8IsUJO87iARZCBp+iFAj6gvmLQ=
-X-Gm-Gg: Acq92OEtnjAsjXMJleAPBhafzX1oQJq/OjFQUjx+oc1YGOE5VeNkQ1GwEjt98I7Cnu/
- 2ksDRlji/rsxPt5qR4jMeunLC2o3z/rdyW3ykVNdPPoKe9PIqhPuA1UARWIBrukfVFOV/kYtIAj
- bXtGRnQ1fFVAXVmJm9BQ2H5v+Qgj80szTU8CIXj51XLnHWmKs6oOZGWdfBtwPKBiapu1JTpjKci
- jALAoI6ZPMqoM3q0+dS5LV9uCjQoqY9DiJv4LYDGRSvOHOIETx+GAyUke//xLc+EZgAWUBiaHeY
- y/wd1wnAEDHNBShpQG48S3Z/Ojr96oyTtcWwevPTLuRxAj7G+ENC2gQRf1a0lUhkFNswZit+OPn
- fySwqHUX7y8ZmKf8bmbaOvTNqHq6r8E34CfH81QS2JrGj8S+2NFeDKUd7S12iSley2bcn+0PQlt
- 7ShOF7KRwou1c67aJGowBhLHUF5dw4P7yN6w==
-X-Received: by 2002:a05:600c:c104:b0:48a:534a:eed8 with SMTP id
- 5b1f17b1804b1-49036047933mr23536725e9.1.1779369463818; 
- Thu, 21 May 2026 06:17:43 -0700 (PDT)
+ bh=rTVlKsaFgg0tIzupuoHVqOYQ+PBnu11p6ihQwnWRn+4=;
+ b=GSPTciK9HOr631CVdo3ZU3KSTWSIkrSsUv6MYsPxk0TJei83rpRAtsT2zyuCjEawSA
+ 0tzSJ11Zhfi9y2FTMQZm2p3nw8+fOySNCAfw310qNnMcUDRR5M25GinDSs22kHcuiSi2
+ GOGrU5HjpMkmMnrRDK6qrywZwulxU3/5jcZAjufiUQEqrQ5BqUfhvW3kSxGZTknSAUU4
+ mbu8ufBamVbFTHwyCs2UwzI2QNGhHHbX+rjYnzc/++j0y7tnhU2U5CdsT2A/QcW4lkHC
+ 4/NRPTxLzQKNCm6R8u7RUdpj0H7M3xlEsHSXLimBeoQW+lbm7a9WKr37bE/TIfL7N0U/
+ G2ZA==
+X-Gm-Message-State: AOJu0YzbJGW7UHsCjFlKlNe8enldAQXOYjG6FQ3duHWkaJ2IiTuQKd9j
+ QNFAUJXdLQeiYzthbJALkhvVck8hWU1xkvv56OmAaU75Zh9OWoxKmXkZXVPIFK09eYE=
+X-Gm-Gg: Acq92OGj+081m5LoS0dHiXy/FIP0gJWawF7z+O1e7FIUH7H1SvjmCpyWjjS1JuE3YNh
+ //NZ7nnc8F94ncKEIecNfmG2y1NiRlshtpzHWsGfmBVqZ6tnGZJnJX610Slla6BYs3MVMN6K1Bc
+ i/AzUMzZOiP1sUhVLr+hZUblyevUIkOtSuhC3lQ6DKNPrfka3PiEMWOYOWQeF2Bp3MomgP/FBJe
+ qI7Q2Lmc+K94qB5NSK1MXJiVrr0/+gc7seigfRSZOfgC4ClKcqgECiIb6jyrOEq0k++maWNXND2
+ V/THcBN+pa+SXmC3W+JypLhdQbh0PNwYPo7hrM2oG3Js8AfBh/geS7gXR7N4ic0CAYyBjepEYod
+ Ekzo/mDkf3AgOPHKR0d6wdR9WRSPsH8XsiW0RnajahKTjJ0cVG/kVuzARSL7YtjWX2FxmeKkFdH
+ Da0+nW/WTsm2XNr2Z/5ZHiZDA=
+X-Received: by 2002:a05:600c:8592:b0:48a:5970:1fe1 with SMTP id
+ 5b1f17b1804b1-49036033339mr35805995e9.4.1779369469024; 
+ Thu, 21 May 2026 06:17:49 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4903c99cb43sm25940995e9.4.2026.05.21.06.17.41
+ ffacd0b85a97d-45eaa92ca96sm2598593f8f.19.2026.05.21.06.17.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 06:17:43 -0700 (PDT)
+ Thu, 21 May 2026 06:17:48 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E806B60200;
- Thu, 21 May 2026 14:17:39 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 6482360E4D;
+ Thu, 21 May 2026 14:17:40 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
@@ -84,24 +84,25 @@ Cc: Peter Xu <peterx@redhat.com>,
  Brian Cain <brian.cain@oss.qualcomm.com>, Fabiano Rosas <farosas@suse.de>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org
-Subject: [PATCH v2 07/16] gitlab: add MacOS 26 job on gitlab runner
-Date: Thu, 21 May 2026 14:17:29 +0100
-Message-ID: <20260521131739.540157-8-alex.bennee@linaro.org>
+Subject: [PATCH v2 12/16] MAINTAINERS: Cover debian-xtensa-cross.docker with
+ Xtensa section
+Date: Thu, 21 May 2026 14:17:34 +0100
+Message-ID: <20260521131739.540157-13-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260521131739.540157-1-alex.bennee@linaro.org>
 References: <20260521131739.540157-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,48 +118,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-gitlab supports 3 MacOS images with 15 and 26 being the current
-supported ones. To get ahead of the curve lets enable 26 as well.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-It re-uses the same brew list but also attempts to work around python
-configure failure by setting DYLD_LIBRARY_PATH:
-/opt/homebrew/opt/expat/lib/
-
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260518102222.80735-4-philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
 ---
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-v2
-  - call runners directly, seems to be working now
-  - drop debug lines
----
- .gitlab-ci.d/macos.yml | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
-
-diff --git a/.gitlab-ci.d/macos.yml b/.gitlab-ci.d/macos.yml
-index c93bf12a294..f61750a3f4a 100644
---- a/.gitlab-ci.d/macos.yml
-+++ b/.gitlab-ci.d/macos.yml
-@@ -45,3 +45,19 @@ aarch64-macos-15-build:
-         --cross-prefix-x86_64=x86_64-elf-
-         --disable-plugins
-     TEST_TARGETS: check-unit run-tcg-tests-aarch64-softmmu run-tcg-tests-i386-softmmu run-tcg-tests-x86_64-softmmu
-+
-+aarch64-macos-26-build:
-+  extends: .macos_job_template
-+  image: macos-26-xcode-26
-+  variables:
-+    NAME: macos-26
-+    DYLD_LIBRARY_PATH: /opt/homebrew/opt/expat/lib/
-+    PATH_EXTRA: /opt/homebrew/gettext/bin
-+    PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
-+    CONFIGURE_ARGS:
-+        --target-list=aarch64-softmmu,i386-softmmu,x86_64-softmmu
-+        --cross-prefix-aarch64=aarch64-elf-
-+        --cross-prefix-i386=i686-elf-
-+        --cross-prefix-x86_64=x86_64-elf-
-+        --disable-plugins
-+    TEST_TARGETS: check-unit run-tcg-tests-aarch64-softmmu run-tcg-tests-i386-softmmu run-tcg-tests-x86_64-softmmu
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 03ec57efe75..c04fc1cd2e8 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -445,6 +445,7 @@ W: http://wiki.osll.ru/doku.php?id=etc:users:jcmvbkbc:qemu-target-xtensa
+ S: Maintained
+ F: target/xtensa/
+ F: hw/xtensa/
++F: tests/docker/dockerfiles/debian-xtensa-cross.docker
+ F: tests/functional/xtensa/meson.build
+ F: tests/tcg/xtensa/
+ F: tests/tcg/xtensaeb/
 -- 
 2.47.3
 
