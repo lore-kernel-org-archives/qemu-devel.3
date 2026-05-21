@@ -4,88 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4E8DCD4F5E
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 11:16:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AAF1CD4F5E
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 11:17:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ1Ny-0001nV-4X; Thu, 21 May 2026 07:16:18 -0400
+	id 1wQ1PD-0002FF-Un; Thu, 21 May 2026 07:17:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wQ1Nk-0001mP-Es
- for qemu-devel@nongnu.org; Thu, 21 May 2026 07:16:06 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wQ1PB-0002Er-JY
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 07:17:33 -0400
+Received: from mail-dy1-x132f.google.com ([2607:f8b0:4864:20::132f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wQ1Ni-0004L8-8A
- for qemu-devel@nongnu.org; Thu, 21 May 2026 07:16:04 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4896c22fcbaso50079225e9.0
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 04:16:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wQ1P9-00059k-Nh
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 07:17:33 -0400
+Received: by mail-dy1-x132f.google.com with SMTP id
+ 5a478bee46e88-303f2fb7225so4287472eec.1
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 04:17:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779362250; cv=none;
+ d=google.com; s=arc-20240605;
+ b=fmeeJHt4YgzHlktA6ESkfujSJ2hZdxhVRtQqLZOAc9TjudXFOD8sZOpA2H5DVqGgGe
+ lBlHFj+kN6ZGSBC2H5x8quIh8XX/7UimbJ+/GxoAZOdx/72fqQzTGscRH0jWuuQsF45Z
+ au5E/lu4x/okrMJk9qHkkVTr9+6OA2pUaHxxQl0pqrSiwmtTYrNCT3vxEJZjHFkEGxVt
+ rYXSgh9bsJNnHeG+8CrJSwnnGi/TG/wr5VH0ACwD75NJTce61W3oozB21FrXDRcRrepl
+ 18jO+UHnnSXxN6xOBi616F/VNcpLGDxWARWCqIvujbdlw2igDi1AUUkdUkzh76qMPh+0
+ gQSg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=nIX3NTj9INwIfv1Bi9RBLvg4HVeaythAzpOSfbT011o=;
+ fh=cOsNULT/G3KmuphHDOpmhJ0EqPaEyNDPfyDGSK/csWI=;
+ b=LHzTFt2/8IUuWBeOYyfOv5RdpBKGPgm4/DvXPtRDqzZRijHAwezzpEKJp9zudnHoBG
+ r63CPN+Nhd0IN0NVonMnlK5Wf0ROKTTV/hJT3KByx2gNsyfEnPwG5NoE+C22QekKNf9g
+ aYctvoXUouz6E4wbjWIsGhNE1b6J5OjhsWrujnVty9a3ZiMPgIvphsXzatFTpPU7QEoa
+ r9qzPz/5sfIg6s6caWftMRrym56PvJhGJukbkrVRl96zD7MRDHuTe0GjtCdSqWcXdchY
+ 8SOD1ACWVhYgBo+Rcbv5q+O220gbMc2trPUiLzIxkk9IQSmDnDk4TsGkpZZl5/Tc/fXZ
+ sNxQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779362160; x=1779966960; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=0hiC0WF36NDFgtTmQxhbpENg5yDvvV+A2beEKRzJVvM=;
- b=xLMACaSm1ljpS8OGY7MXYarPbsMXleOLcPMxBkF4dPnwKkMbTz+VJttJBGINNyQbHT
- qzJTNTh5mo1aEYSlO2HjM//uhrJ/FVjzim/3jrMxR6XlxRaLH6CnA1tFsPGQem/Qisjd
- eF9F/OBduzRsCvprSnzgkNn8jGG5cn6QKHe6LmLKsC/AQBdTXn57N6h66X7I9nw5eFR+
- f6wFvzufz1W7MaM3sgFmzAkOLisoJ3BxkDrNWCShczsl0MTrnt5FA+1J2Y2ojoor0r0Z
- jqFuPM2x8ei4wA09I9iF56nddVSYF+Qw2oyReFk43awlnRvQuaEfMMTBdvXypAS4oeVI
- EMnA==
+ d=gmail.com; s=20251104; t=1779362250; x=1779967050; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nIX3NTj9INwIfv1Bi9RBLvg4HVeaythAzpOSfbT011o=;
+ b=YxD3T/BieM9W4BV/r99s5N5tMWp1HOhj7vCNPyvhK15hA561c07zKG7jZ2YpfTALWN
+ WZ8Yu8WllUfjjEQ7Xj0Jeazbm2ZUDuVrF+bdhyJNu5fTzS3jdsARO/s3gcilo59dzNFu
+ QhOnVf9BOeNxXN9VXdNoChJK3IqO+16ldOudfjGyQ+BF0e+WPjiLeeqXJcYDTWxyscrO
+ rwGp6l7vvbuCvXKdtTCXC3lsJGXFXSauF0IBrVLmUhaFaghJncNxZ2kYHrtqXr/a9kuG
+ RSUyVFPLNOiERB55eCh1GLEA/appF6fJp+4/CN3RG8njhf3dhlFGjO+z6acwX/UvXHMk
+ BYsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779362160; x=1779966960;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0hiC0WF36NDFgtTmQxhbpENg5yDvvV+A2beEKRzJVvM=;
- b=TU4suhYex36yiyb2KULkOee0tcKCCkbgEbjvB04s2QWT4doXOhJz93CIF6ozRk1Tzs
- AWc2NOlUg0RP4tQbuHHk5/1T5LqeXYscvuRhFFgnXvpePHMKj3Hac6hlalkL6uhXypnD
- m+YpS4n/jULCOq7EoGc+GMRfcI+zolOMgaFO/nBIkh//b9H1MinqDPi/JkeURyNFXsNM
- x/7GnDSo+2AKTy9OpkNz/MQoIXWy3hjhYjP8lSgPVIzS4BtO+++8ZGA42HHQHB6UapLl
- YE1Tsnz8ROZoCDJ2HqUReNBAR1HWclBzb6/wPLk8LUb0nA4/e0yKsKbkvw6ForAPFphI
- bA4Q==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/NL0Cwu1Y+SFUK5EG4vbBoRuppuWw06yfQMp58WvtVoRmN521ywSMFU1VUjF7d/tJBiNxC0l/q0Ytk@nongnu.org
-X-Gm-Message-State: AOJu0Yw/GNi3KL3eV+DI7HFqHA0gqq/1Ng/F2sgUCa12lgTmvknjEWyJ
- 9Z9saJfo78bgAJ14eSqg9VgAlfv1Wpr5zljCIIDtpNi6hpZKpxTgXATdZgE1bKTEAZ4=
-X-Gm-Gg: Acq92OGxeCu5UDRfTxnHseIvLjqfF+CxUHf95sBI/g2Ui3tZ7jo1XrZQysu335u5Ngv
- +dgnAss2M5XDBTo4cQNLgbknZlt4yf9C+TSHULA7CJnJdBCXMYLcxzrNLSmbOW0EZi1dfB8w0+N
- gjfYb+EmiCurahzN9IP5LJEgXEcYr/IINNJaRMDypmXeX9izJDwUGXhXdHDIHFjioB6N8h1HKa5
- ks2/6oLifCAS3YUdN8a+3A9LH3/Ij56P5RtdzAVcibVDOzvWS1EYw4Bitp32FIZ2FD+ODr+d0VH
- Ll8Ogwn6r5Dt8hVnoGNj3BcAq4lBpmNEeNCeB8BwLZbIAUh4g+5prluZemcP3sOO0rMw2FCLAaA
- jY3KA9503cubOk1qIsEJ0b8JTpyY4U056mcrvuT8Nxs265a1h7wAgmfYKy+im2nbcI/lyZsSuOS
- 1rLLNwcgTG6sp1bmn8AenCXG05n8cOjQplVcawsDvJrzDxc1AgBTQEIh1JAedktoKITA==
-X-Received: by 2002:a05:600c:8596:b0:48a:5339:ef0e with SMTP id
- 5b1f17b1804b1-4903604ccb3mr28617365e9.3.1779362160391; 
- Thu, 21 May 2026 04:16:00 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49033d3515asm66798265e9.1.2026.05.21.04.15.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 May 2026 04:15:59 -0700 (PDT)
-Message-ID: <21ecefbf-7052-4382-8332-564ec70eeb0d@linaro.org>
-Date: Thu, 21 May 2026 13:15:58 +0200
+ d=1e100.net; s=20251104; t=1779362250; x=1779967050;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=nIX3NTj9INwIfv1Bi9RBLvg4HVeaythAzpOSfbT011o=;
+ b=WstzcTcxRQZ2hv40F3DlVsQD2pd0gyBFqhXUpb+qLlGtw8LzI1/OjsHteqBXXoEOZb
+ 5PLYyfv8PlvfxJLcZLzAAvS3MtlMjKuoLp9LNBWhet0CFWVGOJDvePUOlU3dBs3JaJVu
+ 8jiMeYrF10nQyxfKqlh7lczo3xrtkRqLK47KxZoLNsqoPRkYkdn3uGuptUtpxXNLbRip
+ 1JBoaqezuAYOdQJ3VwGklxq4EjdFoRtsfWSTHzDakomdRzmcHOhsMU8QhL+3RAE3A2bD
+ my+428THD+MhCjXQhmCMXWR/8fRNzD0vmWu3Qyr7TJYFMNabLP0fsSacxFSNq4Yc9N2o
+ o2PQ==
+X-Gm-Message-State: AOJu0YzIfy8um+faOMPTffpjnb5pHACWFLZFbBK9I73Qr1WKYF+HK/Fk
+ xBLPq6T98wdO3CHGOzSwrA1BZMT1tk4pnnVCAuG2hQfQzxceqMcefvUEYiecri/euvEw9cYYZE+
+ 8rEtPcK/wr8aRjEk4d+Bmls5X2Qm5M80=
+X-Gm-Gg: Acq92OEVOsSsSt7xnnv5FrNtSQrVSaaJ5e5ilmxQ+DKGYVpzWFbLqzuyo1mkE3/HTXY
+ 2HPqOJ2iLl1NRxhFEtTwbiYrRsgoHJ5hdKM6d4LDdHvGxBKJ3nWYTEjpNroRs4Xu/8VJs6wgp6I
+ LCXu+5eNzIJluhXd49625albUxaRUTj/FDyKWeaCnmTKmk5vXbfyz05kW8hikXSgJkN6Crd3DSk
+ QTMStnDd431Sv8r+ij2SuHsT5ZKabDXPqGdrYHPrU65JeQPdsiHP1GX6pUBznYq5oTdDE3g974m
+ 1TW+r0j4HmqMNnyT34u63MJ0vKWfuYbI8VYkv7Y=
+X-Received: by 2002:a05:693c:2c0b:b0:2ed:e14:42ea with SMTP id
+ 5a478bee46e88-3042faf598fmr1426563eec.35.1779362249930; Thu, 21 May 2026
+ 04:17:29 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/riscv: Use float_raise
-Content-Language: en-US
-To: Anton Blanchard <antonb@tenstorrent.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: alistair.francis@wdc.com, chao.liu.zevorn@gmail.com
-References: <20260521110824.1091323-1-antonb@tenstorrent.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260521110824.1091323-1-antonb@tenstorrent.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+References: <20260521004226.1914121-1-dongwon.kim@intel.com>
+In-Reply-To: <20260521004226.1914121-1-dongwon.kim@intel.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Thu, 21 May 2026 15:17:17 +0400
+X-Gm-Features: AVHnY4J8w8DtBzMGHbyphsolzc_pTqWFlQqIfaz320JH1s9YbpvcOaS4MNNUWVU
+Message-ID: <CAJ+F1CLN+y6vopPwY2gE=dHPQAjptOxFjaapzf01aHmK1a+gVw@mail.gmail.com>
+Subject: Re: [PATCH] ui/egl: reset framebuffer state when creating new EGL
+To: dongwon.kim@intel.com
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132f;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x132f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,14 +115,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/5/26 13:08, Anton Blanchard wrote:
+Hi
 
-Use float_raise instead of open coding it.
-
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+On Thu, May 21, 2026 at 4:48=E2=80=AFAM <dongwon.kim@intel.com> wrote:
+>
+> From: Dongwon Kim <dongwon.kim@intel.com>
+>
+> When an old EGL context is destroyed, its associated OpenGL textures
+> and framebuffer resource IDs are already implicitly freed by the
+> driver. However, the cached IDs and geometry attributes stored within
+> the egl_fb structures remain stale and invalid for the new context.
+>
+> Call egl_fb_destroy() on the guest, cursor, and window framebuffers
+> in gd_egl_refresh() to safely clear these stale fields back to zero
+> before they are re-initialized under the new current context.
+>
+> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Cc: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
 > ---
->   target/riscv/vector_helper.c | 35 +++++++++++++++++------------------
->   1 file changed, 17 insertions(+), 18 deletions(-)
+>  ui/gtk-egl.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>
+> diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+> index 7c5c9b2428..fd14b391ed 100644
+> --- a/ui/gtk-egl.c
+> +++ b/ui/gtk-egl.c
+> @@ -163,6 +163,12 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
+>              surface_gl_create_texture(vc->gfx.gls, vc->gfx.ds);
+>          }
+>  #ifdef CONFIG_GBM
+> +
+> +        /* resetting old ids to 0 for new egl context */
+> +        egl_fb_destroy(&vc->gfx.guest_fb);
+> +        egl_fb_destroy(&vc->gfx.cursor_fb);
+> +        egl_fb_destroy(&vc->gfx.win_fb);
+> +
+
+Hmm.. It looks like the whole block is flawed.. All the destruction
+should be done before the new context is created in gd_egl_init(). Or
+was gd_egl_init() intended to be called only once? Tbh, this is X11
+stuff I think we should get rid of..
+
+
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
