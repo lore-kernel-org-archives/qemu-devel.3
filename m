@@ -4,92 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A678ECD5BB4
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 15:33:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19406CD5BB4
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 15:34:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ5P1-0003gX-IZ; Thu, 21 May 2026 11:33:40 -0400
+	id 1wQ5PR-0003uC-Hy; Thu, 21 May 2026 11:34:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wQ5Or-0003Y1-JX
- for qemu-devel@nongnu.org; Thu, 21 May 2026 11:33:32 -0400
-Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wQ5P6-0003j1-0B
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 11:33:45 -0400
+Received: from mail-qk1-x72b.google.com ([2607:f8b0:4864:20::72b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wQ5Om-00017N-6d
- for qemu-devel@nongnu.org; Thu, 21 May 2026 11:33:27 -0400
-Received: by mail-lj1-x22c.google.com with SMTP id
- 38308e7fff4ca-38e7c3a2deaso58803481fa.2
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 08:33:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wQ5P3-0001MB-Kk
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 11:33:43 -0400
+Received: by mail-qk1-x72b.google.com with SMTP id
+ af79cd13be357-90ca6f20872so869996185a.0
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 08:33:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779377619; cv=none;
+ d=google.com; s=arc-20240605;
+ b=OcZYn5V+CIlKyhfaPH9n2CX/NxE67OTIqty0FvaLHsXlg7nlIlTvWXGtYAYgLEmuKx
+ NKFLI7MpmxK9sdTvmrOiPnjxDdyj4YmA2M37M+GGznqnefjx97VdkksrT0k7JWjdMSXP
+ ZVNIUcqbil82JjfnM19ShYOzTeTukEnWOdygR50T+z7U/DnC/8AWGOe7A81q2brmJgZx
+ HdxJCL5LXCKhxYoNkffYBOvktFf45ShCUIle93ZsULm0WOH/J46txjHBuLPPGTqaE7c2
+ GXAAbB4LakLdUqejSrhh+duEP30nhfozJlgzLrgnA1IxFbheSQF3dDM5MfU6halyZ98S
+ sauA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=peDINXBxcKWQYjVspnPJmH/goNDZV4Xd6bFqDbTEs+c=;
+ fh=qz5jHiMNfVBJ88oqmstg9p/MLllNZlxY5VnP9u6Gy/E=;
+ b=fSxLxiOEGP+5DT47N7H91urtmqsbDTYuv9j0jrxpVnUD58H+oT6cq/h+7gQJAiB+dF
+ aiOkJ4c+2l+2brO4CV7xrcU34WNWU5npgeZLNzzlLp1YjhAuPDeanELqcIVT6M9WWiM5
+ Y5lxN/1IwjBO9E6R89WHfCe41HtFbsSF/6yP3PODMCqdC1sMy4PnbmZqDpGP72OULKCK
+ /qLoCOPQy5f8WnxsVrDcP7bVaZ5cdD/yCt7xikoVjWJ3DxEWX9BSGN4iZbITACB07a9Y
+ lSC6jRJxJjrJABtpXUCowb5Es19eZGtNe7LWrSbzebirTaIBt/cmd++Uvhpcq5wM+qnW
+ ZcsA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779377601; x=1779982401; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1779377619; x=1779982419; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KimNAMyXmZNNTWWv9jeYJPSLYiMDb4bG0OyNT/B+qNg=;
- b=DjWiZwo6vHuuFpCbA2AFvqjtLi/Dcn8X/BUHaQcHDpK78gsc/uQVAIcGrb/y08weQM
- 9x1g6IgHTOlLwHMHy8CgwWvSfLqvdJU0Tmbg2/5vRNFc3VQujtfV/WiWUTmTulaLXuo3
- 9E1PMVNAugwYu+lKfxTZcTCjtWApjwtMeqB8Mcz9wvwoNUfjnZuWUqsaTvmlPV4cYQ29
- dHuQp0ytqwLB9ReV8sl+MbiHd97gWCCHy1zVBGiGW1c5HG7pW5cYGpuqicp3ekkS7CoG
- 3C0lBb9zeN8FCJuZ14qK+ikPVBsi/b4wGNfObEmx9Go5w07kS4nrUars92uQvL24eK8v
- aZjw==
+ bh=peDINXBxcKWQYjVspnPJmH/goNDZV4Xd6bFqDbTEs+c=;
+ b=jitNQCdD4psjDLEOWx3wkF8MY87GOnC+0PB3wgrKuuBYAHbR90pGL9rI52UwjcEvGX
+ t3UdviaORhtweupaQhG/oDXXWn82h9WW2lEnEfGhliSQeDwXBNwM6ieAji88ykibtmB6
+ Hp4H7xpie19eVxrkIPMvm5IqE0cQtqCi4mEq/wBmMZ1xHyv0i0mWU+2OAK6Wax+7ja9s
+ 3yVk4YNSICdxwlo925ndeNkXkcVH4QzbJBPWuPfIpsgap7AS5YoMNdz3EtypvClPu5cO
+ cDlNrvi0dkwNiX7bNzDHdXdPlX1G7SKCyE6zbFDowvZk2IeLTZUiG9XPsx/Y9lPvldH1
+ d5HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779377601; x=1779982401;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KimNAMyXmZNNTWWv9jeYJPSLYiMDb4bG0OyNT/B+qNg=;
- b=osPt7i4OWEn9P0VVwOMtd8lAoh8e2rcbj0IZtHXMAW/PPdwE494bgqaNIkSg+Jt5CS
- 7OV+bHX4a1U+VOd0CljXNVaGTlmURVZiQfndAHXcUl78sN16LjHyhmDkq579Cm+rRzbM
- UmJd2BosSK2qMDHzuKVAcrm+OtPEf6+PMxwNSOVvukD1Juey5IY4clNQCSI77aKqNqob
- oqUskb6zzGz3Jznjw7pU9r11xNGgNDdOPfuxfK9XMomka3bT0RRpGPTLgWsdXFtuvV0g
- t2Jbe1h/ny67NIZQNtMWo5OmyarYLC0+4x+0pYH+V2i5MmLOdoJndpQxOAybmqtkfWZm
- SyXg==
-X-Gm-Message-State: AOJu0Yx4HxfKtQ3xkp7mcIs6ukdMWmCUBv4g6w7Rsys4FJ8y7hhyIAAU
- pduWsZlZ1TzSA19JxwDghdpYI9bHExXiNHPxQjDadISUazWEKshEY7wJ63JaB91JuINLv8u0sph
- 7m8WbKGE=
-X-Gm-Gg: Acq92OFvozCfo7+u8Dr/Uq9r/EGtLgCzXmtHqyUF+W+o/2akCnQr2wnIQvknjSrFbtE
- MBYlakeadHZcB99okPOpqdlfdkcaTtwIo05GfjfpqUmB2naUSfA+iDy/V8FkmFIEOKKcnxcru14
- uvPE7Krjlzvu884EVGEe981Oc1mIA0Mf/QAT8oBidU+qDj5h0UHIJLVVgpCafnvOe63VfuccHZh
- TxJcqnvxJSTtQ31wHrJr8J+h9oH+w/cnzKr9Vo1QtOdr7eU/rAnDY7dZ2y5NpjxF2rVsVK5l0r2
- bPNPH7qT7l317N5U7Ky0Xrr1vDVLIu46hXWkPawhrd0+5AOdxQiMr7uvaCLDq3+QaiaDFv9VT9X
- JheSMwGHsQUCBMqmwhCkltphvxBz1pr6bFLspUpuaHu4/YhW4gcgeRXvPo2RDfUu0Puo68ozv1p
- 8asmMMtRPFhffuzbR+M66sgMY=
-X-Received: by 2002:a05:600c:8585:b0:490:3890:605b with SMTP id
- 5b1f17b1804b1-49038906125mr35734655e9.31.1779376943042; 
- Thu, 21 May 2026 08:22:23 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49035c47b31sm18444115e9.14.2026.05.21.08.22.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 08:22:22 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 61EFC5F886;
- Thu, 21 May 2026 16:22:21 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org
-Subject: Re: [PATCH v6 01/64] target/arm: Implement ID_AA64ISAR3
-In-Reply-To: <20260520182213.872945-2-richard.henderson@linaro.org> (Richard
- Henderson's message of "Wed, 20 May 2026 11:21:10 -0700")
-References: <20260520182213.872945-1-richard.henderson@linaro.org>
- <20260520182213.872945-2-richard.henderson@linaro.org>
-User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Thu, 21 May 2026 16:22:21 +0100
-Message-ID: <874ik0okia.fsf@draig.linaro.org>
+ d=1e100.net; s=20251104; t=1779377619; x=1779982419;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=peDINXBxcKWQYjVspnPJmH/goNDZV4Xd6bFqDbTEs+c=;
+ b=duEtQD3Jhak3+RapdCiq41c5nGH+O/l2TTS+epQyOcZI0FtUg00iXRx09vXk3dHFJ/
+ wN974ymmqQ9WCkm9dkD7s/fCcQx8Q55Pl7dhvJGU9o1WtWy4VjporYQJ6cNGIiVpJmG9
+ HQ4ugqZCNuUts8EF/W2nr0kjvUbTWVuxY9SAZph6wNV8vXOp7M828hHLRkG4EQm6+2qg
+ rNrJmbaC3i1Pi3gH3zfecwgBSsVkmZHXmEDYlqps37mMexyiCde/2oTUQGpobVlC86OU
+ g/GmPCvRHecyZQCpiesDhM6HVuofHS2BNIbgKyGUizrLh3PzmvKUWKDZ2Zwc7KIhr2Oj
+ pKjg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8nKx6/ol4XLM6nHmS+aFpfCA+R2s7PJWEB22Qphdz1FKD5Ce0Y29E9/KfnPhnKia/m0TrQM0sXxO5v@nongnu.org
+X-Gm-Message-State: AOJu0YwiuZavhwqyR52zzWjjX5H/7gEUXSMJKVHnpwYR53aNdise3iuL
+ drmJVS3g9MKspJxzm3wBPdutIB8olcaZKwvucMhrrXhy8W7ez+5H1gFHcZcCpL3qTa0cv8NHx8H
+ Nv4mliFI8nhwnFORHFH+vB/8Zn8PuhHLNbwIgotLaaAp1isf90X+fZ1M=
+X-Gm-Gg: Acq92OGxtVhntYBpiUyprIeijYcKzrH1H4UAQCIxmGH0MToM9lSKwY5HoniHK8fc295
+ N536u2cBVraV/oWRceTqE3tyfhIX3nRfkURGcnFQX3+N4X0bJDfKDpt8TTOMBvpmnQAoXAHGGTF
+ 7vKulWA2+G/aFjgLwgzS8hscFpKIIxOV+l1cZCX31//RYBjS8m6L6ecveftMvDuC84Zod6i/fzT
+ jSpOt3O2/wrGGVwck66xzMDFXsDsmc7Sst/ez6r51cziBgxUc3KwsT1mycTU/2YUEa8HHXTcri6
+ dHHiwi1ecLz45b/XXXBlQ37DA0nILapM6mqSCQ8A38bEVr7lpSar2g/dzRDLnz7W0ks=
+X-Received: by 2002:a05:690e:4106:b0:65e:28f3:4a51 with SMTP id
+ 956f58d0204a3-65eacf4c084mr2450181d50.24.1779376891622; Thu, 21 May 2026
+ 08:21:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260521122913.1565011-1-peter.maydell@linaro.org>
+ <20260521122913.1565011-3-peter.maydell@linaro.org>
+ <87mrxsolqb.fsf@draig.linaro.org>
+In-Reply-To: <87mrxsolqb.fsf@draig.linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 21 May 2026 16:21:19 +0100
+X-Gm-Features: AVHnY4Ii6rVxvA1qROzVPUpXFSIwUzts1U0lx8wgf2cfqvUYsOFufjyE9IZvlhs
+Message-ID: <CAFEAcA9JuUY-en-_ZOnO3bjtgqG-MHp2ESGskdm-D0+fqFng_Q@mail.gmail.com>
+Subject: Re: [PATCH 2/3] target/arm: Use FPST_A64_F16 for SVE FCVTLT_hs
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
- envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x22c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-qk1-x72b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,86 +119,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
-
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/cpu-features.h    | 9 +++++++++
->  target/arm/helper.c          | 8 ++++++--
->  target/arm/cpu-sysregs.h.inc | 1 +
->  3 files changed, 16 insertions(+), 2 deletions(-)
+On Thu, 21 May 2026 at 15:55, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
 >
-> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-> index 4e44245a8b..50776347a5 100644
-> --- a/target/arm/cpu-features.h
-> +++ b/target/arm/cpu-features.h
-> @@ -244,6 +244,15 @@ FIELD(ID_AA64ISAR2, CSSC, 52, 4)
->  FIELD(ID_AA64ISAR2, LUT, 56, 4)
->  FIELD(ID_AA64ISAR2, ATS1A, 60, 4)
->=20=20
-> +FIELD(ID_AA64ISAR3, CPA, 0, 4)
-> +FIELD(ID_AA64ISAR3, FAMINMAX, 4, 4)
-> +FIELD(ID_AA64ISAR3, TLBIW, 8, 4)
-> +FIELD(ID_AA64ISAR3, PACM, 12, 4)
-> +FIELD(ID_AA64ISAR3, LSFE, 16, 4)
-> +FIELD(ID_AA64ISAR3, OCCMO, 20, 4)
-> +FIELD(ID_AA64ISAR3, LSUI, 24, 4)
-> +FIELD(ID_AA64ISAR3, FPRCVT, 28, 4)
-> +
->  FIELD(ID_AA64PFR0, EL0, 0, 4)
->  FIELD(ID_AA64PFR0, EL1, 4, 4)
->  FIELD(ID_AA64PFR0, EL2, 8, 4)
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index 8240f1b384..6ad01b345f 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -6519,11 +6519,11 @@ void register_cp_regs_for_features(ARMCPU *cpu)
->                .access =3D PL1_R, .type =3D ARM_CP_CONST,
->                .accessfn =3D access_tid3,
->                .resetvalue =3D GET_IDREG(isar, ID_AA64ISAR2)},
-> -            { .name =3D "ID_AA64ISAR3_EL1_RESERVED", .state =3D ARM_CP_S=
-TATE_AA64,
-> +            { .name =3D "ID_AA64ISAR3_EL1", .state =3D ARM_CP_STATE_AA64,
->                .opc0 =3D 3, .opc1 =3D 0, .crn =3D 0, .crm =3D 6, .opc2 =
-=3D 3,
->                .access =3D PL1_R, .type =3D ARM_CP_CONST,
->                .accessfn =3D access_tid3,
-> -              .resetvalue =3D 0 },
-> +              .resetvalue =3D GET_IDREG(isar, ID_AA64ISAR3) },
->              { .name =3D "ID_AA64ISAR4_EL1_RESERVED", .state =3D ARM_CP_S=
-TATE_AA64,
->                .opc0 =3D 3, .opc1 =3D 0, .crn =3D 0, .crm =3D 6, .opc2 =
-=3D 4,
->                .access =3D PL1_R, .type =3D ARM_CP_CONST,
-> @@ -6752,6 +6752,10 @@ void register_cp_regs_for_features(ARMCPU *cpu)
->                                 R_ID_AA64ISAR2_BC_MASK |
->                                 R_ID_AA64ISAR2_RPRFM_MASK |
->                                 R_ID_AA64ISAR2_CSSC_MASK },
-> +            { .name =3D "ID_AA64ISAR3_EL1",
-> +              .exported_bits =3D R_ID_AA64ISAR3_FAMINMAX_MASK |
-> +                               R_ID_AA64ISAR3_LSFE_MASK |
-> +                               R_ID_AA64ISAR3_FPRCVT_MASK },
+> Peter Maydell <peter.maydell@linaro.org> writes:
+>
+> > The SVE FCVTLT_hs operation produces a halfprec result, so we should
+> > use the FPST_A64_F16 fpstatus for it.
+>
+> Maybe I'm reading the Arm ARM wrong (I can't find FCVTLT_hs but I can
+> see FCVTLT in the SVE encodings). But these are all widening operations
+> so I can see halfprec to single, not the other way around.
 
-With this definition should we also add it to arm_clear_aarch64_idregs()
-which clears the other ISARs with aarch64=3Doff?
+Yes, I got the commit message wrong here; this is half to single,
+and we need to use the A64_F16 fpstatus for conversions from
+halfprec, not conversions to it. The e07b48995aaa commit message
+does a better job of explaining this than I did this time around.
 
->              { .name =3D "ID_AA64ISAR*_EL1_RESERVED",
->                .is_glob =3D true },
->          };
-> diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
-> index 3d1ed40f04..b99579f773 100644
-> --- a/target/arm/cpu-sysregs.h.inc
-> +++ b/target/arm/cpu-sysregs.h.inc
-> @@ -10,6 +10,7 @@ DEF(ID_AA64AFR1_EL1, 3, 0, 0, 5, 5)
->  DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
->  DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
->  DEF(ID_AA64ISAR2_EL1, 3, 0, 0, 6, 2)
-> +DEF(ID_AA64ISAR3_EL1, 3, 0, 0, 6, 3)
->  DEF(ID_AA64MMFR0_EL1, 3, 0, 0, 7, 0)
->  DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
->  DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
+The _hs is how the QEMU decode file splits the half to single
+and the single to double encodings, which are the same insn
+mnememonic in the architecture.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Improved commit message:
+
+=3D=3D=3Dbegin=3D=3D=3D
+We should be using the F16-specific float_status for conversions from
+half-precision, because halfprec inputs never set Input Denormal.
+If we use the FPST_A64 fpstatus then we will incorrectly set
+FPCR.IDC for input-denormals when FPCR.AH=3D1.
+
+In commit e07b48995aaa we updated most of the halfprec-to-other
+conversion insns to use FPST_A64_F16 as part of implementing FEAT_AHP.
+However we missed the SVE FCVTLT instruction, which has a
+halfprec-to-single encoding.
+
+Correct the FPST we use for the hs variant of FCVTLT.
+
+[cc, fixes, &c]
+=3D=3D=3Dendit=3D=3D=3D
+
+
+thanks
+-- PMM
 
