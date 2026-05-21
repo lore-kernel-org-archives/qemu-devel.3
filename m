@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F0F2CD4F5E
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 11:58:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D099CD5BA4
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 11:58:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ22e-0005pT-1q; Thu, 21 May 2026 07:58:20 -0400
+	id 1wQ22L-00058Y-Vn; Thu, 21 May 2026 07:58:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wQ22b-0005d6-0u
- for qemu-devel@nongnu.org; Thu, 21 May 2026 07:58:17 -0400
+ id 1wQ22C-0004xQ-VO
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 07:57:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wQ22Z-00048b-4K
- for qemu-devel@nongnu.org; Thu, 21 May 2026 07:58:16 -0400
+ id 1wQ22B-00044R-FI
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 07:57:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779364694;
+ s=mimecast20190719; t=1779364670;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YIwiZmnjUXUCbjuzvEwbbIdtcVmXNfGuVljF3AGGI/k=;
- b=bPt6LSfdhrMN7/jiFYgQHlBXEAGQ9Ax+HObCFdB2fp/aJPKjpxRxzF/LAraluK/PE1hsSG
- y5tPnwWMcvZ2kZIyAQzVL3rD9Lm/i0jJhvnZoqhXfuDePSNEjNaQ6YFvPlCGXoOJBhio3p
- oUSO/I1P9WwVewGi5i/eXME4JzfiO1w=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=XVdC8+ZAXrboODKEiUEFzI6uzqlzT6GSg5bz9+Srejc=;
+ b=UJSidoPtNSXYlCQ0o5m1dN9RAl0rVioBGWbTE/vs40ftoZDPayJX/3KLO8s+Ht5byt/WHk
+ EsxCFh7eYADcrZGpU06PdHF8lvs5dPz+vDgzIXjlMV43A3HeXMndXtCLuTs77kQKzGhTBL
+ 3bC8KRkAfGmcUZ739h2JI5tJiY2xKO0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-387-UFjspIO3PCWNcOAE6ex-MQ-1; Thu,
- 21 May 2026 07:58:10 -0400
-X-MC-Unique: UFjspIO3PCWNcOAE6ex-MQ-1
-X-Mimecast-MFC-AGG-ID: UFjspIO3PCWNcOAE6ex-MQ_1779364689
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-627-6h0vVKEqNU6e_p-s80c_GA-1; Thu,
+ 21 May 2026 07:57:47 -0400
+X-MC-Unique: 6h0vVKEqNU6e_p-s80c_GA-1
+X-Mimecast-MFC-AGG-ID: 6h0vVKEqNU6e_p-s80c_GA_1779364666
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 930E919560A3; Thu, 21 May 2026 11:58:09 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7554D18002EF; Thu, 21 May 2026 11:57:46 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.26])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3427B300019F; Thu, 21 May 2026 11:58:07 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1A6191684; Thu, 21 May 2026 11:57:44 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: stefanha@gmail.com, Heechan Kang <gganji11@naver.com>,
+Cc: stefanha@gmail.com,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 08/38] ui: fix validation of VNC extended clipboard data length
-Date: Thu, 21 May 2026 15:56:45 +0400
-Message-ID: <20260521115717.1701482-9-marcandre.lureau@redhat.com>
+Subject: [PULL 04/38] ui/vnc: fix OOB read access in VNC SASL mechname array
+Date: Thu, 21 May 2026 15:56:41 +0400
+Message-ID: <20260521115717.1701482-5-marcandre.lureau@redhat.com>
 In-Reply-To: <20260521115717.1701482-1-marcandre.lureau@redhat.com>
 References: <20260521115717.1701482-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,70 +86,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Heechan Kang <gganji11@naver.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-QEMU's VNC extended clipboard handler inflates a client-controlled
-compressed clipboard payload. The code checks the declared text size
-against the total inflated buffer size:
+When reading the SASL mechname array off the VNC connection, if
+malicious, the received data may contain embedded NULs. If this
+happens the memory buffer returned by g_strndup may be shorter
+than the original data. Unfortunately the code continued to
+index into this buffer with an offset equal to the original
+length. This is a potential OOB read of the array.
 
-    if (tsize < size)
-
-but then copies from:
-
-    tbuf = buf + 4;
-    qemu_clipboard_set_data(..., tsize, tbuf, true);
-
-The correct bound is the remaining data length after the 4-byte length
-field, not the total inflated buffer length.
-
-As a result, a VNC client can make QEMU copy up to 3 bytes past the end
-of the inflated heap buffer. With a second VNC client, those copied
-bytes are observable through the normal VNC extended clipboard PROVIDE
-path.
-
-Fixes: CVE-2026-8343
-Reported-by: Heechan Kang <gganji11@naver.com>
-Reported-by: Feifan Qian <bea1e@proton.me>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Heechan Kang <gganji11@naver.com>
-[DB: added #include and 'return' statements]
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Fixes: 5847d9e1 (ui/vnc: simplify and avoid strncpy)
+Reported-by: boy juju <agx1657748706@gmail.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260512095543.459949-1-berrange@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20260521103353.1645561-2-berrange@redhat.com>
 ---
- ui/vnc-clipboard.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ ui/vnc-auth-sasl.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/ui/vnc-clipboard.c b/ui/vnc-clipboard.c
-index 124b6fbd9c2..fa05d86f424 100644
---- a/ui/vnc-clipboard.c
-+++ b/ui/vnc-clipboard.c
-@@ -23,6 +23,7 @@
-  */
+diff --git a/ui/vnc-auth-sasl.c b/ui/vnc-auth-sasl.c
+index 9964b969ac2..298c8f3769f 100644
+--- a/ui/vnc-auth-sasl.c
++++ b/ui/vnc-auth-sasl.c
+@@ -489,6 +489,8 @@ static int protocol_client_auth_sasl_mechname(VncState *vs, uint8_t *data, size_
+     char *mechname = g_strndup((const char *) data, len);
+     trace_vnc_auth_sasl_mech_choose(vs, mechname);
  
- #include "qemu/osdep.h"
-+#include "qemu/error-report.h"
- #include "vnc.h"
- #include "vnc-jobs.h"
- 
-@@ -282,10 +283,16 @@ void vnc_client_cut_text_ext(VncState *vs, int32_t len, uint32_t flags, uint8_t
-             buf && size >= 4) {
-             uint32_t tsize = read_u32(buf, 0);
-             uint8_t *tbuf = buf + 4;
--            if (tsize < size) {
-+            if (tsize <= size - 4) {
-                 qemu_clipboard_set_data(&vs->cbpeer, vs->cbinfo,
-                                         QEMU_CLIPBOARD_TYPE_TEXT,
-                                         tsize, tbuf, true);
-+            } else {
-+                error_report("vnc: malformed extended clipboard payload "
-+                             "with text length %u exceeding available %u",
-+                             tsize, size - 4);
-+                vnc_client_error(vs);
-+                return;
-             }
-         }
-     }
++    /* If 'data' had embedded NUL the dup'd string might now be shorter */
++    len = strlen(mechname);
+     if (strncmp(vs->sasl.mechlist, mechname, len) == 0) {
+         if (vs->sasl.mechlist[len] != '\0' &&
+             vs->sasl.mechlist[len] != ',') {
 -- 
 2.54.0
 
