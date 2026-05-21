@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1E64CD343F
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 05:59:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61699CD343F
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 06:02:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPwQc-0004hK-NN; Thu, 21 May 2026 01:58:42 -0400
+	id 1wPwU1-00068A-SN; Thu, 21 May 2026 02:02:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wPwQb-0004gp-4n
- for qemu-devel@nongnu.org; Thu, 21 May 2026 01:58:41 -0400
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPwTz-00067l-3E
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 02:02:11 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wPwQZ-0005Ig-15
- for qemu-devel@nongnu.org; Thu, 21 May 2026 01:58:40 -0400
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-651c5d525f6so5907515d50.3
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 22:58:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPwTx-00067d-A8
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 02:02:10 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-44985f4ab0fso3043813f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 23:02:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779343118; x=1779947918; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SgDw4wDuhWc2HdYiA6TxnPIJZAPxBjyxaBSXfDIU2B4=;
- b=Dm8EXjuV7+aTpNohtdycBSRVGM4GKhJlk2mh7FISQCzOvXHAhC62oax6BFmqAZMVL+
- j/4ybEVbpethrv8eAA176KvxCbHXh7FIpLVZ/GfbR5TkvuWIFqOQpaaBZlqgh3XAQl7e
- JTW0tek4Zty0HNi44FzSDrO8TetTBQWyFHaOBtXsTcPZCEoKrqJEsd07mMIjonSGCy7F
- Toz+eJEToRdjvpXSZiVym+C1IbCQ12JrZlxOR6kUVhaI3pjfTQFC9MpCzHqUtNoUWEyy
- BUYkhAuYfZ3DUuBU5kRuJCKZoFnCxdSKdQkWWhcsdVk9WnZFcXGikCrFZtzArlbsFPhP
- AU0A==
+ d=linaro.org; s=google; t=1779343327; x=1779948127; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Kf8uHWQIx+rhGhwVlOEmCrqlFf6F59bZiK9yJTexNF4=;
+ b=JyOMJPhAyBr7+VRFq4UacRoGkT5WnV7eBRpyljoG9WQL82InJ2zT8+owcw68CD/ENL
+ TNyzVggjEtFroZ/WOSSD7/mkpsLcIdm4JTrEdIZ+WHB0Acxfpf/BzoLbwAWZmr/EAwBs
+ 6brX3vqIqjwBko7KX9VEzMXVCPRFDvSUEoVFzxo8JFYG/8tXAANNdm+XUXTvZ9IKxMIr
+ g9G8r0P/92uNu6gzveCHorI/+kpp3D1wWb4PwBB5mZpcrszymyqLNELFlLYGnziJ5GDm
+ rTwUhiR+4dBSHMJb/7FTJaQ5AIetrBURVZIOCVaCrYx+oOXx/8I5jRTFAP03J+jYkQz1
+ TIOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779343118; x=1779947918;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=SgDw4wDuhWc2HdYiA6TxnPIJZAPxBjyxaBSXfDIU2B4=;
- b=UEtl2zNSq+nNy8YP1LsbhDGHJDmkS66bbYjDyl3pH5dsmWoW0ODnAfexD1JuUciaUu
- OLHtp+m1LPS3mL6o2tarBfKqwfYnIVcj0ssB7DkIQifzLfjRc/eEzEB9x05JHTj+TKS0
- ixrWEPT5E5nqqmhNMB4IqeZTWwPfOQjPrk/UDGB98Q30auUdZZ3h/S5zmtVwj1c/mkbd
- /5NjFbbQoOfptH9LtyvN1O0rpyZqZRNedPHK4eJylXQ6LlRm5/oh+rHMCUMIimuMsRgl
- SoGB/ZC5djAUMZdsjVaKzMO+xwsBysPgetE2zo79wJLALWoGAX8Uu24Cu5iVCLXETIkG
- 6eDQ==
-X-Gm-Message-State: AOJu0Yxcs1fa1ByAOQR54Bd43DAScAARXXKt6e8MBQHEnbSU3GpwSaj0
- 1XF624tdrNL05F6s4sjqvMJAnma8xF0fvy7FKx7w235CbZUX7eSIvfT6GfPFmOTC
-X-Gm-Gg: Acq92OHYCQYTvxhVxAcrXmQTlpsceU7NJU4kSxe493M9icH1/ct8kpcp6gG5h5rYfsE
- N7yL7OPVb1xzJGFQ7Lk40MTviZLm/oWnfNPTIp/P5HvG6cMalFAlyAyzwr037L3nRBKhDlytzc+
- juWWZEcMOcCTWHuf0w3O+/9KkY7yR+vDl5GWvyUeMz+KVLfeyg9hzt5mkBTd2v1vr2dOMGnAIb5
- GWQZUIXtEeScvFUD2j7cL8QxbFAuZkF/+GkI2Dn7CCTCDo9owaYvNnciuclZf2uz0y+jqVmv1RM
- Lx0zNauQ2QSAjfNa1ZSPKWM0c5sJEZWxeAXd59D3ik0oj82tBcc688ne2gQLcudf/sdr1uvlPtu
- TgkvUOfmInCzT6gezGfmzyjtzQIZwosByjz6BdQJpGZ/d8uWzNjN4gkFklqIcZ8R6QAZtKo0krb
- oDNDD8r+aqiqrrvXw50qRNKs665alAEd5WBV/1UVz6XH+YyWkCXghZbafhzquT5K6a6jGcBXi05
- D8=
-X-Received: by 2002:a05:690e:bca:b0:65c:6220:5fcf with SMTP id
- 956f58d0204a3-65eae3caf3bmr1097575d50.62.1779343117934; 
- Wed, 20 May 2026 22:58:37 -0700 (PDT)
-Received: from localhost (107-220-129-194.lightspeed.chrlnc.sbcglobal.net.
- [107.220.129.194]) by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-65e0d86bc02sm10285008d50.4.2026.05.20.22.58.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 22:58:36 -0700 (PDT)
-From: Matt Turner <mattst88@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Matt Turner <mattst88@gmail.com>,
- qemu-stable@nongnu.org
-Subject: [PATCH 2/2] linux-user/mips64: fix mipsn32 elf_core_copy_regs entry
- width
-Date: Thu, 21 May 2026 01:58:21 -0400
-Message-ID: <20260521055821.1380491-2-mattst88@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260521055821.1380491-1-mattst88@gmail.com>
-References: <20260521055821.1380491-1-mattst88@gmail.com>
+ d=1e100.net; s=20251104; t=1779343327; x=1779948127;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Kf8uHWQIx+rhGhwVlOEmCrqlFf6F59bZiK9yJTexNF4=;
+ b=QSPMMUitX+yZiruObfZSL7s5YoLObjPi/g8wW0AzIzvc4CpOBvJwI8QIwkwszWAvk5
+ DFG3GRoz33drVUZLwKpOTpLGF7f+jSjpDPXfX0KwPcJ/zVkdHkvCsegrAp4oQh3N7cBp
+ 5H4PAPRpetDExU5I1pwwqQtWUfkGlr+g8p5BytA0GFnFjtyFYTdaiqNZgBXYf/em8Qv8
+ miis8djDfAlVJER4XGs6384DEuinqvUi2zVh3icOVd4+J52HiLSij9J9Ej291u016Jsk
+ HnHNEYAdJoWNm8q8hAigdPs+kI9jRnDu47w7v4M10Ai/OD+XAbZGusH19VmFuTkGhcyz
+ QL8A==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8UB3Lmuz8ONp9HMiGs2vLg97KJCV2we82cl3ZGTn2fl+cqGtjMAwDVRrn0agp4zTSOQica2qxM4+Do@nongnu.org
+X-Gm-Message-State: AOJu0YwI3B4nuDRaWZGdUEBm9bCSsnfuKa7qCF7ssyz8XoYzXWOw9lFL
+ J1tZ0QVscCNcIJFexRhUZoFPSvMsiuru+puge9PvR8o+JiFsAQClDxvag4CAVD+M6J+pWc2gp9r
+ ocq1e5OM=
+X-Gm-Gg: Acq92OFxaARwrH/562QdEFYRWcPUDIetMbhswpIXQYcGtR82hjAZlN6ILVEODG3eBlk
+ W/AyzlYv8kIjKU3tdK35hOHpUJ/FkL4HHET86ku4jdQOWztmOp549yzNY/fldbVqUeqZQZuEwy5
+ g/BMghGeJiWAPcao9/8+x9LBIsS0XjwNfo/c9T4VL3JAsD6npwc6RTih/MWE2YlfJ1M8fI1NdrT
+ kxEuIE7HM42MvIG1Fze8iVaeBv/kDPHuVfKWg9ZWUUMWfTs0WYVTORPCTnQotggsVHDsAv0UX8c
+ mv2nO7KIwFjdcARGFBgw2jJVej/Gg0vLzQLUnshqGeNSPR1efGl2zYQCE/Jy3HmHlT7+xAJgxZm
+ FSGdgi2Wy1jXUOxs9zm0UaEyYPJf9I/3MpSHnRCsHHOs9/aJeTTgVgfe4gh2HgUJEnREZzF/lBH
+ ne8L5Y+Ay8ohHfIPgRf4eiCkfVQqntpDHyfwl/0mK9IZyertz9LxEfi6AuUoTeljpTvQ==
+X-Received: by 2002:a5d:5f91:0:b0:45a:e3dd:5869 with SMTP id
+ ffacd0b85a97d-45ea41066a3mr1822013f8f.30.1779343327265; 
+ Wed, 20 May 2026 23:02:07 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45eaa7d9daasm125702f8f.11.2026.05.20.23.02.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 20 May 2026 23:02:05 -0700 (PDT)
+Message-ID: <aa414d23-afe6-429b-ab20-1364ec5ecd45@linaro.org>
+Date: Thu, 21 May 2026 08:02:04 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 14/40] qemu-io: propagate errors through Error API instead
+ of printf
+Content-Language: en-US
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+References: <20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com>
+ <20260521-qemu-no-hmp-v1-14-d104f809e145@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260521-qemu-no-hmp-v1-14-d104f809e145@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=mattst88@gmail.com; helo=mail-yx1-xb134.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,83 +105,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For mipsn32 (TARGET_ABI32=y, TARGET_LONG_BITS=64):
-  abi_ulong = uint32_t (4 bytes) — for pointers and ABI-sized fields
-  target_ulong = uint64_t (8 bytes) — for general-purpose registers
+On 20/5/26 23:49, Marc-André Lureau wrote:
+> Convert the qemu-io command infrastructure to use QEMU's Error API
+> (Error **errp) for error propagation instead of printing directly to
+> stdout/stderr via printf/fprintf.
+> 
+> The cfunc_t typedef, all ~35 command functions, the dispatcher chain
+> (command/init_check_command/qemuio_command), and helper functions
+> (parse_pattern, create_iovec, qemu_io_alloc_from_file) all gain an
+> Error **errp parameter. Async completion callbacks (aio_read_done,
+> aio_write_done, aio_discard_done) use error_report() since they have
+> no Error path back to the caller.
+> 
+> Update tests:
+> - error_report_err() prepends qemu-io: prefix
+> - copy-before-write: check the HMP return value, rather than stdio
+> - other tests: update to check JSON {"return": "Error: error text"}
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   include/qemu-io.h                          |   4 +-
+>   block/monitor/block-hmp-cmds.c             |   2 +-
+>   qemu-io-cmds.c                             | 426 +++++++++++++++--------------
+>   qemu-io.c                                  |  17 +-
+>   tests/qemu-iotests/004.out                 |  20 +-
+>   tests/qemu-iotests/021.out                 |  60 ++--
+>   tests/qemu-iotests/060.out                 |  44 ++-
+>   tests/qemu-iotests/071.out                 |  10 +-
+>   tests/qemu-iotests/072.out                 |   2 +-
+>   tests/qemu-iotests/080.out                 |   4 +-
+>   tests/qemu-iotests/089.out                 |   4 +-
+>   tests/qemu-iotests/114.out                 |   2 +-
+>   tests/qemu-iotests/134.out                 |   2 +-
+>   tests/qemu-iotests/137.out                 |   2 +-
+>   tests/qemu-iotests/171                     |   2 +-
+>   tests/qemu-iotests/171.out                 |  68 ++---
+>   tests/qemu-iotests/214.out                 |   2 +-
+>   tests/qemu-iotests/220.out                 |   2 +-
+>   tests/qemu-iotests/244.out                 |  12 +-
+>   tests/qemu-iotests/249.out                 |   6 +-
+>   tests/qemu-iotests/271.out                 |  14 +-
+>   tests/qemu-iotests/tests/copy-before-write |  66 +++--
+>   22 files changed, 404 insertions(+), 367 deletions(-)
 
-linux-user/elfload.c allocates target_elf_prstatus using the
-mips64/target_elf.h definition where target_elf_gregset_t has
-target_ulong reserved[45] (8 bytes each, 360 bytes total).
 
-However, in linux-user/mips64/elfload.c, #include "target_elf.h" inside
-the included mips/elfload.c resolves to mips/target_elf.h (compiler
-searches the file's own directory first), where the union uses abi_ulong
-reserved[45].  For mipsn32 this gives 4-byte entries (180 bytes), not
-the 8-byte entries (360 bytes) that elfload.c actually allocated.
+> diff --git a/qemu-io-cmds.c b/qemu-io-cmds.c
+> index de4c1966fea..5093aa4169a 100644
+> --- a/qemu-io-cmds.c
+> +++ b/qemu-io-cmds.c
 
-Writing via r->reserved[34] therefore lands at byte offset 34*4=136
-instead of the correct 34*8=272, silently zeroing the EPC in the core
-file.
 
-Fix by casting the pointer to target_ulong * so writes always use 8-byte
-slots and land at the offsets matching the allocated layout.
+> -static int reopen_f(BlockBackend *blk, int argc, char **argv)
+> +static int reopen_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+>   {
+>       BlockDriverState *bs = blk_bs(blk);
+>       QemuOpts *qopts;
 
-This does not change behavior for mips64 (N64) where abi_ulong already
-equals target_ulong (both 8 bytes).
+> @@ -2609,37 +2624,41 @@ static int reopen_f(BlockBackend *blk, int argc, char **argv)
+>           qdict_put_bool(opts, BDRV_OPT_CACHE_NO_FLUSH, flags & BDRV_O_NO_FLUSH);
+>       }
+>   
+> -    bdrv_reopen(bs, opts, true, &local_err);
+> -
+> -    if (local_err) {
+> -        error_report_err(local_err);
+> -        return -EINVAL;
+> +    {
+> +        Error *local_err = NULL;
+> +        bdrv_reopen(bs, opts, true, &local_err);
+> +        if (local_err) {
+> +            error_propagate(errp, local_err);
+> +            return -EINVAL;
+> +        }
+>       }
 
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Cc: qemu-stable@nongnu.org
----
- linux-user/mips64/elfload.c | 35 +++++++++++++++++++++++++----------
- 1 file changed, 25 insertions(+), 10 deletions(-)
+         if (bdrv_reopen(bs, opts, true, errp) < 0) {
+             return -EINVAL;
+         }
 
-diff --git ./linux-user/mips64/elfload.c ./linux-user/mips64/elfload.c
-index d19e5f2439..feba260462 100644
---- ./linux-user/mips64/elfload.c
-+++ ./linux-user/mips64/elfload.c
-@@ -15,16 +15,31 @@
-  */
- void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
- {
--    /* R0 is always 0; r->reserved is zero-initialised by the caller */
-+    /*
-+     * linux-user/elfload.c allocates target_elf_prstatus using the
-+     * definition from mips64/target_elf.h, where target_elf_gregset_t
-+     * has target_ulong reserved[45] (8 bytes each = 360 bytes total).
-+     *
-+     * But in this compilation unit, "#include target_elf.h" resolved to
-+     * mips/target_elf.h (wrong directory), so our local target_elf_gregset_t
-+     * has abi_ulong reserved[45] which is only 4 bytes each for mipsn32.
-+     * Using r->reserved[i] would write to the wrong offsets for mipsn32.
-+     *
-+     * Cast to target_ulong * to always write 8-byte entries at the correct
-+     * positions, matching the layout that elfload.c allocated.
-+     */
-+    target_ulong *regs = (target_ulong *)r;
-+
-+    /* R0 is always 0; buffer is zero-initialised by the caller */
-     for (int i = 1; i < 32; i++) {
--        r->reserved[i] = tswapl(env->active_tc.gpr[i]);
-+        regs[i] = tswapl(env->active_tc.gpr[i]);
-     }
--    r->reserved[26] = 0;   /* k0 */
--    r->reserved[27] = 0;   /* k1 */
--    r->reserved[32] = tswapl(env->active_tc.LO[0]);
--    r->reserved[33] = tswapl(env->active_tc.HI[0]);
--    r->reserved[34] = tswapl(env->active_tc.PC);
--    r->reserved[35] = tswapl(env->CP0_BadVAddr);
--    r->reserved[36] = tswapl(env->CP0_Status);
--    r->reserved[37] = tswapl(env->CP0_Cause);
-+    regs[26] = 0;   /* k0 */
-+    regs[27] = 0;   /* k1 */
-+    regs[32] = tswapl(env->active_tc.LO[0]);
-+    regs[33] = tswapl(env->active_tc.HI[0]);
-+    regs[34] = tswapl(env->active_tc.PC);
-+    regs[35] = tswapl(env->CP0_BadVAddr);
-+    regs[36] = tswapl(env->CP0_Status);
-+    regs[37] = tswapl(env->CP0_Cause);
- }
--- 
-2.53.0
+Otherwise:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+>   
+>       blk_set_enable_write_cache(blk, !writethrough);
+>       return 0;
+>   }
 
