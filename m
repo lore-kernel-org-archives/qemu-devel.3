@@ -4,106 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4094ACD5BB3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D7F5CD5BAB
 	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 20:18:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ9qC-0005Bp-Bb; Thu, 21 May 2026 16:18:00 -0400
+	id 1wQ9qd-0005Fm-Rt; Thu, 21 May 2026 16:18:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1wQ9q9-0005BE-1N
- for qemu-devel@nongnu.org; Thu, 21 May 2026 16:17:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wQ9qT-0005Dz-26; Thu, 21 May 2026 16:18:21 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1wQ9q6-0003hM-Uf
- for qemu-devel@nongnu.org; Thu, 21 May 2026 16:17:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779394673;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FsCL0r7r5uVznA4axQ+PIrE31dTKcqqwgJyhUkVMNQ0=;
- b=Tqy/G1ewvCK1evbXM5EGUSTgKuGgCPzB5dawozvu+mFMe0YeOy/T9YXbzqfTWvuayYHbiq
- 6Ld3dDKYwnL1FFwjAj+hfpRUiiKnxdUHQvIcg3OVUfF+qB6ZhMak8EoHzcK6UUPVBJoKrC
- SLE6H0IR/90nUK/2PVrtqobhtaNITRQ=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-433-ZNi1Ws0sOfGv9QbPVFstdg-1; Thu, 21 May 2026 16:17:51 -0400
-X-MC-Unique: ZNi1Ws0sOfGv9QbPVFstdg-1
-X-Mimecast-MFC-AGG-ID: ZNi1Ws0sOfGv9QbPVFstdg_1779394670
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2b4654f9bb6so63832525ad.2
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 13:17:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779394670; x=1779999470; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=FsCL0r7r5uVznA4axQ+PIrE31dTKcqqwgJyhUkVMNQ0=;
- b=lNcMbKmFBPK0YE0ECJTiBIGNcnzQcNzeTBsrjjdxaGSBgDt6HUTQZXKRrxO45EGowY
- Ly2r6w1M4N6kGdOOtzFAtJ2D6KaXZWftNWTV/9BLcobxmdhpToyZLLOZPnY2HQ0M6mLc
- k3vii089Z2Sox+MyR02vPpNU2xUrEGkkP7fWZ/KnQ/UxbL5g/tMbWWI0/J0BuFeeWNU2
- 0vGIFPi91cNeM3g3IAuZK1Ym003uo2AP1nImsDpJ7zg7qWIK1RpFOJ9UQYQ+DyHaQir+
- IfJUGK0cnA9qdUngGnH9okXsYSMgRWO6eG+yYBmuuKaJe1nWqcFVmETDPWuxSAcPlfsS
- Ruhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779394670; x=1779999470;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FsCL0r7r5uVznA4axQ+PIrE31dTKcqqwgJyhUkVMNQ0=;
- b=BwnEnVKuR8sWvIEOD84e5xV+wEoh7AHs0RHyZTwi4AvMc1OpnrEKq+N3OePJVmzboV
- U9T+S007sH/taSvKYylNFHdIbDKfYBhTd6yWi/HqkyCO33sN6vspQsV4YxKUwyUmWQK6
- 9rDc0ya189tLPmntHyoqn9Kuw5KO0wDXTGcdUCsJFnYEb68RHzpSpdusYY9c+4atFOG8
- 62Ldfwka32p0e2VBG2tKG5Y8GUk66w5SiG4/ZQKhoiS+uYJWclzPGoC2C93e+vzTcquE
- Guh1nxV8q8sfwpmPV6yCpVee4e5Lihn1TBq5+vJdxsm6/zFsJ1o6+M70hTXISR8Kwor0
- 8zLg==
-X-Gm-Message-State: AOJu0YxKpxFGtV9tfjrRgtDXvEkPuoZS22C7lgZQBLtexyxTYbakllRO
- CECFGqPhzzDt2aB+h7puGckKGKiHoQMgEs6zJUKO0wZ1VjDChnIPoH1PwlEwEIw26fMrLoaYivK
- iCz3W8bS5hkCADNofkd3TAwVhWBV8PDiD1JKdGZ2mCia1Vv5cTbQK5tPa
-X-Gm-Gg: Acq92OHG7G9XZ+mwNPJjW7eJlZB8kc+PF0x9RwMZsfgucwtqfZHAtwBh/9bFtNtrGGY
- Hzhficl6Iwh3jWtwcBuuoaXGK9i+2N+y5k2uEMEgkpX/HqPdOLEsZ11eAbSvKp75cxBbS8OUzGg
- qmiC86y2rhgztG71jp7D4GcQ50im95OEMHwz691F0kUNyHAjjWRJFWL92W2jcayNtz0M9ggmMF5
- e23SF8ucYUrS7+xH/iJQbQZa/zxTa7n1eyLhCNUUz78DNw4TP5pstBnUMF4GuBVQE5WkXLRqAks
- IFoHFIYPLRmzgNhvnTui8jJfVG7VIZ8auW6ERcqjVg31CH5Gb9oM7lVI5X8dGsxP9dXwFM61IRy
- yXEWEmSHiw6s=
-X-Received: by 2002:a17:903:41d2:b0:2ae:4a4e:1e25 with SMTP id
- d9443c01a7336-2beb07b77f6mr3733915ad.25.1779394670355; 
- Thu, 21 May 2026 13:17:50 -0700 (PDT)
-X-Received: by 2002:a17:903:41d2:b0:2ae:4a4e:1e25 with SMTP id
- d9443c01a7336-2beb07b77f6mr3733625ad.25.1779394669816; 
- Thu, 21 May 2026 13:17:49 -0700 (PDT)
-Received: from fedora ([49.36.106.50]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2beb1403b35sm744385ad.79.2026.05.21.13.17.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 13:17:49 -0700 (PDT)
-Date: Fri, 22 May 2026 01:47:44 +0530
-From: Arun Menon <armenon@redhat.com>
-To: =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com
-Subject: Re: [PATCH v3 18/24] hw/tpm: free PPI buffer on finalization
-Message-ID: <ag9oaNePe_-iS35W@fedora>
-References: <20260516-qom-tests-v3-0-3f20c3a029a7@redhat.com>
- <20260516-qom-tests-v3-18-3f20c3a029a7@redhat.com>
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wQ9qP-0003rN-D9; Thu, 21 May 2026 16:18:16 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64LC15pe834424; Thu, 21 May 2026 20:18:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=dwRNOM
+ KLj/BAPj0a4JmOg7jRonYoBx8nRsG1r6KXKn8=; b=kkYS4JLxatQ3T6yP1yQJwO
+ rD0KW87IHpyK7gIDT4Z2xsUrSzrlBk75xXN5kwg/qowIyPdt6DXHDVweBfll09d3
+ 7OZ1f+ak+e7RV5T9Ldi+EkzuZZ/VSnEvzF35f2eD3LS5Ik3WDEakc510HwokGMid
+ k3L0ppL7IM5NfjeaxWgUGEplfE6d6zqB8pGpQPO0yL3gROeW1qNSOIZ/AhGiK8br
+ rQbzj2n4glPnbJbAlXRQlq+xEaIopTfpPbxnPOxrBOyJVAIV7VKnFS7nWGN9VxVU
+ 1Ay8PbM56UJLRtTGn40gEuqZ8NW0F15c4A4T+ZwsCtUK/uaeo2le0h60P5txxXfQ
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h8n0ut7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 21 May 2026 20:18:10 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64LK9N2A030142;
+ Thu, 21 May 2026 20:18:09 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e75kydnvs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 21 May 2026 20:18:09 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64LKI67V48628128
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 21 May 2026 20:18:06 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 18BD72004B;
+ Thu, 21 May 2026 20:18:06 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2311120043;
+ Thu, 21 May 2026 20:16:58 +0000 (GMT)
+Received: from [9.39.29.116] (unknown [9.39.29.116])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 21 May 2026 20:16:47 +0000 (GMT)
+Message-ID: <85986a77-4135-4419-946e-16eea76fb36b@linux.ibm.com>
+Date: Fri, 22 May 2026 01:45:34 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260516-qom-tests-v3-18-3f20c3a029a7@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] ppc/pnv: Make Power11 as the default CPU
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Shivang Upadhyay
+ <shivangu@linux.ibm.com>, Misbah Anjum N <misanjum@linux.ibm.com>
+References: <20260521200844.1449023-1-adityag@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <20260521200844.1449023-1-adityag@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: bR4VayECeZdOoYecEU5FPZMy8IG5pA-B
+X-Authority-Analysis: v=2.4 cv=GYMnWwXL c=1 sm=1 tr=0 ts=6a0f6883 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=p0WdMEafAAAA:8
+ a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=Qhl29BPw-YrFtiSbdCcA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: _T2nhcgzv4i85Y7lF1UGJkypw8FLcg9T
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIxMDIwMiBTYWx0ZWRfX1WWwHnrMX//u
+ DSCVFb8DiIMAglNLsiXLABH1aFhlmN+wGCh8eVJT9jBF48Ss2JHy0Kw8xT89HLRCiUB0JApXplq
+ fLzMQVAVJxHOPnlcfBMYBOtCGY1/ElsOad35OtMRlpmkxNW05gQ86g5E0e/mtQmhPCN5jXkuXWg
+ SKGtJ6DJCcjo2MChpp/+6oP9VVoTralJFjSutDhWO01TQRbPLGMFWMGtakZguOgXkSAPpCNw0pH
+ OFMJiDdsLVFcT9oYu5QOhCMccEXI4FWoxwlBJ/JlUSDqrfkTgVy7xDpVLv3lqsTWLhBZyvOGUnU
+ HCqvmmtfHTxwMRuQB6J1c02lEVy6YXD8KsDghwdsn6uKF0ZpW5TNGAS7PYpAWgfRrGVllq6cxSe
+ VIq0leRoW5sAseB+MwZiCcQWg674o5fRYe4JUSv2RhK29StSIWx6EN1UPKp5I9EhkeiB1rM7isq
+ 2+KbTBuDXOKRWODTDuA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-21_04,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ adultscore=0 suspectscore=0 spamscore=0 clxscore=1015 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605210202
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,53 +123,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On 22/05/26 01:38, Aditya Gupta wrote:
 
-On Sat, May 16, 2026 at 11:59:17AM +0400, Marc-André Lureau wrote:
-> The PPI buffer is allocated with qemu_memalign() in instance_init but
-> never freed when the device is destroyed.
-> 
-> Fixes: 46cd2c1050f0 ("hw/tpm: add PPI support to tpm-tis-device for ARM64 virt")
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->  hw/tpm/tpm_tis_sysbus.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/hw/tpm/tpm_tis_sysbus.c b/hw/tpm/tpm_tis_sysbus.c
-> index 6bec30c36fc..3984228c42f 100644
-> --- a/hw/tpm/tpm_tis_sysbus.c
-> +++ b/hw/tpm/tpm_tis_sysbus.c
-> @@ -150,11 +150,20 @@ static void tpm_tis_sysbus_class_init(ObjectClass *klass, const void *data)
->      set_bit(DEVICE_CATEGORY_MISC, dc->categories);
->  }
->  
-> +static void tpm_tis_sysbus_finalize(Object *obj)
-> +{
-> +    TPMStateSysBus *sbdev = TPM_TIS_SYSBUS(obj);
-> +    TPMState *s = &sbdev->state;
-> +
-> +    qemu_vfree(s->ppi.buf);
-> +}
-> +
->  static const TypeInfo tpm_tis_sysbus_info = {
->      .name = TYPE_TPM_TIS_SYSBUS,
->      .parent = TYPE_DYNAMIC_SYS_BUS_DEVICE,
->      .instance_size = sizeof(TPMStateSysBus),
->      .instance_init = tpm_tis_sysbus_initfn,
-> +    .instance_init = tpm_tis_sysbus_finalize,
-
-shouldn't this be .instance_finalize ?
-
->      .class_init  = tpm_tis_sysbus_class_init,
->      .interfaces = (const InterfaceInfo[]) {
->          { TYPE_TPM_IF },
-> 
-> -- 
-> 2.54.0
-> 
+> Overview
+> ========
 >
+> Power11 is the newest supported Power processor merged last year.
+> Make it the default processor for PSeries and PowerNV.
+>
+> Testing
+> =======
+> 1. Git tree with patches: https://gitlab.com/adi-g15-ibm/qemu/-/tree/feat_default_p11
+> 2. Gitlab Pipeline: https://gitlab.com/adi-g15-ibm/qemu/-/pipelines/2542576926/
 
-Regards,
-Arun Menon
+Note: For qemu to successfully build, following patches by Amit are 
+required: 
+https://lore.kernel.org/qemu-devel/20260518172517.12466-1-amachhiw@linux.ibm.com/
 
+- Aditya G
 
