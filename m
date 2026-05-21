@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D33CCD5BB5
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 16:52:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51E7ECD5BAF
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 16:52:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ6cB-0004PW-Cr; Thu, 21 May 2026 12:51:19 -0400
+	id 1wQ6cV-0004Up-SY; Thu, 21 May 2026 12:51:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
- id 1wQ6bw-0004NG-SK
- for qemu-devel@nongnu.org; Thu, 21 May 2026 12:51:05 -0400
+ id 1wQ6bn-0004MD-QE
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 12:50:57 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wQ6bu-000785-Uh
- for qemu-devel@nongnu.org; Thu, 21 May 2026 12:51:04 -0400
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wQ6bj-0006zw-Eg
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 12:50:55 -0400
 Received: from laptop.localdomain (unknown [86.121.140.206])
- by linux.microsoft.com (Postfix) with ESMTPSA id 5C7A820B7168;
- Thu, 21 May 2026 09:50:52 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 5C7A820B7168
+ by linux.microsoft.com (Postfix) with ESMTPSA id EE73120B7167;
+ Thu, 21 May 2026 09:50:38 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com EE73120B7167
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1779382254;
- bh=+TH8cWmGlklXi/vqiEG7E4IrjXJbF3Oqz5W2s6/S5c8=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=n4dcxKLKbbqyskfsicBG2a5Q/TFDxYjjzpU2X+34VNIv8OFCPc0y+1kjBnIzrRvI7
- LawcUrmUEa9FOyvOQ+XnTPudWsw85X8K0j/E28bOWjWrRJxXvET892M8ZSFb0ikiIU
- maqq2Bc2kr545kt4IFspU6WVxuQ1PaMZ9lcdcib4=
+ s=default; t=1779382240;
+ bh=UbcjOgjDVAghdO/Ov60N2qO+7G+evuw5eC7IeeojGaY=;
+ h=From:To:Cc:Subject:Date:From;
+ b=BWiJWSDyoWbKN+h728Eyh/nJ8aEtNkV8O6+QMH2zurtxWcd4Y7YpCtR961O61ypew
+ WZPr6S7CRL9HzFxOsEDBS6uew6haxbAoe5UXZb/VIe9KcuJWm5V1s41o+/XVtQPVg7
+ TpaJOpWrHe0HLEm3EhXLiBxaFdjE8128cT2FhOoE=
 From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
@@ -37,15 +37,13 @@ Cc: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
  Wei Liu <liuwe@microsoft.com>, Magnus Kulke <magnuskulke@microsoft.com>,
  Wei Liu <wei.liu@kernel.org>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PATCH v3 5/7] target/i386/mshv: use the register page to get
- registers
-Date: Thu, 21 May 2026 19:50:39 +0300
-Message-ID: <20260521165041.131477-6-dblanzeanu@linux.microsoft.com>
+Subject: [PATCH v3 0/7] target/i386/mshv: use hv_vp_register_page for fast
+ register access
+Date: Thu, 21 May 2026 19:50:34 +0300
+Message-ID: <20260521165041.131477-1-dblanzeanu@linux.microsoft.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260521165041.131477-1-dblanzeanu@linux.microsoft.com>
-References: <20260521165041.131477-1-dblanzeanu@linux.microsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=13.77.154.182;
  envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
@@ -70,211 +68,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Change the mshv_load_regs to use the register page when it is mmapped
-and is valid.
-Eliminate the hypercall based logic and fail in case the register page
-is found in an unexpected state.
+This series adds support for using the hypervisor's vp register page
+in the mshv accelerator to optimize vcpu register access on mmio and pio
+exits.
 
-When retrieving the special registers, there are some registers that are
-not present in the register page: TR, LDTR, GDTR, IDTR, CR2, APIC_BASE.
-As this registers are not likely to be used in an MMIO/PIO operation,
-and to avoid a hypercall overhead we do not retrieve them.
+Currently, all register reads and writes go through hypercalls (ioctls),
+which add overhead on every VM exit. The VP register page is a shared
+memory page that the hypervisor populates with vcpu register state,
+allowing Qemu to read and write registers directly without hypercalls.
 
-Local testing showed no regression when using this logic. To properly
-retrieve all the necessary registers for each decoded operation implies
-having a mechanism that tracks the state of each register, which is
-beyond the scope of this patch series.
+The series is structured as follows:
+1. Remove the duplicate `fetch_guest_state` function, consolidating
+  register loading into `mshv_load_regs`.
+2. Move `mshv_arch_init_vcpu` after vcpu creation so the vcpu fd is
+  valid when we need it for mmap.
+3. Define the `hv_vp_register_page` structure in `hvgdk_mini.h`, matching
+  the layout used by the Linux kernel's mshv driver.
+4. Set up the register page by mmapping the vcpu fd at init time. If the
+  mmap fails, we abort signaling an issue in the system.
+5. Use the register page to read registers on VM exit. General purpose
+  registers, RIP, RFLAGS, segment registers, and control registers
+  (CR0, CR4, CR4, CR8, EFER) are read directly from the page. Registers
+  not present on the page (TR, LDTR, GDTR, IDTR, CR2, APIC_BASE) are not
+  fetched anymore for performance reasons.
+6. Use register page to write registers on vmentry. GP registers,
+  RIP, and RFLAGS are written to the page with the appropriate dirty
+  bits set, avoiding the hypercall for the standard register store.
 
-Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
----
- accel/mshv/mshv-all.c       |   9 +--
- include/system/mshv_int.h   |   2 +-
- target/i386/mshv/mshv-cpu.c | 113 +++++++++++++++++++++++++++++-------
- 3 files changed, 93 insertions(+), 31 deletions(-)
+The register page is only used when it has been successfully mmapped and
+the hypervisor has marked it as valid (`isvalid != 0`). Otherwise, an error is
+returned and execution aborted to signal something faulty and unexpected.
 
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index e3da583f21..bd3bf557ec 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -666,14 +666,7 @@ static void mshv_cpu_synchronize_pre_loadvm(CPUState *cpu)
- static void do_mshv_cpu_synchronize(CPUState *cpu, run_on_cpu_data arg)
- {
-     if (!cpu->accel->dirty) {
--        int ret = mshv_load_regs(cpu);
--        if (ret < 0) {
--            error_report("Failed to load registers for vcpu %d",
--                         cpu->cpu_index);
--
--            cpu_dump_state(cpu, stderr, CPU_DUMP_CODE);
--            vm_stop(RUN_STATE_INTERNAL_ERROR);
--        }
-+        mshv_load_regs(cpu);
- 
-         cpu->accel->dirty = true;
-     }
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index 35386c422f..a8a59ebf16 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -85,7 +85,7 @@ int mshv_configure_vcpu(const CPUState *cpu, const MshvFPU *fpu, uint64_t xcr0);
- int mshv_get_standard_regs(CPUState *cpu);
- int mshv_get_special_regs(CPUState *cpu);
- int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit);
--int mshv_load_regs(CPUState *cpu);
-+void mshv_load_regs(CPUState *cpu);
- int mshv_store_regs(CPUState *cpu);
- int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
-                           size_t n_regs);
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 45dc6e6331..500967b53e 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -401,6 +401,80 @@ static void populate_special_regs(const hv_register_assoc *assocs,
-     cpu_set_apic_base(x86cpu->apic_state, assocs[16].value.reg64);
- }
- 
-+static void mshv_get_standard_regs_vp_page(CPUState *cpu)
-+{
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86cpu->env;
-+
-+    /* General Purpose Registers  */
-+    env->regs[R_EAX] = env->regs_page->rax;
-+    env->regs[R_EBX] = env->regs_page->rbx;
-+    env->regs[R_ECX] = env->regs_page->rcx;
-+    env->regs[R_EDX] = env->regs_page->rdx;
-+    env->regs[R_ESI] = env->regs_page->rsi;
-+    env->regs[R_EDI] = env->regs_page->rdi;
-+    env->regs[R_ESP] = env->regs_page->rsp;
-+    env->regs[R_EBP] = env->regs_page->rbp;
-+    env->regs[R_R8]  = env->regs_page->r8;
-+    env->regs[R_R9]  = env->regs_page->r9;
-+    env->regs[R_R10] = env->regs_page->r10;
-+    env->regs[R_R11] = env->regs_page->r11;
-+    env->regs[R_R12] = env->regs_page->r12;
-+    env->regs[R_R13] = env->regs_page->r13;
-+    env->regs[R_R14] = env->regs_page->r14;
-+    env->regs[R_R15] = env->regs_page->r15;
-+
-+    env->eip = env->regs_page->rip;
-+    env->eflags = env->regs_page->rflags;
-+    rflags_to_lflags(env);
-+}
-+
-+/*
-+ * This function synchronizes the special registers present in the
-+ * register vp page, which are not all the special registers.
-+ * The rest of the special registers (LD, TR, GDT, IDT, CR2, APIC_BASE)
-+ * are not synchronized to avoid the overhead of a hypercall.
-+ *
-+ * These special registers are not normally used by the guest,
-+ * and are only used in some specific cases.
-+ */
-+static void mshv_get_special_regs_vp_page(CPUState *cpu)
-+{
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86cpu->env;
-+    hv_x64_segment_register seg;
-+
-+    /* Populate special registers that are in the VP register page */
-+    env->cr[0] = env->regs_page->cr0;
-+    env->cr[3] = env->regs_page->cr3;
-+    env->cr[4] = env->regs_page->cr4;
-+    env->efer = env->regs_page->efer;
-+    cpu_set_apic_tpr(x86cpu->apic_state, env->regs_page->cr8);
-+
-+    /* Segment Registers - copy from packed struct to avoid unaligned access */
-+    memcpy(&seg, &env->regs_page->es, sizeof(hv_x64_segment_register));
-+    populate_segment_reg(&seg, &env->segs[R_ES]);
-+    memcpy(&seg, &env->regs_page->cs, sizeof(hv_x64_segment_register));
-+    populate_segment_reg(&seg, &env->segs[R_CS]);
-+    memcpy(&seg, &env->regs_page->ss, sizeof(hv_x64_segment_register));
-+    populate_segment_reg(&seg, &env->segs[R_SS]);
-+    memcpy(&seg, &env->regs_page->ds, sizeof(hv_x64_segment_register));
-+    populate_segment_reg(&seg, &env->segs[R_DS]);
-+    memcpy(&seg, &env->regs_page->fs, sizeof(hv_x64_segment_register));
-+    populate_segment_reg(&seg, &env->segs[R_FS]);
-+    memcpy(&seg, &env->regs_page->gs, sizeof(hv_x64_segment_register));
-+    populate_segment_reg(&seg, &env->segs[R_GS]);
-+}
-+
-+static void mshv_get_registers_vp_page(CPUState *cpu)
-+{
-+    /* General Purpose Registers  */
-+    mshv_get_standard_regs_vp_page(cpu);
-+
-+    /* Special Registers */
-+    mshv_get_special_regs_vp_page(cpu);
-+}
-+
- 
- int mshv_get_special_regs(CPUState *cpu)
- {
-@@ -422,23 +496,26 @@ int mshv_get_special_regs(CPUState *cpu)
-     return 0;
- }
- 
--int mshv_load_regs(CPUState *cpu)
-+void mshv_load_regs(CPUState *cpu)
- {
--    int ret;
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
- 
--    ret = mshv_get_standard_regs(cpu);
--    if (ret < 0) {
--        error_report("Failed to load standard registers");
--        return -1;
-+    /* Check register page pointer and abort if in unexpected state */
-+    if (!env->regs_page) {
-+        error_report(
-+                "load regs: register page not set for vcpu %d",
-+                cpu->cpu_index);
-+        abort();
-     }
--
--    ret = mshv_get_special_regs(cpu);
--    if (ret < 0) {
--        error_report("Failed to load special registers");
--        return -1;
-+    if (env->regs_page->isvalid == 0) {
-+        error_report(
-+                "load regs: register page invalid for vcpu %d",
-+                cpu->cpu_index);
-+        abort();
-     }
- 
--    return 0;
-+    mshv_get_registers_vp_page(cpu);
- }
- 
- static void add_cpuid_entry(GList *cpuid_entries,
-@@ -1103,11 +1180,7 @@ static int emulate_instruction(CPUState *cpu,
-     int ret;
-     x86_insn_stream stream = { .bytes = insn_bytes, .len = insn_len };
- 
--    ret = mshv_load_regs(cpu);
--    if (ret < 0) {
--        error_report("failed to load registers");
--        return -1;
--    }
-+    mshv_load_regs(cpu);
- 
-     decode_instruction_stream(env, &decode, &stream);
-     exec_instruction(env, &decode);
-@@ -1410,11 +1483,7 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
-     X86CPU *x86_cpu = X86_CPU(cpu);
-     CPUX86State *env = &x86_cpu->env;
- 
--    ret = mshv_load_regs(cpu);
--    if (ret < 0) {
--        error_report("Failed to fetch guest state");
--        return -1;
--    }
-+    mshv_load_regs(cpu);
- 
-     direction_flag = (env->eflags & DESC_E_MASK) != 0;
- 
+Changes since v2:
+- Rebased on the current master
+- Add HV_VP_REGISTER_PAGE_VERSION_1 to `hvhdk.h` and verify the register page
+  version after mmap.
+- Remove fallback to ioctl for when mmap fails, or the register page pointer is
+  invalid. Now the mmap, or register page pointer is not valid, we abort with an
+  error message indicating what went wrong.
+  The mshv_load_regs and mshv_store_regs functions now abort in case the
+  register page is not valid.
+- Move the regs_page field to a place that is preserved across CPU reset inside
+  the CPUArchState struct
+
+Changes since v1:
+- move hv_register_page struct definition to hvhdk.h
+- add a compile time guard around regs_page in CPUArchState
+- modify mshv_get_special_regs_vp_page to only retrieve the special
+  registers present in the register page (removed TR, LDTR, GDTR, IDTR,
+  CR2, APIC_BASE)
+  In local testing this hasn't created any regressions, and it is unlikely
+  that the mmio operations need this registers.
+  We'll want to keep an eye on this in case there are decoded operations
+  that rely on fetching these registers on every VM exit.
+- add commit to fix handle_pio_non_str and handle_pio_str to correctly
+  store modified registers back to the register page after the pio
+  operation, and clear the cpu->accel->dirty flag to avoid the
+  mshv_arch_put_registers from resetting some registers state (fpu).
+- modified register page setup to signal an error instead of a warning
+  in case mmap fails.
+  I am not sure aborting here is fine because it would make some of the
+  fallback logic redundant, and I think that's a bigger refactoring.
+
+Doru Blânzeanu (7):
+  target/i386/mshv: remove duplicate function for reading vcpu registers
+  accel/mshv: move vcpu arch specific initialization after vcpu creation
+  include/hw/hyperv: add hv_vp_register_page struct definition
+  target/i386/mshv: hv_vp_register_page setup for the vcpu
+  target/i386/mshv: use the register page to get registers
+  target/i386/mshv: use the register page to set registers
+  target/i386/mshv: fix pio handlers clobbering device-modified
+    registers
+
+ accel/mshv/mshv-all.c       |  12 +-
+ include/hw/hyperv/hvgdk.h   |   2 +
+ include/hw/hyperv/hvhdk.h   | 106 +++++++++++++
+ include/system/mshv_int.h   |   4 +-
+ target/i386/cpu.h           |   4 +
+ target/i386/mshv/mshv-cpu.c | 300 ++++++++++++++++++++++++++----------
+ 6 files changed, 332 insertions(+), 96 deletions(-)
+
 -- 
 2.53.0
 
