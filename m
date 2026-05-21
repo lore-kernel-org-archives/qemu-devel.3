@@ -4,59 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CE78CD4F5E
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 08:06:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B57E9CD4F5E
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 08:06:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPyPd-0007np-GJ; Thu, 21 May 2026 04:05:49 -0400
+	id 1wPyPk-0007uK-Ez; Thu, 21 May 2026 04:05:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPyPC-0007bt-Vb
- for qemu-devel@nongnu.org; Thu, 21 May 2026 04:05:26 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPyPG-0007cI-Ld
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 04:05:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPyPA-0006r5-Ik
- for qemu-devel@nongnu.org; Thu, 21 May 2026 04:05:22 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPyPD-0006sc-Op
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 04:05:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779350717;
+ s=mimecast20190719; t=1779350722;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=VxT3rvJjwmxx/55QY3a9XGPJdlojQBDQYFHoeyuMWUo=;
- b=dpj64gQq5VQzsf5470tHqJZy6Ake+3SGycoh43vAQVTeLE3ZeH9+Qij1Lny4giQgtay/22
- tM8Fu5nY0UZRIh/yNg2tedpUxc1YcR564MRtcTRAMCH8gq65k9eyrSmTcIUk3T2B4wFKaD
- ATlNP2XlJqeoqbdlloPlh08oaEkCRSM=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rCGrFwKum6nk1p9GTKJAmV29zH9HImugoZEty/Qxb8Q=;
+ b=hul2xuEKx0gOU6zMIH6qLSio5oz94+8F1Xy2evCgN1Xj6yWFmktW7gQ8xbunTvqwC0KPnD
+ x+xbKEu6OOJpMHufclcS5Li8FKuIvv+N40cd8i9Poxwe/8Wbn43e5sJPmMeq2hxTrLGKiv
+ 7fslnWLRrEt2j0knKR+NuK6Vdxml/7c=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-381-G9nt9ZjtOkCF1CborwskcA-1; Thu,
- 21 May 2026 04:05:15 -0400
-X-MC-Unique: G9nt9ZjtOkCF1CborwskcA-1
-X-Mimecast-MFC-AGG-ID: G9nt9ZjtOkCF1CborwskcA_1779350714
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-467-XDMV3mVONQq4TtigOWKXCw-1; Thu,
+ 21 May 2026 04:05:19 -0400
+X-MC-Unique: XDMV3mVONQq4TtigOWKXCw-1
+X-Mimecast-MFC-AGG-ID: XDMV3mVONQq4TtigOWKXCw_1779350718
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BED1018005B3; Thu, 21 May 2026 08:05:14 +0000 (UTC)
+ id D9FFC18005BB; Thu, 21 May 2026 08:05:17 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5A3391681; Thu, 21 May 2026 08:05:14 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 97ECA1956053; Thu, 21 May 2026 08:05:17 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id CAB9D21E6A01; Thu, 21 May 2026 10:05:11 +0200 (CEST)
+ id 0998521E6A37; Thu, 21 May 2026 10:05:12 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org,
-	pierrick.bouvier@oss.qualcomm.com
-Subject: [PATCH 00/39] MAINTAINERS: Fix F: lines
-Date: Thu, 21 May 2026 10:04:32 +0200
-Message-ID: <20260521080511.999266-1-armbru@redhat.com>
+Cc: philmd@linaro.org, pierrick.bouvier@oss.qualcomm.com,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+Subject: [PATCH 13/39] MAINTAINERS: Fix F: in "Raspberry Pi"
+Date: Thu, 21 May 2026 10:04:45 +0200
+Message-ID: <20260521080511.999266-14-armbru@redhat.com>
+In-Reply-To: <20260521080511.999266-1-armbru@redhat.com>
+References: <20260521080511.999266-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -81,103 +84,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Quite a few F: lines don't match any files.  The quick & dirty check
+Cover hw/arm/raspi4b.c.  Drop hw/arm/raspi_platform.h, it's in
+include/hw/arm/, and covered there.
 
-    $ ls `sed -n 's/^F: *//p' MAINTAINERS ` >/dev/null
+Fixes: 95a5db3ae5 (MAINTAINERS: Add entries for missing ARM boards, 2018-11-19)
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: qemu-arm@nongnu.org
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ MAINTAINERS | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-finds about fifty.
-
-Philippe Mathieu-Daudé recently posted a few fixes:
-
-  MAINTAINERS: Fix docker/dockerfiles/debian-hexagon-cross.docker path
-  MAINTAINERS: Cover debian-loongarch-cross.docker with LoongArch section
-  MAINTAINERS: Cover debian-xtensa-cross.docker with Xtensa section
-  MAINTAINERS: Cover debian-tricore-cross.docker with TriCore section
-  MAINTAINERS: Cover python.docker with Python library section
-  MAINTAINERS: Fix s390x storage key/attribute device paths
-  MAINTAINERS: Fix tcg/s390x/ path
-  MAINTAINERS: Correct scripts/coverity-model.c path
-  MAINTAINERS: Fix hexagon-linux-user.mak path
-
-These are in
-
-   Subject: [PATCH 0/7] docker: Remove LegacyKeyValueFormat warnings
-   Date: Mon, 18 May 2026 12:22:15 +0200
-   Message-ID: <20260518102222.80735-1-philmd@linaro.org>
-
-   Subject: [PATCH v2 0/4] buildsys: Stop checking for ESA/390 host
-   Date: Tue, 19 May 2026 19:12:36 +0200
-   Message-ID: <20260519171240.97420-1-philmd@linaro.org>
-
-
-   Subject: [PATCH] MAINTAINERS: Correct scripts/coverity-model.c path
-   Date: Tue, 19 May 2026 19:19:26 +0200
-   Message-ID: <20260519171926.98099-1-philmd@linaro.org>
-
-   Subject: [PATCH] MAINTAINERS: Fix hexagon-linux-user.mak path
-   Date: Wed, 20 May 2026 14:39:47 +0200
-   Message-ID: <20260520123947.12711-1-philmd@linaro.org>
-
-This series takes care of the remainder, except for one discussed
-below.  It applies cleanly with and without Philippe's patches.
-
-The exception is the last line in
-
-    Python scripts
-    M: John Snow <jsnow@redhat.com>
-    M: Cleber Rosa <crosa@redhat.com>
-    S: Odd Fixes
-    F: scripts/*.py
-    F: tests/*.py
-
-Both F: are actually wrong here: they match only in the scripts/ and
-tests/ not further down.  Left for another day.
-
-Markus Armbruster (39):
-  MAINTAINERS: Improve another "Overall" section headline
-  MAINTAINERS: Delete trailing colons in section headlines
-  MAINTAINERS: Drop stale F: from "Guest CPU cores (TCG)"
-  MAINTAINERS: Drop stale F: in "RISC-V TCG CPUs"
-  MAINTAINERS: Drop stale F: in "SPARC TCG CPUs"
-  MAINTAINERS: Drop stale F: from "Overall KVM CPUs"
-  MAINTAINERS: Drop stale F: from "Overall CPUs other accelerators"
-  MAINTAINERS: Drop stale F: from "virtio"
-  MAINTAINERS: Fix F: in "Apple Silicon HVF CPUs"
-  MAINTAINERS: Drop bad F: in "X86 Xen CPUs"
-  MAINTAINERS: Fix F: in "WebAssembly"
-  MAINTAINERS: Fix F: in "Allwinner-a10"
-  MAINTAINERS: Fix F: in "Raspberry Pi"
-  MAINTAINERS: Drop bad F: from "Xilinx Zynq"
-  MAINTAINERS: Drop stale F: from "New World (mac99)"
-  MAINTAINERS: Drop stale F: from "sPAPR (pseries)"
-  MAINTAINERS: Fix F: typo in "sam460ex"
-  MAINTAINERS: Fix F: in "SiFive Machines"
-  MAINTAINERS: Fix F: typo in "ACPI/HEST/GHES/ARM processor CPER"
-  MAINTAINERS: Fix F: in "SSI"
-  MAINTAINERS: Fix F: in "vhost"
-  MAINTAINERS: Fix F: in "virtio-input"
-  MAINTAINERS: Fix bad / stale F: in "virtio-rng"
-  MAINTAINERS: Fix F: in "vhost-user-stubs"
-  MAINTAINERS: Fix F: in "virtio-snd" and "virtio-gpu"
-  MAINTAINERS: Fix F: typo in "pcf8574"
-  MAINTAINERS: Drop stale F: from "Block I/O path"
-  MAINTAINERS: Fix F: typo in "Dump"
-  MAINTAINERS: Drop stale F: from "Human Monitor (HMP)"
-  MAINTAINERS: Fix F: in "QDev"
-  MAINTAINERS: Fix F: in "QMP"
-  MAINTAINERS: Fix F: typo in "I3C"
-  MAINTAINERS: Drop stale F: from "EDK2 Firmware"
-  MAINTAINERS: Drop stale F: from "TCI TCG target"
-  MAINTAINERS: Drop stale F: from "Linux io_uring"
-  MAINTAINERS: Fix F: in "VFIO-USER"
-  MAINTAINERS: Fix F: in "Build and test automation"
-  MAINTAINERS: Drop stale F: from "Sphinx documentation configuration
-    ..."
-  MAINTAINERS: Fix F: in "Rust build system integration"
-
- MAINTAINERS | 73 ++++++++++++++++++-----------------------------------
- 1 file changed, 24 insertions(+), 49 deletions(-)
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 839e5036f9..a346728415 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1015,8 +1015,7 @@ M: Peter Maydell <peter.maydell@linaro.org>
+ R: Philippe Mathieu-Daudé <philmd@linaro.org>
+ L: qemu-arm@nongnu.org
+ S: Odd Fixes
+-F: hw/arm/raspi.c
+-F: hw/arm/raspi_platform.h
++F: hw/arm/raspi*.c
+ F: hw/*/bcm283*
+ F: include/hw/arm/rasp*
+ F: include/hw/*/bcm283*
 -- 
 2.54.0
 
