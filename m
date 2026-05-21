@@ -4,51 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EB1DCD4F3D
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 14:18:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E85CDCD5BAC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 14:24:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ4EG-0007Zo-3R; Thu, 21 May 2026 10:18:28 -0400
+	id 1wQ4JD-0001Vd-Fm; Thu, 21 May 2026 10:23:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1wQ4E6-0007S6-OI; Thu, 21 May 2026 10:18:23 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wQ4IX-0001KQ-Th
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 10:22:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1wQ4E0-0001Gq-Bz; Thu, 21 May 2026 10:18:16 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id C47E0836DE;
- Thu, 21 May 2026 16:18:04 +0200 (CEST)
-Message-ID: <2fa73e56-f4b5-436e-ab25-5654e0837bce@proxmox.com>
-Date: Thu, 21 May 2026 16:18:03 +0200
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wQ4IV-000591-9m
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 10:22:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779373370;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RH05gHQfsO6XxElUEre8MjkhjJLcn3LTyidfBnh+DVI=;
+ b=Y3L1exh4pxt4nvTzy/H7VmRu7GYpyweP4giZdpzf2hscnSLNpZSDSFiXa2Le6m9fY7mJfz
+ xe3N0WKMvNgjWCnqRurzuEfyxYi/pmf/0i+GYNlSe27RfrPM+MKu92wARQeVbpsgFv8KCb
+ OT/y+G7gqPPhslM3TcoldiBwuEicpt8=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-117-6ovOHBSmPzyGBwhClKHCDQ-1; Thu, 21 May 2026 10:22:41 -0400
+X-MC-Unique: 6ovOHBSmPzyGBwhClKHCDQ-1
+X-Mimecast-MFC-AGG-ID: 6ovOHBSmPzyGBwhClKHCDQ_1779373360
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-44f65835b77so4643979f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 07:22:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1779373360; x=1779978160; darn=nongnu.org;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=RH05gHQfsO6XxElUEre8MjkhjJLcn3LTyidfBnh+DVI=;
+ b=CbdJUvNa4X66t7bgVIlL4kdK7OLZSrwuvEtsoKFhcr+2vFJ8AbWVhZfb8hShhWvDTl
+ 0KoK2AJeGUb8Y8Gi52kRd7UcHxSWknAU9oBJOTw84qAGEhHKK3fuhHC6Y8i5GXA4m46R
+ gsmOa5G7g6xnNoQ8mPRhUAENN1x9t13/DgmbG8Fve5O4e2ZFPfNkPuyXo77/aTDkJJhq
+ qTusAdnI6myb9bBnupdmjqCA4YiZbElKGeMk/6JdCV5oCu58UFtWYqRmzCEmmbuGonMH
+ eDiODgMlU2R1sxA0/AuhEahUT1GPgT9kVA6PzN8HlRrxSyU6WWtsfoCt+y7QvMDPj7UX
+ ITsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779373360; x=1779978160;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=RH05gHQfsO6XxElUEre8MjkhjJLcn3LTyidfBnh+DVI=;
+ b=o/HX6Vb9mrHQb7CTaYeokhe526BsX42G86RR2GCIdI0C2ViyBjJXoGEN2qCo2W7aH8
+ dws/oCPjjfyekSJdPuUWlGJVlIaL0G4QF6bi/kQlRZTq/iMX4lZeefTBTsmjymtnY9fZ
+ q53sWLGMyh6iFad1nd5mAP5qXqB86zPKyloqMfdKDXW3uJUowDczjZWE5UCcU36+z49w
+ 9gWwa51wth88P63R5K5lLVmY3tFrkAhKrpwh9HAF50oElvBtoRStWkDxJYDkQ3EQQ+dn
+ tffxqD/ar1kXd6s9U75twxMurbpI4nPpRKHvc79PljxAYEhiGaJq3DHPsDDbRa4Gol7+
+ 6TXg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9cNom804jUf4lELVppeUiWQHUjNmxXgyulJ3A6EGvzHt/L+5VC38i4sBPY1dsECd3HsMJD0lcJUTdY@nongnu.org
+X-Gm-Message-State: AOJu0Yy8UD+zF2LmZ/MheU6IUjhAelXnDyLTkbrlhaY28qch4JqsBoxK
+ PwIXbEoxcdGW63gn4g2S/sS2i69hO5nNgAJVfHd/JuzWTxR2r00b4z9WbEMk6M4SrvGJRIliRG0
+ m7enQ/bGdIdCzyp59kgq4JQzYqK2j9kuXT/nrAQ+03JudKPA+8nO4kGub
+X-Gm-Gg: Acq92OFTX+XmWGrzo+jrqeQZ+AKIs/MNfbWIG5Pl8KQJmEaCBem0zC/4v+zCNpz/r11
+ iCye+82GrB0OtTniZeP8NVWYmC4iq/LW4GxnsIxwNSAYnxYhNoOIb0Ci5NY2joxxwsZenUkCJbp
+ F2T9SJHM2Z0Px3ZiCnhnGCPHEouMT6gDF73I8c3+qzsy0WFjMTAG7MytQ3cm4pI8l3Xk9iY/S41
+ 4B2Mqr5IkysewqXt9XDyF6fqVtZEPVC+doI/1W1xbhlziLvU7oEF5W3wMlq+hIzUzVTg4+hXbb5
+ roejoc965yYaBu3QKOgVB0hIz3sGy0sFP8yhfNq9Db3L3+afZcJ2xvAH9Xzgv7ENCsw8mJueALP
+ pySLTLuM0IcSw77Ws7MIHkGkxjuJxhI5ALzyJCl4BHSj5bNK1RjYrcmKCgJxgCPWUFBLKDmE=
+X-Received: by 2002:a05:600c:1c0d:b0:48f:fe2a:107b with SMTP id
+ 5b1f17b1804b1-49036048699mr56077795e9.7.1779373360385; 
+ Thu, 21 May 2026 07:22:40 -0700 (PDT)
+X-Received: by 2002:a05:600c:1c0d:b0:48f:fe2a:107b with SMTP id
+ 5b1f17b1804b1-49036048699mr56077065e9.7.1779373359969; 
+ Thu, 21 May 2026 07:22:39 -0700 (PDT)
+Received: from rh (p200300f6af2a6100f239e076bbd76784.dip0.t-ipconnect.de.
+ [2003:f6:af2a:6100:f239:e076:bbd7:6784])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49033d44705sm63687105e9.4.2026.05.21.07.22.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 21 May 2026 07:22:39 -0700 (PDT)
+Date: Thu, 21 May 2026 16:22:38 +0200 (CEST)
+From: Sebastian Ott <sebott@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>
+cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ kvmarm@lists.linux.dev, peter.maydell@linaro.org, 
+ shaju.abraham@nutanix.com, khushit.shah@nutanix.com, 
+ yangjinqian1@huawei.com, cohuck@redhat.com, richard.henderson@linaro.org, 
+ skolothumtho@nvidia.com, philmd@linaro.org, maz@kernel.org, 
+ oliver.upton@linux.dev, pbonzini@redhat.com, armbru@redhat.com, 
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com
+Subject: Re: [PATCH v5 11/18] arm/kvm: Initialize all writable ID registers
+ from host
+In-Reply-To: <20260519132905.145643-12-eric.auger@redhat.com>
+Message-ID: <f049616f-d221-5f0e-95a5-e40d61637e0e@redhat.com>
+References: <20260519132905.145643-1-eric.auger@redhat.com>
+ <20260519132905.145643-12-eric.auger@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] qcow2: Fix corruption on discard during write with COW
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- hreitz@redhat.com, den@openvz.org, stefanha@redhat.com,
- qemu-stable@nongnu.org, qemu-devel@nongnu.org,
- Thomas Lamprecht <t.lamprecht@proxmox.com>
-References: <20260427170520.101242-1-kwolf@redhat.com>
- <20260427170520.101242-4-kwolf@redhat.com>
- <414848c6-3829-4120-b760-6db8d43c1ab5@proxmox.com>
- <ag8MzS2ULm8UTFlb@redhat.com>
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <ag8MzS2ULm8UTFlb@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1779373066383
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sebott@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,150 +124,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Kevin,
+On Tue, 19 May 2026, Eric Auger wrote:
+> We want to allow overwriting writable fields of some ID registers.
+> However currently some of them are never touched, neither read nor
+> w. Examples are CLIDR_EL1, CTR_EL0, REVIDR_EL1, MIDR_EL1.
+>
+> We want to initialize them from the host value, allow overwrite
+> and write back for kvm afterwards. This patch implements the
+> initialization.
+>
+> Introduce a new get_host_cpu_idregs() helper that gets the host
+> values for all writable ID regs and store them in isar.idregs[].
+>
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+>
 
-Am 21.05.26 um 3:46 PM schrieb Kevin Wolf:
-> Am 21.05.2026 um 14:12 hat Fiona Ebner geschrieben:
->> Am 27.04.26 um 7:04 PM schrieb Kevin Wolf:
->>> Most code in qcow2 that accesses (and potentially modifies) L2 tables
->>> does so while holding s->lock.
->>>
->>> There is one exception, which is allocating writes. They hold the lock
->>> initially while allocating clusters, but drop it for writing the guest
->>> payload before taking the lock again for updating the L2 tables. This
->>> allows concurrent requests that touch other parts of the image file to
->>> continue in parallel and is an important performance optimisation.
->>>
->>> However, this means that other requests that run while the lock is
->>> dropped for writing guest data must synchronise with the list of
->>> allocating requests in s->cluster_allocs and wait if they would overlap.
->>> For writes, this is done in handle_dependencies(), but discard and write
->>> zeros operations neglect to synchronise with s->cluster_allocs.
->>>
->>> This means that discard can free a cluster whose L2 entry will already
->>> be modified in qcow2_alloc_cluster_link_l2() by a previously started
->>> write. In the case of a pre-allocated zero cluster that is in the
->>> process of being overwritten, this means that discard can lead to a
->>> situation where the cluster is still mapped (because the write will
->>> restore the L2 entry just without the zero flag), but its refcount has
->>> been decreased, resulting in a corrupted image.
->>>
->>> Add the missing synchronisation to qcow2_cluster_discard() and
->>> qcow2_subcluster_zeroize() to fix the problem.
->>>
->>> Cc: qemu-stable@nongnu.org
->>> Reported-by: Denis V. Lunev <den@openvz.org>
->>> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
->>
->> we had started rolling out a build of QEMU 11 with this patch already
->> included. However, some of our users reported issues with VMs using
->> qcow2 disks soon after [0][1]. I was able to reproduce the in-guest
->> segfaults from [1] in a memory-constrained Debian 12 guest when using a
->> swap partition on the same disk. Thanks to Thomas for the hunch with
->> swap! After reverting this patch, I wasn't able to reproduce the issue
->> anymore. I do not have a better reproducer yet and am not sure about the
->> exact pattern causing the issue. It's related to the
->> wait_for_dependencies() call in qcow2_subcluster_zeroize(), because if I
->> revert just the one in qcow2_cluster_discard(), the issue still reproduces.
->>
->> Commandline for my reproducer VM [2]. The issue does not happen if I
->> drop "detect-zeroes":"unmap". Note that I don't have discard-no-unref
->> for the qcow2 image, so in zero_in_l2_slice(), the branch with
->> qcow2_free_any_cluster() is taken. Could the conflict be related to that?
->>
->> I'm still trying to figure things out and come up with a better
->> reproducer, but wanted to let you know early, also because of the
->> upcoming stable releases. Of course, I'd also be happy for hints/hunches
->> and am happy to test suggestions!
-> 
-> Do you have any information about the options used with the image file?
-> In particular, is it using subclusters? Maybe just the 'qemu-img info'
-> output would already give a bit more context.
-
-No subclusters if I'm not missing anything. When I created the image the
-output was:
-
-Formatting '/mnt/pve/dir/images/300/vm-300-disk-0.qcow2', fmt=qcow2
-cluster_size=65536 extended_l2=off preallocation=metadata
-compression_type=zlib size=4510973952 lazy_refcounts=off refcount_bits=16
-
-Our management layer doesn't log the command itself, but doing the same
-operation with logging added (and 301 instead of 300):
-
-/usr/bin/qemu-img create -o preallocation=metadata -f qcow2
-/mnt/pve/dir/images/301/vm-301-disk-0.qcow2 4405248K
-
-qemu-img info gives:
-
-{
-    "children": [
-        {
-            "name": "file",
-            "info": {
-                "children": [
-                ],
-                "virtual-size": 6018105344,
-                "filename": "/mnt/pve/dir/images/300/vm-300-disk-0.qcow2",
-                "format": "file",
-                "actual-size": 3794231296,
-                "format-specific": {
-                    "type": "file",
-                    "data": {
-                        "extent-size-hint": 1048576
-                    }
-                },
-                "dirty-flag": false
-            }
-        }
-    ],
-    "snapshots": [
-        {
-            "icount": 0,
-            "vm-clock-nsec": 0,
-            "name": "s0",
-            "date-sec": 1779354489,
-            "date-nsec": 415278000,
-            "vm-clock-sec": 0,
-            "id": "1",
-            "vm-state-size": 0
-        }
-    ],
-    "virtual-size": 4510973952,
-    "filename": "/mnt/pve/dir/images/300/vm-300-disk-0.qcow2",
-    "cluster-size": 65536,
-    "format": "qcow2",
-    "actual-size": 3794231296,
-    "format-specific": {
-        "type": "qcow2",
-        "data": {
-            "compat": "1.1",
-            "compression-type": "zlib",
-            "lazy-refcounts": false,
-            "refcount-bits": 16,
-            "corrupt": false,
-            "extended-l2": false
-        }
-    },
-    "dirty-flag": false
-}
-
-> Could you already locate the actual corruption and check what the
-> pattern looks like? Something like zeros where we would expect data or
-> the other way around? Or something less clear? (If you don't know,
-> that's a good answer too. I know well that this kind of things is hard
-> to debug.)
-
-Unfortunately not. I can only see the symptom of memory swapped back in
-being corrupt (at least that's what happens AFAIU), leading to segfaults
-in various processes as well as issues with heap allocations, e.g.:
-corrupted double-linked list
-free(): invalid pointer
-
-I'll write a small program which allocates memory with a fixed pattern
-and regularly dumps it, maybe that works to get an idea about the
-corruption.
-
-Best Regards,
-Fiona
+Reviewed-by: Sebastian Ott <sebott@redhat.com>
 
 
