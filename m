@@ -4,56 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27297CD5BAF
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 16:52:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2451FCD5BAF
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 17:51:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ6cW-0004Vf-8t; Thu, 21 May 2026 12:51:40 -0400
+	id 1wQ7Y2-0005n3-RI; Thu, 21 May 2026 13:51:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
- id 1wQ6c3-0004Ov-Ct
- for qemu-devel@nongnu.org; Thu, 21 May 2026 12:51:11 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wQ6c1-00079H-H0
- for qemu-devel@nongnu.org; Thu, 21 May 2026 12:51:11 -0400
-Received: from laptop.localdomain (unknown [86.121.140.206])
- by linux.microsoft.com (Postfix) with ESMTPSA id D058120B7168;
- Thu, 21 May 2026 09:50:57 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D058120B7168
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1779382259;
- bh=XH+JRGJXKCFRmrWjSkiZ8RWMbcx1sY7JXUEnLVWDxwY=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=G+zyRBy7klpv7kkG/pEwV6rfxqIqNn2YV4GmSSE/7F5gi7fz9mk5WOEeAyyPHGcHc
- j1d03q2TzRseMwjQwbXGp3zG49d+wp9H1f6g8mxOuJ4uqfAqjurckvPQeT2VbZf8uh
- 2HshEUP5bd8//5h1wCU3MkNU36NsGzsqeuIU/DzQ=
-From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Wei Liu <liuwe@microsoft.com>, Magnus Kulke <magnuskulke@microsoft.com>,
- Wei Liu <wei.liu@kernel.org>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PATCH v3 7/7] target/i386/mshv: fix pio handlers clobbering
- device-modified registers
-Date: Thu, 21 May 2026 19:50:41 +0300
-Message-ID: <20260521165041.131477-8-dblanzeanu@linux.microsoft.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260521165041.131477-1-dblanzeanu@linux.microsoft.com>
-References: <20260521165041.131477-1-dblanzeanu@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wQ7Xz-0005lu-8b
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 13:51:03 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wQ7Xx-0002zI-HG
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 13:51:03 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4891c00e7aeso47890515e9.2
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 10:51:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779385859; x=1779990659; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=E93CL4DH4ar5MccsqxIg0d37nJPxBRV8JYrPMpHpOSY=;
+ b=D3M76bwp/mHbSSMp1xu3TRN+PeNHuf5FwcFIEzFpZf410dayHRieqh8pcl9jDHRTx7
+ 3HTa15d4QulKbrXYiVQBsj9KqO02XgitjLWSJACI1C2ORfgSFqkXTOSwHs6auS1raPcY
+ lxFz1UQ88EJamvxYAfz17/artAstBWPMC5e4lnvikKIulu1m21YvmQzGV6lCr0tAAfnM
+ IjleZP+3tTC3RqeWr1Cj/B4TNpQgQEPnuLvgcQ+VU+ahJLiryGzpaYnyj0DoTG9u2vZg
+ VQXsqxuoaWlK06gPefAN6A6mK1NjZsh04scjpk3Ce/9bXWe5eL0qHYw/k8FPjoeImzTG
+ MuZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779385859; x=1779990659;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=E93CL4DH4ar5MccsqxIg0d37nJPxBRV8JYrPMpHpOSY=;
+ b=Dpkm0y5rjIV0o7hr4KRcQ05tfbZ7aRsLIcO4thIhrEYW4v5tybziR1WpGEc1wmcwnU
+ /D/sgOtZVWm2BOQwcSlg9Y7hrDopgOyjVp4LsfJ6LGM5LDdjVOrjhT8EO2cMrxD4ZmnW
+ CnrFRdvncnY2sVX6kJSHnn16SXk/vWY7T53NpYEqPP4lN4/fOfGj/1rA8Piqs0mgzZ2a
+ q16quQGUKoHp2Glqc6OtZtuxUqG31M6kab5dtocphdfcx18cSMKXWMLU9lyk3LnztQTM
+ RyKv7GhqXIummUKAMJz+MJdbxnh39Z+FpI0AhY5l0NgSN4E3Q52YrsqPPgmebkq8jbGO
+ /NVg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ87blMp5Seu4wysnfLhyxTatm+ePAWydNmy/2VCjZYrCMJPjYirud/XzEUjsOhk3N12QAuFkT/b9K7r@nongnu.org
+X-Gm-Message-State: AOJu0YzLfYWJPtAZJJrm2nDWTX8fQdXfBVgidJUFZnExuuWK2GmKusSb
+ Ba3+SRmhs1s+aeZdhs4CKU/QXtnwsRjYHxg8liC38Ux62vY2/vuJ2+mGLfk9pF9l+mw=
+X-Gm-Gg: Acq92OHGXtnxrW7Jy7XeTDRVkabFTjyQrdpPELr4p51wa8HlWBBkwHVLgHLZqptiGZL
+ PBzVzWByLEGX0339ym3qRx0QobdBmVanyfErVJjTYyLLIVkWqb8hIP7GnvAs/FJjBrAbrJTvEfA
+ zLm6ZM4QEmvH2ZEPbQyzyCdkzN5erMeHI7+rBPlFza7Lgjxral7A3AEySshwSbEbiXihNtuGysQ
+ rcTrwYglmL2BeP8/RXL+m8Enzb6FQcw/r350rUCwNoUWn81aTVx0CeJvq/AMn+9I2qG3or5aNoL
+ XDpNR+A1v0W+hTFrILON+6smshgzozXsSU24wnCYE0aag4Fzt8IN23ARPyRL7bX/hhjF85vMB6/
+ FwMNEcO7fChIv5mj0VtxbMeBKlzpRzWs8fwAOfJTC/7Iaf+Al9wxJvp6VXRGavesPzda+ndDWX5
+ G+Kb5xnwh9O5KJ9Tx/xEhoWU4=
+X-Received: by 2002:a05:600c:c086:b0:48f:dfe3:dae4 with SMTP id
+ 5b1f17b1804b1-4903606b808mr45607375e9.13.1779385859288; 
+ Thu, 21 May 2026 10:50:59 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4903caede9fsm43911755e9.14.2026.05.21.10.50.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 21 May 2026 10:50:58 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 9578A5F886;
+ Thu, 21 May 2026 18:50:57 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org,  qemu-devel@nongnu.org,  qemu-stable@nongnu.org
+Subject: Re: [PATCH 2/3] target/arm: Use FPST_A64_F16 for SVE FCVTLT_hs
+In-Reply-To: <CAFEAcA9JuUY-en-_ZOnO3bjtgqG-MHp2ESGskdm-D0+fqFng_Q@mail.gmail.com>
+ (Peter Maydell's message of "Thu, 21 May 2026 16:21:19 +0100")
+References: <20260521122913.1565011-1-peter.maydell@linaro.org>
+ <20260521122913.1565011-3-peter.maydell@linaro.org>
+ <87mrxsolqb.fsf@draig.linaro.org>
+ <CAFEAcA9JuUY-en-_ZOnO3bjtgqG-MHp2ESGskdm-D0+fqFng_Q@mail.gmail.com>
+User-Agent: mu4e 1.14.1; emacs 30.1
+Date: Thu, 21 May 2026 18:50:57 +0100
+Message-ID: <87se7kmz26.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,167 +108,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a device handler (e.g. vmport) calls cpu_synchronize_state() during
-I/O port dispatch, it sets cpu->accel->dirty = true and may modify
-registers directly in env. The old PIO code ignored this: it
-unconditionally wrote the stale info->rax from the VM-exit intercept
-message back to the hypervisor and then cleared dirty, discarding any
-register changes made by the device.
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-Bifurcate both handlers on cpu->accel->dirty:
+> On Thu, 21 May 2026 at 15:55, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
+rote:
+>>
+>> Peter Maydell <peter.maydell@linaro.org> writes:
+>>
+>> > The SVE FCVTLT_hs operation produces a halfprec result, so we should
+>> > use the FPST_A64_F16 fpstatus for it.
+>>
+>> Maybe I'm reading the Arm ARM wrong (I can't find FCVTLT_hs but I can
+>> see FCVTLT in the SVE encodings). But these are all widening operations
+>> so I can see halfprec to single, not the other way around.
+>
+> Yes, I got the commit message wrong here; this is half to single,
+> and we need to use the A64_F16 fpstatus for conversions from
+> halfprec, not conversions to it. The e07b48995aaa commit message
+> does a better job of explaining this than I did this time around.
+>
+> The _hs is how the QEMU decode file splits the half to single
+> and the single to double encodings, which are the same insn
+> mnememonic in the architecture.
+>
+> Improved commit message:
+>
+> =3D=3D=3Dbegin=3D=3D=3D
+> We should be using the F16-specific float_status for conversions from
+> half-precision, because halfprec inputs never set Input Denormal.
+> If we use the FPST_A64 fpstatus then we will incorrectly set
+> FPCR.IDC for input-denormals when FPCR.AH=3D1.
+>
+> In commit e07b48995aaa we updated most of the halfprec-to-other
+> conversion insns to use FPST_A64_F16 as part of implementing FEAT_AHP.
+> However we missed the SVE FCVTLT instruction, which has a
+> halfprec-to-single encoding.
+>
+> Correct the FPST we use for the hs variant of FCVTLT.
+>
+> [cc, fixes, &c]
+> =3D=3D=3Dendit=3D=3D=3D
+>
 
-handle_pio_non_str:
-- dirty path: update env->eip directly. For reads (IN), merge the I/O
-  result into env->regs[R_EAX] (which may have been modified by the
-  device) rather than info->rax. For writes (OUT), leave RAX untouched.
-  Flush all registers via mshv_store_regs() and clear dirty.
-- non-dirty path: write RIP and RAX via set_x64_registers hypercall as
-  before.
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-handle_pio_str:
-- dirty path: update env->eip and the appropriate index register
-  (RSI for OUTS, RDI for INS) directly. Flush via mshv_store_regs()
-  and clear dirty.
-- non-dirty path: write the index register and RIP via
-  set_x64_registers. Drop the RAX assignment that was here before;
-  string I/O does not modify RAX, and set_x64_registers is hardcoded
-  to write only 2 registers so the third slot was silently ignored
-  anyway.
+>
+> thanks
+> -- PMM
 
-Remove the unconditional "cpu->accel->dirty = false" at the end of both
-handlers. In the non-dirty fast path it was redundant (already false).
-In the dirty path it was actively harmful: it told the vcpu run loop
-that env was clean when it was not, losing the device's modifications.
-
-Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
-Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
----
- target/i386/mshv/mshv-cpu.c | 74 +++++++++++++++++++++++++------------
- 1 file changed, 51 insertions(+), 23 deletions(-)
-
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index a2bc29abd4..60d21cedbb 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -1331,7 +1331,7 @@ static int pio_write(uint64_t port, const uint8_t *data, uintptr_t size,
-     return ret;
- }
- 
--static int handle_pio_non_str(const CPUState *cpu,
-+static int handle_pio_non_str(CPUState *cpu,
-                               hv_x64_io_port_intercept_message *info)
- {
-     size_t len = info->access_info.access_size;
-@@ -1340,10 +1340,12 @@ static int handle_pio_non_str(const CPUState *cpu,
-     uint32_t val, eax;
-     const uint32_t eax_mask =  0xffffffffu >> (32 - len * 8);
-     size_t insn_len;
--    uint64_t rip, rax;
-+    uint64_t rip;
-     uint32_t reg_names[2];
-     uint64_t reg_values[2];
-     uint16_t port = info->port_number;
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
- 
-     if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
-         union {
-@@ -1374,21 +1376,36 @@ static int handle_pio_non_str(const CPUState *cpu,
- 
-     /* Advance RIP and update RAX */
-     rip = info->header.rip + insn_len;
--    rax = info->rax;
- 
--    reg_names[0] = HV_X64_REGISTER_RIP;
--    reg_values[0] = rip;
--    reg_names[1] = HV_X64_REGISTER_RAX;
--    reg_values[1] = rax;
-+    if (cpu->accel->dirty) {
-+        env->eip = rip;
-+        if (access_type != HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
-+            /*
-+             * For reads, merge the I/O result into the current RAX.
-+             * Use env->regs[R_EAX] as the base since a device handler
-+             * (e.g. vmport) may have called cpu_synchronize_state()
-+             * and modified registers.
-+             */
-+            eax = (((uint32_t)env->regs[R_EAX]) & ~eax_mask)
-+                  | (val & eax_mask);
-+            env->regs[R_EAX] = (uint64_t)eax;
-+        }
-+        /* Sync modified standard registers back and clear dirty. */
-+        mshv_store_regs(cpu);
-+        cpu->accel->dirty = false;
-+    } else {
-+        reg_names[0] = HV_X64_REGISTER_RIP;
-+        reg_values[0] = rip;
-+        reg_names[1] = HV_X64_REGISTER_RAX;
-+        reg_values[1] = info->rax;
- 
--    ret = set_x64_registers(cpu, reg_names, reg_values);
--    if (ret < 0) {
--        error_report("Failed to set x64 registers");
--        return -1;
-+        ret = set_x64_registers(cpu, reg_names, reg_values);
-+        if (ret < 0) {
-+            error_report("Failed to set x64 registers");
-+            return -1;
-+        }
-     }
- 
--    cpu->accel->dirty = false;
--
-     return 0;
- }
- 
-@@ -1504,6 +1521,7 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
-     bool repop = info->access_info.rep_prefix == 1;
-     size_t repeat = repop ? info->rcx : 1;
-     size_t insn_len = info->header.instruction_length;
-+    uint64_t rip;
-     bool direction_flag;
-     uint32_t reg_names[3];
-     uint64_t reg_values[3];
-@@ -1533,18 +1551,28 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
-         reg_values[0] = info->rdi;
-     }
- 
--    reg_names[1] = HV_X64_REGISTER_RIP;
--    reg_values[1] = info->header.rip + insn_len;
--    reg_names[2] = HV_X64_REGISTER_RAX;
--    reg_values[2] = info->rax;
-+    rip = info->header.rip + insn_len;
- 
--    ret = set_x64_registers(cpu, reg_names, reg_values);
--    if (ret < 0) {
--        error_report("Failed to set x64 registers");
--        return -1;
--    }
-+    if (cpu->accel->dirty) {
-+        env->eip = rip;
-+        if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
-+            env->regs[R_ESI] = info->rsi;
-+        } else {
-+            env->regs[R_EDI] = info->rdi;
-+        }
-+        /* Sync modified standard registers back and clear dirty. */
-+        mshv_store_regs(cpu);
-+        cpu->accel->dirty = false;
-+    } else {
-+        reg_names[1] = HV_X64_REGISTER_RIP;
-+        reg_values[1] = rip;
- 
--    cpu->accel->dirty = false;
-+        ret = set_x64_registers(cpu, reg_names, reg_values);
-+        if (ret < 0) {
-+            error_report("Failed to set x64 registers");
-+            return -1;
-+        }
-+    }
- 
-     return 0;
- }
--- 
-2.53.0
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
