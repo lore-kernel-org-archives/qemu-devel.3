@@ -4,70 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 093A6CD5BAC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB8E9CD4F3D
 	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:56:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ3sd-0003yK-8k; Thu, 21 May 2026 09:56:07 -0400
+	id 1wQ3sl-0005GR-99; Thu, 21 May 2026 09:56:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wQ3sa-0003Tw-Vt
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:56:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wQ3si-0004hj-GJ
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:56:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wQ3sZ-0000aa-0u
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:56:04 -0400
+ id 1wQ3sg-0000dQ-MN
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:56:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779371762;
+ s=mimecast20190719; t=1779371769;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=fmlPuAOfp1q9XAq2piMfhl2un1ZaUFpr6GQ07RselCo=;
- b=Hpd0V9zqddFhCtLnNHDn3kjlQDCSww8McJIxxcJOFoJcQMn9dmjhWaDN+urpMUOAu79y3S
- q1AO5L5q0gY4bDjwqeHTZ8aF1KRVjqAoIuRPgxtI3FOT1jmLk5L/A84Evcay7R9nlF2y9n
- GDpnlI14YGw2EAmXvoRAGurGDcgHBQ0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=bnddn3jK2GBEQZ5IObPXYSBjY5rgo/9BZjPxgwCqYvk=;
+ b=Lt0M9sFKyfzlUl2cKB2lKLGqpA1TPYCHwU0Cem8s6rul0PSqAS//+B7enhAt7nyd53OzLD
+ UhHm0/I6nL/rzKrcQ+S+k5IsEDKW5KnuMbNLc1Hz+HuSztMnACywVInEAj3BqNwFX/abrU
+ yV7BE7YPD2Bd4+DaUA9bl9LbnttWJE4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-625-n5HPksroN7uE0c6CPEiZHg-1; Thu,
- 21 May 2026 09:56:00 -0400
-X-MC-Unique: n5HPksroN7uE0c6CPEiZHg-1
-X-Mimecast-MFC-AGG-ID: n5HPksroN7uE0c6CPEiZHg_1779371760
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-544-IJGGQiADM36vXgcDlUA7aQ-1; Thu,
+ 21 May 2026 09:56:06 -0400
+X-MC-Unique: IJGGQiADM36vXgcDlUA7aQ-1
+X-Mimecast-MFC-AGG-ID: IJGGQiADM36vXgcDlUA7aQ_1779371765
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E359A19560B2; Thu, 21 May 2026 13:55:59 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 715591800614; Thu, 21 May 2026 13:56:05 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.26])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9F12E19560A3; Thu, 21 May 2026 13:55:58 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 280541800352; Thu, 21 May 2026 13:56:03 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: stefanha@gmail.com,
+Cc: stefanha@gmail.com, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL v2 00/38] Ui patches
-Date: Thu, 21 May 2026 17:55:11 +0400
-Message-ID: <20260521135551.1752945-1-marcandre.lureau@redhat.com>
+Subject: [PULL v2 01/38] ui/vt100: Standardize on uint8_t for "ch" byte
+ variables
+Date: Thu, 21 May 2026 17:55:12 +0400
+Message-ID: <20260521135551.1752945-2-marcandre.lureau@redhat.com>
+In-Reply-To: <20260521135551.1752945-1-marcandre.lureau@redhat.com>
+References: <20260521135551.1752945-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,131 +86,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The following changes since commit 3f129ea545f16e82b5e43fcc3866b134b7cc4dfc:
+The vt100 code is rather confused about how it handles bytes of data
+to be sent to the terminal:
+ * vt100_input() takes a buffer of uint8_t
+ * each byte is passed to vt100_putchar(), which takes "int ch"
+ * that calls vt100_put_one(), which also takes "int ch"
+ * vt100_put_one() sets TextCell::ch, which is uint8_t again
+ * various places pass the TextCell:ch value to vt100_putcharxy(),
+   which takes "int ch" again, but uses it unchecked as an
+   index into a 256-entry array
 
-  Merge tag 'pull-vfio-20260520' of https://github.com/legoater/qemu into staging (2026-05-20 16:53:28 -0400)
+This confuses Coverity (e.g. CID 1659590) and the reader, who may be
+unsure whether the "int" variable really does hold only valid byte
+values 0..255 and whether we need to bounds-check before doing array
+dereferences.
 
-are available in the Git repository at:
+Standardize on keeping known-byte data in uint8_t all the way
+through.
 
-  https://gitlab.com/marcandre.lureau/qemu.git tags/ui-pull-request
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260512104210.3330835-2-peter.maydell@linaro.org>
+---
+ ui/vt100.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-for you to fetch changes up to 95df9ffa98a785e4e9368018a72e643e77328ed1:
-
-  ui/gtk: Fix focus loss on re-attachment with single VC (2026-05-21 17:53:43 +0400)
-
-----------------------------------------------------------------
-UI pull request
-
-- ui/input: Decouple internal and QAPI input events
-- VNC OOB fixes
-- vt100 fixes
-- GTK focus fix
-
-----------------------------------------------------------------
-
-Akihiko Odaki (29):
-  ui/input: Introduce QemuInputEvent typedef
-  ui/input: Remove QAPI wrappers from QemuInputEvent
-  ui/input: Store QKeyCode directly in QemuInputKeyEvent
-  ui/input: Use Linux key codes for internal key events
-  ui/input: Prohibit sending KEY_RESERVED
-  ui/console: Add qemu_text_console_put_linux()
-  ui/kbd-state: Use Linux key codes
-  hw/arm/musicpal: Use Linux key codes
-  hw/char/escc: Use Linux key codes
-  hw/display/xenfb: Use Linux key codes
-  hw/input/adb-kbd: Use Linux key codes
-  hw/input/hid: Use Linux key codes
-  hw/input/ps2: Use Linux key codes
-  hw/input/virtio-input: Use Linux key codes
-  hw/m68k/next-kbd: Use Linux key codes
-  replay: Use Linux key codes
-  ui/cocoa: Use Linux key codes
-  ui/dbus: Use Linux key codes
-  ui/gtk: Use Linux key codes
-  ui/input-barrier: Use Linux key codes
-  ui/input-legacy: Use Linux key codes
-  ui/input-linux: Use Linux key codes
-  ui/keymaps: Use Linux key codes
-  ui/sdl2: Use Linux key codes
-  ui/spice: Use Linux key codes
-  ui/vnc: Use Linux key codes
-  qemu-keymap: Use Linux key codes
-  ui/console: Remove qemu_text_console_put_qcode()
-  ui/input: Remove unused QKeyCode helpers and keymaps
-
-Daniel P. Berrangé (4):
-  ui/vnc: fix OOB read access in VNC SASL mechname array
-  ui/vnc: fix OOB write in VNC stats array
-  ui/vnc: fix OOB write in lossy rect worker code
-  ui/vnc: fix OOB read updating VNC update frequency stats
-
-Dongwon Kim (1):
-  ui/gtk: Fix focus loss on re-attachment with single VC
-
-Heechan Kang (1):
-  ui: fix validation of VNC extended clipboard data length
-
-Marc-André Lureau (1):
-  ui/vt100: add vt100_fini() check
-
-Peter Maydell (2):
-  ui/vt100: Standardize on uint8_t for "ch" byte variables
-  ui/vt100: Take byte as uint8_t in bh_utf8_decode()
-
- include/qemu/typedefs.h      |   1 +
- include/system/replay.h      |   2 +-
- include/ui/console.h         |   3 +-
- include/ui/input.h           |  92 ++++++-----
- include/ui/kbd-state.h       |  12 +-
- replay/replay-internal.h     |   6 +-
- ui/vnc.h                     |   4 +-
- ui/x_keymap.h                |   3 +-
- chardev/msmouse.c            |  12 +-
- chardev/wctablet.c           |  10 +-
- hw/arm/musicpal.c            |  31 ++--
- hw/char/escc.c               |  45 +++---
- hw/display/xenfb.c           |  51 ++-----
- hw/input/adb-kbd.c           | 246 +++++++++++++++--------------
- hw/input/adb-mouse.c         |  22 ++-
- hw/input/hid.c               |  41 +++--
- hw/input/ps2.c               | 118 +++++++-------
- hw/input/stellaris_gamepad.c |  11 +-
- hw/input/virtio-input-hid.c  |  89 ++++++-----
- hw/m68k/next-kbd.c           | 128 ++++++++--------
- qemu-keymap.c                |  41 +++--
- replay/replay-events.c       |   6 +-
- replay/replay-input.c        | 117 +++++---------
- replay/replay.c              |   2 +-
- replay/stubs-system.c        |   2 +-
- tools/qemu-vnc/input.c       |   9 +-
- ui/console.c                 |  62 +++++---
- ui/dbus-console.c            |   8 +-
- ui/gtk.c                     |  55 ++++---
- ui/input-barrier.c           |  26 ++--
- ui/input-keymap.c            |  74 +++++----
- ui/input-legacy.c            |  47 ++----
- ui/input-linux.c             |   3 +-
- ui/input.c                   | 214 ++++++++++++--------------
- ui/kbd-state.c               |  61 ++++----
- ui/keymaps.c                 |   4 +-
- ui/sdl2-input.c              |  17 ++-
- ui/spice-input.c             |   3 +-
- ui/vdagent.c                 |  20 +--
- ui/vnc-auth-sasl.c           |   2 +
- ui/vnc-clipboard.c           |   9 +-
- ui/vnc.c                     |  41 ++---
- ui/vt100.c                   |  11 +-
- ui/x_keymap.c                |  24 +--
- hw/input/trace-events        |   2 +-
- tools/qemu-vnc/trace-events  |   2 +-
- ui/cocoa.m                   | 289 ++++++++++++++++++-----------------
- ui/meson.build               |  29 ++--
- ui/trace-events              |   5 +-
- 49 files changed, 1014 insertions(+), 1098 deletions(-)
-
+diff --git a/ui/vt100.c b/ui/vt100.c
+index e2fba822523..7e373766bc1 100644
+--- a/ui/vt100.c
++++ b/ui/vt100.c
+@@ -61,7 +61,7 @@ static void image_bitblt(pixman_image_t *image,
+                            xs, ys, 0, 0, xd, yd, w, h);
+ }
+ 
+-static void vt100_putcharxy(QemuVT100 *vt, int x, int y, int ch,
++static void vt100_putcharxy(QemuVT100 *vt, int x, int y, uint8_t ch,
+                             TextAttributes *t_attrib)
+ {
+     static pixman_image_t *glyphs[256];
+@@ -468,7 +468,7 @@ static uint32_t bh_utf8_decode(uint32_t *state, uint32_t *codep, uint32_t byte)
+     return *state;
+ }
+ 
+-static void vt100_put_one(QemuVT100 *vt, int ch)
++static void vt100_put_one(QemuVT100 *vt, uint8_t ch)
+ {
+     TextCell *c;
+     int y1;
+@@ -606,7 +606,7 @@ static void vt100_restore_cursor(QemuVT100 *vt)
+     vt->t_attrib = vt->t_attrib_saved;
+ }
+ 
+-static void vt100_putchar(QemuVT100 *vt, int ch)
++static void vt100_putchar(QemuVT100 *vt, uint8_t ch)
+ {
+     int i;
+     int x, y;
 -- 
 2.54.0
 
