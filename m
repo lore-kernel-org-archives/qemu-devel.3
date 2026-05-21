@@ -4,175 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19176CD5BB0
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 09:41:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8577DCD5BAC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 09:42:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPztY-0004Uo-2f; Thu, 21 May 2026 05:40:48 -0400
+	id 1wPzvG-00051c-L9; Thu, 21 May 2026 05:42:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1wPztW-0004US-0m
- for qemu-devel@nongnu.org; Thu, 21 May 2026 05:40:46 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1wPztT-0007ty-Ng
- for qemu-devel@nongnu.org; Thu, 21 May 2026 05:40:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1779356444; x=1810892444;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=x9ttqtd9kevL7mo94mfklYtn2dQrjDdSNAoX6KmwfH8=;
- b=ZDlfpzkd1xW2cyUrvsF33Y69BLcjBhv1/g2cBjzXunxLyFCXQVtGQsy5
- MGh292Djdw4t/vAY/PaNKp4eBTP6Eq5YIPOtG0xuN7oig6S0h/X6NlaEU
- P+dQy5otK/J85wIYsyWBKaH3lyzepHxhEC5Shic7lXlwlr5590lvnRC9V
- bmnBbhWsnfHjFa3n67nEfndx/9HY2jpWStV2KPoR4hUkUJZP0t25vEXIQ
- H72Uvr58HbAfG3fdYNxI6vv2MzlrBVbhVppynNrztbvqXq4/g+HJaDqH1
- MhBHrYPdeJZA8k3LR6cLw+rppOquUkRy7vph0tSOi6FzNB1Zptw7LDFk7 A==;
-X-CSE-ConnectionGUID: kHryMrW9Qg6/PJQQDDU+Fg==
-X-CSE-MsgGUID: IfaagX0CSlKcF/SIlcpSPA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11792"; a="90963688"
-X-IronPort-AV: E=Sophos;i="6.23,246,1770624000"; d="scan'208";a="90963688"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2026 02:40:40 -0700
-X-CSE-ConnectionGUID: MD+9pOfpR6GCH5Wcs5iCdQ==
-X-CSE-MsgGUID: rP36w+3ESy6+kXWVm07F9g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,246,1770624000"; d="scan'208";a="245469334"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
- by orviesa005.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2026 02:40:40 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Thu, 21 May 2026 02:40:39 -0700
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Thu, 21 May 2026 02:40:39 -0700
-Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.32) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Thu, 21 May 2026 02:40:38 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZDehWREzSXvnW/kvn/YAB4IMNgk/PJRxvb+N8Aj8sigdq5CFuTrZwc0j0zXTjo+e5YjrseUhTfcrQlo3jtxNhR/nFQVlQEZDeJJ2jnBcPN9wjEQdNAP0CdJmcXZjwreW6aCF0am8IcfUQNFqdHOCXasxPheQnzmbB8j1D7/W6J+Gf1buRZAiHTKJ5EuBtjIHv+LZldjjrHCvxTuaui3RJkriMab0X/97j7rtjEqU4kPduOedBNwa9w0npaVch1/jWKhrTakfRJoBa9diz78TSWgSzuzMfYYz7UO7jknBVg3nmVfTSD09Lp2mQgSbJ2y9WB8phVNqRKn1n5K2R8FSXA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HLreY95UGWR9IQbQpe9VxeRVAcJRLolz0zbFkIvr7Xo=;
- b=PY8AEfCh8Eg69UbjJDMJONYtIBx+OpQ4hbOltT2FhdUVpQqdgZ54qAst1t6OsRZVpSOwk1n6P+a5eu4FiFWPHfZsS/DHBaJ5YYD1KDfsutYUNQu8epO6J90mXSHgp6IQZw7C3e/N1oYRxFjcfZP/yhTVt2efDcfUHwB3xDjwx6Ug1uILfJ8NFI32qqFvZ4jRthi223JdWBeAmTkm5k9F+iWR/NloTYJ042ZODNheog+iFC1ohOdJZ1MGZckmNLaaue2gJsaPCaB4CnwYWYkPV4h1jEgqubI5/GqN2CA0lmQiu79bZPvNSvwr8ZEuhsu3QL4xwkPmLTH8d1G4o623NQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from LV8PR11MB8509.namprd11.prod.outlook.com (2603:10b6:408:1e6::15)
- by PH7PR11MB7431.namprd11.prod.outlook.com (2603:10b6:510:273::16)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.16; Thu, 21 May
- 2026 09:40:36 +0000
-Received: from LV8PR11MB8509.namprd11.prod.outlook.com
- ([fe80::f5bd:4dde:4f2f:20b7]) by LV8PR11MB8509.namprd11.prod.outlook.com
- ([fe80::f5bd:4dde:4f2f:20b7%5]) with mapi id 15.21.0048.013; Thu, 21 May 2026
- 09:40:36 +0000
-Message-ID: <c95ff720-d821-40d7-a091-a909394f58a2@intel.com>
-Date: Thu, 21 May 2026 17:48:42 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] backends/iommufd: Introduce
- iommufd_backend_alloc_faultq
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, <qemu-devel@nongnu.org>
-CC: <alex@shazbot.org>, <clg@redhat.com>, <eric.auger@redhat.com>,
- <mst@redhat.com>, <jasowang@redhat.com>, <jgg@nvidia.com>,
- <nicolinc@nvidia.com>, <skolothumtho@nvidia.com>,
- <joao.m.martins@oracle.com>, <clement.mathieu--drif@bull.com>,
- <kevin.tian@intel.com>, <xudong.hao@intel.com>
-References: <20260327025228.474257-1-zhenzhong.duan@intel.com>
- <20260327025228.474257-2-zhenzhong.duan@intel.com>
-Content-Language: en-US
-From: Yi Liu <yi.l.liu@intel.com>
-In-Reply-To: <20260327025228.474257-2-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SI3PR02CA0008.apcprd02.prod.outlook.com
- (2603:1096:4:295::16) To LV8PR11MB8509.namprd11.prod.outlook.com
- (2603:10b6:408:1e6::15)
+ (Exim 4.90_1) (envelope-from <joshualant@gmail.com>)
+ id 1wPzvF-00051K-F0
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 05:42:33 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <joshualant@gmail.com>)
+ id 1wPzvC-0008Jt-4e
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 05:42:33 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-48896199cbaso45971835e9.1
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 02:42:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1779356548; x=1779961348; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=EvbcgxZMEngpix8PPNffa9OACapw9cCTxSSTQ7Xgr3o=;
+ b=VY6yDNr6VTOXMGz4eT3tfZRS10W0XO7/ax+qEk7pYJxUIyhIhSDfoGQqvdvoDnTdxT
+ 8TBZ50exbhrc/PS4jUNdk4VEe1Itxe3HjixIcgMyP9RDvjI2R9SwuN5WbRZc3Urjy5vd
+ c/UBFoWopmXtxIvwBasoH5eVwfScYZIDKZuMjBk0YalNRXWn6C0G81WOWJrx7jndqxST
+ UJc4KgCPSkvyI8hnRndJsSwXh983MkmS963cW0Leqy2LTx90kIJ35Bmgdw68QunC06Se
+ wTC6QNRys39ptuG+pmrRN7zkfFP5sT5U/0ff0jaNC7Pj3q+4c++Oy8DOh5Q3YOsV7cVZ
+ /tjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779356548; x=1779961348;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=EvbcgxZMEngpix8PPNffa9OACapw9cCTxSSTQ7Xgr3o=;
+ b=n5P0Oz3hubH+CJ7oojxbiuX6zUyorw3DQAUCb0CjCgN3Bvtfe6hxBd2sIuX0zgRLhk
+ liJU5RJNzpX8XKBY8C35+ISffP0BwoJ6ggxsZtUgHu0bFlYdTnrzGUMaGFQOODz+9F3h
+ oyX1/y7SVGRoC5hZo/+VeopjrAKNlOslvQzt49P+f5Bh9z5vG+RIEhuDMk4DzKhQiSAV
+ ASO2FFgJh/BGXV0rbF5zSXhvhjWL6qIMTSw/wIeaO03Id083KZXL7ckB3pEZlYb2nWk9
+ L2JEXOEep1D8EmheLbH1kdXlNtHlIUNyp7uNYSyXyMsu2GVdbuBBzdgSF5Y7uE3zhM4s
+ wrJA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9V5u3pfn6jAmSNJcVrF/++uUllkEcckulkWJ60aKKLl1Gs2lAzdYuKdLatxEDqQa+U/EqPzsv2+t6+@nongnu.org
+X-Gm-Message-State: AOJu0YzHUxSBjCLvwziiAi3z5L2VMadCKXdNiPxUDbH2nxTlro/k+gZ4
+ vQnjLtKYkbPkdCYzy6SyCAKIvFGNM8sTHhh9Z4FdwXT4SrGh1V+fSJkAjr5oX184
+X-Gm-Gg: Acq92OH2W8QSlWw5FnrSkYfbue9KfYnlUdEz5ROfGcdFMPZayZOMsQzgZnCd0qphkY/
+ BQwS9Aigr3vBOPQtfmeappXoi/ZWDinuDcP8r7XyXdSTaQaWLTBRCCgZtZ2dcKY1ou5lo43Jy9Q
+ jk30968JRkChx8YalwrUxVNlxkIFkg2XK7gd+Myrl+X138VL72isLzWUQYMyS89PwKknVo2pRvX
+ ciYCcY7zFJYQzSsdBXWt7gxSpGYkYA0MN7AXbTSak2ukGZVN2oWp6UUDk9voWpEXwIN8NlqO/94
+ zJue6ElyZbLAiBoMc2ECUQyyQSkLImGWjsMN3/ZuZ67lTBI2aPya34j/sof23Ec+ecDJKmCYx8q
+ mOosOXrVHROFDsNGmWsNYYBV3QP213qZJ4c4kMhvyonzBghb5dhWiA1BEu+Wm7cWswvVYcaR+9j
+ q5eVOZKer7/PtB+PfqYmn8aLZKx5UvL8OYkD17k1WVgV3hPArHNL77Ub8f7NNvTEtdbFkFZAf+T
+ 5+uxVQ+sc1K
+X-Received: by 2002:a05:600c:26cb:b0:48f:e6de:1cc6 with SMTP id
+ 5b1f17b1804b1-490360e1832mr18320785e9.32.1779356547548; 
+ Thu, 21 May 2026 02:42:27 -0700 (PDT)
+Received: from thinkpc (shef-16-b2-v4wan-175958-cust4.vm3.cable.virginm.net.
+ [80.193.46.5]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49035adf173sm17183185e9.0.2026.05.21.02.42.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 21 May 2026 02:42:26 -0700 (PDT)
+Date: Thu, 21 May 2026 10:42:23 +0100
+From: Joshua Lant <joshualant@gmail.com>
+To: Jonathan Cameron <jic23@kernel.org>
+Cc: linux-cxl@vger.kernel.org, qemu-devel@nongnu.org,
+ Jonathan.Cameron@huawei.com, arpit1.kumar@samsung.com
+Subject: Re: [RFC QEMU PATCH 01/10] docs: Add documentation for cxl-vcs-switch
+Message-ID: <ag7Tf+5Fn4460FL0@thinkpc>
+References: <20260429135717.3048713-1-joshualant@gmail.com>
+ <20260429135717.3048713-2-joshualant@gmail.com>
+ <20260519153308.4626e491@jic23-huawei>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR11MB8509:EE_|PH7PR11MB7431:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6e393223-78c9-46b6-6fd1-08deb71d02a4
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|376014|7416014|1800799024|42112799006|22082099003|18002099003|56012099003|4143699003|11063799006;
-X-Microsoft-Antispam-Message-Info: vP+4ckjm6+clum3iM5TNMvBJPOF/QKsZTBR7dKa7DThn18SHgrd6BRkxG5StgTGxJBuDjPXLeSo45ywytmt30XzcAOnZWlroAyjauUt+H+TDtdzDs4X2PJYaL3jdkK8YBSiD/jsMBZZ1IywmcQ2V8xLK20idwZZzrMU5K/SfZ67vo0yd8gmw4phGLwtpXhyJoaNUPfH9PsAe6tKhz7JyeNL8GI5QSTvmbXB1srBWHImci6WYyiiLMEbeKJLRJ4m6QAWKiJoYWmKTfKaPLf+/fcHPpJPeY16wa138EqbcIFqUPNbgLA8dEsbjLDNtUToMp51sC9cx73B9PNwm9FrpmeJH4PKbRpvWLvIuOo8UdX4Af6qdhWPpuzvx4P9Y7OUj99Npe8hYpAuVKL7kwm1MyJ9KvD4W0LcqDKvhR8wyLNBAwI4+MP88K1tjUtf5abfiRVv6fIjMYFmROXb0m6sXGSvN78po9VRu0C2VH+u+njkc1ClnW+OSU7XQRykGevLDX9+woHfcsuOeMBEI2WNcov0ZC1YcKZw6Xa/qPC++mFp0qub/BmpABxThdZDxtYU0BB/fjMTo1F3vrD0m8WuRDYlecqO3GMQuAfbtoKMNtSTPqybsEPxTyg52bMsO+UcoQzEbdcvkMCMe1Yp5txnGQJJai+5eoPkz4bD6g0SiSh5xFx2ipzFj4iTOjvvMWreg
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:LV8PR11MB8509.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(7416014)(1800799024)(42112799006)(22082099003)(18002099003)(56012099003)(4143699003)(11063799006);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SUc2Z2xGNkc0KzdWdmF6NzM1dGxWK3EyWmcrRVBSTXhWaSsvY2wwTklUb3Qv?=
- =?utf-8?B?TWZyZEJLNUdaYkZwYlMzMjFFZjdIK1ZZVElXblBjLy9HMnR6Tng1d1YrTkJi?=
- =?utf-8?B?Y2RiMDFwMUFGZXVYa1ZpQjgrYXZoN1ZSL2U0UzlFVTQ3OGNNczBRM1VLOWUw?=
- =?utf-8?B?N2w2NDNYZGsybGNMSFc0WmJ5SjhiTnlKcVZUMkFndCtqZmNmTkg2MlFVQjA3?=
- =?utf-8?B?NWEvVkJ5aXpsUGp4elEyTnNsU1pRSkd2R2VjNUlGSGlDSzNDc3hpOTNUdnpS?=
- =?utf-8?B?Z2hpSy9TbkVMWGhkK1hrQllDVFgzYkNEU3RnWE14NTFrMnllUGpncmdvaFpE?=
- =?utf-8?B?dDJWR3ZBbWdhRlpIbVZjb1g0S0N1T2s4bEIvYS9aSFhIRGdrUmFzd21zcVI3?=
- =?utf-8?B?Qmh6ZWlDbnIxWjVTZFc5T1dNallvdnZoeTUvWXQ1bEJvZ3BvQ0dCWk9pSlVH?=
- =?utf-8?B?d2hvMmJzSEN1M0VHdE9QZnBKb3U3VmtDZ3F0UjBmVGNoYnNyZjVrcFppUmdN?=
- =?utf-8?B?NzJRM0FCa2trbnhQZFlObkRJNkxyK284SzAvYkhFb1dham9GNmpFV01BWjJD?=
- =?utf-8?B?T0ZqZVluL0EyNGFtTDV2MlkxaldzVXplaUJzbVlpOUt5aEU0WkZEemlXTFdG?=
- =?utf-8?B?RkF2RVl0RDByTlRKckd6MEt0UDlxa3pkYVZQRnp2cXpCMkVScDIzcmNKeHpX?=
- =?utf-8?B?TUdmWHRUR01VWExWcGlGMHpUd1dFbFpkSjZkeU9iZlh1MDRWemllY3NLMi9S?=
- =?utf-8?B?MWZQOURUbFdrSm5IQ0RGRStlOUNSeVoxN2Uvd3dCMzhoMGlONVpPQU9ReUJa?=
- =?utf-8?B?M094SmtPdStFSzNwcUE0UWF1Q1A2VjdvaFN1KzRrY3lydmptOU01UHlaQ3dZ?=
- =?utf-8?B?MHg5UlZ3ZkpvSHExWkNmMVowQ3NuRFBLN2hmMWJWVDJzTS8vSGd6MWM3VVFR?=
- =?utf-8?B?TC9sS2V6V2ZKRDJuMzhCbG5rRGpMMERzT3Qrcmo0QmVFWkVoUmphYVVLZVpa?=
- =?utf-8?B?TFQyYzJ4bU4wTFRhWDV5Rk0yTUJoM244UG5rWTNHVVIyMHhqbTlJS0s1QVhs?=
- =?utf-8?B?YzlGbmhHMUlKUFVkTVJGdjNqdjh6d0lmd1BDL09aOW1PNGdnZWx6RjJHMHhH?=
- =?utf-8?B?NXczV1EzZ002eEc2MDI0NWZhZHlFT0U0T1Yzb3h3TEZZaU5ZWUNsVyt2S0ll?=
- =?utf-8?B?dDZubmprVC9UTnRaMUNmY00rRTRUclpBK1pkV3d6K1Y0L2hYRTE5bGZ0VTNV?=
- =?utf-8?B?ODFYZ3haWlJlMHprd0I5OSt2aUhiSk1sdElSYUtCSGpiL1cxbEVvcGx1RmZ6?=
- =?utf-8?B?V0xqZ3lmSjRmZmduRXNOa3dxUW5aeGVHZUxxUFRYcFRkWTdSMGRWVHpuRDU2?=
- =?utf-8?B?K0l1TncyRCs4T2Jydk55QVo4U2xaZ09ZempaaEVKNFFFNXg0YkhNMUdQczhH?=
- =?utf-8?B?Tk9sclZzcmc3RHhPRUhsKzlPazFEUytBVXJDU3cvYXVQajVhdGFYSWFCdlg3?=
- =?utf-8?B?WUVPdzB6SE1vRkVvVWJPTE9DV0k1WlBXS3FDYW1Fb29Oak04bHdpeGZuaFRn?=
- =?utf-8?B?WXFvNThTKysrV203dW12TTNJYkxXUVFtQWx4aDJYYU1VYTc1dXV1aWdkSlU3?=
- =?utf-8?B?RllOL0xKTzNUelYzY1dpb0tRUWZhYzBNZ1RST09jdS9QTFQ5aWoxSUdBQUU4?=
- =?utf-8?B?eDgxRjZ6cHd6Um5rdmVjRGltdWQvK1BOb0ZJYjJwVFFvM1BWWHhmaDNTSUky?=
- =?utf-8?B?N3NBU0Jwa0xSRmJwUkRQdG5XSVlSNm5rTE1yQStNM3F3YjloaE9ORG5jVFBl?=
- =?utf-8?B?RTFPeStEQlhYaDZGbzA4MFN6VlpoOHRYS2xic0ZmdStxOFFWSXhLck9QanJP?=
- =?utf-8?B?aXlvVlFrd29kWHhlVDVuUXo3K0tsNGE4a1FXaGZJUU9TSjgyaFI4YnVsYS9j?=
- =?utf-8?B?blJWRGhyalJzQ292ZC9WUE1CMTZLMlZkd2p2RUM3WUpHV2VqOXlRUHQ4UGJ6?=
- =?utf-8?B?Sk9tTDRCdVl6MGtMSkJQc2VkRFNPcTFUbXZ5R1U2RDMrRFVCL1pBbkVvc2lh?=
- =?utf-8?B?TG81aEdtckJsTUNtZXdtd0hHVElDOTlTLy9JdjM4SHlLWWQxVkkycmYwcG4w?=
- =?utf-8?B?ZkdvZXo0Rm5DTW53UU9rQWZmczJzUHhwMENua2NMQ2lsOGtRZkZuZGlyd2lJ?=
- =?utf-8?B?dnVxbVZGTzZXM1NoZ0lpcm5EZFRzOTg5MGRPemx3OEprMEFKalY3ejdtZlJ6?=
- =?utf-8?B?eGZ0TDJ4TVdRS0RWWWVBRGRmZzB2Slg4YXJCZkM4cWIwZER3bDc4ODVtSzRa?=
- =?utf-8?B?TkZvVGY0QzlpL3ZaT0pSS2JRKzJZQ3htM3lUb09oZzZwalNZaHJGUT09?=
-X-Exchange-RoutingPolicyChecked: b2AgiQ1eibBF+ACjz2e6SCpyfDABz4UtrfjjnbwxnxbJJK3NN54GflmrrkjJ9j74iggm1urQudYnqrnRutQolokDA7vLnvR0R5rJTSQN9Opsj7WHPciMOsW1shcMYBch5LssQNvQsNl32Nmod11F6eRZ5lD2xaxlvC5o7mUXMuxoocPp7L+qbL9Mydwd8HggGVxtZjE3zsJ8yO5sOs4yjQIJ2yv+qcciK96PCvNeXdgokR2Yhoo6qTpdF/xzLUS+3jfyqSgzeoV3bk//cs87GaRh6Mi51EjObdC4DS2K9L3tCZ9wlrJgKOxpq8GA2GpC07f46LbOe42ed4FOKfwpkQ==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6e393223-78c9-46b6-6fd1-08deb71d02a4
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR11MB8509.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 May 2026 09:40:36.2658 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: M/vi5IFoE5s8B9vdBXRZo5iI9fJqK4eveTMCFVPy51lHXHQxlwbTq1uVpoTzqOFF0Zx8O4UdwF305Ner9Mwmvg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB7431
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.9; envelope-from=yi.l.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260519153308.4626e491@jic23-huawei>
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=joshualant@gmail.com; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -188,79 +104,328 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/27/26 10:52, Zhenzhong Duan wrote:
-> Add a new helper for IOMMU_FAULT_QUEUE_ALLOC ioctl to allocate a fault
-> handling object which will be used in hwpt allocation.
+> On Wed, 29 Apr 2026 14:48:35 +0100
+> Joshua Lant <joshualant@gmail.com> wrote:
 > 
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->   include/system/iommufd.h |  3 +++
->   backends/iommufd.c       | 21 +++++++++++++++++++++
->   backends/trace-events    |  1 +
->   3 files changed, 25 insertions(+)
+> > Signed-off-by: Joshua Lant <joshualant@gmail.com>
+> Hi Joshua,
 > 
-> diff --git a/include/system/iommufd.h b/include/system/iommufd.h
-> index 45a9e87cb0..d4ba8434a5 100644
-> --- a/include/system/iommufd.h
-> +++ b/include/system/iommufd.h
-> @@ -100,6 +100,9 @@ bool iommufd_backend_alloc_veventq(IOMMUFDBackend *be, uint32_t viommu_id,
->                                      uint32_t *out_veventq_id,
->                                      uint32_t *out_veventq_fd, Error **errp);
->   
-> +bool iommufd_backend_alloc_faultq(IOMMUFDBackend *be, uint32_t *fault_id,
-> +                                  uint32_t *fault_fd, Error **errp);
-> +
->   bool iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be, uint32_t hwpt_id,
->                                           bool start, Error **errp);
->   bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
-> diff --git a/backends/iommufd.c b/backends/iommufd.c
-> index ab612e4874..9496377a25 100644
-> --- a/backends/iommufd.c
-> +++ b/backends/iommufd.c
-> @@ -337,6 +337,27 @@ bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
->       return true;
->   }
->   
-> +bool iommufd_backend_alloc_faultq(IOMMUFDBackend *be, uint32_t *fault_id,
-> +                                  uint32_t *fault_fd, Error **errp)
+> Sorry it's taken me a while to get to this!  I blame to much activity
+> on other open source projects! :)
 
-how about using int *fault_fd? I know the uapi returns __u32, but we
-anyhow need to have a conversion to int. If so, we may do it in this
-helper.
+No problem at all! I appreciate you taking time to review this.
 
-> +{
-> +    int ret, fd = be->fd;
-> +    struct iommu_fault_alloc cmd = {
-> +        .size = sizeof(cmd),
-> +    };
-> +
-> +    ret = ioctl(fd, IOMMU_FAULT_QUEUE_ALLOC, &cmd);
-> +    trace_iommufd_backend_alloc_faultq(fd, cmd.out_fault_id, cmd.out_fault_fd,
-> +                                       ret);
-> +    if (ret) {
-> +        error_setg_errno(errp, errno, "Failed to allocate fault queue");
-> +        return false;
-> +    }
-> +
-> +    *fault_id = cmd.out_fault_id;
-> +    *fault_fd = cmd.out_fault_fd;
-> +    return true;
-> +}
-> +
->   bool iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be,
->                                           uint32_t hwpt_id, bool start,
->                                           Error **errp)
-> diff --git a/backends/trace-events b/backends/trace-events
-> index b9365113e7..6820a9939e 100644
-> --- a/backends/trace-events
-> +++ b/backends/trace-events
-> @@ -17,6 +17,7 @@ iommufd_backend_unmap_dma_non_exist(int iommufd, uint32_t ioas, uint64_t iova, u
->   iommufd_backend_unmap_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
->   iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas) " iommufd=%d ioas=%d"
->   iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_t flags, uint32_t hwpt_type, uint32_t len, uint64_t data_ptr, uint32_t out_hwpt_id, int ret) " iommufd=%d dev_id=%u pt_id=%u flags=0x%x hwpt_type=%u len=%u data_ptr=0x%"PRIx64" out_hwpt=%u (%d)"
-> +iommufd_backend_alloc_faultq(int iommufd, uint32_t fault_id, uint32_t fault_fd, int ret) " iommufd=%d fault_id=%d fault_fd=%d (%d)"
->   iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%d)"
->   iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
->   iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t flags, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" flags=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
+> 
+> I've mused in the past on how to do the command lines for these.
+> So some thoughts are based on that - feel free to argue why we
+> the structure you have here works better.
+> 
+> When I get through the series I may well change my mind on some
+> of what follows ;)
+> 
+> 
+> > ---
+> >  docs/system/devices/cxl.rst | 90 ++++++++++++++++++++++++++++++++++---
+> >  1 file changed, 85 insertions(+), 5 deletions(-)
+> > 
+> > diff --git a/docs/system/devices/cxl.rst b/docs/system/devices/cxl.rst
+> > index 32b1b5d773..9e8452e576 100644
+> > --- a/docs/system/devices/cxl.rst
+> > +++ b/docs/system/devices/cxl.rst
+> > @@ -119,11 +119,11 @@ and associated component register access via PCI bars.
+> >  CXL Switch
+> >  ~~~~~~~~~~
+> >  Here we consider a simple CXL switch with only a single
+> > -virtual hierarchy. Whilst more complex devices exist, their
+> > -visibility to a particular host is generally the same as for
+> > -a simple switch design. Hosts often have no awareness
+> > -of complex rerouting and device pooling, they simply see
+> > -devices being hot added or hot removed.
+> > +virtual hierarchy. Whilst more complex devices exist (see VCS
+> > +Switching below), their visibility to a particular host is
+> > +generally the same as for a simple switch design. Hosts often
+> > +have no awareness of complex rerouting and device pooling,
+> > +they simply see devices being hot added or hot removed.
+> >  
+> >  A CXL switch has a similar architecture to those in PCIe,
+> >  with a single upstream port, internal PCI bus and multiple
+> > @@ -467,6 +467,86 @@ Example configuration:
+> >  Guest OS communication with the MCTP CCI can then be established using standard
+> >  MCTP configuration tools.
+> >  
+> > +CXL Multi-VCS Switching
+> > +-----------------------
+> > +
+> > +The cxl-vcs-switch object allows for a Fabric Manager to dynamically reconfigure
+> > +the switching within a multi-upstream port CXL/PCIe topology, This moves beyond
+> > +the static switching configuration described above. The use of vcs=X on an
+> > +endpoint device indicates that it should be hidden from guests at boot. 
+> 
+> That bit seems rather unintuitive.  EPs shouldn't really be involved in this
+> at all. I guess you are using them as a proxy for a physical downstream port?
 
+correct...
+
+> Interesting idea if a bit non intuitive. I wonder if we can put in an explicit
+> physical DSP device in. When linked it just proxies the vPPD.
+> 
+> Maybe we can get away without that but it leaves us with no physical port hotplug
+> as we can't connect an empty physical downstream port to a VCS.
+> 
+
+The main reason it has been designed this way is becasue I could not see
+a way of replacing one DSP (the vPPB seen by the guest) with another DSP
+(the actual physical port to which the device would be attached). Doing this
+could be done in 1 of 3 ways. Two of which I dont think will work. The
+third I have not figured out how to do it yet.
+
+1. Reconnect USP to PPB and endpoint rather than the vPPB on bind.
+
+The connection(s) to the USP needs to remain static since the USP itself is not
+hotpluggable. This is a mandate from the PCIe spec regarding slot/device
+characteristics, rather than a QEMU implementation detail AFAICT.
+
+2.
+The connection between DSP (PPB) and endpoint is severed on bind, and
+then the endpoint is then attached to the vPPB.
+
+This will mean in QEMU that the device has to go through the teardown process
+and reenumeration, so will potentially lose device state information. The
+alternative being (i'd imagine) a messy piece of code to rewrite the exit
+functions depending what is happening (real exit or "rewiring")...
+
+3.
+Create some sort of new device which looks like a DSP but actually is
+more of a shim of some sort and is able to connect pre-realized devices to
+pre-existing DSPs (the vPPBs) but somehow trigger a hotplug event in the guest
+as if it was only just being realized.
+
+> > Each
+> > +upstream port with vcs=X set will conceptually become an upstream PPB. Any
+> > +downstream port that is connected to an upstream port with vcs=X set will
+> > +automatically become a vPPB for that VCS. The overall cxl-virtual-switch has a
+> Neat not to have to set it for the DSPs, but I think we will need them to
+> grow new functionality so maybe a different device type is good.
+> 
+> > +single CCI mailbox used for config/status of all ports within the switch.
+> 
+> Need to support both MCTP and switch-cci but that should be fine.
+> 
+> > +Setting local-fm=true indicates that this QEMU instance has the CCI mailbox
+> > +attached. Setting it false will create listeners for commands from a remote
+> > +QEMU process (yet to be implemented).
+> 
+> Nice but make that the default for now (And drop the parameter).
+> Absence of a connected CCI might be sufficient though that's a bit ugly
+> to check.
+> 
+> > +
+> > +An example of how the topology is described on the CLI is shown below:
+> > +
+> > +  -object cxl-vcs-switch,id=vcs0,usp-ppbs=2,dsp-ppbs=4,local-fm=true \
+> Interesting.  I'd kind of like it to be a device, but it has no presence
+> on any bus in of itself (arguably it is on a whole load of them). So maybe not.
+> 
+
+I mentioned this briefly in the cover letter (sorry if unclear). I would
+have liked it to be a device as well, but I couldn't figure out how
+to do this given the way QEMU associates the buses and
+devices to one another in the QOM tree. You can't not give it a bus
+option, becasue it will then choose a single default bus to associate
+with. Im unsure about adding multiple bus association. Doing this will require
+deeper changes to the qdev/qbus which might be messy or unpalatable to upstream
+folk. I made my changes to qbus as minimal as possible.
+
+> > +  -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.0,hdm_for_passthrough=true \
+> 
+> Small side note - avoid the passthrough trick. It means a bunch of code
+> paths aren't exercised and has hidden various OS bugs.
+> 
+> > +  -device cxl-rp,port=0,bus=cxl.0,id=root_port1,chassis=0,slot=1 \
+> > +  -device pxb-cxl,bus_nr=22,bus=pcie.0,id=cxl.1,hdm_for_passthrough=true \
+> > +  -device cxl-rp,port=0,bus=cxl.1,id=root_port2,chassis=1,slot=1 \
+> > +  -device cxl-upstream,port=0,sn=1234,bus=root_port1,id=us0,addr=0.0,multifunction=on,vcs=vcs0,usppb=0 \
+> > +  -device cxl-upstream,port=0,sn=5678,bus=root_port2,id=us1,addr=0.0,multifunction=on,vcs=vcs0,usppb=1 \
+> 
+> How can we have two upstream ports in a single vcs?  To me those are separate VCSs
+> where a VCS is normally a tree topology below a given USP.
+> 
+> I think we have a terminology problem.  If I read this right you are using VCS
+> to mean the whole physical switch?  Been a little while but I don't think
+> that corresponds at all to it's meaning in the CXL Spec. Your VCS0/1 below
+> are right.
+> 
+
+Yeah I was struggling with the naming somewhat trying not to conflate a "VCS
+capable switch" with the VCS within the switch itself. Seems I didn't do a
+great job. Just to be clear 1 VCS = 1 USP. The whole switch is the collection
+of all the VCS's. The id's here of the CLI devices is misleading I see
+that.
+
+> 
+> 
+> > +  -device cxl-switch-mailbox-cci,bus=root_port1,addr=0.3,target=vcs0 \
+> > +  -device usb-cxl-mctp,bus=ehci.0,id=usb0,target=vcs0 \
+> > +  -device cxl-downstream,port=0,bus=us0,id=dsp0,slot=3 \
+> > +  -device cxl-downstream,port=1,bus=us0,id=dsp1,slot=4 \
+> > +  -device cxl-downstream,port=0,bus=us1,id=dsp2,slot=7 \
+> > +  -device cxl-downstream,port=1,bus=us1,id=dsp3,slot=8 \
+> Ok. So these only know they are virtual because they are connected to a virtual USP.
+> Might be enough - or we might want to make that more explicit via
+> a new device type.
+> 
+> > +  -device cxl-type3,persistent-memdev=cxl-mem1,id=cxl-ep1,lsa=cxl-lsa1,sn=99,vcs=vcs0,dsppb=0 \
+> > +  -device cxl-type3,persistent-memdev=cxl-mem2,id=cxl-ep2,lsa=cxl-lsa2,sn=100,vcs=vcs0,dsppb=1 \
+> > +  -device cxl-type3,persistent-memdev=cxl-mem3,id=cxl-ep3,lsa=cxl-lsa3,sn=101,vcs=vcs0,dsppb=2 \
+> > +  -device cxl-type3,persistent-memdev=cxl-mem4,id=cxl-ep4,lsa=cxl-lsa4,sn=102,vcs=vcs0,dsppb=3 \
+> This I mention above. I 'think' you are using the dsppb to instantiate something that is pretending
+> to be a the physical DSP.
+> I haven't yet read thee series, but gut feeling is that will make the querying of link
+> properties etc rather different from the normal case.
+> 
+> > +  -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=8G,cxl-fmw.1.targets.0=cxl.1,cxl-fmw.1.size=8G
+> > +
+> > +Example topology involving VCS switching::
+> > +
+> > +               +--------------------+  +--------------------+
+> > +               |   Host Bridge 0    |  |   Host Bridge 1    |
+> > +               +----------+---------+  +----------+---------+
+> > +    +-------+             |                       |
+> > +    | MCTP  |             |                       |
+> > +    | USB/  |  +----------+---------+  +----------+---------+
+> > +    | I2C   |  |    Root Port 0     |  |    Root Port 1     |
+> > +    +-----+-+  +----------+---------+  +----------+---------+
+> > +          |               |                       |
+> > +          |               |                       |
+> > +   +------|---------------+-----------------------+-----------------------+
+> > +   |    +-+--------+      |  cxl-vcs-switch (vcs0)|                       |
+> > +   | +--| CCI MBOX |---*  |                       |                       |
+> > +   | |  +----------+      |                       |                       |
+> > +   | |  +-----------------+--------+      +-------+------------------+    |
+> > +   | +--+                 |   VCS0 |  *---+       |             VCS1 |    |
+> > +   |    | +---------------+------+ |      | +-----+----------------+ |    |
+> > +   |    | |                      | |      | |                      | |    |
+> > +   |    | |        USP 0         | |      | |        USP 1         | |    |
+> > +   |    | |                      | |      | |                      | |    |
+> > +   |    | +----+------------+----+ |      | +----+------------+----+ |    |
+> > +   |    |      |            |      |      |      |            |      |    |
+> > +   |    | +----+----+  +----+----+ |      | +----+----+  +----+----+ |    |
+> > +   |    | |  DSP 0  |  |  DSP 1  | |      | |  DSP 2  |  |  DSP 3  | |    |
+> > +   |    | |(vPPB 0) |  |(vPPB 1) | |      | |(vPPB 0) |  |(vPPB 1) | |    |
+> > +   |    | |         |  |         | |      | |         |  |         | |    |
+> > +   |    | +---------+  +---------+ |      | +---------+  +----+----+ |    |
+> > +   |    +--------------------------+      +-------------------+------+    |
+> > +   |                                                          |           |
+> > +   |           +----------------------------------------------+           |
+> > +   |           |                                                          |
+> > +   |           |            -                    -            -           |
+> > +   +-----------|------------|--------------------|------------|-----------+
+> > +               |            |                    |            |
+> > +          +---------+  +---------+          +---------+  +---------+
+> > +          |CXL/PCIe |  |CXL/PCIe |          |CXL/PCIe |  |CXL/PCIe |
+> > +          |  EP 0   |  |  EP 1   |          |  EP 2   |  |  EP 3   |
+> > +          | (PPB0)  |  | (PPB1)  |          | (PPB2)  |  | (PPB3)  |
+> > +          +---------+  +---------+          +---------+  +---------+
+> > +                 PPB0 Bound to VCS1, vPPB1. Others unbound...
+> > +
+> Good to have the diagram as makes it easier to discuss.  
+> 
+> What you have here is a bit of a hack because only some entities created
+> exist in the command line - the others are spun up implicitly.  I suspect
+> we really want to make them explicit.  The one thing I never looked into in
+> the following is how hard it would be to poke a vDSP in front of a physical
+> DSP and basically proxy stuff through or not.  Some stuff will be programmed
+> at boot (windows etc for hotplug later) but other stuff will fire in the hotplug
+> flow on an attach of a physical port. Will need some care and stitching up
+> memory regions across the boundary.
+> 
+
+I think that this is really the crux of the issue with this series, and
+all relates to the first question I posed in the cover letter and some of the
+other comments you make on other patches, and with my comments below.
+
+The way these patches work currently make the software side of the
+hotplug on binding trivial, but they disallow FM comms to the device when it is
+not bound. If we solve this and have realized devices dangling off the
+DSPs, then it makes the hotplug to the guest more complex.
+
+The issue is that the hotplug events and the realize/exit functions seem so
+tied up with one another. I'm unsure at the moment how to decouple them cleanly
+in the VCS case.
+
+> The command line I'd be looking at for this as a target (feel free to shoot
+> at it) would be something like (I went with one PXB - but need to test both options). 
+> Note some of this is probably garbage as I haven't checked parameters are right.
+>  -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.0 \
+>  -device cxl-rp,bus,cxl.0,id=root_port1...
+>  -device cxl-rp,bus,cxl.0,id=root_port2..
+>  -device cxl-upstream,port=0,sn=1234,bus=root_port1,id=us0,addr=0.0,multifunction=on,virtual=on \
+>  -device cxl-upstream,port=0,sn=5678,bus=root_port2,id=us1,addr=0.0,virtual=on \
+> 
+> #note I extended current target to a list
+>  -device cxl-virtual-downstream,vport=0,bus=us0,id=vppb0 \
+>  -device cxl-virtual-downstream,vport=1,bus=us0,id=vppb0 \
+>  -device cxl-virtual-downstream,vport=2,bus=us0,id=vppb0 \
+>  -device cxl-virtual-downstream,vport=0,bus=us1,id=vppb0 \
+>  -device cxl-virtual-downstream,vport=1,bus=us1,id=vppb0 \
+>  -device cxl-virtual-downstream,vport=2,bus=us1,id=vppb0 \
+> # Note more virtual ports than physical - likely common situation.
+>  -object cxl-switch,usps.0=usp0,usps.1=usp1,id=vsw0 \
+> #list of usps so we can navigate downwards from this.
+>  -device cxl-switch-mailbox-cci,id=swcci0,bus=root_por1,multifunction=on,target=vsw0\
+> # Maybe hang the unconnected physical dsps on a bus created by the cxl-switch?
+
+I had tried writing it like this originally. The issue comes from the
+fact that having a "bus" implies something has been added to the QOM Tree, which
+forces an association to the guest. When actually we need this whole bus
+to be invisible to the guest (but visible to an FM) on boot.
+
+I'm sure this can be solved, but I can't see a way of doing it wihtout
+more invasive changes to the qbus/qdev code (patch 2), and conceptually
+to how the QOMTree represents the whole machine in general. I'm not sure yet
+if this could open up a can of worms with other stuff going on deeper in the
+guts of QEMU...
+
+Ultimately this is at the boundary of my knowledge of QEMU internals
+currently, but I think something like this might be necessary to
+solve the issues regarding FM communication with the
+unbound devices etc. I would really appreciate input about this
+specific issue.
+
+>  -device cxl-downstream,port=0,bus=vsw0,id=dsp0,slot=3 \
+>  -device cxl-downstream,port=1,bus=vsw0,id=dsp1,slot=4 \
+>  -device cxl-downstream,port=2,bus=vsw0,id=dsp2,slot=7 \
+>  -device cxl-downstream,port=3,bus=vsw0,id=dsp3,slot=8 \
+> #ideally a device but need to think where to hang it.
+>  -device cxl-type3,persistent-memdev=cxl-mem1,id=cxl-ep1,lsa=cxl-lsa1,sn=99,bus=dsp0 \
+>  -device cxl-type3,persistent-memdev=cxl-mem2,id=cxl-ep2,lsa=cxl-lsa2,sn=100,bus=dsp1 \
+>  -device cxl-type3,persistent-memdev=cxl-mem3,id=cxl-ep3,lsa=cxl-lsa3,sn=101,bus=dsp2 \
+> #note not all DSPs have anything on them.
+> 
+> Few reasons for this structure.
+> 1) The unconnected physical port - we want to make sure physical hotplug works both
+>    when not associated with a VCS and when it is.
+> 2) We need to be able to talk to EPs via FM interfaces when they aren't connected
+>    Given we have to make that look like PCI, let's make it PCI.  I'm not sure how
+>    much hackery that will take as we'll need to do some level of enumeration from
+>    the the switch controller.  Only need that once we want to do more than check
+>    training etc though - so maybe job for another day.  In theory we can do everything
+>    with devices in that state (be it slowly) so would need all the addresses programmed
+>    etc. Not as general as current discussions on enumerating full PCI bus in QEMU as
+>    all direct connect.
+
+What discussions are you refering to?
+
+> 
+> Anyhow it's fiddly with this scheme but I think a little more general
+> than your current one and closer representation of the hardware which will
+> matter as we add all the introspection stuff etc in the FMAPI.
+> 
+
+I agree fully. It would be much better if I could get this general
+solution. I just need to figure out how to do it...
+
+Cheers,
+
+Josh
 
