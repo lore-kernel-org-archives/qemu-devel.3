@@ -4,108 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C03DCD4F3D
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 00:48:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3C4ACD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 00:48:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPrZT-0007XV-ND; Wed, 20 May 2026 20:47:31 -0400
+	id 1wPrZu-0007bj-Jy; Wed, 20 May 2026 20:47:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wPrZS-0007XI-8H
- for qemu-devel@nongnu.org; Wed, 20 May 2026 20:47:30 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1wPrZt-0007bb-Ax
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 20:47:57 -0400
+Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wPrZQ-0008Dk-Mo
- for qemu-devel@nongnu.org; Wed, 20 May 2026 20:47:30 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64KEveFf072884; Thu, 21 May 2026 00:47:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=qGp574
- yDrVh8ugnIb00eWtRX55wmGLCv1uCMj7zOA0c=; b=RB8R+SgKHDkzyMjeJCILvo
- 7l1dv9B+UEjEpSYqAEvxgdSUNfiJaA8rsGdW55Td39lwyq0dD1Ffs0Mq4NPAgD+G
- 3WvB3PvWN05tK1rKzM7Unc6uNp0dIOTY8svCUE8Tb9mXMcpBZ8qC9jFL3KJcSQ2w
- 85utHp+ip3btdeXg2N5NeLi/CYEebvnTpTc6L71KZxELPTlLsJk06MHllkMQPZyz
- Sc+bAwxedn0/PwrGLwombrdOnLLkjdcpWC2AcU/5W5OeWSAyjgMvxlJe7id/d6xc
- HzsqEIkLOnK/Ph0SQwzJjHciHp5r/2HgLa6XHOs63j2UYGB4J5cgAG5otXAIuGnw
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h8mvhnm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 21 May 2026 00:47:25 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64L098Uk001859;
- Thu, 21 May 2026 00:47:24 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e754ghkns-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 21 May 2026 00:47:24 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64L0lOsX33424008
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 21 May 2026 00:47:24 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 19B075805F;
- Thu, 21 May 2026 00:47:24 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1EF1558043;
- Thu, 21 May 2026 00:47:23 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.141.43]) by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 21 May 2026 00:47:23 +0000 (GMT)
-Message-ID: <61fdc7c291a43969020b3c84e287e7094aa10ec1.camel@linux.ibm.com>
-Subject: Re: [PATCH 06/40] s390x: prevent crash if given invalid CPU#
-From: Eric Farman <farman@linux.ibm.com>
-To: =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Date: Wed, 20 May 2026 20:47:22 -0400
-In-Reply-To: <20260521-qemu-no-hmp-v1-6-d104f809e145@redhat.com>
-References: <20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com>
- <20260521-qemu-no-hmp-v1-6-d104f809e145@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1wPrZr-0008Oi-1P
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 20:47:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1779324475; x=1810860475;
+ h=from:to:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=RgbZeK+T0d0MjC474rAEIERQ+Q7bC7vfl+Q7h0f++pc=;
+ b=BkGDzTKT8M/vsX7iKdE2VAcEBgAn8AejlNhwB78Mksn+aU/5BzHK8JdO
+ EmHABEekFXHSfCIqymUeAI6TQ6casPB265IvDaRjMwc/BOwESwkCrpqEU
+ /FGY3KoVFG56ridZw+jqpUViJsLjsebf3HDcE1bC8mGkiUympUaKRHgTo
+ b7SVzro4GyjNZQay8Hy7P271Mv2N8B1Wl2rjPs40xAO1cwLG8wXSovVOJ
+ WwIV/V0Fdz9ByzdEV9jdhpaY2o6FpaEelktEo//RpWAnoi5UVbsE2hRTU
+ lkB2p2BVTv1fqE7/MvC5UQ97/58webt0B1/qx5n4rAwQzvCoKC9DNXd01 Q==;
+X-CSE-ConnectionGUID: zBdSqfyURh21VzbR50n14g==
+X-CSE-MsgGUID: 8aMFqnCfRNWOdfwpRHGRLA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11792"; a="79969213"
+X-IronPort-AV: E=Sophos;i="6.23,245,1770624000"; d="scan'208";a="79969213"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 May 2026 17:47:49 -0700
+X-CSE-ConnectionGUID: Q8v4/O64Tauduee/FtDApg==
+X-CSE-MsgGUID: i5GRZ4JATwKMsjS4R+5exQ==
+X-ExtLoop1: 1
+Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.158.5])
+ by fmviesa003.fm.intel.com with ESMTP; 20 May 2026 17:47:48 -0700
+From: dongwon.kim@intel.com
+To: qemu-devel@nongnu.org
+Subject: [PATCH] ui/egl: reset framebuffer state when creating new EGL
+Date: Wed, 20 May 2026 17:42:26 -0700
+Message-Id: <20260521004226.1914121-1-dongwon.kim@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: vG6oyrInus05fIeJSHtNpW6N0kdzCKHt
-X-Authority-Analysis: v=2.4 cv=GYMnWwXL c=1 sm=1 tr=0 ts=6a0e561d cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=20KFwNOVAAAA:8
- a=VnNF1IyMAAAA:8 a=RCG6V7LVYpKTZnwaq0gA:9 a=QEXdDO2ut3YA:10 a=1k1Y3PzgwnwA:10
-X-Proofpoint-ORIG-GUID: vG6oyrInus05fIeJSHtNpW6N0kdzCKHt
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIxMDAwMyBTYWx0ZWRfXyUmCudsAgu6n
- 2itdMelguJVA6Byt/TXDHUaaAARFQWbtNlNe6cVnGco/7BlWDRjb5Je2MXQ2Mw1N2Zduz2StXDh
- 4k/S9WavbUtfAIGo773xi453YiEAzaTmp9ZzXbvHG3nyNomg4S+Ef3crT0bsC0daUEgaA4gdz/8
- Cf89llH1wULjo/l+UDAGvvTtD3qhjx80uFMfK1G9x7mcAmPW0Bj99fogkNORB2xiqE4Pdvv3J4f
- DyZK60fp82sHfiAJ+wRR0VCwFfIoDyA0IrHVg/PYSX74pdyUdk4rZvbX5ZuJNGnFRIp8doK5vMB
- DKlhY299JCMp58xlkXaxe0lxG8q2YI+WcM5z59uKDQheLEfBYa29e+dgVxnYWAl4AUNcEGTIiEe
- jms8UAoNMQQBD4w0LjTaQs68pqDV1hDqhRHRZDyd2QewYctxephoJ+O7nNRV6jJoRPxv0yHilPx
- Pv2tTgxzcNcibqMTT3Q==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-20_03,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
- adultscore=0 suspectscore=0 spamscore=0 clxscore=1015 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605210003
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.20; envelope-from=dongwon.kim@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,13 +77,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2026-05-21 at 01:49 +0400, Marc-Andr=C3=A9 Lureau wrote:
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> ---
->  hw/s390x/s390-virtio-ccw.c | 5 +++++
->  1 file changed, 5 insertions(+)
+From: Dongwon Kim <dongwon.kim@intel.com>
 
-Straightforward defensive check.
+When an old EGL context is destroyed, its associated OpenGL textures 
+and framebuffer resource IDs are already implicitly freed by the 
+driver. However, the cached IDs and geometry attributes stored within 
+the egl_fb structures remain stale and invalid for the new context.
 
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Call egl_fb_destroy() on the guest, cursor, and window framebuffers 
+in gd_egl_refresh() to safely clear these stale fields back to zero 
+before they are re-initialized under the new current context.
+
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+---
+ ui/gtk-egl.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+index 7c5c9b2428..fd14b391ed 100644
+--- a/ui/gtk-egl.c
++++ b/ui/gtk-egl.c
+@@ -163,6 +163,12 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
+             surface_gl_create_texture(vc->gfx.gls, vc->gfx.ds);
+         }
+ #ifdef CONFIG_GBM
++
++        /* resetting old ids to 0 for new egl context */
++        egl_fb_destroy(&vc->gfx.guest_fb);
++        egl_fb_destroy(&vc->gfx.cursor_fb);
++        egl_fb_destroy(&vc->gfx.win_fb);
++
+         if (vc->gfx.guest_fb.dmabuf) {
+             egl_dmabuf_release_texture(vc->gfx.guest_fb.dmabuf);
+             gd_egl_scanout_dmabuf(dcl, vc->gfx.guest_fb.dmabuf);
+-- 
+2.43.0
+
 
