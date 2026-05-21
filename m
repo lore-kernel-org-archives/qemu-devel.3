@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 481A3CD5BAF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67E39CD5BB0
 	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 16:52:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ6cH-0004RA-JS; Thu, 21 May 2026 12:51:29 -0400
+	id 1wQ6c1-0004OI-N2; Thu, 21 May 2026 12:51:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
- id 1wQ6bo-0004MF-3p
+ id 1wQ6bn-0004MB-Fn
  for qemu-devel@nongnu.org; Thu, 21 May 2026 12:50:57 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wQ6bm-00071k-Am
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wQ6bk-00070E-DO
  for qemu-devel@nongnu.org; Thu, 21 May 2026 12:50:55 -0400
 Received: from laptop.localdomain (unknown [86.121.140.206])
- by linux.microsoft.com (Postfix) with ESMTPSA id 4732820B716A;
- Thu, 21 May 2026 09:50:44 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 4732820B716A
+ by linux.microsoft.com (Postfix) with ESMTPSA id 9C22920B7168;
+ Thu, 21 May 2026 09:50:41 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9C22920B7168
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1779382246;
- bh=JlpbxG0l5HnNNZhi6MoHMmlFp4OaZ+gjEkjpeb/dFsw=;
+ s=default; t=1779382243;
+ bh=G/N6a+EPTHHVm59twzRAAc8BmvLdSoWkzl5r46hF50w=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=EY678/l8Fj+U7XglZr5L4s9Qqym2YO/qwM7o13Fnd8+NNeEWwemHqXztf/5KEbhLA
- Q91Dr0yrZwkVLJ0dPWBuBytZt6H8skstptdIQKVCfq0rC9VHlQWdgheO8COIHR5g/3
- 9hxeL8tG+JGU7oNbGcSe1HXHvwGptF0RQmtJky4Y=
+ b=PoLQp0V3kvkKtrWWmzuLbXpm4wCRRG3qFH+9awqs9QnhYBFW+Op9JFdkXtZjzLHBy
+ 8VYpaJimZeVWVZhgQLxK6Yp9rT1Rk0BmVUzsgn4XQvI0tVt8Yj1begUISRvlEHk4OI
+ JaX36uOioTagznu27a6S3V7TIzx6kNpu5vOl39eU=
 From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
@@ -37,10 +37,10 @@ Cc: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
  Wei Liu <liuwe@microsoft.com>, Magnus Kulke <magnuskulke@microsoft.com>,
  Wei Liu <wei.liu@kernel.org>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PATCH v3 2/7] accel/mshv: move vcpu arch specific initialization
- after vcpu creation
-Date: Thu, 21 May 2026 19:50:36 +0300
-Message-ID: <20260521165041.131477-3-dblanzeanu@linux.microsoft.com>
+Subject: [PATCH v3 1/7] target/i386/mshv: remove duplicate function for
+ reading vcpu registers
+Date: Thu, 21 May 2026 19:50:35 +0300
+Message-ID: <20260521165041.131477-2-dblanzeanu@linux.microsoft.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260521165041.131477-1-dblanzeanu@linux.microsoft.com>
 References: <20260521165041.131477-1-dblanzeanu@linux.microsoft.com>
@@ -70,36 +70,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Call mshv_arch_init_vcpu after the vcpu is created to ensure a valid
-vcpu fd.
+Remove function `fetch_guest_state` because it is a duplicate function
+of `mshv_load_regs` function.
 
 Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
 Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 Reviewed-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
 ---
- accel/mshv/mshv-all.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ target/i386/mshv/mshv-cpu.c | 21 +--------------------
+ 1 file changed, 1 insertion(+), 20 deletions(-)
 
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index 58af674bd9..e3da583f21 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -415,13 +415,14 @@ static int mshv_init_vcpu(CPUState *cpu)
-     int ret;
- 
-     cpu->accel = g_new0(AccelCPUState, 1);
--    mshv_arch_init_vcpu(cpu);
- 
-     ret = mshv_create_vcpu(vm_fd, vp_index, &cpu->accel->cpufd);
-     if (ret < 0) {
-         return -1;
-     }
- 
-+    mshv_arch_init_vcpu(cpu);
-+
-     cpu->accel->dirty = true;
- 
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 4ed6e7548f..9defd05db6 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -1291,25 +1291,6 @@ static int handle_pio_non_str(const CPUState *cpu,
      return 0;
+ }
+ 
+-static int fetch_guest_state(CPUState *cpu)
+-{
+-    int ret;
+-
+-    ret = mshv_get_standard_regs(cpu);
+-    if (ret < 0) {
+-        error_report("Failed to get standard registers");
+-        return -1;
+-    }
+-
+-    ret = mshv_get_special_regs(cpu);
+-    if (ret < 0) {
+-        error_report("Failed to get special registers");
+-        return -1;
+-    }
+-
+-    return 0;
+-}
+-
+ static int read_memory(const CPUState *cpu, uint64_t initial_gva,
+                        uint64_t initial_gpa, uint64_t gva, uint8_t *data,
+                        size_t len)
+@@ -1429,7 +1410,7 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
+     X86CPU *x86_cpu = X86_CPU(cpu);
+     CPUX86State *env = &x86_cpu->env;
+ 
+-    ret = fetch_guest_state(cpu);
++    ret = mshv_load_regs(cpu);
+     if (ret < 0) {
+         error_report("Failed to fetch guest state");
+         return -1;
 -- 
 2.53.0
 
