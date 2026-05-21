@@ -4,102 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55401CD5BAC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 14:06:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0559ACD5BAC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 14:08:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ42M-0001Zg-WB; Thu, 21 May 2026 10:06:11 -0400
+	id 1wQ448-0002kd-0h; Thu, 21 May 2026 10:08:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wQ41t-0001JU-S5
- for qemu-devel@nongnu.org; Thu, 21 May 2026 10:05:43 -0400
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wQ41l-0006CG-Po
- for qemu-devel@nongnu.org; Thu, 21 May 2026 10:05:39 -0400
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-65c52bb5dd7so6020724d50.2
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 07:05:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779372323; cv=none;
- d=google.com; s=arc-20240605;
- b=h7938oPTeqQbemIsEgFhWFyD8gOC7MPULwqJvx6OL0gV/K0R/jYDWjVOUYrLf3ZLGF
- fIdjldsNgFNzkeLB1Wa+vMvQo3Dy0R0KlqM3Rmq+zbTQ89Db5rBT7huyCtquNxJWPMHs
- bCPzYBTXB/nrdyIY5VE/Kiq9GL3+f97YPUMT8qX3Gi0yoXDnDPRy+NeV832g5L/kaPQq
- 4BoD2oWcJ7giRv5c878rUGSkeNfQxObDYLQFXLorwdsr7aF0rvujhnzkB869mSzXlJHb
- Ckd1mivl9aDUuCHhiHvH/lC1pV6aaQ46NVc0Q6NLCO+kZqTyXHhcefQdcwrj5xFwfg/D
- dmKA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=glCp+je1rn5P2pXLcdWdgxumiY4iqmYs0GuwWcGNqfY=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=IcNmAt0UPovnIKwG2W0QZrvuzASv7UGusC2dcE55qEcWdYTb9y8al+EWgfb4oCrEb+
- SFjU1UP4etwVHBbFBqAFVrYZRJU+7OVrKtFQEOC796HU/I57W95QGpzoT5agL5MkARHD
- y8NasE4ZBVkrvIrUt1U8G5B9K8E+bHsNeQ3M65z3NtzwIF72G/8X7vET6GIto64djlTx
- jXY3gTJ0VZeRnOyPQ54mazb49Yfnf0F0YMexdLFv8gRd8SZlSi2ddc45oswMQyBW4oqS
- ICqQDXJpFizkWg0Tl5EXDkJv/1l1ELZvlcaOq18qVbPCIk+vUi6X8GZMolgHR7CSUarw
- DB5w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1wQ43p-0002Ri-1P
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 10:07:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1wQ43k-0007hM-O1
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 10:07:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779372453;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GBSn6wb/FRACPuw5VM8/6y917ILNCyEiuNKU8x3jRpk=;
+ b=Nh03uZGASTjYUoOnI1qb/S3cf9wvaU/QUZC6JkgS4buRAV7VtPkH7NDj/V+6wh2WBgPrfa
+ yA4BzTpcQWeHXXSbb/bVYUM0YaBdBGNcqO+ueHmE/J1P+3tYRFo6N7ycWzSiqbH0Z7XVu+
+ zK47HpvPzX08QMf00tS8I2S2MwgpEHs=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-558-O1SD5_brMQeDndKs72Z5RQ-1; Thu, 21 May 2026 10:07:21 -0400
+X-MC-Unique: O1SD5_brMQeDndKs72Z5RQ-1
+X-Mimecast-MFC-AGG-ID: O1SD5_brMQeDndKs72Z5RQ_1779372439
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-48fde68e420so53869275e9.0
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 07:07:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779372323; x=1779977123; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=glCp+je1rn5P2pXLcdWdgxumiY4iqmYs0GuwWcGNqfY=;
- b=PEZS7dc8JEnnoWR7aNajrtmaREie3pvp6qdubQrcddOV+TEjUNDtPl6TBILd9vKVRW
- JrSFgz2Ks4YVIFlLdPDE10a34H+NRzOc4w6tQnKb9YqZfIUGNANvd7z9D1UYjYTd8Dok
- FsHGEMVSzW5xmqiaOkch+PJCKxJVSkr1eEp1Mj6YfmZZ1BJHvgrOAKtRZoAxNwTL4uE8
- pAlYQ1I9Zk70rkrbQbhhulL55OrbnT4Sh+ZzFM4jUAKBEw7ocGAMBDOjNjy03Zrx7FHu
- 5Zkv+Xt8KIbb1q/Sw5hkvYZEgmFKD/KFaMtw+7G0n3bFbjO3FAryz2ZcZMnFeTCUME30
- Lplw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779372323; x=1779977123;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1779372439; x=1779977239; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=glCp+je1rn5P2pXLcdWdgxumiY4iqmYs0GuwWcGNqfY=;
- b=TzKMf7WOAYWbxdDJcWQMUmn9LUivVYWinqUYDIvDFQF/601Y+kaRaqbId4slLp4/HC
- fg9M8n6Gekg+wXy0HsP1FcOyFI+8xWrUFbcL0pQAvBXlwYuEMMqWT6VZpib0zdl8YIyh
- iVtcZiaRg6eJXI+Zh4VhsXRWoGRMt1Feb38+yuy4ysANh2GmpZ/Ppi1VFogR1sCUTCDg
- M0ytyUI2J9hEC0szXbbLCMPUkeM2bLZoxU2wVVRr63Awa9COroWv5Dp/tYGBDBvjls5Z
- 7hQ2L5ulPghwdNLigDXJ9ox2Sy2Bu5a5zy9mu1Qy7DQlt+xa8RA+2QJOud/GD4lzsjgc
- K5eQ==
-X-Gm-Message-State: AOJu0YxRvLg8+bd14Rw9ZjF2tJlh0SRTLVjwldgdrEd4wN/YVJ+YkDUN
- gM+ch/Wv63cejFmO1O+QT6QIXw05FCua8Vei3OV70OJTVveTj9o6OrUv7r0Pjp2Cf/QNqDm5Y+6
- kFLPtPPh7T9nC2WOAKLogcPLs6rW5p5ycrit6jJtXKg==
-X-Gm-Gg: Acq92OEmMW5BpmUuDThPwFJJhQMDpjdw92SLesWnByb4DzqEjo6vUCEvXQYyanN3sZb
- e8kfIx8P7hV4YssNE5Ya5uhd5w1f9FULQ1Z7yOvJ+iWNj6tc5tqyAyp6aiTc89Go1aIL9jNkwdv
- ThazBHzv3FpC9cvRVYyYZBIYTdlT64dLDz+7bU9eZkcIdYWRZFwKdf8ZwuRYNv4pCt/X+QNiOjj
- GOdSOug90hwFwkzbQmcp95EkcivHNdMGwBaTeqxVBX6I7YXc0xF5UD0CNJ0JWUR9Y0gJ27VEkHL
- nP0g5tXxEZ054J6YQnVh+EQmMdmjUmeYz41Jpr2YY7HuCZgsJBzeCF1Qei9X6p/OqVzBLw81F1L
- Xog==
-X-Received: by 2002:a05:690e:4005:b0:658:a18:cdf0 with SMTP id
- 956f58d0204a3-65eae04b9c8mr2467505d50.29.1779372322588; Thu, 21 May 2026
- 07:05:22 -0700 (PDT)
+ bh=GBSn6wb/FRACPuw5VM8/6y917ILNCyEiuNKU8x3jRpk=;
+ b=D2AYlFA89FhA5OCZHFWiyFGTxVXOA5ihUhFBl5NWLb9SZyctDffaWnPAOMciqeI+sq
+ ZGtNzUEzXC0OCn2IfDHbD0kI80JTESVVe4t++4QPggb3xWv1icc2n5r0d2B+t/o9fhSy
+ maU9gRiiwRQ+XV8+9XUIZ6qL2AcSWtPz5AThf9mkAxi7kn0fyBm1yqUQeYkEPTNcELJw
+ yuGY/LUAA+iUou18fYqWhaUN7yb8SDNUdRjwhW2+ujR7GAH7OXw7KW3T3Cu7nkqhQAOw
+ GsDflit82EHqYYSoEYhmkSTdFffnxXiNxiWH8A1Bb2wK6jZ82dPcGtjW7NQBMiC0Ldoq
+ 4O1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779372439; x=1779977239;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=GBSn6wb/FRACPuw5VM8/6y917ILNCyEiuNKU8x3jRpk=;
+ b=h0uED1lF4+2yVwK+EEeXIbu20UfjZNOe4Rz3AK6mAag+Z5yvmJqPkRuYfWya09GrkB
+ /lU2FOHO83AjeBWpA/L4gdYVzwwXBUno/pzzFL7WNFkRDZGbUbih2Ahqf4G6lYEZXuBu
+ 5aAolKApYlhun8jIknrrtnjxbLTFX44Ad/NA/IDemkAlyItpWgapKN/gN2Sv8uJ7x/N9
+ P/2uEwCD0cxxKpFucTRfTuLoHalB/YsdihGqM1yw9aXDo1ZDKmDxpesvtbaLDmnJaYZQ
+ D0+iu92+RJ5BkrIN6WOclCbD3VegLKllMjtfLDIvwI59SAJbyc0Ydfq4dy/q2J7MCreb
+ Eeew==
+X-Gm-Message-State: AOJu0Yyv+WPPj6Nk0yyZH99vISN6Z58x+w9b0XgXF9PGynKxWYXwVA7D
+ j7bLtyROa+Z3/hazHLka5nzxYfg6yyx+sqH+YzcQ8wnyVHURci94qTbefz6b9LiJzXb02ncb52d
+ aY/pyziJ6po8C6c2P2OcWOPDAZLvCGt8ie0JjjAqOhXLreCxLXK21LSE6
+X-Gm-Gg: Acq92OHTGl72h6KJsQR0dq9L1DEDWoS9eOzDB6EMPhv8wDHf7KnWlOOWpZH2AzGOWJS
+ t76G2+rR96tzwWLQDQ4NvVWTL/RMDeQp//FNC3gZlSpKK/CXqpWA97aYWNIq1U+9skdoe4WXxZa
+ lgQg1AW9OPpRkbOmEy/9Npkcn9saUQx/k4iM39Crws7NKNGXjM9oQMqSUGq9kWEV+BSSdaKwn3y
+ 5tMiLVBlWu1teZuDLGF25n83ZdiSkNYHiF1UBJmyLpEofC1i1iE4hLpQpybHhLWqZUJ8m4FGzYk
+ b7MDFsZTyEWx5ugcik23bQU4GJtLFiylqbsTJOY+ftLRmvBWEung6sNgz7maIhfFzrf2Av0VDVj
+ S70+8/A==
+X-Received: by 2002:a05:600c:3395:b0:48a:7965:b943 with SMTP id
+ 5b1f17b1804b1-490360b11e0mr25857995e9.29.1779372438662; 
+ Thu, 21 May 2026 07:07:18 -0700 (PDT)
+X-Received: by 2002:a05:600c:3395:b0:48a:7965:b943 with SMTP id
+ 5b1f17b1804b1-490360b11e0mr25857565e9.29.1779372438169; 
+ Thu, 21 May 2026 07:07:18 -0700 (PDT)
+Received: from imammedo ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4903c99d807sm33368085e9.5.2026.05.21.07.07.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 21 May 2026 07:07:17 -0700 (PDT)
+Date: Thu, 21 May 2026 16:07:16 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
+Cc: <qemu-devel@nongnu.org>, David Hildenbrand <david@redhat.com>, "Gregory
+ Price" <gourry@gourry.net>, Zhigang Luo <Zhigang.Luo@amd.com>, Lianjie Shi
+ <Lianjie.Shi@amd.com>
+Subject: Re: [PATCH v7 1/1] numa: add memmap-type option for memory type
+ configuration
+Message-ID: <20260521160716.169137ae@imammedo>
+In-Reply-To: <666a7ba1-5d3a-4732-b872-0d9fb2fe8461@amd.com>
+References: <666a7ba1-5d3a-4732-b872-0d9fb2fe8461@amd.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-References: <20260520182213.872945-1-richard.henderson@linaro.org>
- <20260520182213.872945-8-richard.henderson@linaro.org>
-In-Reply-To: <20260520182213.872945-8-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 21 May 2026 15:05:10 +0100
-X-Gm-Features: AVHnY4LqOFoCm3gjOXHMXDgktw6dOeTzm-XZplVIIAcgu49kGFvP-RoA1aGl4-Y
-Message-ID: <CAFEAcA9sOVf-R-3xDmvKYeHdEkCXJnC1P-nDi6h4YZYqdpiURw@mail.gmail.com>
-Subject: Re: [PATCH v6 07/64] target/arm: Update HCRX bits for Arm ARM M.a.a
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,33 +121,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 20 May 2026 at 19:26, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/internals.h | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/target/arm/internals.h b/target/arm/internals.h
-> index 00830b1724..f02d3c6a71 100644
-> --- a/target/arm/internals.h
-> +++ b/target/arm/internals.h
-> @@ -258,7 +258,9 @@ FIELD(VSTCR, SA, 30, 1)
->  #define HCRX_TCR2EN   (1ULL << 14)
->  #define HCRX_SCTLR2EN (1ULL << 15)
->  #define HCRX_GCSEN    (1ULL << 22)
-> -
-> +#define HCRX_ENFPM    (1ULL << 23)
-> +#define HCRX_PACMEN   (1ULL << 24)
-> +#define HCRX_SRMASKEN (1ULL << 26)
->  #define HPFAR_NS      (1ULL << 63)
+On Thu, 21 May 2026 18:41:35 +0800
+"Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com> wrote:
 
-We should keep the blank line separating the HCRX bit
-definitions from HPFAR_NS. Otherwise
+> Hi Igor,
+> 
+> Thanks for the candor in this round, and for laying out the
+> architectural reasoning rather than just the position. The framing is
+> clear: an RFC with a rough prototype demonstrating the device-based
+> approach, and the interface decision after that exploration
+> converges. That's a reasonable bar and I'm glad to converge on it.
+> 
+> Two of your clarifications particularly helped me converge:
+> 
+> - SPM belongs to the memory-device family by design, not as an
+>    extension of built-in RAM.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-thanks
--- PMM
+> - The v4 -object/backend-property rejection is scoped to that form,
+>    not to any device-based shape -- so `-device spm-memory` doesn't
+>    carry the v4 risk forward.
+
+Not sure what you a taking about, with device approach you will use
+backend property ('memdev' if i recall correctly) to connect backend
+(whatever it might be) to front-end (device model).
+
+> 
+> One thing I should mention while we're aligning: in parallel with
+> this thread, I've actually been prototyping the spm-memory device
+> direction you outlined. I held off bringing it into the v7
+> discussion because I didn't want to muddy the interface debate with
+> implementation specifics before the direction was settled. Now that
+> you've made the path explicit, I can share what I've found and move
+> the discussion to the v8 / RFC thread properly.
+> 
+> A short prototype status and a couple of architectural findings
+> below. Some you've likely thought through already; raising them so
+> the v8 thread has a starting point.
+> 
+> (1) Prototype status
+> 
+> A working `spm-memory` prototype inheriting from TYPE_MEMORY_DEVICE
+> -- end-to-end verified on both SeaBIOS and OVMF across single,
+> multi-instance, and mixed-with-pc-dimm scenarios.
+> 
+> (2) Umbrella overlap finding + proposed mitigation for your read
+> 
+> The umbrella SRAT entry at acpi-build.c:1510-1515 (PXM =
+> nb_numa_nodes - 1, covering the full device_memory length per
+> pc.c:615) overlaps every per-device entry by construction. Any
+> driver that first-match-by-PXM via SRAT walk lands on the
+> umbrella's range rather than the device's actual range.
+> 
+> Mitigation in the prototype: in acpi-build.c, skip the umbrella
+> when every plugged memory device is TYPE_SPM_MEMORY. Empty
+> device_memory and mixed configs (SPM + pc-dimm / nvdimm /
+> virtio-mem) keep the umbrella, preserving Windows hotplug /
+> Linux <4G SWIOTLB. Verified in both directions. Honest scoping:
+> mixed mode still has the overlap, so this is a partial
+> mitigation.
+
+I'd suggest to:
+  1: make smp-memory not hotpluggable
+  2: when SRAT is built, partition 'umbrella region' region on chunks
+    (current hotplug kind and spm kind). that will fragment the region
+    and limit what can be (hot)plugged later on (especially if spm in the middle),
+    but that will be the edge case, and user can reconfigure QEMU to
+    put spm 1st and DIMMs on top.
+
+If we do it like this, then mixed scenarios should work just fine.
+ 
+> 
+> (3) Process
+> 
+> I'll prepare a v8 PATCH series along the lines you sketched:
+> 
+>    - spm-memory device class (TYPE_MEMORY_DEVICE base for first cut)
+>    - drop the `reserved` enum value
+>    - commit message with the bigger-picture rationale
+
+ps:
+it would be nice to put references to previous versions in cover letter,
+so it wouldn't be pain to find them (especially when threads are renamed)
+
+> 
+> I'll post the RFC on qemu-devel under a fresh subject so the 
+> device-based discussion can start clean.
+> 
+> Setting the v7 memmap-type discussion aside accordingly. Thanks
+> again for the patience.
+> 
+> Best regards,
+> FangSheng Huang (Jerry)
+> 
+
 
