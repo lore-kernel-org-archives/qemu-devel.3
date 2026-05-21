@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F392ECD343F
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 05:49:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D45F1CD343F
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 05:50:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPwHw-0001ro-QW; Thu, 21 May 2026 01:49:44 -0400
+	id 1wPwIN-00021h-CV; Thu, 21 May 2026 01:50:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPwHv-0001rX-MS
- for qemu-devel@nongnu.org; Thu, 21 May 2026 01:49:43 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPwIL-0001zZ-SB
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 01:50:09 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPwHu-0002u8-1c
- for qemu-devel@nongnu.org; Thu, 21 May 2026 01:49:43 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-488b0046078so48851775e9.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 22:49:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPwIK-000397-2f
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 01:50:09 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-488a14c31eeso34672275e9.0
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 22:50:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779342580; x=1779947380; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=B3vnb7oSNxTJwfe4owQDCQnJtBVDrM0Aa5oWs1NNK2o=;
- b=nRBwAZB/aDG8uYkL3Fe74jDECeuUCc5axiY39SAGuRbKYFvD6NuHnHQ5vaK0vDDkym
- uhCLK1VZn3zKAI07nLdt41hjeXmIVW6PM3c2OD8erMK3i6j/mGjVU+fdh/WkaxvW1RE0
- MAlxmLmaOe8etzUWGX29YK+O/PXe9UC2CI8glTAh4EYYUEgjgrKyN8+J7ghNzlire0V8
- RPk/nE2VoD0yw8l9iSdfJszeolnpnt/hDod7adm+rNPSaINAqZO7kdXegoFXQPPmYk2z
- g9VlswOhaQ2i+uYUNu0gRG787lMbMmSOP3imKPnGYoUN5nlhBm0LwQKWuvJVRzkvxQtD
- gTYg==
+ d=linaro.org; s=google; t=1779342605; x=1779947405; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gfrgYQOQkEtk+/MqMLPJPVSGHTgqZziOuqPi8na0zgI=;
+ b=ciP7AW3sh9FBVxnLKJnP4NJUeeVo5ya+kFIVIutcVrdmSZQebKZoW9EIYEkHruTNMj
+ rCFc4d/NwlkOhfXgsr2umMHxGS8yLWaf7StvhaGrBwdUKbhai27UNkiKYyWQtX53voiK
+ T3odeUWnSTgUoU38BkyNHwJ6MGsDKiqSSZQ77Ep7iAOT0YWsIobkVEVnNBWFbgGbnDQl
+ GAhXWX/fnofMCxylvc805TnP9Is+TAGmSv6z7kMkgcMAKRhFAwn6AzlQ7K6BhynGsNMP
+ XZLhdvDEPXQ1j3hDjz0F60wUK9DSpU7LWa8O5L9rh47QxS+VU1Uh/wEs8VHOglIA0G9n
+ ZBTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779342580; x=1779947380;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1779342605; x=1779947405;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=B3vnb7oSNxTJwfe4owQDCQnJtBVDrM0Aa5oWs1NNK2o=;
- b=H2JKwcQ3Z+Wqrcjqc/VqcB9HCuDDrbIpfu4r5hU7D8Dz/N8m43Sch9tCIk17+8dr+R
- J5pD5pKnRpIqibxNP+pETbZfRa2TucfB2kDSCV+ut+ZHctq6q5FtW+QaEyUlWuEEfQnQ
- F3q1mL1Qb8lXGJt9md8mw+O8Zj7o1LRSQUcCFCS1z5niRO1ErLavf8+Ikv6SjedKkjAK
- ujbniDj/7YKuuUV69wzN7gGsk9fVZZ/dt29fGjAR8i8G2fcCYKCypYi5oo+UigR6tPXy
- ahUD4SF3OHgcGD5szRv56a9Z1Qo6TkCqBb8AIcfQggQir/b+GFJYqv5V8yILHlxdA4Pj
- HUAQ==
+ bh=gfrgYQOQkEtk+/MqMLPJPVSGHTgqZziOuqPi8na0zgI=;
+ b=p4SRhIFH/s328pgQVb2RNM4b2aX5DmN+2NCfWfTEkkdaU39E9DpIpWUr5u9MNr3mbc
+ a5vxeVErtFDOUI7kqotTKcGNhJG+zJrkRwxIFeQFVidYVDY59X7Z9pEPSE0/KHzQVNKb
+ rK28hDAGQ9jFcmcAO6As29OT6aq4s8HB5QMEZ/KjsAnWmrAwYtrkK/0sHzA8YNZRCZs0
+ rWoiGm2V9LgrXPBxMMAevE9x8V6EHkqs+1eZRsGEk8zqZB59EkFRUe1ei/GOPg7uYEH4
+ jJtfbB/ZqhNBNNt0cBFiF4jm1Walb4B9bhWtXKBUY2LpKsNI5/9meT27QC7kjHYc4LWy
+ vl6g==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8/aoslEq5kiOcNaoNBzEbP0XGR45+oq45ig51SDl4/OUfnojoUhl4UBwzEORA5RSKGHGckAHmKOKqt@nongnu.org
-X-Gm-Message-State: AOJu0Yy5RqRBKW7ATT0TPtFWelejw1FBjEyjP9ArF5vlJpaMsWDWsbLW
- EkPY2KWFT6kAkF8bmsA1Rbl7UW/SWIiNW+3rsuo8Kkffu7/B0EHRaHfToat0WnSD4eo=
-X-Gm-Gg: Acq92OE1MYnO3zmaaJK1XOCk3NEhBvNO/CmUYZykq7Bhj9pvmZOkrmCy9W7Dm7rozMO
- NF3yErAX6GQqAXY8+Ck8ZWYVd+hNgOvfOMFX5/O1OJ6tSYzOLjT4KDObws/l0w77R0L5vISek4n
- 9W7d7Z8iWSOOsURiGdUP2pFMzhYk0cnEmpBYJQQcvyXqcXPsoG0Spai4hfq4TUG0T6+OVyCFxL+
- b/UIy8WYsjJhhDLMYYPIf8H1lMgueITJYNSXgC4GzxWy85pOyC3Bz/nQxbe1MRYkkO2hMSQvY5o
- k2mF/oP6jrA1bZyJhppeH/Xb+hH5GgXdRzYfsh7oc1lLeePl7UL71VN8GDxsLkTIa2ddpFSGOXn
- RMuvhFLZBcJAyXAYiTqpusjvXM9ebq97p0y5QKeJYOoy1mAzZotYC3NQj9rOqUTmstD9xaJKUO9
- shr51fKjtHx25c2cBwRz40zbrq53tFklHO/XgE9+jWMV6RMxuR0rypc9+JXP+M6p+EOiNUsfhW3
- Yr3
-X-Received: by 2002:a05:600d:8:b0:490:778:4fe3 with SMTP id
- 5b1f17b1804b1-490360ee151mr13934065e9.32.1779342579999; 
- Wed, 20 May 2026 22:49:39 -0700 (PDT)
+ AFNElJ91ct+Q8ptjj652x3s/A1lmR4fZzkRm/3zjpGQnez9owM9glZfDFTXiiDty+PnGM/il/Z2PHT0ZDZcX@nongnu.org
+X-Gm-Message-State: AOJu0YxtkN1K6OjhYGsYhKtMA9iN7b3aCMv938H6oTf3uWfK1nU8LUgl
+ s1sQDdv6ttorz+iuVWwgAcvy8t9VHLDeXvpk3lyJVV6F09p6IWtKxe0GR8f6FXHsf+c=
+X-Gm-Gg: Acq92OFmZfhav7UMwmE/2od2gr7NuffwpOOylpyZ70nnBQgRUVamNCKmdKi+y3+nx2I
+ 0ZZ/muF89lLcITfJddmpd0IHWuMCva7/XcnV2W4+tIg29mZ2JS3TUTmLVFic52kNoEAdacM5nlP
+ EzStYRZz1Ut/Wu7mpGsDHw6G3dl44AaBjSXAiVrxMg1nvl1KRdCshjz4Sqhgw5PzET9Dzk+5Dyz
+ eG2/7VkRmA5JwWj4CkuHGhb5AZP5hlO9wg7piN6v8llCc5o+9o+QSNk3ZkTAwC41zLXWinQofCc
+ Pc5S7hhYw5VWUDFXqppCsGJDAK98uoHqB+sRQrj02L1oJDuoz9B6yK1GXPUL1W4cdgtTznijldV
+ txQittOxyMdnCTI2v1PJgNHse2/narLsl3VbBNawznXlBCvcf3GdDPua04tdHSdA8m4X3GEAcV4
+ +IzL9hVyy3GyX3TQyeu5qA5XaKEGU5XZ75TvtN88Or8eZYD6gF0eBhpNWGZkxHzGAcwQ==
+X-Received: by 2002:a05:600c:4241:b0:48e:62ec:f264 with SMTP id
+ 5b1f17b1804b1-4903607cfe5mr8397355e9.17.1779342604844; 
+ Wed, 20 May 2026 22:50:04 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49035ee5956sm8035275e9.28.2026.05.20.22.49.38
+ 5b1f17b1804b1-49035ee8a6fsm7893315e9.29.2026.05.20.22.50.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 May 2026 22:49:39 -0700 (PDT)
-Message-ID: <c856e07c-0ab8-4043-a6b6-8a32f174f478@linaro.org>
-Date: Thu, 21 May 2026 07:49:38 +0200
+ Wed, 20 May 2026 22:50:03 -0700 (PDT)
+Message-ID: <f4ed5c00-38bb-4553-9cdd-f88336e0abf1@linaro.org>
+Date: Thu, 21 May 2026 07:50:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/40] target/i386: decouple cpu_x86_inject_mce() from
- Monitor
+Subject: Re: [PATCH 05/40] system: move gpa2hva() to system memory unit
+Content-Language: en-US
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 References: <20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com>
- <20260521-qemu-no-hmp-v1-4-d104f809e145@redhat.com>
+ <20260521-qemu-no-hmp-v1-5-d104f809e145@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260521-qemu-no-hmp-v1-4-d104f809e145@redhat.com>
+In-Reply-To: <20260521-qemu-no-hmp-v1-5-d104f809e145@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,58 +104,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 20/5/26 23:49, Marc-André Lureau wrote:
-> Replace monitor_printf() error reporting with the standard **errp
-> pattern. Drop the Monitor *mon parameter and return bool to indicate
-> success, improving the function usage from non-HMP contexts. Update the
-> KVM MCE injection path and hmp_mce() accordingly.
-> 
-> Notes:
->   - we may want to print the error in KVM path too
->   - multiple error prints are now accumulated with error hints
+> The function is now used by SEV code path. Move it to physmem.c rather
+> than hmp-cmds.c.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   target/i386/cpu.h     |  4 ++--
->   target/i386/helper.c  | 49 ++++++++++++++++++++++++++++---------------------
->   target/i386/kvm/kvm.c |  4 ++--
->   target/i386/monitor.c |  6 ++++--
->   4 files changed, 36 insertions(+), 27 deletions(-)
-
-
-> diff --git a/target/i386/monitor.c b/target/i386/monitor.c
-> index a536712c755..785a13dd710 100644
-> --- a/target/i386/monitor.c
-> +++ b/target/i386/monitor.c
-> @@ -580,6 +580,7 @@ void hmp_mce(Monitor *mon, const QDict *qdict)
->       uint64_t addr = qdict_get_int(qdict, "addr");
->       uint64_t misc = qdict_get_int(qdict, "misc");
->       int flags = MCE_INJECT_UNCOND_AO;
-> +    Error *err = NULL;
->   
->       if (qdict_get_try_bool(qdict, "broadcast", false)) {
->           flags |= MCE_INJECT_BROADCAST;
-> @@ -587,7 +588,8 @@ void hmp_mce(Monitor *mon, const QDict *qdict)
->       cs = qemu_get_cpu(cpu_index);
-
-
-     if (!cs) {
-         error_setg(errp, "Invalid CPU %d", cpu_index);
-         return;
-     }
-
-?
+>   include/monitor/monitor.h |  2 --
+>   include/system/memory.h   |  2 ++
+>   monitor/hmp-cmds.c        | 31 -------------------------------
+>   system/physmem.c          | 31 +++++++++++++++++++++++++++++++
+>   4 files changed, 33 insertions(+), 33 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
->       if (cs != NULL) {
->           cpu = X86_CPU(cs);
-> -        cpu_x86_inject_mce(mon, cpu, bank, status, mcg_status, addr, misc,
-> -                           flags);
-> +        cpu_x86_inject_mce(cpu, bank, status, mcg_status, addr, misc,
-> +                           flags, &err);
-> +        hmp_handle_error(mon, err);
->       }
->   }
-> 
-
 
