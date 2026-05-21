@@ -4,51 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6876ACD4F3D
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 06:39:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D57CCCD343F
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 06:39:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPx3f-0007n7-3Z; Thu, 21 May 2026 02:39:03 -0400
+	id 1wPx3Y-0007lU-Qb; Thu, 21 May 2026 02:38:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wPx3d-0007mV-Ib
- for qemu-devel@nongnu.org; Thu, 21 May 2026 02:39:01 -0400
-Received: from smtpout7.mo534.mail-out.ovh.net ([54.36.140.178])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1wPx3U-0007lF-Db; Thu, 21 May 2026 02:38:54 -0400
+Received: from 12.mo533.mail-out.ovh.net ([178.33.248.79])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wPx3b-0004qK-TB
- for qemu-devel@nongnu.org; Thu, 21 May 2026 02:39:01 -0400
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net [51.68.94.138])
- by mo534.mail-out.ovh.net (Postfix) with ESMTPS id 4gLdzM3cqvz6BkG;
- Thu, 21 May 2026 06:38:54 +0000 (UTC)
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net. [127.0.0.1])
- by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Thu, 21 May 2026 06:38:54 +0000 (UTC)
-Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.96.77])
- by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4gLdzL4QDxz7tjQ;
- Thu, 21 May 2026 06:38:54 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.2])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1wPx3Q-0004nw-HL; Thu, 21 May 2026 02:38:52 -0400
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net [51.68.80.175])
+ by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4gLdz62Zqmz6ChB;
+ Thu, 21 May 2026 06:38:42 +0000 (UTC)
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net. [127.0.0.1])
+ by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Thu, 21 May 2026 06:38:42 +0000 (UTC)
+Received: from mta2.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.113.24])
+ by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4gLdz56wRgz5vg4; Thu, 21 May 2026 06:38:41 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.1])
  (Authenticated sender: clg@kaod.org)
- by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 0062A1B43B57;
- Thu, 21 May 2026 06:38:52 +0000 (UTC)
+ by mta2.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 891E1941743; 
+ Thu, 21 May 2026 06:38:39 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-97G002bbe1ae97-708f-4679-9dba-69d454ae883a,
+ (GARM-109S00374be418d-69c8-4817-9f12-51063eac55c6,
  155D954443A34AB19E7EFB78D45315E373F1C727) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <137d5d92-5dc5-4d0e-8fd1-01df54f9cf7b@kaod.org>
-Date: Thu, 21 May 2026 08:38:52 +0200
+Message-ID: <ca8e431e-0c57-4b9f-82d3-99713052bbd2@kaod.org>
+Date: Thu, 21 May 2026 08:38:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/misc/aspeed_scu: Fix AST2600_RNG definitions
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Subject: Re: [PATCH v3 0/3] hw/arm/aspeed: add anacapa-bmc machine
+To: William de Abreu Pinho <williamdapinho@gmail.com>, qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, kane_chen@aspeedtech.com,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
-References: <20260513053749.132759-1-clg@redhat.com>
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+References: <20260519-add-anacapa-machine-v3-0-56c23993a20a@gmail.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -93,30 +94,30 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260513053749.132759-1-clg@redhat.com>
+In-Reply-To: <20260519-add-anacapa-machine-v3-0-56c23993a20a@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 12141141647892261912
+x-ovh-tracer-id: 12137763946543426584
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTE6jM+1s/C6DzGOdsEXe/ITC9BuNJitQJ65aeMxkZpr9vxgIkX6UZKkmRWCIEuYOehRtvNT7+CcDsx/6FFSo19CIgS6vLLoNJwbekUX1Hfl0id/ekHrGYSkmG4rBGicWNyGfkxoRriZ9b7ShRtT6Ldo5Uz5pU+3p+0AkIVE4+gCJd2a1YJHmv9kvPIRV1l9uGgUzck8heajZlg6dAUhdnu8ndn6Vz2YIyZeG5U86Ij+MOYv1ZkprWiIROmTnRhbb9/RfQXc61M2p5YPX/Bkq5u8myWsYVAQE1rQ0G3fNnDmdAex8UuEdBC5/JH3+fDNEnXdPXqzZJ/3ltxyFHnW8PQOTqMS62n3Dcbm8/DcsO89kksuN1biYHG+Sy7HHorkZGukIo4/7HSx3/Q9SNtgJIfO4mQS2BCFtEXNqSeT7m7pUw99xN+R3rggqk+dj1MmKiAx0+pMKF4xy1XXTUr8JWxH+jmqDuM912bzmx8SYxXjp1dWIv3gkEfB3yQs9QRW2PgGTEDjGcPt+9+NNvFnmEGRZKU3tTXYtsOtKzVFUgZXNMFaed34XLMMkyLBTdtra4722d5pLNihyakPPy8DgMIVueh4nMbO3OwK/pORRXPZlnj387L9X8BNhtQT3PU8WJWCEyGnv9WD03ccebZ1tF4sdGbziL26uskrfJZQEThNeg
-DKIM-Signature: a=rsa-sha256; bh=ZiBLaOM/2H1a74blP5O+8CBsRJ6g/GGJDioTV7wWjIw=; 
+X-VR-SPAMCAUSE: dmFkZTEoyrCRwVlFJkeHTbxKuCE2nBZ3VzgVPqMF3BwGxxASkjis7SMU081tfZeqLKQSvHmG/r/QVPxHQzjPLx83g3lGLqxl9SleN/SdvcE3DVlx/3pt9l6u3/pmWV4tJYw/CP+aD5/iSlIJxpXOqwKgPMvEpxN4c1pEJbc0uTywomC7MWtAZqxZ0SL5KmrFKVEbVmixKOpGNFx1NBTdzQJIHG3/6OQu89BvM1AVr9MnASn/gn/vnnmCDSaotAZLUZROE3DKkT7iZLyvLcjpYT1nX2YZ04wNWK46mXoIrRrT0Di8egoq07PIa2gRiz6UJvbUDkMA7HHZvm6BIvuiayYX2clYReqXFg7UhrMR+AzN3scnuAVMQAQrVxPdBnojGJ34C23u84larnXuVyWaE2wXd1hv8h7Fcz03u/80+pDvBKNJQQwg4T7Fx8oM0FNJWb5JBuIPwVOj+7QTBAphwZeHPPyCKP7Uc/b7alQCrZ3MR31Yiq2qnSSiME6O7ZZQD6T6xPDr1Xm3ArmM7t1csDYdGAuIqNbHXBxfEMZpNl69dGE20Jbe9+ShcE/uCGvMxvXYStA5NDnphnRRsfqEmSlAIaHwHjrWEMdSl+/FY2QAW4An03kn3ONHxMmxQpIuHKApegxeNfcNvpMi8rI1vL+5iHl4d2Zgs6JDS86Z7qHJMsSrXg
+DKIM-Signature: a=rsa-sha256; bh=wGhJLtOWfGdJdw6As3Wy7APebRKq/V9nAkpVsY5FCv0=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1779345536; v=1;
- b=QIWG53vu1kVnZaBTaE2VNPqv671eo+uPOkXOFsviedsY/4mxL0O6Oke05txDD8FUfaHLcnnC
- ik9j5YkL8mEJdWvZjnYM8nEM8WLrO52QYLqEoiQ5YtW6uKigeaTNm8yinj6eP8F1ADXxZqSbpub
- 2W5SK6Etf+VvSRXQtF2Dx74gOSywgLjR0Xx+AvPLMJIc2mCF8At6ytE8kXAN+6W3p7ne3RMdrn/
- yMjQPDkryGOb2gPThtSCNDv3DuELF70WLKrKgzfGPfXFl34KaJ3yg/BgXEIqduODxQqq2SOQtJI
- OeE2l6jypsM6h4sDRvev0tSgAYdhwvziAMfDwtlYE0/wQ==
-Received-SPF: pass client-ip=54.36.140.178; envelope-from=clg@kaod.org;
- helo=smtpout7.mo534.mail-out.ovh.net
+ t=1779345523; v=1;
+ b=SikVs0b/BBBERSh4LedtAVEF+sLyZQlVrNMRvf7n7NTBN4WEbsLjTmzYp7EfxFF6rRrf9+Eg
+ CuJ5819siHfO9izwBRD7FzW3w1Ln/b+TkQkwDzmnlpTZWZzhtM6miAVxrGdoqp4XwwCRrPSispW
+ jaqMnPN2TLTAo1FIT0sxJ4iwkMty+pnAnmkIr9pgSg8IXGtm0E8pdK3TNPngOqTz+G3HeiP1jMP
+ FOsnt7bEbyQvYzypCZ4qnPumBx322LAehEDrGoqJhmu8tTJFPp00znPivfRlJVMJpS9XdFLjV8F
+ Tm/ICVDEHHwQ708F1hWwGBJRN2vtR07vX2DRrlaK7y0eg==
+Received-SPF: pass client-ip=178.33.248.79; envelope-from=clg@kaod.org;
+ helo=12.mo533.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,45 +133,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/13/26 07:37, Cédric Le Goater wrote:
-> Commit e09cf36321f6 ("hw: aspeed_scu: Add AST2600 support") introduced
-> a typo on the definitions of the Random Number Generator registers.
-> Fix that.
+On 5/19/26 19:48, William de Abreu Pinho wrote:
+> This series adds support for the Anacapa machine type.  The first patch
+> introduces FacebookAspeedTest and updates the existing Facebook machine
+> tests.  The second patch adds the machine model and functional tests.
+> The third patch adds the FRU EEPROM contents.
 > 
-> The implementation of RNG_CTRL and RNG_DATA should be rechecked on HW
-> since the QEMU implementation always generates random data, regardless
-> of RNG_CTRL. A comment in aspeed_ast2600_scu_read() admits uncertainty
-> about the behavior :
+> To: qemu-devel@nongnu.org
+> Cc: Cédric Le Goater <clg@kaod.org>
+> Cc: Peter Maydell <peter.maydell@linaro.org>
+> Cc: Steven Lee <steven_lee@aspeedtech.com>
+> Cc: Troy Lee <leetroy@gmail.com>
+> Cc: Jamin Lin <jamin_lin@aspeedtech.com>
+> Cc: Kane Chen <kane_chen@aspeedtech.com>
+> Cc: Andrew Jeffery <andrew@codeconstruct.com.au>
+> Cc: Joel Stanley <joel@jms.id.au>
+> Cc: qemu-arm@nongnu.org
+> Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 > 
->      /*
->       * On hardware, RNG_DATA works regardless of the state of the
->       * enable bit in RNG_CTRL
->       *
->       * TODO: Check this is true for ast2600
->       */
+> Changes in v3:
+> - Update docs/system/arm/aspeed.rst to add anacapa-bmc (suggested by
+>    Cédric Le Goater)
+> - Link to v2: https://lore.kernel.org/qemu-devel/20260519-add-anacapa-machine-v2-0-47027867d76a@gmail.com
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2350
-> Fixes: e09cf36321f6 ("hw: aspeed_scu: Add AST2600 support")
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> Changes in v2:
+> - Split the functional test (FacebookAspeedTest) into a separate patch,
+>    also updating bletchley-bmc and catalina-bmc to use it.
+> - Link to v1: https://lore.kernel.org/qemu-devel/20260515-add-anacapa-machine-v1-0-9765ce0b9426@gmail.com
+> 
 > ---
->   hw/misc/aspeed_scu.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+> William de Abreu Pinho (3):
+>        tests/functional/aspeed: introduce FacebookAspeedTest
+>        hw/arm/aspeed: add anacapa-bmc machine
+>        hw/arm/aspeed: anacapa: add FRU EEPROM data
 > 
-> diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
-> index e4160356e443..9d9f43e6b563 100644
-> --- a/hw/misc/aspeed_scu.c
-> +++ b/hw/misc/aspeed_scu.c
-> @@ -128,8 +128,8 @@
->   #define AST2600_HW_STRAP2         TO_REG(0x510)
->   #define AST2600_HW_STRAP2_CLR     TO_REG(0x514)
->   #define AST2600_HW_STRAP2_PROT    TO_REG(0x518)
-> -#define AST2600_RNG_CTRL          TO_REG(0x524)
-> -#define AST2600_RNG_DATA          TO_REG(0x540)
-> +#define AST2600_RNG_CTRL          TO_REG(0x520)
-> +#define AST2600_RNG_DATA          TO_REG(0x524)
->   #define AST2600_CHIP_ID0          TO_REG(0x5B0)
->   #define AST2600_CHIP_ID1          TO_REG(0x5B4)
->   
+>   docs/system/arm/aspeed.rst                    |   3 +-
+>   hw/arm/aspeed_ast2600_anacapa.c               | 362 ++++++++++++++++++++++++++
+>   hw/arm/meson.build                            |   1 +
+>   tests/functional/arm/meson.build              |   2 +
+>   tests/functional/arm/test_aspeed_anacapa.py   |  25 ++
+>   tests/functional/arm/test_aspeed_bletchley.py |   6 +-
+>   tests/functional/arm/test_aspeed_catalina.py  |   6 +-
+>   tests/functional/aspeed.py                    |   8 +
+>   8 files changed, 406 insertions(+), 7 deletions(-)
+> ---
+> base-commit: ee7eb612be8f8886d48c1d0c1f1c65e495138f83
+> change-id: 20260511-add-anacapa-machine-cf7076ab0afa
+> 
+> Best regards,
 
 Applied to
 
