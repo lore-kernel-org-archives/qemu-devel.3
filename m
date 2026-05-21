@@ -4,65 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82BD7CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 04:44:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DAA6CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 05:45:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPvFq-00014S-1f; Thu, 21 May 2026 00:43:30 -0400
+	id 1wPwCj-0000tK-L5; Thu, 21 May 2026 01:44:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wPvFo-00013l-7s; Thu, 21 May 2026 00:43:28 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wPwCY-0000re-P7; Thu, 21 May 2026 01:44:11 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wPvFl-0003Oq-MO; Thu, 21 May 2026 00:43:27 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64L4hJmb051138
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 21 May 2026 13:43:19 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=H4pXrTLxtLklurT0dQMZJFFwX+t+Pw/T6jSaC1qidss=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1779338599; v=1;
- b=sfeVbTiYZAtCjIMSDF/2CIoKt1k1v74MErjXZE2pRskLBTXuRY+X+AKYV3DtEil3
- fKLtsGrfkayRz5zL0ckBYpKdw4M/dQYVcr8d9lQvg4w8oyrov3yn5pIwlBwKArIS
- lY1STeHHUz1REaLsOuWCrj5VJjxz6BYMep3cBPjnxfJygCMBDgdhc53I9mUazPv9
- A9ZONrZpFBuQVKWYocae2QhqYK2l6Ve94w85CXenDbcA8OtspEbCDiNJYklXWWTc
- 0Ds2mlaee7kNnyzvsnWeMZZbOManLtwmZjn7BqGFUWhrsOEzJ+WJ224hukfcB6GN
- uM0G+s6IrAjrCqP+mOLgcQ==
-Message-ID: <ea0ee6f6-4753-45d4-ac55-a4ccbf6b7cf7@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 21 May 2026 13:43:18 +0900
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wPwCV-00014X-R7; Thu, 21 May 2026 01:44:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1779342241; bh=bD7i8ED9wvzu2Z67H9M3zTIcdXsXWRJMgOI4EmZijU8=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=J6qWwIKVklP09ZjlaLVI6PycWJgzWAPF4OANozfIpH1usXTws2uISncMaJJTdigSS
+ RVCQEUnpKmh4M+3VnwAqnvJCI9fZDo0CVBHQVqe4J04+bV2MHV2XxGhEn6UeKq3c3S
+ R9tPt+WMjunee/WSQyt9ysw5KACsCUR9jalRY4YLY1hBXZOEfCgEaUEoEgfPgL7ROM
+ F615F6Z9a5iqoIoObxZz7CmAigHq9PMPzgIFyYzWYc4nfsjQibYAPsmsCTeZk1DdfV
+ iyi+rEqs8o9NivJ4GL7IKm1Huk23X3c47kRIgnM4UiOmySfdReRoD5Qqte5wsrW7l5
+ Q7BDXZwVCkLFw==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 52ED21AEC68;
+ Thu, 21 May 2026 08:44:01 +0300 (MSK)
+Message-ID: <db8c70f3-bf65-4d9b-bed1-eb98543939d2@tls.msk.ru>
+Date: Thu, 21 May 2026 08:44:01 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 3/4] hw/arm/virt: Remove the lower bound of HighMem IO
- Regions
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org, Eric Auger <eric.auger@redhat.com>,
- Andrew Jones <ajones@ventanamicro.com>, "Michael S. Tsirkin"
- <mst@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20260520-virt-v6-0-d96180454fdf@rsg.ci.i.u-tokyo.ac.jp>
- <20260520-virt-v6-3-d96180454fdf@rsg.ci.i.u-tokyo.ac.jp>
- <20260520155152.3652a6e9@imammedo>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260520155152.3652a6e9@imammedo>
+Subject: Re: [PATCH v2 0/1] coroutine: fix lost wakeup in qemu_co_sleep_wake()
+To: "Denis V. Lunev" <den@virtuozzo.com>, "Denis V. Lunev" <den@openvz.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org, kwolf@redhat.com,
+ hreitz@redhat.com, stefanha@redhat.com
+References: <20260520193849.467936-1-den@openvz.org>
+ <410459b5-ff3d-4d88-8b4e-ad226c7e5e49@tls.msk.ru>
+ <98afd158-b155-4f57-ab43-235d77aed6ad@virtuozzo.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <98afd158-b155-4f57-ab43-235d77aed6ad@virtuozzo.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- TVD_SUBJ_WIPE_DEBT=1.004 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,143 +113,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/05/20 22:51, Igor Mammedov wrote:
-> On Wed, 20 May 2026 18:56:32 +0900
-> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
-> 
->> Remove the lower bound of the Highmem IO Regions' addresses for the
->> latest machine version to increase the chance to fit the regions in the
->> PA space.
+On 20.05.2026 23:11, Denis V. Lunev wrote:
+> On 5/20/26 21:57, Michael Tokarev wrote:
+>> On 20.05.2026 22:38, Denis V. Lunev via wrote:
+>>> Changes since v1
+>>> ----------------
+>>>
+>>> v1 was a two-patch series tracking two independent missed-wakeup
+>>> races on the qemu shutdown path.
+>> Um.  The v1 has already been applied to the master branch, see commit
+>> e3082ab3b3.
 >>
->> The lower bound was especially problematic when using virt-install on
->> Apple M2. virt-install 5.0.0 adds multiple pcie-root-port devices that
+>> And I already picked it up for stable, but not for 10.0.x
+>>
+>> So I guess the next step is to send a follow-up on top of v1, or
+>> to revert v1 and have this v2 instead.
+..
+> It seems that I have written things wrong in description.
 > 
-> it looks like with this patch everything would move down,
-> with 'small' but, VIRT_HIGH_PCIE_MMIO that still won't fit into M2 PA and
-> will get disabled.
-> Is it intended (perhaps it should be mentioned in patch)
+> v1 consists of 2 patches which were fixed very similar
+> but different patterns - 2 distinct hangs on cleanup:
+> * one in bdrv_graph_co_rdunlock() [1]
+> * and one in cache_clean_timer_del_and_wait() [2]
+> 
+> Patch [1] has been applied by Kevin to master.
+> Patch [2] has been reviewed with a proposal to revise
+> the approach.
+> 
+> This submission contains Patch [2] in a way proposed
+> by Kevin. Patch [1] is independent and stays merged.
 
-Yes. It is another opportunity for improvement, but out of scopoe of 
-this patch.
+Aha, this makes sense.  Thank you for clarifying things!
+And indeed, I missed this part of your description - which
+is right in the part of your message which I quoted.  I'm
+sorry for the noise.
 
-> 
-> 
->> require sufficient space in the ECAM region. However, the Highmem ECAM
->> region did not fit in the limited PA space on the hardware, and the ECAM
->> region size was limited to 16 MiB. If virt-install had added more than
->> 16 devices to the root bridge, the region overflowed, which prevented
->> edk2-stable202505 from scanning PCI devices, including the boot disk,
->> causing boot failures.
->>
->> Ideally, a virtual machine with more than 16 devices added to the root
->> bridge should just work so that users and management layers do not have
->> to care whether they use constrained hardware.
->>
->> The base address of the Highmem IO Regions was fixed when commit
->> f90747c4e8fb ("hw/arm/virt: GICv3 DT node with one or two redistributor
->> regions") added the first Highmem IO Region. Later, commit 957e32cffa57
->> ("hw/arm/virt: Dynamic memory map depending on RAM requirements")
->> allowed moving the Highmem IO Regions to higher addresses to accommodate
->> RAM more than 255 GiB, but the lower bound remained to keep the legacy
->> memory map.
->>
->> Remove the lower bound for the latest machine version to accommodate
->> more devices with the root bridge. Keeping the lower bound for the old
->> machine versions ensures the compatibility is still maintained.
->>
->> The hardcoded memory map in tests/qtest/libqos/generic-pcihost.c is also
->> updated.
->>
->> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->> Reviewed-by: Eric Auger <eric.auger@redhat.com>
->> ---
->>   include/hw/arm/virt.h                |  1 +
->>   hw/arm/virt.c                        | 17 +++++++++++------
->>   tests/qtest/libqos/generic-pcihost.c |  2 +-
->>   3 files changed, 13 insertions(+), 7 deletions(-)
->>
->> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
->> index 3ba33b4bd274..6c8ba8f3185b 100644
->> --- a/include/hw/arm/virt.h
->> +++ b/include/hw/arm/virt.h
->> @@ -142,6 +142,7 @@ typedef enum VirtGICType {
->>   
->>   struct VirtMachineClass {
->>       MachineClass parent;
->> +    hwaddr min_highmem_base;
->>       bool no_tcg_its;
->>       bool no_highmem_compact;
->>       bool no_kvm_steal_time;
->> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
->> index b090233893c5..78a85a966ad7 100644
->> --- a/hw/arm/virt.c
->> +++ b/hw/arm/virt.c
->> @@ -229,8 +229,7 @@ static const MemMapEntry base_memmap[] = {
->>    * Highmem IO Regions: This memory map is floating, located after the RAM.
->>    * Each MemMapEntry base (GPA) will be dynamically computed, depending on the
->>    * top of the RAM, so that its base get the same alignment as the size,
->> - * ie. a 512GiB entry will be aligned on a 512GiB boundary. If there is
->> - * less than 256GiB of RAM, the floating area starts at the 256GiB mark.
->> + * ie. a 512GiB entry will be aligned on a 512GiB boundary.
->>    * Note the extended_memmap is sized so that it eventually also includes the
->>    * base_memmap entries (VIRT_HIGH_GIC_REDIST2 index is greater than the last
->>    * index of base_memmap).
->> @@ -2479,6 +2478,7 @@ static void virt_set_high_memmap(VirtMachineState *vms,
->>   static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
->>   {
->>       MachineState *ms = MACHINE(vms);
->> +    VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
->>       hwaddr base, device_memory_base, device_memory_size, memtop;
->>       int i;
->>   
->> @@ -2505,8 +2505,7 @@ static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
->>       /*
->>        * We compute the base of the high IO region depending on the
->>        * amount of initial and device memory. The device memory start/size
->> -     * is aligned on 1GiB. We never put the high IO region below 256GiB
->> -     * so that if maxram_size is < 255GiB we keep the legacy memory map.
->> +     * is aligned on 1GiB.
->>        * The device region size assumes 1GiB page max alignment per slot.
->>        */
->>       device_memory_base =
->> @@ -2524,8 +2523,8 @@ static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
->>           error_report("maxmem/slots too huge");
->>           exit(EXIT_FAILURE);
->>       }
->> -    if (base < vms->memmap[VIRT_MEM].base + LEGACY_RAMLIMIT_BYTES) {
->> -        base = vms->memmap[VIRT_MEM].base + LEGACY_RAMLIMIT_BYTES;
->> +    if (base < vmc->min_highmem_base) {
->> +        base = vmc->min_highmem_base;
->>       }
->>   
->>       /* We know for sure that at least the memory fits in the PA space */
->> @@ -4367,6 +4366,12 @@ static void virt_machine_11_0_options(MachineClass *mc)
->>       virt_machine_11_1_options(mc);
->>       compat_props_add(mc->compat_props, hw_compat_11_0, hw_compat_11_0_len);
->>       vmc->hvf_no_kernel_irqchip_default = true;
->> +
->> +    /*
->> +     * Do not put the high IO region below 256GiB so that if maxram_size is
->> +     * < 255GiB we keep the legacy memory map.
->> +     */
->> +    vmc->min_highmem_base = base_memmap[VIRT_MEM].base + LEGACY_RAMLIMIT_BYTES;
->>   }
->>   DEFINE_VIRT_MACHINE(11, 0)
->>   
->> diff --git a/tests/qtest/libqos/generic-pcihost.c b/tests/qtest/libqos/generic-pcihost.c
->> index b77617524cac..287e8445ec5b 100644
->> --- a/tests/qtest/libqos/generic-pcihost.c
->> +++ b/tests/qtest/libqos/generic-pcihost.c
->> @@ -210,7 +210,7 @@ void qpci_init_generic(QGenericPCIBus *qpci, QTestState *qts,
->>       qpci->bus.pio_limit = 0x10000;
->>       qpci->bus.mmio_alloc_ptr = 0x10000000;
->>       qpci->bus.mmio_limit = 0x2eff0000;
->> -    qpci->ecam_alloc_ptr = 0x4010000000;
->> +    qpci->ecam_alloc_ptr = 0x90000000;
->>   
->>       qpci->obj.get_driver = qpci_generic_get_driver;
->>   }
->>
-> 
+Best,
 
+/mjt
 
