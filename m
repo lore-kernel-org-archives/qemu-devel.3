@@ -4,89 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36E3CCD5BAF
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 20:29:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 437C7CD5BAF
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 20:40:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQA0n-0000Am-Tt; Thu, 21 May 2026 16:28:57 -0400
+	id 1wQAAj-0001XD-Fu; Thu, 21 May 2026 16:39:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wQA0k-0000AI-SM
- for qemu-devel@nongnu.org; Thu, 21 May 2026 16:28:55 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <gumenezes2019@gmail.com>)
+ id 1wQAAb-0001UG-8P
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 16:39:05 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wQA0i-0000sw-Rk
- for qemu-devel@nongnu.org; Thu, 21 May 2026 16:28:54 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4903974854dso10532995e9.3
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 13:28:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gumenezes2019@gmail.com>)
+ id 1wQAAZ-0006ae-J5
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 16:39:05 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-7cfd0d8eb09so35054527b3.1
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 13:39:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779395942; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Ydk7zPBbcSyiSmgnPAka1LKizC5mImyR6lJfKC94xFiOHjgVhlQZi8v4VZUPnJSmd1
+ sbb/39TDBoJ3nEg6jYK9BhH4wjJquhknbkt5EIC1JKzGRsTkrXqDJLOk2WfTrjUEJSdZ
+ ebBCnjhX4Xa8h5zDsZRU/QxuwI5W8elU7Rs+y6/YmnSAZNrPBYmfOThOBSpEFduda7z0
+ 2ZP4k+4xb0Zx6FSKRte0suUmyC0X4qhogT8Eu3W26udv9b0VHLDvnlRNG74ImBKIkHz9
+ C2KXMlvdXVvI2FcONjU00qkvDLrqCVnvK6P0H0vEbqtrEPcPrKzttkyacDdJruABxj6+
+ RDGg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=v+DKoTCfCC6UB3kduWaVqd1GE9NOmFLhNF6mSI5w6b0=;
+ fh=axbB2bjiSokmisYx3H7DI5yUO3Z+Sykod4F4JR7lPwk=;
+ b=JV9WX47yJdvgd3wLne2GS0modNVFnvUOz9hk87lEoLqyvL09GIC8RK24QXDHYDkeVL
+ kdFaMk5kTwC/5BOTX2a0dD4sUBExkRZ6/On7Fsicfw6y33Y8iWOOhYH+Tt5sK8vlbL0V
+ obX85LFOIGOJnsoPJxyCkvWStf2BpBqI5r3lCw+udOWJC9GgbOXKnLNip5DAmPjD5kOp
+ KMiH/qcc2yl/eSy8Bxs+K0l5qjKQjNRXKeMZR5gIczowCWTFG5MaRfNiIzA44yWqSg46
+ gS01t1JxCe+vXONqhN6VKsxJCWwetweijDf2y2vMTko/Qce9deDNyyihGx6VVarkys/O
+ cvUQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779395331; x=1780000131; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=y7AlX1zOnsIRlw1I2xhuzDkfrP1AIvNyFk5r/QJiaPo=;
- b=Vj0isDAW2ewh5r28Y2uQIyMZGy+YqbTGOzBOYX+mDZ3B++fsIdaqV35+k4W8s3GPlu
- wMyP9ywCrvrZ7z6f8etqEEnwEM7uSMybXfYiBYHxeb1fsTOedt31WbOfXWh+PKYXfvOu
- 8SHhSACLXQz/bXVaKceKJwtM57ededmDBK/8Pdb336I/ySzcsZmSxm6OBOepqA33UpjB
- w8Vdm4HkpDz9qKNjlRaIggUK4s8fDcJ2eAb+CLY1cjRI9p2sS3DYrBJQ1Sq/OAFZL0E+
- L4MxOuBmGcABTjbTZM+41wdg0rH069WSOvzOh3qf3vKKhx3zYv4QTRzNIpp5XxgQaE3z
- LMPg==
+ d=gmail.com; s=20251104; t=1779395942; x=1780000742; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=v+DKoTCfCC6UB3kduWaVqd1GE9NOmFLhNF6mSI5w6b0=;
+ b=dhGRbXO+pdTWAB2FxKuKIPbLOIM2fB2tpr2a3Vjv84Ro42gmENHqAA7/gE5xnkCRoE
+ 4VlIzuYF6V7/+ZSo5ZGTujsD7qAQ0k8JNskr9k55YdtS3sYirspG8WroVcNskcwoTOoz
+ KeuUHhK/SziHJoXpQOwJVl4yBH1PZTNPhbHqCze8Hh2tli1dSYH3d8Fro3560HPyPIwD
+ nlvSRG4rfGYlAltfPXBOWlRDEgEeZfyRXCRye2MsfsugA3TGT0UPDDUlrmgGnfrQD3bN
+ nh/iyR5YHb7SHQWHmYRIl3GNd2MzF+WctwPI5EiAYpVOScL1xeExbuuAWbA1b9W50Ywf
+ 1qwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779395331; x=1780000131;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=y7AlX1zOnsIRlw1I2xhuzDkfrP1AIvNyFk5r/QJiaPo=;
- b=ZHIANFOSIQQo4lHXXukbszACP85TRX+OUbH8x3Ict5ObKzyEJ9pFM4/iqKN21M6Pi/
- HwcigtHW7g+U5uNQz84FfudHDHdvWXNnx6kz7GsJ1nOQwWXYZD8CVlXEaJ+rv7rnI9zh
- LrQQe5HoZk8FvVo0Caa4yvHfcB+Qdq3IlML/iFPjxfvGZsvnDz0ClluuJIn6kyXF4Ib9
- QEx7qFj1CGOiwO1NSwcIs05zXASKp1f0HkWliZzmU7D5zqwf4bosFSObyNA+HOPKxDZg
- unVotFGW867HQFiWyM8xlTHBXmmGzwdrzhCaP9+21h7g9I8uzzWA4oPd8epigq53UjFO
- Mraw==
-X-Gm-Message-State: AOJu0Yyav1wBQGRD0DouPbWl7vpYsdzD/dEG+i6bV748IrVok7ZlP2Qn
- eA2xUBwysJs/fNQwJ6PXyhLEaFv7EAM99nprPR+uImonqjJgeV2/Hz2uM7x9T0d7qX9T8vB4Ny5
- QDn/RJlY=
-X-Gm-Gg: Acq92OH6Bxe3FTDWRzXoFd2+hCs+r6XuFRgiHsI4PYg2M+nXCXC72s3Zxi22ZHUuqvE
- kGUH98bFipOeGbsxndG1lJcoElcdBuFYt3AL4sIIhwTZG8orABj29PavqkiNwKjQGf1VtuAMfQH
- TJejUI5UNx6Zz2Yy6XR8ZhzKmsJIkQMcQQNUT4i0ZirwQkW4FED7UvSb4MD2E2Davuo8CzKBYrh
- v+HCbgp9HQxXXBzK939feGuh4mZnJlYPjheaR/uEUsdgKCjam/usVU87hmS/FiiTIEI49KiCgqb
- fA84SuK816h439QMOoo2/mOZXoHnxEqAZwayR0yeHU3kn0RHaEc/VUEU9869eEBu6mVF6P0E2sW
- nWfboTnn1x3Z++ieHmHjAIZ5RUJZc11uXp6eRkemC887DaOarNG5uV5rXlZJ5HNGsXz6muSyAWk
- DUhQFZYMnNq89dmY9DUzScg/A=
-X-Received: by 2002:a05:600c:8599:b0:48a:93f8:dd02 with SMTP id
- 5b1f17b1804b1-490426b49a3mr2698075e9.14.1779395331224; 
- Thu, 21 May 2026 13:28:51 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eaa7cf1c2sm5531479f8f.4.2026.05.21.13.28.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 13:28:50 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AB7805F886;
- Thu, 21 May 2026 21:28:49 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: gustavo menezes <gumenezes2019@gmail.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [RFC] Add initial Qualcomm MSM7201A platform emulation
-In-Reply-To: <CA+YAEjo9BdN6RuRbg=bfVqke4kf24my21Jk3P4aJDzR8A5yqyw@mail.gmail.com>
- (gustavo menezes's message of "Thu, 21 May 2026 15:30:11 -0300")
-References: <CA+YAEjo9BdN6RuRbg=bfVqke4kf24my21Jk3P4aJDzR8A5yqyw@mail.gmail.com>
-User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Thu, 21 May 2026 21:28:49 +0100
-Message-ID: <87h5o0mrr2.fsf@draig.linaro.org>
+ d=1e100.net; s=20251104; t=1779395942; x=1780000742;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=v+DKoTCfCC6UB3kduWaVqd1GE9NOmFLhNF6mSI5w6b0=;
+ b=Dv9tSnr4x3uGSdINJ8/23/omZ5CIIBSChg4Z0pqKjMWtqdx62TSVjZGSluxSTf8uPL
+ U3e9Xah22w0IhYLkZ8t5cv8UANhBfdDJSAO8QS0Ds0UhDDYuYMiBRMrB4Ezl8SyD6Fs1
+ frTiAbDKQfEUBusfhuwbFmHyj9hMAJTKbuPDabrX7R5ByOtllwBbAczXkDSMFgpnoMjq
+ e8+bEcvwwlk5fT6rpn+WLWoXryaAxIcJTrdy9sZrL+KzBdY/nsLAHjGtJvJh5COm9jxk
+ rYmgXY4PxjTpfxHOyjZmqV7zXUrxQWBGzT/lpdNl5bzu0wwQBDXa6xj4TdwGegVFE0+t
+ KoFw==
+X-Gm-Message-State: AOJu0Yz5mx58TG+Yx+6m99pjkEWv3QkVCfFhJUZvNiGxWPaijn3PzQo9
+ i46dzIJcNvqTW6AbwBu4SvhjmszsNoDC345QeLJ7MdsFcTS3pZrgjLGla5cF52/Y8XA973e2XEh
+ C6+sD0T9Ah5v8Mo5ORMGK9rG5J1xEXrQ=
+X-Gm-Gg: Acq92OHiG4seC+//7osXVSjH9Ri3SfrC6ZCpeKexCeyfcuoRDbZueN2oaszrh2E0BKb
+ rvUr5O+uF5cn3K38BVAMd/iivR8qvUE6A0rgLmrAZ3m3o8Rgs8PXmXzGL/1F9hYThoHOMxXHaKE
+ sBlMGZCF1j1cBFGxLGdUd8Jmt7nSCs0JRdzZ8PlNE8a6kty+PXPnCWEkMKbKdZFqj3LY5GmnTn5
+ uoEjUmZ0wNccDnJezrTAzkY71JLBeiHnM8UyZpLOlbybSntiJo5nVvrW/UmGupjm9m1Z14ojpXe
+ aOewuHkTtzb42GSknaocq3TSNx1VlYqrFtvtxX4FKXYg0jeTyjSrOAxinWUS1pgTzdGQFqcYI8L
+ 1ARbKfw==
+X-Received: by 2002:a05:690c:d0b:b0:7c0:56f:5b59 with SMTP id
+ 00721157ae682-7d338490957mr11394957b3.15.1779395942481; Thu, 21 May 2026
+ 13:39:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <CA+YAEjo9BdN6RuRbg=bfVqke4kf24my21Jk3P4aJDzR8A5yqyw@mail.gmail.com>
+ <87h5o0mrr2.fsf@draig.linaro.org>
+In-Reply-To: <87h5o0mrr2.fsf@draig.linaro.org>
+From: gustavo menezes <gumenezes2019@gmail.com>
+Date: Thu, 21 May 2026 17:38:49 -0300
+X-Gm-Features: AVHnY4LRgOAgeQjANcCWPGYWIKXLa1Yj0q52JfK8t17QFIx4kXFsCrw1k4QUIy8
+Message-ID: <CA+YAEjoXsRp71ucEmreK+ExPjWhK6iEw6BrGzVkk1e5b45fc9Q@mail.gmail.com>
+Subject: Re: [RFC] Add initial Qualcomm MSM7201A platform emulation
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000110513065259e760"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=gumenezes2019@gmail.com; helo=mail-yw1-x112e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,103 +116,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-gustavo menezes <gumenezes2019@gmail.com> writes:
+--000000000000110513065259e760
+Content-Type: text/plain; charset="UTF-8"
 
-> Hello,
->
-> I am interested in developing initial support for the Qualcomm MSM7201A
-> SoC family in QEMU.
->
-> The goal is to emulate early Qualcomm MSM7K-based smartphones such as
-> the HTC Dream / T-Mobile G1 and related Windows Mobile devices.
+Thank you for the detailed feedback.
 
-That sounds like quite a lot of work for one person. Have you done much
-device modelling or reverse engineering before?
+My initial goal is intentionally much smaller than full smartphone
+emulation. I mainly want to establish a minimal MSM7K machine model
+capable of early Linux/Android boot and serial console output.
 
->
-> Initial targets would include:
-> - ARM1136 core support integration
+I agree that a complete emulation of commercial devices would require
+significant long-term work, especially for multimedia and modem-related
+hardware.
 
-We already have at least one board that uses this so that is done.
+Regarding experience:
 
-> - UART
-> - Interrupt controller
-> - Timers
+   -
 
-Are these all Arm IP blocks or something QC specific?
+   I have been studying QEMU internals and ARM board models
+   -
 
-> - NAND flash controller
-> - Minimal Linux/Android boot capability
+   I have experience with low-level firmware/kernel analysis
+   -
 
-While Android can boot on QEMU (specifically the Cuttlefish Android
-target) you may need to model/stub a lot of devices to get through the
-boot of an unmodified image.
+   I have also been working with vendor kernel sources and older Android
+   boot chains
 
-> Longer term goals may include:
-> - LCD/framebuffer support
-> - Audio
-> - Modem/DSP stubs
-> - Power management
-> - Windows Mobile compatibility
->
-> Potential use cases:
-> - Preservation of early smartphone platforms
-> - Android historical research
-> - Embedded Linux development
-> - Reverse engineering research
+For the initial devices:
 
-For reverse engineering you should ensure any devices you model work
-appropriately with record/replay.=20
+   -
 
->
-> I would appreciate feedback regarding:
-> - Existing related efforts
+   ARM1136 support already existing in QEMU simplifies the CPU side
+   -
 
-There are a number of downstream forks of QEMU that model various things
-including at least one that claims to emulate a full iPhone so such
-things are possible. However most of the upstream models are either
-aimed at virtualisation, model various developer/reference boards and a
-large number of system controller boards.
+   Some peripherals appear to be Qualcomm-specific rather than standard
+   ARM PrimeCell IP blocks, although I am still verifying this through
+   downstream kernel sources and available documentation
 
-> - Preferred machine model structure
+My current plan is roughly:
 
-I'll leave that for others - however the general advice is to be wary of
-copying and pasting for older models which often use old/legacy APIs and
-haven't bee converted.
+   1.
 
-> - Maintainership expectations
+   Minimal machine definition
+   2.
 
-No one is expecting full security support for random board models (see
-security.rst) however neither are drive-by code dumps particularly
-useful to the project. Orphaned sections of code are liable to
-eventually get removed especially if there is little evidence of it
-being useful to people. You should be prepared to at least field bug
-reports and review incoming patches even if the patches are eventually
-merged through some higher level maintainer tree.
+   UART support
+   3.
 
-> - Upstream acceptance concerns
+   Interrupt/timer implementation
+   4.
 
-All code added to QEMU adds some degree to the maintenance burden. As
-code is likely to be re-factored by many people the most useful thing to
-address are:
+   NAND boot path
+   5.
 
-  - Good comments and references to source documents of what behaviour
-    should be
-  - Testing, having some way to ensure functionality doesn't bit rot
-  - Try and keep changes localised - QEMU is pretty modular but if you
-    need to make changes to wider code expect to justify it.
+   Linux kernel boot to serial console
 
-Plus all the usual things about project coding and commit style and what
-developer focused documentation we have:
+I also appreciate the comments regarding:
 
-  https://qemu.readthedocs.io/en/master/devel/index.html
-=20=20
+   -
 
+   record/replay compatibility
+   -
 
->
-> Thanks
+   maintainability expectations
+   -
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+   testing and documentation
+   -
+
+   avoiding legacy API patterns
+
+I intend to keep the implementation incremental and localized as much
+as possible.
+
+Thanks again for the guidance and references.
+
+--000000000000110513065259e760
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><p>Thank you for the detailed feedback.</p><p>My initial g=
+oal is intentionally much smaller than full smartphone<br>emulation. I main=
+ly want to establish a minimal MSM7K machine model<br>capable of early Linu=
+x/Android boot and serial console output.</p><p>I agree that a complete emu=
+lation of commercial devices would require<br>significant long-term work, e=
+specially for multimedia and modem-related<br>hardware.</p><p>Regarding exp=
+erience:</p><ul><li><p>I have been studying QEMU internals and ARM board mo=
+dels</p></li><li><p>I have experience with low-level firmware/kernel analys=
+is</p></li><li><p>I have also been working with vendor kernel sources and o=
+lder Android<br>boot chains</p></li></ul><p>For the initial devices:</p><ul=
+><li><p>ARM1136 support already existing in QEMU simplifies the CPU side</p=
+></li><li><p>Some peripherals appear to be Qualcomm-specific rather than st=
+andard<br>ARM PrimeCell IP blocks, although I am still verifying this throu=
+gh<br>downstream kernel sources and available documentation</p></li></ul><p=
+>My current plan is roughly:</p><ol><li><p>Minimal machine definition</p></=
+li><li><p>UART support</p></li><li><p>Interrupt/timer implementation</p></l=
+i><li><p>NAND boot path</p></li><li><p>Linux kernel boot to serial console<=
+/p></li></ol><p>I also appreciate the comments regarding:</p><ul><li><p>rec=
+ord/replay compatibility</p></li><li><p>maintainability expectations</p></l=
+i><li><p>testing and documentation</p></li><li><p>avoiding legacy API patte=
+rns</p></li></ul><p>I intend to keep the implementation incremental and loc=
+alized as much<br>as possible.</p><p>Thanks again for the guidance and refe=
+rences.</p></div>
+
+--000000000000110513065259e760--
 
