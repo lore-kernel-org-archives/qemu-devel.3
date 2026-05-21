@@ -4,83 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5D8BCD4F3D
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:56:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11F7FCD5BB4
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 May 2026 13:56:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQ3p9-0004C2-5Q; Thu, 21 May 2026 09:52:31 -0400
+	id 1wQ3qM-0006jb-2v; Thu, 21 May 2026 09:53:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wQ3p3-00049p-HS
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:52:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kees@kernel.org>) id 1wQ3Ws-0001ks-0o
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:33:38 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wQ3p1-0006Yx-MR
- for qemu-devel@nongnu.org; Thu, 21 May 2026 09:52:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779371543;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=h9wLB4CLym9nrvKDYBwDKPAx6VH+gv3KlNnDNRnFKzg=;
- b=PsEOOl9tBJSzrNsAtcPUuNA28RtknMX4kVdvF3z1u+oTsA/HEN12jqQMYCZ4byOkmqUDkL
- WNnqJVBXFJHAn5FKJ1cDAEGmy8E/h3hMiZMY2nrFvicVpvJpkBKlNtWYG2jiRKOJrtFuts
- Fw50CuI161lmRWp8DNJuKk1Y9s3dttU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-339-ldcZa0lUN0yx4PCQ8CxF0Q-1; Thu,
- 21 May 2026 09:52:16 -0400
-X-MC-Unique: ldcZa0lUN0yx4PCQ8CxF0Q-1
-X-Mimecast-MFC-AGG-ID: ldcZa0lUN0yx4PCQ8CxF0Q_1779371533
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5F37219560B5; Thu, 21 May 2026 13:52:13 +0000 (UTC)
-Received: from berrange.com (unknown [10.44.33.98])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 06CB51956053; Thu, 21 May 2026 13:52:08 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- John Levon <john.levon@nutanix.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 29/29] qom: drop user_creatable_add_type method
-Date: Thu, 21 May 2026 14:49:43 +0100
-Message-ID: <20260521134943.1714527-30-berrange@redhat.com>
-In-Reply-To: <20260521134943.1714527-1-berrange@redhat.com>
-References: <20260521134943.1714527-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <kees@kernel.org>) id 1wQ3Wq-0005A2-47
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 09:33:37 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by sea.source.kernel.org (Postfix) with ESMTP id 9A25643D68;
+ Thu, 21 May 2026 13:33:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 664AA1F00A3C;
+ Thu, 21 May 2026 13:33:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1779370406;
+ bh=ezV5ICAM2va0jVjd8iAniGdLxBSb69xxnF1gv2JwpSY=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=j4CDviTd6M6LDTj5r6sQRqgJ6ESa9aWMu37zRV8mtOcXrJiE1zLL6x/OVHUw7taNB
+ jl6ETIYiu8JAkRBqc4Wuv2aB534ln8Hu69MX1fb2GFClu2Mmurr/zb532bCHmICyRT
+ bW4gGDuRH21kbO4Mt3QzAC1BgrPy+si2Rjb35ZfN4nboZAY9y9toARiousj3e/bp3M
+ OhVS9wgD8OvUpe6jIOQ+pq818okRHEEM5Lah2/H+GkNEe7+pCkBUV/HEs3jXEYS4f4
+ MtCRjjIGdmkPubfqUsmmCsve0nsahQ5jfKPmPGh0P3LHoWU280OP0E1I4NEEZgAN1h
+ MDV3MyE2qhaxQ==
+From: Kees Cook <kees@kernel.org>
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Kees Cook <kees@kernel.org>, Pengpeng Hou <pengpeng@iscas.ac.cn>,
+ stable@vger.kernel.org, Petr Pavlu <petr.pavlu@suse.com>,
+ Richard Weinberger <richard@nod.at>,
+ Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+ Johannes Berg <johannes@sipsolutions.net>,
+ "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>,
+ Corey Minyard <corey@minyard.net>, Gabriel Somlo <somlo@cmu.edu>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Jani Nikula <jani.nikula@linux.intel.com>,
+ Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+ Rodrigo Vivi <rodrigo.vivi@intel.com>,
+ Tvrtko Ursulin <tursulin@ursulin.net>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>, Bart Van Assche <bvanassche@acm.org>,
+ Jason Gunthorpe <jgg@ziepe.ca>, Leon Romanovsky <leon@kernel.org>,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+ Hans de Goede <hansg@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Bjorn Helgaas <bhelgaas@google.com>, Hannes Reinecke <hare@suse.de>,
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>,
+ Daniel Lezcano <daniel.lezcano@kernel.org>,
+ Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jiri Slaby <jirislaby@kernel.org>, Alan Stern <stern@rowland.harvard.edu>,
+ Jason Wang <jasowang@redhat.com>, Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+ =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+ Jason Baron <jbaron@akamai.com>, Jim Cromie <jim.cromie@gmail.com>,
+ Tiwei Bie <tiwei.btw@antgroup.com>,
+ Benjamin Berg <benjamin.berg@intel.com>,
+ =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+ "David E. Box" <david.e.box@linux.intel.com>,
+ "Maciej W. Rozycki" <macro@orcam.me.uk>,
+ Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+ Peter Zijlstra <peterz@infradead.org>, Heiko Carstens <hca@linux.ibm.com>,
+ Vasily Gorbik <gor@linux.ibm.com>, Sean Christopherson <seanjc@google.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Gleixner <tglx@kernel.org>,
+ Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+ Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
+ "H. Peter Anvin" <hpa@zytor.com>, Vinod Koul <vkoul@kernel.org>,
+ Frank Li <Frank.Li@kernel.org>, Daniel Gomez <da.gomez@kernel.org>,
+ Sami Tolvanen <samitolvanen@google.com>,
+ Aaron Tomlin <atomlin@atomlin.com>,
+ Alexander Potapenko <glider@google.com>, Marco Elver <elver@google.com>,
+ Dmitry Vyukov <dvyukov@google.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ John Johansen <john.johansen@canonical.com>,
+ Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>,
+ "Serge E. Hallyn" <serge@hallyn.com>,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Georgia Garcia <georgia.garcia@canonical.com>, kvm@vger.kernel.org,
+ dmaengine@vger.kernel.org, linux-modules@vger.kernel.org,
+ kasan-dev@googlegroups.com, linux-mm@kvack.org, apparmor@lists.ubuntu.com,
+ linux-security-module@vger.kernel.org, linux-um@lists.infradead.org,
+ linux-acpi@vger.kernel.org, openipmi-developer@lists.sourceforge.net,
+ qemu-devel@nongnu.org, intel-gfx@lists.freedesktop.org,
+ dri-devel@lists.freedesktop.org, linux-rdma@vger.kernel.org,
+ linux-media@vger.kernel.org, linux-pci@vger.kernel.org,
+ linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
+ linuxppc-dev@lists.ozlabs.org, linux-serial@vger.kernel.org,
+ linux-usb@vger.kernel.org, usb-storage@lists.one-eyed-alien.net,
+ virtualization@lists.linux.dev, linux-kernel@vger.kernel.org,
+ linux-arch@vger.kernel.org, netdev@vger.kernel.org,
+ linux-fsdevel@vger.kernel.org, linux-hardening@vger.kernel.org
+Subject: [PATCH 01/11] params: bound array element output to the caller's page
+ buffer
+Date: Thu, 21 May 2026 06:33:14 -0700
+Message-Id: <20260521133326.2465264-1-kees@kernel.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260521133315.work.845-kees@kernel.org>
+References: <20260521133315.work.845-kees@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2143; i=kees@kernel.org;
+ h=from:subject; bh=3eO38ZdE0rbljlF5l/QfEOapKDQ3GxlJmKbxHXugskI=;
+ b=owGbwMvMwCVmps19z/KJym7G02pJDFn8nAtqmS7cf3B//69jZ5rrq6va9p3fNOGM7h2Jd74Pn
+ JTCV6u3dZSyMIhxMciKKbIE2bnHuXi8bQ93n6sIM4eVCWQIAxenAEzEYiojw//ne8uu9YZ9+sWp
+ mJ7czDyrP2Afv+2f21+/99yL9Jp+OI2RYVNeQ9witS6BzPe55aerW/eveRmS81ixc8XMVftPpj7
+ OZQAA
+X-Developer-Key: i=kees@kernel.org; a=openpgp;
+ fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=kees@kernel.org; helo=sea.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 21 May 2026 09:52:45 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,178 +139,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This can be replaced by object_new_with_props_from_qdict, which does
-functionally the same job, but the caller does not own the returned
-reference, instead the parent object owns it.
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-In one case we can use object_new_with_props_from_qdict_owned instead
-since the object is not intended to have any parent.
+param_array_get() appends each element's string representation into the
+shared sysfs page buffer by passing buffer + off to the element getter.
 
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+That works for getters that only write a small bounded string, but
+param_get_charp() and similar helpers format against PAGE_SIZE from the
+pointer they receive. Once off is non-zero, an element getter can
+therefore write past the end of the original sysfs page buffer.
+
+Collect each element into a temporary PAGE_SIZE buffer first and then
+copy only the remaining space into the caller's page buffer.
+
+Cc: stable@vger.kernel.org
+Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Kees Cook <kees@kernel.org>
 ---
- authz/listfile.c                |  4 +-
- include/qom/object_interfaces.h | 18 ---------
- qom/object_interfaces.c         | 70 ++-------------------------------
- tests/unit/check-qom-proplist.c |  5 +--
- 4 files changed, 7 insertions(+), 90 deletions(-)
+ kernel/params.c | 26 ++++++++++++++++++++------
+ 1 file changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/authz/listfile.c b/authz/listfile.c
-index 13741d5a72..23655f8663 100644
---- a/authz/listfile.c
-+++ b/authz/listfile.c
-@@ -79,8 +79,8 @@ qauthz_list_file_load(QAuthZListFile *fauthz, Error **errp)
- 
-     v = qobject_input_visitor_new(obj);
- 
--    ret = (QAuthZ *)user_creatable_add_type(TYPE_QAUTHZ_LIST,
--                                            NULL, pdict, v, errp);
-+    ret = QAUTHZ(object_new_with_props_from_qdict_parentless(
-+                     TYPE_QAUTHZ_LIST, pdict, v, errp));
- 
-  cleanup:
-     visit_free(v);
-diff --git a/include/qom/object_interfaces.h b/include/qom/object_interfaces.h
-index 02b11a7ef0..e2b8615617 100644
---- a/include/qom/object_interfaces.h
-+++ b/include/qom/object_interfaces.h
-@@ -69,24 +69,6 @@ bool user_creatable_complete(UserCreatable *uc, Error **errp);
-  */
- bool user_creatable_can_be_deleted(UserCreatable *uc);
- 
--/**
-- * user_creatable_add_type:
-- * @type: the object type name
-- * @id: the unique ID for the object
-- * @qdict: the object properties
-- * @v: the visitor
-- * @errp: if an error occurs, a pointer to an area to store the error
-- *
-- * Create an instance of the user creatable object @type, placing
-- * it in the object composition tree with name @id, initializing
-- * it with properties from @qdict
-- *
-- * Returns: the newly created object or NULL on error
-- */
--Object *user_creatable_add_type(const char *type, const char *id,
--                                const QDict *qdict,
--                                Visitor *v, Error **errp);
--
- /**
-  * user_creatable_add_qapi:
-  * @options: the object definition
-diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
-index e0a3cd8d0f..7080f85f95 100644
---- a/qom/object_interfaces.c
-+++ b/qom/object_interfaces.c
-@@ -44,75 +44,11 @@ bool user_creatable_can_be_deleted(UserCreatable *uc)
-     }
- }
- 
--Object *user_creatable_add_type(const char *type, const char *id,
--                                const QDict *qdict,
--                                Visitor *v, Error **errp)
--{
--    ERRP_GUARD();
--    Object *obj;
--    ObjectClass *klass;
--    Error *local_err = NULL;
--
--    if (id != NULL && !id_wellformed(id)) {
--        error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "id", "an identifier");
--        error_append_hint(errp, "Identifiers consist of letters, digits, "
--                          "'-', '.', '_', starting with a letter.\n");
--        return NULL;
--    }
--
--    klass = module_object_class_by_name(type);
--    if (!klass) {
--        error_setg(errp, "invalid object type: %s", type);
--        return NULL;
--    }
--
--    if (!object_class_dynamic_cast(klass, TYPE_USER_CREATABLE)) {
--        error_setg(errp, "object type '%s' isn't supported by object-add",
--                   type);
--        return NULL;
--    }
--
--    if (object_class_is_abstract(klass)) {
--        error_setg(errp, "object type '%s' is abstract", type);
--        return NULL;
--    }
--
--    assert(qdict);
--    obj = object_new_with_class(klass);
--    object_set_props_from_qdict(obj, qdict, v, &local_err);
--    if (local_err) {
--        goto out;
--    }
--
--    if (id != NULL) {
--        object_property_try_add_child(object_get_objects_root(),
--                                      id, obj, &local_err);
--        if (local_err) {
--            goto out;
--        }
--    }
--
--    if (!user_creatable_complete(USER_CREATABLE(obj), &local_err)) {
--        if (id != NULL) {
--            object_property_del(object_get_objects_root(), id);
--        }
--        goto out;
--    }
--out:
--    if (local_err) {
--        error_propagate(errp, local_err);
--        object_unref(obj);
--        return NULL;
--    }
--    return obj;
--}
--
- void user_creatable_add_qapi(ObjectOptions *options, Error **errp)
+diff --git a/kernel/params.c b/kernel/params.c
+index 74d620bc2521..752721922a15 100644
+--- a/kernel/params.c
++++ b/kernel/params.c
+@@ -475,22 +475,36 @@ static int param_array_set(const char *val, const struct kernel_param *kp)
+ static int param_array_get(char *buffer, const struct kernel_param *kp)
  {
-     Visitor *v;
-     QObject *qobj;
-     QDict *props;
--    Object *obj;
+ 	int i, off, ret;
++	char *elem_buf;
+ 	const struct kparam_array *arr = kp->arr;
+ 	struct kernel_param p = *kp;
  
-     v = qobject_output_visitor_new(&qobj);
-     visit_type_ObjectOptions(v, NULL, &options, &error_abort);
-@@ -124,9 +60,9 @@ void user_creatable_add_qapi(ObjectOptions *options, Error **errp)
-     qdict_del(props, "id");
- 
-     v = qobject_input_visitor_new(QOBJECT(props));
--    obj = user_creatable_add_type(ObjectType_str(options->qom_type),
--                                  options->id, props, v, errp);
--    object_unref(obj);
-+    object_new_with_props_from_qdict(ObjectType_str(options->qom_type),
-+                                     object_get_objects_root(),
-+                                     options->id, props, v, errp);
-     qobject_unref(qobj);
-     visit_free(v);
++	elem_buf = kmalloc(PAGE_SIZE, GFP_KERNEL);
++	if (!elem_buf)
++		return -ENOMEM;
++
+ 	for (i = off = 0; i < (arr->num ? *arr->num : arr->max); i++) {
+-		/* Replace \n with comma */
+-		if (i)
+-			buffer[off - 1] = ',';
+ 		p.arg = arr->elem + arr->elemsize * i;
+ 		check_kparam_locked(p.mod);
+-		ret = arr->ops->get(buffer + off, &p);
++		ret = arr->ops->get(elem_buf, &p);
+ 		if (ret < 0)
+-			return ret;
++			goto out;
++		ret = min(ret, (int)(PAGE_SIZE - 1 - off));
++		if (!ret)
++			break;
++		/* Replace the previous element's trailing newline with a comma. */
++		if (i)
++			buffer[off - 1] = ',';
++		memcpy(buffer + off, elem_buf, ret);
+ 		off += ret;
++		if (off == PAGE_SIZE - 1)
++			break;
+ 	}
+ 	buffer[off] = '\0';
+-	return off;
++	ret = off;
++out:
++	kfree(elem_buf);
++	return ret;
  }
-diff --git a/tests/unit/check-qom-proplist.c b/tests/unit/check-qom-proplist.c
-index 954c898ce1..89de92b7d9 100644
---- a/tests/unit/check-qom-proplist.c
-+++ b/tests/unit/check-qom-proplist.c
-@@ -461,10 +461,9 @@ static void test_dummy_createlist_parentless(void)
- static bool test_create_obj(QDict *qdict, Error **errp)
- {
-     Visitor *v = qobject_input_visitor_new_keyval(QOBJECT(qdict));
--    Object *obj = user_creatable_add_type(TYPE_DUMMY, "dev0", qdict, v, errp);
--
-+    Object *obj = object_new_with_props_from_qdict(
-+        TYPE_DUMMY, object_get_objects_root(), "dev0", qdict, v, errp);
-     visit_free(v);
--    object_unref(obj);
-     return !!obj;
- }
  
+ static void param_array_free(void *arg)
 -- 
-2.54.0
+2.34.1
 
 
