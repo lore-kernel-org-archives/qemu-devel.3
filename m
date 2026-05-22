@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3250CD5BB4
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 00:11:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5886DCD5BAB
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 00:11:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQDQO-0005kV-Nx; Thu, 21 May 2026 20:07:38 -0400
+	id 1wQDOl-00031c-3U; Thu, 21 May 2026 20:05:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wQDOj-0003G3-JO
- for qemu-devel@nongnu.org; Thu, 21 May 2026 20:05:58 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1wQDNy-0002PH-90
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 20:05:09 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wQDOh-0004q2-RG
- for qemu-devel@nongnu.org; Thu, 21 May 2026 20:05:53 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2bd80b3aa13so43719775ad.0
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 17:05:51 -0700 (PDT)
+ id 1wQDNq-00040B-QR
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 20:05:00 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2ba1e9d3687so43977795ad.3
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 17:04:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779408350; x=1780013150; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779408297; x=1780013097; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SZq1TS4SRxhc1zRU0AK8gAJHqXbVMRKeP3nPDewB9R8=;
- b=ga+5yiRTPMQb0kSZt7EA1WAoqWF0Rtm93S9f6N3Gm4c9xdD0r0Ozi/+H4JFKoW8hhS
- cg9j9rdollVFr0qDiQSaEi3P+g6oyTN/Zr5+3QdsupXA+CRbCFkC+v4sbsy0T8V5qPSW
- 9gPQXG+cMuNqseCyGc0hGxmTC+P18ShpVyOwrzHDNiN4qdmV+c3irNWvtaYnReNyxXZ+
- MfYRVbvNZqWdC9VWHH8jDqMJkN4Cl84JB45xYcOUIcSiR+6R1pvKHWd7U6uZigu1nNYE
- /F0Zu4gGMmGu14nVjhEDseY0+8LwwjEpmzYj6rbNpmm7bZ4FXfz6PmlyBE9XufymkFox
- sgTg==
+ bh=UpKQmCzdzg3fotqF1bomQ3jmeLPsPlAsYk7oZ3kgloI=;
+ b=qViZkPcxX1n50i62vMwNlbV40XF5v8yFfFte2kKxyMxXP5D/tJWUarFaATxvZefcZZ
+ RE/U+XpnHGgYsWoX0uppabVrB8MdSzi90NCifgRBSeYpMdDVnkwsab7adiHNBq3iW8iC
+ giGS5th24lELRX+EpGQ/Aua7qwXNjkiEZlM8iZnXK0t3Nf1f+q3R7fcp9pzVxnIt0bK7
+ Q6wIobHicMi9ez38fkhTujkWHbsg2Nf/KJMZWMjOxI6jifq4Zlw+1HaF7Ji2gG3+KYR6
+ 1puVAN/UA9sAQzWmYDgIq82u5gaB5GgP34tPjdiB+vNIClbw4YkHL7tTGfl5P0z+YnNb
+ +QGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779408350; x=1780013150;
+ d=1e100.net; s=20251104; t=1779408297; x=1780013097;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=SZq1TS4SRxhc1zRU0AK8gAJHqXbVMRKeP3nPDewB9R8=;
- b=L8agm9oCV/RB1NgXhk+FLwTYB1XRb9hVl/KCYTS/VcjR2pyNu3wXCwc4bbGmNjjclv
- 9kX33MKWLIIzL7E9OXF/o4J+GWlc7CRWMhFSR5lPeZrQqU8bX9lgs9hCAcf7l3rc/l0t
- vUnhyhpC0s0/h7CQZyMnu9yTHZM7GztGa0nxvai+HWvDd89v/ZAQCalqBU2p7lByPwaR
- yKwXmsE1ci73SHQ6M9CyT4bq45TajpH/0lMxpT9pxoViHXNza7hjW8Wt6mh9m4msr0pF
- jNXK2eXCHe7SKJhFjFnec6DfqbhDG5YYLXjIjPeb+4VH61tE6kXZ37F6cP97pPxwwVLh
- 96wQ==
-X-Gm-Message-State: AOJu0Yyy2z3USeEnFtB4UaJwSLAd1pG9CvrnLyukRgDmKIgFGgvVgBGp
- QJFyzxUWSQCe7OvWiZHigXeL/qVVNZCIZ1fs84NjsutO06myEmGguFz36UdnWITc
-X-Gm-Gg: Acq92OFt8zjAqJxOq86cLCFvpjLpoi+7MNCvZJ4WVaU/FgVy85LqbTGLc9S++ChjjNp
- ZJOQ3LTEG9ubHoXhDsBiG5123DDI17BskqgiFgq6tbfPIfjCRH9ftMkbbrNxLF4En6XJ9HntPBr
- s0bf1jqztt9olTJXayTpMiTKLex+3zD1fTCnH5EQl+BvkNmoNKYcp4vGsKOV/iBVoQTO9Q8O2rF
- wgEmImvLt1gwSA+tKPM7jgWJK2JTp7YPr3lOionMn8/lazk++DhGaoFCM59yv/sJ27fAZ5IC54l
- lTZz4mBW23zN7YvCbJa52+lLKOkKzp/cCET2LPMxj+t3IphljN8bwYF5xhMrJe+qzhxbGHLLcoz
- rtTQm2LGVUEi3mUP9SgMHPND39oelxQTTIzA/32WXO9aqO/bHEG1eBiQQRsRc2X3D8b/ZsZGI+a
- Gceq0CbcDb91lY/ziMvxHoQKNW+vSd4JnQVMdyBiCrqQ==
-X-Received: by 2002:a17:903:46c4:b0:2ae:54b2:27c7 with SMTP id
- d9443c01a7336-2beb085795dmr8421945ad.39.1779408350390; 
- Thu, 21 May 2026 17:05:50 -0700 (PDT)
+ bh=UpKQmCzdzg3fotqF1bomQ3jmeLPsPlAsYk7oZ3kgloI=;
+ b=ZLO3+oxgH31mXCbs3pSyJMqPE2HSI7iasTKzEvTBeaL5lQJ9XKG8XruQ3alRZY/b0o
+ 70JOu5jeMZsVjDNBz8JCtEOlVZg+gUjSSZnnAYDj/cgevNZ9xU5Rq4Oh9iJ3cnndYvgq
+ XNPYAG110vf3Gy3/ric7aoYGenaMQxQsyCtDgaCw3dWluJU1G8zwjI3Blkb6YCl2CMYS
+ 6T2sJOn77FH3QEZCFUkOVteiFCsJHelfd4rycU5n6FzP/AdMTk574AMBR5yEWfKsA7oz
+ sXAp3kIfCD0I8tx+pb2ksb7G4lpmmg2BTzRBM+iGPrzonYy7Lw0GdWJiL5fWmX6JcSqK
+ 2V2g==
+X-Gm-Message-State: AOJu0Ywl0HY42e5iacSmQSBwuAdefcnc+5QTwf9+Bl5zO/GRAkkT1ydA
+ U17fjMoiV/Ze/xrhsWYjcA1zZIwFy5wSOWWanBOjTaoz+9CWeXmnhv23wePtYUjS
+X-Gm-Gg: Acq92OHHNCfR0x0qZ4WHutM6TDgVy/aSZ2LH9T/YLO987N/T4qJL1+n7RT2HKbcFYUI
+ eIYFbiArciYFej3bPkDHVQbyiAO4tkB/5GRERkZXSjw7QwoVglKS55ITZpiC37JyGvBgwF70pLo
+ Zko5G40N+EKCI2U0SRWWvJC/q7hz1JU7IBVHIpjL53YhDMm/Y0gz4LXgk1HUnt/2RqpIRp/5mA9
+ MaT/P8gPJ2Z6E177gflDyqEEu5nsz+58D+hGDqvj5wdmc/9trQBTbsKDWLtl4UNCpYY3b9vfCXM
+ d6cP/B+m9KXWVWcGfWhAOE5qtYrlAsedumroC+cTy0cqJBWFU8orwNwxkvyGLpq7oGrDEpr79A2
+ yKo+N/Ty8b4mQ9BRf4AcT34SmgHYgvNfoV2w/4UmqhukeYEURyChzv1SyAvoMi/umDsmsoADSGH
+ TYGhLbeTlljeMM7IEoH7H0dbpe/O4e5WhRllkRd7ef4A==
+X-Received: by 2002:a17:903:3bcf:b0:2ba:df8c:11d3 with SMTP id
+ d9443c01a7336-2beb06c0336mr10893845ad.32.1779408296946; 
+ Thu, 21 May 2026 17:04:56 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2beb114b54csm3915475ad.42.2026.05.21.17.05.47
+ d9443c01a7336-2beb114b54csm3915475ad.42.2026.05.21.17.04.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 17:05:49 -0700 (PDT)
+ Thu, 21 May 2026 17:04:56 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Zishun Yi <vulab@iscas.ac.cn>,
+Cc: alistair23@gmail.com, Guenter Roeck <linux@roeck-us.net>,
+ Conor Dooley <conor.dooley@microchip.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 42/48] hw/riscv/virt-acpi-build: Fix off-by-one error in RIMT
- ID mapping
-Date: Fri, 22 May 2026 10:03:18 +1000
-Message-ID: <20260522000324.23255-43-alistair.francis@wdc.com>
+Subject: [PULL 25/48] hw: misc: Implement Microchip mpfs ioscb PLLs and sysreg
+ clock dividers
+Date: Fri, 22 May 2026 10:03:01 +1000
+Message-ID: <20260522000324.23255-26-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260522000324.23255-1-alistair.francis@wdc.com>
 References: <20260522000324.23255-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,50 +104,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zishun Yi <vulab@iscas.ac.cn>
+From: Guenter Roeck <linux@roeck-us.net>
 
-In build_rimt(), the calculation of `num_ids` for the ID mapping array
-incorrectly uses the same formula (`0xffff - s->pci_iommu_bdf`) for both
-System IOMMU and PCI IOMMU topologies.
+Minimal clock register configuration required to boot Linux
+without backtraces in the clock code.
 
-For a System IOMMU, `s->pci_iommu_bdf` is 0. This results in a `num_ids`
-value of 0xffff. Since the source ID base starts at 0, the mapping only
-covers Requester IDs from 0 to 0xfffe. The final valid PCI Requester ID
-(0xffff) is erroneously omitted from the RIMT table.
-
-Fix this by decoupling the `num_ids` calculation. For System IOMMUs,
-explicitly set `num_ids` to 0x10000 to cover the entire PCI Requester ID
-space.
-
-This issue was discovered and reported by SpecHunter, an AI-driven
-architecture specification analysis tool.
-
-Link: https://github.com/yizishun/rv-isa-sec/blob/c78dacf66c8acd677b3538c837fde310bb71a97b/output/riscv-server-platform/pr-102/qemu.txt#L32
-Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260512062310.348208-1-vulab@iscas.ac.cn>
+Message-ID: <20260514-reference-overhand-749149e36a88@spud>
+[ Changes by AF:
+ - Fixup checkpatch errors
+]
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/virt-acpi-build.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/hw/misc/mchp_pfsoc_ioscb.h |  2 ++
+ hw/misc/mchp_pfsoc_ioscb.c         | 47 +++++++++++++++++++++++++++++-
+ hw/misc/mchp_pfsoc_sysreg.c        | 13 +++++++++
+ 3 files changed, 61 insertions(+), 1 deletion(-)
 
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index fd6ca5dbc4..413d47d70e 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -802,10 +802,11 @@ static void build_rimt(GArray *table_data, BIOSLinker *linker,
-         range = &g_array_index(iommu_idmaps, AcpiRimtIdMapping, i);
-         if (virt_is_iommu_sys_enabled(s)) {
-             range->source_id_base = 0;
-+            range->num_ids = 0x10000;
-         } else {
-             range->source_id_base = s->pci_iommu_bdf + 1;
-+            range->num_ids = 0xffff - s->pci_iommu_bdf;
-         }
--        range->num_ids = 0xffff - s->pci_iommu_bdf;
-         build_rimt_id_mapping(table_data, range->source_id_base,
-                               range->num_ids, iommu_offset);
-     }
+diff --git a/include/hw/misc/mchp_pfsoc_ioscb.h b/include/hw/misc/mchp_pfsoc_ioscb.h
+index eaaa2ac5d9..9687ea25b1 100644
+--- a/include/hw/misc/mchp_pfsoc_ioscb.h
++++ b/include/hw/misc/mchp_pfsoc_ioscb.h
+@@ -35,6 +35,8 @@ typedef struct MchpPfSoCIoscbState {
+     MemoryRegion mailbox;
+     MemoryRegion cfg;
+     MemoryRegion ccc;
++    MemoryRegion pll_nw_0;
++    MemoryRegion pll_nw_1;
+     MemoryRegion pll_mss;
+     MemoryRegion cfm_mss;
+     MemoryRegion pll_ddr;
+diff --git a/hw/misc/mchp_pfsoc_ioscb.c b/hw/misc/mchp_pfsoc_ioscb.c
+index 05538d012a..09b702e520 100644
+--- a/hw/misc/mchp_pfsoc_ioscb.c
++++ b/hw/misc/mchp_pfsoc_ioscb.c
+@@ -53,6 +53,8 @@
+ #define IOSCB_MAILBOX_BASE          0x07020800
+ #define IOSCB_CFG_BASE              0x07080000
+ #define IOSCB_CCC_BASE              0x08000000
++#define IOSCB_PLL_NW0_BASE          0x08100000
++#define IOSCB_PLL_NW1_BASE          0x08200000
+ #define IOSCB_PLL_MSS_BASE          0x0E001000
+ #define IOSCB_CFM_MSS_BASE          0x0E002000
+ #define IOSCB_PLL_DDR_BASE          0x0E010000
+@@ -92,6 +94,16 @@ static const MemoryRegionOps mchp_pfsoc_dummy_ops = {
+ /* All PLL modules in IOSCB have the same register layout */
+ 
+ #define PLL_CTRL    0x04
++#define PLL_REF_FB  0x08
++#define PLL_DIV_0_1 0x10
++#define PLL_DIV_2_3 0x14
++#define PLL_CTRL2   0x18
++#define PLL_CAL     0x1c
++#define PLL_PHADJ   0x20
++#define SSCG_REG_0  0x24
++#define SSCG_REG_1  0x28
++#define SSCG_REG_2  0x2c
++#define SSCG_REG_3  0x30
+ 
+ static uint64_t mchp_pfsoc_pll_read(void *opaque, hwaddr offset,
+                                     unsigned size)
+@@ -103,6 +115,22 @@ static uint64_t mchp_pfsoc_pll_read(void *opaque, hwaddr offset,
+         /* PLL is locked */
+         val = BIT(25);
+         break;
++    case PLL_DIV_0_1:
++    case PLL_DIV_2_3:
++        val = 0x01000100; /* return valid post divider values */
++        break;
++    case PLL_CTRL2:
++        val = 0x00001110;
++        break;
++    case PLL_REF_FB:
++        val = 0x00000100; /* RFDIV := 1 */
++        break;
++    case SSCG_REG_2:
++        val = 0x00000001; /* INTIN := 1 */
++        break;
++    case PLL_PHADJ:
++        val = 0x00000401;
++        break;
+     default:
+         qemu_log_mask(LOG_UNIMP, "%s: unimplemented device read "
+                       "(size %d, offset 0x%" HWADDR_PRIx ")\n",
+@@ -113,9 +141,18 @@ static uint64_t mchp_pfsoc_pll_read(void *opaque, hwaddr offset,
+     return val;
+ }
+ 
++static void mchp_pfsoc_pll_write(void *opaque, hwaddr offset,
++                                 uint64_t value, unsigned size)
++{
++    qemu_log_mask(LOG_UNIMP, "%s: unimplemented device write "
++                       "(size %d, value 0x%" PRIx64
++                       ", offset 0x%" HWADDR_PRIx ")\n",
++                       __func__, size, value, offset);
++}
++
+ static const MemoryRegionOps mchp_pfsoc_pll_ops = {
+     .read = mchp_pfsoc_pll_read,
+-    .write = mchp_pfsoc_dummy_write,
++    .write = mchp_pfsoc_pll_write,
+     .endianness = DEVICE_LITTLE_ENDIAN,
+ };
+ 
+@@ -240,6 +277,14 @@ static void mchp_pfsoc_ioscb_realize(DeviceState *dev, Error **errp)
+                           "mchp.pfsoc.ioscb.ccc", IOSCB_CCC_REG_SIZE);
+     memory_region_add_subregion(&s->container, IOSCB_CCC_BASE, &s->ccc);
+ 
++    memory_region_init_io(&s->pll_nw_0, OBJECT(s), &mchp_pfsoc_pll_ops, s,
++                          "mchp.pfsoc.ioscb.pll_nw_0", IOSCB_SUBMOD_REG_SIZE);
++    memory_region_add_subregion(&s->container, IOSCB_PLL_NW0_BASE, &s->pll_nw_0);
++
++    memory_region_init_io(&s->pll_nw_1, OBJECT(s), &mchp_pfsoc_pll_ops, s,
++                          "mchp.pfsoc.ioscb.pll_nw_1", IOSCB_SUBMOD_REG_SIZE);
++    memory_region_add_subregion(&s->container, IOSCB_PLL_NW1_BASE, &s->pll_nw_1);
++
+     memory_region_init_io(&s->pll_mss, OBJECT(s), &mchp_pfsoc_pll_ops, s,
+                           "mchp.pfsoc.ioscb.pll_mss", IOSCB_SUBMOD_REG_SIZE);
+     memory_region_add_subregion(&s->container, IOSCB_PLL_MSS_BASE, &s->pll_mss);
+diff --git a/hw/misc/mchp_pfsoc_sysreg.c b/hw/misc/mchp_pfsoc_sysreg.c
+index f190ecc78e..1d9154280a 100644
+--- a/hw/misc/mchp_pfsoc_sysreg.c
++++ b/hw/misc/mchp_pfsoc_sysreg.c
+@@ -29,6 +29,8 @@
+ #include "hw/misc/mchp_pfsoc_sysreg.h"
+ #include "system/runstate.h"
+ 
++#define CLOCK_CONFIG_CR 0x8
++#define RTC_CLOCK_CR    0xc
+ #define MSS_RESET_CR    0x18
+ #define ENVM_CR         0xb8
+ #define MESSAGE_INT     0x118c
+@@ -39,6 +41,17 @@ static uint64_t mchp_pfsoc_sysreg_read(void *opaque, hwaddr offset,
+     uint32_t val = 0;
+ 
+     switch (offset) {
++    case CLOCK_CONFIG_CR:
++        /* Icicle kit reference design cpu/axi/ahb divider setting */
++        val = 0x24;
++        break;
++    case RTC_CLOCK_CR:
++        /*
++         * Bit 16 enables the RTC clock, 0x7d is the required divider
++         * setting for a 125 MHz reference.
++         */
++        val = BIT(16) | 0x7d;
++        break;
+     case ENVM_CR:
+         /* Indicate the eNVM is running at the configured divider rate */
+         val = BIT(6);
 -- 
 2.53.0
 
