@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B827CD5BB4
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 19:39:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37166CD5BB6
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 19:39:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQVgN-0001ke-C1; Fri, 22 May 2026 15:37:19 -0400
+	id 1wQVgP-0001lE-G9; Fri, 22 May 2026 15:37:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wQVgE-0001iC-BC
- for qemu-devel@nongnu.org; Fri, 22 May 2026 15:37:10 -0400
-Received: from mail-oi1-x234.google.com ([2607:f8b0:4864:20::234])
+ id 1wQVgJ-0001jL-8t
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 15:37:16 -0400
+Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wQVg8-0000W3-WD
- for qemu-devel@nongnu.org; Fri, 22 May 2026 15:37:08 -0400
-Received: by mail-oi1-x234.google.com with SMTP id
- 5614622812f47-479ef2b78f3so7220184b6e.2
- for <qemu-devel@nongnu.org>; Fri, 22 May 2026 12:37:04 -0700 (PDT)
+ id 1wQVgD-0000Yj-D8
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 15:37:12 -0400
+Received: by mail-oi1-x235.google.com with SMTP id
+ 5614622812f47-4855e69a5a4so370132b6e.2
+ for <qemu-devel@nongnu.org>; Fri, 22 May 2026 12:37:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779478623; x=1780083423; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779478628; x=1780083428; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=PnTJYfVSvACT0b5QSd/UfQc+xIazcctATOmMtri60t0=;
- b=moLIhX8Jg9Ww7xltsoMOz5qZzA/xKZKNVhx7g9ozuqffXKoZZRwyubpB0SvcoNQ6tR
- 8dYMNFJEMTvEh+3E07ri3xOeOWxcfa+D6mAACvZzXslDZY6uPYIwJQvk0wYeyj8Lvq2F
- D8OLSzPcre5cQTlbTOF642cy/3htJWc3lGT6Oo8QboIRNJspjT9dAoPuXD4MIOjJEgzH
- ZUsqGILZczpVv+OLJFZ2ztD5D23kclsXOIp4DQaa6vAIyl4tkhjMeFfCpMHhCd0iaLUj
- UI3aWzPgVzqtmzoWX/pi7V5U6hG74xfV8JDVssPlK8l+nexIch53CZJdn1YhmHMiTbaw
- 7evA==
+ :reply-to; bh=dbskrzgvKScbHAmKPwkiyfQ5HhDAS/G7M42ypREWm+c=;
+ b=Ai4AW7kGr7rxG8KzLAstBTB+LFY/vgjVF6KIhLHOcIKilrXvCd1w3Iy0Kx86SmKLN2
+ ixQ+zUUmUk2hN8osJVpp4XN2Wvh7NH36/bEpk+L+j55MjQBqEjcl5iqnrEMj4OTlDc9r
+ jwCB8Mp4XLF16R4Ac5ODAtVYIpEIf/+BPk3+Ucwkf+JAtIPSAXh3KNxfMtly57iWDFLa
+ q1FZc58I0G35WmQLwKTCHrhq/AETNLljX+bld1PYesZo8uhc6E6oOVOkjkjjbUNkLwrq
+ n0ikyxJ8SBKdiptymGcX8R48OpdfL6Pnl5qXZFuhLLYq7XJm1eJ9BI1veEXNC2HDh+0z
+ X7uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779478623; x=1780083423;
+ d=1e100.net; s=20251104; t=1779478628; x=1780083428;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=PnTJYfVSvACT0b5QSd/UfQc+xIazcctATOmMtri60t0=;
- b=XrN2UJSbhc86on6hwcpS7j+gIFPZmF+RkW3GIJv8cQ/Kal/rfKG4MJkwuEOy9G6BsZ
- JTr3BJ46+B0C0Yf6iTYLBcgL2dQJfePtOq9uwe3YIesbMJnJXxwYX5w5eanIE6bZKffx
- TsHLLClsXlx8xwRIBPYhkbSbybzFnUPlskdFIU4mkoOAOMR1+BOloh7wYUo3hSbPknHE
- E3MVDY+m0h8UEnW4T9CKvqsbVYsnLk6ZuSxDOw4L1espkkIl+2POP49YS8SVGj4VynA5
- VCRY5bsXMRAz1RMgsoWy+HablIlHgigZ6d7BkT8pwzO3o98Crea0SWmqtRCJS8EQ8OnQ
- Qkhw==
-X-Gm-Message-State: AOJu0YwksxiKKR1m4UAj+T+Z3RrAXdR5ruGKKok7Eij5fY0sOGHMGaCz
- qLJydyZ3FUS3g2HgqpNCBK3GdeqiC3MqVrrqa0yXYf8ezuzahbRdvBJ7
-X-Gm-Gg: Acq92OGlNXGPmBSDzkqi3vAFIGqtwXnWVEDkE9hUzOnuGT9fHJGmXibs5sxdaDYF90+
- LjGrCLVMhOASHwjTkcwuR4nC/b2dsv+55D4Tk0/l6rsvSITCzCb+PwM+NJqRyJSm4/N7WruIJKO
- lYaIRDxY7ITcqzxryGSvaI00VHyyldCpB+pemOORSoTRgtmynDgvzSOvt/HxEVODvQDeSaPlaHW
- M26/pzdD2L6oI4vIAu0v4p4122ZcqcLxBz3PDhaDyRngqeatrJWvPila52CedxnGZOeMyREgyRM
- cB589VtP5qfMFWwLumFM4ogTd7EeK+whCAaVtHsxlYgKu0U/vLAi3Eks7u5dnIcY1i00S2Y3rSM
- VRJHka0lMbp8EMICJdOBt6Sk5Zf4QaIb4Mk+Jws+1nDfRIb2P9tA82giDzCw8rq0YHCoUyTSysp
- d252CHwA/mB3Vqry8jA06+H2/u/ai0PiDAIOfyxMTDX41PTsCKGUEetbiyQJ4ffT7YhSq7O7Ovc
- YCNyeRrY9ZPhheIDl4jWU6WIMRllxFihJR4d/WUlfTA//WWopdBGZ7Ojhjc23hCYQfk
-X-Received: by 2002:a05:6808:640f:b0:485:3a28:a83f with SMTP id
- 5614622812f47-4854a28ec27mr3005022b6e.32.1779478623341; 
- Fri, 22 May 2026 12:37:03 -0700 (PDT)
+ bh=dbskrzgvKScbHAmKPwkiyfQ5HhDAS/G7M42ypREWm+c=;
+ b=WlpT7ik1EZzRyzTOzMvkzp3eQRPgWxFd636ALlBadhfpwFibiXn81mUde5pe71Rl+z
+ Nb5prMS0KOYnPfkJIr0boKGu46u9OsvRODrxwVa/Er/+d56uCarNEi08gbZUKo7cE1S/
+ gG6KAH1I6X+8mSOK0c3npRf4LRJjWY5xh8xSm43H/B73zD2toub9bQwpB9wgxgW4Tt3e
+ j6iZn8R2tIMllffBvb4jY/FhzceE2UnoAEN/2Skl6hY0xkqfRpvqmrytwsrHGy8udbHG
+ J/DrRCAMNV2KiWQua7gr621TfQKvExM6QlN3rAg8DWL9YQfLZx06icW91SfcBOTs301j
+ KW4w==
+X-Gm-Message-State: AOJu0YwyxkCeJ0pHbKIbsNqYu1gmJHcFf3Df6SBsV1iQMohw9/PNZEnZ
+ +F1eNtnxPFhJCczz7PiuGMVXI+LVc/Ellkm0gcLtHmoxRUoJjJrKnspi
+X-Gm-Gg: Acq92OFVqzs8cs2FE5AX/pTwpbDOa6nXfpEQt82OACOrjoJTvlWXm2cTELI045+Yzqr
+ aXAFgWw4frDG51JAK9APJK5CNx8AQ76jSCMyahVTNPkQa8ZXVAa+J26+f2dnxscZ4BF36yVbqxW
+ ZB0Q+GhNslh8Uaep5zebLG9sR2wNBjUYgnzs2YAKfZX4xCi4JcMee9S4g9Qi8ZzVrXEcuvgJLGq
+ b0wMVjyWwyazDL7+gC0sq8AiJVkYhM85mpJk2ScPyaAkBydXt1dj1BMV6x0iKKTYw+O5cZXDByf
+ sMDtCBujMD03ZFLDPPBcxjShH6n3Ge6Y/m7idsk7beE6s6zCFtuOYtXvuLD+v/btwf98Jjp9iRM
+ XmpZmt4I4qTxJNlP9USrxDs+mgHEZ0ce1e7nP9gMvVIRqRbZS4aJiABsw6QAV8QTJ/awZIKbarI
+ Wx6vtSfpLfnKav1xAgmYjvN1Z41cZ4rjuxQOjazoTYTzpCSkBUeZMgKu7R/jnStqVAjqzJ53RBt
+ MUJx0Czi/w4u8rsYqm+vy6U9dybirq61SkeLxkAfKLQSoS411HSFDlE/P6pHR8PmH5n
+X-Received: by 2002:a05:6808:1383:b0:466:f60b:19d5 with SMTP id
+ 5614622812f47-48549cfcbc6mr3503960b6e.8.1779478628030; 
+ Fri, 22 May 2026 12:37:08 -0700 (PDT)
 Received: from mac.localdomain (184-96-131-78.hlrn.qwest.net. [184.96.131.78])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-48554757d5dsm995297b6e.15.2026.05.22.12.37.02
+ 5614622812f47-48554757d5dsm995297b6e.15.2026.05.22.12.37.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 May 2026 12:37:02 -0700 (PDT)
+ Fri, 22 May 2026 12:37:07 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Fri, 22 May 2026 13:36:44 -0600
-Subject: [PATCH v15 13/22] target/mips: add Octeon HSH COP2 helpers
+Date: Fri, 22 May 2026 13:36:47 -0600
+Subject: [PATCH v15 16/22] target/mips: decode Octeon CRC and GFM COP2
+ selectors
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260522-mips-octeon-missing-insns-v2-v15-13-f8731a588dc2@gmail.com>
+Message-Id: <20260522-mips-octeon-missing-insns-v2-v15-16-f8731a588dc2@gmail.com>
 References: <20260522-mips-octeon-missing-insns-v2-v15-0-f8731a588dc2@gmail.com>
 In-Reply-To: <20260522-mips-octeon-missing-insns-v2-v15-0-f8731a588dc2@gmail.com>
 To: qemu-devel@nongnu.org
@@ -84,8 +85,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  James Hilliard <james.hilliard1@gmail.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::234;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x234.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::235;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x235.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -109,449 +110,309 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add helper support for the Octeon HSH hash selectors. This includes the
-base HSH data/IV windows, MD5, SHA1, SHA256, and SHA512 transform paths,
-and the shared HSH/SHA512 register-window readback and write operations.
+Add explicit decodetree entries and translator bindings for the Octeon
+CRC and GFM COP2 operation selectors. Unlike simple register moves,
+these selectors update CRC or Galois-field state and therefore remain
+per-operation helper calls.
 
-The SHA512 path shares the wide HSH register bank with SHA3, SNOW3G, and
-ZUC. Keep the aliased readback and write paths centralized so selector
-decode can route register accesses through these helpers when side
-effects are required.
+Keep CRC/GFM decode next to the helpers that implement these side
+effects while avoiding a monolithic selector-dispatch helper.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
-Changes v13 -> v14:
-  - Keep HSH narrow DAT/IV state updates in the low 32-bit halves of the
-    architectural HSH register bank so paired selector transfers preserve
-    the wide shared-window state.
-
 Changes v10 -> v13:
-  - Keep the 0x0057 SDK compatibility path as an explicit STARTSHA1
-    compatibility helper instead of a generic STARTSHA name.
-
-Changes v9 -> v10:
-  - Remove references to shared-mode tracking; aliased state is kept in the
-    architectural HSH register banks.
-
-Changes v8 -> v9:
-  - Split HSH/SHA helpers into their own COP2 helper patch.
-  - Replace generic selector dispatch with per-operation HSH helpers.
-  - Keep shared-window readback and write helpers grouped with HSH.
-  - Add matching helper.h declarations with the helper implementation.
+  - Split simple register-transfer selectors into a separate COP2 register
+    selector patch.
+  - Use final CRC selector names in this patch instead of renaming them
+    later in the series.
+  - Route reflected GFM selectors through helpers immediately so no
+    non-architectural reflected GFM state is introduced.
+  - Add the reflected CRC polynomial helper with the selector decode that
+    uses it.
 ---
- target/mips/helper.h            |   5 +
- target/mips/tcg/octeon_crypto.c | 375 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 380 insertions(+)
+ target/mips/helper.h                          |  1 +
+ target/mips/tcg/octeon.decode                 | 22 +++++++++
+ target/mips/tcg/octeon_crypto.c               |  7 +++
+ target/mips/tcg/octeon_translate.c            | 50 +++++++++++++++++++
+ tests/tcg/mips/user/isa/octeon/octeon-insns.c | 70 +++++++++++++++++++++++++++
+ 5 files changed, 150 insertions(+)
 
 diff --git a/target/mips/helper.h b/target/mips/helper.h
-index 71b7a2b30e..834f2d0769 100644
+index e210e406f9..141350e80a 100644
 --- a/target/mips/helper.h
 +++ b/target/mips/helper.h
-@@ -69,6 +69,11 @@ DEF_HELPER_2(octeon_cp2_mt_des3_dec, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_camellia_fl, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_camellia_flinv, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_camellia_round, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_hsh_startsha1_compat, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_hsh_startmd5, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_hsh_startsha256, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_hsh_startsha, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_hsh_startsha512, void, env, i64)
- 
- /* microMIPS functions */
- DEF_HELPER_4(lwm, void, env, tl, tl, i32)
+@@ -32,6 +32,7 @@ DEF_HELPER_1(octeon_cp2_mf_gfm_mul_reflect1, i64, env)
+ DEF_HELPER_1(octeon_cp2_mf_gfm_resinp_reflect0, i64, env)
+ DEF_HELPER_1(octeon_cp2_mf_gfm_resinp_reflect1, i64, env)
+ DEF_HELPER_2(octeon_cp2_mt_crc_write_iv_reflect, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_crc_write_polynomial_reflect, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_crc_write_byte, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_crc_write_half, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_crc_write_word, void, env, i64)
+diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+index 09fbc6c1e3..70e02d0b0e 100644
+--- a/target/mips/tcg/octeon.decode
++++ b/target/mips/tcg/octeon.decode
+@@ -132,6 +132,11 @@ LDX          011111 ..... ..... ..... 01000 001010 @lx
+     CVM_MF_CRC_POLYNOMIAL                010010 00001 rt:5 0000 0010 0000 0000 &cp2
+     CVM_MF_CRC_IV                        010010 00001 rt:5 0000 0010 0000 0001 &cp2
+     CVM_MF_CRC_LEN                       010010 00001 rt:5 0000 0010 0000 0010 &cp2
++    CVM_MF_CRC_IV_REFLECT                010010 00001 rt:5 0000 0010 0000 0011 &cp2
++    CVM_MF_GFM_MUL_REFLECT0              010010 00001 rt:5 0000 0000 0101 1000 &cp2
++    CVM_MF_GFM_MUL_REFLECT1              010010 00001 rt:5 0000 0000 0101 1001 &cp2
++    CVM_MF_GFM_RESINP_REFLECT0           010010 00001 rt:5 0000 0000 0101 1010 &cp2
++    CVM_MF_GFM_RESINP_REFLECT1           010010 00001 rt:5 0000 0000 0101 1011 &cp2
+     CVM_MF_GFM_MUL0                      010010 00001 rt:5 0000 0010 0101 1000 &cp2
+     CVM_MF_GFM_MUL1                      010010 00001 rt:5 0000 0010 0101 1001 &cp2
+     CVM_MF_GFM_RESINP0                   010010 00001 rt:5 0000 0010 0101 1010 &cp2
+@@ -148,6 +153,9 @@ LDX          011111 ..... ..... ..... 01000 001010 @lx
+     CVM_MT_HSH_IV1                       010010 00101 rt:5 0000 0000 0100 1001 &cp2
+     CVM_MT_HSH_IV2                       010010 00101 rt:5 0000 0000 0100 1010 &cp2
+     CVM_MT_HSH_IV3                       010010 00101 rt:5 0000 0000 0100 1011 &cp2
++    CVM_MT_GFM_MUL_REFLECT0              010010 00101 rt:5 0000 0000 0101 1000 &cp2
++    CVM_MT_GFM_MUL_REFLECT1              010010 00101 rt:5 0000 0000 0101 1001 &cp2
++    CVM_MT_GFM_XOR0_REFLECT              010010 00101 rt:5 0000 0000 0101 1100 &cp2
+     CVM_MT_3DES_KEY0                     010010 00101 rt:5 0000 0000 1000 0000 &cp2
+     CVM_MT_3DES_KEY1                     010010 00101 rt:5 0000 0000 1000 0001 &cp2
+     CVM_MT_3DES_KEY2                     010010 00101 rt:5 0000 0000 1000 0010 &cp2
+@@ -167,13 +175,27 @@ LDX          011111 ..... ..... ..... 01000 001010 @lx
+     CVM_MT_AES_DEC0                      010010 00101 rt:5 0000 0001 0000 1110 &cp2
+     CVM_MT_AES_KEYLENGTH                 010010 00101 rt:5 0000 0001 0001 0000 &cp2
+     CVM_MT_CRC_IV                        010010 00101 rt:5 0000 0010 0000 0001 &cp2
++    CVM_MT_CRC_IV_REFLECT                010010 00101 rt:5 0000 0010 0001 0001 &cp2
++    CVM_MT_CRC_BYTE                      010010 00101 rt:5 0000 0010 0000 0100 &cp2
++    CVM_MT_CRC_HALF                      010010 00101 rt:5 0000 0010 0000 0101 &cp2
++    CVM_MT_CRC_WORD                      010010 00101 rt:5 0000 0010 0000 0110 &cp2
++    CVM_MT_CRC_BYTE_REFLECT              010010 00101 rt:5 0000 0010 0001 0100 &cp2
++    CVM_MT_CRC_HALF_REFLECT              010010 00101 rt:5 0000 0010 0001 0101 &cp2
++    CVM_MT_CRC_WORD_REFLECT              010010 00101 rt:5 0000 0010 0001 0110 &cp2
+     CVM_MT_GFM_MUL0                      010010 00101 rt:5 0000 0010 0101 1000 &cp2
+     CVM_MT_GFM_MUL1                      010010 00101 rt:5 0000 0010 0101 1001 &cp2
+     CVM_MT_GFM_RESINP0                   010010 00101 rt:5 0000 0010 0101 1010 &cp2
+     CVM_MT_GFM_RESINP1                   010010 00101 rt:5 0000 0010 0101 1011 &cp2
+     CVM_MT_GFM_POLY                      010010 00101 rt:5 0000 0010 0101 1110 &cp2
+     CVM_MT_CRC_LEN                       010010 00101 rt:5 0001 0010 0000 0010 &cp2
++    CVM_MT_CRC_DWORD                     010010 00101 rt:5 0001 0010 0000 0111 &cp2
++    CVM_MT_CRC_VAR                       010010 00101 rt:5 0001 0010 0000 1000 &cp2
++    CVM_MT_CRC_DWORD_REFLECT             010010 00101 rt:5 0001 0010 0001 0111 &cp2
++    CVM_MT_CRC_VAR_REFLECT               010010 00101 rt:5 0001 0010 0001 1000 &cp2
++    CVM_MT_GFM_XORMUL1_REFLECT           010010 00101 rt:5 0100 0000 0101 1101 &cp2
+     CVM_MT_CRC_POLYNOMIAL                010010 00101 rt:5 0100 0010 0000 0000 &cp2
++    CVM_MT_CRC_POLYNOMIAL_REFLECT        010010 00101 rt:5 0100 0010 0001 0000 &cp2
++    CVM_MT_GFM_XORMUL1                   010010 00101 rt:5 0100 0010 0101 1101 &cp2
+   ]
+   CP2_Undef                              010010 ----- ----- ---- ---- ---- ----
+ }
 diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
-index 67959618cc..9523c84667 100644
+index 29b661d47f..1f97b8193c 100644
 --- a/target/mips/tcg/octeon_crypto.c
 +++ b/target/mips/tcg/octeon_crypto.c
-@@ -153,6 +153,348 @@ static void octeon_gfm_mul64_uia2(const uint64_t x[2], const uint64_t y[2],
-     out[1] = revbit64(res);
+@@ -2207,6 +2207,13 @@ void helper_octeon_cp2_mt_crc_write_iv_reflect(CPUMIPSState *env,
+         octeon_crc_reflect32_by_byte((uint32_t)value);
  }
  
-+static inline uint32_t octeon_hsh_get32(const uint64_t *regs,
-+                                        unsigned int index)
++void helper_octeon_cp2_mt_crc_write_polynomial_reflect(CPUMIPSState *env,
++                                                       uint64_t value)
 +{
-+    return regs[index];
++    env->octeon_crypto.crc_poly =
++        octeon_crc_reflect32_by_byte((uint32_t)value);
 +}
 +
-+static inline void octeon_hsh_set32(uint64_t *regs, unsigned int index,
-+                                    uint32_t value)
-+{
-+    regs[index] = (regs[index] & ~(uint64_t)UINT32_MAX) | value;
-+}
-+
-+static inline void octeon_hsh_set_pair(uint64_t *regs, unsigned int index,
-+                                       uint64_t value)
-+{
-+    octeon_hsh_set32(regs, index * 2, value >> 32);
-+    octeon_hsh_set32(regs, index * 2 + 1, value);
-+}
-+
-+static void octeon_md5_transform(MIPSOcteonCryptoState *crypto)
-+{
-+    static const uint32_t k[64] = {
-+        0xd76aa478U, 0xe8c7b756U, 0x242070dbU, 0xc1bdceeeU,
-+        0xf57c0fafU, 0x4787c62aU, 0xa8304613U, 0xfd469501U,
-+        0x698098d8U, 0x8b44f7afU, 0xffff5bb1U, 0x895cd7beU,
-+        0x6b901122U, 0xfd987193U, 0xa679438eU, 0x49b40821U,
-+        0xf61e2562U, 0xc040b340U, 0x265e5a51U, 0xe9b6c7aaU,
-+        0xd62f105dU, 0x02441453U, 0xd8a1e681U, 0xe7d3fbc8U,
-+        0x21e1cde6U, 0xc33707d6U, 0xf4d50d87U, 0x455a14edU,
-+        0xa9e3e905U, 0xfcefa3f8U, 0x676f02d9U, 0x8d2a4c8aU,
-+        0xfffa3942U, 0x8771f681U, 0x6d9d6122U, 0xfde5380cU,
-+        0xa4beea44U, 0x4bdecfa9U, 0xf6bb4b60U, 0xbebfbc70U,
-+        0x289b7ec6U, 0xeaa127faU, 0xd4ef3085U, 0x04881d05U,
-+        0xd9d4d039U, 0xe6db99e5U, 0x1fa27cf8U, 0xc4ac5665U,
-+        0xf4292244U, 0x432aff97U, 0xab9423a7U, 0xfc93a039U,
-+        0x655b59c3U, 0x8f0ccc92U, 0xffeff47dU, 0x85845dd1U,
-+        0x6fa87e4fU, 0xfe2ce6e0U, 0xa3014314U, 0x4e0811a1U,
-+        0xf7537e82U, 0xbd3af235U, 0x2ad7d2bbU, 0xeb86d391U,
-+    };
-+    static const uint8_t s[64] = {
-+        7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
-+        5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20,
-+        4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,
-+        6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21,
-+    };
-+    uint32_t m[16];
-+    uint32_t a, b, c, d;
-+    uint32_t aa, bb, cc, dd;
-+    int i;
-+
-+    for (i = 0; i < 16; i++) {
-+        m[i] = bswap32(octeon_hsh_get32(crypto->hsh_dat, i));
-+    }
-+
-+    a = bswap32(octeon_hsh_get32(crypto->hsh_iv, 0));
-+    b = bswap32(octeon_hsh_get32(crypto->hsh_iv, 1));
-+    c = bswap32(octeon_hsh_get32(crypto->hsh_iv, 2));
-+    d = bswap32(octeon_hsh_get32(crypto->hsh_iv, 3));
-+    aa = a;
-+    bb = b;
-+    cc = c;
-+    dd = d;
-+
-+    for (i = 0; i < 64; i++) {
-+        uint32_t f, g, tmp;
-+
-+        if (i < 16) {
-+            f = (b & c) | ((~b) & d);
-+            g = i;
-+        } else if (i < 32) {
-+            f = (d & b) | ((~d) & c);
-+            g = (5 * i + 1) & 0xf;
-+        } else if (i < 48) {
-+            f = b ^ c ^ d;
-+            g = (3 * i + 5) & 0xf;
-+        } else {
-+            f = c ^ (b | (~d));
-+            g = (7 * i) & 0xf;
-+        }
-+
-+        tmp = d;
-+        d = c;
-+        c = b;
-+        b = b + rol32(a + f + k[i] + m[g], s[i]);
-+        a = tmp;
-+    }
-+
-+    a += aa;
-+    b += bb;
-+    c += cc;
-+    d += dd;
-+    octeon_hsh_set32(crypto->hsh_iv, 0, bswap32(a));
-+    octeon_hsh_set32(crypto->hsh_iv, 1, bswap32(b));
-+    octeon_hsh_set32(crypto->hsh_iv, 2, bswap32(c));
-+    octeon_hsh_set32(crypto->hsh_iv, 3, bswap32(d));
-+}
-+
-+static void octeon_sha1_transform(MIPSOcteonCryptoState *crypto)
-+{
-+    uint32_t w[80];
-+    uint32_t a, b, c, d, e;
-+    uint32_t orig[5];
-+    int i;
-+
-+    for (i = 0; i < 16; i++) {
-+        w[i] = octeon_hsh_get32(crypto->hsh_dat, i);
-+    }
-+    for (i = 16; i < 80; i++) {
-+        w[i] = rol32(w[i - 3] ^ w[i - 8] ^ w[i - 14] ^ w[i - 16], 1);
-+    }
-+
-+    for (i = 0; i < 5; i++) {
-+        orig[i] = octeon_hsh_get32(crypto->hsh_iv, i);
-+    }
-+    a = orig[0];
-+    b = orig[1];
-+    c = orig[2];
-+    d = orig[3];
-+    e = orig[4];
-+
-+    for (i = 0; i < 80; i++) {
-+        uint32_t f, k, temp;
-+
-+        if (i < 20) {
-+            f = (b & c) | ((~b) & d);
-+            k = 0x5a827999;
-+        } else if (i < 40) {
-+            f = b ^ c ^ d;
-+            k = 0x6ed9eba1;
-+        } else if (i < 60) {
-+            f = (b & c) | (b & d) | (c & d);
-+            k = 0x8f1bbcdc;
-+        } else {
-+            f = b ^ c ^ d;
-+            k = 0xca62c1d6;
-+        }
-+
-+        temp = rol32(a, 5) + f + e + k + w[i];
-+        e = d;
-+        d = c;
-+        c = rol32(b, 30);
-+        b = a;
-+        a = temp;
-+    }
-+
-+    orig[0] += a;
-+    orig[1] += b;
-+    orig[2] += c;
-+    orig[3] += d;
-+    orig[4] += e;
-+    for (i = 0; i < 5; i++) {
-+        octeon_hsh_set32(crypto->hsh_iv, i, orig[i]);
-+    }
-+}
-+
-+static void octeon_sha256_transform(MIPSOcteonCryptoState *crypto)
-+{
-+    static const uint32_t k[64] = {
-+        0x428a2f98U, 0x71374491U, 0xb5c0fbcfU, 0xe9b5dba5U,
-+        0x3956c25bU, 0x59f111f1U, 0x923f82a4U, 0xab1c5ed5U,
-+        0xd807aa98U, 0x12835b01U, 0x243185beU, 0x550c7dc3U,
-+        0x72be5d74U, 0x80deb1feU, 0x9bdc06a7U, 0xc19bf174U,
-+        0xe49b69c1U, 0xefbe4786U, 0x0fc19dc6U, 0x240ca1ccU,
-+        0x2de92c6fU, 0x4a7484aaU, 0x5cb0a9dcU, 0x76f988daU,
-+        0x983e5152U, 0xa831c66dU, 0xb00327c8U, 0xbf597fc7U,
-+        0xc6e00bf3U, 0xd5a79147U, 0x06ca6351U, 0x14292967U,
-+        0x27b70a85U, 0x2e1b2138U, 0x4d2c6dfcU, 0x53380d13U,
-+        0x650a7354U, 0x766a0abbU, 0x81c2c92eU, 0x92722c85U,
-+        0xa2bfe8a1U, 0xa81a664bU, 0xc24b8b70U, 0xc76c51a3U,
-+        0xd192e819U, 0xd6990624U, 0xf40e3585U, 0x106aa070U,
-+        0x19a4c116U, 0x1e376c08U, 0x2748774cU, 0x34b0bcb5U,
-+        0x391c0cb3U, 0x4ed8aa4aU, 0x5b9cca4fU, 0x682e6ff3U,
-+        0x748f82eeU, 0x78a5636fU, 0x84c87814U, 0x8cc70208U,
-+        0x90befffaU, 0xa4506cebU, 0xbef9a3f7U, 0xc67178f2U,
-+    };
-+    uint32_t w[64];
-+    uint32_t a, b, c, d, e, f, g, h;
-+    uint32_t orig[8];
-+    int i;
-+
-+    for (i = 0; i < 16; i++) {
-+        w[i] = octeon_hsh_get32(crypto->hsh_dat, i);
-+    }
-+    for (i = 16; i < 64; i++) {
-+        uint32_t s0 = ror32(w[i - 15], 7) ^
-+                      ror32(w[i - 15], 18) ^
-+                      (w[i - 15] >> 3);
-+        uint32_t s1 = ror32(w[i - 2], 17) ^
-+                      ror32(w[i - 2], 19) ^
-+                      (w[i - 2] >> 10);
-+        w[i] = w[i - 16] + s0 + w[i - 7] + s1;
-+    }
-+
-+    for (i = 0; i < 8; i++) {
-+        orig[i] = octeon_hsh_get32(crypto->hsh_iv, i);
-+    }
-+    a = orig[0];
-+    b = orig[1];
-+    c = orig[2];
-+    d = orig[3];
-+    e = orig[4];
-+    f = orig[5];
-+    g = orig[6];
-+    h = orig[7];
-+
-+    for (i = 0; i < 64; i++) {
-+        uint32_t s1 = ror32(e, 6) ^
-+                      ror32(e, 11) ^
-+                      ror32(e, 25);
-+        uint32_t ch = (e & f) ^ ((~e) & g);
-+        uint32_t temp1 = h + s1 + ch + k[i] + w[i];
-+        uint32_t s0 = ror32(a, 2) ^
-+                      ror32(a, 13) ^
-+                      ror32(a, 22);
-+        uint32_t maj = (a & b) ^ (a & c) ^ (b & c);
-+        uint32_t temp2 = s0 + maj;
-+
-+        h = g;
-+        g = f;
-+        f = e;
-+        e = d + temp1;
-+        d = c;
-+        c = b;
-+        b = a;
-+        a = temp1 + temp2;
-+    }
-+
-+    orig[0] += a;
-+    orig[1] += b;
-+    orig[2] += c;
-+    orig[3] += d;
-+    orig[4] += e;
-+    orig[5] += f;
-+    orig[6] += g;
-+    orig[7] += h;
-+    for (i = 0; i < 8; i++) {
-+        octeon_hsh_set32(crypto->hsh_iv, i, orig[i]);
-+    }
-+}
-+
-+static void octeon_sha512_transform(MIPSOcteonCryptoState *crypto)
-+{
-+    static const uint64_t k[80] = {
-+        0x428a2f98d728ae22ULL, 0x7137449123ef65cdULL,
-+        0xb5c0fbcfec4d3b2fULL, 0xe9b5dba58189dbbcULL,
-+        0x3956c25bf348b538ULL, 0x59f111f1b605d019ULL,
-+        0x923f82a4af194f9bULL, 0xab1c5ed5da6d8118ULL,
-+        0xd807aa98a3030242ULL, 0x12835b0145706fbeULL,
-+        0x243185be4ee4b28cULL, 0x550c7dc3d5ffb4e2ULL,
-+        0x72be5d74f27b896fULL, 0x80deb1fe3b1696b1ULL,
-+        0x9bdc06a725c71235ULL, 0xc19bf174cf692694ULL,
-+        0xe49b69c19ef14ad2ULL, 0xefbe4786384f25e3ULL,
-+        0x0fc19dc68b8cd5b5ULL, 0x240ca1cc77ac9c65ULL,
-+        0x2de92c6f592b0275ULL, 0x4a7484aa6ea6e483ULL,
-+        0x5cb0a9dcbd41fbd4ULL, 0x76f988da831153b5ULL,
-+        0x983e5152ee66dfabULL, 0xa831c66d2db43210ULL,
-+        0xb00327c898fb213fULL, 0xbf597fc7beef0ee4ULL,
-+        0xc6e00bf33da88fc2ULL, 0xd5a79147930aa725ULL,
-+        0x06ca6351e003826fULL, 0x142929670a0e6e70ULL,
-+        0x27b70a8546d22ffcULL, 0x2e1b21385c26c926ULL,
-+        0x4d2c6dfc5ac42aedULL, 0x53380d139d95b3dfULL,
-+        0x650a73548baf63deULL, 0x766a0abb3c77b2a8ULL,
-+        0x81c2c92e47edaee6ULL, 0x92722c851482353bULL,
-+        0xa2bfe8a14cf10364ULL, 0xa81a664bbc423001ULL,
-+        0xc24b8b70d0f89791ULL, 0xc76c51a30654be30ULL,
-+        0xd192e819d6ef5218ULL, 0xd69906245565a910ULL,
-+        0xf40e35855771202aULL, 0x106aa07032bbd1b8ULL,
-+        0x19a4c116b8d2d0c8ULL, 0x1e376c085141ab53ULL,
-+        0x2748774cdf8eeb99ULL, 0x34b0bcb5e19b48a8ULL,
-+        0x391c0cb3c5c95a63ULL, 0x4ed8aa4ae3418acbULL,
-+        0x5b9cca4f7763e373ULL, 0x682e6ff3d6b2b8a3ULL,
-+        0x748f82ee5defb2fcULL, 0x78a5636f43172f60ULL,
-+        0x84c87814a1f0ab72ULL, 0x8cc702081a6439ecULL,
-+        0x90befffa23631e28ULL, 0xa4506cebde82bde9ULL,
-+        0xbef9a3f7b2c67915ULL, 0xc67178f2e372532bULL,
-+        0xca273eceea26619cULL, 0xd186b8c721c0c207ULL,
-+        0xeada7dd6cde0eb1eULL, 0xf57d4f7fee6ed178ULL,
-+        0x06f067aa72176fbaULL, 0x0a637dc5a2c898a6ULL,
-+        0x113f9804bef90daeULL, 0x1b710b35131c471bULL,
-+        0x28db77f523047d84ULL, 0x32caab7b40c72493ULL,
-+        0x3c9ebe0a15c9bebcULL, 0x431d67c49c100d4cULL,
-+        0x4cc5d4becb3e42b6ULL, 0x597f299cfc657e2aULL,
-+        0x5fcb6fab3ad6faecULL, 0x6c44198c4a475817ULL,
-+    };
-+    uint64_t w[80];
-+    uint64_t a, b, c, d, e, f, g, h;
-+    int i;
-+
-+    for (i = 0; i < 16; i++) {
-+        w[i] = crypto->hsh_dat[i];
-+    }
-+    for (i = 16; i < 80; i++) {
-+        uint64_t s0 = ror64(w[i - 15], 1) ^
-+                      ror64(w[i - 15], 8) ^
-+                      (w[i - 15] >> 7);
-+        uint64_t s1 = ror64(w[i - 2], 19) ^
-+                      ror64(w[i - 2], 61) ^
-+                      (w[i - 2] >> 6);
-+        w[i] = w[i - 16] + s0 + w[i - 7] + s1;
-+    }
-+
-+    a = crypto->hsh_iv[0];
-+    b = crypto->hsh_iv[1];
-+    c = crypto->hsh_iv[2];
-+    d = crypto->hsh_iv[3];
-+    e = crypto->hsh_iv[4];
-+    f = crypto->hsh_iv[5];
-+    g = crypto->hsh_iv[6];
-+    h = crypto->hsh_iv[7];
-+
-+    for (i = 0; i < 80; i++) {
-+        uint64_t s0 = ror64(a, 28) ^
-+                      ror64(a, 34) ^
-+                      ror64(a, 39);
-+        uint64_t s1 = ror64(e, 14) ^
-+                      ror64(e, 18) ^
-+                      ror64(e, 41);
-+        uint64_t ch = (e & f) ^ ((~e) & g);
-+        uint64_t maj = (a & b) ^ (a & c) ^ (b & c);
-+        uint64_t temp1 = h + s1 + ch + k[i] + w[i];
-+        uint64_t temp2 = s0 + maj;
-+
-+        h = g;
-+        g = f;
-+        f = e;
-+        e = d + temp1;
-+        d = c;
-+        c = b;
-+        b = a;
-+        a = temp1 + temp2;
-+    }
-+
-+    crypto->hsh_iv[0] += a;
-+    crypto->hsh_iv[1] += b;
-+    crypto->hsh_iv[2] += c;
-+    crypto->hsh_iv[3] += d;
-+    crypto->hsh_iv[4] += e;
-+    crypto->hsh_iv[5] += f;
-+    crypto->hsh_iv[6] += g;
-+    crypto->hsh_iv[7] += h;
-+}
-+
- static const uint64_t octeon_sha3_round_constants[24] = {
-     0x0000000000000001ULL, 0x0000000000008082ULL,
-     0x800000000000808aULL, 0x8000000080008000ULL,
-@@ -1715,6 +2057,39 @@ void helper_octeon_cp2_mt_zuc_more(CPUMIPSState *env, uint64_t value)
-     octeon_zuc_more(&env->octeon_crypto, value);
- }
- 
-+void helper_octeon_cp2_mt_hsh_startsha1_compat(CPUMIPSState *env,
-+                                               uint64_t value)
-+{
-+    octeon_hsh_set_pair(env->octeon_crypto.hsh_dat, 7, value);
-+    octeon_sha1_transform(&env->octeon_crypto);
-+}
-+
-+void helper_octeon_cp2_mt_hsh_startmd5(CPUMIPSState *env, uint64_t value)
-+{
-+    octeon_hsh_set_pair(env->octeon_crypto.hsh_dat, 7, value);
-+    octeon_md5_transform(&env->octeon_crypto);
-+}
-+
-+void helper_octeon_cp2_mt_hsh_startsha256(CPUMIPSState *env, uint64_t value)
-+{
-+    octeon_hsh_set_pair(env->octeon_crypto.hsh_dat, 7, value);
-+    octeon_sha256_transform(&env->octeon_crypto);
-+}
-+
-+void helper_octeon_cp2_mt_hsh_startsha(CPUMIPSState *env, uint64_t value)
-+{
-+    octeon_hsh_set_pair(env->octeon_crypto.hsh_dat, 7, value);
-+    octeon_sha1_transform(&env->octeon_crypto);
-+}
-+
-+void helper_octeon_cp2_mt_hsh_startsha512(CPUMIPSState *env, uint64_t value)
-+{
-+    MIPSOcteonCryptoState *crypto = &env->octeon_crypto;
-+
-+    crypto->hsh_dat[15] = value;
-+    octeon_sha512_transform(crypto);
-+}
-+
- uint64_t helper_octeon_cp2_mf_crc_iv_reflect(CPUMIPSState *env)
+ void helper_octeon_cp2_mt_crc_write_byte(CPUMIPSState *env, uint64_t value)
  {
-     return octeon_crc_reflect32_by_byte(env->octeon_crypto.crc_iv);
+     octeon_crc_update_normal(&env->octeon_crypto, value, 1);
+diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+index b33252dd1f..ce4cfcb3f3 100644
+--- a/target/mips/tcg/octeon_translate.c
++++ b/target/mips/tcg/octeon_translate.c
+@@ -28,6 +28,9 @@
+     TRANS(NAME, trans_octeon_cp2_mf_hsh_pair, \
+           OCTEON_CRYPTO_OFFSET(FIELD[2 * (INDEX)]), \
+           OCTEON_CRYPTO_OFFSET(FIELD[2 * (INDEX) + 1]))
++#define CP2_MF_HELPER(NAME, SUFFIX) \
++    TRANS(NAME, trans_octeon_cp2_mf_helper, \
++          gen_helper_octeon_cp2_mf_ ## SUFFIX)
+ #define CP2_MT_I64(NAME, FIELD) \
+     TRANS(NAME, trans_octeon_cp2_mt_i64, OCTEON_CRYPTO_OFFSET(FIELD))
+ #define CP2_MT_U32(NAME, FIELD) \
+@@ -41,6 +44,9 @@
+     TRANS(NAME, trans_octeon_cp2_mt_hsh_pair, \
+           OCTEON_CRYPTO_OFFSET(FIELD[2 * (INDEX)]), \
+           OCTEON_CRYPTO_OFFSET(FIELD[2 * (INDEX) + 1]))
++#define CP2_MT_HELPER(NAME, SUFFIX) \
++    TRANS(NAME, trans_octeon_cp2_mt_helper, \
++          gen_helper_octeon_cp2_mt_ ## SUFFIX)
+ 
+ #define OCTEON_LO32_OFFSET (HOST_BIG_ENDIAN ? 4 : 0)
+ 
+@@ -99,6 +105,16 @@ static bool trans_octeon_cp2_mf_hsh_pair(DisasContext *ctx, arg_cp2 *a,
+     return true;
+ }
+ 
++static bool trans_octeon_cp2_mf_helper(DisasContext *ctx, arg_cp2 *a,
++                                       void (*gen_helper)(TCGv_i64, TCGv_env))
++{
++    TCGv_i64 value = tcg_temp_new_i64();
++
++    gen_helper(value, tcg_env);
++    gen_store_gpr(value, a->rt);
++    return true;
++}
++
+ static bool trans_octeon_cp2_mt_i64(DisasContext *ctx, arg_cp2 *a, int offset)
+ {
+     TCGv_i64 value = tcg_temp_new_i64();
+@@ -149,6 +165,16 @@ static bool trans_octeon_cp2_mt_hsh_pair(DisasContext *ctx, arg_cp2 *a,
+     return true;
+ }
+ 
++static bool trans_octeon_cp2_mt_helper(DisasContext *ctx, arg_cp2 *a,
++                                       void (*gen_helper)(TCGv_env, TCGv_i64))
++{
++    TCGv_i64 value = tcg_temp_new_i64();
++
++    gen_load_gpr(value, a->rt);
++    gen_helper(tcg_env, value);
++    return true;
++}
++
+ CP2_MF_HSH_PAIR(CVM_MF_HSH_DAT0, hsh_dat, 0);
+ CP2_MF_HSH_PAIR(CVM_MF_HSH_DAT1, hsh_dat, 1);
+ CP2_MF_HSH_PAIR(CVM_MF_HSH_DAT2, hsh_dat, 2);
+@@ -185,6 +211,12 @@ CP2_MF_I64(CVM_MF_GFM_RESINP0, gfm_resinp[0]);
+ CP2_MF_I64(CVM_MF_GFM_RESINP1, gfm_resinp[1]);
+ CP2_MF_U16(CVM_MF_GFM_POLY, gfm_poly);
+ 
++CP2_MF_HELPER(CVM_MF_CRC_IV_REFLECT, crc_iv_reflect);
++CP2_MF_HELPER(CVM_MF_GFM_MUL_REFLECT0, gfm_mul_reflect0);
++CP2_MF_HELPER(CVM_MF_GFM_MUL_REFLECT1, gfm_mul_reflect1);
++CP2_MF_HELPER(CVM_MF_GFM_RESINP_REFLECT0, gfm_resinp_reflect0);
++CP2_MF_HELPER(CVM_MF_GFM_RESINP_REFLECT1, gfm_resinp_reflect1);
++
+ CP2_MT_HSH_PAIR(CVM_MT_HSH_DAT0, hsh_dat, 0);
+ CP2_MT_HSH_PAIR(CVM_MT_HSH_DAT1, hsh_dat, 1);
+ CP2_MT_HSH_PAIR(CVM_MT_HSH_DAT2, hsh_dat, 2);
+@@ -196,6 +228,9 @@ CP2_MT_HSH_PAIR(CVM_MT_HSH_IV0, hsh_iv, 0);
+ CP2_MT_HSH_PAIR(CVM_MT_HSH_IV1, hsh_iv, 1);
+ CP2_MT_HSH_PAIR(CVM_MT_HSH_IV2, hsh_iv, 2);
+ CP2_MT_HSH_PAIR(CVM_MT_HSH_IV3, hsh_iv, 3);
++CP2_MT_HELPER(CVM_MT_GFM_MUL_REFLECT0, gfm_mul_reflect0);
++CP2_MT_HELPER(CVM_MT_GFM_MUL_REFLECT1, gfm_mul_reflect1);
++CP2_MT_HELPER(CVM_MT_GFM_XOR0_REFLECT, gfm_xor0_reflect);
+ CP2_MT_I64(CVM_MT_3DES_KEY0, des3_key[0]);
+ CP2_MT_I64(CVM_MT_3DES_KEY1, des3_key[1]);
+ CP2_MT_I64(CVM_MT_3DES_KEY2, des3_key[2]);
+@@ -223,6 +258,21 @@ CP2_MT_U16(CVM_MT_GFM_POLY, gfm_poly);
+ CP2_MT_U8_MASKED(CVM_MT_CRC_LEN, crc_len, 0xf);
+ CP2_MT_U32(CVM_MT_CRC_POLYNOMIAL, crc_poly);
+ 
++CP2_MT_HELPER(CVM_MT_CRC_POLYNOMIAL_REFLECT, crc_write_polynomial_reflect);
++CP2_MT_HELPER(CVM_MT_CRC_IV_REFLECT, crc_write_iv_reflect);
++CP2_MT_HELPER(CVM_MT_CRC_BYTE, crc_write_byte);
++CP2_MT_HELPER(CVM_MT_CRC_HALF, crc_write_half);
++CP2_MT_HELPER(CVM_MT_CRC_WORD, crc_write_word);
++CP2_MT_HELPER(CVM_MT_CRC_BYTE_REFLECT, crc_write_byte_reflect);
++CP2_MT_HELPER(CVM_MT_CRC_HALF_REFLECT, crc_write_half_reflect);
++CP2_MT_HELPER(CVM_MT_CRC_WORD_REFLECT, crc_write_word_reflect);
++CP2_MT_HELPER(CVM_MT_CRC_DWORD, crc_write_dword);
++CP2_MT_HELPER(CVM_MT_CRC_VAR, crc_write_var);
++CP2_MT_HELPER(CVM_MT_CRC_DWORD_REFLECT, crc_write_dword_reflect);
++CP2_MT_HELPER(CVM_MT_CRC_VAR_REFLECT, crc_write_var_reflect);
++CP2_MT_HELPER(CVM_MT_GFM_XORMUL1_REFLECT, gfm_xormul1_reflect);
++CP2_MT_HELPER(CVM_MT_GFM_XORMUL1, gfm_xormul1);
++
+ static bool trans_BBIT(DisasContext *ctx, arg_BBIT *a)
+ {
+     TCGv_i64 p;
+diff --git a/tests/tcg/mips/user/isa/octeon/octeon-insns.c b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
+index 7a7445c40a..f3c52d7829 100644
+--- a/tests/tcg/mips/user/isa/octeon/octeon-insns.c
++++ b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
+@@ -266,6 +266,70 @@ static uint64_t octeon_cop2_hsh_dat0_readback(uint64_t value)
+     return rd;
+ }
+ 
++static uint64_t octeon_cop2_crc_len_readback(uint64_t value)
++{
++    uint64_t rd;
++
++    asm volatile(
++        "move $8, %[value]\n\t"
++        ".word 0x48a81202\n\t" /* dmtc2 $8, CRC_LEN selector */
++        ".word 0x482a0202\n\t" /* dmfc2 $10, CRC_LEN selector */
++        "move %[rd], $10\n\t"
++        : [rd] "=r" (rd)
++        : [value] "r" (value)
++        : "$8", "$10");
++
++    return rd;
++}
++
++static uint64_t octeon_cop2_crc_poly_reflect_readback(uint64_t value)
++{
++    uint64_t rd;
++
++    asm volatile(
++        "move $8, %[value]\n\t"
++        ".word 0x48a84210\n\t" /* dmtc2 $8, CRC_POLYNOMIAL_REFLECT selector */
++        ".word 0x482a0200\n\t" /* dmfc2 $10, CRC_POLYNOMIAL selector */
++        "move %[rd], $10\n\t"
++        : [rd] "=r" (rd)
++        : [value] "r" (value)
++        : "$8", "$10");
++
++    return rd;
++}
++
++static uint64_t octeon_cop2_gfm_mul_reflect_write_readback(uint64_t value)
++{
++    uint64_t rd;
++
++    asm volatile(
++        "move $8, %[value]\n\t"
++        ".word 0x48a80058\n\t" /* dmtc2 $8, GFM_MUL_REFLECT0 selector */
++        ".word 0x482a0258\n\t" /* dmfc2 $10, GFM_MUL0 selector */
++        "move %[rd], $10\n\t"
++        : [rd] "=r" (rd)
++        : [value] "r" (value)
++        : "$8", "$10");
++
++    return rd;
++}
++
++static uint64_t octeon_cop2_gfm_mul_reflect_readback(uint64_t value)
++{
++    uint64_t rd;
++
++    asm volatile(
++        "move $8, %[value]\n\t"
++        ".word 0x48a80258\n\t" /* dmtc2 $8, GFM_MUL0 selector */
++        ".word 0x482a0058\n\t" /* dmfc2 $10, GFM_MUL_REFLECT0 selector */
++        "move %[rd], $10\n\t"
++        : [rd] "=r" (rd)
++        : [value] "r" (value)
++        : "$8", "$10");
++
++    return rd;
++}
++
+ int main(void)
+ {
+     assert(octeon_baddu(0x123, 0x0f0) == 0x13);
+@@ -288,6 +352,12 @@ int main(void)
+     assert(octeon_cop2_keylength_readback(0xa5) == 1);
+     assert(octeon_cop2_hsh_dat0_readback(0x0102030405060708ULL) ==
+            0x0102030405060708ULL);
++    assert(octeon_cop2_crc_len_readback(0xb5) == 5);
++    assert(octeon_cop2_crc_poly_reflect_readback(0x12345678) == 0x482c6a1e);
++    assert(octeon_cop2_gfm_mul_reflect_write_readback(
++               0x0123456789abcdefULL) == 0xf7b3d591e6a2c480ULL);
++    assert(octeon_cop2_gfm_mul_reflect_readback(
++               0xfedcba9876543210ULL) == 0x084c2a6e195d3b7fULL);
+ 
+     return 0;
+ }
 
 -- 
 2.54.0
