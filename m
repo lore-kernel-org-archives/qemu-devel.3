@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 461C7CD5BB8
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:46:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A886CCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:46:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXbE-0002bH-43; Fri, 22 May 2026 17:40:08 -0400
+	id 1wQXZR-0007hF-8V; Fri, 22 May 2026 17:38:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXb0-00019W-9f; Fri, 22 May 2026 17:39:54 -0400
+ id 1wQXZO-0007Sw-CF; Fri, 22 May 2026 17:38:14 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXax-0003ZC-Kf; Fri, 22 May 2026 17:39:52 -0400
+ id 1wQXZM-0002TR-Ci; Fri, 22 May 2026 17:38:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485683; bh=jjsX3vuFG5pdqzcPcvEy5TDx1NFhTrvU0iAbRklyfh4=;
+ t=1779485682; bh=qG6ii2l7hCb7dAKBoB+JAL6Fy6hY5WJKV7Caap/hyCY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=QICZoMX5AnqpKSbnh4WvC4ZwvyH0QGlJVX7KJGDO9hKQaatV4IkNyu72v9HLdJ6nS
- glsslhuHEbX7aItcJ9xOWD6/KcHYaKz6PAxdXDSe2bzxoAjCLuWri7AitYgJmux2k8
- iaKBd8yPbaXoFP+jijrUTiGnzCoQ+KTMKKe4tN8TuQ/u2GxZZLLidhHp6JQbZLKL8E
- nzZOAZgUkbqVRL8bntzwkuOoCwSLnxDZNzAy77U5xha2eGbS7WX3Bevh0ntFSVHKjX
- HzDZJbh/KkVBPMmJSmHY/AI8MVpzcN6J+Eo/IiHbbMedORtvFa/X6vNySWz4VmGzui
- ERDbnf/boXM1A==
+ b=sGRj20qMkeTex/G4NV2kJwZxmw/QpgXJbBW1CIKLZxkK2oEgFVQ+xsV1DDHJjbgNT
+ G6SGi9VMMF3oxQ3uAZltwBDjLwLV4byfmTosJZNbNHGuQHVFMHpN6pOyix0CkN6x0l
+ djtUVtUAzeJfyXXl/LjrquCuISejcI4aaS2NpiszCppCUWNFz9u9amy5PRk0fMAlJO
+ 0xRbPGL0GsPKA9P+FF6AuA4npcMBAZ0+51E1xdelmFF/02AQhwG6CakZB223GCuoXP
+ MfBJCTlSCQkt2frr76qdi8XdnWaiFLPzsBHwB0ciRA9LKPF8Xp2TwyqqFPq3abho/V
+ t0AIcWneCva8Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8AECB1AFB0B;
- Sat, 23 May 2026 00:34:43 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9C4661AFAFC;
+ Sat, 23 May 2026 00:34:42 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AD9C83B718B;
- Sat, 23 May 2026 00:34:47 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id BFD6F3B717C;
+ Sat, 23 May 2026 00:34:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 122/136] linux-user/sh4: Fix target_ucontext tuc_link
- field type
-Date: Sat, 23 May 2026 00:34:30 +0300
-Message-ID: <20260522213446.806182-23-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Katherine Leaver <katherine.j.leaver@gmail.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 107/136] hw/uefi: avoid possibly unaligned
+ variable_auth_2 struct field access
+Date: Sat, 23 May 2026 00:34:15 +0300
+Message-ID: <20260522213446.806182-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
@@ -70,66 +70,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-tuc_link is declared as 'struct target_ucontext *', which is a HOST
-pointer.  On a 64-bit host running a 32-bit SH4 target, this is 8 bytes
-instead of the 4 bytes the target expects, padding pushes tuc_mcontext
-8 bytes past its correct offset.
+Copy data to stack-allocated struct before accessing it
+to make sure it is properly aligned.
 
-When a signal handler receives ucontext_t *, every field accessed through
-uc_mcontext (gregs[], pc, pr, ...) is read from the wrong address.  In
-particular the saved PC comes back as a garbage stack value, which breaks
-any code that initialises a libunwind cursor from the signal context.
-
-Fix it by using abi_ulong, which is always sized to the target ABI (4
-bytes for SH4), matching the layout the kernel and glibc agree on.  This
-is the same pattern used by arm/signal.c.
-
-Also remove the (unsigned long *) cast from the __put_user that zeros
-tuc_link.  The cast was harmless when tuc_link was pointer-sized (8
-bytes matching unsigned long on a 64-bit host), but after the type
-change __put_user's sizeof dispatch would select stq_le_p (8-byte write)
-for a now-4-byte field, silently overwriting the start of tuc_stack.
-
-Neither this fix nor the companion setup_sigtramp fix is independently
-sufficient: this fix corrects register values read from the signal context
-but libunwind still cannot detect the frame without the correct trampoline
-pattern; that fix makes the frame detectable but register reads remain
-garbage without the correct ucontext layout.  Together they fix the
-following libunwind tests on a 64-bit host:
-  Gtest-sig-context, Gtest-trace, Ltest-init-local-signal,
-  Ltest-sig-context, Ltest-trace
-
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit c3176e645774fcb795bf99c1c6c40c67432232db)
+Fixes: CVE-2026-41440
+Fixes: f1488fac0584 ("hw/uefi: add var-service-auth.c")
+Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20260422092910.444997-7-kraxel@redhat.com>
+(cherry picked from commit b4680c02b8e838c75691656ee2c4450b454d1ca7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
-index 9ecc026fae..20d2bc8b2c 100644
---- a/linux-user/sh4/signal.c
-+++ b/linux-user/sh4/signal.c
-@@ -57,7 +57,7 @@ struct target_sigframe
+diff --git a/hw/uefi/var-service-auth.c b/hw/uefi/var-service-auth.c
+index fba5a0956a..795f2f54e4 100644
+--- a/hw/uefi/var-service-auth.c
++++ b/hw/uefi/var-service-auth.c
+@@ -180,9 +180,10 @@ static efi_status uefi_vars_check_auth_2_sb(uefi_vars_state *uv,
+                                             void *data,
+                                             uint64_t data_offset)
+ {
+-    variable_auth_2 *auth = data;
++    variable_auth_2 auth;
+     uefi_variable *siglist;
  
- struct target_ucontext {
-     target_ulong tuc_flags;
--    struct target_ucontext *tuc_link;
-+    abi_ulong tuc_link;
-     target_stack_t tuc_stack;
-     struct target_sigcontext tuc_mcontext;
-     target_sigset_t tuc_sigmask;        /* mask last for extensibility */
-@@ -237,7 +237,7 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
++    memcpy(&auth, data, sizeof(auth));
+     if (custom_mode_is_active(uv)) {
+         /* no authentication in custom mode */
+         return EFI_SUCCESS;
+@@ -193,7 +194,7 @@ static efi_status uefi_vars_check_auth_2_sb(uefi_vars_state *uv,
+         return EFI_SUCCESS;
+     }
  
-     /* Create the ucontext.  */
-     __put_user(0, &frame->uc.tuc_flags);
--    __put_user(0, (unsigned long *)&frame->uc.tuc_link);
-+    __put_user(0, &frame->uc.tuc_link);
-     target_save_altstack(&frame->uc.tuc_stack, regs);
-     setup_sigcontext(&frame->uc.tuc_mcontext,
-                      regs, set->sig[0]);
+-    if (auth->hdr_length == 24) {
++    if (auth.hdr_length == 24) {
+         /* no signature (auth->cert_data is empty) */
+         return EFI_SECURITY_VIOLATION;
+     }
+@@ -218,23 +219,25 @@ static efi_status uefi_vars_check_auth_2_sb(uefi_vars_state *uv,
+ efi_status uefi_vars_check_auth_2(uefi_vars_state *uv, uefi_variable *var,
+                                   mm_variable_access *va, void *data)
+ {
+-    variable_auth_2 *auth = data;
++    variable_auth_2 auth;
+     uint64_t data_offset;
+     efi_status status;
+ 
+-    if (va->data_size < sizeof(*auth)) {
++    if (va->data_size < sizeof(auth)) {
+         return EFI_SECURITY_VIOLATION;
+     }
+-    if (uadd64_overflow(sizeof(efi_time), auth->hdr_length, &data_offset)) {
++    memcpy(&auth, data, sizeof(auth));
++
++    if (uadd64_overflow(sizeof(efi_time), auth.hdr_length, &data_offset)) {
+         return EFI_SECURITY_VIOLATION;
+     }
+     if (va->data_size < data_offset) {
+         return EFI_SECURITY_VIOLATION;
+     }
+ 
+-    if (auth->hdr_revision != 0x0200 ||
+-        auth->hdr_cert_type != WIN_CERT_TYPE_EFI_GUID ||
+-        !qemu_uuid_is_equal(&auth->guid_cert_type, &EfiCertTypePkcs7Guid)) {
++    if (auth.hdr_revision != 0x0200 ||
++        auth.hdr_cert_type != WIN_CERT_TYPE_EFI_GUID ||
++        !qemu_uuid_is_equal(&auth.guid_cert_type, &EfiCertTypePkcs7Guid)) {
+         return EFI_UNSUPPORTED;
+     }
+ 
+@@ -255,7 +258,7 @@ efi_status uefi_vars_check_auth_2(uefi_vars_state *uv, uefi_variable *var,
+     }
+ 
+     /* checks passed, set variable data */
+-    var->time = auth->timestamp;
++    var->time = auth.timestamp;
+     if (va->data_size - data_offset > 0) {
+         var->data = g_malloc(va->data_size - data_offset);
+         memcpy(var->data, data + data_offset, va->data_size - data_offset);
+diff --git a/hw/uefi/var-service-pkcs7.c b/hw/uefi/var-service-pkcs7.c
+index f17ad6872f..c859743e86 100644
+--- a/hw/uefi/var-service-pkcs7.c
++++ b/hw/uefi/var-service-pkcs7.c
+@@ -21,17 +21,20 @@
+  */
+ static gnutls_datum_t *build_signed_data(mm_variable_access *va, void *data)
+ {
+-    variable_auth_2 *auth = data;
+-    uint64_t data_offset = sizeof(efi_time) + auth->hdr_length;
++    variable_auth_2 auth;
++    uint64_t data_offset;
+     uint16_t *name = (void *)va + sizeof(mm_variable_access);
+     gnutls_datum_t *sdata;
+     uint64_t pos = 0;
+ 
++    memcpy(&auth, data, sizeof(auth));
++    data_offset = sizeof(efi_time) + auth.hdr_length;
++
+     sdata = g_new(gnutls_datum_t, 1);
+     sdata->size = (va->name_size - 2
+                    + sizeof(QemuUUID)
+                    + sizeof(va->attributes)
+-                   + sizeof(auth->timestamp)
++                   + sizeof(auth.timestamp)
+                    + va->data_size - data_offset);
+     sdata->data = g_malloc(sdata->size);
+ 
+@@ -48,8 +51,8 @@ static gnutls_datum_t *build_signed_data(mm_variable_access *va, void *data)
+     pos += sizeof(va->attributes);
+ 
+     /* TimeStamp */
+-    memcpy(sdata->data + pos, &auth->timestamp, sizeof(auth->timestamp));
+-    pos += sizeof(auth->timestamp);
++    memcpy(sdata->data + pos, &auth.timestamp, sizeof(auth.timestamp));
++    pos += sizeof(auth.timestamp);
+ 
+     /* Variable Content */
+     memcpy(sdata->data + pos, data + data_offset, va->data_size - data_offset);
+@@ -105,11 +108,12 @@ static void wrap_pkcs7(gnutls_datum_t *pkcs7)
+ 
+ static gnutls_datum_t *build_pkcs7(void *data)
+ {
+-    variable_auth_2 *auth = data;
++    variable_auth_2 auth;
+     gnutls_datum_t *pkcs7;
+ 
++    memcpy(&auth, data, sizeof(auth));
+     pkcs7 = g_new(gnutls_datum_t, 1);
+-    pkcs7->size = auth->hdr_length - 24;
++    pkcs7->size = auth.hdr_length - 24;
+     pkcs7->data = g_malloc(pkcs7->size);
+     memcpy(pkcs7->data, data + 16 + 24, pkcs7->size);
+ 
 -- 
 2.47.3
 
