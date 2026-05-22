@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A6E8CD5BB1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 560DDCD5BAB
 	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 00:09:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQDPd-0004Zz-TF; Thu, 21 May 2026 20:06:59 -0400
+	id 1wQDN4-0001YF-2f; Thu, 21 May 2026 20:04:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wQDOP-0002xW-5I
- for qemu-devel@nongnu.org; Thu, 21 May 2026 20:05:40 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1wQDN2-0001Xp-LN
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 20:04:08 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wQDOH-0004k2-P4
- for qemu-devel@nongnu.org; Thu, 21 May 2026 20:05:27 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2bc763e2ba8so32886155ad.3
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 17:05:25 -0700 (PDT)
+ id 1wQDN0-0003IC-PH
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 20:04:08 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2ba856db1c0so49142775ad.3
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 17:04:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779408324; x=1780013124; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779408245; x=1780013045; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=j+87QTMcfFX2FyZwbh4AAcXaUu5KgnVrJc22KYW3tTY=;
- b=onDoiNjBTDlyw+L4pgnjz60zk10aAuRMuRcr8IE6u8xuFFM02rGflkxnJ5/G3gU3gB
- +75I5YGzEK1ZmYH50jrnBXztYagXihYnUM6KuMx9MsufFJAo6veta+GcaBpsRjovKDa7
- Jrx0b6sdJJMcHqIf/o4CqU+0ol6voVdA3qwdZNhYlBT/7dtdMqWfZ0H+QMKLjX1AxAsa
- U7k/ZQArFvyGLQxmCGo5AiBadPF9R6bCaRlKDBBmgsEYj/jx6TptxpnGQElgRDLgCHIO
- pfwW7lR6pz/mt2NAdq6fKYWRCPtKN88x2YjkZmxfidvnTabp8/ad84I/s77eGoXMfCdl
- qc+w==
+ bh=dWclSkJBFNBbgj7Bf7xZl/684YkVm+PSyCPH4svFOR4=;
+ b=r1BsT1GwJmjv53whjfeThZHoDjwsjdsd0DLd18olaB6wQM3jI0wV4+WtYgNPXNpSVw
+ jNbJPdOhflTh3oTtl0BtaAthDQ/LnyuxKku6SWjkqD/zvk+BSKXfSuBoTBg0fkD8eKnh
+ kuqxSrJcUkwcPLR3FN4bW6JdKZwMfuPvkwBUfRB/jUWu68IbZVegfijJ42/q0tN+DhG3
+ vFmDZ6jwqKo20P94eZHK49K8Qlh75p9Gv/KnFL0A1lyzs7PJho/197J0v8CMePjV820A
+ OAabdmS00GVSy2C4nCvm2aUtbGzPRLyjZG1Q+dmBuBtZMVJjE2jKTt7H97awuhgM9qRq
+ IQPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779408324; x=1780013124;
+ d=1e100.net; s=20251104; t=1779408245; x=1780013045;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=j+87QTMcfFX2FyZwbh4AAcXaUu5KgnVrJc22KYW3tTY=;
- b=aeIixnHqu48o0wIPw6jGNT7YvyuHWyHgcwOOK0yUd3tDBjj9sKBg+zKdo2UL3PqqvE
- ck9e0DsOBZmZi7ijlJaH/Ke/OxOhd30KevO09q4D/wadx91qewItIo/bg7jK38J+ZTlt
- EgITFYENqk5ZgoPjxnlelV+/1wD1RFto9cjDaBhDxr/4+GP3ZV/jRdwgqeVQrJFF/39x
- Nw16fs8RaDPN+78nkm7d70yW+XK1Ys0GNFoyLp1VG02O4f0xvTpZMtXnxT51eZG1sIRX
- JP0hoq1xCWhccjNBlnIxZoZ+ghsCPTzwNA0W0UpLt/ZFFD9n3hQFswiAkbxE0RNqg3C6
- IeVA==
-X-Gm-Message-State: AOJu0YwEoKlwdSL0QW+CpgdNIoSEoF+etazlVIs9RBTdoZfJDcx5FaEA
- XlXw65XRpabTNFqDUDiGdHuiP/v3kyZjE8LW1f026ETCSH1BMl11dG5RMwqIASla
-X-Gm-Gg: Acq92OHyN+veulQ1nxWzchZNUwyVsvTd1q2SnCcSu/RSZvPJgpHRlGJ5IJlFtXws8NG
- Yxv/zW228snmAssI8Vst+IpKgD7JF+WwPQ+9mL0CEJFSSIW9f3N0r1Lh6zHF1rO3vFeVpcAjxVH
- O/ymvgBDFtP7X9GvRU8WlpPl2eKAqvuDb295Gge2RdzNCK6j7g0tTxtm7u8+og9CiJ0bYnPzmMF
- EJu1C1GYTfnfje/vlqGXPf/zrtyw8gklH4K5SpxaUdblJFy6VwFO1GnnxP59lLaADtL4NJ437gV
- PVdXfgLa4z1g7miUoNBzOSpxtryIBwReM7lBj4QE4qqBlL+nnTMcb9DM+BSTS10hzgf8NH+dYI6
- rwUGTLETPa1ANbL9A6B9pe0bzfZXysvKYTTpUnlMq0bHjKXMO32RnSpIQG9CyFY2w/jK+7HvSQ6
- hjf3A0LirBJSKHGZA0zbHKL1z01zdlk1veLwe8Vw9OsOrFFMBz/HSf
-X-Received: by 2002:a17:902:e74f:b0:2b2:58c7:2ce1 with SMTP id
- d9443c01a7336-2beb07da2dcmr9938835ad.36.1779408324479; 
- Thu, 21 May 2026 17:05:24 -0700 (PDT)
+ bh=dWclSkJBFNBbgj7Bf7xZl/684YkVm+PSyCPH4svFOR4=;
+ b=TXxwvbjShykcRpS8ish1mke4gb16UeQxyfGNPkIA1gTQS7jve5OEhQ6pxhEYYV2Jsw
+ OUYGUkroATlali78vo8oNl+QLVwlxbEq3Z0gZKX2e8TmzJ2nd7GeR/ktkZdR7W1KnFHc
+ g9h6BJ3B5Swu1pdGjrBxMShddE1Dg7AmpXGggXu1FyXESpsB+bE3jMN+Wv7wVgb4BS61
+ aAE+FjjbGJbApcQd+RU1LVDry/tIiuU2ofm3LtFHLiqI8kvB9oqMnO0ACwX79x8xV8bw
+ RxpxTclusdsWXwXJNv959RbTW1FyHebnK4u4lv92ClESc+gwyvRzhSY0P1DQ0yXnqPXI
+ mxXA==
+X-Gm-Message-State: AOJu0YzqMFS+1tPOeZzoJNmwjyydSlUrXXX0j44XiJMACRLzrY7JP9kv
+ IvZM6m+nKherpWyrkfJxozTd94rtFNLKeqUuFL5V3GVqMKhig55e+5f0fGEU/6hb
+X-Gm-Gg: Acq92OHUVOTAhz4pKAqsuhWCLtqIeV4ImsFO3/KTxYdXeTxVypO0LAAVMD+IvzvtYtR
+ xXfCQdH8alXtrWPu8yP9z6hoYT1As1wO9oIFT2LA1+Maq4svIWkY2NihyrqAu6MeiKXcCGC+29I
+ vDb3JN6ZKI0z8+7dMvIJuydYXS50996u3Qn27tx45gQhE+43QF3hLsKCDNMs8vrEoSiG+8Ixc2Q
+ /8cJI3lFlzdbcBzlpacx6l7FEWoyf5pFIz4slTsRkbvXIt90RPWYT5eiGxpBB/jLZVtVUssFn6F
+ Hw/NLwrqR4/27ctNuJODKEt5/QLIt5MpcnR987xxQTTanU2u43L+/kHV5FpKG0Jlwh2z+UBh496
+ pv5iBQCKWlLdcjE6LodoJQwUpIZaGoXwkWBQ7c9gLjYN1mcPJsQkpq9kuD0EGFLjLL0vxCdKNKj
+ u8ZOjgalAkqPxhcQa8wbe2ZouwQPBzIDYoea3E89OvxQ==
+X-Received: by 2002:a17:903:246:b0:2bd:8395:fed8 with SMTP id
+ d9443c01a7336-2beb0722b38mr11003215ad.27.1779408245067; 
+ Thu, 21 May 2026 17:04:05 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2beb114b54csm3915475ad.42.2026.05.21.17.05.22
+ d9443c01a7336-2beb114b54csm3915475ad.42.2026.05.21.17.04.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 17:05:24 -0700 (PDT)
+ Thu, 21 May 2026 17:04:04 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
+Cc: alistair23@gmail.com, Andrew Jones <andrew.jones@oss.qualcomm.com>,
+ qemu-stable@nongnu.org,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Nutty Liu <nutty.liu@hotmail.com>, Tomasz Jeznach <tjeznach@rivosinc.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 34/48] target/riscv/kvm: use isa_edata_arr[] for unavailable
- props
-Date: Fri, 22 May 2026 10:03:10 +1000
-Message-ID: <20260522000324.23255-35-alistair.francis@wdc.com>
+Subject: [PULL 09/48] hw/riscv/riscv-iommu: Fix Svnapot 64KB pages
+Date: Fri, 22 May 2026 10:02:45 +1000
+Message-ID: <20260522000324.23255-10-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260522000324.23255-1-alistair.francis@wdc.com>
 References: <20260522000324.23255-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -88,7 +89,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,64 +105,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Andrew Jones <andrew.jones@oss.qualcomm.com>
 
-Use isa_edata_arr[] directly instead of going through 3 different arrays
-to populate the unavailable KVM properties.
+The Svnapot extension encodes a 64KB leaf PTE by setting PTE_N and
+storing bits [3:0] of the PPN as a NAPOT size indicator. The IOMMU
+model wasn't checking PTE_N and therefore was using the raw (NAPOT-
+encoded) PPN directly in the physical address, yielding an address
+32 KB above the correct base.
 
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260512032926.1978818-10-daniel.barboza@oss.qualcomm.com>
+Fix both riscv_iommu_spa_fetch() and pdt_memory_read() by mirroring
+the Svnapot handling already present in target/riscv/cpu_helper.c:
+
+  napot_bits  = ctz64(ppn) + 1          /* 4 for 64KB */
+  napot_mask  = (1 << napot_bits) - 1   /* 0xF */
+  phys_base   = PPN_PHYS(ppn & ~napot_mask)
+  page_offset = addr & (PPN_PHYS(napot_mask) | (TARGET_PAGE_SIZE - 1))
+
+The spec only defines napot_bits == 4 (64KB); any other value is
+treated as a reserved encoding.
+
+This is a fix, rather than new feature support, because the spec
+says "IOMMU implementations must support the Svnapot standard
+extension for NAPOT Translation Contiguity."
+
+Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Reviewed-by: Tomasz Jeznach <tjeznach@rivosinc.com>
+Message-ID: <20260508205129.377032-1-andrew.jones@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/kvm/kvm-cpu.c | 25 ++++++++++---------------
- 1 file changed, 10 insertions(+), 15 deletions(-)
+ hw/riscv/riscv-iommu.c | 44 ++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 40 insertions(+), 4 deletions(-)
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 34f60bd80c..17ba38403a 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -535,20 +535,9 @@ static void riscv_cpu_add_kvm_unavail_prop(Object *obj, const char *prop_name)
-                         NULL, (void *)prop_name);
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 25a356d1d3..eb09cc9748 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -237,6 +237,25 @@ static bool riscv_iommu_msi_check(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+     return true;
  }
  
--static void riscv_cpu_add_kvm_unavail_prop_array(Object *obj,
--                                        const RISCVCPUMultiExtConfig *array)
--{
--    const RISCVCPUMultiExtConfig *prop;
--
--    g_assert(array);
--
--    for (prop = array; prop && prop->name; prop++) {
--        riscv_cpu_add_kvm_unavail_prop(obj, prop->name);
--    }
--}
--
- static void kvm_riscv_add_cpu_user_properties(Object *cpu_obj)
- {
-+    const RISCVIsaExtData *edata;
-     int i;
- 
-     riscv_add_satp_mode_properties(cpu_obj);
-@@ -582,9 +571,15 @@ static void kvm_riscv_add_cpu_user_properties(Object *cpu_obj)
-                             NULL, multi_cfg);
-     }
- 
--    riscv_cpu_add_kvm_unavail_prop_array(cpu_obj, riscv_cpu_extensions);
--    riscv_cpu_add_kvm_unavail_prop_array(cpu_obj, riscv_cpu_vendor_exts);
--    riscv_cpu_add_kvm_unavail_prop_array(cpu_obj, riscv_cpu_experimental_exts);
-+    /*
-+     * Mark all isa_edata_arr properties that collides with
-+     * a KVM property as unavailable.
-+     */
-+    for (edata = isa_edata_arr; edata && edata->name; edata++) {
-+        if (edata->prop_name) {
-+            riscv_cpu_add_kvm_unavail_prop(cpu_obj, edata->prop_name);
-+        }
++/* Returns the NAPOT page mask, or 0 for reserved encodings. */
++static hwaddr riscv_iommu_napot_page_mask(hwaddr ppn, hwaddr addr, hwaddr *out)
++{
++    int napot_bits = ctz64(ppn) + 1;
++    hwaddr napot_mask, page_mask;
++
++    /* The spec only defines 64KB (napot_bits == 4) */
++    if (napot_bits != 4) {
++        return 0;
 +    }
++
++    napot_mask = (1ULL << napot_bits) - 1;
++    page_mask = PPN_PHYS(napot_mask) | (TARGET_PAGE_SIZE - 1);
++
++    *out = PPN_PHYS(ppn & ~napot_mask) | (addr & page_mask);
++
++    return page_mask;
++}
++
+ /*
+  * RISCV IOMMU Address Translation Lookup - Page Table Walk
+  *
+@@ -458,9 +477,20 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+         } else {
+             /* Leaf PTE, translation completed. */
+             sc[pass].step = sc[pass].levels;
+-            base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
+-            /* Update address mask based on smallest translation granularity */
+-            iotlb->addr_mask &= (1ULL << va_skip) - 1;
++
++            if (pte & PTE_N) {
++                hwaddr mask = riscv_iommu_napot_page_mask(ppn, addr, &base);
++
++                if (!mask) {
++                    break;
++                }
++                iotlb->addr_mask &= mask;
++            } else {
++                base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
++                /* Update address mask based on smallest translation granularity */
++                iotlb->addr_mask &= (1ULL << va_skip) - 1;
++            }
++
+             /* Continue with S-Stage translation? */
+             if (pass && sc[0].step != sc[0].levels) {
+                 pass = S_STAGE;
+@@ -997,7 +1027,13 @@ static MemTxResult pdt_memory_read(RISCVIOMMUState *s,
+             return MEMTX_ACCESS_ERROR; /* Misaligned PPN */
+         } else {
+             /* Leaf PTE, translation completed. */
+-            base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
++            if (pte & PTE_N) {
++                if (!riscv_iommu_napot_page_mask(ppn, addr, &base)) {
++                    return MEMTX_ACCESS_ERROR;
++                }
++            } else {
++                base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
++            }
+             break;
+         }
  
-    /* We don't have the needed KVM support for profiles */
-     for (i = 0; riscv_profiles[i] != NULL; i++) {
 -- 
 2.53.0
 
