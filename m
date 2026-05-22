@@ -4,182 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F91FCD5BAB
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 02:45:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3026ECD5BAB
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 02:46:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQFsN-0007Mw-OB; Thu, 21 May 2026 22:44:39 -0400
+	id 1wQFu9-00087T-5P; Thu, 21 May 2026 22:46:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1wQFsM-0007MU-AP
- for qemu-devel@nongnu.org; Thu, 21 May 2026 22:44:38 -0400
-Received: from mgamail.intel.com ([198.175.65.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1wQFsI-00080e-Pu
- for qemu-devel@nongnu.org; Thu, 21 May 2026 22:44:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1779417875; x=1810953875;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=eLd3E/Ah53j2Viix6qKwS9GnD6O7ufRr+cq3jm5RAHc=;
- b=KSZbvg9Ge8LTL8lfVhG7gdzuaITIDQcKg2pNMb7Gyvun8w9MfKcv0bog
- 0MocKopnNsr/KvfKFJNeA9In4GzJY52WADAKxZx8l9g5NBhLA4SFiJI+L
- E8SNspNO1J/2k3AUTGAvi3HQW5BOj3VXg+3lRBGkqz+lqgW/5YHuQIxyo
- 9soJ1vGR5jV73IbWrPUNoF9r16NZBOoTVJ167OjPIDdhfFJK4W39ep80q
- ok/5XCPEScwAFcHnjpZ0yGQkqMyYvqBOwzOB7ke7707lXcfa9yBgRpM09
- kWTqa1wXuJaCQf7pA149sNCkQIwFZbJNc/fbrC65gis3A25w3t6XXNOKX A==;
-X-CSE-ConnectionGUID: BfkSmVcKTPGyCnsA47Mz4Q==
-X-CSE-MsgGUID: kjlvHhOxRTasUcJLt07E0Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11793"; a="103022633"
-X-IronPort-AV: E=Sophos;i="6.24,161,1774335600"; d="scan'208";a="103022633"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2026 19:44:29 -0700
-X-CSE-ConnectionGUID: nkm3BWdmSA+iOB1te9elGw==
-X-CSE-MsgGUID: 4lZ2bCNORJSoS+/x+lg5MA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,161,1774335600"; d="scan'208";a="240983360"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
- by orviesa007.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2026 19:44:29 -0700
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Thu, 21 May 2026 19:44:28 -0700
-Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Thu, 21 May 2026 19:44:28 -0700
-Received: from SN4PR2101CU001.outbound.protection.outlook.com (40.93.195.39)
- by edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Thu, 21 May 2026 19:44:25 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Fnfz4MhwI+a1kkfrYBkSbRH3ehZR617mcj4N1mEPe6ZAii/lCXbd56LbWsQx9B42tCL1NB172ACOHq+fDIVMJjfpJMe27mkEqmoenjLt7MxoYBmRCFxGEVn1VV9b+TV6N0X4WdrQDm9Y5gE3gwtBPRLYDA9W24aG9CLu53UqiQfw8wUYIT7UkJh10mI/ESYk0bLuKfCq5KlYgHBvSBVjLKaCCMF67nIilslkSMz889iPR4gdv0IuFABjr70L3VMrLonJ3Xz1wHKkCZ1v78YRpdsklZT2yiKxnCK2TzyivPxGn/4VaT1dLRGVjATO/7VIYtMF3NXx15LD18x40hN5Bw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=eLd3E/Ah53j2Viix6qKwS9GnD6O7ufRr+cq3jm5RAHc=;
- b=eSkOy1fymykpNFg0Wj4pQmFtT0zNABeCw3fXJ4CgNwm5tdRnfKLLgb+njr8ANraFq8GyyjN5CHNagSmvx2PxCFt4LpS2+ML0cZOIWr6RJsgLlBOcDaOWCLHr1q3AEFBu4eoSuLdixNT4w1Ur9XfuMifCTUvCqy85jpHHGPhFRsxeDZLGtHSrXcD6Ka0ytpffJ4RSYSVIs/82ShVxQhC41FyfL6CZ73K/OAuAlSNuX38d9fhDcFvalAs3PC+i30G1CSVrILWPQvyCME3EUfwMk/CVKCFNig67Yur6cJlTL/jzA/WeUeA6KCN8CSPc4jCDh6yAcrCnQvgzY6Eq5CbLYg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
- by CO1PR11MB4868.namprd11.prod.outlook.com (2603:10b6:303:90::19)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.17; Fri, 22 May
- 2026 02:44:22 +0000
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::37b4:37a9:4f3:518b]) by IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::37b4:37a9:4f3:518b%5]) with mapi id 15.20.9913.009; Fri, 22 May 2026
- 02:44:22 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: "Liu, Yi L" <yi.l.liu@intel.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>, 
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "mst@redhat.com"
- <mst@redhat.com>, "jasowang@redhat.com" <jasowang@redhat.com>,
- "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "clement.mathieu--drif@bull.com" <clement.mathieu--drif@bull.com>, "Tian,
- Kevin" <kevin.tian@intel.com>, "Hao, Xudong" <xudong.hao@intel.com>
-Subject: RE: [PATCH v5 09/15] intel_iommu_accel: Handle PASID entry addition
- for pc_inv_dsc request
-Thread-Topic: [PATCH v5 09/15] intel_iommu_accel: Handle PASID entry addition
- for pc_inv_dsc request
-Thread-Index: AQHc32me4EElSM8k006ingDT7vUeurYNadwAgAv9ygA=
-Date: Fri, 22 May 2026 02:44:21 +0000
-Message-ID: <IA3PR11MB9136BDEC87472A1BD0E93B09920F2@IA3PR11MB9136.namprd11.prod.outlook.com>
-References: <20260509040819.1044702-1-zhenzhong.duan@intel.com>
- <20260509040819.1044702-10-zhenzhong.duan@intel.com>
- <44c1dd56-a37a-42ca-b8f3-9ac69aa1f33b@intel.com>
-In-Reply-To: <44c1dd56-a37a-42ca-b8f3-9ac69aa1f33b@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|CO1PR11MB4868:EE_
-x-ms-office365-filtering-correlation-id: 60d14bf1-3697-4195-fd80-08deb7ac0768
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|7416014|376014|1800799024|18002099003|56012099003|22082099003|3613699012|38070700021|6133799003|4143699003|11063799006;
-x-microsoft-antispam-message-info: 1yZa+TrayDgaGTSfmVm1BSCgzalolCScxDDG8OgVsFn8rSWxsoPExCFTTfVK5o9QEQ7dA2eLZLd8+WeLmSaXBfcrWdwEni7GjzBPYheXJZPngT6D/+fBLAkZyqADcTbNgiuXfdPsAMPOQ91kkrl4RHFWkJTDyBnxDvVNBWgixNcUNdlJUiVRmduaYFM9DhSvUj0e6FzGHAs5aWF6vLiA74LLYPmrxvQaZ8nv8zTICyHKwfHUjjCSf+DwJzXXcvn7C1+5X+hH1MDwK5MMWTEbBPzJ6MtqbvjyDL4ZAsyVa3dICUGsKu0ZesPrBA4tWKWk/PlsAlH/aH5LfrBdlnV99EXgBqHLSidM5rY4ernV4BX15VOcT3y7ZmmPnuqYXQnLxLrWITDe8iaqFPfuU6a8nZaVrZHOq5r13mZVk8Yc6tAbR+3CnZmrPqNTrFUpU82KifkqVZ+6OZpU6+jQlkE+8t2YIrtGlBZ8cpLFeBa64ZRxf18SsWvg5q7VEYXLasiR81oAh9AlwYonC0gG18XQ3bekqFSSGrx6rFEOvodACW+y4EDKTvwXxEbuEKwKM+Wj2tWmv8M9z8q/qZaxwox3rjtQEsHxSIL8shi1fF4IZjJsdX2VSjUfro9zCegT9w4aNIKubpGoZufI49CD2c31YCziWMtCE2sJmLoN35TmXV9hQQaik1e9VpJzK4VpwEhsSAFWQJnFnQom/UY4I9J8Xy6bROBcqPizJPdvArGc+S/wZhwqerQ7P7TBrJKQFXTbYadcAy1uSrzu5O+vzBASqA==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(7416014)(376014)(1800799024)(18002099003)(56012099003)(22082099003)(3613699012)(38070700021)(6133799003)(4143699003)(11063799006);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?dWZFOTk0aTczY3BFa1VsNDNJNUpHRDFzYmRCVkhUZHlrZGJrelNaeEhsU0FO?=
- =?utf-8?B?MmNPT2pJaGEyMFRGOEN1S2lidVNWZDlLZlhwQm50N1lIWDU3eVBtbTdwWHV2?=
- =?utf-8?B?YmxHQjdGWXNHTGhHUXNFVzNkdG5yOE9icHBqMFFSYTluNjRTbmlPWHg0eVJh?=
- =?utf-8?B?UTl5NS9YeFhRdnhwUWNzRzdHdW93NE9VVzNEcDl4RjFpNFRtSktvaVVyNDRr?=
- =?utf-8?B?QmpiV0NsY2pqYTQvcll2VE1zOTAxTDNzVzVUQWpTUHY2Ri9Ea0djUW5GcHdE?=
- =?utf-8?B?RGxCelNYUjE0WDByalFGNVRvODJCSTlSd2R6RE5pelNEamJpSGxpOWFleVZx?=
- =?utf-8?B?YkdsSXBRalYySHpmT2Z4aU5rcjNiNHdWSlJyd3RpTE1ldDRMTmU0R3VUZ2Vw?=
- =?utf-8?B?Y29icGh5WUNGTzVGbG5hb2lUaDhIUFlQNlhhL3h4WldTUHB6SFh2a1FzcHZ3?=
- =?utf-8?B?emRHYUxLYk1ldWhTWXY2cmR4bkxNaVpBVU9OZEE4aUE3OTIxRE5UcDV0RUZY?=
- =?utf-8?B?ZStYT1FJb2hsc05pZm9hL2h3QVM1dEg4MG9YSTRyZXE2RVJ2b1Z0VVZPeWpp?=
- =?utf-8?B?ZlkrNlRWeGttaUE2TFk4WjRwOWZpTE9nelVCay83RE41SEphSDM4RkFBU3Ns?=
- =?utf-8?B?Skl3Ui95aUxtcnZBQklTcWNNYXhDNlJiSFZjcFVNeHlTTWk0RWNHeXBRWkh0?=
- =?utf-8?B?ZGpZd0JxVUMyU2p3UmNQby81OE40RlNBZTZoZ29vcElUWWRBZlcwQzR6bEFk?=
- =?utf-8?B?ZGxFcHhFQU5YeVZHVEFtY2lDTzhZbWlKbFAvdUQveFhpQy80Y3lnQ0xKQWdh?=
- =?utf-8?B?OWNVN2NEb2tQbmROZUltRXA5dmhrL2JzVUdEVnRGdkdodGRCUFQwUm5lOEVP?=
- =?utf-8?B?SnRtbWs0dDM4bER4MmVhejdxeHJSSlp4S1RKZ0FYQnA5UmUyOTc2L1hQRXBR?=
- =?utf-8?B?eDR0NUlJbnBVSWJyWUh5OW95aE9WYTlZOFI1R2tuUnd2MUthdkRSSTBSSVZL?=
- =?utf-8?B?b2VwU3JIKzEyYkhnMDd5NWl0QWhtSDZJa3FJU1lMcFJQcmVDUXZUYTd6OWpT?=
- =?utf-8?B?MWhJRExoZFl4OEtTcVVCWmdPUktYbXlrYjNxb2JMeXlJSGR4bjBjY2hDSDZ6?=
- =?utf-8?B?b3o0N1lyR1p4QXdPWllyMXJkNHBmL0NqdzhJS1VDdVRSUGJLd0FyNVRvZnVi?=
- =?utf-8?B?RitHSjRGb2pEZ1FTN2RiTWx1dUJSSlRxNDNEVVRLLzFBb01SSlgzc2FaajdF?=
- =?utf-8?B?LzcyVHR6Y3lic2VtUkZZNmxzME1wb0ZpSDdLRFdiRlRPTmxBSE9SdVVzSGlF?=
- =?utf-8?B?eFFVb094M3QvZkVjNlZQUFlkUkpvTG1TUk00UWNyY1gzRWlFWnVBTlFyWEMr?=
- =?utf-8?B?SThnUUROeEViajlpNDdjcU5lYzdtZ05TWlhMdGNaeEttUkZsWnhSZDlJTWk2?=
- =?utf-8?B?WWdkbExLaTBRTUhvRm40UWFBRFJoY214cWJNUHRzeXQyN1Qwc0IzbGM3YmNx?=
- =?utf-8?B?T2Zpa1c1MDFXUHVCbFd3cTQ5UVBMVndRbHJjL0FqZzBhTDAvL3BwTXZLSmpV?=
- =?utf-8?B?WGo3RU41K0VGeC81V1RVbU1ZRWZNTUJJdEtmaForaSt6OWhGalZCUHhKak1s?=
- =?utf-8?B?RXBmRkN0eUt4a1BtUHV5d3ViSkl3NHUvU09DNnRUbFY1TXYwa2M1ZlBsUkhz?=
- =?utf-8?B?L2x4MGZodlhGMjhqN0ZGRjN3dFZrNk9nRkJzYVREcndSVXdBdzJUM3B1Mitj?=
- =?utf-8?B?ZmpIODhJYStwVUdVV2V5Mnk5cFhSZFpNdW5WcXFVVThqYUNKbDJDYjBLQVBO?=
- =?utf-8?B?K1Q0ODUvNC9WU1Y0dGcxWXJOR0ZDUlZaNXBQWWgrMUJhNmlOYzZrOWFuQ2dF?=
- =?utf-8?B?NWt0SEF6akhZbitwUW5BNFNJY3VZdXU1MjNwc2ZoUnVFSjdvTGVqK3k5L0Na?=
- =?utf-8?B?T0c4NTJUazFLSkxxQXIwZFZIUlNJZUJrV0tXcjZUVXJ1eWhUYVdJdGpQRmNF?=
- =?utf-8?B?OEFpQWQ4R1NzcENBVFc0OXhsYWRiRmZJbHYxQTFidE00RzA1ZEQ3SmNEZDNG?=
- =?utf-8?B?cGRvZlZ1eDVoQVI1bSt5Ly9aNmxpTHRpM25jTUY4R3ZCNGVpSzlzVTlZYWpi?=
- =?utf-8?B?Y3JXQmVGbGptNDMrOHJDRTZ2aXlBU0lDelBmSGtnbG1nRHNGWnJ2bmZzcjdX?=
- =?utf-8?B?UUZGeEhhYTgzN0xpMXJnWmg1NFNqRWJJeWp2SDZMNU9VYSs0MG5sd0JhckNH?=
- =?utf-8?B?MlNPdTRYZHZGMDdrbHlpdHgyWHdzUDk2MTNqRTV5V0h5UU1hQ0lLbDk4VDJI?=
- =?utf-8?B?S3g5VjRrTVh4Vkg2amhKUnlONG16bEcyM1VOTmgyZ09PZFNVSkQvUT09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1wQFu6-00087L-Qq
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 22:46:26 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1wQFu0-0000j7-9x
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 22:46:26 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Ax6Hh1ww9q_D8MAA--.11087S3;
+ Fri, 22 May 2026 10:46:13 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJDxquByww9qvTSMAA--.3717S3;
+ Fri, 22 May 2026 10:46:12 +0800 (CST)
+Subject: Re: [PATCH 4/4] target/loongarch: virtualize guest TLB and address
+ translation
+To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
+Cc: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+References: <cover.1779171125.git.prcups@krgm.moe>
+ <1483c382ada81ec19e0bd29bf8817afda75af9bf.1779171126.git.prcups@krgm.moe>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <bc615ae4-a341-57e0-6c93-ecd435b53395@loongson.cn>
+Date: Fri, 22 May 2026 10:43:10 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: XQdDG3jqeqFPuigFqTAQTpDGf3B1OVBFvGDZH4Kzxk81J6gu5J5rb18eqv/lyn0bxs/jLGj4VZ6gOekBn23fV+OIzjMnxif7bDnZNOAKrvJDZ+61T4pfCO7MZKoxo1LfQz9SnZQHnut17AxOP5XlYt7trWOFln5HgUOZr3UDA+aIMuG8/3AOvvuoDWDGYBMp7O8E164MKvfSGEB1urcBmLkSV6bpp+BMp3GnD7B3JxZItkDdUAATlrp3kflxYxnWGQPmhFv+NqsQduDE/hmlxtMV+6ReUAbp3P3lpnzqBGuhjWuQjevDWGR0cZY48P0HF9g7wgYkmP3eQNAcpAePDg==
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 60d14bf1-3697-4195-fd80-08deb7ac0768
-X-MS-Exchange-CrossTenant-originalarrivaltime: 22 May 2026 02:44:21.9568 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: XbQW46GX6CNBfwQZwlAFneeepfQFcD8idro03AaUz4nzNYRj+hizbQOLZHXmK9u5/hbXOqik+tONSg4aYEnmCEAAB2ia9BpKI1WkumqHfLM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR11MB4868
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.9;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
+In-Reply-To: <1483c382ada81ec19e0bd29bf8817afda75af9bf.1779171126.git.prcups@krgm.moe>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJDxquByww9qvTSMAA--.3717S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj9fXoWfKw4xCFyfGFyfWry8Ww43XFc_yoWxGr4UCo
+ WfJF4rG3W3Gr4fKF9F9wnIqay7JFWkAw4kCFZFvw43WayftryUKFWrta95Aa1UGF1kWF4k
+ C3WIqF15trW3Z343l-sFpf9Il3svdjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8wcxFpf
+ 9Il3svdxBIdaVrn0xqx4xG64xvF2IEw4CE5I8CrVC2j2Jv73VFW2AGmfu7bjvjm3AaLaJ3
+ UjIYCTnIWjp_UUUY27kC6x804xWl14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI
+ 8IcIk0rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xG
+ Y2AK021l84ACjcxK6xIIjxv20xvE14v26r1I6r4UM28EF7xvwVC0I7IYx2IY6xkF7I0E14
+ v26r1j6r4UM28EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUAVWUtwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
+ W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UMpBfU
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -48
+X-Spam_score: -4.9
 X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -195,252 +82,1747 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IExpdSwgWWkgTCA8eWkubC5s
-aXVAaW50ZWwuY29tPg0KPlN1YmplY3Q6IFJlOiBbUEFUQ0ggdjUgMDkvMTVdIGludGVsX2lvbW11
-X2FjY2VsOiBIYW5kbGUgUEFTSUQgZW50cnkgYWRkaXRpb24gZm9yDQo+cGNfaW52X2RzYyByZXF1
-ZXN0DQo+DQo+T24gNS85LzI2IDEyOjA4LCBaaGVuemhvbmcgRHVhbiB3cm90ZToNCj4+IFN0cnVj
-dHVyZSBWVERBZGRyZXNzU3BhY2UgaW5jbHVkZXMgc29tZSBlbGVtZW50cyBzdWl0YWJsZSBmb3Ig
-ZW11bGF0ZWQNCj4+IGRldmljZSBhbmQgcGFzc3Rocm91Z2ggZGV2aWNlIHdpdGhvdXQgUEFTSUQs
-IGUuZy4sIGFkZHJlc3Mgc3BhY2UsDQo+PiBkaWZmZXJlbnQgbWVtb3J5IHJlZ2lvbnMsIGV0Yywg
-aXQgaXMgYWxzbyBwcm90ZWN0ZWQgYnkgdnRkIGlvbW11IGxvY2ssDQo+PiBhbGwgdGhlc2UgYXJl
-IHVzZWxlc3MgYW5kIGJlY29tZSBhIGJ1cmRlbiBmb3IgcGFzc3Rocm91Z2ggZGV2aWNlIHdpdGgN
-Cj4+IFBBU0lELg0KPj4NCj4+IFdoZW4gdGhlcmUgYXJlIGxvdHMgb2YgUEFTSURzIHVzZWQgaW4g
-b25lIGRldmljZSwgdGhlIEFTIGFuZCBNUnMgYXJlDQo+PiBhbGwgcmVnaXN0ZXJlZCB0byBtZW1v
-cnkgY29yZSBhbmQgaW1wYWN0IHRoZSB3aG9sZSBzeXN0ZW0gcGVyZm9ybWFuY2UuDQo+Pg0KPj4g
-U28gaW5zdGVhZCBvZiB1c2luZyBWVERBZGRyZXNzU3BhY2UgdG8gY2FjaGUgcGFzaWQgZW50cnkg
-Zm9yIGVhY2ggcGFzaWQNCj4+IG9mIGEgcGFzc3Rocm91Z2ggZGV2aWNlLCB3ZSBkZWZpbmUgYSBs
-aWdodCB3ZWlnaHQgc3RydWN0dXJlDQo+PiBWVERBY2NlbFBBU0lEQ2FjaGVFbnRyeSB3aXRoIG9u
-bHkgbmVjZXNzYXJ5IGVsZW1lbnRzIGZvciBlYWNoIHBhc2lkLiBXZQ0KPj4gd2lsbCB1c2UgdGhp
-cyBzdHJ1Y3QgYXMgYSBwYXJhbWV0ZXIgdG8gY29uZHVjdCBiaW5kaW5nL3VuYmluZGluZyB0bw0K
-Pj4gbmVzdGVkIGh3cHQgYW5kIHRvIHJlY29yZCB0aGUgY3VycmVudCBib3VuZCBuZXN0ZWQgaHdw
-dC4gSXQncyBhbHNvDQo+PiBkZXNpZ25lZCB0byBzdXBwb3J0IElPTU1VX05PX1BBU0lELg0KPj4N
-Cj4+IFZUREFjY2VsUEFTSURDYWNoZUVudHJ5IGlzIGRlc2lnbmVkIHRvIG9ubHkgYmUgdXNlZCBp
-biBpbnRlbF9pb21tdV9hY2NlbC5jLA0KPj4gc2ltaWxhcmx5IFZURFBBU0lEQ2FjaGVFbnRyeSBz
-aG91bGQgb25seSBiZSB1c2VkIGluIGh3L2kzODYvaW50ZWxfaW9tbXUuYw0KPj4NCj4+IFdoZW4g
-Z3Vlc3QgY3JlYXRlcyBuZXcgUEFTSUQgZW50cmllcywgUUVNVSB3aWxsIGNhcHR1cmUgdGhlIHBj
-X2ludl9kc2MNCj4+IChwYXNpZCBjYWNoZSBpbnZhbGlkYXRpb24pIHJlcXVlc3QsIHdhbGsgdGhy
-b3VnaCBlYWNoIHBhc2lkIGluIGVhY2gNCj4+IHBhc3N0aHJvdWdoIGRldmljZSBmb3IgdmFsaWQg
-cGFzaWQgZW50cmllcywgY3JlYXRlIGEgbmV3DQo+PiBWVERBY2NlbFBBU0lEQ2FjaGVFbnRyeSBp
-ZiBub3QgZXhpc3RpbmcgeWV0Lg0KPj4NCj4+IElPTU1VX05PX1BBU0lEIG9mIHBhc3N0aHJvdWdo
-IGRldmljZSBzdGlsbCBuZWVkIHRvIHJlZ2lzdGVyIE1ScyBpbiBjYXNlDQo+PiBndWVzdCBkb2Vz
-IG5vdCBvcGVyYXRlIGluIHNjYWxhYmxlIG1vZGUuIFNvIGZvciBJT01NVV9OT19QQVNJRCwgd2Ug
-aGF2ZQ0KPj4gYm90aCBWVERBUEFTSURDYWNoZUVudHJ5IGFuZCBWVERBY2NlbFBBU0lEQ2FjaGVF
-bnRyeS4NCj4NCj5UaGUgaW1wbGVtZW50YXRpb24gTEdUTS4gQnV0IEkgZ290IGEgcXVlc3Rpb24g
-dG8gYXNrIGhlcmUuDQo+VlREQVBBU0lEQ2FjaGVFbnRyeSBpcyBjYWNoZWQgaW4gVlREQWRkcmVz
-c1NwYWNlLCB3aGlsZQ0KPlZUREFjY2VsUEFTSURDYWNoZUVudHJ5IGlzIGNhY2hlZCBpbiBWVERI
-b3N0SU9NTVVEZXZpY2UuIEEgbmF0dXJhbA0KPnF1ZXN0aW9uIGlzIHdoeSB1c2luZ1ZUREhvc3RJ
-T01NVURldmljZSBpbnN0ZWFkIG9mIFZUREFkZHJlc3NTcGFjZS4gSQ0KPnRoaW5rIGl0IG1pZ2h0
-IGJlIHZhbHVhYmxlIHRvIG1hcmsgdGhlIHJlYXNvbiBvZiB0aGlzIGNob2ljZS4gVGhpcw0KPndv
-dWxkIGhlbHAgbWFpbnRhaW5pbmcgaXQgaW4gZnV0dXJlIGFzIHdlIG1pZ2h0IGZvcmdvdCB0aGUg
-cmVhc29uLiA6KQ0KDQpIbW0sIHlvdSBtZWFuIHdoeSBub3QgcHV0dGluZyBWVERBY2NlbFBBU0lE
-Q2FjaGVFbnRyeSBsaXN0IGluIFZUREFkZHJlc3NTcGFjZT8NClRoZXJlIGlzIGV4cGxhbmF0aW9u
-IGFib3ZlLCBwYXN0ZSBoZXJlOg0KDQogIFZUREFjY2VsUEFTSURDYWNoZUVudHJ5IGlzIGRlc2ln
-bmVkIHRvIG9ubHkgYmUgdXNlZCBpbiBpbnRlbF9pb21tdV9hY2NlbC5jLA0KICBzaW1pbGFybHkg
-VlREUEFTSURDYWNoZUVudHJ5IHNob3VsZCBvbmx5IGJlIHVzZWQgaW4gaHcvaTM4Ni9pbnRlbF9p
-b21tdS5jDQoNClRoYW5rcw0KWmhlbnpob25nDQoNCj4NCj4+IENvLWRldmVsb3BlZC1ieTogWWkg
-TGl1IDx5aS5sLmxpdUBpbnRlbC5jb20+DQo+PiBTaWduZWQtb2ZmLWJ5OiBZaSBMaXUgPHlpLmwu
-bGl1QGludGVsLmNvbT4NCj4+IFNpZ25lZC1vZmYtYnk6IFpoZW56aG9uZyBEdWFuIDx6aGVuemhv
-bmcuZHVhbkBpbnRlbC5jb20+DQo+PiBUZXN0ZWQtYnk6IFh1ZG9uZyBIYW8gPHh1ZG9uZy5oYW9A
-aW50ZWwuY29tPg0KPj4gLS0tDQo+PiAgIGh3L2kzODYvaW50ZWxfaW9tbXVfYWNjZWwuaCAgICB8
-ICAxMyArKysNCj4+ICAgaHcvaTM4Ni9pbnRlbF9pb21tdV9pbnRlcm5hbC5oIHwgICA4ICsrDQo+
-PiAgIGh3L2kzODYvaW50ZWxfaW9tbXUuYyAgICAgICAgICB8ICAgMyArDQo+PiAgIGh3L2kzODYv
-aW50ZWxfaW9tbXVfYWNjZWwuYyAgICB8IDE1NiArKysrKysrKysrKysrKysrKysrKysrKysrKysr
-KysrKysNCj4+ICAgNCBmaWxlcyBjaGFuZ2VkLCAxODAgaW5zZXJ0aW9ucygrKQ0KPj4NCj4+IGRp
-ZmYgLS1naXQgYS9ody9pMzg2L2ludGVsX2lvbW11X2FjY2VsLmggYi9ody9pMzg2L2ludGVsX2lv
-bW11X2FjY2VsLmgNCj4+IGluZGV4IGU1ZjBiMDc3YjQuLmM5YjE4MjM3NDUgMTAwNjQ0DQo+PiAt
-LS0gYS9ody9pMzg2L2ludGVsX2lvbW11X2FjY2VsLmgNCj4+ICsrKyBiL2h3L2kzODYvaW50ZWxf
-aW9tbXVfYWNjZWwuaA0KPj4gQEAgLTEyLDYgKzEyLDEzIEBADQo+PiAgICNkZWZpbmUgSFdfSTM4
-Nl9JTlRFTF9JT01NVV9BQ0NFTF9IDQo+PiAgICNpbmNsdWRlIENPTkZJR19ERVZJQ0VTDQo+Pg0K
-Pj4gK3R5cGVkZWYgc3RydWN0IFZUREFjY2VsUEFTSURDYWNoZUVudHJ5IHsNCj4+ICsgICAgVlRE
-SG9zdElPTU1VRGV2aWNlICp2dGRfaGlvZDsNCj4+ICsgICAgVlREUEFTSURFbnRyeSBwYXNpZF9l
-bnRyeTsNCj4+ICsgICAgdWludDMyX3QgcGFzaWQ7DQo+PiArICAgIFFMSVNUX0VOVFJZKFZUREFj
-Y2VsUEFTSURDYWNoZUVudHJ5KSBuZXh0Ow0KPj4gK30gVlREQWNjZWxQQVNJRENhY2hlRW50cnk7
-DQo+PiArDQo+PiAgICNpZmRlZiBDT05GSUdfVlREX0FDQ0VMDQo+PiAgIGJvb2wgdnRkX2NoZWNr
-X2hpb2RfYWNjZWwoSW50ZWxJT01NVVN0YXRlICpzLCBWVERIb3N0SU9NTVVEZXZpY2UNCj4qdnRk
-X2hpb2QsDQo+PiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgRXJyb3IgKiplcnJwKTsNCj4+
-IEBAIC0yMCw2ICsyNyw3IEBAIGJvb2wgdnRkX3Byb3BhZ2F0ZV9ndWVzdF9wYXNpZChWVERBZGRy
-ZXNzU3BhY2UNCj4qdnRkX2FzLCBFcnJvciAqKmVycnApOw0KPj4gICB2b2lkIHZ0ZF9mbHVzaF9o
-b3N0X3Bpb3RsYl9hbGxfbG9ja2VkKEludGVsSU9NTVVTdGF0ZSAqcywgdWludDE2X3QNCj5kb21h
-aW5faWQsDQo+PiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdWludDMy
-X3QgcGFzaWQsIGh3YWRkciBhZGRyLA0KPj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgIHVpbnQ2NF90IG5wYWdlcywgYm9vbCBpaCk7DQo+PiArdm9pZCB2dGRfYWNjZWxf
-cGFzaWRfY2FjaGVfc3luYyhJbnRlbElPTU1VU3RhdGUgKnMsIFZURFBBU0lEQ2FjaGVJbmZvDQo+
-KnBjX2luZm8pOw0KPj4gICB2b2lkIHZ0ZF9pb21tdV9vcHNfdXBkYXRlX2FjY2VsKFBDSUlPTU1V
-T3BzICpvcHMpOw0KPj4gICAjZWxzZQ0KPj4gICBzdGF0aWMgaW5saW5lIGJvb2wgdnRkX2NoZWNr
-X2hpb2RfYWNjZWwoSW50ZWxJT01NVVN0YXRlICpzLA0KPj4gQEAgLTQ5LDYgKzU3LDExIEBAIHN0
-YXRpYyBpbmxpbmUgdm9pZA0KPnZ0ZF9mbHVzaF9ob3N0X3Bpb3RsYl9hbGxfbG9ja2VkKEludGVs
-SU9NTVVTdGF0ZSAqcywNCj4+ICAgew0KPj4gICB9DQo+Pg0KPj4gK3N0YXRpYyBpbmxpbmUgdm9p
-ZCB2dGRfYWNjZWxfcGFzaWRfY2FjaGVfc3luYyhJbnRlbElPTU1VU3RhdGUgKnMsDQo+PiArICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFZURFBBU0lEQ2FjaGVJ
-bmZvICpwY19pbmZvKQ0KPj4gK3sNCj4+ICt9DQo+PiArDQo+PiAgIHN0YXRpYyBpbmxpbmUgdm9p
-ZCB2dGRfaW9tbXVfb3BzX3VwZGF0ZV9hY2NlbChQQ0lJT01NVU9wcyAqb3BzKQ0KPj4gICB7DQo+
-PiAgIH0NCj4+IGRpZmYgLS1naXQgYS9ody9pMzg2L2ludGVsX2lvbW11X2ludGVybmFsLmggYi9o
-dy9pMzg2L2ludGVsX2lvbW11X2ludGVybmFsLmgNCj4+IGluZGV4IDAxNDEzMTZmODMuLjYyM2Rj
-MjQ3NjAgMTAwNjQ0DQo+PiAtLS0gYS9ody9pMzg2L2ludGVsX2lvbW11X2ludGVybmFsLmgNCj4+
-ICsrKyBiL2h3L2kzODYvaW50ZWxfaW9tbXVfaW50ZXJuYWwuaA0KPj4gQEAgLTYxNSw2ICs2MTUs
-NyBAQCB0eXBlZGVmIHN0cnVjdCBWVERSb290RW50cnkgVlREUm9vdEVudHJ5Ow0KPj4gICAjZGVm
-aW5lIFZURF9DVFhfRU5UUllfTEVHQUNZX1NJWkUgICAgIDE2DQo+PiAgICNkZWZpbmUgVlREX0NU
-WF9FTlRSWV9TQ0FMQUJMRV9TSVpFICAgMzINCj4+DQo+PiArI2RlZmluZSBWVERfU01fQ09OVEVY
-VF9FTlRSWV9QRFRTKHgpICAgICAgICBleHRyYWN0NjQoKHgpLT52YWxbMF0sIDksIDMpDQo+PiAg
-ICNkZWZpbmUgVlREX1NNX0NPTlRFWFRfRU5UUllfUlNWRF9WQUwwKGF3KSAgKDB4MWUwVUxMIHwN
-Cj5+VlREX0hBV19NQVNLKGF3KSkNCj4+ICAgI2RlZmluZSBWVERfU01fQ09OVEVYVF9FTlRSWV9S
-U1ZEX1ZBTDEgICAgICAweGZmZmZmZmZmZmZlMDAwMDBVTEwNCj4+ICAgI2RlZmluZSBWVERfU01f
-Q09OVEVYVF9FTlRSWV9QUkUgICAgICAgICAgICAweDEwVUxMDQo+PiBAQCAtNjQ1LDYgKzY0Niw3
-IEBAIHR5cGVkZWYgc3RydWN0IFZURFBJT1RMQkludkluZm8gew0KPj4gICAjZGVmaW5lIFZURF9Q
-QVNJRF9ESVJfQklUU19NQVNLICAgICAgICgweDNmZmZVTEwpDQo+PiAgICNkZWZpbmUgVlREX1BB
-U0lEX0RJUl9JTkRFWChwYXNpZCkgICAgKCgocGFzaWQpID4+IDYpICYNCj5WVERfUEFTSURfRElS
-X0JJVFNfTUFTSykNCj4+ICAgI2RlZmluZSBWVERfUEFTSURfRElSX0ZQRCAgICAgICAgICAgICAo
-MVVMTCA8PCAxKSAvKiBGYXVsdCBQcm9jZXNzaW5nIERpc2FibGUgKi8NCj4+ICsjZGVmaW5lIFZU
-RF9QQVNJRF9UQUJMRV9FTlRSWV9OVU0gICAgICgxVUxMIDw8IDYpDQo+PiAgICNkZWZpbmUgVlRE
-X1BBU0lEX1RBQkxFX0JJVFNfTUFTSyAgICAgKDB4M2ZVTEwpDQo+PiAgICNkZWZpbmUgVlREX1BB
-U0lEX1RBQkxFX0lOREVYKHBhc2lkKSAgKChwYXNpZCkgJg0KPlZURF9QQVNJRF9UQUJMRV9CSVRT
-X01BU0spDQo+PiAgICNkZWZpbmUgVlREX1BBU0lEX0VOVFJZX0ZQRCAgICAgICAgICAgKDFVTEwg
-PDwgMSkgLyogRmF1bHQgUHJvY2Vzc2luZyBEaXNhYmxlDQo+Ki8NCj4+IEBAIC03MTAsNiArNzEy
-LDcgQEAgdHlwZWRlZiBzdHJ1Y3QgVlRESG9zdElPTU1VRGV2aWNlIHsNCj4+ICAgICAgIFBDSUJ1
-cyAqYnVzOw0KPj4gICAgICAgdWludDhfdCBkZXZmbjsNCj4+ICAgICAgIEhvc3RJT01NVURldmlj
-ZSAqaGlvZDsNCj4+ICsgICAgUUxJU1RfSEVBRCgsIFZUREFjY2VsUEFTSURDYWNoZUVudHJ5KSBw
-YXNpZF9jYWNoZV9saXN0Ow0KPj4gICB9IFZUREhvc3RJT01NVURldmljZTsNCj4+DQo+PiAgIC8q
-DQo+PiBAQCAtNzY3LDYgKzc3MCwxMSBAQCBzdGF0aWMgaW5saW5lIGludA0KPnZ0ZF9wYXNpZF9l
-bnRyeV9jb21wYXJlKFZURFBBU0lERW50cnkgKnAxLCBWVERQQVNJREVudHJ5ICpwMikNCj4+ICAg
-ICAgIHJldHVybiBtZW1jbXAocDEsIHAyLCBzaXplb2YoKnAxKSk7DQo+PiAgIH0NCj4+DQo+PiAr
-c3RhdGljIGlubGluZSB1aW50MzJfdCB2dGRfc21fY2VfZ2V0X3BkdF9lbnRyeV9udW0oVlREQ29u
-dGV4dEVudHJ5ICpjZSkNCj4+ICt7DQo+PiArICAgIHJldHVybiAxVSA8PCAoVlREX1NNX0NPTlRF
-WFRfRU5UUllfUERUUyhjZSkgKyA3KTsNCj4+ICt9DQo+PiArDQo+PiAgIGludCB2dGRfZ2V0X3Bk
-aXJlX2Zyb21fcGRpcl90YWJsZShkbWFfYWRkcl90IHBhc2lkX2Rpcl9iYXNlLCB1aW50MzJfdCBw
-YXNpZCwNCj4+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFZURFBBU0lERGly
-RW50cnkgKnBkaXJlKTsNCj4+ICAgaW50IHZ0ZF9nZXRfcGVfaW5fcGFzaWRfbGVhZl90YWJsZShJ
-bnRlbElPTU1VU3RhdGUgKnMsIHVpbnQzMl90IHBhc2lkLA0KPj4gZGlmZiAtLWdpdCBhL2h3L2kz
-ODYvaW50ZWxfaW9tbXUuYyBiL2h3L2kzODYvaW50ZWxfaW9tbXUuYw0KPj4gaW5kZXggYjUwYzU1
-NmM0MC4uZTFlMzI5NTlkMyAxMDA2NDQNCj4+IC0tLSBhL2h3L2kzODYvaW50ZWxfaW9tbXUuYw0K
-Pj4gKysrIGIvaHcvaTM4Ni9pbnRlbF9pb21tdS5jDQo+PiBAQCAtMzE4MSw2ICszMTgxLDggQEAg
-c3RhdGljIHZvaWQgdnRkX3Bhc2lkX2NhY2hlX3N5bmMoSW50ZWxJT01NVVN0YXRlDQo+KnMsIFZU
-RFBBU0lEQ2FjaGVJbmZvICpwY19pbmZvKQ0KPj4gICAgICAgZ19oYXNoX3RhYmxlX2ZvcmVhY2go
-cy0+dnRkX2FkZHJlc3Nfc3BhY2VzLA0KPnZ0ZF9wYXNpZF9jYWNoZV9zeW5jX2xvY2tlZCwNCj4+
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgIHBjX2luZm8pOw0KPj4gICAgICAgdnRkX2lvbW11
-X3VubG9jayhzKTsNCj4+ICsNCj4+ICsgICAgdnRkX2FjY2VsX3Bhc2lkX2NhY2hlX3N5bmMocywg
-cGNfaW5mbyk7DQo+PiAgIH0NCj4+DQo+PiAgIHN0YXRpYyB2b2lkIHZ0ZF9yZXBsYXlfcGFzaWRf
-YmluZGluZ3NfYWxsKEludGVsSU9NTVVTdGF0ZSAqcykNCj4+IEBAIC00NzUxLDYgKzQ3NTMsNyBA
-QCBzdGF0aWMgYm9vbCB2dGRfZGV2X3NldF9pb21tdV9kZXZpY2UoUENJQnVzICpidXMsDQo+dm9p
-ZCAqb3BhcXVlLCBpbnQgZGV2Zm4sDQo+PiAgICAgICB2dGRfaGlvZC0+ZGV2Zm4gPSAodWludDhf
-dClkZXZmbjsNCj4+ICAgICAgIHZ0ZF9oaW9kLT5pb21tdV9zdGF0ZSA9IHM7DQo+PiAgICAgICB2
-dGRfaGlvZC0+aGlvZCA9IGhpb2Q7DQo+PiArICAgIFFMSVNUX0lOSVQoJnZ0ZF9oaW9kLT5wYXNp
-ZF9jYWNoZV9saXN0KTsNCj4+DQo+PiAgICAgICBpZiAoIXZ0ZF9jaGVja19oaW9kKHMsIHZ0ZF9o
-aW9kLCBlcnJwKSkgew0KPj4gICAgICAgICAgIGdfZnJlZSh2dGRfaGlvZCk7DQo+PiBkaWZmIC0t
-Z2l0IGEvaHcvaTM4Ni9pbnRlbF9pb21tdV9hY2NlbC5jIGIvaHcvaTM4Ni9pbnRlbF9pb21tdV9h
-Y2NlbC5jDQo+PiBpbmRleCAxMGJkYmJhNjMyLi5hNjZkNjNiNGM4IDEwMDY0NA0KPj4gLS0tIGEv
-aHcvaTM4Ni9pbnRlbF9pb21tdV9hY2NlbC5jDQo+PiArKysgYi9ody9pMzg2L2ludGVsX2lvbW11
-X2FjY2VsLmMNCj4+IEBAIC0yNTksNiArMjU5LDE2MiBAQCB2b2lkDQo+dnRkX2ZsdXNoX2hvc3Rf
-cGlvdGxiX2FsbF9sb2NrZWQoSW50ZWxJT01NVVN0YXRlICpzLCB1aW50MTZfdCBkb21haW5faWQs
-DQo+PiAgICAgICAgICAgICAgICAgICAgICAgICAgICB2dGRfZmx1c2hfaG9zdF9waW90bGJfbG9j
-a2VkLCAmcGlvdGxiX2luZm8pOw0KPj4gICB9DQo+Pg0KPj4gK3N0YXRpYyB2b2lkIHZ0ZF9hY2Nl
-bF9maWxsX3BjKFZUREhvc3RJT01NVURldmljZSAqdnRkX2hpb2QsIHVpbnQzMl90IHBhc2lkLA0K
-Pj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFZURFBBU0lERW50cnkgKnBlKQ0KPj4g
-K3sNCj4+ICsgICAgVlREQWNjZWxQQVNJRENhY2hlRW50cnkgKnZ0ZF9wY2U7DQo+PiArDQo+PiAr
-ICAgIFFMSVNUX0ZPUkVBQ0godnRkX3BjZSwgJnZ0ZF9oaW9kLT5wYXNpZF9jYWNoZV9saXN0LCBu
-ZXh0KSB7DQo+PiArICAgICAgICBpZiAodnRkX3BjZS0+cGFzaWQgPT0gcGFzaWQpIHsNCj4+ICsg
-ICAgICAgICAgICBpZiAodnRkX3Bhc2lkX2VudHJ5X2NvbXBhcmUocGUsICZ2dGRfcGNlLT5wYXNp
-ZF9lbnRyeSkpIHsNCj4+ICsgICAgICAgICAgICAgICAgdnRkX3BjZS0+cGFzaWRfZW50cnkgPSAq
-cGU7DQo+PiArICAgICAgICAgICAgfQ0KPj4gKyAgICAgICAgICAgIHJldHVybjsNCj4+ICsgICAg
-ICAgIH0NCj4+ICsgICAgfQ0KPj4gKw0KPj4gKyAgICB2dGRfcGNlID0gZ19tYWxsb2MwKHNpemVv
-ZihWVERBY2NlbFBBU0lEQ2FjaGVFbnRyeSkpOw0KPj4gKyAgICB2dGRfcGNlLT52dGRfaGlvZCA9
-IHZ0ZF9oaW9kOw0KPj4gKyAgICB2dGRfcGNlLT5wYXNpZCA9IHBhc2lkOw0KPj4gKyAgICB2dGRf
-cGNlLT5wYXNpZF9lbnRyeSA9ICpwZTsNCj4+ICsgICAgUUxJU1RfSU5TRVJUX0hFQUQoJnZ0ZF9o
-aW9kLT5wYXNpZF9jYWNoZV9saXN0LCB2dGRfcGNlLCBuZXh0KTsNCj4+ICt9DQo+PiArDQo+PiAr
-LyoNCj4+ICsgKiBUaGlzIGZ1bmN0aW9uIHdhbGtzIG92ZXIgUEFTSUQgcmFuZ2Ugd2l0aGluIFtz
-dGFydCwgZW5kKSBpbiBhIHNpbmdsZQ0KPj4gKyAqIFBBU0lEIHRhYmxlIGZvciBlbnRyaWVzIG1h
-dGNoaW5nIEBpbmZvIHR5cGUvZGlkLCB0aGVuIGNyZWF0ZQ0KPj4gKyAqIFZUREFjY2VsUEFTSURD
-YWNoZUVudHJ5IGlmIG5vdCBleGlzdCB5ZXQuDQo+PiArICovDQo+PiArc3RhdGljIHZvaWQgdnRk
-X3NtX3Bhc2lkX3RhYmxlX3dhbGtfb25lKFZUREhvc3RJT01NVURldmljZSAqdnRkX2hpb2QsDQo+
-PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGRtYV9hZGRyX3QgcHRf
-YmFzZSwgaW50IHN0YXJ0LCBpbnQgZW5kLA0KPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICBWVERQQVNJRENhY2hlSW5mbyAqaW5mbykNCj4+ICt7DQo+PiArICAgIElu
-dGVsSU9NTVVTdGF0ZSAqcyA9IHZ0ZF9oaW9kLT5pb21tdV9zdGF0ZTsNCj4+ICsgICAgVlREUEFT
-SURFbnRyeSBwZTsNCj4+ICsgICAgaW50IHBhc2lkOw0KPj4gKw0KPj4gKyAgICBmb3IgKHBhc2lk
-ID0gc3RhcnQ7IHBhc2lkIDwgZW5kOyBwYXNpZCsrKSB7DQo+PiArICAgICAgICBpZiAodnRkX2dl
-dF9wZV9pbl9wYXNpZF9sZWFmX3RhYmxlKHMsIHBhc2lkLCBwdF9iYXNlLCAmcGUpIHx8DQo+PiAr
-ICAgICAgICAgICAgIXZ0ZF9wZV9wcmVzZW50KCZwZSkpIHsNCj4+ICsgICAgICAgICAgICBjb250
-aW51ZTsNCj4+ICsgICAgICAgIH0NCj4+ICsNCj4+ICsgICAgICAgIGlmICgoaW5mby0+dHlwZSA9
-PSBWVERfSU5WX0RFU0NfUEFTSURDX0dfRFNJIHx8DQo+PiArICAgICAgICAgICAgIGluZm8tPnR5
-cGUgPT0gVlREX0lOVl9ERVNDX1BBU0lEQ19HX1BBU0lEX1NJKSAmJg0KPj4gKyAgICAgICAgICAg
-IChpbmZvLT5kaWQgIT0gVlREX1NNX1BBU0lEX0VOVFJZX0RJRCgmcGUpKSkgew0KPj4gKyAgICAg
-ICAgICAgIC8qDQo+PiArICAgICAgICAgICAgICogVlREX1BBU0lEX0NBQ0hFX0RPTVNJIGFuZCBW
-VERfUEFTSURfQ0FDSEVfUEFTSURTSQ0KPj4gKyAgICAgICAgICAgICAqIHJlcXVpcmVzIGRvbWFp
-biBpZCBjaGVjay4gSWYgZG9tYWluIGlkIGNoZWNrIGZhaWwsDQo+PiArICAgICAgICAgICAgICog
-Z28gdG8gbmV4dCBwYXNpZC4NCj4+ICsgICAgICAgICAgICAgKi8NCj4+ICsgICAgICAgICAgICBj
-b250aW51ZTsNCj4+ICsgICAgICAgIH0NCj4+ICsNCj4+ICsgICAgICAgIHZ0ZF9hY2NlbF9maWxs
-X3BjKHZ0ZF9oaW9kLCBwYXNpZCwgJnBlKTsNCj4+ICsgICAgfQ0KPj4gK30NCj4+ICsNCj4+ICsv
-Kg0KPj4gKyAqIEluIFZULWQgc2NhbGFibGUgbW9kZSB0cmFuc2xhdGlvbiwgUEFTSUQgZGlyICsg
-UEFTSUQgdGFibGUgaXMgdXNlZC4NCj4+ICsgKiBUaGlzIGZ1bmN0aW9uIGFpbXMgYXQgbG9vcGlu
-ZyBvdmVyIGEgcmFuZ2Ugb2YgUEFTSURzIGluIHRoZSBnaXZlbg0KPj4gKyAqIHR3byBsZXZlbCB0
-YWJsZSB0byBpZGVudGlmeSB0aGUgcGFzaWQgY29uZmlnIGluIGd1ZXN0Lg0KPj4gKyAqLw0KPj4g
-K3N0YXRpYyB2b2lkIHZ0ZF9zbV9wYXNpZF90YWJsZV93YWxrKFZUREhvc3RJT01NVURldmljZSAq
-dnRkX2hpb2QsDQo+PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZG1hX2Fk
-ZHJfdCBwZHRfYmFzZSwgaW50IHN0YXJ0LCBpbnQgZW5kLA0KPj4gKyAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgIFZURFBBU0lEQ2FjaGVJbmZvICppbmZvKQ0KPj4gK3sNCj4+ICsg
-ICAgVlREUEFTSUREaXJFbnRyeSBwZGlyZTsNCj4+ICsgICAgaW50IHBhc2lkID0gc3RhcnQ7DQo+
-PiArICAgIGludCBwYXNpZF9uZXh0Ow0KPj4gKyAgICBkbWFfYWRkcl90IHB0X2Jhc2U7DQo+PiAr
-DQo+PiArICAgIHdoaWxlIChwYXNpZCA8IGVuZCkgew0KPj4gKyAgICAgICAgcGFzaWRfbmV4dCA9
-IChwYXNpZCArIFZURF9QQVNJRF9UQUJMRV9FTlRSWV9OVU0pICYNCj4+ICsgICAgICAgICAgICAg
-ICAgICAgICB+KFZURF9QQVNJRF9UQUJMRV9FTlRSWV9OVU0gLSAxKTsNCj4+ICsgICAgICAgIHBh
-c2lkX25leHQgPSBwYXNpZF9uZXh0IDwgZW5kID8gcGFzaWRfbmV4dCA6IGVuZDsNCj4+ICsNCj4+
-ICsgICAgICAgIGlmICghdnRkX2dldF9wZGlyZV9mcm9tX3BkaXJfdGFibGUocGR0X2Jhc2UsIHBh
-c2lkLCAmcGRpcmUpDQo+PiArICAgICAgICAgICAgJiYgdnRkX3BkaXJlX3ByZXNlbnQoJnBkaXJl
-KSkgew0KPj4gKyAgICAgICAgICAgIHB0X2Jhc2UgPSBwZGlyZS52YWwgJiBWVERfUEFTSURfVEFC
-TEVfQkFTRV9BRERSX01BU0s7DQo+PiArICAgICAgICAgICAgdnRkX3NtX3Bhc2lkX3RhYmxlX3dh
-bGtfb25lKHZ0ZF9oaW9kLCBwdF9iYXNlLCBwYXNpZCwgcGFzaWRfbmV4dCwNCj4+ICsgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaW5mbyk7DQo+PiArICAgICAgICB9DQo+
-PiArICAgICAgICBwYXNpZCA9IHBhc2lkX25leHQ7DQo+PiArICAgIH0NCj4+ICt9DQo+PiArDQo+
-PiArc3RhdGljIHZvaWQgdnRkX2FjY2VsX3JlcGxheV9wYXNpZF9iaW5kX2Zvcl9kZXYoVlRESG9z
-dElPTU1VRGV2aWNlDQo+KnZ0ZF9oaW9kLA0KPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIGludCBzdGFydCwgaW50IGVuZCwNCj4+ICsgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBWVERQQVNJRENhY2hlSW5mbyAq
-cGNfaW5mbykNCj4+ICt7DQo+PiArICAgIEludGVsSU9NTVVTdGF0ZSAqcyA9IHZ0ZF9oaW9kLT5p
-b21tdV9zdGF0ZTsNCj4+ICsgICAgVlREQ29udGV4dEVudHJ5IGNlOw0KPj4gKyAgICBpbnQgZGV2
-X21heF9wYXNpZCA9IDEgPDwgdnRkX2hpb2QtPmhpb2QtPmNhcHMubWF4X3Bhc2lkX2xvZzI7DQo+
-PiArDQo+PiArICAgIGlmICghdnRkX2Rldl90b19jb250ZXh0X2VudHJ5KHMsIHBjaV9idXNfbnVt
-KHZ0ZF9oaW9kLT5idXMpLA0KPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB2
-dGRfaGlvZC0+ZGV2Zm4sICZjZSkpIHsNCj4+ICsgICAgICAgIFZURFBBU0lEQ2FjaGVJbmZvIHdh
-bGtfaW5mbyA9ICpwY19pbmZvOw0KPj4gKyAgICAgICAgdWludDMyX3QgY2VfbWF4X3Bhc2lkID0g
-dnRkX3NtX2NlX2dldF9wZHRfZW50cnlfbnVtKCZjZSkgKg0KPj4gKyAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgVlREX1BBU0lEX1RBQkxFX0VOVFJZX05VTTsNCj4+ICsNCj4+ICsgICAg
-ICAgIGVuZCA9IE1JTihlbmQsIE1JTihkZXZfbWF4X3Bhc2lkLCBjZV9tYXhfcGFzaWQpKTsNCj4+
-ICsNCj4+ICsgICAgICAgIHZ0ZF9zbV9wYXNpZF90YWJsZV93YWxrKHZ0ZF9oaW9kLA0KPlZURF9D
-RV9HRVRfUEFTSURfRElSX1RBQkxFKCZjZSksDQo+PiArICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICBzdGFydCwgZW5kLCAmd2Fsa19pbmZvKTsNCj4+ICsgICAgfQ0KPj4gK30NCj4+ICsN
-Cj4+ICsvKg0KPj4gKyAqIFRoaXMgZnVuY3Rpb24gcmVwbGF5cyB0aGUgZ3Vlc3QgcGFzaWQgYmlu
-ZGluZ3MgYnkgd2Fsa2luZyB0aGUgdHdvIGxldmVsDQo+PiArICogZ3Vlc3QgUEFTSUQgdGFibGUu
-IEZvciBlYWNoIHZhbGlkIHBhc2lkIGVudHJ5LCBpdCBjcmVhdGVzIGFuIGVudHJ5DQo+PiArICog
-VlREQWNjZWxQQVNJRENhY2hlRW50cnkgZHluYW1pY2FsbHkgaWYgbm90IGV4aXN0IHlldC4gVGhp
-cyBlbnRyeSBob2xkcw0KPj4gKyAqIGluZm8gc3BlY2lmaWMgdG8gYSBwYXNpZA0KPj4gKyAqLw0K
-Pj4gK3ZvaWQgdnRkX2FjY2VsX3Bhc2lkX2NhY2hlX3N5bmMoSW50ZWxJT01NVVN0YXRlICpzLCBW
-VERQQVNJRENhY2hlSW5mbw0KPipwY19pbmZvKQ0KPj4gK3sNCj4+ICsgICAgaW50IHN0YXJ0ID0g
-SU9NTVVfTk9fUEFTSUQsIGVuZCA9IDEgPDwgcy0+cGFzaWQ7DQo+PiArICAgIFZUREhvc3RJT01N
-VURldmljZSAqdnRkX2hpb2Q7DQo+PiArICAgIEdIYXNoVGFibGVJdGVyIGhpb2RfaXQ7DQo+PiAr
-DQo+PiArICAgIGlmICghcy0+ZnN0cykgew0KPj4gKyAgICAgICAgcmV0dXJuOw0KPj4gKyAgICB9
-DQo+PiArDQo+PiArICAgIHN3aXRjaCAocGNfaW5mby0+dHlwZSkgew0KPj4gKyAgICBjYXNlIFZU
-RF9JTlZfREVTQ19QQVNJRENfR19QQVNJRF9TSToNCj4+ICsgICAgICAgIHN0YXJ0ID0gcGNfaW5m
-by0+cGFzaWQ7DQo+PiArICAgICAgICBlbmQgPSBwY19pbmZvLT5wYXNpZCArIDE7DQo+PiArICAg
-ICAgICAvKiBmYWxsIHRocm91Z2ggKi8NCj4+ICsgICAgY2FzZSBWVERfSU5WX0RFU0NfUEFTSURD
-X0dfRFNJOg0KPj4gKyAgICAgICAgLyoNCj4+ICsgICAgICAgICAqIGxvb3AgYWxsIGFzc2lnbmVk
-IGRldmljZXMsIGRvIGRvbWFpbiBpZCBjaGVjayBpbg0KPj4gKyAgICAgICAgICogdnRkX3NtX3Bh
-c2lkX3RhYmxlX3dhbGtfb25lKCkgYWZ0ZXIgZ2V0IHBhc2lkIGVudHJ5Lg0KPj4gKyAgICAgICAg
-ICovDQo+PiArICAgICAgICBicmVhazsNCj4+ICsgICAgY2FzZSBWVERfSU5WX0RFU0NfUEFTSURD
-X0dfR0xPQkFMOg0KPj4gKyAgICAgICAgLyogbG9vcCBhbGwgYXNzaWduZWQgZGV2aWNlcyAqLw0K
-Pj4gKyAgICAgICAgYnJlYWs7DQo+PiArICAgIGRlZmF1bHQ6DQo+PiArICAgICAgICBnX2Fzc2Vy
-dF9ub3RfcmVhY2hlZCgpOw0KPj4gKyAgICB9DQo+PiArDQo+PiArICAgIC8qDQo+PiArICAgICAq
-IExvb3AgYWxsIHRoZSB2dGRfaGlvZCBpbnN0YW5jZXMgdG8gc3luYyB0aGUgInBhc2lkIGNhY2hl
-IiBwZXIgdGhlDQo+PiArICAgICAqIGd1ZXN0IHBhc2lkIGNvbmZpZ3VyYXRpb24uDQo+PiArICAg
-ICAqDQo+PiArICAgICAqIFZURCB0cmFuc2xhdGlvbiBjYWxsYmFjayBuZXZlciBhY2Nlc3NlcyB2
-dGRfaGlvZCBhbmQgaXRzIGNvcnJlc3BvbmRpbmcNCj4+ICsgICAgICogY2FjaGVkIHBhc2lkIGVu
-dHJ5LCBzbyBubyBpb21tdSBsb2NrIG5lZWRlZCBoZXJlLg0KPj4gKyAgICAgKi8NCj4+ICsgICAg
-Z19oYXNoX3RhYmxlX2l0ZXJfaW5pdCgmaGlvZF9pdCwgcy0+dnRkX2hvc3RfaW9tbXVfZGV2KTsN
-Cj4+ICsgICAgd2hpbGUgKGdfaGFzaF90YWJsZV9pdGVyX25leHQoJmhpb2RfaXQsIE5VTEwsICh2
-b2lkICoqKSZ2dGRfaGlvZCkpIHsNCj4+ICsgICAgICAgIGlmICghb2JqZWN0X2R5bmFtaWNfY2Fz
-dChPQkpFQ1QodnRkX2hpb2QtPmhpb2QpLA0KPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgIFRZUEVfSE9TVF9JT01NVV9ERVZJQ0VfSU9NTVVGRCkpIHsNCj4+ICsgICAgICAgICAg
-ICBjb250aW51ZTsNCj4+ICsgICAgICAgIH0NCj4+ICsgICAgICAgIHZ0ZF9hY2NlbF9yZXBsYXlf
-cGFzaWRfYmluZF9mb3JfZGV2KHZ0ZF9oaW9kLCBzdGFydCwgZW5kLCBwY19pbmZvKTsNCj4+ICsg
-ICAgfQ0KPj4gK30NCj4+ICsNCj4+ICAgc3RhdGljIHVpbnQ2NF90IHZ0ZF9nZXRfaG9zdF9pb21t
-dV9xdWlya3ModWludDMyX3QgdHlwZSwNCj4+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgdm9pZCAqY2FwcywgdWludDMyX3Qgc2l6ZSkNCj4+ICAgew0KDQo=
+
+
+On 2026/5/19 下午2:30, SignKirigami wrote:
+> Signed-off-by: SignKirigami <prcups@krgm.moe>
+> Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+> ---
+>   target/loongarch/cpu-mmu.h                    |  37 +-
+>   target/loongarch/cpu_helper.c                 | 119 ++--
+>   target/loongarch/disas.c                      |   6 +
+>   target/loongarch/insns.decode                 |   6 +
+>   target/loongarch/tcg/helper.h                 |  17 +-
+>   .../tcg/insn_trans/trans_privileged.c.inc     | 128 +++-
+>   target/loongarch/tcg/tcg_loongarch.h          |   6 +-
+>   target/loongarch/tcg/tlb_helper.c             | 629 +++++++++++++-----
+>   8 files changed, 694 insertions(+), 254 deletions(-)
+> 
+> diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
+> index 2d7ebb2d72..31093641ff 100644
+> --- a/target/loongarch/cpu-mmu.h
+> +++ b/target/loongarch/cpu-mmu.h
+> @@ -17,6 +17,14 @@ typedef enum TLBRet {
+>       TLBRET_RI,
+>       TLBRET_XI,
+>       TLBRET_PE,
+> +    TLBRET_HOST_MATCH,
+> +    TLBRET_HOST_BADADDR,
+> +    TLBRET_HOST_NOMATCH,
+> +    TLBRET_HOST_INVALID,
+> +    TLBRET_HOST_DIRTY,
+> +    TLBRET_HOST_RI,
+> +    TLBRET_HOST_XI,
+> +    TLBRET_HOST_PE,
+>   } TLBRet;
+>   
+>   typedef struct MMUContext {
+> @@ -30,16 +38,17 @@ typedef struct MMUContext {
+>       uint64_t      pte_buddy[2];
+>   } MMUContext;
+>   
+> -static inline bool cpu_has_ptw(CPULoongArchState *env)
+> +static inline bool cpu_has_ptw(CPULoongArchState *env, bool guest)
+>   {
+> -    return !!FIELD_EX64(env->CSR_PWCH, CSR_PWCH, HPTW_EN);
+> +    return !!FIELD_EX64(GET_CSR_IF(guest, PWCH), CSR_PWCH, HPTW_EN);
+>   }
+>   
+> -static inline bool pte_present(CPULoongArchState *env, uint64_t entry)
+> +static inline bool pte_present(CPULoongArchState *env, uint64_t entry,
+> +                               bool guest)
+>   {
+>       uint8_t present;
+>   
+> -    if (cpu_has_ptw(env)) {
+> +    if (cpu_has_ptw(env, guest)) {
+>           present = FIELD_EX64(entry, TLBENTRY, P);
+>       } else {
+>           present = FIELD_EX64(entry, TLBENTRY, V);
+> @@ -48,11 +57,11 @@ static inline bool pte_present(CPULoongArchState *env, uint64_t entry)
+>       return !!present;
+>   }
+>   
+> -static inline bool pte_write(CPULoongArchState *env, uint64_t entry)
+> +static inline bool pte_write(CPULoongArchState *env, uint64_t entry, bool guest)
+>   {
+>       uint8_t writable;
+>   
+> -    if (cpu_has_ptw(env)) {
+> +    if (cpu_has_ptw(env, guest)) {
+>           writable = FIELD_EX64(entry, TLBENTRY, W);
+>       } else {
+>           writable = FIELD_EX64(entry, TLBENTRY, D);
+> @@ -89,14 +98,22 @@ static inline bool pte_dirty(uint64_t entry)
+>   
+>   bool check_ps(CPULoongArchState *ent, uint8_t ps);
+>   TLBRet loongarch_check_pte(CPULoongArchState *env, MMUContext *context,
+> -                           MMUAccessType access_type, int mmu_idx);
+> +                           MMUAccessType access_type, int mmu_idx, bool guest);
+>   TLBRet get_physical_address(CPULoongArchState *env, MMUContext *context,
+>                               MMUAccessType access_type, int mmu_idx,
+> -                            int is_debug);
+> +                            int is_debug, uintptr_t retaddr);
+>   TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+> -                     int access_type, int mmu_idx, int debug);
+> +                     int access_type, int mmu_idx, int debug, bool guest,
+> +                     uintptr_t retaddr);
+> +hwaddr loongarch_get_host_address(CPULoongArchState *env, hwaddr gpa,
+> +                                  uintptr_t retaddr);
+> +TLBRet loongarch_map_host_address(CPULoongArchState *env, MMUContext *context,
+> +                                  MMUAccessType access_type, uintptr_t retaddr);
+> +TLBRet loongarch_map_address(CPULoongArchState *env, MMUContext *context,
+> +                             MMUAccessType access_type, int mmu_idx,
+> +                             int is_debug, bool guest, uintptr_t retaddr);
+>   void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+> -                        uint64_t *dir_width, unsigned int level);
+> +                        uint64_t *dir_width, unsigned int level, bool guest);
+>   hwaddr loongarch_cpu_get_phys_addr_debug(CPUState *cpu, vaddr addr);
+>   uint64_t loongarch_palen_mask(CPULoongArchState *env);
+>   
+> diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
+> index eb9684a4a1..bad6062ac9 100644
+> --- a/target/loongarch/cpu_helper.c
+> +++ b/target/loongarch/cpu_helper.c
+> @@ -17,46 +17,56 @@
+>   #include "cpu-mmu.h"
+>   #include "tcg/tcg_loongarch.h"
+>   
+> -void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+> -                        uint64_t *dir_width, unsigned int level)
+> +static void get_dir_base_width_csr(CPULoongArchState *env, uint64_t *dir_base,
+> +                                   uint64_t *dir_width, unsigned int level,
+> +                                   bool guest)
+>   {
+> +    uint64_t pwcl = GET_CSR_IF(guest, PWCL);
+> +    uint64_t pwch = GET_CSR_IF(guest, PWCH);
+> +
+>       switch (level) {
+>       case 1:
+> -        *dir_base = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR1_BASE);
+> -        *dir_width = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR1_WIDTH);
+> +        *dir_base = FIELD_EX64(pwcl, CSR_PWCL, DIR1_BASE);
+> +        *dir_width = FIELD_EX64(pwcl, CSR_PWCL, DIR1_WIDTH);
+>           break;
+>       case 2:
+> -        *dir_base = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR2_BASE);
+> -        *dir_width = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR2_WIDTH);
+> +        *dir_base = FIELD_EX64(pwcl, CSR_PWCL, DIR2_BASE);
+> +        *dir_width = FIELD_EX64(pwcl, CSR_PWCL, DIR2_WIDTH);
+>           break;
+>       case 3:
+> -        *dir_base = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR3_BASE);
+> -        *dir_width = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR3_WIDTH);
+> +        *dir_base = FIELD_EX64(pwch, CSR_PWCH, DIR3_BASE);
+> +        *dir_width = FIELD_EX64(pwch, CSR_PWCH, DIR3_WIDTH);
+>           break;
+>       case 4:
+> -        *dir_base = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR4_BASE);
+> -        *dir_width = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR4_WIDTH);
+> +        *dir_base = FIELD_EX64(pwch, CSR_PWCH, DIR4_BASE);
+> +        *dir_width = FIELD_EX64(pwch, CSR_PWCH, DIR4_WIDTH);
+>           break;
+>       default:
+>           /* level may be zero for ldpte */
+> -        *dir_base = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE);
+> -        *dir_width = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTWIDTH);
+> +        *dir_base = FIELD_EX64(pwcl, CSR_PWCL, PTBASE);
+> +        *dir_width = FIELD_EX64(pwcl, CSR_PWCL, PTWIDTH);
+>           break;
+>       }
+>   }
+>   
+> +void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+> +                        uint64_t *dir_width, unsigned int level, bool guest)
+> +{
+> +    get_dir_base_width_csr(env, dir_base, dir_width, level, guest);
+> +}
+> +
+>   TLBRet loongarch_check_pte(CPULoongArchState *env, MMUContext *context,
+> -                           MMUAccessType access_type, int mmu_idx)
+> +                           MMUAccessType access_type, int mmu_idx, bool guest)
+>   {
+> -    uint64_t plv = mmu_idx;
+> +    uint64_t plv = mmu_idx_to_plv(mmu_idx);
+>       uint64_t tlb_entry, tlb_ppn;
+>       uint8_t tlb_ps, tlb_plv, tlb_nx, tlb_nr, tlb_rplv;
+>       bool tlb_v, tlb_d;
+>   
+>       tlb_entry = context->pte;
+>       tlb_ps = context->ps;
+> -    tlb_v = pte_present(env, tlb_entry);
+> -    tlb_d = pte_write(env, tlb_entry);
+> +    tlb_v = pte_present(env, tlb_entry, guest);
+> +    tlb_d = pte_write(env, tlb_entry, guest);
+>       tlb_plv = FIELD_EX64(tlb_entry, TLBENTRY, PLV);
+>       if (is_la64(env)) {
+>           tlb_ppn = FIELD_EX64(tlb_entry, TLBENTRY_64, PPN);
+> @@ -98,7 +108,7 @@ TLBRet loongarch_check_pte(CPULoongArchState *env, MMUContext *context,
+>       context->physical = (tlb_ppn << R_TLBENTRY_64_PPN_SHIFT) |
+>                           (context->addr & MAKE_64BIT_MASK(0, tlb_ps));
+>       context->prot = PAGE_READ;
+> -    context->mmu_index = tlb_plv;
+> +    context->mmu_index = mmu_idx;
+>       if (tlb_d) {
+>           context->prot |= PAGE_WRITE;
+>       }
+> @@ -144,7 +154,8 @@ static MemTxResult loongarch_cmpxchg_phys(CPUState *cs, hwaddr phys,
+>   }
+>   
+>   TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+> -                     int access_type, int mmu_idx, int debug)
+> +                     int access_type, int mmu_idx, int debug, bool guest,
+> +                     uintptr_t retaddr)
+>   {
+>       const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
+>       CPUState *cs = env_cpu(env);
+> @@ -160,14 +171,14 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+>   
+>       address = context->addr;
+>       if ((address >> 63) & 0x1) {
+> -        base = env->CSR_PGDH;
+> +        base = GET_CSR_IF(guest, PGDH);
+>       } else {
+> -        base = env->CSR_PGDL;
+> +        base = GET_CSR_IF(guest, PGDL);
+>       }
+>       base &= palen_mask;
+>   
+>       for (level = 4; level >= 0; level--) {
+> -        get_dir_base_width(env, &dir_base, &dir_width, level);
+> +        get_dir_base_width(env, &dir_base, &dir_width, level, guest);
+>   
+>           if (dir_width == 0) {
+>               continue;
+> @@ -176,7 +187,10 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+>           /* get next level page directory */
+>           index = (address >> dir_base) & ((1 << dir_width) - 1);
+>           phys = base | index << 3;
+> -        base = address_space_ldq_le(cs->as, phys, attrs, NULL);
+> +        base = address_space_ldq_le(
+> +            cs->as,
+> +            (guest ? loongarch_get_host_address(env, phys, retaddr) : phys),
+> +            attrs, NULL);
+>           if (level) {
+>               if (FIELD_EX64(base, TLBENTRY, HUGE)) {
+>                   /* base is a huge pte */
+> @@ -205,19 +219,22 @@ restart:
+>           context->pte_buddy[index] = base;
+>           context->pte_buddy[1 - index] = base + BIT_ULL(dir_base);
+>           base += (BIT_ULL(dir_base) & address);
+> -    } else if (cpu_has_ptw(env)) {
+> +    } else if (cpu_has_ptw(env, guest)) {
+>           uint64_t val;
+>   
+>           index &= 1;
+>           context->pte_buddy[index] = base;
+> -        val = address_space_ldq_le(cs->as, phys + 8 * (1 - 2 * index),
+> -                                   attrs, NULL);
+> +        val = address_space_ldq_le(
+> +            cs->as,
+> +            (guest ? loongarch_get_host_address(env, phys, retaddr) : phys) +
+> +                8 * (1 - 2 * index),
+> +            attrs, NULL);
+>           context->pte_buddy[1 - index] = val;
+>       }
+>   
+>       context->ps = dir_base;
+>       context->pte = base;
+> -    ret = loongarch_check_pte(env, context, access_type, mmu_idx);
+> +    ret = loongarch_check_pte(env, context, access_type, mmu_idx, guest);
+>       if (debug) {
+>           return ret;
+>       }
+> @@ -228,7 +245,7 @@ restart:
+>        * Need atomic compchxg operation with pte update, other vCPUs may
+>        * update pte at the same time.
+>        */
+> -    if (ret == TLBRET_MATCH && cpu_has_ptw(env)) {
+> +    if (ret == TLBRET_MATCH && cpu_has_ptw(env, guest)) {
+>           if (access_type == MMU_DATA_STORE && pte_dirty(base)) {
+>               return ret;
+>           }
+> @@ -241,10 +258,15 @@ restart:
+>           if (access_type == MMU_DATA_STORE) {
+>               base = pte_mkdirty(base);
+>           }
+> -        ret1 = loongarch_cmpxchg_phys(cs, phys, pte, base);
+> +        ret1 = loongarch_cmpxchg_phys(
+> +            cs, (guest ? loongarch_get_host_address(env, phys, retaddr) : phys),
+> +            pte, base);
+>           /* PTE updated by other CPU, reload PTE entry */
+>           if (ret1 == MEMTX_DECODE_ERROR) {
+> -            base = address_space_ldq_le(cs->as, phys, attrs, NULL);
+> +            base = address_space_ldq_le(
+> +                cs->as,
+> +                (guest ? loongarch_get_host_address(env, phys, retaddr) : phys),
+> +                attrs, NULL);
+>               goto restart;
+>           }
+>   
+> @@ -270,15 +292,15 @@ restart:
+>       return ret;
+>   }
+>   
+> -static TLBRet loongarch_map_address(CPULoongArchState *env,
+> -                                    MMUContext *context,
+> -                                    MMUAccessType access_type, int mmu_idx,
+> -                                    int is_debug)
+> +TLBRet loongarch_map_address(CPULoongArchState *env, MMUContext *context,
+> +                             MMUAccessType access_type, int mmu_idx,
+> +                             int is_debug, bool guest, uintptr_t retaddr)
+>   {
+>       TLBRet ret;
+>   
+>       if (tcg_enabled()) {
+> -        ret = loongarch_get_addr_from_tlb(env, context, access_type, mmu_idx);
+> +        ret = loongarch_get_addr_from_tlb(env, context, access_type, mmu_idx,
+> +                                          guest);
+>           if (ret != TLBRET_NOMATCH) {
+>               return ret;
+>           }
+> @@ -290,7 +312,8 @@ static TLBRet loongarch_map_address(CPULoongArchState *env,
+>            * legal mapping, even if the mapping is not yet in TLB. return 0 if
+>            * there is a valid map, else none zero.
+>            */
+> -        return loongarch_ptw(env, context, access_type, mmu_idx, is_debug);
+> +        return loongarch_ptw(env, context, access_type, mmu_idx, is_debug,
+> +                             guest, retaddr);
+>       }
+>   
+>       return TLBRET_NOMATCH;
+> @@ -309,14 +332,14 @@ static hwaddr dmw_va2pa(CPULoongArchState *env, vaddr va, uint64_t dmw)
+>   
+>   TLBRet get_physical_address(CPULoongArchState *env, MMUContext *context,
+>                               MMUAccessType access_type, int mmu_idx,
+> -                            int is_debug)
+> +                            int is_debug, uintptr_t retaddr)
+>   {
+> -    int user_mode = mmu_idx == MMU_USER_IDX;
+> -    int kernel_mode = mmu_idx == MMU_KERNEL_IDX;
+> +    int user_mode = mmu_idx_to_plv(mmu_idx) == MMU_USER_IDX;
+> +    int kernel_mode = mmu_idx_to_plv(mmu_idx) == MMU_KERNEL_IDX;
+>       uint32_t plv, base_c, base_v;
+>       int64_t addr_high;
+> -    uint8_t da = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, DA);
+> -    uint8_t pg = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PG);
+> +    uint8_t da = FIELD_EX64(GET_CSR_IF(env->guest, CRMD), CSR_CRMD, DA);
+> +    uint8_t pg = FIELD_EX64(GET_CSR_IF(env->guest, CRMD), CSR_CRMD, PG);
+>       vaddr address;
+>   
+>       /* Check PG and DA */
+> @@ -337,12 +360,15 @@ TLBRet get_physical_address(CPULoongArchState *env, MMUContext *context,
+>       /* Check direct map window */
+>       for (int i = 0; i < 4; i++) {
+>           if (is_la64(env)) {
+> -            base_c = FIELD_EX64(env->CSR_DMW[i], CSR_DMW_64, VSEG);
+> +            base_c =
+> +                FIELD_EX64(GET_CSR_IF(env->guest, DMW[i]), CSR_DMW_64, VSEG);
+>           } else {
+> -            base_c = FIELD_EX64(env->CSR_DMW[i], CSR_DMW_32, VSEG);
+> +            base_c =
+> +                FIELD_EX64(GET_CSR_IF(env->guest, DMW[i]), CSR_DMW_32, VSEG);
+>           }
+> -        if ((plv & env->CSR_DMW[i]) && (base_c == base_v)) {
+> -            context->physical = dmw_va2pa(env, address, env->CSR_DMW[i]);
+> +        if ((plv & GET_CSR_IF(env->guest, DMW[i])) && (base_c == base_v)) {
+> +            context->physical =
+> +                dmw_va2pa(env, address, GET_CSR_IF(env->guest, DMW[i]));
+>               context->prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+>               context->mmu_index = MMU_DA_IDX;
+>               return TLBRET_MATCH;
+> @@ -356,7 +382,8 @@ TLBRet get_physical_address(CPULoongArchState *env, MMUContext *context,
+>       }
+>   
+>       /* Mapped address */
+> -    return loongarch_map_address(env, context, access_type, mmu_idx, is_debug);
+> +    return loongarch_map_address(env, context, access_type, mmu_idx, is_debug,
+> +                                 env->guest, retaddr);
+>   }
+>   
+>   hwaddr loongarch_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
+> @@ -366,7 +393,7 @@ hwaddr loongarch_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
+>   
+>       context.addr = addr;
+>       if (get_physical_address(env, &context, MMU_DATA_LOAD,
+> -                             cpu_mmu_index(cs, false), 1) != TLBRET_MATCH) {
+> +                             cpu_mmu_index(cs, false), 1, 0) != TLBRET_MATCH) {
+>           return -1;
+>       }
+>       return context.physical;
+> diff --git a/target/loongarch/disas.c b/target/loongarch/disas.c
+> index cae416266b..b282da6ea6 100644
+> --- a/target/loongarch/disas.c
+> +++ b/target/loongarch/disas.c
+> @@ -701,6 +701,12 @@ INSN(invtlb,       i_rr)
+>   INSN(gcsrrd,       r_csr)
+>   INSN(gcsrwr,       r_csr)
+>   INSN(gcsrxchg,     rr_csr)
+> +INSN(gtlbclr,      empty)
+> +INSN(gtlbflush,    empty)
+> +INSN(gtlbsrch,     empty)
+> +INSN(gtlbrd,       empty)
+> +INSN(gtlbwr,       empty)
+> +INSN(gtlbfill,     empty)
+>   INSN(hvcl,         i)
+>   INSN(cacop,        cop_r_i)
+>   INSN(lddir,        rr_i)
+> diff --git a/target/loongarch/insns.decode b/target/loongarch/insns.decode
+> index 2ade384081..b19c40b423 100644
+> --- a/target/loongarch/insns.decode
+> +++ b/target/loongarch/insns.decode
+> @@ -502,6 +502,12 @@ bgeu            0110 11 ................ ..... .....     @rr_offs16
+>     gcsrxchg          0000 0101 .............. ..... .....     @rr_csr
+>   }
+>   
+> +gtlbclr          0000 01100100 10000 01000 00000 00001    @empty
+> +gtlbflush        0000 01100100 10000 01001 00000 00001    @empty
+> +gtlbsrch         0000 01100100 10000 01010 00000 00001    @empty
+> +gtlbrd           0000 01100100 10000 01011 00000 00001    @empty
+> +gtlbwr           0000 01100100 10000 01100 00000 00001    @empty
+> +gtlbfill         0000 01100100 10000 01101 00000 00001    @empty
+>   hvcl             0000 0000 0010 1011 1 ...............    @i15
+>   
+>   iocsrrd_b        0000 01100100 10000 00000 ..... .....    @rr
+> diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
+> index 69f6cb352a..648328a7ef 100644
+> --- a/target/loongarch/tcg/helper.h
+> +++ b/target/loongarch/tcg/helper.h
+> @@ -133,11 +133,18 @@ DEF_HELPER_1(tlbsrch, void, env)
+>   DEF_HELPER_1(tlbrd, void, env)
+>   DEF_HELPER_1(tlbclr, void, env)
+>   DEF_HELPER_1(tlbflush, void, env)
+> -DEF_HELPER_1(invtlb_all, void, env)
+> -DEF_HELPER_2(invtlb_all_g, void, env, i32)
+> -DEF_HELPER_2(invtlb_all_asid, void, env, tl)
+> -DEF_HELPER_3(invtlb_page_asid, void, env, tl, tl)
+> -DEF_HELPER_3(invtlb_page_asid_or_g, void, env, tl, tl)
+> +DEF_HELPER_4(invtlb_all, void, env, tl, i32, i32)
+> +DEF_HELPER_4(invtlb_all_g, void, env, tl, i32, i32)
+> +DEF_HELPER_3(invtlb_all_asid, void, env, tl, i32)
+> +DEF_HELPER_4(invtlb_page_asid, void, env, tl, tl, i32)
+> +DEF_HELPER_4(invtlb_page_asid_or_g, void, env, tl, tl, i32)
+> +
+> +DEF_HELPER_1(gtlbwr, void, env)
+> +DEF_HELPER_1(gtlbfill, void, env)
+> +DEF_HELPER_1(gtlbsrch, void, env)
+> +DEF_HELPER_1(gtlbrd, void, env)
+> +DEF_HELPER_1(gtlbclr, void, env)
+> +DEF_HELPER_1(gtlbflush, void, env)
+>   
+>   DEF_HELPER_4(lddir, tl, env, tl, i32, i32)
+>   DEF_HELPER_4(ldpte, void, env, tl, tl, i32)
+> diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> index 0cb629e5d7..19b02e6a78 100644
+> --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> @@ -42,6 +42,12 @@ GEN_FALSE_TRANS(idle)
+>   GEN_FALSE_TRANS(gcsrrd)
+>   GEN_FALSE_TRANS(gcsrwr)
+>   GEN_FALSE_TRANS(gcsrxchg)
+> +GEN_FALSE_TRANS(gtlbclr)
+> +GEN_FALSE_TRANS(gtlbflush)
+> +GEN_FALSE_TRANS(gtlbsrch)
+> +GEN_FALSE_TRANS(gtlbrd)
+> +GEN_FALSE_TRANS(gtlbwr)
+> +GEN_FALSE_TRANS(gtlbfill)
+>   GEN_FALSE_TRANS(hvcl)
+>   
+>   #else
+> @@ -305,7 +311,7 @@ TRANS64(iocsrwr_d, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_d)
+>   
+>   static void check_mmu_idx(DisasContext *ctx)
+>   {
+> -    if (ctx->mem_idx != MMU_DA_IDX) {
+> +    if (ctx->mem_idx != MMU_DA_IDX && ctx->mem_idx != MMU_GUEST_DA_IDX) {
+>           tcg_gen_movi_tl(cpu_pc, ctx->base.pc_next + 4);
+>           ctx->base.is_jmp = DISAS_EXIT;
+>       }
+> @@ -378,25 +384,61 @@ static bool trans_invtlb(DisasContext *ctx, arg_invtlb *a)
+>           return false;
+>       }
+>   
+> +    if (!avail_LVZ(ctx) && a->imm > 0x6) {
+> +        return false;
+> +    }
+> +
+> +    //TODO: futher refinement of op 0x9 and 0x10-0x16
+>       switch (a->imm) {
+> -    case 0:
+> -    case 1:
+> -        gen_helper_invtlb_all(tcg_env);
+> +    case 0x0:
+> +    case 0x1:
+> +        gen_helper_invtlb_all(tcg_env, rj, tcg_constant_i32(a->imm),
+> +                              tcg_constant_i32(0));
+> +        break;
+> +    case 0x2:
+> +        gen_helper_invtlb_all_g(tcg_env, rj, tcg_constant_i32(1),
+> +                                tcg_constant_i32(0));
+> +        break;
+> +    case 0x3:
+> +        gen_helper_invtlb_all_g(tcg_env, rj, tcg_constant_i32(0),
+> +                                tcg_constant_i32(0));
+> +        break;
+> +    case 0x4:
+> +        gen_helper_invtlb_all_asid(tcg_env, rj, tcg_constant_i32(0));
+> +        break;
+> +    case 0x5:
+> +        gen_helper_invtlb_page_asid(tcg_env, rj, rk, tcg_constant_i32(0));
+>           break;
+> -    case 2:
+> -        gen_helper_invtlb_all_g(tcg_env, tcg_constant_i32(1));
+> +    case 0x6:
+> +        gen_helper_invtlb_page_asid_or_g(tcg_env, rj, rk, tcg_constant_i32(0));
+>           break;
+> -    case 3:
+> -        gen_helper_invtlb_all_g(tcg_env, tcg_constant_i32(0));
+> +    case 0x9:
+> +    case 0x10:
+> +    case 0x11:
+> +    case 0x12:
+> +    case 0x13:
+> +    case 0x14:
+> +    case 0x15:
+> +    case 0x16:
+> +        gen_helper_invtlb_all(tcg_env, rj, tcg_constant_i32(0),
+> +                              tcg_constant_i32(0));
+>           break;
+> -    case 4:
+> -        gen_helper_invtlb_all_asid(tcg_env, rj);
+> +    case 0xa:
+> +        gen_helper_invtlb_all_g(tcg_env, rj, tcg_constant_i32(1),
+> +                                tcg_constant_i32(1));
+>           break;
+> -    case 5:
+> -        gen_helper_invtlb_page_asid(tcg_env, rj, rk);
+> +    case 0xb:
+> +        gen_helper_invtlb_all_g(tcg_env, rj, tcg_constant_i32(0),
+> +                                tcg_constant_i32(1));
+>           break;
+> -    case 6:
+> -        gen_helper_invtlb_page_asid_or_g(tcg_env, rj, rk);
+> +    case 0xc:
+> +        gen_helper_invtlb_all_asid(tcg_env, rj, tcg_constant_i32(1));
+> +        break;
+> +    case 0xd:
+> +        gen_helper_invtlb_page_asid(tcg_env, rj, rk, tcg_constant_i32(1));
+> +        break;
+> +    case 0xe:
+> +        gen_helper_invtlb_page_asid_or_g(tcg_env, rj, rk, tcg_constant_i32(1));
+>           break;
+>       default:
+>           return false;
+> @@ -613,6 +655,64 @@ static bool trans_gcsrxchg(DisasContext *ctx, arg_gcsrxchg *a)
+>       return true;
+>   }
+>   
+> +static bool trans_gtlbsrch(DisasContext *ctx, arg_gtlbsrch *a)
+> +{
+> +    if (check_plv(ctx) || !avail_LVZ(ctx) || ctx->guest_mode) {
+> +        return false;
+> +    }
+> +    gen_helper_gtlbsrch(tcg_env);
+> +    return true;
+> +}
+> +
+> +static bool trans_gtlbrd(DisasContext *ctx, arg_gtlbrd *a)
+> +{
+> +    if (check_plv(ctx) || !avail_LVZ(ctx) || ctx->guest_mode) {
+> +        return false;
+> +    }
+> +    gen_helper_gtlbrd(tcg_env);
+> +    return true;
+> +}
+> +
+> +static bool trans_gtlbwr(DisasContext *ctx, arg_gtlbwr *a)
+> +{
+> +    if (check_plv(ctx) || !avail_LVZ(ctx) || ctx->guest_mode) {
+> +        return false;
+> +    }
+> +    gen_helper_gtlbwr(tcg_env);
+> +    check_mmu_idx(ctx);
+> +    return true;
+> +}
+> +
+> +static bool trans_gtlbfill(DisasContext *ctx, arg_gtlbfill *a)
+> +{
+> +    if (check_plv(ctx) || !avail_LVZ(ctx) || ctx->guest_mode) {
+> +        return false;
+> +    }
+> +    gen_helper_gtlbfill(tcg_env);
+> +    check_mmu_idx(ctx);
+> +    return true;
+> +}
+> +
+> +static bool trans_gtlbclr(DisasContext *ctx, arg_gtlbclr *a)
+> +{
+> +    if (check_plv(ctx) || !avail_LVZ(ctx) || ctx->guest_mode) {
+> +        return false;
+> +    }
+> +    gen_helper_gtlbclr(tcg_env);
+> +    check_mmu_idx(ctx);
+> +    return true;
+> +}
+> +
+> +static bool trans_gtlbflush(DisasContext *ctx, arg_gtlbflush *a)
+> +{
+> +    if (check_plv(ctx) || !avail_LVZ(ctx) || ctx->guest_mode) {
+> +        return false;
+> +    }
+> +    gen_helper_gtlbflush(tcg_env);
+> +    check_mmu_idx(ctx);
+> +    return true;
+> +}
+> +
+>   static bool trans_hvcl(DisasContext *ctx, arg_hvcl *a)
+>   {
+>       if (!avail_LVZ(ctx)) {
+> diff --git a/target/loongarch/tcg/tcg_loongarch.h b/target/loongarch/tcg/tcg_loongarch.h
+> index 7fb627f2d6..ceba1e4062 100644
+> --- a/target/loongarch/tcg/tcg_loongarch.h
+> +++ b/target/loongarch/tcg/tcg_loongarch.h
+> @@ -16,8 +16,8 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>                               MMUAccessType access_type, int mmu_idx,
+>                               bool probe, uintptr_t retaddr);
+>   
+> -TLBRet loongarch_get_addr_from_tlb(CPULoongArchState *env,
+> -                                   MMUContext *context,
+> -                                   MMUAccessType access_type, int mmu_idx);
+> +TLBRet loongarch_get_addr_from_tlb(CPULoongArchState *env, MMUContext *context,
+> +                                   MMUAccessType access_type, int mmu_idx,
+> +                                   bool guest);
+>   
+>   #endif  /* TARGET_LOONGARCH_TCG_LOONGARCH_H */
+> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+> index 892e0eb473..fec0aeeb57 100644
+> --- a/target/loongarch/tcg/tlb_helper.c
+> +++ b/target/loongarch/tcg/tlb_helper.c
+> @@ -34,6 +34,13 @@ static bool tlb_match_asid(bool global, int asid, int tlb_asid)
+>       return !global && tlb_asid == asid;
+>   }
+>   
+> +static inline bool tlb_entry_matches_gid(LoongArchTLB *tlb, uint8_t gid)
+> +{
+> +    uint8_t entry_gid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, GID);
+> +
+> +    return entry_gid == gid;
+> +}
+> +
+>   bool check_ps(CPULoongArchState *env, uint8_t tlb_ps)
+>   {
+>       if (tlb_ps >= 64) {
+> @@ -46,14 +53,22 @@ static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
+>                                   MMUAccessType access_type, TLBRet tlb_error)
+>   {
+>       CPUState *cs = env_cpu(env);
+> +    bool real_guest;
+> +
+> +    if (env->guest && tlb_error > TLBRET_HOST_MATCH) {
+> +        trigger_vm_exit(env);
+> +    }
+> +    real_guest = !env->vm_exit && env->guest;
+>   
+>       switch (tlb_error) {
+>       default:
+>       case TLBRET_BADADDR:
+> +    case TLBRET_HOST_BADADDR:
+>           cs->exception_index = access_type == MMU_INST_FETCH
+>                                 ? EXCCODE_ADEF : EXCCODE_ADEM;
+>           break;
+>       case TLBRET_NOMATCH:
+> +    case TLBRET_HOST_NOMATCH:
+>           /* No TLB match for a mapped address */
+>           if (access_type == MMU_DATA_LOAD) {
+>               cs->exception_index = EXCCODE_PIL;
+> @@ -62,9 +77,12 @@ static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
+>           } else if (access_type == MMU_INST_FETCH) {
+>               cs->exception_index = EXCCODE_PIF;
+>           }
+> -        env->CSR_TLBRERA = FIELD_DP64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 1);
+> +        SET_CSR_IF(real_guest, TLBRERA,
+> +                   FIELD_DP64(GET_CSR_IF(real_guest, TLBRERA), CSR_TLBRERA,
+> +                              ISTLBR, 1));
+>           break;
+>       case TLBRET_INVALID:
+> +    case TLBRET_HOST_INVALID:
+>           /* TLB match with no valid bit */
+>           if (access_type == MMU_DATA_LOAD) {
+>               cs->exception_index = EXCCODE_PIL;
+> @@ -75,46 +93,58 @@ static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
+>           }
+>           break;
+>       case TLBRET_DIRTY:
+> +    case TLBRET_HOST_DIRTY:
+>           /* TLB match but 'D' bit is cleared */
+>           cs->exception_index = EXCCODE_PME;
+>           break;
+>       case TLBRET_XI:
+> +    case TLBRET_HOST_XI:
+>           /* Execute-Inhibit Exception */
+>           cs->exception_index = EXCCODE_PNX;
+>           break;
+>       case TLBRET_RI:
+> +    case TLBRET_HOST_RI:
+>           /* Read-Inhibit Exception */
+>           cs->exception_index = EXCCODE_PNR;
+>           break;
+>       case TLBRET_PE:
+> +    case TLBRET_HOST_PE:
+>           /* Privileged Exception */
+>           cs->exception_index = EXCCODE_PPI;
+>           break;
+>       }
+>   
+> -    if (tlb_error == TLBRET_NOMATCH) {
+> -        env->CSR_TLBRBADV = address;
+> +    if (tlb_error == TLBRET_NOMATCH || tlb_error == TLBRET_HOST_NOMATCH) {
+> +        SET_CSR_IF(real_guest, TLBRBADV, address);
+>           if (is_la64(env)) {
+> -            env->CSR_TLBREHI = FIELD_DP64(env->CSR_TLBREHI, CSR_TLBREHI_64,
+> -                                        VPPN, extract64(address, 13, 35));
+> +            SET_CSR_IF(real_guest, TLBREHI,
+> +                       FIELD_DP64(GET_CSR_IF(real_guest, TLBREHI),
+> +                                  CSR_TLBREHI_64, VPPN,
+> +                                  extract64(address, 13, 35)));
+>           } else {
+> -            env->CSR_TLBREHI = FIELD_DP64(env->CSR_TLBREHI, CSR_TLBREHI_32,
+> -                                        VPPN, extract64(address, 13, 19));
+> +            SET_CSR_IF(real_guest, TLBREHI,
+> +                       FIELD_DP64(GET_CSR_IF(real_guest, TLBREHI),
+> +                                  CSR_TLBREHI_32, VPPN,
+> +                                  extract64(address, 13, 19)));
+>           }
+>       } else {
+>           if (!FIELD_EX64(env->CSR_DBG, CSR_DBG, DST)) {
+> -            env->CSR_BADV = address;
+> +            SET_CSR_IF(real_guest, BADV, address);
+>           }
+> -        env->CSR_TLBEHI = address & (TARGET_PAGE_MASK << 1);
+> -   }
+> +        SET_CSR_IF(real_guest, TLBEHI, address & (TARGET_PAGE_MASK << 1));
+> +    }
+>   }
+>   
+> -static void invalidate_tlb_entry(CPULoongArchState *env, int index)
+> +static void invalidate_tlb_entry(CPULoongArchState *env, int index, bool guest)
+>   {
+>       target_ulong addr, mask, pagesize;
+>       uint8_t tlb_ps;
+> -    LoongArchTLB *tlb = &env->tlb[index];
+> -    int idxmap = BIT(MMU_KERNEL_IDX) | BIT(MMU_USER_IDX);
+> +    LoongArchTLB *tlb = guest ? &env->gtlb[index] : &env->tlb[index];
+> +    int idxmap =
+> +        guest ? (BIT(MMU_GUEST_IDX) | BIT(MMU_GUEST_IDX + 1) |
+> +                 BIT(MMU_GUEST_IDX + 2) | BIT(MMU_GUEST_IDX + 3) |
+> +                 BIT(MMU_GUEST_DA_IDX)) :
+> +                (BIT(MMU_KERNEL_IDX) | BIT(MMU_USER_IDX) | BIT(MMU_DA_IDX));
+>       uint64_t tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
+>       bool tlb_v;
+>   
+> @@ -124,27 +154,27 @@ static void invalidate_tlb_entry(CPULoongArchState *env, int index)
+>       addr = (tlb_vppn << R_TLB_MISC_VPPN_SHIFT) & ~mask;
+>       addr = sextract64(addr, 0, TARGET_VIRT_ADDR_SPACE_BITS);
+>   
+> -    tlb_v = pte_present(env, tlb->tlb_entry0);
+> +    tlb_v = pte_present(env, tlb->tlb_entry0, guest);
+>       if (tlb_v) {
+>           tlb_flush_range_by_mmuidx(env_cpu(env), addr, pagesize,
+>                                     idxmap, TARGET_LONG_BITS);
+>       }
+>   
+> -    tlb_v = pte_present(env, tlb->tlb_entry1);
+> +    tlb_v = pte_present(env, tlb->tlb_entry1, guest);
+>       if (tlb_v) {
+>           tlb_flush_range_by_mmuidx(env_cpu(env), addr + pagesize, pagesize,
+>                                     idxmap, TARGET_LONG_BITS);
+>       }
+>   }
+>   
+> -static void invalidate_tlb(CPULoongArchState *env, int index)
+> +static void invalidate_tlb(CPULoongArchState *env, int index, bool guest)
+>   {
+>       LoongArchTLB *tlb;
+>       uint16_t csr_asid, tlb_asid, tlb_g;
+>       uint8_t tlb_e;
+>   
+> -    csr_asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
+> -    tlb = &env->tlb[index];
+> +    csr_asid = FIELD_EX64(GET_CSR_IF(guest, ASID), CSR_ASID, ASID);
+> +    tlb = guest ? &env->gtlb[index] : &env->tlb[index];
+>       tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
+>       if (!tlb_e) {
+>           return;
+> @@ -157,33 +187,38 @@ static void invalidate_tlb(CPULoongArchState *env, int index)
+>       if (tlb_g == 0 && tlb_asid != csr_asid) {
+>           return;
+>       }
+> -    invalidate_tlb_entry(env, index);
+> +    invalidate_tlb_entry(env, index, guest);
+>   }
+>   
+>   /* Prepare tlb entry information in software PTW mode */
+> -static void sptw_prepare_context(CPULoongArchState *env, MMUContext *context)
+> +static void sptw_prepare_context(CPULoongArchState *env, MMUContext *context,
+> +                                 bool guest)
+>   {
+>       uint64_t lo0, lo1, csr_vppn;
+>       uint8_t csr_ps;
+>   
+> -    if (FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
+> -        csr_ps = FIELD_EX64(env->CSR_TLBREHI, CSR_TLBREHI, PS);
+> +    if (FIELD_EX64(GET_CSR_IF(guest, TLBRERA), CSR_TLBRERA, ISTLBR)) {
+> +        csr_ps = FIELD_EX64(GET_CSR_IF(guest, TLBREHI), CSR_TLBREHI, PS);
+>           if (is_la64(env)) {
+> -            csr_vppn = FIELD_EX64(env->CSR_TLBREHI, CSR_TLBREHI_64, VPPN);
+> +            csr_vppn =
+> +                FIELD_EX64(GET_CSR_IF(guest, TLBREHI), CSR_TLBREHI_64, VPPN);
+>           } else {
+> -            csr_vppn = FIELD_EX64(env->CSR_TLBREHI, CSR_TLBREHI_32, VPPN);
+> +            csr_vppn =
+> +                FIELD_EX64(GET_CSR_IF(guest, TLBREHI), CSR_TLBREHI_32, VPPN);
+>           }
+> -        lo0 = env->CSR_TLBRELO0;
+> -        lo1 = env->CSR_TLBRELO1;
+> +        lo0 = GET_CSR_IF(guest, TLBRELO0);
+> +        lo1 = GET_CSR_IF(guest, TLBRELO1);
+>       } else {
+> -        csr_ps = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, PS);
+> +        csr_ps = FIELD_EX64(GET_CSR_IF(guest, TLBIDX), CSR_TLBIDX, PS);
+>           if (is_la64(env)) {
+> -            csr_vppn = FIELD_EX64(env->CSR_TLBEHI, CSR_TLBEHI_64, VPPN);
+> +            csr_vppn =
+> +                FIELD_EX64(GET_CSR_IF(guest, TLBEHI), CSR_TLBEHI_64, VPPN);
+>           } else {
+> -            csr_vppn = FIELD_EX64(env->CSR_TLBEHI, CSR_TLBEHI_32, VPPN);
+> +            csr_vppn =
+> +                FIELD_EX64(GET_CSR_IF(guest, TLBEHI), CSR_TLBEHI_32, VPPN);
+>           }
+> -        lo0 = env->CSR_TLBELO0;
+> -        lo1 = env->CSR_TLBELO1;
+> +        lo0 = GET_CSR_IF(guest, TLBELO0);
+> +        lo1 = GET_CSR_IF(guest, TLBELO1);
+>       }
+>   
+>       context->ps = csr_ps;
+> @@ -193,7 +228,7 @@ static void sptw_prepare_context(CPULoongArchState *env, MMUContext *context)
+>   }
+>   
+>   static void fill_tlb_entry(CPULoongArchState *env, LoongArchTLB *tlb,
+> -                           MMUContext *context)
+> +                           MMUContext *context, bool guest)
+>   {
+>       uint64_t lo0, lo1, csr_vppn;
+>       uint16_t csr_asid;
+> @@ -208,8 +243,9 @@ static void fill_tlb_entry(CPULoongArchState *env, LoongArchTLB *tlb,
+>       tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, PS, csr_ps);
+>       tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, VPPN, csr_vppn);
+>       tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 1);
+> -    csr_asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
+> +    csr_asid = FIELD_EX64(GET_CSR_IF(guest, ASID), CSR_ASID, ASID);
+>       tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, ASID, csr_asid);
+> +    tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, GID, get_tgid(env));
+>   
+>       tlb->tlb_entry0 = lo0;
+>       tlb->tlb_entry1 = lo1;
+> @@ -233,7 +269,8 @@ static uint32_t get_random_tlb(uint32_t low, uint32_t high)
+>    */
+>   static LoongArchTLB *loongarch_tlb_search_cb(CPULoongArchState *env,
+>                                                vaddr vaddr, int csr_asid,
+> -                                             tlb_match func)
+> +                                             tlb_match func, bool guest,
+> +                                             uint8_t gid)
+>   {
+>       LoongArchTLB *tlb;
+>       uint16_t tlb_asid, stlb_idx;
+> @@ -242,14 +279,15 @@ static LoongArchTLB *loongarch_tlb_search_cb(CPULoongArchState *env,
+>       int i, compare_shift;
+>       uint64_t vpn, tlb_vppn;
+>   
+> -    stlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+> +    stlb_ps = FIELD_EX64(GET_CSR_IF(guest, STLBPS), CSR_STLBPS, PS);
+>       vpn = (vaddr & TARGET_VIRT_MASK) >> (stlb_ps + 1);
+>       stlb_idx = vpn & 0xff; /* VA[25:15] <==> TLBIDX.index for 16KiB Page */
+>       compare_shift = stlb_ps + 1 - R_TLB_MISC_VPPN_SHIFT;
+>   
+>       /* Search STLB */
+>       for (i = 0; i < 8; ++i) {
+> -        tlb = &env->tlb[i * 256 + stlb_idx];
+> +        tlb = guest ? &env->gtlb[i * 256 + stlb_idx] :
+> +                      &env->tlb[i * 256 + stlb_idx];
+>           tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
+>           if (tlb_e) {
+>               tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
+> @@ -257,6 +295,7 @@ static LoongArchTLB *loongarch_tlb_search_cb(CPULoongArchState *env,
+>               tlb_g = !!FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
+>   
+>               if (func(tlb_g, csr_asid, tlb_asid) &&
+> +                tlb_entry_matches_gid(tlb, gid) &&
+>                   (vpn == (tlb_vppn >> compare_shift))) {
+>                   return tlb;
+>               }
+> @@ -265,7 +304,7 @@ static LoongArchTLB *loongarch_tlb_search_cb(CPULoongArchState *env,
+>   
+>       /* Search MTLB */
+>       for (i = LOONGARCH_STLB; i < LOONGARCH_TLB_MAX; ++i) {
+> -        tlb = &env->tlb[i];
+> +        tlb = guest ? &env->gtlb[i] : &env->tlb[i];
+>           tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
+>           if (tlb_e) {
+>               tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
+> @@ -275,6 +314,7 @@ static LoongArchTLB *loongarch_tlb_search_cb(CPULoongArchState *env,
+>               compare_shift = tlb_ps + 1 - R_TLB_MISC_VPPN_SHIFT;
+>               vpn = (vaddr & TARGET_VIRT_MASK) >> (tlb_ps + 1);
+>               if (func(tlb_g, csr_asid, tlb_asid) &&
+> +                tlb_entry_matches_gid(tlb, gid) &&
+>                   (vpn == (tlb_vppn >> compare_shift))) {
+>                   return tlb;
+>               }
+> @@ -284,17 +324,17 @@ static LoongArchTLB *loongarch_tlb_search_cb(CPULoongArchState *env,
+>   }
+>   
+>   static bool loongarch_tlb_search(CPULoongArchState *env, vaddr vaddr,
+> -                                 int *index)
+> +                                 int *index, bool guest, uint8_t gid)
+>   {
+>       int csr_asid;
+>       tlb_match func;
+>       LoongArchTLB *tlb;
+>   
+>       func = tlb_match_any;
+> -    csr_asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
+> -    tlb = loongarch_tlb_search_cb(env, vaddr, csr_asid, func);
+> +    csr_asid = FIELD_EX64(GET_CSR_IF(guest, ASID), CSR_ASID, ASID);
+> +    tlb = loongarch_tlb_search_cb(env, vaddr, csr_asid, func, guest, gid);
+>       if (tlb) {
+> -        *index = tlb - env->tlb;
+> +        *index = guest ? (tlb - env->gtlb) : (tlb - env->tlb);
+>           return true;
+>       }
+>   
+> @@ -304,66 +344,112 @@ static bool loongarch_tlb_search(CPULoongArchState *env, vaddr vaddr,
+>   void helper_tlbsrch(CPULoongArchState *env)
+>   {
+>       int index, match;
+> +    vaddr search_ehi;
+>   
+> -    if (FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
+> -        match = loongarch_tlb_search(env, env->CSR_TLBREHI, &index);
+> +    if (FIELD_EX64(GET_CSR_IF(env->guest, TLBRERA), CSR_TLBRERA, ISTLBR)) {
+> +        search_ehi = GET_CSR_IF(env->guest, TLBREHI);
+>       } else {
+> -        match = loongarch_tlb_search(env, env->CSR_TLBEHI, &index);
+> +        search_ehi = GET_CSR_IF(env->guest, TLBEHI);
+>       }
+>   
+> +    match = loongarch_tlb_search(env, search_ehi, &index, env->guest,
+> +                                 get_tgid(env));
+> +
+>       if (match) {
+> -        env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX, index);
+> -        env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX, NE, 0);
+> +        SET_CSR_IF(env->guest, TLBIDX,
+> +                   FIELD_DP64(GET_CSR_IF(env->guest, TLBIDX), CSR_TLBIDX, INDEX,
+> +                              index));
+> +        SET_CSR_IF(
+> +            env->guest, TLBIDX,
+> +            FIELD_DP64(GET_CSR_IF(env->guest, TLBIDX), CSR_TLBIDX, NE, 0));
+>           return;
+>       }
+>   
+> -    env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX, NE, 1);
+> +    SET_CSR_IF(env->guest, TLBIDX,
+> +               FIELD_DP64(GET_CSR_IF(env->guest, TLBIDX), CSR_TLBIDX, NE, 1));
+>   }
+>   
+> -void helper_tlbrd(CPULoongArchState *env)
+> +static void read_tlb(CPULoongArchState *env, bool guest)
+>   {
+>       LoongArchTLB *tlb;
+>       int index;
+>       uint8_t tlb_ps, tlb_e;
+>   
+> -    index = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX);
+> -    tlb = &env->tlb[index];
+> +    index = FIELD_EX64(GET_CSR_IF(guest, TLBIDX), CSR_TLBIDX, INDEX);
+> +    tlb = guest ? &env->gtlb[index] : &env->tlb[index];
+>       tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+>       tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
+>   
+>       if (!tlb_e) {
+>           /* Invalid TLB entry */
+> -        env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX, NE, 1);
+> -        env->CSR_ASID  = FIELD_DP64(env->CSR_ASID, CSR_ASID, ASID, 0);
+> -        env->CSR_TLBEHI = 0;
+> -        env->CSR_TLBELO0 = 0;
+> -        env->CSR_TLBELO1 = 0;
+> -        env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX, PS, 0);
+> +        SET_CSR_IF(guest, TLBIDX,
+> +                   FIELD_DP64(GET_CSR_IF(guest, TLBIDX), CSR_TLBIDX, NE, 1));
+> +        SET_CSR_IF(guest, ASID,
+> +                   FIELD_DP64(GET_CSR_IF(guest, ASID), CSR_ASID, ASID, 0));
+> +        SET_CSR_IF(guest, TLBEHI, 0);
+> +        SET_CSR_IF(guest, TLBELO0, 0);
+> +        SET_CSR_IF(guest, TLBELO1, 0);
+> +        SET_CSR_IF(guest, TLBIDX,
+> +                   FIELD_DP64(GET_CSR_IF(guest, TLBIDX), CSR_TLBIDX, PS, 0));
+>       } else {
+>           /* Valid TLB entry */
+> -        env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX, NE, 0);
+> -        env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX,
+> -                                     PS, (tlb_ps & 0x3f));
+> -        env->CSR_TLBEHI = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN) <<
+> -                                     R_TLB_MISC_VPPN_SHIFT;
+> -        env->CSR_TLBELO0 = tlb->tlb_entry0;
+> -        env->CSR_TLBELO1 = tlb->tlb_entry1;
+> +        SET_CSR_IF(guest, TLBIDX,
+> +                   FIELD_DP64(GET_CSR_IF(guest, TLBIDX), CSR_TLBIDX, NE, 0));
+> +        SET_CSR_IF(guest, TLBIDX,
+> +                   FIELD_DP64(GET_CSR_IF(guest, TLBIDX), CSR_TLBIDX, PS,
+> +                              tlb_ps & 0x3f));
+> +        SET_CSR_IF(guest, TLBEHI,
+> +                   FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN)
+> +                       << R_TLB_MISC_VPPN_SHIFT);
+> +        SET_CSR_IF(guest, TLBELO0, tlb->tlb_entry0);
+> +        SET_CSR_IF(guest, TLBELO1, tlb->tlb_entry1);
+> +    }
+> +}
+> +
+> +void helper_tlbrd(CPULoongArchState *env)
+> +{
+> +    read_tlb(env, env->guest);
+> +}
+> +
+> +void helper_gtlbsrch(CPULoongArchState *env)
+> +{
+> +    int index, match;
+> +    vaddr search_ehi;
+> +
+> +    if (FIELD_EX64(env->GCSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
+> +        search_ehi = env->GCSR_TLBREHI;
+> +    } else {
+> +        search_ehi = env->GCSR_TLBEHI;
+> +    }
+> +
+> +    match = loongarch_tlb_search(env, search_ehi, &index, true, get_tgid(env));
+> +    if (match) {
+> +        env->GCSR_TLBIDX =
+> +            FIELD_DP64(env->GCSR_TLBIDX, CSR_TLBIDX, INDEX, index);
+> +        env->GCSR_TLBIDX = FIELD_DP64(env->GCSR_TLBIDX, CSR_TLBIDX, NE, 0);
+> +        return;
+>       }
+> +    env->GCSR_TLBIDX = FIELD_DP64(env->GCSR_TLBIDX, CSR_TLBIDX, NE, 1);
+> +}
+> +
+> +void helper_gtlbrd(CPULoongArchState *env)
+> +{
+> +    read_tlb(env, true);
+>   }
+>   
+>   static void update_tlb_index(CPULoongArchState *env, MMUContext *context,
+> -                             int index)
+> +                             int index, bool guest)
+>   {
+>       LoongArchTLB *old, new = {};
+>       bool skip_inv = false, tlb_v0, tlb_v1;
+>   
+> -    old = env->tlb + index;
+> -    fill_tlb_entry(env, &new, context);
+> +    old = guest ? env->gtlb + index : env->tlb + index;
+> +    fill_tlb_entry(env, &new, context, guest);
+>       /* Check whether ASID/VPPN is the same */
+>       if (old->tlb_misc == new.tlb_misc) {
+>           /* Check whether both even/odd pages is the same or invalid */
+> -        tlb_v0 = pte_present(env, old->tlb_entry0);
+> -        tlb_v1 = pte_present(env, old->tlb_entry1);
+> +        tlb_v0 = pte_present(env, old->tlb_entry0, guest);
+> +        tlb_v1 = pte_present(env, old->tlb_entry1, guest);
+>           if ((!tlb_v0 || new.tlb_entry0 == old->tlb_entry0) &&
+>               (!tlb_v1 || new.tlb_entry1 == old->tlb_entry1)) {
+>               skip_inv = true;
+> @@ -372,7 +458,7 @@ static void update_tlb_index(CPULoongArchState *env, MMUContext *context,
+>   
+>       /* flush tlb before updating the entry */
+>       if (!skip_inv) {
+> -        invalidate_tlb(env, index);
+> +        invalidate_tlb(env, index, guest);
+>       }
+>   
+>       *old = new;
+> @@ -380,20 +466,34 @@ static void update_tlb_index(CPULoongArchState *env, MMUContext *context,
+>   
+>   void helper_tlbwr(CPULoongArchState *env)
+>   {
+> -    int index = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX);
+> +    int index = FIELD_EX64(GET_CSR_IF(env->guest, TLBIDX), CSR_TLBIDX, INDEX);
+> +    MMUContext context;
+> +
+> +    if (FIELD_EX64(GET_CSR_IF(env->guest, TLBIDX), CSR_TLBIDX, NE)) {
+> +        invalidate_tlb(env, index, env->guest);
+> +        return;
+> +    }
+> +
+> +    sptw_prepare_context(env, &context, env->guest);
+> +    update_tlb_index(env, &context, index, env->guest);
+> +}
+> +
+> +void helper_gtlbwr(CPULoongArchState *env)
+> +{
+> +    int index = FIELD_EX64(env->GCSR_TLBIDX, CSR_TLBIDX, INDEX);
+>       MMUContext context;
+>   
+> -    if (FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, NE)) {
+> -        invalidate_tlb(env, index);
+> +    if (FIELD_EX64(env->GCSR_TLBIDX, CSR_TLBIDX, NE)) {
+> +        invalidate_tlb(env, index, true);
+>           return;
+>       }
+>   
+> -    sptw_prepare_context(env, &context);
+> -    update_tlb_index(env, &context, index);
+> +    sptw_prepare_context(env, &context, true);
+> +    update_tlb_index(env, &context, index, true);
+>   }
+>   
+>   static int get_tlb_random_index(CPULoongArchState *env, vaddr addr,
+> -                                int pagesize)
+> +                                int pagesize, bool guest)
+>   {
+>       uint64_t address;
+>       int index, set, i, stlb_idx;
+> @@ -402,15 +502,16 @@ static int get_tlb_random_index(CPULoongArchState *env, vaddr addr,
+>       uint8_t tlb_e, tlb_g;
+>   
+>       /* Validity of stlb_ps is checked in helper_csrwr_stlbps() */
+> -    stlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+> -    asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
+> +    stlb_ps = FIELD_EX64(GET_CSR_IF(guest, STLBPS), CSR_STLBPS, PS);
+> +    asid = FIELD_EX64(GET_CSR_IF(guest, ASID), CSR_ASID, ASID);
+>       if (pagesize == stlb_ps) {
+>           /* Only write into STLB bits [47:13] */
+>           address = addr & ~MAKE_64BIT_MASK(0, R_CSR_TLBEHI_64_VPPN_SHIFT);
+>           set = -1;
+>           stlb_idx = (address >> (stlb_ps + 1)) & 0xff; /* [0,255] */
+>           for (i = 0; i < 8; ++i) {
+> -            tlb = &env->tlb[i * 256 + stlb_idx];
+> +            tlb = guest ? &env->gtlb[i * 256 + stlb_idx] :
+> +                          &env->tlb[i * 256 + stlb_idx];
+>               tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
+>               if (!tlb_e) {
+>                   set = i;
+> @@ -419,7 +520,8 @@ static int get_tlb_random_index(CPULoongArchState *env, vaddr addr,
+>   
+>               tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
+>               tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
+> -            if (tlb_g == 0 && asid != tlb_asid) {
+> +            if (tlb_g == 0 && asid != tlb_asid &&
+> +                tlb_entry_matches_gid(tlb, get_tgid(env))) {
+>                   set = i;
+>               }
+>           }
+> @@ -433,7 +535,7 @@ static int get_tlb_random_index(CPULoongArchState *env, vaddr addr,
+>           /* Only write into MTLB */
+>           index = -1;
+>           for (i = LOONGARCH_STLB; i < LOONGARCH_TLB_MAX; i++) {
+> -            tlb = &env->tlb[i];
+> +            tlb = guest ? &env->gtlb[i] : &env->tlb[i];
+>               tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
+>   
+>               if (!tlb_e) {
+> @@ -443,7 +545,8 @@ static int get_tlb_random_index(CPULoongArchState *env, vaddr addr,
+>   
+>               tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
+>               tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
+> -            if (tlb_g == 0 && asid != tlb_asid) {
+> +            if (tlb_g == 0 && asid != tlb_asid &&
+> +                tlb_entry_matches_gid(tlb, get_tgid(env))) {
+>                   index = i;
+>               }
+>           }
+> @@ -462,48 +565,70 @@ void helper_tlbfill(CPULoongArchState *env)
+>       int index, pagesize;
+>       MMUContext context;
+>   
+> -    if (FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
+> -        entryhi = env->CSR_TLBREHI;
+> +    if (FIELD_EX64(GET_CSR_IF(env->guest, TLBRERA), CSR_TLBRERA, ISTLBR)) {
+> +        entryhi = GET_CSR_IF(env->guest, TLBREHI);
+>           /* Validity of pagesize is checked in helper_ldpte() */
+> -        pagesize = FIELD_EX64(env->CSR_TLBREHI, CSR_TLBREHI, PS);
+> +        pagesize = FIELD_EX64(GET_CSR_IF(env->guest, TLBREHI), CSR_TLBREHI, PS);
+>       } else {
+> -        entryhi = env->CSR_TLBEHI;
+> +        entryhi = GET_CSR_IF(env->guest, TLBEHI);
+>           /* Validity of pagesize is checked in helper_tlbrd() */
+> -        pagesize = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, PS);
+> +        pagesize = FIELD_EX64(GET_CSR_IF(env->guest, TLBIDX), CSR_TLBIDX, PS);
+>       }
+>   
+> -    sptw_prepare_context(env, &context);
+> -    index = get_tlb_random_index(env, entryhi, pagesize);
+> -    invalidate_tlb(env, index);
+> -    fill_tlb_entry(env, env->tlb + index, &context);
+> +    sptw_prepare_context(env, &context, env->guest);
+> +    index = get_tlb_random_index(env, entryhi, pagesize, env->guest);
+> +    invalidate_tlb(env, index, env->guest);
+> +    fill_tlb_entry(env, env->guest ? env->gtlb + index : env->tlb + index,
+> +                   &context, env->guest);
+>   }
+>   
+> -void helper_tlbclr(CPULoongArchState *env)
+> +void helper_gtlbfill(CPULoongArchState *env)
+> +{
+> +    vaddr entryhi;
+> +    int index, pagesize;
+> +    MMUContext context;
+> +
+> +    if (FIELD_EX64(env->GCSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
+> +        entryhi = env->GCSR_TLBREHI;
+> +        pagesize = FIELD_EX64(env->GCSR_TLBREHI, CSR_TLBREHI, PS);
+> +    } else {
+> +        entryhi = env->GCSR_TLBEHI;
+> +        pagesize = FIELD_EX64(env->GCSR_TLBIDX, CSR_TLBIDX, PS);
+> +    }
+> +
+> +    sptw_prepare_context(env, &context, true);
+> +    index = get_tlb_random_index(env, entryhi, pagesize, true);
+> +    invalidate_tlb(env, index, true);
+> +    fill_tlb_entry(env, env->gtlb + index, &context, true);
+> +}
+> +
+> +static void clear_tlb_by_index(CPULoongArchState *env, bool guest)
+>   {
+>       LoongArchTLB *tlb;
+>       int i, index;
+>       uint16_t csr_asid, tlb_asid, tlb_g;
+>   
+> -    csr_asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
+> -    index = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX);
+> +    csr_asid = FIELD_EX64(GET_CSR_IF(guest, ASID), CSR_ASID, ASID);
+> +    index = FIELD_EX64(GET_CSR_IF(guest, TLBIDX), CSR_TLBIDX, INDEX);
+>   
+>       if (index < LOONGARCH_STLB) {
+> -        /* STLB. One line per operation */
+>           for (i = 0; i < 8; i++) {
+> -            tlb = &env->tlb[i * 256 + (index % 256)];
+> +            tlb = guest ? &env->gtlb[i * 256 + (index % 256)] :
+> +                          &env->tlb[i * 256 + (index % 256)];
+>               tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
+>               tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
+> -            if (!tlb_g && tlb_asid == csr_asid) {
+> +            if (!tlb_g && tlb_asid == csr_asid &&
+> +                tlb_entry_matches_gid(tlb, get_tgid(env))) {
+>                   tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 0);
+>               }
+>           }
+>       } else if (index < LOONGARCH_TLB_MAX) {
+> -        /* All MTLB entries */
+>           for (i = LOONGARCH_STLB; i < LOONGARCH_TLB_MAX; i++) {
+> -            tlb = &env->tlb[i];
+> +            tlb = guest ? &env->gtlb[i] : &env->tlb[i];
+>               tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
+>               tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
+> -            if (!tlb_g && tlb_asid == csr_asid) {
+> +            if (!tlb_g && tlb_asid == csr_asid &&
+> +                tlb_entry_matches_gid(tlb, get_tgid(env))) {
+>                   tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 0);
+>               }
+>           }
+> @@ -512,62 +637,116 @@ void helper_tlbclr(CPULoongArchState *env)
+>       tlb_flush(env_cpu(env));
+>   }
+>   
+> -void helper_tlbflush(CPULoongArchState *env)
+> +void helper_tlbclr(CPULoongArchState *env)
+> +{
+> +    clear_tlb_by_index(env, env->guest);
+> +}
+> +
+> +void helper_gtlbclr(CPULoongArchState *env)
+> +{
+> +    clear_tlb_by_index(env, true);
+> +}
+> +
+> +static void flush_tlb_by_index(CPULoongArchState *env, bool guest)
+>   {
+>       int i, index;
+>   
+> -    index = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX);
+> +    index = FIELD_EX64(GET_CSR_IF(guest, TLBIDX), CSR_TLBIDX, INDEX);
+>   
+>       if (index < LOONGARCH_STLB) {
+> -        /* STLB. One line per operation */
+>           for (i = 0; i < 8; i++) {
+>               int s_idx = i * 256 + (index % 256);
+> -            env->tlb[s_idx].tlb_misc = FIELD_DP64(env->tlb[s_idx].tlb_misc,
+> -                                                  TLB_MISC, E, 0);
+> +            LoongArchTLB *tlb = guest ? &env->gtlb[s_idx] : &env->tlb[s_idx];
+> +
+> +            tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 0);
+>           }
+>       } else if (index < LOONGARCH_TLB_MAX) {
+> -        /* All MTLB entries */
+>           for (i = LOONGARCH_STLB; i < LOONGARCH_TLB_MAX; i++) {
+> -            env->tlb[i].tlb_misc = FIELD_DP64(env->tlb[i].tlb_misc,
+> -                                              TLB_MISC, E, 0);
+> +            LoongArchTLB *tlb = guest ? &env->gtlb[i] : &env->tlb[i];
+> +
+> +            tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 0);
+>           }
+>       }
+>   
+>       tlb_flush(env_cpu(env));
+>   }
+>   
+> -void helper_invtlb_all(CPULoongArchState *env)
+> +void helper_tlbflush(CPULoongArchState *env)
+> +{
+> +    flush_tlb_by_index(env, env->guest);
+> +}
+> +
+> +void helper_gtlbflush(CPULoongArchState *env)
+> +{
+> +    flush_tlb_by_index(env, true);
+> +}
+> +
+> +void helper_invtlb_all(CPULoongArchState *env, target_ulong info, uint32_t op,
+> +                       uint32_t to_guest)
+>   {
+> +    uint16_t gid = to_guest ? (info & 0xff) : get_tgid(env);
+> +
+> +    if (to_guest && env->guest) {
+> +        do_raise_exception(env, EXCCODE_IPE, GETPC());
+> +    }
+> +
+> +    to_guest |= env->guest;
+> +
+>       for (int i = 0; i < LOONGARCH_TLB_MAX; i++) {
+> -        env->tlb[i].tlb_misc = FIELD_DP64(env->tlb[i].tlb_misc,
+> -                                          TLB_MISC, E, 0);
+> +        LoongArchTLB *tlb = &env->tlb[i];
+> +        LoongArchTLB *gtlb = &env->gtlb[i];
+> +
+> +        if (!to_guest && (op == 0 || tlb_entry_matches_gid(tlb, 0))) {
+> +            tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 0);
+> +        }
+> +        if ((!to_guest && op == 0) ||
+> +            (to_guest && tlb_entry_matches_gid(gtlb, gid))) {
+> +            gtlb->tlb_misc = FIELD_DP64(gtlb->tlb_misc, TLB_MISC, E, 0);
+> +        }
+>       }
+>       tlb_flush(env_cpu(env));
+>   }
+>   
+> -void helper_invtlb_all_g(CPULoongArchState *env, uint32_t g)
+> +void helper_invtlb_all_g(CPULoongArchState *env, target_ulong info, uint32_t g,
+> +                         uint32_t to_guest)
+>   {
+> +    uint16_t gid = to_guest ? (info & 0xff) : get_tgid(env);
+> +
+> +    if (to_guest && env->guest) {
+> +        do_raise_exception(env, EXCCODE_IPE, GETPC());
+> +    }
+> +
+> +    to_guest |= env->guest;
+> +
+>       for (int i = 0; i < LOONGARCH_TLB_MAX; i++) {
+> -        LoongArchTLB *tlb = &env->tlb[i];
+> +        LoongArchTLB *tlb = to_guest ? &env->gtlb[i] : &env->tlb[i];
+>           uint8_t tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
+>   
+> -        if (tlb_g == g) {
+> +        if (tlb_g == g && tlb_entry_matches_gid(tlb, gid)) {
+>               tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 0);
+>           }
+>       }
+>       tlb_flush(env_cpu(env));
+>   }
+>   
+> -void helper_invtlb_all_asid(CPULoongArchState *env, target_ulong info)
+> +void helper_invtlb_all_asid(CPULoongArchState *env, target_ulong info,
+> +                            uint32_t to_guest)
+>   {
+>       uint16_t asid = info & R_CSR_ASID_ASID_MASK;
+> +    uint16_t gid = to_guest ? ((info >> 16) & 0xff) : get_tgid(env);
+> +
+> +    if (to_guest && env->guest) {
+> +        do_raise_exception(env, EXCCODE_IPE, GETPC());
+> +    }
+> +
+> +    to_guest |= env->guest;
+>   
+>       for (int i = 0; i < LOONGARCH_TLB_MAX; i++) {
+> -        LoongArchTLB *tlb = &env->tlb[i];
+> +        LoongArchTLB *tlb = to_guest ? &env->gtlb[i] : &env->tlb[i];
+>           uint8_t tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
+>           uint16_t tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
+>   
+> -        if (!tlb_g && (tlb_asid == asid)) {
+> +        if (!tlb_g && tlb_asid == asid && tlb_entry_matches_gid(tlb, gid)) {
+>               tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 0);
+>           }
+>       }
+> @@ -575,66 +754,82 @@ void helper_invtlb_all_asid(CPULoongArchState *env, target_ulong info)
+>   }
+>   
+>   void helper_invtlb_page_asid(CPULoongArchState *env, target_ulong info,
+> -                             target_ulong addr)
+> +                             target_ulong addr, uint32_t to_guest)
+>   {
+> -    int asid = info & 0x3ff;
+> +    uint16_t asid = info & R_CSR_ASID_ASID_MASK;
+> +    uint16_t gid = to_guest ? ((info >> 16) & 0xff) : get_tgid(env);
+>       LoongArchTLB *tlb;
+> -    tlb_match func;
+> +    int index;
+> +
+> +    if (to_guest && env->guest) {
+> +        do_raise_exception(env, EXCCODE_IPE, GETPC());
+> +    }
+> +    to_guest |= env->guest;
+>   
+> -    func = tlb_match_asid;
+> -    tlb = loongarch_tlb_search_cb(env, addr, asid, func);
+> +    tlb =
+> +        loongarch_tlb_search_cb(env, addr, asid, tlb_match_asid, to_guest, gid);
+>       if (tlb) {
+> -        invalidate_tlb(env, tlb - env->tlb);
+> +        index = to_guest ? (tlb - env->gtlb) : (tlb - env->tlb);
+> +        invalidate_tlb(env, index, to_guest);
+>       }
+>   }
+>   
+> -void helper_invtlb_page_asid_or_g(CPULoongArchState *env,
+> -                                  target_ulong info, target_ulong addr)
+> +void helper_invtlb_page_asid_or_g(CPULoongArchState *env, target_ulong info,
+> +                                  target_ulong addr, uint32_t to_guest)
+>   {
+> -    int asid = info & 0x3ff;
+> +    uint16_t asid = info & R_CSR_ASID_ASID_MASK;
+> +    uint16_t gid = to_guest ? ((info >> 16) & 0xff) : get_tgid(env);
+>       LoongArchTLB *tlb;
+> -    tlb_match func;
+> +    int index;
+>   
+> -    func = tlb_match_any;
+> -    tlb = loongarch_tlb_search_cb(env, addr, asid, func);
+> +    if (to_guest && env->guest) {
+> +        do_raise_exception(env, EXCCODE_IPE, GETPC());
+> +    }
+> +
+> +    to_guest |= env->guest;
+> +
+> +    tlb =
+> +        loongarch_tlb_search_cb(env, addr, asid, tlb_match_any, to_guest, gid);
+>       if (tlb) {
+> -        invalidate_tlb(env, tlb - env->tlb);
+> +        index = to_guest ? (tlb - env->gtlb) : (tlb - env->tlb);
+> +        invalidate_tlb(env, index, to_guest);
+>       }
+>   }
+>   
+> -static void ptw_update_tlb(CPULoongArchState *env, MMUContext *context)
+> +static void ptw_update_tlb(CPULoongArchState *env, MMUContext *context,
+> +                           bool guest)
+>   {
+>       int index;
+>   
+>       index = context->tlb_index;
+>       if (index < 0) {
+> -        index = get_tlb_random_index(env, context->addr, context->ps);
+> +        index = get_tlb_random_index(env, context->addr, context->ps, guest);
+>       }
+>   
+> -    update_tlb_index(env, context, index);
+> +    update_tlb_index(env, context, index, guest);
+>   }
+>   
+> -bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+> -                            MMUAccessType access_type, int mmu_idx,
+> -                            bool probe, uintptr_t retaddr)
+> +TLBRet loongarch_map_host_address(CPULoongArchState *env, MMUContext *context,
+> +                                  MMUAccessType access_type, uintptr_t retaddr)
+>   {
+> -    CPULoongArchState *env = cpu_env(cs);
+> -    hwaddr physical;
+> -    int prot;
+> -    MMUContext context;
+>       TLBRet ret;
+> +    ret = loongarch_map_address(env, context, access_type, MMU_KERNEL_IDX,
+> +                                false, false, retaddr);
+> +    return TLBRET_HOST_MATCH + ret;
+> +}
+>   
+> -    /* Data access */
+> -    context.addr = address;
+> -    context.tlb_index = -1;
+> -    ret = get_physical_address(env, &context, access_type, mmu_idx, 0);
+> -    if (ret == TLBRET_MATCH && context.mmu_index != MMU_DA_IDX
+> -        && cpu_has_ptw(env)) {
+> +static void loongarch_try_ptw(CPULoongArchState *env, MMUContext *context,
+> +                              MMUAccessType access_type, int mmu_index,
+> +                              TLBRet *status, bool guest, uintptr_t retaddr)
+> +{
+> +    if ((*status == TLBRET_MATCH || *status == TLBRET_HOST_MATCH) &&
+> +        context->mmu_index != MMU_DA_IDX &&
+> +        context->mmu_index != MMU_GUEST_DA_IDX && cpu_has_ptw(env, guest)) {
+>           bool need_update = true;
+>   
+> -        if (access_type == MMU_DATA_STORE && pte_dirty(context.pte)) {
+> +        if (access_type == MMU_DATA_STORE && pte_dirty(context->pte)) {
+>               need_update = false;
+> -        } else if (access_type != MMU_DATA_STORE && pte_access(context.pte)) {
+> +        } else if (access_type != MMU_DATA_STORE && pte_access(context->pte)) {
+>               need_update = false;
+>   
+>               /*
+> @@ -649,31 +844,77 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>   
+>           if (need_update) {
+>               /* Need update bit A/D in PTE entry, take PTW again */
+> -            ret = TLBRET_NOMATCH;
+> +            *status =
+> +                (env->guest && !guest) ? TLBRET_HOST_NOMATCH : TLBRET_NOMATCH;
+>           }
+>       }
+>   
+> -    if (ret != TLBRET_MATCH && cpu_has_ptw(env)) {
+> +    if (*status != TLBRET_MATCH && *status != TLBRET_HOST_MATCH &&
+> +        cpu_has_ptw(env, guest)) {
+>           /* Take HW PTW if TLB missed or bit P is zero */
+> -        if (ret == TLBRET_NOMATCH || ret == TLBRET_INVALID) {
+> -            ret = loongarch_ptw(env, &context, access_type, mmu_idx, 0);
+> -            if (ret == TLBRET_MATCH) {
+> -                ptw_update_tlb(env, &context);
+> +        if (*status == TLBRET_NOMATCH || *status == TLBRET_INVALID ||
+> +            *status == TLBRET_HOST_NOMATCH || *status == TLBRET_HOST_INVALID) {
+> +            *status =
+> +                ((env->guest && !guest) ? TLBRET_HOST_MATCH : TLBRET_MATCH) +
+> +                loongarch_ptw(env, context, access_type, mmu_index, 0, guest,
+> +                              retaddr);
+> +            if (*status == TLBRET_MATCH || *status == TLBRET_HOST_MATCH) {
+> +                ptw_update_tlb(env, context, guest);
+>               }
+> -        } else if (context.tlb_index >= 0) {
+> -            invalidate_tlb(env, context.tlb_index);
+> +        } else if (context->tlb_index >= 0) {
+> +            invalidate_tlb(env, context->tlb_index, guest);
+>           }
+>       }
+> +}
+> +
+> +bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+> +                            MMUAccessType access_type, int mmu_idx, bool probe,
+> +                            uintptr_t retaddr)
+> +{
+> +    CPULoongArchState *env = cpu_env(cs);
+> +    MMUContext host_context;
+> +    hwaddr physical;
+> +    int prot, host_prot;
+> +    MMUContext context;
+> +    TLBRet ret;
+> +
+> +    /* Data access */
+> +    context.addr = address;
+> +    context.tlb_index = -1;
+> +    ret = get_physical_address(env, &context, access_type, mmu_idx, 0, retaddr);
+> +    loongarch_try_ptw(env, &context, access_type, mmu_idx, &ret, env->guest,
+> +                      retaddr);
+>   
+>       if (ret == TLBRET_MATCH) {
+>           physical = context.physical;
+>           prot = context.prot;
+> +        if (env->guest) {
+> +            host_context.addr = physical;
+> +            host_context.tlb_index = -1;
+> +            ret = loongarch_map_host_address(env, &host_context, access_type,
+> +                                             retaddr);
+> +            loongarch_try_ptw(env, &host_context, access_type, MMU_KERNEL_IDX,
+> +                              &ret, false, retaddr);
+> +            if (ret != TLBRET_HOST_MATCH) {
+> +                if (probe) {
+> +                    return false;
+> +                }
+> +                raise_mmu_exception(env, physical, access_type, ret);
+> +                cpu_loop_exit_restore(cs, retaddr);
+> +                return false;
+> +            }
+> +            physical = host_context.physical;
+> +            host_prot = host_context.prot;
+> +            prot &= host_prot;
+> +        }
+>           tlb_set_page(cs, address & TARGET_PAGE_MASK,
+>                        physical & TARGET_PAGE_MASK, prot,
+>                        mmu_idx, TARGET_PAGE_SIZE);
+>           qemu_log_mask(CPU_LOG_MMU,
+>                         "%s address=%" VADDR_PRIx " physical " HWADDR_FMT_plx
+> -                      " prot %d\n", __func__, address, physical, prot);
+> +                      " prot %d guest %d\n",
+> +                      __func__, address, physical, prot,
+> +                      is_guest_mmu_idx(mmu_idx));
+>           return true;
+>       } else {
+>           qemu_log_mask(CPU_LOG_MMU,
+> @@ -702,6 +943,31 @@ static inline uint64_t loongarch_sanitize_hw_pte(CPULoongArchState *env,
+>       return (pte & ~ppn_mask) | ((pte & ppn_mask) & palen_mask);
+>   }
+>   
+> +hwaddr loongarch_get_host_address(CPULoongArchState *env, hwaddr gpa,
+> +                                  uintptr_t retaddr)
+> +{
+> +    MMUContext host_context;
+> +    TLBRet ret;
+> +
+> +    if (!env->guest) {
+> +        return gpa;
+> +    }
+> +
+> +    host_context.addr = gpa;
+> +    host_context.tlb_index = -1;
+> +    ret =
+> +        loongarch_map_host_address(env, &host_context, MMU_DATA_LOAD, retaddr);
+> +    loongarch_try_ptw(env, &host_context, MMU_DATA_LOAD, MMU_KERNEL_IDX, &ret,
+> +                      false, retaddr);
+> +
+> +    if (ret != TLBRET_HOST_MATCH) {
+> +        raise_mmu_exception(env, gpa, MMU_DATA_LOAD, ret);
+> +        cpu_loop_exit_restore(env_cpu(env), retaddr);
+> +    }
+> +
+> +    return host_context.physical;
+> +}
+> +
+>   target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+>                             uint32_t level, uint32_t mem_idx)
+>   {
+> @@ -732,12 +998,15 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+>           }
+>       }
+>   
+> -    badvaddr = env->CSR_TLBRBADV;
+> +    badvaddr = GET_CSR_IF(env->guest, TLBRBADV);
+>       base = base & palen_mask;
+> -    get_dir_base_width(env, &dir_base, &dir_width, level);
+> +    get_dir_base_width(env, &dir_base, &dir_width, level, env->guest);
+>       index = (badvaddr >> dir_base) & ((1 << dir_width) - 1);
+>       phys = base | index << 3;
+> -    val = address_space_ldq_le(cs->as, phys, MEMTXATTRS_UNSPECIFIED, NULL);
+> +    val = address_space_ldq_le(
+> +        cs->as,
+> +        (env->guest ? loongarch_get_host_address(env, phys, GETPC()) : phys),
+> +        MEMTXATTRS_UNSPECIFIED, NULL);
+QEMU TLB is skipped with function loongarch_get_host_address(), I think 
+it should be used. Can it be changed something like this?
+if (!env->guest) {
+     val = address_space_ldq_le(cs->as, phys, MEMTXATTRS_UNSPECIFIED, NULL);
+} else {
+     val = cpu_ldq_data_ra(env, phys, GETPC());
+}
+
+the same with ldpte().
+
+Regards
+Bibo Mao
+>   
+>       return val & palen_mask;
+>   }
+> @@ -749,8 +1018,10 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+>       hwaddr phys, tmp0, ptindex, ptoffset0, ptoffset1;
+>       uint64_t pte_raw;
+>       uint64_t badv;
+> -    uint64_t ptbase = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE);
+> -    uint64_t ptwidth = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTWIDTH);
+> +    uint64_t ptbase =
+> +        FIELD_EX64(GET_CSR_IF(env->guest, PWCL), CSR_PWCL, PTBASE);
+> +    uint64_t ptwidth =
+> +        FIELD_EX64(GET_CSR_IF(env->guest, PWCL), CSR_PWCL, PTWIDTH);
+>       uint64_t palen_mask = loongarch_palen_mask(env);
+>       uint64_t dir_base, dir_width;
+>       uint8_t  ps;
+> @@ -771,7 +1042,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+>            * Move HGLOBAL bit to GLOBAL bit.
+>            */
+>           get_dir_base_width(env, &dir_base, &dir_width,
+> -                           FIELD_EX64(base, TLBENTRY, LEVEL));
+> +                           FIELD_EX64(base, TLBENTRY, LEVEL), env->guest);
+>   
+>           base = FIELD_DP64(base, TLBENTRY, LEVEL, 0);
+>           base = FIELD_DP64(base, TLBENTRY, HUGE, 0);
+> @@ -796,7 +1067,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+>               return;
+>           }
+>       } else {
+> -        badv = env->CSR_TLBRBADV;
+> +        badv = GET_CSR_IF(env->guest, TLBRBADV);
+>   
+>           base = base & palen_mask;
+>   
+> @@ -805,26 +1076,31 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+>           ptoffset0 = ptindex << 3;
+>           ptoffset1 = (ptindex + 1) << 3;
+>           phys = base | (odd ? ptoffset1 : ptoffset0);
+> -        pte_raw = address_space_ldq_le(cs->as, phys,
+> -                                       MEMTXATTRS_UNSPECIFIED, NULL);
+> +        pte_raw = address_space_ldq_le(
+> +            cs->as,
+> +            (env->guest ? loongarch_get_host_address(env, phys, GETPC()) :
+> +                          phys),
+> +            MEMTXATTRS_UNSPECIFIED, NULL);
+>           tmp0 = loongarch_sanitize_hw_pte(env, pte_raw);
+>           ps = ptbase;
+>       }
+>   
+>       if (odd) {
+> -        env->CSR_TLBRELO1 = tmp0;
+> +        SET_CSR_IF(env->guest, TLBRELO1, tmp0);
+>       } else {
+> -        env->CSR_TLBRELO0 = tmp0;
+> +        SET_CSR_IF(env->guest, TLBRELO0, tmp0);
+>       }
+> -    env->CSR_TLBREHI = FIELD_DP64(env->CSR_TLBREHI, CSR_TLBREHI, PS, ps);
+> +    SET_CSR_IF(
+> +        env->guest, TLBREHI,
+> +        FIELD_DP64(GET_CSR_IF(env->guest, TLBREHI), CSR_TLBREHI, PS, ps));
+>   }
+>   
+>   static TLBRet loongarch_map_tlb_entry(CPULoongArchState *env,
+>                                         MMUContext *context,
+>                                         MMUAccessType access_type, int index,
+> -                                      int mmu_idx)
+> +                                      int mmu_idx, bool guest)
+>   {
+> -    LoongArchTLB *tlb = &env->tlb[index];
+> +    LoongArchTLB *tlb = guest ? &env->gtlb[index] : &env->tlb[index];
+>       uint8_t tlb_ps, n;
+>   
+>       tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+> @@ -832,19 +1108,20 @@ static TLBRet loongarch_map_tlb_entry(CPULoongArchState *env,
+>       context->pte = n ? tlb->tlb_entry1 : tlb->tlb_entry0;
+>       context->ps = tlb_ps;
+>       context->tlb_index = index;
+> -    return loongarch_check_pte(env, context, access_type, mmu_idx);
+> +    return loongarch_check_pte(env, context, access_type, mmu_idx, guest);
+>   }
+>   
+> -TLBRet loongarch_get_addr_from_tlb(CPULoongArchState *env,
+> -                                   MMUContext *context,
+> -                                   MMUAccessType access_type, int mmu_idx)
+> +TLBRet loongarch_get_addr_from_tlb(CPULoongArchState *env, MMUContext *context,
+> +                                   MMUAccessType access_type, int mmu_idx,
+> +                                   bool guest)
+>   {
+>       int index, match;
+>   
+> -    match = loongarch_tlb_search(env, context->addr, &index);
+> +    match =
+> +        loongarch_tlb_search(env, context->addr, &index, guest, get_tgid(env));
+>       if (match) {
+>           return loongarch_map_tlb_entry(env, context, access_type, index,
+> -                                       mmu_idx);
+> +                                       mmu_idx, guest);
+>       }
+>   
+>       return TLBRET_NOMATCH;
+> 
+
 
