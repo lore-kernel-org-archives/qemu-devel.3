@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDF0ECD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:58:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92A86CD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:58:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXmy-00045X-If; Fri, 22 May 2026 17:52:16 -0400
+	id 1wQXnD-00062i-NX; Fri, 22 May 2026 17:52:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXmi-0002rj-74; Fri, 22 May 2026 17:52:00 -0400
+ id 1wQXnB-0005qg-Bf; Fri, 22 May 2026 17:52:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXmf-0004FH-NL; Fri, 22 May 2026 17:51:59 -0400
+ id 1wQXn9-0004aL-BA; Fri, 22 May 2026 17:52:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486561; bh=p6pAbECg2KacMKKyb2n/g/X3bm43YbGdZyTLDTpukU4=;
+ t=1779486561; bh=HQV63UvZd5MvJaFzgykX2S2gv6ckpflrxgTt6u6L5o4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=uvPGKfOwKa9ssoZmJ5idOGBdx4h15Xgpa/FCnaTfAp3CooH93ug0JpCxy3u5pSUcp
- SULs+P8RaZi2tHbh/PxWp3TXJvgkDJ5mx/Ppz0A3Ifh60UJA8UKDP14kDP5jFep7/6
- l2WNNz48sv0Jo+8m5M90UqbD+A9yYmQ3YFPQ+qEZRi9UeKF3YtX+4XobVTD3e7FtQs
- HvH8aopRWf/6RGC2ZxnENl///6e+1gCsiGLfsXNStPo8xoRVoWP7g7Cqk881c+u0dM
- bZ6vExzSH8z7CjhOksnjSar8tOL6TrCA2xmQ94W1nD3WpRxsgIbttk8RnhpQCupJFB
- 5UI7vK4l72Bmw==
+ b=mMPdgT2yrV8q1u0XsSYZPCUnYKYtJ7N44fpraHN+JqTfCzrJnMoQiTlc8f2tk4GP+
+ pHo7CugQyfF2b94VpDw2Wvp3NLApdvWl4DuXmngGmMF9D0/QbEl2WJfkxkZcEUcOjp
+ xi7nv9rFkESc91ts9VVvo59d398dQIYwa1jU5Y1n3YMTZAInKOkq1npF2lVPI/0SVj
+ sfBj0isTDnsTT8m1wmFDZh5n6QZKuBKFyrgwxToNCXjPls2GY7h3BZav9fuCeMHM9/
+ dGopruMb5lGAjXHZo5vez4CZZvA7elqfjiWQ9MImExI8DHQHi6KpS0QK3rmWMBXigF
+ 35UDLtTJIUBww==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 180071AFB78;
+ by isrv.corpit.ru (Postfix) with ESMTP id 684EE1AFB7D;
  Sat, 23 May 2026 00:49:21 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3CF823B71C7;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8EB9E3B71CC;
  Sat, 23 May 2026 00:49:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 130/149] meson.build: Add -fzero-init-padding-bits=all
-Date: Sat, 23 May 2026 00:49:02 +0300
-Message-ID: <20260522214923.807017-31-mjt@tls.msk.ru>
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 135/149] linux-user/sh4: Fix setup_sigtramp to match
+ Linux kernel trampoline pattern
+Date: Sat, 23 May 2026 00:49:07 +0300
+Message-ID: <20260522214923.807017-36-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,61 +70,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Matt Turner <mattst88@gmail.com>
 
-The C standard doesn't always guarantee that struct and union padding
-bits are zero initialized, even if the code initializes a struct.
-For QEMU, this is potentially problematic, because we often have
-structs that match data structures in guest memory, where we
-initialize them and then bulk copy them into the guest.  If the
-compiler didn't zero init the whole of the memory containing the
-struct, we could potentially leak random data from the host into the
-guest via the padding bytes.
+QEMU used MOVW(2) (0x9300), which loads the syscall number from PC+4,
+instead of the kernel's MOVW(7) (0x9305), which loads from PC+14.  The
+kernel uses five "or r0,r0" nop pads between TRAP_NOARG and the syscall
+number word to reach that offset.  libunwind's unw_is_signal_frame checks
+for the exact kernel byte pattern 0xc3109305 at the frame PC, so QEMU's
+compact layout was not detected, breaking unwinding through signal frames.
 
-We already use -ftrivial-auto-var-init=zero, which will zero out
-padding in many of these cases, but -fzero-init-padding-bits=all
-closes some gaps, for example cases where we initialize a
-variable with a struct initializer, and cases involving unions.
+Expand each trampoline from 6 to 16 bytes matching the kernel layout
+defined in arch/sh/kernel/signal_32.c:
 
-Follow the Linux kernel in using both options. Compare kernel
-commit dce4aab8441 ("kbuild: Use -fzero-init-padding-bits=all").
+  #define MOVW(n)    (0x9300|((n)-2))  /* Move mem word at PC+n to R3 */
+  #define TRAP_NOARG 0xc310            /* Syscall w/no args (NR in R3) */
+  #define OR_R0_R0   0x200b            /* or r0,r0 (insert to avoid hardware bug) */
 
-This option exists in gcc-15 and above; it's not supported
-by clang, but clang documents that it guarantees zero init
-of these cases always:
-https://clang.llvm.org/docs/LanguageExtensions.html#union-and-aggregate-initialization-in-c
-Older gcc which don't have the option behave as if it were set.
+  __put_user(MOVW(7),          &frame->retcode[0]);  /* 0x9305 */
+  __put_user(TRAP_NOARG,       &frame->retcode[1]);  /* 0xc310 */
+  __put_user(OR_R0_R0,         &frame->retcode[2]);  /* 0x200b */
+  __put_user(OR_R0_R0,         &frame->retcode[3]);  /* 0x200b */
+  __put_user(OR_R0_R0,         &frame->retcode[4]);  /* 0x200b */
+  __put_user(OR_R0_R0,         &frame->retcode[5]);  /* 0x200b */
+  __put_user(OR_R0_R0,         &frame->retcode[6]);  /* 0x200b */
+  __put_user((__NR_sigreturn), &frame->retcode[7]);
 
-(These options are passed through the cc.get_supported_arguments()
-filter, so we don't need to do anything extra to avoid passing it to
-a compiler that doesn't recognize it.)
+The first two halfwords (MOVW(7) || TRAP_NOARG = 0xc3109305) form the
+32-bit value libunwind checks at the frame PC, followed by two
+OR_R0_R0 halfwords (0x200b200b) at PC+4.  The same layout applies to
+the rt_sigreturn trampoline (lines 366-373 of signal_32.c).
 
+Neither this fix nor the companion tuc_link fix is independently
+sufficient: this fix makes signal frames detectable but register reads
+remain garbage without the correct ucontext layout; that fix corrects the
+ucontext layout but libunwind still cannot detect the frame without the
+correct trampoline pattern.  Together they fix the following libunwind
+tests on a 64-bit host:
+  Gtest-sig-context, Gtest-trace, Ltest-init-local-signal,
+  Ltest-sig-context, Ltest-trace
+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-id: 20260508104723.2144051-1-peter.maydell@linaro.org
-(cherry picked from commit a163fc1f864bef27f6e527cbad9defba7af9e60a)
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 9ac5aa72272117608482cad2430a75477263fe09)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/meson.build b/meson.build
-index 5ba29bc07d..7ae0d109ab 100644
---- a/meson.build
-+++ b/meson.build
-@@ -703,6 +703,12 @@ hardening_flags = [
-     # it harder to take advantage of uninitialized stack
-     # data to drive exploits
-     '-ftrivial-auto-var-init=zero',
-+    # Ensure GCC zero-initializes padding bits and trailing fields in
-+    # unions. This avoids potentially leaking host data into the guest
-+    # when we init a struct and copy it into guest memory.  GCC prior
-+    # to GCC 15 and clang don't have this, but they zero the padding
-+    # and trailing portions of a union by default.
-+    '-fzero-init-padding-bits=all',
- ]
+diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
+index 20d2bc8b2c..d70be24c38 100644
+--- a/linux-user/sh4/signal.c
++++ b/linux-user/sh4/signal.c
+@@ -329,20 +329,42 @@ badframe:
+     return -QEMU_ESIGRETURN;
+ }
  
- # Zero out registers used during a function call
++/*
++ * "or r0,r0" nop used by the Linux kernel inline sigreturn trampolines to
++ * avoid a hardware bug (OR_R0_R0 in arch/sh/kernel/signal_32.c).  Five of
++ * these nops follow TRAP_NOARG, placing the syscall number word 14 bytes
++ * past the MOVW(7) instruction (at MOVW(7)'s load offset).  This yields the
++ * fixed 16-byte layout that libunwind's unw_is_signal_frame detects:
++ *   [MOVW(7), TRAP_NOARG, 5x NOP_OR, .word syscall_nr]
++ */
++#define NOP_OR 0x200b
++
+ void setup_sigtramp(abi_ulong sigtramp_page)
+ {
+-    uint16_t *tramp = lock_user(VERIFY_WRITE, sigtramp_page, 2 * 6, 0);
++    uint16_t *tramp = lock_user(VERIFY_WRITE, sigtramp_page, 2 * 16, 0);
+     assert(tramp != NULL);
+ 
++    /* sigreturn trampoline (non-RT) at offset 0 */
+     default_sigreturn = sigtramp_page;
+-    __put_user(MOVW(2), &tramp[0]);
++    __put_user(MOVW(7), &tramp[0]);
+     __put_user(TRAP_NOARG, &tramp[1]);
+-    __put_user(TARGET_NR_sigreturn, &tramp[2]);
+-
+-    default_rt_sigreturn = sigtramp_page + 6;
+-    __put_user(MOVW(2), &tramp[3]);
+-    __put_user(TRAP_NOARG, &tramp[4]);
+-    __put_user(TARGET_NR_rt_sigreturn, &tramp[5]);
+-
+-    unlock_user(tramp, sigtramp_page, 2 * 6);
++    __put_user(NOP_OR, &tramp[2]);
++    __put_user(NOP_OR, &tramp[3]);
++    __put_user(NOP_OR, &tramp[4]);
++    __put_user(NOP_OR, &tramp[5]);
++    __put_user(NOP_OR, &tramp[6]);
++    __put_user(TARGET_NR_sigreturn, &tramp[7]);
++
++    /* rt_sigreturn trampoline at offset 16 */
++    default_rt_sigreturn = sigtramp_page + 16;
++    __put_user(MOVW(7), &tramp[8]);
++    __put_user(TRAP_NOARG, &tramp[9]);
++    __put_user(NOP_OR, &tramp[10]);
++    __put_user(NOP_OR, &tramp[11]);
++    __put_user(NOP_OR, &tramp[12]);
++    __put_user(NOP_OR, &tramp[13]);
++    __put_user(NOP_OR, &tramp[14]);
++    __put_user(TARGET_NR_rt_sigreturn, &tramp[15]);
++
++    unlock_user(tramp, sigtramp_page, 2 * 16);
+ }
 -- 
 2.47.3
 
