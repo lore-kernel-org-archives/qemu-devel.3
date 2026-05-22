@@ -4,112 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9154ACD5BB1
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 08:28:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E979CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 08:29:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQLEU-0001QA-He; Fri, 22 May 2026 04:27:50 -0400
+	id 1wQLGK-0001td-Ol; Fri, 22 May 2026 04:29:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wQLET-0001Pp-0j
- for qemu-devel@nongnu.org; Fri, 22 May 2026 04:27:49 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
+ id 1wQLGJ-0001tR-Tq; Fri, 22 May 2026 04:29:43 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wQLER-0004b9-FN
- for qemu-devel@nongnu.org; Fri, 22 May 2026 04:27:48 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
+ id 1wQLGH-0005ma-VR; Fri, 22 May 2026 04:29:43 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64M6l4LU151154; Fri, 22 May 2026 08:27:42 GMT
+ 64LMOudt2818971; Fri, 22 May 2026 08:29:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=IBx9kp
- DLrEu9Qvk3PXbwXXsAkjSR1uM38YhPni82hGI=; b=IQq2x9fET1/oaTf6r/yMrd
- 4gDZR4eL5IJ/Xh6omN24oDz2HFaywc8p3IjDl0z5choOtcaqrs+/tu2O0BnGoAG4
- ulagBdUIQ0/K6HYqqnsh54Ox5h21p09H/GJIvM6rLCdIbn1TYxKqUu/79GuDpgNI
- MM5o2xEZThiG9RVNGsgRe7x4SnxfQ0dPudSc0aPOqNplY69LY/CcVmHVqOZrp+j2
- 3ut9uPIRAHW7XX2fRoG7zGjslGeyDAyWIq7F2X3p2vTnvOXTsGd3Z6CZwR56ziUG
- H+yQXx6hXiFGsBy8SMyulvespV+lQdLK0NAe62oNQhE5xChijwxMxrfHskCZHMZQ
+ :message-id:mime-version:references:subject:to; s=pp1; bh=hp8laJ
+ 1YbdJuWUCYzrXg/znq7QILkNLs/b+UFi2juPI=; b=Rf2EOLfu2tle1bpmiYottn
+ vhUM6tW25T52vyCira9+WOghHypn6K7uQl4MuvnURoeCnAAW0ThMPUJ8Zz2YApDN
+ NMXgP7Lau3mHHmHkltvX29pcnl6YANblbtkPX8tODLxHc0JEtcs+hhxAjTn9SYaI
+ gmKdOVilji3ZsrHYXXXBIsiYeaqbW3l9fU1qLMcUSnqZio/RJgHEtR6uIpSZqYoM
+ s2579pUBP1pt/x0dfwxbARSgPuVJygJtZ67c2h6wJYtO+eBSiKPqQNFkCQ/umkzM
+ MgLgJRGLsQUKi+RXbJG0e05G6dxdziN9zJj5VmxWC0ppKyCFzYU1wJKY90VkZFSA
  ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6hawhpe2-1
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h9yb62h-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 22 May 2026 08:27:42 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64M8OOUA015190;
- Fri, 22 May 2026 08:27:42 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e73wkg3qd-1
+ Fri, 22 May 2026 08:29:36 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64M8ORRh030398;
+ Fri, 22 May 2026 08:29:35 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e74dj01qm-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 22 May 2026 08:27:41 +0000 (GMT)
+ Fri, 22 May 2026 08:29:35 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
  [10.20.54.100])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64M8ReE938994342
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64M8TVZS27328802
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 22 May 2026 08:27:40 GMT
+ Fri, 22 May 2026 08:29:31 GMT
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0470320043;
- Fri, 22 May 2026 08:27:40 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id A07EE2004D;
+ Fri, 22 May 2026 08:29:31 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5460220040;
- Fri, 22 May 2026 08:27:38 +0000 (GMT)
-Received: from mac.bl1-in.ibm.com (unknown [9.124.216.126])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Fri, 22 May 2026 08:27:38 +0000 (GMT)
-Date: Fri, 22 May 2026 13:57:34 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Matthew Penney <matt@matthewpenney.net>,
- Thomas Huth <thuth@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: Re: [PULL 1/1] tests/qtest: fix discarded const qualifier warning
-Message-ID: <20260522135219.6cff4e3e-78-amachhiw@linux.ibm.com>
-Mail-Followup-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org, 
- Matthew Penney <matt@matthewpenney.net>, Thomas Huth <thuth@redhat.com>, 
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20260518155344.5945-1-farosas@suse.de>
- <20260518155344.5945-2-farosas@suse.de>
+ by IMSVA (Postfix) with ESMTP id 4A81B20040;
+ Fri, 22 May 2026 08:29:28 +0000 (GMT)
+Received: from [9.123.2.84] (unknown [9.123.2.84])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 22 May 2026 08:29:28 +0000 (GMT)
+Message-ID: <ca4dfe89-78ea-4fc1-bb0c-71650ca2d8f8@linux.ibm.com>
+Date: Fri, 22 May 2026 13:59:27 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260518155344.5945-2-farosas@suse.de>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 00/28] target/ppc: Moving instructions to decodetree
+ specification
+To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, npiggin@gmail.com, harshpb@linux.ibm.com,
+ richard.henderson@linaro.org, peter.maydell@linaro.org, stefanha@redhat.com
+Cc: milesg@linux.ibm.com, tshah@linux.ibm.com, shivangu@linux.ibm.com,
+ ojaswin@linux.ibm.com, aboorvad@linux.ibm.com, amachhiw@linux.ibm.com,
+ sv@linux.ibm.com, shivani@linux.ibm.com, mkchauras@gmail.com,
+ uverma@linux.ibm.com, nikhilks@linux.ibm.com
+References: <20260520160728.2283628-1-rathc@linux.ibm.com>
+Content-Language: en-US, en-IN
+From: Vishal Chourasia <vishalc@linux.ibm.com>
+In-Reply-To: <20260520160728.2283628-1-rathc@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIyMDA4MCBTYWx0ZWRfX/mx4O8PhFonV
- +drgE2vG6hM+S1kz/IIc7oxCu/5BezJ9OYdZfLMQ6e0UVI0r8Th6RqquD2osYPJN9HOp5z9zghG
- JS/otd3ANvDHL35ZVWr1EhymucduUSfYcBiPg7IOPp9GWpEBJzOYT4zv3dlx4zR5jHj+yzbyyDW
- l4Tl/juTb/XPGn3KamMmp+XQ9GbpXm4QK0R7iVePL12FsBt0ZAd1V7G0ZrlcEGklPq15wotR0N7
- N2IrolFz2aGkVtWdeDe6YIiO950oLvd6Oq0ZOsO/gU+83Sd0zuUq4mkXJ+BDOqHnhnPamTDKLZ9
- tQqsh3PWVg7Lgt2gaZ/FD0KMbeAilEBeA3YECSnWnhy57aWrjiWWem95vjKjuUMrviZZBEHbF91
- b2fJTfySOHRRVkRdwT+mEfoHUuQLioqD3kUYocpCsrALbVRE6KdodXb2+Tcc9vKsccLMkQ2CY+q
- daQ38OnAT7CBfWAr1Yg==
-X-Authority-Analysis: v=2.4 cv=Np/htcdJ c=1 sm=1 tr=0 ts=6a10137e cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=8nJEP1OIZ-IA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=UIrnvgbcAAAA:8 a=20KFwNOVAAAA:8 a=KKAkSRfTAAAA:8
- a=EUspDBNiAAAA:8 a=_DXsSRFCzeZwW9W_6c0A:9 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
- a=mx9YIZeJv_Xrg3msmcsP:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: ipTuOE3opC5dfBuANqyRyoUVCSZK4P9a
-X-Proofpoint-GUID: ipTuOE3opC5dfBuANqyRyoUVCSZK4P9a
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIyMDA4MCBTYWx0ZWRfX9vQwj5Zlw64H
+ sqXLWiNl7BjOsufC1QvNFH8MABFB0r6b9MiTVPterDDok3OwYhquFNxlh9dKcIHxSRIcOyOUWbf
+ JUIDwOV2d5YXPwCpkYLI5MYckTzMHqz+voNOPU6KXraXZxCiJJEcmzceAP8Eg9utOT+zfNK3IEn
+ +MJiiQMEdICd/mOJJNRIQVvRbgbsphIVqSgdn4G6Pu5MlA8Xp1SprrUYt4GslWu7J5/dqsZ0IOs
+ omEOAiqfPkogOVPqShMkkLxedb8nnETaYycqUzpmkNisq0Y3PUY1n4qUbW071Ct9xdNvT5f8UhQ
+ 7Dquz86YsJ1++NS/nRfhaG8bM+k2XJe4Obt9hflBueAAtXOQvglrZJdFkCMDv6Xmy6IzF/rIJws
+ HeORzVBn9KZht4AIHl0aigHuUrM4064INqOBCDe+0JMgyaIDI5kMr7Kan+vXxmVgI1Jjs1EmlyJ
+ 4EkH1VgeTnriVvL/6Hg==
+X-Authority-Analysis: v=2.4 cv=BNuDalQG c=1 sm=1 tr=0 ts=6a1013f1 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=p0WdMEafAAAA:8
+ a=h1SniR8Z0XukoVBHosoA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: Z__rRd0q3FcLBG3Sda84bFSGtaprip0p
+X-Proofpoint-GUID: ME4dhm5xZSnRkTV9FpYZxUa8VOGJeLte
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-22_01,2026-05-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 clxscore=1011 priorityscore=1501 impostorscore=0
- lowpriorityscore=0 suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
+ adultscore=0 priorityscore=1501 malwarescore=0 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1011
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605220080
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=vishalc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -132,76 +126,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Matthew,
+Hi All,
 
-Thank you for addressing the const qualifier warning in qtest_verbose(). Your
-fix correctly resolves the immediate compilation issue with modern compilers.
+I see there is a test case that fails during the CI run.
+https://gitlab.com/rathc/qemu/-/jobs/14481511189/
 
-I had independently worked on this same issue and submitted a similar fix as
-part of a patch series:
+Looking into it
 
-  https://lore.kernel.org/all/20260518172517.12466-3-amachhiw@linux.ibm.com/
+Thanks,
+vishalc
 
-While both our approaches fix the immediate strstr() warning by making 'found'
-const, I noticed that getenv() still returns char * despite environment strings
-being semantically read-only. This creates a subtle const-correctness gap that
-stricter compilers (like GCC 16) may flag in the future.
-
-I've prepared an improved v2 patch [2] that builds upon your merged fix by using
-g_getenv() and g_strstr_len() to maintain const correctness throughout. This
-approach:
-
-- Uses g_getenv() which returns const gchar *, matching the read-only semantics
-  of environment variables
-- Employs g_strstr_len() for consistent use of GLib string functions, aligning
-  with QEMU conventions
-- Eliminates all const-correctness warnings with strict compilers The v2 patch
-  supersedes my earlier attempt and is rebased on top of your merged commit
-  (e68da5b7a2cd).
-
-Thanks again for the quick fix!
-
-[1] https://lore.kernel.org/all/20260518172517.12466-3-amachhiw@linux.ibm.com/
-[2] https://lore.kernel.org/all/20260522082555.54918-1-amachhiw@linux.ibm.com/
-
-Regards,
-Amit
-
-On 2026/05/18 12:53 PM, Fabiano Rosas wrote:
-> From: Matthew Penney <matt@matthewpenney.net>
-> 
-> Modern compilers warn that the result of strstr() may discard
-> const qualifiers when assigned to a non-const pointer.
-> 
-> Make 'found' a const char * to fix the warning.
-> 
-> Signed-off-by: Matthew Penney <matt@matthewpenney.net>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Tested-by: Thomas Huth <thuth@redhat.com>
-> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  tests/qtest/libqtest.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-> index bf9284b9a1..b1e06ea364 100644
-> --- a/tests/qtest/libqtest.c
-> +++ b/tests/qtest/libqtest.c
-> @@ -2146,7 +2146,7 @@ bool mkimg(const char *file, const char *fmt, unsigned size_mb)
->  bool qtest_verbose(const char *domain)
->  {
->      const char *log = getenv("QTEST_LOG");
-> -    char *found;
-> +    const char *found;
->  
->      assert(domain);
->  
-> -- 
-> 2.51.0
-> 
-> 
+On 20/05/26 21:37, Chinmay Rath wrote:
+> We recently had a QEMU decodetree hackathon at our org focusing on moving
+> instructions to decodetree specification. I have consolidated the patches
+> generated out of this effort in this series. Though I have done a round
+> of review on all of them, might share some more review comments later.
+>
+> The checkpatch.pl script emits false error for a couple of patches which
+> are of the following nature :
+>
+> TRANS(STWAT, do_st_atomic, DEF_MEMOP(MO_UL))
+>
+> static bool trans_LDAT(DisasContext *ctx, arg_LDAT *a)
+>                                                      ^
+> I see this happening in the last pointer argument in function
+> definitions after macros (like TRANS(..) in this case).
+>
+> Richard, Peter, Stefan,
+> Could you please advise if it would be okay to have the above false
+> positive in the patches ?
+>
+> Gitlab CI: https://gitlab.com/rathc/qemu/-/pipelines/2540725424
+> Please note that check-python-tox and migration-compat-aarch64 from CI
+> fails in the upstream master branch as seen in the following:
+> https://gitlab.com/rathc/qemu/-/pipelines/2537246569
+>
+> Thanks,
+> Chinmay
+>
+> Aboorva Devarajan (3):
+>    target/ppc: Move vector merge instructions to decodetree
+>    target/ppc: Move vector pack instructions to decodetree
+>    target/ppc: Move GPR atomic load/store instructions to decodetree
+>
+> Amit Machhiwal (2):
+>    target/ppc: Move fixed-point Shift insns to decodetree
+>    target/ppc: Move fixed-point byte-reversal store insns to decodetree
+>
+> Mukesh Kumar Chaurasiya (IBM) (2):
+>    target/ppc: convert slw,srw instruction via decode spec
+>    target/ppc: convert sraw[i] instruction via decode spec
+>
+> Nikhil Kumar Singh (3):
+>    target/ppc: Migrate extswsli to decodetree
+>    target/ppc: Migrate atomic loads to decodetree
+>    target/ppc: Convert cache instructions to decodetree
+>
+> Ojaswin Mujoo (7):
+>    target/ppc: Move isync instruction to decodetree.
+>    target/ppc: Convert b{a, l, la} to decode tree
+>    target/ppc: move various conditional branch insns to decodetree
+>    target/ppc: Fix TRANS* macro variadic arguments handling
+>    target/ppc: Move wait instruction to decodetree
+>    target/ppc: Move sleep & friends to decodetree
+>    target/ppc: Refactor sleep and its variants to use a common helper
+>
+> Shivang Upadhyay (4):
+>    target/ppc: Move Condition Register access instructions to decodetree.
+>    target/ppc: Move Condition Register logical instructions to
+>      decodetree.
+>    target/ppc: Move Fixed-Point Load/Store String instructions to
+>      decodetree.
+>    target/ppc: Move VMX integer arithmetic and BCD instructions to
+>      decodetree.
+>
+> Shivani Nittor (1):
+>    target/ppc : Convert mcrf to decode tree
+>
+> Tanushree Shah (2):
+>    target/ppc: Move rlwimi, rlwinm instructions to decodetree
+>    target/ppc: Move lmw, stmw instructions to decodetree
+>
+> Utkarsh Verma (1):
+>    target/ppc: Move st{b, h, w, d, q}cx instructions to decodetree
+>
+> Vishal Chourasia (3):
+>    target/ppc: Move mfmsr, mtmsr[d] instructions to decodetree
+>    target/ppc: Move byte-reverse instructions to decodetree
+>    target/ppc: Move system call and rfi instructions to decodetree
+>
+>   target/ppc/helper.h                           |  100 +-
+>   target/ppc/insn32.decode                      |  244 ++
+>   target/ppc/int_helper.c                       |   76 +-
+>   target/ppc/internal.h                         |    7 -
+>   target/ppc/mem_helper.c                       |   18 +-
+>   target/ppc/tcg-excp_helper.c                  |   10 +-
+>   target/ppc/translate.c                        | 2592 ++++-------------
+>   target/ppc/translate/branch-impl.c.inc        |  181 ++
+>   target/ppc/translate/fixedpoint-impl.c.inc    |  936 ++++++
+>   target/ppc/translate/misc-impl.c.inc          |  175 ++
+>   .../ppc/translate/processor-ctrl-impl.c.inc   |   30 +
+>   target/ppc/translate/storage-ctrl-impl.c.inc  |  117 +
+>   target/ppc/translate/vmx-impl.c.inc           |  360 +--
+>   target/ppc/translate/vmx-ops.c.inc            |   41 -
+>   14 files changed, 2529 insertions(+), 2358 deletions(-)
+>
 
