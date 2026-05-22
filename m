@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D75F7CD5BB8
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:54:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9988BCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:54:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXlX-0008Uf-2l; Fri, 22 May 2026 17:50:47 -0400
+	id 1wQXos-0001dr-5i; Fri, 22 May 2026 17:54:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXlR-0008FZ-2b; Fri, 22 May 2026 17:50:41 -0400
+ id 1wQXo9-0000Qo-Tx; Fri, 22 May 2026 17:53:30 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXlN-0003Ln-LZ; Fri, 22 May 2026 17:50:40 -0400
+ id 1wQXo8-0005Cd-5l; Fri, 22 May 2026 17:53:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486560; bh=6yNTHyY4n+czwCDJOviiZkYDpnz4dMyJaeqmCz/8sP8=;
+ t=1779486561; bh=s2b6KIjZ9zS3GX+ilug1RJYQGimyhkHV/+2cFdfi+tw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=f4ypp9qTDrbMBnGxRr2VEWfU4hKquHS7jVvVT1Ax2ochXFLkMGWi7nHNF6Oq8th5J
- 0KefefqWWxia1Gy00vhaUI6mtwtBTs1S//PZWMVRguspPSKfQrFi9H9xdByr9DsCdf
- Xc7GZVW0st8FJL578uI19o1+gLHokcG78hxvqMTBCwrCZa7KuginheoYBxfMwsChkM
- EQxY0e+tvOW+RQJ4QYDNMcgmrqFQeSJ93qhJUAzzxJaRu94cKtGvI4h5qhg2pAOC+I
- 56cvSYRsgTZUUvg5g4wPxW9Vkw272wlb5xsM4/fVIyyvehoCVs4803489hCBFJXb0E
- sEjiOn444JBvQ==
+ b=p2V44etnyT6VP+NDaBECU//Xg4EMX4ySV7PIMQ0fiEcdQa6mvy6aS3sdClJ0Cq4Uj
+ +M68XGt6pJWCwA6wFvV9g2r5stzLsUEnB+waIKeLRT5f+q62I00lwXgoWBNYZtLxb/
+ R53VpIdzgbucWHSp9d1d4buR/swdQ4For7VMK/8UuZt+8SiL1JMf76PRGdOFlSVF5T
+ j/ebnrwTr3zWju9iyK65oD060KTj0WfzfxUR5p2DXmktsBT7r73kbiHwjupx8oZWqe
+ ZkozqKoC1IrXeDBGrmtJuaCSEHRpW3vJmo2b/OAPm3AelXDGbgxN0IZafan3FA+aYi
+ vo47CdctBMB8Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3006F1AFB6A;
- Sat, 23 May 2026 00:49:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id ECEDF1AFB87;
+ Sat, 23 May 2026 00:49:21 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4D0B93B71B9;
- Sat, 23 May 2026 00:49:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 204CE3B71D6;
+ Sat, 23 May 2026 00:49:26 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Katherine Leaver <katherine.j.leaver@gmail.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 116/149] hw/uefi: verify data size before accessing it
- in wrap_pkcs7
-Date: Sat, 23 May 2026 00:48:48 +0300
-Message-ID: <20260522214923.807017-17-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 145/149] commit: Drain nodes across all of
+ bdrv_commit()
+Date: Sat, 23 May 2026 00:49:17 +0300
+Message-ID: <20260522214923.807017-46-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
@@ -70,30 +69,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Kevin Wolf <kwolf@redhat.com>
 
-Fixes: CVE-2026-41439
-Fixes: 3e33af2cb306 ("hw/uefi: add var-service-pkcs7.c")
-Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260422092910.444997-6-kraxel@redhat.com>
-(cherry picked from commit 22b7b222d8f5428be8b5d4787f36efd0a0b75292)
+The whole implementation of bdrv_commit() is only correct if no new
+writes come in while it's running: It has only a single loop checking
+the allocation status for each block and finally calls bdrv_make_empty()
+without checking if that throws away any new changes.
+
+We already have to drain while taking the graph write lock. Just extend
+the drained section to all of bdrv_commit() to make sure that we don't
+get any inconsistencies.
+
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20260427170520.101242-2-kwolf@redhat.com>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
+Tested-by: Denis V. Lunev <den@openvz.org>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit f0d9ccd46cf8fc576ab7d514f10f766546cdbc14)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-pkcs7.c b/hw/uefi/var-service-pkcs7.c
-index 32accf4e44..f17ad6872f 100644
---- a/hw/uefi/var-service-pkcs7.c
-+++ b/hw/uefi/var-service-pkcs7.c
-@@ -73,7 +73,8 @@ static void wrap_pkcs7(gnutls_datum_t *pkcs7)
-     };
-     gnutls_datum_t wrap;
+diff --git a/block/commit.c b/block/commit.c
+index 0d9e1a16d7..c5e3ef03a2 100644
+--- a/block/commit.c
++++ b/block/commit.c
+@@ -518,6 +518,7 @@ int bdrv_commit(BlockDriverState *bs)
+     if (!drv)
+         return -ENOMEDIUM;
  
--    if (pkcs7->data[4] == 0x06 &&
-+    if (pkcs7->size > 16 &&
-+        pkcs7->data[4] == 0x06 &&
-         pkcs7->data[5] == 0x09 &&
-         memcmp(pkcs7->data + 6, signed_data_oid, sizeof(signed_data_oid)) == 0 &&
-         pkcs7->data[15] == 0x0a &&
++    bdrv_drain_all_begin();
+     bdrv_graph_rdlock_main_loop();
+ 
+     backing_file_bs = bdrv_cow_bs(bs);
+@@ -549,6 +550,10 @@ int bdrv_commit(BlockDriverState *bs)
+                   BLK_PERM_ALL);
+     backing = blk_new(ctx, BLK_PERM_WRITE | BLK_PERM_RESIZE, BLK_PERM_ALL);
+ 
++    /* We drained all nodes, but still make requests through BlockBackends */
++    blk_set_disable_request_queuing(src, true);
++    blk_set_disable_request_queuing(backing, true);
++
+     ret = blk_insert_bs(src, bs, &local_err);
+     if (ret < 0) {
+         error_report_err(local_err);
+@@ -565,7 +570,7 @@ int bdrv_commit(BlockDriverState *bs)
+ 
+     bdrv_graph_rdunlock_main_loop();
+ 
+-    bdrv_graph_wrlock_drained();
++    bdrv_graph_wrlock();
+     bdrv_set_backing_hd(commit_top_bs, backing_file_bs, &error_abort);
+     bdrv_set_backing_hd(bs, commit_top_bs, &error_abort);
+     bdrv_graph_wrunlock();
+@@ -647,7 +652,7 @@ ro_cleanup:
+     blk_unref(backing);
+ 
+     bdrv_graph_rdunlock_main_loop();
+-    bdrv_graph_wrlock_drained();
++    bdrv_graph_wrlock();
+     if (bdrv_cow_bs(bs) != backing_file_bs) {
+         bdrv_set_backing_hd(bs, backing_file_bs, &error_abort);
+     }
+@@ -663,6 +668,7 @@ ro_cleanup:
+ 
+ out:
+     bdrv_graph_rdunlock_main_loop();
++    bdrv_drain_all_end();
+ 
+     return ret;
+ }
 -- 
 2.47.3
 
