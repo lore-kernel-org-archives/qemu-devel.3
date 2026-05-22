@@ -4,41 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D529CD5BB3
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 16:41:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D4E7CD5BB3
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 16:53:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQSvL-0008J9-2A; Fri, 22 May 2026 12:40:37 -0400
+	id 1wQT7I-0002G6-6m; Fri, 22 May 2026 12:52:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <t.lamprecht@proxmox.com>)
- id 1wQSv6-0008Hh-Qo; Fri, 22 May 2026 12:40:21 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <t.lamprecht@proxmox.com>)
- id 1wQSv3-0004hB-HZ; Fri, 22 May 2026 12:40:20 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 0E67F84A9A;
- Fri, 22 May 2026 18:40:08 +0200 (CEST)
-From: Thomas Lamprecht <t.lamprecht@proxmox.com>
-To: qemu-block@nongnu.org
-Cc: f.ebner@proxmox.com, kwolf@redhat.com, hreitz@redhat.com,
- qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Subject: [PATCH v2] qcow2: Fix data loss on zero write with detect-zeroes=unmap
-Date: Fri, 22 May 2026 17:13:06 +0200
-Message-ID: <20260522151318.238064-1-t.lamprecht@proxmox.com>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wQT7E-0002Fn-MQ
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 12:52:52 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wQT7C-0001ft-Ro
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 12:52:52 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-8383fb7143aso3447944b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 22 May 2026 09:52:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779468769; x=1780073569; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=iTs0HTuur3HWB23RVI5stuEqHFJEBcNEWU7eo6YsS2s=;
+ b=VtFB6ELJ0G3UDwk1vO2lwO1O0GO8JUt/T6D4lN9n6WuN4PJoZho3//OACYh80pcZpf
+ LkeCUPhlemgNy+LDAA6u2IcdLzeYD1Yqu5xEkC5Lbi23CeDuqaQ0UWbUsgMvlFABSEbF
+ FMqBhDZf97wOxn0vMc+fUnnAPstZLLqxWLqVuI20wrkf0rBWnJ0CjXwDKdubM0hc87Sg
+ BVUPtWQ2Zvl776sxFWIoQOaOlnJzvvOkWWOuDpiHXNJwvNBD5Yld+IY9I/phQqQDPT4V
+ VjdrHxPXEynmfaRHXIBr9ENDwoguCn9J6votwT/M4Akmd6Zbu+60DV7cNPhhixc76hTX
+ kFUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779468769; x=1780073569;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=iTs0HTuur3HWB23RVI5stuEqHFJEBcNEWU7eo6YsS2s=;
+ b=l+Q9Tw+3cPusyvBdQoO+86ZsuGh6BRNkU6HduSEU75/xEGdfDBtr7LOq3vqdDCaHGU
+ wOagf/iGCqSK5pOfl0LRLBPhDrHitppD1kNsj345CBiq2K0xDKdtpilTZrnx+hAJXep6
+ 83q0v9vD1TtT0gQeW+Yao7UvVND5QxZqnELJJJoooOX2tryQWG7FTEqc0dD5xybNr20T
+ uL9sJx4Y+I/ss6a9q4gPd7gx1xTNMajbHfVxMVq9MRzNx1dnvaqCQ6DXtUGsp175vpuX
+ HFqAaV89wLRVPpwOHzJ8gE9+Fmw5yWsdiFxjdcchfMBMChx4WQBg3W3ZIq3WwKGhfKcl
+ Mbyg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/QPhsBMOJjWYFt9/HTuRHsIAWvJPlQgZCxC8vKCaqXslU6OZEBQhh6f7E9sJ4snhiG57nV/h4UH5PQ@nongnu.org
+X-Gm-Message-State: AOJu0YwMmr8+QKJG/gIy4m8fzoK6rI6CgZw9jxtgSxe6v9oIonzpKHSS
+ FH7u0Rx5iUEaeItr90tM+5et5pF2oCZUeQMAlUMAwaXZfyYidKOSSzrdB0sfvNSiujY=
+X-Gm-Gg: Acq92OHWxy8vRffNCRFfIN3kKLnzGevt8zpXKWwf0IkLBwWP5H3hbELn/pyjP4bqcoe
+ uz7wq8bU8e2Aolwop0/HCf7R9kFm4v8kEi23or+fP+WJNTCJpw+yEtLmyUxK1DJx8PvRCjVAE+T
+ haR0twJiKMWUSNwkiQZo3Yh6+YzediFN0k0C2It/cLFjs3b1wEobujDQOQlfaPCQo8s3wnJuI0D
+ UE8rhmN6NHol9jmx2jJPXO4KMvik6OL+jlMuMu3PSMn4GVXqyvrTJ6WmXkAYs8z05U1wYui/mJ+
+ mQE8//1h9O6zO30MhbZGWOfcAtdRQktj6cVRiKsHdGzfaTpxtx1LXRFWSBYgV7zDoi863PAGR6O
+ EOjGmO2YKxqKrlYVNZN9W7NAsaafcD+0NN6WRrZvoPixlMswgUyTBWOMmIb+TWopxMtjGVvKWgD
+ p5Kq/U14Xk2G/qf14VxvIefayofaXbF1ZAqprQZ8fp
+X-Received: by 2002:a05:6a00:2d1b:b0:835:3730:571e with SMTP id
+ d2e1a72fcca58-8415f3a944amr4464641b3a.5.1779468768956; 
+ Fri, 22 May 2026 09:52:48 -0700 (PDT)
+Received: from [192.168.64.111] ([50.78.183.177])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-84164b0427bsm2887447b3a.22.2026.05.22.09.52.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 22 May 2026 09:52:48 -0700 (PDT)
+Message-ID: <e8ac274e-1a59-41d3-bca5-43fb842b8276@linaro.org>
+Date: Fri, 22 May 2026 09:52:46 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1779467987604
-Received-SPF: pass client-ip=94.136.29.106;
- envelope-from=t.lamprecht@proxmox.com; helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v14 07/22] target/mips: add Octeon ZUC COP2 helpers
+To: James Hilliard <james.hilliard1@gmail.com>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Aurelien Jarno
+ <aurelien@aurel32.net>, Aleksandar Rikalo <arikalo@gmail.com>,
+ Huacai Chen <chenhuacai@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20260521-mips-octeon-missing-insns-v2-v14-0-fbf08e164830@gmail.com>
+ <20260521-mips-octeon-missing-insns-v2-v14-7-fbf08e164830@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260521-mips-octeon-missing-insns-v2-v14-7-fbf08e164830@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -55,193 +110,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit b8bfb1478d ("qcow2: Fix corruption on discard during write with
-COW") added a wait_for_dependencies() at the start of
-qcow2_subcluster_zeroize(). That fixes the inconsistency it set out to
-fix, but turns the lock-protected pre-check in the caller,
-qcow2_co_pwrite_zeroes(), into a stale one: the wait yields s->lock,
-so an in-flight allocating write whose QCowL2Meta is already on
-s->cluster_allocs (but whose L2 entry is not yet linked) gets to link
-its entry during the yield. When the zeroize wakes, the cluster is now
-NORMAL, and with BDRV_REQ_MAY_UNMAP the free path in zero_in_l2_slice()
-unmaps the just-written cluster, silently dropping the data write's
-payload.
+On 5/21/26 22:19, James Hilliard wrote:
+> +static uint32_t octeon_zuc_fsm(const MIPSOcteonCryptoState *crypto,
+> +                               unsigned int index)
+> +{
+> +    uint64_t pair = crypto->hsh_dat[8];
+> +
+> +    return index ? octeon_crypto_lo32(pair) : octeon_crypto_hi32(pair);
+> +}
+> +
+> +static void octeon_zuc_set_fsm(MIPSOcteonCryptoState *crypto,
+> +                               unsigned int index, uint32_t value)
+> +{
+> +    uint32_t hi = octeon_crypto_hi32(crypto->hsh_dat[8]);
+> +    uint32_t lo = octeon_crypto_lo32(crypto->hsh_dat[8]);
+> +
+> +    if (index) {
+> +        lo = value;
+> +        crypto->hsh_iv[2] = value;
+> +    } else {
+> +        hi = value;
+> +        crypto->hsh_iv[1] = value;
+> +    }
+> +    crypto->hsh_dat[8] = octeon_zuc_pack_pair(hi, lo);
+> +}
 
-This is reachable with detect-zeroes=unmap (the default for VirtIO
-disks with discard on in Proxmox VE), under which the block layer
-auto-promotes all-zero buffers to BDRV_REQ_ZERO_WRITE |
-BDRV_REQ_MAY_UNMAP. A memory-constrained Debian guest running 'apt
-full-upgrade' on such a disk reproduces it as random SIGSEGVs:
-swapped-out code pages come back as zero.
+Where does HSH_DAT[8] come from?  The docs only mention HASHIV.
 
-Wait for in-flight dependencies before the lock-protected check in
-qcow2_co_pwrite_zeroes(). If a write linked its L2 entry during the
-wait, the type check now fails and the block layer falls back to a
-bounce-buffered zero write that only touches the requested subrange,
-preserving the racing write's data. Promote wait_for_dependencies() to
-qcow2_wait_for_dependencies() so qcow2.c can call it.
+> +
+> +static uint32_t octeon_zuc_window(const MIPSOcteonCryptoState *crypto,
+> +                                  unsigned int index)
+> +{
+> +    switch (index) {
+> +    case 0:
+> +        return octeon_crypto_hi32(crypto->hsh_dat[9]);
+> +    case 1:
+> +        return octeon_crypto_lo32(crypto->hsh_dat[9]);
+> +    case 2:
+> +        return crypto->hsh_dat[10];
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +}
+> +
+> +static void octeon_zuc_set_window(MIPSOcteonCryptoState *crypto,
+> +                                  unsigned int index, uint32_t value)
+> +{
+> +    switch (index) {
+> +    case 0:
+> +        crypto->hsh_dat[9] =
+> +            octeon_zuc_pack_pair(value, octeon_crypto_lo32(crypto->hsh_dat[9]));
+> +        crypto->hsh_iv[0] = crypto->hsh_dat[9];
+> +        return;
+> +    case 1:
+> +        crypto->hsh_dat[9] =
+> +            octeon_zuc_pack_pair(octeon_crypto_hi32(crypto->hsh_dat[9]), value);
+> +        crypto->hsh_iv[0] = crypto->hsh_dat[9];
+> +        return;
+> +    case 2:
+> +        crypto->hsh_dat[10] = value;
+> +        return;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +}
 
-Fixes: b8bfb1478d ("qcow2: Fix corruption on discard during write with COW")
-Cc: qemu-stable@nongnu.org
-Tested-by: Fiona Ebner <f.ebner@proxmox.com>
-Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
-Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
----
+What are these?  No mention of window in the docs at all.
 
-Changes v1 -> v2:
-* improve comments (thx @Fiona)
-* add Fiona's R-b/T-b
+> +static uint32_t octeon_zuc_tresult(const MIPSOcteonCryptoState *crypto)
+> +{
+> +    return crypto->hsh_dat[11];
+> +}
+> +
+> +static void octeon_zuc_set_tresult(MIPSOcteonCryptoState *crypto,
+> +                                   uint32_t value)
+> +{
+> +    crypto->hsh_dat[11] = value;
+> +    crypto->hsh_iv[3] = value;
+> +}
 
- block/qcow2-cluster.c      | 10 +++++-----
- block/qcow2.c              | 10 ++++++++--
- block/qcow2.h              |  4 ++++
- tests/qemu-iotests/046     | 23 +++++++++++++++++++++++
- tests/qemu-iotests/046.out | 10 ++++++++++
- 5 files changed, 50 insertions(+), 7 deletions(-)
-
-diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
-index 8b1e80bd0b..e02fae6a0c 100644
---- a/block/qcow2-cluster.c
-+++ b/block/qcow2-cluster.c
-@@ -1474,9 +1474,9 @@ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
-     return 0;
- }
- 
--static void coroutine_mixed_fn wait_for_dependencies(BlockDriverState *bs,
--                                                     uint64_t guest_offset,
--                                                     uint64_t bytes)
-+void coroutine_mixed_fn qcow2_wait_for_dependencies(BlockDriverState *bs,
-+                                                    uint64_t guest_offset,
-+                                                    uint64_t bytes)
- {
-     BDRVQcow2State *s = bs->opaque;
-     QCowL2Meta *m = NULL;
-@@ -2035,7 +2035,7 @@ int qcow2_cluster_discard(BlockDriverState *bs, uint64_t offset,
-      * We don't need to allocate a QCowL2Meta for the discard operation because
-      * s->lock is held for the duration of the whole operation.
-      */
--    wait_for_dependencies(bs, offset, bytes);
-+    qcow2_wait_for_dependencies(bs, offset, bytes);
- 
-     /* Caller must pass aligned values, except at image end */
-     assert(QEMU_IS_ALIGNED(offset, s->cluster_size));
-@@ -2204,7 +2204,7 @@ int coroutine_fn qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset,
-      * We don't need to allocate a QCowL2Meta for the zeroize operation because
-      * s->lock is held for the duration of the whole operation.
-      */
--    wait_for_dependencies(bs, offset, bytes);
-+    qcow2_wait_for_dependencies(bs, offset, bytes);
- 
-     /* If we have to stay in sync with an external data file, zero out
-      * s->data_file first. */
-diff --git a/block/qcow2.c b/block/qcow2.c
-index 81fd299b4c..96efdd4503 100644
---- a/block/qcow2.c
-+++ b/block/qcow2.c
-@@ -4234,10 +4234,16 @@ qcow2_co_pwrite_zeroes(BlockDriverState *bs, int64_t offset, int64_t bytes,
-         }
- 
-         qemu_co_mutex_lock(&s->lock);
--        /* We can have new write after previous check */
-         offset -= head;
-         bytes = s->subcluster_size;
--        nr = s->subcluster_size;
-+        /*
-+         * Wait for in-flight allocating writes first: otherwise the type
-+         * check below could pass on UNALLOCATED while a yet-to-link_l2 write
-+         * completes during qcow2_subcluster_zeroize()'s own wait, letting the
-+         * resumed MAY_UNMAP discard the just-written data.
-+         */
-+        qcow2_wait_for_dependencies(bs, offset, bytes);
-+        nr = bytes;
-         ret = qcow2_get_host_offset(bs, offset, &nr, &off, &type);
-         if (ret < 0 ||
-             (type != QCOW2_SUBCLUSTER_UNALLOCATED_PLAIN &&
-diff --git a/block/qcow2.h b/block/qcow2.h
-index 192a45d596..ce517040c4 100644
---- a/block/qcow2.h
-+++ b/block/qcow2.h
-@@ -966,6 +966,10 @@ int coroutine_fn GRAPH_RDLOCK
- qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset, uint64_t bytes,
-                          int flags);
- 
-+void coroutine_mixed_fn
-+qcow2_wait_for_dependencies(BlockDriverState *bs, uint64_t guest_offset,
-+                            uint64_t bytes);
-+
- int GRAPH_RDLOCK
- qcow2_expand_zero_clusters(BlockDriverState *bs,
-                            BlockDriverAmendStatusCB *status_cb,
-diff --git a/tests/qemu-iotests/046 b/tests/qemu-iotests/046
-index e03dd40147..0d84b5c1c7 100755
---- a/tests/qemu-iotests/046
-+++ b/tests/qemu-iotests/046
-@@ -226,6 +226,26 @@ aio_write -z 0x140000 0x10000
- resume A
- aio_flush
- EOF
-+
-+# Start an allocating write to a previously unallocated cluster and, before
-+# its L2 update is linked, issue a concurrent sub-cluster zero write with
-+# MAY_UNMAP that targets a disjoint range within the same cluster. The zero
-+# write's head/tail are zero (cluster is unallocated), so qcow2_co_pwrite_zeroes
-+# would expand it to the full subcluster. Without waiting for dependencies
-+# before the zero write's "unallocated" type check, that check passes,
-+# qcow2_subcluster_zeroize then yields in wait_for_dependencies, the allocating
-+# write links its L2 entry, and the resumed zeroize unmaps the cluster -
-+# silently discarding the just-written data. Waiting first makes the zero write
-+# fall back to a bounce-buffered real write, which only touches its own
-+# subrange.
-+cat <<EOF
-+break write_aio A
-+aio_write -P 180 0x200000 0x4000
-+wait_break A
-+aio_write -z -u 0x204000 0x4000
-+resume A
-+aio_flush
-+EOF
- }
- 
- overlay_io | $QEMU_IO blkdebug::"$TEST_IMG" | _filter_qemu_io |\
-@@ -310,6 +330,9 @@ verify_io()
-     echo read -P 0   0x120000 0x10000
-     echo read -P 0   0x130000 0x10000
-     echo read -P 0   0x140000 0x10000
-+
-+    echo read -P 180 0x200000 0x4000
-+    echo read -P 0   0x204000 0xc000
- }
- 
- verify_io | $QEMU_IO "$TEST_IMG" | _filter_qemu_io
-diff --git a/tests/qemu-iotests/046.out b/tests/qemu-iotests/046.out
-index 6341df335c..137cf527f1 100644
---- a/tests/qemu-iotests/046.out
-+++ b/tests/qemu-iotests/046.out
-@@ -169,6 +169,12 @@ wrote XXX/XXX bytes at offset XXX
- XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- wrote XXX/XXX bytes at offset XXX
- XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+blkdebug: Suspended request 'A'
-+blkdebug: Resuming request 'A'
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- 
- == Verify image content ==
- read 65536/65536 bytes at offset 0
-@@ -275,5 +281,9 @@ read 65536/65536 bytes at offset 1245184
- 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- read 65536/65536 bytes at offset 1310720
- 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 16384/16384 bytes at offset 2097152
-+16 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 49152/49152 bytes at offset 2113536
-+48 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- No errors were found on the image.
- *** done
--- 
-2.47.3
+Where does HASHDAT[11] come from?  Docs only mention HASHIV[3].
 
 
+r~
 
