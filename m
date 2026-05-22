@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17CFECD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:42:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2476DCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:42:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXZU-00080H-4Z; Fri, 22 May 2026 17:38:20 -0400
+	id 1wQXaO-0000Rl-7E; Fri, 22 May 2026 17:39:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXZP-0007cw-TC; Fri, 22 May 2026 17:38:15 -0400
+ id 1wQXZo-0000Fi-2I; Fri, 22 May 2026 17:38:45 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXZO-0002Tm-2l; Fri, 22 May 2026 17:38:15 -0400
+ id 1wQXZj-0002UV-V9; Fri, 22 May 2026 17:38:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485682; bh=UhI+KDjAYlhcfCiXgj3KBHxzGA1hM+W7e3Oe7frWppQ=;
+ t=1779485682; bh=RrhIRJ/LDvQkxQ4Mq2Od9Wj9IXgL5QT+Dkxl8e0XdW8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XH5VQLGPbQ++u9eevin3kuQce3fHcIKPTRpYvTELicb3VzpEVir5z2nFV1SzyYun4
- Fiz3aqJIUkVZy2oxhSrb1o+S7y+fSGJ4zP4IucjnuU0mbl1B9NP+Oflx4zc5dNXJHd
- FZtHIUrLr4y/frgmuLY+m50QBtz8MM0TE5tksIznKanMSr6LzPc2jyrEmETAbuwMZn
- VNloEiDkgyo1cyUptYxJQlGZBE3dKekVEefHzTqtMfiPwsS/vCJ365a0lmuC/8k90B
- CXer8oJGyRjeiVSoPYP6S1LO5fRITngNCHb4WXcdkhdrgxJcNuYr3AW50bSlRyygxE
- o4aOQ+QGu9aBw==
+ b=jQpw/LZD9O03Ua2k12YgEyCgg2AZ2Fm0IreupxdhLbyGhRzw3vthd7YnN/lB8oiV9
+ VPxrUySuEJeuvs+Hr1QRzoq3PYsfAdtFSteCY+HYN23RVqsf3jFAmryqlWVFUe+Ced
+ nw2/uxrfUl/u3+8Iy6Fv6fWT9YiFDqSGgw/WBnwHAIy6T2CTWAwrNfE3Cp+5USo69r
+ 8LUGxq0gUlGcIbZjzK3XGAgEo/JzZd4zqwnj/2c4XDtNq1ygIOraiJcktYQlqHoYnY
+ iCu/0vKCV0gWwY46Pug1fU36j8KvMFD04q4aGsfnFET9pBg597oaH9n+2q3M9SoNd5
+ 89TXpeLKs3aVw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AA2D31AFAFD;
+ by isrv.corpit.ru (Postfix) with ESMTP id B796F1AFAFE;
  Sat, 23 May 2026 00:34:42 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id CD80F3B717D;
+ by tsrv.corpit.ru (Postfix) with ESMTP id DBED63B717E;
  Sat, 23 May 2026 00:34:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Feifan Qian <bea1e@proton.me>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: qemu-stable@nongnu.org, Jeuk Kim <jeuk20.kim@samsung.com>,
+ Rayhan Ramdhany Hanaputra <hanaputrarayhan@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 108/136] hw/uefi: check auth.hdr_length minimum size
-Date: Sat, 23 May 2026 00:34:16 +0300
-Message-ID: <20260522213446.806182-9-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 109/136] hw/ufs: Validate MCQ SQ references before use
+Date: Sat, 23 May 2026 00:34:17 +0300
+Message-ID: <20260522213446.806182-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,64 +69,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Jeuk Kim <jeuk20.kim@samsung.com>
 
-auth.hdr_length maximum is already checked (against buffer size).  The
-header has some fixed fields which are included in the header length, so
-there also is a minimum size which must be verified.  Add a check for
-that.  Fixes possible integer underflow.
+A guest can program an out-of-range SQATTR.CQID value, or ring an
+MCQ SQ doorbell before the submission queue exists.
 
-While being at it replace the magic number '24' with sizeof calculations
-for better code documentation.
+Reject SQ creation when the referenced CQ is invalid, and ignore SQ
+doorbells for queues that have not been created. This prevents a
+guest-triggerable out-of-bounds read and NULL pointer dereference.
 
-Fixes: CVE-2026-8341
-Fixes: f1488fac0584 ("hw/uefi: add var-service-auth.c")
-Reported-by: Feifan Qian <bea1e@proton.me>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260512060523.17493-1-kraxel@redhat.com>
-(cherry picked from commit b33fd8ab1caa07aeb290ef5dac44a4e7fd4be02b)
+Fixes: 5c079578d2e ("hw/ufs: Add support MCQ of UFSHCI 4.0")
+Reported-by: Rayhan Ramdhany Hanaputra <hanaputrarayhan@gmail.com>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+(cherry picked from commit 332ea29787800fff2b49e9b89ec93bd370a11965)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-auth.c b/hw/uefi/var-service-auth.c
-index 795f2f54e4..f3dc9c6ca6 100644
---- a/hw/uefi/var-service-auth.c
-+++ b/hw/uefi/var-service-auth.c
-@@ -194,7 +194,7 @@ static efi_status uefi_vars_check_auth_2_sb(uefi_vars_state *uv,
-         return EFI_SUCCESS;
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index 202dae20f7..2469f29b41 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -517,8 +517,13 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
+         return false;
      }
  
--    if (auth.hdr_length == 24) {
-+    if (auth.hdr_length == (sizeof(auth) - sizeof(auth.timestamp))) {
-         /* no signature (auth->cert_data is empty) */
-         return EFI_SECURITY_VIOLATION;
-     }
-@@ -228,6 +228,9 @@ efi_status uefi_vars_check_auth_2(uefi_vars_state *uv, uefi_variable *var,
-     }
-     memcpy(&auth, data, sizeof(auth));
- 
-+    if (auth.hdr_length < (sizeof(auth) - sizeof(auth.timestamp))) {
-+        return EFI_SECURITY_VIOLATION;
++    if (cqid >= u->params.mcq_maxq) {
++        trace_ufs_err_mcq_create_sq_invalid_cqid(cqid);
++        return false;
 +    }
-     if (uadd64_overflow(sizeof(efi_time), auth.hdr_length, &data_offset)) {
-         return EFI_SECURITY_VIOLATION;
++
+     if (!u->cq[cqid]) {
+-        trace_ufs_err_mcq_create_sq_invalid_cqid(qid);
++        trace_ufs_err_mcq_create_sq_invalid_cqid(cqid);
+         return false;
      }
-diff --git a/hw/uefi/var-service-pkcs7.c b/hw/uefi/var-service-pkcs7.c
-index c859743e86..8a1f1395a2 100644
---- a/hw/uefi/var-service-pkcs7.c
-+++ b/hw/uefi/var-service-pkcs7.c
-@@ -113,9 +113,9 @@ static gnutls_datum_t *build_pkcs7(void *data)
  
-     memcpy(&auth, data, sizeof(auth));
-     pkcs7 = g_new(gnutls_datum_t, 1);
--    pkcs7->size = auth.hdr_length - 24;
-+    pkcs7->size = auth.hdr_length - (sizeof(auth) - sizeof(auth.timestamp));
-     pkcs7->data = g_malloc(pkcs7->size);
--    memcpy(pkcs7->data, data + 16 + 24, pkcs7->size);
-+    memcpy(pkcs7->data, data + sizeof(auth), pkcs7->size);
+@@ -775,6 +780,11 @@ static void ufs_mcq_process_db(UfsHc *u, uint8_t qid, uint32_t db)
+     }
  
-     wrap_pkcs7(pkcs7);
+     sq = u->sq[qid];
++    if (!sq) {
++        trace_ufs_err_mcq_db_wr_invalid_sqid(qid);
++        return;
++    }
++
+     if (sq->size * sizeof(UfsSqEntry) <= db) {
+         trace_ufs_err_mcq_db_wr_invalid_db(qid, db);
+         return;
+@@ -788,7 +798,14 @@ static void ufs_write_mcq_op_reg(UfsHc *u, hwaddr offset, uint32_t data,
+                                  unsigned size)
+ {
+     int qid = offset / sizeof(UfsMcqOpReg);
+-    UfsMcqOpReg *opr = &u->mcq_op_reg[qid];
++    UfsMcqOpReg *opr;
++
++    if (qid >= u->params.mcq_maxq) {
++        trace_ufs_err_invalid_register_offset(offset);
++        return;
++    }
++
++    opr = &u->mcq_op_reg[qid];
  
+     switch (offset % sizeof(UfsMcqOpReg)) {
+     case offsetof(UfsMcqOpReg, sq.tp):
 -- 
 2.47.3
 
