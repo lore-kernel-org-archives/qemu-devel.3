@@ -4,50 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07EE4CD5BB0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59E50CD4F3D
 	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:37:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXXc-0002qC-61; Fri, 22 May 2026 17:36:24 -0400
+	id 1wQXXY-0002SF-UO; Fri, 22 May 2026 17:36:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXWM-0008Lt-MO; Fri, 22 May 2026 17:35:14 -0400
+ id 1wQXWp-0000Bp-DP; Fri, 22 May 2026 17:35:36 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXWJ-0007kr-Vh; Fri, 22 May 2026 17:35:06 -0400
+ id 1wQXWk-0008GK-Q9; Fri, 22 May 2026 17:35:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485633; bh=V1zHd0ThjAOjgnZDa11fXo50uLm+BRgchTAjlsofTLA=;
+ t=1779485633; bh=BLo6PwJEyhEPInm/QTZQEjyFLJO3xe8Y3s6kNzquDL8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=kPT1IU7EXySlZ7JywJ2NYZBKFdkNK6E7+kHo6h5He0uU0Mmm3jHM5ypCnGVF/Z/mr
- yJFKCvUgTOX07qc3DkIaLitTskTAF8vOE/QWP8mG/8L77aSgp7fNfS4WSdM6CmIR2o
- Q3G0W7bwgRFsdz9S/movyEdhg6KBdXGIQWM0zBmdngb5plZ/SEstv5tx8U+txW9Drh
- K5xwPjaGw4olS7idklulSQwyJwJkx0V+fn1p8bWZfICutYcPnCMmQ4y+nMO0tViCkT
- G1GpQWCwhNnA5k+Yln2QGN/ZIJSpGV5kixvF6r+qRLdIKcW19bOuoK/6++wGB7614/
- aF1KWGchTfq6w==
+ b=dCRcNddC+eK/jNc93K28zFT5TAKjsHTBt0rhLfkEsqfkK9R7s8lZGYG9EBjS0kSS2
+ zLe5ohsShCQb1CaB4nt/xw67QSBMqCk849dQzYcvjmgjAa+lzgAL7VUlTOxfG0jumE
+ aVBZg9Kc4VErFtrGv4aHdLLyZOV/RmYgjhp5HbcSgWtqIkeSSoy1wrxM/rOaIubMI6
+ TbdTouD7v+JMoPyQyeW4k7Ybf6GXlSkyz/X2fdmU5ramkFz5LQyMn5lp5+U8oZ0V4F
+ Ptd7t9arvayrA6lJgUbDJpms3CnRvt+VrkCQf+QFMtoCNRMOULUBkSXt6ICimlatrw
+ 8uknIGI5KZ2rg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3AFE91AFAD8;
+ by isrv.corpit.ru (Postfix) with ESMTP id 7FE691AFADC;
  Sat, 23 May 2026 00:33:53 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5B6623B715E;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A2C703B7162;
  Sat, 23 May 2026 00:33:57 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 73/94] meson.build: Add -fzero-init-padding-bits=all
-Date: Sat, 23 May 2026 00:33:30 +0300
-Message-ID: <20260522213356.806058-15-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ Andreas Hindborg <a.hindborg@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 77/94] hw/nvme: fix admin cq msix setup
+Date: Sat, 23 May 2026 00:33:34 +0300
+Message-ID: <20260522213356.806058-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,61 +68,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Klaus Jensen <k.jensen@samsung.com>
 
-The C standard doesn't always guarantee that struct and union padding
-bits are zero initialized, even if the code initializes a struct.
-For QEMU, this is potentially problematic, because we often have
-structs that match data structures in guest memory, where we
-initialize them and then bulk copy them into the guest.  If the
-compiler didn't zero init the whole of the memory containing the
-struct, we could potentially leak random data from the host into the
-guest via the padding bytes.
+If MSI-X is not enabled when the admin completion queue is created,
+msix_vector_use() is not called. But, if MSI-X is subsequently enabled,
+msix_notify() will fail to fire the interrupt because the use count for
+the vector remains at 0.
 
-We already use -ftrivial-auto-var-init=zero, which will zero out
-padding in many of these cases, but -fzero-init-padding-bits=all
-closes some gaps, for example cases where we initialize a
-variable with a struct initializer, and cases involving unions.
-
-Follow the Linux kernel in using both options. Compare kernel
-commit dce4aab8441 ("kbuild: Use -fzero-init-padding-bits=all").
-
-This option exists in gcc-15 and above; it's not supported
-by clang, but clang documents that it guarantees zero init
-of these cases always:
-https://clang.llvm.org/docs/LanguageExtensions.html#union-and-aggregate-initialization-in-c
-Older gcc which don't have the option behave as if it were set.
-
-(These options are passed through the cc.get_supported_arguments()
-filter, so we don't need to do anything extra to avoid passing it to
-a compiler that doesn't recognize it.)
+msix_vector_use/unuse should be called if MSI-X is *present*, not
+*enabled*. Fix this.
 
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-id: 20260508104723.2144051-1-peter.maydell@linaro.org
-(cherry picked from commit a163fc1f864bef27f6e527cbad9defba7af9e60a)
+Reported-by: Andreas Hindborg <a.hindborg@samsung.com>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit 2293d8b4bd88d3f29730cfd608935f77247919b6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/meson.build b/meson.build
-index d7b03e4746..51f5f2851a 100644
---- a/meson.build
-+++ b/meson.build
-@@ -684,6 +684,12 @@ hardening_flags = [
-     # it harder to take advantage of uninitialized stack
-     # data to drive exploits
-     '-ftrivial-auto-var-init=zero',
-+    # Ensure GCC zero-initializes padding bits and trailing fields in
-+    # unions. This avoids potentially leaking host data into the guest
-+    # when we init a struct and copy it into guest memory.  GCC prior
-+    # to GCC 15 and clang don't have this, but they zero the padding
-+    # and trailing portions of a union by default.
-+    '-fzero-init-padding-bits=all',
- ]
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index be6c7028cb..8463fd3e9a 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -5517,7 +5517,7 @@ static void nvme_free_cq(NvmeCQueue *cq, NvmeCtrl *n)
+         event_notifier_set_handler(&cq->notifier, NULL);
+         event_notifier_cleanup(&cq->notifier);
+     }
+-    if (msix_enabled(pci) && cq->irq_enabled) {
++    if (msix_present(pci) && cq->irq_enabled) {
+         msix_vector_unuse(pci, cq->vector);
+     }
+     if (cq->cqid) {
+@@ -5558,7 +5558,7 @@ static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl *n, uint64_t dma_addr,
+ {
+     PCIDevice *pci = PCI_DEVICE(n);
  
- # Zero out registers used during a function call
+-    if (msix_enabled(pci) && irq_enabled) {
++    if (msix_present(pci) && irq_enabled) {
+         msix_vector_use(pci, vector);
+     }
+ 
 -- 
 2.47.3
 
