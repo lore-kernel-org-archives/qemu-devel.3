@@ -4,48 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFAAFCD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:44:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E8F3CD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:44:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXaI-0000No-Eg; Fri, 22 May 2026 17:39:12 -0400
+	id 1wQXb2-0001Lw-7g; Fri, 22 May 2026 17:39:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXZo-0000Fj-6Q; Fri, 22 May 2026 17:38:45 -0400
+ id 1wQXaN-0000Un-Rk; Fri, 22 May 2026 17:39:18 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXZm-0002V6-Jp; Fri, 22 May 2026 17:38:39 -0400
+ id 1wQXaK-0002iz-5r; Fri, 22 May 2026 17:39:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485682; bh=JhcnpGPUrpiCR5n20ZMBP5jFQxcVpJmRiz+k9QmoY2I=;
+ t=1779485683; bh=WV4T/svhfK4my9Dm993k/8H9ELLbyrb6My9ko+knJWg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=G/DjuTzBklv7LHsN4nApVxiSG8Ni+RB5+bZk1cT8rK3OiJkpLFaBT+0WkJBZFTuxm
- lQSvogBwQ3S6jhjzqgwM5aI35Cr1h7IAYo6go0To1zwDQVze++BKyPVC7bFb+jfN7p
- +HpNqaTIa3+tlblxHgeJSYBmTR0fjAzcavEAOzeLvzFwnUNmJWEWPAcNRHhYKtnk1f
- ZJP7rCbZ/56baMXfOzfkNVOcQM6sWB6dKWz5zlyMGVIzNn3SO7XPv1Jre2z6gvwkHj
- 3U+Ro7yEAI11A7PeZvQZEAkAUw8IrVnVdIdwfKfFhVx9kYbzkafDDzyWBPf+Cc2rZC
- Q8rjFtrM8qQ+w==
+ b=tujNc/R2oyVD2AAovqzQWVyH+RVtvWbRkSWIPnosatvq0Vx7q+KSRsIi3naDI6DIJ
+ 79vgirrtJPBF6F22r6Ok2svKBFvGiOsH/4q3N/0MhQHng8n8jQVh1XuE/4dL7ZhNwU
+ FuKorkemyHd0TeClqH0rNDq/4loKPoxR0MjfIpMJVqxMvL3WbLXHQh015jCWLpB1Ot
+ Y/OFgdEDil2F/V+9w+Mph4Q4RO4W7MeMJLGEWbXWI6XvJU2p8LRZQk+e4dhxW10bZl
+ BMOJ7R57joHqOBxyHOZWjElznmaYTiwASOOvhhpBEwJfSAiVB+NCZcL1ulDvAga1TM
+ VJRUDYqfn1w6g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C59351AFAFF;
- Sat, 23 May 2026 00:34:42 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1D2441AFB04;
+ Sat, 23 May 2026 00:34:43 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E92953B717F;
- Sat, 23 May 2026 00:34:46 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 404363B7184;
+ Sat, 23 May 2026 00:34:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jeuk Kim <jeuk20.kim@samsung.com>,
- Rayhan Ramdhany Hanaputra <hanaputrarayhan@gmail.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Katherine Leaver <katherine.j.leaver@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 110/136] hw/ufs: Guard MCQ CQ accesses against
- missing queues
-Date: Sat, 23 May 2026 00:34:18 +0300
-Message-ID: <20260522213446.806182-11-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 115/136] aspeed/hace: Fix out-of-bounds read in
+ has_padding()
+Date: Sat, 23 May 2026 00:34:23 +0300
+Message-ID: <20260522213446.806182-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,58 +72,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jeuk Kim <jeuk20.kim@samsung.com>
+From: Cédric Le Goater <clg@redhat.com>
 
-A guest can ring an MCQ CQ doorbell before the completion queue exists.
-The CQ head write path then dereferences a NULL CQ through
-ufs_mcq_cq_full().
+The has_padding() function reads the last 8 bytes of a DMA buffer
+without validating req_len. req_len is guest-controlled (via
+R_HASH_SRC_LEN register or scatter-gather entries) and values less
+than 8 cause integer underflow. This can result in an out-of-bounds
+read of QEMU process memory.
 
-Ignore CQ head updates for missing CQs, and make ufs_mcq_cq_full()
-handle a missing CQ defensively.
+Add a check to ensure req_len >= 8 before accessing the buffer.
 
-Fixes: f78762a3cc8 ("hw/ufs: Fix mcq completion queue wraparound")
-Reported-by: Rayhan Ramdhany Hanaputra <hanaputrarayhan@gmail.com>
+Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
-(cherry picked from commit 283d921e771e8a98a5c3d1eed1ed791b89ba47a8)
-Fixes: 851536a8360 ("hw/ufs: Fix mcq completion queue wraparound") in 10.0.x
+Fixes: 5cd7d8564a8b ("aspeed/hace: Support AST2600 HACE")
+Link: https://lore.kernel.org/qemu-devel/20260504213421.710035-2-clg@redhat.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit 534a52755befa7b8d49c921f8dc964185903efae)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index 2469f29b41..31cf1b9434 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -817,6 +817,10 @@ static void ufs_write_mcq_op_reg(UfsHc *u, hwaddr offset, uint32_t data,
-     case offsetof(UfsMcqOpReg, cq.hp): {
-         UfsCq *cq = u->cq[qid];
- 
-+        if (!cq) {
-+            break;
-+        }
-+
-         if (ufs_mcq_cq_full(u, qid) && !QTAILQ_EMPTY(&cq->req_list)) {
-             /* Enqueueing to CQ was blocked because it was full */
-             qemu_bh_schedule(cq->bh);
-diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
-index 13d964c5ae..9e800cafac 100644
---- a/hw/ufs/ufs.h
-+++ b/hw/ufs/ufs.h
-@@ -203,7 +203,14 @@ static inline bool ufs_mcq_cq_empty(UfsHc *u, uint32_t qid)
- static inline bool ufs_mcq_cq_full(UfsHc *u, uint32_t qid)
+diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
+index 96997a03fc..212703cbe4 100644
+--- a/hw/misc/aspeed_hace.c
++++ b/hw/misc/aspeed_hace.c
+@@ -112,6 +112,14 @@ static bool has_padding(AspeedHACEState *s, struct iovec *iov,
+                         hwaddr req_len, uint32_t *total_msg_len,
+                         uint32_t *pad_offset)
  {
-     uint32_t tail = ufs_mcq_cq_tail(u, qid);
--    uint16_t cq_size = u->cq[qid]->size;
-+    UfsCq *cq = u->cq[qid];
-+    uint16_t cq_size;
-+
-+    if (!cq) {
++    /* Need at least 8 bytes to read the total message length field */
++    if (req_len < 8) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: invalid request length=0x%" HWADDR_PRIx "\n",
++                      __func__, req_len);
 +        return false;
 +    }
 +
-+    cq_size = cq->size;
- 
-     tail = (tail + sizeof(UfsCqEntry)) % (sizeof(UfsCqEntry) * cq_size);
-     return tail == ufs_mcq_cq_head(u, qid);
+     *total_msg_len = (uint32_t)(ldq_be_p(iov->iov_base + req_len - 8) / 8);
+     /*
+      * SG_LIST_LEN_LAST asserted in the request length doesn't mean it is the
 -- 
 2.47.3
 
