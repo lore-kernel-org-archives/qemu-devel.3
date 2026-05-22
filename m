@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5571ECD5BAF
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 05:23:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50948CD5BB3
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 05:23:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQIJZ-0003T0-45; Fri, 22 May 2026 01:20:53 -0400
+	id 1wQIJ5-0002SJ-J5; Fri, 22 May 2026 01:20:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wQIJQ-0002zk-0T
- for qemu-devel@nongnu.org; Fri, 22 May 2026 01:20:45 -0400
-Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
+ id 1wQIJ0-0002PP-7R
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 01:20:19 -0400
+Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wQIJO-0002Im-0u
- for qemu-devel@nongnu.org; Fri, 22 May 2026 01:20:43 -0400
-Received: by mail-oi1-x230.google.com with SMTP id
- 5614622812f47-4824176bbbeso2391312b6e.0
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 22:20:41 -0700 (PDT)
+ id 1wQIIx-0001mB-0t
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 01:20:16 -0400
+Received: by mail-oi1-x229.google.com with SMTP id
+ 5614622812f47-484d3c0855aso2756215b6e.3
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 22:20:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779427241; x=1780032041; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779427214; x=1780032014; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=mu+lYa+gqNWB2nD7pgrIYlNv9/RobAyR2gn9reCR67g=;
- b=CwhJKrwmPTytv99bCtTKw4RalpBETRQlyj8z9vzi5LdJoPFL5LmMmT0MosmRKd3tJn
- YCWNKC0c4bPjJygqykytG0P5y+0/mctJqdlPflB4uO+n8+EWLHtogmPaJvelG9dPjZIA
- ySgI3hBxmr/tsJQnZWHCplkjybJ2WsZNzHsk+CX2ZlLspUZx9nX9h8ubK14rVQD+R28p
- KxtRr7Kcj6gfv4KY4r66gM0eaR0VjG249mZUGPZLnk4BnMjrKhxEdsN1qh4RBm7C4Xid
- znZtG0CBU0raDbOFIkDT53RosPZ7H5u7DAxUJZ0Rp4BRU5/CI3oDG6f47zN1VKXiByJq
- L+Lg==
+ :reply-to; bh=JKF4Q/fd29mnWV/NByXIaIABCsq7UsmokkILVWMv7cY=;
+ b=qu4K8T4UJUX7S5pmE6iCMWveT2hzCDifbUUyCA/e9jh7gow/8PtF+McCOsxeFam946
+ leWGQTK4F4OgVXSbC9Hw6PUqAnFL5+Bk9A3YZgc44it5kNK7lgm4x+etLXYkjco9LJbk
+ jJ+4plplVBzyAVHlV7jmG5mDVBWddw6dYOmxS75LuPGVJHmqL/DpaWn4AlVkohVJk3+C
+ CmuspGnKQXo7sXC8jQde+W2vrChmecBMSElsqEfhxqtLmhHi8aHp0qSFWtfZzFtmG3Ab
+ QBcDz7kTUhSWV3eg3L2XxI1uk+9hXM+JjfPJvFSgSNqJkwbAtwpRgQtsnwAs8DaeNngx
+ X3dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779427241; x=1780032041;
+ d=1e100.net; s=20251104; t=1779427214; x=1780032014;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=mu+lYa+gqNWB2nD7pgrIYlNv9/RobAyR2gn9reCR67g=;
- b=Sr7uyigIMGJWTOOPXw8C4X8+1hpXCtw3TxAWoIx6cUnpBwW7xFRaeDFhGj2jJweFXC
- ClXyWnNzRhdsBZeK4n3bXSC4s1ZakTzxYrmvHyG/eCMuM1lB+1iInd0TgJpu8OsJTzn/
- f4X6DmOwBjNl1AEWBUvrEMVtorL2PZRF6O3v9M9iRw+PJ/dJbtF9fNB8psMfdlGbOAco
- cttvMPuS/Q/bLoA7blZVQ48ilGlRuuI+pjPiH2Ls70DGnU0g72xmZh7wcXX8UYEkWnpW
- OwXjbAhG+c6+5PAFecat80qXn5BFpofberh2vbYT4GKd+/m5ObzqUeflrvUPj4JAKY4h
- p7lg==
-X-Gm-Message-State: AOJu0Yw1X7rxDVtIhGxc9F7yBCO6VAuDNyqckwPs9PpDOmI1lCJLL0lI
- gdHxwooZaP16oCFG08bVVCQ2eLiheuHpwyDTZsePfv/TBnASNQd2E05p
-X-Gm-Gg: Acq92OGyCUFoNa5GfKnCzYU6b0bxP9tLa2K3g0opGCib5UOv/fu9RSgoKsy5C6kP/EK
- ZKqvA2eJTl/2UKLnpmign0bPz0Vc7rhspkbLy42gAqSB0FGVgvecRhKT0PUHeXUNl3JCQk9bIEU
- hT5ya/Zc91U/p/4fyh2DHWOGI7IIcLvtgZ1T2epyMxztYYorIPhf1RDbwvwcjQWRQbazT4MI3It
- le0Ti28PvE4+Fe1Q9gYNXZ9unDBcalnIXJa2Plv68ibHZYJ0R1jZA4GOs8tntqLOBrslJSZ4BUg
- OwHdx5qkkjlqmkYHSHY92xmoVUutdwuuq9rEKQlKp8oOE5LKzQ9+AL3OBjQQamG3PMEvtLRHjXC
- mPL9lhvVUmQcXEeHlg8tbpTG0IxeQNf64290MBTljPekDjJaf14P6aB3jZL1o3sNjqSS20e3G0V
- /8lA0tfoQ71d5UkDXSsM8NLM0eWOkjXYKWkondOTptTT+WJcdG0YP7jP3gsvjlcaQD4Hf1ZIqK8
- E/+TqfGG2BEiq36kQuUvz/0R8BVPX66lmVv3Soe9oAvBiwoIduY8S+x7FoU3M/+vgBCGBOQYdy8
- A3o=
-X-Received: by 2002:a05:6808:c1fb:b0:480:4024:3bb with SMTP id
- 5614622812f47-4854a29a2cbmr1525309b6e.24.1779427240998; 
- Thu, 21 May 2026 22:20:40 -0700 (PDT)
+ bh=JKF4Q/fd29mnWV/NByXIaIABCsq7UsmokkILVWMv7cY=;
+ b=kSroQBAU5PZaAjb/JrHJHKWRmKFLhTnr+x+iQwnC09MLvc+1o4OEKhasTa/4jXek8g
+ wNc60BO6FW0gWJ7CrePnVswZXrdlEs7jKwdfrJ3ZuuvOw1B3KEeAIpqsFO2WmAI6YcbZ
+ NsuoirjjPZ8LPYGf3Q6MZ2V9teHw3u2VWbDASvSKOiQHxuk2dPUbMDUejm9o8PRtC7qs
+ MzvmnAoKpIEQlJ6A+Fu7+gLlrLPDMyzA+wTKrhCBMfiROhjGQajcBN/hQdLCKlakDEMu
+ +olS4bdgnCV6nvOJVejSUbCFcWy7MBRTbFf97kUNaM4MGNOBt4/lRB7+Eql3zgOeurML
+ rF5g==
+X-Gm-Message-State: AOJu0YyNF+RPV/NA6wcSS7O+UECkBsloGWp7oz+TwsU9IbqhR1vRN9Cl
+ gUaquhE21ZjhrJLYqWcxan30B76l+RASyUtPVXo85wiJIoWXWcJ7431u
+X-Gm-Gg: Acq92OGX0AVJFfzjJV+KhVMP0qXRvN6hwZLSyX3SHLWEwwLKAX/Z0jiW/O4MaYQVE95
+ ISH316gRgJpE+lmSV4gx2HtSeOyGpHSu1145vrDNFjXMvvmLXCb6V/IJp2n5BhOiLIqAK7bC/IM
+ nPPAPjB3zNeR4cyAy1ONa3rw3QBk+SfKnDvhS36L6wcKl7VW9KHa6GfCno7OfEyrGlV6k9EPBb4
+ B2MUfL9W3Rdi7qErLjsXY4eryjMIN67NUZxoY1OkNgre2vPc7DE9TbAkOGZIiPDjn8IDg4XM1QZ
+ SkGHjeQ9Q1C3Olx8yZdx3FxVPmaLRvAHejNGow7tELJh1zu7XhXSWREfJKarqPVU2dKVjoPM33f
+ OpcCfFEfddF0QX5Nlx1VFxKgzAz9jO2XtF7/ZHbdO9HAgxoGjVhUVGXZZf4Tugf2tRVb8fO7htP
+ nn8WZp55Jm3vFi4SUfkwt6guZTtUUbuDDy+Db3PBfr+GpCQzf+E/Bw/tnHwBJXrKPHwEty03SZA
+ w/yp41Wkw8cAOF1eehIqDlRdGP2/2C86cWiPuUu7uyAs5d601jgiggKHJHFoXDT+kXZfGVu1RVB
+ ZJOMs6RwbF1UKA==
+X-Received: by 2002:a05:6808:23c2:b0:482:6b8a:33a6 with SMTP id
+ 5614622812f47-4854a279b51mr1462253b6e.23.1779427213687; 
+ Thu, 21 May 2026 22:20:13 -0700 (PDT)
 Received: from mac.localdomain (184-96-131-78.hlrn.qwest.net. [184.96.131.78])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-4855476ab77sm59690b6e.17.2026.05.21.22.20.39
+ 5614622812f47-4855476ab77sm59690b6e.17.2026.05.21.22.20.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 22:20:40 -0700 (PDT)
+ Thu, 21 May 2026 22:20:13 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Thu, 21 May 2026 23:20:04 -0600
-Subject: [PATCH v14 22/22] tests/tcg/mips: cover Octeon QMAC instructions
+Date: Thu, 21 May 2026 23:19:43 -0600
+Subject: [PATCH v14 01/22] tcg: Optimize INDEX_op_mul[us]2 for 0 and 1
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260521-mips-octeon-missing-insns-v2-v14-22-fbf08e164830@gmail.com>
+Message-Id: <20260521-mips-octeon-missing-insns-v2-v14-1-fbf08e164830@gmail.com>
 References: <20260521-mips-octeon-missing-insns-v2-v14-0-fbf08e164830@gmail.com>
 In-Reply-To: <20260521-mips-octeon-missing-insns-v2-v14-0-fbf08e164830@gmail.com>
 To: qemu-devel@nongnu.org
@@ -85,8 +85,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  James Hilliard <james.hilliard1@gmail.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x230.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::229;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x229.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -110,78 +110,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add smoke coverage for Octeon QMAC and QMACS fixed-point accumulator
-instruction paths.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The coverage exercises normal accumulation, saturating accumulation, and
-the sticky saturation flag.
+Zero operands produce a zero high and low product. One operands produce
+a copy of the other operand and a zero or sign extension in the high
+half.
 
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Fold those cases during TCG optimization so wide-multiply idioms used by
+target translators can collapse before code generation.
+
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+
 ---
-Changes v12 -> v13:
-  - Add QMAC/QMACS smoke coverage.
----
- tests/tcg/mips/user/isa/octeon/octeon-insns.c | 40 +++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+Changes v9 -> v10:
+  - Restore the original constant-fold output ordering.
 
-diff --git a/tests/tcg/mips/user/isa/octeon/octeon-insns.c b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
-index 6480c8532a..6fffc82010 100644
---- a/tests/tcg/mips/user/isa/octeon/octeon-insns.c
-+++ b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
-@@ -129,6 +129,43 @@ static uint64_t octeon_vmm0(uint64_t mpl0, uint64_t p0,
-     return rd;
- }
- 
-+static uint64_t octeon_qmac_lo(uint64_t rs, uint64_t rt, uint64_t lo)
-+{
-+    uint64_t rd;
-+
-+    asm volatile(
-+        "move $8, %[rs]\n\t"
-+        "move $9, %[rt]\n\t"
-+        "mtlo %[lo]\n\t"
-+        "mthi $0\n\t"
-+        ".word 0x710904d2\n\t" /* qmac.03 $8, $9 */
-+        "mflo %[rd]\n\t"
-+        : [rd] "=r" (rd)
-+        : [rs] "r" (rs), [rt] "r" (rt), [lo] "r" (lo)
-+        : "$8", "$9");
-+
-+    return rd;
-+}
-+
-+static uint64_t octeon_qmacs_state(uint64_t rs, uint64_t rt, uint64_t lo)
-+{
-+    uint64_t hi, rd;
-+
-+    asm volatile(
-+        "move $8, %[rs]\n\t"
-+        "move $9, %[rt]\n\t"
-+        "mtlo %[lo]\n\t"
-+        "mthi $0\n\t"
-+        ".word 0x71090012\n\t" /* qmacs.00 $8, $9 */
-+        "mfhi %[hi]\n\t"
-+        "mflo %[rd]\n\t"
-+        : [hi] "=r" (hi), [rd] "=r" (rd)
-+        : [rs] "r" (rs), [rt] "r" (rt), [lo] "r" (lo)
-+        : "$8", "$9");
-+
-+    return ((hi & 1) << 32) | (rd & 0xffffffff);
-+}
-+
- static uint64_t octeon_vmm0_zeroes_mpl1(void)
+Changes v7 -> v8:
+  - New patch from Richard Henderson's v7.5 multiplier rework.
+---
+ tcg/optimize.c | 92 ++++++++++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 60 insertions(+), 32 deletions(-)
+
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index b1abec69a5..fcdef25bee 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -2173,45 +2173,73 @@ static bool fold_multiply2(OptContext *ctx, TCGOp *op)
  {
-     uint64_t rd;
-@@ -355,6 +392,9 @@ int main(void)
-     assert(octeon_seq(0xabc, 0xdef) == 0);
-     assert(octeon_sne(0xabc, 0xabc) == 0);
-     assert(octeon_sne(0xabc, 0xdef) == 1);
-+    assert(octeon_qmac_lo(0x0003000000000000ULL, 2, 1) == 13);
-+    assert(octeon_qmacs_state(1, 1, 0x7ffffffe) == 0x17fffffffULL);
-+    assert(octeon_qmacs_state(0x8000, 0x8000, 0) == 0x17fffffffULL);
-     assert(octeon_vmulu(5, 7, 11) == 46);
-     assert(octeon_vmm0(5, 13, 7, 11) == 59);
-     assert(octeon_vmm0_zeroes_mpl1() == 0);
+     swap_commutative(op->args[0], &op->args[2], &op->args[3]);
+ 
+-    if (arg_is_const(op->args[2]) && arg_is_const(op->args[3])) {
+-        uint64_t a = arg_const_val(op->args[2]);
++    if (arg_is_const(op->args[3])) {
+         uint64_t b = arg_const_val(op->args[3]);
+-        uint64_t h, l;
+-        TCGArg rl, rh;
++        TCGArg rl = op->args[0];
++        TCGArg rh = op->args[1];
+         TCGOp *op2;
+ 
+-        switch (op->opc) {
+-        case INDEX_op_mulu2:
+-            if (ctx->type == TCG_TYPE_I32) {
+-                l = (uint64_t)(uint32_t)a * (uint32_t)b;
+-                h = (int32_t)(l >> 32);
+-                l = (int32_t)l;
+-            } else {
+-                mulu64(&l, &h, a, b);
+-            }
+-            break;
+-        case INDEX_op_muls2:
+-            if (ctx->type == TCG_TYPE_I32) {
+-                l = (int64_t)(int32_t)a * (int32_t)b;
+-                h = l >> 32;
+-                l = (int32_t)l;
+-            } else {
+-                muls64(&l, &h, a, b);
++        if (arg_is_const(op->args[2])) {
++            uint64_t a = arg_const_val(op->args[2]);
++            uint64_t h, l;
++
++            switch (op->opc) {
++            case INDEX_op_mulu2:
++                if (ctx->type == TCG_TYPE_I32) {
++                    l = (uint64_t)(uint32_t)a * (uint32_t)b;
++                    h = (int32_t)(l >> 32);
++                    l = (int32_t)l;
++                } else {
++                    mulu64(&l, &h, a, b);
++                }
++                break;
++            case INDEX_op_muls2:
++                if (ctx->type == TCG_TYPE_I32) {
++                    l = (int64_t)(int32_t)a * (int32_t)b;
++                    h = l >> 32;
++                    l = (int32_t)l;
++                } else {
++                    muls64(&l, &h, a, b);
++                }
++                break;
++            default:
++                g_assert_not_reached();
+             }
+-            break;
+-        default:
+-            g_assert_not_reached();
+-        }
+ 
+-        rl = op->args[0];
+-        rh = op->args[1];
++            /* The proper opcode is supplied by tcg_opt_gen_mov. */
++            op2 = opt_insert_before(ctx, op, 0, 2);
++            tcg_opt_gen_movi(ctx, op, rl, l);
++            tcg_opt_gen_movi(ctx, op2, rh, h);
++            return true;
++        }
+ 
+-        /* The proper opcode is supplied by tcg_opt_gen_mov. */
+-        op2 = opt_insert_before(ctx, op, 0, 2);
++        if (b == 0) {
++            op2 = opt_insert_before(ctx, op, 0, 2);
++            tcg_opt_gen_movi(ctx, op2, rl, 0);
++            tcg_opt_gen_movi(ctx, op, rh, 0);
++            return true;
++        }
++        if (b == 1) {
++            op2 = opt_insert_before(ctx, op, 0, 2);
++            tcg_opt_gen_mov(ctx, op2, rl, op->args[2]);
++
++            switch (op->opc) {
++            case INDEX_op_mulu2:
++                tcg_opt_gen_movi(ctx, op, rh, 0);
++                break;
++            case INDEX_op_muls2:
++                op->opc = INDEX_op_sar;
++                op->args[0] = rh;
++                op->args[1] = rl;
++                op->args[2] =
++                    arg_new_constant(ctx, tcg_type_size(ctx->type) * 8 - 1);
++                break;
++            default:
++                g_assert_not_reached();
++            }
+ 
+-        tcg_opt_gen_movi(ctx, op, rl, l);
+-        tcg_opt_gen_movi(ctx, op2, rh, h);
+-        return true;
++            return true;
++        }
+     }
+     return finish_folding(ctx, op);
+ }
 
 -- 
 2.54.0
