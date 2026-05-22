@@ -4,46 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C6A9CD4F3D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E62F9CD5BB0
 	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:54:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXo7-0000FO-HC; Fri, 22 May 2026 17:53:27 -0400
+	id 1wQXn6-0005DL-8y; Fri, 22 May 2026 17:52:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXo1-0008S0-6T; Fri, 22 May 2026 17:53:22 -0400
+ id 1wQXn3-0004tH-Uq; Fri, 22 May 2026 17:52:21 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXny-0004v3-QT; Fri, 22 May 2026 17:53:20 -0400
+ id 1wQXn2-0004G0-7l; Fri, 22 May 2026 17:52:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486561; bh=j6nKCgrUfzNJ3OObA9atGhYMdqhQy3xF0zUtaJNQB1I=;
+ t=1779486561; bh=mGFrnJsQruWew9Mlige4612ivSGUgZqccxWubq5PBMA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=werJObn/UphJQknkLca/Oqd92eTT3TfyWN5DsRipIqRyVnz+JDe2iXfDh0dVTVB6+
- +JyamjisFpgascQSRzq6Slou0GRYCUMs7IUnHeYlWJdA0vgaxDq/lQDCttezhMGQLM
- X1+8gJ1k3uYXSYKjGh/JnkzjDiu2JvA3w73Zv6gEBcT2txmMF7jDhlRPIl5fo9FJXc
- xkSuAENNuzKj3L3+giqN0SHOYNOkH2APlDkfCN2K+3eywvDbx94sjfxkAJhaXhd7l5
- T4VVeXC2cfT7R8kG4Wl4jpYIPZ05rOkiEp7hAndSqGDXAYDjYshJoFSKQb4q+QUWmu
- ej9ZweFpmqwyQ==
+ b=HDNG9lv/cFRW4Uwxl2BLj3TH1Ya3o6RdE7y4EJV/N2DPyy+aIciLgqZbfi+R5pWnS
+ DhuhdN/51AGdW90nZa6sPsO7yJH/gzZ5gllAxgJJjPIdhcCt//aSO+aCwDwn+ITUWX
+ ssIZ9xXEa4/c6Y0IMPI8bpiyA26NplVYXzJL9PLNvciIi5ycn0+I3bxYR2DyQPKIoU
+ 7JvAoyeBfQn3fLoPPJXimkqs7c29tkeJLOcK7sQYZ/AKMg8rvA75QPAjq4s75iAjE8
+ 6nR5KghE9H6NQHY/VehgJQoAQm8EYz3IM9rIb0hoMNSufW0DynSopSk1sjw53bxEyl
+ P8JqU9o68EIzw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B73B81AFB83;
+ by isrv.corpit.ru (Postfix) with ESMTP id 29B881AFB79;
  Sat, 23 May 2026 00:49:21 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E1AF63B71D2;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4EC1C3B71C8;
  Sat, 23 May 2026 00:49:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 141/149] ide-test: Factor out wait_dma_completion()
-Date: Sat, 23 May 2026 00:49:13 +0300
-Message-ID: <20260522214923.807017-42-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <th.huth+qemu@posteo.eu>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 131/149] tests/functional/qemu_test/asset.py: Don't
+ use setxattr when it doesn't exist
+Date: Sat, 23 May 2026 00:49:03 +0300
+Message-ID: <20260522214923.807017-32-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -68,79 +72,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260421161132.99878-7-kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 92854c9c7539bdbf4f9c1abb33dd3ba59ff91e58)
+The Python os.setxattr() API is Linux-specific, so trying to use
+it on other OSes triggers a failure:
+
+  File "/Users/pm215/src/qemu/tests/functional/qemu_test/asset.py",
+line 227, in fetch
+    os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
+    ^^^^^^^^^^^
+AttributeError: module 'os' has no attribute 'setxattr'
+
+Since we only set the attributes here for informational
+purposes, skip them when os.setxattr() isn't available.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 9903217a4ed013 ("tests/functional: add a module for handling asset download & caching")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Thomas Huth <th.huth+qemu@posteo.eu>
+Message-id: 20260501115506.3792110-1-peter.maydell@linaro.org
+(cherry picked from commit 039b057c09c6a9742b91b8f29604651ba3fdb558)
+(Mjt: context fixup for 10.2.x)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
-index ceee444a9e..c6dcb2c074 100644
---- a/tests/qtest/ide-test.c
-+++ b/tests/qtest/ide-test.c
-@@ -200,6 +200,34 @@ static uint64_t trim_range_le(uint64_t sector, uint16_t count)
-     return cpu_to_le64(((uint64_t)count << 48) + sector);
- }
+diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
+index bae40765ce..ef0dff921d 100644
+--- a/tests/functional/qemu_test/asset.py
++++ b/tests/functional/qemu_test/asset.py
+@@ -207,11 +207,14 @@ def fetch(self):
+             raise AssetError(self, "Download retries exceeded", transient=True)
  
-+static uint8_t wait_dma_completion(QTestState *qts, QPCIDevice *dev,
-+                                   QPCIBar bmdma_bar, QPCIBar ide_bar)
-+{
-+    uint8_t status;
-+
-+    /* Wait for the DMA transfer to complete */
-+    do {
-+        status = qpci_io_readb(dev, bmdma_bar, bmreg_status);
-+    } while ((status & (BM_STS_ACTIVE | BM_STS_INTR)) == BM_STS_ACTIVE);
-+
-+    g_assert_cmpint(qtest_get_irq(qts, IDE_PRIMARY_IRQ), ==,
-+                    !!(status & BM_STS_INTR));
-+
-+    /* Check IDE status code */
-+    assert_bit_set(qpci_io_readb(dev, ide_bar, reg_status), DRDY);
-+    assert_bit_clear(qpci_io_readb(dev, ide_bar, reg_status), BSY | DRQ);
-+
-+    /* Reading the status register clears the IRQ */
-+    g_assert(!qtest_get_irq(qts, IDE_PRIMARY_IRQ));
-+
-+    /* Stop DMA transfer if still active */
-+    if (status & BM_STS_ACTIVE) {
-+        qpci_io_writeb(dev, bmdma_bar, bmreg_cmd, 0);
-+    }
-+
-+    return status;
-+}
-+
- static int send_dma_request(QTestState *qts, int cmd, uint64_t sector,
-                             int nb_sectors, PrdtEntry *prdt, int prdt_entries,
-                             void(*post_exec)(QPCIDevice *dev, QPCIBar ide_bar,
-@@ -280,25 +308,7 @@ static int send_dma_request(QTestState *qts, int cmd, uint64_t sector,
-         qpci_io_writeb(dev, bmdma_bar, bmreg_cmd, 0);
-     }
- 
--    /* Wait for the DMA transfer to complete */
--    do {
--        status = qpci_io_readb(dev, bmdma_bar, bmreg_status);
--    } while ((status & (BM_STS_ACTIVE | BM_STS_INTR)) == BM_STS_ACTIVE);
--
--    g_assert_cmpint(qtest_get_irq(qts, IDE_PRIMARY_IRQ), ==,
--                    !!(status & BM_STS_INTR));
--
--    /* Check IDE status code */
--    assert_bit_set(qpci_io_readb(dev, ide_bar, reg_status), DRDY);
--    assert_bit_clear(qpci_io_readb(dev, ide_bar, reg_status), BSY | DRQ);
--
--    /* Reading the status register clears the IRQ */
--    g_assert(!qtest_get_irq(qts, IDE_PRIMARY_IRQ));
--
--    /* Stop DMA transfer if still active */
--    if (status & BM_STS_ACTIVE) {
--        qpci_io_writeb(dev, bmdma_bar, bmreg_cmd, 0);
--    }
-+    status = wait_dma_completion(qts, dev, bmdma_bar, ide_bar);
- 
-     free_pci_device(dev);
+         try:
+-            # Set these just for informational purposes
+-            os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
+-                        self.url.encode('utf8'))
+-            os.setxattr(str(tmp_cache_file), "user.qemu-asset-hash",
+-                        self.hash.encode('utf8'))
++            # Set these just for informational purposes. Note that
++            # setxattr is Linux-only; as this is only informational
++            # we can simply skip it on other platforms.
++            if hasattr(os, "setxattr"):
++                os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
++                            self.url.encode('utf8'))
++                os.setxattr(str(tmp_cache_file), "user.qemu-asset-hash",
++                            self.hash.encode('utf8'))
+         except Exception as e:
+             self.log.debug("Unable to set xattr on %s: %s", tmp_cache_file, e)
  
 -- 
 2.47.3
