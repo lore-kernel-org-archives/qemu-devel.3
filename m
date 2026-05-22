@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7857ACD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:43:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67AAACD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:43:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXZQ-0007er-Mn; Fri, 22 May 2026 17:38:17 -0400
+	id 1wQXbp-0003vm-Bt; Fri, 22 May 2026 17:40:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXZM-0007Iu-Fj; Fri, 22 May 2026 17:38:12 -0400
+ id 1wQXbT-0003kU-UD; Fri, 22 May 2026 17:40:28 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXZK-0002SU-Sq; Fri, 22 May 2026 17:38:12 -0400
+ id 1wQXbR-0004VO-Nd; Fri, 22 May 2026 17:40:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485682; bh=6yNTHyY4n+czwCDJOviiZkYDpnz4dMyJaeqmCz/8sP8=;
+ t=1779485683; bh=0nnSSVXZOKkYsXF2mD7PXRD00F0+1IUBjameM9QTHrc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XpWbgcj6hnKTHNdxDPqR46726zeQ2IclXbH9z57yh7CwwDLGXnDsPlBzc6dJC2k/0
- ODl7DS/s0L7qhU8HR82Gh4ymFWDI7A5H4uFUmarOxTZHX8INGlEQ8nJEUs6cjErsQn
- CPeFkuxU/RSkk2IHyOXqHSan3fQI2zTTb+qGYZKL1KRdSkdu3dFsliYLC4+Rs2NieM
- 94KRyrPEeItdKmf5X/DRYJqPiGQbgrDrI2BVyw+Cjkcgu02N1qgiTtTkFIUdndMB5e
- 28n2mNErIF5LlJxiHgMvmziE+NnbmWOWjSYd2p6rSulv+BWZHzxbXR63hBqT1dTLG5
- /zRxSWb7DUKaA==
+ b=u+fc3xed1bjyRO6RcjngRF0Uean6LwaTfT9cr9JJx10KITTFslNc2QwUlfIoS1F4/
+ G1p+jJJRcUESGyrmwlasFVmwlIo/Dysw7+x/IYR0awak2lcMqoZq8rb6fulpu7gh10
+ 6KNiB/sjsd+1NPnRGk5fUqBs9Oc4qBX72nqyxKREK/yVHvNJkW9vXOjPyCCIrnNIdz
+ 5FnMLTsDCaJ6Zw8ahwFw80R6Vi+B0uCYRXcofzo2ai0llR7TBPrQU0J8CFc1AK+WWN
+ 6gcqqaSN3f1NEbUY7cx5U3W6jGuuGFaGhgogEiBp3BhzmScszVIrIxYppJS9sbEfU1
+ vu5b+2UHZdhaw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8E7921AFAFB;
- Sat, 23 May 2026 00:34:42 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D1B571AFB10;
+ Sat, 23 May 2026 00:34:43 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A7F843B717B;
- Sat, 23 May 2026 00:34:46 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 026393B7190;
+ Sat, 23 May 2026 00:34:48 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Katherine Leaver <katherine.j.leaver@gmail.com>,
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 106/136] hw/uefi: verify data size before accessing
- it in wrap_pkcs7
-Date: Sat, 23 May 2026 00:34:14 +0300
-Message-ID: <20260522213446.806182-7-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 127/136] ide: Minimal fix for deadlock between TRIM
+ and drain
+Date: Sat, 23 May 2026 00:34:35 +0300
+Message-ID: <20260522213446.806182-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
@@ -70,30 +69,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Kevin Wolf <kwolf@redhat.com>
 
-Fixes: CVE-2026-41439
-Fixes: 3e33af2cb306 ("hw/uefi: add var-service-pkcs7.c")
-Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260422092910.444997-6-kraxel@redhat.com>
-(cherry picked from commit 22b7b222d8f5428be8b5d4787f36efd0a0b75292)
+The implementation of TRIM in IDE can chain multiple discard requests
+and uses blk_inc/dec_in_flight() to make sure that the whole TRIM
+operation has completed when the device needs to be quiescent (e.g. for
+the drain when performing an IDE reset, it would be bad if an IDE
+request like TRIM were still in flight).
+
+The problem is that each drain request calls blk_wait_while_drained()
+and when draining, it waits until the drained section ends. At the same
+time, drain_begin can only return if the whole TRIM operation has
+completed. This is a classic deadlock.
+
+Use blk_co_start/end_request() and BDRV_REQ_NO_QUEUE to avoid the
+problem. This requires moving the TRIM state machine to a coroutine.
+This commit does the minimal conversion so that we do have a coroutine
+that works for the fix, but it still looks much like a callback-based
+implementation. This will be cleaned up in the next patch.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 7e5cdb345f77 ('ide: Increment BB in-flight counter for TRIM BH')
+Buglink: https://redhat.atlassian.net/browse/RHEL-121686
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20260421161132.99878-5-kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 095c08a7ba68cabaa6e0ce7a8a0804a949542c4c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-pkcs7.c b/hw/uefi/var-service-pkcs7.c
-index 32accf4e44..f17ad6872f 100644
---- a/hw/uefi/var-service-pkcs7.c
-+++ b/hw/uefi/var-service-pkcs7.c
-@@ -73,7 +73,8 @@ static void wrap_pkcs7(gnutls_datum_t *pkcs7)
-     };
-     gnutls_datum_t wrap;
+diff --git a/hw/ide/core.c b/hw/ide/core.c
+index 9ca480f72e..672238aef8 100644
+--- a/hw/ide/core.c
++++ b/hw/ide/core.c
+@@ -420,7 +420,6 @@ typedef struct TrimAIOCB {
+     QEMUBH *bh;
+     int ret;
+     QEMUIOVector *qiov;
+-    BlockAIOCB *aiocb;
+     int i, j;
+ } TrimAIOCB;
  
--    if (pkcs7->data[4] == 0x06 &&
-+    if (pkcs7->size > 16 &&
-+        pkcs7->data[4] == 0x06 &&
-         pkcs7->data[5] == 0x09 &&
-         memcmp(pkcs7->data + 6, signed_data_oid, sizeof(signed_data_oid)) == 0 &&
-         pkcs7->data[15] == 0x0a &&
+@@ -433,11 +432,6 @@ static void trim_aio_cancel(BlockAIOCB *acb)
+     iocb->i = (iocb->qiov->iov[iocb->j].iov_len / 8) - 1;
+ 
+     iocb->ret = -ECANCELED;
+-
+-    if (iocb->aiocb) {
+-        blk_aio_cancel_async(iocb->aiocb);
+-        iocb->aiocb = NULL;
+-    }
+ }
+ 
+ static const AIOCBInfo trim_aiocb_info = {
+@@ -456,15 +450,20 @@ static void ide_trim_bh_cb(void *opaque)
+     iocb->bh = NULL;
+     qemu_aio_unref(iocb);
+ 
+-    /* Paired with an increment in ide_issue_trim() */
+-    blk_dec_in_flight(blk);
++    /* Paired with blk_co_start_request in ide_trim_co_entry() */
++    blk_end_request(blk);
+ }
+ 
+-static void ide_issue_trim_cb(void *opaque, int ret)
++static void coroutine_fn ide_trim_co_entry(void *opaque)
+ {
+     TrimAIOCB *iocb = opaque;
+     IDEState *s = iocb->s;
++    int ret = 0;
++
++    /* Paired with blk_end_request in ide_trim_bh_cb() */
++    blk_co_start_request(s->blk);
+ 
++loop:
+     if (iocb->i >= 0) {
+         if (ret >= 0) {
+             block_acct_done(blk_get_stats(s->blk), &s->acct);
+@@ -499,11 +498,11 @@ static void ide_issue_trim_cb(void *opaque, int ret)
+                                  count << BDRV_SECTOR_BITS, BLOCK_ACCT_UNMAP);
+ 
+                 /* Got an entry! Submit and exit.  */
+-                iocb->aiocb = blk_aio_pdiscard(s->blk,
+-                                               sector << BDRV_SECTOR_BITS,
+-                                               count << BDRV_SECTOR_BITS,
+-                                               ide_issue_trim_cb, opaque);
+-                return;
++                ret = blk_co_pdiscard(s->blk,
++                                      sector << BDRV_SECTOR_BITS,
++                                      count << BDRV_SECTOR_BITS,
++                                      BDRV_REQ_NO_QUEUE);
++                goto loop;
+             }
+ 
+             iocb->j++;
+@@ -514,7 +513,6 @@ static void ide_issue_trim_cb(void *opaque, int ret)
+     }
+ 
+ done:
+-    iocb->aiocb = NULL;
+     if (iocb->bh) {
+         replay_bh_schedule_event(iocb->bh);
+     }
+@@ -527,9 +525,7 @@ BlockAIOCB *ide_issue_trim(
+     IDEState *s = opaque;
+     IDEDevice *dev = s->unit ? s->bus->slave : s->bus->master;
+     TrimAIOCB *iocb;
+-
+-    /* Paired with a decrement in ide_trim_bh_cb() */
+-    blk_inc_in_flight(s->blk);
++    Coroutine *co;
+ 
+     iocb = blk_aio_get(&trim_aiocb_info, s->blk, cb, cb_opaque);
+     iocb->s = s;
+@@ -539,7 +535,10 @@ BlockAIOCB *ide_issue_trim(
+     iocb->qiov = qiov;
+     iocb->i = -1;
+     iocb->j = 0;
+-    ide_issue_trim_cb(iocb, 0);
++
++    co = qemu_coroutine_create(ide_trim_co_entry, iocb);
++    aio_co_enter(qemu_get_current_aio_context(), co);
++
+     return &iocb->common;
+ }
+ 
 -- 
 2.47.3
 
