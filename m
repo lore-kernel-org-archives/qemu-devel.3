@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2298CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:52:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24B85CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:52:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXlm-0001MT-Cr; Fri, 22 May 2026 17:51:02 -0400
+	id 1wQXlf-0000nY-Pr; Fri, 22 May 2026 17:50:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXlY-00007d-5Y; Fri, 22 May 2026 17:50:48 -0400
+ id 1wQXkw-0007ed-RU; Fri, 22 May 2026 17:50:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXlW-0003Xb-Bl; Fri, 22 May 2026 17:50:47 -0400
+ id 1wQXkv-0003H3-4T; Fri, 22 May 2026 17:50:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486560; bh=APXHp0pm6hEEyeHF/aIo5LS7R2NFDUPqmasahR+f6/4=;
+ t=1779486559; bh=erVKkgu6SN0URtS1fq3517XQa4H8fWCE3nPMJLzIaZ4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=mxBXjnWjXkR4w+MTPuUvRv49SA3xOACMHtgzspm+gurjvTx4gLEmMi8YtvEpomK87
- t11CX42hWyuyauPQ6f4633ShpNkeeDUpswU3pmoHVheCDLZKy7GHiIqsqIKZ1I49SA
- wBy6rEac9XzqkDMKpdENLVbeX2IRPcN+bJhTOpZwOCdNpjqNXNU7gDTvwnHqwBCSvs
- gWTDZSPquBQjA68q640pephT3D/L+h+mN1Hql14o/pAjr16Qeq4kmiWjYX1Eq/6e7U
- /SbauSnmKYU4T/oKvW1hkM03Ia4bmbkQ/G+y7oivjHLEpyrHQvPpidh8niCz4iL748
- xF43lPrEl19vw==
+ b=VtHtcWfuUGoKhzw7QvOUDdqfnBlkzDo5cQhPse6b848Kj6k/jZmgcww8MrrzOcr+4
+ NboRNlRPpOAAFM2L4fU3MEN4sakCBndMXKeSv0YAG3PmPu2d6izCI2YKaDJPrX5nHR
+ 8oRpZ4qbmVPP8bDT7crkYK7eGgj5OfUlmveGXBxPnUTCex4gyolkKFKaJlHAB0o/4Z
+ UOS314G5XB9yeEXbnI6YMw9hUL1IOShrwCxU+MJSyEAO+FiQ8YeEo+7IWqdDVRX8g+
+ tw3LH9tJ4UOVh9TQIOxaxr5OmT6bGM/3LmoHJ/oblgmnSUSVb0x/3DVsu0s2kSSKqI
+ o1dy4J7q8sR0Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5F2271AFB6D;
- Sat, 23 May 2026 00:49:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CA5591AFB66;
+ Sat, 23 May 2026 00:49:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 86C8C3B71BC;
- Sat, 23 May 2026 00:49:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id F26943B71B5;
+ Sat, 23 May 2026 00:49:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jeuk Kim <jeuk20.kim@samsung.com>,
- Rayhan Ramdhany Hanaputra <hanaputrarayhan@gmail.com>,
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Katherine Leaver <katherine.j.leaver@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 119/149] hw/ufs: Validate MCQ SQ references before use
-Date: Sat, 23 May 2026 00:48:51 +0300
-Message-ID: <20260522214923.807017-20-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 112/149] hw/uefi: fix buffer overruns
+Date: Sat, 23 May 2026 00:48:44 +0300
+Message-ID: <20260522214923.807017-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
@@ -69,69 +69,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jeuk Kim <jeuk20.kim@samsung.com>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-A guest can program an out-of-range SQATTR.CQID value, or ring an
-MCQ SQ doorbell before the submission queue exists.
+The buffer size checks do not consider the mm_header size, simliar to
+CVE-2026-5744.  Factor out the repeated size check to a small helper
+function, fix the check, update all places to use the new helper.
 
-Reject SQ creation when the referenced CQ is invalid, and ignore SQ
-doorbells for queues that have not been created. This prevents a
-guest-triggerable out-of-bounds read and NULL pointer dereference.
-
-Fixes: 5c079578d2e ("hw/ufs: Add support MCQ of UFSHCI 4.0")
-Reported-by: Rayhan Ramdhany Hanaputra <hanaputrarayhan@gmail.com>
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
-(cherry picked from commit 332ea29787800fff2b49e9b89ec93bd370a11965)
+Fixes: CVE-2026-41435
+Fixes: db1ecfb473ac ("hw/uefi: add var-service-vars.c")
+Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20260422092910.444997-2-kraxel@redhat.com>
+(cherry picked from commit f252769a23e67765f9b95d8944ca3da6c9edf58b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index 8fdc0854eb..5fe63b82ab 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -517,8 +517,13 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
-         return false;
-     }
+diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
+index 5607763525..922f6dd963 100644
+--- a/hw/uefi/var-service-vars.c
++++ b/hw/uefi/var-service-vars.c
+@@ -260,6 +260,17 @@ static size_t uefi_vars_mm_error(mm_header *mhdr, mm_variable *mvar,
+     return sizeof(*mvar);
+ }
  
-+    if (cqid >= u->params.mcq_maxq) {
-+        trace_ufs_err_mcq_create_sq_invalid_cqid(cqid);
++static bool check_buffer_size(uefi_vars_state *uv, uint64_t length)
++{
++    /* uefi_vars_cmd_mm() checks that */
++    g_assert(uv->buf_size >= sizeof(mm_header));
++
++    if (uv->buf_size - sizeof(mm_header) < length) {
 +        return false;
 +    }
++    return true;
++}
 +
-     if (!u->cq[cqid]) {
--        trace_ufs_err_mcq_create_sq_invalid_cqid(qid);
-+        trace_ufs_err_mcq_create_sq_invalid_cqid(cqid);
-         return false;
-     }
- 
-@@ -775,6 +780,11 @@ static void ufs_mcq_process_db(UfsHc *u, uint8_t qid, uint32_t db)
-     }
- 
-     sq = u->sq[qid];
-+    if (!sq) {
-+        trace_ufs_err_mcq_db_wr_invalid_sqid(qid);
-+        return;
-+    }
-+
-     if (sq->size * sizeof(UfsSqEntry) <= db) {
-         trace_ufs_err_mcq_db_wr_invalid_db(qid, db);
-         return;
-@@ -788,7 +798,14 @@ static void ufs_write_mcq_op_reg(UfsHc *u, hwaddr offset, uint32_t data,
-                                  unsigned size)
+ static size_t uefi_vars_mm_get_variable(uefi_vars_state *uv, mm_header *mhdr,
+                                         mm_variable *mvar, void *func)
  {
-     int qid = offset / sizeof(UfsMcqOpReg);
--    UfsMcqOpReg *opr = &u->mcq_op_reg[qid];
-+    UfsMcqOpReg *opr;
-+
-+    if (qid >= u->params.mcq_maxq) {
-+        trace_ufs_err_invalid_register_offset(offset);
-+        return;
-+    }
-+
-+    opr = &u->mcq_op_reg[qid];
+@@ -307,7 +318,7 @@ static size_t uefi_vars_mm_get_variable(uefi_vars_state *uv, mm_header *mhdr,
+     if (uadd64_overflow(length, va->data_size, &length)) {
+         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
+     }
+-    if (uv->buf_size < length) {
++    if (!check_buffer_size(uv, length)) {
+         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
+     }
  
-     switch (offset % sizeof(UfsMcqOpReg)) {
-     case offsetof(UfsMcqOpReg, sq.tp):
+@@ -377,7 +388,7 @@ uefi_vars_mm_get_next_variable(uefi_vars_state *uv, mm_header *mhdr,
+     }
+ 
+     length = sizeof(*mvar) + sizeof(*nv) + var->name_size;
+-    if (uv->buf_size < length) {
++    if (!check_buffer_size(uv, length)) {
+         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
+     }
+ 
+@@ -567,7 +578,7 @@ static size_t uefi_vars_mm_variable_info(uefi_vars_state *uv, mm_header *mhdr,
+     uint64_t length;
+ 
+     length = sizeof(*mvar) + sizeof(*vi);
+-    if (uv->buf_size < length) {
++    if (!check_buffer_size(uv, length)) {
+         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
+     }
+ 
+@@ -588,7 +599,7 @@ uefi_vars_mm_get_payload_size(uefi_vars_state *uv, mm_header *mhdr,
+     uint64_t length;
+ 
+     length = sizeof(*mvar) + sizeof(*ps);
+-    if (uv->buf_size < length) {
++    if (!check_buffer_size(uv, length)) {
+         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
+     }
+ 
 -- 
 2.47.3
 
