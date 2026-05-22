@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91F7ECD5BAC
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 19:59:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB9C4CD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 20:05:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQW1V-00005H-Bp; Fri, 22 May 2026 15:59:09 -0400
+	id 1wQW77-00017h-Td; Fri, 22 May 2026 16:04:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wQW1T-0008WL-Ot
- for qemu-devel@nongnu.org; Fri, 22 May 2026 15:59:07 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ id 1wQW73-00017C-0v
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 16:04:54 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wQW1S-0007Hr-Cd
- for qemu-devel@nongnu.org; Fri, 22 May 2026 15:59:07 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-3697f25d26eso4074055a91.1
- for <qemu-devel@nongnu.org>; Fri, 22 May 2026 12:59:05 -0700 (PDT)
+ id 1wQW70-00029n-Ps
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 16:04:52 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-c8016d642b2so3740788a12.0
+ for <qemu-devel@nongnu.org>; Fri, 22 May 2026 13:04:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779479944; x=1780084744; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779480289; x=1780085089; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=6oMW9zb14EtLdW5uFRh0YvojS95OqvxMZ2hO2by1IQw=;
- b=lfQtAIsAcH0H9woWcUBLhc05QJgab9aQBaFasYkkhuW2qNnZjIvjIPOLuuhI/LFPsh
- 6nbdUSCq08Xpi16iSUL/XHGvAL2sbq0ihHnFMgBbtvwa6ignrFq9UdVKenW8pCP/XyNX
- iHFMfrHPivBOFhnuokiE21XtE392Cm/zzAPFcmvQFyXDyNwi4XIm7RH2w3HZCvKImp3A
- 1rAoodEF5T6gu5/Hqx88c88oKbdNsWyAyqtFeWBAPtG6MZHVTq8d8qswqo6CD64FQmAh
- Iz41zgjZFazkjAg6q/qCzxF5YT70298po56W6WCwfI1HKrQ4yFiVTtlp1Y0mj1nypBn3
- Ri7A==
+ bh=l4dgXUVC6tuzvLj2cjpvcJR3/0B/Dme0i+5eYta9yto=;
+ b=gcwnaX1iIsL0yuHISSscKaJlMroZOxKRo2dtaaTFd/YhMWSxpVvoLoL1TW/bZCIGqM
+ V/T80EZYflAauagnQ6snyS1TvlPqZ+7gv/E21fSQLsw02+XlZo88nFssZtqsz9Xe8Uma
+ 0j6lWHd/JvyOPOAhTMenlCW19V9xkJfa2hN0v0BWDik0R4YNYOQ/aAOoifzgIpjkwzpp
+ swqQioAkupc2Nfwg4oy3E/kKfdc7GytSW9XFhViAr1FgHtP0TxIMzJXVbtNThGFOsxEx
+ lKxvJ5XtqSY23CEQxefqQCh6RpWMMRO254kJ8bYTcku5X9Zl1pykEMfD/JvNIJKeThB6
+ nkAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779479944; x=1780084744;
+ d=1e100.net; s=20251104; t=1779480289; x=1780085089;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=6oMW9zb14EtLdW5uFRh0YvojS95OqvxMZ2hO2by1IQw=;
- b=nQ67FpNEpmGL/vmDkb01TkSSNB479g+eiKRa/4ao6gl8xS3FArWAJbktXQp+WLd0S9
- FumqrcZU5Nnmrxg5GEgZy214/HT0/uFH6beqg5Yba9kaonf/2lPy3JjMoSFKFATnNZo9
- L+6yhBx2mX2M0bMIe9OAnScCNwSepa+cDSvk7fuMXEJF14s/mnoBJivyM1/Q968ilEOD
- vWux68ZdrtU5dkWQGJMgarsgeUboMrf3gNGU2cprg2YsHmnOPf3XGSp22mkPQbWWSzGs
- +RC1b6ta4Lkl2dUL3/inTvXW6kydyk8CM7y5VTOQPPd34XB9NAbNgKL3MFulFwxt4Jn8
- jTOg==
-X-Gm-Message-State: AOJu0YxMxOciIbuz6WksscckuHMkE0kFhAEeXsd7ERMhsdpGcZwhS9Xx
- yZT/jLZO+M5iLA4HN9ofh7+F+5EkQAoDYkhRvHXSr7B1aJamxOJIG9vMfXqXhIMtDX8=
-X-Gm-Gg: Acq92OF24Ql2br+AsGgTBo+EN2CYZeAUDCPChRqLDNYjfxpY3OTooLyU1ni2kb4R7f9
- w4myDUIASTwGTkB9OXmMqgGTq92dl8oim88jeX9BCdFfiSVy+UV6rPE5AhHQnG6RBHDvM6e4qKl
- cNQRnKacaMqGyDMc5Y2X8C0ntzUY3bn/fmUxHo3MqSdwxJjlElHqTyr98rzrAFxh0lS+yQi+/ON
- qPIDmMoyOCpaM4s8gurqX035TUSBsrvicg7jv+SwM0/7HKJg/8B4ZoIrV8CeA2jbYaJrllOQZ+N
- 1CUoAxyLOArxgqp+kPQw+Cp7I2Ghd9HXrh0CeUAdTh1fixxT0GZjpEWlK8DziAYhP7RbvsfZ/Sm
- vy3FzBWm2FyAbZH0o8GUUFDkoBCE3lwMt+xzmkU4S/PE1LTWc38NkB13BdGv41h4Ci7ySPcWsdN
- lW5UoqiBDooARgF8Lkm6QX/sEr5L+w4akl7qugDdkyjbo6iUWi2/A=
-X-Received: by 2002:a17:903:1a10:b0:2bd:2430:eb7b with SMTP id
- d9443c01a7336-2beb06cbf6cmr57131575ad.12.1779479944505; 
- Fri, 22 May 2026 12:59:04 -0700 (PDT)
+ bh=l4dgXUVC6tuzvLj2cjpvcJR3/0B/Dme0i+5eYta9yto=;
+ b=jgipsrd6PWd+mXyIQcanpO6SwpWlKBEfVkciL8FBPc1A35NRpuBnZ4v6H/KPF8vetG
+ A51/npMadDaw3+98fMFAVQsidIHRl9tIdIxjEklpVWkA6CGcoCc9pdsjZaAltVURlfki
+ brMNTmJNFZmY799ciCG0B5kxBk1FO6HKZQAYOwVzjup6eafjP41183iRjCPjjuJKu4Xw
+ yCQtS+K7SuYW6ww7H1r6HlIXyb2xBGdCj6IO2tMB3lGuDa1LXgK5rgzXLjxIQVDEfFl2
+ a7ntJJFkUookE1C1cbNuLx+dWC+6ljHCTmeBfytF2VNP0zZuihjKpcLJDZhVfM0KEPbT
+ 574Q==
+X-Gm-Message-State: AOJu0YxbHqsRiZdl0B9EjXTH4ZEcxye5wrA5vQoG9OXAmVXV/DpdvMBm
+ l8u8YZtcz2XhkcIV8GsjJykOrg3ueCEu/5pJi5idfFYeoFLndAzjOGFB0kZlpK/NO7Q=
+X-Gm-Gg: Acq92OE7u0cwTNRT/yLk+0kdszr0ekmr5Eadbml5HkUAIkjEHvdIrkRkan4VKYZGFth
+ G+a+NK4cD6ia0v3lT9y/sBm1wMJ61W8j2Cp3P8i9a91vi6yDFJlnPSLuOXsSYWViQGeS3vwDkm+
+ wGPW/H7H0TLcWIW/WW4yaLvDIkPJwqqwwbfma129USJyQICixHMOXAK/N/pmCDSYM1UsAlQmzk7
+ D1wVboXUGpqXGwWQvZ0Ih2qCMHD6ZIRHIctjRZHn1TeauQNPTelSdx7w2TMg8uyYEkZoZKIoPKA
+ is1eHHXNeKVL7CiZdvZbV7+5T6DhzNMjMAocAIGELlJYC26YgsiDrMSe0fsl/VYyPUh9gw8KHzI
+ GL7vA2/53cAkGIGAFSqAfejA9dhxC8nHzSbNh0GCehmtXwqVBWOO0Sc79QGBcC5mKsnL+H4iVGd
+ xMyhwJGn6RxVYRM8Q9ufINB6Z1IFJCbtJu4cNeZkA5
+X-Received: by 2002:a17:903:1a0d:b0:2b0:91e6:bc18 with SMTP id
+ d9443c01a7336-2beb0878549mr44836265ad.14.1779480288712; 
+ Fri, 22 May 2026 13:04:48 -0700 (PDT)
 Received: from [192.168.64.111] ([50.78.183.177])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2beb58b3c92sm26599795ad.42.2026.05.22.12.59.03
+ d9443c01a7336-2beb58b2e8csm22804105ad.41.2026.05.22.13.04.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 22 May 2026 12:59:04 -0700 (PDT)
-Message-ID: <14f3e7ba-1474-42e6-8407-552689f12969@linaro.org>
-Date: Fri, 22 May 2026 12:59:02 -0700
+ Fri, 22 May 2026 13:04:48 -0700 (PDT)
+Message-ID: <5f707062-fdb9-494d-be0f-bef679c77b8d@linaro.org>
+Date: Fri, 22 May 2026 13:04:46 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 31/64] target/arm: Implement BFCVTN for SVE
+Subject: Re: [PATCH v6 60/64] target/arm: Implement FMMLA (FP8 to FP16) for
+ AdvSIMD
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 References: <20260520182213.872945-1-richard.henderson@linaro.org>
- <20260520182213.872945-32-richard.henderson@linaro.org>
- <CAFEAcA_DbZ3m+P6g=+uEvVJCSyUCuTdzDN26xwXLPTRrZLBOwQ@mail.gmail.com>
+ <20260520182213.872945-61-richard.henderson@linaro.org>
+ <CAFEAcA8+VBdRt3DO9zgwQccbH+O2PMZnK3o81zmX9M1GmgiseA@mail.gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <CAFEAcA_DbZ3m+P6g=+uEvVJCSyUCuTdzDN26xwXLPTRrZLBOwQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA8+VBdRt3DO9zgwQccbH+O2PMZnK3o81zmX9M1GmgiseA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,14 +105,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/21/26 02:01, Peter Maydell wrote:
-> Or we could shortcut the packing process and just return
-> the right value:
+On 5/21/26 02:52, Peter Maydell wrote:
+> On Wed, 20 May 2026 at 19:29, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > 
->              /* maximum or minimum normal value for E5M2 */
->              return 0x7b | (p->sign << 7);
+>> +void HELPER(gvec_fmmla_hb)(void *vd, void *vn, void *vm,
+>> +                           CPUARMState *env, uint32_t desc)
+> 
+> This still has some lurking copy-and-paste issues from the _sb
+> version:
+> 
+>> +{
+>> +    FP8MulContext ctx = fp8_mul_start(env, 0xf);
+>> +    size_t oprsz = simd_oprsz(desc);
+>> +    size_t nseg = oprsz / 16;
+> 
+> Each loop here handles 4 16-bit halfprec outputs == 8 bytes,
+> so we want oprsz / 8.
+> 
+>> +    uint32_t *n = vn;
+>> +    uint32_t *m = vm;
+>> +    float16 *d = vd;
+>> +
+>> +    for (size_t seg = 0; seg < nseg; seg++, d += 4, n += 2, m += 2) {
+>> +        float16 d0 = f8dotadd_h(n[0], m[0], 4, d[H4(0)], &ctx);
+>> +        float16 d1 = f8dotadd_h(n[0], m[1], 4, d[H4(1)], &ctx);
+>> +        float16 d2 = f8dotadd_h(n[1], m[0], 4, d[H4(2)], &ctx);
+>> +        float16 d3 = f8dotadd_h(n[1], m[1], 4, d[H4(3)], &ctx);
+>> +
+>> +        d[H4(0)] = d0;
+>> +        d[H4(1)] = d1;
+>> +        d[H4(2)] = d2;
+>> +        d[H4(3)] = d3;
+> 
+> The H macros here I think are wrong -- d is a float16 so we
+> want H2(), and we need H4() macros for the n and m arrays.
+> (I think in fact if you work it through then all the H macros
+> cancel out and we could drop the lot, but since they're all
+> acting on constant indexes there's no runtime cost and having
+> them present is clearer for the reader.)
 
-Good idea, thanks.
+All correct, now fixed, thanks.
 
 
 r~
