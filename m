@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78F48CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:42:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6305ECD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:42:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXcG-00047Z-Rv; Fri, 22 May 2026 17:41:13 -0400
+	id 1wQXYO-0004dc-Lk; Fri, 22 May 2026 17:37:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXbY-0003r8-LZ; Fri, 22 May 2026 17:40:31 -0400
+ id 1wQXYK-0004Pz-EX; Fri, 22 May 2026 17:37:09 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXbW-0004fL-NA; Fri, 22 May 2026 17:40:28 -0400
+ id 1wQXYI-0001Aq-A8; Fri, 22 May 2026 17:37:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485683; bh=SsHgT/J/bjZboOQ7K5ER+H4GdPu8P5zF1DRzNqSfRqQ=;
+ t=1779485634; bh=s2b6KIjZ9zS3GX+ilug1RJYQGimyhkHV/+2cFdfi+tw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=q7ANS6sawoV2ueIzNHk2U71Qsz5gcqwEbbs7ZjqEJ3/CkxS713pvqbh9JdApJ2x44
- bUZMekkUAp32JOHdSGVx+HedNh2yLsG2cs+4tB/NzXhR33viT3aLjf1pbrH940volc
- 6pDC3LfQ3qRbWZX+YBFHPNmU0NiBM8aEgD6gPoRl+MwnqdnWD80vWiZGgJRpHj7Bra
- QOpQwiXPZBLJ8zVLRuEOIEVKE4ZX5/6EHIfa40M/W8ajpw4wMy//wJs5iN69qsSvIM
- IB/bl8k9v9n6eabL7eRmWTfsgwXOrI4vRmTc0p1uO+JEfwZ7sZvHdLMxMIvbJ/ic4m
- g/In2IjcLanJw==
+ b=SdFwkIRLPPvHaN/VqOT8HXga2taYMThKDq5KCM7XTLLTr9yJyS23ViShSvTAVSZEh
+ Aci0kvhz7rqqy61MsUEJmm4M738wtBfAvFNOWvDgkGVNpiRFBEuFPNXxuopD9whbU2
+ yLEavuSjFGTM1FvMY7byTgKk9CtmCkft7bS1BW1oryChX00AdoC8uvMYPEP8i9rURq
+ 2z7wpAjvitLioUjS25gqfb/xNDh09241RUvtPrsuOyDGxSmIgQLMtPDkQgr15smBAz
+ HQJq3QdgHQnCbvgFjU1yAjIyHHzd+UrD8Y8KdXZBwTLExTlv26BWloQWSBFZ5mZDZd
+ 3+YffiUYQpORQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DED601AFB11;
- Sat, 23 May 2026 00:34:43 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 413971AFAE9;
+ Sat, 23 May 2026 00:33:54 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0FDE93B7191;
- Sat, 23 May 2026 00:34:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6437B3B716F;
+ Sat, 23 May 2026 00:33:58 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 128/136] ide: Clean up ide_trim_co_entry() to be
- idiomatic coroutine code
-Date: Sat, 23 May 2026 00:34:36 +0300
-Message-ID: <20260522213446.806182-29-mjt@tls.msk.ru>
+ "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 90/94] commit: Drain nodes across all of bdrv_commit()
+Date: Sat, 23 May 2026 00:33:47 +0300
+Message-ID: <20260522213356.806058-32-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
-References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
+References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -71,149 +70,72 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kevin Wolf <kwolf@redhat.com>
 
-The previous commit did a minimal conversion of the callback based state
-machine for TRIM to a coroutine in order to fix a bug. Refactor it to
-actually look like normal coroutine based code, which improves its
-readability.
+The whole implementation of bdrv_commit() is only correct if no new
+writes come in while it's running: It has only a single loop checking
+the allocation status for each block and finally calls bdrv_make_empty()
+without checking if that throws away any new changes.
+
+We already have to drain while taking the graph write lock. Just extend
+the drained section to all of bdrv_commit() to make sure that we don't
+get any inconsistencies.
 
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260421161132.99878-6-kwolf@redhat.com>
+Message-ID: <20260427170520.101242-2-kwolf@redhat.com>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
+Tested-by: Denis V. Lunev <den@openvz.org>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit c1c71a7e167fdabaa9827d00c0be3aeafebdd921)
+(cherry picked from commit f0d9ccd46cf8fc576ab7d514f10f766546cdbc14)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ide/core.c b/hw/ide/core.c
-index 672238aef8..bf616b7703 100644
---- a/hw/ide/core.c
-+++ b/hw/ide/core.c
-@@ -420,18 +420,15 @@ typedef struct TrimAIOCB {
-     QEMUBH *bh;
-     int ret;
-     QEMUIOVector *qiov;
--    int i, j;
-+    bool canceled;
- } TrimAIOCB;
+diff --git a/block/commit.c b/block/commit.c
+index 0d9e1a16d7..c5e3ef03a2 100644
+--- a/block/commit.c
++++ b/block/commit.c
+@@ -518,6 +518,7 @@ int bdrv_commit(BlockDriverState *bs)
+     if (!drv)
+         return -ENOMEDIUM;
  
- static void trim_aio_cancel(BlockAIOCB *acb)
- {
-     TrimAIOCB *iocb = container_of(acb, TrimAIOCB, common);
++    bdrv_drain_all_begin();
+     bdrv_graph_rdlock_main_loop();
  
--    /* Exit the loop so ide_issue_trim_cb will not continue  */
--    iocb->j = iocb->qiov->niov - 1;
--    iocb->i = (iocb->qiov->iov[iocb->j].iov_len / 8) - 1;
--
--    iocb->ret = -ECANCELED;
-+    /* Exit the loop so ide_trim_co_entry will not continue */
-+    iocb->canceled = true;
- }
+     backing_file_bs = bdrv_cow_bs(bs);
+@@ -549,6 +550,10 @@ int bdrv_commit(BlockDriverState *bs)
+                   BLK_PERM_ALL);
+     backing = blk_new(ctx, BLK_PERM_WRITE | BLK_PERM_RESIZE, BLK_PERM_ALL);
  
- static const AIOCBInfo trim_aiocb_info = {
-@@ -458,60 +455,55 @@ static void coroutine_fn ide_trim_co_entry(void *opaque)
- {
-     TrimAIOCB *iocb = opaque;
-     IDEState *s = iocb->s;
--    int ret = 0;
-+    int i, j;
-+    int ret;
++    /* We drained all nodes, but still make requests through BlockBackends */
++    blk_set_disable_request_queuing(src, true);
++    blk_set_disable_request_queuing(backing, true);
++
+     ret = blk_insert_bs(src, bs, &local_err);
+     if (ret < 0) {
+         error_report_err(local_err);
+@@ -565,7 +570,7 @@ int bdrv_commit(BlockDriverState *bs)
  
-     /* Paired with blk_end_request in ide_trim_bh_cb() */
-     blk_co_start_request(s->blk);
+     bdrv_graph_rdunlock_main_loop();
  
--loop:
--    if (iocb->i >= 0) {
--        if (ret >= 0) {
--            block_acct_done(blk_get_stats(s->blk), &s->acct);
--        } else {
--            block_acct_failed(blk_get_stats(s->blk), &s->acct);
--        }
--    }
-+    for (j = 0; j < iocb->qiov->niov; j++) {
-+        for (i = 0; i < iocb->qiov->iov[j].iov_len / 8; i++) {
-+            uint64_t *buffer = iocb->qiov->iov[j].iov_base;
+-    bdrv_graph_wrlock_drained();
++    bdrv_graph_wrlock();
+     bdrv_set_backing_hd(commit_top_bs, backing_file_bs, &error_abort);
+     bdrv_set_backing_hd(bs, commit_top_bs, &error_abort);
+     bdrv_graph_wrunlock();
+@@ -647,7 +652,7 @@ ro_cleanup:
+     blk_unref(backing);
  
--    if (ret >= 0) {
--        while (iocb->j < iocb->qiov->niov) {
--            int j = iocb->j;
--            while (++iocb->i < iocb->qiov->iov[j].iov_len / 8) {
--                int i = iocb->i;
--                uint64_t *buffer = iocb->qiov->iov[j].iov_base;
-+            /* 6-byte LBA + 2-byte range per entry */
-+            uint64_t entry = le64_to_cpu(buffer[i]);
-+            uint64_t sector = entry & 0x0000ffffffffffffULL;
-+            uint16_t count = entry >> 48;
- 
--                /* 6-byte LBA + 2-byte range per entry */
--                uint64_t entry = le64_to_cpu(buffer[i]);
--                uint64_t sector = entry & 0x0000ffffffffffffULL;
--                uint16_t count = entry >> 48;
-+            if (count == 0) {
-+                continue;
-+            }
- 
--                if (count == 0) {
--                    continue;
--                }
-+            if (iocb->canceled) {
-+                iocb->ret = -ECANCELED;
-+                goto done;
-+            }
- 
--                if (!ide_sect_range_ok(s, sector, count)) {
--                    block_acct_invalid(blk_get_stats(s->blk), BLOCK_ACCT_UNMAP);
--                    iocb->ret = -EINVAL;
--                    goto done;
--                }
-+            if (!ide_sect_range_ok(s, sector, count)) {
-+                block_acct_invalid(blk_get_stats(s->blk), BLOCK_ACCT_UNMAP);
-+                iocb->ret = -EINVAL;
-+                goto done;
-+            }
- 
--                block_acct_start(blk_get_stats(s->blk), &s->acct,
--                                 count << BDRV_SECTOR_BITS, BLOCK_ACCT_UNMAP);
-+            block_acct_start(blk_get_stats(s->blk), &s->acct,
-+                             count << BDRV_SECTOR_BITS, BLOCK_ACCT_UNMAP);
- 
--                /* Got an entry! Submit and exit.  */
--                ret = blk_co_pdiscard(s->blk,
--                                      sector << BDRV_SECTOR_BITS,
--                                      count << BDRV_SECTOR_BITS,
--                                      BDRV_REQ_NO_QUEUE);
--                goto loop;
-+            /* Got an entry! Submit and exit.  */
-+            ret = blk_co_pdiscard(s->blk,
-+                                  sector << BDRV_SECTOR_BITS,
-+                                  count << BDRV_SECTOR_BITS,
-+                                  BDRV_REQ_NO_QUEUE);
-+            if (ret >= 0) {
-+                block_acct_done(blk_get_stats(s->blk), &s->acct);
-+            } else {
-+                iocb->ret = ret;
-+                block_acct_failed(blk_get_stats(s->blk), &s->acct);
-+                goto done;
-             }
--
--            iocb->j++;
--            iocb->i = -1;
-         }
--    } else {
--        iocb->ret = ret;
+     bdrv_graph_rdunlock_main_loop();
+-    bdrv_graph_wrlock_drained();
++    bdrv_graph_wrlock();
+     if (bdrv_cow_bs(bs) != backing_file_bs) {
+         bdrv_set_backing_hd(bs, backing_file_bs, &error_abort);
      }
+@@ -663,6 +668,7 @@ ro_cleanup:
  
-+    iocb->ret = 0;
- done:
-     if (iocb->bh) {
-         replay_bh_schedule_event(iocb->bh);
-@@ -533,8 +525,7 @@ BlockAIOCB *ide_issue_trim(
-                                    &DEVICE(dev)->mem_reentrancy_guard);
-     iocb->ret = 0;
-     iocb->qiov = qiov;
--    iocb->i = -1;
--    iocb->j = 0;
-+    iocb->canceled = false;
+ out:
+     bdrv_graph_rdunlock_main_loop();
++    bdrv_drain_all_end();
  
-     co = qemu_coroutine_create(ide_trim_co_entry, iocb);
-     aio_co_enter(qemu_get_current_aio_context(), co);
+     return ret;
+ }
 -- 
 2.47.3
 
