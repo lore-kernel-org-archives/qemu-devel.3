@@ -4,50 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E62F9CD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:54:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B0C0CD5BB3
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:54:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXn6-0005DL-8y; Fri, 22 May 2026 17:52:24 -0400
+	id 1wQXob-0000kH-77; Fri, 22 May 2026 17:53:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXn3-0004tH-Uq; Fri, 22 May 2026 17:52:21 -0400
+ id 1wQXo7-0000Gr-1p; Fri, 22 May 2026 17:53:27 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXn2-0004G0-7l; Fri, 22 May 2026 17:52:21 -0400
+ id 1wQXo5-00056Z-3T; Fri, 22 May 2026 17:53:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486561; bh=mGFrnJsQruWew9Mlige4612ivSGUgZqccxWubq5PBMA=;
+ t=1779486561; bh=uwIk2g6C48QDxHZ1Rndg/wiAHcFoc6O9sffrranMGdI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=HDNG9lv/cFRW4Uwxl2BLj3TH1Ya3o6RdE7y4EJV/N2DPyy+aIciLgqZbfi+R5pWnS
- DhuhdN/51AGdW90nZa6sPsO7yJH/gzZ5gllAxgJJjPIdhcCt//aSO+aCwDwn+ITUWX
- ssIZ9xXEa4/c6Y0IMPI8bpiyA26NplVYXzJL9PLNvciIi5ycn0+I3bxYR2DyQPKIoU
- 7JvAoyeBfQn3fLoPPJXimkqs7c29tkeJLOcK7sQYZ/AKMg8rvA75QPAjq4s75iAjE8
- 6nR5KghE9H6NQHY/VehgJQoAQm8EYz3IM9rIb0hoMNSufW0DynSopSk1sjw53bxEyl
- P8JqU9o68EIzw==
+ b=nT/Bfw3FoH7+43073IhsRUegDbv5rG6UbBj0M8L4qxvo4HnsWRcEwWz7OZOo86+Wi
+ RjQlwN4Fi+YqaFTV5qnWBKBvGCiBU9p6wzgYx9BY3yrxSU1i5Em1u6JxZbLFwvd+Mo
+ c/V4MUoO1jtUsjKUgGhvMUWvPX6OC10ULowTdw9OtaViBB1iW55Y76/R3dKSZSOpWx
+ aYAesmwevBvTtj2sJVbnt8OEjnT2aHTaO2aPH/eHg9i2XapWjMufgyeYKt9DYbAMCU
+ IUR9jDamssJoZORdl9HJ9yAxNDGg6m1mrV5XcVvqYzywGWDGfSj/KBpNZnj/dBfw/N
+ sERhCBIIRjr1Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 29B881AFB79;
+ by isrv.corpit.ru (Postfix) with ESMTP id DD4F41AFB86;
  Sat, 23 May 2026 00:49:21 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4EC1C3B71C8;
- Sat, 23 May 2026 00:49:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 11D423B71D5;
+ Sat, 23 May 2026 00:49:26 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <th.huth+qemu@posteo.eu>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 131/149] tests/functional/qemu_test/asset.py: Don't
- use setxattr when it doesn't exist
-Date: Sat, 23 May 2026 00:49:03 +0300
-Message-ID: <20260522214923.807017-32-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Lexi Winter <ivy@FreeBSD.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 144/149] block: Add more defaults to DEFAULT_BLOCK_CONF
+Date: Sat, 23 May 2026 00:49:16 +0300
+Message-ID: <20260522214923.807017-45-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,55 +68,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Kevin Wolf <kwolf@redhat.com>
 
-The Python os.setxattr() API is Linux-specific, so trying to use
-it on other OSes triggers a failure:
+discard_granularity was missing from this, which means that SCSI disks
+created with -drive if=scsi would default to 0 (i.e. disabling discards)
+instead of -1, which makes scsi-hd automatically pick a granularity and
+is the default of the corresponding qdev property for -device scsi-hd.
 
-  File "/Users/pm215/src/qemu/tests/functional/qemu_test/asset.py",
-line 227, in fetch
-    os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
-    ^^^^^^^^^^^
-AttributeError: module 'os' has no attribute 'setxattr'
+This was broken in QEMU 9.0 with commit 3089637.
 
-Since we only set the attributes here for informational
-purposes, skip them when os.setxattr() isn't available.
+Also set other fields whose default isn't an obvious 0. These are not
+actual bug fixes because ON_OFF_AUTO_AUTO in fact happens to be 0, but
+it's better not to rely on the order of enums.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 9903217a4ed013 ("tests/functional: add a module for handling asset download & caching")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Thomas Huth <th.huth+qemu@posteo.eu>
-Message-id: 20260501115506.3792110-1-peter.maydell@linaro.org
-(cherry picked from commit 039b057c09c6a9742b91b8f29604651ba3fdb558)
-(Mjt: context fixup for 10.2.x)
+Fixes: 308963746169 ('scsi: Don't ignore most usb-storage properties')
+Reported-by: Lexi Winter <ivy@FreeBSD.org>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20260410152314.86412-3-kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit f27aea1896338f4dd085a0e2cb2ab3797c5fe3e9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
-index bae40765ce..ef0dff921d 100644
---- a/tests/functional/qemu_test/asset.py
-+++ b/tests/functional/qemu_test/asset.py
-@@ -207,11 +207,14 @@ def fetch(self):
-             raise AssetError(self, "Download retries exceeded", transient=True)
+diff --git a/include/hw/block/block.h b/include/hw/block/block.h
+index 7da643faff..9225e75925 100644
+--- a/include/hw/block/block.h
++++ b/include/hw/block/block.h
+@@ -53,7 +53,12 @@ static inline unsigned int get_physical_block_exp(BlockConf *conf)
  
-         try:
--            # Set these just for informational purposes
--            os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
--                        self.url.encode('utf8'))
--            os.setxattr(str(tmp_cache_file), "user.qemu-asset-hash",
--                        self.hash.encode('utf8'))
-+            # Set these just for informational purposes. Note that
-+            # setxattr is Linux-only; as this is only informational
-+            # we can simply skip it on other platforms.
-+            if hasattr(os, "setxattr"):
-+                os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
-+                            self.url.encode('utf8'))
-+                os.setxattr(str(tmp_cache_file), "user.qemu-asset-hash",
-+                            self.hash.encode('utf8'))
-         except Exception as e:
-             self.log.debug("Unable to set xattr on %s: %s", tmp_cache_file, e)
- 
+ #define DEFAULT_BLOCK_CONF (BlockConf) {                                \
+     .bootindex = -1,                                                    \
++    .backend_defaults = ON_OFF_AUTO_AUTO,                               \
++    .discard_granularity = -1,                                          \
++    .wce = ON_OFF_AUTO_AUTO,                                            \
+     .share_rw = false,                                                  \
++    .account_invalid = ON_OFF_AUTO_AUTO,                                \
++    .account_failed = ON_OFF_AUTO_AUTO,                                 \
+     .rerror = BLOCKDEV_ON_ERROR_AUTO,                                   \
+     .werror = BLOCKDEV_ON_ERROR_AUTO,                                   \
+ }
 -- 
 2.47.3
 
