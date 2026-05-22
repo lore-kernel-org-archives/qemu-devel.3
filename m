@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CCB8CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFAAFCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:44:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXZN-0007Oc-Si; Fri, 22 May 2026 17:38:14 -0400
+	id 1wQXaI-0000No-Eg; Fri, 22 May 2026 17:39:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXZK-0007DC-Ly; Fri, 22 May 2026 17:38:11 -0400
+ id 1wQXZo-0000Fj-6Q; Fri, 22 May 2026 17:38:45 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXZJ-0001ig-4q; Fri, 22 May 2026 17:38:10 -0400
+ id 1wQXZm-0002V6-Jp; Fri, 22 May 2026 17:38:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485682; bh=vKBvvgfYaWo7Ae6DKuGvnLAh6yOso0d5PFdAZLgvEj0=;
+ t=1779485682; bh=JhcnpGPUrpiCR5n20ZMBP5jFQxcVpJmRiz+k9QmoY2I=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=oRSP9k3NRJ/saLw9zshHVouJRVjwnEUJl4maZu2oE8afuGNJTRhpeIHRDI609Ru+B
- 2Eug4GXN70mRgilcs8cTnMB4ZyZ5T8HsGfzbti83MFtqnDCEgTz/iOCL3opDhklmsY
- 2Qppy/27IEaazotOsawxfmEqkvvYgdPbXpagYdZW4hgS1dGMlgJv/I9jONLE2tO915
- 5O9szh6sXwHXpTk3PdyyW/71UjZN2US3Uepu/jiXHu6EgRbNYILFuqEItySBmfjgdf
- PT5rYxWm0y7VvALXzT5RFT6FAJnf8BRaZUco9u6hPZe7Vh9pKa9gU2lmmSHSJ9Exx6
- s2pDBT1jqXpwQ==
+ b=G/DjuTzBklv7LHsN4nApVxiSG8Ni+RB5+bZk1cT8rK3OiJkpLFaBT+0WkJBZFTuxm
+ lQSvogBwQ3S6jhjzqgwM5aI35Cr1h7IAYo6go0To1zwDQVze++BKyPVC7bFb+jfN7p
+ +HpNqaTIa3+tlblxHgeJSYBmTR0fjAzcavEAOzeLvzFwnUNmJWEWPAcNRHhYKtnk1f
+ ZJP7rCbZ/56baMXfOzfkNVOcQM6sWB6dKWz5zlyMGVIzNn3SO7XPv1Jre2z6gvwkHj
+ 3U+Ro7yEAI11A7PeZvQZEAkAUw8IrVnVdIdwfKfFhVx9kYbzkafDDzyWBPf+Cc2rZC
+ Q8rjFtrM8qQ+w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 760EC1AFAFA;
+ by isrv.corpit.ru (Postfix) with ESMTP id C59351AFAFF;
  Sat, 23 May 2026 00:34:42 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8E4363B717A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id E92953B717F;
  Sat, 23 May 2026 00:34:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Katherine Leaver <katherine.j.leaver@gmail.com>,
+Cc: qemu-stable@nongnu.org, Jeuk Kim <jeuk20.kim@samsung.com>,
+ Rayhan Ramdhany Hanaputra <hanaputrarayhan@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 105/136] hw/uefi: add name_size check to
- uefi_vars_mm_lock_variable()
-Date: Sat, 23 May 2026 00:34:13 +0300
-Message-ID: <20260522213446.806182-6-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 110/136] hw/ufs: Guard MCQ CQ accesses against
+ missing queues
+Date: Sat, 23 May 2026 00:34:18 +0300
+Message-ID: <20260522213446.806182-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
@@ -70,33 +70,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Jeuk Kim <jeuk20.kim@samsung.com>
 
-Make sure the total variable_policy_entry size stays below
-64k so the (16-bit) size field can not wrap.
+A guest can ring an MCQ CQ doorbell before the completion queue exists.
+The CQ head write path then dereferences a NULL CQ through
+ufs_mcq_cq_full().
 
-Fixes: CVE-2026-41438
-Fixes: db1ecfb473ac ("hw/uefi: add var-service-vars.c")
-Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260422092910.444997-5-kraxel@redhat.com>
-(cherry picked from commit c45b460d16f991ff3f753623f3423e1adc4077a2)
+Ignore CQ head updates for missing CQs, and make ufs_mcq_cq_full()
+handle a missing CQ defensively.
+
+Fixes: f78762a3cc8 ("hw/ufs: Fix mcq completion queue wraparound")
+Reported-by: Rayhan Ramdhany Hanaputra <hanaputrarayhan@gmail.com>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+(cherry picked from commit 283d921e771e8a98a5c3d1eed1ed791b89ba47a8)
+Fixes: 851536a8360 ("hw/ufs: Fix mcq completion queue wraparound") in 10.0.x
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
-index 82ff4e429a..ef8a3db873 100644
---- a/hw/uefi/var-service-vars.c
-+++ b/hw/uefi/var-service-vars.c
-@@ -629,6 +629,9 @@ uefi_vars_mm_lock_variable(uefi_vars_state *uv, mm_header *mhdr,
-     if (mhdr->length < length) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
-+    if (sizeof(*pe) + lv->name_size > UINT16_MAX) {
-+        return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index 2469f29b41..31cf1b9434 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -817,6 +817,10 @@ static void ufs_write_mcq_op_reg(UfsHc *u, hwaddr offset, uint32_t data,
+     case offsetof(UfsMcqOpReg, cq.hp): {
+         UfsCq *cq = u->cq[qid];
+ 
++        if (!cq) {
++            break;
++        }
++
+         if (ufs_mcq_cq_full(u, qid) && !QTAILQ_EMPTY(&cq->req_list)) {
+             /* Enqueueing to CQ was blocked because it was full */
+             qemu_bh_schedule(cq->bh);
+diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
+index 13d964c5ae..9e800cafac 100644
+--- a/hw/ufs/ufs.h
++++ b/hw/ufs/ufs.h
+@@ -203,7 +203,14 @@ static inline bool ufs_mcq_cq_empty(UfsHc *u, uint32_t qid)
+ static inline bool ufs_mcq_cq_full(UfsHc *u, uint32_t qid)
+ {
+     uint32_t tail = ufs_mcq_cq_tail(u, qid);
+-    uint16_t cq_size = u->cq[qid]->size;
++    UfsCq *cq = u->cq[qid];
++    uint16_t cq_size;
++
++    if (!cq) {
++        return false;
 +    }
++
++    cq_size = cq->size;
  
-     uefi_trace_variable(__func__, lv->guid, name, lv->name_size);
- 
+     tail = (tail + sizeof(UfsCqEntry)) % (sizeof(UfsCqEntry) * cq_size);
+     return tail == ufs_mcq_cq_head(u, qid);
 -- 
 2.47.3
 
