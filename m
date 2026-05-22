@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 672BCCD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:56:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88F92CD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:56:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXna-00076P-54; Fri, 22 May 2026 17:52:54 -0400
+	id 1wQXo9-0000KA-Hy; Fri, 22 May 2026 17:53:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXnX-0006ro-GQ; Fri, 22 May 2026 17:52:51 -0400
+ id 1wQXo3-0008Uv-AQ; Fri, 22 May 2026 17:53:24 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXnU-0004av-Uq; Fri, 22 May 2026 17:52:51 -0400
+ id 1wQXo0-0004vv-5L; Fri, 22 May 2026 17:53:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486561; bh=2EvzDU4SkBQ2rke12IQoCQvpnW/uRQEwCvfnq/wNd4M=;
+ t=1779486561; bh=3muA5MuiaqixstxYyQMlrapQZkF0eE2rkgCoHkfsYPs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=WS8/IUfSEzk1xGJb0gIVnujAmaIuxoz79ncmRNbAxuAhCcRJFQHcI98zIrCqFWqHA
- hDtANDhxWPvBYqRF42hqgewIoUDvWOb/oHNOX8aGIVaT2COk9cR2YfyONzhBw5+GDW
- mZ/bWAnDnp74u48kQa8PKz1dBAXOUgkEbq4EuA5EBz2o5XwGcd7xHjUPjY8hBt+GXe
- P5DXacpAtW4z/O5Mjntv4VdSZOErF2M3aQukZc9M/W977xKB1u6JLOnG+7duw0QlTU
- q3KpYTH1RHdb10CFN4AsPCEW7tbRSuVVqypYjyJQn2c6gra6b2fJ2rPa/ZybZfKOij
- 7AVC2fXtnSYfg==
+ b=iQ4zc1CGFdf6YfFD8RykggXUf1X3gd+StDyTxSj6doZEQ6J2haYwMi9i5cGDev29/
+ XlRkt8VQHc1rskeuexYwNTrAKEmRV5Zn4Q0tsbOW8bOJgslSoulYKnaTrBMhATS8Zf
+ mAmsCoVw3O+FK1MteCqOlXf6nI0UE9+6qzxJrzAqqRW9DJZfRI7vuFJAq1VRdK1Thu
+ zdwdunecR25wwR0u8ytke32skVTiKP90jNWKppHubHkRiA30JMd0jrxxx3OGXSOiPK
+ xUtNmTnysTaTkEYO300C3nSr7DBV9pksqz7Jv3WLMzuH6K8AnDH0orC7hHqLZW+TDF
+ s7wFjJ4RCp2vA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7653A1AFB7E;
+ by isrv.corpit.ru (Postfix) with ESMTP id C40111AFB84;
  Sat, 23 May 2026 00:49:21 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9F91F3B71CD;
+ by tsrv.corpit.ru (Postfix) with ESMTP id ED9F43B71D3;
  Sat, 23 May 2026 00:49:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 136/149] blkdebug: Add 'delay-ns' option
-Date: Sat, 23 May 2026 00:49:08 +0300
-Message-ID: <20260522214923.807017-37-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 142/149] ide-test: Test reset during TRIM
+Date: Sat, 23 May 2026 00:49:14 +0300
+Message-ID: <20260522214923.807017-43-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
@@ -70,107 +70,168 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kevin Wolf <kwolf@redhat.com>
 
-Sometimes reproducing a problem for debugging involves slow I/O, so
-let's add something to blkdebug to make I/O slow when we need it. This
-can be used either together with an error so that the request fails
-after the delay, or with errno=0, which allows the request to succeed
-after the delay.
+This is a regression test for the bug fixed in the previous commits, a
+deadlock between the drain issued by an IDE reset and the TRIM state
+machine.
 
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260421161132.99878-2-kwolf@redhat.com>
+Message-ID: <20260421161132.99878-8-kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit d5e4090177ad382e01084a1594a1a60a69f4c1cd)
+(cherry picked from commit 2fa24e9755994f76f08ea2452215eb50f26f4c21)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/blkdebug.c b/block/blkdebug.c
-index c54aee0c84..8954fc2977 100644
---- a/block/blkdebug.c
-+++ b/block/blkdebug.c
-@@ -95,6 +95,7 @@ typedef struct BlkdebugRule {
-             int immediately;
-             int once;
-             int64_t offset;
-+            int64_t delay_ns;
-         } inject;
-         struct {
-             int new_state;
-@@ -144,6 +145,10 @@ static QemuOptsList inject_error_opts = {
-             .name = "immediately",
-             .type = QEMU_OPT_BOOL,
-         },
-+        {
-+            .name = "delay-ns",
-+            .type = QEMU_OPT_NUMBER,
-+        },
-         { /* end of list */ }
-     },
- };
-@@ -216,6 +221,8 @@ static int add_rule(void *opaque, QemuOpts *opts, Error **errp)
-         rule->options.inject.once  = qemu_opt_get_bool(opts, "once", 0);
-         rule->options.inject.immediately =
-             qemu_opt_get_bool(opts, "immediately", 0);
-+        rule->options.inject.delay_ns =
-+            qemu_opt_get_number(opts, "delay-ns", 0);
-         sector = qemu_opt_get_number(opts, "sector", -1);
-         rule->options.inject.offset =
-             sector == -1 ? -1 : sector * BDRV_SECTOR_SIZE;
-@@ -594,6 +601,7 @@ static int coroutine_fn rule_check(BlockDriverState *bs, uint64_t offset,
-     BlkdebugRule *rule = NULL;
-     int error;
-     bool immediately;
-+    int64_t delay_ns;
+diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
+index c6dcb2c074..721e78170b 100644
+--- a/tests/qtest/ide-test.c
++++ b/tests/qtest/ide-test.c
+@@ -41,8 +41,11 @@
+ #define IDE_PCI_FUNC    1
  
-     qemu_mutex_lock(&s->lock);
-     QSIMPLEQ_FOREACH(rule, &s->active_rules, active_next) {
-@@ -608,13 +616,14 @@ static int coroutine_fn rule_check(BlockDriverState *bs, uint64_t offset,
-         }
-     }
+ #define IDE_BASE 0x1f0
++#define IDE_BASE2 0x3f6
+ #define IDE_PRIMARY_IRQ 14
  
--    if (!rule || !rule->options.inject.error) {
-+    if (!rule) {
-         qemu_mutex_unlock(&s->lock);
-         return 0;
-     }
- 
-     immediately = rule->options.inject.immediately;
-     error = rule->options.inject.error;
-+    delay_ns  = rule->options.inject.delay_ns;
- 
-     if (rule->options.inject.once) {
-         QSIMPLEQ_REMOVE(&s->active_rules, rule, BlkdebugRule, active_next);
-@@ -622,6 +631,10 @@ static int coroutine_fn rule_check(BlockDriverState *bs, uint64_t offset,
-     }
- 
-     qemu_mutex_unlock(&s->lock);
++#define IDE_CTRL_RESET 0x04
 +
-+    if (delay_ns) {
-+        qemu_co_sleep_ns(QEMU_CLOCK_REALTIME, delay_ns);
+ #define ATAPI_BLOCK_SIZE 2048
+ 
+ /* How many bytes to receive via ATAPI PIO at one time.
+@@ -99,6 +102,7 @@ enum {
+ 
+     CMDF_ABORT      = 0x100,
+     CMDF_NO_BM      = 0x200,
++    CMDF_NO_WAIT    = 0x400,
+ };
+ 
+ enum {
+@@ -228,21 +232,21 @@ static uint8_t wait_dma_completion(QTestState *qts, QPCIDevice *dev,
+     return status;
+ }
+ 
+-static int send_dma_request(QTestState *qts, int cmd, uint64_t sector,
+-                            int nb_sectors, PrdtEntry *prdt, int prdt_entries,
+-                            void(*post_exec)(QPCIDevice *dev, QPCIBar ide_bar,
+-                                             uint64_t sector, int nb_sectors))
++static int send_dma_request_dev(QTestState *qts, QPCIDevice *dev,
++                                QPCIBar bmdma_bar, QPCIBar ide_bar, int cmd,
++                                uint64_t sector, int nb_sectors,
++                                PrdtEntry *prdt, int prdt_entries,
++                                void(*post_exec)(QPCIDevice *dev,
++                                                 QPCIBar ide_bar,
++                                                 uint64_t sector,
++                                                 int nb_sectors))
+ {
+-    QPCIDevice *dev;
+-    QPCIBar bmdma_bar, ide_bar;
+     uintptr_t guest_prdt;
+     size_t len;
+     bool from_dev;
+     uint8_t status;
+     int flags;
+ 
+-    dev = get_pci_device(qts, &bmdma_bar, &ide_bar);
+-
+     flags = cmd & ~0xff;
+     cmd &= 0xff;
+ 
+@@ -308,8 +312,28 @@ static int send_dma_request(QTestState *qts, int cmd, uint64_t sector,
+         qpci_io_writeb(dev, bmdma_bar, bmreg_cmd, 0);
+     }
+ 
++    if (flags & CMDF_NO_WAIT) {
++        return 0;
 +    }
-     if (!immediately) {
-         aio_co_schedule(qemu_get_current_aio_context(), qemu_coroutine_self());
-         qemu_coroutine_yield();
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 4118d884f4..b7b5e8bad6 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -3914,6 +3914,9 @@
- #
- # @errno: error identifier (errno) to be returned; defaults to EIO
- #
-+# @delay-ns: request delay before completion in nanoseconds
-+#            (default: 0, since: 11.1)
-+#
- # @sector: specifies the sector index which has to be affected in
- #     order to actually trigger the event; defaults to "any sector"
- #
-@@ -3929,6 +3932,7 @@
-             '*state': 'int',
-             '*iotype': 'BlkdebugIOType',
-             '*errno': 'int',
-+            '*delay-ns': 'int',
-             '*sector': 'int',
-             '*once': 'bool',
-             '*immediately': 'bool' } }
++
+     status = wait_dma_completion(qts, dev, bmdma_bar, ide_bar);
+ 
++    return status;
++}
++
++static int send_dma_request(QTestState *qts, int cmd, uint64_t sector,
++                            int nb_sectors, PrdtEntry *prdt, int prdt_entries,
++                            void(*post_exec)(QPCIDevice *dev, QPCIBar ide_bar,
++                                             uint64_t sector, int nb_sectors))
++{
++    QPCIDevice *dev;
++    QPCIBar bmdma_bar, ide_bar;
++    uint8_t status;
++
++    dev = get_pci_device(qts, &bmdma_bar, &ide_bar);
++    status = send_dma_request_dev(qts, dev, bmdma_bar, ide_bar,
++                                  cmd, sector, nb_sectors, prdt, prdt_entries,
++                                  post_exec);
+     free_pci_device(dev);
+ 
+     return status;
+@@ -457,6 +481,60 @@ static void test_bmdma_trim(void)
+     test_bmdma_teardown(qts);
+ }
+ 
++static void test_bmdma_trim_reset(void)
++{
++    QTestState *qts;
++    QPCIDevice *dev;
++    QPCIBar bmdma_bar, ide_bar, ide_bar2;
++    uint8_t status;
++    const uint64_t trim_range[] = {
++        trim_range_le(0, 2),
++        trim_range_le(6, 8),
++    };
++    size_t len = 512;
++    uint8_t *buf;
++    uintptr_t guest_buf;
++    PrdtEntry prdt[1];
++
++    qts = ide_test_start(
++        "-blockdev file,filename=%s,node-name=img "
++        "-blockdev blkdebug,image=img,node-name=dbg,discard=unmap,"
++        "inject-error.0.event=none,inject-error.0.iotype=discard,"
++        "inject-error.0.errno=0,inject-error.0.delay-ns=1000000 "
++        "-device ide-hd,drive=dbg,bus=ide.0",
++        tmp_path[0]);
++    qtest_irq_intercept_in(qts, "ioapic");
++
++    guest_buf = guest_alloc(&guest_malloc, len);
++    prdt[0].addr = cpu_to_le32(guest_buf),
++    prdt[0].size = cpu_to_le32(len | PRDT_EOT),
++
++    dev = get_pci_device(qts, &bmdma_bar, &ide_bar);
++    ide_bar2 = qpci_legacy_iomap(dev, IDE_BASE2);
++
++    buf = g_malloc(len);
++
++    /* TRIM request with two segments */
++    *((uint64_t *)buf) = trim_range[0];
++    *((uint64_t *)buf + 1) = trim_range[1];
++
++    qtest_memwrite(qts, guest_buf, buf, 2 * sizeof(uint64_t));
++
++    send_dma_request_dev(qts, dev, bmdma_bar, ide_bar, CMD_DSM | CMDF_NO_WAIT, 0, 1, prdt,
++                     ARRAY_SIZE(prdt), NULL);
++
++    /* Reset the device while the first segment is in flight */
++    qpci_io_writeb(dev, ide_bar2, 0, IDE_CTRL_RESET);
++
++    status = wait_dma_completion(qts, dev, bmdma_bar, ide_bar);
++    g_assert_cmphex(status, ==, BM_STS_INTR);
++    assert_bit_clear(qpci_io_readb(dev, ide_bar, reg_status), DF | ERR);
++
++    free_pci_device(dev);
++    g_free(buf);
++    test_bmdma_teardown(qts);
++}
++
+ /*
+  * This test is developed according to the Programming Interface for
+  * Bus Master IDE Controller (Revision 1.0 5/16/94)
+@@ -1138,6 +1216,7 @@ int main(int argc, char **argv)
+ 
+     qtest_add_func("/ide/bmdma/simple_rw", test_bmdma_simple_rw);
+     qtest_add_func("/ide/bmdma/trim", test_bmdma_trim);
++    qtest_add_func("/ide/bmdma/trim_reset", test_bmdma_trim_reset);
+     qtest_add_func("/ide/bmdma/various_prdts", test_bmdma_various_prdts);
+     qtest_add_func("/ide/bmdma/no_busmaster", test_bmdma_no_busmaster);
+ 
 -- 
 2.47.3
 
