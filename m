@@ -4,46 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F2BACD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:39:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16631CD5BB3
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:39:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXXf-00038j-M8; Fri, 22 May 2026 17:36:27 -0400
+	id 1wQXal-0000cU-J1; Fri, 22 May 2026 17:39:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXXK-0000nO-IS; Fri, 22 May 2026 17:36:06 -0400
+ id 1wQXZy-0000HV-3x; Fri, 22 May 2026 17:38:59 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXXF-0000MX-Cn; Fri, 22 May 2026 17:36:03 -0400
+ id 1wQXZw-0002iE-9a; Fri, 22 May 2026 17:38:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485633; bh=H5WdgFMB60Bqo80lVqOWF9pNexOfOl8eyyX1ZX3PAic=;
+ t=1779485682; bh=CLg/NbHjbYspAMq0P5vc2TeituRBmfACUveDQ2y4HgM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=hF4Y0xvY+f6dGrwwtLRM0kG9CZKfXEkQy+U5RckA5SiKOGfAWmZ8X2SY1P/jdZW8G
- IhtTiRDptrtwiBBEp9fVHC9lV09C5o4wHgo1W0+GOiyIyBxAm1LQCxX6q3z1F8EpG7
- UOATEi34TLU5ZlqXQt43jo7O1rn6S4iZOsLbK2IRAu8oDy3alehRoI5uWM9obLHYmF
- OSBGELlXjAgbVNqMy/RdmQVNlpoxuQ2ClAGS5jr0pyJpQYA/ozFwusMeKNS5VNmFau
- hjCFFcfFy7tMlngVyR4z3KWaXpr7qNGz95gUGkXjO67HAb/4xuvKkGHtwLfwZV8yHh
- vFxAz0dLqDFog==
+ b=p+ZRNNTMRv7E92ggxSQu8ahpEmwaeQLBiCgjbxKzuDJckTX5E3jwUCaw1l5/M1UET
+ /L/NeGOAqLqiJhwhTdTXbQDBXwLPZnDG8NmP5TVFTFNiU4hO6Eqa4zMaubSIT4CgYZ
+ TSeF/p82QbIJsopKAqD515d7gR6FqpAeko0EmbO7x9NKgR8j1xelHTs88bLUelesX8
+ d/KHV4bdbDk/9t5tLFoh7Xv6pWzYe99iU73KAElERCLDluaLng41+muXzQmlrL7o73
+ yPrhqXTLHhaRYbbpfIZoBCkK66cIAGIqyJjX2fL7VEfsQiUsUvKl9Q29ilGRv82xGG
+ W16SyH7Uuz2jg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BC17C1AFAE0;
- Sat, 23 May 2026 00:33:53 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id F0B471AFB02;
+ Sat, 23 May 2026 00:34:42 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E07983B7166;
- Sat, 23 May 2026 00:33:57 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1D7C93B7182;
+ Sat, 23 May 2026 00:34:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Junjie Cao <junjie.cao@intel.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 81/94] blkdebug: Add 'delay-ns' option
-Date: Sat, 23 May 2026 00:33:38 +0300
-Message-ID: <20260522213356.806058-23-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 113/136] hw/display/cirrus_vga: Fix packed-24
+ color-expansion transparent pattern fills
+Date: Sat, 23 May 2026 00:34:21 +0300
+Message-ID: <20260522213446.806182-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
-References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
+References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -68,109 +72,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Sometimes reproducing a problem for debugging involves slow I/O, so
-let's add something to blkdebug to make I/O slow when we need it. This
-can be used either together with an error so that the request fails
-after the delay, or with errno=0, which allows the request to succeed
-after the delay.
+The Cirrus Logic VGA card has "pattern fill" blit modes where it
+repeatedly copies an 8x8 source pattern to the display.  For the
+"color expansion" subtype of these, the source pixel format is an 8x8
+monochrome bitmap, and the destination can be any of 8, 16, 24 or
+32bpp.  We implemented these wrong for the 24bpp case, in a way that
+results in a complaint from the undefined-behavior sanitizer about a
+shift by a negative value.
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260421161132.99878-2-kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit d5e4090177ad382e01084a1594a1a60a69f4c1cd)
+For these pattern fills, the GR2F register includes a field which
+specifies how much to skip at the start of each scanline.  In the 8,
+16 and 32 bit cases, this field is 3 bits and is a count of pixels to
+skip.  We get this case right.  However, for the 24 bit case, the
+field is 5 bits and is a count of destination bytes to skip.  We
+tried to add support for 24-bits in commit ad81218e40e27 ("depth=24
+write mask fix (Volker Ruppert)") in 2005.  However we got this
+wrong, because when we need to skip, for example, 30 bytes in the
+destination, this is 10 input pixels but the whole pattern is only 8
+pixels wide, and we ended up with a negative bitpos for the first bit
+to use in the pattern.
+
+Fix the bug by masking srcskipleft in the 24-bit case so that it
+correctly gives the first pixel to use in the pattern even if we skip
+so many pixels that we have wrapped around to what would have been
+the second copy of the pattern to the destination.
+
+This patch was produced based on the information in the CL-GD5446
+Technical Reference Manual, specifically sections 5.8 "GR2F: BLT
+Destination Left-Side Clipping" and 9.4.8 "Pattern Fills".
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3377
+Fixes: ad81218e40e27 ("depth=24 write mask fix (Volker Ruppert)")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Junjie Cao <junjie.cao@intel.com>
+Tested-by: Junjie Cao <junjie.cao@intel.com>
+Message-ID: <20260410183249.4046456-2-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit aefeecb413a8e404ecb6d210cc32d60da176a336)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/blkdebug.c b/block/blkdebug.c
-index 8a4a8cb85e..b07c67611a 100644
---- a/block/blkdebug.c
-+++ b/block/blkdebug.c
-@@ -95,6 +95,7 @@ typedef struct BlkdebugRule {
-             int immediately;
-             int once;
-             int64_t offset;
-+            int64_t delay_ns;
-         } inject;
-         struct {
-             int new_state;
-@@ -144,6 +145,10 @@ static QemuOptsList inject_error_opts = {
-             .name = "immediately",
-             .type = QEMU_OPT_BOOL,
-         },
-+        {
-+            .name = "delay-ns",
-+            .type = QEMU_OPT_NUMBER,
-+        },
-         { /* end of list */ }
-     },
- };
-@@ -216,6 +221,8 @@ static int add_rule(void *opaque, QemuOpts *opts, Error **errp)
-         rule->options.inject.once  = qemu_opt_get_bool(opts, "once", 0);
-         rule->options.inject.immediately =
-             qemu_opt_get_bool(opts, "immediately", 0);
-+        rule->options.inject.delay_ns =
-+            qemu_opt_get_number(opts, "delay-ns", 0);
-         sector = qemu_opt_get_number(opts, "sector", -1);
-         rule->options.inject.offset =
-             sector == -1 ? -1 : sector * BDRV_SECTOR_SIZE;
-@@ -594,6 +601,7 @@ static int coroutine_fn rule_check(BlockDriverState *bs, uint64_t offset,
-     BlkdebugRule *rule = NULL;
-     int error;
-     bool immediately;
-+    int64_t delay_ns;
- 
-     qemu_mutex_lock(&s->lock);
-     QSIMPLEQ_FOREACH(rule, &s->active_rules, active_next) {
-@@ -608,13 +616,14 @@ static int coroutine_fn rule_check(BlockDriverState *bs, uint64_t offset,
-         }
-     }
- 
--    if (!rule || !rule->options.inject.error) {
-+    if (!rule) {
-         qemu_mutex_unlock(&s->lock);
-         return 0;
-     }
- 
-     immediately = rule->options.inject.immediately;
-     error = rule->options.inject.error;
-+    delay_ns  = rule->options.inject.delay_ns;
- 
-     if (rule->options.inject.once) {
-         QSIMPLEQ_REMOVE(&s->active_rules, rule, BlkdebugRule, active_next);
-@@ -622,6 +631,10 @@ static int coroutine_fn rule_check(BlockDriverState *bs, uint64_t offset,
-     }
- 
-     qemu_mutex_unlock(&s->lock);
+diff --git a/hw/display/cirrus_vga_rop2.h b/hw/display/cirrus_vga_rop2.h
+index b208b7348a..8be35ec6e2 100644
+--- a/hw/display/cirrus_vga_rop2.h
++++ b/hw/display/cirrus_vga_rop2.h
+@@ -191,10 +191,29 @@ glue(glue(glue(cirrus_colorexpand_pattern_transp_, ROP_NAME), _),DEPTH)
+     int x, y, bitpos, pattern_y;
+     unsigned int bits, bits_xor;
+     unsigned int col;
 +
-+    if (delay_ns) {
-+        qemu_co_sleep_ns(QEMU_CLOCK_REALTIME, delay_ns);
-+    }
-     if (!immediately) {
-         aio_co_schedule(qemu_get_current_aio_context(), qemu_coroutine_self());
-         qemu_coroutine_yield();
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 508b081ac1..0efd51787b 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -3919,6 +3919,9 @@
- #
- # @errno: error identifier (errno) to be returned; defaults to EIO
- #
-+# @delay-ns: request delay before completion in nanoseconds
-+#            (default: 0, since: 11.1)
-+#
- # @sector: specifies the sector index which has to be affected in
- #     order to actually trigger the event; defaults to "any sector"
- #
-@@ -3934,6 +3937,7 @@
-             '*state': 'int',
-             '*iotype': 'BlkdebugIOType',
-             '*errno': 'int',
-+            '*delay-ns': 'int',
-             '*sector': 'int',
-             '*once': 'bool',
-             '*immediately': 'bool' } }
++    /*
++     * Copy from an 8x8 monochrome pattern with color expansion.
++     */
++
+ #if DEPTH == 24
++    /*
++     * For packed-24 modes, GR2F bits [4:0] are a count of destination
++     * bytes to be suppressed for each scanline, which we keep in
++     * dstskipleft. Our srcskipleft is the number of pixels to skip
++     * within the 8x8 source pattern to match up with that number
++     * of suppressed bytes. As the pattern repeats every 8 bits we
++     * take the number of pixels mod 8.
++     */
+     int dstskipleft = s->vga.gr[0x2f] & 0x1f;
+-    int srcskipleft = dstskipleft / 3;
++    int srcskipleft = (dstskipleft / 3) & 0x7;
+ #else
++    /*
++     * In all other modes, GR2F bits [2:0] are a count of how many
++     * destination pixels to suppress for each scanline, which is our
++     * srcskipleft. We get dstskipleft, the number of bytes to skip,
++     * by multiplying this by the bytes-per-pixel.
++     */
+     int srcskipleft = s->vga.gr[0x2f] & 0x07;
+     int dstskipleft = srcskipleft * (DEPTH / 8);
+ #endif
 -- 
 2.47.3
 
