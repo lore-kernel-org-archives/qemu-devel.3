@@ -4,47 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5356CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:36:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07EE4CD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:37:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXVt-0008DF-Sk; Fri, 22 May 2026 17:34:38 -0400
+	id 1wQXXc-0002qC-61; Fri, 22 May 2026 17:36:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXVZ-000880-SY; Fri, 22 May 2026 17:34:18 -0400
+ id 1wQXWM-0008Lt-MO; Fri, 22 May 2026 17:35:14 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXVW-0007YB-Nw; Fri, 22 May 2026 17:34:16 -0400
+ id 1wQXWJ-0007kr-Vh; Fri, 22 May 2026 17:35:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485632; bh=gXaCOgIMQok2ureBAQVnySOHuN+YGHTyKbMB7nLoX3k=;
+ t=1779485633; bh=V1zHd0ThjAOjgnZDa11fXo50uLm+BRgchTAjlsofTLA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=RG1gCAWPtzBgnkQwOOT1yk7M4kphhE4sMx8rL/1hgWXMzTiBC6wCeNexf6Y0/sD+l
- echB/iz8sANvKVYbJ3w3WSqB7IL8a3wBdC/fo7aF7DjCRpHlyL10vuksgAQfz3CXQm
- +dfrpfuL3rMjkEfAQDBQjaYJPgnBUUNGTeNAjh42POMmviTNCAxWuwfWmp/13XX2XE
- AwiEi9edueIoFTscn/6vvT794lIKw25h456pzcMFbk3DxbEguQ/LPZNFjSJs8Ul3MV
- K6aAkRlIsfCeKdolpMvhEL5xWmjNWzus0kVDgl7YbVcU6DY1HspYeiPpenviivewsd
- XUj4NgUx2TYdQ==
+ b=kPT1IU7EXySlZ7JywJ2NYZBKFdkNK6E7+kHo6h5He0uU0Mmm3jHM5ypCnGVF/Z/mr
+ yJFKCvUgTOX07qc3DkIaLitTskTAF8vOE/QWP8mG/8L77aSgp7fNfS4WSdM6CmIR2o
+ Q3G0W7bwgRFsdz9S/movyEdhg6KBdXGIQWM0zBmdngb5plZ/SEstv5tx8U+txW9Drh
+ K5xwPjaGw4olS7idklulSQwyJwJkx0V+fn1p8bWZfICutYcPnCMmQ4y+nMO0tViCkT
+ G1GpQWCwhNnA5k+Yln2QGN/ZIJSpGV5kixvF6r+qRLdIKcW19bOuoK/6++wGB7614/
+ aF1KWGchTfq6w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5B3D01AFACB;
- Sat, 23 May 2026 00:33:52 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3AFE91AFAD8;
+ Sat, 23 May 2026 00:33:53 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7E3B23B7151;
- Sat, 23 May 2026 00:33:56 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5B6623B715E;
+ Sat, 23 May 2026 00:33:57 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jeuk Kim <jeuk20.kim@samsung.com>,
- Rayhan Ramdhany Hanaputra <hanaputrarayhan@gmail.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 60/94] hw/ufs: Validate MCQ SQ references before use
-Date: Sat, 23 May 2026 00:33:17 +0300
-Message-ID: <20260522213356.806058-2-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 73/94] meson.build: Add -fzero-init-padding-bits=all
+Date: Sat, 23 May 2026 00:33:30 +0300
+Message-ID: <20260522213356.806058-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,69 +72,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jeuk Kim <jeuk20.kim@samsung.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-A guest can program an out-of-range SQATTR.CQID value, or ring an
-MCQ SQ doorbell before the submission queue exists.
+The C standard doesn't always guarantee that struct and union padding
+bits are zero initialized, even if the code initializes a struct.
+For QEMU, this is potentially problematic, because we often have
+structs that match data structures in guest memory, where we
+initialize them and then bulk copy them into the guest.  If the
+compiler didn't zero init the whole of the memory containing the
+struct, we could potentially leak random data from the host into the
+guest via the padding bytes.
 
-Reject SQ creation when the referenced CQ is invalid, and ignore SQ
-doorbells for queues that have not been created. This prevents a
-guest-triggerable out-of-bounds read and NULL pointer dereference.
+We already use -ftrivial-auto-var-init=zero, which will zero out
+padding in many of these cases, but -fzero-init-padding-bits=all
+closes some gaps, for example cases where we initialize a
+variable with a struct initializer, and cases involving unions.
 
-Fixes: 5c079578d2e ("hw/ufs: Add support MCQ of UFSHCI 4.0")
-Reported-by: Rayhan Ramdhany Hanaputra <hanaputrarayhan@gmail.com>
+Follow the Linux kernel in using both options. Compare kernel
+commit dce4aab8441 ("kbuild: Use -fzero-init-padding-bits=all").
+
+This option exists in gcc-15 and above; it's not supported
+by clang, but clang documents that it guarantees zero init
+of these cases always:
+https://clang.llvm.org/docs/LanguageExtensions.html#union-and-aggregate-initialization-in-c
+Older gcc which don't have the option behave as if it were set.
+
+(These options are passed through the cc.get_supported_arguments()
+filter, so we don't need to do anything extra to avoid passing it to
+a compiler that doesn't recognize it.)
+
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
-(cherry picked from commit 332ea29787800fff2b49e9b89ec93bd370a11965)
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-id: 20260508104723.2144051-1-peter.maydell@linaro.org
+(cherry picked from commit a163fc1f864bef27f6e527cbad9defba7af9e60a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index cb74cb56bc..d5fba15e2a 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -517,8 +517,13 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
-         return false;
-     }
+diff --git a/meson.build b/meson.build
+index d7b03e4746..51f5f2851a 100644
+--- a/meson.build
++++ b/meson.build
+@@ -684,6 +684,12 @@ hardening_flags = [
+     # it harder to take advantage of uninitialized stack
+     # data to drive exploits
+     '-ftrivial-auto-var-init=zero',
++    # Ensure GCC zero-initializes padding bits and trailing fields in
++    # unions. This avoids potentially leaking host data into the guest
++    # when we init a struct and copy it into guest memory.  GCC prior
++    # to GCC 15 and clang don't have this, but they zero the padding
++    # and trailing portions of a union by default.
++    '-fzero-init-padding-bits=all',
+ ]
  
-+    if (cqid >= u->params.mcq_maxq) {
-+        trace_ufs_err_mcq_create_sq_invalid_cqid(cqid);
-+        return false;
-+    }
-+
-     if (!u->cq[cqid]) {
--        trace_ufs_err_mcq_create_sq_invalid_cqid(qid);
-+        trace_ufs_err_mcq_create_sq_invalid_cqid(cqid);
-         return false;
-     }
- 
-@@ -775,6 +780,11 @@ static void ufs_mcq_process_db(UfsHc *u, uint8_t qid, uint32_t db)
-     }
- 
-     sq = u->sq[qid];
-+    if (!sq) {
-+        trace_ufs_err_mcq_db_wr_invalid_sqid(qid);
-+        return;
-+    }
-+
-     if (sq->size * sizeof(UfsSqEntry) <= db) {
-         trace_ufs_err_mcq_db_wr_invalid_db(qid, db);
-         return;
-@@ -788,7 +798,14 @@ static void ufs_write_mcq_op_reg(UfsHc *u, hwaddr offset, uint32_t data,
-                                  unsigned size)
- {
-     int qid = offset / sizeof(UfsMcqOpReg);
--    UfsMcqOpReg *opr = &u->mcq_op_reg[qid];
-+    UfsMcqOpReg *opr;
-+
-+    if (qid >= u->params.mcq_maxq) {
-+        trace_ufs_err_invalid_register_offset(offset);
-+        return;
-+    }
-+
-+    opr = &u->mcq_op_reg[qid];
- 
-     switch (offset % sizeof(UfsMcqOpReg)) {
-     case offsetof(UfsMcqOpReg, sq.tp):
+ # Zero out registers used during a function call
 -- 
 2.47.3
 
