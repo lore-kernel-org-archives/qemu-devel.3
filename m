@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B52FFCD5BAF
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 00:06:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CA68CD5BAF
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 00:07:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQDMm-0001U5-Ep; Thu, 21 May 2026 20:03:52 -0400
+	id 1wQDPT-00042D-Fr; Thu, 21 May 2026 20:06:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wQDMa-0001ST-Oh
- for qemu-devel@nongnu.org; Thu, 21 May 2026 20:03:44 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1wQDOE-0002du-47
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 20:05:28 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wQDMZ-0003Cv-6e
- for qemu-devel@nongnu.org; Thu, 21 May 2026 20:03:40 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2bea7176c72so8592035ad.0
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 17:03:38 -0700 (PDT)
+ id 1wQDOB-0004iu-W4
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 20:05:21 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2ba21d32776so49060235ad.2
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 17:05:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779408218; x=1780013018; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779408319; x=1780013119; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RVDuaf0uiJPSEZc00jK7jWeRO5ExDmx6hQRMkeQfRZQ=;
- b=buPem7awAKc0S/woG+w9nVbxsfQBd+tQoh3tNaFecXIcQujllPymzW2alK3UNG0L5w
- 1kXFgWm1pylT09+aPC0b7jdben72816Psoufs8iBo4yh58OdCpHo28RYBLV69ofVdFT2
- OLO2lkVvGkHRdoDlMxisEOQ1OYgGjT9D1Peb//1RuH59ON0kdODvTUhyrq3kIr+loDv0
- u3hmPAksOduOtiqOTLqreHuCOgMQng12IFe8oX1qGmvXZg3KyIfjgviqO7wESBbAXcWX
- VoeYQZyrB0fVIO7QxLdDKeplInu7W6bDNO8ucAilZn82HxQDHMiPuZjkR/QJuU/h6767
- jh+w==
+ bh=TgSVB8hbB12ipCIv+wwkqgZJqTEdlVVSjL31mZweUX8=;
+ b=HAN0fD+avTi5R/pQnyyahlXk63L30y1EcvxD5V2anC4I8O1usgApuJcJ0gADXdsQku
+ 2HrYYMNLX0UWEoEBcsURqpg3kw7CeGk46SzPBQpb8VSGkAl6AdJ4N6MkAf6LeL4DJBHn
+ y8AoTpqGebvl7U23v6oJWaCwPZxyI6nhGVPJrxdb4jWzgPCq6bDVbZ8feVUKgwYOX+uU
+ YJeGDrG566TUifOCS11xNsXakB58nfPBPwDIyachfPtOfnD68xT4T7eUIb9v2MxeE1fF
+ /xof8aX0x+KYTbahUy+2MHfD0qHbLTXC8EXhKXckvneWyGJyO9iiHCeT2i5daSydyP54
+ trMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779408218; x=1780013018;
+ d=1e100.net; s=20251104; t=1779408319; x=1780013119;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=RVDuaf0uiJPSEZc00jK7jWeRO5ExDmx6hQRMkeQfRZQ=;
- b=Xh7czsZRORtUnm01o4oG1oRytQaY5OYHSa9ejl44m7uv4e9SCRzpNCVEviOEDAawVm
- /+qO25zD3IKss/MrNvhhbXgeyP8Y66nr6bx6jNfpNmQ6AZvDttJU0N+J0XTOuKAZaX7Y
- HK9okijjbm7ydCmgBcD/bjQVY68fRQeQ9tKY4cEhF3IDSNCFfLaFsBLZ/vRskT96bazc
- unhQpSJIW9sK+hsYl8A2ExJLLQ1jO5ql0UvlJnluHBs9rZoMi0jKj8V9/m89ZihcihOF
- ZfxnS0HG8Ydj/TBuH7ZKnUIkMXus3GsLa8YVxV9LMpNXWqm4JeoyE+LGZuZiszNq9qD5
- Iu5w==
-X-Gm-Message-State: AOJu0YyZcW8TVL2lOR8T6aBnqKCljr0F8faP4QFUCdoE6BGbnKCWygQR
- 4X52qnFcnOFEJ1oZLWfB+He3Dl/n/LMEcFmsjFgQw8LLXmBhp+BF6N/VpTljt/gM
-X-Gm-Gg: Acq92OHV4OF3cLGj40Q/df0/BA2if1ziJFgXhPlFGVN/xcyqwUbcf+17vFWwJts7qP4
- evsObWmPVzNxwUdBTRan0CX4uzZ8eIdKVjubAobbd8kCd7nJa7yQoRpXdxw+7LwdJaMw675OnL3
- I8bsKV6LLJReHRbREy6qYUuWbbuKNpTLBX8ONUOd8TcZEE1BjzGBcR4vbLrQLLSRed3wSXQ8mOf
- gJuYc3HsYXT0Qqmxx3ZESHkJE1T1I6jLKNgxyEZTIsL9q1RPh1er6NzgnpwkaKclndGevJc90MX
- Ev47NPbdLZwGGA21w1W8mWV2kqs9vv1B0T+xWv8b1CBTUp3JJKt2dpLqNp/ffQ0hZ+sllasPnFN
- 1M2tDhRJPAYcs3UwF14vff1dQEVD25MAZ+8QXa98Ivxg5ioN6os/t9FbYjvxhSQRtRhAG58NJFg
- Bu5IOsHRODdRAnnLHUvEcFrzyfrzOScExISyw6C4VGGA==
-X-Received: by 2002:a17:902:f60f:b0:2b0:5795:9ead with SMTP id
- d9443c01a7336-2beb02cb6bamr11475155ad.0.1779408217720; 
- Thu, 21 May 2026 17:03:37 -0700 (PDT)
+ bh=TgSVB8hbB12ipCIv+wwkqgZJqTEdlVVSjL31mZweUX8=;
+ b=jm7XzRk8qCiKCRMVgu5UC6INGZe+agqx/jsLbEE51x9QMGPltKnpssW6caG5g9GBm/
+ dSCiwTqLdJdsUFRrvZN7XzXIfof5uunAr+jiKUxiP5dGCQikQEEwBa7p/Ooi5VJ7uzz5
+ nPgLsIc1r5AhDwEXCkSbmJ/fJpSPM0VxTUYuVShbh1GRwnCaUaJQaWXxmcH26eZyZllT
+ tTkKsWsGK0UvKFaCr59cMdAYLlXdkUA1ANce8ZgwWkXbX88xEjcrsbNbb2WE+8+KQZlx
+ peXJgujwRZxz0CzCNYB19OoBImzy18iohfYQY3TccZRXg4iKchEpxC/9NXJO+1SbeypW
+ U6vg==
+X-Gm-Message-State: AOJu0YwEQQ2rYBbFQeHDrT6NTkDZAUNyL2u7Op4zoB3+bYYvWEiyzH0m
+ i5kDOdY5v6BzMuv+vk7rZO3Dyf/pp7geWlp4wx3SKaPINL5n6VDvwn14JDynq1Sv
+X-Gm-Gg: Acq92OF7eXAYeggfTb4QbmhAhSKrZPbWi8YSE3qpZgUT+Cx/5mSFv1nQBI8ubu+l2ti
+ qm7q7RhgwtUc6V+AGveQS4A8BuuKu9rnB7g57z4SF5QCSZ396cNgq1wNaofIGWWyfNSoZP1V3TR
+ xG/Y8sAgqn0kggZd58Jkkaemo6gYOgWSvyl/OzjSW28+VIGG6rGv4DQfPKiUJNhf+IB6EBBl37Q
+ wEU5cghRBGdohRzZXYY2LARzPjj+XjI6Nd5U3I01IVWrJctPRO4RgEDzNvTX0E3JBCIxcOAQxFK
+ /nBPWnrC5deyufVSvbJiJDbtsU99KPwKkVjLKc5YrLbEZSydJD0vYREsXu3CVflxP0Yw6myOjnB
+ CuPbW9yc1d8Svs06Ivhbw2N1YppK8VAXln2vbpqOV4HvrGvFSsMAsCr1sAdQ/GuJJL/ph6N80WN
+ m5RTnYNd57GbiEIzD47NenuubvL+7M9acbJagv1Tk+Sw==
+X-Received: by 2002:a17:903:244c:b0:2bd:7ff4:ab0b with SMTP id
+ d9443c01a7336-2beb06552bbmr11009045ad.39.1779408318707; 
+ Thu, 21 May 2026 17:05:18 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2beb114b54csm3915475ad.42.2026.05.21.17.03.34
+ d9443c01a7336-2beb114b54csm3915475ad.42.2026.05.21.17.05.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 17:03:37 -0700 (PDT)
+ Thu, 21 May 2026 17:05:18 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Alistair Francis <alistair.francis@wdc.com>,
+Cc: alistair23@gmail.com,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Chao Liu <chao.liu.zevorn@gmail.com>
-Subject: [PULL 01/48] target/riscv: Remove spike as default machine
-Date: Fri, 22 May 2026 10:02:37 +1000
-Message-ID: <20260522000324.23255-2-alistair.francis@wdc.com>
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 32/48] target/riscv: remove riscv_cpu_named_features[]
+Date: Fri, 22 May 2026 10:03:08 +1000
+Message-ID: <20260522000324.23255-33-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260522000324.23255-1-alistair.francis@wdc.com>
 References: <20260522000324.23255-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,89 +103,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-In QEMU 10.0 we deprecated the default spike machine, let's finally
-remove spike as the default and require users to specify the machine.
+This array has no uses left.
 
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Message-ID: <20260430052218.771358-2-alistair.francis@wdc.com>
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260512032926.1978818-8-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- docs/about/deprecated.rst       | 18 ------------------
- docs/about/removed-features.rst | 14 ++++++++++++++
- hw/riscv/spike.c                |  1 -
- 3 files changed, 14 insertions(+), 19 deletions(-)
+ target/riscv/cpu.h         |  1 -
+ target/riscv/cpu.c         | 26 --------------------------
+ target/riscv/tcg/tcg-cpu.c |  4 ++--
+ 3 files changed, 2 insertions(+), 29 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 95bf761329..7771b98b72 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -243,24 +243,6 @@ better reflects the way this property affects all random data within
- the device tree blob, not just the ``kaslr-seed`` node.
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index f93d80ef22..b1bd69d4a9 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -992,7 +992,6 @@ typedef struct RISCVCPUMultiExtConfig {
+ extern const RISCVCPUMultiExtConfig riscv_cpu_extensions[];
+ extern const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[];
+ extern const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[];
+-extern const RISCVCPUMultiExtConfig riscv_cpu_named_features[];
  
+ typedef struct isa_ext_data {
+     const char *name;
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index ecf31599c5..64e3fa4ef0 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1411,32 +1411,6 @@ const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
+     { },
+ };
  
--RISC-V default machine option (since 10.0)
--''''''''''''''''''''''''''''''''''''''''''
+-/*
+- * 'Named features' is the name we give to extensions that we
+- * don't want to expose to users. They are either immutable
+- * (always enabled/disable) or they'll vary depending on
+- * the resulting CPU state.
+- *
+- * Some of them are always enabled depending on priv version
+- * of the CPU and are declared directly in isa_edata_arr[].
+- * The ones listed here have special checks during finalize()
+- * time and require their own flags like regular extensions.
+- * See riscv_cpu_update_named_features() for more info.
+- */
+-const RISCVCPUMultiExtConfig riscv_cpu_named_features[] = {
+-    MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
+-    MULTI_EXT_CFG_BOOL("ssstateen", ext_ssstateen, true),
+-    MULTI_EXT_CFG_BOOL("sha", ext_sha, true),
 -
--RISC-V defines ``spike`` as the default machine if no machine option is
--given in the command line.  This happens because ``spike`` is the first
--RISC-V machine implemented in QEMU and setting it as default was
--convenient at that time.  Now we have 7 riscv64 and 6 riscv32 machines
--and having ``spike`` as a default is no longer justified.  This default
--will also promote situations where users think they're running ``virt``
--(the most used RISC-V machine type in 10.0) when in fact they're
--running ``spike``.
+-    /*
+-     * 'ziccrse' has its own flag because the KVM driver
+-     * wants to enable/disable it on its own accord.
+-     */
+-    MULTI_EXT_CFG_BOOL("ziccrse", ext_ziccrse, true),
 -
--Removing the default machine option forces users to always set the machine
--they want to use and avoids confusion.  Existing users of the ``spike``
--machine must ensure that they're setting the ``spike`` machine in the
--command line (``-M spike``).
+-    { },
+-};
 -
--
- Backend options
- ---------------
+ static void cpu_set_prop_err(RISCVCPU *cpu, const char *propname,
+                              Error **errp)
+ {
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index c3e354b0ae..8dea22bae5 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -454,7 +454,7 @@ static void riscv_cpu_disable_priv_spec_isa_exts(RISCVCPU *cpu)
+     }
+ }
  
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index 2021e85f56..d1bea4d75b 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -1229,6 +1229,20 @@ firmware is available to boot it. It can be replaced by the
- ``ast2700fc``, another multi-SoC machine based on the newer AST2700
- SoCs which are excepted to receive better support in the future.
+-static void riscv_cpu_update_named_features(RISCVCPU *cpu)
++static void riscv_cpu_update_cfg(RISCVCPU *cpu)
+ {
+     if (cpu->env.priv_ver >= PRIV_VERSION_1_11_0) {
+         cpu->cfg.has_priv_1_11 = true;
+@@ -1181,7 +1181,7 @@ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
+         return;
+     }
  
-+RISC-V default machine (removed in 11.1)
-+''''''''''''''''''''''''''''''''''''''''
-+
-+RISC-V used to define ``spike`` as the default machine if no machine option
-+was given via the command line.  This happend because ``spike`` was the first
-+RISC-V machine implemented in QEMU and setting it as default was
-+convenient at that time.  Now we have 7 riscv64 and 6 riscv32 machines
-+and having ``spike`` as a default is no longer justified.
-+
-+The default machine option has been removed, forcing users to always set the
-+machine they want to use to avoid confusion.  Existing users of the ``spike``
-+machine must ensure that they're setting the ``spike`` machine in the
-+command line (``-M spike``).
-+
- linux-user mode CPUs
- --------------------
+-    riscv_cpu_update_named_features(cpu);
++    riscv_cpu_update_cfg(cpu);
+     riscv_cpu_validate_profiles(cpu);
  
-diff --git a/hw/riscv/spike.c b/hw/riscv/spike.c
-index 35c696f891..87fe0f242f 100644
---- a/hw/riscv/spike.c
-+++ b/hw/riscv/spike.c
-@@ -341,7 +341,6 @@ static void spike_machine_class_init(ObjectClass *oc, const void *data)
-     mc->desc = "RISC-V Spike board";
-     mc->init = spike_board_init;
-     mc->max_cpus = SPIKE_CPUS_MAX;
--    mc->is_default = true;
-     mc->default_cpu_type = TYPE_RISCV_CPU_BASE;
-     mc->possible_cpu_arch_ids = riscv_numa_possible_cpu_arch_ids;
-     mc->cpu_index_to_instance_props = riscv_numa_cpu_index_to_props;
+     if (cpu->cfg.ext_smepmp && !cpu->cfg.pmp) {
 -- 
 2.53.0
 
