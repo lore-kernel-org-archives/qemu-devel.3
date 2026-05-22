@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E73CCD5BAC
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 20:31:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22918CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 20:31:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQWWT-0005u9-6Q; Fri, 22 May 2026 16:31:15 -0400
+	id 1wQWWn-0006IV-78; Fri, 22 May 2026 16:31:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1wQWVz-0005jb-Uc; Fri, 22 May 2026 16:30:50 -0400
+ id 1wQWWA-0005kA-MN; Fri, 22 May 2026 16:30:54 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1wQWVu-0005sv-IE; Fri, 22 May 2026 16:30:36 -0400
+ id 1wQWW8-0006pD-6q; Fri, 22 May 2026 16:30:50 -0400
 Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64MImoY03991718; Fri, 22 May 2026 20:30:30 GMT
+ 64MFm8wW1562366; Fri, 22 May 2026 20:30:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=rvQ3C0
- /IN0BfdPykbOi836XJXD4mAh6xqm1hS8V8p64=; b=UbJ7jtt3Nmzb7KBuUmEKLU
- VeQ4ufIeUnNou8TruCii3asWpxK+D/SV3PRkYpIP/Q5w7rFCux30F/mkwLwuS4MK
- x979R4iMRSUGjhaWEMdju4lnNW7V7texPGiQyMXi0mPR3CNm/X8b67ivHTjuWkIV
- tQbL7uvfnZQ2J47aQHojWRURD3II71HrIVWsGi5qhlA9YC8gexrhwgrvzbwY/iqj
- /e1IgNafXGcIiEla3dto5DErer0P4yOQCo2x5ZNlbCAas6PNhgJAk+sGlZwzncsS
- cENbylXJPt2SsQiVJ9tBebrkOcD4+fN065shTMelB3NI/+2TJ709GJv7CB+gGuAg
+ :message-id:mime-version:references:subject:to; s=pp1; bh=uq5RYW
+ Nxq3ChBOFITqRX8e21W9Q8VYICHdjdVb0BEdA=; b=YFVCJOS6aRdU8j5Ez4GlIL
+ k3Ua7UIqknyZaSMuKaSUkHq+NALJDTJgVMWM6kkwgqhmqFgc31PGuidAUMfZEHJh
+ wMovW5b4Sic+6gcdUfKq8NWNxV6e5IYUWmaMSHI0NaYnqXW0mBBwaeONn6YPLHlv
+ bigibrcl8Ox3G2qylnw5UPeIPyObcMQK/vzeOg7ZZ2vdpjOuWPm2QiaYuh4vi67B
+ plwr8ea8NqijKhRHZIXVHO2vzcGJ/uutQO4mNs1L1THYM9BTC4JPEN9uzUolhORk
+ ox4C7wkfyAyeHxiksbH9GX1L23a7n8udDRgW7cId5HarT6HylDocOhKMilfD1GZg
  ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6hb8v64j-1
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6hb8v658-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 22 May 2026 20:30:30 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64MKOCsb016245;
- Fri, 22 May 2026 20:30:29 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e754gtatn-1
+ Fri, 22 May 2026 20:30:45 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64MKO6pG031512;
+ Fri, 22 May 2026 20:30:44 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e73wkjj7p-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 22 May 2026 20:30:29 +0000 (GMT)
+ Fri, 22 May 2026 20:30:44 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
  [10.39.53.229])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64MKUSxQ18154234
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64MKUhK963242500
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 22 May 2026 20:30:28 GMT
+ Fri, 22 May 2026 20:30:43 GMT
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 134EE5805F;
- Fri, 22 May 2026 20:30:28 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0B3DE5805D;
+ Fri, 22 May 2026 20:30:43 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 369235805C;
- Fri, 22 May 2026 20:30:26 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 2946558059;
+ Fri, 22 May 2026 20:30:41 +0000 (GMT)
 Received: from [9.67.42.213] (unknown [9.67.42.213])
  by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Fri, 22 May 2026 20:30:26 +0000 (GMT)
-Message-ID: <f83158c7-0831-4e94-93f8-1e621034bb01@linux.ibm.com>
-Date: Fri, 22 May 2026 16:30:26 -0400
+ Fri, 22 May 2026 20:30:41 +0000 (GMT)
+Message-ID: <9e80bf66-268e-47b8-8678-c899ece52296@linux.ibm.com>
+Date: Fri, 22 May 2026 16:30:40 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Collin Walling <walling@linux.ibm.com>
-Subject: Re: [PATCH v11 16/32] hw/s390x/ipl: Add IPIB flags to IPL Parameter
- Block
+Subject: Re: [PATCH v11 20/32] pc-bios/s390-ccw: Introduce ZiplBootMode enum
+ for IPL mode selection
 To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org
 Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
@@ -74,24 +74,24 @@ Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
  armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
  pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
 References: <20260505201905.997996-1-zycai@linux.ibm.com>
- <20260505201905.997996-17-zycai@linux.ibm.com>
+ <20260505201905.997996-21-zycai@linux.ibm.com>
 Content-Language: en-US
-In-Reply-To: <20260505201905.997996-17-zycai@linux.ibm.com>
+In-Reply-To: <20260505201905.997996-21-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIyMDIwMCBTYWx0ZWRfX263xhF0bZ3VN
- UDv30oeoynkYAXvKg47ttqsbstzpX+wJ/j9p3NBZLGvixah1hI88tlv7MLqf6MV/TDYayTngdK4
- PfvMcVZ+JE+GeUW6Q2ADEFHewAmCgOcghpIR+M4oyyjg7S3QOwDZ7a0N2hxum2/21C9NqK/HLeb
- EKINVAwzBihEHpfEY43UzBmTgQtIMK4QGgJJF1lv5M1v2xat8KHfZhP6opoDZ3ARJVheoUTmym7
- bKYfSeD3oWtQQHBrK7deV6lomGQ0oQpc5DKLzhANBqexsPg7zAONkwlLVUrOVvyJNI023ROTNGn
- HqWjMjtHUvwjRE/d/+Urj5VxB9M5RU04POzVh7uAcKPeggOI7FPpZ2WZ52Wt7toUE2myD48Z+Wa
- ItXYUS1S2QqHh1VEMf/hPYubTSVpNH0gEAXECVogVLE3MP+YJfri4ihVMMySJebevSgkHx0gYs5
- lr2CF4q9XLdINuz1W9w==
-X-Proofpoint-GUID: b8wYAf9ZLVYeBvygcsxHPxZY1EZRauBJ
-X-Proofpoint-ORIG-GUID: b8wYAf9ZLVYeBvygcsxHPxZY1EZRauBJ
-X-Authority-Analysis: v=2.4 cv=aYBRWxot c=1 sm=1 tr=0 ts=6a10bce6 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIyMDIwMCBTYWx0ZWRfX/WdgKwVhxIIS
+ Z2KJMYhsmipV7qN2hzwBZBUWhTSkDRrbIcQD3fI1Gfa6Mpi4FxCyGDlY2aE6Kitj/R/iDYdsujt
+ ay2b00Q3vW7ZO9NPnDtzH3IXgXQlb/z3eZaGgIzpsF7iO+RY8KskFiWDRuA8/eXoewmNer/TmTG
+ 3m775nNSD6uQIjEVFCvQnOIrpgJ/IxwA7wDuoEw4/VIZR3CHf6vy52EVOa6kBcEi8Bl17lF8D1v
+ b4s9OO7pBJjxz1nm1DbXo3n94G84QeUPkoalJzubKpXR8vCchR6kQx1hG9e4WgxU/4/og9TpA+F
+ MUidWp3KtT385TrCa7GkXsvBWklvym5gp8cL/Ql48HYyWK+DI3+1CiWwj6NCpXjEhxhf7uC+3VN
+ hwm1UEPorVTAreFTYrMm/bT/9cgudzs3q/wrRtvSORqHWb1lsYRgqsCPpJaDLl6huzRwvG56wmu
+ JeaYQhcQ4SBPI3DfmHw==
+X-Proofpoint-GUID: BxbCoKzdiyrWpvJExckOrGUE8bkTbxfU
+X-Proofpoint-ORIG-GUID: BxbCoKzdiyrWpvJExckOrGUE8bkTbxfU
+X-Authority-Analysis: v=2.4 cv=aYBRWxot c=1 sm=1 tr=0 ts=6a10bcf5 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
  a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
  a=IrZvC-waEUVJwRxjAe8A:9 a=QEXdDO2ut3YA:10
@@ -126,7 +126,6 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-
 
 Reviewed-by: Collin Walling <walling@linux.ibm.com>
 
