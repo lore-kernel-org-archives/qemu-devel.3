@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7278CD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:45:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 490FECD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:45:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXYV-0005C9-HH; Fri, 22 May 2026 17:37:19 -0400
+	id 1wQXYI-0004CI-Ol; Fri, 22 May 2026 17:37:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXYP-0004k1-Um; Fri, 22 May 2026 17:37:14 -0400
+ id 1wQXXv-0003YO-2c; Fri, 22 May 2026 17:36:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXYN-0001Ff-LC; Fri, 22 May 2026 17:37:13 -0400
+ id 1wQXXr-00019V-2m; Fri, 22 May 2026 17:36:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485634; bh=NeizuiU9CNw1ZzTV6M1T2A/yYQYGEMCvWTUWZVtOwzs=;
+ t=1779485634; bh=iB8+DD2CCARFB1ExC1+rjLjOekeA9E4stav5DEa6fiA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=LXXxNB+2L1FxNCfTBQsf5/j3Xy5+wHkaXRBi0OeZABVUhUj6EkZl+hYVXGPYI+HQB
- AajT+PbB7mwQ8ucwm7Byzu5KuK/NrUJKBic3zuJBCZQZs0hG04gK6fFkTc+UZDOEu3
- kDx4LCFX4t7hU0j60MFcfpfQ4fZxuFYaV5liDXvzvLliBY9xpbUCpfoHpFbpXWS0wc
- oFDxF1nCRdS39yMg7NXCj05k0FxIpOrZlkwJV+HgGBh5Y0u+4J2K/l6I90e9DYcPyZ
- W3IRbT3OZpDPoCQBXlmhP5uD8LYnQacRky0X8OKGUOdydPqdPgUvdJx8fMJfImmnB8
- m5b2SDWj5jivg==
+ b=ZzTkUGdyZoVLZax1jY80VamBKe6Skxtaqj1HB8MOW5fsPiaizTkVGKRFhyGjFE/+z
+ dDKjyFmyGzSQ2PFp6EjC/7NDtw4QrGWbLtiBuPHJ/EH2kO73NSxeorSz0w/7NoxTG2
+ saIpuj6ZBFeME/RzzCOayvaWKsjMnhOXmd95hVkmcFmCbJw6o6UAfAitvcD3gEHkfK
+ Q5jDqQYI/vj+gVfv3Hvcx2W/4lw1BUkDjx5+lbBebNmrLkRgSUXV/+CiY2rfUWJtId
+ 6Yfk8RLcjQuwNwhQKByyEgw9uNkj7WvSK7z93eudW1RQ1AZ1HteWiUXHD4oF5yyb6F
+ OCedYWGA8RqOQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6E8011AFAEC;
+ by isrv.corpit.ru (Postfix) with ESMTP id 246DE1AFAE7;
  Sat, 23 May 2026 00:33:54 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 917263B7172;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 487583B716D;
  Sat, 23 May 2026 00:33:58 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 93/94] iotests/046: Test that discard/write_zeroes
- wait for dependencies
-Date: Sat, 23 May 2026 00:33:50 +0300
-Message-ID: <20260522213356.806058-35-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 88/94] block: Create DEFAULT_BLOCK_CONF macro
+Date: Sat, 23 May 2026 00:33:45 +0300
+Message-ID: <20260522213356.806058-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
@@ -71,136 +70,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kevin Wolf <kwolf@redhat.com>
 
-This is a regression test for the bug fixed in the previous commit where
-discard and write_zeroes operations wouldn't consider their dependencies
-in s->cluster_allocs. Without the fix, this results in a corrupted
-image.
+The property default values from include/hw/block/block.h were
+duplicated in scsi_bus_legacy_handle_cmdline(), allowing them to go out
+of sync easily. There doesn't seem a good way to avoid the duplication,
+but moving them next to each other in the header file should help to
+avoid this problem in the future.
 
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260427170520.101242-5-kwolf@redhat.com>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
-Tested-by: Denis V. Lunev <den@openvz.org>
+Message-ID: <20260410152314.86412-2-kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 389f5bcc744d3ddc127d550a57261aed9bbba1f3)
+(cherry picked from commit a1310cc6281d22ac948f4aa198dcc55d58fc039d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qemu-iotests/046 b/tests/qemu-iotests/046
-index 4c9ed4d26e..e03dd40147 100755
---- a/tests/qemu-iotests/046
-+++ b/tests/qemu-iotests/046
-@@ -184,6 +184,48 @@ aio_write -P 160 0x104000 0x18000
- resume A
- aio_flush
- EOF
-+
-+# Create a pre-allocated zero cluster, then start a write on it and discard it
-+# before the L2 update is made
-+cat  <<EOF
-+write -P 181 0x120000 0x10000
-+write -z 0x120000 0x10000
-+
-+break write_aio A
-+aio_write -P 180 0x120000 0x10000
-+wait_break A
-+aio_discard 0x120000 0x10000
-+resume A
-+aio_flush
-+EOF
-+
-+# Create a pre-allocated zero cluster, then start a write on it and a
-+# concurrent zero write with MAY_UNMAP before the L2 update is made
-+cat  <<EOF
-+write -P 181 0x130000 0x10000
-+write -z 0x130000 0x10000
-+
-+break write_aio A
-+aio_write -P 180 0x130000 0x10000
-+wait_break A
-+aio_write -z -u 0x130000 0x10000
-+resume A
-+aio_flush
-+EOF
-+
-+# Create a pre-allocated zero cluster, then start a write on it and a
-+# concurrent zero write without MAY_UNMAP before the L2 update is made
-+cat  <<EOF
-+write -P 181 0x140000 0x10000
-+write -z 0x140000 0x10000
-+
-+break write_aio A
-+aio_write -P 180 0x140000 0x10000
-+wait_break A
-+aio_write -z 0x140000 0x10000
-+resume A
-+aio_flush
-+EOF
+diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
+index 1a6b181b9d..dccb2f25b2 100644
+--- a/hw/scsi/scsi-bus.c
++++ b/hw/scsi/scsi-bus.c
+@@ -485,12 +485,7 @@ void scsi_bus_legacy_handle_cmdline(SCSIBus *bus)
+     Location loc;
+     DriveInfo *dinfo;
+     int unit;
+-    BlockConf conf = {
+-        .bootindex = -1,
+-        .share_rw = false,
+-        .rerror = BLOCKDEV_ON_ERROR_AUTO,
+-        .werror = BLOCKDEV_ON_ERROR_AUTO,
+-    };
++    BlockConf conf = DEFAULT_BLOCK_CONF;
+ 
+     loc_push_none(&loc);
+     for (unit = 0; unit <= bus->info->max_target; unit++) {
+diff --git a/include/hw/block/block.h b/include/hw/block/block.h
+index 7dc19d8a45..e0a427039e 100644
+--- a/include/hw/block/block.h
++++ b/include/hw/block/block.h
+@@ -51,6 +51,13 @@ static inline unsigned int get_physical_block_exp(BlockConf *conf)
+     return exp;
  }
  
- overlay_io | $QEMU_IO blkdebug::"$TEST_IMG" | _filter_qemu_io |\
-@@ -264,6 +306,10 @@ verify_io()
-     # Undefined content for 0x10c000 0x8000
-     echo read -P 160 0x114000 0x8000
-     echo read -P 17  0x11c000 0x4000
++#define DEFAULT_BLOCK_CONF (BlockConf) {                                \
++    .bootindex = -1,                                                    \
++    .share_rw = false,                                                  \
++    .rerror = BLOCKDEV_ON_ERROR_AUTO,                                   \
++    .werror = BLOCKDEV_ON_ERROR_AUTO,                                   \
++}
 +
-+    echo read -P 0   0x120000 0x10000
-+    echo read -P 0   0x130000 0x10000
-+    echo read -P 0   0x140000 0x10000
- }
- 
- verify_io | $QEMU_IO "$TEST_IMG" | _filter_qemu_io
-diff --git a/tests/qemu-iotests/046.out b/tests/qemu-iotests/046.out
-index b1a03f4041..6341df335c 100644
---- a/tests/qemu-iotests/046.out
-+++ b/tests/qemu-iotests/046.out
-@@ -139,6 +139,36 @@ wrote XXX/XXX bytes at offset XXX
- XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- wrote XXX/XXX bytes at offset XXX
- XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+blkdebug: Suspended request 'A'
-+blkdebug: Resuming request 'A'
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+discarded  XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+blkdebug: Suspended request 'A'
-+blkdebug: Resuming request 'A'
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+blkdebug: Suspended request 'A'
-+blkdebug: Resuming request 'A'
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- 
- == Verify image content ==
- read 65536/65536 bytes at offset 0
-@@ -239,5 +269,11 @@ read 32768/32768 bytes at offset 1130496
- 32 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- read 16384/16384 bytes at offset 1163264
- 16 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 65536/65536 bytes at offset 1179648
-+64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 65536/65536 bytes at offset 1245184
-+64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 65536/65536 bytes at offset 1310720
-+64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- No errors were found on the image.
- *** done
+ #define DEFINE_BLOCK_PROPERTIES_BASE(_state, _conf)                     \
+     DEFINE_PROP_ON_OFF_AUTO("backend_defaults", _state,                 \
+                             _conf.backend_defaults, ON_OFF_AUTO_AUTO),  \
 -- 
 2.47.3
 
