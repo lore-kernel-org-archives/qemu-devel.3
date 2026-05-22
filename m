@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CAF1CD5BB3
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 18:27:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E48CD5BB3
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 18:27:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQUaU-0004Yx-3E; Fri, 22 May 2026 14:27:10 -0400
+	id 1wQUaT-0004Yb-7d; Fri, 22 May 2026 14:27:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wQUaQ-0004Y9-Fn
- for qemu-devel@nongnu.org; Fri, 22 May 2026 14:27:08 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1wQUaP-0004Xz-9B
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 14:27:05 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wQUaO-0004xM-MQ
- for qemu-devel@nongnu.org; Fri, 22 May 2026 14:27:06 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2b9fcf7c91bso84284485ad.0
- for <qemu-devel@nongnu.org>; Fri, 22 May 2026 11:27:03 -0700 (PDT)
+ id 1wQUaN-0004wM-B3
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 14:27:05 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2ba4efedbeaso56994375ad.1
+ for <qemu-devel@nongnu.org>; Fri, 22 May 2026 11:27:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779474423; x=1780079223; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=u/kDXd23+ycS383PGeIrgHSsrr0fsby8WIj0IEq0o18=;
- b=MMLn56i4EKIf7qsOJ9D2C2K03Zd5U6sxPlYIQG3kLb1q4I05ZJrFDlgq51FKkCdyiP
- Yh5Q71H9+AGnCppGFYktOzspm2JVsnzay6Ejnj8A0786tseUhrjc1Q7AfwFJtEDR9K4u
- qViP8eMdpXQO76keD1XZx+Fqx31ngtFoZRC6qgaL+C9IUpSsaclZgmlx1v3a/VYfRc0x
- 0TxsQZunY+p07Fk9aWXCBzsyb55D6j5ewY91oSY0CZQK2yEw+L3r2ubm44ug/lhWmrDm
- Z+Be+X+VDX5d+lZtdfRcE3QVOmG8XrKYOVX0VJ4sCXZKA77a4m0Dwp/0V1yle03oQnWp
- VCBg==
+ d=linaro.org; s=google; t=1779474422; x=1780079222; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=OguH3ODWP2nkZHWzpE24Pyy5ZdCppS9CN9LZkMq+yZA=;
+ b=Tz17RRcAbWz9n/U4oMRhotco7RpuhH0c92jkqLEE78+4NB5jZFLhZtjF/s1alAx2dq
+ e3SbGLybls9hjR/DxD+6SC2+upO6fqJrqafFVtJJR4dVQN5Lp61Yeu4hXtSRig2TENQp
+ Ouck664Ik3KMqiG/XKAB9ZgS3g7gWaqVceAQ2gFqo8/309veAFhq87ZCn6qdODyC2fwd
+ DLTWLrgVTpLsCJWKZEK32NCuPKdlpK0TaRjqJh515hg6YUvINoGfpKu4D27Co/H7A0mX
+ Z3dfDiPrt7sCr6D5DgzqoJiIpR3LEcYEO9jIqyFPaGbxA2Zbg1Fn93RZVFSODQzFHoty
+ f66A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779474423; x=1780079223;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=u/kDXd23+ycS383PGeIrgHSsrr0fsby8WIj0IEq0o18=;
- b=BjzOFYUw8FUGTHyOqfRBYrItPj3zlW30d+ok1DwNrE90XeeZJe5GHlPrkRgFRLTZo6
- fuxpQeExjvghrHxz5Ony3g9c0i4nu2kmvA6YiQlS+WwExpmIMIvGlR0OCnEvv9bXOZiA
- i4g1JLidf/WiiFnNsVaz8yCIhBCORuJpO2dRrgKTZY5uvyjVao+kK8gF32j1wo+Rl9K9
- vDwdqMaTy47BWG8EkJgOPfhT8vnD/QLQcQAAWnRo1J3FxN/92K/YmLSUcMs7EaWLmb5L
- hKH4nqsguV1vxwh0UZy6RcLIqu3TC1dsUIxa6sVs/QoSyGTI4vv+Nq94QSS7Q1rhHYN2
- JE6Q==
-X-Gm-Message-State: AOJu0YzegLCy622MtYhuI5AFZMUHcljR5G1e8iTXnjjDibRBuYhCL8Q0
- 1/cdpi3NNqJdbewy+nboDPVY50aRgzawEludoHLa+xQ4i10VMKzyj1PXwJQHLJkHVtdCN2W0WhQ
- BJNEa
-X-Gm-Gg: Acq92OGm24dvYpfaEXL621HsJCrzdVL3lhBWo5TR5nhK96d6NRs32EOpvanW4BdIR7m
- B45IjLyzJyJHraYLMQM3lGeupowXE8uJ6otOMpTXUib0cwbcqfWOOGkjoaXxqtgqEYP5l25qd2P
- gFE+fKqStiLFXrGH+KkVtE8EdEBYtg0AU4fYnDcGYi6xT+gOp2XsyiB/+8zZVFPDizOnle1uOMp
- 6jkFNQ5Y4Awt2mLHnn8l4RNFBa+1pU/QbPUdc7Y2pjOle7ZoRA8+mzS6HoaQEASFYxURsz77gTy
- EDArQKCGbA0dCQ1XGEFoqLUOzDyEAVtwHUbhtwYATMSSK+zyWcpu9wuiJOK227O5EV0nDvC7ae6
- gwY/bvH/JmgLmfjoIyycmMD3DCJtkw7F0HSqAiNgenepcfNmA1o/QvA1b7MGxmgf2ffWnhM+8gh
- nTQHmNPEl0l9V8BVgdPEgKw06WVSDW
-X-Received: by 2002:a17:902:e885:b0:2bc:e62a:979b with SMTP id
- d9443c01a7336-2beb0699cdemr52513425ad.30.1779474422520; 
- Fri, 22 May 2026 11:27:02 -0700 (PDT)
-Received: from stoup.. ([50.78.183.177]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2beb5900b8bsm21824735ad.76.2026.05.22.11.27.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ d=1e100.net; s=20251104; t=1779474422; x=1780079222;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=OguH3ODWP2nkZHWzpE24Pyy5ZdCppS9CN9LZkMq+yZA=;
+ b=g3pQds2gyz+Jo5IiXhbn02UQ20KO/mhssYpYbFsf/ooFVD+RfWpUH+e28OTmZBP2qL
+ FIeNusqjYz70iMXDwVycl8XCdEvToX1pucrFBFjlvwwAD3E6z/NdWovDhrywHMOr7O5K
+ Wq1m6vbiM+0oViqdDXB/4AjDqXM7t2O9tg5DCQ2xRxJYGn93L6e3fMxiFRhY8dZq8ddE
+ jgzeDnuzXIZoov3DxQlZpFNXtwvYYLfDGQqoRVQPt2PMvmcTr6iWV4nVOdDr6C/z7fmm
+ vwd4EP6bhDviVkQCEG9R5gI3STgUo7uzXEd1qJOOXrFkvhevh1Ny49JVsRKNWG3CtUfm
+ HOqQ==
+X-Gm-Message-State: AOJu0YwOKPWpBqYPPprsT+jVDcWJfZOYivEbtXE51smkGglcEYFAEeDZ
+ Z2SrwERVOV0XUt3DCCDDhtxl3WKyd5y3EsJkvwned9dzI7m3d+QbjMdEKIXrJSW6utn+crE4COR
+ kDvun
+X-Gm-Gg: Acq92OEv85uau1h9Vh/z+uFip0WkHwBziWglgiSsJ5ybD3dnzRfKHakc95nEcSzhBB4
+ EkCdI0lVBcPa+UFNLH/8dJCS6QfxNhvkGIVEHElpblyrG7NtOU1QOaGWWT9bq8s4STQAH/GRrJN
+ 8+Rwertw1xD0eD3S0qKyqbIf3EZbbwKOj/98oZFubZinROXUVWdbgx+eS5Q0eQIwxTgSG3QfRBu
+ q019E8IadC0IyNauXd+Xbaep00WR7WoZ8O1d3wUJGZ8xZDtM+cpq4TOqu0SKRi0uRqcUmAlnByP
+ cAMds9/sS37Z84fT57S75IBQOwEdbKnskUgmlirCTrT2uE67mFwIoeVuuRTvGcZjn7Fh0nTLXIL
+ mBDufJviuvyMtSwtvCeDvJ9nwFuQsHQfOBeJuDEgjMYxlfFJ4AUY3vnzmccmF7J6qI0T+D5vCFq
+ Boy27up0Wr1GZURuqCFaQYFk4+Cbvg
+X-Received: by 2002:a17:903:2381:b0:2bc:ac76:c1c9 with SMTP id
+ d9443c01a7336-2beb05e8633mr51213745ad.16.1779474421610; 
  Fri, 22 May 2026 11:27:01 -0700 (PDT)
+Received: from stoup.. ([50.78.183.177]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2beb5900b8bsm21824735ad.76.2026.05.22.11.27.00
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 22 May 2026 11:27:00 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 01/30] fpu: Return struct from parts{64,128}_scalbn
-Date: Fri, 22 May 2026 11:26:29 -0700
-Message-ID: <20260522182658.184604-2-richard.henderson@linaro.org>
+Subject: [PULL 00/30] fpu patch queue
+Date: Fri, 22 May 2026 11:26:28 -0700
+Message-ID: <20260522182658.184604-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260522182658.184604-1-richard.henderson@linaro.org>
-References: <20260522182658.184604-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,149 +97,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-At the same time, export.
+The following changes since commit f5a2438405d4ae8b62de7c9b39fac0b2155ee544:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- include/fpu/softfloat-parts.h |  3 +++
- fpu/softfloat.c               | 18 +++++++++---------
- fpu/softfloat-parts.c.inc     | 14 ++++++++------
- 3 files changed, 20 insertions(+), 15 deletions(-)
+  Merge tag 'pull-qapi-2026-05-21' of https://repo.or.cz/qemu/armbru into staging (2026-05-21 09:00:22 -0400)
 
-diff --git a/include/fpu/softfloat-parts.h b/include/fpu/softfloat-parts.h
-index 9504d0daa0..46618d217e 100644
---- a/include/fpu/softfloat-parts.h
-+++ b/include/fpu/softfloat-parts.h
-@@ -214,4 +214,7 @@ FloatParts128 parts128_round_to_int(const FloatParts128 *a,
- FloatParts64 parts64_round_to_fmt(const FloatParts64 *p, float_status *s,
-                                   const FloatFmt *fmt);
- 
-+FloatParts64 parts64_scalbn(const FloatParts64 *a, int n, float_status *s);
-+FloatParts128 parts128_scalbn(const FloatParts128 *a, int n, float_status *s);
-+
- #endif
-diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index 90ebd83f69..7fc6df461e 100644
---- a/fpu/softfloat.c
-+++ b/fpu/softfloat.c
-@@ -1910,7 +1910,7 @@ float16 float16_muladd_scalbn(float16 a, float16 b, float16 c,
- 
-     /* Before rounding, scale. */
-     if (scale) {
--        parts64_scalbn(pr, scale, status);
-+        *pr = parts64_scalbn(pr, scale, status);
-     }
-     parts64_uncanon(pr, status, &float16_params, false);
-     /* After rounding, apply negate result, especially for -0.0. */
-@@ -1937,7 +1937,7 @@ float32_muladd_scalbn(float32 a, float32 b, float32 c,
- 
-     /* Before rounding, scale. */
-     if (scale) {
--        parts64_scalbn(pr, scale, status);
-+        *pr = parts64_scalbn(pr, scale, status);
-     }
-     parts64_uncanon(pr, status, &float32_params, false);
-     /* After rounding, apply negate result, especially for -0.0. */
-@@ -1958,7 +1958,7 @@ float64_muladd_scalbn(float64 a, float64 b, float64 c,
- 
-     /* Before rounding, scale. */
-     if (scale) {
--        parts64_scalbn(pr, scale, status);
-+        *pr = parts64_scalbn(pr, scale, status);
-     }
-     parts64_uncanon(pr, status, &float64_params, false);
-     /* After rounding, apply negate result, especially for -0.0. */
-@@ -4312,7 +4312,7 @@ float16 float16_scalbn(float16 a, int n, float_status *status)
- {
-     FloatParts64 p = float16_unpack_canonical(a, status);
- 
--    parts64_scalbn(&p, n, status);
-+    p = parts64_scalbn(&p, n, status);
-     return float16_round_pack_canonical(&p, status);
- }
- 
-@@ -4320,7 +4320,7 @@ float32 float32_scalbn(float32 a, int n, float_status *status)
- {
-     FloatParts64 p = float32_unpack_canonical(a, status);
- 
--    parts64_scalbn(&p, n, status);
-+    p = parts64_scalbn(&p, n, status);
-     return float32_round_pack_canonical(&p, status);
- }
- 
-@@ -4328,7 +4328,7 @@ float64 float64_scalbn(float64 a, int n, float_status *status)
- {
-     FloatParts64 p = float64_unpack_canonical(a, status);
- 
--    parts64_scalbn(&p, n, status);
-+    p = parts64_scalbn(&p, n, status);
-     return float64_round_pack_canonical(&p, status);
- }
- 
-@@ -4336,7 +4336,7 @@ bfloat16 bfloat16_scalbn(bfloat16 a, int n, float_status *status)
- {
-     FloatParts64 p = bfloat16_unpack_canonical(a, status);
- 
--    parts64_scalbn(&p, n, status);
-+    p = parts64_scalbn(&p, n, status);
-     return bfloat16_round_pack_canonical(&p, status);
- }
- 
-@@ -4344,7 +4344,7 @@ float128 float128_scalbn(float128 a, int n, float_status *status)
- {
-     FloatParts128 p = float128_unpack_canonical(a, status);
- 
--    parts128_scalbn(&p, n, status);
-+    p = parts128_scalbn(&p, n, status);
-     return float128_round_pack_canonical(&p, status);
- }
- 
-@@ -4355,7 +4355,7 @@ floatx80 floatx80_scalbn(floatx80 a, int n, float_status *status)
-     if (!floatx80_unpack_canonical(&p, a, status)) {
-         return floatx80_default_nan(status);
-     }
--    parts128_scalbn(&p, n, status);
-+    p = parts128_scalbn(&p, n, status);
-     return floatx80_round_pack_canonical(&p, status);
- }
- 
-diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index 2114797aca..3a9c2748cd 100644
---- a/fpu/softfloat-parts.c.inc
-+++ b/fpu/softfloat-parts.c.inc
-@@ -1633,22 +1633,24 @@ FloatRelation partsN(compare)(const FloatPartsN *a, const FloatPartsN *b,
- /*
-  * Multiply A by 2 raised to the power N.
-  */
--static void partsN(scalbn)(FloatPartsN *a, int n, float_status *s)
-+FloatPartsN partsN(scalbn)(const FloatPartsN *a, int n, float_status *s)
- {
-     switch (a->cls) {
-     case float_class_snan:
-     case float_class_qnan:
--        *a = partsN(return_nan)(a, s);
--        break;
-+        return partsN(return_nan)(a, s);
-     case float_class_zero:
-     case float_class_inf:
--        break;
-+        return *a;
-     case float_class_denormal:
-         float_raise(float_flag_input_denormal_used, s);
-         /* fall through */
-     case float_class_normal:
--        a->exp += MIN(MAX(n, -0x10000), 0x10000);
--        break;
-+        {
-+            FloatPartsN r = *a;
-+            r.exp += MIN(MAX(n, -0x10000), 0x10000);
-+            return r;
-+        }
-     default:
-         g_assert_not_reached();
-     }
--- 
-2.43.0
+are available in the Git repository at:
 
+  https://gitlab.com/rth7680/qemu.git tags/pull-fpu-20260522
+
+for you to fetch changes up to 512f5147c8722c2caf730d1b5a09dbf36b03da57:
+
+  fpu: Export floatN_minmax (2026-05-22 11:21:37 -0700)
+
+----------------------------------------------------------------
+fpu: Export partsN_{scalbn,muladd}
+fpu: Export floatN_minmax
+fpu: Simplifications to muladd, addsub
+fpu: Introduce exp_scalbn
+fpu: Introduce FloatExceptionFlags
+fpu: Use float_status accessors everywhere
+fpu: Compress float_status with bitfields
+fpu: Fixes for E4M3 vs NaNs
+target/alpha: Remove CONFIG_SOFTFLOAT_INLINE
+target/alpha: Use FloatExceptionFlags
+target/s390x: Move float{32,64}_s390_divide_to_integer
+
+----------------------------------------------------------------
+Richard Henderson (30):
+      fpu: Return struct from parts{64,128}_scalbn
+      fpu: Reorganize partsN(muladd)
+      fpu: Return struct from parts{64,128}_muladd
+      fpu: Hoist nan check in partsN_addsub
+      fpu: Simplify 0 +/- N case in parts_addsub
+      fpu: Use parts64_round_to_int in parts_s390_divide_to_integer
+      target/s390x: Move float{32,64}_s390_divide_to_integer
+      fpu: Introduce exp_scalbn
+      target/alpha: Remove CONFIG_SOFTFLOAT_INLINE
+      fpu: Introduce FloatExceptionFlags
+      target/alpha: Use FloatExceptionFlags
+      fpu: Introduce frac_msb_is_snan
+      fpu: Introduce FloatSNaNRule
+      fpu: Use {get,set}_float_rounding_mode everywhere
+      fpu: Use of {get,set}_floatx80_rounding_precision everywhere
+      fpu: Use get_floatx80_behaviour everywhere
+      fpu: Use get_float_2nan_prop_rule in partsN_pick_nan
+      fpu: Use get_float_3nan_prop_rule in partsN_pick_nan_muladd
+      fpu: Use get_float_infzeronan_rule in partsN_pick_nan_muladd
+      fpu: Use accessors for tininess_before_rounding
+      fpu: Use {get,set}_flush_to_zero everywhere
+      fpu: Use accessors for ftz_before_rounding
+      fpu: Use {get,set}_flush_inputs_to_zero everywhere
+      fpu: Use get_default_nan_mode everywhere
+      fpu: Use get_float_default_nan_pattern in partsN_default_nan
+      fpu: Add accessors for rebias_{underflow,overflow}
+      fpu: Reorg float_status
+      fpu: Introduce float_status.e4m3_nan_is_snan
+      fpu: Fix NaN encoding for E4M3 in parts64_uncanon
+      fpu: Export floatN_minmax
+
+ include/fpu/softfloat-helpers.h |  37 ++--
+ include/fpu/softfloat-parts.h   |  12 ++
+ include/fpu/softfloat-types.h   |  89 ++++++---
+ include/fpu/softfloat.h         | 112 ++++++-----
+ target/i386/ops_sse.h           |  24 +--
+ target/mips/fpu_helper.h        |   3 +-
+ fpu/softfloat.c                 | 422 +++++++++++++---------------------------
+ target/alpha/fpu_helper.c       |   8 +-
+ target/alpha/helper.c           |   3 +-
+ target/alpha/translate.c        |  18 +-
+ target/arm/tcg/helper-a64.c     |  12 +-
+ target/arm/tcg/vfp_helper.c     |  38 ++--
+ target/hexagon/fma_emu.c        |   6 +-
+ target/hppa/fpu_helper.c        |   2 +-
+ target/i386/tcg/fpu_helper.c    |  65 ++++---
+ target/m68k/softfloat.c         | 380 ++++++++++++++++++------------------
+ target/mips/msa.c               |   4 +-
+ target/ppc/cpu.c                |   4 +-
+ target/ppc/fpu_helper.c         |  14 +-
+ target/riscv/vector_helper.c    |   6 +-
+ target/s390x/tcg/fpu_helper.c   | 139 ++++++++++++-
+ target/sh4/cpu.c                |   2 +-
+ target/xtensa/cpu.c             |   3 +-
+ tests/fp/fp-bench.c             |   6 +-
+ tests/fp/fp-test.c              |   6 +-
+ fpu/softfloat-parts.c.inc       | 312 +++++++++++++++--------------
+ fpu/softfloat-specialize.c.inc  | 117 ++++++-----
+ tests/fp/wrap.c.inc             |  12 +-
+ 28 files changed, 936 insertions(+), 920 deletions(-)
 
