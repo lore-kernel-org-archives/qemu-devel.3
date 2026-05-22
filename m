@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EBA3CD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:44:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CCB8CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:44:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXZN-0007Jk-1W; Fri, 22 May 2026 17:38:13 -0400
+	id 1wQXZN-0007Oc-Si; Fri, 22 May 2026 17:38:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXZJ-00078R-BU; Fri, 22 May 2026 17:38:09 -0400
+ id 1wQXZK-0007DC-Ly; Fri, 22 May 2026 17:38:11 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXZH-0001ab-BL; Fri, 22 May 2026 17:38:09 -0400
+ id 1wQXZJ-0001ig-4q; Fri, 22 May 2026 17:38:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485682; bh=4rkkLGqTdBX+oCD8jRNrc2w3UKNXIdoSZtlA4EO+SVY=;
+ t=1779485682; bh=vKBvvgfYaWo7Ae6DKuGvnLAh6yOso0d5PFdAZLgvEj0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fLuCC3qOYyO2mdVH27pycnKyBUdM8JO9Q5bHBSLQqzpDAdhZFu/3ZuSsHG6QRMyO+
- pi0MVPaxdI1NfayCAbbApTV3CK6dP4u6yOPn0PSB//A3YdyJUI/x4VFW3Ze5/HI5oM
- 5UwC1ugm6gx8L7QTaW5SCEjGzmZhwC+evbGF3+cZmqgLI+BQuLIfT0MaMueZBcy1x7
- ubTnJ6vPcdfH+vMarw4s6YLKdmrSCHSdU3zYg7AmB1GToDZ1nT5Ektp7h8mltUt5Jr
- Z0HgcPN9ufVsJIdssoK9Pthe856xdeTJ87R4oAmMVeucQjqgSewBIxDx6/gTZn4zEf
- YU+Sykro6v1Kw==
+ b=oRSP9k3NRJ/saLw9zshHVouJRVjwnEUJl4maZu2oE8afuGNJTRhpeIHRDI609Ru+B
+ 2Eug4GXN70mRgilcs8cTnMB4ZyZ5T8HsGfzbti83MFtqnDCEgTz/iOCL3opDhklmsY
+ 2Qppy/27IEaazotOsawxfmEqkvvYgdPbXpagYdZW4hgS1dGMlgJv/I9jONLE2tO915
+ 5O9szh6sXwHXpTk3PdyyW/71UjZN2US3Uepu/jiXHu6EgRbNYILFuqEItySBmfjgdf
+ PT5rYxWm0y7VvALXzT5RFT6FAJnf8BRaZUco9u6hPZe7Vh9pKa9gU2lmmSHSJ9Exx6
+ s2pDBT1jqXpwQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5C0F11AFAF9;
+ by isrv.corpit.ru (Postfix) with ESMTP id 760EC1AFAFA;
  Sat, 23 May 2026 00:34:42 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7F78E3B7179;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8E4363B717A;
  Sat, 23 May 2026 00:34:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
  Katherine Leaver <katherine.j.leaver@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 104/136] hw/uefi: fix ucs2 string helper functions
-Date: Sat, 23 May 2026 00:34:12 +0300
-Message-ID: <20260522213446.806182-5-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 105/136] hw/uefi: add name_size check to
+ uefi_vars_mm_lock_variable()
+Date: Sat, 23 May 2026 00:34:13 +0300
+Message-ID: <20260522213446.806182-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
@@ -71,119 +72,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Gerd Hoffmann <kraxel@redhat.com>
 
-The length passed in is in bytes not characters.  Rename the
-parameters to make that clear.  Calculate the number of chars
-if needed.  Fix length checks to use the number of chars not
-bytes to avoid OOB reads.
+Make sure the total variable_policy_entry size stays below
+64k so the (16-bit) size field can not wrap.
 
-Fixes: CVE-2026-41437
-Fixes: 1ebc319c8ca7 ("hw/uefi: add var-service-utils.c")
+Fixes: CVE-2026-41438
+Fixes: db1ecfb473ac ("hw/uefi: add var-service-vars.c")
 Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260422092910.444997-4-kraxel@redhat.com>
-(cherry picked from commit 5247b3034c23bdfd91a7f78587c3b3e37f90568c)
+Message-ID: <20260422092910.444997-5-kraxel@redhat.com>
+(cherry picked from commit c45b460d16f991ff3f753623f3423e1adc4077a2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-utils.c b/hw/uefi/var-service-utils.c
-index c9ef46570f..71631e9f3c 100644
---- a/hw/uefi/var-service-utils.c
-+++ b/hw/uefi/var-service-utils.c
-@@ -19,13 +19,18 @@
-  * sometimes when they are not (for example in variable policies).
-  */
- 
--gboolean uefi_str_is_valid(const uint16_t *str, size_t len,
-+gboolean uefi_str_is_valid(const uint16_t *str, size_t bytes,
-                            gboolean must_be_null_terminated)
- {
-+    size_t chars = bytes / 2;
-     size_t pos = 0;
- 
-+    if ((bytes % 2) != 0) {
-+        return false;
+diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
+index 82ff4e429a..ef8a3db873 100644
+--- a/hw/uefi/var-service-vars.c
++++ b/hw/uefi/var-service-vars.c
+@@ -629,6 +629,9 @@ uefi_vars_mm_lock_variable(uefi_vars_state *uv, mm_header *mhdr,
+     if (mhdr->length < length) {
+         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
+     }
++    if (sizeof(*pe) + lv->name_size > UINT16_MAX) {
++        return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
 +    }
-+
-     for (;;) {
--        if (pos == len) {
-+        if (pos == chars) {
-             if (must_be_null_terminated) {
-                 return false;
-             } else {
-@@ -47,12 +52,13 @@ gboolean uefi_str_is_valid(const uint16_t *str, size_t len,
-     }
- }
  
--size_t uefi_strlen(const uint16_t *str, size_t len)
-+size_t uefi_strlen(const uint16_t *str, size_t bytes)
- {
-+    size_t chars = bytes / 2;
-     size_t pos = 0;
+     uefi_trace_variable(__func__, lv->guid, name, lv->name_size);
  
-     for (;;) {
--        if (pos == len) {
-+        if (pos == chars) {
-             return pos;
-         }
-         if (str[pos] == 0) {
-@@ -62,25 +68,25 @@ size_t uefi_strlen(const uint16_t *str, size_t len)
-     }
- }
- 
--gboolean uefi_str_equal_ex(const uint16_t *a, size_t alen,
--                           const uint16_t *b, size_t blen,
-+gboolean uefi_str_equal_ex(const uint16_t *a, size_t a_bytes,
-+                           const uint16_t *b, size_t b_bytes,
-                            gboolean wildcards_in_a)
- {
-+    size_t a_chars = a_bytes / 2;
-+    size_t b_chars = b_bytes / 2;
-     size_t pos = 0;
- 
--    alen = alen / 2;
--    blen = blen / 2;
-     for (;;) {
--        if (pos == alen && pos == blen) {
-+        if (pos == a_chars && pos == b_chars) {
-             return true;
-         }
--        if (pos == alen && b[pos] == 0) {
-+        if (pos == a_chars && b[pos] == 0) {
-             return true;
-         }
--        if (pos == blen && a[pos] == 0) {
-+        if (pos == b_chars && a[pos] == 0) {
-             return true;
-         }
--        if (pos == alen || pos == blen) {
-+        if (pos == a_chars || pos == b_chars) {
-             return false;
-         }
-         if (a[pos] == 0 && b[pos] == 0) {
-@@ -100,18 +106,18 @@ gboolean uefi_str_equal_ex(const uint16_t *a, size_t alen,
-     }
- }
- 
--gboolean uefi_str_equal(const uint16_t *a, size_t alen,
--                        const uint16_t *b, size_t blen)
-+gboolean uefi_str_equal(const uint16_t *a, size_t a_bytes,
-+                        const uint16_t *b, size_t b_bytes)
- {
--    return uefi_str_equal_ex(a, alen, b, blen, false);
-+    return uefi_str_equal_ex(a, a_bytes, b, b_bytes, false);
- }
- 
--char *uefi_ucs2_to_ascii(const uint16_t *ucs2, uint64_t ucs2_size)
-+char *uefi_ucs2_to_ascii(const uint16_t *ucs2, uint64_t ucs2_bytes)
- {
--    char *str = g_malloc0(ucs2_size / 2 + 1);
-+    char *str = g_malloc0(ucs2_bytes / 2 + 1);
-     int i;
- 
--    for (i = 0; i * 2 < ucs2_size; i++) {
-+    for (i = 0; i * 2 < ucs2_bytes; i++) {
-         if (ucs2[i] == 0) {
-             break;
-         }
 -- 
 2.47.3
 
