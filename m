@@ -4,61 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E40C9CD5BAC
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 10:30:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5454CD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 11:28:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQN8O-0002XT-AP; Fri, 22 May 2026 06:29:40 -0400
+	id 1wQO2q-0001ul-Dt; Fri, 22 May 2026 07:28:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mateusz.nowicki@posteo.net>)
- id 1wQN87-0002UM-Tw
- for qemu-devel@nongnu.org; Fri, 22 May 2026 06:29:24 -0400
-Received: from mout02.posteo.de ([185.67.36.66])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wQO2p-0001u5-1f; Fri, 22 May 2026 07:27:59 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mateusz.nowicki@posteo.net>)
- id 1wQN84-0004qt-Nl
- for qemu-devel@nongnu.org; Fri, 22 May 2026 06:29:23 -0400
-Received: from submission (posteo.de [185.67.36.169]) 
- by mout02.posteo.de (Postfix) with ESMTPS id 659DC240101
- for <qemu-devel@nongnu.org>; Fri, 22 May 2026 12:29:19 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.net; s=2017;
- t=1779445759; bh=O7kEDERCXmt2AhuexqxHG0yR53P6PmbKGP3KLII922U=;
- h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:
- Content-Transfer-Encoding:From;
- b=XbWLVAd7wTfsIZw10+KmtbdgwPUtJz8KGAGYnBnUo1ndnddlcjRos2bXetiQEzSAe
- PPpXlUhk3RW6mQrgE3/P5hIhpFMINLM526S0XsDjQNAUD09x69AD+fBxTbjiYjwPA5
- Q1EDggBqcg/vOsT2dEuwcSFMSn3VTj2E+ViUQw3kUh2CoFIXIVQCi1kdOSkBHlEOIV
- 73Hv45a7PnlfamFS/wlHDFSsdenrifpt+qRfAQWkUw+q0/Rs/3zbQSfPpWULsIOrYD
- +y7H1uGzoNXHB+br1FbdDgvgwGo94E0zpkVYFw3hjBgHsCglv4uTj4Biujbxzeae3r
- J7EtB5itLnyzw==
-Received: from customer (localhost [127.0.0.1])
- by submission (posteo.de) with ESMTPSA id 4gMM2j6ZFzz9rxD;
- Fri, 22 May 2026 12:29:17 +0200 (CEST)
-From: Mateusz Nowicki <mateusz.nowicki@posteo.net>
-To: qemu-devel@nongnu.org
-Cc: "Dr . David Alan Gilbert" <dave@treblig.org>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, qemu-block@nongnu.org
-Subject: [PATCH v3 1/2] hw/nvme: add 'info nvme' HMP command
-Date: Fri, 22 May 2026 10:29:18 +0000
-Message-ID: <20260522102821.16766-2-mateusz.nowicki@posteo.net>
-In-Reply-To: <20260522102821.16766-1-mateusz.nowicki@posteo.net>
-References: <20260522102821.16766-1-mateusz.nowicki@posteo.net>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wQO2l-0005yD-3e; Fri, 22 May 2026 07:27:58 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 87465C0164;
+ Fri, 22 May 2026 14:27:49 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:55c::1:1d] (unknown
+ [2a02:6bf:8080:55c::1:1d])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id mRSHeL0ecqM0-8VqrMtvd; Fri, 22 May 2026 14:27:48 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1779449268;
+ bh=KJfk6NvC+//Y2cV9yzhTOEcjFQSlEnj4+HDpWqNQDnI=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=uileJ26K3rFmsdM8S97RqipKN8iWQU0PSk0UWpRKoLdUyl0QW4DwUTIf/Eb8kAsgv
+ aoJHPgqYlMn40DtA2Lp2mMWmu5pS6u8YYyRJqMnw34T6SATZLOYGgiuSIwuGdFTXwm
+ 6VW7CFBdHNAzU0++1emyfcEH2A+dPcoIwPAqip30=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <5d094a6b-8355-464c-b4b8-53f4b1e10cbf@yandex-team.ru>
+Date: Fri, 22 May 2026 14:27:47 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] qcow2: add functionality to repair bitmaps
+To: Jean-Louis Dupond <jean-louis@dupond.be>, qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>, Eric Blake <eblake@redhat.com>,
+ John Snow <jsnow@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org
+References: <20260521091918.2366140-1-jean-louis@dupond.be>
+ <20260521091918.2366140-3-jean-louis@dupond.be>
+ <b5391bdd-387c-4a61-824d-d998dd442058@yandex-team.ru>
+ <4c7b98a2-53ec-406c-9e84-ee301bda8ad2@dupond.be>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <4c7b98a2-53ec-406c-9e84-ee301bda8ad2@dupond.be>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.67.36.66;
- envelope-from=mateusz.nowicki@posteo.net; helo=mout02.posteo.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,185 +78,287 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an 'info nvme' HMP command for inspecting emulated NVMe
-controllers from the QEMU monitor.
+On 22.05.26 11:45, Jean-Louis Dupond wrote:
+> 
+> On 22/05/2026 10:19, Vladimir Sementsov-Ogievskiy wrote:
+>> On 21.05.26 12:19, Jean-Louis Dupond wrote:
+>>> In some cases, it might happen that bitmaps become corrupt.
+>>> For example when adding/removing bitmaps on a live image.
+>>>
+>>> Of course this should not happen, but in case this happens, the image is
+>>> corrupt and even cannot be opened anymore. You'll get something like the
+>>> following:
+>>> qemu-img: Could not open 'disk.qcow2': Bitmap '' doesn't satisfy the constraints
+>>>
+>>> So the image becomes useless, and cannot be repaired. This while in fact
+>>> only (one) bitmap entry is corrupt, and the rest of the data is just
+>>> intact.
+>>>
+>>> This commit adds a way to fix this corruption, by just replacing the
+>>> bitmap list in the qcow2 image with the valid bitmaps, and dropping the
+>>> bitmaps that are corrupt.
+>>>
+>>> $ qemu-img check disk.qcow2
+>>> qemu-img: Check failed: Invalid argument
+>>> qemu-img: Lost persistent bitmaps during inactivation of node '#block147': Bitmap '' doesn't satisfy the constraints
+>>>
+>>> $ qemu-img check -r all disk.qcow2
+>>> qcow2_free_clusters failed: Invalid argument
+>>> Leaked cluster 3 refcount=1 reference=0
+>>> Leaked cluster 26 refcount=1 reference=0
+>>> ERROR cluster 983214 refcount=0 reference=1
+>>> Rebuilding refcount structure
+>>> Repairing cluster 1 refcount=1 reference=0
+>>> Repairing cluster 2 refcount=1 reference=0
+>>> Repairing cluster 32768 refcount=1 reference=0
+>>> Repairing cluster 65536 refcount=1 reference=0
+>>> Repairing cluster 98304 refcount=1 reference=0
+>>> Repairing cluster 131072 refcount=1 reference=0
+>>> Repairing cluster 163840 refcount=1 reference=0
+>>> Repairing cluster 196612 refcount=1 reference=0
+>>> Repairing cluster 229377 refcount=1 reference=0
+>>> Repairing cluster 262146 refcount=1 reference=0
+>>> Repairing cluster 294915 refcount=1 reference=0
+>>> Repairing cluster 327684 refcount=1 reference=0
+>>> Repairing cluster 360449 refcount=1 reference=0
+>>> Repairing cluster 393218 refcount=1 reference=0
+>>> Repairing cluster 425987 refcount=1 reference=0
+>>> Repairing cluster 458756 refcount=1 reference=0
+>>> Repairing cluster 491521 refcount=1 reference=0
+>>> Repairing cluster 524289 refcount=1 reference=0
+>>> Repairing cluster 557058 refcount=1 reference=0
+>>> Repairing cluster 589827 refcount=1 reference=0
+>>> Repairing cluster 622596 refcount=1 reference=0
+>>> Repairing cluster 655361 refcount=1 reference=0
+>>> Repairing cluster 688130 refcount=1 reference=0
+>>> Repairing cluster 720899 refcount=1 reference=0
+>>> Repairing cluster 753668 refcount=1 reference=0
+>>> Repairing cluster 786433 refcount=1 reference=0
+>>> Repairing cluster 819202 refcount=1 reference=0
+>>> Repairing cluster 851971 refcount=1 reference=0
+>>> Repairing cluster 884740 refcount=1 reference=0
+>>> Repairing cluster 917505 refcount=1 reference=0
+>>> Repairing cluster 950274 refcount=1 reference=0
+>>
+>> I think, most of these lines may be replaced with "...".
+>>
+> Ack
+>>> Repairing cluster 983042 refcount=1 reference=0
+>>> Repairing cluster 983214 refcount=1 reference=0
+>>> The following inconsistencies were found and repaired:
+>>>
+>>>      2 leaked clusters
+>>>      3 corruptions
+>>>
+>>> Double checking the fixed image now...
+>>> No errors were found on the image.
+>>> 983056/1048576 = 93.75% allocated, 0.05% fragmented, 0.00% compressed clusters
+>>> Image end offset: 64437878784
+>>>
+>>> And the image is valid again!
+>>> Worst case you lose all bitmaps, but at least the image and the data
+>>> itself is useable again.
+>>>
+>>> Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
+>>
+>> Overall looks good to me, still some comments below.
+>>
+> Thanks!
+>>> ---
+>>>   block/qcow2-bitmap.c   | 42 +++++++++++++++++++++++++++++++++++++++++-
+>>>   block/qcow2-refcount.c |  3 ++-
+>>>   block/qcow2.c          | 15 +++++++++++----
+>>>   block/qcow2.h          |  3 ++-
+>>>   4 files changed, 56 insertions(+), 7 deletions(-)
+>>>
+>>> diff --git a/block/qcow2-bitmap.c b/block/qcow2-bitmap.c
+>>> index b87940bb43..bcc9462feb 100644
+>>> --- a/block/qcow2-bitmap.c
+>>> +++ b/block/qcow2-bitmap.c
+>>> @@ -1734,11 +1734,14 @@ uint64_t qcow2_get_persistent_dirty_bitmap_size(BlockDriverState *in_bs,
+>>>   int coroutine_fn
+>>>   qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
+>>>                                 void **refcount_table,
+>>> -                              int64_t *refcount_table_size)
+>>> +                              int64_t *refcount_table_size,
+>>> +                              BdrvCheckMode fix)
+>>>   {
+>>>       int ret;
+>>>       BDRVQcow2State *s = bs->opaque;
+>>>       Qcow2BitmapList *bm_list;
+>>> +    Qcow2BitmapList *fixed_list = NULL;
+>>> +    int valid_bitmaps = 0;
+>>>       Qcow2Bitmap *bm;
+>>>         if (s->nb_bitmaps == 0) {
+>>> @@ -1752,16 +1755,29 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
+>>>           return ret;
+>>>       }
+>>>   +    if (fix & BDRV_FIX_ERRORS) {
+>>> +        fixed_list = bitmap_list_new();
+>>> +    }
+>>> +
+>>>       bm_list = bitmap_list_load(bs, s->bitmap_directory_offset,
+>>>                                  s->bitmap_directory_size, NULL);
+>>>       if (bm_list == NULL) {
+>>>           res->corruptions++;
+>>> +
+>>> +        if (fix & BDRV_FIX_ERRORS) {
+>>> +            ret = update_ext_header_and_dir(bs, fixed_list);
+>>> +            if (ret >= 0) {
+>>> +                res->corruptions_fixed++;
+>>> +            }
+>>> +            goto out;
+>>> +        }
+>>>           return -EINVAL;
+>>>       }
+>>>         QSIMPLEQ_FOREACH(bm, bm_list, entry) {
+>>>           uint64_t *bitmap_table = NULL;
+>>>           int i;
+>>> +        bool bitmap_valid = true;
+>>>             ret = qcow2_inc_refcounts_imrt(bs, res,
+>>>                                          refcount_table, refcount_table_size,
+>>> @@ -1774,6 +1790,9 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
+>>>           ret = bitmap_table_load(bs, &bm->table, &bitmap_table);
+>>>           if (ret < 0) {
+>>>               res->corruptions++;
+>>> +            if (fix & BDRV_FIX_ERRORS) {
+>>> +                continue;
+>>> +            }
+>>>               goto out;
+>>>           }
+>>>   @@ -1783,6 +1802,7 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
+>>>                 if (check_table_entry(entry, s->cluster_size) < 0) {
+>>>                   res->corruptions++;
+>>> +                bitmap_valid = false;
+>>>                   continue;
+>>>               }
+>>>   @@ -1799,10 +1819,30 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
+>>>               }
+>>>           }
+>>>   +        if ((fix & BDRV_FIX_ERRORS) && bitmap_valid) {
+>>> +            valid_bitmaps++;
+>>> +            Qcow2Bitmap *bm_copy = g_new0(Qcow2Bitmap, 1);
+>>> +            *bm_copy = *bm;
+>>> +            bm_copy->name = g_strdup(bm->name);
+>>> +            QSIMPLEQ_INSERT_TAIL(fixed_list, bm_copy, entry);
+>>> +        }
+>>> +
+>>>           g_free(bitmap_table);
+>>>       }
+>>>   +    /* If fixing, update the bitmap directory with the repaired list */
+>>> +    if ((fix & BDRV_FIX_ERRORS) && s->nb_bitmaps != valid_bitmaps) {
+>>> +        ret = update_ext_header_and_dir(bs, fixed_list);
+>>> +        if (ret >= 0) {
+>>> +            res->corruptions_fixed += s->nb_bitmaps - valid_bitmaps;
+>>
+>> Previous call to  update_ext_header_and_dir() already made "s->nb_bitmaps = new_nb_bitmaps", so,
+>> I expect this difference "s->nb_bitmaps - valid_bitmaps" would be always zero.
+>>
+> Valid, fixing in v3
+>>> +        }
+>>> +    }
+>>> +
+>>>   out:
+>>> +    if (fix & BDRV_FIX_ERRORS) {
+>>
+>> "if" maybe omitted, as bitmap_list_free() has null-check at the beginning.
+>>
+> Fixing in v3
+>>> +        bitmap_list_free(fixed_list);
+>>> +    }
+>>> +
+>>>       bitmap_list_free(bm_list);
+>>>         return ret;
+>>> diff --git a/block/qcow2-refcount.c b/block/qcow2-refcount.c
+>>> index 6512cda407..df7f6d2f23 100644
+>>> --- a/block/qcow2-refcount.c
+>>> +++ b/block/qcow2-refcount.c
+>>> @@ -2305,7 +2305,8 @@ calculate_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
+>>>       }
+>>>         /* bitmaps */
+>>> -    ret = qcow2_check_bitmaps_refcounts(bs, res, refcount_table, nb_clusters);
+>>> +    ret = qcow2_check_bitmaps_refcounts(bs, res, refcount_table,
+>>> +                                        nb_clusters, fix);
+>>>       if (ret < 0) {
+>>>           return ret;
+>>>       }
+>>> diff --git a/block/qcow2.c b/block/qcow2.c
+>>> index 81fd299b4c..dfb6b23932 100644
+>>> --- a/block/qcow2.c
+>>> +++ b/block/qcow2.c
+>>> @@ -1927,11 +1927,18 @@ qcow2_do_open(BlockDriverState *bs, QDict *options, int flags,
+>>>       if (!(bdrv_get_flags(bs) & BDRV_O_INACTIVE)) {
+>>>           /* It's case 1, 2 or 3.2. Or 3.1 which is BUG in management layer. */
+>>>           bool header_updated;
+>>> -        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, errp)) {
+>>> -            ret = -EINVAL;
+>>> -            goto fail;
+>>> +        Error *local_err = NULL;
+>>> +        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, &local_err)) {
+>>> +            /* Allow this to fail in check mode
+>>
+>> Qemu style ask for opening "/*" on a separate line, if I remember correctly.
+>>
+> Both styles seems to be used. But I agree a empty /* as start is cleaner. Fixing.
 
-For each NVMe controller in the QOM tree the command prints:
+Still we have a documentation, checking docs/devel/style.rst:
 
-  - PCI BDF, vendor/device ID and BAR0 base address;
-  - Identify Controller fields visible to the host driver: SN, MN, FR
-    and CNTLID;
-  - the CC, CSTS and AQA registers (raw 32-bit values);
-  - the number of admin and active I/O submission/completion queues.
+     Comment style
+     =============
 
-Useful when debugging the Linux NVMe driver against the QEMU emulation
-without attaching gdb to the QEMU process.
+     [...]
 
-Example:
+     Multiline comment blocks should have a row of stars on the left,
+     and the initial /``*`` and terminating ``*``/ both on their own lines:
 
-  (qemu) info nvme
-  /machine/peripheral-anon/device[0]
-    PCI:    BDF 00:04.0  VID=8086 DID=5845  BAR0=0x00000000feb50000
-    ID:     SN=NVME0001  MN=QEMU NVMe Ctrl  FR=...  CNTLID=0x0000
-    CC:     0x00460001
-    CSTS:   0x00000001
-    AQA:    0x001f001f
-    Queues: 1 admin + 4 IO SQ / 4 IO CQ
+     .. code-block:: c
 
-Signed-off-by: Mateusz Nowicki <mateusz.nowicki@posteo.net>
-Acked-by: Dr. David Alan Gilbert <dave@treblig.org>
-Acked-by: Markus Armbruster <armbru@redhat.com>
----
- hmp-commands-info.hx | 13 ++++++++
- hw/nvme/meson.build  |  2 +-
- hw/nvme/monitor.c    | 76 ++++++++++++++++++++++++++++++++++++++++++++
- qapi/machine.json    | 17 ++++++++++
- 4 files changed, 107 insertions(+), 1 deletion(-)
- create mode 100644 hw/nvme/monitor.c
+         /*
+          * like
+          * this
+          */
 
-diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-index 82134eb6c2..b984691c3c 100644
---- a/hmp-commands-info.hx
-+++ b/hmp-commands-info.hx
-@@ -340,6 +340,19 @@ SRST
-     Show guest USB devices.
- ERST
- 
-+    {
-+        .name       = "nvme",
-+        .args_type  = "",
-+        .params     = "",
-+        .help       = "show emulated NVMe controllers",
-+        .cmd_info_hrt = qmp_x_query_nvme,
-+    },
-+
-+SRST
-+  ``info nvme``
-+    Show emulated NVMe controllers.
-+ERST
-+
-     {
-         .name       = "usbhost",
-         .args_type  = "",
-diff --git a/hw/nvme/meson.build b/hw/nvme/meson.build
-index 7d5caa53c2..33dee048b0 100644
---- a/hw/nvme/meson.build
-+++ b/hw/nvme/meson.build
-@@ -1 +1 @@
--system_ss.add(when: 'CONFIG_NVME_PCI', if_true: files('ctrl.c', 'dif.c', 'ns.c', 'subsys.c', 'nguid.c'))
-\ No newline at end of file
-+system_ss.add(when: 'CONFIG_NVME_PCI', if_true: files('ctrl.c', 'dif.c', 'ns.c', 'subsys.c', 'nguid.c', 'monitor.c'))
-diff --git a/hw/nvme/monitor.c b/hw/nvme/monitor.c
-new file mode 100644
-index 0000000000..4f70bfe3ec
---- /dev/null
-+++ b/hw/nvme/monitor.c
-@@ -0,0 +1,76 @@
-+/*
-+ * QEMU NVMe Controller monitor commands
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qapi/qapi-commands-machine.h"
-+#include "qapi/type-helpers.h"
-+#include "hw/pci/pci.h"
-+
-+#include "nvme.h"
-+
-+static int collect_one(Object *obj, void *opaque)
-+{
-+    GString *buf = opaque;
-+    NvmeCtrl *n;
-+    PCIDevice *pci;
-+    pcibus_t bar0;
-+    unsigned io_sq = 0, io_cq = 0;
-+
-+    if (!object_dynamic_cast(obj, TYPE_NVME)) {
-+        return 0;
-+    }
-+    n = NVME(obj);
-+    pci = PCI_DEVICE(n);
-+    bar0 = pci_get_bar_addr(pci, 0);
-+
-+    for (unsigned i = 1; i <= n->conf_ioqpairs; i++) {
-+        if (n->sq && n->sq[i]) {
-+            io_sq++;
-+        }
-+        if (n->cq && n->cq[i]) {
-+            io_cq++;
-+        }
-+    }
-+
-+    g_string_append_printf(buf, "%s\n", object_get_canonical_path(obj));
-+    g_string_append_printf(buf,
-+        "  PCI:    BDF %02x:%02x.%x  VID=%04x DID=%04x  ",
-+        pci_dev_bus_num(pci), PCI_SLOT(pci->devfn), PCI_FUNC(pci->devfn),
-+        pci_get_word(pci->config + PCI_VENDOR_ID),
-+        pci_get_word(pci->config + PCI_DEVICE_ID));
-+    if (bar0 == PCI_BAR_UNMAPPED) {
-+        g_string_append(buf, "BAR0=unmapped\n");
-+    } else {
-+        g_string_append_printf(buf, "BAR0=0x%016" PRIx64 "\n",
-+                               (uint64_t)bar0);
-+    }
-+    g_string_append_printf(buf,
-+        "  ID:     SN=%.20s  MN=%.40s  FR=%.8s  CNTLID=0x%04x\n",
-+        n->id_ctrl.sn, n->id_ctrl.mn, n->id_ctrl.fr, n->cntlid);
-+    g_string_append_printf(buf, "  CC:     0x%08x\n",
-+                           ldl_le_p(&n->bar.cc));
-+    g_string_append_printf(buf, "  CSTS:   0x%08x\n",
-+                           ldl_le_p(&n->bar.csts));
-+    g_string_append_printf(buf, "  AQA:    0x%08x\n",
-+                           ldl_le_p(&n->bar.aqa));
-+    g_string_append_printf(buf,
-+        "  Queues: 1 admin + %u IO SQ / %u IO CQ\n", io_sq, io_cq);
-+    return 0;
-+}
-+
-+HumanReadableText *qmp_x_query_nvme(Error **errp)
-+{
-+    g_autoptr(GString) buf = g_string_new("");
-+
-+    object_child_foreach_recursive(object_get_root(), collect_one, buf);
-+
-+    if (buf->len == 0) {
-+        g_string_append(buf, "no NVMe controllers\n");
-+    }
-+
-+    return human_readable_text_from_str(buf);
-+}
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 685e4e29b8..d4a589e768 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -1772,6 +1772,23 @@
-   'returns': 'HumanReadableText',
-   'features': [ 'unstable' ] }
- 
-+##
-+# @x-query-nvme:
-+#
-+# Query state of emulated NVMe controllers.
-+#
-+# Features:
-+#
-+# @unstable: This command is meant for debugging.
-+#
-+# Returns: NVMe controller state as human-readable text
-+#
-+# Since: 11.1
-+##
-+{ 'command': 'x-query-nvme',
-+  'returns': 'HumanReadableText',
-+  'features': [ 'unstable' ] }
-+
- ##
- # @SmbiosEntryPointType:
- #
+>>> +             * because otherwise we can't open the image at all.
+>>> +             */
+>>> +            if (!(flags & BDRV_O_CHECK)) {
+>>
+>> I'm a bit confused, that we don't have similar logic for other checks in qcow2_do_open(),
+>> like qcow2_validate_table() calls... So, qemu-img check can't repair any error that doesn't
+>> have such "if (!_CHECK)" in qcow2_do_open()?
+>>
+>> On the other hand, I don't see any other way to do it. qemu-img check needs to open the image
+>> first anyway.
+>>
+> Yea some have it, some don't.
+> But we need to open the image in order to be able to fix it indeed, so I don't see a better way :)
+> 
+>>> +                ret = -EINVAL;
+>>> +                error_propagate(errp, local_err);
+>>> +                goto fail;
+>>> +            }
+>>> +            error_free(local_err);
+>>>           }
+>>> -
+>>>           update_header = update_header && !header_updated;
+>>>       }
+>>>   diff --git a/block/qcow2.h b/block/qcow2.h
+>>> index 192a45d596..2d9c6929a7 100644
+>>> --- a/block/qcow2.h
+>>> +++ b/block/qcow2.h
+>>> @@ -1034,7 +1034,8 @@ void qcow2_cache_discard(Qcow2Cache *c, void *table);
+>>>   int coroutine_fn GRAPH_RDLOCK
+>>>   qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
+>>>                                 void **refcount_table,
+>>> -                              int64_t *refcount_table_size);
+>>> +                              int64_t *refcount_table_size,
+>>> +                              BdrvCheckMode fix);
+>>>     bool coroutine_fn GRAPH_RDLOCK
+>>>   qcow2_load_dirty_bitmaps(BlockDriverState *bs, bool *header_updated,
+>>
+>>
+
+
 -- 
-2.53.0
-
+Best regards,
+Vladimir
 
