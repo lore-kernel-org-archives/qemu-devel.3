@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86CB5CD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 18:29:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04C5FCD5BB4
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 18:30:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQUb2-0004pf-IY; Fri, 22 May 2026 14:27:44 -0400
+	id 1wQUap-0004fj-8N; Fri, 22 May 2026 14:27:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wQUay-0004lM-6C
- for qemu-devel@nongnu.org; Fri, 22 May 2026 14:27:40 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1wQUam-0004eC-RN
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 14:27:30 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wQUaw-0005PN-6J
- for qemu-devel@nongnu.org; Fri, 22 May 2026 14:27:39 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2b458ca2296so56004825ad.0
- for <qemu-devel@nongnu.org>; Fri, 22 May 2026 11:27:37 -0700 (PDT)
+ id 1wQUaj-0005Kq-LP
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 14:27:28 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-36a8ee1e28cso321977a91.0
+ for <qemu-devel@nongnu.org>; Fri, 22 May 2026 11:27:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779474457; x=1780079257; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779474444; x=1780079244; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=N6pOylLIPPF3SzGGD/hO5sB9wT9twUN2F4g4tckWWxE=;
- b=eKX2Fx4E+ua434tjuaBvpkG+XvXSW2CSX+3QKwBhmhHZntQFH0pZZvCXOuhFYD6Eft
- vf3XYII2bUfQ35NtJaPcdwftmnk+BPU14QmA7CMafVag6Y+pTfHgWwVnzNfrAZITIFLK
- Snpa06tLJnAT2bIUsX5H2ZTlDvP1DBhxzyi0BRbLN0BqmlqsEJWyNe6UljGTgcrGExJ5
- t8j1WgK5bltMqObBIo7ED5WS6AuXCe0JetiLF/zdawEUMEfwFTg/7Ss6lfPT4jN0W5Zh
- qAQZ0Tw7aV3Gr2GeHB9MGe8Hp/gMZYS0CsOaBqavtlQ1443wGEf+fPC+891Bh4rGAMmo
- M6TA==
+ bh=Er8/h7hcdrH0i8AVq283Mmmr7LBMQsIla5HO90Oj/dc=;
+ b=GPcjNbyjIrsRgTk1vCu5eftum0VmxZseBilEyoSSvPy/M4RcHXlROQ4Hwodh23WLnd
+ Q0NSsK/NOtN4Xo8GuzjrjIthzHoxBQECJo6QWCGCijwOh3gGQmS2K7PegzqzfaTsVEFQ
+ Ef/3pW/V61iSdEiBW0eqe38lDcl2JTQLTtgV0HQzji5hdTfaVGnOXaL/zLigR2d3fqsP
+ WkPfX1/bWyvJBdsgI0FvJ1+OXQTVLN4TkSm8ovY1kxXqF/Sc5KRCEQBKtng53vwsN/Z7
+ fBXnmRWY9EY0ajl7Teix7X357tOY88XU7xby6lYpgIytEEMNHvkErDPrvWYWQmJUk6Ec
+ /xeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779474457; x=1780079257;
+ d=1e100.net; s=20251104; t=1779474444; x=1780079244;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=N6pOylLIPPF3SzGGD/hO5sB9wT9twUN2F4g4tckWWxE=;
- b=So/KERLSnfUKDSsE+mslBo5V08tjiV/Fkl1vc1IXo0scF5rwA31TcFFRFM7OgIYkcK
- HU65VCIHq0AxvxUyiNtkVTchX2JfsI+ffijxhXlp1WubG6HEwRjjZd1/+0+xEdb7BW7y
- 1/ukIs6g1YAGC0ycFIaxoBdErx7yLfsXPXtJ0IEuNg2Z19dwpzZv7U3Y1XRUdk0UfdAV
- 8PalvvzTh3e0TRrNbjtKpcIKyN5WYoC+JxbdOSruhJ3KYwBD41LaWWDfHg6CaE3eZwsg
- cppbQh1S6sL+3rw+8p0TOlGSbS2IYfyCAkn3M+Rl/oeOPUZBpzfkX/PHQwn6dWrhzQR8
- nsGg==
-X-Gm-Message-State: AOJu0YwOw7dOwYfDcY+S9Ivt6FsXbIq6zYKyw5EsL2bgg52smPM2uPPl
- U5zXAtbxfF7EEOBCt+dxBMgh0+pY+YPH3zSy+nLcWqyr9zBsDAlTkuVpWkfsA+PMOUL5XGiwtf1
- t5ReR
-X-Gm-Gg: Acq92OE1ESnPpGJ6OBftsoEW87ftwAuYc/K7cKrHgtImAwXhW/HsRCy5VJ05dmBu4JG
- 9DQSyWxnQPNTHdn7UTxC3NqkxJz/ktHFP+rhRrcJ6Svp/dlaF3Ov9e/k5D3veMhDN+GCWUPvFbA
- qV16ByWR3XjP/fDz5j7p/dh6yEXgHhMNkkoVy0BHtza5ckvAbhEYp99XwSN6kp0sHPUR3txXVEb
- KpEWewCw1MKm0JEUQnj//95hHmZ3YjL2LkFA2aAt3ocx1epD531qfj0jtn7A/gkvvDJ9UQud4yr
- JuuohlUVDzqBBiuZFbCxtnPvyInKd2uXB3rLLjsXqYkrBIZfcPkJ2v+/hyJhDFk6XJ2BrjdCi/o
- rzn7GEw4MXdFKVcYSP6z/M2NNMWs15sfb1g4GQy0384Eoy34AALKd9V8wzG05DwR5jlCX6SQxos
- +QTAPvjtv47Xx+trOs8zG8xAj274pc
-X-Received: by 2002:a17:902:fc48:b0:2b0:c45a:bc2 with SMTP id
- d9443c01a7336-2beb059cebcmr51923135ad.16.1779474456695; 
- Fri, 22 May 2026 11:27:36 -0700 (PDT)
+ bh=Er8/h7hcdrH0i8AVq283Mmmr7LBMQsIla5HO90Oj/dc=;
+ b=MSWRczwyUbvriWeAJ2kCQ6e8XZXqMg4Sjlx72jf8B9fCTbMu/g65xjIqgV9lgb5fgl
+ E8fKz2c40UvDcZmQ4q8uj2gWhv3bb1lgrVBuXp3tmxrN0+5WMq6dLHimds1dJW+c6ogl
+ jN3Wzd4tyrDMtULoIAwp89SsWn3jErCdlDjA3zf0L0C9vRAA4NmiFfcCnqGLjI3WTxnN
+ 7ZIhGQ5h9EgZgizHlSK12f/qp/KNIpg8jGCIzApsXmY5aljJ2JP9xnnvolDA1y1DwRlk
+ bTCPpLLEd9fCDg8T38pzh6+kG9mOxXX8kmkGWv9UzAtcuY21AANgwbd9kIptdgIFlAwW
+ u1Ug==
+X-Gm-Message-State: AOJu0Yz/+mobm5kGLUI3hdfpxum6xY57UXzhAhnU4FFynd0FVpp3vjLe
+ sC6Be7l13SwqurQ2rw1sHwsfRYLWxjMaN7D53Ul2vZIGc25aQsRAR8nIpNXUHORLjF3YZ//fjWx
+ cILCe
+X-Gm-Gg: Acq92OEAti2BNK5yowAA6ZSpU4gNxmzHLdMYziDr4y5uF3LTpVdvrarJIDsxfc1632m
+ Xvpn2IS8ri3RgmRG3I3aCYoXR3aKRyNz5A3H4/37sFX95NZg4I+SaULepFuJR9EWeB0GJj/8a6B
+ EXcl67OD4AuH8Wbs/HX501opAkvveFqtw4BGMhtRGr2MUPIiavJhSOwhAr0SWIQ6AMrt2yF9N8u
+ OZM5KI34DhaKcc3gRya8YDdwa+IZX/KH9WKg++j7VoSFG8MQHomwLg4vtOQNuegHVz1sbPhjWQ6
+ 3M/GM9aus2Q/rePh0APAGcnZqQDRKW7Ua2CfQzIW8+JMmvnOSJuyjQe6h6hXZ5mrT47FlgZZVDi
+ P5bJ61mBtTCGHVyrm0YOQRPm4Wg+rL8QZFg7fVuG4wIpl7OFvayjsFWWct/ZULKcKPr5Oz4qsxe
+ kW7KbQ7d35f/OIWh90aivibfvpLqUl
+X-Received: by 2002:a17:902:ef11:b0:2bd:d7b5:83ed with SMTP id
+ d9443c01a7336-2beb07001camr55242415ad.39.1779474443839; 
+ Fri, 22 May 2026 11:27:23 -0700 (PDT)
 Received: from stoup.. ([50.78.183.177]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2beb5900b8bsm21824735ad.76.2026.05.22.11.27.36
+ d9443c01a7336-2beb5900b8bsm21824735ad.76.2026.05.22.11.27.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 May 2026 11:27:36 -0700 (PDT)
+ Fri, 22 May 2026 11:27:23 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 10/30] fpu: Introduce FloatExceptionFlags
-Date: Fri, 22 May 2026 11:26:38 -0700
-Message-ID: <20260522182658.184604-11-richard.henderson@linaro.org>
+Subject: [PULL 03/30] fpu: Return struct from parts{64,128}_muladd
+Date: Fri, 22 May 2026 11:26:31 -0700
+Message-ID: <20260522182658.184604-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260522182658.184604-1-richard.henderson@linaro.org>
 References: <20260522182658.184604-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,123 +100,313 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have, in the past, used any of uint8_t, uint16_t or int
-to hold the set of exception flags.  Use a typedef instead.
+At the same time, export.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/fpu/softfloat-helpers.h | 6 ++++--
- include/fpu/softfloat-types.h   | 4 +++-
- include/fpu/softfloat.h         | 2 +-
- fpu/softfloat.c                 | 2 +-
- fpu/softfloat-parts.c.inc       | 7 ++++---
- 5 files changed, 13 insertions(+), 8 deletions(-)
+ include/fpu/softfloat-parts.h |  9 ++++
+ fpu/softfloat.c               | 83 +++++++++++++++++------------------
+ fpu/softfloat-parts.c.inc     | 38 ++++++++--------
+ 3 files changed, 69 insertions(+), 61 deletions(-)
 
-diff --git a/include/fpu/softfloat-helpers.h b/include/fpu/softfloat-helpers.h
-index 90862f5cd2..745a49f07a 100644
---- a/include/fpu/softfloat-helpers.h
-+++ b/include/fpu/softfloat-helpers.h
-@@ -64,7 +64,8 @@ static inline void set_float_rounding_mode(FloatRoundMode val,
-     status->float_rounding_mode = val;
- }
+diff --git a/include/fpu/softfloat-parts.h b/include/fpu/softfloat-parts.h
+index 46618d217e..7170cc7b6a 100644
+--- a/include/fpu/softfloat-parts.h
++++ b/include/fpu/softfloat-parts.h
+@@ -202,6 +202,15 @@ FloatParts64 parts64_mul(const FloatParts64 *a, const FloatParts64 *b,
+ FloatParts128 parts128_mul(const FloatParts128 *a, const FloatParts128 *b,
+                            float_status *s);
  
--static inline void set_float_exception_flags(int val, float_status *status)
-+static inline void
-+set_float_exception_flags(FloatExceptionFlags val, float_status *status)
- {
-     status->float_exception_flags = val;
- }
-@@ -146,7 +147,8 @@ static inline FloatRoundMode get_float_rounding_mode(const float_status *status)
-     return status->float_rounding_mode;
- }
- 
--static inline int get_float_exception_flags(const float_status *status)
-+static inline FloatExceptionFlags
-+get_float_exception_flags(const float_status *status)
- {
-     return status->float_exception_flags;
- }
-diff --git a/include/fpu/softfloat-types.h b/include/fpu/softfloat-types.h
-index ead146c22d..5048faa76f 100644
---- a/include/fpu/softfloat-types.h
-+++ b/include/fpu/softfloat-types.h
-@@ -181,6 +181,8 @@ enum {
-     float_flag_input_denormal_used = 0x4000,
- };
- 
-+typedef uint16_t FloatExceptionFlags;
++FloatParts64 parts64_muladd(const FloatParts64 *a,
++                            const FloatParts64 *b,
++                            const FloatParts64 *c,
++                            int flags, float_status *s);
++FloatParts128 parts128_muladd(const FloatParts128 *a,
++                              const FloatParts128 *b,
++                              const FloatParts128 *c,
++                              int flags, float_status *s);
 +
- /*
-  * Rounding precision for floatx80.
-  */
-@@ -385,7 +387,7 @@ typedef enum __attribute__((__packed__)) {
-  */
- 
- typedef struct float_status {
--    uint16_t float_exception_flags;
-+    FloatExceptionFlags float_exception_flags;
-     FloatRoundMode float_rounding_mode;
-     FloatX80RoundPrec floatx80_rounding_precision;
-     FloatX80Behaviour floatx80_behaviour;
-diff --git a/include/fpu/softfloat.h b/include/fpu/softfloat.h
-index 1580d956d5..4ae4ddc799 100644
---- a/include/fpu/softfloat.h
-+++ b/include/fpu/softfloat.h
-@@ -101,7 +101,7 @@ typedef enum {
- | Routine to raise any or all of the software IEC/IEEE floating-point
- | exception flags.
- *----------------------------------------------------------------------------*/
--static inline void float_raise(uint16_t flags, float_status *status)
-+static inline void float_raise(FloatExceptionFlags flags, float_status *status)
- {
-     status->float_exception_flags |= flags;
- }
+ FloatParts64 parts64_round_to_int(const FloatParts64 *a,
+                                   FloatRoundMode rmode,
+                                   int scale, float_status *s,
 diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index df94f299e1..391d8f3169 100644
+index 7fc6df461e..905ba6ecf8 100644
 --- a/fpu/softfloat.c
 +++ b/fpu/softfloat.c
-@@ -2976,7 +2976,7 @@ static int64_t float128_to_int64_scalbn(float128 a, FloatRoundMode rmode,
- static Int128 float128_to_int128_scalbn(float128 a, FloatRoundMode rmode,
-                                         int scale, float_status *s)
- {
--    int flags = 0;
-+    FloatExceptionFlags flags = 0;
-     Int128 r;
-     FloatParts128 p = float128_unpack_canonical(a, s);
+@@ -1906,18 +1906,18 @@ float16 float16_muladd_scalbn(float16 a, float16 b, float16 c,
+     FloatParts64 pa = float16_unpack_canonical(a, status);
+     FloatParts64 pb = float16_unpack_canonical(b, status);
+     FloatParts64 pc = float16_unpack_canonical(c, status);
+-    FloatParts64 *pr = parts64_muladd(&pa, &pb, &pc, flags, status);
++    FloatParts64 pr = parts64_muladd(&pa, &pb, &pc, flags, status);
  
+     /* Before rounding, scale. */
+     if (scale) {
+-        *pr = parts64_scalbn(pr, scale, status);
++        pr = parts64_scalbn(&pr, scale, status);
+     }
+-    parts64_uncanon(pr, status, &float16_params, false);
++    parts64_uncanon(&pr, status, &float16_params, false);
+     /* After rounding, apply negate result, especially for -0.0. */
+-    if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
+-        pr->sign ^= 1;
++    if ((flags & float_muladd_negate_result) && !is_nan(pr.cls)) {
++        pr.sign ^= 1;
+     }
+-    return pack_raw64(pr, &float16_params);
++    return pack_raw64(&pr, &float16_params);
+ }
+ 
+ float16 float16_muladd(float16 a, float16 b, float16 c,
+@@ -1933,18 +1933,18 @@ float32_muladd_scalbn(float32 a, float32 b, float32 c,
+     FloatParts64 pa = float32_unpack_canonical(a, status);
+     FloatParts64 pb = float32_unpack_canonical(b, status);
+     FloatParts64 pc = float32_unpack_canonical(c, status);
+-    FloatParts64 *pr = parts64_muladd(&pa, &pb, &pc, flags, status);
++    FloatParts64 pr = parts64_muladd(&pa, &pb, &pc, flags, status);
+ 
+     /* Before rounding, scale. */
+     if (scale) {
+-        *pr = parts64_scalbn(pr, scale, status);
++        pr = parts64_scalbn(&pr, scale, status);
+     }
+-    parts64_uncanon(pr, status, &float32_params, false);
++    parts64_uncanon(&pr, status, &float32_params, false);
+     /* After rounding, apply negate result, especially for -0.0. */
+-    if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
+-        pr->sign ^= 1;
++    if ((flags & float_muladd_negate_result) && !is_nan(pr.cls)) {
++        pr.sign ^= 1;
+     }
+-    return pack_raw64(pr, &float32_params);
++    return pack_raw64(&pr, &float32_params);
+ }
+ 
+ float64 QEMU_SOFTFLOAT_ATTR
+@@ -1954,18 +1954,18 @@ float64_muladd_scalbn(float64 a, float64 b, float64 c,
+     FloatParts64 pa = float64_unpack_canonical(a, status);
+     FloatParts64 pb = float64_unpack_canonical(b, status);
+     FloatParts64 pc = float64_unpack_canonical(c, status);
+-    FloatParts64 *pr = parts64_muladd(&pa, &pb, &pc, flags, status);
++    FloatParts64 pr = parts64_muladd(&pa, &pb, &pc, flags, status);
+ 
+     /* Before rounding, scale. */
+     if (scale) {
+-        *pr = parts64_scalbn(pr, scale, status);
++        pr = parts64_scalbn(&pr, scale, status);
+     }
+-    parts64_uncanon(pr, status, &float64_params, false);
++    parts64_uncanon(&pr, status, &float64_params, false);
+     /* After rounding, apply negate result, especially for -0.0. */
+-    if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
+-        pr->sign ^= 1;
++    if ((flags & float_muladd_negate_result) && !is_nan(pr.cls)) {
++        pr.sign ^= 1;
+     }
+-    return pack_raw64(pr, &float64_params);
++    return pack_raw64(&pr, &float64_params);
+ }
+ 
+ static bool force_soft_fma;
+@@ -2115,14 +2115,14 @@ float64 float64r32_muladd(float64 a, float64 b, float64 c,
+     FloatParts64 pa = float64_unpack_canonical(a, status);
+     FloatParts64 pb = float64_unpack_canonical(b, status);
+     FloatParts64 pc = float64_unpack_canonical(c, status);
+-    FloatParts64 *pr = parts64_muladd(&pa, &pb, &pc, flags, status);
++    FloatParts64 pr = parts64_muladd(&pa, &pb, &pc, flags, status);
+ 
+     /* Round before applying negate result. */
+-    parts64_uncanon(pr, status, &float32_params, false);
+-    if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
+-        pr->sign ^= 1;
++    parts64_uncanon(&pr, status, &float32_params, false);
++    if ((flags & float_muladd_negate_result) && !is_nan(pr.cls)) {
++        pr.sign ^= 1;
+     }
+-    return float64r32_pack_raw(pr);
++    return float64r32_pack_raw(&pr);
+ }
+ 
+ bfloat16 bfloat16_muladd(bfloat16 a, bfloat16 b, bfloat16 c,
+@@ -2131,14 +2131,14 @@ bfloat16 bfloat16_muladd(bfloat16 a, bfloat16 b, bfloat16 c,
+     FloatParts64 pa = bfloat16_unpack_canonical(a, status);
+     FloatParts64 pb = bfloat16_unpack_canonical(b, status);
+     FloatParts64 pc = bfloat16_unpack_canonical(c, status);
+-    FloatParts64 *pr = parts64_muladd(&pa, &pb, &pc, flags, status);
++    FloatParts64 pr = parts64_muladd(&pa, &pb, &pc, flags, status);
+ 
+     /* Round before applying negate result. */
+-    parts64_uncanon(pr, status, &bfloat16_params, false);
+-    if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
+-        pr->sign ^= 1;
++    parts64_uncanon(&pr, status, &bfloat16_params, false);
++    if ((flags & float_muladd_negate_result) && !is_nan(pr.cls)) {
++        pr.sign ^= 1;
+     }
+-    return pack_raw64(pr, &bfloat16_params);
++    return pack_raw64(&pr, &bfloat16_params);
+ }
+ 
+ float128 float128_muladd(float128 a, float128 b, float128 c,
+@@ -2147,14 +2147,14 @@ float128 float128_muladd(float128 a, float128 b, float128 c,
+     FloatParts128 pa = float128_unpack_canonical(a, status);
+     FloatParts128 pb = float128_unpack_canonical(b, status);
+     FloatParts128 pc = float128_unpack_canonical(c, status);
+-    FloatParts128 *pr = parts128_muladd(&pa, &pb, &pc, flags, status);
++    FloatParts128 pr = parts128_muladd(&pa, &pb, &pc, flags, status);
+ 
+     /* Round before applying negate result. */
+-    parts128_uncanon(pr, status, &float128_params, false);
+-    if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
+-        pr->sign ^= 1;
++    parts128_uncanon(&pr, status, &float128_params, false);
++    if ((flags & float_muladd_negate_result) && !is_nan(pr.cls)) {
++        pr.sign ^= 1;
+     }
+-    return float128_pack_raw(pr);
++    return float128_pack_raw(&pr);
+ }
+ 
+ /*
+@@ -5126,7 +5126,7 @@ float32 float32_exp2(float32 a, float_status *status)
+     rp = float64_unpack_canonical(float64_one, status);
+     for (int i = 0; i < 15; i++) {
+         tp = float64_unpack_canonical(float32_exp2_coefficients[i], status);
+-        rp = *parts64_muladd(&tp, &xnp, &rp, 0, status);
++        rp = parts64_muladd(&tp, &xnp, &rp, 0, status);
+         xnp = parts64_mul(&xnp, &xp, status);
+     }
+ 
+@@ -5175,7 +5175,7 @@ static void parts_s390_divide_to_integer(FloatParts64 *a, FloatParts64 *b,
+         n->sign = a->sign ^ b->sign;
+         *cc = 0;
+     } else {
+-        FloatParts64 *q, q_buf, *r_precise, r_precise_buf;
++        FloatParts64 *q, q_buf, r_precise;
+         int float_exception_flags = 0;
+         bool is_q_smallish;
+         uint32_t r_flags;
+@@ -5205,12 +5205,11 @@ static void parts_s390_divide_to_integer(FloatParts64 *a, FloatParts64 *b,
+                                     0, fmt->frac_size);
+ 
+         /* Compute precise remainder */
+-        r_precise_buf = *b;
+-        r_precise = parts64_muladd(&r_precise_buf, n, a,
++        r_precise = parts64_muladd(b, n, a,
+                                    float_muladd_negate_product, status);
+ 
+         /* Round remainder to the target format */
+-        *r = *r_precise;
++        *r = r_precise;
+         status->float_exception_flags = 0;
+         *r = parts64_round_to_fmt(r, status, fmt);
+         r_flags = status->float_exception_flags;
+@@ -5234,17 +5233,17 @@ static void parts_s390_divide_to_integer(FloatParts64 *a, FloatParts64 *b,
+                          * toward zero) or incremented.
+                          */
+                         saved_r_sign = r->sign;
+-                        saved_r_precise_sign = r_precise->sign;
++                        saved_r_precise_sign = r_precise.sign;
+                         r->sign = false;
+-                        r_precise->sign = false;
+-                        if (parts64_compare(r, r_precise, status, true) <
++                        r_precise.sign = false;
++                        if (parts64_compare(r, &r_precise, status, true) <
+                             float_relation_equal) {
+                             *dxc = 0x8;
+                         } else {
+                             *dxc = 0xc;
+                         }
+                         r->sign = saved_r_sign;
+-                        r_precise->sign = saved_r_precise_sign;
++                        r_precise.sign = saved_r_precise_sign;
+                     }
+                 }
+             }
 diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index 4715187017..bc348f75a3 100644
+index ca2d7a15c9..437b333341 100644
 --- a/fpu/softfloat-parts.c.inc
 +++ b/fpu/softfloat-parts.c.inc
-@@ -297,7 +297,8 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
-     const uint64_t roundeven_mask = round_mask | frac_lsb;
-     uint64_t inc;
-     bool overflow_norm = saturate;
--    int exp, flags = 0;
-+    int exp;
-+    FloatExceptionFlags flags = 0;
- 
-     switch (s->float_rounding_mode) {
-     case float_round_nearest_even_max:
-@@ -1256,7 +1257,7 @@ static int64_t partsN(float_to_sint)(FloatPartsN *p, FloatRoundMode rmode,
-                                      int scale, int64_t min, int64_t max,
-                                      float_status *s)
+@@ -677,9 +677,8 @@ FloatPartsN partsN(mul)(const FloatPartsN *a, const FloatPartsN *b,
+  * Requires A and C extracted into a double-sized structure to provide the
+  * extra space for the widening multiply.
+  */
+-static FloatPartsN *partsN(muladd)(FloatPartsN *a, FloatPartsN *b,
+-                                   FloatPartsN *c,
+-                                   int flags, float_status *s)
++FloatPartsN partsN(muladd)(const FloatPartsN *a, const FloatPartsN *b,
++                           const FloatPartsN *c, int flags, float_status *s)
  {
--    int flags = 0;
-+    FloatExceptionFlags flags = 0;
-     uint64_t r;
+     int ab_mask = float_cmask(a->cls) | float_cmask(b->cls);
+     int c_mask = float_cmask(c->cls);
+@@ -717,10 +716,13 @@ static FloatPartsN *partsN(muladd)(FloatPartsN *a, FloatPartsN *b,
+         }
  
-     switch (p->cls) {
-@@ -1324,7 +1325,7 @@ static int64_t partsN(float_to_sint)(FloatPartsN *p, FloatRoundMode rmode,
- static uint64_t partsN(float_to_uint)(FloatPartsN *p, FloatRoundMode rmode,
-                                       int scale, uint64_t max, float_status *s)
- {
--    int flags = 0;
-+    FloatExceptionFlags flags = 0;
-     uint64_t r;
+         /* Narrow with sticky bit, for proper rounding later. */
+-        fracN(truncjam)(a, &p_widen);
+-        a->sign = p_widen.sign;
+-        a->exp = p_widen.exp;
+-        return a;
++        FloatPartsN r = {
++            .sign = p_widen.sign,
++            .exp = p_widen.exp,
++            .cls = float_class_normal,
++        };
++        fracN(truncjam)(&r, &p_widen);
++        return r;
+     }
  
-     switch (p->cls) {
+     /*
+@@ -730,8 +732,7 @@ static FloatPartsN *partsN(muladd)(FloatPartsN *a, FloatPartsN *b,
+      * off to the target-specific pick-a-NaN routine.
+      */
+     if (unlikely(abc_mask & float_cmask_anynan)) {
+-        *a = partsN(pick_nan_muladd)(a, b, c, s, ab_mask, abc_mask);
+-        return a;
++        return partsN(pick_nan_muladd)(a, b, c, s, ab_mask, abc_mask);
+     }
+ 
+     if (unlikely(ab_mask == float_cmask_infzero)) {
+@@ -748,9 +749,7 @@ static FloatPartsN *partsN(muladd)(FloatPartsN *a, FloatPartsN *b,
+         }
+         /* Inf + C == Inf */
+         record_denormals_used(abc_mask, s);
+-        a->sign = p_sign;
+-        a->cls = float_class_inf;
+-        return a;
++        return (FloatPartsN){ .sign = p_sign, .cls = float_class_inf };
+     }
+     record_denormals_used(abc_mask, s);
+ 
+@@ -766,19 +765,20 @@ static FloatPartsN *partsN(muladd)(FloatPartsN *a, FloatPartsN *b,
+     if (!(c_mask & float_cmask_zero)
+         || p_sign == c_sign
+         || (flags & float_muladd_suppress_add_product_zero)) {
+-        c->sign = c_sign;
+-        return c;
++        FloatPartsN r = *c;
++        r.sign = c_sign;
++        return r;
+     }
+ 
+  return_sub_zero:
+     /* 0 - 0 == -0 for round_down, +0 otherwise. */
+-    a->sign = s->float_rounding_mode == float_round_down;
+-    a->cls = float_class_zero;
+-    return a;
++    return (FloatPartsN){
++        .sign = s->float_rounding_mode == float_round_down,
++        .cls = float_class_zero
++    };
+ 
+  d_nan:
+-    *a = partsN(default_nan)(s);
+-    return a;
++    return partsN(default_nan)(s);
+ }
+ 
+ /*
 -- 
 2.43.0
 
