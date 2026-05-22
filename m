@@ -4,47 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED90FCD5BB3
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 23:11:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60715CD5BB3
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 23:13:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQZ1B-00033T-Dy; Fri, 22 May 2026 19:11:01 -0400
+	id 1wQZ3S-0004Uq-9v; Fri, 22 May 2026 19:13:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1wQZ19-00033D-Q0; Fri, 22 May 2026 19:10:59 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1wQZ15-0005RS-JH; Fri, 22 May 2026 19:10:58 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 0C63744550;
- Sat, 23 May 2026 01:10:53 +0200 (CEST)
-Message-ID: <51204e0c-14e1-41db-8eaf-83bc3734567d@proxmox.com>
-Date: Sat, 23 May 2026 01:10:51 +0200
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wQZ3Q-0004Nr-M1
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 19:13:20 -0400
+Received: from mail-vk1-xa31.google.com ([2607:f8b0:4864:20::a31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wQZ3N-00066u-HK
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 19:13:19 -0400
+Received: by mail-vk1-xa31.google.com with SMTP id
+ 71dfb90a1353d-57516e08474so6048080e0c.3
+ for <qemu-devel@nongnu.org>; Fri, 22 May 2026 16:13:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779491596; x=1780096396; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=GEFD1n5j9GGzU4s63QqricYbFjRfTK2BLi6JRIRb1RU=;
+ b=in7aAZzktxuJEW9g2s+N6JWC+VPOlO86NV0JG4hAr4iKPYQaroT/DznED0tDccmcCj
+ vzyFXGuZVvInUpQXPDI5a1oZi873OmEnIvXSqGiz3mu9NboQPLkFG5sxb60pg5RdUP4u
+ kxgcgRzxaDa3ZPMVQjhhO1S+CN34PXh5N53eTksf7ygn5SE3QWLekx4Eq2DeX67lr+4r
+ kQxeWWMXXGt9HcN8LfsVNgiwkaSTP3XUNgPfDXkujuukRRMkw497GsYLXAr6Y+Kh4zvJ
+ Vw8Wa34BeFezYRRYDrB5mmhNT0M4UDb1gsGxSTlZABMrZPNL4m83P4WScrZ2sxVo8jm0
+ r1sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779491596; x=1780096396;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GEFD1n5j9GGzU4s63QqricYbFjRfTK2BLi6JRIRb1RU=;
+ b=Nk9yaNnIiciTc7FQUb6Rs5cTf+XIqVkfiYjp29W86jroM0tHOAxAHBX4UrLslvDbjF
+ szeSDKgXAOlezs8G6mFOOs+RopKhEkz9VAjA74A4j75hLjzHFEs3roDrHB6/rIySTVt/
+ dqcXOn1dbU+YkE6Zms9s5XopHmFr9mnaSQcdvNg37j7ruNFIEyICltgUFzXBQJtW5JmD
+ 67R41kHQydvKbB6mwG2HVSjrnB4G/bdtdmaMjHgYpZoZOT3UXNURHNqjAFsao+JzYZT+
+ pZsdQ5J6Q0ag9W4tFwXpZqQIb/1RRfV2cqIaFxK7UcENJD0TDHZC1Zerb0gm3kkD/wm8
+ Jj0g==
+X-Gm-Message-State: AOJu0YyCYTZaAVgOQ9zvXrjR6OVjY6wqlZigswDCISf717EQEHhd66mM
+ /JuFg8Vrotj+GakMA4cdSEbmOIniCHbNV3A9bM24zW4wkYP62S8PBoaCCYUCJyl2OkduOJix/8q
+ hx8tS
+X-Gm-Gg: Acq92OGn8z7ml4zoxb3HUFCtEfbeSDchX9YGZUNF3ZWg7jh+UqXK2mDeGoWdmPuYv+Z
+ HRYQhsC97jhl6zF7R+PHzigSS1G4RJg49R41QDQgFxXsSsFdlqYHqJoWc725zGXDA42W4dWm6pv
+ gqpLq6WZ7xs0OHmypDXKAktUQmn+ZcoBVgXg6ySGqMown5tDJATc6+ltYZyMX0lJhNN0gjjiWdN
+ c6suV5c300rOmbn1UTsVxzYw4dgZor3xOleIHLAjiYqNvvfeb38E4u8jr9Que9mJtElLgunVnH0
+ +xBFQygV5QiweGCOvbYvG4bx7/VyRF/8VB6p+17W/La1Uq+gKO121AEWF/1pasVmPJLIPldLRt2
+ QY0Kly9vFG8+ztQZ3UCM/KscCnyCGOxP8FjEmU/rd941b6MyKpcLP57rtfctq0OKczey9744Ogr
+ e+7qmnIhFnGvfpvEO9Whl/rqBDdz6ltqXhFsNiLJOa
+X-Received: by 2002:a17:903:3c2d:b0:2b2:42b1:adac with SMTP id
+ d9443c01a7336-2beb031af0bmr55417255ad.3.1779490807477; 
+ Fri, 22 May 2026 16:00:07 -0700 (PDT)
+Received: from [192.168.64.111] ([50.78.183.177])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2beb5900b8bsm25164035ad.76.2026.05.22.16.00.06
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 22 May 2026 16:00:07 -0700 (PDT)
+Message-ID: <47c1bfab-8d88-4e61-b374-8c6b101daaaf@linaro.org>
+Date: Fri, 22 May 2026 16:00:05 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [Stable-11.0.1 v2 00/94] Patch Round-up for stable 11.0.1, freeze
- on 2026-05-22 (frozen)
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- qemu-devel@nongnu.org
-References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
+Subject: Re: [PATCH 1/2] target/arm: implement FEAT_RNG_TRAP for RNDR/RNDRRS
+To: qemu-devel@nongnu.org
+References: <20260519153249.31100-1-wrigjl@proton.me>
+ <20260519153249.31100-2-wrigjl@proton.me>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20260519153249.31100-2-wrigjl@proton.me>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1779491432465
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a31;
+ envelope-from=richard.henderson@linaro.org; helo=mail-vk1-xa31.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,33 +104,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michael,
+I did this myself 9 months ago, but never posted it for some reason.
 
-Am 22.05.26 um 11:35 PM schrieb Michael Tokarev:
-> Please respond here or CC qemu-stable@nongnu.org on any additional patches
-> you think should (or shouldn't) be included in the release.
+https://gitlab.com/rth7680/qemu/-/commit/2598d4896e19376fbae3926728ac737e7bbea190
 
-> 92 b8bfb1478d61 Kevin Wolf:
->    qcow2: Fix corruption on discard during write with COW
-> 93 389f5bcc744d Kevin Wolf:
->    iotests/046: Test that discard/write_zeroes wait for dependencies
+The only difference I have is
 
-since number 92 can cause an issue [0] that is much easier to run into
-than the one it solves, but still similarly bad, I think it should only
-be included together with Thomas' fix [1] on top. I know that one has
-not been applied to master or reviewed by a maintainer yet, so if
-including it goes against procedure, maybe it'd be better to leave 92
-(and 93) out for now or delay the release?
+> +static CPAccessResult access_rndr(CPUARMState *env, const ARMCPRegInfo *ri,
+> +                                  bool isread)
+> +{
+> +    if (env->cp15.scr_el3 & SCR_TRNDR) {
+> +        return CP_ACCESS_TRAP_EL3;
+> +    }
+> +    return CP_ACCESS_OK;
+> +}
 
-Same for the other stable series. Thank you for the consideration!
+static CPAccessResult access_rndr(CPUARMState *env, const ARMCPRegInfo *ri,
+                                   bool isread)
+{
+     if (env->cp15.scr_el3 & SCR_TRNDR) {
+         return CP_ACCESS_TRAP_EL3;
+     }
+     /*
+      * Note that FEAT_RNDR_TRAP may be implemented without FEAT_RNDR.
+      * In that case, if the trap is not enabled, the read undefs.
+      */
+     if (!cpu_isar_feature(aa64_rndr, env_archcpu(env))) {
+         return CP_ACCESS_UNDEFINED;
+     }
+     return CP_ACCESS_OK;
+}
 
-Best Regards,
-Fiona
+...
 
-[0]:
-https://lore.kernel.org/qemu-devel/414848c6-3829-4120-b760-6db8d43c1ab5@proxmox.com/
-[1]:
-https://lore.kernel.org/qemu-devel/20260522151318.238064-1-t.lamprecht@proxmox.com/
+     if (cpu_isar_feature(aa64_rndr, cpu) ||
+         cpu_isar_feature(aa64_rndr_trap, cpu)) {
+         define_arm_cp_regs(cpu, rndr_reginfo);
+     }
 
 
+r~
 
