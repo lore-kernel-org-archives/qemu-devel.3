@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04C5FCD5BB4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01810CD5BB0
 	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 18:30:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQUap-0004fj-8N; Fri, 22 May 2026 14:27:31 -0400
+	id 1wQUbK-0005fZ-K7; Fri, 22 May 2026 14:28:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wQUam-0004eC-RN
- for qemu-devel@nongnu.org; Fri, 22 May 2026 14:27:30 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ id 1wQUbG-0005XY-NH
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 14:27:58 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wQUaj-0005Kq-LP
- for qemu-devel@nongnu.org; Fri, 22 May 2026 14:27:28 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-36a8ee1e28cso321977a91.0
- for <qemu-devel@nongnu.org>; Fri, 22 May 2026 11:27:25 -0700 (PDT)
+ id 1wQUbE-0005dG-96
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 14:27:58 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2b941cd869cso50145065ad.1
+ for <qemu-devel@nongnu.org>; Fri, 22 May 2026 11:27:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779474444; x=1780079244; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779474475; x=1780079275; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Er8/h7hcdrH0i8AVq283Mmmr7LBMQsIla5HO90Oj/dc=;
- b=GPcjNbyjIrsRgTk1vCu5eftum0VmxZseBilEyoSSvPy/M4RcHXlROQ4Hwodh23WLnd
- Q0NSsK/NOtN4Xo8GuzjrjIthzHoxBQECJo6QWCGCijwOh3gGQmS2K7PegzqzfaTsVEFQ
- Ef/3pW/V61iSdEiBW0eqe38lDcl2JTQLTtgV0HQzji5hdTfaVGnOXaL/zLigR2d3fqsP
- WkPfX1/bWyvJBdsgI0FvJ1+OXQTVLN4TkSm8ovY1kxXqF/Sc5KRCEQBKtng53vwsN/Z7
- fBXnmRWY9EY0ajl7Teix7X357tOY88XU7xby6lYpgIytEEMNHvkErDPrvWYWQmJUk6Ec
- /xeQ==
+ bh=QjgecQOKIFquxYcNCBsqhcMsA2llHQcUX4f1yL+tqyM=;
+ b=KFKf08OSRmOetB+fN1niuWKhlXjOQ9K+vy1t4yezbkd7ItfgJRX9VTzikyGLFiN8GG
+ O75QZ90B0pmHyL1rLTQbjHfpK5ptnQPV7A8fgtNrjsGQkmS8vWOK627oIx6g/42sq298
+ 9+X4FFcLcngp3Kh8V2WUyglWeSarZryv1atjD1vpX1Z6E3+HOVGHDb/J/lXj1eGdSci/
+ w2RQa+wh8nya3aT9sN4tYAaKUKv19ZXVHlUMBv211HZjUHbr++6xy7pU8zj1//+ss3Ha
+ ZXWBeRdM7grUtrqa7bKrzNhI/78Z3Up2QG0qTId0ZkfX+1+Iyyrt5MbdJF+WPpvP7kuP
+ p9eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779474444; x=1780079244;
+ d=1e100.net; s=20251104; t=1779474475; x=1780079275;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Er8/h7hcdrH0i8AVq283Mmmr7LBMQsIla5HO90Oj/dc=;
- b=MSWRczwyUbvriWeAJ2kCQ6e8XZXqMg4Sjlx72jf8B9fCTbMu/g65xjIqgV9lgb5fgl
- E8fKz2c40UvDcZmQ4q8uj2gWhv3bb1lgrVBuXp3tmxrN0+5WMq6dLHimds1dJW+c6ogl
- jN3Wzd4tyrDMtULoIAwp89SsWn3jErCdlDjA3zf0L0C9vRAA4NmiFfcCnqGLjI3WTxnN
- 7ZIhGQ5h9EgZgizHlSK12f/qp/KNIpg8jGCIzApsXmY5aljJ2JP9xnnvolDA1y1DwRlk
- bTCPpLLEd9fCDg8T38pzh6+kG9mOxXX8kmkGWv9UzAtcuY21AANgwbd9kIptdgIFlAwW
- u1Ug==
-X-Gm-Message-State: AOJu0Yz/+mobm5kGLUI3hdfpxum6xY57UXzhAhnU4FFynd0FVpp3vjLe
- sC6Be7l13SwqurQ2rw1sHwsfRYLWxjMaN7D53Ul2vZIGc25aQsRAR8nIpNXUHORLjF3YZ//fjWx
- cILCe
-X-Gm-Gg: Acq92OEAti2BNK5yowAA6ZSpU4gNxmzHLdMYziDr4y5uF3LTpVdvrarJIDsxfc1632m
- Xvpn2IS8ri3RgmRG3I3aCYoXR3aKRyNz5A3H4/37sFX95NZg4I+SaULepFuJR9EWeB0GJj/8a6B
- EXcl67OD4AuH8Wbs/HX501opAkvveFqtw4BGMhtRGr2MUPIiavJhSOwhAr0SWIQ6AMrt2yF9N8u
- OZM5KI34DhaKcc3gRya8YDdwa+IZX/KH9WKg++j7VoSFG8MQHomwLg4vtOQNuegHVz1sbPhjWQ6
- 3M/GM9aus2Q/rePh0APAGcnZqQDRKW7Ua2CfQzIW8+JMmvnOSJuyjQe6h6hXZ5mrT47FlgZZVDi
- P5bJ61mBtTCGHVyrm0YOQRPm4Wg+rL8QZFg7fVuG4wIpl7OFvayjsFWWct/ZULKcKPr5Oz4qsxe
- kW7KbQ7d35f/OIWh90aivibfvpLqUl
-X-Received: by 2002:a17:902:ef11:b0:2bd:d7b5:83ed with SMTP id
- d9443c01a7336-2beb07001camr55242415ad.39.1779474443839; 
- Fri, 22 May 2026 11:27:23 -0700 (PDT)
+ bh=QjgecQOKIFquxYcNCBsqhcMsA2llHQcUX4f1yL+tqyM=;
+ b=LcKGZ02LhP6zPWJ9NUrM1ndi3yy2z3FH8KyaRSmotkwKBoHOlND194cTYOyT5K1Tb3
+ kKdxiX9R5jV37+hrsGLf3bJgtwV+Ahxzj3zo/qmkHZJgWYJaGJ9O1fL8NTG4zOkQ7uWs
+ ZXewpWEomZBSo0mpUZ1yw4j6p2l5wuwQ2ao63nXHJ5f4wnScOJzjL8OwkvlVzRfJpeVz
+ e2V3Gfcyrc2I9+VlKcpblixWKgS5YvMhW+wbhzQT6Mqdoda9lEbncwLWMyjaID7f0Bp2
+ ToegGeu8fFdvgPOxJ2duv9FkV7j245niE9a7uGD9gyu/A2WsxZITidGoLCsjE3W84ThS
+ 83PA==
+X-Gm-Message-State: AOJu0YxzF6LRVegf8CZupxtjL496W2+zAU74Kx40Zw/z/dT7nl2S9TMF
+ VPMC1CqfGsNODApnHAe4FJUk82S/BTOJc3pCL/VM1CO52zhWtKApEvkzTw6fVmdi6DLJi/n7xPV
+ PTkkN
+X-Gm-Gg: Acq92OF6tUU3SAi7v6Yl609yI4oSWSNlFDapLDCkHf0/mlZE9BXQX8x0yH7U9Kr98Wq
+ +vvv0k7s0NqSbnwA3MqbpTsQxyP6WAEhi1Bv0jPu7yNJ0j27L7mg/Y+1tSwSPB6Ooa3odQ9ZW/h
+ sSjKnmmm//xsmeWaWcPY0pE5EkPBdzK8ZL68PdUjwB+OjbKuzPYSe3f6M7SgXEqkJT91HKJnyNV
+ 9OVpPMPP4BQgUtikjEIrUOHd4y4OmbnxNLJ438/5ZnK8pko7ITjRaxmVs6McDcgt3Y/dW2Y+s42
+ IGp86/NHbshf5PrgXFGKvjBADsmlBXHnCQIFXIxguIpd+skDHewPrTWD4EihgUcjDpl50x9UrJg
+ 9BC3c7mkI10PviQid9bse1DMe0Gx63P0oA4cM96FnUZn+yXbe9lH/h+V2w9eGBVBLMuEb9emlZ4
+ IcWyBixL4ypg7LbjtaVCCVXrHoTEwc
+X-Received: by 2002:a17:903:15c7:b0:2bd:8938:b811 with SMTP id
+ d9443c01a7336-2beb0700897mr55834775ad.34.1779474474528; 
+ Fri, 22 May 2026 11:27:54 -0700 (PDT)
 Received: from stoup.. ([50.78.183.177]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2beb5900b8bsm21824735ad.76.2026.05.22.11.27.23
+ d9443c01a7336-2beb5900b8bsm21824735ad.76.2026.05.22.11.27.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 May 2026 11:27:23 -0700 (PDT)
+ Fri, 22 May 2026 11:27:54 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 03/30] fpu: Return struct from parts{64,128}_muladd
-Date: Fri, 22 May 2026 11:26:31 -0700
-Message-ID: <20260522182658.184604-4-richard.henderson@linaro.org>
+Subject: [PULL 30/30] fpu: Export floatN_minmax
+Date: Fri, 22 May 2026 11:26:58 -0700
+Message-ID: <20260522182658.184604-31-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260522182658.184604-1-richard.henderson@linaro.org>
 References: <20260522182658.184604-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,313 +100,304 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-At the same time, export.
+Allow target access to routines using the minmax flags.
+Make the existing min/max wrappers inline.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/fpu/softfloat-parts.h |  9 ++++
- fpu/softfloat.c               | 83 +++++++++++++++++------------------
- fpu/softfloat-parts.c.inc     | 38 ++++++++--------
- 3 files changed, 69 insertions(+), 61 deletions(-)
+ include/fpu/softfloat.h   | 93 ++++++++++++++++++++++-----------------
+ fpu/softfloat.c           | 50 +++------------------
+ fpu/softfloat-parts.c.inc |  8 ++--
+ 3 files changed, 62 insertions(+), 89 deletions(-)
 
-diff --git a/include/fpu/softfloat-parts.h b/include/fpu/softfloat-parts.h
-index 46618d217e..7170cc7b6a 100644
---- a/include/fpu/softfloat-parts.h
-+++ b/include/fpu/softfloat-parts.h
-@@ -202,6 +202,15 @@ FloatParts64 parts64_mul(const FloatParts64 *a, const FloatParts64 *b,
- FloatParts128 parts128_mul(const FloatParts128 *a, const FloatParts128 *b,
-                            float_status *s);
+diff --git a/include/fpu/softfloat.h b/include/fpu/softfloat.h
+index e08d1c374d..d48fc6b043 100644
+--- a/include/fpu/softfloat.h
++++ b/include/fpu/softfloat.h
+@@ -132,6 +132,25 @@ enum {
+     float_muladd_suppress_add_product_zero = 8,
+ };
  
-+FloatParts64 parts64_muladd(const FloatParts64 *a,
-+                            const FloatParts64 *b,
-+                            const FloatParts64 *c,
-+                            int flags, float_status *s);
-+FloatParts128 parts128_muladd(const FloatParts128 *a,
-+                              const FloatParts128 *b,
-+                              const FloatParts128 *c,
-+                              int flags, float_status *s);
++/*----------------------------------------------------------------------------
++| Options to indicate which negations to perform in float*_minmax()
++*----------------------------------------------------------------------------*/
 +
- FloatParts64 parts64_round_to_int(const FloatParts64 *a,
-                                   FloatRoundMode rmode,
-                                   int scale, float_status *s,
++/* Flags for parts_minmax. */
++enum {
++    /* Set for minimum; clear for maximum. */
++    float_minmax_ismin = 1,
++    /* Set for the IEEE 754-2008 minNum() and maxNum() operations. */
++    float_minmax_isnum = 2,
++    /* Set for the IEEE 754-2008 minNumMag() and minNumMag() operations. */
++    float_minmax_ismag = 4,
++    /*
++     * Set for the IEEE 754-2019 minimumNumber() and maximumNumber()
++     * operations.
++     */
++    float_minmax_isnumber = 8,
++};
++
+ /*----------------------------------------------------------------------------
+ | Software IEC/IEEE integer-to-floating-point conversion routines.
+ *----------------------------------------------------------------------------*/
+@@ -258,14 +277,7 @@ float16 float16_muladd_scalbn(float16, float16, float16,
+                               int, int, float_status *status);
+ float16 float16_div(float16, float16, float_status *status);
+ float16 float16_scalbn(float16, int, float_status *status);
+-float16 float16_min(float16, float16, float_status *status);
+-float16 float16_max(float16, float16, float_status *status);
+-float16 float16_minnum(float16, float16, float_status *status);
+-float16 float16_maxnum(float16, float16, float_status *status);
+-float16 float16_minnummag(float16, float16, float_status *status);
+-float16 float16_maxnummag(float16, float16, float_status *status);
+-float16 float16_minimum_number(float16, float16, float_status *status);
+-float16 float16_maximum_number(float16, float16, float_status *status);
++float16 float16_minmax(float16, float16, float_status *status, int flags);
+ float16 float16_sqrt(float16, float_status *status);
+ FloatRelation float16_compare(float16, float16, float_status *status);
+ FloatRelation float16_compare_quiet(float16, float16, float_status *status);
+@@ -451,14 +463,7 @@ bfloat16 bfloat16_div(bfloat16, bfloat16, float_status *status);
+ bfloat16 bfloat16_muladd(bfloat16, bfloat16, bfloat16, int,
+                          float_status *status);
+ float16 bfloat16_scalbn(bfloat16, int, float_status *status);
+-bfloat16 bfloat16_min(bfloat16, bfloat16, float_status *status);
+-bfloat16 bfloat16_max(bfloat16, bfloat16, float_status *status);
+-bfloat16 bfloat16_minnum(bfloat16, bfloat16, float_status *status);
+-bfloat16 bfloat16_maxnum(bfloat16, bfloat16, float_status *status);
+-bfloat16 bfloat16_minnummag(bfloat16, bfloat16, float_status *status);
+-bfloat16 bfloat16_maxnummag(bfloat16, bfloat16, float_status *status);
+-bfloat16 bfloat16_minimum_number(bfloat16, bfloat16, float_status *status);
+-bfloat16 bfloat16_maximum_number(bfloat16, bfloat16, float_status *status);
++bfloat16 bfloat16_minmax(bfloat16, bfloat16, float_status *status, int flags);
+ bfloat16 bfloat16_sqrt(bfloat16, float_status *status);
+ FloatRelation bfloat16_compare(bfloat16, bfloat16, float_status *status);
+ FloatRelation bfloat16_compare_quiet(bfloat16, bfloat16, float_status *status);
+@@ -622,14 +627,7 @@ float32 float32_exp2(float32, float_status *status);
+ float32 float32_log2(float32, float_status *status);
+ FloatRelation float32_compare(float32, float32, float_status *status);
+ FloatRelation float32_compare_quiet(float32, float32, float_status *status);
+-float32 float32_min(float32, float32, float_status *status);
+-float32 float32_max(float32, float32, float_status *status);
+-float32 float32_minnum(float32, float32, float_status *status);
+-float32 float32_maxnum(float32, float32, float_status *status);
+-float32 float32_minnummag(float32, float32, float_status *status);
+-float32 float32_maxnummag(float32, float32, float_status *status);
+-float32 float32_minimum_number(float32, float32, float_status *status);
+-float32 float32_maximum_number(float32, float32, float_status *status);
++float32 float32_minmax(float32, float32, float_status *status, int flags);
+ bool float32_is_quiet_nan(float32, float_status *status);
+ bool float32_is_signaling_nan(float32, float_status *status);
+ float32 float32_silence_nan(float32, float_status *status);
+@@ -818,14 +816,7 @@ float64 float64_sqrt(float64, float_status *status);
+ float64 float64_log2(float64, float_status *status);
+ FloatRelation float64_compare(float64, float64, float_status *status);
+ FloatRelation float64_compare_quiet(float64, float64, float_status *status);
+-float64 float64_min(float64, float64, float_status *status);
+-float64 float64_max(float64, float64, float_status *status);
+-float64 float64_minnum(float64, float64, float_status *status);
+-float64 float64_maxnum(float64, float64, float_status *status);
+-float64 float64_minnummag(float64, float64, float_status *status);
+-float64 float64_maxnummag(float64, float64, float_status *status);
+-float64 float64_minimum_number(float64, float64, float_status *status);
+-float64 float64_maximum_number(float64, float64, float_status *status);
++float64 float64_minmax(float64, float64, float_status *status, int flags);
+ bool float64_is_quiet_nan(float64 a, float_status *status);
+ bool float64_is_signaling_nan(float64, float_status *status);
+ float64 float64_silence_nan(float64, float_status *status);
+@@ -1279,14 +1270,7 @@ float128 float128_rem(float128, float128, float_status *status);
+ float128 float128_sqrt(float128, float_status *status);
+ FloatRelation float128_compare(float128, float128, float_status *status);
+ FloatRelation float128_compare_quiet(float128, float128, float_status *status);
+-float128 float128_min(float128, float128, float_status *status);
+-float128 float128_max(float128, float128, float_status *status);
+-float128 float128_minnum(float128, float128, float_status *status);
+-float128 float128_maxnum(float128, float128, float_status *status);
+-float128 float128_minnummag(float128, float128, float_status *status);
+-float128 float128_maxnummag(float128, float128, float_status *status);
+-float128 float128_minimum_number(float128, float128, float_status *status);
+-float128 float128_maximum_number(float128, float128, float_status *status);
++float128 float128_minmax(float128, float128, float_status *status, int flags);
+ bool float128_is_quiet_nan(float128, float_status *status);
+ bool float128_is_signaling_nan(float128, float_status *status);
+ float128 float128_silence_nan(float128, float_status *status);
+@@ -1388,4 +1372,33 @@ static inline bool float128_unordered_quiet(float128 a, float128 b,
+ *----------------------------------------------------------------------------*/
+ float128 float128_default_nan(float_status *status);
+ 
++/*----------------------------------------------------------------------------
++| Minumum and maximum functions.
++*----------------------------------------------------------------------------*/
++
++#define MINMAX_1(type, name, flags)                                     \
++    static inline type type##_##name(type a, type b, float_status *s)   \
++    { return type##_minmax(a, b, s, flags); }
++
++#define MINMAX_2(type)                                                  \
++    MINMAX_1(type, max, 0)                                              \
++    MINMAX_1(type, maxnum, float_minmax_isnum)                          \
++    MINMAX_1(type, maxnummag, float_minmax_isnum | float_minmax_ismag)  \
++    MINMAX_1(type, maximum_number, float_minmax_isnumber)               \
++    MINMAX_1(type, min, float_minmax_ismin)                             \
++    MINMAX_1(type, minnum, float_minmax_ismin | float_minmax_isnum)     \
++    MINMAX_1(type, minnummag,                                           \
++             float_minmax_ismin | float_minmax_isnum | float_minmax_ismag) \
++    MINMAX_1(type, minimum_number,                                      \
++             float_minmax_ismin | float_minmax_isnumber)
++
++MINMAX_2(float16)
++MINMAX_2(bfloat16)
++MINMAX_2(float32)
++MINMAX_2(float64)
++MINMAX_2(float128)
++
++#undef MINMAX_1
++#undef MINMAX_2
++
+ #endif /* SOFTFLOAT_H */
 diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index 7fc6df461e..905ba6ecf8 100644
+index 2c3bf01213..bc244a44ff 100644
 --- a/fpu/softfloat.c
 +++ b/fpu/softfloat.c
-@@ -1906,18 +1906,18 @@ float16 float16_muladd_scalbn(float16 a, float16 b, float16 c,
-     FloatParts64 pa = float16_unpack_canonical(a, status);
-     FloatParts64 pb = float16_unpack_canonical(b, status);
-     FloatParts64 pc = float16_unpack_canonical(c, status);
--    FloatParts64 *pr = parts64_muladd(&pa, &pb, &pc, flags, status);
-+    FloatParts64 pr = parts64_muladd(&pa, &pb, &pc, flags, status);
- 
-     /* Before rounding, scale. */
-     if (scale) {
--        *pr = parts64_scalbn(pr, scale, status);
-+        pr = parts64_scalbn(&pr, scale, status);
-     }
--    parts64_uncanon(pr, status, &float16_params, false);
-+    parts64_uncanon(&pr, status, &float16_params, false);
-     /* After rounding, apply negate result, especially for -0.0. */
--    if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
--        pr->sign ^= 1;
-+    if ((flags & float_muladd_negate_result) && !is_nan(pr.cls)) {
-+        pr.sign ^= 1;
-     }
--    return pack_raw64(pr, &float16_params);
-+    return pack_raw64(&pr, &float16_params);
+@@ -397,21 +397,6 @@ float64_gen2(float64 xa, float64 xb, float_status *s,
+     return soft(ua.s, ub.s, s);
  }
  
- float16 float16_muladd(float16 a, float16 b, float16 c,
-@@ -1933,18 +1933,18 @@ float32_muladd_scalbn(float32 a, float32 b, float32 c,
-     FloatParts64 pa = float32_unpack_canonical(a, status);
-     FloatParts64 pb = float32_unpack_canonical(b, status);
-     FloatParts64 pc = float32_unpack_canonical(c, status);
--    FloatParts64 *pr = parts64_muladd(&pa, &pb, &pc, flags, status);
-+    FloatParts64 pr = parts64_muladd(&pa, &pb, &pc, flags, status);
+-/* Flags for parts_minmax. */
+-enum {
+-    /* Set for minimum; clear for maximum. */
+-    minmax_ismin = 1,
+-    /* Set for the IEEE 754-2008 minNum() and maxNum() operations. */
+-    minmax_isnum = 2,
+-    /* Set for the IEEE 754-2008 minNumMag() and minNumMag() operations. */
+-    minmax_ismag = 4,
+-    /*
+-     * Set for the IEEE 754-2019 minimumNumber() and maximumNumber()
+-     * operations.
+-     */
+-    minmax_isnumber = 8,
+-};
+-
+ /* Simple helpers for checking if, or what kind of, NaN we have */
+ static inline __attribute__((unused)) bool is_nan(FloatClass c)
+ {
+@@ -4076,7 +4061,7 @@ float128 uint128_to_float128(Int128 a, float_status *status)
+  * Minimum and maximum
+  */
  
-     /* Before rounding, scale. */
-     if (scale) {
--        *pr = parts64_scalbn(pr, scale, status);
-+        pr = parts64_scalbn(&pr, scale, status);
-     }
--    parts64_uncanon(pr, status, &float32_params, false);
-+    parts64_uncanon(&pr, status, &float32_params, false);
-     /* After rounding, apply negate result, especially for -0.0. */
--    if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
--        pr->sign ^= 1;
-+    if ((flags & float_muladd_negate_result) && !is_nan(pr.cls)) {
-+        pr.sign ^= 1;
-     }
--    return pack_raw64(pr, &float32_params);
-+    return pack_raw64(&pr, &float32_params);
+-static float16 float16_minmax(float16 a, float16 b, float_status *s, int flags)
++float16 float16_minmax(float16 a, float16 b, float_status *s, int flags)
+ {
+     FloatParts64 pa = float16_unpack_canonical(a, s);
+     FloatParts64 pb = float16_unpack_canonical(b, s);
+@@ -4085,8 +4070,7 @@ static float16 float16_minmax(float16 a, float16 b, float_status *s, int flags)
+     return float16_round_pack_canonical(pr, s);
  }
  
- float64 QEMU_SOFTFLOAT_ATTR
-@@ -1954,18 +1954,18 @@ float64_muladd_scalbn(float64 a, float64 b, float64 c,
-     FloatParts64 pa = float64_unpack_canonical(a, status);
-     FloatParts64 pb = float64_unpack_canonical(b, status);
-     FloatParts64 pc = float64_unpack_canonical(c, status);
--    FloatParts64 *pr = parts64_muladd(&pa, &pb, &pc, flags, status);
-+    FloatParts64 pr = parts64_muladd(&pa, &pb, &pc, flags, status);
- 
-     /* Before rounding, scale. */
-     if (scale) {
--        *pr = parts64_scalbn(pr, scale, status);
-+        pr = parts64_scalbn(&pr, scale, status);
-     }
--    parts64_uncanon(pr, status, &float64_params, false);
-+    parts64_uncanon(&pr, status, &float64_params, false);
-     /* After rounding, apply negate result, especially for -0.0. */
--    if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
--        pr->sign ^= 1;
-+    if ((flags & float_muladd_negate_result) && !is_nan(pr.cls)) {
-+        pr.sign ^= 1;
-     }
--    return pack_raw64(pr, &float64_params);
-+    return pack_raw64(&pr, &float64_params);
+-static bfloat16 bfloat16_minmax(bfloat16 a, bfloat16 b,
+-                                float_status *s, int flags)
++bfloat16 bfloat16_minmax(bfloat16 a, bfloat16 b, float_status *s, int flags)
+ {
+     FloatParts64 pa = bfloat16_unpack_canonical(a, s);
+     FloatParts64 pb = bfloat16_unpack_canonical(b, s);
+@@ -4095,7 +4079,7 @@ static bfloat16 bfloat16_minmax(bfloat16 a, bfloat16 b,
+     return bfloat16_round_pack_canonical(pr, s);
  }
  
- static bool force_soft_fma;
-@@ -2115,14 +2115,14 @@ float64 float64r32_muladd(float64 a, float64 b, float64 c,
-     FloatParts64 pa = float64_unpack_canonical(a, status);
-     FloatParts64 pb = float64_unpack_canonical(b, status);
-     FloatParts64 pc = float64_unpack_canonical(c, status);
--    FloatParts64 *pr = parts64_muladd(&pa, &pb, &pc, flags, status);
-+    FloatParts64 pr = parts64_muladd(&pa, &pb, &pc, flags, status);
- 
-     /* Round before applying negate result. */
--    parts64_uncanon(pr, status, &float32_params, false);
--    if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
--        pr->sign ^= 1;
-+    parts64_uncanon(&pr, status, &float32_params, false);
-+    if ((flags & float_muladd_negate_result) && !is_nan(pr.cls)) {
-+        pr.sign ^= 1;
-     }
--    return float64r32_pack_raw(pr);
-+    return float64r32_pack_raw(&pr);
+-static float32 float32_minmax(float32 a, float32 b, float_status *s, int flags)
++float32 float32_minmax(float32 a, float32 b, float_status *s, int flags)
+ {
+     FloatParts64 pa = float32_unpack_canonical(a, s);
+     FloatParts64 pb = float32_unpack_canonical(b, s);
+@@ -4104,7 +4088,7 @@ static float32 float32_minmax(float32 a, float32 b, float_status *s, int flags)
+     return float32_round_pack_canonical(pr, s);
  }
  
- bfloat16 bfloat16_muladd(bfloat16 a, bfloat16 b, bfloat16 c,
-@@ -2131,14 +2131,14 @@ bfloat16 bfloat16_muladd(bfloat16 a, bfloat16 b, bfloat16 c,
-     FloatParts64 pa = bfloat16_unpack_canonical(a, status);
-     FloatParts64 pb = bfloat16_unpack_canonical(b, status);
-     FloatParts64 pc = bfloat16_unpack_canonical(c, status);
--    FloatParts64 *pr = parts64_muladd(&pa, &pb, &pc, flags, status);
-+    FloatParts64 pr = parts64_muladd(&pa, &pb, &pc, flags, status);
- 
-     /* Round before applying negate result. */
--    parts64_uncanon(pr, status, &bfloat16_params, false);
--    if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
--        pr->sign ^= 1;
-+    parts64_uncanon(&pr, status, &bfloat16_params, false);
-+    if ((flags & float_muladd_negate_result) && !is_nan(pr.cls)) {
-+        pr.sign ^= 1;
-     }
--    return pack_raw64(pr, &bfloat16_params);
-+    return pack_raw64(&pr, &bfloat16_params);
+-static float64 float64_minmax(float64 a, float64 b, float_status *s, int flags)
++float64 float64_minmax(float64 a, float64 b, float_status *s, int flags)
+ {
+     FloatParts64 pa = float64_unpack_canonical(a, s);
+     FloatParts64 pb = float64_unpack_canonical(b, s);
+@@ -4113,8 +4097,7 @@ static float64 float64_minmax(float64 a, float64 b, float_status *s, int flags)
+     return float64_round_pack_canonical(pr, s);
  }
  
- float128 float128_muladd(float128 a, float128 b, float128 c,
-@@ -2147,14 +2147,14 @@ float128 float128_muladd(float128 a, float128 b, float128 c,
-     FloatParts128 pa = float128_unpack_canonical(a, status);
-     FloatParts128 pb = float128_unpack_canonical(b, status);
-     FloatParts128 pc = float128_unpack_canonical(c, status);
--    FloatParts128 *pr = parts128_muladd(&pa, &pb, &pc, flags, status);
-+    FloatParts128 pr = parts128_muladd(&pa, &pb, &pc, flags, status);
- 
-     /* Round before applying negate result. */
--    parts128_uncanon(pr, status, &float128_params, false);
--    if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
--        pr->sign ^= 1;
-+    parts128_uncanon(&pr, status, &float128_params, false);
-+    if ((flags & float_muladd_negate_result) && !is_nan(pr.cls)) {
-+        pr.sign ^= 1;
-     }
--    return float128_pack_raw(pr);
-+    return float128_pack_raw(&pr);
+-static float128 float128_minmax(float128 a, float128 b,
+-                                float_status *s, int flags)
++float128 float128_minmax(float128 a, float128 b, float_status *s, int flags)
+ {
+     FloatParts128 pa = float128_unpack_canonical(a, s);
+     FloatParts128 pb = float128_unpack_canonical(b, s);
+@@ -4123,29 +4106,6 @@ static float128 float128_minmax(float128 a, float128 b,
+     return float128_round_pack_canonical(pr, s);
  }
  
+-#define MINMAX_1(type, name, flags) \
+-    type type##_##name(type a, type b, float_status *s) \
+-    { return type##_minmax(a, b, s, flags); }
+-
+-#define MINMAX_2(type) \
+-    MINMAX_1(type, max, 0)                                                \
+-    MINMAX_1(type, maxnum, minmax_isnum)                                  \
+-    MINMAX_1(type, maxnummag, minmax_isnum | minmax_ismag)                \
+-    MINMAX_1(type, maximum_number, minmax_isnumber)                       \
+-    MINMAX_1(type, min, minmax_ismin)                                     \
+-    MINMAX_1(type, minnum, minmax_ismin | minmax_isnum)                   \
+-    MINMAX_1(type, minnummag, minmax_ismin | minmax_isnum | minmax_ismag) \
+-    MINMAX_1(type, minimum_number, minmax_ismin | minmax_isnumber)        \
+-
+-MINMAX_2(float16)
+-MINMAX_2(bfloat16)
+-MINMAX_2(float32)
+-MINMAX_2(float64)
+-MINMAX_2(float128)
+-
+-#undef MINMAX_1
+-#undef MINMAX_2
+-
  /*
-@@ -5126,7 +5126,7 @@ float32 float32_exp2(float32 a, float_status *status)
-     rp = float64_unpack_canonical(float64_one, status);
-     for (int i = 0; i < 15; i++) {
-         tp = float64_unpack_canonical(float32_exp2_coefficients[i], status);
--        rp = *parts64_muladd(&tp, &xnp, &rp, 0, status);
-+        rp = parts64_muladd(&tp, &xnp, &rp, 0, status);
-         xnp = parts64_mul(&xnp, &xp, status);
-     }
- 
-@@ -5175,7 +5175,7 @@ static void parts_s390_divide_to_integer(FloatParts64 *a, FloatParts64 *b,
-         n->sign = a->sign ^ b->sign;
-         *cc = 0;
-     } else {
--        FloatParts64 *q, q_buf, *r_precise, r_precise_buf;
-+        FloatParts64 *q, q_buf, r_precise;
-         int float_exception_flags = 0;
-         bool is_q_smallish;
-         uint32_t r_flags;
-@@ -5205,12 +5205,11 @@ static void parts_s390_divide_to_integer(FloatParts64 *a, FloatParts64 *b,
-                                     0, fmt->frac_size);
- 
-         /* Compute precise remainder */
--        r_precise_buf = *b;
--        r_precise = parts64_muladd(&r_precise_buf, n, a,
-+        r_precise = parts64_muladd(b, n, a,
-                                    float_muladd_negate_product, status);
- 
-         /* Round remainder to the target format */
--        *r = *r_precise;
-+        *r = r_precise;
-         status->float_exception_flags = 0;
-         *r = parts64_round_to_fmt(r, status, fmt);
-         r_flags = status->float_exception_flags;
-@@ -5234,17 +5233,17 @@ static void parts_s390_divide_to_integer(FloatParts64 *a, FloatParts64 *b,
-                          * toward zero) or incremented.
-                          */
-                         saved_r_sign = r->sign;
--                        saved_r_precise_sign = r_precise->sign;
-+                        saved_r_precise_sign = r_precise.sign;
-                         r->sign = false;
--                        r_precise->sign = false;
--                        if (parts64_compare(r, r_precise, status, true) <
-+                        r_precise.sign = false;
-+                        if (parts64_compare(r, &r_precise, status, true) <
-                             float_relation_equal) {
-                             *dxc = 0x8;
-                         } else {
-                             *dxc = 0xc;
-                         }
-                         r->sign = saved_r_sign;
--                        r_precise->sign = saved_r_precise_sign;
-+                        r_precise.sign = saved_r_precise_sign;
-                     }
-                 }
-             }
+  * Floating point compare
+  */
 diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index ca2d7a15c9..437b333341 100644
+index d0064f5d22..a154faf32b 100644
 --- a/fpu/softfloat-parts.c.inc
 +++ b/fpu/softfloat-parts.c.inc
-@@ -677,9 +677,8 @@ FloatPartsN partsN(mul)(const FloatPartsN *a, const FloatPartsN *b,
-  * Requires A and C extracted into a double-sized structure to provide the
-  * extra space for the widening multiply.
-  */
--static FloatPartsN *partsN(muladd)(FloatPartsN *a, FloatPartsN *b,
--                                   FloatPartsN *c,
--                                   int flags, float_status *s)
-+FloatPartsN partsN(muladd)(const FloatPartsN *a, const FloatPartsN *b,
-+                           const FloatPartsN *c, int flags, float_status *s)
- {
-     int ab_mask = float_cmask(a->cls) | float_cmask(b->cls);
-     int c_mask = float_cmask(c->cls);
-@@ -717,10 +716,13 @@ static FloatPartsN *partsN(muladd)(FloatPartsN *a, FloatPartsN *b,
-         }
- 
-         /* Narrow with sticky bit, for proper rounding later. */
--        fracN(truncjam)(a, &p_widen);
--        a->sign = p_widen.sign;
--        a->exp = p_widen.exp;
--        return a;
-+        FloatPartsN r = {
-+            .sign = p_widen.sign,
-+            .exp = p_widen.exp,
-+            .cls = float_class_normal,
-+        };
-+        fracN(truncjam)(&r, &p_widen);
-+        return r;
-     }
- 
-     /*
-@@ -730,8 +732,7 @@ static FloatPartsN *partsN(muladd)(FloatPartsN *a, FloatPartsN *b,
-      * off to the target-specific pick-a-NaN routine.
+@@ -1469,7 +1469,7 @@ static FloatPartsN *partsN(minmax)(FloatPartsN *a, FloatPartsN *b,
+          * if one operand is a QNaN, and the other
+          * operand is numerical, then return numerical argument.
+          */
+-        if ((flags & (minmax_isnum | minmax_isnumber))
++        if ((flags & (float_minmax_isnum | float_minmax_isnumber))
+             && !(ab_mask & float_cmask_snan)
+             && (ab_mask & ~float_cmask_qnan)) {
+             record_denormals_used(ab_mask, s);
+@@ -1487,7 +1487,7 @@ static FloatPartsN *partsN(minmax)(FloatPartsN *a, FloatPartsN *b,
+          *   but unless both operands are NaNs,
+          *   the SNaN is otherwise ignored and not converted to a QNaN.
+          */
+-        if ((flags & minmax_isnumber)
++        if ((flags & float_minmax_isnumber)
+             && (ab_mask & float_cmask_snan)
+             && (ab_mask & ~float_cmask_anynan)) {
+             float_raise(float_flag_invalid, s);
+@@ -1542,7 +1542,7 @@ static FloatPartsN *partsN(minmax)(FloatPartsN *a, FloatPartsN *b,
+      * Take the sign into account.
+      * For ismag, only do this if the magnitudes are equal.
       */
-     if (unlikely(abc_mask & float_cmask_anynan)) {
--        *a = partsN(pick_nan_muladd)(a, b, c, s, ab_mask, abc_mask);
--        return a;
-+        return partsN(pick_nan_muladd)(a, b, c, s, ab_mask, abc_mask);
-     }
- 
-     if (unlikely(ab_mask == float_cmask_infzero)) {
-@@ -748,9 +749,7 @@ static FloatPartsN *partsN(muladd)(FloatPartsN *a, FloatPartsN *b,
+-    if (!(flags & minmax_ismag) || cmp == 0) {
++    if (!(flags & float_minmax_ismag) || cmp == 0) {
+         if (a->sign != b->sign) {
+             /* For differing signs, the negative operand is less. */
+             cmp = a->sign ? -1 : 1;
+@@ -1552,7 +1552,7 @@ static FloatPartsN *partsN(minmax)(FloatPartsN *a, FloatPartsN *b,
          }
-         /* Inf + C == Inf */
-         record_denormals_used(abc_mask, s);
--        a->sign = p_sign;
--        a->cls = float_class_inf;
--        return a;
-+        return (FloatPartsN){ .sign = p_sign, .cls = float_class_inf };
-     }
-     record_denormals_used(abc_mask, s);
- 
-@@ -766,19 +765,20 @@ static FloatPartsN *partsN(muladd)(FloatPartsN *a, FloatPartsN *b,
-     if (!(c_mask & float_cmask_zero)
-         || p_sign == c_sign
-         || (flags & float_muladd_suppress_add_product_zero)) {
--        c->sign = c_sign;
--        return c;
-+        FloatPartsN r = *c;
-+        r.sign = c_sign;
-+        return r;
      }
  
-  return_sub_zero:
-     /* 0 - 0 == -0 for round_down, +0 otherwise. */
--    a->sign = s->float_rounding_mode == float_round_down;
--    a->cls = float_class_zero;
--    return a;
-+    return (FloatPartsN){
-+        .sign = s->float_rounding_mode == float_round_down,
-+        .cls = float_class_zero
-+    };
- 
-  d_nan:
--    *a = partsN(default_nan)(s);
--    return a;
-+    return partsN(default_nan)(s);
- }
- 
- /*
+-    if (flags & minmax_ismin) {
++    if (flags & float_minmax_ismin) {
+         cmp = -cmp;
+     }
+     return cmp < 0 ? b : a;
 -- 
 2.43.0
 
