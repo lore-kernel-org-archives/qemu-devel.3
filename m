@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CD31CD5BAF
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 00:09:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 101A2CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 00:09:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQDRB-00075H-Kw; Thu, 21 May 2026 20:08:25 -0400
+	id 1wQDRG-0007ti-5z; Thu, 21 May 2026 20:08:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wQDOx-0003Se-DW
- for qemu-devel@nongnu.org; Thu, 21 May 2026 20:06:09 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1wQDPG-0003mG-EB
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 20:06:29 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wQDOu-0004rb-1D
- for qemu-devel@nongnu.org; Thu, 21 May 2026 20:06:06 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-365eecc5885so6175103a91.0
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 17:05:58 -0700 (PDT)
+ id 1wQDP6-0004uR-16
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 20:06:22 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2b4583f0a1aso44356195ad.3
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 17:06:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779408358; x=1780013158; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779408372; x=1780013172; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2dgac1OLNcr/FYIR3xDJ+0jIQEEekbcedMFC+8QFpLo=;
- b=IcV2ugn8SqmVwhUb0p/b71RpK9mHzOLRp0I06hHEeFZP2hj7B5l2EpdzWGWdKaTFrO
- KICNawnRQp1ghywLoxNgnBN2C2V79WFu0KtjuaNOH9XoJNbRswUrcv0p8ADXT7hCmlgU
- TzshRSxaNuL+qaUTToh2BaBTSWVjpFmw5UTSzYKebAWKlrFDY4BIp5CbFudCrhVeob4z
- 8ayU5psbqY9HESXGdgqUG1d6TxOjP6TULoIf8dwrZNJQuSJEOH8H7df44nXIssTved1D
- q/1xz/TruKGAxESHG9p/ndITq3sGCfmu5lK3KPhKSzkWEokPzq7abrPCfxcBrqTJII3N
- KqIQ==
+ bh=vjZMmpyQD1LLA9i3sAZPSJaJH6BunaEwKF+ldbZm58o=;
+ b=hakbDboqCi01LHSyVJKlCTXzdEFX+NXwXWbWWqg/S4arzqUCJp543UZ88da/LSk6PF
+ 4O7LV5zTBIAT7xndi/gYyHRAprmRLRtkdw0ExSbSIunLuijeNQ3302BxIK6vWTOtAuGn
+ 9XL6CuBWq+dOegw7Il4b20jTMOk3Nokqi3GVUA7scZPXJZhRzAHcRiKdjAOyRbN86nCf
+ D4pQDwRaSiirbuJ7TRiIB9gGti8/Eo2lCBiEHyuDa+grGAp3OIdWXDT71LWQY0jt1xuR
+ SEJOPePSStWCyuRUw4UbQ05IHaH7jnRkvIG2fjcVhk4mQaeN6UQdN20Hw0l/KtthRlUj
+ yUIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779408358; x=1780013158;
+ d=1e100.net; s=20251104; t=1779408372; x=1780013172;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=2dgac1OLNcr/FYIR3xDJ+0jIQEEekbcedMFC+8QFpLo=;
- b=XFqWxuU4opc3TCMUg81P/uoUQikN10XPKv8ONbpzeeg3li49FUwf9vIa1yrM8+zlko
- q9goEpdYG94CanmaN2wDuI0/nE5JrMDfLnV74GF30NgPZ5Z787yHmipRJepzYO81Pz9L
- eyd51puevwxBO6qhi/6euewpUJpQ9ZLVNUqhha0KTT5W2YGL2a2p3eunLcBWqrKsx/pk
- XxFNZAuhq2O3wyyHfhxjarpdE89ZVelH4H9ugruGpn6oX0MOI+BnuHxnhv6TIaRjZb4B
- QcZNVFc6NnyjWqTVDkfwkpD5nyHzgZzixwu+gX1Rheb3VgpVts8JnYfz5jekh786PARK
- piPw==
-X-Gm-Message-State: AOJu0Yxk15DQMyBaJFND7+xm+p70XK/iYNff4GgOj/+8XSogu6oVW4VY
- WDRq2di6+WqmH+62RhZUb9YDEc9W76n+PlyXzT7WHxVrA4ufWpKFuhPReTVN+E6a
-X-Gm-Gg: Acq92OEad5t/g+BGWc8UIbvd2u+ANyUHzy6hm2aZbIPuFvFjLhP9o++1zHd3Lb1FntU
- MbFPf4jy/AM9R4KrgNo3UwkiwLsC4dCQMsdpookfKB1tnZihUxbPdKoOAFCj8rhsepgwe8YONXQ
- kr4qXQ9MhcefzGGmHXxqVXR1a/LANnVZyGuqZYK4Ro7S6fkPgLdVoWCu8Ku+ImG8LRs8v0AijiK
- s3siHDBEx4z0qZBTli48c3hQwohDZiiDIBedRrynxoMsDwY/ro5hRglT+QAlRBe5pBUuKcustYM
- zNODXeRIuWTAMWLL4HyMFn6jBoy10E8w3d2PAvdslIce1VDwXe7MoADFRQgLtvaVS6L2+W6AYlY
- T4Du5sgT+G+n2yU93BWbE1WOIrBd0cD//JL98/H90dY/EdmXMqvPo2e8xETDRQLTEJUNBQFL/+e
- V25EOeSQ25JNA1Yt/2z4PuhxW7NPfgd+xiM+yj9dcNTw==
-X-Received: by 2002:a17:903:390d:b0:2b9:8d39:5e87 with SMTP id
- d9443c01a7336-2beb0657112mr10298995ad.10.1779408357816; 
- Thu, 21 May 2026 17:05:57 -0700 (PDT)
+ bh=vjZMmpyQD1LLA9i3sAZPSJaJH6BunaEwKF+ldbZm58o=;
+ b=Fllju4ei44IL0lPkg5bkTxHG5BZxY5m7bK+G++xEI7qJjr2FFYq00krlsKWW7Esr8u
+ PFVo85fx61vLZA1n4pniTxagk85Qa22u5IEbltjxdv4p5nFXfSbGyJzJE60yNGokHwZT
+ aSfRRQaI+dpcTq7Y9DuL60k3r0OMoe0BYN25OCBSeNaEjTtIHvrMb8BRZa+AKchmoT2y
+ DQtjweyqh4/La+v3lv8926QVj+dgXFlO3H+HIFxtcda+VAwCFlLTPJq3X6PiusXeE3UZ
+ sztiYLA6ORbjGaocsRemAePxfNlINOO1Mye55+boMoXv9LEFhravEmXt/8WWYApCbL4x
+ /kSg==
+X-Gm-Message-State: AOJu0Yw+01jwOdModl3U3IM3vgZn2S85qYw5klSD8pbRKrjq42/Vd0YJ
+ pDuEN3yOVnx9zmHMH1pb+is4bXm37l0kFjVuZ82YibVQU4RdMsCCIxFvJJ3c8haS
+X-Gm-Gg: Acq92OGrP+HyApqrMVXK1sZeZw7oIl/trg3Zbm9ngPbDnLqmuQTZLWlRibtbzzsLHuZ
+ Uks7OicBMKPNE6XbV1YDFEzOkvRAMelw0T70ZPm5L6W3LXHSBZPuIoDAHFzUQD1+UOODYjzB4p4
+ ZCn6OVxNFCoqE2e3RkOqCLbJ4UvdShDatOvuI9LhdS0PIXKz9CyKbDy+KrWl4O9WDhaAhi3MWHu
+ 3NGYTJ3xSCpIQCqOxosvaIlC2C1EXtn8sZfkgzrtS507qXKs6vU2pKjXDyQbEQWkJVrBc/bdZgA
+ kAh14NTKdKoax8+zc1hUjgDxWzPgr2DGPOu/zQX8nTIXKZTYRFReV1DRyymQ6AfeN2dS7H9P9sd
+ RnL6kdL0Kp2FVAOe7pQK513yyhB0+1ba7Nr+8CqPfgpa+a2QoJyRyheWhVdWyPp7Fx8QXwJo2si
+ 63dd3OHqAF7cgSI3vW4P2V7kCDf0tndhBcdKnzSM40CUT7TfQ/WAKw
+X-Received: by 2002:a17:902:cf0e:b0:2bd:ba87:40a1 with SMTP id
+ d9443c01a7336-2beb07ffc75mr10639205ad.29.1779408372154; 
+ Thu, 21 May 2026 17:06:12 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2beb114b54csm3915475ad.42.2026.05.21.17.05.54
+ d9443c01a7336-2beb114b54csm3915475ad.42.2026.05.21.17.06.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 17:05:57 -0700 (PDT)
+ Thu, 21 May 2026 17:06:11 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Jim Shu <jim.shu@sifive.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>,
+Cc: alistair23@gmail.com, Jay Chang <jay.chang@sifive.com>,
+ Frank Chang <frank.chang@sifive.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Nutty Liu <nutty.liu@hotmail.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 44/48] hw/intc: riscv_aplic: Fix level trigger IRQ in direct
- delivery mode
-Date: Fri, 22 May 2026 10:03:20 +1000
-Message-ID: <20260522000324.23255-45-alistair.francis@wdc.com>
+Subject: [PULL 48/48] hw/riscv: riscv-iommu: Re-process command queue after
+ clearing CMD_ILL
+Date: Fri, 22 May 2026 10:03:24 +1000
+Message-ID: <20260522000324.23255-49-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260522000324.23255-1-alistair.francis@wdc.com>
 References: <20260522000324.23255-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,58 +106,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jim Shu <jim.shu@sifive.com>
+From: Jay Chang <jay.chang@sifive.com>
 
-According to the AIA spec ch4.7 ("Precise effects on interrupt-pending
-bits"), pending bit of APLIC should be set/cleared whenever the
-rectified input value is high/low in the both level-trigger mode
-and direct delivery mode.
+When software clears CMD_ILL or CQMF error bits by writing 1 to CQCSR,
+the IOMMU should re-check the command queue and continue processing
+pending commands if head != tail.
 
-Currently, QEMU APLIC only clears the pending bit when interrupt is
-claimed in APLIC, but not clears it when the rectified input value is
-low. (e.g. IRQ source signal is low in the LEVEL_HIGH/Level1 mode).
-The software may receive an additional IRQ if the peripheral
-triggers one after the software clears the APLIC IRQ but before it
-clears the peripheral's IRQ.
+Per RISC-V IOMMU specification :
+If command-queue access leads to a memory fault then the
+command-queue-memory-fault bit is set to 1 and the commandqueue
+stalls until this bit is cleared. To re-enable command
+processing, software should clear this bit by writing 1.
 
-Thus, we also clear the pending bit via the rectified input value in the
-level-trigger mode.
-
-This change doesn't affect MSI delivery mode. Calling
-riscv_aplic_msi_irq_update() when IRQ pending is low will do nothing.
-
-Signed-off-by: Jim Shu <jim.shu@sifive.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Signed-off-by: Jay Chang <jay.chang@sifive.com>
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20260428160103.3551125-2-jim.shu@sifive.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Message-ID: <20260518070143.8405-1-jay.chang@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/intc/riscv_aplic.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/riscv/riscv-iommu.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-index 8f70043111..791e0b01b9 100644
---- a/hw/intc/riscv_aplic.c
-+++ b/hw/intc/riscv_aplic.c
-@@ -591,14 +591,14 @@ static void riscv_aplic_request(void *opaque, int irq, int level)
-         }
-         break;
-     case APLIC_SOURCECFG_SM_LEVEL_HIGH:
--        if ((level > 0) && !(state & APLIC_ISTATE_PENDING)) {
--            riscv_aplic_set_pending_raw(aplic, irq, true);
-+        if ((level > 0) != !!(state & APLIC_ISTATE_PENDING)) {
-+            riscv_aplic_set_pending_raw(aplic, irq, level > 0);
-             update = true;
-         }
-         break;
-     case APLIC_SOURCECFG_SM_LEVEL_LOW:
--        if ((level <= 0) && !(state & APLIC_ISTATE_PENDING)) {
--            riscv_aplic_set_pending_raw(aplic, irq, true);
-+        if ((level <= 0) != !!(state & APLIC_ISTATE_PENDING)) {
-+            riscv_aplic_set_pending_raw(aplic, irq, level <= 0);
-             update = true;
-         }
-         break;
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 5bc2472a83..1b8a8e9ef2 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -2034,6 +2034,16 @@ static void riscv_iommu_process_cq_control(RISCVIOMMUState *s)
+     }
+ 
+     riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_CQCSR, ctrl_set, ctrl_clr);
++
++    /*
++     * After clearing error bits (CMD_ILL, CQMF), if queue is still active,
++     * re-process pending command.
++     */
++    ctrl_set = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_CQCSR);
++    if ((ctrl_set & RISCV_IOMMU_CQCSR_CQON) &&
++        !(ctrl_set & (RISCV_IOMMU_CQCSR_CMD_ILL | RISCV_IOMMU_CQCSR_CQMF))) {
++        riscv_iommu_process_cq_tail(s);
++    }
+ }
+ 
+ static void riscv_iommu_process_fq_control(RISCVIOMMUState *s)
 -- 
 2.53.0
 
