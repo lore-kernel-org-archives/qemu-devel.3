@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DD0BCD5BAC
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 19:38:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AD9BCD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 19:38:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQVgU-0001rn-Nz; Fri, 22 May 2026 15:37:26 -0400
+	id 1wQVg1-0001dl-4r; Fri, 22 May 2026 15:36:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wQVgM-0001kc-NG
- for qemu-devel@nongnu.org; Fri, 22 May 2026 15:37:18 -0400
+ id 1wQVfy-0001ci-3L
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 15:36:54 -0400
 Received: from mail-oi1-x232.google.com ([2607:f8b0:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wQVgJ-0000a6-6S
- for qemu-devel@nongnu.org; Fri, 22 May 2026 15:37:17 -0400
+ id 1wQVfv-0000RE-D5
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 15:36:52 -0400
 Received: by mail-oi1-x232.google.com with SMTP id
- 5614622812f47-464bba3a9easo4883543b6e.0
- for <qemu-devel@nongnu.org>; Fri, 22 May 2026 12:37:13 -0700 (PDT)
+ 5614622812f47-4854166e1efso1830418b6e.3
+ for <qemu-devel@nongnu.org>; Fri, 22 May 2026 12:36:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779478632; x=1780083432; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779478610; x=1780083410; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=H4fbpAWrwvWrzQHeEihm7BL4TjivtpObCtoA8m34nPQ=;
- b=M0rKRtr2/ZdoAlM8nogPEBjBbiFmDm99ePmm61SJjvBt8KIoCvvUgCzwxt3Sa8pYz6
- rSp+6/G9x9ysY0kN0rAR5WKuvDSv7iNaIzx3VU4bkesASAR/5mfJe09feTHfgPjRqtAS
- hkSXQ/rEmPFvZUJkxSZO6bYGiF9lQ8TZHG6NcLamDtVpJ2Clw16Xzup+RFcFK1utWpY2
- LwDPWdAKm7zkpuCSW74Y8yw59M0Ks36LePJl+OZGSRbXf8HH3xlF/234c4d2O4U8v8BL
- 2OXswa/k0ydgdlIowtiV8t1szUNQ2pQ75d8yFtpAUGcJTwlVGtx+Atihk0jHAtvQReAd
- fJZQ==
+ :reply-to; bh=48Ai9CIUSaGzXZYONL1dAcOkXHUHQVK32aP2mmtN5aU=;
+ b=hwm9YBSjnox0gDjV7Vx5x57CfGI2nPcyww0Sq7s0Xn3LzAWtZqlvLs/efAkufe5cji
+ iCmrovbn9OLg7CutjwxKsi6BSFx7X752WXboOduM2uPOeR4rPLhRq4vLf3GQ8k0gAhZF
+ o8iY4n33X2yqtg9fZpzf4fXbOedFo8FlQerUpvvzEH2BMR5ViIqsI1zFszHqNnyQKWOd
+ 131f/fapBSM8Jh9TxEQ/Eta6dgeG6y9kYEcFvhHs2z5mAEBUGj0c9FhEVAm1HCsDnmVC
+ psL6Wf42s5oaoO8YiSoRykJcV0aKRT96K9qXnP0yL/vHvA4a/LyHv+Mxi/SNCREEyaH/
+ ZVZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779478632; x=1780083432;
+ d=1e100.net; s=20251104; t=1779478610; x=1780083410;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=H4fbpAWrwvWrzQHeEihm7BL4TjivtpObCtoA8m34nPQ=;
- b=r7y5E0ae/pHTVWeU1pWltXOxUGegYorhFLlMYmc1wpLeMx+YObsE7/YaQl6iKoGyb4
- g5BqDiLJdUk1YVezpvVvCXYu5g4aB7vM3G682DUlGzcBZknllUOVOI8kuNuuqRIPZhIE
- jRdFEMtd8HjpMXbWp3798nyyWSJoC/b1ADWW9DO1Guy9WmAfVoQBz0ATbvOcCEpYoQY5
- cUz37GavIqFt5n/ZbhU1KfKLuKebhaKBYE6g2lL9RSV2ICijbGCXpdamiv046c6WDpmt
- KPCa0b/xZGhzbeoCzEYsgk2PgCr2kgSwPqVDlrQzlQ2EbgZl+cfghUgP0cQInj4/r03D
- S6Ng==
-X-Gm-Message-State: AOJu0Yzgzye9hTRfkQd3ZXppiJZPqtYRgZV4t17M2mfs6qJjuYXaxHsq
- fdnk3nfn3jQhLsKQh86imxBXbbCsYwdLqZWJLQzmTcjK/54aDbdgkRd8
-X-Gm-Gg: Acq92OEy43g4BPbRbgi30ziDOj54ozjdNj7G8tYUb2X+LvieYtq567dOl/pqoCsOzPN
- f+7VFBonglsXw9u4ZqmbOELuq6VGWXXSFOCcfu2QNCEYTC0nBvDk76WNsvQFFEgWb0c3mxOG9vU
- 9kh6gcYmctBQOxeARw+hE6kJqCS0L/Cl9GK4+ZDhZG9dOuTusxU1KwRWWQqO4mkj6vGTLBSHwF+
- ORFnTz/PgfBCcZIs09FwTcfuU7o0qrYerQJtVgwX+nKrZAINP19xNNt4yOnLjtictvomBcVkTG8
- 2/9HeUknDSeSupjgJrYmN29Ko0Tc3iS3CSEWgCYdn5N9YPGCslT2mjFSGxxiRdr94Udv4e7pES0
- 3LRb3F1iIdU4O3hfFjVhxcg20zO68rrhKj4/TPbij5utt1iU1sEoatgUyHplyXzsQj4lv/mWC5I
- 7H826m9SI0a0/zrMKIny+hpqQu/oDCWTuLLqBXfhbq4PCdExkCh3N0DLXHmK/y256gBUmqGB+p6
- 3SLG4sK34sdAryHAz+4UWsH1Wl+l10nEeUO9ViixJ2olTWJgPgtnuM8DiW1Ya0//LDB
-X-Received: by 2002:a05:6808:1693:b0:479:f131:c4f2 with SMTP id
- 5614622812f47-4854a0fe77bmr2402921b6e.14.1779478632519; 
- Fri, 22 May 2026 12:37:12 -0700 (PDT)
+ bh=48Ai9CIUSaGzXZYONL1dAcOkXHUHQVK32aP2mmtN5aU=;
+ b=n5/R35QNc+eeO0YuiiEY89qIjMbWUObx6JKAJXYgg7hmJ55VIxUKMzOOoqEfDfX8Ik
+ 4JA38RRQoqoxd4dlfedKShy3absxJMusqVYKLFWcCSkXlpiPW7bBMfw/jKZts5KboR92
+ Ip02v6dmEDBKpvzgPRCbaKDibTBkwJNRISSNU3NeeCmESrx73pqiBpj49lqepKj/vvqN
+ S4Z6Fixz18IDy4dHbHg0ya6GCookllWVV0hFIOORimawsLFQ7e0Av7agj7te28ACy+X8
+ zmn1n4TJ6X0tb/yqL3p8O9NsKL+mjrPn6axzr6OL6qjTYNZ3b6wHaOXgSBxTfIChEkYQ
+ EYcQ==
+X-Gm-Message-State: AOJu0Yy7QrODGFC74x4y2iNv7PC545pxfnln4A++JxgH9CSVm8JGjOyk
+ yu8SmgOGzSAeYZzygUfidR0WvLQAJo70dY+Ujg2Vt8u9qpP+f42qB4x0
+X-Gm-Gg: Acq92OEAIn3BYnoupZhWORoNcWGfpBhSlpnhPmcLK0F1BQRP5qs0w+zVl5KKOUiXgbA
+ mD+FEiiQE+qflL0sNU0Ek1i82AnbyB4cLXNMb4ikxlgl6vhovRuQRunXilcGT/N7Cz6mxopcgn9
+ L5cOQngX9cFR1WbYhpXOo5Gv4k+LPbgEC2LGmy4ar5yHvgssj2F0dNlAEk3xKbM1+GC4A6miyIz
+ TcxUhscTOkp8rDQcQ/CAgV43FtQtJBGVLXQLuuRGoyvXFvbu4sTV5Z5Trbrx7JhcJ24pZkrM6Cb
+ KHBKDprjHTjorHlK/a0ZpFs0AKIEC4xIZDsq9ijEw/K0Lne9OEAR7Q/n8MQgyybq7NfdUG7CdTw
+ +AA84sqwowg0PCHeekWMfTZRt35u5L3odn5hvFXE2YQ+sUyYmq4S8K9DnPyCh9kRJPuf2K2j/E9
+ J4IHRoaccDylwbgQ/tFn0q1HoCK/rOZG6efQXkpKR1w7XAq6g3hxH4U/1aQ7G5921r5AvNGX8dV
+ ynFhHjky6li/RksAhyClOoi30Pb28zGMQF2rAW5uN9jcg7pePfEdXCLBXDnnU6jOtan
+X-Received: by 2002:a05:6808:5190:b0:469:fc59:b128 with SMTP id
+ 5614622812f47-4854a2282b8mr2576895b6e.25.1779478610169; 
+ Fri, 22 May 2026 12:36:50 -0700 (PDT)
 Received: from mac.localdomain (184-96-131-78.hlrn.qwest.net. [184.96.131.78])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-48554757d5dsm995297b6e.15.2026.05.22.12.37.11
+ 5614622812f47-48554757d5dsm995297b6e.15.2026.05.22.12.36.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 May 2026 12:37:12 -0700 (PDT)
+ Fri, 22 May 2026 12:36:49 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Fri, 22 May 2026 13:36:51 -0600
-Subject: [PATCH v15 20/22] target/mips: decode Octeon CHORD and LLM COP2
- selectors
+Date: Fri, 22 May 2026 13:36:34 -0600
+Subject: [PATCH v15 03/22] target/mips: add Octeon COP2 crypto helper plumbing
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260522-mips-octeon-missing-insns-v2-v15-20-f8731a588dc2@gmail.com>
+Message-Id: <20260522-mips-octeon-missing-insns-v2-v15-3-f8731a588dc2@gmail.com>
 References: <20260522-mips-octeon-missing-insns-v2-v15-0-f8731a588dc2@gmail.com>
 In-Reply-To: <20260522-mips-octeon-missing-insns-v2-v15-0-f8731a588dc2@gmail.com>
 To: qemu-devel@nongnu.org
@@ -110,100 +109,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add explicit decodetree entries and translator bindings for the Octeon
-CHORD and sparse LLM COP2 selectors.  CHORD and LLM use their own COP2
-selector window rather than the crypto engine windows covered by the
-preceding decode patches.
+Add the Octeon COP2 crypto helper source file and build it with the MIPS
+TCG target. This provides the common compilation unit for the COP2 engine
+helpers.
 
-This completes the explicit COP2 selector coverage by adding the
-remaining CHORD and LLM register and operation selectors.
+The instruction dispatch itself remains fully decoded by decodetree, and
+operation selectors call per-operation helpers rather than a common
+selector-dispatch helper.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
-Changes v13 -> v14:
-  - Leave the CP2_Undef fallback in the register-selector patch and keep
-    this patch limited to CHORD/LLM selector additions.
-
 Changes v9 -> v10:
-  - Split CHORD/LLM selector decode out of the monolithic Octeon COP2
-    selector decode patch.
-  - Kept sparse LLM operations helper-backed.
----
- target/mips/tcg/octeon.decode      | 13 +++++++++++++
- target/mips/tcg/octeon_translate.c | 13 +++++++++++++
- 2 files changed, 26 insertions(+)
+  - Remove shared-window selector constants and the shared-mode setter.
 
-diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index 4ac38d264c..a8c944e668 100644
---- a/target/mips/tcg/octeon.decode
-+++ b/target/mips/tcg/octeon.decode
-@@ -167,6 +167,9 @@ LDX          011111 ..... ..... ..... 01000 001010 @lx
-     CVM_MF_GFM_RESINP0                   010010 00001 rt:5 0000 0010 0101 1010 &cp2
-     CVM_MF_GFM_RESINP1                   010010 00001 rt:5 0000 0010 0101 1011 &cp2
-     CVM_MF_GFM_POLY                      010010 00001 rt:5 0000 0010 0101 1110 &cp2
-+    CVM_MF_CHORD                         010010 00001 rt:5 0000 0100 0000 0000 &cp2
-+    CVM_MF_LLM_DATA0                     010010 00001 rt:5 0000 0100 0000 0010 &cp2
-+    CVM_MF_LLM_DATA1                     010010 00001 rt:5 0000 0100 0000 1010 &cp2
-     CVM_MT_HSH_DAT0                      010010 00101 rt:5 0000 0000 0100 0000 &cp2
-     CVM_MT_HSH_DAT1                      010010 00101 rt:5 0000 0000 0100 0001 &cp2
-     CVM_MT_HSH_DAT2                      010010 00101 rt:5 0000 0000 0100 0010 &cp2
-@@ -261,6 +264,16 @@ LDX          011111 ..... ..... ..... 01000 001010 @lx
-     CVM_MT_SHA3_XORDAT15                 010010 00101 rt:5 0000 0010 1100 1111 &cp2
-     CVM_MT_SHA3_XORDAT16                 010010 00101 rt:5 0000 0010 1101 0000 &cp2
-     CVM_MT_SHA3_XORDAT17                 010010 00101 rt:5 0000 0010 1101 0001 &cp2
-+    CVM_MT_LLM_READ_ADDR0                010010 00101 rt:5 0000 0100 0000 0000 &cp2
-+    CVM_MT_LLM_WRITE_ADDR0               010010 00101 rt:5 0000 0100 0000 0001 &cp2
-+    CVM_MT_LLM_DATA0                     010010 00101 rt:5 0000 0100 0000 0010 &cp2
-+    CVM_MT_LLM_READ64_ADDR0              010010 00101 rt:5 0000 0100 0000 0100 &cp2
-+    CVM_MT_LLM_WRITE64_ADDR0             010010 00101 rt:5 0000 0100 0000 0101 &cp2
-+    CVM_MT_LLM_READ_ADDR1                010010 00101 rt:5 0000 0100 0000 1000 &cp2
-+    CVM_MT_LLM_WRITE_ADDR1               010010 00101 rt:5 0000 0100 0000 1001 &cp2
-+    CVM_MT_LLM_DATA1                     010010 00101 rt:5 0000 0100 0000 1010 &cp2
-+    CVM_MT_LLM_READ64_ADDR1              010010 00101 rt:5 0000 0100 0000 1100 &cp2
-+    CVM_MT_LLM_WRITE64_ADDR1             010010 00101 rt:5 0000 0100 0000 1101 &cp2
-     CVM_MT_CRC_LEN                       010010 00101 rt:5 0001 0010 0000 0010 &cp2
-     CVM_MT_CRC_DWORD                     010010 00101 rt:5 0001 0010 0000 0111 &cp2
-     CVM_MT_CRC_VAR                       010010 00101 rt:5 0001 0010 0000 1000 &cp2
-diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index 76792c9c87..a0db6630c7 100644
---- a/target/mips/tcg/octeon_translate.c
-+++ b/target/mips/tcg/octeon_translate.c
-@@ -235,6 +235,9 @@ CP2_MF_I64(CVM_MF_GFM_MUL1, gfm_mul[1]);
- CP2_MF_I64(CVM_MF_GFM_RESINP0, gfm_resinp[0]);
- CP2_MF_I64(CVM_MF_GFM_RESINP1, gfm_resinp[1]);
- CP2_MF_U16(CVM_MF_GFM_POLY, gfm_poly);
-+CP2_MF_I64(CVM_MF_CHORD, chord);
-+CP2_MF_I64(CVM_MF_LLM_DATA0, llm_data[0]);
-+CP2_MF_I64(CVM_MF_LLM_DATA1, llm_data[1]);
- 
- CP2_MF_HELPER(CVM_MF_CRC_IV_REFLECT, crc_iv_reflect);
- CP2_MF_I64(CVM_MF_SHA3_DAT24, sha3_dat24);
-@@ -306,6 +309,8 @@ CP2_MT_I64(CVM_MT_GFM_RESINP0, gfm_resinp[0]);
- CP2_MT_I64(CVM_MT_GFM_RESINP1, gfm_resinp[1]);
- CP2_MT_XOR_I64(CVM_MT_GFM_XOR0, gfm_resinp[0]);
- CP2_MT_U16(CVM_MT_GFM_POLY, gfm_poly);
-+CP2_MT_I64(CVM_MT_LLM_DATA0, llm_data[0]);
-+CP2_MT_I64(CVM_MT_LLM_DATA1, llm_data[1]);
- CP2_MT_U8_MASKED(CVM_MT_CRC_LEN, crc_len, 0xf);
- CP2_MT_U32(CVM_MT_CRC_POLYNOMIAL, crc_poly);
- 
-@@ -395,6 +400,14 @@ CP2_MT_HELPER(CVM_MT_HSH_STARTMD5, hsh_startmd5);
- CP2_MT_HELPER(CVM_MT_HSH_STARTSHA256, hsh_startsha256);
- CP2_MT_HELPER(CVM_MT_HSH_STARTSHA, hsh_startsha);
- CP2_MT_HELPER(CVM_MT_HSH_STARTSHA512, hsh_startsha512);
-+CP2_MT_HELPER(CVM_MT_LLM_READ_ADDR0, llm_read_addr0);
-+CP2_MT_HELPER(CVM_MT_LLM_WRITE_ADDR0, llm_write_addr0);
-+CP2_MT_HELPER(CVM_MT_LLM_READ64_ADDR0, llm_read64_addr0);
-+CP2_MT_HELPER(CVM_MT_LLM_WRITE64_ADDR0, llm_write64_addr0);
-+CP2_MT_HELPER(CVM_MT_LLM_READ_ADDR1, llm_read_addr1);
-+CP2_MT_HELPER(CVM_MT_LLM_WRITE_ADDR1, llm_write_addr1);
-+CP2_MT_HELPER(CVM_MT_LLM_READ64_ADDR1, llm_read64_addr1);
-+CP2_MT_HELPER(CVM_MT_LLM_WRITE64_ADDR1, llm_write64_addr1);
- 
- static bool trans_BBIT(DisasContext *ctx, arg_BBIT *a)
- {
+Changes v8 -> v9:
+  - Split helper plumbing out of the former monolithic COP2 helper patch.
+  - Keep shared-window selector arithmetic local to octeon_crypto.c.
+---
+ target/mips/tcg/meson.build     |  1 +
+ target/mips/tcg/octeon_crypto.c | 16 ++++++++++++++++
+ 2 files changed, 17 insertions(+)
+
+diff --git a/target/mips/tcg/meson.build b/target/mips/tcg/meson.build
+index fff9cd6c7f..4ee359874a 100644
+--- a/target/mips/tcg/meson.build
++++ b/target/mips/tcg/meson.build
+@@ -18,6 +18,7 @@ mips_ss.add(files(
+   'lmmi_helper.c',
+   'msa_helper.c',
+   'msa_translate.c',
++  'octeon_crypto.c',
+   'op_helper.c',
+   'rel6_translate.c',
+   'translate.c',
+diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
+new file mode 100644
+index 0000000000..df5b0449ae
+--- /dev/null
++++ b/target/mips/tcg/octeon_crypto.c
+@@ -0,0 +1,16 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * MIPS Octeon crypto emulation helpers.
++ *
++ * Copyright (c) 2026 James Hilliard
++ */
++
++#include "qemu/osdep.h"
++#include "cpu.h"
++#include "internal.h"
++#include "exec/helper-proto.h"
++#include "crypto/aes.h"
++#include "crypto/sm4.h"
++#include "qemu/bitops.h"
++#include "qemu/host-utils.h"
 
 -- 
 2.54.0
