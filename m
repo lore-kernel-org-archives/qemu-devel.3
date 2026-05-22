@@ -4,47 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 683C0CD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:53:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44663CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:54:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXnf-0007sJ-TV; Fri, 22 May 2026 17:53:00 -0400
+	id 1wQXlV-0008S6-Do; Fri, 22 May 2026 17:50:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXnd-0007Yh-7L; Fri, 22 May 2026 17:52:57 -0400
+ id 1wQXkt-0007ZK-Ji; Fri, 22 May 2026 17:50:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXnb-0004t5-6m; Fri, 22 May 2026 17:52:56 -0400
+ id 1wQXkr-0002eE-N8; Fri, 22 May 2026 17:50:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486561; bh=pRuzxg2xfxbxyj6206LkAip8Se84uW0D06jJxQlUGkM=;
+ t=1779486559; bh=Q9IaUrQ8GBoIzQb0JDHPhBgvBuj9NSR3QyVLqxaJLok=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XEakNSqKs4nSA6uBIDsGUQBf/g44RmsbmBLmil7R/cyE2aGzgrwSaP6VcTAGQHyZC
- 4UIxGQpQhfJ/0wVA9TINUULNpObH9RY6aM6FLrM0tTvPkjXK3JbMI4MsdCqPteP7Qa
- OX2Q+wXyJWbq0rZiUd4klKW1YtM/aI0aoEYhwXTUcYq1sCzhMnERdAgzx7Nl1PqHhX
- d8zm6LpyeOjruYfIYdpGz4QfjE1sXv9QOaGACYc+U/GJhD6aEt7dXf7j26uZ4lBWsB
- pPh+l5L4UP05qbFcRz93qTwIY3kLpF0YRZRrmfpaOz8Z2CvrtvugQnESYZnNkypCNj
- Z6JqNzKClXCQw==
+ b=Cw/7CGKDJNh8ayFUUIeUZWicazq+jIAFZVswHAMVujgA1XQJFyCuHRpfqnXZFXaZa
+ tAmrnvDfTxKKuQVOYv9RlXM2vUxdgKeJbZDB0lTjWIOTiII2HXIunPq1M/6ZY/iBf3
+ MOu2hIH33BMFROmUYUx3ZR4z5W1JQyP4vo5T/nKLRrmn5Oiuau7rXNE3n1Wq/7dryu
+ oZoOpfdg2hCT3+dNBm1xBCE1nMgydEWqEgJt7q3ytgkbytGoiIQ9VH1PMeyay/6/aN
+ jyr7PgMpymSK2mxJ8HK1h/oekHlG7spwpFFDbwBpvyVhr9iR3syM+vezkah3cVGUn6
+ a86pOSPMCecBw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9D3911AFB81;
- Sat, 23 May 2026 00:49:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A2D761AFB64;
+ Sat, 23 May 2026 00:49:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C71E63B71D0;
- Sat, 23 May 2026 00:49:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C8ED63B71B3;
+ Sat, 23 May 2026 00:49:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 139/149] ide: Minimal fix for deadlock between TRIM
- and drain
-Date: Sat, 23 May 2026 00:49:11 +0300
-Message-ID: <20260522214923.807017-40-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 110/149] target/arm: Report IL=0 for Thumb 16-bit BKPT
+ insn
+Date: Sat, 23 May 2026 00:48:42 +0300
+Message-ID: <20260522214923.807017-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,130 +73,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The implementation of TRIM in IDE can chain multiple discard requests
-and uses blk_inc/dec_in_flight() to make sure that the whole TRIM
-operation has completed when the device needs to be quiescent (e.g. for
-the drain when performing an IDE reset, it would be bad if an IDE
-request like TRIM were still in flight).
+The Thumb BKPT insn is 16-bit, and the ESR_ELx syndrome register
+definition requires that we set the IL bit to 0 for this, and 1 for
+the 32-bit A32 and A64 BKPT/BRK.
 
-The problem is that each drain request calls blk_wait_while_drained()
-and when draining, it waits until the drained section ends. At the same
-time, drain_begin can only return if the whole TRIM operation has
-completed. This is a classic deadlock.
+We used to do this correctly, but accidentally lost it in the
+conversion to decodetree, because we converted the A32 BKPT first,
+and then when we converted the T16 BKPT we forgot that trans_BKPT()
+was unconditionally setting IL=1.
 
-Use blk_co_start/end_request() and BDRV_REQ_NO_QUEUE to avoid the
-problem. This requires moving the TRIM state machine to a coroutine.
-This commit does the minimal conversion so that we do have a coroutine
-that works for the fix, but it still looks much like a callback-based
-implementation. This will be cleaned up in the next patch.
+Pass the right value for syn_aa32_bkpt()'s is_16bit argument.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 7e5cdb345f77 ('ide: Increment BB in-flight counter for TRIM BH')
-Buglink: https://redhat.atlassian.net/browse/RHEL-121686
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260421161132.99878-5-kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 095c08a7ba68cabaa6e0ce7a8a0804a949542c4c)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3474
+Fixes: 43f7e42c7d515f ("target/arm: Convert T16, Miscellaneous 16-bit instructions")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260505103726.419195-1-peter.maydell@linaro.org
+(cherry picked from commit f443b687636205b7f70029692b244f1f90532cf2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ide/core.c b/hw/ide/core.c
-index c66a9d8df0..a2430f3a8e 100644
---- a/hw/ide/core.c
-+++ b/hw/ide/core.c
-@@ -420,7 +420,6 @@ typedef struct TrimAIOCB {
-     QEMUBH *bh;
-     int ret;
-     QEMUIOVector *qiov;
--    BlockAIOCB *aiocb;
-     int i, j;
- } TrimAIOCB;
- 
-@@ -433,11 +432,6 @@ static void trim_aio_cancel(BlockAIOCB *acb)
-     iocb->i = (iocb->qiov->iov[iocb->j].iov_len / 8) - 1;
- 
-     iocb->ret = -ECANCELED;
--
--    if (iocb->aiocb) {
--        blk_aio_cancel_async(iocb->aiocb);
--        iocb->aiocb = NULL;
--    }
- }
- 
- static const AIOCBInfo trim_aiocb_info = {
-@@ -456,15 +450,20 @@ static void ide_trim_bh_cb(void *opaque)
-     iocb->bh = NULL;
-     qemu_aio_unref(iocb);
- 
--    /* Paired with an increment in ide_issue_trim() */
--    blk_dec_in_flight(blk);
-+    /* Paired with blk_co_start_request in ide_trim_co_entry() */
-+    blk_end_request(blk);
- }
- 
--static void ide_issue_trim_cb(void *opaque, int ret)
-+static void coroutine_fn ide_trim_co_entry(void *opaque)
- {
-     TrimAIOCB *iocb = opaque;
-     IDEState *s = iocb->s;
-+    int ret = 0;
-+
-+    /* Paired with blk_end_request in ide_trim_bh_cb() */
-+    blk_co_start_request(s->blk);
- 
-+loop:
-     if (iocb->i >= 0) {
-         if (ret >= 0) {
-             block_acct_done(blk_get_stats(s->blk), &s->acct);
-@@ -499,11 +498,11 @@ static void ide_issue_trim_cb(void *opaque, int ret)
-                                  count << BDRV_SECTOR_BITS, BLOCK_ACCT_UNMAP);
- 
-                 /* Got an entry! Submit and exit.  */
--                iocb->aiocb = blk_aio_pdiscard(s->blk,
--                                               sector << BDRV_SECTOR_BITS,
--                                               count << BDRV_SECTOR_BITS,
--                                               ide_issue_trim_cb, opaque);
--                return;
-+                ret = blk_co_pdiscard(s->blk,
-+                                      sector << BDRV_SECTOR_BITS,
-+                                      count << BDRV_SECTOR_BITS,
-+                                      BDRV_REQ_NO_QUEUE);
-+                goto loop;
-             }
- 
-             iocb->j++;
-@@ -514,7 +513,6 @@ static void ide_issue_trim_cb(void *opaque, int ret)
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 0a92300f9b..bca278daf0 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -3562,7 +3562,7 @@ static bool trans_BKPT(DisasContext *s, arg_BKPT *a)
+         (a->imm == 0xab)) {
+         gen_exception_internal_insn(s, EXCP_SEMIHOST);
+     } else {
+-        gen_exception_bkpt_insn(s, syn_aa32_bkpt(a->imm, false));
++        gen_exception_bkpt_insn(s, syn_aa32_bkpt(a->imm, curr_insn_len(s) == 2));
      }
- 
- done:
--    iocb->aiocb = NULL;
-     if (iocb->bh) {
-         replay_bh_schedule_event(iocb->bh);
-     }
-@@ -527,9 +525,7 @@ BlockAIOCB *ide_issue_trim(
-     IDEState *s = opaque;
-     IDEDevice *dev = s->unit ? s->bus->slave : s->bus->master;
-     TrimAIOCB *iocb;
--
--    /* Paired with a decrement in ide_trim_bh_cb() */
--    blk_inc_in_flight(s->blk);
-+    Coroutine *co;
- 
-     iocb = blk_aio_get(&trim_aiocb_info, s->blk, cb, cb_opaque);
-     iocb->s = s;
-@@ -539,7 +535,10 @@ BlockAIOCB *ide_issue_trim(
-     iocb->qiov = qiov;
-     iocb->i = -1;
-     iocb->j = 0;
--    ide_issue_trim_cb(iocb, 0);
-+
-+    co = qemu_coroutine_create(ide_trim_co_entry, iocb);
-+    aio_co_enter(qemu_get_current_aio_context(), co);
-+
-     return &iocb->common;
+     return true;
  }
- 
 -- 
 2.47.3
 
