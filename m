@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC9B1CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:57:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A456CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:57:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXnc-0007Kx-1W; Fri, 22 May 2026 17:52:56 -0400
+	id 1wQXnd-0007Yb-GN; Fri, 22 May 2026 17:52:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXnZ-00074N-I2; Fri, 22 May 2026 17:52:53 -0400
+ id 1wQXnb-0007Ia-3X; Fri, 22 May 2026 17:52:55 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXnW-0004bk-Sn; Fri, 22 May 2026 17:52:53 -0400
+ id 1wQXnZ-0004pR-2a; Fri, 22 May 2026 17:52:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486561; bh=XLuOu2cSNcSji7uiKveZs6B32uKB5jmPtFUgBpL1RfM=;
+ t=1779486561; bh=mjCVHlbBqsBhNHaMV81ofn1gao8FpAyUFLppKRHX0sM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=DhKTd6xayLW/o/Z5Jf4ZVq4bLXDGDtLwCYu1Wd+v5Q5ZSiQdRze2/9FDn1f2gyvbe
- 99ekd9MN8e+XBHO7RwYHXv98BXoOPArI+EW2KtcgriXfAdQcDk9rDYsQgQuYf6ybR3
- LQDppFjTIvOO1qkiRxdXPnBfSMyrwv5nxh2WyPYj4ZRdBBW79qa482rL4n/x4fRF1x
- ERq9vq8G8okSc4Q4uuttvz6qZ4KSKb8eRbje2jpYvPAGOWrUMSJRY1R8zBNw7urWtY
- b9OGNYQcbrFt9PRg3PRlWAhVW0xWVrZrRb6uAHlGSUOTa4xYz1n3HJwsUMaQ08V1Iy
- 32MxfFo5pLMXQ==
+ b=tLIq2jXh1D7SZgmuLwkyVLUBmirEHAAc7V+JO/Bnsz1SiFIC30EX2W7rB0ZoaLf7n
+ hORymK1myai0bSLg5N7NU6am3R2HAjIwRlqyM7opXFgoOJurBHWUbYPQD3U3y6pjn+
+ GohoaLuKBYrGi83Q3i8njJ7UVIy76L7DvnbDYT7qX8/6JzPrA12QGO4Xhrl9gZOsZU
+ PDQ1ZJc0Z8P//9ytMxc6i3QFOknFncUPIvi0/ZDFHE2w4uwvk8HSeyHmiKXc2hIEOv
+ KcyV+s+Csoo4z22NKisildmVqWfwHzMfPV94HTmUhxTtEJycW4lcKgPwsgS5dcPGpA
+ 1E5vaC43mfXkA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 82F4F1AFB7F;
+ by isrv.corpit.ru (Postfix) with ESMTP id 902931AFB80;
  Sat, 23 May 2026 00:49:21 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AD4013B71CE;
+ by tsrv.corpit.ru (Postfix) with ESMTP id B98C73B71CF;
  Sat, 23 May 2026 00:49:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 137/149] block: Add blk_co_start/end_request() and
- BDRV_REQ_NO_QUEUE
-Date: Sat, 23 May 2026 00:49:09 +0300
-Message-ID: <20260522214923.807017-38-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 138/149] block: Add flags parameter to blk_*_pdiscard()
+Date: Sat, 23 May 2026 00:49:10 +0300
+Message-ID: <20260522214923.807017-39-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
@@ -71,187 +70,155 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kevin Wolf <kwolf@redhat.com>
 
-If a device uses blk_inc/dec_in_flight() in order to build macro
-operations that involve multiple requests for the block layer and that
-need to be completed as a unit before the BlockBackend can be considered
-drained, it sets the stage for a deadlock: When a drain is requested,
-the inner request at the BlockBackend level will be queued in
-blk_wait_while_drained() and wait until the drained section ends, but at
-the same time, drain_begin can only return if the whole macro operation
-at the device level has completed.
-
-Introduce a new interface to allow implementing the logic correctly:
-Instead of queueing individual requests, blk_co_start_request() calls
-blk_wait_while_drained() once at the beginning. The individual requests
-must then set BDRV_REQ_NO_QUEUE to avoid being queued and running into
-the deadlock; being wrapped in blk_co_start/end_request() makes sure
-that drain_begin waits for them and they don't sneak in when the
-BlockBackend is supposed to already be quiescent.
+All existing callers pass 0, but we need a way to pass BDRV_REQ_NO_QUEUE
+for discard requests.
 
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260421161132.99878-3-kwolf@redhat.com>
+Message-ID: <20260421161132.99878-4-kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 34a67637767d3ed1ac813c44effe827bbfba5996)
+(cherry picked from commit 53074ba0330ae8831abbae2521c012e1d9072ed3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/block/block-backend.c b/block/block-backend.c
-index 98315d4470..b8d877c4e7 100644
+index b8d877c4e7..850f2ecec2 100644
 --- a/block/block-backend.c
 +++ b/block/block-backend.c
-@@ -82,6 +82,7 @@ struct BlockBackend {
-     QemuMutex queued_requests_lock; /* protects queued_requests */
-     CoQueue queued_requests;
-     bool disable_request_queuing; /* atomic */
-+    int start_request_count; /* atomic */
- 
-     VMChangeStateEntry *vmsh;
-     bool force_allow_inactivate;
-@@ -1306,10 +1307,16 @@ bool blk_in_drain(BlockBackend *blk)
- }
+@@ -1803,12 +1803,13 @@ BlockAIOCB *blk_aio_ioctl(BlockBackend *blk, unsigned long int req, void *buf,
  
  /* To be called between exactly one pair of blk_inc/dec_in_flight() */
--static void coroutine_fn blk_wait_while_drained(BlockBackend *blk)
-+static void coroutine_fn blk_wait_while_drained(BlockBackend *blk,
-+                                                BdrvRequestFlags flags)
+ static int coroutine_fn
+-blk_co_do_pdiscard(BlockBackend *blk, int64_t offset, int64_t bytes)
++blk_co_do_pdiscard(BlockBackend *blk, int64_t offset, int64_t bytes,
++                   BdrvRequestFlags flags)
  {
-     assert(blk->in_flight > 0);
- 
-+    if (flags & BDRV_REQ_NO_QUEUE) {
-+        assert(qatomic_read(&blk->start_request_count));
-+        return;
-+    }
-+
-     if (qatomic_read(&blk->quiesce_counter) &&
-         !qatomic_read(&blk->disable_request_queuing)) {
-         /*
-@@ -1335,7 +1342,7 @@ blk_co_do_preadv_part(BlockBackend *blk, int64_t offset, int64_t bytes,
-     BlockDriverState *bs;
-     IO_CODE();
- 
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, flags);
-     GRAPH_RDLOCK_GUARD();
- 
-     /* Call blk_bs() only after waiting, the graph may have changed */
-@@ -1410,7 +1417,7 @@ blk_co_do_pwritev_part(BlockBackend *blk, int64_t offset, int64_t bytes,
-     BlockDriverState *bs;
-     IO_CODE();
- 
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, flags);
-     GRAPH_RDLOCK_GUARD();
- 
-     /* Call blk_bs() only after waiting, the graph may have changed */
-@@ -1523,6 +1530,19 @@ void blk_dec_in_flight(BlockBackend *blk)
-     aio_wait_kick();
- }
- 
-+void coroutine_fn blk_co_start_request(BlockBackend *blk)
-+{
-+    blk_inc_in_flight(blk);
-+    blk_wait_while_drained(blk, 0);
-+    qatomic_inc(&blk->start_request_count);
-+}
-+
-+void blk_end_request(BlockBackend *blk)
-+{
-+    qatomic_dec(&blk->start_request_count);
-+    blk_dec_in_flight(blk);
-+}
-+
- static void error_callback_bh(void *opaque)
- {
-     struct BlockBackendAIOCB *acb = opaque;
-@@ -1741,7 +1761,7 @@ blk_co_do_ioctl(BlockBackend *blk, unsigned long int req, void *buf)
- {
-     IO_CODE();
- 
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, 0);
-     GRAPH_RDLOCK_GUARD();
- 
-     if (!blk_co_is_available(blk)) {
-@@ -1788,7 +1808,7 @@ blk_co_do_pdiscard(BlockBackend *blk, int64_t offset, int64_t bytes)
      int ret;
      IO_CODE();
  
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, 0);
+-    blk_wait_while_drained(blk, 0);
++    blk_wait_while_drained(blk, flags);
      GRAPH_RDLOCK_GUARD();
  
      ret = blk_check_byte_request(blk, offset, bytes);
-@@ -1834,7 +1854,7 @@ int coroutine_fn blk_co_pdiscard(BlockBackend *blk, int64_t offset,
- static int coroutine_fn blk_co_do_flush(BlockBackend *blk)
+@@ -1824,7 +1825,7 @@ static void coroutine_fn blk_aio_pdiscard_entry(void *opaque)
+     BlkAioEmAIOCB *acb = opaque;
+     BlkRwCo *rwco = &acb->rwco;
+ 
+-    rwco->ret = blk_co_do_pdiscard(rwco->blk, rwco->offset, acb->bytes);
++    rwco->ret = blk_co_do_pdiscard(rwco->blk, rwco->offset, acb->bytes, 0);
+     blk_aio_complete(acb);
+ }
+ 
+@@ -1838,13 +1839,13 @@ BlockAIOCB *blk_aio_pdiscard(BlockBackend *blk,
+ }
+ 
+ int coroutine_fn blk_co_pdiscard(BlockBackend *blk, int64_t offset,
+-                                 int64_t bytes)
++                                 int64_t bytes, BdrvRequestFlags flags)
  {
-     IO_CODE();
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, 0);
-     GRAPH_RDLOCK_GUARD();
- 
-     if (!blk_co_is_available(blk)) {
-@@ -2009,7 +2029,7 @@ int coroutine_fn blk_co_zone_report(BlockBackend *blk, int64_t offset,
-     IO_CODE();
- 
-     blk_inc_in_flight(blk); /* increase before waiting */
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, 0);
-     GRAPH_RDLOCK_GUARD();
-     if (!blk_is_available(blk)) {
-         blk_dec_in_flight(blk);
-@@ -2034,7 +2054,7 @@ int coroutine_fn blk_co_zone_mgmt(BlockBackend *blk, BlockZoneOp op,
-     IO_CODE();
+     int ret;
+     IO_OR_GS_CODE();
  
      blk_inc_in_flight(blk);
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, 0);
-     GRAPH_RDLOCK_GUARD();
+-    ret = blk_co_do_pdiscard(blk, offset, bytes);
++    ret = blk_co_do_pdiscard(blk, offset, bytes, flags);
+     blk_dec_in_flight(blk);
  
-     ret = blk_check_byte_request(blk, offset, len);
-@@ -2058,7 +2078,7 @@ int coroutine_fn blk_co_zone_append(BlockBackend *blk, int64_t *offset,
-     IO_CODE();
+     return ret;
+diff --git a/block/export/virtio-blk-handler.c b/block/export/virtio-blk-handler.c
+index bc1cec6757..b82baae553 100644
+--- a/block/export/virtio-blk-handler.c
++++ b/block/export/virtio-blk-handler.c
+@@ -121,7 +121,7 @@ virtio_blk_discard_write_zeroes(VirtioBlkHandler *handler, struct iovec *iov,
+         }
  
-     blk_inc_in_flight(blk);
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, flags);
-     GRAPH_RDLOCK_GUARD();
-     if (!blk_is_available(blk)) {
-         blk_dec_in_flight(blk);
-diff --git a/include/block/block-common.h b/include/block/block-common.h
-index c8c626daea..895ea17541 100644
---- a/include/block/block-common.h
-+++ b/include/block/block-common.h
-@@ -215,8 +215,17 @@ typedef enum {
-      */
-     BDRV_REQ_NO_WAIT = 0x400,
+         if (blk_co_pdiscard(blk, sector << VIRTIO_BLK_SECTOR_BITS,
+-                            bytes) == 0) {
++                            bytes, 0) == 0) {
+             return VIRTIO_BLK_S_OK;
+         }
+     }
+diff --git a/block/mirror.c b/block/mirror.c
+index 2fcded9e93..089856f4a8 100644
+--- a/block/mirror.c
++++ b/block/mirror.c
+@@ -454,7 +454,7 @@ static void coroutine_fn mirror_co_discard(void *opaque)
+     *op->bytes_handled = op->bytes;
+     op->is_in_flight = true;
  
-+    /*
-+     * Used between blk_co_start_request() and blk_end_request() to avoid
-+     * that the request waits in a drained BlockBackend until the drained
-+     * section ends. Waiting would cause a deadlock because drain waits for
-+     * blk_end_request() to be called, but the request never completes
-+     * because it waits for the drain to end.
-+     */
-+    BDRV_REQ_NO_QUEUE = 0x800,
-+
-     /* Mask of valid flags */
--    BDRV_REQ_MASK               = 0x7ff,
-+    BDRV_REQ_MASK               = 0xfff,
- } BdrvRequestFlags;
+-    ret = blk_co_pdiscard(op->s->target, op->offset, op->bytes);
++    ret = blk_co_pdiscard(op->s->target, op->offset, op->bytes, 0);
+     mirror_write_complete(op, ret);
+ }
  
- #define BDRV_O_NO_SHARE    0x0001 /* don't share permissions */
+@@ -1532,7 +1532,7 @@ do_sync_target_write(MirrorBlockJob *job, MirrorMethod method,
+                          zero_bitmap_end - zero_bitmap_offset);
+         }
+         assert(!qiov);
+-        ret = blk_co_pdiscard(job->target, offset, bytes);
++        ret = blk_co_pdiscard(job->target, offset, bytes, 0);
+         break;
+ 
+     default:
 diff --git a/include/system/block-backend-io.h b/include/system/block-backend-io.h
-index 6d5ac476fc..0248c1c36e 100644
+index 0248c1c36e..fd84723d9d 100644
 --- a/include/system/block-backend-io.h
 +++ b/include/system/block-backend-io.h
-@@ -71,6 +71,8 @@ BlockAIOCB *blk_aio_ioctl(BlockBackend *blk, unsigned long int req, void *buf,
+@@ -218,9 +218,9 @@ int co_wrapper_mixed blk_zone_append(BlockBackend *blk, int64_t *offset,
+                                          BdrvRequestFlags flags);
  
- void blk_inc_in_flight(BlockBackend *blk);
- void blk_dec_in_flight(BlockBackend *blk);
-+void coroutine_fn blk_co_start_request(BlockBackend *blk);
-+void blk_end_request(BlockBackend *blk);
+ int co_wrapper_mixed blk_pdiscard(BlockBackend *blk, int64_t offset,
+-                                  int64_t bytes);
++                                  int64_t bytes, BdrvRequestFlags flags);
+ int coroutine_fn blk_co_pdiscard(BlockBackend *blk, int64_t offset,
+-                                 int64_t bytes);
++                                 int64_t bytes, BdrvRequestFlags flags);
  
- bool coroutine_fn GRAPH_RDLOCK blk_co_is_inserted(BlockBackend *blk);
- bool co_wrapper_mixed_bdrv_rdlock blk_is_inserted(BlockBackend *blk);
+ int co_wrapper_mixed blk_flush(BlockBackend *blk);
+ int coroutine_fn blk_co_flush(BlockBackend *blk);
+diff --git a/nbd/server.c b/nbd/server.c
+index acec0487a8..bd103a8840 100644
+--- a/nbd/server.c
++++ b/nbd/server.c
+@@ -2984,7 +2984,7 @@ static coroutine_fn int nbd_handle_request(NBDClient *client,
+                                       "flush failed", errp);
+ 
+     case NBD_CMD_TRIM:
+-        ret = blk_co_pdiscard(exp->common.blk, request->from, request->len);
++        ret = blk_co_pdiscard(exp->common.blk, request->from, request->len, 0);
+         if (ret >= 0 && request->flags & NBD_CMD_FLAG_FUA) {
+             ret = blk_co_flush(exp->common.blk);
+         }
+diff --git a/qemu-io-cmds.c b/qemu-io-cmds.c
+index 13e0330162..f6d077908f 100644
+--- a/qemu-io-cmds.c
++++ b/qemu-io-cmds.c
+@@ -2201,7 +2201,7 @@ static int discard_f(BlockBackend *blk, int argc, char **argv)
+     }
+ 
+     clock_gettime(CLOCK_MONOTONIC, &t1);
+-    ret = blk_pdiscard(blk, offset, bytes);
++    ret = blk_pdiscard(blk, offset, bytes, 0);
+     clock_gettime(CLOCK_MONOTONIC, &t2);
+ 
+     if (ret < 0) {
+diff --git a/tests/unit/test-block-iothread.c b/tests/unit/test-block-iothread.c
+index e26b3be593..5273ff235a 100644
+--- a/tests/unit/test-block-iothread.c
++++ b/tests/unit/test-block-iothread.c
+@@ -270,11 +270,11 @@ static void test_sync_op_blk_pdiscard(BlockBackend *blk)
+     int ret;
+ 
+     /* Early success: UNMAP not supported */
+-    ret = blk_pdiscard(blk, 0, 512);
++    ret = blk_pdiscard(blk, 0, 512, 0);
+     g_assert_cmpint(ret, ==, 0);
+ 
+     /* Early error: Negative offset */
+-    ret = blk_pdiscard(blk, -2, 512);
++    ret = blk_pdiscard(blk, -2, 512, 0);
+     g_assert_cmpint(ret, ==, -EIO);
+ }
+ 
 -- 
 2.47.3
 
