@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89C75CD5BAF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE95DCD5BB1
 	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 00:06:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQDMw-0001Wi-D2; Thu, 21 May 2026 20:04:02 -0400
+	id 1wQDPS-0003vk-Vb; Thu, 21 May 2026 20:06:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wQDMu-0001Vk-91
- for qemu-devel@nongnu.org; Thu, 21 May 2026 20:04:00 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1wQDO5-0002YN-12
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 20:05:13 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wQDMs-0003G1-PG
- for qemu-devel@nongnu.org; Thu, 21 May 2026 20:04:00 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2bd9c3b550aso46085925ad.2
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 17:03:58 -0700 (PDT)
+ id 1wQDO1-0004B4-FL
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 20:05:12 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2b458ca2296so48485345ad.0
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 17:05:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779408237; x=1780013037; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779408303; x=1780013103; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WC2iiKLLlqcGQYDTGH87Wu5VEUoCfQXRtJb1LZHx4HU=;
- b=Pjzn3fpeYHVRs5IS/F5gpwmsKO8ZNAqggtkLauJNm9RAtpN5eMoa6lWjVkvVqBRcDG
- +T9EGS4DMz7A7BGZR2qfoyzsW7yJe7A0pHGrJTIFcaCXrm9TrJCQE9OytLDkBlcPv18S
- eEl/+NEyoH0AiNcz65L4g2Cz4VKtoy6Taw3oKOepQbo9KJ3UnKqXVFe/ofV8KzwoF9vM
- KRYeD2blOFi3X2QInpP5o+IDF/36AV5CCGRB6aki/MIFqgr7+EA58ADKP/W77A4MsrZb
- XhHlILnSBFgJFKYghkfGFT7i7NZrJp6vOREa2iFjd+CtcNTX5UTERXZ4dyribNNqqtXV
- reSA==
+ bh=kMMqLaKrCoP1vDhVq3vdZXjM2VTYqU1Msqxk/7vrSmo=;
+ b=d3XPh9psDEPSioIcAuNkB2mMXTHY4mr46mFORPgi9JPX1/H5w37P4dg+A8H13zxPRg
+ hXGBVxH4nxBbzybwHfK+lboIIqx1XiPnaYcuMQSJ5RUVxW4N/tqk0BveUUgnhYQybx9o
+ d13pYzV2eptoB+RnyAQ5khETkO/FUbY406WcOo5XgxXZ4fkUaQb6L5rXz1XhTsxqluE4
+ HtEtXwpsi/7+B5KA3npPq08lCWNPiMTOQNLDG230s1tqwLefP822Lx9j8X6Pi/KEK8o6
+ 9qhRs4VogEMNQnvSXWzTp15JIZvKFyijIPqFb8/yylz5braSsqzPoSV5WoooskeMIIbn
+ T1Rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779408237; x=1780013037;
+ d=1e100.net; s=20251104; t=1779408303; x=1780013103;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=WC2iiKLLlqcGQYDTGH87Wu5VEUoCfQXRtJb1LZHx4HU=;
- b=CX9yKKwaYp+fyyU3SSzXwehcE/r9InhpP7AS3OIxZCU/jvgHGFNGPPMUXmYiPfXw3n
- C3Fv7bnOj+2cE6RM3rVchvpfxTA9hqwpsYMxCqozGIzvK65x7Zz5SNaQrF9ZRIK0tZgZ
- n3m22xyqQ6wPMNTDZPg6kymTPGokfjUGAZj7IugLGr/rqZVHwKSTNcUuxMAevCr+YlaO
- 1YOagnuv+ecj43F2usosBXWL/KW/zLCeVWeBMAsWs3cAeY8im38nU6i36nrxONc3UWAQ
- u6DpKCTU6hDXWnXSLrEJ9McLDXMyb8fN4jCHH2MhirDcymnoRjuuOb22nkTWzrZSqPR/
- xZnQ==
-X-Gm-Message-State: AOJu0YwJxBCu5BL47e9bAHqfq8UgZgBIWP3vNl5q9dRGJuMwSdOz9CZ6
- kMsRlSFQu0JX9gGa9vM+R+1D3iD3xWUaWplZnBLBgsbzUlHrtK+SHu2HcF2q31Gx
-X-Gm-Gg: Acq92OHDJJzPxWDkUErgO2wVQ/2TW1DHUxmZdGmFNCO17B1EjpYph3Mxz8M9ztEgCYm
- jdFN6tbrI/+WhCtU/jCnyAIgQdJKLvXxtJhHL6PaCLT/iAGCC7DCo/uCkqu/SSj25pNtgcSUEAy
- /nAuUDktV5UMfLnYSdTcN/VS1xKs3JN2CdPrs1VTFvexpTw3roXLB6oBbbyZEjpxRkheJ/GmY5U
- 42YXjytLlUgyiwjHI403fNlF5iHlIdJcGaEjA1FBabdt+Dp0eVEC1oPQTtzEuH8zNyGcq/dOc0q
- K8HAh7/2hCG4kalgM85DV2Ss/Occe3NDf3rMVm1xFlVy3yZ6J+Ec+Ov9UK19cZsD6CGeEwoGRzD
- lx0uBgTEK4FykJizNB+r6xYrPHIvjU/WRmNoxTHy+ZG2VFIVH+lbcTtb4PFHlbroxAPy1KyQGJX
- vYtrdE9dHOzKrcIOydmOFI7ooc23Z4V6+V3SiMO+y0qw==
-X-Received: by 2002:a17:903:f90:b0:2bc:dca9:f0ef with SMTP id
- d9443c01a7336-2beb0770a09mr10606495ad.36.1779408237348; 
- Thu, 21 May 2026 17:03:57 -0700 (PDT)
+ bh=kMMqLaKrCoP1vDhVq3vdZXjM2VTYqU1Msqxk/7vrSmo=;
+ b=XLMyPsmDiNb47v8W8BOQ3bhTd8iA6wMVVrpVUFyihAmXd6+nPeWutK8R9GE4lUaEvS
+ qam0EZlDFCHYp7pZAgvq+uGlPJMBt0d3sSP6zX8F0haM3NLe6jVK7gEXKRfvLI8HXZvK
+ 5fQdH510wyYxBmnpUDHLGlWfcVG7JvMbVCJ8uIhyulo+jRsHtq5bWLEWvoS2FSJjPBxp
+ 5J+SquLa+fXBtkdDv5wh84jQmtHm5uQC4po36JzMAy+r2rPl99XXYjIqztdbBW7zbsTy
+ ugZr2lFfHRAisafAvAdgInv/wZvmDeOTs46Rvo4gjh37Fu18ZesLssyVGuici4fWR4WC
+ avFA==
+X-Gm-Message-State: AOJu0YzMaJaYp7tIhdx6eYE6CRH4kjbfHrPoMeQQ9MkKYmeCyJ62FE5i
+ N8p2+45jVPUY26I17Nl5OKCi/cOHetBZ9qb/dMTNs84gWe5rnoELw/R0pebfve6D
+X-Gm-Gg: Acq92OG9m2Ta+f7IBKUSEfkpJPVX2zDRgrNaVvIk5kUnGlZbjCyiUNOzJQ1kcgdr8Qk
+ fxt3OLefxbvpDkyN6g9HlArvLbMSZzjyuVgfrWfOWnfXp3GRjxJkEYh4RhJ9jd9+i6/5a0dRFFb
+ RQjd2O6JbsTbcz7SfLYceNGlba1h12ahqzBbLnCj6NwGr9zhCobzotIkMhmgI5pUPTSoAHvjk4i
+ lA2AVi+QJm2S+LxcSmR3TzeFWH8udqnqkEY8E6TS0OeQfog/5JrPxpSKvj9ix3s93z9cBHYSmgW
+ TyybmpENh5Googy+sxiVhKU2E+HrLLxLmYXwqwXR50aOZtEx98B8zTREhBmjlCLkoSkfuitMBei
+ NbRDPLhZ5TQW5ntPVx4QKGjhcgmPGysGHUeBoYf3Eqv+PkVerrMR3OKdatFv/i2lbcgcc6j/F1Z
+ xphP6TQephbuehvNs/b6So0o4Osj8nJBo5v0sPLlEtAQ==
+X-Received: by 2002:a17:902:d50c:b0:2bd:105c:91cb with SMTP id
+ d9443c01a7336-2beb059e13fmr11581135ad.15.1779408303288; 
+ Thu, 21 May 2026 17:05:03 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2beb114b54csm3915475ad.42.2026.05.21.17.03.54
+ d9443c01a7336-2beb114b54csm3915475ad.42.2026.05.21.17.05.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 17:03:56 -0700 (PDT)
+ Thu, 21 May 2026 17:05:02 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Mohamed Ayman <mohamedaymanworkspace@gmail.com>,
+Cc: alistair23@gmail.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 07/48] riscv: virt: avoid RISCVCPU copy in PMU FDT setup
-Date: Fri, 22 May 2026 10:02:43 +1000
-Message-ID: <20260522000324.23255-8-alistair.francis@wdc.com>
+Subject: [PULL 27/48] target/riscv/cpu.c: fix smctr/ssctr isa_edata_arr[] order
+Date: Fri, 22 May 2026 10:03:03 +1000
+Message-ID: <20260522000324.23255-28-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260522000324.23255-1-alistair.francis@wdc.com>
 References: <20260522000324.23255-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,37 +103,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mohamed Ayman <mohamedaymanworkspace@gmail.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-Use a pointer to the hart instead of copying RISCVCPU when
-passing pmu_avail_ctrs to riscv_pmu_generate_fdt_node().
+Noticed when realizing that 'svadu' was too far apart from 'svade'.
 
-Signed-off-by: Mohamed Ayman <mohamedaymanworkspace@gmail.com>
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260503180252.1122776-1-mohamedaymanworkspace@gmail.com>
+Message-ID: <20260512032926.1978818-3-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/virt.c | 4 ++--
+ target/riscv/cpu.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 315049bc86..3d06c9c610 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -722,11 +722,11 @@ static void create_fdt_pmu(RISCVVirtState *s)
- {
-     g_autofree char *pmu_name = g_strdup_printf("/pmu");
-     MachineState *ms = MACHINE(s);
--    RISCVCPU hart = s->soc[0].harts[0];
-+    RISCVCPU *hart = &s->soc[0].harts[0];
- 
-     qemu_fdt_add_subnode(ms->fdt, pmu_name);
-     qemu_fdt_setprop_string(ms->fdt, pmu_name, "compatible", "riscv,pmu");
--    riscv_pmu_generate_fdt_node(ms->fdt, hart.pmu_avail_ctrs, pmu_name);
-+    riscv_pmu_generate_fdt_node(ms->fdt, hart->pmu_avail_ctrs, pmu_name);
- }
- 
- static void create_fdt_sockets(RISCVVirtState *s,
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index f8a3b3ef4a..0a56dc61bc 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -222,6 +222,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(smcdeleg, PRIV_VERSION_1_13_0, ext_smcdeleg),
+     ISA_EXT_DATA_ENTRY(smcntrpmf, PRIV_VERSION_1_12_0, ext_smcntrpmf),
+     ISA_EXT_DATA_ENTRY(smcsrind, PRIV_VERSION_1_13_0, ext_smcsrind),
++    ISA_EXT_DATA_ENTRY(smctr, PRIV_VERSION_1_12_0, ext_smctr),
+     ISA_EXT_DATA_ENTRY(smdbltrp, PRIV_VERSION_1_13_0, ext_smdbltrp),
+     ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
+     ISA_EXT_DATA_ENTRY(smpmpmt, PRIV_VERSION_1_12_0, ext_smpmpmt),
+@@ -235,6 +236,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(sscofpmf, PRIV_VERSION_1_12_0, ext_sscofpmf),
+     ISA_EXT_DATA_ENTRY(sscounterenw, PRIV_VERSION_1_12_0, has_priv_1_12),
+     ISA_EXT_DATA_ENTRY(sscsrind, PRIV_VERSION_1_12_0, ext_sscsrind),
++    ISA_EXT_DATA_ENTRY(ssctr, PRIV_VERSION_1_12_0, ext_ssctr),
+     ISA_EXT_DATA_ENTRY(ssdbltrp, PRIV_VERSION_1_13_0, ext_ssdbltrp),
+     ISA_EXT_DATA_ENTRY(ssnpm, PRIV_VERSION_1_13_0, ext_ssnpm),
+     ISA_EXT_DATA_ENTRY(sspm, PRIV_VERSION_1_13_0, ext_sspm),
+@@ -246,8 +248,6 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(ssu64xl, PRIV_VERSION_1_12_0, has_priv_1_12),
+     ISA_EXT_DATA_ENTRY(supm, PRIV_VERSION_1_13_0, ext_supm),
+     ISA_EXT_DATA_ENTRY(svade, PRIV_VERSION_1_11_0, ext_svade),
+-    ISA_EXT_DATA_ENTRY(smctr, PRIV_VERSION_1_12_0, ext_smctr),
+-    ISA_EXT_DATA_ENTRY(ssctr, PRIV_VERSION_1_12_0, ext_ssctr),
+     ISA_EXT_DATA_ENTRY(svadu, PRIV_VERSION_1_12_0, ext_svadu),
+     ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),
+     ISA_EXT_DATA_ENTRY(svnapot, PRIV_VERSION_1_12_0, ext_svnapot),
 -- 
 2.53.0
 
