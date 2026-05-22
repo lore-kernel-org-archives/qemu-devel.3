@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B26FCD5BB0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5514CD5BBA
 	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:36:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXXM-0000uQ-CA; Fri, 22 May 2026 17:36:08 -0400
+	id 1wQXVh-000882-4F; Fri, 22 May 2026 17:34:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXVt-0008Di-62; Fri, 22 May 2026 17:34:37 -0400
+ id 1wQXVV-000878-8C; Fri, 22 May 2026 17:34:13 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXVr-0007eP-92; Fri, 22 May 2026 17:34:36 -0400
+ id 1wQXVR-0007Uu-0s; Fri, 22 May 2026 17:34:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485632; bh=197TdS6uvjBdNhXmqQHxcSGmobx776Db55g/ZGGL0i4=;
+ t=1779485632; bh=UhI+KDjAYlhcfCiXgj3KBHxzGA1hM+W7e3Oe7frWppQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Ra0ulNn2xoQKbRm0mS+gwuVNdNqijBc8uctOfI0Sezeqpd5R4RgIR9doE1qTlrzI6
- 0WpMJsHnyaHEc1I/86mh0mZgoY/LmpTDf0wkIPqM2+01m280F6iwKt89a6sZDXgxoR
- +Hp9A4+tELneCJqzfw7FKvRhD6eSYZICHR0jM+5qJ/rdEOkusZqR1N6dDdAx/YmR1f
- ldicPbENENLY6n9Ur1MzkSWmoRKWvKc8lxX55ai7kZ8KEWak+qlkTyH8l628gD80kL
- No1qYkWUK115FgxfaJkt/2lrEAvxykgK0zyQklE1I09pnsg+RGL6vmnALOzB1egw5D
- 0Xe2LkS4wOS0g==
+ b=MUxk/eLj3nUkSSb1O9lIbdD60B78ZE4TnZSBs3gOVwlar37mk+74uCQgxyThz/Q2p
+ NtCQkyVm6qTOHUAikZGzr2HHoU3wbXYFBRTw9moFl3sBfvtZXZp6V/joGMsUfZJ0JN
+ FNjFhWXuCygtT7kNfgpQoGryLO6NYPGNCnC7N6mVGYKbxrID6U1I5+OL8fyH9TBsri
+ I+/yiXxMwfh2i0dTw6RZxtKhkWSKjBVvuydNa7JBlBVYaZr4/BJMexDrYrgA9SHhHp
+ r+IZGfRRY1nz7aliRQZvxZAD11ucVGzLHHBPTpCDfyCbq3vAc9OaoSZCgCVZc6nrcm
+ 5AVW7fmz22WuA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EC30A1AFAD4;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4C2091AFACA;
  Sat, 23 May 2026 00:33:52 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1B5173B715A;
- Sat, 23 May 2026 00:33:57 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6CA443B7150;
+ Sat, 23 May 2026 00:33:56 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Katherine Leaver <katherine.j.leaver@gmail.com>,
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Feifan Qian <bea1e@proton.me>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 69/94] aspeed/hace: Prevent total_req_len overflow
-Date: Sat, 23 May 2026 00:33:26 +0300
-Message-ID: <20260522213356.806058-11-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 58/94] hw/uefi: check auth.hdr_length minimum size
+Date: Sat, 23 May 2026 00:33:16 +0300
+Message-ID: <20260522213356.806058-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
@@ -71,69 +71,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-In accumulate mode, total_req_len is incremented with plen (hwaddr)
-for each hash request. Repeated additions can overflow total_req_len
-(uint32_t) and potentially bypass validation checks in has_padding().
+auth.hdr_length maximum is already checked (against buffer size).  The
+header has some fixed fields which are included in the header length, so
+there also is a minimum size which must be verified.  Add a check for
+that.  Fixes possible integer underflow.
 
-Add a helper function to detect overflow before incrementing
-total_req_len and reject the request if overflow would occur.
+While being at it replace the magic number '24' with sizeof calculations
+for better code documentation.
 
-Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
-Cc: qemu-stable@nongnu.org
-Fixes: 5cd7d8564a8b ("aspeed/hace: Support AST2600 HACE")
-Link: https://lore.kernel.org/qemu-devel/20260504213421.710035-3-clg@redhat.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit c6aa2d0ac161f2a58a8fbab9a15e846278661158)
+Fixes: CVE-2026-8341
+Fixes: f1488fac0584 ("hw/uefi: add var-service-auth.c")
+Reported-by: Feifan Qian <bea1e@proton.me>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20260512060523.17493-1-kraxel@redhat.com>
+(cherry picked from commit b33fd8ab1caa07aeb290ef5dac44a4e7fd4be02b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
-index ef698b3ecb..0504d61cbf 100644
---- a/hw/misc/aspeed_hace.c
-+++ b/hw/misc/aspeed_hace.c
-@@ -205,6 +205,19 @@ static uint64_t hash_get_source_addr(AspeedHACEState *s)
-     return src_addr;
- }
+diff --git a/hw/uefi/var-service-auth.c b/hw/uefi/var-service-auth.c
+index 795f2f54e4..f3dc9c6ca6 100644
+--- a/hw/uefi/var-service-auth.c
++++ b/hw/uefi/var-service-auth.c
+@@ -194,7 +194,7 @@ static efi_status uefi_vars_check_auth_2_sb(uefi_vars_state *uv,
+         return EFI_SUCCESS;
+     }
  
-+static bool hash_accumulate_len(AspeedHACEState *s, hwaddr plen)
-+{
-+    if (plen > UINT32_MAX - s->total_req_len) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: total_req_len overflow, current=0x%x, adding=0x%"
-+                      HWADDR_PRIx "\n", __func__, s->total_req_len, plen);
-+        return false;
+-    if (auth.hdr_length == 24) {
++    if (auth.hdr_length == (sizeof(auth) - sizeof(auth.timestamp))) {
+         /* no signature (auth->cert_data is empty) */
+         return EFI_SECURITY_VIOLATION;
+     }
+@@ -228,6 +228,9 @@ efi_status uefi_vars_check_auth_2(uefi_vars_state *uv, uefi_variable *var,
+     }
+     memcpy(&auth, data, sizeof(auth));
+ 
++    if (auth.hdr_length < (sizeof(auth) - sizeof(auth.timestamp))) {
++        return EFI_SECURITY_VIOLATION;
 +    }
-+
-+    s->total_req_len += plen;
-+    return true;
-+}
-+
- static int hash_prepare_direct_iov(AspeedHACEState *s, struct iovec *iov,
-                                    bool acc_mode, bool *acc_final_request)
- {
-@@ -232,7 +245,9 @@ static int hash_prepare_direct_iov(AspeedHACEState *s, struct iovec *iov,
-     iov_idx = 1;
+     if (uadd64_overflow(sizeof(efi_time), auth.hdr_length, &data_offset)) {
+         return EFI_SECURITY_VIOLATION;
+     }
+diff --git a/hw/uefi/var-service-pkcs7.c b/hw/uefi/var-service-pkcs7.c
+index c859743e86..8a1f1395a2 100644
+--- a/hw/uefi/var-service-pkcs7.c
++++ b/hw/uefi/var-service-pkcs7.c
+@@ -113,9 +113,9 @@ static gnutls_datum_t *build_pkcs7(void *data)
  
-     if (acc_mode) {
--        s->total_req_len += plen;
-+        if (!hash_accumulate_len(s, plen)) {
-+            return -1;
-+        }
+     memcpy(&auth, data, sizeof(auth));
+     pkcs7 = g_new(gnutls_datum_t, 1);
+-    pkcs7->size = auth.hdr_length - 24;
++    pkcs7->size = auth.hdr_length - (sizeof(auth) - sizeof(auth.timestamp));
+     pkcs7->data = g_malloc(pkcs7->size);
+-    memcpy(pkcs7->data, data + 16 + 24, pkcs7->size);
++    memcpy(pkcs7->data, data + sizeof(auth), pkcs7->size);
  
-         if (has_padding(s, &iov[0], plen, &total_msg_len,
-                         &pad_offset)) {
-@@ -299,7 +314,9 @@ static int hash_prepare_sg_iov(AspeedHACEState *s, struct iovec *iov,
+     wrap_pkcs7(pkcs7);
  
-         iov[iov_idx].iov_base = haddr;
-         if (acc_mode) {
--            s->total_req_len += plen;
-+            if (!hash_accumulate_len(s, plen)) {
-+                return -1;
-+            }
- 
-             if (has_padding(s, &iov[iov_idx], plen, &total_msg_len,
-                             &pad_offset)) {
 -- 
 2.47.3
 
