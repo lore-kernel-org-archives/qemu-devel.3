@@ -4,69 +4,182 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EB4FCD5BAB
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 02:40:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F91FCD5BAB
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 02:45:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQFob-0006GP-J3; Thu, 21 May 2026 22:40:48 -0400
+	id 1wQFsN-0007Mw-OB; Thu, 21 May 2026 22:44:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wQFoS-0006EU-J6
- for qemu-devel@nongnu.org; Thu, 21 May 2026 22:40:41 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wQFoL-00057R-Se
- for qemu-devel@nongnu.org; Thu, 21 May 2026 22:40:35 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxhngXwg9qjz8MAA--.10942S3;
- Fri, 22 May 2026 10:40:23 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJCx98AOwg9q2jKMAA--.55253S3;
- Fri, 22 May 2026 10:40:14 +0800 (CST)
-Subject: Re: [PATCH 1/4] target/loongarch: add LVZ CPU state and CSR metadata
-To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
-Cc: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-References: <cover.1779171125.git.prcups@krgm.moe>
- <94fb3d6942546c67f0126d08a56797406c65fde1.1779171125.git.prcups@krgm.moe>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <21d4ba10-8b2a-bb8c-455d-f379ffd13259@loongson.cn>
-Date: Fri, 22 May 2026 10:37:13 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
-MIME-Version: 1.0
-In-Reply-To: <94fb3d6942546c67f0126d08a56797406c65fde1.1779171125.git.prcups@krgm.moe>
-Content-Type: text/plain; charset=utf-8; format=flowed
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1wQFsM-0007MU-AP
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 22:44:38 -0400
+Received: from mgamail.intel.com ([198.175.65.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1wQFsI-00080e-Pu
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 22:44:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1779417875; x=1810953875;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=eLd3E/Ah53j2Viix6qKwS9GnD6O7ufRr+cq3jm5RAHc=;
+ b=KSZbvg9Ge8LTL8lfVhG7gdzuaITIDQcKg2pNMb7Gyvun8w9MfKcv0bog
+ 0MocKopnNsr/KvfKFJNeA9In4GzJY52WADAKxZx8l9g5NBhLA4SFiJI+L
+ E8SNspNO1J/2k3AUTGAvi3HQW5BOj3VXg+3lRBGkqz+lqgW/5YHuQIxyo
+ 9soJ1vGR5jV73IbWrPUNoF9r16NZBOoTVJ167OjPIDdhfFJK4W39ep80q
+ ok/5XCPEScwAFcHnjpZ0yGQkqMyYvqBOwzOB7ke7707lXcfa9yBgRpM09
+ kWTqa1wXuJaCQf7pA149sNCkQIwFZbJNc/fbrC65gis3A25w3t6XXNOKX A==;
+X-CSE-ConnectionGUID: BfkSmVcKTPGyCnsA47Mz4Q==
+X-CSE-MsgGUID: kjlvHhOxRTasUcJLt07E0Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11793"; a="103022633"
+X-IronPort-AV: E=Sophos;i="6.24,161,1774335600"; d="scan'208";a="103022633"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 May 2026 19:44:29 -0700
+X-CSE-ConnectionGUID: nkm3BWdmSA+iOB1te9elGw==
+X-CSE-MsgGUID: 4lZ2bCNORJSoS+/x+lg5MA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,161,1774335600"; d="scan'208";a="240983360"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+ by orviesa007.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 May 2026 19:44:29 -0700
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Thu, 21 May 2026 19:44:28 -0700
+Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37 via Frontend Transport; Thu, 21 May 2026 19:44:28 -0700
+Received: from SN4PR2101CU001.outbound.protection.outlook.com (40.93.195.39)
+ by edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Thu, 21 May 2026 19:44:25 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Fnfz4MhwI+a1kkfrYBkSbRH3ehZR617mcj4N1mEPe6ZAii/lCXbd56LbWsQx9B42tCL1NB172ACOHq+fDIVMJjfpJMe27mkEqmoenjLt7MxoYBmRCFxGEVn1VV9b+TV6N0X4WdrQDm9Y5gE3gwtBPRLYDA9W24aG9CLu53UqiQfw8wUYIT7UkJh10mI/ESYk0bLuKfCq5KlYgHBvSBVjLKaCCMF67nIilslkSMz889iPR4gdv0IuFABjr70L3VMrLonJ3Xz1wHKkCZ1v78YRpdsklZT2yiKxnCK2TzyivPxGn/4VaT1dLRGVjATO/7VIYtMF3NXx15LD18x40hN5Bw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=eLd3E/Ah53j2Viix6qKwS9GnD6O7ufRr+cq3jm5RAHc=;
+ b=eSkOy1fymykpNFg0Wj4pQmFtT0zNABeCw3fXJ4CgNwm5tdRnfKLLgb+njr8ANraFq8GyyjN5CHNagSmvx2PxCFt4LpS2+ML0cZOIWr6RJsgLlBOcDaOWCLHr1q3AEFBu4eoSuLdixNT4w1Ur9XfuMifCTUvCqy85jpHHGPhFRsxeDZLGtHSrXcD6Ka0ytpffJ4RSYSVIs/82ShVxQhC41FyfL6CZ73K/OAuAlSNuX38d9fhDcFvalAs3PC+i30G1CSVrILWPQvyCME3EUfwMk/CVKCFNig67Yur6cJlTL/jzA/WeUeA6KCN8CSPc4jCDh6yAcrCnQvgzY6Eq5CbLYg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by CO1PR11MB4868.namprd11.prod.outlook.com (2603:10b6:303:90::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.17; Fri, 22 May
+ 2026 02:44:22 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::37b4:37a9:4f3:518b]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::37b4:37a9:4f3:518b%5]) with mapi id 15.20.9913.009; Fri, 22 May 2026
+ 02:44:22 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: "Liu, Yi L" <yi.l.liu@intel.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>, 
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "mst@redhat.com"
+ <mst@redhat.com>, "jasowang@redhat.com" <jasowang@redhat.com>,
+ "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
+ <nicolinc@nvidia.com>, "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "clement.mathieu--drif@bull.com" <clement.mathieu--drif@bull.com>, "Tian,
+ Kevin" <kevin.tian@intel.com>, "Hao, Xudong" <xudong.hao@intel.com>
+Subject: RE: [PATCH v5 09/15] intel_iommu_accel: Handle PASID entry addition
+ for pc_inv_dsc request
+Thread-Topic: [PATCH v5 09/15] intel_iommu_accel: Handle PASID entry addition
+ for pc_inv_dsc request
+Thread-Index: AQHc32me4EElSM8k006ingDT7vUeurYNadwAgAv9ygA=
+Date: Fri, 22 May 2026 02:44:21 +0000
+Message-ID: <IA3PR11MB9136BDEC87472A1BD0E93B09920F2@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20260509040819.1044702-1-zhenzhong.duan@intel.com>
+ <20260509040819.1044702-10-zhenzhong.duan@intel.com>
+ <44c1dd56-a37a-42ca-b8f3-9ac69aa1f33b@intel.com>
+In-Reply-To: <44c1dd56-a37a-42ca-b8f3-9ac69aa1f33b@intel.com>
+Accept-Language: en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCx98AOwg9q2jKMAA--.55253S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9fXoWfury8GFy8trWxZw1kCrWfJFc_yoW5GFW3Xo
- W5ZrWayw4fA3WfCF97Grs0qFZ2vr4xArZ8uFs7Xa15Ka13Kr48K3yrXay8trW8Wryjqw1r
- GF18t3sYyrn2y3W5l-sFpf9Il3svdjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8wcxFpf
- 9Il3svdxBIdaVrn0xqx4xG64xvF2IEw4CE5I8CrVC2j2Jv73VFW2AGmfu7bjvjm3AaLaJ3
- UjIYCTnIWjp_UUUY27kC6x804xWl14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI
- 8IcIk0rVWrJVCq3wAFIxvE14AKwVWUXVWUAwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xG
- Y2AK021l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14
- v26r1j6r4UM28EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j0FALU
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -48
-X-Spam_score: -4.9
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|CO1PR11MB4868:EE_
+x-ms-office365-filtering-correlation-id: 60d14bf1-3697-4195-fd80-08deb7ac0768
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|7416014|376014|1800799024|18002099003|56012099003|22082099003|3613699012|38070700021|6133799003|4143699003|11063799006;
+x-microsoft-antispam-message-info: 1yZa+TrayDgaGTSfmVm1BSCgzalolCScxDDG8OgVsFn8rSWxsoPExCFTTfVK5o9QEQ7dA2eLZLd8+WeLmSaXBfcrWdwEni7GjzBPYheXJZPngT6D/+fBLAkZyqADcTbNgiuXfdPsAMPOQ91kkrl4RHFWkJTDyBnxDvVNBWgixNcUNdlJUiVRmduaYFM9DhSvUj0e6FzGHAs5aWF6vLiA74LLYPmrxvQaZ8nv8zTICyHKwfHUjjCSf+DwJzXXcvn7C1+5X+hH1MDwK5MMWTEbBPzJ6MtqbvjyDL4ZAsyVa3dICUGsKu0ZesPrBA4tWKWk/PlsAlH/aH5LfrBdlnV99EXgBqHLSidM5rY4ernV4BX15VOcT3y7ZmmPnuqYXQnLxLrWITDe8iaqFPfuU6a8nZaVrZHOq5r13mZVk8Yc6tAbR+3CnZmrPqNTrFUpU82KifkqVZ+6OZpU6+jQlkE+8t2YIrtGlBZ8cpLFeBa64ZRxf18SsWvg5q7VEYXLasiR81oAh9AlwYonC0gG18XQ3bekqFSSGrx6rFEOvodACW+y4EDKTvwXxEbuEKwKM+Wj2tWmv8M9z8q/qZaxwox3rjtQEsHxSIL8shi1fF4IZjJsdX2VSjUfro9zCegT9w4aNIKubpGoZufI49CD2c31YCziWMtCE2sJmLoN35TmXV9hQQaik1e9VpJzK4VpwEhsSAFWQJnFnQom/UY4I9J8Xy6bROBcqPizJPdvArGc+S/wZhwqerQ7P7TBrJKQFXTbYadcAy1uSrzu5O+vzBASqA==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(7416014)(376014)(1800799024)(18002099003)(56012099003)(22082099003)(3613699012)(38070700021)(6133799003)(4143699003)(11063799006);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?dWZFOTk0aTczY3BFa1VsNDNJNUpHRDFzYmRCVkhUZHlrZGJrelNaeEhsU0FO?=
+ =?utf-8?B?MmNPT2pJaGEyMFRGOEN1S2lidVNWZDlLZlhwQm50N1lIWDU3eVBtbTdwWHV2?=
+ =?utf-8?B?YmxHQjdGWXNHTGhHUXNFVzNkdG5yOE9icHBqMFFSYTluNjRTbmlPWHg0eVJh?=
+ =?utf-8?B?UTl5NS9YeFhRdnhwUWNzRzdHdW93NE9VVzNEcDl4RjFpNFRtSktvaVVyNDRr?=
+ =?utf-8?B?QmpiV0NsY2pqYTQvcll2VE1zOTAxTDNzVzVUQWpTUHY2Ri9Ea0djUW5GcHdE?=
+ =?utf-8?B?RGxCelNYUjE0WDByalFGNVRvODJCSTlSd2R6RE5pelNEamJpSGxpOWFleVZx?=
+ =?utf-8?B?YkdsSXBRalYySHpmT2Z4aU5rcjNiNHdWSlJyd3RpTE1ldDRMTmU0R3VUZ2Vw?=
+ =?utf-8?B?Y29icGh5WUNGTzVGbG5hb2lUaDhIUFlQNlhhL3h4WldTUHB6SFh2a1FzcHZ3?=
+ =?utf-8?B?emRHYUxLYk1ldWhTWXY2cmR4bkxNaVpBVU9OZEE4aUE3OTIxRE5UcDV0RUZY?=
+ =?utf-8?B?ZStYT1FJb2hsc05pZm9hL2h3QVM1dEg4MG9YSTRyZXE2RVJ2b1Z0VVZPeWpp?=
+ =?utf-8?B?ZlkrNlRWeGttaUE2TFk4WjRwOWZpTE9nelVCay83RE41SEphSDM4RkFBU3Ns?=
+ =?utf-8?B?Skl3Ui95aUxtcnZBQklTcWNNYXhDNlJiSFZjcFVNeHlTTWk0RWNHeXBRWkh0?=
+ =?utf-8?B?ZGpZd0JxVUMyU2p3UmNQby81OE40RlNBZTZoZ29vcElUWWRBZlcwQzR6bEFk?=
+ =?utf-8?B?ZGxFcHhFQU5YeVZHVEFtY2lDTzhZbWlKbFAvdUQveFhpQy80Y3lnQ0xKQWdh?=
+ =?utf-8?B?OWNVN2NEb2tQbmROZUltRXA5dmhrL2JzVUdEVnRGdkdodGRCUFQwUm5lOEVP?=
+ =?utf-8?B?SnRtbWs0dDM4bER4MmVhejdxeHJSSlp4S1RKZ0FYQnA5UmUyOTc2L1hQRXBR?=
+ =?utf-8?B?eDR0NUlJbnBVSWJyWUh5OW95aE9WYTlZOFI1R2tuUnd2MUthdkRSSTBSSVZL?=
+ =?utf-8?B?b2VwU3JIKzEyYkhnMDd5NWl0QWhtSDZJa3FJU1lMcFJQcmVDUXZUYTd6OWpT?=
+ =?utf-8?B?MWhJRExoZFl4OEtTcVVCWmdPUktYbXlrYjNxb2JMeXlJSGR4bjBjY2hDSDZ6?=
+ =?utf-8?B?b3o0N1lyR1p4QXdPWllyMXJkNHBmL0NqdzhJS1VDdVRSUGJLd0FyNVRvZnVi?=
+ =?utf-8?B?RitHSjRGb2pEZ1FTN2RiTWx1dUJSSlRxNDNEVVRLLzFBb01SSlgzc2FaajdF?=
+ =?utf-8?B?LzcyVHR6Y3lic2VtUkZZNmxzME1wb0ZpSDdLRFdiRlRPTmxBSE9SdVVzSGlF?=
+ =?utf-8?B?eFFVb094M3QvZkVjNlZQUFlkUkpvTG1TUk00UWNyY1gzRWlFWnVBTlFyWEMr?=
+ =?utf-8?B?SThnUUROeEViajlpNDdjcU5lYzdtZ05TWlhMdGNaeEttUkZsWnhSZDlJTWk2?=
+ =?utf-8?B?WWdkbExLaTBRTUhvRm40UWFBRFJoY214cWJNUHRzeXQyN1Qwc0IzbGM3YmNx?=
+ =?utf-8?B?T2Zpa1c1MDFXUHVCbFd3cTQ5UVBMVndRbHJjL0FqZzBhTDAvL3BwTXZLSmpV?=
+ =?utf-8?B?WGo3RU41K0VGeC81V1RVbU1ZRWZNTUJJdEtmaForaSt6OWhGalZCUHhKak1s?=
+ =?utf-8?B?RXBmRkN0eUt4a1BtUHV5d3ViSkl3NHUvU09DNnRUbFY1TXYwa2M1ZlBsUkhz?=
+ =?utf-8?B?L2x4MGZodlhGMjhqN0ZGRjN3dFZrNk9nRkJzYVREcndSVXdBdzJUM3B1Mitj?=
+ =?utf-8?B?ZmpIODhJYStwVUdVV2V5Mnk5cFhSZFpNdW5WcXFVVThqYUNKbDJDYjBLQVBO?=
+ =?utf-8?B?K1Q0ODUvNC9WU1Y0dGcxWXJOR0ZDUlZaNXBQWWgrMUJhNmlOYzZrOWFuQ2dF?=
+ =?utf-8?B?NWt0SEF6akhZbitwUW5BNFNJY3VZdXU1MjNwc2ZoUnVFSjdvTGVqK3k5L0Na?=
+ =?utf-8?B?T0c4NTJUazFLSkxxQXIwZFZIUlNJZUJrV0tXcjZUVXJ1eWhUYVdJdGpQRmNF?=
+ =?utf-8?B?OEFpQWQ4R1NzcENBVFc0OXhsYWRiRmZJbHYxQTFidE00RzA1ZEQ3SmNEZDNG?=
+ =?utf-8?B?cGRvZlZ1eDVoQVI1bSt5Ly9aNmxpTHRpM25jTUY4R3ZCNGVpSzlzVTlZYWpi?=
+ =?utf-8?B?Y3JXQmVGbGptNDMrOHJDRTZ2aXlBU0lDelBmSGtnbG1nRHNGWnJ2bmZzcjdX?=
+ =?utf-8?B?UUZGeEhhYTgzN0xpMXJnWmg1NFNqRWJJeWp2SDZMNU9VYSs0MG5sd0JhckNH?=
+ =?utf-8?B?MlNPdTRYZHZGMDdrbHlpdHgyWHdzUDk2MTNqRTV5V0h5UU1hQ0lLbDk4VDJI?=
+ =?utf-8?B?S3g5VjRrTVh4Vkg2amhKUnlONG16bEcyM1VOTmgyZ09PZFNVSkQvUT09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-Exchange-RoutingPolicyChecked: XQdDG3jqeqFPuigFqTAQTpDGf3B1OVBFvGDZH4Kzxk81J6gu5J5rb18eqv/lyn0bxs/jLGj4VZ6gOekBn23fV+OIzjMnxif7bDnZNOAKrvJDZ+61T4pfCO7MZKoxo1LfQz9SnZQHnut17AxOP5XlYt7trWOFln5HgUOZr3UDA+aIMuG8/3AOvvuoDWDGYBMp7O8E164MKvfSGEB1urcBmLkSV6bpp+BMp3GnD7B3JxZItkDdUAATlrp3kflxYxnWGQPmhFv+NqsQduDE/hmlxtMV+6ReUAbp3P3lpnzqBGuhjWuQjevDWGR0cZY48P0HF9g7wgYkmP3eQNAcpAePDg==
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 60d14bf1-3697-4195-fd80-08deb7ac0768
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 May 2026 02:44:21.9568 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: XbQW46GX6CNBfwQZwlAFneeepfQFcD8idro03AaUz4nzNYRj+hizbQOLZHXmK9u5/hbXOqik+tONSg4aYEnmCEAAB2ia9BpKI1WkumqHfLM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR11MB4868
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.9;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
 X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,752 +195,252 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2026/5/19 下午2:30, SignKirigami wrote:
-> Signed-off-by: SignKirigami <prcups@krgm.moe>
-> Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-> ---
->   target/loongarch/cpu-csr.h |  42 +++++++
->   target/loongarch/cpu.h     | 125 ++++++++++++++++++-
->   target/loongarch/csr.c     | 122 ++++++++++++++++++
->   target/loongarch/csr.h     |   3 +
->   target/loongarch/machine.c | 249 +++++++++++++++++++++++++------------
->   5 files changed, 457 insertions(+), 84 deletions(-)
-> 
-> diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
-> index d860417af2..4b0bb4d2e5 100644
-> --- a/target/loongarch/cpu-csr.h
-> +++ b/target/loongarch/cpu-csr.h
-> @@ -180,11 +180,13 @@ FIELD(CSR_TLBREHI_64, VPPN, 13, 35)
->   #define LOONGARCH_CSR_TLBRPRMD       0x8f /* TLB refill mode info */
->   FIELD(CSR_TLBRPRMD, PPLV, 0, 2)
->   FIELD(CSR_TLBRPRMD, PIE, 2, 1)
-> +FIELD(CSR_TLBRPRMD, PGM, 3, 1)
->   FIELD(CSR_TLBRPRMD, PWE, 4, 1)
->   
->   /* Machine Error CSRs */
->   #define LOONGARCH_CSR_MERRCTL        0x90 /* ERRCTL */
->   FIELD(CSR_MERRCTL, ISMERR, 0, 1)
-> +FIELD(CSR_MERRCTL, PGM, 5, 1)
->   #define LOONGARCH_CSR_MERRINFO1      0x91
->   #define LOONGARCH_CSR_MERRINFO2      0x92
->   #define LOONGARCH_CSR_MERRENTRY      0x93 /* MError exception base */
-> @@ -224,4 +226,44 @@ FIELD(CSR_DBG, ECODE, 16, 6)
->   #define LOONGARCH_CSR_DERA           0x501 /* Debug era */
->   #define LOONGARCH_CSR_DSAVE          0x502 /* Debug save */
->   
-> +/* LVZ (LoongArch Virtualization) CSRs */
-> +#define LOONGARCH_CSR_GSTAT          0x50 /* Guest status */
-> +FIELD(CSR_GSTAT, VM, 0, 1)
-> +FIELD(CSR_GSTAT, PVM, 1, 1)
-> +FIELD(CSR_GSTAT, GIDBIT, 4, 6)
-> +FIELD(CSR_GSTAT, GID, 16, 8)
-> +
-> +#define LOONGARCH_CSR_GCFG           0x51 /* Guest config */
-> +FIELD(CSR_GCFG, MATP, 0, 4)
-> +FIELD(CSR_GCFG, MATC, 4, 2)
-> +FIELD(CSR_GCFG, TOPIP, 6, 1)
-> +FIELD(CSR_GCFG, TOPI, 7, 1)
-> +FIELD(CSR_GCFG, TOTIP, 8, 1)
-> +FIELD(CSR_GCFG, TOTI, 9, 1)
-> +FIELD(CSR_GCFG, TOEP, 10, 1)
-> +FIELD(CSR_GCFG, TOE, 11, 1)
-> +FIELD(CSR_GCFG, TOPP, 12, 1)
-> +FIELD(CSR_GCFG, TOP, 13, 1)
-> +FIELD(CSR_GCFG, TOHUP, 14, 1)
-> +FIELD(CSR_GCFG, TOHU, 15, 1)
-> +FIELD(CSR_GCFG, TOCIP, 16, 4)
-> +FIELD(CSR_GCFG, TOCI, 20, 2)
-> +FIELD(CSR_GCFG, GPMP, 23, 1)
-> +FIELD(CSR_GCFG, GPMNUM, 24, 3)
-> +
-> +#define LOONGARCH_CSR_GINTC          0x52 /* Guest interrupt config */
-> +FIELD(CSR_GINTC, HWIS, 0, 8)
-> +FIELD(CSR_GINTC, HWIP, 8, 8)
-> +FIELD(CSR_GINTC, HWIC, 16, 8)
-> +
-> +#define LOONGARCH_CSR_GCNTC          0x53 /* Guest counter compensation */
-> +
-> +#define LOONGARCH_CSR_GTLBC          0x15 /* Guest TLB control */
-> +FIELD(CSR_GTLBC, GMTLBSZ, 0, 6)
-> +FIELD(CSR_GTLBC, USETGID, 12, 1)
-> +FIELD(CSR_GTLBC, TOTI, 13, 1)
-> +FIELD(CSR_GTLBC, TGID, 16, 8)
-> +
-> +#define LOONGARCH_CSR_TRGP           0x16 /* Trapped guest physical address */
-> +
->   #endif /* LOONGARCH_CPU_CSR_H */
-> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-> index 096d778928..8d3cae59fa 100644
-> --- a/target/loongarch/cpu.h
-> +++ b/target/loongarch/cpu.h
-> @@ -20,6 +20,20 @@
->   #include "cpu-csr.h"
->   #include "cpu-qom.h"
->   
-> +#define GET_CSR_IF(guest_mode, csr_name) \
-> +    ((guest_mode) ? (env->GCSR_##csr_name) : (env->CSR_##csr_name))
-> +
-> +#define SET_CSR_IF(guest_mode, csr_name, value) \
-> +    do {                                        \
-> +        if (guest_mode) {                       \
-> +            env->GCSR_##csr_name = (value);     \
-> +        } else {                                \
-> +            env->CSR_##csr_name = (value);      \
-> +        }                                       \
-> +    } while (0)
-> +
-> +#define CPU_INTERRUPT_GUEST CPU_INTERRUPT_TGT_EXT_0
-> +
->   #define FCSR0_M1    0x1f         /* FCSR1 mask, Enables */
->   #define FCSR0_M2    0x1f1f0000   /* FCSR2 mask, Cause and Flags */
->   #define FCSR0_M3    0x300        /* FCSR3 mask, Round Mode */
-> @@ -93,6 +107,10 @@ FIELD(FCSR0, CAUSE, 24, 5)
->   #define  EXCCODE_WPEM                EXCODE(19, 1)
->   #define  EXCCODE_BTD                 EXCODE(20, 0)
->   #define  EXCCODE_BTE                 EXCODE(21, 0)
-> +#define  EXCCODE_GSPR                EXCODE(22, 0)
-> +#define  EXCCODE_HVC                 EXCODE(23, 0)
-> +#define  EXCCODE_GCSC                EXCODE(24, 0)
-> +#define  EXCCODE_GCHC                EXCODE(25, 0)
->   #define  EXCCODE_DBP                 EXCODE(26, 0) /* Reserved subcode used for debug */
->   
->   /* cpucfg[0] bits */
-> @@ -255,6 +273,7 @@ FIELD(TLB_MISC, E, 0, 1)
->   FIELD(TLB_MISC, ASID, 1, 10)
->   FIELD(TLB_MISC, VPPN, 13, 35)
->   FIELD(TLB_MISC, PS, 48, 6)
-> +FIELD(TLB_MISC, GID, 54, 8)
->   
->   /*Msg interrupt registers */
->   #define N_MSGIS                4
-> @@ -389,6 +408,79 @@ typedef struct CPUArchState {
->       uint64_t CSR_DBG;
->       uint64_t CSR_DERA;
->       uint64_t CSR_DSAVE;
-> +
-> +    /* LVZ (LoongArch Virtualization) CSRs */
-> +    uint64_t CSR_GSTAT;
-> +    uint64_t CSR_GCFG;
-> +    uint64_t CSR_GINTC;
-> +    uint64_t CSR_GCNTC;
-> +    uint64_t CSR_GTLBC;
-> +    uint64_t CSR_TRGP;
-> +
-> +    /* Guest CSR registers (GCSR) */
-> +    uint64_t GCSR_CRMD;
-> +    uint64_t GCSR_PRMD;
-> +    uint64_t GCSR_EUEN;
-> +    uint64_t GCSR_MISC;
-> +    uint64_t GCSR_ECFG;
-> +    uint64_t GCSR_ESTAT;
-> +    uint64_t GCSR_ERA;
-> +    uint64_t GCSR_BADV;
-> +    uint64_t GCSR_BADI;
-> +    uint64_t GCSR_EENTRY;
-> +    uint64_t GCSR_TLBIDX;
-> +    uint64_t GCSR_TLBEHI;
-> +    uint64_t GCSR_TLBELO0;
-> +    uint64_t GCSR_TLBELO1;
-> +    uint64_t GCSR_ASID;
-> +    uint64_t GCSR_PGDL;
-> +    uint64_t GCSR_PGDH;
-> +    uint64_t GCSR_PGD;
-> +    uint64_t GCSR_PWCL;
-> +    uint64_t GCSR_PWCH;
-> +    uint64_t GCSR_STLBPS;
-> +    uint64_t GCSR_RVACFG;
-> +    uint64_t GCSR_CPUID;
-> +    uint64_t GCSR_PRCFG1;
-> +    uint64_t GCSR_PRCFG2;
-> +    uint64_t GCSR_PRCFG3;
-> +    uint64_t GCSR_SAVE[16];
-> +    uint64_t GCSR_TID;
-> +    uint64_t GCSR_TCFG;
-> +    uint64_t GCSR_TVAL;
-> +    uint64_t GCSR_CNTC;
-> +    uint64_t GCSR_TICLR;
-> +    uint64_t GCSR_LLBCTL;
-> +    uint64_t GCSR_IMPCTL1;
-> +    uint64_t GCSR_IMPCTL2;
-> +    uint64_t GCSR_TLBRENTRY;
-> +    uint64_t GCSR_TLBRBADV;
-> +    uint64_t GCSR_TLBRERA;
-> +    uint64_t GCSR_TLBRSAVE;
-> +    uint64_t GCSR_TLBRELO0;
-> +    uint64_t GCSR_TLBRELO1;
-> +    uint64_t GCSR_TLBREHI;
-> +    uint64_t GCSR_TLBRPRMD;
-> +    uint64_t GCSR_MERRCTL;
-> +    uint64_t GCSR_MERRINFO1;
-> +    uint64_t GCSR_MERRINFO2;
-> +    uint64_t GCSR_MERRENTRY;
-> +    uint64_t GCSR_MERRERA;
-> +    uint64_t GCSR_MERRSAVE;
-> +    uint64_t GCSR_CTAG;
-> +    uint64_t GCSR_DMW[4];
-> +    uint64_t GCSR_DBG;
-> +    uint64_t GCSR_DERA;
-> +    uint64_t GCSR_DSAVE;
-> +    uint64_t GCSR_GSTAT;
-> +    uint64_t GCSR_GCFG;
-> +    uint64_t GCSR_GINTC;
-> +    uint64_t GCSR_GCNTC;
-> +    uint64_t GCSR_GTLBC;
-> +    uint64_t GCSR_TRGP;
-I am new with LVZ code, some comments may be wrong. If you have any 
-suggestion, do not hesitate to raise.
-
-Is it ok to define one structure special for CSR register, such as
-typedef struct CPUCsrState {
-     uint64_t CSR_CRMD;
-     uint64_t CSR_PRMD;
-     ...
-};
-
-typedef struct CPUArchState {
-     struct CPUCsrState csrState[N_VM_LEVEL];
-     struct CPUCsrState *curCsrState;
-}
-
-The same for tlb and timer since VMs with LVZ enabled has separate 
-tlb/timer. About TLB, I do not which is simpler compared with shared 
-TLB? It is not so important, the easier way be better for the present.
-> +
-> +    bool guest;
-Can the data type changed with uint8_t or uint16_t? also named is 
-changed with vm_level for example, so that nested LVZ can be easily 
-added in later.
-
-
-Regards
-Bibo Mao
-> +    bool vm_exit;
->       /* Msg interrupt registers */
->       uint64_t CSR_MSGIS[N_MSGIS];
->       uint64_t CSR_MSGIR;
-> @@ -410,6 +502,7 @@ typedef struct CPUArchState {
->   #ifndef CONFIG_USER_ONLY
->   #ifdef CONFIG_TCG
->       LoongArchTLB  tlb[LOONGARCH_TLB_MAX];
-> +    LoongArchTLB gtlb[LOONGARCH_TLB_MAX];
->   #endif
->   
->       AddressSpace *address_space_iocsr;
-> @@ -434,9 +527,11 @@ struct ArchCPU {
->   
->       CPULoongArchState env;
->       QEMUTimer timer;
-> +    QEMUTimer guest_timer;
->       uint32_t  phy_id;
->       OnOffAuto lbt;
->       OnOffAuto pmu;
-> +    OnOffAuto lvz;
->       OnOffAuto ptw;
->       OnOffAuto lsx;
->       OnOffAuto lasx;
-> @@ -480,6 +575,24 @@ struct LoongArchCPUClass {
->   #define MMU_KERNEL_IDX   MMU_PLV_KERNEL
->   #define MMU_USER_IDX     MMU_PLV_USER
->   #define MMU_DA_IDX       4
-> +#define MMU_GUEST_IDX    5
-> +#define MMU_GUEST_DA_IDX 9
-> +
-> +static inline bool is_guest_mmu_idx(int mmu_idx)
-> +{
-> +    return mmu_idx >= MMU_GUEST_IDX;
-> +}
-> +
-> +static inline int mmu_idx_to_plv(int mmu_idx)
-> +{
-> +    if (mmu_idx == MMU_DA_IDX || mmu_idx == MMU_GUEST_DA_IDX) {
-> +        return 0;
-> +    }
-> +    if (is_guest_mmu_idx(mmu_idx)) {
-> +        return mmu_idx - MMU_GUEST_IDX;
-> +    }
-> +    return mmu_idx;
-> +}
->   
->   static inline bool is_la64(CPULoongArchState *env)
->   {
-> @@ -490,8 +603,9 @@ static inline bool is_va32(CPULoongArchState *env)
->   {
->       /* VA32 if !LA64 or VA32L[1-3] */
->       bool va32 = !is_la64(env);
-> -    uint64_t plv = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PLV);
-> -    if (plv >= 1 && (FIELD_EX64(env->CSR_MISC, CSR_MISC, VA32) & (1 << plv))) {
-> +    uint64_t plv = FIELD_EX64(GET_CSR_IF(env->guest, CRMD), CSR_CRMD, PLV);
-> +    if (plv >= 1 &&
-> +        (FIELD_EX64(GET_CSR_IF(env->guest, MISC), CSR_MISC, VA32) & BIT(plv))) {
->           va32 = true;
->       }
->       return va32;
-> @@ -515,6 +629,13 @@ static inline void set_pc(CPULoongArchState *env, uint64_t value)
->   #define HW_FLAGS_CRMD_PG    R_CSR_CRMD_PG_MASK   /* 0x10 */
->   #define HW_FLAGS_VA32       0x20
->   #define HW_FLAGS_EUEN_ASXE  0x40
-> +#define HW_FLAGS_GUEST_MODE 0x80
-> +
-> +bool has_lvz_capability(CPULoongArchState *env);
-> +bool will_return_to_guest(CPULoongArchState *env);
-> +uint8_t get_gid(CPULoongArchState *env);
-> +uint8_t get_tgid(CPULoongArchState *env);
-> +void trigger_vm_exit(CPULoongArchState *env);
->   
->   #define CPU_RESOLVING_TYPE TYPE_LOONGARCH_CPU
->   
-> diff --git a/target/loongarch/csr.c b/target/loongarch/csr.c
-> index fff2312f87..1c4505536d 100644
-> --- a/target/loongarch/csr.c
-> +++ b/target/loongarch/csr.c
-> @@ -20,8 +20,27 @@
->           .flags = 0, .readfn = NULL, .writefn = NULL           \
->       }
->   
-> +#define GCSR_OFF_FUNCS(NAME, FL, RD, WR)                              \
-> +    [LOONGARCH_CSR_##                                                 \
-> +        NAME] = { .name = (stringify(GCSR_##NAME)),                   \
-> +                  .offset = offsetof(CPULoongArchState, GCSR_##NAME), \
-> +                  .flags = FL,                                        \
-> +                  .readfn = RD,                                       \
-> +                  .writefn = WR }
-> +
-> +#define GCSR_OFF_ARRAY(NAME, N)                                         \
-> +    [LOONGARCH_CSR_##NAME(N)] = { .name = (stringify(GCSR_##NAME##N)),  \
-> +                                  .offset = offsetof(CPULoongArchState, \
-> +                                                     GCSR_##NAME[N]),   \
-> +                                  .flags = 0,                           \
-> +                                  .readfn = NULL,                       \
-> +                                  .writefn = NULL }
-> +
->   #define CSR_OFF_FLAGS(NAME, FL)   CSR_OFF_FUNCS(NAME, FL, NULL, NULL)
->   #define CSR_OFF(NAME)             CSR_OFF_FLAGS(NAME, 0)
-> +#define GCSR_OFF_FLAGS(NAME, FL) GCSR_OFF_FUNCS(NAME, FL, NULL, NULL)
-> +#define GCSR_OFF(NAME) GCSR_OFF_FLAGS(NAME, 0)
-> +#define GCSR_GSPR(NAME) GCSR_OFF_FUNCS(NAME, CSRFL_GSPR, NULL, NULL)
->   
->   static CSRInfo csr_info[] = {
->       CSR_OFF_FLAGS(CRMD, CSRFL_EXITTB),
-> @@ -35,6 +54,8 @@ static CSRInfo csr_info[] = {
->       CSR_OFF_FLAGS(BADI, CSRFL_READONLY),
->       CSR_OFF(EENTRY),
->       CSR_OFF(TLBIDX),
-> +    CSR_OFF(GTLBC),
-> +    CSR_OFF(TRGP),
->       CSR_OFF(TLBEHI),
->       CSR_OFF(TLBELO0),
->       CSR_OFF(TLBELO1),
-> @@ -71,6 +92,10 @@ static CSRInfo csr_info[] = {
->       CSR_OFF_FLAGS(TVAL, CSRFL_READONLY | CSRFL_IO),
->       CSR_OFF(CNTC),
->       CSR_OFF_FLAGS(TICLR, CSRFL_IO),
-> +    CSR_OFF(GSTAT),
-> +    CSR_OFF(GCFG),
-> +    CSR_OFF_FLAGS(GINTC, CSRFL_IO),
-> +    CSR_OFF(GCNTC),
->       CSR_OFF(LLBCTL),
->       CSR_OFF(IMPCTL1),
->       CSR_OFF(IMPCTL2),
-> @@ -135,6 +160,87 @@ static CSRInfo csr_info[] = {
->       CSR_OFF(MSGIR),
->   };
->   
-> +static CSRInfo gcsr_info[] = {
-> +    GCSR_OFF_FLAGS(CRMD, CSRFL_EXITTB),
-> +    GCSR_OFF(PRMD),
-> +    GCSR_OFF_FLAGS(EUEN, CSRFL_EXITTB),
-> +    GCSR_OFF_FLAGS(MISC, CSRFL_GUEST_READONLY),
-> +    GCSR_OFF(ECFG),
-> +    GCSR_OFF_FLAGS(ESTAT, CSRFL_EXITTB),
-> +    GCSR_OFF(ERA),
-> +    GCSR_OFF(BADV),
-> +    GCSR_OFF_FLAGS(BADI, CSRFL_GUEST_READONLY),
-> +    GCSR_OFF(EENTRY),
-> +    GCSR_OFF(TLBIDX),
-> +    GCSR_GSPR(GTLBC),
-> +    GCSR_GSPR(TRGP),
-> +    GCSR_OFF(TLBEHI),
-> +    GCSR_OFF(TLBELO0),
-> +    GCSR_OFF(TLBELO1),
-> +    GCSR_OFF_FLAGS(ASID, CSRFL_EXITTB),
-> +    GCSR_OFF(PGDL),
-> +    GCSR_OFF(PGDH),
-> +    GCSR_OFF_FLAGS(PGD, CSRFL_GUEST_READONLY),
-> +    GCSR_OFF(PWCL),
-> +    GCSR_OFF(PWCH),
-> +    GCSR_OFF(STLBPS),
-> +    GCSR_OFF(RVACFG),
-> +    GCSR_OFF_FLAGS(CPUID, CSRFL_GUEST_READONLY),
-> +    GCSR_OFF_FLAGS(PRCFG1, CSRFL_GUEST_READONLY),
-> +    GCSR_OFF_FLAGS(PRCFG2, CSRFL_GUEST_READONLY),
-> +    GCSR_OFF_FLAGS(PRCFG3, CSRFL_GUEST_READONLY),
-> +    GCSR_OFF_ARRAY(SAVE, 0),
-> +    GCSR_OFF_ARRAY(SAVE, 1),
-> +    GCSR_OFF_ARRAY(SAVE, 2),
-> +    GCSR_OFF_ARRAY(SAVE, 3),
-> +    GCSR_OFF_ARRAY(SAVE, 4),
-> +    GCSR_OFF_ARRAY(SAVE, 5),
-> +    GCSR_OFF_ARRAY(SAVE, 6),
-> +    GCSR_OFF_ARRAY(SAVE, 7),
-> +    GCSR_OFF_ARRAY(SAVE, 8),
-> +    GCSR_OFF_ARRAY(SAVE, 9),
-> +    GCSR_OFF_ARRAY(SAVE, 10),
-> +    GCSR_OFF_ARRAY(SAVE, 11),
-> +    GCSR_OFF_ARRAY(SAVE, 12),
-> +    GCSR_OFF_ARRAY(SAVE, 13),
-> +    GCSR_OFF_ARRAY(SAVE, 14),
-> +    GCSR_OFF_ARRAY(SAVE, 15),
-> +    GCSR_OFF(TID),
-> +    GCSR_OFF_FLAGS(TCFG, CSRFL_IO),
-> +    GCSR_OFF_FLAGS(TVAL, CSRFL_GUEST_READONLY | CSRFL_IO),
-> +    GCSR_OFF(CNTC),
-> +    GCSR_OFF_FLAGS(TICLR, CSRFL_IO),
-> +    GCSR_GSPR(GSTAT),
-> +    GCSR_GSPR(GCFG),
-> +    GCSR_GSPR(GINTC),
-> +    GCSR_GSPR(GCNTC),
-> +    GCSR_OFF(LLBCTL),
-> +    GCSR_GSPR(IMPCTL1),
-> +    GCSR_GSPR(IMPCTL2),
-> +    GCSR_OFF(TLBRENTRY),
-> +    GCSR_OFF(TLBRBADV),
-> +    GCSR_OFF(TLBRERA),
-> +    GCSR_OFF(TLBRSAVE),
-> +    GCSR_OFF(TLBRELO0),
-> +    GCSR_OFF(TLBRELO1),
-> +    GCSR_OFF(TLBREHI),
-> +    GCSR_OFF(TLBRPRMD),
-> +    GCSR_GSPR(MERRCTL),
-> +    GCSR_GSPR(MERRINFO1),
-> +    GCSR_GSPR(MERRINFO2),
-> +    GCSR_GSPR(MERRENTRY),
-> +    GCSR_GSPR(MERRERA),
-> +    GCSR_GSPR(MERRSAVE),
-> +    GCSR_GSPR(CTAG),
-> +    GCSR_OFF_ARRAY(DMW, 0),
-> +    GCSR_OFF_ARRAY(DMW, 1),
-> +    GCSR_OFF_ARRAY(DMW, 2),
-> +    GCSR_OFF_ARRAY(DMW, 3),
-> +    GCSR_GSPR(DBG),
-> +    GCSR_GSPR(DERA),
-> +    GCSR_GSPR(DSAVE),
-> +};
-> +
->   CSRInfo *get_csr(unsigned int csr_num)
->   {
->       CSRInfo *csr;
-> @@ -151,6 +257,22 @@ CSRInfo *get_csr(unsigned int csr_num)
->       return csr;
->   }
->   
-> +CSRInfo *get_gcsr(unsigned int csr_num)
-> +{
-> +    CSRInfo *csr;
-> +
-> +    if (csr_num >= ARRAY_SIZE(gcsr_info)) {
-> +        return NULL;
-> +    }
-> +
-> +    csr = &gcsr_info[csr_num];
-> +    if (csr->offset == 0) {
-> +        return NULL;
-> +    }
-> +
-> +    return csr;
-> +}
-> +
->   bool set_csr_flag(unsigned int csr_num, int flag)
->   {
->       CSRInfo *csr;
-> diff --git a/target/loongarch/csr.h b/target/loongarch/csr.h
-> index 81a656baae..a0846353de 100644
-> --- a/target/loongarch/csr.h
-> +++ b/target/loongarch/csr.h
-> @@ -14,6 +14,8 @@ enum {
->       CSRFL_EXITTB   = (1 << 1),
->       CSRFL_IO       = (1 << 2),
->       CSRFL_UNUSED   = (1 << 3),
-> +    CSRFL_GUEST_READONLY = (1 << 4),
-> +    CSRFL_GSPR     = (1 << 5),
->   };
->   
->   typedef struct {
-> @@ -25,5 +27,6 @@ typedef struct {
->   } CSRInfo;
->   
->   CSRInfo *get_csr(unsigned int csr_num);
-> +CSRInfo *get_gcsr(unsigned int csr_num);
->   bool set_csr_flag(unsigned int csr_num, int flag);
->   #endif /* TARGET_LOONGARCH_CSR_H */
-> diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
-> index 4db53fec26..df7a7c9075 100644
-> --- a/target/loongarch/machine.c
-> +++ b/target/loongarch/machine.c
-> @@ -197,11 +197,101 @@ static const VMStateDescription vmstate_tlb = {
->       .version_id = 0,
->       .minimum_version_id = 0,
->       .needed = tlb_needed,
-> -    .fields = (const VMStateField[]) {
-> -        VMSTATE_STRUCT_ARRAY(env.tlb, LoongArchCPU, LOONGARCH_TLB_MAX,
-> -                             0, vmstate_tlb_entry, LoongArchTLB),
-> -        VMSTATE_END_OF_LIST()
-> -    }
-> +    .fields =
-> +        (const VMStateField[]){
-> +            VMSTATE_STRUCT_ARRAY(env.tlb, LoongArchCPU, LOONGARCH_TLB_MAX, 0,
-> +                                 vmstate_tlb_entry, LoongArchTLB),
-> +            VMSTATE_END_OF_LIST() }
-> +};
-> +
-> +static bool lvz_needed(void *opaque)
-> +{
-> +    LoongArchCPU *cpu = opaque;
-> +
-> +    return FIELD_EX32(cpu->env.cpucfg[2], CPUCFG2, LVZ);
-> +}
-> +
-> +static const VMStateDescription vmstate_lvz = {
-> +    .name = "cpu/lvz",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = lvz_needed,
-> +    .fields =
-> +        (const VMStateField[]){
-> +            VMSTATE_UINT64(env.CSR_GSTAT, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_GCFG, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_GINTC, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_GCNTC, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_GTLBC, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_TRGP, LoongArchCPU),
-> +
-> +            VMSTATE_UINT64(env.GCSR_CRMD, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_PRMD, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_EUEN, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_MISC, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_ECFG, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_ESTAT, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_ERA, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_BADV, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_BADI, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_EENTRY, LoongArchCPU),
-> +
-> +            VMSTATE_UINT64(env.GCSR_TLBIDX, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_TLBEHI, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_TLBELO0, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_TLBELO1, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_ASID, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_PGDL, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_PGDH, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_PGD, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_PWCL, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_PWCH, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_STLBPS, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_RVACFG, LoongArchCPU),
-> +
-> +            VMSTATE_UINT64(env.GCSR_CPUID, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_PRCFG1, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_PRCFG2, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_PRCFG3, LoongArchCPU),
-> +            VMSTATE_UINT64_ARRAY(env.GCSR_SAVE, LoongArchCPU, 16),
-> +
-> +            VMSTATE_UINT64(env.GCSR_TID, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_TCFG, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_TVAL, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_CNTC, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_TICLR, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_LLBCTL, LoongArchCPU),
-> +
-> +            VMSTATE_UINT64(env.GCSR_IMPCTL1, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_IMPCTL2, LoongArchCPU),
-> +
-> +            VMSTATE_UINT64(env.GCSR_TLBRENTRY, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_TLBRBADV, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_TLBRERA, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_TLBRSAVE, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_TLBRELO0, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_TLBRELO1, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_TLBREHI, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_TLBRPRMD, LoongArchCPU),
-> +
-> +            VMSTATE_UINT64(env.GCSR_MERRCTL, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_MERRINFO1, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_MERRINFO2, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_MERRENTRY, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_MERRERA, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_MERRSAVE, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_CTAG, LoongArchCPU),
-> +
-> +            VMSTATE_UINT64_ARRAY(env.GCSR_DMW, LoongArchCPU, 4),
-> +
-> +            VMSTATE_UINT64(env.GCSR_DBG, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_DERA, LoongArchCPU),
-> +            VMSTATE_UINT64(env.GCSR_DSAVE, LoongArchCPU),
-> +
-> +            VMSTATE_BOOL(env.guest, LoongArchCPU),
-> +            VMSTATE_STRUCT_ARRAY(env.gtlb, LoongArchCPU, LOONGARCH_TLB_MAX, 0,
-> +                                 vmstate_tlb_entry, LoongArchTLB),
-> +            VMSTATE_END_OF_LIST() },
->   };
->   #endif
->   
-> @@ -210,83 +300,78 @@ const VMStateDescription vmstate_loongarch_cpu = {
->       .name = "cpu",
->       .version_id = 4,
->       .minimum_version_id = 4,
-> -    .fields = (const VMStateField[]) {
-> -        VMSTATE_UINT64_ARRAY(env.gpr, LoongArchCPU, 32),
-> -        VMSTATE_UINT64(env.pc, LoongArchCPU),
-> -
-> -        /* Remaining CSRs */
-> -        VMSTATE_UINT64(env.CSR_CRMD, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_PRMD, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_EUEN, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_MISC, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_ECFG, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_ESTAT, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_ERA, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_BADV, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_BADI, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_EENTRY, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_TLBIDX, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_TLBEHI, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_TLBELO0, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_TLBELO1, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_ASID, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_PGDL, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_PGDH, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_PGD, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_PWCL, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_PWCH, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_STLBPS, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_RVACFG, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_PRCFG1, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_PRCFG2, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_PRCFG3, LoongArchCPU),
-> -        VMSTATE_UINT64_ARRAY(env.CSR_SAVE, LoongArchCPU, 16),
-> -        VMSTATE_UINT64(env.CSR_TID, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_TCFG, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_TVAL, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_CNTC, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_TICLR, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_LLBCTL, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_IMPCTL1, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_IMPCTL2, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_TLBRENTRY, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_TLBRBADV, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_TLBRERA, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_TLBRSAVE, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_TLBRELO0, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_TLBRELO1, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_TLBREHI, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_TLBRPRMD, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_MERRCTL, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_MERRINFO1, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_MERRINFO2, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_MERRENTRY, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_MERRERA, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_MERRSAVE, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_CTAG, LoongArchCPU),
-> -        VMSTATE_UINT64_ARRAY(env.CSR_DMW, LoongArchCPU, 4),
-> -
-> -        /* Debug CSRs */
-> -        VMSTATE_UINT64(env.CSR_DBG, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_DERA, LoongArchCPU),
-> -        VMSTATE_UINT64(env.CSR_DSAVE, LoongArchCPU),
-> -
-> -        VMSTATE_UINT64(kvm_state_counter, LoongArchCPU),
-> -        /* PV steal time */
-> -        VMSTATE_UINT64(env.stealtime.guest_addr, LoongArchCPU),
-> -
-> -        VMSTATE_END_OF_LIST()
-> -    },
-> -    .subsections = (const VMStateDescription * const []) {
-> -        &vmstate_fpu,
-> -        &vmstate_lsx,
-> -        &vmstate_lasx,
-> +    .fields =
-> +        (const VMStateField[]){
-> +            VMSTATE_UINT64_ARRAY(env.gpr, LoongArchCPU, 32),
-> +            VMSTATE_UINT64(env.pc, LoongArchCPU),
-> +
-> +            /* Remaining CSRs */
-> +            VMSTATE_UINT64(env.CSR_CRMD, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_PRMD, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_EUEN, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_MISC, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_ECFG, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_ESTAT, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_ERA, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_BADV, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_BADI, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_EENTRY, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_TLBIDX, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_TLBEHI, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_TLBELO0, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_TLBELO1, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_ASID, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_PGDL, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_PGDH, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_PGD, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_PWCL, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_PWCH, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_STLBPS, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_RVACFG, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_PRCFG1, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_PRCFG2, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_PRCFG3, LoongArchCPU),
-> +            VMSTATE_UINT64_ARRAY(env.CSR_SAVE, LoongArchCPU, 16),
-> +            VMSTATE_UINT64(env.CSR_TID, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_TCFG, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_TVAL, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_CNTC, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_TICLR, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_LLBCTL, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_IMPCTL1, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_IMPCTL2, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_TLBRENTRY, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_TLBRBADV, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_TLBRERA, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_TLBRSAVE, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_TLBRELO0, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_TLBRELO1, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_TLBREHI, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_TLBRPRMD, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_MERRCTL, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_MERRINFO1, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_MERRINFO2, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_MERRENTRY, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_MERRERA, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_MERRSAVE, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_CTAG, LoongArchCPU),
-> +            VMSTATE_UINT64_ARRAY(env.CSR_DMW, LoongArchCPU, 4),
-> +
-> +            /* Debug CSRs */
-> +            VMSTATE_UINT64(env.CSR_DBG, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_DERA, LoongArchCPU),
-> +            VMSTATE_UINT64(env.CSR_DSAVE, LoongArchCPU),
-> +
-> +            VMSTATE_UINT64(kvm_state_counter, LoongArchCPU),
-> +            /* PV steal time */
-> +            VMSTATE_UINT64(env.stealtime.guest_addr, LoongArchCPU),
-> +
-> +            VMSTATE_END_OF_LIST() },
-> +    .subsections =
-> +        (const VMStateDescription *const[]) {
-> +            &vmstate_fpu, &vmstate_lsx, &vmstate_lasx,
->   #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
-> -        &vmstate_tlb,
-> +            &vmstate_tlb, &vmstate_lvz,
->   #endif
-> -        &vmstate_lbt,
-> -        &vmstate_msgint,
-> -        &vmstate_pmu,
-> -        NULL
-> -    }
-> +            &vmstate_lbt, &vmstate_msgint, &vmstate_pmu, NULL }
->   };
-> 
-
+DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IExpdSwgWWkgTCA8eWkubC5s
+aXVAaW50ZWwuY29tPg0KPlN1YmplY3Q6IFJlOiBbUEFUQ0ggdjUgMDkvMTVdIGludGVsX2lvbW11
+X2FjY2VsOiBIYW5kbGUgUEFTSUQgZW50cnkgYWRkaXRpb24gZm9yDQo+cGNfaW52X2RzYyByZXF1
+ZXN0DQo+DQo+T24gNS85LzI2IDEyOjA4LCBaaGVuemhvbmcgRHVhbiB3cm90ZToNCj4+IFN0cnVj
+dHVyZSBWVERBZGRyZXNzU3BhY2UgaW5jbHVkZXMgc29tZSBlbGVtZW50cyBzdWl0YWJsZSBmb3Ig
+ZW11bGF0ZWQNCj4+IGRldmljZSBhbmQgcGFzc3Rocm91Z2ggZGV2aWNlIHdpdGhvdXQgUEFTSUQs
+IGUuZy4sIGFkZHJlc3Mgc3BhY2UsDQo+PiBkaWZmZXJlbnQgbWVtb3J5IHJlZ2lvbnMsIGV0Yywg
+aXQgaXMgYWxzbyBwcm90ZWN0ZWQgYnkgdnRkIGlvbW11IGxvY2ssDQo+PiBhbGwgdGhlc2UgYXJl
+IHVzZWxlc3MgYW5kIGJlY29tZSBhIGJ1cmRlbiBmb3IgcGFzc3Rocm91Z2ggZGV2aWNlIHdpdGgN
+Cj4+IFBBU0lELg0KPj4NCj4+IFdoZW4gdGhlcmUgYXJlIGxvdHMgb2YgUEFTSURzIHVzZWQgaW4g
+b25lIGRldmljZSwgdGhlIEFTIGFuZCBNUnMgYXJlDQo+PiBhbGwgcmVnaXN0ZXJlZCB0byBtZW1v
+cnkgY29yZSBhbmQgaW1wYWN0IHRoZSB3aG9sZSBzeXN0ZW0gcGVyZm9ybWFuY2UuDQo+Pg0KPj4g
+U28gaW5zdGVhZCBvZiB1c2luZyBWVERBZGRyZXNzU3BhY2UgdG8gY2FjaGUgcGFzaWQgZW50cnkg
+Zm9yIGVhY2ggcGFzaWQNCj4+IG9mIGEgcGFzc3Rocm91Z2ggZGV2aWNlLCB3ZSBkZWZpbmUgYSBs
+aWdodCB3ZWlnaHQgc3RydWN0dXJlDQo+PiBWVERBY2NlbFBBU0lEQ2FjaGVFbnRyeSB3aXRoIG9u
+bHkgbmVjZXNzYXJ5IGVsZW1lbnRzIGZvciBlYWNoIHBhc2lkLiBXZQ0KPj4gd2lsbCB1c2UgdGhp
+cyBzdHJ1Y3QgYXMgYSBwYXJhbWV0ZXIgdG8gY29uZHVjdCBiaW5kaW5nL3VuYmluZGluZyB0bw0K
+Pj4gbmVzdGVkIGh3cHQgYW5kIHRvIHJlY29yZCB0aGUgY3VycmVudCBib3VuZCBuZXN0ZWQgaHdw
+dC4gSXQncyBhbHNvDQo+PiBkZXNpZ25lZCB0byBzdXBwb3J0IElPTU1VX05PX1BBU0lELg0KPj4N
+Cj4+IFZUREFjY2VsUEFTSURDYWNoZUVudHJ5IGlzIGRlc2lnbmVkIHRvIG9ubHkgYmUgdXNlZCBp
+biBpbnRlbF9pb21tdV9hY2NlbC5jLA0KPj4gc2ltaWxhcmx5IFZURFBBU0lEQ2FjaGVFbnRyeSBz
+aG91bGQgb25seSBiZSB1c2VkIGluIGh3L2kzODYvaW50ZWxfaW9tbXUuYw0KPj4NCj4+IFdoZW4g
+Z3Vlc3QgY3JlYXRlcyBuZXcgUEFTSUQgZW50cmllcywgUUVNVSB3aWxsIGNhcHR1cmUgdGhlIHBj
+X2ludl9kc2MNCj4+IChwYXNpZCBjYWNoZSBpbnZhbGlkYXRpb24pIHJlcXVlc3QsIHdhbGsgdGhy
+b3VnaCBlYWNoIHBhc2lkIGluIGVhY2gNCj4+IHBhc3N0aHJvdWdoIGRldmljZSBmb3IgdmFsaWQg
+cGFzaWQgZW50cmllcywgY3JlYXRlIGEgbmV3DQo+PiBWVERBY2NlbFBBU0lEQ2FjaGVFbnRyeSBp
+ZiBub3QgZXhpc3RpbmcgeWV0Lg0KPj4NCj4+IElPTU1VX05PX1BBU0lEIG9mIHBhc3N0aHJvdWdo
+IGRldmljZSBzdGlsbCBuZWVkIHRvIHJlZ2lzdGVyIE1ScyBpbiBjYXNlDQo+PiBndWVzdCBkb2Vz
+IG5vdCBvcGVyYXRlIGluIHNjYWxhYmxlIG1vZGUuIFNvIGZvciBJT01NVV9OT19QQVNJRCwgd2Ug
+aGF2ZQ0KPj4gYm90aCBWVERBUEFTSURDYWNoZUVudHJ5IGFuZCBWVERBY2NlbFBBU0lEQ2FjaGVF
+bnRyeS4NCj4NCj5UaGUgaW1wbGVtZW50YXRpb24gTEdUTS4gQnV0IEkgZ290IGEgcXVlc3Rpb24g
+dG8gYXNrIGhlcmUuDQo+VlREQVBBU0lEQ2FjaGVFbnRyeSBpcyBjYWNoZWQgaW4gVlREQWRkcmVz
+c1NwYWNlLCB3aGlsZQ0KPlZUREFjY2VsUEFTSURDYWNoZUVudHJ5IGlzIGNhY2hlZCBpbiBWVERI
+b3N0SU9NTVVEZXZpY2UuIEEgbmF0dXJhbA0KPnF1ZXN0aW9uIGlzIHdoeSB1c2luZ1ZUREhvc3RJ
+T01NVURldmljZSBpbnN0ZWFkIG9mIFZUREFkZHJlc3NTcGFjZS4gSQ0KPnRoaW5rIGl0IG1pZ2h0
+IGJlIHZhbHVhYmxlIHRvIG1hcmsgdGhlIHJlYXNvbiBvZiB0aGlzIGNob2ljZS4gVGhpcw0KPndv
+dWxkIGhlbHAgbWFpbnRhaW5pbmcgaXQgaW4gZnV0dXJlIGFzIHdlIG1pZ2h0IGZvcmdvdCB0aGUg
+cmVhc29uLiA6KQ0KDQpIbW0sIHlvdSBtZWFuIHdoeSBub3QgcHV0dGluZyBWVERBY2NlbFBBU0lE
+Q2FjaGVFbnRyeSBsaXN0IGluIFZUREFkZHJlc3NTcGFjZT8NClRoZXJlIGlzIGV4cGxhbmF0aW9u
+IGFib3ZlLCBwYXN0ZSBoZXJlOg0KDQogIFZUREFjY2VsUEFTSURDYWNoZUVudHJ5IGlzIGRlc2ln
+bmVkIHRvIG9ubHkgYmUgdXNlZCBpbiBpbnRlbF9pb21tdV9hY2NlbC5jLA0KICBzaW1pbGFybHkg
+VlREUEFTSURDYWNoZUVudHJ5IHNob3VsZCBvbmx5IGJlIHVzZWQgaW4gaHcvaTM4Ni9pbnRlbF9p
+b21tdS5jDQoNClRoYW5rcw0KWmhlbnpob25nDQoNCj4NCj4+IENvLWRldmVsb3BlZC1ieTogWWkg
+TGl1IDx5aS5sLmxpdUBpbnRlbC5jb20+DQo+PiBTaWduZWQtb2ZmLWJ5OiBZaSBMaXUgPHlpLmwu
+bGl1QGludGVsLmNvbT4NCj4+IFNpZ25lZC1vZmYtYnk6IFpoZW56aG9uZyBEdWFuIDx6aGVuemhv
+bmcuZHVhbkBpbnRlbC5jb20+DQo+PiBUZXN0ZWQtYnk6IFh1ZG9uZyBIYW8gPHh1ZG9uZy5oYW9A
+aW50ZWwuY29tPg0KPj4gLS0tDQo+PiAgIGh3L2kzODYvaW50ZWxfaW9tbXVfYWNjZWwuaCAgICB8
+ICAxMyArKysNCj4+ICAgaHcvaTM4Ni9pbnRlbF9pb21tdV9pbnRlcm5hbC5oIHwgICA4ICsrDQo+
+PiAgIGh3L2kzODYvaW50ZWxfaW9tbXUuYyAgICAgICAgICB8ICAgMyArDQo+PiAgIGh3L2kzODYv
+aW50ZWxfaW9tbXVfYWNjZWwuYyAgICB8IDE1NiArKysrKysrKysrKysrKysrKysrKysrKysrKysr
+KysrKysNCj4+ICAgNCBmaWxlcyBjaGFuZ2VkLCAxODAgaW5zZXJ0aW9ucygrKQ0KPj4NCj4+IGRp
+ZmYgLS1naXQgYS9ody9pMzg2L2ludGVsX2lvbW11X2FjY2VsLmggYi9ody9pMzg2L2ludGVsX2lv
+bW11X2FjY2VsLmgNCj4+IGluZGV4IGU1ZjBiMDc3YjQuLmM5YjE4MjM3NDUgMTAwNjQ0DQo+PiAt
+LS0gYS9ody9pMzg2L2ludGVsX2lvbW11X2FjY2VsLmgNCj4+ICsrKyBiL2h3L2kzODYvaW50ZWxf
+aW9tbXVfYWNjZWwuaA0KPj4gQEAgLTEyLDYgKzEyLDEzIEBADQo+PiAgICNkZWZpbmUgSFdfSTM4
+Nl9JTlRFTF9JT01NVV9BQ0NFTF9IDQo+PiAgICNpbmNsdWRlIENPTkZJR19ERVZJQ0VTDQo+Pg0K
+Pj4gK3R5cGVkZWYgc3RydWN0IFZUREFjY2VsUEFTSURDYWNoZUVudHJ5IHsNCj4+ICsgICAgVlRE
+SG9zdElPTU1VRGV2aWNlICp2dGRfaGlvZDsNCj4+ICsgICAgVlREUEFTSURFbnRyeSBwYXNpZF9l
+bnRyeTsNCj4+ICsgICAgdWludDMyX3QgcGFzaWQ7DQo+PiArICAgIFFMSVNUX0VOVFJZKFZUREFj
+Y2VsUEFTSURDYWNoZUVudHJ5KSBuZXh0Ow0KPj4gK30gVlREQWNjZWxQQVNJRENhY2hlRW50cnk7
+DQo+PiArDQo+PiAgICNpZmRlZiBDT05GSUdfVlREX0FDQ0VMDQo+PiAgIGJvb2wgdnRkX2NoZWNr
+X2hpb2RfYWNjZWwoSW50ZWxJT01NVVN0YXRlICpzLCBWVERIb3N0SU9NTVVEZXZpY2UNCj4qdnRk
+X2hpb2QsDQo+PiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgRXJyb3IgKiplcnJwKTsNCj4+
+IEBAIC0yMCw2ICsyNyw3IEBAIGJvb2wgdnRkX3Byb3BhZ2F0ZV9ndWVzdF9wYXNpZChWVERBZGRy
+ZXNzU3BhY2UNCj4qdnRkX2FzLCBFcnJvciAqKmVycnApOw0KPj4gICB2b2lkIHZ0ZF9mbHVzaF9o
+b3N0X3Bpb3RsYl9hbGxfbG9ja2VkKEludGVsSU9NTVVTdGF0ZSAqcywgdWludDE2X3QNCj5kb21h
+aW5faWQsDQo+PiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdWludDMy
+X3QgcGFzaWQsIGh3YWRkciBhZGRyLA0KPj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgIHVpbnQ2NF90IG5wYWdlcywgYm9vbCBpaCk7DQo+PiArdm9pZCB2dGRfYWNjZWxf
+cGFzaWRfY2FjaGVfc3luYyhJbnRlbElPTU1VU3RhdGUgKnMsIFZURFBBU0lEQ2FjaGVJbmZvDQo+
+KnBjX2luZm8pOw0KPj4gICB2b2lkIHZ0ZF9pb21tdV9vcHNfdXBkYXRlX2FjY2VsKFBDSUlPTU1V
+T3BzICpvcHMpOw0KPj4gICAjZWxzZQ0KPj4gICBzdGF0aWMgaW5saW5lIGJvb2wgdnRkX2NoZWNr
+X2hpb2RfYWNjZWwoSW50ZWxJT01NVVN0YXRlICpzLA0KPj4gQEAgLTQ5LDYgKzU3LDExIEBAIHN0
+YXRpYyBpbmxpbmUgdm9pZA0KPnZ0ZF9mbHVzaF9ob3N0X3Bpb3RsYl9hbGxfbG9ja2VkKEludGVs
+SU9NTVVTdGF0ZSAqcywNCj4+ICAgew0KPj4gICB9DQo+Pg0KPj4gK3N0YXRpYyBpbmxpbmUgdm9p
+ZCB2dGRfYWNjZWxfcGFzaWRfY2FjaGVfc3luYyhJbnRlbElPTU1VU3RhdGUgKnMsDQo+PiArICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFZURFBBU0lEQ2FjaGVJ
+bmZvICpwY19pbmZvKQ0KPj4gK3sNCj4+ICt9DQo+PiArDQo+PiAgIHN0YXRpYyBpbmxpbmUgdm9p
+ZCB2dGRfaW9tbXVfb3BzX3VwZGF0ZV9hY2NlbChQQ0lJT01NVU9wcyAqb3BzKQ0KPj4gICB7DQo+
+PiAgIH0NCj4+IGRpZmYgLS1naXQgYS9ody9pMzg2L2ludGVsX2lvbW11X2ludGVybmFsLmggYi9o
+dy9pMzg2L2ludGVsX2lvbW11X2ludGVybmFsLmgNCj4+IGluZGV4IDAxNDEzMTZmODMuLjYyM2Rj
+MjQ3NjAgMTAwNjQ0DQo+PiAtLS0gYS9ody9pMzg2L2ludGVsX2lvbW11X2ludGVybmFsLmgNCj4+
+ICsrKyBiL2h3L2kzODYvaW50ZWxfaW9tbXVfaW50ZXJuYWwuaA0KPj4gQEAgLTYxNSw2ICs2MTUs
+NyBAQCB0eXBlZGVmIHN0cnVjdCBWVERSb290RW50cnkgVlREUm9vdEVudHJ5Ow0KPj4gICAjZGVm
+aW5lIFZURF9DVFhfRU5UUllfTEVHQUNZX1NJWkUgICAgIDE2DQo+PiAgICNkZWZpbmUgVlREX0NU
+WF9FTlRSWV9TQ0FMQUJMRV9TSVpFICAgMzINCj4+DQo+PiArI2RlZmluZSBWVERfU01fQ09OVEVY
+VF9FTlRSWV9QRFRTKHgpICAgICAgICBleHRyYWN0NjQoKHgpLT52YWxbMF0sIDksIDMpDQo+PiAg
+ICNkZWZpbmUgVlREX1NNX0NPTlRFWFRfRU5UUllfUlNWRF9WQUwwKGF3KSAgKDB4MWUwVUxMIHwN
+Cj5+VlREX0hBV19NQVNLKGF3KSkNCj4+ICAgI2RlZmluZSBWVERfU01fQ09OVEVYVF9FTlRSWV9S
+U1ZEX1ZBTDEgICAgICAweGZmZmZmZmZmZmZlMDAwMDBVTEwNCj4+ICAgI2RlZmluZSBWVERfU01f
+Q09OVEVYVF9FTlRSWV9QUkUgICAgICAgICAgICAweDEwVUxMDQo+PiBAQCAtNjQ1LDYgKzY0Niw3
+IEBAIHR5cGVkZWYgc3RydWN0IFZURFBJT1RMQkludkluZm8gew0KPj4gICAjZGVmaW5lIFZURF9Q
+QVNJRF9ESVJfQklUU19NQVNLICAgICAgICgweDNmZmZVTEwpDQo+PiAgICNkZWZpbmUgVlREX1BB
+U0lEX0RJUl9JTkRFWChwYXNpZCkgICAgKCgocGFzaWQpID4+IDYpICYNCj5WVERfUEFTSURfRElS
+X0JJVFNfTUFTSykNCj4+ICAgI2RlZmluZSBWVERfUEFTSURfRElSX0ZQRCAgICAgICAgICAgICAo
+MVVMTCA8PCAxKSAvKiBGYXVsdCBQcm9jZXNzaW5nIERpc2FibGUgKi8NCj4+ICsjZGVmaW5lIFZU
+RF9QQVNJRF9UQUJMRV9FTlRSWV9OVU0gICAgICgxVUxMIDw8IDYpDQo+PiAgICNkZWZpbmUgVlRE
+X1BBU0lEX1RBQkxFX0JJVFNfTUFTSyAgICAgKDB4M2ZVTEwpDQo+PiAgICNkZWZpbmUgVlREX1BB
+U0lEX1RBQkxFX0lOREVYKHBhc2lkKSAgKChwYXNpZCkgJg0KPlZURF9QQVNJRF9UQUJMRV9CSVRT
+X01BU0spDQo+PiAgICNkZWZpbmUgVlREX1BBU0lEX0VOVFJZX0ZQRCAgICAgICAgICAgKDFVTEwg
+PDwgMSkgLyogRmF1bHQgUHJvY2Vzc2luZyBEaXNhYmxlDQo+Ki8NCj4+IEBAIC03MTAsNiArNzEy
+LDcgQEAgdHlwZWRlZiBzdHJ1Y3QgVlRESG9zdElPTU1VRGV2aWNlIHsNCj4+ICAgICAgIFBDSUJ1
+cyAqYnVzOw0KPj4gICAgICAgdWludDhfdCBkZXZmbjsNCj4+ICAgICAgIEhvc3RJT01NVURldmlj
+ZSAqaGlvZDsNCj4+ICsgICAgUUxJU1RfSEVBRCgsIFZUREFjY2VsUEFTSURDYWNoZUVudHJ5KSBw
+YXNpZF9jYWNoZV9saXN0Ow0KPj4gICB9IFZUREhvc3RJT01NVURldmljZTsNCj4+DQo+PiAgIC8q
+DQo+PiBAQCAtNzY3LDYgKzc3MCwxMSBAQCBzdGF0aWMgaW5saW5lIGludA0KPnZ0ZF9wYXNpZF9l
+bnRyeV9jb21wYXJlKFZURFBBU0lERW50cnkgKnAxLCBWVERQQVNJREVudHJ5ICpwMikNCj4+ICAg
+ICAgIHJldHVybiBtZW1jbXAocDEsIHAyLCBzaXplb2YoKnAxKSk7DQo+PiAgIH0NCj4+DQo+PiAr
+c3RhdGljIGlubGluZSB1aW50MzJfdCB2dGRfc21fY2VfZ2V0X3BkdF9lbnRyeV9udW0oVlREQ29u
+dGV4dEVudHJ5ICpjZSkNCj4+ICt7DQo+PiArICAgIHJldHVybiAxVSA8PCAoVlREX1NNX0NPTlRF
+WFRfRU5UUllfUERUUyhjZSkgKyA3KTsNCj4+ICt9DQo+PiArDQo+PiAgIGludCB2dGRfZ2V0X3Bk
+aXJlX2Zyb21fcGRpcl90YWJsZShkbWFfYWRkcl90IHBhc2lkX2Rpcl9iYXNlLCB1aW50MzJfdCBw
+YXNpZCwNCj4+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFZURFBBU0lERGly
+RW50cnkgKnBkaXJlKTsNCj4+ICAgaW50IHZ0ZF9nZXRfcGVfaW5fcGFzaWRfbGVhZl90YWJsZShJ
+bnRlbElPTU1VU3RhdGUgKnMsIHVpbnQzMl90IHBhc2lkLA0KPj4gZGlmZiAtLWdpdCBhL2h3L2kz
+ODYvaW50ZWxfaW9tbXUuYyBiL2h3L2kzODYvaW50ZWxfaW9tbXUuYw0KPj4gaW5kZXggYjUwYzU1
+NmM0MC4uZTFlMzI5NTlkMyAxMDA2NDQNCj4+IC0tLSBhL2h3L2kzODYvaW50ZWxfaW9tbXUuYw0K
+Pj4gKysrIGIvaHcvaTM4Ni9pbnRlbF9pb21tdS5jDQo+PiBAQCAtMzE4MSw2ICszMTgxLDggQEAg
+c3RhdGljIHZvaWQgdnRkX3Bhc2lkX2NhY2hlX3N5bmMoSW50ZWxJT01NVVN0YXRlDQo+KnMsIFZU
+RFBBU0lEQ2FjaGVJbmZvICpwY19pbmZvKQ0KPj4gICAgICAgZ19oYXNoX3RhYmxlX2ZvcmVhY2go
+cy0+dnRkX2FkZHJlc3Nfc3BhY2VzLA0KPnZ0ZF9wYXNpZF9jYWNoZV9zeW5jX2xvY2tlZCwNCj4+
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIHBjX2luZm8pOw0KPj4gICAgICAgdnRkX2lvbW11
+X3VubG9jayhzKTsNCj4+ICsNCj4+ICsgICAgdnRkX2FjY2VsX3Bhc2lkX2NhY2hlX3N5bmMocywg
+cGNfaW5mbyk7DQo+PiAgIH0NCj4+DQo+PiAgIHN0YXRpYyB2b2lkIHZ0ZF9yZXBsYXlfcGFzaWRf
+YmluZGluZ3NfYWxsKEludGVsSU9NTVVTdGF0ZSAqcykNCj4+IEBAIC00NzUxLDYgKzQ3NTMsNyBA
+QCBzdGF0aWMgYm9vbCB2dGRfZGV2X3NldF9pb21tdV9kZXZpY2UoUENJQnVzICpidXMsDQo+dm9p
+ZCAqb3BhcXVlLCBpbnQgZGV2Zm4sDQo+PiAgICAgICB2dGRfaGlvZC0+ZGV2Zm4gPSAodWludDhf
+dClkZXZmbjsNCj4+ICAgICAgIHZ0ZF9oaW9kLT5pb21tdV9zdGF0ZSA9IHM7DQo+PiAgICAgICB2
+dGRfaGlvZC0+aGlvZCA9IGhpb2Q7DQo+PiArICAgIFFMSVNUX0lOSVQoJnZ0ZF9oaW9kLT5wYXNp
+ZF9jYWNoZV9saXN0KTsNCj4+DQo+PiAgICAgICBpZiAoIXZ0ZF9jaGVja19oaW9kKHMsIHZ0ZF9o
+aW9kLCBlcnJwKSkgew0KPj4gICAgICAgICAgIGdfZnJlZSh2dGRfaGlvZCk7DQo+PiBkaWZmIC0t
+Z2l0IGEvaHcvaTM4Ni9pbnRlbF9pb21tdV9hY2NlbC5jIGIvaHcvaTM4Ni9pbnRlbF9pb21tdV9h
+Y2NlbC5jDQo+PiBpbmRleCAxMGJkYmJhNjMyLi5hNjZkNjNiNGM4IDEwMDY0NA0KPj4gLS0tIGEv
+aHcvaTM4Ni9pbnRlbF9pb21tdV9hY2NlbC5jDQo+PiArKysgYi9ody9pMzg2L2ludGVsX2lvbW11
+X2FjY2VsLmMNCj4+IEBAIC0yNTksNiArMjU5LDE2MiBAQCB2b2lkDQo+dnRkX2ZsdXNoX2hvc3Rf
+cGlvdGxiX2FsbF9sb2NrZWQoSW50ZWxJT01NVVN0YXRlICpzLCB1aW50MTZfdCBkb21haW5faWQs
+DQo+PiAgICAgICAgICAgICAgICAgICAgICAgICAgICB2dGRfZmx1c2hfaG9zdF9waW90bGJfbG9j
+a2VkLCAmcGlvdGxiX2luZm8pOw0KPj4gICB9DQo+Pg0KPj4gK3N0YXRpYyB2b2lkIHZ0ZF9hY2Nl
+bF9maWxsX3BjKFZUREhvc3RJT01NVURldmljZSAqdnRkX2hpb2QsIHVpbnQzMl90IHBhc2lkLA0K
+Pj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFZURFBBU0lERW50cnkgKnBlKQ0KPj4g
+K3sNCj4+ICsgICAgVlREQWNjZWxQQVNJRENhY2hlRW50cnkgKnZ0ZF9wY2U7DQo+PiArDQo+PiAr
+ICAgIFFMSVNUX0ZPUkVBQ0godnRkX3BjZSwgJnZ0ZF9oaW9kLT5wYXNpZF9jYWNoZV9saXN0LCBu
+ZXh0KSB7DQo+PiArICAgICAgICBpZiAodnRkX3BjZS0+cGFzaWQgPT0gcGFzaWQpIHsNCj4+ICsg
+ICAgICAgICAgICBpZiAodnRkX3Bhc2lkX2VudHJ5X2NvbXBhcmUocGUsICZ2dGRfcGNlLT5wYXNp
+ZF9lbnRyeSkpIHsNCj4+ICsgICAgICAgICAgICAgICAgdnRkX3BjZS0+cGFzaWRfZW50cnkgPSAq
+cGU7DQo+PiArICAgICAgICAgICAgfQ0KPj4gKyAgICAgICAgICAgIHJldHVybjsNCj4+ICsgICAg
+ICAgIH0NCj4+ICsgICAgfQ0KPj4gKw0KPj4gKyAgICB2dGRfcGNlID0gZ19tYWxsb2MwKHNpemVv
+ZihWVERBY2NlbFBBU0lEQ2FjaGVFbnRyeSkpOw0KPj4gKyAgICB2dGRfcGNlLT52dGRfaGlvZCA9
+IHZ0ZF9oaW9kOw0KPj4gKyAgICB2dGRfcGNlLT5wYXNpZCA9IHBhc2lkOw0KPj4gKyAgICB2dGRf
+cGNlLT5wYXNpZF9lbnRyeSA9ICpwZTsNCj4+ICsgICAgUUxJU1RfSU5TRVJUX0hFQUQoJnZ0ZF9o
+aW9kLT5wYXNpZF9jYWNoZV9saXN0LCB2dGRfcGNlLCBuZXh0KTsNCj4+ICt9DQo+PiArDQo+PiAr
+LyoNCj4+ICsgKiBUaGlzIGZ1bmN0aW9uIHdhbGtzIG92ZXIgUEFTSUQgcmFuZ2Ugd2l0aGluIFtz
+dGFydCwgZW5kKSBpbiBhIHNpbmdsZQ0KPj4gKyAqIFBBU0lEIHRhYmxlIGZvciBlbnRyaWVzIG1h
+dGNoaW5nIEBpbmZvIHR5cGUvZGlkLCB0aGVuIGNyZWF0ZQ0KPj4gKyAqIFZUREFjY2VsUEFTSURD
+YWNoZUVudHJ5IGlmIG5vdCBleGlzdCB5ZXQuDQo+PiArICovDQo+PiArc3RhdGljIHZvaWQgdnRk
+X3NtX3Bhc2lkX3RhYmxlX3dhbGtfb25lKFZUREhvc3RJT01NVURldmljZSAqdnRkX2hpb2QsDQo+
+PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGRtYV9hZGRyX3QgcHRf
+YmFzZSwgaW50IHN0YXJ0LCBpbnQgZW5kLA0KPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICBWVERQQVNJRENhY2hlSW5mbyAqaW5mbykNCj4+ICt7DQo+PiArICAgIElu
+dGVsSU9NTVVTdGF0ZSAqcyA9IHZ0ZF9oaW9kLT5pb21tdV9zdGF0ZTsNCj4+ICsgICAgVlREUEFT
+SURFbnRyeSBwZTsNCj4+ICsgICAgaW50IHBhc2lkOw0KPj4gKw0KPj4gKyAgICBmb3IgKHBhc2lk
+ID0gc3RhcnQ7IHBhc2lkIDwgZW5kOyBwYXNpZCsrKSB7DQo+PiArICAgICAgICBpZiAodnRkX2dl
+dF9wZV9pbl9wYXNpZF9sZWFmX3RhYmxlKHMsIHBhc2lkLCBwdF9iYXNlLCAmcGUpIHx8DQo+PiAr
+ICAgICAgICAgICAgIXZ0ZF9wZV9wcmVzZW50KCZwZSkpIHsNCj4+ICsgICAgICAgICAgICBjb250
+aW51ZTsNCj4+ICsgICAgICAgIH0NCj4+ICsNCj4+ICsgICAgICAgIGlmICgoaW5mby0+dHlwZSA9
+PSBWVERfSU5WX0RFU0NfUEFTSURDX0dfRFNJIHx8DQo+PiArICAgICAgICAgICAgIGluZm8tPnR5
+cGUgPT0gVlREX0lOVl9ERVNDX1BBU0lEQ19HX1BBU0lEX1NJKSAmJg0KPj4gKyAgICAgICAgICAg
+IChpbmZvLT5kaWQgIT0gVlREX1NNX1BBU0lEX0VOVFJZX0RJRCgmcGUpKSkgew0KPj4gKyAgICAg
+ICAgICAgIC8qDQo+PiArICAgICAgICAgICAgICogVlREX1BBU0lEX0NBQ0hFX0RPTVNJIGFuZCBW
+VERfUEFTSURfQ0FDSEVfUEFTSURTSQ0KPj4gKyAgICAgICAgICAgICAqIHJlcXVpcmVzIGRvbWFp
+biBpZCBjaGVjay4gSWYgZG9tYWluIGlkIGNoZWNrIGZhaWwsDQo+PiArICAgICAgICAgICAgICog
+Z28gdG8gbmV4dCBwYXNpZC4NCj4+ICsgICAgICAgICAgICAgKi8NCj4+ICsgICAgICAgICAgICBj
+b250aW51ZTsNCj4+ICsgICAgICAgIH0NCj4+ICsNCj4+ICsgICAgICAgIHZ0ZF9hY2NlbF9maWxs
+X3BjKHZ0ZF9oaW9kLCBwYXNpZCwgJnBlKTsNCj4+ICsgICAgfQ0KPj4gK30NCj4+ICsNCj4+ICsv
+Kg0KPj4gKyAqIEluIFZULWQgc2NhbGFibGUgbW9kZSB0cmFuc2xhdGlvbiwgUEFTSUQgZGlyICsg
+UEFTSUQgdGFibGUgaXMgdXNlZC4NCj4+ICsgKiBUaGlzIGZ1bmN0aW9uIGFpbXMgYXQgbG9vcGlu
+ZyBvdmVyIGEgcmFuZ2Ugb2YgUEFTSURzIGluIHRoZSBnaXZlbg0KPj4gKyAqIHR3byBsZXZlbCB0
+YWJsZSB0byBpZGVudGlmeSB0aGUgcGFzaWQgY29uZmlnIGluIGd1ZXN0Lg0KPj4gKyAqLw0KPj4g
+K3N0YXRpYyB2b2lkIHZ0ZF9zbV9wYXNpZF90YWJsZV93YWxrKFZUREhvc3RJT01NVURldmljZSAq
+dnRkX2hpb2QsDQo+PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZG1hX2Fk
+ZHJfdCBwZHRfYmFzZSwgaW50IHN0YXJ0LCBpbnQgZW5kLA0KPj4gKyAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgIFZURFBBU0lEQ2FjaGVJbmZvICppbmZvKQ0KPj4gK3sNCj4+ICsg
+ICAgVlREUEFTSUREaXJFbnRyeSBwZGlyZTsNCj4+ICsgICAgaW50IHBhc2lkID0gc3RhcnQ7DQo+
+PiArICAgIGludCBwYXNpZF9uZXh0Ow0KPj4gKyAgICBkbWFfYWRkcl90IHB0X2Jhc2U7DQo+PiAr
+DQo+PiArICAgIHdoaWxlIChwYXNpZCA8IGVuZCkgew0KPj4gKyAgICAgICAgcGFzaWRfbmV4dCA9
+IChwYXNpZCArIFZURF9QQVNJRF9UQUJMRV9FTlRSWV9OVU0pICYNCj4+ICsgICAgICAgICAgICAg
+ICAgICAgICB+KFZURF9QQVNJRF9UQUJMRV9FTlRSWV9OVU0gLSAxKTsNCj4+ICsgICAgICAgIHBh
+c2lkX25leHQgPSBwYXNpZF9uZXh0IDwgZW5kID8gcGFzaWRfbmV4dCA6IGVuZDsNCj4+ICsNCj4+
+ICsgICAgICAgIGlmICghdnRkX2dldF9wZGlyZV9mcm9tX3BkaXJfdGFibGUocGR0X2Jhc2UsIHBh
+c2lkLCAmcGRpcmUpDQo+PiArICAgICAgICAgICAgJiYgdnRkX3BkaXJlX3ByZXNlbnQoJnBkaXJl
+KSkgew0KPj4gKyAgICAgICAgICAgIHB0X2Jhc2UgPSBwZGlyZS52YWwgJiBWVERfUEFTSURfVEFC
+TEVfQkFTRV9BRERSX01BU0s7DQo+PiArICAgICAgICAgICAgdnRkX3NtX3Bhc2lkX3RhYmxlX3dh
+bGtfb25lKHZ0ZF9oaW9kLCBwdF9iYXNlLCBwYXNpZCwgcGFzaWRfbmV4dCwNCj4+ICsgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaW5mbyk7DQo+PiArICAgICAgICB9DQo+
+PiArICAgICAgICBwYXNpZCA9IHBhc2lkX25leHQ7DQo+PiArICAgIH0NCj4+ICt9DQo+PiArDQo+
+PiArc3RhdGljIHZvaWQgdnRkX2FjY2VsX3JlcGxheV9wYXNpZF9iaW5kX2Zvcl9kZXYoVlRESG9z
+dElPTU1VRGV2aWNlDQo+KnZ0ZF9oaW9kLA0KPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgIGludCBzdGFydCwgaW50IGVuZCwNCj4+ICsgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBWVERQQVNJRENhY2hlSW5mbyAq
+cGNfaW5mbykNCj4+ICt7DQo+PiArICAgIEludGVsSU9NTVVTdGF0ZSAqcyA9IHZ0ZF9oaW9kLT5p
+b21tdV9zdGF0ZTsNCj4+ICsgICAgVlREQ29udGV4dEVudHJ5IGNlOw0KPj4gKyAgICBpbnQgZGV2
+X21heF9wYXNpZCA9IDEgPDwgdnRkX2hpb2QtPmhpb2QtPmNhcHMubWF4X3Bhc2lkX2xvZzI7DQo+
+PiArDQo+PiArICAgIGlmICghdnRkX2Rldl90b19jb250ZXh0X2VudHJ5KHMsIHBjaV9idXNfbnVt
+KHZ0ZF9oaW9kLT5idXMpLA0KPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB2
+dGRfaGlvZC0+ZGV2Zm4sICZjZSkpIHsNCj4+ICsgICAgICAgIFZURFBBU0lEQ2FjaGVJbmZvIHdh
+bGtfaW5mbyA9ICpwY19pbmZvOw0KPj4gKyAgICAgICAgdWludDMyX3QgY2VfbWF4X3Bhc2lkID0g
+dnRkX3NtX2NlX2dldF9wZHRfZW50cnlfbnVtKCZjZSkgKg0KPj4gKyAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgVlREX1BBU0lEX1RBQkxFX0VOVFJZX05VTTsNCj4+ICsNCj4+ICsgICAg
+ICAgIGVuZCA9IE1JTihlbmQsIE1JTihkZXZfbWF4X3Bhc2lkLCBjZV9tYXhfcGFzaWQpKTsNCj4+
+ICsNCj4+ICsgICAgICAgIHZ0ZF9zbV9wYXNpZF90YWJsZV93YWxrKHZ0ZF9oaW9kLA0KPlZURF9D
+RV9HRVRfUEFTSURfRElSX1RBQkxFKCZjZSksDQo+PiArICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICBzdGFydCwgZW5kLCAmd2Fsa19pbmZvKTsNCj4+ICsgICAgfQ0KPj4gK30NCj4+ICsN
+Cj4+ICsvKg0KPj4gKyAqIFRoaXMgZnVuY3Rpb24gcmVwbGF5cyB0aGUgZ3Vlc3QgcGFzaWQgYmlu
+ZGluZ3MgYnkgd2Fsa2luZyB0aGUgdHdvIGxldmVsDQo+PiArICogZ3Vlc3QgUEFTSUQgdGFibGUu
+IEZvciBlYWNoIHZhbGlkIHBhc2lkIGVudHJ5LCBpdCBjcmVhdGVzIGFuIGVudHJ5DQo+PiArICog
+VlREQWNjZWxQQVNJRENhY2hlRW50cnkgZHluYW1pY2FsbHkgaWYgbm90IGV4aXN0IHlldC4gVGhp
+cyBlbnRyeSBob2xkcw0KPj4gKyAqIGluZm8gc3BlY2lmaWMgdG8gYSBwYXNpZA0KPj4gKyAqLw0K
+Pj4gK3ZvaWQgdnRkX2FjY2VsX3Bhc2lkX2NhY2hlX3N5bmMoSW50ZWxJT01NVVN0YXRlICpzLCBW
+VERQQVNJRENhY2hlSW5mbw0KPipwY19pbmZvKQ0KPj4gK3sNCj4+ICsgICAgaW50IHN0YXJ0ID0g
+SU9NTVVfTk9fUEFTSUQsIGVuZCA9IDEgPDwgcy0+cGFzaWQ7DQo+PiArICAgIFZUREhvc3RJT01N
+VURldmljZSAqdnRkX2hpb2Q7DQo+PiArICAgIEdIYXNoVGFibGVJdGVyIGhpb2RfaXQ7DQo+PiAr
+DQo+PiArICAgIGlmICghcy0+ZnN0cykgew0KPj4gKyAgICAgICAgcmV0dXJuOw0KPj4gKyAgICB9
+DQo+PiArDQo+PiArICAgIHN3aXRjaCAocGNfaW5mby0+dHlwZSkgew0KPj4gKyAgICBjYXNlIFZU
+RF9JTlZfREVTQ19QQVNJRENfR19QQVNJRF9TSToNCj4+ICsgICAgICAgIHN0YXJ0ID0gcGNfaW5m
+by0+cGFzaWQ7DQo+PiArICAgICAgICBlbmQgPSBwY19pbmZvLT5wYXNpZCArIDE7DQo+PiArICAg
+ICAgICAvKiBmYWxsIHRocm91Z2ggKi8NCj4+ICsgICAgY2FzZSBWVERfSU5WX0RFU0NfUEFTSURD
+X0dfRFNJOg0KPj4gKyAgICAgICAgLyoNCj4+ICsgICAgICAgICAqIGxvb3AgYWxsIGFzc2lnbmVk
+IGRldmljZXMsIGRvIGRvbWFpbiBpZCBjaGVjayBpbg0KPj4gKyAgICAgICAgICogdnRkX3NtX3Bh
+c2lkX3RhYmxlX3dhbGtfb25lKCkgYWZ0ZXIgZ2V0IHBhc2lkIGVudHJ5Lg0KPj4gKyAgICAgICAg
+ICovDQo+PiArICAgICAgICBicmVhazsNCj4+ICsgICAgY2FzZSBWVERfSU5WX0RFU0NfUEFTSURD
+X0dfR0xPQkFMOg0KPj4gKyAgICAgICAgLyogbG9vcCBhbGwgYXNzaWduZWQgZGV2aWNlcyAqLw0K
+Pj4gKyAgICAgICAgYnJlYWs7DQo+PiArICAgIGRlZmF1bHQ6DQo+PiArICAgICAgICBnX2Fzc2Vy
+dF9ub3RfcmVhY2hlZCgpOw0KPj4gKyAgICB9DQo+PiArDQo+PiArICAgIC8qDQo+PiArICAgICAq
+IExvb3AgYWxsIHRoZSB2dGRfaGlvZCBpbnN0YW5jZXMgdG8gc3luYyB0aGUgInBhc2lkIGNhY2hl
+IiBwZXIgdGhlDQo+PiArICAgICAqIGd1ZXN0IHBhc2lkIGNvbmZpZ3VyYXRpb24uDQo+PiArICAg
+ICAqDQo+PiArICAgICAqIFZURCB0cmFuc2xhdGlvbiBjYWxsYmFjayBuZXZlciBhY2Nlc3NlcyB2
+dGRfaGlvZCBhbmQgaXRzIGNvcnJlc3BvbmRpbmcNCj4+ICsgICAgICogY2FjaGVkIHBhc2lkIGVu
+dHJ5LCBzbyBubyBpb21tdSBsb2NrIG5lZWRlZCBoZXJlLg0KPj4gKyAgICAgKi8NCj4+ICsgICAg
+Z19oYXNoX3RhYmxlX2l0ZXJfaW5pdCgmaGlvZF9pdCwgcy0+dnRkX2hvc3RfaW9tbXVfZGV2KTsN
+Cj4+ICsgICAgd2hpbGUgKGdfaGFzaF90YWJsZV9pdGVyX25leHQoJmhpb2RfaXQsIE5VTEwsICh2
+b2lkICoqKSZ2dGRfaGlvZCkpIHsNCj4+ICsgICAgICAgIGlmICghb2JqZWN0X2R5bmFtaWNfY2Fz
+dChPQkpFQ1QodnRkX2hpb2QtPmhpb2QpLA0KPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIFRZUEVfSE9TVF9JT01NVV9ERVZJQ0VfSU9NTVVGRCkpIHsNCj4+ICsgICAgICAgICAg
+ICBjb250aW51ZTsNCj4+ICsgICAgICAgIH0NCj4+ICsgICAgICAgIHZ0ZF9hY2NlbF9yZXBsYXlf
+cGFzaWRfYmluZF9mb3JfZGV2KHZ0ZF9oaW9kLCBzdGFydCwgZW5kLCBwY19pbmZvKTsNCj4+ICsg
+ICAgfQ0KPj4gK30NCj4+ICsNCj4+ICAgc3RhdGljIHVpbnQ2NF90IHZ0ZF9nZXRfaG9zdF9pb21t
+dV9xdWlya3ModWludDMyX3QgdHlwZSwNCj4+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgdm9pZCAqY2FwcywgdWludDMyX3Qgc2l6ZSkNCj4+ICAgew0KDQo=
 
