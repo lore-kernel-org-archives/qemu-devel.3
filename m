@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B853ACD5BB3
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:54:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D75F7CD5BB8
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:54:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXov-0001ie-76; Fri, 22 May 2026 17:54:18 -0400
+	id 1wQXlX-0008Uf-2l; Fri, 22 May 2026 17:50:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXob-0000s3-RM; Fri, 22 May 2026 17:53:58 -0400
+ id 1wQXlR-0008FZ-2b; Fri, 22 May 2026 17:50:41 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXoW-0005ve-G5; Fri, 22 May 2026 17:53:57 -0400
+ id 1wQXlN-0003Ln-LZ; Fri, 22 May 2026 17:50:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486562; bh=NeizuiU9CNw1ZzTV6M1T2A/yYQYGEMCvWTUWZVtOwzs=;
+ t=1779486560; bh=6yNTHyY4n+czwCDJOviiZkYDpnz4dMyJaeqmCz/8sP8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=bS1om3Rn4RdGsg/c132ejy/0EHMUIN9e1XMcPel5lGMvAmafsm6rapU+EaXBIX8Mp
- S4iQibMVDwQ84mT6uEAhhp5lHJcKQJfwDwqF4apKLPOzHfCkXyFkj933LP0LOrNepk
- qCX1TgbtsA/VPBKabjBZ6QX5nex+Trnb+NFfbz4MVcuTS4wVvgKtLCpP2ogW50WB0o
- rjX8HaV01GSaQvTef4SpFpNkWTVdr/LGpOlsdrQLyEQNvSvrPO/FGGfa1ahWBrX8ex
- Oij9tFEsxOY0yaL123J6JFAT7KkqQ0NUBv5qM4JURgIzkfnm3R+f3tNCxQX5joVJEk
- c2BVoRNlDdChw==
+ b=f4ypp9qTDrbMBnGxRr2VEWfU4hKquHS7jVvVT1Ax2ochXFLkMGWi7nHNF6Oq8th5J
+ 0KefefqWWxia1Gy00vhaUI6mtwtBTs1S//PZWMVRguspPSKfQrFi9H9xdByr9DsCdf
+ Xc7GZVW0st8FJL578uI19o1+gLHokcG78hxvqMTBCwrCZa7KuginheoYBxfMwsChkM
+ EQxY0e+tvOW+RQJ4QYDNMcgmrqFQeSJ93qhJUAzzxJaRu94cKtGvI4h5qhg2pAOC+I
+ 56cvSYRsgTZUUvg5g4wPxW9Vkw272wlb5xsM4/fVIyyvehoCVs4803489hCBFJXb0E
+ sEjiOn444JBvQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 27EA91AFB8A;
- Sat, 23 May 2026 00:49:22 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3006F1AFB6A;
+ Sat, 23 May 2026 00:49:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5013A3B71D9;
- Sat, 23 May 2026 00:49:26 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4D0B93B71B9;
+ Sat, 23 May 2026 00:49:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 148/149] iotests/046: Test that discard/write_zeroes
- wait for dependencies
-Date: Sat, 23 May 2026 00:49:20 +0300
-Message-ID: <20260522214923.807017-49-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Katherine Leaver <katherine.j.leaver@gmail.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 116/149] hw/uefi: verify data size before accessing it
+ in wrap_pkcs7
+Date: Sat, 23 May 2026 00:48:48 +0300
+Message-ID: <20260522214923.807017-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
@@ -69,138 +70,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-This is a regression test for the bug fixed in the previous commit where
-discard and write_zeroes operations wouldn't consider their dependencies
-in s->cluster_allocs. Without the fix, this results in a corrupted
-image.
-
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260427170520.101242-5-kwolf@redhat.com>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
-Tested-by: Denis V. Lunev <den@openvz.org>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 389f5bcc744d3ddc127d550a57261aed9bbba1f3)
+Fixes: CVE-2026-41439
+Fixes: 3e33af2cb306 ("hw/uefi: add var-service-pkcs7.c")
+Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20260422092910.444997-6-kraxel@redhat.com>
+(cherry picked from commit 22b7b222d8f5428be8b5d4787f36efd0a0b75292)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qemu-iotests/046 b/tests/qemu-iotests/046
-index 4c9ed4d26e..e03dd40147 100755
---- a/tests/qemu-iotests/046
-+++ b/tests/qemu-iotests/046
-@@ -184,6 +184,48 @@ aio_write -P 160 0x104000 0x18000
- resume A
- aio_flush
- EOF
-+
-+# Create a pre-allocated zero cluster, then start a write on it and discard it
-+# before the L2 update is made
-+cat  <<EOF
-+write -P 181 0x120000 0x10000
-+write -z 0x120000 0x10000
-+
-+break write_aio A
-+aio_write -P 180 0x120000 0x10000
-+wait_break A
-+aio_discard 0x120000 0x10000
-+resume A
-+aio_flush
-+EOF
-+
-+# Create a pre-allocated zero cluster, then start a write on it and a
-+# concurrent zero write with MAY_UNMAP before the L2 update is made
-+cat  <<EOF
-+write -P 181 0x130000 0x10000
-+write -z 0x130000 0x10000
-+
-+break write_aio A
-+aio_write -P 180 0x130000 0x10000
-+wait_break A
-+aio_write -z -u 0x130000 0x10000
-+resume A
-+aio_flush
-+EOF
-+
-+# Create a pre-allocated zero cluster, then start a write on it and a
-+# concurrent zero write without MAY_UNMAP before the L2 update is made
-+cat  <<EOF
-+write -P 181 0x140000 0x10000
-+write -z 0x140000 0x10000
-+
-+break write_aio A
-+aio_write -P 180 0x140000 0x10000
-+wait_break A
-+aio_write -z 0x140000 0x10000
-+resume A
-+aio_flush
-+EOF
- }
+diff --git a/hw/uefi/var-service-pkcs7.c b/hw/uefi/var-service-pkcs7.c
+index 32accf4e44..f17ad6872f 100644
+--- a/hw/uefi/var-service-pkcs7.c
++++ b/hw/uefi/var-service-pkcs7.c
+@@ -73,7 +73,8 @@ static void wrap_pkcs7(gnutls_datum_t *pkcs7)
+     };
+     gnutls_datum_t wrap;
  
- overlay_io | $QEMU_IO blkdebug::"$TEST_IMG" | _filter_qemu_io |\
-@@ -264,6 +306,10 @@ verify_io()
-     # Undefined content for 0x10c000 0x8000
-     echo read -P 160 0x114000 0x8000
-     echo read -P 17  0x11c000 0x4000
-+
-+    echo read -P 0   0x120000 0x10000
-+    echo read -P 0   0x130000 0x10000
-+    echo read -P 0   0x140000 0x10000
- }
- 
- verify_io | $QEMU_IO "$TEST_IMG" | _filter_qemu_io
-diff --git a/tests/qemu-iotests/046.out b/tests/qemu-iotests/046.out
-index b1a03f4041..6341df335c 100644
---- a/tests/qemu-iotests/046.out
-+++ b/tests/qemu-iotests/046.out
-@@ -139,6 +139,36 @@ wrote XXX/XXX bytes at offset XXX
- XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- wrote XXX/XXX bytes at offset XXX
- XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+blkdebug: Suspended request 'A'
-+blkdebug: Resuming request 'A'
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+discarded  XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+blkdebug: Suspended request 'A'
-+blkdebug: Resuming request 'A'
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+blkdebug: Suspended request 'A'
-+blkdebug: Resuming request 'A'
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- 
- == Verify image content ==
- read 65536/65536 bytes at offset 0
-@@ -239,5 +269,11 @@ read 32768/32768 bytes at offset 1130496
- 32 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- read 16384/16384 bytes at offset 1163264
- 16 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 65536/65536 bytes at offset 1179648
-+64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 65536/65536 bytes at offset 1245184
-+64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 65536/65536 bytes at offset 1310720
-+64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- No errors were found on the image.
- *** done
+-    if (pkcs7->data[4] == 0x06 &&
++    if (pkcs7->size > 16 &&
++        pkcs7->data[4] == 0x06 &&
+         pkcs7->data[5] == 0x09 &&
+         memcmp(pkcs7->data + 6, signed_data_oid, sizeof(signed_data_oid)) == 0 &&
+         pkcs7->data[15] == 0x0a &&
 -- 
 2.47.3
 
