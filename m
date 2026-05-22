@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9281CD5BB3
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:52:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A448CD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:52:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXmk-0002yW-BH; Fri, 22 May 2026 17:52:02 -0400
+	id 1wQXlS-0008I5-5I; Fri, 22 May 2026 17:50:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXmL-0002cb-Li; Fri, 22 May 2026 17:51:41 -0400
+ id 1wQXkU-0006td-UO; Fri, 22 May 2026 17:49:44 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXmH-0003nw-EA; Fri, 22 May 2026 17:51:36 -0400
+ id 1wQXkT-0002ZD-1c; Fri, 22 May 2026 17:49:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486560; bh=ShN1YawPOBejdJIy6tjrordl8O94iVv8f/3vbxRUpwU=;
+ t=1779486559; bh=wiIxSKLWjGp/hnmDgWgykvj99Y/kdybHqbX062AqeJ8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=iFbHrR8eTsZUY+QweMVMwo7+i3dR/EJkV5a7nXnW7OGJxmb9x25rR0Me6JXPKmZhT
- /dyl13aC5txKE/DhNi5kCERNzuhnFBpGHOZSkctvhShrtzf92kYXsRG7ocOu/qGHfT
- zzqF4voCxmi32S0YB88wsaADGm7bRpWnkB+8At0fVFnQDc6qBpVS0nBAPTgxM305BR
- xAuagpixbwePegZxlHqE+zyo3xRSUVkTPwxA5o03wUMbgotsmr0fEgiJvLsMHuvHji
- /tyn7uyaqMuTsdaasK7Es0KMxOpkxrooKS/E77pkLs7oMQZx9NPvUFw4EO7Fys/PGn
- GLC/TLXMk8lAg==
+ b=MFVinSxW2TlV98oUJppyPC8hjlmWtHc2oHfryRkgwx9f2niN9cuB4Ot2RlwrYWrm3
+ rapYshkqS4zYnBozpoUaCIKCZSSxkPZbA0XdAwlwvgUciEDID8K4bWLro86Co4gzTf
+ ciKjbKONVBviZ67EBLkshvsIu7LCRywWnqm7CmszIlypr8XhoRQHubnRCxlsLBglDw
+ rlnwnA9SHdgA170cGfRiQTx/VoTKMOH5/RmOmhGUH8R8pas49AUFiSpTjo5VrLInYn
+ 6i47TcEJb41pRKOWf3+hdhWkz+0lX9yd/AhhcSl68yMIiMasDdliW7YV62TIgVzD2U
+ qO2+3PodHENMA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9B6121AFB71;
- Sat, 23 May 2026 00:49:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 75CDF1AFB61;
+ Sat, 23 May 2026 00:49:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BADF73B71C0;
- Sat, 23 May 2026 00:49:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9DC5F3B71B0;
+ Sat, 23 May 2026 00:49:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jeuk Kim <jeuk20.kim@samsung.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 123/149] hw/ufs: Zero reserved bytes in REPORT LUNS
- response header
-Date: Sat, 23 May 2026 00:48:55 +0300
-Message-ID: <20260522214923.807017-24-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, liugan1 <liugan1@lixiang.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 107/149] hw/intc/arm_gicv3: Fix NS write to
+ ICC_AP1Rn_EL1 when prebits < 7
+Date: Sat, 23 May 2026 00:48:39 +0300
+Message-ID: <20260522214923.807017-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
@@ -69,34 +69,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jeuk Kim <jeuk20.kim@samsung.com>
+From: liugan1 <liugan1@lixiang.com>
 
-ufs_emulate_report_luns() writes the 4-byte LUN list length into
-outbuf[0..3] via stl_be_p() but leaves outbuf[4..7], the reserved
-field, uninitialized. Those bytes are then DMA'd to guest memory,
-leaking uninitialized QEMU stack data.
+The existing code uses a blanket `regno < 2` check to make
+ICC_AP1R0_EL1 and ICC_AP1R1_EL1 writes from Non-secure code WI
+(Write Ignore) when EL3 is present. This is intended to prevent
+NS code from claiming active interrupts in the Secure priority
+range, which could block Secure interrupt delivery.
 
-Fixes: 7708e298180 ("hw/ufs/lu: skip automatic zero-init of large array")
+However, that check assumes prebits=7 (4 APR registers), where the
+NS priority range (128..255) maps entirely to AP1R2/AP1R3. Since
+commit 39f29e599355 ("hw/intc/arm_gicv3: Use correct number of
+priority bits for the CPU", first in 7.1), all QEMU AArch64 CPUs
+are initialised with gic_pribits=5 (one APR register), so NS
+priorities map to AP1R0 bits [16:31]. Blanket WI of the entire
+AP1R0 register prevents NS code from clearing its own NS active
+priority bits. Machines using hw_compat_7_0 (e.g. virt-7.0) still
+force pribits=8 via force-8-bit-prio and are therefore unaffected.
+
+A concrete consequence observed in virtualisation scenarios: when
+a guest VM acknowledges an SPI interrupt but does not perform EOI,
+is force-killed and restarted, the new guest's attempt to clear
+the residual active state by writing ICC_AP1R0_EL1=0 is silently
+ignored. The running priority (RPR) remains stuck at the old
+interrupt's priority, preventing all equal-or-lower priority
+interrupts (including timer interrupts) from being delivered, and
+hanging the guest.
+
+Fix this by computing the exact Secure/NS boundary within the APR
+bank based on prebits. For registers entirely in the Secure range,
+keep the WI behaviour. For the register that straddles the
+boundary, preserve only the Secure bits while allowing NS bits to
+be modified. For registers entirely in the NS range, allow full
+write access.
+
+The new logic produces identical behaviour to the old code when
+prebits=7, preserving existing behaviour for machines that use
+force-8-bit-prio.
+
+Fixes: 39f29e599355 ("hw/intc/arm_gicv3: Use correct number of priority bits for the CPU")
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
-(cherry picked from commit 042dbcff8382393b20b716294a6c4b1a4af6b3f1)
+Signed-off-by: liugan1 <liugan1@lixiang.com>
+Message-id: 20260428083119.1400110-1-gs_liugan@163.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit f35f0f1ca121fb4931fe98570cda3aeb06b7a87f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
-index 3f3c9589ce..709d6adcf6 100644
---- a/hw/ufs/lu.c
-+++ b/hw/ufs/lu.c
-@@ -101,6 +101,10 @@ static int ufs_emulate_report_luns(UfsRequest *req, uint8_t *outbuf,
-         return SCSI_COMMAND_FAIL;
+diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
+index 2e6c1f778a..5b15e4ff1e 100644
+--- a/hw/intc/arm_gicv3_cpuif.c
++++ b/hw/intc/arm_gicv3_cpuif.c
+@@ -1869,9 +1869,40 @@ static void icc_ap_write(CPUARMState *env, const ARMCPRegInfo *ri,
+      * at a priority outside the Non-secure range (128..255), since this
+      * would otherwise allow malicious NS code to block delivery of S interrupts
+      * by writing a bad value to these registers.
++     *
++     * The NS priority range (128..255) maps to APR bits starting at
++     * aprbit = 0x80 >> (8 - prebits). Depending on prebits, this boundary
++     * may fall within AP1R0 or AP1R1, so we cannot simply WI the entire
++     * register. Instead we calculate which bits within each register
++     * correspond to the Secure range and preserve those, while allowing
++     * NS code to modify only the NS range bits.
++     *
++     *   prebits=4: num_aprs=1, NS starts at AP1R0[8]
++     *   prebits=5: num_aprs=1, NS starts at AP1R0[16]
++     *   prebits=6: num_aprs=2, NS starts at AP1R1[0]
++     *   prebits=7: num_aprs=4, NS starts at AP1R2[0]
+      */
+-    if (grp == GICV3_G1NS && regno < 2 && arm_feature(env, ARM_FEATURE_EL3)) {
+-        return;
++    if (grp == GICV3_G1NS && arm_feature(env, ARM_FEATURE_EL3)) {
++        int ns_start_bit = 0x80 >> (8 - cs->prebits);
++        int ns_start_regno = ns_start_bit / 32;
++        int ns_start_regbit = ns_start_bit % 32;
++
++        if (regno < ns_start_regno) {
++            /* This entire register is in the Secure range: WI */
++            return;
++        } else if (regno == ns_start_regno && ns_start_regbit > 0) {
++            /*
++             * This register is split: low bits are Secure, high bits are NS.
++             * Preserve the Secure bits (below ns_start_regbit) from the
++             * current value, and take the NS bits (at and above
++             * ns_start_regbit) from the written value.
++             */
++            uint32_t secure_mask = MAKE_64BIT_MASK(0, ns_start_regbit);
++
++            value = (cs->icc_apr[grp][regno] & secure_mask) |
++                    (value & ~secure_mask);
++        }
++        /* else: regno > ns_start_regno, entire register is NS: allow write */
      }
  
-+    if (outbuf_len < 8) {
-+        return SCSI_COMMAND_FAIL;
-+    }
-+    memset(outbuf, 0, 8);
-     len += 8;
- 
-     for (uint8_t lun = 0; lun < UFS_MAX_LUS; ++lun) {
+     if (cs->nmi_support) {
 -- 
 2.47.3
 
