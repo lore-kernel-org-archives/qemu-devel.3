@@ -4,184 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B14E7CD5BAF
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 06:21:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84E7ECD4F5B
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 06:41:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQJFY-0005G7-GE; Fri, 22 May 2026 02:20:48 -0400
+	id 1wQJYm-0000B6-0C; Fri, 22 May 2026 02:40:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1wQJFW-0005Fu-Ag
- for qemu-devel@nongnu.org; Fri, 22 May 2026 02:20:46 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wQJYc-0000AY-OB
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 02:40:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1wQJFT-0001Ac-HD
- for qemu-devel@nongnu.org; Fri, 22 May 2026 02:20:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1779430843; x=1810966843;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=qPocOtRDLpkNgZAihRdDN8YyzMGe/MCuH+0YWGx3OrQ=;
- b=Tm6kRDtPfjYOYXYGiB8aWcjVQuEJyiwOXZN+IDXGhYFYn50Fe+AsQxEk
- Unsaae8BGJ/Nxj6+VWG8PNV6qMxLaDCN95QDH1CJsm10oXJumLsYzAqBd
- xcvq5XhWQQPV48a/KZ6VAI7MPrNxcFOgSdeRwpGaI/iwSHhBfOTHu+3FU
- V80VnktqthifyiYOkVovRbL0GCIP6UnXOryTUdjfj5GJvMfHC5KT7AK8d
- HxPw29Hq2jKw3aPSUP6fk+WS1welL0UfnQS5x4EUngMplE3SjqyBqHQgE
- hBfvsnD2Y9gxwiCJqTtR8OVHfQ5OyTNMo/3sxEkSa2UMFlVAhR69NZk+/ g==;
-X-CSE-ConnectionGUID: bEnLmTzZQOyx639d8p+w3w==
-X-CSE-MsgGUID: KuBqPeKrR+u8VRkX7YSQdA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11793"; a="91047628"
-X-IronPort-AV: E=Sophos;i="6.24,161,1774335600"; d="scan'208";a="91047628"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2026 23:20:41 -0700
-X-CSE-ConnectionGUID: QCnb+Y+kS7SsFqNQJJAdEw==
-X-CSE-MsgGUID: Qu+7tzY6TwuDXZrUkycxpA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,161,1774335600"; d="scan'208";a="264351687"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
- by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2026 23:20:41 -0700
-Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Thu, 21 May 2026 23:20:39 -0700
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Thu, 21 May 2026 23:20:39 -0700
-Received: from SA9PR02CU001.outbound.protection.outlook.com (40.93.196.71) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Thu, 21 May 2026 23:20:39 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YKKTwn1hmbEZVtnn8YoKvbbL0iDMCOuKoE7Rvk8D3uLRdT+FqNi4cvfZFDmF1ortduQyyx46iwEG07kgF+dDjv47qKDQ0CZsi3yXwUIScdtZ8vTaHru9m+ZCAaJvmUILqXMbp9dcovyfaV2G3Rn0FyR1nC1H/7bsjRRyFj1aRCI0EgxKp6gx/TZRCAweM/IgipocHh/pYpmZWzk7O16NK5msRjtmUDGHQ/bLIN6BcuADecvL3VczJ9e6jFCirwSmshFSMyForFcsiPCh9Z/A4OGkx8AmgLxzhmmJQEy2d3kpRarOOEZRjYQAsni0VnDbJLMjDPjzGcAPMGZTsq2ZyA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qPocOtRDLpkNgZAihRdDN8YyzMGe/MCuH+0YWGx3OrQ=;
- b=CbJUp6CMFR8+e+rUPvSV6gqWHr7+1W8opkb0tVhjbpIHyDRLad59C8tOcUnxnGxLaJGNIaktozjElfA/ko8p0wB/hj4WjeuyqaoC55oMY03yaAZoa4ZRRTi4TJpWG57+xoC9yILtcrAgV8W3pz+yd+8zWPYt01a2WP/EcxW/jHQ7OJK2BU0i9wCc0ZGUvv/AiAGyVJCwtvZ66Q/f6d8hMLI4mcodMOyrDvyBa1I0MFJkYwPpr0LSJJIU6NrYAuWOG0aaC6LMb/MjQ6XUKPY2wHRG+FBL8+7r+EMsAQgfxWsrOjaIVE3FxfF3T36w6+jJEP0k6KMK7Y9O4zgnWHWAoQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
- by DM4PR11MB7256.namprd11.prod.outlook.com (2603:10b6:8:10c::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.17; Fri, 22 May
- 2026 06:20:32 +0000
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::37b4:37a9:4f3:518b]) by IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::37b4:37a9:4f3:518b%5]) with mapi id 15.20.9913.009; Fri, 22 May 2026
- 06:20:31 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: "Liu, Yi L" <yi.l.liu@intel.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>, 
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "mst@redhat.com"
- <mst@redhat.com>, "jasowang@redhat.com" <jasowang@redhat.com>,
- "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "clement.mathieu--drif@bull.com" <clement.mathieu--drif@bull.com>, "Tian,
- Kevin" <kevin.tian@intel.com>, "Hao, Xudong" <xudong.hao@intel.com>
-Subject: RE: [PATCH v5 10/15] intel_iommu_accel: Handle PASID entry removal
- for pc_inv_dsc request
-Thread-Topic: [PATCH v5 10/15] intel_iommu_accel: Handle PASID entry removal
- for pc_inv_dsc request
-Thread-Index: AQHc32mg4oXI8zixW0uZHfCp60fO67YNafCAgAwEaZCAACpEAIAADc0w
-Date: Fri, 22 May 2026 06:20:31 +0000
-Message-ID: <IA3PR11MB9136F4193E5334152DDD6048920F2@IA3PR11MB9136.namprd11.prod.outlook.com>
-References: <20260509040819.1044702-1-zhenzhong.duan@intel.com>
- <20260509040819.1044702-11-zhenzhong.duan@intel.com>
- <829fcf6f-39e4-4d21-9f08-2772c0813c32@intel.com>
- <IA3PR11MB91369A610C7F2DDEC9F2D5BD920F2@IA3PR11MB9136.namprd11.prod.outlook.com>
- <1d15367a-d28e-40cf-b051-6c047392a3c9@intel.com>
-In-Reply-To: <1d15367a-d28e-40cf-b051-6c047392a3c9@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|DM4PR11MB7256:EE_
-x-ms-office365-filtering-correlation-id: d1d8450d-064f-4bbf-13fe-08deb7ca3a15
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|7416014|376014|1800799024|18002099003|56012099003|22082099003|3613699012|38070700021|11063799006|3023799007|4143699003;
-x-microsoft-antispam-message-info: GwS0/ejGaesBDsiWkfdtXBsUhfszWfFQ64NioWXM3Va7j/E08NlT8aaXjgsA62WV26ZtMFYop6j/MVsjzi3P59Rbm24/fg4uajt51ZILu3TrBMsq2tE0a9JCPG2Inuk6hzkNJtNbMRZpWN7+83l0PliWDvDtq9C/hCzr+z1I9b+p5Vwuo0yabD0eljg2Z5QRyAvPJ8vr5Y6weEhMGqDnCKmvKCH9VQGaD6rSSLN+9TugIyk5j8OK29lbmzzcCxb3EMLjqtVvUSl623WqRjGacYRa2eUE7JV7QcXde0Gu25C+W2NWzz9JEHr38s95ZwHNVs/lq97ddmcGU+LKSD9+s8pb/Y/24TXnvzEByjKqwFPn+PqyL6drSoySyWPtwXY8VmY+Jd7OLnM+Qv/bslClmR9BserQpIpsQL0FEA5qAh978A43jmm0Cm2DJuBKbqRdMCFPl3vl/5PvuLWhgenTW8bv3JZiow0MJ+cIMNAyQIlcTgR756JaTP6PuosMLU5V5uuabm1Yu4kl8g94uTzqW76kg2nFViIg6VTQDNafg3/1HjWROZaJoDmY7pJhooOxEM1b3wKDgLy9uVap8WntkrHGATnpV7zOEvRQcxaXS1wtnD+horZlz5jobXEyt3xEuJ6fqk3TBQf6k8w4wHvwamdkAShKviW2tb0i4o48pq+U96DgqJvuGtDigp7VaZ1DzzxCxfFshWseEETE538JNUkRtj+02Vq4Tb9XomVkp5WggeIaMcPw4+Xa4H7EfDFlzruazcpq5izo4O5GVvQ+nQ==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(7416014)(376014)(1800799024)(18002099003)(56012099003)(22082099003)(3613699012)(38070700021)(11063799006)(3023799007)(4143699003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?WXg1Sm05MFpTZ3RwbDR4L1FXY2g2T2NETlB6eTBWdU1ZM3ozaEc0aFV0c3Bt?=
- =?utf-8?B?bnRMdENPMXRkM2FQaHBCZ08vUzN2YXU3b1RuYWxGRkhHY1E5TkVlZHV4cHo1?=
- =?utf-8?B?ejcwd1F3SjJxSjFnWklFSlZJUE04RkpsYWY0YkNrVTVQTkwzL0xqUXVBRksw?=
- =?utf-8?B?ZWJVNnRjYkRydVdLcmJuOU9NN0xvTFA4SlpzV1l1WkNDSUYzYWMxaEJuUWVM?=
- =?utf-8?B?bzUxVXRHQnRkaDNka0FOUHAvbkpGRGlEY3A4RmNyTW1ka3BoUUpPT2JLc2xG?=
- =?utf-8?B?SHB5VGkrdFlNUVl5eHArOVJPZnJTY01NeTBEQnZ4SjBIYkZFaVNUUjRreklB?=
- =?utf-8?B?RlJHQUh5dEJ5OVZyWU9TeEtRTWxtZ210ZXFPS2RmOHRZcU05UDcrVlJNeXFB?=
- =?utf-8?B?ekN5NnFRQ3ZPRlFWMXRQS2I3WnF0TXQ1bEt3aktxc0N1R1NvNUNHQVhoMkpK?=
- =?utf-8?B?WUlRc0xSOElOYW9INDdvL2FyZUZWM1dHRDJDWEswbjZJQ083MDB5NGE0SVRj?=
- =?utf-8?B?K1RiK3BXRWZndkw1TlpvSnlrK2RQRFNzVTd5THBPSkQvdEZ1cVliYjZlcW5B?=
- =?utf-8?B?ZDFralp2THZQREFtQndTalNpUkhmV0NzSmdxWlBucDZ1VG50b3NKeWpIUzA3?=
- =?utf-8?B?L3BicmVKSE9kV3VrUGJDa3JoZ01aU3UwMWw3L1pDeTIzUTk3cTBjM2ZkaDJv?=
- =?utf-8?B?RXJXQ1lxaGFUZEIxZ0lWSkVjY2M0cEVHL0dLZnl4emNOWTcwMGY1OHBCL3lG?=
- =?utf-8?B?WHdPL1RUeXpXUDBCRENCTlA0YVFOaFdQdlRkcEZXeUdOM1pJcWV0UU9ibU55?=
- =?utf-8?B?STc5Z1Boa0prQk5hUGRKa0xYekRmNTJSdmFPUGpGbG9kcHVONDN5azk5SUc0?=
- =?utf-8?B?TjRaRXczS1cxcmtKOFl2RkJPdkF6VE14amw1dTdjczUrdnlhQ09SdUtKNGNk?=
- =?utf-8?B?Y1dTSEtqa0FaWUxhZHdJWTcwTEwrMFNXM1gzaUl6N21scUF0eCtNLzJHd2Rr?=
- =?utf-8?B?dm81elJyUjFUWWpIRlNGMVhVdFdPb1FHQXRVeTNoZUcvR1BIOGlHa0I4QWJH?=
- =?utf-8?B?Y0ZJWmtoZXZ5RjhhdzZjdGtxbWVXR0htVXBQZDRJQnFJN0d2WmtYTUt1SE84?=
- =?utf-8?B?MkV4aW9FdzRIekhvV3dOKzlwYlR6WHVBT29FckE2YTV5b3NzNlpManhJTzI2?=
- =?utf-8?B?eWozYmR3R0ozVWM2bEZaL2tKclRia3M2YTdIdUR0aUFpTkg0aHhQYjl4Qlgz?=
- =?utf-8?B?aGpvdVNNZUFqVWJaZ0E1Q1g0MDQ1ZEZHc0ZqOU9TTHREWjZDUXVwWVYxTTNC?=
- =?utf-8?B?R2RCMnFUQU00YTJ4TTNHa3BBUFNORHRUVGRSRjV1ZGVIeWQvalB6M1FqbmFz?=
- =?utf-8?B?UldTTkVTTkNNbjVzMEJJZXl5TjNicm1zSDg5U0lpS21JdWROb0ZsMVhtcFpU?=
- =?utf-8?B?cWQxY011UHQzSkFsaU1zOGV1VlZUY0lxcDdJdjkrMGFHWVFNSG5tcDFMQW16?=
- =?utf-8?B?YStQa0tDeitaUE5MWkpCTnRhcW5CSTJCb3F2elJDYW8wQmRoWjhCTXFxS1Fy?=
- =?utf-8?B?UEphU0c3amcrNEsvSXBsTGZiZXRXSnYrckJHR3g1VnZVRUNQR2R5ejhIMEx0?=
- =?utf-8?B?VndWdzBJWkc1clZ1T2NaZVpiWkpOa2RyQll5VU5FWTVlNU9VaFlMR0ZxU2dL?=
- =?utf-8?B?RVJSUERTM2ZER2djd21TTXZta1ZPT2lYaE9Jb04rVW5RMldsSnJQLy9BbFBQ?=
- =?utf-8?B?c2o1bk9mdHowYldhZlhBTy9GYVBNa1ZmYjQ2ZXJHamw1aGhBMkdldlVkL1Ra?=
- =?utf-8?B?Q3B3YS9vMDJTYnlDa1dEcnFsMmRmU0w2WXYzWmNhdUlTVFJySlA2K2xPUVVN?=
- =?utf-8?B?NHd5QVNsbEVxMEE0SzR3NUdDeExrYk1mTmNsUmsyRlhNUlJGUnhDUGk2aDFP?=
- =?utf-8?B?YkJaaFFxdVEvdUV5RkJ5aUJ2NWhPSTVSeUFzQ2dsU29aTTRUYURhL1pmOTVy?=
- =?utf-8?B?cXM4M1ovN1VrVEJzeXBjVldOb3dPUEhhTk5KWmxPRHJwcmpRV3VYUGd2TEVw?=
- =?utf-8?B?ZjIxVkp2RGdkbDE1SUt0VWZibmNNYUZ3V1VtSkhWMFB5cDJyR3Y5Nit1TU93?=
- =?utf-8?B?RThGcEREYkwxZnpXTW9CdzlNR1d2YzhhUGxaYUhnM2pzZ0JzVWpDMm1YZVpa?=
- =?utf-8?B?VjEzZmxIWDhBS1VSYnZoUDRrOUE1U3NLYVgxSkhRVFhzYnBsaE01RS9INDNV?=
- =?utf-8?B?WjBWZzNyOFVRVVBBMEJQNFFkZXZkbUo4d0xDcGxoL0Z3a2FDaW9ocndiRk5R?=
- =?utf-8?B?WlA3MHFDSng1WHcvQ0p5Y2oycE9SZUJjalFPR0xYak1vOU1walFtZz09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wQJYY-0002xp-GQ
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 02:40:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779432024;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=QYOM3Z6mWCYWpjWptyu+tC334fXzwYTOrTkErzu5zp4=;
+ b=bJjYsHOY+UmNBUqSTiU5z0rZFobAgj0/9Uey1XE9vpOHe0Q2V81rv2D4XGQ7ZdAVXG+BKG
+ 9rM8vEZMMnVq5yg3E0AvrNDK3DBM5iZjqwMnCPjD9JJM6JayWVEWwIXjtYuQ3yCdUBH2L+
+ L3n9qLoDNLbM06c1ZFhN8i8ElfXq6BQ=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-76-UgcxlsILNSODtW20vIj9eg-1; Fri, 22 May 2026 02:40:22 -0400
+X-MC-Unique: UgcxlsILNSODtW20vIj9eg-1
+X-Mimecast-MFC-AGG-ID: UgcxlsILNSODtW20vIj9eg_1779432021
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-bceb2b8bc2bso485890166b.1
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 23:40:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1779432021; x=1780036821; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=QYOM3Z6mWCYWpjWptyu+tC334fXzwYTOrTkErzu5zp4=;
+ b=oogMfugmxMkREJx2rhQxirPteA5hrmoz6hGsoKktdTy5I68nJEqKOMocX3HFGgGXRt
+ zlQIqtQzGhoWSrQ0AU8fp+IX9SR4YUw6X+c43I3xe7dAc0NAJEEqqslV859dB4RmkZRK
+ nZemQLRw2u2dqtabQL7oxn1+hYgoToY9aif+C2p7r737OsVmfALzTy5qaoWc+HIanF4p
+ nAF3hnmArRtoRCp02CoGBRpW1bcDVaX/dcResLvxh9IuOKKYqCGWICsc3PFoU/b+iqkw
+ N/To5U+cBMOjIh6psb0l+igKS+Dt/eAzr1DHu3WnjvnWwLJbCCuAlXT5Khs9QoouBper
+ 8nxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779432021; x=1780036821;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QYOM3Z6mWCYWpjWptyu+tC334fXzwYTOrTkErzu5zp4=;
+ b=MjUUAWmfK4QczS0akOYsSbftB1P39J7jpxna6kslIRMLC3+wC0xMmpX+Ye1Zheci07
+ u5HS6s3BSqPHJBAypQZkkVNaw7wIhhk7qvYx3KyNXY33N/vkpiag8zFPVjiliBol3Vpk
+ FImMbXf63gF59SQP3J12D5empGdIJ5ffEGemqGenjzAaPD8mGkodqmqABfxfgzat+EJX
+ 1owWgBOaAiGwWx89fPmPq+473PNNTVhoAmGFABAh2iEWBA7V37DrBYycFDmiQxpQxo6h
+ 2EPJ686c8ge8QthveoxR3sCFq9d8GrMpsRTiy4Q05XRHOQKO9A/RT5dtQzfBTpWi2+e1
+ FvkQ==
+X-Gm-Message-State: AOJu0Yyf4LJkGgdYWeIB8i4t5diWTxidVYtMH744jpptrdHc07vRfPQw
+ XjbmRrMg04zf6H3jX9EJ3OX3ruDng5ika/+fC2y6m86rmxEsRDRaeISiklxUma9afSO0K5R1H7Z
+ Zh9wkLJFmA1AHDfMOc8tcRnzK4Ke1VdT7N8zNQx6wBSF4lNoXJNrs9EJy
+X-Gm-Gg: Acq92OGWWC285GxEP0/MBRCt8c/3PAqBP/PClbSqz0NBxHlRPA4pWJUz7YARI2HSxng
+ wIza/fgMbXLR+mjNfoqjppKDOUmUxKAYnB8gswTRZzOfsqA5i6Ko3ceUW7FJHVCslAOkYifd53z
+ MRFyXTkhu829EthMrRJbHv3VlLVXNU6tw9TrbXkjTcsp56foscXz/aBgKwlnshHqSkNvuO0GrzP
+ BU0FyBX0m3YdYxOF7AZFfpH1YKFJEFwxpBx0+D/JYfS/WVinpuIw0IPKjr+CEa1HMXxtxLyNf+Z
+ jAL0dV3vBBvHLj2D+iLbb00LjnFfrW5DrInc8T4jaPK+u4NTyrOfwiJ1g8S1UuPvX8/PH08UQox
+ 54kc57JZUKw==
+X-Received: by 2002:a17:907:7f94:b0:bd4:a839:9065 with SMTP id
+ a640c23a62f3a-bdd27cc8467mr122209266b.37.1779432020433; 
+ Thu, 21 May 2026 23:40:20 -0700 (PDT)
+X-Received: by 2002:a17:907:7f94:b0:bd4:a839:9065 with SMTP id
+ a640c23a62f3a-bdd27cc8467mr122206466b.37.1779432019637; 
+ Thu, 21 May 2026 23:40:19 -0700 (PDT)
+Received: from redhat.com ([31.187.78.1]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-bddc2c4e3d5sm19786466b.15.2026.05.21.23.40.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 21 May 2026 23:40:19 -0700 (PDT)
+Date: Fri, 22 May 2026 02:40:16 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Jack Wang <jinpu.wang@ionos.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] virtio-qmp: use stringification in FEATURE_ENTRY to
+ prevent copy-paste bugs
+Message-ID: <20260522022726-mutt-send-email-mst@kernel.org>
+References: <20260320193746.242704-1-jinpu.wang@ionos.com>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: mgn4omyFfCjJLOYcOahvd+IbT0JGv1qNJShadH1iv8O0kSmlD2dhd5GY8jcb3nQ3lPn2eqhhSD0VY8yjgyb6cH7vHUOXBh6gxeRdidXH6OuU/NPy1f3Tsym/MJzI45r/7ZF10212ar+QcyREN6zyzxEO5dtqD8iBIH4rnIutXrE0EYgp2Fkz6dWClrYLMfoOnZin9S25zd948sLiYWG2HdKrbJFIB5B6VS6mOUrMK2fhMQmNVx6Rgu0HjaDhTLlbzh9TRer6cGod49eT8R+LCKxTXLQiVW2yCBH9PHE0jP8e/xHecsKcgerdZXONVuhH6FgkcrrULBT7sf32BLnU5w==
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d1d8450d-064f-4bbf-13fe-08deb7ca3a15
-X-MS-Exchange-CrossTenant-originalarrivaltime: 22 May 2026 06:20:31.8813 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: kPgXy85twGWIJRXKDYQupQ1NZCkhUfw/V11PXakEK+AMDI8suwlRg55Vno3E7uO/YpN0LCUIsF6VZzQveSn5nf/dimwEfnKlW+Ni8C9W+GE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB7256
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.9;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260320193746.242704-1-jinpu.wang@ionos.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -197,88 +114,633 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IExpdSwgWWkgTCA8eWkubC5s
-aXVAaW50ZWwuY29tPg0KPlN1YmplY3Q6IFJlOiBbUEFUQ0ggdjUgMTAvMTVdIGludGVsX2lvbW11
-X2FjY2VsOiBIYW5kbGUgUEFTSUQgZW50cnkgcmVtb3ZhbCBmb3INCj5wY19pbnZfZHNjIHJlcXVl
-c3QNCj4NCj5PbiA1LzIyLzI2IDExOjA3LCBEdWFuLCBaaGVuemhvbmcgd3JvdGU6DQo+Pg0KPj4N
-Cj4+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPj4+IEZyb206IExpdSwgWWkgTCA8eWku
-bC5saXVAaW50ZWwuY29tPg0KPj4+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggdjUgMTAvMTVdIGludGVs
-X2lvbW11X2FjY2VsOiBIYW5kbGUgUEFTSUQgZW50cnkgcmVtb3ZhbA0KPmZvcg0KPj4+IHBjX2lu
-dl9kc2MgcmVxdWVzdA0KPj4+DQo+Pj4gT24gNS85LzI2IDEyOjA4LCBaaGVuemhvbmcgRHVhbiB3
-cm90ZToNCj4+Pj4gV2hlbiBndWVzdCBkZWxldGVzIFBBU0lEIGVudHJpZXMsIFFFTVUgd2lsbCBj
-YXB0dXJlIHRoZSBwYXNpZCBjYWNoZQ0KPj4+PiBpbnZhbGlkYXRpb24gcmVxdWVzdCwgd2FsayB0
-aHJvdWdoIHBhc2lkX2NhY2hlX2xpc3QgaW4gZWFjaCBwYXNzdGhyb3VnaA0KPj4+PiBkZXZpY2Ug
-dG8gZmluZCBzdGFsZSBWVERBY2NlbFBBU0lEQ2FjaGVFbnRyeSBhbmQgZGVsZXRlIHRoZW0uDQo+
-Pj4+DQo+Pj4+IENvLWRldmVsb3BlZC1ieTogWWkgTGl1IDx5aS5sLmxpdUBpbnRlbC5jb20+DQo+
-Pj4+IFNpZ25lZC1vZmYtYnk6IFlpIExpdSA8eWkubC5saXVAaW50ZWwuY29tPg0KPj4+PiBTaWdu
-ZWQtb2ZmLWJ5OiBaaGVuemhvbmcgRHVhbiA8emhlbnpob25nLmR1YW5AaW50ZWwuY29tPg0KPj4+
-PiBUZXN0ZWQtYnk6IFh1ZG9uZyBIYW8gPHh1ZG9uZy5oYW9AaW50ZWwuY29tPg0KPj4+PiAtLS0N
-Cj4+Pj4gICAgaHcvaTM4Ni9pbnRlbF9pb21tdV9hY2NlbC5jIHwgODANCj4+PiArKysrKysrKysr
-KysrKysrKysrKysrKysrKysrKysrKysrKysrDQo+Pj4+ICAgIDEgZmlsZSBjaGFuZ2VkLCA4MCBp
-bnNlcnRpb25zKCspDQo+Pj4+DQo+Pj4+IGRpZmYgLS1naXQgYS9ody9pMzg2L2ludGVsX2lvbW11
-X2FjY2VsLmMgYi9ody9pMzg2L2ludGVsX2lvbW11X2FjY2VsLmMNCj4+Pj4gaW5kZXggYTY2ZDYz
-YjRjOC4uODJiZmJkZjQ4NCAxMDA2NDQNCj4+Pj4gLS0tIGEvaHcvaTM4Ni9pbnRlbF9pb21tdV9h
-Y2NlbC5jDQo+Pj4+ICsrKyBiL2h3L2kzODYvaW50ZWxfaW9tbXVfYWNjZWwuYw0KPj4+PiBAQCAt
-MTYsNiArMTYsMjggQEANCj4+Pj4gICAgI2luY2x1ZGUgImh3L3BjaS9wY2lfYnVzLmgiDQo+Pj4+
-ICAgICNpbmNsdWRlICJ0cmFjZS5oIg0KPj4+Pg0KPj4+PiArc3RhdGljIGludCB2dGRfaGlvZF9n
-ZXRfcGVfZnJvbV9wYXNpZChWVERBY2NlbFBBU0lEQ2FjaGVFbnRyeSAqdnRkX3BjZSwNCj4+Pg0K
-Pj4+IHRoaXMgaGVscGVyIGlzIHRyaWNreS4gdnRkX3BjZSBhbHJlYWR5IGhhcyBhIHBlIGNhY2hl
-ZCwgdGhlbiB3aHkgbmVlZA0KPj4+IHRvIGRvIHRoaXM/DQo+Pg0KPj4gSXQncyB1c2VkIG9uIHBj
-X2ludl9kc2MgaGFuZGxlciBwYXRoLCB2dGRfcGNlIGNhY2hlcyBvbGQgcGUsIHdlIG5lZWQgdG8g
-Z2V0DQo+cmVmcmVzaGVkIG9uZSBpbiBtZW1vcnkuDQo+Pg0KPj4+IEkgdGhpbmsgaXQncyBiZXR0
-ZXIgdG8gaGF2ZSBhIGhlbHBlciByZWNlaXZlcyBzLCBkZXZmbiwgYW5kDQo+Pj4gcGFzaWQgaW5z
-dGVhZCBvZiBhY2NlcHRpbmcgdnRkX3BjZS4gYnR3LiBJIHRoaW5rIHRoZSBpbnRlbF9pb21tdS5j
-DQo+Pj4gc2hvdWxkIGhhdmUgc3VjaCBhIGhlbHBlci4gaXMgaXQ/DQo+Pg0KPj4gSW4gaW50ZWxf
-aW9tbXUuYywgdGhlcmUgaXMgYSBoZWxwZXIgZm9yIHZ0ZF9hczoNCj4+DQo+PiBzdGF0aWMgaW5s
-aW5lIGludCB2dGRfZGV2X2dldF9wZV9mcm9tX3Bhc2lkKFZUREFkZHJlc3NTcGFjZSAqdnRkX2Fz
-LA0KPj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgVlREUEFT
-SURFbnRyeSAqcGUpDQo+Pg0KPj4gc28gaW4gaW50ZWxfaW9tbXVfYWNjZWwuYywgdnRkX2hpb2Rf
-Z2V0X3BlX2Zyb21fcGFzaWQoKSBpcyBhZGRlZCBmb3IgdnRkX3BjZS4NCj4+DQo+DQo+Z290IGl0
-LiBWVERBZGRyZXNzU3BhY2UgYWxzbyBjYWNoZWQgYSBwZSwgd2l0aCBhIGNsb3NlciByZWFkLCBp
-dCdzDQo+dHJpY2t5IGFzIHdlbGwuIENvdWxkIHlvdSByZWZhY3RvciBhIGJpdD8gZS5nLiBhdm9p
-ZCB1c2luZyB0aGUNCj5WVERBZGRyZXNzU3BhY2UgYXMgYW4gaW5wdXQuDQoNCkFkZGVkIGFzIGEg
-cHJlcGFyaW5nIHBhdGNoLCBsZXQgbWUga25vdyBpZiBhbnkgbWlzdW5kZXJzdGFuZGluZ3M6DQoN
-CmNvbW1pdCAzMWZjNmU0MDlmMjg1YTJhOTNmMDlmOTlmZDI3MWQ0YjAxZDg3YzUzIChIRUFEKQ0K
-QXV0aG9yOiBaaGVuemhvbmcgRHVhbiA8emhlbnpob25nLmR1YW5AaW50ZWwuY29tPg0KRGF0ZTog
-ICBGcmkgTWF5IDIyIDAyOjE0OjMwIDIwMjYgLTA0MDANCg0KICAgIGludGVsX2lvbW11OiBtYWtl
-IHZ0ZF9kZXZfZ2V0X3BlX2Zyb21fcGFzaWQoKSBtb3JlIGdlbmVyaWMNCg0KICAgIFJlZmFjdG9y
-IHZ0ZF9kZXZfZ2V0X3BlX2Zyb21fcGFzaWQoKSB0byB0YWtlIGluZGl2aWR1YWwgcGFyYW1ldGVy
-cw0KICAgIChJbnRlbElPTU1VU3RhdGUsIFBDSUJ1cywgZGV2Zm4sIHBhc2lkKSBpbnN0ZWFkIG9m
-IFZUREFkZHJlc3NTcGFjZS4NCg0KICAgIFRoaXMgbWFrZXMgdGhlIGZ1bmN0aW9uIG1vcmUgcmV1
-c2FibGUgYW5kIHByZXBhcmVzIGl0IGZvciBleHBvcnQgdG8gYmUNCiAgICB1c2VkIGluIHRoZSBh
-Y2NlbGVyYXRpb24gcGF0aC4gUmVtb3ZlIGlubGluZSBxdWFsaWZpZXIgYXMgdGhlIGZ1bmN0aW9u
-DQogICAgd2lsbCBiZSBleHBvcnRlZCBpbiBhIHN1YnNlcXVlbnQgcGF0Y2guDQoNCiAgICBObyBm
-dW5jdGlvbmFsIGNoYW5nZXMgaW50ZW5kZWQuDQoNCiAgICBTdWdnZXN0ZWQtYnk6IFlpIExpdSA8
-eWkubC5saXVAaW50ZWwuY29tPg0KICAgIFNpZ25lZC1vZmYtYnk6IFpoZW56aG9uZyBEdWFuIDx6
-aGVuemhvbmcuZHVhbkBpbnRlbC5jb20+DQoNCmRpZmYgLS1naXQgYS9ody9pMzg2L2ludGVsX2lv
-bW11LmMgYi9ody9pMzg2L2ludGVsX2lvbW11LmMNCmluZGV4IGNmMjc1YjQ5NmUuLmFhMjcxODdl
-MDIgMTAwNjQ0DQotLS0gYS9ody9pMzg2L2ludGVsX2lvbW11LmMNCisrKyBiL2h3L2kzODYvaW50
-ZWxfaW9tbXUuYw0KQEAgLTMxMTMsMTAgKzMxMTMsMTAgQEAgc3RhdGljIGJvb2wgdnRkX3Byb2Nl
-c3NfcGlvdGxiX2Rlc2MoSW50ZWxJT01NVVN0YXRlICpzLA0KICAgICByZXR1cm4gdHJ1ZTsNCiB9
-DQoNCi1zdGF0aWMgaW5saW5lIGludCB2dGRfZGV2X2dldF9wZV9mcm9tX3Bhc2lkKFZUREFkZHJl
-c3NTcGFjZSAqdnRkX2FzLA0KLSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgVlREUEFTSURFbnRyeSAqcGUpDQorc3RhdGljIGludCB2dGRfZGV2X2dldF9wZV9mcm9t
-X3Bhc2lkKEludGVsSU9NTVVTdGF0ZSAqcywgUENJQnVzICpidXMsDQorICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIHVpbnQ4X3QgZGV2Zm4sIHVpbnQzMl90IHBhc2lkLA0KKyAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBWVERQQVNJREVudHJ5ICpwZSkNCiB7
-DQotICAgIEludGVsSU9NTVVTdGF0ZSAqcyA9IHZ0ZF9hcy0+aW9tbXVfc3RhdGU7DQogICAgIFZU
-RENvbnRleHRFbnRyeSBjZTsNCiAgICAgaW50IHJldDsNCg0KQEAgLTMxMjQsMTMgKzMxMjQsMTIg
-QEAgc3RhdGljIGlubGluZSBpbnQgdnRkX2Rldl9nZXRfcGVfZnJvbV9wYXNpZChWVERBZGRyZXNz
-U3BhY2UgKnZ0ZF9hcywNCiAgICAgICAgIHJldHVybiAtVlREX0ZSX1JUQUREUl9JTlZfVFRNOw0K
-ICAgICB9DQoNCi0gICAgcmV0ID0gdnRkX2Rldl90b19jb250ZXh0X2VudHJ5KHMsIHBjaV9idXNf
-bnVtKHZ0ZF9hcy0+YnVzKSwgdnRkX2FzLT5kZXZmbiwNCi0gICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICZjZSk7DQorICAgIHJldCA9IHZ0ZF9kZXZfdG9fY29udGV4dF9lbnRyeShz
-LCBwY2lfYnVzX251bShidXMpLCBkZXZmbiwgJmNlKTsNCiAgICAgaWYgKHJldCkgew0KICAgICAg
-ICAgcmV0dXJuIHJldDsNCiAgICAgfQ0KDQotICAgIHJldHVybiB2dGRfY2VfZ2V0X3Bhc2lkX2Vu
-dHJ5KHMsICZjZSwgcGUsIHZ0ZF9hcy0+cGFzaWQpOw0KKyAgICByZXR1cm4gdnRkX2NlX2dldF9w
-YXNpZF9lbnRyeShzLCAmY2UsIHBlLCBwYXNpZCk7DQogfQ0KDQogc3RhdGljIGludCB2dGRfcGFz
-aWRfZW50cnlfY29tcGFyZShWVERQQVNJREVudHJ5ICpwMSwgVlREUEFTSURFbnRyeSAqcDIpDQpA
-QCAtMzE1MSw3ICszMTUwLDggQEAgc3RhdGljIHZvaWQgdnRkX3Bhc2lkX2NhY2hlX3N5bmNfbG9j
-a2VkKGdwb2ludGVyIGtleSwgZ3BvaW50ZXIgdmFsdWUsDQogICAgIGNvbnN0IGNoYXIgKmVycl9w
-cmVmaXggPSAiQXR0YWNoaW5nIHRvIEhXUFQgZmFpbGVkOiAiOw0KICAgICBFcnJvciAqbG9jYWxf
-ZXJyID0gTlVMTDsNCg0KLSAgICBpZiAodnRkX2Rldl9nZXRfcGVfZnJvbV9wYXNpZCh2dGRfYXMs
-ICZwZSkpIHsNCisgICAgaWYgKHZ0ZF9kZXZfZ2V0X3BlX2Zyb21fcGFzaWQodnRkX2FzLT5pb21t
-dV9zdGF0ZSwgdnRkX2FzLT5idXMsDQorICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-IHZ0ZF9hcy0+ZGV2Zm4sIHZ0ZF9hcy0+cGFzaWQsICZwZSkpIHsNCiAgICAgICAgIGlmICghcGNf
-ZW50cnktPnZhbGlkKSB7DQogICAgICAgICAgICAgcmV0dXJuOw0KICAgICAgICAgfQ0K
+On Fri, Mar 20, 2026 at 08:37:46PM +0100, Jack Wang wrote:
+> The FEATURE_ENTRY macro required manually repeating the feature name
+> in the description string, which led to copy-paste bugs:
+>   - VIRTIO_NET_F_GUEST_USO6 had "VIRTIO_NET_F_GUEST_USO4:" prefix
+>   - VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM had wrong prefix
+>   - VIRTIO_I2C_F_ZERO_LENGTH_REQUEST had typo "LEGNTH"
+>   - VIRTIO_MEM_F_PERSISTENT_SUSPEND had typo "SUSPND"
+
+this mixes issues already fixed previously and issues this patch is
+fixing.
+
+no es bueno
+
+> 
+> Use C preprocessor stringification (#name) to auto-generate the
+> "NAME: " prefix, eliminating this entire class of bugs. The
+> description strings now contain only the human-readable part.
+
+It's all human-readable? You just mean "now don't need to duplicate
+the feature name".
+
+> 
+> The output is identical: the preprocessor concatenates #name ": "
+> with the description string at compile time.
+
+identical to what? code without the patch? no it's not? try running
+the preprocessor and check the diff, and tell us in the commit log how
+you did it.
+
+And add Fixes tags please.
+
+> 
+> Link: https://lore.kernel.org/qemu-devel/20251021085833-mutt-send-email-mst@kernel.org/
+> Suggested-by: Michael S. Tsirkin <mst@redhat.com>
+> Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
+> Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
+
+Sadly, I have to reject it, see docs/devel/code-provenance.rst
+
+But maybe if you make the 1st change by hand, and ask Claude
+to write a script to do the rest, then it's ok because the
+output of claude is then not included in the patch.
+
+Don't ask me why.
+
+And please rewrite the commit log in your own words, checking
+each thing to say. Because claude did a hatchet job on this.
+
+
+> ---
+>  hw/virtio/virtio-qmp.c | 280 ++++++++++++++++++++---------------------
+>  1 file changed, 140 insertions(+), 140 deletions(-)
+> 
+> diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
+> index f9cdca50d990..e654a59b49fe 100644
+> --- a/hw/virtio/virtio-qmp.c
+> +++ b/hw/virtio/virtio-qmp.c
+> @@ -34,94 +34,94 @@
+>  #include "standard-headers/linux/virtio_gpio.h"
+>  
+>  #define FEATURE_ENTRY(name, desc) (qmp_virtio_feature_map_t) \
+> -    { .virtio_bit = name, .feature_desc = desc }
+> +    { .virtio_bit = name, .feature_desc = #name ": " desc }
+>  
+>  /* Virtio transport features mapping */
+>  static const qmp_virtio_feature_map_t virtio_transport_map[] = {
+>      /* Virtio device transport features */
+>      FEATURE_ENTRY(VIRTIO_F_NOTIFY_ON_EMPTY, \
+> -            "VIRTIO_F_NOTIFY_ON_EMPTY: Notify when device runs out of avail. "
+> +            "Notify when device runs out of avail. "
+>              "descs. on VQ"),
+>      FEATURE_ENTRY(VIRTIO_F_ANY_LAYOUT, \
+> -            "VIRTIO_F_ANY_LAYOUT: Device accepts arbitrary desc. layouts"),
+> +            "Device accepts arbitrary desc. layouts"),
+>      FEATURE_ENTRY(VIRTIO_F_VERSION_1, \
+> -            "VIRTIO_F_VERSION_1: Device compliant for v1 spec (legacy)"),
+> +            "Device compliant for v1 spec (legacy)"),
+>      FEATURE_ENTRY(VIRTIO_F_IOMMU_PLATFORM, \
+> -            "VIRTIO_F_IOMMU_PLATFORM: Device can be used on IOMMU platform"),
+> +            "Device can be used on IOMMU platform"),
+>      FEATURE_ENTRY(VIRTIO_F_RING_PACKED, \
+> -            "VIRTIO_F_RING_PACKED: Device supports packed VQ layout"),
+> +            "Device supports packed VQ layout"),
+>      FEATURE_ENTRY(VIRTIO_F_IN_ORDER, \
+> -            "VIRTIO_F_IN_ORDER: Device uses buffers in same order as made "
+> +            "Device uses buffers in same order as made "
+>              "available by driver"),
+>      FEATURE_ENTRY(VIRTIO_F_ORDER_PLATFORM, \
+> -            "VIRTIO_F_ORDER_PLATFORM: Memory accesses ordered by platform"),
+> +            "Memory accesses ordered by platform"),
+>      FEATURE_ENTRY(VIRTIO_F_SR_IOV, \
+> -            "VIRTIO_F_SR_IOV: Device supports single root I/O virtualization"),
+> +            "Device supports single root I/O virtualization"),
+>      FEATURE_ENTRY(VIRTIO_F_RING_RESET, \
+> -            "VIRTIO_F_RING_RESET: Driver can reset a queue individually"),
+> +            "Driver can reset a queue individually"),
+>      /* Virtio ring transport features */
+>      FEATURE_ENTRY(VIRTIO_RING_F_INDIRECT_DESC, \
+> -            "VIRTIO_RING_F_INDIRECT_DESC: Indirect descriptors supported"),
+> +            "Indirect descriptors supported"),
+>      FEATURE_ENTRY(VIRTIO_RING_F_EVENT_IDX, \
+> -            "VIRTIO_RING_F_EVENT_IDX: Used & avail. event fields enabled"),
+> +            "Used & avail. event fields enabled"),
+>      { -1, "" }
+>  };
+>  
+>  /* Vhost-user protocol features mapping */
+>  static const qmp_virtio_feature_map_t vhost_user_protocol_map[] = {
+>      FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_MQ, \
+> -            "VHOST_USER_PROTOCOL_F_MQ: Multiqueue protocol supported"),
+> +            "Multiqueue protocol supported"),
+>      FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_LOG_SHMFD, \
+> -            "VHOST_USER_PROTOCOL_F_LOG_SHMFD: Shared log memory fd supported"),
+> +            "Shared log memory fd supported"),
+>      FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_RARP, \
+> -            "VHOST_USER_PROTOCOL_F_RARP: Vhost-user back-end RARP broadcasting "
+> +            "Vhost-user back-end RARP broadcasting "
+>              "supported"),
+>      FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_REPLY_ACK, \
+> -            "VHOST_USER_PROTOCOL_F_REPLY_ACK: Requested operation status ack. "
+> +            "Requested operation status ack. "
+>              "supported"),
+>      FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_NET_MTU, \
+> -            "VHOST_USER_PROTOCOL_F_NET_MTU: Expose host MTU to guest supported"),
+> +            "Expose host MTU to guest supported"),
+>      FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_BACKEND_REQ, \
+> -            "VHOST_USER_PROTOCOL_F_BACKEND_REQ: Socket fd for back-end initiated "
+> +            "Socket fd for back-end initiated "
+>              "requests supported"),
+>      FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_CROSS_ENDIAN, \
+> -            "VHOST_USER_PROTOCOL_F_CROSS_ENDIAN: Endianness of VQs for legacy "
+> +            "Endianness of VQs for legacy "
+>              "devices supported"),
+>      FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_CRYPTO_SESSION, \
+> -            "VHOST_USER_PROTOCOL_F_CRYPTO_SESSION: Session creation for crypto "
+> +            "Session creation for crypto "
+>              "operations supported"),
+>      FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_PAGEFAULT, \
+> -            "VHOST_USER_PROTOCOL_F_PAGEFAULT: Request servicing on userfaultfd "
+> +            "Request servicing on userfaultfd "
+>              "for accessed pages supported"),
+>      FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_CONFIG, \
+> -            "VHOST_USER_PROTOCOL_F_CONFIG: Vhost-user messaging for virtio "
+> +            "Vhost-user messaging for virtio "
+>              "device configuration space supported"),
+>      FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_BACKEND_SEND_FD, \
+> -            "VHOST_USER_PROTOCOL_F_BACKEND_SEND_FD: Backend fd communication "
+> +            "Backend fd communication "
+>              "channel supported"),
+>      FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_HOST_NOTIFIER, \
+> -            "VHOST_USER_PROTOCOL_F_HOST_NOTIFIER: Host notifiers for specified "
+> +            "Host notifiers for specified "
+>              "VQs supported"),
+>      FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD, \
+> -            "VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD: Shared inflight I/O buffers "
+> +            "Shared inflight I/O buffers "
+>              "supported"),
+>      FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_RESET_DEVICE, \
+> -            "VHOST_USER_PROTOCOL_F_RESET_DEVICE: Disabling all rings and "
+> +            "Disabling all rings and "
+>              "resetting internal device state supported"),
+>      FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_INBAND_NOTIFICATIONS, \
+> -            "VHOST_USER_PROTOCOL_F_INBAND_NOTIFICATIONS: In-band messaging "
+> +            "In-band messaging "
+>              "supported"),
+>      FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS, \
+> -            "VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS: Configuration for "
+> +            "Configuration for "
+>              "memory slots supported"),
+>      FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_STATUS, \
+> -            "VHOST_USER_PROTOCOL_F_STATUS: Querying and notifying back-end "
+> +            "Querying and notifying back-end "
+>              "device status supported"),
+>      FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_SHARED_OBJECT, \
+> -            "VHOST_USER_PROTOCOL_F_SHARED_OBJECT: Backend shared object "
+> +            "Backend shared object "
+>              "supported"),
+>      FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_DEVICE_STATE, \
+> -            "VHOST_USER_PROTOCOL_F_DEVICE_STATE: Backend device state transfer "
+> +            "Backend device state transfer "
+>              "supported"),
+>      { -1, "" }
+>  };
+> @@ -129,58 +129,58 @@ static const qmp_virtio_feature_map_t vhost_user_protocol_map[] = {
+>  /* virtio device configuration statuses */
+>  static const qmp_virtio_feature_map_t virtio_config_status_map[] = {
+>      FEATURE_ENTRY(VIRTIO_CONFIG_S_DRIVER_OK, \
+> -            "VIRTIO_CONFIG_S_DRIVER_OK: Driver setup and ready"),
+> +            "Driver setup and ready"),
+>      FEATURE_ENTRY(VIRTIO_CONFIG_S_FEATURES_OK, \
+> -            "VIRTIO_CONFIG_S_FEATURES_OK: Feature negotiation complete"),
+> +            "Feature negotiation complete"),
+>      FEATURE_ENTRY(VIRTIO_CONFIG_S_DRIVER, \
+> -            "VIRTIO_CONFIG_S_DRIVER: Guest OS compatible with device"),
+> +            "Guest OS compatible with device"),
+>      FEATURE_ENTRY(VIRTIO_CONFIG_S_NEEDS_RESET, \
+> -            "VIRTIO_CONFIG_S_NEEDS_RESET: Irrecoverable error, device needs "
+> +            "Irrecoverable error, device needs "
+>              "reset"),
+>      FEATURE_ENTRY(VIRTIO_CONFIG_S_FAILED, \
+> -            "VIRTIO_CONFIG_S_FAILED: Error in guest, device failed"),
+> +            "Error in guest, device failed"),
+>      FEATURE_ENTRY(VIRTIO_CONFIG_S_ACKNOWLEDGE, \
+> -            "VIRTIO_CONFIG_S_ACKNOWLEDGE: Valid virtio device found"),
+> +            "Valid virtio device found"),
+>      { -1, "" }
+>  };
+>  
+>  /* virtio-blk features mapping */
+>  static const qmp_virtio_feature_map_t virtio_blk_feature_map[] = {
+>      FEATURE_ENTRY(VIRTIO_BLK_F_SIZE_MAX, \
+> -            "VIRTIO_BLK_F_SIZE_MAX: Max segment size is size_max"),
+> +            "Max segment size is size_max"),
+>      FEATURE_ENTRY(VIRTIO_BLK_F_SEG_MAX, \
+> -            "VIRTIO_BLK_F_SEG_MAX: Max segments in a request is seg_max"),
+> +            "Max segments in a request is seg_max"),
+>      FEATURE_ENTRY(VIRTIO_BLK_F_GEOMETRY, \
+> -            "VIRTIO_BLK_F_GEOMETRY: Legacy geometry available"),
+> +            "Legacy geometry available"),
+>      FEATURE_ENTRY(VIRTIO_BLK_F_RO, \
+> -            "VIRTIO_BLK_F_RO: Device is read-only"),
+> +            "Device is read-only"),
+>      FEATURE_ENTRY(VIRTIO_BLK_F_BLK_SIZE, \
+> -            "VIRTIO_BLK_F_BLK_SIZE: Block size of disk available"),
+> +            "Block size of disk available"),
+>      FEATURE_ENTRY(VIRTIO_BLK_F_TOPOLOGY, \
+> -            "VIRTIO_BLK_F_TOPOLOGY: Topology information available"),
+> +            "Topology information available"),
+>      FEATURE_ENTRY(VIRTIO_BLK_F_MQ, \
+> -            "VIRTIO_BLK_F_MQ: Multiqueue supported"),
+> +            "Multiqueue supported"),
+>      FEATURE_ENTRY(VIRTIO_BLK_F_DISCARD, \
+> -            "VIRTIO_BLK_F_DISCARD: Discard command supported"),
+> +            "Discard command supported"),
+>      FEATURE_ENTRY(VIRTIO_BLK_F_WRITE_ZEROES, \
+> -            "VIRTIO_BLK_F_WRITE_ZEROES: Write zeroes command supported"),
+> +            "Write zeroes command supported"),
+>      FEATURE_ENTRY(VIRTIO_BLK_F_SECURE_ERASE, \
+> -            "VIRTIO_BLK_F_SECURE_ERASE: Secure erase supported"),
+> +            "Secure erase supported"),
+>      FEATURE_ENTRY(VIRTIO_BLK_F_ZONED, \
+> -            "VIRTIO_BLK_F_ZONED: Zoned block devices"),
+> +            "Zoned block devices"),
+>      FEATURE_ENTRY(VIRTIO_BLK_F_BARRIER, \
+> -            "VIRTIO_BLK_F_BARRIER: Request barriers supported"),
+> +            "Request barriers supported"),
+>      FEATURE_ENTRY(VIRTIO_BLK_F_SCSI, \
+> -            "VIRTIO_BLK_F_SCSI: SCSI packet commands supported"),
+> +            "SCSI packet commands supported"),
+>      FEATURE_ENTRY(VIRTIO_BLK_F_FLUSH, \
+> -            "VIRTIO_BLK_F_FLUSH: Flush command supported"),
+> +            "Flush command supported"),
+>      FEATURE_ENTRY(VIRTIO_BLK_F_CONFIG_WCE, \
+> -            "VIRTIO_BLK_F_CONFIG_WCE: Cache writeback and writethrough modes "
+> +            "Cache writeback and writethrough modes "
+>              "supported"),
+>      FEATURE_ENTRY(VHOST_F_LOG_ALL, \
+> -            "VHOST_F_LOG_ALL: Logging write descriptors supported"),
+> +            "Logging write descriptors supported"),
+>      FEATURE_ENTRY(VHOST_USER_F_PROTOCOL_FEATURES, \
+> -            "VHOST_USER_F_PROTOCOL_FEATURES: Vhost-user protocol features "
+> +            "Vhost-user protocol features "
+>              "negotiation supported"),
+>      { -1, "" }
+>  };
+> @@ -188,31 +188,31 @@ static const qmp_virtio_feature_map_t virtio_blk_feature_map[] = {
+>  /* virtio-serial features mapping */
+>  static const qmp_virtio_feature_map_t virtio_serial_feature_map[] = {
+>      FEATURE_ENTRY(VIRTIO_CONSOLE_F_SIZE, \
+> -            "VIRTIO_CONSOLE_F_SIZE: Host providing console size"),
+> +            "Host providing console size"),
+>      FEATURE_ENTRY(VIRTIO_CONSOLE_F_MULTIPORT, \
+> -            "VIRTIO_CONSOLE_F_MULTIPORT: Multiple ports for device supported"),
+> +            "Multiple ports for device supported"),
+>      FEATURE_ENTRY(VIRTIO_CONSOLE_F_EMERG_WRITE, \
+> -            "VIRTIO_CONSOLE_F_EMERG_WRITE: Emergency write supported"),
+> +            "Emergency write supported"),
+>      { -1, "" }
+>  };
+>  
+>  /* virtio-gpu features mapping */
+>  static const qmp_virtio_feature_map_t virtio_gpu_feature_map[] = {
+>      FEATURE_ENTRY(VIRTIO_GPU_F_VIRGL, \
+> -            "VIRTIO_GPU_F_VIRGL: Virgl 3D mode supported"),
+> +            "Virgl 3D mode supported"),
+>      FEATURE_ENTRY(VIRTIO_GPU_F_EDID, \
+> -            "VIRTIO_GPU_F_EDID: EDID metadata supported"),
+> +            "EDID metadata supported"),
+>      FEATURE_ENTRY(VIRTIO_GPU_F_RESOURCE_UUID, \
+> -            "VIRTIO_GPU_F_RESOURCE_UUID: Resource UUID assigning supported"),
+> +            "Resource UUID assigning supported"),
+>      FEATURE_ENTRY(VIRTIO_GPU_F_RESOURCE_BLOB, \
+> -            "VIRTIO_GPU_F_RESOURCE_BLOB: Size-based blob resources supported"),
+> +            "Size-based blob resources supported"),
+>      FEATURE_ENTRY(VIRTIO_GPU_F_CONTEXT_INIT, \
+> -            "VIRTIO_GPU_F_CONTEXT_INIT: Context types and synchronization "
+> +            "Context types and synchronization "
+>              "timelines supported"),
+>      FEATURE_ENTRY(VHOST_F_LOG_ALL, \
+> -            "VHOST_F_LOG_ALL: Logging write descriptors supported"),
+> +            "Logging write descriptors supported"),
+>      FEATURE_ENTRY(VHOST_USER_F_PROTOCOL_FEATURES, \
+> -            "VHOST_USER_F_PROTOCOL_FEATURES: Vhost-user protocol features "
+> +            "Vhost-user protocol features "
+>              "negotiation supported"),
+>      { -1, "" }
+>  };
+> @@ -220,9 +220,9 @@ static const qmp_virtio_feature_map_t virtio_gpu_feature_map[] = {
+>  /* virtio-input features mapping */
+>  static const qmp_virtio_feature_map_t virtio_input_feature_map[] = {
+>      FEATURE_ENTRY(VHOST_F_LOG_ALL, \
+> -            "VHOST_F_LOG_ALL: Logging write descriptors supported"),
+> +            "Logging write descriptors supported"),
+>      FEATURE_ENTRY(VHOST_USER_F_PROTOCOL_FEATURES, \
+> -            "VHOST_USER_F_PROTOCOL_FEATURES: Vhost-user protocol features "
+> +            "Vhost-user protocol features "
+>              "negotiation supported"),
+>      { -1, "" }
+>  };
+> @@ -230,96 +230,96 @@ static const qmp_virtio_feature_map_t virtio_input_feature_map[] = {
+>  /* virtio-net features mapping */
+>  static const qmp_virtio_feature_map_t virtio_net_feature_map[] = {
+>      FEATURE_ENTRY(VIRTIO_NET_F_CSUM, \
+> -            "VIRTIO_NET_F_CSUM: Device handling packets with partial checksum "
+> +            "Device handling packets with partial checksum "
+>              "supported"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_GUEST_CSUM, \
+> -            "VIRTIO_NET_F_GUEST_CSUM: Driver handling packets with partial "
+> +            "Driver handling packets with partial "
+>              "checksum supported"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_CTRL_GUEST_OFFLOADS, \
+> -            "VIRTIO_NET_F_CTRL_GUEST_OFFLOADS: Control channel offloading "
+> +            "Control channel offloading "
+>              "reconfig. supported"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_MTU, \
+> -            "VIRTIO_NET_F_MTU: Device max MTU reporting supported"),
+> +            "Device max MTU reporting supported"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_MAC, \
+> -            "VIRTIO_NET_F_MAC: Device has given MAC address"),
+> +            "Device has given MAC address"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_GUEST_TSO4, \
+> -            "VIRTIO_NET_F_GUEST_TSO4: Driver can receive TSOv4"),
+> +            "Driver can receive TSOv4"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_GUEST_TSO6, \
+> -            "VIRTIO_NET_F_GUEST_TSO6: Driver can receive TSOv6"),
+> +            "Driver can receive TSOv6"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_GUEST_ECN, \
+> -            "VIRTIO_NET_F_GUEST_ECN: Driver can receive TSO with ECN"),
+> +            "Driver can receive TSO with ECN"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_GUEST_UFO, \
+> -            "VIRTIO_NET_F_GUEST_UFO: Driver can receive UFO"),
+> +            "Driver can receive UFO"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_HOST_TSO4, \
+> -            "VIRTIO_NET_F_HOST_TSO4: Device can receive TSOv4"),
+> +            "Device can receive TSOv4"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_HOST_TSO6, \
+> -            "VIRTIO_NET_F_HOST_TSO6: Device can receive TSOv6"),
+> +            "Device can receive TSOv6"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_HOST_ECN, \
+> -            "VIRTIO_NET_F_HOST_ECN: Device can receive TSO with ECN"),
+> +            "Device can receive TSO with ECN"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_HOST_UFO, \
+> -            "VIRTIO_NET_F_HOST_UFO: Device can receive UFO"),
+> +            "Device can receive UFO"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_MRG_RXBUF, \
+> -            "VIRTIO_NET_F_MRG_RXBUF: Driver can merge receive buffers"),
+> +            "Driver can merge receive buffers"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_STATUS, \
+> -            "VIRTIO_NET_F_STATUS: Configuration status field available"),
+> +            "Configuration status field available"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_CTRL_VQ, \
+> -            "VIRTIO_NET_F_CTRL_VQ: Control channel available"),
+> +            "Control channel available"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_CTRL_RX, \
+> -            "VIRTIO_NET_F_CTRL_RX: Control channel RX mode supported"),
+> +            "Control channel RX mode supported"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_CTRL_VLAN, \
+> -            "VIRTIO_NET_F_CTRL_VLAN: Control channel VLAN filtering supported"),
+> +            "Control channel VLAN filtering supported"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_CTRL_RX_EXTRA, \
+> -            "VIRTIO_NET_F_CTRL_RX_EXTRA: Extra RX mode control supported"),
+> +            "Extra RX mode control supported"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_GUEST_ANNOUNCE, \
+> -            "VIRTIO_NET_F_GUEST_ANNOUNCE: Driver sending gratuitous packets "
+> +            "Driver sending gratuitous packets "
+>              "supported"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_MQ, \
+> -            "VIRTIO_NET_F_MQ: Multiqueue with automatic receive steering "
+> +            "Multiqueue with automatic receive steering "
+>              "supported"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_CTRL_MAC_ADDR, \
+> -            "VIRTIO_NET_F_CTRL_MAC_ADDR: MAC address set through control "
+> +            "MAC address set through control "
+>              "channel"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_NOTF_COAL, \
+> -            "VIRTIO_NET_F_NOTF_COAL: Device supports coalescing notifications"),
+> +            "Device supports coalescing notifications"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_GUEST_USO4, \
+> -            "VIRTIO_NET_F_GUEST_USO4: Driver can receive USOv4"),
+> +            "Driver can receive USOv4"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_GUEST_USO6, \
+> -            "VIRTIO_NET_F_GUEST_USO6: Driver can receive USOv6"),
+> +            "Driver can receive USOv6"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_HOST_USO, \
+> -            "VIRTIO_NET_F_HOST_USO: Device can receive USO"),
+> +            "Device can receive USO"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_HASH_REPORT, \
+> -            "VIRTIO_NET_F_HASH_REPORT: Hash reporting supported"),
+> +            "Hash reporting supported"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_RSS, \
+> -            "VIRTIO_NET_F_RSS: RSS RX steering supported"),
+> +            "RSS RX steering supported"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_RSC_EXT, \
+> -            "VIRTIO_NET_F_RSC_EXT: Extended coalescing info supported"),
+> +            "Extended coalescing info supported"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_STANDBY, \
+> -            "VIRTIO_NET_F_STANDBY: Device acting as standby for primary "
+> +            "Device acting as standby for primary "
+>              "device with same MAC addr. supported"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_SPEED_DUPLEX, \
+> -            "VIRTIO_NET_F_SPEED_DUPLEX: Device set linkspeed and duplex"),
+> +            "Device set linkspeed and duplex"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_GSO, \
+> -            "VIRTIO_NET_F_GSO: Handling GSO-type packets supported"),
+> +            "Handling GSO-type packets supported"),
+>      FEATURE_ENTRY(VHOST_NET_F_VIRTIO_NET_HDR, \
+> -            "VHOST_NET_F_VIRTIO_NET_HDR: Virtio-net headers for RX and TX "
+> +            "Virtio-net headers for RX and TX "
+>              "packets supported"),
+>      FEATURE_ENTRY(VHOST_F_LOG_ALL, \
+> -            "VHOST_F_LOG_ALL: Logging write descriptors supported"),
+> +            "Logging write descriptors supported"),
+>      FEATURE_ENTRY(VHOST_USER_F_PROTOCOL_FEATURES, \
+> -            "VHOST_USER_F_PROTOCOL_FEATURES: Vhost-user protocol features "
+> +            "Vhost-user protocol features "
+>              "negotiation supported"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO, \
+> -            "VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO: Driver can receive GSO over "
+> +            "Driver can receive GSO over "
+>              "UDP tunnel packets"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM, \
+> -            "VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO: Driver can receive GSO over "
+> +            "Driver can receive GSO over "
+>              "UDP tunnel packets requiring checksum offload for the outer "
+>              "header"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO, \
+> -            "VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO: Device can receive GSO over "
+> +            "Device can receive GSO over "
+>              "UDP tunnel packets"),
+>      FEATURE_ENTRY(VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM, \
+> -            "VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM: Device can receive GSO over "
+> +            "Device can receive GSO over "
+>              "UDP tunnel packets requiring checksum offload for the outer "
+>              "header"),
+>      { -1, "" }
+> @@ -328,20 +328,20 @@ static const qmp_virtio_feature_map_t virtio_net_feature_map[] = {
+>  /* virtio-scsi features mapping */
+>  static const qmp_virtio_feature_map_t virtio_scsi_feature_map[] = {
+>      FEATURE_ENTRY(VIRTIO_SCSI_F_INOUT, \
+> -            "VIRTIO_SCSI_F_INOUT: Requests including read and writable data "
+> +            "Requests including read and writable data "
+>              "buffers supported"),
+>      FEATURE_ENTRY(VIRTIO_SCSI_F_HOTPLUG, \
+> -            "VIRTIO_SCSI_F_HOTPLUG: Reporting and handling hot-plug events "
+> +            "Reporting and handling hot-plug events "
+>              "supported"),
+>      FEATURE_ENTRY(VIRTIO_SCSI_F_CHANGE, \
+> -            "VIRTIO_SCSI_F_CHANGE: Reporting and handling LUN changes "
+> +            "Reporting and handling LUN changes "
+>              "supported"),
+>      FEATURE_ENTRY(VIRTIO_SCSI_F_T10_PI, \
+> -            "VIRTIO_SCSI_F_T10_PI: T10 info included in request header"),
+> +            "T10 info included in request header"),
+>      FEATURE_ENTRY(VHOST_F_LOG_ALL, \
+> -            "VHOST_F_LOG_ALL: Logging write descriptors supported"),
+> +            "Logging write descriptors supported"),
+>      FEATURE_ENTRY(VHOST_USER_F_PROTOCOL_FEATURES, \
+> -            "VHOST_USER_F_PROTOCOL_FEATURES: Vhost-user protocol features "
+> +            "Vhost-user protocol features "
+>              "negotiation supported"),
+>      { -1, "" }
+>  };
+> @@ -349,9 +349,9 @@ static const qmp_virtio_feature_map_t virtio_scsi_feature_map[] = {
+>  /* virtio/vhost-user-fs features mapping */
+>  static const qmp_virtio_feature_map_t virtio_fs_feature_map[] = {
+>      FEATURE_ENTRY(VHOST_F_LOG_ALL, \
+> -            "VHOST_F_LOG_ALL: Logging write descriptors supported"),
+> +            "Logging write descriptors supported"),
+>      FEATURE_ENTRY(VHOST_USER_F_PROTOCOL_FEATURES, \
+> -            "VHOST_USER_F_PROTOCOL_FEATURES: Vhost-user protocol features "
+> +            "Vhost-user protocol features "
+>              "negotiation supported"),
+>      { -1, "" }
+>  };
+> @@ -359,11 +359,11 @@ static const qmp_virtio_feature_map_t virtio_fs_feature_map[] = {
+>  /* virtio/vhost-user-i2c features mapping */
+>  static const qmp_virtio_feature_map_t virtio_i2c_feature_map[] = {
+>      FEATURE_ENTRY(VIRTIO_I2C_F_ZERO_LENGTH_REQUEST, \
+> -            "VIRTIO_I2C_F_ZERO_LEGNTH_REQUEST: Zero length requests supported"),
+> +            "Zero length requests supported"),
+>      FEATURE_ENTRY(VHOST_F_LOG_ALL, \
+> -            "VHOST_F_LOG_ALL: Logging write descriptors supported"),
+> +            "Logging write descriptors supported"),
+>      FEATURE_ENTRY(VHOST_USER_F_PROTOCOL_FEATURES, \
+> -            "VHOST_USER_F_PROTOCOL_FEATURES: Vhost-user protocol features "
+> +            "Vhost-user protocol features "
+>              "negotiation supported"),
+>      { -1, "" }
+>  };
+> @@ -371,11 +371,11 @@ static const qmp_virtio_feature_map_t virtio_i2c_feature_map[] = {
+>  /* virtio/vhost-vsock features mapping */
+>  static const qmp_virtio_feature_map_t virtio_vsock_feature_map[] = {
+>      FEATURE_ENTRY(VIRTIO_VSOCK_F_SEQPACKET, \
+> -            "VIRTIO_VSOCK_F_SEQPACKET: SOCK_SEQPACKET supported"),
+> +            "SOCK_SEQPACKET supported"),
+>      FEATURE_ENTRY(VHOST_F_LOG_ALL, \
+> -            "VHOST_F_LOG_ALL: Logging write descriptors supported"),
+> +            "Logging write descriptors supported"),
+>      FEATURE_ENTRY(VHOST_USER_F_PROTOCOL_FEATURES, \
+> -            "VHOST_USER_F_PROTOCOL_FEATURES: Vhost-user protocol features "
+> +            "Vhost-user protocol features "
+>              "negotiation supported"),
+>      { -1, "" }
+>  };
+> @@ -383,47 +383,47 @@ static const qmp_virtio_feature_map_t virtio_vsock_feature_map[] = {
+>  /* virtio-balloon features mapping */
+>  static const qmp_virtio_feature_map_t virtio_balloon_feature_map[] = {
+>      FEATURE_ENTRY(VIRTIO_BALLOON_F_MUST_TELL_HOST, \
+> -            "VIRTIO_BALLOON_F_MUST_TELL_HOST: Tell host before reclaiming "
+> +            "Tell host before reclaiming "
+>              "pages"),
+>      FEATURE_ENTRY(VIRTIO_BALLOON_F_STATS_VQ, \
+> -            "VIRTIO_BALLOON_F_STATS_VQ: Guest memory stats VQ available"),
+> +            "Guest memory stats VQ available"),
+>      FEATURE_ENTRY(VIRTIO_BALLOON_F_DEFLATE_ON_OOM, \
+> -            "VIRTIO_BALLOON_F_DEFLATE_ON_OOM: Deflate balloon when guest OOM"),
+> +            "Deflate balloon when guest OOM"),
+>      FEATURE_ENTRY(VIRTIO_BALLOON_F_FREE_PAGE_HINT, \
+> -            "VIRTIO_BALLOON_F_FREE_PAGE_HINT: VQ reporting free pages enabled"),
+> +            "VQ reporting free pages enabled"),
+>      FEATURE_ENTRY(VIRTIO_BALLOON_F_PAGE_POISON, \
+> -            "VIRTIO_BALLOON_F_PAGE_POISON: Guest page poisoning enabled"),
+> +            "Guest page poisoning enabled"),
+>      FEATURE_ENTRY(VIRTIO_BALLOON_F_REPORTING, \
+> -            "VIRTIO_BALLOON_F_REPORTING: Page reporting VQ enabled"),
+> +            "Page reporting VQ enabled"),
+>      { -1, "" }
+>  };
+>  
+>  /* virtio-crypto features mapping */
+>  static const qmp_virtio_feature_map_t virtio_crypto_feature_map[] = {
+>      FEATURE_ENTRY(VHOST_F_LOG_ALL, \
+> -            "VHOST_F_LOG_ALL: Logging write descriptors supported"),
+> +            "Logging write descriptors supported"),
+>      { -1, "" }
+>  };
+>  
+>  /* virtio-iommu features mapping */
+>  static const qmp_virtio_feature_map_t virtio_iommu_feature_map[] = {
+>      FEATURE_ENTRY(VIRTIO_IOMMU_F_INPUT_RANGE, \
+> -            "VIRTIO_IOMMU_F_INPUT_RANGE: Range of available virtual addrs. "
+> +            "Range of available virtual addrs. "
+>              "available"),
+>      FEATURE_ENTRY(VIRTIO_IOMMU_F_DOMAIN_RANGE, \
+> -            "VIRTIO_IOMMU_F_DOMAIN_RANGE: Number of supported domains "
+> +            "Number of supported domains "
+>              "available"),
+>      FEATURE_ENTRY(VIRTIO_IOMMU_F_MAP_UNMAP, \
+> -            "VIRTIO_IOMMU_F_MAP_UNMAP: Map and unmap requests available"),
+> +            "Map and unmap requests available"),
+>      FEATURE_ENTRY(VIRTIO_IOMMU_F_BYPASS, \
+> -            "VIRTIO_IOMMU_F_BYPASS: Endpoints not attached to domains are in "
+> +            "Endpoints not attached to domains are in "
+>              "bypass mode"),
+>      FEATURE_ENTRY(VIRTIO_IOMMU_F_PROBE, \
+> -            "VIRTIO_IOMMU_F_PROBE: Probe requests available"),
+> +            "Probe requests available"),
+>      FEATURE_ENTRY(VIRTIO_IOMMU_F_MMIO, \
+> -            "VIRTIO_IOMMU_F_MMIO: VIRTIO_IOMMU_MAP_F_MMIO flag available"),
+> +            "VIRTIO_IOMMU_MAP_F_MMIO flag available"),
+>      FEATURE_ENTRY(VIRTIO_IOMMU_F_BYPASS_CONFIG, \
+> -            "VIRTIO_IOMMU_F_BYPASS_CONFIG: Bypass field of IOMMU config "
+> +            "Bypass field of IOMMU config "
+>              "available"),
+>      { -1, "" }
+>  };
+> @@ -431,12 +431,12 @@ static const qmp_virtio_feature_map_t virtio_iommu_feature_map[] = {
+>  /* virtio-mem features mapping */
+>  static const qmp_virtio_feature_map_t virtio_mem_feature_map[] = {
+>      FEATURE_ENTRY(VIRTIO_MEM_F_ACPI_PXM, \
+> -            "VIRTIO_MEM_F_ACPI_PXM: node_id is an ACPI PXM and is valid"),
+> +            "node_id is an ACPI PXM and is valid"),
+>      FEATURE_ENTRY(VIRTIO_MEM_F_UNPLUGGED_INACCESSIBLE, \
+> -            "VIRTIO_MEM_F_UNPLUGGED_INACCESSIBLE: Unplugged memory cannot be "
+> +            "Unplugged memory cannot be "
+>              "accessed"),
+>      FEATURE_ENTRY(VIRTIO_MEM_F_PERSISTENT_SUSPEND, \
+> -            "VIRTIO_MEM_F_PERSISTENT_SUSPND: Plugged memory will remain "
+> +            "Plugged memory will remain "
+>              "plugged when suspending+resuming"),
+>      { -1, "" }
+>  };
+> @@ -444,9 +444,9 @@ static const qmp_virtio_feature_map_t virtio_mem_feature_map[] = {
+>  /* virtio-rng features mapping */
+>  static const qmp_virtio_feature_map_t virtio_rng_feature_map[] = {
+>      FEATURE_ENTRY(VHOST_F_LOG_ALL, \
+> -            "VHOST_F_LOG_ALL: Logging write descriptors supported"),
+> +            "Logging write descriptors supported"),
+>      FEATURE_ENTRY(VHOST_USER_F_PROTOCOL_FEATURES, \
+> -            "VHOST_USER_F_PROTOCOL_FEATURES: Vhost-user protocol features "
+> +            "Vhost-user protocol features "
+>              "negotiation supported"),
+>      { -1, "" }
+>  };
+> @@ -454,9 +454,9 @@ static const qmp_virtio_feature_map_t virtio_rng_feature_map[] = {
+>  /* virtio/vhost-gpio features mapping */
+>  static const qmp_virtio_feature_map_t virtio_gpio_feature_map[] = {
+>      FEATURE_ENTRY(VIRTIO_GPIO_F_IRQ, \
+> -            "VIRTIO_GPIO_F_IRQ: Device supports interrupts on GPIO lines"),
+> +            "Device supports interrupts on GPIO lines"),
+>      FEATURE_ENTRY(VHOST_USER_F_PROTOCOL_FEATURES, \
+> -            "VHOST_USER_F_PROTOCOL_FEATURES: Vhost-user protocol features "
+> +            "Vhost-user protocol features "
+>              "negotiation supported"),
+>      { -1, "" }
+>  };
+> -- 
+> 2.43.0
+
 
