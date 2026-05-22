@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 490FECD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:45:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F630CD5BB3
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:45:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXYI-0004CI-Ol; Fri, 22 May 2026 17:37:07 -0400
+	id 1wQXbA-0002JL-UM; Fri, 22 May 2026 17:40:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXXv-0003YO-2c; Fri, 22 May 2026 17:36:51 -0400
+ id 1wQXav-00014W-Mp; Fri, 22 May 2026 17:39:50 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXXr-00019V-2m; Fri, 22 May 2026 17:36:40 -0400
+ id 1wQXau-0002xE-47; Fri, 22 May 2026 17:39:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485634; bh=iB8+DD2CCARFB1ExC1+rjLjOekeA9E4stav5DEa6fiA=;
+ t=1779485683; bh=FIeIBy2N5y9GMFnFrffVgiNItTw2cfOKJtZt/hBEu0w=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ZzTkUGdyZoVLZax1jY80VamBKe6Skxtaqj1HB8MOW5fsPiaizTkVGKRFhyGjFE/+z
- dDKjyFmyGzSQ2PFp6EjC/7NDtw4QrGWbLtiBuPHJ/EH2kO73NSxeorSz0w/7NoxTG2
- saIpuj6ZBFeME/RzzCOayvaWKsjMnhOXmd95hVkmcFmCbJw6o6UAfAitvcD3gEHkfK
- Q5jDqQYI/vj+gVfv3Hvcx2W/4lw1BUkDjx5+lbBebNmrLkRgSUXV/+CiY2rfUWJtId
- 6Yfk8RLcjQuwNwhQKByyEgw9uNkj7WvSK7z93eudW1RQ1AZ1HteWiUXHD4oF5yyb6F
- OCedYWGA8RqOQ==
+ b=Tws9zWeXPVB4IlzOvabnHrJP2VPTQhydN1Hs6/UUyQ0zx62K7eJXQNgSB86EtNOaF
+ paOi+EjG/kjzML6An1rOR0nBeMtajp/bh5mVtsuVgZJxyBvab6TqBgmNbTvdhSOjqF
+ PAOHfsmQIXhTYdQqwZHcDckUWfSAN6TYJHMItQjz435dzsQhbRqKU9gLMes2ViBRfu
+ DedL6shvEOPTk2mFMxeVBBs6xoLZ7xVOKD4oFMcZ5RGVWizcfAslfLGg6TzblrU5Ip
+ W+95hq11nsB2itML7oBpRB6ZSizyh5yWQrnbqdfb/FoN9B9YcQSfuTT/P8Pf6eV8f3
+ lIqzCKFf3p1Bw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 246DE1AFAE7;
- Sat, 23 May 2026 00:33:54 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6EC5C1AFB09;
+ Sat, 23 May 2026 00:34:43 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 487583B716D;
- Sat, 23 May 2026 00:33:58 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 919ED3B7189;
+ Sat, 23 May 2026 00:34:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 88/94] block: Create DEFAULT_BLOCK_CONF macro
-Date: Sat, 23 May 2026 00:33:45 +0300
-Message-ID: <20260522213356.806058-30-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ Andreas Hindborg <a.hindborg@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 120/136] hw/nvme: fix admin cq msix setup
+Date: Sat, 23 May 2026 00:34:28 +0300
+Message-ID: <20260522213446.806182-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
-References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
+References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -68,56 +68,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Klaus Jensen <k.jensen@samsung.com>
 
-The property default values from include/hw/block/block.h were
-duplicated in scsi_bus_legacy_handle_cmdline(), allowing them to go out
-of sync easily. There doesn't seem a good way to avoid the duplication,
-but moving them next to each other in the header file should help to
-avoid this problem in the future.
+If MSI-X is not enabled when the admin completion queue is created,
+msix_vector_use() is not called. But, if MSI-X is subsequently enabled,
+msix_notify() will fail to fire the interrupt because the use count for
+the vector remains at 0.
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260410152314.86412-2-kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit a1310cc6281d22ac948f4aa198dcc55d58fc039d)
+msix_vector_use/unuse should be called if MSI-X is *present*, not
+*enabled*. Fix this.
+
+Cc: qemu-stable@nongnu.org
+Reported-by: Andreas Hindborg <a.hindborg@samsung.com>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit 2293d8b4bd88d3f29730cfd608935f77247919b6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
-index 1a6b181b9d..dccb2f25b2 100644
---- a/hw/scsi/scsi-bus.c
-+++ b/hw/scsi/scsi-bus.c
-@@ -485,12 +485,7 @@ void scsi_bus_legacy_handle_cmdline(SCSIBus *bus)
-     Location loc;
-     DriveInfo *dinfo;
-     int unit;
--    BlockConf conf = {
--        .bootindex = -1,
--        .share_rw = false,
--        .rerror = BLOCKDEV_ON_ERROR_AUTO,
--        .werror = BLOCKDEV_ON_ERROR_AUTO,
--    };
-+    BlockConf conf = DEFAULT_BLOCK_CONF;
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 60738e3466..27ade1c14f 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -5515,7 +5515,7 @@ static void nvme_free_cq(NvmeCQueue *cq, NvmeCtrl *n)
+         event_notifier_set_handler(&cq->notifier, NULL);
+         event_notifier_cleanup(&cq->notifier);
+     }
+-    if (msix_enabled(pci) && cq->irq_enabled) {
++    if (msix_present(pci) && cq->irq_enabled) {
+         msix_vector_unuse(pci, cq->vector);
+     }
+     if (cq->cqid) {
+@@ -5556,7 +5556,7 @@ static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl *n, uint64_t dma_addr,
+ {
+     PCIDevice *pci = PCI_DEVICE(n);
  
-     loc_push_none(&loc);
-     for (unit = 0; unit <= bus->info->max_target; unit++) {
-diff --git a/include/hw/block/block.h b/include/hw/block/block.h
-index 7dc19d8a45..e0a427039e 100644
---- a/include/hw/block/block.h
-+++ b/include/hw/block/block.h
-@@ -51,6 +51,13 @@ static inline unsigned int get_physical_block_exp(BlockConf *conf)
-     return exp;
- }
+-    if (msix_enabled(pci) && irq_enabled) {
++    if (msix_present(pci) && irq_enabled) {
+         msix_vector_use(pci, vector);
+     }
  
-+#define DEFAULT_BLOCK_CONF (BlockConf) {                                \
-+    .bootindex = -1,                                                    \
-+    .share_rw = false,                                                  \
-+    .rerror = BLOCKDEV_ON_ERROR_AUTO,                                   \
-+    .werror = BLOCKDEV_ON_ERROR_AUTO,                                   \
-+}
-+
- #define DEFINE_BLOCK_PROPERTIES_BASE(_state, _conf)                     \
-     DEFINE_PROP_ON_OFF_AUTO("backend_defaults", _state,                 \
-                             _conf.backend_defaults, ON_OFF_AUTO_AUTO),  \
 -- 
 2.47.3
 
