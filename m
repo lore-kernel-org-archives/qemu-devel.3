@@ -4,58 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAB92CD5BB4
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 15:06:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 789F6CD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 15:34:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQRRY-0004Iu-7B; Fri, 22 May 2026 11:05:44 -0400
+	id 1wQRst-00015J-Vl; Fri, 22 May 2026 11:34:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1wQRRU-0004Ha-IB; Fri, 22 May 2026 11:05:40 -0400
-Received: from apollo.dupie.be ([51.159.20.238])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1wQRRR-0004l5-Tt; Fri, 22 May 2026 11:05:40 -0400
-Received: from lt-jeanlouis (unknown
- [IPv6:2a02:a03f:eaf9:5401:5fb3:a398:4351:5e57])
- by apollo.dupie.be (Postfix) with ESMTPSA id BE0861520E62;
- Fri, 22 May 2026 17:05:34 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
- t=1779462334;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=u/0z779TWxwwA5ep7fmRt2GdtTPzska/rDUTxmKWeuE=;
- b=kM/UoYejKa6GHZi8CHecHHSsdJU8xw0AFahhacawnmGwG0BGgTuAKT5bEE7SPITd89h6DK
- fgu97T/Pfa+flkb+piPsE4XQteHHePvqSPM+JejIbS+zKK0m+rfCUnZfaIvd25fe1nS82Q
- T96B5jQTyqfi/trtrrpOth3DJWMKOd3ycgQUGSBAkHFizJv/v3pu5vfeCnCyZHywDiBR0k
- dcK4aXQcfIewK7Ojbd85khLFP33FGgXxz7obDjZMxG9WOvPA+IEeuWBZ1/MPpMsy6pGMI7
- 92IKheepJLRvq1H6rp1xrDeTh2NhLoApe9c2NbPqAW1QgbtlJ3qK53warS9Yag==
-From: Jean-Louis Dupond <jean-louis@dupond.be>
-To: qemu-devel@nongnu.org
-Cc: Eric Blake <eblake@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
- John Snow <jsnow@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Jean-Louis Dupond <jean-louis@dupond.be>
-Subject: [PATCH v4 1/1] qcow2: add functionality to repair bitmaps
-Date: Fri, 22 May 2026 17:05:24 +0200
-Message-ID: <20260522150524.855403-2-jean-louis@dupond.be>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260522150524.855403-1-jean-louis@dupond.be>
-References: <20260522150524.855403-1-jean-louis@dupond.be>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wQRsV-00012g-89
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 11:33:37 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wQRsT-00051E-JH
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 11:33:34 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-c80203b9d7bso3346980a12.0
+ for <qemu-devel@nongnu.org>; Fri, 22 May 2026 08:33:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779464011; x=1780068811; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hDyEPhkW+qEQ9S4J8mXrDjRZyuafJiR73dMD5KSeAZM=;
+ b=L16+Z86aNPe2eLvlTfmRi+BFt0noBUU/pUxHhjlwH7ydiw3fwbwsNdoGRxYvQX9Dt0
+ VqmqwGRWE3bxoy5u/ak1wllJnzw82J9Rr+mxxS3kMdiUNDW3McL78L49AJJnFXR4bOCj
+ h5lDS+9iCtEJ9QcbFY7rvL+KD8dTyf62c/RSTc/Tp1O/NpIL0xfGjWEb8eN7Scf9Ggaz
+ eTwic1y5kSaoi5izThRA3mUnWB1BtpDZNOGp+37epwDLKwwMH0H0etDvasA+C8pM9op/
+ n5uukrSpGV73KyM/2vAZt3l0E0pSDjmFRX2QAB88UJLgeUTr8HwgWCri6qXAQtDc9/qd
+ VQlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779464011; x=1780068811;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hDyEPhkW+qEQ9S4J8mXrDjRZyuafJiR73dMD5KSeAZM=;
+ b=HeI60oLgpkOZO2K4+UHzMLoxTQYyKvjOb3IJ9UIz4/+wc6b+SO7L5dH6EuM6S1tpQh
+ t4OJ5R7/T9IBSKkuVDPOw9XhzbsYWem4XMzL8KxN1uaBAsE0IYPZO1giU/llou9JWnHs
+ vriqDLUThYbjKQPx4AF0W8j0+TOWSB6/D5iPesrTcqySpKgYaINWwrZ8B9PAJCNz9QbI
+ gjU3OUwyuZwPbQytjNdMDcvq8X9MO92lJ4gnw1DP8DtzFCgCpfikvVMZ3RZI62T2v+gZ
+ 4xGOaTyDoBhbH3yyWGDftAwF+nqzsdOLKnsPxwpHGDDlpTy8RqZUDFXAmDs0Dvh8keQD
+ SV8w==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+WjTnoppPHnrxqIm2rueqjGqZOz8ZCYjQNRgSKhYXeKHAHHjwpvAnSE/YGcMY+zBaOn45wsSSBumRq@nongnu.org
+X-Gm-Message-State: AOJu0Yz2CZ7szZ9oTl0SLj58rOGPHvEVc0KBpRgm05ZpU6YBaVS9Bjcq
+ NgnMsPPbjcW6WelPLuXXDT+sBR62etlx51T2kLbGl5slZzX1dbKKY7Fsnbia8KPmuTw=
+X-Gm-Gg: Acq92OEY1N560tHs+5IlI5fZsrsOeEhOw/n+3WPJP2W6JKuA4rA55U6whvuNFtTg0td
+ rKbI+ghFQFl9RnL7bBo73RdQLnLfWjeyD07aJyhpFm9tLGPf2DVkotHyLJk2P9xqU3fCY63eUsv
+ lgpOH6+eJqX0XTke1FPRzTt/PJtp4OePXx9N+ogFiDFw7//7Oz1InX5FHVC8lTf3femMHSl49yW
+ Td+VpEfNBzHTWkViozlWAtvXSvv/3NuAv31lIbYegqZyN6VfbrOLkchpo3SAmfvZWqF+rv7Tbnn
+ gj6ufGnZdwLlE52rcaFW2IOnar0bT1DZweLPw8KE0J0KhxL8VlCBbIxyOEn0tnAou5xrBOr8b4F
+ HO3U363OeADtbugjPU+L6fK6sFbMYxqmVjdsdosGbvEeqwKGE5x9wsvQcm5zNnSD2Z3h+8fC989
+ miPqFAeqS9aflA770ulJydWHCz8HpHaMi9rfdwBHA8l6wQnK99e9g=
+X-Received: by 2002:a17:902:ebc2:b0:2ae:6259:5aff with SMTP id
+ d9443c01a7336-2beb031adfdmr42103835ad.6.1779464011329; 
+ Fri, 22 May 2026 08:33:31 -0700 (PDT)
+Received: from [192.168.64.111] ([50.78.183.177])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2beb58b2ebcsm21093545ad.49.2026.05.22.08.33.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 22 May 2026 08:33:30 -0700 (PDT)
+Message-ID: <12907495-84d8-4540-be9d-61921f188845@linaro.org>
+Date: Fri, 22 May 2026 08:33:27 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=51.159.20.238; envelope-from=jean-louis@dupond.be;
- helo=apollo.dupie.be
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v14 15/22] target/mips: decode Octeon COP2 register
+ selectors
+To: James Hilliard <james.hilliard1@gmail.com>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Aurelien Jarno
+ <aurelien@aurel32.net>, Aleksandar Rikalo <arikalo@gmail.com>,
+ Huacai Chen <chenhuacai@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20260521-mips-octeon-missing-insns-v2-v14-0-fbf08e164830@gmail.com>
+ <20260521-mips-octeon-missing-insns-v2-v14-15-fbf08e164830@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260521-mips-octeon-missing-insns-v2-v14-15-fbf08e164830@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,214 +111,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In some cases, it might happen that bitmaps become corrupt.
-For example when adding/removing bitmaps on a live image.
+On 5/21/26 22:19, James Hilliard wrote:
+> Add explicit decodetree entries and translator bindings for Octeon
+> DMFC2/DMTC2 selectors that are simple COP2 register transfers.
+> 
+> Emit direct TCG loads and stores for register moves. Use signed 32-bit
+> loads for 32-bit DMFC2 readback and mask narrow writable fields such as
+> AESKEYLEN and CRCLEN on DMTC2.
+> 
+> Keep operation selectors with side effects in later functional decode
+> patches.
+> 
+> Signed-off-by: James Hilliard<james.hilliard1@gmail.com>
+> ---
+> Changes v13 -> v14:
+>    - Add missing HSH DAT readback selectors.
+>    - Implement HSH DAT/IV selector transfers as paired low-32 architectural
+>      word moves using tcg_gen_concat32_i64().
+>    - Move the CP2_Undef fallback into this selector patch.
+>    - Remove the redundant AES RESINP translator path.
+>    - Add HSH DAT readback smoke coverage.
+> 
+> Changes v10 -> v13:
+>    - Keep simple register moves in their own selector patch.
+>    - Use final KAS result naming and final CRC register selector names.
+>    - Mask AESKEYLEN and CRCLEN direct writes.
+> ---
+>   target/mips/tcg/octeon.decode                 |  80 ++++++++++
+>   target/mips/tcg/octeon_translate.c            | 210 ++++++++++++++++++++++++++
+>   tests/tcg/mips/user/isa/octeon/octeon-insns.c |  89 +++++++++++
+>   3 files changed, 379 insertions(+)
 
-Of course this should not happen, but in case this happens, the image is
-corrupt and even cannot be opened anymore. You'll get something like the
-following:
-qemu-img: Could not open 'disk.qcow2': Bitmap '' doesn't satisfy the constraints
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-So the image becomes useless, and cannot be repaired. This while in fact
-only (one) bitmap entry is corrupt, and the rest of the data is just
-intact.
-
-This commit adds a way to fix this corruption, by just replacing the
-bitmap list in the qcow2 image with the valid bitmaps, and dropping the
-bitmaps that are corrupt.
-
-$ qemu-img check disk.qcow2
-qemu-img: Check failed: Invalid argument
-qemu-img: Lost persistent bitmaps during inactivation of node '#block147': Bitmap '' doesn't satisfy the constraints
-
-$ qemu-img check -r all disk.qcow2
-qcow2_free_clusters failed: Invalid argument
-Leaked cluster 3 refcount=1 reference=0
-Leaked cluster 26 refcount=1 reference=0
-ERROR cluster 983214 refcount=0 reference=1
-Rebuilding refcount structure
-Repairing cluster 1 refcount=1 reference=0
-Repairing cluster 2 refcount=1 reference=0
-Repairing cluster 32768 refcount=1 reference=0
-....
-Repairing cluster 983214 refcount=1 reference=0
-The following inconsistencies were found and repaired:
-
-    2 leaked clusters
-    3 corruptions
-
-Double checking the fixed image now...
-No errors were found on the image.
-983056/1048576 = 93.75% allocated, 0.05% fragmented, 0.00% compressed clusters
-Image end offset: 64437878784
-
-And the image is valid again!
-Worst case you lose all bitmaps, but at least the image and the data
-itself is useable again.
-
-Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
----
- block/qcow2-bitmap.c   | 38 +++++++++++++++++++++++++++++++++++++-
- block/qcow2-refcount.c |  3 ++-
- block/qcow2.c          | 16 ++++++++++++----
- block/qcow2.h          |  3 ++-
- 4 files changed, 53 insertions(+), 7 deletions(-)
-
-diff --git a/block/qcow2-bitmap.c b/block/qcow2-bitmap.c
-index 256ec99878..9162149cdf 100644
---- a/block/qcow2-bitmap.c
-+++ b/block/qcow2-bitmap.c
-@@ -100,6 +100,9 @@ typedef enum BitmapType {
-     BT_DIRTY_TRACKING_BITMAP = 1
- } BitmapType;
- 
-+static int GRAPH_RDLOCK
-+update_ext_header_and_dir(BlockDriverState *bs, Qcow2BitmapList *bm_list);
-+
- static inline bool can_write(BlockDriverState *bs)
- {
-     return !bdrv_is_read_only(bs) && !(bdrv_get_flags(bs) & BDRV_O_INACTIVE);
-@@ -655,12 +658,14 @@ fail:
- int coroutine_fn
- qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
-                               void **refcount_table,
--                              int64_t *refcount_table_size)
-+                              int64_t *refcount_table_size,
-+                              BdrvCheckMode fix)
- {
-     int ret;
-     BDRVQcow2State *s = bs->opaque;
-     Qcow2BitmapList *bm_list;
-     Qcow2Bitmap *bm;
-+    bool bitmap_modified = false;
- 
-     if (s->nb_bitmaps == 0) {
-         return 0;
-@@ -677,12 +682,21 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
-                                s->bitmap_directory_size, NULL);
-     if (bm_list == NULL) {
-         res->corruptions++;
-+
-+        if (fix & BDRV_FIX_ERRORS) {
-+            ret = update_ext_header_and_dir(bs, NULL);
-+            if (ret >= 0) {
-+                res->corruptions_fixed++;
-+            }
-+            goto out;
-+        }
-         return -EINVAL;
-     }
- 
-     QSIMPLEQ_FOREACH(bm, bm_list, entry) {
-         uint64_t *bitmap_table = NULL;
-         int i;
-+        bool bitmap_valid = true;
- 
-         ret = qcow2_inc_refcounts_imrt(bs, res,
-                                        refcount_table, refcount_table_size,
-@@ -695,6 +709,12 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
-         ret = bitmap_table_load(bs, &bm->table, &bitmap_table);
-         if (ret < 0) {
-             res->corruptions++;
-+            if (fix & BDRV_FIX_ERRORS) {
-+                QSIMPLEQ_REMOVE(bm_list, bm, Qcow2Bitmap, entry);
-+                bitmap_free(bm);
-+                bitmap_modified = true;
-+                continue;
-+            }
-             goto out;
-         }
- 
-@@ -704,6 +724,7 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
- 
-             if (check_table_entry(entry, s->cluster_size) < 0) {
-                 res->corruptions++;
-+                bitmap_valid = false;
-                 continue;
-             }
- 
-@@ -720,9 +741,24 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
-             }
-         }
- 
-+        if ((fix & BDRV_FIX_ERRORS) && !bitmap_valid) {
-+            QSIMPLEQ_REMOVE(bm_list, bm, Qcow2Bitmap, entry);
-+            bitmap_free(bm);
-+            bitmap_modified = true;
-+        }
-+
-         g_free(bitmap_table);
-     }
- 
-+    /* If fixing, update the bitmap directory with the repaired list */
-+    if ((fix & BDRV_FIX_ERRORS) && bitmap_modified) {
-+        uint32_t initial_bitmaps = s->nb_bitmaps;
-+        ret = update_ext_header_and_dir(bs, bm_list);
-+        if (ret >= 0) {
-+            res->corruptions_fixed += initial_bitmaps - s->nb_bitmaps;
-+        }
-+    }
-+
- out:
-     bitmap_list_free(bm_list);
- 
-diff --git a/block/qcow2-refcount.c b/block/qcow2-refcount.c
-index 6512cda407..df7f6d2f23 100644
---- a/block/qcow2-refcount.c
-+++ b/block/qcow2-refcount.c
-@@ -2305,7 +2305,8 @@ calculate_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
-     }
- 
-     /* bitmaps */
--    ret = qcow2_check_bitmaps_refcounts(bs, res, refcount_table, nb_clusters);
-+    ret = qcow2_check_bitmaps_refcounts(bs, res, refcount_table,
-+                                        nb_clusters, fix);
-     if (ret < 0) {
-         return ret;
-     }
-diff --git a/block/qcow2.c b/block/qcow2.c
-index 81fd299b4c..adfb7ee37a 100644
---- a/block/qcow2.c
-+++ b/block/qcow2.c
-@@ -1927,11 +1927,19 @@ qcow2_do_open(BlockDriverState *bs, QDict *options, int flags,
-     if (!(bdrv_get_flags(bs) & BDRV_O_INACTIVE)) {
-         /* It's case 1, 2 or 3.2. Or 3.1 which is BUG in management layer. */
-         bool header_updated;
--        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, errp)) {
--            ret = -EINVAL;
--            goto fail;
-+        Error *local_err = NULL;
-+        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, &local_err)) {
-+            /*
-+             * Allow this to fail in check mode
-+             * because otherwise we can't open the image at all.
-+             */
-+            if (!(flags & BDRV_O_CHECK)) {
-+                ret = -EINVAL;
-+                error_propagate(errp, local_err);
-+                goto fail;
-+            }
-+            error_free(local_err);
-         }
--
-         update_header = update_header && !header_updated;
-     }
- 
-diff --git a/block/qcow2.h b/block/qcow2.h
-index 192a45d596..2d9c6929a7 100644
---- a/block/qcow2.h
-+++ b/block/qcow2.h
-@@ -1034,7 +1034,8 @@ void qcow2_cache_discard(Qcow2Cache *c, void *table);
- int coroutine_fn GRAPH_RDLOCK
- qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
-                               void **refcount_table,
--                              int64_t *refcount_table_size);
-+                              int64_t *refcount_table_size,
-+                              BdrvCheckMode fix);
- 
- bool coroutine_fn GRAPH_RDLOCK
- qcow2_load_dirty_bitmaps(BlockDriverState *bs, bool *header_updated,
--- 
-2.54.0
-
+r~
 
