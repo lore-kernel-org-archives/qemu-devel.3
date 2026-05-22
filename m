@@ -4,46 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60C22CD5BB8
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:43:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73349CD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:43:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXcY-00055W-6r; Fri, 22 May 2026 17:41:30 -0400
+	id 1wQXb6-0001oX-KG; Fri, 22 May 2026 17:40:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXbz-00041d-83; Fri, 22 May 2026 17:41:02 -0400
+ id 1wQXaZ-0000Vw-7g; Fri, 22 May 2026 17:39:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXbv-0004sn-S1; Fri, 22 May 2026 17:40:54 -0400
+ id 1wQXaX-0002qA-2W; Fri, 22 May 2026 17:39:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485684; bh=m9cYpDv3gk1tbajdL895DALF4TOXSMWLbbVoSYE0EQI=;
+ t=1779485683; bh=ZzwmK6NhinsNKk8PElcppAMiWGZrV5nmEP0XXJQlTDc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=UYn+gFC5io9MCBrqRuQhSEEZW5jJV7Ezsg6N8tm1qdqpw/N7sZHPYLZ34sHQ5VgP2
- 0WAcBpvoEnCylke0A6S0/TXQ28gEBA6l8IHUfTCgMLKRqAjxJaPlxvl9oiAG4CcWPU
- cnZNgB9U7UTLjV7E0mR0vd9580XOkqmypRe5pCJzpYdS40BCMo4/hguIHofub9eOok
- HAwdi+SKc23UguZiaZAJ3QkNZ7RLzLQH6mkyboWbjfyN3h56xCbwpANKKV77bjct80
- tr8Z6b5xw64fAf0CSzKgFoq5v5kiTIgmGxCooYR6SKCM8Yo/ShKt1/B8fAxCtU4+8J
- zHUSQskgfahMQ==
+ b=tC9EgxZAutSdHIhEEAreV83kEim/1YYYSVn5ipVILRjrEk8O+oYCnxzSAnLokws5J
+ FBETMRwuiNPuH+RHpzbAGzGgM+O6qoz6i/AoOjchaiZHsUQB7aJhgWM4+WTbC4LP8r
+ pCZI3ojP5ok1uaXq8trZIV+/xyBY31R2hLMU/GgaFxa9Yx4OmVPJfGgAjNcz9PuY8/
+ dP1pjsB9i/qrpNSsb7CYt/9xO0AtEsqSOUSM4MZN7BxYve4RLwyLlxHZMHcRO4AXyF
+ nj9FNVgDYwU4TqOp2PjB9naRAOYVkwqwVgJoX7FYy7gcS/pTy4dylrnznvzlqPh1Zo
+ 8x8mz/ZV7SDdg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 142BE1AFB14;
- Sat, 23 May 2026 00:34:44 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5F2731AFB08;
+ Sat, 23 May 2026 00:34:43 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 38E8B3B7194;
- Sat, 23 May 2026 00:34:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7F0A23B7188;
+ Sat, 23 May 2026 00:34:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 131/136] block: Create DEFAULT_BLOCK_CONF macro
-Date: Sat, 23 May 2026 00:34:39 +0300
-Message-ID: <20260522213446.806182-32-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <th.huth+qemu@posteo.eu>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 119/136] tests/functional/qemu_test/asset.py: Don't
+ use setxattr when it doesn't exist
+Date: Sat, 23 May 2026 00:34:27 +0300
+Message-ID: <20260522213446.806182-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -68,56 +72,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The property default values from include/hw/block/block.h were
-duplicated in scsi_bus_legacy_handle_cmdline(), allowing them to go out
-of sync easily. There doesn't seem a good way to avoid the duplication,
-but moving them next to each other in the header file should help to
-avoid this problem in the future.
+The Python os.setxattr() API is Linux-specific, so trying to use
+it on other OSes triggers a failure:
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260410152314.86412-2-kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit a1310cc6281d22ac948f4aa198dcc55d58fc039d)
+  File "/Users/pm215/src/qemu/tests/functional/qemu_test/asset.py",
+line 227, in fetch
+    os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
+    ^^^^^^^^^^^
+AttributeError: module 'os' has no attribute 'setxattr'
+
+Since we only set the attributes here for informational
+purposes, skip them when os.setxattr() isn't available.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 9903217a4ed013 ("tests/functional: add a module for handling asset download & caching")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Thomas Huth <th.huth+qemu@posteo.eu>
+Message-id: 20260501115506.3792110-1-peter.maydell@linaro.org
+(cherry picked from commit 039b057c09c6a9742b91b8f29604651ba3fdb558)
+(Mjt: context fixup for 10.0.x)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
-index ece1107ee8..35ff216510 100644
---- a/hw/scsi/scsi-bus.c
-+++ b/hw/scsi/scsi-bus.c
-@@ -482,12 +482,7 @@ void scsi_bus_legacy_handle_cmdline(SCSIBus *bus)
-     Location loc;
-     DriveInfo *dinfo;
-     int unit;
--    BlockConf conf = {
--        .bootindex = -1,
--        .share_rw = false,
--        .rerror = BLOCKDEV_ON_ERROR_AUTO,
--        .werror = BLOCKDEV_ON_ERROR_AUTO,
--    };
-+    BlockConf conf = DEFAULT_BLOCK_CONF;
+diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
+index 5aceb8f27a..6c91c4830e 100644
+--- a/tests/functional/qemu_test/asset.py
++++ b/tests/functional/qemu_test/asset.py
+@@ -183,11 +183,14 @@ def fetch(self):
+             raise AssetError(self, "Download retries exceeded", transient=True)
  
-     loc_push_none(&loc);
-     for (unit = 0; unit <= bus->info->max_target; unit++) {
-diff --git a/include/hw/block/block.h b/include/hw/block/block.h
-index de3946a5f1..1f140c01a4 100644
---- a/include/hw/block/block.h
-+++ b/include/hw/block/block.h
-@@ -49,6 +49,13 @@ static inline unsigned int get_physical_block_exp(BlockConf *conf)
-     return exp;
- }
- 
-+#define DEFAULT_BLOCK_CONF (BlockConf) {                                \
-+    .bootindex = -1,                                                    \
-+    .share_rw = false,                                                  \
-+    .rerror = BLOCKDEV_ON_ERROR_AUTO,                                   \
-+    .werror = BLOCKDEV_ON_ERROR_AUTO,                                   \
-+}
-+
- #define DEFINE_BLOCK_PROPERTIES_BASE(_state, _conf)                     \
-     DEFINE_PROP_ON_OFF_AUTO("backend_defaults", _state,                 \
-                             _conf.backend_defaults, ON_OFF_AUTO_AUTO),  \
+         try:
+-            # Set these just for informational purposes
+-            os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
+-                        self.url.encode('utf8'))
+-            os.setxattr(str(tmp_cache_file), "user.qemu-asset-hash",
+-                        self.hash.encode('utf8'))
++            # Set these just for informational purposes. Note that
++            # setxattr is Linux-only; as this is only informational
++            # we can simply skip it on other platforms.
++            if hasattr(os, "setxattr"):
++                os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
++                            self.url.encode('utf8'))
++                os.setxattr(str(tmp_cache_file), "user.qemu-asset-hash",
++                            self.hash.encode('utf8'))
+         except Exception as e:
+             self.log.debug("Unable to set xattr on %s: %s", tmp_cache_file, e)
+             pass
 -- 
 2.47.3
 
