@@ -4,46 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10F60CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:43:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F8D7CD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:43:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXcY-000589-BZ; Fri, 22 May 2026 17:41:30 -0400
+	id 1wQXb7-0001wf-GF; Fri, 22 May 2026 17:40:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXcA-00047V-7m; Fri, 22 May 2026 17:41:10 -0400
+ id 1wQXaR-0000VW-TH; Fri, 22 May 2026 17:39:27 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXc1-0005d8-7M; Fri, 22 May 2026 17:41:00 -0400
+ id 1wQXaO-0002me-2h; Fri, 22 May 2026 17:39:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485684; bh=yBluAs/gE8DSO3TfUiji3YFG4b/s0M7RfG8jpYCyV4I=;
+ t=1779485683; bh=uw3IFaMoHTWHcwtezVFZdQWRKLoUOSyauJSIUxwu/qE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Xu2h6CiEHItWqVYvHEiP5iZxnKQB9jf6jIZ8KuCS0q6Mtjstv6VZVWEMIAjrEbjLG
- AY+DJ+Z2FiZginj97R0ZQzupkWkyBT4JA4rbUGnhucOYiHiauMVngK+CU3V9oYAPUP
- X33OoN41C5eAEFO210+/da8sYyPdaxtM6iFMofw4g1h4BFq4EBz4WveKgSmsE3GRKG
- 3kJA3a6UOrbWNjsuXlMJMk05Afmb6+ys9gUfjWhuH0m7KP4f91lng0GVgvMIdT0Ibk
- pzRuESShNFclbXECqugDI+roAdUiWrVa4//ekD1hZMusn9WzF+K0yl1RkFIHQ5DGP4
- F1hOp0mW7ni8w==
+ b=p1tVsPzUvfvQvcv1EygBQQYGJ+vDmqrFa8TlxE4Y1XS8Hf1rdM3DKASdVYkRcd5GB
+ shH1WgTEt973gh8DL8lIqKSBBPP2XMBeIZqn11Bfbyu4W/IU6tIO0IzuHK1eZR1B2t
+ aFhjQu8ZPU1xbDiQ4p9lPQodAeVu3fxHuVANnxR/W+FBK/yawqg9bwEM+H+bFT2PVh
+ j7hzr++lNuv6IGmV9G2Q17nblaACUpTwdskyKRzkzhpSaQEKAgKNnHIlWHQfmaNNzd
+ a/0LQTIbrg3X9o+FbFIfPpxPTWzgr9dlpqmU9IWRY2ROnbNqWWswvF5O5ffEI3f1Vy
+ 3rMPKpbOl4DDQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 33DC71AFB16;
- Sat, 23 May 2026 00:34:44 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2BCE41AFB05;
+ Sat, 23 May 2026 00:34:43 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 56A393B7196;
- Sat, 23 May 2026 00:34:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4F35F3B7185;
+ Sat, 23 May 2026 00:34:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 133/136] qemu-io: Add 'aio_discard' command
-Date: Sat, 23 May 2026 00:34:41 +0300
-Message-ID: <20260522213446.806182-34-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Katherine Leaver <katherine.j.leaver@gmail.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 116/136] aspeed/hace: Prevent total_req_len overflow
+Date: Sat, 23 May 2026 00:34:24 +0300
+Message-ID: <20260522213446.806182-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -68,154 +71,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Cédric Le Goater <clg@redhat.com>
 
-Testing interactions between multiple requests that include discard
-requests require that qemu-io can do the discard asynchronously, like it
-already does for reads and writes. To this effect, add an 'aio_discard'
-command.
+In accumulate mode, total_req_len is incremented with plen (hwaddr)
+for each hash request. Repeated additions can overflow total_req_len
+(uint32_t) and potentially bypass validation checks in has_padding().
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260427170520.101242-3-kwolf@redhat.com>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
-Tested-by: Denis V. Lunev <den@openvz.org>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 7f8466e2ce620e3c6a6e2f32d616367174d4dbe9)
+Add a helper function to detect overflow before incrementing
+total_req_len and reject the request if overflow would occur.
+
+Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
+Cc: qemu-stable@nongnu.org
+Fixes: 5cd7d8564a8b ("aspeed/hace: Support AST2600 HACE")
+Link: https://lore.kernel.org/qemu-devel/20260504213421.710035-3-clg@redhat.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit c6aa2d0ac161f2a58a8fbab9a15e846278661158)
+(Mjt: fixup for 10.0 due to missing v10.0.0-1171-g7328c48b57c9
+ "hw/misc/aspeed_hace: Extract direct mode hash buffer setup into helper function")
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/qemu-io-cmds.c b/qemu-io-cmds.c
-index f6d077908f..de4c1966fe 100644
---- a/qemu-io-cmds.c
-+++ b/qemu-io-cmds.c
-@@ -2218,6 +2218,120 @@ static int discard_f(BlockBackend *blk, int argc, char **argv)
-     return 0;
+diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
+index 212703cbe4..d1b9dd4c3a 100644
+--- a/hw/misc/aspeed_hace.c
++++ b/hw/misc/aspeed_hace.c
+@@ -169,6 +169,19 @@ static int reconstruct_iov(AspeedHACEState *s, struct iovec *iov, int id,
+     return iov_count;
  }
  
-+static void aio_discard_help(void)
++static bool hash_accumulate_len(AspeedHACEState *s, hwaddr plen)
 +{
-+    printf(
-+"\n"
-+" asynchronously discards a range of bytes from the given offset\n"
-+"\n"
-+" Example:\n"
-+" 'aio_discard 512 1k' - discards 1 kilobyte from 512 bytes into the file\n"
-+"\n"
-+" Discards a segment of the currently open file.\n"
-+" -C, -- report statistics in a machine parsable format\n"
-+" -q, -- quiet mode, do not show I/O statistics\n"
-+" The discard is performed asynchronously and the aio_flush command must be\n"
-+" used to ensure all outstanding aio requests have been completed.\n"
-+" Note that due to its asynchronous nature, this command will be\n"
-+" considered successful once the request is submitted, independently\n"
-+" of potential I/O errors.\n"
-+"\n");
++    if (plen > UINT32_MAX - s->total_req_len) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: total_req_len overflow, current=0x%x, adding=0x%"
++                      HWADDR_PRIx "\n", __func__, s->total_req_len, plen);
++        return false;
++    }
++
++    s->total_req_len += plen;
++    return true;
 +}
 +
-+static int aio_discard_f(BlockBackend *blk, int argc, char **argv);
-+
-+static const cmdinfo_t aio_discard_cmd = {
-+    .name       = "aio_discard",
-+    .cfunc      = aio_discard_f,
-+    .perm       = BLK_PERM_WRITE,
-+    .argmin     = 2,
-+    .argmax     = -1,
-+    .args       = "[-Cq] off len",
-+    .oneline    = "asynchronously discards a number of bytes",
-+    .help       = aio_discard_help,
-+};
-+
-+static void aio_discard_done(void *opaque, int ret)
-+{
-+    struct aio_ctx *ctx = opaque;
-+    struct timespec t2;
-+
-+    clock_gettime(CLOCK_MONOTONIC, &t2);
-+
-+    if (ret < 0) {
-+        printf("aio_discard failed: %s\n", strerror(-ret));
-+        block_acct_failed(blk_get_stats(ctx->blk), &ctx->acct);
-+        goto out;
-+    }
-+
-+    block_acct_done(blk_get_stats(ctx->blk), &ctx->acct);
-+
-+    if (ctx->qflag) {
-+        goto out;
-+    }
-+
-+    /* Finally, report back -- -C gives a parsable format */
-+    t2 = tsub(t2, ctx->t1);
-+    print_report("discarded ", &t2, ctx->offset, ctx->qiov.size,
-+                 ctx->qiov.size, 1, ctx->Cflag);
-+out:
-+    g_free(ctx);
-+}
-+
-+static int aio_discard_f(BlockBackend *blk, int argc, char **argv)
-+{
-+    int c, ret;
-+    int64_t count;
-+    struct aio_ctx *ctx = g_new0(struct aio_ctx, 1);
-+
-+    ctx->blk = blk;
-+
-+    while ((c = getopt(argc, argv, "Cq")) != -1) {
-+        switch (c) {
-+        case 'C':
-+            ctx->Cflag = true;
-+            break;
-+        case 'q':
-+            ctx->qflag = true;
-+            break;
-+        default:
-+            g_free(ctx);
-+            qemuio_command_usage(&aio_discard_cmd);
-+            return -EINVAL;
-+        }
-+    }
-+
-+    if (optind != argc - 2) {
-+        g_free(ctx);
-+        qemuio_command_usage(&aio_discard_cmd);
-+        return -EINVAL;
-+    }
-+
-+    ctx->offset = cvtnum(argv[optind]);
-+    if (ctx->offset < 0) {
-+        ret = ctx->offset;
-+        print_cvtnum_err(ret, argv[optind]);
-+        g_free(ctx);
-+        return ret;
-+    }
-+    optind++;
-+
-+    count = cvtnum(argv[optind]);
-+    if (count < 0) {
-+        print_cvtnum_err(count, argv[optind]);
-+        g_free(ctx);
-+        return count;
-+    }
-+
-+    clock_gettime(CLOCK_MONOTONIC, &ctx->t1);
-+    ctx->qiov.size = count;
-+    block_acct_start(blk_get_stats(blk), &ctx->acct, ctx->qiov.size,
-+                     BLOCK_ACCT_UNMAP);
-+    blk_aio_pdiscard(blk, ctx->offset, count, aio_discard_done, ctx);
-+
-+    return 0;
-+}
-+
- static int alloc_f(BlockBackend *blk, int argc, char **argv)
+ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+                               bool acc_mode)
  {
-     BlockDriverState *bs = blk_bs(blk);
-@@ -2800,6 +2914,7 @@ static void __attribute((constructor)) init_qemuio_commands(void)
-     qemuio_add_command(&length_cmd);
-     qemuio_add_command(&info_cmd);
-     qemuio_add_command(&discard_cmd);
-+    qemuio_add_command(&aio_discard_cmd);
-     qemuio_add_command(&alloc_cmd);
-     qemuio_add_command(&map_cmd);
-     qemuio_add_command(&reopen_cmd);
+@@ -224,7 +237,9 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+             }
+             iov[i].iov_base = haddr;
+             if (acc_mode) {
+-                s->total_req_len += plen;
++                if (!hash_accumulate_len(s, plen)) {
++                    return;
++                }
+ 
+                 if (has_padding(s, &iov[i], plen, &total_msg_len,
+                                 &pad_offset)) {
 -- 
 2.47.3
 
