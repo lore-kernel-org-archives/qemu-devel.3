@@ -4,87 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9117CD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 16:33:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D529CD5BB3
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 16:41:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQSni-0004vW-Te; Fri, 22 May 2026 12:32:42 -0400
+	id 1wQSvL-0008J9-2A; Fri, 22 May 2026 12:40:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wQSne-0004ud-9g
- for qemu-devel@nongnu.org; Fri, 22 May 2026 12:32:38 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wQSna-0001Ci-6Y
- for qemu-devel@nongnu.org; Fri, 22 May 2026 12:32:38 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4903d5c67bfso9468515e9.1
- for <qemu-devel@nongnu.org>; Fri, 22 May 2026 09:32:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779467552; x=1780072352; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=hsNsyJVNcWSO04d87bUHfOP4iWA2739eXSxbnApeGbE=;
- b=Iv14sUUxUdrJk2rfKTMG/b0jGw9IxBlr77Ey/c0dNy4X0QAqDVs+AVLDZY9sKhabO1
- zGqQQK4HRiPZ+B0er+hZrh/o2Ud/Er/RA273CjvQSdO8ROTKHttwmzDE+6ocSDk8on8R
- GBJKVHSvDjlzgybh6duEsMv/X0A6nTs9eS1e0hZGAXlF9WJFI2nO442BkQi3OiuO1foA
- mUuVodwx7V5j9o0+9Fyzg3YuWwFDzQfBUIIA7qqFUsw3RG5l5C1WlgHRkSyITP4YVIxs
- jkU7FKjIbZi//Xec2BxhGCuuF0tUyBwxIXHMyFLhUmSsFiW0/rK8ZqB0iGO/uFJUVq8o
- AEBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779467552; x=1780072352;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=hsNsyJVNcWSO04d87bUHfOP4iWA2739eXSxbnApeGbE=;
- b=mdGgHI19oYFs4l0tI9ewm7bJdZx0LQc+NpJupzjpCdslKjEk30HoCkel59QH3pvolz
- TmZNjISme0uX5bLUFm97fdpwBpfMcIbFzlttPWywQLb+jsVMAhPbcKj/VZe8fMFN1myj
- mwkbijcYaIJrLR7KCJ56V4Q3jKgvy0YJ+YIRrnNR/Q3IohuhpQ5etcZ94LyqN7Cbc77d
- tuw0ZS9AydD+58XMVx1fJw8RjT+1FPnolXXBFWF8Cmfc7wlN7d+dVrQYPHIqJB7k9P2R
- fkWBd3e0oXAq0+5+wKQUcmA3qQ4acOWdj5iAZtTGgztPNlrFsXjK72erF6W2shO02+vl
- ys8w==
-X-Gm-Message-State: AOJu0Yxd2mVXFuAldbbxFg/XX0A2fBEbYylUxHrTnjnXI+tJkiLhy1ZI
- RJjqYA9E/vtHDqrcn0ueYX41S7N0+23qLJq4IuFnzhITud6EkbtP04qZbjhnbCKhJ/0=
-X-Gm-Gg: Acq92OEZQbWo9QTvTrNkIImFI7CBzLmOKMrvU6BTQueyriN5zRsR2WOO3+PhhKCcNOQ
- WnlgmuE7LpGWMYVp18Z/3kyMenrUEPjlXuZS3wudnLmwLN4BjkeLjHbmizN3pD9F2fOJ1vhRFh1
- Eai7219KOVDpxnquk+HeE9HWJQqUNzGHVG880eSCAjtBLGfGtUl5B9EU7BQNienjJAq7VryY75C
- p3OaZKTAJ+ZM/ctwrdwarLJw0HK/wtHNxLjJe23lK/ahS5cjpeqEjPF1/fbhM79HZL0p/gLAtGf
- ViSlVBmXX7IRmkyqdhn5KTNG8qvB856wIJS0Z/+Z0GCfcY25ZwpRqxuqQBXS8/dC9ciiulA0Z3w
- f4PxU4o1b3d4f/lQ9IpCq8oC1XeotVa3Y1xWUrDbLl/cT7jXZcLYN9E8SjIVLosb2QMOiUzZe45
- fS6kIE1IdiJAx3EYwDUqUDkdk=
-X-Received: by 2002:a05:600c:3592:b0:490:44eb:c1d9 with SMTP id
- 5b1f17b1804b1-49044ebc292mr68451315e9.28.1779467552049; 
- Fri, 22 May 2026 09:32:32 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6c9f6ffsm5149273f8f.1.2026.05.22.09.32.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 May 2026 09:32:31 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 773895F8BA;
- Fri, 22 May 2026 17:32:30 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel <qemu-devel@nongnu.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth
- <thuth@redhat.com>, Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: GitLab issue tracker at inbox 0 (for unlabelled issues ;-)
-User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Fri, 22 May 2026 17:32:30 +0100
-Message-ID: <87zf1rl80x.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <t.lamprecht@proxmox.com>)
+ id 1wQSv6-0008Hh-Qo; Fri, 22 May 2026 12:40:21 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <t.lamprecht@proxmox.com>)
+ id 1wQSv3-0004hB-HZ; Fri, 22 May 2026 12:40:20 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 0E67F84A9A;
+ Fri, 22 May 2026 18:40:08 +0200 (CEST)
+From: Thomas Lamprecht <t.lamprecht@proxmox.com>
+To: qemu-block@nongnu.org
+Cc: f.ebner@proxmox.com, kwolf@redhat.com, hreitz@redhat.com,
+ qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Subject: [PATCH v2] qcow2: Fix data loss on zero write with detect-zeroes=unmap
+Date: Fri, 22 May 2026 17:13:06 +0200
+Message-ID: <20260522151318.238064-1-t.lamprecht@proxmox.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1779467987604
+Received-SPF: pass client-ip=94.136.29.106;
+ envelope-from=t.lamprecht@proxmox.com; helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,45 +55,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Commit b8bfb1478d ("qcow2: Fix corruption on discard during write with
+COW") added a wait_for_dependencies() at the start of
+qcow2_subcluster_zeroize(). That fixes the inconsistency it set out to
+fix, but turns the lock-protected pre-check in the caller,
+qcow2_co_pwrite_zeroes(), into a stale one: the wait yields s->lock,
+so an in-flight allocating write whose QCowL2Meta is already on
+s->cluster_allocs (but whose L2 entry is not yet linked) gets to link
+its entry during the yield. When the zeroize wakes, the cluster is now
+NORMAL, and with BDRV_REQ_MAY_UNMAP the free path in zero_in_l2_slice()
+unmaps the just-written cluster, silently dropping the data write's
+payload.
 
-Hi,
+This is reachable with detect-zeroes=unmap (the default for VirtIO
+disks with discard on in Proxmox VE), under which the block layer
+auto-promotes all-zero buffers to BDRV_REQ_ZERO_WRITE |
+BDRV_REQ_MAY_UNMAP. A memory-constrained Debian guest running 'apt
+full-upgrade' on such a disk reproduces it as random SIGSEGVs:
+swapped-out code pages come back as zero.
 
-I've finally finished working our way through the backlog of un-tagged
-issues in the tracker. This has been done with an AI agent following the
-"qemu-issue-triage" skill from my recent agent skills series:
+Wait for in-flight dependencies before the lock-protected check in
+qcow2_co_pwrite_zeroes(). If a write linked its L2 entry during the
+wait, the type check now fails and the block layer falls back to a
+bounce-buffered zero write that only touches the requested subrange,
+preserving the racing write's data. Promote wait_for_dependencies() to
+qcow2_wait_for_dependencies() so qcow2.c can call it.
 
-  Message-ID: <20260515163055.1792262-1-alex.bennee@linaro.org>
-  Date: Fri, 15 May 2026 17:30:43 +0100
-  Subject: [RFC PATCH v3 00/11] AGENTS.md and associated skills
+Fixes: b8bfb1478d ("qcow2: Fix corruption on discard during write with COW")
+Cc: qemu-stable@nongnu.org
+Tested-by: Fiona Ebner <f.ebner@proxmox.com>
+Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
+Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
+---
 
-I've been sampling the results as I've gone along and am pretty happy
-with how the agents have performed. If you do find the agent has gone
-off on one can you tag me or the agent in a comment on the bug in
-question and we can try and improve the triage skills.
+Changes v1 -> v2:
+* improve comments (thx @Fiona)
+* add Fiona's R-b/T-b
 
-We currently have 1271 open issues in the tracker. Of those:
+ block/qcow2-cluster.c      | 10 +++++-----
+ block/qcow2.c              | 10 ++++++++--
+ block/qcow2.h              |  4 ++++
+ tests/qemu-iotests/046     | 23 +++++++++++++++++++++++
+ tests/qemu-iotests/046.out | 10 ++++++++++
+ 5 files changed, 50 insertions(+), 7 deletions(-)
 
-  124 are tagged Needs Info
-  50 have patches linked
-  151 are Feature Requests
-  71 have TestCases attached
-  16 are identified as Regressions
-  ...
-  and many more
+diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
+index 8b1e80bd0b..e02fae6a0c 100644
+--- a/block/qcow2-cluster.c
++++ b/block/qcow2-cluster.c
+@@ -1474,9 +1474,9 @@ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
+     return 0;
+ }
+ 
+-static void coroutine_mixed_fn wait_for_dependencies(BlockDriverState *bs,
+-                                                     uint64_t guest_offset,
+-                                                     uint64_t bytes)
++void coroutine_mixed_fn qcow2_wait_for_dependencies(BlockDriverState *bs,
++                                                    uint64_t guest_offset,
++                                                    uint64_t bytes)
+ {
+     BDRVQcow2State *s = bs->opaque;
+     QCowL2Meta *m = NULL;
+@@ -2035,7 +2035,7 @@ int qcow2_cluster_discard(BlockDriverState *bs, uint64_t offset,
+      * We don't need to allocate a QCowL2Meta for the discard operation because
+      * s->lock is held for the duration of the whole operation.
+      */
+-    wait_for_dependencies(bs, offset, bytes);
++    qcow2_wait_for_dependencies(bs, offset, bytes);
+ 
+     /* Caller must pass aligned values, except at image end */
+     assert(QEMU_IS_ALIGNED(offset, s->cluster_size));
+@@ -2204,7 +2204,7 @@ int coroutine_fn qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset,
+      * We don't need to allocate a QCowL2Meta for the zeroize operation because
+      * s->lock is held for the duration of the whole operation.
+      */
+-    wait_for_dependencies(bs, offset, bytes);
++    qcow2_wait_for_dependencies(bs, offset, bytes);
+ 
+     /* If we have to stay in sync with an external data file, zero out
+      * s->data_file first. */
+diff --git a/block/qcow2.c b/block/qcow2.c
+index 81fd299b4c..96efdd4503 100644
+--- a/block/qcow2.c
++++ b/block/qcow2.c
+@@ -4234,10 +4234,16 @@ qcow2_co_pwrite_zeroes(BlockDriverState *bs, int64_t offset, int64_t bytes,
+         }
+ 
+         qemu_co_mutex_lock(&s->lock);
+-        /* We can have new write after previous check */
+         offset -= head;
+         bytes = s->subcluster_size;
+-        nr = s->subcluster_size;
++        /*
++         * Wait for in-flight allocating writes first: otherwise the type
++         * check below could pass on UNALLOCATED while a yet-to-link_l2 write
++         * completes during qcow2_subcluster_zeroize()'s own wait, letting the
++         * resumed MAY_UNMAP discard the just-written data.
++         */
++        qcow2_wait_for_dependencies(bs, offset, bytes);
++        nr = bytes;
+         ret = qcow2_get_host_offset(bs, offset, &nr, &off, &type);
+         if (ret < 0 ||
+             (type != QCOW2_SUBCLUSTER_UNALLOCATED_PLAIN &&
+diff --git a/block/qcow2.h b/block/qcow2.h
+index 192a45d596..ce517040c4 100644
+--- a/block/qcow2.h
++++ b/block/qcow2.h
+@@ -966,6 +966,10 @@ int coroutine_fn GRAPH_RDLOCK
+ qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset, uint64_t bytes,
+                          int flags);
+ 
++void coroutine_mixed_fn
++qcow2_wait_for_dependencies(BlockDriverState *bs, uint64_t guest_offset,
++                            uint64_t bytes);
++
+ int GRAPH_RDLOCK
+ qcow2_expand_zero_clusters(BlockDriverState *bs,
+                            BlockDriverAmendStatusCB *status_cb,
+diff --git a/tests/qemu-iotests/046 b/tests/qemu-iotests/046
+index e03dd40147..0d84b5c1c7 100755
+--- a/tests/qemu-iotests/046
++++ b/tests/qemu-iotests/046
+@@ -226,6 +226,26 @@ aio_write -z 0x140000 0x10000
+ resume A
+ aio_flush
+ EOF
++
++# Start an allocating write to a previously unallocated cluster and, before
++# its L2 update is linked, issue a concurrent sub-cluster zero write with
++# MAY_UNMAP that targets a disjoint range within the same cluster. The zero
++# write's head/tail are zero (cluster is unallocated), so qcow2_co_pwrite_zeroes
++# would expand it to the full subcluster. Without waiting for dependencies
++# before the zero write's "unallocated" type check, that check passes,
++# qcow2_subcluster_zeroize then yields in wait_for_dependencies, the allocating
++# write links its L2 entry, and the resumed zeroize unmaps the cluster -
++# silently discarding the just-written data. Waiting first makes the zero write
++# fall back to a bounce-buffered real write, which only touches its own
++# subrange.
++cat <<EOF
++break write_aio A
++aio_write -P 180 0x200000 0x4000
++wait_break A
++aio_write -z -u 0x204000 0x4000
++resume A
++aio_flush
++EOF
+ }
+ 
+ overlay_io | $QEMU_IO blkdebug::"$TEST_IMG" | _filter_qemu_io |\
+@@ -310,6 +330,9 @@ verify_io()
+     echo read -P 0   0x120000 0x10000
+     echo read -P 0   0x130000 0x10000
+     echo read -P 0   0x140000 0x10000
++
++    echo read -P 180 0x200000 0x4000
++    echo read -P 0   0x204000 0xc000
+ }
+ 
+ verify_io | $QEMU_IO "$TEST_IMG" | _filter_qemu_io
+diff --git a/tests/qemu-iotests/046.out b/tests/qemu-iotests/046.out
+index 6341df335c..137cf527f1 100644
+--- a/tests/qemu-iotests/046.out
++++ b/tests/qemu-iotests/046.out
+@@ -169,6 +169,12 @@ wrote XXX/XXX bytes at offset XXX
+ XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ wrote XXX/XXX bytes at offset XXX
+ XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++blkdebug: Suspended request 'A'
++blkdebug: Resuming request 'A'
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ == Verify image content ==
+ read 65536/65536 bytes at offset 0
+@@ -275,5 +281,9 @@ read 65536/65536 bytes at offset 1245184
+ 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ read 65536/65536 bytes at offset 1310720
+ 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 16384/16384 bytes at offset 2097152
++16 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 49152/49152 bytes at offset 2113536
++48 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ No errors were found on the image.
+ *** done
+-- 
+2.47.3
 
-A lot of the older issues ended up with Needs Info because they are
-reported against older versions of QEMU outside the support range.
-Daniel did suggest maybe we should think about having
-"triage::outdated-version" and "triage::distro-package" states. However
-maybe it is enough to stick with Needs Info and just auto expire bugs
-that have stayed in that state for long enough (6-12 months?).
 
-Of course triaging is only the first step, I encourage maintainers to go
-check their labels and see if any bugs have been missed. I have found
-adding tabs to the Work Items view with interesting sets of labels has
-helped in sorting through the noise.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
