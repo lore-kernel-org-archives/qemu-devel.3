@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35D9CCD5BAF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE911CD5BAB
 	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 00:11:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQDMm-0001Tl-1h; Thu, 21 May 2026 20:03:52 -0400
+	id 1wQDQO-0005kS-Oz; Thu, 21 May 2026 20:07:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wQDMg-0001Sq-Ee
- for qemu-devel@nongnu.org; Thu, 21 May 2026 20:03:47 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1wQDOB-0002dF-Hh
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 20:05:26 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wQDMd-0003DB-Jy
- for qemu-devel@nongnu.org; Thu, 21 May 2026 20:03:44 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2b9fcf7c91bso72358295ad.0
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 17:03:42 -0700 (PDT)
+ id 1wQDO9-0004dY-FV
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 20:05:19 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-c801b30188dso3153389a12.3
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 17:05:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779408222; x=1780013022; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779408315; x=1780013115; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yzmrb2//Q/gLCR3bz7IsBU8u2c8FQ+I54Hlj/vG+0N4=;
- b=ldNs4A1B3wFWC+GBAIJypjnJ3O3CFUZNmDKexL83NraCFD9QkU1Jm8o6CqHDJHLAQo
- xpzj2dHgq35GGAaBnzex7kwpMqD04wxWAQtw0LDz5CmUyulmOGufZN0cM77wZag6sczK
- IvMOrZKdxu/qMHiEXsHFR09IJNToFqwJ0oHEjTQHGA7J1wJTzsdPVRnR/ArCwe6xvq51
- wo/LGT5HPcVI0OZR++tvCPICPKgkbfw///BuLsWy/mi4h5FsZI7iO1ZlaemnIeMzvkmS
- p5EKR1Qlve0KfAsI8S0GjF3lOFOW6ACB4b3sMxBBHQyaU43ITvBCvzpWoKWWMc+PPJau
- rFwg==
+ bh=iRaz1TlypKE5ho+rp9KhYgTc5x2rHfXcx74X3Pi8EsI=;
+ b=Mr4SvUin/jgMwj1ukjbLtXGxeBrIFF5PooHxFl5rZHyYEx9donZ1BKihT9tlvwNFh9
+ dIrWtMvmzhjPQrfbobXLYzAIhY9W2FHorxi8E9t8wnxFsz069XUUDqffHq9lVlzg46zc
+ USlxZmBXFEe4ztFqMNb/jMDLgihBsQGWDlOd0d0jEgjDux5q1Im7KeQJQK0UFKdviczA
+ oC0jBk+tR+lGEWjJUtpBhNBKwS4c7N0YM5Ds1ep7zdoFLLRGrOoKlx/SD4FyURxB8qpJ
+ q0BDO538dwsAJPpqeYQdjP0EyXTCWb2FT3H6NBvNwexaV6uocwCHbjJc9Y2MNCWUBIJR
+ gPwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779408222; x=1780013022;
+ d=1e100.net; s=20251104; t=1779408315; x=1780013115;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=yzmrb2//Q/gLCR3bz7IsBU8u2c8FQ+I54Hlj/vG+0N4=;
- b=ACwNUEmE3wmW+CeREFLvR6htRUJXR5zwpQiLUTVGgjrDpYR2EKmoa7ccp7yuVxzD/C
- QzdOA4i6loPS5PTsbsEdMgfDdkdf6R05u17fZqGHCT1DMwkJxkOdw/dKZTrC3y9YzHNc
- P7mTHwy8iDHLcCQ0C1RE6FE6VHrB+PqH0FoyxFrA+hi3nB13ruKdqxyPmZE4oNbQqjAQ
- qIzoSDj7Skb6YujIco/TQy6GwfjDd84nCduUUXcsbA5S1D5AfkBhTw+8CkHmu77xO5Zk
- Y6GAapWWPwZvBvq8AmDgtTflaB3YsZZS/xMH8pveJvbec2mbBs6nJRDAeGowOEOVjmtW
- hJaw==
-X-Gm-Message-State: AOJu0YwmXUhb2JmhyP0zsZLK1KaTuS9z0HG2eFS6YSU88kWLdVmGNJlr
- CQcyx+R8K1qhRU6YKRr07akC/OyJDORiE4W2nblJmWimUxvFraprhEqBTPYk6Whb
-X-Gm-Gg: Acq92OFsecae8UFaXARs1cMrolP/CcdWFXsRCljZrOjLMBHV9vEsIH0ChiS9o7uOhiw
- TSK4Wn22lONIkrC2CX9B8jjwPdbMCLJ/0sFkSHmBKMDKaQb1wpjYe9+SStytln6P/v1V0hqbTSK
- g4MPtInqMfyy40WvCSOvECZKABdBWJpTt3gx6Vl50X6kNB741M6xTBpetfIfMiihI4p8PpyeTtH
- +zMe8wcppS0BqGVy1wDB3de1H3AnjkiNOQYAinM1O/DlOYFKFM4ojuCOZ7EN1URK7E1feYoe94+
- RkzsWiqNFkgpuHvylETj9J435dlAEYJoSGJZrPkmvXsgyXey2utG08t09J+D5cA7jXtk+ZBDMj8
- rV39idboJjnR6EjdUutNZDu6sCvPEgvS9b0Tz9FjloVuntyv0WYRZx4SNzFDYugbEiWGIQxZ8cW
- bRHRkNUTb272bua6V+l5tzjq0df8Dmo7y488lVhJ3SOLmopZbAgmRF
-X-Received: by 2002:a17:902:ce92:b0:2b9:7ad1:bf2b with SMTP id
- d9443c01a7336-2beb06924e5mr11266125ad.29.1779408221570; 
- Thu, 21 May 2026 17:03:41 -0700 (PDT)
+ bh=iRaz1TlypKE5ho+rp9KhYgTc5x2rHfXcx74X3Pi8EsI=;
+ b=sagjIY99zuYN0L0MA/+vWkTK8siwlN/0u3FhMlVVlVBpNTUbri0mKr4Yz4nWWfwwvh
+ JsOWgjl3ba+5nIEfZOBvamwIuHk3aItwCMWAdDoAqISGs5BLqlE850r6hSYe+8FUEPnL
+ jotjhmoXeh31SK5y0K+vvUTIVRcqhZtYzV7mvEf1yBntQh0/tVrmX2HsCc13+v8i9WrB
+ paH49JdQ/2iX07Gk2s/8huvvDLRl/A9IsoZ1XwnNOVx86mX+i3Y3WDATGPK+QjrlL+0C
+ 195GX3OEL7WFWA7XHQU0PpjuQ3Q3LliiXSQbfI/yJx84Bzxgvh9R++Xlie96ee1ioEGn
+ HGVg==
+X-Gm-Message-State: AOJu0YxyY5Eft3jHTkiJkK5hwWzQVXt5M4ElrgNk1IsMrUMUUf1qRaKZ
+ aDLXgxg5edXb0ktYqFC0qM9deqh+jLSMynriUybVUaU6o+kamvIaTItXd/4pWIZK
+X-Gm-Gg: Acq92OG7carDsKLnBsNYbvGjXfCqf/7lU87/TU9IdIVaR4vU0QsW+Nb5pZ3FovK7aJu
+ HufdRh3uVYNwFLP0yzzWRnIBsX0ZMx+43bF8YtPhuoWjszI2XP+0888lnqtgKsKCvV4Ksg8+WhP
+ BshzMQPCclVye1FG3EgKEKKIU/DgJFybOwpwA50WMTI2fV0QJs0Q/P59FR53Lc9nLwPObyo+RxM
+ 2FafONVHakwvFah5B1vV7IO3bwO51/7NMggOzc0p/KLPGtz2hvA8OoqEdSJLElD+Dm9UiJ6tlvR
+ 5R8yT1CXNSbLbJ8ZV9Dnc6nVoABD/og1tAcl8CM59zFLXvhRVojBvryH96E9xov/HWFo/TWaWHU
+ IF4NZiQzpWDVfcD00zdYjhK2/TLHvnhnkRKEN2WmkwL6iSSgIBCY6Ozwhn9UzjUN4MyzOC4KIUw
+ sy/ee15Y66TavrDFEjE+45sSQDeLTMVetlxBJc+ceCmOIGwxJI11v+
+X-Received: by 2002:a17:903:1a10:b0:2bd:2430:eb7b with SMTP id
+ d9443c01a7336-2beb06cbf6cmr11040485ad.12.1779408315556; 
+ Thu, 21 May 2026 17:05:15 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2beb114b54csm3915475ad.42.2026.05.21.17.03.38
+ d9443c01a7336-2beb114b54csm3915475ad.42.2026.05.21.17.05.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 17:03:41 -0700 (PDT)
+ Thu, 21 May 2026 17:05:14 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Alistair Francis <alistair.francis@wdc.com>,
+Cc: alistair23@gmail.com,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Chao Liu <chao.liu.zevorn@gmail.com>
-Subject: [PULL 02/48] target/riscv: Deprecate the shakti_c machine
-Date: Fri, 22 May 2026 10:02:38 +1000
-Message-ID: <20260522000324.23255-3-alistair.francis@wdc.com>
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 31/48] target/riscv/cpu.c: remove riscv_cpu_enable_named_feat()
+Date: Fri, 22 May 2026 10:03:07 +1000
+Message-ID: <20260522000324.23255-32-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260522000324.23255-1-alistair.francis@wdc.com>
 References: <20260522000324.23255-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,53 +103,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-The RISC-V shakti_c machine hasn't had meaningful contributions since 2021
-and is currently unmaintained. The machine is scheduled to be removed as it
-appears to have no users.
+Deprecate riscv_cpu_enable_named_feat() by creating implied rules for
+'sha' and 'ssstateen'.  'zic64' is always true given that our default
+block size is set to 64.
 
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Message-ID: <20260430052218.771358-3-alistair.francis@wdc.com>
+With this change we homogeneize extension handling when enabling
+profiles.
+
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260512032926.1978818-7-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- docs/about/deprecated.rst | 7 +++++++
- hw/riscv/shakti_c.c       | 1 +
- 2 files changed, 8 insertions(+)
+ target/riscv/cpu.c         | 25 ++++++++++++++++++++++--
+ target/riscv/tcg/tcg-cpu.c | 40 --------------------------------------
+ 2 files changed, 23 insertions(+), 42 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 7771b98b72..97750f5edc 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -242,6 +242,13 @@ deprecated; use the new name ``dtb-randomness`` instead. The new name
- better reflects the way this property affects all random data within
- the device tree blob, not just the ``kaslr-seed`` node.
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 0f8ddeb42e..ecf31599c5 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2599,6 +2599,17 @@ static RISCVCPUImpliedExtsRule ZVKSG_IMPLIED = {
+     },
+ };
  
-+RISC-V Shakti machine (since 11.1)
-+''''''''''''''''''''''''''''''''''
++static RISCVCPUImpliedExtsRule SHA_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_sha),
++    .implied_misa_exts = RVH,
++    .implied_multi_exts = {
++        CPU_CFG_OFFSET(ext_smstateen),
++        CPU_CFG_OFFSET(ext_ssstateen),
 +
-+The RISC-V ``shakti_c`` machine hasn't had meaningful contributions since 2021
-+and is currently unmaintained. The machine is scheduled to be removed as it
-+appears to have no users.
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
 +
+ static RISCVCPUImpliedExtsRule SSCFG_IMPLIED = {
+     .ext = CPU_CFG_OFFSET(ext_ssccfg),
+     .implied_multi_exts = {
+@@ -2647,6 +2658,15 @@ static RISCVCPUImpliedExtsRule SSCTR_IMPLIED = {
+     },
+ };
  
- Backend options
- ---------------
-diff --git a/hw/riscv/shakti_c.c b/hw/riscv/shakti_c.c
-index 49a39b3021..852d5b9797 100644
---- a/hw/riscv/shakti_c.c
-+++ b/hw/riscv/shakti_c.c
-@@ -83,6 +83,7 @@ static void shakti_c_machine_class_init(ObjectClass *klass, const void *data)
-     mc->init = shakti_c_machine_state_init;
-     mc->default_cpu_type = TYPE_RISCV_CPU_SHAKTI_C;
-     mc->valid_cpu_types = valid_cpu_types;
-+    mc->deprecation_reason = "Currently unmaintained with no known users";
-     mc->default_ram_id = "riscv.shakti.c.ram";
++static RISCVCPUImpliedExtsRule SSSTATEEN_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_ssstateen),
++    .implied_multi_exts = {
++        CPU_CFG_OFFSET(ext_smstateen),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
+ static RISCVCPUImpliedExtsRule ZVFBFA_IMPLIED = {
+     .ext = CPU_CFG_OFFSET(ext_zvfbfa),
+     .implied_multi_exts = {
+@@ -2673,8 +2693,9 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
+     &ZVFBFA_IMPLIED, &ZVFBFMIN_IMPLIED, &ZVFBFWMA_IMPLIED,
+     &ZVFH_IMPLIED, &ZVFHMIN_IMPLIED, &ZVKN_IMPLIED,
+     &ZVKNC_IMPLIED, &ZVKNG_IMPLIED, &ZVKNHB_IMPLIED,
+-    &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SSCFG_IMPLIED,
+-    &SUPM_IMPLIED, &SSPM_IMPLIED, &SMCTR_IMPLIED, &SSCTR_IMPLIED,
++    &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SHA_IMPLIED,
++    &SSCFG_IMPLIED, &SUPM_IMPLIED, &SSPM_IMPLIED, &SMCTR_IMPLIED,
++    &SSCTR_IMPLIED, &SSSTATEEN_IMPLIED,
+     NULL
+ };
+ 
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 704105d3df..c3e354b0ae 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -322,42 +322,6 @@ static const char *cpu_cfg_ext_get_name(uint32_t ext_offset)
+     g_assert_not_reached();
  }
+ 
+-static bool cpu_cfg_offset_is_named_feat(uint32_t ext_offset)
+-{
+-    const RISCVCPUMultiExtConfig *feat;
+-
+-    for (feat = riscv_cpu_named_features; feat->name != NULL; feat++) {
+-        if (feat->offset == ext_offset) {
+-            return true;
+-        }
+-    }
+-
+-    return false;
+-}
+-
+-static void riscv_cpu_enable_named_feat(RISCVCPU *cpu, uint32_t feat_offset)
+-{
+-     /*
+-      * All other named features are already enabled
+-      * in riscv_tcg_cpu_instance_init().
+-      */
+-    switch (feat_offset) {
+-    case CPU_CFG_OFFSET(ext_zic64b):
+-        cpu->cfg.cbom_blocksize = 64;
+-        cpu->cfg.cbop_blocksize = 64;
+-        cpu->cfg.cboz_blocksize = 64;
+-        break;
+-    case CPU_CFG_OFFSET(ext_sha):
+-        if (!cpu_misa_ext_is_user_set(RVH)) {
+-            riscv_cpu_write_misa_bit(cpu, RVH, true);
+-        }
+-        /* fallthrough */
+-    case CPU_CFG_OFFSET(ext_ssstateen):
+-        cpu->cfg.ext_smstateen = true;
+-        break;
+-    }
+-}
+-
+ static void cpu_bump_multi_ext_priv_ver(CPURISCVState *env,
+                                         uint32_t ext_offset)
+ {
+@@ -1327,10 +1291,6 @@ static void riscv_cpu_set_profile(RISCVCPU *cpu,
+         ext_offset = profile->ext_offsets[i];
+ 
+         if (profile->enabled) {
+-            if (cpu_cfg_offset_is_named_feat(ext_offset)) {
+-                riscv_cpu_enable_named_feat(cpu, ext_offset);
+-            }
+-
+             cpu_bump_multi_ext_priv_ver(&cpu->env, ext_offset);
+         }
  
 -- 
 2.53.0
