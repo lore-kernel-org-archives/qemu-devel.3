@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B00AACD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:45:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7278CD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:45:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXcf-0005T6-2Z; Fri, 22 May 2026 17:41:37 -0400
+	id 1wQXYV-0005C9-HH; Fri, 22 May 2026 17:37:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXcG-00049o-AM; Fri, 22 May 2026 17:41:12 -0400
+ id 1wQXYP-0004k1-Um; Fri, 22 May 2026 17:37:14 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXcC-0005fE-N4; Fri, 22 May 2026 17:41:11 -0400
+ id 1wQXYN-0001Ff-LC; Fri, 22 May 2026 17:37:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485684; bh=3eStd9tzp10nIvgv3uD2QnV70tB8KVSRJ2k3TMOWGvA=;
+ t=1779485634; bh=NeizuiU9CNw1ZzTV6M1T2A/yYQYGEMCvWTUWZVtOwzs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=YUB6b9hBoFKrVaMFe1SSuwO5UHk3Mtf/JCD7zLXL6RwnwQQG23c8cwFHpaaKCTdDk
- Zze812OkoACfAJlcUbD6tjaEdjl7j2r4RyobVbKZyY29pKvZeuSt9HvSll7Oh3F8Jq
- pxEy2UVCVrnmTd6zZVLyJXoSEUC3SNAsl4hDQlmzBVI4k0XpGyS2nOSEB7l5ezi1xD
- 315blWbclK8bftqxtBOFT1vxJ4OBGGpwXO6B2IeTABjxbmxuaR5PmbX6uIt/xNurfn
- ZMl14PorzgIz8jg71XDgDysINODNy/N+sjjPoLAPZBfsuFYYsxLtkLQozOGBkTiJjL
- aaEOVoB4vcuEQ==
+ b=LXXxNB+2L1FxNCfTBQsf5/j3Xy5+wHkaXRBi0OeZABVUhUj6EkZl+hYVXGPYI+HQB
+ AajT+PbB7mwQ8ucwm7Byzu5KuK/NrUJKBic3zuJBCZQZs0hG04gK6fFkTc+UZDOEu3
+ kDx4LCFX4t7hU0j60MFcfpfQ4fZxuFYaV5liDXvzvLliBY9xpbUCpfoHpFbpXWS0wc
+ oFDxF1nCRdS39yMg7NXCj05k0FxIpOrZlkwJV+HgGBh5Y0u+4J2K/l6I90e9DYcPyZ
+ W3IRbT3OZpDPoCQBXlmhP5uD8LYnQacRky0X8OKGUOdydPqdPgUvdJx8fMJfImmnB8
+ m5b2SDWj5jivg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 438B31AFB17;
- Sat, 23 May 2026 00:34:44 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6E8011AFAEC;
+ Sat, 23 May 2026 00:33:54 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 66C673B7197;
- Sat, 23 May 2026 00:34:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 917263B7172;
+ Sat, 23 May 2026 00:33:58 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 134/136] qcow2: Fix corruption on discard during
- write with COW
-Date: Sat, 23 May 2026 00:34:42 +0300
-Message-ID: <20260522213446.806182-35-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 93/94] iotests/046: Test that discard/write_zeroes
+ wait for dependencies
+Date: Sat, 23 May 2026 00:33:50 +0300
+Message-ID: <20260522213356.806058-35-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
-References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
+References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -71,147 +71,136 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kevin Wolf <kwolf@redhat.com>
 
-Most code in qcow2 that accesses (and potentially modifies) L2 tables
-does so while holding s->lock.
+This is a regression test for the bug fixed in the previous commit where
+discard and write_zeroes operations wouldn't consider their dependencies
+in s->cluster_allocs. Without the fix, this results in a corrupted
+image.
 
-There is one exception, which is allocating writes. They hold the lock
-initially while allocating clusters, but drop it for writing the guest
-payload before taking the lock again for updating the L2 tables. This
-allows concurrent requests that touch other parts of the image file to
-continue in parallel and is an important performance optimisation.
-
-However, this means that other requests that run while the lock is
-dropped for writing guest data must synchronise with the list of
-allocating requests in s->cluster_allocs and wait if they would overlap.
-For writes, this is done in handle_dependencies(), but discard and write
-zeros operations neglect to synchronise with s->cluster_allocs.
-
-This means that discard can free a cluster whose L2 entry will already
-be modified in qcow2_alloc_cluster_link_l2() by a previously started
-write. In the case of a pre-allocated zero cluster that is in the
-process of being overwritten, this means that discard can lead to a
-situation where the cluster is still mapped (because the write will
-restore the L2 entry just without the zero flag), but its refcount has
-been decreased, resulting in a corrupted image.
-
-Add the missing synchronisation to qcow2_cluster_discard() and
-qcow2_subcluster_zeroize() to fix the problem.
-
-Cc: qemu-stable@nongnu.org
-Reported-by: Denis V. Lunev <den@openvz.org>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260427170520.101242-4-kwolf@redhat.com>
+Message-ID: <20260427170520.101242-5-kwolf@redhat.com>
 Reviewed-by: Denis V. Lunev <den@openvz.org>
 Tested-by: Denis V. Lunev <den@openvz.org>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit b8bfb1478d61512f851badd0d912c6661a2efee7)
+(cherry picked from commit 389f5bcc744d3ddc127d550a57261aed9bbba1f3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
-index ce8c0076b3..c20011d34c 100644
---- a/block/qcow2-cluster.c
-+++ b/block/qcow2-cluster.c
-@@ -1392,6 +1392,9 @@ count_single_write_clusters(BlockDriverState *bs, int nb_clusters,
-  * the same cluster. In this case we need to wait until the previous
-  * request has completed and updated the L2 table accordingly.
-  *
-+ * If allow_shortening == true, instead of waiting for a dependency, *cur_bytes
-+ * can be shortened so that the cluster allocations don't overlap.
-+ *
-  * Returns:
-  *   0       if there was no dependency. *cur_bytes indicates the number of
-  *           bytes from guest_offset that can be read before the next
-@@ -1403,7 +1406,9 @@ count_single_write_clusters(BlockDriverState *bs, int nb_clusters,
-  */
- static int coroutine_fn handle_dependencies(BlockDriverState *bs,
-                                             uint64_t guest_offset,
--                                            uint64_t *cur_bytes, QCowL2Meta **m)
-+                                            uint64_t *cur_bytes,
-+                                            bool allow_shortening,
-+                                            QCowL2Meta **m)
- {
-     BDRVQcow2State *s = bs->opaque;
-     QCowL2Meta *old_alloc;
-@@ -1434,7 +1439,7 @@ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
- 
-         /* Conflict */
- 
--        if (start < old_start) {
-+        if (start < old_start && allow_shortening) {
-             /* Stop at the start of a running allocation */
-             bytes = old_start - start;
-         } else {
-@@ -1469,6 +1474,29 @@ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
-     return 0;
+diff --git a/tests/qemu-iotests/046 b/tests/qemu-iotests/046
+index 4c9ed4d26e..e03dd40147 100755
+--- a/tests/qemu-iotests/046
++++ b/tests/qemu-iotests/046
+@@ -184,6 +184,48 @@ aio_write -P 160 0x104000 0x18000
+ resume A
+ aio_flush
+ EOF
++
++# Create a pre-allocated zero cluster, then start a write on it and discard it
++# before the L2 update is made
++cat  <<EOF
++write -P 181 0x120000 0x10000
++write -z 0x120000 0x10000
++
++break write_aio A
++aio_write -P 180 0x120000 0x10000
++wait_break A
++aio_discard 0x120000 0x10000
++resume A
++aio_flush
++EOF
++
++# Create a pre-allocated zero cluster, then start a write on it and a
++# concurrent zero write with MAY_UNMAP before the L2 update is made
++cat  <<EOF
++write -P 181 0x130000 0x10000
++write -z 0x130000 0x10000
++
++break write_aio A
++aio_write -P 180 0x130000 0x10000
++wait_break A
++aio_write -z -u 0x130000 0x10000
++resume A
++aio_flush
++EOF
++
++# Create a pre-allocated zero cluster, then start a write on it and a
++# concurrent zero write without MAY_UNMAP before the L2 update is made
++cat  <<EOF
++write -P 181 0x140000 0x10000
++write -z 0x140000 0x10000
++
++break write_aio A
++aio_write -P 180 0x140000 0x10000
++wait_break A
++aio_write -z 0x140000 0x10000
++resume A
++aio_flush
++EOF
  }
  
-+static void coroutine_mixed_fn wait_for_dependencies(BlockDriverState *bs,
-+                                                     uint64_t guest_offset,
-+                                                     uint64_t bytes)
-+{
-+    BDRVQcow2State *s = bs->opaque;
-+    QCowL2Meta *m = NULL;
-+    int ret;
+ overlay_io | $QEMU_IO blkdebug::"$TEST_IMG" | _filter_qemu_io |\
+@@ -264,6 +306,10 @@ verify_io()
+     # Undefined content for 0x10c000 0x8000
+     echo read -P 160 0x114000 0x8000
+     echo read -P 17  0x11c000 0x4000
 +
-+    /*
-+     * Discard has some non-coroutine callers (creating internal snapshots and
-+     * make empty). They are calling from qemu-img or in a drained section, so
-+     * we know that no writes can be in progress.
-+     */
-+    if (!qemu_in_coroutine()) {
-+        assert(QLIST_EMPTY(&s->cluster_allocs));
-+        return;
-+    }
-+
-+    do {
-+        ret = handle_dependencies(bs, guest_offset, &bytes, false, &m);
-+    } while (ret == -EAGAIN);
-+}
-+
- /*
-  * Checks how many already allocated clusters that don't require a new
-  * allocation there are at the given guest_offset (up to *bytes).
-@@ -1840,7 +1868,7 @@ again:
-          *         the right synchronisation between the in-flight request and
-          *         the new one.
-          */
--        ret = handle_dependencies(bs, start, &cur_bytes, m);
-+        ret = handle_dependencies(bs, start, &cur_bytes, true, m);
-         if (ret == -EAGAIN) {
-             /* Currently handle_dependencies() doesn't yield if we already had
-              * an allocation. If it did, we would have to clean up the L2Meta
-@@ -2002,6 +2030,15 @@ int qcow2_cluster_discard(BlockDriverState *bs, uint64_t offset,
-     int64_t cleared;
-     int ret;
++    echo read -P 0   0x120000 0x10000
++    echo read -P 0   0x130000 0x10000
++    echo read -P 0   0x140000 0x10000
+ }
  
-+    /*
-+     * If we're touching a cluster for which allocating writes are in flight,
-+     * wait for them to complete to avoid conflicting metadata updates.
-+     *
-+     * We don't need to allocate a QCowL2Meta for the discard operation because
-+     * s->lock is held for the duration of the whole operation.
-+     */
-+    wait_for_dependencies(bs, offset, bytes);
-+
-     /* Caller must pass aligned values, except at image end */
-     assert(QEMU_IS_ALIGNED(offset, s->cluster_size));
-     assert(QEMU_IS_ALIGNED(end_offset, s->cluster_size) ||
-@@ -2164,6 +2201,15 @@ int coroutine_fn qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset,
-     int64_t cleared;
-     int ret;
+ verify_io | $QEMU_IO "$TEST_IMG" | _filter_qemu_io
+diff --git a/tests/qemu-iotests/046.out b/tests/qemu-iotests/046.out
+index b1a03f4041..6341df335c 100644
+--- a/tests/qemu-iotests/046.out
++++ b/tests/qemu-iotests/046.out
+@@ -139,6 +139,36 @@ wrote XXX/XXX bytes at offset XXX
+ XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ wrote XXX/XXX bytes at offset XXX
+ XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++blkdebug: Suspended request 'A'
++blkdebug: Resuming request 'A'
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++discarded  XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++blkdebug: Suspended request 'A'
++blkdebug: Resuming request 'A'
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++blkdebug: Suspended request 'A'
++blkdebug: Resuming request 'A'
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
  
-+    /*
-+     * If we're touching a cluster for which allocating writes are in flight,
-+     * wait for them to complete to avoid conflicting metadata updates.
-+     *
-+     * We don't need to allocate a QCowL2Meta for the zeroize operation because
-+     * s->lock is held for the duration of the whole operation.
-+     */
-+    wait_for_dependencies(bs, offset, bytes);
-+
-     /* If we have to stay in sync with an external data file, zero out
-      * s->data_file first. */
-     if (data_file_is_raw(bs)) {
+ == Verify image content ==
+ read 65536/65536 bytes at offset 0
+@@ -239,5 +269,11 @@ read 32768/32768 bytes at offset 1130496
+ 32 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ read 16384/16384 bytes at offset 1163264
+ 16 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 65536/65536 bytes at offset 1179648
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 65536/65536 bytes at offset 1245184
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 65536/65536 bytes at offset 1310720
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ No errors were found on the image.
+ *** done
 -- 
 2.47.3
 
