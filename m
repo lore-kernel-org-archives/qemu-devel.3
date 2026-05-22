@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F8D7CD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:43:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7857ACD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:43:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXb7-0001wf-GF; Fri, 22 May 2026 17:40:01 -0400
+	id 1wQXZQ-0007er-Mn; Fri, 22 May 2026 17:38:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXaR-0000VW-TH; Fri, 22 May 2026 17:39:27 -0400
+ id 1wQXZM-0007Iu-Fj; Fri, 22 May 2026 17:38:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXaO-0002me-2h; Fri, 22 May 2026 17:39:19 -0400
+ id 1wQXZK-0002SU-Sq; Fri, 22 May 2026 17:38:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485683; bh=uw3IFaMoHTWHcwtezVFZdQWRKLoUOSyauJSIUxwu/qE=;
+ t=1779485682; bh=6yNTHyY4n+czwCDJOviiZkYDpnz4dMyJaeqmCz/8sP8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=p1tVsPzUvfvQvcv1EygBQQYGJ+vDmqrFa8TlxE4Y1XS8Hf1rdM3DKASdVYkRcd5GB
- shH1WgTEt973gh8DL8lIqKSBBPP2XMBeIZqn11Bfbyu4W/IU6tIO0IzuHK1eZR1B2t
- aFhjQu8ZPU1xbDiQ4p9lPQodAeVu3fxHuVANnxR/W+FBK/yawqg9bwEM+H+bFT2PVh
- j7hzr++lNuv6IGmV9G2Q17nblaACUpTwdskyKRzkzhpSaQEKAgKNnHIlWHQfmaNNzd
- a/0LQTIbrg3X9o+FbFIfPpxPTWzgr9dlpqmU9IWRY2ROnbNqWWswvF5O5ffEI3f1Vy
- 3rMPKpbOl4DDQ==
+ b=XpWbgcj6hnKTHNdxDPqR46726zeQ2IclXbH9z57yh7CwwDLGXnDsPlBzc6dJC2k/0
+ ODl7DS/s0L7qhU8HR82Gh4ymFWDI7A5H4uFUmarOxTZHX8INGlEQ8nJEUs6cjErsQn
+ CPeFkuxU/RSkk2IHyOXqHSan3fQI2zTTb+qGYZKL1KRdSkdu3dFsliYLC4+Rs2NieM
+ 94KRyrPEeItdKmf5X/DRYJqPiGQbgrDrI2BVyw+Cjkcgu02N1qgiTtTkFIUdndMB5e
+ 28n2mNErIF5LlJxiHgMvmziE+NnbmWOWjSYd2p6rSulv+BWZHzxbXR63hBqT1dTLG5
+ /zRxSWb7DUKaA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2BCE41AFB05;
- Sat, 23 May 2026 00:34:43 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8E7921AFAFB;
+ Sat, 23 May 2026 00:34:42 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4F35F3B7185;
- Sat, 23 May 2026 00:34:47 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A7F843B717B;
+ Sat, 23 May 2026 00:34:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
  Katherine Leaver <katherine.j.leaver@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 116/136] aspeed/hace: Prevent total_req_len overflow
-Date: Sat, 23 May 2026 00:34:24 +0300
-Message-ID: <20260522213446.806182-17-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 106/136] hw/uefi: verify data size before accessing
+ it in wrap_pkcs7
+Date: Sat, 23 May 2026 00:34:14 +0300
+Message-ID: <20260522213446.806182-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,61 +70,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-In accumulate mode, total_req_len is incremented with plen (hwaddr)
-for each hash request. Repeated additions can overflow total_req_len
-(uint32_t) and potentially bypass validation checks in has_padding().
-
-Add a helper function to detect overflow before incrementing
-total_req_len and reject the request if overflow would occur.
-
+Fixes: CVE-2026-41439
+Fixes: 3e33af2cb306 ("hw/uefi: add var-service-pkcs7.c")
 Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
-Cc: qemu-stable@nongnu.org
-Fixes: 5cd7d8564a8b ("aspeed/hace: Support AST2600 HACE")
-Link: https://lore.kernel.org/qemu-devel/20260504213421.710035-3-clg@redhat.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit c6aa2d0ac161f2a58a8fbab9a15e846278661158)
-(Mjt: fixup for 10.0 due to missing v10.0.0-1171-g7328c48b57c9
- "hw/misc/aspeed_hace: Extract direct mode hash buffer setup into helper function")
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20260422092910.444997-6-kraxel@redhat.com>
+(cherry picked from commit 22b7b222d8f5428be8b5d4787f36efd0a0b75292)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
-index 212703cbe4..d1b9dd4c3a 100644
---- a/hw/misc/aspeed_hace.c
-+++ b/hw/misc/aspeed_hace.c
-@@ -169,6 +169,19 @@ static int reconstruct_iov(AspeedHACEState *s, struct iovec *iov, int id,
-     return iov_count;
- }
+diff --git a/hw/uefi/var-service-pkcs7.c b/hw/uefi/var-service-pkcs7.c
+index 32accf4e44..f17ad6872f 100644
+--- a/hw/uefi/var-service-pkcs7.c
++++ b/hw/uefi/var-service-pkcs7.c
+@@ -73,7 +73,8 @@ static void wrap_pkcs7(gnutls_datum_t *pkcs7)
+     };
+     gnutls_datum_t wrap;
  
-+static bool hash_accumulate_len(AspeedHACEState *s, hwaddr plen)
-+{
-+    if (plen > UINT32_MAX - s->total_req_len) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: total_req_len overflow, current=0x%x, adding=0x%"
-+                      HWADDR_PRIx "\n", __func__, s->total_req_len, plen);
-+        return false;
-+    }
-+
-+    s->total_req_len += plen;
-+    return true;
-+}
-+
- static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
-                               bool acc_mode)
- {
-@@ -224,7 +237,9 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
-             }
-             iov[i].iov_base = haddr;
-             if (acc_mode) {
--                s->total_req_len += plen;
-+                if (!hash_accumulate_len(s, plen)) {
-+                    return;
-+                }
- 
-                 if (has_padding(s, &iov[i], plen, &total_msg_len,
-                                 &pad_offset)) {
+-    if (pkcs7->data[4] == 0x06 &&
++    if (pkcs7->size > 16 &&
++        pkcs7->data[4] == 0x06 &&
+         pkcs7->data[5] == 0x09 &&
+         memcmp(pkcs7->data + 6, signed_data_oid, sizeof(signed_data_oid)) == 0 &&
+         pkcs7->data[15] == 0x0a &&
 -- 
 2.47.3
 
