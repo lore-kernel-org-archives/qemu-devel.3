@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9988BCD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:54:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C6A9CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:54:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXos-0001dr-5i; Fri, 22 May 2026 17:54:15 -0400
+	id 1wQXo7-0000FO-HC; Fri, 22 May 2026 17:53:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXo9-0000Qo-Tx; Fri, 22 May 2026 17:53:30 -0400
+ id 1wQXo1-0008S0-6T; Fri, 22 May 2026 17:53:22 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXo8-0005Cd-5l; Fri, 22 May 2026 17:53:29 -0400
+ id 1wQXny-0004v3-QT; Fri, 22 May 2026 17:53:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486561; bh=s2b6KIjZ9zS3GX+ilug1RJYQGimyhkHV/+2cFdfi+tw=;
+ t=1779486561; bh=j6nKCgrUfzNJ3OObA9atGhYMdqhQy3xF0zUtaJNQB1I=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=p2V44etnyT6VP+NDaBECU//Xg4EMX4ySV7PIMQ0fiEcdQa6mvy6aS3sdClJ0Cq4Uj
- +M68XGt6pJWCwA6wFvV9g2r5stzLsUEnB+waIKeLRT5f+q62I00lwXgoWBNYZtLxb/
- R53VpIdzgbucWHSp9d1d4buR/swdQ4For7VMK/8UuZt+8SiL1JMf76PRGdOFlSVF5T
- j/ebnrwTr3zWju9iyK65oD060KTj0WfzfxUR5p2DXmktsBT7r73kbiHwjupx8oZWqe
- ZkozqKoC1IrXeDBGrmtJuaCSEHRpW3vJmo2b/OAPm3AelXDGbgxN0IZafan3FA+aYi
- vo47CdctBMB8Q==
+ b=werJObn/UphJQknkLca/Oqd92eTT3TfyWN5DsRipIqRyVnz+JDe2iXfDh0dVTVB6+
+ +JyamjisFpgascQSRzq6Slou0GRYCUMs7IUnHeYlWJdA0vgaxDq/lQDCttezhMGQLM
+ X1+8gJ1k3uYXSYKjGh/JnkzjDiu2JvA3w73Zv6gEBcT2txmMF7jDhlRPIl5fo9FJXc
+ xkSuAENNuzKj3L3+giqN0SHOYNOkH2APlDkfCN2K+3eywvDbx94sjfxkAJhaXhd7l5
+ T4VVeXC2cfT7R8kG4Wl4jpYIPZ05rOkiEp7hAndSqGDXAYDjYshJoFSKQb4q+QUWmu
+ ej9ZweFpmqwyQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id ECEDF1AFB87;
+ by isrv.corpit.ru (Postfix) with ESMTP id B73B81AFB83;
  Sat, 23 May 2026 00:49:21 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 204CE3B71D6;
- Sat, 23 May 2026 00:49:26 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E1AF63B71D2;
+ Sat, 23 May 2026 00:49:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 145/149] commit: Drain nodes across all of
- bdrv_commit()
-Date: Sat, 23 May 2026 00:49:17 +0300
-Message-ID: <20260522214923.807017-46-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 141/149] ide-test: Factor out wait_dma_completion()
+Date: Sat, 23 May 2026 00:49:13 +0300
+Message-ID: <20260522214923.807017-42-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
@@ -71,72 +70,78 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kevin Wolf <kwolf@redhat.com>
 
-The whole implementation of bdrv_commit() is only correct if no new
-writes come in while it's running: It has only a single loop checking
-the allocation status for each block and finally calls bdrv_make_empty()
-without checking if that throws away any new changes.
-
-We already have to drain while taking the graph write lock. Just extend
-the drained section to all of bdrv_commit() to make sure that we don't
-get any inconsistencies.
-
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260427170520.101242-2-kwolf@redhat.com>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
-Tested-by: Denis V. Lunev <den@openvz.org>
+Message-ID: <20260421161132.99878-7-kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit f0d9ccd46cf8fc576ab7d514f10f766546cdbc14)
+(cherry picked from commit 92854c9c7539bdbf4f9c1abb33dd3ba59ff91e58)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/commit.c b/block/commit.c
-index 0d9e1a16d7..c5e3ef03a2 100644
---- a/block/commit.c
-+++ b/block/commit.c
-@@ -518,6 +518,7 @@ int bdrv_commit(BlockDriverState *bs)
-     if (!drv)
-         return -ENOMEDIUM;
- 
-+    bdrv_drain_all_begin();
-     bdrv_graph_rdlock_main_loop();
- 
-     backing_file_bs = bdrv_cow_bs(bs);
-@@ -549,6 +550,10 @@ int bdrv_commit(BlockDriverState *bs)
-                   BLK_PERM_ALL);
-     backing = blk_new(ctx, BLK_PERM_WRITE | BLK_PERM_RESIZE, BLK_PERM_ALL);
- 
-+    /* We drained all nodes, but still make requests through BlockBackends */
-+    blk_set_disable_request_queuing(src, true);
-+    blk_set_disable_request_queuing(backing, true);
-+
-     ret = blk_insert_bs(src, bs, &local_err);
-     if (ret < 0) {
-         error_report_err(local_err);
-@@ -565,7 +570,7 @@ int bdrv_commit(BlockDriverState *bs)
- 
-     bdrv_graph_rdunlock_main_loop();
- 
--    bdrv_graph_wrlock_drained();
-+    bdrv_graph_wrlock();
-     bdrv_set_backing_hd(commit_top_bs, backing_file_bs, &error_abort);
-     bdrv_set_backing_hd(bs, commit_top_bs, &error_abort);
-     bdrv_graph_wrunlock();
-@@ -647,7 +652,7 @@ ro_cleanup:
-     blk_unref(backing);
- 
-     bdrv_graph_rdunlock_main_loop();
--    bdrv_graph_wrlock_drained();
-+    bdrv_graph_wrlock();
-     if (bdrv_cow_bs(bs) != backing_file_bs) {
-         bdrv_set_backing_hd(bs, backing_file_bs, &error_abort);
-     }
-@@ -663,6 +668,7 @@ ro_cleanup:
- 
- out:
-     bdrv_graph_rdunlock_main_loop();
-+    bdrv_drain_all_end();
- 
-     return ret;
+diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
+index ceee444a9e..c6dcb2c074 100644
+--- a/tests/qtest/ide-test.c
++++ b/tests/qtest/ide-test.c
+@@ -200,6 +200,34 @@ static uint64_t trim_range_le(uint64_t sector, uint16_t count)
+     return cpu_to_le64(((uint64_t)count << 48) + sector);
  }
+ 
++static uint8_t wait_dma_completion(QTestState *qts, QPCIDevice *dev,
++                                   QPCIBar bmdma_bar, QPCIBar ide_bar)
++{
++    uint8_t status;
++
++    /* Wait for the DMA transfer to complete */
++    do {
++        status = qpci_io_readb(dev, bmdma_bar, bmreg_status);
++    } while ((status & (BM_STS_ACTIVE | BM_STS_INTR)) == BM_STS_ACTIVE);
++
++    g_assert_cmpint(qtest_get_irq(qts, IDE_PRIMARY_IRQ), ==,
++                    !!(status & BM_STS_INTR));
++
++    /* Check IDE status code */
++    assert_bit_set(qpci_io_readb(dev, ide_bar, reg_status), DRDY);
++    assert_bit_clear(qpci_io_readb(dev, ide_bar, reg_status), BSY | DRQ);
++
++    /* Reading the status register clears the IRQ */
++    g_assert(!qtest_get_irq(qts, IDE_PRIMARY_IRQ));
++
++    /* Stop DMA transfer if still active */
++    if (status & BM_STS_ACTIVE) {
++        qpci_io_writeb(dev, bmdma_bar, bmreg_cmd, 0);
++    }
++
++    return status;
++}
++
+ static int send_dma_request(QTestState *qts, int cmd, uint64_t sector,
+                             int nb_sectors, PrdtEntry *prdt, int prdt_entries,
+                             void(*post_exec)(QPCIDevice *dev, QPCIBar ide_bar,
+@@ -280,25 +308,7 @@ static int send_dma_request(QTestState *qts, int cmd, uint64_t sector,
+         qpci_io_writeb(dev, bmdma_bar, bmreg_cmd, 0);
+     }
+ 
+-    /* Wait for the DMA transfer to complete */
+-    do {
+-        status = qpci_io_readb(dev, bmdma_bar, bmreg_status);
+-    } while ((status & (BM_STS_ACTIVE | BM_STS_INTR)) == BM_STS_ACTIVE);
+-
+-    g_assert_cmpint(qtest_get_irq(qts, IDE_PRIMARY_IRQ), ==,
+-                    !!(status & BM_STS_INTR));
+-
+-    /* Check IDE status code */
+-    assert_bit_set(qpci_io_readb(dev, ide_bar, reg_status), DRDY);
+-    assert_bit_clear(qpci_io_readb(dev, ide_bar, reg_status), BSY | DRQ);
+-
+-    /* Reading the status register clears the IRQ */
+-    g_assert(!qtest_get_irq(qts, IDE_PRIMARY_IRQ));
+-
+-    /* Stop DMA transfer if still active */
+-    if (status & BM_STS_ACTIVE) {
+-        qpci_io_writeb(dev, bmdma_bar, bmreg_cmd, 0);
+-    }
++    status = wait_dma_completion(qts, dev, bmdma_bar, ide_bar);
+ 
+     free_pci_device(dev);
+ 
 -- 
 2.47.3
 
