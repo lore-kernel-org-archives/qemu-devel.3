@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D21B3CD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:56:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A070CD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:56:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXn8-0005PA-4i; Fri, 22 May 2026 17:52:26 -0400
+	id 1wQXoz-0002Aj-5P; Fri, 22 May 2026 17:54:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXn5-00057c-Ie; Fri, 22 May 2026 17:52:23 -0400
+ id 1wQXoY-0000j8-Hd; Fri, 22 May 2026 17:53:56 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXn3-0004Gl-T2; Fri, 22 May 2026 17:52:23 -0400
+ id 1wQXoV-0005M4-OC; Fri, 22 May 2026 17:53:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486561; bh=BLo6PwJEyhEPInm/QTZQEjyFLJO3xe8Y3s6kNzquDL8=;
+ t=1779486562; bh=8146qO6KFVKscfnp7ME4DCWZ2VVfJ/m5ZGh/Be/5xEg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=gxen5VcOd9R3KtfYjGB7Y0UsVB/SQBEHiLeLVoZGtXzKOoMv0mMXsD2SRCtItMEZg
- NJqgIJKexpB87r4KX/LJks4GeIGM5P0Cv/SvkMCxG0i2ClM/rbZlgHObDiLGAAHM8y
- jSvKGi50wDX72YovGP2eQQmOC/3yc2mBhN1k/YeirdQcO+jcek+HMSWv5zuf42AfNa
- N73xf58XoynX4YKjNLO72neTdUdkodm0XnxVz6YqW6fFQKDV4k59puJz1onOeCNo4n
- eFzil/8dv8fXFmQS/dFmKOOZfBPzaF9/7nFpv9l0Q95SqNrYJzJ4ADYc8VzUlSa0B6
- KAdNTJmKtuBsw==
+ b=GTj+q/ZuNY7NdjLe5S2E017W3+D5Zyfzkotdz5k7T968JBprs8DqrE7+kysMzs5V8
+ FRF93Sf+0uUKFvZ5NSd83P2GJW+Q5iA9/pF/DOOtPbV2hE1baPPZ+YVtYK+kTmNMeR
+ YXdVXymzaRr5dD6OaK/FupMC995++CymxjnJ/k9j9OhCE3yHkPp7tVOZqIBG1BMDkC
+ VM3+EP/onSEP+2R7xtcytJkqKTu8+bvRw64l7ow8RkSB1+cAmx6sM79MJtwLwd1+Sl
+ rfaOXJxqFt8EfRLYDZbiPotievt1zRBvEq38jPcYeilc2XVGTgNElBbujOO/qQq2iS
+ 0IHOFB0iZoX+Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3883E1AFB7A;
- Sat, 23 May 2026 00:49:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 18CEA1AFB89;
+ Sat, 23 May 2026 00:49:22 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 608EF3B71C9;
- Sat, 23 May 2026 00:49:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 401693B71D8;
+ Sat, 23 May 2026 00:49:26 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
- Andreas Hindborg <a.hindborg@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 132/149] hw/nvme: fix admin cq msix setup
-Date: Sat, 23 May 2026 00:49:04 +0300
-Message-ID: <20260522214923.807017-33-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 147/149] qcow2: Fix corruption on discard during write
+ with COW
+Date: Sat, 23 May 2026 00:49:19 +0300
+Message-ID: <20260522214923.807017-48-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
@@ -68,44 +69,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Klaus Jensen <k.jensen@samsung.com>
+From: Kevin Wolf <kwolf@redhat.com>
 
-If MSI-X is not enabled when the admin completion queue is created,
-msix_vector_use() is not called. But, if MSI-X is subsequently enabled,
-msix_notify() will fail to fire the interrupt because the use count for
-the vector remains at 0.
+Most code in qcow2 that accesses (and potentially modifies) L2 tables
+does so while holding s->lock.
 
-msix_vector_use/unuse should be called if MSI-X is *present*, not
-*enabled*. Fix this.
+There is one exception, which is allocating writes. They hold the lock
+initially while allocating clusters, but drop it for writing the guest
+payload before taking the lock again for updating the L2 tables. This
+allows concurrent requests that touch other parts of the image file to
+continue in parallel and is an important performance optimisation.
+
+However, this means that other requests that run while the lock is
+dropped for writing guest data must synchronise with the list of
+allocating requests in s->cluster_allocs and wait if they would overlap.
+For writes, this is done in handle_dependencies(), but discard and write
+zeros operations neglect to synchronise with s->cluster_allocs.
+
+This means that discard can free a cluster whose L2 entry will already
+be modified in qcow2_alloc_cluster_link_l2() by a previously started
+write. In the case of a pre-allocated zero cluster that is in the
+process of being overwritten, this means that discard can lead to a
+situation where the cluster is still mapped (because the write will
+restore the L2 entry just without the zero flag), but its refcount has
+been decreased, resulting in a corrupted image.
+
+Add the missing synchronisation to qcow2_cluster_discard() and
+qcow2_subcluster_zeroize() to fix the problem.
 
 Cc: qemu-stable@nongnu.org
-Reported-by: Andreas Hindborg <a.hindborg@samsung.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit 2293d8b4bd88d3f29730cfd608935f77247919b6)
+Reported-by: Denis V. Lunev <den@openvz.org>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20260427170520.101242-4-kwolf@redhat.com>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
+Tested-by: Denis V. Lunev <den@openvz.org>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit b8bfb1478d61512f851badd0d912c6661a2efee7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index be6c7028cb..8463fd3e9a 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -5517,7 +5517,7 @@ static void nvme_free_cq(NvmeCQueue *cq, NvmeCtrl *n)
-         event_notifier_set_handler(&cq->notifier, NULL);
-         event_notifier_cleanup(&cq->notifier);
-     }
--    if (msix_enabled(pci) && cq->irq_enabled) {
-+    if (msix_present(pci) && cq->irq_enabled) {
-         msix_vector_unuse(pci, cq->vector);
-     }
-     if (cq->cqid) {
-@@ -5558,7 +5558,7 @@ static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl *n, uint64_t dma_addr,
+diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
+index c655bf6df4..8b1e80bd0b 100644
+--- a/block/qcow2-cluster.c
++++ b/block/qcow2-cluster.c
+@@ -1392,6 +1392,9 @@ count_single_write_clusters(BlockDriverState *bs, int nb_clusters,
+  * the same cluster. In this case we need to wait until the previous
+  * request has completed and updated the L2 table accordingly.
+  *
++ * If allow_shortening == true, instead of waiting for a dependency, *cur_bytes
++ * can be shortened so that the cluster allocations don't overlap.
++ *
+  * Returns:
+  *   0       if there was no dependency. *cur_bytes indicates the number of
+  *           bytes from guest_offset that can be read before the next
+@@ -1403,7 +1406,9 @@ count_single_write_clusters(BlockDriverState *bs, int nb_clusters,
+  */
+ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
+                                             uint64_t guest_offset,
+-                                            uint64_t *cur_bytes, QCowL2Meta **m)
++                                            uint64_t *cur_bytes,
++                                            bool allow_shortening,
++                                            QCowL2Meta **m)
  {
-     PCIDevice *pci = PCI_DEVICE(n);
+     BDRVQcow2State *s = bs->opaque;
+     QCowL2Meta *old_alloc;
+@@ -1434,7 +1439,7 @@ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
  
--    if (msix_enabled(pci) && irq_enabled) {
-+    if (msix_present(pci) && irq_enabled) {
-         msix_vector_use(pci, vector);
-     }
+         /* Conflict */
  
+-        if (start < old_start) {
++        if (start < old_start && allow_shortening) {
+             /* Stop at the start of a running allocation */
+             bytes = old_start - start;
+         } else {
+@@ -1469,6 +1474,29 @@ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
+     return 0;
+ }
+ 
++static void coroutine_mixed_fn wait_for_dependencies(BlockDriverState *bs,
++                                                     uint64_t guest_offset,
++                                                     uint64_t bytes)
++{
++    BDRVQcow2State *s = bs->opaque;
++    QCowL2Meta *m = NULL;
++    int ret;
++
++    /*
++     * Discard has some non-coroutine callers (creating internal snapshots and
++     * make empty). They are calling from qemu-img or in a drained section, so
++     * we know that no writes can be in progress.
++     */
++    if (!qemu_in_coroutine()) {
++        assert(QLIST_EMPTY(&s->cluster_allocs));
++        return;
++    }
++
++    do {
++        ret = handle_dependencies(bs, guest_offset, &bytes, false, &m);
++    } while (ret == -EAGAIN);
++}
++
+ /*
+  * Checks how many already allocated clusters that don't require a new
+  * allocation there are at the given guest_offset (up to *bytes).
+@@ -1840,7 +1868,7 @@ again:
+          *         the right synchronisation between the in-flight request and
+          *         the new one.
+          */
+-        ret = handle_dependencies(bs, start, &cur_bytes, m);
++        ret = handle_dependencies(bs, start, &cur_bytes, true, m);
+         if (ret == -EAGAIN) {
+             /* Currently handle_dependencies() doesn't yield if we already had
+              * an allocation. If it did, we would have to clean up the L2Meta
+@@ -2000,6 +2028,15 @@ int qcow2_cluster_discard(BlockDriverState *bs, uint64_t offset,
+     int64_t cleared;
+     int ret;
+ 
++    /*
++     * If we're touching a cluster for which allocating writes are in flight,
++     * wait for them to complete to avoid conflicting metadata updates.
++     *
++     * We don't need to allocate a QCowL2Meta for the discard operation because
++     * s->lock is held for the duration of the whole operation.
++     */
++    wait_for_dependencies(bs, offset, bytes);
++
+     /* Caller must pass aligned values, except at image end */
+     assert(QEMU_IS_ALIGNED(offset, s->cluster_size));
+     assert(QEMU_IS_ALIGNED(end_offset, s->cluster_size) ||
+@@ -2160,6 +2197,15 @@ int coroutine_fn qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset,
+     int64_t cleared;
+     int ret;
+ 
++    /*
++     * If we're touching a cluster for which allocating writes are in flight,
++     * wait for them to complete to avoid conflicting metadata updates.
++     *
++     * We don't need to allocate a QCowL2Meta for the zeroize operation because
++     * s->lock is held for the duration of the whole operation.
++     */
++    wait_for_dependencies(bs, offset, bytes);
++
+     /* If we have to stay in sync with an external data file, zero out
+      * s->data_file first. */
+     if (data_file_is_raw(bs)) {
 -- 
 2.47.3
 
