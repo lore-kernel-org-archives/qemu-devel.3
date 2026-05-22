@@ -4,112 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FFFCCD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 09:07:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18F6DCD5BAC
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 09:23:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQLqn-0007rp-FZ; Fri, 22 May 2026 05:07:25 -0400
+	id 1wQM63-0001Rr-Av; Fri, 22 May 2026 05:23:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
- id 1wQLqm-0007rd-6w; Fri, 22 May 2026 05:07:24 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <anthony@xenproject.org>)
+ id 1wQM5v-0001RY-RG
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 05:23:04 -0400
+Received: from mail.xenproject.org ([104.130.215.37])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
- id 1wQLqk-0006fW-Ku; Fri, 22 May 2026 05:07:23 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64LJ6aX3730699; Fri, 22 May 2026 09:07:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=qSZtDq
- aa5vvN+vwsz35sJZ9kmKvDhwUn1LoDiDYAMj4=; b=gRxm9nTbIJe4qBQRXhLpfu
- qfHmkob19Z8n90rLi/8lLJKBtvaAoFBJvPriyupC5zN8bh/gECgA5ZGC+uiO+Xrb
- yfMXIIGHvV/8BPo8XvntzCBruIKwalzOds/BzNoCoJUQq7Cwxwb094W+bfuvIUmz
- 14xyqjk40NAfZ5+DeOS7bgqjmdjnf5Ctipco8tpsJk6dBPIJa7uGRMFLRHOhBc2o
- Y/Bx/H1bZBDdW8YBTZo28baMCQsibARkKk6jg9Qu193cCcG5s5dHAWGPCeYC9Q1p
- +UQ01aXhunkqT65STRMxQBbfnnCFAcsJakZqRaJGJPed9thwFPv0EyJchSTYUoRw
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6hawhtvy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 22 May 2026 09:07:18 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64M8s76u011977;
- Fri, 22 May 2026 09:07:18 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e73wkg7n4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 22 May 2026 09:07:17 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64M97Eeq18153880
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 22 May 2026 09:07:14 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E51E02004B;
- Fri, 22 May 2026 09:07:13 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 02B7120043;
- Fri, 22 May 2026 09:07:11 +0000 (GMT)
-Received: from [9.124.216.223] (unknown [9.124.216.223])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 22 May 2026 09:07:10 +0000 (GMT)
-Message-ID: <23c8cf1d-dfe9-4273-868d-1c4e41a59fcd@linux.ibm.com>
-Date: Fri, 22 May 2026 14:37:08 +0530
+ (Exim 4.90_1) (envelope-from <anthony@xenproject.org>)
+ id 1wQM5u-0008Ke-8A
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 05:23:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=xenproject.org; s=20200302mail; h=In-Reply-To:Content-Type:MIME-Version:
+ References:Message-ID:Subject:Cc:To:From:Date;
+ bh=H31lC0eOpJY3qpXcHt0ef1xE5sHfYgrP7GJ9jWjLaBM=; b=aIS3u1/YrQnynD3MWM5lo3Grvi
+ njtBsTFVWlhv2GJbtcKW204PpT1cUkRi9bXpXPIxXu2Klsh/4FXgQpt13XWzdmOFDPMcHNDA9HDUx
+ Us8NJzc/o5rUs69dvx/jLnVk4c8qiJhP8ZeWNGFEjvjOG7p6LsiPRdwbbzGj3Yxu5pL4=;
+Received: from xenbits.xenproject.org ([104.239.192.120])
+ by mail.xenproject.org with esmtp (Exim 4.96)
+ (envelope-from <anthony@xenproject.org>) id 1wQM5q-000cnf-0T;
+ Fri, 22 May 2026 09:22:58 +0000
+Received: from [2a01:e0a:1da:8420:b77:bd5:6e45:7633] (helo=l14)
+ by xenbits.xenproject.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
+ (envelope-from <anthony@xenproject.org>) id 1wQM5p-0013S3-2X;
+ Fri, 22 May 2026 09:22:57 +0000
+Date: Fri, 22 May 2026 11:22:55 +0200
+From: Anthony PERARD <anthony@xenproject.org>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org,
+ pierrick.bouvier@oss.qualcomm.com,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ xen-devel@lists.xenproject.org
+Subject: Re: [PATCH 10/39] MAINTAINERS: Drop bad F: in "X86 Xen CPUs"
+Message-ID: <ahAgb1shN3tLrK_h@l14>
+References: <20260521080511.999266-1-armbru@redhat.com>
+ <20260521080511.999266-11-armbru@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/6] ppc/spapr: Advertise RTAS error injection call
- support via FDT property
-To: Narayana Murty N <nnmlinux@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Cc: npiggin@gmail.com, harshpb@linux.ibm.com, mahesh@linux.ibm.com,
- ganeshgr@linux.ibm.com, vaibhav@linux.ibm.com,
- anushree.mathur@linux.vnet.ibm.com, clg@redhat.com,
- pierrick.bouvier@oss.qualcomm.com, philmd@linaro.org
-References: <20260520095446.64206-1-nnmlinux@linux.ibm.com>
- <20260520095446.64206-5-nnmlinux@linux.ibm.com>
-Content-Language: en-US
-From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-In-Reply-To: <20260520095446.64206-5-nnmlinux@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIyMDA5MCBTYWx0ZWRfX93pilKqQRx0F
- nCGSRUr41X6TzlO6+gbdh7OP3Z1dYxvXa+BTo6QlMc9CRwycejcA1J8Uwe1i4JSzbCiw0j0/XXJ
- 5W5rCUhQV1c/V7rhn+dPWa6cG/pfvhasCT+caFk6CxqoLN+Rf04qm9moCfIbncowKclmOBOW+wD
- Uazg7Mri8TBcqi/kVNRdthg/XdVjm47NU3AtiLFR3+gS+lBen87xl4kUURhAgKB/rfpncC58bZE
- g2NMEuPxD7SqCeZPLDDBX9NQQ3kxRKBJfwYjfbkq8Q4zZhudijX8me14FV6qe1VlUZ8ro7OSLmM
- nx70CphezZVKPIjM4Qti+/NVjIywYttiGuVd5/TcEfRdqLPCQmFeoF73NfAzw45QNeIYNzS62V3
- untFhX8dWsEaRCIDTgZVJLn7IP3h/q7K4jyNOECiDNhB+ETB/CZpmfzn4Wz+eheiiYtN2W3IY0i
- NPpEQTr8NtlYY6eFrGg==
-X-Authority-Analysis: v=2.4 cv=Np/htcdJ c=1 sm=1 tr=0 ts=6a101cc6 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=97YlaDwIuPnNYaTA6CoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: B6rtBLynzr1qQ4e9hAXWKqiwtPRTfFGe
-X-Proofpoint-GUID: W2c3jqbmsEu0dD-aHVNYkFWuDAGbV3kx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-22_02,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 clxscore=1011 priorityscore=1501 impostorscore=0
- lowpriorityscore=0 suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605220090
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=sbhat@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260521080511.999266-11-armbru@redhat.com>
+Received-SPF: pass client-ip=104.130.215.37;
+ envelope-from=anthony@xenproject.org; helo=mail.xenproject.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,50 +75,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Narayana,
+On Thu, May 21, 2026 at 10:04:42AM +0200, Markus Armbruster wrote:
+> include/hw/block/dataplane/xen* does not exist.
+> hw/block/dataplane/xen* does, and is covered.  Drop the bad line.
+> 
+> Fixes: fcab2b464e (xen: add header and build dataplane/xen-block.c, 2019-01-08)
+> Cc: Stefano Stabellini <sstabellini@kernel.org>
+> Cc: Anthony PERARD <anthony@xenproject.org>
+> Cc: Edgar E. Iglesias <edgar.iglesias@gmail.com>
+> Cc: xen-devel@lists.xenproject.org
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
 
-
-On 5/20/26 3:24 PM, Narayana Murty N wrote:
-> Advertise RTAS error injection call support to guests through a new
-> "ibm,errinjct-tokens" property under the RTAS node in the device tree.
->
-> This patch introduces:
->    - spapr_get_errinject_tokens(), which retrieves or constructs a blob
->      of supported error injection tokens from the host or fallback data.
->    - Integration of "ibm,errinjct-tokens" into the RTAS FDT node.
->    - Addition of "ibm,open-errinjct" and "ibm,close-errinjct" properties
->      to advertise open/close handlers for error injection sessions.
->
-> The ibm,errinjct-tokens property allows guests to programmatically
-> discover supported RTAS error injection facilities, enabling safe and
-> dynamic usage. The helper routine allocates memory for the token blob,
-> which the caller must free once it has been added to the FDT.
->
-> If the device-tree file (/proc/device-tree/rtas/ibm,errinjct-tokens)
-> is not available, a static fallback blob is generated internally.
-
-Do we really need to probe the procfs ? This path wont exist when on 
-baremetal.
-
-When on L1, the host compatibility may not be assured between different L1s
-
-and I see no specific handling of compatibilities between L1s.
-
-Why not advertise all tokens and let the errinjct return invalid argument
-
-if the host doesn't have support the given function? The use case is anyway
-
-an error injection which is mostly for development and testing.
-
+Reviewed-by: Anthony PERARD <anthony@xenproject.org>
 
 Thanks,
 
-Shivaprasad
-
->
-> Signed-off-by: Narayana Murty N <nnmlinux@linux.ibm.com>
-> ---
->   hw/ppc/spapr.c | 104 +++++++++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 104 insertions(+)
-<snip/>
+-- 
+Anthony PERARD
 
