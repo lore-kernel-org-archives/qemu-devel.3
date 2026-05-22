@@ -4,57 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92A86CD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:58:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D1C9CD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:58:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXnD-00062i-NX; Fri, 22 May 2026 17:52:31 -0400
+	id 1wQXsT-0004SQ-DM; Fri, 22 May 2026 17:57:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXnB-0005qg-Bf; Fri, 22 May 2026 17:52:29 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXn9-0004aL-BA; Fri, 22 May 2026 17:52:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486561; bh=HQV63UvZd5MvJaFzgykX2S2gv6ckpflrxgTt6u6L5o4=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=mMPdgT2yrV8q1u0XsSYZPCUnYKYtJ7N44fpraHN+JqTfCzrJnMoQiTlc8f2tk4GP+
- pHo7CugQyfF2b94VpDw2Wvp3NLApdvWl4DuXmngGmMF9D0/QbEl2WJfkxkZcEUcOjp
- xi7nv9rFkESc91ts9VVvo59d398dQIYwa1jU5Y1n3YMTZAInKOkq1npF2lVPI/0SVj
- sfBj0isTDnsTT8m1wmFDZh5n6QZKuBKFyrgwxToNCXjPls2GY7h3BZav9fuCeMHM9/
- dGopruMb5lGAjXHZo5vez4CZZvA7elqfjiWQ9MImExI8DHQHi6KpS0QK3rmWMBXigF
- 35UDLtTJIUBww==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 684EE1AFB7D;
- Sat, 23 May 2026 00:49:21 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8EB9E3B71CC;
- Sat, 23 May 2026 00:49:25 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 135/149] linux-user/sh4: Fix setup_sigtramp to match
- Linux kernel trampoline pattern
-Date: Sat, 23 May 2026 00:49:07 +0300
-Message-ID: <20260522214923.807017-36-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
-References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wQXsO-0004IZ-Fs
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 17:57:54 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wQXsK-00017K-GV
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 17:57:51 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-367cbac9c37so4474371a91.2
+ for <qemu-devel@nongnu.org>; Fri, 22 May 2026 14:57:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779487067; x=1780091867; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5n8IQx7EY0CJn6G/bV7CipFELrrWflkQjUXgLKBAuYo=;
+ b=Pr51OvTnb/ByMcPVUsvMR5aF9lH6MCCDPjADTDkRzX87//BrlUdixFKt1auNjy0NDN
+ mOaXaWmdrC3clLH32ZKEMsR9T5QXmoil5U0HFjpkv4Sk+j1XuV6c+eECmnJ/qIJ4nTHX
+ GXTV1jmXsokKThqtyiwm/x2g3Ju6rB14XktnMEPm0g8GnHo752N98vllDbQ8cyBDrsgG
+ GywFlx1vklXPu9QR6Azo4TWu7D7CZCV3hDdKwNbjG9yIUY11WWJ4H43GEBwa81ueH6lm
+ OSR4oEMHfh0UBrtXUYsCtqvatXWg9nty1qm6uGVVy11zFNfgHtb/N82aG5SZ0AIl9iJD
+ JnmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779487067; x=1780091867;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5n8IQx7EY0CJn6G/bV7CipFELrrWflkQjUXgLKBAuYo=;
+ b=RUYBJFO2gcHT8OzJFQFznRmbtfTEx2uP8Q72bHhXuYIfE7ETdb/pYPR4zWJ/9NQ0Rh
+ DtmdLlZ/Wyt1+ydKg31ZB0+aaYY4TB3GjALeZjXi6k9qwUmDuy3lLpq0AOTzoDBr44CA
+ mq+KnfkWp+ClGCWKJYvPHzOJxsZPYduk3GJlbqEW6lztSukmAhxBBEq/OyGgSztM1xQm
+ 3yqPsKnBWFJAm7gqqIVWF0hUPydq4/mla6PHjH6MDdqPm3buugCfANFt1+SbpbH1g3RJ
+ bNvDshG7LBBlTfbU+j7TdPLaO32Lye83t4UxSYRex/SMWloX5SVuOzsEaE037v5Z0REC
+ gJ0A==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/IY+at5kl7gqahYc8YVGEzee98AyPvojz6jPGvGOHbfJnLZ2fc4sUykow91KKXL9Kgmu9ckrfyNeYU@nongnu.org
+X-Gm-Message-State: AOJu0YzPFpw+B3s0gZ6vrz4B6exukJoZ3KYMel41M1BSp7qUIZkCjeUO
+ eeYCqvvMI49emt6Qf2Zc01ePX66HWjLI0UfGkl8TobV1NuFUIA+lhM4kgfpa8Egqjtw=
+X-Gm-Gg: Acq92OHKDpwDTbx50XLo49DuC4o8gz6+2wTxAMNjFUEEYvkEFgl1MJY9eTSw05zXoK4
+ WOnFZTD0eiLpBzJIXEESDQV2kV+2mnqEcB/kJMaWeFr9dLh7UMHnzFcWSZBk/APOFh+Lrhc3TJL
+ HKxvOH3YXURhtgTkQAfeVgJlykZxwwf7Dxsu2+DHEDv5bvHLcCANmEyM+ljCvZjzS+ZIdXEa9Hw
+ 6Ua2XDIGp+EUrlAfz9uYMKoJMR2EBAWFz3AxNI9DW2UwmjWhbzjs/ozEQMZDhDsPfYeI0CCQVye
+ tiG94eLSsmfjM5G8P7CcCDZ/mNyiD8K3q3ijthVYVK2FzyxblgfOzn7EylUEpbtEA59/ig7OAM3
+ o6Y+dpDbqN0zp3xXmVCgw7O+K2zABZnlGB9oTQk6Z5iNnKq8z0LlJToQW4/tCIpcCXjZ/xB2Ezb
+ AL01SGfEY1Wm3rxR+3xz8xgjJ4hxkE3D0hV9o4tzDs
+X-Received: by 2002:a17:90b:3bcc:b0:368:f179:ba07 with SMTP id
+ 98e67ed59e1d1-36a6746d070mr5128110a91.9.1779487066777; 
+ Fri, 22 May 2026 14:57:46 -0700 (PDT)
+Received: from [192.168.64.111] ([50.78.183.177])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c85202901e6sm2259406a12.2.2026.05.22.14.57.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 22 May 2026 14:57:46 -0700 (PDT)
+Message-ID: <53e498ea-1110-42f5-aef1-b1233677954b@linaro.org>
+Date: Fri, 22 May 2026 14:57:44 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/arm: SME BFCVT, BFCVTN have "Alternate BFloat16
+ behaviors"
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+References: <20260521180854.1744788-1-peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260521180854.1744788-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,110 +106,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+On 5/21/26 11:08, Peter Maydell wrote:
+> The Arm ARM A1.5.10 notes that some instructions have "Alternate
+> Bfloat16 behaviors" when FPCR.AH == 1.  We implement these using the
+> FPST_AH and FPST_AH_F16 fp_status words.  The list includes the SME
+> BFVCT (single-precision to BFloat16) and BFCVTN, but we forgot to
+> make those use FPST_AH_F16 when we implemented them. (We get the
+> ASIMD and SVE insns on the list right.)
+> 
+> Add the missing logic to select the right FPST.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: 465d36db0e1 ("target/arm: Implement SME2 BFCVT, BFCVTN, FCVT, FCVTN")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> (There will be a minor conflict with the rename of BFCVT to
+> BFCVT_hs in RTH's FP8 series.)
+> ---
+>   target/arm/tcg/translate-sme.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+> index 08254b088e..8e56dedaa3 100644
+> --- a/target/arm/tcg/translate-sme.c
+> +++ b/target/arm/tcg/translate-sme.c
+> @@ -1419,9 +1419,9 @@ static bool do_zz_fpst(DisasContext *s, arg_zz_n *a, int data,
+>   }
+>   
+>   TRANS_FEAT(BFCVT, aa64_sme2, do_zz_fpst, a, 0,
+> -           FPST_A64, gen_helper_sme2_bfcvt)
+> +           s->fpcr_ah ? FPST_AH : FPST_A64, gen_helper_sme2_bfcvt)
+>   TRANS_FEAT(BFCVTN, aa64_sme2, do_zz_fpst, a, 0,
+> -           FPST_A64, gen_helper_sme2_bfcvtn)
+> +           s->fpcr_ah ? FPST_AH : FPST_A64, gen_helper_sme2_bfcvtn)
+>   TRANS_FEAT(FCVT_n, aa64_sme2, do_zz_fpst, a, 0,
+>              FPST_A64, gen_helper_sme2_fcvt_n)
+>   TRANS_FEAT(FCVTN, aa64_sme2, do_zz_fpst, a, 0,
 
-QEMU used MOVW(2) (0x9300), which loads the syscall number from PC+4,
-instead of the kernel's MOVW(7) (0x9305), which loads from PC+14.  The
-kernel uses five "or r0,r0" nop pads between TRAP_NOARG and the syscall
-number word to reach that offset.  libunwind's unw_is_signal_frame checks
-for the exact kernel byte pattern 0xc3109305 at the frame PC, so QEMU's
-compact layout was not detected, breaking unwinding through signal frames.
+What is the difference between FPST_AH and FPST_A64 when AH is set, given that 
+vfp_set_fpcr_to_host does the arm_set_*_fp_behaviours dance?
 
-Expand each trampoline from 6 to 16 bytes matching the kernel layout
-defined in arch/sh/kernel/signal_32.c:
 
-  #define MOVW(n)    (0x9300|((n)-2))  /* Move mem word at PC+n to R3 */
-  #define TRAP_NOARG 0xc310            /* Syscall w/no args (NR in R3) */
-  #define OR_R0_R0   0x200b            /* or r0,r0 (insert to avoid hardware bug) */
-
-  __put_user(MOVW(7),          &frame->retcode[0]);  /* 0x9305 */
-  __put_user(TRAP_NOARG,       &frame->retcode[1]);  /* 0xc310 */
-  __put_user(OR_R0_R0,         &frame->retcode[2]);  /* 0x200b */
-  __put_user(OR_R0_R0,         &frame->retcode[3]);  /* 0x200b */
-  __put_user(OR_R0_R0,         &frame->retcode[4]);  /* 0x200b */
-  __put_user(OR_R0_R0,         &frame->retcode[5]);  /* 0x200b */
-  __put_user(OR_R0_R0,         &frame->retcode[6]);  /* 0x200b */
-  __put_user((__NR_sigreturn), &frame->retcode[7]);
-
-The first two halfwords (MOVW(7) || TRAP_NOARG = 0xc3109305) form the
-32-bit value libunwind checks at the frame PC, followed by two
-OR_R0_R0 halfwords (0x200b200b) at PC+4.  The same layout applies to
-the rt_sigreturn trampoline (lines 366-373 of signal_32.c).
-
-Neither this fix nor the companion tuc_link fix is independently
-sufficient: this fix makes signal frames detectable but register reads
-remain garbage without the correct ucontext layout; that fix corrects the
-ucontext layout but libunwind still cannot detect the frame without the
-correct trampoline pattern.  Together they fix the following libunwind
-tests on a 64-bit host:
-  Gtest-sig-context, Gtest-trace, Ltest-init-local-signal,
-  Ltest-sig-context, Ltest-trace
-
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 9ac5aa72272117608482cad2430a75477263fe09)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
-index 20d2bc8b2c..d70be24c38 100644
---- a/linux-user/sh4/signal.c
-+++ b/linux-user/sh4/signal.c
-@@ -329,20 +329,42 @@ badframe:
-     return -QEMU_ESIGRETURN;
- }
- 
-+/*
-+ * "or r0,r0" nop used by the Linux kernel inline sigreturn trampolines to
-+ * avoid a hardware bug (OR_R0_R0 in arch/sh/kernel/signal_32.c).  Five of
-+ * these nops follow TRAP_NOARG, placing the syscall number word 14 bytes
-+ * past the MOVW(7) instruction (at MOVW(7)'s load offset).  This yields the
-+ * fixed 16-byte layout that libunwind's unw_is_signal_frame detects:
-+ *   [MOVW(7), TRAP_NOARG, 5x NOP_OR, .word syscall_nr]
-+ */
-+#define NOP_OR 0x200b
-+
- void setup_sigtramp(abi_ulong sigtramp_page)
- {
--    uint16_t *tramp = lock_user(VERIFY_WRITE, sigtramp_page, 2 * 6, 0);
-+    uint16_t *tramp = lock_user(VERIFY_WRITE, sigtramp_page, 2 * 16, 0);
-     assert(tramp != NULL);
- 
-+    /* sigreturn trampoline (non-RT) at offset 0 */
-     default_sigreturn = sigtramp_page;
--    __put_user(MOVW(2), &tramp[0]);
-+    __put_user(MOVW(7), &tramp[0]);
-     __put_user(TRAP_NOARG, &tramp[1]);
--    __put_user(TARGET_NR_sigreturn, &tramp[2]);
--
--    default_rt_sigreturn = sigtramp_page + 6;
--    __put_user(MOVW(2), &tramp[3]);
--    __put_user(TRAP_NOARG, &tramp[4]);
--    __put_user(TARGET_NR_rt_sigreturn, &tramp[5]);
--
--    unlock_user(tramp, sigtramp_page, 2 * 6);
-+    __put_user(NOP_OR, &tramp[2]);
-+    __put_user(NOP_OR, &tramp[3]);
-+    __put_user(NOP_OR, &tramp[4]);
-+    __put_user(NOP_OR, &tramp[5]);
-+    __put_user(NOP_OR, &tramp[6]);
-+    __put_user(TARGET_NR_sigreturn, &tramp[7]);
-+
-+    /* rt_sigreturn trampoline at offset 16 */
-+    default_rt_sigreturn = sigtramp_page + 16;
-+    __put_user(MOVW(7), &tramp[8]);
-+    __put_user(TRAP_NOARG, &tramp[9]);
-+    __put_user(NOP_OR, &tramp[10]);
-+    __put_user(NOP_OR, &tramp[11]);
-+    __put_user(NOP_OR, &tramp[12]);
-+    __put_user(NOP_OR, &tramp[13]);
-+    __put_user(NOP_OR, &tramp[14]);
-+    __put_user(TARGET_NR_rt_sigreturn, &tramp[15]);
-+
-+    unlock_user(tramp, sigtramp_page, 2 * 16);
- }
--- 
-2.47.3
-
+r~
 
