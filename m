@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44663CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:54:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A146CCD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:54:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXlV-0008S6-Do; Fri, 22 May 2026 17:50:45 -0400
+	id 1wQXmu-0003Zd-NH; Fri, 22 May 2026 17:52:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXkt-0007ZK-Ji; Fri, 22 May 2026 17:50:07 -0400
+ id 1wQXmW-0002oS-9g; Fri, 22 May 2026 17:51:58 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXkr-0002eE-N8; Fri, 22 May 2026 17:50:07 -0400
+ id 1wQXmN-00049G-DK; Fri, 22 May 2026 17:51:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486559; bh=Q9IaUrQ8GBoIzQb0JDHPhBgvBuj9NSR3QyVLqxaJLok=;
+ t=1779486560; bh=ciabHIWCm6x1U3XoGnS5ewmf2ya228L/LGLe4l4K5CA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Cw/7CGKDJNh8ayFUUIeUZWicazq+jIAFZVswHAMVujgA1XQJFyCuHRpfqnXZFXaZa
- tAmrnvDfTxKKuQVOYv9RlXM2vUxdgKeJbZDB0lTjWIOTiII2HXIunPq1M/6ZY/iBf3
- MOu2hIH33BMFROmUYUx3ZR4z5W1JQyP4vo5T/nKLRrmn5Oiuau7rXNE3n1Wq/7dryu
- oZoOpfdg2hCT3+dNBm1xBCE1nMgydEWqEgJt7q3ytgkbytGoiIQ9VH1PMeyay/6/aN
- jyr7PgMpymSK2mxJ8HK1h/oekHlG7spwpFFDbwBpvyVhr9iR3syM+vezkah3cVGUn6
- a86pOSPMCecBw==
+ b=mEtRNQtZkRHNR6BGOg7WYfkRBBsVlLLHTFoNNw7SvRk8SiDaqXeCO4vfQsvpl8IQR
+ Yp3jV5a0b0SyP4Z1EZsjnDLUbfae/ZAyLXzMHRCTgSOa+dWyZsVC5levDC5Ja7hxBk
+ F9q/nzAOW/tSCc4+CK30Cim5BAdP7zBFl8ygqjUYLjCzmFYJvE3pUZz0vRpMrD7MQp
+ aRUj9BHaaV2im7Fa2wZHQxiiY253WdU6vjsoHx5KxS6qE+56XMXeQQiPq+Uw1MZe4A
+ FrCwfHYcw5U4p1C6JHGjxF2gU2rd39P4RqlDclgMy72ysq5u32RTwtvGAk1HWXfURw
+ FfkvIiI1Izdcw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A2D761AFB64;
- Sat, 23 May 2026 00:49:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CCF241AFB74;
+ Sat, 23 May 2026 00:49:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C8ED63B71B3;
- Sat, 23 May 2026 00:49:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id F361F3B71C3;
+ Sat, 23 May 2026 00:49:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Kane Chen <kane_chen@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 110/149] target/arm: Report IL=0 for Thumb 16-bit BKPT
- insn
-Date: Sat, 23 May 2026 00:48:42 +0300
-Message-ID: <20260522214923.807017-11-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 126/149] hw/misc/aspeed_sbc: Add bounds checking for
+ OTP write operations
+Date: Sat, 23 May 2026 00:48:58 +0300
+Message-ID: <20260522214923.807017-27-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
@@ -73,43 +72,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Kane Chen <kane_chen@aspeedtech.com>
 
-The Thumb BKPT insn is 16-bit, and the ESR_ELx syndrome register
-definition requires that we set the IL bit to 0 for this, and 1 for
-the 32-bit A32 and A64 BKPT/BRK.
+There is a mismatch between the Aspeed OTP model and the Aspeed SBC
+model in how the guest-provided address is handled.
+aspeed_sbc_otp_prog() passes a word-indexed address directly
+to address_space_write() without converting it to a byte offset,
+whereas aspeed_otp_write() expects a byte offset and applies an
+additional shift (otp_addr << 2). This double-shift confusion means
+that an out-of-range word address can lead to a write beyond the
+allocated storage.
 
-We used to do this correctly, but accidentally lost it in the
-conversion to decodetree, because we converted the A32 BKPT first,
-and then when we converted the T16 BKPT we forgot that trans_BKPT()
-was unconditionally setting IL=1.
+Fix this by adding bounds checking on the word offset before
+converting to byte offset and passing to address_space_write().
+This matches the existing bounds check in aspeed_sbc_otp_read().
 
-Pass the right value for syn_aa32_bkpt()'s is_16bit argument.
-
+Cc: Kane-Chen-AS <kane_chen@aspeedtech.com>
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3474
-Fixes: 43f7e42c7d515f ("target/arm: Convert T16, Miscellaneous 16-bit instructions")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260505103726.419195-1-peter.maydell@linaro.org
-(cherry picked from commit f443b687636205b7f70029692b244f1f90532cf2)
+Fixes: 1a00754ccf15 ("hw/misc: Add Aspeed Secure Boot Controller model")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3436
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260428055254.76581-2-kane_chen@aspeedtech.com
+[ clg: Kept otp_addr in event logged in aspeed_sbc_otp_prog() ]
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit ff36712da5ae73aca5a044fe5e61c585d427013a)
+(Mjt: actual Fixes: tag is this one)
+Fixes: 9f58dd0a8c30 ("hw/misc/aspeed_sbc: Connect ASPEED OTP memory device to SBC")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index 0a92300f9b..bca278daf0 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -3562,7 +3562,7 @@ static bool trans_BKPT(DisasContext *s, arg_BKPT *a)
-         (a->imm == 0xab)) {
-         gen_exception_internal_insn(s, EXCP_SEMIHOST);
-     } else {
--        gen_exception_bkpt_insn(s, syn_aa32_bkpt(a->imm, false));
-+        gen_exception_bkpt_insn(s, syn_aa32_bkpt(a->imm, curr_insn_len(s) == 2));
-     }
+diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c
+index 2fc5db749d..db92364fb8 100644
+--- a/hw/misc/aspeed_sbc.c
++++ b/hw/misc/aspeed_sbc.c
+@@ -159,9 +159,17 @@ static bool aspeed_sbc_otp_prog(AspeedSBCState *s,
+     MemTxResult ret;
+     AspeedOTPState *otp = &s->otp;
+     uint32_t value = s->regs[R_CAMP1];
++    uint32_t otp_offset = otp_addr << 2;
+ 
+-    ret = address_space_write(&otp->as, otp_addr, MEMTXATTRS_UNSPECIFIED,
+-                        &value, sizeof(value));
++    if (otp_addr >= OTP_TOTAL_DWORD_COUNT) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "Invalid OTP addr 0x%x\n",
++                      otp_addr);
++        return false;
++    }
++
++    ret = address_space_write(&otp->as, otp_offset, MEMTXATTRS_UNSPECIFIED,
++                              &value, sizeof(value));
+     if (ret != MEMTX_OK) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "Failed to write OTP memory, addr = %x\n",
+diff --git a/hw/nvram/aspeed_otp.c b/hw/nvram/aspeed_otp.c
+index dcf8ed3917..605e96139a 100644
+--- a/hw/nvram/aspeed_otp.c
++++ b/hw/nvram/aspeed_otp.c
+@@ -57,12 +57,12 @@ static bool valid_program_data(uint32_t otp_addr,
+     return has_programmable_bits != 0;
+ }
+ 
+-static bool program_otpmem_data(void *opaque, uint32_t otp_addr,
++static bool program_otpmem_data(void *opaque, hwaddr otp_offset,
+                              uint32_t prog_bit, uint32_t *value)
+ {
+     AspeedOTPState *s = opaque;
++    uint32_t otp_addr = otp_offset >> 2;
+     bool is_odd = otp_addr & 1;
+-    uint32_t otp_offset = otp_addr << 2;
+ 
+     memcpy(value, s->storage + otp_offset, sizeof(uint32_t));
+ 
+@@ -79,26 +79,25 @@ static bool program_otpmem_data(void *opaque, uint32_t otp_addr,
      return true;
  }
+ 
+-static void aspeed_otp_write(void *opaque, hwaddr otp_addr,
++static void aspeed_otp_write(void *opaque, hwaddr otp_offset,
+                                 uint64_t val, unsigned size)
+ {
+     AspeedOTPState *s = opaque;
+-    uint32_t otp_offset, value;
++    uint32_t value;
+ 
+-    if (!program_otpmem_data(s, otp_addr, val, &value)) {
++    if (!program_otpmem_data(s, otp_offset, val, &value)) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: Failed to program data, value = %x, bit = %"PRIx64"\n",
+                       __func__, value, val);
+         return;
+     }
+ 
+-    otp_offset = otp_addr << 2;
+     memcpy(s->storage + otp_offset, &value, size);
+ 
+     if (s->blk) {
+         if (blk_pwrite(s->blk, otp_offset, size, &value, 0) < 0) {
+             qemu_log_mask(LOG_GUEST_ERROR,
+-                          "%s: Failed to write %x to %x\n",
++                          "%s: Failed to write %x to %"HWADDR_PRIx"\n",
+                           __func__, value, otp_offset);
+ 
+             return;
 -- 
 2.47.3
 
