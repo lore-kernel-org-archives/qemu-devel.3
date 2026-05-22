@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8AB3CD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:46:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEAE4CD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:46:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXYA-0003Zt-F0; Fri, 22 May 2026 17:36:59 -0400
+	id 1wQXYR-0004pU-MR; Fri, 22 May 2026 17:37:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXXp-0003T0-Lw; Fri, 22 May 2026 17:36:37 -0400
+ id 1wQXYO-0004ft-9u; Fri, 22 May 2026 17:37:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXXn-00014j-F7; Fri, 22 May 2026 17:36:37 -0400
+ id 1wQXYM-0001F0-3L; Fri, 22 May 2026 17:37:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485634; bh=j6nKCgrUfzNJ3OObA9atGhYMdqhQy3xF0zUtaJNQB1I=;
+ t=1779485634; bh=8146qO6KFVKscfnp7ME4DCWZ2VVfJ/m5ZGh/Be/5xEg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=VgKYp2v9fNCaAoS4Bl5FybDleDFOOQDOjQhKHntbaEw7q0CRryJIuJlXxNcPETEY4
- duc6+D1iZPwNK+XtrDiE/fzd/pJdmqN6999H/SWdyaOTlsFlYSdJbI2Lj+behX/J7m
- Uwa+9aQPNRR5gLKT5LhlWTrU2JZUxNdLMo7C1flWv7xOeT2kt6SqsgEKpdUdeN7g3b
- 1+dOpevHhx+XTTMf9qo8J3NoN+yiWzOTYk72AqA+iP0chbNTsYKdAyA4Uhj9MaC+qz
- RHJlPPIwS4sJdatY3pkJ/EtkpzLkFlovliy2+Ll8NoPl0Rpl266eHPnHrUsxLQDptV
- geOaeZFnyBKYA==
+ b=mSz9WxnNumQjzRQPrUkyVtEPkKESbYnGMGOEXBZCFjpIwdRdN60YcmZ28aW4lUgCO
+ rCRGQjhl+N1JZD3xVKQMQ33e0qvBP/36UV/gzi+Q4hDKCqiSQ75uVGiRQLiuQRuLCE
+ hX+Dcq9qblNzThLr7KDOENQrBMBFy1sSRViXSDpt676VyflMv6Cby7qDRf6SVbcxmc
+ SvRmlP8Tymw3TkJplHMcg7QS7S5vsC3eN8XPFOKE6gzt/asW0AcfdiD1WT7wCxMhk+
+ myp6zIx1t7Fsk4Z5GPDveR/9doDenMH18qkEAG6jwEukbeE/EJel1p33jiL4P1MnMQ
+ nblz2g/t1Njag==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 08F561AFAE5;
+ by isrv.corpit.ru (Postfix) with ESMTP id 5F6371AFAEB;
  Sat, 23 May 2026 00:33:54 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2E4A13B716B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 82C5D3B7171;
  Sat, 23 May 2026 00:33:58 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 86/94] ide-test: Factor out wait_dma_completion()
-Date: Sat, 23 May 2026 00:33:43 +0300
-Message-ID: <20260522213356.806058-28-mjt@tls.msk.ru>
+ "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 92/94] qcow2: Fix corruption on discard during write
+ with COW
+Date: Sat, 23 May 2026 00:33:49 +0300
+Message-ID: <20260522213356.806058-34-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
@@ -70,78 +71,147 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kevin Wolf <kwolf@redhat.com>
 
+Most code in qcow2 that accesses (and potentially modifies) L2 tables
+does so while holding s->lock.
+
+There is one exception, which is allocating writes. They hold the lock
+initially while allocating clusters, but drop it for writing the guest
+payload before taking the lock again for updating the L2 tables. This
+allows concurrent requests that touch other parts of the image file to
+continue in parallel and is an important performance optimisation.
+
+However, this means that other requests that run while the lock is
+dropped for writing guest data must synchronise with the list of
+allocating requests in s->cluster_allocs and wait if they would overlap.
+For writes, this is done in handle_dependencies(), but discard and write
+zeros operations neglect to synchronise with s->cluster_allocs.
+
+This means that discard can free a cluster whose L2 entry will already
+be modified in qcow2_alloc_cluster_link_l2() by a previously started
+write. In the case of a pre-allocated zero cluster that is in the
+process of being overwritten, this means that discard can lead to a
+situation where the cluster is still mapped (because the write will
+restore the L2 entry just without the zero flag), but its refcount has
+been decreased, resulting in a corrupted image.
+
+Add the missing synchronisation to qcow2_cluster_discard() and
+qcow2_subcluster_zeroize() to fix the problem.
+
+Cc: qemu-stable@nongnu.org
+Reported-by: Denis V. Lunev <den@openvz.org>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260421161132.99878-7-kwolf@redhat.com>
+Message-ID: <20260427170520.101242-4-kwolf@redhat.com>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
+Tested-by: Denis V. Lunev <den@openvz.org>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 92854c9c7539bdbf4f9c1abb33dd3ba59ff91e58)
+(cherry picked from commit b8bfb1478d61512f851badd0d912c6661a2efee7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
-index ceee444a9e..c6dcb2c074 100644
---- a/tests/qtest/ide-test.c
-+++ b/tests/qtest/ide-test.c
-@@ -200,6 +200,34 @@ static uint64_t trim_range_le(uint64_t sector, uint16_t count)
-     return cpu_to_le64(((uint64_t)count << 48) + sector);
+diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
+index c655bf6df4..8b1e80bd0b 100644
+--- a/block/qcow2-cluster.c
++++ b/block/qcow2-cluster.c
+@@ -1392,6 +1392,9 @@ count_single_write_clusters(BlockDriverState *bs, int nb_clusters,
+  * the same cluster. In this case we need to wait until the previous
+  * request has completed and updated the L2 table accordingly.
+  *
++ * If allow_shortening == true, instead of waiting for a dependency, *cur_bytes
++ * can be shortened so that the cluster allocations don't overlap.
++ *
+  * Returns:
+  *   0       if there was no dependency. *cur_bytes indicates the number of
+  *           bytes from guest_offset that can be read before the next
+@@ -1403,7 +1406,9 @@ count_single_write_clusters(BlockDriverState *bs, int nb_clusters,
+  */
+ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
+                                             uint64_t guest_offset,
+-                                            uint64_t *cur_bytes, QCowL2Meta **m)
++                                            uint64_t *cur_bytes,
++                                            bool allow_shortening,
++                                            QCowL2Meta **m)
+ {
+     BDRVQcow2State *s = bs->opaque;
+     QCowL2Meta *old_alloc;
+@@ -1434,7 +1439,7 @@ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
+ 
+         /* Conflict */
+ 
+-        if (start < old_start) {
++        if (start < old_start && allow_shortening) {
+             /* Stop at the start of a running allocation */
+             bytes = old_start - start;
+         } else {
+@@ -1469,6 +1474,29 @@ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
+     return 0;
  }
  
-+static uint8_t wait_dma_completion(QTestState *qts, QPCIDevice *dev,
-+                                   QPCIBar bmdma_bar, QPCIBar ide_bar)
++static void coroutine_mixed_fn wait_for_dependencies(BlockDriverState *bs,
++                                                     uint64_t guest_offset,
++                                                     uint64_t bytes)
 +{
-+    uint8_t status;
++    BDRVQcow2State *s = bs->opaque;
++    QCowL2Meta *m = NULL;
++    int ret;
 +
-+    /* Wait for the DMA transfer to complete */
-+    do {
-+        status = qpci_io_readb(dev, bmdma_bar, bmreg_status);
-+    } while ((status & (BM_STS_ACTIVE | BM_STS_INTR)) == BM_STS_ACTIVE);
-+
-+    g_assert_cmpint(qtest_get_irq(qts, IDE_PRIMARY_IRQ), ==,
-+                    !!(status & BM_STS_INTR));
-+
-+    /* Check IDE status code */
-+    assert_bit_set(qpci_io_readb(dev, ide_bar, reg_status), DRDY);
-+    assert_bit_clear(qpci_io_readb(dev, ide_bar, reg_status), BSY | DRQ);
-+
-+    /* Reading the status register clears the IRQ */
-+    g_assert(!qtest_get_irq(qts, IDE_PRIMARY_IRQ));
-+
-+    /* Stop DMA transfer if still active */
-+    if (status & BM_STS_ACTIVE) {
-+        qpci_io_writeb(dev, bmdma_bar, bmreg_cmd, 0);
++    /*
++     * Discard has some non-coroutine callers (creating internal snapshots and
++     * make empty). They are calling from qemu-img or in a drained section, so
++     * we know that no writes can be in progress.
++     */
++    if (!qemu_in_coroutine()) {
++        assert(QLIST_EMPTY(&s->cluster_allocs));
++        return;
 +    }
 +
-+    return status;
++    do {
++        ret = handle_dependencies(bs, guest_offset, &bytes, false, &m);
++    } while (ret == -EAGAIN);
 +}
 +
- static int send_dma_request(QTestState *qts, int cmd, uint64_t sector,
-                             int nb_sectors, PrdtEntry *prdt, int prdt_entries,
-                             void(*post_exec)(QPCIDevice *dev, QPCIBar ide_bar,
-@@ -280,25 +308,7 @@ static int send_dma_request(QTestState *qts, int cmd, uint64_t sector,
-         qpci_io_writeb(dev, bmdma_bar, bmreg_cmd, 0);
-     }
+ /*
+  * Checks how many already allocated clusters that don't require a new
+  * allocation there are at the given guest_offset (up to *bytes).
+@@ -1840,7 +1868,7 @@ again:
+          *         the right synchronisation between the in-flight request and
+          *         the new one.
+          */
+-        ret = handle_dependencies(bs, start, &cur_bytes, m);
++        ret = handle_dependencies(bs, start, &cur_bytes, true, m);
+         if (ret == -EAGAIN) {
+             /* Currently handle_dependencies() doesn't yield if we already had
+              * an allocation. If it did, we would have to clean up the L2Meta
+@@ -2000,6 +2028,15 @@ int qcow2_cluster_discard(BlockDriverState *bs, uint64_t offset,
+     int64_t cleared;
+     int ret;
  
--    /* Wait for the DMA transfer to complete */
--    do {
--        status = qpci_io_readb(dev, bmdma_bar, bmreg_status);
--    } while ((status & (BM_STS_ACTIVE | BM_STS_INTR)) == BM_STS_ACTIVE);
--
--    g_assert_cmpint(qtest_get_irq(qts, IDE_PRIMARY_IRQ), ==,
--                    !!(status & BM_STS_INTR));
--
--    /* Check IDE status code */
--    assert_bit_set(qpci_io_readb(dev, ide_bar, reg_status), DRDY);
--    assert_bit_clear(qpci_io_readb(dev, ide_bar, reg_status), BSY | DRQ);
--
--    /* Reading the status register clears the IRQ */
--    g_assert(!qtest_get_irq(qts, IDE_PRIMARY_IRQ));
--
--    /* Stop DMA transfer if still active */
--    if (status & BM_STS_ACTIVE) {
--        qpci_io_writeb(dev, bmdma_bar, bmreg_cmd, 0);
--    }
-+    status = wait_dma_completion(qts, dev, bmdma_bar, ide_bar);
++    /*
++     * If we're touching a cluster for which allocating writes are in flight,
++     * wait for them to complete to avoid conflicting metadata updates.
++     *
++     * We don't need to allocate a QCowL2Meta for the discard operation because
++     * s->lock is held for the duration of the whole operation.
++     */
++    wait_for_dependencies(bs, offset, bytes);
++
+     /* Caller must pass aligned values, except at image end */
+     assert(QEMU_IS_ALIGNED(offset, s->cluster_size));
+     assert(QEMU_IS_ALIGNED(end_offset, s->cluster_size) ||
+@@ -2160,6 +2197,15 @@ int coroutine_fn qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset,
+     int64_t cleared;
+     int ret;
  
-     free_pci_device(dev);
- 
++    /*
++     * If we're touching a cluster for which allocating writes are in flight,
++     * wait for them to complete to avoid conflicting metadata updates.
++     *
++     * We don't need to allocate a QCowL2Meta for the zeroize operation because
++     * s->lock is held for the duration of the whole operation.
++     */
++    wait_for_dependencies(bs, offset, bytes);
++
+     /* If we have to stay in sync with an external data file, zero out
+      * s->data_file first. */
+     if (data_file_is_raw(bs)) {
 -- 
 2.47.3
 
