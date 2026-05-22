@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E18D5CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:37:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC287CD5BB3
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:37:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXXr-0003UV-Gq; Fri, 22 May 2026 17:36:39 -0400
+	id 1wQXXf-00037A-6s; Fri, 22 May 2026 17:36:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXXN-00016J-PJ; Fri, 22 May 2026 17:36:09 -0400
+ id 1wQXWp-0000Bn-CH; Fri, 22 May 2026 17:35:36 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXXK-0000rz-Kj; Fri, 22 May 2026 17:36:09 -0400
+ id 1wQXWj-00081x-6L; Fri, 22 May 2026 17:35:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485633; bh=mLupHvjHRu4AgV5B1K7Cf1zafiM0zXWVHgOhiGnSlX0=;
+ t=1779485633; bh=uYPhL+4ibz7lqI8gspHCwGuTnFu+/OP7WFg7jbd4oaM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=CXGlNdLGo6Cyd4PIl+C+tfwwPO+AAb0mDRckHt4GGlHLsHyypdYlxAW0If+rhe4Wh
- V0CCCHq4aoxRWkHr76bIM/RXxNU0nkfZ9brH2paBfu1xPcKz5G8M3uCDnbeF6RgBMt
- GDFQowrV9WxZzoGGbIDTJOLb6AtR5VtgmYAI8qXT3s10Qv3wPtCB0ycMZUtvWC/km6
- Z+PcR4mPrFW8BnTPwwDsRguOTc5cuMfWRNdmE3cDSmT3RLmk7QAF3TZuPh9N7dXpJz
- MAgUfT3VTUBPMQ+JQTIKz97c7NukU9y6HZtxaBFZUouay/jcY4fg2/qKPJs4BN6kVN
- PP7pTaguKp6+w==
+ b=dj2/VTw44vnaYmL47jiAh4WZzcpS3weqTfu61wsv0Q+s97lZ3nS8sWLP42zGlnlf7
+ nrCPYv6ur7ODPZtMNkxHTWLBDhxFeB9xCjMOoGMBnWWCg8WQaEmkZ5tI+gwoHS1Acw
+ zio8Yvm0wia4BqPmSF9DGrgujXKVs6tfsMeQ3V5gEh1Bbn+KLRW1S54+ZS7wx6Ysa3
+ Ud+iAuvGtXi0JYRVxbsuz57bqJMwYd1uQWM0av1U05zqP2VR2G+AhwBZq+9X7sgc5B
+ 5DcA5GxsZV7mX3MYzaw62hlWEL0guHs0uFYcSE6Lk5ye7zLZnrCnF317SjaX3W1XWx
+ rmwPhkK6e+0zg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C9C421AFAE1;
+ by isrv.corpit.ru (Postfix) with ESMTP id 708DE1AFADB;
  Sat, 23 May 2026 00:33:53 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id EE62D3B7167;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 917303B7161;
  Sat, 23 May 2026 00:33:57 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 82/94] block: Add blk_co_start/end_request() and
- BDRV_REQ_NO_QUEUE
-Date: Sat, 23 May 2026 00:33:39 +0300
-Message-ID: <20260522213356.806058-24-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Scott J. Goldman" <scottjgo@gmail.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 76/94] target/arm/hvf: Fix WFI halting to stop idle
+ vCPU spinning
+Date: Sat, 23 May 2026 00:33:33 +0300
+Message-ID: <20260522213356.806058-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
@@ -69,189 +70,282 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: "Scott J. Goldman" <scottjgo@gmail.com>
 
-If a device uses blk_inc/dec_in_flight() in order to build macro
-operations that involve multiple requests for the block layer and that
-need to be completed as a unit before the BlockBackend can be considered
-drained, it sets the stage for a deadlock: When a drain is requested,
-the inner request at the BlockBackend level will be queued in
-blk_wait_while_drained() and wait until the drained section ends, but at
-the same time, drain_begin can only return if the whole macro operation
-at the device level has completed.
+Commit b5f8f77271 ("accel/hvf: Implement WFI without using pselect()")
+changed hvf_wfi() from blocking the vCPU thread with pselect() to
+returning EXCP_HLT, intending QEMU's main event loop to handle the
+idle wait. However, cpu->halted was never set, so cpu_thread_is_idle()
+always returns false and the vCPU thread spins at 100% CPU per core
+while the guest is idle.
 
-Introduce a new interface to allow implementing the logic correctly:
-Instead of queueing individual requests, blk_co_start_request() calls
-blk_wait_while_drained() once at the beginning. The individual requests
-must then set BDRV_REQ_NO_QUEUE to avoid being queued and running into
-the deadlock; being wrapped in blk_co_start/end_request() makes sure
-that drain_begin waits for them and they don't sneak in when the
-BlockBackend is supposed to already be quiescent.
+Fix this by:
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260421161132.99878-3-kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 34a67637767d3ed1ac813c44effe827bbfba5996)
+1. Setting cpu->halted = 1 in hvf_wfi() so the vCPU thread sleeps on
+   halt_cond in qemu_process_cpu_events().
+
+2. Arming a per-vCPU QEMU_CLOCK_VIRTUAL timer to fire when the guest's
+   virtual timer (CNTV_CVAL_EL0) would expire. This is necessary
+   because HVF only delivers HV_EXIT_REASON_VTIMER_ACTIVATED during
+   hv_vcpu_run(), which is not called while the CPU is halted. The
+   timer callback mirrors the VTIMER_ACTIVATED handler: it raises the
+   vtimer IRQ through the GIC and marks vtimer_masked, causing the
+   interrupt delivery chain to wake the vCPU via qemu_cpu_kick().
+
+3. Clearing cpu->halted in hvf_arch_vcpu_exec() when cpu_has_work()
+   indicates a pending interrupt, and cancelling the WFI timer.
+
+4. Re-arming the WFI timer from hvf_vm_state_change() on the resume
+   transition for any halted vCPU, since the QEMUTimer is per-instance
+   state and is not migrated. After cpu_synchronize_all_states() the
+   migrated vtimer state is mirrored in env, so we can read CNTV_CTL
+   and CNTV_CVAL from there. If the vtimer has already expired by the
+   time the destination resumes, hvf_wfi_timer_cb() is invoked
+   directly so the halted vCPU is woken up.
+
+All wfi_timer handling (allocation, arming, deletion, and the resume
+re-arm) is gated on !hvf_irqchip_in_kernel(): with the Apple in-kernel
+vGIC, HVF owns the vtimer and delivers wake-ups itself.
+
+Note for stable backports: this commit won't apply to 11.0 as
+it has changes to handle the hvf in-kernel irqchip support that
+landed after the 11.0 release. The v3 version of this commit:
+  https://patchew.org/QEMU/20260427195516.46256-1-scottjgo@gmail.com/
+should be suitable for 11.0 backporting (it is essentially
+identical except that it doesn't make the changes conditional
+on !hvf_irqchip_in_kernel()).
+
+Cc: qemu-stable@nongnu.org
+Fixes: b5f8f77271 ("accel/hvf: Implement WFI without using pselect()")
+Signed-off-by: Scott J. Goldman <scottjgo@gmail.com>
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+[PMM: added note about stable backports to commit message]
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit a86024eb2df56f7664cef16ec8e9a50a1dc3dd2f)
+(Mjt: add hvf_irqchip_in_kernel() define)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/block-backend.c b/block/block-backend.c
-index 9944657120..ee00440e28 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -82,6 +82,7 @@ struct BlockBackend {
-     QemuMutex queued_requests_lock; /* protects queued_requests */
-     CoQueue queued_requests;
-     bool disable_request_queuing; /* atomic */
-+    int start_request_count; /* atomic */
+diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
+index 2621164cb2..58fb865eba 100644
+--- a/include/system/hvf_int.h
++++ b/include/system/hvf_int.h
+@@ -48,6 +48,7 @@ struct AccelCPUState {
+     hv_vcpu_exit_t *exit;
+     bool vtimer_masked;
+     bool guest_debug_enabled;
++    struct QEMUTimer *wfi_timer;
+ #endif
+ };
  
-     VMChangeStateEntry *vmsh;
-     bool force_allow_inactivate;
-@@ -1306,10 +1307,16 @@ bool blk_in_drain(BlockBackend *blk)
- }
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 5fc8f6bbbd..5016783062 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -28,6 +28,7 @@
+ #include "hw/core/boards.h"
+ #include "hw/core/irq.h"
+ #include "qemu/main-loop.h"
++#include "qemu/timer.h"
+ #include "system/cpus.h"
+ #include "arm-powerctl.h"
+ #include "target/arm/cpu.h"
+@@ -40,6 +41,8 @@
  
- /* To be called between exactly one pair of blk_inc/dec_in_flight() */
--static void coroutine_fn blk_wait_while_drained(BlockBackend *blk)
-+static void coroutine_fn blk_wait_while_drained(BlockBackend *blk,
-+                                                BdrvRequestFlags flags)
+ #include "gdbstub/enums.h"
+ 
++#define hvf_irqchip_in_kernel() 0 /* stub for qemu 11.0.x */
++
+ #define MDSCR_EL1_SS_SHIFT  0
+ #define MDSCR_EL1_MDE_SHIFT 15
+ 
+@@ -301,6 +304,8 @@ void hvf_arm_init_debug(void)
+ #define TMR_CTL_IMASK   (1 << 1)
+ #define TMR_CTL_ISTATUS (1 << 2)
+ 
++static void hvf_wfi_timer_cb(void *opaque);
++
+ static uint32_t chosen_ipa_bit_size;
+ 
+ typedef struct HVFVTimer {
+@@ -1214,6 +1219,11 @@ void hvf_arch_vcpu_destroy(CPUState *cpu)
  {
-     assert(blk->in_flight > 0);
+     hv_return_t ret;
  
-+    if (flags & BDRV_REQ_NO_QUEUE) {
-+        assert(qatomic_read(&blk->start_request_count));
-+        return;
++    if (!hvf_irqchip_in_kernel()) {
++        timer_free(cpu->accel->wfi_timer);
++        cpu->accel->wfi_timer = NULL;
 +    }
 +
-     if (qatomic_read(&blk->quiesce_counter) &&
-         !qatomic_read(&blk->disable_request_queuing)) {
-         /*
-@@ -1335,7 +1342,7 @@ blk_co_do_preadv_part(BlockBackend *blk, int64_t offset, int64_t bytes,
-     BlockDriverState *bs;
-     IO_CODE();
+     ret = hv_vcpu_destroy(cpu->accel->fd);
+     assert_hvf_ok(ret);
+ }
+@@ -1352,6 +1362,11 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+                               arm_cpu->isar.idregs[ID_AA64MMFR0_EL1_IDX]);
+     assert_hvf_ok(ret);
  
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, flags);
-     GRAPH_RDLOCK_GUARD();
- 
-     /* Call blk_bs() only after waiting, the graph may have changed */
-@@ -1410,7 +1417,7 @@ blk_co_do_pwritev_part(BlockBackend *blk, int64_t offset, int64_t bytes,
-     BlockDriverState *bs;
-     IO_CODE();
- 
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, flags);
-     GRAPH_RDLOCK_GUARD();
- 
-     /* Call blk_bs() only after waiting, the graph may have changed */
-@@ -1523,6 +1530,19 @@ void blk_dec_in_flight(BlockBackend *blk)
-     aio_wait_kick();
++    if (!hvf_irqchip_in_kernel()) {
++        cpu->accel->wfi_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
++                                             hvf_wfi_timer_cb, cpu);
++    }
++
+     aarch64_add_sme_properties(OBJECT(cpu));
+     return 0;
+ }
+@@ -2027,6 +2042,62 @@ static uint64_t hvf_vtimer_val_raw(void)
+     return mach_absolute_time() - hvf_state->vtimer_offset;
  }
  
-+void coroutine_fn blk_co_start_request(BlockBackend *blk)
++static void hvf_wfi_timer_cb(void *opaque)
 +{
-+    blk_inc_in_flight(blk);
-+    blk_wait_while_drained(blk, 0);
-+    qatomic_inc(&blk->start_request_count);
-+}
++    CPUState *cpu = opaque;
++    ARMCPU *arm_cpu = ARM_CPU(cpu);
 +
-+void blk_end_request(BlockBackend *blk)
-+{
-+    qatomic_dec(&blk->start_request_count);
-+    blk_dec_in_flight(blk);
-+}
-+
- static void error_callback_bh(void *opaque)
- {
-     struct BlockBackendAIOCB *acb = opaque;
-@@ -1741,7 +1761,7 @@ blk_co_do_ioctl(BlockBackend *blk, unsigned long int req, void *buf)
- {
-     IO_CODE();
- 
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, 0);
-     GRAPH_RDLOCK_GUARD();
- 
-     if (!blk_co_is_available(blk)) {
-@@ -1788,7 +1808,7 @@ blk_co_do_pdiscard(BlockBackend *blk, int64_t offset, int64_t bytes)
-     int ret;
-     IO_CODE();
- 
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, 0);
-     GRAPH_RDLOCK_GUARD();
- 
-     ret = blk_check_byte_request(blk, offset, bytes);
-@@ -1834,7 +1854,7 @@ int coroutine_fn blk_co_pdiscard(BlockBackend *blk, int64_t offset,
- static int coroutine_fn blk_co_do_flush(BlockBackend *blk)
- {
-     IO_CODE();
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, 0);
-     GRAPH_RDLOCK_GUARD();
- 
-     if (!blk_co_is_available(blk)) {
-@@ -2009,7 +2029,7 @@ int coroutine_fn blk_co_zone_report(BlockBackend *blk, int64_t offset,
-     IO_CODE();
- 
-     blk_inc_in_flight(blk); /* increase before waiting */
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, 0);
-     GRAPH_RDLOCK_GUARD();
-     if (!blk_is_available(blk)) {
-         blk_dec_in_flight(blk);
-@@ -2034,7 +2054,7 @@ int coroutine_fn blk_co_zone_mgmt(BlockBackend *blk, BlockZoneOp op,
-     IO_CODE();
- 
-     blk_inc_in_flight(blk);
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, 0);
-     GRAPH_RDLOCK_GUARD();
- 
-     ret = blk_check_byte_request(blk, offset, len);
-@@ -2058,7 +2078,7 @@ int coroutine_fn blk_co_zone_append(BlockBackend *blk, int64_t *offset,
-     IO_CODE();
- 
-     blk_inc_in_flight(blk);
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, flags);
-     GRAPH_RDLOCK_GUARD();
-     if (!blk_is_available(blk)) {
-         blk_dec_in_flight(blk);
-diff --git a/include/block/block-common.h b/include/block/block-common.h
-index c8c626daea..895ea17541 100644
---- a/include/block/block-common.h
-+++ b/include/block/block-common.h
-@@ -215,8 +215,17 @@ typedef enum {
-      */
-     BDRV_REQ_NO_WAIT = 0x400,
- 
 +    /*
-+     * Used between blk_co_start_request() and blk_end_request() to avoid
-+     * that the request waits in a drained BlockBackend until the drained
-+     * section ends. Waiting would cause a deadlock because drain waits for
-+     * blk_end_request() to be called, but the request never completes
-+     * because it waits for the drain to end.
++     * vtimer expired while the CPU was halted for WFI.
++     * Mirror HV_EXIT_REASON_VTIMER_ACTIVATED: raise the vtimer
++     * interrupt and mark as masked so hvf_sync_vtimer() will
++     * check and unmask when the guest handles it.
++     *
++     * The interrupt delivery chain (GIC -> cpu_interrupt ->
++     * qemu_cpu_kick) wakes the vCPU thread from halt_cond.
 +     */
-+    BDRV_REQ_NO_QUEUE = 0x800,
++    qemu_set_irq(arm_cpu->gt_timer_outputs[GTIMER_VIRT], 1);
++    cpu->accel->vtimer_masked = true;
++}
 +
-     /* Mask of valid flags */
--    BDRV_REQ_MASK               = 0x7ff,
-+    BDRV_REQ_MASK               = 0xfff,
- } BdrvRequestFlags;
++/*
++ * Arm a host-side QEMU_CLOCK_VIRTUAL timer to fire when the guest's
++ * vtimer (CNTV_CVAL_EL0) is scheduled to expire. HVF only delivers
++ * HV_EXIT_REASON_VTIMER_ACTIVATED during hv_vcpu_run(), which we won't
++ * call while the vCPU is halted, so we need this to wake the vCPU.
++ *
++ * QEMU_CLOCK_VIRTUAL pauses while the VM is stopped, which keeps the
++ * timer in lockstep with the guest's view of vtime across pause/resume.
++ *
++ * Caller must supply the current CNTV_CTL_EL0 and CNTV_CVAL_EL0 values,
++ * since the appropriate source (HVF vs. env) depends on context.
++ *
++ * Returns 0 if the timer was armed (or if the vtimer is disabled/masked
++ * and the vCPU should still halt waiting on another event), or -1 if
++ * the vtimer has already expired.
++ */
++static int hvf_arm_wfi_timer(CPUState *cpu, uint64_t ctl, uint64_t cval)
++{
++    ARMCPU *arm_cpu = ARM_CPU(cpu);
++    uint64_t now;
++    int64_t delta_ns;
++
++    if (!(ctl & TMR_CTL_ENABLE) || (ctl & TMR_CTL_IMASK)) {
++        return 0;
++    }
++
++    now = hvf_vtimer_val_raw();
++    if (cval <= now) {
++        return -1;
++    }
++
++    delta_ns = muldiv64(cval - now, NANOSECONDS_PER_SECOND,
++                        arm_cpu->gt_cntfrq_hz);
++    timer_mod(cpu->accel->wfi_timer,
++              qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + delta_ns);
++    return 0;
++}
++
+ static int hvf_wfi(CPUState *cpu)
+ {
+     if (cpu_has_work(cpu)) {
+@@ -2037,6 +2108,29 @@ static int hvf_wfi(CPUState *cpu)
+         return 0;
+     }
  
- #define BDRV_O_NO_SHARE    0x0001 /* don't share permissions */
-diff --git a/include/system/block-backend-io.h b/include/system/block-backend-io.h
-index 6d5ac476fc..0248c1c36e 100644
---- a/include/system/block-backend-io.h
-+++ b/include/system/block-backend-io.h
-@@ -71,6 +71,8 @@ BlockAIOCB *blk_aio_ioctl(BlockBackend *blk, unsigned long int req, void *buf,
++    if (!hvf_irqchip_in_kernel()) {
++        uint64_t ctl, cval;
++        hv_return_t r;
++
++        /*
++         * Read the vtimer state directly from HVF. We're on the vCPU
++         * thread, just exited from hv_vcpu_run(), so HVF holds the
++         * authoritative values and env may be stale.
++         */
++        r = hv_vcpu_get_sys_reg(cpu->accel->fd, HV_SYS_REG_CNTV_CTL_EL0,
++                                &ctl);
++        assert_hvf_ok(r);
++        r = hv_vcpu_get_sys_reg(cpu->accel->fd, HV_SYS_REG_CNTV_CVAL_EL0,
++                                &cval);
++        assert_hvf_ok(r);
++
++        if (hvf_arm_wfi_timer(cpu, ctl, cval) < 0) {
++            /* vtimer already expired, don't halt */
++            return 0;
++        }
++    }
++
++    cpu->halted = 1;
+     return EXCP_HLT;
+ }
  
- void blk_inc_in_flight(BlockBackend *blk);
- void blk_dec_in_flight(BlockBackend *blk);
-+void coroutine_fn blk_co_start_request(BlockBackend *blk);
-+void blk_end_request(BlockBackend *blk);
+@@ -2332,7 +2426,13 @@ int hvf_arch_vcpu_exec(CPUState *cpu)
+     hv_return_t r;
  
- bool coroutine_fn GRAPH_RDLOCK blk_co_is_inserted(BlockBackend *blk);
- bool co_wrapper_mixed_bdrv_rdlock blk_is_inserted(BlockBackend *blk);
+     if (cpu->halted) {
+-        return EXCP_HLT;
++        if (!cpu_has_work(cpu)) {
++            return EXCP_HLT;
++        }
++        cpu->halted = 0;
++        if (!hvf_irqchip_in_kernel()) {
++            timer_del(cpu->accel->wfi_timer);
++        }
+     }
+ 
+     flush_cpu_state(cpu);
+@@ -2381,6 +2481,46 @@ static void hvf_vm_state_change(void *opaque, bool running, RunState state)
+         /* Update vtimer offset on all CPUs */
+         hvf_state->vtimer_offset = mach_absolute_time() - s->vtimer_val;
+         cpu_synchronize_all_states();
++
++        /*
++         * After migration restore (or any resume), the wfi_timer is not
++         * scheduled on this QEMU instance, so re-arm it for any halted
++         * vCPU with a pending vtimer. For a non-migration resume the
++         * QEMU_CLOCK_VIRTUAL timer was already scheduled; recomputing the
++         * deadline produces the same value and is a harmless no-op.
++         *
++         * cpu_synchronize_all_states() above ensures env mirrors the
++         * authoritative vtimer state (whether that came from HVF or from
++         * the migration stream), so we can safely read it here from the
++         * iothread.
++         *
++         * Only applies when we own the wfi_timer; with an in-kernel vGIC
++         * the timer is never allocated and HVF handles vtimer wake-ups.
++         */
++        if (!hvf_irqchip_in_kernel()) {
++            CPUState *cpu;
++
++            CPU_FOREACH(cpu) {
++                ARMCPU *arm_cpu;
++                uint64_t ctl, cval;
++
++                if (!cpu->accel || !cpu->halted) {
++                    continue;
++                }
++
++                arm_cpu = ARM_CPU(cpu);
++                ctl = arm_cpu->env.cp15.c14_timer[GTIMER_VIRT].ctl;
++                cval = arm_cpu->env.cp15.c14_timer[GTIMER_VIRT].cval;
++
++                if (hvf_arm_wfi_timer(cpu, ctl, cval) < 0) {
++                    /*
++                     * vtimer already expired while we were paused; raise
++                     * the IRQ now so the halted vCPU wakes up.
++                     */
++                    hvf_wfi_timer_cb(cpu);
++                }
++            }
++        }
+     } else {
+         /* Remember vtimer value on every pause */
+         s->vtimer_val = hvf_vtimer_val_raw();
 -- 
 2.47.3
 
