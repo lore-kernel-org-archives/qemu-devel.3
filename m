@@ -4,48 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7EEBCD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:52:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81369CD5BB3
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:52:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXnC-0005yg-T5; Fri, 22 May 2026 17:52:31 -0400
+	id 1wQXmx-0003ut-E9; Fri, 22 May 2026 17:52:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXn9-0005cc-Ae; Fri, 22 May 2026 17:52:27 -0400
+ id 1wQXmb-0002qu-UU; Fri, 22 May 2026 17:51:59 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXn7-0004Zq-Fj; Fri, 22 May 2026 17:52:26 -0400
+ id 1wQXmT-0004AF-0p; Fri, 22 May 2026 17:51:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486561; bh=jjsX3vuFG5pdqzcPcvEy5TDx1NFhTrvU0iAbRklyfh4=;
+ t=1779486560; bh=/l8YcLns4Vdy96Q/u/j3F12L1D8EC3WNVcLrc44P2MA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ev+RC5LoNYD3Z9o1HsiOPfPuMY4h0ACCH6bwwFmbmBxjprj1AJLCA+DzRn6Z03z/D
- DFtqih/yI8stpQ7G8RqgBWFoCvrng4PTJeE0BA/gV7bFP59ZDEDFBuwF3grUUknodM
- MNySFqlUxxyOJdAaje4S7U//FJ2Y57Z/vdiZqlTEMkq8Z4/lNFtY69JtuxSALFtWNH
- ZPEYp3QYcTcO+cvXBdHiEglrwenQItuX3FE2rnCoIX/hTdkPSqIaKrr0tKBMRpetsh
- ZLJpssXtZnJtYATkosEuw5ypZCyJdJTjElEg6/3OgPZKQiEVhkqk+Rj6xDb2WTUZml
- HiRIpeUnWsJtw==
+ b=syoZ2gxZQuUFJ1imXkOsNnvyn5WdvZ+0+h5eW2FlyYz3v/Zvfe68EjEsjSsBoh5E6
+ 0clr5Tng9O8V7xWFd1ZdoY5D+JRdq7tcRstpM+stMd1vIMe1WTNyDCxwBvWAwnOTh5
+ miHnOcp88YEO7Z9BL7cb4WV94PIBDWzIy55oT2Ovr76k3y3Qxv7fEnHlnE8UkApwiy
+ ztZX86nLsR/UJVxmUhrP+y0zzLBWP2eM7lYYYtnKkdWG29qhWiL9yjJElXr2E+O0iA
+ J5BzrxfMpWskswO5/jN/U0le9j7sg1VEdG0WAuG2nvvvBNm3B6uwTG3x/RdE8AfR3Y
+ 59JtL9jxEYXOw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5770A1AFB7C;
- Sat, 23 May 2026 00:49:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id DBF6D1AFB75;
+ Sat, 23 May 2026 00:49:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7D6D03B71CB;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0FD8B3B71C4;
  Sat, 23 May 2026 00:49:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 134/149] linux-user/sh4: Fix target_ucontext tuc_link
- field type
-Date: Sat, 23 May 2026 00:49:06 +0300
-Message-ID: <20260522214923.807017-35-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Katherine Leaver <katherine.j.leaver@gmail.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 127/149] aspeed/hace: Fix out-of-bounds read in
+ has_padding()
+Date: Sat, 23 May 2026 00:48:59 +0300
+Message-ID: <20260522214923.807017-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,66 +72,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Cédric Le Goater <clg@redhat.com>
 
-tuc_link is declared as 'struct target_ucontext *', which is a HOST
-pointer.  On a 64-bit host running a 32-bit SH4 target, this is 8 bytes
-instead of the 4 bytes the target expects, padding pushes tuc_mcontext
-8 bytes past its correct offset.
+The has_padding() function reads the last 8 bytes of a DMA buffer
+without validating req_len. req_len is guest-controlled (via
+R_HASH_SRC_LEN register or scatter-gather entries) and values less
+than 8 cause integer underflow. This can result in an out-of-bounds
+read of QEMU process memory.
 
-When a signal handler receives ucontext_t *, every field accessed through
-uc_mcontext (gregs[], pc, pr, ...) is read from the wrong address.  In
-particular the saved PC comes back as a garbage stack value, which breaks
-any code that initialises a libunwind cursor from the signal context.
+Add a check to ensure req_len >= 8 before accessing the buffer.
 
-Fix it by using abi_ulong, which is always sized to the target ABI (4
-bytes for SH4), matching the layout the kernel and glibc agree on.  This
-is the same pattern used by arm/signal.c.
-
-Also remove the (unsigned long *) cast from the __put_user that zeros
-tuc_link.  The cast was harmless when tuc_link was pointer-sized (8
-bytes matching unsigned long on a 64-bit host), but after the type
-change __put_user's sizeof dispatch would select stq_le_p (8-byte write)
-for a now-4-byte field, silently overwriting the start of tuc_stack.
-
-Neither this fix nor the companion setup_sigtramp fix is independently
-sufficient: this fix corrects register values read from the signal context
-but libunwind still cannot detect the frame without the correct trampoline
-pattern; that fix makes the frame detectable but register reads remain
-garbage without the correct ucontext layout.  Together they fix the
-following libunwind tests on a 64-bit host:
-  Gtest-sig-context, Gtest-trace, Ltest-init-local-signal,
-  Ltest-sig-context, Ltest-trace
-
-Signed-off-by: Matt Turner <mattst88@gmail.com>
+Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
 Cc: qemu-stable@nongnu.org
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit c3176e645774fcb795bf99c1c6c40c67432232db)
+Fixes: 5cd7d8564a8b ("aspeed/hace: Support AST2600 HACE")
+Link: https://lore.kernel.org/qemu-devel/20260504213421.710035-2-clg@redhat.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit 534a52755befa7b8d49c921f8dc964185903efae)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
-index 9ecc026fae..20d2bc8b2c 100644
---- a/linux-user/sh4/signal.c
-+++ b/linux-user/sh4/signal.c
-@@ -57,7 +57,7 @@ struct target_sigframe
- 
- struct target_ucontext {
-     target_ulong tuc_flags;
--    struct target_ucontext *tuc_link;
-+    abi_ulong tuc_link;
-     target_stack_t tuc_stack;
-     struct target_sigcontext tuc_mcontext;
-     target_sigset_t tuc_sigmask;        /* mask last for extensibility */
-@@ -237,7 +237,7 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
- 
-     /* Create the ucontext.  */
-     __put_user(0, &frame->uc.tuc_flags);
--    __put_user(0, (unsigned long *)&frame->uc.tuc_link);
-+    __put_user(0, &frame->uc.tuc_link);
-     target_save_altstack(&frame->uc.tuc_stack, regs);
-     setup_sigcontext(&frame->uc.tuc_mcontext,
-                      regs, set->sig[0]);
+diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
+index 726368fbbc..c7a2731e38 100644
+--- a/hw/misc/aspeed_hace.c
++++ b/hw/misc/aspeed_hace.c
+@@ -154,6 +154,14 @@ static bool has_padding(AspeedHACEState *s, struct iovec *iov,
+                         hwaddr req_len, uint32_t *total_msg_len,
+                         uint32_t *pad_offset)
+ {
++    /* Need at least 8 bytes to read the total message length field */
++    if (req_len < 8) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: invalid request length=0x%" HWADDR_PRIx "\n",
++                      __func__, req_len);
++        return false;
++    }
++
+     *total_msg_len = (uint32_t)(ldq_be_p(iov->iov_base + req_len - 8) / 8);
+     /*
+      * SG_LIST_LEN_LAST asserted in the request length doesn't mean it is the
 -- 
 2.47.3
 
