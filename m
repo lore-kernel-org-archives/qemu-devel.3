@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFC98CD5BB3
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:38:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E0E1CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:38:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXYS-0004tv-Sp; Fri, 22 May 2026 17:37:17 -0400
+	id 1wQXXK-0000l1-NV; Fri, 22 May 2026 17:36:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXYM-0004UA-4o; Fri, 22 May 2026 17:37:10 -0400
+ id 1wQXVe-00088R-5X; Fri, 22 May 2026 17:34:25 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXYJ-0001BP-GL; Fri, 22 May 2026 17:37:09 -0400
+ id 1wQXVb-0007Zb-PK; Fri, 22 May 2026 17:34:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485634; bh=yBluAs/gE8DSO3TfUiji3YFG4b/s0M7RfG8jpYCyV4I=;
+ t=1779485632; bh=6kR7gBao9NuX7iqdiTNrrbJQYkU96/gbiBKN7W/fiB0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=cTgjcpJ8SedDgqrqlRaBnIEBkvF+lVX8J3zqXEk9CcaSt/74CTaV+GrpIWAbG5dAD
- ZtAG0I8yaRD3jjhOWbFd62XMOk21LnPXBrH4/5xYDm8UnCTg4L8Xbe1F9OmGUOacM+
- uHdu7kVWNMeOdrmx9NE4IKpbJS1fo3j3iZf5ySoCDGEj96H8G3A0xClLTrIKtjRzX3
- Y+gS+jT5xpJ/SwT6PdNNj6kOnlrMS7nVZwbRH1rl8VHfSHxAodfYz0TKeBDLr1tfSf
- nlpV92fpunlabZTem260ecneEPb1LgjLwDupezz3FYc+81unYtWX9QPu09ijEizJNk
- SA6rK+/CzGJ5w==
+ b=scWIIuz8eLlCOOoNSAAobS4/YvaB5rXrqwSFlg5LKvFyLSUnd+FFQR7ZDR8tFjkT3
+ BXdJsC1sjCDmMVh8zAlURau+ePi6inxo4g0EVhuKAnEo6jo0DTOlyrPrmHwF1u5MZ2
+ NwNIx/F/jq3jvq9F75qoCTM6BA5b95yLA4NlzpFhM6GZYELfr/GP6bLOOciab2N7eL
+ 9cdMXiDHXD6gtXTuQ4QYpVEgV35K47Bl/UFOMYOw3SPJNH0JjdmTAWqqgFrN9Xd/6Q
+ /sDmrk1KH4tRlT8ceOg7Q1QuNEsB18C9DkOxokp4J0nnsA9WlPNsaFBr55hPUoDEKf
+ HWJjBfJXNMmMg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 508841AFAEA;
- Sat, 23 May 2026 00:33:54 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 85D5A1AFACE;
+ Sat, 23 May 2026 00:33:52 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7384D3B7170;
- Sat, 23 May 2026 00:33:58 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id AA4A63B7154;
+ Sat, 23 May 2026 00:33:56 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 91/94] qemu-io: Add 'aio_discard' command
-Date: Sat, 23 May 2026 00:33:48 +0300
-Message-ID: <20260522213356.806058-33-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jeuk Kim <jeuk20.kim@samsung.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 63/94] hw/ufs: Keep MCQ SQs alive while requests are
+ outstanding
+Date: Sat, 23 May 2026 00:33:20 +0300
+Message-ID: <20260522213356.806058-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
@@ -68,154 +69,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Jeuk Kim <jeuk20.kim@samsung.com>
 
-Testing interactions between multiple requests that include discard
-requests require that qemu-io can do the discard asynchronously, like it
-already does for reads and writes. To this effect, add an 'aio_discard'
-command.
+MCQ requests are allocated with their SQ, but can remain in flight on the
+CQ list or in the SCSI layer after leaving the SQ free list.
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260427170520.101242-3-kwolf@redhat.com>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
-Tested-by: Denis V. Lunev <den@openvz.org>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 7f8466e2ce620e3c6a6e2f32d616367174d4dbe9)
+Reject runtime SQ deletion while any request is still outstanding, and
+use separate teardown helpers so device exit can still release MCQ
+queues after child devices have been unrealized.
+
+Fixes: 5c079578d2e ("hw/ufs: Add support MCQ of UFSHCI 4.0")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+(cherry picked from commit 619c2da19a05668dabe7912afb789e50b8635c4d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/qemu-io-cmds.c b/qemu-io-cmds.c
-index f6d077908f..de4c1966fe 100644
---- a/qemu-io-cmds.c
-+++ b/qemu-io-cmds.c
-@@ -2218,6 +2218,120 @@ static int discard_f(BlockBackend *blk, int argc, char **argv)
-     return 0;
+diff --git a/hw/ufs/trace-events b/hw/ufs/trace-events
+index 7734b35f08..6f7ea9c95f 100644
+--- a/hw/ufs/trace-events
++++ b/hw/ufs/trace-events
+@@ -44,6 +44,7 @@ ufs_err_mcq_create_sq_invalid_size(uint8_t qid) "invalid mcq sq size for sqid %"
+ ufs_err_mcq_create_sq_already_exists(uint8_t qid) "mcq sqid %"PRIu8 "already exists"
+ ufs_err_mcq_delete_sq_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
+ ufs_err_mcq_delete_sq_not_exists(uint8_t qid) "mcq sqid %"PRIu8 "not exists"
++ufs_err_mcq_delete_sq_busy(uint8_t qid) "mcq sqid %"PRIu8" has outstanding requests"
+ ufs_err_mcq_create_cq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
+ ufs_err_mcq_create_cq_invalid_size(uint8_t qid) "invalid mcq cq size for cqid %"PRIu8""
+ ufs_err_mcq_create_cq_already_exists(uint8_t qid) "mcq cqid %"PRIu8 "already exists"
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index 4ccd7aa64d..6548f0f637 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -556,6 +556,31 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
+     return true;
  }
  
-+static void aio_discard_help(void)
++static bool ufs_mcq_sq_has_outstanding_req(UfsSq *sq)
 +{
-+    printf(
-+"\n"
-+" asynchronously discards a range of bytes from the given offset\n"
-+"\n"
-+" Example:\n"
-+" 'aio_discard 512 1k' - discards 1 kilobyte from 512 bytes into the file\n"
-+"\n"
-+" Discards a segment of the currently open file.\n"
-+" -C, -- report statistics in a machine parsable format\n"
-+" -q, -- quiet mode, do not show I/O statistics\n"
-+" The discard is performed asynchronously and the aio_flush command must be\n"
-+" used to ensure all outstanding aio requests have been completed.\n"
-+" Note that due to its asynchronous nature, this command will be\n"
-+" considered successful once the request is submitted, independently\n"
-+" of potential I/O errors.\n"
-+"\n");
++    UfsRequest *req;
++    uint16_t free_reqs = 0;
++
++    QTAILQ_FOREACH(req, &sq->req_list, entry)
++    {
++        free_reqs++;
++    }
++
++    return free_reqs != sq->size;
 +}
 +
-+static int aio_discard_f(BlockBackend *blk, int argc, char **argv);
-+
-+static const cmdinfo_t aio_discard_cmd = {
-+    .name       = "aio_discard",
-+    .cfunc      = aio_discard_f,
-+    .perm       = BLK_PERM_WRITE,
-+    .argmin     = 2,
-+    .argmax     = -1,
-+    .args       = "[-Cq] off len",
-+    .oneline    = "asynchronously discards a number of bytes",
-+    .help       = aio_discard_help,
-+};
-+
-+static void aio_discard_done(void *opaque, int ret)
++static void ufs_mcq_free_sq(UfsSq *sq)
 +{
-+    struct aio_ctx *ctx = opaque;
-+    struct timespec t2;
++    qemu_bh_delete(sq->bh);
 +
-+    clock_gettime(CLOCK_MONOTONIC, &t2);
-+
-+    if (ret < 0) {
-+        printf("aio_discard failed: %s\n", strerror(-ret));
-+        block_acct_failed(blk_get_stats(ctx->blk), &ctx->acct);
-+        goto out;
++    for (int i = 0; i < sq->size; i++) {
++        ufs_clear_req(&sq->req[i]);
 +    }
 +
-+    block_acct_done(blk_get_stats(ctx->blk), &ctx->acct);
-+
-+    if (ctx->qflag) {
-+        goto out;
-+    }
-+
-+    /* Finally, report back -- -C gives a parsable format */
-+    t2 = tsub(t2, ctx->t1);
-+    print_report("discarded ", &t2, ctx->offset, ctx->qiov.size,
-+                 ctx->qiov.size, 1, ctx->Cflag);
-+out:
-+    g_free(ctx);
++    g_free(sq->req);
++    g_free(sq);
 +}
 +
-+static int aio_discard_f(BlockBackend *blk, int argc, char **argv)
-+{
-+    int c, ret;
-+    int64_t count;
-+    struct aio_ctx *ctx = g_new0(struct aio_ctx, 1);
-+
-+    ctx->blk = blk;
-+
-+    while ((c = getopt(argc, argv, "Cq")) != -1) {
-+        switch (c) {
-+        case 'C':
-+            ctx->Cflag = true;
-+            break;
-+        case 'q':
-+            ctx->qflag = true;
-+            break;
-+        default:
-+            g_free(ctx);
-+            qemuio_command_usage(&aio_discard_cmd);
-+            return -EINVAL;
-+        }
-+    }
-+
-+    if (optind != argc - 2) {
-+        g_free(ctx);
-+        qemuio_command_usage(&aio_discard_cmd);
-+        return -EINVAL;
-+    }
-+
-+    ctx->offset = cvtnum(argv[optind]);
-+    if (ctx->offset < 0) {
-+        ret = ctx->offset;
-+        print_cvtnum_err(ret, argv[optind]);
-+        g_free(ctx);
-+        return ret;
-+    }
-+    optind++;
-+
-+    count = cvtnum(argv[optind]);
-+    if (count < 0) {
-+        print_cvtnum_err(count, argv[optind]);
-+        g_free(ctx);
-+        return count;
-+    }
-+
-+    clock_gettime(CLOCK_MONOTONIC, &ctx->t1);
-+    ctx->qiov.size = count;
-+    block_acct_start(blk_get_stats(blk), &ctx->acct, ctx->qiov.size,
-+                     BLOCK_ACCT_UNMAP);
-+    blk_aio_pdiscard(blk, ctx->offset, count, aio_discard_done, ctx);
-+
-+    return 0;
-+}
-+
- static int alloc_f(BlockBackend *blk, int argc, char **argv)
+ static bool ufs_mcq_delete_sq(UfsHc *u, uint8_t qid)
  {
-     BlockDriverState *bs = blk_bs(blk);
-@@ -2800,6 +2914,7 @@ static void __attribute((constructor)) init_qemuio_commands(void)
-     qemuio_add_command(&length_cmd);
-     qemuio_add_command(&info_cmd);
-     qemuio_add_command(&discard_cmd);
-+    qemuio_add_command(&aio_discard_cmd);
-     qemuio_add_command(&alloc_cmd);
-     qemuio_add_command(&map_cmd);
-     qemuio_add_command(&reopen_cmd);
+     UfsSq *sq;
+@@ -572,9 +597,12 @@ static bool ufs_mcq_delete_sq(UfsHc *u, uint8_t qid)
+ 
+     sq = u->sq[qid];
+ 
+-    qemu_bh_delete(sq->bh);
+-    g_free(sq->req);
+-    g_free(sq);
++    if (ufs_mcq_sq_has_outstanding_req(sq)) {
++        trace_ufs_err_mcq_delete_sq_busy(qid);
++        return false;
++    }
++
++    ufs_mcq_free_sq(sq);
+     u->sq[qid] = NULL;
+     return true;
+ }
+@@ -617,6 +645,12 @@ static bool ufs_mcq_create_cq(UfsHc *u, uint8_t qid, uint32_t attr)
+     return true;
+ }
+ 
++static void ufs_mcq_free_cq(UfsCq *cq)
++{
++    qemu_bh_delete(cq->bh);
++    g_free(cq);
++}
++
+ static bool ufs_mcq_delete_cq(UfsHc *u, uint8_t qid)
+ {
+     UfsCq *cq;
+@@ -640,8 +674,7 @@ static bool ufs_mcq_delete_cq(UfsHc *u, uint8_t qid)
+ 
+     cq = u->cq[qid];
+ 
+-    qemu_bh_delete(cq->bh);
+-    g_free(cq);
++    ufs_mcq_free_cq(cq);
+     u->cq[qid] = NULL;
+     return true;
+ }
+@@ -1884,12 +1917,14 @@ static void ufs_exit(PCIDevice *pci_dev)
+ 
+     for (int i = 0; i < ARRAY_SIZE(u->sq); i++) {
+         if (u->sq[i]) {
+-            ufs_mcq_delete_sq(u, i);
++            ufs_mcq_free_sq(u->sq[i]);
++            u->sq[i] = NULL;
+         }
+     }
+     for (int i = 0; i < ARRAY_SIZE(u->cq); i++) {
+         if (u->cq[i]) {
+-            ufs_mcq_delete_cq(u, i);
++            ufs_mcq_free_cq(u->cq[i]);
++            u->cq[i] = NULL;
+         }
+     }
+ }
 -- 
 2.47.3
 
