@@ -4,113 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9000CD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 19:00:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37FECCD5BAC
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 19:01:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQV6i-0003Vo-SZ; Fri, 22 May 2026 15:00:28 -0400
+	id 1wQV7o-0003pw-Df; Fri, 22 May 2026 15:01:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wQV6g-0003VL-IM
- for qemu-devel@nongnu.org; Fri, 22 May 2026 15:00:27 -0400
-Received: from mail-vs1-xe29.google.com ([2607:f8b0:4864:20::e29])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wQV7k-0003nq-3D
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 15:01:32 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wQV6e-0003I2-7A
- for qemu-devel@nongnu.org; Fri, 22 May 2026 15:00:25 -0400
-Received: by mail-vs1-xe29.google.com with SMTP id
- ada2fe7eead31-63319183a49so2900791137.2
- for <qemu-devel@nongnu.org>; Fri, 22 May 2026 12:00:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779476422; cv=none;
- d=google.com; s=arc-20240605;
- b=SjZsC0rv0jqR3sM21X8I0F0uxXSQYKdWaQSYRMEBKZ4lSjyYi4Hb5L20RvBYmT3Jp5
- 2B5A8QEA45aoD1QPMu15dlEeWztvYQUeL5/Uu0qlLBHPM/aTSpqEKQHKiqHoVzpNpM39
- m6Gw/BnvFzR7GeL6SK1EDE9tgN9Rfcu+Rx7Hu6mPleGEP2/qlpWLOT5HpvnIE6yKICuA
- 1qVRp5A4oKl2cvEAzIWzXJZhC539IclV9JFh1iv9H2gsM8v6z/P1AK23WQQSWShG2msl
- QQrs1FuEpUPZzDRYvOKGUo2heKIPc+/ZcCRH975mildrabdv69MJ8Gj8bdI1f0ojnUM9
- iY/g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=LJPeMxwkiPLkjOpP3U+cEXz9Tpfn/aQoOcSM8gtHfRs=;
- fh=GTUPsNBhrKhcIgApgfu77UrsCgak6ozDr4MrYCEd4bk=;
- b=Ie9r/66GvcuAbpOSOvih/90Tfvj0+V+mMasdKI39NLRnw8ovdR9S4XQ3eCaZJMYuaR
- ve8J3fLvyCJrcOXlUPzJtWKso/1OncJoTi+GBL9Pl6etm86BoqQNilNoE9X/xwhCji92
- oC0DZlTFqL90hiDelPUi0WcmR7pLzARe9IAa184mhFD7yH8eOFpPWhoX1PFeLdW6p7dX
- sOLnhcc6St2kVgyMdv61b9RK/wpEe3lWCPl2klQ3DZfK9UpyzBhlT8emJBKHwn7YseF8
- ZQVaGMo3Tj0pMMTzUpfVOYjm9rCqcapgj+/+OtSwy/AbqgxD7SR2QClMmeclNBFjo69U
- tOUA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wQV7h-0003fR-KD
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 15:01:31 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-83ec36a13e9so3838577b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 22 May 2026 12:01:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779476422; x=1780081222; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LJPeMxwkiPLkjOpP3U+cEXz9Tpfn/aQoOcSM8gtHfRs=;
- b=Poyh0TVXeWB7AU3RNuM5oVi/R0qJNY4zvBcX6UojAzVD9sg30viBeOUE8/ckgBkj7C
- O9F25kBC3I2D0ibxuOCLXxbocH8uDcG0d7JOAXS35b6OfLg5Q05DyNDO/X0ml1fQTQqv
- joEMvgYTgMO8lySWMjTKg/KtOdrhmmgM0CaaggdYj5O1CGl/zF8dM3u4qFzG8dHx9lUV
- p1+w1S9XcSh8xfBtxezkLJu/fF/AYegFPE2jVIg/f0MUcvijoCrJME6hldXG9QDWkCcC
- SCWSsDOYE0kr7IQpiZICsWzNSv1lNWUhSH9twarQDg6eT7sCdhBq2PZr0JISVgVp2hsl
- uLTg==
+ d=linaro.org; s=google; t=1779476488; x=1780081288; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=U9tzhWUk1KOVQ6fQ6Hxfk6N0dM12WxUlPD7OOJcV4+k=;
+ b=eKCJv/wHALkRytg9hiLq1UkPoxsamJ1OZ4/zhx0YamRlplY0HMEZ67OoTsoVeYu/7W
+ Tp7dcBoaW28e7tk0c0riQ9HconvNrWruKXgL/sNVO6l+Ex2whmg2h+r6i8NCxTHZdmYl
+ vSmhae064V2+7cwNb4CZnhUSGmEZEGBWazuLq9R+38w8gJwn3cqlsSCIF+4orGgdNLf4
+ xcu4hcf/PRBu2xs1yo+XPZX5fwqJyD5MPS1HYKdmIMm0IwvVoj8inEuSLlG1UIUEhBIf
+ +42Tqt6PQuOfY7dwL8xEJJsuiGpBM+kA91X3+23gdsgTTIDkn4E16Gpr6DlfQ3PfAbDV
+ xLqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779476422; x=1780081222;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=LJPeMxwkiPLkjOpP3U+cEXz9Tpfn/aQoOcSM8gtHfRs=;
- b=Uvp0njfkzmP8GsJTYxySx1u0xoz9QEvWObg+VKe1Sr7lAe9d8ytKSi64YHHiCk+wGT
- xbLC62R/pRsugzpc7ZXlyB7o6c5BWyBqIC7dOAghQ0SlsoUf8bOrfnQrjXqrx/7eI2IQ
- HMLMOK9XdEMKDoaQX1oeucfORpah2uWumhbamSmlrxbKSccJE651DDDeQlulJc6t06oU
- v5UHx0RnWF0Asz8Xp7SG3u/2w5l1zXn1BnLMhN7HsstuyjftXnstOcYAAYDWJyaBv+Yo
- fYRtG2rGTSsuX3A1ByW0kx7ZQ9pdwBQpcXpKh1dF878pmF9IscTBh73lxxfqWCd2No3P
- hnaQ==
-X-Gm-Message-State: AOJu0YwHYTAY+uP2l4x1Bu+UIjLGxzxH25HhtOjMbjpWghzxx5Nbzbu7
- cqakrT7sHIXg8HUmC3kA/yVPSEJXUwEuVtajjFJ/yc19zzWaZCTyu6KCiHdr5TfMr6NGY56KyuP
- s6s3amrDVv7kRheR+18bRaDal8p8IgQE=
-X-Gm-Gg: Acq92OESA7SI7J12ZMYF8ryOGrhEFBz55jUf5MDuh+6XI+0uVq79ouz3f6V74pfHvo5
- 4n8rCOGoC2zFsk6Hc5MOt8FoMSJj4AnGnpzj53H6PK85iMAriJydWfyv2R9+wQZXtbptPq7gpEm
- H+5/BntXZw17wNpufWTYWAqNZtFI9BR0u2n3XQPuOCcDAr9QXRRlofjTJlQYL46mzRTAkpA1lv7
- yMKJiJ9PW44agyn4av3VKsds2kjIrlpBOo1L0dzq8MIW6ZDo/GEt2DEH1/oCLxL+UN9LbklS8Jd
- SqiLd852vq9X/12f/LnXSYfoHwLpCT8d9IfwBNLGWFG2LXJ4mg/N1tqcAlrY1TWbzlu8xT1EfII
- 9O9s=
-X-Received: by 2002:a05:6102:15a0:b0:632:425e:85eb with SMTP id
- ada2fe7eead31-67c7f83b985mr2645037137.21.1779476422386; Fri, 22 May 2026
- 12:00:22 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779476488; x=1780081288;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=U9tzhWUk1KOVQ6fQ6Hxfk6N0dM12WxUlPD7OOJcV4+k=;
+ b=T7Q6QUHhgSs5wgUWkXGbjZlycInpENvbeqtyXtX0X+J9FNPW945nSd9eXDzl5Eo5dz
+ 4okAXzduIhXLnLmUjjRfykHtbdwnM8WZx9ijg8N8B+zKCRmK4meYfY+DXn5eYG5wnatv
+ sl6SbGCGPsPmoK0s472rz+L1N7oBIc0LGaEvs/34mS4i/VCdLnOWn5CK8oJX9zh74Maz
+ IxgUbYaea6c9K3gZHEgjxhqpoHj+jWNsgf88k65gQOxqDnGfiJZLTphYoNiRuWEXX+PA
+ IvC1JPpbp/0jNS63DGj5uy1yr08VoXz+eC+i8dQ3ijJqGz3lxCmuN8q+OILj8QFQFUwP
+ ZffA==
+X-Gm-Message-State: AOJu0Yy1wc9+ftl7KvBd76lREe9M/mAHdrteO8HVUDze8hCR08YATZF1
+ numj515twBnnIRcAYejvn8zMmqYBlQov+Y+itGfg+YsWyPvK08LG6AdaSpatuG+BUeU=
+X-Gm-Gg: Acq92OHVVEE3a6OzozhVzS7zZzSllSXoSGVPb4E78be7YU739h4PFM8aeERe3qSy1tf
+ DJQFH53x+lR2W6E+zdcy4qG3TGhKWAlop0vhjHDnM0VrOYEJ93QrmcFX36fDrxEP6BmJDhNWTCK
+ 1G+IG1PWEMXIFJecbeeFs6ZFGaGv89U/dyDK2vL/Th/f9ykdSKgDYGr0lLKwThdUtk8BBB/cSOn
+ uHxCaxwNmmEQOprKFv/fVvZn26Z4bYz4fA7r60cZWqEsDdD43TQZXUArNNzA8I1aADTyeYV6RsB
+ CSc9dAXIigbh5z64IZo0KFIfg6gVEkA46NP9IcwCUpFGaPGxKd8fAj190X8PFWwHkOQMR1uDSGc
+ yWQptHCzGhTDrrEfe6APSCoaRX8v/y9T8oDn29nYCfNRidEO6Tqx9x1ouAAuct3EIpwMaYnSRtL
+ o5BSES8MWGMu/gmRI+/wKXQXeEdMajcprpuMP2TrP5
+X-Received: by 2002:a05:6a00:2d8c:b0:82f:29fe:7239 with SMTP id
+ d2e1a72fcca58-8415f5bf78dmr4584630b3a.50.1779476487667; 
+ Fri, 22 May 2026 12:01:27 -0700 (PDT)
+Received: from [192.168.64.111] ([50.78.183.177])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-84164fb00b6sm3316173b3a.40.2026.05.22.12.01.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 22 May 2026 12:01:27 -0700 (PDT)
+Message-ID: <4cb0aec7-dd0e-4308-9600-b802bd16a74d@linaro.org>
+Date: Fri, 22 May 2026 12:01:25 -0700
 MIME-Version: 1.0
-References: <20260521-mips-octeon-missing-insns-v2-v14-0-fbf08e164830@gmail.com>
- <20260521-mips-octeon-missing-insns-v2-v14-20-fbf08e164830@gmail.com>
- <942c3ac5-9e27-4dca-9d56-02a19f9edd00@linaro.org>
-In-Reply-To: <942c3ac5-9e27-4dca-9d56-02a19f9edd00@linaro.org>
-From: James Hilliard <james.hilliard1@gmail.com>
-Date: Fri, 22 May 2026 13:00:10 -0600
-X-Gm-Features: AVHnY4L05i_kFaN9MwGLUoLisIWxirzALYJQnZPgb2mbAiHE6Qe8QNSDmc2P6CU
-Message-ID: <CADvTj4qwzxKpJwj=188m0k1r6q=+5GTe5CjBAwHScwGx+0ozLg@mail.gmail.com>
-Subject: Re: [PATCH v14 20/22] target/mips: decode Octeon CHORD and LLM COP2
- selectors
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
- Helge Deller <deller@gmx.de>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Aurelien Jarno <aurelien@aurel32.net>, 
- Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e29;
- envelope-from=james.hilliard1@gmail.com; helo=mail-vs1-xe29.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 10/64] target/arm: Enable EnFPM bits for FEAT_FPMR
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20260520182213.872945-1-richard.henderson@linaro.org>
+ <20260520182213.872945-11-richard.henderson@linaro.org>
+ <CAFEAcA8ibw4o3R6eJdtupAc8o0Tk2N5iWahDHwbuCdoCLKK5CQ@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA8ibw4o3R6eJdtupAc8o0Tk2N5iWahDHwbuCdoCLKK5CQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,66 +104,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 22, 2026 at 9:40=E2=80=AFAM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 5/21/26 22:20, James Hilliard wrote:
-> > Add explicit decodetree entries and translator bindings for the Octeon
-> > CHORD and sparse LLM COP2 selectors.  CHORD and LLM use their own COP2
-> > selector window rather than the crypto engine windows covered by the
-> > preceding decode patches.
-> >
-> > This completes the explicit COP2 selector coverage by adding the
-> > remaining CHORD and LLM register and operation selectors.
-> >
-> > Signed-off-by: James Hilliard<james.hilliard1@gmail.com>
-> >
-> > ---
-> > Changes v13 -> v14:
-> >    - Leave the CP2_Undef fallback in the register-selector patch and ke=
-ep
-> >      this patch limited to CHORD/LLM selector additions.
-> >
-> > Changes v9 -> v10:
-> >    - Split CHORD/LLM selector decode out of the monolithic Octeon COP2
-> >      selector decode patch.
-> >    - Kept sparse LLM operations helper-backed.
-> > ---
-> >   target/mips/tcg/octeon.decode      | 13 +++++++++++++
-> >   target/mips/tcg/octeon_translate.c | 13 +++++++++++++
-> >   2 files changed, 26 insertions(+)
->
-> Not present in the documentation I have, but it looks ok.
+On 5/21/26 07:15, Peter Maydell wrote:
+> I think we also need arm_emulate_firmware_reset() to
+> set SCR_ENFPM, so we get the "emulating EL3 but starting
+> guest at EL2" case right.
+> 
+> Otherwise
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-I checked this more closely. The CN50XX/CN71XX manuals document RDHWR
-$30 as ChOrd. The SDK and this series use the all-caps CHORD spelling
-for the same local pending tag-switch bit. I do not find the legacy
-DMFC2 0x0400 alias in the manuals.
+Yep, thanks.
 
-Mainline Linux uses that same CHORD spelling for the RDHWR path:
-
-https://github.com/torvalds/linux/blob/v7.0/arch/mips/include/asm/octeon/cv=
-mx-pow.h#L1302-L1331
-
-The LLM selector bank also appears to be SDK/kernel ABI rather than
-public-manual material. Cavium SDK cvmx-asm.h defines the
-0x0400/0x0401/0x0402/0x0404/0x0405 + 8*set LLM selectors, and
-cvmx-llm.h uses those selectors for narrow/wide LLM accesses while
-documenting the 36-bit data/xxor format. Mainline Linux's Octeon
-context switch code also saves/restores LLM state through DMFC2/DMTC2
-selectors 0x0402 and 0x040a:
-
-https://github.com/torvalds/linux/blob/v7.0/arch/mips/kernel/octeon_switch.=
-S#L111-L117
-https://github.com/torvalds/linux/blob/v7.0/arch/mips/kernel/octeon_switch.=
-S#L276-L280
-
-So RDHWR $30 is the documented ChOrd/CHORD path, while the DMFC2 CHORD
-alias and the LLM selector bank are SDK-visible compatibility
-interfaces.
-
->
-> Acked-by: Richard Henderson <richard.henderson@linaro.org>
->
-> r~
+r~
 
