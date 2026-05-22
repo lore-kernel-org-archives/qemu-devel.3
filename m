@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 694B1CD5BB8
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 22:40:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27B9CCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 22:41:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQYX8-00022o-G6; Fri, 22 May 2026 18:39:59 -0400
+	id 1wQYXw-0002yS-KO; Fri, 22 May 2026 18:40:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wQYX3-00022S-SP
- for qemu-devel@nongnu.org; Fri, 22 May 2026 18:39:54 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1wQYXu-0002q7-QP
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 18:40:46 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wQYX2-0003D0-ET
- for qemu-devel@nongnu.org; Fri, 22 May 2026 18:39:53 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-82f8b60e54dso6432637b3a.2
- for <qemu-devel@nongnu.org>; Fri, 22 May 2026 15:39:51 -0700 (PDT)
+ id 1wQYXt-0003la-BJ
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 18:40:46 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-c802803ac17so3420303a12.1
+ for <qemu-devel@nongnu.org>; Fri, 22 May 2026 15:40:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779489590; x=1780094390; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779489644; x=1780094444; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=WYObwEGuwjFu6HWXLH6zCd+BUf+/exQmWJ0x6uFP+3E=;
- b=PiQ1xb50/ByLCrklZwC1DvXHJ0yTYckZ7nfzofr/oSXqcaa/CBkPBItb48Z8KPnpkQ
- ad6+L2lwi6Df3bQ09g8PzlGK6YxUGdZkN0rg1fuYx7+HHJynCEEUpz15RJn2C7fIZuw7
- 86Kz08Kio6dKU/T1cqQ6j0dN9GBreYukBj6RYrZ/QPkfW8nhI0KNo4XkW9riuWepFjaQ
- YlhH+dmJtN4Wn3vWDSN74ifqcMVScl/ep0kpit4uk9JFK8C8zUnQGQykkzgIwZXk5pA2
- LzQYYIFE+srTtxIpwjRfInbjV1qgLdsxTDwbQn4rNOnVmEHtxblExrwv3/eorwx2FRHo
- LgUg==
+ bh=kYpd/LWiIrI+H+PVI/rDALSVpo+bcl6LfFkxhaTeeNE=;
+ b=AsLtfRvuUzoyJLjbKsY+8yT67cR1KZE3bi6ZVes8diiih/q6LfCntT6yScNvIinnh6
+ hERau2XuPvPOHgW+LiR2za60KpyXnNXss5yjKn2+mr85odhJs6ji0r6PGAFfhsZcqCcn
+ FtoCXf0TtAdqn9feDGwgRv477zy0suL/SKwt1BaECYur8ZBjW+3957GsYI8oRK2OiPkQ
+ Hjn3oV/s6EK0kfqDXsKZOaULHX2O0V8e36MPPt+tLoLPBKGOB4qrMiNjyvLoIPcqD6oo
+ 83amP5Fvq4QyP0gJupSfu6oNfDTJYFH+bN5wwwdZ3Lr9zlKW1Q9oG6QrVAU8hH9i2LSw
+ nRTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779489590; x=1780094390;
+ d=1e100.net; s=20251104; t=1779489644; x=1780094444;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=WYObwEGuwjFu6HWXLH6zCd+BUf+/exQmWJ0x6uFP+3E=;
- b=IDwwGIljIOISj9SHTr3u0x8M7NpyKiFUsjr9EwEWXNgBR2FUJu5k5ho/x8ZPHzqEF0
- AiSiLvlahGifuzuyE0FNEUGfXiQUUKgHaewfWm2po3VnnXYueHrRPlveItLfg3Nz6NG7
- vL0KCSiHT1B1hzLSdHED/XqZulltldl7/VHBcA0K+GEemUgyMMh/NT05Oc+kv3a38o10
- 7SXnlxKEpmiNGLNDcso81mxdmJm+IMexrlaEVfvZa01n04WRkK9MJ7QIXw0GHpI7rbKf
- yKqQXJaz/td9vO5674R8eklqTSy6p2TY5isAuqrBnDucY/wiit/OvOsiyiEPIIBNCPay
- 28sw==
-X-Gm-Message-State: AOJu0YzqO0T95I3Ct1uiCDJGdF1JzudsisiCdcgaDvzHJh0zTAN79eFs
- BQcLH9aPm+hxilGPPlZC4ys8DJWFHmMAS3EkILInxtGnvG+Y3NJCQztDttgJIZW47b37ULbtv7Z
- liYs8
-X-Gm-Gg: Acq92OF7bAPyWyr8J0orM8MohHLszDaLI7yWXndHjyZRFz9cGoy7NTKVpSyj0QNsHWG
- hK+OeGd6F4/w53kVvNpGSSkUJQz6jL6g788oI2JPQiTJ9fcsUK015CEJVeubAP558OoEhN2vred
- FOtFibh05pt+8ylMEtP4biONIxpf5BrkG0mXAGxTi+KSG3ZwgJkhqTJdIuhbzrhxdmwjrw/Ydp4
- BWysqgwdvPsBJgPIZ5/14wYozJdBJwqt/SeJwDrEHg5TpuYcV2m9Gx7V15/PestG0bkQMYhOC/v
- RXitY7QSwwAx5Ae9GthK+tFZq+yvHmrGNh93yQ++VddR8saVjS57AcRi+CX2LDeZ8XbhpM6+V8Z
- IE7TEOJcHcya9liezj0iBrluyTw1vM1ochqJtvDSifIzIfcc0W87QSzeI4vJdeNgWkOr9P+kRXI
- BBFhTzWB8zkh5PYbJc11HBeLO9bpYnFzE9BYbkkHJV
-X-Received: by 2002:a05:6a00:438b:b0:837:db4e:a35d with SMTP id
- d2e1a72fcca58-8415f32f292mr5584103b3a.23.1779489589921; 
- Fri, 22 May 2026 15:39:49 -0700 (PDT)
+ bh=kYpd/LWiIrI+H+PVI/rDALSVpo+bcl6LfFkxhaTeeNE=;
+ b=hm7CFgh0HcHSkqwrt04wULZe3czTIBgWCfTI9Wl55Mybfda1+pmpNv5nlyyCKSVey8
+ Q+jH8uuy1ZCffZW5hg2XM6WZiz8iacuqcPbMrfNu/7B+hU4MYsCO02jt29IXj1fZt/Nb
+ nsSbYn2qkZbQP6CbU1R4cy7IpwYP0Mly3QGtuIHW8OffOZCVGD64chrcdXQwARvBcRvS
+ lsKF4nQrI2HDmE56G+uQuDv7WgztriCmUN3SY5/VQygAImApQYEm6gkDsA6QvyEeOwbA
+ 52E/F0NeVJI6HowxeXIxqxW6dksJpaVt9w3FXXuaPWj3LzjmwXDj4p/hQIrJRQP6G35e
+ AEDw==
+X-Gm-Message-State: AOJu0YyNRAzwK1arbFu4Sq0yzLrt2+6BfdJJHiMArYOxoy5telS/1d8t
+ yFEs4f4F8hho27kUKO70vv1llgxA2Av9J0ABI/Z1pdJTv7STz2vKKQ1SZfNrGX7en+7W2wxseHl
+ JwDYj
+X-Gm-Gg: Acq92OE4urQgMsu9kgYAYfiPllCG9UU5E2173RDEB8vGCwzRkDNxnPAXQR0cbYfSBht
+ 9nVijxpHwqj90/X4OLbG3NwstvZz7pwgGc9KFmU/0Y9rr0k6VKPbHxfAEW2xzvQcEanE0yEf8k7
+ 367H44bN0W+ZIEqoO+z8ulD796vHOBplCTBTdsJElvWQtO3Ihc3GjaL3zO3OyF0DXojKTauO1w1
+ wUPJ6oFlQkgsCqajr///H5oiJTJXfVNtZ5LyGE7tP0Gqq8TGkSfmCfyZT1t+AvT36fCDrIijDYS
+ h10NbdgUW5omiqqkhE1wqFAaMBoxB81Lya+m/xU6wy0rmicgAJx25USWJuuW84OujyLTx+neK2e
+ w+MMmufQDPcUXKOkoAHx6k8hQNn6GPmMkKcf38v4FTlareNq5RYTPwREcYoQN1Kz+I5NHuF67Ek
+ 6mdAS4lZMMFCSzNRdJjn7htvCY3D+JqZdxXF37qrNVP0pKnoZY2Rc=
+X-Received: by 2002:a05:6300:2109:b0:39b:81bf:15ed with SMTP id
+ adf61e73a8af0-3b328fb1b64mr5843996637.52.1779489643706; 
+ Fri, 22 May 2026 15:40:43 -0700 (PDT)
 Received: from [192.168.64.111] ([50.78.183.177])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-84164aca86asm2811945b3a.7.2026.05.22.15.39.48
+ 41be03b00d2f7-c852058557bsm2417886a12.30.2026.05.22.15.40.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 22 May 2026 15:39:49 -0700 (PDT)
-Message-ID: <435a5b39-48ee-4b74-86a3-86d5f00ea169@linaro.org>
-Date: Fri, 22 May 2026 15:39:47 -0700
+ Fri, 22 May 2026 15:40:43 -0700 (PDT)
+Message-ID: <00b09bfc-7cd9-411a-8732-4a36ae3b0230@linaro.org>
+Date: Fri, 22 May 2026 15:40:41 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/14] hw/riscv: Add macros and globals for simplifying
- machine definitions
+Subject: Re: [PATCH v3 04/14] hw/core: Add riscv[32|64] to "none" machine
 To: qemu-devel@nongnu.org
 References: <20260520-hw-riscv-cpu-int-v3-0-d1123ea63d9c@rev.ng>
- <20260520-hw-riscv-cpu-int-v3-2-d1123ea63d9c@rev.ng>
+ <20260520-hw-riscv-cpu-int-v3-4-d1123ea63d9c@rev.ng>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260520-hw-riscv-cpu-int-v3-2-d1123ea63d9c@rev.ng>
+In-Reply-To: <20260520-hw-riscv-cpu-int-v3-4-d1123ea63d9c@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,31 +105,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/20/26 06:12, Anton Johansson via qemu development wrote:
-> +extern InterfaceInfo riscv32_machine_interfaces[];
-> +extern InterfaceInfo riscv64_machine_interfaces[];
-> +extern InterfaceInfo riscv32_64_machine_interfaces[];
+> Reviewed-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
+> Signed-off-by: Anton Johansson<anjo@rev.ng>
+> ---
+>   hw/core/null-machine.c | 3 +++
+>   1 file changed, 3 insertions(+)
 
-const.
-
-> +InterfaceInfo riscv32_machine_interfaces[] = {
-> +    { TYPE_TARGET_RISCV32_MACHINE },
-> +    { }
-> +};
-> +
-> +InterfaceInfo riscv64_machine_interfaces[] = {
-> +    { TYPE_TARGET_RISCV64_MACHINE },
-> +    { }
-> +};
-> +
-> +InterfaceInfo riscv32_64_machine_interfaces[] = {
-> +    { TYPE_TARGET_RISCV32_MACHINE },
-> +    { TYPE_TARGET_RISCV64_MACHINE },
-> +    { }
-> +};
-
-const.
-
-Otherwise,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
