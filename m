@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1071CCD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:51:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFD1BCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:51:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXlk-0001FX-W4; Fri, 22 May 2026 17:51:01 -0400
+	id 1wQXlj-00018o-CY; Fri, 22 May 2026 17:50:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXlU-0008Rm-QI; Fri, 22 May 2026 17:50:45 -0400
+ id 1wQXlR-0008Fc-4i; Fri, 22 May 2026 17:50:41 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXlS-0003Vl-LO; Fri, 22 May 2026 17:50:44 -0400
+ id 1wQXlM-0003KZ-G7; Fri, 22 May 2026 17:50:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486560; bh=UhI+KDjAYlhcfCiXgj3KBHxzGA1hM+W7e3Oe7frWppQ=;
+ t=1779486560; bh=JIKFRlQIwK1/FxLkJ2ppK44nheMtdlfIIxo/AMV79x0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=f9OPfOvnoA+u62/6PyOHpmqrDV80vyeQH253e8hd+l/DgwQfP2IX+sqENxWCkTdBD
- AhJ36ZMhkdpFuXu1nA79X7VMYqFDHKoMcXYi5nwLxt6YVtqpa0x+fxWzn55EksU2w8
- Hhnic9vzkT+ZQdKBJlXCNxhkQfmv90LLXpulYT9sHD6PoNGduEVErKYJb9Rvgzi92l
- olo/EAsVwbpZhNJYhzP1zUHtT0u1IKgEJyKC10/p8JDhshwlC8KHYEJlvzTdkmAi0k
- UZai5JrZilKMoIks0KVqIxlSpLZjXMMqLMz9ZBPotcuZy4eQhrMexniIYgbjtXiKgs
- 07zjPERoeMtBA==
+ b=MCyeqW5d42ecFwGSZUTC4s6fxFkgR70jbIlDLkmDFKSY8oKWBYG54G+emJOxA8AnA
+ L08BTetXLLD+wT2a4336//Sq2p8mVofBqTZBx4h5GGfr9er2/Jk5tkVJ+dFp9a8Wko
+ o1kJMLiqN5RVYIxpBKpy07tDlG2a6od3O6mCnwMkef4++Z7htxaM4EIW6KA21B9D0c
+ Jlc8MHQeM3VsB5A3dDrd1ufJGkSbKQQmeC9jsu6mo6sm3+pCgk1pk7MgcpoXPKth8X
+ Lj8cPGlOZ0oU4RmDZzk6XChmhtRT952GHUi/9CLgqr4oZESApEFgBH23NNbz1U+6gl
+ +oW/AYyrHF69w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4F5871AFB6C;
+ by isrv.corpit.ru (Postfix) with ESMTP id 168BB1AFB69;
  Sat, 23 May 2026 00:49:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 762393B71BB;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 345AE3B71B8;
  Sat, 23 May 2026 00:49:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Feifan Qian <bea1e@proton.me>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Katherine Leaver <katherine.j.leaver@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 118/149] hw/uefi: check auth.hdr_length minimum size
-Date: Sat, 23 May 2026 00:48:50 +0300
-Message-ID: <20260522214923.807017-19-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 115/149] hw/uefi: add name_size check to
+ uefi_vars_mm_lock_variable()
+Date: Sat, 23 May 2026 00:48:47 +0300
+Message-ID: <20260522214923.807017-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,61 +72,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Gerd Hoffmann <kraxel@redhat.com>
 
-auth.hdr_length maximum is already checked (against buffer size).  The
-header has some fixed fields which are included in the header length, so
-there also is a minimum size which must be verified.  Add a check for
-that.  Fixes possible integer underflow.
+Make sure the total variable_policy_entry size stays below
+64k so the (16-bit) size field can not wrap.
 
-While being at it replace the magic number '24' with sizeof calculations
-for better code documentation.
-
-Fixes: CVE-2026-8341
-Fixes: f1488fac0584 ("hw/uefi: add var-service-auth.c")
-Reported-by: Feifan Qian <bea1e@proton.me>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Fixes: CVE-2026-41438
+Fixes: db1ecfb473ac ("hw/uefi: add var-service-vars.c")
+Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260512060523.17493-1-kraxel@redhat.com>
-(cherry picked from commit b33fd8ab1caa07aeb290ef5dac44a4e7fd4be02b)
+Message-ID: <20260422092910.444997-5-kraxel@redhat.com>
+(cherry picked from commit c45b460d16f991ff3f753623f3423e1adc4077a2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-auth.c b/hw/uefi/var-service-auth.c
-index 795f2f54e4..f3dc9c6ca6 100644
---- a/hw/uefi/var-service-auth.c
-+++ b/hw/uefi/var-service-auth.c
-@@ -194,7 +194,7 @@ static efi_status uefi_vars_check_auth_2_sb(uefi_vars_state *uv,
-         return EFI_SUCCESS;
+diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
+index 922f6dd963..d7187e006d 100644
+--- a/hw/uefi/var-service-vars.c
++++ b/hw/uefi/var-service-vars.c
+@@ -629,6 +629,9 @@ uefi_vars_mm_lock_variable(uefi_vars_state *uv, mm_header *mhdr,
+     if (mhdr->length < length) {
+         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
      }
- 
--    if (auth.hdr_length == 24) {
-+    if (auth.hdr_length == (sizeof(auth) - sizeof(auth.timestamp))) {
-         /* no signature (auth->cert_data is empty) */
-         return EFI_SECURITY_VIOLATION;
-     }
-@@ -228,6 +228,9 @@ efi_status uefi_vars_check_auth_2(uefi_vars_state *uv, uefi_variable *var,
-     }
-     memcpy(&auth, data, sizeof(auth));
- 
-+    if (auth.hdr_length < (sizeof(auth) - sizeof(auth.timestamp))) {
-+        return EFI_SECURITY_VIOLATION;
++    if (sizeof(*pe) + lv->name_size > UINT16_MAX) {
++        return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
 +    }
-     if (uadd64_overflow(sizeof(efi_time), auth.hdr_length, &data_offset)) {
-         return EFI_SECURITY_VIOLATION;
-     }
-diff --git a/hw/uefi/var-service-pkcs7.c b/hw/uefi/var-service-pkcs7.c
-index c859743e86..8a1f1395a2 100644
---- a/hw/uefi/var-service-pkcs7.c
-+++ b/hw/uefi/var-service-pkcs7.c
-@@ -113,9 +113,9 @@ static gnutls_datum_t *build_pkcs7(void *data)
  
-     memcpy(&auth, data, sizeof(auth));
-     pkcs7 = g_new(gnutls_datum_t, 1);
--    pkcs7->size = auth.hdr_length - 24;
-+    pkcs7->size = auth.hdr_length - (sizeof(auth) - sizeof(auth.timestamp));
-     pkcs7->data = g_malloc(pkcs7->size);
--    memcpy(pkcs7->data, data + 16 + 24, pkcs7->size);
-+    memcpy(pkcs7->data, data + sizeof(auth), pkcs7->size);
- 
-     wrap_pkcs7(pkcs7);
+     uefi_trace_variable(__func__, lv->guid, name, lv->name_size);
  
 -- 
 2.47.3
