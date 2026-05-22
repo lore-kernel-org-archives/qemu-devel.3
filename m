@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59E50CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:37:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E18D5CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:37:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXXY-0002SF-UO; Fri, 22 May 2026 17:36:21 -0400
+	id 1wQXXr-0003UV-Gq; Fri, 22 May 2026 17:36:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXWp-0000Bp-DP; Fri, 22 May 2026 17:35:36 -0400
+ id 1wQXXN-00016J-PJ; Fri, 22 May 2026 17:36:09 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXWk-0008GK-Q9; Fri, 22 May 2026 17:35:34 -0400
+ id 1wQXXK-0000rz-Kj; Fri, 22 May 2026 17:36:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485633; bh=BLo6PwJEyhEPInm/QTZQEjyFLJO3xe8Y3s6kNzquDL8=;
+ t=1779485633; bh=mLupHvjHRu4AgV5B1K7Cf1zafiM0zXWVHgOhiGnSlX0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=dCRcNddC+eK/jNc93K28zFT5TAKjsHTBt0rhLfkEsqfkK9R7s8lZGYG9EBjS0kSS2
- zLe5ohsShCQb1CaB4nt/xw67QSBMqCk849dQzYcvjmgjAa+lzgAL7VUlTOxfG0jumE
- aVBZg9Kc4VErFtrGv4aHdLLyZOV/RmYgjhp5HbcSgWtqIkeSSoy1wrxM/rOaIubMI6
- TbdTouD7v+JMoPyQyeW4k7Ybf6GXlSkyz/X2fdmU5ramkFz5LQyMn5lp5+U8oZ0V4F
- Ptd7t9arvayrA6lJgUbDJpms3CnRvt+VrkCQf+QFMtoCNRMOULUBkSXt6ICimlatrw
- 8uknIGI5KZ2rg==
+ b=CXGlNdLGo6Cyd4PIl+C+tfwwPO+AAb0mDRckHt4GGlHLsHyypdYlxAW0If+rhe4Wh
+ V0CCCHq4aoxRWkHr76bIM/RXxNU0nkfZ9brH2paBfu1xPcKz5G8M3uCDnbeF6RgBMt
+ GDFQowrV9WxZzoGGbIDTJOLb6AtR5VtgmYAI8qXT3s10Qv3wPtCB0ycMZUtvWC/km6
+ Z+PcR4mPrFW8BnTPwwDsRguOTc5cuMfWRNdmE3cDSmT3RLmk7QAF3TZuPh9N7dXpJz
+ MAgUfT3VTUBPMQ+JQTIKz97c7NukU9y6HZtxaBFZUouay/jcY4fg2/qKPJs4BN6kVN
+ PP7pTaguKp6+w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7FE691AFADC;
+ by isrv.corpit.ru (Postfix) with ESMTP id C9C421AFAE1;
  Sat, 23 May 2026 00:33:53 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A2C703B7162;
+ by tsrv.corpit.ru (Postfix) with ESMTP id EE62D3B7167;
  Sat, 23 May 2026 00:33:57 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
- Andreas Hindborg <a.hindborg@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 77/94] hw/nvme: fix admin cq msix setup
-Date: Sat, 23 May 2026 00:33:34 +0300
-Message-ID: <20260522213356.806058-19-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 82/94] block: Add blk_co_start/end_request() and
+ BDRV_REQ_NO_QUEUE
+Date: Sat, 23 May 2026 00:33:39 +0300
+Message-ID: <20260522213356.806058-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
@@ -68,44 +69,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Klaus Jensen <k.jensen@samsung.com>
+From: Kevin Wolf <kwolf@redhat.com>
 
-If MSI-X is not enabled when the admin completion queue is created,
-msix_vector_use() is not called. But, if MSI-X is subsequently enabled,
-msix_notify() will fail to fire the interrupt because the use count for
-the vector remains at 0.
+If a device uses blk_inc/dec_in_flight() in order to build macro
+operations that involve multiple requests for the block layer and that
+need to be completed as a unit before the BlockBackend can be considered
+drained, it sets the stage for a deadlock: When a drain is requested,
+the inner request at the BlockBackend level will be queued in
+blk_wait_while_drained() and wait until the drained section ends, but at
+the same time, drain_begin can only return if the whole macro operation
+at the device level has completed.
 
-msix_vector_use/unuse should be called if MSI-X is *present*, not
-*enabled*. Fix this.
+Introduce a new interface to allow implementing the logic correctly:
+Instead of queueing individual requests, blk_co_start_request() calls
+blk_wait_while_drained() once at the beginning. The individual requests
+must then set BDRV_REQ_NO_QUEUE to avoid being queued and running into
+the deadlock; being wrapped in blk_co_start/end_request() makes sure
+that drain_begin waits for them and they don't sneak in when the
+BlockBackend is supposed to already be quiescent.
 
-Cc: qemu-stable@nongnu.org
-Reported-by: Andreas Hindborg <a.hindborg@samsung.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit 2293d8b4bd88d3f29730cfd608935f77247919b6)
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20260421161132.99878-3-kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 34a67637767d3ed1ac813c44effe827bbfba5996)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index be6c7028cb..8463fd3e9a 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -5517,7 +5517,7 @@ static void nvme_free_cq(NvmeCQueue *cq, NvmeCtrl *n)
-         event_notifier_set_handler(&cq->notifier, NULL);
-         event_notifier_cleanup(&cq->notifier);
-     }
--    if (msix_enabled(pci) && cq->irq_enabled) {
-+    if (msix_present(pci) && cq->irq_enabled) {
-         msix_vector_unuse(pci, cq->vector);
-     }
-     if (cq->cqid) {
-@@ -5558,7 +5558,7 @@ static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl *n, uint64_t dma_addr,
+diff --git a/block/block-backend.c b/block/block-backend.c
+index 9944657120..ee00440e28 100644
+--- a/block/block-backend.c
++++ b/block/block-backend.c
+@@ -82,6 +82,7 @@ struct BlockBackend {
+     QemuMutex queued_requests_lock; /* protects queued_requests */
+     CoQueue queued_requests;
+     bool disable_request_queuing; /* atomic */
++    int start_request_count; /* atomic */
+ 
+     VMChangeStateEntry *vmsh;
+     bool force_allow_inactivate;
+@@ -1306,10 +1307,16 @@ bool blk_in_drain(BlockBackend *blk)
+ }
+ 
+ /* To be called between exactly one pair of blk_inc/dec_in_flight() */
+-static void coroutine_fn blk_wait_while_drained(BlockBackend *blk)
++static void coroutine_fn blk_wait_while_drained(BlockBackend *blk,
++                                                BdrvRequestFlags flags)
  {
-     PCIDevice *pci = PCI_DEVICE(n);
+     assert(blk->in_flight > 0);
  
--    if (msix_enabled(pci) && irq_enabled) {
-+    if (msix_present(pci) && irq_enabled) {
-         msix_vector_use(pci, vector);
-     }
++    if (flags & BDRV_REQ_NO_QUEUE) {
++        assert(qatomic_read(&blk->start_request_count));
++        return;
++    }
++
+     if (qatomic_read(&blk->quiesce_counter) &&
+         !qatomic_read(&blk->disable_request_queuing)) {
+         /*
+@@ -1335,7 +1342,7 @@ blk_co_do_preadv_part(BlockBackend *blk, int64_t offset, int64_t bytes,
+     BlockDriverState *bs;
+     IO_CODE();
  
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, flags);
+     GRAPH_RDLOCK_GUARD();
+ 
+     /* Call blk_bs() only after waiting, the graph may have changed */
+@@ -1410,7 +1417,7 @@ blk_co_do_pwritev_part(BlockBackend *blk, int64_t offset, int64_t bytes,
+     BlockDriverState *bs;
+     IO_CODE();
+ 
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, flags);
+     GRAPH_RDLOCK_GUARD();
+ 
+     /* Call blk_bs() only after waiting, the graph may have changed */
+@@ -1523,6 +1530,19 @@ void blk_dec_in_flight(BlockBackend *blk)
+     aio_wait_kick();
+ }
+ 
++void coroutine_fn blk_co_start_request(BlockBackend *blk)
++{
++    blk_inc_in_flight(blk);
++    blk_wait_while_drained(blk, 0);
++    qatomic_inc(&blk->start_request_count);
++}
++
++void blk_end_request(BlockBackend *blk)
++{
++    qatomic_dec(&blk->start_request_count);
++    blk_dec_in_flight(blk);
++}
++
+ static void error_callback_bh(void *opaque)
+ {
+     struct BlockBackendAIOCB *acb = opaque;
+@@ -1741,7 +1761,7 @@ blk_co_do_ioctl(BlockBackend *blk, unsigned long int req, void *buf)
+ {
+     IO_CODE();
+ 
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, 0);
+     GRAPH_RDLOCK_GUARD();
+ 
+     if (!blk_co_is_available(blk)) {
+@@ -1788,7 +1808,7 @@ blk_co_do_pdiscard(BlockBackend *blk, int64_t offset, int64_t bytes)
+     int ret;
+     IO_CODE();
+ 
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, 0);
+     GRAPH_RDLOCK_GUARD();
+ 
+     ret = blk_check_byte_request(blk, offset, bytes);
+@@ -1834,7 +1854,7 @@ int coroutine_fn blk_co_pdiscard(BlockBackend *blk, int64_t offset,
+ static int coroutine_fn blk_co_do_flush(BlockBackend *blk)
+ {
+     IO_CODE();
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, 0);
+     GRAPH_RDLOCK_GUARD();
+ 
+     if (!blk_co_is_available(blk)) {
+@@ -2009,7 +2029,7 @@ int coroutine_fn blk_co_zone_report(BlockBackend *blk, int64_t offset,
+     IO_CODE();
+ 
+     blk_inc_in_flight(blk); /* increase before waiting */
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, 0);
+     GRAPH_RDLOCK_GUARD();
+     if (!blk_is_available(blk)) {
+         blk_dec_in_flight(blk);
+@@ -2034,7 +2054,7 @@ int coroutine_fn blk_co_zone_mgmt(BlockBackend *blk, BlockZoneOp op,
+     IO_CODE();
+ 
+     blk_inc_in_flight(blk);
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, 0);
+     GRAPH_RDLOCK_GUARD();
+ 
+     ret = blk_check_byte_request(blk, offset, len);
+@@ -2058,7 +2078,7 @@ int coroutine_fn blk_co_zone_append(BlockBackend *blk, int64_t *offset,
+     IO_CODE();
+ 
+     blk_inc_in_flight(blk);
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, flags);
+     GRAPH_RDLOCK_GUARD();
+     if (!blk_is_available(blk)) {
+         blk_dec_in_flight(blk);
+diff --git a/include/block/block-common.h b/include/block/block-common.h
+index c8c626daea..895ea17541 100644
+--- a/include/block/block-common.h
++++ b/include/block/block-common.h
+@@ -215,8 +215,17 @@ typedef enum {
+      */
+     BDRV_REQ_NO_WAIT = 0x400,
+ 
++    /*
++     * Used between blk_co_start_request() and blk_end_request() to avoid
++     * that the request waits in a drained BlockBackend until the drained
++     * section ends. Waiting would cause a deadlock because drain waits for
++     * blk_end_request() to be called, but the request never completes
++     * because it waits for the drain to end.
++     */
++    BDRV_REQ_NO_QUEUE = 0x800,
++
+     /* Mask of valid flags */
+-    BDRV_REQ_MASK               = 0x7ff,
++    BDRV_REQ_MASK               = 0xfff,
+ } BdrvRequestFlags;
+ 
+ #define BDRV_O_NO_SHARE    0x0001 /* don't share permissions */
+diff --git a/include/system/block-backend-io.h b/include/system/block-backend-io.h
+index 6d5ac476fc..0248c1c36e 100644
+--- a/include/system/block-backend-io.h
++++ b/include/system/block-backend-io.h
+@@ -71,6 +71,8 @@ BlockAIOCB *blk_aio_ioctl(BlockBackend *blk, unsigned long int req, void *buf,
+ 
+ void blk_inc_in_flight(BlockBackend *blk);
+ void blk_dec_in_flight(BlockBackend *blk);
++void coroutine_fn blk_co_start_request(BlockBackend *blk);
++void blk_end_request(BlockBackend *blk);
+ 
+ bool coroutine_fn GRAPH_RDLOCK blk_co_is_inserted(BlockBackend *blk);
+ bool co_wrapper_mixed_bdrv_rdlock blk_is_inserted(BlockBackend *blk);
 -- 
 2.47.3
 
