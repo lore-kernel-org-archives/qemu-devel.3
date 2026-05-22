@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F047CD5BB3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F002CD5BB0
 	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:40:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXXo-0003Na-Kx; Fri, 22 May 2026 17:36:36 -0400
+	id 1wQXXe-00032h-Ay; Fri, 22 May 2026 17:36:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXXm-0003Lf-7K; Fri, 22 May 2026 17:36:34 -0400
+ id 1wQXXG-0000l0-Oq; Fri, 22 May 2026 17:36:06 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXXk-00011T-10; Fri, 22 May 2026 17:36:33 -0400
+ id 1wQXXE-0000ML-C3; Fri, 22 May 2026 17:36:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485633; bh=OXIPqZWpItYkzqBipJMaJJyw12b/+2Q3ZEi7oZGo5iQ=;
+ t=1779485633; bh=HQV63UvZd5MvJaFzgykX2S2gv6ckpflrxgTt6u6L5o4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ZZ6Dz+6uiiOvF2H9KmFlkuvOuoZNQ+nEA0nBr5R+tPSSalHs9HPhONFlQYUUoD1lq
- TNFc8qOVAwZepyRhdI/wD69qnLz5aNjOm6hLfUvVX6Xm0iv5n1DpBNuTQ+57MEOKMX
- tQcMxPtucRy4+C6LRl99mVn+93kzq5/ds0Ugjqz3nMCs8x2aoHMyJ9eQvHGbyFQVtX
- cXGYkFKPaOsG5C25awjxi8AoKaRMJ8hrVYndmR6dASkXHfpfqT9NcHiN02ATQyJTGg
- 59nMkXdcLa0lqvNEYJt/G4YeUHTg3ZLqeOVnP1okJkmQ2/M170zUzlroCJeH577CEB
- DyzYqSHaUplTw==
+ b=GwRGpF0LcfKv77880JgV2Hy78uBqeNIdLAvAgYRbHL7kFZHDkBzvbbf52WmTLnFJ9
+ CpE0PFtfVD9W72barXqHz3t1RjopjVOXbWTo9xAyHLKH8IzdorkYxxkykZZeSggb/o
+ Ve2Aj076GKUPuj3Mgg8lPYTWae7gnR6FzcnVKUErTjustd/0F8s/Od9mAuwmwRCy8c
+ 3lurmMYSCW5qMgS6oa7BunSrBBgYb2osoi2+nKB0UBf/FB+gUVpuAPt/0XWExRTW6O
+ wjcuMY+mIGHQuW9REuLIm4PUl294vF7fCQy30DbRnXg6etd5sSSIhyVpmtSOIpEDyg
+ 89xXT+D7cAnIg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F08E41AFAE4;
+ by isrv.corpit.ru (Postfix) with ESMTP id ADE771AFADF;
  Sat, 23 May 2026 00:33:53 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 20DA13B716A;
- Sat, 23 May 2026 00:33:58 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id CF75E3B7165;
+ Sat, 23 May 2026 00:33:57 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 85/94] ide: Clean up ide_trim_co_entry() to be
- idiomatic coroutine code
-Date: Sat, 23 May 2026 00:33:42 +0300
-Message-ID: <20260522213356.806058-27-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 80/94] linux-user/sh4: Fix setup_sigtramp to match
+ Linux kernel trampoline pattern
+Date: Sat, 23 May 2026 00:33:37 +0300
+Message-ID: <20260522213356.806058-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
@@ -69,151 +70,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Matt Turner <mattst88@gmail.com>
 
-The previous commit did a minimal conversion of the callback based state
-machine for TRIM to a coroutine in order to fix a bug. Refactor it to
-actually look like normal coroutine based code, which improves its
-readability.
+QEMU used MOVW(2) (0x9300), which loads the syscall number from PC+4,
+instead of the kernel's MOVW(7) (0x9305), which loads from PC+14.  The
+kernel uses five "or r0,r0" nop pads between TRAP_NOARG and the syscall
+number word to reach that offset.  libunwind's unw_is_signal_frame checks
+for the exact kernel byte pattern 0xc3109305 at the frame PC, so QEMU's
+compact layout was not detected, breaking unwinding through signal frames.
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260421161132.99878-6-kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit c1c71a7e167fdabaa9827d00c0be3aeafebdd921)
+Expand each trampoline from 6 to 16 bytes matching the kernel layout
+defined in arch/sh/kernel/signal_32.c:
+
+  #define MOVW(n)    (0x9300|((n)-2))  /* Move mem word at PC+n to R3 */
+  #define TRAP_NOARG 0xc310            /* Syscall w/no args (NR in R3) */
+  #define OR_R0_R0   0x200b            /* or r0,r0 (insert to avoid hardware bug) */
+
+  __put_user(MOVW(7),          &frame->retcode[0]);  /* 0x9305 */
+  __put_user(TRAP_NOARG,       &frame->retcode[1]);  /* 0xc310 */
+  __put_user(OR_R0_R0,         &frame->retcode[2]);  /* 0x200b */
+  __put_user(OR_R0_R0,         &frame->retcode[3]);  /* 0x200b */
+  __put_user(OR_R0_R0,         &frame->retcode[4]);  /* 0x200b */
+  __put_user(OR_R0_R0,         &frame->retcode[5]);  /* 0x200b */
+  __put_user(OR_R0_R0,         &frame->retcode[6]);  /* 0x200b */
+  __put_user((__NR_sigreturn), &frame->retcode[7]);
+
+The first two halfwords (MOVW(7) || TRAP_NOARG = 0xc3109305) form the
+32-bit value libunwind checks at the frame PC, followed by two
+OR_R0_R0 halfwords (0x200b200b) at PC+4.  The same layout applies to
+the rt_sigreturn trampoline (lines 366-373 of signal_32.c).
+
+Neither this fix nor the companion tuc_link fix is independently
+sufficient: this fix makes signal frames detectable but register reads
+remain garbage without the correct ucontext layout; that fix corrects the
+ucontext layout but libunwind still cannot detect the frame without the
+correct trampoline pattern.  Together they fix the following libunwind
+tests on a 64-bit host:
+  Gtest-sig-context, Gtest-trace, Ltest-init-local-signal,
+  Ltest-sig-context, Ltest-trace
+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 9ac5aa72272117608482cad2430a75477263fe09)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ide/core.c b/hw/ide/core.c
-index 48359c934c..f78b00220b 100644
---- a/hw/ide/core.c
-+++ b/hw/ide/core.c
-@@ -420,18 +420,15 @@ typedef struct TrimAIOCB {
-     QEMUBH *bh;
-     int ret;
-     QEMUIOVector *qiov;
--    int i, j;
-+    bool canceled;
- } TrimAIOCB;
- 
- static void trim_aio_cancel(BlockAIOCB *acb)
- {
-     TrimAIOCB *iocb = container_of(acb, TrimAIOCB, common);
- 
--    /* Exit the loop so ide_issue_trim_cb will not continue  */
--    iocb->j = iocb->qiov->niov - 1;
--    iocb->i = (iocb->qiov->iov[iocb->j].iov_len / 8) - 1;
--
--    iocb->ret = -ECANCELED;
-+    /* Exit the loop so ide_trim_co_entry will not continue */
-+    iocb->canceled = true;
+diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
+index 20d2bc8b2c..d70be24c38 100644
+--- a/linux-user/sh4/signal.c
++++ b/linux-user/sh4/signal.c
+@@ -329,20 +329,42 @@ badframe:
+     return -QEMU_ESIGRETURN;
  }
  
- static const AIOCBInfo trim_aiocb_info = {
-@@ -458,60 +455,55 @@ static void coroutine_fn ide_trim_co_entry(void *opaque)
++/*
++ * "or r0,r0" nop used by the Linux kernel inline sigreturn trampolines to
++ * avoid a hardware bug (OR_R0_R0 in arch/sh/kernel/signal_32.c).  Five of
++ * these nops follow TRAP_NOARG, placing the syscall number word 14 bytes
++ * past the MOVW(7) instruction (at MOVW(7)'s load offset).  This yields the
++ * fixed 16-byte layout that libunwind's unw_is_signal_frame detects:
++ *   [MOVW(7), TRAP_NOARG, 5x NOP_OR, .word syscall_nr]
++ */
++#define NOP_OR 0x200b
++
+ void setup_sigtramp(abi_ulong sigtramp_page)
  {
-     TrimAIOCB *iocb = opaque;
-     IDEState *s = iocb->s;
--    int ret = 0;
-+    int i, j;
-+    int ret;
+-    uint16_t *tramp = lock_user(VERIFY_WRITE, sigtramp_page, 2 * 6, 0);
++    uint16_t *tramp = lock_user(VERIFY_WRITE, sigtramp_page, 2 * 16, 0);
+     assert(tramp != NULL);
  
-     /* Paired with blk_end_request in ide_trim_bh_cb() */
-     blk_co_start_request(s->blk);
- 
--loop:
--    if (iocb->i >= 0) {
--        if (ret >= 0) {
--            block_acct_done(blk_get_stats(s->blk), &s->acct);
--        } else {
--            block_acct_failed(blk_get_stats(s->blk), &s->acct);
--        }
--    }
-+    for (j = 0; j < iocb->qiov->niov; j++) {
-+        for (i = 0; i < iocb->qiov->iov[j].iov_len / 8; i++) {
-+            uint64_t *buffer = iocb->qiov->iov[j].iov_base;
- 
--    if (ret >= 0) {
--        while (iocb->j < iocb->qiov->niov) {
--            int j = iocb->j;
--            while (++iocb->i < iocb->qiov->iov[j].iov_len / 8) {
--                int i = iocb->i;
--                uint64_t *buffer = iocb->qiov->iov[j].iov_base;
-+            /* 6-byte LBA + 2-byte range per entry */
-+            uint64_t entry = le64_to_cpu(buffer[i]);
-+            uint64_t sector = entry & 0x0000ffffffffffffULL;
-+            uint16_t count = entry >> 48;
- 
--                /* 6-byte LBA + 2-byte range per entry */
--                uint64_t entry = le64_to_cpu(buffer[i]);
--                uint64_t sector = entry & 0x0000ffffffffffffULL;
--                uint16_t count = entry >> 48;
-+            if (count == 0) {
-+                continue;
-+            }
- 
--                if (count == 0) {
--                    continue;
--                }
-+            if (iocb->canceled) {
-+                iocb->ret = -ECANCELED;
-+                goto done;
-+            }
- 
--                if (!ide_sect_range_ok(s, sector, count)) {
--                    block_acct_invalid(blk_get_stats(s->blk), BLOCK_ACCT_UNMAP);
--                    iocb->ret = -EINVAL;
--                    goto done;
--                }
-+            if (!ide_sect_range_ok(s, sector, count)) {
-+                block_acct_invalid(blk_get_stats(s->blk), BLOCK_ACCT_UNMAP);
-+                iocb->ret = -EINVAL;
-+                goto done;
-+            }
- 
--                block_acct_start(blk_get_stats(s->blk), &s->acct,
--                                 count << BDRV_SECTOR_BITS, BLOCK_ACCT_UNMAP);
-+            block_acct_start(blk_get_stats(s->blk), &s->acct,
-+                             count << BDRV_SECTOR_BITS, BLOCK_ACCT_UNMAP);
- 
--                /* Got an entry! Submit and exit.  */
--                ret = blk_co_pdiscard(s->blk,
--                                      sector << BDRV_SECTOR_BITS,
--                                      count << BDRV_SECTOR_BITS,
--                                      BDRV_REQ_NO_QUEUE);
--                goto loop;
-+            /* Got an entry! Submit and exit.  */
-+            ret = blk_co_pdiscard(s->blk,
-+                                  sector << BDRV_SECTOR_BITS,
-+                                  count << BDRV_SECTOR_BITS,
-+                                  BDRV_REQ_NO_QUEUE);
-+            if (ret >= 0) {
-+                block_acct_done(blk_get_stats(s->blk), &s->acct);
-+            } else {
-+                iocb->ret = ret;
-+                block_acct_failed(blk_get_stats(s->blk), &s->acct);
-+                goto done;
-             }
++    /* sigreturn trampoline (non-RT) at offset 0 */
+     default_sigreturn = sigtramp_page;
+-    __put_user(MOVW(2), &tramp[0]);
++    __put_user(MOVW(7), &tramp[0]);
+     __put_user(TRAP_NOARG, &tramp[1]);
+-    __put_user(TARGET_NR_sigreturn, &tramp[2]);
 -
--            iocb->j++;
--            iocb->i = -1;
-         }
--    } else {
--        iocb->ret = ret;
-     }
- 
-+    iocb->ret = 0;
- done:
-     if (iocb->bh) {
-         replay_bh_schedule_event(iocb->bh);
-@@ -533,8 +525,7 @@ BlockAIOCB *ide_issue_trim(
-                                    &DEVICE(dev)->mem_reentrancy_guard);
-     iocb->ret = 0;
-     iocb->qiov = qiov;
--    iocb->i = -1;
--    iocb->j = 0;
-+    iocb->canceled = false;
- 
-     co = qemu_coroutine_create(ide_trim_co_entry, iocb);
-     aio_co_enter(qemu_get_current_aio_context(), co);
+-    default_rt_sigreturn = sigtramp_page + 6;
+-    __put_user(MOVW(2), &tramp[3]);
+-    __put_user(TRAP_NOARG, &tramp[4]);
+-    __put_user(TARGET_NR_rt_sigreturn, &tramp[5]);
+-
+-    unlock_user(tramp, sigtramp_page, 2 * 6);
++    __put_user(NOP_OR, &tramp[2]);
++    __put_user(NOP_OR, &tramp[3]);
++    __put_user(NOP_OR, &tramp[4]);
++    __put_user(NOP_OR, &tramp[5]);
++    __put_user(NOP_OR, &tramp[6]);
++    __put_user(TARGET_NR_sigreturn, &tramp[7]);
++
++    /* rt_sigreturn trampoline at offset 16 */
++    default_rt_sigreturn = sigtramp_page + 16;
++    __put_user(MOVW(7), &tramp[8]);
++    __put_user(TRAP_NOARG, &tramp[9]);
++    __put_user(NOP_OR, &tramp[10]);
++    __put_user(NOP_OR, &tramp[11]);
++    __put_user(NOP_OR, &tramp[12]);
++    __put_user(NOP_OR, &tramp[13]);
++    __put_user(NOP_OR, &tramp[14]);
++    __put_user(TARGET_NR_rt_sigreturn, &tramp[15]);
++
++    unlock_user(tramp, sigtramp_page, 2 * 16);
+ }
 -- 
 2.47.3
 
