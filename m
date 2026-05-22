@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9149CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:52:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63102CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:52:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXko-0007To-RU; Fri, 22 May 2026 17:50:03 -0400
+	id 1wQXlR-0008EH-6P; Fri, 22 May 2026 17:50:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXkG-00061x-BU; Fri, 22 May 2026 17:49:28 -0400
+ id 1wQXkL-0006eo-Dm; Fri, 22 May 2026 17:49:33 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXkE-0002Kk-6I; Fri, 22 May 2026 17:49:28 -0400
+ id 1wQXkJ-0002Ry-DZ; Fri, 22 May 2026 17:49:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486559; bh=F1ZjrKYiZq3Jun8XhqtVGKKyZHugcUCPVem+L/R0zQ4=;
+ t=1779486559; bh=VlZqLHHTvpomm2hntvJQOW5VrdmG1HeMDRNVrfzqF5M=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ACP2I24J+LO3GBsD1EuRksrfDFoVMjfgJUH68dx8deeHywIQgpwoK9mTsBX+/G8iL
- SCsZouOq09Au2QdGrz8w+ZvTXfhQsd+O0xmHgiKbmjnkEc/fm6mAZ2qZOl5c3HZ73K
- IjPBwRDofE2PSuuZxFni+ka+zETeUvkLEqWHnTPDdZjvc4e9iMko9YXcSFEmImrcbz
- VXVh/G+5FRFnsEbfva44ls2bfMiWJunuqCfxJU3tevtM62ZtntsOr3AjmyPTdMw6pi
- B7kAs+7YlU+YsQAey9Lb7yAFJ93UdIbBR3F3SdKHnMTym/36zdPVReSkbOzydobsXG
- ZaFG8HmhOWkNA==
+ b=EXZ45Ma6XyIev4UYJK12bx7qTxymdwn0XJAU1oID/HhnU7TQ3Nei5r9uMDxoCjFIx
+ IQTF3WqkkVfRLhm1ms7wsofynOCO9aWUwu80tmVGoBAQpONfa4y7vj+C+k+Vr2GJ5+
+ x+oDKPe4Y79L7xIJKvvGKcArwiwXWZNXZLvnXNVhN5IGYM0Ksc+Duh4czMAodQy8oY
+ p68ugdkglpSDDURSIiYWcybAsmsGjT6ofeuDkNYfGvIrPaWwNN99jcLSQM03P97/al
+ Kj2AFVnbYCWWlaSt0D+L/33It6SqEmZP23vc+rCIhVHBixM0ZIzRd6UbP/5NlQuY6B
+ XQ8fG4qnJr/Ew==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 025711AFB5A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 206251AFB5C;
  Sat, 23 May 2026 00:49:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1F36B3B71A9;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 491B93B71AB;
  Sat, 23 May 2026 00:49:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
- Warner Losh <imp@bsdimp.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 100/149] linux-user: Flush errors by using exit()
- instead of _exit() in error path
-Date: Sat, 23 May 2026 00:48:32 +0300
-Message-ID: <20260522214923.807017-1-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 102/149] linux-user: Translate errno in IP_RECVERR and
+ IPV6_RECVERR
+Date: Sat, 23 May 2026 00:48:34 +0300
+Message-ID: <20260522214923.807017-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
@@ -71,29 +71,41 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Similiar to previous patch - ensure that we always flush I/O by using
-exit() instead of _exit().
+Translate host error codes of IP_RECVERR and IPV6_RECVERR control messages to
+target error codes before returning to the caller.
+For example, this is important for architectures (e.g. hppa, alpha, sparc,
+mips) on which the value of ECONNREFUSED is different to the value on a x86_64
+host.
 
-Reported by: Tobias Bergkvist <tobias@bergkv.ist>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2544
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/602
 Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 9fb681792d65fa570cb3e1a769945c10bf276d25)
+(cherry picked from commit 9667bf3249256788245c6ca07bc12106f3e4fa22)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 84e110dfe9..86d04cca3c 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -975,7 +975,7 @@ int main(int argc, char **argv, char **envp)
-                       info, &bprm);
-     if (ret != 0) {
-         printf("Error while loading %s: %s\n", exec_path, strerror(-ret));
--        _exit(EXIT_FAILURE);
-+        exit(EXIT_FAILURE);
-     }
- 
-     for (wrk = target_environ; *wrk; wrk++) {
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 8934aa9514..bb818f35d9 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -2011,7 +2011,8 @@ static inline abi_long host_to_target_cmsg(struct target_msghdr *target_msgh,
+                     tgt_len != sizeof(struct errhdr_t)) {
+                     goto unimplemented;
+                 }
+-                __put_user(errh->ee.ee_errno, &target_errh->ee.ee_errno);
++                __put_user(host_to_target_errno(errh->ee.ee_errno),
++                           &target_errh->ee.ee_errno);
+                 __put_user(errh->ee.ee_origin, &target_errh->ee.ee_origin);
+                 __put_user(errh->ee.ee_type,  &target_errh->ee.ee_type);
+                 __put_user(errh->ee.ee_code, &target_errh->ee.ee_code);
+@@ -2065,7 +2066,8 @@ static inline abi_long host_to_target_cmsg(struct target_msghdr *target_msgh,
+                     tgt_len != sizeof(struct errhdr6_t)) {
+                     goto unimplemented;
+                 }
+-                __put_user(errh->ee.ee_errno, &target_errh->ee.ee_errno);
++                __put_user(host_to_target_errno(errh->ee.ee_errno),
++                           &target_errh->ee.ee_errno);
+                 __put_user(errh->ee.ee_origin, &target_errh->ee.ee_origin);
+                 __put_user(errh->ee.ee_type,  &target_errh->ee.ee_type);
+                 __put_user(errh->ee.ee_code, &target_errh->ee.ee_code);
 -- 
 2.47.3
 
