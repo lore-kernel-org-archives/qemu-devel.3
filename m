@@ -4,46 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A456CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:57:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2125DCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:57:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXnd-0007Yb-GN; Fri, 22 May 2026 17:52:57 -0400
+	id 1wQXm5-00024j-Af; Fri, 22 May 2026 17:51:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXnb-0007Ia-3X; Fri, 22 May 2026 17:52:55 -0400
+ id 1wQXlz-0001vU-LY; Fri, 22 May 2026 17:51:16 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXnZ-0004pR-2a; Fri, 22 May 2026 17:52:54 -0400
+ id 1wQXlx-0003nv-DF; Fri, 22 May 2026 17:51:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486561; bh=mjCVHlbBqsBhNHaMV81ofn1gao8FpAyUFLppKRHX0sM=;
+ t=1779486560; bh=CLg/NbHjbYspAMq0P5vc2TeituRBmfACUveDQ2y4HgM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=tLIq2jXh1D7SZgmuLwkyVLUBmirEHAAc7V+JO/Bnsz1SiFIC30EX2W7rB0ZoaLf7n
- hORymK1myai0bSLg5N7NU6am3R2HAjIwRlqyM7opXFgoOJurBHWUbYPQD3U3y6pjn+
- GohoaLuKBYrGi83Q3i8njJ7UVIy76L7DvnbDYT7qX8/6JzPrA12QGO4Xhrl9gZOsZU
- PDQ1ZJc0Z8P//9ytMxc6i3QFOknFncUPIvi0/ZDFHE2w4uwvk8HSeyHmiKXc2hIEOv
- KcyV+s+Csoo4z22NKisildmVqWfwHzMfPV94HTmUhxTtEJycW4lcKgPwsgS5dcPGpA
- 1E5vaC43mfXkA==
+ b=iTjlLwsnkRXl6VCkHtrLWfgMbxSbEPX88ujtSQSXJsUTcDVn9iHJ8ci5hZcJB1v4Y
+ WfyidycvHgQ4r+eov+F2yysWA5M3m4cY07y5mPt2UiQV7ZUSt8TEBhBbDirZCwh3//
+ gJ4N3NlLPTQwneBG5DR1nUbnavoRNp8wJMcK+9X4Qs8cWhA1m0iI9azkAo3YuTKpHE
+ T2Sqr+EjL+TlI3DHL27nFW6OqyEZvbt/1vGxLPa5VuQX8/rzIibAHyae5T06cBoyWw
+ piDTaKBemwIYC+BzvleYW78uyTpM0atwk6B62Ns4OKn5xUOd0prN0AsMSByV7MIiPJ
+ G1p7XHOwgCfpA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 902931AFB80;
- Sat, 23 May 2026 00:49:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AB4EA1AFB72;
+ Sat, 23 May 2026 00:49:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B98C73B71CF;
- Sat, 23 May 2026 00:49:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D205D3B71C1;
+ Sat, 23 May 2026 00:49:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Junjie Cao <junjie.cao@intel.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 138/149] block: Add flags parameter to blk_*_pdiscard()
-Date: Sat, 23 May 2026 00:49:10 +0300
-Message-ID: <20260522214923.807017-39-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 124/149] hw/display/cirrus_vga: Fix packed-24
+ color-expansion transparent pattern fills
+Date: Sat, 23 May 2026 00:48:56 +0300
+Message-ID: <20260522214923.807017-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -68,157 +72,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-All existing callers pass 0, but we need a way to pass BDRV_REQ_NO_QUEUE
-for discard requests.
+The Cirrus Logic VGA card has "pattern fill" blit modes where it
+repeatedly copies an 8x8 source pattern to the display.  For the
+"color expansion" subtype of these, the source pixel format is an 8x8
+monochrome bitmap, and the destination can be any of 8, 16, 24 or
+32bpp.  We implemented these wrong for the 24bpp case, in a way that
+results in a complaint from the undefined-behavior sanitizer about a
+shift by a negative value.
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260421161132.99878-4-kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 53074ba0330ae8831abbae2521c012e1d9072ed3)
+For these pattern fills, the GR2F register includes a field which
+specifies how much to skip at the start of each scanline.  In the 8,
+16 and 32 bit cases, this field is 3 bits and is a count of pixels to
+skip.  We get this case right.  However, for the 24 bit case, the
+field is 5 bits and is a count of destination bytes to skip.  We
+tried to add support for 24-bits in commit ad81218e40e27 ("depth=24
+write mask fix (Volker Ruppert)") in 2005.  However we got this
+wrong, because when we need to skip, for example, 30 bytes in the
+destination, this is 10 input pixels but the whole pattern is only 8
+pixels wide, and we ended up with a negative bitpos for the first bit
+to use in the pattern.
+
+Fix the bug by masking srcskipleft in the 24-bit case so that it
+correctly gives the first pixel to use in the pattern even if we skip
+so many pixels that we have wrapped around to what would have been
+the second copy of the pattern to the destination.
+
+This patch was produced based on the information in the CL-GD5446
+Technical Reference Manual, specifically sections 5.8 "GR2F: BLT
+Destination Left-Side Clipping" and 9.4.8 "Pattern Fills".
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3377
+Fixes: ad81218e40e27 ("depth=24 write mask fix (Volker Ruppert)")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Junjie Cao <junjie.cao@intel.com>
+Tested-by: Junjie Cao <junjie.cao@intel.com>
+Message-ID: <20260410183249.4046456-2-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit aefeecb413a8e404ecb6d210cc32d60da176a336)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/block-backend.c b/block/block-backend.c
-index b8d877c4e7..850f2ecec2 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -1803,12 +1803,13 @@ BlockAIOCB *blk_aio_ioctl(BlockBackend *blk, unsigned long int req, void *buf,
- 
- /* To be called between exactly one pair of blk_inc/dec_in_flight() */
- static int coroutine_fn
--blk_co_do_pdiscard(BlockBackend *blk, int64_t offset, int64_t bytes)
-+blk_co_do_pdiscard(BlockBackend *blk, int64_t offset, int64_t bytes,
-+                   BdrvRequestFlags flags)
- {
-     int ret;
-     IO_CODE();
- 
--    blk_wait_while_drained(blk, 0);
-+    blk_wait_while_drained(blk, flags);
-     GRAPH_RDLOCK_GUARD();
- 
-     ret = blk_check_byte_request(blk, offset, bytes);
-@@ -1824,7 +1825,7 @@ static void coroutine_fn blk_aio_pdiscard_entry(void *opaque)
-     BlkAioEmAIOCB *acb = opaque;
-     BlkRwCo *rwco = &acb->rwco;
- 
--    rwco->ret = blk_co_do_pdiscard(rwco->blk, rwco->offset, acb->bytes);
-+    rwco->ret = blk_co_do_pdiscard(rwco->blk, rwco->offset, acb->bytes, 0);
-     blk_aio_complete(acb);
- }
- 
-@@ -1838,13 +1839,13 @@ BlockAIOCB *blk_aio_pdiscard(BlockBackend *blk,
- }
- 
- int coroutine_fn blk_co_pdiscard(BlockBackend *blk, int64_t offset,
--                                 int64_t bytes)
-+                                 int64_t bytes, BdrvRequestFlags flags)
- {
-     int ret;
-     IO_OR_GS_CODE();
- 
-     blk_inc_in_flight(blk);
--    ret = blk_co_do_pdiscard(blk, offset, bytes);
-+    ret = blk_co_do_pdiscard(blk, offset, bytes, flags);
-     blk_dec_in_flight(blk);
- 
-     return ret;
-diff --git a/block/export/virtio-blk-handler.c b/block/export/virtio-blk-handler.c
-index bc1cec6757..b82baae553 100644
---- a/block/export/virtio-blk-handler.c
-+++ b/block/export/virtio-blk-handler.c
-@@ -121,7 +121,7 @@ virtio_blk_discard_write_zeroes(VirtioBlkHandler *handler, struct iovec *iov,
-         }
- 
-         if (blk_co_pdiscard(blk, sector << VIRTIO_BLK_SECTOR_BITS,
--                            bytes) == 0) {
-+                            bytes, 0) == 0) {
-             return VIRTIO_BLK_S_OK;
-         }
-     }
-diff --git a/block/mirror.c b/block/mirror.c
-index 2fcded9e93..089856f4a8 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -454,7 +454,7 @@ static void coroutine_fn mirror_co_discard(void *opaque)
-     *op->bytes_handled = op->bytes;
-     op->is_in_flight = true;
- 
--    ret = blk_co_pdiscard(op->s->target, op->offset, op->bytes);
-+    ret = blk_co_pdiscard(op->s->target, op->offset, op->bytes, 0);
-     mirror_write_complete(op, ret);
- }
- 
-@@ -1532,7 +1532,7 @@ do_sync_target_write(MirrorBlockJob *job, MirrorMethod method,
-                          zero_bitmap_end - zero_bitmap_offset);
-         }
-         assert(!qiov);
--        ret = blk_co_pdiscard(job->target, offset, bytes);
-+        ret = blk_co_pdiscard(job->target, offset, bytes, 0);
-         break;
- 
-     default:
-diff --git a/include/system/block-backend-io.h b/include/system/block-backend-io.h
-index 0248c1c36e..fd84723d9d 100644
---- a/include/system/block-backend-io.h
-+++ b/include/system/block-backend-io.h
-@@ -218,9 +218,9 @@ int co_wrapper_mixed blk_zone_append(BlockBackend *blk, int64_t *offset,
-                                          BdrvRequestFlags flags);
- 
- int co_wrapper_mixed blk_pdiscard(BlockBackend *blk, int64_t offset,
--                                  int64_t bytes);
-+                                  int64_t bytes, BdrvRequestFlags flags);
- int coroutine_fn blk_co_pdiscard(BlockBackend *blk, int64_t offset,
--                                 int64_t bytes);
-+                                 int64_t bytes, BdrvRequestFlags flags);
- 
- int co_wrapper_mixed blk_flush(BlockBackend *blk);
- int coroutine_fn blk_co_flush(BlockBackend *blk);
-diff --git a/nbd/server.c b/nbd/server.c
-index acec0487a8..bd103a8840 100644
---- a/nbd/server.c
-+++ b/nbd/server.c
-@@ -2984,7 +2984,7 @@ static coroutine_fn int nbd_handle_request(NBDClient *client,
-                                       "flush failed", errp);
- 
-     case NBD_CMD_TRIM:
--        ret = blk_co_pdiscard(exp->common.blk, request->from, request->len);
-+        ret = blk_co_pdiscard(exp->common.blk, request->from, request->len, 0);
-         if (ret >= 0 && request->flags & NBD_CMD_FLAG_FUA) {
-             ret = blk_co_flush(exp->common.blk);
-         }
-diff --git a/qemu-io-cmds.c b/qemu-io-cmds.c
-index 13e0330162..f6d077908f 100644
---- a/qemu-io-cmds.c
-+++ b/qemu-io-cmds.c
-@@ -2201,7 +2201,7 @@ static int discard_f(BlockBackend *blk, int argc, char **argv)
-     }
- 
-     clock_gettime(CLOCK_MONOTONIC, &t1);
--    ret = blk_pdiscard(blk, offset, bytes);
-+    ret = blk_pdiscard(blk, offset, bytes, 0);
-     clock_gettime(CLOCK_MONOTONIC, &t2);
- 
-     if (ret < 0) {
-diff --git a/tests/unit/test-block-iothread.c b/tests/unit/test-block-iothread.c
-index e26b3be593..5273ff235a 100644
---- a/tests/unit/test-block-iothread.c
-+++ b/tests/unit/test-block-iothread.c
-@@ -270,11 +270,11 @@ static void test_sync_op_blk_pdiscard(BlockBackend *blk)
-     int ret;
- 
-     /* Early success: UNMAP not supported */
--    ret = blk_pdiscard(blk, 0, 512);
-+    ret = blk_pdiscard(blk, 0, 512, 0);
-     g_assert_cmpint(ret, ==, 0);
- 
-     /* Early error: Negative offset */
--    ret = blk_pdiscard(blk, -2, 512);
-+    ret = blk_pdiscard(blk, -2, 512, 0);
-     g_assert_cmpint(ret, ==, -EIO);
- }
- 
+diff --git a/hw/display/cirrus_vga_rop2.h b/hw/display/cirrus_vga_rop2.h
+index b208b7348a..8be35ec6e2 100644
+--- a/hw/display/cirrus_vga_rop2.h
++++ b/hw/display/cirrus_vga_rop2.h
+@@ -191,10 +191,29 @@ glue(glue(glue(cirrus_colorexpand_pattern_transp_, ROP_NAME), _),DEPTH)
+     int x, y, bitpos, pattern_y;
+     unsigned int bits, bits_xor;
+     unsigned int col;
++
++    /*
++     * Copy from an 8x8 monochrome pattern with color expansion.
++     */
++
+ #if DEPTH == 24
++    /*
++     * For packed-24 modes, GR2F bits [4:0] are a count of destination
++     * bytes to be suppressed for each scanline, which we keep in
++     * dstskipleft. Our srcskipleft is the number of pixels to skip
++     * within the 8x8 source pattern to match up with that number
++     * of suppressed bytes. As the pattern repeats every 8 bits we
++     * take the number of pixels mod 8.
++     */
+     int dstskipleft = s->vga.gr[0x2f] & 0x1f;
+-    int srcskipleft = dstskipleft / 3;
++    int srcskipleft = (dstskipleft / 3) & 0x7;
+ #else
++    /*
++     * In all other modes, GR2F bits [2:0] are a count of how many
++     * destination pixels to suppress for each scanline, which is our
++     * srcskipleft. We get dstskipleft, the number of bytes to skip,
++     * by multiplying this by the bytes-per-pixel.
++     */
+     int srcskipleft = s->vga.gr[0x2f] & 0x07;
+     int dstskipleft = srcskipleft * (DEPTH / 8);
+ #endif
 -- 
 2.47.3
 
