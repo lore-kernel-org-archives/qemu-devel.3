@@ -4,48 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91F87CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:48:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D667CCD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:48:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXYX-0005LU-11; Fri, 22 May 2026 17:37:21 -0400
+	id 1wQXbR-0003cn-VY; Fri, 22 May 2026 17:40:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXYS-0004wB-Dg; Fri, 22 May 2026 17:37:16 -0400
+ id 1wQXbP-0003Um-Ux; Fri, 22 May 2026 17:40:19 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXYQ-0001GB-36; Fri, 22 May 2026 17:37:15 -0400
+ id 1wQXbN-0003eh-Fs; Fri, 22 May 2026 17:40:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485634; bh=ch1KAip7MpoJ/MwOcadWCqcl9HxGgpT+x4LHCiWF430=;
+ t=1779485683; bh=2MMfs8x8eWAS6M/2CFqpS90zy2cejQ1Qv11C8unkwlg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=P3lQCjWnCXrT8R28pmFz90Y7nLRz8P9x0iKog7ApC1sZw1rvL7wj9JO9DM8OLdCUv
- 4eivNu8h/glminmbSy20vPD3kgmVv3Z+sjtxqNS1QnfmCeHy4d88/ltKofSI9jUTLf
- i1FvSWeEw2iPq8RrzB7nHUs11ijyvwH/kANB3eqhQHEOfb1lHbzgtMR705hFZgEcP/
- 3HIGpckLvLO4OLA7tsVym3KDpoy84uokg4HtKVvZdmG9EQk9a4sg0EX8+UEX2+0B6p
- X//V0W3ZegvUEDuJZGziIZnm2OJ60r0EnVW1ztwE6Al5C29FOy7VEutv/cQCWjZg7M
- mWeUNiEdLSG/A==
+ b=L20AgoK4d+mMVsHSW/dksKW1OKAesY8uRGGfKo8rC0G2HdmdhsG+8DRknjCzFYTQB
+ 4Np4B5nuWtNkUCtjGrqYvZGveWBEXiD3H9G+uaja0dw68Ddws/gDazm0e4uqCrtUOo
+ FYqXChIFL9EyexCOSPptKgRKPeGr2d8xCv6qGkRJ739z4+/hqsh8/QEj2lEmbfrQZ8
+ 6O64CGz5Xgq0ByuvKQvOYHdwEpAv9fKX56/GHCcPV2xpVDJOThnE+prPLm7+gHv7+8
+ hBocmgm/YQ9QXpQZYE2h+Lp3NiIix6pCYQ2bt3hSPxBR3seyjmQoAUmU0rWnyZYWpg
+ DcnGogh0w9T4g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8535C1AFAED;
- Sat, 23 May 2026 00:33:54 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B5EC21AFB0E;
+ Sat, 23 May 2026 00:34:43 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A0F283B7173;
- Sat, 23 May 2026 00:33:58 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id DA8583B718E;
+ Sat, 23 May 2026 00:34:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Fiona Ebner <f.ebner@proxmox.com>,
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 94/94] block/graph-lock: fix missed wakeup in
- bdrv_graph_co_rdunlock()
-Date: Sat, 23 May 2026 00:33:51 +0300
-Message-ID: <20260522213356.806058-36-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 125/136] block: Add blk_co_start/end_request() and
+ BDRV_REQ_NO_QUEUE
+Date: Sat, 23 May 2026 00:34:33 +0300
+Message-ID: <20260522213446.806182-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
-References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
+References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -71,95 +69,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Kevin Wolf <kwolf@redhat.com>
 
-tests/qemu-iotests/tests/iothreads-create reproduces the hang on
-master under `stress-ng --cpu $(nproc) --timeout 0`.  The iotest's
-vm.run_job() times out and qemu stays permanently stuck in
-ppoll(timeout=-1) inside bdrv_graph_wrlock_drained -> blk_remove_bs
-during qemu_cleanup().  The timing window is narrow on modern
-bare-metal hardware and much wider in a VM guest; downstream trees
-that still use plain bdrv_graph_wrlock() in blk_remove_bs() hit it
-on the first iteration under the same stress.
+If a device uses blk_inc/dec_in_flight() in order to build macro
+operations that involve multiple requests for the block layer and that
+need to be completed as a unit before the BlockBackend can be considered
+drained, it sets the stage for a deadlock: When a drain is requested,
+the inner request at the BlockBackend level will be queued in
+blk_wait_while_drained() and wait until the drained section ends, but at
+the same time, drain_begin can only return if the whole macro operation
+at the device level has completed.
 
-bdrv_graph_wrlock() zeroes has_writer around its AIO_WAIT_WHILE loop
-so that callbacks dispatched by aio_poll() can still take the read
-lock on the fast path.  The rdunlock side, however, only kicks a
-waiting writer when has_writer is observed set; a reader that drops
-its lock inside the polling window silently returns and nothing ever
-wakes the writer:
+Introduce a new interface to allow implementing the logic correctly:
+Instead of queueing individual requests, blk_co_start_request() calls
+blk_wait_while_drained() once at the beginning. The individual requests
+must then set BDRV_REQ_NO_QUEUE to avoid being queued and running into
+the deadlock; being wrapped in blk_co_start/end_request() makes sure
+that drain_begin waits for them and they don't sneak in when the
+BlockBackend is supposed to already be quiescent.
 
-  main thread                         iothread0 coroutine
-  -----------                         -------------------
-  bdrv_graph_wrlock:                  rdlock held, reader_count=1
-    bdrv_drain_all_begin_nopoll
-    has_writer = 0
-    AIO_WAIT_WHILE_UNLOCKED(
-        NULL, reader_count >= 1):
-      num_waiters++
-      smp_mb
-      aio_poll(main_ctx, true)   -->  bdrv_graph_co_rdunlock:
-        (ppoll, blocked)                reader_count-- -> 0
-                                        smp_mb
-                                        read has_writer = 0
-                                        skip aio_wait_kick()
-                                      return
-
-reader_count is now 0 and num_waiters is still 1, but no BH, fd or
-timer on the main AioContext will fire -- the only entity that could
-kick just decided it did not have to.  Main stays in ppoll() holding
-BQL, so RCU, VCPUs and any iothread path that needs BQL stall behind
-it.  The hang is final; no timeout, no forward progress, no recovery
-as there is no other source of wake up inside qemu_cleanup().
-
-bdrv_drain_all_begin() does not close the race on its own: it
-quiesces in-flight I/O, but graph readers also include non-I/O
-coroutines (block-job cleanup, virtio-scsi polling) that drain does
-not evict.  The bdrv_graph_wrlock_drained() wrapper narrows the
-window but does not eliminate it; every plain bdrv_graph_wrlock()
-site is exposed on the same basis.
-
-Drop the has_writer check in bdrv_graph_co_rdunlock() and call
-aio_wait_kick() unconditionally.  The helper itself loads num_waiters
-atomically and only schedules a dummy BH when a waiter exists, so the
-change is a no-op on the no-writer path and closes the missed-wakeup
-on the writer path.
-
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Cc: Kevin Wolf <kwolf@redhat.com>
-Cc: Hanna Reitz <hreitz@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Fiona Ebner <f.ebner@proxmox.com>
-Message-ID: <20260424103917.248668-2-den@openvz.org>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit e3082ab3b38538ebdbc5cd62b4c476b673c5e515)
+Message-ID: <20260421161132.99878-3-kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 34a67637767d3ed1ac813c44effe827bbfba5996)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/graph-lock.c b/block/graph-lock.c
-index b7319473a1..f2501d75fb 100644
---- a/block/graph-lock.c
-+++ b/block/graph-lock.c
-@@ -278,14 +278,12 @@ void coroutine_fn bdrv_graph_co_rdunlock(void)
-     smp_mb();
+diff --git a/block/block-backend.c b/block/block-backend.c
+index 50ccf3663f..11ad178966 100644
+--- a/block/block-backend.c
++++ b/block/block-backend.c
+@@ -82,6 +82,7 @@ struct BlockBackend {
+     QemuMutex queued_requests_lock; /* protects queued_requests */
+     CoQueue queued_requests;
+     bool disable_request_queuing; /* atomic */
++    int start_request_count; /* atomic */
  
-     /*
--     * has_writer == 0: this means reader will read reader_count decreased
--     * has_writer == 1: we don't know if writer read reader_count old or
--     *                  new. Therefore, kick again so on next iteration
--     *                  writer will for sure read the updated value.
-+     * Always kick: bdrv_graph_wrlock() zeroes has_writer while polling (to
-+     * let callbacks take the reader lock via the fast path), so we cannot
-+     * rely on has_writer to detect a waiting writer. aio_wait_kick() is a
-+     * no-op when no one is waiting, so it is cheap in the common case.
-      */
--    if (qatomic_read(&has_writer)) {
--        aio_wait_kick();
--    }
-+    aio_wait_kick();
+     VMChangeStateEntry *vmsh;
+     bool force_allow_inactivate;
+@@ -1306,10 +1307,16 @@ bool blk_in_drain(BlockBackend *blk)
  }
  
- void bdrv_graph_rdlock_main_loop(void)
+ /* To be called between exactly one pair of blk_inc/dec_in_flight() */
+-static void coroutine_fn blk_wait_while_drained(BlockBackend *blk)
++static void coroutine_fn blk_wait_while_drained(BlockBackend *blk,
++                                                BdrvRequestFlags flags)
+ {
+     assert(blk->in_flight > 0);
+ 
++    if (flags & BDRV_REQ_NO_QUEUE) {
++        assert(qatomic_read(&blk->start_request_count));
++        return;
++    }
++
+     if (qatomic_read(&blk->quiesce_counter) &&
+         !qatomic_read(&blk->disable_request_queuing)) {
+         /*
+@@ -1335,7 +1342,7 @@ blk_co_do_preadv_part(BlockBackend *blk, int64_t offset, int64_t bytes,
+     BlockDriverState *bs;
+     IO_CODE();
+ 
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, flags);
+     GRAPH_RDLOCK_GUARD();
+ 
+     /* Call blk_bs() only after waiting, the graph may have changed */
+@@ -1410,7 +1417,7 @@ blk_co_do_pwritev_part(BlockBackend *blk, int64_t offset, int64_t bytes,
+     BlockDriverState *bs;
+     IO_CODE();
+ 
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, flags);
+     GRAPH_RDLOCK_GUARD();
+ 
+     /* Call blk_bs() only after waiting, the graph may have changed */
+@@ -1523,6 +1530,19 @@ void blk_dec_in_flight(BlockBackend *blk)
+     aio_wait_kick();
+ }
+ 
++void coroutine_fn blk_co_start_request(BlockBackend *blk)
++{
++    blk_inc_in_flight(blk);
++    blk_wait_while_drained(blk, 0);
++    qatomic_inc(&blk->start_request_count);
++}
++
++void blk_end_request(BlockBackend *blk)
++{
++    qatomic_dec(&blk->start_request_count);
++    blk_dec_in_flight(blk);
++}
++
+ static void error_callback_bh(void *opaque)
+ {
+     struct BlockBackendAIOCB *acb = opaque;
+@@ -1741,7 +1761,7 @@ blk_co_do_ioctl(BlockBackend *blk, unsigned long int req, void *buf)
+ {
+     IO_CODE();
+ 
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, 0);
+     GRAPH_RDLOCK_GUARD();
+ 
+     if (!blk_co_is_available(blk)) {
+@@ -1788,7 +1808,7 @@ blk_co_do_pdiscard(BlockBackend *blk, int64_t offset, int64_t bytes)
+     int ret;
+     IO_CODE();
+ 
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, 0);
+     GRAPH_RDLOCK_GUARD();
+ 
+     ret = blk_check_byte_request(blk, offset, bytes);
+@@ -1834,7 +1854,7 @@ int coroutine_fn blk_co_pdiscard(BlockBackend *blk, int64_t offset,
+ static int coroutine_fn blk_co_do_flush(BlockBackend *blk)
+ {
+     IO_CODE();
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, 0);
+     GRAPH_RDLOCK_GUARD();
+ 
+     if (!blk_co_is_available(blk)) {
+@@ -2009,7 +2029,7 @@ int coroutine_fn blk_co_zone_report(BlockBackend *blk, int64_t offset,
+     IO_CODE();
+ 
+     blk_inc_in_flight(blk); /* increase before waiting */
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, 0);
+     GRAPH_RDLOCK_GUARD();
+     if (!blk_is_available(blk)) {
+         blk_dec_in_flight(blk);
+@@ -2034,7 +2054,7 @@ int coroutine_fn blk_co_zone_mgmt(BlockBackend *blk, BlockZoneOp op,
+     IO_CODE();
+ 
+     blk_inc_in_flight(blk);
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, 0);
+     GRAPH_RDLOCK_GUARD();
+ 
+     ret = blk_check_byte_request(blk, offset, len);
+@@ -2058,7 +2078,7 @@ int coroutine_fn blk_co_zone_append(BlockBackend *blk, int64_t *offset,
+     IO_CODE();
+ 
+     blk_inc_in_flight(blk);
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, flags);
+     GRAPH_RDLOCK_GUARD();
+     if (!blk_is_available(blk)) {
+         blk_dec_in_flight(blk);
+diff --git a/include/block/block-common.h b/include/block/block-common.h
+index 0b831ef87b..d4852e944c 100644
+--- a/include/block/block-common.h
++++ b/include/block/block-common.h
+@@ -215,8 +215,17 @@ typedef enum {
+      */
+     BDRV_REQ_NO_WAIT = 0x400,
+ 
++    /*
++     * Used between blk_co_start_request() and blk_end_request() to avoid
++     * that the request waits in a drained BlockBackend until the drained
++     * section ends. Waiting would cause a deadlock because drain waits for
++     * blk_end_request() to be called, but the request never completes
++     * because it waits for the drain to end.
++     */
++    BDRV_REQ_NO_QUEUE = 0x800,
++
+     /* Mask of valid flags */
+-    BDRV_REQ_MASK               = 0x7ff,
++    BDRV_REQ_MASK               = 0xfff,
+ } BdrvRequestFlags;
+ 
+ #define BDRV_O_NO_SHARE    0x0001 /* don't share permissions */
+diff --git a/include/system/block-backend-io.h b/include/system/block-backend-io.h
+index ba8dfcc7d0..59841e04a8 100644
+--- a/include/system/block-backend-io.h
++++ b/include/system/block-backend-io.h
+@@ -71,6 +71,8 @@ BlockAIOCB *blk_aio_ioctl(BlockBackend *blk, unsigned long int req, void *buf,
+ 
+ void blk_inc_in_flight(BlockBackend *blk);
+ void blk_dec_in_flight(BlockBackend *blk);
++void coroutine_fn blk_co_start_request(BlockBackend *blk);
++void blk_end_request(BlockBackend *blk);
+ 
+ bool coroutine_fn GRAPH_RDLOCK blk_co_is_inserted(BlockBackend *blk);
+ bool co_wrapper_mixed_bdrv_rdlock blk_is_inserted(BlockBackend *blk);
 -- 
 2.47.3
 
