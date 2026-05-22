@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A070CD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:56:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 672BCCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:56:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXoz-0002Aj-5P; Fri, 22 May 2026 17:54:21 -0400
+	id 1wQXna-00076P-54; Fri, 22 May 2026 17:52:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXoY-0000j8-Hd; Fri, 22 May 2026 17:53:56 -0400
+ id 1wQXnX-0006ro-GQ; Fri, 22 May 2026 17:52:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXoV-0005M4-OC; Fri, 22 May 2026 17:53:53 -0400
+ id 1wQXnU-0004av-Uq; Fri, 22 May 2026 17:52:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486562; bh=8146qO6KFVKscfnp7ME4DCWZ2VVfJ/m5ZGh/Be/5xEg=;
+ t=1779486561; bh=2EvzDU4SkBQ2rke12IQoCQvpnW/uRQEwCvfnq/wNd4M=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=GTj+q/ZuNY7NdjLe5S2E017W3+D5Zyfzkotdz5k7T968JBprs8DqrE7+kysMzs5V8
- FRF93Sf+0uUKFvZ5NSd83P2GJW+Q5iA9/pF/DOOtPbV2hE1baPPZ+YVtYK+kTmNMeR
- YXdVXymzaRr5dD6OaK/FupMC995++CymxjnJ/k9j9OhCE3yHkPp7tVOZqIBG1BMDkC
- VM3+EP/onSEP+2R7xtcytJkqKTu8+bvRw64l7ow8RkSB1+cAmx6sM79MJtwLwd1+Sl
- rfaOXJxqFt8EfRLYDZbiPotievt1zRBvEq38jPcYeilc2XVGTgNElBbujOO/qQq2iS
- 0IHOFB0iZoX+Q==
+ b=WS8/IUfSEzk1xGJb0gIVnujAmaIuxoz79ncmRNbAxuAhCcRJFQHcI98zIrCqFWqHA
+ hDtANDhxWPvBYqRF42hqgewIoUDvWOb/oHNOX8aGIVaT2COk9cR2YfyONzhBw5+GDW
+ mZ/bWAnDnp74u48kQa8PKz1dBAXOUgkEbq4EuA5EBz2o5XwGcd7xHjUPjY8hBt+GXe
+ P5DXacpAtW4z/O5Mjntv4VdSZOErF2M3aQukZc9M/W977xKB1u6JLOnG+7duw0QlTU
+ q3KpYTH1RHdb10CFN4AsPCEW7tbRSuVVqypYjyJQn2c6gra6b2fJ2rPa/ZybZfKOij
+ 7AVC2fXtnSYfg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 18CEA1AFB89;
- Sat, 23 May 2026 00:49:22 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7653A1AFB7E;
+ Sat, 23 May 2026 00:49:21 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 401693B71D8;
- Sat, 23 May 2026 00:49:26 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9F91F3B71CD;
+ Sat, 23 May 2026 00:49:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 147/149] qcow2: Fix corruption on discard during write
- with COW
-Date: Sat, 23 May 2026 00:49:19 +0300
-Message-ID: <20260522214923.807017-48-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 136/149] blkdebug: Add 'delay-ns' option
+Date: Sat, 23 May 2026 00:49:08 +0300
+Message-ID: <20260522214923.807017-37-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
@@ -71,147 +70,107 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kevin Wolf <kwolf@redhat.com>
 
-Most code in qcow2 that accesses (and potentially modifies) L2 tables
-does so while holding s->lock.
+Sometimes reproducing a problem for debugging involves slow I/O, so
+let's add something to blkdebug to make I/O slow when we need it. This
+can be used either together with an error so that the request fails
+after the delay, or with errno=0, which allows the request to succeed
+after the delay.
 
-There is one exception, which is allocating writes. They hold the lock
-initially while allocating clusters, but drop it for writing the guest
-payload before taking the lock again for updating the L2 tables. This
-allows concurrent requests that touch other parts of the image file to
-continue in parallel and is an important performance optimisation.
-
-However, this means that other requests that run while the lock is
-dropped for writing guest data must synchronise with the list of
-allocating requests in s->cluster_allocs and wait if they would overlap.
-For writes, this is done in handle_dependencies(), but discard and write
-zeros operations neglect to synchronise with s->cluster_allocs.
-
-This means that discard can free a cluster whose L2 entry will already
-be modified in qcow2_alloc_cluster_link_l2() by a previously started
-write. In the case of a pre-allocated zero cluster that is in the
-process of being overwritten, this means that discard can lead to a
-situation where the cluster is still mapped (because the write will
-restore the L2 entry just without the zero flag), but its refcount has
-been decreased, resulting in a corrupted image.
-
-Add the missing synchronisation to qcow2_cluster_discard() and
-qcow2_subcluster_zeroize() to fix the problem.
-
-Cc: qemu-stable@nongnu.org
-Reported-by: Denis V. Lunev <den@openvz.org>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260427170520.101242-4-kwolf@redhat.com>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
-Tested-by: Denis V. Lunev <den@openvz.org>
+Message-ID: <20260421161132.99878-2-kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit b8bfb1478d61512f851badd0d912c6661a2efee7)
+(cherry picked from commit d5e4090177ad382e01084a1594a1a60a69f4c1cd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
-index c655bf6df4..8b1e80bd0b 100644
---- a/block/qcow2-cluster.c
-+++ b/block/qcow2-cluster.c
-@@ -1392,6 +1392,9 @@ count_single_write_clusters(BlockDriverState *bs, int nb_clusters,
-  * the same cluster. In this case we need to wait until the previous
-  * request has completed and updated the L2 table accordingly.
-  *
-+ * If allow_shortening == true, instead of waiting for a dependency, *cur_bytes
-+ * can be shortened so that the cluster allocations don't overlap.
-+ *
-  * Returns:
-  *   0       if there was no dependency. *cur_bytes indicates the number of
-  *           bytes from guest_offset that can be read before the next
-@@ -1403,7 +1406,9 @@ count_single_write_clusters(BlockDriverState *bs, int nb_clusters,
-  */
- static int coroutine_fn handle_dependencies(BlockDriverState *bs,
-                                             uint64_t guest_offset,
--                                            uint64_t *cur_bytes, QCowL2Meta **m)
-+                                            uint64_t *cur_bytes,
-+                                            bool allow_shortening,
-+                                            QCowL2Meta **m)
- {
-     BDRVQcow2State *s = bs->opaque;
-     QCowL2Meta *old_alloc;
-@@ -1434,7 +1439,7 @@ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
+diff --git a/block/blkdebug.c b/block/blkdebug.c
+index c54aee0c84..8954fc2977 100644
+--- a/block/blkdebug.c
++++ b/block/blkdebug.c
+@@ -95,6 +95,7 @@ typedef struct BlkdebugRule {
+             int immediately;
+             int once;
+             int64_t offset;
++            int64_t delay_ns;
+         } inject;
+         struct {
+             int new_state;
+@@ -144,6 +145,10 @@ static QemuOptsList inject_error_opts = {
+             .name = "immediately",
+             .type = QEMU_OPT_BOOL,
+         },
++        {
++            .name = "delay-ns",
++            .type = QEMU_OPT_NUMBER,
++        },
+         { /* end of list */ }
+     },
+ };
+@@ -216,6 +221,8 @@ static int add_rule(void *opaque, QemuOpts *opts, Error **errp)
+         rule->options.inject.once  = qemu_opt_get_bool(opts, "once", 0);
+         rule->options.inject.immediately =
+             qemu_opt_get_bool(opts, "immediately", 0);
++        rule->options.inject.delay_ns =
++            qemu_opt_get_number(opts, "delay-ns", 0);
+         sector = qemu_opt_get_number(opts, "sector", -1);
+         rule->options.inject.offset =
+             sector == -1 ? -1 : sector * BDRV_SECTOR_SIZE;
+@@ -594,6 +601,7 @@ static int coroutine_fn rule_check(BlockDriverState *bs, uint64_t offset,
+     BlkdebugRule *rule = NULL;
+     int error;
+     bool immediately;
++    int64_t delay_ns;
  
-         /* Conflict */
+     qemu_mutex_lock(&s->lock);
+     QSIMPLEQ_FOREACH(rule, &s->active_rules, active_next) {
+@@ -608,13 +616,14 @@ static int coroutine_fn rule_check(BlockDriverState *bs, uint64_t offset,
+         }
+     }
  
--        if (start < old_start) {
-+        if (start < old_start && allow_shortening) {
-             /* Stop at the start of a running allocation */
-             bytes = old_start - start;
-         } else {
-@@ -1469,6 +1474,29 @@ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
-     return 0;
- }
+-    if (!rule || !rule->options.inject.error) {
++    if (!rule) {
+         qemu_mutex_unlock(&s->lock);
+         return 0;
+     }
  
-+static void coroutine_mixed_fn wait_for_dependencies(BlockDriverState *bs,
-+                                                     uint64_t guest_offset,
-+                                                     uint64_t bytes)
-+{
-+    BDRVQcow2State *s = bs->opaque;
-+    QCowL2Meta *m = NULL;
-+    int ret;
+     immediately = rule->options.inject.immediately;
+     error = rule->options.inject.error;
++    delay_ns  = rule->options.inject.delay_ns;
+ 
+     if (rule->options.inject.once) {
+         QSIMPLEQ_REMOVE(&s->active_rules, rule, BlkdebugRule, active_next);
+@@ -622,6 +631,10 @@ static int coroutine_fn rule_check(BlockDriverState *bs, uint64_t offset,
+     }
+ 
+     qemu_mutex_unlock(&s->lock);
 +
-+    /*
-+     * Discard has some non-coroutine callers (creating internal snapshots and
-+     * make empty). They are calling from qemu-img or in a drained section, so
-+     * we know that no writes can be in progress.
-+     */
-+    if (!qemu_in_coroutine()) {
-+        assert(QLIST_EMPTY(&s->cluster_allocs));
-+        return;
++    if (delay_ns) {
++        qemu_co_sleep_ns(QEMU_CLOCK_REALTIME, delay_ns);
 +    }
-+
-+    do {
-+        ret = handle_dependencies(bs, guest_offset, &bytes, false, &m);
-+    } while (ret == -EAGAIN);
-+}
-+
- /*
-  * Checks how many already allocated clusters that don't require a new
-  * allocation there are at the given guest_offset (up to *bytes).
-@@ -1840,7 +1868,7 @@ again:
-          *         the right synchronisation between the in-flight request and
-          *         the new one.
-          */
--        ret = handle_dependencies(bs, start, &cur_bytes, m);
-+        ret = handle_dependencies(bs, start, &cur_bytes, true, m);
-         if (ret == -EAGAIN) {
-             /* Currently handle_dependencies() doesn't yield if we already had
-              * an allocation. If it did, we would have to clean up the L2Meta
-@@ -2000,6 +2028,15 @@ int qcow2_cluster_discard(BlockDriverState *bs, uint64_t offset,
-     int64_t cleared;
-     int ret;
- 
-+    /*
-+     * If we're touching a cluster for which allocating writes are in flight,
-+     * wait for them to complete to avoid conflicting metadata updates.
-+     *
-+     * We don't need to allocate a QCowL2Meta for the discard operation because
-+     * s->lock is held for the duration of the whole operation.
-+     */
-+    wait_for_dependencies(bs, offset, bytes);
-+
-     /* Caller must pass aligned values, except at image end */
-     assert(QEMU_IS_ALIGNED(offset, s->cluster_size));
-     assert(QEMU_IS_ALIGNED(end_offset, s->cluster_size) ||
-@@ -2160,6 +2197,15 @@ int coroutine_fn qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset,
-     int64_t cleared;
-     int ret;
- 
-+    /*
-+     * If we're touching a cluster for which allocating writes are in flight,
-+     * wait for them to complete to avoid conflicting metadata updates.
-+     *
-+     * We don't need to allocate a QCowL2Meta for the zeroize operation because
-+     * s->lock is held for the duration of the whole operation.
-+     */
-+    wait_for_dependencies(bs, offset, bytes);
-+
-     /* If we have to stay in sync with an external data file, zero out
-      * s->data_file first. */
-     if (data_file_is_raw(bs)) {
+     if (!immediately) {
+         aio_co_schedule(qemu_get_current_aio_context(), qemu_coroutine_self());
+         qemu_coroutine_yield();
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index 4118d884f4..b7b5e8bad6 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -3914,6 +3914,9 @@
+ #
+ # @errno: error identifier (errno) to be returned; defaults to EIO
+ #
++# @delay-ns: request delay before completion in nanoseconds
++#            (default: 0, since: 11.1)
++#
+ # @sector: specifies the sector index which has to be affected in
+ #     order to actually trigger the event; defaults to "any sector"
+ #
+@@ -3929,6 +3932,7 @@
+             '*state': 'int',
+             '*iotype': 'BlkdebugIOType',
+             '*errno': 'int',
++            '*delay-ns': 'int',
+             '*sector': 'int',
+             '*once': 'bool',
+             '*immediately': 'bool' } }
 -- 
 2.47.3
 
