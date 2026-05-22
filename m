@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46173CD5BB0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 461C7CD5BB8
 	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:46:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXXX-0002Ig-U5; Fri, 22 May 2026 17:36:20 -0400
+	id 1wQXbE-0002bH-43; Fri, 22 May 2026 17:40:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXWj-00006D-7o; Fri, 22 May 2026 17:35:34 -0400
+ id 1wQXb0-00019W-9f; Fri, 22 May 2026 17:39:54 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXWO-0007ou-PS; Fri, 22 May 2026 17:35:11 -0400
+ id 1wQXax-0003ZC-Kf; Fri, 22 May 2026 17:39:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485633; bh=Wbc0EYLcaWHr8Vx9HuQC1z01QL8uelngdR56IlOZGpM=;
+ t=1779485683; bh=jjsX3vuFG5pdqzcPcvEy5TDx1NFhTrvU0iAbRklyfh4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=KVZPQWWFQ1NkFhuEVZ7+CRazEQcK9VEksA2p9YL6bmZ/RLGHxJjxpfEPv9ZMjBODH
- EnSDTIpTnn45T1aLVJ0HcAEqxbOK+vMwB7gzbW9UBB92rbVJrMIkX/Bo8cl5B15H9O
- 8bzBi7UbFkQbwCHMErCRsHkFWXenPlZcDTFiikGUGaATQgid3334y15pGLVGZ6ml6Z
- jZIT/7maz8KZSesrolXqXIb1kZdRJp3KIHlY+XTkAlG55+8+gkAZnPQ9pj1AI1Ls3L
- NGX6vjIMow2uQhP/1bBGNVIWvkLnBZM9Kyl+rL2dJwObyB2gNq7xBX+DO7N46W2TM+
- /kVV0pRFHA5kw==
+ b=QICZoMX5AnqpKSbnh4WvC4ZwvyH0QGlJVX7KJGDO9hKQaatV4IkNyu72v9HLdJ6nS
+ glsslhuHEbX7aItcJ9xOWD6/KcHYaKz6PAxdXDSe2bzxoAjCLuWri7AitYgJmux2k8
+ iaKBd8yPbaXoFP+jijrUTiGnzCoQ+KTMKKe4tN8TuQ/u2GxZZLLidhHp6JQbZLKL8E
+ nzZOAZgUkbqVRL8bntzwkuOoCwSLnxDZNzAy77U5xha2eGbS7WX3Bevh0ntFSVHKjX
+ HzDZJbh/KkVBPMmJSmHY/AI8MVpzcN6J+Eo/IiHbbMedORtvFa/X6vNySWz4VmGzui
+ ERDbnf/boXM1A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5F16F1AFADA;
- Sat, 23 May 2026 00:33:53 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8AECB1AFB0B;
+ Sat, 23 May 2026 00:34:43 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7EE593B7160;
- Sat, 23 May 2026 00:33:57 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id AD9C83B718B;
+ Sat, 23 May 2026 00:34:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <th.huth+qemu@posteo.eu>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 75/94] tests/functional/qemu_test/asset.py: Don't use
- setxattr when it doesn't exist
-Date: Sat, 23 May 2026 00:33:32 +0300
-Message-ID: <20260522213356.806058-17-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 122/136] linux-user/sh4: Fix target_ucontext tuc_link
+ field type
+Date: Sat, 23 May 2026 00:34:30 +0300
+Message-ID: <20260522213446.806182-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
-References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
+References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,54 +70,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Matt Turner <mattst88@gmail.com>
 
-The Python os.setxattr() API is Linux-specific, so trying to use
-it on other OSes triggers a failure:
+tuc_link is declared as 'struct target_ucontext *', which is a HOST
+pointer.  On a 64-bit host running a 32-bit SH4 target, this is 8 bytes
+instead of the 4 bytes the target expects, padding pushes tuc_mcontext
+8 bytes past its correct offset.
 
-  File "/Users/pm215/src/qemu/tests/functional/qemu_test/asset.py",
-line 227, in fetch
-    os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
-    ^^^^^^^^^^^
-AttributeError: module 'os' has no attribute 'setxattr'
+When a signal handler receives ucontext_t *, every field accessed through
+uc_mcontext (gregs[], pc, pr, ...) is read from the wrong address.  In
+particular the saved PC comes back as a garbage stack value, which breaks
+any code that initialises a libunwind cursor from the signal context.
 
-Since we only set the attributes here for informational
-purposes, skip them when os.setxattr() isn't available.
+Fix it by using abi_ulong, which is always sized to the target ABI (4
+bytes for SH4), matching the layout the kernel and glibc agree on.  This
+is the same pattern used by arm/signal.c.
 
+Also remove the (unsigned long *) cast from the __put_user that zeros
+tuc_link.  The cast was harmless when tuc_link was pointer-sized (8
+bytes matching unsigned long on a 64-bit host), but after the type
+change __put_user's sizeof dispatch would select stq_le_p (8-byte write)
+for a now-4-byte field, silently overwriting the start of tuc_stack.
+
+Neither this fix nor the companion setup_sigtramp fix is independently
+sufficient: this fix corrects register values read from the signal context
+but libunwind still cannot detect the frame without the correct trampoline
+pattern; that fix makes the frame detectable but register reads remain
+garbage without the correct ucontext layout.  Together they fix the
+following libunwind tests on a 64-bit host:
+  Gtest-sig-context, Gtest-trace, Ltest-init-local-signal,
+  Ltest-sig-context, Ltest-trace
+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
 Cc: qemu-stable@nongnu.org
-Fixes: 9903217a4ed013 ("tests/functional: add a module for handling asset download & caching")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Thomas Huth <th.huth+qemu@posteo.eu>
-Message-id: 20260501115506.3792110-1-peter.maydell@linaro.org
-(cherry picked from commit 039b057c09c6a9742b91b8f29604651ba3fdb558)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit c3176e645774fcb795bf99c1c6c40c67432232db)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
-index 51a434b2b7..0abd89e0a3 100644
---- a/tests/functional/qemu_test/asset.py
-+++ b/tests/functional/qemu_test/asset.py
-@@ -223,11 +223,14 @@ def fetch(self):
-             raise AssetError(self, "Download retries exceeded", transient=True)
+diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
+index 9ecc026fae..20d2bc8b2c 100644
+--- a/linux-user/sh4/signal.c
++++ b/linux-user/sh4/signal.c
+@@ -57,7 +57,7 @@ struct target_sigframe
  
-         try:
--            # Set these just for informational purposes
--            os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
--                        self.url.encode('utf8'))
--            os.setxattr(str(tmp_cache_file), "user.qemu-asset-hash",
--                        self.hash.encode('utf8'))
-+            # Set these just for informational purposes. Note that
-+            # setxattr is Linux-only; as this is only informational
-+            # we can simply skip it on other platforms.
-+            if hasattr(os, "setxattr"):
-+                os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
-+                            self.url.encode('utf8'))
-+                os.setxattr(str(tmp_cache_file), "user.qemu-asset-hash",
-+                            self.hash.encode('utf8'))
-         except OSError as e:
-             self.log.debug("Unable to set xattr on %s: %s", tmp_cache_file, e)
+ struct target_ucontext {
+     target_ulong tuc_flags;
+-    struct target_ucontext *tuc_link;
++    abi_ulong tuc_link;
+     target_stack_t tuc_stack;
+     struct target_sigcontext tuc_mcontext;
+     target_sigset_t tuc_sigmask;        /* mask last for extensibility */
+@@ -237,7 +237,7 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
  
+     /* Create the ucontext.  */
+     __put_user(0, &frame->uc.tuc_flags);
+-    __put_user(0, (unsigned long *)&frame->uc.tuc_link);
++    __put_user(0, &frame->uc.tuc_link);
+     target_save_altstack(&frame->uc.tuc_stack, regs);
+     setup_sigcontext(&frame->uc.tuc_mcontext,
+                      regs, set->sig[0]);
 -- 
 2.47.3
 
