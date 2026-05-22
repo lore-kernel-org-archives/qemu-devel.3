@@ -4,113 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C459CD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 11:29:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B21ECD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 11:30:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQO4e-0002Ql-EB; Fri, 22 May 2026 07:29:52 -0400
+	id 1wQO4M-0002Me-Ue; Fri, 22 May 2026 07:29:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wQO4d-0002QX-Hh; Fri, 22 May 2026 07:29:51 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wQO4L-0002MS-Iv; Fri, 22 May 2026 07:29:33 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wQO4b-0007JA-U5; Fri, 22 May 2026 07:29:51 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64M7SUix789447; Fri, 22 May 2026 11:29:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=0N5qFd0OyyiIrArieIAf4nfoZeNIZx
- VykPhvnnNhC7c=; b=OmJL1jGAs66nWGc+XuZkYjOzIN7z/p/2LUP7aSW7sd4QGQ
- TL39T6maABYEKOCyL5Uwx+rZW5AjjQXKBH6W0ZS7Dxu5FLXiG9dPzwN2zZvvFbhr
- 6Wa4Z7vdNWVCcfAEo8NSWSiyOiSea+8Qlg7zdTygpXQIbmdi2JskrdpL4IQhcZ0U
- g8prO8ehRqeG9Azke7okEufMHNBmI78qbFx/dD0Fl5ceGAxEc5Q6Tebfnsztg5JP
- 08YKluB0NoKlZ7SLWWCoSqL8vR7Vtp0NUaBVNfInCtr4ZMNg+hFQbKlBgN1APzsD
- EidMbP9WIHqze8XiKsAXYxwSF5BAu40vqpXAIqfA==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6hb8t5qs-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 22 May 2026 11:29:47 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64MBO6Mb014286;
- Fri, 22 May 2026 11:29:47 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e739w8s4e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 22 May 2026 11:29:47 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64MBThcJ30474836
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 22 May 2026 11:29:43 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3BAD020043;
- Fri, 22 May 2026 11:29:43 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 388C720040;
- Fri, 22 May 2026 11:29:41 +0000 (GMT)
-Received: from mac.bl1-in.ibm.com (unknown [9.124.216.126])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Fri, 22 May 2026 11:29:40 +0000 (GMT)
-Date: Fri, 22 May 2026 16:59:37 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: Aditya Gupta <adityag@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Miles Glenn <milesg@linux.ibm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>,
- Misbah Anjum N <misanjum@linux.ibm.com>
-Subject: Re: [PATCH 0/2] ppc/pnv: Make Power11 as the default CPU
-Message-ID: <20260522164309.470506c2-b8-amachhiw@linux.ibm.com>
-Mail-Followup-To: Aditya Gupta <adityag@linux.ibm.com>, 
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Miles Glenn <milesg@linux.ibm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>,
- Misbah Anjum N <misanjum@linux.ibm.com>
-References: <20260521200844.1449023-1-adityag@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wQO4J-0006fJ-A0; Fri, 22 May 2026 07:29:33 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:bf1f:0:640:c739:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 5DD158062F;
+ Fri, 22 May 2026 14:29:28 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:55c::1:1d] (unknown
+ [2a02:6bf:8080:55c::1:1d])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id QTSjIK0g9Gk0-2QlYskeC; Fri, 22 May 2026 14:29:27 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1779449367;
+ bh=n4272EuhkRp/tF71FOQD7xOhOp27tViOK+NdhH/oPog=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=xhTFLFk+pqYlEo+BRi6ykETDQAXxezQpiIn7HDfpgrG3hZ5uzZQ0pLv9HzQOnu3Gd
+ DTGbaLJK/Vh1i4B8GLkLLddqP95d/5Yp82T5JdAr/L/tG9+QBkY9qjH3kEsENIfGDe
+ TV1T+iMUjBxhQDS5JQsyDg4Ie2cBv/H3eSuNCf7Y=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <24220347-bc4a-4f70-9a78-6aba96e643d5@yandex-team.ru>
+Date: Fri, 22 May 2026 14:29:26 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260521200844.1449023-1-adityag@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIyMDExMSBTYWx0ZWRfX+UkPOFfATXcA
- gaYq7wpTJebEGtmC8plmgCAMwlp1jQE9Ft4K6KzHrNfYvofvhVIXotiZFJPcQ2JoemhQb3LtZUH
- rdv6iX6j0SZ5btHG3co9w8J4o5WkEA8Tt3S0Jx4bH8UTmNVxPDHFhOI+22hgSapOK5NF2zduxAF
- D+j9tLiCDd4SDOCumXul4K2sEEnVY6LX4qFVMh0ZKNw7kUenJTJxzvoSsAu6un0CY04UkeNWuDH
- JR/pUI7hjp9YE5u+nAFexHba2x9jjgiRpiDrEZKaFE99VL3j5BY2ZQ67CCM0+qAds31sp7flPei
- 26oBATtpCGBtQR7bdt2yqOoV59XibRdLQI8a9ES4kkWI69GiOZeA0L8yOw+nIgxkr4HgNF/eP3q
- 0CQSBswP9gATEcHpyqYWUateRe4YkMhoFLw4yPynrXNoafWLqYq3vj7I4GbMnF0BgiM+2RoBJ/m
- hH5QZoijNDgUkmWZf9A==
-X-Proofpoint-GUID: aesWJcPz_2LEuvQQOvrDwk-oZB9kVeea
-X-Proofpoint-ORIG-GUID: eJdLydV_w15CwvHbNTSSaeYZAQcBvpjG
-X-Authority-Analysis: v=2.4 cv=aYBRWxot c=1 sm=1 tr=0 ts=6a103e2c cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=kj9zAlcOel0A:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=i0h0DvZQZo2f9Fd42IUA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-22_02,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
- clxscore=1015 spamscore=0 phishscore=0 priorityscore=1501 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605220111
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/1] qcow2: add functionality to repair bitmaps
+To: Jean-Louis Dupond <jean-louis@dupond.be>, qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>, qemu-block@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Eric Blake <eblake@redhat.com>
+References: <20260522085128.428672-1-jean-louis@dupond.be>
+ <20260522085128.428672-2-jean-louis@dupond.be>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20260522085128.428672-2-jean-louis@dupond.be>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,87 +77,258 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Aditya,
-
-Thanks for the patches.
-
-On 2026/05/22 01:38 AM, Aditya Gupta wrote:
-> Overview
-> ========
+On 22.05.26 11:51, Jean-Louis Dupond wrote:
+> In some cases, it might happen that bitmaps become corrupt.
+> For example when adding/removing bitmaps on a live image.
 > 
-> Power11 is the newest supported Power processor merged last year.
-> Make it the default processor for PSeries and PowerNV.
+> Of course this should not happen, but in case this happens, the image is
+> corrupt and even cannot be opened anymore. You'll get something like the
+> following:
+> qemu-img: Could not open 'disk.qcow2': Bitmap '' doesn't satisfy the constraints
+> 
+> So the image becomes useless, and cannot be repaired. This while in fact
+> only (one) bitmap entry is corrupt, and the rest of the data is just
+> intact.
+> 
+> This commit adds a way to fix this corruption, by just replacing the
+> bitmap list in the qcow2 image with the valid bitmaps, and dropping the
+> bitmaps that are corrupt.
+> 
+> $ qemu-img check disk.qcow2
+> qemu-img: Check failed: Invalid argument
+> qemu-img: Lost persistent bitmaps during inactivation of node '#block147': Bitmap '' doesn't satisfy the constraints
+> 
+> $ qemu-img check -r all disk.qcow2
+> qcow2_free_clusters failed: Invalid argument
+> Leaked cluster 3 refcount=1 reference=0
+> Leaked cluster 26 refcount=1 reference=0
+> ERROR cluster 983214 refcount=0 reference=1
+> Rebuilding refcount structure
+> Repairing cluster 1 refcount=1 reference=0
+> Repairing cluster 2 refcount=1 reference=0
+> Repairing cluster 32768 refcount=1 reference=0
+> ....
+> Repairing cluster 983214 refcount=1 reference=0
+> The following inconsistencies were found and repaired:
+> 
+>      2 leaked clusters
+>      3 corruptions
+> 
+> Double checking the fixed image now...
+> No errors were found on the image.
+> 983056/1048576 = 93.75% allocated, 0.05% fragmented, 0.00% compressed clusters
+> Image end offset: 64437878784
+> 
+> And the image is valid again!
+> Worst case you lose all bitmaps, but at least the image and the data
+> itself is useable again.
+> 
+> Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
+> ---
+>   block/qcow2-bitmap.c   | 43 +++++++++++++++++++++++++++++++++++++++++-
+>   block/qcow2-refcount.c |  3 ++-
+>   block/qcow2.c          | 16 ++++++++++++----
+>   block/qcow2.h          |  3 ++-
+>   4 files changed, 58 insertions(+), 7 deletions(-)
+> 
+> diff --git a/block/qcow2-bitmap.c b/block/qcow2-bitmap.c
+> index 256ec99878..ab2f7fd83b 100644
+> --- a/block/qcow2-bitmap.c
+> +++ b/block/qcow2-bitmap.c
+> @@ -100,6 +100,9 @@ typedef enum BitmapType {
+>       BT_DIRTY_TRACKING_BITMAP = 1
+>   } BitmapType;
+>   
+> +static int GRAPH_RDLOCK
+> +update_ext_header_and_dir(BlockDriverState *bs, Qcow2BitmapList *bm_list);
+> +
+>   static inline bool can_write(BlockDriverState *bs)
+>   {
+>       return !bdrv_is_read_only(bs) && !(bdrv_get_flags(bs) & BDRV_O_INACTIVE);
+> @@ -655,11 +658,14 @@ fail:
+>   int coroutine_fn
+>   qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
+>                                 void **refcount_table,
+> -                              int64_t *refcount_table_size)
+> +                              int64_t *refcount_table_size,
+> +                              BdrvCheckMode fix)
+>   {
+>       int ret;
+>       BDRVQcow2State *s = bs->opaque;
+>       Qcow2BitmapList *bm_list;
+> +    Qcow2BitmapList *fixed_list = NULL;
+> +    int valid_bitmaps = 0;
+>       Qcow2Bitmap *bm;
+>   
+>       if (s->nb_bitmaps == 0) {
+> @@ -673,16 +679,29 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
+>           return ret;
+>       }
+>   
+> +    if (fix & BDRV_FIX_ERRORS) {
 
-I gave the patches a try and I see the default CPU without the patches is
-Power10 while with the patches, the default CPU becomes as Power11.
+Maybe, worth making a variable for it, and use it here and below.
 
-PowerNV:
-========
-  Without the patches:
-  --------------------
-  # cat /proc/cpuinfo
-  processor	: 0
-  cpu		: POWER10, altivec supported
-  clock		: 3800.000000MHz
-  revision	: 2.0 (pvr 0080 1200)
+bool fix_errors = fix & BDRV_FIX_ERRORS;
 
-  timebase	: 512000000
-  platform	: PowerNV
-  model		: IBM PowerNV (emulated by qemu)
-  machine	: PowerNV IBM PowerNV (emulated by qemu)
-  firmware	: OPAL
-  MMU		: Radix
+> +        fixed_list = bitmap_list_new();
+> +    }
+> +
+>       bm_list = bitmap_list_load(bs, s->bitmap_directory_offset,
+>                                  s->bitmap_directory_size, NULL);
+>       if (bm_list == NULL) {
+>           res->corruptions++;
+> +
+> +        if (fix & BDRV_FIX_ERRORS) {
+> +            ret = update_ext_header_and_dir(bs, fixed_list);
+> +            if (ret >= 0) {
+> +                res->corruptions_fixed++;
+> +            }
+> +            goto out;
+> +        }
+>           return -EINVAL;
+>       }
+>   
+>       QSIMPLEQ_FOREACH(bm, bm_list, entry) {
+>           uint64_t *bitmap_table = NULL;
+>           int i;
+> +        bool bitmap_valid = true;
+>   
+>           ret = qcow2_inc_refcounts_imrt(bs, res,
+>                                          refcount_table, refcount_table_size,
+> @@ -695,6 +714,9 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
+>           ret = bitmap_table_load(bs, &bm->table, &bitmap_table);
+>           if (ret < 0) {
+>               res->corruptions++;
+> +            if (fix & BDRV_FIX_ERRORS) {
+> +                continue;
+> +            }
+>               goto out;
+>           }
+>   
+> @@ -704,6 +726,7 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
+>   
+>               if (check_table_entry(entry, s->cluster_size) < 0) {
+>                   res->corruptions++;
+> +                bitmap_valid = false;
+>                   continue;
+>               }
+>   
+> @@ -720,10 +743,28 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
+>               }
+>           }
+>   
+> +        if ((fix & BDRV_FIX_ERRORS) && bitmap_valid) {
+> +            valid_bitmaps++;
+> +            Qcow2Bitmap *bm_copy = g_new0(Qcow2Bitmap, 1);
 
-  With the patches:
-  -----------------
-  # cat /proc/cpuinfo
-  processor	: 0
-  cpu		: Power11, altivec supported
-  clock		: 3800.000000MHz
-  revision	: 18.0 (pvr 0082 1200)
+Also, from docs/devel/style.rst:
 
-  platform	: PowerNV
-  model		: IBM PowerNV (emulated by qemu)
-  machine	: PowerNV IBM PowerNV (emulated by qemu)
-  firmware	: OPAL
-  MMU		: Radix
+     Declarations
+     ============
 
-pSeries:
-========
+     Mixed declarations (interleaving statements and declarations within
+     blocks) are generally not allowed; declarations should be at the beginning
+     of blocks.
 
-  Without the patches:
-  --------------------
-  # cat /proc/cpuinfo
-  processor	: 0
-  cpu		: POWER10 (architected), altivec supported
-  clock		: 1000.000000MHz
-  revision	: 2.0 (pvr 0080 1200)
 
-  timebase	: 512000000
-  platform	: pSeries
-  model		: IBM pSeries (emulated by qemu)
-  machine	: CHRP IBM pSeries (emulated by qemu)
-  MMU		: Radix
+So,
 
-  With the patches:
-  -----------------
-  # cat /proc/cpuinfo
-  processor	: 0
-  cpu		: Power11 (architected), altivec supported
-  clock		: 1000.000000MHz
-  revision	: 18.0 (pvr 0082 1200)
+     Qcow2Bitmap *bm_copy = g_new0(Qcow2Bitmap, 1);
 
-  timebase	: 512000000
-  platform	: pSeries
-  model		: IBM pSeries (emulated by qemu)
-  machine	: CHRP IBM pSeries (emulated by qemu)
-  MMU		: Radix
+should be the first line of the block.
 
-Also, the changes look good to me. Hence:
+> +            *bm_copy = *bm;
+> +            bm_copy->name = g_strdup(bm->name);
+> +            QSIMPLEQ_INSERT_TAIL(fixed_list, bm_copy, entry);
 
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-Tested-by: Amit Machhiwal <amachihw@linux.ibm.com>
 
-Thanks,
-Amit
+Hmm, and another thought (sorry I didn't figure it out in the previous iteration):
+
+Why do we need even this half-copied additional list?
+
+Instead, we can remove broken elements from original bm_list (when fix & BDRV_FIX_ERRORS),
+and reuse it for update_ext_header_and_dir().
+
+
+> +        }
+> +
+>           g_free(bitmap_table);
+>       }
+>   
+> +    /* If fixing, update the bitmap directory with the repaired list */
+> +    if ((fix & BDRV_FIX_ERRORS) && s->nb_bitmaps != valid_bitmaps) {
+> +        uint32_t initial_bitmaps = s->nb_bitmaps;
+> +        ret = update_ext_header_and_dir(bs, fixed_list);
+> +        if (ret >= 0) {
+> +            res->corruptions_fixed += initial_bitmaps - valid_bitmaps;
+> +        }
+> +    }
+> +
+>   out:
+> +    bitmap_list_free(fixed_list);
+>       bitmap_list_free(bm_list);
+>   
+>       return ret;
+> diff --git a/block/qcow2-refcount.c b/block/qcow2-refcount.c
+> index 6512cda407..df7f6d2f23 100644
+> --- a/block/qcow2-refcount.c
+> +++ b/block/qcow2-refcount.c
+> @@ -2305,7 +2305,8 @@ calculate_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
+>       }
+>   
+>       /* bitmaps */
+> -    ret = qcow2_check_bitmaps_refcounts(bs, res, refcount_table, nb_clusters);
+> +    ret = qcow2_check_bitmaps_refcounts(bs, res, refcount_table,
+> +                                        nb_clusters, fix);
+>       if (ret < 0) {
+>           return ret;
+>       }
+> diff --git a/block/qcow2.c b/block/qcow2.c
+> index 81fd299b4c..adfb7ee37a 100644
+> --- a/block/qcow2.c
+> +++ b/block/qcow2.c
+> @@ -1927,11 +1927,19 @@ qcow2_do_open(BlockDriverState *bs, QDict *options, int flags,
+>       if (!(bdrv_get_flags(bs) & BDRV_O_INACTIVE)) {
+>           /* It's case 1, 2 or 3.2. Or 3.1 which is BUG in management layer. */
+>           bool header_updated;
+> -        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, errp)) {
+> -            ret = -EINVAL;
+> -            goto fail;
+> +        Error *local_err = NULL;
+> +        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, &local_err)) {
+> +            /*
+> +             * Allow this to fail in check mode
+> +             * because otherwise we can't open the image at all.
+> +             */
+> +            if (!(flags & BDRV_O_CHECK)) {
+> +                ret = -EINVAL;
+> +                error_propagate(errp, local_err);
+> +                goto fail;
+> +            }
+> +            error_free(local_err);
+>           }
+> -
+>           update_header = update_header && !header_updated;
+>       }
+>   
+> diff --git a/block/qcow2.h b/block/qcow2.h
+> index 192a45d596..2d9c6929a7 100644
+> --- a/block/qcow2.h
+> +++ b/block/qcow2.h
+> @@ -1034,7 +1034,8 @@ void qcow2_cache_discard(Qcow2Cache *c, void *table);
+>   int coroutine_fn GRAPH_RDLOCK
+>   qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
+>                                 void **refcount_table,
+> -                              int64_t *refcount_table_size);
+> +                              int64_t *refcount_table_size,
+> +                              BdrvCheckMode fix);
+>   
+>   bool coroutine_fn GRAPH_RDLOCK
+>   qcow2_load_dirty_bitmaps(BlockDriverState *bs, bool *header_updated,
+
+
+-- 
+Best regards,
+Vladimir
 
