@@ -4,83 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13B9FCD5BAF
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 00:12:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B243CD5BAB
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 00:56:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQDMt-0001Vc-JU; Thu, 21 May 2026 20:03:59 -0400
+	id 1wQEAd-0008Pj-0F; Thu, 21 May 2026 20:55:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wQDMq-0001V4-J5
- for qemu-devel@nongnu.org; Thu, 21 May 2026 20:03:56 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1wQEAb-0008Ot-8K
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 20:55:21 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wQDMo-0003En-79
- for qemu-devel@nongnu.org; Thu, 21 May 2026 20:03:55 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2ba1e9d3687so43973095ad.3
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 17:03:52 -0700 (PDT)
+ id 1wQEAZ-0000Ff-IU
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 20:55:21 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-67c9616b4feso11726367a12.1
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 17:55:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779411318; cv=none;
+ d=google.com; s=arc-20240605;
+ b=fZcRXoaWbdx9xJLcpUgmogi7fv0ixfe2wCTC9qlVKEByBjvhKzslae/b0xJBlfD9dV
+ tHdJOIznHEdwLsaQYqmzRtqWH19/jvYPwDUdP0dPWuFEFR11Q3rElo2go5OX6VMILyyH
+ b3qJMG3HY+zzdWPf0NhE2bTcFMMgGewfxXccVNgm6P+BLFGhZvu7SO3qzuZYRV0PM9+2
+ 4jLxCTLj7RCfzIdQLb8iM4J8MClbRkSQbmWDToec8RmQ95mdgksLj7uxR5bg1Rhf+eL6
+ Q09f6fcnvD6MVWV3UV1iHoBxuckkbwKYNDjwPOldSmMF9XG0i8KoVZ7Wjb9UITAtXVLa
+ sFAA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Uay4Umbp+YGoKGaatPhY0ERwpHx863YwCMi7q80oGDM=;
+ fh=O2eVX0dx021x8yEhrgIC0F4xHLJSk94EneMFKA7kjJ0=;
+ b=MFp6z6Cmbl8ZtmloUtzE6H4orPonnaw1mCN7MPXz9rch3Hvr3C/fkz78Chc1X/dyio
+ uLDvdbL+m7vsHj3Zy+uofx3yE0pMGK8GWR6/Y6ILvFBBWfww1T8VNIRyZZ2y5SC0aXY+
+ jimc2OjpN4QM7tduc6/CC/fnaNZ/RK42NuJsBkYEmVmqGwgq088LLg5qDyxV+a333Efh
+ ZS5Aw5aJBsgIKxxLjdFHt4xO3QoJPA2a/6//ueH/Hd34Hskva56fmwirIWGC+oKuyvyt
+ oZNtBHSvrPLvNW/vikF04cj4SZXUra9PG/9N1crsM0dfhiMp3FILY3SeFbnv170BMP6r
+ jDPA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779408231; x=1780013031; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1779411318; x=1780016118; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8PDGuQ2v76g5jAoiknd6c7KU2tqrx5VzNJSrO3FkLtI=;
- b=UR6GV6NVGW/6Fb2SAmpAHuiU5X3ucSKLSkRRZZCWNnfgFDS3+rPC9pIF5Qouu6oNgF
- ydp+u3yWk0k+xUzmLt0SPyPTPG6UJ1kz7z3b+d7+wYVciK5bsED8sJBimpt8N29k1Vrm
- +Eiu4LAlO3nuGFwig2imaTbmxINwb9Y30+XI+ZNQfuWSnD+gGFMfsgJ7r8E8h8BWMnmu
- DknqlVFJogiuG/aM9CLKZO4J5WywIe9PUpl1G+acq2ZYl6Majb9bcMoeMG7q5GEE5sw4
- yjPXacnHhBsHXS3tC4fn3gjV9zM95wrNdfYbpQT9D0fRUPNXWGs6xuv8QznuAU7tXHIj
- LuVg==
+ bh=Uay4Umbp+YGoKGaatPhY0ERwpHx863YwCMi7q80oGDM=;
+ b=lR5xtcH9ku/gZb0rT5F45n/XATpp0yAXNISzWrTa91QC4SPsOODgPpDmRzcZgC0xaV
+ jQsRHqZkF5Trf6fCXYOmVXvf4XwnPd8x+BJxEIoJUBo6a+nEtlYE/vAjSjII320fnrri
+ 5iB296eRLbtjG26a+JK7eyyvNY/9GUyYwTBThLqBykfKNOFfyvJYYxc8wV+fJBUY59as
+ 6wPKb9PqyNDnaFdoUiXDGVLt/AQ9fWyOsIgxs+yawWLV+irstaxBGIfHiQaO1A9+IKLz
+ 2BnxExvGhvuiMwFi5U1DFJ6NnFC3gLMz1UtND30fMDQs7qdqWvonElO+GTN0lpaCp3QL
+ pVGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779408231; x=1780013031;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1779411318; x=1780016118;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=8PDGuQ2v76g5jAoiknd6c7KU2tqrx5VzNJSrO3FkLtI=;
- b=G+BqyHg7M26F8qaUlZSueA8baD3BQpXi55dB8yj+o/+sGTvSaTR5UuWHgdu0+TV7cT
- /iShXQgKUoiA+FpRCKHZOQ/rFIoUq7Egr9YxHcaf+ANoiOCOk4q+0u6B7jjdH9NFxO7F
- /0VoobsoAVffqZwhaZsMRTu2cCHXeUJ3xQI/ksi8JFjiI/voiUXhvVw/LA/OlCKU0CD2
- KhK6Wr3WU+IsgqDERcivwy02MBRfmdB5kzPi9QEA8YNFfQy/W7PJUJG8f7jfP9vJiNhH
- xqCXVLyCN4VlA+7imWGe6UCQ3SL+2x46xqoQxTcHV8d0oUV/JmVekFzU6hIQ9QmHkDvF
- 82gg==
-X-Gm-Message-State: AOJu0YzsHytxhtQf3NEGWJKtqRAF49dVIE35uqBqeveGjw1gG1ZyOU9q
- GmOzfkb4L8MPCVS7l1oqfZzZODpuva32UV1p6giAcvDy3D65/fs0ToibrY/LClBN
-X-Gm-Gg: Acq92OGmNwULvoBZCbK+1BVcDSpKZ0EtCs/9HIOK40v9sz4qfDtpTVSTwOubN/gPFVl
- TY4k8d15w4O/vgGPcGyeX4lkr7kOuKQ4mdPbWJQPoRtUDJ97EZMopmIQbjD4Etp6We5+hvm3Gq5
- hM4UttqPCdRQv9W2ZuCKUeBHmgiIyRwWEPnZt8bvZWJkjW7aWl1A31pYMvw0uMsWcfUxVQ7i+jM
- pnJI5VwXZLpxBNHqhL/lg2yCr87uetV5ajcQc8ZBfcjuHF54XFtnhuCveotMCsqcM0MhiUBZPLQ
- 9C0DCbqXZ7X2s57pK7MSuh5mwQ78HTj45fPH0ihezUS9qMFA21C8m+nPAtejXgWDDyhcSiDsRGF
- Pdk4Q/GcCCRea6bCrrd81K8TzxOx4UiprG9tPhloU5ywPrdcq5TNwmFc51lrsYZZqNtZtT14I8O
- Fz74tqEnO19r/pcYajfb2x39bVWThGa8e7WtYPUeB42w==
-X-Received: by 2002:a17:903:24f:b0:2ba:4e84:966 with SMTP id
- d9443c01a7336-2beb06dc34dmr10809255ad.36.1779408231501; 
- Thu, 21 May 2026 17:03:51 -0700 (PDT)
-Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2beb114b54csm3915475ad.42.2026.05.21.17.03.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 17:03:51 -0700 (PDT)
-From: alistair23@gmail.com
-X-Google-Original-From: alistair.francis@wdc.com
-To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 05/48] MAINTAINERS: Maintain OpenSBI Firmware
-Date: Fri, 22 May 2026 10:02:41 +1000
-Message-ID: <20260522000324.23255-6-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260522000324.23255-1-alistair.francis@wdc.com>
-References: <20260522000324.23255-1-alistair.francis@wdc.com>
+ bh=Uay4Umbp+YGoKGaatPhY0ERwpHx863YwCMi7q80oGDM=;
+ b=E2WPL5bcGyB5Vv9MZWrJFkXDw5eHnUC9HmvUMTNMA49jMzh06YWXamn2wU4fLXGFpi
+ x16HtHA/8CzIUDKmFpBOootleHPnzw8LZ3nUp4S+hQkq4a1VF90FDD63SsTMdtgtvB7y
+ G0hhoWOvFVQnRcOcnwKzM5thUslG6qeM06xUunbAjPJ0HNkweic0c/ZzTzQPNk6kTxzZ
+ EHPeg9Qz/JrD+Bolscs6cv5l+q3RS79xdF8fSG5V+jwKzAlEIjwTKUgGx0EbrpTEPUAC
+ +bUBkHkSw+Sap+JIn6Gs0715TTLx09SLsMMnNeQoLruPyaWjgKLpNjCLZN+QOIioEwgH
+ SSdw==
+X-Gm-Message-State: AOJu0YypQ/wlNIDa8OjRLKylMh4m0SnYFIDRZqJ/K4cyk+/yl1J2KWL4
+ gfsurFaW+3ms2xpzMYZeXDHFNaBD4jkEsaAit/vjE9ta2Vh1Ac8n/iJOwKORWwmOg5DRzpygNyr
+ rPHbywZu58eANFZxF1tBKTh5hQXsYRLs=
+X-Gm-Gg: Acq92OE8zXZGSWwGYB70gOOQhBmRT9nTKJQUXHHIHapv5Oi/crcnrKKQxuDuoT6/w4k
+ 5vmQPhxO4MD/IlnBFAwkIHkqflOh82xmWuzw+rM+mFZdl6bfjHw8BDJ2AxKYqtOgAPgnwjRF9i3
+ 7yNcxheEjPJawzFGicq+yEjm1wsxOVeXSsYBiXzs5GmNt+MZxiu16nblOOXsIOy4BcaFKngmzxl
+ ieAMnVEosgF4Z49jFBZUp+1h+hCfYV+/UI8uG7T5VhmpAkSSPsCTYRB27XM6GYgbKByb3duEDNw
+ R2564jYxeJRq1GGIZOENCwguxWay6inPyMspWg==
+X-Received: by 2002:a17:906:5a61:b0:bd1:d4e8:42a4 with SMTP id
+ a640c23a62f3a-bdd22f29463mr59830766b.11.1779411317619; Thu, 21 May 2026
+ 17:55:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x634.google.com
+References: <20260519172621.98469-1-philmd@linaro.org>
+In-Reply-To: <20260519172621.98469-1-philmd@linaro.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 22 May 2026 10:54:50 +1000
+X-Gm-Features: AVHnY4IVnOjhWXDUj4bhcjPHtJixmklVRqIHVU2nH_EqYyMig4Jh7djTxlCRTeQ
+Message-ID: <CAKmqyKPNfx0vKB9D=q8-VVAJj_J3K-GnbO9O3dD3hR7fpSrevw@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: Fix RISCV related paths
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,34 +117,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
+On Wed, May 20, 2026 at 3:28=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> Host user-emulation headers were renamed in commits ba0e7333620
+> ("configure: Merge riscv32 and riscv64 host architectures") and
+> bbf15aaf7c7 ("common-user: Move safe-syscall.* from linux-user"),
+> then covered in commit 355cdac7d86 ("MAINTAINERS: Add
+> common-user/host/riscv to RISC-V section"). Remove the obsolete
+> entries.
+>
+> test_riscv64_sifive_u.py was renamed in commit e1a8572a8d7
+> ("tests/functional: Move riscv32/riscv64 tests into target-specific
+> folders").
+>
+> Reported-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Mark the OpenSBI Firmware as maintained by me (Alistair Francis) and add
-Daniel Henrique Barboza as a reviewer.
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260506234243.1873782-1-alistair.francis@wdc.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- MAINTAINERS | 2 ++
- 1 file changed, 2 insertions(+)
+Alistair
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a90daf0308..cd5c4831e2 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4055,6 +4055,8 @@ S: Supported
- F: hw/i386/amd_iommu*
- 
- OpenSBI Firmware
-+M: Alistair Francis <Alistair.Francis@wdc.com>
-+R: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
- L: qemu-riscv@nongnu.org
- S: Supported
- F: pc-bios/opensbi-*
--- 
-2.53.0
-
+> ---
+>  MAINTAINERS | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 73b7ebf1d7e..0a1cc0e51a2 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -361,8 +361,6 @@ F: hw/riscv/
+>  F: hw/intc/riscv*
+>  F: include/hw/char/riscv_htif.h
+>  F: include/hw/riscv/
+> -F: linux-user/host/riscv32/
+> -F: linux-user/host/riscv64/
+>  F: common-user/host/riscv*
+>  F: tests/functional/riscv32
+>  F: tests/functional/riscv64
+> @@ -1783,7 +1781,7 @@ S: Supported
+>  F: docs/system/riscv/sifive_u.rst
+>  F: hw/*/*sifive*.c
+>  F: include/hw/*/*sifive*.h
+> -F: tests/functional/test_riscv64_sifive_u.py
+> +F: tests/functional/riscv64/test_sifive_u.py
+>
+>  AMD Microblaze-V Generic Board
+>  M: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+> --
+> 2.53.0
+>
+>
 
