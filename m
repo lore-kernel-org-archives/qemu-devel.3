@@ -4,126 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3003CD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 18:54:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73F0BCD5BB3
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 18:54:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQUzx-000050-6o; Fri, 22 May 2026 14:53:29 -0400
+	id 1wQUzv-0008WV-M6; Fri, 22 May 2026 14:53:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wQUzt-0008Vh-I5
- for qemu-devel@nongnu.org; Fri, 22 May 2026 14:53:25 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wQUzu-0008Vr-2K
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 14:53:26 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wQUzr-0006lY-7m
+ id 1wQUzs-0006lc-6z
  for qemu-devel@nongnu.org; Fri, 22 May 2026 14:53:25 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64MGanKb1733041
- for <qemu-devel@nongnu.org>; Fri, 22 May 2026 18:53:21 GMT
+ 64MHQqWG3947382
+ for <qemu-devel@nongnu.org>; Fri, 22 May 2026 18:53:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=qr2fBXwtm5EFF+jWer/caM
- 8CYNEtFNWLzO+Xp17Z0iY=; b=LREdiEAFNHuvph1B9sKpnHEETcDygtzPJFDWB9
- QVSWxGoKeskg0yL3Gp135v5ODhmBZOaGYBe4PURIV/Y0ZH+8Kd74Nb56f4DvwDUj
- OJm7vq+6E8niUOAzwvmZTyzziOVwSiOjNaDBBrlNYCZjJ633hxoKSoPkVsKpkmqw
- bcaG/Blh3I5twb2KMHt6tnWlxIpdZEFuCabpf8KRlqmK1UU4cyUaqMujmXLxuCOC
- WrMDniWNYn3j//PjKTglbe0wUSxNYeyu5QztqArMvWvdTpeqy1yzdJIWe4/MO9EO
- 6nA4X5VrkHTbSFOCmicMjdzCxWBCSaft6ofHMwUfmDwf6VCQ==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eattq8gjy-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 3L41nfmdxulaUsGh/Hd2izRgUAXYbCTVuhrD0/jLbfg=; b=knFm3HcDWY8Fq15K
+ /sdrsjMxgjEtqHwIZ9jQiumQ3bDT4tN/KqMl/tYr7jp0nRcL6/AbZtIilLqi1qex
+ E2IXYPxQcjLWphcN/dIVFqWNxkWatvsEZPfiR+E/MnRX7dg/kswmVIQuzIl9BeOc
+ Hb3iFOxHLWxh9WCxW3Wr9OUedcmSsBwdWAKDuyspTDmlzKuN/BPzqtwF5PDCWi1M
+ zXGueva5XpYekXqfrapN3EQ8OTYa2wmF4vNiLf+lDzPkY9EeY6MV+SW0+FrLQeNH
+ NVSvI0k7geL6r860oSwlUMXFzDCYQDQv850SjhIr6vSLufVNsMuR1wM1Vpds3KRx
+ imzyAQ==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
+ [74.125.82.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ean2nj1x7-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 22 May 2026 18:53:21 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-2f2d983d109so3749315eec.0
+ for <qemu-devel@nongnu.org>; Fri, 22 May 2026 18:53:22 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id
+ 5a478bee46e88-2eebb099efbso5736869eec.0
  for <qemu-devel@nongnu.org>; Fri, 22 May 2026 11:53:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oss.qualcomm.com; s=google; t=1779476001; x=1780080801; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=qr2fBXwtm5EFF+jWer/caM8CYNEtFNWLzO+Xp17Z0iY=;
- b=HUrEvXzvGKpugIFEZzFpVuhRLTrKQ9nXfg5BFFzoCuqFKa7nh0SEyTFdZdj7n9+AAt
- 8O+5ULSvf5crqCy/zviQXa9DXNWlL4FpxGxo6O7DlWnwx7HNNhDA7gCYHGGVmzuPsj3y
- Yog0j/5K903yREBHiYNmFU6Fe8ZeQplvz7eHHL47b5VwNnrKS2mpHzO8Of4VMehuzdIW
- spZfWMfRx12CLCLat2I67eCoTzoz9UL5MYwl7W5JDCI0DK6MAzurvBgl7kiwdiy8Ph3L
- svQmBcotT/7GVuklfd7DGyzKNz3/o/S1615/fawU61KGFa8INI5gNRJcty8VN3+oFbUr
- oRrw==
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3L41nfmdxulaUsGh/Hd2izRgUAXYbCTVuhrD0/jLbfg=;
+ b=eoIwOGpbG+ErxK0MNz6GgLObXaxSzipS7cb/eBSw9kdUYa5h2h9eqAX2kzCWRekHS9
+ 4viZnlle2XVpMjZspPjmAzlNwkSK7C1tkNykj0zlcDEydltE2+I2Sn5Xsf1lRZLdP1fe
+ gM4jjClPPHyhSYlku+dAWJsoVbxbNMDH6GMxYcI1Lub0r6AvjgkXW4oBsriJdrVw7U2X
+ hn8wfjSl8whjHfZslH+8u6o4OlybF1YjAG39PMAWbrkPvreQARjQUr7IhxSrxsT3dohc
+ ERAq/PL3uZLbwlLlbogMZ7nQpPrw8qAr9QwdxqJaAEd6YzqlBjoHrhNlcrqr7k0lKWYo
+ aTrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20251104; t=1779476001; x=1780080801;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qr2fBXwtm5EFF+jWer/caM8CYNEtFNWLzO+Xp17Z0iY=;
- b=jTGOOCJIECSRFqeitPzlZDtjUI5/0ALRiYmnzNHF/r+ZIr0Jty8CP2oP/NHdlcKpAv
- slnImhV2kxyp0gS+zlw95YsS1Fjn28Fii8XxylAK/XBINIwXmevtCL+vyVzoTy4m00Vt
- zs0CIGVN+R1mEbciMw+sJw+hoLGlFqBI7rUmCs62LOsUuzydfYboTHWH9joiY7/7ZI7E
- xoK6fgZH/ugOOItqeGlkRgtvUX3kOSAcC0dZyZYtYiWLE8s/jVO3kxTf3H3wf1SXNkmC
- izzKC41WOtplyWtEhVC0IqmLM0rLpfU9wuzIFoXS6XTpV9YjijeJsbCKOkLo24vPy6F2
- ZZoA==
-X-Gm-Message-State: AOJu0Yxjzqc7n83Ja7giIwmwSP5IsxdtR24K4caE+BHt3uiqNfmc7EjH
- C3+e563ZQy5PYEBJqhOL6+8ItHxqIDzdUyHVb8UTFlYUACwjomJqGiRpHGZ/TC9t9QnbX3yqt6/
- AO8//xbTUNG0OXzvw9Elycs44e3NSehPIpdFXJSmn1TWo69nr0vYakWpo8rsUrAX+Nr+f
-X-Gm-Gg: Acq92OGZdyXGciSdHPxa3iebVOnicTb9xyFQWPCe+lQxwlqZwoZJvnqDXrBPsKCwrd6
- QA+CsviGHIuAUWBfeSXyV2vJoevMyAcMpU3B5bkF+xnNjkmcBgMFcOmg09Rm6sSjY4y9GlSEVu6
- ZYlCDkQpZfCuOKOESYi8SdXgto2KaHU+D+fPjbgMegDYOybHXtIAagVX3FGJ/DqZJU/y/d1uMuZ
- pEFjPyRkShqprRGdUxYHtcQ6MaE5+xeY4NZyPx8JvBUuoaqaj1qXBPoIyjt4NhiBPevLZXPzSs+
- FWjzKiGLK/w1nXRvBKPspWE04JmutIlySr7O7mtiG19sdmdk3Zr/Caw3UypC8+v5FA2S5TbKFVq
- OvnIEqoWn8uSeM0k2W+AKLi4MCB/JwEBpbeJgcvaI5oCXEamfCv3ic1AfBrYmVeDHF0s8BTYB4b
- dcEMAufA==
-X-Received: by 2002:a05:7301:6003:b0:2c5:60d0:701e with SMTP id
- 5a478bee46e88-30448ffd0e8mr2681790eec.3.1779476000511; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=3L41nfmdxulaUsGh/Hd2izRgUAXYbCTVuhrD0/jLbfg=;
+ b=SqO/dSWJ2kR9kzZUkZkwVFwSsT9YyUsmcy9mBsZGacEgyTNH/82Go/QvnfeZRfvAGM
+ llJDm0JF39CLbIQ6DG41wyFgTrTputtCpkz746oGIRZBgA2D+bAlRzSSPWk8GM18Drzl
+ 6rUWjVzS80b6H0z4Po09u3UtB29lslNm5kI0XAQBV7M2VJ6uxm8oA7Gvo4P8xjZoR6J6
+ hI/tFc0Bmlz9omiu9JKkTGKqTrYSvUFiVwDP8+4B26N/ENz74dHGptx6FCEKQkxTcTZ5
+ oxYmlQDIpD8cj+qqixmUGA+Tp2tq7LB8r98I7K1GtMpawwbgYQicA2q98nzLtFxLDg84
+ 8a/Q==
+X-Gm-Message-State: AOJu0Yx0N9vxXtysgpcoI9aASXfkd6biI+J7HBM5vBYj/daqmTctb5Hc
+ 5vUcXZoxO6GgOLpOboLGR1E34hDG8Gd2yyyV7Vpqx1G3aEZGUhqQFsc7Qr9IlCI6QCLzhgs5KVS
+ u3LreFBAl2Ozqy0IhFvs1LcY00I8l+hclsP6ggXM/BiqN90FEcpb+8KoZR4lORQe8AM77
+X-Gm-Gg: Acq92OHtC/0BRRQBUamPTxHwYHN1Q4ckzFbQKgy7D6scqTkUAUee7cInQD13wOvtXuK
+ 2fieGtqrWqTXf8nOB/kdMCP9YfHkdwpLgK73w9CFpHEyO1IEfhwaJkAPh8eFsRNq0obOr2qqXtB
+ jBMQkzM3kDqENmAfn0zuC1ZrjdF7gbhfhPVg9lgiw16rthbvysqO9Pt5jvY2ZxGDIl72Orrk0PE
+ KDrWhj6MD8gvruAP8vbdTTgYbSTo4PZdbtqTcqUIsdHC7EgjqtUycyqzi7bVrzGzFvcz/OFqIE8
+ wwQjtFY2ZIS3Z+NaU0xpR+9nNayQQ/cWQBblAUW2BR1RxRFYnWdWe/O7WVXyUSs8Cjf35teDdpr
+ rkuA0PmnJyx9OLkcF0A3MPbbOAf2DUr20eqoTQouBOvhdci3fXH91V5cXwMmNeemLLSRF53eJl7
+ XLdB6YCw==
+X-Received: by 2002:a05:7301:6446:b0:2f2:8857:1804 with SMTP id
+ 5a478bee46e88-3044905b3ecmr2624610eec.9.1779476001343; 
+ Fri, 22 May 2026 11:53:21 -0700 (PDT)
+X-Received: by 2002:a05:7301:6446:b0:2f2:8857:1804 with SMTP id
+ 5a478bee46e88-3044905b3ecmr2624585eec.9.1779476000830; 
  Fri, 22 May 2026 11:53:20 -0700 (PDT)
-X-Received: by 2002:a05:7301:6003:b0:2c5:60d0:701e with SMTP id
- 5a478bee46e88-30448ffd0e8mr2681763eec.3.1779475999909; 
- Fri, 22 May 2026 11:53:19 -0700 (PDT)
 Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3045225b7b6sm2470502eec.25.2026.05.22.11.53.19
+ 5a478bee46e88-3045225b7b6sm2470502eec.25.2026.05.22.11.53.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 May 2026 11:53:19 -0700 (PDT)
+ Fri, 22 May 2026 11:53:20 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 0/3] Docs update for 2026-05-22
-Date: Fri, 22 May 2026 11:53:03 -0700
-Message-ID: <20260522185306.4105344-1-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL 1/3] docs/code-provenance: Fix formatting of *-by tags
+Date: Fri, 22 May 2026 11:53:04 -0700
+Message-ID: <20260522185306.4105344-2-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260522185306.4105344-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260522185306.4105344-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIyMDE4OCBTYWx0ZWRfX0rnnsUMSFGf6
- eigYBHmnFgYtM3rmo2IFQ+a/lEtJD7NjxtLcQJsw9RgMexT7T6rrRpaxbcPnvRTO9F1EfU9vGR7
- ROlV8cwiMO+xSm+Co3oC5uDGYfUTjwZ9ERWYz47kdeceAhCAm6q1NMdjHu79rBM7tp0cAywqJpU
- cxYk2xLlfeMEek+1H8jDQQ5l5NbBXrq3J/k8PZ1vmX+xIc3m9U2+2sbURWIbj7bqTgSmh647w32
- BMvT4/wADEJTwRrsGKOjmPfSUT312hKmvuUvNyWN81Tx/L0LG/VsAqsIL/F2jPmjCZ68z0rwzHg
- UzaJfUvnCF/uEpkPy1lv1dMt5lnux3OttvFVUp0AcSqAT9wFT8rDpNbDFWWAyRON/0XqOMBlBj8
- jqUzuOyf6XraonRzRza5roy/26meX95vvnY8tit53o3zzAvPjmYrTPgsQwN8+Mp/x/9jPnde6ab
- qLaPDSYJEM3yqFLkT4Q==
-X-Proofpoint-GUID: s27G0YGvxsMopbxa_DVhae7hTKKIbpJy
-X-Proofpoint-ORIG-GUID: s27G0YGvxsMopbxa_DVhae7hTKKIbpJy
-X-Authority-Analysis: v=2.4 cv=S/zpBosP c=1 sm=1 tr=0 ts=6a10a621 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Authority-Analysis: v=2.4 cv=XvDK/1F9 c=1 sm=1 tr=0 ts=6a10a622 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=-AnQz9JOAAAA:8 a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8 a=PzGKxP3WAAAA:8
- a=7hskF5ZkpNGFD0IAr0wA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PxkB5W3o20Ba91AHUih5:22 a=3bnadFWGKyIZm4bBUiDd:22 a=zCCnohV0i-_k6euCn0hJ:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=VwQbUJbxAAAA:8 a=PzGKxP3WAAAA:8 a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8
+ a=hgBJMz_LmLdNJunF3I4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bBxd6f-gb0O0v-kibOvt:22 a=zCCnohV0i-_k6euCn0hJ:22
+X-Proofpoint-GUID: c1Io6eFLdLBO93o5p-nxL-6XVkZtTNpM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIyMDE4OCBTYWx0ZWRfX+uegdYsdANrh
+ gvmzHMTP28I+AUu8LvE18QaOVvM9kwfbImlMNRxxZh+tPMg4xA/mqYiw+f5o0BR3psNKcC46dgn
+ V6M6ImqB/zVBEIokITKPXV+7yrVzOjNVPQttjsjyWKNitgXm0RQX5vSE8EagjLiqxVw/3fC0jCV
+ jS/+20sdnTY+K7EF5Yk+ovb2+wo8mG5aIBUHMpxIHlLLT8l9aTouUb9MjOQ9Upr3elSSUz05tME
+ ZIJVcJp+O3oOs/2ijACu7ZQkK0BZS+6F5xmebPILi7qYOY4GwMYRn6Lz/Iohv/chzLnTzKZkxOK
+ MTi9NwvcMPm6dhA24xKWoNdIkGE5LXKeLw/wKANnvQiSFkFoIl7YYY0My6PXW7qYSO2gxWp796v
+ ZhiXewWJYU35P8ykusqx9W8vdlzhtggRgCJbXyUh2Xk/2UsJ1IaduXx1wF7Pz8nCCOSvcn/gPUn
+ 9bkZrMibBdDwQ8aAxSQ==
+X-Proofpoint-ORIG-GUID: c1Io6eFLdLBO93o5p-nxL-6XVkZtTNpM
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-22_05,2026-05-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0
- adultscore=0 spamscore=0 priorityscore=1501 suspectscore=0 malwarescore=0
+ clxscore=1015 lowpriorityscore=0 malwarescore=0 phishscore=0 spamscore=0
+ impostorscore=0 adultscore=0 suspectscore=0 priorityscore=1501 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605220188
-Received-SPF: pass client-ip=205.220.180.131;
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -146,35 +150,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit f5a2438405d4ae8b62de7c9b39fac0b2155ee544:
+From: J. Neuschäfer <j.neuschaefer@9elements.com>
 
-  Merge tag 'pull-qapi-2026-05-21' of https://repo.or.cz/qemu/armbru into staging (2026-05-21 09:00:22 -0400)
+Applying both ``code`` and **bold** formatting doesn't have the intended
+outcome, instead Sphinx emits the backticks into the HTML.
 
-are available in the Git repository at:
+Use only **bold** formatting to fix the HTML output.
 
-  https://gitlab.com/p-b-o/qemu tags/pbouvier/pr/docs-20260522
-
-for you to fetch changes up to 6a570c504f1bf1b42a3a0eadc8139b7cb1d7b8b8:
-
-  docs/devel: Fix typo (s/exist paths/exit paths/) (2026-05-22 11:52:32 -0700)
-
-----------------------------------------------------------------
-Changes:
-- [PATCH] docs/code-provenance: Fix formatting of *-by tags (=?utf-8?q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@9elements.com>)
-  Link: https://lore.kernel.org/qemu-devel/20260520-prov-v1-1-7a58af334b9c@9elements.com
-- [PATCH] docs/devel/qom: Fix some editing errors (=?utf-8?q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@9elements.com>)
-  Link: https://lore.kernel.org/qemu-devel/20260520-qom-v1-1-baad87fefe4f@9elements.com
-- [PATCH] docs/devel: Fix typo (s/exist paths/exit paths/) (=?utf-8?q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@9elements.com>)
-  Link: https://lore.kernel.org/qemu-devel/20260520-exist-v1-1-535f929a87ae@9elements.com
-
-----------------------------------------------------------------
-J. Neuschäfer (3):
-      docs/code-provenance: Fix formatting of *-by tags
-      docs/devel/qom: Fix some editing errors
-      docs/devel: Fix typo (s/exist paths/exit paths/)
-
+Signed-off-by: J. Neuschäfer <j.neuschaefer@9elements.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260520-prov-v1-1-7a58af334b9c@9elements.com
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
  docs/devel/code-provenance.rst | 10 +++++-----
- docs/devel/qom.rst             |  4 ++--
- docs/devel/style.rst           |  2 +-
- 3 files changed, 8 insertions(+), 8 deletions(-)
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
+index 4e6a9afe0d6..65b8f232a08 100644
+--- a/docs/devel/code-provenance.rst
++++ b/docs/devel/code-provenance.rst
+@@ -99,13 +99,13 @@ Other commit tags
+ While the ``Signed-off-by`` tag is mandatory, there are a number of other tags
+ that are commonly used during QEMU development:
+ 
+- * **``Reviewed-by``**: when a QEMU community member reviews a patch on the
++ * **Reviewed-by**: when a QEMU community member reviews a patch on the
+    mailing list, if they consider the patch acceptable, they should send an
+    email reply containing a ``Reviewed-by`` tag. Subsystem maintainers who
+    review a patch should add this even if they are also adding their
+    ``Signed-off-by`` to the same commit.
+ 
+- * **``Acked-by``**: when a QEMU subsystem maintainer approves a patch that
++ * **Acked-by**: when a QEMU subsystem maintainer approves a patch that
+    touches their subsystem, but intends to allow a different maintainer to
+    queue it and send a pull request, they would send a mail containing a
+    ``Acked-by`` tag. Where a patch touches multiple subsystems, ``Acked-by``
+@@ -113,18 +113,18 @@ that are commonly used during QEMU development:
+    maintainer wants to indicate they have done a full review they should use
+    a ``Reviewed-by`` tag.
+ 
+- * **``Tested-by``**: when a QEMU community member has functionally tested the
++ * **Tested-by**: when a QEMU community member has functionally tested the
+    behaviour of the patch in some manner, they should send an email reply
+    containing a ``Tested-by`` tag.
+ 
+- * **``Reported-by``**: when a QEMU community member reports a problem via the
++ * **Reported-by**: when a QEMU community member reports a problem via the
+    mailing list, or some other informal channel that is not the issue tracker,
+    it is good practice to credit them by including a ``Reported-by`` tag on
+    any patch fixing the issue. When the problem is reported via the GitLab
+    issue tracker, however, it is sufficient to just include a link to the
+    issue.
+ 
+- * **``Suggested-by``**: when a reviewer or other 3rd party makes non-trivial
++ * **Suggested-by**: when a reviewer or other 3rd party makes non-trivial
+    suggestions for how to change a patch, it is good practice to credit them
+    by including a ``Suggested-by`` tag.
+ 
+-- 
+2.43.0
+
 
