@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CC31CD5BB3
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 05:23:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D07BFCD5BAF
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 05:23:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQIJW-0003De-Pb; Fri, 22 May 2026 01:20:50 -0400
+	id 1wQIJE-0002b1-DO; Fri, 22 May 2026 01:20:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wQIJK-0002vn-I2
- for qemu-devel@nongnu.org; Fri, 22 May 2026 01:20:38 -0400
-Received: from mail-oi1-x231.google.com ([2607:f8b0:4864:20::231])
+ id 1wQIJC-0002Yr-RQ
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 01:20:30 -0400
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wQIJH-0002C9-S8
- for qemu-devel@nongnu.org; Fri, 22 May 2026 01:20:38 -0400
-Received: by mail-oi1-x231.google.com with SMTP id
- 5614622812f47-47cba53479aso4800562b6e.0
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 22:20:35 -0700 (PDT)
+ id 1wQIJA-00020c-11
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 01:20:30 -0400
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-47c7b282e21so2866517b6e.1
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 22:20:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779427234; x=1780032034; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779427227; x=1780032027; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=dZ4CrzNSbg8N92isrUqhe1gtXsGlHjJdw2HEjLBDLdM=;
- b=HrB48bBLRbXaOrKDptfz/6TAQARCefxZieIuX5ol7tg3ktWv1leAU4Jx5jpt7TFyPy
- ThnEecTPTRb6wYv/03ZJ1GbeJ6ntCrDpL47i7UCAvtBc0ZCMsbdMMyHHEFhQ+p2vtIFx
- BF9shNJTOhdd0jOJWlw80Chom1Yke2TU9wZrKZEro1QC8IKI+i9h2O/mtZOQvGKt6DD6
- EHRCrcGOBQNvaGaGgPqMZafcLqhniV4LITLKZdGtDJCK6sZMz3Qdlq0HBOdM82beJm+3
- IhIuJtsNmwoGD1KHVlzzNoW+vGeWVGVrSQ4n8WdH7B6UAYJTHDWvaXnGq8uSPGw/mGCH
- dFrQ==
+ :reply-to; bh=KCMCwSrvPApDaTT/eK8226LssVWE0QxPTwRU0tAy9hs=;
+ b=BzLCD5DcnTTYQD7/NMoFqTKuVj6Sz+B2NMJTvTDfrneapYXjf2IJBeV37lXPQAp8dl
+ 9JzEJW2eIyzuQ36gSd8jdxFwe6aTQj9JgKTu7Nj0Mtzr6mrgN4eY7X0kpwg9GNqAgEPV
+ /yaINoPT5odi+mFPovkQ5R8ROfRYhnYGkWCw5XegLF2Mp8ZrZgllHIPZOrMehaEtzhbJ
+ EuXKllwmhFZXTmUeTMBcwLSfAWidyyockHNkDRXlDauEmpj7VwO7ueUFQY+5aD1F6WIG
+ oKCQQy1U7pejvxwDtMidYOEtcxlPBNsX8O56sN+2tnWsKYCrdpz19f2EAdr7dtI5wgXN
+ HUNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779427234; x=1780032034;
+ d=1e100.net; s=20251104; t=1779427227; x=1780032027;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=dZ4CrzNSbg8N92isrUqhe1gtXsGlHjJdw2HEjLBDLdM=;
- b=MloXQ+oj+frf11AGbF5lEj7DJyH87VsJKVuxELKp+04b1qizTj6Zia9pDUFJe9WWzE
- 9XhNEi85GFSrWIq1s/umLz+30XF0Rp6ERwwwhEER8JEqoMw5g8imZCi8MRxGUUWNMlxC
- oDxVyJ5KQJWlGxlY6dxx29uy2A25MopsjdiLk536VROb5quqJHoyyqLnuDkbneabFJ3i
- Moq8o1kCsV0y29EPA3LIEsjpySslpatN00MmZym+AJHi0vCTma3WCbUdgB/MqqPm323n
- JpRHAejB9we5v0XC+5ZxeVfVicAQaiPMqFLV3+Tv3xSKTdU2UBf1UfQG81cJ/V9Urx8D
- L+bg==
-X-Gm-Message-State: AOJu0YxNMnZZi/Cl53W+06y4M91FrQfKw3fjpv1RW7qI1mfldmInzRC/
- O2GtWlCipJ49nTOl7gqloy4d8nMqRio+6+DblThIm9xY9ODhV2DQIQ1N
-X-Gm-Gg: Acq92OHzgZy0hSm2AATpdEdm67IQSLWXU8w8aC/TcOSycSJSyHTHWZX5aTaov5SsYEC
- oGuL+wi/51PorSafXcYbMZbB7MQxn3tDRVmWQ6rJHMWFxbWPCN6aJDi8kop5eagj/ef3okbfVVp
- jYG+FHiNccf7coaQsfw+dzH+VNqTaWhCU3IHUeIKjYglmnH/xG12H4DjnsU8u2/70uAn4vpqExX
- 845nThRTKvm2vFh1BMdd4oyOWfpLZC+p9+HNrShJWDm0WwjH9aDDVG1ygVkfTiTvllGhdu0g+U5
- gAaTdn2AFrmdXW90EJWOy4xX67TxkNU/XWJGAJ5/QleoBnzhNjk7a/bLQeIzXjtY1KeS0EVzH2Z
- TgHs2Kgndxc8mBLJyOd+u/ruA9jrmPBVCRbD4Ypi4aNM+rNy2dKN/idd0gBcUFx0LEipTweBdCa
- Afc90fJUr1YarN1sYMLtt020eX1DFefAd2mgCOYrScqIOBEoBOzMqQoB5C2maCdbk6Ds8+b1RIp
- XMg6FH9y/vP8kZAzaGjmYWC2TUf0u8XHm8fSlz9ST/qsZU9FaUHtZ1jT1DnMepZ4+RU
-X-Received: by 2002:a05:6808:17a5:b0:479:f58a:c5d5 with SMTP id
- 5614622812f47-4854a3d68e1mr1116778b6e.45.1779427234429; 
- Thu, 21 May 2026 22:20:34 -0700 (PDT)
+ bh=KCMCwSrvPApDaTT/eK8226LssVWE0QxPTwRU0tAy9hs=;
+ b=JkPCOn8iEbnPPnlUgSLhb4jJKUUmdlwFYuCkRd3CL1Dr5JpoATIHJinuc3f7L30fxk
+ s6cvXqShNyQZUPLSuVV2uwQ0tOfDV+NbKATPHkC/CIzuzaRddtc1wNFRDRqDsJncLxuu
+ fWnmjKzlxrBfcqWfcAj8dcd8R8Pio41RGrOphy40kC4p2jE8/2FiaYjOq9rznLFsNQRj
+ aavD38Spnmy1X+r/VwiYlssgh9FIJXpRIE6I2SHJqiBHl5Zx+QdxYFWWjMrifHWWJ0lr
+ U6bhXS4U7NjN//9xcMeOMU8Di2Rqn4QQyZLB8uKRYwqVoBHLqGVwp8nzIXUg8Zk3k/zF
+ RpdA==
+X-Gm-Message-State: AOJu0YzxVCNnWQEYSwR/SOGeIr/g7FHndRZr04sQOGaKv9Ob24O5QETG
+ JeVfuykifEOm8cWNwAHdhCzeeXXPVWVamXZxnPm5AuK3BeenoB9Ati42
+X-Gm-Gg: Acq92OE/52m0U3ZIZcEmr8E+h2g5v1QGQrrLvVU+l8jBa6YUruOlVnP9t5f9TzI/4XJ
+ 4Nk00P1PmNC6XHCVGsIhvEPDsFBFR4clooH7do9G5x2dVDbHMVpGNO7gjIDbwaUQjmDLqJreMe+
+ Tw+rpnDWmScPG4Sg0wJj48hKJSBzenFjVnGgmbkOs0t6Mubc3Gcc8BeVULjgz5RF+osQJRDSKxT
+ wQhOoxQYBikBeb155BPwSXJj/Eh58jA/DlYRyx4gPpamV8d3HlncaHkLZRnuorN7/5iqBX4zCqN
+ zUsOkOaPQbcuZXV8KaHrHxMpE+9ASK1OnwBtNzhXN+/flWHuk8PF23qOu9fAYoL5OW1eIrjL36O
+ 6tc1v44toH3k0DwlRcKFfAhGZhwDJbBhbfcnG/kT7Qt0wdWK/tSvRohRaJDXfOGi+p/aTTDAtmG
+ 1u8wRtwEqrwe4KdcWUbIigPYjNF6gYUT2SkiMsc7FaCUB0Q5sz0CJeONJYW8H/gdvDXhYdrCpZM
+ AIQp8wC3UUv24yI8jatQhgu81pxrah/RbSUkMAK3d2NCjaJxbD3p+AnbdxU4dwXBZMcZ7yPX1FF
+ zBY=
+X-Received: by 2002:a05:6808:1b10:b0:479:dc28:b71f with SMTP id
+ 5614622812f47-4854a3f312dmr1134796b6e.40.1779427226674; 
+ Thu, 21 May 2026 22:20:26 -0700 (PDT)
 Received: from mac.localdomain (184-96-131-78.hlrn.qwest.net. [184.96.131.78])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-4855476ab77sm59690b6e.17.2026.05.21.22.20.33
+ 5614622812f47-4855476ab77sm59690b6e.17.2026.05.21.22.20.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 22:20:34 -0700 (PDT)
+ Thu, 21 May 2026 22:20:26 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Thu, 21 May 2026 23:19:59 -0600
-Subject: [PATCH v14 17/22] target/mips: decode Octeon HSH and SHA3 COP2
- selectors
+Date: Thu, 21 May 2026 23:19:53 -0600
+Subject: [PATCH v14 11/22] target/mips: add Octeon 3DES and KASUMI COP2 helpers
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260521-mips-octeon-missing-insns-v2-v14-17-fbf08e164830@gmail.com>
+Message-Id: <20260521-mips-octeon-missing-insns-v2-v14-11-fbf08e164830@gmail.com>
 References: <20260521-mips-octeon-missing-insns-v2-v14-0-fbf08e164830@gmail.com>
 In-Reply-To: <20260521-mips-octeon-missing-insns-v2-v14-0-fbf08e164830@gmail.com>
 To: qemu-devel@nongnu.org
@@ -85,8 +85,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  James Hilliard <james.hilliard1@gmail.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::231;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x231.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x22f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -110,265 +110,512 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add explicit decodetree entries and translator bindings for the Octeon
-HSH shared-window selectors and SHA3 operation selectors. These paths
-need helper calls because HSH/SHA3 selectors alias the architectural hash
-register window and operation selectors have visible side effects.
+Add helper support for the Octeon 3DES and KASUMI operation selectors.
+The 3DES helpers implement ECB and CBC encrypt/decrypt over the shared
+3DES key, IV, and result bank. KASUMI reuses the same register bank and
+adds its own encrypt selectors.
 
-Keep HSH/SHA3 decode separate from direct register transfers because the
-shared hash-window aliases require helper-mediated state updates.
+Only the operation selectors require helper code. Simple key, IV, and
+result register transfers are handled by direct selector decode.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
-Changes v10 -> v13:
-  - Keep this patch limited to HSH/SHA3 selector additions; CRC/GFM
-    selector finalization stays in the CRC/GFM selector patch.
-  - Name the 0x0057 SDK compatibility selector as STARTSHA1_COMPAT and
-    document why it is kept despite not appearing in the public manuals.
-
-Changes v9 -> v10:
-  - Split HSH/SHA3 selector decode out of the monolithic Octeon COP2
-    selector decode patch.
-  - Reworked the shared HSH/SHA3 register-window transfers around the
-    architectural hash state instead of DATW/IVW shadow state.
+Changes v8 -> v9:
+  - Split 3DES/KASUMI operation selectors into their own COP2 helper patch.
+  - Replace generic selector dispatch with per-operation 3DES/KASUMI
+    helpers.
+  - Add matching helper.h declarations with the helper implementation.
 ---
- target/mips/tcg/octeon.decode      | 77 ++++++++++++++++++++++++++++++++++++++
- target/mips/tcg/octeon_translate.c | 77 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 154 insertions(+)
+ target/mips/helper.h            |   6 +
+ target/mips/tcg/octeon_crypto.c | 458 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 464 insertions(+)
 
-diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index 70e02d0b0e..b1a63b743f 100644
---- a/target/mips/tcg/octeon.decode
-+++ b/target/mips/tcg/octeon.decode
-@@ -113,6 +113,7 @@ LDX          011111 ..... ..... ..... 01000 001010 @lx
-     CVM_MF_HSH_DAT4                      010010 00001 rt:5 0000 0000 0100 0100 &cp2
-     CVM_MF_HSH_DAT5                      010010 00001 rt:5 0000 0000 0100 0101 &cp2
-     CVM_MF_HSH_DAT6                      010010 00001 rt:5 0000 0000 0100 0110 &cp2
-+    CVM_MF_SHA3_DAT24                    010010 00001 rt:5 0000 0000 0101 0000 &cp2
-     CVM_MF_3DES_KEY0                     010010 00001 rt:5 0000 0000 1000 0000 &cp2
-     CVM_MF_3DES_KEY1                     010010 00001 rt:5 0000 0000 1000 0001 &cp2
-     CVM_MF_3DES_KEY2                     010010 00001 rt:5 0000 0000 1000 0010 &cp2
-@@ -137,6 +138,30 @@ LDX          011111 ..... ..... ..... 01000 001010 @lx
-     CVM_MF_GFM_MUL_REFLECT1              010010 00001 rt:5 0000 0000 0101 1001 &cp2
-     CVM_MF_GFM_RESINP_REFLECT0           010010 00001 rt:5 0000 0000 0101 1010 &cp2
-     CVM_MF_GFM_RESINP_REFLECT1           010010 00001 rt:5 0000 0000 0101 1011 &cp2
-+    CVM_MF_HSH_DATW0                     010010 00001 rt:5 0000 0010 0100 0000 &cp2
-+    CVM_MF_HSH_DATW1                     010010 00001 rt:5 0000 0010 0100 0001 &cp2
-+    CVM_MF_HSH_DATW2                     010010 00001 rt:5 0000 0010 0100 0010 &cp2
-+    CVM_MF_HSH_DATW3                     010010 00001 rt:5 0000 0010 0100 0011 &cp2
-+    CVM_MF_HSH_DATW4                     010010 00001 rt:5 0000 0010 0100 0100 &cp2
-+    CVM_MF_HSH_DATW5                     010010 00001 rt:5 0000 0010 0100 0101 &cp2
-+    CVM_MF_HSH_DATW6                     010010 00001 rt:5 0000 0010 0100 0110 &cp2
-+    CVM_MF_HSH_DATW7                     010010 00001 rt:5 0000 0010 0100 0111 &cp2
-+    CVM_MF_HSH_DATW8                     010010 00001 rt:5 0000 0010 0100 1000 &cp2
-+    CVM_MF_HSH_DATW9                     010010 00001 rt:5 0000 0010 0100 1001 &cp2
-+    CVM_MF_HSH_DATW10                    010010 00001 rt:5 0000 0010 0100 1010 &cp2
-+    CVM_MF_HSH_DATW11                    010010 00001 rt:5 0000 0010 0100 1011 &cp2
-+    CVM_MF_HSH_DATW12                    010010 00001 rt:5 0000 0010 0100 1100 &cp2
-+    CVM_MF_HSH_DATW13                    010010 00001 rt:5 0000 0010 0100 1101 &cp2
-+    CVM_MF_HSH_DATW14                    010010 00001 rt:5 0000 0010 0100 1110 &cp2
-+    CVM_MF_HSH_DATW15                    010010 00001 rt:5 0000 0010 0100 1111 &cp2
-+    CVM_MF_HSH_IVW0                      010010 00001 rt:5 0000 0010 0101 0000 &cp2
-+    CVM_MF_HSH_IVW1                      010010 00001 rt:5 0000 0010 0101 0001 &cp2
-+    CVM_MF_HSH_IVW2                      010010 00001 rt:5 0000 0010 0101 0010 &cp2
-+    CVM_MF_HSH_IVW3                      010010 00001 rt:5 0000 0010 0101 0011 &cp2
-+    CVM_MF_HSH_IVW4                      010010 00001 rt:5 0000 0010 0101 0100 &cp2
-+    CVM_MF_HSH_IVW5                      010010 00001 rt:5 0000 0010 0101 0101 &cp2
-+    CVM_MF_HSH_IVW6                      010010 00001 rt:5 0000 0010 0101 0110 &cp2
-+    CVM_MF_HSH_IVW7                      010010 00001 rt:5 0000 0010 0101 0111 &cp2
-     CVM_MF_GFM_MUL0                      010010 00001 rt:5 0000 0010 0101 1000 &cp2
-     CVM_MF_GFM_MUL1                      010010 00001 rt:5 0000 0010 0101 1001 &cp2
-     CVM_MF_GFM_RESINP0                   010010 00001 rt:5 0000 0010 0101 1010 &cp2
-@@ -153,6 +178,10 @@ LDX          011111 ..... ..... ..... 01000 001010 @lx
-     CVM_MT_HSH_IV1                       010010 00101 rt:5 0000 0000 0100 1001 &cp2
-     CVM_MT_HSH_IV2                       010010 00101 rt:5 0000 0000 0100 1010 &cp2
-     CVM_MT_HSH_IV3                       010010 00101 rt:5 0000 0000 0100 1011 &cp2
-+    CVM_MT_SHA3_DAT24                    010010 00101 rt:5 0000 0000 0101 0000 &cp2
-+    CVM_MT_SHA3_DAT15                    010010 00101 rt:5 0000 0000 0101 0001 &cp2
-+    # Cavium SDK code uses 0x0057 as a STARTSHA1 compatibility alias.
-+    CVM_MT_HSH_STARTSHA1_COMPAT          010010 00101 rt:5 0000 0000 0101 0111 &cp2
-     CVM_MT_GFM_MUL_REFLECT0              010010 00101 rt:5 0000 0000 0101 1000 &cp2
-     CVM_MT_GFM_MUL_REFLECT1              010010 00101 rt:5 0000 0000 0101 1001 &cp2
-     CVM_MT_GFM_XOR0_REFLECT              010010 00101 rt:5 0000 0000 0101 1100 &cp2
-@@ -182,19 +211,67 @@ LDX          011111 ..... ..... ..... 01000 001010 @lx
-     CVM_MT_CRC_BYTE_REFLECT              010010 00101 rt:5 0000 0010 0001 0100 &cp2
-     CVM_MT_CRC_HALF_REFLECT              010010 00101 rt:5 0000 0010 0001 0101 &cp2
-     CVM_MT_CRC_WORD_REFLECT              010010 00101 rt:5 0000 0010 0001 0110 &cp2
-+    CVM_MT_HSH_DATW0                     010010 00101 rt:5 0000 0010 0100 0000 &cp2
-+    CVM_MT_HSH_DATW1                     010010 00101 rt:5 0000 0010 0100 0001 &cp2
-+    CVM_MT_HSH_DATW2                     010010 00101 rt:5 0000 0010 0100 0010 &cp2
-+    CVM_MT_HSH_DATW3                     010010 00101 rt:5 0000 0010 0100 0011 &cp2
-+    CVM_MT_HSH_DATW4                     010010 00101 rt:5 0000 0010 0100 0100 &cp2
-+    CVM_MT_HSH_DATW5                     010010 00101 rt:5 0000 0010 0100 0101 &cp2
-+    CVM_MT_HSH_DATW6                     010010 00101 rt:5 0000 0010 0100 0110 &cp2
-+    CVM_MT_HSH_DATW7                     010010 00101 rt:5 0000 0010 0100 0111 &cp2
-+    CVM_MT_HSH_DATW8                     010010 00101 rt:5 0000 0010 0100 1000 &cp2
-+    CVM_MT_HSH_DATW9                     010010 00101 rt:5 0000 0010 0100 1001 &cp2
-+    CVM_MT_HSH_DATW10                    010010 00101 rt:5 0000 0010 0100 1010 &cp2
-+    CVM_MT_HSH_DATW11                    010010 00101 rt:5 0000 0010 0100 1011 &cp2
-+    CVM_MT_HSH_DATW12                    010010 00101 rt:5 0000 0010 0100 1100 &cp2
-+    CVM_MT_HSH_DATW13                    010010 00101 rt:5 0000 0010 0100 1101 &cp2
-+    CVM_MT_HSH_DATW14                    010010 00101 rt:5 0000 0010 0100 1110 &cp2
-+    CVM_MT_HSH_DATW15                    010010 00101 rt:5 0000 0010 0100 1111 &cp2
-+    CVM_MT_HSH_IVW0                      010010 00101 rt:5 0000 0010 0101 0000 &cp2
-+    CVM_MT_HSH_IVW1                      010010 00101 rt:5 0000 0010 0101 0001 &cp2
-+    CVM_MT_HSH_IVW2                      010010 00101 rt:5 0000 0010 0101 0010 &cp2
-+    CVM_MT_HSH_IVW3                      010010 00101 rt:5 0000 0010 0101 0011 &cp2
-+    CVM_MT_HSH_IVW4                      010010 00101 rt:5 0000 0010 0101 0100 &cp2
-+    CVM_MT_HSH_IVW5                      010010 00101 rt:5 0000 0010 0101 0101 &cp2
-+    CVM_MT_HSH_IVW6                      010010 00101 rt:5 0000 0010 0101 0110 &cp2
-+    CVM_MT_HSH_IVW7                      010010 00101 rt:5 0000 0010 0101 0111 &cp2
-     CVM_MT_GFM_MUL0                      010010 00101 rt:5 0000 0010 0101 1000 &cp2
-     CVM_MT_GFM_MUL1                      010010 00101 rt:5 0000 0010 0101 1001 &cp2
-     CVM_MT_GFM_RESINP0                   010010 00101 rt:5 0000 0010 0101 1010 &cp2
-     CVM_MT_GFM_RESINP1                   010010 00101 rt:5 0000 0010 0101 1011 &cp2
-+    CVM_MT_GFM_XOR0                      010010 00101 rt:5 0000 0010 0101 1100 &cp2
-     CVM_MT_GFM_POLY                      010010 00101 rt:5 0000 0010 0101 1110 &cp2
-+    CVM_MT_SHA3_XORDAT0                  010010 00101 rt:5 0000 0010 1100 0000 &cp2
-+    CVM_MT_SHA3_XORDAT1                  010010 00101 rt:5 0000 0010 1100 0001 &cp2
-+    CVM_MT_SHA3_XORDAT2                  010010 00101 rt:5 0000 0010 1100 0010 &cp2
-+    CVM_MT_SHA3_XORDAT3                  010010 00101 rt:5 0000 0010 1100 0011 &cp2
-+    CVM_MT_SHA3_XORDAT4                  010010 00101 rt:5 0000 0010 1100 0100 &cp2
-+    CVM_MT_SHA3_XORDAT5                  010010 00101 rt:5 0000 0010 1100 0101 &cp2
-+    CVM_MT_SHA3_XORDAT6                  010010 00101 rt:5 0000 0010 1100 0110 &cp2
-+    CVM_MT_SHA3_XORDAT7                  010010 00101 rt:5 0000 0010 1100 0111 &cp2
-+    CVM_MT_SHA3_XORDAT8                  010010 00101 rt:5 0000 0010 1100 1000 &cp2
-+    CVM_MT_SHA3_XORDAT9                  010010 00101 rt:5 0000 0010 1100 1001 &cp2
-+    CVM_MT_SHA3_XORDAT10                 010010 00101 rt:5 0000 0010 1100 1010 &cp2
-+    CVM_MT_SHA3_XORDAT11                 010010 00101 rt:5 0000 0010 1100 1011 &cp2
-+    CVM_MT_SHA3_XORDAT12                 010010 00101 rt:5 0000 0010 1100 1100 &cp2
-+    CVM_MT_SHA3_XORDAT13                 010010 00101 rt:5 0000 0010 1100 1101 &cp2
-+    CVM_MT_SHA3_XORDAT14                 010010 00101 rt:5 0000 0010 1100 1110 &cp2
-+    CVM_MT_SHA3_XORDAT15                 010010 00101 rt:5 0000 0010 1100 1111 &cp2
-+    CVM_MT_SHA3_XORDAT16                 010010 00101 rt:5 0000 0010 1101 0000 &cp2
-+    CVM_MT_SHA3_XORDAT17                 010010 00101 rt:5 0000 0010 1101 0001 &cp2
-     CVM_MT_CRC_LEN                       010010 00101 rt:5 0001 0010 0000 0010 &cp2
-     CVM_MT_CRC_DWORD                     010010 00101 rt:5 0001 0010 0000 0111 &cp2
-     CVM_MT_CRC_VAR                       010010 00101 rt:5 0001 0010 0000 1000 &cp2
-     CVM_MT_CRC_DWORD_REFLECT             010010 00101 rt:5 0001 0010 0001 0111 &cp2
-     CVM_MT_CRC_VAR_REFLECT               010010 00101 rt:5 0001 0010 0001 1000 &cp2
-+    CVM_MT_HSH_STARTMD5                  010010 00101 rt:5 0100 0000 0100 0111 &cp2
-+    CVM_MT_HSH_STARTSHA256               010010 00101 rt:5 0100 0000 0100 1111 &cp2
-+    CVM_MT_SHA3_STARTOP                  010010 00101 rt:5 0100 0000 0101 0010 &cp2
-+    CVM_MT_HSH_STARTSHA                  010010 00101 rt:5 0100 0000 0101 0111 &cp2
-     CVM_MT_GFM_XORMUL1_REFLECT           010010 00101 rt:5 0100 0000 0101 1101 &cp2
-     CVM_MT_CRC_POLYNOMIAL                010010 00101 rt:5 0100 0010 0000 0000 &cp2
-     CVM_MT_CRC_POLYNOMIAL_REFLECT        010010 00101 rt:5 0100 0010 0001 0000 &cp2
-+    CVM_MT_HSH_STARTSHA512               010010 00101 rt:5 0100 0010 0100 1111 &cp2
-     CVM_MT_GFM_XORMUL1                   010010 00101 rt:5 0100 0010 0101 1101 &cp2
-   ]
-   CP2_Undef                              010010 ----- ----- ---- ---- ---- ----
-diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index ce4cfcb3f3..c8c797e57f 100644
---- a/target/mips/tcg/octeon_translate.c
-+++ b/target/mips/tcg/octeon_translate.c
-@@ -212,10 +212,35 @@ CP2_MF_I64(CVM_MF_GFM_RESINP1, gfm_resinp[1]);
- CP2_MF_U16(CVM_MF_GFM_POLY, gfm_poly);
+diff --git a/target/mips/helper.h b/target/mips/helper.h
+index 64bb3ff8a5..444eeeb3ec 100644
+--- a/target/mips/helper.h
++++ b/target/mips/helper.h
+@@ -82,6 +82,12 @@ DEF_HELPER_2(octeon_cp2_mt_sms4_enc_cbc1, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_sms4_enc1, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_sms4_dec_cbc1, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_sms4_dec1, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_des3_enc_cbc, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_kas_enc_cbc, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_des3_enc, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_kas_enc, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_des3_dec_cbc, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_des3_dec, void, env, i64)
  
- CP2_MF_HELPER(CVM_MF_CRC_IV_REFLECT, crc_iv_reflect);
-+CP2_MF_HELPER(CVM_MF_SHA3_DAT24, sha3_dat24);
- CP2_MF_HELPER(CVM_MF_GFM_MUL_REFLECT0, gfm_mul_reflect0);
- CP2_MF_HELPER(CVM_MF_GFM_MUL_REFLECT1, gfm_mul_reflect1);
- CP2_MF_HELPER(CVM_MF_GFM_RESINP_REFLECT0, gfm_resinp_reflect0);
- CP2_MF_HELPER(CVM_MF_GFM_RESINP_REFLECT1, gfm_resinp_reflect1);
-+CP2_MF_I64(CVM_MF_HSH_DATW0, hsh_dat[0]);
-+CP2_MF_I64(CVM_MF_HSH_DATW1, hsh_dat[1]);
-+CP2_MF_I64(CVM_MF_HSH_DATW2, hsh_dat[2]);
-+CP2_MF_I64(CVM_MF_HSH_DATW3, hsh_dat[3]);
-+CP2_MF_I64(CVM_MF_HSH_DATW4, hsh_dat[4]);
-+CP2_MF_I64(CVM_MF_HSH_DATW5, hsh_dat[5]);
-+CP2_MF_I64(CVM_MF_HSH_DATW6, hsh_dat[6]);
-+CP2_MF_I64(CVM_MF_HSH_DATW7, hsh_dat[7]);
-+CP2_MF_I64(CVM_MF_HSH_DATW8, hsh_dat[8]);
-+CP2_MF_I64(CVM_MF_HSH_DATW9, hsh_dat[9]);
-+CP2_MF_I64(CVM_MF_HSH_DATW10, hsh_dat[10]);
-+CP2_MF_I64(CVM_MF_HSH_DATW11, hsh_dat[11]);
-+CP2_MF_I64(CVM_MF_HSH_DATW12, hsh_dat[12]);
-+CP2_MF_I64(CVM_MF_HSH_DATW13, hsh_dat[13]);
-+CP2_MF_I64(CVM_MF_HSH_DATW14, hsh_dat[14]);
-+CP2_MF_I64(CVM_MF_HSH_DATW15, hsh_dat[15]);
-+CP2_MF_I64(CVM_MF_HSH_IVW0, hsh_iv[0]);
-+CP2_MF_I64(CVM_MF_HSH_IVW1, hsh_iv[1]);
-+CP2_MF_I64(CVM_MF_HSH_IVW2, hsh_iv[2]);
-+CP2_MF_I64(CVM_MF_HSH_IVW3, hsh_iv[3]);
-+CP2_MF_I64(CVM_MF_HSH_IVW4, hsh_iv[4]);
-+CP2_MF_I64(CVM_MF_HSH_IVW5, hsh_iv[5]);
-+CP2_MF_I64(CVM_MF_HSH_IVW6, hsh_iv[6]);
-+CP2_MF_I64(CVM_MF_HSH_IVW7, hsh_iv[7]);
+ /* microMIPS functions */
+ DEF_HELPER_4(lwm, void, env, tl, tl, i32)
+diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
+index 64b553392a..893f55d1e5 100644
+--- a/target/mips/tcg/octeon_crypto.c
++++ b/target/mips/tcg/octeon_crypto.c
+@@ -1156,6 +1156,464 @@ void helper_octeon_cp2_mt_sms4_dec1(CPUMIPSState *env, uint64_t value)
+     octeon_sms4_crypt_common(crypto, false, false);
+ }
  
- CP2_MT_HSH_PAIR(CVM_MT_HSH_DAT0, hsh_dat, 0);
- CP2_MT_HSH_PAIR(CVM_MT_HSH_DAT1, hsh_dat, 1);
-@@ -254,11 +279,13 @@ CP2_MT_I64(CVM_MT_GFM_MUL0, gfm_mul[0]);
- CP2_MT_I64(CVM_MT_GFM_MUL1, gfm_mul[1]);
- CP2_MT_I64(CVM_MT_GFM_RESINP0, gfm_resinp[0]);
- CP2_MT_I64(CVM_MT_GFM_RESINP1, gfm_resinp[1]);
-+CP2_MT_HELPER(CVM_MT_GFM_XOR0, gfm_xor0);
- CP2_MT_U16(CVM_MT_GFM_POLY, gfm_poly);
- CP2_MT_U8_MASKED(CVM_MT_CRC_LEN, crc_len, 0xf);
- CP2_MT_U32(CVM_MT_CRC_POLYNOMIAL, crc_poly);
- 
- CP2_MT_HELPER(CVM_MT_CRC_POLYNOMIAL_REFLECT, crc_write_polynomial_reflect);
++static const uint8_t octeon_des_ip[64] = {
++    58, 50, 42, 34, 26, 18, 10,  2,
++    60, 52, 44, 36, 28, 20, 12,  4,
++    62, 54, 46, 38, 30, 22, 14,  6,
++    64, 56, 48, 40, 32, 24, 16,  8,
++    57, 49, 41, 33, 25, 17,  9,  1,
++    59, 51, 43, 35, 27, 19, 11,  3,
++    61, 53, 45, 37, 29, 21, 13,  5,
++    63, 55, 47, 39, 31, 23, 15,  7,
++};
 +
- CP2_MT_HELPER(CVM_MT_CRC_IV_REFLECT, crc_write_iv_reflect);
- CP2_MT_HELPER(CVM_MT_CRC_BYTE, crc_write_byte);
- CP2_MT_HELPER(CVM_MT_CRC_HALF, crc_write_half);
-@@ -272,6 +299,56 @@ CP2_MT_HELPER(CVM_MT_CRC_DWORD_REFLECT, crc_write_dword_reflect);
- CP2_MT_HELPER(CVM_MT_CRC_VAR_REFLECT, crc_write_var_reflect);
- CP2_MT_HELPER(CVM_MT_GFM_XORMUL1_REFLECT, gfm_xormul1_reflect);
- CP2_MT_HELPER(CVM_MT_GFM_XORMUL1, gfm_xormul1);
-+CP2_MT_HELPER(CVM_MT_SHA3_DAT24, sha3_dat24);
-+CP2_MT_HELPER(CVM_MT_SHA3_DAT15, sha3_dat15);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT0, sha3_xordat0);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT1, sha3_xordat1);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT2, sha3_xordat2);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT3, sha3_xordat3);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT4, sha3_xordat4);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT5, sha3_xordat5);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT6, sha3_xordat6);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT7, sha3_xordat7);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT8, sha3_xordat8);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT9, sha3_xordat9);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT10, sha3_xordat10);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT11, sha3_xordat11);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT12, sha3_xordat12);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT13, sha3_xordat13);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT14, sha3_xordat14);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT15, sha3_xordat15);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT16, sha3_xordat16);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT17, sha3_xordat17);
-+CP2_MT_HELPER(CVM_MT_SHA3_STARTOP, sha3_startop);
-+CP2_MT_HELPER(CVM_MT_HSH_STARTSHA1_COMPAT, hsh_startsha1_compat);
-+CP2_MT_I64(CVM_MT_HSH_DATW0, hsh_dat[0]);
-+CP2_MT_I64(CVM_MT_HSH_DATW1, hsh_dat[1]);
-+CP2_MT_I64(CVM_MT_HSH_DATW2, hsh_dat[2]);
-+CP2_MT_I64(CVM_MT_HSH_DATW3, hsh_dat[3]);
-+CP2_MT_I64(CVM_MT_HSH_DATW4, hsh_dat[4]);
-+CP2_MT_I64(CVM_MT_HSH_DATW5, hsh_dat[5]);
-+CP2_MT_I64(CVM_MT_HSH_DATW6, hsh_dat[6]);
-+CP2_MT_I64(CVM_MT_HSH_DATW7, hsh_dat[7]);
-+CP2_MT_I64(CVM_MT_HSH_DATW8, hsh_dat[8]);
-+CP2_MT_I64(CVM_MT_HSH_DATW9, hsh_dat[9]);
-+CP2_MT_I64(CVM_MT_HSH_DATW10, hsh_dat[10]);
-+CP2_MT_I64(CVM_MT_HSH_DATW11, hsh_dat[11]);
-+CP2_MT_I64(CVM_MT_HSH_DATW12, hsh_dat[12]);
-+CP2_MT_I64(CVM_MT_HSH_DATW13, hsh_dat[13]);
-+CP2_MT_I64(CVM_MT_HSH_DATW14, hsh_dat[14]);
-+CP2_MT_I64(CVM_MT_HSH_DATW15, hsh_dat[15]);
-+CP2_MT_I64(CVM_MT_HSH_IVW0, hsh_iv[0]);
-+CP2_MT_I64(CVM_MT_HSH_IVW1, hsh_iv[1]);
-+CP2_MT_I64(CVM_MT_HSH_IVW2, hsh_iv[2]);
-+CP2_MT_I64(CVM_MT_HSH_IVW3, hsh_iv[3]);
-+CP2_MT_I64(CVM_MT_HSH_IVW4, hsh_iv[4]);
-+CP2_MT_I64(CVM_MT_HSH_IVW5, hsh_iv[5]);
-+CP2_MT_I64(CVM_MT_HSH_IVW6, hsh_iv[6]);
-+CP2_MT_I64(CVM_MT_HSH_IVW7, hsh_iv[7]);
-+CP2_MT_HELPER(CVM_MT_HSH_STARTMD5, hsh_startmd5);
-+CP2_MT_HELPER(CVM_MT_HSH_STARTSHA256, hsh_startsha256);
-+CP2_MT_HELPER(CVM_MT_HSH_STARTSHA, hsh_startsha);
-+CP2_MT_HELPER(CVM_MT_HSH_STARTSHA512, hsh_startsha512);
- 
- static bool trans_BBIT(DisasContext *ctx, arg_BBIT *a)
++static const uint8_t octeon_des_fp[64] = {
++    40,  8, 48, 16, 56, 24, 64, 32,
++    39,  7, 47, 15, 55, 23, 63, 31,
++    38,  6, 46, 14, 54, 22, 62, 30,
++    37,  5, 45, 13, 53, 21, 61, 29,
++    36,  4, 44, 12, 52, 20, 60, 28,
++    35,  3, 43, 11, 51, 19, 59, 27,
++    34,  2, 42, 10, 50, 18, 58, 26,
++    33,  1, 41,  9, 49, 17, 57, 25,
++};
++
++static const uint8_t octeon_des_e[48] = {
++    32,  1,  2,  3,  4,  5,
++     4,  5,  6,  7,  8,  9,
++     8,  9, 10, 11, 12, 13,
++    12, 13, 14, 15, 16, 17,
++    16, 17, 18, 19, 20, 21,
++    20, 21, 22, 23, 24, 25,
++    24, 25, 26, 27, 28, 29,
++    28, 29, 30, 31, 32,  1,
++};
++
++static const uint8_t octeon_des_p[32] = {
++    16,  7, 20, 21, 29, 12, 28, 17,
++     1, 15, 23, 26,  5, 18, 31, 10,
++     2,  8, 24, 14, 32, 27,  3,  9,
++    19, 13, 30,  6, 22, 11,  4, 25,
++};
++
++static const uint8_t octeon_des_pc1[56] = {
++    57, 49, 41, 33, 25, 17,  9,
++     1, 58, 50, 42, 34, 26, 18,
++    10,  2, 59, 51, 43, 35, 27,
++    19, 11,  3, 60, 52, 44, 36,
++    63, 55, 47, 39, 31, 23, 15,
++     7, 62, 54, 46, 38, 30, 22,
++    14,  6, 61, 53, 45, 37, 29,
++    21, 13,  5, 28, 20, 12,  4,
++};
++
++static const uint8_t octeon_des_pc2[48] = {
++    14, 17, 11, 24,  1,  5,
++     3, 28, 15,  6, 21, 10,
++    23, 19, 12,  4, 26,  8,
++    16,  7, 27, 20, 13,  2,
++    41, 52, 31, 37, 47, 55,
++    30, 40, 51, 45, 33, 48,
++    44, 49, 39, 56, 34, 53,
++    46, 42, 50, 36, 29, 32,
++};
++
++static const uint8_t octeon_des_rotations[16] = {
++    1, 1, 2, 2, 2, 2, 2, 2,
++    1, 2, 2, 2, 2, 2, 2, 1,
++};
++
++static const uint8_t octeon_des_sboxes[8][64] = {
++    {
++        14, 4, 13, 1,  2, 15, 11, 8,  3, 10, 6, 12, 5, 9, 0, 7,
++         0, 15, 7, 4, 14,  2, 13, 1, 10,  6, 12, 11, 9, 5, 3, 8,
++         4, 1, 14, 8, 13,  6,  2, 11, 15, 12, 9,  7, 3, 10, 5, 0,
++        15, 12, 8, 2,  4,  9,  1, 7,  5, 11, 3, 14, 10, 0, 6, 13,
++    },
++    {
++        15, 1,  8, 14, 6, 11, 3, 4,  9, 7, 2, 13, 12, 0, 5, 10,
++         3, 13, 4, 7, 15, 2,  8, 14, 12, 0, 1, 10,  6, 9, 11, 5,
++         0, 14, 7, 11, 10, 4, 13, 1,  5, 8, 12, 6,  9, 3,  2, 15,
++        13, 8, 10, 1,  3, 15, 4, 2, 11, 6, 7, 12,  0, 5, 14, 9,
++    },
++    {
++        10, 0,  9, 14, 6, 3, 15, 5,  1, 13, 12, 7, 11, 4, 2, 8,
++        13, 7,  0, 9,  3, 4, 6,  10, 2, 8,  5, 14, 12, 11, 15, 1,
++        13, 6,  4, 9,  8, 15, 3, 0, 11, 1,  2, 12,  5, 10, 14, 7,
++         1, 10, 13, 0,  6, 9, 8, 7,  4, 15, 14, 3, 11, 5,  2, 12,
++    },
++    {
++         7, 13, 14, 3,  0, 6, 9, 10, 1, 2, 8,  5, 11, 12, 4, 15,
++        13, 8,  11, 5,  6, 15, 0, 3,  4, 7, 2, 12, 1,  10, 14, 9,
++        10, 6,  9,  0, 12, 11, 7, 13, 15, 1, 3, 14, 5,  2,  8,  4,
++         3, 15, 0,  6, 10, 1, 13, 8,  9, 4, 5, 11, 12, 7,  2,  14,
++    },
++    {
++         2, 12, 4,  1,  7, 10, 11, 6,  8, 5, 3, 15, 13, 0, 14, 9,
++        14, 11, 2,  12, 4, 7,  13, 1,  5, 0, 15, 10, 3,  9, 8,  6,
++         4, 2,  1,  11, 10, 13, 7, 8, 15, 9, 12, 5,  6,  3, 0, 14,
++        11, 8,  12, 7,  1, 14, 2, 13, 6, 15, 0,  9, 10, 4, 5,  3,
++    },
++    {
++        12, 1,  10, 15, 9, 2,  6, 8,  0, 13, 3, 4, 14, 7, 5, 11,
++        10, 15, 4,  2,  7, 12, 9, 5,  6, 1,  13, 14, 0, 11, 3, 8,
++         9, 14, 15, 5,  2, 8,  12, 3,  7, 0,  4, 10, 1, 13, 11, 6,
++         4, 3,  2,  12, 9, 5,  15, 10, 11, 14, 1, 7,  6, 0,  8, 13,
++    },
++    {
++         4, 11, 2, 14, 15, 0, 8, 13, 3, 12, 9, 7,  5, 10, 6, 1,
++        13, 0,  11, 7,  4, 9, 1, 10, 14, 3, 5, 12, 2, 15, 8, 6,
++         1, 4,  11, 13, 12, 3, 7, 14, 10, 15, 6, 8,  0, 5,  9, 2,
++         6, 11, 13, 8,  1, 4, 10, 7,  9, 5,  0, 15, 14, 2,  3, 12,
++    },
++    {
++        13, 2,  8, 4,  6, 15, 11, 1, 10, 9, 3, 14, 5, 0, 12, 7,
++         1, 15, 13, 8, 10, 3,  7,  4, 12, 5, 6, 11, 0, 14, 9,  2,
++         7, 11, 4,  1,  9, 12, 14, 2, 0,  6, 10, 13, 15, 3, 5, 8,
++         2, 1,  14, 7,  4, 10, 8,  13, 15, 12, 9, 0,  3,  5, 6, 11,
++    },
++};
++
++static const uint8_t octeon_kasumi_s7[128] = {
++     54,  50,  62,  56,  22,  34,  94,  96,  38,   6,  63,  93,   2,  18,
++    123,  33,  55, 113,  39, 114,  21,  67,  65,  12,  47,  73,  46,  27,
++     25, 111, 124,  81,  53,   9, 121,  79,  52,  60,  58,  48, 101, 127,
++     40, 120, 104,  70,  71,  43,  20, 122,  72,  61,  23, 109,  13, 100,
++     77,   1,  16,   7,  82,  10, 105,  98, 117, 116,  76,  11,  89, 106,
++      0, 125, 118,  99,  86,  69,  30,  57, 126,  87, 112,  51,  17,   5,
++     95,  14,  90,  84,  91,   8,  35, 103,  32,  97,  28,  66, 102,  31,
++     26,  45,  75,   4,  85,  92,  37,  74,  80,  49,  68,  29, 115,  44,
++     64, 107, 108,  24, 110,  83,  36,  78,  42,  19,  15,  41,  88, 119,
++     59,   3,
++};
++
++static const uint16_t octeon_kasumi_s9[512] = {
++    167, 239, 161, 379, 391, 334,   9, 338,  38, 226,  48, 358, 452, 385,
++     90, 397, 183, 253, 147, 331, 415, 340,  51, 362, 306, 500, 262,  82,
++    216, 159, 356, 177, 175, 241, 489,  37, 206,  17,   0, 333,  44, 254,
++    378,  58, 143, 220,  81, 400,  95,   3, 315, 245,  54, 235, 218, 405,
++    472, 264, 172, 494, 371, 290, 399,  76, 165, 197, 395, 121, 257, 480,
++    423, 212, 240,  28, 462, 176, 406, 507, 288, 223, 501, 407, 249, 265,
++     89, 186, 221, 428, 164,  74, 440, 196, 458, 421, 350, 163, 232, 158,
++    134, 354,  13, 250, 491, 142, 191,  69, 193, 425, 152, 227, 366, 135,
++    344, 300, 276, 242, 437, 320, 113, 278,  11, 243,  87, 317,  36,  93,
++    496,  27, 487, 446, 482,  41,  68, 156, 457, 131, 326, 403, 339,  20,
++     39, 115, 442, 124, 475, 384, 508,  53, 112, 170, 479, 151, 126, 169,
++     73, 268, 279, 321, 168, 364, 363, 292,  46, 499, 393, 327, 324,  24,
++    456, 267, 157, 460, 488, 426, 309, 229, 439, 506, 208, 271, 349, 401,
++    434, 236,  16, 209, 359,  52,  56, 120, 199, 277, 465, 416, 252, 287,
++    246,   6,  83, 305, 420, 345, 153, 502,  65,  61, 244, 282, 173, 222,
++    418,  67, 386, 368, 261, 101, 476, 291, 195, 430,  49,  79, 166, 330,
++    280, 383, 373, 128, 382, 408, 155, 495, 367, 388, 274, 107, 459, 417,
++     62, 454, 132, 225, 203, 316, 234,  14, 301,  91, 503, 286, 424, 211,
++    347, 307, 140, 374,  35, 103, 125, 427,  19, 214, 453, 146, 498, 314,
++    444, 230, 256, 329, 198, 285,  50, 116,  78, 410,  10, 205, 510, 171,
++    231,  45, 139, 467,  29,  86, 505,  32,  72,  26, 342, 150, 313, 490,
++    431, 238, 411, 325, 149, 473,  40, 119, 174, 355, 185, 233, 389,  71,
++    448, 273, 372,  55, 110, 178, 322,  12, 469, 392, 369, 190,   1, 109,
++    375, 137, 181,  88,  75, 308, 260, 484,  98, 272, 370, 275, 412, 111,
++    336, 318,   4, 504, 492, 259, 304,  77, 337, 435,  21, 357, 303, 332,
++    483,  18,  47,  85,  25, 497, 474, 289, 100, 269, 296, 478, 270, 106,
++     31, 104, 433,  84, 414, 486, 394,  96,  99, 154, 511, 148, 413, 361,
++    409, 255, 162, 215, 302, 201, 266, 351, 343, 144, 441, 365, 108, 298,
++    251,  34, 182, 509, 138, 210, 335, 133, 311, 352, 328, 141, 396, 346,
++    123, 319, 450, 281, 429, 228, 443, 481,  92, 404, 485, 422, 248, 297,
++     23, 213, 130, 466,  22, 217, 283,  70, 294, 360, 419, 127, 312, 377,
++      7, 468, 194,   2, 117, 295, 463, 258, 224, 447, 247, 187,  80, 398,
++    284, 353, 105, 390, 299, 471, 470, 184,  57, 200, 348,  63, 204, 188,
++     33, 451,  97,  30, 310, 219,  94, 160, 129, 493,  64, 179, 263, 102,
++    189, 207, 114, 402, 438, 477, 387, 122, 192,  42, 381,   5, 145, 118,
++    180, 449, 293, 323, 136, 380,  43,  66,  60, 455, 341, 445, 202, 432,
++      8, 237,  15, 376, 436, 464,  59, 461,
++};
++
++static const uint16_t octeon_kasumi_constants[8] = {
++    0x0123, 0x4567, 0x89ab, 0xcdef, 0xfedc, 0xba98, 0x7654, 0x3210,
++};
++
++typedef struct OcteonKasumiSubkeys {
++    uint16_t kli1[8];
++    uint16_t kli2[8];
++    uint16_t koi1[8];
++    uint16_t koi2[8];
++    uint16_t koi3[8];
++    uint16_t kii1[8];
++    uint16_t kii2[8];
++    uint16_t kii3[8];
++} OcteonKasumiSubkeys;
++
++static uint64_t octeon_des_permute(uint64_t input, const uint8_t *table,
++                                   size_t output_bits, size_t input_bits)
++{
++    uint64_t out = 0;
++
++    for (size_t i = 0; i < output_bits; i++) {
++        unsigned src = table[i] - 1;
++
++        out = (out << 1) | ((input >> (input_bits - 1 - src)) & 1);
++    }
++    return out;
++}
++
++static uint32_t octeon_des_rotate28(uint32_t v, unsigned shift)
++{
++    return ((v << shift) | (v >> (28 - shift))) & 0x0fffffffU;
++}
++
++static void octeon_des_expand_subkeys(uint64_t key, uint64_t subkeys[16])
++{
++    uint64_t permuted = octeon_des_permute(key, octeon_des_pc1,
++                                           ARRAY_SIZE(octeon_des_pc1), 64);
++    uint32_t c = (permuted >> 28) & 0x0fffffffU;
++    uint32_t d = permuted & 0x0fffffffU;
++
++    for (int i = 0; i < 16; i++) {
++        c = octeon_des_rotate28(c, octeon_des_rotations[i]);
++        d = octeon_des_rotate28(d, octeon_des_rotations[i]);
++        subkeys[i] = octeon_des_permute(((uint64_t)c << 28) | d,
++                                        octeon_des_pc2,
++                                        ARRAY_SIZE(octeon_des_pc2), 56);
++    }
++}
++
++static uint32_t octeon_des_f(uint32_t r, uint64_t subkey)
++{
++    uint64_t expanded = octeon_des_permute(r, octeon_des_e,
++                                           ARRAY_SIZE(octeon_des_e), 32);
++    uint32_t out = 0;
++
++    expanded ^= subkey;
++    for (int i = 0; i < 8; i++) {
++        uint8_t sextet = (expanded >> (42 - i * 6)) & 0x3f;
++        uint8_t row = ((sextet & 0x20) >> 4) | (sextet & 0x01);
++        uint8_t col = (sextet >> 1) & 0x0f;
++
++        out = (out << 4) | octeon_des_sboxes[i][row * 16 + col];
++    }
++
++    return octeon_des_permute(out, octeon_des_p, ARRAY_SIZE(octeon_des_p), 32);
++}
++
++static uint64_t octeon_des_block_crypt(uint64_t block, uint64_t key,
++                                       bool encrypt)
++{
++    uint64_t subkeys[16];
++    uint64_t permuted = octeon_des_permute(block, octeon_des_ip,
++                                           ARRAY_SIZE(octeon_des_ip), 64);
++    uint32_t l = permuted >> 32;
++    uint32_t r = permuted;
++
++    octeon_des_expand_subkeys(key, subkeys);
++
++    for (int i = 0; i < 16; i++) {
++        uint32_t next = l ^ octeon_des_f(r, subkeys[encrypt ? i : 15 - i]);
++
++        l = r;
++        r = next;
++    }
++
++    return octeon_des_permute(((uint64_t)r << 32) | l,
++                              octeon_des_fp, ARRAY_SIZE(octeon_des_fp), 64);
++}
++
++static uint64_t octeon_3des_block_crypt(uint64_t block, const uint64_t keys[3],
++                                        bool encrypt)
++{
++    if (encrypt) {
++        block = octeon_des_block_crypt(block, keys[0], true);
++        block = octeon_des_block_crypt(block, keys[1], false);
++        block = octeon_des_block_crypt(block, keys[2], true);
++    } else {
++        block = octeon_des_block_crypt(block, keys[2], false);
++        block = octeon_des_block_crypt(block, keys[1], true);
++        block = octeon_des_block_crypt(block, keys[0], false);
++    }
++    return block;
++}
++
++static void octeon_3des_crypt_common(MIPSOcteonCryptoState *crypto,
++                                     uint64_t input_reg,
++                                     bool encrypt, bool cbc)
++{
++    const uint64_t keys[3] = {
++        crypto->des3_key[0],
++        crypto->des3_key[1],
++        crypto->des3_key[2],
++    };
++    uint64_t block = input_reg;
++
++    if (cbc) {
++        if (encrypt) {
++            block ^= crypto->des3_iv;
++            block = octeon_3des_block_crypt(block, keys, true);
++            crypto->des3_iv = block;
++        } else {
++            block = octeon_3des_block_crypt(block, keys, false);
++            block ^= crypto->des3_iv;
++            crypto->des3_iv = input_reg;
++        }
++    } else {
++        block = octeon_3des_block_crypt(block, keys, encrypt);
++    }
++
++    crypto->des3_result = block;
++}
++
++static inline uint16_t octeon_rol16(uint16_t value, unsigned int bits)
++{
++    return (value << bits) | (value >> (16 - bits));
++}
++
++static void octeon_kasumi_key_schedule(const uint64_t key_regs[2],
++                                       OcteonKasumiSubkeys *subkeys)
++{
++    uint16_t key[8];
++    uint16_t key_prime[8];
++
++    key[0] = key_regs[0] >> 48;
++    key[1] = key_regs[0] >> 32;
++    key[2] = key_regs[0] >> 16;
++    key[3] = key_regs[0];
++    key[4] = key_regs[1] >> 48;
++    key[5] = key_regs[1] >> 32;
++    key[6] = key_regs[1] >> 16;
++    key[7] = key_regs[1];
++
++    for (int i = 0; i < 8; i++) {
++        key_prime[i] = key[i] ^ octeon_kasumi_constants[i];
++    }
++
++    for (int i = 0; i < 8; i++) {
++        subkeys->kli1[i] = octeon_rol16(key[i], 1);
++        subkeys->kli2[i] = key_prime[(i + 2) & 7];
++        subkeys->koi1[i] = octeon_rol16(key[(i + 1) & 7], 5);
++        subkeys->koi2[i] = octeon_rol16(key[(i + 5) & 7], 8);
++        subkeys->koi3[i] = octeon_rol16(key[(i + 6) & 7], 13);
++        subkeys->kii1[i] = key_prime[(i + 4) & 7];
++        subkeys->kii2[i] = key_prime[(i + 3) & 7];
++        subkeys->kii3[i] = key_prime[(i + 7) & 7];
++    }
++}
++
++static uint16_t octeon_kasumi_fi(uint16_t in, uint16_t subkey)
++{
++    uint16_t nine = in >> 7;
++    uint16_t seven = in & 0x7f;
++
++    nine = octeon_kasumi_s9[nine] ^ seven;
++    seven = octeon_kasumi_s7[seven] ^ (nine & 0x7f);
++    seven ^= subkey >> 9;
++    nine ^= subkey & 0x1ff;
++    nine = octeon_kasumi_s9[nine] ^ seven;
++    seven = octeon_kasumi_s7[seven] ^ (nine & 0x7f);
++    return (seven << 9) | nine;
++}
++
++static uint32_t octeon_kasumi_fo(uint32_t in, int index,
++                                 const OcteonKasumiSubkeys *subkeys)
++{
++    uint16_t left = in >> 16;
++    uint16_t right = in;
++
++    left ^= subkeys->koi1[index];
++    left = octeon_kasumi_fi(left, subkeys->kii1[index]);
++    left ^= right;
++    right ^= subkeys->koi2[index];
++    right = octeon_kasumi_fi(right, subkeys->kii2[index]);
++    right ^= left;
++    left ^= subkeys->koi3[index];
++    left = octeon_kasumi_fi(left, subkeys->kii3[index]);
++    left ^= right;
++
++    return ((uint32_t)right << 16) | left;
++}
++
++static uint32_t octeon_kasumi_fl(uint32_t in, int index,
++                                 const OcteonKasumiSubkeys *subkeys)
++{
++    uint16_t left = in >> 16;
++    uint16_t right = in;
++    uint16_t a = left & subkeys->kli1[index];
++    uint16_t b;
++
++    right ^= octeon_rol16(a, 1);
++    b = right | subkeys->kli2[index];
++    left ^= octeon_rol16(b, 1);
++    return ((uint32_t)left << 16) | right;
++}
++
++static uint64_t octeon_kasumi_block_encrypt(uint64_t block,
++                                            const uint64_t key_regs[2])
++{
++    OcteonKasumiSubkeys subkeys;
++    uint32_t left = block >> 32;
++    uint32_t right = block;
++
++    octeon_kasumi_key_schedule(key_regs, &subkeys);
++
++    for (int i = 0; i < 8; ) {
++        uint32_t temp = octeon_kasumi_fl(left, i, &subkeys);
++
++        temp = octeon_kasumi_fo(temp, i++, &subkeys);
++        right ^= temp;
++        temp = octeon_kasumi_fo(right, i, &subkeys);
++        temp = octeon_kasumi_fl(temp, i++, &subkeys);
++        left ^= temp;
++    }
++
++    return ((uint64_t)left << 32) | right;
++}
++
++static void octeon_kasumi_crypt_common(MIPSOcteonCryptoState *crypto,
++                                       uint64_t input_reg, bool cbc)
++{
++    const uint64_t key_regs[2] = {
++        crypto->des3_key[0],
++        crypto->des3_key[1],
++    };
++    uint64_t block = input_reg;
++
++    if (cbc) {
++        block ^= crypto->des3_iv;
++    }
++
++    block = octeon_kasumi_block_encrypt(block, key_regs);
++    if (cbc) {
++        crypto->des3_iv = block;
++    }
++    crypto->des3_result = block;
++}
++
++void helper_octeon_cp2_mt_des3_enc_cbc(CPUMIPSState *env, uint64_t value)
++{
++    octeon_3des_crypt_common(&env->octeon_crypto, value, true, true);
++}
++
++void helper_octeon_cp2_mt_kas_enc_cbc(CPUMIPSState *env, uint64_t value)
++{
++    octeon_kasumi_crypt_common(&env->octeon_crypto, value, true);
++}
++
++void helper_octeon_cp2_mt_des3_enc(CPUMIPSState *env, uint64_t value)
++{
++    octeon_3des_crypt_common(&env->octeon_crypto, value, true, false);
++}
++
++void helper_octeon_cp2_mt_kas_enc(CPUMIPSState *env, uint64_t value)
++{
++    octeon_kasumi_crypt_common(&env->octeon_crypto, value, false);
++}
++
++void helper_octeon_cp2_mt_des3_dec_cbc(CPUMIPSState *env, uint64_t value)
++{
++    octeon_3des_crypt_common(&env->octeon_crypto, value, false, true);
++}
++
++void helper_octeon_cp2_mt_des3_dec(CPUMIPSState *env, uint64_t value)
++{
++    octeon_3des_crypt_common(&env->octeon_crypto, value, false, false);
++}
++
+ void helper_octeon_cp2_mt_snow3g_start(CPUMIPSState *env, uint64_t value)
  {
+     octeon_snow3g_start(&env->octeon_crypto, value);
 
 -- 
 2.54.0
