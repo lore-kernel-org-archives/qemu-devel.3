@@ -4,67 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99B43CD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 12:07:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59F99CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 12:07:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQOdX-0001nB-V5; Fri, 22 May 2026 08:05:55 -0400
+	id 1wQOex-0002v7-Rz; Fri, 22 May 2026 08:07:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wQOdW-0001mH-8V
- for qemu-devel@nongnu.org; Fri, 22 May 2026 08:05:54 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ (Exim 4.90_1) (envelope-from <t.lamprecht@proxmox.com>)
+ id 1wQOeo-0002Yo-1d; Fri, 22 May 2026 08:07:17 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wQOdT-0000g2-Em
- for qemu-devel@nongnu.org; Fri, 22 May 2026 08:05:53 -0400
-Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c08:7605:0:640:8d9a:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id DFC2C80789;
- Fri, 22 May 2026 15:05:49 +0300 (MSK)
-Received: from vsementsov-lin (unknown [2a02:6bf:8080:55c::1:1d])
- by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id Z5T7aO0g14Y0-Z2LqyA1J; Fri, 22 May 2026 15:05:48 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1779451548;
- bh=PVAowtwzhrVsBRa5qN4jvHqSojD2hJEn1z7ffiaaqxs=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=Y5mkOAlH344p6jCt2J1BuWQ7hoqWyDovOPx0wNQo1NFoven92vfj6sxBJVgyun61j
- E7lZz7bFyijost+7yFYtU+QDETCHIpowWMj1PQ/Vkj1+NYGys00zLdpgStGvEcU0sd
- 148Krel+HTaQG164a2rBdNpQ92qTSu7bswLGigCU=
-Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: jasowang@redhat.com,
-	mst@redhat.com
-Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
- raphael.s.norwitz@gmail.com, bchaney@akamai.com, vsementsov@yandex-team.ru,
- qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
- yc-core@yandex-team.ru, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v16 8/8] tests/functional: add test_tap_migration
-Date: Fri, 22 May 2026 15:05:33 +0300
-Message-ID: <20260522120534.77653-9-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260522120534.77653-1-vsementsov@yandex-team.ru>
-References: <20260522120534.77653-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <t.lamprecht@proxmox.com>)
+ id 1wQOek-0001yG-QD; Fri, 22 May 2026 08:07:13 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id E7142A0AB4;
+ Fri, 22 May 2026 14:07:06 +0200 (CEST)
+From: Thomas Lamprecht <t.lamprecht@proxmox.com>
+To: qemu-block@nongnu.org
+Cc: f.ebner@proxmox.com, kwolf@redhat.com, hreitz@redhat.com,
+ qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Subject: [PATCH] qcow2: Fix data loss on zero write with detect-zeroes=unmap
+Date: Fri, 22 May 2026 13:06:37 +0200
+Message-ID: <20260522120638.3992702-1-t.lamprecht@proxmox.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1779451606889
+Received-SPF: pass client-ip=94.136.29.106;
+ envelope-from=t.lamprecht@proxmox.com; helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -76,492 +55,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add test for a new local-migration migration of virtio-net/tap, with fd
-passing through UNIX socket.
+Commit b8bfb1478d ("qcow2: Fix corruption on discard during write with
+COW") added a wait_for_dependencies() at the start of
+qcow2_subcluster_zeroize(). That fixes the inconsistency it set out to
+fix, but turns the lock-protected pre-check in the caller,
+qcow2_co_pwrite_zeroes(), into a stale one: the wait yields s->lock,
+so an in-flight allocating write whose QCowL2Meta is already on
+s->cluster_allocs (but whose L2 entry is not yet linked) gets to link
+its entry during the yield. When the zeroize wakes, the cluster is now
+NORMAL, and with BDRV_REQ_MAY_UNMAP the free path in zero_in_l2_slice()
+unmaps the just-written cluster, silently dropping the data write's
+payload.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Ben Chaney <bchaney@akamai.com>
+This is reachable with detect-zeroes=unmap (the default for VirtIO
+disks with discard on in Proxmox VE), under which the block layer
+auto-promotes all-zero buffers to BDRV_REQ_ZERO_WRITE |
+BDRV_REQ_MAY_UNMAP. One can, for example, setup a memory-constrained
+Debian guest running 'apt full-upgrade' on such a disk reproduces it as
+random SIGSEGVs: swapped-out code pages come back as zero.
+
+To fix this, wait for in-flight dependencies before the lock-protected
+check in qcow2_co_pwrite_zeroes(). If a write linked its L2 entry during
+the wait, the type check now fails and the block layer falls back to a
+bounce-buffered zero write that only touches the requested subrange,
+preserving the racing write's data. Promote wait_for_dependencies() to
+qcow2_wait_for_dependencies() so qcow2.c can call it.
+
+Fixes: b8bfb1478d ("qcow2: Fix corruption on discard during write with COW")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
 ---
- tests/functional/x86_64/meson.build           |   1 +
- tests/functional/x86_64/test_tap_migration.py | 458 ++++++++++++++++++
- 2 files changed, 459 insertions(+)
- create mode 100755 tests/functional/x86_64/test_tap_migration.py
 
-diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
-index 1ed10ad6c29..c4bb14f034b 100644
---- a/tests/functional/x86_64/meson.build
-+++ b/tests/functional/x86_64/meson.build
-@@ -45,4 +45,5 @@ tests_x86_64_system_thorough = [
-   'virtio_balloon',
-   'virtio_gpu',
-   'rebuild_vmfd',
-+  'tap_migration',
- ]
-diff --git a/tests/functional/x86_64/test_tap_migration.py b/tests/functional/x86_64/test_tap_migration.py
-new file mode 100755
-index 00000000000..7708facc153
---- /dev/null
-+++ b/tests/functional/x86_64/test_tap_migration.py
-@@ -0,0 +1,458 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that tests TAP local migration
-+# with fd passing
-+#
-+# Copyright (c) Yandex Technologies LLC, 2026
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import os
-+import time
-+import subprocess
-+from subprocess import run
-+import signal
-+import ctypes
-+import ctypes.util
-+import unittest
-+from contextlib import contextmanager, ExitStack
-+from typing import Tuple
-+
-+from qemu_test import (
-+    LinuxKernelTest,
-+    Asset,
-+    exec_command_and_wait_for_pattern,
-+)
-+from qemu_test.decorators import skipWithoutSudo
-+
-+
-+GUEST_IP = "192.168.100.2"
-+GUEST_IP_MASK = f"{GUEST_IP}/24"
-+GUEST_MAC = "d6:0d:75:f8:0f:b7"
-+HOST_IP = "192.168.100.1"
-+HOST_IP_MASK = f"{HOST_IP}/24"
-+TAP_ID = "tap0"
-+TAP_ID2 = "tap1"
-+TAP_MAC = "e6:1d:44:b5:03:5d"
-+NETNS = f"qemu_test_ns_{os.getpid()}"
-+
-+
-+def ip(args, check=True) -> None:
-+    """Run ip command with sudo"""
-+    run(["sudo", "ip"] + args, check=check)
-+
-+
-+@contextmanager
-+def switch_netns(netns_name):
-+    libc = ctypes.CDLL(ctypes.util.find_library("c"))
-+    netns_path = f"/var/run/netns/{netns_name}"
-+
-+    def switch_to_fd(fd, check: bool = False):
-+        """Switch to netns by file descriptor"""
-+        SYS_setns = 308
-+        CLONE_NEWNET = 0x40000000
-+        ret = libc.syscall(SYS_setns, fd, CLONE_NEWNET)
-+        if check and ret != 0:
-+            raise RuntimeError("syscall SETNS failed")
-+
-+    with ExitStack() as stack:
-+        original_netns_fd = os.open("/proc/self/ns/net", os.O_RDONLY)
-+        stack.callback(os.close, original_netns_fd)
-+
-+        ip(["netns", "add", netns_name])
-+        stack.callback(ip, ["netns", "del", netns_name], check=False)
-+
-+        new_netns_fd = os.open(netns_path, os.O_RDONLY)
-+        stack.callback(os.close, new_netns_fd)
-+
-+        switch_to_fd(new_netns_fd)
-+        stack.callback(switch_to_fd, original_netns_fd, check=False)
-+
-+        yield
-+
-+
-+def del_tap(tap_name: str = TAP_ID) -> None:
-+    ip(["tuntap", "del", tap_name, "mode", "tap", "multi_queue"], check=False)
-+
-+
-+def init_tap(tap_name: str = TAP_ID, with_ip: bool = True) -> None:
-+    ip(["tuntap", "add", "dev", tap_name, "mode", "tap", "multi_queue"])
-+    if with_ip:
-+        ip(["link", "set", "dev", tap_name, "address", TAP_MAC])
-+        ip(["addr", "add", HOST_IP_MASK, "dev", tap_name])
-+    ip(["link", "set", tap_name, "up"])
-+
-+
-+def switch_network_to_tap2() -> None:
-+    ip(["link", "set", TAP_ID2, "down"])
-+    ip(["link", "set", TAP_ID, "down"])
-+    ip(["addr", "delete", HOST_IP_MASK, "dev", TAP_ID])
-+    ip(["link", "set", "dev", TAP_ID2, "address", TAP_MAC])
-+    ip(["addr", "add", HOST_IP_MASK, "dev", TAP_ID2])
-+    ip(["link", "set", TAP_ID2, "up"])
-+
-+
-+def parse_ping_line(line: str) -> float:
-+    # suspect lines like
-+    # [1748524876.590509] 64 bytes from 94.245.155.3 \
-+    #      (94.245.155.3): icmp_seq=1 ttl=250 time=101 ms
-+    spl = line.split()
-+    return float(spl[0][1:-1])
-+
-+
-+def parse_ping_output(out) -> Tuple[bool, float, float]:
-+    lines = [x for x in out.split("\n") if x.startswith("[")]
-+
-+    try:
-+        first_no_ans = next(
-+            (ind for ind in range(len(lines)) if lines[ind][20:26] == "no ans")
-+        )
-+    except StopIteration:
-+        return False, parse_ping_line(lines[0]), parse_ping_line(lines[-1])
-+
-+    last_no_ans = next(
-+        ind
-+        for ind in range(len(lines) - 1, -1, -1)
-+        if lines[ind][20:26] == "no ans"
-+    )
-+
-+    return (
-+        True,
-+        parse_ping_line(lines[first_no_ans]),
-+        parse_ping_line(lines[last_no_ans]),
-+    )
-+
-+
-+def wait_migration_finish(source_vm, target_vm):
-+    migr_events = (
-+        ("MIGRATION", {"data": {"status": "completed"}}),
-+        ("MIGRATION", {"data": {"status": "failed"}}),
-+    )
-+
-+    source_e = source_vm.events_wait(migr_events)["data"]
-+    target_e = target_vm.events_wait(migr_events)["data"]
-+
-+    source_s = source_vm.cmd("query-status")["status"]
-+    target_s = target_vm.cmd("query-status")["status"]
-+
-+    assert (
-+        source_e["status"] == "completed"
-+        and target_e["status"] == "completed"
-+        and source_s == "postmigrate"
-+        and target_s == "paused"
-+    ), f"""Migration failed:
-+    SRC status: {source_s}
-+    SRC event: {source_e}
-+    TGT status: {target_s}
-+    TGT event:{target_e}"""
-+
-+
-+@skipWithoutSudo()
-+class TAPFdMigration(LinuxKernelTest):
-+
-+    ASSET_KERNEL = Asset(
-+        (
-+            "https://archives.fedoraproject.org/pub/archive/fedora/linux/releases"
-+            "/31/Server/x86_64/os/images/pxeboot/vmlinuz"
-+        ),
-+        "d4738d03dbbe083ca610d0821d0a8f1488bebbdccef54ce33e3adb35fda00129",
-+    )
-+
-+    ASSET_INITRD = Asset(
-+        (
-+            "https://archives.fedoraproject.org/pub/archive/fedora/linux/releases"
-+            "/31/Server/x86_64/os/images/pxeboot/initrd.img"
-+        ),
-+        "277cd6c7adf77c7e63d73bbb2cded8ef9e2d3a2f100000e92ff1f8396513cd8b",
-+    )
-+
-+    ASSET_ALPINE_ISO = Asset(
-+        (
-+            "https://dl-cdn.alpinelinux.org/"
-+            "alpine/v3.22/releases/x86_64/alpine-standard-3.22.1-x86_64.iso"
-+        ),
-+        "96d1b44ea1b8a5a884f193526d92edb4676054e9fa903ad2f016441a0fe13089",
-+    )
-+
-+    @classmethod
-+    def setUpClass(cls):
-+        super().setUpClass()
-+
-+        try:
-+            cls.netns_context = switch_netns(NETNS)
-+            cls.netns_context.__enter__()
-+        except (OSError, subprocess.CalledProcessError) as e:
-+            raise unittest.SkipTest(f"can't switch network namespace: {e}")
-+
-+    @classmethod
-+    def tearDownClass(cls):
-+        if hasattr(cls, "netns_context"):
-+            cls.netns_context.__exit__(None, None, None)
-+        super().tearDownClass()
-+
-+    def setUp(self):
-+        super().setUp()
-+
-+        init_tap()
-+
-+        self.outer_ping_proc = None
-+        self.shm_path = None
-+
-+    def tearDown(self):
-+        try:
-+            del_tap(TAP_ID)
-+            del_tap(TAP_ID2)
-+
-+            if self.outer_ping_proc:
-+                self.stop_outer_ping()
-+
-+            if self.shm_path:
-+                os.unlink(self.shm_path)
-+        finally:
-+            super().tearDown()
-+
-+    def start_outer_ping(self) -> None:
-+        assert self.outer_ping_proc is None
-+        self.outer_ping_log = self.scratch_file("ping.log")
-+        with open(self.outer_ping_log, "w") as f:
-+            self.outer_ping_proc = subprocess.Popen(
-+                ["ping", "-i", "0", "-O", "-D", GUEST_IP],
-+                text=True,
-+                stdout=f,
-+            )
-+
-+    def stop_outer_ping(self) -> str:
-+        assert self.outer_ping_proc
-+        self.outer_ping_proc.send_signal(signal.SIGINT)
-+
-+        self.outer_ping_proc.communicate(timeout=5)
-+        self.outer_ping_proc = None
-+
-+        with open(self.outer_ping_log) as f:
-+            return f.read()
-+
-+    def stop_ping_and_check(self, stop_time, resume_time):
-+        ping_res = self.stop_outer_ping()
-+
-+        discon, a, b = parse_ping_output(ping_res)
-+
-+        if not discon:
-+            text = (
-+                f"STOP: {stop_time}, RESUME: {resume_time}," f"PING: {a} - {b}"
-+            )
-+            if a > stop_time or b < resume_time:
-+                self.fail(f"PING failed: {text}")
-+            self.log.info(f"PING: no packets lost: {text}")
-+            return
-+
-+        text = (
-+            f"STOP: {stop_time}, RESUME: {resume_time},"
-+            f"PING: disconnect: {a} - {b}"
-+        )
-+        self.log.info(text)
-+        eps = 0.05
-+        if a < stop_time - eps or b > resume_time + eps:
-+            self.fail(text)
-+
-+    def one_ping_from_guest(self, vm) -> None:
-+        exec_command_and_wait_for_pattern(
-+            self,
-+            f"ping -c 1 -W 1 {HOST_IP}",
-+            "1 packets transmitted, 1 packets received",
-+            "1 packets transmitted, 0 packets received",
-+            vm=vm,
-+        )
-+        self.wait_for_console_pattern("# ", vm=vm)
-+
-+    def one_ping_from_host(self) -> None:
-+        run(
-+            ["ping", "-c", "1", "-W", "1", GUEST_IP],
-+            stdout=subprocess.DEVNULL,
-+            check=True,
-+        )
-+
-+    def setup_shared_memory(self):
-+        self.shm_path = f"/dev/shm/qemu_test_{os.getpid()}"
-+
-+        try:
-+            with open(self.shm_path, "wb") as f:
-+                f.write(b"\0" * (1024 * 1024 * 1024))  # 1GB
-+        except Exception as e:
-+            self.fail(f"Failed to create shared memory file: {e}")
-+
-+    def prepare_and_launch_vm(
-+        self, shm_path, vhost, incoming=False, vm=None, local=True
-+    ):
-+        if not vm:
-+            vm = self.vm
-+
-+        vm.set_console()
-+        vm.add_args("-accel", "kvm")
-+        vm.add_args("-device", "pcie-pci-bridge,id=pci.1,bus=pcie.0")
-+        vm.add_args("-m", "1G")
-+
-+        vm.add_args(
-+            "-object",
-+            f"memory-backend-file,id=ram0,size=1G,mem-path={shm_path},share=on",
-+        )
-+        vm.add_args("-machine", "memory-backend=ram0")
-+
-+        vm.add_args(
-+            "-drive",
-+            f"file={self.ASSET_ALPINE_ISO.fetch()},media=cdrom,format=raw",
-+        )
-+
-+        vm.add_args("-S")
-+
-+        if incoming:
-+            vm.add_args("-incoming", "defer")
-+
-+        vm_s = "target" if incoming else "source"
-+        self.log.info(f"Launching {vm_s} VM")
-+        vm.launch()
-+
-+        if not local:
-+            tap_name = TAP_ID2 if incoming else TAP_ID
-+        else:
-+            tap_name = TAP_ID
-+
-+        self.add_virtio_net(vm, vhost, tap_name, local, incoming)
-+
-+        self.set_migration_capabilities(vm, local)
-+
-+    def add_virtio_net(
-+        self, vm, vhost: bool, tap_name: str, local: bool, incoming: bool
-+    ):
-+        incoming_fds = local and incoming
-+        netdev_params = {
-+            "id": "netdev.1",
-+            "vhost": vhost,
-+            "type": "tap",
-+            "queues": 4,
-+            "incoming-fds": incoming_fds,
-+            "script": "no",
-+            "downscript": "no",
-+        }
-+
-+        if not incoming_fds:
-+            netdev_params["vnet_hdr"] = True
-+            netdev_params["ifname"] = tap_name
-+
-+        vm.cmd("netdev_add", netdev_params)
-+
-+        vm.cmd(
-+            "device_add",
-+            driver="virtio-net-pci",
-+            romfile="",
-+            id="vnet.1",
-+            netdev="netdev.1",
-+            mq=True,
-+            vectors=18,
-+            bus="pci.1",
-+            mac=GUEST_MAC,
-+            disable_legacy="off",
-+            local_migration=local,
-+        )
-+
-+    def set_migration_capabilities(self, vm, local=True):
-+        vm.cmd(
-+            "migrate-set-capabilities",
-+            {
-+                "capabilities": [
-+                    {"capability": "events", "state": True},
-+                    {"capability": "x-ignore-shared", "state": True},
-+                ]
-+            },
-+        )
-+        vm.cmd("migrate-set-parameters", {"local": local})
-+
-+    def setup_guest_network(self) -> None:
-+        exec_command_and_wait_for_pattern(self, "ip addr", "# ")
-+        exec_command_and_wait_for_pattern(
-+            self,
-+            f"ip addr add {GUEST_IP_MASK} dev eth0 && "
-+            "ip link set eth0 up && echo OK",
-+            "OK",
-+        )
-+        self.wait_for_console_pattern("# ")
-+
-+    def do_test_tap_fd_migration(self, vhost, local=True):
-+        self.require_accelerator("kvm")
-+        self.set_machine("q35")
-+
-+        socket_dir = self.socket_dir()
-+        migration_socket = os.path.join(socket_dir.name, "migration.sock")
-+
-+        self.setup_shared_memory()
-+
-+        # Setup second TAP if needed
-+        if not local:
-+            del_tap(TAP_ID2)
-+            init_tap(TAP_ID2, with_ip=False)
-+
-+        self.prepare_and_launch_vm(self.shm_path, vhost, local=local)
-+        self.vm.cmd("cont")
-+        self.wait_for_console_pattern("login:")
-+        exec_command_and_wait_for_pattern(self, "root", "# ")
-+
-+        self.setup_guest_network()
-+
-+        self.one_ping_from_guest(self.vm)
-+        self.one_ping_from_host()
-+        self.start_outer_ping()
-+
-+        # Get some successful pings before migration
-+        time.sleep(0.5)
-+
-+        target_vm = self.get_vm(name="target")
-+        self.prepare_and_launch_vm(
-+            self.shm_path,
-+            vhost,
-+            incoming=True,
-+            vm=target_vm,
-+            local=local,
-+        )
-+
-+        target_vm.cmd("migrate-incoming", {"uri": f"unix:{migration_socket}"})
-+
-+        self.log.info("Starting migration")
-+        freeze_start = time.time()
-+        self.vm.cmd("migrate", {"uri": f"unix:{migration_socket}"})
-+
-+        self.log.info("Waiting for migration completion")
-+        wait_migration_finish(self.vm, target_vm)
-+
-+        # Switch network to tap1 if not using local-migration
-+        if not local:
-+            switch_network_to_tap2()
-+
-+        target_vm.cmd("cont")
-+        freeze_end = time.time()
-+
-+        self.vm.shutdown()
-+
-+        self.log.info("Verifying PING on target VM after migration")
-+        self.one_ping_from_guest(target_vm)
-+        self.one_ping_from_host()
-+
-+        # And a bit more pings after source shutdown
-+        time.sleep(0.3)
-+        self.stop_ping_and_check(freeze_start, freeze_end)
-+
-+        target_vm.shutdown()
-+
-+    def test_tap_fd_migration(self):
-+        self.do_test_tap_fd_migration(False)
-+
-+    def test_tap_fd_migration_vhost(self):
-+        self.do_test_tap_fd_migration(True)
-+
-+    def test_tap_new_tap_migration(self):
-+        self.do_test_tap_fd_migration(False, local=False)
-+
-+    def test_tap_new_tap_migration_vhost(self):
-+        self.do_test_tap_fd_migration(True, local=False)
-+
-+
-+if __name__ == "__main__":
-+    LinuxKernelTest.main()
+FWIW, this fixes our reproducer here for me. The issue Kevin mentioned
+in his reply sounds like a different (i.e., additional) bug, I did not
+check that out closely yet though.
+
+ block/qcow2-cluster.c      | 10 +++++-----
+ block/qcow2.c              | 10 ++++++++--
+ block/qcow2.h              |  4 ++++
+ tests/qemu-iotests/046     | 22 ++++++++++++++++++++++
+ tests/qemu-iotests/046.out | 10 ++++++++++
+ 5 files changed, 49 insertions(+), 7 deletions(-)
+
+diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
+index 8b1e80bd0b..e02fae6a0c 100644
+--- a/block/qcow2-cluster.c
++++ b/block/qcow2-cluster.c
+@@ -1474,9 +1474,9 @@ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
+     return 0;
+ }
+ 
+-static void coroutine_mixed_fn wait_for_dependencies(BlockDriverState *bs,
+-                                                     uint64_t guest_offset,
+-                                                     uint64_t bytes)
++void coroutine_mixed_fn qcow2_wait_for_dependencies(BlockDriverState *bs,
++                                                    uint64_t guest_offset,
++                                                    uint64_t bytes)
+ {
+     BDRVQcow2State *s = bs->opaque;
+     QCowL2Meta *m = NULL;
+@@ -2035,7 +2035,7 @@ int qcow2_cluster_discard(BlockDriverState *bs, uint64_t offset,
+      * We don't need to allocate a QCowL2Meta for the discard operation because
+      * s->lock is held for the duration of the whole operation.
+      */
+-    wait_for_dependencies(bs, offset, bytes);
++    qcow2_wait_for_dependencies(bs, offset, bytes);
+ 
+     /* Caller must pass aligned values, except at image end */
+     assert(QEMU_IS_ALIGNED(offset, s->cluster_size));
+@@ -2204,7 +2204,7 @@ int coroutine_fn qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset,
+      * We don't need to allocate a QCowL2Meta for the zeroize operation because
+      * s->lock is held for the duration of the whole operation.
+      */
+-    wait_for_dependencies(bs, offset, bytes);
++    qcow2_wait_for_dependencies(bs, offset, bytes);
+ 
+     /* If we have to stay in sync with an external data file, zero out
+      * s->data_file first. */
+diff --git a/block/qcow2.c b/block/qcow2.c
+index 81fd299b4c..d52002fd80 100644
+--- a/block/qcow2.c
++++ b/block/qcow2.c
+@@ -4234,10 +4234,16 @@ qcow2_co_pwrite_zeroes(BlockDriverState *bs, int64_t offset, int64_t bytes,
+         }
+ 
+         qemu_co_mutex_lock(&s->lock);
+-        /* We can have new write after previous check */
+         offset -= head;
+         bytes = s->subcluster_size;
+-        nr = s->subcluster_size;
++        /*
++         * Wait for in-flight allocating writes first: otherwise the type
++         * check below passes on UNALLOCATED while a yet-to-link_l2 write
++         * completes during qcow2_subcluster_zeroize()'s own wait and the
++         * resumed MAY_UNMAP discards the just-written data.
++         */
++        qcow2_wait_for_dependencies(bs, offset, bytes);
++        nr = bytes;
+         ret = qcow2_get_host_offset(bs, offset, &nr, &off, &type);
+         if (ret < 0 ||
+             (type != QCOW2_SUBCLUSTER_UNALLOCATED_PLAIN &&
+diff --git a/block/qcow2.h b/block/qcow2.h
+index 192a45d596..ce517040c4 100644
+--- a/block/qcow2.h
++++ b/block/qcow2.h
+@@ -966,6 +966,10 @@ int coroutine_fn GRAPH_RDLOCK
+ qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset, uint64_t bytes,
+                          int flags);
+ 
++void coroutine_mixed_fn
++qcow2_wait_for_dependencies(BlockDriverState *bs, uint64_t guest_offset,
++                            uint64_t bytes);
++
+ int GRAPH_RDLOCK
+ qcow2_expand_zero_clusters(BlockDriverState *bs,
+                            BlockDriverAmendStatusCB *status_cb,
+diff --git a/tests/qemu-iotests/046 b/tests/qemu-iotests/046
+index e03dd40147..2a0429e93a 100755
+--- a/tests/qemu-iotests/046
++++ b/tests/qemu-iotests/046
+@@ -226,6 +226,25 @@ aio_write -z 0x140000 0x10000
+ resume A
+ aio_flush
+ EOF
++
++# Start an allocating write to a previously unallocated cluster and, before
++# its L2 update is linked, issue a concurrent sub-cluster zero write with
++# MAY_UNMAP that targets a disjoint range within the same cluster. The zero
++# write's head/tail are zero (cluster is unallocated), so qcow2_co_pwrite_zeroes
++# would expand it to the full subcluster. Without the fix the zero write's
++# stale "unallocated" type check passes, qcow2_subcluster_zeroize then yields
++# in wait_for_dependencies, the allocating write links its L2 entry, and the
++# resumed zeroize unmaps the cluster - silently discarding the just-written
++# data. The fix makes the zero write fall back to a bounce-buffered real
++# write, which only touches its own subrange.
++cat <<EOF
++break write_aio A
++aio_write -P 180 0x200000 0x4000
++wait_break A
++aio_write -z -u 0x204000 0x4000
++resume A
++aio_flush
++EOF
+ }
+ 
+ overlay_io | $QEMU_IO blkdebug::"$TEST_IMG" | _filter_qemu_io |\
+@@ -310,6 +329,9 @@ verify_io()
+     echo read -P 0   0x120000 0x10000
+     echo read -P 0   0x130000 0x10000
+     echo read -P 0   0x140000 0x10000
++
++    echo read -P 180 0x200000 0x4000
++    echo read -P 0   0x204000 0xc000
+ }
+ 
+ verify_io | $QEMU_IO "$TEST_IMG" | _filter_qemu_io
+diff --git a/tests/qemu-iotests/046.out b/tests/qemu-iotests/046.out
+index 6341df335c..137cf527f1 100644
+--- a/tests/qemu-iotests/046.out
++++ b/tests/qemu-iotests/046.out
+@@ -169,6 +169,12 @@ wrote XXX/XXX bytes at offset XXX
+ XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ wrote XXX/XXX bytes at offset XXX
+ XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++blkdebug: Suspended request 'A'
++blkdebug: Resuming request 'A'
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ == Verify image content ==
+ read 65536/65536 bytes at offset 0
+@@ -275,5 +281,9 @@ read 65536/65536 bytes at offset 1245184
+ 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ read 65536/65536 bytes at offset 1310720
+ 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 16384/16384 bytes at offset 2097152
++16 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 49152/49152 bytes at offset 2113536
++48 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ No errors were found on the image.
+ *** done
 -- 
-2.52.0
+2.47.3
+
 
 
