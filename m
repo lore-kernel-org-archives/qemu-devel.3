@@ -4,50 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E119ECD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:36:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5356CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:36:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXXP-00019h-1H; Fri, 22 May 2026 17:36:11 -0400
+	id 1wQXVt-0008DF-Sk; Fri, 22 May 2026 17:34:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXVp-0008BJ-R7; Fri, 22 May 2026 17:34:34 -0400
+ id 1wQXVZ-000880-SY; Fri, 22 May 2026 17:34:18 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXVl-0007cK-NH; Fri, 22 May 2026 17:34:33 -0400
+ id 1wQXVW-0007YB-Nw; Fri, 22 May 2026 17:34:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485632; bh=6AkFnyMO5nVqOBffS08PDcG3KK64ADxzPpOkcraRmgc=;
+ t=1779485632; bh=gXaCOgIMQok2ureBAQVnySOHuN+YGHTyKbMB7nLoX3k=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Wr6YSXBHWKwDM3+Zxae3i+LzpH5X8mQRiGbKelQ4Oa7my75CzoKT/hE27EVxCztoF
- +C9uRgX0c7UIU8HOFW0CjWLBFWkYqlm+WZZammJWInpxyUwbgcsiJo4dImOeCFLGaK
- Wb7lv4NL7ZY1WMbVMTvdOrqc0ldGShEFlWZXows2k/y3ndkAzeC6IzGIqy0gRxl6EU
- 1/fTnOISJFURr4BmO0WfGFvvgHFvQBtrYQ0D/9FVKW6y14Vva6YCbHd3Zqj+dq73Qe
- jhXzS2YvxvAWAm2NJDZfPpuV7gGn6uB6QeqkOr86PXaHy6LsIC1c6sQPDpsLcFRj3l
- DOFMXtCciXg7g==
+ b=RG1gCAWPtzBgnkQwOOT1yk7M4kphhE4sMx8rL/1hgWXMzTiBC6wCeNexf6Y0/sD+l
+ echB/iz8sANvKVYbJ3w3WSqB7IL8a3wBdC/fo7aF7DjCRpHlyL10vuksgAQfz3CXQm
+ +dfrpfuL3rMjkEfAQDBQjaYJPgnBUUNGTeNAjh42POMmviTNCAxWuwfWmp/13XX2XE
+ AwiEi9edueIoFTscn/6vvT794lIKw25h456pzcMFbk3DxbEguQ/LPZNFjSJs8Ul3MV
+ K6aAkRlIsfCeKdolpMvhEL5xWmjNWzus0kVDgl7YbVcU6DY1HspYeiPpenviivewsd
+ XUj4NgUx2TYdQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CFF0E1AFAD2;
+ by isrv.corpit.ru (Postfix) with ESMTP id 5B3D01AFACB;
  Sat, 23 May 2026 00:33:52 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id F27CC3B7158;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7E3B23B7151;
  Sat, 23 May 2026 00:33:56 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kane Chen <kane_chen@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+Cc: qemu-stable@nongnu.org, Jeuk Kim <jeuk20.kim@samsung.com>,
+ Rayhan Ramdhany Hanaputra <hanaputrarayhan@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 67/94] hw/misc/aspeed_sbc: Add bounds checking for OTP
- write operations
-Date: Sat, 23 May 2026 00:33:24 +0300
-Message-ID: <20260522213356.806058-9-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 60/94] hw/ufs: Validate MCQ SQ references before use
+Date: Sat, 23 May 2026 00:33:17 +0300
+Message-ID: <20260522213356.806058-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,110 +69,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kane Chen <kane_chen@aspeedtech.com>
+From: Jeuk Kim <jeuk20.kim@samsung.com>
 
-There is a mismatch between the Aspeed OTP model and the Aspeed SBC
-model in how the guest-provided address is handled.
-aspeed_sbc_otp_prog() passes a word-indexed address directly
-to address_space_write() without converting it to a byte offset,
-whereas aspeed_otp_write() expects a byte offset and applies an
-additional shift (otp_addr << 2). This double-shift confusion means
-that an out-of-range word address can lead to a write beyond the
-allocated storage.
+A guest can program an out-of-range SQATTR.CQID value, or ring an
+MCQ SQ doorbell before the submission queue exists.
 
-Fix this by adding bounds checking on the word offset before
-converting to byte offset and passing to address_space_write().
-This matches the existing bounds check in aspeed_sbc_otp_read().
+Reject SQ creation when the referenced CQ is invalid, and ignore SQ
+doorbells for queues that have not been created. This prevents a
+guest-triggerable out-of-bounds read and NULL pointer dereference.
 
-Cc: Kane-Chen-AS <kane_chen@aspeedtech.com>
+Fixes: 5c079578d2e ("hw/ufs: Add support MCQ of UFSHCI 4.0")
+Reported-by: Rayhan Ramdhany Hanaputra <hanaputrarayhan@gmail.com>
 Cc: qemu-stable@nongnu.org
-Fixes: 1a00754ccf15 ("hw/misc: Add Aspeed Secure Boot Controller model")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3436
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260428055254.76581-2-kane_chen@aspeedtech.com
-[ clg: Kept otp_addr in event logged in aspeed_sbc_otp_prog() ]
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit ff36712da5ae73aca5a044fe5e61c585d427013a)
-(Mjt: actual Fixes: tag is this one)
-Fixes: 9f58dd0a8c30 ("hw/misc/aspeed_sbc: Connect ASPEED OTP memory device to SBC")
+Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+(cherry picked from commit 332ea29787800fff2b49e9b89ec93bd370a11965)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c
-index 065e822e70..e5dab1c7bb 100644
---- a/hw/misc/aspeed_sbc.c
-+++ b/hw/misc/aspeed_sbc.c
-@@ -159,9 +159,17 @@ static bool aspeed_sbc_otp_prog(AspeedSBCState *s,
-     MemTxResult ret;
-     AspeedOTPState *otp = &s->otp;
-     uint32_t value = s->regs[R_CAMP1];
-+    uint32_t otp_offset = otp_addr << 2;
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index cb74cb56bc..d5fba15e2a 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -517,8 +517,13 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
+         return false;
+     }
  
--    ret = address_space_write(&otp->as, otp_addr, MEMTXATTRS_UNSPECIFIED,
--                        &value, sizeof(value));
-+    if (otp_addr >= OTP_TOTAL_DWORD_COUNT) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "Invalid OTP addr 0x%x\n",
-+                      otp_addr);
++    if (cqid >= u->params.mcq_maxq) {
++        trace_ufs_err_mcq_create_sq_invalid_cqid(cqid);
 +        return false;
 +    }
 +
-+    ret = address_space_write(&otp->as, otp_offset, MEMTXATTRS_UNSPECIFIED,
-+                              &value, sizeof(value));
-     if (ret != MEMTX_OK) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "Failed to write OTP memory, addr = %x\n",
-diff --git a/hw/nvram/aspeed_otp.c b/hw/nvram/aspeed_otp.c
-index a60289000c..1a9d3841b8 100644
---- a/hw/nvram/aspeed_otp.c
-+++ b/hw/nvram/aspeed_otp.c
-@@ -57,12 +57,12 @@ static bool valid_program_data(uint32_t otp_addr,
-     return has_programmable_bits != 0;
- }
- 
--static bool program_otpmem_data(void *opaque, uint32_t otp_addr,
-+static bool program_otpmem_data(void *opaque, hwaddr otp_offset,
-                              uint32_t prog_bit, uint32_t *value)
- {
-     AspeedOTPState *s = opaque;
-+    uint32_t otp_addr = otp_offset >> 2;
-     bool is_odd = otp_addr & 1;
--    uint32_t otp_offset = otp_addr << 2;
- 
-     memcpy(value, s->storage + otp_offset, sizeof(uint32_t));
- 
-@@ -79,26 +79,25 @@ static bool program_otpmem_data(void *opaque, uint32_t otp_addr,
-     return true;
- }
- 
--static void aspeed_otp_write(void *opaque, hwaddr otp_addr,
-+static void aspeed_otp_write(void *opaque, hwaddr otp_offset,
-                                 uint64_t val, unsigned size)
- {
-     AspeedOTPState *s = opaque;
--    uint32_t otp_offset, value;
-+    uint32_t value;
- 
--    if (!program_otpmem_data(s, otp_addr, val, &value)) {
-+    if (!program_otpmem_data(s, otp_offset, val, &value)) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: Failed to program data, value = %x, bit = %"PRIx64"\n",
-                       __func__, value, val);
-         return;
+     if (!u->cq[cqid]) {
+-        trace_ufs_err_mcq_create_sq_invalid_cqid(qid);
++        trace_ufs_err_mcq_create_sq_invalid_cqid(cqid);
+         return false;
      }
  
--    otp_offset = otp_addr << 2;
-     memcpy(s->storage + otp_offset, &value, size);
+@@ -775,6 +780,11 @@ static void ufs_mcq_process_db(UfsHc *u, uint8_t qid, uint32_t db)
+     }
  
-     if (s->blk) {
-         if (blk_pwrite(s->blk, otp_offset, size, &value, 0) < 0) {
-             qemu_log_mask(LOG_GUEST_ERROR,
--                          "%s: Failed to write %x to %x\n",
-+                          "%s: Failed to write %x to %"HWADDR_PRIx"\n",
-                           __func__, value, otp_offset);
+     sq = u->sq[qid];
++    if (!sq) {
++        trace_ufs_err_mcq_db_wr_invalid_sqid(qid);
++        return;
++    }
++
+     if (sq->size * sizeof(UfsSqEntry) <= db) {
+         trace_ufs_err_mcq_db_wr_invalid_db(qid, db);
+         return;
+@@ -788,7 +798,14 @@ static void ufs_write_mcq_op_reg(UfsHc *u, hwaddr offset, uint32_t data,
+                                  unsigned size)
+ {
+     int qid = offset / sizeof(UfsMcqOpReg);
+-    UfsMcqOpReg *opr = &u->mcq_op_reg[qid];
++    UfsMcqOpReg *opr;
++
++    if (qid >= u->params.mcq_maxq) {
++        trace_ufs_err_invalid_register_offset(offset);
++        return;
++    }
++
++    opr = &u->mcq_op_reg[qid];
  
-             return;
+     switch (offset % sizeof(UfsMcqOpReg)) {
+     case offsetof(UfsMcqOpReg, sq.tp):
 -- 
 2.47.3
 
