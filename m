@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 104E0CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:52:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 122E1CD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:53:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXl1-0007no-Gh; Fri, 22 May 2026 17:50:15 -0400
+	id 1wQXn9-0005ZI-7z; Fri, 22 May 2026 17:52:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXkO-0006nV-NX; Fri, 22 May 2026 17:49:37 -0400
+ id 1wQXn7-0005Ot-N0; Fri, 22 May 2026 17:52:25 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXkM-0002TG-Rb; Fri, 22 May 2026 17:49:36 -0400
+ id 1wQXn5-0004ZE-Hn; Fri, 22 May 2026 17:52:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486559; bh=Q3lCuv4X+Ag/LDgtUcJpyEVJ8Rrvluf+nuqZHXrk1hg=;
+ t=1779486561; bh=IxlVzasWUz1jAgKSjDI2NIizegDam5b3CcOyjw+M1BU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=pmTvxUrUzkxeWZekUuJsPSA4O/gJPhesYDdn6fOqY53SdnPnS3dDzEAML86JCFAh2
- 7oUdbT6XFZogCQ+RSPQMH/xhq3/fpovlLJF/usWMljqmHVBf+7IKh9MbY0AOQSgwYY
- 9DLHWYXd6QaK3S9urReZAzoxblRzdjTZgI8tSlpqS1KYhXjcmV/2bhXDjNICFaygUA
- EBqDj0dCzkaL2cJ+oTyin/NsG8bh/mD49xDy1D8Dz6PCDAxREOvhuKXcUuMLfC9KES
- krMQFQwm97LIojVkYy8rMhxoMc+9yq/4uyPQvchPz/sPhk8RFl72fdO7QLoaWtDo0z
- RZDc58xaD2G2w==
+ b=bLN6ExPB4hgQySkkQjp8XglktG7Y+u/b/wG6uBNnum5r8mi3rf/fPlH5Fh7/4kPjF
+ qLnykjU2sweubI1kWyFxkkT+Mr0cngB0cFHsx1yDp0aHXYOpI+7hCit+UFfWAMEXA4
+ PaFeWAVjEwa2ln5W5f2zRbgdMzNd635Sn8FKhfDXivFxCtkUpqbsxAljS+2CPEU99k
+ oO9cCUBXnks6lF6SZNC42xrMZnH8NQoJjku5vetdnAl6kNfQ5+yTrQFQdjO1+53vyh
+ nPlGbkHTLavFQYJV9ECMrfg8K9jNDzfMHcVdpt5Xjlh+ZQZ4GhQU5gmmjiXQ2Ne0bx
+ QHrKvht6hvm4A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 463651AFB5E;
- Sat, 23 May 2026 00:49:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 467781AFB7B;
+ Sat, 23 May 2026 00:49:21 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6D6163B71AD;
- Sat, 23 May 2026 00:49:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6FF6D3B71CA;
+ Sat, 23 May 2026 00:49:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 104/149] tests/rcutorture: Fix build error
-Date: Sat, 23 May 2026 00:48:36 +0300
-Message-ID: <20260522214923.807017-5-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 133/149] linux-user: Fix AT_EXECFN in AUXV for
+ symlinked programs
+Date: Sat, 23 May 2026 00:49:05 +0300
+Message-ID: <20260522214923.807017-34-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,39 +69,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+From: Helge Deller <deller@gmx.de>
 
-Newer gcc compiler (version 16.0.0 20260103 (Red Hat 16.0.0-0) (GCC))
-detects an unused variable error:
+The AT_EXECFN entry in AUXV needs to keep the value which was used when
+the program was started. Especially for symlinked programs qemu should
+not try to resolve the realpath.
 
-  ../tests/unit/rcutorture.c: In function ‘rcu_read_stress_test’:
-  ../tests/unit/rcutorture.c:251:18: error: variable ‘garbage’ set but not used [-Werror=unused-but-set-variable=]
-    251 |     volatile int garbage = 0;
-        |                  ^~~~~~~
+Here is a reproducer:
+(arm64-chroot)root@p100:/# cd /usr/bin
+(arm64-chroot)root@p100:/usr/bin# ln -s echo testprog
+(arm64-chroot)root@p100:/usr/bin# LD_SHOW_AUXV=1 ./testprog | grep AT_EXECFN
+AT_EXECFN:            ./testprog
 
-Since the 'garbage' variable is used to generate memory reads from the
-CPU while holding the RCU lock, it can not be removed. Tag it as
-((unused)) instead to silence the compiler warnings/errors.
+In this example, "./testprog" is the correct output, and not "/usr/bin/echo".
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260112163350.1251114-1-clg@redhat.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit 7a05be8c70bb789c23076b1ca2563ed7d87c6fb8)
+This patch fixes parts of commit 258bec39 ("linux-user: Fix access to
+/proc/self/exe").
+
+Fixes: 258bec39 ("linux-user: Fix access to /proc/self/exe")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3379
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 6b5aef7cac9dab7c16451588cff6615eb2048293)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/unit/rcutorture.c b/tests/unit/rcutorture.c
-index 7662081683..2f19d479a3 100644
---- a/tests/unit/rcutorture.c
-+++ b/tests/unit/rcutorture.c
-@@ -248,7 +248,7 @@ static void *rcu_read_stress_test(void *arg)
-     int pc;
-     long long n_reads_local = 0;
-     long long rcu_stress_local[RCU_STRESS_PIPE_LEN + 1] = { 0 };
--    volatile int garbage = 0;
-+    volatile int garbage __attribute__ ((unused)) = 0;
+diff --git a/linux-user/main.c b/linux-user/main.c
+index 86d04cca3c..c08c73fd80 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -772,8 +772,10 @@ int main(int argc, char **argv, char **envp)
+     }
  
-     rcu_register_thread();
+     /* Resolve executable file name to full path name */
+-    if (realpath(exec_path, real_exec_path)) {
+-        exec_path = real_exec_path;
++    /* Keep how we started the program in exec_path, e.g. "./my_program" */
++    /* Store real path in real_exec_path, e.g. "/usr/local/bin/my_program" */
++    if (!realpath(exec_path, real_exec_path)) {
++        printf("Could not resolve %s\n", exec_path);
+     }
  
+     /*
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index bb818f35d9..5c101c19e4 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -8799,9 +8799,9 @@ static int maybe_do_fake_open(CPUArchState *cpu_env, int dirfd,
+             return -1;
+         }
+         if (safe) {
+-            return safe_openat(dirfd, exec_path, flags, mode);
++            return safe_openat(dirfd, real_exec_path, flags, mode);
+         } else {
+-            return openat(dirfd, exec_path, flags, mode);
++            return openat(dirfd, real_exec_path, flags, mode);
+         }
+     }
+ 
+@@ -8934,9 +8934,9 @@ ssize_t do_guest_readlink(const char *pathname, char *buf, size_t bufsiz)
+          * Don't worry about sign mismatch as earlier mapping
+          * logic would have thrown a bad address error.
+          */
+-        ret = MIN(strlen(exec_path), bufsiz);
++        ret = MIN(strlen(real_exec_path), bufsiz);
+         /* We cannot NUL terminate the string. */
+-        memcpy(buf, exec_path, ret);
++        memcpy(buf, real_exec_path, ret);
+     } else {
+         ret = readlink(path(pathname), buf, bufsiz);
+     }
+@@ -9027,7 +9027,7 @@ static int do_execv(CPUArchState *cpu_env, int dirfd,
+ 
+     const char *exe = p;
+     if (is_proc_myself(p, "exe")) {
+-        exe = exec_path;
++        exe = real_exec_path;
+     }
+     ret = is_execveat
+         ? safe_execveat(dirfd, exe, argp, envp, flags)
+@@ -11038,9 +11038,9 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+                  * Don't worry about sign mismatch as earlier mapping
+                  * logic would have thrown a bad address error.
+                  */
+-                ret = MIN(strlen(exec_path), arg4);
++                ret = MIN(strlen(real_exec_path), arg4);
+                 /* We cannot NUL terminate the string. */
+-                memcpy(p2, exec_path, ret);
++                memcpy(p2, real_exec_path, ret);
+             } else {
+                 ret = get_errno(readlinkat(arg1, path(p), p2, arg4));
+             }
+diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
+index 24d35998f0..7730444aa5 100644
+--- a/linux-user/user-internals.h
++++ b/linux-user/user-internals.h
+@@ -24,6 +24,7 @@
+ #include "exec/translation-block.h"
+ 
+ extern char *exec_path;
++extern char real_exec_path[PATH_MAX];
+ void init_task_state(TaskState *ts);
+ void task_settid(TaskState *);
+ void stop_all_tasks(void);
 -- 
 2.47.3
 
