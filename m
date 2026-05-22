@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4730CD4F3D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B853ACD5BB3
 	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:54:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXlg-0000qv-4V; Fri, 22 May 2026 17:50:56 -0400
+	id 1wQXov-0001ie-76; Fri, 22 May 2026 17:54:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXkw-0007eC-F2; Fri, 22 May 2026 17:50:10 -0400
+ id 1wQXob-0000s3-RM; Fri, 22 May 2026 17:53:58 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXku-0002ji-O5; Fri, 22 May 2026 17:50:10 -0400
+ id 1wQXoW-0005ve-G5; Fri, 22 May 2026 17:53:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486559; bh=xmHfeUJz0ZcDqeB1vL/AXC1QJ6Wf1Lm11pgd52X7R5w=;
+ t=1779486562; bh=NeizuiU9CNw1ZzTV6M1T2A/yYQYGEMCvWTUWZVtOwzs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=WaWIazCutnv3SbdfL0/06aRB0DDJxKrxIpeej5GREtdNlRF3Zbh7ysCRId8NBzRH2
- XXTMxANADka6DY6ATWpQOF9Ypi+NqNF1BHacHa1vsTIonSsipEwAucGybNO2dWUYwl
- XAXlw0ZlmHkrM1GD9pNI4qb3/szihDZFbdH4qEPZX4WqGMW4OoIHtmz/x/EeHUjnBq
- xpFQeSK3rcW0MnmiDtMYgmY6Q9Tb3e7ANP99fz8rP+XC1SjeuECenXWR5IgYwvkScs
- htKf179ofY7fee7hJZbZ6z8tYpQ925U79VPaxUuA+D7gvIPOVzG6S5zpSvblUI7TRa
- iSyZMNJzN5cxQ==
+ b=bS1om3Rn4RdGsg/c132ejy/0EHMUIN9e1XMcPel5lGMvAmafsm6rapU+EaXBIX8Mp
+ S4iQibMVDwQ84mT6uEAhhp5lHJcKQJfwDwqF4apKLPOzHfCkXyFkj933LP0LOrNepk
+ qCX1TgbtsA/VPBKabjBZ6QX5nex+Trnb+NFfbz4MVcuTS4wVvgKtLCpP2ogW50WB0o
+ rjX8HaV01GSaQvTef4SpFpNkWTVdr/LGpOlsdrQLyEQNvSvrPO/FGGfa1ahWBrX8ex
+ Oij9tFEsxOY0yaL123J6JFAT7KkqQ0NUBv5qM4JURgIzkfnm3R+f3tNCxQX5joVJEk
+ c2BVoRNlDdChw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BB9AD1AFB65;
- Sat, 23 May 2026 00:49:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 27EA91AFB8A;
+ Sat, 23 May 2026 00:49:22 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id DA09E3B71B4;
- Sat, 23 May 2026 00:49:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5013A3B71D9;
+ Sat, 23 May 2026 00:49:26 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 111/149] hw/misc/bcm2835_rng: Specify valid memory
- access sizes
-Date: Sat, 23 May 2026 00:48:43 +0300
-Message-ID: <20260522214923.807017-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 148/149] iotests/046: Test that discard/write_zeroes
+ wait for dependencies
+Date: Sat, 23 May 2026 00:49:20 +0300
+Message-ID: <20260522214923.807017-49-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,37 +69,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Kevin Wolf <kwolf@redhat.com>
 
-The BCM2835 RNG has 32-bit registers only; specify this in
-the MemoryRegionOps so wrong-sized accesses are rejected rather
-than getting to the assertions in the read and write functions,
-and for clarity add the matching .impl constraints.
+This is a regression test for the bug fixed in the previous commit where
+discard and write_zeroes operations wouldn't consider their dependencies
+in s->cluster_allocs. Without the fix, this results in a corrupted
+image.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3394
-Fixes: 54a5ba13a9f ("target-arm: Implement BCM2835 hardware RNG")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260501162700.4092512-1-peter.maydell@linaro.org
-(cherry picked from commit 18b664c90085b0d2be9c2ad8c747e00a7a733402)
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20260427170520.101242-5-kwolf@redhat.com>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
+Tested-by: Denis V. Lunev <den@openvz.org>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 389f5bcc744d3ddc127d550a57261aed9bbba1f3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/misc/bcm2835_rng.c b/hw/misc/bcm2835_rng.c
-index e4d2c224c8..4492e325b4 100644
---- a/hw/misc/bcm2835_rng.c
-+++ b/hw/misc/bcm2835_rng.c
-@@ -93,6 +93,10 @@ static const MemoryRegionOps bcm2835_rng_ops = {
-     .read = bcm2835_rng_read,
-     .write = bcm2835_rng_write,
-     .endianness = DEVICE_NATIVE_ENDIAN,
-+    .impl.min_access_size = 4,
-+    .impl.max_access_size = 4,
-+    .valid.min_access_size = 4,
-+    .valid.max_access_size = 4,
- };
+diff --git a/tests/qemu-iotests/046 b/tests/qemu-iotests/046
+index 4c9ed4d26e..e03dd40147 100755
+--- a/tests/qemu-iotests/046
++++ b/tests/qemu-iotests/046
+@@ -184,6 +184,48 @@ aio_write -P 160 0x104000 0x18000
+ resume A
+ aio_flush
+ EOF
++
++# Create a pre-allocated zero cluster, then start a write on it and discard it
++# before the L2 update is made
++cat  <<EOF
++write -P 181 0x120000 0x10000
++write -z 0x120000 0x10000
++
++break write_aio A
++aio_write -P 180 0x120000 0x10000
++wait_break A
++aio_discard 0x120000 0x10000
++resume A
++aio_flush
++EOF
++
++# Create a pre-allocated zero cluster, then start a write on it and a
++# concurrent zero write with MAY_UNMAP before the L2 update is made
++cat  <<EOF
++write -P 181 0x130000 0x10000
++write -z 0x130000 0x10000
++
++break write_aio A
++aio_write -P 180 0x130000 0x10000
++wait_break A
++aio_write -z -u 0x130000 0x10000
++resume A
++aio_flush
++EOF
++
++# Create a pre-allocated zero cluster, then start a write on it and a
++# concurrent zero write without MAY_UNMAP before the L2 update is made
++cat  <<EOF
++write -P 181 0x140000 0x10000
++write -z 0x140000 0x10000
++
++break write_aio A
++aio_write -P 180 0x140000 0x10000
++wait_break A
++aio_write -z 0x140000 0x10000
++resume A
++aio_flush
++EOF
+ }
  
- static const VMStateDescription vmstate_bcm2835_rng = {
+ overlay_io | $QEMU_IO blkdebug::"$TEST_IMG" | _filter_qemu_io |\
+@@ -264,6 +306,10 @@ verify_io()
+     # Undefined content for 0x10c000 0x8000
+     echo read -P 160 0x114000 0x8000
+     echo read -P 17  0x11c000 0x4000
++
++    echo read -P 0   0x120000 0x10000
++    echo read -P 0   0x130000 0x10000
++    echo read -P 0   0x140000 0x10000
+ }
+ 
+ verify_io | $QEMU_IO "$TEST_IMG" | _filter_qemu_io
+diff --git a/tests/qemu-iotests/046.out b/tests/qemu-iotests/046.out
+index b1a03f4041..6341df335c 100644
+--- a/tests/qemu-iotests/046.out
++++ b/tests/qemu-iotests/046.out
+@@ -139,6 +139,36 @@ wrote XXX/XXX bytes at offset XXX
+ XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ wrote XXX/XXX bytes at offset XXX
+ XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++blkdebug: Suspended request 'A'
++blkdebug: Resuming request 'A'
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++discarded  XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++blkdebug: Suspended request 'A'
++blkdebug: Resuming request 'A'
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++blkdebug: Suspended request 'A'
++blkdebug: Resuming request 'A'
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ == Verify image content ==
+ read 65536/65536 bytes at offset 0
+@@ -239,5 +269,11 @@ read 32768/32768 bytes at offset 1130496
+ 32 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ read 16384/16384 bytes at offset 1163264
+ 16 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 65536/65536 bytes at offset 1179648
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 65536/65536 bytes at offset 1245184
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 65536/65536 bytes at offset 1310720
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ No errors were found on the image.
+ *** done
 -- 
 2.47.3
 
