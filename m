@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC816CD5BB3
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:44:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C69ECD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:44:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXXI-0000al-M8; Fri, 22 May 2026 17:36:06 -0400
+	id 1wQXYx-0006eF-9g; Fri, 22 May 2026 17:37:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXVe-00088N-2y; Fri, 22 May 2026 17:34:25 -0400
+ id 1wQXYv-0006cU-I8; Fri, 22 May 2026 17:37:45 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXVb-0007ZK-E9; Fri, 22 May 2026 17:34:21 -0400
+ id 1wQXYt-0001Tm-5X; Fri, 22 May 2026 17:37:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485632; bh=SHRwfxBNjqYNChVpuObGVc28DrBIKUPUH1Ppb1rJg28=;
+ t=1779485682; bh=NcJd8nN8udITBb8kuubjKg36rc3x3Tj18jI98dI1A5o=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=rn9gBAdBSKxGW8TEHFiIG1/GWoOivhMRivh27ZCiSScVr4/djYPMv5rStHXVBRXFw
- O2YmrZ3HtSkcCrPmWBZSiGVYZYIqfDZ7OSnjwvBl1GXx1oR+iKaGgaVO3WFcAIG+lN
- 63s1eYD46l3sN7qrzwhwv90k5jyqCrFB8FiUWFLqP1+o8Il4L9oR3bbPNNlJvyw91x
- VyAE/FgETULnLGp0Jwogtx64Ky1H80QwcSkVPr93FUZGjwmPCoxyU/MfpbsV1Cmvka
- 6RWEK2TW4ZtNxhl71KyZicqnbOwJUSxZ6brLC9PkARC9Xy6eB0DGbCb23NMWzpxXZ+
- RrDIJpW4+R/kQ==
+ b=bhKc/uB+UC3On9np0E9W6kywXJMirlz6W/PGXA6ZmpgbtbVxa2yb5JQa2PKh2iv7h
+ PaaUrbCZwE9Fc9oLJEP5qNtRiXU45E7shQEs0rFUcuQ9rFuw38WDaGEmpboP8QEokF
+ Ui5c5kBbXyiAO34aKlw99tKNr4+4Z40zf/ERSTibL2TaPkUNGDW/T/iGhVj9nDbr1b
+ El5CTZTL6gL5NE+ayYaEiEyidbiZsisr0HRuDNPDJeGH21oAlypctGNy7ykKOLwPBs
+ OEAqAjLbZjzlPIbsaTiQIDDiN4cUJ17KTZe0E3JGsWrMHz/va1qkGXu1k1DKfv5ptP
+ xN0TJOy0zaPVQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 783E31AFACD;
- Sat, 23 May 2026 00:33:52 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 340EE1AFAF7;
+ Sat, 23 May 2026 00:34:42 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9D2F03B7153;
- Sat, 23 May 2026 00:33:56 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 57A253B7177;
+ Sat, 23 May 2026 00:34:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jeuk Kim <jeuk20.kim@samsung.com>,
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Katherine Leaver <katherine.j.leaver@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 62/94] hw/ufs: Reject zero-depth MCQ queues
-Date: Sat, 23 May 2026 00:33:19 +0300
-Message-ID: <20260522213356.806058-4-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 102/136] hw/uefi: fix buffer overruns
+Date: Sat, 23 May 2026 00:34:10 +0300
+Message-ID: <20260522213446.806182-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
-References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
+References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -68,94 +69,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jeuk Kim <jeuk20.kim@samsung.com>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-Reject SQATTR.SIZE and CQATTR.SIZE values that produce zero-entry MCQ
-queues. Such queues can later trigger a divide-by-zero while advancing
-queue pointers.
+The buffer size checks do not consider the mm_header size, simliar to
+CVE-2026-5744.  Factor out the repeated size check to a small helper
+function, fix the check, update all places to use the new helper.
 
-Fixes: 5c079578d2e ("hw/ufs: Add support MCQ of UFSHCI 4.0")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
-(cherry picked from commit 4a909c00b9e18478e67a792c7f7cfae62cb6c865)
+Fixes: CVE-2026-41435
+Fixes: db1ecfb473ac ("hw/uefi: add var-service-vars.c")
+Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20260422092910.444997-2-kraxel@redhat.com>
+(cherry picked from commit f252769a23e67765f9b95d8944ca3da6c9edf58b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ufs/trace-events b/hw/ufs/trace-events
-index 531dcfc686..7734b35f08 100644
---- a/hw/ufs/trace-events
-+++ b/hw/ufs/trace-events
-@@ -40,10 +40,12 @@ ufs_err_mcq_db_wr_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
- ufs_err_mcq_db_wr_invalid_db(uint8_t qid, uint32_t db) "invalid mcq doorbell sqid %"PRIu8", db %"PRIu32""
- ufs_err_mcq_create_sq_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
- ufs_err_mcq_create_sq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
-+ufs_err_mcq_create_sq_invalid_size(uint8_t qid) "invalid mcq sq size for sqid %"PRIu8""
- ufs_err_mcq_create_sq_already_exists(uint8_t qid) "mcq sqid %"PRIu8 "already exists"
- ufs_err_mcq_delete_sq_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
- ufs_err_mcq_delete_sq_not_exists(uint8_t qid) "mcq sqid %"PRIu8 "not exists"
- ufs_err_mcq_create_cq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
-+ufs_err_mcq_create_cq_invalid_size(uint8_t qid) "invalid mcq cq size for cqid %"PRIu8""
- ufs_err_mcq_create_cq_already_exists(uint8_t qid) "mcq cqid %"PRIu8 "already exists"
- ufs_err_mcq_delete_cq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
- ufs_err_mcq_delete_cq_not_exists(uint8_t qid) "mcq cqid %"PRIu8 "not exists"
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index 1819ba2e8a..4ccd7aa64d 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -506,6 +506,8 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
-     UfsMcqReg *reg = &u->mcq_reg[qid];
-     UfsSq *sq;
-     uint8_t cqid = FIELD_EX32(attr, SQATTR, CQID);
-+    uint16_t qsize =
-+        ((FIELD_EX32(attr, SQATTR, SIZE) + 1) << 2) / sizeof(UfsSqEntry);
+diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
+index 27421c6e2d..82ff4e429a 100644
+--- a/hw/uefi/var-service-vars.c
++++ b/hw/uefi/var-service-vars.c
+@@ -260,6 +260,17 @@ static size_t uefi_vars_mm_error(mm_header *mhdr, mm_variable *mvar,
+     return sizeof(*mvar);
+ }
  
-     if (qid >= u->params.mcq_maxq) {
-         trace_ufs_err_mcq_create_sq_invalid_sqid(qid);
-@@ -527,12 +529,17 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
-         return false;
-     }
- 
-+    if (!qsize) {
-+        trace_ufs_err_mcq_create_sq_invalid_size(qid);
++static bool check_buffer_size(uefi_vars_state *uv, uint64_t length)
++{
++    /* uefi_vars_cmd_mm() checks that */
++    g_assert(uv->buf_size >= sizeof(mm_header));
++
++    if (uv->buf_size - sizeof(mm_header) < length) {
 +        return false;
 +    }
++    return true;
++}
 +
-     sq = g_malloc0(sizeof(*sq));
-     sq->u = u;
-     sq->sqid = qid;
-     sq->cq = u->cq[cqid];
-     sq->addr = ((uint64_t)reg->squba << 32) | reg->sqlba;
--    sq->size = ((FIELD_EX32(attr, SQATTR, SIZE) + 1) << 2) / sizeof(UfsSqEntry);
-+    sq->size = qsize;
- 
-     sq->bh = qemu_bh_new_guarded(ufs_mcq_process_sq, sq,
-                                  &DEVICE(u)->mem_reentrancy_guard);
-@@ -576,6 +583,8 @@ static bool ufs_mcq_create_cq(UfsHc *u, uint8_t qid, uint32_t attr)
+ static size_t uefi_vars_mm_get_variable(uefi_vars_state *uv, mm_header *mhdr,
+                                         mm_variable *mvar, void *func)
  {
-     UfsMcqReg *reg = &u->mcq_reg[qid];
-     UfsCq *cq;
-+    uint16_t qsize =
-+        ((FIELD_EX32(attr, CQATTR, SIZE) + 1) << 2) / sizeof(UfsCqEntry);
- 
-     if (qid >= u->params.mcq_maxq) {
-         trace_ufs_err_mcq_create_cq_invalid_cqid(qid);
-@@ -587,11 +596,16 @@ static bool ufs_mcq_create_cq(UfsHc *u, uint8_t qid, uint32_t attr)
-         return false;
+@@ -307,7 +318,7 @@ static size_t uefi_vars_mm_get_variable(uefi_vars_state *uv, mm_header *mhdr,
+     if (uadd64_overflow(length, va->data_size, &length)) {
+         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
+     }
+-    if (uv->buf_size < length) {
++    if (!check_buffer_size(uv, length)) {
+         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
      }
  
-+    if (!qsize) {
-+        trace_ufs_err_mcq_create_cq_invalid_size(qid);
-+        return false;
-+    }
-+
-     cq = g_malloc0(sizeof(*cq));
-     cq->u = u;
-     cq->cqid = qid;
-     cq->addr = ((uint64_t)reg->cquba << 32) | reg->cqlba;
--    cq->size = ((FIELD_EX32(attr, CQATTR, SIZE) + 1) << 2) / sizeof(UfsCqEntry);
-+    cq->size = qsize;
+@@ -377,7 +388,7 @@ uefi_vars_mm_get_next_variable(uefi_vars_state *uv, mm_header *mhdr,
+     }
  
-     cq->bh = qemu_bh_new_guarded(ufs_mcq_process_cq, cq,
-                                  &DEVICE(u)->mem_reentrancy_guard);
+     length = sizeof(*mvar) + sizeof(*nv) + var->name_size;
+-    if (uv->buf_size < length) {
++    if (!check_buffer_size(uv, length)) {
+         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
+     }
+ 
+@@ -567,7 +578,7 @@ static size_t uefi_vars_mm_variable_info(uefi_vars_state *uv, mm_header *mhdr,
+     uint64_t length;
+ 
+     length = sizeof(*mvar) + sizeof(*vi);
+-    if (uv->buf_size < length) {
++    if (!check_buffer_size(uv, length)) {
+         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
+     }
+ 
+@@ -588,7 +599,7 @@ uefi_vars_mm_get_payload_size(uefi_vars_state *uv, mm_header *mhdr,
+     uint64_t length;
+ 
+     length = sizeof(*mvar) + sizeof(*ps);
+-    if (uv->buf_size < length) {
++    if (!check_buffer_size(uv, length)) {
+         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
+     }
+ 
 -- 
 2.47.3
 
