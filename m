@@ -4,50 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73349CD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:43:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EBA3CD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:44:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXb6-0001oX-KG; Fri, 22 May 2026 17:40:00 -0400
+	id 1wQXZN-0007Jk-1W; Fri, 22 May 2026 17:38:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXaZ-0000Vw-7g; Fri, 22 May 2026 17:39:29 -0400
+ id 1wQXZJ-00078R-BU; Fri, 22 May 2026 17:38:09 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXaX-0002qA-2W; Fri, 22 May 2026 17:39:26 -0400
+ id 1wQXZH-0001ab-BL; Fri, 22 May 2026 17:38:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485683; bh=ZzwmK6NhinsNKk8PElcppAMiWGZrV5nmEP0XXJQlTDc=;
+ t=1779485682; bh=4rkkLGqTdBX+oCD8jRNrc2w3UKNXIdoSZtlA4EO+SVY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=tC9EgxZAutSdHIhEEAreV83kEim/1YYYSVn5ipVILRjrEk8O+oYCnxzSAnLokws5J
- FBETMRwuiNPuH+RHpzbAGzGgM+O6qoz6i/AoOjchaiZHsUQB7aJhgWM4+WTbC4LP8r
- pCZI3ojP5ok1uaXq8trZIV+/xyBY31R2hLMU/GgaFxa9Yx4OmVPJfGgAjNcz9PuY8/
- dP1pjsB9i/qrpNSsb7CYt/9xO0AtEsqSOUSM4MZN7BxYve4RLwyLlxHZMHcRO4AXyF
- nj9FNVgDYwU4TqOp2PjB9naRAOYVkwqwVgJoX7FYy7gcS/pTy4dylrnznvzlqPh1Zo
- 8x8mz/ZV7SDdg==
+ b=fLuCC3qOYyO2mdVH27pycnKyBUdM8JO9Q5bHBSLQqzpDAdhZFu/3ZuSsHG6QRMyO+
+ pi0MVPaxdI1NfayCAbbApTV3CK6dP4u6yOPn0PSB//A3YdyJUI/x4VFW3Ze5/HI5oM
+ 5UwC1ugm6gx8L7QTaW5SCEjGzmZhwC+evbGF3+cZmqgLI+BQuLIfT0MaMueZBcy1x7
+ ubTnJ6vPcdfH+vMarw4s6YLKdmrSCHSdU3zYg7AmB1GToDZ1nT5Ektp7h8mltUt5Jr
+ Z0HgcPN9ufVsJIdssoK9Pthe856xdeTJ87R4oAmMVeucQjqgSewBIxDx6/gTZn4zEf
+ YU+Sykro6v1Kw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5F2731AFB08;
- Sat, 23 May 2026 00:34:43 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5C0F11AFAF9;
+ Sat, 23 May 2026 00:34:42 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7F0A23B7188;
- Sat, 23 May 2026 00:34:47 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7F78E3B7179;
+ Sat, 23 May 2026 00:34:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <th.huth+qemu@posteo.eu>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 119/136] tests/functional/qemu_test/asset.py: Don't
- use setxattr when it doesn't exist
-Date: Sat, 23 May 2026 00:34:27 +0300
-Message-ID: <20260522213446.806182-20-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Katherine Leaver <katherine.j.leaver@gmail.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 104/136] hw/uefi: fix ucs2 string helper functions
+Date: Sat, 23 May 2026 00:34:12 +0300
+Message-ID: <20260522213446.806182-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,55 +69,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-The Python os.setxattr() API is Linux-specific, so trying to use
-it on other OSes triggers a failure:
+The length passed in is in bytes not characters.  Rename the
+parameters to make that clear.  Calculate the number of chars
+if needed.  Fix length checks to use the number of chars not
+bytes to avoid OOB reads.
 
-  File "/Users/pm215/src/qemu/tests/functional/qemu_test/asset.py",
-line 227, in fetch
-    os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
-    ^^^^^^^^^^^
-AttributeError: module 'os' has no attribute 'setxattr'
-
-Since we only set the attributes here for informational
-purposes, skip them when os.setxattr() isn't available.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 9903217a4ed013 ("tests/functional: add a module for handling asset download & caching")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Thomas Huth <th.huth+qemu@posteo.eu>
-Message-id: 20260501115506.3792110-1-peter.maydell@linaro.org
-(cherry picked from commit 039b057c09c6a9742b91b8f29604651ba3fdb558)
-(Mjt: context fixup for 10.0.x)
+Fixes: CVE-2026-41437
+Fixes: 1ebc319c8ca7 ("hw/uefi: add var-service-utils.c")
+Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20260422092910.444997-4-kraxel@redhat.com>
+(cherry picked from commit 5247b3034c23bdfd91a7f78587c3b3e37f90568c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
-index 5aceb8f27a..6c91c4830e 100644
---- a/tests/functional/qemu_test/asset.py
-+++ b/tests/functional/qemu_test/asset.py
-@@ -183,11 +183,14 @@ def fetch(self):
-             raise AssetError(self, "Download retries exceeded", transient=True)
+diff --git a/hw/uefi/var-service-utils.c b/hw/uefi/var-service-utils.c
+index c9ef46570f..71631e9f3c 100644
+--- a/hw/uefi/var-service-utils.c
++++ b/hw/uefi/var-service-utils.c
+@@ -19,13 +19,18 @@
+  * sometimes when they are not (for example in variable policies).
+  */
  
-         try:
--            # Set these just for informational purposes
--            os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
--                        self.url.encode('utf8'))
--            os.setxattr(str(tmp_cache_file), "user.qemu-asset-hash",
--                        self.hash.encode('utf8'))
-+            # Set these just for informational purposes. Note that
-+            # setxattr is Linux-only; as this is only informational
-+            # we can simply skip it on other platforms.
-+            if hasattr(os, "setxattr"):
-+                os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
-+                            self.url.encode('utf8'))
-+                os.setxattr(str(tmp_cache_file), "user.qemu-asset-hash",
-+                            self.hash.encode('utf8'))
-         except Exception as e:
-             self.log.debug("Unable to set xattr on %s: %s", tmp_cache_file, e)
-             pass
+-gboolean uefi_str_is_valid(const uint16_t *str, size_t len,
++gboolean uefi_str_is_valid(const uint16_t *str, size_t bytes,
+                            gboolean must_be_null_terminated)
+ {
++    size_t chars = bytes / 2;
+     size_t pos = 0;
+ 
++    if ((bytes % 2) != 0) {
++        return false;
++    }
++
+     for (;;) {
+-        if (pos == len) {
++        if (pos == chars) {
+             if (must_be_null_terminated) {
+                 return false;
+             } else {
+@@ -47,12 +52,13 @@ gboolean uefi_str_is_valid(const uint16_t *str, size_t len,
+     }
+ }
+ 
+-size_t uefi_strlen(const uint16_t *str, size_t len)
++size_t uefi_strlen(const uint16_t *str, size_t bytes)
+ {
++    size_t chars = bytes / 2;
+     size_t pos = 0;
+ 
+     for (;;) {
+-        if (pos == len) {
++        if (pos == chars) {
+             return pos;
+         }
+         if (str[pos] == 0) {
+@@ -62,25 +68,25 @@ size_t uefi_strlen(const uint16_t *str, size_t len)
+     }
+ }
+ 
+-gboolean uefi_str_equal_ex(const uint16_t *a, size_t alen,
+-                           const uint16_t *b, size_t blen,
++gboolean uefi_str_equal_ex(const uint16_t *a, size_t a_bytes,
++                           const uint16_t *b, size_t b_bytes,
+                            gboolean wildcards_in_a)
+ {
++    size_t a_chars = a_bytes / 2;
++    size_t b_chars = b_bytes / 2;
+     size_t pos = 0;
+ 
+-    alen = alen / 2;
+-    blen = blen / 2;
+     for (;;) {
+-        if (pos == alen && pos == blen) {
++        if (pos == a_chars && pos == b_chars) {
+             return true;
+         }
+-        if (pos == alen && b[pos] == 0) {
++        if (pos == a_chars && b[pos] == 0) {
+             return true;
+         }
+-        if (pos == blen && a[pos] == 0) {
++        if (pos == b_chars && a[pos] == 0) {
+             return true;
+         }
+-        if (pos == alen || pos == blen) {
++        if (pos == a_chars || pos == b_chars) {
+             return false;
+         }
+         if (a[pos] == 0 && b[pos] == 0) {
+@@ -100,18 +106,18 @@ gboolean uefi_str_equal_ex(const uint16_t *a, size_t alen,
+     }
+ }
+ 
+-gboolean uefi_str_equal(const uint16_t *a, size_t alen,
+-                        const uint16_t *b, size_t blen)
++gboolean uefi_str_equal(const uint16_t *a, size_t a_bytes,
++                        const uint16_t *b, size_t b_bytes)
+ {
+-    return uefi_str_equal_ex(a, alen, b, blen, false);
++    return uefi_str_equal_ex(a, a_bytes, b, b_bytes, false);
+ }
+ 
+-char *uefi_ucs2_to_ascii(const uint16_t *ucs2, uint64_t ucs2_size)
++char *uefi_ucs2_to_ascii(const uint16_t *ucs2, uint64_t ucs2_bytes)
+ {
+-    char *str = g_malloc0(ucs2_size / 2 + 1);
++    char *str = g_malloc0(ucs2_bytes / 2 + 1);
+     int i;
+ 
+-    for (i = 0; i * 2 < ucs2_size; i++) {
++    for (i = 0; i * 2 < ucs2_bytes; i++) {
+         if (ucs2[i] == 0) {
+             break;
+         }
 -- 
 2.47.3
 
