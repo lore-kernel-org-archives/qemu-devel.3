@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16631CD5BB3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80E0FCD5BB8
 	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:39:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXal-0000cU-J1; Fri, 22 May 2026 17:39:41 -0400
+	id 1wQXYy-0006gH-Ti; Fri, 22 May 2026 17:37:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXZy-0000HV-3x; Fri, 22 May 2026 17:38:59 -0400
+ id 1wQXYx-0006eQ-G8; Fri, 22 May 2026 17:37:47 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXZw-0002iE-9a; Fri, 22 May 2026 17:38:49 -0400
+ id 1wQXYv-0001ZM-KL; Fri, 22 May 2026 17:37:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485682; bh=CLg/NbHjbYspAMq0P5vc2TeituRBmfACUveDQ2y4HgM=;
+ t=1779485682; bh=cELnmoErs9KMFB4E7GoUF8HDV6d7Qtq6N+nR7aXB3vg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=p+ZRNNTMRv7E92ggxSQu8ahpEmwaeQLBiCgjbxKzuDJckTX5E3jwUCaw1l5/M1UET
- /L/NeGOAqLqiJhwhTdTXbQDBXwLPZnDG8NmP5TVFTFNiU4hO6Eqa4zMaubSIT4CgYZ
- TSeF/p82QbIJsopKAqD515d7gR6FqpAeko0EmbO7x9NKgR8j1xelHTs88bLUelesX8
- d/KHV4bdbDk/9t5tLFoh7Xv6pWzYe99iU73KAElERCLDluaLng41+muXzQmlrL7o73
- yPrhqXTLHhaRYbbpfIZoBCkK66cIAGIqyJjX2fL7VEfsQiUsUvKl9Q29ilGRv82xGG
- W16SyH7Uuz2jg==
+ b=YonrsCoi89IsXiFikxpOl97FuZsoI74BWx/7ZGr7vIygvOSPICS7uFudBx3i6FOOT
+ Hnm32KSJLKaa217rvK227pIq8je6v24VXP4naa75jv/GiJqCTQmjIx4Y5KlCyIBHGD
+ 52CI4Sm5ATvARIAF3NQJl+96+/thusrZ9hVKrSaJ9iXQCyB/I4lhw+JiFwUNtyqBMU
+ s86eGxQLk8vVyiIsp0gm8XLtke67YjjUEMYQpuQXFldfUCxvHxvW6f5dFOg7w1QXbA
+ +6b9hR5drcOYuVcKd6dcwVUzjnPl0YEArBT+A/gT5/gcYsnLGOM7Z+QmctM3WCHih1
+ ScW0N1q1hTLrA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F0B471AFB02;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4D4FD1AFAF8;
  Sat, 23 May 2026 00:34:42 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1D7C93B7182;
- Sat, 23 May 2026 00:34:47 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 664B43B7178;
+ Sat, 23 May 2026 00:34:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Junjie Cao <junjie.cao@intel.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Katherine Leaver <katherine.j.leaver@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 113/136] hw/display/cirrus_vga: Fix packed-24
- color-expansion transparent pattern fills
-Date: Sat, 23 May 2026 00:34:21 +0300
-Message-ID: <20260522213446.806182-14-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 103/136] hw/uefi: verify pio_xfer_offset before
+ calculating buffer checksum
+Date: Sat, 23 May 2026 00:34:11 +0300
+Message-ID: <20260522213446.806182-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,83 +70,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-The Cirrus Logic VGA card has "pattern fill" blit modes where it
-repeatedly copies an 8x8 source pattern to the display.  For the
-"color expansion" subtype of these, the source pixel format is an 8x8
-monochrome bitmap, and the destination can be any of 8, 16, 24 or
-32bpp.  We implemented these wrong for the 24bpp case, in a way that
-results in a complaint from the undefined-behavior sanitizer about a
-shift by a negative value.
+Without that it is possible to do trigger OOB reads by first
+advancing offset, then making the buffer smaller, finally
+asking for a checksum.
 
-For these pattern fills, the GR2F register includes a field which
-specifies how much to skip at the start of each scanline.  In the 8,
-16 and 32 bit cases, this field is 3 bits and is a count of pixels to
-skip.  We get this case right.  However, for the 24 bit case, the
-field is 5 bits and is a count of destination bytes to skip.  We
-tried to add support for 24-bits in commit ad81218e40e27 ("depth=24
-write mask fix (Volker Ruppert)") in 2005.  However we got this
-wrong, because when we need to skip, for example, 30 bytes in the
-destination, this is 10 input pixels but the whole pattern is only 8
-pixels wide, and we ended up with a negative bitpos for the first bit
-to use in the pattern.
-
-Fix the bug by masking srcskipleft in the 24-bit case so that it
-correctly gives the first pixel to use in the pattern even if we skip
-so many pixels that we have wrapped around to what would have been
-the second copy of the pattern to the destination.
-
-This patch was produced based on the information in the CL-GD5446
-Technical Reference Manual, specifically sections 5.8 "GR2F: BLT
-Destination Left-Side Clipping" and 9.4.8 "Pattern Fills".
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3377
-Fixes: ad81218e40e27 ("depth=24 write mask fix (Volker Ruppert)")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Junjie Cao <junjie.cao@intel.com>
-Tested-by: Junjie Cao <junjie.cao@intel.com>
-Message-ID: <20260410183249.4046456-2-peter.maydell@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit aefeecb413a8e404ecb6d210cc32d60da176a336)
+Fixes: CVE-2026-41436
+Fixes: 90ca4e03c27d ("hw/uefi: add var-service-core.c")
+Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20260422092910.444997-3-kraxel@redhat.com>
+(cherry picked from commit 94d9a8b2c9e6962aa7f7673229d2db7b110cfac6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/cirrus_vga_rop2.h b/hw/display/cirrus_vga_rop2.h
-index b208b7348a..8be35ec6e2 100644
---- a/hw/display/cirrus_vga_rop2.h
-+++ b/hw/display/cirrus_vga_rop2.h
-@@ -191,10 +191,29 @@ glue(glue(glue(cirrus_colorexpand_pattern_transp_, ROP_NAME), _),DEPTH)
-     int x, y, bitpos, pattern_y;
-     unsigned int bits, bits_xor;
-     unsigned int col;
-+
-+    /*
-+     * Copy from an 8x8 monochrome pattern with color expansion.
-+     */
-+
- #if DEPTH == 24
-+    /*
-+     * For packed-24 modes, GR2F bits [4:0] are a count of destination
-+     * bytes to be suppressed for each scanline, which we keep in
-+     * dstskipleft. Our srcskipleft is the number of pixels to skip
-+     * within the 8x8 source pattern to match up with that number
-+     * of suppressed bytes. As the pattern repeats every 8 bits we
-+     * take the number of pixels mod 8.
-+     */
-     int dstskipleft = s->vga.gr[0x2f] & 0x1f;
--    int srcskipleft = dstskipleft / 3;
-+    int srcskipleft = (dstskipleft / 3) & 0x7;
- #else
-+    /*
-+     * In all other modes, GR2F bits [2:0] are a count of how many
-+     * destination pixels to suppress for each scanline, which is our
-+     * srcskipleft. We get dstskipleft, the number of bytes to skip,
-+     * by multiplying this by the bytes-per-pixel.
-+     */
-     int srcskipleft = s->vga.gr[0x2f] & 0x07;
-     int dstskipleft = srcskipleft * (DEPTH / 8);
- #endif
+diff --git a/hw/uefi/var-service-core.c b/hw/uefi/var-service-core.c
+index 0a05ec4c9c..1b9ca3dc77 100644
+--- a/hw/uefi/var-service-core.c
++++ b/hw/uefi/var-service-core.c
+@@ -229,6 +229,10 @@ static uint64_t uefi_vars_read(void *opaque, hwaddr addr, unsigned size)
+         uv->pio_xfer_offset += size;
+         break;
+     case UEFI_VARS_REG_PIO_BUFFER_CRC32C:
++        if (uv->pio_xfer_offset > uv->buf_size) {
++            retval = 0;
++            break;
++        }
+         retval = crc32c(0xffffffff, uv->pio_xfer_buffer, uv->pio_xfer_offset);
+         break;
+     case UEFI_VARS_REG_FLAGS:
 -- 
 2.47.3
 
