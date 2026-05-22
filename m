@@ -4,90 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0C15CD5BB3
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 18:34:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80EB0CD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 18:48:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQUhq-0002XR-SN; Fri, 22 May 2026 14:34:46 -0400
+	id 1wQUuI-00060t-QA; Fri, 22 May 2026 14:47:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wQUhn-0002W4-45
- for qemu-devel@nongnu.org; Fri, 22 May 2026 14:34:43 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wQUhl-0001N0-J0
- for qemu-devel@nongnu.org; Fri, 22 May 2026 14:34:42 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2ba6485d219so58804935ad.3
- for <qemu-devel@nongnu.org>; Fri, 22 May 2026 11:34:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779474880; x=1780079680; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TlF2BebW9lGZY3igTqy4P2tedbTbEGuevX3gYEU6Yq8=;
- b=ZvMcFcTN74ECXFOaKzZCa8NKtTzMg1f6xgUohBqRaFVoaxJSEisNu4ipyImWw/rF1/
- i6cANkxGW7F0HPW9JZNA/qJtWp8Cz5m9Pt0K7hLLoDWxBFfBKFG7mnT9s0AWOa22eEpC
- Wu5TFowU4SciW111lkeLjZQarzInJVHax/VFgzHSJ/If2aenAZpz3Keo2QMvtB4zXcXS
- 15hJCA3wWKtZoJxX5qe1gkjb3aTm6q1a+W50W5LruoICk4Le+AOjSfFyx5DjD6gZkbPZ
- YuhEtoQS6Y9WpKVdPp7HYyxTZxpZ38Cp7QXtJioewDypf8uFOUqEqmZmqmoJX64F6nmM
- ta1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779474880; x=1780079680;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=TlF2BebW9lGZY3igTqy4P2tedbTbEGuevX3gYEU6Yq8=;
- b=pYCr9+yd5nZI7NLTrXUEvdsqSTiekV4wowU9/+qGgXp7/v/5ER0sJll3+FWN1yr/0B
- ZYuwNRwUz9bF0NtvffSRloOb/ex6Jr5rgb5FyRTRavOjxdv4rKMQUs2vU8S/XGxCnz+x
- MCjTffo9viPFM50sPd7EhP8bw3+KN+uzTv1Zblt3xSuj2oFr5mx9unNJ7dxIXowLxoTj
- tXQrPz1Engch2Ez7AFju53kh+moGMxzV2IiikY+ARiaikH/FVZagMo5wG2ee0UHx9ycR
- TPB1Mrlagtpe9eV7Acrh/ltxlySf/ubX5lpaBAjXXLx4AGt8HI9q/z6AOc+03U2f3hfo
- dP0Q==
-X-Gm-Message-State: AOJu0YweXQaMlfMyNGzDC2qSqwcz1oe8hkrho+22N4P0Va21hFex0LdO
- VzRsYHLvWTCFSO1GZd61X7anGwK0SBsP0KoIc2VTW/lUyPcjAiPcYTytUGkdivlU8E8=
-X-Gm-Gg: Acq92OEZ2yHRatgDPbkHKk4qD9Izv0DF5neOFXtsbyJSsYcoxPjFzUggE6IeheZxOlq
- s/nwTD2lKL2rdrkDEVwlPqX4FKF0Acz5xw2Eh7I7h0z0I+SbhAXIvqiWQ9vKp+oxa73lp3AhwEy
- b+dRxg8URIiwXfqO+XZETwYFYzZMV8mFFc5iVOiLgfSRCfL1jVS0qK8Arq3aGgwWo8YhYBYw8BT
- mg2vwytbhBg02z2/HfQWq/oVjBdgCM1afX9erQAKvG4oOoDOrZMEdH/LByg7TGuTFQJCiccEb+Y
- XFmTInzn5Sh+p/JQB0iJODh0oLE34y1k2xlJOiK/osS0izD3rQeLCt3rS7VndFNQpDbuFfKXa/O
- EKKsxIr7Ffpl30/yOJEqGK/lxOnNU63ts7p4vgHz3i0bVDL047ZQeuZgVTKspIqmnwIBpsVlPyQ
- dzk4YCQdppTucYeMCrUHp6TmU527xgwG1Bbg/howNM
-X-Received: by 2002:a17:903:3c6d:b0:2b7:86be:7673 with SMTP id
- d9443c01a7336-2beb0366450mr51833775ad.6.1779474879582; 
- Fri, 22 May 2026 11:34:39 -0700 (PDT)
-Received: from [192.168.64.111] ([50.78.183.177])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2beb591d102sm23030525ad.81.2026.05.22.11.34.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 22 May 2026 11:34:39 -0700 (PDT)
-Message-ID: <d19f76ef-487c-493c-8276-4526b7f96762@linaro.org>
-Date: Fri, 22 May 2026 11:34:37 -0700
+ (Exim 4.90_1) (envelope-from <oelghoul@linux.ibm.com>)
+ id 1wQUuE-0005tX-K7; Fri, 22 May 2026 14:47:34 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <oelghoul@linux.ibm.com>)
+ id 1wQUuC-0000X1-Tv; Fri, 22 May 2026 14:47:34 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64M7SM8n069628; Fri, 22 May 2026 18:47:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=0/17QK
+ 3eb6+QKF2enQ84suwMXGW31FG7/Y693k7TYC8=; b=llk/p7t0Pnw7AKw8NYaDxb
+ 0UBwxi6L/NShVbZhDTl8N8hDU7eAUFungXVtkGeiXFz9sOC/B/wUEY58GgfsoFND
+ 3IBR1cMGVLQ4graYoV/FNXa43J5zCrWWJD/dj5GA4cHDhRxGSzjJxjqHCQiG6tku
+ 5a+ZYLHET5/Bwd0D3lMQMS2xeN3U4koDiIE1M1N+ruxBc89RbmqJUcss3YAnAthY
+ 0f3Shz0m4UiUbugiay5JVBeBfk3tAj0YZvni7e6cPCyhmQ9FdlBIStbubtu4mINc
+ MOLoID1o4VYI1O6MJhWsHljD5mL1bLOKNm1o8e7qrJHF1Z27Gh04w5OyxDzw6Hng
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h8n5d8k-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 22 May 2026 18:47:27 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64MIdAw4018067;
+ Fri, 22 May 2026 18:47:26 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e73wkj7ej-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 22 May 2026 18:47:26 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64MIlP0U29229780
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 22 May 2026 18:47:25 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4386858056;
+ Fri, 22 May 2026 18:47:25 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A86C55803F;
+ Fri, 22 May 2026 18:47:24 +0000 (GMT)
+Received: from [9.61.253.232] (unknown [9.61.253.232])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Fri, 22 May 2026 18:47:24 +0000 (GMT)
+Message-ID: <04bc4b44-a7ce-4551-9313-5ecee3024e4f@linux.ibm.com>
+Date: Fri, 22 May 2026 14:47:24 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 02/64] target/arm: Implement FEAT_FAMINMAX for AdvSIMD
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-References: <20260520182213.872945-1-richard.henderson@linaro.org>
- <20260520182213.872945-3-richard.henderson@linaro.org>
- <CAFEAcA_F72LXF9kWVrU=mSt4=v19jRkDt9XkznpE+7DjVV94kw@mail.gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v1] s390x/pci: Fix interrupt forwarding disable for
+ interpreted devices
+To: Farhan Ali <alifm@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: mjrosato@linux.ibm.com, farman@linux.ibm.com, cohuck@redhat.com,
+ qemu-stable@nongnu.org, Niklas Schnelle <schnelle@linux.ibm.com>
+References: <20260521182946.1607-1-alifm@linux.ibm.com>
 Content-Language: en-US
-In-Reply-To: <CAFEAcA_F72LXF9kWVrU=mSt4=v19jRkDt9XkznpE+7DjVV94kw@mail.gmail.com>
+From: Omar Elghoul <oelghoul@linux.ibm.com>
+In-Reply-To: <20260521182946.1607-1-alifm@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: JJKW6MiYNaw79qTvnqGIpoSyyW_K037D
+X-Authority-Analysis: v=2.4 cv=GYMnWwXL c=1 sm=1 tr=0 ts=6a10a4bf cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=69wJf7TsAAAA:8 a=B7zm4avvAfTAtJRvoU8A:9 a=QEXdDO2ut3YA:10
+ a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-ORIG-GUID: JJKW6MiYNaw79qTvnqGIpoSyyW_K037D
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIyMDE4NSBTYWx0ZWRfX3k+xeFy3lmyX
+ wVxsCPz76Va22CJRHf/z+L0KLyjF+WxRvnGG9B7q6vr5O5rqy+Ie23nu0D3oqx28JdYGWoa0w15
+ hjs+wIiDy3gBebIhaBIfElYTmh2o/I9IHx36rUsNzLJMF7Xoic4aosddSLsMoDD2YVEfmYqcr1+
+ 3iy/MTPwTwc6cYMfgcBOaDGTMeY0B2P1ZhjPe5hVa4SKOeiSHucE6xDuTWcCXgQDUk68t2Y6Dsz
+ 2xYgiw4MexeVUsaDrEVZ6zRBwhrMJ7YTLGqte+Ie9YUpweDb1XqXY+rFSloTJohJYHd8O8OfM+I
+ 34jni5dEoptfFBCtuMU/byyjIQfnD4U7nuISqfKM8gWCkK1JYO6W1TB6WHjMCYQg+1F5BlcsBPN
+ jsFpi/dOkpklUmQ8oxEs/ARw++XR2xPhZixgOVXgmZOglrsSC3EwL9et1ZPLRPcGOAXyoYiqU7E
+ vcX88m/ZD/y5IOtjrDA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-22_05,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ adultscore=0 suspectscore=0 spamscore=0 clxscore=1011 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605220185
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=oelghoul@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,46 +123,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/21/26 01:25, Peter Maydell wrote:
-> On Wed, 20 May 2026 at 19:22, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> 
->> +/*
->> + * Use float_minmax_ismag to get the absolute value min/max.
->> + * Avoid float_minmax_is{num,number} so that we get normal NaN processing.
->> + * If the result is not a nan, take the absolute value.
->> + *
->> + * Note this operation squashes FZ, FIZ, and AH to 0.
->> + * Create a fresh status with default behaviour and propagate exceptions.
->> + */
->> +#define DO_FAMINMAX(NAME, TYPE, MIN)                                    \
->> +TYPE TYPE##_##NAME(TYPE a, TYPE b, float_status *s)                     \
->> +{                                                                       \
->> +    float_status local = {};                                            \
->> +    arm_set_default_fp_behaviours(&local);                              \
-> 
-> This misses that we need to keep the default_nan_mode setting
-> from 's', otherwise we stop honouring FPCR.DN. This will fix it:
-> 
-> --- a/target/arm/tcg/vec_helper64.c
-> +++ b/target/arm/tcg/vec_helper64.c
-> @@ -155,6 +155,7 @@ TYPE TYPE##_##NAME(TYPE a, TYPE b, float_status
-> *s)                     \
->   {                                                                       \
->       float_status local = {};                                            \
->       arm_set_default_fp_behaviours(&local);                              \
-> +    set_default_nan_mode(get_default_nan_mode(s), &local);              \
->       TYPE r = TYPE##_minmax(a, b, &local, MIN | float_minmax_ismag);     \
->       if (!TYPE##_is_any_nan(r)) {                                        \
->           r = TYPE##_abs(r);                                              \
-> 
-> (or we could go back to copying 's' into 'local').
+On 5/21/26 2:29 PM, Farhan Ali wrote:
 
-I went back to copying s into local.  I should have known a blank slate was too good to be 
-true.  :-)
+> Remove the FH_MASK_ENABLE check when disabling interrupt forwarding
+> during device reset. This check was broken for the default case in
+> the switch statement above, preventing proper cleanup of interrupt
+> forwarding.
+>
+> The pbdev->aif check in s390_pci_kvm_aif_disable() already guards
+> against double-disabling of interrupt forwarding.
+I tested this patch with PCI mlx, ISM, and NVMe devices in combinations of
+guest kernels, including and excluding the patch that originally exposed
+this issue, and have found it to be resolved. I did not find any new
+regressions with kernels that don't expose this issue either.
 
+Tested-by: Omar Elghoul <oelghoul@linux.ibm.com>
 
-r~
+Thanks.
+>
+> Cc: qemu-stable@nongnu.org
+> Reported-by: Niklas Schnelle <schnelle@linux.ibm.com>
+> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+> ---
+>   hw/s390x/s390-pci-bus.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+> index 3665aba106..2f7b214891 100644
+> --- a/hw/s390x/s390-pci-bus.c
+> +++ b/hw/s390x/s390-pci-bus.c
+> @@ -1542,7 +1542,7 @@ static void s390_pci_device_reset(DeviceState *dev)
+>           break;
+>       }
+>   
+> -    if (pbdev->interp && (pbdev->fh & FH_MASK_ENABLE)) {
+> +    if (pbdev->interp) {
+>           /* Interpreted devices were using interrupt forwarding */
+>           s390_pci_kvm_aif_disable(pbdev);
+>       } else if (pbdev->summary_ind) {
 
