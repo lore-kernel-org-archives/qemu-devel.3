@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6333CCD5BB3
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:52:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA809CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:52:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXlz-0001sH-1m; Fri, 22 May 2026 17:51:15 -0400
+	id 1wQXlh-00011n-TN; Fri, 22 May 2026 17:50:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXlv-0001mn-Rj; Fri, 22 May 2026 17:51:12 -0400
+ id 1wQXl2-0007o8-3J; Fri, 22 May 2026 17:50:16 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXlt-0003mt-Qk; Fri, 22 May 2026 17:51:11 -0400
+ id 1wQXky-0003IQ-Fo; Fri, 22 May 2026 17:50:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486560; bh=4GJmcHYljCZZwjgafy8Mgt2lqystmIDIGI238LULHVk=;
+ t=1779486559; bh=tGCFPzas1hHKzOl+cALrD/N2SyuwGyZAQXj2RFisqsM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XwgAZy2+TR9pBA+w7EDPyIJzE+OB08PVExOY/RJHUSUu9c/OpvpsPaUqdWt8TI6SN
- ZG74yGRS/8C+4+qbPjkxQxuFcecTrRpEBbvwp+g9YGu0KOsYEySgFn7Ci7ekYBTwsO
- LqMHzX40VVQ/bQEyPql93JFTBKo/rxqSZWCViyjwQCkkttFfh9qpTIFhJw+DvqIDgj
- q+aII7FJ7du5yeJl/AgnurA7vDMNCuStLocrcfaslLcIl5FmBB1uio/5/1tv5vJwdc
- Z5u2V8Wc6ko2rf0F/ZbRFrK0KCzYHMEWNGPtXoJE5ahB+8O685MzCnD9FbK7PFdt7a
- HsHqaDgYLsf1Q==
+ b=rzknWhoBorf30bXcV8FJv1z+ps14+/QyaPGmyhsEbNHvtgjC2AGhjNwOoqHyJIBAt
+ 10hnddiZTzAc1kg6VdQiksP7F5nukP8K+0ChPtJ5MnCs9h8J1BUAKI60yTmMWgUa4X
+ kDT7yQ4NrYj1uF993+zkML/GqZyPmisLnXoUZs4b6lHLBpnsq7NYsIXB8cSLzIg8E8
+ wbcJ24x3rR60H/+4MiVEdkT8E2mvetsT2MZr3Kkeo7hreu+VBscFrEpkCtZlM0tLph
+ DFYNZyinVeQxZp5SxQq2bxmkvGmaQgO0+NEXWtd9ng+b3R7ebZv8hDMEr+lwSejOzc
+ Mac8t6sD94m4A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 845A41AFB70;
- Sat, 23 May 2026 00:49:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id F1ADF1AFB68;
+ Sat, 23 May 2026 00:49:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AF3FE3B71BF;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 251D63B71B7;
  Sat, 23 May 2026 00:49:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jeuk Kim <jeuk20.kim@samsung.com>,
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Katherine Leaver <katherine.j.leaver@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 122/149] hw/ufs: Keep MCQ SQs alive while requests are
- outstanding
-Date: Sat, 23 May 2026 00:48:54 +0300
-Message-ID: <20260522214923.807017-23-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 114/149] hw/uefi: fix ucs2 string helper functions
+Date: Sat, 23 May 2026 00:48:46 +0300
+Message-ID: <20260522214923.807017-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
@@ -69,125 +69,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jeuk Kim <jeuk20.kim@samsung.com>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-MCQ requests are allocated with their SQ, but can remain in flight on the
-CQ list or in the SCSI layer after leaving the SQ free list.
+The length passed in is in bytes not characters.  Rename the
+parameters to make that clear.  Calculate the number of chars
+if needed.  Fix length checks to use the number of chars not
+bytes to avoid OOB reads.
 
-Reject runtime SQ deletion while any request is still outstanding, and
-use separate teardown helpers so device exit can still release MCQ
-queues after child devices have been unrealized.
-
-Fixes: 5c079578d2e ("hw/ufs: Add support MCQ of UFSHCI 4.0")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
-(cherry picked from commit 619c2da19a05668dabe7912afb789e50b8635c4d)
+Fixes: CVE-2026-41437
+Fixes: 1ebc319c8ca7 ("hw/uefi: add var-service-utils.c")
+Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20260422092910.444997-4-kraxel@redhat.com>
+(cherry picked from commit 5247b3034c23bdfd91a7f78587c3b3e37f90568c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ufs/trace-events b/hw/ufs/trace-events
-index 7734b35f08..6f7ea9c95f 100644
---- a/hw/ufs/trace-events
-+++ b/hw/ufs/trace-events
-@@ -44,6 +44,7 @@ ufs_err_mcq_create_sq_invalid_size(uint8_t qid) "invalid mcq sq size for sqid %"
- ufs_err_mcq_create_sq_already_exists(uint8_t qid) "mcq sqid %"PRIu8 "already exists"
- ufs_err_mcq_delete_sq_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
- ufs_err_mcq_delete_sq_not_exists(uint8_t qid) "mcq sqid %"PRIu8 "not exists"
-+ufs_err_mcq_delete_sq_busy(uint8_t qid) "mcq sqid %"PRIu8" has outstanding requests"
- ufs_err_mcq_create_cq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
- ufs_err_mcq_create_cq_invalid_size(uint8_t qid) "invalid mcq cq size for cqid %"PRIu8""
- ufs_err_mcq_create_cq_already_exists(uint8_t qid) "mcq cqid %"PRIu8 "already exists"
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index 66f4031852..d63a8f9c9c 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -556,6 +556,31 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
-     return true;
- }
+diff --git a/hw/uefi/var-service-utils.c b/hw/uefi/var-service-utils.c
+index 258013f436..489321a26c 100644
+--- a/hw/uefi/var-service-utils.c
++++ b/hw/uefi/var-service-utils.c
+@@ -19,13 +19,18 @@
+  * sometimes when they are not (for example in variable policies).
+  */
  
-+static bool ufs_mcq_sq_has_outstanding_req(UfsSq *sq)
-+{
-+    UfsRequest *req;
-+    uint16_t free_reqs = 0;
-+
-+    QTAILQ_FOREACH(req, &sq->req_list, entry)
-+    {
-+        free_reqs++;
-+    }
-+
-+    return free_reqs != sq->size;
-+}
-+
-+static void ufs_mcq_free_sq(UfsSq *sq)
-+{
-+    qemu_bh_delete(sq->bh);
-+
-+    for (int i = 0; i < sq->size; i++) {
-+        ufs_clear_req(&sq->req[i]);
-+    }
-+
-+    g_free(sq->req);
-+    g_free(sq);
-+}
-+
- static bool ufs_mcq_delete_sq(UfsHc *u, uint8_t qid)
+-gboolean uefi_str_is_valid(const uint16_t *str, size_t len,
++gboolean uefi_str_is_valid(const uint16_t *str, size_t bytes,
+                            gboolean must_be_null_terminated)
  {
-     UfsSq *sq;
-@@ -572,9 +597,12 @@ static bool ufs_mcq_delete_sq(UfsHc *u, uint8_t qid)
++    size_t chars = bytes / 2;
+     size_t pos = 0;
  
-     sq = u->sq[qid];
- 
--    qemu_bh_delete(sq->bh);
--    g_free(sq->req);
--    g_free(sq);
-+    if (ufs_mcq_sq_has_outstanding_req(sq)) {
-+        trace_ufs_err_mcq_delete_sq_busy(qid);
++    if ((bytes % 2) != 0) {
 +        return false;
 +    }
 +
-+    ufs_mcq_free_sq(sq);
-     u->sq[qid] = NULL;
-     return true;
- }
-@@ -617,6 +645,12 @@ static bool ufs_mcq_create_cq(UfsHc *u, uint8_t qid, uint32_t attr)
-     return true;
+     for (;;) {
+-        if (pos == len) {
++        if (pos == chars) {
+             if (must_be_null_terminated) {
+                 return false;
+             } else {
+@@ -47,12 +52,13 @@ gboolean uefi_str_is_valid(const uint16_t *str, size_t len,
+     }
  }
  
-+static void ufs_mcq_free_cq(UfsCq *cq)
-+{
-+    qemu_bh_delete(cq->bh);
-+    g_free(cq);
-+}
-+
- static bool ufs_mcq_delete_cq(UfsHc *u, uint8_t qid)
+-size_t uefi_strlen(const uint16_t *str, size_t len)
++size_t uefi_strlen(const uint16_t *str, size_t bytes)
  {
-     UfsCq *cq;
-@@ -640,8 +674,7 @@ static bool ufs_mcq_delete_cq(UfsHc *u, uint8_t qid)
++    size_t chars = bytes / 2;
+     size_t pos = 0;
  
-     cq = u->cq[qid];
- 
--    qemu_bh_delete(cq->bh);
--    g_free(cq);
-+    ufs_mcq_free_cq(cq);
-     u->cq[qid] = NULL;
-     return true;
- }
-@@ -1884,12 +1917,14 @@ static void ufs_exit(PCIDevice *pci_dev)
- 
-     for (int i = 0; i < ARRAY_SIZE(u->sq); i++) {
-         if (u->sq[i]) {
--            ufs_mcq_delete_sq(u, i);
-+            ufs_mcq_free_sq(u->sq[i]);
-+            u->sq[i] = NULL;
+     for (;;) {
+-        if (pos == len) {
++        if (pos == chars) {
+             return pos;
          }
-     }
-     for (int i = 0; i < ARRAY_SIZE(u->cq); i++) {
-         if (u->cq[i]) {
--            ufs_mcq_delete_cq(u, i);
-+            ufs_mcq_free_cq(u->cq[i]);
-+            u->cq[i] = NULL;
-         }
+         if (str[pos] == 0) {
+@@ -62,25 +68,25 @@ size_t uefi_strlen(const uint16_t *str, size_t len)
      }
  }
+ 
+-gboolean uefi_str_equal_ex(const uint16_t *a, size_t alen,
+-                           const uint16_t *b, size_t blen,
++gboolean uefi_str_equal_ex(const uint16_t *a, size_t a_bytes,
++                           const uint16_t *b, size_t b_bytes,
+                            gboolean wildcards_in_a)
+ {
++    size_t a_chars = a_bytes / 2;
++    size_t b_chars = b_bytes / 2;
+     size_t pos = 0;
+ 
+-    alen = alen / 2;
+-    blen = blen / 2;
+     for (;;) {
+-        if (pos == alen && pos == blen) {
++        if (pos == a_chars && pos == b_chars) {
+             return true;
+         }
+-        if (pos == alen && b[pos] == 0) {
++        if (pos == a_chars && b[pos] == 0) {
+             return true;
+         }
+-        if (pos == blen && a[pos] == 0) {
++        if (pos == b_chars && a[pos] == 0) {
+             return true;
+         }
+-        if (pos == alen || pos == blen) {
++        if (pos == a_chars || pos == b_chars) {
+             return false;
+         }
+         if (a[pos] == 0 && b[pos] == 0) {
+@@ -100,18 +106,18 @@ gboolean uefi_str_equal_ex(const uint16_t *a, size_t alen,
+     }
+ }
+ 
+-gboolean uefi_str_equal(const uint16_t *a, size_t alen,
+-                        const uint16_t *b, size_t blen)
++gboolean uefi_str_equal(const uint16_t *a, size_t a_bytes,
++                        const uint16_t *b, size_t b_bytes)
+ {
+-    return uefi_str_equal_ex(a, alen, b, blen, false);
++    return uefi_str_equal_ex(a, a_bytes, b, b_bytes, false);
+ }
+ 
+-char *uefi_ucs2_to_ascii(const uint16_t *ucs2, uint64_t ucs2_size)
++char *uefi_ucs2_to_ascii(const uint16_t *ucs2, uint64_t ucs2_bytes)
+ {
+-    char *str = g_malloc0(ucs2_size / 2 + 1);
++    char *str = g_malloc0(ucs2_bytes / 2 + 1);
+     int i;
+ 
+-    for (i = 0; i * 2 < ucs2_size; i++) {
++    for (i = 0; i * 2 < ucs2_bytes; i++) {
+         if (ucs2[i] == 0) {
+             break;
+         }
 -- 
 2.47.3
 
