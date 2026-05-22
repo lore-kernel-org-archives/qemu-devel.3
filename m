@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86585CD5BB3
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 18:29:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E806CD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 18:29:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQUbK-0005g9-KR; Fri, 22 May 2026 14:28:02 -0400
+	id 1wQUbE-0005Qi-TL; Fri, 22 May 2026 14:27:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wQUbF-0005RH-1K
- for qemu-devel@nongnu.org; Fri, 22 May 2026 14:27:57 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1wQUbC-0005Hy-Ab
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 14:27:54 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wQUbD-0005d3-FH
- for qemu-devel@nongnu.org; Fri, 22 May 2026 14:27:56 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-c7b9f54d3deso6468987a12.1
- for <qemu-devel@nongnu.org>; Fri, 22 May 2026 11:27:55 -0700 (PDT)
+ id 1wQUbA-0005ae-Gw
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 14:27:54 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2bea7176c72so17029805ad.0
+ for <qemu-devel@nongnu.org>; Fri, 22 May 2026 11:27:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779474474; x=1780079274; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779474471; x=1780079271; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3vaXGPhPcEspPib85CstdsUrhGWg1HWPTQKD0EVWs1c=;
- b=JLFXCla46BU2wgUIVZ/CGFGk240NhEMF4GsXAI4Egb/a8mG30PsnuHhLJlRv9ituUw
- kieIuKazaQCdT+QMfYjh5p8a/ViyEs3oAWe035DykQcMIlhbx59wxTPkNBp//xLohZ6a
- +z69C5Jjhz2lfhXTJbc36gxZC14wMJKlQ5D6yElySQskEF+7fiYJp+0zn1AmUGsHTVSu
- XzSU8/SvGBl8aQX/6wfJ3UARvGSk1RHnPnpQKUIVlREbYAPd2jOku4nYHetY0L13DIqM
- 4Odm/DOLnF+DWyJ7b0Sw5gflhydGHoOwiubEqcxrUuXZAyZn8xVMLH8r3KkEG3K1E5mz
- fGzw==
+ bh=rdCiAeyqDTXuK52kfIqalebuIdHOX+3Sh4uzHDXmhFg=;
+ b=MY3AtajjYlnjgFvLg9y5Th7It0llw2zF0fEcHtdYkulH6GrloYWJSoSh0HONwNdXrq
+ q8iDe92qg7K+vZXzW68s6lBEDJukvS53oyECcA50bnfMOlbpI9FcXB/JBoAjxjBxgWrm
+ dLKZsGP8G8PZHMCZDmf3FGtGllzOr3Ael+dOANg752JVvIbRrE5ijlBEQPdxenu+QR7G
+ FQ0P/awYq9GSBuNSqNs7on2ojjjZO578ESBYfmXDkVJuQb4kAArwq1xkM1QuNFvoujt3
+ l1Qk0Zr83DP6ehlZgaxJAmWYcpoAlSvXQxvhxGuA1l72JiaEgHalJT+YtJSipDwNKkQI
+ QZ4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779474474; x=1780079274;
+ d=1e100.net; s=20251104; t=1779474471; x=1780079271;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=3vaXGPhPcEspPib85CstdsUrhGWg1HWPTQKD0EVWs1c=;
- b=kKArtzggHGGXZd3Ow68mT/s0O3YHyysCMrKe3fyWg6+v4tS7+rdlaBfMN3pSNhiO02
- 1JwZcfMRPurLKYAqwL4v+pTf16ga4x11YAP+WZa1kXDs4rb5qz/bAU1JEIRuNM5EoC+i
- wicTo/BldF/w9UgVjg/MOozB9NVLHzcLys0Hb2UXf3jQw5vo4W7+c9fSkFmMItiuwm5a
- u+bflWHvGXJ/ttfZNjkD+Rpkpv+2nzPVst03t207n+I9evlUMhTCzexQIMgLj1HpjLSV
- f4J2npUFPxPaUnob7la8i3VNfdow9AfI3SiYzJbj1vebCluBCQRSPj2kO7w70e2VKJns
- XLTg==
-X-Gm-Message-State: AOJu0YxIOt/Q1D+3IXblvMDfBDwpA5mcAI7ddEB7pyX9pvFthHbtpKXe
- 4J4Dp+eBVRJKA311+8NtNWoDIrWrX+m3Dfgp7b8N90+t92eXUccNkhA/XpdaXhTOSmDhC1Jm7/P
- al33N
-X-Gm-Gg: Acq92OGTZWlESNbcvXl8ODmzeE95kak24scrlfc6I7Ojyb90iwhAsTPdxkZdW0VO18F
- fDpmb83Lkyn3x8Aq7NfA2ghFsFJmwWZTvN+ffQoydlWvRea4mGe2pag74aupBI6dlq9F/iLRF/2
- G8gT5CJo8yAVxGHA9IrbKQ0HyztXM6ja0kdr8oqJXiiiOGpTjeiolUGVH9Smr7gJ5nf5QXfVpLc
- TdFNVB1nHycum+ZiTkQAYZ1T6XLpLSq0ZQ31rO878bLT+fAcqInXtMRP7A1CxBYAnR8A47ZuVdE
- qDO0egs8FzBtObYIYjoKisnAUuffqDOkrbFendYWJAtyxRBxoxqQPf+NuR3B+fZQMn0G5oKkGBS
- j+TLV9B4TFd0NgciNI2bi2ulZ9TcMrM6BcbzdJP4NjNE1hejUteNoETqd6Hv+ptPghSdlKL/2jQ
- H22S/uToVGiwPYODiYz6JsueAQeyO/49rI9GCh+z0=
-X-Received: by 2002:a17:903:24c:b0:2b9:fb0b:b727 with SMTP id
- d9443c01a7336-2beb0675f69mr49210005ad.39.1779474473592; 
- Fri, 22 May 2026 11:27:53 -0700 (PDT)
+ bh=rdCiAeyqDTXuK52kfIqalebuIdHOX+3Sh4uzHDXmhFg=;
+ b=WALSvEI1/cO3zOxyyiX3dtgQ2VPK1P8Mx4kfzwLu4O+zIBeOCzryweEiJ+w6usIxfm
+ /zRxGmJyvMmYZ9QH6Nq/dM7z9V4fwNbXwniDP+t2yafv9pOlJO4r1MApv98MXFh1Mgu6
+ 1ZVwc2walJSfAU2h8ep9m9JV2+jBYpzyaFmTaGNLE+Avlv+iK80nyKFgzmqPjP+ZJH3l
+ JUSul2H0kSzu6PfHvuEmYOuHFePVRFibhKq0K7IKiiRYT10dCGn8OxI6qcDoz9RmmNPw
+ 1DDmw3D0u2O1F0vg3AQKZs2L03A+CQPzdtmKMirZkQKkUm/amUMDXdrdowLCp1S5HKLN
+ y61Q==
+X-Gm-Message-State: AOJu0YzEG/BkvXHlVziSuxGVLWL/NKcAqsoNKEZzmHYz1UEfL/03DTtw
+ cLm+y3WS2cDPg+0jaboL7h4CxhayG7XinKbefpDuskx2mA1N8aDsbVEbL28UeFtmGDukrHScC0G
+ aBIh9
+X-Gm-Gg: Acq92OG/KYceN0SkhhQeVxfpJZewdmClB8UxBbAT3fmEEB2LXBRwaaPADQpK1qkh4Ft
+ khu3b5mltKFaS8zKbMnKkWpf5yEfsZ6uoYRqANzyb52Rwo0raCEGRVI4CNDu+Owb4UdAClNq5am
+ QVDU/a1dkM15jhz25lLU1ZejGam+lNhDRPVGHfaVxCjrLNZwiAhK3XD1yIoBS4WKaVDdFYwk4vJ
+ Iq5hSE2DS9f2RJCjePwa7425o/llC9c1sSHineqc1FgU1s8FbKU9Hq6Ls6zdUACXTuTNuRcZm54
+ 8EWP8FXTj2A1TaqdEmxmsKfSetyCUftJ7DvtpBjN31oaLeR2b6JeKn0GFO/AH9qRWKdHnSeLLae
+ 7lrBAHjiUQFLouNLPry81iX0mWAgy3liufaxpFbKtRBPZXi3fx9yDC/Wi/dRwEnEzrVfc7X45ns
+ SkZlbt8mBDy+fkgIIOesE38B4lZEFbXN5b6jw9HsY=
+X-Received: by 2002:a17:903:2bcc:b0:2bc:b80f:677e with SMTP id
+ d9443c01a7336-2beb069970bmr49630525ad.25.1779474471005; 
+ Fri, 22 May 2026 11:27:51 -0700 (PDT)
 Received: from stoup.. ([50.78.183.177]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2beb5900b8bsm21824735ad.76.2026.05.22.11.27.52
+ d9443c01a7336-2beb5900b8bsm21824735ad.76.2026.05.22.11.27.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 May 2026 11:27:53 -0700 (PDT)
+ Fri, 22 May 2026 11:27:50 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 29/30] fpu: Fix NaN encoding for E4M3 in parts64_uncanon
-Date: Fri, 22 May 2026 11:26:57 -0700
-Message-ID: <20260522182658.184604-30-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 26/30] fpu: Add accessors for rebias_{underflow,overflow}
+Date: Fri, 22 May 2026 11:26:54 -0700
+Message-ID: <20260522182658.184604-27-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260522182658.184604-1-richard.henderson@linaro.org>
 References: <20260522182658.184604-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,79 +100,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is only one NaN fractional encoding for E4M3.  Retain the
-incoming sign, but force the outgoing fraction to the unique value.
-
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- fpu/softfloat.c           |  2 ++
- fpu/softfloat-parts.c.inc | 28 ++++++++++++++++++++++++----
- 2 files changed, 26 insertions(+), 4 deletions(-)
+ include/fpu/softfloat-helpers.h | 10 ++++++++++
+ target/ppc/cpu.c                |  4 ++--
+ fpu/softfloat-parts.c.inc       |  4 ++--
+ fpu/softfloat-specialize.c.inc  | 10 ++++++++++
+ 4 files changed, 24 insertions(+), 4 deletions(-)
 
-diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index be6b02d866..2c3bf01213 100644
---- a/fpu/softfloat.c
-+++ b/fpu/softfloat.c
-@@ -499,6 +499,8 @@ const FloatFmt float8_e4m3_params = {
- 
- /* 110 << frac_shift, with the implicit bit set */
- #define E4M3_NORMAL_FRAC_MAX  0xe000000000000000ull
-+/* 111 << frac_shift, no implicit bit */
-+#define E4M3_NAN_FRAC         0x7000000000000000ull
- 
- const FloatFmt float8_e5m2_params = {
-     FLOAT_PARAMS(5, 2)
-diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index 559e40d196..d0064f5d22 100644
---- a/fpu/softfloat-parts.c.inc
-+++ b/fpu/softfloat-parts.c.inc
-@@ -278,11 +278,16 @@ static void partsN(uncanon_e4m3_overflow)(FloatPartsN *p, float_status *s,
-                                           const FloatFmt *fmt, bool saturate)
- {
-     assert(N == 64);
-+    p->exp = fmt->exp_max;
-     if (saturate) {
--        p->exp = fmt->exp_max;
-         p->frac_hi = E4M3_NORMAL_FRAC_MAX;
-     } else {
--        *p = partsN(default_nan)(s);
-+        /*
-+         * The class isn't actually used after this point in uncanon,
-+         * but for clarity while debugging, don't leave it set to normal.
-+         */
-+        p->cls = float_class_qnan;
-+        p->frac_hi = E4M3_NAN_FRAC;
-     }
+diff --git a/include/fpu/softfloat-helpers.h b/include/fpu/softfloat-helpers.h
+index 49e04ffee9..4791a7fc87 100644
+--- a/include/fpu/softfloat-helpers.h
++++ b/include/fpu/softfloat-helpers.h
+@@ -131,6 +131,16 @@ static inline void set_snan_rule(FloatSNaNRule val, float_status *status)
+     status->float_snan_rule = val;
  }
  
-@@ -507,9 +512,24 @@ static void partsN(uncanon)(FloatPartsN *p, float_status *s,
-             return;
-         case float_class_qnan:
-         case float_class_snan:
--            assert(fmt->exp_max_kind != float_expmax_normal);
-             p->exp = fmt->exp_max;
--            fracN(shr)(p, fmt->frac_shift);
-+            switch (fmt->exp_max_kind) {
-+            case float_expmax_e4m3:
-+                /*
-+                 * There is only one NaN encoding for E4M3, and with a
-+                 * conversion from another format, the input NaN fraction
-+                 * may not apply.
-+                 */
-+                assert(N == 64);
-+                p->frac_hi = E4M3_NAN_FRAC;
-+                /* fall through */
-+            case float_expmax_ieee:
-+                fracN(shr)(p, fmt->frac_shift);
-+                break;
-+            case float_expmax_normal:
-+            default:
-+                g_assert_not_reached();
-+            }
-             return;
-         default:
-             break;
++static inline void set_float_rebias_overflow(bool val, float_status *status)
++{
++    status->rebias_overflow = val;
++}
++
++static inline void set_float_rebias_underflow(bool val, float_status *status)
++{
++    status->rebias_underflow = val;
++}
++
+ static inline FloatRoundMode get_float_rounding_mode(const float_status *status)
+ {
+     return status->float_rounding_mode;
+diff --git a/target/ppc/cpu.c b/target/ppc/cpu.c
+index 4d8faaddee..41edb18643 100644
+--- a/target/ppc/cpu.c
++++ b/target/ppc/cpu.c
+@@ -248,8 +248,8 @@ void ppc_store_fpscr(CPUPPCState *env, target_ulong val)
+         val |= FP_FEX;
+     }
+     env->fpscr = val;
+-    env->fp_status.rebias_overflow  = (FP_OE & env->fpscr) ? true : false;
+-    env->fp_status.rebias_underflow = (FP_UE & env->fpscr) ? true : false;
++    set_float_rebias_overflow(FP_OE & env->fpscr, &env->fp_status);
++    set_float_rebias_underflow(FP_UE & env->fpscr, &env->fp_status);
+     if (tcg_enabled()) {
+         fpscr_set_rounding_mode(env);
+     }
+diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+index bef47a932d..184614ea47 100644
+--- a/fpu/softfloat-parts.c.inc
++++ b/fpu/softfloat-parts.c.inc
+@@ -358,7 +358,7 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
+             switch (fmt->exp_max_kind) {
+             case float_expmax_ieee:
+                 flags |= float_flag_overflow;
+-                if (s->rebias_overflow) {
++                if (get_float_rebias_overflow(s)) {
+                     exp -= fmt->exp_re_bias;
+                 } else if (overflow_norm) {
+                     flags |= float_flag_inexact;
+@@ -398,7 +398,7 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
+             }
+         }
+         fracN(shr)(p, frac_shift);
+-    } else if (unlikely(s->rebias_underflow)) {
++    } else if (unlikely(get_float_rebias_underflow(s))) {
+         flags |= float_flag_underflow;
+         exp += fmt->exp_re_bias;
+         if (p->frac_lo & round_mask) {
+diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
+index c1ed661f5e..b97c971ae6 100644
+--- a/fpu/softfloat-specialize.c.inc
++++ b/fpu/softfloat-specialize.c.inc
+@@ -94,6 +94,16 @@ static inline uint8_t get_float_default_nan_pattern(const float_status *status)
+     return status->default_nan_pattern;
+ }
+ 
++static inline bool get_float_rebias_overflow(const float_status *status)
++{
++    return status->rebias_overflow;
++}
++
++static inline bool get_float_rebias_underflow(const float_status *status)
++{
++    return status->rebias_underflow;
++}
++
+ /*----------------------------------------------------------------------------
+ | For the deconstructed floating-point with fraction FRAC, return true
+ | if the fraction represents a signalling NaN; otherwise false.
 -- 
 2.43.0
 
