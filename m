@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1A54CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 00:06:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6D7CCD5BAF
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 00:06:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQDO3-0002U2-P2; Thu, 21 May 2026 20:05:12 -0400
+	id 1wQDNQ-0001jD-C1; Thu, 21 May 2026 20:04:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wQDNl-00024d-9z
- for qemu-devel@nongnu.org; Thu, 21 May 2026 20:04:53 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1wQDNL-0001fb-V0
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 20:04:27 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wQDNj-0003iS-IL
- for qemu-devel@nongnu.org; Thu, 21 May 2026 20:04:53 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2ba6485d219so50682705ad.3
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 17:04:51 -0700 (PDT)
+ id 1wQDNK-0003O8-9J
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 20:04:27 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-c7980c060cfso2995649a12.2
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 17:04:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779408290; x=1780013090; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779408264; x=1780013064; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lVQWbjWJNWGQBFqdKllYREvwvixFFOatWu8HImUdVmU=;
- b=J+8/P6qHEzCoF03i+i+M+rZ4oafwsRfHstOa1ExjPHeH3eFjdNgDkzMB35l234677x
- dtLYC8fWDc4q7gHZXKtYJQZSEqe7WVUsszPkzsidmlw6oDccS8Yx2srtSX3cd8y/LhCR
- c8wj8pfvhV4yH+iy9AIwt4nlGbieCd2ZPiOJQtHyTxmrgRsiVNIrFjvMD6NWgvz8PXip
- tuM6JkDL9JmdtWMiVD9LN0LyFmBo0vTSSNvRreHXGh3vW81X2Q4bXTcmD7DnhmuxruOr
- sMHiB/WnRapUlOpvA6K7iKfQ6M0TBMuzlebteaLMCiGGzKC1vczSgd+hyKOsMxCFQzbp
- w99Q==
+ bh=+AsLKIKSjxv8nk05Qhrn0NmtTJ8lIc/gH0gx8e16TAU=;
+ b=T0DZ1U4QmJRz75hIYZPI+/Y5ovqLqwiSOv2nRZJW42D+Ejs9I6xvOnq5ktEmygl4f0
+ vgrvq4U0oVTK4zfGH4cu9GZEyvOh7/Uhw4rFJQoHMuxU52dy0VNY3do6nCASRD1of2rp
+ EOY8WxuczZf1yykL/nxB3VO+7MsiI3HrU7S2LP0zlfohTRmXlJRPDESymPtx8G270RIg
+ CxqWZg4/7vkqnn5Kznu5YhqmbVUM17R3u7+r83DeBADG5luAALhtUDgS/a0lnqfev4qB
+ X82FIU13piYQfdVbPgjgpROcGYkHA9wUwnJpUeVIkTRFNz+fBXYA0RjWmGQQhLPfcn+8
+ tYuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779408290; x=1780013090;
+ d=1e100.net; s=20251104; t=1779408264; x=1780013064;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=lVQWbjWJNWGQBFqdKllYREvwvixFFOatWu8HImUdVmU=;
- b=qLgSR/IpV00lbeRbM94OOOPt0Q92geywpSREmCXgpz2ODbdizWSXoe80CHNJvqmcc5
- PTq+6HLa1fHKgvingE2b+lN10Wc2QmZNc2VpfhXI92bWtEPijkAsSi2y8CiRHWVxQMOK
- AuX6lBahyesk7P/vWYZev9uZpNcdvOWuMOeKr3xfATzB9CsxJVeT7aKa9mRMq2w/poUm
- 5gIVD7jlsc/nICiTYwlIhUCCBH1DA1wkoldKXjY6C0OYQ0afSL4SkBMEK09PfNOlyGWS
- LmXPPw2amZD7gccntdGRqbw9KSKtqfmGbSIVixDRanF03LiDDh2oaHsbNzI9cjC/5ehU
- duHQ==
-X-Gm-Message-State: AOJu0YwT+3PI1lX0m8xo2Mj0QcuOMqyioO02N7MKTB0zCzOJm/Fc7F8m
- Y8ve6+jVXmYM1hC0qJe2k7n4MDox1UzZPc4IPDMoKNmWu/zTRjn4HuYzOH/YxCif
-X-Gm-Gg: Acq92OH31qTPBcItFunDkWAAKPF2uqpiprNFn4w9C9OUPu0lHX+CMGrvwRwgNgA3J5t
- Nh/nLmO/olLUak6W0K/1z4fIhUR/VVVxpYojo+2JasBEVYRchNxE6bJlQrf6tRP3eyEtF3iRS6y
- SFjwvTEEjts4lIoQzqsLb4NSEdYj2GFGghSNsDptfU368+KDaY6nTLlHMRYE+Ntikp0bAqykjaC
- rD00hnp6UVF0O9T3yShs8gs6T/hhk0msLhovncUBXIzqYvOzqZS0iFaXtdXbGJEBadFJTlliLNF
- jhjuPYKjYxoWHg8a9kxepsYXU/eJmuJsPqKc+3aQlMweVjfz7nzRgBtvzWrE88Nhq/NnkAfJQZQ
- HNybvNCn73pXRuKWLV6P1x1o//ZSU0HpjBEeEveL/Pr8jtylR30Cw12CyXl1pljp0BXNVxx1Hx7
- ONpZ9DFdeoxSeovS3GgQ+316LTEastPHTcU8gZe7TrWVlHeE6KWIyt
-X-Received: by 2002:a17:902:fc85:b0:2bc:f202:54d7 with SMTP id
- d9443c01a7336-2beb069e6c7mr10573845ad.38.1779408289969; 
- Thu, 21 May 2026 17:04:49 -0700 (PDT)
+ bh=+AsLKIKSjxv8nk05Qhrn0NmtTJ8lIc/gH0gx8e16TAU=;
+ b=KzyXHuakSGsPC/6PjwBDRbmdSqbVzHckqBY2NxmB6ixY/nqKRHAQTcZmW0XeRhKLUG
+ KmcqUi7yKAoka8r+M3rYPnZU9i22+vqbPC0zZm+S90g9uWBnl4kjUMT9sDGcvONy6SaO
+ Ob2TX0I6VbWoBHQ/MV5tk+lJSzPstXS9tDmRccXm56+MUuIaklrtlagKnExJmul+X1zw
+ UGbHYsfjwVnJTy/X5MyD2Y6OkpgxLDb4cY8zmMNtGmOL0vmdEr6jUAUqjdLMdBEjKZQ0
+ Mwuk7nkm/I8ivcOWm1gqFrFze/NhWPiUAR1Ew2ME3ric6PR8dzz6vpjKw+L2d1S4uP8b
+ F7IQ==
+X-Gm-Message-State: AOJu0YzMmKpuPFfzCHZRyZS4WF9lN8tmwj84p7jqSn54mRa6d1RwaAaS
+ AIBYGUHae5QDLTTxyfHd+B6bLftoA+vBP+/FWFneHQup/H9Uqf1rnXGy3gQu9X3C
+X-Gm-Gg: Acq92OGxYA8i0F7J+n2yB0iljXh0yghlrtzLqsbYvEZYc5Mkvh6J1oQ/2D2iJ8gWh0G
+ rDaNM65BnMpIBAZMIoFasJAx4ZCeQ9PuqfkzoXw+hpOATFDKRbACAulSjSwmdvoUcPqtIRx/287
+ HSB9Ngoh4+qHdptuanIXVshwySEY7qEqE1MjQO4/65Tz+gyjSSv30mTiz19/CmIokqjmzrYHJUk
+ onj4D6MRlagr443abtZK/5PWvAT33aNc2nDzH/qDaUq7LQ8rxg+OaerdeLOuT6NiRYJh7lb2O+i
+ tplbXhVcKIbCb09Rg76aJIp+ACme7/KNsKVSzox6c7wmxXeHN2Z+Z5AMw94YSCBkqA5ryj9fNwO
+ DbeyGYRpD0WFD+PJHsU6TyIHkNa00pRJlVi/CjMG8F6WgeckwPjgDKas24ZdGK0M2giCh/b36WS
+ xEJd3WtUPcLgAc2YG2pZoI+9sn7TRowznJAIJOp2k/Qg==
+X-Received: by 2002:a17:903:2290:b0:2bd:5a99:f293 with SMTP id
+ d9443c01a7336-2beb0631928mr11253885ad.21.1779408264213; 
+ Thu, 21 May 2026 17:04:24 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2beb114b54csm3915475ad.42.2026.05.21.17.04.46
+ d9443c01a7336-2beb114b54csm3915475ad.42.2026.05.21.17.04.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 17:04:49 -0700 (PDT)
+ Thu, 21 May 2026 17:04:23 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, Zishun Yi <vulab@iscas.ac.cn>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 23/48] hw/riscv/riscv-iommu: fix FSC SV32 capability check
-Date: Fri, 22 May 2026 10:02:59 +1000
-Message-ID: <20260522000324.23255-24-alistair.francis@wdc.com>
+Subject: [PULL 15/48] target/riscv: Remove unconditional MENVCFG_CDE from mask
+Date: Fri, 22 May 2026 10:02:51 +1000
+Message-ID: <20260522000324.23255-16-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260522000324.23255-1-alistair.francis@wdc.com>
 References: <20260522000324.23255-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,36 +105,41 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zishun Yi <vulab@iscas.ac.cn>
 
-Fix a mode-to-capability comparison error in
-riscv_iommu_validate_device_ctx.  The code was comparing fsc_mode (a
-value) against a capability bitmask, making the SV32 support check
-ineffective.
+Currently, the MENVCFG_CDE (Counter Delegation Enable) bit is
+unconditionally included in the base write mask for CSR_MENVCFG.
+This make the subsequent conditional check
+`(cfg->ext_smcdeleg ? MENVCFG_CDE : 0)` completely ineffective,
+as a bitwise OR cannot clear a bit that is already set.
+
+Fix this by removing MENVCFG_CDE from the initial base mask. The bit
+will now only be writable when explicitly granted by the `ext_smcdeleg`
+configuration.
 
 This issue was discovered and reported by SpecHunter, an AI-driven
 architecture specification analysis tool.
 
-Link: https://github.com/yizishun/rv-isa-sec/blob/master/output/riscv-iommu/pr-694/qemu.txt
+Link: https://github.com/yizishun/rv-isa-sec/blob/master/output/riscv-isa-manual/pr-2601/qemu.txt
 Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20260511080904.3049446-1-vulab@iscas.ac.cn>
+Message-ID: <20260511040534.2862443-1-vulab@iscas.ac.cn>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/riscv-iommu.c | 2 +-
+ target/riscv/csr.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index eb09cc9748..c9c64be24f 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -807,7 +807,7 @@ static bool riscv_iommu_validate_device_ctx(RISCVIOMMUState *s,
-         }
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 60ac307012..e041f5c16e 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -3177,7 +3177,7 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
+ {
+     const RISCVCPUConfig *cfg = riscv_cpu_cfg(env);
+     uint64_t mask = MENVCFG_FIOM | MENVCFG_CBIE | MENVCFG_CBCFE |
+-                    MENVCFG_CBZE | MENVCFG_CDE;
++                    MENVCFG_CBZE;
+     bool stce_changed = false;
  
-         if (ctx->tc & RISCV_IOMMU_DC_TC_SXL) {
--            if (fsc_mode == RISCV_IOMMU_CAP_SV32 &&
-+            if (fsc_mode == RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV32 &&
-                 !(s->cap & RISCV_IOMMU_CAP_SV32)) {
-                 return false;
-             }
+     if (riscv_cpu_mxl(env) == MXL_RV64) {
 -- 
 2.53.0
 
