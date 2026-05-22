@@ -4,47 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93E12CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1071CCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:51:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXl2-0007o3-4a; Fri, 22 May 2026 17:50:16 -0400
+	id 1wQXlk-0001FX-W4; Fri, 22 May 2026 17:51:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXkW-0006ty-5v; Fri, 22 May 2026 17:49:47 -0400
+ id 1wQXlU-0008Rm-QI; Fri, 22 May 2026 17:50:45 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXkU-0002Zw-8a; Fri, 22 May 2026 17:49:43 -0400
+ id 1wQXlS-0003Vl-LO; Fri, 22 May 2026 17:50:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486559; bh=t1J8WMNyiECT8S8oMriALLHVngmgly+xsrMf1JZklI0=;
+ t=1779486560; bh=UhI+KDjAYlhcfCiXgj3KBHxzGA1hM+W7e3Oe7frWppQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Ew0VFX+aeMvk5p/3eEnDULbEyYKLT0zWCnatRqygroYXYDTL6/m024ebwRNSFbH65
- /Ojx4mpp/H3vrO7HIZh6zsxxkE/Q3AcxbOvTuuM/p8yGu1q2Mh+ZPJ4JrWbGLlgFB7
- JILgwRbHdzehAhbr7Tt7D1P9o25kJgtPdboJpcnPxJih/BBz6Vp56/hzsvgnAiDfCg
- qKDmHXQKp30ni4zXBTTj4QGSykaHUrEgAuN9Q0oJNG60tyts8wJFfeZ0ZQ37HnjieL
- th2OEOiCj6B394cDc+KIh2CsabLRxT1neEIr34PwCwaAudpm77tNwNj3/QObGFBEzF
- 8RJ1CjcEhfAlQ==
+ b=f9OPfOvnoA+u62/6PyOHpmqrDV80vyeQH253e8hd+l/DgwQfP2IX+sqENxWCkTdBD
+ AhJ36ZMhkdpFuXu1nA79X7VMYqFDHKoMcXYi5nwLxt6YVtqpa0x+fxWzn55EksU2w8
+ Hhnic9vzkT+ZQdKBJlXCNxhkQfmv90LLXpulYT9sHD6PoNGduEVErKYJb9Rvgzi92l
+ olo/EAsVwbpZhNJYhzP1zUHtT0u1IKgEJyKC10/p8JDhshwlC8KHYEJlvzTdkmAi0k
+ UZai5JrZilKMoIks0KVqIxlSpLZjXMMqLMz9ZBPotcuZy4eQhrMexniIYgbjtXiKgs
+ 07zjPERoeMtBA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8246C1AFB62;
- Sat, 23 May 2026 00:49:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4F5871AFB6C;
+ Sat, 23 May 2026 00:49:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id ABE263B71B1;
- Sat, 23 May 2026 00:49:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 762393B71BB;
+ Sat, 23 May 2026 00:49:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Xu <peterx@redhat.com>,
- Juraj Marcin <jmarcin@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 108/149] migration: Fix low possibility downtime
- violation
-Date: Sat, 23 May 2026 00:48:40 +0300
-Message-ID: <20260522214923.807017-9-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Feifan Qian <bea1e@proton.me>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 118/149] hw/uefi: check auth.hdr_length minimum size
+Date: Sat, 23 May 2026 00:48:50 +0300
+Message-ID: <20260522214923.807017-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,46 +71,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-When QEMU queried the estimated version of pending data and thinks it's
-ready to converge, it'll send another accurate query to make sure of it.
-It is needed to make sure we collect the latest reports and that equation
-still holds true.
+auth.hdr_length maximum is already checked (against buffer size).  The
+header has some fixed fields which are included in the header length, so
+there also is a minimum size which must be verified.  Add a check for
+that.  Fixes possible integer underflow.
 
-However we missed one tiny little difference here on "<" v.s. "<=" when
-comparing pending_size (A) to threshold_size (B)..
+While being at it replace the magic number '24' with sizeof calculations
+for better code documentation.
 
-QEMU src only re-query if A<B, but will kickoff switchover if A<=B.
-
-I think it means it is possible to happen if A (as an estimate only so far)
-accidentally equals to B, then re-query won't happen and switchover will
-proceed without considering new dirtied data.
-
-It turns out it was an accident in my commit 7aaa1fc072 when refactoring
-the code around.  Fix this by using the same equation in both places.
-
-Fixes: 7aaa1fc072 ("migration: Rewrite the migration complete detect logic")
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
-Link: https://lore.kernel.org/r/20260421202110.306051-3-peterx@redhat.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
-(cherry picked from commit 455a6167f25416ce97ea966d6e8301df9fda9a47)
+Fixes: CVE-2026-8341
+Fixes: f1488fac0584 ("hw/uefi: add var-service-auth.c")
+Reported-by: Feifan Qian <bea1e@proton.me>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20260512060523.17493-1-kraxel@redhat.com>
+(cherry picked from commit b33fd8ab1caa07aeb290ef5dac44a4e7fd4be02b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/migration/migration.c b/migration/migration.c
-index b316ee01ab..5daf0d84e4 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -3510,7 +3510,7 @@ static MigIterateState migration_iteration_run(MigrationState *s)
-          * postcopy started, so ESTIMATE should always match with EXACT
-          * during postcopy phase.
-          */
--        if (pending_size < s->threshold_size) {
-+        if (pending_size <= s->threshold_size) {
-             qemu_savevm_state_pending_exact(&must_precopy, &can_postcopy);
-             pending_size = must_precopy + can_postcopy;
-             trace_migrate_pending_exact(pending_size, must_precopy,
+diff --git a/hw/uefi/var-service-auth.c b/hw/uefi/var-service-auth.c
+index 795f2f54e4..f3dc9c6ca6 100644
+--- a/hw/uefi/var-service-auth.c
++++ b/hw/uefi/var-service-auth.c
+@@ -194,7 +194,7 @@ static efi_status uefi_vars_check_auth_2_sb(uefi_vars_state *uv,
+         return EFI_SUCCESS;
+     }
+ 
+-    if (auth.hdr_length == 24) {
++    if (auth.hdr_length == (sizeof(auth) - sizeof(auth.timestamp))) {
+         /* no signature (auth->cert_data is empty) */
+         return EFI_SECURITY_VIOLATION;
+     }
+@@ -228,6 +228,9 @@ efi_status uefi_vars_check_auth_2(uefi_vars_state *uv, uefi_variable *var,
+     }
+     memcpy(&auth, data, sizeof(auth));
+ 
++    if (auth.hdr_length < (sizeof(auth) - sizeof(auth.timestamp))) {
++        return EFI_SECURITY_VIOLATION;
++    }
+     if (uadd64_overflow(sizeof(efi_time), auth.hdr_length, &data_offset)) {
+         return EFI_SECURITY_VIOLATION;
+     }
+diff --git a/hw/uefi/var-service-pkcs7.c b/hw/uefi/var-service-pkcs7.c
+index c859743e86..8a1f1395a2 100644
+--- a/hw/uefi/var-service-pkcs7.c
++++ b/hw/uefi/var-service-pkcs7.c
+@@ -113,9 +113,9 @@ static gnutls_datum_t *build_pkcs7(void *data)
+ 
+     memcpy(&auth, data, sizeof(auth));
+     pkcs7 = g_new(gnutls_datum_t, 1);
+-    pkcs7->size = auth.hdr_length - 24;
++    pkcs7->size = auth.hdr_length - (sizeof(auth) - sizeof(auth.timestamp));
+     pkcs7->data = g_malloc(pkcs7->size);
+-    memcpy(pkcs7->data, data + 16 + 24, pkcs7->size);
++    memcpy(pkcs7->data, data + sizeof(auth), pkcs7->size);
+ 
+     wrap_pkcs7(pkcs7);
+ 
 -- 
 2.47.3
 
