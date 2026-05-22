@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58A62CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:42:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BD9FCD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:42:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXch-0005uc-PZ; Fri, 22 May 2026 17:41:40 -0400
+	id 1wQXck-0006K5-P8; Fri, 22 May 2026 17:41:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXcA-00047W-8C; Fri, 22 May 2026 17:41:10 -0400
+ id 1wQXcG-00049p-AH; Fri, 22 May 2026 17:41:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXc1-0005d0-8D; Fri, 22 May 2026 17:40:59 -0400
+ id 1wQXcC-0005eo-K1; Fri, 22 May 2026 17:41:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485684; bh=lxlFVMilZ96+NuPWy6lpFs1uYEKQKcV6jx6Yl2LIN50=;
+ t=1779485684; bh=NeizuiU9CNw1ZzTV6M1T2A/yYQYGEMCvWTUWZVtOwzs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=qvB2zePZiX8HgGuoAgpW/JQjLYqMGufOiWoNetW+74OqfJI6Ym9AnsEMUoJWoVFmn
- ndcDh/mRZPOCh+OBV0f/WfLzYXnQVHg+vs4Px4+d5DAUM9ndgzRtuGAoX2cbDKC7bS
- Z4g8aRHxN6m0jOc15Di9DaFBuj8iuEt1hfqKNlasX5Mgu06jC7hD2Iye/Ch/d6136K
- yURTkfeS7LMktqLw8HJ1KUhlejLmbUwsc7XYNr35BIDNcljz2opRS2W5VK46yAQ7iP
- YSh9+aP7t/bPJx7JhgLAFxzIwzV25VjvZ8IFPSLwf3/vcgSug0Jq6f3CS1oDSAnMjI
- 5SNaAMl8hEvOg==
+ b=jKhfT7ynRWFfcrB7+uT2et08bxRU1zpMqEvN1YKz6eNhUWoBvq8ro5Uq7m4aLgfty
+ HqzjMpEKk8VIRb+c1HeFQO8eImwO3ZDb0cA/5RNElIE2jS0EwArrVoM1KAeAwlphVg
+ VO8pZMSXJvuXArHJFYSd85Ll7/rxfwYqK+RGWsqtj//2MGKNLBBN3Ls/cIshSj/o/P
+ aKpoCK8BvI8dgOMeWXXkoLliaVX4qHfTZ96c4oFzHZ3qu8q7ettvMHpiHipNHLHXDc
+ Lx766cNU1dqT+UD81cgk5bTLybBboz1U6HT9bTluKetkRfe1DH4d4gRHjp+ddSi5am
+ 4vwMXoRH3+kRA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 23BBD1AFB15;
+ by isrv.corpit.ru (Postfix) with ESMTP id 615CE1AFB18;
  Sat, 23 May 2026 00:34:44 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 462B23B7195;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 75D293B7198;
  Sat, 23 May 2026 00:34:48 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Lexi Winter <ivy@FreeBSD.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 132/136] block: Add more defaults to
- DEFAULT_BLOCK_CONF
-Date: Sat, 23 May 2026 00:34:40 +0300
-Message-ID: <20260522213446.806182-33-mjt@tls.msk.ru>
+ "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 135/136] iotests/046: Test that discard/write_zeroes
+ wait for dependencies
+Date: Sat, 23 May 2026 00:34:43 +0300
+Message-ID: <20260522213446.806182-36-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
@@ -71,43 +71,136 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kevin Wolf <kwolf@redhat.com>
 
-discard_granularity was missing from this, which means that SCSI disks
-created with -drive if=scsi would default to 0 (i.e. disabling discards)
-instead of -1, which makes scsi-hd automatically pick a granularity and
-is the default of the corresponding qdev property for -device scsi-hd.
+This is a regression test for the bug fixed in the previous commit where
+discard and write_zeroes operations wouldn't consider their dependencies
+in s->cluster_allocs. Without the fix, this results in a corrupted
+image.
 
-This was broken in QEMU 9.0 with commit 3089637.
-
-Also set other fields whose default isn't an obvious 0. These are not
-actual bug fixes because ON_OFF_AUTO_AUTO in fact happens to be 0, but
-it's better not to rely on the order of enums.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 308963746169 ('scsi: Don't ignore most usb-storage properties')
-Reported-by: Lexi Winter <ivy@FreeBSD.org>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260410152314.86412-3-kwolf@redhat.com>
+Message-ID: <20260427170520.101242-5-kwolf@redhat.com>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
+Tested-by: Denis V. Lunev <den@openvz.org>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit f27aea1896338f4dd085a0e2cb2ab3797c5fe3e9)
+(cherry picked from commit 389f5bcc744d3ddc127d550a57261aed9bbba1f3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/hw/block/block.h b/include/hw/block/block.h
-index 1f140c01a4..65efa2b44c 100644
---- a/include/hw/block/block.h
-+++ b/include/hw/block/block.h
-@@ -51,7 +51,12 @@ static inline unsigned int get_physical_block_exp(BlockConf *conf)
- 
- #define DEFAULT_BLOCK_CONF (BlockConf) {                                \
-     .bootindex = -1,                                                    \
-+    .backend_defaults = ON_OFF_AUTO_AUTO,                               \
-+    .discard_granularity = -1,                                          \
-+    .wce = ON_OFF_AUTO_AUTO,                                            \
-     .share_rw = false,                                                  \
-+    .account_invalid = ON_OFF_AUTO_AUTO,                                \
-+    .account_failed = ON_OFF_AUTO_AUTO,                                 \
-     .rerror = BLOCKDEV_ON_ERROR_AUTO,                                   \
-     .werror = BLOCKDEV_ON_ERROR_AUTO,                                   \
+diff --git a/tests/qemu-iotests/046 b/tests/qemu-iotests/046
+index 4c9ed4d26e..e03dd40147 100755
+--- a/tests/qemu-iotests/046
++++ b/tests/qemu-iotests/046
+@@ -184,6 +184,48 @@ aio_write -P 160 0x104000 0x18000
+ resume A
+ aio_flush
+ EOF
++
++# Create a pre-allocated zero cluster, then start a write on it and discard it
++# before the L2 update is made
++cat  <<EOF
++write -P 181 0x120000 0x10000
++write -z 0x120000 0x10000
++
++break write_aio A
++aio_write -P 180 0x120000 0x10000
++wait_break A
++aio_discard 0x120000 0x10000
++resume A
++aio_flush
++EOF
++
++# Create a pre-allocated zero cluster, then start a write on it and a
++# concurrent zero write with MAY_UNMAP before the L2 update is made
++cat  <<EOF
++write -P 181 0x130000 0x10000
++write -z 0x130000 0x10000
++
++break write_aio A
++aio_write -P 180 0x130000 0x10000
++wait_break A
++aio_write -z -u 0x130000 0x10000
++resume A
++aio_flush
++EOF
++
++# Create a pre-allocated zero cluster, then start a write on it and a
++# concurrent zero write without MAY_UNMAP before the L2 update is made
++cat  <<EOF
++write -P 181 0x140000 0x10000
++write -z 0x140000 0x10000
++
++break write_aio A
++aio_write -P 180 0x140000 0x10000
++wait_break A
++aio_write -z 0x140000 0x10000
++resume A
++aio_flush
++EOF
  }
+ 
+ overlay_io | $QEMU_IO blkdebug::"$TEST_IMG" | _filter_qemu_io |\
+@@ -264,6 +306,10 @@ verify_io()
+     # Undefined content for 0x10c000 0x8000
+     echo read -P 160 0x114000 0x8000
+     echo read -P 17  0x11c000 0x4000
++
++    echo read -P 0   0x120000 0x10000
++    echo read -P 0   0x130000 0x10000
++    echo read -P 0   0x140000 0x10000
+ }
+ 
+ verify_io | $QEMU_IO "$TEST_IMG" | _filter_qemu_io
+diff --git a/tests/qemu-iotests/046.out b/tests/qemu-iotests/046.out
+index b1a03f4041..6341df335c 100644
+--- a/tests/qemu-iotests/046.out
++++ b/tests/qemu-iotests/046.out
+@@ -139,6 +139,36 @@ wrote XXX/XXX bytes at offset XXX
+ XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ wrote XXX/XXX bytes at offset XXX
+ XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++blkdebug: Suspended request 'A'
++blkdebug: Resuming request 'A'
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++discarded  XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++blkdebug: Suspended request 'A'
++blkdebug: Resuming request 'A'
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++blkdebug: Suspended request 'A'
++blkdebug: Resuming request 'A'
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ == Verify image content ==
+ read 65536/65536 bytes at offset 0
+@@ -239,5 +269,11 @@ read 32768/32768 bytes at offset 1130496
+ 32 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ read 16384/16384 bytes at offset 1163264
+ 16 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 65536/65536 bytes at offset 1179648
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 65536/65536 bytes at offset 1245184
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 65536/65536 bytes at offset 1310720
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ No errors were found on the image.
+ *** done
 -- 
 2.47.3
 
