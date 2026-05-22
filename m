@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E467CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:36:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E119ECD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:36:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXXM-0000xO-NW; Fri, 22 May 2026 17:36:08 -0400
+	id 1wQXXP-00019h-1H; Fri, 22 May 2026 17:36:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXVj-0008AH-QP; Fri, 22 May 2026 17:34:31 -0400
+ id 1wQXVp-0008BJ-R7; Fri, 22 May 2026 17:34:34 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXVg-0007aZ-QO; Fri, 22 May 2026 17:34:26 -0400
+ id 1wQXVl-0007cK-NH; Fri, 22 May 2026 17:34:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485632; bh=CLg/NbHjbYspAMq0P5vc2TeituRBmfACUveDQ2y4HgM=;
+ t=1779485632; bh=6AkFnyMO5nVqOBffS08PDcG3KK64ADxzPpOkcraRmgc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=a+nn50sH13Edk9qi+HbkNNQYyjvUH6Z5jTJRiiC7QSSO/0vL+jCJeSbL+JdR/QVg7
- iSgQ7OHXZI1yPELxSE9LmqGUS7xTfuz5zTzUohNRrQNXQAq0SVqZX6lwLd3oEHUZGl
- MSstgJXX48jrO+6WZR89P5U3xnH3y4Fy+ioeA2ta42G0QUc6F55vgA8MnsPSyrt5eD
- m0IAOyfEbDgaIlBhWVSdwHf3e49n2JOVTt48EAhMwBNuFRB0VqNXxkQXujA2p/AQnk
- siEP/kvDBKJLwRezGVPSZrObcj8xmh7RmhMAUZEgMrhGVSvCd0JOcWBoSq6lTPIOo3
- 866LSuMIj6GYw==
+ b=Wr6YSXBHWKwDM3+Zxae3i+LzpH5X8mQRiGbKelQ4Oa7my75CzoKT/hE27EVxCztoF
+ +C9uRgX0c7UIU8HOFW0CjWLBFWkYqlm+WZZammJWInpxyUwbgcsiJo4dImOeCFLGaK
+ Wb7lv4NL7ZY1WMbVMTvdOrqc0ldGShEFlWZXows2k/y3ndkAzeC6IzGIqy0gRxl6EU
+ 1/fTnOISJFURr4BmO0WfGFvvgHFvQBtrYQ0D/9FVKW6y14Vva6YCbHd3Zqj+dq73Qe
+ jhXzS2YvxvAWAm2NJDZfPpuV7gGn6uB6QeqkOr86PXaHy6LsIC1c6sQPDpsLcFRj3l
+ DOFMXtCciXg7g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B041F1AFAD0;
+ by isrv.corpit.ru (Postfix) with ESMTP id CFF0E1AFAD2;
  Sat, 23 May 2026 00:33:52 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D0D253B7156;
+ by tsrv.corpit.ru (Postfix) with ESMTP id F27CC3B7158;
  Sat, 23 May 2026 00:33:56 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Junjie Cao <junjie.cao@intel.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Kane Chen <kane_chen@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 65/94] hw/display/cirrus_vga: Fix packed-24
- color-expansion transparent pattern fills
-Date: Sat, 23 May 2026 00:33:22 +0300
-Message-ID: <20260522213356.806058-7-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 67/94] hw/misc/aspeed_sbc: Add bounds checking for OTP
+ write operations
+Date: Sat, 23 May 2026 00:33:24 +0300
+Message-ID: <20260522213356.806058-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
@@ -72,83 +72,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Kane Chen <kane_chen@aspeedtech.com>
 
-The Cirrus Logic VGA card has "pattern fill" blit modes where it
-repeatedly copies an 8x8 source pattern to the display.  For the
-"color expansion" subtype of these, the source pixel format is an 8x8
-monochrome bitmap, and the destination can be any of 8, 16, 24 or
-32bpp.  We implemented these wrong for the 24bpp case, in a way that
-results in a complaint from the undefined-behavior sanitizer about a
-shift by a negative value.
+There is a mismatch between the Aspeed OTP model and the Aspeed SBC
+model in how the guest-provided address is handled.
+aspeed_sbc_otp_prog() passes a word-indexed address directly
+to address_space_write() without converting it to a byte offset,
+whereas aspeed_otp_write() expects a byte offset and applies an
+additional shift (otp_addr << 2). This double-shift confusion means
+that an out-of-range word address can lead to a write beyond the
+allocated storage.
 
-For these pattern fills, the GR2F register includes a field which
-specifies how much to skip at the start of each scanline.  In the 8,
-16 and 32 bit cases, this field is 3 bits and is a count of pixels to
-skip.  We get this case right.  However, for the 24 bit case, the
-field is 5 bits and is a count of destination bytes to skip.  We
-tried to add support for 24-bits in commit ad81218e40e27 ("depth=24
-write mask fix (Volker Ruppert)") in 2005.  However we got this
-wrong, because when we need to skip, for example, 30 bytes in the
-destination, this is 10 input pixels but the whole pattern is only 8
-pixels wide, and we ended up with a negative bitpos for the first bit
-to use in the pattern.
+Fix this by adding bounds checking on the word offset before
+converting to byte offset and passing to address_space_write().
+This matches the existing bounds check in aspeed_sbc_otp_read().
 
-Fix the bug by masking srcskipleft in the 24-bit case so that it
-correctly gives the first pixel to use in the pattern even if we skip
-so many pixels that we have wrapped around to what would have been
-the second copy of the pattern to the destination.
-
-This patch was produced based on the information in the CL-GD5446
-Technical Reference Manual, specifically sections 5.8 "GR2F: BLT
-Destination Left-Side Clipping" and 9.4.8 "Pattern Fills".
-
+Cc: Kane-Chen-AS <kane_chen@aspeedtech.com>
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3377
-Fixes: ad81218e40e27 ("depth=24 write mask fix (Volker Ruppert)")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Junjie Cao <junjie.cao@intel.com>
-Tested-by: Junjie Cao <junjie.cao@intel.com>
-Message-ID: <20260410183249.4046456-2-peter.maydell@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit aefeecb413a8e404ecb6d210cc32d60da176a336)
+Fixes: 1a00754ccf15 ("hw/misc: Add Aspeed Secure Boot Controller model")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3436
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260428055254.76581-2-kane_chen@aspeedtech.com
+[ clg: Kept otp_addr in event logged in aspeed_sbc_otp_prog() ]
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit ff36712da5ae73aca5a044fe5e61c585d427013a)
+(Mjt: actual Fixes: tag is this one)
+Fixes: 9f58dd0a8c30 ("hw/misc/aspeed_sbc: Connect ASPEED OTP memory device to SBC")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/cirrus_vga_rop2.h b/hw/display/cirrus_vga_rop2.h
-index b208b7348a..8be35ec6e2 100644
---- a/hw/display/cirrus_vga_rop2.h
-+++ b/hw/display/cirrus_vga_rop2.h
-@@ -191,10 +191,29 @@ glue(glue(glue(cirrus_colorexpand_pattern_transp_, ROP_NAME), _),DEPTH)
-     int x, y, bitpos, pattern_y;
-     unsigned int bits, bits_xor;
-     unsigned int col;
+diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c
+index 065e822e70..e5dab1c7bb 100644
+--- a/hw/misc/aspeed_sbc.c
++++ b/hw/misc/aspeed_sbc.c
+@@ -159,9 +159,17 @@ static bool aspeed_sbc_otp_prog(AspeedSBCState *s,
+     MemTxResult ret;
+     AspeedOTPState *otp = &s->otp;
+     uint32_t value = s->regs[R_CAMP1];
++    uint32_t otp_offset = otp_addr << 2;
+ 
+-    ret = address_space_write(&otp->as, otp_addr, MEMTXATTRS_UNSPECIFIED,
+-                        &value, sizeof(value));
++    if (otp_addr >= OTP_TOTAL_DWORD_COUNT) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "Invalid OTP addr 0x%x\n",
++                      otp_addr);
++        return false;
++    }
 +
-+    /*
-+     * Copy from an 8x8 monochrome pattern with color expansion.
-+     */
-+
- #if DEPTH == 24
-+    /*
-+     * For packed-24 modes, GR2F bits [4:0] are a count of destination
-+     * bytes to be suppressed for each scanline, which we keep in
-+     * dstskipleft. Our srcskipleft is the number of pixels to skip
-+     * within the 8x8 source pattern to match up with that number
-+     * of suppressed bytes. As the pattern repeats every 8 bits we
-+     * take the number of pixels mod 8.
-+     */
-     int dstskipleft = s->vga.gr[0x2f] & 0x1f;
--    int srcskipleft = dstskipleft / 3;
-+    int srcskipleft = (dstskipleft / 3) & 0x7;
- #else
-+    /*
-+     * In all other modes, GR2F bits [2:0] are a count of how many
-+     * destination pixels to suppress for each scanline, which is our
-+     * srcskipleft. We get dstskipleft, the number of bytes to skip,
-+     * by multiplying this by the bytes-per-pixel.
-+     */
-     int srcskipleft = s->vga.gr[0x2f] & 0x07;
-     int dstskipleft = srcskipleft * (DEPTH / 8);
- #endif
++    ret = address_space_write(&otp->as, otp_offset, MEMTXATTRS_UNSPECIFIED,
++                              &value, sizeof(value));
+     if (ret != MEMTX_OK) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "Failed to write OTP memory, addr = %x\n",
+diff --git a/hw/nvram/aspeed_otp.c b/hw/nvram/aspeed_otp.c
+index a60289000c..1a9d3841b8 100644
+--- a/hw/nvram/aspeed_otp.c
++++ b/hw/nvram/aspeed_otp.c
+@@ -57,12 +57,12 @@ static bool valid_program_data(uint32_t otp_addr,
+     return has_programmable_bits != 0;
+ }
+ 
+-static bool program_otpmem_data(void *opaque, uint32_t otp_addr,
++static bool program_otpmem_data(void *opaque, hwaddr otp_offset,
+                              uint32_t prog_bit, uint32_t *value)
+ {
+     AspeedOTPState *s = opaque;
++    uint32_t otp_addr = otp_offset >> 2;
+     bool is_odd = otp_addr & 1;
+-    uint32_t otp_offset = otp_addr << 2;
+ 
+     memcpy(value, s->storage + otp_offset, sizeof(uint32_t));
+ 
+@@ -79,26 +79,25 @@ static bool program_otpmem_data(void *opaque, uint32_t otp_addr,
+     return true;
+ }
+ 
+-static void aspeed_otp_write(void *opaque, hwaddr otp_addr,
++static void aspeed_otp_write(void *opaque, hwaddr otp_offset,
+                                 uint64_t val, unsigned size)
+ {
+     AspeedOTPState *s = opaque;
+-    uint32_t otp_offset, value;
++    uint32_t value;
+ 
+-    if (!program_otpmem_data(s, otp_addr, val, &value)) {
++    if (!program_otpmem_data(s, otp_offset, val, &value)) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: Failed to program data, value = %x, bit = %"PRIx64"\n",
+                       __func__, value, val);
+         return;
+     }
+ 
+-    otp_offset = otp_addr << 2;
+     memcpy(s->storage + otp_offset, &value, size);
+ 
+     if (s->blk) {
+         if (blk_pwrite(s->blk, otp_offset, size, &value, 0) < 0) {
+             qemu_log_mask(LOG_GUEST_ERROR,
+-                          "%s: Failed to write %x to %x\n",
++                          "%s: Failed to write %x to %"HWADDR_PRIx"\n",
+                           __func__, value, otp_offset);
+ 
+             return;
 -- 
 2.47.3
 
