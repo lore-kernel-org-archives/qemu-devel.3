@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24B85CD4F3D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9281CD5BB3
 	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:52:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXlf-0000nY-Pr; Fri, 22 May 2026 17:50:55 -0400
+	id 1wQXmk-0002yW-BH; Fri, 22 May 2026 17:52:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXkw-0007ed-RU; Fri, 22 May 2026 17:50:10 -0400
+ id 1wQXmL-0002cb-Li; Fri, 22 May 2026 17:51:41 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXkv-0003H3-4T; Fri, 22 May 2026 17:50:10 -0400
+ id 1wQXmH-0003nw-EA; Fri, 22 May 2026 17:51:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486559; bh=erVKkgu6SN0URtS1fq3517XQa4H8fWCE3nPMJLzIaZ4=;
+ t=1779486560; bh=ShN1YawPOBejdJIy6tjrordl8O94iVv8f/3vbxRUpwU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=VtHtcWfuUGoKhzw7QvOUDdqfnBlkzDo5cQhPse6b848Kj6k/jZmgcww8MrrzOcr+4
- NboRNlRPpOAAFM2L4fU3MEN4sakCBndMXKeSv0YAG3PmPu2d6izCI2YKaDJPrX5nHR
- 8oRpZ4qbmVPP8bDT7crkYK7eGgj5OfUlmveGXBxPnUTCex4gyolkKFKaJlHAB0o/4Z
- UOS314G5XB9yeEXbnI6YMw9hUL1IOShrwCxU+MJSyEAO+FiQ8YeEo+7IWqdDVRX8g+
- tw3LH9tJ4UOVh9TQIOxaxr5OmT6bGM/3LmoHJ/oblgmnSUSVb0x/3DVsu0s2kSSKqI
- o1dy4J7q8sR0Q==
+ b=iFbHrR8eTsZUY+QweMVMwo7+i3dR/EJkV5a7nXnW7OGJxmb9x25rR0Me6JXPKmZhT
+ /dyl13aC5txKE/DhNi5kCERNzuhnFBpGHOZSkctvhShrtzf92kYXsRG7ocOu/qGHfT
+ zzqF4voCxmi32S0YB88wsaADGm7bRpWnkB+8At0fVFnQDc6qBpVS0nBAPTgxM305BR
+ xAuagpixbwePegZxlHqE+zyo3xRSUVkTPwxA5o03wUMbgotsmr0fEgiJvLsMHuvHji
+ /tyn7uyaqMuTsdaasK7Es0KMxOpkxrooKS/E77pkLs7oMQZx9NPvUFw4EO7Fys/PGn
+ GLC/TLXMk8lAg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CA5591AFB66;
- Sat, 23 May 2026 00:49:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9B6121AFB71;
+ Sat, 23 May 2026 00:49:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id F26943B71B5;
- Sat, 23 May 2026 00:49:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id BADF73B71C0;
+ Sat, 23 May 2026 00:49:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Katherine Leaver <katherine.j.leaver@gmail.com>,
+Cc: qemu-stable@nongnu.org, Jeuk Kim <jeuk20.kim@samsung.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 112/149] hw/uefi: fix buffer overruns
-Date: Sat, 23 May 2026 00:48:44 +0300
-Message-ID: <20260522214923.807017-13-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 123/149] hw/ufs: Zero reserved bytes in REPORT LUNS
+ response header
+Date: Sat, 23 May 2026 00:48:55 +0300
+Message-ID: <20260522214923.807017-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
@@ -69,78 +69,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Jeuk Kim <jeuk20.kim@samsung.com>
 
-The buffer size checks do not consider the mm_header size, simliar to
-CVE-2026-5744.  Factor out the repeated size check to a small helper
-function, fix the check, update all places to use the new helper.
+ufs_emulate_report_luns() writes the 4-byte LUN list length into
+outbuf[0..3] via stl_be_p() but leaves outbuf[4..7], the reserved
+field, uninitialized. Those bytes are then DMA'd to guest memory,
+leaking uninitialized QEMU stack data.
 
-Fixes: CVE-2026-41435
-Fixes: db1ecfb473ac ("hw/uefi: add var-service-vars.c")
-Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260422092910.444997-2-kraxel@redhat.com>
-(cherry picked from commit f252769a23e67765f9b95d8944ca3da6c9edf58b)
+Fixes: 7708e298180 ("hw/ufs/lu: skip automatic zero-init of large array")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+(cherry picked from commit 042dbcff8382393b20b716294a6c4b1a4af6b3f1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
-index 5607763525..922f6dd963 100644
---- a/hw/uefi/var-service-vars.c
-+++ b/hw/uefi/var-service-vars.c
-@@ -260,6 +260,17 @@ static size_t uefi_vars_mm_error(mm_header *mhdr, mm_variable *mvar,
-     return sizeof(*mvar);
- }
+diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
+index 3f3c9589ce..709d6adcf6 100644
+--- a/hw/ufs/lu.c
++++ b/hw/ufs/lu.c
+@@ -101,6 +101,10 @@ static int ufs_emulate_report_luns(UfsRequest *req, uint8_t *outbuf,
+         return SCSI_COMMAND_FAIL;
+     }
  
-+static bool check_buffer_size(uefi_vars_state *uv, uint64_t length)
-+{
-+    /* uefi_vars_cmd_mm() checks that */
-+    g_assert(uv->buf_size >= sizeof(mm_header));
-+
-+    if (uv->buf_size - sizeof(mm_header) < length) {
-+        return false;
++    if (outbuf_len < 8) {
++        return SCSI_COMMAND_FAIL;
 +    }
-+    return true;
-+}
-+
- static size_t uefi_vars_mm_get_variable(uefi_vars_state *uv, mm_header *mhdr,
-                                         mm_variable *mvar, void *func)
- {
-@@ -307,7 +318,7 @@ static size_t uefi_vars_mm_get_variable(uefi_vars_state *uv, mm_header *mhdr,
-     if (uadd64_overflow(length, va->data_size, &length)) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
--    if (uv->buf_size < length) {
-+    if (!check_buffer_size(uv, length)) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
++    memset(outbuf, 0, 8);
+     len += 8;
  
-@@ -377,7 +388,7 @@ uefi_vars_mm_get_next_variable(uefi_vars_state *uv, mm_header *mhdr,
-     }
- 
-     length = sizeof(*mvar) + sizeof(*nv) + var->name_size;
--    if (uv->buf_size < length) {
-+    if (!check_buffer_size(uv, length)) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
- 
-@@ -567,7 +578,7 @@ static size_t uefi_vars_mm_variable_info(uefi_vars_state *uv, mm_header *mhdr,
-     uint64_t length;
- 
-     length = sizeof(*mvar) + sizeof(*vi);
--    if (uv->buf_size < length) {
-+    if (!check_buffer_size(uv, length)) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
- 
-@@ -588,7 +599,7 @@ uefi_vars_mm_get_payload_size(uefi_vars_state *uv, mm_header *mhdr,
-     uint64_t length;
- 
-     length = sizeof(*mvar) + sizeof(*ps);
--    if (uv->buf_size < length) {
-+    if (!check_buffer_size(uv, length)) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
- 
+     for (uint8_t lun = 0; lun < UFS_MAX_LUS; ++lun) {
 -- 
 2.47.3
 
