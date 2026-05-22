@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62EB0CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:42:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E089CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:42:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXbC-0002Tb-EQ; Fri, 22 May 2026 17:40:06 -0400
+	id 1wQXXQ-0001QK-Sb; Fri, 22 May 2026 17:36:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXaw-00015D-K1; Fri, 22 May 2026 17:39:54 -0400
+ id 1wQXWN-0008Lu-4C; Fri, 22 May 2026 17:35:14 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXau-0002yL-OP; Fri, 22 May 2026 17:39:50 -0400
+ id 1wQXWL-0007gn-9b; Fri, 22 May 2026 17:35:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485683; bh=kBVhGhz/+qRjiAGKSIr8cCYc1RoITfOAx3YapVSC5rc=;
+ t=1779485633; bh=hJaRuAX6LIkyhNtmQcr5JlRnYbl5/hyQbDJItjZQY8I=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ZI5UAhgdXMFpV+Yf4RStZSslXFa3wuu2lRDLwLhBVJcOXMR4H9FXKFh963LeYeqMb
- 56ZulqzHLM/9AtvlP4sFGJ7QkiXE0StJGZnx4FFjzFQWazptqoMf+yoDueAs0S6lnl
- ICFAauRwRtjtrjWkl7ddxuiuc90f/9xQ8fjZTAgD/418epPgQ+JqaYOCA6LkInKN6B
- q52SzhH1Lk0suUcQHwOXTXzT4j/fm+mjOxOH8ZWIVVS2v+J1PnOIQzqmH1auRhA6dD
- TGKmHQ6bDg9gNwW4GIHF+Qu4A1j5RyfE2wNR9OZpD0VgaEh5NRmUdvEx0HsooDsKXB
- QC6Cux176f/Lw==
+ b=Uxa4bOJ94bqonr2O7ER7r9ZReWMafVp6FDfvOYUHx7wQrOWi8sMsQ8+rxj0n3RP2W
+ W5iVkFdwbVcSqCe3QAY09l0AKBjtk5EodQYE98ITeLSY8uxfuCxvtrmofYNzsQByA8
+ VqzE85/UoNY+QDldtTXL5/EJWU4+IPbs7gaQMnHabVePb/e4n73aenrr2CW9XqGpKb
+ vrMtLi/bxzCMkNwtM4AOtQqlqrbF5To1822OWBrDf41MBEDLYzY0kFAT7GLka5ciHt
+ 0h+L0xlYiiZ6krD4T4cuaQpYY08HQEpKET5lBEYhosB3sJSVPqN98n/hn4fGYYF2E2
+ pHQQK/ucwUDEA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7BA331AFB0A;
- Sat, 23 May 2026 00:34:43 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2933D1AFAD7;
+ Sat, 23 May 2026 00:33:53 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A0CF43B718A;
- Sat, 23 May 2026 00:34:47 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4AB0F3B715D;
+ Sat, 23 May 2026 00:33:57 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Eric Auger <eric.auger@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 121/136] linux-user: Fix AT_EXECFN in AUXV for
- symlinked programs
-Date: Sat, 23 May 2026 00:34:29 +0300
-Message-ID: <20260522213446.806182-22-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 72/94] tests/qtest/iommu-smmuv3-test: Skip if no TCG
+ GICv3 device present
+Date: Sat, 23 May 2026 00:33:29 +0300
+Message-ID: <20260522213356.806058-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
-References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
+References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -69,107 +70,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The AT_EXECFN entry in AUXV needs to keep the value which was used when
-the program was started. Especially for symlinked programs qemu should
-not try to resolve the realpath.
+On a KVM-only (--disable-tcg) build, the iommu-smmuv3 qtest fails:
 
-Here is a reproducer:
-(arm64-chroot)root@p100:/# cd /usr/bin
-(arm64-chroot)root@p100:/usr/bin# ln -s echo testprog
-(arm64-chroot)root@p100:/usr/bin# LD_SHOW_AUXV=1 ./testprog | grep AT_EXECFN
-AT_EXECFN:            ./testprog
+qemu-system-aarch64: QTest does not support GICv3 emulation
+Broken pipe
+../../tests/qtest/libqtest.c:201: kill_qemu() tried to terminate QEMU process but encountered exit status 1 (expected 0)
 
-In this example, "./testprog" is the correct output, and not "/usr/bin/echo".
+This is because the test runs the virt board with the qtest
+accelerator and gic-version=3.  In the virt board this selects the
+TCG (emulated) GICv3, but in a --disable-tcg build we don't compile
+that device, only the KVM GICv3 (which isn't usable with qtest).
 
-This patch fixes parts of commit 258bec39 ("linux-user: Fix access to
-/proc/self/exe").
+Add a check to the test so we skip it if the arm-gicv3 device isn't
+in the QEMU binary.
 
-Fixes: 258bec39 ("linux-user: Fix access to /proc/self/exe")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3379
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 6b5aef7cac9dab7c16451588cff6615eb2048293)
+Cc: qemu-stable@nongnu.org
+Fixes: d8d19c31b220142641 ("tests/qtest: Add SMMUv3 bare-metal test using iommu-testdev")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+(cherry picked from commit 0129c626503c6d7220848a1f944a8f8e033ceaf9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 57fc568e72..7a8acf0cc1 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -791,8 +791,10 @@ int main(int argc, char **argv, char **envp)
+diff --git a/tests/qtest/iommu-smmuv3-test.c b/tests/qtest/iommu-smmuv3-test.c
+index dae9821b92..708fae5fd3 100644
+--- a/tests/qtest/iommu-smmuv3-test.c
++++ b/tests/qtest/iommu-smmuv3-test.c
+@@ -64,6 +64,11 @@ static void run_smmuv3_translation(const QSMMUTestConfig *cfg)
+         g_test_skip("virt machine not available");
+         return;
      }
++    if (!qtest_has_device("arm-gicv3")) {
++        /* This can happen for a KVM-only build: qtest uses the TCG GICv3 */
++        g_test_skip("gicv3 not available");
++        return;
++    }
  
-     /* Resolve executable file name to full path name */
--    if (realpath(exec_path, real_exec_path)) {
--        exec_path = real_exec_path;
-+    /* Keep how we started the program in exec_path, e.g. "./my_program" */
-+    /* Store real path in real_exec_path, e.g. "/usr/local/bin/my_program" */
-+    if (!realpath(exec_path, real_exec_path)) {
-+        printf("Could not resolve %s\n", exec_path);
-     }
- 
-     /*
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index b6c57dbd07..9204dc64ad 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -8661,9 +8661,9 @@ static int maybe_do_fake_open(CPUArchState *cpu_env, int dirfd,
-             return -1;
-         }
-         if (safe) {
--            return safe_openat(dirfd, exec_path, flags, mode);
-+            return safe_openat(dirfd, real_exec_path, flags, mode);
-         } else {
--            return openat(dirfd, exec_path, flags, mode);
-+            return openat(dirfd, real_exec_path, flags, mode);
-         }
-     }
- 
-@@ -8796,9 +8796,9 @@ ssize_t do_guest_readlink(const char *pathname, char *buf, size_t bufsiz)
-          * Don't worry about sign mismatch as earlier mapping
-          * logic would have thrown a bad address error.
-          */
--        ret = MIN(strlen(exec_path), bufsiz);
-+        ret = MIN(strlen(real_exec_path), bufsiz);
-         /* We cannot NUL terminate the string. */
--        memcpy(buf, exec_path, ret);
-+        memcpy(buf, real_exec_path, ret);
-     } else {
-         ret = readlink(path(pathname), buf, bufsiz);
-     }
-@@ -8889,7 +8889,7 @@ static int do_execv(CPUArchState *cpu_env, int dirfd,
- 
-     const char *exe = p;
-     if (is_proc_myself(p, "exe")) {
--        exe = exec_path;
-+        exe = real_exec_path;
-     }
-     ret = is_execveat
-         ? safe_execveat(dirfd, exe, argp, envp, flags)
-@@ -10805,9 +10805,9 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-                  * Don't worry about sign mismatch as earlier mapping
-                  * logic would have thrown a bad address error.
-                  */
--                ret = MIN(strlen(exec_path), arg4);
-+                ret = MIN(strlen(real_exec_path), arg4);
-                 /* We cannot NUL terminate the string. */
--                memcpy(p2, exec_path, ret);
-+                memcpy(p2, real_exec_path, ret);
-             } else {
-                 ret = get_errno(readlinkat(arg1, path(p), p2, arg4));
-             }
-diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
-index 02872a98d5..792bbb271a 100644
---- a/linux-user/user-internals.h
-+++ b/linux-user/user-internals.h
-@@ -23,6 +23,7 @@
- #include "qemu/log.h"
- 
- extern char *exec_path;
-+extern char real_exec_path[PATH_MAX];
- void init_task_state(TaskState *ts);
- void task_settid(TaskState *);
- void stop_all_tasks(void);
+     /* Initialize QEMU environment for SMMU testing */
+     qts = qtest_init("-machine virt,acpi=off,gic-version=3,iommu=smmuv3 "
 -- 
 2.47.3
 
