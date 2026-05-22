@@ -4,47 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 122E1CD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:53:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FF9ECD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:53:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXn9-0005ZI-7z; Fri, 22 May 2026 17:52:27 -0400
+	id 1wQXmw-0003ph-KV; Fri, 22 May 2026 17:52:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXn7-0005Ot-N0; Fri, 22 May 2026 17:52:25 -0400
+ id 1wQXmd-0002r7-Td; Fri, 22 May 2026 17:52:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXn5-0004ZE-Hn; Fri, 22 May 2026 17:52:25 -0400
+ id 1wQXmY-0004Bu-8h; Fri, 22 May 2026 17:51:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486561; bh=IxlVzasWUz1jAgKSjDI2NIizegDam5b3CcOyjw+M1BU=;
+ t=1779486560; bh=JAZIl9UU37pIptr7cp3TbXuzV+fdEh9Xox+SYIH5P7g=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=bLN6ExPB4hgQySkkQjp8XglktG7Y+u/b/wG6uBNnum5r8mi3rf/fPlH5Fh7/4kPjF
- qLnykjU2sweubI1kWyFxkkT+Mr0cngB0cFHsx1yDp0aHXYOpI+7hCit+UFfWAMEXA4
- PaFeWAVjEwa2ln5W5f2zRbgdMzNd635Sn8FKhfDXivFxCtkUpqbsxAljS+2CPEU99k
- oO9cCUBXnks6lF6SZNC42xrMZnH8NQoJjku5vetdnAl6kNfQ5+yTrQFQdjO1+53vyh
- nPlGbkHTLavFQYJV9ECMrfg8K9jNDzfMHcVdpt5Xjlh+ZQZ4GhQU5gmmjiXQ2Ne0bx
- QHrKvht6hvm4A==
+ b=aRD8u+/O54P5TlLhaf3BQP4rUYboVIX4qO9MGMQiY2BWMHM8o78CTxpDx5uRG1d21
+ sF0F3XXzphjjj63V8kE3k9Cvm3ERpKaTFRPeCTvbDFiLKXQP31T8VqAOD5KxavVGGT
+ 43Fvo4slLaBgbZl8PNi7XM/K0TJtffbM79ZhDvABKwu/hVElqlzvEMruxaX7t745c4
+ zo1uu9SlS8J6xTpUtdkuKNc3DzY/7b6HLIPZL++lLHL+FTu7x4UAZ7AQ0vF5E371o8
+ J+90180kAy2Bmr6K71XLQA5wxNbaiwhuRyyMQjLR7E5c8nAsVlG+pOGqzNjsfKZE6V
+ 8ClYsdYUQe18A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 467781AFB7B;
- Sat, 23 May 2026 00:49:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id EAD7A1AFB76;
+ Sat, 23 May 2026 00:49:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6FF6D3B71CA;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1EF543B71C5;
  Sat, 23 May 2026 00:49:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Katherine Leaver <katherine.j.leaver@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 133/149] linux-user: Fix AT_EXECFN in AUXV for
- symlinked programs
-Date: Sat, 23 May 2026 00:49:05 +0300
-Message-ID: <20260522214923.807017-34-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 128/149] aspeed/hace: Prevent total_req_len overflow
+Date: Sat, 23 May 2026 00:49:00 +0300
+Message-ID: <20260522214923.807017-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,107 +71,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Cédric Le Goater <clg@redhat.com>
 
-The AT_EXECFN entry in AUXV needs to keep the value which was used when
-the program was started. Especially for symlinked programs qemu should
-not try to resolve the realpath.
+In accumulate mode, total_req_len is incremented with plen (hwaddr)
+for each hash request. Repeated additions can overflow total_req_len
+(uint32_t) and potentially bypass validation checks in has_padding().
 
-Here is a reproducer:
-(arm64-chroot)root@p100:/# cd /usr/bin
-(arm64-chroot)root@p100:/usr/bin# ln -s echo testprog
-(arm64-chroot)root@p100:/usr/bin# LD_SHOW_AUXV=1 ./testprog | grep AT_EXECFN
-AT_EXECFN:            ./testprog
+Add a helper function to detect overflow before incrementing
+total_req_len and reject the request if overflow would occur.
 
-In this example, "./testprog" is the correct output, and not "/usr/bin/echo".
-
-This patch fixes parts of commit 258bec39 ("linux-user: Fix access to
-/proc/self/exe").
-
-Fixes: 258bec39 ("linux-user: Fix access to /proc/self/exe")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3379
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 6b5aef7cac9dab7c16451588cff6615eb2048293)
+Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
+Cc: qemu-stable@nongnu.org
+Fixes: 5cd7d8564a8b ("aspeed/hace: Support AST2600 HACE")
+Link: https://lore.kernel.org/qemu-devel/20260504213421.710035-3-clg@redhat.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit c6aa2d0ac161f2a58a8fbab9a15e846278661158)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 86d04cca3c..c08c73fd80 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -772,8 +772,10 @@ int main(int argc, char **argv, char **envp)
-     }
+diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
+index c7a2731e38..f08b7ae376 100644
+--- a/hw/misc/aspeed_hace.c
++++ b/hw/misc/aspeed_hace.c
+@@ -205,6 +205,19 @@ static uint64_t hash_get_source_addr(AspeedHACEState *s)
+     return src_addr;
+ }
  
-     /* Resolve executable file name to full path name */
--    if (realpath(exec_path, real_exec_path)) {
--        exec_path = real_exec_path;
-+    /* Keep how we started the program in exec_path, e.g. "./my_program" */
-+    /* Store real path in real_exec_path, e.g. "/usr/local/bin/my_program" */
-+    if (!realpath(exec_path, real_exec_path)) {
-+        printf("Could not resolve %s\n", exec_path);
-     }
++static bool hash_accumulate_len(AspeedHACEState *s, hwaddr plen)
++{
++    if (plen > UINT32_MAX - s->total_req_len) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: total_req_len overflow, current=0x%x, adding=0x%"
++                      HWADDR_PRIx "\n", __func__, s->total_req_len, plen);
++        return false;
++    }
++
++    s->total_req_len += plen;
++    return true;
++}
++
+ static int hash_prepare_direct_iov(AspeedHACEState *s, struct iovec *iov,
+                                    bool acc_mode, bool *acc_final_request)
+ {
+@@ -232,7 +245,9 @@ static int hash_prepare_direct_iov(AspeedHACEState *s, struct iovec *iov,
+     iov_idx = 1;
  
-     /*
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index bb818f35d9..5c101c19e4 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -8799,9 +8799,9 @@ static int maybe_do_fake_open(CPUArchState *cpu_env, int dirfd,
-             return -1;
-         }
-         if (safe) {
--            return safe_openat(dirfd, exec_path, flags, mode);
-+            return safe_openat(dirfd, real_exec_path, flags, mode);
-         } else {
--            return openat(dirfd, exec_path, flags, mode);
-+            return openat(dirfd, real_exec_path, flags, mode);
-         }
-     }
+     if (acc_mode) {
+-        s->total_req_len += plen;
++        if (!hash_accumulate_len(s, plen)) {
++            return -1;
++        }
  
-@@ -8934,9 +8934,9 @@ ssize_t do_guest_readlink(const char *pathname, char *buf, size_t bufsiz)
-          * Don't worry about sign mismatch as earlier mapping
-          * logic would have thrown a bad address error.
-          */
--        ret = MIN(strlen(exec_path), bufsiz);
-+        ret = MIN(strlen(real_exec_path), bufsiz);
-         /* We cannot NUL terminate the string. */
--        memcpy(buf, exec_path, ret);
-+        memcpy(buf, real_exec_path, ret);
-     } else {
-         ret = readlink(path(pathname), buf, bufsiz);
-     }
-@@ -9027,7 +9027,7 @@ static int do_execv(CPUArchState *cpu_env, int dirfd,
+         if (has_padding(s, &iov[0], plen, &total_msg_len,
+                         &pad_offset)) {
+@@ -299,7 +314,9 @@ static int hash_prepare_sg_iov(AspeedHACEState *s, struct iovec *iov,
  
-     const char *exe = p;
-     if (is_proc_myself(p, "exe")) {
--        exe = exec_path;
-+        exe = real_exec_path;
-     }
-     ret = is_execveat
-         ? safe_execveat(dirfd, exe, argp, envp, flags)
-@@ -11038,9 +11038,9 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-                  * Don't worry about sign mismatch as earlier mapping
-                  * logic would have thrown a bad address error.
-                  */
--                ret = MIN(strlen(exec_path), arg4);
-+                ret = MIN(strlen(real_exec_path), arg4);
-                 /* We cannot NUL terminate the string. */
--                memcpy(p2, exec_path, ret);
-+                memcpy(p2, real_exec_path, ret);
-             } else {
-                 ret = get_errno(readlinkat(arg1, path(p), p2, arg4));
-             }
-diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
-index 24d35998f0..7730444aa5 100644
---- a/linux-user/user-internals.h
-+++ b/linux-user/user-internals.h
-@@ -24,6 +24,7 @@
- #include "exec/translation-block.h"
+         iov[iov_idx].iov_base = haddr;
+         if (acc_mode) {
+-            s->total_req_len += plen;
++            if (!hash_accumulate_len(s, plen)) {
++                return -1;
++            }
  
- extern char *exec_path;
-+extern char real_exec_path[PATH_MAX];
- void init_task_state(TaskState *ts);
- void task_settid(TaskState *);
- void stop_all_tasks(void);
+             if (has_padding(s, &iov[iov_idx], plen, &total_msg_len,
+                             &pad_offset)) {
 -- 
 2.47.3
 
