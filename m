@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2125CD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:40:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 774FBCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:40:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXb4-0001Ya-Ge; Fri, 22 May 2026 17:39:58 -0400
+	id 1wQXXo-0003Mp-6h; Fri, 22 May 2026 17:36:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXaT-0000VY-WA; Fri, 22 May 2026 17:39:29 -0400
+ id 1wQXWt-0000Ir-17; Fri, 22 May 2026 17:35:42 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXaQ-0002mu-G8; Fri, 22 May 2026 17:39:20 -0400
+ id 1wQXWq-0000AS-UT; Fri, 22 May 2026 17:35:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485683; bh=v42CUW4JL41tf1/usJ3yGvlj+27rYyjEEGd/NmBr14s=;
+ t=1779485633; bh=gRBk0Ncio/cPswT0A/E3LLStMoOMo8cAeANKs7ajgAM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=tLoTrdhw1RMgs9LLNSOerC7ebfrQWzJkxVVoK5s0qo6gmsqH37BK/SbFpxbNNGyZ4
- Cgvn8l5/7Jc1Jg6yMDTsl7xq0tFNDFV2c2yBFvR5mot5Mn3IGh0JeB9zda+iw2N+Op
- Bi4fZOUawfl6OG4D84xsWiryOQ8clvNJRr8Ao/QaMcNcKBfYZZXEMRJ91i8Daccwkv
- rQvKiluTb0/hfCpUa46Jxd2BWrgLGXPcOafN9YyvaSQYw2s4Oh5WifuzPO0C7In3Vm
- n2zt76sHmt9wbGsqv5G0jeqQkQTEw9x+nxAAGv567VTXianMm1PXWmeH0mHMQd14p4
- KkEoc7B1+z6VA==
+ b=j/h9wzdHIzki1BHDU+6FvVshc41qawHSW2HELNgF7cfW2F+EmZuJUB60qfb3Yu3EW
+ QGq5Z3/cCaJDF1hSRfr8nx2tj4y68qaHs55axQWecAPGn9yZ9OIzt85PONXwFDZ+h/
+ CZBWg7oaUHI5jeechayUt5uD5wfTw51pcmOUv6q6aTvhBTCallNC5ieKMdLK4lndwH
+ VTgcdybY83JBlVmmqzsyugac1WESDX3gDC3yRY8SOsv2BUpXIbCOaqoKfCW/XmrEKC
+ y1FKsuua0ogLuledWTzcTLrC0YECyfmHo8AWqlwgFW+tDhS5Ao5Ozze4JvGhop95y+
+ EwZdimlaCyCSA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3A1D51AFB06;
- Sat, 23 May 2026 00:34:43 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8DE561AFADD;
+ Sat, 23 May 2026 00:33:53 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5DE4C3B7186;
- Sat, 23 May 2026 00:34:47 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B1F903B7163;
+ Sat, 23 May 2026 00:33:57 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 117/136] hw/i2c/microbit_i2c: Don't index off end of
- twi_read_sequence[]
-Date: Sat, 23 May 2026 00:34:25 +0300
-Message-ID: <20260522213446.806182-18-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 78/94] linux-user: Fix AT_EXECFN in AUXV for symlinked
+ programs
+Date: Sat, 23 May 2026 00:33:35 +0300
+Message-ID: <20260522213356.806058-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
-References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
+References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,42 +69,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Helge Deller <deller@gmx.de>
 
-If the guest tries to read more bytes from our fake stub I2C device
-than we have provided, we incorrectly read one byte beyond the end of
-this array. Avoid this, and instead keep reporting the RXD register
-as containing the last byte of the "data transfer".
+The AT_EXECFN entry in AUXV needs to keep the value which was used when
+the program was started. Especially for symlinked programs qemu should
+not try to resolve the realpath.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 9d68bf564ec ("arm: Stub out NRF51 TWI magnetometer/accelerometer detection")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3408
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260501162634.4092394-1-peter.maydell@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit a824f3531a44cbd19bcd9dd0ca48e5805c781e02)
+Here is a reproducer:
+(arm64-chroot)root@p100:/# cd /usr/bin
+(arm64-chroot)root@p100:/usr/bin# ln -s echo testprog
+(arm64-chroot)root@p100:/usr/bin# LD_SHOW_AUXV=1 ./testprog | grep AT_EXECFN
+AT_EXECFN:            ./testprog
+
+In this example, "./testprog" is the correct output, and not "/usr/bin/echo".
+
+This patch fixes parts of commit 258bec39 ("linux-user: Fix access to
+/proc/self/exe").
+
+Fixes: 258bec39 ("linux-user: Fix access to /proc/self/exe")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3379
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 6b5aef7cac9dab7c16451588cff6615eb2048293)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i2c/microbit_i2c.c b/hw/i2c/microbit_i2c.c
-index 06fbd18a78..379b627232 100644
---- a/hw/i2c/microbit_i2c.c
-+++ b/hw/i2c/microbit_i2c.c
-@@ -41,8 +41,13 @@ static uint64_t microbit_i2c_read(void *opaque, hwaddr addr, unsigned int size)
-         data = 0x01;
-         break;
-     case NRF51_TWI_REG_RXD:
-+        /*
-+         * Return the next byte from our fake data sequence. If
-+         * the guest keeps reading the register after that, keep
-+         * returning the same last byte value.
-+         */
-         data = twi_read_sequence[s->read_idx];
--        if (s->read_idx < G_N_ELEMENTS(twi_read_sequence)) {
-+        if (s->read_idx + 1 < G_N_ELEMENTS(twi_read_sequence)) {
-             s->read_idx++;
+diff --git a/linux-user/main.c b/linux-user/main.c
+index 86d04cca3c..c08c73fd80 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -772,8 +772,10 @@ int main(int argc, char **argv, char **envp)
+     }
+ 
+     /* Resolve executable file name to full path name */
+-    if (realpath(exec_path, real_exec_path)) {
+-        exec_path = real_exec_path;
++    /* Keep how we started the program in exec_path, e.g. "./my_program" */
++    /* Store real path in real_exec_path, e.g. "/usr/local/bin/my_program" */
++    if (!realpath(exec_path, real_exec_path)) {
++        printf("Could not resolve %s\n", exec_path);
+     }
+ 
+     /*
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index d3d9fffb54..65bbeb8551 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -8790,9 +8790,9 @@ static int maybe_do_fake_open(CPUArchState *cpu_env, int dirfd,
+             return -1;
          }
-         break;
+         if (safe) {
+-            return safe_openat(dirfd, exec_path, flags, mode);
++            return safe_openat(dirfd, real_exec_path, flags, mode);
+         } else {
+-            return openat(dirfd, exec_path, flags, mode);
++            return openat(dirfd, real_exec_path, flags, mode);
+         }
+     }
+ 
+@@ -8929,9 +8929,9 @@ ssize_t do_guest_readlink(const char *pathname, char *buf, size_t bufsiz)
+          * Don't worry about sign mismatch as earlier mapping
+          * logic would have thrown a bad address error.
+          */
+-        ret = MIN(strlen(exec_path), bufsiz);
++        ret = MIN(strlen(real_exec_path), bufsiz);
+         /* We cannot NUL terminate the string. */
+-        memcpy(buf, exec_path, ret);
++        memcpy(buf, real_exec_path, ret);
+     } else {
+         ret = readlink(path(pathname), buf, bufsiz);
+     }
+@@ -9022,7 +9022,7 @@ static int do_execv(CPUArchState *cpu_env, int dirfd,
+ 
+     const char *exe = p;
+     if (is_proc_myself(p, "exe")) {
+-        exe = exec_path;
++        exe = real_exec_path;
+     }
+     ret = is_execveat
+         ? safe_execveat(dirfd, exe, argp, envp, flags)
+@@ -11033,9 +11033,9 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+                  * Don't worry about sign mismatch as earlier mapping
+                  * logic would have thrown a bad address error.
+                  */
+-                ret = MIN(strlen(exec_path), arg4);
++                ret = MIN(strlen(real_exec_path), arg4);
+                 /* We cannot NUL terminate the string. */
+-                memcpy(p2, exec_path, ret);
++                memcpy(p2, real_exec_path, ret);
+             } else {
+                 ret = get_errno(readlinkat(arg1, path(p), p2, arg4));
+             }
+diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
+index 24d35998f0..7730444aa5 100644
+--- a/linux-user/user-internals.h
++++ b/linux-user/user-internals.h
+@@ -24,6 +24,7 @@
+ #include "exec/translation-block.h"
+ 
+ extern char *exec_path;
++extern char real_exec_path[PATH_MAX];
+ void init_task_state(TaskState *ts);
+ void task_settid(TaskState *);
+ void stop_all_tasks(void);
 -- 
 2.47.3
 
