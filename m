@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C69ECD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:44:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1737BCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:45:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXYx-0006eF-9g; Fri, 22 May 2026 17:37:47 -0400
+	id 1wQXYM-0004Tk-MG; Fri, 22 May 2026 17:37:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXYv-0006cU-I8; Fri, 22 May 2026 17:37:45 -0400
+ id 1wQXXw-0003YR-6W; Fri, 22 May 2026 17:36:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXYt-0001Tm-5X; Fri, 22 May 2026 17:37:45 -0400
+ id 1wQXXs-00019o-JH; Fri, 22 May 2026 17:36:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485682; bh=NcJd8nN8udITBb8kuubjKg36rc3x3Tj18jI98dI1A5o=;
+ t=1779485634; bh=yE5Jo4b3dRdRgS1KUXLaSY05dtwt/yP95TKmE8vnnkI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=bhKc/uB+UC3On9np0E9W6kywXJMirlz6W/PGXA6ZmpgbtbVxa2yb5JQa2PKh2iv7h
- PaaUrbCZwE9Fc9oLJEP5qNtRiXU45E7shQEs0rFUcuQ9rFuw38WDaGEmpboP8QEokF
- Ui5c5kBbXyiAO34aKlw99tKNr4+4Z40zf/ERSTibL2TaPkUNGDW/T/iGhVj9nDbr1b
- El5CTZTL6gL5NE+ayYaEiEyidbiZsisr0HRuDNPDJeGH21oAlypctGNy7ykKOLwPBs
- OEAqAjLbZjzlPIbsaTiQIDDiN4cUJ17KTZe0E3JGsWrMHz/va1qkGXu1k1DKfv5ptP
- xN0TJOy0zaPVQ==
+ b=NYaawEoDjRhbllfNWx0onSplqI6qpxRTKZ95sRwi0pj566gZupJSBYLkESx4OGRaO
+ yE9VTU6G19nnDra33yIDZCuCJPLDOGPYRatRrMtqm0kUj+kay1pvuMtkP1eUHlxGRh
+ S6m1zoTAcF7FZjT7vgd9NVOvlaSB31L1MdJAOGyqWcmO9uKkVSTgzQxjZjqQAUxSJx
+ ooH54wPBvtjUN4icHDIfqA0ecrflOOTVj83wPziEDjqHv/OiX0gw1FrW7fYhMTk96C
+ 6eENOAm6No+5gI832YkA0TKA6yiBKxYhFwe5V9ZFhKnX7HDrhupRqBOPEk2mKHeTYe
+ GZl7YeG/3ZSAg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 340EE1AFAF7;
- Sat, 23 May 2026 00:34:42 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 32DB21AFAE8;
+ Sat, 23 May 2026 00:33:54 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 57A253B7177;
- Sat, 23 May 2026 00:34:46 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5694C3B716E;
+ Sat, 23 May 2026 00:33:58 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Katherine Leaver <katherine.j.leaver@gmail.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 102/136] hw/uefi: fix buffer overruns
-Date: Sat, 23 May 2026 00:34:10 +0300
-Message-ID: <20260522213446.806182-3-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Lexi Winter <ivy@FreeBSD.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 89/94] block: Add more defaults to DEFAULT_BLOCK_CONF
+Date: Sat, 23 May 2026 00:33:46 +0300
+Message-ID: <20260522213356.806058-31-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
-References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
+References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -69,78 +68,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Kevin Wolf <kwolf@redhat.com>
 
-The buffer size checks do not consider the mm_header size, simliar to
-CVE-2026-5744.  Factor out the repeated size check to a small helper
-function, fix the check, update all places to use the new helper.
+discard_granularity was missing from this, which means that SCSI disks
+created with -drive if=scsi would default to 0 (i.e. disabling discards)
+instead of -1, which makes scsi-hd automatically pick a granularity and
+is the default of the corresponding qdev property for -device scsi-hd.
 
-Fixes: CVE-2026-41435
-Fixes: db1ecfb473ac ("hw/uefi: add var-service-vars.c")
-Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260422092910.444997-2-kraxel@redhat.com>
-(cherry picked from commit f252769a23e67765f9b95d8944ca3da6c9edf58b)
+This was broken in QEMU 9.0 with commit 3089637.
+
+Also set other fields whose default isn't an obvious 0. These are not
+actual bug fixes because ON_OFF_AUTO_AUTO in fact happens to be 0, but
+it's better not to rely on the order of enums.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 308963746169 ('scsi: Don't ignore most usb-storage properties')
+Reported-by: Lexi Winter <ivy@FreeBSD.org>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20260410152314.86412-3-kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit f27aea1896338f4dd085a0e2cb2ab3797c5fe3e9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
-index 27421c6e2d..82ff4e429a 100644
---- a/hw/uefi/var-service-vars.c
-+++ b/hw/uefi/var-service-vars.c
-@@ -260,6 +260,17 @@ static size_t uefi_vars_mm_error(mm_header *mhdr, mm_variable *mvar,
-     return sizeof(*mvar);
+diff --git a/include/hw/block/block.h b/include/hw/block/block.h
+index e0a427039e..df941df19f 100644
+--- a/include/hw/block/block.h
++++ b/include/hw/block/block.h
+@@ -53,7 +53,12 @@ static inline unsigned int get_physical_block_exp(BlockConf *conf)
+ 
+ #define DEFAULT_BLOCK_CONF (BlockConf) {                                \
+     .bootindex = -1,                                                    \
++    .backend_defaults = ON_OFF_AUTO_AUTO,                               \
++    .discard_granularity = -1,                                          \
++    .wce = ON_OFF_AUTO_AUTO,                                            \
+     .share_rw = false,                                                  \
++    .account_invalid = ON_OFF_AUTO_AUTO,                                \
++    .account_failed = ON_OFF_AUTO_AUTO,                                 \
+     .rerror = BLOCKDEV_ON_ERROR_AUTO,                                   \
+     .werror = BLOCKDEV_ON_ERROR_AUTO,                                   \
  }
- 
-+static bool check_buffer_size(uefi_vars_state *uv, uint64_t length)
-+{
-+    /* uefi_vars_cmd_mm() checks that */
-+    g_assert(uv->buf_size >= sizeof(mm_header));
-+
-+    if (uv->buf_size - sizeof(mm_header) < length) {
-+        return false;
-+    }
-+    return true;
-+}
-+
- static size_t uefi_vars_mm_get_variable(uefi_vars_state *uv, mm_header *mhdr,
-                                         mm_variable *mvar, void *func)
- {
-@@ -307,7 +318,7 @@ static size_t uefi_vars_mm_get_variable(uefi_vars_state *uv, mm_header *mhdr,
-     if (uadd64_overflow(length, va->data_size, &length)) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
--    if (uv->buf_size < length) {
-+    if (!check_buffer_size(uv, length)) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
- 
-@@ -377,7 +388,7 @@ uefi_vars_mm_get_next_variable(uefi_vars_state *uv, mm_header *mhdr,
-     }
- 
-     length = sizeof(*mvar) + sizeof(*nv) + var->name_size;
--    if (uv->buf_size < length) {
-+    if (!check_buffer_size(uv, length)) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
- 
-@@ -567,7 +578,7 @@ static size_t uefi_vars_mm_variable_info(uefi_vars_state *uv, mm_header *mhdr,
-     uint64_t length;
- 
-     length = sizeof(*mvar) + sizeof(*vi);
--    if (uv->buf_size < length) {
-+    if (!check_buffer_size(uv, length)) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
- 
-@@ -588,7 +599,7 @@ uefi_vars_mm_get_payload_size(uefi_vars_state *uv, mm_header *mhdr,
-     uint64_t length;
- 
-     length = sizeof(*mvar) + sizeof(*ps);
--    if (uv->buf_size < length) {
-+    if (!check_buffer_size(uv, length)) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
- 
 -- 
 2.47.3
 
