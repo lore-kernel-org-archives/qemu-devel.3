@@ -4,84 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37FECCD5BAC
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 19:01:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8005CCD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 19:02:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQV7o-0003pw-Df; Fri, 22 May 2026 15:01:36 -0400
+	id 1wQV8d-0004X4-Tp; Fri, 22 May 2026 15:02:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wQV7k-0003nq-3D
- for qemu-devel@nongnu.org; Fri, 22 May 2026 15:01:32 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wQV8c-0004WY-BC
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 15:02:26 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wQV7h-0003fR-KD
- for qemu-devel@nongnu.org; Fri, 22 May 2026 15:01:31 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-83ec36a13e9so3838577b3a.0
- for <qemu-devel@nongnu.org>; Fri, 22 May 2026 12:01:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wQV8Z-00043H-Kt
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 15:02:26 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-48e6db3ff7eso40491965e9.0
+ for <qemu-devel@nongnu.org>; Fri, 22 May 2026 12:02:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779476488; x=1780081288; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=U9tzhWUk1KOVQ6fQ6Hxfk6N0dM12WxUlPD7OOJcV4+k=;
- b=eKCJv/wHALkRytg9hiLq1UkPoxsamJ1OZ4/zhx0YamRlplY0HMEZ67OoTsoVeYu/7W
- Tp7dcBoaW28e7tk0c0riQ9HconvNrWruKXgL/sNVO6l+Ex2whmg2h+r6i8NCxTHZdmYl
- vSmhae064V2+7cwNb4CZnhUSGmEZEGBWazuLq9R+38w8gJwn3cqlsSCIF+4orGgdNLf4
- xcu4hcf/PRBu2xs1yo+XPZX5fwqJyD5MPS1HYKdmIMm0IwvVoj8inEuSLlG1UIUEhBIf
- +42Tqt6PQuOfY7dwL8xEJJsuiGpBM+kA91X3+23gdsgTTIDkn4E16Gpr6DlfQ3PfAbDV
- xLqg==
+ d=linaro.org; s=google; t=1779476541; x=1780081341; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1zmfuMLM/jv+2sAZAYdT/4UiMpv4lo9buBeRT97Ft5Q=;
+ b=BbXqukMP7ji+ZOs4jZ2yKYYaR1Cwa05ad0ShBHoSlvtNe2kN6TwwMup7i/EXMX5+t7
+ dVXOp5c62ACZU2QlbwmZdmAyrUmp44EuEQSc5eqxq23NFdedUt+KzQMhu/udFxjpvwiB
+ mx/tsRdTdWCj3P/xuLTUJXeduQuf5LjxSwfu3OmhGo+GedtuBbTowXeYtYhIaOwWj4pZ
+ 3z4RsjG0BAShoT9CkxeWbcXrL4DAXwvR83ldjvx/jyztY73jZ+fldPHKLzaR4m3LJeQu
+ VlL+fUtxUeWRGbqn2L+KmDjmJAKfR+AcnsnOYmn9PJ2Vquf0SMSr2cNkUOCjr3UCrD//
+ MPFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779476488; x=1780081288;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=U9tzhWUk1KOVQ6fQ6Hxfk6N0dM12WxUlPD7OOJcV4+k=;
- b=T7Q6QUHhgSs5wgUWkXGbjZlycInpENvbeqtyXtX0X+J9FNPW945nSd9eXDzl5Eo5dz
- 4okAXzduIhXLnLmUjjRfykHtbdwnM8WZx9ijg8N8B+zKCRmK4meYfY+DXn5eYG5wnatv
- sl6SbGCGPsPmoK0s472rz+L1N7oBIc0LGaEvs/34mS4i/VCdLnOWn5CK8oJX9zh74Maz
- IxgUbYaea6c9K3gZHEgjxhqpoHj+jWNsgf88k65gQOxqDnGfiJZLTphYoNiRuWEXX+PA
- IvC1JPpbp/0jNS63DGj5uy1yr08VoXz+eC+i8dQ3ijJqGz3lxCmuN8q+OILj8QFQFUwP
- ZffA==
-X-Gm-Message-State: AOJu0Yy1wc9+ftl7KvBd76lREe9M/mAHdrteO8HVUDze8hCR08YATZF1
- numj515twBnnIRcAYejvn8zMmqYBlQov+Y+itGfg+YsWyPvK08LG6AdaSpatuG+BUeU=
-X-Gm-Gg: Acq92OHVVEE3a6OzozhVzS7zZzSllSXoSGVPb4E78be7YU739h4PFM8aeERe3qSy1tf
- DJQFH53x+lR2W6E+zdcy4qG3TGhKWAlop0vhjHDnM0VrOYEJ93QrmcFX36fDrxEP6BmJDhNWTCK
- 1G+IG1PWEMXIFJecbeeFs6ZFGaGv89U/dyDK2vL/Th/f9ykdSKgDYGr0lLKwThdUtk8BBB/cSOn
- uHxCaxwNmmEQOprKFv/fVvZn26Z4bYz4fA7r60cZWqEsDdD43TQZXUArNNzA8I1aADTyeYV6RsB
- CSc9dAXIigbh5z64IZo0KFIfg6gVEkA46NP9IcwCUpFGaPGxKd8fAj190X8PFWwHkOQMR1uDSGc
- yWQptHCzGhTDrrEfe6APSCoaRX8v/y9T8oDn29nYCfNRidEO6Tqx9x1ouAAuct3EIpwMaYnSRtL
- o5BSES8MWGMu/gmRI+/wKXQXeEdMajcprpuMP2TrP5
-X-Received: by 2002:a05:6a00:2d8c:b0:82f:29fe:7239 with SMTP id
- d2e1a72fcca58-8415f5bf78dmr4584630b3a.50.1779476487667; 
- Fri, 22 May 2026 12:01:27 -0700 (PDT)
-Received: from [192.168.64.111] ([50.78.183.177])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-84164fb00b6sm3316173b3a.40.2026.05.22.12.01.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 22 May 2026 12:01:27 -0700 (PDT)
-Message-ID: <4cb0aec7-dd0e-4308-9600-b802bd16a74d@linaro.org>
-Date: Fri, 22 May 2026 12:01:25 -0700
+ d=1e100.net; s=20251104; t=1779476541; x=1780081341;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1zmfuMLM/jv+2sAZAYdT/4UiMpv4lo9buBeRT97Ft5Q=;
+ b=CfTnAisLngQC7dPinLNWqD9onsu3+YeIEE2hy+hYArl3ZALUWuDEszH87k0YCfWtef
+ De/2JRlr1ITS01DbiUIl8NikcKUhe2Lg6Q9O2Kc5qsXzaXv3Zu5Jo3gf9kVSzkGxM2bo
+ aXFApm+ly1RZQR+ZZGSLKIY01Od4a0XB69jYCJ1mCO32JRhnQ0WcbRU8pNl2hMNAe/G5
+ Kj9pisYB4cNhYuq4HRIK4+2kyEtCuRuDgLlQDpR7IX9iElJFa/HD1Ky4P4f40hYqwW6y
+ c6nTruEiIKs9j+uPJ7EfJYJBNCctFGgDDW5TJj0QAYqE39tGtF0siQqN2MMU49+/T71a
+ GRfA==
+X-Gm-Message-State: AOJu0YwNELySXObvMf5RKyAm/+JrLNVA7pJhGJTqwfZSSJMhofriqTL7
+ UAnYVU0Kmeea/njm1dkMhesAjtaN4j5uT3LaSvy7cIQf/4VxlboxZAoomPSiPxjdL4Y=
+X-Gm-Gg: Acq92OFiMgzB4OPHHvYDmBG6MFhzYUS7jEsBBLwIz9gW7Dr/nO848yasIsLnaTgb8bu
+ rPzjEyU8O4rAD/1gM5pW1IzyfBjehdxI5fM6U3zAEmRKiAMNZ8Ji/UrW8Y2ihHQgVNUM87yw1BQ
+ XHCRQMEIC/mtTmSLaRKou4yRfnYSJms7lPHuIueFcL5qeMsCCYrOol+VVwUT52CyePnMgeVz2sB
+ zjX7tI4ii7XRi6QBwML8w7J1kK6hTlWcEzzN2xr+p6FFGMgVwHflH1Q7uqmv1Wbgv0uKiGYRXMa
+ W4QfNZs7TBehN0RrRTNUuZMdc3769BG3G9K/fDgEraX43NlJX8G5xPdPp8+1+hqsfiBsZAtL+lA
+ ivuuUHB0un/l5rTtbQv5DB3Y8ObnWgdj5yF4tHwgzt5mcXnoJgACIkYqz6n+0A5Ek0DV7LHf/xh
+ nrACa9gwY8Viyb7CUs5K4Sr40=
+X-Received: by 2002:a05:600c:c4a3:b0:488:ac01:72b6 with SMTP id
+ 5b1f17b1804b1-490426ceed2mr72356495e9.21.1779476540911; 
+ Fri, 22 May 2026 12:02:20 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49044f2bad3sm66644315e9.0.2026.05.22.12.02.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 22 May 2026 12:02:20 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 490495F8BA;
+ Fri, 22 May 2026 20:02:19 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Thomas Huth
+ <th.huth+qemu@posteo.eu>,
+ Song Gao <gaosong@loongson.cn>,  John Snow <jsnow@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Kyle Evans
+ <kevans@freebsd.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,  Cleber Rosa
+ <crosa@redhat.com>,  Warner Losh <imp@bsdimp.com>,  Brad Smith
+ <brad@comstyle.com>,  Thomas Huth <thuth@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Max Filippov <jcmvbkbc@gmail.com>,  Brian Cain
+ <brian.cain@oss.qualcomm.com>,  Fabiano Rosas <farosas@suse.de>,  Peter
+ Maydell <peter.maydell@linaro.org>,  Richard Henderson
+ <richard.henderson@linaro.org>,  qemu-arm@nongnu.org
+Subject: Re: [PATCH v2 03/16] tests/Makefile.include: add binary dependency
+ to run-tcg-tests-% rules
+In-Reply-To: <74e8bc86-cd81-43f9-b5cb-7e3de3bcd3d0@oss.qualcomm.com> (Pierrick
+ Bouvier's message of "Fri, 22 May 2026 11:03:46 -0700")
+References: <20260521131739.540157-1-alex.bennee@linaro.org>
+ <20260521131739.540157-4-alex.bennee@linaro.org>
+ <74e8bc86-cd81-43f9-b5cb-7e3de3bcd3d0@oss.qualcomm.com>
+User-Agent: mu4e 1.14.1; emacs 30.1
+Date: Fri, 22 May 2026 20:02:19 +0100
+Message-ID: <87tsrzl138.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 10/64] target/arm: Enable EnFPM bits for FEAT_FPMR
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-References: <20260520182213.872945-1-richard.henderson@linaro.org>
- <20260520182213.872945-11-richard.henderson@linaro.org>
- <CAFEAcA8ibw4o3R6eJdtupAc8o0Tk2N5iWahDHwbuCdoCLKK5CQ@mail.gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA8ibw4o3R6eJdtupAc8o0Tk2N5iWahDHwbuCdoCLKK5CQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,15 +118,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/21/26 07:15, Peter Maydell wrote:
-> I think we also need arm_emulate_firmware_reset() to
-> set SCR_ENFPM, so we get the "emulating EL3 but starting
-> guest at EL2" case right.
-> 
-> Otherwise
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
-Yep, thanks.
+> On 5/21/2026 6:17 AM, Alex Benn=C3=A9e wrote:
+>> Explicitly set the appropriate QEMU binary as a dependency so we can
+>> ensure they get built. This is especially important for MacOS which
+>> otherwise only builds the unsigned binaries on a normal "make all"
+>> run.
+>>
+>
+> I'm not sure to see why it matters. tcg-tests don't make use of hvf, so
+> unsigned binaries are plenty for it.
+>
+> Which other binary is this building that is not built by default?
+>
+> In general, if something is not included in "all" target, let's make
+> sure it's included there (meson.build?) instead of adding a workaround
+> here. Not only tests benefit this, but anyone doing a build on a
+> platform that might have optional binaries not built by default.
 
-r~
+If you have a suggestion on how to make that work I'm all ears.
+
+>
+> It's totally ok to build all binaries (even for other targets than one
+> tested), people have configure --target-list to restrict what is
+> globally built. Better to catch something broken elsewhere instead of
+> "oh sorry, my custom test command didn't build this at the time".
+>
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> ---
+>>  tests/Makefile.include | 6 ++++++
+>>  1 file changed, 6 insertions(+)
+>>=20
+>> diff --git a/tests/Makefile.include b/tests/Makefile.include
+>> index ce6a0dccaf4..cf6f9e68245 100644
+>> --- a/tests/Makefile.include
+>> +++ b/tests/Makefile.include
+>> @@ -57,6 +57,12 @@ RUN_TCG_TARGET_RULES=3D$(patsubst %,run-tcg-tests-%, =
+$(TCG_TESTS_TARGETS))
+>>  $(foreach TARGET,$(TCG_TESTS_TARGETS), \
+>>          $(eval $(BUILD_DIR)/tests/tcg/config-$(TARGET).mak: config-host=
+.mak))
+>>=20=20
+>> +# $1 =3D the stem (e.g., arm-softmmu or x86_64-linux-user)
+>> +get-qemu-bin =3D $(if $(findstring softmmu,$1),qemu-system-$(subst -sof=
+tmmu,,$1),qemu-$(subst -linux-user,,$1))
+>> +
+>> +$(foreach TARGET,$(TCG_TESTS_TARGETS), \
+>> +        $(eval .ninja-goals.run-tcg-tests-$(TARGET) +=3D $(call get-qem=
+u-bin,$(TARGET))))
+>> +
+>>  .PHONY: $(TCG_TESTS_TARGETS:%=3Dbuild-tcg-tests-%)
+>>  $(TCG_TESTS_TARGETS:%=3Dbuild-tcg-tests-%): build-tcg-tests-%: $(BUILD_=
+DIR)/tests/tcg/config-%.mak
+>>  	$(call quiet-command, \
+>
+> Regards,
+> Pierrick
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
