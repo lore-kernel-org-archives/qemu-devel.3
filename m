@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BC83CD5BAF
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 00:05:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E7A7CD5BAF
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 00:05:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQDNK-0001au-NL; Thu, 21 May 2026 20:04:26 -0400
+	id 1wQDNu-0002Dz-8v; Thu, 21 May 2026 20:05:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wQDNI-0001aG-UC
- for qemu-devel@nongnu.org; Thu, 21 May 2026 20:04:25 -0400
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ id 1wQDNj-00020n-Q6
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 20:04:52 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wQDNG-0003Lr-VG
- for qemu-devel@nongnu.org; Thu, 21 May 2026 20:04:24 -0400
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-c6dd5b01e14so3178005a12.0
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 17:04:22 -0700 (PDT)
+ id 1wQDNg-0003hE-Tf
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 20:04:50 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-c80167f5716so3031502a12.2
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 17:04:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779408261; x=1780013061; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779408286; x=1780013086; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=voLNE+GP6MgaDC842wErmF2XBwpM8m0z5a8r1iEUN1w=;
- b=aYrgZawLPOPuc8ct0plJ5Vi9KCSqgXICcZqH5xvzDBKGXiYsgM4cs7IU7hd+5tE6hS
- pSl8vf+j9BRQBU/EqBJ+hc1MU8kFPNrO7CI8QXJmJ82mvHW298ODbNS4fwxteDjPJ5x6
- i+yR8CZc1i/G1EBdk20+fcLFcEY6M48CbxKBrK00drbzKVqkPM31NEZADEM2XL/d7oL0
- Qmu1w5gop+ZP2gl6zBW/0QwKsdiYRfszDcO9IXl+Sr+f+r/1bCjZ/VxcstQ/LAv4YzT8
- i0yAzRZAmTUfkfUwrDXNQyHCmTMkQ4e+MvKXKuLrIwaIj09EgQ6WYcynJOLAaHmJPO+p
- 8EWw==
+ bh=MirGdvlp1h8clJvrvy1Hkb6T0OVMX8liN9iOwDmT8JU=;
+ b=Bhdv1TicT/ScZOBr9eEHe8LH8VamRdJT6J2Say2avJpLbYNYZa7a0WbABVXLrYXe+H
+ 8fa89fRj9j6SlLC6/vXgba7a0f1fBBRZ1vlddIl8UrPguur+0s7jMAScBCA4ifaWGksP
+ 3ZsA7LE6r6ORXrFxEYsuaZTSEj/VlMZhp6FQaM5+7wdlvgqhpoxDiuajMd/vZqOce2ah
+ Fes5IMKIaUMOZOjszEhUmC6M4d4oQA6MSnJljYQwS9W9/LWU0Dgbm5kVkAIkKaKWDCiR
+ SNUlpqiVWTG7wHHQND7W330YAoJ24TrFxBq2o7OEIwvleRJxXBPfk5Rcw97lS25WZ/Mn
+ /3xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779408261; x=1780013061;
+ d=1e100.net; s=20251104; t=1779408286; x=1780013086;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=voLNE+GP6MgaDC842wErmF2XBwpM8m0z5a8r1iEUN1w=;
- b=iUB9eV0JnbZeZCNUZ6hNXNZ9OkBTzwkCeeuUL70BcPwjCFLxZhRB1S/rj385P1pxe9
- P0BL9P0qVW+tacqU3rmmmyUVvb5x302C+jIuNRn1xb0nmSxJRFboCFW+nHXp+8Aey96h
- KWoBnc9aQGRdYeNfQH0LEUa9tYCRWfl7nJhvJzOBD9+xkWA3uBBecGJIOhOq6Jsq1aer
- e0NvCtAsaBu1kbKEzbdFlxJDRKaquVbady4syBoNS1W6BdnEwMtXYAb0xUVl2sfIqg8R
- a89VQjChyrCRZ/rk/NYRLXK5lKsf7l5IBhg3J0sy37bevcBgPy5FP8K3uqdbctx3gJXE
- b0Eg==
-X-Gm-Message-State: AOJu0Yxla59VxGm1lgnfGbzqA20gGIBuAQA33LJCY3jwfmMjhgls3AT/
- fXhwioKpinXSK+iBdB2PdlyLTJiFPgLsintuVM1ComhPzvdO5jXj59E4ire3KQEu
-X-Gm-Gg: Acq92OFzro+o4xs/TC1WVbhBGG/YCZYXnjMmcvLRCVg8byqVGrnW2bcsoaGRloCWWVL
- RQItnNtWKLF+b2BpfU8++dSY+JO9rCmTjmMCDWUVZf8fYoSPHGp+aRPe8XdQkGocVpnOh5T1ZQj
- ejRW6wo5AIKKQahmr7BJL89w/Sy/KkRWPMpp3rK9uoMWlpmbKVYVdMAR1ECLHB7baj3uekw8je6
- mTSXnBFnDTNSfigzssC1XdoUId484YvgTAsum4JZKf5duHfSlMazKC9nwORvjG6+VlYgEcufybY
- eKc0ndwOdUKyCCr7Myg4BP7AbL9q7eYPI/eK7qMYTie6lYjJPgsXeyPUUO8CbMfbSXH+tqo1Ala
- 8BzksiB1MUwTPfq2w6b0iENsvnbDVf0KIkMPlM3NSW8FU6pmr0wLwwqb2qMuPDqj711inOT2lvC
- CUAoPLIkhRxOWx+2/vMfqtd47fy0pZuHaX2QoA2MUgFA==
-X-Received: by 2002:a17:903:3905:b0:2b4:59bf:5728 with SMTP id
- d9443c01a7336-2beb05e4149mr12379355ad.25.1779408257472; 
- Thu, 21 May 2026 17:04:17 -0700 (PDT)
+ bh=MirGdvlp1h8clJvrvy1Hkb6T0OVMX8liN9iOwDmT8JU=;
+ b=Dp/woI7/SBM6odWWIhfDGDij38iiqOZdyoZHTufOcOl3nhrlKxJ9dQyHJSNttApHEt
+ +0yLj+G4+Cde9BkniulVZCbERUsJ9eXnIMl5T5FkMmwZkoB4zHqEWNXu7mQpZeVCVty6
+ 499Y5eiR+nA8MRrCjz0amuZDeERA/XbqsfTRHj1awfKEW98PHDyRko27ttIWWLmNBkdl
+ SN3Gj8YmRS617RVtS/0jKM+lMYTWlGDzrCmftgluNxdQ02BuE0ZnV7lKgyovpX6cWrFd
+ 3zUSZikMt/rX0kg2kUC+3RQxEZHl4UPON5/ahkx992o18GNA53RNLGx5qpbk6obWmGZM
+ SJSg==
+X-Gm-Message-State: AOJu0YxNc9dYLK5mCS+2haRuJvdMCvYCtXi6M56QD7fvRhUFY5wVMSFK
+ Hu/KTTX62Fl7OGkK9ZxSmUsOqxn7PcDl9gXEXemjYb/r/YtGc6LJkqykN8v8NGTu
+X-Gm-Gg: Acq92OFFd6eDdodD9xCI3c0JUNdicy85RqyfvolLvDBBZGSubxoJeM6qWcVv/bSYIng
+ b6lZtoa2KpJEEx34oM3R4bOPyNM2fdjDQdLWfslKSloZSRj0UvwT2i0VVV29PaSCpYDPgZGH5y7
+ eYmzruYGqoDk1XOr2Wy9S3WC5HiJpNqvFei+RyWkeIZVz7xGCZfbpiYFJHG2f8TAB5udMV1yJ0H
+ K5w4UCcPpQvm0ZZGRm4tgqZE5mZ1jLhpxyCK3c8Y3pxxKNdoQvzwntZOV65NBFzZI3641PD3u00
+ IIeAJqMjZeTUBzbr0qPZ7gp4mpfmhjJq1laiCa9FaK2bEhcvDud5c8m4LHVSZmeanmoDiq2d3MZ
+ f3BlMrVls5D372cF8Ce+fIRHM1cPYLd7svOiyHCCv06kX8Ps5hF3egLNF9pK4KvRCHOI5W+rTg0
+ dXjeggvdL0aQLgF+2lqU6vX5vfDc5EypLj+eTEuPKrvA==
+X-Received: by 2002:a17:903:3c6c:b0:2ba:6bd7:8f00 with SMTP id
+ d9443c01a7336-2beb06e9eecmr9878965ad.5.1779408286550; 
+ Thu, 21 May 2026 17:04:46 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2beb114b54csm3915475ad.42.2026.05.21.17.04.14
+ d9443c01a7336-2beb114b54csm3915475ad.42.2026.05.21.17.04.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 17:04:17 -0700 (PDT)
+ Thu, 21 May 2026 17:04:45 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
- "chen.zhongyao@zte.com.cn" <chen.zhongyao@zte.com.cn>,
+Cc: alistair23@gmail.com, Zongmin Zhou <zhouzongmin@kylinos.cn>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 13/48] target/riscv: Fix tail handling for vmv.s.x and vfmv.s.f
-Date: Fri, 22 May 2026 10:02:49 +1000
-Message-ID: <20260522000324.23255-14-alistair.francis@wdc.com>
+Subject: [PULL 22/48] target/riscv/kvm: Add BFloat16 extensions support
+Date: Fri, 22 May 2026 10:02:58 +1000
+Message-ID: <20260522000324.23255-23-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260522000324.23255-1-alistair.francis@wdc.com>
 References: <20260522000324.23255-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x52b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,148 +103,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "chen.zhongyao@zte.com.cn" <chen.zhongyao@zte.com.cn>
+From: Zongmin Zhou <zhouzongmin@kylinos.cn>
 
-The risc-v vector spec defines vmv.s.x and vfmv.s.f as writing
-element 0 of the destination register while the remaining destination
-elements follow the current tail policy. When QEMU runs with
-rvv_ta_all_1s enabled, those elements must therefore become all 1s.
+Expose the BFloat16 extensions (Zfbfmin, Zvfbfmin, Zvfbfwma) to KVM guests
+when available in hardware.
 
-QEMU handled both instructions as translation-time special cases that
-directly wrote vd[0] and skipped the usual tail processing. As a result,
-vmv.s.x and vfmv.s.f left the remaining destination elements unchanged
-instead of applying the configured tail policy.
-
-Fix this by routing both instructions through a helper that writes
-vd[0] and then treats the rest of the destination register as tail,
-reusing the existing agnostic-element fill logic.
-
-Signed-off-by: Zhongyao Chen <chen.zhongyao@zte.com.cn>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <202605061005.646A537u037157@mse-fl1.zte.com.cn>
+Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <1258febb0eeb4ee286eb88f70b077a7f1ece507f.1778653159.git.zhouzongmin@kylinos.cn>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/helper.h                   |  4 +++
- target/riscv/vector_helper.c            | 18 ++++++++++
- target/riscv/insn_trans/trans_rvv.c.inc | 44 ++++++++-----------------
- 3 files changed, 36 insertions(+), 30 deletions(-)
+ target/riscv/kvm/kvm-cpu.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index 36cdacfb0e..542b7c264f 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -662,6 +662,10 @@ DEF_HELPER_4(vmv_v_x_b, void, ptr, i64, env, i32)
- DEF_HELPER_4(vmv_v_x_h, void, ptr, i64, env, i32)
- DEF_HELPER_4(vmv_v_x_w, void, ptr, i64, env, i32)
- DEF_HELPER_4(vmv_v_x_d, void, ptr, i64, env, i32)
-+DEF_HELPER_4(vset_velem0_b, void, ptr, i64, env, i32)
-+DEF_HELPER_4(vset_velem0_h, void, ptr, i64, env, i32)
-+DEF_HELPER_4(vset_velem0_w, void, ptr, i64, env, i32)
-+DEF_HELPER_4(vset_velem0_d, void, ptr, i64, env, i32)
- 
- DEF_HELPER_6(vsaddu_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
- DEF_HELPER_6(vsaddu_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 5a3554dd71..c4e150635e 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -2141,6 +2141,24 @@ GEN_VEXT_VMV_VX(vmv_v_x_h, int16_t, H2)
- GEN_VEXT_VMV_VX(vmv_v_x_w, int32_t, H4)
- GEN_VEXT_VMV_VX(vmv_v_x_d, int64_t, H8)
- 
-+#define GEN_VEXT_SET_VELEM0(NAME, ETYPE, H)                             \
-+void HELPER(NAME)(void *vd, uint64_t s1, CPURISCVState *env,            \
-+                  uint32_t desc)                                        \
-+{                                                                       \
-+    uint32_t esz = sizeof(ETYPE);                                       \
-+    uint32_t vlenb = riscv_cpu_cfg(env)->vlenb;                         \
-+    uint32_t vta = vext_vta(desc);                                      \
-+                                                                        \
-+    *((ETYPE *)vd + H(0)) = (ETYPE)s1;                                  \
-+    /* Treat every element past vd[0] as tail for scalar-to-vector moves. */ \
-+    vext_set_elems_1s(vd, vta, esz, vlenb);                             \
-+}
-+
-+GEN_VEXT_SET_VELEM0(vset_velem0_b, int8_t,  H1)
-+GEN_VEXT_SET_VELEM0(vset_velem0_h, int16_t, H2)
-+GEN_VEXT_SET_VELEM0(vset_velem0_w, int32_t, H4)
-+GEN_VEXT_SET_VELEM0(vset_velem0_d, int64_t, H8)
-+
- #define GEN_VEXT_VMERGE_VV(NAME, ETYPE, H)                           \
- void HELPER(NAME)(void *vd, void *v0, void *vs1, void *vs2,          \
-                   CPURISCVState *env, uint32_t desc)                 \
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 0b41cecb27..9a86c6dcd4 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -3607,37 +3607,21 @@ static void vec_element_loadi(DisasContext *s, TCGv_i64 dest,
-     load_element(dest, tcg_env, endian_ofs(s, vreg, idx), s->sew, sign);
- }
- 
--/* Integer Scalar Move Instruction */
-+typedef void gen_helper_vset_velem0(TCGv_ptr, TCGv_i64, TCGv_env, TCGv_i32);
- 
--static void store_element(TCGv_i64 val, TCGv_ptr base,
--                          int ofs, int sew)
-+static void vec_element_storei_tail(DisasContext *s, int vreg, TCGv_i64 val)
- {
--    switch (sew) {
--    case MO_8:
--        tcg_gen_st8_i64(val, base, ofs);
--        break;
--    case MO_16:
--        tcg_gen_st16_i64(val, base, ofs);
--        break;
--    case MO_32:
--        tcg_gen_st32_i64(val, base, ofs);
--        break;
--    case MO_64:
--        tcg_gen_st_i64(val, base, ofs);
--        break;
--    default:
--        g_assert_not_reached();
--    }
--}
-+    static gen_helper_vset_velem0 * const fns[4] = {
-+        gen_helper_vset_velem0_b, gen_helper_vset_velem0_h,
-+        gen_helper_vset_velem0_w, gen_helper_vset_velem0_d,
-+    };
-+    TCGv_ptr dest = tcg_temp_new_ptr();
-+    uint32_t data = FIELD_DP32(0, VDATA, VTA, s->vta);
-+    TCGv_i32 desc = tcg_constant_i32(simd_desc(s->cfg_ptr->vlenb,
-+                                              s->cfg_ptr->vlenb, data));
- 
--/*
-- * Store vreg[idx] = val.
-- * The index must be in range of VLMAX.
-- */
--static void vec_element_storei(DisasContext *s, int vreg,
--                               int idx, TCGv_i64 val)
--{
--    store_element(val, tcg_env, endian_ofs(s, vreg, idx), s->sew);
-+    tcg_gen_addi_ptr(dest, tcg_env, vreg_ofs(s, vreg));
-+    fns[s->sew](dest, val, tcg_env, desc);
- }
- 
- /* vmv.x.s rd, vs2 # x[rd] = vs2[0] */
-@@ -3684,7 +3668,7 @@ static bool trans_vmv_s_x(DisasContext *s, arg_vmv_s_x *a)
-          */
-         s1 = get_gpr(s, a->rs1, EXT_NONE);
-         tcg_gen_ext_tl_i64(t1, s1);
--        vec_element_storei(s, a->rd, 0, t1);
-+        vec_element_storei_tail(s, a->rd, t1);
-         gen_set_label(over);
-         tcg_gen_movi_tl(cpu_vstart, 0);
-         finalize_rvv_inst(s);
-@@ -3741,7 +3725,7 @@ static bool trans_vfmv_s_f(DisasContext *s, arg_vfmv_s_f *a)
-         t1 = tcg_temp_new_i64();
-         do_nanbox(s, t1, cpu_fpr[a->rs1]);
- 
--        vec_element_storei(s, a->rd, 0, t1);
-+        vec_element_storei_tail(s, a->rd, t1);
- 
-         gen_set_label(over);
-         tcg_gen_movi_tl(cpu_vstart, 0);
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 608495630f..34f60bd80c 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -309,6 +309,7 @@ static KVMCPUConfig kvm_multi_ext_cfgs[] = {
+     KVM_EXT_CFG("zacas", ext_zacas, KVM_RISCV_ISA_EXT_ZACAS),
+     KVM_EXT_CFG("zawrs", ext_zawrs, KVM_RISCV_ISA_EXT_ZAWRS),
+     KVM_EXT_CFG("zfa", ext_zfa, KVM_RISCV_ISA_EXT_ZFA),
++    KVM_EXT_CFG("zfbfmin", ext_zfbfmin, KVM_RISCV_ISA_EXT_ZFBFMIN),
+     KVM_EXT_CFG("zfh", ext_zfh, KVM_RISCV_ISA_EXT_ZFH),
+     KVM_EXT_CFG("zfhmin", ext_zfhmin, KVM_RISCV_ISA_EXT_ZFHMIN),
+     KVM_EXT_CFG("zba", ext_zba, KVM_RISCV_ISA_EXT_ZBA),
+@@ -334,6 +335,8 @@ static KVMCPUConfig kvm_multi_ext_cfgs[] = {
+     KVM_EXT_CFG("zvbc", ext_zvbc, KVM_RISCV_ISA_EXT_ZVBC),
+     KVM_EXT_CFG("zvfh", ext_zvfh, KVM_RISCV_ISA_EXT_ZVFH),
+     KVM_EXT_CFG("zvfhmin", ext_zvfhmin, KVM_RISCV_ISA_EXT_ZVFHMIN),
++    KVM_EXT_CFG("zvfbfmin", ext_zvfbfmin, KVM_RISCV_ISA_EXT_ZVFBFMIN),
++    KVM_EXT_CFG("zvfbfwma", ext_zvfbfwma, KVM_RISCV_ISA_EXT_ZVFBFWMA),
+     KVM_EXT_CFG("zvkb", ext_zvkb, KVM_RISCV_ISA_EXT_ZVKB),
+     KVM_EXT_CFG("zvkg", ext_zvkg, KVM_RISCV_ISA_EXT_ZVKG),
+     KVM_EXT_CFG("zvkned", ext_zvkned, KVM_RISCV_ISA_EXT_ZVKNED),
 -- 
 2.53.0
 
