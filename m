@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AE49CD5BB3
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:42:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78F48CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:42:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXah-0000aw-JQ; Fri, 22 May 2026 17:39:37 -0400
+	id 1wQXcG-00047Z-Rv; Fri, 22 May 2026 17:41:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXZw-0000HT-7t; Fri, 22 May 2026 17:38:56 -0400
+ id 1wQXbY-0003r8-LZ; Fri, 22 May 2026 17:40:31 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXZq-0002hD-LU; Fri, 22 May 2026 17:38:45 -0400
+ id 1wQXbW-0004fL-NA; Fri, 22 May 2026 17:40:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485682; bh=Ut3R3oMAcPO1UtBljC2SxEXddYzO4+92BlrarOBehwg=;
+ t=1779485683; bh=SsHgT/J/bjZboOQ7K5ER+H4GdPu8P5zF1DRzNqSfRqQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=qCLg3dQ76RdrmuBov8Ikh6S0FFd7dD1pmBL0TQOeoJMhAt2GuZoYlZRa0bKaEN23g
- /DQl7XTk/u6R5QuU69sHjdGM9NO3dZevkImbBA54kCdxkYQiBmjaBAwKTFJbcnDSMh
- PogUvz90p3bvXWopAFd4ETHIVAZPIi7z9qx0BfB8p4HR9aowgCI5Ue6ft0W5h0EmGh
- HIYtkCAMqmO8DdciCGyaelocIyDu1t9j94qYMnGGP2TGwxxJ7cd86R+mJTE8WL3ez3
- 6+rOcY7DqXdHIACtE3Ux7m10riTsfR1599pNnKENH+GWYaPzRyrWM3dZH45VwYZ3XP
- JEcU3ugqsypYQ==
+ b=q7ANS6sawoV2ueIzNHk2U71Qsz5gcqwEbbs7ZjqEJ3/CkxS713pvqbh9JdApJ2x44
+ bUZMekkUAp32JOHdSGVx+HedNh2yLsG2cs+4tB/NzXhR33viT3aLjf1pbrH940volc
+ 6pDC3LfQ3qRbWZX+YBFHPNmU0NiBM8aEgD6gPoRl+MwnqdnWD80vWiZGgJRpHj7Bra
+ QOpQwiXPZBLJ8zVLRuEOIEVKE4ZX5/6EHIfa40M/W8ajpw4wMy//wJs5iN69qsSvIM
+ IB/bl8k9v9n6eabL7eRmWTfsgwXOrI4vRmTc0p1uO+JEfwZ7sZvHdLMxMIvbJ/ic4m
+ g/In2IjcLanJw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DF6701AFB01;
- Sat, 23 May 2026 00:34:42 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id DED601AFB11;
+ Sat, 23 May 2026 00:34:43 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 101053B7181;
- Sat, 23 May 2026 00:34:47 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0FDE93B7191;
+ Sat, 23 May 2026 00:34:48 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jeuk Kim <jeuk20.kim@samsung.com>,
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 112/136] hw/ufs: Keep MCQ SQs alive while requests
- are outstanding
-Date: Sat, 23 May 2026 00:34:20 +0300
-Message-ID: <20260522213446.806182-13-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 128/136] ide: Clean up ide_trim_co_entry() to be
+ idiomatic coroutine code
+Date: Sat, 23 May 2026 00:34:36 +0300
+Message-ID: <20260522213446.806182-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
@@ -69,125 +69,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jeuk Kim <jeuk20.kim@samsung.com>
+From: Kevin Wolf <kwolf@redhat.com>
 
-MCQ requests are allocated with their SQ, but can remain in flight on the
-CQ list or in the SCSI layer after leaving the SQ free list.
+The previous commit did a minimal conversion of the callback based state
+machine for TRIM to a coroutine in order to fix a bug. Refactor it to
+actually look like normal coroutine based code, which improves its
+readability.
 
-Reject runtime SQ deletion while any request is still outstanding, and
-use separate teardown helpers so device exit can still release MCQ
-queues after child devices have been unrealized.
-
-Fixes: 5c079578d2e ("hw/ufs: Add support MCQ of UFSHCI 4.0")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
-(cherry picked from commit 619c2da19a05668dabe7912afb789e50b8635c4d)
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20260421161132.99878-6-kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit c1c71a7e167fdabaa9827d00c0be3aeafebdd921)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ufs/trace-events b/hw/ufs/trace-events
-index 7734b35f08..6f7ea9c95f 100644
---- a/hw/ufs/trace-events
-+++ b/hw/ufs/trace-events
-@@ -44,6 +44,7 @@ ufs_err_mcq_create_sq_invalid_size(uint8_t qid) "invalid mcq sq size for sqid %"
- ufs_err_mcq_create_sq_already_exists(uint8_t qid) "mcq sqid %"PRIu8 "already exists"
- ufs_err_mcq_delete_sq_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
- ufs_err_mcq_delete_sq_not_exists(uint8_t qid) "mcq sqid %"PRIu8 "not exists"
-+ufs_err_mcq_delete_sq_busy(uint8_t qid) "mcq sqid %"PRIu8" has outstanding requests"
- ufs_err_mcq_create_cq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
- ufs_err_mcq_create_cq_invalid_size(uint8_t qid) "invalid mcq cq size for cqid %"PRIu8""
- ufs_err_mcq_create_cq_already_exists(uint8_t qid) "mcq cqid %"PRIu8 "already exists"
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index c6415a4b96..6144e727dd 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -556,6 +556,31 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
-     return true;
- }
+diff --git a/hw/ide/core.c b/hw/ide/core.c
+index 672238aef8..bf616b7703 100644
+--- a/hw/ide/core.c
++++ b/hw/ide/core.c
+@@ -420,18 +420,15 @@ typedef struct TrimAIOCB {
+     QEMUBH *bh;
+     int ret;
+     QEMUIOVector *qiov;
+-    int i, j;
++    bool canceled;
+ } TrimAIOCB;
  
-+static bool ufs_mcq_sq_has_outstanding_req(UfsSq *sq)
-+{
-+    UfsRequest *req;
-+    uint16_t free_reqs = 0;
-+
-+    QTAILQ_FOREACH(req, &sq->req_list, entry)
-+    {
-+        free_reqs++;
-+    }
-+
-+    return free_reqs != sq->size;
-+}
-+
-+static void ufs_mcq_free_sq(UfsSq *sq)
-+{
-+    qemu_bh_delete(sq->bh);
-+
-+    for (int i = 0; i < sq->size; i++) {
-+        ufs_clear_req(&sq->req[i]);
-+    }
-+
-+    g_free(sq->req);
-+    g_free(sq);
-+}
-+
- static bool ufs_mcq_delete_sq(UfsHc *u, uint8_t qid)
+ static void trim_aio_cancel(BlockAIOCB *acb)
  {
-     UfsSq *sq;
-@@ -572,9 +597,12 @@ static bool ufs_mcq_delete_sq(UfsHc *u, uint8_t qid)
+     TrimAIOCB *iocb = container_of(acb, TrimAIOCB, common);
  
-     sq = u->sq[qid];
- 
--    qemu_bh_delete(sq->bh);
--    g_free(sq->req);
--    g_free(sq);
-+    if (ufs_mcq_sq_has_outstanding_req(sq)) {
-+        trace_ufs_err_mcq_delete_sq_busy(qid);
-+        return false;
-+    }
-+
-+    ufs_mcq_free_sq(sq);
-     u->sq[qid] = NULL;
-     return true;
- }
-@@ -617,6 +645,12 @@ static bool ufs_mcq_create_cq(UfsHc *u, uint8_t qid, uint32_t attr)
-     return true;
+-    /* Exit the loop so ide_issue_trim_cb will not continue  */
+-    iocb->j = iocb->qiov->niov - 1;
+-    iocb->i = (iocb->qiov->iov[iocb->j].iov_len / 8) - 1;
+-
+-    iocb->ret = -ECANCELED;
++    /* Exit the loop so ide_trim_co_entry will not continue */
++    iocb->canceled = true;
  }
  
-+static void ufs_mcq_free_cq(UfsCq *cq)
-+{
-+    qemu_bh_delete(cq->bh);
-+    g_free(cq);
-+}
-+
- static bool ufs_mcq_delete_cq(UfsHc *u, uint8_t qid)
+ static const AIOCBInfo trim_aiocb_info = {
+@@ -458,60 +455,55 @@ static void coroutine_fn ide_trim_co_entry(void *opaque)
  {
-     UfsCq *cq;
-@@ -640,8 +674,7 @@ static bool ufs_mcq_delete_cq(UfsHc *u, uint8_t qid)
+     TrimAIOCB *iocb = opaque;
+     IDEState *s = iocb->s;
+-    int ret = 0;
++    int i, j;
++    int ret;
  
-     cq = u->cq[qid];
+     /* Paired with blk_end_request in ide_trim_bh_cb() */
+     blk_co_start_request(s->blk);
  
--    qemu_bh_delete(cq->bh);
--    g_free(cq);
-+    ufs_mcq_free_cq(cq);
-     u->cq[qid] = NULL;
-     return true;
- }
-@@ -1884,12 +1917,14 @@ static void ufs_exit(PCIDevice *pci_dev)
+-loop:
+-    if (iocb->i >= 0) {
+-        if (ret >= 0) {
+-            block_acct_done(blk_get_stats(s->blk), &s->acct);
+-        } else {
+-            block_acct_failed(blk_get_stats(s->blk), &s->acct);
+-        }
+-    }
++    for (j = 0; j < iocb->qiov->niov; j++) {
++        for (i = 0; i < iocb->qiov->iov[j].iov_len / 8; i++) {
++            uint64_t *buffer = iocb->qiov->iov[j].iov_base;
  
-     for (int i = 0; i < ARRAY_SIZE(u->sq); i++) {
-         if (u->sq[i]) {
--            ufs_mcq_delete_sq(u, i);
-+            ufs_mcq_free_sq(u->sq[i]);
-+            u->sq[i] = NULL;
+-    if (ret >= 0) {
+-        while (iocb->j < iocb->qiov->niov) {
+-            int j = iocb->j;
+-            while (++iocb->i < iocb->qiov->iov[j].iov_len / 8) {
+-                int i = iocb->i;
+-                uint64_t *buffer = iocb->qiov->iov[j].iov_base;
++            /* 6-byte LBA + 2-byte range per entry */
++            uint64_t entry = le64_to_cpu(buffer[i]);
++            uint64_t sector = entry & 0x0000ffffffffffffULL;
++            uint16_t count = entry >> 48;
+ 
+-                /* 6-byte LBA + 2-byte range per entry */
+-                uint64_t entry = le64_to_cpu(buffer[i]);
+-                uint64_t sector = entry & 0x0000ffffffffffffULL;
+-                uint16_t count = entry >> 48;
++            if (count == 0) {
++                continue;
++            }
+ 
+-                if (count == 0) {
+-                    continue;
+-                }
++            if (iocb->canceled) {
++                iocb->ret = -ECANCELED;
++                goto done;
++            }
+ 
+-                if (!ide_sect_range_ok(s, sector, count)) {
+-                    block_acct_invalid(blk_get_stats(s->blk), BLOCK_ACCT_UNMAP);
+-                    iocb->ret = -EINVAL;
+-                    goto done;
+-                }
++            if (!ide_sect_range_ok(s, sector, count)) {
++                block_acct_invalid(blk_get_stats(s->blk), BLOCK_ACCT_UNMAP);
++                iocb->ret = -EINVAL;
++                goto done;
++            }
+ 
+-                block_acct_start(blk_get_stats(s->blk), &s->acct,
+-                                 count << BDRV_SECTOR_BITS, BLOCK_ACCT_UNMAP);
++            block_acct_start(blk_get_stats(s->blk), &s->acct,
++                             count << BDRV_SECTOR_BITS, BLOCK_ACCT_UNMAP);
+ 
+-                /* Got an entry! Submit and exit.  */
+-                ret = blk_co_pdiscard(s->blk,
+-                                      sector << BDRV_SECTOR_BITS,
+-                                      count << BDRV_SECTOR_BITS,
+-                                      BDRV_REQ_NO_QUEUE);
+-                goto loop;
++            /* Got an entry! Submit and exit.  */
++            ret = blk_co_pdiscard(s->blk,
++                                  sector << BDRV_SECTOR_BITS,
++                                  count << BDRV_SECTOR_BITS,
++                                  BDRV_REQ_NO_QUEUE);
++            if (ret >= 0) {
++                block_acct_done(blk_get_stats(s->blk), &s->acct);
++            } else {
++                iocb->ret = ret;
++                block_acct_failed(blk_get_stats(s->blk), &s->acct);
++                goto done;
+             }
+-
+-            iocb->j++;
+-            iocb->i = -1;
          }
+-    } else {
+-        iocb->ret = ret;
      }
-     for (int i = 0; i < ARRAY_SIZE(u->cq); i++) {
-         if (u->cq[i]) {
--            ufs_mcq_delete_cq(u, i);
-+            ufs_mcq_free_cq(u->cq[i]);
-+            u->cq[i] = NULL;
-         }
-     }
- }
+ 
++    iocb->ret = 0;
+ done:
+     if (iocb->bh) {
+         replay_bh_schedule_event(iocb->bh);
+@@ -533,8 +525,7 @@ BlockAIOCB *ide_issue_trim(
+                                    &DEVICE(dev)->mem_reentrancy_guard);
+     iocb->ret = 0;
+     iocb->qiov = qiov;
+-    iocb->i = -1;
+-    iocb->j = 0;
++    iocb->canceled = false;
+ 
+     co = qemu_coroutine_create(ide_trim_co_entry, iocb);
+     aio_co_enter(qemu_get_current_aio_context(), co);
 -- 
 2.47.3
 
