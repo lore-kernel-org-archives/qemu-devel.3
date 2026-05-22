@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5517CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:39:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F2BACD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:39:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXXe-00031c-4D; Fri, 22 May 2026 17:36:26 -0400
+	id 1wQXXf-00038j-M8; Fri, 22 May 2026 17:36:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXXO-00019H-Bl; Fri, 22 May 2026 17:36:10 -0400
+ id 1wQXXK-0000nO-IS; Fri, 22 May 2026 17:36:06 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXXM-0000wW-6K; Fri, 22 May 2026 17:36:09 -0400
+ id 1wQXXF-0000MX-Cn; Fri, 22 May 2026 17:36:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485633; bh=MeK8UWy+x9PhAx8K2lxMEFb2KpUQgsBnsLYskStfXtw=;
+ t=1779485633; bh=H5WdgFMB60Bqo80lVqOWF9pNexOfOl8eyyX1ZX3PAic=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=J7dJc91Cv8sXxHuj0EB2uF+1+5LPHLv9jNY6NG9tXClrIoBiJ3H9fPhXsHHA9iNg5
- sF/QIkBiDq31E90SVEh+WtTgv0794CknpDvYlkMNmVHJtUfk1yuxK6YoxblStYALPp
- cJn9uaVI4jGwGtb/V445tKGaltZF+z55/ZF6ZKeHUcFiavRsWLwcJMBoQ5nJ+PcYcN
- QhMnWkh2wCZuXMzCywZHYMhjoNwOz2LREI1hy/iH/qq7062dkERSl3q+xx/VcCFLY7
- sDWgy0QUyA3KV5OuiHZ5LkcQw2/MTOImIBOzauO9paVD4rmmVrYeg1KU351xHPOL52
- WczM4OxVFNExg==
+ b=hF4Y0xvY+f6dGrwwtLRM0kG9CZKfXEkQy+U5RckA5SiKOGfAWmZ8X2SY1P/jdZW8G
+ IhtTiRDptrtwiBBEp9fVHC9lV09C5o4wHgo1W0+GOiyIyBxAm1LQCxX6q3z1F8EpG7
+ UOATEi34TLU5ZlqXQt43jo7O1rn6S4iZOsLbK2IRAu8oDy3alehRoI5uWM9obLHYmF
+ OSBGELlXjAgbVNqMy/RdmQVNlpoxuQ2ClAGS5jr0pyJpQYA/ozFwusMeKNS5VNmFau
+ hjCFFcfFy7tMlngVyR4z3KWaXpr7qNGz95gUGkXjO67HAb/4xuvKkGHtwLfwZV8yHh
+ vFxAz0dLqDFog==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D606B1AFAE2;
+ by isrv.corpit.ru (Postfix) with ESMTP id BC17C1AFAE0;
  Sat, 23 May 2026 00:33:53 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 070603B7168;
- Sat, 23 May 2026 00:33:58 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E07983B7166;
+ Sat, 23 May 2026 00:33:57 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 83/94] block: Add flags parameter to blk_*_pdiscard()
-Date: Sat, 23 May 2026 00:33:40 +0300
-Message-ID: <20260522213356.806058-25-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 81/94] blkdebug: Add 'delay-ns' option
+Date: Sat, 23 May 2026 00:33:38 +0300
+Message-ID: <20260522213356.806058-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
@@ -70,155 +70,107 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kevin Wolf <kwolf@redhat.com>
 
-All existing callers pass 0, but we need a way to pass BDRV_REQ_NO_QUEUE
-for discard requests.
+Sometimes reproducing a problem for debugging involves slow I/O, so
+let's add something to blkdebug to make I/O slow when we need it. This
+can be used either together with an error so that the request fails
+after the delay, or with errno=0, which allows the request to succeed
+after the delay.
 
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260421161132.99878-4-kwolf@redhat.com>
+Message-ID: <20260421161132.99878-2-kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 53074ba0330ae8831abbae2521c012e1d9072ed3)
+(cherry picked from commit d5e4090177ad382e01084a1594a1a60a69f4c1cd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/block-backend.c b/block/block-backend.c
-index ee00440e28..37ba7e9fc4 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -1803,12 +1803,13 @@ BlockAIOCB *blk_aio_ioctl(BlockBackend *blk, unsigned long int req, void *buf,
+diff --git a/block/blkdebug.c b/block/blkdebug.c
+index 8a4a8cb85e..b07c67611a 100644
+--- a/block/blkdebug.c
++++ b/block/blkdebug.c
+@@ -95,6 +95,7 @@ typedef struct BlkdebugRule {
+             int immediately;
+             int once;
+             int64_t offset;
++            int64_t delay_ns;
+         } inject;
+         struct {
+             int new_state;
+@@ -144,6 +145,10 @@ static QemuOptsList inject_error_opts = {
+             .name = "immediately",
+             .type = QEMU_OPT_BOOL,
+         },
++        {
++            .name = "delay-ns",
++            .type = QEMU_OPT_NUMBER,
++        },
+         { /* end of list */ }
+     },
+ };
+@@ -216,6 +221,8 @@ static int add_rule(void *opaque, QemuOpts *opts, Error **errp)
+         rule->options.inject.once  = qemu_opt_get_bool(opts, "once", 0);
+         rule->options.inject.immediately =
+             qemu_opt_get_bool(opts, "immediately", 0);
++        rule->options.inject.delay_ns =
++            qemu_opt_get_number(opts, "delay-ns", 0);
+         sector = qemu_opt_get_number(opts, "sector", -1);
+         rule->options.inject.offset =
+             sector == -1 ? -1 : sector * BDRV_SECTOR_SIZE;
+@@ -594,6 +601,7 @@ static int coroutine_fn rule_check(BlockDriverState *bs, uint64_t offset,
+     BlkdebugRule *rule = NULL;
+     int error;
+     bool immediately;
++    int64_t delay_ns;
  
- /* To be called between exactly one pair of blk_inc/dec_in_flight() */
- static int coroutine_fn
--blk_co_do_pdiscard(BlockBackend *blk, int64_t offset, int64_t bytes)
-+blk_co_do_pdiscard(BlockBackend *blk, int64_t offset, int64_t bytes,
-+                   BdrvRequestFlags flags)
- {
-     int ret;
-     IO_CODE();
- 
--    blk_wait_while_drained(blk, 0);
-+    blk_wait_while_drained(blk, flags);
-     GRAPH_RDLOCK_GUARD();
- 
-     ret = blk_check_byte_request(blk, offset, bytes);
-@@ -1824,7 +1825,7 @@ static void coroutine_fn blk_aio_pdiscard_entry(void *opaque)
-     BlkAioEmAIOCB *acb = opaque;
-     BlkRwCo *rwco = &acb->rwco;
- 
--    rwco->ret = blk_co_do_pdiscard(rwco->blk, rwco->offset, acb->bytes);
-+    rwco->ret = blk_co_do_pdiscard(rwco->blk, rwco->offset, acb->bytes, 0);
-     blk_aio_complete(acb);
- }
- 
-@@ -1838,13 +1839,13 @@ BlockAIOCB *blk_aio_pdiscard(BlockBackend *blk,
- }
- 
- int coroutine_fn blk_co_pdiscard(BlockBackend *blk, int64_t offset,
--                                 int64_t bytes)
-+                                 int64_t bytes, BdrvRequestFlags flags)
- {
-     int ret;
-     IO_OR_GS_CODE();
- 
-     blk_inc_in_flight(blk);
--    ret = blk_co_do_pdiscard(blk, offset, bytes);
-+    ret = blk_co_do_pdiscard(blk, offset, bytes, flags);
-     blk_dec_in_flight(blk);
- 
-     return ret;
-diff --git a/block/export/virtio-blk-handler.c b/block/export/virtio-blk-handler.c
-index 3dd6c43af1..eaa6fc1906 100644
---- a/block/export/virtio-blk-handler.c
-+++ b/block/export/virtio-blk-handler.c
-@@ -122,7 +122,7 @@ virtio_blk_discard_write_zeroes(VirtioBlkHandler *handler, struct iovec *iov,
-         }
- 
-         if (blk_co_pdiscard(blk, sector << VIRTIO_BLK_SECTOR_BITS,
--                            bytes) == 0) {
-+                            bytes, 0) == 0) {
-             return VIRTIO_BLK_S_OK;
+     qemu_mutex_lock(&s->lock);
+     QSIMPLEQ_FOREACH(rule, &s->active_rules, active_next) {
+@@ -608,13 +616,14 @@ static int coroutine_fn rule_check(BlockDriverState *bs, uint64_t offset,
          }
      }
-diff --git a/block/mirror.c b/block/mirror.c
-index 2fcded9e93..089856f4a8 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -454,7 +454,7 @@ static void coroutine_fn mirror_co_discard(void *opaque)
-     *op->bytes_handled = op->bytes;
-     op->is_in_flight = true;
  
--    ret = blk_co_pdiscard(op->s->target, op->offset, op->bytes);
-+    ret = blk_co_pdiscard(op->s->target, op->offset, op->bytes, 0);
-     mirror_write_complete(op, ret);
- }
- 
-@@ -1532,7 +1532,7 @@ do_sync_target_write(MirrorBlockJob *job, MirrorMethod method,
-                          zero_bitmap_end - zero_bitmap_offset);
-         }
-         assert(!qiov);
--        ret = blk_co_pdiscard(job->target, offset, bytes);
-+        ret = blk_co_pdiscard(job->target, offset, bytes, 0);
-         break;
- 
-     default:
-diff --git a/include/system/block-backend-io.h b/include/system/block-backend-io.h
-index 0248c1c36e..fd84723d9d 100644
---- a/include/system/block-backend-io.h
-+++ b/include/system/block-backend-io.h
-@@ -218,9 +218,9 @@ int co_wrapper_mixed blk_zone_append(BlockBackend *blk, int64_t *offset,
-                                          BdrvRequestFlags flags);
- 
- int co_wrapper_mixed blk_pdiscard(BlockBackend *blk, int64_t offset,
--                                  int64_t bytes);
-+                                  int64_t bytes, BdrvRequestFlags flags);
- int coroutine_fn blk_co_pdiscard(BlockBackend *blk, int64_t offset,
--                                 int64_t bytes);
-+                                 int64_t bytes, BdrvRequestFlags flags);
- 
- int co_wrapper_mixed blk_flush(BlockBackend *blk);
- int coroutine_fn blk_co_flush(BlockBackend *blk);
-diff --git a/nbd/server.c b/nbd/server.c
-index 620097c58c..78ec984409 100644
---- a/nbd/server.c
-+++ b/nbd/server.c
-@@ -2990,7 +2990,7 @@ static coroutine_fn int nbd_handle_request(NBDClient *client,
-                                       "flush failed", errp);
- 
-     case NBD_CMD_TRIM:
--        ret = blk_co_pdiscard(exp->common.blk, request->from, request->len);
-+        ret = blk_co_pdiscard(exp->common.blk, request->from, request->len, 0);
-         if (ret >= 0 && request->flags & NBD_CMD_FLAG_FUA) {
-             ret = blk_co_flush(exp->common.blk);
-         }
-diff --git a/qemu-io-cmds.c b/qemu-io-cmds.c
-index 13e0330162..f6d077908f 100644
---- a/qemu-io-cmds.c
-+++ b/qemu-io-cmds.c
-@@ -2201,7 +2201,7 @@ static int discard_f(BlockBackend *blk, int argc, char **argv)
+-    if (!rule || !rule->options.inject.error) {
++    if (!rule) {
+         qemu_mutex_unlock(&s->lock);
+         return 0;
      }
  
-     clock_gettime(CLOCK_MONOTONIC, &t1);
--    ret = blk_pdiscard(blk, offset, bytes);
-+    ret = blk_pdiscard(blk, offset, bytes, 0);
-     clock_gettime(CLOCK_MONOTONIC, &t2);
+     immediately = rule->options.inject.immediately;
+     error = rule->options.inject.error;
++    delay_ns  = rule->options.inject.delay_ns;
  
-     if (ret < 0) {
-diff --git a/tests/unit/test-block-iothread.c b/tests/unit/test-block-iothread.c
-index e26b3be593..5273ff235a 100644
---- a/tests/unit/test-block-iothread.c
-+++ b/tests/unit/test-block-iothread.c
-@@ -270,11 +270,11 @@ static void test_sync_op_blk_pdiscard(BlockBackend *blk)
-     int ret;
+     if (rule->options.inject.once) {
+         QSIMPLEQ_REMOVE(&s->active_rules, rule, BlkdebugRule, active_next);
+@@ -622,6 +631,10 @@ static int coroutine_fn rule_check(BlockDriverState *bs, uint64_t offset,
+     }
  
-     /* Early success: UNMAP not supported */
--    ret = blk_pdiscard(blk, 0, 512);
-+    ret = blk_pdiscard(blk, 0, 512, 0);
-     g_assert_cmpint(ret, ==, 0);
- 
-     /* Early error: Negative offset */
--    ret = blk_pdiscard(blk, -2, 512);
-+    ret = blk_pdiscard(blk, -2, 512, 0);
-     g_assert_cmpint(ret, ==, -EIO);
- }
- 
+     qemu_mutex_unlock(&s->lock);
++
++    if (delay_ns) {
++        qemu_co_sleep_ns(QEMU_CLOCK_REALTIME, delay_ns);
++    }
+     if (!immediately) {
+         aio_co_schedule(qemu_get_current_aio_context(), qemu_coroutine_self());
+         qemu_coroutine_yield();
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index 508b081ac1..0efd51787b 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -3919,6 +3919,9 @@
+ #
+ # @errno: error identifier (errno) to be returned; defaults to EIO
+ #
++# @delay-ns: request delay before completion in nanoseconds
++#            (default: 0, since: 11.1)
++#
+ # @sector: specifies the sector index which has to be affected in
+ #     order to actually trigger the event; defaults to "any sector"
+ #
+@@ -3934,6 +3937,7 @@
+             '*state': 'int',
+             '*iotype': 'BlkdebugIOType',
+             '*errno': 'int',
++            '*delay-ns': 'int',
+             '*sector': 'int',
+             '*once': 'bool',
+             '*immediately': 'bool' } }
 -- 
 2.47.3
 
