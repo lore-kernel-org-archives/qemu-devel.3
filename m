@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 578D3CD4F5B
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 05:22:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4F8ECD5BAF
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 05:22:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQIJA-0002Xb-Ni; Fri, 22 May 2026 01:20:28 -0400
+	id 1wQIJX-0003LQ-Un; Fri, 22 May 2026 01:20:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wQIJ8-0002US-GO
- for qemu-devel@nongnu.org; Fri, 22 May 2026 01:20:26 -0400
-Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
+ id 1wQIJO-0002za-Ro
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 01:20:44 -0400
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wQIJ4-0001rE-Kb
- for qemu-devel@nongnu.org; Fri, 22 May 2026 01:20:26 -0400
-Received: by mail-oi1-x230.google.com with SMTP id
- 5614622812f47-4824b15c19eso5791910b6e.2
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 22:20:22 -0700 (PDT)
+ id 1wQIJM-0002E8-WD
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 01:20:42 -0400
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-4855562f32eso5142b6e.2
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 22:20:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779427221; x=1780032021; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779427240; x=1780032040; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Lb0OvF7hQ6PiNdrSYpxR44n5ZueReZ1PaD49+fWM2z8=;
- b=Nf5fKqO3J0rz6uKBLDe/DNPzRZLNiWqbBmINTdrf2VF/kYkX4RYGghNSgZb69jihIQ
- XhjkK2b2nI5oBiviHkWgg9mTzmLuFcVi9MWlZ1pcP6zT8jRPLQjXWbI8Fk2mFdMBT4Uu
- QAHCjreIwJuxwfpApF0nKkzvi0oBqarK4EAWt9V48DVYKubmHBX9lAi329BsQCJdOvLw
- s461i1llf8IShhLqhnaZOjMBKOy8wgguG8kyC7I7R5oNsIt+vw61/+sMT8uMFUnEa8Fd
- qwmyw6R9e98jugZAhDGHLP9qujAMpGf79p+GbU/e3afX+TQ2YY4GKVmZ2qDGX57aWYhw
- wNyQ==
+ :reply-to; bh=ligDnecCtveNInNVdf6mxSKRJEEchFOLQXnvzn95ews=;
+ b=GJF0gh+zXKIOMKTY1OmR9H41m9mRZYXe9qLFK4pITsSQXd3boiW4HhSeo5ZJRKVnJk
+ zQPylPp75pFkGL3YXNV++0NKWzI7lnqAw4xqAPCNzJJxwtOBIiSV0QAa68JoNZqSchvt
+ dFKN53nSXrmKAGNOwcdFAKP7RyXZOQGIOUhZ4LzRP65ZonYQBX1mi2FmBOiyxAoIS16g
+ wWi8e/nDkU8R3uNcR+eubHXnqVdeA1R3Bd8uCM7PpnDS7pM1i6td2AtfzSP9I+z3e95Z
+ 9Fha9QG4v17cgBOa4qgXGwBz/Rx3DbQfsM49rpP23GrpRyiJppRJUDbWr5lbcMSJWQuG
+ tA0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779427221; x=1780032021;
+ d=1e100.net; s=20251104; t=1779427240; x=1780032040;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Lb0OvF7hQ6PiNdrSYpxR44n5ZueReZ1PaD49+fWM2z8=;
- b=lotUtcVj3DbLFL+TB/U+wUVSa+86xCZix+fQhAmHlVaxg0oRVIKb6YnDnCYWF/aE5j
- +o4YzJs9yG26qWM1Yo++f6M0sMhDos1niQEfyku6ngB0CsW1T2H8k9TjfNWpEy2FuIv1
- RQoiwjqWsDPcBz+E4VXBmAO9KsG6ANprMDV0WNP3TwKuZ2em74NssxWKPA/j+A7pdu0/
- K74t1K8iFq5VOmkalKFUWnEPkntg7dXSDNG5koxx8DqoePOUA8TmIOKx0DCMXzZVrpvC
- 1La5V1EB7kJg3qvPtvD0D/JXLZ47hSPjyPQyAD7O+NXCjcwrT3cndKaIA+0HOM0BU34i
- knlw==
-X-Gm-Message-State: AOJu0YyTa2CUpMcbkw1FWlXWqFS5EfJFGZU6Z90cHuw2UZUF3zTT4In8
- JESnkKjXJUE2uWTRWnf8q0uzUJA4v3KpwmG3eKncTer941IfeA9txntS
-X-Gm-Gg: Acq92OG7NhLnAaDHO5l1YaGQikv2A1iWTMXcU1Npc4od8YELUk3ZwnJaaeKg5O0XkvY
- gC2GNNGL1Ra0DE0B+gAgveSg/7xRWXmrpFaoHLeSj9o8v5gTJloCTuH3ooAI87hB1q5KRFVbIg5
- 5JGetrHIv0sEnEHAzbWjLb7fKMjXJ62gNjnEsyOHAGFVj/Z99JcrFq5NBSxIxQMQ1TeHiTz5t6+
- vn7KuwwYoUJD/A/9qkZ4Y+dpvhlMlpsEVRU/2W8qQlS1UIkEw4zXjufUa7zSuNKp2Zu1ldRA04I
- g4qWVA5Ooui23GO+PVNnqc1BEq2v0pr0Vu1GnNyoXH4mvB9rryEUkegSMCyAZxmZxv5sGHfYeUr
- DKZdjKTL4QrMOEcqAci9n6qFx5BYhmoEzuVClY3VhgXxQEfkSPnl5vKE13bzuy62I8weJXu4A3M
- uN7Vh5aqSWPVD4gyCGDNcGh9Sy7XhO97kBKUVr5diNG4WwOYmxDzRITwDyBHb1Egt9YrJ6sFKCp
- HO2xghEr2Z76ayWNAgSfAu2vBfGAXClGEysI8/TxJ18XA7JDGBOApP/RnCf7KL16sKyvvoFbgMV
- PGc=
-X-Received: by 2002:a05:6808:4fea:b0:484:e5e2:6b99 with SMTP id
- 5614622812f47-48549ecf994mr1312588b6e.1.1779427221251; 
- Thu, 21 May 2026 22:20:21 -0700 (PDT)
+ bh=ligDnecCtveNInNVdf6mxSKRJEEchFOLQXnvzn95ews=;
+ b=iICAmg8CX6MVYcQoHBOR8KajwJDk2C/NDp9Kulb0ccg3ljELdNNz9qy04+8y642Xny
+ FdwF7GdF3ydFBeIu4jingiglbjsnRIESNdZQdPxvWef9zubWeZGyLAVzezQ/ZAnrRcCB
+ 5JpWXwy3encdIetQII6Dg/NInj62p7ujAKtDa50IkFcLZgrHFMrOk2ERLnPeDDiKXEPF
+ oHuJKYP923CFafvJ+AJvddXEraXT6xB2SRVWtzt2jo4BwplLt2aQEiqr85BQL20ldGaP
+ qyITzFvkZnhHWueKpbD3ZxU7CvvUe4k4HsreKS054ueJjXdHJFSwdzDn2vwrXZOhbfRs
+ NbTQ==
+X-Gm-Message-State: AOJu0YxHRYIIywmgWpRd/jPJq5WN/Lz0KEeYPD1+Llx3WY1MjnNB1dan
+ QsTWndDSWvYg76TzITuOtIEWJVcaOOo+NzN1OJ5RxWxzCaqm2yAIuk67
+X-Gm-Gg: Acq92OGizwnsK7U9fbwYMPjD1dVT/U3CD6Z/ZDdveGCbUFScH8XLe/+hFLVKRWF+uOT
+ cALe/piaO8InvSKSzwgdPVgj+MpLx8dRY4cZnf8cNzNjp91SVqs1mpWTcZhr9GWbdw/hNfaoJf5
+ 8MtBEiX8xb9wsvF1W6Aif4d8GobOOFcoKgINzF4y3pdpr/61pnUalbPymOwu56tLQRBo2CCMvqn
+ J9Ln/P813fRZ0BdTyTWLs9daXuzppxYl0PNcZeb7NMFv2vPpz4gC8nemkU7KnK0lRtTFISqHgr1
+ 9pBDhYNRoRtvQrqrY8xSEILHZJLsmBl8p/TDyzRTJxcPSPfruWIOx13rfp3gMv667r5L48UqQPm
+ NvLuQnfBNSTGcTvBdVpZaXouGqOTPFt+UFvb6vcYIRkMZGQhvkXKEZBCYEEBvduE6d7L5A37IlN
+ j+TJmDWSPDY5zkGYmQQxXfnTp76Gv5tWrzktrTDTPPkcvR+xD0h61oYKNkQ543uXiX+l+UN3+cu
+ VOOlSwEa2qcAEhMnJlgRC9zEW92pbo+j0pIhoVLMOugbZNU9nrrCUiACcbTcBDCgLtb9gV///on
+ gJQ=
+X-Received: by 2002:a05:6808:1804:b0:485:3a2c:e78f with SMTP id
+ 5614622812f47-4854a3fecc3mr1061756b6e.40.1779427239850; 
+ Thu, 21 May 2026 22:20:39 -0700 (PDT)
 Received: from mac.localdomain (184-96-131-78.hlrn.qwest.net. [184.96.131.78])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-4855476ab77sm59690b6e.17.2026.05.21.22.20.19
+ 5614622812f47-4855476ab77sm59690b6e.17.2026.05.21.22.20.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 22:20:20 -0700 (PDT)
+ Thu, 21 May 2026 22:20:39 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Thu, 21 May 2026 23:19:49 -0600
-Subject: [PATCH v14 07/22] target/mips: add Octeon ZUC COP2 helpers
+Date: Thu, 21 May 2026 23:20:03 -0600
+Subject: [PATCH v14 21/22] target/mips: add Octeon CvmCount RDHWR support
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260521-mips-octeon-missing-insns-v2-v14-7-fbf08e164830@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260521-mips-octeon-missing-insns-v2-v14-21-fbf08e164830@gmail.com>
 References: <20260521-mips-octeon-missing-insns-v2-v14-0-fbf08e164830@gmail.com>
 In-Reply-To: <20260521-mips-octeon-missing-insns-v2-v14-0-fbf08e164830@gmail.com>
 To: qemu-devel@nongnu.org
@@ -85,8 +85,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  James Hilliard <james.hilliard1@gmail.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x230.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x22f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -110,432 +110,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the Octeon ZUC START and MORE helper operations and model the shared
-state window used by the hardware interface. This covers the keystream
-and MAC engine state, including the save-and-restore view that overlaps
-the HSH/SHA3 bank.
+Octeon exposes CvmCount through RDHWR register 31. Add the Octeon-only
+decode path, enable the corresponding HWREna bit for linux-user, and use
+an unsigned mask when checking HWREna so bit 31 is handled safely.
 
-Shared-window writes also update the SHA512/SHA3 backing state so guests
-can switch between engines without stale register contents.
+For user-mode emulation, return host ticks as a monotonic counter source
+suitable for existing Octeon userspace code. In system mode, fall back to
+the existing CP0 Count value.
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
-Changes v8 -> v9:
-  - Split ZUC selector operations into their own COP2 helper patch.
-  - Replace generic selector dispatch with per-operation ZUC helpers.
-  - Use helper-local selector constants for shared-window position logic.
-  - Add matching helper.h declarations with the helper implementation.
-
 Changes v5 -> v6:
-  - Use the manual-aligned HSH_DATW field and shared HSH window helper
-    names introduced by the COP2 crypto core patch.
-
-Changes v1 -> v2:
-  - Add shared-window selector predicates and assert on unreachable ZUC
-    selector switches.  (suggested by Philippe Mathieu-Daudé)
-  - Preserve aliased HSH/SHA3/SHA512 backing state during ZUC
-    shared-window writes.
-  - Add selector dispatch updates in octeon_translate.c after moving
-    COP2 decode out of translate.c.  (suggested by Philippe
-    Mathieu-Daudé)
+  - New patch.
 ---
- target/mips/helper.h            |   2 +
- target/mips/tcg/octeon_crypto.c | 369 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 371 insertions(+)
+ target/mips/cpu.c                             |  1 +
+ target/mips/helper.h                          |  1 +
+ target/mips/tcg/op_helper.c                   | 13 ++++++++++++-
+ target/mips/tcg/translate.c                   | 11 +++++++++++
+ tests/tcg/mips/user/isa/octeon/octeon-insns.c | 17 +++++++++++++++++
+ 5 files changed, 42 insertions(+), 1 deletion(-)
 
+diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+index b223b767c9..d72044aef6 100644
+--- a/target/mips/cpu.c
++++ b/target/mips/cpu.c
+@@ -320,6 +320,7 @@ static void mips_cpu_reset_hold(Object *obj, ResetType type)
+     env->CP0_HWREna |= 0x0000000F;
+     if (env->insn_flags & INSN_OCTEON) {
+         env->CP0_HWREna |= 0x40000000u;
++        env->CP0_HWREna |= 0x80000000u;
+     }
+     if (env->CP0_Config1 & (1 << CP0C1_FP)) {
+         env->CP0_Status |= (1 << CP0St_CU1);
 diff --git a/target/mips/helper.h b/target/mips/helper.h
-index d1ec75eaff..353832748c 100644
+index 2902dde889..a755cc5ad5 100644
 --- a/target/mips/helper.h
 +++ b/target/mips/helper.h
-@@ -70,6 +70,8 @@ DEF_HELPER_2(octeon_cp2_mt_sha3_xordat15, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_sha3_xordat16, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_sha3_xordat17, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_sha3_startop, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_zuc_start, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_zuc_more, void, env, i64)
+@@ -277,6 +277,7 @@ DEF_HELPER_1(rdhwr_ccres, tl, env)
+ DEF_HELPER_1(rdhwr_performance, tl, env)
+ DEF_HELPER_1(rdhwr_xnp, tl, env)
+ DEF_HELPER_1(rdhwr_chord, tl, env)
++DEF_HELPER_1(rdhwr_cvmcount, tl, env)
+ DEF_HELPER_2(pmon, void, env, int)
+ DEF_HELPER_1(wait, void, env)
  
- /* microMIPS functions */
- DEF_HELPER_4(lwm, void, env, tl, tl, i32)
-diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
-index b3b88ce018..28a9fca013 100644
---- a/target/mips/tcg/octeon_crypto.c
-+++ b/target/mips/tcg/octeon_crypto.c
-@@ -264,6 +264,375 @@ static void octeon_sha3_permute(MIPSOcteonCryptoState *crypto)
+diff --git a/target/mips/tcg/op_helper.c b/target/mips/tcg/op_helper.c
+index 3e586e3049..df1b5c3734 100644
+--- a/target/mips/tcg/op_helper.c
++++ b/target/mips/tcg/op_helper.c
+@@ -25,6 +25,7 @@
+ #include "exec/memop.h"
+ #include "fpu_helper.h"
+ #include "qemu/crc32c.h"
++#include "qemu/timer.h"
+ #include <zlib.h>
+ 
+ static inline target_ulong bitswap(target_ulong v)
+@@ -209,7 +210,7 @@ target_ulong helper_yield(CPUMIPSState *env, target_ulong arg)
+ 
+ static inline void check_hwrena(CPUMIPSState *env, int reg, uintptr_t pc)
+ {
+-    if ((env->hflags & MIPS_HFLAG_CP0) || (env->CP0_HWREna & (1 << reg))) {
++    if ((env->hflags & MIPS_HFLAG_CP0) || (env->CP0_HWREna & (1u << reg))) {
+         return;
      }
+     do_raise_exception(env, EXCP_RI, pc);
+@@ -261,6 +262,16 @@ target_ulong helper_rdhwr_chord(CPUMIPSState *env)
+     return env->octeon_crypto.chord;
  }
  
-+static inline uint32_t octeon_crypto_hi32(uint64_t value)
++target_ulong helper_rdhwr_cvmcount(CPUMIPSState *env)
 +{
-+    return value >> 32;
++    check_hwrena(env, 31, GETPC());
++#ifdef CONFIG_USER_ONLY
++    return cpu_get_host_ticks();
++#else
++    return (uint32_t)cpu_mips_get_count(env);
++#endif
 +}
 +
-+static inline uint32_t octeon_crypto_lo32(uint64_t value)
-+{
-+    return value;
-+}
-+
-+static inline uint64_t octeon_crypto_pack32(uint32_t hi, uint32_t lo)
-+{
-+    return ((uint64_t)hi << 32) | lo;
-+}
-+
-+static const uint8_t octeon_zuc_s0[256] = {
-+    0x3e, 0x72, 0x5b, 0x47, 0xca, 0xe0, 0x00, 0x33,
-+    0x04, 0xd1, 0x54, 0x98, 0x09, 0xb9, 0x6d, 0xcb,
-+    0x7b, 0x1b, 0xf9, 0x32, 0xaf, 0x9d, 0x6a, 0xa5,
-+    0xb8, 0x2d, 0xfc, 0x1d, 0x08, 0x53, 0x03, 0x90,
-+    0x4d, 0x4e, 0x84, 0x99, 0xe4, 0xce, 0xd9, 0x91,
-+    0xdd, 0xb6, 0x85, 0x48, 0x8b, 0x29, 0x6e, 0xac,
-+    0xcd, 0xc1, 0xf8, 0x1e, 0x73, 0x43, 0x69, 0xc6,
-+    0xb5, 0xbd, 0xfd, 0x39, 0x63, 0x20, 0xd4, 0x38,
-+    0x76, 0x7d, 0xb2, 0xa7, 0xcf, 0xed, 0x57, 0xc5,
-+    0xf3, 0x2c, 0xbb, 0x14, 0x21, 0x06, 0x55, 0x9b,
-+    0xe3, 0xef, 0x5e, 0x31, 0x4f, 0x7f, 0x5a, 0xa4,
-+    0x0d, 0x82, 0x51, 0x49, 0x5f, 0xba, 0x58, 0x1c,
-+    0x4a, 0x16, 0xd5, 0x17, 0xa8, 0x92, 0x24, 0x1f,
-+    0x8c, 0xff, 0xd8, 0xae, 0x2e, 0x01, 0xd3, 0xad,
-+    0x3b, 0x4b, 0xda, 0x46, 0xeb, 0xc9, 0xde, 0x9a,
-+    0x8f, 0x87, 0xd7, 0x3a, 0x80, 0x6f, 0x2f, 0xc8,
-+    0xb1, 0xb4, 0x37, 0xf7, 0x0a, 0x22, 0x13, 0x28,
-+    0x7c, 0xcc, 0x3c, 0x89, 0xc7, 0xc3, 0x96, 0x56,
-+    0x07, 0xbf, 0x7e, 0xf0, 0x0b, 0x2b, 0x97, 0x52,
-+    0x35, 0x41, 0x79, 0x61, 0xa6, 0x4c, 0x10, 0xfe,
-+    0xbc, 0x26, 0x95, 0x88, 0x8a, 0xb0, 0xa3, 0xfb,
-+    0xc0, 0x18, 0x94, 0xf2, 0xe1, 0xe5, 0xe9, 0x5d,
-+    0xd0, 0xdc, 0x11, 0x66, 0x64, 0x5c, 0xec, 0x59,
-+    0x42, 0x75, 0x12, 0xf5, 0x74, 0x9c, 0xaa, 0x23,
-+    0x0e, 0x86, 0xab, 0xbe, 0x2a, 0x02, 0xe7, 0x67,
-+    0xe6, 0x44, 0xa2, 0x6c, 0xc2, 0x93, 0x9f, 0xf1,
-+    0xf6, 0xfa, 0x36, 0xd2, 0x50, 0x68, 0x9e, 0x62,
-+    0x71, 0x15, 0x3d, 0xd6, 0x40, 0xc4, 0xe2, 0x0f,
-+    0x8e, 0x83, 0x77, 0x6b, 0x25, 0x05, 0x3f, 0x0c,
-+    0x30, 0xea, 0x70, 0xb7, 0xa1, 0xe8, 0xa9, 0x65,
-+    0x8d, 0x27, 0x1a, 0xdb, 0x81, 0xb3, 0xa0, 0xf4,
-+    0x45, 0x7a, 0x19, 0xdf, 0xee, 0x78, 0x34, 0x60,
-+};
-+
-+static const uint8_t octeon_zuc_s1[256] = {
-+    0x55, 0xc2, 0x63, 0x71, 0x3b, 0xc8, 0x47, 0x86,
-+    0x9f, 0x3c, 0xda, 0x5b, 0x29, 0xaa, 0xfd, 0x77,
-+    0x8c, 0xc5, 0x94, 0x0c, 0xa6, 0x1a, 0x13, 0x00,
-+    0xe3, 0xa8, 0x16, 0x72, 0x40, 0xf9, 0xf8, 0x42,
-+    0x44, 0x26, 0x68, 0x96, 0x81, 0xd9, 0x45, 0x3e,
-+    0x10, 0x76, 0xc6, 0xa7, 0x8b, 0x39, 0x43, 0xe1,
-+    0x3a, 0xb5, 0x56, 0x2a, 0xc0, 0x6d, 0xb3, 0x05,
-+    0x22, 0x66, 0xbf, 0xdc, 0x0b, 0xfa, 0x62, 0x48,
-+    0xdd, 0x20, 0x11, 0x06, 0x36, 0xc9, 0xc1, 0xcf,
-+    0xf6, 0x27, 0x52, 0xbb, 0x69, 0xf5, 0xd4, 0x87,
-+    0x7f, 0x84, 0x4c, 0xd2, 0x9c, 0x57, 0xa4, 0xbc,
-+    0x4f, 0x9a, 0xdf, 0xfe, 0xd6, 0x8d, 0x7a, 0xeb,
-+    0x2b, 0x53, 0xd8, 0x5c, 0xa1, 0x14, 0x17, 0xfb,
-+    0x23, 0xd5, 0x7d, 0x30, 0x67, 0x73, 0x08, 0x09,
-+    0xee, 0xb7, 0x70, 0x3f, 0x61, 0xb2, 0x19, 0x8e,
-+    0x4e, 0xe5, 0x4b, 0x93, 0x8f, 0x5d, 0xdb, 0xa9,
-+    0xad, 0xf1, 0xae, 0x2e, 0xcb, 0x0d, 0xfc, 0xf4,
-+    0x2d, 0x46, 0x6e, 0x1d, 0x97, 0xe8, 0xd1, 0xe9,
-+    0x4d, 0x37, 0xa5, 0x75, 0x5e, 0x83, 0x9e, 0xab,
-+    0x82, 0x9d, 0xb9, 0x1c, 0xe0, 0xcd, 0x49, 0x89,
-+    0x01, 0xb6, 0xbd, 0x58, 0x24, 0xa2, 0x5f, 0x38,
-+    0x78, 0x99, 0x15, 0x90, 0x50, 0xb8, 0x95, 0xe4,
-+    0xd0, 0x91, 0xc7, 0xce, 0xed, 0x0f, 0xb4, 0x6f,
-+    0xa0, 0xcc, 0xf0, 0x02, 0x4a, 0x79, 0xc3, 0xde,
-+    0xa3, 0xef, 0xea, 0x51, 0xe6, 0x6b, 0x18, 0xec,
-+    0x1b, 0x2c, 0x80, 0xf7, 0x74, 0xe7, 0xff, 0x21,
-+    0x5a, 0x6a, 0x54, 0x1e, 0x41, 0x31, 0x92, 0x35,
-+    0xc4, 0x33, 0x07, 0x0a, 0xba, 0x7e, 0x0e, 0x34,
-+    0x88, 0xb1, 0x98, 0x7c, 0xf3, 0x3d, 0x60, 0x6c,
-+    0x7b, 0xca, 0xd3, 0x1f, 0x32, 0x65, 0x04, 0x28,
-+    0x64, 0xbe, 0x85, 0x9b, 0x2f, 0x59, 0x8a, 0xd7,
-+    0xb0, 0x25, 0xac, 0xaf, 0x12, 0x03, 0xe2, 0xf2,
-+};
-+
-+static inline uint32_t octeon_zuc_addm(uint32_t a, uint32_t b)
-+{
-+    uint32_t c = a + b;
-+
-+    c = (c & 0x7fffffffU) + (c >> 31);
-+    return c ? c : 0x7fffffffU;
-+}
-+
-+static inline uint32_t octeon_zuc_mul_by_pow2(uint32_t v, unsigned int shift)
-+{
-+    return ((v << shift) | (v >> (31 - shift))) & 0x7fffffffU;
-+}
-+
-+static inline uint32_t octeon_zuc_make_u32(uint8_t a, uint8_t b,
-+                                           uint8_t c, uint8_t d)
-+{
-+    return ((uint32_t)a << 24) | ((uint32_t)b << 16) |
-+           ((uint32_t)c << 8) | d;
-+}
-+
-+static inline uint64_t octeon_zuc_pack_pair(uint32_t hi, uint32_t lo)
-+{
-+    return ((uint64_t)hi << 32) | lo;
-+}
-+
-+static uint32_t octeon_zuc_lfsr(const MIPSOcteonCryptoState *crypto,
-+                                unsigned int index)
-+{
-+    uint64_t pair = crypto->hsh_dat[index / 2];
-+
-+    return index & 1 ? octeon_crypto_lo32(pair) : octeon_crypto_hi32(pair);
-+}
-+
-+static void octeon_zuc_set_lfsr(MIPSOcteonCryptoState *crypto,
-+                                unsigned int index, uint32_t value)
-+{
-+    uint32_t hi = octeon_crypto_hi32(crypto->hsh_dat[index / 2]);
-+    uint32_t lo = octeon_crypto_lo32(crypto->hsh_dat[index / 2]);
-+
-+    value &= 0x7fffffffU;
-+    if (index & 1) {
-+        lo = value;
-+    } else {
-+        hi = value;
-+    }
-+    crypto->hsh_dat[index / 2] = octeon_zuc_pack_pair(hi, lo);
-+}
-+
-+static uint32_t octeon_zuc_fsm(const MIPSOcteonCryptoState *crypto,
-+                               unsigned int index)
-+{
-+    uint64_t pair = crypto->hsh_dat[8];
-+
-+    return index ? octeon_crypto_lo32(pair) : octeon_crypto_hi32(pair);
-+}
-+
-+static void octeon_zuc_set_fsm(MIPSOcteonCryptoState *crypto,
-+                               unsigned int index, uint32_t value)
-+{
-+    uint32_t hi = octeon_crypto_hi32(crypto->hsh_dat[8]);
-+    uint32_t lo = octeon_crypto_lo32(crypto->hsh_dat[8]);
-+
-+    if (index) {
-+        lo = value;
-+        crypto->hsh_iv[2] = value;
-+    } else {
-+        hi = value;
-+        crypto->hsh_iv[1] = value;
-+    }
-+    crypto->hsh_dat[8] = octeon_zuc_pack_pair(hi, lo);
-+}
-+
-+static uint32_t octeon_zuc_window(const MIPSOcteonCryptoState *crypto,
-+                                  unsigned int index)
-+{
-+    switch (index) {
-+    case 0:
-+        return octeon_crypto_hi32(crypto->hsh_dat[9]);
-+    case 1:
-+        return octeon_crypto_lo32(crypto->hsh_dat[9]);
-+    case 2:
-+        return crypto->hsh_dat[10];
-+    default:
-+        g_assert_not_reached();
-+    }
-+}
-+
-+static void octeon_zuc_set_window(MIPSOcteonCryptoState *crypto,
-+                                  unsigned int index, uint32_t value)
-+{
-+    switch (index) {
-+    case 0:
-+        crypto->hsh_dat[9] =
-+            octeon_zuc_pack_pair(value, octeon_crypto_lo32(crypto->hsh_dat[9]));
-+        crypto->hsh_iv[0] = crypto->hsh_dat[9];
-+        return;
-+    case 1:
-+        crypto->hsh_dat[9] =
-+            octeon_zuc_pack_pair(octeon_crypto_hi32(crypto->hsh_dat[9]), value);
-+        crypto->hsh_iv[0] = crypto->hsh_dat[9];
-+        return;
-+    case 2:
-+        crypto->hsh_dat[10] = value;
-+        return;
-+    default:
-+        g_assert_not_reached();
-+    }
-+}
-+
-+static uint32_t octeon_zuc_tresult(const MIPSOcteonCryptoState *crypto)
-+{
-+    return crypto->hsh_dat[11];
-+}
-+
-+static void octeon_zuc_set_tresult(MIPSOcteonCryptoState *crypto,
-+                                   uint32_t value)
-+{
-+    crypto->hsh_dat[11] = value;
-+    crypto->hsh_iv[3] = value;
-+}
-+
-+static void octeon_zuc_bit_reorganization(const MIPSOcteonCryptoState *crypto,
-+                                          uint32_t x[4])
-+{
-+    x[0] = ((octeon_zuc_lfsr(crypto, 15) & 0x7fff8000U) << 1) |
-+           (octeon_zuc_lfsr(crypto, 14) & 0xffffU);
-+    x[1] = ((octeon_zuc_lfsr(crypto, 11) & 0xffffU) << 16) |
-+           (octeon_zuc_lfsr(crypto, 9) >> 15);
-+    x[2] = ((octeon_zuc_lfsr(crypto, 7) & 0xffffU) << 16) |
-+           (octeon_zuc_lfsr(crypto, 5) >> 15);
-+    x[3] = ((octeon_zuc_lfsr(crypto, 2) & 0xffffU) << 16) |
-+           (octeon_zuc_lfsr(crypto, 0) >> 15);
-+}
-+
-+static inline uint32_t octeon_zuc_l1(uint32_t x)
-+{
-+    return x ^ rol32(x, 2) ^ rol32(x, 10) ^
-+           rol32(x, 18) ^ rol32(x, 24);
-+}
-+
-+static inline uint32_t octeon_zuc_l2(uint32_t x)
-+{
-+    return x ^ rol32(x, 8) ^ rol32(x, 14) ^
-+           rol32(x, 22) ^ rol32(x, 30);
-+}
-+
-+static uint32_t octeon_zuc_f(MIPSOcteonCryptoState *crypto, const uint32_t x[4])
-+{
-+    uint32_t fsm0 = octeon_zuc_fsm(crypto, 0);
-+    uint32_t fsm1 = octeon_zuc_fsm(crypto, 1);
-+    uint32_t w = (x[0] ^ fsm0) + fsm1;
-+    uint32_t w1 = fsm0 + x[1];
-+    uint32_t w2 = fsm1 ^ x[2];
-+    uint32_t u = octeon_zuc_l1((w1 << 16) | (w2 >> 16));
-+    uint32_t v = octeon_zuc_l2((w2 << 16) | (w1 >> 16));
-+
-+    octeon_zuc_set_fsm(crypto, 0,
-+                       octeon_zuc_make_u32(octeon_zuc_s0[u >> 24],
-+                                           octeon_zuc_s1[(uint8_t)(u >> 16)],
-+                                           octeon_zuc_s0[(uint8_t)(u >> 8)],
-+                                           octeon_zuc_s1[(uint8_t)u]));
-+    octeon_zuc_set_fsm(crypto, 1,
-+                       octeon_zuc_make_u32(octeon_zuc_s0[v >> 24],
-+                                           octeon_zuc_s1[(uint8_t)(v >> 16)],
-+                                           octeon_zuc_s0[(uint8_t)(v >> 8)],
-+                                           octeon_zuc_s1[(uint8_t)v]));
-+    return w;
-+}
-+
-+static void octeon_zuc_lfsr_step(MIPSOcteonCryptoState *crypto,
-+                                 bool init_mode, uint32_t u)
-+{
-+    uint32_t lfsr[16];
-+    uint32_t f;
-+
-+    for (int i = 0; i < 16; i++) {
-+        lfsr[i] = octeon_zuc_lfsr(crypto, i);
-+    }
-+
-+    f = lfsr[0];
-+    f = octeon_zuc_addm(f, octeon_zuc_mul_by_pow2(lfsr[0], 8));
-+    f = octeon_zuc_addm(f, octeon_zuc_mul_by_pow2(lfsr[4], 20));
-+    f = octeon_zuc_addm(f, octeon_zuc_mul_by_pow2(lfsr[10], 21));
-+    f = octeon_zuc_addm(f, octeon_zuc_mul_by_pow2(lfsr[13], 17));
-+    f = octeon_zuc_addm(f, octeon_zuc_mul_by_pow2(lfsr[15], 15));
-+    if (init_mode) {
-+        f = octeon_zuc_addm(f, u);
-+    }
-+
-+    for (int i = 0; i < 15; i++) {
-+        octeon_zuc_set_lfsr(crypto, i, lfsr[i + 1]);
-+    }
-+    octeon_zuc_set_lfsr(crypto, 15, f);
-+}
-+
-+static uint32_t octeon_zuc_generate_word(MIPSOcteonCryptoState *crypto)
-+{
-+    uint32_t x[4];
-+    uint32_t z;
-+
-+    octeon_zuc_bit_reorganization(crypto, x);
-+    z = octeon_zuc_f(crypto, x) ^ x[3];
-+    octeon_zuc_lfsr_step(crypto, false, 0);
-+    return z;
-+}
-+
-+static void octeon_zuc_fill_window(MIPSOcteonCryptoState *crypto)
-+{
-+    octeon_zuc_set_window(crypto, 0, octeon_zuc_generate_word(crypto));
-+    octeon_zuc_set_window(crypto, 1, octeon_zuc_generate_word(crypto));
-+    octeon_zuc_set_window(crypto, 2, octeon_zuc_generate_word(crypto));
-+}
-+
-+static inline uint32_t
-+octeon_zuc_window_word(const MIPSOcteonCryptoState *crypto, unsigned int bit)
-+{
-+    if (bit == 0) {
-+        return octeon_zuc_window(crypto, 0);
-+    }
-+    if (bit < 32) {
-+        return (octeon_zuc_window(crypto, 0) << bit) |
-+               (octeon_zuc_window(crypto, 1) >> (32 - bit));
-+    }
-+    if (bit == 32) {
-+        return octeon_zuc_window(crypto, 1);
-+    }
-+    return (octeon_zuc_window(crypto, 1) << (bit - 32)) |
-+           (octeon_zuc_window(crypto, 2) >> (64 - bit));
-+}
-+
-+static void octeon_zuc_advance_window(MIPSOcteonCryptoState *crypto)
-+{
-+    octeon_zuc_set_window(crypto, 0, octeon_zuc_window(crypto, 2));
-+    octeon_zuc_set_window(crypto, 1, octeon_zuc_generate_word(crypto));
-+    octeon_zuc_set_window(crypto, 2, octeon_zuc_generate_word(crypto));
-+}
-+
-+static void octeon_zuc_start(MIPSOcteonCryptoState *crypto, uint64_t data)
-+{
-+    uint32_t x[4];
-+
-+    for (int i = 0; i < 14; i++) {
-+        octeon_zuc_set_lfsr(crypto, i, octeon_zuc_lfsr(crypto, i));
-+    }
-+    octeon_zuc_set_lfsr(crypto, 14, data >> 32);
-+    octeon_zuc_set_lfsr(crypto, 15, data);
-+    octeon_zuc_set_fsm(crypto, 0, 0);
-+    octeon_zuc_set_fsm(crypto, 1, 0);
-+    octeon_zuc_set_tresult(crypto, 0);
-+
-+    for (int i = 0; i < 32; i++) {
-+        octeon_zuc_bit_reorganization(crypto, x);
-+        octeon_zuc_lfsr_step(crypto, true, octeon_zuc_f(crypto, x) >> 1);
-+    }
-+
-+    octeon_zuc_bit_reorganization(crypto, x);
-+    (void)octeon_zuc_f(crypto, x);
-+    octeon_zuc_lfsr_step(crypto, false, 0);
-+    octeon_zuc_fill_window(crypto);
-+}
-+
-+static void octeon_zuc_more(MIPSOcteonCryptoState *crypto, uint64_t data)
-+{
-+    uint32_t t = octeon_zuc_tresult(crypto);
-+
-+    for (unsigned int bit = 0; bit < 64; bit++) {
-+        if ((data >> (63 - bit)) & 1) {
-+            t ^= octeon_zuc_window_word(crypto, bit);
-+        }
-+    }
-+    octeon_zuc_set_tresult(crypto, t);
-+    octeon_zuc_advance_window(crypto);
-+}
-+
-+void helper_octeon_cp2_mt_zuc_start(CPUMIPSState *env, uint64_t value)
-+{
-+    octeon_zuc_start(&env->octeon_crypto, value);
-+}
-+
-+void helper_octeon_cp2_mt_zuc_more(CPUMIPSState *env, uint64_t value)
-+{
-+    octeon_zuc_more(&env->octeon_crypto, value);
-+}
-+
- uint64_t helper_octeon_cp2_mf_crc_iv_reflect(CPUMIPSState *env)
+ void helper_pmon(CPUMIPSState *env, int function)
  {
-     return octeon_crc_reflect32_by_byte(env->octeon_crypto.crc_iv);
+     function /= 2;
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+index 1f44932882..e3467d1525 100644
+--- a/target/mips/tcg/translate.c
++++ b/target/mips/tcg/translate.c
+@@ -10933,6 +10933,17 @@ void gen_rdhwr(DisasContext *ctx, int rt, int rd, int sel)
+         gen_helper_rdhwr_chord(t0, tcg_env);
+         gen_store_gpr(t0, rt);
+         break;
++    case 31:
++        if (!(ctx->insn_flags & INSN_OCTEON)) {
++            gen_reserved_instruction(ctx);
++            break;
++        }
++        translator_io_start(&ctx->base);
++        gen_helper_rdhwr_cvmcount(t0, tcg_env);
++        gen_store_gpr(t0, rt);
++        gen_save_pc(ctx->base.pc_next + 4);
++        ctx->base.is_jmp = DISAS_EXIT;
++        break;
+     default:            /* Invalid */
+         MIPS_INVAL("rdhwr");
+         gen_reserved_instruction(ctx);
+diff --git a/tests/tcg/mips/user/isa/octeon/octeon-insns.c b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
+index f3c52d7829..6480c8532a 100644
+--- a/tests/tcg/mips/user/isa/octeon/octeon-insns.c
++++ b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
+@@ -330,6 +330,22 @@ static uint64_t octeon_cop2_gfm_mul_reflect_readback(uint64_t value)
+     return rd;
+ }
+ 
++static uint64_t octeon_rdhwr31_non_decreasing(void)
++{
++    uint64_t first, second;
++
++    asm volatile(
++        ".word 0x7c08f83b\n\t" /* rdhwr $8, $31 */
++        ".word 0x7c09f83b\n\t" /* rdhwr $9, $31 */
++        "move %[first], $8\n\t"
++        "move %[second], $9\n\t"
++        : [first] "=r" (first), [second] "=r" (second)
++        :
++        : "$8", "$9");
++
++    return second >= first;
++}
++
+ int main(void)
+ {
+     assert(octeon_baddu(0x123, 0x0f0) == 0x13);
+@@ -358,6 +374,7 @@ int main(void)
+                0x0123456789abcdefULL) == 0xf7b3d591e6a2c480ULL);
+     assert(octeon_cop2_gfm_mul_reflect_readback(
+                0xfedcba9876543210ULL) == 0x084c2a6e195d3b7fULL);
++    assert(octeon_rdhwr31_non_decreasing());
+ 
+     return 0;
+ }
 
 -- 
 2.54.0
