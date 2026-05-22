@@ -4,99 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06CC0CD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 14:23:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 919FBCD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 14:58:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQQmS-0005Ic-N2; Fri, 22 May 2026 10:23:16 -0400
+	id 1wQRJk-0002kY-NF; Fri, 22 May 2026 10:57:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wQQmQ-0005IN-SL
- for qemu-devel@nongnu.org; Fri, 22 May 2026 10:23:14 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wQQmO-0006qN-9q
- for qemu-devel@nongnu.org; Fri, 22 May 2026 10:23:14 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 6049D6739F;
- Fri, 22 May 2026 14:23:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1779459790; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
+ id 1wQRJQ-0002eh-Jg; Fri, 22 May 2026 10:57:20 -0400
+Received: from apollo.dupie.be ([51.159.20.238])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
+ id 1wQRJM-0006aU-Qj; Fri, 22 May 2026 10:57:20 -0400
+Received: from [10.100.100.22] (35.203-64-87.adsl-dyn.isp.belgacom.be
+ [87.64.203.35])
+ by apollo.dupie.be (Postfix) with ESMTPSA id C3BD31520E21;
+ Fri, 22 May 2026 16:57:11 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
+ t=1779461832;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ERzfB3K1RYDEqI7M8Eax5BIJz7dIO8XaAnjkcDleRME=;
- b=vXo+d9qp5/+Tmbs7+EnMU97d8Ua9L5fUsz8ELB1JQTfpkq/5DkR1/i2Rf2BehXvUh4AZ1l
- xYBIUc8K7h6uOFkr/wJLZ3kGmt5Z7gvYS8jcLR0wuvoPxXjsyBVLjWksEWrTaQHTNvED7Q
- VS9wRq9O1n7TyVysvXHNTqQxY5n63bM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1779459790;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ERzfB3K1RYDEqI7M8Eax5BIJz7dIO8XaAnjkcDleRME=;
- b=AxAikJOcu4HoHZfcwQMZT7veL5P+DnBP1Lmh7TxqDwBjwnCevi1PuzGLMc+PMvnCxG+myi
- nKitm6nEgeMzIyDA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1779459790; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ERzfB3K1RYDEqI7M8Eax5BIJz7dIO8XaAnjkcDleRME=;
- b=vXo+d9qp5/+Tmbs7+EnMU97d8Ua9L5fUsz8ELB1JQTfpkq/5DkR1/i2Rf2BehXvUh4AZ1l
- xYBIUc8K7h6uOFkr/wJLZ3kGmt5Z7gvYS8jcLR0wuvoPxXjsyBVLjWksEWrTaQHTNvED7Q
- VS9wRq9O1n7TyVysvXHNTqQxY5n63bM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1779459790;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ERzfB3K1RYDEqI7M8Eax5BIJz7dIO8XaAnjkcDleRME=;
- b=AxAikJOcu4HoHZfcwQMZT7veL5P+DnBP1Lmh7TxqDwBjwnCevi1PuzGLMc+PMvnCxG+myi
- nKitm6nEgeMzIyDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EB018593A8;
- Fri, 22 May 2026 14:23:09 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id i5ZjLs1mEGrXZgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 22 May 2026 14:23:09 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- jasowang@redhat.com
-Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, Markus Armbruster
- <armbru@redhat.com>, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Eric Blake <eblake@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo
- Bonzini <pbonzini@redhat.com>, "open list:Incompatible changes"
- <devel@lists.libvirt.org>
-Subject: Re: [PATCH v7] qapi: net: deprecate vhostforce option
-In-Reply-To: <20260522121549.81248-1-vsementsov@yandex-team.ru>
-References: <20260522121549.81248-1-vsementsov@yandex-team.ru>
-Date: Fri, 22 May 2026 11:22:59 -0300
-Message-ID: <87jysv5xrw.fsf@suse.de>
+ bh=vKQFXdAQibq7GxbDy+HaJsf0pNQtrrLUsW5BTEn0sJs=;
+ b=jdvCWi2zMSajdDTbjy9pcuxpfbFNAkDYQCg5AJrCSdnyBaRD8Ln7QrLs4sDboI0zgAH7gT
+ f7xKHtMgCtyJgCfeUmPgAznlh5qbx7ghHnO3TZF2HcOJWa7FPbkuq60gyNPEReS6IKe0M7
+ LzyodxoNkp9M9tbBw8kHR4WLE9qjV7wAa0m67r1btP+bH/dhpNUnOApEAf5EbEO8MYqP8X
+ Sd5Vc5Euf1eigBR8NelgGjkh7cCpQCHY9CngTb4iM/hJ5gfKxqOtggp3nCcThmy5XBEiYl
+ b81U7aZKkXrI8KYPOay7JnjbLLQ+eCs/LJVh5D4O9FDt8SrEPIJho/bo8cqlAA==
+Message-ID: <723487c1-b891-496b-ae77-51b082e39fc1@dupond.be>
+Date: Fri, 22 May 2026 16:57:11 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[10]; MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:email,
- suse.de:mid]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/1] qcow2: add functionality to repair bitmaps
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>, qemu-block@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Eric Blake <eblake@redhat.com>
+References: <20260522085128.428672-1-jean-louis@dupond.be>
+ <20260522085128.428672-2-jean-louis@dupond.be>
+ <24220347-bc4a-4f70-9a78-6aba96e643d5@yandex-team.ru>
+Content-Language: en-US, en-GB, nl-BE
+From: Jean-Louis Dupond <jean-louis@dupond.be>
+In-Reply-To: <24220347-bc4a-4f70-9a78-6aba96e643d5@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=51.159.20.238; envelope-from=jean-louis@dupond.be;
+ helo=apollo.dupie.be
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,202 +75,284 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-> This option for tap and vhost-user netdevs doesn't make sense
-> since long ago (10 years!), starting from commits:
+On 22/05/2026 13:29, Vladimir Sementsov-Ogievskiy wrote:
+> On 22.05.26 11:51, Jean-Louis Dupond wrote:
+>> In some cases, it might happen that bitmaps become corrupt.
+>> For example when adding/removing bitmaps on a live image.
+>>
+>> Of course this should not happen, but in case this happens, the image is
+>> corrupt and even cannot be opened anymore. You'll get something like the
+>> following:
+>> qemu-img: Could not open 'disk.qcow2': Bitmap '' doesn't satisfy the 
+>> constraints
+>>
+>> So the image becomes useless, and cannot be repaired. This while in fact
+>> only (one) bitmap entry is corrupt, and the rest of the data is just
+>> intact.
+>>
+>> This commit adds a way to fix this corruption, by just replacing the
+>> bitmap list in the qcow2 image with the valid bitmaps, and dropping the
+>> bitmaps that are corrupt.
+>>
+>> $ qemu-img check disk.qcow2
+>> qemu-img: Check failed: Invalid argument
+>> qemu-img: Lost persistent bitmaps during inactivation of node 
+>> '#block147': Bitmap '' doesn't satisfy the constraints
+>>
+>> $ qemu-img check -r all disk.qcow2
+>> qcow2_free_clusters failed: Invalid argument
+>> Leaked cluster 3 refcount=1 reference=0
+>> Leaked cluster 26 refcount=1 reference=0
+>> ERROR cluster 983214 refcount=0 reference=1
+>> Rebuilding refcount structure
+>> Repairing cluster 1 refcount=1 reference=0
+>> Repairing cluster 2 refcount=1 reference=0
+>> Repairing cluster 32768 refcount=1 reference=0
+>> ....
+>> Repairing cluster 983214 refcount=1 reference=0
+>> The following inconsistencies were found and repaired:
+>>
+>>      2 leaked clusters
+>>      3 corruptions
+>>
+>> Double checking the fixed image now...
+>> No errors were found on the image.
+>> 983056/1048576 = 93.75% allocated, 0.05% fragmented, 0.00% compressed 
+>> clusters
+>> Image end offset: 64437878784
+>>
+>> And the image is valid again!
+>> Worst case you lose all bitmaps, but at least the image and the data
+>> itself is useable again.
+>>
+>> Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
+>> ---
+>>   block/qcow2-bitmap.c   | 43 +++++++++++++++++++++++++++++++++++++++++-
+>>   block/qcow2-refcount.c |  3 ++-
+>>   block/qcow2.c          | 16 ++++++++++++----
+>>   block/qcow2.h          |  3 ++-
+>>   4 files changed, 58 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/block/qcow2-bitmap.c b/block/qcow2-bitmap.c
+>> index 256ec99878..ab2f7fd83b 100644
+>> --- a/block/qcow2-bitmap.c
+>> +++ b/block/qcow2-bitmap.c
+>> @@ -100,6 +100,9 @@ typedef enum BitmapType {
+>>       BT_DIRTY_TRACKING_BITMAP = 1
+>>   } BitmapType;
+>>   +static int GRAPH_RDLOCK
+>> +update_ext_header_and_dir(BlockDriverState *bs, Qcow2BitmapList 
+>> *bm_list);
+>> +
+>>   static inline bool can_write(BlockDriverState *bs)
+>>   {
+>>       return !bdrv_is_read_only(bs) && !(bdrv_get_flags(bs) & 
+>> BDRV_O_INACTIVE);
+>> @@ -655,11 +658,14 @@ fail:
+>>   int coroutine_fn
+>>   qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult 
+>> *res,
+>>                                 void **refcount_table,
+>> -                              int64_t *refcount_table_size)
+>> +                              int64_t *refcount_table_size,
+>> +                              BdrvCheckMode fix)
+>>   {
+>>       int ret;
+>>       BDRVQcow2State *s = bs->opaque;
+>>       Qcow2BitmapList *bm_list;
+>> +    Qcow2BitmapList *fixed_list = NULL;
+>> +    int valid_bitmaps = 0;
+>>       Qcow2Bitmap *bm;
+>>         if (s->nb_bitmaps == 0) {
+>> @@ -673,16 +679,29 @@ qcow2_check_bitmaps_refcounts(BlockDriverState 
+>> *bs, BdrvCheckResult *res,
+>>           return ret;
+>>       }
+>>   +    if (fix & BDRV_FIX_ERRORS) {
 >
->  1e7398a140f7a6 ("vhost: enable vhost without without MSI-X")
->  24f938a682d934 ("vhost user:support vhost user nic for non msi guests")
+> Maybe, worth making a variable for it, and use it here and below.
 >
-> Prior these commits, to enable kernel vhost-net, or vhost-user-net for
-> some specific kind of guests (that don't have MSI-X support), you should
-> have set vhostforce=on.
+> bool fix_errors = fix & BDRV_FIX_ERRORS;
 >
-> Now guest type doesn't matter, all guests are equal for these
-> options logic.
->
-> For tap the current logic is:
->   vhost=on / vhost=off : vhostforce ignored, doesn't make sense
->   vhost unset : vhostforce counts, enabling vhost
->
-> So you may enable vhost for tap several ways:
-> - vhost=on
-> - vhostforce=on
-> - vhost=on + vhostforce=on
-> - and even vhost=on + vhostforce=off
->
-> - they are all equal.
->
-> For vhost-user we simply ignore the vhostforce option at all in the
-> code.
->
-> Let's finally deprecate the extra options.
->
-> Also, fix @vhostforce documentation everywhere to show the real picture,
-> and update vhost-user test to not use deprecated option.
->
-> While updating command line options, drop "experimental" word from
-> "experimental in kernel accelerator". vhost-net is in production for
-> years.
->
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
-> ---
->  docs/about/deprecated.rst     | 11 +++++++++++
->  qapi/net.json                 | 18 ++++++++++++++----
->  qemu-options.hx               | 13 +++++--------
->  tests/qtest/vhost-user-test.c |  2 +-
->  4 files changed, 31 insertions(+), 13 deletions(-)
->
->
-> v7: rebase on master (on top of "[PATCH v16 0/8] virtio-net: live-TAP local migration")
-> 01: update version 11.0 -> 11.1, keep r-b
->
-> Based-on: <20260522120534.77653-1-vsementsov@yandex-team.ru>
->     "[PATCH v16 0/8] virtio-net: live-TAP local migration"
->
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 95bf7613295..2c79cdb4eeb 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -384,6 +384,17 @@ Backend ``memory`` (since 9.0)
->  ``memory`` is a deprecated synonym for ``ringbuf``.
->  
->  
-> +TAP ``vhostforce`` (since 11.1)
-> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> +
-> +The ``vhostforce`` option is redundant with the ``vhost`` option.
-> +If they conflict, ``vhost`` takes precedence.  Just use ``vhost``.
-> +
-> +Vhost-user ``vhostforce`` (since 11.1)
-> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> +
-> +The ``vhostforce`` option is a no-op.  Do not use it.
-> +
->  CPU device properties
->  '''''''''''''''''''''
->  
-> diff --git a/qapi/net.json b/qapi/net.json
-> index 82ddbb51cd7..70a749a0e64 100644
-> --- a/qapi/net.json
-> +++ b/qapi/net.json
-> @@ -418,7 +418,8 @@
->  # @vhostfds: file descriptors of multiple already opened vhost net
->  #     devices
->  #
-> -# @vhostforce: vhost on for non-MSIX virtio guests
-> +# @vhostforce: enable vhost-net network accelerator.  Ignored when
-> +#    @vhost is set.
->  #
->  # @queues: number of queues to be created for multiqueue capable tap
->  #
-> @@ -432,6 +433,10 @@
->  #     @downscript be explicitly set to nothing (empty string or "no")
->  #     (Since 11.1)
->  #
-> +# Features:
-> +#
-> +# @deprecated: Member @vhostforce is deprecated.  Use @vhost instead.
-> +#
->  # Since: 1.2
->  ##
->  { 'struct': 'NetdevTapOptions',
-> @@ -448,7 +453,7 @@
->      '*vhost':      'bool',
->      '*vhostfd':    'str',
->      '*vhostfds':   'str',
-> -    '*vhostforce': 'bool',
-> +    '*vhostforce': { 'type': 'bool', 'features': [ 'deprecated' ] },
->      '*queues':     'uint32',
->      '*poll-us':    'uint32',
->      '*incoming-fds': 'bool' } }
-> @@ -688,17 +693,22 @@
->  #
->  # @chardev: name of a unix socket chardev
->  #
-> -# @vhostforce: vhost on for non-MSIX virtio guests (default: false).
-> +# @vhostforce: silently ignored, exists just for backward
-> +#     compatibility.
->  #
->  # @queues: number of queues to be created for multiqueue vhost-user
->  #     (default: 1) (Since 2.5)
->  #
-> +# Features:
-> +#
-> +# @deprecated: Member @vhostforce is deprecated.
-> +#
->  # Since: 2.1
->  ##
->  { 'struct': 'NetdevVhostUserOptions',
->    'data': {
->      'chardev':        'str',
-> -    '*vhostforce':    'bool',
-> +    '*vhostforce': { 'type': 'bool', 'features': [ 'deprecated' ] },
->      '*queues':        'int' } }
->  
->  ##
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index 96ae41f787b..f5a1ad6c577 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -2969,7 +2969,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
->  #else
->      "-netdev tap,id=str[,fd=h][,fds=x:y:...:z][,ifname=name][,script=file][,downscript=dfile]\n"
->      "         [,br=bridge][,helper=helper][,sndbuf=nbytes][,vnet_hdr=on|off][,vhost=on|off]\n"
-> -    "         [,vhostfd=h][,vhostfds=x:y:...:z][,vhostforce=on|off][,queues=n]\n"
-> +    "         [,vhostfd=h][,vhostfds=x:y:...:z][,queues=n]\n"
->      "         [,poll-us=n]\n"
->      "                configure a host TAP network backend with ID 'str'\n"
->      "                connected to a bridge (default=" DEFAULT_BRIDGE_INTERFACE ")\n"
-> @@ -2985,9 +2985,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
->      "                default is disabled 'sndbuf=0' to enable flow control set 'sndbuf=1048576')\n"
->      "                use vnet_hdr=off to avoid enabling the IFF_VNET_HDR tap flag\n"
->      "                use vnet_hdr=on to make the lack of IFF_VNET_HDR support an error condition\n"
-> -    "                use vhost=on to enable experimental in kernel accelerator\n"
-> -    "                    (only has effect for virtio guests which use MSIX)\n"
-> -    "                use vhostforce=on to force vhost on for non-MSIX virtio guests\n"
-> +    "                use vhost=on to enable in kernel accelerator\n"
->      "                use 'vhostfd=h' to connect to an already opened vhost net device\n"
->      "                use 'vhostfds=x:y:...:z to connect to multiple already opened vhost net devices\n"
->      "                use 'queues=n' to specify the number of queues to be created for multiqueue TAP\n"
-> @@ -3078,7 +3076,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
->      "                use 'start-queue=m' to specify the first queue that should be used\n"
->  #endif
->  #ifdef CONFIG_POSIX
-> -    "-netdev vhost-user,id=str,chardev=dev[,vhostforce=on|off]\n"
-> +    "-netdev vhost-user,id=str,chardev=dev\n"
->      "                configure a vhost-user network, backed by a chardev 'dev'\n"
->  #endif
->  #ifdef __linux__
-> @@ -3978,12 +3976,11 @@ SRST
->      for insertion into the socket map.  The combination of 'map-path' and
->      'sock-fds' together is not supported.
->  
-> -``-netdev vhost-user,chardev=id[,vhostforce=on|off][,queues=n]``
-> +``-netdev vhost-user,chardev=id[,queues=n]``
->      Establish a vhost-user netdev, backed by a chardev id. The chardev
->      should be a unix domain socket backed one. The vhost-user uses a
->      specifically defined protocol to pass vhost ioctl replacement
-> -    messages to an application on the other end of the socket. On
-> -    non-MSIX guests, the feature can be forced with vhostforce. Use
-> +    messages to an application on the other end of the socket. Use
->      'queues=n' to specify the number of queues to be created for
->      multiqueue vhost-user.
->  
-> diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
-> index c8b5f8ff714..ebeebde2281 100644
-> --- a/tests/qtest/vhost-user-test.c
-> +++ b/tests/qtest/vhost-user-test.c
-> @@ -46,7 +46,7 @@
->  #define QEMU_CMD_SHM    " -m %d -object memory-backend-shm,id=mem,size=%dM," \
->                          " -numa node,memdev=mem"
->  #define QEMU_CMD_CHR    " -chardev socket,id=%s,path=%s%s"
-> -#define QEMU_CMD_NETDEV " -netdev vhost-user,id=hs0,chardev=%s,vhostforce=on"
-> +#define QEMU_CMD_NETDEV " -netdev vhost-user,id=hs0,chardev=%s"
->  
->  #define HUGETLBFS_MAGIC       0x958458f6
+I opted for the current behaviour as bitmask compare is also performant 
+and avoids extra variable.
+Next to that all code in qcow2.c also use 'flags & BDRV_O_CHECK' style 
+if. So :)
+But I'm open for both...
 
-Acked-by: Fabiano Rosas <farosas@suse.de>
+>> +        fixed_list = bitmap_list_new();
+>> +    }
+>> +
+>>       bm_list = bitmap_list_load(bs, s->bitmap_directory_offset,
+>>                                  s->bitmap_directory_size, NULL);
+>>       if (bm_list == NULL) {
+>>           res->corruptions++;
+>> +
+>> +        if (fix & BDRV_FIX_ERRORS) {
+>> +            ret = update_ext_header_and_dir(bs, fixed_list);
+>> +            if (ret >= 0) {
+>> +                res->corruptions_fixed++;
+>> +            }
+>> +            goto out;
+>> +        }
+>>           return -EINVAL;
+>>       }
+>>         QSIMPLEQ_FOREACH(bm, bm_list, entry) {
+>>           uint64_t *bitmap_table = NULL;
+>>           int i;
+>> +        bool bitmap_valid = true;
+>>             ret = qcow2_inc_refcounts_imrt(bs, res,
+>>                                          refcount_table, 
+>> refcount_table_size,
+>> @@ -695,6 +714,9 @@ qcow2_check_bitmaps_refcounts(BlockDriverState 
+>> *bs, BdrvCheckResult *res,
+>>           ret = bitmap_table_load(bs, &bm->table, &bitmap_table);
+>>           if (ret < 0) {
+>>               res->corruptions++;
+>> +            if (fix & BDRV_FIX_ERRORS) {
+>> +                continue;
+>> +            }
+>>               goto out;
+>>           }
+>>   @@ -704,6 +726,7 @@ qcow2_check_bitmaps_refcounts(BlockDriverState 
+>> *bs, BdrvCheckResult *res,
+>>                 if (check_table_entry(entry, s->cluster_size) < 0) {
+>>                   res->corruptions++;
+>> +                bitmap_valid = false;
+>>                   continue;
+>>               }
+>>   @@ -720,10 +743,28 @@ 
+>> qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult 
+>> *res,
+>>               }
+>>           }
+>>   +        if ((fix & BDRV_FIX_ERRORS) && bitmap_valid) {
+>> +            valid_bitmaps++;
+>> +            Qcow2Bitmap *bm_copy = g_new0(Qcow2Bitmap, 1);
+>
+> Also, from docs/devel/style.rst:
+>
+>     Declarations
+>     ============
+>
+>     Mixed declarations (interleaving statements and declarations within
+>     blocks) are generally not allowed; declarations should be at the 
+> beginning
+>     of blocks.
+>
+>
+> So,
+>
+>     Qcow2Bitmap *bm_copy = g_new0(Qcow2Bitmap, 1);
+>
+> should be the first line of the block.
+>
+Will Fix!
+>> +            *bm_copy = *bm;
+>> +            bm_copy->name = g_strdup(bm->name);
+>> +            QSIMPLEQ_INSERT_TAIL(fixed_list, bm_copy, entry);
+>
+>
+> Hmm, and another thought (sorry I didn't figure it out in the previous 
+> iteration):
+No problem!
+>
+> Why do we need even this half-copied additional list?
+>
+> Instead, we can remove broken elements from original bm_list (when fix 
+> & BDRV_FIX_ERRORS),
+> and reuse it for update_ext_header_and_dir().
+>
+I looked for the best way to handle this.
+Thought that creating a new list with valid items would be easiest, but 
+changing the approach to remove corrupt items from the existing list.
+
+>
+>> +        }
+>> +
+>>           g_free(bitmap_table);
+>>       }
+>>   +    /* If fixing, update the bitmap directory with the repaired 
+>> list */
+>> +    if ((fix & BDRV_FIX_ERRORS) && s->nb_bitmaps != valid_bitmaps) {
+>> +        uint32_t initial_bitmaps = s->nb_bitmaps;
+>> +        ret = update_ext_header_and_dir(bs, fixed_list);
+>> +        if (ret >= 0) {
+>> +            res->corruptions_fixed += initial_bitmaps - valid_bitmaps;
+>> +        }
+>> +    }
+>> +
+>>   out:
+>> +    bitmap_list_free(fixed_list);
+>>       bitmap_list_free(bm_list);
+>>         return ret;
+>> diff --git a/block/qcow2-refcount.c b/block/qcow2-refcount.c
+>> index 6512cda407..df7f6d2f23 100644
+>> --- a/block/qcow2-refcount.c
+>> +++ b/block/qcow2-refcount.c
+>> @@ -2305,7 +2305,8 @@ calculate_refcounts(BlockDriverState *bs, 
+>> BdrvCheckResult *res,
+>>       }
+>>         /* bitmaps */
+>> -    ret = qcow2_check_bitmaps_refcounts(bs, res, refcount_table, 
+>> nb_clusters);
+>> +    ret = qcow2_check_bitmaps_refcounts(bs, res, refcount_table,
+>> +                                        nb_clusters, fix);
+>>       if (ret < 0) {
+>>           return ret;
+>>       }
+>> diff --git a/block/qcow2.c b/block/qcow2.c
+>> index 81fd299b4c..adfb7ee37a 100644
+>> --- a/block/qcow2.c
+>> +++ b/block/qcow2.c
+>> @@ -1927,11 +1927,19 @@ qcow2_do_open(BlockDriverState *bs, QDict 
+>> *options, int flags,
+>>       if (!(bdrv_get_flags(bs) & BDRV_O_INACTIVE)) {
+>>           /* It's case 1, 2 or 3.2. Or 3.1 which is BUG in management 
+>> layer. */
+>>           bool header_updated;
+>> -        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, errp)) {
+>> -            ret = -EINVAL;
+>> -            goto fail;
+>> +        Error *local_err = NULL;
+>> +        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, 
+>> &local_err)) {
+>> +            /*
+>> +             * Allow this to fail in check mode
+>> +             * because otherwise we can't open the image at all.
+>> +             */
+>> +            if (!(flags & BDRV_O_CHECK)) {
+>> +                ret = -EINVAL;
+>> +                error_propagate(errp, local_err);
+>> +                goto fail;
+>> +            }
+>> +            error_free(local_err);
+>>           }
+>> -
+>>           update_header = update_header && !header_updated;
+>>       }
+>>   diff --git a/block/qcow2.h b/block/qcow2.h
+>> index 192a45d596..2d9c6929a7 100644
+>> --- a/block/qcow2.h
+>> +++ b/block/qcow2.h
+>> @@ -1034,7 +1034,8 @@ void qcow2_cache_discard(Qcow2Cache *c, void 
+>> *table);
+>>   int coroutine_fn GRAPH_RDLOCK
+>>   qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult 
+>> *res,
+>>                                 void **refcount_table,
+>> -                              int64_t *refcount_table_size);
+>> +                              int64_t *refcount_table_size,
+>> +                              BdrvCheckMode fix);
+>>     bool coroutine_fn GRAPH_RDLOCK
+>>   qcow2_load_dirty_bitmaps(BlockDriverState *bs, bool *header_updated,
+>
+>
+
+I'll post a v4 with the fixes.
+
+Thanks
+Jean-Louis
+
 
