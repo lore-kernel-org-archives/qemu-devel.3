@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2476DCD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:42:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58A62CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:42:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXaO-0000Rl-7E; Fri, 22 May 2026 17:39:21 -0400
+	id 1wQXch-0005uc-PZ; Fri, 22 May 2026 17:41:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXZo-0000Fi-2I; Fri, 22 May 2026 17:38:45 -0400
+ id 1wQXcA-00047W-8C; Fri, 22 May 2026 17:41:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXZj-0002UV-V9; Fri, 22 May 2026 17:38:39 -0400
+ id 1wQXc1-0005d0-8D; Fri, 22 May 2026 17:40:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485682; bh=RrhIRJ/LDvQkxQ4Mq2Od9Wj9IXgL5QT+Dkxl8e0XdW8=;
+ t=1779485684; bh=lxlFVMilZ96+NuPWy6lpFs1uYEKQKcV6jx6Yl2LIN50=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=jQpw/LZD9O03Ua2k12YgEyCgg2AZ2Fm0IreupxdhLbyGhRzw3vthd7YnN/lB8oiV9
- VPxrUySuEJeuvs+Hr1QRzoq3PYsfAdtFSteCY+HYN23RVqsf3jFAmryqlWVFUe+Ced
- nw2/uxrfUl/u3+8Iy6Fv6fWT9YiFDqSGgw/WBnwHAIy6T2CTWAwrNfE3Cp+5USo69r
- 8LUGxq0gUlGcIbZjzK3XGAgEo/JzZd4zqwnj/2c4XDtNq1ygIOraiJcktYQlqHoYnY
- iCu/0vKCV0gWwY46Pug1fU36j8KvMFD04q4aGsfnFET9pBg597oaH9n+2q3M9SoNd5
- 89TXpeLKs3aVw==
+ b=qvB2zePZiX8HgGuoAgpW/JQjLYqMGufOiWoNetW+74OqfJI6Ym9AnsEMUoJWoVFmn
+ ndcDh/mRZPOCh+OBV0f/WfLzYXnQVHg+vs4Px4+d5DAUM9ndgzRtuGAoX2cbDKC7bS
+ Z4g8aRHxN6m0jOc15Di9DaFBuj8iuEt1hfqKNlasX5Mgu06jC7hD2Iye/Ch/d6136K
+ yURTkfeS7LMktqLw8HJ1KUhlejLmbUwsc7XYNr35BIDNcljz2opRS2W5VK46yAQ7iP
+ YSh9+aP7t/bPJx7JhgLAFxzIwzV25VjvZ8IFPSLwf3/vcgSug0Jq6f3CS1oDSAnMjI
+ 5SNaAMl8hEvOg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B796F1AFAFE;
- Sat, 23 May 2026 00:34:42 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 23BBD1AFB15;
+ Sat, 23 May 2026 00:34:44 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id DBED63B717E;
- Sat, 23 May 2026 00:34:46 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 462B23B7195;
+ Sat, 23 May 2026 00:34:48 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jeuk Kim <jeuk20.kim@samsung.com>,
- Rayhan Ramdhany Hanaputra <hanaputrarayhan@gmail.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 109/136] hw/ufs: Validate MCQ SQ references before use
-Date: Sat, 23 May 2026 00:34:17 +0300
-Message-ID: <20260522213446.806182-10-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Lexi Winter <ivy@FreeBSD.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 132/136] block: Add more defaults to
+ DEFAULT_BLOCK_CONF
+Date: Sat, 23 May 2026 00:34:40 +0300
+Message-ID: <20260522213446.806182-33-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
@@ -69,69 +69,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jeuk Kim <jeuk20.kim@samsung.com>
+From: Kevin Wolf <kwolf@redhat.com>
 
-A guest can program an out-of-range SQATTR.CQID value, or ring an
-MCQ SQ doorbell before the submission queue exists.
+discard_granularity was missing from this, which means that SCSI disks
+created with -drive if=scsi would default to 0 (i.e. disabling discards)
+instead of -1, which makes scsi-hd automatically pick a granularity and
+is the default of the corresponding qdev property for -device scsi-hd.
 
-Reject SQ creation when the referenced CQ is invalid, and ignore SQ
-doorbells for queues that have not been created. This prevents a
-guest-triggerable out-of-bounds read and NULL pointer dereference.
+This was broken in QEMU 9.0 with commit 3089637.
 
-Fixes: 5c079578d2e ("hw/ufs: Add support MCQ of UFSHCI 4.0")
-Reported-by: Rayhan Ramdhany Hanaputra <hanaputrarayhan@gmail.com>
+Also set other fields whose default isn't an obvious 0. These are not
+actual bug fixes because ON_OFF_AUTO_AUTO in fact happens to be 0, but
+it's better not to rely on the order of enums.
+
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
-(cherry picked from commit 332ea29787800fff2b49e9b89ec93bd370a11965)
+Fixes: 308963746169 ('scsi: Don't ignore most usb-storage properties')
+Reported-by: Lexi Winter <ivy@FreeBSD.org>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20260410152314.86412-3-kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit f27aea1896338f4dd085a0e2cb2ab3797c5fe3e9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index 202dae20f7..2469f29b41 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -517,8 +517,13 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
-         return false;
-     }
+diff --git a/include/hw/block/block.h b/include/hw/block/block.h
+index 1f140c01a4..65efa2b44c 100644
+--- a/include/hw/block/block.h
++++ b/include/hw/block/block.h
+@@ -51,7 +51,12 @@ static inline unsigned int get_physical_block_exp(BlockConf *conf)
  
-+    if (cqid >= u->params.mcq_maxq) {
-+        trace_ufs_err_mcq_create_sq_invalid_cqid(cqid);
-+        return false;
-+    }
-+
-     if (!u->cq[cqid]) {
--        trace_ufs_err_mcq_create_sq_invalid_cqid(qid);
-+        trace_ufs_err_mcq_create_sq_invalid_cqid(cqid);
-         return false;
-     }
- 
-@@ -775,6 +780,11 @@ static void ufs_mcq_process_db(UfsHc *u, uint8_t qid, uint32_t db)
-     }
- 
-     sq = u->sq[qid];
-+    if (!sq) {
-+        trace_ufs_err_mcq_db_wr_invalid_sqid(qid);
-+        return;
-+    }
-+
-     if (sq->size * sizeof(UfsSqEntry) <= db) {
-         trace_ufs_err_mcq_db_wr_invalid_db(qid, db);
-         return;
-@@ -788,7 +798,14 @@ static void ufs_write_mcq_op_reg(UfsHc *u, hwaddr offset, uint32_t data,
-                                  unsigned size)
- {
-     int qid = offset / sizeof(UfsMcqOpReg);
--    UfsMcqOpReg *opr = &u->mcq_op_reg[qid];
-+    UfsMcqOpReg *opr;
-+
-+    if (qid >= u->params.mcq_maxq) {
-+        trace_ufs_err_invalid_register_offset(offset);
-+        return;
-+    }
-+
-+    opr = &u->mcq_op_reg[qid];
- 
-     switch (offset % sizeof(UfsMcqOpReg)) {
-     case offsetof(UfsMcqOpReg, sq.tp):
+ #define DEFAULT_BLOCK_CONF (BlockConf) {                                \
+     .bootindex = -1,                                                    \
++    .backend_defaults = ON_OFF_AUTO_AUTO,                               \
++    .discard_granularity = -1,                                          \
++    .wce = ON_OFF_AUTO_AUTO,                                            \
+     .share_rw = false,                                                  \
++    .account_invalid = ON_OFF_AUTO_AUTO,                                \
++    .account_failed = ON_OFF_AUTO_AUTO,                                 \
+     .rerror = BLOCKDEV_ON_ERROR_AUTO,                                   \
+     .werror = BLOCKDEV_ON_ERROR_AUTO,                                   \
+ }
 -- 
 2.47.3
 
