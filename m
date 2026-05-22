@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D313CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:55:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B52FDCD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:55:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXl3-0007sa-Oq; Fri, 22 May 2026 17:50:17 -0400
+	id 1wQXmv-0003eq-8m; Fri, 22 May 2026 17:52:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXkY-0006vG-4S; Fri, 22 May 2026 17:49:50 -0400
+ id 1wQXmR-0002e2-DP; Fri, 22 May 2026 17:51:43 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXkW-0002cx-ED; Fri, 22 May 2026 17:49:45 -0400
+ id 1wQXmL-0003om-53; Fri, 22 May 2026 17:51:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486559; bh=6ttS+OBwVuSJGHZkrgJNbxyeLpBThZnjePJjP1+Z0zg=;
+ t=1779486560; bh=nSbJccUXo9jKpv2H2W8hWaOn1ytKiY+C0ZzYGiaskuM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=QaahfwGXb8g9rjZChZnqC2kr/9P4bzh2kAajkA0OaJP757Y3r5SsfxXDdFqDEUWX/
- VXMKFbJRy1gTECpXXTmEEysiJQPFPHkbfyjDQvRz7Hr6j3eHeafiQ1FFTAFGE+wWWK
- 1Aiefdh6fSRk7OPi2b+EyqRBQb/WRKj9APSN3EjoAEpfm60R8r/1XMdwGosrbn9K5D
- 6LE0BLoaKwWNqe3i8FYS8GigLThMnoOJiL21WKbwtQwMTLrsYXORKzMwCHlBWzDDIH
- 3ihJU1MBA3d6aYVPs+6OGtpr7tmZa5Rg+jvGjoYmG23F2DCYBeZZ7EqmAMQPdT5Yt1
- Ii3wUeD0shKeA==
+ b=TZFhN1AUWVrfKWrB/zec0Xmo7tJgwM0c6cu4lhCtjnKPA+a3H32bVgc/gGJPKVmT6
+ FwTfQrwNz1Kg2DWcbMUTCytoP+4DdyVof1FEnOcQOdJ2q36wIMtYRLU7KDqHqNmJNY
+ GlVjLMvehvA/dqD38e+iVgb4r0v84mp5f8OmdVv2dVl6dw+3KCsxX60+9MSn6zQEuW
+ gi0V93Gqk1M4kUMwneWGk/Hw68IbKjY6Z831mvAsiq7K3ARPysZdMehamMFOjkdWzI
+ GLppQkIGxJKTjdboXsgcmNoFiEOdT9zPJdcQBO9TYnuKDKOJoMRtwkwzXTpaj+lYN1
+ iV95LbUTewJ6w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 91C0A1AFB63;
- Sat, 23 May 2026 00:49:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id BBD501AFB73;
+ Sat, 23 May 2026 00:49:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B8D5B3B71B2;
- Sat, 23 May 2026 00:49:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E2E533B71C2;
+ Sat, 23 May 2026 00:49:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Junjie Cao <junjie.cao@intel.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 109/149] target/microblaze: Fix endianness used to
- disassemble
-Date: Sat, 23 May 2026 00:48:41 +0300
-Message-ID: <20260522214923.807017-10-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 125/149] hw/display/cirrus_vga: Fix packed-24
+ color-expansion transparent copies
+Date: Sat, 23 May 2026 00:48:57 +0300
+Message-ID: <20260522214923.807017-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
@@ -73,44 +72,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-MicroBlaze CPU model has a "little-endian" property, pointing to
-the @endi internal field. Commit c36ec3a9655 ("hw/microblaze:
-Explicit CPU endianness") took care of having all MicroBlaze
-boards with an explicit default endianness (similarly with
-commit 91fc6d8101d for linux-user binaries), so later commit
-415aae543ed ("target/microblaze: Consider endianness while
-translating code") could infer the endianness at runtime from
-the @endi field, and not a compile time via the TARGET_BIG_ENDIAN
-definition. Doing so, we forgot to propagate that runtime change
-to the disassemble_info structure. Do it now to display the
-opcodes in correct endianness order.
+For the "color expansion" subtype of raster operations, the source
+pixel format is a monochrome bitmap, and the destination can be any
+of 8, 16, 24 or 32bpp.
+
+For these pattern operations, the GR2F register includes a field
+which specifies how much to skip at the start of each scanline.  In
+the 8, 16 and 32 bit cases, this field is 3 bits and is a count of
+pixels to skip.  We get this case right.  However, for the 24 bit
+case, the field is 5 bits and is a count of destination bytes to
+skip.
+
+In commit ad81218e40e27 ("depth=24 write mask fix (Volker Ruppert)")
+in 2005, we updated the code to (attempt to) handle the 5-bit mask
+case.  However, we don't do the right thing when the 5-bit mask
+indicates that we need to skip more than 8 bits of the input bitmap:
+we will right-shift the 0x80 constant completely off the right hand
+side, and will be off-by-one for all the source bitmap loads.
+
+Fix this by calculating the whole number of input bytes we need to
+skip and the residual number of bits.  In the 8/16/32bpp case the
+bytes to skip is always zero.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 415aae543ed ("target/microblaze: Consider endianness while translating code")
+Fixes: ad81218e40e27 ("depth=24 write mask fix (Volker Ruppert)")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Junjie Cao <junjie.cao@intel.com>
+Tested-by: Junjie Cao <junjie.cao@intel.com>
+Message-ID: <20260410183249.4046456-3-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-Id: <20260423100612.27278-3-philmd@linaro.org>
-(cherry picked from commit 41c417290df91c31a70adeb8f5271896a8c5f802)
+(cherry picked from commit 27d14251b904e6dd60c1053a893b52e085f48a3a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
-index 22231f09e6..965eedbfaf 100644
---- a/target/microblaze/cpu.c
-+++ b/target/microblaze/cpu.c
-@@ -237,8 +237,8 @@ static void mb_disas_set_info(CPUState *cpu, disassemble_info *info)
- {
-     info->mach = bfd_arch_microblaze;
-     info->print_insn = print_insn_microblaze;
--    info->endian = TARGET_BIG_ENDIAN ? BFD_ENDIAN_BIG
--                                     : BFD_ENDIAN_LITTLE;
-+    info->endian = MICROBLAZE_CPU(cpu)->cfg.endi ? BFD_ENDIAN_LITTLE
-+                                                 : BFD_ENDIAN_BIG;
- }
+diff --git a/hw/display/cirrus_vga_rop2.h b/hw/display/cirrus_vga_rop2.h
+index 8be35ec6e2..33f9b3b613 100644
+--- a/hw/display/cirrus_vga_rop2.h
++++ b/hw/display/cirrus_vga_rop2.h
+@@ -108,12 +108,34 @@ glue(glue(glue(cirrus_colorexpand_transp_, ROP_NAME), _),DEPTH)
+     unsigned int col;
+     unsigned bitmask;
+     unsigned index;
++
++    /*
++     * Raster ops where the source is a monochrome bitmap with
++     * color expansion to 8/16/24/32bpp destination.
++     */
++
+ #if DEPTH == 24
++    /*
++     * For packed-24 modes, GR2F bits [4:0] are a count of destination
++     * bytes to be suppressed for each scanline, which we keep in
++     * dstskipleft. We want to track the number of whole bytes
++     * to skip in the source (always either 0 or 1) and the number
++     * of bits within the byte to skip.
++     */
+     int dstskipleft = s->vga.gr[0x2f] & 0x1f;
+-    int srcskipleft = dstskipleft / 3;
++    int srcskipleftbits = (dstskipleft / 3) & 0x7;
++    int srcskipleftbytes = (dstskipleft / 3) >> 3;
+ #else
+-    int srcskipleft = s->vga.gr[0x2f] & 0x07;
+-    int dstskipleft = srcskipleft * (DEPTH / 8);
++    /*
++     * In all other modes, GR2F bits [2:0] are a count of how many
++     * destination pixels to suppress for each scanline, which is our
++     * srcskipleftbits. We get dstskipleft, the number of bytes to
++     * skip, by multiplying this by the bytes-per-pixel. In these
++     * modes we never need to skip an entire source byte.
++     */
++    int srcskipleftbits = s->vga.gr[0x2f] & 0x07;
++    int srcskipleftbytes = 0;
++    int dstskipleft = srcskipleftbits * (DEPTH / 8);
+ #endif
  
- static void mb_cpu_realizefn(DeviceState *dev, Error **errp)
+     if (s->cirrus_blt_modeext & CIRRUS_BLTMODEEXT_COLOREXPINV) {
+@@ -125,7 +147,8 @@ glue(glue(glue(cirrus_colorexpand_transp_, ROP_NAME), _),DEPTH)
+     }
+ 
+     for(y = 0; y < bltheight; y++) {
+-        bitmask = 0x80 >> srcskipleft;
++        bitmask = 0x80 >> srcskipleftbits;
++        srcaddr += srcskipleftbytes;
+         bits = cirrus_src(s, srcaddr++) ^ bits_xor;
+         addr = dstaddr + dstskipleft;
+         for (x = dstskipleft; x < bltwidth; x += (DEPTH / 8)) {
 -- 
 2.47.3
 
