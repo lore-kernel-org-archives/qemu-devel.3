@@ -4,182 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 024B9CD5BAF
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 03:10:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3690CD5BAF
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 03:20:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQGH0-0003P6-Kg; Thu, 21 May 2026 23:10:06 -0400
+	id 1wQGQY-0004oO-81; Thu, 21 May 2026 23:19:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1wQGGz-0003Ol-CQ
- for qemu-devel@nongnu.org; Thu, 21 May 2026 23:10:05 -0400
-Received: from mgamail.intel.com ([192.198.163.17])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1wQGGx-00024r-P4
- for qemu-devel@nongnu.org; Thu, 21 May 2026 23:10:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1779419404; x=1810955404;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=LrnqDEJRk4MVMVzCiAbIn3M8dnSbisut2VA1vEC5/ZU=;
- b=IyY5u9x5as8JkNYEpw2wFZr4V+z597E5MTlMaM7VIYm8ila17K3cZzo3
- a175n23InJlAY847Yj4tUT9YP+k7UQeD/i5nL6IMG5mKxrGUgtXUH02X2
- +OMQSceYIDlNJw4VBo2ZUgPzHVJ052VEHkqGZv103syxClGifQt2gTdaU
- fulilmH4UzeXpOsWPJX3Ov2hZjvZSmT5UagT2S8ItaX80eyFUoMzArKRi
- JYKMdYua46OLKQDRx0hIZBlG22MyLa8GXnM8i/MuSbGc8WqHMpUdfUoyl
- NT3IKD56vdD6X+yxHlJQv/CeXKtgTezbfC3B21VaKd7pw6luF509Jtt9K A==;
-X-CSE-ConnectionGUID: nxk9WHLbS5CUhwN/qbYxvQ==
-X-CSE-MsgGUID: kmyktmD3Qtm98/GUYjKeSQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11793"; a="80200930"
-X-IronPort-AV: E=Sophos;i="6.24,161,1774335600"; d="scan'208";a="80200930"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2026 20:10:02 -0700
-X-CSE-ConnectionGUID: CA4mZVNfSz+1Sqf0PVATRw==
-X-CSE-MsgGUID: ieHKXWlKTbilTnTqfYmr4Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,161,1774335600"; d="scan'208";a="240993039"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
- by orviesa007.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2026 20:10:02 -0700
-Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Thu, 21 May 2026 20:10:00 -0700
-Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
- FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Thu, 21 May 2026 20:10:00 -0700
-Received: from PH7PR06CU001.outbound.protection.outlook.com (52.101.201.32) by
- edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Thu, 21 May 2026 20:09:59 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=J9x68mqGR4P4AqsF8OefDFjyOQIEh8d1JVDkCkOqO1SFEKXcCb8w/mtbekC4yeZuYd16YPCf86+XjBsrjMugxyjqJVJNDKXErd84Z9s/0EXXSGMyJVizYMFjThqHLflcnkhhJn62fCFpLptp1eYj8aAK/g5G/sE2xFljhWE8ZW21pmI99hfdPP+daUmdf5LpSYmrN77hfmWeJBqCCSfDDan5R3CFaZgw79ZDCCuhuK9CURZz7s2P0mCEJA9ykswJiWznzvNFuvRtp8UXDQjdGX3Ghov8SWOO9vpRT+CTCzgaRrZj8Tc0dqYLdFNx0QTdEzY8VOfogTfJGle2MhFmtQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=LrnqDEJRk4MVMVzCiAbIn3M8dnSbisut2VA1vEC5/ZU=;
- b=G+p+IJ+zSt2V54kXItnmVhg5wjA2vs/tK7xEzatjyBdGoV3RbJjVCL48+NxwVIqaJiRJ9HeBsBEs/ClsfhZq7+8U60dLFYcomViJCxfJeRNDVcVl7pbI0TFJiwnLirchV6xSM+fpQwRgWW4NXKWv6+dEXXC9NyWNBmptFhQQYdflYgHQ5kbUeZElFBGFSB4C3+rx5M0gjSHPqLpb2IvKN5oCNj/+o7LjctWXYz+Jch4gE3G+iCuAmKQUikEuA2NCkJyNMNrcErxOc5ZORx98HckjsSKl0JX/P7qYNkJst0YxvxukiKDwsj972KU5AGc66RNUjszUowu3ahXh39QHWQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
- by MN6PR11MB8218.namprd11.prod.outlook.com (2603:10b6:208:47c::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.23; Fri, 22 May
- 2026 03:09:50 +0000
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::37b4:37a9:4f3:518b]) by IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::37b4:37a9:4f3:518b%5]) with mapi id 15.20.9913.009; Fri, 22 May 2026
- 03:09:50 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: "Liu, Yi L" <yi.l.liu@intel.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>, 
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "mst@redhat.com"
- <mst@redhat.com>, "jasowang@redhat.com" <jasowang@redhat.com>,
- "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "clement.mathieu--drif@bull.com" <clement.mathieu--drif@bull.com>, "Tian,
- Kevin" <kevin.tian@intel.com>, "Hao, Xudong" <xudong.hao@intel.com>
-Subject: RE: [PATCH v5 10/15] intel_iommu_accel: Handle PASID entry removal
- for pc_inv_dsc request
-Thread-Topic: [PATCH v5 10/15] intel_iommu_accel: Handle PASID entry removal
- for pc_inv_dsc request
-Thread-Index: AQHc32mg4oXI8zixW0uZHfCp60fO67YNafCAgAwHexA=
-Date: Fri, 22 May 2026 03:09:50 +0000
-Message-ID: <IA3PR11MB913674858DB7097F67EC3A7A920F2@IA3PR11MB9136.namprd11.prod.outlook.com>
-References: <20260509040819.1044702-1-zhenzhong.duan@intel.com>
- <20260509040819.1044702-11-zhenzhong.duan@intel.com>
- <829fcf6f-39e4-4d21-9f08-2772c0813c32@intel.com>
-In-Reply-To: <829fcf6f-39e4-4d21-9f08-2772c0813c32@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|MN6PR11MB8218:EE_
-x-ms-office365-filtering-correlation-id: 8a715e76-8ea2-4670-e2c2-08deb7af9684
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|7416014|376014|1800799024|4143699003|56012099003|18002099003|3613699012|38070700021|11063799006|22082099003;
-x-microsoft-antispam-message-info: PwaWcfZmDjIIJXNgIuHWKM1ArMWgeAZ2RrICjiJkLVR8rgxXo/zjzwyHdlwubJyaq0z+l8Ieablg6k7Hi56XoFJh0GLGJa+Os9ixLFNDzWb6xW6pgTfaKwUpdAgc0SQF1jbjPxLFlSArYB1xtKhSyFVwf7ZOrpW2xyD0N5fh8CvYj7oOKtqGQGF+jWdYK/xbn5DP6Oj5/7YGiWYtY84yPYP2SBHIiJGjk0boTAyRI6g3Q6/LZFW3V/na2Id2ZjIg2Fc2KjWl00fAXRYwOirExZchdjo2HR/9RkO9deajd39he3EtdsMzs/SNW6bkAXStkQiiU4m4gnvQtbbJcfB8TsRmS6rSMBaC7E09SIwiZG5GGgtwQSftm/rrh0/QA5dcNwgkaklxVcZnGXOrOH/oqRx2hDJaP53CHIox4cJ41TZngAz8PVIat2DDKcXhrdRmZ8Gqxalq+d9u5ojiSlJu3tjKmMa8SId0h5jOL02Jftg7NTx6yBQUGCQOLQD/rfaySBCafzpbpD6mkBlS/ryEGTIPgvkrTwHKwyXHvMY9LOVwyYophbGTROA0I87cDr2RIRLhJbKVeYqlX+9PN7tVIGAlavbmlwpOsA5Od2CbDBWGGucCYEdDpr2LYlRFvNFQ+nmWXFHR0N/S71H7tG3UGSro/a6GkO9kNLcBlYo7Lm7dnTQ8z/qQ9QErokLqCpVBsnQ1rgxa1UaEdt7FqZLO8s46+6K3kj2jcuoDQD+Kg4Ssoxdfw4WjpDGQyY41jwkGV/DS2fcRI117qZIlmTyv6w==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(7416014)(376014)(1800799024)(4143699003)(56012099003)(18002099003)(3613699012)(38070700021)(11063799006)(22082099003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?clpNditHNjQxVUp2a0tCQnM4RXBjTHhadm90dk4yVDNDR09PV0ZXVkljRDVP?=
- =?utf-8?B?b0Z6dnFKRXBYMnlGZmhYb3MxQjR5OFJGSnhZQTN6ajlUTkNhM2NndVVORDJP?=
- =?utf-8?B?aWRVMjV5alFEOTlpYU16T3FwZ1RDWHJJQ0s3OGdHZ3RsMmlNR1krb0IyeXgx?=
- =?utf-8?B?WjRhdjdRbmRmQ2V5OTlXcjhrcmZ1RytoZzgvRm9RSm1COVpWcmdaMThQNFNu?=
- =?utf-8?B?eGtqZkxvci9nS25xV3gxQlVaTEZxbThhTFc4R3d6UjRrZFZYMXdrU05VM1pX?=
- =?utf-8?B?L1JwTEZETk10cFFtc0RFLzQzU2VScDN5ckxJREZiQXVKOVgrbVNKZFA2dUFJ?=
- =?utf-8?B?U1BhNlY0L1BpVDVGU3JCaDJ1S1d6TE0vS1gvMjk1N05RTjdVMnFYSnhKT09F?=
- =?utf-8?B?TDRwcHVVb2haWGllMEdSUitOaWNSclZGOE5yTHk3QjAyTFZLci8ranZtN01V?=
- =?utf-8?B?Q1JRdlZZRlBVeERycUFkTzZuTTVkYS9ZSC93T0FoUlVjYlZIYlduQ3Rpditj?=
- =?utf-8?B?RGVUTU0wRFA4MCt1YVhmY0xwdVNWa1dvOGNnWEhBeFA5dW1mMm04a2haSElF?=
- =?utf-8?B?Q21ObWlwK0plRzFmMW5PWGdZMlhiUzJHd0xoN3F1NktJVE5FclIvTWZiZ3dN?=
- =?utf-8?B?dDA0ZXZMbVd6YXkzd2FOSEttNS9WWjY0MjNWY21odHN4RGt6ZTJHczFTZitk?=
- =?utf-8?B?TDZHUC9pcnhQQUlJbmZBRWN0OXNDTWpUYjFaeVhPL0dQbUM1MU80VVpxRGkz?=
- =?utf-8?B?YjBtMGdkdmdYWGFnTEpINy94ODZGZjJBSE14UDVOR1Y3dXNacHpCMFBMNzIx?=
- =?utf-8?B?ZE43N3RpWU1CTVMweUpDMDU4TndubDFpNk5SL2hwVWRZTzBaSHZIaUowTC9m?=
- =?utf-8?B?T0dhN0w4eWxndG9CVjRGYWdsaFFOajVaZlRPekd5eGZ3UHBJdE5YMkk0Yi9o?=
- =?utf-8?B?TW9PN2VvZFY3dWg2MktMQ2Q3cDRVTFM1cDZ4VWRkOXJKaHVrQjI3TUNNdmV5?=
- =?utf-8?B?bWp2QUpaUEJPU2VDVXlNcndTdnJMMlpFN1NaMno1bHE5TE5leXk0MnRBT1hW?=
- =?utf-8?B?WVBaajVSVmxVM29VUWxpbHhxcHZFZ2d0bktGN0lNY2tBUVcwZ293NGd3R1lZ?=
- =?utf-8?B?ZXEwcUlGZ0NFSW1VVzdtMjNTd1RDMGk1UFAvaTRwR3Q0a1M2c2VBcXZiRUNa?=
- =?utf-8?B?M0NrQ1Qyb051ZHYwQnJUQUhFZ2RFSGd2WVNiUzI2RFpUSmVlUVRFMzZvVXBT?=
- =?utf-8?B?WWFFNzFtK3dNbVZhYVVlSTl6NXFxUnRFNUs1SzlyRXM5TmJZcmYwS3FuNCtq?=
- =?utf-8?B?WTdvZzRnQWVGODFQLzkwRkk5YldVWTNjbXU0aW5WZEtWZ05Sa000b0tlRlJQ?=
- =?utf-8?B?RHVWMnVNWEhUeTdOb1Z6d1F0ZU9HK3cyTExhZnBlc1BDQjk5RHBpZ3J6eGl3?=
- =?utf-8?B?OUxXejA2aDBaS21ENzNpVFNEWmhCbnZ4dHBWZi95UFR5UWkwT2FLOWFueTZ0?=
- =?utf-8?B?UVBoZXVZWnh6d25XWWEvdkEvcVBlRUhtTkFXTzNDSVBUZ2dLUHRMaWIvK05K?=
- =?utf-8?B?dE9wRFdaYXUvdWJMemVMVHE4eXJLMWRQUXV4YzRMdmZXcm5NRjRiZHRLalhr?=
- =?utf-8?B?OWlZYTQxb3U4ejMzRTFaeUNpWU5MUTVKWUoyNjF6UnQrSGI1T2JzT3pleStj?=
- =?utf-8?B?dXY0RVA1NjY5S0VxaEpvLzRnUWhJWnY1YkR3a3F1ZENGcEFBa05CaVhua1Av?=
- =?utf-8?B?cWJRSzBuY2ZiWkxXdDJiZmdBRVJvb0VGYlBJMWRWM0U5aE40U0pVc1daUGNl?=
- =?utf-8?B?bmpSNTBDaHYxV2YvRXhjZDdmYzlWOWN1dHFrSWg5UEw3NzVJbjVxM2wzbVp6?=
- =?utf-8?B?YnpjL3BUSk13bGhIeHV1S3pLeTRFcnJLVUFYTHVlY1YxblUvSWNSTi93YTc1?=
- =?utf-8?B?U1M4VUFDMitBNnR3V0dDREFwVHIwRWNHV3czQ0RrUXgxUkdLT1ZqVmVGZkc4?=
- =?utf-8?B?czJESzdMdE9JNVBoTmlLTEs2anpRQUtzUmwvZVNiZndYNk9TYkEya2trNE5R?=
- =?utf-8?B?aTI1WWdMSDkrVjVtMG0zV2F3a3B0eDZQZXhkdmtzWnVaUWJlWEVNUUhpSDNM?=
- =?utf-8?B?dC8xUlIyMnVGeW9LSWhKV0hJNWhqQkMxamUwYWhYdWM2UjFUYW1Eb3NqY3lY?=
- =?utf-8?B?Y3BQMk85ZHl0MDQzVVIrYWNaMlphZVUwVmQ1VStOUEpTSFRXZUxxMjI0dm8z?=
- =?utf-8?B?ZkZpZ1d0ZFNLL0dFTW1OWkN6ODZNODRjNnRzQngvMnJzaGNwWVV6OXRYNHBu?=
- =?utf-8?B?ZFpDK1RJVHdYN3Y3WDN2cVVmZW9mazdtZ1AvQ1RwZ2kySkxwU0t1Zz09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1wQGQV-0004o0-Ku
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 23:19:55 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1wQGQR-0007wD-8t
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 23:19:55 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8CxRehOyw9qtUEMAA--.29650S3;
+ Fri, 22 May 2026 11:19:43 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJCx2+BLyw9qjjmMAA--.4051S3;
+ Fri, 22 May 2026 11:19:40 +0800 (CST)
+Subject: Re: [PATCH 3/4] target/loongarch: translate LVZ CSR and trap
+ instructions
+To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
+Cc: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+References: <cover.1779171125.git.prcups@krgm.moe>
+ <060310ded8b9a188848f48cabf6afe69fcf9216d.1779171126.git.prcups@krgm.moe>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <3a88b3a6-e4e1-b9b4-af39-5a0fc0c4845d@loongson.cn>
+Date: Fri, 22 May 2026 11:16:39 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: YEBVEOQH0MrnbysqeFNgoyg1kGAQd+S/IHJOnqNqeADHW0Xk6vJgBzDFrb80QJMemGl0/S8k5APefg40HiWi8ykAlVIZoTGlurgEyZk2cxWmejbPXM2wXhP8A5qlJP4AYK3AYx4tMURDbmb2RFlC2dubPXm1gi0jpOnKjCnDPXguc8JxDKAXjjTfjctzkI+2c7Lk5PRPxn2RbfS7rI0OH4gEODsijAvPRiCXW5Gbmzxxfwf92bPYBRfOsQqBbHfLKbG5IYDSsVrILMve9/N111BNry7juXSkZWVihgHvPaVTVhGpoFlu8fvExXZeuzFCShu6iQvPB3v9QyU9UvKRyQ==
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8a715e76-8ea2-4670-e2c2-08deb7af9684
-X-MS-Exchange-CrossTenant-originalarrivaltime: 22 May 2026 03:09:50.5324 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: K6DEvdaoRn92HFs++dRSKqr2kQxJxzAMXlInONY6QrouxeDua9Zd+GP3xIKiHlEzq4Qow7Bb8wcGmFM2V8nmt9AZaxzPRKGbx7ky31h/y/s=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR11MB8218
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.17;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
+In-Reply-To: <060310ded8b9a188848f48cabf6afe69fcf9216d.1779171126.git.prcups@krgm.moe>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJCx2+BLyw9qjjmMAA--.4051S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj9fXoW3uw43Kr4xXrWDKF45CFWkZrc_yoW8GrW5Go
+ W8XF43JF4rGwsYkF93K39rXFWUXFyj9anrCa98Ww4DuF4kJry2vFyrGrsYvayfGryIgrWr
+ G3WxW3W3KayfZwn3l-sFpf9Il3svdjkaLaAFLSUrUUUUbb8apTn2vfkv8UJUUUU8wcxFpf
+ 9Il3svdxBIdaVrn0xqx4xG64xvF2IEw4CE5I8CrVC2j2Jv73VFW2AGmfu7bjvjm3AaLaJ3
+ UjIYCTnIWjp_UUUY27kC6x804xWl14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI
+ 8IcIk0rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xG
+ Y2AK021l84ACjcxK6xIIjxv20xvE14v26r1I6r4UM28EF7xvwVC0I7IYx2IY6xkF7I0E14
+ v26r4j6F4UM28EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
+ W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UNvtZU
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -48
+X-Spam_score: -4.9
 X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -195,18 +82,460 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pj4gQEAgLTQxMSw2ICs0ODQsMTMgQEAgdm9pZCB2dGRfYWNjZWxfcGFzaWRfY2FjaGVfc3luYyhJ
-bnRlbElPTU1VU3RhdGUNCj4qcywgVlREUEFTSURDYWNoZUluZm8gKnBjX2luZm8pDQo+PiAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFRZUEVfSE9TVF9JT01NVV9ERVZJQ0VfSU9N
-TVVGRCkpIHsNCj4+ICAgICAgICAgICAgICAgY29udGludWU7DQo+PiAgICAgICAgICAgfQ0KPj4g
-Kw0KPj4gKyAgICAgICAgLyoNCj4+ICsgICAgICAgICAqIFBBU0lEIGVudHJ5IHJlbW92YWwgaXMg
-aGFuZGxlZCBiZWZvcmUgYWRkaXRpb24gaW50ZW50aW9uYWxseSwNCj4+ICsgICAgICAgICAqIGJl
-Y2F1c2UgaXQncyB1bm5lY2Vzc2FyeSB0byBpdGVyYXRlIG9uIGFuIGVudHJ5IHRoYXQgd2lsbCBi
-ZQ0KPj4gKyAgICAgICAgICogcmVtb3ZlZC4NCj4NCj5ob3cgYWJvdXQgYmVsb3c/IDopDQo+DQo+
-LyoNCj4gICogVGhlIHJlcGxheSBwYXRoIGluZXZpdGFibHkgbmVlZHMgdG8gaXRlcmF0ZSB0aHJv
-dWdoIGV4aXN0aW5nDQo+ICAqIFBBU0lEIGNhY2hlIGVudHJpZXMuIFNpbmNlIGNhY2hlZCBQQVNJ
-RCBlbnRyaWVzIHRoYXQgYXJlIG1hcmtlZA0KPiAgKiBmb3IgcmVtb3ZhbCBkb24ndCBuZWVkIHRv
-IGJlIGl0ZXJhdGVkLCB3ZSBpbnRlbnRpb25hbGx5IGhhbmRsZQ0KPiAgKiByZW1vdmFscyBiZWZv
-cmUgYWRkaXRpb25zIHRvIG9wdGltaXplIHRoZSByZXBsYXkgcHJvY2Vzcy4NCj4gICovDQoNCkdv
-b2QsIHdpbGwgZG8uDQoNClRoYW5rcw0KWmhlbnpob25nDQo=
+
+
+On 2026/5/19 下午2:30, SignKirigami wrote:
+> Signed-off-by: SignKirigami <prcups@krgm.moe>
+> Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+> ---
+>   target/loongarch/disas.c                      |   4 +
+>   target/loongarch/insns.decode                 |  11 +
+>   .../tcg/insn_trans/trans_privileged.c.inc     | 225 +++++++++++++++++-
+>   target/loongarch/tcg/translate.c              |   6 +-
+>   target/loongarch/translate.h                  |   2 +
+>   5 files changed, 240 insertions(+), 8 deletions(-)
+> 
+> diff --git a/target/loongarch/disas.c b/target/loongarch/disas.c
+> index 3249ab7ac6..cae416266b 100644
+> --- a/target/loongarch/disas.c
+> +++ b/target/loongarch/disas.c
+> @@ -698,6 +698,10 @@ INSN(tlbfill,      empty)
+>   INSN(tlbclr,       empty)
+>   INSN(tlbflush,     empty)
+>   INSN(invtlb,       i_rr)
+> +INSN(gcsrrd,       r_csr)
+> +INSN(gcsrwr,       r_csr)
+> +INSN(gcsrxchg,     rr_csr)
+> +INSN(hvcl,         i)
+>   INSN(cacop,        cop_r_i)
+>   INSN(lddir,        rr_i)
+>   INSN(ldpte,        j_i)
+> diff --git a/target/loongarch/insns.decode b/target/loongarch/insns.decode
+> index 3089d42044..2ade384081 100644
+> --- a/target/loongarch/insns.decode
+> +++ b/target/loongarch/insns.decode
+> @@ -493,6 +493,17 @@ bgeu            0110 11 ................ ..... .....     @rr_offs16
+>     csrxchg           0000 0100 .............. ..... .....     @rr_csr
+>   }
+>   
+> +#
+> +# LVZ (LoongArch Virtualization) instructions
+> +#
+> +{
+> +  gcsrrd            0000 0101 .............. 00000 .....     @r_csr
+> +  gcsrwr            0000 0101 .............. 00001 .....     @r_csr
+> +  gcsrxchg          0000 0101 .............. ..... .....     @rr_csr
+> +}
+> +
+> +hvcl             0000 0000 0010 1011 1 ...............    @i15
+> +
+>   iocsrrd_b        0000 01100100 10000 00000 ..... .....    @rr
+>   iocsrrd_h        0000 01100100 10000 00001 ..... .....    @rr
+>   iocsrrd_w        0000 01100100 10000 00010 ..... .....    @rr
+> diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> index 2094d182ac..0cb629e5d7 100644
+> --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> @@ -39,6 +39,10 @@ GEN_FALSE_TRANS(lddir)
+>   GEN_FALSE_TRANS(ertn)
+>   GEN_FALSE_TRANS(dbcl)
+>   GEN_FALSE_TRANS(idle)
+> +GEN_FALSE_TRANS(gcsrrd)
+> +GEN_FALSE_TRANS(gcsrwr)
+> +GEN_FALSE_TRANS(gcsrxchg)
+> +GEN_FALSE_TRANS(hvcl)
+>   
+>   #else
+>   
+> @@ -69,8 +73,25 @@ static bool set_csr_trans_func(unsigned int csr_num, GenCSRRead readfn,
+>       return true;
+>   }
+>   
+> +static bool set_gcsr_trans_func(unsigned int csr_num, GenCSRRead readfn,
+> +                                GenCSRWrite writefn)
+> +{
+> +    CSRInfo *csr;
+> +
+> +    csr = get_gcsr(csr_num);
+> +    if (!csr) {
+> +        return false;
+> +    }
+> +
+> +    csr->readfn = (GenCSRFunc)readfn;
+> +    csr->writefn = (GenCSRFunc)writefn;
+> +    return true;
+> +}
+> +
+>   #define SET_CSR_FUNC(NAME, read, write)                 \
+>           set_csr_trans_func(LOONGARCH_CSR_##NAME, read, write)
+> +#define SET_GCSR_FUNC(NAME, read, write)                \
+> +        set_gcsr_trans_func(LOONGARCH_CSR_##NAME, read, write)
+>   
+>   void loongarch_csr_translate_init(void)
+>   {
+> @@ -85,14 +106,28 @@ void loongarch_csr_translate_init(void)
+>       SET_CSR_FUNC(TVAL,  gen_helper_csrrd_tval, NULL);
+>       SET_CSR_FUNC(TICLR, NULL, gen_helper_csrwr_ticlr);
+>       SET_CSR_FUNC(MSGIR, gen_helper_csrrd_msgir, NULL);
+> +    SET_CSR_FUNC(GSTAT, NULL, gen_helper_csrwr_gstat);
+> +    SET_CSR_FUNC(GTLBC, NULL, gen_helper_csrwr_gtlbc);
+> +    SET_CSR_FUNC(GINTC, NULL, gen_helper_csrwr_gintc);
+> +
+> +    SET_GCSR_FUNC(ESTAT, NULL, gen_helper_gcsrwr_estat);
+> +    SET_GCSR_FUNC(ASID, NULL, gen_helper_gcsrwr_asid);
+> +    SET_GCSR_FUNC(PGD, gen_helper_gcsrrd_pgd, NULL);
+> +    SET_GCSR_FUNC(TCFG, NULL, gen_helper_gcsrwr_tcfg);
+> +    SET_GCSR_FUNC(TVAL, gen_helper_gcsrrd_tval, NULL);
+> +    SET_GCSR_FUNC(TICLR, NULL, gen_helper_gcsrwr_ticlr);
+>   }
+>   #undef SET_CSR_FUNC
+> +#undef SET_GCSR_FUNC
+>   
+>   static bool check_csr_flags(DisasContext *ctx, const CSRInfo *csr, bool write)
+>   {
+>       if ((csr->flags & CSRFL_READONLY) && write) {
+>           return false;
+>       }
+> +    if ((csr->flags & CSRFL_GUEST_READONLY) && ctx->guest_mode && write) {
+> +        return false;
+> +    }
+>       if ((csr->flags & CSRFL_IO) && translator_io_start(&ctx->base)) {
+>           ctx->base.is_jmp = DISAS_EXIT_UPDATE;
+>       } else if ((csr->flags & CSRFL_EXITTB) && write) {
+> @@ -110,12 +145,17 @@ static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
+>       if (check_plv(ctx)) {
+>           return false;
+>       }
+> -    csr = get_csr(a->csr);
+> +    csr = ctx->guest_mode ? get_gcsr(a->csr) : get_csr(a->csr);
+>       if (csr == NULL) {
+>           /* CSR is undefined: read as 0. */
+>           dest = tcg_constant_tl(0);
+>       } else {
+>           check_csr_flags(ctx, csr, false);
+> +        if (ctx->guest_mode && (csr->flags & CSRFL_GSPR)) {
+> +            gen_helper_gspr(tcg_env);
+> +            gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
+> +            return true;
+> +        }
+>           dest = gpr_dst(ctx, a->rd, EXT_NONE);
+>           readfn = (GenCSRRead)csr->readfn;
+>           if (readfn) {
+> @@ -137,12 +177,17 @@ static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
+>       if (check_plv(ctx)) {
+>           return false;
+>       }
+> -    csr = get_csr(a->csr);
+> +    csr = ctx->guest_mode ? get_gcsr(a->csr) : get_csr(a->csr);
+>       if (csr == NULL) {
+>           /* CSR is undefined: write ignored, read old_value as 0. */
+>           gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
+>           return true;
+>       }
+> +    if (ctx->guest_mode && (csr->flags & CSRFL_GSPR)) {
+> +        gen_helper_gspr(tcg_env);
+> +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
+> +        return true;
+> +    }
+>       if (!check_csr_flags(ctx, csr, true)) {
+>           /* CSR is readonly: trap. */
+>           return false;
+> @@ -170,28 +215,35 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
+>       if (check_plv(ctx)) {
+>           return false;
+>       }
+> -    csr = get_csr(a->csr);
+> +    csr = ctx->guest_mode ? get_gcsr(a->csr) : get_csr(a->csr);
+>       if (csr == NULL) {
+>           /* CSR is undefined: write ignored, read old_value as 0. */
+>           gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
+>           return true;
+>       }
+> +    if (ctx->guest_mode && (csr->flags & CSRFL_GSPR)) {
+> +        gen_helper_gspr(tcg_env);
+> +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
+> +        return true;
+> +    }
+>   
+>       if (!check_csr_flags(ctx, csr, true)) {
+>           /* CSR is readonly: trap. */
+>           return false;
+>       }
+>   
+> -    /* So far only readonly csrs have readfn. */
+> -    assert(csr->readfn == NULL);
+> -
+>       src1 = gpr_src(ctx, a->rd, EXT_NONE);
+>       mask = gpr_src(ctx, a->rj, EXT_NONE);
+>       oldv = tcg_temp_new();
+>       newv = tcg_temp_new();
+>       temp = tcg_temp_new();
+>   
+> -    tcg_gen_ld_tl(oldv, tcg_env, csr->offset);
+> +    if (csr->readfn) {
+> +        GenCSRRead readfn = (GenCSRRead)csr->readfn;
+> +        readfn(oldv, tcg_env);
+> +    } else {
+> +        tcg_gen_ld_tl(oldv, tcg_env, csr->offset);
+> +    }
+>       tcg_gen_and_tl(newv, src1, mask);
+>       tcg_gen_andc_tl(temp, oldv, mask);
+>       tcg_gen_or_tl(newv, newv, temp);
+> @@ -212,6 +264,11 @@ static bool gen_iocsrrd(DisasContext *ctx, arg_rr *a,
+>       TCGv dest = gpr_dst(ctx, a->rd, EXT_NONE);
+>       TCGv src1 = gpr_src(ctx, a->rj, EXT_NONE);
+>   
+> +    if (ctx->guest_mode) {
+> +        gen_helper_gspr(tcg_env);
+> +        return true;
+> +    }
+> +
+>       if (check_plv(ctx)) {
+>           return false;
+>       }
+> @@ -225,6 +282,11 @@ static bool gen_iocsrwr(DisasContext *ctx, arg_rr *a,
+>       TCGv val = gpr_src(ctx, a->rd, EXT_NONE);
+>       TCGv addr = gpr_src(ctx, a->rj, EXT_NONE);
+>   
+> +    if (ctx->guest_mode) {
+> +        gen_helper_gspr(tcg_env);
+> +        return true;
+> +    }
+> +
+>       if (check_plv(ctx)) {
+>           return false;
+>       }
+> @@ -400,6 +462,10 @@ static bool trans_dbcl(DisasContext *ctx, arg_dbcl *a)
+>       if (check_plv(ctx)) {
+>           return false;
+>       }
+> +    if (ctx->guest_mode) {
+> +        gen_helper_gspr(tcg_env);
+> +        return true;
+> +    }
+>       generate_exception(ctx, EXCCODE_DBP);
+>       return true;
+>   }
+> @@ -410,9 +476,154 @@ static bool trans_idle(DisasContext *ctx, arg_idle *a)
+>           return false;
+>       }
+>   
+> +    if (ctx->guest_mode) {
+> +        gen_helper_gspr(tcg_env);
+> +        return true;
+> +    }
+> +
+>       tcg_gen_movi_tl(cpu_pc, ctx->base.pc_next + 4);
+>       gen_helper_idle(tcg_env);
+>       ctx->base.is_jmp = DISAS_NORETURN;
+>       return true;
+>   }
+> +
+> +static bool trans_gcsrrd(DisasContext *ctx, arg_gcsrrd *a)
+> +{
+> +    TCGv dest;
+> +    const CSRInfo *csr;
+> +    GenCSRRead readfn;
+> +
+> +    if (check_plv(ctx)) {
+> +        return false;
+> +    }
+> +    if (!avail_LVZ(ctx) || ctx->guest_mode) {
+> +        return false;
+> +    }
+> +
+> +    csr = get_gcsr(a->csr);
+> +    if (csr == NULL) {
+> +        dest = tcg_constant_tl(0);
+> +    } else {
+> +        dest = gpr_dst(ctx, a->rd, EXT_NONE);
+> +        if (csr->flags & CSRFL_GSPR) {
+> +            tcg_gen_movi_tl(dest, 0);
+> +        } else {
+> +            readfn = (GenCSRRead)csr->readfn;
+> +            if (readfn) {
+> +                readfn(dest, tcg_env);
+> +            } else {
+> +                tcg_gen_ld_tl(dest, tcg_env, csr->offset);
+> +            }
+> +        }
+> +    }
+> +    gen_set_gpr(a->rd, dest, EXT_NONE);
+> +    return true;
+> +}
+> +
+> +static bool trans_gcsrwr(DisasContext *ctx, arg_gcsrwr *a)
+> +{
+> +    TCGv dest, src1;
+> +    const CSRInfo *csr;
+> +    GenCSRWrite writefn;
+> +
+> +    if (check_plv(ctx)) {
+> +        return false;
+> +    }
+> +    if (!avail_LVZ(ctx) || ctx->guest_mode) {
+> +        return false;
+> +    }
+> +
+> +    csr = get_gcsr(a->csr);
+> +    if (csr == NULL) {
+> +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
+> +        return true;
+> +    }
+> +    if (!check_csr_flags(ctx, csr, true)) {
+> +        return false;
+> +    }
+> +    if (csr->flags & CSRFL_GSPR) {
+> +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
+> +        return true;
+> +    }
+> +
+> +    src1 = gpr_src(ctx, a->rd, EXT_NONE);
+> +    writefn = (GenCSRWrite)csr->writefn;
+> +    if (writefn) {
+> +        dest = gpr_dst(ctx, a->rd, EXT_NONE);
+> +        writefn(dest, tcg_env, src1);
+> +    } else {
+> +        dest = tcg_temp_new();
+> +        tcg_gen_ld_tl(dest, tcg_env, csr->offset);
+> +        tcg_gen_st_tl(src1, tcg_env, csr->offset);
+> +    }
+> +    gen_set_gpr(a->rd, dest, EXT_NONE);
+> +    return true;
+> +}
+> +
+> +static bool trans_gcsrxchg(DisasContext *ctx, arg_gcsrxchg *a)
+> +{
+> +    TCGv src1, mask, oldv, newv, temp;
+> +    const CSRInfo *csr;
+> +    GenCSRRead readfn;
+> +    GenCSRWrite writefn;
+> +
+> +    if (check_plv(ctx)) {
+> +        return false;
+> +    }
+> +    if (!avail_LVZ(ctx) || ctx->guest_mode) {
+> +        return false;
+> +    }
+> +
+> +    csr = get_gcsr(a->csr);
+> +    if (csr == NULL) {
+> +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
+> +        return true;
+> +    }
+> +    if (!check_csr_flags(ctx, csr, true)) {
+> +        return false;
+> +    }
+> +    if (csr->flags & CSRFL_GSPR) {
+> +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
+> +        return true;
+> +    }
+> +
+> +    src1 = gpr_src(ctx, a->rd, EXT_NONE);
+> +    mask = gpr_src(ctx, a->rj, EXT_NONE);
+> +    oldv = tcg_temp_new();
+> +    newv = tcg_temp_new();
+> +    temp = tcg_temp_new();
+> +
+> +    readfn = (GenCSRRead)csr->readfn;
+> +    if (readfn) {
+> +        readfn(oldv, tcg_env);
+> +    } else {
+> +        tcg_gen_ld_tl(oldv, tcg_env, csr->offset);
+> +    }
+> +    tcg_gen_and_tl(newv, src1, mask);
+> +    tcg_gen_andc_tl(temp, oldv, mask);
+> +    tcg_gen_or_tl(newv, newv, temp);
+> +
+> +    writefn = (GenCSRWrite)csr->writefn;
+> +    if (writefn) {
+> +        writefn(oldv, tcg_env, newv);
+> +    } else {
+> +        tcg_gen_st_tl(newv, tcg_env, csr->offset);
+> +    }
+> +    gen_set_gpr(a->rd, oldv, EXT_NONE);
+> +    return true;
+> +}
+> +
+> +static bool trans_hvcl(DisasContext *ctx, arg_hvcl *a)
+> +{
+> +    if (!avail_LVZ(ctx)) {
+> +        return false;
+> +    }
+> +    if (!ctx->guest_mode) {
+> +        return false;
+> +    }
+> +    tcg_gen_movi_tl(cpu_pc, ctx->base.pc_next);
+> +    gen_helper_hvcl(tcg_env, tcg_constant_i32(a->imm));
+> +    ctx->base.is_jmp = DISAS_NORETURN;
+> +    return true;
+> +}
+>   #endif
+> diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
+> index 124dce6269..15c83ef72d 100644
+> --- a/target/loongarch/tcg/translate.c
+> +++ b/target/loongarch/tcg/translate.c
+> @@ -122,12 +122,16 @@ static void loongarch_tr_init_disas_context(DisasContextBase *dcbase,
+>       CPULoongArchState *env = cpu_env(cs);
+>       DisasContext *ctx = container_of(dcbase, DisasContext, base);
+>   
+> +    ctx->guest_mode = (ctx->base.tb->flags & HW_FLAGS_GUEST_MODE) != 0;
+>       ctx->page_start = ctx->base.pc_first & TARGET_PAGE_MASK;
+>       ctx->plv = ctx->base.tb->flags & HW_FLAGS_PLV_MASK;
+>       if (ctx->base.tb->flags & HW_FLAGS_CRMD_PG) {
+>           ctx->mem_idx = ctx->plv;
+> +        if (ctx->guest_mode) {
+> +            ctx->mem_idx += MMU_GUEST_IDX;
+> +        }
+>       } else {
+> -        ctx->mem_idx = MMU_DA_IDX;
+> +        ctx->mem_idx = ctx->guest_mode ? MMU_GUEST_DA_IDX : MMU_DA_IDX;
+>       }
+>   
+>       /* Bound the number of insns to execute to those left on the page.  */
+> diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
+> index 8aa8325dc6..db0650e713 100644
+> --- a/target/loongarch/translate.h
+> +++ b/target/loongarch/translate.h
+> @@ -26,6 +26,7 @@
+>   #define avail_FP_DP(C)  (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP_DP))
+>   #define avail_LSPW(C)   (FIELD_EX32((C)->cpucfg2, CPUCFG2, LSPW))
+>   #define avail_LAM(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM))
+> +#define avail_LVZ(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LVZ))
+>   #define avail_LAM_BH(C) (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM_BH))
+>   #define avail_LAMCAS(C) (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAMCAS))
+>   #define avail_LSX(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LSX))
+
+static void loongarch_tr_init_disas_context(DisasContextBase *dcbase,
+                                             CPUState *cs)
+{
+
+     if (FIELD_EX64(env->cpucfg[2], CPUCFG2, LSX)) {
+         ctx->vl = LSX_LEN;
+     }
+     if (FIELD_EX64(env->cpucfg[2], CPUCFG2, LASX)) {
+         ctx->vl = LASX_LEN;
+     ctx->cpucfg1 = env->cpucfg[1];
+     ctx->cpucfg2 = env->cpucfg[2];
+     ctx->cpucfg3 = env->cpucfg[3];
+}
+
+There may be some problem with cpucfg configuration, for example host 
+has LASX/LSX feature, however vCPU is configured with LASX/LSX feature 
+disabled. With the upper piece of code, ctx->cpucfg1 comes from host 
+feature setting instead.
+
+Regards
+Bibo Mao
+
+> @@ -66,6 +67,7 @@ typedef struct DisasContext {
+>       TCGv zero;
+>       bool la64; /* LoongArch64 mode */
+>       bool va32; /* 32-bit virtual address */
+> +    bool guest_mode;
+>       uint32_t cpucfg1;
+>       uint32_t cpucfg2;
+>       uint32_t cpucfg3;
+> 
+
 
