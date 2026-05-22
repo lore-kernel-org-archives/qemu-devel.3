@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74C85CD5BAC
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 19:37:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CF76CD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 19:37:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQVgC-0001gd-P4; Fri, 22 May 2026 15:37:09 -0400
+	id 1wQVgK-0001jJ-8P; Fri, 22 May 2026 15:37:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wQVg5-0001fF-Qq
- for qemu-devel@nongnu.org; Fri, 22 May 2026 15:37:02 -0400
-Received: from mail-oi1-x22c.google.com ([2607:f8b0:4864:20::22c])
+ id 1wQVg8-0001ft-VP
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 15:37:05 -0400
+Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wQVg1-0000SO-VJ
- for qemu-devel@nongnu.org; Fri, 22 May 2026 15:37:00 -0400
-Received: by mail-oi1-x22c.google.com with SMTP id
- 5614622812f47-4855003f70bso732916b6e.1
- for <qemu-devel@nongnu.org>; Fri, 22 May 2026 12:36:57 -0700 (PDT)
+ id 1wQVg4-0000TH-LX
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 15:37:02 -0400
+Received: by mail-oi1-x22a.google.com with SMTP id
+ 5614622812f47-47cacb4ed99so4889678b6e.1
+ for <qemu-devel@nongnu.org>; Fri, 22 May 2026 12:37:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779478616; x=1780083416; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779478619; x=1780083419; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=KwEzXgen8Gnp7u/7KMDnkud2zgJHwWnpe+PU5S+vNIo=;
- b=S5jDM+mHT/HXjY2uFf/gjLeW2HX5kAQsfeH+zlYl1stM4vR0o5j/ev47mFA3LVClYa
- LOoUz2sWVMvJU060ofxJPudCZ8yZQJgXLVaW/nU5i8P5tPwXhrfeJLvBaB6d/pEzOUO3
- SMpS2dAbYjEpB5LO41y+uaC7zIw0YhBeJdNHBpg8tEjLsTJcaK/SKFNcbHixCLHgwzeC
- iY6szEwtFPRWYxfgTj+LBDSsIHSdn7CUvDaSUD3YWC0HNlK+uJqu8gtSkybnVo+Q12zW
- /a05rmx8olCqDfSYjDZ5okB50O3I3lY63a4fMzo5YY2jizYaGPwQviSq58YIpunBHGg/
- EW7Q==
+ :reply-to; bh=4cvv9uFzIlix0aHZHW7IXUB7h+HGXq8FdmHAt2uF7zY=;
+ b=Rih0xTkcNaGcIiZdYXZs2xnBB6DEo1t//3SrtfTl7C9t/dIwmCW03VOEoY1p69+loN
+ LE+vUHnHePEoz7fhC+KaQUt7kWGNvA0BaF+1NCje2VpamSpr7y2V6Zs5uZwhd0Q5horB
+ YPeWIRr37Z7UM/YkyrqP67NrxnFD/0VHUNAB+vbGCiI2bHFV7q6w0lF2MxfLRAs0/O7D
+ ileNZ/1mip1XFXSMsRsq8DypL0eAo9B/+o+v2zHVwxlY7oMl/+kEG1TyQcpJx7TqWmnq
+ lvpW3RtOQiqWwhtau8txrugLVXgl4NrHQ+oUttJ7NoP6ov5QPYzm/F1AKIa9WvV3YvPB
+ 4ehQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779478616; x=1780083416;
+ d=1e100.net; s=20251104; t=1779478619; x=1780083419;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=KwEzXgen8Gnp7u/7KMDnkud2zgJHwWnpe+PU5S+vNIo=;
- b=AdUv+qQeM+Z0IpaPNrPYNOtAm+cCskw0+vJA3HSTMC06s77VjTnvYSLDd0yN0Aew+v
- MWqnhippEC7IG7aPR1KuU+CwDTAJTV+C0/UGpJdSAkEore6C9p4K5TKZ0iOwJxc7a7nZ
- 2YTjcsSZSa4zHpcniKvXnqYDLJcNwzNvqtWH4rVWjaAfTKF/aZzveN5RQ+S15k4F4r2J
- 5wBfYVX9gqxnWVaaLT+TxxPfTmtM83LH6nyi4lIz5Vov8g4rBtgglwtLMrVFiljpDlxC
- 9q8IOponVhhfHKOyUPi8f9PVCOkrRpEVo3gzg0qT1ophNXJ7sw2yXj5HdPtbxtlfQiGK
- Wm0Q==
-X-Gm-Message-State: AOJu0Yz1Yx2TgzjR3b9Ffv6Tbcv8VPojEg9d0s5/82M2aklc5w7TTlCx
- TjvlkMurakNwQc4sisvHCJ675OcZh0maJV6dQJa4CutMWoc0qW04+rLT
-X-Gm-Gg: Acq92OEV7kgXhz9mlnaX8DSC2ImzW93WZoqy9dfHQbw2TqCNx0e7fPj0iLA+FbqG1z4
- h+113cmAdQ7yeKfrXIXSc+kE+yEZTsB9Cn5cnRK62/hXt00zipzxkt5b+b5RUVQeYJsDtq8MhPe
- Uafaf6ywb3giqKxITRMUIDYbZq0gKijQ2pTv7uOMWj2Up3ebBXjSgmrrElYRWHgGSUC4NSXY/Ja
- I/yBXYj+Cz461SU+wPhKby8OjXsm8vyqydIATOhxYMAg44G6F4iNCDr997LotjENdn6bN1rieIm
- CiUVTq8KtqcrNlh8F1Tk5IoQV/gKYIae+KcTnoXokvl+zzxgxKPFAVOOJM+m6yKuWxnGyPatmnD
- jANm3FV7ipL4Htqkxrwf55pQUNGOA4qRcspmJtHMQo37iBKWT7VNav5GBn7UwWJI+2AzuyMrKb4
- ISznqY3/OBMzFxnLq2C1OaSlMBs9XF6MDKjt4gGzUSoeDto0PiAb6QJSbRSqpT9lguD/rNGpRyA
- AobXtG1dJaK6aEtKwI4uONxTn+XwgayYyeMpfSbg4dwOxmdE8QIN0fLB/lIkBTt6rDmHV10RNGJ
- gMo=
-X-Received: by 2002:a05:6808:c1cb:b0:47a:ae7:b5e2 with SMTP id
- 5614622812f47-4854a449b3emr2914508b6e.38.1779478616323; 
- Fri, 22 May 2026 12:36:56 -0700 (PDT)
+ bh=4cvv9uFzIlix0aHZHW7IXUB7h+HGXq8FdmHAt2uF7zY=;
+ b=fwR/HhRj888MfnuhI6jQGVfWgJ3fVya8XRPWb1HKGqFdLrJQmAz0wHDkzI2ia0+hbp
+ 1tWCegSa2Vz2LGYbYEZmGj6GuYEyjDAPFkztUZcAEc/efqaq3ZCpFy8vPlgQ2k53uTCk
+ yjzWWXg8t8OXue67mDH7km5j8JJii9OPpWFczE3iaOahjY8vicMyb8NkL+WElUTqzuYQ
+ WEeRChjp1ScACOFCDLEb14YU9Bzi+ku3Tsy9prWacj1zdT1nrGIdLUX/XU8x7IUsmx3B
+ JDmn+gB363mom5NO7r2A0v718CoPZA9GjyhY8hBJP2Ptb8nQ+W/aoN2aJZewQgG5rFA4
+ 33pQ==
+X-Gm-Message-State: AOJu0YzIIBZ/si8uskoBHt5PBPtA8bhsyS/Kw2C7M6wwiZ6ufdiwiwLv
+ oZPhgj9/+BkxXoWkmmNceNliuAwK1r1D5E4Fj2PV4cv9hzX5+1i85zJp
+X-Gm-Gg: Acq92OEIOC3hKdX7yPq5JSdVolYLJgw8t5Bom1cAVsW15jsLNyaOIoI01H5N1jauSbB
+ +x63nCVhgtVd+G3DSq7Y+HbY1+TJa7aC+Wz1g6lMZfUN8yxyPWoUVizZZIgFcdRfS09TzhC/qRg
+ RFjSZNslHQP59TVxuP+SlxorCh2hCvSYy3z7it7K+4170eLByLnzebXdAyLTrEtIs5mi3jLCEpb
+ 4ckFneoXerFDq/bbeu+MVqxwdnEkqgRz93KkRR41ux4wF3jsSG8JQNuk5/t7fvSkc7toNlWs2fq
+ dTv/Pc8OmDG6uVTcT2NBHf6KPMNv2flUz6Y4YQwuVOZVTsiZ4hB4KZrtgRmLgt0fmmVyQdhAt5V
+ e62kACeTWRLoj78i6wxNc1TK/hLTJUX3WjchPej7VqgeiIBA4e+IUTSbmCO9B4wWkDvu0CSM7iD
+ P+3EGM7IXIyEfOq9p/roFZ9m1RUgwMOxn9Od7AHpN6SeVxpMM5oBdBqYH64JJvfItcZKNirx7vL
+ HitRkYsTE3o7L56GloNBOASJdyfw3FxmPEYVyphdMe+2hApIPKGSZbEF8QhKZxwcnAp
+X-Received: by 2002:a05:6808:4f53:b0:485:4396:91a3 with SMTP id
+ 5614622812f47-4854a3b9ed3mr2821796b6e.30.1779478619114; 
+ Fri, 22 May 2026 12:36:59 -0700 (PDT)
 Received: from mac.localdomain (184-96-131-78.hlrn.qwest.net. [184.96.131.78])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-48554757d5dsm995297b6e.15.2026.05.22.12.36.55
+ 5614622812f47-48554757d5dsm995297b6e.15.2026.05.22.12.36.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 May 2026 12:36:55 -0700 (PDT)
+ Fri, 22 May 2026 12:36:58 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Fri, 22 May 2026 13:36:39 -0600
-Subject: [PATCH v15 08/22] target/mips: add Octeon SNOW3G COP2 helpers
+Date: Fri, 22 May 2026 13:36:41 -0600
+Subject: [PATCH v15 10/22] target/mips: add Octeon SMS4 COP2 helpers
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260522-mips-octeon-missing-insns-v2-v15-8-f8731a588dc2@gmail.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260522-mips-octeon-missing-insns-v2-v15-10-f8731a588dc2@gmail.com>
 References: <20260522-mips-octeon-missing-insns-v2-v15-0-f8731a588dc2@gmail.com>
 In-Reply-To: <20260522-mips-octeon-missing-insns-v2-v15-0-f8731a588dc2@gmail.com>
 To: qemu-devel@nongnu.org
@@ -85,8 +84,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  James Hilliard <james.hilliard1@gmail.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22c;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x22c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22a;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x22a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -110,324 +109,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add helper support for the Octeon SNOW3G START and MORE selectors. The
-engine state and result are represented through the architectural HSH IV
-and DAT register banks that SNOW3G aliases for save and restore.
+Add helper support for the Octeon SMS4 operation selectors. SMS4 reuses
+the AES RESINP, IV, and key banks, so the helpers share the existing AES
+state while implementing the SMS4 ECB/CBC encrypt and decrypt operations.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
-Changes v9 -> v10:
-  - Drop non-architectural SNOW3G shadow state and shared-mode tracking.
-  - Use the architectural HSH IV/DAT register banks for aliased state.
-
 Changes v8 -> v9:
-  - Split SNOW3G selector operations into their own COP2 helper patch.
-  - Replace generic selector dispatch with per-operation SNOW3G helpers.
+  - Split SMS4 operation selectors into their own COP2 helper patch.
+  - Replace generic selector dispatch with per-operation SMS4 helpers.
   - Add matching helper.h declarations with the helper implementation.
+
+Changes v5 -> v6:
+  - Use RESINP wording for the SMS4 shared selector aliases.
+
+Changes v1 -> v2:
+  - Add selector dispatch updates in octeon_translate.c after moving
+    COP2 decode out of translate.c.  (suggested by Philippe
+    Mathieu-Daudé)
 ---
- target/mips/helper.h            |   2 +
- target/mips/tcg/octeon_crypto.c | 275 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 277 insertions(+)
+ target/mips/helper.h            |   4 ++
+ target/mips/tcg/octeon_crypto.c | 124 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 128 insertions(+)
 
 diff --git a/target/mips/helper.h b/target/mips/helper.h
-index 292336ec62..c4e7693df6 100644
+index 39c226ded9..4949b94657 100644
 --- a/target/mips/helper.h
 +++ b/target/mips/helper.h
-@@ -50,6 +50,8 @@ DEF_HELPER_2(octeon_cp2_mt_gfm_xormul1, void, env, i64)
- DEF_HELPER_1(octeon_cp2_mt_sha3_startop, void, env)
- DEF_HELPER_2(octeon_cp2_mt_zuc_start, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_zuc_more, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_snow3g_start, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_snow3g_more, void, env, i64)
+@@ -56,6 +56,10 @@ DEF_HELPER_2(octeon_cp2_mt_aes_enc_cbc1, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_aes_enc1, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_aes_dec_cbc1, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_aes_dec1, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sms4_enc_cbc1, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sms4_enc1, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sms4_dec_cbc1, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_sms4_dec1, void, env, i64)
  
  /* microMIPS functions */
  DEF_HELPER_4(lwm, void, env, tl, tl, i32)
 diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
-index 0205ed5af5..b8157c9a8e 100644
+index 3de7ad31bf..abc16754e0 100644
 --- a/target/mips/tcg/octeon_crypto.c
 +++ b/target/mips/tcg/octeon_crypto.c
-@@ -577,6 +577,281 @@ static void octeon_zuc_more(MIPSOcteonCryptoState *crypto, uint64_t data)
-     octeon_zuc_advance_window(crypto, z2);
+@@ -986,6 +986,130 @@ void helper_octeon_cp2_mt_aes_dec1(CPUMIPSState *env, uint64_t value)
+     octeon_aes_decrypt_common(crypto, false);
  }
  
-+static const uint8_t octeon_snow3g_sr[256] = {
-+    0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5,
-+    0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
-+    0xca, 0x82, 0xc9, 0x7d, 0xfa, 0x59, 0x47, 0xf0,
-+    0xad, 0xd4, 0xa2, 0xaf, 0x9c, 0xa4, 0x72, 0xc0,
-+    0xb7, 0xfd, 0x93, 0x26, 0x36, 0x3f, 0xf7, 0xcc,
-+    0x34, 0xa5, 0xe5, 0xf1, 0x71, 0xd8, 0x31, 0x15,
-+    0x04, 0xc7, 0x23, 0xc3, 0x18, 0x96, 0x05, 0x9a,
-+    0x07, 0x12, 0x80, 0xe2, 0xeb, 0x27, 0xb2, 0x75,
-+    0x09, 0x83, 0x2c, 0x1a, 0x1b, 0x6e, 0x5a, 0xa0,
-+    0x52, 0x3b, 0xd6, 0xb3, 0x29, 0xe3, 0x2f, 0x84,
-+    0x53, 0xd1, 0x00, 0xed, 0x20, 0xfc, 0xb1, 0x5b,
-+    0x6a, 0xcb, 0xbe, 0x39, 0x4a, 0x4c, 0x58, 0xcf,
-+    0xd0, 0xef, 0xaa, 0xfb, 0x43, 0x4d, 0x33, 0x85,
-+    0x45, 0xf9, 0x02, 0x7f, 0x50, 0x3c, 0x9f, 0xa8,
-+    0x51, 0xa3, 0x40, 0x8f, 0x92, 0x9d, 0x38, 0xf5,
-+    0xbc, 0xb6, 0xda, 0x21, 0x10, 0xff, 0xf3, 0xd2,
-+    0xcd, 0x0c, 0x13, 0xec, 0x5f, 0x97, 0x44, 0x17,
-+    0xc4, 0xa7, 0x7e, 0x3d, 0x64, 0x5d, 0x19, 0x73,
-+    0x60, 0x81, 0x4f, 0xdc, 0x22, 0x2a, 0x90, 0x88,
-+    0x46, 0xee, 0xb8, 0x14, 0xde, 0x5e, 0x0b, 0xdb,
-+    0xe0, 0x32, 0x3a, 0x0a, 0x49, 0x06, 0x24, 0x5c,
-+    0xc2, 0xd3, 0xac, 0x62, 0x91, 0x95, 0xe4, 0x79,
-+    0xe7, 0xc8, 0x37, 0x6d, 0x8d, 0xd5, 0x4e, 0xa9,
-+    0x6c, 0x56, 0xf4, 0xea, 0x65, 0x7a, 0xae, 0x08,
-+    0xba, 0x78, 0x25, 0x2e, 0x1c, 0xa6, 0xb4, 0xc6,
-+    0xe8, 0xdd, 0x74, 0x1f, 0x4b, 0xbd, 0x8b, 0x8a,
-+    0x70, 0x3e, 0xb5, 0x66, 0x48, 0x03, 0xf6, 0x0e,
-+    0x61, 0x35, 0x57, 0xb9, 0x86, 0xc1, 0x1d, 0x9e,
-+    0xe1, 0xf8, 0x98, 0x11, 0x69, 0xd9, 0x8e, 0x94,
-+    0x9b, 0x1e, 0x87, 0xe9, 0xce, 0x55, 0x28, 0xdf,
-+    0x8c, 0xa1, 0x89, 0x0d, 0xbf, 0xe6, 0x42, 0x68,
-+    0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16,
-+};
-+
-+static const uint8_t octeon_snow3g_sq[256] = {
-+    0x25, 0x24, 0x73, 0x67, 0xd7, 0xae, 0x5c, 0x30,
-+    0xa4, 0xee, 0x6e, 0xcb, 0x7d, 0xb5, 0x82, 0xdb,
-+    0xe4, 0x8e, 0x48, 0x49, 0x4f, 0x5d, 0x6a, 0x78,
-+    0x70, 0x88, 0xe8, 0x5f, 0x5e, 0x84, 0x65, 0xe2,
-+    0xd8, 0xe9, 0xcc, 0xed, 0x40, 0x2f, 0x11, 0x28,
-+    0x57, 0xd2, 0xac, 0xe3, 0x4a, 0x15, 0x1b, 0xb9,
-+    0xb2, 0x80, 0x85, 0xa6, 0x2e, 0x02, 0x47, 0x29,
-+    0x07, 0x4b, 0x0e, 0xc1, 0x51, 0xaa, 0x89, 0xd4,
-+    0xca, 0x01, 0x46, 0xb3, 0xef, 0xdd, 0x44, 0x7b,
-+    0xc2, 0x7f, 0xbe, 0xc3, 0x9f, 0x20, 0x4c, 0x64,
-+    0x83, 0xa2, 0x68, 0x42, 0x13, 0xb4, 0x41, 0xcd,
-+    0xba, 0xc6, 0xbb, 0x6d, 0x4d, 0x71, 0x21, 0xf4,
-+    0x8d, 0xb0, 0xe5, 0x93, 0xfe, 0x8f, 0xe6, 0xcf,
-+    0x43, 0x45, 0x31, 0x22, 0x37, 0x36, 0x96, 0xfa,
-+    0xbc, 0x0f, 0x08, 0x52, 0x1d, 0x55, 0x1a, 0xc5,
-+    0x4e, 0x23, 0x69, 0x7a, 0x92, 0xff, 0x5b, 0x5a,
-+    0xeb, 0x9a, 0x1c, 0xa9, 0xd1, 0x7e, 0x0d, 0xfc,
-+    0x50, 0x8a, 0xb6, 0x62, 0xf5, 0x0a, 0xf8, 0xdc,
-+    0x03, 0x3c, 0x0c, 0x39, 0xf1, 0xb8, 0xf3, 0x3d,
-+    0xf2, 0xd5, 0x97, 0x66, 0x81, 0x32, 0xa0, 0x00,
-+    0x06, 0xce, 0xf6, 0xea, 0xb7, 0x17, 0xf7, 0x8c,
-+    0x79, 0xd6, 0xa7, 0xbf, 0x8b, 0x3f, 0x1f, 0x53,
-+    0x63, 0x75, 0x35, 0x2c, 0x60, 0xfd, 0x27, 0xd3,
-+    0x94, 0xa5, 0x7c, 0xa1, 0x05, 0x58, 0x2d, 0xbd,
-+    0xd9, 0xc7, 0xaf, 0x6b, 0x54, 0x0b, 0xe0, 0x38,
-+    0x04, 0xc8, 0x9d, 0xe7, 0x14, 0xb1, 0x87, 0x9c,
-+    0xdf, 0x6f, 0xf9, 0xda, 0x2a, 0xc4, 0x59, 0x16,
-+    0x74, 0x91, 0xab, 0x26, 0x61, 0x76, 0x34, 0x2b,
-+    0xad, 0x99, 0xfb, 0x72, 0xec, 0x33, 0x12, 0xde,
-+    0x98, 0x3b, 0xc0, 0x9b, 0x3e, 0x18, 0x10, 0x3a,
-+    0x56, 0xe1, 0x77, 0xc9, 0x1e, 0x9e, 0x95, 0xa3,
-+    0x90, 0x19, 0xa8, 0x6c, 0x09, 0xd0, 0xf0, 0x86,
-+};
-+
-+static inline uint8_t octeon_snow3g_mulx(uint8_t v, uint8_t c)
++static inline uint32_t octeon_sms4_t(uint32_t x)
 +{
-+    return (v & 0x80) ? ((v << 1) ^ c) : (v << 1);
++    x = sm4_subword(x);
++    return x ^ rol32(x, 2) ^ rol32(x, 10) ^
++           rol32(x, 18) ^ rol32(x, 24);
 +}
 +
-+static uint8_t octeon_snow3g_mulxpow(uint8_t v, unsigned int n, uint8_t c)
++static inline uint32_t octeon_sms4_t_key(uint32_t x)
 +{
-+    while (n-- > 0) {
-+        v = octeon_snow3g_mulx(v, c);
++    x = sm4_subword(x);
++    return x ^ rol32(x, 13) ^ rol32(x, 23);
++}
++
++static void octeon_sms4_expand_key(const uint8_t *key, uint32_t round_keys[32])
++{
++    static const uint32_t fk[4] = {
++        0xa3b1bac6U, 0x56aa3350U, 0x677d9197U, 0xb27022dcU,
++    };
++    uint32_t k[36];
++
++    for (int i = 0; i < 4; i++) {
++        k[i] = ldl_be_p(key + i * 4) ^ fk[i];
 +    }
-+    return v;
-+}
-+
-+static inline uint32_t octeon_snow3g_pack32(uint8_t b0, uint8_t b1,
-+                                            uint8_t b2, uint8_t b3)
-+{
-+    return ((uint32_t)b0 << 24) | ((uint32_t)b1 << 16) |
-+           ((uint32_t)b2 << 8) | b3;
-+}
-+
-+static uint32_t octeon_snow3g_mulalpha(uint8_t c)
-+{
-+    return octeon_snow3g_pack32(octeon_snow3g_mulxpow(c, 23, 0xa9),
-+                                octeon_snow3g_mulxpow(c, 245, 0xa9),
-+                                octeon_snow3g_mulxpow(c, 48, 0xa9),
-+                                octeon_snow3g_mulxpow(c, 239, 0xa9));
-+}
-+
-+static uint32_t octeon_snow3g_divalpha(uint8_t c)
-+{
-+    return octeon_snow3g_pack32(octeon_snow3g_mulxpow(c, 16, 0xa9),
-+                                octeon_snow3g_mulxpow(c, 39, 0xa9),
-+                                octeon_snow3g_mulxpow(c, 6, 0xa9),
-+                                octeon_snow3g_mulxpow(c, 64, 0xa9));
-+}
-+
-+static uint32_t octeon_snow3g_s1(uint32_t w)
-+{
-+    uint8_t x0 = octeon_snow3g_sr[w >> 24];
-+    uint8_t x1 = octeon_snow3g_sr[(uint8_t)(w >> 16)];
-+    uint8_t x2 = octeon_snow3g_sr[(uint8_t)(w >> 8)];
-+    uint8_t x3 = octeon_snow3g_sr[(uint8_t)w];
-+    uint8_t r0 = octeon_snow3g_mulx(x0, 0x1b) ^ x1 ^ x2 ^
-+                 octeon_snow3g_mulx(x3, 0x1b) ^ x3;
-+    uint8_t r1 = octeon_snow3g_mulx(x0, 0x1b) ^ x0 ^
-+                 octeon_snow3g_mulx(x1, 0x1b) ^ x2 ^ x3;
-+    uint8_t r2 = x0 ^ octeon_snow3g_mulx(x1, 0x1b) ^ x1 ^
-+                 octeon_snow3g_mulx(x2, 0x1b) ^ x3;
-+    uint8_t r3 = x0 ^ x1 ^ octeon_snow3g_mulx(x2, 0x1b) ^ x2 ^
-+                 octeon_snow3g_mulx(x3, 0x1b);
-+
-+    return octeon_snow3g_pack32(r0, r1, r2, r3);
-+}
-+
-+static uint32_t octeon_snow3g_s2(uint32_t w)
-+{
-+    uint8_t x0 = octeon_snow3g_sq[w >> 24];
-+    uint8_t x1 = octeon_snow3g_sq[(uint8_t)(w >> 16)];
-+    uint8_t x2 = octeon_snow3g_sq[(uint8_t)(w >> 8)];
-+    uint8_t x3 = octeon_snow3g_sq[(uint8_t)w];
-+    uint8_t r0 = octeon_snow3g_mulx(x0, 0x69) ^ x1 ^ x2 ^
-+                 octeon_snow3g_mulx(x3, 0x69) ^ x3;
-+    uint8_t r1 = octeon_snow3g_mulx(x0, 0x69) ^ x0 ^
-+                 octeon_snow3g_mulx(x1, 0x69) ^ x2 ^ x3;
-+    uint8_t r2 = x0 ^ octeon_snow3g_mulx(x1, 0x69) ^ x1 ^
-+                 octeon_snow3g_mulx(x2, 0x69) ^ x3;
-+    uint8_t r3 = x0 ^ x1 ^ octeon_snow3g_mulx(x2, 0x69) ^ x2 ^
-+                 octeon_snow3g_mulx(x3, 0x69);
-+
-+    return octeon_snow3g_pack32(r0, r1, r2, r3);
-+}
-+
-+static uint32_t octeon_snow3g_lfsr(const MIPSOcteonCryptoState *crypto,
-+                                   unsigned int index)
-+{
-+    uint64_t pair = crypto->hsh_dat[index / 2];
-+
-+    return index & 1 ? octeon_crypto_lo32(pair) : octeon_crypto_hi32(pair);
-+}
-+
-+static void octeon_snow3g_set_lfsr(MIPSOcteonCryptoState *crypto,
-+                                   unsigned int index, uint32_t value)
-+{
-+    uint32_t hi = octeon_crypto_hi32(crypto->hsh_dat[index / 2]);
-+    uint32_t lo = octeon_crypto_lo32(crypto->hsh_dat[index / 2]);
-+
-+    if (index & 1) {
-+        lo = value;
-+    } else {
-+        hi = value;
++    for (int i = 0; i < 32; i++) {
++        k[i + 4] = k[i] ^ octeon_sms4_t_key(k[i + 1] ^ k[i + 2] ^
++                                            k[i + 3] ^ sm4_ck[i]);
++        round_keys[i] = k[i + 4];
 +    }
-+    crypto->hsh_dat[index / 2] = octeon_crypto_pack32(hi, lo);
 +}
 +
-+static uint32_t octeon_snow3g_fsm(const MIPSOcteonCryptoState *crypto,
-+                                  unsigned int index)
++static void octeon_sms4_crypt_block(const uint8_t *in, uint8_t *out,
++                                    const uint32_t round_keys[32],
++                                    bool encrypt)
 +{
-+    return crypto->hsh_iv[1 + index];
++    uint32_t x[36];
++
++    for (int i = 0; i < 4; i++) {
++        x[i] = ldl_be_p(in + i * 4);
++    }
++    for (int i = 0; i < 32; i++) {
++        uint32_t rk = round_keys[encrypt ? i : 31 - i];
++
++        x[i + 4] = x[i] ^ octeon_sms4_t(x[i + 1] ^ x[i + 2] ^
++                                        x[i + 3] ^ rk);
++    }
++    stl_be_p(out, x[35]);
++    stl_be_p(out + 4, x[34]);
++    stl_be_p(out + 8, x[33]);
++    stl_be_p(out + 12, x[32]);
 +}
 +
-+static void octeon_snow3g_set_fsm(MIPSOcteonCryptoState *crypto,
-+                                  unsigned int index, uint32_t value)
++static void octeon_sms4_crypt_common(MIPSOcteonCryptoState *crypto,
++                                     bool encrypt, bool cbc)
 +{
-+    crypto->hsh_iv[1 + index] = value;
-+}
++    uint8_t key[16];
++    uint8_t in[16];
++    uint8_t out[16];
++    uint8_t iv[16];
++    uint8_t next_iv[16];
++    uint32_t round_keys[32];
 +
-+static uint32_t octeon_snow3g_clock_fsm(MIPSOcteonCryptoState *crypto)
-+{
-+    uint32_t fsm0 = octeon_snow3g_fsm(crypto, 0);
-+    uint32_t fsm1 = octeon_snow3g_fsm(crypto, 1);
-+    uint32_t fsm2 = octeon_snow3g_fsm(crypto, 2);
-+    uint32_t f = (uint32_t)(octeon_snow3g_lfsr(crypto, 15) + fsm0) ^ fsm1;
-+    uint32_t r = (uint32_t)(fsm1 + (fsm2 ^ octeon_snow3g_lfsr(crypto, 5)));
-+
-+    octeon_snow3g_set_fsm(crypto, 2, octeon_snow3g_s2(fsm1));
-+    octeon_snow3g_set_fsm(crypto, 1, octeon_snow3g_s1(fsm0));
-+    octeon_snow3g_set_fsm(crypto, 0, r);
-+    return f;
-+}
-+
-+static void octeon_snow3g_clock_lfsr(MIPSOcteonCryptoState *crypto,
-+                                     bool init_mode, uint32_t f)
-+{
-+    uint32_t lfsr[16];
-+    uint32_t s0;
-+    uint32_t s11;
-+    uint32_t v;
-+    int i;
-+
-+    for (i = 0; i < 16; i++) {
-+        lfsr[i] = octeon_snow3g_lfsr(crypto, i);
++    /*
++     * SMS4 aliases the AES state onto the RESINP, IV, and KEY banks,
++     * with only the operation selectors remaining distinct.
++     */
++    octeon_aes_load_key(crypto, key, sizeof(key));
++    octeon_aes_load_block(crypto->aes_resinp, in);
++    if (cbc) {
++        octeon_aes_load_block(crypto->aes_iv, iv);
++        if (encrypt) {
++            for (int i = 0; i < sizeof(in); i++) {
++                in[i] ^= iv[i];
++            }
++        } else {
++            memcpy(next_iv, in, sizeof(next_iv));
++        }
 +    }
 +
-+    s0 = lfsr[0];
-+    s11 = lfsr[11];
-+    v = (s0 << 8) ^ octeon_snow3g_mulalpha(s0 >> 24) ^
-+        lfsr[2] ^ (s11 >> 8) ^ octeon_snow3g_divalpha((uint8_t)s11);
-+
-+    if (init_mode) {
-+        v ^= f;
++    octeon_sms4_expand_key(key, round_keys);
++    octeon_sms4_crypt_block(in, out, round_keys, encrypt);
++    if (cbc && !encrypt) {
++        for (int i = 0; i < sizeof(out); i++) {
++            out[i] ^= iv[i];
++        }
 +    }
 +
-+    for (i = 0; i < 15; i++) {
-+        octeon_snow3g_set_lfsr(crypto, i, lfsr[i + 1]);
++    octeon_aes_store_block(crypto->aes_resinp, out);
++    if (cbc) {
++        octeon_aes_store_block(crypto->aes_iv, encrypt ? out : next_iv);
 +    }
-+    octeon_snow3g_set_lfsr(crypto, 15, v);
 +}
 +
-+static uint32_t octeon_snow3g_generate_word(MIPSOcteonCryptoState *crypto)
++void helper_octeon_cp2_mt_sms4_enc_cbc1(CPUMIPSState *env, uint64_t value)
 +{
-+    uint32_t f = octeon_snow3g_clock_fsm(crypto);
-+    uint32_t z = f ^ octeon_snow3g_lfsr(crypto, 0);
++    MIPSOcteonCryptoState *crypto = &env->octeon_crypto;
 +
-+    octeon_snow3g_clock_lfsr(crypto, false, 0);
-+    return z;
++    crypto->aes_resinp[1] = value;
++    octeon_sms4_crypt_common(crypto, true, true);
 +}
 +
-+static void octeon_snow3g_queue_result(MIPSOcteonCryptoState *crypto)
++void helper_octeon_cp2_mt_sms4_enc1(CPUMIPSState *env, uint64_t value)
 +{
-+    uint32_t z0 = octeon_snow3g_generate_word(crypto);
-+    uint32_t z1 = octeon_snow3g_generate_word(crypto);
++    MIPSOcteonCryptoState *crypto = &env->octeon_crypto;
 +
-+    crypto->hsh_iv[0] = octeon_crypto_pack32(z0, z1);
++    crypto->aes_resinp[1] = value;
++    octeon_sms4_crypt_common(crypto, true, false);
 +}
 +
-+static void octeon_snow3g_start(MIPSOcteonCryptoState *crypto, uint64_t data)
++void helper_octeon_cp2_mt_sms4_dec_cbc1(CPUMIPSState *env, uint64_t value)
 +{
-+    int i;
++    MIPSOcteonCryptoState *crypto = &env->octeon_crypto;
 +
-+    for (i = 0; i < 14; i++) {
-+        octeon_snow3g_set_lfsr(crypto, i, octeon_snow3g_lfsr(crypto, i));
-+    }
-+    octeon_snow3g_set_lfsr(crypto, 14, data >> 32);
-+    octeon_snow3g_set_lfsr(crypto, 15, data);
-+    for (i = 0; i < 3; i++) {
-+        octeon_snow3g_set_fsm(crypto, i, 0);
-+    }
-+
-+    for (i = 0; i < 32; i++) {
-+        uint32_t f = octeon_snow3g_clock_fsm(crypto);
-+
-+        octeon_snow3g_clock_lfsr(crypto, true, f);
-+    }
-+
-+    (void)octeon_snow3g_clock_fsm(crypto);
-+    octeon_snow3g_clock_lfsr(crypto, false, 0);
-+    octeon_snow3g_queue_result(crypto);
++    crypto->aes_resinp[1] = value;
++    octeon_sms4_crypt_common(crypto, false, true);
 +}
 +
-+static void octeon_snow3g_more(MIPSOcteonCryptoState *crypto)
++void helper_octeon_cp2_mt_sms4_dec1(CPUMIPSState *env, uint64_t value)
 +{
-+    octeon_snow3g_queue_result(crypto);
++    MIPSOcteonCryptoState *crypto = &env->octeon_crypto;
++
++    crypto->aes_resinp[1] = value;
++    octeon_sms4_crypt_common(crypto, false, false);
 +}
 +
-+void helper_octeon_cp2_mt_snow3g_start(CPUMIPSState *env, uint64_t value)
-+{
-+    octeon_snow3g_start(&env->octeon_crypto, value);
-+}
-+
-+void helper_octeon_cp2_mt_snow3g_more(CPUMIPSState *env, uint64_t value)
-+{
-+    (void)value;
-+    octeon_snow3g_more(&env->octeon_crypto);
-+}
-+
- void helper_octeon_cp2_mt_zuc_start(CPUMIPSState *env, uint64_t value)
+ void helper_octeon_cp2_mt_snow3g_start(CPUMIPSState *env, uint64_t value)
  {
-     octeon_zuc_start(&env->octeon_crypto, value);
+     octeon_snow3g_start(&env->octeon_crypto, value);
 
 -- 
 2.54.0
