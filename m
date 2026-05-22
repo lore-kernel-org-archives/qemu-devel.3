@@ -4,50 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2125DCD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:57:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97FBCCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:58:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXm5-00024j-Af; Fri, 22 May 2026 17:51:21 -0400
+	id 1wQXm5-00023k-4A; Fri, 22 May 2026 17:51:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXlz-0001vU-LY; Fri, 22 May 2026 17:51:16 -0400
+ id 1wQXlv-0001mm-Ro; Fri, 22 May 2026 17:51:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXlx-0003nv-DF; Fri, 22 May 2026 17:51:15 -0400
+ id 1wQXlt-0003bd-NZ; Fri, 22 May 2026 17:51:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486560; bh=CLg/NbHjbYspAMq0P5vc2TeituRBmfACUveDQ2y4HgM=;
+ t=1779486560; bh=oeIl4T4LEBNfxxFNGKktvougbNt4aFA2iEAi4mg1xaA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=iTjlLwsnkRXl6VCkHtrLWfgMbxSbEPX88ujtSQSXJsUTcDVn9iHJ8ci5hZcJB1v4Y
- WfyidycvHgQ4r+eov+F2yysWA5M3m4cY07y5mPt2UiQV7ZUSt8TEBhBbDirZCwh3//
- gJ4N3NlLPTQwneBG5DR1nUbnavoRNp8wJMcK+9X4Qs8cWhA1m0iI9azkAo3YuTKpHE
- T2Sqr+EjL+TlI3DHL27nFW6OqyEZvbt/1vGxLPa5VuQX8/rzIibAHyae5T06cBoyWw
- piDTaKBemwIYC+BzvleYW78uyTpM0atwk6B62Ns4OKn5xUOd0prN0AsMSByV7MIiPJ
- G1p7XHOwgCfpA==
+ b=UC4a5VQ7Tp6jeQz5ZSjsea3wEogxjwP4IyWywICkcFXvEmk7JagR1eMTi8Nt4KOZ0
+ XeKKW3ppSPjONUrIcx5nSaJMsy9Db0+oBqX/0IFyLey8DETXWIBDXvNwq9aFjjee7k
+ u0Bp7aLkbjQ6InoMCdDncalKS70RVkqDO1VBWRa3CjxHs2ZyWJB0hbHEQnRhjEUQbt
+ 3LF6YUcLHd0iDTgXxIPZvWwHewaDowEPL2qVK2qoQFBuUTVGMJJdbIXQg/+CzZfqz2
+ pDSlvd5M2SUEdVxMOGgJCOo7vXlfP130/irZf5jyUSoOxhHFEKAKY9issehovK4mz9
+ rbqMyMfstz4fQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AB4EA1AFB72;
+ by isrv.corpit.ru (Postfix) with ESMTP id 7945F1AFB6F;
  Sat, 23 May 2026 00:49:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D205D3B71C1;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A3B733B71BE;
  Sat, 23 May 2026 00:49:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Junjie Cao <junjie.cao@intel.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Jeuk Kim <jeuk20.kim@samsung.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 124/149] hw/display/cirrus_vga: Fix packed-24
- color-expansion transparent pattern fills
-Date: Sat, 23 May 2026 00:48:56 +0300
-Message-ID: <20260522214923.807017-25-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 121/149] hw/ufs: Reject zero-depth MCQ queues
+Date: Sat, 23 May 2026 00:48:53 +0300
+Message-ID: <20260522214923.807017-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,83 +68,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Jeuk Kim <jeuk20.kim@samsung.com>
 
-The Cirrus Logic VGA card has "pattern fill" blit modes where it
-repeatedly copies an 8x8 source pattern to the display.  For the
-"color expansion" subtype of these, the source pixel format is an 8x8
-monochrome bitmap, and the destination can be any of 8, 16, 24 or
-32bpp.  We implemented these wrong for the 24bpp case, in a way that
-results in a complaint from the undefined-behavior sanitizer about a
-shift by a negative value.
+Reject SQATTR.SIZE and CQATTR.SIZE values that produce zero-entry MCQ
+queues. Such queues can later trigger a divide-by-zero while advancing
+queue pointers.
 
-For these pattern fills, the GR2F register includes a field which
-specifies how much to skip at the start of each scanline.  In the 8,
-16 and 32 bit cases, this field is 3 bits and is a count of pixels to
-skip.  We get this case right.  However, for the 24 bit case, the
-field is 5 bits and is a count of destination bytes to skip.  We
-tried to add support for 24-bits in commit ad81218e40e27 ("depth=24
-write mask fix (Volker Ruppert)") in 2005.  However we got this
-wrong, because when we need to skip, for example, 30 bytes in the
-destination, this is 10 input pixels but the whole pattern is only 8
-pixels wide, and we ended up with a negative bitpos for the first bit
-to use in the pattern.
-
-Fix the bug by masking srcskipleft in the 24-bit case so that it
-correctly gives the first pixel to use in the pattern even if we skip
-so many pixels that we have wrapped around to what would have been
-the second copy of the pattern to the destination.
-
-This patch was produced based on the information in the CL-GD5446
-Technical Reference Manual, specifically sections 5.8 "GR2F: BLT
-Destination Left-Side Clipping" and 9.4.8 "Pattern Fills".
-
+Fixes: 5c079578d2e ("hw/ufs: Add support MCQ of UFSHCI 4.0")
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3377
-Fixes: ad81218e40e27 ("depth=24 write mask fix (Volker Ruppert)")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Junjie Cao <junjie.cao@intel.com>
-Tested-by: Junjie Cao <junjie.cao@intel.com>
-Message-ID: <20260410183249.4046456-2-peter.maydell@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit aefeecb413a8e404ecb6d210cc32d60da176a336)
+Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+(cherry picked from commit 4a909c00b9e18478e67a792c7f7cfae62cb6c865)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/cirrus_vga_rop2.h b/hw/display/cirrus_vga_rop2.h
-index b208b7348a..8be35ec6e2 100644
---- a/hw/display/cirrus_vga_rop2.h
-+++ b/hw/display/cirrus_vga_rop2.h
-@@ -191,10 +191,29 @@ glue(glue(glue(cirrus_colorexpand_pattern_transp_, ROP_NAME), _),DEPTH)
-     int x, y, bitpos, pattern_y;
-     unsigned int bits, bits_xor;
-     unsigned int col;
+diff --git a/hw/ufs/trace-events b/hw/ufs/trace-events
+index 531dcfc686..7734b35f08 100644
+--- a/hw/ufs/trace-events
++++ b/hw/ufs/trace-events
+@@ -40,10 +40,12 @@ ufs_err_mcq_db_wr_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
+ ufs_err_mcq_db_wr_invalid_db(uint8_t qid, uint32_t db) "invalid mcq doorbell sqid %"PRIu8", db %"PRIu32""
+ ufs_err_mcq_create_sq_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
+ ufs_err_mcq_create_sq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
++ufs_err_mcq_create_sq_invalid_size(uint8_t qid) "invalid mcq sq size for sqid %"PRIu8""
+ ufs_err_mcq_create_sq_already_exists(uint8_t qid) "mcq sqid %"PRIu8 "already exists"
+ ufs_err_mcq_delete_sq_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
+ ufs_err_mcq_delete_sq_not_exists(uint8_t qid) "mcq sqid %"PRIu8 "not exists"
+ ufs_err_mcq_create_cq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
++ufs_err_mcq_create_cq_invalid_size(uint8_t qid) "invalid mcq cq size for cqid %"PRIu8""
+ ufs_err_mcq_create_cq_already_exists(uint8_t qid) "mcq cqid %"PRIu8 "already exists"
+ ufs_err_mcq_delete_cq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
+ ufs_err_mcq_delete_cq_not_exists(uint8_t qid) "mcq cqid %"PRIu8 "not exists"
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index e01fc730fd..66f4031852 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -506,6 +506,8 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
+     UfsMcqReg *reg = &u->mcq_reg[qid];
+     UfsSq *sq;
+     uint8_t cqid = FIELD_EX32(attr, SQATTR, CQID);
++    uint16_t qsize =
++        ((FIELD_EX32(attr, SQATTR, SIZE) + 1) << 2) / sizeof(UfsSqEntry);
+ 
+     if (qid >= u->params.mcq_maxq) {
+         trace_ufs_err_mcq_create_sq_invalid_sqid(qid);
+@@ -527,12 +529,17 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
+         return false;
+     }
+ 
++    if (!qsize) {
++        trace_ufs_err_mcq_create_sq_invalid_size(qid);
++        return false;
++    }
 +
-+    /*
-+     * Copy from an 8x8 monochrome pattern with color expansion.
-+     */
+     sq = g_malloc0(sizeof(*sq));
+     sq->u = u;
+     sq->sqid = qid;
+     sq->cq = u->cq[cqid];
+     sq->addr = ((uint64_t)reg->squba << 32) | reg->sqlba;
+-    sq->size = ((FIELD_EX32(attr, SQATTR, SIZE) + 1) << 2) / sizeof(UfsSqEntry);
++    sq->size = qsize;
+ 
+     sq->bh = qemu_bh_new_guarded(ufs_mcq_process_sq, sq,
+                                  &DEVICE(u)->mem_reentrancy_guard);
+@@ -576,6 +583,8 @@ static bool ufs_mcq_create_cq(UfsHc *u, uint8_t qid, uint32_t attr)
+ {
+     UfsMcqReg *reg = &u->mcq_reg[qid];
+     UfsCq *cq;
++    uint16_t qsize =
++        ((FIELD_EX32(attr, CQATTR, SIZE) + 1) << 2) / sizeof(UfsCqEntry);
+ 
+     if (qid >= u->params.mcq_maxq) {
+         trace_ufs_err_mcq_create_cq_invalid_cqid(qid);
+@@ -587,11 +596,16 @@ static bool ufs_mcq_create_cq(UfsHc *u, uint8_t qid, uint32_t attr)
+         return false;
+     }
+ 
++    if (!qsize) {
++        trace_ufs_err_mcq_create_cq_invalid_size(qid);
++        return false;
++    }
 +
- #if DEPTH == 24
-+    /*
-+     * For packed-24 modes, GR2F bits [4:0] are a count of destination
-+     * bytes to be suppressed for each scanline, which we keep in
-+     * dstskipleft. Our srcskipleft is the number of pixels to skip
-+     * within the 8x8 source pattern to match up with that number
-+     * of suppressed bytes. As the pattern repeats every 8 bits we
-+     * take the number of pixels mod 8.
-+     */
-     int dstskipleft = s->vga.gr[0x2f] & 0x1f;
--    int srcskipleft = dstskipleft / 3;
-+    int srcskipleft = (dstskipleft / 3) & 0x7;
- #else
-+    /*
-+     * In all other modes, GR2F bits [2:0] are a count of how many
-+     * destination pixels to suppress for each scanline, which is our
-+     * srcskipleft. We get dstskipleft, the number of bytes to skip,
-+     * by multiplying this by the bytes-per-pixel.
-+     */
-     int srcskipleft = s->vga.gr[0x2f] & 0x07;
-     int dstskipleft = srcskipleft * (DEPTH / 8);
- #endif
+     cq = g_malloc0(sizeof(*cq));
+     cq->u = u;
+     cq->cqid = qid;
+     cq->addr = ((uint64_t)reg->cquba << 32) | reg->cqlba;
+-    cq->size = ((FIELD_EX32(attr, CQATTR, SIZE) + 1) << 2) / sizeof(UfsCqEntry);
++    cq->size = qsize;
+ 
+     cq->bh = qemu_bh_new_guarded(ufs_mcq_process_cq, cq,
+                                  &DEVICE(u)->mem_reentrancy_guard);
 -- 
 2.47.3
 
