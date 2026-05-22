@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A448CD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:52:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6333CCD5BB3
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:52:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXlS-0008I5-5I; Fri, 22 May 2026 17:50:42 -0400
+	id 1wQXlz-0001sH-1m; Fri, 22 May 2026 17:51:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXkU-0006td-UO; Fri, 22 May 2026 17:49:44 -0400
+ id 1wQXlv-0001mn-Rj; Fri, 22 May 2026 17:51:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXkT-0002ZD-1c; Fri, 22 May 2026 17:49:42 -0400
+ id 1wQXlt-0003mt-Qk; Fri, 22 May 2026 17:51:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486559; bh=wiIxSKLWjGp/hnmDgWgykvj99Y/kdybHqbX062AqeJ8=;
+ t=1779486560; bh=4GJmcHYljCZZwjgafy8Mgt2lqystmIDIGI238LULHVk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=MFVinSxW2TlV98oUJppyPC8hjlmWtHc2oHfryRkgwx9f2niN9cuB4Ot2RlwrYWrm3
- rapYshkqS4zYnBozpoUaCIKCZSSxkPZbA0XdAwlwvgUciEDID8K4bWLro86Co4gzTf
- ciKjbKONVBviZ67EBLkshvsIu7LCRywWnqm7CmszIlypr8XhoRQHubnRCxlsLBglDw
- rlnwnA9SHdgA170cGfRiQTx/VoTKMOH5/RmOmhGUH8R8pas49AUFiSpTjo5VrLInYn
- 6i47TcEJb41pRKOWf3+hdhWkz+0lX9yd/AhhcSl68yMIiMasDdliW7YV62TIgVzD2U
- qO2+3PodHENMA==
+ b=XwgAZy2+TR9pBA+w7EDPyIJzE+OB08PVExOY/RJHUSUu9c/OpvpsPaUqdWt8TI6SN
+ ZG74yGRS/8C+4+qbPjkxQxuFcecTrRpEBbvwp+g9YGu0KOsYEySgFn7Ci7ekYBTwsO
+ LqMHzX40VVQ/bQEyPql93JFTBKo/rxqSZWCViyjwQCkkttFfh9qpTIFhJw+DvqIDgj
+ q+aII7FJ7du5yeJl/AgnurA7vDMNCuStLocrcfaslLcIl5FmBB1uio/5/1tv5vJwdc
+ Z5u2V8Wc6ko2rf0F/ZbRFrK0KCzYHMEWNGPtXoJE5ahB+8O685MzCnD9FbK7PFdt7a
+ HsHqaDgYLsf1Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 75CDF1AFB61;
- Sat, 23 May 2026 00:49:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 845A41AFB70;
+ Sat, 23 May 2026 00:49:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9DC5F3B71B0;
- Sat, 23 May 2026 00:49:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id AF3FE3B71BF;
+ Sat, 23 May 2026 00:49:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, liugan1 <liugan1@lixiang.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 107/149] hw/intc/arm_gicv3: Fix NS write to
- ICC_AP1Rn_EL1 when prebits < 7
-Date: Sat, 23 May 2026 00:48:39 +0300
-Message-ID: <20260522214923.807017-8-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jeuk Kim <jeuk20.kim@samsung.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 122/149] hw/ufs: Keep MCQ SQs alive while requests are
+ outstanding
+Date: Sat, 23 May 2026 00:48:54 +0300
+Message-ID: <20260522214923.807017-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
@@ -69,100 +69,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: liugan1 <liugan1@lixiang.com>
+From: Jeuk Kim <jeuk20.kim@samsung.com>
 
-The existing code uses a blanket `regno < 2` check to make
-ICC_AP1R0_EL1 and ICC_AP1R1_EL1 writes from Non-secure code WI
-(Write Ignore) when EL3 is present. This is intended to prevent
-NS code from claiming active interrupts in the Secure priority
-range, which could block Secure interrupt delivery.
+MCQ requests are allocated with their SQ, but can remain in flight on the
+CQ list or in the SCSI layer after leaving the SQ free list.
 
-However, that check assumes prebits=7 (4 APR registers), where the
-NS priority range (128..255) maps entirely to AP1R2/AP1R3. Since
-commit 39f29e599355 ("hw/intc/arm_gicv3: Use correct number of
-priority bits for the CPU", first in 7.1), all QEMU AArch64 CPUs
-are initialised with gic_pribits=5 (one APR register), so NS
-priorities map to AP1R0 bits [16:31]. Blanket WI of the entire
-AP1R0 register prevents NS code from clearing its own NS active
-priority bits. Machines using hw_compat_7_0 (e.g. virt-7.0) still
-force pribits=8 via force-8-bit-prio and are therefore unaffected.
+Reject runtime SQ deletion while any request is still outstanding, and
+use separate teardown helpers so device exit can still release MCQ
+queues after child devices have been unrealized.
 
-A concrete consequence observed in virtualisation scenarios: when
-a guest VM acknowledges an SPI interrupt but does not perform EOI,
-is force-killed and restarted, the new guest's attempt to clear
-the residual active state by writing ICC_AP1R0_EL1=0 is silently
-ignored. The running priority (RPR) remains stuck at the old
-interrupt's priority, preventing all equal-or-lower priority
-interrupts (including timer interrupts) from being delivered, and
-hanging the guest.
-
-Fix this by computing the exact Secure/NS boundary within the APR
-bank based on prebits. For registers entirely in the Secure range,
-keep the WI behaviour. For the register that straddles the
-boundary, preserve only the Secure bits while allowing NS bits to
-be modified. For registers entirely in the NS range, allow full
-write access.
-
-The new logic produces identical behaviour to the old code when
-prebits=7, preserving existing behaviour for machines that use
-force-8-bit-prio.
-
-Fixes: 39f29e599355 ("hw/intc/arm_gicv3: Use correct number of priority bits for the CPU")
+Fixes: 5c079578d2e ("hw/ufs: Add support MCQ of UFSHCI 4.0")
 Cc: qemu-stable@nongnu.org
-Signed-off-by: liugan1 <liugan1@lixiang.com>
-Message-id: 20260428083119.1400110-1-gs_liugan@163.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit f35f0f1ca121fb4931fe98570cda3aeb06b7a87f)
+Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+(cherry picked from commit 619c2da19a05668dabe7912afb789e50b8635c4d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
-index 2e6c1f778a..5b15e4ff1e 100644
---- a/hw/intc/arm_gicv3_cpuif.c
-+++ b/hw/intc/arm_gicv3_cpuif.c
-@@ -1869,9 +1869,40 @@ static void icc_ap_write(CPUARMState *env, const ARMCPRegInfo *ri,
-      * at a priority outside the Non-secure range (128..255), since this
-      * would otherwise allow malicious NS code to block delivery of S interrupts
-      * by writing a bad value to these registers.
-+     *
-+     * The NS priority range (128..255) maps to APR bits starting at
-+     * aprbit = 0x80 >> (8 - prebits). Depending on prebits, this boundary
-+     * may fall within AP1R0 or AP1R1, so we cannot simply WI the entire
-+     * register. Instead we calculate which bits within each register
-+     * correspond to the Secure range and preserve those, while allowing
-+     * NS code to modify only the NS range bits.
-+     *
-+     *   prebits=4: num_aprs=1, NS starts at AP1R0[8]
-+     *   prebits=5: num_aprs=1, NS starts at AP1R0[16]
-+     *   prebits=6: num_aprs=2, NS starts at AP1R1[0]
-+     *   prebits=7: num_aprs=4, NS starts at AP1R2[0]
-      */
--    if (grp == GICV3_G1NS && regno < 2 && arm_feature(env, ARM_FEATURE_EL3)) {
--        return;
-+    if (grp == GICV3_G1NS && arm_feature(env, ARM_FEATURE_EL3)) {
-+        int ns_start_bit = 0x80 >> (8 - cs->prebits);
-+        int ns_start_regno = ns_start_bit / 32;
-+        int ns_start_regbit = ns_start_bit % 32;
-+
-+        if (regno < ns_start_regno) {
-+            /* This entire register is in the Secure range: WI */
-+            return;
-+        } else if (regno == ns_start_regno && ns_start_regbit > 0) {
-+            /*
-+             * This register is split: low bits are Secure, high bits are NS.
-+             * Preserve the Secure bits (below ns_start_regbit) from the
-+             * current value, and take the NS bits (at and above
-+             * ns_start_regbit) from the written value.
-+             */
-+            uint32_t secure_mask = MAKE_64BIT_MASK(0, ns_start_regbit);
-+
-+            value = (cs->icc_apr[grp][regno] & secure_mask) |
-+                    (value & ~secure_mask);
-+        }
-+        /* else: regno > ns_start_regno, entire register is NS: allow write */
-     }
+diff --git a/hw/ufs/trace-events b/hw/ufs/trace-events
+index 7734b35f08..6f7ea9c95f 100644
+--- a/hw/ufs/trace-events
++++ b/hw/ufs/trace-events
+@@ -44,6 +44,7 @@ ufs_err_mcq_create_sq_invalid_size(uint8_t qid) "invalid mcq sq size for sqid %"
+ ufs_err_mcq_create_sq_already_exists(uint8_t qid) "mcq sqid %"PRIu8 "already exists"
+ ufs_err_mcq_delete_sq_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
+ ufs_err_mcq_delete_sq_not_exists(uint8_t qid) "mcq sqid %"PRIu8 "not exists"
++ufs_err_mcq_delete_sq_busy(uint8_t qid) "mcq sqid %"PRIu8" has outstanding requests"
+ ufs_err_mcq_create_cq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
+ ufs_err_mcq_create_cq_invalid_size(uint8_t qid) "invalid mcq cq size for cqid %"PRIu8""
+ ufs_err_mcq_create_cq_already_exists(uint8_t qid) "mcq cqid %"PRIu8 "already exists"
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index 66f4031852..d63a8f9c9c 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -556,6 +556,31 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
+     return true;
+ }
  
-     if (cs->nmi_support) {
++static bool ufs_mcq_sq_has_outstanding_req(UfsSq *sq)
++{
++    UfsRequest *req;
++    uint16_t free_reqs = 0;
++
++    QTAILQ_FOREACH(req, &sq->req_list, entry)
++    {
++        free_reqs++;
++    }
++
++    return free_reqs != sq->size;
++}
++
++static void ufs_mcq_free_sq(UfsSq *sq)
++{
++    qemu_bh_delete(sq->bh);
++
++    for (int i = 0; i < sq->size; i++) {
++        ufs_clear_req(&sq->req[i]);
++    }
++
++    g_free(sq->req);
++    g_free(sq);
++}
++
+ static bool ufs_mcq_delete_sq(UfsHc *u, uint8_t qid)
+ {
+     UfsSq *sq;
+@@ -572,9 +597,12 @@ static bool ufs_mcq_delete_sq(UfsHc *u, uint8_t qid)
+ 
+     sq = u->sq[qid];
+ 
+-    qemu_bh_delete(sq->bh);
+-    g_free(sq->req);
+-    g_free(sq);
++    if (ufs_mcq_sq_has_outstanding_req(sq)) {
++        trace_ufs_err_mcq_delete_sq_busy(qid);
++        return false;
++    }
++
++    ufs_mcq_free_sq(sq);
+     u->sq[qid] = NULL;
+     return true;
+ }
+@@ -617,6 +645,12 @@ static bool ufs_mcq_create_cq(UfsHc *u, uint8_t qid, uint32_t attr)
+     return true;
+ }
+ 
++static void ufs_mcq_free_cq(UfsCq *cq)
++{
++    qemu_bh_delete(cq->bh);
++    g_free(cq);
++}
++
+ static bool ufs_mcq_delete_cq(UfsHc *u, uint8_t qid)
+ {
+     UfsCq *cq;
+@@ -640,8 +674,7 @@ static bool ufs_mcq_delete_cq(UfsHc *u, uint8_t qid)
+ 
+     cq = u->cq[qid];
+ 
+-    qemu_bh_delete(cq->bh);
+-    g_free(cq);
++    ufs_mcq_free_cq(cq);
+     u->cq[qid] = NULL;
+     return true;
+ }
+@@ -1884,12 +1917,14 @@ static void ufs_exit(PCIDevice *pci_dev)
+ 
+     for (int i = 0; i < ARRAY_SIZE(u->sq); i++) {
+         if (u->sq[i]) {
+-            ufs_mcq_delete_sq(u, i);
++            ufs_mcq_free_sq(u->sq[i]);
++            u->sq[i] = NULL;
+         }
+     }
+     for (int i = 0; i < ARRAY_SIZE(u->cq); i++) {
+         if (u->cq[i]) {
+-            ufs_mcq_delete_cq(u, i);
++            ufs_mcq_free_cq(u->cq[i]);
++            u->cq[i] = NULL;
+         }
+     }
+ }
 -- 
 2.47.3
 
