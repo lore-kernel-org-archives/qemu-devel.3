@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A97ECD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 19:38:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A37B4CD5BB0
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 19:38:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQVg4-0001ev-B4; Fri, 22 May 2026 15:37:00 -0400
+	id 1wQVgU-0001os-8F; Fri, 22 May 2026 15:37:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wQVg2-0001eI-66
- for qemu-devel@nongnu.org; Fri, 22 May 2026 15:36:58 -0400
+ id 1wQVgM-0001kb-Mi
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 15:37:18 -0400
 Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wQVfy-0000Rm-AQ
- for qemu-devel@nongnu.org; Fri, 22 May 2026 15:36:57 -0400
+ id 1wQVgJ-0000Zt-Lu
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 15:37:17 -0400
 Received: by mail-oi1-x22b.google.com with SMTP id
- 5614622812f47-484d3c0855aso3091649b6e.3
- for <qemu-devel@nongnu.org>; Fri, 22 May 2026 12:36:53 -0700 (PDT)
+ 5614622812f47-479eb8bcacbso5130059b6e.1
+ for <qemu-devel@nongnu.org>; Fri, 22 May 2026 12:37:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779478613; x=1780083413; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779478631; x=1780083431; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=hZFh/GWoCgy0eFWMQ2wrLktcTwtzf8GnUsJ1AQOL9oc=;
- b=Erne1dEsKfaNyVpahRvqp+HYKH3CwL3/qSNB7Zs94fN39BnSuLp98sTvPfp4LyRBjO
- jTArzOfoi+i9kbhT9dnA/TVXa7eEKyh83eYpZo5VuQfZj0Qt5gn7pavRL4HhblHK9eS5
- 3Xq1VA95CEGBP2jfERCDuiE0loD2Cr6TLcChLMDDMdCjVacKDmsQmr0w07ziAQR7myDC
- en22LQY4Bjzq/ZcReYzxjxbVGYLUm2PaGLPtk/vfwjQN7QLeCJWI5V/AgaopE+4E9lEF
- +IVhvFs3HtLwJlBlgCNlsEaOpZA520zQBoP9KuwHHL9iyFwNOIIyBbEqh48vb4SN5zQy
- zQpQ==
+ :reply-to; bh=Itk/+hHnAXi54GejRG9Qzx8wNFURSexUEVLdbkIeDSk=;
+ b=HDZGV4VPljGBz3PIElzigIIf/hqAcl+6OyzY7X6c3f9IA9U6aORjzULhGl7QUZTpBi
+ Jy6f2txmrHTUEltCAL/lT35LvYZjxK8JcRFRpXWMoqVYD6NxyJWZDPJqZPQ3XqE2GI0P
+ lSaa6dvgzejV1lYaIwTgB8g/AdMr6jNLlqukvIdEAmZmP9OPofo4o4Eex5Ut+I9HqivF
+ d/spfakNZ/htuZYFnSe47Gdly40A+EnhyRC/YmQDq1ptvMQRAcO4TtLWKMuG/nOjOLCO
+ 3zsTh4HOcZQjI9NPErp+ehETHscAqVf0UJ/s2iUc/ZbZBrwCfgnU6ZJyzlfR9QJbU6f3
+ bTzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779478613; x=1780083413;
+ d=1e100.net; s=20251104; t=1779478631; x=1780083431;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=hZFh/GWoCgy0eFWMQ2wrLktcTwtzf8GnUsJ1AQOL9oc=;
- b=juUnYLUR8j7yYGQV8EpdnhpV1wPr+FXf0x73SDXxG1bJos4BOUoZK5AXDR1Hgf6Kjc
- Ojf6/DOjAvaorW0rFycszd0Rr/aEeT94jNem5ecioYqK6NZtbi0DC2NHaedrcYXgbOKZ
- ipfpnQFqOLDmfdiMkh7vi7ZsLKKh2fVHeBEB7qrsnb1jaXit9uPodtySQbLE2nVU5so7
- pgrcOm+FFm+iwFDF6I3evwo6xEKmrj4yrdm7ycZ//2tdy0yo38Augk8E0elSIbpBd/3b
- byzTbBsMJ1y9ol4N54bTL9PDnIAxbiypQ4MOHU8L92M7WvHFb0sEeurWXL6QWME1cV8M
- 6bQw==
-X-Gm-Message-State: AOJu0Yy//j9jCjDnp5+n4vAvktVyNaIfg3IvbrjsB3xz8/PdcFrYhGEi
- 22HZjYXjG+rfI4Y2rdxoVJmdLjFy1khXY7hwRwllMyL8DsDG1ei2DhZk
-X-Gm-Gg: Acq92OH759uXuHbI/dgBEeFiIHpjrDJRgQLQMPM/p3jcOCJKqXblq4HOh93MU/LKWSm
- hUr63mtA41MICB3YXkYbKalvp0R8ikNumW/vfJMth8FBPoMUNt2psoBxze1Ims25oXdMh8fvdrQ
- x3GTJGjnQ1MFxOajeclA7SZ2GflWGSNa0058YzD/R+1dUwO8LijF1czSHSIiHYktRfj+GMrlJ/X
- BQFxjQn8YxTdNjtcg3HYKkiBCapEqMr5Zni1JFbLuueQ5UT3Ln3HcTFSY+zGLUS6cs4EfmBZNMr
- lqy5CQIdykClE50kSwMhcukTf1s2nOJGdcfR9bL9sf3jE0TW0UccNFU7q0Wsny0adyg+FNbz0yD
- MhzkCL8OZNEfTlUzUnYYvfYELgmmVsxopHD/65doeZzlFOYPe71u6rUlxI9la6CdyBQWUCdegnV
- EfeAplGNPQrSYaS63PR+jz86q7z5LlswopQXNlmU5xZza2NXytce9waHC7Eucb9k12aeMY6KR0N
- 6CeDOHoZnWvpd0tM/M9MxfuzV1PigRf0BHmLwLmrLl7eRS6FMIwE8PwRIQtR7yUgCQ5
-X-Received: by 2002:a05:6808:6603:b0:485:467f:a307 with SMTP id
- 5614622812f47-4854a3fe8e2mr2666682b6e.42.1779478613050; 
- Fri, 22 May 2026 12:36:53 -0700 (PDT)
+ bh=Itk/+hHnAXi54GejRG9Qzx8wNFURSexUEVLdbkIeDSk=;
+ b=AedgHJ5CCrsWdBcXoV5rjToGqigntO71y4sBdQS5Wg/MvdHrPzEWm4SDWZxtGbUYJr
+ xrM08NqfdL1txHR4ctpK1rs7/uYtnGcD2R4GHCcuHAVgPiMkXo1BGFBC+JKmeU+S8OGw
+ xf8i6AS06M+3ZX7Vvd20MyrMVGiDvg/C8pYvvtkL8OlkYJ3oLzx5JzCf7fVtdPVK8oNd
+ +0/v50+g/706p3xvlHD/tODVrnEow2P1jEg9e5FeL3aSPCa5nm3SwoXAJjrkmm3sRRjc
+ ID0ObASib4iC8M4vEYScYjcQxeMvRNyPT4TyGX4xTEgh3p9QwvLqVlShD2iQ/SzeFCi4
+ I32g==
+X-Gm-Message-State: AOJu0Yyq65ULmKNwC2lpWucDw7jDto1BmoEMhrMhy8oLp6tb+POZG6Ao
+ HWutH0VfC90XQ47DtqarKeoXy5n1sVjd8yU0HSkRA3D/J4I6UdQr0R5o
+X-Gm-Gg: Acq92OFhzkaT1knxwoUjr1WAWlXO3Pr+dzuLPM1rYddviiUvwvHBZlH7nMjmkW+6jwF
+ IYtrUO6zASezjKdFz9d3UhyMHA2IbZoOfq1ISdtpXPcNJcyPS5sLybABx94IK982TgEmv2ppoTk
+ qJkpIvS/mXy/nXxHY4t62qkTQ9a7mPIedq8W+NJ8EXpvzYtOqthe4Kc94QwLFJGgjMv4KkPGiCb
+ oRqp9X6IKofEk77u9wM9JPT88r7LffhZBvtPIxyjHeSYHaMok15wfx40qeCpbH+tIqGLKyDlUWu
+ 7KgprGS6Y05ZlJiuwSricJ3+xUNXlxWf+YBZ10cQHO/HDMx0z6S9VL4PPAqXJqxi8+k8d97T5K2
+ w+3McAa0BsGcn7a8VoDFQAuVRdSBXcT70BGFI4QX+TO2P1iVT6LbwAsYNVw1DYVsALDNss85++a
+ 6Px03UneypHVfnf5VWZo7RAJt6oxSQZP2tOUC++OWr3WfB0+Z9bKgmsAwOlc3IXVxH+wY8mTMQ5
+ r5KsOdtCz4VPREMDz9y7PiDIXwlitA7YWd/2ZMLo5LugPHxWqB6hBP1llpha4nrB7GSLOEw6E+l
+ DjI=
+X-Received: by 2002:a05:6808:5387:b0:485:3dd3:7719 with SMTP id
+ 5614622812f47-4854a3fa2abmr2656175b6e.22.1779478631371; 
+ Fri, 22 May 2026 12:37:11 -0700 (PDT)
 Received: from mac.localdomain (184-96-131-78.hlrn.qwest.net. [184.96.131.78])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-48554757d5dsm995297b6e.15.2026.05.22.12.36.51
+ 5614622812f47-48554757d5dsm995297b6e.15.2026.05.22.12.37.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 May 2026 12:36:52 -0700 (PDT)
+ Fri, 22 May 2026 12:37:10 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Fri, 22 May 2026 13:36:36 -0600
-Subject: [PATCH v15 05/22] target/mips: add Octeon GFM COP2 helpers
+Date: Fri, 22 May 2026 13:36:50 -0600
+Subject: [PATCH v15 19/22] target/mips: decode Octeon block-cipher COP2
+ selectors
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260522-mips-octeon-missing-insns-v2-v15-5-f8731a588dc2@gmail.com>
+Message-Id: <20260522-mips-octeon-missing-insns-v2-v15-19-f8731a588dc2@gmail.com>
 References: <20260522-mips-octeon-missing-insns-v2-v15-0-f8731a588dc2@gmail.com>
 In-Reply-To: <20260522-mips-octeon-missing-insns-v2-v15-0-f8731a588dc2@gmail.com>
 To: qemu-devel@nongnu.org
@@ -109,231 +111,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add helper support for the Octeon GFM carryless multiply selectors. This
-models the normal and reflected multiplication paths, including the
-XOR-and-multiply forms that update the result/input state used by Octeon
-crypto code.
+Add explicit decodetree entries and translator bindings for the Octeon
+AES, SMS4, 3DES, KASUMI, and Camellia COP2 operation selectors.  These
+selectors consume or update engine state, so keep them as per-operation
+helper calls while the simple block-cipher register moves remain direct
+TCG loads and stores from the earlier register-selector patch.
 
-Reflected selectors operate on the architectural GFM register bank using
-bit-reflected register transfers rather than a separate shadow state.
-Keep the 64-bit UIA2 reduction path used by SNOW3G F9 and share that
-shortcut between the normal and reflected XORMUL1 paths.
+This completes the block-cipher selector coverage without reintroducing a
+generic runtime selector dispatch path.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 ---
-Changes v14 -> v15:
-  - Document the reflected-polynomial reduction form used by the GFM
-    multiplier.
-  - Share the 64-bit UIA2 shortcut between normal and reflected XORMUL1.
-  - Inline the simple non-reflected GFM XOR selector in the translator.
-
-Changes v10 -> v13:
-  - Map reflected GFM selectors directly onto the architectural GFM state
-    in this patch instead of adding temporary reflected shadow state.
-  - Preserve the 64-bit UIA2 GFM reduction path used by SNOW3G F9.
-
-Changes v8 -> v9:
-  - Split GFM selector operations into their own COP2 helper patch.
-  - Expose per-operation helpers instead of a generic selector helper.
-  - Add matching helper.h declarations with the helper implementation.
+Changes v9 -> v10:
+  - Split AES, SMS4, 3DES, KASUMI, and Camellia selector decode out of
+    the monolithic Octeon COP2 selector decode patch.
+  - Kept block-cipher operation selectors helper-backed while simple
+    register moves remain direct TCG transfers.
 ---
- target/mips/helper.h            |   9 +++
- target/mips/tcg/octeon_crypto.c | 142 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 151 insertions(+)
+ target/mips/tcg/octeon.decode      | 17 +++++++++++++++++
+ target/mips/tcg/octeon_translate.c | 17 +++++++++++++++++
+ 2 files changed, 34 insertions(+)
 
-diff --git a/target/mips/helper.h b/target/mips/helper.h
-index e802f50fd6..20ffbfb709 100644
---- a/target/mips/helper.h
-+++ b/target/mips/helper.h
-@@ -27,6 +27,10 @@ DEF_HELPER_FLAGS_4(rotx, TCG_CALL_NO_RWG_SE, tl, tl, i32, i32, i32)
- 
- /* Octeon COP2 selector operation helpers. */
- DEF_HELPER_1(octeon_cp2_mf_crc_iv_reflect, i64, env)
-+DEF_HELPER_1(octeon_cp2_mf_gfm_mul_reflect0, i64, env)
-+DEF_HELPER_1(octeon_cp2_mf_gfm_mul_reflect1, i64, env)
-+DEF_HELPER_1(octeon_cp2_mf_gfm_resinp_reflect0, i64, env)
-+DEF_HELPER_1(octeon_cp2_mf_gfm_resinp_reflect1, i64, env)
- DEF_HELPER_2(octeon_cp2_mt_crc_write_iv_reflect, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_crc_write_byte, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_crc_write_half, void, env, i64)
-@@ -38,6 +42,11 @@ DEF_HELPER_2(octeon_cp2_mt_crc_write_dword, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_crc_write_var, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_crc_write_dword_reflect, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_crc_write_var_reflect, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_gfm_mul_reflect0, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_gfm_mul_reflect1, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_gfm_xor0_reflect, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_gfm_xormul1_reflect, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_gfm_xormul1, void, env, i64)
- 
- /* microMIPS functions */
- DEF_HELPER_4(lwm, void, env, tl, tl, i32)
-diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
-index 811f36f46a..dc49986202 100644
---- a/target/mips/tcg/octeon_crypto.c
-+++ b/target/mips/tcg/octeon_crypto.c
-@@ -11,6 +11,7 @@
- #include "internal.h"
- #include "exec/helper-proto.h"
- #include "crypto/aes.h"
-+#include "crypto/clmul.h"
- #include "crypto/sm4.h"
- #include "qemu/bitops.h"
- #include "qemu/host-utils.h"
-@@ -75,11 +76,152 @@ static void octeon_crc_update_reflect(MIPSOcteonCryptoState *crypto,
-     octeon_crc_set_state_reflect(crypto, crc);
- }
- 
-+static void octeon_gfm_mul(const uint64_t x[2], const uint64_t y[2],
-+                           uint16_t poly, uint64_t out[2])
-+{
-+    uint64_t zh = 0, zl = 0;
-+    uint64_t vh = y[0], vl = y[1];
-+    uint64_t rh = (uint64_t)poly << 48;
-+    int i;
-+
-+    /*
-+     * Keep the reflected-shift formulation used by Octeon software: the
-+     * selector polynomial is already in reflected bit order, and the software
-+     * view folds its 16 reduction bits from the top of the high word.
-+     */
-+    for (i = 0; i < 128; i++) {
-+        bool bit;
-+        bool lsb;
-+
-+        if (i < 64) {
-+            bit = (x[0] >> (63 - i)) & 1;
-+        } else {
-+            bit = (x[1] >> (127 - i)) & 1;
-+        }
-+        if (bit) {
-+            zh ^= vh;
-+            zl ^= vl;
-+        }
-+
-+        lsb = vl & 1;
-+        vl = (vh << 63) | (vl >> 1);
-+        vh >>= 1;
-+        if (lsb) {
-+            vh ^= rh;
-+        }
-+    }
-+
-+    out[0] = zh;
-+    out[1] = zl;
-+}
-+
-+static uint64_t octeon_gfm_reduce64(Int128 product, uint8_t poly)
-+{
-+    uint64_t lo = int128_getlo(product);
-+    uint64_t hi = int128_gethi(product);
-+
-+    while (hi) {
-+        int bit = 63 - clz64(hi);
-+
-+        hi ^= 1ULL << bit;
-+        lo ^= (uint64_t)poly << bit;
-+        if (bit > 56) {
-+            hi ^= (uint64_t)poly >> (64 - bit);
-+        }
-+    }
-+
-+    return lo;
-+}
-+
-+static void octeon_gfm_mul64_uia2(const uint64_t x[2], const uint64_t y[2],
-+                                  uint8_t poly, uint64_t out[2])
-+{
-+    /*
-+     * SNOW3G UIA2 uses the GFM datapath as a reflected 64-bit multiply in
-+     * the low half of the 128-bit register pair.  When RESINP[0], MUL[1],
-+     * and the high polynomial byte are all zero, octeon_gfm_mul() observes
-+     * only x[1], y[0], and the low 8-bit polynomial.  Reflect those operands
-+     * into normal carryless-multiply order and reflect the reduced result
-+     * back into RESINP[1].
-+     */
-+    uint64_t vx = revbit64(x[1]);
-+    uint64_t vy = revbit64(y[0]);
-+    Int128 product = clmul_64(vx, vy);
-+    uint64_t res = octeon_gfm_reduce64(product, revbit32(poly) >> 24);
-+
-+    out[0] = 0;
-+    out[1] = revbit64(res);
-+}
-+
- uint64_t helper_octeon_cp2_mf_crc_iv_reflect(CPUMIPSState *env)
- {
-     return octeon_crc_reflect32_by_byte(env->octeon_crypto.crc_iv);
- }
- 
-+uint64_t helper_octeon_cp2_mf_gfm_mul_reflect0(CPUMIPSState *env)
-+{
-+    return revbit64(env->octeon_crypto.gfm_mul[0]);
-+}
-+
-+uint64_t helper_octeon_cp2_mf_gfm_mul_reflect1(CPUMIPSState *env)
-+{
-+    return revbit64(env->octeon_crypto.gfm_mul[1]);
-+}
-+
-+uint64_t helper_octeon_cp2_mf_gfm_resinp_reflect0(CPUMIPSState *env)
-+{
-+    return revbit64(env->octeon_crypto.gfm_resinp[0]);
-+}
-+
-+uint64_t helper_octeon_cp2_mf_gfm_resinp_reflect1(CPUMIPSState *env)
-+{
-+    return revbit64(env->octeon_crypto.gfm_resinp[1]);
-+}
-+
-+void helper_octeon_cp2_mt_gfm_mul_reflect0(CPUMIPSState *env, uint64_t value)
-+{
-+    env->octeon_crypto.gfm_mul[0] = revbit64(value);
-+}
-+
-+void helper_octeon_cp2_mt_gfm_mul_reflect1(CPUMIPSState *env, uint64_t value)
-+{
-+    env->octeon_crypto.gfm_mul[1] = revbit64(value);
-+}
-+
-+void helper_octeon_cp2_mt_gfm_xor0_reflect(CPUMIPSState *env, uint64_t value)
-+{
-+    env->octeon_crypto.gfm_resinp[0] ^= revbit64(value);
-+}
-+
-+static void octeon_gfm_xormul1_common(MIPSOcteonCryptoState *crypto,
-+                                      uint64_t value)
-+{
-+    crypto->gfm_resinp[1] ^= value;
-+    if (crypto->gfm_poly <= 0xff && crypto->gfm_mul[1] == 0 &&
-+        crypto->gfm_resinp[0] == 0) {
-+        octeon_gfm_mul64_uia2(crypto->gfm_resinp, crypto->gfm_mul,
-+                              crypto->gfm_poly, crypto->gfm_resinp);
-+    } else {
-+        octeon_gfm_mul(crypto->gfm_resinp, crypto->gfm_mul, crypto->gfm_poly,
-+                       crypto->gfm_resinp);
-+    }
-+}
-+
-+void helper_octeon_cp2_mt_gfm_xormul1_reflect(CPUMIPSState *env,
-+                                              uint64_t value)
-+{
-+    MIPSOcteonCryptoState *crypto = &env->octeon_crypto;
-+
-+    octeon_gfm_xormul1_common(crypto, revbit64(value));
-+}
-+
-+void helper_octeon_cp2_mt_gfm_xormul1(CPUMIPSState *env, uint64_t value)
-+{
-+    MIPSOcteonCryptoState *crypto = &env->octeon_crypto;
-+
-+    octeon_gfm_xormul1_common(crypto, value);
-+}
-+
- void helper_octeon_cp2_mt_crc_write_iv_reflect(CPUMIPSState *env,
-                                                uint64_t value)
- {
+diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+index 2b27fa205f..4ac38d264c 100644
+--- a/target/mips/tcg/octeon.decode
++++ b/target/mips/tcg/octeon.decode
+@@ -203,6 +203,8 @@ LDX          011111 ..... ..... ..... 01000 001010 @lx
+     CVM_MT_AES_DEC_CBC0                  010010 00101 rt:5 0000 0001 0000 1100 &cp2
+     CVM_MT_AES_DEC0                      010010 00101 rt:5 0000 0001 0000 1110 &cp2
+     CVM_MT_AES_KEYLENGTH                 010010 00101 rt:5 0000 0001 0001 0000 &cp2
++    CVM_MT_CAMELLIA_FL                   010010 00101 rt:5 0000 0001 0001 0101 &cp2
++    CVM_MT_CAMELLIA_FLINV                010010 00101 rt:5 0000 0001 0001 0110 &cp2
+     CVM_MT_CRC_IV                        010010 00101 rt:5 0000 0010 0000 0001 &cp2
+     CVM_MT_CRC_IV_REFLECT                010010 00101 rt:5 0000 0010 0001 0001 &cp2
+     CVM_MT_CRC_BYTE                      010010 00101 rt:5 0000 0010 0000 0100 &cp2
+@@ -264,6 +266,15 @@ LDX          011111 ..... ..... ..... 01000 001010 @lx
+     CVM_MT_CRC_VAR                       010010 00101 rt:5 0001 0010 0000 1000 &cp2
+     CVM_MT_CRC_DWORD_REFLECT             010010 00101 rt:5 0001 0010 0001 0111 &cp2
+     CVM_MT_CRC_VAR_REFLECT               010010 00101 rt:5 0001 0010 0001 1000 &cp2
++    CVM_MT_AES_ENC_CBC1                  010010 00101 rt:5 0011 0001 0000 1001 &cp2
++    CVM_MT_AES_ENC1                      010010 00101 rt:5 0011 0001 0000 1011 &cp2
++    CVM_MT_AES_DEC_CBC1                  010010 00101 rt:5 0011 0001 0000 1101 &cp2
++    CVM_MT_AES_DEC1                      010010 00101 rt:5 0011 0001 0000 1111 &cp2
++    CVM_MT_CAMELLIA_ROUND                010010 00101 rt:5 0011 0001 0001 0100 &cp2
++    CVM_MT_SMS4_ENC_CBC1                 010010 00101 rt:5 0011 0001 0001 1001 &cp2
++    CVM_MT_SMS4_ENC1                     010010 00101 rt:5 0011 0001 0001 1011 &cp2
++    CVM_MT_SMS4_DEC_CBC1                 010010 00101 rt:5 0011 0001 0001 1101 &cp2
++    CVM_MT_SMS4_DEC1                     010010 00101 rt:5 0011 0001 0001 1111 &cp2
+     CVM_MT_HSH_STARTMD5                  010010 00101 rt:5 0100 0000 0100 0111 &cp2
+     CVM_MT_SNOW3G_START                  010010 00101 rt:5 0100 0000 0100 1101 &cp2
+     CVM_MT_SNOW3G_MORE                   010010 00101 rt:5 0100 0000 0100 1110 &cp2
+@@ -273,6 +284,12 @@ LDX          011111 ..... ..... ..... 01000 001010 @lx
+     CVM_MT_ZUC_MORE                      010010 00101 rt:5 0100 0000 0101 0110 &cp2
+     CVM_MT_HSH_STARTSHA                  010010 00101 rt:5 0100 0000 0101 0111 &cp2
+     CVM_MT_GFM_XORMUL1_REFLECT           010010 00101 rt:5 0100 0000 0101 1101 &cp2
++    CVM_MT_3DES_ENC_CBC                  010010 00101 rt:5 0100 0000 1000 1000 &cp2
++    CVM_MT_KAS_ENC_CBC                   010010 00101 rt:5 0100 0000 1000 1001 &cp2
++    CVM_MT_3DES_ENC                      010010 00101 rt:5 0100 0000 1000 1010 &cp2
++    CVM_MT_KAS_ENC                       010010 00101 rt:5 0100 0000 1000 1011 &cp2
++    CVM_MT_3DES_DEC_CBC                  010010 00101 rt:5 0100 0000 1000 1100 &cp2
++    CVM_MT_3DES_DEC                      010010 00101 rt:5 0100 0000 1000 1110 &cp2
+     CVM_MT_CRC_POLYNOMIAL                010010 00101 rt:5 0100 0010 0000 0000 &cp2
+     CVM_MT_CRC_POLYNOMIAL_REFLECT        010010 00101 rt:5 0100 0010 0001 0000 &cp2
+     CVM_MT_HSH_STARTSHA512               010010 00101 rt:5 0100 0010 0100 1111 &cp2
+diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+index b4663b35a3..76792c9c87 100644
+--- a/target/mips/tcg/octeon_translate.c
++++ b/target/mips/tcg/octeon_translate.c
+@@ -349,6 +349,23 @@ CP2_MT_HELPER(CVM_MT_ZUC_START, zuc_start);
+ CP2_MT_HELPER(CVM_MT_ZUC_MORE, zuc_more);
+ CP2_MT_HELPER(CVM_MT_SNOW3G_START, snow3g_start);
+ CP2_MT_HELPER(CVM_MT_SNOW3G_MORE, snow3g_more);
++CP2_MT_HELPER(CVM_MT_AES_ENC_CBC1, aes_enc_cbc1);
++CP2_MT_HELPER(CVM_MT_AES_ENC1, aes_enc1);
++CP2_MT_HELPER(CVM_MT_AES_DEC_CBC1, aes_dec_cbc1);
++CP2_MT_HELPER(CVM_MT_AES_DEC1, aes_dec1);
++CP2_MT_HELPER(CVM_MT_SMS4_ENC_CBC1, sms4_enc_cbc1);
++CP2_MT_HELPER(CVM_MT_SMS4_ENC1, sms4_enc1);
++CP2_MT_HELPER(CVM_MT_SMS4_DEC_CBC1, sms4_dec_cbc1);
++CP2_MT_HELPER(CVM_MT_SMS4_DEC1, sms4_dec1);
++CP2_MT_HELPER(CVM_MT_3DES_ENC_CBC, des3_enc_cbc);
++CP2_MT_HELPER(CVM_MT_KAS_ENC_CBC, kas_enc_cbc);
++CP2_MT_HELPER(CVM_MT_3DES_ENC, des3_enc);
++CP2_MT_HELPER(CVM_MT_KAS_ENC, kas_enc);
++CP2_MT_HELPER(CVM_MT_3DES_DEC_CBC, des3_dec_cbc);
++CP2_MT_HELPER(CVM_MT_3DES_DEC, des3_dec);
++CP2_MT_HELPER(CVM_MT_CAMELLIA_FL, camellia_fl);
++CP2_MT_HELPER(CVM_MT_CAMELLIA_FLINV, camellia_flinv);
++CP2_MT_HELPER(CVM_MT_CAMELLIA_ROUND, camellia_round);
+ CP2_MT_HELPER(CVM_MT_HSH_STARTSHA1_COMPAT, hsh_startsha1_compat);
+ CP2_MT_I64(CVM_MT_HSH_DATW0, hsh_dat[0]);
+ CP2_MT_I64(CVM_MT_HSH_DATW1, hsh_dat[1]);
 
 -- 
 2.54.0
