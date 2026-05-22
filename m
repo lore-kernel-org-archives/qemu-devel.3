@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0223CD5BB9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70CD7CD5BB8
 	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:41:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXXV-0001uu-8O; Fri, 22 May 2026 17:36:18 -0400
+	id 1wQXbJ-000358-FC; Fri, 22 May 2026 17:40:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXWQ-0008M5-2u; Fri, 22 May 2026 17:35:16 -0400
+ id 1wQXb1-0001Mh-Ok; Fri, 22 May 2026 17:39:56 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXWO-0007o1-7T; Fri, 22 May 2026 17:35:09 -0400
+ id 1wQXay-0003b0-3b; Fri, 22 May 2026 17:39:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485633; bh=HLstrD2yX5cos5Myq+2hfk0ettzVsUF35yppkgC4WsE=;
+ t=1779485683; bh=HQV63UvZd5MvJaFzgykX2S2gv6ckpflrxgTt6u6L5o4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=CXyoe5/ef/DIh5E5T1091AUEULQ2gfM99RJNfr5zXqlS468vupt+htjGeTKopOPoo
- hBwgil9u0uxfNSyjYeXdOZNYfT10PCt73mHHWZ3RNjR2rHwi+CVfUEdEgVHB8QAGge
- qHZa92uDQPXdJW0vFfOjZD/FAB/QiJAwxHkNMestcFpT628cBXqxZUNWdUJ10ltE8x
- cA8yfjnyPnO78Q+acykjD9HsmVWmq3OKScooP8vS4Xy1mXYnwFvM8nuuR8vOUaOIlT
- YYGx4XoMxDXYlJf531RA8CyQFYvNssUkUXzWqq1fdmnncutR74lnb5O+ljitU2andd
- AGGR5Ma77eEdA==
+ b=wMV7sm9Ags4Gy48FTR7Tvt4wzT90QqpQaxiNcchdGsy7x/QOXgm8Qs1lPuUwWYj7H
+ 0pTtnF51jDrGzKGm4ZAoitAPmsEEq9tp8xuxrpw0aglhzW3qcOvhK8VdEQCZTWrYNp
+ 8wAq7wU2oL0wM2e1uN5gHWRbnLFDggEzZayo4CiVFe66mCVtwxQ/rj+raahdBKrIuB
+ O4udPZwoX+vgIxcasb2LfKB9Ofutht+H9nJ2gNHEA42QJoLe94rvEZ86eqmFkEDigE
+ lKuvQPaiuMN+C4kFffTNzGz1Go8yVHjSa0DRy1kja+sdOFF4uONkrI7pZYLQJT+pAt
+ IoWbrmJvPunYg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4C9061AFAD9;
- Sat, 23 May 2026 00:33:53 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9A49F1AFB0C;
+ Sat, 23 May 2026 00:34:43 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6D3C73B715F;
- Sat, 23 May 2026 00:33:57 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id BC6A83B718C;
+ Sat, 23 May 2026 00:34:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 74/94] hw/remote/machine.c: Mark x-remote machine as
- OK for AArch64 and AArch32
-Date: Sat, 23 May 2026 00:33:31 +0300
-Message-ID: <20260522213356.806058-16-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 123/136] linux-user/sh4: Fix setup_sigtramp to match
+ Linux kernel trampoline pattern
+Date: Sat, 23 May 2026 00:34:31 +0300
+Message-ID: <20260522213446.806182-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
-References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
+References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,52 +70,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Matt Turner <mattst88@gmail.com>
 
-When we updated Arm and AArch64 board types to mark them for the
-target_machine_typename() filter, we forgot about the "x-remote"
-machine type, which meant that it disappeared from the set of board
-types exposed on the qemu-system-arm and qemu-system-aarch64
-binaries.  We didn't notice this, because although we have a
-functional test for it, it requires the KVM accelerator and we don't
-run the functional tests on an AArch64 host in CI.
+QEMU used MOVW(2) (0x9300), which loads the syscall number from PC+4,
+instead of the kernel's MOVW(7) (0x9305), which loads from PC+14.  The
+kernel uses five "or r0,r0" nop pads between TRAP_NOARG and the syscall
+number word to reach that offset.  libunwind's unw_is_signal_frame checks
+for the exact kernel byte pattern 0xc3109305 at the frame PC, so QEMU's
+compact layout was not detected, breaking unwinding through signal frames.
 
-Mark the machine as being OK to expose in qemu-system-arm and
-qemu-system-aarch64, in the same way we do for the "none" machine
-type. This fixes a check-functional failure on aarch64 host, where
-it would otherwise fail with:
-   qemu-system-aarch64: unsupported machine type: "x-remote"
+Expand each trampoline from 6 to 16 bytes matching the kernel layout
+defined in arch/sh/kernel/signal_32.c:
 
+  #define MOVW(n)    (0x9300|((n)-2))  /* Move mem word at PC+n to R3 */
+  #define TRAP_NOARG 0xc310            /* Syscall w/no args (NR in R3) */
+  #define OR_R0_R0   0x200b            /* or r0,r0 (insert to avoid hardware bug) */
+
+  __put_user(MOVW(7),          &frame->retcode[0]);  /* 0x9305 */
+  __put_user(TRAP_NOARG,       &frame->retcode[1]);  /* 0xc310 */
+  __put_user(OR_R0_R0,         &frame->retcode[2]);  /* 0x200b */
+  __put_user(OR_R0_R0,         &frame->retcode[3]);  /* 0x200b */
+  __put_user(OR_R0_R0,         &frame->retcode[4]);  /* 0x200b */
+  __put_user(OR_R0_R0,         &frame->retcode[5]);  /* 0x200b */
+  __put_user(OR_R0_R0,         &frame->retcode[6]);  /* 0x200b */
+  __put_user((__NR_sigreturn), &frame->retcode[7]);
+
+The first two halfwords (MOVW(7) || TRAP_NOARG = 0xc3109305) form the
+32-bit value libunwind checks at the frame PC, followed by two
+OR_R0_R0 halfwords (0x200b200b) at PC+4.  The same layout applies to
+the rt_sigreturn trampoline (lines 366-373 of signal_32.c).
+
+Neither this fix nor the companion tuc_link fix is independently
+sufficient: this fix makes signal frames detectable but register reads
+remain garbage without the correct ucontext layout; that fix corrects the
+ucontext layout but libunwind still cannot detect the frame without the
+correct trampoline pattern.  Together they fix the following libunwind
+tests on a 64-bit host:
+  Gtest-sig-context, Gtest-trace, Ltest-init-local-signal,
+  Ltest-sig-context, Ltest-trace
+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
 Cc: qemu-stable@nongnu.org
-Fixes: eb796c55513d9d39 ("hw/core: Allow ARM/Aarch64 binaries to use the 'none' machine")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260507194728.2034696-2-peter.maydell@linaro.org
-(cherry picked from commit 4e8ac6857faab29f8d6e149f4d71aeb057884496)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 9ac5aa72272117608482cad2430a75477263fe09)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/remote/machine.c b/hw/remote/machine.c
-index ced782f6a9..df08f64019 100644
---- a/hw/remote/machine.c
-+++ b/hw/remote/machine.c
-@@ -24,6 +24,7 @@
- #include "hw/core/qdev.h"
- #include "hw/remote/vfio-user-obj.h"
- #include "hw/pci/msi.h"
-+#include "hw/arm/machines-qom.h"
+diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
+index 20d2bc8b2c..d70be24c38 100644
+--- a/linux-user/sh4/signal.c
++++ b/linux-user/sh4/signal.c
+@@ -329,20 +329,42 @@ badframe:
+     return -QEMU_ESIGRETURN;
+ }
  
- static void remote_machine_init(MachineState *machine)
++/*
++ * "or r0,r0" nop used by the Linux kernel inline sigreturn trampolines to
++ * avoid a hardware bug (OR_R0_R0 in arch/sh/kernel/signal_32.c).  Five of
++ * these nops follow TRAP_NOARG, placing the syscall number word 14 bytes
++ * past the MOVW(7) instruction (at MOVW(7)'s load offset).  This yields the
++ * fixed 16-byte layout that libunwind's unw_is_signal_frame detects:
++ *   [MOVW(7), TRAP_NOARG, 5x NOP_OR, .word syscall_nr]
++ */
++#define NOP_OR 0x200b
++
+ void setup_sigtramp(abi_ulong sigtramp_page)
  {
-@@ -148,6 +149,8 @@ static const TypeInfo remote_machine = {
-     .class_init = remote_machine_class_init,
-     .interfaces = (const InterfaceInfo[]) {
-         { TYPE_HOTPLUG_HANDLER },
-+        { TYPE_TARGET_AARCH64_MACHINE },
-+        { TYPE_TARGET_ARM_MACHINE },
-         { }
-     }
- };
+-    uint16_t *tramp = lock_user(VERIFY_WRITE, sigtramp_page, 2 * 6, 0);
++    uint16_t *tramp = lock_user(VERIFY_WRITE, sigtramp_page, 2 * 16, 0);
+     assert(tramp != NULL);
+ 
++    /* sigreturn trampoline (non-RT) at offset 0 */
+     default_sigreturn = sigtramp_page;
+-    __put_user(MOVW(2), &tramp[0]);
++    __put_user(MOVW(7), &tramp[0]);
+     __put_user(TRAP_NOARG, &tramp[1]);
+-    __put_user(TARGET_NR_sigreturn, &tramp[2]);
+-
+-    default_rt_sigreturn = sigtramp_page + 6;
+-    __put_user(MOVW(2), &tramp[3]);
+-    __put_user(TRAP_NOARG, &tramp[4]);
+-    __put_user(TARGET_NR_rt_sigreturn, &tramp[5]);
+-
+-    unlock_user(tramp, sigtramp_page, 2 * 6);
++    __put_user(NOP_OR, &tramp[2]);
++    __put_user(NOP_OR, &tramp[3]);
++    __put_user(NOP_OR, &tramp[4]);
++    __put_user(NOP_OR, &tramp[5]);
++    __put_user(NOP_OR, &tramp[6]);
++    __put_user(TARGET_NR_sigreturn, &tramp[7]);
++
++    /* rt_sigreturn trampoline at offset 16 */
++    default_rt_sigreturn = sigtramp_page + 16;
++    __put_user(MOVW(7), &tramp[8]);
++    __put_user(TRAP_NOARG, &tramp[9]);
++    __put_user(NOP_OR, &tramp[10]);
++    __put_user(NOP_OR, &tramp[11]);
++    __put_user(NOP_OR, &tramp[12]);
++    __put_user(NOP_OR, &tramp[13]);
++    __put_user(NOP_OR, &tramp[14]);
++    __put_user(TARGET_NR_rt_sigreturn, &tramp[15]);
++
++    unlock_user(tramp, sigtramp_page, 2 * 16);
+ }
 -- 
 2.47.3
 
