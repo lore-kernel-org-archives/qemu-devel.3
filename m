@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84ED9CD5BAB
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 00:06:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C01BCD5BAF
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 00:06:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQDNT-0001mC-K8; Thu, 21 May 2026 20:04:35 -0400
+	id 1wQDNC-0001Z6-AA; Thu, 21 May 2026 20:04:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wQDNR-0001l8-Um
- for qemu-devel@nongnu.org; Thu, 21 May 2026 20:04:33 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1wQDN5-0001Yh-7H
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 20:04:12 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wQDNQ-0003Pu-9H
- for qemu-devel@nongnu.org; Thu, 21 May 2026 20:04:33 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2ba17c8cfacso65844455ad.2
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 17:04:31 -0700 (PDT)
+ id 1wQDN3-0003Ij-Dn
+ for qemu-devel@nongnu.org; Thu, 21 May 2026 20:04:10 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2b9ea536877so42326475ad.1
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 17:04:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779408270; x=1780013070; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779408248; x=1780013048; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Oexc3WaCAOy/tuwIEhfKj7IUvhj6ywE8pLBhOUrwZYI=;
- b=OF3wMNJGTygaP4i3rkV9xJklzWqLAZkhhs2aDFS13IGZdum+n+g/+BsO5KdEvlZUE6
- dRHeGsXDoMAJG2pXPB0q7xg0lCiO7/oBliWSaWy6Yw3BZrGyHZz/L/OlzkfPMvPiN8iy
- AlSbX7mRUMtX8P+qgCjN9V7zWjwzy0O2Gi0yzUwOb0wb7zrKQTqlERDm4zezVP/NG5PJ
- yhjbVV4sjvIeS/4bPokXXtaOMsppTKFe6tkz0FMMq+Aolrhn3OCOzapbpiZ7TGfMAoTM
- jONntK+QjGgwEO/2DM1+YfTdgXbFLKO4T4ehqH4aJT0SRD+dbaMEMA3kujwkKFBl3sqU
- /DUw==
+ bh=ck1FjH8gwZzYqjalWaxvd/wqR/65wgyMLNJS0gQeToE=;
+ b=Mcc49hGjlo6ljJJSCEAMXzA51TFh48e6K/oinhAKqnc9UUkbwmadiUbIolOIbixlPI
+ N69Cdmd/bG80mHYzWFkIgc7ZGNyKYgif6ugHqbwljr4eZTNNQZbVeHqhLa5JPS2rPYFs
+ jsd6kUWRi+pfemooeoHYYj4XUKs05Og+jM7mZq0eLhW2KryFoRZNkWo/X7fDVsHIBfr2
+ wDNmUlBj6aWThOT70uLpP1XzZu+SkMWv8QcffhFe8EjC79+xSRkCpF8KQ8ll4U3b2y02
+ w85Xi3KLz28JRdwO9tWBj1jiaNFx+d5QEkQkZsSN+mFoR8gK4pBvylTxEhCxdZTbRMkI
+ uxBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779408270; x=1780013070;
+ d=1e100.net; s=20251104; t=1779408248; x=1780013048;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Oexc3WaCAOy/tuwIEhfKj7IUvhj6ywE8pLBhOUrwZYI=;
- b=n8Af5TejrkGbkqdFkr0989qL0nBazfL0nXQVhU5ensOZmXZVoOXIdnnsv4d8nD+rTh
- ZZFe1VO3dDQVOan37bhLlPdKgo0+rDvHc4rMxYIrrYFC8VYaVQPHRKRcvEeqpaRVMDnp
- sFlKVebnMhdJuPCVmezSkekBUSnMJKqpoEUsULNiAL+Qc33gevr7G0mQgUS1XpywcD/C
- gS/yS6fjQMSH3voNmSTmp+00em8QZphLs9sxMj2+X9aYVpTgyEYGMIP7iAKW2phBsjLv
- PLfVlCqR2zcWyQKDCuYFffND+bfSZ6iStapATYTD4SFtgA1mHO54tkmHLUMOx4ORWAW6
- PR2A==
-X-Gm-Message-State: AOJu0Yy5qOBhel+DFJo9jkQaF+551Xg8OdKFRHjLx4XNNoVL4pjWdakM
- QU6mPXkFze8QNb3uiepWob/i96+rpJ6fwN2SHVUtYB4upFP0+yobFjXwG/Batd03
-X-Gm-Gg: Acq92OHepHOJtb3Ur8eoqAO+l1k1E91tE2AlS28JI1Wk94rElM3ImDuaqvWTt8TCNz/
- QlqSDEpG7xhTdo8CZTu+MX5S/9TgfGoJNSEpBLzu7uF+OxznRWyyr0HdAZKdz2BIja8C+SpKEXZ
- 3KwAsv4p2PJAYwDdYtAq7bEFxYRYTXw50DDnjsUeuopEsPwxzZY+D92LogrdvUrcmgkyUnQzP7A
- CJpi4KlXIXraWvNiEA3rjCVYuoz9bed1Ie3syHb51R2hVrby9Q/Wp/5sot3FOsMjmTlbQmsq5xX
- 7S3YmEzGbTs2nboA0eHrDq6qnALpHYiVJEhjFfvnfaktZ3qXVMpUZwdCMU1TZBUet1W9m5UOwuu
- jJcvi/dEXZ9CZy1ltFCDd0/wgc5OBDyto+Xoc2AOiM+ozrSo0bdhtbxJGEZCn4pP00vHolTHwR3
- OSIPRVK1peDiHHprjiRhGOqreE/rkAsePLHSBBpzurHg==
-X-Received: by 2002:a17:903:1ac3:b0:2bc:7d1d:b677 with SMTP id
- d9443c01a7336-2beb065f97fmr11187665ad.36.1779408270581; 
- Thu, 21 May 2026 17:04:30 -0700 (PDT)
+ bh=ck1FjH8gwZzYqjalWaxvd/wqR/65wgyMLNJS0gQeToE=;
+ b=qBVTEyYmjjC8tgHSzSpUkOWG1JBSnnyG95s2VItfFiD96/DEbr9eZu4OEA5fgGrOOY
+ 1HggYnMcA4clWI5WbdzJc1QbIRuyHmwoFlBA5blqla0JldLGkZbsErHhpMEU9o5B19eB
+ +FpRPlbE/SLV5DJlBHZdbkskjLr9iJ9Ogozcip2kqnvbPo/dLx8Vo/YnTlU1XvYy6iGO
+ 2A85qD9cTCvPzhOU+/67VUbE0tvyvSEqubwPgVk13O2r0OdNzvjHJBJJHa7CNgbTVjcQ
+ 3YfGgfljLL9yQ2xQ0+VftrYB0KHMq7HJpdK/BUzn68i0kuZ4MYM4gygCCsotPUkLKkZU
+ kaDw==
+X-Gm-Message-State: AOJu0Yyf1v92/9z3Lw/gKmr3OeFUtOPKQ/B06xTZsk66EWKS0DcVM+ix
+ HA0ODIkwu/MGg/m6PEUBFXmcQke2JXYvIcoW5ksVGpkBRNX4w0sPg9q5icPysYLZ
+X-Gm-Gg: Acq92OFyDbDD+K7hl7nsk7G1yc/GBqMb0s5faNtv4jsda5n2c9zqSDVexwUde2k50HG
+ CU24YpJ62NZQP0tkdn3S3hlFtqJb4cqdXZqP0CeVv9xq+aouDExu9pJQ1Aiqveo7CudOMkuwkJ6
+ rjRHE89OY0Hu9sWVj8jizn+j8zVJClJLnbz2EPxvNkSqqv80M96upzp6DCXuhgEwux098N0D7TN
+ 8PKS1KNo2cqoaP0eOll4/g/P3PzqaC4Dvj4kjXvbgaYVd1Tu/6bhTI9VEe09AkU99nuLAqnG5fK
+ iOdubZ3396YxTb44alFHg+B8cy5HF6j0MKaELlfU3JHi48pVgWWyiwnL86r9sz6EgjVO6LPw3jA
+ /8pK4gbfm7UYVO6ssnVJGxQ8p73jPXNYiEWy96h1JqDr1OaGkRQUz72Iybj1LTaNCNN2SPFgXx4
+ 7O3N6RkvX2vmkJ3cbTFL5V7F99ZudohUMZb/ho/HFMTw==
+X-Received: by 2002:a17:903:234d:b0:2b9:cabe:ce37 with SMTP id
+ d9443c01a7336-2bea20a2f33mr50739985ad.1.1779408247930; 
+ Thu, 21 May 2026 17:04:07 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2beb114b54csm3915475ad.42.2026.05.21.17.04.27
+ d9443c01a7336-2beb114b54csm3915475ad.42.2026.05.21.17.04.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 17:04:30 -0700 (PDT)
+ Thu, 21 May 2026 17:04:07 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Zishun Yi <vulab@iscas.ac.cn>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Subject: [PULL 17/48] target/riscv/pmp: Fix integer overflow in TOR and NA4
- address computation
-Date: Fri, 22 May 2026 10:02:53 +1000
-Message-ID: <20260522000324.23255-18-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Anton Blanchard <antonb@tenstorrent.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 10/48] target/riscv: rvv: Handle source overlap of vector
+ widening reduction instructions
+Date: Fri, 22 May 2026 10:02:46 +1000
+Message-ID: <20260522000324.23255-11-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260522000324.23255-1-alistair.francis@wdc.com>
 References: <20260522000324.23255-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,50 +103,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zishun Yi <vulab@iscas.ac.cn>
+From: Anton Blanchard <antonb@tenstorrent.com>
 
-According to the RISC-V Privileged Manual: "The Sv32 page-based
-virtual-memory scheme described in sv32 supports 34-bit physical
-addresses for RV32, so the PMP scheme must support addresses wider than
-XLEN for RV32."
+Widening reductions read vs2 as a vector of SEW elements and vs1[0] as a
+scalar of 2*SEW. The ISA does not allow the same vector register to be read
+with different EEWs, so they must not overlap.
 
-However, the current QEMU implementation uses `target_ulong` (which
-resolves to `uint32_t` on RV32) for PMP address variables.  When
-shifting these addresses left (e.g., `this_addr << 2`), an integer
-overflow occurs, truncating the high bits of the 34-bit physical
-address.
+vs1 is read as a scalar from element 0, so it is treated as a single vector
+register (independent of LMUL) when checking overlap.
 
-Fix this issue by changing the types of PMP address variables
-(`this_addr` and `prev_addr`) to `hwaddr`.
-
-This issue was discovered and reported by SpecHunter, an AI-driven
-architecture specification analysis tool.
-
-Link: https://github.com/yizishun/rv-isa-sec/blob/master/output/riscv-isa-manual/pr-2472/qemu.txt
-Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20260511102627.3120140-1-vulab@iscas.ac.cn>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3208
+Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260417080328.31918-1-antonb@tenstorrent.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/pmp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/riscv/insn_trans/trans_rvv.c.inc | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-index 5391caa59c..a71091a316 100644
---- a/target/riscv/pmp.c
-+++ b/target/riscv/pmp.c
-@@ -227,8 +227,8 @@ static void pmp_decode_napot(hwaddr a, hwaddr *sa, hwaddr *ea)
- void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index)
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index e65356eb7c..0b41cecb27 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -3283,6 +3283,7 @@ GEN_OPIVV_TRANS(vredxor_vs, reduction_check)
+ static bool reduction_widen_check(DisasContext *s, arg_rmrr *a)
  {
-     uint8_t this_cfg = env->pmp_state.pmp[pmp_index].cfg_reg;
--    target_ulong this_addr = env->pmp_state.pmp[pmp_index].addr_reg;
--    target_ulong prev_addr = 0u;
-+    hwaddr this_addr = env->pmp_state.pmp[pmp_index].addr_reg;
-+    hwaddr prev_addr = 0u;
-     hwaddr sa = 0u;
-     hwaddr ea = 0u;
-     int g = pmp_get_granularity_g(env);
+     return reduction_check(s, a) && (s->sew < MO_64) &&
++           !is_overlapped(a->rs1, 1, a->rs2, 1 << MAX(s->lmul, 0)) &&
+            ((s->sew + 1) <= (s->cfg_ptr->elen >> 4));
+ }
+ 
 -- 
 2.53.0
 
