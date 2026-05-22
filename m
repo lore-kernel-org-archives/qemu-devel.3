@@ -4,44 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EA98CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:54:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A24CCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:54:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXlV-0008TZ-RL; Fri, 22 May 2026 17:50:46 -0400
+	id 1wQXoe-0001AF-7U; Fri, 22 May 2026 17:54:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXl0-0007nQ-KN; Fri, 22 May 2026 17:50:14 -0400
+ id 1wQXo6-0000Cb-MZ; Fri, 22 May 2026 17:53:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXky-0003I6-6c; Fri, 22 May 2026 17:50:14 -0400
+ id 1wQXo3-00053K-Dz; Fri, 22 May 2026 17:53:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779486559; bh=usJebyXOwOn1hWsXzUOvUHyblNNQU6e+dFrR0SYBzcs=;
+ t=1779486561; bh=t4CYhJA8XOnr+F14j2WG0HCzMMezf8973YvwtfLOE3I=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=RPtFZWkTo/OplmyjdLF/GbOd+3EwVLqkfmIy/VRzo72N33QDH+UoX2zzYlKhZaNOj
- B8BEaWwAuU+EZpYTOT+lA05/Nr76/bNPj8dtoDHaKUd4gEnwViGKMPWh5m9VijecmZ
- rvLBkC3ruO6kmAnf7oVNCWojGeiKbhi9xaYkz+l8l2/AEhEVdDlA+/V/2azaVKis/l
- GFIhFCCBPB7iUHeJ7LynTUklnnjY+HJsYi7UWrJb0qg8F52Li3oZCezD1MjVBzQT8U
- gLicqNrDejhxXndRdVVike42bVgUHHkBAG7KpvN0qMt7nxBRbUo9m0ycV6tnGbLiCv
- 5urz0IlfCJd+Q==
+ b=pf3Qci7Cks5PKX0V9BiOwGBqIpsagdAHXxKMlbdd7GHWzMRdf+isvyWiXt0UpBmUn
+ q99Qzz8VjfX/9RG/ULxFf70oy4XE0U8AAxKLbUbW3Zx5Ry6fHAccXFW30SUJf5xzi8
+ A9x5gKhQ7OSQrflPcYiayKa882vFWsfXk/7L/x4FSOR4cZLGaZ+MUBeo5Pql6+b3Gg
+ jbmJL47+yJqX0FwvtaZSoDFaW8RkFMvNNZcJKqpo9rHGWXbWPG4RXduejURIKzMUFu
+ sonnCVppEzaGjsB9Do5pMUWubV2BojH81670Z0Rl/MhCAlmfyz4kPZAN6F/xBQeQJk
+ zIkRDDP17AzTQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E2B271AFB67;
- Sat, 23 May 2026 00:49:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CFAB61AFB85;
+ Sat, 23 May 2026 00:49:21 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0D0833B71B6;
- Sat, 23 May 2026 00:49:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 05F7D3B71D4;
+ Sat, 23 May 2026 00:49:26 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Katherine Leaver <katherine.j.leaver@gmail.com>,
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 113/149] hw/uefi: verify pio_xfer_offset before
- calculating buffer checksum
-Date: Sat, 23 May 2026 00:48:45 +0300
-Message-ID: <20260522214923.807017-14-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 143/149] block: Create DEFAULT_BLOCK_CONF macro
+Date: Sat, 23 May 2026 00:49:15 +0300
+Message-ID: <20260522214923.807017-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260522213553@cover.tls.msk.ru>
@@ -70,35 +68,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Kevin Wolf <kwolf@redhat.com>
 
-Without that it is possible to do trigger OOB reads by first
-advancing offset, then making the buffer smaller, finally
-asking for a checksum.
+The property default values from include/hw/block/block.h were
+duplicated in scsi_bus_legacy_handle_cmdline(), allowing them to go out
+of sync easily. There doesn't seem a good way to avoid the duplication,
+but moving them next to each other in the header file should help to
+avoid this problem in the future.
 
-Fixes: CVE-2026-41436
-Fixes: 90ca4e03c27d ("hw/uefi: add var-service-core.c")
-Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260422092910.444997-3-kraxel@redhat.com>
-(cherry picked from commit 94d9a8b2c9e6962aa7f7673229d2db7b110cfac6)
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20260410152314.86412-2-kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit a1310cc6281d22ac948f4aa198dcc55d58fc039d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-core.c b/hw/uefi/var-service-core.c
-index 91548e2f39..660ca2f9f8 100644
---- a/hw/uefi/var-service-core.c
-+++ b/hw/uefi/var-service-core.c
-@@ -229,6 +229,10 @@ static uint64_t uefi_vars_read(void *opaque, hwaddr addr, unsigned size)
-         uv->pio_xfer_offset += size;
-         break;
-     case UEFI_VARS_REG_PIO_BUFFER_CRC32C:
-+        if (uv->pio_xfer_offset > uv->buf_size) {
-+            retval = 0;
-+            break;
-+        }
-         retval = crc32c(0xffffffff, uv->pio_xfer_buffer, uv->pio_xfer_offset);
-         break;
-     case UEFI_VARS_REG_FLAGS:
+diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
+index b9b115deed..982287191e 100644
+--- a/hw/scsi/scsi-bus.c
++++ b/hw/scsi/scsi-bus.c
+@@ -482,12 +482,7 @@ void scsi_bus_legacy_handle_cmdline(SCSIBus *bus)
+     Location loc;
+     DriveInfo *dinfo;
+     int unit;
+-    BlockConf conf = {
+-        .bootindex = -1,
+-        .share_rw = false,
+-        .rerror = BLOCKDEV_ON_ERROR_AUTO,
+-        .werror = BLOCKDEV_ON_ERROR_AUTO,
+-    };
++    BlockConf conf = DEFAULT_BLOCK_CONF;
+ 
+     loc_push_none(&loc);
+     for (unit = 0; unit <= bus->info->max_target; unit++) {
+diff --git a/include/hw/block/block.h b/include/hw/block/block.h
+index b4d914624e..7da643faff 100644
+--- a/include/hw/block/block.h
++++ b/include/hw/block/block.h
+@@ -51,6 +51,13 @@ static inline unsigned int get_physical_block_exp(BlockConf *conf)
+     return exp;
+ }
+ 
++#define DEFAULT_BLOCK_CONF (BlockConf) {                                \
++    .bootindex = -1,                                                    \
++    .share_rw = false,                                                  \
++    .rerror = BLOCKDEV_ON_ERROR_AUTO,                                   \
++    .werror = BLOCKDEV_ON_ERROR_AUTO,                                   \
++}
++
+ #define DEFINE_BLOCK_PROPERTIES_BASE(_state, _conf)                     \
+     DEFINE_PROP_ON_OFF_AUTO("backend_defaults", _state,                 \
+                             _conf.backend_defaults, ON_OFF_AUTO_AUTO),  \
 -- 
 2.47.3
 
