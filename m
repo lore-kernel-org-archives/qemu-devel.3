@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E12E1CD5BB3
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 05:20:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCEF5CD4F5B
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 05:20:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQIJ4-0002RB-Sy; Fri, 22 May 2026 01:20:22 -0400
+	id 1wQIJU-000396-OO; Fri, 22 May 2026 01:20:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wQIJ1-0002Q7-To
- for qemu-devel@nongnu.org; Fri, 22 May 2026 01:20:19 -0400
-Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
+ id 1wQIJK-0002x7-Qa
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 01:20:39 -0400
+Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wQIIz-0001mu-PA
- for qemu-devel@nongnu.org; Fri, 22 May 2026 01:20:19 -0400
-Received: by mail-ot1-x32a.google.com with SMTP id
- 46e09a7af769-7dbca22dbfeso3699622a34.1
- for <qemu-devel@nongnu.org>; Thu, 21 May 2026 22:20:16 -0700 (PDT)
+ id 1wQIJI-0002CS-RT
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 01:20:38 -0400
+Received: by mail-oi1-x229.google.com with SMTP id
+ 5614622812f47-47c7b282d73so4525598b6e.3
+ for <qemu-devel@nongnu.org>; Thu, 21 May 2026 22:20:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779427215; x=1780032015; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779427236; x=1780032036; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=x0NUdarwlNBIbAV+0BMqGTTe4aMVplAxOCrABMuHx4A=;
- b=lX9Z8iNByPq0Yh8tfbU10h2htdmV/cV1issCjF6FySZbqChYUbGqnAv7ztzn7g3wOz
- qX8o+bMTT71Fj4k/9a9ZsWiqeC/OcxpY1uci9zej5FaPkPwSRZcATPHMzDWAAV72FoGh
- eWfuohD6MG39iW4sdncDJk6LJglWnldTswW1ewvXh7z7wX/SMJgoIMN1d60fP5eP9Mp7
- BJPsprR9Z2RpzffzKmhwLCUSf9ef7Kr5+F9DEMwPGgdqxXfQTG/iqGUCKQHxBxmW/AyG
- NAamiaMCrASsMPZHG99wCrh01573X37Q6nKsnKs4zF/XOUBQCSpXksZ3ooc2tCed1c1O
- W3zA==
+ :reply-to; bh=IIq/YskjRURxwXRrby+JleJo4nRwydEYBipsWaNUB70=;
+ b=U+Jy1eMHXZciqrhTCJIMpQOnfXaqnDtuu3ajWoZaFf9G1lvTg+8dOUkFHj1LPbyPSH
+ Bmi58OxCbqVTYeeub9lw79MY9JqnvNYbZH0UcTVNrlG6JdW7r555vSu91RMMDBriYFSr
+ h1j7gc5ySk5reLaxnHxRB95aR8LC19RFqFoQ71HhcUTBmXuBh0l2yRVp5HVu8rc+vp1E
+ S1ipmAqkgKmTqgbjG72V5YilGCCynoyhrqHaoW5PbcO1/lyFSK6+pW/UUfNvGiFsM4ko
+ hm4Hl1zeXrwXq9HFbJtCyAi+9+QBwJoIz5+Hislk/ayhip5cGFImfTwxHcUn/BnmUgx2
+ zCLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779427215; x=1780032015;
+ d=1e100.net; s=20251104; t=1779427236; x=1780032036;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=x0NUdarwlNBIbAV+0BMqGTTe4aMVplAxOCrABMuHx4A=;
- b=Ui0wY4PoL8IThUPdUZq8u/phwe+L+iRYfqxxYDiErrdZV0MrNw+X6gADrMj7rTyjuq
- Ym9ukD2LYe6+VxsytIz1PUNyMHBi3hBYY6Iidln3t2mhAWcKzRikJyZajycWZ2vlQtvu
- fCDc3nfX7b0VjIFc5Qk28TjZRakcl/qP+WMamwbhughjjW2Z1+GdxMPFxeY/JNl+LNW0
- tEE1xlpPlj+xHSMDMRquk+klfKilzTsoeHRrRmNqAlMaTuGcF4+0Leto8Wj77StMyPiV
- /KgjDAOEOM1fSnuVj1L94uqlt/l/cCOignD9lzf2gCGCCFbpawbGS6+EX57jTwbbUp6d
- rGxw==
-X-Gm-Message-State: AOJu0YyPhAPNTf0Yjayq1f37GbXhsEJAo1bOOTGgdJ8OU2k+uKHer6U5
- XDV4k4yeyQIBmuCTVg8OcmtSm5O0BuYyptSWGCS9BVtR7OsGdikmeHoB
-X-Gm-Gg: Acq92OECC683osn6ZajxsSTzgLSMbhMlWXfvHkEe6R7u0hvIo5xvsVu8Sdhlr+NmJeN
- Hc604aCoiYESa+awYakcfD+zOeDWm293Ce1zquK0RzJbF7DgTsQST0/QEqkrwqSZndgquMgy0GE
- +7tm0Y5jwx5nZ6M/xJ9rnbcmZyTEX8TaFJUBDHZUf5wRZe/R0zfKlhW5dGX0aL/cZKyiHpmfJl7
- eKSkFs8YE1mQMSv2o3514KVjg/oCHSGkNNYUeN2mSvxwp/65GtzHi5ZMpCuJTKVA4n+ApA2tb6q
- Yl7hPp+olTxeU5nm2ygzfoV6v0x2k1cKcZc8yYY5nox/Q4j5JiGbo6DAi3iBhHYazpteyYPAG/R
- DylMS1EjA+SY6h8grwNNmX16ZnfjHtYQJog7h3tL7qnGPfHQR9qRYCi7JIhFRqDwkDKsnMYKKSU
- eCqKQaVunEpSFCdKAvx/1Tbx6sJNLmuOkFJ71I2INzcIDdO68g1dwts7vCgZe/aQu7fQH+h8586
- LFcsDtY5zujCTX/F/eUAGmiOJbcAGggd7sBQoZdTCQp3N9wuSyGB8hr+vl87ZNAlgtD
-X-Received: by 2002:a05:6808:23d2:b0:467:819:dc61 with SMTP id
- 5614622812f47-4854a29f503mr1222801b6e.23.1779427215037; 
- Thu, 21 May 2026 22:20:15 -0700 (PDT)
+ bh=IIq/YskjRURxwXRrby+JleJo4nRwydEYBipsWaNUB70=;
+ b=H08mHUqghfXmRmLIQmGSBp/jcRzXrDPFhr15BGTjsQa8kx5ldDoITjvVOfURIjWNhn
+ vo0SevsJz3AjUv6MLw1oRI3c5gywr7gPi2rg4MTrWQixJaAFjgxgnRZT9PSJxLRdBDOR
+ QrsKYUmK8r7YwL09gfjTp9IutFn2/VCKwZxSqMSy9oQ6Am1As66N6O7W1OKUxrPxgiNP
+ hMq+zEhtp+RjUJ694oXDGUEmGoQ1JD7TgIymjVBAnRW/V7nanq9Ksut2GkhN2rKZ6v/Q
+ e2k/suZvs9XRonCqhMpmdiqe+9S08qsL+FhAYMhzFeN8gPPvDuxnejZmSQkMFim30RPM
+ g22g==
+X-Gm-Message-State: AOJu0YzH6jAhDLg1R23UOHOyRiehaQi+9MlzYrPfOzF8Vj/5WCVi98aM
+ 8wRM7RndbS1h0RqYQNFMehAzMFnkNZohcIEc3s0zweTzDz+5GiIi/2rR
+X-Gm-Gg: Acq92OGZ0HP9gelkPALq5F3zJdPGdntLmRTJl3OxzLGbzL+zeSHfZg9dJuRzD1DnuYW
+ M3kXuvTwzIEASSK03aMM1bSzj0RiuRBBQWwh1T0MGvK71Ho04Rd3U9GiaZ0UidRfJ+Z2gtYpgVj
+ Y6kWF9vKavUCjeRL049rDY9p4jX00ETdGmkug3Sr5bXHK8e1el3AE9wcSgOZT+z0MnwVE0SqmZU
+ vKfvjSvJSZFKBLRuBNH98FnyCKumWc7xO6mFb9dpjdWgqjn0z7TueepKo3CVD6fgeG7BqyNJ8cb
+ g1NC9JG9rhD0ZsF0bCpcclmO8DjSdhLcPxy4wcq/qUvalua1WigIEpih3wqqRKzM5ywbT6j16mL
+ OFLhyvV3qG/nrxQp6Vr+WnhJ1E7fONkC1tzZMXfwPLxKgxNUTVUNJRuipT/LPi58jyVQ1U5qs9h
+ rI1Q8bpMC6WJdxnVXS8Rx6ZzaJH6pxsYFFySvOMmzlVPZQGl1mJAMlCjIcRbIgR7t1NMp1WZ7kY
+ pkV/y1wjcNkC5cRCTaByHBlQ5g24bhaJ3rAeBnJA+XYaTljyW+hLBZcrEjLVSpzM3Po
+X-Received: by 2002:a05:6808:23c9:b0:47c:7c7c:c792 with SMTP id
+ 5614622812f47-48549ecf769mr1444949b6e.7.1779427235763; 
+ Thu, 21 May 2026 22:20:35 -0700 (PDT)
 Received: from mac.localdomain (184-96-131-78.hlrn.qwest.net. [184.96.131.78])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-4855476ab77sm59690b6e.17.2026.05.21.22.20.13
+ 5614622812f47-4855476ab77sm59690b6e.17.2026.05.21.22.20.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 May 2026 22:20:14 -0700 (PDT)
+ Thu, 21 May 2026 22:20:35 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Thu, 21 May 2026 23:19:44 -0600
-Subject: [PATCH v14 02/22] target/mips: add Octeon COP2 crypto state
+Date: Thu, 21 May 2026 23:20:00 -0600
+Subject: [PATCH v14 18/22] target/mips: decode Octeon ZUC and SNOW3G COP2
+ selectors
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260521-mips-octeon-missing-insns-v2-v14-2-fbf08e164830@gmail.com>
+Message-Id: <20260521-mips-octeon-missing-insns-v2-v14-18-fbf08e164830@gmail.com>
 References: <20260521-mips-octeon-missing-insns-v2-v14-0-fbf08e164830@gmail.com>
 In-Reply-To: <20260521-mips-octeon-missing-insns-v2-v14-0-fbf08e164830@gmail.com>
 To: qemu-devel@nongnu.org
@@ -84,8 +85,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  James Hilliard <james.hilliard1@gmail.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
- envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x32a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::229;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x229.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -109,130 +110,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the common architectural state needed by Octeon's selector-driven
-COP2 crypto interfaces. This includes storage for the base hash, AES,
-CRC, GFM, 3DES, KASUMI, and overlapping HSH/SHA512/SHA3/SNOW3G/ZUC
-selector windows.
+Add explicit decodetree entries and translator bindings for the Octeon
+ZUC and SNOW3G COP2 operation selectors.  These stream-cipher selectors
+operate on the shared HSH register window state, so dispatch them through
+the per-operation helpers added with the corresponding engine support.
 
-Keep selector values and helper-local aliasing logic out of the CPU state
-header so the state definition remains limited to architectural storage.
-Helper code uses the same register banks instead of adding
-non-architectural shadow state.
-
-Migrate the state in an Octeon-only subsection so non-Octeon CPU models
-do not grow migration data.
+Keep stream-cipher decode separate because these selectors share the HSH
+register window with unrelated engines.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
-Changes v10 -> v13:
-  - Keep reflected GFM selectors mapped onto the architectural GFM state
-    from the start instead of adding temporary reflected shadow fields.
 
+---
 Changes v9 -> v10:
-  - Drop non-architectural shared-mode, AES input/result split, GFM XOR,
-    and ZUC/SNOW3G shadow state.
-  - Model HSH/SHA512/SHA3/SNOW3G/ZUC overlap with the architectural HSH
-    DAT/IV register banks.
-  - Store CRCLEN as the architectural 4-bit state.
-
-Changes v8 -> v9:
-  - Remove the MIPSOcteonCop2Sel enum; selector values are decoded by
-    decodetree or kept local to helper plumbing.
-  - Leave only COP2 state and migration data in this patch.
-
-Changes v7 -> v8:
-  - Split COP2 crypto state and migration coverage out of the combined
-    COP2 crypto core patch.
+  - Split ZUC/SNOW3G selector decode out of the monolithic Octeon COP2
+    selector decode patch.
+  - Kept stream-cipher operation selectors helper-backed because they
+    operate on the shared HSH register-window state.
 ---
- target/mips/cpu.h            | 21 +++++++++++++++++++++
- target/mips/system/machine.c | 27 +++++++++++++++++++++++++++
- 2 files changed, 48 insertions(+)
+ target/mips/tcg/octeon.decode      | 4 ++++
+ target/mips/tcg/octeon_translate.c | 4 ++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/target/mips/cpu.h b/target/mips/cpu.h
-index 346713705a..2dad7f538f 100644
---- a/target/mips/cpu.h
-+++ b/target/mips/cpu.h
-@@ -537,6 +537,25 @@ struct TCState {
- };
- 
- struct MIPSITUState;
-+typedef struct MIPSOcteonCryptoState {
-+    uint64_t hsh_dat[16];
-+    uint64_t hsh_iv[8];
-+    uint64_t sha3_dat24;
-+    uint64_t des3_key[3];
-+    uint64_t des3_iv;
-+    uint64_t des3_result;
-+    uint64_t aes_resinp[2];
-+    uint64_t aes_iv[2];
-+    uint64_t aes_key[4];
-+    uint32_t crc_poly;
-+    uint32_t crc_iv;
-+    uint64_t gfm_mul[2];
-+    uint64_t gfm_resinp[2];
-+    uint16_t gfm_poly;
-+    uint8_t aes_keylen;
-+    uint8_t crc_len;
-+} MIPSOcteonCryptoState;
-+
- typedef struct CPUArchState {
-     TCState active_tc;
-     CPUMIPSFPUContext active_fpu;
-@@ -558,6 +577,8 @@ typedef struct CPUArchState {
- #define MSAIR_ProcID    8
- #define MSAIR_Rev       0
- 
-+    MIPSOcteonCryptoState octeon_crypto;
-+
- /*
-  * CP0 Register 0
-  */
-diff --git a/target/mips/system/machine.c b/target/mips/system/machine.c
-index f988b3695b..77f576a25b 100644
---- a/target/mips/system/machine.c
-+++ b/target/mips/system/machine.c
-@@ -279,6 +279,32 @@ static const VMStateDescription mips_vmstate_octeon_multiplier = {
-     }
- };
- 
-+static const VMStateDescription mips_vmstate_octeon_crypto = {
-+    .name = "cpu/octeon_crypto",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = mips_octeon_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64_ARRAY(env.octeon_crypto.hsh_dat, MIPSCPU, 16),
-+        VMSTATE_UINT64_ARRAY(env.octeon_crypto.hsh_iv, MIPSCPU, 8),
-+        VMSTATE_UINT64(env.octeon_crypto.sha3_dat24, MIPSCPU),
-+        VMSTATE_UINT64_ARRAY(env.octeon_crypto.des3_key, MIPSCPU, 3),
-+        VMSTATE_UINT64(env.octeon_crypto.des3_iv, MIPSCPU),
-+        VMSTATE_UINT64(env.octeon_crypto.des3_result, MIPSCPU),
-+        VMSTATE_UINT64_ARRAY(env.octeon_crypto.aes_resinp, MIPSCPU, 2),
-+        VMSTATE_UINT64_ARRAY(env.octeon_crypto.aes_iv, MIPSCPU, 2),
-+        VMSTATE_UINT64_ARRAY(env.octeon_crypto.aes_key, MIPSCPU, 4),
-+        VMSTATE_UINT32(env.octeon_crypto.crc_poly, MIPSCPU),
-+        VMSTATE_UINT32(env.octeon_crypto.crc_iv, MIPSCPU),
-+        VMSTATE_UINT64_ARRAY(env.octeon_crypto.gfm_mul, MIPSCPU, 2),
-+        VMSTATE_UINT64_ARRAY(env.octeon_crypto.gfm_resinp, MIPSCPU, 2),
-+        VMSTATE_UINT16(env.octeon_crypto.gfm_poly, MIPSCPU),
-+        VMSTATE_UINT8(env.octeon_crypto.aes_keylen, MIPSCPU),
-+        VMSTATE_UINT8(env.octeon_crypto.crc_len, MIPSCPU),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- const VMStateDescription vmstate_mips_cpu = {
-     .name = "cpu",
-     .version_id = 21,
-@@ -396,6 +422,7 @@ const VMStateDescription vmstate_mips_cpu = {
-     .subsections = (const VMStateDescription * const []) {
-         &mips_vmstate_timer,
-         &mips_vmstate_octeon_multiplier,
-+        &mips_vmstate_octeon_crypto,
-         NULL
-     }
- };
+diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+index b1a63b743f..2b27fa205f 100644
+--- a/target/mips/tcg/octeon.decode
++++ b/target/mips/tcg/octeon.decode
+@@ -265,8 +265,12 @@ LDX          011111 ..... ..... ..... 01000 001010 @lx
+     CVM_MT_CRC_DWORD_REFLECT             010010 00101 rt:5 0001 0010 0001 0111 &cp2
+     CVM_MT_CRC_VAR_REFLECT               010010 00101 rt:5 0001 0010 0001 1000 &cp2
+     CVM_MT_HSH_STARTMD5                  010010 00101 rt:5 0100 0000 0100 0111 &cp2
++    CVM_MT_SNOW3G_START                  010010 00101 rt:5 0100 0000 0100 1101 &cp2
++    CVM_MT_SNOW3G_MORE                   010010 00101 rt:5 0100 0000 0100 1110 &cp2
+     CVM_MT_HSH_STARTSHA256               010010 00101 rt:5 0100 0000 0100 1111 &cp2
+     CVM_MT_SHA3_STARTOP                  010010 00101 rt:5 0100 0000 0101 0010 &cp2
++    CVM_MT_ZUC_START                     010010 00101 rt:5 0100 0000 0101 0101 &cp2
++    CVM_MT_ZUC_MORE                      010010 00101 rt:5 0100 0000 0101 0110 &cp2
+     CVM_MT_HSH_STARTSHA                  010010 00101 rt:5 0100 0000 0101 0111 &cp2
+     CVM_MT_GFM_XORMUL1_REFLECT           010010 00101 rt:5 0100 0000 0101 1101 &cp2
+     CVM_MT_CRC_POLYNOMIAL                010010 00101 rt:5 0100 0010 0000 0000 &cp2
+diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+index c8c797e57f..cda9a0e0f5 100644
+--- a/target/mips/tcg/octeon_translate.c
++++ b/target/mips/tcg/octeon_translate.c
+@@ -320,6 +320,10 @@ CP2_MT_HELPER(CVM_MT_SHA3_XORDAT15, sha3_xordat15);
+ CP2_MT_HELPER(CVM_MT_SHA3_XORDAT16, sha3_xordat16);
+ CP2_MT_HELPER(CVM_MT_SHA3_XORDAT17, sha3_xordat17);
+ CP2_MT_HELPER(CVM_MT_SHA3_STARTOP, sha3_startop);
++CP2_MT_HELPER(CVM_MT_ZUC_START, zuc_start);
++CP2_MT_HELPER(CVM_MT_ZUC_MORE, zuc_more);
++CP2_MT_HELPER(CVM_MT_SNOW3G_START, snow3g_start);
++CP2_MT_HELPER(CVM_MT_SNOW3G_MORE, snow3g_more);
+ CP2_MT_HELPER(CVM_MT_HSH_STARTSHA1_COMPAT, hsh_startsha1_compat);
+ CP2_MT_I64(CVM_MT_HSH_DATW0, hsh_dat[0]);
+ CP2_MT_I64(CVM_MT_HSH_DATW1, hsh_dat[1]);
 
 -- 
 2.54.0
