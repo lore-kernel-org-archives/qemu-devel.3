@@ -4,50 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E8F3CD5BB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:44:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC816CD5BB3
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 May 2026 21:44:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQXb2-0001Lw-7g; Fri, 22 May 2026 17:39:56 -0400
+	id 1wQXXI-0000al-M8; Fri, 22 May 2026 17:36:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXaN-0000Un-Rk; Fri, 22 May 2026 17:39:18 -0400
+ id 1wQXVe-00088N-2y; Fri, 22 May 2026 17:34:25 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wQXaK-0002iz-5r; Fri, 22 May 2026 17:39:15 -0400
+ id 1wQXVb-0007ZK-E9; Fri, 22 May 2026 17:34:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779485683; bh=WV4T/svhfK4my9Dm993k/8H9ELLbyrb6My9ko+knJWg=;
+ t=1779485632; bh=SHRwfxBNjqYNChVpuObGVc28DrBIKUPUH1Ppb1rJg28=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=tujNc/R2oyVD2AAovqzQWVyH+RVtvWbRkSWIPnosatvq0Vx7q+KSRsIi3naDI6DIJ
- 79vgirrtJPBF6F22r6Ok2svKBFvGiOsH/4q3N/0MhQHng8n8jQVh1XuE/4dL7ZhNwU
- FuKorkemyHd0TeClqH0rNDq/4loKPoxR0MjfIpMJVqxMvL3WbLXHQh015jCWLpB1Ot
- Y/OFgdEDil2F/V+9w+Mph4Q4RO4W7MeMJLGEWbXWI6XvJU2p8LRZQk+e4dhxW10bZl
- BMOJ7R57joHqOBxyHOZWjElznmaYTiwASOOvhhpBEwJfSAiVB+NCZcL1ulDvAga1TM
- VJRUDYqfn1w6g==
+ b=rn9gBAdBSKxGW8TEHFiIG1/GWoOivhMRivh27ZCiSScVr4/djYPMv5rStHXVBRXFw
+ O2YmrZ3HtSkcCrPmWBZSiGVYZYIqfDZ7OSnjwvBl1GXx1oR+iKaGgaVO3WFcAIG+lN
+ 63s1eYD46l3sN7qrzwhwv90k5jyqCrFB8FiUWFLqP1+o8Il4L9oR3bbPNNlJvyw91x
+ VyAE/FgETULnLGp0Jwogtx64Ky1H80QwcSkVPr93FUZGjwmPCoxyU/MfpbsV1Cmvka
+ 6RWEK2TW4ZtNxhl71KyZicqnbOwJUSxZ6brLC9PkARC9Xy6eB0DGbCb23NMWzpxXZ+
+ RrDIJpW4+R/kQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1D2441AFB04;
- Sat, 23 May 2026 00:34:43 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 783E31AFACD;
+ Sat, 23 May 2026 00:33:52 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 404363B7184;
- Sat, 23 May 2026 00:34:47 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9D2F03B7153;
+ Sat, 23 May 2026 00:33:56 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Katherine Leaver <katherine.j.leaver@gmail.com>,
+Cc: qemu-stable@nongnu.org, Jeuk Kim <jeuk20.kim@samsung.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 115/136] aspeed/hace: Fix out-of-bounds read in
- has_padding()
-Date: Sat, 23 May 2026 00:34:23 +0300
-Message-ID: <20260522213446.806182-16-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 62/94] hw/ufs: Reject zero-depth MCQ queues
+Date: Sat, 23 May 2026 00:33:19 +0300
+Message-ID: <20260522213356.806058-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
-References: <qemu-stable-10.0.10-20260522213601@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
+References: <qemu-stable-11.0.1-20260522213549@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,43 +68,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+From: Jeuk Kim <jeuk20.kim@samsung.com>
 
-The has_padding() function reads the last 8 bytes of a DMA buffer
-without validating req_len. req_len is guest-controlled (via
-R_HASH_SRC_LEN register or scatter-gather entries) and values less
-than 8 cause integer underflow. This can result in an out-of-bounds
-read of QEMU process memory.
+Reject SQATTR.SIZE and CQATTR.SIZE values that produce zero-entry MCQ
+queues. Such queues can later trigger a divide-by-zero while advancing
+queue pointers.
 
-Add a check to ensure req_len >= 8 before accessing the buffer.
-
-Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
+Fixes: 5c079578d2e ("hw/ufs: Add support MCQ of UFSHCI 4.0")
 Cc: qemu-stable@nongnu.org
-Fixes: 5cd7d8564a8b ("aspeed/hace: Support AST2600 HACE")
-Link: https://lore.kernel.org/qemu-devel/20260504213421.710035-2-clg@redhat.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit 534a52755befa7b8d49c921f8dc964185903efae)
+Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+(cherry picked from commit 4a909c00b9e18478e67a792c7f7cfae62cb6c865)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
-index 96997a03fc..212703cbe4 100644
---- a/hw/misc/aspeed_hace.c
-+++ b/hw/misc/aspeed_hace.c
-@@ -112,6 +112,14 @@ static bool has_padding(AspeedHACEState *s, struct iovec *iov,
-                         hwaddr req_len, uint32_t *total_msg_len,
-                         uint32_t *pad_offset)
- {
-+    /* Need at least 8 bytes to read the total message length field */
-+    if (req_len < 8) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: invalid request length=0x%" HWADDR_PRIx "\n",
-+                      __func__, req_len);
+diff --git a/hw/ufs/trace-events b/hw/ufs/trace-events
+index 531dcfc686..7734b35f08 100644
+--- a/hw/ufs/trace-events
++++ b/hw/ufs/trace-events
+@@ -40,10 +40,12 @@ ufs_err_mcq_db_wr_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
+ ufs_err_mcq_db_wr_invalid_db(uint8_t qid, uint32_t db) "invalid mcq doorbell sqid %"PRIu8", db %"PRIu32""
+ ufs_err_mcq_create_sq_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
+ ufs_err_mcq_create_sq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
++ufs_err_mcq_create_sq_invalid_size(uint8_t qid) "invalid mcq sq size for sqid %"PRIu8""
+ ufs_err_mcq_create_sq_already_exists(uint8_t qid) "mcq sqid %"PRIu8 "already exists"
+ ufs_err_mcq_delete_sq_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
+ ufs_err_mcq_delete_sq_not_exists(uint8_t qid) "mcq sqid %"PRIu8 "not exists"
+ ufs_err_mcq_create_cq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
++ufs_err_mcq_create_cq_invalid_size(uint8_t qid) "invalid mcq cq size for cqid %"PRIu8""
+ ufs_err_mcq_create_cq_already_exists(uint8_t qid) "mcq cqid %"PRIu8 "already exists"
+ ufs_err_mcq_delete_cq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
+ ufs_err_mcq_delete_cq_not_exists(uint8_t qid) "mcq cqid %"PRIu8 "not exists"
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index 1819ba2e8a..4ccd7aa64d 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -506,6 +506,8 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
+     UfsMcqReg *reg = &u->mcq_reg[qid];
+     UfsSq *sq;
+     uint8_t cqid = FIELD_EX32(attr, SQATTR, CQID);
++    uint16_t qsize =
++        ((FIELD_EX32(attr, SQATTR, SIZE) + 1) << 2) / sizeof(UfsSqEntry);
+ 
+     if (qid >= u->params.mcq_maxq) {
+         trace_ufs_err_mcq_create_sq_invalid_sqid(qid);
+@@ -527,12 +529,17 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
+         return false;
+     }
+ 
++    if (!qsize) {
++        trace_ufs_err_mcq_create_sq_invalid_size(qid);
 +        return false;
 +    }
 +
-     *total_msg_len = (uint32_t)(ldq_be_p(iov->iov_base + req_len - 8) / 8);
-     /*
-      * SG_LIST_LEN_LAST asserted in the request length doesn't mean it is the
+     sq = g_malloc0(sizeof(*sq));
+     sq->u = u;
+     sq->sqid = qid;
+     sq->cq = u->cq[cqid];
+     sq->addr = ((uint64_t)reg->squba << 32) | reg->sqlba;
+-    sq->size = ((FIELD_EX32(attr, SQATTR, SIZE) + 1) << 2) / sizeof(UfsSqEntry);
++    sq->size = qsize;
+ 
+     sq->bh = qemu_bh_new_guarded(ufs_mcq_process_sq, sq,
+                                  &DEVICE(u)->mem_reentrancy_guard);
+@@ -576,6 +583,8 @@ static bool ufs_mcq_create_cq(UfsHc *u, uint8_t qid, uint32_t attr)
+ {
+     UfsMcqReg *reg = &u->mcq_reg[qid];
+     UfsCq *cq;
++    uint16_t qsize =
++        ((FIELD_EX32(attr, CQATTR, SIZE) + 1) << 2) / sizeof(UfsCqEntry);
+ 
+     if (qid >= u->params.mcq_maxq) {
+         trace_ufs_err_mcq_create_cq_invalid_cqid(qid);
+@@ -587,11 +596,16 @@ static bool ufs_mcq_create_cq(UfsHc *u, uint8_t qid, uint32_t attr)
+         return false;
+     }
+ 
++    if (!qsize) {
++        trace_ufs_err_mcq_create_cq_invalid_size(qid);
++        return false;
++    }
++
+     cq = g_malloc0(sizeof(*cq));
+     cq->u = u;
+     cq->cqid = qid;
+     cq->addr = ((uint64_t)reg->cquba << 32) | reg->cqlba;
+-    cq->size = ((FIELD_EX32(attr, CQATTR, SIZE) + 1) << 2) / sizeof(UfsCqEntry);
++    cq->size = qsize;
+ 
+     cq->bh = qemu_bh_new_guarded(ufs_mcq_process_cq, cq,
+                                  &DEVICE(u)->mem_reentrancy_guard);
 -- 
 2.47.3
 
