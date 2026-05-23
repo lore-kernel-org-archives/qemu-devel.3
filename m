@@ -4,105 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 533DACD5BB8
-	for <qemu-devel@archiver.kernel.org>; Sat, 23 May 2026 20:59:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E909CD4F54
+	for <qemu-devel@archiver.kernel.org>; Sat, 23 May 2026 21:40:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQtQk-0001zV-ED; Sat, 23 May 2026 16:58:46 -0400
+	id 1wQu4v-00014J-7y; Sat, 23 May 2026 17:40:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wQtQf-0001yd-Fr
- for qemu-devel@nongnu.org; Sat, 23 May 2026 16:58:41 -0400
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ (Exim 4.90_1) (envelope-from <sebastienb.sc@gmail.com>)
+ id 1wQsmd-00054D-FA
+ for qemu-devel@nongnu.org; Sat, 23 May 2026 16:17:21 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wQtQd-00045b-IN
- for qemu-devel@nongnu.org; Sat, 23 May 2026 16:58:41 -0400
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-7cb343d343fso78166547b3.2
- for <qemu-devel@nongnu.org>; Sat, 23 May 2026 13:58:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779569918; cv=none;
- d=google.com; s=arc-20240605;
- b=a3LfuQhcN0fkiTfOWYFbHftzHCGXYXDoJkbXNtGqiRQog8Fcv6NElctemc1WongiL4
- UAtCBiAsy7PdqzsuFD+sa04KaeAriWJobEjAdR9PynFe/OKGlcK2DFaw9dlwAneOeh0v
- fGBEbW3ldBkCOOtON+osI+WUTpKWZpvYu9Nd3GavfN758KUqjVKfIcy3ey4J4kgNrAwS
- YkCHaWpR2swtr1/IDMBiRyqp7dtOPOVp6NEqIXh4sES6nSlfMzd5oXA3y+9TU6/DuFOk
- 7k9GX2qJWDJoR9VsIWZflHgsg57c5MzGEsEWHWD1hM58rkyWWR3ruEyKLVIB5krGXndy
- f8dQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=al+Hae3VUxEZ7Src1Wlod7I1X4P4CfSYv4d4oT/42jM=;
- fh=E58ZOd8izbwvkm1j0n3A60e1EFv0fycTWZbjYWD5NHU=;
- b=VxcEiPOle54+bAAcIZy5AAODj5CmO5dj40F0TSw8tY2Jxi14ouBQ8r5tO+3jl8GwBk
- LxgQ2D8gsO2aD/mpwTisToME1QmucNUEm14acjWFwmrMz2NAKv1R3s3rDZkKjhPHwsvj
- I7jRj5qy/82b1yHkpWxHvUpkkvNgP2683xILJ6b56S2Kr3k6SzqVrWA3SBnqMP/kvjzz
- tc5hFhwov/IsvFJnvpekG0VTCnONJCF2EQihk7ETyNgNu1uyV/HRIstKRLC/K5U4Up7Q
- ELzRk11p2t4Db2LzhR1mAyZ2C3TXI+KouWvX6bHqQs5Rbs3/++RkWA/2fsBLNJBlhXW+
- /zZQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <sebastienb.sc@gmail.com>)
+ id 1wQsmb-0008Jk-2Z
+ for qemu-devel@nongnu.org; Sat, 23 May 2026 16:17:19 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-bdbac72ac1fso592833366b.3
+ for <qemu-devel@nongnu.org>; Sat, 23 May 2026 13:17:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779569918; x=1780174718; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=al+Hae3VUxEZ7Src1Wlod7I1X4P4CfSYv4d4oT/42jM=;
- b=mehulGvmUvXn/RUNXBevCOEbL9S1r8Kgq5b6NVarJqk5IXlEbBM4RZYWlQ2HZA1i1y
- Soq5v8Xg0qSanvidHmnBA3YR0h8JXOQy/ZWejhiIGQLBuDJzLf22ADmKmmnW0r4ya2pw
- QBFt7bL5x4dJl5Oi5UPTnIK3RnXaHoUHBuGepi77Bj7lctmjH93HOsRH4H0GeexS8IVs
- YmT9XAWo+8X9ixD/ObPBoXZUwshgHFm34X8L606k+z+sLm3wQ7v50k0xGHf21NxVtlgH
- ecHvPWyPCf180VFEoKo7xnXsNrqmVCIX1zsGYb0CFqw0jvZEm0rdRnu7Nq9mIhpgZ+RT
- xDgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779569918; x=1780174718;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1779567434; x=1780172234; darn=nongnu.org;
+ h=disposition-notification-to:subject:from:to:content-language
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
  :message-id:reply-to;
- bh=al+Hae3VUxEZ7Src1Wlod7I1X4P4CfSYv4d4oT/42jM=;
- b=nSZJF8P3pxi3OqxBDrZZtMOGacQcq+beTRm4tuE5V4yH2EMK3JSHDNWbXZ7KDBWtA8
- aEoRA9rwhcUmsFgEYn+nDF8jNjvXZJI5uZDtLLFjQRVKQs2u4pJgBsyDopaHqxtE5YEe
- XxRkWt8c5UZWrA5ZbEN0FiG7njon7HN8S5NPj9I+QQkErLAD4kods3x5aRXueJ40R7xX
- s2Jxk7+7MgKbNi0vpC/0ohusx2mRx7d/atsNfA8iBgwxfebSo3fHpzGbf3x03iMJCc3F
- j691lDgpdIKD5liIWOzRtq2UNEISy7pmFVJz86gNyB0o7iewJxv9XokzKqwFMrHx8X6D
- psUg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+qdTeXNfjLsY3PTzo0R5zvsO9JYZ+UEuU6Tnk9WgmwkPwx9M24OZ392AZQtaLPpnTikArAW0sFXWww@nongnu.org
-X-Gm-Message-State: AOJu0YxxbfIPh7CLTROx6je6JcV3caI0vXdn0PIDH0KzdbIs3gKejkc8
- TEGbdnZtWjh1NssrQZr36CZK0cyGA90XM62qhBeDAKhLm7m2JG8bi0rYjlFLRx0ohOu38NPPE12
- Hs/rOUPEwy+G3MoXKJh3sUw8f2hy+VfAPCzXWk/SGZHD99TlaWuLs2ZQ=
-X-Gm-Gg: Acq92OEivuefCBp3iF8IY0rLFsXotfKe9+X+lLKnlsYyZi7LeifXHGQV0dI905n2Qh9
- q9V1tPI1rnd65gfGwHPI+5kyuc+VjDt1P3MTxnvhhILR5cVgeCYjIigECB9CAf4/lHMZpNmLd16
- NHxdB+egHL5B3VaAQhvD5BBvJwvjBIcwCsA1/AalmokNlv9OzQspWqFBV/QPU0tfLjhM/7L+OHc
- tYO3EmjfsgxGDBl+J6422PNZ3A8bcUC0YFkW5i7+eUVMVfeY2TmTc9AIiM9gvXedupnrO4hy1Q+
- rQ7bqcheci4EEDGKCwpFMQOK/TjvpOhMrKSHpoOzSKB+oh2IpQt13E1IUspYzcgYWww=
-X-Received: by 2002:a53:c047:0:20b0:653:60c:a4a8 with SMTP id
- 956f58d0204a3-65ec9616d7cmr6971355d50.12.1779569917619; Sat, 23 May 2026
- 13:58:37 -0700 (PDT)
+ bh=QkBjN0PMKJ1IeG+FwoI0Y5J0Z4iXVr4KI+53dPiOt2A=;
+ b=WRum3Q2e+ioaGJIfJMOCBoV/Mas7EZ02CR7rCE5GFG3TrgAlVAtGYe2fG3vHdLYIzI
+ GhcrwOwBJ3q4COxRRsCz0dxBqaBLQR6Ne3L415lyBP2LmpHjg7+L2ACS0/udINbKRHEi
+ CKCDn8+fGYIPmntXJOhVbRnu97fU6Z6oMtJjATqzmRM725kpTdKjJ2NELQSTWpioOhSt
+ u+Srxq8i9mgVtAb3bwqtaHpo8yCIMTswhegn2fIY/vVZ2SW2BQ/5oLjH1Q+qOfIsBecI
+ eXW8Q7gEgfG4HlmNkSkqbXyVUdz+TF5fGz17XWyg3ksO3DuusISJe2SADfIWTToIEFDT
+ V+Kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779567434; x=1780172234;
+ h=disposition-notification-to:subject:from:to:content-language
+ :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=QkBjN0PMKJ1IeG+FwoI0Y5J0Z4iXVr4KI+53dPiOt2A=;
+ b=BLHoFdXOIifWWD1G1BjSsGg/En/cvIdlFsob+jmldNsXXGZEfL7jngCjTAPzHJbP2o
+ qPJb2Nei25mUAEFDZibvAsV5odB4++Nkv2IOrlqYpZ5qa8Aopx07tZNIecbPWErrhoq0
+ vaJoLeVf8VjKstYM+rWLi7tKXfSNKsMRasfuB9dfkshg7SaU0qD4BSNViWfZc2aERqn6
+ gb+GlCMTFAX+G6LhxJHHSWRlmjplanLgty7Vc0cFo9tlWGAJhdRJhU947codsmJsAEEX
+ q4VRWXu6fQ0vJRtMvLn1POMBzNgQhtkIzKHaW4a0NUZHQF47LrjkGHFr8zQ4CoP2dJpp
+ OeEA==
+X-Gm-Message-State: AOJu0YzYJYNyCQd3jezOWQOsn3lSUWcFy6zUODJH61qQ0TT10oljMCjp
+ Mru3vB7jSdrbATMEajBwhgsFRNhG5XbXcVXTvkFM4I/uf+IFcn0jlvmiJvUnug==
+X-Gm-Gg: Acq92OEA6DCyAkfe8RIH0NvERlZvCi42s58diXw6oWg+ZG7s900i3+mX1s1Usj81KS9
+ /JGi75GprC5sY5P2ZR9a1X1qbX03DdpLRDbH3E3FLQa3jnrXmiQ4IH4hJrwUjz50oF+t9ZUbuWo
+ tSYnHRsFlnGHQWJRNsJwiX2U2zQ4VPhJWsrDGXhiW3HQ++INshMkjOo0hCh1OmTvgKYPnCUR8Y7
+ poLn1Uui/dGHLfy52j4+oJUPiF694rGVVVcoxBQXqTmmKs3BZxwXIYyE/PmbhDB32z1+yDoS9gL
+ Ul6m3tsdXatlIJiUz74jF7JGENc2Tn2FoktkjVMtxUDgdAuA04qqHyJ5vxhoAnIJFTSRXlvwaqN
+ 4aa6rk8MLVus5CYwzKgAaLjA+AsLd1craf10yJaAmV2z10MGDRlUG/fl9z3lNQM2yWPkko4RGsS
+ zCI0Vgtky63UD/3bMBioAoh69nMCKJEYUvZYQtPza/avezCYeyEJKPBqCW0NleFc/fwwW1e5Nxb
+ ktUn1FILc8=
+X-Received: by 2002:a17:907:26c5:b0:bd1:d244:ca24 with SMTP id
+ a640c23a62f3a-bdd236022bbmr514737766b.14.1779567433534; 
+ Sat, 23 May 2026 13:17:13 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:e1a:3730:a090:1f76:7779:8016?
+ ([2a01:e0a:e1a:3730:a090:1f76:7779:8016])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-bddc62d3f21sm214895166b.44.2026.05.23.13.17.12
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 23 May 2026 13:17:12 -0700 (PDT)
+Content-Type: multipart/alternative;
+ boundary="------------ECcRVrFPwlT9vaULTTBTAxUu"
+Message-ID: <70e8ed39-3e00-4c95-a2e6-b10faf3a8b9e@gmail.com>
+Date: Sat, 23 May 2026 22:17:11 +0200
 MIME-Version: 1.0
-References: <20260521180854.1744788-1-peter.maydell@linaro.org>
- <53e498ea-1110-42f5-aef1-b1233677954b@linaro.org>
-In-Reply-To: <53e498ea-1110-42f5-aef1-b1233677954b@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 23 May 2026 21:58:26 +0100
-X-Gm-Features: AVHnY4LSyO5Famn_k4UVxwXZw5UwduYfP0q5sd2HDalJx9o6gCBEUWsxETO0DxM
-Message-ID: <CAFEAcA_vRANGSaL0ve06+Xm-s6afXpWUwqTvJyyC+PXXjPi5Mg@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: SME BFCVT,
- BFCVTN have "Alternate BFloat16 behaviors"
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+From: Sebastien Brat <sebastienb.sc@gmail.com>
+Subject: [BUG] input-linux: grab toggle doesn't propagate to mouse when
+ keyboard is declared before mouse
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=sebastienb.sc@gmail.com; helo=mail-ej1-x633.google.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ GB_FREEMAIL_DISPTO=0.499, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sat, 23 May 2026 17:40:16 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -117,75 +103,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 22 May 2026 at 22:57, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 5/21/26 11:08, Peter Maydell wrote:
-> > The Arm ARM A1.5.10 notes that some instructions have "Alternate
-> > Bfloat16 behaviors" when FPCR.AH == 1.  We implement these using the
-> > FPST_AH and FPST_AH_F16 fp_status words.  The list includes the SME
-> > BFVCT (single-precision to BFloat16) and BFCVTN, but we forgot to
-> > make those use FPST_AH_F16 when we implemented them. (We get the
-> > ASIMD and SVE insns on the list right.)
-> >
-> > Add the missing logic to select the right FPST.
-> >
-> > Cc: qemu-stable@nongnu.org
-> > Fixes: 465d36db0e1 ("target/arm: Implement SME2 BFCVT, BFCVTN, FCVT, FCVTN")
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> > (There will be a minor conflict with the rename of BFCVT to
-> > BFCVT_hs in RTH's FP8 series.)
-> > ---
-> >   target/arm/tcg/translate-sme.c | 4 ++--
-> >   1 file changed, 2 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-> > index 08254b088e..8e56dedaa3 100644
-> > --- a/target/arm/tcg/translate-sme.c
-> > +++ b/target/arm/tcg/translate-sme.c
-> > @@ -1419,9 +1419,9 @@ static bool do_zz_fpst(DisasContext *s, arg_zz_n *a, int data,
-> >   }
-> >
-> >   TRANS_FEAT(BFCVT, aa64_sme2, do_zz_fpst, a, 0,
-> > -           FPST_A64, gen_helper_sme2_bfcvt)
-> > +           s->fpcr_ah ? FPST_AH : FPST_A64, gen_helper_sme2_bfcvt)
-> >   TRANS_FEAT(BFCVTN, aa64_sme2, do_zz_fpst, a, 0,
-> > -           FPST_A64, gen_helper_sme2_bfcvtn)
-> > +           s->fpcr_ah ? FPST_AH : FPST_A64, gen_helper_sme2_bfcvtn)
-> >   TRANS_FEAT(FCVT_n, aa64_sme2, do_zz_fpst, a, 0,
-> >              FPST_A64, gen_helper_sme2_fcvt_n)
-> >   TRANS_FEAT(FCVTN, aa64_sme2, do_zz_fpst, a, 0,
->
-> What is the difference between FPST_AH and FPST_A64 when AH is set, given that
-> vfp_set_fpcr_to_host does the arm_set_*_fp_behaviours dance?
+This is a multi-part message in MIME format.
+--------------ECcRVrFPwlT9vaULTTBTAxUu
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-(1) FPST_AH always has flush_to_zero and flush_input_to_zero set,
-whereas FPST_A64 sets and clears those based on FPCR.FZ and FPCR.FIZ
-(2) FPST_A64 adjusts the rounding mode when the FPCR rounding mode
-field changes, and FPST_AH does not
-(3) vfp_get_fpsr_from_host() looks at FPST_A64 but ignores FPST_AH
+|Hello,
 
-These combined get us the A1.5.10 required behaviour:
+I found a bug in ui/input-linux.c affecting evdev grab toggle propagation
+between keyboard and mouse devices.
 
-- Produce the expected IEEE 754 default result but do not update the
- FPSR cumulative exception flag bits.
-- Disable trapped floating-point exceptions, as if
- FPCR.{IDE, IXE, UFE, OFE, DZE, IOE} are all 0.
-- Use Round to Nearest Even, ignoring FPCR.RMode.
-- Flush denormalized inputs and outputs to zero, as if FPCR.{FZ, FIZ} is {1, 1}.
+## Summary
 
-(since we don't implement trapped fp exceptions).
+When using evdev passthrough with input-linux objects, the grab toggle
+(e.g. ctrl-ctrl) only releases the keyboard but not the mouse, leaving
+the mouse permanently grabbed by the VM.
 
-We use FPST_AH for the A1.5.10 insns, and also for FRECPE, FRECPS,
-FRECPX, FRSQRTE, and FRSQRTS, which also want these effects.
-(This information is slightly less helpfully located, being
-scattered across A1.5.6.1, A1.5.6.2, A1.5.8, A1.5.9.1.)
+## Root cause
 
-There might be a clearer name than FPST_AH, but I couldn't
-think of one at the time. We do at least document all this
-in the comment in cpu.h.
+In input_linux_complete(), the initialization order is:
 
-thanks
--- PMM
+     input_linux_toggle_grab(il);           /* initial grab */
+     QTAILQ_INSERT_TAIL(&inputs, il, next); /* insert into list */
+
+When the keyboard is declared before the mouse in the VM configuration,
+the keyboard initializes first: it grabs and inserts itself into inputs.
+At this point, the mouse is not yet in the list.
+
+The exact failure condition was confirmed via strace: when keyboard is
+declared before mouse, toggling only produces EVIOCGRAB(0) on the
+keyboard fd. The mouse fd receives no ioctl at all, meaning it is never
+reached by the propagation loop in input_linux_toggle_grab().
+
+Declaring the mouse before the keyboard in the XML fixes the issue:
+both fds correctly receive EVIOCGRAB(0) on toggle.
+
+The exact reason why insertion order affects runtime toggle propagation
+requires further investigation, but the fix is confirmed to work.
+
+## Suggested fix
+
+In input_linux_complete(), insert the device into inputs BEFORE calling
+input_linux_toggle_grab(), so that all devices are visible to each other
+during initialization:
+
+     /* current (buggy) */
+     input_linux_toggle_grab(il);
+     QTAILQ_INSERT_TAIL(&inputs, il, next);
+
+     /* suggested fix */
+     QTAILQ_INSERT_TAIL(&inputs, il, next);
+     input_linux_toggle_grab(il);
+
+## Steps to reproduce
+
+1. Configure two input-linux evdev devices in libvirt XML:
+    - keyboard: grab='all', grabToggle='ctrl-ctrl', repeat='on'
+    - mouse: no grab_all
+    - keyboard declared BEFORE mouse in XML
+2. Start VM
+3. Press left ctrl + right ctrl to toggle
+4. Keyboard returns to host, mouse stays grabbed by VM
+
+## Expected behavior
+
+Toggle releases both keyboard and mouse simultaneously.
+
+## Actual behavior
+
+Only keyboard is toggled. Mouse remains permanently grabbed by VM.
+Confirmed via strace: only fd for keyboard receives EVIOCGRAB(0),
+mouse fd receives no ioctl at toggle time.
+
+## Environment
+
+- QEMU version: 10.0.8 (Debian 1:10.0.8+ds-0+deb13u1+b2)
+- Host OS: Debian Trixie
+- libvirt version: 11.3.0
+- Host CPU: AMD (iGPU), Guest GPU: NVIDIA GeForce RTX 5060 (PCIe 
+passthrough)
+
+|
+
+|Regards|
+
+|Sébastien Brat|
+
+--------------ECcRVrFPwlT9vaULTTBTAxUu
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <code>Hello,<br>
+      <br>
+      I found a bug in ui/input-linux.c affecting evdev grab toggle
+      propagation<br>
+      between keyboard and mouse devices.<br>
+      <br>
+      ## Summary<br>
+      <br>
+      When using evdev passthrough with input-linux objects, the grab
+      toggle<br>
+      (e.g. ctrl-ctrl) only releases the keyboard but not the mouse,
+      leaving<br>
+      the mouse permanently grabbed by the VM.<br>
+      <br>
+      ## Root cause<br>
+      <br>
+      In input_linux_complete(), the initialization order is:<br>
+      <br>
+          input_linux_toggle_grab(il);           /* initial grab */<br>
+          QTAILQ_INSERT_TAIL(&amp;inputs, il, next); /* insert into list
+      */<br>
+      <br>
+      When the keyboard is declared before the mouse in the VM
+      configuration,<br>
+      the keyboard initializes first: it grabs and inserts itself into
+      inputs.<br>
+      At this point, the mouse is not yet in the list.<br>
+      <br>
+      The exact failure condition was confirmed via strace: when
+      keyboard is<br>
+      declared before mouse, toggling only produces EVIOCGRAB(0) on the<br>
+      keyboard fd. The mouse fd receives no ioctl at all, meaning it is
+      never<br>
+      reached by the propagation loop in input_linux_toggle_grab().<br>
+      <br>
+      Declaring the mouse before the keyboard in the XML fixes the
+      issue:<br>
+      both fds correctly receive EVIOCGRAB(0) on toggle.<br>
+      <br>
+      The exact reason why insertion order affects runtime toggle
+      propagation<br>
+      requires further investigation, but the fix is confirmed to work.<br>
+      <br>
+      ## Suggested fix<br>
+      <br>
+      In input_linux_complete(), insert the device into inputs BEFORE
+      calling<br>
+      input_linux_toggle_grab(), so that all devices are visible to each
+      other<br>
+      during initialization:<br>
+      <br>
+          /* current (buggy) */<br>
+          input_linux_toggle_grab(il);<br>
+          QTAILQ_INSERT_TAIL(&amp;inputs, il, next);<br>
+      <br>
+          /* suggested fix */<br>
+          QTAILQ_INSERT_TAIL(&amp;inputs, il, next);<br>
+          input_linux_toggle_grab(il);<br>
+      <br>
+      ## Steps to reproduce<br>
+      <br>
+      1. Configure two input-linux evdev devices in libvirt XML:<br>
+         - keyboard: grab='all', grabToggle='ctrl-ctrl', repeat='on'<br>
+         - mouse: no grab_all<br>
+         - keyboard declared BEFORE mouse in XML<br>
+      2. Start VM<br>
+      3. Press left ctrl + right ctrl to toggle<br>
+      4. Keyboard returns to host, mouse stays grabbed by VM<br>
+      <br>
+      ## Expected behavior<br>
+      <br>
+      Toggle releases both keyboard and mouse simultaneously.<br>
+      <br>
+      ## Actual behavior<br>
+      <br>
+      Only keyboard is toggled. Mouse remains permanently grabbed by VM.<br>
+      Confirmed via strace: only fd for keyboard receives EVIOCGRAB(0),<br>
+      mouse fd receives no ioctl at toggle time.<br>
+      <br>
+      ## Environment<br>
+      <br>
+      - QEMU version: 10.0.8 (Debian 1:10.0.8+ds-0+deb13u1+b2)<br>
+      - Host OS: Debian Trixie<br>
+      - libvirt version: 11.3.0<br>
+      - Host CPU: AMD (iGPU), Guest GPU: NVIDIA GeForce RTX 5060 (PCIe
+      passthrough)<br>
+      <br>
+    </code>
+    <p><code>Regards</code></p>
+    <p><code>Sébastien Brat</code></p>
+  </body>
+</html>
+
+--------------ECcRVrFPwlT9vaULTTBTAxUu--
 
