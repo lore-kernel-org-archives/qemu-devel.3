@@ -4,74 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91650CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Sat, 23 May 2026 12:40:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F1C8CD5BAC
+	for <qemu-devel@archiver.kernel.org>; Sat, 23 May 2026 12:50:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQldS-0005J8-E8; Sat, 23 May 2026 08:39:23 -0400
+	id 1wQlnM-0007gz-QS; Sat, 23 May 2026 08:49:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wQldQ-0005Ik-9F
- for qemu-devel@nongnu.org; Sat, 23 May 2026 08:39:20 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wQldM-0004o7-Jq
- for qemu-devel@nongnu.org; Sat, 23 May 2026 08:39:20 -0400
-Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
- [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64NCcZTh019725
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 23 May 2026 21:38:57 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=BNRW/j5h0rMkK1BTmEvIbZjkQ08T8F05tW1RreTz0tA=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1779539938; v=1;
- b=ZgiEFbL1rnbgvfdwdJF1uPKU7kZ4UCxPzToyta0TI7hTSFJW6xCqcAaYn7oHyZg4
- UyCnnUhkZyUaerQbpmWIHl327TCcOMRDMKDGmAS7DfGdTQAUbKwLxtz5DJgFI+KD
- 7DejTFjzNfgKg9cAHlfrsgSY3P2S5uDXQJBh5q04I3JtwlZlweFbd7X53f1vGWub
- EPEk1jJkttRByOD8Ef2fZQNS/C2eGET9UkVnFIp6LsNAktyKPAhbEe/vzyOhE3p5
- 7RLSyIwlRCNNMXEcaHFPA02JP+S9MCQTsDDIgXY0F+/obRr3i7aIDn20fHTASJW+
- fbC3pvEc1gLSmQgqvho2WA==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 23 May 2026 21:38:28 +0900
-Subject: [PATCH] system/physmem: Synchronize ram_list accesses
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260523-tsan-v1-1-07d5eb9dcaa2@rsg.ci.i.u-tokyo.ac.jp>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDUyMD3ZLixDzdZLM0w8RESwNLIFYCKi0oSk3LrAAbEx0L4ReXJmWlJpe
- A9CrV1gIA7RleJWgAAAA=
-X-Change-ID: 20260520-tsan-c6f1aa909a90
+ (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1wQdFW-0000Kb-DG
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 23:42:06 -0400
+Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1wQdFU-00011M-PF
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 23:42:06 -0400
+Received: by mail-lf1-x12a.google.com with SMTP id
+ 2adb3069b0e04-5a877510541so9125781e87.2
+ for <qemu-devel@nongnu.org>; Fri, 22 May 2026 20:42:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1779507722; x=1780112522; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=qFVAp6EFQDNV6TsONcqYfIVwYqHKqy58kia4nBKKXNM=;
+ b=T7XH/1t5anCslUy6Zv50sMARLlfO8E2ycxL6T/TMd8y6qepKNQUK0YbF/cvTu/1Diz
+ D3dNU+Kcqmg/sGHlznEv3Dfj21bEYaphyGMFQV4xYSlh/eDwUa682xmku8JPrrKAYi1J
+ mqnPTjb+2kDOejtMXZ1dh5MW5YMXfJ9omDverdSyPPNKIpaFJZtmogsyNC+zjpIAWEYt
+ 1ymlaPMHV5B098/uJvuJLsu6McK5EsliKrxTNnqfXUQMi+ZMR//Lpbg82EWF2KTHEJ2N
+ 7qlSKMuVvSKFXGK1ExHxSGvnOfQDvhOwTF/g3hAIeNAzPNXJRX/Vcb2GAkfdsFdEtejy
+ Blbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779507722; x=1780112522;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qFVAp6EFQDNV6TsONcqYfIVwYqHKqy58kia4nBKKXNM=;
+ b=GcNZ94lW34wT1ucNZ/9HtbA2r6r78aYDI+TcwD5pZhrlwKzHzmy8gtetVCOD5I8P5X
+ N/ndxjuIfMdwsUec4NU3N7D3SUgGhK7BNGXPA/V61jMaAAcNlDvfi/q7xlJ3qBaR3d8Q
+ 6jvM4MMSFQGACDwp0EvmsuzZrv53VJrOpNCGZUe3tO4mR5dNsQuAJ8ImS7eRP1XRpfaA
+ X6os48iug+5Q2vnR3X7FgHbqi2NTk4jlJOqUpnhzFpyeq14T7WxLch51p9n1fgS/pfBC
+ +5zZ9ZICm+58U7nTm8b386sQo7yJZlBptinYdFLz2Z13EtpVrM0Zx761tb/Lx6lRWBs2
+ dc4Q==
+X-Gm-Message-State: AOJu0YxHLZsdXjPElOWh/+y4DPgvvqP+k6QqGs4aAz5Pr5dRsliPiIlQ
+ sOppOpfONAEDx0HFCApaJqIBzVYRB7d2lP1mZu7hH352vZ9pl2q1I9IO6GeTDnpl2p8=
+X-Gm-Gg: Acq92OECibYnkoL1hD+0nnLx8VNdiqvna7euH6jjTYPdTSmV+YmgRCI7vGNMj04349R
+ tPl6Bm6ZWG7P+6rN5zyyeet6CTf8MR60z27mDr68Vd1vKo2K5JhDjpXfO2bsynohtOOue+pPGv6
+ RsYU62fED6rr735gcOyF9PQgx+2xlhmXC8B2RWMyVhvdSAqWfqjZz1bnL9RlOwiMBvjwuj1GyEt
+ EKrotOwOOVUJthAPrn3sjqUfOKxrGf13I2vfxhBabavdXdl9rkzSxMkwpfHBrgDSATN45P91LYj
+ 32ooe71R5AyaMQ4JaKNqw5wJHlZGwc/PcanpYEDOSz9pJxNhNWtEC60blVzRTayoLaJNo+R9+7n
+ rNmOPK5v2wH+A6dHW5e2XUzU7mYOSy45G8f1lCpfPPNacI6OJdH3OS+k8gurPYCW45ck1ujmICQ
+ 8DB6/kPpMqXzcX8MgRZ3hKQbtTErgUBZlWupVKxUr/
+X-Received: by 2002:a05:6512:1321:b0:5a8:7f30:609f with SMTP id
+ 2adb3069b0e04-5aa3238b3edmr1663941e87.10.1779507722086; 
+ Fri, 22 May 2026 20:42:02 -0700 (PDT)
+Received: from xpahos-osx.yandex.net ([2a02:6bf:8080:c2d::1:2b])
+ by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-5aa32cb36f6sm848685e87.4.2026.05.22.20.42.01
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 22 May 2026 20:42:01 -0700 (PDT)
+From: Alexander Gryanko <xpahos@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S . Tsirkin" <mst@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.16-dev-16047
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6748;
- i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=qM226VHWLt/mqFKbQrdKwTtUT2AoPl19zgThVczH9hc=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ5bg/Id3XzBtu/jpb71jn2vv5bpc9y+W35wKv6vcNlp3O
- SprydKVHaUsDGJcDLJiiiwpRbu5NaJrPxUmxLfAzGFlAhnCwMUpABNZUsPwP7OpJu37cvPQ6M8/
- PrNsE6nYa/m53CjMmDfhOJvyRWY1GYb/ATvzp4p1L5qw6cblBQtTI2P4J6R8XjR7Y+Wc9sRNurf
- 6eQA=
-X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
- fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>, Alexander Gryanko <xpahos@gmail.com>
+Subject: [PATCH 0/3] hw/smbios: Add dedicated handle range for Type 8 tables
+Date: Sat, 23 May 2026 06:41:55 +0300
+Message-Id: <20260523034158.57487-1-xpahos@gmail.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
+ envelope-from=xpahos@gmail.com; helo=mail-lf1-x12a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sat, 23 May 2026 08:49:35 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,175 +99,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alex Bennée reported a ThreadSanitizer warning about a plain concurrent
-access to ram_list [1]. Ensure the concurrent accesses to ram_list are
-properly synchronized with atomic accesses, mutexes, or RCU.
+This is a continuation of the work originally proposed by Felix Wu [1],
+which changed the SMBIOS Type 8 handle base unconditionally. As Igor
+Mammedov pointed out in review, an unconditional change would break
+live migration between hosts running different QEMU versions.
+This series addresses the review feedback by:
+- Using machine-type versioning (pc-*-11.2) to opt in to the new
+  behavior, preserving T0_BASE for older machine types
+- Adding a PCMachineClass field to control the setting per machine type
+- Adding tests for both new and compat machine versions
+[1] https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg03208.html
 
-First, the plain assignments of ram_list.mru_block are replaced with
-qatomic_set(). A comment in qemu_get_ram_block() explains why the
-ordering requirement is relaxed, but it still needs to be atomically
-accessed. include/qemu/atomic.h says:
+Alexander Gryanko (3):
+  hw/i386/pc: Introduce 11.2 machine type for SMBIOS type 8 base
+    migration
+  hw/smbios: Add dedicated handle range for Type 8 tables
+  tests/qtest: Add SMBIOS Type 8 handle base tests
 
-> The C11 memory model says that variables that are accessed from
-> different threads should at least be done with __ATOMIC_RELAXED
-> primitives or the result is undefined. Generally this has little to
-> no effect on the generated code but not using the atomic primitives
-> will get flagged by sanitizers as a violation.
+ hw/core/machine.c              |  3 ++
+ hw/i386/fw_cfg.c               |  1 +
+ hw/i386/pc.c                   |  3 ++
+ hw/i386/pc_piix.c              | 16 +++++++-
+ hw/i386/pc_q35.c               | 16 +++++++-
+ hw/smbios/smbios.c             | 10 ++++-
+ include/hw/core/boards.h       |  3 ++
+ include/hw/firmware/smbios.h   |  1 +
+ include/hw/i386/pc.h           |  4 ++
+ tests/qtest/bios-tables-test.c | 70 +++++++++++++++++++++++++++++++++-
+ 10 files changed, 121 insertions(+), 6 deletions(-)
 
-Second, ram_list.version accesses are replaced with atomic operations
-or protected with a mutex. Unlike ram_list.mru_block, ram_list.version
-has tighter ordering requirements for one of its goals: ensuring that
-the reader-held rs->last_seen_block value is invalidated whenever a RAM
-block is reclaimed between two RCU reader critical sections. Below are
-steps a reader and an updater follow:
-
-Reader:
-
-R-1. Enter the first RCU read-side critical section:
-R-1-1. rs->last_version = qatomic_load_acquire(&ram_list.version)
-R-1-2. rs->last_seen_block = an element of ram_list.blocks
-R-2. Enter the second RCU read-side critical section:
-R-2-1. if (qatomic_read(&ram_list.version) != rs->last_version)
-R-2-2.     rs->last_seen_block = NULL
-
-Updater:
-
-W-1. Enter a ram_list.mutex critical section
-W-1-1. Update ram_list.blocks
-W-1-2. qatomic_store_release(&ram_list.version, ram_list.version + 1)
-W-2. Enter another ram_list.mutex critical section
-W-2-1. QLIST_REMOVE_RCU(block, next)
-W-2-2. qatomic_store_release(&ram_list.version, ram_list.version + 1)
-W-2-3. call_rcu(block, reclaim_ramblock, rcu)
-
-W-1-2 represents the write observed by R-1-1.
-
-ram_list.version is read non-atomically on the update side because the
-update side is serialized with ram_list.mutex. The other ram_list
-accesses in these steps are reasoned about in two cases.
-
-When the grace period of W-2-3 contains R-2:
-    qatomic_load_acquire() at R-1-1 and qatomic_store_release() at W-1-2
-    enforce the following ordering:
-        W-1-1 -> W-1-2 -> R-1-1 -> R-1-2
-    The value of ram_list.blocks stored by W-1-1 or a newer value that
-    was loaded by R-1-2 is still valid because of the grace period.
-
-When the grace period of W-2-3 ends before R-2:
-    call_rcu() at W-2-3 and the read-side critical section at R-2 ensure
-    the following ordering:
-        W-2-2 -> W-2-3 -> the grace period -> R-2 -> R-2-1
-    The value of ram_list.version stored by W-2-2 or a newer value that
-    was loaded by R-2-1 differs from rs->last_version and the reader
-    invalidates rs->last_seen_block.
-
-Together, these steps ensure that rs->last_seen_block is invalidated
-whenever necessary. With added atomic operations, pre-existing memory
-barriers are no longer necessary and are removed.
-
-Any other ram_list accesses are already properly synchronized.
-
-[1] https://lore.kernel.org/qemu-devel/878q9fbmap.fsf@draig.linaro.org/
-
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
- migration/ram.c  | 10 +++++-----
- system/physmem.c | 16 +++++++---------
- 2 files changed, 12 insertions(+), 14 deletions(-)
-
-diff --git a/migration/ram.c b/migration/ram.c
-index fc38ffbf8af1..6da24d725861 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -2495,7 +2495,10 @@ static void ram_state_reset(RAMState *rs)
- 
-     rs->last_seen_block = NULL;
-     rs->last_page = 0;
--    rs->last_version = ram_list.version;
-+
-+    /* Read version before ram_list.blocks */
-+    rs->last_version = qatomic_load_acquire(&ram_list.version);
-+
-     rs->xbzrle_started = false;
- 
-     ram_page_hint_reset(&rs->page_hint);
-@@ -3270,13 +3273,10 @@ static int ram_save_iterate(QEMUFile *f, void *opaque)
-      */
-     WITH_QEMU_LOCK_GUARD(&rs->bitmap_mutex) {
-         WITH_RCU_READ_LOCK_GUARD() {
--            if (ram_list.version != rs->last_version) {
-+            if (qatomic_read(&ram_list.version) != rs->last_version) {
-                 ram_state_reset(rs);
-             }
- 
--            /* Read version before ram_list.blocks */
--            smp_rmb();
--
-             ret = rdma_registration_start(f, RAM_CONTROL_ROUND);
-             if (ret < 0) {
-                 qemu_file_set_error(f, ret);
-diff --git a/system/physmem.c b/system/physmem.c
-index 7bcbf8757361..9e1ac13e8259 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -839,12 +839,12 @@ found:
-     /* It is safe to write mru_block outside the BQL.  This
-      * is what happens:
-      *
--     *     mru_block = xxx
-+     *     qatomic_set(&mru_block, xxx)
-      *     rcu_read_unlock()
-      *                                        xxx removed from list
-      *                  rcu_read_lock()
-      *                  read mru_block
--     *                                        mru_block = NULL;
-+     *                                        qatomic_set(&mru_block, NULL);
-      *                                        call_rcu(reclaim_ramblock, xxx);
-      *                  rcu_read_unlock()
-      *
-@@ -852,7 +852,7 @@ found:
-      * when it was placed into the list.  Here we're just making an extra
-      * copy of the pointer.
-      */
--    ram_list.mru_block = block;
-+    qatomic_set(&ram_list.mru_block, block);
-     return block;
- }
- 
-@@ -2260,11 +2260,10 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-     } else { /* list is empty */
-         QLIST_INSERT_HEAD_RCU(&ram_list.blocks, new_block, next);
-     }
--    ram_list.mru_block = NULL;
-+    qatomic_set(&ram_list.mru_block, NULL);
- 
-     /* Write list before version */
--    smp_wmb();
--    ram_list.version++;
-+    qatomic_store_release(&ram_list.version, ram_list.version + 1);
-     qemu_mutex_unlock_ramlist();
- 
-     physical_memory_set_dirty_range(new_block->offset,
-@@ -2608,10 +2607,9 @@ void qemu_ram_free(RAMBlock *block)
-     name = cpr_name(block->mr);
-     cpr_delete_fd(name, 0);
-     QLIST_REMOVE_RCU(block, next);
--    ram_list.mru_block = NULL;
-+    qatomic_set(&ram_list.mru_block, NULL);
-     /* Write list before version */
--    smp_wmb();
--    ram_list.version++;
-+    qatomic_store_release(&ram_list.version, ram_list.version + 1);
-     call_rcu(block, reclaim_ramblock, rcu);
-     qemu_mutex_unlock_ramlist();
- }
-
----
-base-commit: e89049b3ba5f1f0468bc0d294173345597514a1b
-change-id: 20260520-tsan-c6f1aa909a90
-
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+-- 
+2.39.5 (Apple Git-154)
 
 
