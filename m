@@ -4,101 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73BBECD5BB8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AD5ECD5BC2
 	for <qemu-devel@archiver.kernel.org>; Sat, 23 May 2026 16:28:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQpCW-0007Zs-Ft; Sat, 23 May 2026 12:27:48 -0400
+	id 1wQpCa-0007ee-Dt; Sat, 23 May 2026 12:27:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wQpCV-0007Xt-Ed
- for qemu-devel@nongnu.org; Sat, 23 May 2026 12:27:47 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wQpCY-0007e5-W8
+ for qemu-devel@nongnu.org; Sat, 23 May 2026 12:27:51 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wQpCT-0001S2-2K
- for qemu-devel@nongnu.org; Sat, 23 May 2026 12:27:47 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1wQpCX-0001VD-Co
+ for qemu-devel@nongnu.org; Sat, 23 May 2026 12:27:50 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64NFtDYA2359358; Sat, 23 May 2026 16:27:43 GMT
+ 64NCDjFK3074604
+ for <qemu-devel@nongnu.org>; Sat, 23 May 2026 16:27:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=vhkYytgRdiywd75vR
- Uh23erAQgaAokMnOUSIKthfAcE=; b=Un6xzXTp853cOkck7kwg8aapLWI3eCCp9
- wDbOjcB08hnv6PufU4Dm8Or665jt8tKFFic7dI+rWAcA2D7IN+JqbhH+eG9s0D/s
- GGvVtgZ5FFFm3UVnG2N3jcxGJgMzEfXvUCwufVpevgNbT0chrVy7vM6tUlOA/NA9
- TLYLge6OIR12gNKhim9yxaS5wBYsbqylHLhqLMJ/VNK7ehOSgy1LZJJZQGjIQ6Pa
- yOMEM98gMr/UWLrft/aRhuBP1WZDnbT6Q5Ohn5s68uV+l5kPhtBlgTd4PoL0anfX
- fyQxi0ObmhArkRFqaWdMiitvwski0mfxPoJpqBNvgQk5R0lP9W0QQ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eb4s21gu7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 23 May 2026 16:27:42 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64NG9FEJ001376;
- Sat, 23 May 2026 16:27:41 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4eb46bsr44-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 23 May 2026 16:27:41 +0000 (GMT)
+ :mime-version:references:subject:to; s=pp1; bh=R5ZwBQsZP8XD2Xa2W
+ QTE+zUweiw4Y2Jp2/gIutjJsDI=; b=CHW1qFEnT/e1/c893NHI9664QI27XP7Ua
+ czxRYRbhZyZa0OxuJw1Nnqs50f+a+bYqpn0DSny4fbHpLb4nRPpbN6BN0ZEpykLW
+ 64N5gEYU9o/gFmV0uMTzH+tNgUxC1YMJKASFrQTCi4IwLZ6dnvqXHVjJbWipVIkb
+ 7xDtWqL++qqDAPsuTN5sqSd82NVYXD6Nfkhb1SYyAuB0sC/F2RZAV88zYSG6Y/vO
+ CIKFdJjHN8mG69Wgoccl7QokuoL8VHYQJMHXisvTkmYnwpnZE502wcamwCdA6AJP
+ u+ZzSua0AL8+QuI1wNR34I/q9Wbk7CC46QmJchtfcyo4Bv3TvLBcA==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eb4npscbu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Sat, 23 May 2026 16:27:48 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64NGO4ea022702
+ for <qemu-devel@nongnu.org>; Sat, 23 May 2026 16:27:47 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4eb480hrh7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Sat, 23 May 2026 16:27:47 +0000 (GMT)
 Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
  [10.20.54.102])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64NGRcMl54133214
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64NGRhaZ59572564
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 23 May 2026 16:27:38 GMT
+ Sat, 23 May 2026 16:27:43 GMT
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 69C1B20043;
- Sat, 23 May 2026 16:27:38 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id ACE5E2004D;
+ Sat, 23 May 2026 16:27:43 +0000 (GMT)
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1138D20040;
- Sat, 23 May 2026 16:27:37 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 7DA4D20043;
+ Sat, 23 May 2026 16:27:42 +0000 (GMT)
 Received: from Mac.com (unknown [9.124.217.135])
  by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Sat, 23 May 2026 16:27:36 +0000 (GMT)
+ Sat, 23 May 2026 16:27:42 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: Shivang Upadhyay <shivangu@linux.ibm.com>,
- Aditya Gupta <adityag@linux.ibm.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 2/5] ppc/pnv: Fix uninitialized MpiplProcDumpArea struct
-Date: Sat, 23 May 2026 21:57:21 +0530
-Message-ID: <20260523162724.95229-3-harshpb@linux.ibm.com>
+Cc: Aditya Gupta <adityag@linux.ibm.com>,
+ Amit Machhiwal <amachhiw@linux.ibm.com>,
+ Misbah Anjum N <misanjum@linux.ibm.com>
+Subject: [PULL 5/5] ppc/spapr: Make Power11 as default cpu for pseries
+Date: Sat, 23 May 2026 21:57:24 +0530
+Message-ID: <20260523162724.95229-6-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260523162724.95229-1-harshpb@linux.ibm.com>
 References: <20260523162724.95229-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: wWv0ijXGon0za1QPsZfm1zZPN4NdyZ9d
-X-Authority-Analysis: v=2.4 cv=Sq2gLvO0 c=1 sm=1 tr=0 ts=6a11d57e cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Proofpoint-GUID: WJ6m3tSxOxHcHcvrubhFIMhL6uJtRd0B
+X-Proofpoint-ORIG-GUID: WJ6m3tSxOxHcHcvrubhFIMhL6uJtRd0B
+X-Authority-Analysis: v=2.4 cv=QIJYgALL c=1 sm=1 tr=0 ts=6a11d584 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=NGcC8JguVDcA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=KKAkSRfTAAAA:8 a=2nFqyGsmG02ODFuZbPAA:9
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIzMDE2NSBTYWx0ZWRfXybkib6h23i/K
- G2dmpDf/NEHwIITzg27S+PirVB+SeLMKvGG+hxerviSW5OVZGdIOQu79cqiceQQg8lRHlPbP+jT
- 5i2uTHzfWVgLeCyLkKVYkdIycGwhP6SlUr9G1Ecv/3OTD+6qTxwD9Q/ykanQJcnOdrC7nJKD8LM
- JF6IhLF7z04c6GYNpnF6UjBvgPfsBp6MXlNMQ7kdHnV/fQLyrpah4bEJAjFFk/Ir1RJNzbx9jdx
- Q16CRSK6DWJ4ybGSuWoJ59iWNvrbvblbPAdJEvRxBQyYT0zU+M9AL8IIwWAxvwsw+1i5edpolpn
- 1h/nSfHMq92T1I1LbgYTpWspvmJA2ZpvjdZXLhXfn2orF109M6Jyt0pzxzq3C/iTCQIjyQeWvgw
- GMgIWTcScykW0d7zZcJN94gcSzyprKcPjD1ZC86DXHa0UymWaxaAMAj2XXzlPCmRORAL2cRPOb9
- kPy5DH8NTkRRfm/HFHg==
-X-Proofpoint-ORIG-GUID: wWv0ijXGon0za1QPsZfm1zZPN4NdyZ9d
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=ao_pOPHRJG_XwDkW-DoA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIzMDE2NSBTYWx0ZWRfX4vMAolQpru5T
+ ChWac1AiBNiiQgzbBFyIyZusvt++iOWoL1w0rGKQWnS7aLlaGnVuseriWKMcnrEFz3SaSKCMzML
+ pWEHb324utWQrv5N7THB18gkriztqvlB0eA0yJ1R0ZaDSYD8IR1MX815q/ZS7nqu44JTkk3ZkE9
+ knRqmw3lNt+dLQZbZEY/HxVVbVDiMLCfkwEu1/bOSeHRMlFDf58m5vZDiqBHozNvE8uBMXdFLMe
+ FQuvOisrxmRSsyQeXulZlgDVmnaEP36/JdvpFblvTpK/4aze3JGlGmwYZFjWRmf/mnu/PFaNCec
+ tCLh++dr9gLAQG6MhEjV1TDyiz9HQSORGzaOC+8wEIMbaQ6DltlOt3GmEfvYZW8FIFQYT7ZxVxL
+ t04IX6TU4FrESwMjq1g4qY4JJ2NLyib1LytMHjJhks3j1O5C/yQuJwV7KkKit1vm8Ne7o0hi3FC
+ zFnvk9hER3f3273g5pg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-23_05,2026-05-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 priorityscore=1501 phishscore=0 impostorscore=0 malwarescore=0
- lowpriorityscore=0 adultscore=0 clxscore=1015 suspectscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605230165
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ clxscore=1015 priorityscore=1501 impostorscore=0 malwarescore=0
+ suspectscore=0 phishscore=0 bulkscore=0 adultscore=0 spamscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
+ definitions=main-2605230165
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -121,50 +122,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
+From: Aditya Gupta <adityag@linux.ibm.com>
 
-Fix Coverity CID 1658041 by using designated initializers to prevent
-uninitialized memory from being written to guest.
+With Power11 being the newest supportied Power processor in QEMU, and
+sufficiently tested, make Power11 as default CPU type for pseries
+machine
 
-Cc: Aditya Gupta <adityag@linux.ibm.com>
-Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>"
-Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260508142029.624039-1-shivangu@linux.ibm.com
+Retain Power10 as default CPU for pseries-11.0 and older versions
+
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Tested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Tested-by: Misbah Anjum N <misanjum@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260521200844.1449023-3-adityag@linux.ibm.com
+[harshpb: commit title, Amit's email updated]
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- hw/ppc/pnv.c | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ hw/ppc/spapr.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 8306754d9a..6a45852174 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -838,18 +838,10 @@ static void pnv_reset(MachineState *machine, ResetType type)
-          * crash
-          */
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index d40af312fa..191f7431bd 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -4644,7 +4644,7 @@ static void spapr_machine_class_init(ObjectClass *oc, const void *data)
+     hc->unplug_request = spapr_machine_device_unplug_request;
+     hc->unplug = spapr_machine_device_unplug;
  
--        MpiplProcDumpArea proc_area;
--
--        proc_area.version = PROC_DUMP_AREA_VERSION_P9;
--        proc_area.thread_size = cpu_to_be32(sizeof(MpiplPreservedCPUState));
--
--        /* These are to be allocated & assigned by the firmware */
--        proc_area.alloc_addr = 0;
--        proc_area.alloc_size = 0;
--
--        /* These get assigned after crash, when QEMU preserves the registers */
--        proc_area.dest_addr = 0;
--        proc_area.act_size = 0;
-+        MpiplProcDumpArea proc_area = {
-+            .version = PROC_DUMP_AREA_VERSION_P9,
-+            .thread_size = cpu_to_be32(sizeof(MpiplPreservedCPUState)),
-+        };
+-    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power10_v2.0");
++    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power11_v2.0");
+     mc->has_hotpluggable_cpus = true;
+     mc->nvdimm_supported = true;
+     smc->resize_hpt_default = SPAPR_RESIZE_HPT_ENABLED;
+@@ -4777,6 +4777,7 @@ static void spapr_machine_11_0_class_options(MachineClass *mc)
+ {
+     spapr_machine_11_1_class_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_11_0, hw_compat_11_0_len);
++    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power10_v2.0");
+ }
  
-         cpu_physical_memory_write(PROC_DUMP_AREA_OFF, &proc_area,
-                 sizeof(proc_area));
+ DEFINE_SPAPR_MACHINE(11, 0);
 -- 
 2.52.0
 
