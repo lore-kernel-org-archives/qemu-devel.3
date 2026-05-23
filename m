@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EC01CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Sat, 23 May 2026 12:08:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC4D1CD5BAC
+	for <qemu-devel@archiver.kernel.org>; Sat, 23 May 2026 12:08:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQl97-0007Fh-AN; Sat, 23 May 2026 08:08:01 -0400
+	id 1wQl9h-0007sc-Lq; Sat, 23 May 2026 08:08:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wQl92-0007FH-UQ
- for qemu-devel@nongnu.org; Sat, 23 May 2026 08:07:56 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wQl9f-0007sM-Vx
+ for qemu-devel@nongnu.org; Sat, 23 May 2026 08:08:36 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wQl91-00031m-D1
- for qemu-devel@nongnu.org; Sat, 23 May 2026 08:07:56 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4891d7164ddso41254595e9.3
- for <qemu-devel@nongnu.org>; Sat, 23 May 2026 05:07:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wQl9e-0003Qr-FZ
+ for qemu-devel@nongnu.org; Sat, 23 May 2026 08:08:35 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-449de065cb3so7830836f8f.2
+ for <qemu-devel@nongnu.org>; Sat, 23 May 2026 05:08:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779538074; x=1780142874; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779538112; x=1780142912; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Tk2R8mJeqdvDngAuCxHvjR4qZlArO8FppQmogPkTrUY=;
- b=uILms3Yxx+HZigtnh3+80LoEiEvn6SIdrInbxrmY41V5B+TjjJVAynh723jHaTKNL3
- 07kFWiiyS3Ulb7nwTMPqhWqDBhcoEV2WSmq6dSB+z1G5yhQDE0pv06UKZBvrsXoMnKjU
- NG/YKq/r/YmrzLc8O6PQB9owscW7wSphGdikyhK/6BdQReeRfZEFATMcnyE2mG8bXKY2
- F8n4zbBY+taquvRs0DjX3HXng0ga7CR7bPQFPrRHiC1zsXC9We9tPc+cEkRqh/l5yCU3
- 7o8nLQLm3YcZX/wxJDBijkKhHCSHCElyFerrkgQSgOLd0uLsU9Pk3FkxLWFngmH8zVBx
- Ac1w==
+ bh=HgeB1sVK1hGoZt+y/dgm7PUxj3bktAgARGILc58Myn0=;
+ b=hxzMI4MNwPuUdIJ/4w4dqixI+kfSAWMk0hVdBHxsFlb8gPTWFzkA0E7mR6UYW32jGl
+ Niv2v66KtsTwn5E1UQWMdHHbdo2DJAPmuHgYKOKYJ/VwfNu72di6+FEPe/dTaWRLSY0/
+ jmL+i7pK7okOl1z2LMAnDGTOM9miopVvf8QQC1YIISF6P54QnrB2PNrlz99noxRRBerN
+ ppcqmSlZrQWEPyW8tYWX+7wVFhbCtky8PkEJZDaodCSkmHUwbem7pwvhtukwGAJU2nMK
+ 0XE87/b7rAHVYhuGIJ8fxpCRoZfwPV4G3UDyIkA30ddRd5HPbEiQnFBU5t639WY1Fn02
+ u1HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779538074; x=1780142874;
+ d=1e100.net; s=20251104; t=1779538112; x=1780142912;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Tk2R8mJeqdvDngAuCxHvjR4qZlArO8FppQmogPkTrUY=;
- b=iUmGAsVUSPXCvUjNwbi8X5eNsxta9j6ib7k8ZDNMCXnpiay6JI0SAWlWu1mPgdNqcs
- qBV4a48dfMoeXLxT2HwoigjnugcS7fb9cBltrHvZfacRpt83/sZbcY9cWSToIaEtT93y
- gSeVx23dTpqK/18HkNaZfQa+bsGRLU0AnSHaEBdcl3SiMmb6r77+aDren8kTfH9ZBMtS
- H+RiM31P1S5rlmxSDs/9J03Ba4uv2yN0ne5jy3UnxnIDXfwXcm+X7YCF5AAzGee9352Z
- IzyxvU6UiueVGMDoIDKutm+nwNsXwChHOsiyn4Re84kK0HqGfE4uYZRcEyeAJpgEyLax
- tigg==
+ bh=HgeB1sVK1hGoZt+y/dgm7PUxj3bktAgARGILc58Myn0=;
+ b=czjN5uiz1NqMBEjux6xhWD7ZMVezdw/PdUJnfw0Ayr/llEIMNpdn8asLyfO2s0xayn
+ +nCmPYYTedaqBlguUo1L7Tb9Up/meNRplqxy4O6yRM+L00HAPAaBhn/vbZ70G7gHLJId
+ 5JAWPqW/LwsOZXKGrBBhvmCqajgxn8sbh26gHoeqeNcZbjXZFe+xJklOGWwCf34UwsmG
+ M/Hj+SN7tH0JyfWqIJHAXdOkpIan6d2bi85fT9UuqZ6qmXx6UiUkWFlQhgoewKaqXl7N
+ yWm/Wj/d4KlmNCLOQnqvSH8gOdTzuQqb16noFmgECXHCyy5EfhZ/v8hxaSSoAX7/Eyww
+ lcPQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9NenWdqKcKZq3FG9394HTZ164q9MYDw/34ijxI0o5CojsP+mZT+Oz9NnBom5UBhMxmMfn/DVKX0aVm@nongnu.org
-X-Gm-Message-State: AOJu0Yz6XSHsYWZZYM67D9/2bZPqhUSBcn4tLzjng8IRMI8/ncUeQKVu
- 8LrJFaENpnvBfqoNZlYXGVDIC8O8+ZoJlOOsKnAf/Vs+vQKsbmi8hcISKiw/GXBEeK1paYXLPO4
- /X0leb8faVA==
-X-Gm-Gg: Acq92OExy+7/hf8mDtGQi7+2McAnumyMM8dO/kom4gkpzZg7LFTAFZtUgvkq6WiPj/C
- GpK06S6XY1V3bIf9x9pT7y6bIUnjJrfpTTLsTGiJRuZIT48e3ijV/LB7a5r6FNOanW3Rlj1hnrd
- kjcaKHTwYJvvL98evQFVpHmNpcUXDMx8LBcb4dW4qjxwsb57xTwggQk/MNwl5ihafIRmP9gLX4t
- g00/omGt5Bop/MLzfpWzINsRk2fhSSSilfjwgzs7mTTSHv+W1f9uzznFMTOBzZhqkPuXNE8+WL+
- NApSu7jTKMduWMGsK6VyuQRiSRXG64aC6BcbE9nzFrBxCnqYceEamdi1/EIeKi2O9FDwRXqceZU
- kxnDS/yj/IZALEpVJC+E1GRosJuCV7PMb/sd4S9iIlV6GiumIq96IBzri1RJuypSoo9JCS5pNaK
- 48XvlO/c7s+Ls5Y3mL5Bbg61Fw6Bz407Qlm0lZKfTMWi04IGQ5xs/9RDiaPCG5wB0Q8jxMpgHo7
- C4=
-X-Received: by 2002:a05:600c:3e0c:b0:488:ac01:72de with SMTP id
- 5b1f17b1804b1-49042489c30mr128630615e9.5.1779538073703; 
- Sat, 23 May 2026 05:07:53 -0700 (PDT)
+ AFNElJ/j1PIeZ3HriuJ5mEFPtMJ7L2E8jO1bs5qW/N0dwSR4c1ZSaTKv7/vJLWUBEX0LrBMTz44whiV03Z+l@nongnu.org
+X-Gm-Message-State: AOJu0Yy/Md5lAKl5i7FeIIRPggzJNvAQXTM8Ieu66BQf3NCF5hW/Gfm+
+ BuBsXkVeYdLRaYkG+sktGgO8tDzlYCuFlG5nzasdXHHXx5NeD7CtmZmj+dfUgEezCPw=
+X-Gm-Gg: Acq92OH5sRRb5MfyY+ZePIY0NZ6FvHCLe7eumePezzRfmL3CIPz3zPU3Oc46/CBDPcO
+ o+5V8nYpUjfJ9ugy092FDWpndSrfOzMSSfMRGaM6lyyuhQloXAlRCD1YuCAw4bK6beSYyCC62ra
+ 69W0Jr8i4z/S7e0sElueC/52LsLduTcItdnBY/zD2GtBuAm+T43hNlHrhMwLtHMO7o8utDrimYz
+ vrshHYi4RPyudyxHIauCJhG/V2blqFgRFb/CHZnCPZhOS3g8ERPzaztYzIbTEklmEwVBWiOjmmG
+ hzNKSIXjRZ6YX1gD+LN7BgYV9PMusDTPC76hEq9shf1+S0KHC96V3/TEDQzSYgBZkGcs+bR9f2t
+ A586z+dmR6hKl2d06hF0842n+MIQR34+3FiTSsR7qoi1LpQ8vHREkNsTt3YCGpM4r5NN8tvEdsP
+ 5KLlETd2H3fSjMJ4+rNvHlX+U9u9k5tR3OiJyP9Hi8TtAHAcvvjvPF/6vRZ0lRXmOwmqj0r6Uoa
+ tw=
+X-Received: by 2002:a05:6000:2688:b0:452:712a:91e with SMTP id
+ ffacd0b85a97d-45eb3670343mr13617107f8f.2.1779538111809; 
+ Sat, 23 May 2026 05:08:31 -0700 (PDT)
 Received: from [192.168.1.117] (88-180-58-130.subs.proxad.net. [88.180.58.130])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6d4850dsm11197444f8f.17.2026.05.23.05.07.52
+ ffacd0b85a97d-45eb6d5ed84sm11509390f8f.31.2026.05.23.05.08.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 23 May 2026 05:07:52 -0700 (PDT)
-Message-ID: <49530161-7d87-4358-9331-a783169ccff8@linaro.org>
-Date: Sat, 23 May 2026 14:07:51 +0200
+ Sat, 23 May 2026 05:08:31 -0700 (PDT)
+Message-ID: <a8afacb0-e7d0-41c0-bc68-c86cf9401af2@linaro.org>
+Date: Sat, 23 May 2026 14:08:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 28/39] MAINTAINERS: Fix F: typo in "Dump"
+Subject: Re: [PATCH 26/39] MAINTAINERS: Fix F: typo in "pcf8574"
 Content-Language: en-US
 To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: pierrick.bouvier@oss.qualcomm.com,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Ani Sinha <anisinha@redhat.com>
+Cc: pierrick.bouvier@oss.qualcomm.com
 References: <20260521080511.999266-1-armbru@redhat.com>
- <20260521080511.999266-29-armbru@redhat.com>
+ <20260521080511.999266-27-armbru@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260521080511.999266-29-armbru@redhat.com>
+In-Reply-To: <20260521080511.999266-27-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,14 +104,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/5/26 10:05, Markus Armbruster wrote:
-> Fixes: 6d3da32c8b (MAINTAINERS: Add Windows dump to section "Dump", 2019-06-19)
-> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Cc: Ani Sinha <anisinha@redhat.com>
+On 21/5/26 10:04, Markus Armbruster wrote:
+> Fixes: 4cbb1513a2 (hw/gpio: introduce pcf8574 driver, 2024-03-11)
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
 >   MAINTAINERS | 2 +-
 >   1 file changed, 1 insertion(+), 1 deletion(-)
+
+Oops.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
