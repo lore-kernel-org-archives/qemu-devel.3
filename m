@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F1C8CD5BAC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40FB6CD5BBF
 	for <qemu-devel@archiver.kernel.org>; Sat, 23 May 2026 12:50:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wQlnM-0007gz-QS; Sat, 23 May 2026 08:49:36 -0400
+	id 1wQlnN-0007hD-UD; Sat, 23 May 2026 08:49:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1wQdFW-0000Kb-DG
- for qemu-devel@nongnu.org; Fri, 22 May 2026 23:42:06 -0400
+ (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1wQdG4-0000Oy-Bb
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 23:42:41 -0400
 Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1wQdFU-00011M-PF
- for qemu-devel@nongnu.org; Fri, 22 May 2026 23:42:06 -0400
+ (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1wQdG2-0001X1-Gb
+ for qemu-devel@nongnu.org; Fri, 22 May 2026 23:42:40 -0400
 Received: by mail-lf1-x12a.google.com with SMTP id
- 2adb3069b0e04-5a877510541so9125781e87.2
- for <qemu-devel@nongnu.org>; Fri, 22 May 2026 20:42:04 -0700 (PDT)
+ 2adb3069b0e04-5a40cfab24dso3312852e87.2
+ for <qemu-devel@nongnu.org>; Fri, 22 May 2026 20:42:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779507722; x=1780112522; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=qFVAp6EFQDNV6TsONcqYfIVwYqHKqy58kia4nBKKXNM=;
- b=T7XH/1t5anCslUy6Zv50sMARLlfO8E2ycxL6T/TMd8y6qepKNQUK0YbF/cvTu/1Diz
- D3dNU+Kcqmg/sGHlznEv3Dfj21bEYaphyGMFQV4xYSlh/eDwUa682xmku8JPrrKAYi1J
- mqnPTjb+2kDOejtMXZ1dh5MW5YMXfJ9omDverdSyPPNKIpaFJZtmogsyNC+zjpIAWEYt
- 1ymlaPMHV5B098/uJvuJLsu6McK5EsliKrxTNnqfXUQMi+ZMR//Lpbg82EWF2KTHEJ2N
- 7qlSKMuVvSKFXGK1ExHxSGvnOfQDvhOwTF/g3hAIeNAzPNXJRX/Vcb2GAkfdsFdEtejy
- Blbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779507722; x=1780112522;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1779507757; x=1780112557; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qFVAp6EFQDNV6TsONcqYfIVwYqHKqy58kia4nBKKXNM=;
- b=GcNZ94lW34wT1ucNZ/9HtbA2r6r78aYDI+TcwD5pZhrlwKzHzmy8gtetVCOD5I8P5X
- N/ndxjuIfMdwsUec4NU3N7D3SUgGhK7BNGXPA/V61jMaAAcNlDvfi/q7xlJ3qBaR3d8Q
- 6jvM4MMSFQGACDwp0EvmsuzZrv53VJrOpNCGZUe3tO4mR5dNsQuAJ8ImS7eRP1XRpfaA
- X6os48iug+5Q2vnR3X7FgHbqi2NTk4jlJOqUpnhzFpyeq14T7WxLch51p9n1fgS/pfBC
- +5zZ9ZICm+58U7nTm8b386sQo7yJZlBptinYdFLz2Z13EtpVrM0Zx761tb/Lx6lRWBs2
- dc4Q==
-X-Gm-Message-State: AOJu0YxHLZsdXjPElOWh/+y4DPgvvqP+k6QqGs4aAz5Pr5dRsliPiIlQ
- sOppOpfONAEDx0HFCApaJqIBzVYRB7d2lP1mZu7hH352vZ9pl2q1I9IO6GeTDnpl2p8=
-X-Gm-Gg: Acq92OECibYnkoL1hD+0nnLx8VNdiqvna7euH6jjTYPdTSmV+YmgRCI7vGNMj04349R
- tPl6Bm6ZWG7P+6rN5zyyeet6CTf8MR60z27mDr68Vd1vKo2K5JhDjpXfO2bsynohtOOue+pPGv6
- RsYU62fED6rr735gcOyF9PQgx+2xlhmXC8B2RWMyVhvdSAqWfqjZz1bnL9RlOwiMBvjwuj1GyEt
- EKrotOwOOVUJthAPrn3sjqUfOKxrGf13I2vfxhBabavdXdl9rkzSxMkwpfHBrgDSATN45P91LYj
- 32ooe71R5AyaMQ4JaKNqw5wJHlZGwc/PcanpYEDOSz9pJxNhNWtEC60blVzRTayoLaJNo+R9+7n
- rNmOPK5v2wH+A6dHW5e2XUzU7mYOSy45G8f1lCpfPPNacI6OJdH3OS+k8gurPYCW45ck1ujmICQ
- 8DB6/kPpMqXzcX8MgRZ3hKQbtTErgUBZlWupVKxUr/
-X-Received: by 2002:a05:6512:1321:b0:5a8:7f30:609f with SMTP id
- 2adb3069b0e04-5aa3238b3edmr1663941e87.10.1779507722086; 
- Fri, 22 May 2026 20:42:02 -0700 (PDT)
+ bh=dRL+/V54GamePco94OeayJHfwlemtYbdo+DlCdU3QsM=;
+ b=SYorEpKCjAGwsKHpQ3viFMePmr8T1ipwbAtnioPyeoENs3VKY5FMIRt5fm6uKt73/y
+ niYUEUQZYMEfwf9wpdsstJsrEjxXJ0KkQN+2UFt6MVXFWY8kfh5p29qcHBwsxD/yOJqs
+ 5SZzfl8qon52DZx7RZzdMr6UWfgvxx0QDeZaBjNM+2KySuXzLjBgVFI0sBYM/PUTMaug
+ YePcp2TLmWfNxZx1vPtMXYS7JRV5AT1GKUp/OhYRlJ5zuknEStYsRlSyWPvPk/erf4qD
+ mPocjDuW6rmHkomC2hz80/QW2SAEntzW6ez/vnHkbsVKw+VVHNonB2LXv+74u/BfSG1Y
+ VVfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779507757; x=1780112557;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=dRL+/V54GamePco94OeayJHfwlemtYbdo+DlCdU3QsM=;
+ b=csjENfHPN3A2i2FHvYBq2HwhjVIPt1sDhVQ1auHOIqJLtRr8QlMxe0K0CskiQFdpvO
+ oUJb5xM2Q8KQO90GeJiDen3MGKoLrs8eIVfwo7fmDf7Vywc8tBpy0ViFL/+h+i3rQKjk
+ T2iet//Xc7foc5PoACx9+W+5siE5feZ6ejSo027Fng9rs9lwPMg7q1JbiGmfmUqPyAZT
+ L6DWqve9jyjumBlxCNR/5FItKb2iTei28cJNwQZT6rVOfi5yqowNYsMUlLg71A2kW4lU
+ n5iUXapnwsVr0v9PQzOoFNummXVf9OXu7bbmXHSAhSYK5zZJFcHVC7enlczR4wekQmlu
+ IWAw==
+X-Gm-Message-State: AOJu0YzXMIi6/F6qe+xwf73Ax5Px2Z0N8A1u07mLEu09cv3BSmXSnADY
+ zBsJ3bZ/b67Bp49haH2WmIIYfRoauv+vuBGYxnEImUBGFtBF0k+TLBLRrnV4WSPa3jg=
+X-Gm-Gg: Acq92OEvggwUOy58mgUBueQ2JW/xtNWyGSey9i75Jj2Nl/hJsMKSGaQPtyj+G77XdBp
+ IiFQ5SMQlSUyZylp5ligQXlmFtajqzTxflHDw+RoRl0P+Zs/LyetdtMzsYvzecL83b9WGGvaEMA
+ 25ESHd5QFyyPzeJ/SgcJFW3mIFj6b/p/LwxWp8vGm/bOaAVpkLzcruZcOen4rA6xplE7n1tQICa
+ QxJHIf8XDI4DPjoyv+l9TsaLu2mhMnMUn6N2k61iGsQXRvm6PsGF7o1s+ZLxhvI2C1wFzRf5h1W
+ mLOflYS5y4uNUEDPiTh+k2rXsKurlLBqjA9TsotZuvDRhsPbAzng+6UvK/pmCqL4plW49eW0ith
+ r6Sd0F/sFUPG7wDq/JWRy0Brs0U7V/o5cV5qRPaEz3mv7AdWBvquU+SlNtvWYne+MzJR2DziknI
+ Yh0NpaORZv0jxDzj41n6dBCNb4ZyWp4w==
+X-Received: by 2002:a05:6512:3d11:b0:5a8:638f:cc9c with SMTP id
+ 2adb3069b0e04-5aa3237e691mr1786968e87.17.1779507756458; 
+ Fri, 22 May 2026 20:42:36 -0700 (PDT)
 Received: from xpahos-osx.yandex.net ([2a02:6bf:8080:c2d::1:2b])
  by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5aa32cb36f6sm848685e87.4.2026.05.22.20.42.01
+ 2adb3069b0e04-5aa32cb36f6sm848685e87.4.2026.05.22.20.42.34
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 22 May 2026 20:42:01 -0700 (PDT)
+ Fri, 22 May 2026 20:42:36 -0700 (PDT)
 From: Alexander Gryanko <xpahos@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -68,10 +69,13 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Ani Sinha <anisinha@redhat.com>, Alexander Gryanko <xpahos@gmail.com>
-Subject: [PATCH 0/3] hw/smbios: Add dedicated handle range for Type 8 tables
-Date: Sat, 23 May 2026 06:41:55 +0300
-Message-Id: <20260523034158.57487-1-xpahos@gmail.com>
+Subject: [PATCH 1/3] hw/i386/pc: Introduce 11.2 machine type for SMBIOS type 8
+ base migration
+Date: Sat, 23 May 2026 06:41:56 +0300
+Message-Id: <20260523034158.57487-2-xpahos@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20260523034158.57487-1-xpahos@gmail.com>
+References: <20260523034158.57487-1-xpahos@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
@@ -99,35 +103,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a continuation of the work originally proposed by Felix Wu [1],
-which changed the SMBIOS Type 8 handle base unconditionally. As Igor
-Mammedov pointed out in review, an unconditional change would break
-live migration between hosts running different QEMU versions.
-This series addresses the review feedback by:
-- Using machine-type versioning (pc-*-11.2) to opt in to the new
-  behavior, preserving T0_BASE for older machine types
-- Adding a PCMachineClass field to control the setting per machine type
-- Adding tests for both new and compat machine versions
-[1] https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg03208.html
+SMBIOS Type 8 (Port Connector) tables have been using T0_BASE (0x0) for
+handle allocation, which can collide with handles assigned to other
+SMBIOS types. Types 2, 3, 4, 9, and 11 already use dedicated ranges
+(T2_BASE=0x200, T3_BASE=0x300, etc.).
+Introduce pc-q35-11.2 and pc-i440fx-11.2 with smbios_type8_handle_t8_base
+enabled, so Type 8 handles start at 0x800. The 11.1 machine types retain
+T0_BASE for migration compatibility.
+Other platforms (ARM, LoongArch, RISC-V) are not changed by this patch.
 
-Alexander Gryanko (3):
-  hw/i386/pc: Introduce 11.2 machine type for SMBIOS type 8 base
-    migration
-  hw/smbios: Add dedicated handle range for Type 8 tables
-  tests/qtest: Add SMBIOS Type 8 handle base tests
+Signed-off-by: Alexander Gryanko <xpahos@gmail.com>
+---
+ hw/core/machine.c        |  3 +++
+ hw/i386/pc.c             |  3 +++
+ hw/i386/pc_piix.c        | 16 ++++++++++++++--
+ hw/i386/pc_q35.c         | 16 ++++++++++++++--
+ include/hw/core/boards.h |  3 +++
+ include/hw/i386/pc.h     |  4 ++++
+ 6 files changed, 41 insertions(+), 4 deletions(-)
 
- hw/core/machine.c              |  3 ++
- hw/i386/fw_cfg.c               |  1 +
- hw/i386/pc.c                   |  3 ++
- hw/i386/pc_piix.c              | 16 +++++++-
- hw/i386/pc_q35.c               | 16 +++++++-
- hw/smbios/smbios.c             | 10 ++++-
- include/hw/core/boards.h       |  3 ++
- include/hw/firmware/smbios.h   |  1 +
- include/hw/i386/pc.h           |  4 ++
- tests/qtest/bios-tables-test.c | 70 +++++++++++++++++++++++++++++++++-
- 10 files changed, 121 insertions(+), 6 deletions(-)
-
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 63baff859f..96de2d20f0 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -39,6 +39,9 @@
+ #include "hw/acpi/generic_event_device.h"
+ #include "qemu/audio.h"
+ 
++GlobalProperty hw_compat_11_1[] = {};
++const size_t hw_compat_11_1_len = G_N_ELEMENTS(hw_compat_11_1);
++
+ GlobalProperty hw_compat_11_0[] = {
+     { "chardev-vc", "encoding", "cp437" },
+ };
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 2ecad3c503..17ad8b6489 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -73,6 +73,9 @@
+ #include "hw/xen/xen-bus.h"
+ #endif
+ 
++GlobalProperty pc_compat_11_1[] = {};
++const size_t pc_compat_11_1_len = G_N_ELEMENTS(pc_compat_11_1);
++
+ GlobalProperty pc_compat_11_0[] = {};
+ const size_t pc_compat_11_0_len = G_N_ELEMENTS(pc_compat_11_0);
+ 
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 82457bdb16..27e1d552f6 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -406,6 +406,7 @@ static void pc_i440fx_machine_options(MachineClass *m)
+     pcmc->default_south_bridge = TYPE_PIIX3_DEVICE;
+     pcmc->pci_root_uid = 0;
+     pcmc->default_cpu_version = 1;
++    pcmc->smbios_type8_handle_t8_base = true;
+ 
+     m->family = "pc_piix";
+     m->desc = "Standard PC (i440FX + PIIX, 1996)";
+@@ -428,12 +429,23 @@ static void pc_i440fx_machine_options(MachineClass *m)
+                      pc_piix_compat_defaults, pc_piix_compat_defaults_len);
+ }
+ 
+-static void pc_i440fx_machine_11_1_options(MachineClass *m)
++static void pc_i440fx_machine_11_2_options(MachineClass *m)
+ {
+     pc_i440fx_machine_options(m);
+ }
+ 
+-DEFINE_I440FX_MACHINE_AS_LATEST(11, 1);
++DEFINE_I440FX_MACHINE_AS_LATEST(11, 2);
++
++static void pc_i440fx_machine_11_1_options(MachineClass *m)
++{
++    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
++    pc_i440fx_machine_11_2_options(m);
++    pcmc->smbios_type8_handle_t8_base = false;
++    compat_props_add(m->compat_props, hw_compat_11_1, hw_compat_11_1_len);
++    compat_props_add(m->compat_props, pc_compat_11_1, pc_compat_11_1_len);
++}
++
++DEFINE_I440FX_MACHINE(11, 1);
+ 
+ static void pc_i440fx_machine_11_0_options(MachineClass *m)
+ {
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index d8fed698c7..cf1ae9b78b 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -345,6 +345,7 @@ static void pc_q35_machine_options(MachineClass *m)
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+     pcmc->pci_root_uid = 0;
+     pcmc->default_cpu_version = 1;
++    pcmc->smbios_type8_handle_t8_base = true;
+ 
+     m->family = "pc_q35";
+     m->desc = "Standard PC (Q35 + ICH9, 2009)";
+@@ -365,12 +366,23 @@ static void pc_q35_machine_options(MachineClass *m)
+                      pc_q35_compat_defaults, pc_q35_compat_defaults_len);
+ }
+ 
+-static void pc_q35_machine_11_1_options(MachineClass *m)
++static void pc_q35_machine_11_2_options(MachineClass *m)
+ {
+     pc_q35_machine_options(m);
+ }
+ 
+-DEFINE_Q35_MACHINE_AS_LATEST(11, 1);
++DEFINE_Q35_MACHINE_AS_LATEST(11, 2);
++
++static void pc_q35_machine_11_1_options(MachineClass *m)
++{
++    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
++    pc_q35_machine_11_2_options(m);
++    pcmc->smbios_type8_handle_t8_base = false;
++    compat_props_add(m->compat_props, hw_compat_11_1, hw_compat_11_1_len);
++    compat_props_add(m->compat_props, pc_compat_11_1, pc_compat_11_1_len);
++}
++
++DEFINE_Q35_MACHINE(11, 1);
+ 
+ static void pc_q35_machine_11_0_options(MachineClass *m)
+ {
+diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+index 29c68931d8..a436d48c8e 100644
+--- a/include/hw/core/boards.h
++++ b/include/hw/core/boards.h
+@@ -815,6 +815,9 @@ compat_props_add(GPtrArray *arr,
+     }
+ }
+ 
++extern GlobalProperty hw_compat_11_1[];
++extern const size_t hw_compat_11_1_len;
++
+ extern GlobalProperty hw_compat_11_0[];
+ extern const size_t hw_compat_11_0_len;
+ 
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 85a74363b5..b7d21fb96e 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -102,6 +102,7 @@ struct PCMachineClass {
+     /* SMBIOS compat: */
+     bool smbios_defaults;
+     bool smbios_legacy_mode;
++    bool smbios_type8_handle_t8_base;
+     SmbiosEntryPointType default_smbios_ep_type;
+ 
+     /* RAM / address space compat: */
+@@ -208,6 +209,9 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size);
+ /* sgx.c */
+ void pc_machine_init_sgx_epc(PCMachineState *pcms);
+ 
++extern GlobalProperty pc_compat_11_1[];
++extern const size_t pc_compat_11_1_len;
++
+ extern GlobalProperty pc_compat_11_0[];
+ extern const size_t pc_compat_11_0_len;
+ 
 -- 
 2.39.5 (Apple Git-154)
 
