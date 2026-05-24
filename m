@@ -4,60 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4E6ACD5BB1
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 May 2026 13:20:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11567CD5BAB
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 May 2026 13:40:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wR8jg-0006aJ-7r; Sun, 24 May 2026 09:19:20 -0400
+	id 1wR93c-00050V-4T; Sun, 24 May 2026 09:39:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wR8jf-0006Zb-0E
- for qemu-devel@nongnu.org; Sun, 24 May 2026 09:19:19 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wR8jd-0005Xj-9Y
- for qemu-devel@nongnu.org; Sun, 24 May 2026 09:19:18 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 6366640294;
- Sun, 24 May 2026 13:19:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D943F1F000E9;
- Sun, 24 May 2026 13:19:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779628756;
- bh=4jUD/iUmIk0WZSVuI4UggbN0ekm9NJMZB34COoCbZKM=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=MmljiueBRk8lVtkc+5SNSJfq0x+8a2JSoAF2zI6sAlFK5z8mbscaojKPE2AmO1phH
- /y78ajjBgZXnCcTFGU8N9OmLIZ+jdTCjh4xulGYkG/sRHkeOW0tbvFe0BRRK3Txf71
- 8+PcTCPTFav0MnYOjgu8E+AgOStoi+jFw8tYmxH73fCty2NCG2dup65dnH3uZt0kMw
- LTkrIZsx8fJfOs/+ZTVRxkiE4tEYGYVoP6kRiozX/6IDzzFNwQ2bjPisTBaTBp3eOt
- JzrAYY3w9rbCEiXK9vy+cTx1HD3Kxjx2pt/83F6udR4NTi362t1xQ8suwDKT7CRsRN
- FCKJZ1/MUfkbA==
-From: Helge Deller <deller@kernel.org>
+ (Exim 4.90_1) (envelope-from <Mitsuru.Kariya@oss.nttdata.com>)
+ id 1wR3Mf-0008OH-0G
+ for qemu-devel@nongnu.org; Sun, 24 May 2026 03:35:13 -0400
+Received: from oss.nttdata.com ([49.212.34.109])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <Mitsuru.Kariya@oss.nttdata.com>)
+ id 1wR3Md-0002RN-7G
+ for qemu-devel@nongnu.org; Sun, 24 May 2026 03:35:12 -0400
+Received: by oss.nttdata.com (Postfix, from userid 1024)
+ id 468C820202B8; Sun, 24 May 2026 16:35:09 +0900 (JST)
+From: Mitsuru Kariya <Mitsuru.Kariya@oss.nttdata.com>
 To: qemu-devel@nongnu.org
-Cc: Matt Turner <mattst88@gmail.com>, Helge Deller <deller@gmx.de>,
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 2/6] linux-user/mips64: fix elf_core_copy_regs register layout
- in core files
-Date: Sun, 24 May 2026 15:19:04 +0200
-Message-ID: <20260524131909.162990-3-deller@kernel.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260524131909.162990-1-deller@kernel.org>
-References: <20260524131909.162990-1-deller@kernel.org>
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Jason Wang <jasowang@redhat.com>
+Subject: [PATCH 5/5] tests/qtest/netdev-socket: smoke test -netdev stream inet
+ option set
+Date: Sun, 24 May 2026 16:34:42 +0900
+Message-ID: <20260524073442.435408-6-Mitsuru.Kariya@oss.nttdata.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260524073442.435408-1-Mitsuru.Kariya@oss.nttdata.com>
+References: <20260524073442.435408-1-Mitsuru.Kariya@oss.nttdata.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Virus-Scanned: clamav-milter 1.4.3 at oss.nttdata.com
+X-Virus-Status: Clean
+Received-SPF: pass client-ip=49.212.34.109;
+ envelope-from=Mitsuru.Kariya@oss.nttdata.com; helo=oss.nttdata.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sun, 24 May 2026 09:39:20 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,95 +66,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+The existing /netdev/stream/inet/ipv4 and /ipv6 tests only exercise
+addr.type, addr.host, addr.port and addr.ipv4/ipv6.  None of the other
+optional InetSocketAddress members (numeric, to, keep-alive,
+keep-alive-count, keep-alive-idle, keep-alive-interval, user-timeout,
+mptcp) have any test coverage on the QAPI keyval parsing path used by
+netdev_parse_modern().  That gap let the qemu-options.hx synopsis drift
+out of sync with reality (multiple options were documented without the
+required "addr." prefix, which the QAPI input visitor would have
+rejected).
 
-mips64/elfload.c uses #include "../mips/elfload.c" to share code. When
-the compiler processes mips/elfload.c the quoted #include "target_elf.h"
-resolves relative to the including file's directory, so it picks up
-mips/target_elf.h instead of mips64/target_elf.h.  mips/target_elf.h
-pulls in mips/target_ptrace.h, whose target_pt_regs has a pad0[6] field
-before regs[].  As a result elf_core_copy_regs writes:
+Add /netdev/stream/inet/options that sets all those options on the
+server and client -netdev stream invocations.  The options conditionally
+compiled by HAVE_TCP_KEEP*/HAVE_TCP_USER_TIMEOUT/HAVE_IPPROTO_MPTCP are
+gated the same way here, mirroring inet_set_sockopts() and the QAPI
+schema.
 
-  r->pt.regs[i]   -> reserved[6+i]   (shifted by 6 from the correct index)
-  r->pt.cp0_epc   -> reserved[40]    (correct mips64 N64 index is 34)
+This is a smoke test: it verifies QEMU accepts the options and the
+netdev reaches "listening"/"tcp:..." state.  It does not read the
+options back from the kernel; that path is already covered indirectly
+by test_inet_parse_all_options_good which exercises inet_set_sockopts()
+through the QemuOpts inet_parse() path.
 
-The Linux kernel and glibc both use the mips64 N64 layout (no pad0): EPC
-at reserved[34].  Debuggers and libunwind reading the core with N64
-constants therefore see a completely wrong register set — EPC points to
-GP, RA holds the branch target instead of the link address, etc.
-
-Fix by:
- - Guarding the mips32 elf_core_copy_regs in mips/elfload.c with #ifndef
-   TARGET_MIPS64 so it is not compiled for mips64/mipsn32 targets.
- - Providing a mips64-specific elf_core_copy_regs in mips64/elfload.c
-   that writes directly to r->reserved[i] with the correct N64 indices,
-   bypassing the struct field names that are tainted by the wrong header
-   include.
-
-The mipsn32 (TARGET_ABI_MIPSN32) and mips64el targets are covered by the
-same mips64/elfload.c and benefit from the same fix.
-
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Mitsuru Kariya <Mitsuru.Kariya@oss.nttdata.com>
 ---
- linux-user/mips/elfload.c   |  2 ++
- linux-user/mips64/elfload.c | 29 +++++++++++++++++++++++++++++
- 2 files changed, 31 insertions(+)
+ tests/qtest/netdev-socket.c | 71 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 71 insertions(+)
 
-diff --git a/linux-user/mips/elfload.c b/linux-user/mips/elfload.c
-index cc5bbf05ab..1a46e180cf 100644
---- a/linux-user/mips/elfload.c
-+++ b/linux-user/mips/elfload.c
-@@ -131,6 +131,7 @@ const char *get_elf_base_platform(CPUState *cs)
- #undef MATCH_PLATFORM_INSN
- 
- /* See linux kernel: arch/mips/kernel/process.c:elf_dump_regs.  */
-+#ifndef TARGET_MIPS64
- void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
- {
-     for (int i = 1; i < ARRAY_SIZE(env->active_tc.gpr); i++) {
-@@ -146,3 +147,4 @@ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
-     r->pt.cp0_status = tswapl(env->CP0_Status);
-     r->pt.cp0_cause = tswapl(env->CP0_Cause);
+diff --git a/tests/qtest/netdev-socket.c b/tests/qtest/netdev-socket.c
+index b731af0ad9..d1718813eb 100644
+--- a/tests/qtest/netdev-socket.c
++++ b/tests/qtest/netdev-socket.c
+@@ -146,6 +146,76 @@ static void test_stream_inet_ipv4(void)
+     qtest_quit(qts0);
  }
-+#endif
-diff --git a/linux-user/mips64/elfload.c b/linux-user/mips64/elfload.c
-index b719555e65..9081ae8111 100644
---- a/linux-user/mips64/elfload.c
-+++ b/linux-user/mips64/elfload.c
-@@ -1 +1,30 @@
- #include "../mips/elfload.c"
-+
+ 
 +/*
-+ * mips/elfload.c defines elf_core_copy_regs guarded by #ifndef TARGET_MIPS64.
-+ *
-+ * We must provide the mips64 version here.  We cannot use r->pt.regs[] because
-+ * when mips/elfload.c is #include'd above its "#include "target_elf.h"" resolves
-+ * to mips/target_elf.h (compiler searches the including file's directory first),
-+ * which pulls in mips/target_ptrace.h.  That struct has pad0[6] before regs[],
-+ * so r->pt.regs[i] writes to reserved[6+i] — offset by 6 from what the kernel
-+ * and glibc expect for the N64 ABI (EPC at reserved[34], not reserved[40]).
-+ *
-+ * Write directly to reserved[] using the mips64 N64 index layout:
-+ *   R0-R31 at reserved[0..31], LO at [32], HI at [33], EPC at [34].
++ * Smoke test that -netdev stream accepts all optional InetSocketAddress
++ * members (numeric, to, keep-alive*, user-timeout, mptcp).  Catches
++ * regressions in the QAPI schema, the keyval parsing path, and the
++ * synopsis spelling in qemu-options.hx.
 + */
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
++static void test_stream_inet_options(void)
 +{
-+    /* R0 is always 0; r->reserved is zero-initialised by the caller */
-+    for (int i = 1; i < 32; i++) {
-+        r->reserved[i] = tswap64(env->active_tc.gpr[i]);
-+    }
-+    r->reserved[26] = 0;   /* k0 */
-+    r->reserved[27] = 0;   /* k1 */
-+    r->reserved[32] = tswap64(env->active_tc.LO[0]);
-+    r->reserved[33] = tswap64(env->active_tc.HI[0]);
-+    r->reserved[34] = tswap64(env->active_tc.PC);
-+    r->reserved[35] = tswap64(env->CP0_BadVAddr);
-+    r->reserved[36] = tswap64(env->CP0_Status);
-+    r->reserved[37] = tswap64(env->CP0_Cause);
++    QTestState *qts0, *qts1;
++    char *expect;
++    int port;
++
++    port = inet_get_free_port(false);
++    qts0 = qtest_initf("-nodefaults -M none "
++                       "-netdev stream,id=st0,server=true,addr.type=inet,"
++                       "addr.ipv4=on,addr.ipv6=off,addr.numeric=on,"
++                       "addr.host=127.0.0.1,addr.port=%d,addr.to=%d,"
++                       "addr.keep-alive=on"
++#ifdef HAVE_TCP_KEEPCNT
++                       ",addr.keep-alive-count=3"
++#endif
++#ifdef HAVE_TCP_KEEPIDLE
++                       ",addr.keep-alive-idle=10"
++#endif
++#ifdef HAVE_TCP_KEEPINTVL
++                       ",addr.keep-alive-interval=5"
++#endif
++#ifdef HAVE_TCP_USER_TIMEOUT
++                       ",addr.user-timeout=10000"
++#endif
++#ifdef HAVE_IPPROTO_MPTCP
++                       ",addr.mptcp=off"
++#endif
++                       , port, port);
++
++    EXPECT_STATE(qts0, "st0: index=0,type=stream,listening\r\n", 0);
++
++    qts1 = qtest_initf("-nodefaults -M none "
++                       "-netdev stream,server=false,id=st0,addr.type=inet,"
++                       "addr.ipv4=on,addr.ipv6=off,addr.numeric=on,"
++                       "addr.host=127.0.0.1,addr.port=%d,"
++                       "addr.keep-alive=on"
++#ifdef HAVE_TCP_KEEPCNT
++                       ",addr.keep-alive-count=3"
++#endif
++#ifdef HAVE_TCP_KEEPIDLE
++                       ",addr.keep-alive-idle=10"
++#endif
++#ifdef HAVE_TCP_KEEPINTVL
++                       ",addr.keep-alive-interval=5"
++#endif
++#ifdef HAVE_TCP_USER_TIMEOUT
++                       ",addr.user-timeout=10000"
++#endif
++#ifdef HAVE_IPPROTO_MPTCP
++                       ",addr.mptcp=off"
++#endif
++                       , port);
++
++    expect = g_strdup_printf("st0: index=0,type=stream,tcp:127.0.0.1:%d\r\n",
++                             port);
++    EXPECT_STATE(qts1, expect, 0);
++    g_free(expect);
++
++    EXPECT_STATE(qts0, "st0: index=0,type=stream,tcp:127.0.0.1", ':');
++
++    qtest_quit(qts1);
++    qtest_quit(qts0);
 +}
++
+ static void wait_stream_connected(QTestState *qts, const char *id,
+                                   SocketAddress **addr)
+ {
+@@ -512,6 +582,7 @@ int main(int argc, char **argv)
+ 
+     if (has_ipv4) {
+         qtest_add_func("/netdev/stream/inet/ipv4", test_stream_inet_ipv4);
++        qtest_add_func("/netdev/stream/inet/options", test_stream_inet_options);
+         qtest_add_func("/netdev/dgram/inet", test_dgram_inet);
+ #if !defined(_WIN32) && !defined(CONFIG_DARWIN)
+         qtest_add_func("/netdev/dgram/mcast", test_dgram_mcast);
 -- 
-2.54.0
+2.43.0
 
 
