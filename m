@@ -4,102 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20055CD5BB4
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 May 2026 06:59:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04A06CD5BAB
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 May 2026 07:16:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wR2ni-0003KK-Tl; Sun, 24 May 2026 02:59:06 -0400
+	id 1wR33b-0005nP-30; Sun, 24 May 2026 03:15:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wR2nd-0003Ju-Fs
- for qemu-devel@nongnu.org; Sun, 24 May 2026 02:59:05 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wR33T-0005mU-8s
+ for qemu-devel@nongnu.org; Sun, 24 May 2026 03:15:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wR2na-00004q-UT
- for qemu-devel@nongnu.org; Sun, 24 May 2026 02:59:01 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wR33Q-0005Jw-Jf
+ for qemu-devel@nongnu.org; Sun, 24 May 2026 03:15:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779605935;
+ s=mimecast20190719; t=1779606918;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=1NFLSivcclWCV2sCtRH9P5Pb5CBAnsIKZ1gnsz3RI44=;
- b=VvSxPeKD/gWnDe5WLPfA6OPZ7Lb9RQN3OEHIbt3ihf0g8k+Bm2NmmIp99fonihfYJCWggH
- lTY/ZubBsQqq7amF8axRY95sPU48zIMukLgnaz9BVu4tLX/WrlWLDbvU47paH5D+b/m6Ag
- Kn0z6F/J+SYCMj9Jf9SRV5P2QAhRpbQ=
+ bh=MeMcg9poW2sZLHBkaJ9tRSZykW1udUhXLX9HUewfT1M=;
+ b=S7ZLoNb6A4ECa6WqqZcyNdcnDnW7Zu4nw9NrCEbAl4XVRFCbO+YQfdsQv5AvPdoSOfr2MY
+ ucAGtWjGtErcvo3RkH4p7vNHDZ6mZeFoWTXbYfqEN2Era2hI85sDlyzJ98mZbeaUvYQsqP
+ 7Bq9rxvzZIypUTvEFUTE9VcYyhqSBCw=
 Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
  [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-393-TDUkeNsRO4K68rxgL5sLEA-1; Sun, 24 May 2026 02:58:53 -0400
-X-MC-Unique: TDUkeNsRO4K68rxgL5sLEA-1
-X-Mimecast-MFC-AGG-ID: TDUkeNsRO4K68rxgL5sLEA_1779605933
+ us-mta-483-SIjkAeQOORmdnSIll5Jq2w-1; Sun, 24 May 2026 03:15:17 -0400
+X-MC-Unique: SIjkAeQOORmdnSIll5Jq2w-1
+X-Mimecast-MFC-AGG-ID: SIjkAeQOORmdnSIll5Jq2w_1779606916
 Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49051422d55so5773825e9.2
- for <qemu-devel@nongnu.org>; Sat, 23 May 2026 23:58:53 -0700 (PDT)
+ 5b1f17b1804b1-48ff0eb77b5so2419195e9.0
+ for <qemu-devel@nongnu.org>; Sun, 24 May 2026 00:15:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779605932; x=1780210732; darn=nongnu.org;
+ d=redhat.com; s=google; t=1779606916; x=1780211716; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=1NFLSivcclWCV2sCtRH9P5Pb5CBAnsIKZ1gnsz3RI44=;
- b=R1P+uLhNQEYyHuNT1HbENvbIKyj9TsxUM5zmugRVCZB8nbNTGDV0nqBq250AEmFSlQ
- VcIaMtlro/m2roo6T+TYKsLv7LlYbpsF+eBVbWf82HLidWcqXM3TTyvE3OTw5cTzXKtC
- AnQ4XCfrS9axfyx7OJPlBFL5ISuCf7VPMJRDG3HDVUtYSeQtBjbX+1aHjmfVa6b+DhX9
- 1Nu7N9D8ZIxTUYAeOTgOunQXq9sX5yIO+Znj39aL/m4gq+Z23O7KPDDoDyHp70wNC2qO
- 9vP/3FaENFLbQ3Y2D1JpEO/Xj7eOoqcRU5AtC1MuvTdAg0T/vnz6O09fLj/WdCyc2cqw
- th+Q==
+ bh=MeMcg9poW2sZLHBkaJ9tRSZykW1udUhXLX9HUewfT1M=;
+ b=NMX53+Fy95WQ5QSpmUhPxIThRlGyfjdBlsODjNookJmGRjFF+Yxtb7YCaXnmuCM2Ps
+ 4ybR93t4EsEmN/546T3hl34Mn/UR5nYk5bPDf9J1H420D3vX1qgqO+UNLwgWcU8mJpi5
+ n3HYgp/FOkSjsRKjZdqQeytJ9nuZ9BeifDa0av4ECXuPH0GSxdmsZ8SplS5TiRr496NK
+ FS2CCeLuRdQYIkFgCWLg0HPlF7Q1B84WnGhC6bboH0AdHqQkYI8ZVa8/qFtOOa10M0oF
+ 6TUse7D0Q7ygK+mHBYUrSZjU083NKlYqH3UZJYTCvNUl4qhnNZqoH+po9GL6rquqEUxR
+ MhbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779605932; x=1780210732;
+ d=1e100.net; s=20251104; t=1779606916; x=1780211716;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1NFLSivcclWCV2sCtRH9P5Pb5CBAnsIKZ1gnsz3RI44=;
- b=oXEI2juhorP8mH99MydhCncz3XaHQ8EXs5xJqA1SlpTzbSa5CCoK+vbknVhHnEbqi4
- rwgWIPmASt4ndzBhJeKDvRpPMxfP2EqPCBjbUZX6T1CjWoJM0Dyx2+R+jlmqqnYjrhQf
- Ax8n6O3hkLLzNLfkPqSjJaY8lJnrjFHv0LV8xAjBtR96/xtJi5qBLUPAhLbOLRBgRTV+
- EI6lNV/EdhJ9WML9izfsyn8NcLRKnZASYHhV/mZFvcqvNajt5SwcBdbNz3wuew11OmAm
- KG22loUuNIPVlZpL1yb9oJhbwN2Xp/egA+GIoBwxOibx59u7tpEaTek1/9dZiLI6ENKC
- 9EEg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+PvU3ku7MyNVFWHWlIggCdZjIHrzGP9OK8daYN9Ok0s4n9BFQql40HBX69vjghV/9NxTedrXySfk/0@nongnu.org
-X-Gm-Message-State: AOJu0YzeJg+H7n/mMNmj951dWNwjlkucpqrr1hqK2fHF9LOgE3bqXGeJ
- b24omR0XLMiU3xW0BdL6wEG9RsKo9UhjNG51rW9reqYn3oCif+LIRACpfFfzvnXssi6eIbcgOmV
- qpc7YyO2qA7ioMiZljXbVur0/hXLg9LnDHyajcr5yF6TEey5z9dnFk0oY
-X-Gm-Gg: Acq92OFCNxOhZNoFci3AXuKvUEXthh/nSE4F6lmNibAXM0SMOCze0q9osQrTzA3qaB0
- OSpaaAmVIYbBlqMyGGn9v+pHsrYbe6RG+JMJV8/dl62K5X94ulOiw+qpW/0N2Ez0ubPYifml9Lv
- X+WSHp0jCq/z+mq5mzbz16pgi4QhE78ksmYLRWjumXLItKbk9r8yz+sPl3TV5LGqFkSTrOSkKxF
- rUifBwMBRW7gwFJvP4AJDNPNxBYIQTNRQnOaftQ1RQTAz/X/ENKYkIykIWE0JAjrTVLV3TETedi
- DE/FC+x/EPSRdvLmlBeEv3ONlZsmK6b8uCELGIwFX04absBJ1NMo3W6Wq4Fau5sMupngj4/6DY7
- fSKHdNqfcQSxajub5mCA9umK9LUqPdQN3qglu7EXATTY=
-X-Received: by 2002:a05:600c:c10b:b0:489:e126:b757 with SMTP id
- 5b1f17b1804b1-490426ddc41mr120366565e9.25.1779605932498; 
- Sat, 23 May 2026 23:58:52 -0700 (PDT)
-X-Received: by 2002:a05:600c:c10b:b0:489:e126:b757 with SMTP id
- 5b1f17b1804b1-490426ddc41mr120366445e9.25.1779605932075; 
- Sat, 23 May 2026 23:58:52 -0700 (PDT)
+ bh=MeMcg9poW2sZLHBkaJ9tRSZykW1udUhXLX9HUewfT1M=;
+ b=VXzPvt61kdLnfe+gwSa/YLhZlU+0WDb9jgTRVL5isceC8mHClSs16MOM+uxYgxcPeS
+ Tg321/v8o4vdHdKlg6Z5dEQVv6B2JgqHd+fXBzn1umNqyxv5bm0xcES8MILUp/Kh9a3u
+ 2cd25Lm1yFyftXK62e2LJ7LFqMQv7fvzZBIwxOQmKbWijGJGuVxqnWddwcOVAYKB/dMo
+ 5dBHM/Qfi9Hu2NxsicPkV6NJKXFtjGtn7WpYsD2GC3Ei+oyorLKmjUMg/r5TBucnauK3
+ /E3nPGFCvDY1ZLkUCjffbXxUafoxxLlL+LRIaoqs2ooMEVllePYWUQu9t1a/hQmJ5X5n
+ sISg==
+X-Gm-Message-State: AOJu0YySP9uqIUbYf0VkHwF4q1JthqXAtaO7+4Q9QlHWZYWZyzlNWIo8
+ an0WkthPeFyVT0l+s1bNofYR4aYenfMIQGtwaW36kaS5aa+2KtaulicRYczNewNekNLm0mUYLmd
+ Eg7E0Bs7+1Dehm1/AwCo2VOCkclcpB1se1XkjuS54LwIzTc9R3GAKUPrM
+X-Gm-Gg: Acq92OF4DR2fr5XSmzaTxEBJKPRnGTfCw10Duc8OAKmXxFRRKVtcjVweCDRuYhnMhD2
+ GiBtfGkOkB9+ApxeoDD6qn+MH4mcQmKYUZJ06ZxTef3sS5s5Sf86LEPjvdYclWgsyaXeTUqEhr8
+ E9RSGmavEPSgBMZObCFSRIP4oxyQw3PWkCl0IjQEyYgckpTr/kCsksNjUhVwdB4/uDARBcUFnht
+ OWxBXpEIdTgjaAsw5guho+xWp74O6OQ0E8WLuHsDahY0RJl2zBFAUQa8pHv07dd5+WG0KY6wUlh
+ OBrgd3oxaARxES/LXoi5Hq+YaUm+PjE5Z7YzSSj7JiJ8OYqaAQB2uiNsYq1UH2smyVEFcY6rbXn
+ N+9E7GWU5rpjJlYnVmgzi+McqkgO3tEm/SpsOqCXXTd0=
+X-Received: by 2002:a05:600c:4f0b:b0:48a:7676:30bc with SMTP id
+ 5b1f17b1804b1-490426a4753mr152248325e9.14.1779606915884; 
+ Sun, 24 May 2026 00:15:15 -0700 (PDT)
+X-Received: by 2002:a05:600c:4f0b:b0:48a:7676:30bc with SMTP id
+ 5b1f17b1804b1-490426a4753mr152247945e9.14.1779606915505; 
+ Sun, 24 May 2026 00:15:15 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-25-45.inter.net.il. [80.230.25.45])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490428d4c39sm54431285e9.20.2026.05.23.23.58.50
+ 5b1f17b1804b1-490456274ebsm153744685e9.15.2026.05.24.00.15.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 23 May 2026 23:58:51 -0700 (PDT)
-Date: Sun, 24 May 2026 02:58:48 -0400
+ Sun, 24 May 2026 00:15:14 -0700 (PDT)
+Date: Sun, 24 May 2026 03:15:12 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
- yc-core@yandex-team.ru, d-tatianin@yandex-team.ru,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- zhenwei pi <zhenwei.pi@linux.dev>, Raphael Norwitz <rnorwitz@nvidia.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- "open list:Block layer core" <qemu-block@nongnu.org>
-Subject: Re: [PATCH v6 04/22] vhost: move protocol_features to vhost_user
-Message-ID: <20260524025735-mutt-send-email-mst@kernel.org>
-References: <20260420200339.708640-1-vsementsov@yandex-team.ru>
- <20260420200339.708640-5-vsementsov@yandex-team.ru>
- <6b808fc2-a90e-4b25-84d2-d516eb176c8e@yandex-team.ru>
+To: Thierry Escande <thierry.escande@vates.tech>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Anthony PERARD <anthony@xenproject.org>, xen-devel@lists.xenproject.org
+Subject: Re: [PATCH 0/4] Xen: Add Q35 initial support for HVM guests
+Message-ID: <20260524031423-mutt-send-email-mst@kernel.org>
+References: <20260313164649.794591-1-thierry.escande@vates.tech>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6b808fc2-a90e-4b25-84d2-d516eb176c8e@yandex-team.ru>
+In-Reply-To: <20260313164649.794591-1-thierry.escande@vates.tech>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -108,7 +101,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,68 +117,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 22, 2026 at 03:31:07PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> On 20.04.26 23:03, Vladimir Sementsov-Ogievskiy wrote:
-> > As comment says: it's only for vhost-user. So, let's move it
-> > to corresponding vhost backend realization.
-> > 
-> > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> > ---
-> >   backends/cryptodev-vhost.c     |  1 -
-> >   hw/block/vhost-user-blk.c      |  6 ++----
-> >   hw/net/vhost_net.c             |  2 --
-> >   hw/virtio/meson.build          |  3 +++
-> >   hw/virtio/vhost-user-stub.c    |  6 ++++++
-> >   hw/virtio/vhost-user.c         | 36 +++++++++++++++++++++++++++-------
-> >   hw/virtio/virtio-qmp.c         |  6 ++++--
-> >   include/hw/virtio/vhost-user.h |  4 ++++
-> >   include/hw/virtio/vhost.h      |  8 --------
-> >   9 files changed, 48 insertions(+), 24 deletions(-)
-> >   create mode 100644 hw/virtio/vhost-user-stub.c
-> > 
+On Fri, Mar 13, 2026 at 04:46:56PM +0000, Thierry Escande wrote:
+> This patch series introduces Q35 chipset support for Xen HVM guests. This is
+> based on the work from Alexey Gerasimenko (See patchset [1] for reference).
 > 
-> [..]
+> This series does not implement device passthrough as this will need more work
+> on the Xen side to support multiple PCI buses. Since Q35 chipset does not
+> support device hotplugging and with current Xen mechanism for device
+> passthrough, they have to be plugged to a new PCIe root port, i.e. not the PCI
+> bus 0.
 > 
-> > diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
-> > index 415e359e9fc..adc3a4f748a 100644
-> > --- a/hw/virtio/meson.build
-> > +++ b/hw/virtio/meson.build
-> > @@ -43,6 +43,8 @@ if have_vhost
-> >                            if_true: files('vhost-user-input-pci.c'))
-> >       system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_SPI'],
-> >                            if_true: files('vhost-user-spi-pci.c'))
-> 
-> Small conflict, when applying to current master, as in master there is now
-> one more entry after CONFIG_VHOST_USER_SPI:
-> 
->    system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_RTC'],
->                         if_true: files('vhost-user-rtc-pci.c'))
-> 
-> so, "else" should go after this new CONFIG_VHOST_USER_RTC entry.
-> 
-> 
-> Let me know, if resend needed.
-> 
-> > +  else
-> > +    system_virtio_ss.add(files('vhost-user-stub.c'))
-> >     endif
-> >     if have_vhost_vdpa
-> >       system_virtio_ss.add(files('vhost-vdpa.c'))
-> > @@ -91,6 +93,7 @@ system_virtio_ss.add_all(when: 'CONFIG_VIRTIO_PCI', if_true: virtio_pci_ss)
-> >   system_ss.add_all(when: 'CONFIG_VIRTIO', if_true: system_virtio_ss)
-> >   stub_ss.add(files('vhost-stub.c'))
-> > +stub_ss.add(files('vhost-user-stub.c'))
-> >   stub_ss.add(files('virtio-stub.c'))
-> >   stub_ss.add(files('virtio-md-stubs.c'))
+> As a first step for Q35 guests support, this series implements:
+> - Legacy interrupt routing for the ICH9 LPC bridge (i.e. not IOAPIC)
+> - Xen HVM machine initialization in pc_q35_init()
+> - Access to PCIe Extended Config Space
+> - Fix for incorrect values and usage for PCIEXBAR masks
 
+Xen maintainers, who's merging this?
 
-I'm confused why would we add vhost-user-stub.c twice at all.
-
-
+> The corresponding patchset for the Xen Project has been posted at [2].
 > 
+> [1] https://lore.kernel.org/xen-devel/cover.1520867740.git.x1917x@gmail.com/
+> [2] https://lore.kernel.org/xen-devel/20260313163455.790692-1-thierry.escande@vates.tech/
+> 
+> Alexey Gerasimenko (2):
+>   pc/xen: Xen Q35 support: provide IRQ handling for PCI devices
+>   q35: Fix incorrect values for PCIEXBAR masks
+> 
+> Thierry Escande (2):
+>   q35/xen: Add Xen support for Q35
+>   xen: Handle PCIe config space size in cpu_ioreq_config()
+> 
+>  hw/i386/pc_piix.c         |  2 --
+>  hw/i386/pc_q35.c          | 12 +++++++++++-
+>  hw/i386/xen/xen-hvm.c     | 38 ++++++++++++++++++++++++++++++++++++++
+>  hw/isa/lpc_ich9.c         | 16 +++++++++++++---
+>  hw/pci-host/q35.c         |  6 +++---
+>  hw/xen/xen-hvm-common.c   | 11 +++++++----
+>  include/hw/pci-host/q35.h |  4 ++--
+>  include/hw/xen/xen.h      |  5 +++++
+>  stubs/xen-hw-stub.c       |  4 ++++
+>  9 files changed, 83 insertions(+), 15 deletions(-)
 > 
 > -- 
-> Best regards,
-> Vladimir
+> 2.51.0
+> 
+> 
+> 
+> --
+> Thierry Escande | Vates XCP-ng Developer
+> 
+> XCP-ng & Xen Orchestra - Vates solutions
+> 
+> web: https://vates.tech
 
 
