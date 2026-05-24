@@ -4,100 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B063CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 May 2026 20:05:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E63CFCD5BAB
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 May 2026 20:12:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRF3u-000407-Mv; Sun, 24 May 2026 16:04:38 -0400
+	id 1wRFAU-0005LY-Fg; Sun, 24 May 2026 16:11:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wRF3t-0003zS-Hw
- for qemu-devel@nongnu.org; Sun, 24 May 2026 16:04:37 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wRFAS-0005LM-Ln
+ for qemu-devel@nongnu.org; Sun, 24 May 2026 16:11:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wRF3r-0006dc-Hd
- for qemu-devel@nongnu.org; Sun, 24 May 2026 16:04:37 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wRFAQ-00083N-A9
+ for qemu-devel@nongnu.org; Sun, 24 May 2026 16:11:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779653073;
+ s=mimecast20190719; t=1779653480;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qNDYY4Hv/0XP2z+wqsEZhvuO8E0Aqm+4w8C6Q1/AefQ=;
- b=g4F8C/PI8UcDj3Y6jBdHNirfm5O52sTon4HhUN2AbstONh2NyeptIFSb557sNq+D1Vz/Fe
- QswxN4HcIxpjzmP6cqKKFPpkNvfzYWiiTlbipxA1bikpF4wuqjAwKicvJUHaFXaiCpKx1R
- tZxKUTvb5BGz5OqaokPvS+c7v/hUGdU=
+ bh=oBgXzQZdaSXad8KsI6BsXYkemImOjNEa2mOec1yyZ9o=;
+ b=OfmDwjNRBesi1OYqzzLTm8Hv+TBSbIeXj7W4CF90LSj9foLagE8IaINqi9WwEGyt3tKFMu
+ PEuRkY2niLOxoJl55a/YL+y5CZdaQVrMA/OWoI33uXblsT6NVl8eEZU8Qd/x4OcLt85Vei
+ yQAhfFD1GTCHnYe40vcnfhjHhHD/M5E=
 Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
  [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-131-S6GCrO43OZONa-8SVoECYQ-1; Sun, 24 May 2026 16:04:32 -0400
-X-MC-Unique: S6GCrO43OZONa-8SVoECYQ-1
-X-Mimecast-MFC-AGG-ID: S6GCrO43OZONa-8SVoECYQ_1779653071
+ us-mta-435-nArU3099Mb-_9bt90QF3Lw-1; Sun, 24 May 2026 16:11:17 -0400
+X-MC-Unique: nArU3099Mb-_9bt90QF3Lw-1
+X-Mimecast-MFC-AGG-ID: nArU3099Mb-_9bt90QF3Lw_1779653476
 Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-45aeac88af4so7337280f8f.3
- for <qemu-devel@nongnu.org>; Sun, 24 May 2026 13:04:32 -0700 (PDT)
+ ffacd0b85a97d-43fe791a398so6944432f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 24 May 2026 13:11:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779653071; x=1780257871; darn=nongnu.org;
+ d=redhat.com; s=google; t=1779653476; x=1780258276; darn=nongnu.org;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:from:to
  :cc:subject:date:message-id:reply-to;
- bh=qNDYY4Hv/0XP2z+wqsEZhvuO8E0Aqm+4w8C6Q1/AefQ=;
- b=nlKvVK1B15dnNoMBykYERr423Z9CqsqmKAfnh1gdyHfgOOkciJYgmz4PjEjNNhznyf
- Se9JgnBFtzZ7z6m64/7JTErE6gSYoK3SrDUOp5qE+NnaT9oClfTf/bGf0Q89UxAFVqrx
- uUmHuoQWrUhSgOrOCXMB33x2un0a/q9pb8Ux/rxp9Vus+HR03MEYKWiYw7Xrh5vKJBgd
- UUgYvnaGbNv86ELpErn5sA9JVal6jY6zmLTjLnl7h9ZvIU1qP6oc9JoVrlFmQwP9d+rl
- G+IcajQGpGU7QFAvtaKiaEI4BpbW/CeUmMmnLGQqhPxJhtPZ33Ejz3mclcHy9tzNJOVG
- KbLw==
+ bh=oBgXzQZdaSXad8KsI6BsXYkemImOjNEa2mOec1yyZ9o=;
+ b=sSlJHHmf16yttP4BDyCIVbStV4ELZp9ZWDkblpJGkgQJBDgdVqGsXhxC9bxmYsFaJs
+ 4PWFvN1Fpux3V55JXtFRj8yGbgS44DJbMLgbY98k/KqiCzSA/c3fCNjR4bFZxYO446LZ
+ IrtSSEAmvxbP9efzILYtw5YsSKUSy5diV8JxZPpF6s2iFLier/gnR6DqQAW3iyoXGdq9
+ mcYrPKQV7/TdbDnlSbLxluyv0NdTUe0d+V2gcJj0QbQ7iSOcOYW2UgmTBa+5FAV/c1qt
+ 4E1NZmnFbUHd+lc6rH3xoG7bhLYI4X956tSg7GOGruy0okGehvhVwG84S4wmSFwlfWzg
+ ICNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779653071; x=1780257871;
+ d=1e100.net; s=20251104; t=1779653476; x=1780258276;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qNDYY4Hv/0XP2z+wqsEZhvuO8E0Aqm+4w8C6Q1/AefQ=;
- b=T8XXmVIBkDTBU8pFQuZbv/6zJZpMq0cXdbZhZfQ3MrTIBGW0X9IBPQi3sfBoqI6lHx
- LY/xqPMday+WTB73sLd4wT+5VhJlIdapNICchFDnNqH/ZfL6SdsTwgI43ljFDYOY/jG4
- R709YkAEjNi6qYIpEBYYb2OBjZvq8fw5PAroAN5nD10V735ZQkgDC1WT4deiHBvoanx4
- WF4DXUovpb0YgP/awq7xjtNqb2ykBsE05uGXX0u9TF6EZALAPeJwXkb467L2QEjBs90E
- aI+F3sK4sraBbEWFntfqQ+2lFuntd+a4R3IMy6mzU5BjnliTXoaiXqRF936N0QHCXLlk
- mrbA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8S9SAWPtdQURcS6yuBQE83076Hvvr4QS8l0pBxlB1gAUnOz9mtXnDSA977BtEelK1MQ1nURy5eKOfX@nongnu.org
-X-Gm-Message-State: AOJu0Yx2yYrj62XLMK855YwVE4Bw6L6njUISvkzjncRU7ZazlhrbLmXD
- r6xRaYVCeGNqyWs2a7A9JQcUvcylQr+rx985b41wCXz9tUurHurqauisyWjwEfmlNMGMkxe2etM
- L6M4kSwq7KI5FDqsZlkQh4CIANwGfjrE7Wz6UJlDWOkZEAttZzDgpg4Wm
-X-Gm-Gg: Acq92OHiPGI3AT3Dp2n7ZGUlwFJSxBqOZiHxDzy+h/7WA8/jgAPeNiE1o2TP1STtvbx
- koSz7Xhy7li00aPZGwgfhgQnyMhB0QNr/D64oXiJVS/A3h6Y/4P1FVtXRcCb5G4KzYvDUr5E6ua
- 944bc+TauJB1Ya3JPbDdKnmxsryqsnvnOKNl6rJiIsYG590vivQzZ1KLX3ri2VKnm7/sHO93IUI
- +I0XWNMbA6+hIzfMuBoKMFWP2VmeoIXJMVR6sBOtQun84e5BX/0sB9U2EBvw/ybzKlF4Sp1/h+M
- 7DYqGIfRhzDYdLFtk5VtEeHTBxwY2rjrT27WYioHXqvxHtR+kCdlHXQpEEopdLRL8LfMv+JBjIw
- wz198NN2w8JTH2XovuNwq0KqZsW0yFxfaYRX72lXHUrM=
-X-Received: by 2002:a05:6000:41d9:b0:43c:fb48:6856 with SMTP id
- ffacd0b85a97d-45eb36883a9mr20282826f8f.13.1779653070968; 
- Sun, 24 May 2026 13:04:30 -0700 (PDT)
-X-Received: by 2002:a05:6000:41d9:b0:43c:fb48:6856 with SMTP id
- ffacd0b85a97d-45eb36883a9mr20282774f8f.13.1779653070446; 
- Sun, 24 May 2026 13:04:30 -0700 (PDT)
+ bh=oBgXzQZdaSXad8KsI6BsXYkemImOjNEa2mOec1yyZ9o=;
+ b=sVKr4C8y39DUVyBmoXFP3rZ0LcZtjK3O2Ru4gMxUxaT3J0fMcBmNrnj9X8P6ljS8/Y
+ Ib2si9qnGo2Y0x6HDINtuj/INoHelvqOWr7rJ9ybl+HQFkFXff4vpqEe+LOlH0VjUz1F
+ 27klVH8ArWqCgCvy6Ygq2Igt+i0qR+UdefDeeQZ/MLlz21rQcoIbj/IEYPRPkv6OaGrb
+ +hZhWaoamEp+rqFbf+MJlHgAmpRWF8Lay6BRuaxP92y4jDcAMxQuvwr/4vaou0xKuDIf
+ S/GibNC0T4oi88bLG6Hagf/w3Dekzk0RwYKAJRhFXR3i3nzvXXFoCEkGweJTBFXaSFgB
+ cLoQ==
+X-Gm-Message-State: AOJu0YzIqT2Mix7f1zliu68PBrOvpnnT0Zub1YFns8Tl5lFeLKaLfvaK
+ /0S4BSXFmgbJ+sN8EUH/u3TO0F2L9bE1xEbgCyanNhkStn7mlf2MG52wc4DcsfXm4Jg/QdOT/8y
+ /kQYr/bASr0Th7QAOfAYpkOpDIUi6Cy75rpIyMPnM4BAaSL4ZHSI/1uXc
+X-Gm-Gg: Acq92OGBbdGEWGurBbuT25/ByS4iV6UBSfdq8xew8cbH1WguCybQjIG1dugyqLC4hfg
+ FKHNe6R+D/oekY/1kK1ekqv41UZoO61Kwdn8ZMSZc9dKVn9qRN9kKXWZwEUEhuNYJQC2YrPY2bS
+ 963LTj3Gnei84bcJAd3QmB0nxhw4dM6qjTzD399uPoLTbr8YL2k0+V5y3GfX7oBXsIFa5JJz/7f
+ 0sdtcFo0cImyTVZqb/KSP75BijVsQg/aCgTUc9lSsgNe4jtO2K/Kn2ChbpOiBrwvYcxozr0z9d8
+ 8KYTwoOjk+26uSeSoDNqMquY8cPgNOvBInb/RhRvulASa2y6uei+rymWJ3VH7aOAO0VU3nrSj8L
+ mMrOPeFCaYa+bKNUjxm8w57pgcPrfC0y5Q8u67/mOiyw=
+X-Received: by 2002:a05:600c:1393:b0:489:c57:7836 with SMTP id
+ 5b1f17b1804b1-490428e5b31mr197316555e9.27.1779653476022; 
+ Sun, 24 May 2026 13:11:16 -0700 (PDT)
+X-Received: by 2002:a05:600c:1393:b0:489:c57:7836 with SMTP id
+ 5b1f17b1804b1-490428e5b31mr197316295e9.27.1779653475478; 
+ Sun, 24 May 2026 13:11:15 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-25-45.inter.net.il. [80.230.25.45])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6d5e363sm22269523f8f.28.2026.05.24.13.04.27
+ ffacd0b85a97d-45eb6d5cb76sm18553912f8f.25.2026.05.24.13.11.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 24 May 2026 13:04:27 -0700 (PDT)
-Date: Sun, 24 May 2026 16:04:00 -0400
+ Sun, 24 May 2026 13:11:14 -0700 (PDT)
+Date: Sun, 24 May 2026 16:11:12 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Warner Losh <imp@bsdimp.com>
-Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, stefanha@redhat.com
+To: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, stefanha@redhat.com
 Subject: Re: on ai generated and code provenance
-Message-ID: <20260524160214-mutt-send-email-mst@kernel.org>
+Message-ID: <20260524161048-mutt-send-email-mst@kernel.org>
 References: <20260524083329-mutt-send-email-mst@kernel.org>
  <87v7ccd9eh.fsf@draig.linaro.org>
- <CANCZdfoEWBxjMXof7fPLnwL6=KfWys=fNg4tP8b+pFuhZZd-dg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANCZdfoEWBxjMXof7fPLnwL6=KfWys=fNg4tP8b+pFuhZZd-dg@mail.gmail.com>
+In-Reply-To: <87v7ccd9eh.fsf@draig.linaro.org>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -122,15 +118,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, May 24, 2026 at 12:26:43PM -0600, Warner Losh wrote:
-> So maybe a good middle ground might be to allow claude for things that
-> are low risk:
-> - Things sed or coccinelle  can do
-> - Minor bug fixes with human written commit messages
-> - Minor feature tweaks (say < 200 lines)
+On Sun, May 24, 2026 at 06:06:46PM +0100, Alex Bennée wrote:
+> "Michael S. Tsirkin" <mst@redhat.com> writes:
+> 
+> > So, I had to reject a perfectly reasonable patch:
+> > https://lore.kernel.org/qemu-devel/20260320193746.242704-1-jinpu.wang@ionos.com/
+> > just because of a tool used to make it.
+> >
+> >
+> > 	How contributors could comply with DCO terms (b) or (c) for the output of AI
+> > 	content generators commonly available today is unclear.  The QEMU project is
+> > 	not willing or able to accept the legal risks of non-compliance.
+> 
+> In the linked case the LLM is basically doing a glorified search and
+> replace. There seems to be no danger of accidentally regurgitating any
+> training data which is where the worry about inadvertent copyright
+> infringement comes from.
 
-As far as I am concerned, if it's a reasonably split patchset of
-multiple patches < 200 lines each, it the same.
+Does this mean I can merge it, in your view?
 
 -- 
 MST
