@@ -4,97 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C060CD5BAB
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 May 2026 07:44:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07925CD5BAB
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 May 2026 08:40:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wR3VH-0001mD-Mw; Sun, 24 May 2026 03:44:07 -0400
+	id 1wR4N3-0000pb-Nx; Sun, 24 May 2026 04:39:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wR3V9-0001kW-DJ
- for qemu-devel@nongnu.org; Sun, 24 May 2026 03:44:02 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wR4Ms-0000pA-53
+ for qemu-devel@nongnu.org; Sun, 24 May 2026 04:39:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wR3V7-0005E3-3r
- for qemu-devel@nongnu.org; Sun, 24 May 2026 03:43:59 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wR4Mm-0005q5-OC
+ for qemu-devel@nongnu.org; Sun, 24 May 2026 04:39:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779608634;
+ s=mimecast20190719; t=1779611959;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=d31P/47NSDwQAWFSW6gul/ImIejpiWKEwkFsv0GPKu4=;
- b=diNJKyzYDDaWkddZ5FL0ZC/01IpXKGoVX4Ae20hxLSHR7ywrJbMHXgwtG5eW4EtuaRw5nn
- kWNOc5LzOUsExo/LHM3PAbUaf7j1eVleMe3k3l9qVpKUXaqfawq4pGNWDgsPRLSpSl8jp6
- y3sKZFyXvBNip4cDuoNggmieSVld0P8=
+ bh=JFB3Z1IlTRiiapSnVe6zG2T9VrE+ICv30J8TG4XwNnM=;
+ b=VY6oiDdd5orwKFqHNrWHPq/pDA3XqAsXQBTdcqpyPmDkGDQh+2qEsnbIjYb4MljUohCx5j
+ aDjBKT3zvpAkYHh5I9ooPS58cNDyxwXjhbJ4mleNVGrihNFfJahai8HU9E2JL88WyZRLfE
+ 4uyt7JliuA0O5K7POWm84UErTSUIPYI=
 Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
  [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-323-YoUY8Q9dOhKBOUO2CZ9N3A-1; Sun, 24 May 2026 03:43:52 -0400
-X-MC-Unique: YoUY8Q9dOhKBOUO2CZ9N3A-1
-X-Mimecast-MFC-AGG-ID: YoUY8Q9dOhKBOUO2CZ9N3A_1779608631
+ us-mta-133-n4A_G2OHPcqeXsDiFeAa-A-1; Sun, 24 May 2026 04:39:17 -0400
+X-MC-Unique: n4A_G2OHPcqeXsDiFeAa-A-1
+X-Mimecast-MFC-AGG-ID: n4A_G2OHPcqeXsDiFeAa-A_1779611957
 Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49041d39887so15178965e9.2
- for <qemu-devel@nongnu.org>; Sun, 24 May 2026 00:43:52 -0700 (PDT)
+ 5b1f17b1804b1-48fdad6cce4so40330585e9.1
+ for <qemu-devel@nongnu.org>; Sun, 24 May 2026 01:39:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779608631; x=1780213431; darn=nongnu.org;
+ d=redhat.com; s=google; t=1779611956; x=1780216756; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=d31P/47NSDwQAWFSW6gul/ImIejpiWKEwkFsv0GPKu4=;
- b=PrJJJyGcR1D+R+aK+XWi4SJOa6tNkuL070c+TA6Ejjg8VjIcc6ATBfLcljAAR+Xb8g
- WwSewrIRkysYvlzf2WlRllsU7ZvUtdwwu51TP7bZJ0GAag/Afjrza5N2o9zS536bSyGH
- xXctr9LPj64VfRL4ZYW7Nc4Sgb46KJJkjjCQHJDYAE3uhGK2GnfgMBeaE6LgYHJhJ3NI
- AfiEUIDUgOju00I5+91t2zfIoEwZsplhHoxAQeZfkHl8Du9P9KhdW5Gxsvnba5RS01+J
- SqgdroFjOxWnZMy4apEKeuQhPbmHplf0lZjJZpNSfA4RyYD+q7rQq7p2tKbdwVQYKO7x
- iG5Q==
+ bh=JFB3Z1IlTRiiapSnVe6zG2T9VrE+ICv30J8TG4XwNnM=;
+ b=ATZpmY4xk11J3IiHbJeHahlMgLG0gZ0iqUbFkXfrTCv6IgH3Wr+u6xWRfAPhDnRzEE
+ k8FlUbNy/HxoFeyv4M63WNJ+sDbQAtt4ce15y07fSVbM4yMk+9n9TQHadZXccO4OUN15
+ 8K/rTiXorIdZJCgG1vTfHL+6PM4XMJxwcHgjkL+QFBjNqUJKY3bcab7tTnfvLnbbowfv
+ SHs2pbIO/C5MNxL1XpEGsjbd5ibNT/umb32DaYI+GHk27Ubo56A/fqQjqoysFjR4+Lhe
+ I6rEoP5uoW9Vq4B4iu7/UQTHypcKse6gEzOHLQzBT0fIBTuKK8QmdTQmPrY0Gp3sz55d
+ U2aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779608631; x=1780213431;
+ d=1e100.net; s=20251104; t=1779611956; x=1780216756;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=d31P/47NSDwQAWFSW6gul/ImIejpiWKEwkFsv0GPKu4=;
- b=UPeFs8+4DkcQ06egO4yHcFNbWsbeA2iJjNrPUoRKFcmaNcBPbwxPQg3OYhhC423LE4
- Ou0UlSNlD7DLNBT+za239DMPq5XP8OYrYVqHo2z4SMhDcivXAcKTwtXts67V5k3ZGvp4
- WseTB3ir7FEcUG4DmhFl/i8xFt8V+59xefpM5ty9TG7kXxYw7TR8Sho5/tr8PzZGoR2k
- cZ+xtjq7KLIPl95TxoW1t7oHRJWYwEhs4+9UjHvM78GHrTk9dnfpjtaZ0DTUZdhZ42ao
- 8Km58HHxY+yXmqaS5EWFuOiOHQMhmcfbrqkiIa+G7rxoy3l+25DcLvtFikud9bOLb4/w
- Nu0w==
-X-Gm-Message-State: AOJu0YyWYL6j6iQ2wqZNVgeAd9lq4sSWA/MyKxYjfCk1tiaaPxIROJwY
- 4N9tB353b34vJ+uNvJiSedQBD0lot/BuLsrXPrJ8gM68H3PqDweq4A3bf+jJPsjJxxFJtLdIwK1
- oHvVjFvE5vDjoNZpSZOw8yhV3V6/hH6Sq8Uw0cfuPpaKoVEwXNnyhoppZ
-X-Gm-Gg: Acq92OHVwPAhwdINCT7par8+K+NkfuTdIT3YWhFutZUNO0t/BswIX7WpvkwyiKUb0pF
- ZtNJsmSOmFqpAyGvLvc6+8gZuanemxPbXIHdlHkA4eILjsnwF22sQp2qx5xiFpw8IteF1Ucx5xp
- jNxdA4l9LgXqaW8rZ8vSdwLUFRwQoclUNDfQeDAW6zpZ7d0B642fGGkseA8f09mbV90y56en9Dt
- DDECqgtENhcOD+zFd6HuuXWBxyW1wGOrn1EJZ36dgU/k2RwYzumjtmAmzyHqvyt5Hnk6CYPOxer
- snxpecVp3PZwzhDmF0JqfiFBBRRV/oloqBiyqfmKtY3wY9XwKPExH8ArA5Xb1W/zXIWLsB4hDgf
- nzmHxoU2XFNvdkq+swJiWPZFUVcwsyyPnXS6dUnxVods=
-X-Received: by 2002:a05:600c:1393:b0:489:1d74:56d with SMTP id
- 5b1f17b1804b1-490428e15e9mr155921945e9.29.1779608630976; 
- Sun, 24 May 2026 00:43:50 -0700 (PDT)
-X-Received: by 2002:a05:600c:1393:b0:489:1d74:56d with SMTP id
- 5b1f17b1804b1-490428e15e9mr155921545e9.29.1779608630486; 
- Sun, 24 May 2026 00:43:50 -0700 (PDT)
+ bh=JFB3Z1IlTRiiapSnVe6zG2T9VrE+ICv30J8TG4XwNnM=;
+ b=lvfvzgF+35MJqH7e8pw7KCr5MaC3xwiu3tXgPTsob46AI9vvjKhy5vUpQXQCJo8RCe
+ MyFUdVQWBIZQg2e3cIgeahVn2s+QHA3ktlQctz41Dx+vgMXFqtbz+exZN+/0d+ryLzk6
+ H8jyFUO6Xk65GGAflevTkVIXmZ2NcXelVhOAuX13YzjeTFc6oyH2jIxkvoZX/EEWyw0N
+ 3jMVErx2J68HIwCMDPakCXQNwDe8AnWMxthmPYSwZMROj4EoztD3K5rinWAoTc+dkXRM
+ qq4lwJqb89DDRNbXJouOQpiIi5kO+SIOe0LhAniJcGRpZgV9c+Z7rAmdl4kOSriOKeZY
+ CGQA==
+X-Gm-Message-State: AOJu0YxZNuVYO4Ik+dbMwe+VvIuFUOTCvbs5gzT8oOHB0TEWdJgi2AmZ
+ TamvmHlRHb6LrXlwu35PgpEhTfzMAhOvewnmubNDDpHJqtSIlk65YIrSER8QcljJSxXyWxJkXXP
+ Bl86tKiTvWdsfnbWVH+IOfrBB+mT/OCntsr602o4D/U0qAVWliOyMP7xI
+X-Gm-Gg: Acq92OE/eJUVHwXXc5lrTBqjs7bv/07/gQFlkog2ZRNiIz1GrcF8So4uXn3Yy5lOL/Z
+ QBMApgOpCzTIClfrda3S+a+XMZ6oMn+jr6NPOkyG+jEWi5kShAtCZ5bgvYUfJJ6jNhjSn2e5Oaq
+ B9RlcT/1UZNSKldWIxQ/LTqM6gY2G/RXI57iEr7dP9VSVrnv+OPme6nk0szMEcucNZTVbqcWKEN
+ FjU5HIV3k4LJpOBRi4FWOVw28JWmKuuAtqIi3Ff2l7Re1796YpvTa0qa8XAqACTkrucbhp+qjiI
+ k4xReTE+r5PjgMhwByPtj7b33ynd8nqwOO+vkhpG3L88CaF/mZ5RBfOzWGsn73eTcead9AiYOds
+ sQ74aolr44hciAaOX7j1EITxUQdZI9T8ZsPs+fhnJxj0=
+X-Received: by 2002:a05:600c:2a8b:b0:489:1abb:5559 with SMTP id
+ 5b1f17b1804b1-4904226d9camr86921035e9.5.1779611956494; 
+ Sun, 24 May 2026 01:39:16 -0700 (PDT)
+X-Received: by 2002:a05:600c:2a8b:b0:489:1abb:5559 with SMTP id
+ 5b1f17b1804b1-4904226d9camr86920735e9.5.1779611955972; 
+ Sun, 24 May 2026 01:39:15 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-25-45.inter.net.il. [80.230.25.45])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ec7fcd7f9sm4733435f8f.37.2026.05.24.00.43.48
+ 5b1f17b1804b1-490454ea134sm187066345e9.8.2026.05.24.01.39.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 24 May 2026 00:43:49 -0700 (PDT)
-Date: Sun, 24 May 2026 03:43:47 -0400
+ Sun, 24 May 2026 01:39:15 -0700 (PDT)
+Date: Sun, 24 May 2026 04:39:12 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Thierry Escande <thierry.escande@vates.tech>
-Cc: qemu-devel@nongnu.org, Alexey Gerasimenko <x1917x@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Anthony PERARD <anthony@xenproject.org>, xen-devel@lists.xenproject.org
-Subject: Re: [PATCH 3/4] q35: Fix incorrect values for PCIEXBAR masks
-Message-ID: <20260524034330-mutt-send-email-mst@kernel.org>
-References: <20260313164649.794591-1-thierry.escande@vates.tech>
- <20260313164649.794591-4-thierry.escande@vates.tech>
+To: slonkazoid <slonkazoid@slonk.ing>
+Cc: qemu-devel@nongnu.org,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: Re: [PATCH v2] add a refresh_rate option to virtio-gpu
+Message-ID: <20260524043219-mutt-send-email-mst@kernel.org>
+References: <20260415-virtio-gpu-refresh-rate-v2-1-b71599d84755@slonk.ing>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260313164649.794591-4-thierry.escande@vates.tech>
+In-Reply-To: <20260415-virtio-gpu-refresh-rate-v2-1-b71599d84755@slonk.ing>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -119,74 +117,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 13, 2026 at 04:47:16PM +0000, Thierry Escande wrote:
-> From: Alexey Gerasimenko <x1917x@gmail.com>
-> 
-> There are two small issues in PCIEXBAR address mask handling:
-> - wrong bit positions for address mask bits (see PCIEXBAR description
->   in Q35 datasheet)
-> - incorrect usage of 64ADR_MASK
-> 
-> Due to this, attempting to write a valid PCIEXBAR address may cause it
-> to shift to another address, causing memory layout corruption where
-> emulated MMIO regions may overlap real (passed through) MMIO ranges. Fix
-> this by providing correct values.
-> 
-> Signed-off-by: Alexey Gerasimenko <x1917x@gmail.com>
-> Signed-off-by: Thierry Escande <thierry.escande@vates.tech>
+>On Wed, Apr 15, 2026 at 12:19:05PM +0300, slonkazoid wrote:
 
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Your From is mangled by qemu-devel (I'm not 100% sure when does it do
+it, but it did here), so please include a From: line here inthe body.
+
+And please add a short description here. Maybe the text below,
+preferably with uppercase letters )
+
+
+> Signed-off-by: slonkazoid <slonkazoid@slonk.ing>
+> ---
+> currently, the virtio-gpu module does not set a refresh rate, making it
+> default to 75Hz in the qemu edid generation logic. i wrote a sloppy patch
+> that adds a `refresh_rate` option to virtio-gpu, which propagates to all
+> the devices based on it (i was interested in virtio-vga-gl). it's not of
+> much use by itself but when combined with something like Sunshine or
+> looking-glass, it can provide *far* smoother guest graphics than the
+> inbuilt display devices. i have done a bare minimum amount of manual
+> testing (virtio-vga-gl with venus XOR amdgpu drm native context streaming
+> video games) and it functions as intended, and should not break the code
+> path to fetch the refresh rate from the active display device (?), however,
+> i have never contributed to QEMU before and i don't know the customs
+> concerning testing, documentation, etc. if there's more i should do, please
+> tell me! if this is something that would benefit QEMU, feel free to merge it.
+> it's probably not a copyrightable change anyways.
+
+I'm not sure why do you mention this? is there a copyright concern?
 
 > ---
->  hw/pci-host/q35.c         | 6 +++---
->  include/hw/pci-host/q35.h | 4 ++--
->  2 files changed, 5 insertions(+), 5 deletions(-)
+> Changes in v2:
+> - Update default value of refresh_rate to the old implied default of 75000
+> - Link to v1: https://lore.kernel.org/qemu-devel/20260414-virtio-gpu-refresh-rate-v1-1-59e6320eb24e@slonk.ing
+> ---
+>  hw/display/virtio-gpu-base.c   | 1 +
+>  include/hw/virtio/virtio-gpu.h | 4 +++-
+>  2 files changed, 4 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
-> index e85e4227b3..7368e3c598 100644
-> --- a/hw/pci-host/q35.c
-> +++ b/hw/pci-host/q35.c
-> @@ -306,12 +306,12 @@ static void mch_update_pciexbar(MCHPCIState *mch)
->          break;
->      case MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_128M:
->          length = 128 * 1024 * 1024;
-> -        addr_mask |= MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK |
-> -            MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK;
-> +        addr_mask |= MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK;
->          break;
->      case MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_64M:
->          length = 64 * 1024 * 1024;
-> -        addr_mask |= MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK;
-> +        addr_mask |= MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK |
-> +            MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK;
->          break;
->      case MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_RVD:
->          qemu_log_mask(LOG_GUEST_ERROR, "Q35: Reserved PCIEXBAR LENGTH\n");
-> diff --git a/include/hw/pci-host/q35.h b/include/hw/pci-host/q35.h
-> index ddafc3f2e3..f31a71010b 100644
-> --- a/include/hw/pci-host/q35.h
-> +++ b/include/hw/pci-host/q35.h
-> @@ -100,8 +100,8 @@ struct Q35PCIHost {
->  #define MCH_HOST_BRIDGE_PCIEXBAR_DEFAULT       0xb0000000
->  #define MCH_HOST_BRIDGE_PCIEXBAR_MAX           (0x10000000) /* 256M */
->  #define MCH_HOST_BRIDGE_PCIEXBAR_ADMSK         Q35_MASK(64, 35, 28)
-> -#define MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK      ((uint64_t)(1 << 26))
-> -#define MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK       ((uint64_t)(1 << 25))
-> +#define MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK      ((uint64_t)(1 << 27))
-> +#define MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK       ((uint64_t)(1 << 26))
->  #define MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_MASK   ((uint64_t)(0x3 << 1))
->  #define MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_256M   ((uint64_t)(0x0 << 1))
->  #define MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_128M   ((uint64_t)(0x1 << 1))
+> diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
+> index cb76302e2d..d87f6604d0 100644
+> --- a/hw/display/virtio-gpu-base.c
+> +++ b/hw/display/virtio-gpu-base.c
+> @@ -232,6 +232,7 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
+>  
+>      g->req_state[0].width = g->conf.xres;
+>      g->req_state[0].height = g->conf.yres;
+> +    g->req_state[0].refresh_rate = g->conf.refresh_rate;
+>  
+>      for (output_idx = 0, node = g->conf.outputs;
+>           node && output_idx < g->conf.max_outputs;
+> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+> index f69fc19462..e440535fa0 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -131,6 +131,7 @@ struct virtio_gpu_base_conf {
+>      uint32_t flags;
+>      uint32_t xres;
+>      uint32_t yres;
+> +    uint32_t refresh_rate;
+>      uint64_t hostmem;
+>      VirtIOGPUOutputList *outputs;
+>  };
+> @@ -176,7 +177,8 @@ struct VirtIOGPUBaseClass {
+>      DEFINE_PROP_BIT("edid", _state, _conf.flags, \
+>                      VIRTIO_GPU_FLAG_EDID_ENABLED, true), \
+>      DEFINE_PROP_UINT32("xres", _state, _conf.xres, 1280), \
+> -    DEFINE_PROP_UINT32("yres", _state, _conf.yres, 800)
+> +    DEFINE_PROP_UINT32("yres", _state, _conf.yres, 800), \
+> +    DEFINE_PROP_UINT32("refresh_rate", _state, _conf.refresh_rate, 75000)
+>  
+>  typedef struct VGPUDMABuf {
+>      QemuDmaBuf *buf;
+> 
+> ---
+> base-commit: 985062e2319e6bf4a4be9c216ede6d34379e5777
+> change-id: 20260414-virtio-gpu-refresh-rate-37b388e7dd72
+> 
+> Best regards,
 > -- 
-> 2.51.0
-> 
-> 
-> 
-> --
-> Thierry Escande | Vates XCP-ng Developer
-> 
-> XCP-ng & Xen Orchestra - Vates solutions
-> 
-> web: https://vates.tech
+> slonkazoid <slonkazoid@slonk.ing>
 
 
