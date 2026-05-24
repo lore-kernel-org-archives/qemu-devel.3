@@ -4,24 +4,22 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A14F1CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 May 2026 13:40:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9438CD5BAB
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 May 2026 13:40:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wR93C-0004q7-9j; Sun, 24 May 2026 09:39:30 -0400
+	id 1wR93e-00051O-2c; Sun, 24 May 2026 09:39:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Mitsuru.Kariya@oss.nttdata.com>)
- id 1wR3Mb-0008NZ-Ao
- for qemu-devel@nongnu.org; Sun, 24 May 2026 03:35:09 -0400
+ id 1wR3Mt-0008Qv-4F; Sun, 24 May 2026 03:35:27 -0400
 Received: from oss.nttdata.com ([49.212.34.109])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <Mitsuru.Kariya@oss.nttdata.com>)
- id 1wR3MZ-0002Pp-NQ
- for qemu-devel@nongnu.org; Sun, 24 May 2026 03:35:09 -0400
+ id 1wR3Mq-0002Dw-Up; Sun, 24 May 2026 03:35:26 -0400
 Received: by oss.nttdata.com (Postfix, from userid 1024)
- id 844D020202A5; Sun, 24 May 2026 16:35:05 +0900 (JST)
+ id E84822020286; Sun, 24 May 2026 16:34:59 +0900 (JST)
 From: Mitsuru Kariya <Mitsuru.Kariya@oss.nttdata.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -31,11 +29,12 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Peter Xu <peterx@redhat.com>, Jason Wang <jasowang@redhat.com>
-Subject: [PATCH 3/5] qemu-options: document keep-alive*/numeric/mptcp for
- -incoming tcp:
-Date: Sun, 24 May 2026 16:34:40 +0900
-Message-ID: <20260524073442.435408-4-Mitsuru.Kariya@oss.nttdata.com>
+ Peter Xu <peterx@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ qemu-stable@nongnu.org
+Subject: [PATCH 1/5] qemu-options: fix missing addr. prefix on -netdev stream
+ inet/unix options
+Date: Sun, 24 May 2026 16:34:38 +0900
+Message-ID: <20260524073442.435408-2-Mitsuru.Kariya@oss.nttdata.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260524073442.435408-1-Mitsuru.Kariya@oss.nttdata.com>
 References: <20260524073442.435408-1-Mitsuru.Kariya@oss.nttdata.com>
@@ -51,7 +50,7 @@ X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 24 May 2026 09:39:19 -0400
+X-Mailman-Approved-At: Sun, 24 May 2026 09:39:20 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,43 +65,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
--incoming tcp: and migrate tcp: parse their URIs through
-socket_parse() -> inet_parse(), which uses the inet_opts QemuOptsList
-(util/qemu-sockets.c).  That table has long accepted numeric, keep-alive
-and (when supported by the host) keep-alive-count, keep-alive-idle,
-keep-alive-interval and mptcp, but the -incoming synopsis only listed
-to/ipv4/ipv6.
+-netdev stream uses modern syntax parsed by netdev_parse_modern() which
+goes through the QAPI keyval visitor (qobject_input_visitor_new_str() ->
+keyval_parse() -> qobject_input_visitor_new_keyval() -> visit_type_Netdev()).
+Options nested under addr (of type SocketAddress) must therefore be
+written with the "addr." prefix: a top-level "keep-alive=on" is rejected
+by the QAPI input visitor with "Parameter 'keep-alive' is unexpected",
+because NetdevStreamOptions has no such member.
 
-List the other accepted options too, so the documentation matches what
-the parser actually supports.
+The documentation listed several InetSocketAddress members (to, numeric,
+keep-alive, mptcp, ipv4, ipv6) and UnixSocketAddress members (abstract,
+tight) without the prefix, which never actually worked.  Only
+addr.type/addr.host/addr.port/addr.path/addr.str were spelled correctly
+in the synopsis.
 
+Add the missing addr. prefix to all affected option names.
+
+Fixes: bb1326abd9df ("net: update netdev stream/dgram man page")
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Mitsuru Kariya <Mitsuru.Kariya@oss.nttdata.com>
 ---
- qemu-options.hx | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ qemu-options.hx | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
 diff --git a/qemu-options.hx b/qemu-options.hx
-index 7432b77571..d2b816e16f 100644
+index 96ae41f787..527fc12494 100644
 --- a/qemu-options.hx
 +++ b/qemu-options.hx
-@@ -5365,7 +5365,7 @@ SRST
- ERST
+@@ -3034,8 +3034,8 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
+     "-netdev socket,id=str[,fd=h][,udp=host:port][,localaddr=host:port]\n"
+     "                configure a network backend to connect to another network\n"
+     "                using an UDP tunnel\n"
+-    "-netdev stream,id=str[,server=on|off],addr.type=inet,addr.host=host,addr.port=port[,to=maxport][,numeric=on|off][,keep-alive=on|off][,mptcp=on|off][,addr.ipv4=on|off][,addr.ipv6=on|off][,reconnect-ms=milliseconds]\n"
+-    "-netdev stream,id=str[,server=on|off],addr.type=unix,addr.path=path[,abstract=on|off][,tight=on|off][,reconnect-ms=milliseconds]\n"
++    "-netdev stream,id=str[,server=on|off],addr.type=inet,addr.host=host,addr.port=port[,addr.to=maxport][,addr.numeric=on|off][,addr.keep-alive=on|off][,addr.mptcp=on|off][,addr.ipv4=on|off][,addr.ipv6=on|off][,reconnect-ms=milliseconds]\n"
++    "-netdev stream,id=str[,server=on|off],addr.type=unix,addr.path=path[,addr.abstract=on|off][,addr.tight=on|off][,reconnect-ms=milliseconds]\n"
+     "-netdev stream,id=str[,server=on|off],addr.type=fd,addr.str=file-descriptor[,reconnect-ms=milliseconds]\n"
+     "                configure a network backend to connect to another network\n"
+     "                using a socket connection in stream mode.\n"
+@@ -3640,7 +3640,7 @@ SRST
+                          -device e1000,netdev=n1,mac=52:54:00:12:34:56 \\
+                          -netdev socket,id=n1,mcast=239.192.168.1:1102,localaddr=1.2.3.4
  
- DEF("incoming", HAS_ARG, QEMU_OPTION_incoming, \
--    "-incoming tcp:[host]:port[,to=maxport][,ipv4=on|off][,ipv6=on|off]\n" \
-+    "-incoming tcp:[host]:port[,to=maxport][,numeric=on|off][,keep-alive=on|off][,keep-alive-count=count][,keep-alive-idle=idle][,keep-alive-interval=interval][,mptcp=on|off][,ipv4=on|off][,ipv6=on|off]\n" \
-     "-incoming rdma:host:port[,ipv4=on|off][,ipv6=on|off]\n" \
-     "-incoming unix:socketpath\n" \
-     "                prepare for incoming migration, listen on\n" \
-@@ -5387,7 +5387,7 @@ migration channel types.  The channel type is specified in <channel>,
- or is 'main' for all other forms of -incoming.  If multiple -incoming
- options are specified for a channel type, the last one takes precedence.
+-``-netdev stream,id=str[,server=on|off],addr.type=inet,addr.host=host,addr.port=port[,to=maxport][,numeric=on|off][,keep-alive=on|off][,mptcp=on|off][,addr.ipv4=on|off][,addr.ipv6=on|off][,reconnect-ms=milliseconds]``
++``-netdev stream,id=str[,server=on|off],addr.type=inet,addr.host=host,addr.port=port[,addr.to=maxport][,addr.numeric=on|off][,addr.keep-alive=on|off][,addr.mptcp=on|off][,addr.ipv4=on|off][,addr.ipv6=on|off][,reconnect-ms=milliseconds]``
+     Configure a network backend to connect to another QEMU virtual machine or a proxy using a TCP/IP socket.
  
--``-incoming tcp:[host]:port[,to=maxport][,ipv4=on|off][,ipv6=on|off]``
-+``-incoming tcp:[host]:port[,to=maxport][,numeric=on|off][,keep-alive=on|off][,keep-alive-count=count][,keep-alive-idle=idle][,keep-alive-interval=interval][,mptcp=on|off][,ipv4=on|off][,ipv6=on|off]``
-   \ 
- ``-incoming rdma:host:port[,ipv4=on|off][,ipv6=on|off]``
-     Prepare for incoming migration, listen on a given tcp port.
+     ``server=on|off``
+@@ -3649,22 +3649,22 @@ SRST
+     ``addr.host=host,addr.port=port``
+         socket address to listen on (server=on) or connect to (server=off)
+ 
+-    ``to=maxport``
++    ``addr.to=maxport``
+         if present, this is range of possible addresses, with port between ``port`` and ``maxport``.
+ 
+-    ``numeric=on|off``
++    ``addr.numeric=on|off``
+         if ``on`` ``host`` and ``port`` are guaranteed to be numeric, otherwise a name resolution should be attempted (default: ``off``)
+ 
+-    ``keep-alive=on|off``
++    ``addr.keep-alive=on|off``
+         enable keep-alive when connecting to this socket.  Not supported for passive sockets.
+ 
+-    ``mptcp=on|off``
++    ``addr.mptcp=on|off``
+         enable multipath TCP
+ 
+-    ``ipv4=on|off``
++    ``addr.ipv4=on|off``
+         whether to accept IPv4 addresses, default to try both IPv4 and IPv6
+ 
+-    ``ipv6=on|off``
++    ``addr.ipv6=on|off``
+         whether to accept IPv6 addresses, default to try both IPv4 and IPv6
+ 
+     ``reconnect-ms=milliseconds``
+@@ -3684,7 +3684,7 @@ SRST
+                       -device virtio-net,netdev=net0,mac=52:54:00:12:34:57 \\
+                       -netdev stream,id=net0,server=off,addr.type=inet,addr.host=localhost,addr.port=1234,reconnect-ms=5000
+ 
+-``-netdev stream,id=str[,server=on|off],addr.type=unix,addr.path=path[,abstract=on|off][,tight=on|off][,reconnect-ms=milliseconds]``
++``-netdev stream,id=str[,server=on|off],addr.type=unix,addr.path=path[,addr.abstract=on|off][,addr.tight=on|off][,reconnect-ms=milliseconds]``
+     Configure a network backend to connect to another QEMU virtual machine or a proxy using a stream oriented unix domain socket.
+ 
+     ``server=on|off``
+@@ -3693,10 +3693,10 @@ SRST
+     ``addr.path=path``
+         filesystem path to use
+ 
+-    ``abstract=on|off``
++    ``addr.abstract=on|off``
+         if ``on``, this is a Linux abstract socket address.
+ 
+-    ``tight=on|off``
++    ``addr.tight=on|off``
+         if false, pad an abstract socket address with enough null bytes to make it fill struct sockaddr_un member sun_path.
+ 
+     ``reconnect-ms=milliseconds``
 -- 
 2.43.0
 
