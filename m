@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70BFECD5BAB
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 May 2026 13:20:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 212BECD5BAB
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 May 2026 13:20:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wR8je-0006Za-LU; Sun, 24 May 2026 09:19:18 -0400
+	id 1wR8jk-0006aw-3V; Sun, 24 May 2026 09:19:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wR8jd-0006Yz-6q
- for qemu-devel@nongnu.org; Sun, 24 May 2026 09:19:17 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wR8ji-0006am-Mr
+ for qemu-devel@nongnu.org; Sun, 24 May 2026 09:19:22 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wR8jb-0005XS-EH
- for qemu-devel@nongnu.org; Sun, 24 May 2026 09:19:16 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wR8jh-0005aV-9L
+ for qemu-devel@nongnu.org; Sun, 24 May 2026 09:19:22 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id BB797429EB;
- Sun, 24 May 2026 13:19:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE471F000E9;
- Sun, 24 May 2026 13:19:10 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 7C0E0600AE;
+ Sun, 24 May 2026 13:19:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915E91F000E9;
+ Sun, 24 May 2026 13:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779628752;
- bh=J71lmpQ1Inbv6j2JQt92BaTazOoFiKOR/kHx7CQf58g=;
- h=From:To:Cc:Subject:Date;
- b=OdHrfN8gwuX6UiNEsdSYhTLF1LVYIrhvzxEJQoI0JBQDIJFqWK7x2ebMNHtUGLR2O
- Mo5qdWFgksOhMXYvaUNODhuET6o+qWmTYAEMc9RDTJmiVCf/pr5lpTI5woWwFSSq2K
- VNPKEqrMOK5/pULPpF1Mi4DRjgzZ3zlabqLz2HA21vfWQP7bDYSJqCgcnPt6UVM9Uf
- zLLyiai6Hgr9+CkT4WtqOECwzRdsGvli5bxKZO5Y+G1hoLWmZDx4uy/9tstEt+N/5R
- dz3tR5lt6Hp2zXChYHlw2x+LriDianbGXDn2W6RC5P9opVMkBvNwTVt881awVm1+b8
- bjBXQzUwOwN/w==
+ s=k20260515; t=1779628760;
+ bh=53stOSPzY4yCMB1+R3XmVCXAcTk/eugwWFbVqsrGjYM=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=QGfnkduHbymEOrRqDyZn6b3oIM02JD+UywPTicCP0lcuaUbu+dqYxuYpjjGyt3h0U
+ NIS//f2t/GniqKQW0TNbPrn81p4rNAzT+W0IPPv/SByobfm8belfh6KqQ9P4JWHFHK
+ dFnWfrWxjj3iZ20TumFCqmdx1bfUMNUnR5suwKGYN4YD2GX52ca5Cuh3tRImApVOTI
+ FaItXtPUAPI658oQx59Pdlqmvzqv8/dj6Ybr5iLA3qlFM4cWfJTXIJ/q+IIbJQYfMb
+ jisolk5I6EvPJEVenZRGUthzyFHO8NrRqsrve4P96ikg4+HdlNrMNEtatOTizsHxaI
+ WEuR7AEP/31BA==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Matt Turner <mattst88@gmail.com>, Helge Deller <deller@gmx.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 0/6] Linux user next patches
-Date: Sun, 24 May 2026 15:19:02 +0200
-Message-ID: <20260524131909.162990-1-deller@kernel.org>
+Subject: [PULL 4/6] linux-user/mips: use tswap32 in elf_core_copy_regs
+Date: Sun, 24 May 2026 15:19:06 +0200
+Message-ID: <20260524131909.162990-5-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260524131909.162990-1-deller@kernel.org>
+References: <20260524131909.162990-1-deller@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -69,60 +70,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Matt Turner <mattst88@gmail.com>
 
-The following changes since commit f5a2438405d4ae8b62de7c9b39fac0b2155ee544:
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+---
+ linux-user/mips/elfload.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-  Merge tag 'pull-qapi-2026-05-21' of https://repo.or.cz/qemu/armbru into staging (2026-05-21 09:00:22 -0400)
-
-are available in the Git repository at:
-
-  https://github.com/hdeller/qemu-hppa.git tags/linux-user-next-pull-request
-
-for you to fetch changes up to 975bd51a88792cb6a3596c7127a1009bb3a17f08:
-
-  linux-user/sh4: add VDSO support for sh4 and sh4eb (2026-05-24 15:07:28 +0200)
-
-----------------------------------------------------------------
-linux-user updates from Matt Turner
-
-Various linux-user updates and fixes from Matt Turner regarding VDSO and
-coredump support for hppa, mips, mips64, riscv and sh4.
-
-----------------------------------------------------------------
-
-Matt Turner (6):
-  linux-user/hppa: add coredump support
-  linux-user/mips64: fix elf_core_copy_regs register layout in core
-    files
-  linux-user/mips64: fix mipsn32 elf_core_copy_regs entry width
-  linux-user/mips: use tswap32 in elf_core_copy_regs
-  linux-user/riscv: add coredump support
-  linux-user/sh4: add VDSO support for sh4 and sh4eb
-
- linux-user/hppa/elfload.c       |  13 +++
- linux-user/hppa/target_elf.h    |  21 +++++
- linux-user/mips/elfload.c       |  16 ++--
- linux-user/mips64/elfload.c     |  44 ++++++++++
- linux-user/riscv/elfload.c      |   9 ++
- linux-user/riscv/target_elf.h   |   7 ++
- linux-user/sh4/Makefile.vdso    |  18 ++++
- linux-user/sh4/elfload.c        |  14 ++++
- linux-user/sh4/meson.build      |  12 +++
- linux-user/sh4/target_elf.h     |   1 +
- linux-user/sh4/vdso-asmoffset.h |  45 ++++++++++
- linux-user/sh4/vdso-be.so       | Bin 0 -> 2704 bytes
- linux-user/sh4/vdso-le.so       | Bin 0 -> 2704 bytes
- linux-user/sh4/vdso.S           | 142 ++++++++++++++++++++++++++++++++
- linux-user/sh4/vdso.ld          |  67 +++++++++++++++
- 15 files changed, 402 insertions(+), 7 deletions(-)
- create mode 100644 linux-user/sh4/Makefile.vdso
- create mode 100644 linux-user/sh4/vdso-asmoffset.h
- create mode 100755 linux-user/sh4/vdso-be.so
- create mode 100755 linux-user/sh4/vdso-le.so
- create mode 100644 linux-user/sh4/vdso.S
- create mode 100644 linux-user/sh4/vdso.ld
-
+diff --git a/linux-user/mips/elfload.c b/linux-user/mips/elfload.c
+index 1a46e180cf..ce2c4514f3 100644
+--- a/linux-user/mips/elfload.c
++++ b/linux-user/mips/elfload.c
+@@ -135,16 +135,16 @@ const char *get_elf_base_platform(CPUState *cs)
+ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
+ {
+     for (int i = 1; i < ARRAY_SIZE(env->active_tc.gpr); i++) {
+-        r->pt.regs[i] = tswapl(env->active_tc.gpr[i]);
++        r->pt.regs[i] = tswap32(env->active_tc.gpr[i]);
+     }
+ 
+     r->pt.regs[26] = 0;
+     r->pt.regs[27] = 0;
+-    r->pt.lo = tswapl(env->active_tc.LO[0]);
+-    r->pt.hi = tswapl(env->active_tc.HI[0]);
+-    r->pt.cp0_epc = tswapl(env->active_tc.PC);
+-    r->pt.cp0_badvaddr = tswapl(env->CP0_BadVAddr);
+-    r->pt.cp0_status = tswapl(env->CP0_Status);
+-    r->pt.cp0_cause = tswapl(env->CP0_Cause);
++    r->pt.lo = tswap32(env->active_tc.LO[0]);
++    r->pt.hi = tswap32(env->active_tc.HI[0]);
++    r->pt.cp0_epc = tswap32(env->active_tc.PC);
++    r->pt.cp0_badvaddr = tswap32(env->CP0_BadVAddr);
++    r->pt.cp0_status = tswap32(env->CP0_Status);
++    r->pt.cp0_cause = tswap32(env->CP0_Cause);
+ }
+ #endif
 -- 
 2.54.0
 
