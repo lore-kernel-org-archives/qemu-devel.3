@@ -4,146 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D3E8CD5BAB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20055CD5BB4
 	for <qemu-devel@archiver.kernel.org>; Sun, 24 May 2026 06:59:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wR2nv-0003LL-9d; Sun, 24 May 2026 02:59:19 -0400
+	id 1wR2ni-0003KK-Tl; Sun, 24 May 2026 02:59:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wR2nq-0003L4-BN
- for qemu-devel@nongnu.org; Sun, 24 May 2026 02:59:15 -0400
-Received: from mail-westus3azlp170120001.outbound.protection.outlook.com
- ([2a01:111:f403:c107::1] helo=PH8PR06CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wR2nd-0003Ju-Fs
+ for qemu-devel@nongnu.org; Sun, 24 May 2026 02:59:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wR2nn-0000C9-R0
- for qemu-devel@nongnu.org; Sun, 24 May 2026 02:59:13 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=dYsDpk6Ze+Va5TEVM7PfkHMy1AOsp1L2j6u8CdtFa7JHw5+mRHjPZKdUTi7M9bMYjud1qXSFJSmay5JvmWnQaT4/x70SO5K4DOur1YA45MJsf108STy29i5t1i2TQ87gyqBu5G/M1TsvMrGCjmD2G5NyvjAklC8gUYx46IGCK68RaJMnmrLCuKn9NYAFTHjpqEgQy7UOeugQF/X+Kc3YBZHRgawEAVnFCtr6gwGxtU/PtV33St4OOKiMVsmCctc4dvfg8Exe/WA3gLVRJndUvqI/L+ZQmiEuW/EXVpE8ooo5kSIwnKTSqo6q9TBmXv9Uvd/fXAJMaEdQgBcbKRaKjg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=v4tc3qHGEHhJIXLKedEEBhR4hkMFNQMIhrxOQ4Q/cWg=;
- b=kO9/jdEnfiLzSLdfJ73UYfKwnaNRorINKXCCuPFzU0FkB6gK9IFzbj8Y9LYaorQSPf7Y17naKyQK3/+Vr3otBdqsXMhhpPtLpy6bP5/FbOMkzMYZ+MXQqBM6Q1xA9C/xLVa81HINihtachLkl0y1z5b2THP+u75A9kPnkUjSrxgontNtURjOEhZB/ASRbFIIblI+e4LinqodwsrVzRezEXNSDRZNh9LKV5EYM4c/GTeK4ObgP9GlyeUmImBce9Q3qWtmEmEvPlP29lNan6xrnYYUtpmARbNd3eP594OSUslBQ+cvOcCK2yl1BKikvwyVTIBcx+h0FROucTtejgnWaA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=v4tc3qHGEHhJIXLKedEEBhR4hkMFNQMIhrxOQ4Q/cWg=;
- b=GTN/ckAi2BcvjBtKgadtYpCkYhG5WRw1t11uHU81MKejsWU5tYhA4lFnJsqjj8ZB4tPC/KwxwPOVIWIkyVxabzgMt0HtAMrOE9kq/43yupi57tsNVzDEXpQ31i2UHG/Z+qo901pEnEvuHmlER8GrKipqvWCgKY1o0NijyyT/yTHldO13KnGmJYfwbmftU7MnEeta+Jckl5ZQ8wxA7c8teKJOtpfYxRe0yMPF1//WevuTkFJADEO6gTZW9ISkbH9t5Xj6XYCIpllc8SiOCujNzU31RLcuou0gDt1XWm/RZANry7CLKnHLoCRmaFUvz9N5roIT+CZDOu1A3Q5Mnnc7EQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BL1PR12MB5063.namprd12.prod.outlook.com (2603:10b6:208:31a::11)
- by DS7PR12MB5838.namprd12.prod.outlook.com (2603:10b6:8:79::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.19; Sun, 24 May
- 2026 06:59:03 +0000
-Received: from BL1PR12MB5063.namprd12.prod.outlook.com
- ([fe80::a0c2:5681:4aca:90da]) by BL1PR12MB5063.namprd12.prod.outlook.com
- ([fe80::a0c2:5681:4aca:90da%7]) with mapi id 15.21.0048.016; Sun, 24 May 2026
- 06:59:03 +0000
-Message-ID: <2756b13a-498a-4e2d-a218-10b756e0bf5b@nvidia.com>
-Date: Sun, 24 May 2026 09:58:57 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/14] Make switchover-ack re-usable and add VFIO precopy
- REINIT feature
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Maor Gottlieb <maorg@nvidia.com>
-References: <20260505081423.28326-1-avihaih@nvidia.com>
- <agzDdH5vClAqwjAs@x1.local> <3a1d0bc7-7656-43f4-b763-5114d9dc57a0@nvidia.com>
- <ag8iwiwMz5IapU5i@x1.local>
-Content-Language: en-US
-From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <ag8iwiwMz5IapU5i@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TLZP290CA0007.ISRP290.PROD.OUTLOOK.COM (2603:1096:950:9::7)
- To BL1PR12MB5063.namprd12.prod.outlook.com
- (2603:10b6:208:31a::11)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wR2na-00004q-UT
+ for qemu-devel@nongnu.org; Sun, 24 May 2026 02:59:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779605935;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1NFLSivcclWCV2sCtRH9P5Pb5CBAnsIKZ1gnsz3RI44=;
+ b=VvSxPeKD/gWnDe5WLPfA6OPZ7Lb9RQN3OEHIbt3ihf0g8k+Bm2NmmIp99fonihfYJCWggH
+ lTY/ZubBsQqq7amF8axRY95sPU48zIMukLgnaz9BVu4tLX/WrlWLDbvU47paH5D+b/m6Ag
+ Kn0z6F/J+SYCMj9Jf9SRV5P2QAhRpbQ=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-393-TDUkeNsRO4K68rxgL5sLEA-1; Sun, 24 May 2026 02:58:53 -0400
+X-MC-Unique: TDUkeNsRO4K68rxgL5sLEA-1
+X-Mimecast-MFC-AGG-ID: TDUkeNsRO4K68rxgL5sLEA_1779605933
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-49051422d55so5773825e9.2
+ for <qemu-devel@nongnu.org>; Sat, 23 May 2026 23:58:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1779605932; x=1780210732; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=1NFLSivcclWCV2sCtRH9P5Pb5CBAnsIKZ1gnsz3RI44=;
+ b=R1P+uLhNQEYyHuNT1HbENvbIKyj9TsxUM5zmugRVCZB8nbNTGDV0nqBq250AEmFSlQ
+ VcIaMtlro/m2roo6T+TYKsLv7LlYbpsF+eBVbWf82HLidWcqXM3TTyvE3OTw5cTzXKtC
+ AnQ4XCfrS9axfyx7OJPlBFL5ISuCf7VPMJRDG3HDVUtYSeQtBjbX+1aHjmfVa6b+DhX9
+ 1Nu7N9D8ZIxTUYAeOTgOunQXq9sX5yIO+Znj39aL/m4gq+Z23O7KPDDoDyHp70wNC2qO
+ 9vP/3FaENFLbQ3Y2D1JpEO/Xj7eOoqcRU5AtC1MuvTdAg0T/vnz6O09fLj/WdCyc2cqw
+ th+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779605932; x=1780210732;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=1NFLSivcclWCV2sCtRH9P5Pb5CBAnsIKZ1gnsz3RI44=;
+ b=oXEI2juhorP8mH99MydhCncz3XaHQ8EXs5xJqA1SlpTzbSa5CCoK+vbknVhHnEbqi4
+ rwgWIPmASt4ndzBhJeKDvRpPMxfP2EqPCBjbUZX6T1CjWoJM0Dyx2+R+jlmqqnYjrhQf
+ Ax8n6O3hkLLzNLfkPqSjJaY8lJnrjFHv0LV8xAjBtR96/xtJi5qBLUPAhLbOLRBgRTV+
+ EI6lNV/EdhJ9WML9izfsyn8NcLRKnZASYHhV/mZFvcqvNajt5SwcBdbNz3wuew11OmAm
+ KG22loUuNIPVlZpL1yb9oJhbwN2Xp/egA+GIoBwxOibx59u7tpEaTek1/9dZiLI6ENKC
+ 9EEg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+PvU3ku7MyNVFWHWlIggCdZjIHrzGP9OK8daYN9Ok0s4n9BFQql40HBX69vjghV/9NxTedrXySfk/0@nongnu.org
+X-Gm-Message-State: AOJu0YzeJg+H7n/mMNmj951dWNwjlkucpqrr1hqK2fHF9LOgE3bqXGeJ
+ b24omR0XLMiU3xW0BdL6wEG9RsKo9UhjNG51rW9reqYn3oCif+LIRACpfFfzvnXssi6eIbcgOmV
+ qpc7YyO2qA7ioMiZljXbVur0/hXLg9LnDHyajcr5yF6TEey5z9dnFk0oY
+X-Gm-Gg: Acq92OFCNxOhZNoFci3AXuKvUEXthh/nSE4F6lmNibAXM0SMOCze0q9osQrTzA3qaB0
+ OSpaaAmVIYbBlqMyGGn9v+pHsrYbe6RG+JMJV8/dl62K5X94ulOiw+qpW/0N2Ez0ubPYifml9Lv
+ X+WSHp0jCq/z+mq5mzbz16pgi4QhE78ksmYLRWjumXLItKbk9r8yz+sPl3TV5LGqFkSTrOSkKxF
+ rUifBwMBRW7gwFJvP4AJDNPNxBYIQTNRQnOaftQ1RQTAz/X/ENKYkIykIWE0JAjrTVLV3TETedi
+ DE/FC+x/EPSRdvLmlBeEv3ONlZsmK6b8uCELGIwFX04absBJ1NMo3W6Wq4Fau5sMupngj4/6DY7
+ fSKHdNqfcQSxajub5mCA9umK9LUqPdQN3qglu7EXATTY=
+X-Received: by 2002:a05:600c:c10b:b0:489:e126:b757 with SMTP id
+ 5b1f17b1804b1-490426ddc41mr120366565e9.25.1779605932498; 
+ Sat, 23 May 2026 23:58:52 -0700 (PDT)
+X-Received: by 2002:a05:600c:c10b:b0:489:e126:b757 with SMTP id
+ 5b1f17b1804b1-490426ddc41mr120366445e9.25.1779605932075; 
+ Sat, 23 May 2026 23:58:52 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-25-45.inter.net.il. [80.230.25.45])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-490428d4c39sm54431285e9.20.2026.05.23.23.58.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 23 May 2026 23:58:51 -0700 (PDT)
+Date: Sun, 24 May 2026 02:58:48 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
+ yc-core@yandex-team.ru, d-tatianin@yandex-team.ru,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>, Raphael Norwitz <rnorwitz@nvidia.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ "open list:Block layer core" <qemu-block@nongnu.org>
+Subject: Re: [PATCH v6 04/22] vhost: move protocol_features to vhost_user
+Message-ID: <20260524025735-mutt-send-email-mst@kernel.org>
+References: <20260420200339.708640-1-vsementsov@yandex-team.ru>
+ <20260420200339.708640-5-vsementsov@yandex-team.ru>
+ <6b808fc2-a90e-4b25-84d2-d516eb176c8e@yandex-team.ru>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL1PR12MB5063:EE_|DS7PR12MB5838:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0b6e78d9-4695-4a47-df23-08deb961f08a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|7416014|376014|18002099003|56012099003|22082099003|11063799006|4143699003|6133799003;
-X-Microsoft-Antispam-Message-Info: Yt0KdjS1aYo5Pz5hL/y1FmzEAHm79ZhEITJ2YTc9RX153sbRrMx9TKEbo+k2SgiB6mzdeZJ1OE8IWdGgWCJbdq27y8TiyE9GIVtkMlJo/yxmmHpD5SOjq8YMHOSgvs39rMqnErCAk2m8qkLcKi8NwgFUoaDHFpJx4YFv4LlLQxGC7Il6vQ9g+vSF7DWZZNk6IIZhf6P4Xv2maqavuT1ARkNqtk58jndE7Og1ipQJ8Db5MCtQsZ5Lfp4wISRnmqWbkbJTKX1utIrzSf64ODpIIC/ulR03HgwBaR6alde9SdhMdPLtMn8b9/Tfx9STfU9sOyU4IxDb2BP9RAEG1Fsud6wTebfINLd7bAZrQCjhURbU3QEyvhKAWt/DYr6zn+dhQ9EuUCJca/3eteK5c/+X02EiqgV7nUl5j3e4HbZaWdsU28fsqnDqUvSZpXDE0ZabN7zfiHwXMKTW4N58rtEZTzmGENyKACd34uryEKcDviaXBl/2l324DTjWOuqSYtJ9KsD36/+clLwt1D3Zlg8hhaYjre8TxoH3JOYojI4KyjXYl0dY/UjlGIRVAzPb4P09dJGq+A+kSPqYqJQnG1ad39UopReyXtqsma6ANkQFjoLIKf82cfN1q1nzg1nBX97lg9LfmvFgnqkGp7OvryNiC/6+iva3m8L1JLwCQVu7hrRWJGzHTEznqoaO7uGn8h/p
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BL1PR12MB5063.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014)(18002099003)(56012099003)(22082099003)(11063799006)(4143699003)(6133799003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?U2t2NGczUVAvdDlKTHh3cjlNcnBRQmZ5MmVpU1kySkFMNGpXYmZCYWtOclBK?=
- =?utf-8?B?VnFVS3MwNHBpY2ladTk2RUI0TzRkckdGYm80QlpuakIrdWtyQkVrN3ZBaFBT?=
- =?utf-8?B?RkVFajVPbVIxVkNadjJUS1VabS9EQlFERXg3SWhJV2ZLNHpCb2JxUDlIVVFw?=
- =?utf-8?B?NFE1S1VvbFJKNGNENFlsZzFYRlJsYUQrOGtodEE5ZWhkb3FTUFhmeGh3d3FD?=
- =?utf-8?B?WDNzSXc1enYzNDNiL0JJV0U0SXRVdC85ZEFTS0o4bGdraXpEcFVPTjVqaGFn?=
- =?utf-8?B?SUV3cTBIWDh0R0FQV2p1RFcrV0dGODNwUVVsaGloRHBSU1NXSVkrYU9FRE14?=
- =?utf-8?B?T1pBTW40ajlrQmJqUXAwZ3NUeDB0NWtsN1NUTUU1cHlSTnZDaUhUL0tydEdh?=
- =?utf-8?B?ekIwbkJTbEVEWGVnTHVXS2xDRXRPVEhxV0ZOYkxVT0psYWVrQ0JqZmVIK2R3?=
- =?utf-8?B?RjVaNHZVbHBMS013OVBDYWVIMkUwdTBqd3k5Nmg3Qm5sQkdyNzNMVHV1ak1N?=
- =?utf-8?B?ai8zMGVickdmNUU0V1MxMThXWkYvTnlsdys5Q1VaWHEvUVFxU2JvV0V5ZXht?=
- =?utf-8?B?NWFpaVIzaU0ybjRxMlZidFA1TTRXNWFJY2l1RnVjK3Jmc2J0MENOZC9DMVdt?=
- =?utf-8?B?VWJEWGlpSDRxNnFPVzJER0ROOHg2WGdJbWVYcGtpd0UveDUvQmZtTWJvM0o4?=
- =?utf-8?B?QzZWWitFVmtjbWtNaEt6akdvVHkyMFZBTkJETnVGOVZEcVVFTW56V2JER21I?=
- =?utf-8?B?TTE0MFlUWUd6bDNRaUF2bW5mY3pER1FQeTRiZ1dZWFlJdXdKRWNnV0JZS0tO?=
- =?utf-8?B?N3ZVYjVibmNGeGZCMkltZjVoNHBieEdJR1RKSjY0dW1Ub3VFK0x0c05RWS9P?=
- =?utf-8?B?WnBOeUd0TGNWOTlaTCt1N2xsOWtzMjVDdi9XT3VOTWdia3EvU0hJbTNPY1lY?=
- =?utf-8?B?Mk9HSk5EZjZRMG1DbzF6SHhYQlIwbFlFVmRXLzVTZGVNeTVtSUpsNzgvVkh0?=
- =?utf-8?B?bDdNbkNaa3I0dTJNTnlRcDROanIydUVlaUZNMW9Bb21sazZOMURLMFl6R1pu?=
- =?utf-8?B?bGNmYVZjZ280bktUbWNqaWY3QlJCNnRCVUIrak1hOWozSzhBbng3VExjbmdH?=
- =?utf-8?B?OUI0SFhHWnM1STFlM251YmVmTDhOdzA1djBQcjJEN2J0Uy81eEg0bVlwdDFV?=
- =?utf-8?B?ZVRtR0x3Mmx0MkNWbjRSdDRCNlR2OHJzTHRRUTNYL0xUZE9HblJSZHNKUnhJ?=
- =?utf-8?B?akFhS05RNFZjTFd6NXNIbFJWK0dHdVo4UXNYTXBtVFVGcTAwRyt3VHhNNmU4?=
- =?utf-8?B?dGQvMVpjb2NBaWROeUZ1V1R4MUoxaUJJSEJHOVRpMzRRTWVRb1l1ZmV0V042?=
- =?utf-8?B?OTVCblhvdGpXUzdVOE1EajBPQzJQS1VaZG9MdlQ4TzBIV3diNEhtL0RCcTFx?=
- =?utf-8?B?Z05VRWlQcW1GU0R0V3MyZ0FhSzRUbDZHUXRHRHNEZzA1U1h3MVp4U3lqSlZ2?=
- =?utf-8?B?WS9oYUpxYWkwaFNSWWpaUkRtUERDUWxIUkRqTWZZVnlTbEJ2bXpHTzZISS84?=
- =?utf-8?B?OFhneEs5SVQxZzhYdDJYakZrZGpCZGxPcGFLSmgzMzdhcDNXMjNNMzdsMlNn?=
- =?utf-8?B?enBNUWluS00rTVZhanFYNmZQL0JXSlZOU2JWNEFYMUtMYWl1aThOeTcxOWlD?=
- =?utf-8?B?RXloYTIvZGVLU2hZVUlCUGs2RUVVRHRna2xWRTJ3T2VmYmp2cms5NmZGZTFu?=
- =?utf-8?B?UEQrUXlmakRXOFBNQXBuVkUxR0FnamYvZ094eWladXpFNXFOUkhFNjlUQ2tt?=
- =?utf-8?B?QVJ6clZsKzQyNUFLZGMvNjhoRGExN1U4YTF2VjBuTmhYdEJ6UGc2ZTU3aWFq?=
- =?utf-8?B?cjlDcWtVejVrTFBmUTh6YUxuR1dKc2gxd2d2OVBqbzJHNUhheE16a2FmclJN?=
- =?utf-8?B?TGpHeUx5SEVNQ3ZoeUpGVVp5aEc4Q0VDeHlyek9NcG1XK01ZVC9GK0FJay9q?=
- =?utf-8?B?Y1pndVBrUkt3a3JBV2xjVFBLalZNd0VyL2hqdWNyeXdLcWF3Ym84SDZ0VU45?=
- =?utf-8?B?YXVsUTgzWDB1ZExCVUdJYS84c2lPZEtqM3RHd1RlN05vWWFES3REaDM1eGM5?=
- =?utf-8?B?UTR1OGxrZnFQR1F1ckF6RnIrZWFvbHFJNFNDYkg5MytEVGlkRkJPWVZJb2Fq?=
- =?utf-8?B?QmUySzZ4Ly92WFZzZ1JYbnE2bHhPMlNJR2NXc05ya1ZxaHI3Q2c4RmlRTFo2?=
- =?utf-8?B?TDdaaUJJbDVMbjQ5SkFxcG9USENSYWpMTlVQNGtsM0lJdy9mV3ZQVTFqK3pm?=
- =?utf-8?B?ejE5OFpxTGRLRjFzMFAvQXNiMEQ1eDZ0WWVjZGhCV1c1bFAwSWRHZz09?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0b6e78d9-4695-4a47-df23-08deb961f08a
-X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5063.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 May 2026 06:59:03.4333 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: xJK7GaI9pHdcQ9MmtUuTyWvWQchE5uMudPNFgfehT63pf2uXyVHPngLUJdR6EAbcjdkdYskpa1EnNTgv47Z2vg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB5838
-Received-SPF: permerror client-ip=2a01:111:f403:c107::1;
- envelope-from=avihaih@nvidia.com;
- helo=PH8PR06CU001.outbound.protection.outlook.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6b808fc2-a90e-4b25-84d2-d516eb176c8e@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,93 +124,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, May 22, 2026 at 03:31:07PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 20.04.26 23:03, Vladimir Sementsov-Ogievskiy wrote:
+> > As comment says: it's only for vhost-user. So, let's move it
+> > to corresponding vhost backend realization.
+> > 
+> > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> > ---
+> >   backends/cryptodev-vhost.c     |  1 -
+> >   hw/block/vhost-user-blk.c      |  6 ++----
+> >   hw/net/vhost_net.c             |  2 --
+> >   hw/virtio/meson.build          |  3 +++
+> >   hw/virtio/vhost-user-stub.c    |  6 ++++++
+> >   hw/virtio/vhost-user.c         | 36 +++++++++++++++++++++++++++-------
+> >   hw/virtio/virtio-qmp.c         |  6 ++++--
+> >   include/hw/virtio/vhost-user.h |  4 ++++
+> >   include/hw/virtio/vhost.h      |  8 --------
+> >   9 files changed, 48 insertions(+), 24 deletions(-)
+> >   create mode 100644 hw/virtio/vhost-user-stub.c
+> > 
+> 
+> [..]
+> 
+> > diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
+> > index 415e359e9fc..adc3a4f748a 100644
+> > --- a/hw/virtio/meson.build
+> > +++ b/hw/virtio/meson.build
+> > @@ -43,6 +43,8 @@ if have_vhost
+> >                            if_true: files('vhost-user-input-pci.c'))
+> >       system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_SPI'],
+> >                            if_true: files('vhost-user-spi-pci.c'))
+> 
+> Small conflict, when applying to current master, as in master there is now
+> one more entry after CONFIG_VHOST_USER_SPI:
+> 
+>    system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_RTC'],
+>                         if_true: files('vhost-user-rtc-pci.c'))
+> 
+> so, "else" should go after this new CONFIG_VHOST_USER_RTC entry.
+> 
+> 
+> Let me know, if resend needed.
+> 
+> > +  else
+> > +    system_virtio_ss.add(files('vhost-user-stub.c'))
+> >     endif
+> >     if have_vhost_vdpa
+> >       system_virtio_ss.add(files('vhost-vdpa.c'))
+> > @@ -91,6 +93,7 @@ system_virtio_ss.add_all(when: 'CONFIG_VIRTIO_PCI', if_true: virtio_pci_ss)
+> >   system_ss.add_all(when: 'CONFIG_VIRTIO', if_true: system_virtio_ss)
+> >   stub_ss.add(files('vhost-stub.c'))
+> > +stub_ss.add(files('vhost-user-stub.c'))
+> >   stub_ss.add(files('virtio-stub.c'))
+> >   stub_ss.add(files('virtio-md-stubs.c'))
 
-On 5/21/2026 6:20 PM, Peter Xu wrote:
-> External email: Use caution opening links or attachments
->
->
-> On Thu, May 21, 2026 at 04:53:54PM +0300, Avihai Horon wrote:
->> On 5/19/2026 11:09 PM, Peter Xu wrote:
->>> External email: Use caution opening links or attachments
->>>
->>>
->>> On Tue, May 05, 2026 at 11:14:09AM +0300, Avihai Horon wrote:
->>>> Performance tests were done by migrating a single VM with:
->>>> * 8 GB RAM
->>>> * 4 mlx5 VFIO devices:
->>>>     - One device with 1GB of device data (stopcopy data) that runs
->>>>       workload during precopy so VFIO_PRECOPY_INFO_REINIT is exercised
->>>>       (generate new initial_bytes chunks during precopy).
->>> Could you elaborate a bit more on what workload is executed, and how that
->>> will affect REINIT reportings (e.g. is only one REINIT generated, or it
->>> keeps generating)?
->> Basically, I create and destroy RDMA resources (MRs, QPs, CQs, etc.) on the
->> VFIO device in a loop for several iterations.
->> This generates several REINITs.
->>
->>> Can I understand it in this way: without REINIT, device is forced to put
->>> those data into stopcopy size; then with REINIT, some stopcopy size is
->>> essentially moved back to precopy phase?
->> Almost:
->> Without REINIT, the device is forced to put this data in precopy
->> dirty_bytes.
->> With REINIT, this data can be put in precopy init_bytes (and do the
->> switchover-ack dance again).
-> Hmm, then I don't understand why moving some chunk of data from
-> precopy_bytes to init_bytes helps downtime.
->
-> Essentially, QEMU makes the switchover decision based on the math of:
->
->     init+dirty+stop
->     --------------- <= downtime_limit
->           bw
->
-> The possible min of above is:
->
->          stop
->     ---------------
->           bw
->
-> Here whether some data would be in init or precopy portion shouldn't matter
-> for a min downtime, since both portions are allowed to be moved during
-> precopy phase.
->
-> OTOH, if stop_bytes unchanged, min downtime is still the same before /
-> after supporting REINIT, if we try harder.
->
-> Say, with below testing results:
->
-> With VFIO_PRECOPY_INFO_REINIT:
->    1335ms total (~520ms from the VFIO device running the workload).
->
-> Without VFIO_PRECOPY_INFO_REINIT:
->    2352ms total (~1600ms from the VFIO device running the workload).
->
-> What is the downtime_limit you specified for both cases?  Have you tried to
-> specify lower downtime_limit than what you specified, so that both results
-> will become even closer (until they become, statistically, identical)?
->
-> In general, I can understand the REINIT will stop converging too early, but
-> it'll be the same IIUC just to turn the downtime_limit smaller..  IOW, I
-> may still miss some important piece of info that how this REINIT feature
-> helps downtime..
 
-The init_bytes are special in the sense that it's crucial that they are 
-transferred before switching over. Otherwise, VFIO precopy may not have 
-full effect which could make VFIO migration slower.
-Accordingly, their contribution to downtime may not be just the time it 
-takes to transfer them.
+I'm confused why would we add vhost-user-stub.c twice at all.
 
-Specifically for mlx5, init_bytes hold a small portion of metadata used 
-for time consuming pre-allocations on destination side. So, we may have 
-10MB of init_bytes which would take a fraction of a second to transfer, 
-but once reached destination, it could take even a few seconds to load them.
 
-When moving this data from dirty_bytes to init_bytes along with 
-switchover-ack, we guarantee that this long pre-allocation doesn't 
-happen during downtime. This is the time difference you see in the test 
-results.
-
-Thanks.
+> 
+> 
+> -- 
+> Best regards,
+> Vladimir
 
 
