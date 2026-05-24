@@ -4,99 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E97C9CD5BBF
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 May 2026 16:58:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C37AECD5BB1
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 May 2026 17:07:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRC94-0000Rr-Rf; Sun, 24 May 2026 12:57:46 -0400
+	id 1wRCHt-0002V4-Sn; Sun, 24 May 2026 13:06:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wRC92-0000Rj-Kq
- for qemu-devel@nongnu.org; Sun, 24 May 2026 12:57:44 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wRCHs-0002Uj-FA
+ for qemu-devel@nongnu.org; Sun, 24 May 2026 13:06:52 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wRC8z-0002OZ-K5
- for qemu-devel@nongnu.org; Sun, 24 May 2026 12:57:44 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-36a7bbb9698so1251143a91.2
- for <qemu-devel@nongnu.org>; Sun, 24 May 2026 09:57:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779641858; cv=none;
- d=google.com; s=arc-20240605;
- b=jLwLYvejcHoOqR6GWnZEXhMrKNFrcbUo4ksUHmLqst7ToRVV58DKmQdfwBCjfgNG16
- Ngc2dIBXTl545UYStmHm8VodKabH0jTrygCdIO7ALqIJegFGG/caChQp/6NPIyG43T3G
- 8xNDP6W8QHMOr7GM4BYveiPBw4ZPL4AOHpslTxrZkh3vxZB4UdaPyGrsbdYMtjVyIrsy
- JohqVnserV634D4MYFfwC8utNVibMh3jJ5YqILPgdDcvJAYzvi1RKNmxTW/nYGmIcUkN
- cFWIIaTg5f/AptNvcUggLDwd6RI6okGm/Po0iMOcNbE/PPuxkLXE+yJGw390gNsyq4/J
- fngg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=f4K/Z3KBAPgRLMANkM0OscBelFpROOvbTw8tzDAVweE=;
- fh=auXky6MbHvI/BelePkZYald8UfencEibALzsoTdXrYs=;
- b=YrIHu0CFKBVhK/OsAL47ouyHhs6UmFk8Cz9m6gjxALPGWwPqCP5Duz19X1ij5MtWZe
- YW1vcetW37soBs6IEx9AWb8aEySxTTlm0e3GQGbyXnUYkqhNk31vromOYOTNWmu/jO/O
- Vq1Wykaro3hT6uBTZeHcbnVnnlj+79yKMs3iOi+1sJQzWaFpSwV+muKAirqLOOLT6dHU
- ZKrQCmkq+4WZKCa4VVF8aj7k8P4CFZjLrV5LnTaX+YrGvnir794tKsuf4cRlOkSHv4VM
- iO1XQLsv5HSkGrq3U0l7/C8ofyALbNfadRddznihWK7/QmNiFGahd/CIGpqvqEc9b8Z8
- hwuw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wRCHq-0004UE-8P
+ for qemu-devel@nongnu.org; Sun, 24 May 2026 13:06:52 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-48e6db3ff7eso45833995e9.0
+ for <qemu-devel@nongnu.org>; Sun, 24 May 2026 10:06:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779641858; x=1780246658;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=f4K/Z3KBAPgRLMANkM0OscBelFpROOvbTw8tzDAVweE=;
- b=tLYPdvjKdtEXh4Ofu0c/Tz7d5eHQe7btMLZXAithFyBjLpAmOY0kzdIBHQCPX3quT7
- 0aARlf+6bq0Rv5KUDM0fEdoo7+O3H3i4gscDZFt/JbjbKPu6l+UuUL4DglsitVxmnrQk
- vpJIFJi9GoNKVcadIoo+e4Uzml0rNXVFvmveyowBJxG5Tj5Dyxc8aJNdQErQu5EtsfEz
- /tD7hgyIqQRTFmtb1czzNde3N3bHi78gDuVjZ5xNl0Hd9/H+qOYSc1oLVRE3GPlpMjd/
- iBTSWJ3AUJ5efMQFt3NQbFrNnLv3D5qhs/m4Z5FzXQflasycxJFaWVi4tNCCVkF9nNxw
- l1RA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779641858; x=1780246658;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1779642408; x=1780247208; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=f4K/Z3KBAPgRLMANkM0OscBelFpROOvbTw8tzDAVweE=;
- b=XTZqmPq6gqnPzMBVajhVYpnFJqt7Hz/17Pm1kREnlLeV/U0iyfKyTjTg44B1QUw7hM
- Su5FZl/W64mBz6W4YI5nJshW9p7heT+Ra+PYSBadyScpJoJbfbzdZOuPMYW6oHauD+mL
- XKuKBZraLrFUT9uOrh7zRjrSiiWANLmLhof13OmQ+0af7KeOa8DVAcltWaLBFj3zAYyx
- orGKIFQzgViyEiNzRMZz9TB/YgWOKOEDxwCeyrl92u5AOP52fgAPP2E7liEUFBNkimFW
- kL3G2+A9jn5Ac3nGODCTwn7veWq17Q9m4LWKzPU/xmiNlN/HOT5GdX5tf3QOHGBTVO3W
- +y1w==
-X-Gm-Message-State: AOJu0Yw2EMcINMvLgOh2moBlbcV2AtAmXkiy3RaSheFf9ujOVK5uX3y2
- BRpX9Qnp7PZkNMvP0XAggWCYxbGgO9GLeaGijjpVmCtdfEycHWHlKK5cXx+s8dQqAiSA88Begm1
- ZucPPQMKqKmZEHwa+KyAldOTGQO5RdRZrvFu1oh7Tbw==
-X-Gm-Gg: Acq92OG4bRZ0a4RKBbTzxacFCvhnN11fnpqw6jakE4gbU3ebPK++rTKdzt1C4pidDEF
- 70T/CnBIO2i1KodMxPvTCwoSovbOs7K8ZXuomFiHdmf3uqSvZezjIxTxeDh/WJtCPzxF/frwszw
- cprx0ApNWHEZa4wkSJjWlm2klBrjZ7UuZi66pHVHctFMtQXc1z4JuF/Jsy4g+vhIyTQzsFf4MYA
- kvGADMSZD8fZ3SM7ffTjDaeFqC7u3f8+KBU6Bo7RsoxAMIq11y9Z1HxireT8izcSxmWKgrk6GJ4
- cJUUTENAqRMQTa0LCgy78UVFcVJDPAIrVQs=
-X-Received: by 2002:a17:90b:3fc7:b0:35b:9894:f6f9 with SMTP id
- 98e67ed59e1d1-36a6765a2e6mr11391003a91.18.1779641858230; Sun, 24 May 2026
- 09:57:38 -0700 (PDT)
+ bh=o34QGNwP+05x1iRjGNlqyIJppK1GOlWgfS0F58eOXFc=;
+ b=OXbbfLL9OK6ZUnLyZipyrFdA9/U9MADnPXwbO2XM7Xiw1QtkODjFZamN06vUQ/v5az
+ 9bdmcWDMszpEHLoNqNlhbH33B0sVo0k7OwnEjdvL+fOlTcayh1OlX5JwHyc7sN8jKVUV
+ DnCeoWHMR5Dc7B9xytdINzzsesTZVNAMeJJpTqrIRiSBofZpz6uJh5zwCiw1yh8Svyn+
+ HyKwZrN40ov2YD2guE4N2+DNeSAJP8xxxFxzDbywUXaxfuEjxpEMsM11wjYIAgVA2xgs
+ mR+1TqqIJCxJG9iGgNeca4QiKNev5BWWhrDKn1GzVBV5smGHvU2KP7ylo1aR2hWD7kxZ
+ 5Pow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779642408; x=1780247208;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=o34QGNwP+05x1iRjGNlqyIJppK1GOlWgfS0F58eOXFc=;
+ b=sEh6l7M3d0Ha49TZ3N94lqPDNVhAgo7AIhsHCFbeRBWX5buY0PHhNcr779URJTu1/D
+ bN2YPdL6jEizBsi/qTGJOYixDUwLfHIfn+FFN+Z32vEIHEiZBBHafwzDYMdcsvxqlSEU
+ hyGw0H9Dg0pKSYo4LxG4Om7f2WUBjJBQYNYYU4ARQt/V4cJm+4+6PiFOP988ptPBFbHZ
+ qDiYx2i0lvcw3tVvIRApO4MfA3pxnZ0klQb/Xf88Qq4570q3nTq28TR7LuQ6/eJVUYPd
+ EUfXQK7fjufcLRfyv3cLXLJ6itpmOh+SpA87ISjBZtCR2SNIaBJ6pnm3BrUizUY0hqOX
+ 7kkQ==
+X-Gm-Message-State: AOJu0Yz9UEu52ch46wHfKLlgUoa/w9aJbaqnUwQg/MYUhZCR4EZlj1Dx
+ M+HXByMcLZlCJL7bMSL2sc3QaBRl8JJ4HME/ogRyhdl95Q1qkvateJChca5fzb2++7bQ+vv6jZL
+ unS+z
+X-Gm-Gg: Acq92OFrzpXydEstP5HkY+CMnQVc3B1KZxLf3/9YeBSXdtdsvIAiZVXP89CLa9VMUVU
+ 3gD4NByB7TC8OWzVUo7iW92Y8v3FrHiv21E8KdsRSWZ74EYqjmJTHrg88Vj2wPWAK1PseJdBYs5
+ 18i5r/wKCJ1mHeE1X44CMs5Ej8PN4z1sjBYtdsY4gvqsojqlw1ebqpQdtP7rmg60z+1iUtLWLC2
+ kPniRxTUlkNCzXNP1FRiHkivbh5ylBe+OqKYkbFQxkvwM9ECvrWqAAc5jXvHtnCGh+BCFOzE9pp
+ BCcecMAAmn16jgItbAfrQosd3g5KUkLpHN6dkqx0aHzCz643oJ5Flys5JbBcNwmPESoHUWXp+Wm
+ 4pWYSiE53hfXu/uXV5R+hubL2YAf0ulOk7TriK0mvsP6fWLGwxYAhOlj52r0RN24uUnYZF096V8
+ uskUDfuWMKj4stN5m1hksCBqM=
+X-Received: by 2002:a05:600c:c4a3:b0:488:ac01:72b6 with SMTP id
+ 5b1f17b1804b1-490426ceed2mr190622185e9.21.1779642408084; 
+ Sun, 24 May 2026 10:06:48 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4904526c926sm320930505e9.1.2026.05.24.10.06.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 24 May 2026 10:06:47 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 7D4255F7E4;
+ Sun, 24 May 2026 18:06:46 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org,  stefanha@redhat.com
+Subject: Re: on ai generated and code provenance
+In-Reply-To: <20260524083329-mutt-send-email-mst@kernel.org> (Michael S.
+ Tsirkin's message of "Sun, 24 May 2026 08:42:39 -0400")
+References: <20260524083329-mutt-send-email-mst@kernel.org>
+User-Agent: mu4e 1.14.1; emacs 30.1
+Date: Sun, 24 May 2026 18:06:46 +0100
+Message-ID: <87v7ccd9eh.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <CANCZdfr6xs9n8sF8AXVWVu9i2_rViKErrMHAVbopnaor4uCN6A@mail.gmail.com>
- <875x8g1pmi.fsf@draig.linaro.org>
-In-Reply-To: <875x8g1pmi.fsf@draig.linaro.org>
-From: Warner Losh <imp@bsdimp.com>
-Date: Sun, 24 May 2026 10:57:26 -0600
-X-Gm-Features: AVHnY4JZ8Mu3JVHSne3yojDIEqa7pwo_ITD_bkfEeUih0cMRznMYKzbx4HjE4lY
-Message-ID: <CANCZdfqT7r9jcTuiwe3=CcjRExL-FP1msx-Q8ftQM5amJ_t0YQ@mail.gmail.com>
-Subject: Re: Question about tb_flush()
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: QEMU Developers <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000c99cb20652932832"
-Received-SPF: none client-ip=2607:f8b0:4864:20::102d;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x102d.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,110 +104,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000c99cb20652932832
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+"Michael S. Tsirkin" <mst@redhat.com> writes:
 
-On Sun, Feb 1, 2026 at 7:54=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@linaro=
-.org> wrote:
-
-> Warner Losh <imp@bsdimp.com> writes:
+> So, I had to reject a perfectly reasonable patch:
+> https://lore.kernel.org/qemu-devel/20260320193746.242704-1-jinpu.wang@ion=
+os.com/
+> just because of a tool used to make it.
 >
-> > OK. I've updated bsd-user fork from last year to yesterday. I had one
-> question.
-> >
-> > I see that we've gone from tb_flush() to queue_tb_flush(). Why was that=
-?
-> And is it a drop in?
-> > FreeBSD's fork has this in the thread creation:
-> >
-> >     /*
-> >      * If this is our first additional thread, we need to ensure we
-> >      * generate code for parallel execution and flush old translations.
-> >      * Do this now so that the copy gets CF_PARALLEL too.
-> >      */
-> >     if (!(cpu->tcg_cflags & CF_PARALLEL)) {
-> >         cpu->tcg_cflags |=3D CF_PARALLEL;
-> >         tb_flush(cpu);
-> >     }
-> >
-> > I think the right thing to do is to just change this to
-> queue_tb_flush(cpu), and that compiles. I'd like to get some confirmation=
-,
-> though.
-> > Did I parse the changes right?
 >
-> Yes, because ultimately we use safe work which:
+> 	How contributors could comply with DCO terms (b) or (c) for the output o=
+f AI
+> 	content generators commonly available today is unclear.  The QEMU projec=
+t is
+> 	not willing or able to accept the legal risks of non-compliance.
+
+In the linked case the LLM is basically doing a glorified search and
+replace. There seems to be no danger of accidentally regurgitating any
+training data which is where the worry about inadvertent copyright
+infringement comes from.
+
+That said in my experience generally any code that does come out from
+these tools tends to match the local code style and patterns pretty
+well. As a general purpose boilerplate generator they are probably
+better than a lot of people at this point.
+
+There has been some case law now that says LLM output could be
+un-copyrightable depending on how involved the user was in the iteration
+of the code. I suspect there is still more to come.
+
 >
->  * Schedules the function @func for execution on the vCPU @cpu
-> asynchronously,
->  * while all other vCPUs are sleeping.
 >
-
-So I've done this in the latest blitz branch. I encountered one gotcha. I
-replaced it in the one place, but that didn't work too well. I finally
-tracked down the issue: I had implemented the change in only one place
-instead of the three required locations. I also had to bring the
-begin_parallel_context() function over from linux-user. I like
-user-internal.h that's in linux user. What is your touchstone for deciding
-where that code belongs in it? I'd like to do the same in bsd-user once my
-upstream focus shift to refinement of blitz and maybe my next cool thing
-there.
-
-Warner
-
---000000000000c99cb20652932832
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, Feb 1, =
-2026 at 7:54=E2=80=AFAM Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@=
-linaro.org">alex.bennee@linaro.org</a>&gt; wrote:<br></div><blockquote clas=
-s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
-gb(204,204,204);padding-left:1ex">Warner Losh &lt;<a href=3D"mailto:imp@bsd=
-imp.com" target=3D"_blank">imp@bsdimp.com</a>&gt; writes:<br>
-<br>
-&gt; OK. I&#39;ve updated bsd-user fork from last year to yesterday. I had =
-one question.<br>
-&gt;<br>
-&gt; I see that we&#39;ve gone from tb_flush() to queue_tb_flush(). Why was=
- that? And is it a drop in?<br>
-&gt; FreeBSD&#39;s fork has this in the thread creation:<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0/*<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 * If this is our first additional thread, we need =
-to ensure we<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 * generate code for parallel execution and flush o=
-ld translations.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 * Do this now so that the copy gets CF_PARALLEL to=
-o.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 */<br>
-&gt;=C2=A0 =C2=A0 =C2=A0if (!(cpu-&gt;tcg_cflags &amp; CF_PARALLEL)) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cpu-&gt;tcg_cflags |=3D CF_PARALLEL;<=
-br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0tb_flush(cpu);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0}<br>
-&gt;<br>
-&gt; I think the right thing to do is to just change this to queue_tb_flush=
-(cpu), and that compiles. I&#39;d like to get some confirmation, though.<br=
+> But, since this was written, Red Hat's Richard Fontana and Chris Wright
+> published this piece:
+> https://www.redhat.com/en/blog/ai-assisted-development-and-open-source-na=
+vigating-legal-issues
 >
-&gt; Did I parse the changes right?<br>
-<br>
-Yes, because ultimately we use safe work which:<br>
-<br>
-=C2=A0* Schedules the function @func for execution on the vCPU @cpu asynchr=
-onously,<br>
-=C2=A0* while all other vCPUs are sleeping.<br></blockquote><div><br></div>=
-<div>So I&#39;ve done this in the latest blitz branch. I encountered one go=
-tcha.=C2=A0I replaced it in the one place, but that didn&#39;t work too wel=
-l. I finally tracked down the issue: I had implemented the change in only o=
-ne place instead of the three required locations.=C2=A0I also had to bring =
-the begin_parallel_context() function over from linux-user. I like user-int=
-ernal.h that&#39;s in linux user. What is your touchstone for deciding wher=
-e that code belongs in it? I&#39;d like to do the same in bsd-user once my =
-upstream focus shift to refinement of blitz and maybe my next cool thing th=
-ere.</div><div><br></div><div>Warner</div></div></div>
+>
+> Saying, in particular "
+> 	We understand this concern, but the DCO has never
+> 	been interpreted to require that every line of a contribution must be
+> 	the personal creative expression of the contributor or another human
+> 	developer.=20
+> "
+>
+> I propose adopting linux's rules instead:
+> https://docs.kernel.org/process/coding-assistants.html
+>
+> which boils down to attribution.
 
---000000000000c99cb20652932832--
+attribution and *ownership*. I think the key point of the policy is to
+make the actual engineer signing the DCO the responsible one for
+generating, testing and validating the code. It is strongly trying to
+suggest that vibe-coded slop isn't wanted.
+
+I still have concerns about the quality of the code and the
+"understanding" these models have. They can generate very convincing
+rationales for their decisions but they also are prone to being
+over-verbose and over-complicating the solutions. They have a tendency
+to chase down rabbit holes in the code and get lost while making wilder
+and more invasive changes to try and get things working.
+
+That said for personal scripts or random experiments the ability to
+quickly get to a PoC is pretty great.
+
+I think there is also scope for using LLMs for things that aren't
+directly writing code:
+
+  - code review
+  - investigation
+  - generating test cases
+  - polishing documentation
+
+and I wonder if we should spend some more time investigating the
+performance and pitfalls of LLMs before we open the flood gates to the
+code.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
