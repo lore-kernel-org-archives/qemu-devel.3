@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0987FCD5BAB
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 May 2026 07:28:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C060CD5BAB
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 May 2026 07:44:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wR3FK-0007Kk-E2; Sun, 24 May 2026 03:27:38 -0400
+	id 1wR3VH-0001mD-Mw; Sun, 24 May 2026 03:44:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wR3FI-0007KU-Rr
- for qemu-devel@nongnu.org; Sun, 24 May 2026 03:27:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wR3V9-0001kW-DJ
+ for qemu-devel@nongnu.org; Sun, 24 May 2026 03:44:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wR3FF-0008Op-Vk
- for qemu-devel@nongnu.org; Sun, 24 May 2026 03:27:36 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wR3V7-0005E3-3r
+ for qemu-devel@nongnu.org; Sun, 24 May 2026 03:43:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779607651;
+ s=mimecast20190719; t=1779608634;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ZxhD+oPNzxpDNMc3FLT/7Y70luC3EVY6qa2hhkOcukw=;
- b=efK7z89bPd5hRr/8DvaR/8w3vxgj79hg6c7x0cyJCUkFbrTHxAqlFd+VGKAi8d2x/J23OM
- YxtMA17Oyi/w8ZNjgZEDta1obtc4096BzCkiP/TMrCQUKXeCyP+TFLXlpWCuD2VyaFSKRV
- nX44xr3D9y6cajZu537KCt4j+PzdS2E=
+ bh=d31P/47NSDwQAWFSW6gul/ImIejpiWKEwkFsv0GPKu4=;
+ b=diNJKyzYDDaWkddZ5FL0ZC/01IpXKGoVX4Ae20hxLSHR7ywrJbMHXgwtG5eW4EtuaRw5nn
+ kWNOc5LzOUsExo/LHM3PAbUaf7j1eVleMe3k3l9qVpKUXaqfawq4pGNWDgsPRLSpSl8jp6
+ y3sKZFyXvBNip4cDuoNggmieSVld0P8=
 Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
  [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-516-39AagrcwMbqbmgKhIZsBHg-1; Sun, 24 May 2026 03:27:29 -0400
-X-MC-Unique: 39AagrcwMbqbmgKhIZsBHg-1
-X-Mimecast-MFC-AGG-ID: 39AagrcwMbqbmgKhIZsBHg_1779607648
+ us-mta-323-YoUY8Q9dOhKBOUO2CZ9N3A-1; Sun, 24 May 2026 03:43:52 -0400
+X-MC-Unique: YoUY8Q9dOhKBOUO2CZ9N3A-1
+X-Mimecast-MFC-AGG-ID: YoUY8Q9dOhKBOUO2CZ9N3A_1779608631
 Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49058e91639so3401065e9.3
- for <qemu-devel@nongnu.org>; Sun, 24 May 2026 00:27:29 -0700 (PDT)
+ 5b1f17b1804b1-49041d39887so15178965e9.2
+ for <qemu-devel@nongnu.org>; Sun, 24 May 2026 00:43:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779607648; x=1780212448; darn=nongnu.org;
+ d=redhat.com; s=google; t=1779608631; x=1780213431; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=ZxhD+oPNzxpDNMc3FLT/7Y70luC3EVY6qa2hhkOcukw=;
- b=W43EXWxeBmnB+nG6zCr4xJpWfaLL+aUYRe2XiwWMvrvVRb+JLwPppaOhgHRl88CDma
- Ww53kcJhYF0pilNgLKAVA/6yW7tYy982RGfEh3n0/L1z2t2CYlzQoBg7dds/bIw7fXFs
- etc/zNETk3zkUORYouQW9CvQ6dvWRHq4Qpz8X7jq0Cal7655oZAblKPA0lTjd4cM+FCW
- 2Ydn0sinKzMWQMH0SK6PDA8HhiIGxOWoXMWr04TQV2QVWsedDeLIOIg6C6zK0HVre1+c
- OTB9I9C89lPDw+dz0FCUsWApEopfUv8GcCHnVTlWWqpbofeJ0buRoph5tMlntAk6PQEA
- y/Rw==
+ bh=d31P/47NSDwQAWFSW6gul/ImIejpiWKEwkFsv0GPKu4=;
+ b=PrJJJyGcR1D+R+aK+XWi4SJOa6tNkuL070c+TA6Ejjg8VjIcc6ATBfLcljAAR+Xb8g
+ WwSewrIRkysYvlzf2WlRllsU7ZvUtdwwu51TP7bZJ0GAag/Afjrza5N2o9zS536bSyGH
+ xXctr9LPj64VfRL4ZYW7Nc4Sgb46KJJkjjCQHJDYAE3uhGK2GnfgMBeaE6LgYHJhJ3NI
+ AfiEUIDUgOju00I5+91t2zfIoEwZsplhHoxAQeZfkHl8Du9P9KhdW5Gxsvnba5RS01+J
+ SqgdroFjOxWnZMy4apEKeuQhPbmHplf0lZjJZpNSfA4RyYD+q7rQq7p2tKbdwVQYKO7x
+ iG5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779607648; x=1780212448;
+ d=1e100.net; s=20251104; t=1779608631; x=1780213431;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZxhD+oPNzxpDNMc3FLT/7Y70luC3EVY6qa2hhkOcukw=;
- b=Nb2l+y7OlbpU1p7tcMcSmA/B6FDjpxyRmixdGnINXEXbY4YLX40MRYQ1NBcM+/2W/9
- FoSmgQMhNIGIy4ud5G5qwppjhD4+CPdGEhJj+ukSUGIZqCH3IDTCJhMGV83RChygCg2v
- 7Rvjr1OSy7ZwSRzKt3A+ZeA6mbymIM96Tzhq4R7Yb2Q1YoRxlcfmwHGcbqhsJLHnm5rZ
- hMEfwis/SCMQ0wT7LkPFKR1D8EYDNmb922eaLsFu+K952LHoWALqgzkookMaY2AiEJ4h
- Gcs2sIQJwCQ9jVuEjcCm1YDCM4XgaRmpWm28d/kpu4u78x8nIeEou0MUWnLyELPJ+ico
- XuIg==
-X-Gm-Message-State: AOJu0YwoUnDGTesQ8Z8QPzb5r2GsOIPVMATutDWNTeAUoAZMbeo11bUf
- X9NfRgNwogREBAmEvF7WEMjbIxp6SrrOiIqrjZOolKB9xw4pRSifEMwkDAuG7whNs5PUsDJYHiE
- GGC0So+lbpDU/abpnRMdTToavmbAOrX+CwGo4blFR8w52HsuIzHiik1RF
-X-Gm-Gg: Acq92OFQgeGWjfeOwX+6IjWMmMjrMjYk/mQzpkR3jfU43YRZ8s2ZXO9J/mt4sTeES1v
- uYqPPMwPVQZbH12B3fz/tSKTp9g+P33eRAE6b5raE5fZFPQ1VPMDltha5Eh5Q2ki23MIrVEfMUb
- PJxqwAEAsLmRAlLRJewPhx+y5umZWwYc0bD20jwzxjlV+U5GB9WJDrA8jF6plt767m0cfdzGCxH
- e16pb/NdAS8HZLIcrJiDjou/dsZ/EIUutZiFu8O7v6YMqk//uGAu48kSDcTGcro67myPDNtjOXl
- f4mFQ4AOOKiiC5aD6RlNK5rY6ajLCkFux5I/cFh1qkjhQhLTxavVtWcQ2Iu9QTQp1Ca3EalJtqR
- Ym2CUiD3qQ0cTh5pulU9mKk9NKiIhbo7Ov5Iam+HZqbM=
-X-Received: by 2002:a05:600c:5298:b0:490:778:4fec with SMTP id
- 5b1f17b1804b1-490428e02d3mr167202455e9.33.1779607648209; 
- Sun, 24 May 2026 00:27:28 -0700 (PDT)
-X-Received: by 2002:a05:600c:5298:b0:490:778:4fec with SMTP id
- 5b1f17b1804b1-490428e02d3mr167202145e9.33.1779607647720; 
- Sun, 24 May 2026 00:27:27 -0700 (PDT)
+ bh=d31P/47NSDwQAWFSW6gul/ImIejpiWKEwkFsv0GPKu4=;
+ b=UPeFs8+4DkcQ06egO4yHcFNbWsbeA2iJjNrPUoRKFcmaNcBPbwxPQg3OYhhC423LE4
+ Ou0UlSNlD7DLNBT+za239DMPq5XP8OYrYVqHo2z4SMhDcivXAcKTwtXts67V5k3ZGvp4
+ WseTB3ir7FEcUG4DmhFl/i8xFt8V+59xefpM5ty9TG7kXxYw7TR8Sho5/tr8PzZGoR2k
+ cZ+xtjq7KLIPl95TxoW1t7oHRJWYwEhs4+9UjHvM78GHrTk9dnfpjtaZ0DTUZdhZ42ao
+ 8Km58HHxY+yXmqaS5EWFuOiOHQMhmcfbrqkiIa+G7rxoy3l+25DcLvtFikud9bOLb4/w
+ Nu0w==
+X-Gm-Message-State: AOJu0YyWYL6j6iQ2wqZNVgeAd9lq4sSWA/MyKxYjfCk1tiaaPxIROJwY
+ 4N9tB353b34vJ+uNvJiSedQBD0lot/BuLsrXPrJ8gM68H3PqDweq4A3bf+jJPsjJxxFJtLdIwK1
+ oHvVjFvE5vDjoNZpSZOw8yhV3V6/hH6Sq8Uw0cfuPpaKoVEwXNnyhoppZ
+X-Gm-Gg: Acq92OHVwPAhwdINCT7par8+K+NkfuTdIT3YWhFutZUNO0t/BswIX7WpvkwyiKUb0pF
+ ZtNJsmSOmFqpAyGvLvc6+8gZuanemxPbXIHdlHkA4eILjsnwF22sQp2qx5xiFpw8IteF1Ucx5xp
+ jNxdA4l9LgXqaW8rZ8vSdwLUFRwQoclUNDfQeDAW6zpZ7d0B642fGGkseA8f09mbV90y56en9Dt
+ DDECqgtENhcOD+zFd6HuuXWBxyW1wGOrn1EJZ36dgU/k2RwYzumjtmAmzyHqvyt5Hnk6CYPOxer
+ snxpecVp3PZwzhDmF0JqfiFBBRRV/oloqBiyqfmKtY3wY9XwKPExH8ArA5Xb1W/zXIWLsB4hDgf
+ nzmHxoU2XFNvdkq+swJiWPZFUVcwsyyPnXS6dUnxVods=
+X-Received: by 2002:a05:600c:1393:b0:489:1d74:56d with SMTP id
+ 5b1f17b1804b1-490428e15e9mr155921945e9.29.1779608630976; 
+ Sun, 24 May 2026 00:43:50 -0700 (PDT)
+X-Received: by 2002:a05:600c:1393:b0:489:1d74:56d with SMTP id
+ 5b1f17b1804b1-490428e15e9mr155921545e9.29.1779608630486; 
+ Sun, 24 May 2026 00:43:50 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-25-45.inter.net.il. [80.230.25.45])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4904526c926sm269326035e9.1.2026.05.24.00.27.26
+ ffacd0b85a97d-45ec7fcd7f9sm4733435f8f.37.2026.05.24.00.43.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 24 May 2026 00:27:27 -0700 (PDT)
-Date: Sun, 24 May 2026 03:27:24 -0400
+ Sun, 24 May 2026 00:43:49 -0700 (PDT)
+Date: Sun, 24 May 2026 03:43:47 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: Thierry Escande <thierry.escande@vates.tech>
 Cc: qemu-devel@nongnu.org, Alexey Gerasimenko <x1917x@gmail.com>,
@@ -87,23 +87,22 @@ Cc: qemu-devel@nongnu.org, Alexey Gerasimenko <x1917x@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
  Anthony PERARD <anthony@xenproject.org>, xen-devel@lists.xenproject.org
-Subject: Re: [PATCH 1/4] pc/xen: Xen Q35 support: provide IRQ handling for
- PCI devices
-Message-ID: <20260524031521-mutt-send-email-mst@kernel.org>
+Subject: Re: [PATCH 3/4] q35: Fix incorrect values for PCIEXBAR masks
+Message-ID: <20260524034330-mutt-send-email-mst@kernel.org>
 References: <20260313164649.794591-1-thierry.escande@vates.tech>
- <20260313164649.794591-2-thierry.escande@vates.tech>
+ <20260313164649.794591-4-thierry.escande@vates.tech>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260313164649.794591-2-thierry.escande@vates.tech>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+In-Reply-To: <20260313164649.794591-4-thierry.escande@vates.tech>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,196 +119,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 13, 2026 at 04:47:07PM +0000, Thierry Escande wrote:
+On Fri, Mar 13, 2026 at 04:47:16PM +0000, Thierry Escande wrote:
 > From: Alexey Gerasimenko <x1917x@gmail.com>
 > 
-> This patch introduces support for ICH9 LPC PCI interrupt routing when
-> running under Xen. This intercepts writes to the PIRQA-D routing
-> registers and propagates routing changes to the Xen device model via
-> xen_set_pci_link_route().
+> There are two small issues in PCIEXBAR address mask handling:
+> - wrong bit positions for address mask bits (see PCIEXBAR description
+>   in Q35 datasheet)
+> - incorrect usage of 64ADR_MASK
 > 
-> A major difference between i440 and Q35 is the number of PIRQ inputs and
-> PIRQ routers (PCI IRQ links in terms of ACPI) available. i440 has 4 PCI
-> interrupt links, while Q35 has 8 (PIRQA...PIRQH). Currently Xen has
-> support for only 4 PCI links, so we describe only 4 of 8 PCI links in
-> ACPI tables. Also, hvmloader disables PIRQ routing for PIRQE..PIRQH by
-> writing 80h into corresponding PIRQ[n]_ROUT registers.
-> 
-> All this PCI interrupt routing stuff largely concerns legacy mechanism
-> from PIC era. It's hardly worth to extend number of PCI links supported
-> as we normally deal with APIC mode and/or MSI interrupts.
-> 
-> The only useful thing to do with PIRQE..PIRQH routing currently is to
-> check if guest actually attempts to use it for some reason (despite ACPI
-> PCI routing information provided). In this case, a warning is reported.
-> 
-> This has been tested on Linux guests with noapic and pci=nomsi kernel
-> parameters set.
+> Due to this, attempting to write a valid PCIEXBAR address may cause it
+> to shift to another address, causing memory layout corruption where
+> emulated MMIO regions may overlap real (passed through) MMIO ranges. Fix
+> this by providing correct values.
 > 
 > Signed-off-by: Alexey Gerasimenko <x1917x@gmail.com>
 > Signed-off-by: Thierry Escande <thierry.escande@vates.tech>
+
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+
 > ---
->  hw/i386/pc_piix.c     |  2 --
->  hw/i386/xen/xen-hvm.c | 38 ++++++++++++++++++++++++++++++++++++++
->  hw/isa/lpc_ich9.c     | 16 +++++++++++++---
->  include/hw/xen/xen.h  |  5 +++++
->  stubs/xen-hw-stub.c   |  4 ++++
->  5 files changed, 60 insertions(+), 5 deletions(-)
+>  hw/pci-host/q35.c         | 6 +++---
+>  include/hw/pci-host/q35.h | 4 ++--
+>  2 files changed, 5 insertions(+), 5 deletions(-)
 > 
-> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> index 4d71e0d51a..a65e09e46c 100644
-> --- a/hw/i386/pc_piix.c
-> +++ b/hw/i386/pc_piix.c
-> @@ -66,8 +66,6 @@
->  #include "hw/i386/acpi-build.h"
->  #include "target/i386/cpu.h"
->  
-> -#define XEN_IOAPIC_NUM_PIRQS 128ULL
-> -
->  static GlobalProperty pc_piix_compat_defaults[] = {
->      { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "true" },
->      { TYPE_VFIO_PCI_NOHOTPLUG, "use-legacy-x86-rom", "true" },
-> diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
-> index 67d3e836eb..2dba289e09 100644
-> --- a/hw/i386/xen/xen-hvm.c
-> +++ b/hw/i386/xen/xen-hvm.c
-> @@ -18,6 +18,7 @@
->  #include "hw/core/hw-error.h"
->  #include "hw/i386/pc.h"
->  #include "hw/core/irq.h"
-> +#include "hw/southbridge/ich9.h"
->  #include "hw/i386/apic-msidef.h"
->  #include "hw/xen/xen-x86.h"
->  #include "qemu/range.h"
-> @@ -87,6 +88,43 @@ int xen_set_pci_link_route(uint8_t link, uint8_t irq)
->      return xendevicemodel_set_pci_link_route(xen_dmod, xen_domid, link, irq);
->  }
->  
-> +void xen_ich9_pci_write_config_client(PCIDevice *pci_dev, uint32_t address, uint32_t val, int len)
-> +{
-> +    static bool pirqe_f_warned = false;
-> +    int i;
-> +
-> +    if (ranges_overlap(address, len, ICH9_LPC_PIRQA_ROUT, 4)) {
-> +        /* handle PIRQA..PIRQD routing */
-> +        /* Scan for updates to PCI link routes (0x60-0x63). */
-> +        for (i = 0; i < len; i++) {
-> +            uint8_t v = (val >> (8 * i)) & 0xff;
-> +            if (v & 0x80) {
-> +                v = 0;
-> +            }
-> +            v &= 0xf;
-> +            if (((address + i) >= ICH9_LPC_PIRQA_ROUT) &&
-> +                ((address + i) <= ICH9_LPC_PIRQD_ROUT)) {
-> +                xen_set_pci_link_route(address + i - ICH9_LPC_PIRQA_ROUT, v);
-> +            }
-> +        }
-> +    } else if (ranges_overlap(address, len, ICH9_LPC_PIRQE_ROUT, 4)) {
-> +        while (len--) {
-> +            if (range_covers_byte(ICH9_LPC_PIRQE_ROUT, 4, address) &&
-> +                (val & 0x80) == 0) {
-> +                /* print warning only once */
-> +                if (!pirqe_f_warned) {
-> +                    pirqe_f_warned = true;
-> +                    warn_report("WARNING: guest domain attempted to use PIRQ%c "
-> +                                "routing which is not supported for Xen/Q35 currently\n",
-> +                                (char)(address - ICH9_LPC_PIRQE_ROUT + 'E'));
-> +                    break;
-> +                }
-> +            }
-> +            address++, val >>= 8;
-> +        }
-> +    }
-> +}
-> +
->  int xen_is_pirq_msi(uint32_t msi_data)
->  {
->      /* If vector is 0, the msi is remapped into a pirq, passed as
-> diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
-> index 51dc680029..8c627f0734 100644
-> --- a/hw/isa/lpc_ich9.c
-> +++ b/hw/isa/lpc_ich9.c
-> @@ -46,8 +46,10 @@
->  #include "hw/acpi/ich9_timer.h"
->  #include "hw/pci/pci_bus.h"
->  #include "hw/core/qdev-properties.h"
-> +#include "hw/xen/xen.h"
->  #include "system/runstate.h"
->  #include "system/system.h"
-> +#include "system/xen.h"
->  #include "hw/core/cpu.h"
->  #include "hw/nvram/fw_cfg.h"
->  #include "qemu/cutils.h"
-> @@ -569,6 +571,9 @@ static void ich9_lpc_config_write(PCIDevice *d,
->      ICH9LPCState *lpc = ICH9_LPC_DEVICE(d);
->      uint32_t rcba_old = pci_get_long(d->config + ICH9_LPC_RCBA);
->  
-> +    if (xen_enabled()){
-
-Coding style violation.
-
-
-> +        xen_ich9_pci_write_config_client(d, addr, val, len);
-> +    }
->      pci_default_write_config(d, addr, val, len);
->      if (ranges_overlap(addr, len, ICH9_LPC_PMBASE, 4) ||
->          ranges_overlap(addr, len, ICH9_LPC_ACPI_CTRL, 1)) {
-> @@ -762,9 +767,14 @@ static void ich9_lpc_realize(PCIDevice *d, Error **errp)
->      irq = object_property_get_uint(OBJECT(&lpc->rtc), "irq", &error_fatal);
->      isa_connect_gpio_out(ISA_DEVICE(&lpc->rtc), 0, irq);
->  
-> -    pci_bus_irqs(pci_bus, ich9_lpc_set_irq, d, ICH9_LPC_NB_PIRQS);
-> -    pci_bus_map_irqs(pci_bus, ich9_lpc_map_irq);
-> -    pci_bus_set_route_irq_fn(pci_bus, ich9_route_intx_pin_to_irq);
-> +    if (xen_enabled()) {
-> +        pci_bus_irqs(pci_bus, xen_intx_set_irq, d, XEN_IOAPIC_NUM_PIRQS);
-> +        pci_bus_map_irqs(pci_bus, xen_pci_slot_get_pirq);
-> +    } else {
-> +        pci_bus_irqs(pci_bus, ich9_lpc_set_irq, d, ICH9_LPC_NB_PIRQS);
-> +        pci_bus_map_irqs(pci_bus, ich9_lpc_map_irq);
-> +        pci_bus_set_route_irq_fn(pci_bus, ich9_route_intx_pin_to_irq);
-> +    }
->  
->      ich9_lpc_pm_init(lpc);
->  }
-> diff --git a/include/hw/xen/xen.h b/include/hw/xen/xen.h
-> index e94c6e5a31..910289b54d 100644
-> --- a/include/hw/xen/xen.h
-> +++ b/include/hw/xen/xen.h
-> @@ -24,6 +24,8 @@
->  #define __XEN_INTERFACE_VERSION__ 0x00040e00
->  #endif
->  
-> +#define XEN_IOAPIC_NUM_PIRQS 128ULL
-> +
->  /* xen-machine.c */
->  enum xen_mode {
->      XEN_DISABLED = 0, /* xen support disabled (default) */
-> @@ -39,6 +41,9 @@ extern bool xen_is_stubdomain;
->  int xen_pci_slot_get_pirq(PCIDevice *pci_dev, int irq_num);
->  int xen_set_pci_link_route(uint8_t link, uint8_t irq);
->  void xen_intx_set_irq(void *opaque, int irq_num, int level);
-> +void xen_ich9_pci_write_config_client(PCIDevice *pci_dev,
-> +                                      uint32_t address, uint32_t val,
-> +                                      int len);
->  void xen_hvm_inject_msi(uint64_t addr, uint32_t data);
->  int xen_is_pirq_msi(uint32_t msi_data);
->  
-> diff --git a/stubs/xen-hw-stub.c b/stubs/xen-hw-stub.c
-> index 6cf0e9a4c1..a74209d01e 100644
-> --- a/stubs/xen-hw-stub.c
-> +++ b/stubs/xen-hw-stub.c
-> @@ -24,6 +24,10 @@ int xen_set_pci_link_route(uint8_t link, uint8_t irq)
->      return -1;
->  }
->  
-> +void xen_ich9_pci_write_config_client(PCIDevice *pci_dev, uint32_t address, uint32_t val, int len)
-> +{
-> +}
-> +
->  int xen_is_pirq_msi(uint32_t msi_data)
->  {
->      return 0;
+> diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+> index e85e4227b3..7368e3c598 100644
+> --- a/hw/pci-host/q35.c
+> +++ b/hw/pci-host/q35.c
+> @@ -306,12 +306,12 @@ static void mch_update_pciexbar(MCHPCIState *mch)
+>          break;
+>      case MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_128M:
+>          length = 128 * 1024 * 1024;
+> -        addr_mask |= MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK |
+> -            MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK;
+> +        addr_mask |= MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK;
+>          break;
+>      case MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_64M:
+>          length = 64 * 1024 * 1024;
+> -        addr_mask |= MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK;
+> +        addr_mask |= MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK |
+> +            MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK;
+>          break;
+>      case MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_RVD:
+>          qemu_log_mask(LOG_GUEST_ERROR, "Q35: Reserved PCIEXBAR LENGTH\n");
+> diff --git a/include/hw/pci-host/q35.h b/include/hw/pci-host/q35.h
+> index ddafc3f2e3..f31a71010b 100644
+> --- a/include/hw/pci-host/q35.h
+> +++ b/include/hw/pci-host/q35.h
+> @@ -100,8 +100,8 @@ struct Q35PCIHost {
+>  #define MCH_HOST_BRIDGE_PCIEXBAR_DEFAULT       0xb0000000
+>  #define MCH_HOST_BRIDGE_PCIEXBAR_MAX           (0x10000000) /* 256M */
+>  #define MCH_HOST_BRIDGE_PCIEXBAR_ADMSK         Q35_MASK(64, 35, 28)
+> -#define MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK      ((uint64_t)(1 << 26))
+> -#define MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK       ((uint64_t)(1 << 25))
+> +#define MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK      ((uint64_t)(1 << 27))
+> +#define MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK       ((uint64_t)(1 << 26))
+>  #define MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_MASK   ((uint64_t)(0x3 << 1))
+>  #define MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_256M   ((uint64_t)(0x0 << 1))
+>  #define MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_128M   ((uint64_t)(0x1 << 1))
 > -- 
 > 2.51.0
 > 
