@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 212BECD5BAB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 212FECD5BC7
 	for <qemu-devel@archiver.kernel.org>; Sun, 24 May 2026 13:20:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wR8jk-0006aw-3V; Sun, 24 May 2026 09:19:24 -0400
+	id 1wR8je-0006ZN-7z; Sun, 24 May 2026 09:19:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wR8ji-0006am-Mr
- for qemu-devel@nongnu.org; Sun, 24 May 2026 09:19:22 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wR8jd-0006Z3-7b
+ for qemu-devel@nongnu.org; Sun, 24 May 2026 09:19:17 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wR8jh-0005aV-9L
- for qemu-devel@nongnu.org; Sun, 24 May 2026 09:19:22 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wR8jb-0005Xc-Ip
+ for qemu-devel@nongnu.org; Sun, 24 May 2026 09:19:16 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 7C0E0600AE;
- Sun, 24 May 2026 13:19:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915E91F000E9;
- Sun, 24 May 2026 13:19:18 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 8776E41A8C;
+ Sun, 24 May 2026 13:19:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087C71F000E9;
+ Sun, 24 May 2026 13:19:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779628760;
- bh=53stOSPzY4yCMB1+R3XmVCXAcTk/eugwWFbVqsrGjYM=;
+ s=k20260515; t=1779628754;
+ bh=onghrVOPoumr7ZF+G1gVbfqOC70FeH6HaXRyKPpvS2g=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=QGfnkduHbymEOrRqDyZn6b3oIM02JD+UywPTicCP0lcuaUbu+dqYxuYpjjGyt3h0U
- NIS//f2t/GniqKQW0TNbPrn81p4rNAzT+W0IPPv/SByobfm8belfh6KqQ9P4JWHFHK
- dFnWfrWxjj3iZ20TumFCqmdx1bfUMNUnR5suwKGYN4YD2GX52ca5Cuh3tRImApVOTI
- FaItXtPUAPI658oQx59Pdlqmvzqv8/dj6Ybr5iLA3qlFM4cWfJTXIJ/q+IIbJQYfMb
- jisolk5I6EvPJEVenZRGUthzyFHO8NrRqsrve4P96ikg4+HdlNrMNEtatOTizsHxaI
- WEuR7AEP/31BA==
+ b=UJ6wi9ebliFQ0Nn2qo5EkrwM9TvJra24ZTadSwvVYupXTJ9yZlAC2Ofet4voocx7T
+ rvY+jIUES20bldJwv03QpDQgUWIktjmOdCJ4dKG3AJzCR19tScLWCAz7lk4OzaJpRc
+ apX4BYhMwu6uqui/Ui8DHaTsFwCwGMBIxjq/ZFf8v5CLHsxBWP1cyN0SsIAmjEhmtA
+ ccXQAw0Pg+pQXsGlzOm4AliZFYXS5LtR5D6mfAoedp23zkOjUwNl3Gs9HG0pmzmQlg
+ I/uNsPEwhzw1D16MkMUyVLHxZGVralNYMX0F4NpcG5thniZn9m8+8mqjNEnNtTogf4
+ QJyDg3niCaYow==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Matt Turner <mattst88@gmail.com>, Helge Deller <deller@gmx.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 4/6] linux-user/mips: use tswap32 in elf_core_copy_regs
-Date: Sun, 24 May 2026 15:19:06 +0200
-Message-ID: <20260524131909.162990-5-deller@kernel.org>
+Subject: [PULL 1/6] linux-user/hppa: add coredump support
+Date: Sun, 24 May 2026 15:19:03 +0200
+Message-ID: <20260524131909.162990-2-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260524131909.162990-1-deller@kernel.org>
 References: <20260524131909.162990-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -72,40 +72,90 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Matt Turner <mattst88@gmail.com>
 
+Add HAVE_ELF_CORE_DUMP, target_elf_gregset_t (80 entries matching
+arch/parisc/include/uapi/asm/ptrace.h), and elf_core_copy_regs().
+
+The struct layout matches the kernel's struct user_regs_struct:
+  gr[0..31]    at indices [0..31]   (PSW in gr[0])
+  sr[0..7]     at indices [32..39]
+  iaoq[0..1]   at indices [40..41]  (instruction address queue)
+  iasq[0..1]   at indices [42..43]
+  sar          at index   [44]      (shift amount / CR11)
+  iir          at index   [45]      (interrupt instruction register)
+  isr          at index   [46]      (interrupt space register)
+  ior          at index   [47]      (interrupt offset register)
+  ipsw         at index   [48]      (interrupt PSW / CR22)
+  cr0          at index   [49]      (recovery counter)
+  cr24_31[8]   at indices [50..57]
+  cr8_15[6]    at indices [58..63]
+  pad[16]      at indices [64..79]
+
+elf_core_copy_regs() saves GRs, IAOQ (front/back), and SAR.
+
 Signed-off-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/mips/elfload.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ linux-user/hppa/elfload.c    | 13 +++++++++++++
+ linux-user/hppa/target_elf.h | 21 +++++++++++++++++++++
+ 2 files changed, 34 insertions(+)
 
-diff --git a/linux-user/mips/elfload.c b/linux-user/mips/elfload.c
-index 1a46e180cf..ce2c4514f3 100644
---- a/linux-user/mips/elfload.c
-+++ b/linux-user/mips/elfload.c
-@@ -135,16 +135,16 @@ const char *get_elf_base_platform(CPUState *cs)
- void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
- {
-     for (int i = 1; i < ARRAY_SIZE(env->active_tc.gpr); i++) {
--        r->pt.regs[i] = tswapl(env->active_tc.gpr[i]);
-+        r->pt.regs[i] = tswap32(env->active_tc.gpr[i]);
-     }
- 
-     r->pt.regs[26] = 0;
-     r->pt.regs[27] = 0;
--    r->pt.lo = tswapl(env->active_tc.LO[0]);
--    r->pt.hi = tswapl(env->active_tc.HI[0]);
--    r->pt.cp0_epc = tswapl(env->active_tc.PC);
--    r->pt.cp0_badvaddr = tswapl(env->CP0_BadVAddr);
--    r->pt.cp0_status = tswapl(env->CP0_Status);
--    r->pt.cp0_cause = tswapl(env->CP0_Cause);
-+    r->pt.lo = tswap32(env->active_tc.LO[0]);
-+    r->pt.hi = tswap32(env->active_tc.HI[0]);
-+    r->pt.cp0_epc = tswap32(env->active_tc.PC);
-+    r->pt.cp0_badvaddr = tswap32(env->CP0_BadVAddr);
-+    r->pt.cp0_status = tswap32(env->CP0_Status);
-+    r->pt.cp0_cause = tswap32(env->CP0_Cause);
+diff --git a/linux-user/hppa/elfload.c b/linux-user/hppa/elfload.c
+index 7f7ece6dc1..3354e1b840 100644
+--- a/linux-user/hppa/elfload.c
++++ b/linux-user/hppa/elfload.c
+@@ -16,6 +16,19 @@ const char *get_elf_platform(CPUState *cs)
+     return "PARISC";
  }
- #endif
+ 
++void elf_core_copy_regs(target_elf_gregset_t *r, const CPUArchState *env)
++{
++    int i;
++
++    memset(r, 0, sizeof(*r));
++    for (i = 0; i < 32; i++) {
++        r->gr[i] = tswapal(env->gr[i]);
++    }
++    r->iaoq[0] = tswapal(env->iaoq_f);
++    r->iaoq[1] = tswapal(env->iaoq_b);
++    r->sar     = tswapal(env->cr[CR_SAR]);
++}
++
+ bool init_guest_commpage(void)
+ {
+     /* If reserved_va, then we have already mapped 0 page on the host. */
+diff --git a/linux-user/hppa/target_elf.h b/linux-user/hppa/target_elf.h
+index 76930c9369..e1c5033242 100644
+--- a/linux-user/hppa/target_elf.h
++++ b/linux-user/hppa/target_elf.h
+@@ -12,6 +12,27 @@
+ #define ELF_MACHINE             EM_PARISC
+ 
+ #define HAVE_ELF_PLATFORM       1
++#define HAVE_ELF_CORE_DUMP      1
++
++/*
++ * Matches struct user_regs_struct from arch/parisc/include/uapi/asm/ptrace.h.
++ * ELF_NGREG = 80; register indices match those used by libunwind and gdb.
++ */
++typedef struct target_elf_gregset_t {
++    abi_ulong gr[32];      /* gr[0..31]; PSW in gr[0]            [0..31] */
++    abi_ulong sr[8];       /* space registers                    [32..39] */
++    abi_ulong iaoq[2];     /* instruction address offset         [40..41] */
++    abi_ulong iasq[2];     /* instruction address space          [42..43] */
++    abi_ulong sar;         /* shift amount register (CR11)       [44] */
++    abi_ulong iir;         /* interrupt instruction register     [45] */
++    abi_ulong isr;         /* interrupt space register           [46] */
++    abi_ulong ior;         /* interrupt offset register          [47] */
++    abi_ulong ipsw;        /* interrupt PSW (CR22)               [48] */
++    abi_ulong cr0;         /* recovery counter                   [49] */
++    abi_ulong cr24_31[8];  /* cr24..cr31                         [50..57] */
++    abi_ulong cr8_15[6];   /* cr8, cr9, cr12, cr13, cr10, cr15  [58..63] */
++    abi_ulong pad[16];     /* pad to 80 elements                 [64..79] */
++} target_elf_gregset_t;
+ 
+ #define LO_COMMPAGE             0
+ #define STACK_GROWS_DOWN        0
 -- 
 2.54.0
 
