@@ -4,91 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C37AECD5BB1
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 May 2026 17:07:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5227CD5BAB
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 May 2026 17:43:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRCHt-0002V4-Sn; Sun, 24 May 2026 13:06:53 -0400
+	id 1wRCqh-0006nC-9g; Sun, 24 May 2026 13:42:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wRCHs-0002Uj-FA
- for qemu-devel@nongnu.org; Sun, 24 May 2026 13:06:52 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wRCHq-0004UE-8P
- for qemu-devel@nongnu.org; Sun, 24 May 2026 13:06:52 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-48e6db3ff7eso45833995e9.0
- for <qemu-devel@nongnu.org>; Sun, 24 May 2026 10:06:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wRCqg-0006mw-2F
+ for qemu-devel@nongnu.org; Sun, 24 May 2026 13:42:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wRCqd-0002fB-Dw
+ for qemu-devel@nongnu.org; Sun, 24 May 2026 13:42:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779644565;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ptAnrTShNOXdvR5tu9P/yqe2dmBjUDOmBbiVfCDhRB8=;
+ b=VXXZQ9Am04778cmY0i8jQIZ5iZcVsyBeV2D1LINz9O1pCuJVtLuFU0a/HGluD3zBg8jD/b
+ sVxq2I83iLMeXn+8SgS8149NZcCpGYxOCyMCTQFzjGNSRB+9Xbh7E2j3cObR0Qfjea8gGV
+ 4GQVJgDjr43W0QTxJXnEhT58y4FqWIw=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-246-66ea_rkpPzmvGW3sjtzOIA-1; Sun, 24 May 2026 13:42:44 -0400
+X-MC-Unique: 66ea_rkpPzmvGW3sjtzOIA-1
+X-Mimecast-MFC-AGG-ID: 66ea_rkpPzmvGW3sjtzOIA_1779644563
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-44696b11265so10907710f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 24 May 2026 10:42:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779642408; x=1780247208; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=o34QGNwP+05x1iRjGNlqyIJppK1GOlWgfS0F58eOXFc=;
- b=OXbbfLL9OK6ZUnLyZipyrFdA9/U9MADnPXwbO2XM7Xiw1QtkODjFZamN06vUQ/v5az
- 9bdmcWDMszpEHLoNqNlhbH33B0sVo0k7OwnEjdvL+fOlTcayh1OlX5JwHyc7sN8jKVUV
- DnCeoWHMR5Dc7B9xytdINzzsesTZVNAMeJJpTqrIRiSBofZpz6uJh5zwCiw1yh8Svyn+
- HyKwZrN40ov2YD2guE4N2+DNeSAJP8xxxFxzDbywUXaxfuEjxpEMsM11wjYIAgVA2xgs
- mR+1TqqIJCxJG9iGgNeca4QiKNev5BWWhrDKn1GzVBV5smGHvU2KP7ylo1aR2hWD7kxZ
- 5Pow==
+ d=redhat.com; s=google; t=1779644563; x=1780249363; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=ptAnrTShNOXdvR5tu9P/yqe2dmBjUDOmBbiVfCDhRB8=;
+ b=X7CVgV77T723pmjMVST/28XlQTcIB/Wr8jCrwo8lIRTZF5J1ZqQMYJpalOdhRVsMIS
+ kE5pE7+gzvFcvfS9UPs5Khx55Y+sKkuyX8+1MS45qq3TTFvdq3i1ilJ8miuMUlfrPT1r
+ w+KnYAvqc7YxMlrnYL9uPmI9DRJvBdBZb9cpL8c+F0ns9vcNU+I+nQ3xTk2rAHRT3cfe
+ meYaqjzhPHt5osZzaHdpygGftrDwc1PHCRJjRWEnEmXUG0Rvh7DdY2/RD3SUttwVtuLa
+ KlMFpX0o/2Efrwd33LPMg7hdz5x6tvOdc3Apw1ijEtvO+4lPNlMvuQRc6fNDSfbpsiYP
+ MyfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779642408; x=1780247208;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ d=1e100.net; s=20251104; t=1779644563; x=1780249363;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=o34QGNwP+05x1iRjGNlqyIJppK1GOlWgfS0F58eOXFc=;
- b=sEh6l7M3d0Ha49TZ3N94lqPDNVhAgo7AIhsHCFbeRBWX5buY0PHhNcr779URJTu1/D
- bN2YPdL6jEizBsi/qTGJOYixDUwLfHIfn+FFN+Z32vEIHEiZBBHafwzDYMdcsvxqlSEU
- hyGw0H9Dg0pKSYo4LxG4Om7f2WUBjJBQYNYYU4ARQt/V4cJm+4+6PiFOP988ptPBFbHZ
- qDiYx2i0lvcw3tVvIRApO4MfA3pxnZ0klQb/Xf88Qq4570q3nTq28TR7LuQ6/eJVUYPd
- EUfXQK7fjufcLRfyv3cLXLJ6itpmOh+SpA87ISjBZtCR2SNIaBJ6pnm3BrUizUY0hqOX
- 7kkQ==
-X-Gm-Message-State: AOJu0Yz9UEu52ch46wHfKLlgUoa/w9aJbaqnUwQg/MYUhZCR4EZlj1Dx
- M+HXByMcLZlCJL7bMSL2sc3QaBRl8JJ4HME/ogRyhdl95Q1qkvateJChca5fzb2++7bQ+vv6jZL
- unS+z
-X-Gm-Gg: Acq92OFrzpXydEstP5HkY+CMnQVc3B1KZxLf3/9YeBSXdtdsvIAiZVXP89CLa9VMUVU
- 3gD4NByB7TC8OWzVUo7iW92Y8v3FrHiv21E8KdsRSWZ74EYqjmJTHrg88Vj2wPWAK1PseJdBYs5
- 18i5r/wKCJ1mHeE1X44CMs5Ej8PN4z1sjBYtdsY4gvqsojqlw1ebqpQdtP7rmg60z+1iUtLWLC2
- kPniRxTUlkNCzXNP1FRiHkivbh5ylBe+OqKYkbFQxkvwM9ECvrWqAAc5jXvHtnCGh+BCFOzE9pp
- BCcecMAAmn16jgItbAfrQosd3g5KUkLpHN6dkqx0aHzCz643oJ5Flys5JbBcNwmPESoHUWXp+Wm
- 4pWYSiE53hfXu/uXV5R+hubL2YAf0ulOk7TriK0mvsP6fWLGwxYAhOlj52r0RN24uUnYZF096V8
- uskUDfuWMKj4stN5m1hksCBqM=
-X-Received: by 2002:a05:600c:c4a3:b0:488:ac01:72b6 with SMTP id
- 5b1f17b1804b1-490426ceed2mr190622185e9.21.1779642408084; 
- Sun, 24 May 2026 10:06:48 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4904526c926sm320930505e9.1.2026.05.24.10.06.47
+ bh=ptAnrTShNOXdvR5tu9P/yqe2dmBjUDOmBbiVfCDhRB8=;
+ b=C0n0UZz2iX/aDtyIUN82X2VbWQpCYsfDbrpFmuNzaix3rGC0YCS5NeLJFWMXlwKcpJ
+ VgtF9HB1jyQhib7cYqRFRfHEPrZhPTKZv2dW5jcAyIrU0sH9UnRn66p2klzsjnktv4gj
+ UPCOM0gTqdJrROgEHG/CSemesFbDzZCJ7Iwwv5uUFa78+FrQ+tVgimlfVdBK+pLt4kWc
+ R8vn7xtghMKxPyZ9eY4cZHsnF1TEIfJCWxGXqcKjiWA9V8e5q1Au+OT1Frompu15ny7a
+ FXmp72MMCNWn4nFmiI1xTWy3WnSbGZcASHzMnzitQyu2l7dXgOrVezMIQwvdTjX98ffy
+ SPTQ==
+X-Gm-Message-State: AOJu0YxMEW5U/eQBGrgBS59+VWRNkwjJKdJd0+7UaSQCuM+o2wNs3IzG
+ a0R7FQtLmbwfA2Oyi5+DLL7blyFU9ptakWzEA/aYWgc0pwkw3t7gqRUve87sk4cQ7pj0Bpfax3Y
+ aHq52dCoGFbTSvUFT5i8qe4EyLwOcbejHZC0UcclTC9U0Hl6e8tQGI5pd
+X-Gm-Gg: Acq92OEimdLoXjJI7k0CHTs+u6dyHwFUVrrjSYwMC3rvkZSllIVpOKgOCFICp+3YdbT
+ wnZmBcwntD/pLrhFPVgYK5ToJH3eVA4bWJcW4KCMPlI064hr7NgkliEsW4610QkRDHtX7uWnZ5l
+ IvvJp6XjkFPloet5U1JpKL43yI3QSNCX/NV+01hN1/q9S8woS8gj33hlRY0Vi+5ah36U2Xj+pN6
+ 1l2lFJGgNLFWbq4M9M5E7eSvOz0Ityz1eQhbwupldrGsPqfncN2ZMM+liXGZjGjSPWErTyKz3uz
+ rYD8jKmClgbhMYwET540u+JMg/yO33sBN1vL/5/H57Aa6CqeIFGI8ReyklDuYnZCFmLYZiVXqVU
+ kKMluCq4JFM1Ap2i4pY+RORCJec/zkWV/irnDbBa6M2JJ4Q6tnuQmUA==
+X-Received: by 2002:a05:6000:4a0f:b0:45e:7997:8b7a with SMTP id
+ ffacd0b85a97d-45eb36ab71amr18058359f8f.16.1779644562569; 
+ Sun, 24 May 2026 10:42:42 -0700 (PDT)
+X-Received: by 2002:a05:6000:4a0f:b0:45e:7997:8b7a with SMTP id
+ ffacd0b85a97d-45eb36ab71amr18058325f8f.16.1779644561978; 
+ Sun, 24 May 2026 10:42:41 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-25-45.inter.net.il. [80.230.25.45])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45eb6cce0a4sm20172410f8f.12.2026.05.24.10.42.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 24 May 2026 10:06:47 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7D4255F7E4;
- Sun, 24 May 2026 18:06:46 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org,  stefanha@redhat.com
+ Sun, 24 May 2026 10:42:41 -0700 (PDT)
+Date: Sun, 24 May 2026 13:42:39 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, stefanha@redhat.com
 Subject: Re: on ai generated and code provenance
-In-Reply-To: <20260524083329-mutt-send-email-mst@kernel.org> (Michael S.
- Tsirkin's message of "Sun, 24 May 2026 08:42:39 -0400")
+Message-ID: <20260524133734-mutt-send-email-mst@kernel.org>
 References: <20260524083329-mutt-send-email-mst@kernel.org>
-User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Sun, 24 May 2026 18:06:46 +0100
-Message-ID: <87v7ccd9eh.fsf@draig.linaro.org>
+ <87v7ccd9eh.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87v7ccd9eh.fsf@draig.linaro.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,82 +118,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+On Sun, May 24, 2026 at 06:06:46PM +0100, Alex Bennée wrote:
+> "Michael S. Tsirkin" <mst@redhat.com> writes:
+> 
+> > So, I had to reject a perfectly reasonable patch:
+> > https://lore.kernel.org/qemu-devel/20260320193746.242704-1-jinpu.wang@ionos.com/
+> > just because of a tool used to make it.
+> >
+> >
+> > 	How contributors could comply with DCO terms (b) or (c) for the output of AI
+> > 	content generators commonly available today is unclear.  The QEMU project is
+> > 	not willing or able to accept the legal risks of non-compliance.
+> 
+> In the linked case the LLM is basically doing a glorified search and
+> replace. There seems to be no danger of accidentally regurgitating any
+> training data which is where the worry about inadvertent copyright
+> infringement comes from.
+> 
+> That said in my experience generally any code that does come out from
+> these tools tends to match the local code style and patterns pretty
+> well.
 
-> So, I had to reject a perfectly reasonable patch:
-> https://lore.kernel.org/qemu-devel/20260320193746.242704-1-jinpu.wang@ion=
-os.com/
-> just because of a tool used to make it.
->
->
-> 	How contributors could comply with DCO terms (b) or (c) for the output o=
-f AI
-> 	content generators commonly available today is unclear.  The QEMU projec=
-t is
-> 	not willing or able to accept the legal risks of non-compliance.
+Making the code original, too.
 
-In the linked case the LLM is basically doing a glorified search and
-replace. There seems to be no danger of accidentally regurgitating any
-training data which is where the worry about inadvertent copyright
-infringement comes from.
+> As a general purpose boilerplate generator they are probably
+> better than a lot of people at this point.
+> 
+> There has been some case law now that says LLM output could be
+> un-copyrightable depending on how involved the user was in the iteration
+> of the code. I suspect there is still more to come.
 
-That said in my experience generally any code that does come out from
-these tools tends to match the local code style and patterns pretty
-well. As a general purpose boilerplate generator they are probably
-better than a lot of people at this point.
+Waiting for courts to settle anything means waiting years, while
+the industry has mostly moved on.
 
-There has been some case law now that says LLM output could be
-un-copyrightable depending on how involved the user was in the iteration
-of the code. I suspect there is still more to come.
+> >
+> >
+> > But, since this was written, Red Hat's Richard Fontana and Chris Wright
+> > published this piece:
+> > https://www.redhat.com/en/blog/ai-assisted-development-and-open-source-navigating-legal-issues
+> >
+> >
+> > Saying, in particular "
+> > 	We understand this concern, but the DCO has never
+> > 	been interpreted to require that every line of a contribution must be
+> > 	the personal creative expression of the contributor or another human
+> > 	developer. 
+> > "
+> >
+> > I propose adopting linux's rules instead:
+> > https://docs.kernel.org/process/coding-assistants.html
+> >
+> > which boils down to attribution.
+> 
+> attribution and *ownership*. I think the key point of the policy is to
+> make the actual engineer signing the DCO the responsible one for
+> generating, testing and validating the code. It is strongly trying to
+> suggest that vibe-coded slop isn't wanted.
+> 
+> I still have concerns about the quality of the code and the
+> "understanding" these models have. They can generate very convincing
+> rationales for their decisions but they also are prone to being
+> over-verbose and over-complicating the solutions. They have a tendency
+> to chase down rabbit holes in the code and get lost while making wilder
+> and more invasive changes to try and get things working.
 
->
->
-> But, since this was written, Red Hat's Richard Fontana and Chris Wright
-> published this piece:
-> https://www.redhat.com/en/blog/ai-assisted-development-and-open-source-na=
-vigating-legal-issues
->
->
-> Saying, in particular "
-> 	We understand this concern, but the DCO has never
-> 	been interpreted to require that every line of a contribution must be
-> 	the personal creative expression of the contributor or another human
-> 	developer.=20
-> "
->
-> I propose adopting linux's rules instead:
-> https://docs.kernel.org/process/coding-assistants.html
->
-> which boils down to attribution.
 
-attribution and *ownership*. I think the key point of the policy is to
-make the actual engineer signing the DCO the responsible one for
-generating, testing and validating the code. It is strongly trying to
-suggest that vibe-coded slop isn't wanted.
+That's up to maintainers though.
 
-I still have concerns about the quality of the code and the
-"understanding" these models have. They can generate very convincing
-rationales for their decisions but they also are prone to being
-over-verbose and over-complicating the solutions. They have a tendency
-to chase down rabbit holes in the code and get lost while making wilder
-and more invasive changes to try and get things working.
+> That said for personal scripts or random experiments the ability to
+> quickly get to a PoC is pretty great.
 
-That said for personal scripts or random experiments the ability to
-quickly get to a PoC is pretty great.
+Patch above is beyond that.
 
-I think there is also scope for using LLMs for things that aren't
-directly writing code:
+> I think there is also scope for using LLMs for things that aren't
+> directly writing code:
+> 
+>   - code review
+>   - investigation
+>   - generating test cases
+>   - polishing documentation
+> 
+> and I wonder if we should spend some more time investigating the
+> performance and pitfalls of LLMs before we open the flood gates to the
+> code.
 
-  - code review
-  - investigation
-  - generating test cases
-  - polishing documentation
+Who would do the investigating?
 
-and I wonder if we should spend some more time investigating the
-performance and pitfalls of LLMs before we open the flood gates to the
-code.
+> -- 
+> Alex Bennée
+> Virtualisation Tech Lead @ Linaro
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
