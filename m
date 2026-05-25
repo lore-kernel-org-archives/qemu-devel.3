@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51AC9CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 15:48:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B311CD5BC9
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 15:48:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRXXB-00038k-ID; Mon, 25 May 2026 11:48:05 -0400
+	id 1wRXXB-00038i-5z; Mon, 25 May 2026 11:48:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wRXX4-000373-Q1
- for qemu-devel@nongnu.org; Mon, 25 May 2026 11:48:00 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1wRXX2-00036O-On
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 11:47:56 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wRXX2-0006d6-HQ
- for qemu-devel@nongnu.org; Mon, 25 May 2026 11:47:57 -0400
+ id 1wRXWy-0006cJ-L8
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 11:47:55 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 8C8FF596946;
- Mon, 25 May 2026 17:47:53 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 66BF959694C;
+ Mon, 25 May 2026 17:47:50 +0200 (CEST)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id w1qxnKlTNIvu; Mon, 25 May 2026 17:47:51 +0200 (CEST)
+ id aFjK_QJ5Xzfr; Mon, 25 May 2026 17:47:48 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 7D39C596953; Mon, 25 May 2026 17:47:51 +0200 (CEST)
-Message-ID: <add4cdf825fa6ad525f3e5012ef4162ded1d90c5.1779723483.git.balaton@eik.bme.hu>
+ id 5EC16596942; Mon, 25 May 2026 17:47:48 +0200 (CEST)
+Message-ID: <cee3692abf6894a06f732545da98710dc3c87a17.1779723483.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1779723483.git.balaton@eik.bme.hu>
 References: <cover.1779723483.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v5 7/7] hw/xtensa/xtfpga: Fix leaking memory region
+Subject: [PATCH v5 4/7] hw/ide/sii3112: Use memory_region_new to avoid leaking
+ regions
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -42,9 +43,9 @@ Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Paolo Bonzini <pbonzini@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Mon, 25 May 2026 17:47:51 +0200 (CEST)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Date: Mon, 25 May 2026 17:47:48 +0200 (CEST)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -65,28 +66,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use memory_region_new_ram to avoid leaking memory region.
+Memory regions created with memory_region_init are not freed with
+their owner. Use memory_region_new instead to let QOM manage the
+lifetime of the memory regions.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/xtensa/xtfpga.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ hw/ide/sii3112.c | 30 ++++++++++++------------------
+ 1 file changed, 12 insertions(+), 18 deletions(-)
 
-diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
-index 33a2d9485c..c826f6a308 100644
---- a/hw/xtensa/xtfpga.c
-+++ b/hw/xtensa/xtfpga.c
-@@ -161,9 +161,8 @@ static void xtfpga_net_init(MemoryRegion *address_space,
-     memory_region_add_subregion(address_space, descriptors,
-             sysbus_mmio_get_region(s, 1));
+diff --git a/hw/ide/sii3112.c b/hw/ide/sii3112.c
+index 9b28c691fd..d2dcfc3830 100644
+--- a/hw/ide/sii3112.c
++++ b/hw/ide/sii3112.c
+@@ -31,7 +31,7 @@ typedef struct SiI3112Regs {
  
--    ram = g_malloc(sizeof(*ram));
--    memory_region_init_ram(ram, OBJECT(s), "open_eth.ram", 16 * KiB,
--                           &error_fatal);
-+    ram = memory_region_new_ram(OBJECT(s), "open_eth.ram", 16 * KiB,
-+                                &error_fatal);
-     memory_region_add_subregion(address_space, buffers, ram);
- }
+ struct SiI3112PCIState {
+     PCIIDEState i;
+-    MemoryRegion mmio;
++
+     SiI3112Regs regs[2];
+ };
+ 
+@@ -249,39 +249,33 @@ static void sii3112_reset(DeviceState *dev)
+ 
+ static void sii3112_pci_realize(PCIDevice *dev, Error **errp)
+ {
+-    SiI3112PCIState *d = SII3112_PCI(dev);
+     PCIIDEState *s = PCI_IDE(dev);
+     DeviceState *ds = DEVICE(dev);
+-    MemoryRegion *mr;
+-    int i;
++    Object *o = OBJECT(dev);
++    MemoryRegion *mmio, *mr;
+ 
+     pci_config_set_interrupt_pin(dev->config, 1);
+     pci_set_byte(dev->config + PCI_CACHE_LINE_SIZE, 8);
+ 
+     /* BAR5 is in PCI memory space */
+-    memory_region_init_io(&d->mmio, OBJECT(d), &sii3112_reg_ops, d,
+-                         "sii3112.bar5", 0x200);
+-    pci_register_bar(dev, 5, PCI_BASE_ADDRESS_SPACE_MEMORY, &d->mmio);
++    mmio = memory_region_new_io(o, &sii3112_reg_ops, SII3112_PCI(dev),
++                                "sii3112.bar5", 0x200);
++    pci_register_bar(dev, 5, PCI_BASE_ADDRESS_SPACE_MEMORY, mmio);
+ 
+     /* BAR0-BAR4 are PCI I/O space aliases into BAR5 */
+-    mr = g_new(MemoryRegion, 1);
+-    memory_region_init_alias(mr, OBJECT(d), "sii3112.bar0", &d->mmio, 0x80, 8);
++    mr = memory_region_new_alias(o, "sii3112.bar0", mmio, 0x80, 8);
+     pci_register_bar(dev, 0, PCI_BASE_ADDRESS_SPACE_IO, mr);
+-    mr = g_new(MemoryRegion, 1);
+-    memory_region_init_alias(mr, OBJECT(d), "sii3112.bar1", &d->mmio, 0x88, 4);
++    mr = memory_region_new_alias(o, "sii3112.bar1", mmio, 0x88, 4);
+     pci_register_bar(dev, 1, PCI_BASE_ADDRESS_SPACE_IO, mr);
+-    mr = g_new(MemoryRegion, 1);
+-    memory_region_init_alias(mr, OBJECT(d), "sii3112.bar2", &d->mmio, 0xc0, 8);
++    mr = memory_region_new_alias(o, "sii3112.bar2", mmio, 0xc0, 8);
+     pci_register_bar(dev, 2, PCI_BASE_ADDRESS_SPACE_IO, mr);
+-    mr = g_new(MemoryRegion, 1);
+-    memory_region_init_alias(mr, OBJECT(d), "sii3112.bar3", &d->mmio, 0xc8, 4);
++    mr = memory_region_new_alias(o, "sii3112.bar3", mmio, 0xc8, 4);
+     pci_register_bar(dev, 3, PCI_BASE_ADDRESS_SPACE_IO, mr);
+-    mr = g_new(MemoryRegion, 1);
+-    memory_region_init_alias(mr, OBJECT(d), "sii3112.bar4", &d->mmio, 0, 16);
++    mr = memory_region_new_alias(o, "sii3112.bar4", mmio, 0, 16);
+     pci_register_bar(dev, 4, PCI_BASE_ADDRESS_SPACE_IO, mr);
+ 
+     qdev_init_gpio_in(ds, sii3112_set_irq, 2);
+-    for (i = 0; i < 2; i++) {
++    for (int i = 0; i < 2; i++) {
+         ide_bus_init(&s->bus[i], sizeof(s->bus[i]), ds, i, 1);
+         ide_bus_init_output_irq(&s->bus[i], qdev_get_gpio_in(ds, i));
  
 -- 
 2.41.3
