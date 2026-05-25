@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E691CD5BC0
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 06:39:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CA84CD5BCB
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 06:39:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wROwP-0006ps-78; Mon, 25 May 2026 02:37:33 -0400
+	id 1wROww-0000tA-9G; Mon, 25 May 2026 02:38:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wROu9-0003pT-7Y
- for qemu-devel@nongnu.org; Mon, 25 May 2026 02:35:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wROvE-0004yX-IM
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 02:36:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wROu7-0001cd-ET
- for qemu-devel@nongnu.org; Mon, 25 May 2026 02:35:12 -0400
+ id 1wROv8-0001kx-Jc
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 02:36:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779690910;
+ s=mimecast20190719; t=1779690972;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=T0U31hilbffMwpa0BEq59ZjijcKzDLFO9G55VI/Gf/k=;
- b=Thvh5DkQpUHVRC21QJFwPokK/jAGozou9pW1exoz+y2UMbdOlaL1ogoxdiXxNgtq31g6qK
- EeGGzoVr5N6DRBRkcAd8Ya1cw3Q2F4E0eJRU0FQ5KA8PwKE26WHIpQ8b0+SyGxew7GHs02
- L9c/BfHmxo0kjQbTTxQMuPB+uhrmrOY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=r2P4H/6PC/PtAzXZKuJPQilzhN2AYohJ5V5fNf5KF9A=;
+ b=GkwuEnA02atfz5fAsIgQZ3sZNAzPhgczvUts2aVlAIDEvMye/iRemRj+Sy15j21hsnPHzW
+ r66bNXj/7GZAVSnJM/Vd1dxMfs4AHkkSMZIHrERyKKOwlf8n1VU5f0gaQD7yvQ25yFuzqd
+ NcjzoA6eB4xgDSXxFBydbfs3HI5n5UU=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-qo8iY_DOMnmBbuGtO0y49g-1; Mon,
- 25 May 2026 02:35:06 -0400
-X-MC-Unique: qo8iY_DOMnmBbuGtO0y49g-1
-X-Mimecast-MFC-AGG-ID: qo8iY_DOMnmBbuGtO0y49g_1779690905
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-qtWMd-1GOsWOFFGPRj6Dww-1; Mon,
+ 25 May 2026 02:36:10 -0400
+X-MC-Unique: qtWMd-1GOsWOFFGPRj6Dww-1
+X-Mimecast-MFC-AGG-ID: qtWMd-1GOsWOFFGPRj6Dww_1779690969
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1981B1800603; Mon, 25 May 2026 06:35:05 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8E4AB180034C; Mon, 25 May 2026 06:36:09 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 50D8C1945110; Mon, 25 May 2026 06:35:02 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BA6E2300019F; Mon, 25 May 2026 06:36:05 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PULL v3 22/38] hw/input/virtio-input: Use Linux key codes
-Date: Mon, 25 May 2026 10:32:05 +0400
-Message-ID: <20260525063223.1409791-23-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL v3 32/38] ui/sdl2: Use Linux key codes
+Date: Mon, 25 May 2026 10:32:15 +0400
+Message-ID: <20260525063223.1409791-33-marcandre.lureau@redhat.com>
 In-Reply-To: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
 References: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -68,7 +68,7 @@ X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,75 +93,74 @@ representations.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260520-input-v3-14-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <20260520-input-v3-24-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/input/virtio-input-hid.c | 40 +++++++++++++++++++++----------------
- 1 file changed, 23 insertions(+), 17 deletions(-)
+ ui/sdl2-input.c | 18 +++++++++---------
+ ui/trace-events |  2 +-
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/hw/input/virtio-input-hid.c b/hw/input/virtio-input-hid.c
-index 1d2e922567a..75fe45d89a2 100644
---- a/hw/input/virtio-input-hid.c
-+++ b/hw/input/virtio-input-hid.c
-@@ -83,23 +83,13 @@ static void virtio_input_handle_event(DeviceState *dev, QemuConsole *src,
+diff --git a/ui/sdl2-input.c b/ui/sdl2-input.c
+index fdbdc427dc9..7bebc3f3e5c 100644
+--- a/ui/sdl2-input.c
++++ b/ui/sdl2-input.c
+@@ -24,6 +24,7 @@
+ /* Ported SDL 1.2 code to 2.0 by Dave Airlie. */
+ 
+ #include "qemu/osdep.h"
++#include "standard-headers/linux/input-event-codes.h"
+ #include "ui/console.h"
+ #include "ui/input.h"
+ #include "ui/sdl2.h"
+@@ -32,28 +33,27 @@
+ void sdl2_process_key(struct sdl2_console *scon,
+                       SDL_KeyboardEvent *ev)
  {
-     VirtIOInput *vinput = VIRTIO_INPUT(dev);
-     virtio_input_event event;
 -    int qcode;
++    unsigned int lnx;
+     QemuConsole *con = scon->dcl.con;
  
-     switch (evt->type) {
-     case INPUT_EVENT_KIND_KEY:
--        qcode = qemu_input_linux_to_qcode(evt->key.key);
--        if (qcode < qemu_input_map_qcode_to_linux_len &&
--            qemu_input_map_qcode_to_linux[qcode]) {
--            event.type  = cpu_to_le16(EV_KEY);
--            event.code  = cpu_to_le16(qemu_input_map_qcode_to_linux[qcode]);
--            event.value = cpu_to_le32(evt->key.down ? 1 : 0);
--            virtio_input_send(vinput, &event);
--        } else {
--            if (evt->key.down) {
--                fprintf(stderr, "%s: unmapped key: %d [%s]\n", __func__,
--                        qcode, QKeyCode_str(qcode));
--            }
--        }
-+        event.type  = cpu_to_le16(EV_KEY);
-+        event.code  = cpu_to_le16(evt->key.key);
-+        event.value = cpu_to_le32(evt->key.down ? 1 : 0);
-+        virtio_input_send(vinput, &event);
-         break;
-     case INPUT_EVENT_KIND_BTN:
-         if ((evt->btn.button == INPUT_BUTTON_WHEEL_UP ||
-@@ -293,12 +283,28 @@ static void virtio_keyboard_init(Object *obj)
- {
-     VirtIOInputHID *vhid = VIRTIO_INPUT_HID(obj);
-     VirtIOInput *vinput = VIRTIO_INPUT(obj);
-+    virtio_input_config ext = {
-+        .select = VIRTIO_INPUT_CFG_EV_BITS,
-+        .subsel = EV_KEY,
-+        .size = DIV_ROUND_UP(KEY_REPLY, 8)
-+    };
-+    unsigned int i;
+-    if (ev->keysym.scancode >= qemu_input_map_usb_to_qcode_len) {
++    if (ev->keysym.scancode >= qemu_input_map_usb_to_linux_len) {
+         return;
+     }
+-    qcode = qemu_input_map_usb_to_qcode[ev->keysym.scancode];
+-    trace_sdl2_process_key(ev->keysym.scancode, qcode,
++    lnx = qemu_input_map_usb_to_linux[ev->keysym.scancode];
++    trace_sdl2_process_key(ev->keysym.scancode, lnx,
+                            ev->type == SDL_KEYDOWN ? "down" : "up");
+-    qkbd_state_key_event(scon->kbd, qemu_input_map_qcode_to_linux[qcode],
+-                         ev->type == SDL_KEYDOWN);
++    qkbd_state_key_event(scon->kbd, lnx, ev->type == SDL_KEYDOWN);
  
-     vhid->handler = &virtio_keyboard_handler;
-     virtio_input_init_config(vinput, virtio_keyboard_config);
--    virtio_input_extend_config(vinput, qemu_input_map_qcode_to_linux,
--                               qemu_input_map_qcode_to_linux_len,
--                               VIRTIO_INPUT_CFG_EV_BITS, EV_KEY);
-+
-+    /*
-+     * Cover as many keys as possible since we cannot tell what keys the host
-+     * supports. This follows Linux xen-kbdfront's approach:
-+     * https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/diff/drivers/input/xen-kbdfront.c?id=4ee36dc08e5c4d16d078f59acd6d9d536f9718dd
-+     *
-+     * Stop before KEY_REPLY for migration compatibility.
-+     */
-+    for (i = KEY_ESC; i < KEY_REPLY; i++) {
-+        ext.u.bitmap[i / 8] |= (1 << (i % 8));
-+    }
-+
-+    virtio_input_add_config(vinput, &ext);
- }
+     if (QEMU_IS_TEXT_CONSOLE(con)) {
+         QemuTextConsole *s = QEMU_TEXT_CONSOLE(con);
+         bool ctrl = qkbd_state_modifier_get(scon->kbd, QKBD_MOD_CTRL);
+         if (ev->type == SDL_KEYDOWN) {
+-            switch (qcode) {
+-            case Q_KEY_CODE_RET:
++            switch (lnx) {
++            case KEY_ENTER:
+                 qemu_text_console_put_keysym(s, '\n');
+                 break;
+             default:
+-                qemu_text_console_put_qcode(s, qcode, ctrl);
++                qemu_text_console_put_linux(s, lnx, ctrl);
+                 break;
+             }
+         }
+diff --git a/ui/trace-events b/ui/trace-events
+index 237f5a65af2..339a61f3415 100644
+--- a/ui/trace-events
++++ b/ui/trace-events
+@@ -135,7 +135,7 @@ input_event_mtt(int conidx, const char *axis, int value) "con %d, axis %s, value
+ input_event_sync(void) ""
  
- static const TypeInfo virtio_keyboard_info = {
+ # sdl2-input.c
+-sdl2_process_key(int sdl_scancode, int qcode, const char *action) "translated SDL scancode %d to QKeyCode %d (%s)"
++sdl2_process_key(int sdl_scancode, unsigned int lnx, const char *action) "translated SDL scancode %d to Linux scancode %u (%s)"
+ 
+ # spice-display.c
+ qemu_spice_add_memslot(int qid, uint32_t slot_id, unsigned long virt_start, unsigned long virt_end, int async) "%d %u: host virt 0x%lx - 0x%lx async=%d"
 -- 
 2.54.0
 
