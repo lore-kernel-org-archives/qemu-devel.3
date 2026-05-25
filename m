@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D76F8CD5BBF
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 06:39:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00C80CD5BBF
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 06:40:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wROwu-0000d5-UQ; Mon, 25 May 2026 02:38:05 -0400
+	id 1wROwW-00086a-Jl; Mon, 25 May 2026 02:37:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wROv3-0004tN-0T
- for qemu-devel@nongnu.org; Mon, 25 May 2026 02:36:15 -0400
+ id 1wROuq-0004na-9V
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 02:36:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wROv0-0001kc-CD
- for qemu-devel@nongnu.org; Mon, 25 May 2026 02:36:07 -0400
+ id 1wROuo-0001hr-Nr
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 02:35:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779690965;
+ s=mimecast20190719; t=1779690954;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iwE4iTcBWb64Ub5rQet8X4bkTzR6yTjGdriwiUrqn4Q=;
- b=JutVTDIBac5MmLS/FbkG7jPkUCQdEXwzTPpGUEbBtHYXOYrb6wU+5ZpDwIYeuWlrZuE0SB
- fgoBUOw5g1nN2aVrDx9S/aZGmiN24tEtmCfrXx2akRSoB+MUOe66HSJd0Zauqz3xYiNhuD
- ummgg3NZCd2ECQm/Ov69hGzHezf6nNk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=P//1lSfTwWASDwdT7cXVvkeoU6XXunKppQjodyXsuCY=;
+ b=QzY/fqBHgFDxfgzIHCYcWLNVPS1dHVn7vcEBhTydLyB3hqBqfqmY6L0/RKKhul2RXausxB
+ vkWfCaRtbuOTyTBUujzGfCJlK7GtrK45jZI6AwDMi7BsKEZ4PXzazx9As6SEAS/HBZiXkm
+ C/6klEiqXoZwBKaa6E8wqDe76xbq8Xs=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-54-unVw0vXZMeq3cAGGI-b-Hw-1; Mon,
- 25 May 2026 02:36:01 -0400
-X-MC-Unique: unVw0vXZMeq3cAGGI-b-Hw-1
-X-Mimecast-MFC-AGG-ID: unVw0vXZMeq3cAGGI-b-Hw_1779690960
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-44-J5gYc1zEN2yo6rBrVgYKww-1; Mon,
+ 25 May 2026 02:35:49 -0400
+X-MC-Unique: J5gYc1zEN2yo6rBrVgYKww-1
+X-Mimecast-MFC-AGG-ID: J5gYc1zEN2yo6rBrVgYKww_1779690949
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 71C1F18005B8; Mon, 25 May 2026 06:36:00 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E0DFD1956052; Mon, 25 May 2026 06:35:48 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 662001956056; Mon, 25 May 2026 06:35:58 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8381C1800352; Mon, 25 May 2026 06:35:47 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL v3 31/38] ui/keymaps: Use Linux key codes
-Date: Mon, 25 May 2026 10:32:14 +0400
-Message-ID: <20260525063223.1409791-32-marcandre.lureau@redhat.com>
+Subject: [PULL v3 29/38] ui/input-legacy: Use Linux key codes
+Date: Mon, 25 May 2026 10:32:12 +0400
+Message-ID: <20260525063223.1409791-30-marcandre.lureau@redhat.com>
 In-Reply-To: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
 References: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,26 +94,60 @@ representations.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260520-input-v3-23-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <20260520-input-v3-21-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 ---
- ui/keymaps.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ ui/input-legacy.c | 22 +++++-----------------
+ 1 file changed, 5 insertions(+), 17 deletions(-)
 
-diff --git a/ui/keymaps.c b/ui/keymaps.c
-index a448efab320..d145b5dd3a8 100644
---- a/ui/keymaps.c
-+++ b/ui/keymaps.c
-@@ -255,9 +255,8 @@ int keysym2scancode(kbd_layout_t *k, int keysym,
-          * On keyup: Try find a key which is actually down.
-          */
-         for (i = 0; i < keysym2code->count; i++) {
--            QKeyCode qcode = qemu_input_key_number_to_qcode
-+            unsigned int lnx = qemu_input_key_number_to_linux
-                 (keysym2code->keycodes[i]);
--            unsigned int lnx = qemu_input_map_qcode_to_linux[qcode];
-             if (kbd && qkbd_state_key_get(kbd, lnx)) {
-                 return keysym2code->keycodes[i];
-             }
+diff --git a/ui/input-legacy.c b/ui/input-legacy.c
+index e2b48dd8f0a..193c9ae2ef9 100644
+--- a/ui/input-legacy.c
++++ b/ui/input-legacy.c
+@@ -71,23 +71,11 @@ int index_from_key(const char *key, size_t key_length)
+     return i;
+ }
+ 
+-static KeyValue *copy_key_value(KeyValue *src)
+-{
+-    KeyValue *dst = g_new(KeyValue, 1);
+-    memcpy(dst, src, sizeof(*src));
+-    if (dst->type == KEY_VALUE_KIND_NUMBER) {
+-        QKeyCode code = qemu_input_key_number_to_qcode(dst->u.number.data);
+-        dst->type = KEY_VALUE_KIND_QCODE;
+-        dst->u.qcode.data = code;
+-    }
+-    return dst;
+-}
+-
+ void qmp_send_key(KeyValueList *keys, bool has_hold_time, int64_t hold_time,
+                   Error **errp)
+ {
+     KeyValueList *p;
+-    KeyValue **up = NULL;
++    unsigned int *up = NULL;
+     int count = 0;
+ 
+     if (!has_hold_time) {
+@@ -95,15 +83,15 @@ void qmp_send_key(KeyValueList *keys, bool has_hold_time, int64_t hold_time,
+     }
+ 
+     for (p = keys; p != NULL; p = p->next) {
+-        qemu_input_event_send_key(NULL, copy_key_value(p->value), true);
+-        qemu_input_event_send_key_delay(hold_time);
+         up = g_realloc(up, sizeof(*up) * (count+1));
+-        up[count] = copy_key_value(p->value);
++        up[count] = qemu_input_key_value_to_linux(p->value);
++        qemu_input_event_send_key_linux(NULL, up[count], true);
++        qemu_input_event_send_key_delay(hold_time);
+         count++;
+     }
+     while (count) {
+         count--;
+-        qemu_input_event_send_key(NULL, up[count], false);
++        qemu_input_event_send_key_linux(NULL, up[count], false);
+         qemu_input_event_send_key_delay(hold_time);
+     }
+     g_free(up);
 -- 
 2.54.0
 
