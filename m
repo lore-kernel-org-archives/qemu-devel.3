@@ -4,71 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B711CD5BCF
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 08:21:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E855BCD5BCF
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 09:14:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRQXi-0002fL-1g; Mon, 25 May 2026 04:20:10 -0400
+	id 1wRRN7-00013Y-VX; Mon, 25 May 2026 05:13:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wRQXe-0002df-Iw
- for qemu-devel@nongnu.org; Mon, 25 May 2026 04:20:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wRQXa-000249-LD
- for qemu-devel@nongnu.org; Mon, 25 May 2026 04:20:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779697197;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=qLya9vILGLfXiq6S5473N7V9FKUlPzgsnJrw6iP1TqQ=;
- b=T+f5JBnwfF1d0ORBeQZS47wbbGh5SPtbWntyuLs9jtdykL1+VOz1/nqxzoy10yGoyyD/+p
- 71znF0jGHDD5inSr+TMA4fiKUd7hK3GHh6JF489OrA/I6SzPbjVsBpPMKKq55sEYJ68NT1
- hddKVDYCbz0f90Y8/KOZxYvcpUHpWIM=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-457-Q_AwZLWSPWyu0SdtV_bAxA-1; Mon,
- 25 May 2026 04:19:54 -0400
-X-MC-Unique: Q_AwZLWSPWyu0SdtV_bAxA-1
-X-Mimecast-MFC-AGG-ID: Q_AwZLWSPWyu0SdtV_bAxA_1779697194
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BC24D195608E
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 08:19:53 +0000 (UTC)
-Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 75A8A180034E; Mon, 25 May 2026 08:19:51 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH] vga: implement text mode character blink
-Date: Mon, 25 May 2026 12:19:44 +0400
-Message-ID: <20260525081944.1494798-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1wRRMz-00011E-9C
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 05:13:09 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1wRRMw-0003DO-2w
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 05:13:09 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8DxrcCYEhRqnAYNAA--.13603S3;
+ Mon, 25 May 2026 17:12:56 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowJDxysGVEhRqXzuQAA--.8794S2;
+ Mon, 25 May 2026 17:12:54 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: maobibo@loongson.cn
+Cc: qemu-devel@nongnu.org, lixianglai@loongson.cn, chenhuacai@loongson.cn,
+ gaosong <gaosong@loongson.cn>
+Subject: [PATCH v3 0/4] LoongArch : Add KVM DINTC support
+Date: Mon, 25 May 2026 16:46:40 +0800
+Message-Id: <20260525084645.3328690-1-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-CM-TRANSID: qMiowJDxysGVEhRqXzuQAA--.8794S2
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,91 +63,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: gaosong <gaosong@loongson.cn>
 
-When bit 3 of the VGA Attribute Mode Control register is set, attribute
-bit 7 switches from selecting bright background colors to enabling
-character blink.
+Hi
 
-Implement this by tracking a separate blink phase timer that toggles
-every 32 frames (matching real VGA hardware frame counter bit 5 @60hz),
-and rendering blinking characters by replacing their foreground with
-background during the off phase.
+This series adds KVM put/get support for msgint CSRs and introduces
+msgint feature checks. It also adds kvm_dintc_realize() when
+kvm_irqchip_in_kernel is enabled, which creates and initializes the DINTC
+device in kernel mode.
 
-As with cursor, no VMState migration of the fields, as they are
-transient display-side states.
+Since the kernel now supports DINTC on the KVM model,
+this series of updates will no longer use the' RFC' header;
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1585
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- hw/display/vga_int.h |  2 ++
- hw/display/vga.c     | 24 +++++++++++++++++++++---
- 2 files changed, 23 insertions(+), 3 deletions(-)
+In addition, this series updates the Linux header files to version 7.1-rc4,
+and updates the `update-linux-headers.sh` script to include `typelimits.h`.
 
-diff --git a/hw/display/vga_int.h b/hw/display/vga_int.h
-index 747b5cc6cf8..5664317ecd6 100644
---- a/hw/display/vga_int.h
-+++ b/hw/display/vga_int.h
-@@ -130,6 +130,8 @@ typedef struct VGACommonState {
-     uint8_t cursor_start, cursor_end;
-     bool cursor_visible_phase;
-     int64_t cursor_blink_time;
-+    bool blink_visible_phase;
-+    int64_t blink_time;
-     uint32_t cursor_offset;
-     const GraphicHwOps *hw_ops;
-     bool full_update_text;
-diff --git a/hw/display/vga.c b/hw/display/vga.c
-index 0ac4bf37310..ea01a889f20 100644
---- a/hw/display/vga.c
-+++ b/hw/display/vga.c
-@@ -45,8 +45,10 @@
- 
- bool have_vga = true;
- 
--/* 16 state changes per vertical frame @60 Hz */
-+/* frame counter bit 4: cursor blink toggles every 16 frames @60 Hz */
- #define VGA_TEXT_CURSOR_PERIOD_MS       (1000 * 2 * 16 / 60)
-+/* frame counter bit 5: character blink toggles every 32 frames @60 Hz */
-+#define VGA_TEXT_BLINK_PERIOD_MS        (1000 * 2 * 32 / 60)
- 
- /* Address mask for non-VESA modes.  */
- #define VGA_VRAM_SIZE                   (256 * KiB)
-@@ -1286,6 +1288,13 @@ static void vga_draw_text(VGACommonState *s, int full_update)
-         s->cursor_blink_time = now + VGA_TEXT_CURSOR_PERIOD_MS / 2;
-         s->cursor_visible_phase = !s->cursor_visible_phase;
-     }
-+    if (now >= s->blink_time) {
-+        s->blink_time = now + VGA_TEXT_BLINK_PERIOD_MS / 2;
-+        s->blink_visible_phase = !s->blink_visible_phase;
-+        if (s->ar[VGA_ATC_MODE] & 0x08) {
-+            full_update = 1;
-+        }
-+    }
- 
-     dest = surface_data(surface);
-     linesize = surface_stride(surface);
-@@ -1317,8 +1326,17 @@ static void vga_draw_text(VGACommonState *s, int full_update)
- #endif
-                 font_ptr = font_base[(cattr >> 3) & 1];
-                 font_ptr += 32 * 4 * ch;
--                bgcol = palette[cattr >> 4];
--                fgcol = palette[cattr & 0x0f];
-+                if (s->ar[VGA_ATC_MODE] & 0x08) {
-+                    bgcol = palette[(cattr >> 4) & 0x07];
-+                    if ((cattr & 0x80) && !s->blink_visible_phase) {
-+                        fgcol = bgcol;
-+                    } else {
-+                        fgcol = palette[cattr & 0x0f];
-+                    }
-+                } else {
-+                    bgcol = palette[cattr >> 4];
-+                    fgcol = palette[cattr & 0x0f];
-+                }
-                 if (cw == 16) {
-                     vga_draw_glyph16(d1, linesize,
-                                      font_ptr, cheight, fgcol, bgcol);
+About Testing:
+1. run script with '-cpu max,msgint=on' and 'virt,dmsi=on.'
+'
+./build/qemu-system-loongarch64 -accel kvm \
+     -bios /usr/share/edk2/loongarch64/QEMU_EFI-silent-pflash.raw \
+     -cpu max,msgint=on\
+     -smp 4 \
+     -machine virt,dmsi=on,kernel_irqchip=on\
+     -m 16G \
+     -netdev tap,id=net0,ifname=tap0,script=/root/net.sh,downscript=no,vhost=on,queues=4 \
+    -device virtio-net-pci,netdev=net0,mq=on,vectors=128,mac=52:54:00:12:34:56 \
+     -monitor telnet:localhost:4418,server,nowait \
+    -device virtio-gpu-pci \
+    -drive if=none,id=disk0,file=/home/kvm/lns23.qcow2,format=qcow2 \
+    -device virtio-blk-pci,drive=disk0,id=virtio_disk0 \
+    --nographic
+'
+2  the vm can work well with with net test, such as netperf or iperf test.
+
+V3: 
+   Rebase,add patch4 to disable msgint in KVM model.
+
+
+Thanks,
+Song Gao
+
+Cédric Le Goater (1):
+  linux-headers: Update to Linux v7.1-rc4
+
+Song Gao (2):
+  target/loongarch: Add kvm support dintc
+  Add dintc kvm_irqchip_in_kernel support
+
+gaosong (1):
+  targe/loongarch: KVM disable msgint
+
+ hw/intc/loongarch_dintc.c                     |  13 +
+ hw/intc/loongarch_dintc_kvm.c                 |  48 ++
+ hw/intc/meson.build                           |   2 +
+ include/hw/intc/loongarch_dintc.h             |  10 +
+ include/standard-headers/drm/drm_fourcc.h     |  28 +-
+ include/standard-headers/linux/const.h        |  18 +
+ include/standard-headers/linux/ethtool.h      |  28 +-
+ .../linux/input-event-codes.h                 |  13 +
+ include/standard-headers/linux/pci_regs.h     |  71 ++-
+ include/standard-headers/linux/typelimits.h   |   8 +
+ include/standard-headers/linux/virtio_ring.h  |   5 +-
+ include/standard-headers/linux/virtio_rtc.h   | 237 ++++++++++
+ include/standard-headers/linux/vmclock-abi.h  |  20 +
+ linux-headers/asm-arm64/kvm.h                 |   1 +
+ linux-headers/asm-arm64/unistd_64.h           |   1 +
+ linux-headers/asm-generic/unistd.h            |   5 +-
+ linux-headers/asm-loongarch/kvm.h             |   5 +
+ linux-headers/asm-loongarch/kvm_para.h        |   1 +
+ linux-headers/asm-loongarch/unistd_64.h       |   2 +
+ linux-headers/asm-mips/unistd_n32.h           |   1 +
+ linux-headers/asm-mips/unistd_n64.h           |   1 +
+ linux-headers/asm-mips/unistd_o32.h           |   1 +
+ linux-headers/asm-powerpc/unistd_32.h         |   1 +
+ linux-headers/asm-powerpc/unistd_64.h         |   1 +
+ linux-headers/asm-riscv/kvm.h                 |  11 +-
+ linux-headers/asm-riscv/ptrace.h              |  37 ++
+ linux-headers/asm-riscv/unistd_32.h           |   1 +
+ linux-headers/asm-riscv/unistd_64.h           |   1 +
+ linux-headers/asm-s390/unistd_32.h            | 446 ------------------
+ linux-headers/asm-s390/unistd_64.h            |   1 +
+ linux-headers/asm-x86/kvm.h                   |  21 +-
+ linux-headers/asm-x86/unistd_32.h             |   1 +
+ linux-headers/asm-x86/unistd_64.h             |   1 +
+ linux-headers/asm-x86/unistd_x32.h            |   1 +
+ linux-headers/linux/const.h                   |  18 +
+ linux-headers/linux/iommufd.h                 |  48 ++
+ linux-headers/linux/kvm.h                     |  46 +-
+ linux-headers/linux/mshv.h                    |   4 +-
+ linux-headers/linux/psp-sev.h                 |   2 +-
+ linux-headers/linux/stddef.h                  |   4 +
+ linux-headers/linux/vduse.h                   |  85 +++-
+ linux-headers/linux/vfio.h                    |  30 +-
+ target/loongarch/cpu.c                        |   8 +-
+ target/loongarch/cpu.h                        |   1 +
+ target/loongarch/kvm/kvm.c                    |  74 +++
+ 45 files changed, 866 insertions(+), 496 deletions(-)
+ create mode 100644 hw/intc/loongarch_dintc_kvm.c
+ create mode 100644 include/standard-headers/linux/typelimits.h
+ create mode 100644 include/standard-headers/linux/virtio_rtc.h
+ delete mode 100644 linux-headers/asm-s390/unistd_32.h
+
 -- 
-2.54.0
+2.47.3
 
 
