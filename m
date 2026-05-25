@@ -4,109 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08181CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 16:33:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E10B8CD5BC9
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 16:42:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRYEX-0000b3-HE; Mon, 25 May 2026 12:32:53 -0400
+	id 1wRYMq-00024B-6R; Mon, 25 May 2026 12:41:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wRYEV-0000aY-JK
- for qemu-devel@nongnu.org; Mon, 25 May 2026 12:32:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wRYET-0007RL-IW
- for qemu-devel@nongnu.org; Mon, 25 May 2026 12:32:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779726767;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=isXcrrT9lQmKtWK1qmg8jpI7HwGACBTn9FCRspXKWb8=;
- b=X0ATV/lVUFldGCJPga2Jh1Bai35Rvq5yq5jnG415gIOyr/b3mAdF6qj78JBuUTaElqKA4c
- m68A/eRADspWb7S2K7RIxhWhLdcloSXAUr9yEEuKk8pWGpk1PeRP3T6rQ04F+GPpqS7cIf
- x6ZTBtUzqN49XM/S11CCBBreS7dkouw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-Jd-T8U8GPFqbNjeYGIAC_Q-1; Mon,
- 25 May 2026 12:32:46 -0400
-X-MC-Unique: Jd-T8U8GPFqbNjeYGIAC_Q-1
-X-Mimecast-MFC-AGG-ID: Jd-T8U8GPFqbNjeYGIAC_Q_1779726765
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3F3A7195608A
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 16:32:45 +0000 (UTC)
-Received: from [10.44.32.152] (unknown [10.44.32.152])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C5E38300019F; Mon, 25 May 2026 16:32:43 +0000 (UTC)
-Message-ID: <f0bc9023-28c4-4685-b0cc-fc7ad4e6d371@redhat.com>
-Date: Mon, 25 May 2026 18:32:42 +0200
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wRYMm-00023y-Rv
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 12:41:24 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wRYMl-0002Bt-2R
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 12:41:24 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-68719234fd8so2827066a12.3
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 09:41:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779727281; cv=none;
+ d=google.com; s=arc-20240605;
+ b=J7mXkuim9nyMlEAzH4qQWWKhZMBk24Vwp4pZDkomHFICo44nNlI5lqzIDFF2sBZi8l
+ O9vDlzCgdLAtmgyHlgNSrEWz/Wq8sE8RPyBlfdKmf5E1/1+ABhimSb2nequCVCdjbDf4
+ 5V8DeP+QBNHGkw++uczFkhBBEZG/CaKxrx6vUwGiepTZRpUKsYWzj4u0cT706uWVqNvk
+ /wJcCt5r6pPbuc/TS2l9RH1eiDVlJEVehoFsv+iKJtpYPXCO/j+Khj4v0lwboFAWKo2C
+ Jkx7L1YoNzPpWgFzbIYzA1lMjZ8g/8pvlP288n6Ro5fRCw0HtllREIQQi3LY84ukjOwF
+ jbeg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=bQQE3SbdOA8mVCI1w3FU9l2xQlyISovTtzF4fGpQKFc=;
+ fh=BuCZB8MAkpexmqNliCV3N9B9XN8DMmBSCEzv3GGUHvM=;
+ b=Svbl212rSCvMsoaJomDSPsUbEW1w2YGhuHcB4Q066YYvAKbeWUoZqhgbEdEh9o+hOB
+ s7usgstSZt0h6kXXxzTrIEIGpiUAwkxEMjuwyBR1Pa6RwAmV9/9bQNH0TAEIiqE73Mjr
+ p7KOiKKo8QAdq++ju+BogWhRlZF2RgxtybHPuqDNfRSteumWVRyy+/bpcaKu7pH1BJ1D
+ Nt/NJAJX6FgIKlOuWz7+ug06RB6raUm8hllRY6KmLg/VKVD3991CrV6Oior7ZyZnLN6l
+ K8ZhSqioiG58ytB6BmCk34cmZ8WEl0yR2yP/rmPEu5FjTPC3DfoPPM57hveJ3w4qa7bL
+ jtvA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1779727281; x=1780332081; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=bQQE3SbdOA8mVCI1w3FU9l2xQlyISovTtzF4fGpQKFc=;
+ b=Om4UYDIuleZr1AG7as3F9LlYlv9xkTEVeMUIs3qNYqv3pOswOd+/qwhjVv9cczpzdv
+ qwwKmoHh2pcUr3/JPuqSmV5n+DLdZA3JSIUpW2nI5Fn510fI/xG0Hzvc198cEEDob1UG
+ e/DegRm98Ir7dHllupLOoJv7C0jdGeZraVWYyR4LLdmTKnk1xG8/cSGR/Ruk6EWcSkid
+ tJ2TbJ6ygPwDpuUwhK/rOXtOawkP4p/VZ/YnsnFR8AkoH2aPO7o4gfLa+PIP8yQXn5Zu
+ j3IJwL5ax22oE7XPqUEsvZitoIeTRF85zxtgzOrgIPXfj2/WfPjxRHX7rq/6d/s54L0x
+ ZU3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779727281; x=1780332081;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bQQE3SbdOA8mVCI1w3FU9l2xQlyISovTtzF4fGpQKFc=;
+ b=YSun77LuK+PTy09yoSZstoHsGnvAsVFCzh5BvKTOXJ7FFomLmuEz+PzBN4RFzFNd2q
+ 7xg9Yb2CZgaBvgzxxSTjfvqnA0MT9N7atueo8q39AFcdnO9AyDam3ii2EX6aITNy7wYd
+ qHauv1N1InlaJIDAqL4zXtK1JXrop9ea+HKV6A37PFFHfj7MJNqYE2RkQpLkFq+cQG6D
+ whbNbTHD/hvqwJIZWGIbFBaxD/UgVU35s/4TvOPjiNH3zwuJ4mq8quZxrBz8wcjMi2QF
+ HnPUm0wZBlRF799N70H+yWOvldV4ChZS70W+eH81Pcf9AHWrRX6UaMg0inuD/mHaCKX3
+ 8Q/A==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8GcCLbPnk1m+MUZ4TSrmO+4ci0w7ygVUn05EjqNlAkosn5NVS31V4TjZBYjVreJkdRCDts+8M8hCxH@nongnu.org
+X-Gm-Message-State: AOJu0YwedUjSiYFEl1012DvDv+IWixxKiILRBm9SbQNDGWjAWxTnloY4
+ 2tHnTOslbVMdujXze1bP4acdjWcp14NPB2U5H+mlCE0FZChcMG1HgioVOkSkyEMK26tYmuqlUek
+ Esk76nSd+xNGeNERxnHTMWEShQZHX/hU=
+X-Gm-Gg: Acq92OHbSpXW7UBPYIYbpLx6EjWJnhZpropWvtDFHP2JsYfrMOOzjXIDN3vX6QzoFo7
+ SEVXtYbggr7Ujc09sDLEGG8jwgD57Y4qHF6vFi3voMii2P1gZLS1HdESW6ikPi0V5UcGuY5I88z
+ cIlwV+r6b10S8cD/YLKeX/kZSEN0GJNYiOFCmu411lwGE1n7s7+qlY1aHVCmGM5wWFDSS9XhhpJ
+ 8HCeBsn4bpm9vGfOK9nU+0N12VQM1LJH1WNN+OArKL3oJ2Ipcu2itmssUL8poKY99FPPCr8mXSJ
+ AdGWuPkhTG3dmvLO9H7F+AORqHaRwtsfKy4YnJ6p4Q==
+X-Received: by 2002:a17:906:ef0c:b0:bc6:2bd3:8176 with SMTP id
+ a640c23a62f3a-bdd279d1b58mr989223966b.35.1779727280714; Mon, 25 May 2026
+ 09:41:20 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: on ai generated and code provenance
-To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Cc: stefanha@redhat.com
-References: <20260524083329-mutt-send-email-mst@kernel.org>
-Content-Language: en-US
-From: Paolo Bonzini <pbonzini@redhat.com>
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20260524083329-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <CAJSP0QULyy5C0YEaxz2ChNy3_zfc5VwaMhB18R=yHDgnhBYo9w@mail.gmail.com>
+ <CAJSP0QWt8Q5+yY1F6--XyvcAV3afg3msAcO6vaNDeWS=B9Oqag@mail.gmail.com>
+ <CANCZdfpbDU+jCr6+Lj-ZV7h5H_ByHf=VJordfQ8OcH3+JsmJ4Q@mail.gmail.com>
+In-Reply-To: <CANCZdfpbDU+jCr6+Lj-ZV7h5H_ByHf=VJordfQ8OcH3+JsmJ4Q@mail.gmail.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Mon, 25 May 2026 12:41:10 -0400
+X-Gm-Features: AVHnY4K0X1AX3bX6WjRBVmOeQBqbMWYk3IRSdmH9fI-gDp-wB5jlL9k6B2JDwIE
+Message-ID: <CAJSP0QX=Uu0cy6z8oCsQK_EKJ8LUW1v3Tsd09JoAU=Py4MkRrw@mail.gmail.com>
+Subject: Re: FreeBSD CI after Cirrus shuts down?
+To: Warner Losh <imp@bsdimp.com>
+Cc: Li-Wen Hsu <lwhsu@freebsd.org>, Alex Bennee <alex.bennee@linaro.org>, 
+ qemu-devel <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="0000000000005d3cad0652a70c11"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,78 +118,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/24/26 14:42, Michael S. Tsirkin wrote:
-> 	How contributors could comply with DCO terms (b) or (c) for the output of AI
-> 	content generators commonly available today is unclear.  The QEMU project is
-> 	not willing or able to accept the legal risks of non-compliance.
-> 
-> But, since this was written, Red Hat's Richard Fontana and Chris Wright
-> published this piece:
-> https://www.redhat.com/en/blog/ai-assisted-development-and-open-source-navigating-legal-issues
-> 
-> Saying, in particular
-> 	We understand this concern, but the DCO has never
-> 	been interpreted to require that every line of a contribution must be
-> 	the personal creative expression of the contributor or another human
-> 	developer.
-This is not the objection or the worry; rather the question is, what if 
-the contribution is a creative expression of someone that could claim 
-copyright in it.  In fact, looking at the Linux policy...
+--0000000000005d3cad0652a70c11
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-   Signed-off-by and Developer Certificate of Origin
-   =================================================
+On Mon, May 25, 2026, 11:12 Warner Losh <imp@bsdimp.com> wrote:
 
-   AI agents MUST NOT add Signed-off-by tags. Only humans can legally
-   certify the Developer Certificate of Origin (DCO). The human submitter
-   is responsible for:
+>
+>
+> On Mon, May 25, 2026, 8:36=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.com=
+> wrote:
+>
+>> On Mon, May 25, 2026 at 10:01=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail=
+.com>
+>> wrote:
+>> > If you have a FreeBSD build host available, you could install
+>> > gitlab-runner on it and I can configure GitLab CI to send QEMU FreeBSD
+>> > build jobs to your runner.
+>>
+>> QEMU has an Intel x86_64 KVM VM with 1 vCPU, 4 GB RAM, and 60 GB of
+>> disk space available.
+>>
+>> The following images are available:
+>> - FreeBSD 14.1
+>> - FreeBSD 14.2 (ufs)
+>> - FreeBSD 14.2 (zfs)
+>>
+>> I can provision the machine for you via remote console access and add
+>> your ssh key. After initially giving you access, you would become the
+>> maintainer of the VM and responsible for keeping it updated and
+>> connected to QEMU's GitLab CI.
+>>
+>> If you would like to do this, please send me your ssh public key and
+>> choice of FreeBSD image from the list above.
+>>
+>
+> Where does that list come from? Those are older versions of FreeBSD by
+> now...
+>
 
-   * Reviewing all AI-generated code
-   * Ensuring compliance with licensing requirements
-   * Adding their own Signed-off-by tag to certify the DCO
-   * Taking full responsibility for the contribution
+These images are available in OSUOSL's OpenStack instance where the VM is
+located.
 
-... the question is how humans can actually do the second step.  The 
-piece you posted above says: "with disclosure and human attentiveness – 
-and oversight – aided where possible by tools that check for code 
-similarity, AI-assisted contributions can be entirely compatible with 
-the spirit of the DCO".
+If you can upgrade in place from FreeBSD 14 to something newer without
+requiring console access, then that might be the simplest solution.
 
-This is not encouraging, in my opinion, because it leaves a lot of the 
-mechanics undefined.  A while ago I suggested that in some scenarios 
-this could actually be done[1][2]; another possible case is localized 
-bugfixes (say, below 20 lines of code).  For more general contributions 
-however, the role of maintainers is not clear.  Would we require to 
-"check for code similarity"?  I sure don't want to open that can of worms.
+Otherwise I can upload a custom image (for QEMU's i440fx machine type with
+virtio devices) if you send me a URL to the image.
 
-> I propose adopting linux's rules instead:
-> https://docs.kernel.org/process/coding-assistants.html
+Stefan
 
-Replacing QEMU's policy with Linux's would be orthogonal to the topic of 
-the DCO.  Maintainers would still have the option of rejecting 
-AI-assisted patches if they don't believe they can apply their own sign-off.
+>
 
-Other projects have taken similar "no AI" policies for different 
-reasons.  Zig has one because they believe AI code would make it harder 
-to retain contributors[3][4]; Rust is working on one that is fairly 
-restrictive[5] (discussion at [6]) and requires previous communications 
-with reviewers about *any* generated PRs[7].  Personally I think QEMU's 
-policy is fine but we should start introducing exceptions, possibly 
-including large contributions with pre-authorization (but not 
-pre-approval) from the maintainer.
+--0000000000005d3cad0652a70c11
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Paolo
+<div dir=3D"auto"><br><br><div class=3D"gmail_quote gmail_quote_container" =
+dir=3D"auto"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, May 25, 2026, 11=
+:12 Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com">imp@bsdimp.com</a>&gt=
+; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px=
+ 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div di=
+r=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
+=3D"gmail_attr">On Mon, May 25, 2026, 8:36=E2=80=AFAM Stefan Hajnoczi &lt;<=
+a href=3D"mailto:stefanha@gmail.com" target=3D"_blank" rel=3D"noreferrer">s=
+tefanha@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote"=
+ style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
+adding-left:1ex">On Mon, May 25, 2026 at 10:01=E2=80=AFAM Stefan Hajnoczi &=
+lt;<a href=3D"mailto:stefanha@gmail.com" rel=3D"noreferrer noreferrer" targ=
+et=3D"_blank">stefanha@gmail.com</a>&gt; wrote:<br>
+&gt; If you have a FreeBSD build host available, you could install<br>
+&gt; gitlab-runner on it and I can configure GitLab CI to send QEMU FreeBSD=
+<br>
+&gt; build jobs to your runner.<br>
+<br>
+QEMU has an Intel x86_64 KVM VM with 1 vCPU, 4 GB RAM, and 60 GB of<br>
+disk space available.<br>
+<br>
+The following images are available:<br>
+- FreeBSD 14.1<br>
+- FreeBSD 14.2 (ufs)<br>
+- FreeBSD 14.2 (zfs)<br>
+<br>
+I can provision the machine for you via remote console access and add<br>
+your ssh key. After initially giving you access, you would become the<br>
+maintainer of the VM and responsible for keeping it updated and<br>
+connected to QEMU&#39;s GitLab CI.<br>
+<br>
+If you would like to do this, please send me your ssh public key and<br>
+choice of FreeBSD image from the list above.<br></blockquote></div></div><d=
+iv dir=3D"auto"><br></div><div dir=3D"auto">Where does that list come from?=
+ Those are older versions of FreeBSD by now...</div></div></blockquote></di=
+v><div dir=3D"auto"><br></div><div dir=3D"auto">These images are available =
+in OSUOSL&#39;s OpenStack instance where the VM is located.=C2=A0</div><div=
+ dir=3D"auto"><br></div><div dir=3D"auto">If you can upgrade in place from =
+FreeBSD 14 to something newer without requiring console access, then that m=
+ight be the simplest solution.=C2=A0</div><div dir=3D"auto"><br></div><div =
+dir=3D"auto">Otherwise I can upload a custom image (for QEMU&#39;s i440fx m=
+achine type with virtio devices) if you send me a URL to the image.</div><d=
+iv dir=3D"auto"><br></div><div dir=3D"auto">Stefan</div><div class=3D"gmail=
+_quote gmail_quote_container" dir=3D"auto"><blockquote class=3D"gmail_quote=
+" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
+padding-left:1ex"><div dir=3D"auto"><div dir=3D"auto"><div class=3D"gmail_q=
+uote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
+order-left:1px solid rgb(204,204,204);padding-left:1ex">
+</blockquote></div></div></div>
+</blockquote></div></div>
 
-[1] 
-https://lore.kernel.org/qemu-devel/20250925075630.352720-1-pbonzini@redhat.com
-[2] 
-https://lore.kernel.org/qemu-devel/20251008063546.376603-1-pbonzini@redhat.com/raw
-[3] https://ziglang.org/code-of-conduct/
-[4] 
-https://ziggit.dev/t/bun-s-zig-fork-got-4x-faster-compilation-times/15183/19
-[5] 
-https://github.com/jyn514/rust-forge/blob/llm-policy/src/policies/llm-usage.md
-[6] https://github.com/rust-lang/rust-forge/pull/1040
-[7] 
-https://github.com/jyn514/rust-forge/blob/llm-policy/src/policies/llm-usage.md#experiment-llm-created-code-changes
-
+--0000000000005d3cad0652a70c11--
 
