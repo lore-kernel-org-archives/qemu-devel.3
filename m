@@ -4,110 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71DEFCD5BC9
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 18:44:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDE61CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 19:14:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRaH8-0004vS-8A; Mon, 25 May 2026 14:43:42 -0400
+	id 1wRakn-0002Qo-67; Mon, 25 May 2026 15:14:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wRaH3-0004ui-RP
- for qemu-devel@nongnu.org; Mon, 25 May 2026 14:43:37 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wRakW-0002Ng-EI
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 15:14:08 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wRaH2-0000ye-8W
- for qemu-devel@nongnu.org; Mon, 25 May 2026 14:43:37 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4903974854dso36973635e9.3
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 11:43:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wRakU-0004Yo-PB
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 15:14:04 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-672645dbfeaso12170583a12.0
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 12:14:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779736440; cv=none;
+ d=google.com; s=arc-20240605;
+ b=hFvvCasaak3pXXPJgn4aLSHOeroiPemVvk8dITomgoHPA4gP+enlAUOqWp2Sa/VmSq
+ Za29at/+qctAKeQx6qrq5C2I3AKcwCpdw4rpmNZfYbeDan16JeeaD796XKbIhojb27Y0
+ qbLivEb/duxOq1USGw7GvVIHFj1uMvQj82S1vzGCuZDtfMM9yEw2XMu6JAoZtC7UWu6d
+ eYblF3d3Oh08YXMmUaSL0EjkT4ZXlqaFNbq8CeSpP7FvmbyL6Kb1SJNeXUpSlxzmPyQi
+ yqqrbRDEuSx+lIXarPkrqGb5zaJxjL6u+IbO9gOPeVtxZN1UwcqkOKpi5QTpi9n8vjfQ
+ d9ew==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=kcBbYXHgL64rza1dFqCTfYEZECcOZKJVGi+Kvw0R8Cc=;
+ fh=xYbP+4l2jWX4HynwyYLvgDhu17mUTsiXnTmVXqjrwqs=;
+ b=TEI3el+pf0nOaNNVGEtdzbaGtOzE33JIzvT16TZK85RdMeqzX1Gvdcj3PfujtrLiTk
+ rRTuubgLUi53zNuoiO4R1iMKzBKAlnjYnz2wOefmOddhcTg+3y+O5KTdmrAA5222kqWV
+ pIPgcZOvzaieDS/BuUDCHsw2y2Ve5lU1SW7vtC8bw+iU8M08RSup9pbum5ovFO+5zY3O
+ Ozx44LchQ9XtUG2zw3omkL6JQsNTAzhrwVg06D5fuUggvQMazhqlXDr7VpLCGnQmdhcp
+ EgftYL1EctdI+8f1YeSqTYHbV90Qy01bqwL8dgOFhpz46gCN1mIVjuCmRv3zkZQ0pWwZ
+ bIBA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779734614; x=1780339414; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1779736440; x=1780341240; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nzfKWv9JzU5mMugxKaK6qPwERMr9J1AgOUmy+aHJ24g=;
- b=s81ciKku0rudltbtvwdI2l7ki0VOGpMrEGbc1O8sFqJ7uvj3Q1jWy1UJqWdR4shyBd
- Az55GEI/5u57u42UE5UFG5ojEEVoA8HfQ2xaRNzTMeDkFD6bgpP14Xkq56ea4T1AJf22
- lYyvM6e8LVkXtugzDZPW9LtKeXP35GBtMfymt11SxT+QPO9FbDqltlgnIcr8qlC2Z9ql
- gQsUHc3r8td1bFqx/ck2rg+BewG6CMJsZeWanAfB2Y+pjGWVKLDX+bNhSITd4PWoRc4U
- /oLT5CY2+yaxGc7eQVdUrRyn8BaIzvJO4cynHG3Hb7P5YFUg1fJtrlquUnT8SoNSp6YM
- dogw==
+ bh=kcBbYXHgL64rza1dFqCTfYEZECcOZKJVGi+Kvw0R8Cc=;
+ b=bXk1wOsWWg1u0diujteqlu5+T3ygqwc/2RmpVjjHX8zE4w99cksxkvHa3P7IvFJUKf
+ d7ZA2qzjFRVo5sqvAk+yK9EmQhCePls4z22WK0ar+aGYwtpaAgVMKJzsIy6CDy6WdMXn
+ 3D1kAtjp0jDu6htySP/pAwOoaW6+N9Vn4MD+gPkQ9t0ieKFmWmvutCh3apCuv0BstyVb
+ HC8I8hn8Cp7Oieg5tpBWGWz+KV5WWAqdxj59wr2htAzPn26Qd8J3MMOYyHo4uUKjAVNy
+ 3+1fyN8pppPU9eqTzU/AK1pttymiUZaW/CLWCTY14gYXfzXuL7sKeQmI484krvGD1Maj
+ kF8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779734614; x=1780339414;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nzfKWv9JzU5mMugxKaK6qPwERMr9J1AgOUmy+aHJ24g=;
- b=hNRJW2fo0i05YjpXmLSn3T9d/QW2rg/DzuxSCGX774hyYGEDYOGFVS0Ggj/88mx3N1
- d7bLezyHhOlPlousCCTZCHanag70urM75HS1kWAo3rJlMv7QscHwaZgbHAmouP2HqmQ5
- r+78U2BIObu/NQ6ebbW12ANr31i34Km9fAizA8CG+kGDt+VLa0mF+qjVGkkQqpBbRqZo
- X5/B+XvJWykqKMv75hhniMj5KibH7q8RRvx6FED++OG7ktaIlqHWlQtA9W7Cu5aMB34h
- 2IyWbPyfUwCxNU9e9odn9hxiNzwvpvFdSZOuFBL2qiZv5s24IC+kORAmsEq0bTNDQcRA
- URRw==
-X-Gm-Message-State: AOJu0YwLtQ2uAjYHgGq8h4c3NVitWDYZMDL6mqSDAZoan01HAswFTk8P
- SyFg0mUmU4mA6n2hFQqfPaI+ODrwQzTNsDpcGmoImlVYpdGh169CRjwiAy6b9AONzGc=
-X-Gm-Gg: Acq92OGcmFZx0Itp8r1ssZ0+zcqvBR6NI7uEofA3z4cyHQGk6kO3vXeGDRtKkEs7Itl
- 7crm2WYCQFTCu9VUfQ7QQf4Ix77xyMfySstTb3AT2WsLsCmlhQrTnqustrL/7FEvFSkS6n7ypMk
- C8XtDXPKVUDhcvUlOjBVclRTpHwBtpFgW/wdfEbNT31c9GjWuxUG0108u9ZoGmchBvAonyLhyLo
- ESSfKQy6KfPndL5H8hl9rD0PTnpx77mTqFaHG+KEsbzPKQhAP3jhQQ1ybF8gRW2l9sVFOxCEXZr
- 8bvKVg6zC6YU131QL5C7zjYdeVrdsd9ED0d/bRN+s1aEOhDd7h3ARIhDehSnD6FrWpfNpQ2ZaWN
- uqpAB/1/msNhVU8GC93V8etVX8BB/MMUYYCL1PyOfQ67N2Jqki8OMFEr6Dn4VPxs93oXiaHyyv+
- +ToIs1EOv9jNX+eGg7O8J132FHykp+jJ+IjQ==
-X-Received: by 2002:a05:600c:8217:b0:490:51e9:deba with SMTP id
- 5b1f17b1804b1-49051e9e233mr175536925e9.27.1779734614129; 
- Mon, 25 May 2026 11:43:34 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6cd1780sm31122078f8f.16.2026.05.25.11.43.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 May 2026 11:43:33 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 40D575F855;
- Mon, 25 May 2026 19:43:32 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Thomas Huth
- <th.huth+qemu@posteo.eu>,
- Song Gao <gaosong@loongson.cn>,  John Snow <jsnow@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Kyle Evans
- <kevans@freebsd.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,  Cleber Rosa
- <crosa@redhat.com>,  Warner Losh <imp@bsdimp.com>,  Brad Smith
- <brad@comstyle.com>,  Thomas Huth <thuth@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Max Filippov <jcmvbkbc@gmail.com>,  Brian Cain
- <brian.cain@oss.qualcomm.com>,  Fabiano Rosas <farosas@suse.de>,  Peter
- Maydell <peter.maydell@linaro.org>,  Richard Henderson
- <richard.henderson@linaro.org>,  qemu-arm@nongnu.org
-Subject: Re: [PATCH v2 03/16] tests/Makefile.include: add binary dependency
- to run-tcg-tests-% rules
-In-Reply-To: <0f73d717-1621-4c3f-9c5e-9bfdfaffb0b8@oss.qualcomm.com> (Pierrick
- Bouvier's message of "Mon, 25 May 2026 10:18:45 -0700")
-References: <20260521131739.540157-1-alex.bennee@linaro.org>
- <20260521131739.540157-4-alex.bennee@linaro.org>
- <74e8bc86-cd81-43f9-b5cb-7e3de3bcd3d0@oss.qualcomm.com>
- <87tsrzl138.fsf@draig.linaro.org>
- <093614fb-ced1-4b15-b1e1-5da755f87237@oss.qualcomm.com>
- <87cxymec7b.fsf@draig.linaro.org>
- <5bd51a1a-4079-4073-bbd8-f0206a1ad458@oss.qualcomm.com>
- <0f73d717-1621-4c3f-9c5e-9bfdfaffb0b8@oss.qualcomm.com>
-User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Mon, 25 May 2026 19:43:32 +0100
-Message-ID: <877bor9vor.fsf@draig.linaro.org>
+ d=1e100.net; s=20251104; t=1779736440; x=1780341240;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=kcBbYXHgL64rza1dFqCTfYEZECcOZKJVGi+Kvw0R8Cc=;
+ b=XHPhV4RBvPRjRcjD9ryfOml2QOTPngCX9Rj0pkdAK5fmVtF9Ux9LULUjztzgMtGkZ3
+ QVq9fmi/Qwv/5MAexFrNoT5PO0v34hY4cX3JjPOI1idBwVPvvBghFsLGhPNAb6u/EhEL
+ c5xAjXSC8ZZvMHMvoEucRxYb90TXJOJdJ2TWTsEwCwTEp0FpkfTTO2tkHS2rMkQHZHL/
+ o6l5i6bpfioAbsgO+56hF6LUDN6FoazwZ08GKNkI/2WY+odQJNN6ivKAxUnSLmlHFopy
+ O6RPd+jF79Svtrd4Tb1EHVGKLLS1frlfMpZdm5yOJ7aGqUR4xJnW5/19YDc1pthhCWko
+ bFQA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9KjWHpJreyyGRxb57PxWQjB4RWK/WCPb+aMRpdUVMwQWs9fEyIzPNyTHRBczjXa4kF5PUPG5shPw4y@nongnu.org
+X-Gm-Message-State: AOJu0YyZze+6l6AZXU04qFS4B/rX+/IcXcrRI5BMJHo7MfrfQsIpyxrp
+ t4Q5BDN0vqJlRaMd0ipf3HFO5AQUfFUoA9mj3lXCEwR+zzuMNR35B2v++Yi42+uPpwu+0cGJVh5
+ 0P2FCa7tJ/J87vqmeCakR6knl/BDf504=
+X-Gm-Gg: Acq92OHiJgLZcQASbR2YaO51M/JHGsB51qKSNnoOSER2bZOrUEX4J883QgOdbQ1+jyp
+ u9RzBD2T5zfTzMxij84rrGR6+4ghDhK9rhDYe1butgqB21qP+ntovsvFrNc2Y35HfQF3riaMamy
+ muvj+f82Ah3X2pH3ElBqUvzLqSxkaJGNJ+h/swBlL0Ya3gHJs6cgVLDmIFydiVzvG/K59wy7kbQ
+ psvUpMBfFj5YN5MlFGpR8lRE18RPU/6rHSup/CJgHlLKaCu67IKD8hWOTeqyCKTz08+4NVftlK9
+ DMUOOn9WpZHZmPUuUArLAFE2nQSdoIoDs5rbJO+lvExPmqv30yZu
+X-Received: by 2002:a05:6402:5110:b0:66e:cf8d:6970 with SMTP id
+ 4fb4d7f45d1cf-6889c46833dmr7752917a12.20.1779736439911; Mon, 25 May 2026
+ 12:13:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <CAJSP0QULyy5C0YEaxz2ChNy3_zfc5VwaMhB18R=yHDgnhBYo9w@mail.gmail.com>
+ <CAJSP0QWt8Q5+yY1F6--XyvcAV3afg3msAcO6vaNDeWS=B9Oqag@mail.gmail.com>
+ <CANCZdfpbDU+jCr6+Lj-ZV7h5H_ByHf=VJordfQ8OcH3+JsmJ4Q@mail.gmail.com>
+ <CAJSP0QX=Uu0cy6z8oCsQK_EKJ8LUW1v3Tsd09JoAU=Py4MkRrw@mail.gmail.com>
+ <CANCZdfrfiVp=BiCEUzYRFFeZBpUoODBwL5b-QQgbA21Ev76noA@mail.gmail.com>
+In-Reply-To: <CANCZdfrfiVp=BiCEUzYRFFeZBpUoODBwL5b-QQgbA21Ev76noA@mail.gmail.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Mon, 25 May 2026 15:13:47 -0400
+X-Gm-Features: AVHnY4LxXNLw8WpEdQZzGvdd1S6aRwpM8xwl6sXg4ybdUOsOxQKem2bakxHWS4M
+Message-ID: <CAJSP0QWrNzf_NS1hx4c2TFRLp0Son=_kAx7qq_CeMBinEV=CNw@mail.gmail.com>
+Subject: Re: FreeBSD CI after Cirrus shuts down?
+To: Warner Losh <imp@bsdimp.com>
+Cc: Li-Wen Hsu <lwhsu@freebsd.org>, Alex Bennee <alex.bennee@linaro.org>, 
+ qemu-devel <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,92 +122,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
-
-> On 5/25/2026 8:46 AM, Pierrick Bouvier wrote:
->> On 5/23/2026 1:56 AM, Alex Benn=C3=A9e wrote:
->>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->>>
->>>> On 5/22/2026 12:02 PM, Alex Benn=C3=A9e wrote:
->>>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->>>>>
->>>>>> On 5/21/2026 6:17 AM, Alex Benn=C3=A9e wrote:
->>>>>>> Explicitly set the appropriate QEMU binary as a dependency so we can
->>>>>>> ensure they get built. This is especially important for MacOS which
->>>>>>> otherwise only builds the unsigned binaries on a normal "make all"
->>>>>>> run.
->>>>>>>
->>>>>>
->>>>>> I'm not sure to see why it matters. tcg-tests don't make use of hvf,=
- so
->>>>>> unsigned binaries are plenty for it.
->>>>>>
->>>>>> Which other binary is this building that is not built by default?
->>>>>>
->>>>>> In general, if something is not included in "all" target, let's make
->>>>>> sure it's included there (meson.build?) instead of adding a workarou=
-nd
->>>>>> here. Not only tests benefit this, but anyone doing a build on a
->>>>>> platform that might have optional binaries not built by default.
->>>>>
->>>>> If you have a suggestion on how to make that work I'm all ears.
->>>>>
+On Mon, May 25, 2026 at 1:39=E2=80=AFPM Warner Losh <imp@bsdimp.com> wrote:
+> On Mon, May 25, 2026 at 10:41=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.=
+com> wrote:
+>> On Mon, May 25, 2026, 11:12 Warner Losh <imp@bsdimp.com> wrote:
+>>> On Mon, May 25, 2026, 8:36=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.c=
+om> wrote:
+>>>> On Mon, May 25, 2026 at 10:01=E2=80=AFAM Stefan Hajnoczi <stefanha@gma=
+il.com> wrote:
+>>>> > If you have a FreeBSD build host available, you could install
+>>>> > gitlab-runner on it and I can configure GitLab CI to send QEMU FreeB=
+SD
+>>>> > build jobs to your runner.
 >>>>
->>>> I would be happy to help, but I don't understand what the goal is. I
->>>> have three questions that should help to provide a suggestion.
+>>>> QEMU has an Intel x86_64 KVM VM with 1 vCPU, 4 GB RAM, and 60 GB of
+>>>> disk space available.
 >>>>
->>>> Which exact test command do you run?
->>>
->>> make check-tcg
->>>
+>>>> The following images are available:
+>>>> - FreeBSD 14.1
+>>>> - FreeBSD 14.2 (ufs)
+>>>> - FreeBSD 14.2 (zfs)
 >>>>
->>>> ```
->>>> Explicitly set the appropriate QEMU binary as a dependency so we can
->>>> ensure they get built.
->>>> ```
->>>> Aren't they built by all?
->>>
->>> Apparently not.
->>>
->>>> It seems to be a dependency, at least for check-tcg:
->>>> .ninja-goals.check-tcg =3D all test-plugins
+>>>> I can provision the machine for you via remote console access and add
+>>>> your ssh key. After initially giving you access, you would become the
+>>>> maintainer of the VM and responsible for keeping it updated and
+>>>> connected to QEMU's GitLab CI.
 >>>>
->>>> ```
->>>> This is especially important for MacOS which otherwise only builds the
->>>> unsigned binaries on a normal "make all" run.
->>>> ```
->>>> Why do you need signed binaries for testing on MacOS (hvf?)?
+>>>> If you would like to do this, please send me your ssh public key and
+>>>> choice of FreeBSD image from the list above.
 >>>
->>> In a previous iteration I made configure spit out the unsigned binaries
->>> to config-target.mak but the request was to fix the dependencies
->>> instead.
 >>>
->>> It all works on Linux so I'm not sure why MacOS is being so weird
->>> because the meson emulators target mechanism should be the same.
->>>
->>=20
->> Just tried now, and it does not work on Linux neither (make check-tcg
->> does not build any target beyond tests). Maybe you forgot to clean your
->> folder?
+>>> Where does that list come from? Those are older versions of FreeBSD by =
+now...
 >>
+>>
+>> These images are available in OSUOSL's OpenStack instance where the VM i=
+s located.
+>>
+>> If you can upgrade in place from FreeBSD 14 to something newer without r=
+equiring console access, then that might be the simplest solution.
+>>
+>> Otherwise I can upload a custom image (for QEMU's i440fx machine type wi=
+th virtio devices) if you send me a URL to the image.
 >
-> The root issue is that tests/Makefile.include is included *after*
-> evaluation of ninja-targets in main Makefile. Thus,
-> .ninja-goals.check-tcg is ignored.
+>
+> If this is a EFI boot, then there's no problem upgrading the ZFS image in=
+ place: I just make a new boot environment (or enable it from scratch). Thi=
+s doesn't need console access and if I totally mess it up, I can start over=
+ from the base image :). But I can script it.
 
-So this replaces patch 1/16 - I think we have a circular dependency here.
+I think the boot type in OpenStack depends on the image you boot from.
+The Ubuntu image I was testing with used BIOS but it should be
+possible to upload a custom FreeBSD image and set it to UEFI.
 
->
-> The fix is to move ninja-targets evaluation to the end of main Makefile,
-> which introduce the expected dependency for check-tcg to "all
-> test-plugins" targets.
->
-> You can replace current patch with the one attached to this email.
->
-> Regards,
-> Pierrick
+> I may have to get in touch with the OSUOSL folks to see what it would tak=
+e to update their image collection. It would be good for me in the long run=
+. FreeBSD is likely well known enough of a name we could get some resources=
+ from them.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+I tried the FreeBSD 14.1 (zfs) image and don't know the default root
+password (I tried empty and "root"). I think my ssh key is not being
+provisioned.
+
+If you have a FreeBSD image that I can upload, then that would be great.
+
+If you need to chat with the OSUOSL admins, try #osuosl IRC chat on
+the Libera Chat network.
+
+> I've not setup a gitlab runner, but I see we have a gitlab runner port. I=
+s there a current setup with FreeBSD as a gitlab runner? Ideally, we'd be r=
+unning -current that we update from time to time and then do the builds usi=
+ng the OCI containers FreeBSD now produces for 14 and 15. I even have Conta=
+inerfile files for 14 and 15 I put together to compile-test bsd-user if we =
+wanted to expand the gitlab stuff. I've wanted to do more than compile test=
+ing + basic booting for a while now... I also have scripts that create boot=
+able images (for system testing) which coincidentally have an itermediate d=
+irectory that we could copy the qemu-*-static files into and use a a jail f=
+or bsd-user testing.
+
+There is no current gitlab-runner setup. Instead, QEMU ran Cirrus CI
+jobs that use FreeBSD machines.
+
+The gitlab-runner setup is fairly easy. Once you're ready to register
+your runner, let me know and I'll send you the GitLab runner token
+that you'll need to connect.
+
+Stefan
 
