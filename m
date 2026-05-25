@@ -4,104 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD7AECD5BB1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 15:16:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 490CFCD5BC9
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 15:16:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRX2C-0005fq-OD; Mon, 25 May 2026 11:16:04 -0400
+	id 1wRX2p-000636-MH; Mon, 25 May 2026 11:16:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wRX28-0005eU-Jm
- for qemu-devel@nongnu.org; Mon, 25 May 2026 11:16:01 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wRX2k-0005yd-DR
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 11:16:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wRX26-0006hW-Dq
- for qemu-devel@nongnu.org; Mon, 25 May 2026 11:16:00 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wRX2h-0007Ti-DO
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 11:16:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779722157;
+ s=mimecast20190719; t=1779722194;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8uPW8yoYG7iov/RDNWk+gQwfpGK8GYqT1zDdSX4WBVY=;
- b=i+5MzDa4VlZuKVy7JsJAcltNv5w4z3f6pMqSIN3MGOGe4LIVouc38CRFcAqL/Ll6hUmHk/
- TJ4BgU2/m2+lGyJzdJy7aNajRgk7PJ18oQUNnt2reVoVU2ie5JqIt7d5jyMVGhTKfw26fn
- txNybJ0ZpbTYVuLIyF8MqmJkVT+lUCc=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=OKOkFCCWCPnSIN8b+3A7vXAmBTMZOV+rT3knUHlWwdQ=;
+ b=Lh07mLtnqYhDg+iaKwnQJEMP9OL4YFBQnEpRPXn1P493yyswaxjCNkl7PEnjqsep+u7KLh
+ CV9lKhk1iy8/duFGXHtyc+TVnc37cWWRPkO587JCKpXPQnctJ/U1EJ3FkUNKH0kolt/sfO
+ qUmfBRBK07wKXZVXCgwo6DPC3sxwU+M=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-55-3uwtZ1OgM8ebvOr1bnqzLQ-1; Mon, 25 May 2026 11:15:55 -0400
-X-MC-Unique: 3uwtZ1OgM8ebvOr1bnqzLQ-1
-X-Mimecast-MFC-AGG-ID: 3uwtZ1OgM8ebvOr1bnqzLQ_1779722155
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-516d53eeb8aso74680681cf.2
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 08:15:55 -0700 (PDT)
+ us-mta-693-hQvyRzXTN6WNYKH2QDwswQ-1; Mon, 25 May 2026 11:16:33 -0400
+X-MC-Unique: hQvyRzXTN6WNYKH2QDwswQ-1
+X-Mimecast-MFC-AGG-ID: hQvyRzXTN6WNYKH2QDwswQ_1779722192
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-44ffa15dc8cso6002393f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 08:16:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779722155; x=1780326955; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=8uPW8yoYG7iov/RDNWk+gQwfpGK8GYqT1zDdSX4WBVY=;
- b=SR+29jLItCSP0teyMsUVooY+ZI3y3R30vOk45Sy83mTG62C8JTcpf94fuUFoTjNIyt
- lMEVMk0s/SCxfE/oOUfXDgBcMLUjCUc+N7EenOGtM4vWFNQXgfekCogvXr38JCg/aI4A
- zjFiyP/1LMlduzOiSvyTIjoruZ0+VUMy9zySEnE0b+HTFQzMezqdAvFCaAUXUGlLapIK
- DKoSOIDTbPbcPjB0NS/t6ShevXqlJETu6fKF4JWud7JR87xE4fIaGsfcGI0X3vTa4VTO
- 9G3omuPqIYd6lsTAuC8XiLUQo4kzHb7u/ZCcWk1o04HqA2+10ablEYgljvoLMRbsJfuE
- bhhw==
+ d=redhat.com; s=google; t=1779722192; x=1780326992; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OKOkFCCWCPnSIN8b+3A7vXAmBTMZOV+rT3knUHlWwdQ=;
+ b=bdZCZPIQtbJaowNFO7SXFkpAr0eOIlI/Y53vHKRfzATjgkOUxRGVAyzTrbpfGYcazk
+ FlrrFXHg67rVYj94bKYvyIeVTP19Tg32jVfvz3EGfTQ3h9SdaYucSS8m2ufqWn9dG+qF
+ sEqouVWJtOITXHHVnXTodrF/ISQ8OjPOl7n+CLD2QUg8rScCVn0t2vkJK0NtJ1PKCEcT
+ yDGeWIqL6uTyq3I2qmCWCGeXN0XINFP2ROU+eW4wlfxniIXTRrbPJQWvfQNt9nkEl4uB
+ E6PSvLNh2sqXjr66nNacM+6Iuf7RvIbowDU+3J1ZuKxWK5y78FcNxQ7888R6G+ex5TFH
+ 7WBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779722155; x=1780326955;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8uPW8yoYG7iov/RDNWk+gQwfpGK8GYqT1zDdSX4WBVY=;
- b=iZ8VQh7Qc++OAHAFv47rK1o1dBpDB7aP30YJ1KmJX4iP2pZQAfmAWtBiGq0pVSwBZz
- VIGPd5sCByBfUXiSCCjK9NqbCebSRyIZxBzhNp0OBQpeF168v9udJXrIdyt5Z9QaeiSJ
- tq2qMH53dkCbrSc0otc6nDbSFjzWjS1m8msfbtL0zKmP8RoD6DhudvDji4mPIRqusw+l
- 1x7STXgcaAOJwYYImpbiQnoLAbYjywTIg3DXHQvy52VqxLYUbKFNm6w2cptGspR3Mq5N
- 2xOAAlq8FEuX7dWwoPXi0gm6c17MpDI+EysGWDN0+maUvO/82ODh4s1wC+TwGLgIaxqK
- I8rw==
-X-Gm-Message-State: AOJu0YwgYnDjehzTBJAoFRpaFc0y93YuPUK/eJ3ky0YxiEaFr0+HytLD
- DdI+RpEBmdLy2Gb0bWWJyekRVrN/skPHYtB94sT9eKRuJidt3Ib8OYuX/z4Qxz1Iv/DWAzt/gGS
- DREhdM9YBAbAsy0qDXtPnVCe73CK5t6Hojn/6g/lmZJxCMWZ2L0Gm7g0X
-X-Gm-Gg: Acq92OELMLdSfJsIwbqFvxxdCUuefGCLgAFUttyoMakgZ2d1EX7yB3vAu/FDjSnYQFw
- SgpS0tsCb7WGEDn9CyOG0lq0rqBSOxRRytp9rxfLlkx0NnMb6epmRsN97JWMf+9GyINS6s7nCq8
- 0z7gPr7k+tm2jCN3a1kulBgxQ/fWlcI1Eci2o/ixWmXuqSwrv8BTWiAAZpuMN9xbdhKXfr/BcAf
- bzj2udwm9IEhV2M6u14fQhl7bYSzR0jPLfhwpynpNnEs9eheQ75ghHtr8GX5RlmFESP4S8N9Zvu
- UiISJFGVSSzK48WxuE3Pb4ZTBSFVDqyTJxewUcTInhjcjPkPSiZSDIkqvTm3RvSlsXYVYZhn8bJ
- whN7gn8LNrbkaacgR2jcEW8P52K2Ip/2soEqAdZhAJKJto0A=
-X-Received: by 2002:a05:622a:8407:10b0:510:1b61:d0e4 with SMTP id
- d75a77b69052e-516d45f9c81mr118700691cf.35.1779722154784; 
- Mon, 25 May 2026 08:15:54 -0700 (PDT)
-X-Received: by 2002:a05:622a:8407:10b0:510:1b61:d0e4 with SMTP id
- d75a77b69052e-516d45f9c81mr118699991cf.35.1779722154130; 
- Mon, 25 May 2026 08:15:54 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-516d8cc6212sm95617951cf.25.2026.05.25.08.15.52
+ d=1e100.net; s=20251104; t=1779722192; x=1780326992;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=OKOkFCCWCPnSIN8b+3A7vXAmBTMZOV+rT3knUHlWwdQ=;
+ b=L5S3BB8s5+3C6b5oxQIwUTGGyXi2fbjGER50PS6Gl41paHjtoGTRx4oqhpkAkb3CQw
+ 3KCPS2lmwsso8HZTGqvb4RBP73KTJlO+QshIXaF1kbUiAx5P1EMNT3I9SvN2g1oJxt6R
+ ZPaAdx3pWC9QqeZ9sIjF8AHB1EbjQ3xOCawRo5YISs8U2mEDx+5rub6oyr58OFPoNp6a
+ 0VdwWOebb+DUlZ+IRGowznBQk0uWlatUJeSm+xKp3azOb42fwa2cPUk6Ex30oM7qK+Zv
+ Qd40NLVMJVqnhGv8uV5+mAkvfnm3OA2TklH3dogJ5OiUDUOYtEzRZfhJN0aQ98BTComi
+ Xvlw==
+X-Gm-Message-State: AOJu0YwAdYoOH9i80JtO3t4jo+j4PDe/1UBAsjwrU+ZQoGpmnbYtlMZq
+ SCWKGWZW+S/mQI2p4K/yAiR1ydIpilDKyZq5HUySnZkaBsAPl7OWlce5P46DbkUEdOaSc2yd0kf
+ kwOq63jb14H73D5cm+cBHw6fsGDwKIBnzcNoCIN7acXI8+mVw3mjUCTEdln0CZWTEryq6IubQnF
+ zrhuM+tfxzjViLmrWZsPUqq/7bCcfUTgbBU+wSSOAa
+X-Gm-Gg: Acq92OEMqIX5jBdXP0beKPrXpDJg5jFetRPwlONof4UhDY/eQPojma51d8NV9BaRxDA
+ q9EFTZHAfFGM8O8v+8aNR7ncVd9gae+q0+G9fsjkBl8CoNOq2OyVvusuSC1BsM0gA2bpkrqbMua
+ 2TjjE/MOw0YUWDro+TmrWQk2JhpTjiL0mg6viJXH4oqHc7r8ZaW2l5DIvj3+pW7Qw0mRJ1AmO5j
+ Kr5mkfmed24tmiI3597VjvvyJiut6kbcuaZ/Sw2l6FIU/zzf7KoKgm29zmO7NDGa+sruoAi17t/
+ 8FN7jDXucXAuVkF5knJBe2EyvZ9U2Dd/rmlhMi1kMA/nnNOCxZPnU8ZDTIqCIDf3efcMTfTYGaV
+ F2kzww//Ea1TNoq2NoofMp5lMgtSdRQgX8+APFLutN9pbsUhY9OCTtS8qyR/82p2nOMqzgJJN4l
+ QD1Vf+xx+icQhynCXJX7KkjNrbHeka
+X-Received: by 2002:a05:6000:4310:b0:45e:73b9:fdeb with SMTP id
+ ffacd0b85a97d-45eb367fa36mr25503544f8f.8.1779722191942; 
+ Mon, 25 May 2026 08:16:31 -0700 (PDT)
+X-Received: by 2002:a05:6000:4310:b0:45e:73b9:fdeb with SMTP id
+ ffacd0b85a97d-45eb367fa36mr25503480f8f.8.1779722191454; 
+ Mon, 25 May 2026 08:16:31 -0700 (PDT)
+Received: from [192.168.10.48] ([176.206.106.181])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45eb6d5e363sm28709822f8f.28.2026.05.25.08.16.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 May 2026 08:15:53 -0700 (PDT)
-Date: Mon, 25 May 2026 11:15:51 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Maor Gottlieb <maorg@nvidia.com>
-Subject: Re: [PATCH 00/14] Make switchover-ack re-usable and add VFIO precopy
- REINIT feature
-Message-ID: <ahRnp0Q18iTZZJ0H@x1.local>
-References: <20260505081423.28326-1-avihaih@nvidia.com>
- <agzDdH5vClAqwjAs@x1.local>
- <3a1d0bc7-7656-43f4-b763-5114d9dc57a0@nvidia.com>
- <ag8iwiwMz5IapU5i@x1.local>
- <2756b13a-498a-4e2d-a218-10b756e0bf5b@nvidia.com>
+ Mon, 25 May 2026 08:16:30 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PULL 4/6] accel/mshv: implement cpu_thread_is_idle() hook
+Date: Mon, 25 May 2026 17:16:19 +0200
+Message-ID: <20260525151621.395954-5-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260525151621.395954-1-pbonzini@redhat.com>
+References: <20260525151621.395954-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <2756b13a-498a-4e2d-a218-10b756e0bf5b@nvidia.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -125,101 +121,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, May 24, 2026 at 09:58:57AM +0300, Avihai Horon wrote:
-> 
-> On 5/21/2026 6:20 PM, Peter Xu wrote:
-> > External email: Use caution opening links or attachments
-> > 
-> > 
-> > On Thu, May 21, 2026 at 04:53:54PM +0300, Avihai Horon wrote:
-> > > On 5/19/2026 11:09 PM, Peter Xu wrote:
-> > > > External email: Use caution opening links or attachments
-> > > > 
-> > > > 
-> > > > On Tue, May 05, 2026 at 11:14:09AM +0300, Avihai Horon wrote:
-> > > > > Performance tests were done by migrating a single VM with:
-> > > > > * 8 GB RAM
-> > > > > * 4 mlx5 VFIO devices:
-> > > > >     - One device with 1GB of device data (stopcopy data) that runs
-> > > > >       workload during precopy so VFIO_PRECOPY_INFO_REINIT is exercised
-> > > > >       (generate new initial_bytes chunks during precopy).
-> > > > Could you elaborate a bit more on what workload is executed, and how that
-> > > > will affect REINIT reportings (e.g. is only one REINIT generated, or it
-> > > > keeps generating)?
-> > > Basically, I create and destroy RDMA resources (MRs, QPs, CQs, etc.) on the
-> > > VFIO device in a loop for several iterations.
-> > > This generates several REINITs.
-> > > 
-> > > > Can I understand it in this way: without REINIT, device is forced to put
-> > > > those data into stopcopy size; then with REINIT, some stopcopy size is
-> > > > essentially moved back to precopy phase?
-> > > Almost:
-> > > Without REINIT, the device is forced to put this data in precopy
-> > > dirty_bytes.
-> > > With REINIT, this data can be put in precopy init_bytes (and do the
-> > > switchover-ack dance again).
-> > Hmm, then I don't understand why moving some chunk of data from
-> > precopy_bytes to init_bytes helps downtime.
-> > 
-> > Essentially, QEMU makes the switchover decision based on the math of:
-> > 
-> >     init+dirty+stop
-> >     --------------- <= downtime_limit
-> >           bw
-> > 
-> > The possible min of above is:
-> > 
-> >          stop
-> >     ---------------
-> >           bw
-> > 
-> > Here whether some data would be in init or precopy portion shouldn't matter
-> > for a min downtime, since both portions are allowed to be moved during
-> > precopy phase.
-> > 
-> > OTOH, if stop_bytes unchanged, min downtime is still the same before /
-> > after supporting REINIT, if we try harder.
-> > 
-> > Say, with below testing results:
-> > 
-> > With VFIO_PRECOPY_INFO_REINIT:
-> >    1335ms total (~520ms from the VFIO device running the workload).
-> > 
-> > Without VFIO_PRECOPY_INFO_REINIT:
-> >    2352ms total (~1600ms from the VFIO device running the workload).
-> > 
-> > What is the downtime_limit you specified for both cases?  Have you tried to
-> > specify lower downtime_limit than what you specified, so that both results
-> > will become even closer (until they become, statistically, identical)?
-> > 
-> > In general, I can understand the REINIT will stop converging too early, but
-> > it'll be the same IIUC just to turn the downtime_limit smaller..  IOW, I
-> > may still miss some important piece of info that how this REINIT feature
-> > helps downtime..
-> 
-> The init_bytes are special in the sense that it's crucial that they are
-> transferred before switching over. Otherwise, VFIO precopy may not have full
-> effect which could make VFIO migration slower.
-> Accordingly, their contribution to downtime may not be just the time it
-> takes to transfer them.
-> 
-> Specifically for mlx5, init_bytes hold a small portion of metadata used for
-> time consuming pre-allocations on destination side. So, we may have 10MB of
-> init_bytes which would take a fraction of a second to transfer, but once
-> reached destination, it could take even a few seconds to load them.
-> 
-> When moving this data from dirty_bytes to init_bytes along with
-> switchover-ack, we guarantee that this long pre-allocation doesn't happen
-> during downtime. This is the time difference you see in the test results.
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
-I see, yes that's what I missed and this makes a lot sense, thanks.
+In MSHV the hypervisor APIC is always used, so we to implement this hook
+to make sure the AP's vcpu thread is not blocked waiting for an INIT SIPI
+by the BSP. Without this change soft reboots with -smp cpus>=2 will
+hang.
 
-Could you put above example into some vfio.rst doc when repost, when
-describing REINIT feature?
+Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Link: https://lore.kernel.org/r/20260421-mshv_accel_arm64_supp-v3-9-469f544778ba@linux.microsoft.com
+[Make comment not x86 specific. - Paolo]
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ accel/mshv/mshv-all.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-Thanks,
-
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index 58af674bd99..58d8638c0c1 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -714,11 +714,23 @@ static const TypeInfo mshv_accel_type = {
+     .instance_size = sizeof(MshvState),
+ };
+ 
++/*
++ * MSHV manages secondary processors in the hypervisor. SIPI for x86 and
++ * PSCI for Arm are handled internally. Halted vCPUs must still enter
++ * mshv_cpu_exec() so that MSHV_RUN_VP is called and the hypervisor will
++ * wake APs.
++ */
++static bool mshv_vcpu_thread_is_idle(CPUState *cpu)
++{
++    return false;
++}
++
+ static void mshv_accel_ops_class_init(ObjectClass *oc, const void *data)
+ {
+     AccelOpsClass *ops = ACCEL_OPS_CLASS(oc);
+ 
+     ops->create_vcpu_thread = mshv_start_vcpu_thread;
++    ops->cpu_thread_is_idle = mshv_vcpu_thread_is_idle;
+     ops->synchronize_post_init = mshv_cpu_synchronize_post_init;
+     ops->synchronize_post_reset = mshv_cpu_synchronize_post_reset;
+     ops->synchronize_state = mshv_cpu_synchronize;
 -- 
-Peter Xu
+2.54.0
 
 
