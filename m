@@ -4,65 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C0FECD5BC7
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 06:39:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D76F8CD5BBF
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 06:39:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wROwO-0006hi-6S; Mon, 25 May 2026 02:37:32 -0400
+	id 1wROwu-0000d5-UQ; Mon, 25 May 2026 02:38:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wROuJ-0004Jj-MM
- for qemu-devel@nongnu.org; Mon, 25 May 2026 02:35:29 -0400
+ id 1wROv3-0004tN-0T
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 02:36:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wROuG-0001dz-NU
- for qemu-devel@nongnu.org; Mon, 25 May 2026 02:35:22 -0400
+ id 1wROv0-0001kc-CD
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 02:36:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779690919;
+ s=mimecast20190719; t=1779690965;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KKb6Pt6jGRTfqvimtGl0NdosDiROfNXVNGZYLGhk3+I=;
- b=KMDCvzgTNS833UZJNHISn/gNoh2TZtBUMkCQX5g3SMc6/Q1b1F8IJwDq5tdSxFIouoK4OH
- 0iatx2hVPqLVxp7LiH1yoBirHzt1MUPdFTYhIj29Tue8R0d3wbFulhJ7ZOIGBYp6UlZCj3
- eqNKAEXesNnjg92Rrlqq1K1AiMoKhm8=
+ bh=iwE4iTcBWb64Ub5rQet8X4bkTzR6yTjGdriwiUrqn4Q=;
+ b=JutVTDIBac5MmLS/FbkG7jPkUCQdEXwzTPpGUEbBtHYXOYrb6wU+5ZpDwIYeuWlrZuE0SB
+ fgoBUOw5g1nN2aVrDx9S/aZGmiN24tEtmCfrXx2akRSoB+MUOe66HSJd0Zauqz3xYiNhuD
+ ummgg3NZCd2ECQm/Ov69hGzHezf6nNk=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-aLQvj0erPQKK_zl1bdwClA-1; Mon,
- 25 May 2026 02:35:18 -0400
-X-MC-Unique: aLQvj0erPQKK_zl1bdwClA-1
-X-Mimecast-MFC-AGG-ID: aLQvj0erPQKK_zl1bdwClA_1779690917
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-54-unVw0vXZMeq3cAGGI-b-Hw-1; Mon,
+ 25 May 2026 02:36:01 -0400
+X-MC-Unique: unVw0vXZMeq3cAGGI-b-Hw-1
+X-Mimecast-MFC-AGG-ID: unVw0vXZMeq3cAGGI-b-Hw_1779690960
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EB0D01800612; Mon, 25 May 2026 06:35:16 +0000 (UTC)
+ id 71C1F18005B8; Mon, 25 May 2026 06:36:00 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 767C71800352; Mon, 25 May 2026 06:35:15 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 662001956056; Mon, 25 May 2026 06:35:58 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
-Subject: [PULL v3 24/38] replay: Use Linux key codes
-Date: Mon, 25 May 2026 10:32:07 +0400
-Message-ID: <20260525063223.1409791-25-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL v3 31/38] ui/keymaps: Use Linux key codes
+Date: Mon, 25 May 2026 10:32:14 +0400
+Message-ID: <20260525063223.1409791-32-marcandre.lureau@redhat.com>
 In-Reply-To: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
 References: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -96,96 +93,26 @@ representations.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260520-input-v3-16-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
-[ Marc-André - update replay-dump.py ]
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260520-input-v3-23-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 ---
- replay/replay-input.c  | 20 +++-----------------
- replay/replay.c        |  2 +-
- scripts/replay-dump.py |  8 +++++++-
- 3 files changed, 11 insertions(+), 19 deletions(-)
+ ui/keymaps.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/replay/replay-input.c b/replay/replay-input.c
-index acf0993c728..c86e00af0ef 100644
---- a/replay/replay-input.c
-+++ b/replay/replay-input.c
-@@ -23,8 +23,7 @@ void replay_save_input_event(QemuInputEvent *evt)
- 
-     switch (evt->type) {
-     case INPUT_EVENT_KIND_KEY:
--        replay_put_dword(KEY_VALUE_KIND_QCODE);
--        replay_put_dword(qemu_input_linux_to_qcode(evt->key.key));
-+        replay_put_dword(evt->key.key);
-         replay_put_byte(evt->key.down);
-         break;
-     case INPUT_EVENT_KIND_BTN:
-@@ -55,25 +54,12 @@ void replay_save_input_event(QemuInputEvent *evt)
- QemuInputEvent *replay_read_input_event(void)
- {
-     QemuInputEvent *evt = g_new(QemuInputEvent, 1);
--    int qcode;
- 
-     evt->type = replay_get_dword();
-     switch (evt->type) {
-     case INPUT_EVENT_KIND_KEY:
--        switch (replay_get_dword()) {
--        case KEY_VALUE_KIND_NUMBER:
--            qcode = qemu_input_key_number_to_qcode(replay_get_qword());
--            evt->key.down = replay_get_byte();
--            break;
--        case KEY_VALUE_KIND_QCODE:
--            qcode = (QKeyCode)replay_get_dword();
--            evt->key.down = replay_get_byte();
--            break;
--        default:
--            g_assert_not_reached();
--        }
--        evt->key.key = qcode < qemu_input_map_qcode_to_linux_len ?
--                       qemu_input_map_qcode_to_linux[qcode] : 0;
-+        evt->key.key = replay_get_dword();
-+        evt->key.down = replay_get_byte();
-         break;
-     case INPUT_EVENT_KIND_BTN:
-         evt->btn.button = (InputButton)replay_get_dword();
-diff --git a/replay/replay.c b/replay/replay.c
-index 2e5c6fa82ea..14437b32566 100644
---- a/replay/replay.c
-+++ b/replay/replay.c
-@@ -22,7 +22,7 @@
- 
- /* Current version of the replay mechanism.
-    Increase it when file format changes. */
--#define REPLAY_VERSION              0xe0200d
-+#define REPLAY_VERSION              0xe0200e
- /* Size of replay log header */
- #define HEADER_SIZE                 (sizeof(uint32_t) + sizeof(uint64_t))
- 
-diff --git a/scripts/replay-dump.py b/scripts/replay-dump.py
-index 081aaa36c5e..ce1031b4ad4 100755
---- a/scripts/replay-dump.py
-+++ b/scripts/replay-dump.py
-@@ -398,6 +398,9 @@ def decode_end(eid, name, dumpfile):
- # EVENT_AUDIO_IN has changed
- v13_event_table = v12_event_table
- 
-+# EVENT_ASYNC_INPUT has changed
-+v14_event_table = v13_event_table
-+
- def parse_arguments():
-     "Grab arguments for script"
-     parser = argparse.ArgumentParser()
-@@ -416,7 +419,10 @@ def decode_file(filename):
-     # see REPLAY_VERSION
-     print("HEADER: version 0x%x" % (version))
- 
--    if version == 0xe0200d:
-+    if version == 0xe0200e:
-+        event_decode_table = v14_event_table
-+        replay_state.checkpoint_start = 30
-+    elif version == 0xe0200d:
-         event_decode_table = v13_event_table
-         replay_state.checkpoint_start = 30
-     elif version == 0xe0200c:
+diff --git a/ui/keymaps.c b/ui/keymaps.c
+index a448efab320..d145b5dd3a8 100644
+--- a/ui/keymaps.c
++++ b/ui/keymaps.c
+@@ -255,9 +255,8 @@ int keysym2scancode(kbd_layout_t *k, int keysym,
+          * On keyup: Try find a key which is actually down.
+          */
+         for (i = 0; i < keysym2code->count; i++) {
+-            QKeyCode qcode = qemu_input_key_number_to_qcode
++            unsigned int lnx = qemu_input_key_number_to_linux
+                 (keysym2code->keycodes[i]);
+-            unsigned int lnx = qemu_input_map_qcode_to_linux[qcode];
+             if (kbd && qkbd_state_key_get(kbd, lnx)) {
+                 return keysym2code->keycodes[i];
+             }
 -- 
 2.54.0
 
