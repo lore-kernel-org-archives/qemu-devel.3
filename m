@@ -4,99 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4379CD5BC9
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 21:56:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5952ACD5BB1
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 21:57:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRdHs-0002CA-26; Mon, 25 May 2026 17:56:40 -0400
+	id 1wRdIJ-0003D0-FQ; Mon, 25 May 2026 17:57:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wRdHk-00020g-Kh
- for qemu-devel@nongnu.org; Mon, 25 May 2026 17:56:35 -0400
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ id 1wRdIG-000332-Us
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 17:57:04 -0400
+Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wRdHe-00077V-Tx
- for qemu-devel@nongnu.org; Mon, 25 May 2026 17:56:28 -0400
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-5a40cfab24dso6085582e87.2
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 14:56:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779746185; cv=none;
+ id 1wRdIF-0007Lh-5F
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 17:57:04 -0400
+Received: by mail-lj1-x22c.google.com with SMTP id
+ 38308e7fff4ca-394095009beso84101981fa.3
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 14:57:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779746221; cv=none;
  d=google.com; s=arc-20240605;
- b=HsLtmkvaUyy3dvBzrCl5vz6NgS75QLLMO66kugANxpeHTO5NEPlJWUdMKkOOg/c4SC
- kKnZiVUMwNbotbIRhhTOoUddz3OHe7kKchB7X6w320ujCasDWlRoIgbwLWJ0uSiV/U8B
- 5eECSPZK5VgZNaMPfiV9h83lIt3XjGTrx21xyICEsUIpm+Ho4nC4QAIfBtpphGLTOMs2
- mKeCPEQtfw8Q1HPJdu/nAEQV+qUixYbktlLDTi/dWY5HZ+ayQgP4n0CO53U6w5EAYWgx
- 2wqSovzI/R15qkM8+wTAl9MIViG5ixuEiQtSh9iNOxsQq6wOMf+awmNng8c8ds+aNod9
- DUnw==
+ b=Mrul8JjerWS8C80jOMc+IBmCkA2iGFSmlUqOl56eXWfDO/JiHHWQkvhNMJ76LshCWR
+ 5QIb+ZZuwx2aEOzeRwBBuWc6y/gKh5CSIQ2CxfHKnEd1Z0zwarudbY+rPI5cY4v5jVo9
+ s3paMCSl6mV38pLbOOFkeIoIGQ1krYYgA5eZFQ3pGautcmYDV+FZmr8Aua9zv83Y1i58
+ co1ElBh9I43it++uW/IvuMnUR6lEgth8zq1w+4OJm/1s0nkyjRitfFUWV3Xo+nNlCXL4
+ /b4OdryaqVoqEFwp/ZntIa6aF7ZqgyTrrq+AC3OdvAAki0dtfx+LxrTfKPu12OhFWUGR
+ vlbQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=zoUOUpW3E75Pe/cwgLThJIq3RQ6h/mAzS46vXJVSYdo=;
- fh=VDGqiENZLmjMFMZWY1xbVB15zxWtxE1H+z48zMSi81E=;
- b=IiRzFnNb9NLqpbOF36x33MtdsLWcjIQot42BiBPltlSbeVciX1tSlv9g/OVdHZJjUg
- DJiqfbrNtWzd7fQ0ZrIzEMS/x2G4IAsZnaxTnuycdi05jR2+sJFa3zb286KzR2Pok7rt
- cRtUX5v8WCH4+faWJbNFDHFHP1ywSs9XZwlzoRPlgBHFktgNHpj8+N015fqGSByHfPPy
- 5OTzZhl+920eBB1+dggMTsqXRXipZk0kW8YDBIezcrL2kqoQoqoIthtHH+1YC3boZ/lN
- /RrBKQMowPP8LDN8h2sn9anlzKXceCSRGpXtBAAqy3AsekdehbT9NATMGMJgYDqi2b7L
- JeAA==; darn=nongnu.org
+ bh=oj1udp2JH+JG+CuTgmxXKZOz98hE3h3a8e15M42/AZM=;
+ fh=lcGHBXp9cedPWhtn5ZVpzv5aGtONIMIq3iWctCG7NbA=;
+ b=gYSZEBvSJL6nitIbhYZGWbYJlkmdblLUUx4maAov01hLylLX8evz460OE4aiitKH6p
+ fMGMQ5mNyoKwBLQvQm35LYAtxEIoBOmmhXx6guukWVVREcM6riJWZeXEl2sujozxPBKY
+ dSCNbheETZ4zNENZ5zBQNSHorfVWG9iVJsOXAKH3V8TK0nPAImJqas13Sr1Q6BwH4xob
+ 3qrP2Yijen30eLrd0yPL5z0nU6tnL3InWinOlJcOmRhIysKGZ4TeY3hP6p1BZltMZXcI
+ O0jnE6b9wM1lhQ7jpTd8Jiu775n8HeJBSMo4qVBFoOwRUorIZe/YEApdz5aXbpqgHd/K
+ ADBg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779746185; x=1780350985; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779746221; x=1780351021; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zoUOUpW3E75Pe/cwgLThJIq3RQ6h/mAzS46vXJVSYdo=;
- b=m53xYrNAa4ZWYx4HIXAYgHT7OeiH3qJOHoBpWdyvOWEotM1UaqczjhsVPbLeG6YlpX
- /sCy5Ko3D4k5ep5EdpP67fXK6tm7T4u3tkaUbH9kgRQFGNkOlo62OLi/LA6LpNrv1msU
- fnyJDaYm5ds4SBjruTLXR4OY5YsFN7P6j8cWm39qqJweEk49gu73tdctzRNJTaZ8mpog
- Lq7HThxfVVUocwVtIXOB7N8nGLs3lsiVM32u8WjJkt5FCKDX88JaC07uZRxguJwD6LnI
- phRzzCc5vY6A1eBEX/ikcjwr9QQPa4qv/SFjubn/0GZXC9oFXBTYomJ9t3NzvzBFI+TA
- r3rA==
+ bh=oj1udp2JH+JG+CuTgmxXKZOz98hE3h3a8e15M42/AZM=;
+ b=c+3J/D2a3MmfFckxsU+M4c2yJFbSbSYVXoLmS2qej2BZPGrGYlaybqgE8jyMXR38S2
+ dFtIQjJMOGBSUS7XVeKxMJJVLf7K3BqmvDZSb6URYIXxnaHmEGmFp5VMhjgTwv34S02v
+ CAebS/yO8L9KksatCz7MHMbpABLhB4ZvR0NnBhkvs7gB9dfysfoT+ef3lZHVSd/0wdT5
+ xQ8yps4DimEg6ewsuTClyjAhi/Qpwkh8rubxWk6r18qO7WqR0gZFy/eMpYYDNgnovCqA
+ B+svKtDEawDipbGHg6Nvc2p9/XoITQHCdECj/Rkcll3YrL90TX2P5LBUHvp0c0DOb4No
+ keAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779746185; x=1780350985;
+ d=1e100.net; s=20251104; t=1779746221; x=1780351021;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=zoUOUpW3E75Pe/cwgLThJIq3RQ6h/mAzS46vXJVSYdo=;
- b=Yr8WcRzt474fwINe77E2EYRCnbzDmT7zk9tePfpbpRRgoHPXNY/3i6i9GOJmA+5ssT
- rsubVmelcJzdRkK4soO4j55pNYi2CSHGWRua8kcrb1h5NpJAB1dawYsHbp5L45ofGUfz
- 7+HBc+i5hl66Rz7tsfeQaaUQikV+VGNke2SIzjn296hMOMMR34nexo6+8a0OarBLDrJI
- 9rocrMKCLcvP4jNcwiKFHGIw8gowrYwBZHDMkt1kYHxBHHReS9WZdKUgfWkQ1ufX4wEE
- nFhFXOJ+tG0+lFswMMC0oY2+EBie+ZITtv2F7MZ4hbqBYC0jtX16VnuX2X8uvYyAzZBC
- P0aw==
-X-Gm-Message-State: AOJu0Yxk4RhstIRnWzKtJo6B3BUnchcVPM2hv9d73BJfUoNYC4r07LE0
- kF6j2WbkMUcEdC6+7wP7iZ6hkcMqGbMGKKSQBAv9fBpqh6Y4FP8b9Ra570Af3bx6wIEq1yaTiA7
- SPd3GRi23L6NvR0SDm6dhNACSnSdGby+qQNiNIhU=
-X-Gm-Gg: Acq92OHZWW0KI45frOsEv42+VwbbruNI9xcYZxs44mugEneEIdJnngin12+cb/dkSa9
- bOCqlEzpI4pfim1xnMu7w783f4C6enk7YsvXbB0acsoStBCTVocos37Ky6ehSXesIdquc52p6GD
- tT/AjT7Aw7oJA0+/JXAKD0u3iV0rnC8r5J443VjyEB0sSUH0yKMGmTi5AgKZ2H0iTJq1sEp15GM
- e7dLinFxa3PIAjCH08rG+YP/HZjT9O9HSbP9xfmazRYCKT8DOQze5rhtSJ9OkrLs+cSBnejpeJc
- aoykzLLdpA==
-X-Received: by 2002:a05:6512:318e:b0:5a4:1798:31ba with SMTP id
- 2adb3069b0e04-5aa323ac3d6mr5047983e87.21.1779746184633; Mon, 25 May 2026
- 14:56:24 -0700 (PDT)
+ bh=oj1udp2JH+JG+CuTgmxXKZOz98hE3h3a8e15M42/AZM=;
+ b=UfqN0MWLydU96fKDSi74nENHmM3UUAS5mEFaCgQZ0l1Lui77oK5vAh+byl71ebZe3s
+ SwLa7B8YltDbduwfbCEHUzVFO0UeVuMHOEUO6MYcw+/AjgRw5IBe5vXs6JgjaReUMgBt
+ rEFqFhnuBmypOaQ6axNmNd8c8FlRJexytm+edpF/deWpqmpMnufTWPiJKSthJJdAFgo7
+ KTvPmnJKAPubK+F91LGlynf8NPneo7+aCPkEp5FiWB2MEWeOeFfTy5iWbjCZgG1fHKq4
+ WaQec+AswA6a4zNw9Lhu8V0Og6R7q9lNoyfIDzcp2f8vBRQKueaSq0d1LS1VKDSh1nDW
+ 4kqg==
+X-Gm-Message-State: AOJu0Yyi6e4Gx3rS08EVSt0SYi/nN5BBewsWfneluvyb9L9mlSs5CWL1
+ TDJCZfZbrpAHfJP7HvaUjtNaYjL1S2FgMeDW8pLNu6GdGi2gxPowAWozSie99LoDmW8/NMD+qT3
+ /Vr2WiYNyEI+afjF1MYvBj3/uHuIZwzSJ6tfM1DM=
+X-Gm-Gg: Acq92OH41tRf4IDiUBYHHqB2ExXLEgweSAnuqxWy3s2xaEjnf8ZuT1Q5jJKbSZUxBaf
+ H8JJC6PokWIo43P3cPuGYdxe/UtguqNgzrBPpMMzINb1eJzHgGUqiBQVP1QBzN6O+sh6U8ZOQJC
+ yxh9JxiNw8EaIzFlOtMuOqqFGIl6QldBE2AMZzVF5wChxsJCGmTbzFnoAqF6VYS3NoumexPK0aJ
+ 9eeUfUFu7Z5gp5fZkw0QvDw3sUgHuCIB4gnBRm8VmT9eVU3qn+XfQql67LlcHMhy/dd7LgV8haH
+ gTZFsR93vkxDhBz+5gW8
+X-Received: by 2002:a05:6512:31cb:b0:5a8:eaec:7567 with SMTP id
+ 2adb3069b0e04-5aa323e0206mr4153384e87.35.1779746221004; Mon, 25 May 2026
+ 14:57:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260525152642.4121729-1-mattst88@gmail.com>
-In-Reply-To: <20260525152642.4121729-1-mattst88@gmail.com>
+References: <20260525152312.4120017-1-mattst88@gmail.com>
+In-Reply-To: <20260525152312.4120017-1-mattst88@gmail.com>
 From: Matt Turner <mattst88@gmail.com>
-Date: Mon, 25 May 2026 17:56:11 -0400
-X-Gm-Features: AVHnY4J2LnN5Ut_00JfS3BPyHGy37reLgHCf3jSPbAb1hALTBOBtdUrh-MgTEyI
-Message-ID: <CAEdQ38Hrjf+PDj+Cmmdt3TfN8V0kW71gmNuU-vyVXB1UeNKdxA@mail.gmail.com>
-Subject: Re: [PATCH 1/3] linux-user/sh4: preserve T/M/Q bits across signal
- delivery
+Date: Mon, 25 May 2026 17:56:48 -0400
+X-Gm-Features: AVHnY4IzIqJeZHBrKhL1-wNqA8DbCsR_etE2hapCM98Y9lAan0gchCv24hpCRDE
+Message-ID: <CAEdQ38GYKVg_4UYtKsOpEJO4Suq4TMLdZ8-b8Z1zbPjXdDDyGg@mail.gmail.com>
+Subject: Re: [PATCH] linux-user/ppc: restore fp_status from FPSCR on sigreturn
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Yoshinori Sato <yoshinori.sato@nifty.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-stable@nongnu.org
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-stable@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=mattst88@gmail.com; helo=mail-lf1-x131.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
+ envelope-from=mattst88@gmail.com; helo=mail-lj1-x22c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,7 +101,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,42 +117,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 25, 2026 at 11:26=E2=80=AFAM Matt Turner <mattst88@gmail.com> w=
+On Mon, May 25, 2026 at 11:23=E2=80=AFAM Matt Turner <mattst88@gmail.com> w=
 rote:
 >
-> QEMU keeps the SH4 T, M and Q status-register bits outside env->sr, in
-> the dedicated env->sr_t, env->sr_m and env->sr_q fields; cpu_read_sr()
-> folds them back into the architectural SR value and cpu_write_sr()
-> splits them back out.
+> restore_user_regs() restores the PPC FPSCR with a direct assignment:
 >
-> setup_sigcontext() saved the bare env->sr (so the T/M/Q bits were always
-> zero in the signal frame) and restore_sigcontext() wrote the value
-> straight back into env->sr without updating sr_t/sr_m/sr_q. As a result
-> the T bit was never preserved across signal delivery: on sigreturn the
-> interrupted code resumed with whatever T value the signal handler last
-> left behind. Any conditional branch (or addc/subc/rotcl/div1, etc.)
-> immediately following the interrupted instruction could then take the
-> wrong path.
+>     env->fpscr =3D (uint32_t) fpscr;
 >
-> This is the cause of the long-standing intermittent failures of the
-> tests/tcg/multiarch/signals.c test on sh4, which was marked BROKEN. With
-> a SIGRTMIN timer firing every millisecond across many threads, the race
-> was hit a few percent of the time and corrupted the guest heap, surfacing
-> as a SIGSEGV in memset, a malloc assertion, or an rseq registration abort=
-.
+> ppc_store_fpscr() exists precisely to write FPSCR and keep the derived
+> env->fp_status in sync: it calls fpscr_set_rounding_mode() to update
+> the softfloat rounding mode, and set_float_rebias_overflow/underflow()
+> to reflect the FP_OE/FP_UE enable bits.  The direct assignment bypasses
+> all of this.
 >
-> Traced on a deterministic rr recording: a cmp/hi set T=3D0, the timer
-> signal interrupted the very next instruction (a bf), the handler left
-> T=3D1, and the resumed bf took glibc calloc's MORECORE_CLEARS branch,
-> using the old top-chunk size as the clear length for a freshly split
-> small chunk and running memset off the end of the heap.
+> On sigreturn, interrupted code resumes with whatever rounding mode and
+> overflow/underflow-rebias state the signal handler last installed in
+> fp_status, rather than the state that was saved at signal delivery.
 >
-> Fix setup_sigcontext()/restore_sigcontext() to use cpu_read_sr() and
-> cpu_write_sr() so the T, M and Q bits round-trip correctly, and drop the
-> BROKEN annotation on the sh4 signals test.
+> Replace the direct assign with ppc_store_fpscr().  The FPSCR_MTFS_MASK
+> applied inside ppc_store_fpscr() only excludes the computed FP_FEX and
+> FP_VX bits, which it re-derives correctly from the exception and enable
+> bits in the restored value.
 >
-> Fixes: c3b5bc8ab3 ("SH4: Signal handling for the user space emulator, by =
-Magnus Damm.")
+> Fixes: bcd4933a23 ("linux-user: ppc signal handling")
 > Cc: qemu-stable@nongnu.org
 > ---
 
