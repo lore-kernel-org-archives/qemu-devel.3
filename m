@@ -4,63 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A1F3CD5BBF
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 05:45:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6095CD5BC0
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 06:33:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRO78-00089f-65; Mon, 25 May 2026 01:44:34 -0400
+	id 1wROs5-0001xl-42; Mon, 25 May 2026 02:33:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wRO76-00089S-BH
- for qemu-devel@nongnu.org; Mon, 25 May 2026 01:44:32 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wROs3-0001xb-5e
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 02:33:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wRO73-0006D5-3e
- for qemu-devel@nongnu.org; Mon, 25 May 2026 01:44:32 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64P5iHSc087468
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 25 May 2026 14:44:17 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=YdFomS6we7dImNt0mqgL6vb5Bcu1tOcU+XszKJSSuzw=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1779687857; v=1;
- b=RV0GU+C/Tu+HU/5mxgPKIdbQUyzukf/T8fDdvnyiiflKPxDhZ/C6gzc6Y/djdfFp
- nw4dCZLNw27N2j/ww+9tsxBRMLb6GauKgeRZzAoRIOtJUsuEsnd8AtHiglKae6sV
- 533sKlsfioX3iuXdhauDRFk43ZKOiW/eYMHVCm0uSo0iAZsNzt9wGMaCs4w3vj41
- 6AapDDq5cn8Lqh18w0aTJISzkFpLydEhEFf6u6ukD8ORuOYP0R9iV9v0KkYbTpu0
- ROZAwJZ92kh12HFx6TBHrBSDO8PV3A+c3Vr8IofK1T5kKOQO6NPIot6IQh8+OQf5
- ytLOSmQvQXpAfJnV6B5/+g==
-Message-ID: <fa0112ca-b388-45d7-8ff5-525ab9bb9635@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 25 May 2026 14:44:17 +0900
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wROs1-0000zh-6y
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 02:33:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779690780;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=s98FdMTREin0x+HMEMyCXnMppXkvaTAPzFjNpL5lKUw=;
+ b=TaZ1G0VuuS6COUTfyoSMWQs+B11NUDNDqgIB2YC+Q0rAdt6AZeXcx4/mjSPoX+aQZwoogi
+ 7PMEjbUykPjxVjBKR6djYe7XDqtO5moflCnM+JgzAvBKsGvgyulC1cl71gijt5Htfy/7Pn
+ HhEH6zD+8YTSn+sIw6zqyplbAK54OME=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-659-3Z1LBFkkM_e9LyMHxWqbsg-1; Mon,
+ 25 May 2026 02:32:55 -0400
+X-MC-Unique: 3Z1LBFkkM_e9LyMHxWqbsg-1
+X-Mimecast-MFC-AGG-ID: 3Z1LBFkkM_e9LyMHxWqbsg_1779690774
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 71DA51800622; Mon, 25 May 2026 06:32:54 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.6])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 332CD1681; Mon, 25 May 2026 06:32:52 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: stefanha@gmail.com,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL v3 03/38] ui/vt100: add vt100_fini() check
+Date: Mon, 25 May 2026 10:31:46 +0400
+Message-ID: <20260525063223.1409791-4-marcandre.lureau@redhat.com>
+In-Reply-To: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
+References: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 00/38] Ui patches
-To: Stefan Hajnoczi <stefanha@gmail.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-References: <20260521135551.1752945-1-marcandre.lureau@redhat.com>
- <CAJSP0QXoxZgG4Chk53upHtWXZH-+nvoU041bHe+bHwgFsg353Q@mail.gmail.com>
- <CAJ+F1CKNGvPfc0kL-7D61_Fd3Eh1HSAS_nY3FgA8yQC_WsT2Rg@mail.gmail.com>
- <CAJSP0QUaHNrjN0G9aRTuT+HLeiQACnihW3d0ws8-LzBd_SRi6A@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <CAJSP0QUaHNrjN0G9aRTuT+HLeiQACnihW3d0ws8-LzBd_SRi6A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,125 +85,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/05/25 6:32, Stefan Hajnoczi wrote:
-> 
-> 
-> On Sun, May 24, 2026, 17:13 Marc-André Lureau 
-> <marcandre.lureau@redhat.com <mailto:marcandre.lureau@redhat.com>> wrote:
-> 
->     Hi
-> 
->     On Mon, May 25, 2026 at 12:31 AM Stefan Hajnoczi <stefanha@gmail.com
->     <mailto:stefanha@gmail.com>> wrote:
->      >
->      > On Thu, May 21, 2026 at 9:56 AM <marcandre.lureau@redhat.com
->     <mailto:marcandre.lureau@redhat.com>> wrote:
->      > >
->      > > From: Marc-André Lureau <marcandre.lureau@redhat.com
->     <mailto:marcandre.lureau@redhat.com>>
->      > >
->      > > The following changes since commit
->     3f129ea545f16e82b5e43fcc3866b134b7cc4dfc:
->      > >
->      > >   Merge tag 'pull-vfio-20260520' of https://github.com/
->     legoater/qemu <https://github.com/legoater/qemu> into staging
->     (2026-05-20 16:53:28 -0400)
->      > >
->      > > are available in the Git repository at:
->      > >
->      > > https://gitlab.com/marcandre.lureau/qemu.git <https://
->     gitlab.com/marcandre.lureau/qemu.git> tags/ui-pull-request
->      > >
->      > > for you to fetch changes up to
->     95df9ffa98a785e4e9368018a72e643e77328ed1:
->      > >
->      > >   ui/gtk: Fix focus loss on re-attachment with single VC
->     (2026-05-21 17:53:43 +0400)
->      > >
->      > > ----------------------------------------------------------------
->      > > UI pull request
->      > >
->      > > - ui/input: Decouple internal and QAPI input events
->      > > - VNC OOB fixes
->      > > - vt100 fixes
->      > > - GTK focus fix
->      > >
->      > > ----------------------------------------------------------------
->      > >
->      > > Akihiko Odaki (29):
->      > >   ui/input: Introduce QemuInputEvent typedef
->      > >   ui/input: Remove QAPI wrappers from QemuInputEvent
->      > >   ui/input: Store QKeyCode directly in QemuInputKeyEvent
->      > >   ui/input: Use Linux key codes for internal key events
->      > >   ui/input: Prohibit sending KEY_RESERVED
->      > >   ui/console: Add qemu_text_console_put_linux()
->      > >   ui/kbd-state: Use Linux key codes
->      > >   hw/arm/musicpal: Use Linux key codes
->      > >   hw/char/escc: Use Linux key codes
->      > >   hw/display/xenfb: Use Linux key codes
->      > >   hw/input/adb-kbd: Use Linux key codes
->      > >   hw/input/hid: Use Linux key codes
->      > >   hw/input/ps2: Use Linux key codes
->      > >   hw/input/virtio-input: Use Linux key codes
->      > >   hw/m68k/next-kbd: Use Linux key codes
->      > >   replay: Use Linux key codes
->      >
->      > Please take a look at this replay failure:
->      > https://gitlab.com/qemu-project/qemu/-/jobs/14521293731#L842
->     <https://gitlab.com/qemu-project/qemu/-/jobs/14521293731#L842>
->      >
->      > If the issue is caused by this pull request, please resend with a
->     fix.
->      >
->      > If the issue is not caused by this pull request, please let me
->     know. Thanks!
-> 
->     Oh I missed it, despite running CI tests with ci.variable=QEMU_CI=2
->     (https://gitlab.com/marcandre.lureau/qemu/-/pipelines/2543698396
->     <https://gitlab.com/marcandre.lureau/qemu/-/pipelines/2543698396>) What
->     should I use instead?
-> 
-> 
-> I'm on my phone right now and can't dig into the details, but you can 
-> run the functional-system-centos test locally to verify your branch.
-> 
-> 
->     In "replay: Use Linux key codes" patch, we'd need something like:
-> 
->     diff --git a/scripts/replay-dump.py b/scripts/replay-dump.py
->     index 081aaa36c5e..ce1031b4ad4 100755
->     --- a/scripts/replay-dump.py
->     +++ b/scripts/replay-dump.py
->     @@ -398,6 +398,9 @@ def decode_end(eid, name, dumpfile):
->       # EVENT_AUDIO_IN has changed
->       v13_event_table = v12_event_table
-> 
->     +# EVENT_ASYNC_INPUT has changed
->     +v14_event_table = v13_event_table
->     +
->       def parse_arguments():
->           "Grab arguments for script"
->           parser = argparse.ArgumentParser()
->     @@ -416,7 +419,10 @@ def decode_file(filename):
->           # see REPLAY_VERSION
->           print("HEADER: version 0x%x" % (version))
-> 
->     -    if version == 0xe0200d:
->     +    if version == 0xe0200e:
->     +        event_decode_table = v14_event_table
->     +        replay_state.checkpoint_start = 30
->     +    elif version == 0xe0200d:
->               event_decode_table = v13_event_table
->               replay_state.checkpoint_start = 30
->           elif version == 0xe0200c:
-> 
->     I can squash and resubmit, or does someone want to revisit it?
-> 
-> 
-> Yes, that's fine.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-This fix looks good to me too. Thank you for fixing this.
+vt100_fini() is called unconditonally from qemu_text_console_finalize(),
+but it may not have been vt100_init()/opened: fix the crash in that case.
 
-Regards,
-Akihiko Odaki
+Fixes: 8fa294482eb ("ui/console-vc: move VT100 state machine ...")
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ ui/vt100.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/ui/vt100.c b/ui/vt100.c
+index f8140cfa85c..6e64845b6c0 100644
+--- a/ui/vt100.c
++++ b/ui/vt100.c
+@@ -978,6 +978,9 @@ void vt100_init(QemuVT100 *vt,
+ 
+ void vt100_fini(QemuVT100 *vt)
+ {
++    if (!QTAILQ_IN_USE(vt, list)) {
++        return;
++    }
+     QTAILQ_REMOVE(&vt100s, vt, list);
+     fifo8_destroy(&vt->out_fifo);
+     g_free(vt->cells);
+-- 
+2.54.0
+
 
