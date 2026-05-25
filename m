@@ -4,124 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65504CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 19:57:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA6A2CD5BC9
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 20:01:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRbPv-0004IC-7y; Mon, 25 May 2026 15:56:51 -0400
+	id 1wRbUR-000524-LJ; Mon, 25 May 2026 16:01:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wRbPt-0004Hz-VU
- for qemu-devel@nongnu.org; Mon, 25 May 2026 15:56:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wRbPr-0003uN-0t
- for qemu-devel@nongnu.org; Mon, 25 May 2026 15:56:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779739005;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/TZO+G0dZVY7MHwEpd1YawhiilgokZrFGlh69a/DAuU=;
- b=hXNk+rnu4iXtY/5DIjtijEwasn4dasX2llsHpm9eQHIZLyasbqB2IPRt2cedF8m6uck4Kq
- rjBq6A6VN3ZOH5eLh1wFChhkvpvCDXc1q38pj9Cvni/NvYUY0e6IweQLebjYLfz5Yry1KM
- Va85syGqUMlbdx4RHnWVDRpaI+14Fb0=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-461-0D3pHTI8Po2RARfoIUMDZA-1; Mon, 25 May 2026 15:56:43 -0400
-X-MC-Unique: 0D3pHTI8Po2RARfoIUMDZA-1
-X-Mimecast-MFC-AGG-ID: 0D3pHTI8Po2RARfoIUMDZA_1779739002
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-44d79da8cf7so7498689f8f.2
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 12:56:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779739002; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wRbUQ-00051h-1U
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 16:01:30 -0400
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wRbUO-0006Q6-5j
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 16:01:29 -0400
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-65e39d1dd38so9136185d50.3
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 13:01:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779739287; cv=none;
  d=google.com; s=arc-20240605;
- b=byp7BjQOlmGOKTy/ymqEZKQFQftz0QYINOjHo1T2mfTDiDo3vopjPTQ0VzNkBFWKfH
- gcAXS9XahgmuirpwntMf1Fsp/PWR0I4u4WFB2gaMet3Nj9cgdDn9gd+cWxytQK2SSg2P
- K0hGqIidDJdgNPzldR2zC0ynIfVZlKa9lciA2VNuIAVR69Z630zyjnvDoA+lhAzos/ZL
- ShVoA83/cbh6hF6mrKyaS5F8kAyA2nLMSEH4WMY4cWv77NQSNvCF+tWXwIcrnF3lQgRX
- CRTcI5n1ICc08Ei+7zsSANfwg8ouW4XCy3YrwP8Kj9o3FnpqhoVY7P3hbFxY3Az2IGrY
- ZcJA==
+ b=koDgYnoRKJHLrpcFHIeu07XK4gicHaitAe/Cj8/pHA7PsX6MSxjw5NTplPg1DSvMuM
+ y7opDMDgusGoufjuPmvC/D18+7JQyFyBzzfLe0kns+wc40x7OD6mUnyl8DU3/MrMIh1J
+ 44tkYKO58C1OXyjbKOSoJxZjob5m97XsMh+oow1zG2vU+Mtll+fdDqyjd3102vOv8IQu
+ vzRHei7VGWIGT3YMZDGPJOA4Yp2gQatNMRrRkXUFBwDudJLZ5+3i0IZBoL7GqNsltlD/
+ MybDvlrdyeFUnrikKUrOgEgD/2d+jLW9w8rz5zDF6nH+9wibP2j9zfObvQmYz5DKlJCW
+ y8tQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=/TZO+G0dZVY7MHwEpd1YawhiilgokZrFGlh69a/DAuU=;
- fh=QVKrYBsudDYNde24GGluNXHf+t1RNPmceo+N5mzrAqY=;
- b=bvNBSfmHMXTlBuiCgZ/dPmD2nTnwy1vrjuxSOy9SUrJOUniMgDK/V0C2A/E2G1436I
- axakuV1Iw/kPnWwwxDhEZ/m1oTjsQK+VYWghQbR020P4CLtp7DwDOUagltiQz88JS7ed
- rWFhr0UFcinoZWkMSXHuE35H/AN9my5H4rlzttLIZImwYWgUrkYp46LTRjPJUi22JesV
- aUdRm0jTPmNVO0VPseI3w/TuEQ8Wt0+CKWgFUlbnt7/Ony+W0IRasv7fV4IdqMNrEOXj
- xqRT4SWz+brdPO3ndOXdAlMB1rm9ocYljCDDU25v4RIfsXfdYgOW1jnky3HLoauPwgdz
- RAyw==; darn=nongnu.org
+ bh=WhSWEnC2ecVc9BwA6TVyk86odnQWuDcS2E3f4VRvhRM=;
+ fh=bnI6YOyuNfxrG7pMwm+vCyspagRL9htO+PWCH8Y+nfA=;
+ b=gSprEzSKuW13Zu2X7bEH8Z8a4Ntu20ebbZZCbgTYigzeqZrazSWDn5GAi1zZoWencu
+ 0nU8kglvzfuo6OPPLZpvKSIH00o9ECLbk5ChVOa50RS8HVTohABNDKYFahiA6auET0ZB
+ lkLaQwXEhEEDe6VlPNm8eGQKsL9AFqqUPAAJ4RGvdgjio/ULU9btCe3iDjNhkxr2H1sj
+ 2I5AT0IsmC66GpegnozpLUE+X69vxI2ORiMBcZdD2R53eAn7BfmLHkQ5OjJhnG1D8Uzy
+ vFAzxcdGi/Z8av9ZaDz1HYFDuO4jGj7xw9RmOnqOOBTPkKzKr1DjEnNjS6z3g8HjAetm
+ w74w==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779739002; x=1780343802; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779739287; x=1780344087; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=/TZO+G0dZVY7MHwEpd1YawhiilgokZrFGlh69a/DAuU=;
- b=qFlsO3iVWZ49QeBLorqcrIWE/QSW6EUuwnHxakK7kgEQAD+OVVFtTNZNzgK2QzpFD2
- eMBp+d5IprS0TSciDAvB7pqZDS9AyG66Kwrsy+WcN6YJGBA9Ia00AnzKTdQbqtcNXxHi
- gWu/Co2U8kJdQ2NPHLTG1sDBkQgk5THa+WOqf04KPUBT5/mLpmC2wO1VCUlorUkxFyyV
- Su6qT6ajLXSm8+NSG6hf+YtVdhH6siVU+SW24s99jS+1s+siMbIq1HiJ6ogx/Okw4nhg
- PBR3Sne+EXCWH9ye5uO4YvAASxR82IVvj8+wXGsaVwkS8q6/fzZdikOMcEsYmaVl25Oc
- ma5Q==
+ bh=WhSWEnC2ecVc9BwA6TVyk86odnQWuDcS2E3f4VRvhRM=;
+ b=x65Kro9UieIPOsMXt3myxm2uEvT54vgbYXQix7mK5MM4G9fku4wOJLrlHGfobJ4ZLO
+ 9PWidGgDNpiyRbDhD/Xvinoy60kXwOc++27wFGJ3C/pfZwFMo6q/EWhFMrQ9pYRx4VpC
+ 3ia0GQ993XjDmg8NhaMRuVUcNSoL89600xYM0EUHniGPOOLnRsSKjT0Cppg5qZlZTosA
+ sACxjI+4d/zHfDyOb5FH0jrADHH2pMT38ZiyW7hQNc7YkolpTCh4sLOb0jSBnrtIWSpa
+ RAnsqi2npCT2Kb41UahaA+7xQP4+6Yt6ynPpYWSDKDukYaLg7I4Ldv7Kl3vK8042DZAY
+ Zv0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779739002; x=1780343802;
+ d=1e100.net; s=20251104; t=1779739287; x=1780344087;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/TZO+G0dZVY7MHwEpd1YawhiilgokZrFGlh69a/DAuU=;
- b=BKmsMtunGTzmlxBL4GWzZL/MFNYaGYGkg2UBOOW+CTPSb4sINfibjD2SmKbWbFwLTe
- QZ4mpYDNpmbXGpHgpNeM446n9XTNKkfKCLYno45aihP+dezH2Nt8JVZXwTZVsh2WjVFO
- a80HZOazwAgyJe4VxoVVbCc+bCjtd8KpWWzIx3885eoQyAli5dAky//Kwqf+8cTtOIp0
- D7wwWyIcMv5m2PLhqyhp4hpREVqINjUY0Bp3Nm1EHCdZrSbuoG+mYwWWxhbLi4v1ZKWv
- Sog3LFV/OkQRKcXECPCIAAM21iT5FcH9Mea2t1AB0owjyuRe2G40BFW7vM9YguvrnMrz
- qyFQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8NUHUPyXBkaeGO5Ur3OisY1DMtSdDJv1WYQhxSt6Hg5voGs0KIm0FWGMrcE+/Lt69c7HEK99Me8ol5@nongnu.org
-X-Gm-Message-State: AOJu0YykHXInyadb8ziGO8ubxmcViGBEe3juG9waSuDh5pwu6yFUoWYr
- pHXZkfwekSxn+2O3vkaYCOwsa+6kL2dmuI7BSp49q4S5TldO8/535QqVcz6pOcG7m7NjhUcZg0W
- jbMZggq99QdUMGEDohTlf9okwo6xps0TEWbFw6+o782+Y0iE8z791OXDGnofGMnPnYWDff0O0w0
- gPkuZgd8rL77Ql4iVCjzSGvAHAdU1PgWU=
-X-Gm-Gg: Acq92OFwZL1XJKmWNGtKxrFSY65lYigiibejq0GYsLAPZjKzzS4PlN6lIJIMaXz/zut
- zBOVAY8B/bgEzjvcl+gG1ggrxvILNDHY8R39T3IJFO/vP0a7xVq0hJzHH+tVMrb8FmeqO8aS3gE
- S2STj+aA0f7+GKAW5ylFw2NolwJb/7YWWY/hhgqQWy2SqJOKQUEuXjkEBAE6bK0+DrqhIxPigSo
- KrDY55KeHgNTW6byMUTgqewPAGPLDQuvkmQvX2PhOMjg98N9L6QJ0+SOHa4BxA7UwqiMo/1oP9K
- gs8=
-X-Received: by 2002:a05:6000:480e:b0:45e:739b:3e3c with SMTP id
- ffacd0b85a97d-45eb36418d3mr23835598f8f.0.1779739002216; 
- Mon, 25 May 2026 12:56:42 -0700 (PDT)
-X-Received: by 2002:a05:6000:480e:b0:45e:739b:3e3c with SMTP id
- ffacd0b85a97d-45eb36418d3mr23835577f8f.0.1779739001869; Mon, 25 May 2026
- 12:56:41 -0700 (PDT)
+ bh=WhSWEnC2ecVc9BwA6TVyk86odnQWuDcS2E3f4VRvhRM=;
+ b=VfYVXATBCSU8Qju34MVawLa9bZLr2KlHGcamox3CevDd6u6kan1LbD4XmmJr3m2zfe
+ Ue9kpfBeInoCUGHKLOjmuTrZclQZYN5naQT3Gtbmo62WhC6hdhmOGaYgSbHSWgfrIs3P
+ SNhrLRVDCqkiczmClAYfAepZcJbPo783gtxPsAe5m1DhCcKOT8BjGzk8sG08SOPGEXBh
+ RSr5IHWRSdEIYinoB4Y4P0gFIyREGXKnwyBH+V1QDow6Ag8Vgc2L0c6y1B21qaryPFbI
+ zL2GtFSAncCTud/++yTjvXw5r2unb7JPdfOx++038RApmdCAFEHl7kZTqWkfesh5EMeu
+ xByg==
+X-Gm-Message-State: AOJu0YwPIWEBsu2OdxYGj4h8a6bOr/FW8NWG1WlDnl8opIw6/PVodPrL
+ p3enNNMnwIg4NI8DEFf0MTCRxfKVAg452KiR3J/FL7sNp7JeiI2IoMI/TMGcSDbfR/3761Fhugh
+ 5ny2b8K6qnM0Fb9FsCbtxqQtqVbZOIvinJn2jB6Mh7A==
+X-Gm-Gg: Acq92OGWiRLL5XznRAFrSnOrdiTbtv4js7yNP8Co0fu4lz/kzgmRywn9Ee/Buw+aBj+
+ hc6UJ1CBQKEi1tTpYsFz0L3aTAFJ0TVZMdKUbE+bXBOJ+XcTqIxju/9VEkjxVWrRBbPjhn8BK3h
+ yhWev013zDkQmxIkPvaEPCb0HaSW/devfjDuDPBhrkbPOG6mOo7rduK1HawSNPUJlQzz2kYb5iV
+ VqC1DIgTu/vUgC0PsN25DaoYCtU7m6GwtGBYxemMHPrhz2A200WrxMHuwVCLH/FlYsyMQuk3dOR
+ jgFm+NaOEBDMHm6XN5bILEmBEgbY4xpDDrSzLu4Pqni7+eFNqNg6oAcMwQf8OPjrbCI=
+X-Received: by 2002:a05:690e:140e:b0:65e:c62f:cd29 with SMTP id
+ 956f58d0204a3-65ec9914c4emr16402216d50.44.1779739286594; Mon, 25 May 2026
+ 13:01:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260524083329-mutt-send-email-mst@kernel.org>
- <f0bc9023-28c4-4685-b0cc-fc7ad4e6d371@redhat.com>
- <CANCZdfrn61yr5k=3=E_zE11dw3j2vVsg0PPn0PZ7RAa2agM8kQ@mail.gmail.com>
-In-Reply-To: <CANCZdfrn61yr5k=3=E_zE11dw3j2vVsg0PPn0PZ7RAa2agM8kQ@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 25 May 2026 21:56:30 +0200
-X-Gm-Features: AVHnY4KAfsTdyMSPXzzRov7X-RJ8sy0lkeDNGHHUQywyrCOSSwH_-M0YOJZSecU
-Message-ID: <CABgObfYJiTZm+SOG+vF06sSfa7PGCuhrpagqwbmssjjFuOiUrQ@mail.gmail.com>
-Subject: Re: on ai generated and code provenance
-To: Warner Losh <imp@bsdimp.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel <qemu-devel@nongnu.org>, 
- "Hajnoczi, Stefan" <stefanha@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000ffef430652a9c650"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <cover.1779723483.git.balaton@eik.bme.hu>
+ <d6fff532607b5153094cd6c72f78a2de5672aaec.1779723483.git.balaton@eik.bme.hu>
+In-Reply-To: <d6fff532607b5153094cd6c72f78a2de5672aaec.1779723483.git.balaton@eik.bme.hu>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 25 May 2026 21:01:14 +0100
+X-Gm-Features: AVHnY4LlWHiTcNSV6H0hJklAZudGuGI5uug1LhNe7GqXbcn2hEPF9ITjp0PvHeI
+Message-ID: <CAFEAcA9Nh9qZ1k_Pq04ajdP8ObrNpen4aYeu-mPNiYbRc9ho3Q@mail.gmail.com>
+Subject: Re: [PATCH v5 1/7] memory: Export memory_region_set_ops()
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Paolo Bonzini <pbonzini@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -138,108 +117,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ffef430652a9c650
-Content-Type: text/plain; charset="UTF-8"
-
-Il lun 25 mag 2026, 19:15 Warner Losh <imp@bsdimp.com> ha scritto:
-
-> The code produced by AI agents has no copyright.
+On Mon, 25 May 2026 at 16:47, BALATON Zoltan <balaton@eik.bme.hu> wrote:
 >
+> Make memory_region_set_ops() function public. In some cases such as
+> when devices have configurable endianness or different behaviour based
+> on settings it is necessary to change the ops callback after the
+> memory region is created. Export memory_region_set_ops() function for
+> this.
 
-This is not entirely true. As models improve their capability to generate,
-they also improve their ability to recall exactly. Stefan gave more
-information.
+If some other CPU is in the middle of using the old MemoryRegionOps
+when the device swaps them out under its feet, what happens?
 
-The ability to search and reuse code found on the internet could also be a
-problem. In that case the code is not produced by AI.
+You could also remove the old MR from its container and add a different
+one with the different behaviour when the guest changes the config,
+or have both of them in the container and toggle which is visible
+with memory_region_set_enabled(). That might potentially be more
+awkward but it would avoid having to look into the memory region
+API internals.
 
-While this is *generally speaking* not an issue, it can be in specific
-cases.
-https://www.devclass.com/ai-ml/2025/11/27/ocaml-maintainers-reject-massive-ai-generated-pull-request/1728083
-is only about six months old.
-
-Also, I've softened this paragraph
-> several times, and it still comes across as more confrontational than I
-> intend.
->
-
-No problem at all!
-
-AI's primary issue is verification. The folks being flooded can't verify
-> the good from the bad in the flood and tend to have a knee jerk reaction to
-> protect themselves: ban it.
->
-
-Being cautious and open minded at the same time is a good way to react, IMO.
-
-Unstated issue: How do we help people that want to contribute grow their
-> skills using AI so they make submissions whose quality if good enough to
-> be worth our time to verify and review. It's an industry wide problem,
-> along
-> with how do junior engineers become senior in a world of AI doing the grunt
-> work they used to learn from.
->
-
-This is not our problem to solve. What we can do is participate to outreach
-activities for students, such as Google Summer of Code.
-
-Paolo
-
->
-
---000000000000ffef430652a9c650
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><br><br><div class=3D"gmail_quote gmail_quote_container" =
-dir=3D"auto"><div dir=3D"ltr" class=3D"gmail_attr">Il lun 25 mag 2026, 19:1=
-5 Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com">imp@bsdimp.com</a>&gt; =
-ha scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
-0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div=
- dir=3D"ltr"><div dir=3D"ltr">The code produced by AI agents has no copyrig=
-ht.</div></div></blockquote></div><div dir=3D"auto"><br></div><div dir=3D"a=
-uto">This is not entirely true. As models improve their capability to gener=
-ate, they also improve their ability to recall exactly. Stefan gave more in=
-formation.</div><div dir=3D"auto"><br></div><div dir=3D"auto">The ability t=
-o search and reuse code found on the internet could also be a problem. In t=
-hat case the code is not produced by AI.</div><div dir=3D"auto"><br></div><=
-div dir=3D"auto">While this is *generally speaking* not an issue, it can be=
- in specific cases.=C2=A0<a href=3D"https://www.devclass.com/ai-ml/2025/11/=
-27/ocaml-maintainers-reject-massive-ai-generated-pull-request/1728083">http=
-s://www.devclass.com/ai-ml/2025/11/27/ocaml-maintainers-reject-massive-ai-g=
-enerated-pull-request/1728083</a> is only about six months old.</div><div d=
-ir=3D"auto"><br></div><div class=3D"gmail_quote gmail_quote_container" dir=
-=3D"auto"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8=
-ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr=
-"><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">Also, I&=
-#39;ve softened this paragraph</div><div>several times, and it still comes =
-across as more confrontational than I intend.</div></div></div></blockquote=
-></div><div dir=3D"auto"><br></div><div dir=3D"auto">No problem at all!</di=
-v><div dir=3D"auto"><br></div><div class=3D"gmail_quote gmail_quote_contain=
-er" dir=3D"auto"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
-0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=
-=3D"ltr"><div class=3D"gmail_quote"><div>AI&#39;s primary issue is verifica=
-tion. The folks being flooded can&#39;t verify the good from the bad in the=
- flood and tend to have a knee jerk reaction to protect themselves: ban it.=
-</div></div></div></blockquote></div><div dir=3D"auto"><br></div><div dir=
-=3D"auto">Being cautious and open minded at the same time is a good way to =
-react, IMO.</div><div dir=3D"auto"><br></div><div class=3D"gmail_quote gmai=
-l_quote_container" dir=3D"auto"><blockquote class=3D"gmail_quote" style=3D"=
-margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-lef=
-t:1ex"><div dir=3D"ltr"><div class=3D"gmail_quote"><div>Unstated issue: How=
- do we help people that want to contribute grow their</div><div>skills usin=
-g AI so they make submissions whose quality if good enough to</div><div>be =
-worth our time to verify and review. It&#39;s an industry wide problem, alo=
-ng</div><div>with how do junior engineers become senior in a world of AI do=
-ing the grunt</div><div>work they used to learn from.</div></div></div></bl=
-ockquote></div><div dir=3D"auto"><br></div><div dir=3D"auto">This is not ou=
-r problem to solve. What we can do is participate to outreach activities fo=
-r students, such as Google Summer of Code.</div><div dir=3D"auto"><br></div=
-><div dir=3D"auto">Paolo</div><div class=3D"gmail_quote gmail_quote_contain=
-er" dir=3D"auto"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
-0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-</blockquote></div></div>
-
---000000000000ffef430652a9c650--
-
+-- PMM
 
