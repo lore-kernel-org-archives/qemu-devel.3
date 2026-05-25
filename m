@@ -4,74 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0227BCD5BBF
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 06:35:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5373CCD5BC0
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 06:36:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wROtg-0003I8-H7; Mon, 25 May 2026 02:34:44 -0400
+	id 1wROuZ-0004Jp-Vk; Mon, 25 May 2026 02:35:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wROsz-0002VF-Kr
- for qemu-devel@nongnu.org; Mon, 25 May 2026 02:34:02 -0400
+ id 1wROtU-0002oQ-6i
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 02:34:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wROsw-0001Ao-BF
- for qemu-devel@nongnu.org; Mon, 25 May 2026 02:34:00 -0400
+ id 1wROtR-0001Iw-SV
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 02:34:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779690837;
+ s=mimecast20190719; t=1779690869;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kXJCyBYPJ2LyljuxM9u8r6lghDNX43DPRG6Wz80yJRQ=;
- b=UvnRvXq1bLTjEeIhFyw5TD+8XVssmrSBxMJj5FOYFRL+jOc+PD280QxzYvIeIG0V+yStY7
- VKyQS+qdwvaA4qvkUWML3ptgYsCYXSTTLSoZ/CkSfFk2LVxi7U8pv1g6h7noE5vRTcun6L
- rbn9LBtab6bWixGfNZzTGxtZGHClzUc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=6Y0k1FSs5g7fmhpLsIU8sGFTaHs3mCtMSaytU1AsWjU=;
+ b=aJoU/4OHTSTKSpxPexfM7fCdXRFy1HxE1qJQpbWaTsMEfW54eP8WZYlKktaQfQ3zyqUgqS
+ JfRmga0XabMK0+Oo4usDbkyp5ZcOB4wWfWvmELAUI5jk/yyKVEhKu5Y9TRZshACM5M0DyC
+ hBllXKhq91JqBlHLo15UYlEPf7mMPSs=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-219-MDh4XIWcMfCMqIrIDF9qog-1; Mon,
- 25 May 2026 02:33:53 -0400
-X-MC-Unique: MDh4XIWcMfCMqIrIDF9qog-1
-X-Mimecast-MFC-AGG-ID: MDh4XIWcMfCMqIrIDF9qog_1779690831
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-519-jeZLMJ_mOtmOMGmmbcWmBg-1; Mon,
+ 25 May 2026 02:34:24 -0400
+X-MC-Unique: jeZLMJ_mOtmOMGmmbcWmBg-1
+X-Mimecast-MFC-AGG-ID: jeZLMJ_mOtmOMGmmbcWmBg_1779690863
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 640781956059; Mon, 25 May 2026 06:33:51 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 743D519560B6; Mon, 25 May 2026 06:34:23 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 913EF18004A3; Mon, 25 May 2026 06:33:48 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BE0CD176C; Mon, 25 May 2026 06:34:21 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Jan Kiszka <jan.kiszka@web.de>, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Thomas Huth <th.huth+qemu@posteo.eu>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-arm@nongnu.org (open list:Musicpal),
- xen-devel@lists.xenproject.org (open list:X86 Xen CPUs),
- qemu-ppc@nongnu.org (open list:Old World (g3beige))
-Subject: [PULL v3 11/38] ui/input: Store QKeyCode directly in QemuInputKeyEvent
-Date: Mon, 25 May 2026 10:31:54 +0400
-Message-ID: <20260525063223.1409791-12-marcandre.lureau@redhat.com>
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL v3 15/38] ui/kbd-state: Use Linux key codes
+Date: Mon, 25 May 2026 10:31:58 +0400
+Message-ID: <20260525063223.1409791-16-marcandre.lureau@redhat.com>
 In-Reply-To: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
 References: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -100,342 +90,410 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-Since commit af07e5ff02ae ("ui: convert key events to QKeyCodes
-immediately"), all internal key events are expected to be represented as
-QKeyCode. Replace KeyValue in QemuInputKeyEvent with QKeyCode to enforce
-that and simplify key code retrieval.
+QemuInputEvent now stores Linux key codes for key events. Use those
+codes directly instead of translating between internal key code
+representations.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260520-input-v3-3-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <20260520-input-v3-7-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 ---
- include/ui/input.h           |  5 ++---
- hw/arm/musicpal.c            |  2 +-
- hw/char/escc.c               |  2 +-
- hw/display/xenfb.c           |  2 +-
- hw/input/adb-kbd.c           |  2 +-
- hw/input/hid.c               |  5 ++---
- hw/input/ps2.c               |  2 +-
- hw/input/stellaris_gamepad.c |  2 +-
- hw/input/virtio-input-hid.c  |  2 +-
- hw/m68k/next-kbd.c           |  2 +-
- replay/replay-input.c        | 29 ++++++-----------------------
- ui/input-keymap.c            |  9 ++++-----
- ui/input.c                   | 34 +++++++---------------------------
- ui/trace-events              |  1 -
- 14 files changed, 29 insertions(+), 70 deletions(-)
+ include/ui/kbd-state.h | 12 ++++----
+ ui/dbus-console.c      |  4 +--
+ ui/gtk.c               |  7 +++--
+ ui/kbd-state.c         | 61 +++++++++++++++++++++-----------------
+ ui/keymaps.c           |  3 +-
+ ui/sdl2-input.c        |  3 +-
+ ui/vnc.c               | 10 +++++--
+ ui/cocoa.m             | 67 +++++++++++++++++++++++++++++++-----------
+ 8 files changed, 108 insertions(+), 59 deletions(-)
 
-diff --git a/include/ui/input.h b/include/ui/input.h
-index 0b8c439fca7..3c3dfa7b59d 100644
---- a/include/ui/input.h
-+++ b/include/ui/input.h
-@@ -19,7 +19,7 @@ typedef struct QemuInputHandler QemuInputHandler;
- typedef struct QemuInputHandlerState QemuInputHandlerState;
+diff --git a/include/ui/kbd-state.h b/include/ui/kbd-state.h
+index 1f37b932eb6..a70d5b5746b 100644
+--- a/include/ui/kbd-state.h
++++ b/include/ui/kbd-state.h
+@@ -52,11 +52,13 @@ void qkbd_state_free(QKbdState *kbd);
+  * This function takes care to not send suspious events (keyup event
+  * for a key not pressed for example).
+  *
++ * This function drops events with key codes outside the defined range.
++ *
+  * @kbd: state tracker state.
+- * @qcode: the key pressed or released.
++ * @lnx: the key pressed or released.
+  * @down: true for key down events, false otherwise.
+  */
+-void qkbd_state_key_event(QKbdState *kbd, QKeyCode qcode, bool down);
++void qkbd_state_key_event(QKbdState *kbd, unsigned int lnx, bool down);
  
- typedef struct QemuInputKeyEvent {
--    KeyValue key;
-+    QKeyCode key;
-     bool down;
- } QemuInputKeyEvent;
+ /**
+  * qkbd_state_set_delay: set key press delay.
+@@ -72,12 +74,12 @@ void qkbd_state_set_delay(QKbdState *kbd, int delay_ms);
+ /**
+  * qkbd_state_key_get: get key state.
+  *
+- * Returns true when the key is down.
++ * Returns true when the key code is in the defined range and the key is down.
+  *
+  * @kbd: state tracker state.
+- * @qcode: the key to query.
++ * @lnx: the key to query.
+  */
+-bool qkbd_state_key_get(QKbdState *kbd, QKeyCode qcode);
++bool qkbd_state_key_get(QKbdState *kbd, unsigned int lnx);
  
-@@ -65,8 +65,7 @@ void qemu_input_event_send_key_delay(uint32_t delay_ms);
- int qemu_input_key_number_to_qcode(unsigned int nr);
- int qemu_input_key_value_to_number(const KeyValue *value);
- int qemu_input_key_value_to_qcode(const KeyValue *value);
--int qemu_input_key_value_to_scancode(const KeyValue *value, bool down,
--                                     int *codes);
-+int qemu_input_qcode_to_scancode(QKeyCode qcode, bool down, int *codes);
- int qemu_input_linux_to_qcode(unsigned int lnx);
+ /**
+  * qkbd_state_modifier_get: get modifier state.
+diff --git a/ui/dbus-console.c b/ui/dbus-console.c
+index b8e5c57b148..24f4542f312 100644
+--- a/ui/dbus-console.c
++++ b/ui/dbus-console.c
+@@ -343,7 +343,7 @@ dbus_kbd_press(DBusDisplayConsole *ddc,
  
- void qemu_input_queue_btn(QemuConsole *src, InputButton btn, bool down);
-diff --git a/hw/arm/musicpal.c b/hw/arm/musicpal.c
-index 43c93cb72d7..f436bd13d91 100644
---- a/hw/arm/musicpal.c
-+++ b/hw/arm/musicpal.c
-@@ -1069,7 +1069,7 @@ static void musicpal_key_event(DeviceState *dev, QemuConsole *src,
-                                QemuInputEvent *evt)
- {
-     musicpal_key_state *s = MUSICPAL_KEY(dev);
--    int qcode = qemu_input_key_value_to_qcode(&evt->key.key);
-+    int qcode = evt->key.key;
-     uint32_t event = 0;
-     int i;
+     trace_dbus_kbd_press(arg_keycode);
  
-diff --git a/hw/char/escc.c b/hw/char/escc.c
-index c88b2d54ebe..3ad803537e5 100644
---- a/hw/char/escc.c
-+++ b/hw/char/escc.c
-@@ -800,7 +800,7 @@ static void sunkbd_handle_event(DeviceState *dev, QemuConsole *src,
-     int qcode, keycode;
+-    qkbd_state_key_event(ddc->kbd, qcode, true);
++    qkbd_state_key_event(ddc->kbd, qemu_input_map_qcode_to_linux[qcode], true);
  
-     assert(evt->type == INPUT_EVENT_KIND_KEY);
--    qcode = qemu_input_key_value_to_qcode(&evt->key.key);
-+    qcode = evt->key.key;
-     trace_escc_sunkbd_event_in(qcode, QKeyCode_str(qcode),
-                                evt->key.down);
+     qemu_dbus_display1_keyboard_complete_press(ddc->iface_kbd, invocation);
  
-diff --git a/hw/display/xenfb.c b/hw/display/xenfb.c
-index 82d2cbae7cc..176796cbf62 100644
---- a/hw/display/xenfb.c
-+++ b/hw/display/xenfb.c
-@@ -203,7 +203,7 @@ static void xenfb_key_event(DeviceState *dev, QemuConsole *src,
-                             QemuInputEvent *evt)
- {
-     struct XenInput *xenfb = (struct XenInput *)dev;
--    int qcode = qemu_input_key_value_to_qcode(&evt->key.key);
-+    int qcode = evt->key.key;
-     int lnx;
+@@ -359,7 +359,7 @@ dbus_kbd_release(DBusDisplayConsole *ddc,
  
-     if (qcode < qemu_input_map_qcode_to_linux_len) {
-diff --git a/hw/input/adb-kbd.c b/hw/input/adb-kbd.c
-index 5911e713925..db3c7777500 100644
---- a/hw/input/adb-kbd.c
-+++ b/hw/input/adb-kbd.c
-@@ -311,7 +311,7 @@ static void adb_keyboard_event(DeviceState *dev, QemuConsole *src,
-     KBDState *s = (KBDState *)dev;
-     int qcode, keycode;
+     trace_dbus_kbd_release(arg_keycode);
  
--    qcode = qemu_input_key_value_to_qcode(&evt->key.key);
-+    qcode = evt->key.key;
-     if (qcode >= ARRAY_SIZE(qcode_to_adb_keycode)) {
-         return;
+-    qkbd_state_key_event(ddc->kbd, qcode, false);
++    qkbd_state_key_event(ddc->kbd, qemu_input_map_qcode_to_linux[qcode], false);
+ 
+     qemu_dbus_display1_keyboard_complete_release(ddc->iface_kbd, invocation);
+ 
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 2c61b601f78..757ee80fa6a 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -1343,7 +1343,8 @@ static gboolean gd_key_event(GtkWidget *widget, GdkEventKey *key, void *opaque)
+         || key->hardware_keycode == VK_PAUSE
+ #endif
+         ) {
+-        qkbd_state_key_event(vc->gfx.kbd, Q_KEY_CODE_PAUSE,
++        qkbd_state_key_event(vc->gfx.kbd,
++                             qemu_input_map_qcode_to_linux[Q_KEY_CODE_PAUSE],
+                              key->type == GDK_KEY_PRESS);
+         return TRUE;
      }
-diff --git a/hw/input/hid.c b/hw/input/hid.c
-index 90b29682a25..31f6331c7d7 100644
---- a/hw/input/hid.c
-+++ b/hw/input/hid.c
-@@ -227,9 +227,8 @@ static void hid_keyboard_event(DeviceState *dev, QemuConsole *src,
-     int scancodes[3], i, count;
-     int slot;
+@@ -1351,10 +1352,10 @@ static gboolean gd_key_event(GtkWidget *widget, GdkEventKey *key, void *opaque)
+     keycode = gd_get_keycode(key);
+     qcode = gd_map_keycode(keycode);
  
--    count = qemu_input_key_value_to_scancode(&evt->key.key,
--                                             evt->key.down,
--                                             scancodes);
-+    count = qemu_input_qcode_to_scancode(evt->key.key, evt->key.down,
-+                                         scancodes);
-     if (hs->n + count > QUEUE_LENGTH) {
-         trace_hid_kbd_queue_full();
-         return;
-diff --git a/hw/input/ps2.c b/hw/input/ps2.c
-index 3e553176ef6..9090a0427bd 100644
---- a/hw/input/ps2.c
-+++ b/hw/input/ps2.c
-@@ -324,7 +324,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+-    trace_gd_key_event(vc->label, keycode, qcode,
++    trace_gd_key_event(vc->label, keycode, qemu_input_map_qcode_to_linux[qcode],
+                        (key->type == GDK_KEY_PRESS) ? "down" : "up");
  
-     qemu_system_wakeup_request(QEMU_WAKEUP_REASON_OTHER, NULL);
-     assert(evt->type == INPUT_EVENT_KIND_KEY);
--    qcode = qemu_input_key_value_to_qcode(&evt->key.key);
-+    qcode = evt->key.key;
+-    qkbd_state_key_event(vc->gfx.kbd, qcode,
++    qkbd_state_key_event(vc->gfx.kbd, qemu_input_map_qcode_to_linux[qcode],
+                          key->type == GDK_KEY_PRESS);
  
-     mod = ps2_modifier_bit(qcode);
-     trace_ps2_keyboard_event(s, qcode, evt->key.down, mod,
-diff --git a/hw/input/stellaris_gamepad.c b/hw/input/stellaris_gamepad.c
-index 7d8ec38e888..6f42c46ddad 100644
---- a/hw/input/stellaris_gamepad.c
-+++ b/hw/input/stellaris_gamepad.c
-@@ -19,7 +19,7 @@ static void stellaris_gamepad_event(DeviceState *dev, QemuConsole *src,
-                                     QemuInputEvent *evt)
+     return TRUE;
+diff --git a/ui/kbd-state.c b/ui/kbd-state.c
+index 52ed28b8a89..c407327da59 100644
+--- a/ui/kbd-state.c
++++ b/ui/kbd-state.c
+@@ -5,6 +5,7 @@
+  */
+ #include "qemu/osdep.h"
+ #include "qemu/bitmap.h"
++#include "standard-headers/linux/input-event-codes.h"
+ #include "ui/console.h"
+ #include "ui/input.h"
+ #include "ui/kbd-state.h"
+@@ -12,15 +13,15 @@
+ struct QKbdState {
+     QemuConsole *con;
+     int key_delay_ms;
+-    DECLARE_BITMAP(keys, Q_KEY_CODE__MAX);
++    DECLARE_BITMAP(keys, KEY_CNT);
+     DECLARE_BITMAP(mods, QKBD_MOD__MAX);
+ };
+ 
+ static void qkbd_state_modifier_update(QKbdState *kbd,
+-                                      QKeyCode qcode1, QKeyCode qcode2,
++                                       unsigned int lnx1, unsigned int lnx2,
+                                       QKbdModifier mod)
  {
-     StellarisGamepad *s = STELLARIS_GAMEPAD(dev);
--    int qcode = qemu_input_key_value_to_qcode(&evt->key.key);
-+    int qcode = evt->key.key;
-     int i;
- 
-     for (i = 0; i < s->num_buttons; i++) {
-diff --git a/hw/input/virtio-input-hid.c b/hw/input/virtio-input-hid.c
-index 3f8a1bc249e..d48be1ea211 100644
---- a/hw/input/virtio-input-hid.c
-+++ b/hw/input/virtio-input-hid.c
-@@ -87,7 +87,7 @@ static void virtio_input_handle_event(DeviceState *dev, QemuConsole *src,
- 
-     switch (evt->type) {
-     case INPUT_EVENT_KIND_KEY:
--        qcode = qemu_input_key_value_to_qcode(&evt->key.key);
-+        qcode = evt->key.key;
-         if (qcode < qemu_input_map_qcode_to_linux_len &&
-             qemu_input_map_qcode_to_linux[qcode]) {
-             event.type  = cpu_to_le16(EV_KEY);
-diff --git a/hw/m68k/next-kbd.c b/hw/m68k/next-kbd.c
-index f3110ea0bca..39f223d0211 100644
---- a/hw/m68k/next-kbd.c
-+++ b/hw/m68k/next-kbd.c
-@@ -248,7 +248,7 @@ static void nextkbd_event(DeviceState *dev, QemuConsole *src,
-     NextKBDState *s = NEXTKBD(dev);
-     int qcode, keycode;
- 
--    qcode = qemu_input_key_value_to_qcode(&evt->key.key);
-+    qcode = evt->key.key;
-     if (qcode >= ARRAY_SIZE(qcode_to_nextkbd_keycode)) {
-         return;
-     }
-diff --git a/replay/replay-input.c b/replay/replay-input.c
-index 0995b125f24..f1ee678ef72 100644
---- a/replay/replay-input.c
-+++ b/replay/replay-input.c
-@@ -23,21 +23,9 @@ void replay_save_input_event(QemuInputEvent *evt)
- 
-     switch (evt->type) {
-     case INPUT_EVENT_KIND_KEY:
--        replay_put_dword(evt->key.key.type);
--
--        switch (evt->key.key.type) {
--        case KEY_VALUE_KIND_NUMBER:
--            replay_put_qword(evt->key.key.u.number.data);
--            replay_put_byte(evt->key.down);
--            break;
--        case KEY_VALUE_KIND_QCODE:
--            replay_put_dword(evt->key.key.u.qcode.data);
--            replay_put_byte(evt->key.down);
--            break;
--        case KEY_VALUE_KIND__MAX:
--            /* keep gcc happy */
--            break;
--        }
-+        replay_put_dword(KEY_VALUE_KIND_QCODE);
-+        replay_put_dword(evt->key.key);
-+        replay_put_byte(evt->key.down);
-         break;
-     case INPUT_EVENT_KIND_BTN:
-         replay_put_dword(evt->btn.button);
-@@ -71,20 +59,15 @@ QemuInputEvent *replay_read_input_event(void)
-     evt->type = replay_get_dword();
-     switch (evt->type) {
-     case INPUT_EVENT_KIND_KEY:
--        evt->key.key.type = replay_get_dword();
--
--        switch (evt->key.key.type) {
-+        switch (replay_get_dword()) {
-         case KEY_VALUE_KIND_NUMBER:
--            evt->key.key.u.number.data = replay_get_qword();
-+            evt->key.key = qemu_input_key_number_to_qcode(replay_get_qword());
-             evt->key.down = replay_get_byte();
-             break;
-         case KEY_VALUE_KIND_QCODE:
--            evt->key.key.u.qcode.data = (QKeyCode)replay_get_dword();
-+            evt->key.key = (QKeyCode)replay_get_dword();
-             evt->key.down = replay_get_byte();
-             break;
--        case KEY_VALUE_KIND__MAX:
--            /* keep gcc happy */
--            break;
-         }
-         break;
-     case INPUT_EVENT_KIND_BTN:
-diff --git a/ui/input-keymap.c b/ui/input-keymap.c
-index 1b756a6970c..2f6d431c824 100644
---- a/ui/input-keymap.c
-+++ b/ui/input-keymap.c
-@@ -61,14 +61,13 @@ int qemu_input_key_value_to_qcode(const KeyValue *value)
-     }
+-    if (test_bit(qcode1, kbd->keys) || test_bit(qcode2, kbd->keys)) {
++    if (test_bit(lnx1, kbd->keys) || test_bit(lnx2, kbd->keys)) {
+         set_bit(mod, kbd->mods);
+     } else {
+         clear_bit(mod, kbd->mods);
+@@ -32,14 +33,20 @@ bool qkbd_state_modifier_get(QKbdState *kbd, QKbdModifier mod)
+     return test_bit(mod, kbd->mods);
  }
  
--int qemu_input_key_value_to_scancode(const KeyValue *value, bool down,
--                                     int *codes)
-+int qemu_input_qcode_to_scancode(QKeyCode qcode, bool down, int *codes)
+-bool qkbd_state_key_get(QKbdState *kbd, QKeyCode qcode)
++bool qkbd_state_key_get(QKbdState *kbd, unsigned int lnx)
  {
--    int keycode = qemu_input_key_value_to_number(value);
-+    int keycode = qcode < qemu_input_map_qcode_to_qnum_len ?
-+                  qemu_input_map_qcode_to_qnum[qcode] : 0;
-     int count = 0;
+-    return test_bit(qcode, kbd->keys);
++    return lnx < KEY_CNT && test_bit(lnx, kbd->keys);
+ }
  
--    if (value->type == KEY_VALUE_KIND_QCODE &&
--        value->u.qcode.data == Q_KEY_CODE_PAUSE) {
-+    if (qcode == Q_KEY_CODE_PAUSE) {
-         /* specific case */
-         int v = down ? 0 : 0x80;
-         codes[count++] = 0xe1;
-diff --git a/ui/input.c b/ui/input.c
-index 97c473f40a2..9232dd7fdae 100644
---- a/ui/input.c
-+++ b/ui/input.c
-@@ -180,8 +180,7 @@ void qmp_input_send_event(const char *device,
-                 g_assert_not_reached();
-             }
- 
--            evt.key.key.type = KEY_VALUE_KIND_QCODE;
--            evt.key.key.u.qcode.data = code;
-+            evt.key.key = code;
-             evt.key.down = qapi->u.key.data->down;
-             break;
-         }
-@@ -215,7 +214,7 @@ void qmp_input_send_event(const char *device,
- static void qemu_input_event_trace(QemuConsole *src, QemuInputEvent *evt)
+-void qkbd_state_key_event(QKbdState *kbd, QKeyCode qcode, bool down)
++void qkbd_state_key_event(QKbdState *kbd, unsigned int lnx, bool down)
  {
-     const char *name;
--    int qcode, idx = -1;
-+    int idx = -1;
-     QemuInputKeyEvent *key;
-     InputBtnEvent *btn;
-     InputMoveEvent *move;
-@@ -227,21 +226,8 @@ static void qemu_input_event_trace(QemuConsole *src, QemuInputEvent *evt)
-     switch (evt->type) {
-     case INPUT_EVENT_KIND_KEY:
-         key = &evt->key;
--        switch (evt->key.key.type) {
--        case KEY_VALUE_KIND_NUMBER:
--            qcode = qemu_input_key_number_to_qcode(key->key.u.number.data);
--            name = QKeyCode_str(qcode);
--            trace_input_event_key_number(idx, key->key.u.number.data,
--                                         name, key->down);
--            break;
--        case KEY_VALUE_KIND_QCODE:
--            name = QKeyCode_str(key->key.u.qcode.data);
--            trace_input_event_key_qcode(idx, name, key->down);
--            break;
--        case KEY_VALUE_KIND__MAX:
--            /* keep gcc happy */
--            break;
--        }
-+        name = QKeyCode_str(key->key);
-+        trace_input_event_key_qcode(idx, name, key->down);
+-    bool state = test_bit(qcode, kbd->keys);
++    bool state;
++
++    if (lnx >= KEY_CNT) {
++        return;
++    }
++
++    state = test_bit(lnx, kbd->keys);
+ 
+     if (down == false  /* got key-up event   */ &&
+         state == false /* key is not pressed */) {
+@@ -59,35 +66,35 @@ void qkbd_state_key_event(QKbdState *kbd, QKeyCode qcode, bool down)
+ 
+     /* update key and modifier state */
+     if (down) {
+-        set_bit(qcode, kbd->keys);
++        set_bit(lnx, kbd->keys);
+     } else {
+-        clear_bit(qcode, kbd->keys);
++        clear_bit(lnx, kbd->keys);
+     }
+-    switch (qcode) {
+-    case Q_KEY_CODE_SHIFT:
+-    case Q_KEY_CODE_SHIFT_R:
+-        qkbd_state_modifier_update(kbd, Q_KEY_CODE_SHIFT, Q_KEY_CODE_SHIFT_R,
++    switch (lnx) {
++    case KEY_LEFTSHIFT:
++    case KEY_RIGHTSHIFT:
++        qkbd_state_modifier_update(kbd, KEY_LEFTSHIFT, KEY_RIGHTSHIFT,
+                                    QKBD_MOD_SHIFT);
          break;
-     case INPUT_EVENT_KIND_BTN:
-         btn = &evt->btn;
-@@ -357,12 +343,6 @@ void qemu_input_event_send_impl(QemuConsole *src, QemuInputEvent *evt)
+-    case Q_KEY_CODE_CTRL:
+-    case Q_KEY_CODE_CTRL_R:
+-        qkbd_state_modifier_update(kbd, Q_KEY_CODE_CTRL, Q_KEY_CODE_CTRL_R,
++    case KEY_LEFTCTRL:
++    case KEY_RIGHTCTRL:
++        qkbd_state_modifier_update(kbd, KEY_LEFTCTRL, KEY_RIGHTCTRL,
+                                    QKBD_MOD_CTRL);
+         break;
+-    case Q_KEY_CODE_ALT:
+-        qkbd_state_modifier_update(kbd, Q_KEY_CODE_ALT, Q_KEY_CODE_ALT,
++    case KEY_LEFTALT:
++        qkbd_state_modifier_update(kbd, KEY_LEFTALT, KEY_LEFTALT,
+                                    QKBD_MOD_ALT);
+         break;
+-    case Q_KEY_CODE_ALT_R:
+-        qkbd_state_modifier_update(kbd, Q_KEY_CODE_ALT_R, Q_KEY_CODE_ALT_R,
++    case KEY_RIGHTALT:
++        qkbd_state_modifier_update(kbd, KEY_RIGHTALT, KEY_RIGHTALT,
+                                    QKBD_MOD_ALTGR);
+         break;
+-    case Q_KEY_CODE_CAPS_LOCK:
++    case KEY_CAPSLOCK:
+         if (down) {
+             change_bit(QKBD_MOD_CAPSLOCK, kbd->mods);
+         }
+         break;
+-    case Q_KEY_CODE_NUM_LOCK:
++    case KEY_NUMLOCK:
+         if (down) {
+             change_bit(QKBD_MOD_NUMLOCK, kbd->mods);
+         }
+@@ -99,7 +106,7 @@ void qkbd_state_key_event(QKbdState *kbd, QKeyCode qcode, bool down)
  
- void qemu_input_event_send(QemuConsole *src, QemuInputEvent *evt)
+     /* send to guest */
+     if (qemu_console_is_graphic(kbd->con)) {
+-        qemu_input_event_send_key_qcode(kbd->con, qcode, down);
++        qemu_input_event_send_key_linux(kbd->con, lnx, down);
+         if (kbd->key_delay_ms) {
+             qemu_input_event_send_key_delay(kbd->key_delay_ms);
+         }
+@@ -108,11 +115,11 @@ void qkbd_state_key_event(QKbdState *kbd, QKeyCode qcode, bool down)
+ 
+ void qkbd_state_lift_all_keys(QKbdState *kbd)
  {
--    /* Expect all parts of QEMU to send events with QCodes exclusively.
--     * Key numbers are only supported as end-user input via QMP */
--    assert(!(evt->type == INPUT_EVENT_KIND_KEY &&
--             evt->key.key.type == KEY_VALUE_KIND_NUMBER));
--
--
-     /*
-      * 'sysrq' was mistakenly added to hack around the fact that
-      * the ps2 driver was not generating correct scancodes sequences
-@@ -372,8 +352,8 @@ void qemu_input_event_send(QemuConsole *src, QemuInputEvent *evt)
-      * need to deal with this mistake
-      */
-     if (evt->type == INPUT_EVENT_KIND_KEY &&
--        evt->key.key.u.qcode.data == Q_KEY_CODE_SYSRQ) {
--        evt->key.key.u.qcode.data = Q_KEY_CODE_PRINT;
-+        evt->key.key == Q_KEY_CODE_SYSRQ) {
-+        evt->key.key = Q_KEY_CODE_PRINT;
+-    int qcode;
++    unsigned int lnx;
+ 
+-    for (qcode = 0; qcode < Q_KEY_CODE__MAX; qcode++) {
+-        if (test_bit(qcode, kbd->keys)) {
+-            qkbd_state_key_event(kbd, qcode, false);
++    for (lnx = 0; lnx < KEY_CNT; lnx++) {
++        if (test_bit(lnx, kbd->keys)) {
++            qkbd_state_key_event(kbd, lnx, false);
+         }
+     }
+ }
+diff --git a/ui/keymaps.c b/ui/keymaps.c
+index 6822c097be7..a448efab320 100644
+--- a/ui/keymaps.c
++++ b/ui/keymaps.c
+@@ -257,7 +257,8 @@ int keysym2scancode(kbd_layout_t *k, int keysym,
+         for (i = 0; i < keysym2code->count; i++) {
+             QKeyCode qcode = qemu_input_key_number_to_qcode
+                 (keysym2code->keycodes[i]);
+-            if (kbd && qkbd_state_key_get(kbd, qcode)) {
++            unsigned int lnx = qemu_input_map_qcode_to_linux[qcode];
++            if (kbd && qkbd_state_key_get(kbd, lnx)) {
+                 return keysym2code->keycodes[i];
+             }
+         }
+diff --git a/ui/sdl2-input.c b/ui/sdl2-input.c
+index 2286df4223d..fdbdc427dc9 100644
+--- a/ui/sdl2-input.c
++++ b/ui/sdl2-input.c
+@@ -41,7 +41,8 @@ void sdl2_process_key(struct sdl2_console *scon,
+     qcode = qemu_input_map_usb_to_qcode[ev->keysym.scancode];
+     trace_sdl2_process_key(ev->keysym.scancode, qcode,
+                            ev->type == SDL_KEYDOWN ? "down" : "up");
+-    qkbd_state_key_event(scon->kbd, qcode, ev->type == SDL_KEYDOWN);
++    qkbd_state_key_event(scon->kbd, qemu_input_map_qcode_to_linux[qcode],
++                         ev->type == SDL_KEYDOWN);
+ 
+     if (QEMU_IS_TEXT_CONSOLE(con)) {
+         QemuTextConsole *s = QEMU_TEXT_CONSOLE(con);
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 2159bb35d54..0a8c5ab0d2d 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -1799,8 +1799,11 @@ static void pointer_event(VncState *vs, int button_mask, int x, int y)
+ 
+ static void press_key(VncState *vs, QKeyCode qcode)
+ {
+-    qkbd_state_key_event(vs->vd->kbd, qcode, true);
+-    qkbd_state_key_event(vs->vd->kbd, qcode, false);
++    qkbd_state_key_event(vs->vd->kbd, qemu_input_map_qcode_to_linux[qcode],
++                         true);
++
++    qkbd_state_key_event(vs->vd->kbd, qemu_input_map_qcode_to_linux[qcode],
++                         false);
+ }
+ 
+ static void vnc_led_state_change(VncState *vs)
+@@ -1907,7 +1910,8 @@ static void do_key_event(VncState *vs, int down, int keycode, int sym)
+         }
      }
  
-     if (!runstate_is_running() && !runstate_check(RUN_STATE_SUSPENDED)) {
-@@ -414,7 +394,7 @@ void qemu_input_event_send_key(QemuConsole *src, KeyValue *key, bool down)
-     QemuInputEvent evt = {
-         .type = INPUT_EVENT_KIND_KEY,
-         .key = {
--            .key = *key,
-+            .key = qemu_input_key_value_to_qcode(key),
-             .down = down,
-         },
-     };
-diff --git a/ui/trace-events b/ui/trace-events
-index c1ea56874ee..1c0d96a92c3 100644
---- a/ui/trace-events
-+++ b/ui/trace-events
-@@ -127,7 +127,6 @@ vnc_tight_zlib_init(void *state, int stream_id, const void *opaque) "VNC tight z
+-    qkbd_state_key_event(vs->vd->kbd, qcode, down);
++    qkbd_state_key_event(vs->vd->kbd, qemu_input_map_qcode_to_linux[qcode],
++                         down);
+     if (QEMU_IS_TEXT_CONSOLE(vs->vd->dcl.con)) {
+         QemuTextConsole *con = QEMU_TEXT_CONSOLE(vs->vd->dcl.con);
+         bool numlock = qkbd_state_modifier_get(vs->vd->kbd, QKBD_MOD_NUMLOCK);
+diff --git a/ui/cocoa.m b/ui/cocoa.m
+index 98394cdc507..ee53e7c72ed 100644
+--- a/ui/cocoa.m
++++ b/ui/cocoa.m
+@@ -767,7 +767,8 @@ - (void) setFullGrab:(id)sender
+ }
  
+ - (void) toggleKey: (int)keycode {
+-    qkbd_state_key_event(kbd, keycode, !qkbd_state_key_get(kbd, keycode));
++    unsigned int lnx = qemu_input_map_qcode_to_linux[keycode];
++    qkbd_state_key_event(kbd, lnx, !qkbd_state_key_get(kbd, lnx));
+ }
  
- # input.c
--input_event_key_number(int conidx, int number, const char *qcode, bool down) "con %d, key number 0x%x [%s], down %d"
- input_event_key_qcode(int conidx, const char *qcode, bool down) "con %d, key qcode %s, down %d"
- input_event_btn(int conidx, const char *btn, bool down) "con %d, button %s, down %d"
- input_event_rel(int conidx, const char *axis, int value) "con %d, axis %s, value %d"
+ // Does the work of sending input to the monitor
+@@ -889,34 +890,62 @@ - (bool) handleEventLocked:(NSEvent *)event
+      */
+     if (!!(modifiers & NSEventModifierFlagCapsLock) !=
+         qkbd_state_modifier_get(kbd, QKBD_MOD_CAPSLOCK)) {
+-        qkbd_state_key_event(kbd, Q_KEY_CODE_CAPS_LOCK, true);
+-        qkbd_state_key_event(kbd, Q_KEY_CODE_CAPS_LOCK, false);
++        qkbd_state_key_event(kbd,
++                             qemu_input_map_qcode_to_linux[Q_KEY_CODE_CAPS_LOCK],
++                             true);
++        qkbd_state_key_event(kbd,
++                             qemu_input_map_qcode_to_linux[Q_KEY_CODE_CAPS_LOCK],
++                             false);
+     }
+ 
+     if (!(modifiers & NSEventModifierFlagShift)) {
+-        qkbd_state_key_event(kbd, Q_KEY_CODE_SHIFT, false);
+-        qkbd_state_key_event(kbd, Q_KEY_CODE_SHIFT_R, false);
++        qkbd_state_key_event(kbd,
++                             qemu_input_map_qcode_to_linux[Q_KEY_CODE_SHIFT],
++                             false);
++        qkbd_state_key_event(kbd,
++                             qemu_input_map_qcode_to_linux[Q_KEY_CODE_SHIFT_R],
++                             false);
+     }
+     if (!(modifiers & NSEventModifierFlagControl)) {
+-        qkbd_state_key_event(kbd, Q_KEY_CODE_CTRL, false);
+-        qkbd_state_key_event(kbd, Q_KEY_CODE_CTRL_R, false);
++        qkbd_state_key_event(kbd,
++                             qemu_input_map_qcode_to_linux[Q_KEY_CODE_CTRL],
++                             false);
++        qkbd_state_key_event(kbd,
++                             qemu_input_map_qcode_to_linux[Q_KEY_CODE_CTRL_R],
++                             false);
+     }
+     if (!(modifiers & NSEventModifierFlagOption)) {
+         if (swap_opt_cmd) {
+-            qkbd_state_key_event(kbd, Q_KEY_CODE_META_L, false);
+-            qkbd_state_key_event(kbd, Q_KEY_CODE_META_R, false);
++            qkbd_state_key_event(kbd,
++                                 qemu_input_map_qcode_to_linux[Q_KEY_CODE_META_L],
++                                 false);
++            qkbd_state_key_event(kbd,
++                                 qemu_input_map_qcode_to_linux[Q_KEY_CODE_META_R],
++                                 false);
+         } else {
+-            qkbd_state_key_event(kbd, Q_KEY_CODE_ALT, false);
+-            qkbd_state_key_event(kbd, Q_KEY_CODE_ALT_R, false);
++            qkbd_state_key_event(kbd,
++                                 qemu_input_map_qcode_to_linux[Q_KEY_CODE_ALT],
++                                 false);
++            qkbd_state_key_event(kbd,
++                                 qemu_input_map_qcode_to_linux[Q_KEY_CODE_ALT_R],
++                                 false);
+         }
+     }
+     if (!(modifiers & NSEventModifierFlagCommand)) {
+         if (swap_opt_cmd) {
+-            qkbd_state_key_event(kbd, Q_KEY_CODE_ALT, false);
+-            qkbd_state_key_event(kbd, Q_KEY_CODE_ALT_R, false);
++            qkbd_state_key_event(kbd,
++                                 qemu_input_map_qcode_to_linux[Q_KEY_CODE_ALT],
++                                 false);
++            qkbd_state_key_event(kbd,
++                                 qemu_input_map_qcode_to_linux[Q_KEY_CODE_ALT_R],
++                                 false);
+         } else {
+-            qkbd_state_key_event(kbd, Q_KEY_CODE_META_L, false);
+-            qkbd_state_key_event(kbd, Q_KEY_CODE_META_R, false);
++            qkbd_state_key_event(kbd,
++                                 qemu_input_map_qcode_to_linux[Q_KEY_CODE_META_L],
++                                 false);
++            qkbd_state_key_event(kbd,
++                                 qemu_input_map_qcode_to_linux[Q_KEY_CODE_META_R],
++                                 false);
+         }
+     }
+ 
+@@ -1023,7 +1052,9 @@ - (bool) handleEventLocked:(NSEvent *)event
+             }
+ 
+             if (qemu_console_is_graphic(dcl.con)) {
+-                qkbd_state_key_event(kbd, keycode, true);
++                qkbd_state_key_event(kbd,
++                                     qemu_input_map_qcode_to_linux[keycode],
++                                     true);
+             } else {
+                 [self handleMonitorInput: event];
+             }
+@@ -1038,7 +1069,9 @@ - (bool) handleEventLocked:(NSEvent *)event
+             }
+ 
+             if (qemu_console_is_graphic(dcl.con)) {
+-                qkbd_state_key_event(kbd, keycode, false);
++                qkbd_state_key_event(kbd,
++                                     qemu_input_map_qcode_to_linux[keycode],
++                                     false);
+             }
+             return true;
+         case NSEventTypeScrollWheel:
 -- 
 2.54.0
 
