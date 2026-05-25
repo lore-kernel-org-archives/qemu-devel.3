@@ -4,104 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50B1ACD5BC9
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 17:39:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B621ACD5BB1
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 17:45:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRZGd-0003Xa-Es; Mon, 25 May 2026 13:39:07 -0400
+	id 1wRZLg-0004OE-Oc; Mon, 25 May 2026 13:44:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wRZGa-0003XC-SZ
- for qemu-devel@nongnu.org; Mon, 25 May 2026 13:39:04 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wRZGY-0001PY-8v
- for qemu-devel@nongnu.org; Mon, 25 May 2026 13:39:04 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-36aa4ae1f11so1124399a91.1
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 10:39:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779730740; cv=none;
- d=google.com; s=arc-20240605;
- b=cA5QWueUvQqY/FRSgODKf0Lt4NIirHDGGlCocjKiyJLsceePn8oj7Y3h8VxEo02o5n
- f3TNb5cqNQFSb2z+YhqYdYG0Mcs8RrYnM1eYavP+K82CJyBNJax1yEO2iGWeuwADkXjX
- fEbYl5pAw5STZAOd4pzLKVoWgQeA7F9zrvz1BpjL8Dzxu4swfk2I4n31Nds6ONyMw/ZA
- oKt6cIFk+Zl+YB6XWVn0QbmfCF8bGkORrSTY2hUnD+f6REITzmIOBzT+quUfkOI1bQ6u
- wMjoTLGZo+loxXbarN2MnGyL7JB2YTkfDVioh9TROmDbusp+v1oFYC5WpaZXoi2Lv0js
- cnVg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=IAKYL26wcUgr+pmddtPtFRBhdgsROCUt334piaPIZww=;
- fh=II3zEG97Ou1nLpLRMV5vTgO13i998QrAniEuWozIk4o=;
- b=BgbDqxz+L/bCUWyHS6jSbS/j2i09c0sAEvIGw+247T2p+B1j4eojf70L/WZPxtC569
- GXRZD1qGIP+OiNatqFyUkxwHLU3h1rhYDfmWwh+UetUvK7Y9kfTo/1ULM/T/LnsvTCtU
- EUANhJkYOql+qj3VWrsRxp04TpgvjCEMzg53pdTCnyxTAukedsCB00SMeqHrqs7kNmqM
- 9ee0xynvTBQXl+n3fS9S1vGTUZa7aY/AsXMse2RoAVosW2QUC9DDGajFe1ht7RBaCoz5
- X+D09hs2IRlBPV/P6fRTh2iX/5pvKkgf13/6IbTgm6goYdSpbFOUumJvTixHgEBdG9oa
- 79/w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779730740; x=1780335540;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=IAKYL26wcUgr+pmddtPtFRBhdgsROCUt334piaPIZww=;
- b=fD6CRaPRlQGaWMnog+1upYZcmlgLNCAvBOIwNoe76gtJ37XyxS9v/4d4AytlTxK9nA
- nNFk299mVXfdMyXQ4aN7wviZwCagj2Ewx7Fp1vRHtsJS/zECFwkZOOeqjbWTLshqrHo/
- ZfixekzsLYmGYCVTDLnFm3nntRSPLJqAncU9ak069bEa+sPhuSutLARS1TrsBNyZXwgg
- JZRBmH9SCH9ioJsjX/Q4+RBsEaV4RvOSsaMS6RjjVoibO9iZJJZ9TPcjwhWZjym7k3Yj
- t5YarejGX6nAB2eG7cSiYkEoTLMZlnyM7xReCaqAqWcVlqsMfreWocRajSrV0lB75mcS
- Yjrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779730740; x=1780335540;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IAKYL26wcUgr+pmddtPtFRBhdgsROCUt334piaPIZww=;
- b=XVVDc6d5iCVh+PG+wVEsjdJl2wQrljIBG/09OHCrT14sFkamjIujVR9Shc3hX7S8HD
- NKEKYEsha56BUzLfUlXweLrqLAazQELRNGUDflU7Xvz1tPzg+3M3D9zE+UaM49jl+Uu2
- BZg4b3THtYl69pAEnHauxn27EPR8yByHt/EDWhI7nOD2C0Imp5iht/mw1qVGlWVSbHn9
- Ws/cKQj/sBg+YzaP29hLLHj/l8qqRyAn/8BXEyK6nYHobSBZUENqmqhpU8EjA/BVfAoK
- kWjuo5Sa7Il4x355GmXusdaZpuTe1+jasLVv0V/MVQNB5DGrI4ifJ/MratgjPfKUNpjv
- i2lQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9GzOtphww8MGpFC56RnnNMAqPRKmaCNVIxHKd4amu+5yRAnnM0v2gY8rqecu4kd9C49Pc3TXbna74u@nongnu.org
-X-Gm-Message-State: AOJu0YxILIdb9mxRvCpfQtKjSUTqgbG51t8eDqhTQsgWRqui6q1xr+r5
- sUC2bU83/oXOEfAdE157auoHcUB3uw4xLurgzMk6/qxh0hZAo10srR2/uuDxuekt2QtOIk7EmYd
- 60MVqoEvGdDtj5Lum2PqcgvdfM2yblWvIXdP0qLQdzD3baK4e4O21SQw=
-X-Gm-Gg: Acq92OFhX3YhA9vnP4pBPFYFDI5UOt9YqQk5qguxLjqkkjXqIWTTcHFRRvmROvoAPXa
- jHS5CvMsqOA+zpxeqyWLCf8Y/ss6La5Fik+fYcUwg33IZCWviUAnfz7VefKAkB6OR8126tNMI7Z
- RnuTYRM+syDm91JKb6nirAaSDdXqe8DNYzwlbnYf89BaO+eLrNZt/YkdIhu4toCGzNEBbatBU33
- BFk+amlMHruTjwpCGyCfeoVHXyBwPuusr4bzrYYVGrY6qmXxnmSlwHKzChFkncjW8tWNGi/FZRB
- k33zEyrhOCTJrw3JbJvBDiHCPWi3ACN+DThCrJtMO+mraUQo
-X-Received: by 2002:a17:903:17cc:b0:2bd:4b8c:fd30 with SMTP id
- d9443c01a7336-2beb085c6ebmr167973815ad.41.1779730740200; Mon, 25 May 2026
- 10:39:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wRZL0-0004MQ-Dp; Mon, 25 May 2026 13:43:44 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wRZKv-0003DB-0n; Mon, 25 May 2026 13:43:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1779731005; bh=8h8O4rS+nJV4Ap42No+yCeDiobIHVyou6BuXvIxCkS8=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=eDyxlYtlGOTTFWewU4ml7/n4cab8Pa2Uhx6yR6pv4XPXHSQjyxF9zJfZqH/lSFm08
+ cVMjxC5NNan8UuDhfHXRZp/i3a0OwlDGMVuVAn93ZP7x4GT1G/Xzscy82bbnp5srSv
+ tCy1g6Mju0Lp3Jq/a1Rce8pmeE7Rkk5duA75WwmcP3wfxjNmv7GqRHqdhXTBs8o2kl
+ XtkZa0GmlKbSB9hZbRptInzhEzcxHGiaE85C1IbGc0ppp5LbUhRigDYfqSRTnC1S7r
+ KZRV3/OJnA/qdsrcpTPkD28V4SKJO5vZ0gWQ80u00TdCCgU6+pWwRtM6CbG5egIwMZ
+ AXPuzqwZpkLIA==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 915E51B0748;
+ Mon, 25 May 2026 20:43:25 +0300 (MSK)
+Message-ID: <76440da5-9f2a-4536-babc-082359812713@tls.msk.ru>
+Date: Mon, 25 May 2026 20:43:27 +0300
 MIME-Version: 1.0
-References: <CAJSP0QULyy5C0YEaxz2ChNy3_zfc5VwaMhB18R=yHDgnhBYo9w@mail.gmail.com>
- <CAJSP0QWt8Q5+yY1F6--XyvcAV3afg3msAcO6vaNDeWS=B9Oqag@mail.gmail.com>
- <CANCZdfpbDU+jCr6+Lj-ZV7h5H_ByHf=VJordfQ8OcH3+JsmJ4Q@mail.gmail.com>
- <CAJSP0QX=Uu0cy6z8oCsQK_EKJ8LUW1v3Tsd09JoAU=Py4MkRrw@mail.gmail.com>
-In-Reply-To: <CAJSP0QX=Uu0cy6z8oCsQK_EKJ8LUW1v3Tsd09JoAU=Py4MkRrw@mail.gmail.com>
-From: Warner Losh <imp@bsdimp.com>
-Date: Mon, 25 May 2026 11:38:49 -0600
-X-Gm-Features: AVHnY4KejkLuqB7Vsagv0SmNk46695P37BFV93D0eLn_Kf7DM-o5o0v4Mvd6MRs
-Message-ID: <CANCZdfrfiVp=BiCEUzYRFFeZBpUoODBwL5b-QQgbA21Ev76noA@mail.gmail.com>
-Subject: Re: FreeBSD CI after Cirrus shuts down?
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Li-Wen Hsu <lwhsu@freebsd.org>, Alex Bennee <alex.bennee@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="00000000000090d61f0652a7dac9"
-Received-SPF: none client-ip=2607:f8b0:4864:20::1034;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1034.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/48] riscv-to-apply queue
+To: alistair23@gmail.com, qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20260522000324.23255-1-alistair.francis@wdc.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260522000324.23255-1-alistair.francis@wdc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,155 +110,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000090d61f0652a7dac9
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 22.05.2026 03:02, alistair23@gmail.com wrote:
 
-On Mon, May 25, 2026 at 10:41=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.co=
-m> wrote:
+> RISC-V PR for 11.1.
+> 
+> * Remove spike as default machine
+> * Deprecate the shakti_c machine
+> * Set MISA.[C|X] based on the selected extensions
+> * Update Maintainers for OpenSBI Firmware
+> * Update OpenSBI to v1.8.1
+> * Avoid RISCVCPU copy in PMU FDT setup
+> * A collection of specification compliance improvements
+> * Fix Svnapot 64KB pages
+> * Handle source overlap of vector widening reduction instructions
+> * Check interrupt in SiFive UART after txctrl register is written
+> * Fix medeleg[11] read-only zero bit for M-mode ECALL
+> * Fix tail handling for vmv.s.x and vfmv.s.f
+> * Update the local AIA interrupt mask
+> * Add KVM support for Zicbop and BFloat16 extensions
+> * Fix the IOMMU FSC SV32 capability check
+> * Avoid caching PCI device IDs in the IOMMU
+> * Implement Microchip mpfs ioscb PLLs and sysreg clock dividers
+> * Remove the internal CPU riscv_cpu_* arrays
+> * Fix IOCOUNTINH.CY toggle detection
+> * Fix the read of pmpaddr(0-63) CSRs
+> * Make hpmcounterh return the upper 32-bits
+> * Minor fixes and enhancements of RISC-V AIA devices
+> * Re-process IOMMU command queue after clearing CMD_ILL
+> 
+> ----------------------------------------------------------------
+> Abhigyan Kumar (1):
+>        target/riscv: Fix medeleg[11] read-only zero bit for M-mode ECALL
+> 
+> Alistair Francis (4):
+>        target/riscv: Remove spike as default machine
+>        target/riscv: Deprecate the shakti_c machine
+>        MAINTAINERS: Maintain OpenSBI Firmware
+>        target/riscv: Update the local interrupt mask
+> 
+> Andrew Jones (1):
+>        hw/riscv/riscv-iommu: Fix Svnapot 64KB pages
+> 
+> Anton Blanchard (1):
+>        target/riscv: rvv: Handle source overlap of vector widening reduction instructions
+> 
+> Chengbo Gao (1):
+>        hw/riscv/riscv-iommu: Avoid caching PCI device IDs
+> 
+> Daniel Henrique Barboza (16):
+>        roms/opensbi: Update to v1.8.1
+>        target/riscv/cpu.c: add xlrbr isa_edata_arr[] entry
+>        target/riscv/cpu.c: fix smctr/ssctr isa_edata_arr[] order
+>        target/riscv: make riscv-qmp-cmds use isa_data_arr[]
+>        target/riscv/tcg: treat all exts equally in cpu_disable_priv_spec_isa_exts
+>        target/riscv/tcg: use only isa_edata_arr[] in cpu_cfg_ext_get_name()
+>        target/riscv/cpu.c: remove riscv_cpu_enable_named_feat()
+>        target/riscv: remove riscv_cpu_named_features[]
+>        target/riscv/tcg: use isa_edata_arr[] in riscv_cpu_update_misa_x()
+>        target/riscv/kvm: use isa_edata_arr[] for unavailable props
+>        target/riscv/tcg: use isa_edata_arr[] to enable max exts
+>        target/riscv/tcg: use cfg_offset as cpu_set_multi_ext cb opaque
+>        target/riscv: do not set defaults in cpu prop callback
+>        target/riscv/tcg: use isa_edata_arr[] to create user props
+>        target/riscv/cpu: remove riscv_cpu_* arrays
+>        target/riscv/csr.c: fix read of pmpaddr(0-63) CSRs
+> 
+> Fangyu Yu (1):
+>        hw/riscv/riscv-iommu: Fix IOCOUNTINH.CY toggle detection
+> 
+> Frank Chang (3):
+>        target/riscv: Update MISA.C for Zc* extensions
+>        target/riscv: Update MISA.X for non-standard extensions
+>        hw/char: Check interrupt after txctrl register is written
+> 
+> Guenter Roeck (1):
+>        hw: misc: Implement Microchip mpfs ioscb PLLs and sysreg clock dividers
+> 
+> Jay Chang (1):
+>        hw/riscv: riscv-iommu: Re-process command queue after clearing CMD_ILL
+> 
+> Jim Shu (4):
+>        hw/intc: riscv_aplic: Fix level trigger IRQ in direct delivery mode
+>        hw/intc: riscv_aplic: Add reset API to APLIC
+>        hw/intc: riscv_imsic: Add reset API to IMSIC
+>        hw/intc: riscv_aplic: add trace events of APLIC read/write function
+> 
+> Mohamed Ayman (1):
+>        riscv: virt: avoid RISCVCPU copy in PMU FDT setup
+> 
+> Portia Stephens (1):
+>        target/riscv: Make hpmcounterh return the upper 32-bits
+> 
+> Zishun Yi (9):
+>        target/riscv: Allow mseccfg access based on ext_zicfilp
+>        target/riscv: add Zvknha as an implied extension for Zvknhb
+>        target/riscv: Remove unconditional MENVCFG_CDE from mask
+>        target/riscv: Fix missing CDE check for scountinhibit
+>        target/riscv/pmp: Fix integer overflow in TOR and NA4 address computation
+>        target/riscv: Add mseccfg to VMStateDescription
+>        target/riscv: clear mseccfg on reset for all dependent extensions
+>        hw/riscv/riscv-iommu: fix FSC SV32 capability check
+>        hw/riscv/virt-acpi-build: Fix off-by-one error in RIMT ID mapping
+> 
+> Zongmin Zhou (2):
+>        target/riscv/kvm: add KVM support for Zicbop extension
+>        target/riscv/kvm: Add BFloat16 extensions support
+> 
+> chen.zhongyao@zte.com.cn (1):
+>        target/riscv: Fix tail handling for vmv.s.x and vfmv.s.f
 
->
->
-> On Mon, May 25, 2026, 11:12 Warner Losh <imp@bsdimp.com> wrote:
->
->>
->>
->> On Mon, May 25, 2026, 8:36=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.co=
-m> wrote:
->>
->>> On Mon, May 25, 2026 at 10:01=E2=80=AFAM Stefan Hajnoczi <stefanha@gmai=
-l.com>
->>> wrote:
->>> > If you have a FreeBSD build host available, you could install
->>> > gitlab-runner on it and I can configure GitLab CI to send QEMU FreeBS=
-D
->>> > build jobs to your runner.
->>>
->>> QEMU has an Intel x86_64 KVM VM with 1 vCPU, 4 GB RAM, and 60 GB of
->>> disk space available.
->>>
->>> The following images are available:
->>> - FreeBSD 14.1
->>> - FreeBSD 14.2 (ufs)
->>> - FreeBSD 14.2 (zfs)
->>>
->>> I can provision the machine for you via remote console access and add
->>> your ssh key. After initially giving you access, you would become the
->>> maintainer of the VM and responsible for keeping it updated and
->>> connected to QEMU's GitLab CI.
->>>
->>> If you would like to do this, please send me your ssh public key and
->>> choice of FreeBSD image from the list above.
->>>
->>
->> Where does that list come from? Those are older versions of FreeBSD by
->> now...
->>
->
-> These images are available in OSUOSL's OpenStack instance where the VM is
-> located.
->
-> If you can upgrade in place from FreeBSD 14 to something newer without
-> requiring console access, then that might be the simplest solution.
->
-> Otherwise I can upload a custom image (for QEMU's i440fx machine type wit=
-h
-> virtio devices) if you send me a URL to the image.
->
+It looks like this pull request includes quite a number of patches which
+are qemu-stable material, some small and/or unimportant, some more
+visible.  Examples:
 
-If this is a EFI boot, then there's no problem upgrading the ZFS image in
-place: I just make a new boot environment (or enable it from scratch). This
-doesn't need console access and if I totally mess it up, I can start over
-from the base image :). But I can script it.
+  target/riscv: Fix medeleg[11] read-only zero bit for M-mode ECALL
+  target/riscv: Update the local interrupt mask
 
-I may have to get in touch with the OSUOSL folks to see what it would take
-to update their image collection. It would be good for me in the long run.
-FreeBSD is likely well known enough of a name we could get some resources
-from them.
+but knowing nothing about riscv, I don't have expertise to choose which
+of them to pick up.  Should we pick sometihng to currently active stable
+branches, which are 10.0 (lts), 10.2 and 11.0?
 
-I've not setup a gitlab runner, but I see we have a gitlab runner port. Is
-there a current setup with FreeBSD as a gitlab runner? Ideally, we'd be
-running -current that we update from time to time and then do the builds
-using the OCI containers FreeBSD now produces for 14 and 15. I even have
-Containerfile files for 14 and 15 I put together to compile-test bsd-user
-if we wanted to expand the gitlab stuff. I've wanted to do more than
-compile testing + basic booting for a while now... I also have scripts that
-create bootable images (for system testing) which coincidentally have an
-itermediate directory that we could copy the qemu-*-static files into and
-use a a jail for bsd-user testing.
+Thanks,
 
-Warner
-
---00000000000090d61f0652a7dac9
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, May 25,=
- 2026 at 10:41=E2=80=AFAM Stefan Hajnoczi &lt;<a href=3D"mailto:stefanha@gm=
-ail.com">stefanha@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gm=
-ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
-204,204);padding-left:1ex"><div dir=3D"auto"><br><br><div class=3D"gmail_qu=
-ote" dir=3D"auto"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, May 25, 202=
-6, 11:12 Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" target=3D"_blank=
-">imp@bsdimp.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" =
-style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
-dding-left:1ex"><div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><=
-div dir=3D"ltr" class=3D"gmail_attr">On Mon, May 25, 2026, 8:36=E2=80=AFAM =
-Stefan Hajnoczi &lt;<a href=3D"mailto:stefanha@gmail.com" rel=3D"noreferrer=
-" target=3D"_blank">stefanha@gmail.com</a>&gt; wrote:<br></div><blockquote =
-class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
-id rgb(204,204,204);padding-left:1ex">On Mon, May 25, 2026 at 10:01=E2=80=
-=AFAM Stefan Hajnoczi &lt;<a href=3D"mailto:stefanha@gmail.com" rel=3D"nore=
-ferrer noreferrer" target=3D"_blank">stefanha@gmail.com</a>&gt; wrote:<br>
-&gt; If you have a FreeBSD build host available, you could install<br>
-&gt; gitlab-runner on it and I can configure GitLab CI to send QEMU FreeBSD=
-<br>
-&gt; build jobs to your runner.<br>
-<br>
-QEMU has an Intel x86_64 KVM VM with 1 vCPU, 4 GB RAM, and 60 GB of<br>
-disk space available.<br>
-<br>
-The following images are available:<br>
-- FreeBSD 14.1<br>
-- FreeBSD 14.2 (ufs)<br>
-- FreeBSD 14.2 (zfs)<br>
-<br>
-I can provision the machine for you via remote console access and add<br>
-your ssh key. After initially giving you access, you would become the<br>
-maintainer of the VM and responsible for keeping it updated and<br>
-connected to QEMU&#39;s GitLab CI.<br>
-<br>
-If you would like to do this, please send me your ssh public key and<br>
-choice of FreeBSD image from the list above.<br></blockquote></div></div><d=
-iv dir=3D"auto"><br></div><div dir=3D"auto">Where does that list come from?=
- Those are older versions of FreeBSD by now...</div></div></blockquote></di=
-v><div dir=3D"auto"><br></div><div dir=3D"auto">These images are available =
-in OSUOSL&#39;s OpenStack instance where the VM is located.=C2=A0</div><div=
- dir=3D"auto"><br></div><div dir=3D"auto">If you can upgrade in place from =
-FreeBSD 14 to something newer without requiring console access, then that m=
-ight be the simplest solution.=C2=A0</div><div dir=3D"auto"><br></div><div =
-dir=3D"auto">Otherwise I can upload a custom image (for QEMU&#39;s i440fx m=
-achine type with virtio devices) if you send me a URL to the image.</div></=
-div></blockquote><div><br></div><div>If this is a EFI boot, then there&#39;=
-s no problem upgrading the ZFS image in place: I just make a new boot envir=
-onment (or enable it from scratch). This doesn&#39;t need console access an=
-d if I totally mess it up, I can start over from the base image :). But I c=
-an script it.</div><div><br></div><div>I may have to get in touch with the =
-OSUOSL folks to see what it would take to update their image collection.=C2=
-=A0It would be good for me in the long run. FreeBSD is likely well known en=
-ough of a name we could get some resources from them.</div><div><br></div><=
-div>I&#39;ve not setup a gitlab runner, but I see we have a gitlab runner p=
-ort. Is there a current setup with FreeBSD as a gitlab runner? Ideally, we&=
-#39;d be running -current that we update from time to time and then do the =
-builds using the OCI containers FreeBSD now produces for 14 and 15. I even =
-have Containerfile files for 14 and 15 I put together to compile-test bsd-u=
-ser if we wanted to expand the gitlab stuff. I&#39;ve wanted to do more tha=
-n compile testing=C2=A0+ basic booting for a while now... I also have scrip=
-ts that create bootable images (for system testing) which coincidentally ha=
-ve an itermediate directory that we could copy the qemu-*-static files into=
- and use a a jail for bsd-user testing.</div><div><br></div><div>Warner</di=
-v></div></div>
-
---00000000000090d61f0652a7dac9--
+/mjt
 
