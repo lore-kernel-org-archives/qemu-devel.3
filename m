@@ -4,155 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30146CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 17:10:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CFAACD5BC9
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 17:16:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRYoj-00060L-Ut; Mon, 25 May 2026 13:10:17 -0400
+	id 1wRYu0-00072l-7H; Mon, 25 May 2026 13:15:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <petr.pavlu@suse.com>)
- id 1wRYoe-0005zb-0D
- for qemu-devel@nongnu.org; Mon, 25 May 2026 13:10:13 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wRYty-00072U-PQ
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 13:15:42 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <petr.pavlu@suse.com>)
- id 1wRYob-0004du-7O
- for qemu-devel@nongnu.org; Mon, 25 May 2026 13:10:11 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4903997fcb5so40910545e9.2
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 10:10:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wRYtv-0006eg-It
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 13:15:42 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2be1dd4af34so85994885ad.1
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 10:15:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779729337; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Zsakhqb19XF+V/3857bizVvN677XiqA24+7wbXTLl6sWpoeaxoZ1czr0VRrWYb5pXI
+ GKFPvMHB0dhNMnCAc+S+90ejW5y/0dP6AWrrIDCyzo9c13I/52vHOzdua+YPUonaO+Ll
+ aRVueyUbBEbxUxYVUhh0hHc/dq9xxJQeNhaVDRhqC3UBvL5t+i1gEWh5hxitzV70fDwn
+ jislawuozfjbuMwTrU1UuUWyZUX8J9rv8dO26kGQd+T6FObuyNVNPPSATQh5TDWDbfk8
+ xPrDzPOtjOsOdjM3pUlOend6ubXkpGrBXjzVSSe5FL1/TM1RHn/3aaf1kqBpZnvfR7eI
+ 14Jg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=FHtO+WCEjyic4zAykprbW8LQJBtJn3jvzIRBDvEtCPs=;
+ fh=0MGl+ytFZVvFwhPb9lwgw5FCdKjSz6X/JXXEfYSIH/g=;
+ b=NWDRNVW/9cpjJ5j26/x1z48fKg5K/+2b3oawEMU0Db3wue59LYADDaGOEKJaNHLWAn
+ 2LEEVKugc21zg9IerhsxE4yD6jtbQgTIcEBwgN15kzVBjIudTzDg0b6YhaQNYTRFAYo6
+ fdlpPQM3B9kODYHtoro6Ft1P6APngW8ABXrzqxmNLpYozx7gNDbkghpdT8gadD/sjZH1
+ miq1IPzQ5I39NrxtaL3ag8RhCe4HAtsE2eamcqvgCR/nIDZxm0r/hHY2A7hzHXEz3Y53
+ AhhyZOxFFrskFWOfTkAdwf/A+kBQRKM0UUgl7hk4c+FHoBWE2ozOEzhrYUgKItqn3cqH
+ qI4g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=suse.com; s=google; t=1779729007; x=1780333807; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=izugkSqOYsBmSyQ8jfD9m1SVj73YG14U78pRBc6Lai0=;
- b=a2Fd7dgQddz0iFrd69o7eSRrhMlKBkoJJhTEdg9kJZBzAi7s3YorJ+6GDDbEfVeO5J
- EUpVZHeCs3bPAWo/c2GtPKF6PLYm83ZBj9w28qo4FMKJX0vVn7IBmF+j6F4NehV/SQg3
- c7Vmvod7Fr59dpiKyfnSxLp8Sj9L8P/mD7yIeF9akGG8GHDr/JgehBGeYmqQbcIr9gjL
- wsnTFoOt1jjLkprYkZu0z4Yx4TYimzC+F1sCEgTIDJ7iEB4RrVXhzeZFbMj67v0CYxvp
- xZtMzkx3xeqKvjboVaQPsYU0d6x8HEKYKtQBev76QNqzSjn/gZvY4EJEf3TePJ6QjCQt
- Rsow==
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779729337; x=1780334137;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=FHtO+WCEjyic4zAykprbW8LQJBtJn3jvzIRBDvEtCPs=;
+ b=ruebAvlM99CfSyL+yeFKwKyJXyblPpViFRzAqg1MU0P/vAt7UNmQKX5xs+o9Ld/jjf
+ bSYTsboqY9dpdonMs2Bz+ZEQ1ehfL81FH/TnXqshXOvCqEb4EIPs9jNfM7h1gSvHmA8l
+ 4mtAl82mYvvecRDZTZFrlrMJq1JZGZ6Ajjo82TzpCXr9fj0uiJMtMogT6SUqZuhHgE63
+ WQ8dxzS9MJJZ63RBXPkTJkR+CJnrXd4LhWpsGzBABFFKqlMyGwlSxTmpe5y5HtTgkp9+
+ jAK6ZS4+8jwUpTLjjg2NLgPtlkl+l7NemTDtcdo9ly0gQ+SZqRXg6NsUZUk8IW7KWBRw
+ 1POQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779729007; x=1780333807;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=izugkSqOYsBmSyQ8jfD9m1SVj73YG14U78pRBc6Lai0=;
- b=kN0jwjYf6HyxNW38et653/31Apg8BlspyzrSeRfeZFvdnKfC+oZiVOqMCqNa7uyNNd
- 9qX+dXPP2LeqqW74IBnnBIeEcPjlKJNsNPpZ72D8wQKOmFShPiP+r+/11aVGohqj8+af
- ioFtJlPqWH4jOqeMKyOASOOQ9eKv2j/xGr/hdRa3REuB3ccJiH8L8CTTsvx6sgVazpfa
- dC6ka16zdPa/X/Qjz3nOGjyBhRlZc8UQrpUapXaQ+XqTTN0OEZFWPrURBgFeqyiFQy0U
- xkwbgPFWaP4FUR6gcafYzb6kOViywE+ZlfRnugTiWT0hHPnCbBCB5BOs+Y8/g+aTnOVi
- Y0mQ==
+ d=1e100.net; s=20251104; t=1779729337; x=1780334137;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FHtO+WCEjyic4zAykprbW8LQJBtJn3jvzIRBDvEtCPs=;
+ b=ShB8lY2Lvp71m3emPa7qROGe1jr6lPCB/3oUFBM8dTmA4nCuooYM1DoqszB5/M7soG
+ f/NXF5BhsypBZx56P6XJXNtEZXJ+ZcvS0bJIKGFty18VvZliuWyGykBqVSNHmGQRpMGm
+ NZEaNPxgyNPcGlqt07D1Up/u8i0+qtNMWLrvZ5Nz30H15+aP+VOGPG2yDU+Qwu8Aze0R
+ GJ3xux9impxr5RnVUfPXuF3oMGuL8S8BFXhwoyWxw94DoEhJOYH4HPY0kO1/qlTx9BQZ
+ AfYUkHcLERJtzGjISZCUu1Loc+G7nRAV7LH5niHL1l/YCzj5aUnEI52IG+23yFemuNIO
+ XvlA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8+4OhpsiHaZXIVUONLyglXHcww+rCa2GpRMqutS7b0JGofuW45pAlajFSVQIEmVaf12kUgsBMFVRoQ@nongnu.org
-X-Gm-Message-State: AOJu0YxDThL+B9a8AlwcTp6ipV2VK+q+l28aJhpTpugXYCfu/SYyRB4s
- u/OTHSrzCKcrvMTtUKfmVl/ELd5D6smI6g2TygScXt9NJE8utxehYbOWse1q+dp3FRU=
-X-Gm-Gg: Acq92OGowwk0ESt0+cMSH1xn78ldmNGlXud6xOlIShTU9HEvPcM1lLE0HPZDahpyuG0
- ILd1RGLE+4bO3jB7cYS8iZ9Sa0CgGjByHOPKCh+Sd+0GZ+85VTNDsjc3NbewRRKRl/uhmp09ZuT
- /GrsFOtAd/a7KA6pNQanlOIPmgXUUoHy8CpJXqH23Y7JWhPuLxsHZ0OGxlWPXKp6WE7uI0baizE
- M+jhsAMovtif9ZlbRLNTzRXV9sCgfcSXwXvKI3oLP0Dhd20ImKBHNJlpRLKWOqDaLV2ZfLmaMmo
- rfwrBRa6KkaBXeFgRRbxAKhwBKwQwi1paBtVWZb2JsfDil9ipSqPBxJGhHFzvJXuP0QCqfhbLg4
- vqN/oDYe9f/xC2XsQcQDZkvcHJUJvvNnqraEBfnPWL4pSDSncjkfBlmugl+HF6jmKlsSzX0LGdd
- rap5AYW3xlWP6FUV/IlXHkVTtEpe6GLBP/bLUa30vZtYti+z5a6RCzOUP8DXMQHKZPLdg0ixWGV
- paWKw/MaAzc46lmfTI/O+F0Ud9W3DaOlI4Jt5vC7PYOAL3q8JGllBCzLP2kbsC3AIC+rZAW5zsi
- I+WBkf3hEtunA9I=
-X-Received: by 2002:a05:600c:35cf:b0:490:44eb:c1e5 with SMTP id
- 5b1f17b1804b1-49044ebc257mr277307095e9.31.1779729006482; 
- Mon, 25 May 2026 10:10:06 -0700 (PDT)
-Received: from ?IPV6:2a00:1028:838d:271e:8e3b:4aff:fe4c:a100?
- (dynamic-2a00-1028-838d-271e-8e3b-4aff-fe4c-a100.ipv6.o2.cz.
- [2a00:1028:838d:271e:8e3b:4aff:fe4c:a100])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4904526c926sm456877405e9.1.2026.05.25.10.10.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 25 May 2026 10:10:06 -0700 (PDT)
-Message-ID: <a192eb5c-5d16-483d-862e-d937fa1b8269@suse.com>
-Date: Mon, 25 May 2026 19:10:03 +0200
+ AFNElJ8dvGyQRFhbC8WmP6HndAOWqydX7XEGk6VB3sNEagVcop/l4WqEDhvpJRhHElEyEU718FENBta1oAQi@nongnu.org
+X-Gm-Message-State: AOJu0Yza8G2hunToqUFekBiLGE4z9U49GLwE6yhHvi4laOZBjSdmKQgV
+ Q3ba7vYNwNN1HrfC5WuXyHPrHa5hrVzdxiqN71DNoJGZwR27F8MS5I88vECXompHkLw3wHC5BRc
+ mSvXyLhmaPK9tgfG8pi77+//y2/6Tf5dHUCJ8UEUvYGrJOYfZX84Kx30=
+X-Gm-Gg: Acq92OHqUGAWQx4NDWEf4obGZmz6RKsipa77TrkRUuywXDPzKn0mxKsyzI6n6IYDz/4
+ t+zz02EcNyD+86gOlbfiROu1CB7P3jJQNKVbWOwKwTq1SbSEv5UN1IWf2GNY2F25urAjqT43S6U
+ q5M1hCcCB8n7/ZwOVoY531/m3jucoZvtQvHlZHxZpZyelpISBjBBc0u0pyspjST00u6Cvs7E1Ui
+ tmz/Ysf2Ouy/Z1ISaw+yOcSniECSJHr+sFDTuVa7Kdz+65BFIGwU5CwD6yZym/qlHFPrigTy/Ni
+ IgepVIaxyg+kTT2K0oaiQUD1h+rkIdUGs3cT6w==
+X-Received: by 2002:a17:903:2284:b0:2bd:412:21fb with SMTP id
+ d9443c01a7336-2beb033eeeamr174409735ad.8.1779729336711; Mon, 25 May 2026
+ 10:15:36 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/11] params: Convert generic kernel_param_ops .get
- helpers to seq_buf
-To: Kees Cook <kees@kernel.org>
-Cc: Luis Chamberlain <mcgrof@kernel.org>, Pengpeng Hou
- <pengpeng@iscas.ac.cn>, Richard Weinberger <richard@nod.at>,
- Anton Ivanov <anton.ivanov@cambridgegreys.com>,
- Johannes Berg <johannes@sipsolutions.net>,
- "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>,
- Corey Minyard <corey@minyard.net>, Gabriel Somlo <somlo@cmu.edu>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Jani Nikula <jani.nikula@linux.intel.com>,
- Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
- Rodrigo Vivi <rodrigo.vivi@intel.com>, Tvrtko Ursulin
- <tursulin@ursulin.net>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>, Bart Van Assche <bvanassche@acm.org>,
- Jason Gunthorpe <jgg@ziepe.ca>, Leon Romanovsky <leon@kernel.org>,
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
- Hans de Goede <hansg@kernel.org>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Hannes Reinecke <hare@suse.de>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>,
- Daniel Lezcano <daniel.lezcano@kernel.org>, Zhang Rui <rui.zhang@intel.com>,
- Lukasz Luba <lukasz.luba@arm.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Jiri Slaby <jirislaby@kernel.org>, Alan Stern <stern@rowland.harvard.edu>,
- Jason Wang <jasowang@redhat.com>, Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>,
- Jason Baron <jbaron@akamai.com>, Jim Cromie <jim.cromie@gmail.com>,
- Tiwei Bie <tiwei.btw@antgroup.com>, Benjamin Berg <benjamin.berg@intel.com>,
- =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
- "David E. Box" <david.e.box@linux.intel.com>,
- "Maciej W. Rozycki" <macro@orcam.me.uk>,
- Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
- Peter Zijlstra <peterz@infradead.org>, Heiko Carstens <hca@linux.ibm.com>,
- Vasily Gorbik <gor@linux.ibm.com>, Sean Christopherson <seanjc@google.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Gleixner <tglx@kernel.org>,
- Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
- Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
- "H. Peter Anvin" <hpa@zytor.com>, Vinod Koul <vkoul@kernel.org>,
- Frank Li <Frank.Li@kernel.org>, Daniel Gomez <da.gomez@kernel.org>,
- Sami Tolvanen <samitolvanen@google.com>, Aaron Tomlin <atomlin@atomlin.com>,
- Alexander Potapenko <glider@google.com>, Marco Elver <elver@google.com>,
- Dmitry Vyukov <dvyukov@google.com>, Andrew Morton
- <akpm@linux-foundation.org>, John Johansen <john.johansen@canonical.com>,
- Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>,
- "Serge E. Hallyn" <serge@hallyn.com>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Georgia Garcia <georgia.garcia@canonical.com>, kvm@vger.kernel.org,
- dmaengine@vger.kernel.org, linux-modules@vger.kernel.org,
- kasan-dev@googlegroups.com, linux-mm@kvack.org, apparmor@lists.ubuntu.com,
- linux-security-module@vger.kernel.org, linux-um@lists.infradead.org,
- linux-acpi@vger.kernel.org, openipmi-developer@lists.sourceforge.net,
- qemu-devel@nongnu.org, intel-gfx@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, linux-rdma@vger.kernel.org,
- linux-media@vger.kernel.org, linux-pci@vger.kernel.org,
- linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
- linuxppc-dev@lists.ozlabs.org, linux-serial@vger.kernel.org,
- linux-usb@vger.kernel.org, usb-storage@lists.one-eyed-alien.net,
- virtualization@lists.linux.dev, linux-kernel@vger.kernel.org,
- linux-arch@vger.kernel.org, netdev@vger.kernel.org,
- linux-fsdevel@vger.kernel.org, linux-hardening@vger.kernel.org
-References: <20260521133315.work.845-kees@kernel.org>
- <20260521133326.2465264-8-kees@kernel.org>
-Content-Language: en-US
-From: Petr Pavlu <petr.pavlu@suse.com>
-In-Reply-To: <20260521133326.2465264-8-kees@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=petr.pavlu@suse.com; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260524083329-mutt-send-email-mst@kernel.org>
+ <f0bc9023-28c4-4685-b0cc-fc7ad4e6d371@redhat.com>
+In-Reply-To: <f0bc9023-28c4-4685-b0cc-fc7ad4e6d371@redhat.com>
+From: Warner Losh <imp@bsdimp.com>
+Date: Mon, 25 May 2026 11:15:25 -0600
+X-Gm-Features: AVHnY4IqT4F4UYwdzqSH7meHc72Ggy6O35mRFiIot5WFMh79FV_wwlccjnEehjg
+Message-ID: <CANCZdfrn61yr5k=3=E_zE11dw3j2vVsg0PPn0PZ7RAa2agM8kQ@mail.gmail.com>
+Subject: Re: on ai generated and code provenance
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
+ stefanha@redhat.com
+Content-Type: multipart/alternative; boundary="000000000000e94c690652a78685"
+Received-SPF: none client-ip=2607:f8b0:4864:20::635;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,124 +115,313 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/21/26 3:33 PM, Kees Cook wrote:
-> Convert the generic struct kernel_param_ops .get helpers in
-> kernel/params.c directly to the seq_buf signature, drop their legacy
-> "char *" form, and refresh prototypes in <linux/moduleparam.h>:
-> 
->   param_get_byte/short/ushort/int/uint/long/ulong/ullong/hexint
->   param_get_charp/bool/invbool/string
->   param_array_get
-> 
-> The STANDARD_PARAM_DEF() macro expands to a seq_buf body for every
-> numeric helper. param_array_get() now writes element output directly
-> into the parent seq_buf when the element ops provide .get; it only
-> allocates the per-call PAGE_SIZE bounce buffer when the element ops
-> still use the legacy .get_str path. The common "rewrite the prior
-> element's trailing newline as a comma" step lives outside both
-> branches so the two paths share it.
-> 
-> The non-core changes in this commit (arch/x86/kvm, mm/kfence,
-> drivers/dma/dmatest, security/apparmor) are the small set of callers that
-> directly invoke one of the converted generic helpers from their own .get
-> callback (e.g. an apparmor wrapper that adds a capability check and then
-> delegates to param_get_bool()). Because the helpers' signature changes
-> here, these wrappers must move in lockstep. Each of them is updated
-> to take "struct seq_buf *" and pass it through; param_get_debug() in
-> apparmor also pulls aa_print_debug_params() (and its val_mask_to_str()
-> helper, in security/apparmor/lib.c) over to seq_buf, since that is the
-> only consumer. No other behavioural change is intended.
-> 
-> Custom .get callbacks that do not delegate to a generic helper (and
-> therefore still match the .get_str signature) are routed automatically
-> to the .get_str field by the DEFINE_KERNEL_PARAM_OPS _Generic dispatcher
-> and are deliberately left alone here, to be changed separately within
-> their respective subsystems.
-> 
-> Signed-off-by: Kees Cook <kees@kernel.org>
-> ---
-> [...]
-> @@ -453,36 +457,46 @@ static int param_array_set(const char *val, const struct kernel_param *kp)
->  			   arr->num ?: &temp_num);
->  }
->  
-> -static int param_array_get(char *buffer, const struct kernel_param *kp)
-> +static int param_array_get(struct seq_buf *s, const struct kernel_param *kp)
->  {
-> -	int i, off, ret;
-> -	char *elem_buf;
->  	const struct kparam_array *arr = kp->arr;
->  	struct kernel_param p = *kp;
-> +	char *elem_buf = NULL;
-> +	int i, ret = 0;
->  
-> -	elem_buf = kmalloc(PAGE_SIZE, GFP_KERNEL);
-> -	if (!elem_buf)
-> -		return -ENOMEM;
-> +	for (i = 0; i < (arr->num ? *arr->num : arr->max); i++) {
-> +		size_t before = s->len;
->  
-> -	for (i = off = 0; i < (arr->num ? *arr->num : arr->max); i++) {
->  		p.arg = arr->elem + arr->elemsize * i;
->  		check_kparam_locked(p.mod);
-> -		ret = arr->ops->get_str(elem_buf, &p);
-> -		if (ret < 0)
-> -			goto out;
-> -		ret = min(ret, (int)(PAGE_SIZE - 1 - off));
-> -		if (!ret)
-> +
-> +		if (arr->ops->get) {
-> +			ret = arr->ops->get(s, &p);
-> +			if (ret < 0)
-> +				goto out;
-> +		} else {
-> +			if (!elem_buf) {
-> +				elem_buf = kmalloc(PAGE_SIZE, GFP_KERNEL);
-> +				if (!elem_buf) {
-> +					ret = -ENOMEM;
-> +					goto out;
-> +				}
-> +			}
-> +			ret = arr->ops->get_str(elem_buf, &p);
-> +			if (ret < 0)
-> +				goto out;
-> +			seq_buf_putmem(s, elem_buf, ret);
-> +		}
-> +
-> +		/* Nothing got written (e.g. overflow) — stop. */
-> +		if (s->len == before)
->  			break;
-> +
->  		/* Replace the previous element's trailing newline with a comma. */
-> -		if (i)
-> -			buffer[off - 1] = ',';
-> -		memcpy(buffer + off, elem_buf, ret);
-> -		off += ret;
-> -		if (off == PAGE_SIZE - 1)
-> -			break;
-> +		if (i && s->buffer[before - 1] == '\n')
-> +			s->buffer[before - 1] = ',';
->  	}
-> -	buffer[off] = '\0';
-> -	ret = off;
-> +	ret = 0;
->  out:
->  	kfree(elem_buf);
->  	return ret;
+--000000000000e94c690652a78685
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Since you're almost completely rewriting the logic in param_array_get(),
-I suggest tightening it up a bit. The function could warn or return an
-error when a kernel_param_ops::get/get_str() call adds a string that
-doesn't terminate with '\n', specifically, when the call adds either
-a zero-length string or a non-zero-length string that ends with
-a different character (unless an overflow occurred).
+On Mon, May 25, 2026 at 10:34=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com=
+> wrote:
 
-The updated code silently stops the loop when a get call returns
-a zero-length string. Similarly, handling of a string not terminated by
-'\n' is halfway there because of the added check
-"s->buffer[before - 1] == '\n'".
+> On 5/24/26 14:42, Michael S. Tsirkin wrote:
+> >       How contributors could comply with DCO terms (b) or (c) for the
+> output of AI
+> >       content generators commonly available today is unclear.  The QEMU
+> project is
+> >       not willing or able to accept the legal risks of non-compliance.
+> >
+> > But, since this was written, Red Hat's Richard Fontana and Chris Wright
+> > published this piece:
+> >
+> https://www.redhat.com/en/blog/ai-assisted-development-and-open-source-na=
+vigating-legal-issues
+> >
+> > Saying, in particular
+> >       We understand this concern, but the DCO has never
+> >       been interpreted to require that every line of a contribution mus=
+t
+> be
+> >       the personal creative expression of the contributor or another
+> human
+> >       developer.
+> This is not the objection or the worry; rather the question is, what if
+> the contribution is a creative expression of someone that could claim
+> copyright in it.  In fact, looking at the Linux policy...
+>
+>    Signed-off-by and Developer Certificate of Origin
+>    =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D
+>
+>    AI agents MUST NOT add Signed-off-by tags. Only humans can legally
+>    certify the Developer Certificate of Origin (DCO). The human submitter
+>    is responsible for:
+>
+>    * Reviewing all AI-generated code
+>    * Ensuring compliance with licensing requirements
+>    * Adding their own Signed-off-by tag to certify the DCO
+>    * Taking full responsibility for the contribution
+>
+> ... the question is how humans can actually do the second step.  The
+> piece you posted above says: "with disclosure and human attentiveness =E2=
+=80=93
+> and oversight =E2=80=93 aided where possible by tools that check for code
+> similarity, AI-assisted contributions can be entirely compatible with
+> the spirit of the DCO".
+>
 
--- 
-Thanks,
-Petr
+The code produced by AI agents has no copyright. You can incorporate
+public domain code into your work and have the absolute right to license
+it (see all the Diseny movies). The notion that LLMs wholesale copy
+originates
+from the earliest days of Copilot and turned out were contrived. No recent
+evidence shows that plagiarism is a concern. To the extent that I modify
+public domain code, I have a copyright that I can choose to license
+however I want (and the SOB says it's compatible).
+
+So I'm struggling to understand the hesitation here. Is it the uncertainty
+around the copyright? Around the copying issue? Something else?
+We already have some level of risk around these issues with human
+coders: We have to take their word for it that they didn't copy, and if
+they did, the project is still on the hook to remedy the situation if the
+real rights holders show up.... There's always risk when submissions
+are accepted from the general public. Also, I've softened this paragraph
+several times, and it still comes across as more confrontational than I
+intend.
+I'm trying to understand.
+
+
+> This is not encouraging, in my opinion, because it leaves a lot of the
+> mechanics undefined.  A while ago I suggested that in some scenarios
+> this could actually be done[1][2]; another possible case is localized
+> bugfixes (say, below 20 lines of code).  For more general contributions
+> however, the role of maintainers is not clear.  Would we require to
+> "check for code similarity"?  I sure don't want to open that can of worms=
+.
+>
+> > I propose adopting linux's rules instead:
+> > https://docs.kernel.org/process/coding-assistants.html
+>
+> Replacing QEMU's policy with Linux's would be orthogonal to the topic of
+> the DCO.  Maintainers would still have the option of rejecting
+> AI-assisted patches if they don't believe they can apply their own
+> sign-off.
+>
+> Other projects have taken similar "no AI" policies for different
+> reasons.  Zig has one because they believe AI code would make it harder
+> to retain contributors[3][4]; Rust is working on one that is fairly
+> restrictive[5] (discussion at [6]) and requires previous communications
+> with reviewers about *any* generated PRs[7].  Personally I think QEMU's
+> policy is fine but we should start introducing exceptions, possibly
+> including large contributions with pre-authorization (but not
+> pre-approval) from the maintainer.
+>
+
+I agree with the thrust of the proposals you've submitted: AI is a tool, an=
+d
+there are many ways to use it safely.
+
+AI's primary issue is verification. The folks being flooded can't verify th=
+e
+good from the bad in the flood and tend to have a knee jerk reaction to
+protect themselves: ban it.
+
+Unstated issue: How do we help people that want to contribute grow their
+skills using AI so they make submissions whose quality if good enough to
+be worth our time to verify and review. It's an industry wide problem, alon=
+g
+with how do junior engineers become senior in a world of AI doing the grunt
+work they used to learn from.
+
+Warner
+
+
+> Paolo
+>
+> [1]
+>
+> https://lore.kernel.org/qemu-devel/20250925075630.352720-1-pbonzini@redha=
+t.com
+> [2]
+>
+> https://lore.kernel.org/qemu-devel/20251008063546.376603-1-pbonzini@redha=
+t.com/raw
+> [3] https://ziglang.org/code-of-conduct/
+> [4]
+>
+> https://ziggit.dev/t/bun-s-zig-fork-got-4x-faster-compilation-times/15183=
+/19
+> [5]
+>
+> https://github.com/jyn514/rust-forge/blob/llm-policy/src/policies/llm-usa=
+ge.md
+> [6] https://github.com/rust-lang/rust-forge/pull/1040
+> [7]
+>
+> https://github.com/jyn514/rust-forge/blob/llm-policy/src/policies/llm-usa=
+ge.md#experiment-llm-created-code-changes
+>
+>
+>
+
+--000000000000e94c690652a78685
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, May 25,=
+ 2026 at 10:34=E2=80=AFAM Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redh=
+at.com">pbonzini@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gm=
+ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
+204,204);padding-left:1ex">On 5/24/26 14:42, Michael S. Tsirkin wrote:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0How contributors could comply with DCO terms=
+ (b) or (c) for the output of AI<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0content generators commonly available today =
+is unclear.=C2=A0 The QEMU project is<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0not willing or able to accept the legal risk=
+s of non-compliance.<br>
+&gt; <br>
+&gt; But, since this was written, Red Hat&#39;s Richard Fontana and Chris W=
+right<br>
+&gt; published this piece:<br>
+&gt; <a href=3D"https://www.redhat.com/en/blog/ai-assisted-development-and-=
+open-source-navigating-legal-issues" rel=3D"noreferrer" target=3D"_blank">h=
+ttps://www.redhat.com/en/blog/ai-assisted-development-and-open-source-navig=
+ating-legal-issues</a><br>
+&gt; <br>
+&gt; Saying, in particular<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0We understand this concern, but the DCO has =
+never<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0been interpreted to require that every line =
+of a contribution must be<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0the personal creative expression of the cont=
+ributor or another human<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0developer.<br>
+This is not the objection or the worry; rather the question is, what if <br=
+>
+the contribution is a creative expression of someone that could claim <br>
+copyright in it.=C2=A0 In fact, looking at the Linux policy...<br>
+<br>
+=C2=A0 =C2=A0Signed-off-by and Developer Certificate of Origin<br>
+=C2=A0 =C2=A0=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D<br>
+<br>
+=C2=A0 =C2=A0AI agents MUST NOT add Signed-off-by tags. Only humans can leg=
+ally<br>
+=C2=A0 =C2=A0certify the Developer Certificate of Origin (DCO). The human s=
+ubmitter<br>
+=C2=A0 =C2=A0is responsible for:<br>
+<br>
+=C2=A0 =C2=A0* Reviewing all AI-generated code<br>
+=C2=A0 =C2=A0* Ensuring compliance with licensing requirements<br>
+=C2=A0 =C2=A0* Adding their own Signed-off-by tag to certify the DCO<br>
+=C2=A0 =C2=A0* Taking full responsibility for the contribution<br>
+<br>
+... the question is how humans can actually do the second step.=C2=A0 The <=
+br>
+piece you posted above says: &quot;with disclosure and human attentiveness =
+=E2=80=93 <br>
+and oversight =E2=80=93 aided where possible by tools that check for code <=
+br>
+similarity, AI-assisted contributions can be entirely compatible with <br>
+the spirit of the DCO&quot;.<br></blockquote><div><br></div><div>The code p=
+roduced by AI agents has no copyright. You can incorporate</div><div>public=
+ domain code into your work and have the absolute right to license</div><di=
+v>it (see all the Diseny movies).=C2=A0The notion that LLMs wholesale copy =
+originates</div><div>from the earliest days of Copilot and turned out were =
+contrived. No recent</div><div>evidence shows that plagiarism is a concern.=
+ To the extent that I modify</div><div>public domain code, I have a copyrig=
+ht that I can choose to license</div><div>however I want (and the SOB says =
+it&#39;s compatible).</div><div><br></div><div>So I&#39;m struggling to und=
+erstand the hesitation here. Is it the uncertainty</div><div>around the cop=
+yright? Around the copying issue? Something else?</div><div>We already have=
+ some level of risk around these issues with human</div><div>coders: We hav=
+e to take their word for it that they didn&#39;t copy, and if</div><div>the=
+y did, the project is still on the hook to remedy the situation if the</div=
+><div>real rights holders show up.... There&#39;s always risk when submissi=
+ons</div><div>are accepted from the general public. Also, I&#39;ve softened=
+ this paragraph</div><div>several times, and it still comes across as more =
+confrontational than I intend.</div><div>I&#39;m trying to understand.</div=
+><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px=
+ 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+This is not encouraging, in my opinion, because it leaves a lot of the <br>
+mechanics undefined.=C2=A0 A while ago I suggested that in some scenarios <=
+br>
+this could actually be done[1][2]; another possible case is localized <br>
+bugfixes (say, below 20 lines of code).=C2=A0 For more general contribution=
+s <br>
+however, the role of maintainers is not clear.=C2=A0 Would we require to <b=
+r>
+&quot;check for code similarity&quot;?=C2=A0 I sure don&#39;t want to open =
+that can of worms.<br>
+<br>
+&gt; I propose adopting linux&#39;s rules instead:<br>
+&gt; <a href=3D"https://docs.kernel.org/process/coding-assistants.html" rel=
+=3D"noreferrer" target=3D"_blank">https://docs.kernel.org/process/coding-as=
+sistants.html</a><br>
+<br>
+Replacing QEMU&#39;s policy with Linux&#39;s would be orthogonal to the top=
+ic of <br>
+the DCO.=C2=A0 Maintainers would still have the option of rejecting <br>
+AI-assisted patches if they don&#39;t believe they can apply their own sign=
+-off.<br>
+<br>
+Other projects have taken similar &quot;no AI&quot; policies for different =
+<br>
+reasons.=C2=A0 Zig has one because they believe AI code would make it harde=
+r <br>
+to retain contributors[3][4]; Rust is working on one that is fairly <br>
+restrictive[5] (discussion at [6]) and requires previous communications <br=
+>
+with reviewers about *any* generated PRs[7].=C2=A0 Personally I think QEMU&=
+#39;s <br>
+policy is fine but we should start introducing exceptions, possibly <br>
+including large contributions with pre-authorization (but not <br>
+pre-approval) from the maintainer.<br></blockquote><div><br></div><div>I ag=
+ree with the thrust of the proposals you&#39;ve submitted: AI is a tool, an=
+d</div><div>there are many ways to use it safely.</div><div><br></div><div>=
+AI&#39;s primary issue is verification. The folks being flooded can&#39;t v=
+erify the</div><div>good from the bad in the flood and tend to have a knee =
+jerk reaction to</div><div>protect themselves: ban it.</div><div><br></div>=
+<div>Unstated issue: How do we help people that want to contribute grow the=
+ir</div><div>skills using AI so they make submissions whose quality if good=
+ enough to</div><div>be worth our time to verify and review. It&#39;s an in=
+dustry wide problem, along</div><div>with how do junior engineers become se=
+nior in a world of AI doing the grunt</div><div>work they used to learn fro=
+m.</div><div><br></div><div>Warner</div><div>=C2=A0</div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex">
+Paolo<br>
+<br>
+[1] <br>
+<a href=3D"https://lore.kernel.org/qemu-devel/20250925075630.352720-1-pbonz=
+ini@redhat.com" rel=3D"noreferrer" target=3D"_blank">https://lore.kernel.or=
+g/qemu-devel/20250925075630.352720-1-pbonzini@redhat.com</a><br>
+[2] <br>
+<a href=3D"https://lore.kernel.org/qemu-devel/20251008063546.376603-1-pbonz=
+ini@redhat.com/raw" rel=3D"noreferrer" target=3D"_blank">https://lore.kerne=
+l.org/qemu-devel/20251008063546.376603-1-pbonzini@redhat.com/raw</a><br>
+[3] <a href=3D"https://ziglang.org/code-of-conduct/" rel=3D"noreferrer" tar=
+get=3D"_blank">https://ziglang.org/code-of-conduct/</a><br>
+[4] <br>
+<a href=3D"https://ziggit.dev/t/bun-s-zig-fork-got-4x-faster-compilation-ti=
+mes/15183/19" rel=3D"noreferrer" target=3D"_blank">https://ziggit.dev/t/bun=
+-s-zig-fork-got-4x-faster-compilation-times/15183/19</a><br>
+[5] <br>
+<a href=3D"https://github.com/jyn514/rust-forge/blob/llm-policy/src/policie=
+s/llm-usage.md" rel=3D"noreferrer" target=3D"_blank">https://github.com/jyn=
+514/rust-forge/blob/llm-policy/src/policies/llm-usage.md</a><br>
+[6] <a href=3D"https://github.com/rust-lang/rust-forge/pull/1040" rel=3D"no=
+referrer" target=3D"_blank">https://github.com/rust-lang/rust-forge/pull/10=
+40</a><br>
+[7] <br>
+<a href=3D"https://github.com/jyn514/rust-forge/blob/llm-policy/src/policie=
+s/llm-usage.md#experiment-llm-created-code-changes" rel=3D"noreferrer" targ=
+et=3D"_blank">https://github.com/jyn514/rust-forge/blob/llm-policy/src/poli=
+cies/llm-usage.md#experiment-llm-created-code-changes</a><br>
+<br>
+<br>
+</blockquote></div></div>
+
+--000000000000e94c690652a78685--
 
