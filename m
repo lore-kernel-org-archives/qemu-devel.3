@@ -4,162 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B81FACD5BC9
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 18:29:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71DEFCD5BC9
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 18:44:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRa2A-0002DD-3Q; Mon, 25 May 2026 14:28:16 -0400
+	id 1wRaH8-0004vS-8A; Mon, 25 May 2026 14:43:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=9605cd9704=quan.sun@windriver.com>)
- id 1wRa24-0002Ck-I4
- for qemu-devel@nongnu.org; Mon, 25 May 2026 14:28:09 -0400
-Received: from mx0a-0064b401.pphosted.com ([205.220.166.238])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=9605cd9704=quan.sun@windriver.com>)
- id 1wRa1x-0002th-EQ
- for qemu-devel@nongnu.org; Mon, 25 May 2026 14:28:06 -0400
-Received: from pps.filterd (m0250809.ppops.net [127.0.0.1])
- by mx0a-0064b401.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64PIF2Le2954258; Mon, 25 May 2026 11:27:51 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=windriver.com;
- h=cc:content-transfer-encoding:content-type:date:from
- :message-id:mime-version:subject:to; s=PPS06212021; bh=jMlaSK/Y9
- w7RQoO7pye8JkRxu/RMbh9XragWboC1LpU=; b=GxPoOpHd7ilUgQjf4c6Zcg6Vm
- dLbykRAGriohMe5fbKVfa+9HtaccHlhzz3oqiLmA4lju3l+88n41fTBGPWG3ljYU
- NzY7IR2Rny/L0rdL6WGV4U2IxkuIc9a0rGNyzYarQNZF6WZd3moUtsl1O0SD7HES
- wtGOC9lk8zOQ8QuzAL8/fJgKT+A9ecIX+W9bFnseJQERo82/kCpA1Fr1Nbxq3Ck9
- LBgcwjMICrFHzk4OPwXUm4KpCdVMXZiAaKOUFn9hl09tV623nj38+nneiLeGv7pT
- rKRZCS/ecEUn2KPL6i/2OukJanv3vFHZi2biPwPZCJ8bgrtEA9fxVc55Dpn8w==
-Received: from mw6pr02cu001.outbound.protection.outlook.com
- (mail-westus2azon11012060.outbound.protection.outlook.com [52.101.48.60])
- by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 4ebbrejmf6-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 25 May 2026 11:27:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RAaqukYplYGPh3JHpYiRCOWycjuJMCwwMQRqmpHehTYSby1hyJUxdSXBPGm02xfYxoXJYHMJ/U5dsVJn/aGhjfzLcsGl7HkLz9r1nYIA7C5YerX4n/lbC09mvzVr2dYD5sEHd+/a6kKF1STsALxjEUQkSgOSJtyP8dBzCHlu4HoRR9IWn5+JZOhzPvF+tQRGR44wDep+L28nV16kMqSA59ta4btr89Egt+60vj1xh6Cu+eEWk0sgsNRlI+uH9bVRleA6cUgG42jEH2rs4nOwFmfuNKiIIjJd5FejQMlTfxMYFrn7R5R88p6UPo37LxtgeU++GYk27TUBmQWOyCfu3g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jMlaSK/Y9w7RQoO7pye8JkRxu/RMbh9XragWboC1LpU=;
- b=FgHiLye5P5u+BvwfzvQaEvvSZW8bOw9qt08Oom5c8AGHsV+dbymR0x8y80ZnpYNnhyeizyG3JDZskoLELWLDnw4xqy3B4kdkmjWiFsE8kVcs9ny0iIU9HkIiqUsgwyfAwyBLr3FCeFwXgHHyUc/XWivqmmzCSY8au6kF6wO9RZ4B2Jy+ZiFJeht0ZYD5dYb53scBVmfJsgQE2FcwXlf2rv0KA55VXEfnFG4by4kiXbEjN90QOt2BgHP+YgM/aqczdqqGJGyC2oDPxkGcMA7XDjOyodtuMvlTeisDWCmJAjFN2T1l60sceGTR+v8V1/Pjye1GYh5jW26KIkDgof9YJQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=windriver.com; dmarc=pass action=none
- header.from=windriver.com; dkim=pass header.d=windriver.com; arc=none
-Received: from IA0PR11MB7283.namprd11.prod.outlook.com (2603:10b6:208:439::10)
- by DM4PR11MB7304.namprd11.prod.outlook.com (2603:10b6:8:107::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.20; Mon, 25 May
- 2026 18:27:48 +0000
-Received: from IA0PR11MB7283.namprd11.prod.outlook.com
- ([fe80::6e41:656f:120e:8e8]) by IA0PR11MB7283.namprd11.prod.outlook.com
- ([fe80::6e41:656f:120e:8e8%3]) with mapi id 15.21.0048.016; Mon, 25 May 2026
- 18:27:48 +0000
-From: Quan.Sun@windriver.com
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, fam@euphon.net, mst@redhat.com, sgarzare@redhat.com, 
- Quan.Sun@windriver.com
-Subject: [PATCH] hw/scsi/vhost-scsi: fix build with older kernel headers
-Date: Mon, 25 May 2026 11:27:30 -0700
-Message-ID: <20260525182730.4098543-1-Quan.Sun@windriver.com>
-X-Mailer: git-send-email 2.49.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SJ0PR03CA0094.namprd03.prod.outlook.com
- (2603:10b6:a03:333::9) To IA0PR11MB7283.namprd11.prod.outlook.com
- (2603:10b6:208:439::10)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wRaH3-0004ui-RP
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 14:43:37 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wRaH2-0000ye-8W
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 14:43:37 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4903974854dso36973635e9.3
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 11:43:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779734614; x=1780339414; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nzfKWv9JzU5mMugxKaK6qPwERMr9J1AgOUmy+aHJ24g=;
+ b=s81ciKku0rudltbtvwdI2l7ki0VOGpMrEGbc1O8sFqJ7uvj3Q1jWy1UJqWdR4shyBd
+ Az55GEI/5u57u42UE5UFG5ojEEVoA8HfQ2xaRNzTMeDkFD6bgpP14Xkq56ea4T1AJf22
+ lYyvM6e8LVkXtugzDZPW9LtKeXP35GBtMfymt11SxT+QPO9FbDqltlgnIcr8qlC2Z9ql
+ gQsUHc3r8td1bFqx/ck2rg+BewG6CMJsZeWanAfB2Y+pjGWVKLDX+bNhSITd4PWoRc4U
+ /oLT5CY2+yaxGc7eQVdUrRyn8BaIzvJO4cynHG3Hb7P5YFUg1fJtrlquUnT8SoNSp6YM
+ dogw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779734614; x=1780339414;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nzfKWv9JzU5mMugxKaK6qPwERMr9J1AgOUmy+aHJ24g=;
+ b=hNRJW2fo0i05YjpXmLSn3T9d/QW2rg/DzuxSCGX774hyYGEDYOGFVS0Ggj/88mx3N1
+ d7bLezyHhOlPlousCCTZCHanag70urM75HS1kWAo3rJlMv7QscHwaZgbHAmouP2HqmQ5
+ r+78U2BIObu/NQ6ebbW12ANr31i34Km9fAizA8CG+kGDt+VLa0mF+qjVGkkQqpBbRqZo
+ X5/B+XvJWykqKMv75hhniMj5KibH7q8RRvx6FED++OG7ktaIlqHWlQtA9W7Cu5aMB34h
+ 2IyWbPyfUwCxNU9e9odn9hxiNzwvpvFdSZOuFBL2qiZv5s24IC+kORAmsEq0bTNDQcRA
+ URRw==
+X-Gm-Message-State: AOJu0YwLtQ2uAjYHgGq8h4c3NVitWDYZMDL6mqSDAZoan01HAswFTk8P
+ SyFg0mUmU4mA6n2hFQqfPaI+ODrwQzTNsDpcGmoImlVYpdGh169CRjwiAy6b9AONzGc=
+X-Gm-Gg: Acq92OGcmFZx0Itp8r1ssZ0+zcqvBR6NI7uEofA3z4cyHQGk6kO3vXeGDRtKkEs7Itl
+ 7crm2WYCQFTCu9VUfQ7QQf4Ix77xyMfySstTb3AT2WsLsCmlhQrTnqustrL/7FEvFSkS6n7ypMk
+ C8XtDXPKVUDhcvUlOjBVclRTpHwBtpFgW/wdfEbNT31c9GjWuxUG0108u9ZoGmchBvAonyLhyLo
+ ESSfKQy6KfPndL5H8hl9rD0PTnpx77mTqFaHG+KEsbzPKQhAP3jhQQ1ybF8gRW2l9sVFOxCEXZr
+ 8bvKVg6zC6YU131QL5C7zjYdeVrdsd9ED0d/bRN+s1aEOhDd7h3ARIhDehSnD6FrWpfNpQ2ZaWN
+ uqpAB/1/msNhVU8GC93V8etVX8BB/MMUYYCL1PyOfQ67N2Jqki8OMFEr6Dn4VPxs93oXiaHyyv+
+ +ToIs1EOv9jNX+eGg7O8J132FHykp+jJ+IjQ==
+X-Received: by 2002:a05:600c:8217:b0:490:51e9:deba with SMTP id
+ 5b1f17b1804b1-49051e9e233mr175536925e9.27.1779734614129; 
+ Mon, 25 May 2026 11:43:34 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45eb6cd1780sm31122078f8f.16.2026.05.25.11.43.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 25 May 2026 11:43:33 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 40D575F855;
+ Mon, 25 May 2026 19:43:32 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Thomas Huth
+ <th.huth+qemu@posteo.eu>,
+ Song Gao <gaosong@loongson.cn>,  John Snow <jsnow@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Kyle Evans
+ <kevans@freebsd.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,  Cleber Rosa
+ <crosa@redhat.com>,  Warner Losh <imp@bsdimp.com>,  Brad Smith
+ <brad@comstyle.com>,  Thomas Huth <thuth@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Max Filippov <jcmvbkbc@gmail.com>,  Brian Cain
+ <brian.cain@oss.qualcomm.com>,  Fabiano Rosas <farosas@suse.de>,  Peter
+ Maydell <peter.maydell@linaro.org>,  Richard Henderson
+ <richard.henderson@linaro.org>,  qemu-arm@nongnu.org
+Subject: Re: [PATCH v2 03/16] tests/Makefile.include: add binary dependency
+ to run-tcg-tests-% rules
+In-Reply-To: <0f73d717-1621-4c3f-9c5e-9bfdfaffb0b8@oss.qualcomm.com> (Pierrick
+ Bouvier's message of "Mon, 25 May 2026 10:18:45 -0700")
+References: <20260521131739.540157-1-alex.bennee@linaro.org>
+ <20260521131739.540157-4-alex.bennee@linaro.org>
+ <74e8bc86-cd81-43f9-b5cb-7e3de3bcd3d0@oss.qualcomm.com>
+ <87tsrzl138.fsf@draig.linaro.org>
+ <093614fb-ced1-4b15-b1e1-5da755f87237@oss.qualcomm.com>
+ <87cxymec7b.fsf@draig.linaro.org>
+ <5bd51a1a-4079-4073-bbd8-f0206a1ad458@oss.qualcomm.com>
+ <0f73d717-1621-4c3f-9c5e-9bfdfaffb0b8@oss.qualcomm.com>
+User-Agent: mu4e 1.14.1; emacs 30.1
+Date: Mon, 25 May 2026 19:43:32 +0100
+Message-ID: <877bor9vor.fsf@draig.linaro.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA0PR11MB7283:EE_|DM4PR11MB7304:EE_
-X-MS-Office365-Filtering-Correlation-Id: 32fd48a3-cf37-4214-321f-08deba8b5256
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|52116014|56012099003|18002099003|38350700014|11063799006;
-X-Microsoft-Antispam-Message-Info: +GSC2BJRxQIUL4w6XxvWzdgWWHel0iGwj9OSnzTo+CzzVAVS7n2H4VIcN4vi5oHTLAWAqWaWn58F8231yYiMgDJjlB2+sM02mz2lXEucPAzAETthznYNbf5q0ybvAIAKcMs4KJlTN/k0tfwghSAv9DerQdMYqx5b2ZegKaO7yxBIdvKa7LG1BaS203eONdIL9XIciNWAr00adVvfm+Ji5ryuOj6PqbKNRbWogbcwVg7kVUpSbgJE4qiEXOq+MPirHRaKBZXe3KGgYZXuzJ9QEkjMxgnDPy09SWUxZT+XT1GnOgGnbvtyhREudr/flHWp0NYy5ufa/fxpBq+BB964nUHCKNW4Y3xgy+KJNQpF2Ki6Cgib2UQZxiwf0nQNRBPSqLIVMepKBaVh1vPZfiXhmcZhIZTbsDKUclaoEzuQtRL4ataJwwyGaYeiUO8vgcnFV/NO2Wn+EBUE4hRBE2NLDa/GIjs1AA3S6kXs5BWjUzhanLePTFm2hh9pbSZazGQhykbuthAksl9cTASb2MWJ5PnArSs3w2uP34KznfsWS2ZV37zIgGqFUWoYCnPcAbuXlg4PSWL/QJt0Aa5M7U/iCXo29oSYMCgGIxU8v5OXuN8S1h+yvUWCcLzTOC816ok3De7fBK7yhmbEc74GH7+06NVBYX4Ha6WzJOYIeNDyZp+go+SQb/uXxKgGzLLW6NUe8veFEpqURd0x8LMTvVGIN76g8SE68hSUTaxE8v7hpoY3qCAeHr0IsYiJayubydX6
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA0PR11MB7283.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(52116014)(56012099003)(18002099003)(38350700014)(11063799006);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?/STb/s21hQFYaHtp+f+ECbHGwiY6Y4GPql6B1+nJscfmXBr9MAHNCKaf/MRk?=
- =?us-ascii?Q?x7sXsV333MyRmZusnAm6JcwgHBZORm0qHCdy8HnA0RGyay13corDDsBqbHQy?=
- =?us-ascii?Q?St/iHi4MW6jKb2XfElohzaX3ypOHGEG4B9Vf/+ut2jvhclavDI4lXQsM7RsE?=
- =?us-ascii?Q?YQlw9OCWDUEqAQrhM3c0g+2ObpMw5VPqtIdkM34tyUla2UvoNhvw/Fq7TPre?=
- =?us-ascii?Q?MR+43dsKHL3e6HMJKGj0qX6j9wITmBiKTNSE+eEdeEUdNRXUZN8VwiPhlyaF?=
- =?us-ascii?Q?ZU6CRW2ij42EuN8/1LMcG33raJCGa6VG0S9oG9IXXnaFVeltWXTus4sQYkhf?=
- =?us-ascii?Q?g+k1Grz8pi/8zPXyrXkMODXDW4os4wB5PUtIUIqgqHR+Jv7KZaLh+Ajb1KO7?=
- =?us-ascii?Q?8wa9tSEqecMh6PesKyjWRAP45YmQUkk+/sNGfILgCV/lp5MXm1ibjILyL5uh?=
- =?us-ascii?Q?dLPidCnfM8KR4UNlzX76TnkZi6YHpFCHTmwAsZDNyeeBH2b6mdO/dLXf3wcM?=
- =?us-ascii?Q?Jlp5n82lqlWyPQThgyiOSXuseRJ+PgAy+ZtvlsbOYSZMJsls5z+BFEzMwtsu?=
- =?us-ascii?Q?dvO5y0+LHxn1fAQ74NFaFmlB9WPeu5wUztee51oqs6oJ8LURso/LCndOnDSZ?=
- =?us-ascii?Q?+j2729ypIjroVL49aAXLPB6kxycDqe2jbGIhNoWYPJKCDdoqY6pUStVXBkdw?=
- =?us-ascii?Q?u4LoSSlKQoaaX4yV3DOP0URdnCIVL8XF/euiyDzoyvsTjuIKIawCEqQ0J1xA?=
- =?us-ascii?Q?+DMhPMosTF3wXDEXfWLak+6GhBARujICMaIY6foXFZP9xeQF5C8bj4t7Wv0X?=
- =?us-ascii?Q?iqawX/7j7jH8z2hUfdPDbRqmz6zoYHJdRPzKKYiA3COmkXT1K8RhIym+oo2j?=
- =?us-ascii?Q?3oUtK+u5kmyew1W2B6LtShRliZFLtPhZlUNYwSp3hjNajzgVjHvUhfZHhEsl?=
- =?us-ascii?Q?z1oLsy6IV2a27W5F1CHTtCkFt+f9AkUZwp5JcKbBzR1S96KSWg+ouclaifhh?=
- =?us-ascii?Q?Dm/zl2kkdsCYYA8YycItLM1HYwAjW8CJgvjBNhbrS4ISHW51qvqN5RZyhil3?=
- =?us-ascii?Q?5w2U8hpcVI4AOaW3A6ISjbOB6wRoLYeLvxUDnA4a6jbOaWmPUd1djualpYSM?=
- =?us-ascii?Q?B7w1hxzPsjAOaRztbCEmvqWbbSNOe4sSvF70EJ4VUlo/24bIK5MlH6Ilu7XV?=
- =?us-ascii?Q?6q1zFCkRxLOXiqxpKbz4r2AVH6ZuFFp/hh1u3zGJJbDRwzgq4f9mbMuyHqNO?=
- =?us-ascii?Q?apVxTuwzYc9SkxWWxkTHQG65ExIJkeC9RQ7bxkvnVopKmgGpvjr0PTyVzzum?=
- =?us-ascii?Q?LTqgIF7kaMmbccmau28U/TSzr4J4tmLktR9ln6V46G+FyTZcxsiJj9F3n8I3?=
- =?us-ascii?Q?KCeFRTioBmpfpTqXcHUEqMymNy3K+p3BNTVrr7naqSz/9gm73Puai/B0ocGc?=
- =?us-ascii?Q?FE/CxRWK+MwMnQsKWyn3qc5ZJ2TSEtyElKH5jcrf8scgylKM7NkTvqa1w6LP?=
- =?us-ascii?Q?VsPEUIBOSW3RkZbX93W+V1FUY9MjfEhjYi+yhHJTfdbpDTl7O1Vii3NnBEri?=
- =?us-ascii?Q?hCYLGhe7wcI8JaNvGA9JlJ3Xa/HxZd7UY4eT56cqR2wyo+QCqia2iKYlpvPD?=
- =?us-ascii?Q?uwuPVrydH/JJDbI9yDBkI36w+MT/JiwFjN1sPrsoE5fkp28xYWgF7ey8tjp5?=
- =?us-ascii?Q?pRzARwtGokRfLIzLxCfy3orUbwsTY9TW7g/cxFQGCuUnLKudnKKjJwSMvsbT?=
- =?us-ascii?Q?xpplBBy4/w=3D=3D?=
-X-Exchange-RoutingPolicyChecked: p9mOH4ruLqCWYn1Zv1lwymrEDrX1yv1r1wu1esnYcLNtMM5jEoUac41Aq1n4TlT+8t2AjBpqmPUAsbzQMHvjGE4E2n0Kr6acA8NLpgZe/clSYnZ4hXQ7Fe0yvf5A/5s2tQYcQm0nktAq5J6InX7zOkuctcl5sKVanM4ciRResBudLkb0YZPiqdlj+1ZS6ICZbVNYMgJeyVURbtO8q+fRwHvWCDXDjCB+wZQSbfWU9CruFYtKrfixRRySheti3iclPOuZZvNcM9Rae54moMXZ8HgmZZg2QCbzyAOw7IF9DO7t1SJD6yC70nlucVfOIPcVoaY7HD0PvLhf9k+0UdyJQw==
-X-OriginatorOrg: windriver.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 32fd48a3-cf37-4214-321f-08deba8b5256
-X-MS-Exchange-CrossTenant-AuthSource: IA0PR11MB7283.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 May 2026 18:27:48.0773 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 8ddb2873-a1ad-4a18-ae4e-4644631433be
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: iDLNSu+qaxDfi4kgjpk+0ez9/vuDN8Ui+/Cg8lJ1W/i4r3PnSOdxFmjDflln5dy7tfnTQZJp6xIbg1ghFy2KHg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB7304
-X-Proofpoint-GUID: JfJ-eHmHuWNfI0l1c_NDjH4NIhcK7UdG
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI1MDE4NCBTYWx0ZWRfX20Qjr8+kjYVm
- Y4ceR2vWm2GUbhp0JGNURi54UEEpVTUyswIExgzyE0E8+U/uJSwcy0vslrU2PE/njLhsa5BmYyq
- +Otybqpyz7mgUYfoM+gIl1iu4YcPuDe4q8QWC0qUf2gkinyUzHq2yZjjz+hGWPG5tgw3FJaHVlc
- Tef01iHK649WZTNk7OAPr+vDyn9U/as/I89YQK0VXX+JMMW6VtFJ8r/7JpL+r6lljjNaqDk9rHD
- Bq3ZnL5f4lTG+fpeIrvv9J9suvAk21w9LEGU4Taly7KZ3dcbgAy7EPmR+AMjH0kj8XL9P5CW3zY
- XaGe3dGDva6ZaLsnXOXJna4DYJ8S0DjzWWfa+e+l3wMQneaqF0pJ5CQEla7JKMZMvsexkX/UaLv
- g+FT0L3OUZ76bsbrPHcBpo84FPjSSnpa3u31Zzeh7biDOhg4o45gqJGge3mBSa7M7njcY7J4BXB
- Qqle/TJANJ83YMy07aQ==
-X-Authority-Analysis: v=2.4 cv=IMUyzAvG c=1 sm=1 tr=0 ts=6a1494a7 cx=c_pps
- a=MzitxtHdenuwXKuz6QWlPg==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=bi6dqmuHe4P4UrxVR6um:22 a=iKiJcTA2PjBS6x5JeXcw:22 a=t7CeM3EgAAAA:8
- a=tOh3b7mK2cmqlCsdpQIA:9 a=FdTzh2GWekK77mhwV6Dw:22
-X-Proofpoint-ORIG-GUID: JfJ-eHmHuWNfI0l1c_NDjH4NIhcK7UdG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-25_05,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0
- phishscore=0 priorityscore=1501 clxscore=1011 suspectscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605250184
-Received-SPF: pass client-ip=205.220.166.238;
- envelope-from=prvs=9605cd9704=quan.sun@windriver.com;
- helo=mx0a-0064b401.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -175,39 +123,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Quan Sun <Quan.Sun@windriver.com>
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
-On build hosts with kernel headers older than 6.0, the system's
-<linux/vhost_types.h> does not define struct vhost_vring_worker or
-struct vhost_worker_state, causing compilation of vhost-scsi.c to
-fail:
+> On 5/25/2026 8:46 AM, Pierrick Bouvier wrote:
+>> On 5/23/2026 1:56 AM, Alex Benn=C3=A9e wrote:
+>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>>
+>>>> On 5/22/2026 12:02 PM, Alex Benn=C3=A9e wrote:
+>>>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>>>>
+>>>>>> On 5/21/2026 6:17 AM, Alex Benn=C3=A9e wrote:
+>>>>>>> Explicitly set the appropriate QEMU binary as a dependency so we can
+>>>>>>> ensure they get built. This is especially important for MacOS which
+>>>>>>> otherwise only builds the unsigned binaries on a normal "make all"
+>>>>>>> run.
+>>>>>>>
+>>>>>>
+>>>>>> I'm not sure to see why it matters. tcg-tests don't make use of hvf,=
+ so
+>>>>>> unsigned binaries are plenty for it.
+>>>>>>
+>>>>>> Which other binary is this building that is not built by default?
+>>>>>>
+>>>>>> In general, if something is not included in "all" target, let's make
+>>>>>> sure it's included there (meson.build?) instead of adding a workarou=
+nd
+>>>>>> here. Not only tests benefit this, but anyone doing a build on a
+>>>>>> platform that might have optional binaries not built by default.
+>>>>>
+>>>>> If you have a suggestion on how to make that work I'm all ears.
+>>>>>
+>>>>
+>>>> I would be happy to help, but I don't understand what the goal is. I
+>>>> have three questions that should help to provide a suggestion.
+>>>>
+>>>> Which exact test command do you run?
+>>>
+>>> make check-tcg
+>>>
+>>>>
+>>>> ```
+>>>> Explicitly set the appropriate QEMU binary as a dependency so we can
+>>>> ensure they get built.
+>>>> ```
+>>>> Aren't they built by all?
+>>>
+>>> Apparently not.
+>>>
+>>>> It seems to be a dependency, at least for check-tcg:
+>>>> .ninja-goals.check-tcg =3D all test-plugins
+>>>>
+>>>> ```
+>>>> This is especially important for MacOS which otherwise only builds the
+>>>> unsigned binaries on a normal "make all" run.
+>>>> ```
+>>>> Why do you need signed binaries for testing on MacOS (hvf?)?
+>>>
+>>> In a previous iteration I made configure spit out the unsigned binaries
+>>> to config-target.mak but the request was to fix the dependencies
+>>> instead.
+>>>
+>>> It all works on Linux so I'm not sure why MacOS is being so weird
+>>> because the meson emulators target mechanism should be the same.
+>>>
+>>=20
+>> Just tried now, and it does not work on Linux neither (make check-tcg
+>> does not build any target beyond tests). Maybe you forgot to clean your
+>> folder?
+>>
+>
+> The root issue is that tests/Makefile.include is included *after*
+> evaluation of ninja-targets in main Makefile. Thus,
+> .ninja-goals.check-tcg is ignored.
 
-  error: storage size of 'vq_worker' isn't known
+So this replaces patch 1/16 - I think we have a circular dependency here.
 
-Fix by including standard-headers/linux/vhost_types.h before the
-system's <linux/vhost.h>, matching the existing pattern used in
-hw/virtio/vhost-backend.c. QEMU's bundled header provides the
-struct definitions, and its include guard prevents redefinition
-when the system header pulls in its own vhost_types.h.
+>
+> The fix is to move ninja-targets evaluation to the end of main Makefile,
+> which introduce the expected dependency for check-tcg to "all
+> test-plugins" targets.
+>
+> You can replace current patch with the one attached to this email.
+>
+> Regards,
+> Pierrick
 
-Signed-off-by: Quan Sun <Quan.Sun@windriver.com>
----
- hw/scsi/vhost-scsi.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
-index 699863cc10..10e8fbe503 100644
---- a/hw/scsi/vhost-scsi.c
-+++ b/hw/scsi/vhost-scsi.c
-@@ -15,6 +15,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "standard-headers/linux/vhost_types.h"
- #include <linux/vhost.h>
- #include <sys/ioctl.h>
- #include "qapi/error.h"
--- 
-2.43.0
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
