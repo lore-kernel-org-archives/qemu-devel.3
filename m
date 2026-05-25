@@ -4,90 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6110DCD5BB1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 15:27:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ADC2CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 15:28:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRXDZ-00079z-ST; Mon, 25 May 2026 11:27:49 -0400
+	id 1wRXDc-0007Dd-8V; Mon, 25 May 2026 11:27:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wRXDZ-000770-0G
- for qemu-devel@nongnu.org; Mon, 25 May 2026 11:27:49 -0400
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wRXDX-0007MK-GO
- for qemu-devel@nongnu.org; Mon, 25 May 2026 11:27:48 -0400
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-7c307937816so85529977b3.0
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 08:27:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779722866; x=1780327666; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=uv/TiZUvtyttpHRh/qTef49+TQHy7ozcPAECKYs4dNI=;
- b=YvYDdRwITYJWJUtUxhRHWfdM0f9sycIRJiDoY5+fb/aOxdy3PqJvKYrRxA+b2/wfz2
- wUGeU6EO4FW7nFH+7Wdj8GchyDeBT3oitJeQowc1lKeSDEWDBtjLvTLdwttdPTiQE2r1
- aviyDEhX/imXmFAGQqQJow7Lo+WxyvWiam4Vx1ORxWcOQKhAQinoA4PUqM9xgjmcIhvW
- hvtVe9KhPNW8e80qgaO6MI5n12sLWVxWk8aey+EJv9DGcwoxFxDPHOL3Z+baBDMT7PCo
- TthCze0bP7zZN/0zN/qHMTM/jh8c5EBB5WsUZxNwy7phynMfhugpvx167zLekXmxd236
- zHNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779722866; x=1780327666;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uv/TiZUvtyttpHRh/qTef49+TQHy7ozcPAECKYs4dNI=;
- b=HWEvCaf9F/n+eDd0QqCJBRdm9VgEwScZirC2lNpt03ZKIndDHEx08+lMA0hMWpWvGO
- v+oku/5DmR93NMBnf+e9grtH+QrjvMC8Y8qCgw/CifRdyi837RDnzKMkIG8HDZuAWeJB
- ZxMq3QsspWf4t4WKIvWwuqBLZ101S4T/BfzWawJG3bna2tx9C2FBWCH8yWwgDmDgnwtl
- u5cdU51VJb8lE41IpbbChuQPQ9LyequvJB3vgY6HAzYVob+XrFyJ7iTC6PgLWyYJtUDo
- dgqZS8p8iCkogKLYPBDYLdGP2EtWxcVCmn9fcvbHr6zygGMaWPgt/zJrevmg2LqEgEPc
- 0YLw==
-X-Gm-Message-State: AOJu0Yw1+DRubAqCTHBAuk0E/o+h+wuRRy986cHvXjxDBCjeTU4Akeyf
- w2a+jymeTcZ9i5EwR6YO8SC+cnubYB+0o28RXiwCphaArsuqCm64s5E/JPsqSoGH
-X-Gm-Gg: Acq92OGlM9qiFiZHAaLyn3fqcHmdGtXGGQ+oBh6dkYZ+QE7Mm3vn9DUFYRqbs3hSlq2
- nkZ8xRC1Pv+m4hbKfEIQTXXBdFoKYPkdEzb+mejx58QapsbSBMiOH/nEN+ryryAn+HPc+fb4eKm
- ToJ/VPJF+VJO7O36lofIBbxu2IZxtt8Po7+ORu8f9OqzbRyM4jHXhYIeWHmRsCZBp47Lw5jYoSj
- hjap0s6fL3hNRaANRuzV4AZf1k5PldvVE7j4krXl7sMTp9Hz74a/AzK95aseIs2kOcpMTYgNVX+
- UGQ8hvw4ofIOaj+6Eghxve/IcHC2DlBLNKWj1l6YU2HUD2lrB2+D10ZyzGMyCjXCPmZpy1VkcF6
- stzrIjjypM3hb6Poay0aQ7LEYoNfU2ETFg9cYvGLhhhu6BUDXiIc1xrMlfsHkvYgVxCVFRUoO6x
- rkhHosKnTlCkTGxsA2B40lGZvG0KeVJkiDjD95J81PFhvB3JCMAYK0oJkFyG1BMIcUdbWdbaRPm
- FQ=
-X-Received: by 2002:a05:690c:c52d:b0:7d1:d41a:5722 with SMTP id
- 00721157ae682-7d3357d5b45mr154551597b3.24.1779722866149; 
- Mon, 25 May 2026 08:27:46 -0700 (PDT)
-Received: from localhost (107-220-129-194.lightspeed.chrlnc.sbcglobal.net.
- [107.220.129.194]) by smtp.gmail.com with ESMTPSA id
- 00721157ae682-7d389d173eesm47624787b3.15.2026.05.25.08.27.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 May 2026 08:27:45 -0700 (PDT)
-From: Matt Turner <mattst88@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Matt Turner <mattst88@gmail.com>
-Subject: [PATCH] target/sh4: decode_gusa: recognize add#imm with prior mov Rm,
- Rn
-Date: Mon, 25 May 2026 11:27:39 -0400
-Message-ID: <20260525152739.4122267-1-mattst88@gmail.com>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wRXDa-0007BA-Hr
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 11:27:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wRXDY-0007M5-3F
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 11:27:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779722866;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=pTKVsCB69qVS1Mxpnsu7vKBah+yuhygLkCE3A3WK6F8=;
+ b=J+mQgGkLPXXZjXBzad4oYcNpCqQu9hi+NtKl+tJ6VnxereVhtqAPz3H4ziRTYMpyl5XoBC
+ QUB3VteAZGN0SQxxOc7hu3++U1gKsp43BprUANNV3XO4JaYvyLrdo59z5c2SLtBvHZYhIf
+ GF0x6U4MPceMvVBnpZ4pCebO0jXAgRo=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-384-1nFQqK8WMyaZzIcILqfrew-1; Mon,
+ 25 May 2026 11:27:44 -0400
+X-MC-Unique: 1nFQqK8WMyaZzIcILqfrew-1
+X-Mimecast-MFC-AGG-ID: 1nFQqK8WMyaZzIcILqfrew_1779722863
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8742118005B5; Mon, 25 May 2026 15:27:43 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.40])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E4A93300019F; Mon, 25 May 2026 15:27:42 +0000 (UTC)
+Date: Mon, 25 May 2026 11:27:41 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Subject: Re: on ai generated and code provenance
+Message-ID: <20260525152741.GA1644136@fedora>
+References: <20260524083329-mutt-send-email-mst@kernel.org>
+ <87v7ccd9eh.fsf@draig.linaro.org>
+ <20260524161048-mutt-send-email-mst@kernel.org>
+ <CAJSP0QVuRHg+gkP=aQzbCAeZfMVFF7qWj58QcJwSPTfinApa_w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=mattst88@gmail.com; helo=mail-yw1-x1132.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="jQHkRXMZ4J9ZBZWu"
+Content-Disposition: inline
+In-Reply-To: <CAJSP0QVuRHg+gkP=aQzbCAeZfMVFF7qWj58QcJwSPTfinApa_w@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,38 +88,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The gUSA pattern matcher rejected `add #imm, Rn` whenever any prior
-`mov Rm, Rn` appeared (mv_src >= 0), forcing a fallback to
-cpu_exec_step_atomic for sequences like:
 
-  mov.l  @r2, r3      ; load
-  mov    r3, r7       ; save old value (mv_src == ld_dst)
-  add    #1, r7       ; increment copy
-  mov.l  r7, @r2      ; store
+--jQHkRXMZ4J9ZBZWu
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-When mv_src == ld_dst the move merely copies the loaded value to
-preserve it -- exactly the situation already accepted for the
-`add Rm, Rn` form. The immediate form can be handled identically with
-tcg_gen_atomic_fetch_add_i32 + tcg_gen_add_i32, so translate it inline
-instead of taking the slower single-step atomic fallback.
----
- target/sh4/translate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Sun, May 24, 2026 at 04:44:41PM -0400, Stefan Hajnoczi wrote:
+> On Sun, May 24, 2026 at 4:12=E2=80=AFPM Michael S. Tsirkin <mst@redhat.co=
+m> wrote:
+> >
+> > On Sun, May 24, 2026 at 06:06:46PM +0100, Alex Benn=C3=A9e wrote:
+> > > "Michael S. Tsirkin" <mst@redhat.com> writes:
+> > >
+> > > > So, I had to reject a perfectly reasonable patch:
+> > > > https://lore.kernel.org/qemu-devel/20260320193746.242704-1-jinpu.wa=
+ng@ionos.com/
+> > > > just because of a tool used to make it.
+> > > >
+> > > >
+> > > >     How contributors could comply with DCO terms (b) or (c) for the=
+ output of AI
+> > > >     content generators commonly available today is unclear.  The QE=
+MU project is
+> > > >     not willing or able to accept the legal risks of non-compliance.
+> > >
+> > > In the linked case the LLM is basically doing a glorified search and
+> > > replace. There seems to be no danger of accidentally regurgitating any
+> > > training data which is where the worry about inadvertent copyright
+> > > infringement comes from.
+> >
+> > Does this mean I can merge it, in your view?
+>=20
+> It would be a good time to revisit the AI policy. From the QEMU Summit
+> 2026 minutes:
 
-diff --git ./target/sh4/translate.c ./target/sh4/translate.c
-index 5adf650744..d38a6bd352 100644
---- ./target/sh4/translate.c
-+++ ./target/sh4/translate.c
-@@ -1974,7 +1974,7 @@ static void decode_gusa(DisasContext *ctx, CPUSH4State *env)
-         break;
- 
-     case 0x7000 ... 0x700f: /* add #imm,Rn */
--        if (op_dst != B11_8 || mv_src >= 0) {
-+        if (op_dst != B11_8 || (mv_src >= 0 && mv_src != ld_dst)) {
-             goto fail;
-         }
-         op_opc = INDEX_op_add;
--- 
-2.53.0
+Oops, "2026" should have been "2025".
+
+I think the policy should be updated if we're going to depart from the
+policy.
+
+Stefan
+
+--jQHkRXMZ4J9ZBZWu
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmoUam0ACgkQnKSrs4Gr
+c8jUFAgAkAADKLcLE0/xhQ4LeMhbXsUfBIX7dalh1OMDvgfuzqoXbC1TRaRQQSUM
+v+fx0zgHUu2rmSTjsmaGHCL7kS6hqPNEPbM/ag2Dgv9ved9JvYcqQsP6YZTuMJhc
+eAt/Gani52C0kQJQ6PEWgrRd6apN+smhdvZR63dt16QEBgoIZJbUgkHB99/UbusF
+BKs22EtXCoKUi3CTY5bXVcHfnmmcrWhiSx7nqX0qhrzGf+NQs0wrAcSwILkW572h
+SlmNQwhAO6QC79BG8lEPnn6ToqAk0z+ux1L90rqSuhMlKnwWSVV4Sw3q8tUTd66c
+1yEHycEKBhXIoGanuIZcTFJX/EQsgw==
+=ObHE
+-----END PGP SIGNATURE-----
+
+--jQHkRXMZ4J9ZBZWu--
 
 
