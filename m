@@ -4,102 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CFAACD5BC9
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 17:16:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C4AECD5BC9
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 17:19:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRYu0-00072l-7H; Mon, 25 May 2026 13:15:44 -0400
+	id 1wRYxE-0007zc-8q; Mon, 25 May 2026 13:19:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wRYty-00072U-PQ
- for qemu-devel@nongnu.org; Mon, 25 May 2026 13:15:42 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wRYtv-0006eg-It
- for qemu-devel@nongnu.org; Mon, 25 May 2026 13:15:42 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2be1dd4af34so85994885ad.1
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 10:15:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779729337; cv=none;
- d=google.com; s=arc-20240605;
- b=Zsakhqb19XF+V/3857bizVvN677XiqA24+7wbXTLl6sWpoeaxoZ1czr0VRrWYb5pXI
- GKFPvMHB0dhNMnCAc+S+90ejW5y/0dP6AWrrIDCyzo9c13I/52vHOzdua+YPUonaO+Ll
- aRVueyUbBEbxUxYVUhh0hHc/dq9xxJQeNhaVDRhqC3UBvL5t+i1gEWh5hxitzV70fDwn
- jislawuozfjbuMwTrU1UuUWyZUX8J9rv8dO26kGQd+T6FObuyNVNPPSATQh5TDWDbfk8
- xPrDzPOtjOsOdjM3pUlOend6ubXkpGrBXjzVSSe5FL1/TM1RHn/3aaf1kqBpZnvfR7eI
- 14Jg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=FHtO+WCEjyic4zAykprbW8LQJBtJn3jvzIRBDvEtCPs=;
- fh=0MGl+ytFZVvFwhPb9lwgw5FCdKjSz6X/JXXEfYSIH/g=;
- b=NWDRNVW/9cpjJ5j26/x1z48fKg5K/+2b3oawEMU0Db3wue59LYADDaGOEKJaNHLWAn
- 2LEEVKugc21zg9IerhsxE4yD6jtbQgTIcEBwgN15kzVBjIudTzDg0b6YhaQNYTRFAYo6
- fdlpPQM3B9kODYHtoro6Ft1P6APngW8ABXrzqxmNLpYozx7gNDbkghpdT8gadD/sjZH1
- miq1IPzQ5I39NrxtaL3ag8RhCe4HAtsE2eamcqvgCR/nIDZxm0r/hHY2A7hzHXEz3Y53
- AhhyZOxFFrskFWOfTkAdwf/A+kBQRKM0UUgl7hk4c+FHoBWE2ozOEzhrYUgKItqn3cqH
- qI4g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wRYx4-0007yi-7n
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 13:18:59 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wRYx1-0007pI-Og
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 13:18:53 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64PEBdxs3658095
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 17:18:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=qcppdkim1; bh=GFZSyZxfUBqDXS7KjAVmYSod
+ f5PDS7OpqHUyiLyWsNw=; b=T3mhYbm6n9kqQObxHElHh0Zlb0ce3OXHQZAJGhYW
+ EamzMN1mGssJgoMv4UJJyYXutsOJicNmV1JIdUS720fV9yk7opt16Xh6vuwb+8kA
+ sHgnMHeQ0Y82Rfmcf6hkma74EFTK/PnuiCEHh3Yu8n9zToE4roYQ2xa2zy1q4wdP
+ gpc74ZJ8k+IjxdirMivzYhN+/W5wiFOEryd90GYC7mTcimVCIlAlt+DHbZip4IvO
+ eDjZrexJ5Au8qHN6MmyCHkpuGfQzwfqmzNDijWZX4jaEeDsiDZWFQGuVzSUh7QsH
+ xZA9BuN3zgKoPspKgH3y2FaCYmxyETrYJH7LyHYpaTVt7Q==
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ecqyn8j5w-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 17:18:49 +0000 (GMT)
+Received: by mail-dl1-f72.google.com with SMTP id
+ a92af1059eb24-13537722193so1737953c88.0
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 10:18:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779729337; x=1780334137;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=FHtO+WCEjyic4zAykprbW8LQJBtJn3jvzIRBDvEtCPs=;
- b=ruebAvlM99CfSyL+yeFKwKyJXyblPpViFRzAqg1MU0P/vAt7UNmQKX5xs+o9Ld/jjf
- bSYTsboqY9dpdonMs2Bz+ZEQ1ehfL81FH/TnXqshXOvCqEb4EIPs9jNfM7h1gSvHmA8l
- 4mtAl82mYvvecRDZTZFrlrMJq1JZGZ6Ajjo82TzpCXr9fj0uiJMtMogT6SUqZuhHgE63
- WQ8dxzS9MJJZ63RBXPkTJkR+CJnrXd4LhWpsGzBABFFKqlMyGwlSxTmpe5y5HtTgkp9+
- jAK6ZS4+8jwUpTLjjg2NLgPtlkl+l7NemTDtcdo9ly0gQ+SZqRXg6NsUZUk8IW7KWBRw
- 1POQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779729337; x=1780334137;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1779729529; x=1780334329; darn=nongnu.org;
+ h=in-reply-to:content-language:references:cc:to:from:subject
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FHtO+WCEjyic4zAykprbW8LQJBtJn3jvzIRBDvEtCPs=;
- b=ShB8lY2Lvp71m3emPa7qROGe1jr6lPCB/3oUFBM8dTmA4nCuooYM1DoqszB5/M7soG
- f/NXF5BhsypBZx56P6XJXNtEZXJ+ZcvS0bJIKGFty18VvZliuWyGykBqVSNHmGQRpMGm
- NZEaNPxgyNPcGlqt07D1Up/u8i0+qtNMWLrvZ5Nz30H15+aP+VOGPG2yDU+Qwu8Aze0R
- GJ3xux9impxr5RnVUfPXuF3oMGuL8S8BFXhwoyWxw94DoEhJOYH4HPY0kO1/qlTx9BQZ
- AfYUkHcLERJtzGjISZCUu1Loc+G7nRAV7LH5niHL1l/YCzj5aUnEI52IG+23yFemuNIO
- XvlA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8dvGyQRFhbC8WmP6HndAOWqydX7XEGk6VB3sNEagVcop/l4WqEDhvpJRhHElEyEU718FENBta1oAQi@nongnu.org
-X-Gm-Message-State: AOJu0Yza8G2hunToqUFekBiLGE4z9U49GLwE6yhHvi4laOZBjSdmKQgV
- Q3ba7vYNwNN1HrfC5WuXyHPrHa5hrVzdxiqN71DNoJGZwR27F8MS5I88vECXompHkLw3wHC5BRc
- mSvXyLhmaPK9tgfG8pi77+//y2/6Tf5dHUCJ8UEUvYGrJOYfZX84Kx30=
-X-Gm-Gg: Acq92OHqUGAWQx4NDWEf4obGZmz6RKsipa77TrkRUuywXDPzKn0mxKsyzI6n6IYDz/4
- t+zz02EcNyD+86gOlbfiROu1CB7P3jJQNKVbWOwKwTq1SbSEv5UN1IWf2GNY2F25urAjqT43S6U
- q5M1hCcCB8n7/ZwOVoY531/m3jucoZvtQvHlZHxZpZyelpISBjBBc0u0pyspjST00u6Cvs7E1Ui
- tmz/Ysf2Ouy/Z1ISaw+yOcSniECSJHr+sFDTuVa7Kdz+65BFIGwU5CwD6yZym/qlHFPrigTy/Ni
- IgepVIaxyg+kTT2K0oaiQUD1h+rkIdUGs3cT6w==
-X-Received: by 2002:a17:903:2284:b0:2bd:412:21fb with SMTP id
- d9443c01a7336-2beb033eeeamr174409735ad.8.1779729336711; Mon, 25 May 2026
- 10:15:36 -0700 (PDT)
+ bh=GFZSyZxfUBqDXS7KjAVmYSodf5PDS7OpqHUyiLyWsNw=;
+ b=Sr4XztVs1gc4JtGdgbrYqJ7aByxMVG4UbxJzUnt8QzDh0N30jVdWM6WTQrOqG5Jz0a
+ 9GoHky+GVdNGFZsPJfxScwy+c3n1Eo06occZ4irUVBN689qwykyueyZlI2XaYan23/Ns
+ 5NmdK1isMVCwMd/VJ9q9sZHCaelpWi1hjaJMAIQElfHw/ulO820++X/JsavB+cDVuf3q
+ K+RCOr8sapkLiIFc5TCSRlw5HMWtLHB3cA67zZFMcXKDQzDmuljS+1hqT/AUfiu++IXK
+ paGRlCPvqSTwP1VU/SmMlj2C07KqIFqxCf0tvuXr/tcgkiBjMpyhYIga2Zf5kdKnaewV
+ gi7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779729529; x=1780334329;
+ h=in-reply-to:content-language:references:cc:to:from:subject
+ :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GFZSyZxfUBqDXS7KjAVmYSodf5PDS7OpqHUyiLyWsNw=;
+ b=N8kmL6+14L9GK7ekhdZOqtlHpZwe1TWpxCmJhQ1fby2gRwT3OaqFz5qNx0qdYm5lpr
+ D4GJdkm2Lr65x7rtsPb6WQY2nN9HkFD59JrMK2pWUnb+HyKIlw2ryo1bUNScIDZEwAx1
+ qB1y7vakFWNkUohLl00Lbjq+CIaIbdOpawv/TgfurIqrqngdbJ3eCe2cvA6fDQQtTzxl
+ yQYGdS1VTihvxvrvaO8qQ4gKCYvqAicARjw1/s77KLBKgYkLGikihFYhjPw7jNBw/BzB
+ /7MJbR7rUtNl5vym9Y0e4pBG34SJI5vecNhqrncuoV0omztex9tu0k2L787n2cPd9qjU
+ V8SA==
+X-Gm-Message-State: AOJu0Yyu72eY/Vonoq5uSOVGf1Thp0tLAb1y7vgVSJmWlZ0sg9Ht2GLa
+ efa06xgT5F6v7538HXpltoZPKjWRa5C7IhpigoaGa9pM+RdpLTrsYnfF0bsxC3Iv5P3mAQIiWa6
+ xwf4bV3brBxNj+D72Od0QdPH06t4EfBaN7RNIrJoCOYNLWeI409vEAiX5kA==
+X-Gm-Gg: Acq92OHL83EaI3d88h6yjoO/hhcmMqe2ojfstzo78LTxzoff7uRxQ6vor5IAeE3mHLN
+ HIR7XlxZW17K3cR9eVoMR2HsqNHQ8p1yXUf0BzlzvBYPXcP+pn9bFFSyG65TeMDUHKCfV/PAcIA
+ Azu0BOZtTdetM/jH8/pQi1JIAYTRqEvOS5c3FOnF8xFRsQ5FvY2hcIbHBaCA12NZD6o2UUiCvaU
+ gIkHoA6pLWpjZTv+yMcjh+cHv3dcDkwtEEew9jhob5GLUZ1960iViK17y01qpuAJM+yiGR36GFz
+ +43fv7nMyIPmSc6/XEDWxfb9lPh0zd3audfbun3hy2SguhEuyEPT5nseDms+ZLDNSnYSyCBvt/B
+ pt5X9KioiNNpeslvoi8VigD8MGtCZvGRPmelMGbfuWZHxcCdqmkUY6jJpX6MPYE8MrQzzspyTW0
+ 4hj5agGbCbQ7GHQw==
+X-Received: by 2002:a05:7022:2381:b0:136:a5df:dcb9 with SMTP id
+ a92af1059eb24-136a5dfddfamr2859682c88.10.1779729528790; 
+ Mon, 25 May 2026 10:18:48 -0700 (PDT)
+X-Received: by 2002:a05:7022:2381:b0:136:a5df:dcb9 with SMTP id
+ a92af1059eb24-136a5dfddfamr2859662c88.10.1779729528134; 
+ Mon, 25 May 2026 10:18:48 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1366a40305csm5991699c88.7.2026.05.25.10.18.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 25 May 2026 10:18:47 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="------------40CsafmXQVnozvoL3aCd0RDG"
+Message-ID: <0f73d717-1621-4c3f-9c5e-9bfdfaffb0b8@oss.qualcomm.com>
+Date: Mon, 25 May 2026 10:18:45 -0700
 MIME-Version: 1.0
-References: <20260524083329-mutt-send-email-mst@kernel.org>
- <f0bc9023-28c4-4685-b0cc-fc7ad4e6d371@redhat.com>
-In-Reply-To: <f0bc9023-28c4-4685-b0cc-fc7ad4e6d371@redhat.com>
-From: Warner Losh <imp@bsdimp.com>
-Date: Mon, 25 May 2026 11:15:25 -0600
-X-Gm-Features: AVHnY4IqT4F4UYwdzqSH7meHc72Ggy6O35mRFiIot5WFMh79FV_wwlccjnEehjg
-Message-ID: <CANCZdfrn61yr5k=3=E_zE11dw3j2vVsg0PPn0PZ7RAa2agM8kQ@mail.gmail.com>
-Subject: Re: on ai generated and code provenance
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
- stefanha@redhat.com
-Content-Type: multipart/alternative; boundary="000000000000e94c690652a78685"
-Received-SPF: none client-ip=2607:f8b0:4864:20::635;
- envelope-from=wlosh@bsdimp.com; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 03/16] tests/Makefile.include: add binary dependency to
+ run-tcg-tests-% rules
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <th.huth+qemu@posteo.eu>, Song Gao <gaosong@loongson.cn>,
+ John Snow <jsnow@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Kyle Evans <kevans@freebsd.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Cleber Rosa <crosa@redhat.com>, Warner Losh <imp@bsdimp.com>,
+ Brad Smith <brad@comstyle.com>, Thomas Huth <thuth@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>, Fabiano Rosas <farosas@suse.de>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org
+References: <20260521131739.540157-1-alex.bennee@linaro.org>
+ <20260521131739.540157-4-alex.bennee@linaro.org>
+ <74e8bc86-cd81-43f9-b5cb-7e3de3bcd3d0@oss.qualcomm.com>
+ <87tsrzl138.fsf@draig.linaro.org>
+ <093614fb-ced1-4b15-b1e1-5da755f87237@oss.qualcomm.com>
+ <87cxymec7b.fsf@draig.linaro.org>
+ <5bd51a1a-4079-4073-bbd8-f0206a1ad458@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <5bd51a1a-4079-4073-bbd8-f0206a1ad458@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=Wpwb99fv c=1 sm=1 tr=0 ts=6a14847a cx=c_pps
+ a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=r77TgQKjGQsHNAKrUKIA:9
+ a=EUspDBNiAAAA:8 a=3Kua0wUZ5nQODclCGu0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=wHKK0QyR7lOD0vgqDtsA:9 a=B2y7HmGcmWMA:10 a=vBUdepa8ALXHeOFLBtFW:22
+X-Proofpoint-GUID: TsV28BCf96Ml_aJLsoIDz9KAls22oZgs
+X-Proofpoint-ORIG-GUID: TsV28BCf96Ml_aJLsoIDz9KAls22oZgs
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI1MDE3NCBTYWx0ZWRfX6K3O77fxcZy2
+ dHs0dwZciYa5bOmQMpEmuuWwlp19DYs6r4+V7y05lOZiTUe8QjAizInYtPLZkX6uipbH9j/jdKl
+ 9PBOyFqVwYhCJia44BrTgdK7z1F/2CXwg9Iu5xvDQOwl/pLohl3CKOfWXy7TkRsVCUSgXCJWTDR
+ 3waFsJfyD1EqqWIS9eEiEeEN8hBKJtcg3m5ryVW8kQN7i7RlJDDjnTMiWvLuJfpCVPooG7g+DZg
+ mVvLuJIsK9wLRU+7OiS3RUW53gt1hz+B0sg4QiFvbu4zXcx4boqa41oqDB1M+2CLX2OzBn1gmOr
+ TumGionCHlyPy4PRGNpUTDNjIDsj9YE8Y6r8oOWf39JcVbj3I/CGxIutVMBynvVaiifgbK0oab6
+ 9RlDyIZc/onPbXh1HxtzwZJq3OnG5/m1weC6u1XP7PUUzEKRubtdCL6oGwPNTrDxYKI9bd3vdux
+ JgQVDzvHsiiW/5+ff0w==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-25_05,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 clxscore=1015 suspectscore=0 impostorscore=0 adultscore=0
+ lowpriorityscore=0 malwarescore=0 spamscore=0 bulkscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605250174
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,313 +164,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e94c690652a78685
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+This is a multi-part message in MIME format.
+--------------40CsafmXQVnozvoL3aCd0RDG
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, May 25, 2026 at 10:34=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com=
-> wrote:
-
-> On 5/24/26 14:42, Michael S. Tsirkin wrote:
-> >       How contributors could comply with DCO terms (b) or (c) for the
-> output of AI
-> >       content generators commonly available today is unclear.  The QEMU
-> project is
-> >       not willing or able to accept the legal risks of non-compliance.
-> >
-> > But, since this was written, Red Hat's Richard Fontana and Chris Wright
-> > published this piece:
-> >
-> https://www.redhat.com/en/blog/ai-assisted-development-and-open-source-na=
-vigating-legal-issues
-> >
-> > Saying, in particular
-> >       We understand this concern, but the DCO has never
-> >       been interpreted to require that every line of a contribution mus=
-t
-> be
-> >       the personal creative expression of the contributor or another
-> human
-> >       developer.
-> This is not the objection or the worry; rather the question is, what if
-> the contribution is a creative expression of someone that could claim
-> copyright in it.  In fact, looking at the Linux policy...
->
->    Signed-off-by and Developer Certificate of Origin
->    =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
->
->    AI agents MUST NOT add Signed-off-by tags. Only humans can legally
->    certify the Developer Certificate of Origin (DCO). The human submitter
->    is responsible for:
->
->    * Reviewing all AI-generated code
->    * Ensuring compliance with licensing requirements
->    * Adding their own Signed-off-by tag to certify the DCO
->    * Taking full responsibility for the contribution
->
-> ... the question is how humans can actually do the second step.  The
-> piece you posted above says: "with disclosure and human attentiveness =E2=
-=80=93
-> and oversight =E2=80=93 aided where possible by tools that check for code
-> similarity, AI-assisted contributions can be entirely compatible with
-> the spirit of the DCO".
->
-
-The code produced by AI agents has no copyright. You can incorporate
-public domain code into your work and have the absolute right to license
-it (see all the Diseny movies). The notion that LLMs wholesale copy
-originates
-from the earliest days of Copilot and turned out were contrived. No recent
-evidence shows that plagiarism is a concern. To the extent that I modify
-public domain code, I have a copyright that I can choose to license
-however I want (and the SOB says it's compatible).
-
-So I'm struggling to understand the hesitation here. Is it the uncertainty
-around the copyright? Around the copying issue? Something else?
-We already have some level of risk around these issues with human
-coders: We have to take their word for it that they didn't copy, and if
-they did, the project is still on the hook to remedy the situation if the
-real rights holders show up.... There's always risk when submissions
-are accepted from the general public. Also, I've softened this paragraph
-several times, and it still comes across as more confrontational than I
-intend.
-I'm trying to understand.
-
-
-> This is not encouraging, in my opinion, because it leaves a lot of the
-> mechanics undefined.  A while ago I suggested that in some scenarios
-> this could actually be done[1][2]; another possible case is localized
-> bugfixes (say, below 20 lines of code).  For more general contributions
-> however, the role of maintainers is not clear.  Would we require to
-> "check for code similarity"?  I sure don't want to open that can of worms=
-.
->
-> > I propose adopting linux's rules instead:
-> > https://docs.kernel.org/process/coding-assistants.html
->
-> Replacing QEMU's policy with Linux's would be orthogonal to the topic of
-> the DCO.  Maintainers would still have the option of rejecting
-> AI-assisted patches if they don't believe they can apply their own
-> sign-off.
->
-> Other projects have taken similar "no AI" policies for different
-> reasons.  Zig has one because they believe AI code would make it harder
-> to retain contributors[3][4]; Rust is working on one that is fairly
-> restrictive[5] (discussion at [6]) and requires previous communications
-> with reviewers about *any* generated PRs[7].  Personally I think QEMU's
-> policy is fine but we should start introducing exceptions, possibly
-> including large contributions with pre-authorization (but not
-> pre-approval) from the maintainer.
+On 5/25/2026 8:46 AM, Pierrick Bouvier wrote:
+> On 5/23/2026 1:56 AM, Alex Bennée wrote:
+>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>
+>>> On 5/22/2026 12:02 PM, Alex Bennée wrote:
+>>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>>>
+>>>>> On 5/21/2026 6:17 AM, Alex Bennée wrote:
+>>>>>> Explicitly set the appropriate QEMU binary as a dependency so we can
+>>>>>> ensure they get built. This is especially important for MacOS which
+>>>>>> otherwise only builds the unsigned binaries on a normal "make all"
+>>>>>> run.
+>>>>>>
+>>>>>
+>>>>> I'm not sure to see why it matters. tcg-tests don't make use of hvf, so
+>>>>> unsigned binaries are plenty for it.
+>>>>>
+>>>>> Which other binary is this building that is not built by default?
+>>>>>
+>>>>> In general, if something is not included in "all" target, let's make
+>>>>> sure it's included there (meson.build?) instead of adding a workaround
+>>>>> here. Not only tests benefit this, but anyone doing a build on a
+>>>>> platform that might have optional binaries not built by default.
+>>>>
+>>>> If you have a suggestion on how to make that work I'm all ears.
+>>>>
+>>>
+>>> I would be happy to help, but I don't understand what the goal is. I
+>>> have three questions that should help to provide a suggestion.
+>>>
+>>> Which exact test command do you run?
+>>
+>> make check-tcg
+>>
+>>>
+>>> ```
+>>> Explicitly set the appropriate QEMU binary as a dependency so we can
+>>> ensure they get built.
+>>> ```
+>>> Aren't they built by all?
+>>
+>> Apparently not.
+>>
+>>> It seems to be a dependency, at least for check-tcg:
+>>> .ninja-goals.check-tcg = all test-plugins
+>>>
+>>> ```
+>>> This is especially important for MacOS which otherwise only builds the
+>>> unsigned binaries on a normal "make all" run.
+>>> ```
+>>> Why do you need signed binaries for testing on MacOS (hvf?)?
+>>
+>> In a previous iteration I made configure spit out the unsigned binaries
+>> to config-target.mak but the request was to fix the dependencies
+>> instead.
+>>
+>> It all works on Linux so I'm not sure why MacOS is being so weird
+>> because the meson emulators target mechanism should be the same.
+>>
+> 
+> Just tried now, and it does not work on Linux neither (make check-tcg
+> does not build any target beyond tests). Maybe you forgot to clean your
+> folder?
 >
 
-I agree with the thrust of the proposals you've submitted: AI is a tool, an=
-d
-there are many ways to use it safely.
+The root issue is that tests/Makefile.include is included *after*
+evaluation of ninja-targets in main Makefile. Thus,
+.ninja-goals.check-tcg is ignored.
 
-AI's primary issue is verification. The folks being flooded can't verify th=
-e
-good from the bad in the flood and tend to have a knee jerk reaction to
-protect themselves: ban it.
+The fix is to move ninja-targets evaluation to the end of main Makefile,
+which introduce the expected dependency for check-tcg to "all
+test-plugins" targets.
 
-Unstated issue: How do we help people that want to contribute grow their
-skills using AI so they make submissions whose quality if good enough to
-be worth our time to verify and review. It's an industry wide problem, alon=
-g
-with how do junior engineers become senior in a world of AI doing the grunt
-work they used to learn from.
+You can replace current patch with the one attached to this email.
 
-Warner
+Regards,
+Pierrick
+--------------40CsafmXQVnozvoL3aCd0RDG
+Content-Type: text/plain; charset=UTF-8;
+ name="0001-Makefile-move-ninja-targets-evaluation-to-end-of-fil.patch"
+Content-Disposition: attachment;
+ filename*0="0001-Makefile-move-ninja-targets-evaluation-to-end-of-fil.pa";
+ filename*1="tch"
+Content-Transfer-Encoding: base64
 
+RnJvbSBmZmM0MThmMWFkZTQyN2UzYWI0NjQ4ZDk3YWYzNzg4OGY0MjRiYWE3IE1vbiBTZXAg
+MTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2
+aWVyQG9zcy5xdWFsY29tbS5jb20+CkRhdGU6IE1vbiwgMjUgTWF5IDIwMjYgMTA6MDk6NTYg
+LTA3MDAKU3ViamVjdDogW1BBVENIXSBNYWtlZmlsZTogbW92ZSBuaW5qYS10YXJnZXRzIGV2
+YWx1YXRpb24gdG8gZW5kIG9mIGZpbGUKCkFsZXggZm91bmQgdGhhdCBtYWtlIGNoZWNrLXRj
+ZyB3YXMgbm90IGNvcnJlY3RseSBidWlsZGluZyBxZW11IGJpbmFyaWVzLgpUaGUgcHJvYmxl
+bSB3YXMgdGhhdCAuL3Rlc3RzL01ha2VmaWxlLmluY2x1ZGUgaXMgaW5jbHVkZWQgKmFmdGVy
+KgpldmFsdWF0aW5nIG5pbmphLXRhcmdldHMuIFRodXMsIC5uaW5qYS1nb2Fscy5jaGVjay10
+Y2cgd2FzIGlnbm9yZWQuCgpUbyBmaXggdGhpcyBhbmQgYXZvaWQgbWlzdGFrZXMgaW4gdGhl
+IGZ1dHVyZSwganVzdCBtb3ZlIHRoZQpuaW5qYS10YXJnZXRzIGV2YWx1YXRpb24gYXQgZW5k
+IG9mIG1haW4gTWFrZWZpbGUuCgpTaWduZWQtb2ZmLWJ5OiBQaWVycmljayBCb3V2aWVyIDxw
+aWVycmljay5ib3V2aWVyQG9zcy5xdWFsY29tbS5jb20+Ci0tLQogTWFrZWZpbGUgfCA4OCAr
+KysrKysrKysrKysrKysrKysrKysrKysrKysrKy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LQogMSBmaWxlIGNoYW5nZWQsIDQ1IGluc2VydGlvbnMoKyksIDQzIGRlbGV0aW9ucygtKQoK
+ZGlmZiAtLWdpdCBhL01ha2VmaWxlIGIvTWFrZWZpbGUKaW5kZXggNTQ1NDdhMzdiMWEuLjVl
+MDBiYzA5MGZjIDEwMDY0NAotLS0gYS9NYWtlZmlsZQorKysgYi9NYWtlZmlsZQpAQCAtMTM1
+LDQ5ICsxMzUsNiBAQCAkKFNSQ19QQVRIKS9zY3JpcHRzL21lc29uLWJ1aWxkb3B0aW9ucy5z
+aDogJChTUkNfUEFUSCkvbWVzb25fb3B0aW9ucy50eHQgJChTUkNfUAogCSAgc2NyaXB0cy9t
+ZXNvbi1idWlsZG9wdGlvbnMucHkgPiAkQC50bXAgJiYgbXYgJEAudG1wICRACiBlbmRpZgog
+Ci0jIDQuIFJ1bGVzIHRvIGJyaWRnZSB0byBvdGhlciBtYWtlZmlsZXMKLQotaWZuZXEgKCQo
+TklOSkEpLCkKLSMgRmlsdGVyIG91dCBsb25nIG9wdGlvbnMgdG8gYXZvaWQgZmxhZ3MgbGlr
+ZSAtLW5vLXByaW50LWRpcmVjdG9yeSB3aGljaAotIyBtYXkgcmVzdWx0IGluIGZhbHNlIHBv
+c2l0aXZlIG1hdGNoIGZvciBNQUtFLm4KLU1BS0UubiA9ICQoZmluZHN0cmluZyBuLCQoZmly
+c3R3b3JkICQoZmlsdGVyLW91dCAtLSUsJChNQUtFRkxBR1MpKSkpCi1NQUtFLmsgPSAkKGZp
+bmRzdHJpbmcgaywkKGZpcnN0d29yZCAkKGZpbHRlci1vdXQgLS0lLCQoTUFLRUZMQUdTKSkp
+KQotTUFLRS5xID0gJChmaW5kc3RyaW5nIHEsJChmaXJzdHdvcmQgJChmaWx0ZXItb3V0IC0t
+JSwkKE1BS0VGTEFHUykpKSkKLU1BS0UubnEgPSAkKGlmICQod29yZCAyLCAkKE1BS0Uubikg
+JChNQUtFLnEpKSxucSkKLU5JTkpBRkxBR1MgPSBcCi0gICAgICAgICQoaWYgJFYsLXYpIFwK
+LSAgICAgICAgJChpZiAkKE1BS0UubiksIC1uKSBcCi0gICAgICAgICQoaWYgJChNQUtFLmsp
+LCAtazApIFwKLSAgICAgICAgJChmaWx0ZXItb3V0IC1qLCBcCi0gICAgICAgICAgJChvciAk
+KGZpbHRlciAtbCUgLWolLCAkKE1BS0VGTEFHUykpLCBcCi0gICAgICAgICAgICAgICAkKGlm
+ICQoZmlsdGVyIC0tam9ic2VydmVyLWF1dGg9JSwgJChNQUtFRkxBR1MpKSwsIC1qMSkpKSBc
+Ci0gICAgICAgIC1kIGtlZXBkZXBmaWxlCi1uaW5qYS1jbWQtZ29hbHMgKz0gJChvciAkKE1B
+S0VDTURHT0FMUyksIGFsbCkKLW5pbmphLWNtZC1nb2FscyArPSAkKGZvcmVhY2ggZywgJChN
+QUtFQ01ER09BTFMpLCAkKC5uaW5qYS1nb2Fscy4kZykpCi0KLW1ha2VmaWxlLXRhcmdldHMg
+Oj0gYnVpbGQubmluamEgY3RhZ3MgVEFHUyBjc2NvcGUgZGlzdCBjbGVhbgotIyAibmluamEg
+LXQgdGFyZ2V0cyIgYWxzbyBsaXN0cyBhbGwgcHJlcmVxdWlzaXRlcy4gIElmIGJ1aWxkIHN5
+c3RlbQotIyBmaWxlcyBhcmUgbWFya2VkIGFzIFBIT05ZLCBob3dldmVyLCBNYWtlIHdpbGwg
+YWx3YXlzIHRyeSB0byBleGVjdXRlCi0jICJuaW5qYSBidWlsZC5uaW5qYSIuCi1uaW5qYS10
+YXJnZXRzIDo9ICQoZmlsdGVyLW91dCAkKGJ1aWxkLWZpbGVzKSAkKG1ha2VmaWxlLXRhcmdl
+dHMpLCAkKG5pbmphLXRhcmdldHMpKQotLlBIT05ZOiAkKG5pbmphLXRhcmdldHMpIHJ1bi1u
+aW5qYQotJChuaW5qYS10YXJnZXRzKTogcnVuLW5pbmphCi0KLSMgVXNlICJ8IGNhdCIgdG8g
+Z2l2ZSBOaW5qYSBhIG1vcmUgIm1ha2UteSIgb3V0cHV0LiAgVXNlICIrIiB0byBieXBhc3Mg
+dGhlCi0jIC0tb3V0cHV0LXN5bmMgbGluZS4KLXJ1bi1uaW5qYTogY29uZmlnLWhvc3QubWFr
+Ci1pZm5lcSAoJChmaWx0ZXIgJChuaW5qYS10YXJnZXRzKSwgJChuaW5qYS1jbWQtZ29hbHMp
+KSwpCi0JKyQoaWYgJChNQUtFLm5xKSxAOiwkKHF1aWV0LUApJChOSU5KQSkgJChOSU5KQUZM
+QUdTKSBcCi0JICAgJChzb3J0ICQoZmlsdGVyICQobmluamEtdGFyZ2V0cyksICQobmluamEt
+Y21kLWdvYWxzKSkpIHwgY2F0KQotZW5kaWYKLWVuZGlmCi0KLWVsc2UgIyBjb25maWctaG9z
+dC5tYWsgZG9lcyBub3QgZXhpc3QKLWlmbmVxICgkKGZpbHRlci1vdXQgJChVTkNIRUNLRURf
+R09BTFMpLCQoTUFLRUNNREdPQUxTKSksJChpZiAkKE1BS0VDTURHT0FMUyksLGZhaWwpKQot
+JChlcnJvciBQbGVhc2UgY2FsbCBjb25maWd1cmUgYmVmb3JlIHJ1bm5pbmcgbWFrZSkKLWVu
+ZGlmCi1lbmRpZiAjIGNvbmZpZy1ob3N0Lm1hayBkb2VzIG5vdCBleGlzdAotCiBTVUJESVJf
+TUFLRUZMQUdTPSQoaWYgJChWKSwsLS1uby1wcmludC1kaXJlY3RvcnkgLS1xdWlldCkKIAog
+aW5jbHVkZSAkKFNSQ19QQVRIKS90ZXN0cy9NYWtlZmlsZS5pbmNsdWRlCkBAIC0zMzcsMyAr
+Mjk0LDQ4IEBAIGVuZGlmCiAKIHByaW50LSU6CiAJQGVjaG8gJyQqPSQoJCopJworCisjIyMj
+IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
+IyMjIyMjIyMjIyMjCisKKyMgNC4gUnVsZXMgdG8gYnJpZGdlIHRvIG90aGVyIG1ha2VmaWxl
+cworCitpZm5lcSAoJChOSU5KQSksKQorIyBGaWx0ZXIgb3V0IGxvbmcgb3B0aW9ucyB0byBh
+dm9pZCBmbGFncyBsaWtlIC0tbm8tcHJpbnQtZGlyZWN0b3J5IHdoaWNoCisjIG1heSByZXN1
+bHQgaW4gZmFsc2UgcG9zaXRpdmUgbWF0Y2ggZm9yIE1BS0UubgorTUFLRS5uID0gJChmaW5k
+c3RyaW5nIG4sJChmaXJzdHdvcmQgJChmaWx0ZXItb3V0IC0tJSwkKE1BS0VGTEFHUykpKSkK
+K01BS0UuayA9ICQoZmluZHN0cmluZyBrLCQoZmlyc3R3b3JkICQoZmlsdGVyLW91dCAtLSUs
+JChNQUtFRkxBR1MpKSkpCitNQUtFLnEgPSAkKGZpbmRzdHJpbmcgcSwkKGZpcnN0d29yZCAk
+KGZpbHRlci1vdXQgLS0lLCQoTUFLRUZMQUdTKSkpKQorTUFLRS5ucSA9ICQoaWYgJCh3b3Jk
+IDIsICQoTUFLRS5uKSAkKE1BS0UucSkpLG5xKQorTklOSkFGTEFHUyA9IFwKKyAgICAgICAg
+JChpZiAkViwtdikgXAorICAgICAgICAkKGlmICQoTUFLRS5uKSwgLW4pIFwKKyAgICAgICAg
+JChpZiAkKE1BS0UuayksIC1rMCkgXAorICAgICAgICAkKGZpbHRlci1vdXQgLWosIFwKKyAg
+ICAgICAgICAkKG9yICQoZmlsdGVyIC1sJSAtaiUsICQoTUFLRUZMQUdTKSksIFwKKyAgICAg
+ICAgICAgICAgICQoaWYgJChmaWx0ZXIgLS1qb2JzZXJ2ZXItYXV0aD0lLCAkKE1BS0VGTEFH
+UykpLCwgLWoxKSkpIFwKKyAgICAgICAgLWQga2VlcGRlcGZpbGUKK25pbmphLWNtZC1nb2Fs
+cyArPSAkKG9yICQoTUFLRUNNREdPQUxTKSwgYWxsKQorbmluamEtY21kLWdvYWxzICs9ICQo
+Zm9yZWFjaCBnLCAkKE1BS0VDTURHT0FMUyksICQoLm5pbmphLWdvYWxzLiRnKSkKKworbWFr
+ZWZpbGUtdGFyZ2V0cyA6PSBidWlsZC5uaW5qYSBjdGFncyBUQUdTIGNzY29wZSBkaXN0IGNs
+ZWFuCisjICJuaW5qYSAtdCB0YXJnZXRzIiBhbHNvIGxpc3RzIGFsbCBwcmVyZXF1aXNpdGVz
+LiAgSWYgYnVpbGQgc3lzdGVtCisjIGZpbGVzIGFyZSBtYXJrZWQgYXMgUEhPTlksIGhvd2V2
+ZXIsIE1ha2Ugd2lsbCBhbHdheXMgdHJ5IHRvIGV4ZWN1dGUKKyMgIm5pbmphIGJ1aWxkLm5p
+bmphIi4KK25pbmphLXRhcmdldHMgOj0gJChmaWx0ZXItb3V0ICQoYnVpbGQtZmlsZXMpICQo
+bWFrZWZpbGUtdGFyZ2V0cyksICQobmluamEtdGFyZ2V0cykpCisuUEhPTlk6ICQobmluamEt
+dGFyZ2V0cykgcnVuLW5pbmphCiskKG5pbmphLXRhcmdldHMpOiBydW4tbmluamEKKworIyBV
+c2UgInwgY2F0IiB0byBnaXZlIE5pbmphIGEgbW9yZSAibWFrZS15IiBvdXRwdXQuICBVc2Ug
+IisiIHRvIGJ5cGFzcyB0aGUKKyMgLS1vdXRwdXQtc3luYyBsaW5lLgorcnVuLW5pbmphOiBj
+b25maWctaG9zdC5tYWsKK2lmbmVxICgkKGZpbHRlciAkKG5pbmphLXRhcmdldHMpLCAkKG5p
+bmphLWNtZC1nb2FscykpLCkKKwkrJChpZiAkKE1BS0UubnEpLEA6LCQocXVpZXQtQCkkKE5J
+TkpBKSAkKE5JTkpBRkxBR1MpIFwKKwkgICAkKHNvcnQgJChmaWx0ZXIgJChuaW5qYS10YXJn
+ZXRzKSwgJChuaW5qYS1jbWQtZ29hbHMpKSkgfCBjYXQpCitlbmRpZgorZW5kaWYKKworZWxz
+ZSAjIGNvbmZpZy1ob3N0Lm1hayBkb2VzIG5vdCBleGlzdAoraWZuZXEgKCQoZmlsdGVyLW91
+dCAkKFVOQ0hFQ0tFRF9HT0FMUyksJChNQUtFQ01ER09BTFMpKSwkKGlmICQoTUFLRUNNREdP
+QUxTKSwsZmFpbCkpCiskKGVycm9yIFBsZWFzZSBjYWxsIGNvbmZpZ3VyZSBiZWZvcmUgcnVu
+bmluZyBtYWtlKQorZW5kaWYKK2VuZGlmICMgY29uZmlnLWhvc3QubWFrIGRvZXMgbm90IGV4
+aXN0Ci0tIAoyLjQzLjAKCg==
 
-> Paolo
->
-> [1]
->
-> https://lore.kernel.org/qemu-devel/20250925075630.352720-1-pbonzini@redha=
-t.com
-> [2]
->
-> https://lore.kernel.org/qemu-devel/20251008063546.376603-1-pbonzini@redha=
-t.com/raw
-> [3] https://ziglang.org/code-of-conduct/
-> [4]
->
-> https://ziggit.dev/t/bun-s-zig-fork-got-4x-faster-compilation-times/15183=
-/19
-> [5]
->
-> https://github.com/jyn514/rust-forge/blob/llm-policy/src/policies/llm-usa=
-ge.md
-> [6] https://github.com/rust-lang/rust-forge/pull/1040
-> [7]
->
-> https://github.com/jyn514/rust-forge/blob/llm-policy/src/policies/llm-usa=
-ge.md#experiment-llm-created-code-changes
->
->
->
-
---000000000000e94c690652a78685
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, May 25,=
- 2026 at 10:34=E2=80=AFAM Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redh=
-at.com">pbonzini@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gm=
-ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
-204,204);padding-left:1ex">On 5/24/26 14:42, Michael S. Tsirkin wrote:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0How contributors could comply with DCO terms=
- (b) or (c) for the output of AI<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0content generators commonly available today =
-is unclear.=C2=A0 The QEMU project is<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0not willing or able to accept the legal risk=
-s of non-compliance.<br>
-&gt; <br>
-&gt; But, since this was written, Red Hat&#39;s Richard Fontana and Chris W=
-right<br>
-&gt; published this piece:<br>
-&gt; <a href=3D"https://www.redhat.com/en/blog/ai-assisted-development-and-=
-open-source-navigating-legal-issues" rel=3D"noreferrer" target=3D"_blank">h=
-ttps://www.redhat.com/en/blog/ai-assisted-development-and-open-source-navig=
-ating-legal-issues</a><br>
-&gt; <br>
-&gt; Saying, in particular<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0We understand this concern, but the DCO has =
-never<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0been interpreted to require that every line =
-of a contribution must be<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0the personal creative expression of the cont=
-ributor or another human<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0developer.<br>
-This is not the objection or the worry; rather the question is, what if <br=
->
-the contribution is a creative expression of someone that could claim <br>
-copyright in it.=C2=A0 In fact, looking at the Linux policy...<br>
-<br>
-=C2=A0 =C2=A0Signed-off-by and Developer Certificate of Origin<br>
-=C2=A0 =C2=A0=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D<br>
-<br>
-=C2=A0 =C2=A0AI agents MUST NOT add Signed-off-by tags. Only humans can leg=
-ally<br>
-=C2=A0 =C2=A0certify the Developer Certificate of Origin (DCO). The human s=
-ubmitter<br>
-=C2=A0 =C2=A0is responsible for:<br>
-<br>
-=C2=A0 =C2=A0* Reviewing all AI-generated code<br>
-=C2=A0 =C2=A0* Ensuring compliance with licensing requirements<br>
-=C2=A0 =C2=A0* Adding their own Signed-off-by tag to certify the DCO<br>
-=C2=A0 =C2=A0* Taking full responsibility for the contribution<br>
-<br>
-... the question is how humans can actually do the second step.=C2=A0 The <=
-br>
-piece you posted above says: &quot;with disclosure and human attentiveness =
-=E2=80=93 <br>
-and oversight =E2=80=93 aided where possible by tools that check for code <=
-br>
-similarity, AI-assisted contributions can be entirely compatible with <br>
-the spirit of the DCO&quot;.<br></blockquote><div><br></div><div>The code p=
-roduced by AI agents has no copyright. You can incorporate</div><div>public=
- domain code into your work and have the absolute right to license</div><di=
-v>it (see all the Diseny movies).=C2=A0The notion that LLMs wholesale copy =
-originates</div><div>from the earliest days of Copilot and turned out were =
-contrived. No recent</div><div>evidence shows that plagiarism is a concern.=
- To the extent that I modify</div><div>public domain code, I have a copyrig=
-ht that I can choose to license</div><div>however I want (and the SOB says =
-it&#39;s compatible).</div><div><br></div><div>So I&#39;m struggling to und=
-erstand the hesitation here. Is it the uncertainty</div><div>around the cop=
-yright? Around the copying issue? Something else?</div><div>We already have=
- some level of risk around these issues with human</div><div>coders: We hav=
-e to take their word for it that they didn&#39;t copy, and if</div><div>the=
-y did, the project is still on the hook to remedy the situation if the</div=
-><div>real rights holders show up.... There&#39;s always risk when submissi=
-ons</div><div>are accepted from the general public. Also, I&#39;ve softened=
- this paragraph</div><div>several times, and it still comes across as more =
-confrontational than I intend.</div><div>I&#39;m trying to understand.</div=
-><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px=
- 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-This is not encouraging, in my opinion, because it leaves a lot of the <br>
-mechanics undefined.=C2=A0 A while ago I suggested that in some scenarios <=
-br>
-this could actually be done[1][2]; another possible case is localized <br>
-bugfixes (say, below 20 lines of code).=C2=A0 For more general contribution=
-s <br>
-however, the role of maintainers is not clear.=C2=A0 Would we require to <b=
-r>
-&quot;check for code similarity&quot;?=C2=A0 I sure don&#39;t want to open =
-that can of worms.<br>
-<br>
-&gt; I propose adopting linux&#39;s rules instead:<br>
-&gt; <a href=3D"https://docs.kernel.org/process/coding-assistants.html" rel=
-=3D"noreferrer" target=3D"_blank">https://docs.kernel.org/process/coding-as=
-sistants.html</a><br>
-<br>
-Replacing QEMU&#39;s policy with Linux&#39;s would be orthogonal to the top=
-ic of <br>
-the DCO.=C2=A0 Maintainers would still have the option of rejecting <br>
-AI-assisted patches if they don&#39;t believe they can apply their own sign=
--off.<br>
-<br>
-Other projects have taken similar &quot;no AI&quot; policies for different =
-<br>
-reasons.=C2=A0 Zig has one because they believe AI code would make it harde=
-r <br>
-to retain contributors[3][4]; Rust is working on one that is fairly <br>
-restrictive[5] (discussion at [6]) and requires previous communications <br=
->
-with reviewers about *any* generated PRs[7].=C2=A0 Personally I think QEMU&=
-#39;s <br>
-policy is fine but we should start introducing exceptions, possibly <br>
-including large contributions with pre-authorization (but not <br>
-pre-approval) from the maintainer.<br></blockquote><div><br></div><div>I ag=
-ree with the thrust of the proposals you&#39;ve submitted: AI is a tool, an=
-d</div><div>there are many ways to use it safely.</div><div><br></div><div>=
-AI&#39;s primary issue is verification. The folks being flooded can&#39;t v=
-erify the</div><div>good from the bad in the flood and tend to have a knee =
-jerk reaction to</div><div>protect themselves: ban it.</div><div><br></div>=
-<div>Unstated issue: How do we help people that want to contribute grow the=
-ir</div><div>skills using AI so they make submissions whose quality if good=
- enough to</div><div>be worth our time to verify and review. It&#39;s an in=
-dustry wide problem, along</div><div>with how do junior engineers become se=
-nior in a world of AI doing the grunt</div><div>work they used to learn fro=
-m.</div><div><br></div><div>Warner</div><div>=C2=A0</div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex">
-Paolo<br>
-<br>
-[1] <br>
-<a href=3D"https://lore.kernel.org/qemu-devel/20250925075630.352720-1-pbonz=
-ini@redhat.com" rel=3D"noreferrer" target=3D"_blank">https://lore.kernel.or=
-g/qemu-devel/20250925075630.352720-1-pbonzini@redhat.com</a><br>
-[2] <br>
-<a href=3D"https://lore.kernel.org/qemu-devel/20251008063546.376603-1-pbonz=
-ini@redhat.com/raw" rel=3D"noreferrer" target=3D"_blank">https://lore.kerne=
-l.org/qemu-devel/20251008063546.376603-1-pbonzini@redhat.com/raw</a><br>
-[3] <a href=3D"https://ziglang.org/code-of-conduct/" rel=3D"noreferrer" tar=
-get=3D"_blank">https://ziglang.org/code-of-conduct/</a><br>
-[4] <br>
-<a href=3D"https://ziggit.dev/t/bun-s-zig-fork-got-4x-faster-compilation-ti=
-mes/15183/19" rel=3D"noreferrer" target=3D"_blank">https://ziggit.dev/t/bun=
--s-zig-fork-got-4x-faster-compilation-times/15183/19</a><br>
-[5] <br>
-<a href=3D"https://github.com/jyn514/rust-forge/blob/llm-policy/src/policie=
-s/llm-usage.md" rel=3D"noreferrer" target=3D"_blank">https://github.com/jyn=
-514/rust-forge/blob/llm-policy/src/policies/llm-usage.md</a><br>
-[6] <a href=3D"https://github.com/rust-lang/rust-forge/pull/1040" rel=3D"no=
-referrer" target=3D"_blank">https://github.com/rust-lang/rust-forge/pull/10=
-40</a><br>
-[7] <br>
-<a href=3D"https://github.com/jyn514/rust-forge/blob/llm-policy/src/policie=
-s/llm-usage.md#experiment-llm-created-code-changes" rel=3D"noreferrer" targ=
-et=3D"_blank">https://github.com/jyn514/rust-forge/blob/llm-policy/src/poli=
-cies/llm-usage.md#experiment-llm-created-code-changes</a><br>
-<br>
-<br>
-</blockquote></div></div>
-
---000000000000e94c690652a78685--
+--------------40CsafmXQVnozvoL3aCd0RDG--
 
