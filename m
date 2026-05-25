@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B562CCD5BC9
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 15:27:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7CFECD5BB1
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 15:27:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRXCh-000608-Es; Mon, 25 May 2026 11:26:55 -0400
+	id 1wRXCl-00061c-73; Mon, 25 May 2026 11:26:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wRXCf-0005zY-JW
- for qemu-devel@nongnu.org; Mon, 25 May 2026 11:26:53 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ id 1wRXCk-00061M-1A
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 11:26:58 -0400
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wRXCd-00073a-VL
- for qemu-devel@nongnu.org; Mon, 25 May 2026 11:26:53 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-7cb345cb5bfso76101067b3.0
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 08:26:51 -0700 (PDT)
+ id 1wRXCi-00077a-HW
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 11:26:57 -0400
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-65c21049dafso8679029d50.2
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 08:26:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779722811; x=1780327611; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=qvqScCwzZVAqBywuCMXx/NqxejVB6s7QovnQzogZffo=;
- b=CNP37Ygr0mrD1qHPkjJHObNSa2iH+ipQQlfoRHcSHZWIHYqntnfFN89Kwp0ePs1LGL
- wlcArES0wj4rLps6mlweTMGpH1oPdVwddF7KwGpe/vxmFTezlMwd/1oAXK6haAj4yNZt
- Q/K2EtO/AsEf6vJAfgBvvkHzOwovoSoqm1UcZHshlmFOfmRiofzO5nJ7yoGpocTzwUoc
- DNKDWQZYBsqDX6WXmA1Fn351nhsJj3Y/X8XfQcCtkbV2j1Rkhc0mtO071ETKHeiM6l+z
- g3aeNTycDESNgl67zW/DzZZoRiX6HQtCu3b8BG5RNfnKcTYgi8EksLRw2sV5fk/m9+ya
- mM3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779722811; x=1780327611;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1779722815; x=1780327615; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qvqScCwzZVAqBywuCMXx/NqxejVB6s7QovnQzogZffo=;
- b=Z6aPMy4Z+Ii27BIx4UxZ2ICO0q4KDuPOZjhjofCK3uKQDh4/qTvYQYipmciDHqFvAw
- KisvoJUdykaSG/MaQMLWcP7O0fIe50yaNj5OqQfTAmc1zfu5xEbKbE0/a2TEfCzDQ3S4
- 7LpQIdon0bUmW7nNcQzMFU1PxDuiKzhW4Oty9QAmYsRbFYHwsPm2/eFNoIxx93pqVL3/
- I3n/jsW1Bk5Owie7lbPuSwv1Ip3P2upYze0rZiqy0MfrlgBmDN2NYSTdBD3tluCLzPb8
- 39QAlr/uTKj7agHAq7CZfp8CqQTZArwjAq0/LHZwz9a3rNuCZ8rdPQAXvtfxAa22V4W0
- n2kQ==
-X-Gm-Message-State: AOJu0YwV8N/t7+lsR7S+1cFFavqSvhlqrzE6eF+5q2P0zU6jZb+E7DNZ
- 9nax0QgrDLnTwgq5VAd40LMXU7UeasWCFMEcbXjfwaXdJ0dS/g3gJA5dRBOsdl/b
-X-Gm-Gg: Acq92OHX1g2tnf/XJ0YXo9bS6ZDDwaZtX2fWwlLEYf3pzbCoiw0NPuckjosLBpQRldT
- RRU2mWZXBgWY1M9SiaWgRcdV5FFLNDR1wCYe9xbsETZcLy1Uo5/Wn2CSQcucQ8BRqgrcmXl4PUs
- HvZu2j7+LBcndeTSi4YkVsWQ8HEC0QY1kL7qMqPB/2AjTRPoQF2jVCqLdd54UxbtAssRl0zndWK
- lerCmHXIZK6iJywjNTFWofBlJWVgntX/VTahRHwSoiJ0OYZKD0A0VskxhDa+VRJ3LwIIGHwbf2X
- VOMWg/O5Yxt1vBi1JHUgtJvhvQnstK7MvQOwgo1NXqX7n1ghXDCZ4QKhz3TDL39+0XXDjzvujvA
- Qu/RmSb1lC3LNNLIFhpAvXVqoDi0Okm9QwdjWU5X1yq/Bvoj0AV7KG+F9012VjkiC/4DZmP9wBg
- 3JWFWINN9Fy4//tYd/KYXTzSZ7822IL0RhB9DO1f3M0QhL8fHkkhBvkCzBPgLRD7I2rD2EkGDnS
- 4DvDVFi5CDAew==
-X-Received: by 2002:a05:690c:9a83:b0:7cf:d242:d963 with SMTP id
- 00721157ae682-7d3376b8c62mr165767857b3.37.1779722810864; 
- Mon, 25 May 2026 08:26:50 -0700 (PDT)
+ bh=03hmVRWj7I+Zszm+FXmA2sP9bk31WiL+ENhFvIsmx/g=;
+ b=tGLm2l8z1eUgyaTJl0E3STIixqXXVp//rqSin8YIL5Tf4GxJWvMPzyZhLrMsZe4FfV
+ Bm04RT8h4Tagb4oOAzxKHfV8SAq/tx1l59/6+MyBviUF3brCjbQ1+SFq2rc3mPmRCMRu
+ 4F/E2vTA7ciZ/uQAHt0BR8c9TLDfPHVEADt15eEQMt+nJvCD1Wkl+gizWntkfUo2OqSa
+ 6usgIiRxAKvU18jnvjKHVVIQWcUXc9ZE0pLdeWndGz7ghBV87Prl4KbXbQt0nmoXfY3e
+ 6tQrQYCApSSImndq0x7/DIKTVEqRqRnq50bywxcO1Eq898XfpzQoHEg9ks3K0f6Tljzb
+ 9sdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779722815; x=1780327615;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=03hmVRWj7I+Zszm+FXmA2sP9bk31WiL+ENhFvIsmx/g=;
+ b=A+ktdVgZKgQKd5kw9niMzZ1waMkzBg7AhWZPcUo1rjqN5gkympk1KnZ/6TfI5okrzC
+ UN2bDGbOFkYNlrf/UMVf4pe61NSEu0ni86Jj6Wz39v+wDxiVt2vM4isxHMOzcncAacqo
+ pJ0/EUrSfa+QewoVaCpLqVHbKTlJXkNoaKN39PBgZrLaSXg/b1OXgboQlhLP3/TL0zKK
+ lb7+Yi+Z014dedRR2NV+s16AxwSbY3xAG7URUF/yZOb5TCXN0LS52B9s46g6VWfeNndf
+ RtIkf6GfBvAY8+O2yhZrj7KFuIsHf7MHIKgl4OCmBE9033Te+srSOE7HFZL/IuHm8tdg
+ chMg==
+X-Gm-Message-State: AOJu0Yw85w9IF5k1jRci6irspNbstKOGvmghiHwWaX939O/A1b7NJwE2
+ h19R2INKg2oAew/Rnpoe5fxGMEGNZiqQ8cnbR2vcqJb6KSVenNFghxSsRyDjsg==
+X-Gm-Gg: Acq92OH39Lwch0BFZSBULAB94WLkCGyOsENzor0Tx9GhJ/UcvmgIzSPhTMFyvp95UaQ
+ B2LCNV7xcQP9M2hnHX6pyby/HGYHAsKiiWAm1Qi/zEZC5QRP2tj7AOg1eV2PJR3q8vS9J7cZ+dm
+ aL6LmZvyXbxl48/SU6IGG0XHhajxDcyyMLrzrn406KIWX502HdP2QQKXSj8GIXLwfwSb0ppIXZC
+ rvuK0WZNwwODVpAaa8UbolcGVsi/pveYecJdYX4plHIdrUBpbqoQ7piT8dbUYjVQo9d2gIFhbjL
+ xhNpIUfZZ0GpjgCTGLfBfwpBNu8tyCa615dVvc3bpBhBEE22LpoFIh3LSlXjzEg8AC173D8tvO0
+ gIzEecf1T1w7aqAWgmUO4GQebiQsfiSNtXfrFn9LXuk5lKvQM28SC0S5feRTtM/aHfuzaG4s/4m
+ b3+f0TW16OEHU+uSXoFlpVvPE6XyZxad6rwPkMeuIg/f9ZsNZ4rZNSPDA/aInm7JnN8yBYdoIM4
+ mg=
+X-Received: by 2002:a05:690e:12cd:b0:650:3952:3d3d with SMTP id
+ 956f58d0204a3-65ec98f74e8mr13921224d50.44.1779722815304; 
+ Mon, 25 May 2026 08:26:55 -0700 (PDT)
 Received: from localhost (107-220-129-194.lightspeed.chrlnc.sbcglobal.net.
  [107.220.129.194]) by smtp.gmail.com with ESMTPSA id
- 00721157ae682-7d38be31027sm47750887b3.28.2026.05.25.08.26.49
+ 956f58d0204a3-65ecfda36b2sm4668341d50.17.2026.05.25.08.26.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 May 2026 08:26:50 -0700 (PDT)
+ Mon, 25 May 2026 08:26:53 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
@@ -71,14 +72,16 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Matt Turner <mattst88@gmail.com>, qemu-stable@nongnu.org
-Subject: [PATCH 1/3] linux-user/sh4: preserve T/M/Q bits across signal delivery
-Date: Mon, 25 May 2026 11:26:40 -0400
-Message-ID: <20260525152642.4121729-1-mattst88@gmail.com>
+Subject: [PATCH 3/3] target/sh4: sync fp_status when gdb writes FPSCR
+Date: Mon, 25 May 2026 11:26:42 -0400
+Message-ID: <20260525152642.4121729-3-mattst88@gmail.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260525152642.4121729-1-mattst88@gmail.com>
+References: <20260525152642.4121729-1-mattst88@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=mattst88@gmail.com; helo=mail-yw1-x112c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=mattst88@gmail.com; helo=mail-yx1-xb130.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -86,7 +89,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,93 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU keeps the SH4 T, M and Q status-register bits outside env->sr, in
-the dedicated env->sr_t, env->sr_m and env->sr_q fields; cpu_read_sr()
-folds them back into the architectural SR value and cpu_write_sr()
-splits them back out.
+sh4_cpu_gdb_write_register() wrote the incoming FPSCR value straight
+into env->fpscr, leaving the derived env->fp_status (rounding mode and
+flush-to-zero) stale, so a gdb-initiated FPSCR change did not take
+effect for subsequent FP operations. Use cpu_load_fpscr() instead, the
+same way the adjacent case already uses cpu_write_sr() for SR.
 
-setup_sigcontext() saved the bare env->sr (so the T/M/Q bits were always
-zero in the signal frame) and restore_sigcontext() wrote the value
-straight back into env->sr without updating sr_t/sr_m/sr_q. As a result
-the T bit was never preserved across signal delivery: on sigreturn the
-interrupted code resumed with whatever T value the signal handler last
-left behind. Any conditional branch (or addc/subc/rotcl/div1, etc.)
-immediately following the interrupted instruction could then take the
-wrong path.
-
-This is the cause of the long-standing intermittent failures of the
-tests/tcg/multiarch/signals.c test on sh4, which was marked BROKEN. With
-a SIGRTMIN timer firing every millisecond across many threads, the race
-was hit a few percent of the time and corrupted the guest heap, surfacing
-as a SIGSEGV in memset, a malloc assertion, or an rseq registration abort.
-
-Traced on a deterministic rr recording: a cmp/hi set T=0, the timer
-signal interrupted the very next instruction (a bf), the handler left
-T=1, and the resumed bf took glibc calloc's MORECORE_CLEARS branch,
-using the old top-chunk size as the clear length for a freshly split
-small chunk and running memset off the end of the heap.
-
-Fix setup_sigcontext()/restore_sigcontext() to use cpu_read_sr() and
-cpu_write_sr() so the T, M and Q bits round-trip correctly, and drop the
-BROKEN annotation on the sh4 signals test.
-
-Fixes: c3b5bc8ab3 ("SH4: Signal handling for the user space emulator, by Magnus Damm.")
 Cc: qemu-stable@nongnu.org
 ---
- linux-user/sh4/signal.c       | 12 ++++++++++--
- tests/tcg/sh4/Makefile.target |  7 -------
- 2 files changed, 10 insertions(+), 9 deletions(-)
+ target/sh4/gdbstub.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git ./linux-user/sh4/signal.c ./linux-user/sh4/signal.c
-index d70be24c38..cc36425c49 100644
---- ./linux-user/sh4/signal.c
-+++ ./linux-user/sh4/signal.c
-@@ -131,8 +131,10 @@ static void setup_sigcontext(struct target_sigcontext *sc,
-     COPY(gregs[14]); COPY(gregs[15]);
-     COPY(gbr); COPY(mach);
-     COPY(macl); COPY(pr);
--    COPY(sr); COPY(pc);
-+    COPY(pc);
- #undef COPY
-+    /* The T, M and Q bits live outside env->sr; fold them back in. */
-+    __put_user(cpu_read_sr(regs), &sc->sc_sr);
- 
-     for (i=0; i<16; i++) {
-         __put_user(regs->fregs[i], &sc->sc_fpregs[i]);
-@@ -159,8 +161,14 @@ static void restore_sigcontext(CPUSH4State *regs, struct target_sigcontext *sc)
-     COPY(gregs[14]); COPY(gregs[15]);
-     COPY(gbr); COPY(mach);
-     COPY(macl); COPY(pr);
--    COPY(sr); COPY(pc);
-+    COPY(pc);
- #undef COPY
-+    /* The T, M and Q bits live outside env->sr; unfold them. */
-+    {
-+        uint32_t sr;
-+        __get_user(sr, &sc->sc_sr);
-+        cpu_write_sr(regs, sr);
-+    }
- 
-     for (i=0; i<16; i++) {
-         __get_user(regs->fregs[i], &sc->sc_fpregs[i]);
-diff --git ./tests/tcg/sh4/Makefile.target ./tests/tcg/sh4/Makefile.target
-index 7852fa62d8..b7a8737be0 100644
---- ./tests/tcg/sh4/Makefile.target
-+++ ./tests/tcg/sh4/Makefile.target
-@@ -3,13 +3,6 @@
- # SuperH specific tweaks
- #
- 
--# This triggers failures for sh4-linux about 10% of the time.
--# Random SIGSEGV at unpredictable guest address, cause unknown.
--run-signals: signals
--	$(call skip-test, $<, "BROKEN")
--run-plugin-signals-with-%:
--	$(call skip-test, $<, "BROKEN")
--
- VPATH += $(SRC_PATH)/tests/tcg/sh4
- 
- test-macl: CFLAGS += -O -g
+diff --git ./target/sh4/gdbstub.c ./target/sh4/gdbstub.c
+index 4f36e800d2..bdc8c1d164 100644
+--- ./target/sh4/gdbstub.c
++++ ./target/sh4/gdbstub.c
+@@ -113,7 +113,7 @@ int superh_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+         env->fpul = ldl_p(mem_buf);
+         break;
+     case 24:
+-        env->fpscr = ldl_p(mem_buf);
++        cpu_load_fpscr(env, ldl_p(mem_buf));
+         break;
+     case 25 ... 40:
+         if (env->fpscr & FPSCR_FR) {
 -- 
 2.53.0
 
