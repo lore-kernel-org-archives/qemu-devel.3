@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC9BECD5BCF
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 06:33:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E049CD5BBF
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 06:33:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wROrw-0001x2-TW; Mon, 25 May 2026 02:32:56 -0400
+	id 1wROsQ-000216-Te; Mon, 25 May 2026 02:33:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wROrv-0001wo-46
- for qemu-devel@nongnu.org; Mon, 25 May 2026 02:32:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wROsL-000209-5a
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 02:33:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wROrt-0000w1-IS
- for qemu-devel@nongnu.org; Mon, 25 May 2026 02:32:54 -0400
+ id 1wROsJ-00011m-7A
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 02:33:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779690772;
+ s=mimecast20190719; t=1779690798;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RZe8CPnHyR2ivcxoMe01YPDfyJrlhdcOYxW+oU3Kn2Y=;
- b=FWiRPCLuY/8YGcRjQvKohlOREWRodyvhaV9QVxA3TjUYYMmJn6kKpwpLFVfZoVbQzXyf6U
- ruiYfXT45S18XtQ5tm1A4O9gk8FyxYpbaha8cn3PeYJQrj87t7/DmfAVnihemVXV0LLXKZ
- zt9vm4/3IVMtDyWev1GxA9DpUxflWB8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ozfM5pL0zGVFmVkgCjhOy/HxIy8dJ9DpdHwS2nKdBUE=;
+ b=VkHfzoXsOO/+h5r6TDxanY4eVgPutIzGItZckKCaUKjmqwqge3edWwd5j7gxYDib4UbTn8
+ IG+GqN1rmMlBpVwJylFSsHbKwdWiVIYuvSpSIAcocnzyfG0di0Xj9a3NEvXYDZjvn1cQEW
+ bRrgASdDAAocQMtnTPEM2igiyKscFxA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-606-ROAn0RroMNSik3S4JAK-3A-1; Mon,
- 25 May 2026 02:32:48 -0400
-X-MC-Unique: ROAn0RroMNSik3S4JAK-3A-1
-X-Mimecast-MFC-AGG-ID: ROAn0RroMNSik3S4JAK-3A_1779690767
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-575-wJ_-cOrsO_Kv3cMrgJ8t9g-1; Mon,
+ 25 May 2026 02:33:14 -0400
+X-MC-Unique: wJ_-cOrsO_Kv3cMrgJ8t9g-1
+X-Mimecast-MFC-AGG-ID: wJ_-cOrsO_Kv3cMrgJ8t9g_1779690793
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 574A619560B7; Mon, 25 May 2026 06:32:47 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4A88819560A1; Mon, 25 May 2026 06:33:13 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1A69E1684; Mon, 25 May 2026 06:32:45 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D0DF718004A3; Mon, 25 May 2026 06:33:11 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: stefanha@gmail.com, Peter Maydell <peter.maydell@linaro.org>,
+Cc: stefanha@gmail.com,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL v3 02/38] ui/vt100: Take byte as uint8_t in bh_utf8_decode()
-Date: Mon, 25 May 2026 10:31:45 +0400
-Message-ID: <20260525063223.1409791-3-marcandre.lureau@redhat.com>
+Subject: [PULL v3 06/38] ui/vnc: fix OOB write in lossy rect worker code
+Date: Mon, 25 May 2026 10:31:49 +0400
+Message-ID: <20260525063223.1409791-7-marcandre.lureau@redhat.com>
 In-Reply-To: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
 References: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -68,7 +69,7 @@ X-Spam_score: 0.8
 X-Spam_bar: /
 X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -86,39 +87,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-The bh_utf8_decode() UTF8 decoder takes its next byte as a "uint32_t
-byte" parameter, but it assumes it to be in bounds as it immediately
-indexes into its array with it.
+Incorrect calculation of the boundary condition when tracking lossy
+rectangles in the worker thread will result in an OOB write which
+can corrupt further worker state, and/or trigger any guard pages
+that may lie beyond the VncWorker struct. This can be triggered
+through careful choice of the display resolution in the guest
+OS by an unprivileged user.
 
-Use "uint8_t" as the argument type instead. This moves us away from
-the upstream implementation slightly, but it is the same type as
-we use in the one callsite, and it makes it clear that we can't
-be indexing off the end of the array with this guest-derived data.
-
-This probably helps make Coverity a bit happier (CID 1659590).
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260512104210.3330835-3-peter.maydell@linaro.org>
+Fixes: CVE-2026-48002
+Reported-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20260521103353.1645561-4-berrange@redhat.com>
+[Marc-André - added assert() suggest by philmd@linaro.org]
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/vt100.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ ui/vnc.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/ui/vt100.c b/ui/vt100.c
-index 7e373766bc1..f8140cfa85c 100644
---- a/ui/vt100.c
-+++ b/ui/vt100.c
-@@ -438,7 +438,7 @@ static void vt100_clear_xy(QemuVT100 *vt, int x, int y)
- #define BH_UTF8_ACCEPT 0
- #define BH_UTF8_REJECT 12
- 
--static uint32_t bh_utf8_decode(uint32_t *state, uint32_t *codep, uint32_t byte)
-+static uint32_t bh_utf8_decode(uint32_t *state, uint32_t *codep, uint8_t byte)
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 56dd43d53ff..375ab207950 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -2982,13 +2982,15 @@ void vnc_sent_lossy_rect(VncWorker *worker, int x, int y, int w, int h)
  {
-     static const uint8_t utf8d[] = {
-         /* character class lookup */
+     int i, j;
+ 
+-    w = (x + w) / VNC_STAT_RECT;
+-    h = (y + h) / VNC_STAT_RECT;
++    w = DIV_ROUND_UP((x + w), VNC_STAT_RECT);
++    h = DIV_ROUND_UP((y + h), VNC_STAT_RECT);
++    assert(h <= VNC_STAT_ROWS);
++    assert(w <= VNC_STAT_COLS);
+     x /= VNC_STAT_RECT;
+     y /= VNC_STAT_RECT;
+ 
+-    for (j = y; j <= h; j++) {
+-        for (i = x; i <= w; i++) {
++    for (j = y; j < h; j++) {
++        for (i = x; i < w; i++) {
+             worker->lossy_rect[j][i] = 1;
+         }
+     }
 -- 
 2.54.0
 
