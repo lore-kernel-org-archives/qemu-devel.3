@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F8B5CD5BBF
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 04:28:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B243CD5BBF
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 04:28:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRMvA-00072w-EY; Mon, 25 May 2026 00:28:08 -0400
+	id 1wRMvT-0007Md-K6; Mon, 25 May 2026 00:28:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wRMv3-0006zm-RZ
- for qemu-devel@nongnu.org; Mon, 25 May 2026 00:28:02 -0400
-Received: from mail-dy1-x1344.google.com ([2607:f8b0:4864:20::1344])
+ id 1wRMvR-0007Ke-9J
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 00:28:25 -0400
+Received: from mail-dy1-x1342.google.com ([2607:f8b0:4864:20::1342])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wRMv1-00079M-0e
- for qemu-devel@nongnu.org; Mon, 25 May 2026 00:28:01 -0400
-Received: by mail-dy1-x1344.google.com with SMTP id
- 5a478bee46e88-2f7020a928eso13358221eec.1
- for <qemu-devel@nongnu.org>; Sun, 24 May 2026 21:27:56 -0700 (PDT)
+ id 1wRMvP-0007Cl-GX
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 00:28:25 -0400
+Received: by mail-dy1-x1342.google.com with SMTP id
+ 5a478bee46e88-30455f77e0eso4631796eec.0
+ for <qemu-devel@nongnu.org>; Sun, 24 May 2026 21:28:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779683275; x=1780288075; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779683302; x=1780288102; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=98hG2LjurcoyBDog7AEq9lxKP6OiJbF4+snXfpW3dqU=;
- b=ljy00Siz2UQadjC0lSwxowtuyxSlMKIqhMZBOS7p7Tdz6YS3m8gci/Prgf3MbcOOA5
- uGD9ijI7jJMVzJ5AGFihv9/uV3OuR8Zr3zVRK0fwz7DoUUrFg0X5Rba0WS4fJdHYIF/+
- cFoekoj1J5UqlVakPsrUNtUDGSxAvqhFydKNxbbkQeuHz/MAg4+/u5c5Vd0aa1VUNUVY
- 9jYgpFIA4RCW25fds/6goJT2aogkbN/npLX/rk39G5hgjCI6rwRPlXj69deA+/CIlptX
- jBcxoD+yTIicOZXd0g+eFeoBMdLus38TVw2QoRLLjEK+gvr4DTevOoihyILHrfmsjcU6
- /ZEw==
+ bh=33J20/6r07FKIZokb7U4QqRC2bN29qsLA+s5n3cTmBY=;
+ b=ofVzv/BgUh5j+hxpSXJFN4CCklLfCpr1dIx/8aoAH2QwcP+wwiywLZ7FJUF2JmTWP2
+ gdv53m2vRloeoE7n25U8A7Hgf953Wh5/qnzQS4YI7xx9PeMszFl6hcP6rwrOO632mvln
+ ThZ4PXNZopvsK/ea9WMNjYZF1Trz/plkyGb+W9g7bkHjHhnKFkgNXf32RcUmL674ySMP
+ mgK1fEIk8YWe4aDEuM2TFeJgJNAl8FN4G0rLIRcwnVCcZr3ew5aJBlUxjnLUGw0s1KQX
+ l7i0T+b5ShCGD6Lwpi6wBGQEixnPiEtgQaFwVVkERVKl59qxG1bEJDn+0cGm6dzn+eIe
+ 83GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779683275; x=1780288075;
+ d=1e100.net; s=20251104; t=1779683302; x=1780288102;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=98hG2LjurcoyBDog7AEq9lxKP6OiJbF4+snXfpW3dqU=;
- b=rsLL5wfeYL44ARqp19zgGuLXoK0LyHr4VIdNqZRA+pGAQPbAAA4e59S9pcDsXMIXwA
- M25eLM7jQ7SQ7HmtsKbpYy7kucBazON2wjbanhZwviEUrDSW/xoMv5PJq2gbbK49Eee4
- Xxg3z4Ch6wBU1F7LWPfAuRLNjXfE5hqwhyiZMACsM+mQjDINircGah9moJ6HBTjvyrGO
- cbP7O5rVL5EmudjKldT+Q53DiM+Zbi/ItKSLamdGlI43Z1vG5dJ44pTC3fkaT7pOrl6A
- VOAy0Q0Tg2I14S68EPruW6nBDap5pc5Ob0Gk0trl5hy2MUap6g6YUswsd7z8eKLigLXa
- KtVA==
-X-Gm-Message-State: AOJu0YzjP4i78AbjYj3CPp1Vo77kUscJ2gInUW4OdTBcwOb1Bl2Jf3N8
- s837RiaJjOVBShyD7PkIXAA3m5bRbhmG6eesZHSIm/T53X4TFW0HLV2+
-X-Gm-Gg: Acq92OFmJtI/U4vbN6CoYojJMKD9M+pUrDukf1cM9vJ1Hk1B+piMEZ1rr55pgqcxeyA
- Wp+NdkEopQeasG3ZAvLnA1QpeFk0LirzmpnwxEQSuU55/9ZSpJXYorQHdxWfY+1Nqsy1ghzo59r
- tHhQH2MV3OKIq4XDV/O+fbvBzvz62ZdBlpaBncyyloenKXClnKdukJUA1K75qM22FutbnwxuPag
- jEhRJSBUGgN3azzeqzxxWWs0UcKA13rdgzAlNz0HWlXFWWV633/7KRNRDUi8kV/vU7ZatvHKNfJ
- spJVIvzOz5UVQdPfaWV2CtFeTiSp0cLtB65mp2j2WM1aj3xTTWjUdEzDfBEUEy/LiD3lHfc4nFx
- 0Urtw4ztDefaFcKblYBgJhdIv0cDIke9ye32s/2qki7VnuiPf51qNeOMuzoeTPi4Xk6jQh3B4+Q
- yE16NdeFg2UPMhwu4kN7RJLhjYkYUzKFIVdakFLXvZf3r+Yv8CqCIf0/zvuwU=
-X-Received: by 2002:a05:7301:2a24:b0:2de:aafb:feff with SMTP id
- 5a478bee46e88-3044904e1dbmr5611825eec.2.1779683275243; 
- Sun, 24 May 2026 21:27:55 -0700 (PDT)
+ bh=33J20/6r07FKIZokb7U4QqRC2bN29qsLA+s5n3cTmBY=;
+ b=IdeUZhTThHqzGvAjKYlL/myvJzeXUgw79ypiz48IHd10tE4y/PDy30Strr2d2MF2+z
+ LqVBvoX0T4LtVQBdhmVBDYcygTTuHJr4tjcjqntMAdq51ed1NnsbW2fNYnr3cqyluJF6
+ XZ9I0PaRah76eNzuROY3WYBcm+UbWEgpIZ+WaQjluoTMlwCU9z0yySsfB5tn+8Rbe8/j
+ f6xtCebg7OPHfB7F1YqLwcZK0ZZbIhPPtFyb97kJ1ml3sDXvUyB6DoeKUn9Ds9TKTIKK
+ 9arXAUQR3ohgV2j8ILVbAJcFmmguE1A1OLiW5L4rC9EoMj0I3cdDoOrrw/Y3tmBD9qjl
+ t5rQ==
+X-Gm-Message-State: AOJu0YyWKVsJv+cnLii+XSZwFWsU9PhAQfnjWVo/IfreZDubWD6oKntX
+ BalU2uz9BrG38ON0AG+dcxvlGSXGOSV6FScAzHbjXq7dFt2NWy2gvzHE
+X-Gm-Gg: Acq92OHJCZH4Mag9jJ0MF4VeVQkwP0fex1dC72tnZmA5ggF3f1XaaPB3hhelOkWJLr1
+ yABnf6OJ8plBP0Zixn/eQefn8v9XQrXeXEdVvEbVP180Ul8IorpAgTtxZItudSo8Q7hcSxZgTnw
+ KqP+KuAykdH1cpmzWwYsC8QRLd+/IvrnI0xr6YtfbaoGhZeB5tr8uzqcvCnUbu8s9BnogCKPttc
+ 2jfPUQ+fAJJ0GbJbrqXPzAoXAmHyj4V3uTf+zqF2urQNNPiYryca/leuFJfIy3rEsi0UYnTAKBA
+ P2MOYrf4qxAHcWmKzgmxaf62mbp6gLGdHuyhE4b40N4xgqoi31k8YJLs9y8H1J6eHk0y3bgf8wl
+ gwrXNwQxV2B8k3ymTzP+GF17CKHAnbBCWom7JWcfc02fMyUu7vpDugcjthooslTKYaH4X7AC1Ib
+ 56BotzMG7zxATZkwA2+g2AFKQ6gff1T+dafYqrEJPLN+FQg2UZxqTDxno6bq41OW+Fa0C4HQ==
+X-Received: by 2002:a05:7300:e424:b0:304:819f:502b with SMTP id
+ 5a478bee46e88-304819f518emr1407113eec.9.1779683301892; 
+ Sun, 24 May 2026 21:28:21 -0700 (PDT)
 Received: from localhost ([64.186.250.142]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3045223103bsm6733914eec.16.2026.05.24.21.27.53
+ 5a478bee46e88-30451ef4af0sm6875913eec.3.2026.05.24.21.28.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 24 May 2026 21:27:54 -0700 (PDT)
-Date: Mon, 25 May 2026 12:27:51 +0800
+ Sun, 24 May 2026 21:28:21 -0700 (PDT)
+Date: Mon, 25 May 2026 12:28:17 +0800
 From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, qemu-stable@nongnu.org
-Subject: Re: [PATCH] target/riscv/cpu_helper.c: allow LOAD_ADDR_MIS promotion
- to AMO fault
-Message-ID: <ahPPun_mYalcBmhF@ChaodeMacBook-Pro.local>
-References: <20260522181353.429782-1-daniel.barboza@oss.qualcomm.com>
+To: Zephyr Li <fritchleybohrer@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ daniel.barboza@oss.qualcomm.com
+Subject: Re: [PATCH v2] target/riscv: Reject Svinval instructions in U-mode
+Message-ID: <ahPP11q8WEK9_vI5@ChaodeMacBook-Pro.local>
+References: <20260522033145.17850-1-fritchleybohrer@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260522181353.429782-1-daniel.barboza@oss.qualcomm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1344;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1344.google.com
+In-Reply-To: <20260522033145.17850-1-fritchleybohrer@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1342;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1342.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,39 +99,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 22, 2026 at 03:13:53PM +0800, Daniel Henrique Barboza wrote:
-> promote_load_fault() is missing the promotion of misaligned AMO load
-> addresses, i.e. RISCV_EXCP_LOAD_ADDR_MIS should be promoted to
-> RISCV_EXCP_STORE_AMO_ADDR_MIS when RISCV_UW2_ALWAYS_STORE_AMO (i.e.
-> always_storeamo is true).
+On Fri, May 22, 2026 at 11:31:44AM +0800, Zephyr Li wrote:
+> The RISC-V privileged specification requires SFENCE.W.INVAL and
+> SFENCE.INVAL.IR to raise an illegal instruction exception when executed
+> in U-mode. Check the current privilege mode during translation and reject these
+> instructions in U-mode, so they are reported as illegal instructions.
 > 
-> All other load AMO faults are already being covered.
+> Add a helper to reject these instructions in U-mode during translation.
 > 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 98f21c30f5 ("target/riscv: AMO operations always raise store/AMO fault")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3503
-> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3493
+> 
+> Suggested-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> 
+> Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
+
 Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 
-
 > ---
->  target/riscv/cpu_helper.c | 3 +++
->  1 file changed, 3 insertions(+)
+>  target/riscv/insn_trans/trans_svinval.c.inc | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
 > 
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 17305e1bb7..aa4cbfcf40 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -2174,6 +2174,9 @@ static target_ulong promote_load_fault(target_ulong orig_cause)
+> diff --git a/target/riscv/insn_trans/trans_svinval.c.inc b/target/riscv/insn_trans/trans_svinval.c.inc
+> index a06c3b214f..4614c1489c 100644
+> --- a/target/riscv/insn_trans/trans_svinval.c.inc
+> +++ b/target/riscv/insn_trans/trans_svinval.c.inc
+> @@ -22,11 +22,19 @@
+>      }                                      \
+>  } while (0)
 >  
->      case RISCV_EXCP_LOAD_PAGE_FAULT:
->          return RISCV_EXCP_STORE_PAGE_FAULT;
+> +/* Test if priv level is M or S. */
+> +#define REQUIRE_PRIV_MS(ctx) do {          \
+> +    if (ctx->priv == PRV_U) {              \
+> +        return false;                      \
+> +    }                                      \
+> +} while (0)
 > +
-> +    case RISCV_EXCP_LOAD_ADDR_MIS:
-> +        return RISCV_EXCP_STORE_AMO_ADDR_MIS;
->      }
->  
->      /* if no promotion, return original cause */
+>  static bool trans_sinval_vma(DisasContext *ctx, arg_sinval_vma *a)
+>  {
+>      REQUIRE_SVINVAL(ctx);
+>      /* Do the same as sfence.vma currently */
+>      REQUIRE_EXT(ctx, RVS);
+> +    REQUIRE_PRIV_MS(ctx);
+>  #ifndef CONFIG_USER_ONLY
+>      decode_save_opc(ctx, 0);
+>      gen_helper_tlb_flush(tcg_env);
+> @@ -39,6 +47,7 @@ static bool trans_sfence_w_inval(DisasContext *ctx, arg_sfence_w_inval *a)
+>  {
+>      REQUIRE_SVINVAL(ctx);
+>      REQUIRE_EXT(ctx, RVS);
+> +    REQUIRE_PRIV_MS(ctx);
+>      /* Do nothing currently */
+>      return true;
+>  }
+> @@ -47,6 +56,7 @@ static bool trans_sfence_inval_ir(DisasContext *ctx, arg_sfence_inval_ir *a)
+>  {
+>      REQUIRE_SVINVAL(ctx);
+>      REQUIRE_EXT(ctx, RVS);
+> +    REQUIRE_PRIV_MS(ctx);
+>      /* Do nothing currently */
+>      return true;
+>  }
+> @@ -56,6 +66,7 @@ static bool trans_hinval_vvma(DisasContext *ctx, arg_hinval_vvma *a)
+>      REQUIRE_SVINVAL(ctx);
+>      /* Do the same as hfence.vvma currently */
+>      REQUIRE_EXT(ctx, RVH);
+> +    REQUIRE_PRIV_MS(ctx);
+>  #ifndef CONFIG_USER_ONLY
+>      decode_save_opc(ctx, 0);
+>      gen_helper_hyp_tlb_flush(tcg_env);
+> @@ -69,6 +80,7 @@ static bool trans_hinval_gvma(DisasContext *ctx, arg_hinval_gvma *a)
+>      REQUIRE_SVINVAL(ctx);
+>      /* Do the same as hfence.gvma currently */
+>      REQUIRE_EXT(ctx, RVH);
+> +    REQUIRE_PRIV_MS(ctx);
+>  #ifndef CONFIG_USER_ONLY
+>      decode_save_opc(ctx, 0);
+>      gen_helper_hyp_gvma_tlb_flush(tcg_env);
 > -- 
 > 2.43.0
 > 
