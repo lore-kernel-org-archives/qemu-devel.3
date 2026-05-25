@@ -4,92 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAD59CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 15:17:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A688ECD5BC9
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 15:17:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRX2p-00062O-I1; Mon, 25 May 2026 11:16:43 -0400
+	id 1wRX2r-00068J-EH; Mon, 25 May 2026 11:16:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wRX2c-0005xn-P6
- for qemu-devel@nongnu.org; Mon, 25 May 2026 11:16:38 -0400
+ id 1wRX2p-00064b-Tv
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 11:16:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wRX2a-0007R9-LU
- for qemu-devel@nongnu.org; Mon, 25 May 2026 11:16:30 -0400
+ id 1wRX2o-0007XU-8z
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 11:16:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779722187;
+ s=mimecast20190719; t=1779722200;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=PuIu6K2USzoA8+hK/I7+F4/b0n1/d9yyrD+F5AyYwyw=;
- b=GA46ono2jm8itobYzA4PZMvvGmBJ8RKgvG5kGs3/5SzZVjfcZEJu6smq716qxRPY3kYyEZ
- JOTwbkSE2lTg0UN0i9iItluYZNRtodGV9CIAoiW8Z30YEybP1nCrOG39yuM+IVZzEdCbu8
- YB3JObF9nxXHIYqGTEbR6Ij770zAbo8=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=seRe1ZqQqT3HIB24WiVLXa3WLn+CdJlH2m0bpSi8QME=;
+ b=gLylFw0bgDmpe7gDDaF+JpZxz6BmrW4T7ixw+xFyoqBiIo1yRHpJ3v5G1scFGKWHAeKKhI
+ onX/+b5k6VtqLsYODPZwfMUeCSF44aESa8Te5MexPdVWiGRw3E2+3DmV91HuwYKjPTpBpS
+ 3jaZFpG5CYNy7AHlb6Fbl5S8woxjfUQ=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-638-rry1Z0rIMUCXRKw7bOh7Yw-1; Mon, 25 May 2026 11:16:24 -0400
-X-MC-Unique: rry1Z0rIMUCXRKw7bOh7Yw-1
-X-Mimecast-MFC-AGG-ID: rry1Z0rIMUCXRKw7bOh7Yw_1779722184
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-48fe40b61a3so62391645e9.3
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 08:16:24 -0700 (PDT)
+ us-mta-34-ZCnK8RhzMfWD-YyfNbAn9A-1; Mon, 25 May 2026 11:16:39 -0400
+X-MC-Unique: ZCnK8RhzMfWD-YyfNbAn9A-1
+X-Mimecast-MFC-AGG-ID: ZCnK8RhzMfWD-YyfNbAn9A_1779722198
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-48fe24773c8so51055555e9.3
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 08:16:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779722183; x=1780326983; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=PuIu6K2USzoA8+hK/I7+F4/b0n1/d9yyrD+F5AyYwyw=;
- b=P6sD0nZzsm0/p5j9aYqIWMMtFf7/eF+MM9JglmrXXZQt0FplB7ZN4yZ+mIxzNBa9/T
- hUthPW3fxBjsyB3T5Ab9FyvqmKEH2Xc8Iz7th7nWt4QML7wKOWXuiNpLAv4j0YSFkB5B
- OdBbPTbEY+CzF8LlpuXwR0kYldihCkRDQv4ndL5aODx6vD07AJ4ylp07D9Z/kVpcXQR2
- BzjFR6QsSgYGxT4ha95nhgkjYajqy0rEoo3fK/GBoLAiaDgCTcTeSbWgBzLpK6p/rGuh
- KiFpQkxyqjfYZDRA2aiMzAhU3hWc5CYH4tJmmlCLEX+FGX68Bw/OXpaVp+8TvdY/TEsl
- OXDw==
+ d=redhat.com; s=google; t=1779722198; x=1780326998; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=seRe1ZqQqT3HIB24WiVLXa3WLn+CdJlH2m0bpSi8QME=;
+ b=puIPqvy2+zoGUDbiAWTi0oS6VQ1pjf7EOaMGYWiiYZn5K8dMXt2/iidpMfHhZZSsCf
+ UPzVaqD/J4FQew4Ai+A/thgnvRXFLSXoQNz5T6q67d+Aerdq+YRBmiTsNZE/gXVwNljA
+ aw5oz+WllnlwNXnHPtGZgY/2g5FLfGpETb2gBqLBH8BXLKJ0cU2+dl27P7PSReiFxfrd
+ ds5K4IFxMCoo1sGAZZ2iE3rBMNZiSdKtGaqQDO8HqWLgdLdqkmVj3682dknu/0P4NuQ6
+ 2rDT0aXZjpSsTxkEG0V5l6XDaCWA2cIV21pbc4ZU5mm3sBAKbQRgeo8xUJxfpZ2NdHJC
+ 9NLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779722183; x=1780326983;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=PuIu6K2USzoA8+hK/I7+F4/b0n1/d9yyrD+F5AyYwyw=;
- b=kFoWzFeApY1od5OaxFcL8byYUvk8qqAfHiuEtFdjJpU39tI14JNsZEDX5VgBmIEVzY
- NFRMK5s6/todzQvsKZC9mcKmhWX6NgZuruF+tiBGTzEF1ujjYc0qd1fwdZiiEpkSIqdX
- Oo04JCxBrqvR5R5B8DWZP+ldEF4M1Uik8HW1xE4NUwrTVjfD5892BYpf6eYXHpIoldXP
- t+WaJ+9uSjPA/wBnWJyBbf0s6wzoa4IwUCjI///vCUJihfqS71YrQj5lLR/4SxZrkcBQ
- MvIG6BOGVIIlSMxom3Rix5hQ1DK/JxgJmxvJWVA8w98aoQqhaRTybfUhJWbwW4Huge6N
- ooQw==
-X-Gm-Message-State: AOJu0YztTDNHuDo2kYNCJrkC42R/wEVusWGVY2MS42amOt12GZOSVL93
- PMMHqL4imKtJn0jOWcB0WCKAp2UePBNMQJ/EeVYBvEzlvRiRfo/mvxovq2ef8mSESYdC/z3Fsk/
- U5uH+Y2sRwqBjiWIpze1usWKCmyvnoilXkdWIUqCGUYe3MmD/ZNVfWXXV3W1KBcVakb8xiR3Xjl
- Gd4MLlW5mSCoDbbyFAkV8WSQnkrD4cn2d6rMwmTmq7
-X-Gm-Gg: Acq92OHsFv8/6xZC38Yp3nOWRm9+pPcq54oHko9mQrS2qWudBSCfOAxMunP5fIpE6hV
- 4siipVxo2NiNos7UkE4oyQ60eZ1PR8pmzNdO/77VNny5/igXWaToL3jLBD19mm0JTR8tB1SvEtG
- ZSqaLOUmnWivkJ4TKjrfwTlQyJqd+gBOM57rRn3nMrYGt+zNLCGuFVQXXZUeZ2wWy1gHvHud3Wt
- AgYzbL2iWImunzUC2iF57Yw42biqqOttSulYPbCmxbhRYWUYC8wjVO46bQ3BUV7R/fvI8KJu9qX
- Fn5ZBqIxvEa4elq2v0Gp8a5bhGCR2CA7KBFBo23L7lkpsAOtKbQIPUgRgeiv6ReF9X/kVX6hbbT
- o0Tj7iTWAZ1Ch+xZl4aQOxIbJds3yNzxrtOXbYo7lp5qvgd5cS3cxYZXco8nxpfJmVAPev/GxEw
- VNxtTDnevTC0EF3fMHUt3FYMTPxQ3w
-X-Received: by 2002:a05:600d:6447:10b0:48f:d5b8:5b07 with SMTP id
- 5b1f17b1804b1-490426c5b1emr174447315e9.20.1779722183600; 
- Mon, 25 May 2026 08:16:23 -0700 (PDT)
-X-Received: by 2002:a05:600d:6447:10b0:48f:d5b8:5b07 with SMTP id
- 5b1f17b1804b1-490426c5b1emr174446835e9.20.1779722183086; 
- Mon, 25 May 2026 08:16:23 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779722198; x=1780326998;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=seRe1ZqQqT3HIB24WiVLXa3WLn+CdJlH2m0bpSi8QME=;
+ b=gFZeOTEMsdIwdN9GOyU5cc6mVxQTE7pOaowF3aF6FgJpUiFlLv+gim2R9EAwhbbVoO
+ SKW2PHsFQGr4QYffQXWC606FBaL9g1ehf+u+VLXd7RzPttjKKT4IzeaTyeFlkZknHI8s
+ oAs5rS+bA/TeEAbBlhTh/sFImHool1vBSPFJ9o/kyS6Lc6Ew+LpdjxfCTfH8nYtj8alD
+ djXL6z8xvHxXhDwJlGAEh7C9meh9kDIBZ9tzsujj77cPb3kx1MypDgsu4AU1YCei0hWJ
+ gNQx9xE2w78F3q6qXLhd2dLA2Gtw+7+XOTcP/TG2WKUY6uWksbV59h5mncbTq1ah+Zw+
+ Nxig==
+X-Gm-Message-State: AOJu0YwlRV6qwzcpBhXUh6C8y7OmgZZ+j57C9elRSrd5QkHh9MmgC+iB
+ QU5kP3AU17e/Sr7SaiULMsd1SccDiXLWFaJWw1qrQKuYGByDhQ91bnIOC4erB2BU7a9Bp50bvWP
+ 7Q08bTEXrgsNa0DHmlD5iJzez7stObrH0/QtBh2fSmfcZN4wEBwucPTpWTiPeUnJJYUITDVtDmW
+ /DJE7z0dxo5hu5t53K1/FtDm579e9epN/mQ0SAdguh
+X-Gm-Gg: Acq92OFhz3pkNVZan/a4ITnTiV/TrZwZl8XCyrB4j4GE4bUSy8mlTGVuGlAK7ZWUHVQ
+ 0GygvGAjkxft9R+jja6Z1Fpkn9JZdQokf5MteHNpMEBZqUH1C/T1TV4sJ95UfyDllBV8AvTHDP3
+ kshPMIa0WVxy4hd32ufOTXGmASiVOTM+SvY9IXgaqgruE1YBO9PCjkKfFyAgsKAv+iYoOke/dwE
+ hfBSmMghRijEHzodd67o+4Ipnp/eyjfn9U20QXrj90qnQ4YxHVk9uXnD1C7AbwhzqmEqmTUkr8T
+ 8TBmL2xN0xHB7xMGsCwFgv+D0Yu9KHAP6g+gwpratMdMgexDbFX70JL6NXg72BNAAJLQvTJXOcm
+ Qp9yoP0MwWigiM72A5qEjozx784RhMWm/pBtKRO0pjLVWRQjTvNV5Gdv9tgBeA/hAnHKT24bx6B
+ /0hJDkLyndTBwV2j68iTnVCX3AC0qq
+X-Received: by 2002:a05:600c:4ecc:b0:489:2005:b36e with SMTP id
+ 5b1f17b1804b1-490428c9564mr238084275e9.19.1779722198079; 
+ Mon, 25 May 2026 08:16:38 -0700 (PDT)
+X-Received: by 2002:a05:600c:4ecc:b0:489:2005:b36e with SMTP id
+ 5b1f17b1804b1-490428c9564mr238083745e9.19.1779722197525; 
+ Mon, 25 May 2026 08:16:37 -0700 (PDT)
 Received: from [192.168.10.48] ([176.206.106.181])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ec7fcd7f9sm14497870f8f.37.2026.05.25.08.16.22
+ 5b1f17b1804b1-49044f2bad3sm274395015e9.0.2026.05.25.08.16.36
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 May 2026 08:16:22 -0700 (PDT)
+ Mon, 25 May 2026 08:16:36 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 0/6] Misc patches for 2026-05-25
-Date: Mon, 25 May 2026 17:16:15 +0200
-Message-ID: <20260525151621.395954-1-pbonzini@redhat.com>
+Subject: [PULL 6/6] json-parser: constify JSONToken
+Date: Mon, 25 May 2026 17:16:21 +0200
+Message-ID: <20260525151621.395954-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260525151621.395954-1-pbonzini@redhat.com>
+References: <20260525151621.395954-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -116,42 +119,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit cbf877d67a812be17a9ce404a589e1bdf722c1f6:
-
-  Merge tag 'pbouvier/pr/docs-20260522' of https://gitlab.com/p-b-o/qemu into staging (2026-05-24 07:45:19 -0400)
-
-are available in the Git repository at:
-
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream2
-
-for you to fetch changes up to 877820be501c72665aff1af468fab87f17995044:
-
-  json-parser: constify JSONToken (2026-05-25 16:52:31 +0200)
-
-----------------------------------------------------------------
-* lsi53c895a, apic, mc146818rtc: fix various bugs
-* accel/mshv: implement cpu_thread_is_idle() hook
-* json-parser: first patch from push parser conversion
-
-----------------------------------------------------------------
-Jinjie Ruan (1):
-      mc146818rtc: Fix get_guest_rtc_ns() overflow bug
-
-Magnus Kulke (1):
-      accel/mshv: implement cpu_thread_is_idle() hook
-
-Paolo Bonzini (4):
-      lsi53c895a: fix use-after-free of cancelled request
-      lsi53c895a: clear tag byte when processing messages
-      apic: fix delivery bitmask with modified xAPIC ids
-      json-parser: constify JSONToken
-
- accel/mshv/mshv-all.c | 12 ++++++++++++
- hw/intc/apic.c        | 17 ++++++++---------
- hw/rtc/mc146818rtc.c  | 23 +++++++++++------------
- hw/scsi/lsi53c895a.c  | 12 ++++++++----
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
  qobject/json-parser.c | 23 ++++++++++++-----------
- 5 files changed, 51 insertions(+), 36 deletions(-)
+ 1 file changed, 12 insertions(+), 11 deletions(-)
+
+diff --git a/qobject/json-parser.c b/qobject/json-parser.c
+index 7483e582fea..f6622b82b0a 100644
+--- a/qobject/json-parser.c
++++ b/qobject/json-parser.c
+@@ -55,7 +55,8 @@ static QObject *parse_value(JSONParserContext *ctxt);
+  * Error handler
+  */
+ static void G_GNUC_PRINTF(3, 4) parse_error(JSONParserContext *ctxt,
+-                                           JSONToken *token, const char *msg, ...)
++                                            const JSONToken *token,
++                                            const char *msg, ...)
+ {
+     va_list ap;
+     char message[1024];
+@@ -126,7 +127,7 @@ static int cvt4hex(const char *s)
+  * - Invalid Unicode characters are rejected.
+  * - Control characters \x00..\x1F are rejected by the lexer.
+  */
+-static QString *parse_string(JSONParserContext *ctxt, JSONToken *token)
++static QString *parse_string(JSONParserContext *ctxt, const JSONToken *token)
+ {
+     const char *ptr = token->str;
+     GString *str;
+@@ -239,14 +240,14 @@ out:
+  * parser_context_pop_token is deleted as soon as parser_context_pop_token
+  * is called again.
+  */
+-static JSONToken *parser_context_pop_token(JSONParserContext *ctxt)
++static const JSONToken *parser_context_pop_token(JSONParserContext *ctxt)
+ {
+     g_free(ctxt->current);
+     ctxt->current = g_queue_pop_head(ctxt->buf);
+     return ctxt->current;
+ }
+ 
+-static JSONToken *parser_context_peek_token(JSONParserContext *ctxt)
++static const JSONToken *parser_context_peek_token(JSONParserContext *ctxt)
+ {
+     return g_queue_peek_head(ctxt->buf);
+ }
+@@ -259,7 +260,7 @@ static int parse_pair(JSONParserContext *ctxt, QDict *dict)
+     QObject *key_obj = NULL;
+     QString *key;
+     QObject *value;
+-    JSONToken *peek, *token;
++    const JSONToken *peek, *token;
+ 
+     peek = parser_context_peek_token(ctxt);
+     if (peek == NULL) {
+@@ -309,7 +310,7 @@ out:
+ static QObject *parse_object(JSONParserContext *ctxt)
+ {
+     QDict *dict = NULL;
+-    JSONToken *token, *peek;
++    const JSONToken *token, *peek;
+ 
+     token = parser_context_pop_token(ctxt);
+     assert(token && token->type == JSON_LCURLY);
+@@ -363,7 +364,7 @@ out:
+ static QObject *parse_array(JSONParserContext *ctxt)
+ {
+     QList *list = NULL;
+-    JSONToken *token, *peek;
++    const JSONToken *token, *peek;
+ 
+     token = parser_context_pop_token(ctxt);
+     assert(token && token->type == JSON_LSQUARE);
+@@ -426,7 +427,7 @@ out:
+ 
+ static QObject *parse_keyword(JSONParserContext *ctxt)
+ {
+-    JSONToken *token;
++    const JSONToken *token;
+ 
+     token = parser_context_pop_token(ctxt);
+     assert(token && token->type == JSON_KEYWORD);
+@@ -444,7 +445,7 @@ static QObject *parse_keyword(JSONParserContext *ctxt)
+ 
+ static QObject *parse_interpolation(JSONParserContext *ctxt)
+ {
+-    JSONToken *token;
++    const JSONToken *token;
+ 
+     token = parser_context_pop_token(ctxt);
+     assert(token && token->type == JSON_INTERP);
+@@ -480,7 +481,7 @@ static QObject *parse_interpolation(JSONParserContext *ctxt)
+ 
+ static QObject *parse_literal(JSONParserContext *ctxt)
+ {
+-    JSONToken *token;
++    const JSONToken *token;
+ 
+     token = parser_context_pop_token(ctxt);
+     assert(token);
+@@ -532,7 +533,7 @@ static QObject *parse_literal(JSONParserContext *ctxt)
+ 
+ static QObject *parse_value(JSONParserContext *ctxt)
+ {
+-    JSONToken *token;
++    const JSONToken *token;
+ 
+     token = parser_context_peek_token(ctxt);
+     if (token == NULL) {
 -- 
 2.54.0
 
