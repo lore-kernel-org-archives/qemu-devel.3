@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAAEECD5BCB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC9BECD5BCF
 	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 06:33:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wROsN-00020C-St; Mon, 25 May 2026 02:33:24 -0400
+	id 1wROrw-0001x2-TW; Mon, 25 May 2026 02:32:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wROs9-0001yV-Tq
- for qemu-devel@nongnu.org; Mon, 25 May 2026 02:33:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wROrv-0001wo-46
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 02:32:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wROs8-00010S-6T
- for qemu-devel@nongnu.org; Mon, 25 May 2026 02:33:09 -0400
+ id 1wROrt-0000w1-IS
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 02:32:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779690786;
+ s=mimecast20190719; t=1779690772;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XVdC8+ZAXrboODKEiUEFzI6uzqlzT6GSg5bz9+Srejc=;
- b=KDCmobJlTPtxcOw0bPmjYyeC2aVQkDaYmAue8szmHer4uvevX7X6P3vDk+TvXsJvQcenDi
- dzmpx9goK2tIDP3yrHjLse7kuL7g/3eUWs2NosFIWKDnDjZUV2xW3xKPIBsY7vhrDIFoCt
- JUixbUB2ksEB+0zx8Oujb89tkYCMfQo=
+ bh=RZe8CPnHyR2ivcxoMe01YPDfyJrlhdcOYxW+oU3Kn2Y=;
+ b=FWiRPCLuY/8YGcRjQvKohlOREWRodyvhaV9QVxA3TjUYYMmJn6kKpwpLFVfZoVbQzXyf6U
+ ruiYfXT45S18XtQ5tm1A4O9gk8FyxYpbaha8cn3PeYJQrj87t7/DmfAVnihemVXV0LLXKZ
+ zt9vm4/3IVMtDyWev1GxA9DpUxflWB8=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-219-3QJGL1-QNYKCpQ-yrX0YmQ-1; Mon,
- 25 May 2026 02:33:02 -0400
-X-MC-Unique: 3QJGL1-QNYKCpQ-yrX0YmQ-1
-X-Mimecast-MFC-AGG-ID: 3QJGL1-QNYKCpQ-yrX0YmQ_1779690781
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-606-ROAn0RroMNSik3S4JAK-3A-1; Mon,
+ 25 May 2026 02:32:48 -0400
+X-MC-Unique: ROAn0RroMNSik3S4JAK-3A-1
+X-Mimecast-MFC-AGG-ID: ROAn0RroMNSik3S4JAK-3A_1779690767
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4231E1955F1B; Mon, 25 May 2026 06:33:01 +0000 (UTC)
+ id 574A619560B7; Mon, 25 May 2026 06:32:47 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BF73619560B4; Mon, 25 May 2026 06:32:58 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1A69E1684; Mon, 25 May 2026 06:32:45 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: stefanha@gmail.com,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: stefanha@gmail.com, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL v3 04/38] ui/vnc: fix OOB read access in VNC SASL mechname array
-Date: Mon, 25 May 2026 10:31:47 +0400
-Message-ID: <20260525063223.1409791-5-marcandre.lureau@redhat.com>
+Subject: [PULL v3 02/38] ui/vt100: Take byte as uint8_t in bh_utf8_decode()
+Date: Mon, 25 May 2026 10:31:45 +0400
+Message-ID: <20260525063223.1409791-3-marcandre.lureau@redhat.com>
 In-Reply-To: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
 References: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -69,7 +68,7 @@ X-Spam_score: 0.8
 X-Spam_bar: /
 X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -87,37 +86,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-When reading the SASL mechname array off the VNC connection, if
-malicious, the received data may contain embedded NULs. If this
-happens the memory buffer returned by g_strndup may be shorter
-than the original data. Unfortunately the code continued to
-index into this buffer with an offset equal to the original
-length. This is a potential OOB read of the array.
+The bh_utf8_decode() UTF8 decoder takes its next byte as a "uint32_t
+byte" parameter, but it assumes it to be in bounds as it immediately
+indexes into its array with it.
 
-Fixes: 5847d9e1 (ui/vnc: simplify and avoid strncpy)
-Reported-by: boy juju <agx1657748706@gmail.com>
+Use "uint8_t" as the argument type instead. This moves us away from
+the upstream implementation slightly, but it is the same type as
+we use in the one callsite, and it makes it clear that we can't
+be indexing off the end of the array with this guest-derived data.
+
+This probably helps make Coverity a bit happier (CID 1659590).
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260521103353.1645561-2-berrange@redhat.com>
+Message-ID: <20260512104210.3330835-3-peter.maydell@linaro.org>
 ---
- ui/vnc-auth-sasl.c | 2 ++
- 1 file changed, 2 insertions(+)
+ ui/vt100.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/ui/vnc-auth-sasl.c b/ui/vnc-auth-sasl.c
-index 9964b969ac2..298c8f3769f 100644
---- a/ui/vnc-auth-sasl.c
-+++ b/ui/vnc-auth-sasl.c
-@@ -489,6 +489,8 @@ static int protocol_client_auth_sasl_mechname(VncState *vs, uint8_t *data, size_
-     char *mechname = g_strndup((const char *) data, len);
-     trace_vnc_auth_sasl_mech_choose(vs, mechname);
+diff --git a/ui/vt100.c b/ui/vt100.c
+index 7e373766bc1..f8140cfa85c 100644
+--- a/ui/vt100.c
++++ b/ui/vt100.c
+@@ -438,7 +438,7 @@ static void vt100_clear_xy(QemuVT100 *vt, int x, int y)
+ #define BH_UTF8_ACCEPT 0
+ #define BH_UTF8_REJECT 12
  
-+    /* If 'data' had embedded NUL the dup'd string might now be shorter */
-+    len = strlen(mechname);
-     if (strncmp(vs->sasl.mechlist, mechname, len) == 0) {
-         if (vs->sasl.mechlist[len] != '\0' &&
-             vs->sasl.mechlist[len] != ',') {
+-static uint32_t bh_utf8_decode(uint32_t *state, uint32_t *codep, uint32_t byte)
++static uint32_t bh_utf8_decode(uint32_t *state, uint32_t *codep, uint8_t byte)
+ {
+     static const uint8_t utf8d[] = {
+         /* character class lookup */
 -- 
 2.54.0
 
