@@ -4,114 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FC31CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 13:49:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 362A9CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 13:52:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRVgH-000814-Ga; Mon, 25 May 2026 09:49:21 -0400
+	id 1wRViy-0000p0-4j; Mon, 25 May 2026 09:52:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wRVg5-000808-NX
- for qemu-devel@nongnu.org; Mon, 25 May 2026 09:49:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wRViv-0000os-OH
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 09:52:05 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wRVg2-0007y6-4Y
- for qemu-devel@nongnu.org; Mon, 25 May 2026 09:49:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779716943;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=g6HziBG1obzse4EJ+ceWxIFYDOCQfj4a5ca/uOLMrW0=;
- b=YTMey/P7j6+o0pj1fRwze2iS+xr5dOa91juJyWkApaVS4/VnnWsZx8ejZ6HgPGeNrt8aK7
- RzHsWtnRoUqicxYs8Pq9JoZMi/nP+DPUy1OZx0HrLh4T18zu78jCMP0bU93BF4kqtwUDWX
- cBnJYyYzrlEjXauhot9X5Oev1k1rzZE=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-607-DhWFR-1fMkirxRhYXiO-Dw-1; Mon, 25 May 2026 09:49:01 -0400
-X-MC-Unique: DhWFR-1fMkirxRhYXiO-Dw-1
-X-Mimecast-MFC-AGG-ID: DhWFR-1fMkirxRhYXiO-Dw_1779716940
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-c82c4772950so4735116a12.1
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 06:49:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779716940; x=1780321740; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=g6HziBG1obzse4EJ+ceWxIFYDOCQfj4a5ca/uOLMrW0=;
- b=aQe9Pl6NLbhoMbRzMfCx0aFMcVYwW5cgPvdb7RjMSMkZp1jUFcWRA1VSXD2bfQd77j
- oPRLcHo4YwVcZaeD7SaebhA9l9VCvrwF3O/T6HjnvWrPAfsNIyiwh2glSrIgaeezeONc
- vq5Y/0RPuBwAmgWFy6Qyeko9Ow3t7uGRsS6VCTUXaTVYjwsBMztxaeAM8cwIrPJjzL+L
- LCu1T2EXRou6dDm3pqpWnCHBScyFP4WDw5fAPtk/mIdqovxaIbUILW5WTPf9QcGnsouF
- 1PQrsq20/KezzhhXaAQSBxVpmY/D8+aAHDgw8QYJNsDCIKmWvvdGvc/w875CBAWiL5Qh
- hqTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779716940; x=1780321740;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=g6HziBG1obzse4EJ+ceWxIFYDOCQfj4a5ca/uOLMrW0=;
- b=UD5ES90fLBxgAQ2MB5TyJ9cUgwO8ad4n3hQarg2d9FniUUrcKJlWdLdR2Uz5yIQm/X
- xD8W3Jw72YV4wk7GCenKfHjJWAdm5DsftHlRJ33UV2HzISpSVLFi+cIHNiS+6sMvs6Ai
- 6L6+TEP/o9g7LZVwW7TaVUCcbhkUq3QzXYSfFNhHlMA//hh6VYXF+PiE1Bun4NCq5Wyh
- D6FWUwA9hflgtR2TjK/pk5vfsJUL8ZyzCX9gJzRfuwrtXSE1a+VbANyMwRl0V5BqRruk
- yPEx9hT63BRwsfwH6YjuzBQnBTxODBvHkD9a0r2comNGK5FZ9AFDdAUckUIfvQFNbrV5
- Lrnw==
-X-Gm-Message-State: AOJu0YwdDIqmr6zAUXUMbY3hGS0ReqOKnvhwG6keXGbAZkuwiSWPo3I8
- uS60v1kV0WRnNJQ5BOnIlIj3UhsH56qckTuPq2BxqaYOiqjCdTySs+Vh0x7bAWiqwwTP/b5Qeg9
- wyfDJ8q2E/7nY64BlqyCX1XBPixfiQguZhLd7qcMHYGfzyjL1tMpUKUL5
-X-Gm-Gg: Acq92OGoQBW5j3FS1Oo8z+eB73OZ2yWi31tweLB5qUK583XgX4tQ5+F1FhdBVv12pNu
- b2xGkXA7JsIiiseTnS4W7kkihpHd2qncFCeqush0mDH8ZpNAadWlBW0HbG+bVFnW67C/MtO1oPW
- 9h4v6tw1lods5mR+EerqMneJe0PDuc4kF5BJl4mC7xeCvkFNs1NXRN8qqwg9aKzq24OSCUdh46f
- 9aQUPa6/sO3FglyhnR/B1BgoY/+HkHCX0G9BEsjryWd6kig1FSfgheZjvb7Iuqt7m5SeuwNlSYW
- Ve3RSUECPdmlgFFs4uNfcRuLfE+7CA6MUoljk0JdeXPCp7Q19msSC4qCrn+Hz0Ulp2HgyNyWmEr
- ZEc9ummauAU7iMIir6PF4hUFDHTMIC1q+wCO/rQ6gWE/zUAOz5rbVxMQSt/SD2L8BcTjESmEVv9
- 7HpcnJveIzQw==
-X-Received: by 2002:a05:6a00:2d20:b0:82f:49b5:cfc3 with SMTP id
- d2e1a72fcca58-8416116fed6mr10044677b3a.18.1779716940356; 
- Mon, 25 May 2026 06:49:00 -0700 (PDT)
-X-Received: by 2002:a05:6a00:2d20:b0:82f:49b5:cfc3 with SMTP id
- d2e1a72fcca58-8416116fed6mr10044653b3a.18.1779716939836; 
- Mon, 25 May 2026 06:48:59 -0700 (PDT)
-Received: from smtpclient.apple ([2401:4900:1c00:31c5:adbe:82eb:af87:7a11])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-84164fb28d5sm10007050b3a.41.2026.05.25.06.48.57
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 25 May 2026 06:48:59 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
-Subject: Re: [PATCH] igvm: replace raw uint32_t with igvm library types
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <20260525-igvm_types-v1-1-df2907c1815a@redhat.com>
-Date: Mon, 25 May 2026 19:18:45 +0530
-Cc: qemu-devel <qemu-devel@nongnu.org>, Gerd Hoffmann <kraxel@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Oliver Steffen <osteffen@redhat.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <8B8A20FD-D7FF-4440-AAE7-CFD0CA01D9C7@redhat.com>
-References: <20260525-igvm_types-v1-1-df2907c1815a@redhat.com>
-To: Luigi Leonardi <leonardi@redhat.com>
-X-Mailer: Apple Mail (2.3864.600.51.1.1)
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wRVis-0000rJ-D1
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 09:52:05 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 8E6A9C01E9;
+ Mon, 25 May 2026 16:51:57 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:b8e::1:a] (unknown [2a02:6bf:8080:b8e::1:a])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id tpXuJI1gJiE0-fumezP0O; Mon, 25 May 2026 16:51:56 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1779717116;
+ bh=p1II4UhToDROxmn6ofZ32e6nHp+QJZuNsYKcAtT3rTY=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=qDyTsoGEAr9Mb+hFN/vv3/fuPW2X5AjsNOgGECiO4C4LBWgRgF5ksD5jO6W/ir33W
+ SC6xbpgKjFmW9MUE/99jo54ve9WHflVj8waCQioTYb25hM4GkU/k4T2ufgv6Cr52pm
+ 4ME3MLZuoMRfMubKQgMq72MNiSuCyMZbVlJY0Qs0=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <c34e9bba-0e98-4694-870f-5f92f34f1076@yandex-team.ru>
+Date: Mon, 25 May 2026 16:51:55 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v16 5/8] virtio-net: support local migration of backend
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: jasowang@redhat.com, armbru@redhat.com, peterx@redhat.com,
+ farosas@suse.de, raphael.s.norwitz@gmail.com, bchaney@akamai.com,
+ qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
+ yc-core@yandex-team.ru, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260522120534.77653-1-vsementsov@yandex-team.ru>
+ <20260522120534.77653-6-vsementsov@yandex-team.ru>
+ <20260524050632-mutt-send-email-mst@kernel.org>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20260524050632-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -123,59 +83,357 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 24.05.26 12:09, Michael S. Tsirkin wrote:
+> On Fri, May 22, 2026 at 03:05:30PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> Add virtio-net option local-migration, which is true by default,
+>> but false for older machine types, which doesn't support the feature.
+>>
+>> When both global migration parameter "local" and new virtio-net
+>> parameter "local-migration" are true, virtio-net transfer the whole
+>> net backend to the destination, including open file descriptors.
+>> Of-course, its only for local migration and the channel must be
+>> UNIX domain socket.
+>>
+>> This way management tool should not care about creating new TAP, and
+>> should not handle switching to it. Migration downtime become shorter.
+>>
+>> Support for TAP will come in the next commit.
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> Reviewed-by: Ben Chaney <bchaney@akamai.com>
+> 
+> I don't get why is this a device property?
+> It's clearly a backend thing?
+> 
+
+Hmm.
+
+We want to be able to disable fd-migration per device, when common "local"
+migration parameter is on.
+
+That's why we have parameter for virtio-net. It's also good, that we may
+enable it by default for newer machine types, to make fd-migration a default
+path.
+
+To be honest, it seems that the only thing in this patch (except for interface),
+which is not about backand, is that we want to do virtio_net_update_host_features()
+after backends incoming migration finished. For this, it's comfortable to have
+backend migration as part of device migration stream.
+
+--
+
+Imagine, we move "local-migration" parameter to TAP device. This raise a lot of questions:
+
+1. We loss a possibility to set good default in machine type. Ok, we probably may add
+a property to "migration" object, but this property will look like "TAP-local-migration",
+and raise discussion again, that it should be property of TAP..
+
+2. We loss possiblity to use qom-set, to change the property value, as net backends are
+not Qobjects.. So it will need additional tap-change qmp command or something like this.
+
+3. Migration it self: should we register specific migration state for TAP backend (which is
+not very comfortable, because net backends are not devices), or just keep it as part of
+virtio-net migration state (like in this patch, but instead of checking for own local-migration
+property, check for all backends local-migration properties).
+
+If create personal migration state for TAP backend, detached from virtio-net migration state,
+we'll need somehow call virtio_net_update_host_features() _after_ all backends migrated. May
+be we can do it in device start, but it's not good, as at this point any error is more critical
+than during migration process.. Another option is migration state priorities, but I didn't dig
+into it, and it doesn't seem as reliable as simply migrate backends as part of parent device
+migration state.
+
+--
+
+What do you think? Theoretically, I can move "local-migration" property to TAP backend, but
+seems, it will lead to more problems.
+
+> 
+> 
+>> ---
+>>   hw/core/machine.c              |   1 +
+>>   hw/i386/pc_q35.c               |   1 +
+>>   hw/net/virtio-net.c            | 137 ++++++++++++++++++++++++++++++++-
+>>   include/hw/virtio/virtio-net.h |   2 +
+>>   include/net/net.h              |   2 +
+>>   5 files changed, 142 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/core/machine.c b/hw/core/machine.c
+>> index 63baff859f3..619e80c1cb3 100644
+>> --- a/hw/core/machine.c
+>> +++ b/hw/core/machine.c
+>> @@ -41,6 +41,7 @@
+>>   
+>>   GlobalProperty hw_compat_11_0[] = {
+>>       { "chardev-vc", "encoding", "cp437" },
+>> +    { TYPE_VIRTIO_NET, "local-migration", "false" },
+>>   };
+>>   const size_t hw_compat_11_0_len = G_N_ELEMENTS(hw_compat_11_0);
+>>   
+>> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+>> index d8fed698c72..b5c0e302d59 100644
+>> --- a/hw/i386/pc_q35.c
+>> +++ b/hw/i386/pc_q35.c
+>> @@ -368,6 +368,7 @@ static void pc_q35_machine_options(MachineClass *m)
+>>   static void pc_q35_machine_11_1_options(MachineClass *m)
+>>   {
+>>       pc_q35_machine_options(m);
+>> +    compat_props_add(m->compat_props, hw_compat_11_0, hw_compat_11_0_len);
+>>   }
+>>   
+>>   DEFINE_Q35_MACHINE_AS_LATEST(11, 1);
+>> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+>> index 2a5d642a647..158b9247a58 100644
+>> --- a/hw/net/virtio-net.c
+>> +++ b/hw/net/virtio-net.c
+>> @@ -38,8 +38,10 @@
+>>   #include "qapi/qapi-events-migration.h"
+>>   #include "hw/virtio/virtio-access.h"
+>>   #include "migration/misc.h"
+>> +#include "migration/options.h"
+>>   #include "standard-headers/linux/ethtool.h"
+>>   #include "system/system.h"
+>> +#include "system/runstate.h"
+>>   #include "system/replay.h"
+>>   #include "trace.h"
+>>   #include "monitor/qdev.h"
+>> @@ -3060,7 +3062,17 @@ static void virtio_net_set_multiqueue(VirtIONet *n, int multiqueue)
+>>       n->multiqueue = multiqueue;
+>>       virtio_net_change_num_queues(n, max * 2 + 1);
+>>   
+>> -    virtio_net_set_queue_pairs(n);
+>> +    /*
+>> +     * virtio_net_set_multiqueue() called from set_features(0) on early
+>> +     * reset, when peer may wait for incoming (and is not initialized
+>> +     * yet).
+>> +     * Don't worry about it: virtio_net_set_queue_pairs() will be called
+>> +     * later form virtio_net_post_load_device(), and anyway will be
+>> +     * noop for local incoming migration with live backend passing.
+>> +     */
+>> +    if (!n->peers_wait_incoming) {
+>> +        virtio_net_set_queue_pairs(n);
+>> +    }
+>>   }
+>>   
+>>   static int virtio_net_pre_load_queues(VirtIODevice *vdev, uint32_t n)
+>> @@ -3089,6 +3101,17 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
+>>   
+>>       virtio_add_feature_ex(features, VIRTIO_NET_F_MAC);
+>>   
+>> +    if (n->peers_wait_incoming) {
+>> +        /*
+>> +         * Excessive feature set is OK for early initialization when
+>> +         * we wait for local incoming migration: actual guest-negotiated
+>> +         * features will come with migration stream anyway. And we are sure
+>> +         * that we support same host-features as source, because the backend
+>> +         * is the same (the same TAP device, for example).
+>> +         */
+>> +        return;
+>> +    }
+>> +
+>>       if (!peer_has_vnet_hdr(n)) {
+>>           virtio_clear_feature_ex(features, VIRTIO_NET_F_CSUM);
+>>           virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO4);
+>> @@ -3179,6 +3202,18 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
+>>       }
+>>   }
+>>   
+>> +static bool virtio_net_update_host_features(VirtIONet *n, Error **errp)
+>> +{
+>> +    ERRP_GUARD();
+>> +    VirtIODevice *vdev = VIRTIO_DEVICE(n);
+>> +
+>> +    peer_test_vnet_hdr(n);
+>> +
+>> +    virtio_net_get_features(vdev, &vdev->host_features, errp);
+>> +
+>> +    return !*errp;
+>> +}
+>> +
+>>   static int virtio_net_post_load_device(void *opaque, int version_id)
+>>   {
+>>       VirtIONet *n = opaque;
+>> @@ -3300,6 +3335,9 @@ struct VirtIONetMigTmp {
+>>       uint16_t        curr_queue_pairs_1;
+>>       uint8_t         has_ufo;
+>>       uint32_t        has_vnet_hdr;
+>> +
+>> +    NetClientState *ncs;
+>> +    uint32_t max_queue_pairs;
+>>   };
+>>   
+>>   /* The 2nd and subsequent tx_waiting flags are loaded later than
+>> @@ -3569,6 +3607,57 @@ static const VMStateDescription vhost_user_net_backend_state = {
+>>       }
+>>   };
+>>   
+>> +static bool virtio_net_migrate_local(void *opaque, int version_id)
+>> +{
+>> +    VirtIONet *n = opaque;
+>> +
+>> +    return migrate_local() && n->local_migration;
+>> +}
+>> +
+>> +static int virtio_net_nic_pre_save(void *opaque)
+>> +{
+>> +    struct VirtIONetMigTmp *tmp = opaque;
+>> +
+>> +    tmp->ncs = tmp->parent->nic->ncs;
+>> +    tmp->max_queue_pairs = tmp->parent->max_queue_pairs;
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static int virtio_net_nic_pre_load(void *opaque)
+>> +{
+>> +    /* Reuse the pointer setup from save */
+>> +    virtio_net_nic_pre_save(opaque);
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static int virtio_net_nic_post_load(void *opaque, int version_id)
+>> +{
+>> +    struct VirtIONetMigTmp *tmp = opaque;
+>> +    Error *local_err = NULL;
+>> +
+>> +    if (!virtio_net_update_host_features(tmp->parent, &local_err)) {
+>> +        error_report_err(local_err);
+>> +        return -EINVAL;
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static const VMStateDescription vmstate_virtio_net_nic = {
+>> +    .name      = "virtio-net-nic",
+>> +    .pre_load  = virtio_net_nic_pre_load,
+>> +    .pre_save  = virtio_net_nic_pre_save,
+>> +    .post_load  = virtio_net_nic_post_load,
+>> +    .fields    = (const VMStateField[]) {
+>> +        VMSTATE_VARRAY_UINT32(ncs, struct VirtIONetMigTmp,
+>> +                              max_queue_pairs, 0, vmstate_net_peer_backend,
+>> +                              NetClientState),
+>> +        VMSTATE_END_OF_LIST()
+>> +    },
+>> +};
+>> +
+>>   static const VMStateDescription vmstate_virtio_net_device = {
+>>       .name = "virtio-net-device",
+>>       .version_id = VIRTIO_NET_VM_VERSION,
+>> @@ -3600,6 +3689,9 @@ static const VMStateDescription vmstate_virtio_net_device = {
+>>            * but based on the uint.
+>>            */
+>>           VMSTATE_BUFFER_POINTER_UNSAFE(vlans, VirtIONet, 0, MAX_VLAN >> 3),
+>> +        VMSTATE_WITH_TMP_TEST(VirtIONet, virtio_net_migrate_local,
+>> +                              struct VirtIONetMigTmp,
+>> +                              vmstate_virtio_net_nic),
+>>           VMSTATE_WITH_TMP(VirtIONet, struct VirtIONetMigTmp,
+>>                            vmstate_virtio_net_has_vnet),
+>>           VMSTATE_UINT8(mac_table.multi_overflow, VirtIONet),
+>> @@ -3864,6 +3956,42 @@ static bool failover_hide_primary_device(DeviceListener *listener,
+>>       return qatomic_read(&n->failover_primary_hidden);
+>>   }
+>>   
+>> +static bool virtio_net_check_peers_wait_incoming(VirtIONet *n, bool *waiting,
+>> +                                                 Error **errp)
+>> +{
+>> +    bool has_waiting = false;
+>> +    bool has_not_waiting = false;
+>> +
+>> +    for (int i = 0; i < n->max_queue_pairs; i++) {
+>> +        NetClientState *peer = n->nic->ncs[i].peer;
+>> +        if (!peer) {
+>> +            continue;
+>> +        }
+>> +
+>> +        if (peer->info->is_wait_incoming &&
+>> +            peer->info->is_wait_incoming(peer)) {
+>> +            has_waiting = true;
+>> +        } else {
+>> +            has_not_waiting = true;
+>> +        }
+>> +
+>> +        if (has_waiting && has_not_waiting) {
+>> +            error_setg(errp, "Mixed peer states: some peers wait for incoming "
+>> +                       "migration while others don't");
+>> +            return false;
+>> +        }
+>> +    }
+>> +
+>> +    if (has_waiting && !runstate_check(RUN_STATE_INMIGRATE)) {
+>> +        error_setg(errp, "Peers wait for incoming, but it's not an incoming "
+>> +                   "migration.");
+>> +        return false;
+>> +    }
+>> +
+>> +    *waiting = has_waiting;
+>> +    return true;
+>> +}
+>> +
+>>   static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+>>   {
+>>       VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+>> @@ -4001,6 +4129,12 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+>>           n->nic->ncs[i].do_not_pad = true;
+>>       }
+>>   
+>> +    if (!virtio_net_check_peers_wait_incoming(n, &n->peers_wait_incoming,
+>> +                                              errp)) {
+>> +        virtio_cleanup(vdev);
+>> +        return;
+>> +    }
+>> +
+>>       peer_test_vnet_hdr(n);
+>>       if (peer_has_vnet_hdr(n)) {
+>>           n->host_hdr_len = sizeof(struct virtio_net_hdr);
+>> @@ -4310,6 +4444,7 @@ static const Property virtio_net_properties[] = {
+>>                                  host_features_ex,
+>>                                  VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM,
+>>                                  true),
+>> +    DEFINE_PROP_BOOL("local-migration", VirtIONet, local_migration, true),
+>>   };
+>>   
+>>   static void virtio_net_class_init(ObjectClass *klass, const void *data)
+>> diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
+>> index 371e3764282..0c14e314409 100644
+>> --- a/include/hw/virtio/virtio-net.h
+>> +++ b/include/hw/virtio/virtio-net.h
+>> @@ -230,6 +230,8 @@ struct VirtIONet {
+>>       struct EBPFRSSContext ebpf_rss;
+>>       uint32_t nr_ebpf_rss_fds;
+>>       char **ebpf_rss_fds;
+>> +    bool peers_wait_incoming;
+>> +    bool local_migration;
+>>   };
+>>   
+>>   size_t virtio_net_handle_ctrl_iov(VirtIODevice *vdev,
+>> diff --git a/include/net/net.h b/include/net/net.h
+>> index aa34043b1ac..d4cf399d4a8 100644
+>> --- a/include/net/net.h
+>> +++ b/include/net/net.h
+>> @@ -82,6 +82,7 @@ typedef void (SocketReadStateFinalize)(SocketReadState *rs);
+>>   typedef void (NetAnnounce)(NetClientState *);
+>>   typedef bool (SetSteeringEBPF)(NetClientState *, int);
+>>   typedef bool (NetCheckPeerType)(NetClientState *, ObjectClass *, Error **);
+>> +typedef bool (IsWaitIncoming)(NetClientState *);
+>>   typedef struct vhost_net *(GetVHostNet)(NetClientState *nc);
+>>   
+>>   typedef struct NetClientInfo {
+>> @@ -110,6 +111,7 @@ typedef struct NetClientInfo {
+>>       NetAnnounce *announce;
+>>       SetSteeringEBPF *set_steering_ebpf;
+>>       NetCheckPeerType *check_peer_type;
+>> +    IsWaitIncoming *is_wait_incoming;
+>>       GetVHostNet *get_vhost_net;
+>>       const VMStateDescription *backend_vmsd;
+>>   } NetClientInfo;
+>> -- 
+>> 2.52.0
+> 
 
 
-> On 25 May 2026, at 5:26=E2=80=AFPM, Luigi Leonardi =
-<leonardi@redhat.com> wrote:
->=20
-> Use IgvmVariableHeaderType and IgvmHeaderSection in QIGVMHandler and
-> qigvm_handler() instead of plain uint32_t, so that each field's =
-purpose
-> is clear from its type.
->=20
-> Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
-
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
-
-> ---
-> backends/igvm.c | 6 +++---
-> 1 file changed, 3 insertions(+), 3 deletions(-)
->=20
-> diff --git a/backends/igvm.c b/backends/igvm.c
-> index c347d0c17e..8bb5750768 100644
-> --- a/backends/igvm.c
-> +++ b/backends/igvm.c
-> @@ -102,8 +102,8 @@ static int qigvm_initialization_guest_policy(QIgvm =
-*ctx,
->                                        Error **errp);
->=20
-> struct QIGVMHandler {
-> -    uint32_t type;
-> -    uint32_t section;
-> +    IgvmVariableHeaderType type;
-> +    IgvmHeaderSection section;
->     int (*handler)(QIgvm *ctx, const uint8_t *header_data, Error =
-**errp);
-> };
->=20
-> @@ -132,7 +132,7 @@ static struct QIGVMHandler handlers[] =3D {
->       qigvm_directive_madt },
-> };
->=20
-> -static int qigvm_handler(QIgvm *ctx, uint32_t type, Error **errp)
-> +static int qigvm_handler(QIgvm *ctx, IgvmVariableHeaderType type, =
-Error **errp)
-> {
->     size_t handler;
->     IgvmHandle header_handle;
->=20
-> ---
-> base-commit: cbf877d67a812be17a9ce404a589e1bdf722c1f6
-> change-id: 20260525-igvm_types-4b24d233e6bb
->=20
-> Best regards,
-> --=20
-> Luigi Leonardi <leonardi@redhat.com>
->=20
-
+-- 
+Best regards,
+Vladimir
 
