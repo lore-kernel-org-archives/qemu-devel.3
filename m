@@ -4,43 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92839CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 17:19:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBB35CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 17:24:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRYxr-0008Dp-UA; Mon, 25 May 2026 13:19:44 -0400
+	id 1wRZ2T-000119-R3; Mon, 25 May 2026 13:24:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wRYxp-0008B4-9M; Mon, 25 May 2026 13:19:41 -0400
+ id 1wRZ2R-00010g-NB; Mon, 25 May 2026 13:24:28 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wRYxm-0008Es-9v; Mon, 25 May 2026 13:19:41 -0400
+ id 1wRZ2O-0002bH-Mz; Mon, 25 May 2026 13:24:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779729564; bh=Y3jKeU/GWSJIjDcoOGcprJsmajUTj6KUs7I79EqmtFY=;
+ t=1779729859; bh=bOc5nfANetH/qet06hldJ0iN/VTHrnMk0YmoqPltQYI=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=ZFc6II6Bh+wRv3/Hz9+EFqwSWPmppk5hvwyuoKS6rTpKEmtpKEfj4w1w6oAHRu/MS
- pmWx1CE6IdXCEmyIcshWSoqbptq6i6erwfCFYCk0Tv99Pvhv59OgHghTti9cotC0lH
- SZ0X44KJfi/MBBchPqz8TTK5kjbtIKylJP4OixFfy9jzbC/o/hB8rQ1juOVp4waSB4
- gICypFeKOA+ZoxssmBT4rmJb89ayJ0FEtcrYRbApLNSs6ulW6r0lrY6vW3moYiAmba
- TMcA4pg1vmviKzn0wGWwBZ5vqnOnysq87/3ih0SREzeUJ26cHbVlx7E+tgCvIb467F
- qHKq4wxZjxKmA==
+ b=o4Qvtp1GYaKn3pqtv3otoYmMcc7FaEiug8i0DsdBi2NzaBIkYcBLEKXe9L8SPspbu
+ 5HrxOwITaeYu0NfvpeewxH2Yq1gmpYS3SiU4BoR26HgOX/knZFtERiZWFWYyeGK7Of
+ VOfs3zOs/PSgoFKfyLh/o1brZtOOkkjpcgQajtDRAJkVWhxSkwa0cBqHra8gXhWpeh
+ kEdr48MJ42PMhRiX1zWYmd/qtVKb6tTZWYTx5TVZHxmuDWOq0rGI/z4dy6X6+BjVBK
+ e5h67B7kmsoNHMTEZiPvR5KwCD509U+vOL20CAgdPLAD6KoHr4HHi7J4iltURj9RX2
+ NeqTHVRlyETJQ==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id DD1461B073A;
- Mon, 25 May 2026 20:19:23 +0300 (MSK)
-Message-ID: <94272c53-266e-4ece-bb30-681a75010e14@tls.msk.ru>
-Date: Mon, 25 May 2026 20:19:25 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id 41F3A1B0740;
+ Mon, 25 May 2026 20:24:19 +0300 (MSK)
+Message-ID: <c04d240e-4b6f-4f0b-a5df-0323397ae858@tls.msk.ru>
+Date: Mon, 25 May 2026 20:24:21 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] crypto: fix client side anonymous TLS credentials
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <dan@berrange.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
+Subject: Re: [PATCH] target/riscv: rvv: Handle source overlap of vector
+ widening reduction instructions
+To: Anton Blanchard <antonb@tenstorrent.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ liujingqi@lanxincomputing.com, max.chou@sifive.com,
  qemu-stable <qemu-stable@nongnu.org>
-References: <20260423134422.688862-1-dan@berrange.com>
+References: <20260417080328.31918-1-antonb@tenstorrent.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -86,9 +88,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260423134422.688862-1-dan@berrange.com>
+In-Reply-To: <20260417080328.31918-1-antonb@tenstorrent.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -112,31 +114,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23.04.2026 16:44, Daniel P. Berrangé wrote:
-> The previous refactoring of credential creation failed to allocate
-> storage fo the anonymous TLS credentials on the client endpoint.
+On 17.04.2026 11:03, Anton Blanchard wrote:
+> Widening reductions read vs2 as a vector of SEW elements and vs1[0] as a
+> scalar of 2*SEW. The ISA does not allow the same vector register to be read
+> with different EEWs, so they must not overlap.
 > 
-> Fixes: 70f9fd8dbf7233bee497055a9b7825e3729ce853
-> Reported-by: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
-> Signed-off-by: Daniel P. Berrangé <dan@berrange.com>
+> vs1 is read as a scalar from element 0, so it is treated as a single vector
+> register (independent of LMUL) when checking overlap.
+> 
+> Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
 > ---
->   crypto/tlscredsanon.c               |   2 +
->   tests/unit/test-crypto-tlssession.c | 120 +++++++++++++++++++++++++++-
->   2 files changed, 121 insertions(+), 1 deletion(-)
+>   target/riscv/insn_trans/trans_rvv.c.inc | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> diff --git a/crypto/tlscredsanon.c b/crypto/tlscredsanon.c
-> index 1551382e1f..190c9833a7 100644
-> --- a/crypto/tlscredsanon.c
-> +++ b/crypto/tlscredsanon.c
-> @@ -73,6 +73,8 @@ qcrypto_tls_creds_anon_load(QCryptoTLSCredsAnon *creds,
->                                                box->dh_params);
->           }
->       } else {
-> +        box = qcrypto_tls_creds_box_new_client(GNUTLS_CRD_ANON);
-> +
->           ret = gnutls_anon_allocate_client_credentials(&box->data.anonclient);
+> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+> index 4df9a40b44..d9a0027e0b 100644
+> --- a/target/riscv/insn_trans/trans_rvv.c.inc
+> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
+> @@ -3062,6 +3062,7 @@ GEN_OPIVV_TRANS(vredxor_vs, reduction_check)
+>   static bool reduction_widen_check(DisasContext *s, arg_rmrr *a)
+>   {
+>       return reduction_check(s, a) && (s->sew < MO_64) &&
+> +           !is_overlapped(a->rs1, 1, a->rs2, 1 << MAX(s->lmul, 0)) &&
+>              ((s->sew + 1) <= (s->cfg_ptr->elen >> 4));
+>   }
+>   
 
-This one feels like a qemu-stable material (11.0.x).
+Shouldn't this change be in stable qemu series?
+Or is it not important there?
+
 I'm picking it up, please let me know if I shouldn't.
 
 Thanks,
