@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B243CD5BBF
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 04:28:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05BC7CD5BC0
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 04:30:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRMvT-0007Md-K6; Mon, 25 May 2026 00:28:27 -0400
+	id 1wRMwo-0008BT-Hl; Mon, 25 May 2026 00:29:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wRMvR-0007Ke-9J
- for qemu-devel@nongnu.org; Mon, 25 May 2026 00:28:25 -0400
+ id 1wRMwl-0008B2-2r
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 00:29:47 -0400
 Received: from mail-dy1-x1342.google.com ([2607:f8b0:4864:20::1342])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wRMvP-0007Cl-GX
- for qemu-devel@nongnu.org; Mon, 25 May 2026 00:28:25 -0400
+ id 1wRMwf-0007Ug-Qt
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 00:29:43 -0400
 Received: by mail-dy1-x1342.google.com with SMTP id
- 5a478bee46e88-30455f77e0eso4631796eec.0
- for <qemu-devel@nongnu.org>; Sun, 24 May 2026 21:28:23 -0700 (PDT)
+ 5a478bee46e88-2ef8d6ba48bso4956073eec.1
+ for <qemu-devel@nongnu.org>; Sun, 24 May 2026 21:29:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779683302; x=1780288102; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779683379; x=1780288179; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=33J20/6r07FKIZokb7U4QqRC2bN29qsLA+s5n3cTmBY=;
- b=ofVzv/BgUh5j+hxpSXJFN4CCklLfCpr1dIx/8aoAH2QwcP+wwiywLZ7FJUF2JmTWP2
- gdv53m2vRloeoE7n25U8A7Hgf953Wh5/qnzQS4YI7xx9PeMszFl6hcP6rwrOO632mvln
- ThZ4PXNZopvsK/ea9WMNjYZF1Trz/plkyGb+W9g7bkHjHhnKFkgNXf32RcUmL674ySMP
- mgK1fEIk8YWe4aDEuM2TFeJgJNAl8FN4G0rLIRcwnVCcZr3ew5aJBlUxjnLUGw0s1KQX
- l7i0T+b5ShCGD6Lwpi6wBGQEixnPiEtgQaFwVVkERVKl59qxG1bEJDn+0cGm6dzn+eIe
- 83GQ==
+ bh=mKS6ZtzMox7hJr+d7N0SCcVnL73DioUjkJgBoaAGVsg=;
+ b=I97MTjfX4YK1wHVRIMBZNQxlfWzEcx1ybYDEVtm865sEygt2L88JNSy5KquewOyjjv
+ B3JhryQO7JkyyX1Qnj6Mz57FJVVsY4Hp6C+hfT8dSaXl3ClrOhQo/7/QyqE9i/Pynm55
+ 0UoIiduEjGFDcp+bqTHqj7+CjZWcv6YZcLwh5RpqT18pkA4gwMhu30YStUD1yaLQ4y40
+ pSs7F1naxGa0x2Wn4bjOc/K786gsX3Vv1wbP7kuJrFMkHWpjYeO8ByP6Te2tMhMCsEbX
+ ErW5XOEuxVpvuuRaheYLJCxjIfgSMGtlQJubsih/Yo3A1Yb0VpNBKbMvA0c98sDyAx6g
+ NHyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779683302; x=1780288102;
+ d=1e100.net; s=20251104; t=1779683379; x=1780288179;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=33J20/6r07FKIZokb7U4QqRC2bN29qsLA+s5n3cTmBY=;
- b=IdeUZhTThHqzGvAjKYlL/myvJzeXUgw79ypiz48IHd10tE4y/PDy30Strr2d2MF2+z
- LqVBvoX0T4LtVQBdhmVBDYcygTTuHJr4tjcjqntMAdq51ed1NnsbW2fNYnr3cqyluJF6
- XZ9I0PaRah76eNzuROY3WYBcm+UbWEgpIZ+WaQjluoTMlwCU9z0yySsfB5tn+8Rbe8/j
- f6xtCebg7OPHfB7F1YqLwcZK0ZZbIhPPtFyb97kJ1ml3sDXvUyB6DoeKUn9Ds9TKTIKK
- 9arXAUQR3ohgV2j8ILVbAJcFmmguE1A1OLiW5L4rC9EoMj0I3cdDoOrrw/Y3tmBD9qjl
- t5rQ==
-X-Gm-Message-State: AOJu0YyWKVsJv+cnLii+XSZwFWsU9PhAQfnjWVo/IfreZDubWD6oKntX
- BalU2uz9BrG38ON0AG+dcxvlGSXGOSV6FScAzHbjXq7dFt2NWy2gvzHE
-X-Gm-Gg: Acq92OHJCZH4Mag9jJ0MF4VeVQkwP0fex1dC72tnZmA5ggF3f1XaaPB3hhelOkWJLr1
- yABnf6OJ8plBP0Zixn/eQefn8v9XQrXeXEdVvEbVP180Ul8IorpAgTtxZItudSo8Q7hcSxZgTnw
- KqP+KuAykdH1cpmzWwYsC8QRLd+/IvrnI0xr6YtfbaoGhZeB5tr8uzqcvCnUbu8s9BnogCKPttc
- 2jfPUQ+fAJJ0GbJbrqXPzAoXAmHyj4V3uTf+zqF2urQNNPiYryca/leuFJfIy3rEsi0UYnTAKBA
- P2MOYrf4qxAHcWmKzgmxaf62mbp6gLGdHuyhE4b40N4xgqoi31k8YJLs9y8H1J6eHk0y3bgf8wl
- gwrXNwQxV2B8k3ymTzP+GF17CKHAnbBCWom7JWcfc02fMyUu7vpDugcjthooslTKYaH4X7AC1Ib
- 56BotzMG7zxATZkwA2+g2AFKQ6gff1T+dafYqrEJPLN+FQg2UZxqTDxno6bq41OW+Fa0C4HQ==
-X-Received: by 2002:a05:7300:e424:b0:304:819f:502b with SMTP id
- 5a478bee46e88-304819f518emr1407113eec.9.1779683301892; 
- Sun, 24 May 2026 21:28:21 -0700 (PDT)
+ bh=mKS6ZtzMox7hJr+d7N0SCcVnL73DioUjkJgBoaAGVsg=;
+ b=Tbp1IX6HvkqG05tUuyRq4Mb09yhSatVZnA+gckrpwq8bw2+IWItbsk2JIHZaV5aocy
+ WxNNln0azqTtZbSieiR3evkBg6gRiEf1y+GNzLRTZdvfwzaL8obr64EuVo1xvIVUdfeI
+ ZoVg5EvbnNt3dKx+4jcz8jidnG8k9PjPcHQzRqJ9wjjGUy9cCiZDKV5+7+qLxsvv7O9t
+ 7qg0KkWie/8qdreTADV5ky8Ifi/x9qX6hUiOrliAhqcviPlVWwGzrzd5a5DngKYxwwwx
+ e9NmDSTvrCeDzV8iwlkPgBmEPuf5aPL0LWO545GOHYMlH2gDw84ueKTaigtrrDHt/h9T
+ sBRw==
+X-Gm-Message-State: AOJu0YzND25XBcydd3liqSoS1B0wOpYOqmXv+7FQvcWmw8BlPDGYq75A
+ HDDEifZOLheCg09cvXeMgq/2Pk6I7aXHFanPkdlFjTIfMm4OWuqHwIB/rYm/bbMeCBScPg==
+X-Gm-Gg: Acq92OGtrTmam7cEE9cfQoyuj4GEwT798Dqtn+u2vtwCgDg8waO0aF/8O9/cCIy2j2Y
+ WqozM/V7S43KUscuw+6Zl3ltMm9OLh3iUPfZ1iDZQUZ2QkjMjywR79FyMIQpqPhw87Kryf3COJ5
+ lMIZ9SPut1c3dw02MEVYOWIAr8qeLqoMkQThsqyYjeVfT50m7qy9XqmSM8h+Laepee8pj3Q6hnI
+ wGv/NMrWLMxw8X9xSBn1oKt8QhccwsaDYtxX5rwx3Hnbfl0vZicARdRLUmh35ymKI3saTdsTmD7
+ lStpTv6073Pek52Wp6jQWWUwHmxjra8AsWZsvgIPJA5tKZtxcuqfyK21/KY/OFbabRKYIKlJPsH
+ YZc90DYs+AvWUuz5vQtRdL5socfiNajJS90YGyyRgt37cxTtMv8r38pjzdn2ZytW5/+IH+eq8Fh
+ ET7P7N7HAepppEYj6ciEFbzVzIBRiTkOQWuQGaIZ2rnpvQaQVuDxhsUpWA974=
+X-Received: by 2002:a05:7300:7c0d:b0:2ed:a58c:942 with SMTP id
+ 5a478bee46e88-3044a41f423mr4649199eec.8.1779683378466; 
+ Sun, 24 May 2026 21:29:38 -0700 (PDT)
 Received: from localhost ([64.186.250.142]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30451ef4af0sm6875913eec.3.2026.05.24.21.28.19
+ 5a478bee46e88-30452230f1bsm6778727eec.14.2026.05.24.21.29.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 24 May 2026 21:28:21 -0700 (PDT)
-Date: Mon, 25 May 2026 12:28:17 +0800
+ Sun, 24 May 2026 21:29:37 -0700 (PDT)
+Date: Mon, 25 May 2026 12:29:35 +0800
 From: Chao Liu <chao.liu.zevorn@gmail.com>
 To: Zephyr Li <fritchleybohrer@gmail.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
  alistair.francis@wdc.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  daniel.barboza@oss.qualcomm.com
-Subject: Re: [PATCH v2] target/riscv: Reject Svinval instructions in U-mode
-Message-ID: <ahPP11q8WEK9_vI5@ChaodeMacBook-Pro.local>
-References: <20260522033145.17850-1-fritchleybohrer@gmail.com>
+Subject: Re: [PATCH] target/riscv: Do not hide Sstc CSRs from gdbstub
+Message-ID: <ahPQJbUYBqXx8dfc@ChaodeMacBook-Pro.local>
+References: <20260525024220.39027-1-fritchleybohrer@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260522033145.17850-1-fritchleybohrer@gmail.com>
+In-Reply-To: <20260525024220.39027-1-fritchleybohrer@gmail.com>
 Received-SPF: pass client-ip=2607:f8b0:4864:20::1342;
  envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1342.google.com
 X-Spam_score_int: -20
@@ -99,82 +99,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 22, 2026 at 11:31:44AM +0800, Zephyr Li wrote:
-> The RISC-V privileged specification requires SFENCE.W.INVAL and
-> SFENCE.INVAL.IR to raise an illegal instruction exception when executed
-> in U-mode. Check the current privilege mode during translation and reject these
-> instructions in U-mode, so they are reported as illegal instructions.
+On Mon, May 25, 2026 at 10:42:20AM +0800, Zephyr Li wrote:
+> The Sstc predicate currently checks both ext_sstc and rdtime_fn. This
+> causes the gdbstub CSR XML generation to skip Sstc CSRs when rdtime_fn
+> has not been initialized yet, even if the CPU supports Sstc.
 > 
-> Add a helper to reject these instructions in U-mode during translation.
+> As a result, GDB reports $stimecmp as void with a CPU that exposes the
+> sstc extension.
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3493
+> Only use ext_sstc for the early existence check, and keep the rdtime_fn
+> check for non-debugger accesses.
 > 
-> Suggested-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3496
 > Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
 
 Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 
 > ---
->  target/riscv/insn_trans/trans_svinval.c.inc | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
 > 
-> diff --git a/target/riscv/insn_trans/trans_svinval.c.inc b/target/riscv/insn_trans/trans_svinval.c.inc
-> index a06c3b214f..4614c1489c 100644
-> --- a/target/riscv/insn_trans/trans_svinval.c.inc
-> +++ b/target/riscv/insn_trans/trans_svinval.c.inc
-> @@ -22,11 +22,19 @@
->      }                                      \
->  } while (0)
+> Testing:
+>     Start QEMU with:
+>         qemu-system-riscv64 -M virt,aclint=on -cpu max,sstc=true -s -S -nographic
+> 
+>     Before:
+>         (gdb) p $stimecmp
+>         $1 = void
+> 
+>     After:
+>         (gdb) p $stimecmp
+>         $1 = 0
+> 
+>  target/riscv/csr.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index da366cf562..c17df147f7 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -586,7 +586,7 @@ static RISCVException sstc(CPURISCVState *env, int csrno)
+>  {
+>      bool hmode_check = false;
 >  
-> +/* Test if priv level is M or S. */
-> +#define REQUIRE_PRIV_MS(ctx) do {          \
-> +    if (ctx->priv == PRV_U) {              \
-> +        return false;                      \
-> +    }                                      \
-> +} while (0)
+> -    if (!riscv_cpu_cfg(env)->ext_sstc || !env->rdtime_fn) {
+> +    if (!riscv_cpu_cfg(env)->ext_sstc) {
+>          return RISCV_EXCP_ILLEGAL_INST;
+>      }
+>  
+> @@ -603,6 +603,10 @@ static RISCVException sstc(CPURISCVState *env, int csrno)
+>          return RISCV_EXCP_NONE;
+>      }
+>  
+> +    if (!env->rdtime_fn) {
+> +        return RISCV_EXCP_ILLEGAL_INST;
+> +    }
 > +
->  static bool trans_sinval_vma(DisasContext *ctx, arg_sinval_vma *a)
->  {
->      REQUIRE_SVINVAL(ctx);
->      /* Do the same as sfence.vma currently */
->      REQUIRE_EXT(ctx, RVS);
-> +    REQUIRE_PRIV_MS(ctx);
->  #ifndef CONFIG_USER_ONLY
->      decode_save_opc(ctx, 0);
->      gen_helper_tlb_flush(tcg_env);
-> @@ -39,6 +47,7 @@ static bool trans_sfence_w_inval(DisasContext *ctx, arg_sfence_w_inval *a)
->  {
->      REQUIRE_SVINVAL(ctx);
->      REQUIRE_EXT(ctx, RVS);
-> +    REQUIRE_PRIV_MS(ctx);
->      /* Do nothing currently */
->      return true;
->  }
-> @@ -47,6 +56,7 @@ static bool trans_sfence_inval_ir(DisasContext *ctx, arg_sfence_inval_ir *a)
->  {
->      REQUIRE_SVINVAL(ctx);
->      REQUIRE_EXT(ctx, RVS);
-> +    REQUIRE_PRIV_MS(ctx);
->      /* Do nothing currently */
->      return true;
->  }
-> @@ -56,6 +66,7 @@ static bool trans_hinval_vvma(DisasContext *ctx, arg_hinval_vvma *a)
->      REQUIRE_SVINVAL(ctx);
->      /* Do the same as hfence.vvma currently */
->      REQUIRE_EXT(ctx, RVH);
-> +    REQUIRE_PRIV_MS(ctx);
->  #ifndef CONFIG_USER_ONLY
->      decode_save_opc(ctx, 0);
->      gen_helper_hyp_tlb_flush(tcg_env);
-> @@ -69,6 +80,7 @@ static bool trans_hinval_gvma(DisasContext *ctx, arg_hinval_gvma *a)
->      REQUIRE_SVINVAL(ctx);
->      /* Do the same as hfence.gvma currently */
->      REQUIRE_EXT(ctx, RVH);
-> +    REQUIRE_PRIV_MS(ctx);
->  #ifndef CONFIG_USER_ONLY
->      decode_save_opc(ctx, 0);
->      gen_helper_hyp_gvma_tlb_flush(tcg_env);
+>      if (env->priv == PRV_M) {
+>          return RISCV_EXCP_NONE;
+>      }
 > -- 
 > 2.43.0
 > 
