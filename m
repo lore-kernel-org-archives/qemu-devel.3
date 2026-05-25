@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5352CCD5BBF
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 06:37:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87927CD5BC0
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 06:37:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wROv4-0004nG-Vz; Mon, 25 May 2026 02:36:18 -0400
+	id 1wROvF-00058i-VK; Mon, 25 May 2026 02:36:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wROtO-0002mG-NW
- for qemu-devel@nongnu.org; Mon, 25 May 2026 02:34:32 -0400
+ id 1wROtY-0002xS-1L
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 02:34:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wROtL-0001Fj-79
- for qemu-devel@nongnu.org; Mon, 25 May 2026 02:34:25 -0400
+ id 1wROtW-0001Jm-EM
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 02:34:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779690862;
+ s=mimecast20190719; t=1779690873;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=y0KRCbh+DuowVvjWgeRAQvhYdmF0tf77Yft4EyxaRRo=;
- b=aNDrMUFlYzfi3lsjFmGhfg6+K+4w76Pas3yOy9qnVdsnsm9EAaRX+ygO2o3BMUTMmgnLLj
- 7RbJbLknIFDSTy78cHf0wtFNYR0w78Xys6+kmNnwMtPZMsLew44k/EEausWrSc2fP42u6G
- nlfl8XEFBsHZKTc+prU5ivMbsw5iVLM=
+ bh=DBHFQLtRMrdfnvQtSsd7u7e5jcNyISFb5lV/307G3wI=;
+ b=UtyCCiyFq+wwIP2Tl5rfto1duIo0khVCy1R5AQWOXWYkoPz1Css67b9LMneF7MLvjKo3Ed
+ XmMc+YLMTNEXLTbDf2R4OwHhFeI/kAkeZx1QWdL/Nmlkd3UnnJf3+uDaCgxAvsWUpW6TTh
+ fFsZZntRzuSFAp8nXBZ3tlOj/jRD4Xs=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-445-npzeTzTbMmiPXR5Bja2g8w-1; Mon,
- 25 May 2026 02:34:17 -0400
-X-MC-Unique: npzeTzTbMmiPXR5Bja2g8w-1
-X-Mimecast-MFC-AGG-ID: npzeTzTbMmiPXR5Bja2g8w_1779690856
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-133-oe1ga9oePWys5YOVoLEYNg-1; Mon,
+ 25 May 2026 02:34:30 -0400
+X-MC-Unique: oe1ga9oePWys5YOVoLEYNg-1
+X-Mimecast-MFC-AGG-ID: oe1ga9oePWys5YOVoLEYNg_1779690869
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B7ACD19560B2; Mon, 25 May 2026 06:34:16 +0000 (UTC)
+ id 8E50219560A2; Mon, 25 May 2026 06:34:29 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4BA771800576; Mon, 25 May 2026 06:34:14 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 120B818004A3; Mon, 25 May 2026 06:34:27 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL v3 14/38] ui/console: Add qemu_text_console_put_linux()
-Date: Mon, 25 May 2026 10:31:57 +0400
-Message-ID: <20260525063223.1409791-15-marcandre.lureau@redhat.com>
+ Jan Kiszka <jan.kiszka@web.de>, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org (open list:Musicpal)
+Subject: [PULL v3 16/38] hw/arm/musicpal: Use Linux key codes
+Date: Mon, 25 May 2026 10:31:59 +0400
+Message-ID: <20260525063223.1409791-17-marcandre.lureau@redhat.com>
 In-Reply-To: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
 References: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -88,123 +89,78 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-Add a text console helper that accepts Linux input key codes and use it
-as the common implementation for qemu_text_console_put_qcode(). This lets
-callers that already use Linux key codes avoid converting them back to
-QKeyCode.
+QemuInputEvent now stores Linux key codes for key events. Use those
+codes directly instead of translating between internal key code
+representations.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260520-input-v3-6-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <20260520-input-v3-8-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 ---
- include/ui/console.h |  2 ++
- ui/console.c         | 66 +++++++++++++++++++++++++++++---------------
- 2 files changed, 46 insertions(+), 22 deletions(-)
+ hw/arm/musicpal.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index cfa940d4c66..691040f5948 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -109,6 +109,8 @@ bool qemu_mouse_set(int index, Error **errp);
- 
- void qemu_text_console_put_keysym(QemuTextConsole *s, int keysym);
- bool qemu_text_console_put_qcode(QemuTextConsole *s, int qcode, bool ctrl);
-+bool qemu_text_console_put_linux(QemuTextConsole *s, unsigned int lnx,
-+                                 bool ctrl);
- void qemu_text_console_put_string(QemuTextConsole *s, const char *str, int len);
- 
- /* consoles */
-diff --git a/ui/console.c b/ui/console.c
-index eaa41086743..2dcb4660fbf 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -23,6 +23,7 @@
-  */
- 
- #include "qemu/osdep.h"
+diff --git a/hw/arm/musicpal.c b/hw/arm/musicpal.c
+index c8985a58f99..e2630243eb7 100644
+--- a/hw/arm/musicpal.c
++++ b/hw/arm/musicpal.c
+@@ -24,6 +24,7 @@
+ #include "hw/core/ptimer.h"
+ #include "hw/core/qdev-properties.h"
+ #include "hw/block/flash.h"
 +#include "standard-headers/linux/input-event-codes.h"
  #include "ui/console.h"
- #include "ui/vgafont.h"
- #include "hw/core/qdev.h"
-@@ -302,36 +303,57 @@ void qemu_text_console_put_keysym(QemuTextConsole *s, int keysym)
-     qemu_text_console_handle_keysym(s, keysym);
- }
- 
--static const int qcode_to_keysym[Q_KEY_CODE__MAX] = {
--    [Q_KEY_CODE_UP]     = QEMU_KEY_UP,
--    [Q_KEY_CODE_DOWN]   = QEMU_KEY_DOWN,
--    [Q_KEY_CODE_RIGHT]  = QEMU_KEY_RIGHT,
--    [Q_KEY_CODE_LEFT]   = QEMU_KEY_LEFT,
--    [Q_KEY_CODE_HOME]   = QEMU_KEY_HOME,
--    [Q_KEY_CODE_END]    = QEMU_KEY_END,
--    [Q_KEY_CODE_PGUP]   = QEMU_KEY_PAGEUP,
--    [Q_KEY_CODE_PGDN]   = QEMU_KEY_PAGEDOWN,
--    [Q_KEY_CODE_DELETE] = QEMU_KEY_DELETE,
--    [Q_KEY_CODE_TAB]    = QEMU_KEY_TAB,
--    [Q_KEY_CODE_BACKSPACE] = QEMU_KEY_BACKSPACE,
-+static const int linux_to_keysym[] = {
-+    [KEY_UP]     = QEMU_KEY_UP,
-+    [KEY_DOWN]   = QEMU_KEY_DOWN,
-+    [KEY_RIGHT]  = QEMU_KEY_RIGHT,
-+    [KEY_LEFT]   = QEMU_KEY_LEFT,
-+    [KEY_HOME]   = QEMU_KEY_HOME,
-+    [KEY_END]    = QEMU_KEY_END,
-+    [KEY_PAGEUP]   = QEMU_KEY_PAGEUP,
-+    [KEY_PAGEDOWN]   = QEMU_KEY_PAGEDOWN,
-+    [KEY_DELETE] = QEMU_KEY_DELETE,
-+    [KEY_TAB]    = QEMU_KEY_TAB,
-+    [KEY_BACKSPACE] = QEMU_KEY_BACKSPACE,
- };
- 
--static const int ctrl_qcode_to_keysym[Q_KEY_CODE__MAX] = {
--    [Q_KEY_CODE_UP]     = QEMU_KEY_CTRL_UP,
--    [Q_KEY_CODE_DOWN]   = QEMU_KEY_CTRL_DOWN,
--    [Q_KEY_CODE_RIGHT]  = QEMU_KEY_CTRL_RIGHT,
--    [Q_KEY_CODE_LEFT]   = QEMU_KEY_CTRL_LEFT,
--    [Q_KEY_CODE_HOME]   = QEMU_KEY_CTRL_HOME,
--    [Q_KEY_CODE_END]    = QEMU_KEY_CTRL_END,
--    [Q_KEY_CODE_PGUP]   = QEMU_KEY_CTRL_PAGEUP,
--    [Q_KEY_CODE_PGDN]   = QEMU_KEY_CTRL_PAGEDOWN,
-+static const int ctrl_linux_to_keysym[] = {
-+    [KEY_UP]     = QEMU_KEY_CTRL_UP,
-+    [KEY_DOWN]   = QEMU_KEY_CTRL_DOWN,
-+    [KEY_RIGHT]  = QEMU_KEY_CTRL_RIGHT,
-+    [KEY_LEFT]   = QEMU_KEY_CTRL_LEFT,
-+    [KEY_HOME]   = QEMU_KEY_CTRL_HOME,
-+    [KEY_END]    = QEMU_KEY_CTRL_END,
-+    [KEY_PAGEUP]   = QEMU_KEY_CTRL_PAGEUP,
-+    [KEY_PAGEDOWN]   = QEMU_KEY_CTRL_PAGEDOWN,
- };
- 
- bool qemu_text_console_put_qcode(QemuTextConsole *s, int qcode, bool ctrl)
+ #include "hw/i2c/i2c.h"
+ #include "hw/i2c/bitbang_i2c.h"
+@@ -1069,40 +1070,39 @@ static void musicpal_key_event(DeviceState *dev, QemuConsole *src,
+                                QemuInputEvent *evt)
  {
-+    unsigned int lnx = qemu_input_map_qcode_to_linux[qcode];
-+    return qemu_text_console_put_linux(s, lnx, ctrl);
-+}
-+
-+bool qemu_text_console_put_linux(QemuTextConsole *s, unsigned int lnx,
-+                                 bool ctrl)
-+{
-+    size_t maplen;
-+    const int *map;
-     int keysym;
+     musicpal_key_state *s = MUSICPAL_KEY(dev);
+-    int qcode = qemu_input_linux_to_qcode(evt->key.key);
+     uint32_t event = 0;
+     int i;
  
--    keysym = ctrl ? ctrl_qcode_to_keysym[qcode] : qcode_to_keysym[qcode];
-+    if (ctrl) {
-+        maplen = ARRAY_SIZE(ctrl_linux_to_keysym);
-+        map = ctrl_linux_to_keysym;
-+    } else {
-+        maplen = ARRAY_SIZE(linux_to_keysym);
-+        map = linux_to_keysym;
-+    }
-+
-+    if (lnx >= maplen) {
-+        return false;
-+    }
-+
-+    keysym = map[lnx];
-     if (keysym == 0) {
-         return false;
+-    switch (qcode) {
+-    case Q_KEY_CODE_UP:
++    switch (evt->key.key) {
++    case KEY_UP:
+         event = MP_KEY_WHEEL_NAV | MP_KEY_WHEEL_NAV_INV;
+         break;
+ 
+-    case Q_KEY_CODE_DOWN:
++    case KEY_DOWN:
+         event = MP_KEY_WHEEL_NAV;
+         break;
+ 
+-    case Q_KEY_CODE_LEFT:
++    case KEY_LEFT:
+         event = MP_KEY_WHEEL_VOL | MP_KEY_WHEEL_VOL_INV;
+         break;
+ 
+-    case Q_KEY_CODE_RIGHT:
++    case KEY_RIGHT:
+         event = MP_KEY_WHEEL_VOL;
+         break;
+ 
+-    case Q_KEY_CODE_F:
++    case KEY_F:
+         event = MP_KEY_BTN_FAVORITS;
+         break;
+ 
+-    case Q_KEY_CODE_TAB:
++    case KEY_TAB:
+         event = MP_KEY_BTN_VOLUME;
+         break;
+ 
+-    case Q_KEY_CODE_RET:
++    case KEY_ENTER:
+         event = MP_KEY_BTN_NAVIGATION;
+         break;
+ 
+-    case Q_KEY_CODE_M:
++    case KEY_M:
+         event = MP_KEY_BTN_MENU;
+         break;
      }
 -- 
 2.54.0
