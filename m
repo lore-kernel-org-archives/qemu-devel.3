@@ -4,152 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA9E8CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 21:35:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C569CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 21:54:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRcwk-0002YE-Of; Mon, 25 May 2026 17:34:50 -0400
+	id 1wRdEh-0000j9-L9; Mon, 25 May 2026 17:53:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rnorwitz@nvidia.com>)
- id 1wRcwi-0002XS-Fs; Mon, 25 May 2026 17:34:48 -0400
-Received: from mail-southcentralusazlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c10d::3] helo=SN4PR0501CU005.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rnorwitz@nvidia.com>)
- id 1wRcwg-00087z-93; Mon, 25 May 2026 17:34:48 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nTXrH4S+o9USPU+A7BdeQE3K+PZkbo4KQOGPV6NLuKfMLhyydUQzuVOaZuDXIrhkLIWen/nmnEXNVIRLfGCXX/aqzCuzJj95IEwNLcEXHTfswhfkEdwmVqn0D8ZBep8/RJjxBkJ7s4wKlI0TFlkBQIpxVep9T0nMltGBQ+J0HnfQS48oCURogZtxhCGwr/w9iwreKgnU8qoVzwXY9nJWhadmgAUjQKPc2Da59Vx5WMC7Nl4ZaY1YhYTLPLE/APvZvX4d4XEy2GzWjAaJK7d8/FUaCBhVhYYyUqzg5QBkshXFhN76OvUr63SwOhiptha3JUw7QA29zSpxs1T7qVpvcg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=X3LYre1DWpanFJfPxMqpheeX498GL741fh5e0zXwUdM=;
- b=IfWS95VS3Ns2swCOCxu5lk+/xlLG56YQpFXe/hdv3ndQRsr+V7xHGIiqXcOu34hARZccs8+f5oU7IibkKrl+6enUvtCUBsGNnRHPUUfdhO0ese6jQrPj8yPB1UafX/hWmEglQcvpRtpy3Dk9RTzoFc0KZ2XabOJKHmu1zo8hCxoBRBaDr0bE+5a7NojZWnw5s23EGCR3HEvNb/GE9V9Qgx2+Cl6MXKOVvuIJFcOdf9pZh93paX92LLy1Ww9kl2hZDzxGG7XW7Ik3PLa8OhVaWkokgb0d1/BvTUb6hi7jBp3WWZ4SvFcik+Yzbp+SY89hM08wypcDF6XSbdpX1VHLEA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=X3LYre1DWpanFJfPxMqpheeX498GL741fh5e0zXwUdM=;
- b=eN1wCS1959rNzIbsaa4iuDzkhN/oT/4t/Pkn569UoxR8hhB/znucSq75uhkFOi/JecJXF6Ec+6JK95fZ4b3JPeKh2Xtttowrzg/ZI4KETpBP5Q4AWmcEVt7nvM9/LGvviHqkz7LFUZboGa6hv18rIDPFS25wH9p0sd8Ul2LhPM/D4+xYMOMv9IXJHzfSUggylk2ym7WKlOHW1MMlGz/Kva9mWzoN+GxDzBCymGTdNawOYVVv0lNV8I4NyUiNdaVmFk8/DHzQ/XUoGoEuk3iIUkl+BGsX/6idH2Btg6/oRCL8poXwPA5R0Pe30HgFruNEGxuMQWON01WJKSXRk1zOaQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from SN7PR12MB7226.namprd12.prod.outlook.com (2603:10b6:806:2a9::18)
- by MN0PR12MB6055.namprd12.prod.outlook.com (2603:10b6:208:3cd::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.20; Mon, 25 May
- 2026 21:34:39 +0000
-Received: from SN7PR12MB7226.namprd12.prod.outlook.com
- ([fe80::c07d:130a:7def:6807]) by SN7PR12MB7226.namprd12.prod.outlook.com
- ([fe80::c07d:130a:7def:6807%5]) with mapi id 15.21.0048.016; Mon, 25 May 2026
- 21:34:39 +0000
-Message-ID: <7fc11fc4-4bc7-46b3-8d83-1ab5a8198cda@nvidia.com>
-Date: Mon, 25 May 2026 17:34:37 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/5] vhost-user: add skip_drain param to GET_VRING_BASE
-To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org
-Cc: "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Milan Zamazal <mzamazal@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Jason Wang <jasowang@redhat.com>, qemu-block@nongnu.org,
- Fam Zheng <fam@euphon.net>, zhenwei pi <zhenwei.pi@linux.dev>,
- Hanna Reitz <hreitz@redhat.com>, virtio-fs@lists.linux.dev,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
- Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-References: <20260330095226.158386-1-dtalexundeer@yandex-team.ru>
- <20260330095226.158386-6-dtalexundeer@yandex-team.ru>
- <613f140f-de27-4f83-8a02-5370833dd659@nvidia.com>
- <965db8ae-b44a-4b29-b006-56e8474d52b5@yandex-team.ru>
- <c9082536-6b4b-4e9a-a6ff-764dbbf649c9@nvidia.com>
- <19b0aa2e-90dc-4467-acc8-adc0bec7c388@yandex-team.ru>
- <1c6af04b-9efd-4d07-ab5c-e6d616818c2c@nvidia.com>
- <9fb43ec4-7825-4382-991f-a2cc17142138@yandex-team.ru>
- <be99a7b5-1575-4da0-93dd-8460a77ddf77@yandex-team.ru>
-Content-Language: en-US
-From: Raphael Norwitz <rnorwitz@nvidia.com>
-In-Reply-To: <be99a7b5-1575-4da0-93dd-8460a77ddf77@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: BL1P221CA0030.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:208:2c5::21) To SN7PR12MB7226.namprd12.prod.outlook.com
- (2603:10b6:806:2a9::18)
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1wRdEg-0000iw-44
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 17:53:22 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1wRdEe-0006Ho-JO
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 17:53:21 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-7c2fa14795aso77299227b3.1
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 14:53:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1779745999; x=1780350799; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=l51dLVCHAR456H4i4+cgGwHpM+CpQO2jRyfd/gO3/ec=;
+ b=GDjt3Jkz+Qtltlu0v6A/szxFzvefjy39WraNL02I8E6ukiu22Yt8mWSNhm0MYy7DX8
+ lh8NroxA4WRaBw9r3V1MiHWxw4LVZ3nZeRIw+Xlu11pT6kvRn9/ulAKct3D3VhpFg2UO
+ JqZFlayzABTvv9debRbZN3RTqxK3dumZ3MXN8Bepz271ZpWAocPy881mt6QZwGf+Yv88
+ Hc18C5xjZMFPkHRiLHTOOjeoBDQOyhvh72+ceD9E4ta3Mstug5o4IkcofEC27zcoV8Gd
+ KR83IkzbBCku1XLnI9/fbypAMQMYUhzQb4EsSFe/r5JJxl50EQZFuDSXUcFHiGGMBUSE
+ Tvjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779745999; x=1780350799;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=l51dLVCHAR456H4i4+cgGwHpM+CpQO2jRyfd/gO3/ec=;
+ b=Qsx7Sb0Wf7he1vOWWAY4slXsYXd/v9h8Nk2cSDZceQpB9IhU/Vb90YDUUFhqeugAAH
+ H9HI7dQPJI9QWlqzKhr99CKCo3TybdbSUmqtYC64I7fuS5vJGCQkUtsyk0EYTWdRTCpq
+ Vxw7lRrU5Sd9HDSGiU7NSem5uudWAx4BkPl8+eJtHz8O3wthiLAdJ7/ymiGoNKEo6E7Y
+ 4WCFQ0Vlvk0zNDjJZ1b/A8VdqkoS1NYyeGX8BxE/l29JOy39qSmpXxppOKmd5Oylo9M0
+ wIxa6DKxU/pnla6nvg9DYwpCDG12M8Z34udhQZW0ppKlGg85PSGcs+iGFHtUKYBT45YO
+ 6VGA==
+X-Gm-Message-State: AOJu0YzGa4XgkTlzCaFwOLrzElmRUx8T46ecXvV02S9av6WQZ2RWb+z7
+ gBAHogzcNbmUYqPco9psAvH63aZr8DPm0EEjVfozYheIQ9puNJ4C/bEaC9jnNYft
+X-Gm-Gg: Acq92OFDxgL+h3d2+CItdAWJ9B5+bIKHks8qCfsOQMWxiXO362ujBAwWqBSw3wXmoV5
+ gXqVtuYiOPoOzwU2IU8vbFZIGRDay25WtVch76VBT1yWdPLpWbdRI3FKDQqEedsnfaUxrksWRd4
+ RkL/zEZFFG8I9FFTtLfm4TQNTftmfS6THZ4hF1ccdR141+5e1GQzUvGk/2cM5ob9hCfvbT2qYGT
+ bBCsquzHTWKz+diBhaIgRozKAKEVBG5zCcTL595OqN2QBnZhY1rmttunEbV4XQ//8NAd4losyOw
+ X3FgtfrB88EQmzj6C3y8MdNHQRJhsUpa+3qxit5f31XlZqd240bXW5cJjxOwDahvEkaTr7jp914
+ QOiEZbboR9o2IZgmt7Dus+JxM8UA6dPt6ZK/ObX95ODFZPATo881+ijTsrs2cVZ1ERpz5xCzvmH
+ HF+rdIMtcUzDMGVgp4+R1D223RWE6/WOE/aL5x4yHOApoVX1ZrqvNOpcy+V0EfyvDnibwsYt5Fl
+ G4=
+X-Received: by 2002:a05:690c:3706:b0:7bd:4792:66ef with SMTP id
+ 00721157ae682-7d33a961ab6mr184729847b3.42.1779745999449; 
+ Mon, 25 May 2026 14:53:19 -0700 (PDT)
+Received: from localhost (107-220-129-194.lightspeed.chrlnc.sbcglobal.net.
+ [107.220.129.194]) by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-7d389815a8fsm51881127b3.6.2026.05.25.14.53.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 25 May 2026 14:53:18 -0700 (PDT)
+From: Matt Turner <mattst88@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Matt Turner <mattst88@gmail.com>
+Subject: [PATCH] linux-user/alpha: add coredump support
+Date: Mon, 25 May 2026 17:53:08 -0400
+Message-ID: <20260525215308.44096-1-mattst88@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN7PR12MB7226:EE_|MN0PR12MB6055:EE_
-X-MS-Office365-Filtering-Correlation-Id: 64f54721-7e19-4b99-7dc0-08debaa56d15
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|366016|1800799024|11063799006|4143699003|3023799007|56012099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: PN0E/C+GTHRtqM+lkFs3brBeqzy/5wUQ6E2pyHeihh5bt/u9kFMKzRIT2oxjfjr9Gz1OefDd97UNDoo70y9LQqOoI/Qc18M5F8RpzPNDKkFIudxfxcs6HkRgHT2t3f7al/b3vFC2sk6FU5kbAdztK0Ejsx4wCxcg65CPB9OYgl0tA3IaTz7pP+afUq2lOQ026iOFNF5wcM1zjJa8UIObzur2LW3fyPujPKNRL5WWdja2dOWB/G+bqJN1IUwn2gmdIJNgFsq0emJdbdboEXMd5fopwudEvO/kCe5dI8ygS0zJgAt435LDEN8eGLIH2Ddgr1wHp32RK09XvdSKzUwY25yFGkugWQiEUzFINXr6jP0O7GAfX3FOgwXd279z6CX37bldHNJzB7XABEO2XLPDmJRp9CR4BxM+lNnZgF/aKwQJ1eKDxpzpJgY17OL/5m2X0TGZu3cMhRLKxaD6DxuKcC9YNmbesLM9J/C6VGunSO2mzm1gwF68ILRxDiOMGcIXYVcTVDFp58Eg8rZOBy9deCycK4I+vM6YoQigjd1XeNUjy4cLPTZ1eOQH97l841fa5n2xZrbTCXsD7hoQuyN409hoLra9+oseeVMAh0zKRQx0T4t2ByZ8HXyQBTxoQ0BvKt/lbpJ7MNisCx284HoBc3Kjdos+TtkWG3hTj4s5OJJue7m56mvwQt9pR0P1aEOo
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SN7PR12MB7226.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(366016)(1800799024)(11063799006)(4143699003)(3023799007)(56012099003)(22082099003)(18002099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dERBbnU2VG9GZCthQlJCNllIUG5QWm9oMGNjOUtlZ3IvWmdwSkY5dmNqK1Aw?=
- =?utf-8?B?OXh4R2VFa0RvdGNSMi9uTFhZdTlldjVZZXdrV3JSdWRZbmV6bVhQZjVqREFG?=
- =?utf-8?B?QVBLWU9CbmlYejJsV2pLUnVINlhuOWVDWmtuRy9XYzBYeU02UG9RVmo4dThz?=
- =?utf-8?B?T2xOM1luM1NpYTVWTi9PQW8yYmdUWk42a0NrSXdPTitwTzdUcFRMLzkzOUhO?=
- =?utf-8?B?WTdjdkhHcGgrSG9FeVcrdFJaV1ErdXhkSWNEcmE1MmJXSENlWkpZczlMdFVR?=
- =?utf-8?B?clY0Uzg0b0VHQlBaUVNocE9HdnlkeG5lQlU0ZXZJZDJOVXp3dDhRZU5qZkVV?=
- =?utf-8?B?cEIvRWR2YnBtbnhvTnhtZk41MUJpYXB4RVNhQ3ZFT2hkL2hySjh4RjVkcTZa?=
- =?utf-8?B?SmkwbW9FVXJCcFNtd2l5bXZuYXpiNVVlVllCcDN4VGdIMi9kaEJUNmM3d1BX?=
- =?utf-8?B?NEZOVFJYWitwdDlqVm1iOFFGMFZNYzJpZStNWGZyVUc0WVd0bFh3WGtBV2Fo?=
- =?utf-8?B?azJYUktjMDNkSnpUaWRFa3Z0ZnI5Rzl1dEhobXFXZUZVa09wc25ONHJ2akhB?=
- =?utf-8?B?WXpENDF3aCtTM29qOVd5Vzh1WVpWVFM2WXdjbTJsKzVxRmVVOHZaL1dvSS9l?=
- =?utf-8?B?dUdFNFpGYStHc294MmNKanlUWER2TGtkdTU1WkdEVVlFQnVCVlpSOVRPbGJm?=
- =?utf-8?B?Yno2VEJZeFVCam5vaTZVamZiTllBU0R2eWs4OGdRM09FT2JZaVhtZEVLcFFJ?=
- =?utf-8?B?SGVSN0NnWnpibUFRVzBudVk2OUl6YVNjME81MzI2dS80R2thczlKV2JlRnRy?=
- =?utf-8?B?cDBPZ3BOaXZyNFZESGZlTXhlakNaZkwycjN4c21HQytmZnVOWm1LQ0s0TFBs?=
- =?utf-8?B?ZHhEYjN0eFpsK0tuRHB4aElKVkFXOFIxQ1BkTnRVVDZHSGtyTi9MNXIzMXdT?=
- =?utf-8?B?SzIvVXdWcXpNNWV2UUlCNWFhUkNJMHI4dDhxTHZqSDdNdytYaUw0a05jZE1o?=
- =?utf-8?B?eXRYbG1DR2YrV0NlYVFJeHVMZXFWemk3aEZ5aHJ6VTB2dGhnckE5SEViZnJ0?=
- =?utf-8?B?emdHQlZISzJYbHFDSlVUZjk4eXVGQXlpSWNwT2RwYUNhbVNkVTl5MHhGMTda?=
- =?utf-8?B?eEpNZDVIdGw0amVMYlVhRlJkRDg3by81bmU0SVVoOFNqbzJTVmczanJHVE4y?=
- =?utf-8?B?NnhFcnovU3RrU0xEWmFhVUkzclNGS3pONGs0cW9tUy9VRVNtQTByV1Jrd0dW?=
- =?utf-8?B?YTZXVUE4ZzhBTlEwUTRyVUtVeVVhK1JibmpBSVlhL3JtZWs4VGJGR3B2YkRv?=
- =?utf-8?B?OStsZnJSeUkzbHlGaU5kVVZlYjZLY0pQU2VXMGhwcGJ5NksxQTVkNTNBT2l4?=
- =?utf-8?B?WkkzTmxUTE8vU3lVNWFray9lb1B2clBaZy91YlIyZVFRV3dDTVR3YTU4ZTVQ?=
- =?utf-8?B?YlpPZGtCNHpKR2Y4MWwrR1Q3TnM2bDY4UFZITzY4cEo0VVpjTmM0d3g2ZElh?=
- =?utf-8?B?Rlk0aURKT3lwY0Nacytma1F2Y2Zka1hOMmtUOFlpSVZZYmJBcUpqUU8xSXNP?=
- =?utf-8?B?S1hkTEZya2taREJ3UmhMaHk1Z0k4QkZWSjlicEIxMERVT2xmR0VOUXZVT3NJ?=
- =?utf-8?B?VERQN1FKMml4aVNZaUFrRG5aM29lYm9jcDg4S1BnYWpqS3hLM1RISnNwendI?=
- =?utf-8?B?RG04VGdjcmZVVjhLR0Z6aCtrSGtmU0VmeXpETW9vb0tHc2JHY1FXUGhOVkg3?=
- =?utf-8?B?c3NUVXlCczVoSmt3eEYyRDV6eEtZUVhkMWE2RWtQKzJZOGxHandyNGxZZS96?=
- =?utf-8?B?VllQZUxTQ0JubGJtUHdPN1B2RHVQV05IN0RuaHEvdStrZkMrWWRPb2d1UmV3?=
- =?utf-8?B?dFlQYTBicWI0VGZ2ak0wWklta0ZVaWt4ZG9UczVqR0dwWGhjV0Z6NFVvWllj?=
- =?utf-8?B?Q214OWwrQmxCWWtmamljYjZKMC85dXhmRUJvYUk5RFgrN01nbURUcnk0K3BB?=
- =?utf-8?B?MmRFNTlHMThnRHhRUVBNOHNwQ2JYSDIyU1FpaURZdGhVazE1aGthclVQMGpo?=
- =?utf-8?B?dUFTc3lHVmlHZU8xR0pyRTZrb1hjdklIU0pMMUozT1hhSWh6Uy9nSnhVaElB?=
- =?utf-8?B?bTZ5Y0NibVBVQm5wSk4yU0l6T251UUhDREZab3BxRG1SekdmcUhhMjYxVVVK?=
- =?utf-8?B?TUxaWHMxRnZHbWxYc2RrK3M5SUtXVTF4aElubGhnWSt2dEVJNGpsTHBZamNN?=
- =?utf-8?B?ME1QN1lXUXl3ZnB6QUZ5NDlOclcwNjhPVmlwVFZuU25zWDFkMXBhZEpiSDE0?=
- =?utf-8?B?elpMMXZyUFJVRlg4QWhtWnRxRFdDTkliWG9qUVd3d0ZyZ1c1SVZUdz09?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 64f54721-7e19-4b99-7dc0-08debaa56d15
-X-MS-Exchange-CrossTenant-AuthSource: SN7PR12MB7226.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 May 2026 21:34:39.6557 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: iPRb7l8PgRTRofx6r+CsA1EVNTcT4gWF+QDFnkcrS5CVXdjyqzWsTlTMpGwWbgh5cuHddGIWc8qaJzc6lzhf7g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6055
-Received-SPF: permerror client-ip=2a01:111:f403:c10d::3;
- envelope-from=rnorwitz@nvidia.com;
- helo=SN4PR0501CU005.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=mattst88@gmail.com; helo=mail-yw1-x112f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,271 +101,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Apologies for the late reply.
+Define HAVE_ELF_CORE_DUMP and target_elf_gregset_t in target_elf.h,
+mirroring the kernel's elf_gregset_t (ELF_NGREG = 66): r0-r31
+[0..31], f0-f31 [32..63], pc [64], ps [65].  Implement
+elf_core_copy_regs() in elfload.c to populate the gregset from
+CPUAlphaState.
 
-On 5/12/26 1:55 AM, Alexandr Moshkov wrote:
-> Gentle ping :)
-> 
+Without this, bprm->core_dump is NULL for Alpha targets.  When a
+guest signal goes unhandled, dump_core_and_abort() skips the core
+write and falls through to die_with_signal(), which re-raises the
+signal to the host.  The host kernel then writes an x86-64 core file
+for the qemu-alpha process instead of an Alpha guest core.
 
-[...]
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+---
+ linux-user/alpha/elfload.c    | 12 ++++++++++++
+ linux-user/alpha/target_elf.h | 13 +++++++++++++
+ 2 files changed, 25 insertions(+)
 
->>>>> On 4/16/26 5:26 AM, Alexandr Moshkov wrote:
->>>>>> Greetings! Thanks for reply!
->>>>>>
->>>>>>
->>>>>> On 4/15/26 20:21, Raphael Norwitz wrote:
->>>>>>> I’m not sure I like using the num field in vhost_vring_state to 
->>>>>>> set magic values which affect protocol behavior for 
->>>>>>> GET_VRING_BASE. It feels like a hack to me. I would think the 
->>>>>>> proper solution if we want to support migration from new to old 
->>>>>>> would be to have new use a different new message entirely. Can we 
->>>>>>> do that?
->>>>>>
->>>>>> I think we can, but I thought at first that this will be almost a 
->>>>>> complete copy of GET_VRING_BASE message, with the exception of 
->>>>>> waiting for drain of requests, so I choose to expand existing 
->>>>>> message.
->>>>>>
->>>>>
->>>>> I think a new message would be cleaner. Anyone else have thoughts?
->>>>>
->>>>>> If this is not an appropriate approach, is it better to make a new 
->>>>>> message like GET_VRING_BASE or a separate message used together 
->>>>>> with default GET_VRING_BASE message (for example, message for 
->>>>>> setting some kind of status on the server)? What should I name 
->>>>>> this new message?
->>>>>>
->>>>>
->>>>> Maybe GET_VRING_BASE_SKIP_DRAIN? How would a separate message used 
->>>>> together with default GET_VRING_BASE message work? 
->>>>
->>>> I was thinking about a message something like SET_VRING_ENABLE - for 
->>>> example SET_SKIP_DRAIN_ENABLE, that would enable/disable some state 
->>>> (skip_drain) in the backend.
->>>
->>> I'd need to see the flow in more detail but sounds promising.
->>
->> On migration vhost-user-blk firstly send SET_SKIP_DRAIN_ENABLE with 
->> num = 1 message if `inflight-migration` device parameter 
->> and VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT enabled. Then send 
->> GET_VRING_BASE and continue work as usual.
->>
->> On SET_SKIP_DRAIN_ENABLE backend sets inner state (skip_drain) so when 
->> GET_VRING_BASE is called and skip_drain is true the drain will skipped.
->>
->> What do you think?
->>
-
-I'm happy with that in theory but would like more clarity on the 
-details. In particular, I'm not sure what you mean by "vhost-user-blk 
-firstly send SET_SKIP_DRAIN_ENABLE". To add a new message I would think 
-we would have to do a vhost-user protocol feature negotiation to gate it.
-
-Also what are the precise semantics for SET_SKIP_DRAIN_ENABLE? Would it 
-be sent on backend connect or when we're about to migrate?
-
-I was hoping others would comment but at this point I'd suggest drafting 
-the code and then we can re-review.
-
->>>
->>>>
->>>>>
->>>>>> I also fix other comments, thanks!
->>>>>>
->>>>>>>
->>>>>>> On 3/30/26 11:52 AM, Alexandr Moshkov wrote:
->>>>>>>> In case of migration of QEMU from the new version (where the
->>>>>>>> inllight-migration parameter is present), to the old one (where 
->>>>>>>> it is
->>>>>>>
->>>>>>> nit: spelling inllight-migration
->>>>>>>
->>>>>>>> absent) there is no way to disable this feature on the backend 
->>>>>>>> during
->>>>>>>> runtime.
->>>>>>>>
->>>>>>>> This commit slightly changes the semantics of the protocol feature
->>>>>>>> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT. Enabling this 
->>>>>>>> feature
->>>>>>>> adds a new parameter for GET_VRING_BASE, which allows to control 
->>>>>>>> the
->>>>>>>> drain in-flight requests on the backend.
->>>>>>>> Thus, QEMU will be able to turn this feature on GET_VRING_BASE 
->>>>>>>> off and
->>>>>>>> on anytime.
->>>>>>>>
->>>>>>>> In vhost-user-blk use inflight_migration param to enable 
->>>>>>>> skip_drain to
->>>>>>>> suspend in-flight I/O requests, and then migrate them throught 
->>>>>>>> inflight
->>>>>>>> subsection.
->>>>>>>>
->>>>>>>> Also now QEMU will always try to setup
->>>>>>>> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT protocol featrue with
->>>>>>>> backend. This will allow to use skip_drain parameter on 
->>>>>>>> GET_VRING_BASE
->>>>>>>> message.
->>>>>>>>
->>>>>>>> Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex- 
->>>>>>>> team.ru>
->>>>>>>> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
->>>>>>>> ---
->>>>>>>>   docs/interop/vhost-user.rst    |  6 ++----
->>>>>>>>   hw/block/vhost-user-blk.c      | 30 +++++++++++++++++++++++ 
->>>>>>>> +------
->>>>>>>>   hw/virtio/vhost-user.c         |  3 +--
->>>>>>>>   hw/virtio/vhost.c              |  1 +
->>>>>>>>   include/hw/virtio/vhost-user.h |  1 -
->>>>>>>>   5 files changed, 28 insertions(+), 13 deletions(-)
->>>>>>>>
->>>>>>>> diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost- 
->>>>>>>> user.rst
->>>>>>>> index bfa75ff9a3..63efc87264 100644
->>>>>>>> --- a/docs/interop/vhost-user.rst
->>>>>>>> +++ b/docs/interop/vhost-user.rst
->>>>>>>> @@ -1255,14 +1255,12 @@ Front-end message types
->>>>>>>>     *suspended*, see :ref:`Suspended device state
->>>>>>>>     <suspended_device_state>`.
->>>>>>>>   -  The request payload's *num* field is currently reserved and 
->>>>>>>> must be
->>>>>>>> -  set to 0.
->>>>>>>> -
->>>>>>>>     By default, the back-end must complete all inflight I/O 
->>>>>>>> requests for the
->>>>>>>>     specified vring before stopping it.
->>>>>>>>       If the ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT`` 
->>>>>>>> protocol
->>>>>>>> -  feature has been negotiated, the back-end may suspend in- 
->>>>>>>> flight I/O
->>>>>>>> +  feature has been negotiated, using request payload's *num* 
->>>>>>>> field,
->>>>>>>> +  when *num* is set to 1, QEMU can tell the back-end to suspend 
->>>>>>>> in- flight I/O
->>>>>>>>     requests and record them as described in :ref:`Inflight I/O 
->>>>>>>> tracking
->>>>>>>>     <inflight_io_tracking>` instead of completing them before 
->>>>>>>> stopping the vring.
->>>>>>>>     How to suspend an in-flight request depends on the 
->>>>>>>> implementation of the back-end
->>>>>>>> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
->>>>>>>> index a3ecd83f54..522e9d34b5 100644
->>>>>>>> --- a/hw/block/vhost-user-blk.c
->>>>>>>> +++ b/hw/block/vhost-user-blk.c
->>>>>>>> @@ -134,10 +134,7 @@ static bool 
->>>>>>>> vhost_user_blk_inflight_needed(void *opaque)
->>>>>>>>   {
->>>>>>>>       struct VHostUserBlk *s = opaque;
->>>>>>>>   -    bool inflight_migration = virtio_has_feature(s- 
->>>>>>>> >dev.protocol_features,
->>>>>>>> - VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
->>>>>>>> -
->>>>>>>> -    return inflight_migration;
->>>>>>>> +    return s->inflight_migration;
->>>>>>>>   }
->>>>>>>>     @@ -232,11 +229,14 @@ static int 
->>>>>>>> vhost_user_blk_stop(VirtIODevice *vdev)
->>>>>>>>           return 0;
->>>>>>>>       }
->>>>>>>>   +    bool skip_drain = vhost_user_blk_inflight_needed(s) &&
->>>>>>>
->>>>>>> nit: declarations on top
->>>>>>>
->>>>>>>> + runstate_check(RUN_STATE_FINISH_MIGRATE);
->>>>>>>> +
->>>>>>>>       force_stop = s->skip_get_vring_base_on_force_shutdown &&
->>>>>>>>                    qemu_force_shutdown_requested();
->>>>>>>>         ret = force_stop ? vhost_dev_force_stop(&s->dev, vdev, 
->>>>>>>> true) :
->>>>>>>> -                       vhost_dev_stop(&s->dev, vdev, true, false);
->>>>>>>> +                       vhost_dev_stop(&s->dev, vdev, true, 
->>>>>>>> skip_drain);
->>>>>>>>         if (k->set_guest_notifiers(qbus->parent, s->dev.nvqs, 
->>>>>>>> false) < 0) {
->>>>>>>>           error_report("vhost guest notifier cleanup failed: 
->>>>>>>> %d", ret);
->>>>>>>> @@ -364,7 +364,6 @@ static int 
->>>>>>>> vhost_user_blk_connect(DeviceState *dev, Error **errp)
->>>>>>>>       vhost_dev_set_config_notifier(&s->dev, &blk_ops);
->>>>>>>>         s->vhost_user.supports_config = true;
->>>>>>>> -    s->vhost_user.supports_inflight_migration = s- 
->>>>>>>> >inflight_migration;
->>>>>>>>       ret = vhost_dev_init(&s->dev, &s->vhost_user, 
->>>>>>>> VHOST_BACKEND_TYPE_USER, 0,
->>>>>>>>                            errp);
->>>>>>>>       if (ret < 0) {
->>>>>>>> @@ -580,10 +579,29 @@ static struct vhost_dev 
->>>>>>>> *vhost_user_blk_get_vhost(VirtIODevice *vdev)
->>>>>>>>       return &s->dev;
->>>>>>>>   }
->>>>>>>>   +static bool vhost_user_blk_pre_save(void *opaque, Error **errp)
->>>>>>>> +{
->>>>>>>> +    VHostUserBlk *s = VHOST_USER_BLK(opaque);
->>>>>>>> +
->>>>>>>> +    bool inflight_migration_enabled = virtio_has_feature(
->>>>>>>> +        s->dev.protocol_features,
->>>>>>>> + VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
->>>>>>>> +    if (vhost_user_blk_inflight_needed(s) && ! 
->>>>>>>> inflight_migration_enabled) {
->>>>>>>> +        error_setg(errp, "can't migrate vhost-user-blk device: "
->>>>>>>> +                         "backend doesn't support "
->>>>>>>> + "VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT "
->>>>>>>> +                         "protocol feature");
->>>>>>>> +        return false;
->>>>>>>> +    }
->>>>>>>> +
->>>>>>>> +    return true;
->>>>>>>> +}
->>>>>>>> +
->>>>>>>>   static const VMStateDescription 
->>>>>>>> vmstate_vhost_user_blk_inflight = {
->>>>>>>>       .name = "vhost-user-blk/inflight",
->>>>>>>>       .version_id = 1,
->>>>>>>>       .needed = vhost_user_blk_inflight_needed,
->>>>>>>> +    .pre_save_errp = vhost_user_blk_pre_save,
->>>>>>>>       .fields = (const VMStateField[]) {
->>>>>>>>           VMSTATE_VHOST_INFLIGHT_REGION(inflight, VHostUserBlk),
->>>>>>>>           VMSTATE_END_OF_LIST()
->>>>>>>> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
->>>>>>>> index bb8f8eab77..ed95ec7523 100644
->>>>>>>> --- a/hw/virtio/vhost-user.c
->>>>>>>> +++ b/hw/virtio/vhost-user.c
->>>>>>>> @@ -2225,8 +2225,7 @@ static int vhost_user_backend_init(struct 
->>>>>>>> vhost_dev *dev, void *opaque,
->>>>>>>>               }
->>>>>>>>           }
->>>>>>>>   -        if (!u->user->supports_inflight_migration ||
->>>>>>>> -            !virtio_has_feature(protocol_features,
->>>>>>>> +        if (!virtio_has_feature(protocol_features,
->>>>>>>> VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD)) {
->>>>>>>>               protocol_features &= ~(1ULL <<
->>>>>>>> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
->>>>>>>> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
->>>>>>>> index ac4d6fca73..54e4ce2660 100644
->>>>>>>> --- a/hw/virtio/vhost.c
->>>>>>>> +++ b/hw/virtio/vhost.c
->>>>>>>> @@ -1398,6 +1398,7 @@ static int do_vhost_virtqueue_stop(struct 
->>>>>>>> vhost_dev *dev,
->>>>>>>>       int vhost_vq_index = dev->vhost_ops- 
->>>>>>>> >vhost_get_vq_index(dev, idx);
->>>>>>>>       struct vhost_vring_state state = {
->>>>>>>>           .index = vhost_vq_index,
->>>>>>>> +        .num = skip_drain,
->>>>>>>>       };
->>>>>>>>       int r = 0;
->>>>>>>>   diff --git a/include/hw/virtio/vhost-user.h b/include/hw/ 
->>>>>>>> virtio/ vhost-user.h
->>>>>>>> index 53fe996686..c95bad5ddc 100644
->>>>>>>> --- a/include/hw/virtio/vhost-user.h
->>>>>>>> +++ b/include/hw/virtio/vhost-user.h
->>>>>>>> @@ -69,7 +69,6 @@ typedef struct VhostUserState {
->>>>>>>>       GPtrArray *notifiers;
->>>>>>>>       int memory_slots;
->>>>>>>>       bool supports_config;
->>>>>>>> -    bool supports_inflight_migration;
->>>>>>>>   } VhostUserState;
->>>>>>>>     /**
->>>>>>>
->>>>>
->>>
+diff --git ./linux-user/alpha/elfload.c ./linux-user/alpha/elfload.c
+index 1e44475c47..c86f9cf2bb 100644
+--- ./linux-user/alpha/elfload.c
++++ ./linux-user/alpha/elfload.c
+@@ -3,8 +3,20 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "loader.h"
++#include "target_elf.h"
+ 
+ 
++void elf_core_copy_regs(target_elf_gregset_t *r, const CPUAlphaState *env)
++{
++    int i;
++
++    for (i = 0; i < 31; i++) {
++        r->regs[i] = tswap64(env->ir[i]);
++    }
++    r->pc = tswap64(env->pc);
++    r->ps = 0;
++}
++
+ const char *get_elf_cpu_model(uint32_t eflags)
+ {
+     return "ev67";
+diff --git ./linux-user/alpha/target_elf.h ./linux-user/alpha/target_elf.h
+index 864dc6e2e6..bf3bd21b09 100644
+--- ./linux-user/alpha/target_elf.h
++++ ./linux-user/alpha/target_elf.h
+@@ -11,4 +11,17 @@
+ #define ELF_CLASS               ELFCLASS64
+ #define ELF_MACHINE             EM_ALPHA
+ 
++#define HAVE_ELF_CORE_DUMP      1
++
++/*
++ * Matches the kernel's elf_gregset_t (ELF_NGREG = 33):
++ *   r0-r30 at indices 0-30, pc at 31, ps at 32.
++ * r31 (hardwired zero) is not stored; pc occupies index 31.
++ */
++typedef struct target_elf_gregset_t {
++    abi_ulong regs[31];  /* integer registers r0-r30  [0..30] */
++    abi_ulong pc;        /* program counter           [31]    */
++    abi_ulong ps;        /* processor status          [32]    */
++} target_elf_gregset_t;
++
+ #endif
+-- 
+2.53.0
 
 
