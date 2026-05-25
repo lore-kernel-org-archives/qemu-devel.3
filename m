@@ -4,97 +4,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B621ACD5BB1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 17:45:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B81FACD5BC9
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 18:29:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRZLg-0004OE-Oc; Mon, 25 May 2026 13:44:26 -0400
+	id 1wRa2A-0002DD-3Q; Mon, 25 May 2026 14:28:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wRZL0-0004MQ-Dp; Mon, 25 May 2026 13:43:44 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1)
+ (envelope-from <prvs=9605cd9704=quan.sun@windriver.com>)
+ id 1wRa24-0002Ck-I4
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 14:28:09 -0400
+Received: from mx0a-0064b401.pphosted.com ([205.220.166.238])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wRZKv-0003DB-0n; Mon, 25 May 2026 13:43:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779731005; bh=8h8O4rS+nJV4Ap42No+yCeDiobIHVyou6BuXvIxCkS8=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=eDyxlYtlGOTTFWewU4ml7/n4cab8Pa2Uhx6yR6pv4XPXHSQjyxF9zJfZqH/lSFm08
- cVMjxC5NNan8UuDhfHXRZp/i3a0OwlDGMVuVAn93ZP7x4GT1G/Xzscy82bbnp5srSv
- tCy1g6Mju0Lp3Jq/a1Rce8pmeE7Rkk5duA75WwmcP3wfxjNmv7GqRHqdhXTBs8o2kl
- XtkZa0GmlKbSB9hZbRptInzhEzcxHGiaE85C1IbGc0ppp5LbUhRigDYfqSRTnC1S7r
- KZRV3/OJnA/qdsrcpTPkD28V4SKJO5vZ0gWQ80u00TdCCgU6+pWwRtM6CbG5egIwMZ
- AXPuzqwZpkLIA==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 915E51B0748;
- Mon, 25 May 2026 20:43:25 +0300 (MSK)
-Message-ID: <76440da5-9f2a-4536-babc-082359812713@tls.msk.ru>
-Date: Mon, 25 May 2026 20:43:27 +0300
+ (Exim 4.90_1)
+ (envelope-from <prvs=9605cd9704=quan.sun@windriver.com>)
+ id 1wRa1x-0002th-EQ
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 14:28:06 -0400
+Received: from pps.filterd (m0250809.ppops.net [127.0.0.1])
+ by mx0a-0064b401.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64PIF2Le2954258; Mon, 25 May 2026 11:27:51 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=windriver.com;
+ h=cc:content-transfer-encoding:content-type:date:from
+ :message-id:mime-version:subject:to; s=PPS06212021; bh=jMlaSK/Y9
+ w7RQoO7pye8JkRxu/RMbh9XragWboC1LpU=; b=GxPoOpHd7ilUgQjf4c6Zcg6Vm
+ dLbykRAGriohMe5fbKVfa+9HtaccHlhzz3oqiLmA4lju3l+88n41fTBGPWG3ljYU
+ NzY7IR2Rny/L0rdL6WGV4U2IxkuIc9a0rGNyzYarQNZF6WZd3moUtsl1O0SD7HES
+ wtGOC9lk8zOQ8QuzAL8/fJgKT+A9ecIX+W9bFnseJQERo82/kCpA1Fr1Nbxq3Ck9
+ LBgcwjMICrFHzk4OPwXUm4KpCdVMXZiAaKOUFn9hl09tV623nj38+nneiLeGv7pT
+ rKRZCS/ecEUn2KPL6i/2OukJanv3vFHZi2biPwPZCJ8bgrtEA9fxVc55Dpn8w==
+Received: from mw6pr02cu001.outbound.protection.outlook.com
+ (mail-westus2azon11012060.outbound.protection.outlook.com [52.101.48.60])
+ by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 4ebbrejmf6-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 25 May 2026 11:27:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=RAaqukYplYGPh3JHpYiRCOWycjuJMCwwMQRqmpHehTYSby1hyJUxdSXBPGm02xfYxoXJYHMJ/U5dsVJn/aGhjfzLcsGl7HkLz9r1nYIA7C5YerX4n/lbC09mvzVr2dYD5sEHd+/a6kKF1STsALxjEUQkSgOSJtyP8dBzCHlu4HoRR9IWn5+JZOhzPvF+tQRGR44wDep+L28nV16kMqSA59ta4btr89Egt+60vj1xh6Cu+eEWk0sgsNRlI+uH9bVRleA6cUgG42jEH2rs4nOwFmfuNKiIIjJd5FejQMlTfxMYFrn7R5R88p6UPo37LxtgeU++GYk27TUBmQWOyCfu3g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=jMlaSK/Y9w7RQoO7pye8JkRxu/RMbh9XragWboC1LpU=;
+ b=FgHiLye5P5u+BvwfzvQaEvvSZW8bOw9qt08Oom5c8AGHsV+dbymR0x8y80ZnpYNnhyeizyG3JDZskoLELWLDnw4xqy3B4kdkmjWiFsE8kVcs9ny0iIU9HkIiqUsgwyfAwyBLr3FCeFwXgHHyUc/XWivqmmzCSY8au6kF6wO9RZ4B2Jy+ZiFJeht0ZYD5dYb53scBVmfJsgQE2FcwXlf2rv0KA55VXEfnFG4by4kiXbEjN90QOt2BgHP+YgM/aqczdqqGJGyC2oDPxkGcMA7XDjOyodtuMvlTeisDWCmJAjFN2T1l60sceGTR+v8V1/Pjye1GYh5jW26KIkDgof9YJQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=windriver.com; dmarc=pass action=none
+ header.from=windriver.com; dkim=pass header.d=windriver.com; arc=none
+Received: from IA0PR11MB7283.namprd11.prod.outlook.com (2603:10b6:208:439::10)
+ by DM4PR11MB7304.namprd11.prod.outlook.com (2603:10b6:8:107::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.20; Mon, 25 May
+ 2026 18:27:48 +0000
+Received: from IA0PR11MB7283.namprd11.prod.outlook.com
+ ([fe80::6e41:656f:120e:8e8]) by IA0PR11MB7283.namprd11.prod.outlook.com
+ ([fe80::6e41:656f:120e:8e8%3]) with mapi id 15.21.0048.016; Mon, 25 May 2026
+ 18:27:48 +0000
+From: Quan.Sun@windriver.com
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, fam@euphon.net, mst@redhat.com, sgarzare@redhat.com, 
+ Quan.Sun@windriver.com
+Subject: [PATCH] hw/scsi/vhost-scsi: fix build with older kernel headers
+Date: Mon, 25 May 2026 11:27:30 -0700
+Message-ID: <20260525182730.4098543-1-Quan.Sun@windriver.com>
+X-Mailer: git-send-email 2.49.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: SJ0PR03CA0094.namprd03.prod.outlook.com
+ (2603:10b6:a03:333::9) To IA0PR11MB7283.namprd11.prod.outlook.com
+ (2603:10b6:208:439::10)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/48] riscv-to-apply queue
-To: alistair23@gmail.com, qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair.francis@wdc.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20260522000324.23255-1-alistair.francis@wdc.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260522000324.23255-1-alistair.francis@wdc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA0PR11MB7283:EE_|DM4PR11MB7304:EE_
+X-MS-Office365-Filtering-Correlation-Id: 32fd48a3-cf37-4214-321f-08deba8b5256
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|1800799024|376014|52116014|56012099003|18002099003|38350700014|11063799006;
+X-Microsoft-Antispam-Message-Info: +GSC2BJRxQIUL4w6XxvWzdgWWHel0iGwj9OSnzTo+CzzVAVS7n2H4VIcN4vi5oHTLAWAqWaWn58F8231yYiMgDJjlB2+sM02mz2lXEucPAzAETthznYNbf5q0ybvAIAKcMs4KJlTN/k0tfwghSAv9DerQdMYqx5b2ZegKaO7yxBIdvKa7LG1BaS203eONdIL9XIciNWAr00adVvfm+Ji5ryuOj6PqbKNRbWogbcwVg7kVUpSbgJE4qiEXOq+MPirHRaKBZXe3KGgYZXuzJ9QEkjMxgnDPy09SWUxZT+XT1GnOgGnbvtyhREudr/flHWp0NYy5ufa/fxpBq+BB964nUHCKNW4Y3xgy+KJNQpF2Ki6Cgib2UQZxiwf0nQNRBPSqLIVMepKBaVh1vPZfiXhmcZhIZTbsDKUclaoEzuQtRL4ataJwwyGaYeiUO8vgcnFV/NO2Wn+EBUE4hRBE2NLDa/GIjs1AA3S6kXs5BWjUzhanLePTFm2hh9pbSZazGQhykbuthAksl9cTASb2MWJ5PnArSs3w2uP34KznfsWS2ZV37zIgGqFUWoYCnPcAbuXlg4PSWL/QJt0Aa5M7U/iCXo29oSYMCgGIxU8v5OXuN8S1h+yvUWCcLzTOC816ok3De7fBK7yhmbEc74GH7+06NVBYX4Ha6WzJOYIeNDyZp+go+SQb/uXxKgGzLLW6NUe8veFEpqURd0x8LMTvVGIN76g8SE68hSUTaxE8v7hpoY3qCAeHr0IsYiJayubydX6
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA0PR11MB7283.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(52116014)(56012099003)(18002099003)(38350700014)(11063799006);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?/STb/s21hQFYaHtp+f+ECbHGwiY6Y4GPql6B1+nJscfmXBr9MAHNCKaf/MRk?=
+ =?us-ascii?Q?x7sXsV333MyRmZusnAm6JcwgHBZORm0qHCdy8HnA0RGyay13corDDsBqbHQy?=
+ =?us-ascii?Q?St/iHi4MW6jKb2XfElohzaX3ypOHGEG4B9Vf/+ut2jvhclavDI4lXQsM7RsE?=
+ =?us-ascii?Q?YQlw9OCWDUEqAQrhM3c0g+2ObpMw5VPqtIdkM34tyUla2UvoNhvw/Fq7TPre?=
+ =?us-ascii?Q?MR+43dsKHL3e6HMJKGj0qX6j9wITmBiKTNSE+eEdeEUdNRXUZN8VwiPhlyaF?=
+ =?us-ascii?Q?ZU6CRW2ij42EuN8/1LMcG33raJCGa6VG0S9oG9IXXnaFVeltWXTus4sQYkhf?=
+ =?us-ascii?Q?g+k1Grz8pi/8zPXyrXkMODXDW4os4wB5PUtIUIqgqHR+Jv7KZaLh+Ajb1KO7?=
+ =?us-ascii?Q?8wa9tSEqecMh6PesKyjWRAP45YmQUkk+/sNGfILgCV/lp5MXm1ibjILyL5uh?=
+ =?us-ascii?Q?dLPidCnfM8KR4UNlzX76TnkZi6YHpFCHTmwAsZDNyeeBH2b6mdO/dLXf3wcM?=
+ =?us-ascii?Q?Jlp5n82lqlWyPQThgyiOSXuseRJ+PgAy+ZtvlsbOYSZMJsls5z+BFEzMwtsu?=
+ =?us-ascii?Q?dvO5y0+LHxn1fAQ74NFaFmlB9WPeu5wUztee51oqs6oJ8LURso/LCndOnDSZ?=
+ =?us-ascii?Q?+j2729ypIjroVL49aAXLPB6kxycDqe2jbGIhNoWYPJKCDdoqY6pUStVXBkdw?=
+ =?us-ascii?Q?u4LoSSlKQoaaX4yV3DOP0URdnCIVL8XF/euiyDzoyvsTjuIKIawCEqQ0J1xA?=
+ =?us-ascii?Q?+DMhPMosTF3wXDEXfWLak+6GhBARujICMaIY6foXFZP9xeQF5C8bj4t7Wv0X?=
+ =?us-ascii?Q?iqawX/7j7jH8z2hUfdPDbRqmz6zoYHJdRPzKKYiA3COmkXT1K8RhIym+oo2j?=
+ =?us-ascii?Q?3oUtK+u5kmyew1W2B6LtShRliZFLtPhZlUNYwSp3hjNajzgVjHvUhfZHhEsl?=
+ =?us-ascii?Q?z1oLsy6IV2a27W5F1CHTtCkFt+f9AkUZwp5JcKbBzR1S96KSWg+ouclaifhh?=
+ =?us-ascii?Q?Dm/zl2kkdsCYYA8YycItLM1HYwAjW8CJgvjBNhbrS4ISHW51qvqN5RZyhil3?=
+ =?us-ascii?Q?5w2U8hpcVI4AOaW3A6ISjbOB6wRoLYeLvxUDnA4a6jbOaWmPUd1djualpYSM?=
+ =?us-ascii?Q?B7w1hxzPsjAOaRztbCEmvqWbbSNOe4sSvF70EJ4VUlo/24bIK5MlH6Ilu7XV?=
+ =?us-ascii?Q?6q1zFCkRxLOXiqxpKbz4r2AVH6ZuFFp/hh1u3zGJJbDRwzgq4f9mbMuyHqNO?=
+ =?us-ascii?Q?apVxTuwzYc9SkxWWxkTHQG65ExIJkeC9RQ7bxkvnVopKmgGpvjr0PTyVzzum?=
+ =?us-ascii?Q?LTqgIF7kaMmbccmau28U/TSzr4J4tmLktR9ln6V46G+FyTZcxsiJj9F3n8I3?=
+ =?us-ascii?Q?KCeFRTioBmpfpTqXcHUEqMymNy3K+p3BNTVrr7naqSz/9gm73Puai/B0ocGc?=
+ =?us-ascii?Q?FE/CxRWK+MwMnQsKWyn3qc5ZJ2TSEtyElKH5jcrf8scgylKM7NkTvqa1w6LP?=
+ =?us-ascii?Q?VsPEUIBOSW3RkZbX93W+V1FUY9MjfEhjYi+yhHJTfdbpDTl7O1Vii3NnBEri?=
+ =?us-ascii?Q?hCYLGhe7wcI8JaNvGA9JlJ3Xa/HxZd7UY4eT56cqR2wyo+QCqia2iKYlpvPD?=
+ =?us-ascii?Q?uwuPVrydH/JJDbI9yDBkI36w+MT/JiwFjN1sPrsoE5fkp28xYWgF7ey8tjp5?=
+ =?us-ascii?Q?pRzARwtGokRfLIzLxCfy3orUbwsTY9TW7g/cxFQGCuUnLKudnKKjJwSMvsbT?=
+ =?us-ascii?Q?xpplBBy4/w=3D=3D?=
+X-Exchange-RoutingPolicyChecked: p9mOH4ruLqCWYn1Zv1lwymrEDrX1yv1r1wu1esnYcLNtMM5jEoUac41Aq1n4TlT+8t2AjBpqmPUAsbzQMHvjGE4E2n0Kr6acA8NLpgZe/clSYnZ4hXQ7Fe0yvf5A/5s2tQYcQm0nktAq5J6InX7zOkuctcl5sKVanM4ciRResBudLkb0YZPiqdlj+1ZS6ICZbVNYMgJeyVURbtO8q+fRwHvWCDXDjCB+wZQSbfWU9CruFYtKrfixRRySheti3iclPOuZZvNcM9Rae54moMXZ8HgmZZg2QCbzyAOw7IF9DO7t1SJD6yC70nlucVfOIPcVoaY7HD0PvLhf9k+0UdyJQw==
+X-OriginatorOrg: windriver.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 32fd48a3-cf37-4214-321f-08deba8b5256
+X-MS-Exchange-CrossTenant-AuthSource: IA0PR11MB7283.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 May 2026 18:27:48.0773 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 8ddb2873-a1ad-4a18-ae4e-4644631433be
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: iDLNSu+qaxDfi4kgjpk+0ez9/vuDN8Ui+/Cg8lJ1W/i4r3PnSOdxFmjDflln5dy7tfnTQZJp6xIbg1ghFy2KHg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB7304
+X-Proofpoint-GUID: JfJ-eHmHuWNfI0l1c_NDjH4NIhcK7UdG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI1MDE4NCBTYWx0ZWRfX20Qjr8+kjYVm
+ Y4ceR2vWm2GUbhp0JGNURi54UEEpVTUyswIExgzyE0E8+U/uJSwcy0vslrU2PE/njLhsa5BmYyq
+ +Otybqpyz7mgUYfoM+gIl1iu4YcPuDe4q8QWC0qUf2gkinyUzHq2yZjjz+hGWPG5tgw3FJaHVlc
+ Tef01iHK649WZTNk7OAPr+vDyn9U/as/I89YQK0VXX+JMMW6VtFJ8r/7JpL+r6lljjNaqDk9rHD
+ Bq3ZnL5f4lTG+fpeIrvv9J9suvAk21w9LEGU4Taly7KZ3dcbgAy7EPmR+AMjH0kj8XL9P5CW3zY
+ XaGe3dGDva6ZaLsnXOXJna4DYJ8S0DjzWWfa+e+l3wMQneaqF0pJ5CQEla7JKMZMvsexkX/UaLv
+ g+FT0L3OUZ76bsbrPHcBpo84FPjSSnpa3u31Zzeh7biDOhg4o45gqJGge3mBSa7M7njcY7J4BXB
+ Qqle/TJANJ83YMy07aQ==
+X-Authority-Analysis: v=2.4 cv=IMUyzAvG c=1 sm=1 tr=0 ts=6a1494a7 cx=c_pps
+ a=MzitxtHdenuwXKuz6QWlPg==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=bi6dqmuHe4P4UrxVR6um:22 a=iKiJcTA2PjBS6x5JeXcw:22 a=t7CeM3EgAAAA:8
+ a=tOh3b7mK2cmqlCsdpQIA:9 a=FdTzh2GWekK77mhwV6Dw:22
+X-Proofpoint-ORIG-GUID: JfJ-eHmHuWNfI0l1c_NDjH4NIhcK7UdG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-25_05,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 impostorscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0
+ phishscore=0 priorityscore=1501 clxscore=1011 suspectscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605250184
+Received-SPF: pass client-ip=205.220.166.238;
+ envelope-from=prvs=9605cd9704=quan.sun@windriver.com;
+ helo=mx0a-0064b401.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,127 +175,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22.05.2026 03:02, alistair23@gmail.com wrote:
+From: Quan Sun <Quan.Sun@windriver.com>
 
-> RISC-V PR for 11.1.
-> 
-> * Remove spike as default machine
-> * Deprecate the shakti_c machine
-> * Set MISA.[C|X] based on the selected extensions
-> * Update Maintainers for OpenSBI Firmware
-> * Update OpenSBI to v1.8.1
-> * Avoid RISCVCPU copy in PMU FDT setup
-> * A collection of specification compliance improvements
-> * Fix Svnapot 64KB pages
-> * Handle source overlap of vector widening reduction instructions
-> * Check interrupt in SiFive UART after txctrl register is written
-> * Fix medeleg[11] read-only zero bit for M-mode ECALL
-> * Fix tail handling for vmv.s.x and vfmv.s.f
-> * Update the local AIA interrupt mask
-> * Add KVM support for Zicbop and BFloat16 extensions
-> * Fix the IOMMU FSC SV32 capability check
-> * Avoid caching PCI device IDs in the IOMMU
-> * Implement Microchip mpfs ioscb PLLs and sysreg clock dividers
-> * Remove the internal CPU riscv_cpu_* arrays
-> * Fix IOCOUNTINH.CY toggle detection
-> * Fix the read of pmpaddr(0-63) CSRs
-> * Make hpmcounterh return the upper 32-bits
-> * Minor fixes and enhancements of RISC-V AIA devices
-> * Re-process IOMMU command queue after clearing CMD_ILL
-> 
-> ----------------------------------------------------------------
-> Abhigyan Kumar (1):
->        target/riscv: Fix medeleg[11] read-only zero bit for M-mode ECALL
-> 
-> Alistair Francis (4):
->        target/riscv: Remove spike as default machine
->        target/riscv: Deprecate the shakti_c machine
->        MAINTAINERS: Maintain OpenSBI Firmware
->        target/riscv: Update the local interrupt mask
-> 
-> Andrew Jones (1):
->        hw/riscv/riscv-iommu: Fix Svnapot 64KB pages
-> 
-> Anton Blanchard (1):
->        target/riscv: rvv: Handle source overlap of vector widening reduction instructions
-> 
-> Chengbo Gao (1):
->        hw/riscv/riscv-iommu: Avoid caching PCI device IDs
-> 
-> Daniel Henrique Barboza (16):
->        roms/opensbi: Update to v1.8.1
->        target/riscv/cpu.c: add xlrbr isa_edata_arr[] entry
->        target/riscv/cpu.c: fix smctr/ssctr isa_edata_arr[] order
->        target/riscv: make riscv-qmp-cmds use isa_data_arr[]
->        target/riscv/tcg: treat all exts equally in cpu_disable_priv_spec_isa_exts
->        target/riscv/tcg: use only isa_edata_arr[] in cpu_cfg_ext_get_name()
->        target/riscv/cpu.c: remove riscv_cpu_enable_named_feat()
->        target/riscv: remove riscv_cpu_named_features[]
->        target/riscv/tcg: use isa_edata_arr[] in riscv_cpu_update_misa_x()
->        target/riscv/kvm: use isa_edata_arr[] for unavailable props
->        target/riscv/tcg: use isa_edata_arr[] to enable max exts
->        target/riscv/tcg: use cfg_offset as cpu_set_multi_ext cb opaque
->        target/riscv: do not set defaults in cpu prop callback
->        target/riscv/tcg: use isa_edata_arr[] to create user props
->        target/riscv/cpu: remove riscv_cpu_* arrays
->        target/riscv/csr.c: fix read of pmpaddr(0-63) CSRs
-> 
-> Fangyu Yu (1):
->        hw/riscv/riscv-iommu: Fix IOCOUNTINH.CY toggle detection
-> 
-> Frank Chang (3):
->        target/riscv: Update MISA.C for Zc* extensions
->        target/riscv: Update MISA.X for non-standard extensions
->        hw/char: Check interrupt after txctrl register is written
-> 
-> Guenter Roeck (1):
->        hw: misc: Implement Microchip mpfs ioscb PLLs and sysreg clock dividers
-> 
-> Jay Chang (1):
->        hw/riscv: riscv-iommu: Re-process command queue after clearing CMD_ILL
-> 
-> Jim Shu (4):
->        hw/intc: riscv_aplic: Fix level trigger IRQ in direct delivery mode
->        hw/intc: riscv_aplic: Add reset API to APLIC
->        hw/intc: riscv_imsic: Add reset API to IMSIC
->        hw/intc: riscv_aplic: add trace events of APLIC read/write function
-> 
-> Mohamed Ayman (1):
->        riscv: virt: avoid RISCVCPU copy in PMU FDT setup
-> 
-> Portia Stephens (1):
->        target/riscv: Make hpmcounterh return the upper 32-bits
-> 
-> Zishun Yi (9):
->        target/riscv: Allow mseccfg access based on ext_zicfilp
->        target/riscv: add Zvknha as an implied extension for Zvknhb
->        target/riscv: Remove unconditional MENVCFG_CDE from mask
->        target/riscv: Fix missing CDE check for scountinhibit
->        target/riscv/pmp: Fix integer overflow in TOR and NA4 address computation
->        target/riscv: Add mseccfg to VMStateDescription
->        target/riscv: clear mseccfg on reset for all dependent extensions
->        hw/riscv/riscv-iommu: fix FSC SV32 capability check
->        hw/riscv/virt-acpi-build: Fix off-by-one error in RIMT ID mapping
-> 
-> Zongmin Zhou (2):
->        target/riscv/kvm: add KVM support for Zicbop extension
->        target/riscv/kvm: Add BFloat16 extensions support
-> 
-> chen.zhongyao@zte.com.cn (1):
->        target/riscv: Fix tail handling for vmv.s.x and vfmv.s.f
+On build hosts with kernel headers older than 6.0, the system's
+<linux/vhost_types.h> does not define struct vhost_vring_worker or
+struct vhost_worker_state, causing compilation of vhost-scsi.c to
+fail:
 
-It looks like this pull request includes quite a number of patches which
-are qemu-stable material, some small and/or unimportant, some more
-visible.  Examples:
+  error: storage size of 'vq_worker' isn't known
 
-  target/riscv: Fix medeleg[11] read-only zero bit for M-mode ECALL
-  target/riscv: Update the local interrupt mask
+Fix by including standard-headers/linux/vhost_types.h before the
+system's <linux/vhost.h>, matching the existing pattern used in
+hw/virtio/vhost-backend.c. QEMU's bundled header provides the
+struct definitions, and its include guard prevents redefinition
+when the system header pulls in its own vhost_types.h.
 
-but knowing nothing about riscv, I don't have expertise to choose which
-of them to pick up.  Should we pick sometihng to currently active stable
-branches, which are 10.0 (lts), 10.2 and 11.0?
+Signed-off-by: Quan Sun <Quan.Sun@windriver.com>
+---
+ hw/scsi/vhost-scsi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thanks,
+diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
+index 699863cc10..10e8fbe503 100644
+--- a/hw/scsi/vhost-scsi.c
++++ b/hw/scsi/vhost-scsi.c
+@@ -15,6 +15,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "standard-headers/linux/vhost_types.h"
+ #include <linux/vhost.h>
+ #include <sys/ioctl.h>
+ #include "qapi/error.h"
+-- 
+2.43.0
 
-/mjt
 
