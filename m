@@ -4,102 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DE8CCD5BB1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 15:13:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD7AECD5BB1
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 15:16:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRWyw-0004w2-RY; Mon, 25 May 2026 11:12:42 -0400
+	id 1wRX2C-0005fq-OD; Mon, 25 May 2026 11:16:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wRWyu-0004vi-65
- for qemu-devel@nongnu.org; Mon, 25 May 2026 11:12:40 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wRWyr-0003aj-Up
- for qemu-devel@nongnu.org; Mon, 25 May 2026 11:12:39 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-367d88b9940so6508992a91.1
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 08:12:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779721956; cv=none;
- d=google.com; s=arc-20240605;
- b=DJhk5cJa3Raj2vucUPqilIk93Uk8q/jv9e9yWuR1k53K8JE2sE8wHhgWgsggTwAQE9
- 2hwGlZxizXDAl/+HvAVgdzGp5RHqj1eSgexECmgNzBDYGQj+y2LSKLKhOm7COPtFWv7I
- JzK2Gv8oCwqo6FHtNoqZFCy76wAxwk2TSvTSuPLH/J8VPsa5CX4itY4PvtGi7OlJgMWg
- oPrHx2160q+BbTM+NWh+a3mL8G9R/g4hIqK8Jh1WDri4sLneSYZh/MvNS/xpWotAvqIQ
- AliFdd68yStj14XX9GlJFq9aEdby1FizZce9INyNXKo+rHK+YnTeaPJbLgMvdibAawx6
- XVBA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=ZKUAwDshkc4Ng/iZ7fbGxGCOttU27D6ke+4uQavtQtU=;
- fh=DCouXjhqaX4HPdvk19UT1l4g31qS8/wfcdUDqYT6hjg=;
- b=B1jmnV5bxfhxW4ch69cePJLeT5oWORX9RDyuseRH9NNH3nLVi1nxaLv1tFyNkyWdkg
- qZaRK63mhxBxQUY38E51GSdtMl6RLQeBiJ39+OoFnty+yk8sR/URL2Mv55lfiIOU6hiM
- xJ6LgrODpB5M3TZnZZBC9t5APoAgq3Eo1m8gEz9LekmcsCMlo5hVvMaPcT9u5x+qmeTy
- y+tOpHLOE25xTzdRp/nh2Oxm/fJGK7jh1opCMvj8TzxXWRFdBy9hOoljvJrULhchhKzA
- Xg2O9VJ2uk65AKc501xbEo9/lYlMV34AaHL6LPXy2UfB6iuq+/lBCwPUO7flE99gmBda
- mRcQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wRX28-0005eU-Jm
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 11:16:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wRX26-0006hW-Dq
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 11:16:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779722157;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8uPW8yoYG7iov/RDNWk+gQwfpGK8GYqT1zDdSX4WBVY=;
+ b=i+5MzDa4VlZuKVy7JsJAcltNv5w4z3f6pMqSIN3MGOGe4LIVouc38CRFcAqL/Ll6hUmHk/
+ TJ4BgU2/m2+lGyJzdJy7aNajRgk7PJ18oQUNnt2reVoVU2ie5JqIt7d5jyMVGhTKfw26fn
+ txNybJ0ZpbTYVuLIyF8MqmJkVT+lUCc=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-55-3uwtZ1OgM8ebvOr1bnqzLQ-1; Mon, 25 May 2026 11:15:55 -0400
+X-MC-Unique: 3uwtZ1OgM8ebvOr1bnqzLQ-1
+X-Mimecast-MFC-AGG-ID: 3uwtZ1OgM8ebvOr1bnqzLQ_1779722155
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-516d53eeb8aso74680681cf.2
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 08:15:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779721956; x=1780326756;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ZKUAwDshkc4Ng/iZ7fbGxGCOttU27D6ke+4uQavtQtU=;
- b=jydjpxAs3ZxyCHucefKo4vQowPckc8OFSj+WS0u1UvjqM+v4snMRu6I96l5etNPRN1
- XUUyVnKtSerQpnUw0xlVTZd1opTGkf5jvz0pIUp1hHpq0L1KD40hnEZ+9RnkxYEBL0oP
- DdiDt3GXr9ngCqBX8ZCdroMQw54Q7UhfHxSti+ySYyjAqlLCww3snGngxNQ2MHvgunJc
- kpOUwUpv+b+GiSaDuCQGmp9mwvfzu7Zf1rqOrd0/9OySGvfHGL7J5SyR4NUUU4caTK/o
- l+eXW2XQR1aZlRKmlIUiZwvXGBHhHVaqGw4ot2hiTemDO/mB+YtTQjZghuPB6DuozO8m
- B3Qw==
+ d=redhat.com; s=google; t=1779722155; x=1780326955; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=8uPW8yoYG7iov/RDNWk+gQwfpGK8GYqT1zDdSX4WBVY=;
+ b=SR+29jLItCSP0teyMsUVooY+ZI3y3R30vOk45Sy83mTG62C8JTcpf94fuUFoTjNIyt
+ lMEVMk0s/SCxfE/oOUfXDgBcMLUjCUc+N7EenOGtM4vWFNQXgfekCogvXr38JCg/aI4A
+ zjFiyP/1LMlduzOiSvyTIjoruZ0+VUMy9zySEnE0b+HTFQzMezqdAvFCaAUXUGlLapIK
+ DKoSOIDTbPbcPjB0NS/t6ShevXqlJETu6fKF4JWud7JR87xE4fIaGsfcGI0X3vTa4VTO
+ 9G3omuPqIYd6lsTAuC8XiLUQo4kzHb7u/ZCcWk1o04HqA2+10ablEYgljvoLMRbsJfuE
+ bhhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779721956; x=1780326756;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZKUAwDshkc4Ng/iZ7fbGxGCOttU27D6ke+4uQavtQtU=;
- b=OtMVbw5nxAcyeaJweRYP8FAUEDHzvjYLCp5kJaxYG3lxJNigaTMjdrSy7tF43iOM+B
- RsN25VNpgtHT7WXb6k/HyM3+YKHkOimBmKxAlKfAZxizo4N4uCumwrch9vxzKaJRGS9M
- NVF69LE3LwYWjEQ/YCtmzGPn4Qfv832jtW3Hov9vTmOjZab/+u1PdfDFuG2cnFvukZng
- 96XU+b3MUCLKMuG+/wYU2VRzS4bVkKqbDT2sdMr58Q6fq+2J9ONbWuYjjZv3WtZN0nKu
- s0OMyBHlcQYxKwgAN82HCtMH6nr70kr8rY9oQRKTkGb0CI9N3JsZkwTln4IiRtZI6oKn
- cnVg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8IOI8GLKaZ7ELnTB/cpJ9Pr3mfZ9/YplYU4fO/xKhQcQd4Lqd5LTzCoLVMBU+MUFHPbuGIlNSs8paK@nongnu.org
-X-Gm-Message-State: AOJu0YzNyaB/mfL9hZj2/oR8TRBofux/Ds4tC6DjJSAg2HVCZeXtJ/Yz
- Zr2j+zlZcrl5J43Cw3NxVilVbzya7C7zlcVliyFhdqID7qD/amkRXFj6dfH9OZ6+5CV0nEORM8h
- hiZjSt7oLkUNlXTmY6iC9bFnDh3cifadQ0bg1NwC1IA==
-X-Gm-Gg: Acq92OGtFRV0kmkVzrx09HkbzLeZdYELsehcQGFO4Iv7g57C96Ou8yF85GTz+HHawA5
- U/5YPdtbJUeXOnl6xnbcvcfOwG4ES+MNHzNYXCxYasDkAkYANKg/SHinRBeWiT0ZYig7RrbW4Qe
- +Z2UwUUfuWVlDYtIWjNUgLMWMIVk5OqA9Cfw7FxB/gR8aseUz2EDDTfDGUGj0KXpPyGxxu4ZXcA
- NrsFJSnvoaq02icPSdsYaKSZUJt+XXkzHm+ly5jzGXEa05wDfe1UX1Vl673Ag+4nZRnFOV1td7e
- FSFKLhNLU/Hz3D1ALcWYGGBhE7XD8IUpcUPrQYXr
-X-Received: by 2002:a17:90b:4e84:b0:369:747b:48b8 with SMTP id
- 98e67ed59e1d1-36a67734201mr15250183a91.8.1779721955839; Mon, 25 May 2026
- 08:12:35 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779722155; x=1780326955;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8uPW8yoYG7iov/RDNWk+gQwfpGK8GYqT1zDdSX4WBVY=;
+ b=iZ8VQh7Qc++OAHAFv47rK1o1dBpDB7aP30YJ1KmJX4iP2pZQAfmAWtBiGq0pVSwBZz
+ VIGPd5sCByBfUXiSCCjK9NqbCebSRyIZxBzhNp0OBQpeF168v9udJXrIdyt5Z9QaeiSJ
+ tq2qMH53dkCbrSc0otc6nDbSFjzWjS1m8msfbtL0zKmP8RoD6DhudvDji4mPIRqusw+l
+ 1x7STXgcaAOJwYYImpbiQnoLAbYjywTIg3DXHQvy52VqxLYUbKFNm6w2cptGspR3Mq5N
+ 2xOAAlq8FEuX7dWwoPXi0gm6c17MpDI+EysGWDN0+maUvO/82ODh4s1wC+TwGLgIaxqK
+ I8rw==
+X-Gm-Message-State: AOJu0YwgYnDjehzTBJAoFRpaFc0y93YuPUK/eJ3ky0YxiEaFr0+HytLD
+ DdI+RpEBmdLy2Gb0bWWJyekRVrN/skPHYtB94sT9eKRuJidt3Ib8OYuX/z4Qxz1Iv/DWAzt/gGS
+ DREhdM9YBAbAsy0qDXtPnVCe73CK5t6Hojn/6g/lmZJxCMWZ2L0Gm7g0X
+X-Gm-Gg: Acq92OELMLdSfJsIwbqFvxxdCUuefGCLgAFUttyoMakgZ2d1EX7yB3vAu/FDjSnYQFw
+ SgpS0tsCb7WGEDn9CyOG0lq0rqBSOxRRytp9rxfLlkx0NnMb6epmRsN97JWMf+9GyINS6s7nCq8
+ 0z7gPr7k+tm2jCN3a1kulBgxQ/fWlcI1Eci2o/ixWmXuqSwrv8BTWiAAZpuMN9xbdhKXfr/BcAf
+ bzj2udwm9IEhV2M6u14fQhl7bYSzR0jPLfhwpynpNnEs9eheQ75ghHtr8GX5RlmFESP4S8N9Zvu
+ UiISJFGVSSzK48WxuE3Pb4ZTBSFVDqyTJxewUcTInhjcjPkPSiZSDIkqvTm3RvSlsXYVYZhn8bJ
+ whN7gn8LNrbkaacgR2jcEW8P52K2Ip/2soEqAdZhAJKJto0A=
+X-Received: by 2002:a05:622a:8407:10b0:510:1b61:d0e4 with SMTP id
+ d75a77b69052e-516d45f9c81mr118700691cf.35.1779722154784; 
+ Mon, 25 May 2026 08:15:54 -0700 (PDT)
+X-Received: by 2002:a05:622a:8407:10b0:510:1b61:d0e4 with SMTP id
+ d75a77b69052e-516d45f9c81mr118699991cf.35.1779722154130; 
+ Mon, 25 May 2026 08:15:54 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-516d8cc6212sm95617951cf.25.2026.05.25.08.15.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 25 May 2026 08:15:53 -0700 (PDT)
+Date: Mon, 25 May 2026 11:15:51 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Avihai Horon <avihaih@nvidia.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Maor Gottlieb <maorg@nvidia.com>
+Subject: Re: [PATCH 00/14] Make switchover-ack re-usable and add VFIO precopy
+ REINIT feature
+Message-ID: <ahRnp0Q18iTZZJ0H@x1.local>
+References: <20260505081423.28326-1-avihaih@nvidia.com>
+ <agzDdH5vClAqwjAs@x1.local>
+ <3a1d0bc7-7656-43f4-b763-5114d9dc57a0@nvidia.com>
+ <ag8iwiwMz5IapU5i@x1.local>
+ <2756b13a-498a-4e2d-a218-10b756e0bf5b@nvidia.com>
 MIME-Version: 1.0
-References: <CAJSP0QULyy5C0YEaxz2ChNy3_zfc5VwaMhB18R=yHDgnhBYo9w@mail.gmail.com>
- <CAJSP0QWt8Q5+yY1F6--XyvcAV3afg3msAcO6vaNDeWS=B9Oqag@mail.gmail.com>
-In-Reply-To: <CAJSP0QWt8Q5+yY1F6--XyvcAV3afg3msAcO6vaNDeWS=B9Oqag@mail.gmail.com>
-From: Warner Losh <imp@bsdimp.com>
-Date: Mon, 25 May 2026 09:12:24 -0600
-X-Gm-Features: AVHnY4LmVvJjfZ71FRKdu1AjVh_NEWMFkIRDWj1HCY29ZJTGNco3zvET7nF5f_M
-Message-ID: <CANCZdfpbDU+jCr6+Lj-ZV7h5H_ByHf=VJordfQ8OcH3+JsmJ4Q@mail.gmail.com>
-Subject: Re: FreeBSD CI after Cirrus shuts down?
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Li-Wen Hsu <lwhsu@freebsd.org>, Alex Bennee <alex.bennee@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000fa20ce0652a5ce9f"
-Received-SPF: none client-ip=2607:f8b0:4864:20::102e;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x102e.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <2756b13a-498a-4e2d-a218-10b756e0bf5b@nvidia.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,82 +125,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000fa20ce0652a5ce9f
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Sun, May 24, 2026 at 09:58:57AM +0300, Avihai Horon wrote:
+> 
+> On 5/21/2026 6:20 PM, Peter Xu wrote:
+> > External email: Use caution opening links or attachments
+> > 
+> > 
+> > On Thu, May 21, 2026 at 04:53:54PM +0300, Avihai Horon wrote:
+> > > On 5/19/2026 11:09 PM, Peter Xu wrote:
+> > > > External email: Use caution opening links or attachments
+> > > > 
+> > > > 
+> > > > On Tue, May 05, 2026 at 11:14:09AM +0300, Avihai Horon wrote:
+> > > > > Performance tests were done by migrating a single VM with:
+> > > > > * 8 GB RAM
+> > > > > * 4 mlx5 VFIO devices:
+> > > > >     - One device with 1GB of device data (stopcopy data) that runs
+> > > > >       workload during precopy so VFIO_PRECOPY_INFO_REINIT is exercised
+> > > > >       (generate new initial_bytes chunks during precopy).
+> > > > Could you elaborate a bit more on what workload is executed, and how that
+> > > > will affect REINIT reportings (e.g. is only one REINIT generated, or it
+> > > > keeps generating)?
+> > > Basically, I create and destroy RDMA resources (MRs, QPs, CQs, etc.) on the
+> > > VFIO device in a loop for several iterations.
+> > > This generates several REINITs.
+> > > 
+> > > > Can I understand it in this way: without REINIT, device is forced to put
+> > > > those data into stopcopy size; then with REINIT, some stopcopy size is
+> > > > essentially moved back to precopy phase?
+> > > Almost:
+> > > Without REINIT, the device is forced to put this data in precopy
+> > > dirty_bytes.
+> > > With REINIT, this data can be put in precopy init_bytes (and do the
+> > > switchover-ack dance again).
+> > Hmm, then I don't understand why moving some chunk of data from
+> > precopy_bytes to init_bytes helps downtime.
+> > 
+> > Essentially, QEMU makes the switchover decision based on the math of:
+> > 
+> >     init+dirty+stop
+> >     --------------- <= downtime_limit
+> >           bw
+> > 
+> > The possible min of above is:
+> > 
+> >          stop
+> >     ---------------
+> >           bw
+> > 
+> > Here whether some data would be in init or precopy portion shouldn't matter
+> > for a min downtime, since both portions are allowed to be moved during
+> > precopy phase.
+> > 
+> > OTOH, if stop_bytes unchanged, min downtime is still the same before /
+> > after supporting REINIT, if we try harder.
+> > 
+> > Say, with below testing results:
+> > 
+> > With VFIO_PRECOPY_INFO_REINIT:
+> >    1335ms total (~520ms from the VFIO device running the workload).
+> > 
+> > Without VFIO_PRECOPY_INFO_REINIT:
+> >    2352ms total (~1600ms from the VFIO device running the workload).
+> > 
+> > What is the downtime_limit you specified for both cases?  Have you tried to
+> > specify lower downtime_limit than what you specified, so that both results
+> > will become even closer (until they become, statistically, identical)?
+> > 
+> > In general, I can understand the REINIT will stop converging too early, but
+> > it'll be the same IIUC just to turn the downtime_limit smaller..  IOW, I
+> > may still miss some important piece of info that how this REINIT feature
+> > helps downtime..
+> 
+> The init_bytes are special in the sense that it's crucial that they are
+> transferred before switching over. Otherwise, VFIO precopy may not have full
+> effect which could make VFIO migration slower.
+> Accordingly, their contribution to downtime may not be just the time it
+> takes to transfer them.
+> 
+> Specifically for mlx5, init_bytes hold a small portion of metadata used for
+> time consuming pre-allocations on destination side. So, we may have 10MB of
+> init_bytes which would take a fraction of a second to transfer, but once
+> reached destination, it could take even a few seconds to load them.
+> 
+> When moving this data from dirty_bytes to init_bytes along with
+> switchover-ack, we guarantee that this long pre-allocation doesn't happen
+> during downtime. This is the time difference you see in the test results.
 
-On Mon, May 25, 2026, 8:36=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.com> =
-wrote:
+I see, yes that's what I missed and this makes a lot sense, thanks.
 
-> On Mon, May 25, 2026 at 10:01=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.=
-com>
-> wrote:
-> > If you have a FreeBSD build host available, you could install
-> > gitlab-runner on it and I can configure GitLab CI to send QEMU FreeBSD
-> > build jobs to your runner.
->
-> QEMU has an Intel x86_64 KVM VM with 1 vCPU, 4 GB RAM, and 60 GB of
-> disk space available.
->
-> The following images are available:
-> - FreeBSD 14.1
-> - FreeBSD 14.2 (ufs)
-> - FreeBSD 14.2 (zfs)
->
-> I can provision the machine for you via remote console access and add
-> your ssh key. After initially giving you access, you would become the
-> maintainer of the VM and responsible for keeping it updated and
-> connected to QEMU's GitLab CI.
->
-> If you would like to do this, please send me your ssh public key and
-> choice of FreeBSD image from the list above.
->
+Could you put above example into some vfio.rst doc when repost, when
+describing REINIT feature?
 
-Where does that list come from? Those are older versions of FreeBSD by
-now...
+Thanks,
 
-Warner
+-- 
+Peter Xu
 
->
-
---000000000000fa20ce0652a5ce9f
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, May 25, 2026, 8:36=E2=80=
-=AFAM Stefan Hajnoczi &lt;<a href=3D"mailto:stefanha@gmail.com">stefanha@gm=
-ail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"=
-margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On Mon, May =
-25, 2026 at 10:01=E2=80=AFAM Stefan Hajnoczi &lt;<a href=3D"mailto:stefanha=
-@gmail.com" target=3D"_blank" rel=3D"noreferrer">stefanha@gmail.com</a>&gt;=
- wrote:<br>
-&gt; If you have a FreeBSD build host available, you could install<br>
-&gt; gitlab-runner on it and I can configure GitLab CI to send QEMU FreeBSD=
-<br>
-&gt; build jobs to your runner.<br>
-<br>
-QEMU has an Intel x86_64 KVM VM with 1 vCPU, 4 GB RAM, and 60 GB of<br>
-disk space available.<br>
-<br>
-The following images are available:<br>
-- FreeBSD 14.1<br>
-- FreeBSD 14.2 (ufs)<br>
-- FreeBSD 14.2 (zfs)<br>
-<br>
-I can provision the machine for you via remote console access and add<br>
-your ssh key. After initially giving you access, you would become the<br>
-maintainer of the VM and responsible for keeping it updated and<br>
-connected to QEMU&#39;s GitLab CI.<br>
-<br>
-If you would like to do this, please send me your ssh public key and<br>
-choice of FreeBSD image from the list above.<br></blockquote></div></div><d=
-iv dir=3D"auto"><br></div><div dir=3D"auto">Where does that list come from?=
- Those are older versions of FreeBSD by now...</div><div dir=3D"auto"><br><=
-/div><div dir=3D"auto">Warner</div><div dir=3D"auto"><div class=3D"gmail_qu=
-ote gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D"margi=
-n:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
-</blockquote></div></div></div>
-
---000000000000fa20ce0652a5ce9f--
 
