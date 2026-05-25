@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87927CD5BC0
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 06:37:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0ACECD5BBF
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 06:37:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wROvF-00058i-VK; Mon, 25 May 2026 02:36:23 -0400
+	id 1wROvl-0005k6-MP; Mon, 25 May 2026 02:37:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wROtY-0002xS-1L
- for qemu-devel@nongnu.org; Mon, 25 May 2026 02:34:38 -0400
+ id 1wROtf-0003Ek-MV
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 02:34:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wROtW-0001Jm-EM
- for qemu-devel@nongnu.org; Mon, 25 May 2026 02:34:35 -0400
+ id 1wROte-0001Kr-4u
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 02:34:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779690873;
+ s=mimecast20190719; t=1779690881;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DBHFQLtRMrdfnvQtSsd7u7e5jcNyISFb5lV/307G3wI=;
- b=UtyCCiyFq+wwIP2Tl5rfto1duIo0khVCy1R5AQWOXWYkoPz1Css67b9LMneF7MLvjKo3Ed
- XmMc+YLMTNEXLTbDf2R4OwHhFeI/kAkeZx1QWdL/Nmlkd3UnnJf3+uDaCgxAvsWUpW6TTh
- fFsZZntRzuSFAp8nXBZ3tlOj/jRD4Xs=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Fh+6O/vHguV/OcDLo0aBOnAZWtT7udU3z87vtg+xsfM=;
+ b=WG+ou7e7C+pyfIVzzDyZHf8SBPkpzVAqwidN2pouAFGOYcKIx3rggRcLtHmQI53cT2CXBh
+ Ilq15HI6tCVt3dhZ0lpBaFc8m3z16kC0pqHIhDyAtUyG3imVnX1vLof5deVX0jbScisvoP
+ 9pQYFx2OKG5vNHJq4vX7xKIT8/f5w1U=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-133-oe1ga9oePWys5YOVoLEYNg-1; Mon,
- 25 May 2026 02:34:30 -0400
-X-MC-Unique: oe1ga9oePWys5YOVoLEYNg-1
-X-Mimecast-MFC-AGG-ID: oe1ga9oePWys5YOVoLEYNg_1779690869
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-_vrPVX6zM5O3pjuuu1o-vA-1; Mon,
+ 25 May 2026 02:34:36 -0400
+X-MC-Unique: _vrPVX6zM5O3pjuuu1o-vA-1
+X-Mimecast-MFC-AGG-ID: _vrPVX6zM5O3pjuuu1o-vA_1779690875
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8E50219560A2; Mon, 25 May 2026 06:34:29 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B5A951956053; Mon, 25 May 2026 06:34:35 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 120B818004A3; Mon, 25 May 2026 06:34:27 +0000 (UTC)
+ id 38EFB18004A3; Mon, 25 May 2026 06:34:33 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Jan Kiszka <jan.kiszka@web.de>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org (open list:Musicpal)
-Subject: [PULL v3 16/38] hw/arm/musicpal: Use Linux key codes
-Date: Mon, 25 May 2026 10:31:59 +0400
-Message-ID: <20260525063223.1409791-17-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL v3 17/38] hw/char/escc: Use Linux key codes
+Date: Mon, 25 May 2026 10:32:00 +0400
+Message-ID: <20260525063223.1409791-18-marcandre.lureau@redhat.com>
 In-Reply-To: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
 References: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
@@ -95,72 +95,54 @@ representations.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260520-input-v3-8-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <20260520-input-v3-9-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/arm/musicpal.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ hw/char/escc.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/hw/arm/musicpal.c b/hw/arm/musicpal.c
-index c8985a58f99..e2630243eb7 100644
---- a/hw/arm/musicpal.c
-+++ b/hw/arm/musicpal.c
-@@ -24,6 +24,7 @@
- #include "hw/core/ptimer.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/block/flash.h"
+diff --git a/hw/char/escc.c b/hw/char/escc.c
+index 39483ca03bf..7aae627fb48 100644
+--- a/hw/char/escc.c
++++ b/hw/char/escc.c
+@@ -30,6 +30,7 @@
+ #include "migration/vmstate.h"
+ #include "qemu/module.h"
+ #include "hw/char/escc.h"
 +#include "standard-headers/linux/input-event-codes.h"
  #include "ui/console.h"
- #include "hw/i2c/i2c.h"
- #include "hw/i2c/bitbang_i2c.h"
-@@ -1069,40 +1070,39 @@ static void musicpal_key_event(DeviceState *dev, QemuConsole *src,
-                                QemuInputEvent *evt)
- {
-     musicpal_key_state *s = MUSICPAL_KEY(dev);
--    int qcode = qemu_input_linux_to_qcode(evt->key.key);
-     uint32_t event = 0;
-     int i;
  
--    switch (qcode) {
--    case Q_KEY_CODE_UP:
-+    switch (evt->key.key) {
-+    case KEY_UP:
-         event = MP_KEY_WHEEL_NAV | MP_KEY_WHEEL_NAV_INV;
-         break;
+ #include "qemu/cutils.h"
+@@ -804,7 +805,7 @@ static void sunkbd_handle_event(DeviceState *dev, QemuConsole *src,
+     trace_escc_sunkbd_event_in(qcode, QKeyCode_str(qcode),
+                                evt->key.down);
  
--    case Q_KEY_CODE_DOWN:
-+    case KEY_DOWN:
-         event = MP_KEY_WHEEL_NAV;
-         break;
+-    if (qcode == Q_KEY_CODE_CAPS_LOCK) {
++    if (evt->key.key == KEY_CAPSLOCK) {
+         if (evt->key.down) {
+             s->caps_lock_mode ^= 1;
+             if (s->caps_lock_mode == 2) {
+@@ -818,7 +819,7 @@ static void sunkbd_handle_event(DeviceState *dev, QemuConsole *src,
+         }
+     }
  
--    case Q_KEY_CODE_LEFT:
-+    case KEY_LEFT:
-         event = MP_KEY_WHEEL_VOL | MP_KEY_WHEEL_VOL_INV;
-         break;
+-    if (qcode == Q_KEY_CODE_NUM_LOCK) {
++    if (evt->key.key == KEY_NUMLOCK) {
+         if (evt->key.down) {
+             s->num_lock_mode ^= 1;
+             if (s->num_lock_mode == 2) {
+@@ -832,11 +833,11 @@ static void sunkbd_handle_event(DeviceState *dev, QemuConsole *src,
+         }
+     }
  
--    case Q_KEY_CODE_RIGHT:
-+    case KEY_RIGHT:
-         event = MP_KEY_WHEEL_VOL;
-         break;
+-    if (qcode >= qemu_input_map_qcode_to_sun_len) {
++    if (evt->key.key >= qemu_input_map_linux_to_sun_len) {
+         return;
+     }
  
--    case Q_KEY_CODE_F:
-+    case KEY_F:
-         event = MP_KEY_BTN_FAVORITS;
-         break;
- 
--    case Q_KEY_CODE_TAB:
-+    case KEY_TAB:
-         event = MP_KEY_BTN_VOLUME;
-         break;
- 
--    case Q_KEY_CODE_RET:
-+    case KEY_ENTER:
-         event = MP_KEY_BTN_NAVIGATION;
-         break;
- 
--    case Q_KEY_CODE_M:
-+    case KEY_M:
-         event = MP_KEY_BTN_MENU;
-         break;
+-    keycode = qemu_input_map_qcode_to_sun[qcode];
++    keycode = qemu_input_map_linux_to_sun[evt->key.key];
+     if (!evt->key.down) {
+         keycode |= 0x80;
      }
 -- 
 2.54.0
