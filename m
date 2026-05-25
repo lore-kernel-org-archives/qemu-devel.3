@@ -4,107 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69403CD5BC9
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 15:02:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65460CD5BC9
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 15:06:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRWoP-0007lr-84; Mon, 25 May 2026 11:01:49 -0400
+	id 1wRWrj-0000kC-98; Mon, 25 May 2026 11:05:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wRWoN-0007lG-69
- for qemu-devel@nongnu.org; Mon, 25 May 2026 11:01:47 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wRWrh-0000ix-MQ
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 11:05:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wRWoL-0006qW-8z
- for qemu-devel@nongnu.org; Mon, 25 May 2026 11:01:46 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wRWre-00012z-Ot
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 11:05:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779721303;
+ s=mimecast20190719; t=1779721508;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GEsfgL5SYs1mBjoNRUpqZyHvO6l/bEjT+Nx6kXjZPbQ=;
- b=O2d5OHT/eoGS9nNZ1ptM3XtxG8wx3EF7t2y89xqdtQW0oI3hm3tnzAC68bLo+XwJbMloOL
- ThD8gkxWVCcxs2Xjxz6bvMnjTR0/cXPcyU50qYNipXRdbsE3fOjd+zAib+zIMDNUx7eATy
- +1gpYq7e6lwDrt3hCdZJO4PYwfHm8bo=
-Received: from mail-ot1-f71.google.com (mail-ot1-f71.google.com
- [209.85.210.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=oEccc61KJRL0zGCF9LdUGokj09V7lLeK+5cqo65gnfc=;
+ b=gTIaiag4j+vnSx1g4UgTh/QmxI7MoMEfki6ZWZBnAVzmtzFWkGgd5CwbfylTRRM6fvDCjY
+ a6n1IY/efU7IU3J9jrLO1QrI5gLUrwPA6ENFjP1dEhexOK/4MjitfF1hoL49ZgS+QWFQpi
+ 0Yn/qHUYWOi0PiM5HYj+pHVUbrRf9I8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-44-S4nSuGXwOtafZn7MCbDv1A-1; Mon, 25 May 2026 11:01:42 -0400
-X-MC-Unique: S4nSuGXwOtafZn7MCbDv1A-1
-X-Mimecast-MFC-AGG-ID: S4nSuGXwOtafZn7MCbDv1A_1779721301
-Received: by mail-ot1-f71.google.com with SMTP id
- 46e09a7af769-7e54519e2e0so2032546a34.0
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 08:01:41 -0700 (PDT)
+ us-mta-124-YUUccqOVNdSdtOyfJk8cOA-1; Mon, 25 May 2026 11:05:07 -0400
+X-MC-Unique: YUUccqOVNdSdtOyfJk8cOA-1
+X-Mimecast-MFC-AGG-ID: YUUccqOVNdSdtOyfJk8cOA_1779721506
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-48feb0298d7so76351035e9.1
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 08:05:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779721301; x=1780326101; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=GEsfgL5SYs1mBjoNRUpqZyHvO6l/bEjT+Nx6kXjZPbQ=;
- b=jtb8Dmm3NdwQNsHBA7d2cQQsjXaa4C5E6535JUkiBU+SY15IWr9GqzwsvmLjCYktl5
- NFfTtnJ64m4bSCm0oELH9S1jqtL7xBLwfzsmsbanZ1T+yhBpPY70T6mTw75+5FG3+Y6t
- P7H6dQDmCzNMz75rJ3YPwNcDyVZKKywCrUD7MvZ8OLdEXQJzh0OuQn5ThiFx5Z3EujxK
- 62WrOOWeO0owrTG9XCJjwVBlSx5J5/NH1GVhXSJ89HGVtkKewq9A/xwO2asBr+ViCxdd
- FPjLwKAx/OLQ452YdQHBe1nIXLohTvu9wO3tDc8Klx6NerrrZxBsMRf+yth09HFPCBQN
- fSng==
+ d=redhat.com; s=google; t=1779721506; x=1780326306; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=oEccc61KJRL0zGCF9LdUGokj09V7lLeK+5cqo65gnfc=;
+ b=RA7+2g5TZCtomhsan00ZviMJ2MyAPL2sGzjEum/0StEuj5mi/PnS6pN4xDmrElq5ls
+ dl6Qo4vyfxoORfSZ9+9hoQ3bixCyrQrMF7lyKIFvopIuKNJl0n6rQbRSpMv0Ds9VAMSG
+ KJOVaZUXp3QL2Y8u8kFmRFCtoQCvFEqeicC4odGFZOqxHtohY7Zq9/MGohx4JRcMmI3q
+ t9svR28qePcDStFMihk+lIhMQhJ/5BNpSN7lxxytTlwQ+yRN8EYMYiayu7ywS8hxRytw
+ Xd3w+SEDAoZB8X8Zwb/FkmfY9LKXvZwWXb+k+K5b4eXtXRiMPA5/MDBg5W7FF6kdR/wi
+ kP8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779721301; x=1780326101;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GEsfgL5SYs1mBjoNRUpqZyHvO6l/bEjT+Nx6kXjZPbQ=;
- b=PK1NLC+tfuFDxBCZgd/DfonaAEHcbA9Dm/Pmik1vg3Wqm38hIVIKGuJJYnGHFtYIes
- CLcTGSoBn5d4gUi0jmdaZi1A9cRAPp3j8JCVsDtobgab2DFcM+v+f6waexCzRXgMsrdv
- mCQwRa3M9lHydZmojr2EiTbHZuMLrUxf49/tPv4Tob0r5dkYGn2I2q/cszdylPocMK/i
- HTH6z54WF7Tf+d9htT6xjKH3SaKTy4M/Z/btUnwHI2MbE6gZJh4oKoHb/lzFBr+6TG3P
- LjlPcIpNZoBfHeK/X0dQ79A449ucHNRMN4iS4PmTphpG6kEnecmqD8dArAIqbHE+EV7h
- gb8w==
-X-Gm-Message-State: AOJu0YwzsJxvESOy7cL7zmyWRoYbAmFYuShf7a1jaL76tTa65xVOlEtf
- Q3GAENPz417lcxVDlACgi5stMoG/pQPz2uVNBVwA/UJaZOiUdvKrdh727d3HJkindAMTY+YT94t
- yp+LdaNwhM6f9EdlKvS3G0DPnM9Hs5EbVP/qvuwlWSqysU4NAWwqooDJU
-X-Gm-Gg: Acq92OF5qQ5D3a6RhHTXzMz7sdZFTOBC7TtQKa+JS//Q/kr2SO35zJF2BFrF+vKg4UJ
- tfuslTCwrCtO6HcWWyBw8kasos1FvSILjzfa2HwLLk72s6FvXBPH2nO+s4RqsChSj4cpXE84e4E
- x/FUcrxempWrWseVXQSXgg94TdZIZJG1jWdPC8r2HTNkRAxyY+ePsHgcpvFWdtysLGwW/5Q7sJP
- 8yTp4kwGiIYS9XAmWboJlid5Bf/LPWFB+5CWc0JhxX4Dde1Y8PUn4U4T3Ns+24TTtsDpp6ap3vL
- OpkfHtO6q5wRJqa2zlDDj24jZHY/DijzHOTM3w35o8FRp5P8KExwQumvX1WVq21JhZBBQgitVUN
- lVhCOqQU2a4q+hnVRcAyxe7X5evPlUYkCSBIjH7CV06P7/Qw=
-X-Received: by 2002:a05:6830:2650:b0:7e5:fb74:bb48 with SMTP id
- 46e09a7af769-7e5fec690b0mr8684038a34.3.1779721301094; 
- Mon, 25 May 2026 08:01:41 -0700 (PDT)
-X-Received: by 2002:a05:6830:2650:b0:7e5:fb74:bb48 with SMTP id
- 46e09a7af769-7e5fec690b0mr8683844a34.3.1779721299857; 
- Mon, 25 May 2026 08:01:39 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8cc812e269csm111639506d6.25.2026.05.25.08.01.37
+ d=1e100.net; s=20251104; t=1779721506; x=1780326306;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=oEccc61KJRL0zGCF9LdUGokj09V7lLeK+5cqo65gnfc=;
+ b=idJ59ax3rTKaj3zzGBMDxipaGfIzjILrtgFR3BbvyUscBSaEY8pc1ITS+xpsMV2KjC
+ q8ZiYXxtHWnDW6qaFqwvGetMOmhAP1lwnjScudR146tFKeZzTAt+GZPVofU9Rp+DFmun
+ GrNTlO897N/PXHbf8x4h4GOF3Fgqnht1paV/YkrnV/JK/SBelFWj5nFOQjwemhiiU4+M
+ WWCA51/DFWWekTElqdqfMOI+FnkmbiaUrriF74SVRRqR7YkGF6Vq6W6gPneONzJKXwyq
+ dAgoPj29hHf2ZblVqfDlK7YJmF/Sp/25aqI7Gv+MFj7Rmt0qXbfxmG61vjOkrWHD4uuw
+ FeFQ==
+X-Gm-Message-State: AOJu0Ywd7shofYWqQ3jPOKrrDUzqPOG+e40Nh6QXBjk2WTwYCOdEdwJm
+ 6oHzVFZezCdPMr16USNXfSDWUz4xXvinf3Dvd0qhGshjl6DVBEYQ9qSN+9etrDojsCEabN/eTw6
+ 1+aP+L+wbSsKGQGdsm2Wu2zSwcc9s57lbFJtkc5mAAvjuk8ZWNpHpliDG7fB9kW1FCB1qQOy5xb
+ TY0zs1Pier2qNLQKOplrV9yRj+9yWeNvtMzacaSFtU
+X-Gm-Gg: Acq92OE7Ww+UxCyqn6gxdw2bYPzCvdxJUwFXRsSOEYeicPaIGHkvCU/T45m3oF0PywA
+ T1vvAM59VYITlNUdWoCGG2f46CnlasqQWznYRTv7RMtmwjFWjgP8SuTZx7B2pw51MO1S7wSQbgu
+ ZDR/c3nFg8f2gv5hLKoW0lvN0BDGVWB8r5LBW+CeRsK1MkoJuFfKEI51kU8IlfgAuoHMjTxgHxo
+ QRRuUMhI8k4GPtsnFdDmBA71RDWbk8w/M4I9hl+PqdPyt8s4dwPOOFaV6MvEUTYa3vrak/RMfjT
+ KBYcvRh9jTTCnPMBOZ0yn0duWJM7BuV68O8H7hxzf5zKA30tazq301gk9DIFp2LSmOguZUq/PqC
+ NUOJlONbOBqvgwL+9Zfr+j6T/9NR1FN3eW1GoQwXxTYIX2KeQ1H0r2xwKZsS6LtM1gEbNn2fcZY
+ dAPDlSv+GtVdUxlZ4SyH9paLjBXZi8
+X-Received: by 2002:a05:600c:3b9f:b0:48d:35e:82cb with SMTP id
+ 5b1f17b1804b1-490428e93d6mr266057335e9.28.1779721505832; 
+ Mon, 25 May 2026 08:05:05 -0700 (PDT)
+X-Received: by 2002:a05:600c:3b9f:b0:48d:35e:82cb with SMTP id
+ 5b1f17b1804b1-490428e93d6mr266056275e9.28.1779721505136; 
+ Mon, 25 May 2026 08:05:05 -0700 (PDT)
+Received: from [192.168.10.48] ([176.206.106.181])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-490428d3e9esm115283545e9.7.2026.05.25.08.05.04
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 May 2026 08:01:37 -0700 (PDT)
-Date: Mon, 25 May 2026 11:01:35 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Maor Gottlieb <maorg@nvidia.com>
-Subject: Re: [PATCH 07/14] migration: Make switchover-ack re-usable
-Message-ID: <ahRkT19AVwi4SQA9@x1.local>
-References: <20260505081423.28326-1-avihaih@nvidia.com>
- <20260505081423.28326-8-avihaih@nvidia.com>
- <agy-q-MTVboGUY_G@x1.local>
- <9631bd0e-5c56-490d-a341-4ad4d5ae91a6@nvidia.com>
- <ag8cqIGtAfe80lKW@x1.local>
- <53cca60e-67b0-4ed2-bdae-6ddbaefc1390@nvidia.com>
+ Mon, 25 May 2026 08:05:04 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PATCH v3 0/7] qobject: switch JSON parser to push
+Date: Mon, 25 May 2026 17:04:56 +0200
+Message-ID: <20260525150503.393743-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <53cca60e-67b0-4ed2-bdae-6ddbaefc1390@nvidia.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -128,47 +116,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, May 24, 2026 at 09:34:48AM +0300, Avihai Horon wrote:
-> Yes I think so.
-> 
-> We just need to indicate modules that it’s the last query during switchover
-> so they can handle it properly.
-> Do you think it would be reasonable to add a "bool final" param to
-> save_query_pending handler?
-> 
-> For RAM it will be used to indicate we are running under the BQL (since
-> currently save_query_pending runs only outside BQL) and to pass the proper
-> last_stage param into migration_bitmap_sync_precopy().
-> For VFIO it will indicate we should not do a query precopy info ioctl (which
-> is only valid in VFIO precopy states, not while VM is stopped).
+This rewrites the json-parser to use a push parser aka state machine.
+While push parsers are inherently more complex than recursive descent,
+the grammar for JSON is simple enough that the parser remains readable.
+There is therefore no need to use e.g. QEMU coroutines.
 
-Yes, a final boolean sounds reasonable, implying both (1) last sync before
-switchover, VM stopped, (2) BQL held.
+Unlike the suggestion in commit 62815d85aed ("json: Redesign the callback
+to consume JSON values", 2018-08-24), I kept the json-streamer concept.
+It helps in handling input limits, it performs error recovery, and it
+converts the token-at-a-time push interface to callbacks---all things
+that are more easily done in a separate layer to keep the parser clean.
+However, there is no need anymore for it to store partial JSON objects
+in tokenized form, because the current state is stored in the push
+parser's stack.
 
-For VFIO, I double checked the complete() that does not depend on the
-precopy_bytes fetched, then it should be fine indeed,
+Another benefit is that QEMU can report the first parsing error
+immediately, without waiting for parentheses to be balanced or for a
+lexing error.  Error recovery then proceeds as before (i.e., the next
+parse still starts after balanced parentheses or a lexing error).
 
-vfio_save_complete_precopy():
-    do {
-        data_size = vfio_save_block(f, vbasedev->migration);
-        if (data_size < 0) {
-            return data_size;
-        }
-    } while (data_size);
+On top of the benefits intrinsic in the push architecture, it so happens
+that it's really easy to add a location to JSON parsing errors now, so
+do that as well.
 
-It's just werid to see that it doesn't depend on either precopy_bytes or
-initial_bytes, even if logically it should.. this will be confusing to
-whoever start reading this code.. but I understand not much we can do with
-the current kernel API.
+The diffstat is unfavorable, but most of the new lines delta is really
+new comments explaining the grammar and state machines.
 
-Side note: should we still better update these fields to make sure they'll
-be zero after migration? That means vfio_update_estimated_pending_data() in
-vfio_save_complete_precopy() too, with/without further sanity checks.  That
-seems to be missing right now.  I'm not sure if it's intentional.
+Paolo
 
-Thanks,
+v2->v3:
+- accept interpolation for the key of a dictionary
+
+v1->v2:
+- remove part of the patch to pass around the lookahead token,
+  it was hard to review and added little value
+- separate patch to reuse the JSONParser
+- separate patch to make brace/bracket count unsigned
+- add comment with the structure of the stack
+- add big comment with the grammar
+- split long lines
+- remove QObject **value argument to pop_entry()
+- add assertions about the type of the top-of-stack
+- change error to "key is not a string in object"
+- split out json_parser_reset() already in the first patch
+- rename json_parser_parse_token() to parse_token()
+- do not use single quotes in commit messages
+- move initialization of JSONToken close to usage
+
+
+Paolo Bonzini (7):
+  json-parser: constify JSONToken
+  json-parser: replace with a push parser
+  json-streamer: reuse parser
+  json-streamer: make brace/bracket count unsigned
+  json-streamer: remove token queue
+  json-streamer: do not heap-allocate JSONToken
+  json-parser: add location to JSON parsing errors
+
+ include/qobject/json-parser.h |  16 +-
+ qobject/json-parser-int.h     |  13 +-
+ qobject/json-lexer.c          |  11 +-
+ qobject/json-parser.c         | 580 +++++++++++++++++++---------------
+ qobject/json-streamer.c       | 120 +++----
+ 5 files changed, 415 insertions(+), 325 deletions(-)
 
 -- 
-Peter Xu
+2.54.0
 
 
