@@ -4,101 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00580CD5BC9
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 22:36:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D926FCD5BC9
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 22:39:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRduD-0000i4-Hk; Mon, 25 May 2026 18:36:17 -0400
+	id 1wRdxC-0001D5-73; Mon, 25 May 2026 18:39:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wRduA-0000hr-Sp
- for qemu-devel@nongnu.org; Mon, 25 May 2026 18:36:15 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wRdxA-0001CY-MR
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 18:39:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wRdu9-0007fB-2M
- for qemu-devel@nongnu.org; Mon, 25 May 2026 18:36:14 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wRdx7-0000R7-0K
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 18:39:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779748572;
+ s=mimecast20190719; t=1779748756;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OEFE6iAnqL+p9fQdf0yHV95agKq4p/0mfYdVoRnODbU=;
- b=XZfORn4049Y5hf1gZdFtCuzV1YuAoGCg5sGWcXxEG1/hh63aAPGFCxl8eQ/2lg8CJcjiVC
- JjRjbjZ7qsUUb+ejZgtuzWnl2FdQVs8+6/Zf1HjfY03FHySkMuls9SOq/VKyQRjizHTQKO
- zM1kmyjqfllaBYXfiENLDvpBwYT1IQU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=82ObKUiFZmoZpz9qpW2c3fGc/c2CPMzq0cMUXtqE5dg=;
+ b=Rzl2szW4hwkMK5GxBK+ElLOekYfKGiX+Y+6YtrncnKdPEIIZjIN38wjntxT0kBXniweSod
+ xAI4ifpdJ0nZj6xBS+rwbuG1JUiAr/3T8UbfYJO4/REifJaYuEc5weIwsxSebabb7lc9WC
+ hxqot8WZBRQsJnIupC9nLIJ78WzNoVU=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-202-fHt66sdnMXui3hoXeOT07g-1; Mon, 25 May 2026 18:36:10 -0400
-X-MC-Unique: fHt66sdnMXui3hoXeOT07g-1
-X-Mimecast-MFC-AGG-ID: fHt66sdnMXui3hoXeOT07g_1779748569
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49043386b3fso32001165e9.3
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 15:36:10 -0700 (PDT)
+ us-mta-168-yrKN7M1wNXuw2RqP7IP3cA-1; Mon, 25 May 2026 18:39:14 -0400
+X-MC-Unique: yrKN7M1wNXuw2RqP7IP3cA-1
+X-Mimecast-MFC-AGG-ID: yrKN7M1wNXuw2RqP7IP3cA_1779748753
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-45dbbbf8d57so11738367f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 15:39:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779748569; x=1780353369; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=OEFE6iAnqL+p9fQdf0yHV95agKq4p/0mfYdVoRnODbU=;
- b=LvBXCfxdxlo3GOG8wynW3urYG7YLtg8g+74+R/Lcv6QlCGL/wM2DV+My9/S/6Rl3mI
- GGgPpz2ma73y3HN6BE+aJb68SIEa5I6OcLFMRIRPR0NBd1L84TxyLR3ZzgvMmEOecIJL
- Rkb2ci8ZErtzi8irIazvT7ub2D6ISXstLiczh4k0HbV47V1YByJ/Aekh2MCRVIQoZ7lt
- R42Xh/aamf6Eu26g59Oj7AF2qug6IQWV5V4KJnWWLfj3YzmHbAXeGtMtG64tygUt7QxL
- 8oXfmSFf9oKU3upPLx+6SzKwDwK+Cdtm57Vwhqzn3YBnqaFiqnZol633wByNDOhQy71K
- lBzQ==
+ d=redhat.com; s=google; t=1779748753; x=1780353553; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=82ObKUiFZmoZpz9qpW2c3fGc/c2CPMzq0cMUXtqE5dg=;
+ b=hAa1zW1KUrBTmtVI3IRmBCIyh0uR+2ulDvesJzamWHawBdOCQSe8pCrl9LgTRQQ+Iw
+ rA6Wranv5G2CJ03hVl+kAnLCaL14nHm6i2ARCejQ6LF3GKPmJE6cdo2ZgH5ls2oNDa8g
+ VYoiWMjGSWjeVDdXZIWyeIC+oXuJ7moewrtSZV8OzG0aj1PSqe4IIG73+hPUQhXwOKNk
+ /mRoiT3tfp6jkUDwCRbEIf+MSdRfxEdkTkUdodmjjQt1M+I6lUHNAvmDP9MkQ6mVGUgM
+ ho5sRz00v/CnjuPgDskelU7Iz+icxn5ySqTBde5GjWxDrT6ICilTTyOkWzjjA0WFLuOx
+ mcFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779748569; x=1780353369;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OEFE6iAnqL+p9fQdf0yHV95agKq4p/0mfYdVoRnODbU=;
- b=dTYaIXUg087tUdcXOjsQ+CKB+qZ2W2a7p+x5yKBUNnIC0Y5+bWYiadb6U/IJJBIG9y
- 6tceELaO4DRt2II68eyGnFRjEl6vC3JslqILVRP8K/PTwpAGjSxJpf+41iZ8dr/u7H2A
- E5SguDm8hRFB1dRg9ZyumvSHZOVSAilyf5WxWUcRRVXRIl8LBtooQc5MSozyhnmY2nlO
- m2u+dB+jXd2MWAaXtLp6ghs+JtzPhYNVU/A1rhxdxI6SiQhblkFgD591LwjseMVomVOa
- MI1O7U3f8eoR9vxiKWiski6XC2pZIxIzR485qbDJ40k9dz9c4BQrvDWQNIgmMTwxpfAG
- 6ntQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/+XvcDpf+xX4R61HPqrAGQb7XafCxDjFLxs1BsX/DtGovnce9K8JnBvMJfCRVUroGWGk+5q/K4Awqe@nongnu.org
-X-Gm-Message-State: AOJu0YzQPw3dEFXktdwhBDbzoaqLkHyxRONAya2PtajVsb+1E7NIdbbU
- IZZy71M3/BGiwoIiIO4c3+enWFqu5XNIZoAavUPRUxe1elJPoFmLj7vyaZ0xQlwV9wcW208PD0m
- AeEcPOKVPiVcgRP96pao9KIb+TgFawFtHGhX6jTVloDd6om4vo7L1g/gg
-X-Gm-Gg: Acq92OHKSGWuUNoa0JdckGhKymx2an/3s0WxdAdLBK433DZGqAV4U+ag/MCCr1tO9Sj
- 6Y9v+9jy+MdGixD7r1kWenDXwY2F23NzO2LcqDyTZi+9g7+WPVziiadtAEaoDQoZWWxkS9apKFZ
- BBxeUE/WMk19V/Zr3Z8pZlH6ngcCCV6G6btst+H4n87hNyX8irusKbpA2Be+j/bKzPSvfvt4bd5
- 8WIRXWBvM0PRu/UpkalUUO7wT8iHXpN3+n1iAG1S9ZriateuX0/K8Pso5YhZRXXP2q7talmn42U
- FbIwbBkcnK6QaK3Rm+ZLWq9oyWtNdnYJGkpRwAjfWpchAILZdp++nspkI14PS1cOddcDvY719WC
- VrcygtbQ8D24E+ryZDAxVFQtNFfZD5oJE5bCuVrG1yr6onXvHelIl
-X-Received: by 2002:a05:600c:3106:b0:490:6889:1ff with SMTP id
- 5b1f17b1804b1-4906889025dmr67812575e9.28.1779748569089; 
- Mon, 25 May 2026 15:36:09 -0700 (PDT)
-X-Received: by 2002:a05:600c:3106:b0:490:6889:1ff with SMTP id
- 5b1f17b1804b1-4906889025dmr67812235e9.28.1779748568607; 
- Mon, 25 May 2026 15:36:08 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779748753; x=1780353553;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=82ObKUiFZmoZpz9qpW2c3fGc/c2CPMzq0cMUXtqE5dg=;
+ b=eQLGidoq9YidV8tMmZrU8R58M2cPJz8+ltsKnVOaCUJFk4c5TLqUj6ObHnw0JZgc0S
+ CKTtUD+vYbH39FNST9rbJY6PmUt+9pxmKM1x5oiC4SJyTKLV8t2vc2kkFQv9Wt8AtX/V
+ 0IhdMpIi/i59AywQcTA5+l2vR30C+P2uLV66Xzhx5HRefdcLPTLzcvmKwB4SDBfuUgdu
+ jyCdmKf9oVmsjvUpY1cpuq7klAsGwU1mwOHWcHT9nIK04pPyS4/5RLLkdGwF5Z8tOjl8
+ LRYD+75Tb859Y4A5f7M+u9z1ylEDwF+ISIRkLsikhTOZeVkyK11Xuxwd/UfevIi/DNCJ
+ jixA==
+X-Gm-Message-State: AOJu0YxZEgCF00t7NyPeyc5Bl3VLScDQn3O2IpjS/UkHjn/s9BqNyk3x
+ iXjVz/8L+A+r0r72Nz5I8vt0Rl23BZD3EzAlQfjUaK5Bdq5kWcyBj6IUKTrF9RoHG2OOya7STiD
+ 22Hyj1b7IcYUCu06NQHVUk80SsOiQURy3THhbratFVX4n2rN9mVMZ8AvmZTG+kLSz
+X-Gm-Gg: Acq92OH19abiMLB+0lK0FgvghNYtjyRzaBchOfd0u6riz1o2OnTSsrCDvDE1Cv4MWl3
+ 1q0OdslN9kKEZeIMAoVTNlm9uLRn8PbXvdWxtxBNHdi6uwePqZS6C6SqIDqaYF35Tx7Sozpi4m4
+ ZeqWDEa/Eved0LmtrKkcgfYYlnYL9SxInSfaABuqTL5Irtq3lHzaoTdYp36h0JeqKqotIMFmaq2
+ NV60IY1E8gpGYR3IpSPCJ6Wkwf9zm0Zvz42FTs7DazdW/Hk1BmomXYwiYC2VzKwFQ9eqZiGmADs
+ MfzrcjAld365Pm/GapI1EvqyqDmCy0dPn/P6Pz6BusBQb800JJIprJ0Rk55ca7cwfZ/1dO27juA
+ gTDFQsUk5U2BPdLyXpSYEPUoqIzSZQV7lAxcVyfw57xs2mM6oNoWw
+X-Received: by 2002:a5d:6f0f:0:b0:453:f951:4e5b with SMTP id
+ ffacd0b85a97d-45eb369c88dmr31885764f8f.13.1779748753100; 
+ Mon, 25 May 2026 15:39:13 -0700 (PDT)
+X-Received: by 2002:a5d:6f0f:0:b0:453:f951:4e5b with SMTP id
+ ffacd0b85a97d-45eb369c88dmr31885721f8f.13.1779748752567; 
+ Mon, 25 May 2026 15:39:12 -0700 (PDT)
 Received: from redhat.com (bzq-79-177-147-143.red.bezeqint.net.
  [79.177.147.143]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490428e6d68sm96189915e9.22.2026.05.25.15.36.07
+ ffacd0b85a97d-45eb6d5e363sm31135234f8f.28.2026.05.25.15.39.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 May 2026 15:36:08 -0700 (PDT)
-Date: Mon, 25 May 2026 18:36:05 -0400
+ Mon, 25 May 2026 15:39:11 -0700 (PDT)
+Date: Mon, 25 May 2026 18:39:09 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Warner Losh <imp@bsdimp.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org, stefanha@redhat.com
-Subject: Re: on ai generated and code provenance
-Message-ID: <20260525183441-mutt-send-email-mst@kernel.org>
-References: <20260524083329-mutt-send-email-mst@kernel.org>
- <f0bc9023-28c4-4685-b0cc-fc7ad4e6d371@redhat.com>
- <CANCZdfrn61yr5k=3=E_zE11dw3j2vVsg0PPn0PZ7RAa2agM8kQ@mail.gmail.com>
- <CAJSP0QUmh4RLFUg9-5Uky36Tjhr_cLkrE2VAC8K_MdSY9p0WZw@mail.gmail.com>
+To: Quan.Sun@windriver.com
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, fam@euphon.net,
+ sgarzare@redhat.com
+Subject: Re: [PATCH] hw/scsi/vhost-scsi: fix build with older kernel headers
+Message-ID: <20260525183656-mutt-send-email-mst@kernel.org>
+References: <20260525182730.4098543-1-Quan.Sun@windriver.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJSP0QUmh4RLFUg9-5Uky36Tjhr_cLkrE2VAC8K_MdSY9p0WZw@mail.gmail.com>
+In-Reply-To: <20260525182730.4098543-1-Quan.Sun@windriver.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -123,82 +115,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 25, 2026 at 03:44:02PM -0400, Stefan Hajnoczi wrote:
-> On Mon, May 25, 2026 at 1:17 PM Warner Losh <imp@bsdimp.com> wrote:
-> > On Mon, May 25, 2026 at 10:34 AM Paolo Bonzini <pbonzini@redhat.com> wrote:
-> >> On 5/24/26 14:42, Michael S. Tsirkin wrote:
-> >> >       How contributors could comply with DCO terms (b) or (c) for the output of AI
-> >> >       content generators commonly available today is unclear.  The QEMU project is
-> >> >       not willing or able to accept the legal risks of non-compliance.
-> >> >
-> >> > But, since this was written, Red Hat's Richard Fontana and Chris Wright
-> >> > published this piece:
-> >> > https://www.redhat.com/en/blog/ai-assisted-development-and-open-source-navigating-legal-issues
-> >> >
-> >> > Saying, in particular
-> >> >       We understand this concern, but the DCO has never
-> >> >       been interpreted to require that every line of a contribution must be
-> >> >       the personal creative expression of the contributor or another human
-> >> >       developer.
-> >> This is not the objection or the worry; rather the question is, what if
-> >> the contribution is a creative expression of someone that could claim
-> >> copyright in it.  In fact, looking at the Linux policy...
-> >>
-> >>    Signed-off-by and Developer Certificate of Origin
-> >>    =================================================
-> >>
-> >>    AI agents MUST NOT add Signed-off-by tags. Only humans can legally
-> >>    certify the Developer Certificate of Origin (DCO). The human submitter
-> >>    is responsible for:
-> >>
-> >>    * Reviewing all AI-generated code
-> >>    * Ensuring compliance with licensing requirements
-> >>    * Adding their own Signed-off-by tag to certify the DCO
-> >>    * Taking full responsibility for the contribution
-> >>
-> >> ... the question is how humans can actually do the second step.  The
-> >> piece you posted above says: "with disclosure and human attentiveness –
-> >> and oversight – aided where possible by tools that check for code
-> >> similarity, AI-assisted contributions can be entirely compatible with
-> >> the spirit of the DCO".
-> >
-> >
-> > The code produced by AI agents has no copyright. You can incorporate
-> > public domain code into your work and have the absolute right to license
-> > it (see all the Diseny movies). The notion that LLMs wholesale copy originates
-> > from the earliest days of Copilot and turned out were contrived. No recent
-> > evidence shows that plagiarism is a concern. To the extent that I modify
-> > public domain code, I have a copyright that I can choose to license
-> > however I want (and the SOB says it's compatible).
+On Mon, May 25, 2026 at 11:27:30AM -0700, Quan.Sun@windriver.com wrote:
+> From: Quan Sun <Quan.Sun@windriver.com>
 > 
-> There is an active field of research on memorization and the status is
-> that LLMs do memorize. A paper from 2026
-> (https://arxiv.org/pdf/2601.02671) shows that production models can
-> output significant chunks of Harry Potter, although the research
-> deliberately extracts training inputs rather than doing so
-> accidentally. I am sharing this because I don't think it's correct to
-> say that concerns about models outputting copyrighted code are
-> outdated.
-
-But the concern is with them doing it *accidentally*.
-Because willful infringement was always possible.
-And that does not seem to be happening.
+> On build hosts with kernel headers older than 6.0, the system's
+> <linux/vhost_types.h> does not define struct vhost_vring_worker or
+> struct vhost_worker_state, causing compilation of vhost-scsi.c to
+> fail:
+> 
+>   error: storage size of 'vq_worker' isn't known
+> 
+> Fix by including standard-headers/linux/vhost_types.h before the
+> system's <linux/vhost.h>, matching the existing pattern used in
+> hw/virtio/vhost-backend.c. QEMU's bundled header provides the
+> struct definitions, and its include guard prevents redefinition
+> when the system header pulls in its own vhost_types.h.
+> 
+> Signed-off-by: Quan Sun <Quan.Sun@windriver.com>
 
 
-> I do think that the risk for coding use cases is low as long as LLMs
-> are used sensibly. If not, legal cases would have popped up by now.
+Hmm. maybe replace linux/vhost.h with standard-headers/linux/vhost.h then?
+
+
+> ---
+>  hw/scsi/vhost-scsi.c | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> The example of ext4 for OpenBSD (https://lwn.net/Articles/1064541/)
-> comes to mind as a case where LLMs were used in a risky way and
-> maintainers decided to reject the code. Even though the output of AI
-> has no copyright, when there is no suitably-licensed information to
-> generate the code from, then it is risky to assume AI generated code
-> is free from copyright, license, patent, etc effects.
-> 
-> As long as we keep the usual practices around intellectual property in
-> mind when merging code, then I think the risk of copyright issues is
-> low and not a blocker for accepting AI generated contributions.
-> 
-> Stefan
+> diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
+> index 699863cc10..10e8fbe503 100644
+> --- a/hw/scsi/vhost-scsi.c
+> +++ b/hw/scsi/vhost-scsi.c
+> @@ -15,6 +15,7 @@
+>   */
+>  
+>  #include "qemu/osdep.h"
+> +#include "standard-headers/linux/vhost_types.h"
+>  #include <linux/vhost.h>
+>  #include <sys/ioctl.h>
+>  #include "qapi/error.h"
+> -- 
+> 2.43.0
 
 
