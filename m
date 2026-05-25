@@ -4,63 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61C97CD5BBF
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 06:39:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C0FECD5BC7
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 06:39:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wROwV-0007vE-M9; Mon, 25 May 2026 02:37:39 -0400
+	id 1wROwO-0006hi-6S; Mon, 25 May 2026 02:37:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wROuH-0004HN-Pt
- for qemu-devel@nongnu.org; Mon, 25 May 2026 02:35:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wROuJ-0004Jj-MM
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 02:35:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wROuF-0001dh-2g
- for qemu-devel@nongnu.org; Mon, 25 May 2026 02:35:21 -0400
+ id 1wROuG-0001dz-NU
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 02:35:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779690918;
+ s=mimecast20190719; t=1779690919;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=97IDxt5ABrrAZRFp6P2Tjgy9nMAKPgPJxl//lYafjqE=;
- b=DSHyLWjngWsqrkc4WFNxAru1Rx/xtbFKjbp4v3RP0oJCHOSI14I7yE8YvM1BuZ+NOaIbx+
- hwkGUhTtttkVGU03W/qNpD8ynPf58103CAZv0UvyHwvd+M87TnkdvjgaC0I0juE6sVXQoi
- /qX6qiQjndcUU3LtrU8pqvhm/BIEp3g=
+ bh=KKb6Pt6jGRTfqvimtGl0NdosDiROfNXVNGZYLGhk3+I=;
+ b=KMDCvzgTNS833UZJNHISn/gNoh2TZtBUMkCQX5g3SMc6/Q1b1F8IJwDq5tdSxFIouoK4OH
+ 0iatx2hVPqLVxp7LiH1yoBirHzt1MUPdFTYhIj29Tue8R0d3wbFulhJ7ZOIGBYp6UlZCj3
+ eqNKAEXesNnjg92Rrlqq1K1AiMoKhm8=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-693-dgmm_memNzOYksWjBYA_lg-1; Mon,
- 25 May 2026 02:35:12 -0400
-X-MC-Unique: dgmm_memNzOYksWjBYA_lg-1
-X-Mimecast-MFC-AGG-ID: dgmm_memNzOYksWjBYA_lg_1779690911
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-aLQvj0erPQKK_zl1bdwClA-1; Mon,
+ 25 May 2026 02:35:18 -0400
+X-MC-Unique: aLQvj0erPQKK_zl1bdwClA-1
+X-Mimecast-MFC-AGG-ID: aLQvj0erPQKK_zl1bdwClA_1779690917
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2303F1800610; Mon, 25 May 2026 06:35:11 +0000 (UTC)
+ id EB0D01800612; Mon, 25 May 2026 06:35:16 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0B6621800591; Mon, 25 May 2026 06:35:09 +0000 (UTC)
+ id 767C71800352; Mon, 25 May 2026 06:35:15 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Thomas Huth <th.huth+qemu@posteo.eu>
-Subject: [PULL v3 23/38] hw/m68k/next-kbd: Use Linux key codes
-Date: Mon, 25 May 2026 10:32:06 +0400
-Message-ID: <20260525063223.1409791-24-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
+Subject: [PULL v3 24/38] replay: Use Linux key codes
+Date: Mon, 25 May 2026 10:32:07 +0400
+Message-ID: <20260525063223.1409791-25-marcandre.lureau@redhat.com>
 In-Reply-To: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
 References: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -68,7 +71,7 @@ X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,173 +96,96 @@ representations.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260520-input-v3-15-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <20260520-input-v3-16-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
+[ Marc-André - update replay-dump.py ]
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/m68k/next-kbd.c | 118 ++++++++++++++++++++++-----------------------
- 1 file changed, 59 insertions(+), 59 deletions(-)
+ replay/replay-input.c  | 20 +++-----------------
+ replay/replay.c        |  2 +-
+ scripts/replay-dump.py |  8 +++++++-
+ 3 files changed, 11 insertions(+), 19 deletions(-)
 
-diff --git a/hw/m68k/next-kbd.c b/hw/m68k/next-kbd.c
-index 7efbd806b7c..7be5ab2fb79 100644
---- a/hw/m68k/next-kbd.c
-+++ b/hw/m68k/next-kbd.c
-@@ -31,6 +31,7 @@
- #include "qemu/log.h"
- #include "hw/core/sysbus.h"
- #include "hw/m68k/next-cube.h"
-+#include "standard-headers/linux/input-event-codes.h"
- #include "ui/console.h"
- #include "migration/vmstate.h"
- #include "qom/object.h"
-@@ -165,59 +166,59 @@ static const MemoryRegionOps kbd_ops = {
-     .endianness = DEVICE_BIG_ENDIAN,
- };
+diff --git a/replay/replay-input.c b/replay/replay-input.c
+index acf0993c728..c86e00af0ef 100644
+--- a/replay/replay-input.c
++++ b/replay/replay-input.c
+@@ -23,8 +23,7 @@ void replay_save_input_event(QemuInputEvent *evt)
  
--static const int qcode_to_nextkbd_keycode[] = {
--    [Q_KEY_CODE_ESC]           = 0x49,
--    [Q_KEY_CODE_1]             = 0x4a,
--    [Q_KEY_CODE_2]             = 0x4b,
--    [Q_KEY_CODE_3]             = 0x4c,
--    [Q_KEY_CODE_4]             = 0x4d,
--    [Q_KEY_CODE_5]             = 0x50,
--    [Q_KEY_CODE_6]             = 0x4f,
--    [Q_KEY_CODE_7]             = 0x4e,
--    [Q_KEY_CODE_8]             = 0x1e,
--    [Q_KEY_CODE_9]             = 0x1f,
--    [Q_KEY_CODE_0]             = 0x20,
--    [Q_KEY_CODE_MINUS]         = 0x1d,
--    [Q_KEY_CODE_EQUAL]         = 0x1c,
--    [Q_KEY_CODE_BACKSPACE]     = 0x1b,
--
--    [Q_KEY_CODE_Q]             = 0x42,
--    [Q_KEY_CODE_W]             = 0x43,
--    [Q_KEY_CODE_E]             = 0x44,
--    [Q_KEY_CODE_R]             = 0x45,
--    [Q_KEY_CODE_T]             = 0x48,
--    [Q_KEY_CODE_Y]             = 0x47,
--    [Q_KEY_CODE_U]             = 0x46,
--    [Q_KEY_CODE_I]             = 0x06,
--    [Q_KEY_CODE_O]             = 0x07,
--    [Q_KEY_CODE_P]             = 0x08,
--    [Q_KEY_CODE_RET]           = 0x2a,
--    [Q_KEY_CODE_A]             = 0x39,
--    [Q_KEY_CODE_S]             = 0x3a,
--
--    [Q_KEY_CODE_D]             = 0x3b,
--    [Q_KEY_CODE_F]             = 0x3c,
--    [Q_KEY_CODE_G]             = 0x3d,
--    [Q_KEY_CODE_H]             = 0x40,
--    [Q_KEY_CODE_J]             = 0x3f,
--    [Q_KEY_CODE_K]             = 0x3e,
--    [Q_KEY_CODE_L]             = 0x2d,
--    [Q_KEY_CODE_SEMICOLON]     = 0x2c,
--    [Q_KEY_CODE_APOSTROPHE]    = 0x2b,
--    [Q_KEY_CODE_GRAVE_ACCENT]  = 0x26,
--    [Q_KEY_CODE_Z]             = 0x31,
--    [Q_KEY_CODE_X]             = 0x32,
--    [Q_KEY_CODE_C]             = 0x33,
--    [Q_KEY_CODE_V]             = 0x34,
--
--    [Q_KEY_CODE_B]             = 0x35,
--    [Q_KEY_CODE_N]             = 0x37,
--    [Q_KEY_CODE_M]             = 0x36,
--    [Q_KEY_CODE_COMMA]         = 0x2e,
--    [Q_KEY_CODE_DOT]           = 0x2f,
--    [Q_KEY_CODE_SLASH]         = 0x30,
--
--    [Q_KEY_CODE_SPC]           = 0x38,
-+static const int linux_to_nextkbd_keycode[] = {
-+    [KEY_ESC]        = 0x49,
-+    [KEY_1]          = 0x4a,
-+    [KEY_2]          = 0x4b,
-+    [KEY_3]          = 0x4c,
-+    [KEY_4]          = 0x4d,
-+    [KEY_5]          = 0x50,
-+    [KEY_6]          = 0x4f,
-+    [KEY_7]          = 0x4e,
-+    [KEY_8]          = 0x1e,
-+    [KEY_9]          = 0x1f,
-+    [KEY_0]          = 0x20,
-+    [KEY_MINUS]      = 0x1d,
-+    [KEY_EQUAL]      = 0x1c,
-+    [KEY_BACKSPACE]  = 0x1b,
-+
-+    [KEY_Q]          = 0x42,
-+    [KEY_W]          = 0x43,
-+    [KEY_E]          = 0x44,
-+    [KEY_R]          = 0x45,
-+    [KEY_T]          = 0x48,
-+    [KEY_Y]          = 0x47,
-+    [KEY_U]          = 0x46,
-+    [KEY_I]          = 0x06,
-+    [KEY_O]          = 0x07,
-+    [KEY_P]          = 0x08,
-+    [KEY_ENTER]      = 0x2a,
-+    [KEY_A]          = 0x39,
-+    [KEY_S]          = 0x3a,
-+
-+    [KEY_D]          = 0x3b,
-+    [KEY_F]          = 0x3c,
-+    [KEY_G]          = 0x3d,
-+    [KEY_H]          = 0x40,
-+    [KEY_J]          = 0x3f,
-+    [KEY_K]          = 0x3e,
-+    [KEY_L]          = 0x2d,
-+    [KEY_SEMICOLON]  = 0x2c,
-+    [KEY_APOSTROPHE] = 0x2b,
-+    [KEY_GRAVE]      = 0x26,
-+    [KEY_Z]          = 0x31,
-+    [KEY_X]          = 0x32,
-+    [KEY_C]          = 0x33,
-+    [KEY_V]          = 0x34,
-+
-+    [KEY_B]          = 0x35,
-+    [KEY_N]          = 0x37,
-+    [KEY_M]          = 0x36,
-+    [KEY_COMMA]      = 0x2e,
-+    [KEY_DOT]        = 0x2f,
-+    [KEY_SLASH]      = 0x30,
-+
-+    [KEY_SPACE]      = 0x38,
- };
- 
- static void nextkbd_put_keycode(NextKBDState *s, int keycode)
-@@ -246,15 +247,14 @@ static void nextkbd_event(DeviceState *dev, QemuConsole *src,
-                           QemuInputEvent *evt)
+     switch (evt->type) {
+     case INPUT_EVENT_KIND_KEY:
+-        replay_put_dword(KEY_VALUE_KIND_QCODE);
+-        replay_put_dword(qemu_input_linux_to_qcode(evt->key.key));
++        replay_put_dword(evt->key.key);
+         replay_put_byte(evt->key.down);
+         break;
+     case INPUT_EVENT_KIND_BTN:
+@@ -55,25 +54,12 @@ void replay_save_input_event(QemuInputEvent *evt)
+ QemuInputEvent *replay_read_input_event(void)
  {
-     NextKBDState *s = NEXTKBD(dev);
--    int qcode, keycode;
-+    int keycode;
+     QemuInputEvent *evt = g_new(QemuInputEvent, 1);
+-    int qcode;
  
--    qcode = qemu_input_linux_to_qcode(evt->key.key);
--    if (qcode >= ARRAY_SIZE(qcode_to_nextkbd_keycode)) {
-+    if (evt->key.key >= ARRAY_SIZE(linux_to_nextkbd_keycode)) {
-         return;
-     }
+     evt->type = replay_get_dword();
+     switch (evt->type) {
+     case INPUT_EVENT_KIND_KEY:
+-        switch (replay_get_dword()) {
+-        case KEY_VALUE_KIND_NUMBER:
+-            qcode = qemu_input_key_number_to_qcode(replay_get_qword());
+-            evt->key.down = replay_get_byte();
+-            break;
+-        case KEY_VALUE_KIND_QCODE:
+-            qcode = (QKeyCode)replay_get_dword();
+-            evt->key.down = replay_get_byte();
+-            break;
+-        default:
+-            g_assert_not_reached();
+-        }
+-        evt->key.key = qcode < qemu_input_map_qcode_to_linux_len ?
+-                       qemu_input_map_qcode_to_linux[qcode] : 0;
++        evt->key.key = replay_get_dword();
++        evt->key.down = replay_get_byte();
+         break;
+     case INPUT_EVENT_KIND_BTN:
+         evt->btn.button = (InputButton)replay_get_dword();
+diff --git a/replay/replay.c b/replay/replay.c
+index 2e5c6fa82ea..14437b32566 100644
+--- a/replay/replay.c
++++ b/replay/replay.c
+@@ -22,7 +22,7 @@
  
-     /* Shift key currently has no keycode, so handle separately */
--    if (qcode == Q_KEY_CODE_SHIFT) {
-+    if (evt->key.key == KEY_LEFTSHIFT) {
-         if (evt->key.down) {
-             s->shift |= KD_LSHIFT;
-         } else {
-@@ -262,7 +262,7 @@ static void nextkbd_event(DeviceState *dev, QemuConsole *src,
-         }
-     }
+ /* Current version of the replay mechanism.
+    Increase it when file format changes. */
+-#define REPLAY_VERSION              0xe0200d
++#define REPLAY_VERSION              0xe0200e
+ /* Size of replay log header */
+ #define HEADER_SIZE                 (sizeof(uint32_t) + sizeof(uint64_t))
  
--    if (qcode == Q_KEY_CODE_SHIFT_R) {
-+    if (evt->key.key == KEY_RIGHTSHIFT) {
-         if (evt->key.down) {
-             s->shift |= KD_RSHIFT;
-         } else {
-@@ -270,7 +270,7 @@ static void nextkbd_event(DeviceState *dev, QemuConsole *src,
-         }
-     }
+diff --git a/scripts/replay-dump.py b/scripts/replay-dump.py
+index 081aaa36c5e..ce1031b4ad4 100755
+--- a/scripts/replay-dump.py
++++ b/scripts/replay-dump.py
+@@ -398,6 +398,9 @@ def decode_end(eid, name, dumpfile):
+ # EVENT_AUDIO_IN has changed
+ v13_event_table = v12_event_table
  
--    keycode = qcode_to_nextkbd_keycode[qcode];
-+    keycode = linux_to_nextkbd_keycode[evt->key.key];
-     if (!keycode) {
-         return;
-     }
++# EVENT_ASYNC_INPUT has changed
++v14_event_table = v13_event_table
++
+ def parse_arguments():
+     "Grab arguments for script"
+     parser = argparse.ArgumentParser()
+@@ -416,7 +419,10 @@ def decode_file(filename):
+     # see REPLAY_VERSION
+     print("HEADER: version 0x%x" % (version))
+ 
+-    if version == 0xe0200d:
++    if version == 0xe0200e:
++        event_decode_table = v14_event_table
++        replay_state.checkpoint_start = 30
++    elif version == 0xe0200d:
+         event_decode_table = v13_event_table
+         replay_state.checkpoint_start = 30
+     elif version == 0xe0200c:
 -- 
 2.54.0
 
