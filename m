@@ -4,108 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDE61CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 19:14:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 280F5CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 19:23:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRakn-0002Qo-67; Mon, 25 May 2026 15:14:21 -0400
+	id 1wRasz-0003u3-Rs; Mon, 25 May 2026 15:22:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wRakW-0002Ng-EI
- for qemu-devel@nongnu.org; Mon, 25 May 2026 15:14:08 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wRakU-0004Yo-PB
- for qemu-devel@nongnu.org; Mon, 25 May 2026 15:14:04 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-672645dbfeaso12170583a12.0
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 12:14:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779736440; cv=none;
- d=google.com; s=arc-20240605;
- b=hFvvCasaak3pXXPJgn4aLSHOeroiPemVvk8dITomgoHPA4gP+enlAUOqWp2Sa/VmSq
- Za29at/+qctAKeQx6qrq5C2I3AKcwCpdw4rpmNZfYbeDan16JeeaD796XKbIhojb27Y0
- qbLivEb/duxOq1USGw7GvVIHFj1uMvQj82S1vzGCuZDtfMM9yEw2XMu6JAoZtC7UWu6d
- eYblF3d3Oh08YXMmUaSL0EjkT4ZXlqaFNbq8CeSpP7FvmbyL6Kb1SJNeXUpSlxzmPyQi
- yqqrbRDEuSx+lIXarPkrqGb5zaJxjL6u+IbO9gOPeVtxZN1UwcqkOKpi5QTpi9n8vjfQ
- d9ew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=kcBbYXHgL64rza1dFqCTfYEZECcOZKJVGi+Kvw0R8Cc=;
- fh=xYbP+4l2jWX4HynwyYLvgDhu17mUTsiXnTmVXqjrwqs=;
- b=TEI3el+pf0nOaNNVGEtdzbaGtOzE33JIzvT16TZK85RdMeqzX1Gvdcj3PfujtrLiTk
- rRTuubgLUi53zNuoiO4R1iMKzBKAlnjYnz2wOefmOddhcTg+3y+O5KTdmrAA5222kqWV
- pIPgcZOvzaieDS/BuUDCHsw2y2Ve5lU1SW7vtC8bw+iU8M08RSup9pbum5ovFO+5zY3O
- Ozx44LchQ9XtUG2zw3omkL6JQsNTAzhrwVg06D5fuUggvQMazhqlXDr7VpLCGnQmdhcp
- EgftYL1EctdI+8f1YeSqTYHbV90Qy01bqwL8dgOFhpz46gCN1mIVjuCmRv3zkZQ0pWwZ
- bIBA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wRasx-0003tN-VH
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 15:22:47 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wRasw-0000d3-1o
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 15:22:47 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64PE2Yoe4117468
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 19:22:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 0k237a9a7+j2B+vi/k9B3UofqHGRriY6LMcOWV4C+Qc=; b=nXHjK/WV5FlPjl00
+ MwUG/F5uZxynxTuE67Epi4HS433DWK+NZLrWO6Tfj/jGSKjK/d9cY6r78F48b2H7
+ 7nzWWxqvDVU4ywI3FGKJpYKShESJv05u+T8vEkaJCM40GedBNLIv6I2XHfk7b3Dr
+ 5YA8LYreJPEJj6eJ3hl3MSIrzcZfAXgl73RUFGtIVfHtSBt3QIOIV/pgQQwxHbNO
+ XCWZDPOrQD2Na9oMLyPA+bpuCbUv35HBZCQarz1eD74Hb+tP+XT0h2wvs+nYKwGm
+ gwqU7YUx9V/xPHZOT48v6beLcYDhpFc1wajhVbjdFm1dXofnX21yJ6O1u+NzCYK8
+ ckBFYw==
+Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ecqud8wmn-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 19:22:43 +0000 (GMT)
+Received: by mail-dl1-f71.google.com with SMTP id
+ a92af1059eb24-135916eefa0so1656059c88.1
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 12:22:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779736440; x=1780341240; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kcBbYXHgL64rza1dFqCTfYEZECcOZKJVGi+Kvw0R8Cc=;
- b=bXk1wOsWWg1u0diujteqlu5+T3ygqwc/2RmpVjjHX8zE4w99cksxkvHa3P7IvFJUKf
- d7ZA2qzjFRVo5sqvAk+yK9EmQhCePls4z22WK0ar+aGYwtpaAgVMKJzsIy6CDy6WdMXn
- 3D1kAtjp0jDu6htySP/pAwOoaW6+N9Vn4MD+gPkQ9t0ieKFmWmvutCh3apCuv0BstyVb
- HC8I8hn8Cp7Oieg5tpBWGWz+KV5WWAqdxj59wr2htAzPn26Qd8J3MMOYyHo4uUKjAVNy
- 3+1fyN8pppPU9eqTzU/AK1pttymiUZaW/CLWCTY14gYXfzXuL7sKeQmI484krvGD1Maj
- kF8g==
+ d=oss.qualcomm.com; s=google; t=1779736963; x=1780341763; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0k237a9a7+j2B+vi/k9B3UofqHGRriY6LMcOWV4C+Qc=;
+ b=V3NiiUVTXuhgA4xK1/Cu63klU9UibiWCoi6rkbGf1x2sMk1cxYIdcbfbPeQq+kvE/v
+ zBGmlw/RqjneZAjbRI7X1HJVcjxrMKZuIQ2XDdRsVGVki47QxS6DmAxtO60FJMyfYcP8
+ yxMort20jq45AvUFBMa6AF4JbTCDLwpBCRlmkA8fTeN3Rx0vtsCsryFdf/XBqG2kt0vN
+ g3iQklLgnVpWu36Qr4ZEenN9lxv2EFcqabAq8YxxpdcdM1DARtcQlH47N/3s7Nas6WCQ
+ nkXJQSzIDw028zXyGikF6l8EJQa7ZCx9tCTJPp8KhK0HduY+41Bb8SJNB0lp4nKFvWib
+ N+Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779736440; x=1780341240;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=kcBbYXHgL64rza1dFqCTfYEZECcOZKJVGi+Kvw0R8Cc=;
- b=XHPhV4RBvPRjRcjD9ryfOml2QOTPngCX9Rj0pkdAK5fmVtF9Ux9LULUjztzgMtGkZ3
- QVq9fmi/Qwv/5MAexFrNoT5PO0v34hY4cX3JjPOI1idBwVPvvBghFsLGhPNAb6u/EhEL
- c5xAjXSC8ZZvMHMvoEucRxYb90TXJOJdJ2TWTsEwCwTEp0FpkfTTO2tkHS2rMkQHZHL/
- o6l5i6bpfioAbsgO+56hF6LUDN6FoazwZ08GKNkI/2WY+odQJNN6ivKAxUnSLmlHFopy
- O6RPd+jF79Svtrd4Tb1EHVGKLLS1frlfMpZdm5yOJ7aGqUR4xJnW5/19YDc1pthhCWko
- bFQA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9KjWHpJreyyGRxb57PxWQjB4RWK/WCPb+aMRpdUVMwQWs9fEyIzPNyTHRBczjXa4kF5PUPG5shPw4y@nongnu.org
-X-Gm-Message-State: AOJu0YyZze+6l6AZXU04qFS4B/rX+/IcXcrRI5BMJHo7MfrfQsIpyxrp
- t4Q5BDN0vqJlRaMd0ipf3HFO5AQUfFUoA9mj3lXCEwR+zzuMNR35B2v++Yi42+uPpwu+0cGJVh5
- 0P2FCa7tJ/J87vqmeCakR6knl/BDf504=
-X-Gm-Gg: Acq92OHiJgLZcQASbR2YaO51M/JHGsB51qKSNnoOSER2bZOrUEX4J883QgOdbQ1+jyp
- u9RzBD2T5zfTzMxij84rrGR6+4ghDhK9rhDYe1butgqB21qP+ntovsvFrNc2Y35HfQF3riaMamy
- muvj+f82Ah3X2pH3ElBqUvzLqSxkaJGNJ+h/swBlL0Ya3gHJs6cgVLDmIFydiVzvG/K59wy7kbQ
- psvUpMBfFj5YN5MlFGpR8lRE18RPU/6rHSup/CJgHlLKaCu67IKD8hWOTeqyCKTz08+4NVftlK9
- DMUOOn9WpZHZmPUuUArLAFE2nQSdoIoDs5rbJO+lvExPmqv30yZu
-X-Received: by 2002:a05:6402:5110:b0:66e:cf8d:6970 with SMTP id
- 4fb4d7f45d1cf-6889c46833dmr7752917a12.20.1779736439911; Mon, 25 May 2026
- 12:13:59 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779736963; x=1780341763;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0k237a9a7+j2B+vi/k9B3UofqHGRriY6LMcOWV4C+Qc=;
+ b=htlq4F1B2OV4l09EXdOnYhBsmVuUwLf5ceoxpAbRrYQ2yuGH6/fugeKwBPydrZ8F2S
+ IlXNy5e767hr+4Jt9S3n62viAGVw+JLuyW5JWg+DFYM2QJkX8bkEVMcC92FE0XEi2kMH
+ kZwSyXMCzOtgHQ7BPRh9He4YPNKMzYJfj9OT3hCU4ko6Sz8ME3RPHtPRfsasM3fwoYgB
+ 6yBr0vRn0TeXU0CU6kxIcbpTRQPBsKMDHEvwwaen/2eLrnVqlILc3xA2W/7yfVb7cSsr
+ IHM9F0dSTnZ1InR/LwpmvQ4bJoFqW66pIfoxCRvb5caS3rvIdbmJvhmBd4R7UjnowwoD
+ +koQ==
+X-Gm-Message-State: AOJu0YygrRTbQgGvYtZjI2FjkxaoizfAAsczSOTez09NIhmPHi9YuU57
+ fX+82lnoPq8rFmHkA+lTIUmc+bPHcJ3GA+SlrhQHPgS5Np9bKLIyCyuckBwMCJqSxiXMyav9N5Y
+ DUh3mivIPIvkru8rZifQZcFLiSzmRoUUlczRZw/X4B+0RMaSRsCa0+jjjcg==
+X-Gm-Gg: Acq92OF+s5TehhZhk+78JGfurkofXqi4uRJKN0sgiCbBvZYHdHKkNfd1A/UDTL5CMWP
+ blLk+ndR/enK+mT5O4xHJVY0xy/uRcAO+6IK9/pRbP9UaRX/SA3mUUGWIqxE+onvEdyp4z+Qn1N
+ 3te62LmvmC+DjNxUF4FqOd/vHfh6D31tI9ST1FHmCcWES1f0l6cA1ED/TL7NIPL3Xjvt+mL8TDW
+ hgKO/FqXczB2HNP/XcUAGKYIkcADHAl3W3rjcA6xwGnXBS8RSe9VoGoa8QgFmrl/FNDKGApscOc
+ XfIodOcqB88CMAXW6ls44GxOGn+fDsaKMsPEWe32uPKdSC9OZQkF1AoTJls6ECD6/bA1iC+8mXv
+ Kyr4nSbuvK8XOfh9+uyFAG82iiBmvdpf3pM6s7t+djZi2Fk3UpIUJmxuWUZURzGjCY8QtnEqa7z
+ FBlG7QfAqUheTiBg==
+X-Received: by 2002:a05:7022:ec8c:b0:12a:6902:ddb8 with SMTP id
+ a92af1059eb24-1365f811a9emr5114882c88.4.1779736962745; 
+ Mon, 25 May 2026 12:22:42 -0700 (PDT)
+X-Received: by 2002:a05:7022:ec8c:b0:12a:6902:ddb8 with SMTP id
+ a92af1059eb24-1365f811a9emr5114862c88.4.1779736962207; 
+ Mon, 25 May 2026 12:22:42 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1366aa88cffsm6178097c88.11.2026.05.25.12.22.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 25 May 2026 12:22:41 -0700 (PDT)
+Message-ID: <7d58926d-a36d-430f-828e-7ebdd9cc4eb5@oss.qualcomm.com>
+Date: Mon, 25 May 2026 12:22:39 -0700
 MIME-Version: 1.0
-References: <CAJSP0QULyy5C0YEaxz2ChNy3_zfc5VwaMhB18R=yHDgnhBYo9w@mail.gmail.com>
- <CAJSP0QWt8Q5+yY1F6--XyvcAV3afg3msAcO6vaNDeWS=B9Oqag@mail.gmail.com>
- <CANCZdfpbDU+jCr6+Lj-ZV7h5H_ByHf=VJordfQ8OcH3+JsmJ4Q@mail.gmail.com>
- <CAJSP0QX=Uu0cy6z8oCsQK_EKJ8LUW1v3Tsd09JoAU=Py4MkRrw@mail.gmail.com>
- <CANCZdfrfiVp=BiCEUzYRFFeZBpUoODBwL5b-QQgbA21Ev76noA@mail.gmail.com>
-In-Reply-To: <CANCZdfrfiVp=BiCEUzYRFFeZBpUoODBwL5b-QQgbA21Ev76noA@mail.gmail.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 25 May 2026 15:13:47 -0400
-X-Gm-Features: AVHnY4LxXNLw8WpEdQZzGvdd1S6aRwpM8xwl6sXg4ybdUOsOxQKem2bakxHWS4M
-Message-ID: <CAJSP0QWrNzf_NS1hx4c2TFRLp0Son=_kAx7qq_CeMBinEV=CNw@mail.gmail.com>
-Subject: Re: FreeBSD CI after Cirrus shuts down?
-To: Warner Losh <imp@bsdimp.com>
-Cc: Li-Wen Hsu <lwhsu@freebsd.org>, Alex Bennee <alex.bennee@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 03/16] tests/Makefile.include: add binary dependency to
+ run-tcg-tests-% rules
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <th.huth+qemu@posteo.eu>, Song Gao <gaosong@loongson.cn>,
+ John Snow <jsnow@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Kyle Evans <kevans@freebsd.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Cleber Rosa <crosa@redhat.com>, Warner Losh <imp@bsdimp.com>,
+ Brad Smith <brad@comstyle.com>, Thomas Huth <thuth@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>, Fabiano Rosas <farosas@suse.de>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org
+References: <20260521131739.540157-1-alex.bennee@linaro.org>
+ <20260521131739.540157-4-alex.bennee@linaro.org>
+ <74e8bc86-cd81-43f9-b5cb-7e3de3bcd3d0@oss.qualcomm.com>
+ <87tsrzl138.fsf@draig.linaro.org>
+ <093614fb-ced1-4b15-b1e1-5da755f87237@oss.qualcomm.com>
+ <87cxymec7b.fsf@draig.linaro.org>
+ <5bd51a1a-4079-4073-bbd8-f0206a1ad458@oss.qualcomm.com>
+ <0f73d717-1621-4c3f-9c5e-9bfdfaffb0b8@oss.qualcomm.com>
+ <877bor9vor.fsf@draig.linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <877bor9vor.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: DLLwuxOKmu3vmHOi2mA9y06_7jGpbWMe
+X-Proofpoint-GUID: DLLwuxOKmu3vmHOi2mA9y06_7jGpbWMe
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI1MDE5MiBTYWx0ZWRfX5Pa4eMgz6+q5
+ cOK6ghsg303XzeB67OwOoDl7zsklgl4NlOU+J6eVjw9GNhdDgVXtko1Awi/7WpczWgugX4aCbpF
+ p+nbYHxfTTxwiSAvyfDu3M6uQDYEMVGR5B2ffSnTm6VE9tp/u4f0SYfh9ooXAhBnETtaNPI8kVW
+ +aYd2ygjh6yJgXQskqyZ1hhVQmMXC3BwPzhSWOqmOefn5CrTIk7UNs7OKRrJCJ6GRrdZk4vVQu2
+ tx9PYScLoLRLfM1Bj+YsBmE5iU5yL3BUoKOUt0szIsnRioO9x8b/WEGrqYWQkWk6wSfxZm/JzAs
+ 4xaVEitfHqaTxD+H+LAZKJYAL0xnAZS0lyTMTHlhxFJd96jvIJe8U18CAidZvy1ouPK1O/QVAlZ
+ +88DG9l4rOG1vPquHveEAKZC4mqDoEIqn5O9adfymORzq4hepUhInAdzGg0jKcyHbMXCZidiVWm
+ IsEeAR6F/eXUxJIbmFg==
+X-Authority-Analysis: v=2.4 cv=C9jZDwP+ c=1 sm=1 tr=0 ts=6a14a183 cx=c_pps
+ a=JYo30EpNSr/tUYqK9jHPoA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=EUspDBNiAAAA:8 a=FChiutd3PLlDn1NUHwcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=Fk4IpSoW4aLDllm1B1p-:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-25_05,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0 bulkscore=0
+ malwarescore=0 suspectscore=0 clxscore=1015 phishscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605250192
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,90 +169,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 25, 2026 at 1:39=E2=80=AFPM Warner Losh <imp@bsdimp.com> wrote:
-> On Mon, May 25, 2026 at 10:41=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.=
-com> wrote:
->> On Mon, May 25, 2026, 11:12 Warner Losh <imp@bsdimp.com> wrote:
->>> On Mon, May 25, 2026, 8:36=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.c=
-om> wrote:
->>>> On Mon, May 25, 2026 at 10:01=E2=80=AFAM Stefan Hajnoczi <stefanha@gma=
-il.com> wrote:
->>>> > If you have a FreeBSD build host available, you could install
->>>> > gitlab-runner on it and I can configure GitLab CI to send QEMU FreeB=
-SD
->>>> > build jobs to your runner.
+On 5/25/2026 11:43 AM, Alex Bennée wrote:
+> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+> 
+>> On 5/25/2026 8:46 AM, Pierrick Bouvier wrote:
+>>> On 5/23/2026 1:56 AM, Alex Bennée wrote:
+>>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 >>>>
->>>> QEMU has an Intel x86_64 KVM VM with 1 vCPU, 4 GB RAM, and 60 GB of
->>>> disk space available.
+>>>>> On 5/22/2026 12:02 PM, Alex Bennée wrote:
+>>>>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>>>>>
+>>>>>>> On 5/21/2026 6:17 AM, Alex Bennée wrote:
+>>>>>>>> Explicitly set the appropriate QEMU binary as a dependency so we can
+>>>>>>>> ensure they get built. This is especially important for MacOS which
+>>>>>>>> otherwise only builds the unsigned binaries on a normal "make all"
+>>>>>>>> run.
+>>>>>>>>
+>>>>>>>
+>>>>>>> I'm not sure to see why it matters. tcg-tests don't make use of hvf, so
+>>>>>>> unsigned binaries are plenty for it.
+>>>>>>>
+>>>>>>> Which other binary is this building that is not built by default?
+>>>>>>>
+>>>>>>> In general, if something is not included in "all" target, let's make
+>>>>>>> sure it's included there (meson.build?) instead of adding a workaround
+>>>>>>> here. Not only tests benefit this, but anyone doing a build on a
+>>>>>>> platform that might have optional binaries not built by default.
+>>>>>>
+>>>>>> If you have a suggestion on how to make that work I'm all ears.
+>>>>>>
+>>>>>
+>>>>> I would be happy to help, but I don't understand what the goal is. I
+>>>>> have three questions that should help to provide a suggestion.
+>>>>>
+>>>>> Which exact test command do you run?
 >>>>
->>>> The following images are available:
->>>> - FreeBSD 14.1
->>>> - FreeBSD 14.2 (ufs)
->>>> - FreeBSD 14.2 (zfs)
+>>>> make check-tcg
 >>>>
->>>> I can provision the machine for you via remote console access and add
->>>> your ssh key. After initially giving you access, you would become the
->>>> maintainer of the VM and responsible for keeping it updated and
->>>> connected to QEMU's GitLab CI.
+>>>>>
+>>>>> ```
+>>>>> Explicitly set the appropriate QEMU binary as a dependency so we can
+>>>>> ensure they get built.
+>>>>> ```
+>>>>> Aren't they built by all?
 >>>>
->>>> If you would like to do this, please send me your ssh public key and
->>>> choice of FreeBSD image from the list above.
+>>>> Apparently not.
+>>>>
+>>>>> It seems to be a dependency, at least for check-tcg:
+>>>>> .ninja-goals.check-tcg = all test-plugins
+>>>>>
+>>>>> ```
+>>>>> This is especially important for MacOS which otherwise only builds the
+>>>>> unsigned binaries on a normal "make all" run.
+>>>>> ```
+>>>>> Why do you need signed binaries for testing on MacOS (hvf?)?
+>>>>
+>>>> In a previous iteration I made configure spit out the unsigned binaries
+>>>> to config-target.mak but the request was to fix the dependencies
+>>>> instead.
+>>>>
+>>>> It all works on Linux so I'm not sure why MacOS is being so weird
+>>>> because the meson emulators target mechanism should be the same.
+>>>>
 >>>
+>>> Just tried now, and it does not work on Linux neither (make check-tcg
+>>> does not build any target beyond tests). Maybe you forgot to clean your
+>>> folder?
 >>>
->>> Where does that list come from? Those are older versions of FreeBSD by =
-now...
 >>
->>
->> These images are available in OSUOSL's OpenStack instance where the VM i=
-s located.
->>
->> If you can upgrade in place from FreeBSD 14 to something newer without r=
-equiring console access, then that might be the simplest solution.
->>
->> Otherwise I can upload a custom image (for QEMU's i440fx machine type wi=
-th virtio devices) if you send me a URL to the image.
+>> The root issue is that tests/Makefile.include is included *after*
+>> evaluation of ninja-targets in main Makefile. Thus,
+>> .ninja-goals.check-tcg is ignored.
+> 
+> So this replaces patch 1/16 - I think we have a circular dependency here.
 >
->
-> If this is a EFI boot, then there's no problem upgrading the ZFS image in=
- place: I just make a new boot environment (or enable it from scratch). Thi=
-s doesn't need console access and if I totally mess it up, I can start over=
- from the base image :). But I can script it.
 
-I think the boot type in OpenStack depends on the image you boot from.
-The Ubuntu image I was testing with used BIOS but it should be
-possible to upload a custom FreeBSD image and set it to UEFI.
+Indeed, I didn't notice the duplication. While it solves things under
+Linux, it doesn't trigger any build on MacOS, which is what you observed
+also. I wonder if it's a gmake vs whatever-make difference.
 
-> I may have to get in touch with the OSUOSL folks to see what it would tak=
-e to update their image collection. It would be good for me in the long run=
-. FreeBSD is likely well known enough of a name we could get some resources=
- from them.
+Another solution that seems ok on both platforms is to use (harmful)
+recursive make:
 
-I tried the FreeBSD 14.1 (zfs) image and don't know the default root
-password (I tried empty and "root"). I think my ssh key is not being
-provisioned.
+ .PHONY: check-tcg
+-.ninja-goals.check-tcg = all test-plugins
+-check-tcg: $(RUN_TCG_TARGET_RULES)
++check-tcg:
++ $(MAKE) all test-plugins
++ $(MAKE) $(RUN_TCG_TARGET_RULES)
 
-If you have a FreeBSD image that I can upload, then that would be great.
+ .PHONY: clean-tcg
+ clean-tcg: $(CLEAN_TCG_TARGET_RULES)
 
-If you need to chat with the OSUOSL admins, try #osuosl IRC chat on
-the Libera Chat network.
+Or maybe just leave it as it is? Doc already mentions build should be
+done before running any test to avoid missing binaries.
+Hopefully we'll completely move tcg tests to meson one day, so there is
+no need to deal with make idiosyncrasy anymore.
 
-> I've not setup a gitlab runner, but I see we have a gitlab runner port. I=
-s there a current setup with FreeBSD as a gitlab runner? Ideally, we'd be r=
-unning -current that we update from time to time and then do the builds usi=
-ng the OCI containers FreeBSD now produces for 14 and 15. I even have Conta=
-inerfile files for 14 and 15 I put together to compile-test bsd-user if we =
-wanted to expand the gitlab stuff. I've wanted to do more than compile test=
-ing + basic booting for a while now... I also have scripts that create boot=
-able images (for system testing) which coincidentally have an itermediate d=
-irectory that we could copy the qemu-*-static files into and use a a jail f=
-or bsd-user testing.
+>>
+>> The fix is to move ninja-targets evaluation to the end of main Makefile,
+>> which introduce the expected dependency for check-tcg to "all
+>> test-plugins" targets.
+>>
+>> You can replace current patch with the one attached to this email.
+>>
+>> Regards,
+>> Pierrick
+> 
 
-There is no current gitlab-runner setup. Instead, QEMU ran Cirrus CI
-jobs that use FreeBSD machines.
-
-The gitlab-runner setup is fairly easy. Once you're ready to register
-your runner, let me know and I'll send you the GitLab runner token
-that you'll need to connect.
-
-Stefan
 
