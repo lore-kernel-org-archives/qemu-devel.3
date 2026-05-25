@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB266CD5BCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 05:32:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C91FCD5BBF
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 05:33:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRNu3-0001iz-SO; Mon, 25 May 2026 01:31:03 -0400
+	id 1wRNu8-0001td-Pt; Mon, 25 May 2026 01:31:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wRNu0-0001Vl-Ku; Mon, 25 May 2026 01:31:00 -0400
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ id 1wRNu6-0001qV-Ej; Mon, 25 May 2026 01:31:06 -0400
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wRNtw-00038d-B9; Mon, 25 May 2026 01:30:59 -0400
+ id 1wRNu4-00035Q-9t; Mon, 25 May 2026 01:31:06 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EVvkVXnB4HFC40mxdj/XeRFS8W5nEnGRjbCiFwQHh+vlB0mc5sXtU/aIXyvqzoGRc0wlPtAOkvIFnAhXp8Z/WH3CUelC5WICYzv4AWnCM7ex3H+B05RSbpjRr0Kc3/aMJOw4Bu2Vg/QtAwF+mDzNL00otOglMtEgIq5yx9k0jkzC4Y6pCrvexP9Q9EWANZKJmeTYtAbrylHZR85CNZ0J4epQYdhMrSaFOsDtFXATZY6cRQ9v9vt2Fu5oyMxXZBmbzbZpMNpcSPrsc3tSN8iq0nC8zrdoe7QnkeNlerA3al1SRkt/5f4i3xKbdy6VD6Ych3XgsSHQpEZg3WO/DUqWLQ==
+ b=lMQ2AUAHJer7qdkJWynT5KgPQKaMo3sa/vL7tJaJckYY7Wk9e7hANn7UvhqESlCCkBLtu37stsgAKEYkumQ64cDKEHvT9Nq1oRxGumrIaqDL/JFrxjiTUNAiAlbanpzCKe//TcbkCebBp60qOZhLa2oZXfX26z7xuIMG3dX1t7XNg4rO9Y8s3Rga38TuR9SvAoXALrT1hQDZSjPHd3RxLQg7HvIzLyXC8COWyzHfBWpVTJIrqsPe6GHKP/6AhRBYQr2qyCZx2F/cfef1y/RZOWORhcSH++HVJTO3Is7Bt4L9TWQOLeT5+dVRyA5H/xl66VGgkmGLq8F6zYg6C50GMA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=d5pnp8FdgpurMyKcpX6hQjkNZjxzkRDDkma2rUlL2KM=;
- b=nNISIoKbj9Y5UczYHYiyW42M1duQ9154XLWvaUzyq6dCIwLSQLv04sNHW48C32zdf0Rp/2bZq6SJBTVE84XRJzNNEEtvnnhKpWG74tASVOfuTDDN/zQtVBkmQPizQmZIC0aNHaT6slvGODsXbLUINybV5n1ugX8xpMvV708/YmcnM8/d0sIG9bTxC0NI5XZtLcBrYMN3FMX5vlt8zXxoHlvleaAeJonfUkOorSETTm3eGwRJFkazefmnL/8QIz/bGCCBAkuc88+q+U8k03cEx3Wjd5pPyJV403XvN1tMBivQEJr9df9EJmhdeRs6HloCcIQkwIUvxtgFcMqxTaKECA==
+ bh=vvZ17tvFz2QyR8Qy0cYZQAspbzEnGEl2NsdqE7osCtc=;
+ b=GND27lJhrOb6EAanDEOO+a3t31YkXyfD5IL1GOEopLgD0M6+IQ2kDokv3rT45BInHabGSapGdn4+vUt47Y/QJs40Zyn7MmQZLyMlnEwG9IjxEXbHCUpUZ6k/87ywoMD3vQoo9hXt6fC6A6n7H6ncZTarb9VrPIPtuwppmWISYmdxY41v2k1Vng0w/LWRaF8Jnk968HLvS52D+J1B1ujqQRjsnfwVR4uYNW0YQ+tatEACSoX6+29cGmWviTli74y1UPluNGl6nzJ4z9/5v5BwqqAYz6JOjiW/j8c0dZ7t7UTDoI9K+J+1FKD1EVxlLMd7PwPG7Vew+JjYV7H00q96yA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=d5pnp8FdgpurMyKcpX6hQjkNZjxzkRDDkma2rUlL2KM=;
- b=gU8xMzlBUISJ9enPPpK5lOfmC2hbjO3HT7/lrvYz82RmVV6OPAsQUytun7COZp/pAJGcX5syX5ZaQs6dXyV3G0phv67g+BjBNKG4CXwkgUMlo6O95kIi/9UplX+p04Xo2v0FtL/vgUYrgSfJbP3Zd4DizNVMEdjclRz5XZqkgj2QCTyFO2XXrk7pXGzL6eW9+0RQoELEGkYMMGhHzeZSHv0Gyh663piu2/3kwJrjTYdD8xWxTHKOLzNX5z3pegVGVhvIpijPzM/x4hyLK2CmFtbi/XabC0BpEeBGjnPOy6Lo4I9KNTSEAcxzrrVq5Hc+8sntCnYfzSvpR4TR7Nz98g==
+ bh=vvZ17tvFz2QyR8Qy0cYZQAspbzEnGEl2NsdqE7osCtc=;
+ b=GROUacCMewDkhEfBGuP/M0bGz79UpX6aLqQcD5VK7yim8HUUUGPeOfRZ5eCHmqjYt18A0cv3AtSPUXkqx5asV77Q6raVJrm7fl8EOTjkQUDpstLL5MZ42wRzp4ni71PvuOYNMufF1FAJwVkujm9P1mXA+K/K0NJj+vBhITlgosns6sa7UOSieDt0RdEBQ/bvvzsKLHi2CUaqh0E6EuQfUWdGHPv3RNCoWFMqNpP2nSZLoWND1TUNbD+TyUu0vmbUozaB1eygqL1/9pDGIjjUbY8zwg2Wuq0CHPR6wi4cjP/1YMEs5tMCUO005S2mTVzlR3uguVLIx1TURpM/hsoyJQ==
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
  by TYZPR06MB6657.apcprd06.prod.outlook.com (2603:1096:400:451::8)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.19; Mon, 25 May
- 2026 05:30:41 +0000
+ 2026 05:30:45 +0000
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3%2]) with mapi id 15.21.0048.016; Mon, 25 May 2026
- 05:30:41 +0000
+ 05:30:45 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
@@ -52,13 +52,11 @@ To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v2 2/9] hw/arm/aspeed: Convert SRAM size definition to array
- type
-Thread-Topic: [PATCH v2 2/9] hw/arm/aspeed: Convert SRAM size definition to
- array type
-Thread-Index: AQHc7Aeg/P2uptVnAke6Q2f5p4gAdA==
-Date: Mon, 25 May 2026 05:30:40 +0000
-Message-ID: <20260525053036.3305181-3-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 6/9] hw/arm/aspeed: Introduce AST1040 A0 SoC model
+Thread-Topic: [PATCH v2 6/9] hw/arm/aspeed: Introduce AST1040 A0 SoC model
+Thread-Index: AQHc7AeiOVn0aYf8U0i+aVjJmK/kmA==
+Date: Mon, 25 May 2026 05:30:45 +0000
+Message-ID: <20260525053036.3305181-7-jamin_lin@aspeedtech.com>
 References: <20260525053036.3305181-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260525053036.3305181-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -69,71 +67,70 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|TYZPR06MB6657:EE_
-x-ms-office365-filtering-correlation-id: de0b5f3d-32dc-45b8-b6d7-08deba1ec2ac
+x-ms-office365-filtering-correlation-id: 88011879-1172-417c-caf9-08deba1ec57a
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
  ARA:13230040|1800799024|366016|376014|18002099003|22082099003|56012099003|38070700021|921020;
-x-microsoft-antispam-message-info: hrGsTKJGpuBualoDTGkHXkxAvYs8nGtkNOiJ4cRUN7aihSzJOukxfyfA+KpOg82ClVdDBbbofkVUhsxXfCJIsdbqoGnmeC6ep6t67jkjY+MNeTZ+7S4gxbPHeEGwoSrzP44KZcAbazDJT3N67GPQkTM13/DnmAtfh3JoBk2YYbI0Xqe1+aDHPWJQvmsiiu7YDaqtmfSE1ayPXtuq6SWWrSQIjTWNMfWQ5uCxTuwDNUmsKaceD1A09jFyIm/FcVqMKvGCUbQOe8KyK5aKCbQudWyOTuYznGW/lcZACLbyPmT7mu72EXYiDF9ozGCyBRtmuY4cabeFDwsP8boRkVQdqsyS7aAEbIcPiTO1+6ZK2qPeJkqdDcRn0f8Qqq2PDxNr3OWtl4CFFeNoQ48xFmbB3fNDVVcpO8X1FqNtgswk0vb7Mb8XW6c2TTVLZfYvZpg1Kv5opm3TFwcBX2ut1hhWsnQysihC252kDTSkAsItFlcmWPXHd2mdYpzoELADVOmUZU0QGGxnaFlvnArA02o9T1fyPTKVxlIaa6tKN7NzPs3fRbYsM5fZedjc9gy/hEunNfp5g2T2HLfmidkP+rk8ioXRJ9sH7Elg9VqciF5hAamTDpU9bIFHmCs6Wskul6Prm5tPEE/zCNjxrXrXod6LBlNzxHygHy8mAh4XWt1fCrY30zOZE9w8sR0yMrUnt+GI+BGkArlnuka/mocrqXyZMfxHm14ZUQ43x5mBS1yXe5s6To+Fhks99xJ5xTeX4vaIcfl0P5kuUuo+8e1eWIOvbQ==
+x-microsoft-antispam-message-info: 3ehCu2rl0eiGztDLKa9r8bHgFwn3EA6AR1XO3BbaCG1AJHZF3DDiJ2xVb85XGEEbldwpCk5TEHsHkxnuRZ188cMiop/Fio2bFqxUZWzdvKAC5FBLDxfKXZBIU+an55IpWCNqczvUpa0wCAeZDI0MjKIRYfDjX7fpFFwxMj0s56sdE9Lv0riEApMQKCINv3y+7E2GZT4y11aHat7PkIstLSTnkdte4Zw1eoM9d3gLiG+jjBTNPicYSQA6sVSG/RvTsx6U/LWuCyT4VmxPv6YcJkDO/imxPXztd0p1QeitzTg6514xaKSFMw2auQTRBYF3yiQeFghlX7xduOTbPTsrOW8blCuLsMY5J6zndaCwE6U1IuRMmAU6MO7pBmJKdXnEssCRrXSIKsBrElWPLsje6EVZ2vf6sNQL0383bz9obs7+B9kl67WBePz2UpzkENDDREtoDSnkmY7H+CSLCIDdEzpy8+mGTUOHhniIE0itCTah1shsDW55i9zkfecZ8hB1Lz/YuLzDLici5hV+ralzO9haPihIuE38s0njY3C7Y9An7dGkf6GHagqmNe0p1sTT1LZF/ubFnA2tsu1gGxHOBu7eZuAOpHch0l1MbW2L+lIQB3zFvsm6l9BnFZLKMgRIEmdJcWRshJG0yUEdF0kOSgDk8T0oZWagcrVx5svcpQrvJUrNsigzOgDUuL2h5S/kqUyXAF3U/NtrJJTnFtGn5cpR8+UXghI5BRYZNaGEaN6eGbsBUPSCsBdRezlvYrd+z22sanraOwMpWcBQJRj4wA==
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(366016)(376014)(18002099003)(22082099003)(56012099003)(38070700021)(921020);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?tsC8PtSb6VO7ohc1HQDg+mu22Wl9G3n2Mhe1iLCnpBUOj6ppznrDFYTYXo?=
- =?iso-8859-1?Q?uVpopfmLOXebZhoP7DHWmuogvkMdjnbZXNbAYPIhBWYzb5CjXGhmHyQIsA?=
- =?iso-8859-1?Q?ikPEtXlvyiHsbHTiIuKU5pV6um+TEKcIdhdfpcDbIs7g+zlbtiH1cb7/KW?=
- =?iso-8859-1?Q?WU3N95fOERuFWBd0QIbAS1CytpyUrK8gFFKy29SN4bGhaHdxZZd07XSlK9?=
- =?iso-8859-1?Q?K/Fbz9h9xQjUhiVt6lczCoIEPZSXArwmrf7joWqnONyISwjucOaO6ifC2N?=
- =?iso-8859-1?Q?nhQNOB9IlL0hRpMMvxaNJqus0P+XfsqakCLgQwc1xSP6+YCPmlumAu/MyJ?=
- =?iso-8859-1?Q?ly+AIlxl2y52ufLv0k2RL0dk3fotGMT/qlEDNy1CudSEUj1/a18WF3lnyL?=
- =?iso-8859-1?Q?NaY6ZMzX3OfDWqsyTy5fUSQkZzbkVplm8rIdMCck3OakGXqmIJ5b0LvuFM?=
- =?iso-8859-1?Q?XtMx3aarqIyaMG2ge+dhl9jJ4PaBjIk+JAQUAxyxDRfa94PoyE19RHQJu3?=
- =?iso-8859-1?Q?6LgtC8AedOa6/JK6yQRv8un0MsYvm4R4X2f1ZWv6tswQ7ePgvld/hzbhcH?=
- =?iso-8859-1?Q?b/9ZLl9odAGR5Joxp5WAJGmU6g0YX2JI0JG4qT6WXAY8FRWJd6QV2g7vpo?=
- =?iso-8859-1?Q?lguRQmRUPoTFA3xPC4GXBxacs4uUfCrn5iyLUuPhmXYSnBhNeKrx1Cy9M0?=
- =?iso-8859-1?Q?LRUhzDmoqc3qeTDLpWEy7vf3P1YyyWvtuJe+9SZbSA23gcAxZnbrEr+/ew?=
- =?iso-8859-1?Q?KUQAmDNjPvmZFdk16SVLprYVSgjcDuaH6bTtR1mOnxp/1A/9iP4RWqGtuU?=
- =?iso-8859-1?Q?iBpHytRqrF87JtYjUmO7rAOhVHWQGj10mVvOEk7FzKMV3w0D1eWhiB1VMB?=
- =?iso-8859-1?Q?VFWi9r788pzH8XTD5dGvu+Ccubrd5gJ++WWXE5S/qE7k/qTnKEXvRzIMe1?=
- =?iso-8859-1?Q?96JIOb5Vn02zniWJfD++5Orlvy1WvxN1TIhp3DBHwyjS/A7I1lrCvTZp5P?=
- =?iso-8859-1?Q?p+IHSBmBXSDAMBITtt1lFl5C4Ls4zGraCuL2YAzD7dNgp/CFOE2AQrOqUk?=
- =?iso-8859-1?Q?K/plv36Mc2dZzMCFe/0Yf0CXR2Z6E8aj+9wmve5HXFVSyPBJAIdWhCm06G?=
- =?iso-8859-1?Q?fr3d2Oi1Nx4Fts6lsaQn9vAPA1FQVFwNq7wlJDR6patwRpdpd7+Od40+to?=
- =?iso-8859-1?Q?cC+hhsO67t86wi/YReUbLS77D3eaJXZOc6Y3CHE0FNu0VPnsWDLmRqGRZD?=
- =?iso-8859-1?Q?cDvCGeXGNawQmADaGLxuP42DO3RbvmlWH2yXDaAXTQO2Mo1pMdDr+iUXgs?=
- =?iso-8859-1?Q?zcrrJISllNFEMh8WrPrEEYAZtsewuqBAIAfhF1A/lloXlwj24WeAxiwb2q?=
- =?iso-8859-1?Q?yV+2OEN2AbVGqNsl5XtyZz6ppIW6AkqxGKLSPiAB3Fmm0gHw88eNRsepi1?=
- =?iso-8859-1?Q?m1EhO2Oc5wbZyVvwOyAwPu/XYT+brlc9DCbawS6CE0LhW3vFz/ijExcPOr?=
- =?iso-8859-1?Q?OsscNEgv1HdcsMKj0qWTvl1jFJ+ecvMEyV4nH9J4jDFXu19FBuzXl1Npy6?=
- =?iso-8859-1?Q?AocIkiBPCZApb1DwWZaZNR5IxZMRUHcfxVpnLn5KNAf5GmUybCb6vjjm9h?=
- =?iso-8859-1?Q?HhZKImzabvcqF2pTdkOEeEw69a9IBj3qqcVBeYTlqe2xfl913l1d7JgWur?=
- =?iso-8859-1?Q?1QAVtqvCvcR8iilZCZam3DQU5aUXWNUG4W5pwJ+A8e+HDC24FKYkDLNHbO?=
- =?iso-8859-1?Q?u8KCn/vwLzKlZKjrdlwyiM/8XzhyF7BDhuwvBj6tGuXG3R9QiK8WaOLsyS?=
- =?iso-8859-1?Q?7RUlCcNzLg=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?lLteXcJCE3JD8TUEPMrqwciBsKokrtFSyXqyVFanzJgj2wr4GGEghEZe+J?=
+ =?iso-8859-1?Q?zJTNaDMnqTH2w8uVV/kb1eNxvJVqO6o4wuZGfYmKbSIuKP6XTjuJ5dyrN3?=
+ =?iso-8859-1?Q?SGM1hIdP7w/eDd9GM0Y9zaXtGSWtXKVDmraGuCGXyCwsRY/v33va32FQhM?=
+ =?iso-8859-1?Q?1seWIgGKn7chmkXNOAzBGp/Ma9JhmgK6J8cMJ6Pe+GPYmbGIX3jkucWCB1?=
+ =?iso-8859-1?Q?k0S/yEvKDLer/rphKtXR7hk9QwWr9IqNw9ePc/YsJwYX/uq3m3muWfmECJ?=
+ =?iso-8859-1?Q?Sq6ap6ZSMWA96kMsRMjLG7h8lx5sY9mI4sGgyryEj13UaJckDfIN01pvde?=
+ =?iso-8859-1?Q?sZEsU+PNR8l2Nyo0/zi4Y2H1cFu1PI7SSAlgyo706eREsnXKtDHl7YGk/7?=
+ =?iso-8859-1?Q?gJv441qZcco4fHz78aPk/B3jTkGzORUROERQnjU6iI0wiGG30X1/qaWZyj?=
+ =?iso-8859-1?Q?LoYeWz+V/jg4OCrXhdzVWPBD36r6Di0q0c6ZZQN8yBQwRlARxCJtmw9eFE?=
+ =?iso-8859-1?Q?0AxOpjEdTDYOgLnJIlA+F3PUlIY8gsUvaI6HPEHxRRb7MBxRtF9/snhN9U?=
+ =?iso-8859-1?Q?g5hbEmIV4BNytP4RBl/y4Up0/DuWItf5x9c2ZvgvjMmQsnxB08fx8HMq6Z?=
+ =?iso-8859-1?Q?PbBGx97Gi5/UDSY4xwck6bKAqprxpUZ7tunEYFaCjskHhI2fikUdybiReQ?=
+ =?iso-8859-1?Q?fUFclV10i3/IBRBLT8zCTZJs/u2uK9MtYP7lqCLKb0LKVuEdA+/IQM0WkI?=
+ =?iso-8859-1?Q?Re5y08pe8CPeAIMOJxhs4CHvuCFsJt2yBoQcRabp4nunFRsupbrdCn0IZe?=
+ =?iso-8859-1?Q?f96YPjuJS22Uj5sm4fQgOQHOd9O8iZm6j6oDUxdPwas6Fk6UB2U/vpwQfK?=
+ =?iso-8859-1?Q?lVVZP5JLhHxnZWErbesHa8d4Ydd+7QPEIm7sl0jRBr/neqqANfbHXShar4?=
+ =?iso-8859-1?Q?xGm0YQIKdpCs5Qtfa07RTkNVJi3Eqy/rcWp4ejzr+cyKyB/hkjq4b1kJ8A?=
+ =?iso-8859-1?Q?iCtJs9Ud9YlRg4Y2uIGjxB4A493jlVqcbxwBDoKtSJYjOUfDNwC8QDs1NQ?=
+ =?iso-8859-1?Q?S61bFCkReaoFKZz1XNmsd0Zzhq51UwcTIw9WKdhXtlG6+hs7UG0xIkV2iU?=
+ =?iso-8859-1?Q?1h90km9r5fWVsB0JRImeoYUa9j1mnJ8YeUEu3wOWwcpEcJuxpCWnYawISq?=
+ =?iso-8859-1?Q?wX/0diKnNZYgmboQTC/svwqYUy3IQ4yeBNPykaQd8LIp8jkrEsIOF+WIXQ?=
+ =?iso-8859-1?Q?4bc7atAKZGse+kusTS1hTIOq+daF3mbuOsPlwwbUrlVgwY6m+z+darntpQ?=
+ =?iso-8859-1?Q?DLt1J7TB/npF2RjytRQSEk8pCm1DkDuYtfaK2/o2zgLMKSBZv7Ad4ei4n0?=
+ =?iso-8859-1?Q?aZW+nWswnFdmn/CvLHxRoe5qtGD8iOH/eTM5mRkOuhFb59JA3B3bvZIF49?=
+ =?iso-8859-1?Q?akHQhrLoCqaOCcJGuhpPGPVDhi79mshN51ixGbIwXk0MfZkmmWDOPCb84d?=
+ =?iso-8859-1?Q?Eoq78kJKOzrsOLDhILq3EfMero/SxovaaHx2oH80FleQ8IC5RwtmPL8j5j?=
+ =?iso-8859-1?Q?xcoKUEeakGa0Gjpf/kas04VIVL2uZyLl9oMGvr4pUt+74Lk7KcOYued2dP?=
+ =?iso-8859-1?Q?VHRpJZfPap0Dhc6Y63QPNwHOxq/qk+vGxHiT7klVn2t26MX7m5tK4L5miN?=
+ =?iso-8859-1?Q?Vhwnt6JylbfNDe0kj89SQyrXd4Kn/pP47FujFh3+LCzwjhGFKDLLIyCjat?=
+ =?iso-8859-1?Q?Pefvfe06+Et74WtUlK7VlHAGYPrFie9aars2Ko0au0+gzvuHPcnqwiEYH7?=
+ =?iso-8859-1?Q?krFKWwVZIw=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: SAwVw/wj3YaMy2um25E6M5cOfx/LwcdARNo4Pd/9BuUjbC89f+t1j73pR9XSU+AvNaWnp8xNwJWQOWf+E8YxJHV6PtcQKxvS+46iZZ3EK19xEfwnLlJuYbewr+8Pk0GXANCtufS3Ag1ygPlkSRXxFdL3kskECmCuCvw8DTZ0nLe/O/fiK3pgPDOAiEycUeHzuhMK2iWuRbvwKu6gG+6jK+ujyUdgFD4GktE1wLB83ukX8yyXBiKLzzVB+K27En//M14Fvo9tmm/E9yfKF26vBNWRERkvS18P6PU294uKQ2il53ikqHG9vgZR19HQDb5uy6H5xnnVmb2NBjMYx7pqjw==
+X-Exchange-RoutingPolicyChecked: EWivQ8weXlGyvJ/ooqJY0Qbxpk9R2mbgRVfzqoxAhD0O81f+NmihOYUEiHJE8xZX/DO96R0q/lRLhEIvQvc3yB66GsLgFvqK0vK/mrM0GlihIoB79Ng0cotP0JTYFtkobRtht5707U3/CZTLT7xnOX+gkMRIHFmxwlqFwH/Mn4P1hfcUJfVhHiV+15uh0/sc6eFk9yyD7yQYNW1oQI9SKSU1ICaBHd7FWcZ5Jh1uUGvR/kxQdMTyjALP6ydcMfYH2HYXnm34mH0DKIxaGMQPALXK7aDsDCH6e4aW5kEvGVv8G3h3iNfyiXtBC7as3Z65m/GMfdY0vHHCAjpNsKowBA==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: de0b5f3d-32dc-45b8-b6d7-08deba1ec2ac
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 May 2026 05:30:40.9164 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 88011879-1172-417c-caf9-08deba1ec57a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 25 May 2026 05:30:45.7841 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 3kBPiWmoMvTGcrklKqNMwTsOIf3NhbJ12mr+yS0hYiIwq1nmdDEeB7p1Mrs4TJ6GpvGzg9w1WCIetr5YKX9xhNyWuWsf4kEDn4NCyHUcsJk=
+X-MS-Exchange-CrossTenant-userprincipalname: 8nSIAv0x/QPgGwMs46P/K6x9CsAYbwlMJSym25X/zukuME0blidyH3u2pQLmJ41wRBzW0bVFpQFSBFdlMN3sPWGEnwHI0xcqE4j59YNMKRM=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB6657
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
  envelope-from=jamin_lin@aspeedtech.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
+ helo=SEYPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -150,177 +147,331 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prepare the Aspeed SoC model for future platforms that may contain=0A=
-multiple SRAM regions with different sizes and MMIO mappings.=0A=
+The AST1040 is based on an ARM Cortex-M4F CPU core. Since QEMU=0A=
+currently does not provide Cortex-M4F support, use the existing=0A=
+Cortex-M4 CPU model as a temporary replacement.=0A=
 =0A=
-The current implementation stores SRAM size information in a single=0A=
-sram_size field, which limits extensibility when additional SRAM=0A=
-instances are introduced.=0A=
+This initial implementation provides the basic infrastructure=0A=
+required to boot firmware and run a minimal firmware shell,=0A=
+including:=0A=
 =0A=
-Convert sram_size into an array-based definition and update all=0A=
-existing users to reference sram_size[0]. This aligns with the=0A=
-previous SRAM MemoryRegion array conversion and provides a scalable=0A=
-foundation for supporting multiple SRAM regions in future SoCs.=0A=
+- ARM Cortex-M4 CPU integration=0A=
+- NVIC interrupt controller support=0A=
+- Internal HyperRAM and SRAM memory regions=0A=
+- SCU integration=0A=
+- UART devices and interrupt wiring=0A=
 =0A=
-No functional change.=0A=
+AST1040 SCU behavior is compatible with the AST2700 SCUIO model,=0A=
+so reuse the existing AST2700 SCUIO implementation directly=0A=
+instead of introducing another identical SCU model. This reduces=0A=
+duplicate code and helps minimize long-term codebase maintenance.=0A=
+=0A=
+Several peripherals are currently modeled as unimplemented=0A=
+devices and can be added incrementally in future updates.=0A=
 =0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 ---=0A=
- include/hw/arm/aspeed_soc.h | 2 +-=0A=
- hw/arm/aspeed_ast10x0.c     | 8 ++++----=0A=
- hw/arm/aspeed_ast2400.c     | 6 +++---=0A=
- hw/arm/aspeed_ast2600.c     | 4 ++--=0A=
- hw/arm/aspeed_ast27x0.c     | 8 ++++----=0A=
- 5 files changed, 14 insertions(+), 14 deletions(-)=0A=
+ hw/arm/aspeed_ast1040.c | 254 ++++++++++++++++++++++++++++++++++++++++=0A=
+ hw/arm/meson.build      |   3 +-=0A=
+ 2 files changed, 256 insertions(+), 1 deletion(-)=0A=
+ create mode 100644 hw/arm/aspeed_ast1040.c=0A=
 =0A=
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h=0A=
-index e6942b2936..3a7db959a9 100644=0A=
---- a/include/hw/arm/aspeed_soc.h=0A=
-+++ b/include/hw/arm/aspeed_soc.h=0A=
-@@ -172,7 +172,7 @@ struct AspeedSoCClass {=0A=
-     /** valid_cpu_types: NULL terminated array of a single CPU type. */=0A=
-     const char * const *valid_cpu_types;=0A=
-     uint32_t silicon_rev;=0A=
--    uint64_t sram_size;=0A=
-+    uint64_t sram_size[ASPEED_SRAM_NUM];=0A=
-     uint64_t secsram_size;=0A=
-     int pcie_num;=0A=
-     int spis_num;=0A=
-diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c=0A=
-index 3e478f7520..9e597a75ec 100644=0A=
---- a/hw/arm/aspeed_ast10x0.c=0A=
-+++ b/hw/arm/aspeed_ast10x0.c=0A=
-@@ -240,8 +240,8 @@ static bool aspeed_soc_ast10x0_realize(Aspeed10x0SoCSta=
-te *a, Error **errp)=0A=
-     /* Internal SRAM */=0A=
-     sram_name =3D g_strdup_printf("aspeed.sram.%d",=0A=
-                                 CPU(a->armv7m.cpu)->cpu_index);=0A=
--    memory_region_init_ram(&s->sram[0], OBJECT(s), sram_name, sc->sram_siz=
-e,=0A=
--                           &err);=0A=
+diff --git a/hw/arm/aspeed_ast1040.c b/hw/arm/aspeed_ast1040.c=0A=
+new file mode 100644=0A=
+index 0000000000..8efcdad8f6=0A=
+--- /dev/null=0A=
++++ b/hw/arm/aspeed_ast1040.c=0A=
+@@ -0,0 +1,254 @@=0A=
++/*=0A=
++ * ASPEED AST1040 SoC=0A=
++ *=0A=
++ * Copyright (C) 2026 ASPEED Technology Inc.=0A=
++ *=0A=
++ * SPDX-License-Identifier: GPL-2.0-or-later=0A=
++ */=0A=
++=0A=
++#include "qemu/osdep.h"=0A=
++#include "qapi/error.h"=0A=
++#include "system/address-spaces.h"=0A=
++#include "system/system.h"=0A=
++#include "hw/core/qdev-clock.h"=0A=
++#include "hw/misc/unimp.h"=0A=
++#include "hw/arm/aspeed_soc.h"=0A=
++=0A=
++static const hwaddr aspeed_soc_ast1040_memmap[] =3D {=0A=
++    [ASPEED_DEV_SRAM1]     =3D 0x00000000, /* Hyper RAM */=0A=
++    [ASPEED_DEV_FMC]       =3D 0x74000000,=0A=
++    [ASPEED_DEV_SPI0]      =3D 0x74010000,=0A=
++    [ASPEED_DEV_SPI1]      =3D 0x74020000,=0A=
++    [ASPEED_DEV_PWM]       =3D 0x740C0000,=0A=
++    [ASPEED_DEV_UDC]       =3D 0x74120000,=0A=
++    [ASPEED_DEV_SRAM0]     =3D 0x74B80000,=0A=
++    [ASPEED_DEV_ADC]       =3D 0x74C00000,=0A=
++    [ASPEED_DEV_JTAG0]     =3D 0x74C01000,=0A=
++    [ASPEED_DEV_SCU]       =3D 0x74C02000,=0A=
++    [ASPEED_DEV_ESPI]      =3D 0x74C05000,=0A=
++    [ASPEED_DEV_JTAG1]     =3D 0x74C09000,=0A=
++    [ASPEED_DEV_GPIO]      =3D 0x74C0B000,=0A=
++    [ASPEED_DEV_SGPIOM0]   =3D 0x74C0C000,=0A=
++    [ASPEED_DEV_SGPIOM1]   =3D 0x74C0D000,=0A=
++    [ASPEED_DEV_I2C]       =3D 0x74C0F000,=0A=
++    [ASPEED_DEV_I3C]       =3D 0x74C20000,=0A=
++    [ASPEED_DEV_UART0]     =3D 0x74C33000,=0A=
++    [ASPEED_DEV_UART1]     =3D 0x74C33100,=0A=
++    [ASPEED_DEV_UART2]     =3D 0x74C33200,=0A=
++    [ASPEED_DEV_UART3]     =3D 0x74C33300,=0A=
++    [ASPEED_DEV_UART4]     =3D 0x74C33400,=0A=
++    [ASPEED_DEV_UART5]     =3D 0x74C33500,=0A=
++    [ASPEED_DEV_UART6]     =3D 0x74C33600,=0A=
++    [ASPEED_DEV_UART7]     =3D 0x74C33700,=0A=
++    [ASPEED_DEV_UART8]     =3D 0x74C33800,=0A=
++    [ASPEED_DEV_UART9]     =3D 0x74C33900,=0A=
++    [ASPEED_DEV_UART10]    =3D 0x74C33A00,=0A=
++    [ASPEED_DEV_UART11]    =3D 0x74C33B00,=0A=
++    [ASPEED_DEV_UART12]    =3D 0x74C33C00,=0A=
++    [ASPEED_DEV_WDT]       =3D 0x74C37000,=0A=
++    [ASPEED_DEV_TIMER1]    =3D 0x74C3A000,=0A=
++};=0A=
++=0A=
++static const int aspeed_soc_ast1040_irqmap[] =3D {=0A=
++    [ASPEED_DEV_ESPI]      =3D 10,=0A=
++    [ASPEED_DEV_I2C]       =3D 64, /* 64 ~ 77 */=0A=
++    [ASPEED_DEV_ADC]       =3D 80,=0A=
++    [ASPEED_DEV_GPIO]      =3D 82,=0A=
++    [ASPEED_DEV_SGPIOM0]   =3D 85,=0A=
++    [ASPEED_DEV_TIMER1]    =3D 92,=0A=
++    [ASPEED_DEV_I3C]       =3D 96, /* 96 ~ 103 */=0A=
++    [ASPEED_DEV_WDT]       =3D 112,=0A=
++    [ASPEED_DEV_FMC]       =3D 121,=0A=
++    [ASPEED_DEV_SPI0]      =3D 122,=0A=
++    [ASPEED_DEV_SPI1]      =3D 123,=0A=
++    [ASPEED_DEV_PWM]       =3D 125,=0A=
++    [ASPEED_DEV_UART0]     =3D 135,=0A=
++    [ASPEED_DEV_UART1]     =3D 136,=0A=
++    [ASPEED_DEV_UART2]     =3D 137,=0A=
++    [ASPEED_DEV_UART3]     =3D 138,=0A=
++    [ASPEED_DEV_UART4]     =3D 139,=0A=
++    [ASPEED_DEV_UART5]     =3D 140,=0A=
++    [ASPEED_DEV_UART6]     =3D 141,=0A=
++    [ASPEED_DEV_UART7]     =3D 142,=0A=
++    [ASPEED_DEV_UART8]     =3D 143,=0A=
++    [ASPEED_DEV_UART9]     =3D 144,=0A=
++    [ASPEED_DEV_UART10]    =3D 145,=0A=
++    [ASPEED_DEV_UART11]    =3D 146,=0A=
++    [ASPEED_DEV_UART12]    =3D 147,=0A=
++    [ASPEED_DEV_JTAG0]     =3D 162,=0A=
++};=0A=
++=0A=
++static qemu_irq aspeed_soc_ast1040_get_irq(AspeedSoCState *s, int dev)=0A=
++{=0A=
++    Aspeed10x0SoCState *a =3D ASPEED10X0_SOC(s);=0A=
++    AspeedSoCClass *sc =3D ASPEED_SOC_GET_CLASS(s);=0A=
++=0A=
++    return qdev_get_gpio_in(DEVICE(&a->armv7m), sc->irqmap[dev]);=0A=
++}=0A=
++=0A=
++static void aspeed_soc_ast1040_init(Object *obj)=0A=
++{=0A=
++    Aspeed10x0SoCState *a =3D ASPEED10X0_SOC(obj);=0A=
++    AspeedSoCState *s =3D ASPEED_SOC(obj);=0A=
++    AspeedSoCClass *sc =3D ASPEED_SOC_GET_CLASS(s);=0A=
++    int i;=0A=
++    object_initialize_child(obj, "armv7m", &a->armv7m, TYPE_ARMV7M);=0A=
++=0A=
++    s->sysclk =3D qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);=
+=0A=
++=0A=
++    /* AST1040 uses the AST2700 SCUIO model */=0A=
++    object_initialize_child(obj, "scu", &s->scu, TYPE_ASPEED_2700_SCUIO);=
+=0A=
++    qdev_prop_set_uint32(DEVICE(&s->scu), "silicon-rev", sc->silicon_rev);=
+=0A=
++=0A=
++    object_property_add_alias(obj, "hw-strap1", OBJECT(&s->scu), "hw-strap=
+1");=0A=
++    object_property_add_alias(obj, "hw-strap2", OBJECT(&s->scu), "hw-strap=
+2");=0A=
++=0A=
++    for (i =3D 0; i < sc->uarts_num; i++) {=0A=
++        object_initialize_child(obj, "uart[*]", &s->uart[i], TYPE_SERIAL_M=
+M);=0A=
++    }=0A=
++=0A=
++    object_initialize_child(obj, "pwm", &s->pwm, TYPE_UNIMPLEMENTED_DEVICE=
+);=0A=
++    object_initialize_child(obj, "espi", &s->espi, TYPE_UNIMPLEMENTED_DEVI=
+CE);=0A=
++    object_initialize_child(obj, "udc", &s->udc, TYPE_UNIMPLEMENTED_DEVICE=
+);=0A=
++    object_initialize_child(obj, "sgpiom[0]", &s->sgpiom[0],=0A=
++                            TYPE_UNIMPLEMENTED_DEVICE);=0A=
++    object_initialize_child(obj, "sgpiom[1]", &s->sgpiom[1],=0A=
++                            TYPE_UNIMPLEMENTED_DEVICE);=0A=
++    object_initialize_child(obj, "jtag[0]", &s->jtag[0],=0A=
++                            TYPE_UNIMPLEMENTED_DEVICE);=0A=
++    object_initialize_child(obj, "jtag[1]", &s->jtag[1],=0A=
++                            TYPE_UNIMPLEMENTED_DEVICE);=0A=
++}=0A=
++=0A=
++static void aspeed_soc_ast1040_realize(DeviceState *dev_soc, Error **errp)=
+=0A=
++{=0A=
++    Aspeed10x0SoCState *a =3D ASPEED10X0_SOC(dev_soc);=0A=
++    AspeedSoCState *s =3D ASPEED_SOC(dev_soc);=0A=
++    AspeedSoCClass *sc =3D ASPEED_SOC_GET_CLASS(s);=0A=
++    g_autofree char *hyperram_name =3D NULL;=0A=
++    g_autofree char *sram_name =3D NULL;=0A=
++    DeviceState *armv7m;=0A=
++    Error *err =3D NULL;=0A=
++    int uart;=0A=
++    int i;=0A=
++=0A=
++    if (!clock_has_source(s->sysclk)) {=0A=
++        error_setg(errp, "sysclk clock must be wired up by the board code"=
+);=0A=
++        return;=0A=
++    }=0A=
++=0A=
++    /* AST1040 CPU Core */=0A=
++    armv7m =3D DEVICE(&a->armv7m);=0A=
++    qdev_prop_set_uint32(armv7m, "num-irq", 256);=0A=
++    qdev_prop_set_string(armv7m, "cpu-type",=0A=
++                         aspeed_soc_cpu_type(sc->valid_cpu_types));=0A=
++    qdev_connect_clock_in(armv7m, "cpuclk", s->sysclk);=0A=
++    object_property_set_link(OBJECT(&a->armv7m), "memory",=0A=
++                             OBJECT(s->memory), &error_abort);=0A=
++    sysbus_realize(SYS_BUS_DEVICE(&a->armv7m), &error_abort);=0A=
++=0A=
++    /* Internal SRAM */=0A=
++    sram_name =3D g_strdup_printf("aspeed.sram.%d",=0A=
++                                CPU(a->armv7m.cpu)->cpu_index);=0A=
 +    memory_region_init_ram(&s->sram[0], OBJECT(s), sram_name,=0A=
 +                           sc->sram_size[0], &err);=0A=
-     if (err !=3D NULL) {=0A=
-         error_propagate(errp, err);=0A=
-         return false;=0A=
-@@ -493,7 +493,7 @@ static void aspeed_soc_ast1030_class_init(ObjectClass *=
-klass, const void *data)=0A=
- =0A=
-     sc->valid_cpu_types =3D valid_cpu_types;=0A=
-     sc->silicon_rev =3D AST1030_A1_SILICON_REV;=0A=
--    sc->sram_size =3D 0xc0000;=0A=
-+    sc->sram_size[0] =3D 0xc0000;=0A=
-     sc->secsram_size =3D 0x40000; /* 256 * KiB */=0A=
-     sc->spis_num =3D 2;=0A=
-     sc->ehcis_num =3D 0;=0A=
-@@ -521,7 +521,7 @@ static void aspeed_soc_ast1060_class_init(ObjectClass *=
-klass, const void *data)=0A=
- =0A=
-     sc->valid_cpu_types =3D valid_cpu_types;=0A=
-     sc->silicon_rev =3D AST1060_A2_SILICON_REV;=0A=
--    sc->sram_size =3D 0xc0000;=0A=
-+    sc->sram_size[0] =3D 0xc0000;=0A=
-     sc->secsram_size =3D 0x40000; /* 256 * KiB */=0A=
-     sc->spis_num =3D 2;=0A=
-     sc->wdts_num =3D 4;=0A=
-diff --git a/hw/arm/aspeed_ast2400.c b/hw/arm/aspeed_ast2400.c=0A=
-index d79aa832f3..c4e5388999 100644=0A=
---- a/hw/arm/aspeed_ast2400.c=0A=
-+++ b/hw/arm/aspeed_ast2400.c=0A=
-@@ -282,7 +282,7 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev=
-, Error **errp)=0A=
-     /* SRAM */=0A=
-     sram_name =3D g_strdup_printf("aspeed.sram.%d", CPU(&a->cpu[0])->cpu_i=
-ndex);=0A=
-     if (!memory_region_init_ram(&s->sram[0], OBJECT(s), sram_name,=0A=
--                                sc->sram_size, errp)) {=0A=
-+                                sc->sram_size[0], errp)) {=0A=
-         return;=0A=
-     }=0A=
-     memory_region_add_subregion(s->memory,=0A=
-@@ -533,7 +533,7 @@ static void aspeed_soc_ast2400_class_init(ObjectClass *=
-oc, const void *data)=0A=
- =0A=
-     sc->valid_cpu_types =3D valid_cpu_types;=0A=
-     sc->silicon_rev  =3D AST2400_A1_SILICON_REV;=0A=
--    sc->sram_size    =3D 0x8000;=0A=
-+    sc->sram_size[0] =3D 0x8000;=0A=
-     sc->spis_num     =3D 1;=0A=
-     sc->ehcis_num    =3D 1;=0A=
-     sc->wdts_num     =3D 2;=0A=
-@@ -560,7 +560,7 @@ static void aspeed_soc_ast2500_class_init(ObjectClass *=
-oc, const void *data)=0A=
- =0A=
-     sc->valid_cpu_types =3D valid_cpu_types;=0A=
-     sc->silicon_rev  =3D AST2500_A1_SILICON_REV;=0A=
--    sc->sram_size    =3D 0x9000;=0A=
-+    sc->sram_size[0] =3D 0x9000;=0A=
-     sc->spis_num     =3D 2;=0A=
-     sc->ehcis_num    =3D 2;=0A=
-     sc->wdts_num     =3D 3;=0A=
-diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c=0A=
-index a69103de89..2f8f49a376 100644=0A=
---- a/hw/arm/aspeed_ast2600.c=0A=
-+++ b/hw/arm/aspeed_ast2600.c=0A=
-@@ -438,7 +438,7 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev=
-, Error **errp)=0A=
-     /* SRAM */=0A=
-     sram_name =3D g_strdup_printf("aspeed.sram.%d", CPU(&a->cpu[0])->cpu_i=
-ndex);=0A=
-     if (!memory_region_init_ram(&s->sram[0], OBJECT(s), sram_name,=0A=
--                                sc->sram_size, errp)) {=0A=
-+                                sc->sram_size[0], errp)) {=0A=
-         return;=0A=
-     }=0A=
-     memory_region_add_subregion(s->memory,=0A=
-@@ -764,7 +764,7 @@ static void aspeed_soc_ast2600_class_init(ObjectClass *=
-oc, const void *data)=0A=
- =0A=
-     sc->valid_cpu_types =3D valid_cpu_types;=0A=
-     sc->silicon_rev  =3D AST2600_A3_SILICON_REV;=0A=
--    sc->sram_size    =3D 0x16400;=0A=
-+    sc->sram_size[0] =3D 0x16400;=0A=
-     sc->spis_num     =3D 2;=0A=
-     sc->ehcis_num    =3D 2;=0A=
-     sc->wdts_num     =3D 4;=0A=
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c=0A=
-index 0fb5e4b24c..30883ea7ce 100644=0A=
---- a/hw/arm/aspeed_ast27x0.c=0A=
-+++ b/hw/arm/aspeed_ast27x0.c=0A=
-@@ -778,8 +778,8 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev=
-, Error **errp)=0A=
- =0A=
-     /* SRAM */=0A=
-     name =3D g_strdup_printf("aspeed.sram.%d", CPU(&a->cpu[0])->cpu_index)=
-;=0A=
--    if (!memory_region_init_ram(&s->sram[0], OBJECT(s), name, sc->sram_siz=
-e,=0A=
--                                errp)) {=0A=
-+    if (!memory_region_init_ram(&s->sram[0], OBJECT(s), name,=0A=
-+                                sc->sram_size[0], errp)) {=0A=
-         return;=0A=
-     }=0A=
-     memory_region_add_subregion(s->memory,=0A=
-@@ -1151,7 +1151,7 @@ static void aspeed_soc_ast2700a1_class_init(ObjectCla=
-ss *oc, const void *data)=0A=
- =0A=
-     sc->valid_cpu_types =3D valid_cpu_types;=0A=
-     sc->silicon_rev  =3D AST2700_A1_SILICON_REV;=0A=
--    sc->sram_size    =3D 0x20000;=0A=
-+    sc->sram_size[0] =3D 0x20000;=0A=
-     sc->pcie_num     =3D 3;=0A=
-     sc->spis_num     =3D 3;=0A=
-     sc->sgpio_num    =3D 2;=0A=
-@@ -1181,7 +1181,7 @@ static void aspeed_soc_ast2700a2_class_init(ObjectCla=
-ss *oc, const void *data)=0A=
- =0A=
-     sc->valid_cpu_types =3D valid_cpu_types;=0A=
-     sc->silicon_rev  =3D AST2700_A2_SILICON_REV;=0A=
--    sc->sram_size    =3D 0x20000;=0A=
-+    sc->sram_size[0] =3D 0x20000;=0A=
-     sc->pcie_num     =3D 3;=0A=
-     sc->spis_num     =3D 3;=0A=
-     sc->sgpio_num    =3D 2;=0A=
++    if (err) {=0A=
++        error_propagate(errp, err);=0A=
++        return;=0A=
++    }=0A=
++    memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SRAM0],=
+=0A=
++                                &s->sram[0]);=0A=
++=0A=
++    /* Internal Hyper RAM */=0A=
++    hyperram_name =3D g_strdup_printf("aspeed.hyperram.%d",=0A=
++                                    CPU(a->armv7m.cpu)->cpu_index);=0A=
++    memory_region_init_ram(&s->sram[1], OBJECT(s), hyperram_name,=0A=
++                           sc->sram_size[1], &err);=0A=
++    if (err) {=0A=
++        error_propagate(errp, err);=0A=
++        return;=0A=
++    }=0A=
++    memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SRAM1],=
+=0A=
++                                &s->sram[1]);=0A=
++=0A=
++    /* SCU */=0A=
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {=0A=
++        return;=0A=
++    }=0A=
++    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->scu), 0,=0A=
++                    sc->memmap[ASPEED_DEV_SCU]);=0A=
++=0A=
++    /* UART */=0A=
++    for (i =3D 0, uart =3D sc->uarts_base; i < sc->uarts_num; i++, uart++)=
+ {=0A=
++        if (!aspeed_soc_uart_realize(s->memory, &s->uart[i],=0A=
++                                     sc->memmap[uart], errp)) {=0A=
++            return;=0A=
++        }=0A=
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart[i]), 0,=0A=
++                           aspeed_soc_ast1040_get_irq(s, uart));=0A=
++    }=0A=
++=0A=
++    /* Unimplemented peripherals */=0A=
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->pwm),=0A=
++                                  "aspeed.pwm",=0A=
++                                  sc->memmap[ASPEED_DEV_PWM], 0x10000);=0A=
++=0A=
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->espi),=0A=
++                                  "aspeed.espi",=0A=
++                                  sc->memmap[ASPEED_DEV_ESPI], 0x1000);=0A=
++=0A=
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->udc),=0A=
++                                  "aspeed.udc",=0A=
++                                  sc->memmap[ASPEED_DEV_UDC], 0x4000);=0A=
++=0A=
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->sgpiom[0])=
+,=0A=
++                                  "aspeed.sgpiom0",=0A=
++                                  sc->memmap[ASPEED_DEV_SGPIOM0], 0x1000);=
+=0A=
++=0A=
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->sgpiom[1])=
+,=0A=
++                                  "aspeed.sgpiom1",=0A=
++                                  sc->memmap[ASPEED_DEV_SGPIOM1], 0x1000);=
+=0A=
++=0A=
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->jtag[0]),=
+=0A=
++                                  "aspeed.jtag0",=0A=
++                                  sc->memmap[ASPEED_DEV_JTAG0], 0x100);=0A=
++=0A=
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->jtag[1]),=
+=0A=
++                                  "aspeed.jtag1",=0A=
++                                  sc->memmap[ASPEED_DEV_JTAG1], 0x100);=0A=
++}=0A=
++=0A=
++static void aspeed_soc_ast1040_class_init(ObjectClass *klass, const void *=
+data)=0A=
++{=0A=
++    static const char * const valid_cpu_types[] =3D {=0A=
++        ARM_CPU_TYPE_NAME("cortex-m4"), /* TODO cortex-m4f */=0A=
++        NULL=0A=
++    };=0A=
++    DeviceClass *dc =3D DEVICE_CLASS(klass);=0A=
++    AspeedSoCClass *sc =3D ASPEED_SOC_CLASS(dc);=0A=
++=0A=
++    /* Reason: The Aspeed SoC can only be instantiated from a board */=0A=
++    dc->user_creatable =3D false;=0A=
++    dc->realize =3D aspeed_soc_ast1040_realize;=0A=
++=0A=
++    sc->valid_cpu_types =3D valid_cpu_types;=0A=
++    sc->silicon_rev     =3D AST1040_A0_SILICON_REV;=0A=
++    sc->sram_size[0]    =3D 128 * KiB;=0A=
++    sc->sram_size[1]    =3D 16 * MiB; /* Hyper RAM */=0A=
++    sc->uarts_num       =3D 13;=0A=
++    sc->uarts_base      =3D ASPEED_DEV_UART0;=0A=
++    sc->irqmap          =3D aspeed_soc_ast1040_irqmap;=0A=
++    sc->memmap          =3D aspeed_soc_ast1040_memmap;=0A=
++    sc->num_cpus        =3D 1;=0A=
++}=0A=
++=0A=
++static const TypeInfo aspeed_soc_ast1040_types[] =3D {=0A=
++    {=0A=
++        .name           =3D "ast1040-a0",=0A=
++        .parent         =3D TYPE_ASPEED10X0_SOC,=0A=
++        .instance_init  =3D aspeed_soc_ast1040_init,=0A=
++        .class_init     =3D aspeed_soc_ast1040_class_init,=0A=
++    }=0A=
++};=0A=
++=0A=
++DEFINE_TYPES(aspeed_soc_ast1040_types)=0A=
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build=0A=
+index 80068f70bb..fa3a848492 100644=0A=
+--- a/hw/arm/meson.build=0A=
++++ b/hw/arm/meson.build=0A=
+@@ -62,7 +62,8 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(=0A=
+   'aspeed_ast2600_gb200nvl.c',=0A=
+   'aspeed_ast2600_rainier.c',=0A=
+   'aspeed_ast10x0.c',=0A=
+-  'aspeed_ast10x0_evb.c'))=0A=
++  'aspeed_ast10x0_evb.c',=0A=
++  'aspeed_ast1040.c'))=0A=
+ arm_common_ss.add(when: ['CONFIG_ASPEED_SOC', 'TARGET_AARCH64'], if_true: =
+files(=0A=
+   'aspeed_ast1700.c',=0A=
+   'aspeed_ast27x0.c',=0A=
 -- =0A=
 2.43.0=0A=
 
