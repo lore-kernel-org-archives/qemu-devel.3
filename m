@@ -4,74 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0ACECD5BBF
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 06:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDA33CD5BBF
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 06:37:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wROvl-0005k6-MP; Mon, 25 May 2026 02:37:01 -0400
+	id 1wROwT-0007eH-Up; Mon, 25 May 2026 02:37:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wROtf-0003Ek-MV
- for qemu-devel@nongnu.org; Mon, 25 May 2026 02:34:43 -0400
+ id 1wROuY-0004d6-9H
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 02:35:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wROte-0001Kr-4u
- for qemu-devel@nongnu.org; Mon, 25 May 2026 02:34:43 -0400
+ id 1wROuV-0001fV-JQ
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 02:35:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779690881;
+ s=mimecast20190719; t=1779690934;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Fh+6O/vHguV/OcDLo0aBOnAZWtT7udU3z87vtg+xsfM=;
- b=WG+ou7e7C+pyfIVzzDyZHf8SBPkpzVAqwidN2pouAFGOYcKIx3rggRcLtHmQI53cT2CXBh
- Ilq15HI6tCVt3dhZ0lpBaFc8m3z16kC0pqHIhDyAtUyG3imVnX1vLof5deVX0jbScisvoP
- 9pQYFx2OKG5vNHJq4vX7xKIT8/f5w1U=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=dCK5DNh3LVvKqOCn+8V9JDLnRLBNdd/SI6lBAcoZbH0=;
+ b=HvqDrekofM6aGRyO1YSi/nWeXLXynW+QOPo5ncL+9edgGNmYKNMsRDdyn99OugW5RJd2qv
+ Fsbz9m8s+W2tt6ygEouvByOzxZkmj2qXjbFk7xWBdYUjbcgzbKaeHCwzmBZDX6wjh7M8Gb
+ S3OVuRth3EnVqhWfQx0weVUoS1TKOxo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-_vrPVX6zM5O3pjuuu1o-vA-1; Mon,
- 25 May 2026 02:34:36 -0400
-X-MC-Unique: _vrPVX6zM5O3pjuuu1o-vA-1
-X-Mimecast-MFC-AGG-ID: _vrPVX6zM5O3pjuuu1o-vA_1779690875
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-93-NrP4pB7CMgeNCLbh0xatyw-1; Mon,
+ 25 May 2026 02:35:29 -0400
+X-MC-Unique: NrP4pB7CMgeNCLbh0xatyw-1
+X-Mimecast-MFC-AGG-ID: NrP4pB7CMgeNCLbh0xatyw_1779690928
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B5A951956053; Mon, 25 May 2026 06:34:35 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B6A041800451; Mon, 25 May 2026 06:35:28 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 38EFB18004A3; Mon, 25 May 2026 06:34:33 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5AB511684; Mon, 25 May 2026 06:35:26 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL v3 17/38] hw/char/escc: Use Linux key codes
-Date: Mon, 25 May 2026 10:32:00 +0400
-Message-ID: <20260525063223.1409791-18-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL v3 26/38] ui/dbus: Use Linux key codes
+Date: Mon, 25 May 2026 10:32:09 +0400
+Message-ID: <20260525063223.1409791-27-marcandre.lureau@redhat.com>
 In-Reply-To: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
 References: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,55 +93,43 @@ representations.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260520-input-v3-9-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <20260520-input-v3-18-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/char/escc.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ ui/dbus-console.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/hw/char/escc.c b/hw/char/escc.c
-index 39483ca03bf..7aae627fb48 100644
---- a/hw/char/escc.c
-+++ b/hw/char/escc.c
-@@ -30,6 +30,7 @@
- #include "migration/vmstate.h"
- #include "qemu/module.h"
- #include "hw/char/escc.h"
-+#include "standard-headers/linux/input-event-codes.h"
- #include "ui/console.h"
+diff --git a/ui/dbus-console.c b/ui/dbus-console.c
+index 24f4542f312..21eceb24362 100644
+--- a/ui/dbus-console.c
++++ b/ui/dbus-console.c
+@@ -339,11 +339,11 @@ dbus_kbd_press(DBusDisplayConsole *ddc,
+                GDBusMethodInvocation *invocation,
+                guint arg_keycode)
+ {
+-    QKeyCode qcode = qemu_input_key_number_to_qcode(arg_keycode);
++    unsigned int lnx = qemu_input_key_number_to_linux(arg_keycode);
  
- #include "qemu/cutils.h"
-@@ -804,7 +805,7 @@ static void sunkbd_handle_event(DeviceState *dev, QemuConsole *src,
-     trace_escc_sunkbd_event_in(qcode, QKeyCode_str(qcode),
-                                evt->key.down);
+     trace_dbus_kbd_press(arg_keycode);
  
--    if (qcode == Q_KEY_CODE_CAPS_LOCK) {
-+    if (evt->key.key == KEY_CAPSLOCK) {
-         if (evt->key.down) {
-             s->caps_lock_mode ^= 1;
-             if (s->caps_lock_mode == 2) {
-@@ -818,7 +819,7 @@ static void sunkbd_handle_event(DeviceState *dev, QemuConsole *src,
-         }
-     }
+-    qkbd_state_key_event(ddc->kbd, qemu_input_map_qcode_to_linux[qcode], true);
++    qkbd_state_key_event(ddc->kbd, lnx, true);
  
--    if (qcode == Q_KEY_CODE_NUM_LOCK) {
-+    if (evt->key.key == KEY_NUMLOCK) {
-         if (evt->key.down) {
-             s->num_lock_mode ^= 1;
-             if (s->num_lock_mode == 2) {
-@@ -832,11 +833,11 @@ static void sunkbd_handle_event(DeviceState *dev, QemuConsole *src,
-         }
-     }
+     qemu_dbus_display1_keyboard_complete_press(ddc->iface_kbd, invocation);
  
--    if (qcode >= qemu_input_map_qcode_to_sun_len) {
-+    if (evt->key.key >= qemu_input_map_linux_to_sun_len) {
-         return;
-     }
+@@ -355,11 +355,11 @@ dbus_kbd_release(DBusDisplayConsole *ddc,
+                  GDBusMethodInvocation *invocation,
+                  guint arg_keycode)
+ {
+-    QKeyCode qcode = qemu_input_key_number_to_qcode(arg_keycode);
++    unsigned int lnx = qemu_input_key_number_to_linux(arg_keycode);
  
--    keycode = qemu_input_map_qcode_to_sun[qcode];
-+    keycode = qemu_input_map_linux_to_sun[evt->key.key];
-     if (!evt->key.down) {
-         keycode |= 0x80;
-     }
+     trace_dbus_kbd_release(arg_keycode);
+ 
+-    qkbd_state_key_event(ddc->kbd, qemu_input_map_qcode_to_linux[qcode], false);
++    qkbd_state_key_event(ddc->kbd, lnx, false);
+ 
+     qemu_dbus_display1_keyboard_complete_release(ddc->iface_kbd, invocation);
+ 
 -- 
 2.54.0
 
