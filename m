@@ -4,108 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A0ECCD5BC9
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 15:18:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A07E3CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 15:18:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRX2t-00069h-OB; Mon, 25 May 2026 11:16:48 -0400
+	id 1wRX4e-00086N-Hp; Mon, 25 May 2026 11:18:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wRX2j-0005yZ-5g
- for qemu-devel@nongnu.org; Mon, 25 May 2026 11:16:38 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wRX4V-0007jM-Eu
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 11:18:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wRX2h-0007Tb-2x
- for qemu-devel@nongnu.org; Mon, 25 May 2026 11:16:36 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wRX4T-0000nJ-Nh
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 11:18:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779722193;
+ s=mimecast20190719; t=1779722302;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GpfDVA7DkFEEKD0uoA21t8IvgHUFiH16OkT5AHytVXI=;
- b=AUFPtATD8TpoSKIsac3qDfrun6PI6eUM3PqHu/V/2gV4fF3gWWG9MvQh9KDE936vOiNrED
- aDDZyy8S+kGeHRtJGAFY4fjKK1eC3kMMCRYluvgKnbkY7exQAKV28eJMVTr8YM/RfDIdlB
- OB6wyWghWx+me6yg2KXCL4buK21ylXc=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-4NAv5A77M3SZovkF_8iQCQ-1; Mon, 25 May 2026 11:16:31 -0400
-X-MC-Unique: 4NAv5A77M3SZovkF_8iQCQ-1
-X-Mimecast-MFC-AGG-ID: 4NAv5A77M3SZovkF_8iQCQ_1779722190
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-490479c2911so33489695e9.2
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 08:16:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779722190; x=1780326990; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GpfDVA7DkFEEKD0uoA21t8IvgHUFiH16OkT5AHytVXI=;
- b=X/XkbwfmOfTPuVgDcKK+B+JNCiKgbm4sPB0dMxbIdz1b6XDM5A7kyuZaKngpoGPkSv
- 0fQ5lRveRukGSu4cKSHm0i3EWCWkdYoziNsd9zMm6lSfMGI9pjBemh1dGLlFW4Wgv1pH
- mvmWAwxqO1FKwl8C4q5QvUrjOiDpg0N1wcVK/7/P7+hlzEzVJcKEe962d0G03KAivlQW
- ri7V7XUxgdbbAMzz2Zl9h+ViZz0HmF2v/RG2ez9R2fogbP14wUMdt2TGRj3ywvAjzo9H
- ximz3Cp5Z0nKypzUQ8olb3wP0+P2yyKph3rft67ZbauItdxwxo37sU4Zt840YiLeL0GI
- sHLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779722190; x=1780326990;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=GpfDVA7DkFEEKD0uoA21t8IvgHUFiH16OkT5AHytVXI=;
- b=Sb8lSz1GnIpDluryxRi17KlYUP+goMXKAt6BA7APAbtDRgpC6kLxW3V353Tlv6kPzP
- /w1saRCE4qcsztXsJecxUqOmotx/EXFLRUAW0ICyHvBiH+pgdKTasltSZNHW9xvNZLOV
- EaC7q/4Nn2pHW44r+bfeTYF5ZPA5e7+NTBkj+cuNIFnttO8Bk84PvtoyqZtzYsNCgkBz
- Qkrt1kl+GzSpB863mDLNmpWddXqfhQqqDhyZ01aP3hDC7MOEiKnvTJp2SlBdQ16ojSyr
- J84ekdTjqna11R/0np9yA6PR9udc2s6X1XUHmb33PWsxv/csi3FTA7+OvrUC4WwdJgUq
- qxoQ==
-X-Gm-Message-State: AOJu0Ywq5FM1GkKQ+/H8wzqYn3uO0XhSTj+ij0r3Rjx1ZeDS0RlPSGQ8
- KGAN8CbW2pOjoHWXrEpy6Wng0JnplrIaZP+rDn3pRrwR+Ug3da4/GRLP2U8G65HSHUPliaaimOB
- BWRQSUj+NXS60QumsRFbxN37lSgDiaz9sBUIVEpaaVi5u5CjixytowowD2qy3zzm5bkQXXZrp2w
- dWz8PyCnE5BIxt+T4tPsxFi0ACC4p3HP17K6IfmuOt
-X-Gm-Gg: Acq92OGx1qC1upd6Fz+mpZLg1UBEzDCFdEAHwBhwPLNg3uCij3EZmjAANXWP67/Ufcn
- 91m7L5P0tSDlSDoVBmoPNRbbjzq5Z6aR6OYB2f0NlFJ5DpgCbwpzpsss65q/rLXBqOye+S691Nv
- CDjXhc5ttyLw6g8G85ZRgPNaRBcKwnxmZc83mrqWvzzgy+BcHKEBcHaikI4ZI3uMlf3vqBgl+NI
- mse3Gp/PNWRIx8NY5rU8C7aXX00AG2ltG+4Kw0GhCE6CZ4lIcNm19arY/xYdxxs3vlzr4nyLDen
- r6SbK4ZxtOCK37/zMVy3PIKGJTyvG4Xr8x3PkDQEHYai7jEwGtx5mZzZGZ/+nOM/XSq9UWvnRnS
- zOxhYBSKTtFM+ItNJgdI8OgVvJhUQz9Hr/Aqazf8a2VaZNF8G4Em8cuSst4qfx2p0ZP6d8jfJ6B
- VoAUgRFiLl29BbwT9OGxd86v08gL6J
-X-Received: by 2002:a05:600c:c4a1:b0:490:1640:8269 with SMTP id
- 5b1f17b1804b1-490426d1a16mr254875085e9.18.1779722190410; 
- Mon, 25 May 2026 08:16:30 -0700 (PDT)
-X-Received: by 2002:a05:600c:c4a1:b0:490:1640:8269 with SMTP id
- 5b1f17b1804b1-490426d1a16mr254874375e9.18.1779722189847; 
- Mon, 25 May 2026 08:16:29 -0700 (PDT)
-Received: from [192.168.10.48] ([176.206.106.181])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4904333146bsm149273425e9.0.2026.05.25.08.16.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 May 2026 08:16:27 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ bh=KPP+lt/TkLLenlDA2KNeaCoQ0OMjXfgwfsa3IFnTB70=;
+ b=ZsomFbWSTMlhlukrQUVK018TSdFA4ue2syL5k2ZjqZuQ+cE/iAlb8L8SBHCYoMpXgBKEJg
+ 4ruoZm4rb9fzaHeD7P55d9ySQzUagaT4Gow12IrD2evMNk0ODYb7XfiADl59ztBxx9cP83
+ aBDbsr5GM8TXdubO+rygddt7usoFzBo=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-20-9MvoqoziMr2p3RGbA1cboQ-1; Mon,
+ 25 May 2026 11:18:18 -0400
+X-MC-Unique: 9MvoqoziMr2p3RGbA1cboQ-1
+X-Mimecast-MFC-AGG-ID: 9MvoqoziMr2p3RGbA1cboQ_1779722297
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4B35C19560BB; Mon, 25 May 2026 15:18:17 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.40])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BA1F91686; Mon, 25 May 2026 15:18:16 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Wei Che Kao <skps96g313.cs10@gmail.com>,
-	qemu-stable@nongnu.org
-Subject: [PULL 3/6] apic: fix delivery bitmask with modified xAPIC ids
-Date: Mon, 25 May 2026 17:16:18 +0200
-Message-ID: <20260525151621.395954-4-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260525151621.395954-1-pbonzini@redhat.com>
-References: <20260525151621.395954-1-pbonzini@redhat.com>
+Cc: Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 1/1] block/linux-aio: bound ioq_submit() recursion depth
+Date: Mon, 25 May 2026 11:18:11 -0400
+Message-ID: <20260525151811.1643855-2-stefanha@redhat.com>
+In-Reply-To: <20260525151811.1643855-1-stefanha@redhat.com>
+References: <20260525151811.1643855-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,62 +85,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Self-IPIs (or all-but-self IPIs) in QEMU can cause a out-of-bounds access
-to deliver_bitmask, because the access uses the APIC ID register which
-is writable by the guest.  However, foreach_apic uses the delivery
-bitmask indexes to look up the local_apics[] array, which is indexed
-by *initial* APIC id.  Using the right id fixes both a possible heap
-write overflow if the modified APIC id is too large for max_apic_words,
-and a mis-delivery of both self and all-but-self IPIs.
+From: "Denis V. Lunev" <den@openvz.org>
 
-Reported-by: Wei Che Kao <skps96g313.cs10@gmail.com>
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+qemu_laio_process_completions() wraps its body in defer_call_begin /
+defer_call_end. Inside the section, completion callbacks wake coroutines
+that queue new aiocbs; laio_do_submit() defers laio_deferred_fn. At the
+bottom of qemu_laio_process_completions() the defer_call_end() fires
+laio_deferred_fn, which calls ioq_submit(), closing the cycle:
+
+  ioq_submit
+    -> io_submit(2)                           // some sync completions
+    -> qemu_laio_process_completions          // defer_call_begin
+         -> aio_co_wake                       // resumes coroutine
+              -> laio_do_submit
+                   -> defer_call(laio_deferred_fn, s)   // enqueued
+         -> defer_call_end                    // nesting drops to 0
+              -> laio_deferred_fn
+                   -> ioq_submit              // +1 stack frame, loop
+
+When io_submit(2) returns asynchronously (O_DIRECT) the cycle
+terminates in one extra frame: the fresh aiocb is still in flight, no
+completion is drained, no coroutine wakes, no new submission queues.
+When submissions complete synchronously (non-O_DIRECT, or per-descriptor
+drivers such as vmdk) each level enqueues more work for the next
+defer_call_end() to drain, so recursion grows without bound and QEMU
+crashes with SIGSEGV on the thread guard page.
+
+The cycle was closed by two performance commits, each correct in
+isolation:
+
+  076682885d ("block/linux-aio: convert to blk_io_plug_call() API")
+    -- introduced laio_deferred_fn and wired
+       laio_do_submit -> defer_call(laio_deferred_fn, s).
+
+  84d61e5f36 ("virtio: use defer_call() in virtio_irqfd_notify()")
+    -- added defer_call_begin/end around qemu_laio_process_completions
+       so virtio-irqfd notifications batch across a completion pass.
+
+The supported aio=native + cache=none pairing keeps submissions
+asynchronous, so the cycle stays bounded; nothing in the code enforces
+that contract. Observed in production as a SIGSEGV during a backup job
+configured with --cached + aio=native; reproducible on upstream with
+qemu-io against vmdk.
+
+Cap ioq_submit() recursion with a counter on LaioQueue, which is only
+accessed from the AioContext home thread. On overflow, return without
+submitting. The pending work is drained by s->completion_bh, which
+qemu_laio_process_completions() has already scheduled on entry -- no
+work is lost; one event-loop round-trip of latency is paid only when
+the bound is hit, which cannot happen on a supported configuration.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Kevin Wolf <kwolf@redhat.com>
+CC: Hanna Reitz <hreitz@redhat.com>
+CC: Stefan Hajnoczi <stefanha@redhat.com>
+CC: Paolo Bonzini <pbonzini@redhat.com>
+Message-ID: <20260520142503.251959-2-den@openvz.org>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- hw/intc/apic.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ block/linux-aio.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/hw/intc/apic.c b/hw/intc/apic.c
-index e5ea8312617..0e8932005fa 100644
---- a/hw/intc/apic.c
-+++ b/hw/intc/apic.c
-@@ -648,13 +648,6 @@ static void apic_deliver(APICCommonState *s, uint32_t dest, uint8_t dest_mode,
-     APICCommonState *apic_iter;
-     uint32_t deliver_bitmask_size = max_apic_words * sizeof(uint32_t);
-     g_autofree uint32_t *deliver_bitmask = g_new(uint32_t, max_apic_words);
--    uint32_t current_apic_id;
--
--    if (is_x2apic_mode(s)) {
--        current_apic_id = s->initial_apic_id;
--    } else {
--        current_apic_id = s->id;
--    }
+diff --git a/block/linux-aio.c b/block/linux-aio.c
+index 0a7424fbb3..5aaf2e8514 100644
+--- a/block/linux-aio.c
++++ b/block/linux-aio.c
+@@ -36,6 +36,19 @@
+ /* Maximum number of requests in a batch. (default value) */
+ #define DEFAULT_MAX_BATCH 32
  
-     switch (dest_shorthand) {
-     case 0:
-@@ -662,14 +655,20 @@ static void apic_deliver(APICCommonState *s, uint32_t dest, uint8_t dest_mode,
-         break;
-     case 1:
-         memset(deliver_bitmask, 0x00, deliver_bitmask_size);
--        apic_set_bit(deliver_bitmask, current_apic_id);
-+        /*
-+         * The self and all-but-self cases do not use apic_match_dest() and
-+         * directly fill in deliver_bitmask; the bitmask's indexes in turn
-+         * map to local_apics[] slots which are never changed even if the
-+         * xAPIC id is modified.  So use s->initial_apic_id instead of s->id.
-+         */
-+        apic_set_bit(deliver_bitmask, s->initial_apic_id);
-         break;
-     case 2:
-         memset(deliver_bitmask, 0xff, deliver_bitmask_size);
-         break;
-     case 3:
-         memset(deliver_bitmask, 0xff, deliver_bitmask_size);
--        apic_reset_bit(deliver_bitmask, current_apic_id);
-+        apic_reset_bit(deliver_bitmask, s->initial_apic_id);
-         break;
++/*
++ * Bound on how deep ioq_submit() may recurse on a single LaioQueue via the
++ * ioq_submit -> qemu_laio_process_completions -> defer_call_end ->
++ * laio_deferred_fn -> ioq_submit cycle. The cycle terminates naturally
++ * when io_submit(2) returns asynchronously (O_DIRECT), but can grow
++ * without bound when submissions complete synchronously. On overflow
++ * the caller returns without submitting; the outermost
++ * qemu_laio_process_completions() has already scheduled s->completion_bh
++ * (via qemu_bh_schedule() at the top of that function), which resumes
++ * submission from the next event-loop dispatch.
++ */
++#define IOQ_SUBMIT_MAX_DEPTH 8
++
+ struct qemu_laiocb {
+     Coroutine *co;
+     LinuxAioState *ctx;
+@@ -61,6 +74,7 @@ typedef struct {
+     unsigned int in_queue;
+     unsigned int in_flight;
+     bool blocked;
++    unsigned int submit_depth;
+     QSIMPLEQ_HEAD(, qemu_laiocb) pending;
+ } LaioQueue;
+ 
+@@ -331,6 +345,7 @@ static void ioq_init(LaioQueue *io_q)
+     io_q->in_queue = 0;
+     io_q->in_flight = 0;
+     io_q->blocked = false;
++    io_q->submit_depth = 0;
+ }
+ 
+ static void ioq_submit(LinuxAioState *s)
+@@ -340,6 +355,11 @@ static void ioq_submit(LinuxAioState *s)
+     QEMU_UNINITIALIZED struct iocb *iocbs[MAX_EVENTS];
+     QSIMPLEQ_HEAD(, qemu_laiocb) completed;
+ 
++    if (s->io_q.submit_depth >= IOQ_SUBMIT_MAX_DEPTH) {
++        return;
++    }
++    s->io_q.submit_depth++;
++
+     do {
+         if (s->io_q.in_flight >= MAX_EVENTS) {
+             break;
+@@ -385,6 +405,8 @@ static void ioq_submit(LinuxAioState *s)
+          * pended requests will be submitted from there.
+          */
      }
++
++    s->io_q.submit_depth--;
+ }
  
+ static uint64_t laio_max_batch(LinuxAioState *s, uint64_t dev_max_batch)
 -- 
 2.54.0
 
