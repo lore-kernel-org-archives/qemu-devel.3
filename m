@@ -4,39 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E855BCD5BCF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4983CD5BBF
 	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 09:14:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRRN7-00013Y-VX; Mon, 25 May 2026 05:13:19 -0400
+	id 1wRRN5-000137-B9; Mon, 25 May 2026 05:13:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wRRMz-00011E-9C
- for qemu-devel@nongnu.org; Mon, 25 May 2026 05:13:09 -0400
+ id 1wRRN0-00012I-ML
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 05:13:11 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wRRMw-0003DO-2w
- for qemu-devel@nongnu.org; Mon, 25 May 2026 05:13:09 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1wRRMx-0003DU-5r
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 05:13:10 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxrcCYEhRqnAYNAA--.13603S3;
- Mon, 25 May 2026 17:12:56 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxNeibEhRqoQYNAA--.31398S3;
+ Mon, 25 May 2026 17:12:59 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJDxysGVEhRqXzuQAA--.8794S2;
- Mon, 25 May 2026 17:12:54 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJDxysGVEhRqXzuQAA--.8794S4;
+ Mon, 25 May 2026 17:12:59 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: maobibo@loongson.cn
-Cc: qemu-devel@nongnu.org, lixianglai@loongson.cn, chenhuacai@loongson.cn,
- gaosong <gaosong@loongson.cn>
-Subject: [PATCH v3 0/4] LoongArch : Add KVM DINTC support
-Date: Mon, 25 May 2026 16:46:40 +0800
-Message-Id: <20260525084645.3328690-1-gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org,
+	lixianglai@loongson.cn,
+	chenhuacai@loongson.cn
+Subject: [PATCH v3 2/4] target/loongarch: Add kvm support dintc
+Date: Mon, 25 May 2026 16:46:42 +0800
+Message-Id: <20260525084645.3328690-3-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20260525084645.3328690-1-gaosong@loongson.cn>
+References: <20260525084645.3328690-1-gaosong@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxysGVEhRqXzuQAA--.8794S2
+X-CM-TRANSID: qMiowJDxysGVEhRqXzuQAA--.8794S4
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -63,108 +65,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: gaosong <gaosong@loongson.cn>
+This patch adds Kvm put/get msgint CSRs and check msgint feature.
 
-Hi
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ target/loongarch/cpu.c     |  5 ++-
+ target/loongarch/cpu.h     |  1 +
+ target/loongarch/kvm/kvm.c | 74 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 77 insertions(+), 3 deletions(-)
 
-This series adds KVM put/get support for msgint CSRs and introduces
-msgint feature checks. It also adds kvm_dintc_realize() when
-kvm_irqchip_in_kernel is enabled, which creates and initializes the DINTC
-device in kernel mode.
-
-Since the kernel now supports DINTC on the KVM model,
-this series of updates will no longer use the' RFC' header;
-
-In addition, this series updates the Linux header files to version 7.1-rc4,
-and updates the `update-linux-headers.sh` script to include `typelimits.h`.
-
-About Testing:
-1. run script with '-cpu max,msgint=on' and 'virt,dmsi=on.'
-'
-./build/qemu-system-loongarch64 -accel kvm \
-     -bios /usr/share/edk2/loongarch64/QEMU_EFI-silent-pflash.raw \
-     -cpu max,msgint=on\
-     -smp 4 \
-     -machine virt,dmsi=on,kernel_irqchip=on\
-     -m 16G \
-     -netdev tap,id=net0,ifname=tap0,script=/root/net.sh,downscript=no,vhost=on,queues=4 \
-    -device virtio-net-pci,netdev=net0,mq=on,vectors=128,mac=52:54:00:12:34:56 \
-     -monitor telnet:localhost:4418,server,nowait \
-    -device virtio-gpu-pci \
-    -drive if=none,id=disk0,file=/home/kvm/lns23.qcow2,format=qcow2 \
-    -device virtio-blk-pci,drive=disk0,id=virtio_disk0 \
-    --nographic
-'
-2  the vm can work well with with net test, such as netperf or iperf test.
-
-V3: 
-   Rebase,add patch4 to disable msgint in KVM model.
-
-
-Thanks,
-Song Gao
-
-Cédric Le Goater (1):
-  linux-headers: Update to Linux v7.1-rc4
-
-Song Gao (2):
-  target/loongarch: Add kvm support dintc
-  Add dintc kvm_irqchip_in_kernel support
-
-gaosong (1):
-  targe/loongarch: KVM disable msgint
-
- hw/intc/loongarch_dintc.c                     |  13 +
- hw/intc/loongarch_dintc_kvm.c                 |  48 ++
- hw/intc/meson.build                           |   2 +
- include/hw/intc/loongarch_dintc.h             |  10 +
- include/standard-headers/drm/drm_fourcc.h     |  28 +-
- include/standard-headers/linux/const.h        |  18 +
- include/standard-headers/linux/ethtool.h      |  28 +-
- .../linux/input-event-codes.h                 |  13 +
- include/standard-headers/linux/pci_regs.h     |  71 ++-
- include/standard-headers/linux/typelimits.h   |   8 +
- include/standard-headers/linux/virtio_ring.h  |   5 +-
- include/standard-headers/linux/virtio_rtc.h   | 237 ++++++++++
- include/standard-headers/linux/vmclock-abi.h  |  20 +
- linux-headers/asm-arm64/kvm.h                 |   1 +
- linux-headers/asm-arm64/unistd_64.h           |   1 +
- linux-headers/asm-generic/unistd.h            |   5 +-
- linux-headers/asm-loongarch/kvm.h             |   5 +
- linux-headers/asm-loongarch/kvm_para.h        |   1 +
- linux-headers/asm-loongarch/unistd_64.h       |   2 +
- linux-headers/asm-mips/unistd_n32.h           |   1 +
- linux-headers/asm-mips/unistd_n64.h           |   1 +
- linux-headers/asm-mips/unistd_o32.h           |   1 +
- linux-headers/asm-powerpc/unistd_32.h         |   1 +
- linux-headers/asm-powerpc/unistd_64.h         |   1 +
- linux-headers/asm-riscv/kvm.h                 |  11 +-
- linux-headers/asm-riscv/ptrace.h              |  37 ++
- linux-headers/asm-riscv/unistd_32.h           |   1 +
- linux-headers/asm-riscv/unistd_64.h           |   1 +
- linux-headers/asm-s390/unistd_32.h            | 446 ------------------
- linux-headers/asm-s390/unistd_64.h            |   1 +
- linux-headers/asm-x86/kvm.h                   |  21 +-
- linux-headers/asm-x86/unistd_32.h             |   1 +
- linux-headers/asm-x86/unistd_64.h             |   1 +
- linux-headers/asm-x86/unistd_x32.h            |   1 +
- linux-headers/linux/const.h                   |  18 +
- linux-headers/linux/iommufd.h                 |  48 ++
- linux-headers/linux/kvm.h                     |  46 +-
- linux-headers/linux/mshv.h                    |   4 +-
- linux-headers/linux/psp-sev.h                 |   2 +-
- linux-headers/linux/stddef.h                  |   4 +
- linux-headers/linux/vduse.h                   |  85 +++-
- linux-headers/linux/vfio.h                    |  30 +-
- target/loongarch/cpu.c                        |   8 +-
- target/loongarch/cpu.h                        |   1 +
- target/loongarch/kvm/kvm.c                    |  74 +++
- 45 files changed, 866 insertions(+), 496 deletions(-)
- create mode 100644 hw/intc/loongarch_dintc_kvm.c
- create mode 100644 include/standard-headers/linux/typelimits.h
- create mode 100644 include/standard-headers/linux/virtio_rtc.h
- delete mode 100644 linux-headers/asm-s390/unistd_32.h
-
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 8f277f7696..64f437fcba 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -443,9 +443,6 @@ static void loongarch_max_initfn(Object *obj)
+ 
+     cpu->ptw = ON_OFF_AUTO_AUTO;
+     if (tcg_enabled()) {
+-        cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, 1);
+-        cpu->msgint = ON_OFF_AUTO_AUTO;
+-
+         uint32_t data = cpu->env.cpucfg[2];
+         data = FIELD_DP32(data, CPUCFG2, HPTW, 1);
+         /* Enable LA v1.1 instructions */
+@@ -460,6 +457,8 @@ static void loongarch_max_initfn(Object *obj)
+         data = FIELD_DP32(data, CPUCFG3, DBAR_HINTS, 1);
+         cpu->env.cpucfg[3] = data;
+     }
++    cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, 1);
++    cpu->msgint = ON_OFF_AUTO_AUTO;
+ }
+ 
+ #if defined(CONFIG_KVM)
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 096d778928..e6bbcded95 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -301,6 +301,7 @@ enum loongarch_features {
+     LOONGARCH_FEATURE_PV_IPI,
+     LOONGARCH_FEATURE_STEALTIME,
+     LOONGARCH_FEATURE_PTW,
++    LOONGARCH_FEATURE_MSGINT,
+ };
+ 
+ typedef struct  LoongArchBT {
+diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+index 4af4ab2ed0..af08f551a0 100644
+--- a/target/loongarch/kvm/kvm.c
++++ b/target/loongarch/kvm/kvm.c
+@@ -36,6 +36,13 @@ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
+     KVM_CAP_LAST_INFO
+ };
+ 
++static bool kvm_cpu_has_msgint(CPUState *cs)
++{
++    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
++
++    return FIELD_EX64(cpu->env.cpucfg[1], CPUCFG1, MSG_INT);
++}
++
+ static int kvm_get_stealtime(CPUState *cs)
+ {
+     CPULoongArchState *env = cpu_env(cs);
+@@ -359,6 +366,25 @@ static int kvm_loongarch_get_csr(CPUState *cs)
+ 
+     ret |= kvm_loongarch_get_pmu(cs);
+ 
++    /*
++     * CSR register MSGIS getting must be put after CSR register CSR_ESTAT,
++     * Since register CSR_ESTAT will sync software pending MSGINT status to
++     * hardware register and modify HW CSR MSGIS registers.
++     */
++    if (kvm_cpu_has_msgint(cs)) {
++        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
++                               &env->CSR_MSGIS[0]);
++
++        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
++                               &env->CSR_MSGIS[1]);
++
++        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
++                               &env->CSR_MSGIS[2]);
++
++        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
++                               &env->CSR_MSGIS[3]);
++    }
++
+     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TVAL),
+                            &env->CSR_TVAL);
+ 
+@@ -534,6 +560,20 @@ static int kvm_loongarch_put_csr(CPUState *cs, KvmPutState level)
+ 
+     ret |= kvm_loongarch_put_pmu(cs);
+ 
++    if (kvm_cpu_has_msgint(cs)) {
++        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
++                               &env->CSR_MSGIS[0]);
++
++        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
++                               &env->CSR_MSGIS[1]);
++
++        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
++                               &env->CSR_MSGIS[2]);
++
++        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
++                               &env->CSR_MSGIS[3]);
++    }
++
+     /*
+      * timer cfg must be put at last since it is used to enable
+      * guest timer
+@@ -983,6 +1023,12 @@ static bool kvm_feature_supported(CPUState *cs, enum loongarch_features feature)
+         ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
+         return (ret == 0);
+ 
++    case LOONGARCH_FEATURE_MSGINT:
++        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
++        attr.attr = KVM_LOONGARCH_VM_FEAT_MSGINT;
++        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
++        return (ret == 0);
++
+     default:
+         return false;
+     }
+@@ -1156,6 +1202,28 @@ static int kvm_cpu_check_pv_features(CPUState *cs, Error **errp)
+     return 0;
+ }
+ 
++static int kvm_cpu_check_msgint(CPUState *cs, Error **errp)
++{
++    CPULoongArchState *env = cpu_env(cs);
++    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
++    bool kvm_supported;
++
++    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_MSGINT);
++    env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 0);
++    if (cpu->msgint == ON_OFF_AUTO_ON) {
++        if (kvm_supported) {
++            env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 1);
++        } else {
++            error_setg(errp, "'msgint' feature not supported by KVM on this host");
++            return -ENOTSUP;
++        }
++    } else if ((cpu->msgint == ON_OFF_AUTO_AUTO) && kvm_supported) {
++        env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 1);
++    }
++
++    return 0;
++}
++
+ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
+ {
+     return 0;
+@@ -1211,6 +1279,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
+         return ret;
+     }
+ 
++    ret = kvm_cpu_check_msgint(cs, &local_err);
++    if (ret < 0) {
++        error_report_err(local_err);
++        return ret;
++    }
++
+     return 0;
+ }
+ 
 -- 
 2.47.3
 
