@@ -4,137 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F97BCD5BB1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 15:24:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E0A0CD5BC9
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 May 2026 15:24:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRX9y-000478-Du; Mon, 25 May 2026 11:24:06 -0400
+	id 1wRXAR-00059V-On; Mon, 25 May 2026 11:24:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wRX9x-00046D-Ea
- for qemu-devel@nongnu.org; Mon, 25 May 2026 11:24:05 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wRX9v-0004zz-Li
- for qemu-devel@nongnu.org; Mon, 25 May 2026 11:24:05 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64PBALND767582
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 15:24:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 9qsN6zxyqJCOfmLBee2J1XFDEDa5ldl26/e4OLIwdjc=; b=FixFFnLF3dMBNjs7
- +eowAwr6KItaivGXAoKbNmGwbw9w08cX5jRBMtyDvpi8GRHswNjZ7D4cXah9RXi0
- SPJ1dPafH9JZFUmT2Uv8LYs1PrZzgDeNS2vxKr3MFk1bXpmy7vJ9M94BEM7m0Ccg
- kw3TaeZNG56Hb7/R9ESWvCkpaILjt8aDKJc7cIphTS19Hu2qRL1GapH+Bwg7qAYU
- Qx1BSFPbAF91rVB0ZkXOBIUapTcYPUTPWwDzh9fsxy2U5HNnvxQ/i8GGTHUU59WW
- kCxgSdDe0rkjZzmrgoE9VNFa1E0wanwBm/3uHphV22CvYSftuKdD741+oH/DiXtZ
- ehKHVg==
-Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ebba0xcts-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 15:24:01 +0000 (GMT)
-Received: by mail-dl1-f70.google.com with SMTP id
- a92af1059eb24-1370417c0bfso313730c88.0
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 08:24:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1wRXAQ-00058o-DH
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 11:24:34 -0400
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1wRXAO-0005E9-Oz
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 11:24:34 -0400
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-7c58e6eb3edso89447967b3.2
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 08:24:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1779722641; x=1780327441; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=9qsN6zxyqJCOfmLBee2J1XFDEDa5ldl26/e4OLIwdjc=;
- b=LGG+HIqaRKRys6fF1AgMRBjdsOBMjx+WGHqcltvEZyH49k2nVuKzl1Cu/Sx0VgSJ20
- wkdBk25mzmcmqW9Ec9EGmw8uih90q5nx2XH8rcLG6YLUoXUp4aBQeJhbz4z/80e1TRud
- X1fowUqTuHtz4xQlFeovv+PQ6/UgrHEHLqi8ED8IrVUhD3XnrRHsxK+BtbqHm6QmxDZL
- IgnRS6mARm+R5BWNgZf5C19KKJJRGupyJILnCVhhBYq0JLs9nnw/ucoIcE3xw7kuGXvU
- LTFhAqd+3gOa4IQiY1vTUQREfn+17xhNU0gnKSKEr02cmXZu11czMkuH5WKyiMnU8XBv
- w9dg==
+ d=gmail.com; s=20251104; t=1779722671; x=1780327471; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ksOvl/ewr6dXPnhJyxWvDLQ6m0eOKL1ME5QF1eL20+A=;
+ b=Vq2n1ih/IJhLUvOpJAKWTIM5fr2ZlPMNqIGzRetO/SGhGfJGF4/Xlh+xysm4S49sCl
+ sHx1FoDLNenNki1Eq/VqWKXnwc8wfC60zRco1jkRL5LS7Y8WR3yO5a/K7zOX9qDAatjU
+ ORmfTHPyY2XvqZalSuZRTHK3YkvQJVhliyH7bYzni8NsJPV/6Y2wjjhs3DFaQ6t1bVcf
+ DNP/HFdHIz+cITJ7CWtQj1AuQqujkirDeCvwhFitOO+isN/yNePCerHdHeJU39B5bcD4
+ EQHjw+/Wv8p0XxDmtm+6comGrPCqI0K0pcYnB+sZ3hXQHssT1hNn6SYYyeXk4RQqhz1h
+ ovwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779722641; x=1780327441;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9qsN6zxyqJCOfmLBee2J1XFDEDa5ldl26/e4OLIwdjc=;
- b=jK38Md3FE4s0rBQz3uoz8IHxQ1OzW8txkT3ZKFVjtchAfjF0nVSzmrHKgzOtN9K+To
- 2AVpebcrU4rIMrEe8pY8ykYNN5t7CoZcZ65ULeeSrnPUDanwoaxA2UlK3YVIO4FaSJDL
- o4i1fbZCcnqSwYjLhJ8HokfWLoEI8Dk0r3Af15ZqVSCRMtNmIQ4p7ankwi9y3SfJlg3s
- xScD7e8wj0wXtFkkBqCyXCEsnXK9ceM7KrX52oWK/MvODKD4Hq2sXQIPrE6GGHsr64+i
- TcNJcypR0JXrobJkDrRTg20T8HfF2ZbkjO5XzJClV1nH/T3Zn9acAsgQLpw8LURB4mfX
- 2YUw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ90Nn1VGGa67JXqzQxYUn2gCqkPh0J5VybYdBdaR0CaTVlrNTVJFU33/QEdH5DluN57Nqhznwg+c+8b@nongnu.org
-X-Gm-Message-State: AOJu0YxUQpgRoOBdqvJbrytKLeHO9mZSNJiHP9xCZSONOeryr6tGZI6s
- PedDz7ewDxWyN5abPOz7BN9CBjkdpHvkPf1qGvkaCbL7UzR4JSKvKETO4ccaxmqCM6UhAqqvxPn
- B8r46A7BWwJUxLgex5raZGmjq8skr2/tA8BdbJPwQkGWsDetvKRPzqYOPzxkZwHIXXQ==
-X-Gm-Gg: Acq92OFtgg/0UZlVZ2NvB6KvNYLPwQ+EjYsfpWxM9WskYRbOsYUYGF7j7pDfpZtVE4J
- RxR+Uy9ZDRkLZsDl+tWDTXT97L4BOMxgTFYxgZNI7NNKAdp3xQ1J3rGrk7yj76BRD4ckX9NkVA7
- hVGDo4UE4iyJ4pgZss7RAwkPqYWmj1G1Os3JAYNt7lmch8bE82ksP/88VG7fqmaKu1AR12QTfYd
- dQ5Bos7BmZIhaj2RuWTmapskgO3SosDND44cvi85vXwRkcnuZN79yRpmP79/bps3EbYAZLLxMhI
- 09K4niQUxRagYK44IXLrRlgbgBO18aREB5mdDkVJhWqYF9+SM9fenK8TsHFCqNCoGs1E3UsrC1f
- Y3rA6dUln6L5yb+XQFMv4ZsECuKRHXLdzWbI+MmzY/v5lokZMSsmbKUR4WY5UP2+6iifXy9Jn3i
- YK2Vc70eG1x5QXHg==
-X-Received: by 2002:a05:7022:ed06:b0:135:40b2:ede0 with SMTP id
- a92af1059eb24-13633b6ccbcmr3838125c88.6.1779722640881; 
- Mon, 25 May 2026 08:24:00 -0700 (PDT)
-X-Received: by 2002:a05:7022:ed06:b0:135:40b2:ede0 with SMTP id
- a92af1059eb24-13633b6ccbcmr3838118c88.6.1779722640238; 
- Mon, 25 May 2026 08:24:00 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30451ca2d80sm10153548eec.0.2026.05.25.08.23.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 25 May 2026 08:23:59 -0700 (PDT)
-Message-ID: <e227ea9f-21bc-43eb-b5ac-21e613d7184e@oss.qualcomm.com>
-Date: Mon, 25 May 2026 08:23:58 -0700
+ d=1e100.net; s=20251104; t=1779722671; x=1780327471;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ksOvl/ewr6dXPnhJyxWvDLQ6m0eOKL1ME5QF1eL20+A=;
+ b=SQ+8fy8cnfK6Q/lNhwkWjJ+3x9rHU8VRMMnKnkQi1hN/5FAcy9tvwpKcqbexv+6EoM
+ 4qECCSE+L7o8a6vJ3vzJhI7HDhnZqffVnzxNTxLg4Bfio68fvP7glKeMknH42xOIaFrG
+ M0KXluXyw5LACKawgMnLJq+0uuVIIXKaPALXMCxxNTmcSp7BELq1eavDv2JiAKtPycz8
+ kZWIFqAIkO27Xpbte+IhDeTWgjrz3aM9S7qrb+Ty8bKPKmhNN286H3MEaJBFfYKJRxBq
+ 6OG3CoC71Ppv8st4hn0E8A9FNCMvXF54M/TfY2KvxLkGHVE+09g0PPi/T0qslUEqm5XS
+ F5ag==
+X-Gm-Message-State: AOJu0Ywo8r2JBzFjbsZf3bC09KCKqSVTTlRfos6NcDNH623jE2yHBeqL
+ WR1vPE/Jo50hIRbhHDv6dFtTRcoyNLX7AR0Ldr1gQpEa1TU3Cj35/ssMLhkrla9w
+X-Gm-Gg: Acq92OElgZd8L/k2mHNiOl9FQvaOhLq5pSNX2xE90QGypkU1lYOdvXOn+4uZ1m/rjPh
+ GFkrqtNPTgCNHrSVCFwNgkpoeSwD6/JiJJHshO1qXwEX32E/8sQ7wR5WOMm0qs/YHvEPrxD1nRz
+ JNGBEUePo7X0pwtjG53pMgEjanF2m+HlBYH43kCWYg1dL4hNTsYxwTOLMP0v40L4CT5x2Wwq1Wa
+ 961daL2ktJ2I/HYDkrzF2H3w1GsknY/Yfc5ougtgeOvuPt2dqNdHNMpiFWPJRi3gt/r7SzNUJJs
+ mwf8itDGlVus82MMxHuPbJn16EfaTtwuWxfmDo5/x7cW4QJc56CnSuFU2jN0vwjd8Li/SAoyFKq
+ t+qmnRJ5LaWcghXNSjpVjd5G82tgpms1z3PP+B/SFhFImnr9LWllXrbVPr6SGOTKAAKyaXYxcZQ
+ WSXSvMaHYVMGGYy9GGL5debJMFyzzxDfy1ZJZFfw9WA9X1ulqttlRs/X3F9JdHpYB+4rnwXMHx3
+ CU=
+X-Received: by 2002:a05:690c:c22e:b0:7bd:a50c:454d with SMTP id
+ 00721157ae682-7d33868107fmr171135817b3.13.1779722671502; 
+ Mon, 25 May 2026 08:24:31 -0700 (PDT)
+Received: from localhost (107-220-129-194.lightspeed.chrlnc.sbcglobal.net.
+ [107.220.129.194]) by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-7d38be313c9sm47545467b3.30.2026.05.25.08.24.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 25 May 2026 08:24:30 -0700 (PDT)
+From: Matt Turner <mattst88@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Matt Turner <mattst88@gmail.com>,
+ qemu-stable@nongnu.org
+Subject: [PATCH] linux-user/mips: save/restore FCSR across signal delivery
+Date: Mon, 25 May 2026 11:24:27 -0400
+Message-ID: <20260525152427.4120785-1-mattst88@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs/code-provenance: Fix formatting of *-by tags
-To: =?UTF-8?Q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@9elements.com>,
- qemu-devel@nongnu.org
-References: <20260520-prov-v1-1-7a58af334b9c@9elements.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260520-prov-v1-1-7a58af334b9c@9elements.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: B8AOPx2Lhfn9wPfu-5x5EcsWpxXQ4slu
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI1MDE1NiBTYWx0ZWRfX3TB6t76SdHdX
- vf8Ysjvg0Sqa8pWIrY7DZREZxzubqXerfb1d0TsDEJqPf7zvYoGObW23yN3jur92Soqv8d1txsk
- EDOnm4hmRJXC0lOwK+z4Nk7ZB8ddLWPslm6PUs3hzir1dthZqcRj5FC5ZuBdjEaBdWWIYv9LFDe
- b7mZXAytbred7YNGXI5PpTDvQHJkZ2PBBVRY1gPhKCvzlLkBaUSiMGbfrNycd9UIxsFQgyAnbci
- 3qkKaPhsbQez25R/oHBcBGkIcu+DvT3a0ONYVX7ZmaAnEfRLoBksYs3gv55lx1q2D2Wz/21zYxK
- mg8hDVj0XT+g9NAzB3kc1ZjW310aWtGnh9yl49/j+3EElzDmYcGS0ZFFDgc2olha60eSF56gP/x
- M+RFO8NHZ6O1Eom4NU8Ba/v9b8neYhE8RFs1D4R8HcDm6joEmUA+JfW1cb//+gIJY8NqKPaotgV
- hhSnveKC8ZY+Y5hHaZQ==
-X-Proofpoint-GUID: B8AOPx2Lhfn9wPfu-5x5EcsWpxXQ4slu
-X-Authority-Analysis: v=2.4 cv=Xca5Co55 c=1 sm=1 tr=0 ts=6a146991 cx=c_pps
- a=SvEPeNj+VMjHSW//kvnxuw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=PzGKxP3WAAAA:8 a=_cXyswzYhM_X85Rk5ssA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=Kq8ClHjjuc5pcCNDwlU0:22 a=zCCnohV0i-_k6euCn0hJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-25_04,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 malwarescore=0 adultscore=0 priorityscore=1501 impostorscore=0
- clxscore=1015 lowpriorityscore=0 bulkscore=0 phishscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605250156
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=mattst88@gmail.com; helo=mail-yw1-x1130.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -151,72 +104,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/20/2026 4:25 AM, J. Neuschäfer wrote:
-> Applying both ``code`` and **bold** formatting doesn't have the intended
-> outcome, instead Sphinx emits the backticks into the HTML.
-> 
-> Use only **bold** formatting to fix the HTML output.
-> 
-> Signed-off-by: J. Neuschäfer <j.neuschaefer@9elements.com>
-> ---
-> I'm fine with either solution, keeping the bold or code formatting, and I'll
-> switch to the other if requested. They just don't mix well.
-> ---
->  docs/devel/code-provenance.rst | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
-> index 4e6a9afe0d672c544c069447a9978baa0b4a6212..65b8f232a08f6bc903c77fd0b1f7a5adad9fbe5d 100644
-> --- a/docs/devel/code-provenance.rst
-> +++ b/docs/devel/code-provenance.rst
-> @@ -99,13 +99,13 @@ Other commit tags
->  While the ``Signed-off-by`` tag is mandatory, there are a number of other tags
->  that are commonly used during QEMU development:
->  
-> - * **``Reviewed-by``**: when a QEMU community member reviews a patch on the
-> + * **Reviewed-by**: when a QEMU community member reviews a patch on the
->     mailing list, if they consider the patch acceptable, they should send an
->     email reply containing a ``Reviewed-by`` tag. Subsystem maintainers who
->     review a patch should add this even if they are also adding their
->     ``Signed-off-by`` to the same commit.
->  
-> - * **``Acked-by``**: when a QEMU subsystem maintainer approves a patch that
-> + * **Acked-by**: when a QEMU subsystem maintainer approves a patch that
->     touches their subsystem, but intends to allow a different maintainer to
->     queue it and send a pull request, they would send a mail containing a
->     ``Acked-by`` tag. Where a patch touches multiple subsystems, ``Acked-by``
-> @@ -113,18 +113,18 @@ that are commonly used during QEMU development:
->     maintainer wants to indicate they have done a full review they should use
->     a ``Reviewed-by`` tag.
->  
-> - * **``Tested-by``**: when a QEMU community member has functionally tested the
-> + * **Tested-by**: when a QEMU community member has functionally tested the
->     behaviour of the patch in some manner, they should send an email reply
->     containing a ``Tested-by`` tag.
->  
-> - * **``Reported-by``**: when a QEMU community member reports a problem via the
-> + * **Reported-by**: when a QEMU community member reports a problem via the
->     mailing list, or some other informal channel that is not the issue tracker,
->     it is good practice to credit them by including a ``Reported-by`` tag on
->     any patch fixing the issue. When the problem is reported via the GitLab
->     issue tracker, however, it is sufficient to just include a link to the
->     issue.
->  
-> - * **``Suggested-by``**: when a reviewer or other 3rd party makes non-trivial
-> + * **Suggested-by**: when a reviewer or other 3rd party makes non-trivial
->     suggestions for how to change a patch, it is good practice to credit them
->     by including a ``Suggested-by`` tag.
->  
-> 
-> ---
-> base-commit: 6d17fd91f6cf88df5cb2205e578640d72605cc43
-> change-id: 20260520-prov-73c69e4e979c
-> 
-> Best regards,
+QEMU keeps the MIPS FPU control/status register (FCSR, fcr31) in
+env->active_fpu.fcr31.  The rounding mode, flush-to-zero (FS), and
+NaN-2008 mode bits in fcr31 are reflected into the derived
+env->active_fpu.fp_status via set_float_rounding_mode() and friends;
+every architectural write to FCSR goes through helper_ctc1() which
+calls restore_fp_status() to keep the two in sync.
 
-This was merged into master (cbf877d67a812be17a9ce404a589e1bdf722c1f6).
-Thank you for your contribution!
+Both target_sigcontext variants (O32 and N32/N64) have an sc_fpc_csr
+field that holds FCSR, but setup_sigcontext() never wrote it and
+restore_sigcontext() never read it.  As a result:
 
-Regards,
-Pierrick
+  - The signal frame always delivered sc_fpc_csr == 0 to the handler,
+    so sigaction(SA_SIGINFO) handlers that inspect the interrupted
+    context see the wrong FCSR.
+
+  - On sigreturn, active_fpu.fcr31 retained whatever value the signal
+    handler last installed (if any), and active_fpu.fp_status was
+    never resynced.  Interrupted code resumed with the wrong rounding
+    mode, FS flag, and NaN-2008 semantics.
+
+Fix setup_sigcontext() to save fcr31 into sc_fpc_csr.  Fix
+restore_sigcontext() to read it back (masked to fcr31_rw_bitmask as
+the kernel does) and call cpu_mips_restore_fp_status() to resync
+fp_status from the restored fcr31.
+
+Add cpu_mips_restore_fp_status() in target/mips/fpu.c (which already
+defines ieee_rm and includes fpu_helper.h), and declare it in cpu.h.
+
+Fixes: 084d0497a0 ("mips-linux-user: Save and restore fpu and dsp from sigcontext")
+Cc: qemu-stable@nongnu.org
+---
+ linux-user/mips/signal.c | 7 +++++++
+ target/mips/cpu.h        | 3 +++
+ target/mips/fpu.c        | 5 +++++
+ 3 files changed, 15 insertions(+)
+
+diff --git ./linux-user/mips/signal.c ./linux-user/mips/signal.c
+index d69a5d73dd..1b10012726 100644
+--- ./linux-user/mips/signal.c
++++ ./linux-user/mips/signal.c
+@@ -134,6 +134,7 @@ static inline void setup_sigcontext(CPUMIPSState *regs,
+     for (i = 0; i < 32; ++i) {
+         __put_user(regs->active_fpu.fpr[i].d, &sc->sc_fpregs[i]);
+     }
++    __put_user(regs->active_fpu.fcr31, &sc->sc_fpc_csr);
+ }
+ 
+ static inline void
+@@ -165,6 +166,12 @@ restore_sigcontext(CPUMIPSState *regs, struct target_sigcontext *sc)
+     for (i = 0; i < 32; ++i) {
+         __get_user(regs->active_fpu.fpr[i].d, &sc->sc_fpregs[i]);
+     }
++    {
++        uint32_t fcr31;
++        __get_user(fcr31, &sc->sc_fpc_csr);
++        regs->active_fpu.fcr31 = fcr31 & regs->active_fpu.fcr31_rw_bitmask;
++        cpu_mips_restore_fp_status(regs);
++    }
+ }
+ 
+ /*
+diff --git ./target/mips/cpu.h ./target/mips/cpu.h
+index 346713705a..392406aff8 100644
+--- ./target/mips/cpu.h
++++ ./target/mips/cpu.h
+@@ -1384,6 +1384,9 @@ void cpu_mips_clock_init(MIPSCPU *cpu);
+ /* helper.c */
+ target_ulong exception_resume_pc(CPUMIPSState *env);
+ 
++/* fpu.c */
++void cpu_mips_restore_fp_status(CPUMIPSState *env);
++
+ /**
+  * mips_cpu_create_with_clock:
+  * @typename: a MIPS CPU type.
+diff --git ./target/mips/fpu.c ./target/mips/fpu.c
+index c7c487c1f9..8b661865ca 100644
+--- ./target/mips/fpu.c
++++ ./target/mips/fpu.c
+@@ -17,6 +17,11 @@ const FloatRoundMode ieee_rm[4] = {
+     float_round_down
+ };
+ 
++void cpu_mips_restore_fp_status(CPUMIPSState *env)
++{
++    restore_fp_status(env);
++}
++
+ const char fregnames[32][4] = {
+     "f0",  "f1",  "f2",  "f3",  "f4",  "f5",  "f6",  "f7",
+     "f8",  "f9",  "f10", "f11", "f12", "f13", "f14", "f15",
+-- 
+2.53.0
+
 
