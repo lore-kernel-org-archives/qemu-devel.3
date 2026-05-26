@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A99CCD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 11:04:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28730CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 11:05:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRpZ6-0002i0-HK; Tue, 26 May 2026 07:03:16 -0400
+	id 1wRpZB-0002lf-8C; Tue, 26 May 2026 07:03:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wRpYm-0002ZY-9j
- for qemu-devel@nongnu.org; Tue, 26 May 2026 07:02:57 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1wRpYr-0002c2-LA
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 07:03:02 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wRpYj-00067T-5N
- for qemu-devel@nongnu.org; Tue, 26 May 2026 07:02:55 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-449de065cb3so10182403f8f.2
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 04:02:52 -0700 (PDT)
+ id 1wRpYm-00069o-9Z
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 07:03:01 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-490686877a1so12832695e9.0
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 04:02:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779793371; x=1780398171; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779793375; x=1780398175; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GpNFrHwCTegluEwEkg7Y+CXfscfOfe38FMBiShMQhEM=;
- b=I22g7ic+dKyJE6x9j5ggXN4LZOOpY03bIRiPQtzd2Cv5Hj7opQ0C/i85R+5AF7C370
- QrL/pbHHD/ZygVT/PZ19LnwNbSOucYLE+VzhIy6MLNNJq4tN4JmwCaTErp+hWk9uX7BF
- xH95hAA3tKVOIRKhX460z/s+JHA25i7+TSsrbrm7XaOCZ57bop5U0THWR59k0M6TbYrY
- ZSyjADcB19WmX7IevOol+uaiU2ziVLd5dffH9YZOgAQvas8OA+2Fzj+KJFYZKfdNtXZG
- e+dRSkKGEJ4nzYCSOMaLPW8BpXzJKRRAYSkiTknmP+buoxcZouLlgE7DUX7/UjQIudZ/
- k3Qw==
+ bh=Bg+tgRoSaMVPlPZYLq68vWgTbA0wBm36ShtmfRzn+V4=;
+ b=foKwkTSl+qg2dvjzAJUoc09EEcPVj5fUc90FyxgaUfERAEwNsc+ZQT+Kd6y7ZtiRcN
+ GmK+4SCnXYQcWFp+tUgq9hd9tjI88WtOecFFVQsmC1sDZ9j9zCl2Re2h5dukQyvwZ5ke
+ gKnDhD/zYwu4IfnJ0xmFdGiGcV3eBbmsWD0BppPOXadYfrxBzvpEnvDqyyY6ZqAm/ByL
+ J3yGoPVRO6Hrcfh6fOqX6mUkPvMgwPfUFgjVPIOmGFNa5fehwkYJVhMVtiRliETE1BSh
+ 5/Ly/fPmVnLDIbKu1a4ZSupxxSNsKhelDCPAyd286YCMkly3EZvKMdHFimgkhXefN5rE
+ tGmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779793371; x=1780398171;
+ d=1e100.net; s=20251104; t=1779793375; x=1780398175;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=GpNFrHwCTegluEwEkg7Y+CXfscfOfe38FMBiShMQhEM=;
- b=cnYPPasuNS3HmxT6zcNLHMu5sCLu1vxmo5zBgVzJS2JwJzzgYNKof6tUkCe3fpaa1c
- Zx8kMVGhO0WuiCJsH1Km71AfOWdlp26yz297OGBrE6bdkaCPGhOGA85GFi6CcqJ5Q6Tx
- 8y1pSmQvTdlhlJBDXYYJ5KFIPRIHIuqk0ZlLueN652U4Lzm0xR2EbfC9BIaJGSQ9xd+x
- tRhRJKBhra9fFALC9f5O0FlwF2zz9xfzHgRXS46YM2mFN5bguOeZUjEmwU3Fk8pIWr1V
- 3m2VqzMlFVZhQlbqzKQ/iTIIfcIiu/zW7rroRcYxm2Jhj1UZ9Xo4wjV24FcR+3Hcs4m/
- sV8g==
-X-Gm-Message-State: AOJu0Yzhc0iUYY2akGQapwhgmgTEY/jy2vnrHPAq7AVxXpiFkRCj7UiO
- VxwcV5eUch6ApB/D9pwTxx1vCTJaM2jatgaOwpic4Y3Y2BehqBGZ+WkuJvWyqLDnON8=
-X-Gm-Gg: Acq92OGQHS/1c5ow1GFZnnh9YBq1KYVkIsGEPu6+NzNsd8OMIeBWxHDxMSwz2w36kzD
- HV0Z7GHkK4NIvW856NJEv0Cbqveqtepf9FPh72wGiP6c6psgzVymgCqsTwf0KJEGnRrFNO0rRfh
- AHXj2IoSsqiRGKo7m9dK10KaqcO5J3ic3FFpq/jTs674h8gb6/xjKexf4jHb6vzFrugsALg4YkB
- iSgyi4F+MW07UI6W12Q0o5ccY9pxIwhD1NzfIznSjkoH5a/b3XLotm2p++Nt9zYrnyeqJfigbb3
- D+w33eZjc41M93u1zH+oRrhNGBtrrawfYEu375r9b5W9NYOwE6tnlZTXyl8kn65gPgd+kjN8xrr
- TMT8hOxnwKUOMeARtWSJbmHdjJYWfbozsgjb2gzKBQJdkpC+PvOwd36WJQvVZ+/JWf2gCWZ8hCq
- xVIVdm+gZ5VyfVmhYScVjZYVs=
-X-Received: by 2002:a05:600c:1c0b:b0:488:b187:3c with SMTP id
- 5b1f17b1804b1-490426aa7acmr338149405e9.14.1779793371347; 
- Tue, 26 May 2026 04:02:51 -0700 (PDT)
+ bh=Bg+tgRoSaMVPlPZYLq68vWgTbA0wBm36ShtmfRzn+V4=;
+ b=LqwWvxo4asJdMJaaiGZIETtN1W5WDRKux2TS5mmPhHQa4aaGNymhRQIoHF3nOG5jT6
+ wOaIab5DJvJLGkrj7pQb9ww68CUoFKKh8anoOYjtGVJwOodzAGiD9EDkpOz9M/xSq55k
+ UpNrbgUniTVJ2y3jDAYLY6nNGQ8MAhJOpGee7wUv2c9CO4YIiu17zrGUgSCgUoYfxA5f
+ T9q1DrnYd6FCR+mae9lpZDE/iKtwyJI4G9LVFLw+LD+mF9brZY3vrWJrr2WakKUSk80m
+ S1zIPFvDp/DQAiOqOvwAQJtVRtUKtJ5GHhN8FObDlXlEpl694/YNUtvFFOjpWfMfFkha
+ d/JA==
+X-Gm-Message-State: AOJu0YzHblgcy4cgOhX8V6Swicd/LPWi1WP3HO5gpkL1rKjIAp/eJUad
+ arhB2vK8Q3fVRATDsHc/XQA2uKhIn0xMT53h3om3CFYnJn+6VEEePK+baea71naS2bI=
+X-Gm-Gg: Acq92OHdf7BsSmZ62DSlbZbfbHEYWNxcnuYXAlpacMMcHtWVI3XEP0ppW5J7bZlKwCZ
+ UwbMUOQFsqx8WPVCKSCVUHQftSxjsX8u0KUe7st590RoXFpeleBiGRcQWirudufmHIo2Bw+8N47
+ oQPA8/UKqd/etAeMck3H0Qq7SrJp7T754leS4VErNFradGNnRZv4bvJTl44GzXp+nwLfF97Cxkb
+ rIkySMhFTp2Ny1y3SuxM/44MdmI6rOzJW8JFJ/y09m0OVQFLBiQVCqfc2SUdsNav3KhSQ3Xzett
+ W94Ng1jPAaJ4BBB3gbPGA/4NjQCbDuE69B4GsBIbb7FosG2roHD7fEOd5OQTLX+yD6BErFQm3t9
+ 9xqm2rSLeQ6irHcqZWXqeT7SRkjSNraqRyVPZcbSrbalSkUUaXAkLMhcnHpP3IrqjFk8YXzvvPG
+ 8PLxTfUhMeWAGoiqNHw4IGqFI=
+X-Received: by 2002:a05:600c:a402:b0:48f:e230:29f5 with SMTP id
+ 5b1f17b1804b1-490426b0c92mr214245655e9.16.1779793374516; 
+ Tue, 26 May 2026 04:02:54 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490454ac6a6sm326948035e9.12.2026.05.26.04.02.46
+ 5b1f17b1804b1-4904561f2dfsm300944335e9.12.2026.05.26.04.02.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 04:02:46 -0700 (PDT)
+ Tue, 26 May 2026 04:02:51 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2FE8360434;
+ by draig.lan (Postfix) with ESMTP id 8F343604A4;
  Tue, 26 May 2026 12:02:44 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -84,24 +84,25 @@ Cc: Brad Smith <brad@comstyle.com>, Thomas Huth <thuth@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org,
  Warner Losh <imp@bsdimp.com>
-Subject: [PATCH v3 07/14] gitlab: add MacOS 26 job on gitlab runner
-Date: Tue, 26 May 2026 12:02:35 +0100
-Message-ID: <20260526110243.470002-8-alex.bennee@linaro.org>
+Subject: [PATCH v3 11/14] MAINTAINERS: Cover debian-loongarch-cross.docker
+ with LoongArch section
+Date: Tue, 26 May 2026 12:02:39 +0100
+Message-ID: <20260526110243.470002-12-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260526110243.470002-1-alex.bennee@linaro.org>
 References: <20260526110243.470002-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_SPACE_RATIO=0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,49 +118,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-gitlab supports 3 MacOS images with 15 and 26 being the current
-supported ones. To get ahead of the curve lets enable 26 as well.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-It re-uses the same brew list but also attempts to work around python
-configure failure by setting DYLD_LIBRARY_PATH:
-/opt/homebrew/opt/expat/lib/
-
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260518102222.80735-3-philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
 ---
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-v2
-  - call runners directly, seems to be working now
-  - drop debug lines
----
- .gitlab-ci.d/macos.yml | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
-
-diff --git a/.gitlab-ci.d/macos.yml b/.gitlab-ci.d/macos.yml
-index c93bf12a294..f61750a3f4a 100644
---- a/.gitlab-ci.d/macos.yml
-+++ b/.gitlab-ci.d/macos.yml
-@@ -45,3 +45,19 @@ aarch64-macos-15-build:
-         --cross-prefix-x86_64=x86_64-elf-
-         --disable-plugins
-     TEST_TARGETS: check-unit run-tcg-tests-aarch64-softmmu run-tcg-tests-i386-softmmu run-tcg-tests-x86_64-softmmu
-+
-+aarch64-macos-26-build:
-+  extends: .macos_job_template
-+  image: macos-26-xcode-26
-+  variables:
-+    NAME: macos-26
-+    DYLD_LIBRARY_PATH: /opt/homebrew/opt/expat/lib/
-+    PATH_EXTRA: /opt/homebrew/gettext/bin
-+    PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
-+    CONFIGURE_ARGS:
-+        --target-list=aarch64-softmmu,i386-softmmu,x86_64-softmmu
-+        --cross-prefix-aarch64=aarch64-elf-
-+        --cross-prefix-i386=i686-elf-
-+        --cross-prefix-x86_64=x86_64-elf-
-+        --disable-plugins
-+    TEST_TARGETS: check-unit run-tcg-tests-aarch64-softmmu run-tcg-tests-i386-softmmu run-tcg-tests-x86_64-softmmu
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 506f8d62467..31500ea2660 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -280,6 +280,7 @@ LoongArch TCG CPUs
+ M: Song Gao <gaosong@loongson.cn>
+ S: Maintained
+ F: target/loongarch/
++F: tests/docker/dockerfiles/debian-loongarch-cross.docker
+ F: tests/tcg/loongarch64/
+ F: tests/functional/loongarch64/meson.build
+ F: tests/functional/loongarch64/test_virt.py
 -- 
 2.47.3
 
