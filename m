@@ -4,114 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3B7BCD5BB4
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 04:14:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 661A1CD5BCF
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 04:15:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRjBE-0003e6-PU; Tue, 26 May 2026 00:14:12 -0400
+	id 1wRjCY-0004I1-Sz; Tue, 26 May 2026 00:15:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wRjBC-0003dH-TB
- for qemu-devel@nongnu.org; Tue, 26 May 2026 00:14:10 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wRjBA-0006Ya-9I
- for qemu-devel@nongnu.org; Tue, 26 May 2026 00:14:10 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-bd56d108454so1830136466b.2
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 21:14:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779768846; cv=none;
- d=google.com; s=arc-20240605;
- b=Vusrw9dhNDUDDSJBbyFUnWKm9bis2xHh5iS0cVMBHEVkOGKYXQgh7jLLkhqQTfmrhx
- IxAq3AlJu97/GRG75xOytjc95hy1Cfo0YKqeugWLaSuelXRlfyWqsy25KjXz44cs39gN
- LVhGBQzsgWUVQ53F8mFH4XjREMueNsk//QYetM58A5D1o6DJDuWRpHkXo2IKamOo688P
- VpgOJyuZxMHEonCpwbxHDV+Zf6sbegytUbaSErTOl0WXfTPFeGVgnTgeX8ddEt0cHWpX
- 8EWaOoIjvXPnf0oOkbjP7LP9H78v4lv44JxbhfbtBaDeqjzJQO7xiSCxAkFeP3rWx4/m
- Rgpg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Jm4cF+ExQ+CB7DRiBDseRtNTIFjbJgZ956XjkqygQlY=;
- fh=Z5J8e1wXZTFt5rQ+kCS4QgV6wPLGneq0xoXcbU8Vu50=;
- b=IZS8rDWuJmi6ZCa/eS2TeV5cHQUy6TE9QulkF0YFxgyTvN75S4loSG3R6uEAd5hTRf
- f0X9zU4qLzHb5cuvcCctJ1saryLeFbX82hfUHmo24QkYM6eCWG7WQ1oU7ZycjauoC49W
- S+s6tBzHTMcfYkzlFraa1/K4Sz83EZQcUIC3hdfZz9ErjU0jbr4VU3Ldyl/hC9UvD0qU
- F3JHvxLASpx8gcVjgXCGneU3/UCZ8IyVmjDm18cT0xKnpmBS1Hupwhenb311JlKNs1Da
- nCX8xbQodu4FGf2wK84d1YWOjbd9+revZpti1jul/OYgRkPvYKBVbWdLKmWiWNXfmuZ9
- eMpQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wRjCW-0004Hg-L4
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 00:15:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wRjCT-0007f7-Uo
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 00:15:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779768928;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ElMZ/vicUbN+TsMfjr9EijaQ3zNqtxaT3mcM9NyM8B0=;
+ b=ItTVMRfhJK+UgTIyD+Z9rZuKv466fkEDOA4XiaFOUDHJ4r3t+pPLjav+yV0YjIiCvZ4S0c
+ DwXHNkGY29REP7x1jmUzRVNHmjpQWgagPTK0ZWR8yMa9lpmAuLFhXaRyWsPSk1cmUN3IwC
+ XqhaNGVgFYEGf9UdFGXo5JQQ7g/oAK8=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-190-GvyJlqYKOlu3_48dFOdAyQ-1; Tue, 26 May 2026 00:15:26 -0400
+X-MC-Unique: GvyJlqYKOlu3_48dFOdAyQ-1
+X-Mimecast-MFC-AGG-ID: GvyJlqYKOlu3_48dFOdAyQ_1779768925
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-369467ab5bfso8611305a91.0
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 21:15:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779768846; x=1780373646; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1779768925; x=1780373725; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Jm4cF+ExQ+CB7DRiBDseRtNTIFjbJgZ956XjkqygQlY=;
- b=r//91e+Qf0g2UuTZc6YRcgSodpbPtmtqtRAajFh8cAYg8ZxFAfDLK2ED6Qoi5Bxje5
- Y768QJyp1ob7FL5Nc5o5zDpOtHdFrymqLYLSwmNbaXtEaDcim1EHgXKv/Oqsh7QeGhGH
- iAdA8TS08uIf4/sQVtwXavitCG3+WSitPnD3Yjvj21vwNu/g1Kye52PsTMNWMRshIXfB
- nc2cdXtPWqqjmX4NpCjifTmHhjNcF6SZ0iyrXQx5oDWBmxBtBjQAknPXDHXTSRZ2ByUw
- /6dOlZcCWTLCDNvGr5WPp5dCBaw6d5hG5gcKGvtka1HYoK/xzMA7+jxbJ5Vo1W7rzL1k
- AwHw==
+ bh=ElMZ/vicUbN+TsMfjr9EijaQ3zNqtxaT3mcM9NyM8B0=;
+ b=r/UwhwEmHP0/AJ4l5DwUb8vU/NgMsPLkPhRKJ/yCgw8tvWqRZURnB7yDO3+8GfnGXh
+ eoExfIrwtr6kh8ZvhZOYimCvuv3YBXampwcX5ygx0mIVthaYohI0gjtXCvo2MRGW+n7s
+ viUwCU01Y5Bk9v5VCEWI31z4LxpHKD1GdFCZAcIEAQRL9ilLzE/oodGTYzDQ3GVcWFhq
+ j+p11HiFDlJYn1Wgx/Dx68pxRJnGmBkRUKTZYKdexjJuq7WqeovPEEWE0aLyrh/YrvOP
+ OaK/MJoH02z2eQFBROT/ZOFtAnexlkJhrRW9LMsuK3gljxMansCGtmNR6MdRUBPAv0mP
+ 6HQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779768846; x=1780373646;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Jm4cF+ExQ+CB7DRiBDseRtNTIFjbJgZ956XjkqygQlY=;
- b=r4FbbNS2EUK+2qV3M1Aailt5peslS1w7efhIP5cBJne7Epe2FOWNAa+e4zpSW7kL9m
- bnVUpXDaFYDiclS7fEqxZNOYNFD2n2wfJ8jA/ovJ17TjtnHQOvs4+rkL4804Q9BvSv0/
- BR0Y00rF4zfLP+9aWGsmXUCZ7mgEiHK1tgiG1kUlnSU8/iQjMW7ycVK7e8epK1yBWLkl
- ucZtCVMGPr5FeazayzMXtJj5NtO9MpVgczPylE7Aj5xX74ZF+YT29OfH6v2jxUCZSuRM
- mjUbiMGq/zMjvheHH0p5ZQMGIF/dCYmu7PNLWmJtVsyh5hCQ3hBuQv1fyyuzCAZuD+ga
- lqmg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+Yx2choxr9jdqe9aboHpk4XhDDZZGWQq3SnoRIbe/HUkXF2WCT8d4iz6Lv364xfytrsEA0vMoMeHDY@nongnu.org
-X-Gm-Message-State: AOJu0Yy9uPEdw8nrlpbNGrK+jQpRsrYWZPjVbNGeALsYTrhIj7fJMiL9
- sEAvYmwofqhlxYj59KXO0suvkkdsQuJUJ+/MuIF1nRgsrgDcjV5psRyTLHpIoUFK7JMWpSUojiR
- yaIcyB+XxugjUl2WgzBEkcS2YGWAL9mw=
-X-Gm-Gg: Acq92OFzkE5v1vMgi2sVdxyHQDSX7k3ZdPKfgrBKZNEhln3EprkzO1ZdMZ3RhKaCu1v
- qEZ6cZwTlEX8mefNXpoHFninbu1RdDvzBg2HgCuENkAsmC5NJ4ON6fH3TaNm5pQdahdSbPhyjTE
- QeIQUha16oT9HnPLRoVUheYDvuGLK+bj7A9rJJO6LfRFzbGA+tKrnm3y9y/QvRIjq/EBDZLo1r9
- C+LWatYXgRGG1lFJHKq9glFZRXErD+o5c4eYY+Jf7mzuEHehMJ0zNHq96kdo+5RVDJelQ+o4LxY
- GhbyiTELKMamFfxigXEjpHx0b3Dbld8TohSLcf5pALmWoyLc
-X-Received: by 2002:a17:907:7290:b0:bd2:4aa6:1a9d with SMTP id
- a640c23a62f3a-bdd2360237fmr1053015766b.16.1779768846290; Mon, 25 May 2026
- 21:14:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <177756498815.8917.12449488721849651971-0@git.sr.ht>
- <177756498815.8917.12449488721849651971-6@git.sr.ht>
-In-Reply-To: <177756498815.8917.12449488721849651971-6@git.sr.ht>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 26 May 2026 14:13:39 +1000
-X-Gm-Features: AVHnY4JKRZz-AmAFAWFHWvzL-_H8fq6RJbvzCZXPhbnkD4-r_hbEQhp0u0urYgY
-Message-ID: <CAKmqyKM7XCgAghGtMrPnd=NFweWNuiwR8E2Y-VnA7axa+gky8w@mail.gmail.com>
-Subject: Re: [PATCH qemu v4 6/9] ot_uart: implement RX fifo and loopback
-To: "~lexbaileylowrisc" <lex.bailey@lowrisc.org>
-Cc: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>, qemu-devel@nongnu.org, 
- Amit Kumar-Hermosillo <amitkh@google.com>,
- nabihestefan <nabihestefan@google.com>
-Content-Type: text/plain; charset="UTF-8"
+ d=1e100.net; s=20251104; t=1779768925; x=1780373725;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ElMZ/vicUbN+TsMfjr9EijaQ3zNqtxaT3mcM9NyM8B0=;
+ b=eBDJowIhJ5uxOGZ1fDUtBZ/w+VmpkEFSbggOVe8v0Wvkm23lDb9zD+6Vrbq8bVaD38
+ zu9XdA/frdj07uUmKrvolYLl409rq1SSfrieZNiIOGROZONN5VJG1lwgZEVZxpkBctnx
+ eg+pezHzizI+Qfqnl7TIp4zoe7tTsJDINNzwU4cU3XaPpTpm+TeJrSmBiSZBBBuvMwzX
+ oMElu7+5qxJZgj0Grt21NFEvDUhjrBmiJZExgiNFGuI7b3DUp5KELlxXYxK+/OMXyIaK
+ dMK+ZuwM413wg/60OSt/PRNzpWsvX7YmsfFfsM2DELcczcUPvwSnTMyVCab2WRcZoEbN
+ HLuw==
+X-Gm-Message-State: AOJu0YxCm3XxzLmB4RYxQYpw5QNlQBjANcRsqQSZ0azDEO+pOPbDRXR4
+ BzqqabS5dnwJl7T8F/vPeCCp/krvkN3h4GisUBxkB3a0MQYAxESFnvv74ET7QlwytDmBvMsWo9E
+ 2ZmZuBmKO2wRLodYCBXYH2aT71dfbBFDHgV2JBgV5JHmVpeC7tLsGvc63ak+NkCrX
+X-Gm-Gg: Acq92OGcKweJl/WcEoMI807981m9pI2vOyweuhUOm24FwQwolJXBrrAKrvKFk4EU0xy
+ D3UEf7O9J/w5XE5NRejQr+YYLXcwLg8pCLFh+8+mv/sJdJc5ckwlvMWWwhpmriFBAb4MWml/1vY
+ HKt8kwPS4ayXlChrOx0PQwMJixO1U7cestLT4UEw2Px2c3v57ixelz1ENY3Ko2iCzJKJatf0qOV
+ kM9pbcqgB4MDNKsnXl91G3VKrdYiVgGwot0ND4DpN15uoB0h4jvUOZrYKeyTqHlgcI/zgHq8rh3
+ JcpKsISuyabUAGZrkwUJv4x0it6SUglXFP1phcme54ic4CTP4ov8ykZNs5/7/1z854V7kJnggDH
+ BtUJfcis1GMIsHGy3zOlErtRtzlbqFCyUrI2j1mPPK4OQYCuarvRL2b5QK2rk7snGbX7VEX4KLI
+ LWMdt4u7bXoA==
+X-Received: by 2002:a17:90b:56cd:b0:367:bc89:546e with SMTP id
+ 98e67ed59e1d1-36a6778bc05mr14879108a91.12.1779768924925; 
+ Mon, 25 May 2026 21:15:24 -0700 (PDT)
+X-Received: by 2002:a17:90b:56cd:b0:367:bc89:546e with SMTP id
+ 98e67ed59e1d1-36a6778bc05mr14879086a91.12.1779768924415; 
+ Mon, 25 May 2026 21:15:24 -0700 (PDT)
+Received: from smtpclient.apple ([122.163.114.34])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c85205855dasm10221642a12.31.2026.05.25.21.15.22
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 25 May 2026 21:15:24 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
+Subject: Re: [PATCH] igvm: fix handling of optional variable header types
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <ahRZH2bUbuQnirr_@leonardi-redhat>
+Date: Tue, 26 May 2026 09:45:18 +0530
+Cc: qemu-devel <qemu-devel@nongnu.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-Id: <8AFE933D-028C-44FC-802A-604298107627@redhat.com>
+References: <20260525-igvm_optional-v1-1-28edc607acfd@redhat.com>
+ <4ED1F4C8-B56E-4997-99CB-C509629F13C7@redhat.com>
+ <ahRZH2bUbuQnirr_@leonardi-redhat>
+To: Luigi Leonardi <leonardi@redhat.com>
+X-Mailer: Apple Mail (2.3864.600.51.1.1)
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,285 +124,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 1, 2026 at 2:05=E2=80=AFAM ~lexbaileylowrisc
-<lexbaileylowrisc@git.sr.ht> wrote:
->
-> From: Lex Bailey <lex.bailey@lowrisc.org>
->
-> The STATUS register value is now generated on every read instead of being
-> tracked in memory since it has such a dynamic value. the receive fifo is =
-now
-> implemented, and the system loopback mode. (line loopback is not supporte=
-d)
->
-> Signed-off-by: Lex Bailey <lex.bailey@lowrisc.org>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-Alistair
+> On 25 May 2026, at 7:46=E2=80=AFPM, Luigi Leonardi =
+<leonardi@redhat.com> wrote:
+>=20
+> On Mon, May 25, 2026 at 07:37:55PM +0530, Ani Sinha wrote:
+>>=20
+>>=20
+>>> On 25 May 2026, at 4:26=E2=80=AFPM, Luigi Leonardi =
+<leonardi@redhat.com> wrote:
+>>>=20
+>>> The IGVM spec defines bit 31 of the variable header type as an
+>>> optional flag: if set, a loader that does not recognize the header
+>>> type may safely skip it. If clear, the loader must reject the file.
 
-> ---
->  hw/char/ot_uart.c | 160 ++++++++++++++++++++++++++++++++--------------
->  1 file changed, 112 insertions(+), 48 deletions(-)
->
-> diff --git a/hw/char/ot_uart.c b/hw/char/ot_uart.c
-> index 2247db7110..3511a42fbe 100644
-> --- a/hw/char/ot_uart.c
-> +++ b/hw/char/ot_uart.c
-> @@ -140,6 +140,21 @@ static void ot_uart_update_irqs(OtUARTState *s)
->      }
->  }
->
-> +static bool ot_uart_is_sys_loopack_enabled(const OtUARTState *s)
-> +{
-> +    return FIELD_EX32(s->regs[R_CTRL], CTRL, SLPBK);
-> +}
-> +
-> +static bool ot_uart_is_tx_enabled(const OtUARTState *s)
-> +{
-> +    return FIELD_EX32(s->regs[R_CTRL], CTRL, TX);
-> +}
-> +
-> +static bool ot_uart_is_rx_enabled(const OtUARTState *s)
-> +{
-> +    return FIELD_EX32(s->regs[R_CTRL], CTRL, RX);
-> +}
-> +
->  static int ot_uart_can_receive(void *opaque)
->  {
->      OtUARTState *s =3D opaque;
-> @@ -196,7 +211,7 @@ static void ot_uart_reset_rx_fifo(OtUARTState *s)
->      fifo8_reset(&s->rx_fifo);
->      s->regs[R_INTR_STATE] &=3D ~INTR_RX_WATERMARK_MASK;
->      s->regs[R_INTR_STATE] &=3D ~INTR_RX_OVERFLOW_MASK;
-> -    if (FIELD_EX32(s->regs[R_CTRL], CTRL, RX)) {
-> +    if (ot_uart_is_rx_enabled(s)) {
->          qemu_chr_fe_accept_input(&s->chr);
->      }
->  }
-> @@ -218,21 +233,37 @@ static void ot_uart_xmit(OtUARTState *s)
->          return;
->      }
->
-> -    /* instant drain the fifo when there's no back-end */
-> -    if (!qemu_chr_fe_backend_connected(&s->chr)) {
-> -        ot_uart_reset_tx_fifo(s);
-> -        ot_uart_update_irqs(s);
-> -        return;
-> -    }
-> +    if (ot_uart_is_sys_loopack_enabled(s)) {
-> +        /* system loopback mode, just forward to RX FIFO */
-> +        uint32_t count =3D fifo8_num_used(&s->tx_fifo);
-> +        buf =3D fifo8_pop_bufptr(&s->tx_fifo, count, &size);
-> +        ot_uart_receive(s, buf, (int)size);
-> +        count -=3D size;
-> +        /*
-> +         * there may be more data to send if data wraps around the end o=
-f TX
-> +         * FIFO
-> +         */
-> +        if (count) {
-> +            buf =3D fifo8_pop_bufptr(&s->tx_fifo, count, &size);
-> +            ot_uart_receive(s, buf, (int)size);
-> +        }
-> +    } else {
-> +        /* instant drain the fifo when there's no back-end */
-> +        if (!qemu_chr_fe_backend_connected(&s->chr)) {
-> +            ot_uart_reset_tx_fifo(s);
-> +            ot_uart_update_irqs(s);
-> +            return;
-> +        }
->
-> -    /* get a continuous buffer from the FIFO */
-> -    buf =3D
-> -        fifo8_peek_bufptr(&s->tx_fifo, fifo8_num_used(&s->tx_fifo), &siz=
-e);
-> -    /* send as much as possible */
-> -    ret =3D qemu_chr_fe_write(&s->chr, buf, (int)size);
-> -    /* if some characters where sent, remove them from the FIFO */
-> -    if (ret >=3D 0) {
-> -        fifo8_drop(&s->tx_fifo, ret);
-> +        /* get a continuous buffer from the FIFO */
-> +        buf =3D
-> +            fifo8_peek_bufptr(&s->tx_fifo, fifo8_num_used(&s->tx_fifo), =
-&size);
-> +        /* send as much as possible */
-> +        ret =3D qemu_chr_fe_write(&s->chr, buf, (int)size);
-> +        /* if some characters where sent, remove them from the FIFO */
-> +        if (ret >=3D 0) {
-> +            fifo8_drop(&s->tx_fifo, ret);
-> +        }
->      }
->
->      /* update INTR_STATE */
-> @@ -269,7 +300,7 @@ static void uart_write_tx_fifo(OtUARTState *s, uint8_=
-t val)
->          s->tx_watermark_level =3D 0;
->      }
->
-> -    if (FIELD_EX32(s->regs[R_CTRL], CTRL, TX)) {
-> +    if (ot_uart_is_tx_enabled(s)) {
->          ot_uart_xmit(s);
->      }
->
-> @@ -288,8 +319,6 @@ static void ot_uart_reset_enter(Object *obj, ResetTyp=
-e type)
->
->      memset(&s->regs[0], 0, sizeof(s->regs));
->
-> -    s->regs[R_STATUS] =3D 0x0000003c;
-> -
->      s->tx_watermark_level =3D 0;
->      for (unsigned index =3D 0; index < ARRAY_SIZE(s->irqs); index++) {
->          qemu_set_irq(s->irqs[index], 0);
-> @@ -305,6 +334,27 @@ static void ot_uart_reset_enter(Object *obj, ResetTy=
-pe type)
->      ot_uart_update_irqs(s);
->  }
->
-> +static uint8_t ot_uart_read_rx_fifo(OtUARTState *s)
-> +{
-> +    uint8_t val;
-> +
-> +    if (!(s->regs[R_CTRL] & R_CTRL_RX_MASK)) {
-> +        return 0;
-> +    }
-> +
-> +    if (fifo8_is_empty(&s->rx_fifo)) {
-> +        return 0;
-> +    }
-> +
-> +    val =3D fifo8_pop(&s->rx_fifo);
-> +
-> +    if (ot_uart_is_rx_enabled(s) && !ot_uart_is_sys_loopack_enabled(s)) =
+
+This description is very confusing. Where is this text written? I =
+can=E2=80=99t find it.
+
+>>>=20
+>>> Currently, all the types with the optional bit set are not
+>>> recognized as valid headers.
+>>>=20
+>>> Implement optional header handling by masking bit 31 before matching
+>>> against the handler table, and skip with a warning any unrecognized
+>>> header that has the optional bit set.
+>>>=20
+>>> Fixes: c1d466d267cf ("backends/igvm: Add IGVM loader and =
+configuration")
+>>> Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+>>> ---
+>>> backends/igvm.c | 24 +++++++++++++++++++++---
+>>> 1 file changed, 21 insertions(+), 3 deletions(-)
+>>>=20
+>>> diff --git a/backends/igvm.c b/backends/igvm.c
+>>> index c347d0c17e..408917f826 100644
+>>> --- a/backends/igvm.c
+>>> +++ b/backends/igvm.c
+>>> @@ -26,6 +26,7 @@
+>>> #include <igvm/igvm.h>
+>>> #include <igvm/igvm_defs.h>
+>>>=20
+>>> +#define IGVM_VHT_OPTIONAL_BIT (1U << 31)
+>>>=20
+>>> /*
+>>> * Some directives are specific to particular confidential computing =
+platforms.
+>>> @@ -139,8 +140,16 @@ static int qigvm_handler(QIgvm *ctx, uint32_t =
+type, Error **errp)
+>>>    const uint8_t *header_data;
+>>>    int result;
+>>>=20
+>>> +    /*
+>>> +     * Bit 31 of the variable header type indicates that the header =
+is
+>>> +     * optional and can be safely ignored by a loader that does not
+>>> +     * support it. If the bit is clear, the file cannot be loaded.
+>>> +     * =
+https://docs.rs/igvm_defs/0.4.0/igvm_defs/struct.IgvmVariableHeaderType.ht=
+ml
+>>> +     */
+>>> +    IgvmVariableHeaderType base_type =3D type & =
+~IGVM_VHT_OPTIONAL_BIT;
+>>> +
+>>>    for (handler =3D 0; handler < G_N_ELEMENTS(handlers); handler++) =
 {
-> +        qemu_chr_fe_accept_input(&s->chr);
-> +    }
-> +
-> +    return val;
-> +}
-> +
->  static uint64_t ot_uart_get_baud(OtUARTState *s)
->  {
->      uint64_t baud;
-> @@ -327,32 +377,50 @@ static uint64_t ot_uart_read(void *opaque, hwaddr a=
-ddr, unsigned int size)
->      case R_INTR_ENABLE:
->      case R_CTRL:
->      case R_FIFO_CTRL:
-> -    case R_STATUS:
->          retvalue =3D s->regs[reg];
->          break;
-> +    case R_STATUS:
-> +        /* assume that UART always report RXIDLE */
-> +        retvalue =3D R_STATUS_RXIDLE_MASK;
-> +        /* report RXEMPTY or RXFULL */
-> +        switch (fifo8_num_used(&s->rx_fifo)) {
-> +        case 0:
-> +            retvalue |=3D R_STATUS_RXEMPTY_MASK;
-> +            break;
-> +        case OT_UART_RX_FIFO_SIZE:
-> +            retvalue |=3D R_STATUS_RXFULL_MASK;
-> +            break;
-> +        default:
-> +            break;
-> +        }
-> +        /* report TXEMPTY+TXIDLE or TXFULL */
-> +        switch (fifo8_num_used(&s->tx_fifo)) {
-> +        case 0:
-> +            retvalue |=3D R_STATUS_TXEMPTY_MASK | R_STATUS_TXIDLE_MASK;
-> +            break;
-> +        case OT_UART_TX_FIFO_SIZE:
-> +            retvalue |=3D R_STATUS_TXFULL_MASK;
-> +            break;
-> +        default:
-> +            break;
-> +        }
-> +        if (!ot_uart_is_tx_enabled(s)) {
-> +            retvalue |=3D R_STATUS_TXIDLE_MASK;
-> +        }
-> +        if (!ot_uart_is_rx_enabled(s)) {
-> +            retvalue |=3D R_STATUS_RXIDLE_MASK;
-> +        }
-> +        break;
->
->      case R_RDATA:
-> -        retvalue =3D s->regs[R_RDATA];
-> -        if ((s->regs[R_CTRL] & R_CTRL_RX_MASK) && (s->rx_level > 0)) {
-> -            qemu_chr_fe_accept_input(&s->chr);
-> -
-> -            s->rx_level -=3D 1;
-> -            s->regs[R_STATUS] &=3D ~R_STATUS_RXFULL_MASK;
-> -            if (s->rx_level =3D=3D 0) {
-> -                s->regs[R_STATUS] |=3D R_STATUS_RXIDLE_MASK;
-> -                s->regs[R_STATUS] |=3D R_STATUS_RXEMPTY_MASK;
-> -            }
-> -        }
-> +        retvalue =3D (uint32_t)ot_uart_read_rx_fifo(s);
->          break;
->
->      case R_FIFO_STATUS:
-> -        retvalue =3D s->regs[R_FIFO_STATUS];
-> -
-> -        retvalue |=3D (s->rx_level & 0x1F) << R_FIFO_STATUS_RXLVL_SHIFT;
-> -        retvalue |=3D (s->tx_level & 0x1F) << R_FIFO_STATUS_TXLVL_SHIFT;
-> -
-> -        qemu_log_mask(LOG_UNIMP,
-> -                      "%s: RX fifos are not supported\n", __func__);
-> +        retvalue =3D
-> +            (fifo8_num_used(&s->rx_fifo) & 0xffu) << R_FIFO_STATUS_RXLVL=
-_SHIFT;
-> +        retvalue |=3D
-> +            (fifo8_num_used(&s->tx_fifo) & 0xffu) << R_FIFO_STATUS_TXLVL=
-_SHIFT;
->          break;
->
->      case R_VAL:
-> @@ -416,10 +484,6 @@ static void ot_uart_write(void *opaque, hwaddr addr,=
- uint64_t val64,
->              qemu_log_mask(LOG_UNIMP,
->                            "%s: UART_CTRL_NF is not supported\n", __func_=
-_);
->          }
-> -        if (value & R_CTRL_SLPBK_MASK) {
-> -            qemu_log_mask(LOG_UNIMP,
-> -                          "%s: UART_CTRL_SLPBK is not supported\n", __fu=
-nc__);
-> -        }
->          if (value & R_CTRL_LLPBK_MASK) {
->              qemu_log_mask(LOG_UNIMP,
->                            "%s: UART_CTRL_LLPBK is not supported\n", __fu=
-nc__);
-> @@ -445,19 +509,19 @@ static void ot_uart_write(void *opaque, hwaddr addr=
-, uint64_t val64,
->          }
->          break;
->      case R_WDATA:
-> -        uart_write_tx_fifo(s, value);
-> +        uart_write_tx_fifo(s, (uint8_t)(value & R_WDATA_WDATA_MASK));
->          break;
->
->      case R_FIFO_CTRL:
-> -        s->regs[R_FIFO_CTRL] =3D value;
-> -
-> +        s->regs[R_FIFO_CTRL] =3D
-> +            value & (R_FIFO_CTRL_RXILVL_MASK | R_FIFO_CTRL_TXILVL_MASK);
->          if (value & R_FIFO_CTRL_RXRST_MASK) {
-> -            s->rx_level =3D 0;
-> -            qemu_log_mask(LOG_UNIMP,
-> -                          "%s: RX fifos are not supported\n", __func__);
-> +            ot_uart_reset_rx_fifo(s);
-> +            ot_uart_update_irqs(s);
->          }
->          if (value & R_FIFO_CTRL_TXRST_MASK) {
-> -            s->tx_level =3D 0;
-> +            ot_uart_reset_tx_fifo(s);
-> +            ot_uart_update_irqs(s);
->          }
->          break;
->      case R_OVRD:
-> --
-> 2.49.1
->
->
+>>> -        if (handlers[handler].type !=3D type) {
+>>> +        if (handlers[handler].type !=3D base_type) {
+>>>            continue;
+>>>        }
+>>>        header_handle =3D igvm_get_header(ctx->file, =
+handlers[handler].section,
+>>> @@ -166,6 +175,13 @@ static int qigvm_handler(QIgvm *ctx, uint32_t =
+type, Error **errp)
+>>>        igvm_free_buffer(ctx->file, header_handle);
+>>>        return result;
+>>>    }
+>>> +
+>>> +    if (type & IGVM_VHT_OPTIONAL_BIT) {
+>>> +        warn_report("IGVM: Skipping unsupported optional header =
+type 0x%"
+>>> +                    PRIX32, type);
+>>> +        return 0;
+>>> +    }
+>>> +
+>>=20
+>> I think this check should be at the top of the loop. If the bit is =
+set, simply return with that warning message. No further processing is =
+needed.
+>=20
+> IIUC, in this way we would always skip optional parameter, right? My =
+idea is to
+> always process optional parameters if we support it.
+
+The spec says:
+
+"The top bit of this type may be set to indicate a loader may safely =
+ignore that structure.=E2=80=9D
+
+So if the bit is set, the way I understand it, there is no need for =
+further processing.
+
+>=20
+>>=20
+>>=20
+>>>    error_setg(errp,
+>>>               "IGVM: Unknown header type encountered when processing =
+file: "
+>>>               "(type 0x%X)",
+>>> @@ -787,7 +803,8 @@ static int =
+qigvm_supported_platform_compat_mask(QIgvm *ctx, Error **errp)
+>>>         header_index++) {
+>>>        IgvmVariableHeaderType typ =3D igvm_get_header_type(
+>>>            ctx->file, IGVM_HEADER_SECTION_PLATFORM, header_index);
+>>> -        if (typ =3D=3D IGVM_VHT_SUPPORTED_PLATFORM) {
+>>> +        IgvmVariableHeaderType base_type =3D typ & =
+~IGVM_VHT_OPTIONAL_BIT;
+>>> +        if (base_type =3D=3D IGVM_VHT_SUPPORTED_PLATFORM) {
+>>>            header_handle =3D igvm_get_header(
+>>>                ctx->file, IGVM_HEADER_SECTION_PLATFORM, =
+header_index);
+>>>            if (header_handle < 0) {
+>>> @@ -947,7 +964,8 @@ int qigvm_process_file(IgvmCfg *cfg, =
+MachineState *machine_state,
+>>>         ctx.current_header_index++) {
+>>>        IgvmVariableHeaderType type =3D igvm_get_header_type(
+>>>            ctx.file, IGVM_HEADER_SECTION_DIRECTIVE, =
+ctx.current_header_index);
+>>> -        if (!onlyVpContext || (type =3D=3D IGVM_VHT_VP_CONTEXT)) {
+>>> +        IgvmVariableHeaderType base_type =3D type & =
+~IGVM_VHT_OPTIONAL_BIT;
+>>> +        if (!onlyVpContext || base_type =3D=3D IGVM_VHT_VP_CONTEXT) =
+{
+>>>            if (qigvm_handler(&ctx, type, errp) < 0) {
+>>>                goto cleanup_parameters;
+>>>            }
+>>>=20
+>>> ---
+>>> base-commit: cbf877d67a812be17a9ce404a589e1bdf722c1f6
+>>> change-id: 20260525-igvm_optional-ca1592b613be
+>>>=20
+>>> Best regards,
+>>> --
+>>> Luigi Leonardi <leonardi@redhat.com>
+
+
 
