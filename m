@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54324CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 19:08:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80B48CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 19:08:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRx6a-0000RV-3r; Tue, 26 May 2026 15:06:20 -0400
+	id 1wRx6a-0000RU-4G; Tue, 26 May 2026 15:06:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRx6B-0000Lf-SX; Tue, 26 May 2026 15:06:00 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1wRx6Q-0000NQ-As; Tue, 26 May 2026 15:06:17 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRx69-0004aF-UM; Tue, 26 May 2026 15:05:55 -0400
+ id 1wRx6O-0004eB-15; Tue, 26 May 2026 15:06:09 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 2A6CE600FC;
- Tue, 26 May 2026 19:05:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF001F00A3D;
- Tue, 26 May 2026 19:05:48 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id F3F84600BB;
+ Tue, 26 May 2026 19:06:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6321F00A3C;
+ Tue, 26 May 2026 19:06:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779822351;
- bh=czHWASgcVRX6WqaAi+3O59ynkEQ7PMLnAzM69Hv53hg=;
+ s=k20260515; t=1779822366;
+ bh=pGlSoLvSkWLWM09alJZgROZ3NJFIPwvSs1E7yFYC654=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=AbdGoW0S8LIcfA7uGNT7nWEgtOCmBTB5M0h7QbqGbg0zM1kvsSEmW/ezmy0A4Fz+j
- 9xnrKvh8VYZDThG2UZg1oQAX9qRCt4JxephX/67+3MfNF7SMGNqK0TvX3SzXIkGftF
- hsZ4sS4Smk/ThslqqiQpr6PS09P00MwDPHTMoYs8/FNHHQLqdHJ9GAviNw4WFRyR+e
- MZMtCrxmb9YHmyfIBNEfAI3y9FHF6qu/8rI8JI/To2kKzKb7hIvJs8p5sncbTaT+fH
- r4G60E5cZQ/lzML/8qqA6HTW557fPLjmNH0jE0JYmRn0QdI35KgzB5tRgEpN7X9QNv
- 0C4oKm7WDx7dw==
+ b=ozgq2w+matKNFjJj5OZXdHdY8dqie6KjzJiLLuSgZFq/1JSpwMWQWlwAvPuCnSnxf
+ uRk4w8AeQOls9mcpA/zsb/Bf4w4ocohIUXI4fDcFQfbRkCjir2a58J7m+9KUhJnjyL
+ Afkm9Uz5g96c1YmchM7GhrmjJ8xtkIwtUPOYaNT6epCcXN6Uz065UIMA+rpiK6uaee
+ AOv1Ko6XIfBRwuhi3R3vgX17ufYV340nx/YdJCwghp807I8DoS4E4OLe0buaoAIuyC
+ yJ2WROgGJgoUaghaCg/5JHNUOm/8ctx+MVDKguOYDhD+WxmHtLCrIKJ4P4W/Vunf77
+ oND3ATI9QuQxQ==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Cornelia Huck <cohuck@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -47,16 +47,17 @@ Cc: Cornelia Huck <cohuck@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
  qemu-s390x@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  David Hildenbrand <david@kernel.org>
-Subject: [PATCH 03/12] linux-user/alpha: add coredump support
-Date: Tue, 26 May 2026 21:05:26 +0200
-Message-ID: <20260526190535.10833-4-deller@kernel.org>
+Subject: [PATCH 07/12] linux-user/s390x: restore fpu_status rounding mode from
+ FPC on sigreturn
+Date: Tue, 26 May 2026 21:05:30 +0200
+Message-ID: <20260526190535.10833-8-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260526190535.10833-1-deller@kernel.org>
 References: <20260526190535.10833-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -80,72 +81,110 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Matt Turner <mattst88@gmail.com>
 
-Define HAVE_ELF_CORE_DUMP and target_elf_gregset_t in target_elf.h,
-mirroring the kernel's elf_gregset_t (ELF_NGREG = 66): r0-r31
-[0..31], f0-f31 [32..63], pc [64], ps [65].  Implement
-elf_core_copy_regs() in elfload.c to populate the gregset from
-CPUAlphaState.
+QEMU keeps the s390x floating-point control register (FPC) in env->fpc.
+The rounding mode bits [2:0] of FPC are reflected into the derived
+env->fpu_status via set_float_rounding_mode(); every architectural
+write to FPC goes through HELPER(sfpc) which keeps the two in sync.
 
-Without this, bprm->core_dump is NULL for Alpha targets.  When a
-guest signal goes unhandled, dump_core_and_abort() skips the core
-write and falls through to die_with_signal(), which re-raises the
-signal to the host.  The host kernel then writes an x86-64 core file
-for the qemu-alpha process instead of an Alpha guest core.
+restore_sigregs() restored FPC with a direct assignment:
 
+    __get_user(env->fpc, &sc->fpregs.fpc);
+
+This wrote env->fpc correctly but never updated env->fpu_status, so on
+sigreturn the interrupted code resumed with whatever rounding mode the
+signal handler last installed in fpu_status.
+
+Factor the two-step "write fpc + sync fpu_status" logic out of
+HELPER(sfpc) into cpu_s390x_load_fpc(), declare it in cpu.h, and call
+it from restore_sigregs() in place of the direct assignment.
+
+cpu_s390x_load_fpc() partially reuses the sanity check from
+HELPER(sfpc): if the FPC value has an invalid rounding mode or reserved
+bits set, it falls back to 0, matching the kernel's fpu_lfpc_safe()
+behavior where a corrupt signal frame value causes a specification
+exception and 0 is used instead.
+
+HELPER(sfpc) now calls cpu_s390x_load_fpc() after its full
+specification-exception check, including the FEAT_FLOATING_POINT_EXT
+test that is not needed for the signal restore path.
+
+Fixes: 2941e0fa05 ("linux-user/s390x: Save/restore fpc when handling a signal")
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/alpha/elfload.c    | 12 ++++++++++++
- linux-user/alpha/target_elf.h | 13 +++++++++++++
- 2 files changed, 25 insertions(+)
+ linux-user/s390x/signal.c     |  6 +++++-
+ target/s390x/cpu.h            |  1 +
+ target/s390x/tcg/fpu_helper.c | 20 ++++++++++++++------
+ 3 files changed, 20 insertions(+), 7 deletions(-)
 
-diff --git a/linux-user/alpha/elfload.c b/linux-user/alpha/elfload.c
-index 1e44475c47..c86f9cf2bb 100644
---- a/linux-user/alpha/elfload.c
-+++ b/linux-user/alpha/elfload.c
-@@ -3,8 +3,20 @@
- #include "qemu/osdep.h"
- #include "qemu.h"
- #include "loader.h"
-+#include "target_elf.h"
- 
- 
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPUAlphaState *env)
-+{
-+    int i;
-+
-+    for (i = 0; i < 31; i++) {
-+        r->regs[i] = tswap64(env->ir[i]);
+diff --git a/linux-user/s390x/signal.c b/linux-user/s390x/signal.c
+index 96d1c8d11c..28ad80bde4 100644
+--- a/linux-user/s390x/signal.c
++++ b/linux-user/s390x/signal.c
+@@ -332,7 +332,11 @@ static void restore_sigregs(CPUS390XState *env, target_sigregs *sc)
+     for (i = 0; i < 16; i++) {
+         __get_user(env->aregs[i], &sc->regs.acrs[i]);
+     }
+-    __get_user(env->fpc, &sc->fpregs.fpc);
++    {
++        uint32_t fpc;
++        __get_user(fpc, &sc->fpregs.fpc);
++        cpu_s390x_load_fpc(env, fpc);
 +    }
-+    r->pc = tswap64(env->pc);
-+    r->ps = 0;
+     for (i = 0; i < 16; i++) {
+         __get_user(*get_freg(env, i), &sc->fpregs.fprs[i]);
+     }
+diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
+index 3acbe83f0f..f55b79ef8a 100644
+--- a/target/s390x/cpu.h
++++ b/target/s390x/cpu.h
+@@ -895,6 +895,7 @@ void s390_init_sigp(void);
+ /* helper.c */
+ void s390_cpu_set_psw(CPUS390XState *env, uint64_t mask, uint64_t addr);
+ uint64_t s390_cpu_get_psw_mask(CPUS390XState *env);
++void cpu_s390x_load_fpc(CPUS390XState *env, uint32_t fpc);
+ 
+ /* outside of target/s390x/ */
+ S390CPU *s390_cpu_addr2state(uint16_t cpu_addr);
+diff --git a/target/s390x/tcg/fpu_helper.c b/target/s390x/tcg/fpu_helper.c
+index 6ca0b7162b..107025e675 100644
+--- a/target/s390x/tcg/fpu_helper.c
++++ b/target/s390x/tcg/fpu_helper.c
+@@ -1087,6 +1087,19 @@ static const int fpc_to_rnd[8] = {
+     float_round_to_odd,
+ };
+ 
++void cpu_s390x_load_fpc(CPUS390XState *env, uint32_t fpc)
++{
++    /*
++     * Mimic kernel fpu_lfpc_safe(): a corrupt signal frame value that would
++     * trigger a specification exception instead results in FPC being set to 0.
++     */
++    if (fpc_to_rnd[fpc & 0x7] == -1 || fpc & 0x03030088u) {
++        fpc = 0;
++    }
++    env->fpc = fpc;
++    set_float_rounding_mode(fpc_to_rnd[fpc & 0x7], &env->fpu_status);
 +}
 +
- const char *get_elf_cpu_model(uint32_t eflags)
+ /* set fpc */
+ void HELPER(sfpc)(CPUS390XState *env, uint64_t fpc)
  {
-     return "ev67";
-diff --git a/linux-user/alpha/target_elf.h b/linux-user/alpha/target_elf.h
-index 864dc6e2e6..bf3bd21b09 100644
---- a/linux-user/alpha/target_elf.h
-+++ b/linux-user/alpha/target_elf.h
-@@ -11,4 +11,17 @@
- #define ELF_CLASS               ELFCLASS64
- #define ELF_MACHINE             EM_ALPHA
+@@ -1094,12 +1107,7 @@ void HELPER(sfpc)(CPUS390XState *env, uint64_t fpc)
+         (!s390_has_feat(S390_FEAT_FLOATING_POINT_EXT) && fpc & 0x4)) {
+         tcg_s390_program_interrupt(env, PGM_SPECIFICATION, GETPC());
+     }
+-
+-    /* Install everything in the main FPC.  */
+-    env->fpc = fpc;
+-
+-    /* Install the rounding mode in the shadow fpu_status.  */
+-    set_float_rounding_mode(fpc_to_rnd[fpc & 0x7], &env->fpu_status);
++    cpu_s390x_load_fpc(env, fpc);
+ }
  
-+#define HAVE_ELF_CORE_DUMP      1
-+
-+/*
-+ * Matches the kernel's elf_gregset_t (ELF_NGREG = 33):
-+ *   r0-r30 at indices 0-30, pc at 31, ps at 32.
-+ * r31 (hardwired zero) is not stored; pc occupies index 31.
-+ */
-+typedef struct target_elf_gregset_t {
-+    abi_ulong regs[31];  /* integer registers r0-r30  [0..30] */
-+    abi_ulong pc;        /* program counter           [31]    */
-+    abi_ulong ps;        /* processor status          [32]    */
-+} target_elf_gregset_t;
-+
- #endif
+ /* set fpc and signal */
 -- 
 2.54.0
 
