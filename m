@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33CDACD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:34:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 653ACCD5BB1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:34:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRsoE-0002q5-CA; Tue, 26 May 2026 10:31:07 -0400
+	id 1wRsma-0000IK-0f; Tue, 26 May 2026 10:29:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRsms-0001QK-NL
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:44 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1wRsmN-0008Ku-JD
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:12 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRsmq-0001Uf-WD
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:42 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-45e9f4a3510so2994107f8f.1
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:29:40 -0700 (PDT)
+ id 1wRsmL-0001Eo-0U
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:11 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-45d96d21e82so5806316f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:29:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779805779; x=1780410579; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779805746; x=1780410546; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=fyYDysEGjb/xns15lLPIe7SYd8K7mitMipemiUdM/H0=;
- b=K0lwldPQ4SDl0puztiY1lRhwu9oetE36tvfHXc8PtND9hERHuCV46ftQYF/iB5oHeG
- 5wg2ovofRD3lPCmLt2eucj/OZw9YA05i8Lzr/LtYXQpd9zJ2wIVKNu19DbyY1wNj4KYA
- gZXT2fOaepBaRlMIqis+z7NVtQXt6mZ1sM/DfMZTSHUotG+7oQtVDWJOW3kD/HbZFUXp
- jZGa38Fkbe1Zoqdur8zwAoV1bwx7d0z5u4HwmVUC9olG8RBB8+zIeyLfy0xKuKeUG+a8
- hQ67tWEafZ08C6NspLuyKYjtfansHde9kSdWhxrSWzgnjMpUNiDoarARNV1FCYEgVfpi
- 7WLg==
+ :reply-to; bh=tmBFhr5bZEi658a1Neb6LtFORntlytJah0gE3InO5v8=;
+ b=Rk6CTtc8t+s8+IKKwTM8/kBXMUaTFe81omyluKq/+PMYP9Yab4oEp6hKy8V84wd57s
+ LdVvQsyBJY/neb5VMfA5yHshP8O/feYcN30/HsjPbBTt819ZCoNds5h13yJ5iTbK7kNJ
+ yBpOToGQkqNmkA6gViwrdNZcoJjO790Z220CVJ/gNt52z2NgEYeMu0oE1Oy85A5jDAKP
+ 2ozv2EjsKYSvZTqqbM6FPwlYtq8tm7BNEgUwum7B18iOIH8NLA5UCiei4YXfhK7mH7ef
+ YHvSUj24Iq++IKZYteFVR1LfssFdSzfAKYIv+Y3+X6+0U3eD9wRTP8I6o4j4wz2oTDo5
+ OIJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779805779; x=1780410579;
+ d=1e100.net; s=20251104; t=1779805746; x=1780410546;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=fyYDysEGjb/xns15lLPIe7SYd8K7mitMipemiUdM/H0=;
- b=ktQ2hAfBqvYsQXHqePR4Ne3xL61q+LzehItlQM4SRvYi/+b3ik6pAfP7tlPpMSH4t3
- IWAlpNEkMbDN7q9jjNKIIKFOHp0lRxXGBok/0Wy2Ygfu+dyZ4nAtji8Zfbh660VdSSYk
- Ocr1iVpW4rg5mNz0G47EdtnR8gDqNlP0maCGnKRMD4NQZpv0xyth72v+3cP38ggy12Ds
- RGsfBrWOka2Ki7/VhGa6jLaY39aGA8WBvRSRJgYd7qbUAyAd9z+scyYci2f+zMdbmHE5
- UxpFbW6Tez9b9eE+sq+syYjW+fzbjI6ha1+8GvZ6r/oMj9Bt9o3h/INNxSQ/WscZpt8W
- rL5w==
-X-Gm-Message-State: AOJu0YxcYQauTmL+XInwuZRl5wM84Dxj+Qr3hsM8jgTnEFRAFlm25hmO
- 56Ga24C8l2TV0vI6Ev3FfrwiuwnNFN/yNoc+6gtYgT6dbSgLQq3p7e5cDy/I/eqH7z2VmDDGm83
- EBSJA
-X-Gm-Gg: Acq92OHI1g4ptnD0HR2ofZA4q2+bOW1IYoUeEce9qOHvL2z4H3Mle1BuLt4Z2O0zp49
- TyaswAQGlQbmpmiW3UaMOyvmsS0RO+C3UkMf7zuqqFOPIoDYV1Dj6y5YsUUasS8MpaFl22sYkw6
- cekowh6ga3odLXpYDwLTK/su+27Kgf3UKhJ3UVQyJywELGklACpB+uVF0wEtuZkpHrjyI3W2KSZ
- 9PVmYIkTENvrWEKSdtImX73MaCWvH2dIPgF2/KSiWsjab4s3XNCyX5rayqk9b0AEKPgfkTIzs3j
- tfKF/CamVYIouI+VcGhpej4hhtmfqjgOKT4iKqt9ghRULs4nuJXS8LqL+3D+CZwl1MmHsxFFHxa
- g7VM7eVk3npQAzKgp4EpWTZOOuulcM2mSAjO3W5Nc/QeO0SCzXADMk6f+K8RNDze+NI9+z7wYtF
- spVUS7FP9ajpeKIjD0Ezbyr2muPSYWm2kJBlOodnHX2tNZzPvivSGzNsEq9Em05nBis6mhkFSgv
- awUtKO7Eh1UAgVAjuUBX4lCpDaR9RNXqU5XwZ1eZA==
-X-Received: by 2002:a05:6000:25c2:b0:45d:b14b:23f8 with SMTP id
- ffacd0b85a97d-45eb369044bmr33300787f8f.18.1779805779602; 
- Tue, 26 May 2026 07:29:39 -0700 (PDT)
+ bh=tmBFhr5bZEi658a1Neb6LtFORntlytJah0gE3InO5v8=;
+ b=cGDQgO6hpoGvHY6Ww55GYIV63CRQpQAzrMQTno/mZ1xNsINiCI/dCqDhHlRTYMa/KY
+ 73KH+ltjkZO6nZyYNVDKX6i497FK/l2e9mxvN3GAvfgPN00ayWIcAPt275zOYfyeiapq
+ yar7Q0Z4zpoxd6h39LoTaN+sp4vcqOkTvASU3uZmd815qSWLYt8niNcKKslk/nZh3r2B
+ KTTh855LH745+xyVwleOx3ClqoNaKzmJFDF2NWXr4IlYwuTUFGw6Apg6m5UuXLio6wIO
+ xYouUkGw0exCoEhSozwZVXQPZtzyC0/1qbBatXy30g/FnHOApYfpdAn74TlmFlgCMCZD
+ bcSQ==
+X-Gm-Message-State: AOJu0YzYuRsA4OPNX3SyGikfHt5kxVFkP9VEh9W1mFpHhBmBDYUqukYL
+ CsAIHQeAkmE+da5EGPdxTC7Cekxdbr0Ej9wI/ychRLKmnTN8llXUuA1QDtsLHQQeS+N1538G6fi
+ 0Yx+e
+X-Gm-Gg: Acq92OFvYp47L103vE0tKfLRb0cnLJkPpHZzqXpL2F0TvbE4WzldoriVy8lC488Dvxp
+ GIvzpFOeIRi1yC32adsE0z35/bjgYbxecuYm+64KtdoLJD8AuPAVuQd2Eyeya7OeUKdtBUmbVNa
+ xHAc6VBp6Xf8f54zSldki3MK7p/FOE/yjerMHH7AYE5mLZJyMBkKPjtM5w7Ab8GMwnT/JA4HCTU
+ 9cHRni8Z9Dv8Hds7o/JZTNXFQJce2LI0sXP6YSxACsgp6rEBtjTPMI54YyBzZAtlUG3bxdl5JSm
+ kbw+npFeEZfoDEmirYM1CRVVUGF2ynNgactY4ApMS0XczHzUNTsQUkJW2aHcXBG2YgcfDQ4VX5+
+ ZrI3j07f3QIeU47it6+r9YeIt4WvPPWOmCilIm/QYuM7HjarVooHfMc0Sk8OrTev2UegH9aFzga
+ Umv/pFoOQ7mR6DBaxv537d6PfifcgBkJNH0lOY61lGaw6JW0MoijeXV7504PWvXf1pWk5ziX1hp
+ 5T69yuXDf1vLuxE9jOwQvaNCr6PyEM=
+X-Received: by 2002:a05:6000:2007:b0:44a:247e:67b4 with SMTP id
+ ffacd0b85a97d-45eb3689031mr31516432f8f.18.1779805746477; 
+ Tue, 26 May 2026 07:29:06 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6d70c51sm38325225f8f.36.2026.05.26.07.29.38
+ ffacd0b85a97d-45eb6d70c51sm38325225f8f.36.2026.05.26.07.29.05
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 07:29:38 -0700 (PDT)
+ Tue, 26 May 2026 07:29:05 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 49/54] target/arm: Implement ID_AA64FPFR0
-Date: Tue, 26 May 2026 15:28:45 +0100
-Message-ID: <20260526142850.2326589-50-peter.maydell@linaro.org>
+Subject: [PULL 15/54] target/arm/ptw: Flip sense of get_phys_addr_lpae return
+ value
+Date: Tue, 26 May 2026 15:28:11 +0100
+Message-ID: <20260526142850.2326589-16-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260526142850.2326589-1-peter.maydell@linaro.org>
 References: <20260526142850.2326589-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,97 +102,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
-
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260522220306.235200-19-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260515142541.571911-3-peter.maydell@linaro.org
 ---
- target/arm/cpu-features.h    |  9 +++++++++
- target/arm/cpu-sysregs.h.inc |  1 +
- target/arm/cpu.c             |  1 +
- target/arm/helper.c          | 13 +++++++++++--
- 4 files changed, 22 insertions(+), 2 deletions(-)
+ target/arm/ptw.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index e13c1c1331..1bb77d78da 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -410,6 +410,15 @@ FIELD(ID_AA64SMFR0, I16I64, 52, 4)
- FIELD(ID_AA64SMFR0, SMEVER, 56, 4)
- FIELD(ID_AA64SMFR0, FA64, 63, 1)
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 9565a7d446..504ecb622a 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -1842,7 +1842,7 @@ static bool lpae_block_desc_valid(ARMCPU *cpu, bool ds,
+ /**
+  * get_phys_addr_lpae: perform one stage of page table walk, LPAE format
+  *
+- * Returns false if the translation was successful. Otherwise, phys_ptr,
++ * Returns true if the translation was successful. Otherwise, phys_ptr,
+  * attrs, prot and page_size may not be filled in, and the populated fsr
+  * value provides information on why the translation aborted, in the format
+  * of a long-format DFSR/IFSR fault register, with the following caveat:
+@@ -2432,7 +2432,7 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
  
-+FIELD(ID_AA64FPFR0, F8E5M2, 0, 1)
-+FIELD(ID_AA64FPFR0, F8E4M3, 1, 1)
-+FIELD(ID_AA64FPFR0, F8MM4, 26, 1)
-+FIELD(ID_AA64FPFR0, F8MM8, 27, 1)
-+FIELD(ID_AA64FPFR0, F8DP2, 28, 1)
-+FIELD(ID_AA64FPFR0, F8DP4, 29, 1)
-+FIELD(ID_AA64FPFR0, F8FMA, 30, 1)
-+FIELD(ID_AA64FPFR0, F8CVT, 31, 1)
-+
- FIELD(ID_DFR0, COPDBG, 0, 4)
- FIELD(ID_DFR0, COPSDBG, 4, 4)
- FIELD(ID_DFR0, MMAPDBG, 8, 4)
-diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
-index b99579f773..6e8b335b8f 100644
---- a/target/arm/cpu-sysregs.h.inc
-+++ b/target/arm/cpu-sysregs.h.inc
-@@ -3,6 +3,7 @@ DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
- DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
- DEF(ID_AA64PFR2_EL1, 3, 0, 0, 4, 2)
- DEF(ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
-+DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
- DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
- DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
- DEF(ID_AA64AFR0_EL1, 3, 0, 0, 5, 4)
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index facd4def38..a13e6dae2a 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -1768,6 +1768,7 @@ static void arm_clear_aarch64_idregs(ARMCPU *cpu)
-     SET_IDREG(&cpu->isar, ID_AA64AFR1, 0);
-     SET_IDREG(&cpu->isar, ID_AA64ZFR0, 0);
-     SET_IDREG(&cpu->isar, ID_AA64SMFR0, 0);
-+    SET_IDREG(&cpu->isar, ID_AA64FPFR0, 0);
+     result->f.phys_addr = descaddr;
+     result->f.lg_page_size = ctz64(page_size);
+-    return false;
++    return true;
+ 
+  do_translation_fault:
+     fi->type = ARMFault_Translation;
+@@ -2445,7 +2445,7 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+         fi->stage2 = regime_is_stage2(mmu_idx);
+     }
+     fi->s1ns = fault_s1ns(ptw->cur_space, mmu_idx);
+-    return true;
++    return false;
  }
  
- static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 3d6e7f1ccc..34487eeaa3 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -6477,11 +6477,11 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-               .access = PL1_R, .type = ARM_CP_CONST,
-               .accessfn = access_tid3,
-               .resetvalue = 0 },
--            { .name = "ID_AA64PFR7_EL1_RESERVED", .state = ARM_CP_STATE_AA64,
-+            { .name = "ID_AA64FPFR0_EL1", .state = ARM_CP_STATE_AA64,
-               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 4, .opc2 = 7,
-               .access = PL1_R, .type = ARM_CP_CONST,
-               .accessfn = access_tid3,
--              .resetvalue = 0 },
-+              .resetvalue = GET_IDREG(isar, ID_AA64FPFR0) },
-             { .name = "ID_AA64DFR0_EL1", .state = ARM_CP_STATE_AA64,
-               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 5, .opc2 = 0,
-               .access = PL1_R, .type = ARM_CP_CONST,
-@@ -6712,6 +6712,15 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-                                R_ID_AA64SMFR0_I16I64_MASK |
-                                R_ID_AA64SMFR0_SMEVER_MASK |
-                                R_ID_AA64SMFR0_FA64_MASK },
-+            { .name = "ID_AA64FPFR0_EL1",
-+              .exported_bits = R_ID_AA64FPFR0_F8E5M2_MASK |
-+                               R_ID_AA64FPFR0_F8E4M3_MASK |
-+                               R_ID_AA64FPFR0_F8MM4_MASK |
-+                               R_ID_AA64FPFR0_F8MM8_MASK |
-+                               R_ID_AA64FPFR0_F8DP2_MASK |
-+                               R_ID_AA64FPFR0_F8DP4_MASK |
-+                               R_ID_AA64FPFR0_F8FMA_MASK |
-+                               R_ID_AA64FPFR0_F8CVT_MASK },
-             { .name = "ID_AA64MMFR0_EL1",
-               .exported_bits = R_ID_AA64MMFR0_ECV_MASK,
-               .fixed_bits = (0xfu << R_ID_AA64MMFR0_TGRAN64_SHIFT) |
+ static bool get_phys_addr_pmsav5(CPUARMState *env,
+@@ -3787,7 +3787,7 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
+     }
+ 
+     if (regime_using_lpae_format(env, mmu_idx)) {
+-        return get_phys_addr_lpae(env, ptw, address, access_type,
++        return !get_phys_addr_lpae(env, ptw, address, access_type,
+                                   memop, result, fi);
+     } else if (arm_feature(env, ARM_FEATURE_V7) ||
+                regime_sctlr(env, mmu_idx) & SCTLR_XP) {
 -- 
 2.43.0
 
