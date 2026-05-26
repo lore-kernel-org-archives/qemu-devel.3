@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 880A0CD5BD1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76D30CD5BB1
 	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 20:04:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRxzJ-0004cl-CR; Tue, 26 May 2026 16:02:53 -0400
+	id 1wRxzL-0004dr-6R; Tue, 26 May 2026 16:02:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRxyw-0004YH-75; Tue, 26 May 2026 16:02:41 -0400
+ id 1wRxyy-0004YU-34; Tue, 26 May 2026 16:02:41 -0400
 Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRxys-0002fr-K3; Tue, 26 May 2026 16:02:28 -0400
+ id 1wRxyw-0002mH-8t; Tue, 26 May 2026 16:02:31 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id DC3EE600B0;
+ by tor.source.kernel.org (Postfix) with ESMTP id 2348A60018;
+ Tue, 26 May 2026 20:02:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85CA21F00A3A;
  Tue, 26 May 2026 20:02:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBAC71F00A3C;
- Tue, 26 May 2026 20:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779825744;
- bh=czHWASgcVRX6WqaAi+3O59ynkEQ7PMLnAzM69Hv53hg=;
+ s=k20260515; t=1779825747;
+ bh=2NUQ5FfWOGem1CUHXmWxzCYzWNN2B5soNsg/vFqDPfI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=EhgzpY33DSE27IaxYA1xVnQurI7m7QeqRbMKOzzykJd0SgG40qBz8uXMho1oZptDr
- q7ZLvgx7swK3YHQ5wfW9JMKW9omn0AeAzp9xL9LokkgyXFVCzSU6V2POIZkvN7dyrV
- GVTt1ln2arHailUxuD0EJHHnG25i2AOQE3oMdZhmxd2XD1NJ1NXsYsVMhYROGFd8Hy
- aq8nvvbDAf0vjq3E9Qaql08Kqs1I/wYosro+KGnN+qAHa4FODfl90NaKnR1xneSqOC
- Wh6qSp37SCA0vlZPABOlBeULZ6fP38IeI8QCoAn09/Y5zT7Ro+kSekenUTRKYW3N51
- 3F8ehQa4F3V9w==
+ b=NcUaMTyPy68y41jsBH5iKuOgQUF+Xi8A614rHx7DHU5ItiY6E9wbPmg+NAPRvkPYj
+ L4iES0P/zEatUyPHUCArBpJTj5qeb3AaIAvqmwh1Uw7ArLm3I67pNZZLqRGlu4keCU
+ +ZC1PoZ0oFO6wReu8NRkGtfI01+dWgiSIsxTicPP6+j3pVcCPWasuzoHlAPg3cMt+v
+ eV7E/p/6ij5tvyggeBRMJcqSpO2X/M7SJKtoXluopboAj5moA7ksC9lgcoSxmRG9wo
+ BmaqllEN3QYytqZZfWMogQiUVYYfvZAZ019Cbsg78u6YB6wncANU6/40YDg8cSGAvH
+ ZOBi358xa7RNA==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -45,9 +45,10 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>, Aurelien Jarno <aurelien@aurel32.net>
-Subject: [PULL 03/12] linux-user/alpha: add coredump support
-Date: Tue, 26 May 2026 22:01:58 +0200
-Message-ID: <20260526200207.79738-4-deller@kernel.org>
+Subject: [PULL 04/12] linux-user/sh4: preserve T/M/Q bits across signal
+ delivery
+Date: Tue, 26 May 2026 22:01:59 +0200
+Message-ID: <20260526200207.79738-5-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260526200207.79738-1-deller@kernel.org>
 References: <20260526200207.79738-1-deller@kernel.org>
@@ -78,72 +79,97 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Matt Turner <mattst88@gmail.com>
 
-Define HAVE_ELF_CORE_DUMP and target_elf_gregset_t in target_elf.h,
-mirroring the kernel's elf_gregset_t (ELF_NGREG = 66): r0-r31
-[0..31], f0-f31 [32..63], pc [64], ps [65].  Implement
-elf_core_copy_regs() in elfload.c to populate the gregset from
-CPUAlphaState.
+QEMU keeps the SH4 T, M and Q status-register bits outside env->sr, in
+the dedicated env->sr_t, env->sr_m and env->sr_q fields; cpu_read_sr()
+folds them back into the architectural SR value and cpu_write_sr()
+splits them back out.
 
-Without this, bprm->core_dump is NULL for Alpha targets.  When a
-guest signal goes unhandled, dump_core_and_abort() skips the core
-write and falls through to die_with_signal(), which re-raises the
-signal to the host.  The host kernel then writes an x86-64 core file
-for the qemu-alpha process instead of an Alpha guest core.
+setup_sigcontext() saved the bare env->sr (so the T/M/Q bits were always
+zero in the signal frame) and restore_sigcontext() wrote the value
+straight back into env->sr without updating sr_t/sr_m/sr_q. As a result
+the T bit was never preserved across signal delivery: on sigreturn the
+interrupted code resumed with whatever T value the signal handler last
+left behind. Any conditional branch (or addc/subc/rotcl/div1, etc.)
+immediately following the interrupted instruction could then take the
+wrong path.
 
+This is the cause of the long-standing intermittent failures of the
+tests/tcg/multiarch/signals.c test on sh4, which was marked BROKEN. With
+a SIGRTMIN timer firing every millisecond across many threads, the race
+was hit a few percent of the time and corrupted the guest heap, surfacing
+as a SIGSEGV in memset, a malloc assertion, or an rseq registration abort.
+
+Traced on a deterministic rr recording: a cmp/hi set T=0, the timer
+signal interrupted the very next instruction (a bf), the handler left
+T=1, and the resumed bf took glibc calloc's MORECORE_CLEARS branch,
+using the old top-chunk size as the clear length for a freshly split
+small chunk and running memset off the end of the heap.
+
+Fix setup_sigcontext()/restore_sigcontext() to use cpu_read_sr() and
+cpu_write_sr() so the T, M and Q bits round-trip correctly, and drop the
+BROKEN annotation on the sh4 signals test.
+
+Fixes: c3b5bc8ab3 ("SH4: Signal handling for the user space emulator, by Magnus Damm.")
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/alpha/elfload.c    | 12 ++++++++++++
- linux-user/alpha/target_elf.h | 13 +++++++++++++
- 2 files changed, 25 insertions(+)
+ linux-user/sh4/signal.c       | 12 ++++++++++--
+ tests/tcg/sh4/Makefile.target |  7 -------
+ 2 files changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/linux-user/alpha/elfload.c b/linux-user/alpha/elfload.c
-index 1e44475c47..c86f9cf2bb 100644
---- a/linux-user/alpha/elfload.c
-+++ b/linux-user/alpha/elfload.c
-@@ -3,8 +3,20 @@
- #include "qemu/osdep.h"
- #include "qemu.h"
- #include "loader.h"
-+#include "target_elf.h"
+diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
+index d70be24c38..cc36425c49 100644
+--- a/linux-user/sh4/signal.c
++++ b/linux-user/sh4/signal.c
+@@ -131,8 +131,10 @@ static void setup_sigcontext(struct target_sigcontext *sc,
+     COPY(gregs[14]); COPY(gregs[15]);
+     COPY(gbr); COPY(mach);
+     COPY(macl); COPY(pr);
+-    COPY(sr); COPY(pc);
++    COPY(pc);
+ #undef COPY
++    /* The T, M and Q bits live outside env->sr; fold them back in. */
++    __put_user(cpu_read_sr(regs), &sc->sc_sr);
  
- 
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPUAlphaState *env)
-+{
-+    int i;
-+
-+    for (i = 0; i < 31; i++) {
-+        r->regs[i] = tswap64(env->ir[i]);
+     for (i=0; i<16; i++) {
+         __put_user(regs->fregs[i], &sc->sc_fpregs[i]);
+@@ -159,8 +161,14 @@ static void restore_sigcontext(CPUSH4State *regs, struct target_sigcontext *sc)
+     COPY(gregs[14]); COPY(gregs[15]);
+     COPY(gbr); COPY(mach);
+     COPY(macl); COPY(pr);
+-    COPY(sr); COPY(pc);
++    COPY(pc);
+ #undef COPY
++    /* The T, M and Q bits live outside env->sr; unfold them. */
++    {
++        uint32_t sr;
++        __get_user(sr, &sc->sc_sr);
++        cpu_write_sr(regs, sr);
 +    }
-+    r->pc = tswap64(env->pc);
-+    r->ps = 0;
-+}
-+
- const char *get_elf_cpu_model(uint32_t eflags)
- {
-     return "ev67";
-diff --git a/linux-user/alpha/target_elf.h b/linux-user/alpha/target_elf.h
-index 864dc6e2e6..bf3bd21b09 100644
---- a/linux-user/alpha/target_elf.h
-+++ b/linux-user/alpha/target_elf.h
-@@ -11,4 +11,17 @@
- #define ELF_CLASS               ELFCLASS64
- #define ELF_MACHINE             EM_ALPHA
  
-+#define HAVE_ELF_CORE_DUMP      1
-+
-+/*
-+ * Matches the kernel's elf_gregset_t (ELF_NGREG = 33):
-+ *   r0-r30 at indices 0-30, pc at 31, ps at 32.
-+ * r31 (hardwired zero) is not stored; pc occupies index 31.
-+ */
-+typedef struct target_elf_gregset_t {
-+    abi_ulong regs[31];  /* integer registers r0-r30  [0..30] */
-+    abi_ulong pc;        /* program counter           [31]    */
-+    abi_ulong ps;        /* processor status          [32]    */
-+} target_elf_gregset_t;
-+
- #endif
+     for (i=0; i<16; i++) {
+         __get_user(regs->fregs[i], &sc->sc_fpregs[i]);
+diff --git a/tests/tcg/sh4/Makefile.target b/tests/tcg/sh4/Makefile.target
+index 7852fa62d8..b7a8737be0 100644
+--- a/tests/tcg/sh4/Makefile.target
++++ b/tests/tcg/sh4/Makefile.target
+@@ -3,13 +3,6 @@
+ # SuperH specific tweaks
+ #
+ 
+-# This triggers failures for sh4-linux about 10% of the time.
+-# Random SIGSEGV at unpredictable guest address, cause unknown.
+-run-signals: signals
+-	$(call skip-test, $<, "BROKEN")
+-run-plugin-signals-with-%:
+-	$(call skip-test, $<, "BROKEN")
+-
+ VPATH += $(SRC_PATH)/tests/tcg/sh4
+ 
+ test-macl: CFLAGS += -O -g
 -- 
 2.54.0
 
