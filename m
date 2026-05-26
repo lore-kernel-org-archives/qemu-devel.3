@@ -4,95 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB47CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 20:32:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E20ACD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 20:34:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRyRQ-0007PA-Jx; Tue, 26 May 2026 16:31:56 -0400
+	id 1wRyTM-00081S-6s; Tue, 26 May 2026 16:33:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRyRO-0007Os-Op
- for qemu-devel@nongnu.org; Tue, 26 May 2026 16:31:54 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRyRM-000435-Gu
- for qemu-devel@nongnu.org; Tue, 26 May 2026 16:31:54 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4893940bb5eso59551885e9.3
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 13:31:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wRyTB-00080i-2v
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 16:33:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wRyT8-0004rw-14
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 16:33:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779827619;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=vXAB3Il+Ea2GNbDuAC+49QOwGTWllKgIRmAm9e07UGM=;
+ b=Gn9kpYmOkjjt9B2bqaB7ZN0tevZj0CbqXDsRcxae186jVyYyEsZlLNF7J3gsPVDPqsPSO9
+ owHRlpDOBCjMV87pXSgXewABCdVasQADhcUB1VEBxkpx4jmRkMb2b064orqs8JPptUFakH
+ GbQPeAd87RBY26m29UsbtjXMbZ3IIpg=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-618-HLmvNHD0N8OXTgzW7ehHyQ-1; Tue, 26 May 2026 16:33:37 -0400
+X-MC-Unique: HLmvNHD0N8OXTgzW7ehHyQ-1
+X-Mimecast-MFC-AGG-ID: HLmvNHD0N8OXTgzW7ehHyQ_1779827617
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-516d51ffb59so12571521cf.3
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 13:33:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779827510; x=1780432310; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:cc:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ALEWKGxJQ3cfiOCVndO4EJvXZtvPUHWQt8k+mSJtbW4=;
- b=s1jq08dT1NWGwWl82o9Qis9B89MwgdlJYsQQgLkknV+8q787fs6tpuuApLNC997rFG
- +ze5BbgCX/N+Vyr6pFbrFClUxNg96nku7n4zj5oIEiLtVPromsRo8YUyL0Bsf1py9ZNH
- Yez4uD8sKp83RuCTXt3CSVQ0p42MLixLRJtjzV+Bf62hzRi+7PKuMz91nLT0LxuuaeQU
- Q0t61EI5jjgxHHicuL/Wx7BWXqlImMQ2DMJsIeDaaKP7DgE7MDnrELaAHyfQvJYjFI5j
- V3e5sQwAVWwXaZT6pl2pCyi1syzsIkdroSlCGqSmjCm08Vmpd/PPbPgm+0znmEm395OV
- aiqg==
+ d=redhat.com; s=google; t=1779827617; x=1780432417; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=vXAB3Il+Ea2GNbDuAC+49QOwGTWllKgIRmAm9e07UGM=;
+ b=I4awSQgiTwh8w7ScpMwHtBZx/96QClLwBbYamQnsV2Doee8+u4wmSjpEbSPh4JJKs5
+ rthALDk/VA/j/XagbVyTqWzHOSW3jVmCYJTLf2P5dW/wk4ivIFcVUL2LXu3xFb9e+BMu
+ wggwKJhY3wIruDujXuNorY7yZHV+LC60BYukAT9afTm5FqI69jQkXobx1O0SXP8M8Wsy
+ 68BTywsr22u5WMcNf6iGtpB6MOtMPh3xwqNq8iqTqPEve1DH60Su8fp1x2ZRys6cBiWC
+ c8XtKQoxRcXl17Y6zXwWO6SL4vn/V2CaJZo95G+6rBzZKRpeLKC4e+XHv31OcvdHUonB
+ xzRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779827510; x=1780432310;
- h=content-transfer-encoding:in-reply-to:cc:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ALEWKGxJQ3cfiOCVndO4EJvXZtvPUHWQt8k+mSJtbW4=;
- b=GrOS3fFWyxrf7Lbaf7Q1z23wGsM2iVqHLz/CY2ulM7yrVg+CmxlU8CzOyxyfr/wbUA
- 6eYCGMUNxdR7baydgLosL2OOR0F+VuKGWj4Nvjk7IRvN/Ykzuf79Wpz7Pow6CPOsH8mB
- OLipperZML4tV/j3e711UoO8TxlNXUWImmOucS1vaTsPzel05dPBsK8fSI6vwPFKeoKl
- VxhlmjRarkthQO6JHnLph/EMYdJOgwJ+a3oD18lixPK5d8LEzcGzhQO5wXpz6AMkMeoh
- EZJBPSb6Vc+IgJ+85y9mZ4tRnTZpJfupZeQiUnw46eCsiDKVpguvXQlHQLyoFW0sPZXT
- 11cQ==
+ d=1e100.net; s=20251104; t=1779827617; x=1780432417;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vXAB3Il+Ea2GNbDuAC+49QOwGTWllKgIRmAm9e07UGM=;
+ b=en7XiVdsTlku/wclruo4X7LTPFjZzH7o/VvEGa1cAZQC9bsneeq/LlChQehTePxyl2
+ gWRgEoDfIEgwKMCc1Z4MT+AKZsSaHij/jbqRjDReezCG/anlqedoyWVoR6kv0f0npQzm
+ /3mSVjrEVDb5itz3+Bu1sw5CKW6Y09iRkP0FB+8VVqCaOe64SYUKyNKUuqbg8019R6xu
+ s8vFlorlHTxTRlTd2HpYX7J0GwmRueY2MSl/5RM+OOziFTBheTu3ZR7C2OxurJNUTFIx
+ DBZSSbUVhy3AoxLh/hpgU1pe3kTJ7WYlgNbGwoJahFUOtp+P0jnXz50AJzXsVPN127/A
+ R3og==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+d+2OlZXIUReBK6jb12nYJ/gSBEDWDGp94KeHllwWm2BlplLMJnXl0iR6YpfxqhNUyK2+bKn0lWOuE@nongnu.org
-X-Gm-Message-State: AOJu0YzztNbj5vM8Xv9pJneITh7AdhLAxyrgOFWEJXT7vM6qmEgvCnhg
- v9KTYJVE963sYY9QdplFJZ0WV48eNI1157fb/Z832+SSI9nnctr/oZXGYxAFlHaCUfA=
-X-Gm-Gg: Acq92OENJWmvMJina3P1StjbJwaAXpUyAh9QfNM/Rm0812R8LXgrK/t/jtTj/LMNXwx
- 7roE9gNjULw5Z14VRU1wmz1lw/Ft6lkemsQxwsGTL+b/Bn/xF/1GmU6XypPQ+VzHq5TiDcPHfEz
- Ozj6TduFBttgj+C5ZJ6GfytVvV1JbEEYlnC7hESHjP05TAJrDZ4fbkgyh9S4km4rzm71K2I/zmu
- joaKpkkn1WopFyJ2udkA7gs7ZYa/rEoCzdfhdPBDoLeMXrFsH3QtmAy5pVd173aTWolyWdtNu0x
- r9MwcTqyhGwI0YIRZRZJvbDXVgYGXCzJPBZ+II3/LdUyj2Oc6LnAcALtJxsq4HdtSsGWeZihQGe
- 4190zgTslnZUUjJcHtWSv/KHTMhIlPkhKxuKGFEc2y0bW9hFv61OsSwlFTWLs/8VI0/lGVKfx6u
- ldjSAUcVouExoW3OfABdsieYEnbcScfVd0mTXDu8iU+VC9KGTRga0o7cgYhSS4SiGpXb7arlBy3
- Q6/
-X-Received: by 2002:a05:600c:4e4b:b0:490:688b:f9f8 with SMTP id
- 5b1f17b1804b1-490688bfa29mr137309985e9.27.1779827510211; 
- Tue, 26 May 2026 13:31:50 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490809a0e7csm1259945e9.22.2026.05.26.13.31.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 May 2026 13:31:49 -0700 (PDT)
-Message-ID: <73cca94a-09ad-478e-a5c0-575bba94651c@linaro.org>
-Date: Tue, 26 May 2026 22:31:48 +0200
+ AFNElJ8n0kYE+xdjhiXpeB2kZVwSBm9h75GOdqCkqGh+hqG+9fpALIVM00L/Z4iUEs2XHV3obqyrWrb8wzG+@nongnu.org
+X-Gm-Message-State: AOJu0YxnvCwikB+WqhpW41MBZVU7sWlH8OjbUj28wuuLoL7NAHmB9v2t
+ hM7k5FSwOX98urE/4aRdrQyehcWTmhNQdB+u93/k47gB3Fi7WnU+262FJFp7MNcVwc49DEynP1R
+ bXbPUAnXzAj/LjSz9mm+j0Nnycr6K1eMgbVduxrVg9CBq5pRSaQ31oqjM
+X-Gm-Gg: Acq92OGaNwtBDVYSBB4h/ZMKCWPv/Ue7vZmvV/j8wyoTed9Sug18vNFOOkv0atZXt9b
+ 76VHXHDuJwnuuS8dwKVOFsT/0qq8nkl1Hhkg0TQ6w2AysVN8YGmW3IpfwGVcfwYeVp7luG80TmJ
+ 3UMkEp0uBipCUBELWRXKb+oZGP2PTcafT1z0zGZ5mIBy469rnf6F5SDZ9bY36PPN48uQ+uRSL3f
+ WJkiVCQrYjqyJeEA6cKNp1kkNjbhnc5UTsg12MBPmecohxuBT3HNx7GO/Os986TNlA8GkhsndeX
+ JQu2dGKq7Zh/FIZvI9sEbhkpk4MXLMKfCtiEcb8/NT3sn9x1jDX4K4w6FvRsrrC4OY+ZzLLShRL
+ hFiZPojzRHoFKimiFjzLRXcZBTHvVRENhE3FWFso3rhvDWGs=
+X-Received: by 2002:a05:622a:4892:b0:50d:86cb:db75 with SMTP id
+ d75a77b69052e-516d429b279mr284140721cf.7.1779827616652; 
+ Tue, 26 May 2026 13:33:36 -0700 (PDT)
+X-Received: by 2002:a05:622a:4892:b0:50d:86cb:db75 with SMTP id
+ d75a77b69052e-516d429b279mr284140151cf.7.1779827616131; 
+ Tue, 26 May 2026 13:33:36 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-51706adc63dsm27579341cf.16.2026.05.26.13.33.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 May 2026 13:33:35 -0700 (PDT)
+Date: Tue, 26 May 2026 16:33:34 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] thread-pool: Allow at least 1 thread in
+ thread_pool_adjust_max_threads_to_work()
+Message-ID: <ahYDnlAUJ8x1bipq@x1.local>
+References: <b76c763f576b0fb8a35960a8e3c3da59701d2a74.1779390317.git.maciej.szmigiero@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Question about recent iotest changes, 'make check' and 'ninja
- test'
-Content-Language: en-US
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-References: <0c7e5dec-44fc-4c1b-b0ce-cb9fdd6d0a5c@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Kevin Wolf <kwolf@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-In-Reply-To: <0c7e5dec-44fc-4c1b-b0ce-cb9fdd6d0a5c@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <b76c763f576b0fb8a35960a8e3c3da59701d2a74.1779390317.git.maciej.szmigiero@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,74 +116,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/5/26 22:14, Daniel Henrique Barboza wrote:
-> Hi,
+On Thu, May 21, 2026 at 09:06:07PM +0200, Maciej S. Szmigiero wrote:
+> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 > 
-> I happen to use 'ninja -C build test to do a (usually) quick sanity test
-> on patches and changes and whatnot.  An usual run of this target tests
-> around 327 individual tests with the RISC-V stuff I usually build.
+> thread_pool_adjust_max_threads_to_work() is supposed to give each task its
+> own thread by setting the pool max thread count limit accordingly.
 > 
-> After pulling today's master 'ninja -C build test' is now running a 
-> whooping
-> 1366 tests.  Here's an example:
+> However, if there aren't any tasks currently in the pool the pool max
+> thread count will be set to 0, which will trigger an assertion failure
+> in thread_pool_set_max_threads() - because setting this value would
+> completely block the pool by not allowing it to process any submitted
+> tasks.
 > 
-> 
-> $ ninja -C build -j 9 test
-> ninja: Entering directory `build'
-> mkvenv: checking for pygdbmi>=0.11.0.0
-> mkvenv: installing pygdbmi==0.11.0.0
-> [2/3] Running all tests
-> [1-12/1366] (....)
->   (....)
-> [250-260/1366] 🌕 block-qcow2-optional+block-slow - qemu:io-qcow2-014
-> [250-261/1366] 🌖 block-qcow2-optional+block-slow - qemu:io-qcow2-014
-> [252-262/1366] 🌒 block-qcow2-optional+block-slow - qemu:io-qcow2-026
-> (...)
-> 
-> I noticed a lot of these "optional+block-slow" tests being ran now, 
-> something that
-> wasn't happening before.
-> 
-> If I use 'make check' I have the results I was having with 'ninja -C 
-> build test'
-> before the recent changes.
-> 
-> I tried to bisect and got to this commit:
-> 
-> commit daf0d008822be3cb14cdb533f7237c3c789bc373 (HEAD)
-> Author: Daniel P. Berrangé <berrange@redhat.com>
-> Date:   Mon Jan 12 13:01:49 2026 +0000
-> 
->      iotests: remove redundant meson suite for iotests
+> This also can happen if a task is submitted via
+> thread_pool_submit_immediate() to an empty pool but the task completes so
+> quickly that by the time this function calls
+> thread_pool_adjust_max_threads_to_work() the pool again has no unfinished
+> tasks in it.
 
-Cc'ing developers involved in this commit and Alex.
+Sorry for a late comment. Just curious: how easy is this to reproduce?
 
 > 
->  From what I can tell this commit triggered (unintended?) stuff that was 
-> already in the
-> code.  In other words I am not sure if this commit is actually the 
-> culprit, so I am
-> reluctant to even call this a bug.
-> 
-> My question is: should I be using 'ninja test'?  It seems to me that the 
-> common practice
-> is to use 'make check' and maybe I've been using an "unsupported" 
-> testing scheme.
+> Fix this by making sure that the pool is allowed to create at least 1
+> thread.
 
-This is what was explained to me on #irc when I complained about a
-similar issue, however I still use ninja first because it is much faster
-than having make parsing Makefiles not triggering any rule before
-calling ninja. When this (rarely) fails I go back to 'make'.
+But then it means we have no work and then we will create one thread does
+nothing..
 
-Some developers like Pierrick better understand ninja and use it
-directly.
+I suspect the real culprit is we released the cur_work_lock during the
+whole process of thread_pool_submit_immediate().  If we take it during the
+whole window this will be a no-issue too.
+
+The other question is, if it is awkward to manually adjust num of threads,
+shall we set num to be -1 (unlimited) while pool created?
+
+Thanks,
 
 > 
+> Fixes: b5aa74968b27 ("thread-pool: Implement generic (non-AIO) pool support")
+> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+> ---
+>  util/thread-pool.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> Cheers,
-> Daniel
+> diff --git a/util/thread-pool.c b/util/thread-pool.c
+> index 8f8cb38d5ce0..4e75191c983e 100644
+> --- a/util/thread-pool.c
+> +++ b/util/thread-pool.c
+> @@ -493,5 +493,5 @@ bool thread_pool_adjust_max_threads_to_work(ThreadPool *pool)
+>  {
+>      QEMU_LOCK_GUARD(&pool->cur_work_lock);
+>  
+> -    return thread_pool_set_max_threads(pool, pool->cur_work);
+> +    return thread_pool_set_max_threads(pool, MAX(pool->cur_work, 1));
+>  }
 > 
-> 
-> 
+
+-- 
+Peter Xu
 
 
