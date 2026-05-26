@@ -4,102 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1090FCD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 13:17:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B688CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 13:23:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRreh-00033X-HQ; Tue, 26 May 2026 09:17:11 -0400
+	id 1wRrkQ-00040M-DH; Tue, 26 May 2026 09:23:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wRreW-00032m-Pu
- for qemu-devel@nongnu.org; Tue, 26 May 2026 09:17:02 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1wRrkO-00040A-UP
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 09:23:05 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wRreU-00031K-PK
- for qemu-devel@nongnu.org; Tue, 26 May 2026 09:17:00 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-67cd93d8affso13085505a12.2
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 06:16:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779801415; cv=none;
+ id 1wRrkN-0000dW-4t
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 09:23:04 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-bd6460b0d11so1857296766b.1
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 06:23:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779801781; cv=none;
  d=google.com; s=arc-20240605;
- b=PtPVcN70a4fhVaQrLfZMvIXIoQ/eTMqncsLeKdzWbf4bfcTeCjuk+WP/tLBbxyqN6B
- Ji3vnxNZUuBf8oRKgPy3ej0aUtH/ST1buWoJgGWLhon4fv0rA1uLo4iPOMrrDR5Ks5jK
- HmXDM83e2MoKsLhb998ft4exHA3Xhk78yh3cuGd4t/N2W96RuF3gMuOG9E4mV+ceeZmo
- EyfYPxlr5Ge/yjex2yKwuBsK7GZL25SsNcX92nwJnrc3H3T4PyllAXPUog0OwZuDU38X
- rEX417faRR83naSl97ZEc3QSaDlFMDiZ7mG7yueqvMuVcebofVAB7mtlklP3a3hNxzoQ
- T0fQ==
+ b=OJmHjfHztoEvdRB7XHbFs0fXwrFzDVdFcRREf12yHevmyixtJBFS4wp0hFgMQK5YY6
+ MjOOlhyt4em7E7mC7/rA+USeuW3cVnkx423hcK2eJRm2rS1bX9HzNeK07LiTZehSvn4V
+ T+akRHgH3Gk2AEoaamF5eLh2ePEg2Gxb5d8wy2Ii1SYHvmigJmelfUdW96GBw8qpbKpJ
+ LRFc3E0lGh4FDX2jDiiSQ00CzMykkCfU0pxm+JJwGY3rsRUrJsjfGW/pLBa7vowL3eOW
+ qp9Cw7w/vHCOn145k0ssWL9hk0qsAI5Z2+4022PC309W2bJCRLTN+qR/NZ5AKBsJh6C+
+ +4bQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=E2kJo/KHyODckPncaHJT1f9N6WdfpHq1W/Soz1Ov6K8=;
- fh=dYKKz+mO9UOlH2bf61vXt9zRZgdMqGWZQNYQftMPock=;
- b=ezcOWOh6wo9Je6CeMxr0dk8MTfwfZ0RtQGCb6JxoQb7wdxjxqx7cBQmXJjRK7qpaag
- 57kJ/gL5dh38WuLFU8vmbhJdLk5WmVIeuzCaVX//7+MLe/7QKLmLChHwzpf1nCDgEW8U
- nYbNA8xzLC0+xd9otwPnCC+GylPzcuY/iR39EjMk+8gvgicWP+uIVzayC4puC/WSx8V/
- rwcPuEwuqbBlOHYwAda2dXI/+MGcBATdB/Umjd9OittsG9d7srdF6HAtgF90C8igLaqd
- w9xVvqVCZH6qy/SxUwaEsvNCG61H3SUkgfh9lr4BuzqQUd5IpU0qbrbiqHRA5pJ6nLsD
- XeMg==; darn=nongnu.org
+ bh=wM8+HqMP83uwX03OBjf8Pjbtv7j0XEsdhHWbb4v6MYw=;
+ fh=qsdNDVjRFhetbPwfelUksp9m6Y//Y7oZPgd+roJVTtQ=;
+ b=OHBhGrMRMeXKPVfE5jE8YOU0VfyxDNLljJpWAJfaAVPI3kODa/eIsKS4lhMYuI0+Td
+ vPvY1U6/z6EsHQgpRSRXG8ivvf4cDE5xTe8u7DoPebqsMGuxsLB37hHI9Ljkn7am9mw0
+ PwiC7Q6K5iY7yhsR5BIBpkIiF8CPrygvY1pmldQTHOF1VvR81TJOUoxoWJvlQB2ayfbB
+ aEGsZPxGQvVI/0JYucVuXWY4outsAbLwvI1MpuzmbLBfTGG1pW+R8Bm0p3QUaCUIj09x
+ DWUS4h6hLa5sxHcGDWo0YudPdIMh2yZMMP7Rf81w1vXlAE+xnJ/dmM1PNb7gfu2wPnBj
+ 0Cqw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779801415; x=1780406215; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779801781; x=1780406581; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=E2kJo/KHyODckPncaHJT1f9N6WdfpHq1W/Soz1Ov6K8=;
- b=eJEnf/iqtSKQDSnXp9K7ocqkBMCsbSxRG1frGPachgQYb8MV0K8UxwCIpf9Inoc4YM
- 539wce7tZES3TliXyjOALcq9wtF5ucwzeHByuyl82QyBzoDDXmixlr4VhRYlcQDSKRVa
- XhKzTl3YmfTBqDyobmlC3EHW4fLjct74XV3oTcPYcY1IBxEL0kebJ19PtsbJxkSKaIi2
- Ax5WLK7sQnU0g3/hJqkXiU2aTVeYaMohCR68BDUqGn2gM9S4LSC0jltJJhIwxnTBSrPz
- xYOZ7XW0dlsatrqp847fNnUGcwF0eHM2xpz6IXyE7P8LySuwJIwFfZg7ggfpc/8+bGWc
- n2Mg==
+ bh=wM8+HqMP83uwX03OBjf8Pjbtv7j0XEsdhHWbb4v6MYw=;
+ b=UJTghpkIqnRHBoaHdIz24K2hKY7VaVqsV8T7CbSpb1vNMdeqqB6Pik5VSdBLZl8dTS
+ zR1FjYLoXVfCITJg/o7VK4y9xPUpeJp1NUwrJoBPSXjOec8dsXUp995X8PQpQzrYoymD
+ QQKBzip/05dtSGtnqc5MOO6YIytb48tyr56NEwPJacmagNGN49g1YgvyyOMO67amZpnq
+ vzd//vzlXEW8MhCBZcEvjFg2x6XRtyZfBzMiD4jL+xb8kyMJlFKU89ioBRx2fcHtCiYs
+ 1JTwbzycbpbskbBPXrJ5fuw4ZnQ1x+9P7GledOqLSoXTEbbO20/EvBnhIvyJNztyKIHX
+ AFug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779801415; x=1780406215;
+ d=1e100.net; s=20251104; t=1779801781; x=1780406581;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=E2kJo/KHyODckPncaHJT1f9N6WdfpHq1W/Soz1Ov6K8=;
- b=Z7xwBtVJg7DpRq3jHR2RszaOMI5BY/FQsjxiLetTT/JCaVeaIGxGFycv53Q0MtWTER
- 4Wku2SN2VjRSIXhXt0FUtF8ObC7K0Q3Cr07KzhonJjrjn03pfjeuZKnkZFk/Y2hCZQ0b
- Y8s2kWueVFgEUKlXRn2P63aZV0qUg2KWc/LtEqVsDytmFyrq+oDtkCOjbExk398QxLvd
- WkOMo8JVWcYJd7b9TcCoYXFl1WSzuegSO65R0OXtdptWXUA3D3IxxdcMNswxDTwHTcC3
- 1fGVsj6L9VAb61N89wcHSI1eSCMxdgVH1Z9M/OiebkVgJx2nDrAB1AuSmF8qvg/7QlBq
- Bc7Q==
+ bh=wM8+HqMP83uwX03OBjf8Pjbtv7j0XEsdhHWbb4v6MYw=;
+ b=nRAm4EEPANfA45JvXWMIvyCO5yOrVBHq5XZJs2D1jIJujpmv3eXCfRA9A8aku9+V1/
+ xpawraK92/KUYZMu+TcR+CkqWcgatHRa/W6Jn0FoZK6lxjIYrrilMIEfnBTFhzSfC6zj
+ ScsZ3oTSF1J9p6MEz5NWIdSF1oZp0AuR9xPJc5kY/fI/TfThj08TAUCj4qKTDXRLlntS
+ bclQeH7qOSqYJ08c1mgL98yE/NOeJh2duWsqPiAcPNFPr4nIcBhy09RIHpPsZ2BQ6i7s
+ GVCTV2ByMirRbLlKgOKmTxRp4HTD1MFYqiAZjxqkcctGKpSuZ7h3OFsBdhnbXx/0x6Sn
+ 09ug==
 X-Forwarded-Encrypted: i=1;
- AFNElJ907aTFt0wb32pwYGLe4qd+iWkhLpbp9tR1Q97uGqrS65uuB9CauK6JgkCA2J6lTFiboPcyqnIcUny7@nongnu.org
-X-Gm-Message-State: AOJu0Yw6FFt3OGNwj7RoWmwxErB3I3F25jsNcqo6zuThxIxPe1ERcJFZ
- ulv8W6lj0as+uE5zCymhkFd3Rf08cPou/mCMU8yXBUl18I6LphdKSdbH6WxGYCO/eDlhXnANC9g
- X1m96h5M1tfMqxd6xjy0fy3gQuftfbFefCUis
-X-Gm-Gg: Acq92OGVEN0FF0YSwUqe70bkZMpgOb9pRKj1TqbSnd6V5jQJ17PatAogmCe1JXQuMIq
- xQqZX+7KPuWoAAxDbu1Yl9VJmCJ5Na4EFpJaTmXpjP3SIpmqav3R4UtQG17O1GDnqXZx7J/NFNH
- 3e8HKZ1AtD4wYTLj4DLZNmTd0e3g4XLuzoyLDHXS9l6xeT/ZaKN82NpM+8xJ9qOwm2uacmhx76o
- h9BZrR9prl2HpJCguhINoPWjTsx7GX0pa2qQlrsFC3fJIiWHbJ4g2bAJFHpQ3ulyAPjD8jn5clk
- TO2cZ9td73iHxuCfLOHFxog5fBVzJiX0SED+zAqVzg==
-X-Received: by 2002:a05:6402:3805:b0:684:95a:4d05 with SMTP id
- 4fb4d7f45d1cf-6889c42bf53mr9044501a12.8.1779801413094; Tue, 26 May 2026
- 06:16:53 -0700 (PDT)
+ AFNElJ/z8D5BBqqFXdqwTyxYPC6BIeJ36PeilPjUNOAj7bft2NwYR3BGgP3AN+6HgZbSM8gmZ5ogCJrUPqc+@nongnu.org
+X-Gm-Message-State: AOJu0YyumBt6USf+bDdHyHYKAIUUECHkrLDSTl54ThrvlcHrnL3DN5pd
+ /mAufKyRkfXGiAGBcMI6kYEX+/vb+617XbCls6jusslssURCdpgFdsTIo/VoMRN5hgdjypPcung
+ g1GmT+U7m2aISjVOVPc4uvcbmPUs+ySI=
+X-Gm-Gg: Acq92OFK6JKePNLCwCqC4quAPEwUnEwov3nehnneTHuGjNiW2GpOMnUVKK68K/k/qTK
+ 6Sv4u9fp3B6xGp/DzNVslvYau3c/H0EArbP6k3oUkbYawDuS+7sRmdB0X3d2hd53ZVpVtD4wTgE
+ S7bdH48NEzOzcYi0yI0Ag3LexFIBS9/A+aERttKOJnl79vavxDzUN3A/07yl6bziA9HEZ0sTXTc
+ IHRFLE1SnvfSzBrRfXugvxqzxqB83Jdz7jj/N1OLK8NbZ5394UyvV5oejUMV0xxPxEzn98kjat+
+ K0R2pJPFFtuM+vQUIMRQhEy6nExv0trrIm5EJV9Jfw==
+X-Received: by 2002:a17:907:3e0c:b0:bd4:d0f2:67b4 with SMTP id
+ a640c23a62f3a-bdd25fdcb0cmr1188135666b.34.1779801781250; Tue, 26 May 2026
+ 06:23:01 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260524083329-mutt-send-email-mst@kernel.org>
  <f0bc9023-28c4-4685-b0cc-fc7ad4e6d371@redhat.com>
- <CANCZdfrn61yr5k=3=E_zE11dw3j2vVsg0PPn0PZ7RAa2agM8kQ@mail.gmail.com>
- <CAJSP0QUmh4RLFUg9-5Uky36Tjhr_cLkrE2VAC8K_MdSY9p0WZw@mail.gmail.com>
- <20260525183441-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20260525183441-mutt-send-email-mst@kernel.org>
+ <CAFEAcA9wMRFJWrjGHcd2nfhgXovyuS=dDJvCXWZkgmD_eez27A@mail.gmail.com>
+ <CABgObfYSy-sctHcUW3hPxQZ8ZGOYHLi3HaW+FrEQ9kKitMAVZg@mail.gmail.com>
+ <e875fb45-9697-a6d0-fbe0-d0531eb2c911@eik.bme.hu>
+In-Reply-To: <e875fb45-9697-a6d0-fbe0-d0531eb2c911@eik.bme.hu>
 From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Tue, 26 May 2026 09:16:40 -0400
-X-Gm-Features: AVHnY4Lw0E72hpa4IJPEh8F5WTklUtgeqtxKYyXk-WOJzGYpeMupOr11GWOeWgM
-Message-ID: <CAJSP0QU9SwLG+REPJz6vrWgCuh+BZ32N2+jVXUr_=di7k_h=9w@mail.gmail.com>
+Date: Tue, 26 May 2026 09:22:49 -0400
+X-Gm-Features: AVHnY4IZwmRV6l4ve8ieJokpfFCGB8bc0SIRZDGC1sMvRVoxAWWYOnvEOL6nC_A
+Message-ID: <CAJSP0QWt_xB9a7UG3nved=m_5-Qmxy8qeAofh4c1M3a6qJanMQ@mail.gmail.com>
 Subject: Re: on ai generated and code provenance
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Warner Losh <imp@bsdimp.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org, stefanha@redhat.com
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel <qemu-devel@nongnu.org>, 
+ "Hajnoczi, Stefan" <stefanha@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=stefanha@gmail.com; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,111 +124,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 25, 2026 at 6:36=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
+On Tue, May 26, 2026 at 7:28=E2=80=AFAM BALATON Zoltan <balaton@eik.bme.hu>=
  wrote:
-> On Mon, May 25, 2026 at 03:44:02PM -0400, Stefan Hajnoczi wrote:
-> > On Mon, May 25, 2026 at 1:17=E2=80=AFPM Warner Losh <imp@bsdimp.com> wr=
-ote:
-> > > On Mon, May 25, 2026 at 10:34=E2=80=AFAM Paolo Bonzini <pbonzini@redh=
-at.com> wrote:
-> > >> On 5/24/26 14:42, Michael S. Tsirkin wrote:
-> > >> >       How contributors could comply with DCO terms (b) or (c) for =
-the output of AI
-> > >> >       content generators commonly available today is unclear.  The=
- QEMU project is
-> > >> >       not willing or able to accept the legal risks of non-complia=
-nce.
-> > >> >
-> > >> > But, since this was written, Red Hat's Richard Fontana and Chris W=
-right
-> > >> > published this piece:
-> > >> > https://www.redhat.com/en/blog/ai-assisted-development-and-open-so=
-urce-navigating-legal-issues
-> > >> >
-> > >> > Saying, in particular
-> > >> >       We understand this concern, but the DCO has never
-> > >> >       been interpreted to require that every line of a contributio=
-n must be
-> > >> >       the personal creative expression of the contributor or anoth=
-er human
-> > >> >       developer.
-> > >> This is not the objection or the worry; rather the question is, what=
- if
-> > >> the contribution is a creative expression of someone that could clai=
-m
-> > >> copyright in it.  In fact, looking at the Linux policy...
-> > >>
-> > >>    Signed-off-by and Developer Certificate of Origin
-> > >>    =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D
-> > >>
-> > >>    AI agents MUST NOT add Signed-off-by tags. Only humans can legall=
-y
-> > >>    certify the Developer Certificate of Origin (DCO). The human subm=
-itter
-> > >>    is responsible for:
-> > >>
-> > >>    * Reviewing all AI-generated code
-> > >>    * Ensuring compliance with licensing requirements
-> > >>    * Adding their own Signed-off-by tag to certify the DCO
-> > >>    * Taking full responsibility for the contribution
-> > >>
-> > >> ... the question is how humans can actually do the second step.  The
-> > >> piece you posted above says: "with disclosure and human attentivenes=
-s =E2=80=93
-> > >> and oversight =E2=80=93 aided where possible by tools that check for=
- code
-> > >> similarity, AI-assisted contributions can be entirely compatible wit=
-h
-> > >> the spirit of the DCO".
-> > >
-> > >
-> > > The code produced by AI agents has no copyright. You can incorporate
-> > > public domain code into your work and have the absolute right to lice=
-nse
-> > > it (see all the Diseny movies). The notion that LLMs wholesale copy o=
-riginates
-> > > from the earliest days of Copilot and turned out were contrived. No r=
-ecent
-> > > evidence shows that plagiarism is a concern. To the extent that I mod=
-ify
-> > > public domain code, I have a copyright that I can choose to license
-> > > however I want (and the SOB says it's compatible).
+> On Tue, 26 May 2026, Paolo Bonzini wrote:
+> > Il mar 26 mag 2026, 10:23 Peter Maydell <peter.maydell@linaro.org> ha
+> > scritto:
 > >
-> > There is an active field of research on memorization and the status is
-> > that LLMs do memorize. A paper from 2026
-> > (https://arxiv.org/pdf/2601.02671) shows that production models can
-> > output significant chunks of Harry Potter, although the research
-> > deliberately extracts training inputs rather than doing so
-> > accidentally. I am sharing this because I don't think it's correct to
-> > say that concerns about models outputting copyrighted code are
-> > outdated.
+> >>> Personally I think QEMU's
+> >>> policy is fine but we should start introducing exceptions, possibly
+> >>> including large contributions with pre-authorization (but not
+> >>> pre-approval) from the maintainer.
+> >>
+> >> I want to note that [...] while we were essentially in the "blanket ba=
+n"
+> >> state anyway, there was no particular need to have the discussion abou=
+t
+> >> other reasons we might also want to be restrictive or cautious about A=
+I
+> >> contributions, but those other reasons and viewpoints don't go away
+> >> automatically with the legal one.
+> >>
+> >> I have quite a lot of sympathy with the rationale behind the Zig polic=
+y,
+> >> for instance: https://kristoff.it/blog/contributor-poker-and-ai/ I spe=
+nd
+> >> quite a lot of time reviewing patches for things which are features I =
+don't
+> >> necessarily personally care about. I'm happy with doing that for other
+> >> people who are hopefully learning and gaining something from the proce=
+ss;
+> >> I'm much less interested in reviewing a mountain of LLM-generated patc=
+hes.
+> >>
+> >
+> > I agree and that's a good argument for pre-discussion with the maintain=
+ers.
+> > It would anyway be the right thing to do for large contributions, but i=
+t's
+> > even more important with AI given the different balance between contrib=
+utor
+> > and reviewer.
 >
-> But the concern is with them doing it *accidentally*.
-> Because willful infringement was always possible.
-> And that does not seem to be happening.
+> I think the real problem is people who don't know what they are doing yet
+> use an AI to generate a patch and submit it anyway. Reviewers are then
+> flooded with nonsense that they have to look at to find out if there's
+> anything useful in it which takes their time from doing more useful
+> things. So the policy should make clear that we don't accept patches
+> generated by AI that no human has read and understood before submission
+> and adding a S-o-b should also mean (besides that the submitter made sure
+> there's no copyright infringement) that that person has knowledge about
+> the patch and is willing to correct it. Then reviewers can just bounce AI
+> nonsense back to the conrtibutor or ignore it if they don't reply (or
+> reply with more AI nonsense suggesting they don't know what the patch doe=
+s
+> so can't correct it). I think that's the real fear that has led to the AI
+> ban and the copyright issues were just a convenient excuse. Maybe
+> clarifying this in the policy could be done although there will always be
+> people who ignore documents. So maybe what we want is no direct submissio=
+n
+> of AI generated patches without at least a human inbetween who has alread=
+y
+> reviewed tha patch before sending it to the list.
 
-I agree. The chance of accidental copyright violations is too small to
-ban AI usage in my opinion...
-
-> > I do think that the risk for coding use cases is low as long as LLMs
-> > are used sensibly. If not, legal cases would have popped up by now.
-> >
-> > The example of ext4 for OpenBSD (https://lwn.net/Articles/1064541/)
-> > comes to mind as a case where LLMs were used in a risky way and
-> > maintainers decided to reject the code. Even though the output of AI
-> > has no copyright, when there is no suitably-licensed information to
-> > generate the code from, then it is risky to assume AI generated code
-> > is free from copyright, license, patent, etc effects.
-
-...but here is a realistic example of where it might make sense to
-reject an AI-generated contribution.
-
-My point is that maintainers still need to consider whether
-contributions are risky and in some cases it's easier to do something
-reckless with AI because it may not feel like you are exposing
-yourself to licensing issues when the AI generates the code for you.
+That sounds reasonable.
 
 Stefan
 
