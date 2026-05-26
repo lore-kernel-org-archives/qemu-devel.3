@@ -4,97 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C74A2CD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 21:19:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FF4ECD5BB1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 21:24:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRzB2-0001O3-RQ; Tue, 26 May 2026 17:19:04 -0400
+	id 1wRzFJ-0002J2-IQ; Tue, 26 May 2026 17:23:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wRzAs-0001Mx-Mp
- for qemu-devel@nongnu.org; Tue, 26 May 2026 17:18:54 -0400
+ id 1wRzFH-0002Ia-Pp
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 17:23:27 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wRzAq-0003xp-MI
- for qemu-devel@nongnu.org; Tue, 26 May 2026 17:18:54 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1wRzFF-0007if-PO
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 17:23:27 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64QH11aI3289824
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 21:18:50 GMT
+ 64QH1DnF2995558
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 21:23:24 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- qNRfr3+xh1lSEsX1bwasvbXcpuo74C1PTpke/ccZa00=; b=JIT+3R/i9oc0kJW9
- +I2ulZYR9x6Apr80WHpEgrUKSxAH39M3izLPrG3JNrzstcYomHRBe2U2bTf6J+9D
- vTl0GVgL68SogCpLZ1GrNML/FFT2gFXdGkWLK9/PlF7AWHfbADUXLQ2TUyNnlgNl
- Ii3R2NkYdRPdd0ONmT6xpaSWf1FP0PoNvIrYn5I+dOrYQF9BR6E+b9T5Aypw7ds7
- 7EuW7SzeePnu0V1u2icBfQQ8+7ku6dUGTRZMiJhxeXSDx71etPfgS4h9/S03ro+H
- m4rHt/nX0u8H8ycwa/eLaBd8xQOY3nEodKCwIXyw4mqT0cHfCHdr1dbkQF/GdqvP
- 9Mo9Lw==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4edf1j90tg-1
+ AcA4ZGv+erGhBuzcp1LpiN++CoeFRvvBuWKBzDqFiTs=; b=NzMHOJvvu+A4b54z
+ uqWw4JJ7q8wi+EBloDZIMn4VcUAgGwNNvRTLCl2Mz0/8ddExzBUEwVNqkbzTqV5d
+ zTRzPf56bkaJimyQdcHhabNAtTNuJs2vWrivIk0Exj2zvgRX2emC8bYhd6ZTWswx
+ 8CsWIN25Yo4hbbCtntAox5Nb8wFQjfRAGzq/EtfcP/oQp7QVp+3WlFnHJXVb99/7
+ XzXHq1Y6oarRM7hOveCjR2qYjKXka8+9JjsNOIFlCVombquOPgoQDB4jWE/5A+D1
+ Me0nF+ouc53XDVnrvVXLPuDq1iibzJHZHhei3PlOBJRnbMXGKVgCt9Br+HtFFfmB
+ GZ2kKw==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4edcnnssrv-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 21:18:50 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8b49424ad88so101992446d6.1
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 14:18:50 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 21:23:24 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-516d4a9e852so74334131cf.0
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 14:23:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1779830330; x=1780435130; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1779830603; x=1780435403; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=qNRfr3+xh1lSEsX1bwasvbXcpuo74C1PTpke/ccZa00=;
- b=PNLk4qo/VgtuiBoCMYy2gMYNaOaRKttQ9Yz5sMhgUlZP9jH/cu/PkrFmmZDnmx2nav
- nJC9SfMK86ZPnXBFmALwoulUMIGqiJqJAvJL1Y5KNdFMd31mqRZLx5r/9M0FdImGkkas
- TnEFc2blNBaw+Z8NCeAr+yd0NrHCGtsh4ZDwkc3IGco0f744LKSgD1ABDlWSTCvuwyPG
- PdCUWf5ROdMq8Z0WxiG5mR3BtLjH+zFC/dklNkN9rwNIJ3UCW1tzfaHrObI1Zgn6PWjr
- MoPugGg0jUgR2FhGCTuZ7HfClTB+OhOs1f10l5cwcKDtr3j1d7RKkgCcTAMen4Vg8G/p
- mxZg==
+ bh=AcA4ZGv+erGhBuzcp1LpiN++CoeFRvvBuWKBzDqFiTs=;
+ b=TsI0JZGCrw4um86KBgZE5dLnACoN6k0LAuN+Ldg0uPFp68J4U8PR58lDRnbyhIMi0F
+ GXZ18rxoSQXbZtuO/elnRIgGylp4hQqDz0kpPaFqMNDyLBOp/Cp7h7B3SoDyLGFFS8TW
+ rjLZo8/fCeiDKE0OyguMQE7B/BB34rWHlpU9E3rW1rJ2VVjme+o0YNUVw3yxSc/89PkY
+ 8gXZSYsY/TLWADwH4Xkj0fkoGrThpGvT4FNtmhjBZJzYcGnssD5uvPRsDChTJqvEUztI
+ mi1vaYmF68zPu1/VKTRdi3UGODkDNVxci5CecngzlVyDNJJaK6tl5UAc/Jdz4+qq6e58
+ EtBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779830330; x=1780435130;
+ d=1e100.net; s=20251104; t=1779830603; x=1780435403;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=qNRfr3+xh1lSEsX1bwasvbXcpuo74C1PTpke/ccZa00=;
- b=owrzFBCSKEKILSsuRm/YMUMeCYD7NtogDU6K38X5OrPz4gnh/J4fdXE2VjulMbcp7O
- L6BgpgxIUC2B3/H9ddMwB62BmYeLBFroPwTQISBkJ0GX4mw4+qh4m2zdyYIfQSDRPnvS
- znVdBbCJueBOU6rFj2NHXObtBGfEchb0o9CXUORIBBz4ujVlt4Z8IDwbW11lN/a3pQZU
- s2dkNFH20IAQor64igdmBABddLRKlCoZgNmvQ6oMWG88nx8WmjWLbNlAxhtUMriKZBUp
- BJgFdahUq4WavihBQ5R+6gEJlZtW7nF81YL2SDNKbvCUv3baS0caYOZgOdK6b5yj8YuZ
- UeAQ==
+ bh=AcA4ZGv+erGhBuzcp1LpiN++CoeFRvvBuWKBzDqFiTs=;
+ b=hWmX91zqpoCJgF1+BcnLmuldhbaXtrsBscCzPwQ7HZ+WoOqQX6DoK0ec7cP7ejwcwj
+ 0X2weeWplWO0b6xJYe8mbLboHqmULvtXaHj2QLeFbbuIeTl0Rl0XTt477jyruQZSaG+m
+ /1QX7K7OWjCe2/86Cem2Hz8eRgTroRkBGJMXjzVjxHqFyiIB8BqccJx3WOM1xnxu4EnX
+ CeZx8Z1xr0+jwXLmpVx7QmSYpt3rz2y+gPgnezU0wff2Sj7Y/J/jp4YBiCJTfsMKm8cf
+ 4v7LJXsGfjv+6qG6o0VwBARJbkKTO1amp1fms2/WtVKQsoyIBI4+hsACyzAr4ayilSuG
+ 06TA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8rmOLfaxnYso6Fk1yMxB9gTmxuKqLcPGiROWE9MHADVZuqeh3iXI2wgSlaAwmtGdtUSlOOrjDr5u1A@nongnu.org
-X-Gm-Message-State: AOJu0YzXcWBSSEnyZK/iY3puz/z05g1i/kLp1aQZsga2vDPSMmVKR0M9
- RugjMGUD57UDPdOOyIcvJ47cc436hL+3i5rxU266fhPzUmGXa2Fp74188rwidnqw080dTfZ+Kvf
- I9G/bXSTc0Niaw+wFB2HvkDiyLkHEdlQ4ZqXiD2ZlHlVAnQk2nJ+xMgL9bA==
-X-Gm-Gg: Acq92OEeyxoHd1dat3Mn/by4HeQaO7Jg0iy3dWW0xPNTH7UcgdAISWbQkz/eAxjTX1w
- ly0NPQgqxvWr4njCsp3eQutKo0WKCzBpuPXcMm1DEUBA3mtWWY49jbk8CForDAupKDMSPOwnZKg
- ZvFzipFvpYTI44WNS4TlewFTxxp9KhXQGvUrv1oSPWXv4LiDkpPHTGnnHsKJadJ8imJ/kSjGRd5
- miArUuYhCUpceCCcq7K4H1DzfkEMtZnwoHHf+X4shpdYXE3UTEO8tdB+zfCEmaIy7zYtXRW5Ytv
- B7FjWqSsTy/UyOpOkrt/shJ46siL/pGmar2GuZUG8CR5NIr5pmnJL+zJziij1mM5PQ+h+Q7bMHN
- +w/n06Igse4RtsNsvmE03BFa8cla8+E27cB8Xe2GaOaWhcq7s04zWdEc4uiTBhyyIMB/YIg==
-X-Received: by 2002:ad4:5744:0:b0:8ca:e41:aaf with SMTP id
- 6a1803df08f44-8cc7b54b9c6mr326556136d6.20.1779830329985; 
- Tue, 26 May 2026 14:18:49 -0700 (PDT)
-X-Received: by 2002:ad4:5744:0:b0:8ca:e41:aaf with SMTP id
- 6a1803df08f44-8cc7b54b9c6mr326555636d6.20.1779830329511; 
- Tue, 26 May 2026 14:18:49 -0700 (PDT)
+ AFNElJ9hsG84g0OHjZzERL7vwRfGIUBXCvu0rZJHqkCS+xNdJ/JdTONydAsVDxvz2vECQ5yX1Zd61tPqBZWa@nongnu.org
+X-Gm-Message-State: AOJu0YxyWzZ9eLteFIMjwux1GvNHqMtLOpFYk+fDsvCub70jWXclm38J
+ 5rr3wNpslypBYQfHubDHHsRIwN4W3p6US73AEVyN8NrluErI2TjS0PTzB0o4mCGEcTPKi22COp7
+ mFZM8dPV/WsD65N5fJHQlK0kfK3fRUp4WbD4ydLXaM/+p0dJotdYWwozBrQ==
+X-Gm-Gg: Acq92OGvuXip2X2+qt0u5P4lun6nYccJ+GykRvjP8TKbFXR3tzYxvQKdUwWdrVPeHQu
+ G4odK/7fzkjQ8oIWdvsOjPHNgIBCpxJdMMHUE20kZuABmywwKEraSVvFBcg7niFb/ugegWCOFSH
+ qTAEEOz6lcFK/vp4REDFkexZDvD4xCNDIqJbuT8u3WeI9CWlPYutWpWAzqUKkXbTeuA2dsD/nZk
+ yc439VImPgURCce8cT1z5/4xqKRxeldbfzR6R8nD71IduBCwHBTRg2arRTglqc5JXhk0xLs3OfE
+ 4EcbPpl3/LHP9tvVGcjehPERa1iiI26+dPybLGBcZobbiJ9csHMvXt6yGO6tGCYnRMwqECgLjEs
+ bJdDHMU8ZXP3sBkR+466NV4wc7TSsRzIpqIwk9xgceXchJ2se02A2MH8zGzI=
+X-Received: by 2002:ac8:5850:0:b0:50d:5a11:1b5 with SMTP id
+ d75a77b69052e-516d445d3ddmr283365291cf.17.1779830603434; 
+ Tue, 26 May 2026 14:23:23 -0700 (PDT)
+X-Received: by 2002:ac8:5850:0:b0:50d:5a11:1b5 with SMTP id
+ d75a77b69052e-516d445d3ddmr283364841cf.17.1779830602807; 
+ Tue, 26 May 2026 14:23:22 -0700 (PDT)
 Received: from [192.168.68.106] ([191.202.238.222])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8cc81306c57sm152323146d6.34.2026.05.26.14.18.46
+ 6a1803df08f44-8cc81316d44sm150716436d6.42.2026.05.26.14.23.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 May 2026 14:18:48 -0700 (PDT)
-Message-ID: <4670e49f-5c0d-4ad2-bcb7-8cb0833ee8f3@oss.qualcomm.com>
-Date: Tue, 26 May 2026 18:18:45 -0300
+ Tue, 26 May 2026 14:23:21 -0700 (PDT)
+Message-ID: <d2c4280c-f8e8-4012-8650-225b73cb8b0d@oss.qualcomm.com>
+Date: Tue, 26 May 2026 18:23:18 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] hw/riscv/microblaze-v: Use RV32I / RV64I CPU type by
- default
+Subject: Re: [PATCH 4/4] hw/riscv/virt: Inline TYPE_RISCV_CPU_BASE definition
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>,
@@ -105,36 +104,36 @@ Cc: qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>,
  Alistair Francis <alistair.francis@wdc.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 References: <20260526095731.63525-1-philmd@linaro.org>
- <20260526095731.63525-4-philmd@linaro.org>
+ <20260526095731.63525-5-philmd@linaro.org>
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20260526095731.63525-4-philmd@linaro.org>
+In-Reply-To: <20260526095731.63525-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=ZNjnX37b c=1 sm=1 tr=0 ts=6a160e3a cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=etEqFfc6qwXwpI8uT8rzbw==:17
+X-Proofpoint-GUID: gwg0_GrprsLtUf0NIxXwFs_k89sQ-4X1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI2MDE4OSBTYWx0ZWRfXxd2XVyFAOcnE
+ vTxHUD8/Co50wLkYkcmK2KS8ENhVWjxFW22Ile7pqjBKtKvSU0f8y6F9cpP2h/g1uHpirsj/THE
+ Xr+mlw82xM8eZJyEmhp1hBuIYlxNJeSsllvKCrruetuCSOCSpLqb+N6i3r6wqCzrTMQi2AsXudz
+ KRO9UpVLL6zCpFAX08II2CHXS+y+xJK90NiUq0AD0+YSRL32OovuR9PM3Ooj3VjjXkKNXCFQsA9
+ W3OcgQPzKpCTIb3P3C+bLcZSvSvDmXZPS0gozXNoitv6asww9FLwBssYqsOcNeXVUZqzM61rRCY
+ XXbjmUmeqgQIIPOzvlYXVi6ES25M1H0l0/CPLHz6kOjSUB11RRMOli1DuhBAie0Vknq5Bp97H7T
+ 2xt/ymsl5u/6dfJbDLqcOsWyp3sWb7E4b9p2RnOoa+QTfdWPGmH+nib8hPLs6GABvjEwGtXabZ+
+ xlbcHmPxDERTAUy2wYg==
+X-Authority-Analysis: v=2.4 cv=VPHtWdPX c=1 sm=1 tr=0 ts=6a160f4c cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=etEqFfc6qwXwpI8uT8rzbw==:17
  a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=zd2uoN0lAAAA:8 a=KKAkSRfTAAAA:8 a=TLzj4CuIgxklPQOjxDEA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI2MDE4OCBTYWx0ZWRfX23NU6N5F0u7w
- 58ifBTy6M4gPg/YKHJXpVIwzkbTQeP8k5IED+wYwOprCirJfX4V8OBM6O2yqCGDNi7x3CjLhlCY
- lR6Xv7iZ8ZqRbX7zVtz6Rhymd4PnAXZd2L9zh4BcgZPzZwSvWCN2Y3eLgB4oNMZdAs39Zw+D+x3
- 7fBkQH3whe+yuhGxvqZWfcLzf901WUNku2gBx7cRKRZwmQdM2E17H+dAW8mCRT2ZeN8G+FBAKB5
- OS1xzA7Dn2LYMLWNFRaSTNwq/VMFYypCNYQcuhjja5DtdDkp4jbMlrUZtooHif1lXzGLr3GhrAd
- sQA37hYtDPJQTQ/r9BvJtTXmHvNh4NPwP7f//k9ZI5dJnGUI56X9oSPd417MaANAtDyQcNu3JBv
- kGtOHnWsjduvk9oX8KjPcgVbOGmh9lqqVjkE1vGqoh78gypf5s9iP3WYmYTMd5iSTs61hWwgaug
- dHNpTPKf0INuHnzRpAg==
-X-Proofpoint-ORIG-GUID: CbkyiRSrfe4RRzBTjETVW-8MUYHb9O1p
-X-Proofpoint-GUID: CbkyiRSrfe4RRzBTjETVW-8MUYHb9O1p
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=acQYp9IdyblRgUTRBEkA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: gwg0_GrprsLtUf0NIxXwFs_k89sQ-4X1
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-05-26_05,2026-05-26_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 impostorscore=0 phishscore=0 lowpriorityscore=0 adultscore=0
- spamscore=0 malwarescore=0 priorityscore=1501 bulkscore=0 clxscore=1015
+ phishscore=0 spamscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
+ adultscore=0 malwarescore=0 priorityscore=1501 bulkscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605260188
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605260189
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -143,7 +142,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,71 +161,69 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 5/26/2026 6:57 AM, Philippe Mathieu-Daudé wrote:
-> Per [*]:
-> 
->    AMD MicroBlaze™ V processor Key Capabilities:
-> 
->    - Configurable ISA support for RV32I and RV64I Base
->      Integer Instruction Set
-> 
-> [*] https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/microblaze-v.html
-
-I am not sure if that's really the case ... the trick is on the "configurable"
-keyword.  This basically means that they start with the base set and then
-add stuff on top of it.
-
-In the link above, if you go down there to a "MicroBlaze V Processor Reference Guide",
-you'll get here:
-
-https://docs.amd.com/r/en-US/ug1629-microblaze-v-user-guide/Introduction
-
-And then if you click in "Features" in the left side, right below "Overview", you'll
-find a "Configurable Feature Overview" table.  And there's a *lot* of stuff there.
-
-Setting the board default to rv32i/rv64i will break the board.  Pretty sure Linux
-won't boot with just rv64i, and I'd be surprised if OpenSBI would be able to play
-ball.
-
-I see that you CCed the original contributor of the board (Sai Pavan Boddu) so we
-can see the author's opinion.  From my perspective, if the idea is to not use
-TYPE_RISCV_CPU_BASE, maybe we can use rva23s64 for 64 bits (the feature table from
-the link seems close to the profile) and for 32 bit I would go with 'max' because
-we don't have 32 bit profiles implemented in QEMU.
-
-A better solution would be to model a Microblaze V CPU for the board but setting
-the default to max32/rva23s64 seems sensible for now.
-
-
-Thanks,
-Daniel
-
+> TYPE_RISCV_CPU_BASE is only use by the 'virt' machine.
+> Inline it, replacing a built time check by a runtime one.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/riscv/microblaze-v-generic.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
+>   target/riscv/cpu.h | 6 ------
+>   hw/riscv/virt.c    | 4 +++-
+>   2 files changed, 3 insertions(+), 7 deletions(-)
 > 
-> diff --git a/hw/riscv/microblaze-v-generic.c b/hw/riscv/microblaze-v-generic.c
-> index b0494b1ac50..04a201dcd95 100644
-> --- a/hw/riscv/microblaze-v-generic.c
-> +++ b/hw/riscv/microblaze-v-generic.c
-> @@ -14,6 +14,7 @@
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 7d79c7a5a7e..0d2ecd9d6ba 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -39,12 +39,6 @@ typedef struct CPUArchState CPURISCVState;
+>   
+>   #define CPU_RESOLVING_TYPE TYPE_RISCV_CPU
+>   
+> -#if defined(TARGET_RISCV32)
+> -# define TYPE_RISCV_CPU_BASE            TYPE_RISCV_CPU_BASE32
+> -#elif defined(TARGET_RISCV64)
+> -# define TYPE_RISCV_CPU_BASE            TYPE_RISCV_CPU_BASE64
+> -#endif
+> -
+>   /*
+>    * b0: Whether a instruction always raise a store AMO or not.
 >    */
->   
->   #include "qemu/osdep.h"
-> +#include "qemu/target-info.h"
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index 3d06c9c6104..8371b28c27a 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -22,6 +22,7 @@
 >   #include "qemu/units.h"
+>   #include "qemu/error-report.h"
+>   #include "qemu/guest-random.h"
+> +#include "qemu/target-info.h"
 >   #include "qapi/error.h"
->   #include "target/riscv/cpu.h"
-> @@ -182,7 +183,8 @@ static void mb_v_generic_machine_init(MachineClass *mc)
->       mc->init = mb_v_generic_init;
->       mc->min_cpus = 1;
->       mc->max_cpus = 1;
+>   #include "hw/core/boards.h"
+>   #include "hw/core/loader.h"
+> @@ -1932,7 +1933,8 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+>       mc->desc = "RISC-V VirtIO board";
+>       mc->init = virt_machine_init;
+>       mc->max_cpus = VIRT_CPUS_MAX;
 > -    mc->default_cpu_type = TYPE_RISCV_CPU_BASE;
-> +    mc->default_cpu_type = target_riscv64() ? TYPE_RISCV_CPU_RV64I
-> +                                            : TYPE_RISCV_CPU_RV32I;
->       mc->default_cpus = 1;
->   }
->   
+> +    mc->default_cpu_type = target_riscv64() ? TYPE_RISCV_CPU_BASE64
+> +                                            : TYPE_RISCV_CPU_BASE32;
+
+
+As I said in an earlier message today I would be soooooo down to make
+rv32/rv64 aliases of max32/max :D
+
+Maaaaybe setting MAX as the default CPU for 'virt' could be a good way
+to put our feet in the water?  Change it, see the amount of nagging coming
+our way, adjust if needed?
+
+But that can wait.  For now:
+
+
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+
+
+
+>       mc->block_default_type = IF_VIRTIO;
+>       mc->no_cdrom = 1;
+>       mc->pci_allow_0_address = true;
 
 
