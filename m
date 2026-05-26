@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06FFFCD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 19:07:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1B49CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 19:07:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRx6q-0000cc-Js; Tue, 26 May 2026 15:06:36 -0400
+	id 1wRx6d-0000W5-29; Tue, 26 May 2026 15:06:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRx6b-0000Uo-Ey; Tue, 26 May 2026 15:06:21 -0400
+ id 1wRx6I-0000Mb-2W; Tue, 26 May 2026 15:06:06 -0400
 Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRx6Z-0004hN-Jg; Tue, 26 May 2026 15:06:21 -0400
+ id 1wRx6G-0004dm-Dq; Tue, 26 May 2026 15:06:01 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 1CF0B438F3;
- Tue, 26 May 2026 19:06:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC33B1F000E9;
- Tue, 26 May 2026 19:06:14 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 41A2D42AE9;
+ Tue, 26 May 2026 19:05:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D19D51F00A3A;
+ Tue, 26 May 2026 19:05:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779822378;
- bh=YmDrG2TezwoliurUbxDzBvTiekL3RGYCv9IQwkBdxx8=;
+ s=k20260515; t=1779822359;
+ bh=0dQnwUFE5S5dYS/jm+p+iJZyIvrikm45NzygrKgjVW0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=npX76Brbf2MixQO187ZMVQ6vKX5oeNNSSSsc3DreDvoucNyVrMptk6EhXpi4EwT+B
- MQt4VHAca8OORzlmY0DSKKa+e58MoiKCf/Wi1NrzbLsWH/R5Rm9dXBh5c2YIGvrGHA
- tf8gu7CwOtC2/uq/MPZ8LBSa0ZxbjPdyetlLkacH4LxND5e0sYoh+83T0KfGj/fDkg
- XUVW0imxoqakv0X4t0Ecm3JnBP75FuKt2NbD3Zxg2YCkDAm113G9CA11UOC00peA6Q
- Dtx9oiPOpKdcd2QMeIFN5/oAekKu4IFzZlrcjj3OJO6nCufz9uL7tpMDEBYUdmvoRF
- pVk+t/cKGPVXA==
+ b=Gh1SmD3bkhkgwI3nS+xCmNo3TjXk3lIogOtfsFd3AEjyjem3rYFgJWkgS034m4Ggg
+ qnkMN7B6Mq4HJhuz4uHYRlJMvcn49rYWnm+rDEDicvEJa4zNd3WCGK8c4qO72OkIrZ
+ Y1D4n/rSfy6cUZKNAPryB9qaxDkUaSUBmVQm8XJIdaR4LzLkdTTGdId6nFjB6z7iXl
+ GG6+yLDEG5Q+bZFAWSni8tqx4v2T5vJvocPN7xioHQspLBWXNgpIxF2uNRl73t0DfJ
+ 1osxVrYqnPO5ZjJU9JWm46QSSwKU9TlihVAzfcqOtNg15wSY8K7iPDqwDazrr/85UQ
+ 5EpCLoHs0KJqg==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Cornelia Huck <cohuck@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -47,9 +47,9 @@ Cc: Cornelia Huck <cohuck@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
  qemu-s390x@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  David Hildenbrand <david@kernel.org>
-Subject: [PATCH 10/12] linux-user: Fix loading static ARM cortex-m55 binaries
-Date: Tue, 26 May 2026 21:05:33 +0200
-Message-ID: <20260526190535.10833-11-deller@kernel.org>
+Subject: [PATCH 05/12] linux-user/sh4: restore FP rounding mode on sigreturn
+Date: Tue, 26 May 2026 21:05:28 +0200
+Message-ID: <20260526190535.10833-6-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260526190535.10833-1-deller@kernel.org>
 References: <20260526190535.10833-1-deller@kernel.org>
@@ -78,39 +78,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Matt Turner <mattst88@gmail.com>
 
-Static built ARM binaries for Cortex-m55 may have been linked to have
-their load address at address 0 (because they are effectively a
-bare-metal image). When qemu-user is running as non-root user and will
-try to mmap() a host address at 0 (which is smaller than mmap_min_addr
-according to /proc/sys/vm/mmap_min_addr), it will fail with EPERM and as
-such loading those guest program will fail.
+The SH4 FPSCR rounding-mode (RM) and denormal (DN) bits are not held
+only in env->fpscr: they are also reflected into the derived
+env->fp_status via set_float_rounding_mode()/set_flush_to_zero(). The
+guest keeps the two in sync by routing every write to FPSCR through
+helper_ld_fpscr().
 
-Fix pgb_addr_set() to always return false if the guest_loaddr <
-mmap_min_addr, that way a valdid guest_base address will be calculated
-and the EPERM can be avoided.
+restore_sigcontext() wrote the saved value straight into env->fpscr and
+never touched env->fp_status, so on sigreturn the interrupted code
+resumed with whatever FP rounding mode and flush-to-zero setting the
+signal handler last installed. (regs->flags = 0 forces the FR/SZ/PR TB
+flags to be recomputed, but fp_status is runtime float state, not a TB
+flag, so it was left stale.) This is the FP analogue of the T/M/Q bit
+problem just fixed for the integer status register.
 
+Factor the FPSCR -> fp_status synchronisation out of helper_ld_fpscr()
+into cpu_load_fpscr() and use it from restore_sigcontext() so the
+rounding mode round-trips correctly across signal delivery.
+
+Fixes: c3b5bc8ab3 ("SH4: Signal handling for the user space emulator, by Magnus Damm.")
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1890
 ---
- linux-user/elfload.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ linux-user/sh4/signal.c | 7 ++++++-
+ target/sh4/cpu.h        | 3 +++
+ target/sh4/op_helper.c  | 7 ++++++-
+ 3 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index f7625c0952..62f12e4149 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -866,7 +866,7 @@ static bool pgb_addr_set(PGBAddrs *ga, abi_ulong guest_loaddr,
-         if (LO_COMMPAGE != -1 && LO_COMMPAGE < mmap_min_addr) {
-             return false;
-         }
--        if (guest_loaddr != 0 && guest_loaddr < mmap_min_addr) {
-+        if (guest_loaddr < mmap_min_addr) {
-             return false;
-         }
+diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
+index cc36425c49..00290d6e40 100644
+--- a/linux-user/sh4/signal.c
++++ b/linux-user/sh4/signal.c
+@@ -173,7 +173,12 @@ static void restore_sigcontext(CPUSH4State *regs, struct target_sigcontext *sc)
+     for (i=0; i<16; i++) {
+         __get_user(regs->fregs[i], &sc->sc_fpregs[i]);
      }
+-    __get_user(regs->fpscr, &sc->sc_fpscr);
++    /* Resync the derived float_status state, not just env->fpscr. */
++    {
++        uint32_t fpscr;
++        __get_user(fpscr, &sc->sc_fpscr);
++        cpu_load_fpscr(regs, fpscr);
++    }
+     __get_user(regs->fpul, &sc->sc_fpul);
+ 
+     regs->tra = -1;         /* disable syscall checks */
+diff --git a/target/sh4/cpu.h b/target/sh4/cpu.h
+index 4b0f3f6d97..3302702376 100644
+--- a/target/sh4/cpu.h
++++ b/target/sh4/cpu.h
+@@ -379,4 +379,7 @@ static inline void cpu_write_sr(CPUSH4State *env, uint32_t sr)
+     env->sr = sr & ~((1u << SR_M) | (1u << SR_Q) | (1u << SR_T));
+ }
+ 
++/* Set FPSCR and the derived float_status rounding/flush-to-zero state. */
++void cpu_load_fpscr(CPUSH4State *env, uint32_t val);
++
+ #endif /* SH4_CPU_H */
+diff --git a/target/sh4/op_helper.c b/target/sh4/op_helper.c
+index 669bc84cb6..cf0f80e4a5 100644
+--- a/target/sh4/op_helper.c
++++ b/target/sh4/op_helper.c
+@@ -204,7 +204,7 @@ void helper_macw(CPUSH4State *env, int32_t arg0, int32_t arg1)
+     }
+ }
+ 
+-void helper_ld_fpscr(CPUSH4State *env, uint32_t val)
++void cpu_load_fpscr(CPUSH4State *env, uint32_t val)
+ {
+     env->fpscr = val & FPSCR_MASK;
+     if ((val & FPSCR_RM_MASK) == FPSCR_RM_ZERO) {
+@@ -215,6 +215,11 @@ void helper_ld_fpscr(CPUSH4State *env, uint32_t val)
+     set_flush_to_zero((val & FPSCR_DN) != 0, &env->fp_status);
+ }
+ 
++void helper_ld_fpscr(CPUSH4State *env, uint32_t val)
++{
++    cpu_load_fpscr(env, val);
++}
++
+ static void update_fpscr(CPUSH4State *env, uintptr_t retaddr)
+ {
+     int xcpt, cause, enable;
 -- 
 2.54.0
 
