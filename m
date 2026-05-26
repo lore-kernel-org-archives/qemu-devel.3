@@ -4,145 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FF4ECD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 21:24:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 488B8CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 21:36:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRzFJ-0002J2-IQ; Tue, 26 May 2026 17:23:29 -0400
+	id 1wRzRg-0004FR-4y; Tue, 26 May 2026 17:36:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wRzFH-0002Ia-Pp
- for qemu-devel@nongnu.org; Tue, 26 May 2026 17:23:27 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wRzRd-0004FJ-DU
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 17:36:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wRzFF-0007if-PO
- for qemu-devel@nongnu.org; Tue, 26 May 2026 17:23:27 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64QH1DnF2995558
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 21:23:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- AcA4ZGv+erGhBuzcp1LpiN++CoeFRvvBuWKBzDqFiTs=; b=NzMHOJvvu+A4b54z
- uqWw4JJ7q8wi+EBloDZIMn4VcUAgGwNNvRTLCl2Mz0/8ddExzBUEwVNqkbzTqV5d
- zTRzPf56bkaJimyQdcHhabNAtTNuJs2vWrivIk0Exj2zvgRX2emC8bYhd6ZTWswx
- 8CsWIN25Yo4hbbCtntAox5Nb8wFQjfRAGzq/EtfcP/oQp7QVp+3WlFnHJXVb99/7
- XzXHq1Y6oarRM7hOveCjR2qYjKXka8+9JjsNOIFlCVombquOPgoQDB4jWE/5A+D1
- Me0nF+ouc53XDVnrvVXLPuDq1iibzJHZHhei3PlOBJRnbMXGKVgCt9Br+HtFFfmB
- GZ2kKw==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4edcnnssrv-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 21:23:24 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-516d4a9e852so74334131cf.0
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 14:23:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wRzRR-00076K-Hs
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 17:36:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779831359;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=YrBRKPt4AoB9fqKY8dFFstw7p2+NWRfv3QZf699GQnM=;
+ b=ZsH02V1l4nmaE0lMkZz55/erBPrIvacrrD/bQm4WPOUtpWrtAQpJDLsfVLm297hEE0trUg
+ IKt+cQiP7dh/sEaBopEp6mdWtzX+dNyeLlSDCHDVDO3G8FvYi7ciA+MuRHh1HA2FzSGbEo
+ Zzcn84q7xtQAK2N3ImZq4nEEUxXQ0M0=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-122-nBO2TLnSPFKBQEurD3BAjA-1; Tue, 26 May 2026 17:35:58 -0400
+X-MC-Unique: nBO2TLnSPFKBQEurD3BAjA-1
+X-Mimecast-MFC-AGG-ID: nBO2TLnSPFKBQEurD3BAjA_1779831357
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8aca4660827so214796026d6.3
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 14:35:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1779830603; x=1780435403; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=AcA4ZGv+erGhBuzcp1LpiN++CoeFRvvBuWKBzDqFiTs=;
- b=TsI0JZGCrw4um86KBgZE5dLnACoN6k0LAuN+Ldg0uPFp68J4U8PR58lDRnbyhIMi0F
- GXZ18rxoSQXbZtuO/elnRIgGylp4hQqDz0kpPaFqMNDyLBOp/Cp7h7B3SoDyLGFFS8TW
- rjLZo8/fCeiDKE0OyguMQE7B/BB34rWHlpU9E3rW1rJ2VVjme+o0YNUVw3yxSc/89PkY
- 8gXZSYsY/TLWADwH4Xkj0fkoGrThpGvT4FNtmhjBZJzYcGnssD5uvPRsDChTJqvEUztI
- mi1vaYmF68zPu1/VKTRdi3UGODkDNVxci5CecngzlVyDNJJaK6tl5UAc/Jdz4+qq6e58
- EtBg==
+ d=redhat.com; s=google; t=1779831357; x=1780436157; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=YrBRKPt4AoB9fqKY8dFFstw7p2+NWRfv3QZf699GQnM=;
+ b=qByneU7hWCoPpOleBXPj84R7yb/nC9xEmrXWZGHxlXrQiwWo6rVdt5T1H1WFdWig2c
+ 5OkPYl9oDA9Nw9oqMr9u6ohVvqXcnsfn67rEMwaabyo4I4Vixu9Fi2eSJ6cNdH8LpqCT
+ 5MmJEbshGDCd4qgj0Owd0bwp7ja1H4wXf5XFFTXmP/vJUo4F+Xpm2tDHZtN75PjAuFlS
+ +cn3ND/mqGTfreI8OdAmYB5vM8vGKs9Oaq8oHBJgUm7iz1g63Dip8b6F2tdhG/y2JJpt
+ oD6BZXtlEtxvht6HMIvTa5IBME8cBMIa+KvEZLz2RIU3Jts625y0BA9Nnc3L1YQgR6KD
+ vjDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779830603; x=1780435403;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=AcA4ZGv+erGhBuzcp1LpiN++CoeFRvvBuWKBzDqFiTs=;
- b=hWmX91zqpoCJgF1+BcnLmuldhbaXtrsBscCzPwQ7HZ+WoOqQX6DoK0ec7cP7ejwcwj
- 0X2weeWplWO0b6xJYe8mbLboHqmULvtXaHj2QLeFbbuIeTl0Rl0XTt477jyruQZSaG+m
- /1QX7K7OWjCe2/86Cem2Hz8eRgTroRkBGJMXjzVjxHqFyiIB8BqccJx3WOM1xnxu4EnX
- CeZx8Z1xr0+jwXLmpVx7QmSYpt3rz2y+gPgnezU0wff2Sj7Y/J/jp4YBiCJTfsMKm8cf
- 4v7LJXsGfjv+6qG6o0VwBARJbkKTO1amp1fms2/WtVKQsoyIBI4+hsACyzAr4ayilSuG
- 06TA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9hsG84g0OHjZzERL7vwRfGIUBXCvu0rZJHqkCS+xNdJ/JdTONydAsVDxvz2vECQ5yX1Zd61tPqBZWa@nongnu.org
-X-Gm-Message-State: AOJu0YxyWzZ9eLteFIMjwux1GvNHqMtLOpFYk+fDsvCub70jWXclm38J
- 5rr3wNpslypBYQfHubDHHsRIwN4W3p6US73AEVyN8NrluErI2TjS0PTzB0o4mCGEcTPKi22COp7
- mFZM8dPV/WsD65N5fJHQlK0kfK3fRUp4WbD4ydLXaM/+p0dJotdYWwozBrQ==
-X-Gm-Gg: Acq92OGvuXip2X2+qt0u5P4lun6nYccJ+GykRvjP8TKbFXR3tzYxvQKdUwWdrVPeHQu
- G4odK/7fzkjQ8oIWdvsOjPHNgIBCpxJdMMHUE20kZuABmywwKEraSVvFBcg7niFb/ugegWCOFSH
- qTAEEOz6lcFK/vp4REDFkexZDvD4xCNDIqJbuT8u3WeI9CWlPYutWpWAzqUKkXbTeuA2dsD/nZk
- yc439VImPgURCce8cT1z5/4xqKRxeldbfzR6R8nD71IduBCwHBTRg2arRTglqc5JXhk0xLs3OfE
- 4EcbPpl3/LHP9tvVGcjehPERa1iiI26+dPybLGBcZobbiJ9csHMvXt6yGO6tGCYnRMwqECgLjEs
- bJdDHMU8ZXP3sBkR+466NV4wc7TSsRzIpqIwk9xgceXchJ2se02A2MH8zGzI=
-X-Received: by 2002:ac8:5850:0:b0:50d:5a11:1b5 with SMTP id
- d75a77b69052e-516d445d3ddmr283365291cf.17.1779830603434; 
- Tue, 26 May 2026 14:23:23 -0700 (PDT)
-X-Received: by 2002:ac8:5850:0:b0:50d:5a11:1b5 with SMTP id
- d75a77b69052e-516d445d3ddmr283364841cf.17.1779830602807; 
- Tue, 26 May 2026 14:23:22 -0700 (PDT)
-Received: from [192.168.68.106] ([191.202.238.222])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8cc81316d44sm150716436d6.42.2026.05.26.14.23.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 May 2026 14:23:21 -0700 (PDT)
-Message-ID: <d2c4280c-f8e8-4012-8650-225b73cb8b0d@oss.qualcomm.com>
-Date: Tue, 26 May 2026 18:23:18 -0300
+ d=1e100.net; s=20251104; t=1779831357; x=1780436157;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YrBRKPt4AoB9fqKY8dFFstw7p2+NWRfv3QZf699GQnM=;
+ b=g1z8GYT//8qKio4kYhaqGW6a5doNimpOTnc20vpC4V/lOS0PSHbLLJVatqyZX6bjia
+ sf2Rd1dUkJLI8gr8pQljlPP9fXUekuoQ9mqPjh4RVtpleX99b9/4R0+l/hRA9zonr0WT
+ xAqpTlCusRmOifmIBpl0LTAWgfxKcBc4CvNMpF7vhayQdansd8mXGy8j7a6Jtchp+MIx
+ 4Z/jh5tWbh6IdK0TQBjrflGGHMOxgND4fIHmJLLY2a8CLomWNY3rcHnHtt3a1D3GZ0vp
+ il3Sqq+cP0NPcj0XfcBhg79kffxt+q9+8V+sLthAV0781VSqTYqCEYYxyB7+8UEBX6lI
+ CSuQ==
+X-Gm-Message-State: AOJu0YwKv6aW0xTddtUkLaJZZrd8G2iFMdBzR8TYE3+zI/RbqYvKuHq9
+ rkgGZ2GsVojZQG9ajEzu34HAVeQ9ihjBzWPHMSU/Z/ZHVJftEYreopDQI5P3JSG99fETa76SjrK
+ 9GnfQs137N5IhYz7uHuAdD2KYyVfjllPaZdQY1kyNBv9MLOUT8N2m7mID
+X-Gm-Gg: Acq92OE2IS8Eyx1NEs6A2Kkkjr9b1KLf+fMhRzfKEV1DRMeBFCyjRumaQ72iMolFwZp
+ uUqlQRetkulpIxR2CQV9hZDvH1IXuqW+2oGmlf82g8SN4ptDY3zRWS9lCRfEUUtYvCff5tunIoU
+ jcE0GLaxdaoFvzy28EXHBmZcputXva0J0XTaPor+NxEY51uh76KCipeoOwk1wvwuHOKgB3hYVHr
+ FibIXFlx5zu1rG5VIcpnsGpPu6GWJkQk/3aZslZ5bUU5jIFa+AetUeZUtW0ZWUMdWP3cBZQeen0
+ jkX53j3m9Y9fRpLH7K1a5iznlaOGJWXt027hHZo58QcmDh/960Ebj3UzsGlJ0gUB2g656LmtqOZ
+ KgnHJF4Bb111817mi7GczVtFUnTBYMKLZYA8zxQd+x3szr7E=
+X-Received: by 2002:a05:6214:242a:b0:8cc:c85:8aac with SMTP id
+ 6a1803df08f44-8cc7b57ee02mr348365266d6.21.1779831357324; 
+ Tue, 26 May 2026 14:35:57 -0700 (PDT)
+X-Received: by 2002:a05:6214:242a:b0:8cc:c85:8aac with SMTP id
+ 6a1803df08f44-8cc7b57ee02mr348364736d6.21.1779831356754; 
+ Tue, 26 May 2026 14:35:56 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8cc812e2018sm153739336d6.28.2026.05.26.14.35.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 May 2026 14:35:56 -0700 (PDT)
+Date: Tue, 26 May 2026 17:35:55 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH] system/physmem: Synchronize ram_list accesses
+Message-ID: <ahYSO98JgdYJrP2e@x1.local>
+References: <20260523-tsan-v1-1-07d5eb9dcaa2@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] hw/riscv/virt: Inline TYPE_RISCV_CPU_BASE definition
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20260526095731.63525-1-philmd@linaro.org>
- <20260526095731.63525-5-philmd@linaro.org>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260526095731.63525-5-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: gwg0_GrprsLtUf0NIxXwFs_k89sQ-4X1
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI2MDE4OSBTYWx0ZWRfXxd2XVyFAOcnE
- vTxHUD8/Co50wLkYkcmK2KS8ENhVWjxFW22Ile7pqjBKtKvSU0f8y6F9cpP2h/g1uHpirsj/THE
- Xr+mlw82xM8eZJyEmhp1hBuIYlxNJeSsllvKCrruetuCSOCSpLqb+N6i3r6wqCzrTMQi2AsXudz
- KRO9UpVLL6zCpFAX08II2CHXS+y+xJK90NiUq0AD0+YSRL32OovuR9PM3Ooj3VjjXkKNXCFQsA9
- W3OcgQPzKpCTIb3P3C+bLcZSvSvDmXZPS0gozXNoitv6asww9FLwBssYqsOcNeXVUZqzM61rRCY
- XXbjmUmeqgQIIPOzvlYXVi6ES25M1H0l0/CPLHz6kOjSUB11RRMOli1DuhBAie0Vknq5Bp97H7T
- 2xt/ymsl5u/6dfJbDLqcOsWyp3sWb7E4b9p2RnOoa+QTfdWPGmH+nib8hPLs6GABvjEwGtXabZ+
- xlbcHmPxDERTAUy2wYg==
-X-Authority-Analysis: v=2.4 cv=VPHtWdPX c=1 sm=1 tr=0 ts=6a160f4c cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=etEqFfc6qwXwpI8uT8rzbw==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=acQYp9IdyblRgUTRBEkA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: gwg0_GrprsLtUf0NIxXwFs_k89sQ-4X1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-05-26_05,2026-05-26_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 spamscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
- adultscore=0 malwarescore=0 priorityscore=1501 bulkscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605260189
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+In-Reply-To: <20260523-tsan-v1-1-07d5eb9dcaa2@rsg.ci.i.u-tokyo.ac.jp>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,72 +119,217 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 5/26/2026 6:57 AM, Philippe Mathieu-Daudé wrote:
-> TYPE_RISCV_CPU_BASE is only use by the 'virt' machine.
-> Inline it, replacing a built time check by a runtime one.
+On Sat, May 23, 2026 at 09:38:28PM +0900, Akihiko Odaki wrote:
+> Alex Bennée reported a ThreadSanitizer warning about a plain concurrent
+> access to ram_list [1]. Ensure the concurrent accesses to ram_list are
+> properly synchronized with atomic accesses, mutexes, or RCU.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> First, the plain assignments of ram_list.mru_block are replaced with
+> qatomic_set(). A comment in qemu_get_ram_block() explains why the
+> ordering requirement is relaxed, but it still needs to be atomically
+> accessed. include/qemu/atomic.h says:
+> 
+> > The C11 memory model says that variables that are accessed from
+> > different threads should at least be done with __ATOMIC_RELAXED
+> > primitives or the result is undefined. Generally this has little to
+> > no effect on the generated code but not using the atomic primitives
+> > will get flagged by sanitizers as a violation.
+> 
+> Second, ram_list.version accesses are replaced with atomic operations
+> or protected with a mutex. Unlike ram_list.mru_block, ram_list.version
+> has tighter ordering requirements for one of its goals: ensuring that
+> the reader-held rs->last_seen_block value is invalidated whenever a RAM
+> block is reclaimed between two RCU reader critical sections. Below are
+> steps a reader and an updater follow:
+> 
+> Reader:
+> 
+> R-1. Enter the first RCU read-side critical section:
+> R-1-1. rs->last_version = qatomic_load_acquire(&ram_list.version)
+> R-1-2. rs->last_seen_block = an element of ram_list.blocks
+> R-2. Enter the second RCU read-side critical section:
+> R-2-1. if (qatomic_read(&ram_list.version) != rs->last_version)
+> R-2-2.     rs->last_seen_block = NULL
+> 
+> Updater:
+> 
+> W-1. Enter a ram_list.mutex critical section
+> W-1-1. Update ram_list.blocks
+> W-1-2. qatomic_store_release(&ram_list.version, ram_list.version + 1)
+> W-2. Enter another ram_list.mutex critical section
+> W-2-1. QLIST_REMOVE_RCU(block, next)
+> W-2-2. qatomic_store_release(&ram_list.version, ram_list.version + 1)
+> W-2-3. call_rcu(block, reclaim_ramblock, rcu)
+> 
+> W-1-2 represents the write observed by R-1-1.
+> 
+> ram_list.version is read non-atomically on the update side because the
+> update side is serialized with ram_list.mutex. The other ram_list
+> accesses in these steps are reasoned about in two cases.
+> 
+> When the grace period of W-2-3 contains R-2:
+>     qatomic_load_acquire() at R-1-1 and qatomic_store_release() at W-1-2
+>     enforce the following ordering:
+>         W-1-1 -> W-1-2 -> R-1-1 -> R-1-2
+>     The value of ram_list.blocks stored by W-1-1 or a newer value that
+>     was loaded by R-1-2 is still valid because of the grace period.
+> 
+> When the grace period of W-2-3 ends before R-2:
+>     call_rcu() at W-2-3 and the read-side critical section at R-2 ensure
+>     the following ordering:
+>         W-2-2 -> W-2-3 -> the grace period -> R-2 -> R-2-1
+>     The value of ram_list.version stored by W-2-2 or a newer value that
+>     was loaded by R-2-1 differs from rs->last_version and the reader
+>     invalidates rs->last_seen_block.
+> 
+> Together, these steps ensure that rs->last_seen_block is invalidated
+> whenever necessary. With added atomic operations, pre-existing memory
+> barriers are no longer necessary and are removed.
+> 
+> Any other ram_list accesses are already properly synchronized.
+> 
+> [1] https://lore.kernel.org/qemu-devel/878q9fbmap.fsf@draig.linaro.org/
+> 
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+
+Above link [1] also mentioned about a hang.  Just to double check: we're
+only trying to silent the TSAN warning (which is a false positive), right?
+
 > ---
->   target/riscv/cpu.h | 6 ------
->   hw/riscv/virt.c    | 4 +++-
->   2 files changed, 3 insertions(+), 7 deletions(-)
+>  migration/ram.c  | 10 +++++-----
+>  system/physmem.c | 16 +++++++---------
+>  2 files changed, 12 insertions(+), 14 deletions(-)
 > 
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 7d79c7a5a7e..0d2ecd9d6ba 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -39,12 +39,6 @@ typedef struct CPUArchState CPURISCVState;
->   
->   #define CPU_RESOLVING_TYPE TYPE_RISCV_CPU
->   
-> -#if defined(TARGET_RISCV32)
-> -# define TYPE_RISCV_CPU_BASE            TYPE_RISCV_CPU_BASE32
-> -#elif defined(TARGET_RISCV64)
-> -# define TYPE_RISCV_CPU_BASE            TYPE_RISCV_CPU_BASE64
-> -#endif
+> diff --git a/migration/ram.c b/migration/ram.c
+> index fc38ffbf8af1..6da24d725861 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -2495,7 +2495,10 @@ static void ram_state_reset(RAMState *rs)
+>  
+>      rs->last_seen_block = NULL;
+>      rs->last_page = 0;
+> -    rs->last_version = ram_list.version;
+> +
+> +    /* Read version before ram_list.blocks */
+> +    rs->last_version = qatomic_load_acquire(&ram_list.version);
+> +
+>      rs->xbzrle_started = false;
+>  
+>      ram_page_hint_reset(&rs->page_hint);
+> @@ -3270,13 +3273,10 @@ static int ram_save_iterate(QEMUFile *f, void *opaque)
+>       */
+>      WITH_QEMU_LOCK_GUARD(&rs->bitmap_mutex) {
+>          WITH_RCU_READ_LOCK_GUARD() {
+> -            if (ram_list.version != rs->last_version) {
+> +            if (qatomic_read(&ram_list.version) != rs->last_version) {
+>                  ram_state_reset(rs);
+>              }
+
+Not directly relevant to this patch, but I never thought into why this few
+lines are needed at all, and then I found I don't have an answer..
+
+Here, ram_list version change should only happen during ramblock
+add/remove.  I can think of a few special cases:
+
+a) device add/remove (e.g. dimms) causing new / removing ramblocks, should
+   never happen as qdev code fails any device add/remove attempt during
+   migration (qdev_device_add_from_qdict, qdev_unplug)
+
+b) virtio-mem, which only manages one memory backend, hence one ramblock,
+   no add/remove
+
+c) virtio-gpu, will do random add/remove with memory_region_init_ram_ptr()
+   which means ramblocks are not migratable
+
+PS: I recall we have other special cases like ROM sizes can change on dest
+QEMU, but it's about used_length, not about version boosts, so doesn't
+matter here.
+
+Both a) and b) should make sure no change on version, c) will change
+version, but in a case where the ramblock is destined to be not migratable,
+hence not visible to migration core.
+
+The patch itself looks all fine, but I'm just wondering if we should just
+remove this check completely or even try to somehow trap it from happening
+(if we can rule out things like virtio-gpu): if something really changed,
+it'll be a serious problem because we sync ramblock list already during
+ram_save_setup.
+
+Thanks,
+
+>  
+> -            /* Read version before ram_list.blocks */
+> -            smp_rmb();
 > -
->   /*
->    * b0: Whether a instruction always raise a store AMO or not.
->    */
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index 3d06c9c6104..8371b28c27a 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -22,6 +22,7 @@
->   #include "qemu/units.h"
->   #include "qemu/error-report.h"
->   #include "qemu/guest-random.h"
-> +#include "qemu/target-info.h"
->   #include "qapi/error.h"
->   #include "hw/core/boards.h"
->   #include "hw/core/loader.h"
-> @@ -1932,7 +1933,8 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
->       mc->desc = "RISC-V VirtIO board";
->       mc->init = virt_machine_init;
->       mc->max_cpus = VIRT_CPUS_MAX;
-> -    mc->default_cpu_type = TYPE_RISCV_CPU_BASE;
-> +    mc->default_cpu_type = target_riscv64() ? TYPE_RISCV_CPU_BASE64
-> +                                            : TYPE_RISCV_CPU_BASE32;
+>              ret = rdma_registration_start(f, RAM_CONTROL_ROUND);
+>              if (ret < 0) {
+>                  qemu_file_set_error(f, ret);
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 7bcbf8757361..9e1ac13e8259 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -839,12 +839,12 @@ found:
+>      /* It is safe to write mru_block outside the BQL.  This
+>       * is what happens:
+>       *
+> -     *     mru_block = xxx
+> +     *     qatomic_set(&mru_block, xxx)
+>       *     rcu_read_unlock()
+>       *                                        xxx removed from list
+>       *                  rcu_read_lock()
+>       *                  read mru_block
+> -     *                                        mru_block = NULL;
+> +     *                                        qatomic_set(&mru_block, NULL);
+>       *                                        call_rcu(reclaim_ramblock, xxx);
+>       *                  rcu_read_unlock()
+>       *
+> @@ -852,7 +852,7 @@ found:
+>       * when it was placed into the list.  Here we're just making an extra
+>       * copy of the pointer.
+>       */
+> -    ram_list.mru_block = block;
+> +    qatomic_set(&ram_list.mru_block, block);
+>      return block;
+>  }
+>  
+> @@ -2260,11 +2260,10 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+>      } else { /* list is empty */
+>          QLIST_INSERT_HEAD_RCU(&ram_list.blocks, new_block, next);
+>      }
+> -    ram_list.mru_block = NULL;
+> +    qatomic_set(&ram_list.mru_block, NULL);
+>  
+>      /* Write list before version */
+> -    smp_wmb();
+> -    ram_list.version++;
+> +    qatomic_store_release(&ram_list.version, ram_list.version + 1);
+>      qemu_mutex_unlock_ramlist();
+>  
+>      physical_memory_set_dirty_range(new_block->offset,
+> @@ -2608,10 +2607,9 @@ void qemu_ram_free(RAMBlock *block)
+>      name = cpr_name(block->mr);
+>      cpr_delete_fd(name, 0);
+>      QLIST_REMOVE_RCU(block, next);
+> -    ram_list.mru_block = NULL;
+> +    qatomic_set(&ram_list.mru_block, NULL);
+>      /* Write list before version */
+> -    smp_wmb();
+> -    ram_list.version++;
+> +    qatomic_store_release(&ram_list.version, ram_list.version + 1);
+>      call_rcu(block, reclaim_ramblock, rcu);
+>      qemu_mutex_unlock_ramlist();
+>  }
+> 
+> ---
+> base-commit: e89049b3ba5f1f0468bc0d294173345597514a1b
+> change-id: 20260520-tsan-c6f1aa909a90
+> 
+> Best regards,
+> --  
+> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> 
 
-
-As I said in an earlier message today I would be soooooo down to make
-rv32/rv64 aliases of max32/max :D
-
-Maaaaybe setting MAX as the default CPU for 'virt' could be a good way
-to put our feet in the water?  Change it, see the amount of nagging coming
-our way, adjust if needed?
-
-But that can wait.  For now:
-
-
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-
-
-
->       mc->block_default_type = IF_VIRTIO;
->       mc->no_cdrom = 1;
->       mc->pci_allow_0_address = true;
+-- 
+Peter Xu
 
 
