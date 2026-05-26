@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1A0CCD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 20:04:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0DE2CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 20:05:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRxzJ-0004co-M9; Tue, 26 May 2026 16:02:53 -0400
+	id 1wRxzO-0004fg-1x; Tue, 26 May 2026 16:02:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRxys-0004Xy-5v; Tue, 26 May 2026 16:02:35 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ id 1wRxzJ-0004cr-SL; Tue, 26 May 2026 16:02:53 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRxyp-0002Zr-8I; Tue, 26 May 2026 16:02:24 -0400
+ id 1wRxzI-0002w9-6I; Tue, 26 May 2026 16:02:53 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 960F2600AB;
- Tue, 26 May 2026 20:02:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F751F000E9;
- Tue, 26 May 2026 20:02:16 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 97C71435E4;
+ Tue, 26 May 2026 20:02:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E7E1F000E9;
+ Tue, 26 May 2026 20:02:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779825740;
- bh=RL/zGi1pDp8yTNmI8IAlrRDAo9DD/BZhQK5MCrsVinw=;
+ s=k20260515; t=1779825770;
+ bh=YmDrG2TezwoliurUbxDzBvTiekL3RGYCv9IQwkBdxx8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=AnwbEPGT1SyeWPFdDZ/mcGieMdi/r+ZztWBDVE0/06S+bl/FFpp0EisIyBJ6kBCY6
- 7LNLX0TVeF1VehRNdjDQUD3iwQuF6SPmXDnt1vUerPCohEzko1nMKqtBU5w77TCC01
- oZdf4yG71f67b4FY977r1gdditZfmu25Jfp6CYvzR9Xjk6rDTHOw5p5MXTUttO3iN+
- a+2o5XzWUH+dA9k2mBZLrOGakRE5Rce5RLARDjqt6x85jQNvnZTMAdrW7kU53XFF94
- g1+p5QKMaYO/DLww6mklE2D7aAy6jRE6oaKlHIhzRV7Og9z7g8ITfNmqIREZ0idtyH
- m7U9YanjoWcsw==
+ b=lAxeD6juO2NsXMXVeQZB6AGPFrH8DbmKyp0k609gf2iib1RJjWxS+yF3zFCRcipdg
+ Ys4g9EtQzEZlPL+hkSBolDCmihupfiFdDCYBd2BZuvnl+Y9Ii7d3qF/EUYq0HKFQhA
+ +kZAbfJN71J1aZc5WZZpIqfREJ+dQsp4etyp+U+CjKc8ADx5tNhXaA+u6cwJc5DS1f
+ pxLtuaHBc4r/XOWlUKT8Tmu+PFd5L63+bBJSGakEtA4Dpu9lxH0hexzwd2VSEOe66I
+ nB7xZpGk6/8lhgrrgfDgmmU+TPzNzWqZzYB6DJD07ZIRPBMvdY7wKoY20kVBwLKQbr
+ 2aRaFoW1Wb0cQ==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -45,16 +45,16 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>, Aurelien Jarno <aurelien@aurel32.net>
-Subject: [PULL 02/12] linux-user/mips: save/restore FCSR across signal delivery
-Date: Tue, 26 May 2026 22:01:57 +0200
-Message-ID: <20260526200207.79738-3-deller@kernel.org>
+Subject: [PULL 10/12] linux-user: Fix loading static ARM cortex-m55 binaries
+Date: Tue, 26 May 2026 22:02:05 +0200
+Message-ID: <20260526200207.79738-11-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260526200207.79738-1-deller@kernel.org>
 References: <20260526200207.79738-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -76,101 +76,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Helge Deller <deller@gmx.de>
 
-QEMU keeps the MIPS FPU control/status register (FCSR, fcr31) in
-env->active_fpu.fcr31.  The rounding mode, flush-to-zero (FS), and
-NaN-2008 mode bits in fcr31 are reflected into the derived
-env->active_fpu.fp_status via set_float_rounding_mode() and friends;
-every architectural write to FCSR goes through helper_ctc1() which
-calls restore_fp_status() to keep the two in sync.
+Static built ARM binaries for Cortex-m55 may have been linked to have
+their load address at address 0 (because they are effectively a
+bare-metal image). When qemu-user is running as non-root user and will
+try to mmap() a host address at 0 (which is smaller than mmap_min_addr
+according to /proc/sys/vm/mmap_min_addr), it will fail with EPERM and as
+such loading those guest program will fail.
 
-Both target_sigcontext variants (O32 and N32/N64) have an sc_fpc_csr
-field that holds FCSR, but setup_sigcontext() never wrote it and
-restore_sigcontext() never read it.  As a result:
+Fix pgb_addr_set() to always return false if the guest_loaddr <
+mmap_min_addr, that way a valdid guest_base address will be calculated
+and the EPERM can be avoided.
 
-  - The signal frame always delivered sc_fpc_csr == 0 to the handler,
-    so sigaction(SA_SIGINFO) handlers that inspect the interrupted
-    context see the wrong FCSR.
-
-  - On sigreturn, active_fpu.fcr31 retained whatever value the signal
-    handler last installed (if any), and active_fpu.fp_status was
-    never resynced.  Interrupted code resumed with the wrong rounding
-    mode, FS flag, and NaN-2008 semantics.
-
-Fix setup_sigcontext() to save fcr31 into sc_fpc_csr.  Fix
-restore_sigcontext() to read it back (masked to fcr31_rw_bitmask as
-the kernel does) and call cpu_mips_restore_fp_status() to resync
-fp_status from the restored fcr31.
-
-Add cpu_mips_restore_fp_status() in target/mips/fpu.c (which already
-defines ieee_rm and includes fpu_helper.h), and declare it in cpu.h.
-
-Fixes: 084d0497a0 ("mips-linux-user: Save and restore fpu and dsp from sigcontext")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1890
 ---
- linux-user/mips/signal.c | 7 +++++++
- target/mips/cpu.h        | 3 +++
- target/mips/fpu.c        | 5 +++++
- 3 files changed, 15 insertions(+)
+ linux-user/elfload.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/linux-user/mips/signal.c b/linux-user/mips/signal.c
-index d69a5d73dd..1b10012726 100644
---- a/linux-user/mips/signal.c
-+++ b/linux-user/mips/signal.c
-@@ -134,6 +134,7 @@ static inline void setup_sigcontext(CPUMIPSState *regs,
-     for (i = 0; i < 32; ++i) {
-         __put_user(regs->active_fpu.fpr[i].d, &sc->sc_fpregs[i]);
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index f7625c0952..62f12e4149 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -866,7 +866,7 @@ static bool pgb_addr_set(PGBAddrs *ga, abi_ulong guest_loaddr,
+         if (LO_COMMPAGE != -1 && LO_COMMPAGE < mmap_min_addr) {
+             return false;
+         }
+-        if (guest_loaddr != 0 && guest_loaddr < mmap_min_addr) {
++        if (guest_loaddr < mmap_min_addr) {
+             return false;
+         }
      }
-+    __put_user(regs->active_fpu.fcr31, &sc->sc_fpc_csr);
- }
- 
- static inline void
-@@ -165,6 +166,12 @@ restore_sigcontext(CPUMIPSState *regs, struct target_sigcontext *sc)
-     for (i = 0; i < 32; ++i) {
-         __get_user(regs->active_fpu.fpr[i].d, &sc->sc_fpregs[i]);
-     }
-+    {
-+        uint32_t fcr31;
-+        __get_user(fcr31, &sc->sc_fpc_csr);
-+        regs->active_fpu.fcr31 = fcr31 & regs->active_fpu.fcr31_rw_bitmask;
-+        cpu_mips_restore_fp_status(regs);
-+    }
- }
- 
- /*
-diff --git a/target/mips/cpu.h b/target/mips/cpu.h
-index 346713705a..392406aff8 100644
---- a/target/mips/cpu.h
-+++ b/target/mips/cpu.h
-@@ -1384,6 +1384,9 @@ void cpu_mips_clock_init(MIPSCPU *cpu);
- /* helper.c */
- target_ulong exception_resume_pc(CPUMIPSState *env);
- 
-+/* fpu.c */
-+void cpu_mips_restore_fp_status(CPUMIPSState *env);
-+
- /**
-  * mips_cpu_create_with_clock:
-  * @typename: a MIPS CPU type.
-diff --git a/target/mips/fpu.c b/target/mips/fpu.c
-index c7c487c1f9..8b661865ca 100644
---- a/target/mips/fpu.c
-+++ b/target/mips/fpu.c
-@@ -17,6 +17,11 @@ const FloatRoundMode ieee_rm[4] = {
-     float_round_down
- };
- 
-+void cpu_mips_restore_fp_status(CPUMIPSState *env)
-+{
-+    restore_fp_status(env);
-+}
-+
- const char fregnames[32][4] = {
-     "f0",  "f1",  "f2",  "f3",  "f4",  "f5",  "f6",  "f7",
-     "f8",  "f9",  "f10", "f11", "f12", "f13", "f14", "f15",
 -- 
 2.54.0
 
