@@ -4,93 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9528CCD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 09:42:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F4E4CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 09:47:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRoIE-00054B-65; Tue, 26 May 2026 05:41:46 -0400
+	id 1wRoNM-0005ru-FT; Tue, 26 May 2026 05:47:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRoIC-000543-HX
- for qemu-devel@nongnu.org; Tue, 26 May 2026 05:41:44 -0400
-Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRoNK-0005r5-GO
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 05:47:02 -0400
+Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRoIA-0001Xi-Jw
- for qemu-devel@nongnu.org; Tue, 26 May 2026 05:41:44 -0400
-Received: by mail-yx1-xb130.google.com with SMTP id
- 956f58d0204a3-65c52bb5dd7so9872504d50.2
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 02:41:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779788500; cv=none;
- d=google.com; s=arc-20240605;
- b=S9snEqnc8YIU0ODcMENPl0PntB/z2iLPzdS9Yn+TWr7XNre/1/Pdy0DkUTXBMnA9x5
- xrYQvuJbUARbYu+NQOXN5fwpAysT+AXtJrT3rmRfjlUvHs9K3+lcaJXfDmcrS+KXTu2Z
- jap7v8TtP+JchcBhMOnKDZaSa45436KAyignooANdE3JTl/MEGQIAairinIED6mup1Du
- 7j4S2kgX3q5l7sEs3F3jFtd8AvkjMQICGQYt1cf6nVMB3vTAQ4a9Vvifg8KQm9hgtPh0
- usSy7Gyhdc0kBKUWagPY4V7g4pUOg8kbuJHRAtCYWkS1F4B4lOvNMYaQVGahDBjYhC4c
- uYcw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=xpWlUl4jTWR+abcNiS2POVhGjXqsiCxExM44RLhMxXs=;
- fh=2Ql2JQXYYxz1RYoZmvk1GClubAUYYhKeJe346T0P6v0=;
- b=lcuBM1hBqinMj7hmmVww8yPcn4Tum6uCPmxIDcLolmzqYI5LZRVp7tE528mXqCugL6
- Pmv1h06fNiMsMjPz9zRZXQv09K2yY30Y3sHZIKypCY93ELu1/wNQcV6Xw3XmIrx7bDlz
- oPFSpBZweeNSpIxx3jOAPcsaok0Edus/7TjIERsfkn1hgqScqc2NChyekP4inYExJzBl
- 2kJnZG+2CBrbUbgsIxOUqnx0cLZ/rLFLicVyKvXY2MFkGN7DPYNQbmon789mqmlnCmRS
- 4AH7E5B07XA3HM2H1KUFu6cgoFZK3dJeVUycetrx2f8B3ZLtOC9NBiHGcmcJkRA1/riv
- /Fdw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRoNI-0004Fd-DW
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 05:47:02 -0400
+Received: by mail-wm1-x341.google.com with SMTP id
+ 5b1f17b1804b1-49068493267so12968215e9.1
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 02:46:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779788500; x=1780393300; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=xpWlUl4jTWR+abcNiS2POVhGjXqsiCxExM44RLhMxXs=;
- b=PVzcqPp9RvluPMJ5dCDEr4MYBpiHB2j9UjncWZewpNanTDzPRT8bJVYvf6eiw2mCVY
- SlN5k/vE1ixxjgBAHwJFYvLP9QCy/VE313KsitukSOyLIaM2U1cp+g/vOWZm+paOazTe
- oNRz4alDfh3TKMq2L4DjctsQ3abQM8Q6X21cY7yxQr1sRvddou0yQfbvaPrkwN6yBJwG
- MjOIaxVlzkP46fAnLBKkVDO14XyoF4u4arZqYwmPOaSiM4+dSmS0RU6/lbLa/pIkYcQs
- 8iXhfzQaqChsAXo2glgQCANQ4T6mfJNR1UbarAIcD30BZoEEOzis8hVugaAfEDdaauPI
- Iy2A==
+ d=linaro.org; s=google; t=1779788818; x=1780393618; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=zKVG0KIYxnF/3RfPEfzH6BbW6IenKOyDdn+K2omGkBk=;
+ b=qRNjK0UoTAKsEALRa7QeFZRtLq8zeQDClgeofI2DbWk9eTCpDQYG0aLmkPVQIrwuFw
+ A+LXQHtsDT4/P8j+WGAAetGjzDgTApzOb7qdNBRYVqAoUZ7Hdm71280wF2FyPp7vIrPK
+ eFSjm9C4wrx8cOGL3aiZlbafG5WvgboARsgp9Ba7oQxPTF1Wo31o5yc3+Wff1vruLXE+
+ uN5aHYK5VZuAFVXm0QSPGemJYZHdsDu2aFxwh6/7ej1WjB49dJRv0p6JBFVdEY3nHJnW
+ 9OQgSjvaZ6GVaQXA/SUB7dEFFXe1Lnlj+ESyzuYLgaEbpnZVzocrgh7ocQbeUrvhHfE9
+ RwwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779788500; x=1780393300;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xpWlUl4jTWR+abcNiS2POVhGjXqsiCxExM44RLhMxXs=;
- b=jzWfXBoJDiWoOFt/4NIwitRvM09bDqbXWAXHt5uxHUjPAtLggvfF3cTIWA9ZtHHMas
- uB+QDO2c/FH9Twlx+myVsn+UMYEwgUdc31+MhhnorZ9I/cUGY1YiZ0Y/I+tCrZgbPW/P
- Hj4UR+0hjNFd0rFG9aicc6Bv+j8bcWSaCiF2bfM3swYWvBmf1gcA5JvPw/eFUBZD6Are
- c2fnVFQBuJoKgnn828dorQazePcO4lK6p80KUXqDlH0C6t7FdefxmzhiHKqOZzRJbLR9
- rqm9zi79thNynFOCbjw/uVCi1laeJ868fRPE5wnESRogb9y6OFnGJNmu2keaLWK9YNOi
- YvXQ==
-X-Gm-Message-State: AOJu0YwqcQHPAP+FTxOKou1JulQqaYGzV24/q47zPffjKriMqplTguRV
- LMFqHsTCfnebzaoGZrFZZk5Pd4RahNfihprdjoKMbuk++mNPiV0isdg0jXNWb5flRE2VSMsc7so
- 9sqJ96LUicpzk2/SWY7vhfHi74rShl2mNg97DwTBobA==
-X-Gm-Gg: Acq92OEYBYfurinNojLMgAungSRvfy7MmNqLchIfRE8OAOAT/n7PAwNErTB0jaFM9r5
- LHLXv2GzzWCMRVJh2MjoSETIel3ZFFwJ5vp/n4UC6cp/lxCROBhNw4N2HE8M6gkBZAZPc7Wl308
- GPUizysrlFpKzPgE7Nyf1lFVH0OEFA0HaQhTO1ouF5Gdumr4DOhPNLPQQ7xyiOM5lTxp/cORDtx
- p78h2nW/Nn0gB82vuF2IDUf6+STGBRalouIlUTDo9pnP4oaGRdFiFUqrbMvKQDCuoETfsYcFMh5
- DZQ0nt80/6OT7esJAmVfo1fy9JkygoJpA7/2uq6D/RTtQ+tDoJjh9TX7ceZ7XCkQpX0=
-X-Received: by 2002:a05:690e:140d:b0:650:6cb:a720 with SMTP id
- 956f58d0204a3-65ec98c44efmr16646530d50.39.1779788500328; Tue, 26 May 2026
- 02:41:40 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779788818; x=1780393618;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zKVG0KIYxnF/3RfPEfzH6BbW6IenKOyDdn+K2omGkBk=;
+ b=BiTGj4pTFb8DRwlHu7Zx6gNi/M8bDqxTaEDdL63Dp9dMdqedyeV7dmi0e+WaqMCgZl
+ BoxlQNkvmI19SCHrt3lEVFPEBGWzq1LW7hLsc/FfnzpdClN1DR62l8/+50mojrux61Ut
+ PFG25cDEZHGbpQj2OVMV91ZOLYW3tc/EAy3RawYvbITFtNn8RarlP1rHJCn7Gf0KwGcv
+ iMLjnPuifYkpjxXcz+I+8Sybbmp3UAFPV9ECBYaFcsUwVofX4Lf2+9wxBKCG++1j7t26
+ u5h81M7SdCYlUyphqMa35/1zhfOfnSrHCGpWJV89aiUwxHXopVkYdKIpFLEkpZkgp9JP
+ 4cBQ==
+X-Gm-Message-State: AOJu0YyzLXw9ynfTzKYc0ptUdl3EKx6f63JxGGLlZuHXkGXF2amO4mDD
+ 4XjVak8E9puC9IyDzi+SyQFgd1V8Rt1SAm5TAyhyZ3RXeduDkMbLdBf17jGafDHTIGE=
+X-Gm-Gg: Acq92OHV/2fqSMQraL4CZYOGA3FvtXKatR+XT47ROY0nSoj3ql4ao93f9KPnyP5TlIi
+ S0tW/l4c+DxiR3+Pvpi8CXMd1IkRHGGMZm1sMDoWy3izVcPXwFrgygueqp3HWBSMK/4XI5Cfphd
+ l+3xUNeHbfBhjpiYn5EUgyzXg6xTONz+h70VO6TivozjVdvlhx0sBDfOS1N/VKqcB5lsTFX4iTt
+ xndOzYy1wIfIBbEyWxN5JuKgbM67Kqt8TUKAsKQHFT7FQ9ryJ+2rDt7fQj5kKhTt5pz/29VUr/Z
+ XLENkXuGmmFw3ma9n7fwdtgmldfixVg/M9/kjyfLeK6Qjrn58QAhE8h+fLTT0zSqjRxjHjr9OaT
+ slPatlXDHmdkiKjjq0KlISkUf38EIu28ekPb7kLL8hrbl0JJFbY/gsg3BVsXE4s2y0fK0NBoyFE
+ IHC+IcW70jssvcZoFI6xOSb4Mw6LvX98SYOYxOxEPCvsPVvHpglfLEkYbwlefX59J0EQ==
+X-Received: by 2002:a05:600d:640f:10b0:490:3ff5:737f with SMTP id
+ 5b1f17b1804b1-490426cefe0mr215062065e9.18.1779788818460; 
+ Tue, 26 May 2026 02:46:58 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45eb6d6ebf0sm35183885f8f.34.2026.05.26.02.46.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 May 2026 02:46:57 -0700 (PDT)
+Message-ID: <de0d459c-56eb-4f5f-937d-53f4875d770e@linaro.org>
+Date: Tue, 26 May 2026 11:46:56 +0200
 MIME-Version: 1.0
-References: <20260521172032.85047-2-hemanshu.khilari.foss@gmail.com>
-In-Reply-To: <20260521172032.85047-2-hemanshu.khilari.foss@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 26 May 2026 10:41:28 +0100
-X-Gm-Features: AVHnY4Kds6Wo04G376xgIDZx3i9pn7tdWoLBXRpVxgvUUCAzzx30CpnmwQHI7wk
-Message-ID: <CAFEAcA-UtcxQewr0y9Ohqfqjez3eDenMhG4+r_DTVTLxe9NhxA@mail.gmail.com>
-Subject: Re: [PATCH] hw/core/qdev-clock: Fix potential null pointer dereference
-To: "hemanshu.khilari.foss" <hemanshu.khilari.foss@gmail.com>
-Cc: qemu-devel@nongnu.org, luc@lmichel.fr, hemanshu_dev@proton.me
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 06/14] target-info: Add target_riscv64()
+Content-Language: en-US
+To: Chao Liu <chao.liu.zevorn@gmail.com>, Anton Johansson <anjo@rev.ng>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com
+References: <20260520-hw-riscv-cpu-int-v3-0-d1123ea63d9c@rev.ng>
+ <20260520-hw-riscv-cpu-int-v3-6-d1123ea63d9c@rev.ng>
+ <ag6_aQE7WW-BWFnB@ChaodeMacBook-Pro.local>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ag6_aQE7WW-BWFnB@ChaodeMacBook-Pro.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::341;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x341.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,60 +104,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 21 May 2026 at 19:13, hemanshu.khilari.foss
-<hemanshu.khilari.foss@gmail.com> wrote:
+On 21/5/26 10:19, Chao Liu wrote:
+> On Wed, May 20, 2026 at 03:12:58PM +0800, Anton Johansson via wrote:
+>> Adds a helper function to tell if the binary is targeting riscv64 or
+>> not.
+>>
+>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> Signed-off-by: Anton Johansson <anjo@rev.ng>
+>> ---
+>>   include/qemu/target-info.h | 7 +++++++
+>>   target-info.c              | 5 +++++
+>>   2 files changed, 12 insertions(+)
+>>
+>> diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
+>> index 23c997de54..6c5b714288 100644
+>> --- a/include/qemu/target-info.h
+>> +++ b/include/qemu/target-info.h
+>> @@ -99,4 +99,11 @@ bool target_ppc64(void);
+>>    */
+>>   bool target_s390x(void);
+>>   
+>> +/**
+> There’s one extra * character here; otherwise LGTM.
 
-Hi; thanks for this patch. It looks good, except for a couple
-of minor things that I've noted below.
+This is the Javadoc tag which is also used by C tools such doxygen:
+https://www.doxygen.nl/manual/docblocks.html#cppblock
 
-> qdev_get_clocklist function returns a pointer to the NamedClockList
-> struct. This function is called in qdev_alias_clock and the returned
-> pointer is immidiately dereferenced without a null check.
+We use sphinx with a kerneldoc.py plugin which understands it:
+https://www.kernel.org/doc/Documentation/doc-guide/kernel-doc.rst
 
-"immediately".
+i.e. https://www.qemu.org/docs/master/devel/index-api.html
 
-You should mention in the commit message that passing the function
-a clock name that doesn't exist is a programming error, and so
-this change is not fixing a bug, only making the reporting of
-that programming error a bit more helpful and bringing it in to
-line with qdev_get_clock_in() and qdev_get_clock_out().
+> 
+> Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+> 
+> Thanks,
+> Chao
+>> + * target_riscv64:
+>> + *
+>> + * Returns whether the target architecture is riscv64
+>> + */
+>> +bool target_riscv64(void);
+>> +
+>>   #endif
+>> diff --git a/target-info.c b/target-info.c
+>> index 28c458fc7a..04c69c41f8 100644
+>> --- a/target-info.c
+>> +++ b/target-info.c
+>> @@ -93,3 +93,8 @@ bool target_s390x(void)
+>>   {
+>>       return target_arch() == SYS_EMU_TARGET_S390X;
+>>   }
+>> +
+>> +bool target_riscv64(void)
+>> +{
+>> +    return target_arch() == SYS_EMU_TARGET_RISCV64;
+>> +}
+>>
+>> -- 
+>> 2.52.0
+>>
+>>
 
-> A null check is added after qdev_get_clocklist is called which prints an
-> error message and the function is aborted.
->
-> Cc: luc@lmichel.fr
-> Cc: hemanshu_dev@proton.me
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2342
-> Signed-off-by: hemanshu.khilari.foss <hemanshu.khilari.foss@gmail.com>
-> ---
->  hw/core/qdev-clock.c | 5 +++++
->  1 file changed, 5 insertions(+)
->
-> diff --git a/hw/core/qdev-clock.c b/hw/core/qdev-clock.c
-> index 6e2967e433..cf09f3d09e 100644
-> --- a/hw/core/qdev-clock.c
-> +++ b/hw/core/qdev-clock.c
-> @@ -157,6 +157,11 @@ Clock *qdev_alias_clock(DeviceState *dev, const char *name,
->                          DeviceState *alias_dev, const char *alias_name)
->  {
->      NamedClockList *ncl = qdev_get_clocklist(dev, name);
-> +    if (!ncl) {
-> +        error_report("Can not find clock-in '%s' for device type '%s'",
-> +                     name, object_get_typename(OBJECT(dev)));
-
-The message should say "clock", not "clock-in", since this is
-for clock aliasing and it works for both input and output clocks.
-
-> +        abort();
-> +    }
->      Clock *clk = ncl->clock;
-
-Our coding style (docs/devel/style.rst) requires that all
-variable declarations go at the top of a function or code block,
-so you can't put this if() above the "Clock *clk" declaration.
-Instead you can put "Clock *clk;" above, and then the
-"clk = ncl->clock;" initializer below.
-
-thanks
--- PMM
 
