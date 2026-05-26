@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87F96CD5BCF
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 06:51:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11D7ECD5BB4
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 06:51:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRld6-0002Jl-7x; Tue, 26 May 2026 02:51:10 -0400
+	id 1wRldN-0002Sy-64; Tue, 26 May 2026 02:51:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wRlcb-0002Fw-VS
- for qemu-devel@nongnu.org; Tue, 26 May 2026 02:50:38 -0400
+ id 1wRlcd-0002Gh-EU
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 02:50:41 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wRlcY-0000aa-73
- for qemu-devel@nongnu.org; Tue, 26 May 2026 02:50:37 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1wRlcb-0000b7-7T
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 02:50:39 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8CxncC4QhVqYkwNAA--.14161S3;
- Tue, 26 May 2026 14:50:32 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxRXi7QhVqfUwNAA--.13629S3;
+ Tue, 26 May 2026 14:50:35 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJBx68GwQhVqMF6RAA--.10913S6;
- Tue, 26 May 2026 14:50:26 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJBxbcK4QhVqM16RAA--.11451S7;
+ Tue, 26 May 2026 14:50:33 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, SignKirigami <prcups@krgm.moe>,
  Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH 04/12] target/loongarch: Use curState in file arch_dump.c when
- accessing CSR registers
-Date: Tue, 26 May 2026 14:50:15 +0800
-Message-Id: <20260526065023.1639371-5-maobibo@loongson.cn>
+Subject: [PATCH 11/12] target/loongarch: Add wrapper function get_csr_offset()
+Date: Tue, 26 May 2026 14:50:22 +0800
+Message-Id: <20260526065023.1639371-12-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20260526065023.1639371-1-maobibo@loongson.cn>
 References: <20260526065023.1639371-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBx68GwQhVqMF6RAA--.10913S6
+X-CM-TRANSID: qMiowJBxbcK4QhVqM16RAA--.11451S7
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -67,130 +66,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When accessing CSR registers in file arch_dump.c, use curState rather
-than env.
+Add wrapper function get_csr_offset(), it is to get offset from structure
+CPULoongArchState. There is no function change, and it is used for future
+LVZ feature.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- hw/intc/loongarch_dintc.c             |  4 +++-
- target/loongarch/arch_dump.c          |  5 +++--
- target/loongarch/cpu-mmu.h            |  4 +++-
- target/loongarch/gdbstub.c            |  3 ++-
- target/loongarch/tcg/constant_timer.c | 10 ++++++----
- 5 files changed, 17 insertions(+), 9 deletions(-)
+ target/loongarch/cpu.c                           |  4 ++--
+ target/loongarch/csr.h                           |  4 ++++
+ .../loongarch/tcg/insn_trans/trans_extra.c.inc   | 11 ++++++++++-
+ .../tcg/insn_trans/trans_privileged.c.inc        | 16 +++++++++++-----
+ 4 files changed, 27 insertions(+), 8 deletions(-)
 
-diff --git a/hw/intc/loongarch_dintc.c b/hw/intc/loongarch_dintc.c
-index c42a919df4..1fa8c12a76 100644
---- a/hw/intc/loongarch_dintc.c
-+++ b/hw/intc/loongarch_dintc.c
-@@ -35,10 +35,12 @@ static void do_set_vcpu_dintc_irq(CPUState *cs, run_on_cpu_data data)
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 49bc896d7c..a036355e0c 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -761,7 +761,7 @@ static void loongarch_cpu_dump_csr(CPUState *cs, FILE *f)
  {
-     int irq = data.host_int;
-     CPULoongArchState *env;
-+    CPUSysState *cur;
- 
-     env = &LOONGARCH_CPU(cs)->env;
-+    cur = get_current_state(env);
-     cpu_synchronize_state(cs);
--    set_bit(irq, (unsigned long *)&env->CSR_MSGIS);
-+    set_bit(irq, (unsigned long *)&cur->CSR_MSGIS);
- }
- 
- static void loongarch_dintc_mem_write(void *opaque, hwaddr addr,
-diff --git a/target/loongarch/arch_dump.c b/target/loongarch/arch_dump.c
-index 2b0955a209..da5605b4e6 100644
---- a/target/loongarch/arch_dump.c
-+++ b/target/loongarch/arch_dump.c
-@@ -116,6 +116,7 @@ int loongarch_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
- {
-     struct loongarch_note note;
-     CPULoongArchState *env = &LOONGARCH_CPU(cs)->env;
-+    CPUSysState *cur = get_current_state(env);
-     int ret, i;
- 
-     loongarch_note_init(&note, s, "CORE", 5, NT_PRSTATUS,
-@@ -126,8 +127,8 @@ int loongarch_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
-     for (i = 0; i < 32; ++i) {
-         note.prstatus.pr_reg.gpr[i] = cpu_to_dump64(s, env->gpr[i]);
-     }
--    note.prstatus.pr_reg.csr_era  = cpu_to_dump64(s, env->CSR_ERA);
--    note.prstatus.pr_reg.csr_badv = cpu_to_dump64(s, env->CSR_BADV);
-+    note.prstatus.pr_reg.csr_era  = cpu_to_dump64(s, cur->CSR_ERA);
-+    note.prstatus.pr_reg.csr_badv = cpu_to_dump64(s, cur->CSR_BADV);
-     ret = f(&note, LOONGARCH_PRSTATUS_NOTE_SIZE, s);
-     if (ret < 0) {
-         return -1;
-diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
-index 2d7ebb2d72..652c522925 100644
---- a/target/loongarch/cpu-mmu.h
-+++ b/target/loongarch/cpu-mmu.h
-@@ -32,7 +32,9 @@ typedef struct MMUContext {
- 
- static inline bool cpu_has_ptw(CPULoongArchState *env)
- {
--    return !!FIELD_EX64(env->CSR_PWCH, CSR_PWCH, HPTW_EN);
-+    CPUSysState *cur = get_current_state(env);
-+
-+    return !!FIELD_EX64(cur->CSR_PWCH, CSR_PWCH, HPTW_EN);
- }
- 
- static inline bool pte_present(CPULoongArchState *env, uint64_t entry)
-diff --git a/target/loongarch/gdbstub.c b/target/loongarch/gdbstub.c
-index 3e9bdfa8bb..1d6c3d19a2 100644
---- a/target/loongarch/gdbstub.c
-+++ b/target/loongarch/gdbstub.c
-@@ -34,6 +34,7 @@ void write_fcc(CPULoongArchState *env, uint64_t val)
- int loongarch_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- {
+ #ifndef CONFIG_USER_ONLY
      CPULoongArchState *env = cpu_env(cs);
-+    CPUSysState *cur = get_current_state(env);
+-    CSRInfo *csr_info;
++    const CSRInfo *csr_info;
+     int64_t *addr;
+     int i, j, len, col = 0;
  
-     if (0 <= n && n <= 34) {
-         uint64_t val;
-@@ -46,7 +47,7 @@ int loongarch_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
-         } else if (n == 33) {
-             val = env->pc;
-         } else /* if (n == 34) */ {
--            val = env->CSR_BADV;
-+            val = cur->CSR_BADV;
+@@ -783,7 +783,7 @@ static void loongarch_cpu_dump_csr(CPUState *cs, FILE *f)
+             qemu_fprintf(f, " CSR%03d:", col);
          }
  
-         if (is_la64(env)) {
-diff --git a/target/loongarch/tcg/constant_timer.c b/target/loongarch/tcg/constant_timer.c
-index 1851f53fd6..b08c2f6d3b 100644
---- a/target/loongarch/tcg/constant_timer.c
-+++ b/target/loongarch/tcg/constant_timer.c
-@@ -34,9 +34,10 @@ void cpu_loongarch_store_constant_timer_config(LoongArchCPU *cpu,
-                                                uint64_t value)
- {
-     CPULoongArchState *env = &cpu->env;
-+    CPUSysState *cur = get_current_state(env);
-     uint64_t now, next;
+-        addr = (void *)env + csr_info->offset;
++        addr = (void *)env + get_csr_offset(csr_info, 0);
+         qemu_fprintf(f, " %s ", csr_info->name);
+         len = strlen(csr_info->name);
+         for (; len < 6; len++) {
+diff --git a/target/loongarch/csr.h b/target/loongarch/csr.h
+index 508a3214fc..ed7c603a0b 100644
+--- a/target/loongarch/csr.h
++++ b/target/loongarch/csr.h
+@@ -27,4 +27,8 @@ typedef struct {
  
--    env->CSR_TCFG = value;
-+    cur->CSR_TCFG = value;
-     if (value & CONSTANT_TIMER_ENABLE) {
-         now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-         next = now + (value & CONSTANT_TIMER_TICK_MASK) * TIMER_PERIOD;
-@@ -50,14 +51,15 @@ void loongarch_constant_timer_cb(void *opaque)
- {
-     LoongArchCPU *cpu  = opaque;
-     CPULoongArchState *env = &cpu->env;
-+    CPUSysState *cur = get_current_state(env);
-     uint64_t now, next;
+ CSRInfo *get_csr(unsigned int csr_num);
+ bool set_csr_flag(unsigned int csr_num, int flag);
++static inline int get_csr_offset(const CSRInfo *csr, int vm_level)
++{
++    return csr->offset;
++}
+ #endif /* TARGET_LOONGARCH_CSR_H */
+diff --git a/target/loongarch/tcg/insn_trans/trans_extra.c.inc b/target/loongarch/tcg/insn_trans/trans_extra.c.inc
+index 298a80cff5..fdff09efd4 100644
+--- a/target/loongarch/tcg/insn_trans/trans_extra.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_extra.c.inc
+@@ -3,6 +3,7 @@
+  * Copyright (c) 2021 Loongson Technology Corporation Limited
+  */
  
--    if (FIELD_EX64(env->CSR_TCFG, CSR_TCFG, PERIODIC)) {
-+    if (FIELD_EX64(cur->CSR_TCFG, CSR_TCFG, PERIODIC)) {
-         now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
--        next = now + (env->CSR_TCFG & CONSTANT_TIMER_TICK_MASK) * TIMER_PERIOD;
-+        next = now + (cur->CSR_TCFG & CONSTANT_TIMER_TICK_MASK) * TIMER_PERIOD;
-         timer_mod(&cpu->timer, next);
-     } else {
--        env->CSR_TCFG = FIELD_DP64(env->CSR_TCFG, CSR_TCFG, EN, 0);
-+        cur->CSR_TCFG = FIELD_DP64(cur->CSR_TCFG, CSR_TCFG, EN, 0);
++#include "csr.h"
+ static bool trans_break(DisasContext *ctx, arg_break *a)
+ {
+     generate_exception(ctx, EXCCODE_BRK);
+@@ -46,13 +47,21 @@ static bool gen_rdtime(DisasContext *ctx, arg_rr *a,
+ {
+     TCGv dst1 = gpr_dst(ctx, a->rd, EXT_NONE);
+     TCGv dst2 = gpr_dst(ctx, a->rj, EXT_NONE);
++    tcg_target_long offset;
++    const CSRInfo *csr;
+ 
+     translator_io_start(&ctx->base);
+     gen_helper_rdtime_d(dst1, tcg_env);
+     if (word) {
+         tcg_gen_sextract_tl(dst1, dst1, high ? 32 : 0, 32);
      }
+-    tcg_gen_ld_i64(dst2, tcg_env, offsetof(CPULoongArchState, CSR_TID));
++    csr = get_csr(LOONGARCH_CSR_TID);
++    if (!csr) {
++        return false;
++    }
++
++    offset = get_csr_offset(csr, 0);
++    tcg_gen_ld_i64(dst2, tcg_env, offset);
  
-     loongarch_cpu_set_irq(opaque, IRQ_TIMER, 1);
+     return true;
+ }
+diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+index 2094d182ac..6728ce5ec9 100644
+--- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+@@ -106,6 +106,7 @@ static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
+     TCGv dest;
+     const CSRInfo *csr;
+     GenCSRRead readfn;
++    tcg_target_long offset;
+ 
+     if (check_plv(ctx)) {
+         return false;
+@@ -121,7 +122,8 @@ static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
+         if (readfn) {
+             readfn(dest, tcg_env);
+         } else {
+-            tcg_gen_ld_tl(dest, tcg_env, csr->offset);
++            offset = get_csr_offset(csr, 0);
++            tcg_gen_ld_tl(dest, tcg_env, offset);
+         }
+     }
+     gen_set_gpr(a->rd, dest, EXT_NONE);
+@@ -133,6 +135,7 @@ static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
+     TCGv dest, src1;
+     const CSRInfo *csr;
+     GenCSRWrite writefn;
++    tcg_target_long offset;
+ 
+     if (check_plv(ctx)) {
+         return false;
+@@ -154,8 +157,9 @@ static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
+         writefn(dest, tcg_env, src1);
+     } else {
+         dest = tcg_temp_new();
+-        tcg_gen_ld_tl(dest, tcg_env, csr->offset);
+-        tcg_gen_st_tl(src1, tcg_env, csr->offset);
++        offset = get_csr_offset(csr, 0);
++        tcg_gen_ld_tl(dest, tcg_env, offset);
++        tcg_gen_st_tl(src1, tcg_env, offset);
+     }
+     gen_set_gpr(a->rd, dest, EXT_NONE);
+     return true;
+@@ -166,6 +170,7 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
+     TCGv src1, mask, oldv, newv, temp;
+     const CSRInfo *csr;
+     GenCSRWrite writefn;
++    tcg_target_long offset;
+ 
+     if (check_plv(ctx)) {
+         return false;
+@@ -191,7 +196,8 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
+     newv = tcg_temp_new();
+     temp = tcg_temp_new();
+ 
+-    tcg_gen_ld_tl(oldv, tcg_env, csr->offset);
++    offset = get_csr_offset(csr, 0);
++    tcg_gen_ld_tl(oldv, tcg_env, offset);
+     tcg_gen_and_tl(newv, src1, mask);
+     tcg_gen_andc_tl(temp, oldv, mask);
+     tcg_gen_or_tl(newv, newv, temp);
+@@ -200,7 +206,7 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
+     if (writefn) {
+         writefn(oldv, tcg_env, newv);
+     } else {
+-        tcg_gen_st_tl(newv, tcg_env, csr->offset);
++        tcg_gen_st_tl(newv, tcg_env, offset);
+     }
+     gen_set_gpr(a->rd, oldv, EXT_NONE);
+     return true;
 -- 
 2.39.3
 
