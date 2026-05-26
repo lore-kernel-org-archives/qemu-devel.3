@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF8C9CD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 20:38:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80B93CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 20:39:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRyXM-0000gb-AB; Tue, 26 May 2026 16:38:08 -0400
+	id 1wRyWu-0000Yk-92; Tue, 26 May 2026 16:37:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRyXE-0000cJ-Ix
- for qemu-devel@nongnu.org; Tue, 26 May 2026 16:37:57 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRyWs-0000YF-Hx
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 16:37:34 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRyXC-0006xP-KL
- for qemu-devel@nongnu.org; Tue, 26 May 2026 16:37:56 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-49040362e4aso54175005e9.0
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 13:37:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRyWq-0006md-QV
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 16:37:34 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4891c00e7aeso76010425e9.2
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 13:37:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779827872; x=1780432672; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779827851; x=1780432651; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vsM35W/WkO5VOGyCq5JTHjDkwnrXsH+8MtcBngCSo5c=;
- b=h7ySPZ0eCqJbvl2tg1LIJclzDugLFIQh2Cb2VRZ1GoxWSeE++jLcTrP6QKWim9Bb7I
- 6luKU74OQINfCCQFcTkRbebKrccgnyGgcOf0J8IZxTQvvPbU1P1slnbDz/iafXDtTh9P
- 8n2qwv4bZNocw4vPznBg0J8hJEw0OfljvesroBt7FAmTZCfctatOnu45JyRw3mAErWCM
- lJRtHVZGnAU7RUO9HuUe7Atu5606OWS7pN6/j12QeHHtvvGs3xw+tGibcQ2O1MuhLc3f
- MgeRgs2bTLLDRM6YBMK5INhBT/bs5FxXPbYAIUEpDcVf4eVNhnO8CgFIIN+tWMPMI/HV
- mVYA==
+ bh=4EkV7xjSh3pmx79WiPT/ksTz6qONDOK77sE793BSEIw=;
+ b=vNDLbYi8VDkVQSWUMFgElvv54eqydTLHCTuoziCAKvQvRgb5vdxD1bYw+zz4cTA92F
+ zk12Wm+pHZhHM4zMB9vfPeM5cqacZK8VRh+a8u4LsfanqLFQfQl4aJKgQ33xpns8G/xa
+ WbXn9Rcmb2sLPwhBJaaRWNJpBXljEmE4BaPW1AqqzX47yFXU/3g8Du34jrLUf1/aw9rq
+ sfCQOgPDCsXrNWoKpT2IOMNOESYWT8T5fiEhNxOGtL1oQHe8KxL5b8DWDjV/yDth/5Ti
+ DN8AZHZS4PcT5T+ikW2nREp83i2qGvFefaWE66WfHml5QJANYbz/x6dw0W+xJabTS1ZE
+ T8SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779827872; x=1780432672;
+ d=1e100.net; s=20251104; t=1779827851; x=1780432651;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vsM35W/WkO5VOGyCq5JTHjDkwnrXsH+8MtcBngCSo5c=;
- b=ZhyiRcr/w8S2aZcoL/1CxPA7W1TVJfQxdJNc3uEO2oOHczEChNcMAWoxc5LN+yapc8
- SmBmrxNcctE8hHtd7lyHaag8/5hOJyc2ZU1Z0dz5dS/M5lECjLV5l2V13pdRU47OW3kQ
- 3cJEUOKO/rI64rbtPpwYZWBs3kM3Wz6VfAJQrtkU5JEsm03zz2SvzGLWeCV04z9hGtjg
- BrM2rZkYS7+I+Bu12kRiB9ClyoV/Iw2V9zgywUivwoSm50Im4cToJyVvaWB8QaXjPv0t
- VRKUTGiVghyw3p9CC4HuIvNJrrGfO7hLE76s6/2tbcWR6CnPWcy3TVo6517Y4xBfPeDw
- OQIA==
-X-Gm-Message-State: AOJu0YxIkF+noDeP2ydBoGznW5n0sp759lV2AwiCmmFDpzwhxAOHkBBZ
- 9QhjjdQ2KdHHKk9zP8fKLUcvWHUf4FwDVSpksVme52pIkl7k9tpZOVma3yN7deWHWtnFZ60t/kU
- Re70PuMrugQ==
-X-Gm-Gg: Acq92OH9+Az+/EdMw3RM2RF4KXDNRisivUBs31hecxQH/zixwvQqGBWkku7JiISCMyw
- 2bCEfOuwrpWkVALYhCqs9BJx4SPwAfuAYUWsSVSCzqRJQVTeQgndPxgZOSLcRnniUZWs1Rj5byx
- FErFPoyebszMvmnzNmhJXRPVpRNqGhbbE+3cQbL/DRqIE0UEColsSHCJMwWVLg8FjCD2A4iyh8v
- yGN/82x2JQLeljx313MRUKbs7ilJliKe6Dd71R5+tVqYGbPBmwheZL+oKqWzcSGWFDudQ6SmMzJ
- pRpAh6wSJa37Npf1NPr/soG6NMGEFk1NK3mQkTvR9rP2DzBeCbtCq5Ae1wZRpPqdyMM35O2b5+d
- nIK8ATEjy5BdOEyWRoyvnVXGGvICQ0uBaa+8zGoiSPnwYI6lXxwc8UlX2RRGEoDgey2U4T8vPC5
- EvbXcZ/6oRBVGpzbiA/1UzJWhIhnyYVJXhJU0sZFPFZvZYE60haPfzk9GvGq+gL746MA==
-X-Received: by 2002:a05:600c:3393:b0:490:4b89:5375 with SMTP id
- 5b1f17b1804b1-4904b89553dmr168242065e9.10.1779827872251; 
- Tue, 26 May 2026 13:37:52 -0700 (PDT)
+ bh=4EkV7xjSh3pmx79WiPT/ksTz6qONDOK77sE793BSEIw=;
+ b=jq6g9qUjVII/cvnwG1ayizVkjI9oma6+Jctho6GRq4g/CRDK8nRclh2YaBAREY3/wY
+ xStQE4lXJKHar8XwU8s7FXJBdbQNnC7/CUlqEfq3U1IzeYac324eXQq2hrbpENWlfu2y
+ t4SxtLHEKV8bcIbKeIVv46422LhGOcadGwOCvJZFCSfBLH8gEuy0M0aBIWCB0YXKQ73C
+ AYUAgpho+eDXncHZ3ss3pYGNSV/xl9YhghOcp6OxaBjbBf5pl1SD8YaCdJzPKvpuBDlI
+ 3eQAXeSRKCDr/WLVSiQKGUjckWoxKJDiuqxgOk4Z8lhkcOG2CjU7d7lu+7Slwrk0Tgl9
+ o+Eg==
+X-Gm-Message-State: AOJu0YywO9AefHdj21jS5eKEEZznB0qX1UjBuIxO5HSMUK0WGXX1ti12
+ +tYxUY8NN7f0L0Z/t/E64+1b1Y5xwsPC7rumpYPsuIA1VUh2zmYZySAtI826kOg6VTzgsoYlmwv
+ cdhX2xqHT5w==
+X-Gm-Gg: Acq92OEQyAN5Hya117vyDdU5V0zCIiv907HMPfpfD777l6omW1rpq6g83IKjHMepEnc
+ 3YGNY0pm7faANHTUCaXgB5CfxnVR+oCagCMGdfwOGVWedUQEy9KXpSsMbM02eUOMTooYvGta3fb
+ P6wTQ0wGaDavgDpZCtjjOIXzqgsteRFOGlwEU5+hQ3PEVv790pTsSpym8NnpHIjra4Bo1rA/2q6
+ C4TPAFCl/pF7YXpyxJqXFDim1HFC1TmoUiPFffYe/RXIViejoP3GLbpwJHaA2dvf3cmuOS9QkTz
+ 7iklB3JPQUUR6LyOCS1fSHACTUCXxiyxHudVPY/FGZqTACS+u5pBuI5vy5KqAqY/zBQZR5TO4nY
+ XTZoh4AqeOq4q1w2OxmnN2dwPDgPyQ9/foZgOKLmIZx8JyJxK0l0xswpOxeNgvkvXd4l2jv8Ln1
+ ++K+0I4XLfs49PC61SZIhPWmGEDX8rFQCNKVIFBKaiZXvCVVf8wn54B2SaZaZ5IpijVQ==
+X-Received: by 2002:a05:600c:8681:b0:490:778:4fe8 with SMTP id
+ 5b1f17b1804b1-490428ce8c7mr238361895e9.25.1779827851164; 
+ Tue, 26 May 2026 13:37:31 -0700 (PDT)
 Received: from m17.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490454dedd9sm320125765e9.6.2026.05.26.13.37.51
+ ffacd0b85a97d-45edb557545sm884805f8f.12.2026.05.26.13.37.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 26 May 2026 13:37:51 -0700 (PDT)
+ Tue, 26 May 2026 13:37:30 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH v9 04/17] hw/arm/aspeed: Build objects once
-Date: Tue, 26 May 2026 22:37:09 +0200
-Message-ID: <20260526203722.79463-5-philmd@linaro.org>
+Subject: [PATCH v9 01/17] hw/arm/raspi: Initialize 64-bit CPU types during
+ DeviceRealize()
+Date: Tue, 26 May 2026 22:37:06 +0200
+Message-ID: <20260526203722.79463-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260526203722.79463-1-philmd@linaro.org>
 References: <20260526203722.79463-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,48 +100,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 064f1ce95fe ("hw/arm/aspeed: Split AST2700 EVB
-machine into a separate source file for maintainability")
-remove the last TARGET_AARCH64 use.
+bcm2836.c models 3 similar SoC: BCM2835, BCM2836 and BCM2837.
+The BCM2837 is a 64-bit only SoC (Cortex-A53), only available
+in the 64-bit binary.
 
-Now than Aspeed machines can be filtered when running a
-qemu-system-arm or qemu-system-aarch64 binary, we can
-compile the aspeed.c file once, moving it from arm_ss[]
-source set to arm_common_ss[].
+If we build this file as common object, all BCM SoCs become
+available in both 32 and 64-bit binaries; however when running
+the introspection test on the 32-bit binary, the BCM2837 init()
+method tries to init the Cortex-A53 type -- although not
+realizing it -- which is not available. This can be avoided by
+deferring the CPU type initialization to the SoC DeviceRealize
+step (this is safe because nothing uses the CPU type before,
+only the GIC access them, just after their realization).
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Acked-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/meson.build | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ hw/arm/bcm2836.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index f149ed68d09..22e8ad924a2 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -43,7 +43,7 @@ arm_common_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files('xlnx-versal.c', 'x
- arm_common_ss.add(when: 'CONFIG_FSL_IMX25', if_true: files('fsl-imx25.c', 'imx25_pdk.c'))
- arm_common_ss.add(when: 'CONFIG_FSL_IMX31', if_true: files('fsl-imx31.c', 'kzm.c'))
- arm_common_ss.add(when: 'CONFIG_FSL_IMX6', if_true: files('fsl-imx6.c'))
--arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-+arm_common_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed.c',
-   'aspeed_soc_common.c',
-   'aspeed_ast2400.c',
-@@ -69,8 +69,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_ast10x0.c',
-   'aspeed_ast10x0_evb.c',
-   'aspeed_ast1040.c',
--  'aspeed_ast1040_evb.c'))
--arm_common_ss.add(when: ['CONFIG_ASPEED_SOC', 'TARGET_AARCH64'], if_true: files(
-+  'aspeed_ast1040_evb.c',
-   'aspeed_ast1700.c',
-   'aspeed_ast27x0.c',
-   'aspeed_ast27x0_evb.c',
+diff --git a/hw/arm/bcm2836.c b/hw/arm/bcm2836.c
+index ee2f44debd1..03825e69d06 100644
+--- a/hw/arm/bcm2836.c
++++ b/hw/arm/bcm2836.c
+@@ -25,12 +25,7 @@ static void bcm283x_base_init(Object *obj)
+ {
+     BCM283XBaseState *s = BCM283X_BASE(obj);
+     BCM283XBaseClass *bc = BCM283X_BASE_GET_CLASS(obj);
+-    int n;
+ 
+-    for (n = 0; n < bc->core_count; n++) {
+-        object_initialize_child(obj, "cpu[*]", &s->cpu[n].core,
+-                                bc->cpu_type);
+-    }
+     if (bc->core_count > 1) {
+         qdev_property_add_static(DEVICE(obj), &bcm2836_enabled_cores_property);
+         qdev_prop_set_uint32(DEVICE(obj), "enabled-cpus", bc->core_count);
+@@ -65,6 +60,11 @@ bool bcm283x_common_realize(DeviceState *dev, BCMSocPeripheralBaseState *ps,
+     BCM283XBaseClass *bc = BCM283X_BASE_GET_CLASS(dev);
+     Object *obj;
+ 
++    for (int n = 0; n < bc->core_count; n++) {
++        object_initialize_child(OBJECT(dev), "cpu[*]", &s->cpu[n].core,
++                                bc->cpu_type);
++    }
++
+     /* common peripherals from bcm2835 */
+ 
+     obj = object_property_get_link(OBJECT(dev), "ram", &error_abort);
 -- 
 2.53.0
 
