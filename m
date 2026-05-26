@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31690CD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 19:06:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4BF9CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 19:06:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRx68-0000Kr-QL; Tue, 26 May 2026 15:05:53 -0400
+	id 1wRx66-0000KD-0P; Tue, 26 May 2026 15:05:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRx63-0000K3-Uy; Tue, 26 May 2026 15:05:47 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ id 1wRx61-0000Jr-LC; Tue, 26 May 2026 15:05:45 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRx62-0004Ym-53; Tue, 26 May 2026 15:05:47 -0400
+ id 1wRx5z-0004YT-JK; Tue, 26 May 2026 15:05:45 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 30FC143785;
- Tue, 26 May 2026 19:05:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C233B1F000E9;
- Tue, 26 May 2026 19:05:40 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id A5CE260018;
+ Tue, 26 May 2026 19:05:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C5A1F00A3A;
+ Tue, 26 May 2026 19:05:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779822344;
- bh=nvntSM18afV4ztUV6noHKCwxuAwGyr+1Agibouoa9Q8=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=hDbwH6PJzI2A13sajbmLOdOiOKqBEvaaENUoQ2MplRDZYQaOXFL3B8OCFL1YCiTFC
- WpG0pBT+dnsJswutWxfIRQB/aNuo+1Xy3FrimRdEo6cG+3sD1LdLKGPYSB0ntzoq96
- WtSBWan5SClbQM4d7PCTlRifatNl14LEfSP+Eeyn/t2m9OPWZEMq96BbgXBnk/8XQA
- PIP+Z50igjvlP8mQjXXF9lzJAEfVDIggCn1wsQt468QyKa3BQenyFdLzTF35/eRXAC
- UZELFA//jxeS99NvDCxSxhseatjrC505ECilARI84fx+qWpBhiz8Jb3m8P1lEbxG1X
- JpetaIqZihbYw==
+ s=k20260515; t=1779822340;
+ bh=DyzwoBWt/EG16LYyQiWtaXeJp63yssRxIxsgq/h38rc=;
+ h=From:To:Cc:Subject:Date;
+ b=LWYw2Vx9VB0rVmIXY6bqzXPRjTtVo3wFdmIDgBX82x4cCMEw3XM7vBD0LL57kmEMQ
+ sQFrzhX4l9APiARCN5Uav3knVYDMFayk64dJE43oG6HBK3frB5wF/4ZQb1Pgm/u0kN
+ rvTUQqxvK+qEy7vqeAv8GNWdfi/zGGhsxIqbIJOGZ3rP0H0wi+NlcFwA9K9Uv/abU2
+ LxGDgM9DFpVNvrMVawKKodz8sJEzl1vJj04xKiOOh9Rr/vd+2FCJ/wp5Wpjpl4WOdE
+ Bk/YS1FHnBnfanWb4qjvmYgu3VEzarnopSp9pxJnSDwZKDXx46Nt3zQhuIyg63PvUb
+ ofsxgfXNGAzOw==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Cornelia Huck <cohuck@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -47,17 +47,15 @@ Cc: Cornelia Huck <cohuck@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
  qemu-s390x@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  David Hildenbrand <david@kernel.org>
-Subject: [PATCH 01/12] linux-user/ppc: restore fp_status from FPSCR on
- sigreturn
-Date: Tue, 26 May 2026 21:05:24 +0200
-Message-ID: <20260526190535.10833-2-deller@kernel.org>
+Subject: [PATCH 00/12] linux user patches
+Date: Tue, 26 May 2026 21:05:23 +0200
+Message-ID: <20260526190535.10833-1-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260526190535.10833-1-deller@kernel.org>
-References: <20260526190535.10833-1-deller@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -79,49 +77,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Helge Deller <deller@gmx.de>
 
-restore_user_regs() restores the PPC FPSCR with a direct assignment:
+A series of patches for linux-user, specifically many FP fixes in signal
+handling code for sh4, mips, ppc, alpha and s390x (from Matt Turner), a
+madvise() improvement and a ARM cortex-m55 program loading fix (from me), and
+qemu header cleanups (from Peter Maydell).
 
-    env->fpscr = (uint32_t) fpscr;
+Helge Deller (3):
+  linux-user: Implement finer grained madivse() syscall
+  linux-user: Fix typo in function documentation for pgb_addr_set()
+  linux-user: Fix loading static ARM cortex-m55 binaries
 
-ppc_store_fpscr() exists precisely to write FPSCR and keep the derived
-env->fp_status in sync: it calls fpscr_set_rounding_mode() to update
-the softfloat rounding mode, and set_float_rebias_overflow/underflow()
-to reflect the FP_OE/FP_UE enable bits.  The direct assignment bypasses
-all of this.
+Matt Turner (7):
+  linux-user/ppc: restore fp_status from FPSCR on sigreturn
+  linux-user/mips: save/restore FCSR across signal delivery
+  linux-user/alpha: add coredump support
+  linux-user/sh4: preserve T/M/Q bits across signal delivery
+  linux-user/sh4: restore FP rounding mode on sigreturn
+  target/sh4: sync fp_status when gdb writes FPSCR
+  linux-user/s390x: restore fpu_status rounding mode from FPC on
+    sigreturn
 
-On sigreturn, interrupted code resumes with whatever rounding mode and
-overflow/underflow-rebias state the signal handler last installed in
-fp_status, rather than the state that was saved at signal delivery.
+Peter Maydell (2):
+  linux-user: Move init_main_thread() prototype to user-internals.h
+  linux-user: Move cpu_copy() to user-internals.h
 
-Replace the direct assign with ppc_store_fpscr().  The FPSCR_MTFS_MASK
-applied inside ppc_store_fpscr() only excludes the computed FP_FEX and
-FP_VX bits, which it re-derives correctly from the exception and enable
-bits in the restored value.
+ linux-user/alpha/elfload.c    | 12 ++++++++++++
+ linux-user/alpha/target_elf.h | 13 +++++++++++++
+ linux-user/elfload.c          |  4 ++--
+ linux-user/mips/signal.c      |  7 +++++++
+ linux-user/mmap.c             | 32 +++++++++++++++++++++++++++++++-
+ linux-user/ppc/signal.c       |  2 +-
+ linux-user/qemu.h             |  5 -----
+ linux-user/s390x/signal.c     |  6 +++++-
+ linux-user/sh4/signal.c       | 19 ++++++++++++++++---
+ linux-user/user-internals.h   | 18 ++++++++++++++++++
+ target/mips/cpu.h             |  3 +++
+ target/mips/fpu.c             |  5 +++++
+ target/s390x/cpu.h            |  1 +
+ target/s390x/tcg/fpu_helper.c | 20 ++++++++++++++------
+ target/sh4/cpu.h              |  3 +++
+ target/sh4/gdbstub.c          |  2 +-
+ target/sh4/op_helper.c        |  7 ++++++-
+ tests/tcg/sh4/Makefile.target |  7 -------
+ 18 files changed, 138 insertions(+), 28 deletions(-)
 
-Fixes: bcd4933a23 ("linux-user: ppc signal handling")
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- linux-user/ppc/signal.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/linux-user/ppc/signal.c b/linux-user/ppc/signal.c
-index a9c10e0987..ab1afea30a 100644
---- a/linux-user/ppc/signal.c
-+++ b/linux-user/ppc/signal.c
-@@ -420,7 +420,7 @@ static void restore_user_regs(CPUPPCState *env,
-             __get_user(*fpr, &frame->mc_fregs[i]);
-         }
-         __get_user(fpscr, &frame->mc_fregs[32]);
--        env->fpscr = (uint32_t) fpscr;
-+        ppc_store_fpscr(env, (uint32_t) fpscr);
-     }
- 
- #if !defined(TARGET_PPC64)
 -- 
 2.54.0
 
