@@ -4,71 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46C68CD5BCF
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 04:11:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3B7BCD5BB4
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 04:14:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRj83-0002yH-4F; Tue, 26 May 2026 00:10:55 -0400
+	id 1wRjBE-0003e6-PU; Tue, 26 May 2026 00:14:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wRj7z-0002y0-KY
- for qemu-devel@nongnu.org; Tue, 26 May 2026 00:10:51 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wRj7v-0004Wf-Jq
- for qemu-devel@nongnu.org; Tue, 26 May 2026 00:10:51 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxFek+HRVqYUQNAA--.32036S3;
- Tue, 26 May 2026 12:10:39 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJDx6+A9HRVqfE+RAA--.14365S3;
- Tue, 26 May 2026 12:10:37 +0800 (CST)
-Subject: Re: [PATCH 3/4] target/loongarch: translate LVZ CSR and trap
- instructions
-To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
-Cc: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-References: <cover.1779171125.git.prcups@krgm.moe>
- <060310ded8b9a188848f48cabf6afe69fcf9216d.1779171126.git.prcups@krgm.moe>
- <3a88b3a6-e4e1-b9b4-af39-5a0fc0c4845d@loongson.cn>
- <QcvEHw3eQdWKrgUEx8sb2A@krgm.moe>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <a2c3c1e6-ea1d-e889-808c-d7cb95de150d@loongson.cn>
-Date: Tue, 26 May 2026 12:07:35 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wRjBC-0003dH-TB
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 00:14:10 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wRjBA-0006Ya-9I
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 00:14:10 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-bd56d108454so1830136466b.2
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 21:14:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779768846; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Vusrw9dhNDUDDSJBbyFUnWKm9bis2xHh5iS0cVMBHEVkOGKYXQgh7jLLkhqQTfmrhx
+ IxAq3AlJu97/GRG75xOytjc95hy1Cfo0YKqeugWLaSuelXRlfyWqsy25KjXz44cs39gN
+ LVhGBQzsgWUVQ53F8mFH4XjREMueNsk//QYetM58A5D1o6DJDuWRpHkXo2IKamOo688P
+ VpgOJyuZxMHEonCpwbxHDV+Zf6sbegytUbaSErTOl0WXfTPFeGVgnTgeX8ddEt0cHWpX
+ 8EWaOoIjvXPnf0oOkbjP7LP9H78v4lv44JxbhfbtBaDeqjzJQO7xiSCxAkFeP3rWx4/m
+ Rgpg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Jm4cF+ExQ+CB7DRiBDseRtNTIFjbJgZ956XjkqygQlY=;
+ fh=Z5J8e1wXZTFt5rQ+kCS4QgV6wPLGneq0xoXcbU8Vu50=;
+ b=IZS8rDWuJmi6ZCa/eS2TeV5cHQUy6TE9QulkF0YFxgyTvN75S4loSG3R6uEAd5hTRf
+ f0X9zU4qLzHb5cuvcCctJ1saryLeFbX82hfUHmo24QkYM6eCWG7WQ1oU7ZycjauoC49W
+ S+s6tBzHTMcfYkzlFraa1/K4Sz83EZQcUIC3hdfZz9ErjU0jbr4VU3Ldyl/hC9UvD0qU
+ F3JHvxLASpx8gcVjgXCGneU3/UCZ8IyVmjDm18cT0xKnpmBS1Hupwhenb311JlKNs1Da
+ nCX8xbQodu4FGf2wK84d1YWOjbd9+revZpti1jul/OYgRkPvYKBVbWdLKmWiWNXfmuZ9
+ eMpQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1779768846; x=1780373646; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Jm4cF+ExQ+CB7DRiBDseRtNTIFjbJgZ956XjkqygQlY=;
+ b=r//91e+Qf0g2UuTZc6YRcgSodpbPtmtqtRAajFh8cAYg8ZxFAfDLK2ED6Qoi5Bxje5
+ Y768QJyp1ob7FL5Nc5o5zDpOtHdFrymqLYLSwmNbaXtEaDcim1EHgXKv/Oqsh7QeGhGH
+ iAdA8TS08uIf4/sQVtwXavitCG3+WSitPnD3Yjvj21vwNu/g1Kye52PsTMNWMRshIXfB
+ nc2cdXtPWqqjmX4NpCjifTmHhjNcF6SZ0iyrXQx5oDWBmxBtBjQAknPXDHXTSRZ2ByUw
+ /6dOlZcCWTLCDNvGr5WPp5dCBaw6d5hG5gcKGvtka1HYoK/xzMA7+jxbJ5Vo1W7rzL1k
+ AwHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779768846; x=1780373646;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Jm4cF+ExQ+CB7DRiBDseRtNTIFjbJgZ956XjkqygQlY=;
+ b=r4FbbNS2EUK+2qV3M1Aailt5peslS1w7efhIP5cBJne7Epe2FOWNAa+e4zpSW7kL9m
+ bnVUpXDaFYDiclS7fEqxZNOYNFD2n2wfJ8jA/ovJ17TjtnHQOvs4+rkL4804Q9BvSv0/
+ BR0Y00rF4zfLP+9aWGsmXUCZ7mgEiHK1tgiG1kUlnSU8/iQjMW7ycVK7e8epK1yBWLkl
+ ucZtCVMGPr5FeazayzMXtJj5NtO9MpVgczPylE7Aj5xX74ZF+YT29OfH6v2jxUCZSuRM
+ mjUbiMGq/zMjvheHH0p5ZQMGIF/dCYmu7PNLWmJtVsyh5hCQ3hBuQv1fyyuzCAZuD+ga
+ lqmg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+Yx2choxr9jdqe9aboHpk4XhDDZZGWQq3SnoRIbe/HUkXF2WCT8d4iz6Lv364xfytrsEA0vMoMeHDY@nongnu.org
+X-Gm-Message-State: AOJu0Yy9uPEdw8nrlpbNGrK+jQpRsrYWZPjVbNGeALsYTrhIj7fJMiL9
+ sEAvYmwofqhlxYj59KXO0suvkkdsQuJUJ+/MuIF1nRgsrgDcjV5psRyTLHpIoUFK7JMWpSUojiR
+ yaIcyB+XxugjUl2WgzBEkcS2YGWAL9mw=
+X-Gm-Gg: Acq92OFzkE5v1vMgi2sVdxyHQDSX7k3ZdPKfgrBKZNEhln3EprkzO1ZdMZ3RhKaCu1v
+ qEZ6cZwTlEX8mefNXpoHFninbu1RdDvzBg2HgCuENkAsmC5NJ4ON6fH3TaNm5pQdahdSbPhyjTE
+ QeIQUha16oT9HnPLRoVUheYDvuGLK+bj7A9rJJO6LfRFzbGA+tKrnm3y9y/QvRIjq/EBDZLo1r9
+ C+LWatYXgRGG1lFJHKq9glFZRXErD+o5c4eYY+Jf7mzuEHehMJ0zNHq96kdo+5RVDJelQ+o4LxY
+ GhbyiTELKMamFfxigXEjpHx0b3Dbld8TohSLcf5pALmWoyLc
+X-Received: by 2002:a17:907:7290:b0:bd2:4aa6:1a9d with SMTP id
+ a640c23a62f3a-bdd2360237fmr1053015766b.16.1779768846290; Mon, 25 May 2026
+ 21:14:06 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <QcvEHw3eQdWKrgUEx8sb2A@krgm.moe>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDx6+A9HRVqfE+RAA--.14365S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9fXoW3KF17tF1rtrW7JryxJF1DJwc_yoW8XFW7Go
- WUGF17JF4rGry5CFWkK3sFqw4UXryUur47CF95ZwsruFs5ta42yr15Grs5Za1fGF1xKrWr
- G3WxJ3WS9FWS9wn3l-sFpf9Il3svdjkaLaAFLSUrUUUUbb8apTn2vfkv8UJUUUU8wcxFpf
- 9Il3svdxBIdaVrn0xqx4xG64xvF2IEw4CE5I8CrVC2j2Jv73VFW2AGmfu7bjvjm3AaLaJ3
- UjIYCTnIWjp_UUUYv7kC6x804xWl14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI
- 8IcIk0rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xG
- Y2AK021l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14
- v26r1j6r4UM28EF7xvwVC2z280aVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8JVW8Jr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE
- 14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
- AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E
- 14v26r1Y6r17MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4
- CE17CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1x
- MIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF
- 4lIxAIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsG
- vfC2KfnxnUUI43ZEXa7IU8oGQDUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <177756498815.8917.12449488721849651971-0@git.sr.ht>
+ <177756498815.8917.12449488721849651971-6@git.sr.ht>
+In-Reply-To: <177756498815.8917.12449488721849651971-6@git.sr.ht>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 26 May 2026 14:13:39 +1000
+X-Gm-Features: AVHnY4JKRZz-AmAFAWFHWvzL-_H8fq6RJbvzCZXPhbnkD4-r_hbEQhp0u0urYgY
+Message-ID: <CAKmqyKM7XCgAghGtMrPnd=NFweWNuiwR8E2Y-VnA7axa+gky8w@mail.gmail.com>
+Subject: Re: [PATCH qemu v4 6/9] ot_uart: implement RX fifo and loopback
+To: "~lexbaileylowrisc" <lex.bailey@lowrisc.org>
+Cc: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu.zevorn@gmail.com>, qemu-devel@nongnu.org, 
+ Amit Kumar-Hermosillo <amitkh@google.com>,
+ nabihestefan <nabihestefan@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x62b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,483 +127,285 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, May 1, 2026 at 2:05=E2=80=AFAM ~lexbaileylowrisc
+<lexbaileylowrisc@git.sr.ht> wrote:
+>
+> From: Lex Bailey <lex.bailey@lowrisc.org>
+>
+> The STATUS register value is now generated on every read instead of being
+> tracked in memory since it has such a dynamic value. the receive fifo is =
+now
+> implemented, and the system loopback mode. (line loopback is not supporte=
+d)
+>
+> Signed-off-by: Lex Bailey <lex.bailey@lowrisc.org>
 
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-On 2026/5/26 上午11:50, SignKirigami wrote:
-> 在 2026年5月22日星期五 中国标准时间 11:16:39，Bibo Mao 写道：
->>
->> On 2026/5/19 下午2:30, SignKirigami wrote:
->>> Signed-off-by: SignKirigami <prcups@krgm.moe>
->>> Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
->>> ---
->>>    target/loongarch/disas.c                      |   4 +
->>>    target/loongarch/insns.decode                 |  11 +
->>>    .../tcg/insn_trans/trans_privileged.c.inc     | 225 +++++++++++++++++-
->>>    target/loongarch/tcg/translate.c              |   6 +-
->>>    target/loongarch/translate.h                  |   2 +
->>>    5 files changed, 240 insertions(+), 8 deletions(-)
->>>
->>> diff --git a/target/loongarch/disas.c b/target/loongarch/disas.c
->>> index 3249ab7ac6..cae416266b 100644
->>> --- a/target/loongarch/disas.c
->>> +++ b/target/loongarch/disas.c
->>> @@ -698,6 +698,10 @@ INSN(tlbfill,      empty)
->>>    INSN(tlbclr,       empty)
->>>    INSN(tlbflush,     empty)
->>>    INSN(invtlb,       i_rr)
->>> +INSN(gcsrrd,       r_csr)
->>> +INSN(gcsrwr,       r_csr)
->>> +INSN(gcsrxchg,     rr_csr)
->>> +INSN(hvcl,         i)
->>>    INSN(cacop,        cop_r_i)
->>>    INSN(lddir,        rr_i)
->>>    INSN(ldpte,        j_i)
->>> diff --git a/target/loongarch/insns.decode b/target/loongarch/insns.decode
->>> index 3089d42044..2ade384081 100644
->>> --- a/target/loongarch/insns.decode
->>> +++ b/target/loongarch/insns.decode
->>> @@ -493,6 +493,17 @@ bgeu            0110 11 ................ ..... .....     @rr_offs16
->>>      csrxchg           0000 0100 .............. ..... .....     @rr_csr
->>>    }
->>>    
->>> +#
->>> +# LVZ (LoongArch Virtualization) instructions
->>> +#
->>> +{
->>> +  gcsrrd            0000 0101 .............. 00000 .....     @r_csr
->>> +  gcsrwr            0000 0101 .............. 00001 .....     @r_csr
->>> +  gcsrxchg          0000 0101 .............. ..... .....     @rr_csr
->>> +}
->>> +
->>> +hvcl             0000 0000 0010 1011 1 ...............    @i15
->>> +
->>>    iocsrrd_b        0000 01100100 10000 00000 ..... .....    @rr
->>>    iocsrrd_h        0000 01100100 10000 00001 ..... .....    @rr
->>>    iocsrrd_w        0000 01100100 10000 00010 ..... .....    @rr
->>> diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
->>> index 2094d182ac..0cb629e5d7 100644
->>> --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
->>> +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
->>> @@ -39,6 +39,10 @@ GEN_FALSE_TRANS(lddir)
->>>    GEN_FALSE_TRANS(ertn)
->>>    GEN_FALSE_TRANS(dbcl)
->>>    GEN_FALSE_TRANS(idle)
->>> +GEN_FALSE_TRANS(gcsrrd)
->>> +GEN_FALSE_TRANS(gcsrwr)
->>> +GEN_FALSE_TRANS(gcsrxchg)
->>> +GEN_FALSE_TRANS(hvcl)
->>>    
->>>    #else
->>>    
->>> @@ -69,8 +73,25 @@ static bool set_csr_trans_func(unsigned int csr_num, GenCSRRead readfn,
->>>        return true;
->>>    }
->>>    
->>> +static bool set_gcsr_trans_func(unsigned int csr_num, GenCSRRead readfn,
->>> +                                GenCSRWrite writefn)
->>> +{
->>> +    CSRInfo *csr;
->>> +
->>> +    csr = get_gcsr(csr_num);
->>> +    if (!csr) {
->>> +        return false;
->>> +    }
->>> +
->>> +    csr->readfn = (GenCSRFunc)readfn;
->>> +    csr->writefn = (GenCSRFunc)writefn;
->>> +    return true;
->>> +}
->>> +
->>>    #define SET_CSR_FUNC(NAME, read, write)                 \
->>>            set_csr_trans_func(LOONGARCH_CSR_##NAME, read, write)
->>> +#define SET_GCSR_FUNC(NAME, read, write)                \
->>> +        set_gcsr_trans_func(LOONGARCH_CSR_##NAME, read, write)
->>>    
->>>    void loongarch_csr_translate_init(void)
->>>    {
->>> @@ -85,14 +106,28 @@ void loongarch_csr_translate_init(void)
->>>        SET_CSR_FUNC(TVAL,  gen_helper_csrrd_tval, NULL);
->>>        SET_CSR_FUNC(TICLR, NULL, gen_helper_csrwr_ticlr);
->>>        SET_CSR_FUNC(MSGIR, gen_helper_csrrd_msgir, NULL);
->>> +    SET_CSR_FUNC(GSTAT, NULL, gen_helper_csrwr_gstat);
->>> +    SET_CSR_FUNC(GTLBC, NULL, gen_helper_csrwr_gtlbc);
->>> +    SET_CSR_FUNC(GINTC, NULL, gen_helper_csrwr_gintc);
->>> +
->>> +    SET_GCSR_FUNC(ESTAT, NULL, gen_helper_gcsrwr_estat);
->>> +    SET_GCSR_FUNC(ASID, NULL, gen_helper_gcsrwr_asid);
->>> +    SET_GCSR_FUNC(PGD, gen_helper_gcsrrd_pgd, NULL);
->>> +    SET_GCSR_FUNC(TCFG, NULL, gen_helper_gcsrwr_tcfg);
->>> +    SET_GCSR_FUNC(TVAL, gen_helper_gcsrrd_tval, NULL);
->>> +    SET_GCSR_FUNC(TICLR, NULL, gen_helper_gcsrwr_ticlr);
->>>    }
->>>    #undef SET_CSR_FUNC
->>> +#undef SET_GCSR_FUNC
->>>    
->>>    static bool check_csr_flags(DisasContext *ctx, const CSRInfo *csr, bool write)
->>>    {
->>>        if ((csr->flags & CSRFL_READONLY) && write) {
->>>            return false;
->>>        }
->>> +    if ((csr->flags & CSRFL_GUEST_READONLY) && ctx->guest_mode && write) {
->>> +        return false;
->>> +    }
->>>        if ((csr->flags & CSRFL_IO) && translator_io_start(&ctx->base)) {
->>>            ctx->base.is_jmp = DISAS_EXIT_UPDATE;
->>>        } else if ((csr->flags & CSRFL_EXITTB) && write) {
->>> @@ -110,12 +145,17 @@ static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
->>>        if (check_plv(ctx)) {
->>>            return false;
->>>        }
->>> -    csr = get_csr(a->csr);
->>> +    csr = ctx->guest_mode ? get_gcsr(a->csr) : get_csr(a->csr);
->>>        if (csr == NULL) {
->>>            /* CSR is undefined: read as 0. */
->>>            dest = tcg_constant_tl(0);
->>>        } else {
->>>            check_csr_flags(ctx, csr, false);
->>> +        if (ctx->guest_mode && (csr->flags & CSRFL_GSPR)) {
->>> +            gen_helper_gspr(tcg_env);
->>> +            gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
->>> +            return true;
->>> +        }
->>>            dest = gpr_dst(ctx, a->rd, EXT_NONE);
->>>            readfn = (GenCSRRead)csr->readfn;
->>>            if (readfn) {
->>> @@ -137,12 +177,17 @@ static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
->>>        if (check_plv(ctx)) {
->>>            return false;
->>>        }
->>> -    csr = get_csr(a->csr);
->>> +    csr = ctx->guest_mode ? get_gcsr(a->csr) : get_csr(a->csr);
->>>        if (csr == NULL) {
->>>            /* CSR is undefined: write ignored, read old_value as 0. */
->>>            gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
->>>            return true;
->>>        }
->>> +    if (ctx->guest_mode && (csr->flags & CSRFL_GSPR)) {
->>> +        gen_helper_gspr(tcg_env);
->>> +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
->>> +        return true;
->>> +    }
->>>        if (!check_csr_flags(ctx, csr, true)) {
->>>            /* CSR is readonly: trap. */
->>>            return false;
->>> @@ -170,28 +215,35 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
->>>        if (check_plv(ctx)) {
->>>            return false;
->>>        }
->>> -    csr = get_csr(a->csr);
->>> +    csr = ctx->guest_mode ? get_gcsr(a->csr) : get_csr(a->csr);
->>>        if (csr == NULL) {
->>>            /* CSR is undefined: write ignored, read old_value as 0. */
->>>            gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
->>>            return true;
->>>        }
->>> +    if (ctx->guest_mode && (csr->flags & CSRFL_GSPR)) {
->>> +        gen_helper_gspr(tcg_env);
->>> +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
->>> +        return true;
->>> +    }
->>>    
->>>        if (!check_csr_flags(ctx, csr, true)) {
->>>            /* CSR is readonly: trap. */
->>>            return false;
->>>        }
->>>    
->>> -    /* So far only readonly csrs have readfn. */
->>> -    assert(csr->readfn == NULL);
->>> -
->>>        src1 = gpr_src(ctx, a->rd, EXT_NONE);
->>>        mask = gpr_src(ctx, a->rj, EXT_NONE);
->>>        oldv = tcg_temp_new();
->>>        newv = tcg_temp_new();
->>>        temp = tcg_temp_new();
->>>    
->>> -    tcg_gen_ld_tl(oldv, tcg_env, csr->offset);
->>> +    if (csr->readfn) {
->>> +        GenCSRRead readfn = (GenCSRRead)csr->readfn;
->>> +        readfn(oldv, tcg_env);
->>> +    } else {
->>> +        tcg_gen_ld_tl(oldv, tcg_env, csr->offset);
->>> +    }
->>>        tcg_gen_and_tl(newv, src1, mask);
->>>        tcg_gen_andc_tl(temp, oldv, mask);
->>>        tcg_gen_or_tl(newv, newv, temp);
->>> @@ -212,6 +264,11 @@ static bool gen_iocsrrd(DisasContext *ctx, arg_rr *a,
->>>        TCGv dest = gpr_dst(ctx, a->rd, EXT_NONE);
->>>        TCGv src1 = gpr_src(ctx, a->rj, EXT_NONE);
->>>    
->>> +    if (ctx->guest_mode) {
->>> +        gen_helper_gspr(tcg_env);
->>> +        return true;
->>> +    }
->>> +
->>>        if (check_plv(ctx)) {
->>>            return false;
->>>        }
->>> @@ -225,6 +282,11 @@ static bool gen_iocsrwr(DisasContext *ctx, arg_rr *a,
->>>        TCGv val = gpr_src(ctx, a->rd, EXT_NONE);
->>>        TCGv addr = gpr_src(ctx, a->rj, EXT_NONE);
->>>    
->>> +    if (ctx->guest_mode) {
->>> +        gen_helper_gspr(tcg_env);
->>> +        return true;
->>> +    }
->>> +
->>>        if (check_plv(ctx)) {
->>>            return false;
->>>        }
->>> @@ -400,6 +462,10 @@ static bool trans_dbcl(DisasContext *ctx, arg_dbcl *a)
->>>        if (check_plv(ctx)) {
->>>            return false;
->>>        }
->>> +    if (ctx->guest_mode) {
->>> +        gen_helper_gspr(tcg_env);
->>> +        return true;
->>> +    }
->>>        generate_exception(ctx, EXCCODE_DBP);
->>>        return true;
->>>    }
->>> @@ -410,9 +476,154 @@ static bool trans_idle(DisasContext *ctx, arg_idle *a)
->>>            return false;
->>>        }
->>>    
->>> +    if (ctx->guest_mode) {
->>> +        gen_helper_gspr(tcg_env);
->>> +        return true;
->>> +    }
->>> +
->>>        tcg_gen_movi_tl(cpu_pc, ctx->base.pc_next + 4);
->>>        gen_helper_idle(tcg_env);
->>>        ctx->base.is_jmp = DISAS_NORETURN;
->>>        return true;
->>>    }
->>> +
->>> +static bool trans_gcsrrd(DisasContext *ctx, arg_gcsrrd *a)
->>> +{
->>> +    TCGv dest;
->>> +    const CSRInfo *csr;
->>> +    GenCSRRead readfn;
->>> +
->>> +    if (check_plv(ctx)) {
->>> +        return false;
->>> +    }
->>> +    if (!avail_LVZ(ctx) || ctx->guest_mode) {
->>> +        return false;
->>> +    }
->>> +
->>> +    csr = get_gcsr(a->csr);
->>> +    if (csr == NULL) {
->>> +        dest = tcg_constant_tl(0);
->>> +    } else {
->>> +        dest = gpr_dst(ctx, a->rd, EXT_NONE);
->>> +        if (csr->flags & CSRFL_GSPR) {
->>> +            tcg_gen_movi_tl(dest, 0);
->>> +        } else {
->>> +            readfn = (GenCSRRead)csr->readfn;
->>> +            if (readfn) {
->>> +                readfn(dest, tcg_env);
->>> +            } else {
->>> +                tcg_gen_ld_tl(dest, tcg_env, csr->offset);
->>> +            }
->>> +        }
->>> +    }
->>> +    gen_set_gpr(a->rd, dest, EXT_NONE);
->>> +    return true;
->>> +}
->>> +
->>> +static bool trans_gcsrwr(DisasContext *ctx, arg_gcsrwr *a)
->>> +{
->>> +    TCGv dest, src1;
->>> +    const CSRInfo *csr;
->>> +    GenCSRWrite writefn;
->>> +
->>> +    if (check_plv(ctx)) {
->>> +        return false;
->>> +    }
->>> +    if (!avail_LVZ(ctx) || ctx->guest_mode) {
->>> +        return false;
->>> +    }
->>> +
->>> +    csr = get_gcsr(a->csr);
->>> +    if (csr == NULL) {
->>> +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
->>> +        return true;
->>> +    }
->>> +    if (!check_csr_flags(ctx, csr, true)) {
->>> +        return false;
->>> +    }
->>> +    if (csr->flags & CSRFL_GSPR) {
->>> +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
->>> +        return true;
->>> +    }
->>> +
->>> +    src1 = gpr_src(ctx, a->rd, EXT_NONE);
->>> +    writefn = (GenCSRWrite)csr->writefn;
->>> +    if (writefn) {
->>> +        dest = gpr_dst(ctx, a->rd, EXT_NONE);
->>> +        writefn(dest, tcg_env, src1);
->>> +    } else {
->>> +        dest = tcg_temp_new();
->>> +        tcg_gen_ld_tl(dest, tcg_env, csr->offset);
->>> +        tcg_gen_st_tl(src1, tcg_env, csr->offset);
->>> +    }
->>> +    gen_set_gpr(a->rd, dest, EXT_NONE);
->>> +    return true;
->>> +}
->>> +
->>> +static bool trans_gcsrxchg(DisasContext *ctx, arg_gcsrxchg *a)
->>> +{
->>> +    TCGv src1, mask, oldv, newv, temp;
->>> +    const CSRInfo *csr;
->>> +    GenCSRRead readfn;
->>> +    GenCSRWrite writefn;
->>> +
->>> +    if (check_plv(ctx)) {
->>> +        return false;
->>> +    }
->>> +    if (!avail_LVZ(ctx) || ctx->guest_mode) {
->>> +        return false;
->>> +    }
->>> +
->>> +    csr = get_gcsr(a->csr);
->>> +    if (csr == NULL) {
->>> +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
->>> +        return true;
->>> +    }
->>> +    if (!check_csr_flags(ctx, csr, true)) {
->>> +        return false;
->>> +    }
->>> +    if (csr->flags & CSRFL_GSPR) {
->>> +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
->>> +        return true;
->>> +    }
->>> +
->>> +    src1 = gpr_src(ctx, a->rd, EXT_NONE);
->>> +    mask = gpr_src(ctx, a->rj, EXT_NONE);
->>> +    oldv = tcg_temp_new();
->>> +    newv = tcg_temp_new();
->>> +    temp = tcg_temp_new();
->>> +
->>> +    readfn = (GenCSRRead)csr->readfn;
->>> +    if (readfn) {
->>> +        readfn(oldv, tcg_env);
->>> +    } else {
->>> +        tcg_gen_ld_tl(oldv, tcg_env, csr->offset);
->>> +    }
->>> +    tcg_gen_and_tl(newv, src1, mask);
->>> +    tcg_gen_andc_tl(temp, oldv, mask);
->>> +    tcg_gen_or_tl(newv, newv, temp);
->>> +
->>> +    writefn = (GenCSRWrite)csr->writefn;
->>> +    if (writefn) {
->>> +        writefn(oldv, tcg_env, newv);
->>> +    } else {
->>> +        tcg_gen_st_tl(newv, tcg_env, csr->offset);
->>> +    }
->>> +    gen_set_gpr(a->rd, oldv, EXT_NONE);
->>> +    return true;
->>> +}
->>> +
->>> +static bool trans_hvcl(DisasContext *ctx, arg_hvcl *a)
->>> +{
->>> +    if (!avail_LVZ(ctx)) {
->>> +        return false;
->>> +    }
->>> +    if (!ctx->guest_mode) {
->>> +        return false;
->>> +    }
->>> +    tcg_gen_movi_tl(cpu_pc, ctx->base.pc_next);
->>> +    gen_helper_hvcl(tcg_env, tcg_constant_i32(a->imm));
->>> +    ctx->base.is_jmp = DISAS_NORETURN;
->>> +    return true;
->>> +}
->>>    #endif
->>> diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
->>> index 124dce6269..15c83ef72d 100644
->>> --- a/target/loongarch/tcg/translate.c
->>> +++ b/target/loongarch/tcg/translate.c
->>> @@ -122,12 +122,16 @@ static void loongarch_tr_init_disas_context(DisasContextBase *dcbase,
->>>        CPULoongArchState *env = cpu_env(cs);
->>>        DisasContext *ctx = container_of(dcbase, DisasContext, base);
->>>    
->>> +    ctx->guest_mode = (ctx->base.tb->flags & HW_FLAGS_GUEST_MODE) != 0;
->>>        ctx->page_start = ctx->base.pc_first & TARGET_PAGE_MASK;
->>>        ctx->plv = ctx->base.tb->flags & HW_FLAGS_PLV_MASK;
->>>        if (ctx->base.tb->flags & HW_FLAGS_CRMD_PG) {
->>>            ctx->mem_idx = ctx->plv;
->>> +        if (ctx->guest_mode) {
->>> +            ctx->mem_idx += MMU_GUEST_IDX;
->>> +        }
->>>        } else {
->>> -        ctx->mem_idx = MMU_DA_IDX;
->>> +        ctx->mem_idx = ctx->guest_mode ? MMU_GUEST_DA_IDX : MMU_DA_IDX;
->>>        }
->>>    
->>>        /* Bound the number of insns to execute to those left on the page.  */
->>> diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
->>> index 8aa8325dc6..db0650e713 100644
->>> --- a/target/loongarch/translate.h
->>> +++ b/target/loongarch/translate.h
->>> @@ -26,6 +26,7 @@
->>>    #define avail_FP_DP(C)  (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP_DP))
->>>    #define avail_LSPW(C)   (FIELD_EX32((C)->cpucfg2, CPUCFG2, LSPW))
->>>    #define avail_LAM(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM))
->>> +#define avail_LVZ(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LVZ))
->>>    #define avail_LAM_BH(C) (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM_BH))
->>>    #define avail_LAMCAS(C) (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAMCAS))
->>>    #define avail_LSX(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LSX))
->>
->> static void loongarch_tr_init_disas_context(DisasContextBase *dcbase,
->>                                               CPUState *cs)
->> {
->>
->>       if (FIELD_EX64(env->cpucfg[2], CPUCFG2, LSX)) {
->>           ctx->vl = LSX_LEN;
->>       }
->>       if (FIELD_EX64(env->cpucfg[2], CPUCFG2, LASX)) {
->>           ctx->vl = LASX_LEN;
->>       ctx->cpucfg1 = env->cpucfg[1];
->>       ctx->cpucfg2 = env->cpucfg[2];
->>       ctx->cpucfg3 = env->cpucfg[3];
->> }
->>
->> There may be some problem with cpucfg configuration, for example host
->> has LASX/LSX feature, however vCPU is configured with LASX/LSX feature
->> disabled. With the upper piece of code, ctx->cpucfg1 comes from host
->> feature setting instead.
->>
->> Regards
->> Bibo Mao
->>
-> When in guest mode, executing cpucfg will cause a gspr exception and exit to
-> host mode, so these data may not be used.
-It influences resules of avail_LASX(c), macro avail_LASX(c) of 
-host/guest should be different.
+Alistair
 
-#define avail_LASX(C)   (FIELD_EX32((C)->cpucfg2, CPUCFG2, LASX))
-
-Here ctx->cpucfg2 = env->cpucfg[2]; they comes from env->cpucfg[2] both. 
-so that avail_LASX(C) will be the same for both host/guest.
-
-Regards
-Bibo Mao
-> 
-> Regards
-> SignKirigami
->>> @@ -66,6 +67,7 @@ typedef struct DisasContext {
->>>        TCGv zero;
->>>        bool la64; /* LoongArch64 mode */
->>>        bool va32; /* 32-bit virtual address */
->>> +    bool guest_mode;
->>>        uint32_t cpucfg1;
->>>        uint32_t cpucfg2;
->>>        uint32_t cpucfg3;
->>>
->>
->>
-> 
-> 
-> 
-
+> ---
+>  hw/char/ot_uart.c | 160 ++++++++++++++++++++++++++++++++--------------
+>  1 file changed, 112 insertions(+), 48 deletions(-)
+>
+> diff --git a/hw/char/ot_uart.c b/hw/char/ot_uart.c
+> index 2247db7110..3511a42fbe 100644
+> --- a/hw/char/ot_uart.c
+> +++ b/hw/char/ot_uart.c
+> @@ -140,6 +140,21 @@ static void ot_uart_update_irqs(OtUARTState *s)
+>      }
+>  }
+>
+> +static bool ot_uart_is_sys_loopack_enabled(const OtUARTState *s)
+> +{
+> +    return FIELD_EX32(s->regs[R_CTRL], CTRL, SLPBK);
+> +}
+> +
+> +static bool ot_uart_is_tx_enabled(const OtUARTState *s)
+> +{
+> +    return FIELD_EX32(s->regs[R_CTRL], CTRL, TX);
+> +}
+> +
+> +static bool ot_uart_is_rx_enabled(const OtUARTState *s)
+> +{
+> +    return FIELD_EX32(s->regs[R_CTRL], CTRL, RX);
+> +}
+> +
+>  static int ot_uart_can_receive(void *opaque)
+>  {
+>      OtUARTState *s =3D opaque;
+> @@ -196,7 +211,7 @@ static void ot_uart_reset_rx_fifo(OtUARTState *s)
+>      fifo8_reset(&s->rx_fifo);
+>      s->regs[R_INTR_STATE] &=3D ~INTR_RX_WATERMARK_MASK;
+>      s->regs[R_INTR_STATE] &=3D ~INTR_RX_OVERFLOW_MASK;
+> -    if (FIELD_EX32(s->regs[R_CTRL], CTRL, RX)) {
+> +    if (ot_uart_is_rx_enabled(s)) {
+>          qemu_chr_fe_accept_input(&s->chr);
+>      }
+>  }
+> @@ -218,21 +233,37 @@ static void ot_uart_xmit(OtUARTState *s)
+>          return;
+>      }
+>
+> -    /* instant drain the fifo when there's no back-end */
+> -    if (!qemu_chr_fe_backend_connected(&s->chr)) {
+> -        ot_uart_reset_tx_fifo(s);
+> -        ot_uart_update_irqs(s);
+> -        return;
+> -    }
+> +    if (ot_uart_is_sys_loopack_enabled(s)) {
+> +        /* system loopback mode, just forward to RX FIFO */
+> +        uint32_t count =3D fifo8_num_used(&s->tx_fifo);
+> +        buf =3D fifo8_pop_bufptr(&s->tx_fifo, count, &size);
+> +        ot_uart_receive(s, buf, (int)size);
+> +        count -=3D size;
+> +        /*
+> +         * there may be more data to send if data wraps around the end o=
+f TX
+> +         * FIFO
+> +         */
+> +        if (count) {
+> +            buf =3D fifo8_pop_bufptr(&s->tx_fifo, count, &size);
+> +            ot_uart_receive(s, buf, (int)size);
+> +        }
+> +    } else {
+> +        /* instant drain the fifo when there's no back-end */
+> +        if (!qemu_chr_fe_backend_connected(&s->chr)) {
+> +            ot_uart_reset_tx_fifo(s);
+> +            ot_uart_update_irqs(s);
+> +            return;
+> +        }
+>
+> -    /* get a continuous buffer from the FIFO */
+> -    buf =3D
+> -        fifo8_peek_bufptr(&s->tx_fifo, fifo8_num_used(&s->tx_fifo), &siz=
+e);
+> -    /* send as much as possible */
+> -    ret =3D qemu_chr_fe_write(&s->chr, buf, (int)size);
+> -    /* if some characters where sent, remove them from the FIFO */
+> -    if (ret >=3D 0) {
+> -        fifo8_drop(&s->tx_fifo, ret);
+> +        /* get a continuous buffer from the FIFO */
+> +        buf =3D
+> +            fifo8_peek_bufptr(&s->tx_fifo, fifo8_num_used(&s->tx_fifo), =
+&size);
+> +        /* send as much as possible */
+> +        ret =3D qemu_chr_fe_write(&s->chr, buf, (int)size);
+> +        /* if some characters where sent, remove them from the FIFO */
+> +        if (ret >=3D 0) {
+> +            fifo8_drop(&s->tx_fifo, ret);
+> +        }
+>      }
+>
+>      /* update INTR_STATE */
+> @@ -269,7 +300,7 @@ static void uart_write_tx_fifo(OtUARTState *s, uint8_=
+t val)
+>          s->tx_watermark_level =3D 0;
+>      }
+>
+> -    if (FIELD_EX32(s->regs[R_CTRL], CTRL, TX)) {
+> +    if (ot_uart_is_tx_enabled(s)) {
+>          ot_uart_xmit(s);
+>      }
+>
+> @@ -288,8 +319,6 @@ static void ot_uart_reset_enter(Object *obj, ResetTyp=
+e type)
+>
+>      memset(&s->regs[0], 0, sizeof(s->regs));
+>
+> -    s->regs[R_STATUS] =3D 0x0000003c;
+> -
+>      s->tx_watermark_level =3D 0;
+>      for (unsigned index =3D 0; index < ARRAY_SIZE(s->irqs); index++) {
+>          qemu_set_irq(s->irqs[index], 0);
+> @@ -305,6 +334,27 @@ static void ot_uart_reset_enter(Object *obj, ResetTy=
+pe type)
+>      ot_uart_update_irqs(s);
+>  }
+>
+> +static uint8_t ot_uart_read_rx_fifo(OtUARTState *s)
+> +{
+> +    uint8_t val;
+> +
+> +    if (!(s->regs[R_CTRL] & R_CTRL_RX_MASK)) {
+> +        return 0;
+> +    }
+> +
+> +    if (fifo8_is_empty(&s->rx_fifo)) {
+> +        return 0;
+> +    }
+> +
+> +    val =3D fifo8_pop(&s->rx_fifo);
+> +
+> +    if (ot_uart_is_rx_enabled(s) && !ot_uart_is_sys_loopack_enabled(s)) =
+{
+> +        qemu_chr_fe_accept_input(&s->chr);
+> +    }
+> +
+> +    return val;
+> +}
+> +
+>  static uint64_t ot_uart_get_baud(OtUARTState *s)
+>  {
+>      uint64_t baud;
+> @@ -327,32 +377,50 @@ static uint64_t ot_uart_read(void *opaque, hwaddr a=
+ddr, unsigned int size)
+>      case R_INTR_ENABLE:
+>      case R_CTRL:
+>      case R_FIFO_CTRL:
+> -    case R_STATUS:
+>          retvalue =3D s->regs[reg];
+>          break;
+> +    case R_STATUS:
+> +        /* assume that UART always report RXIDLE */
+> +        retvalue =3D R_STATUS_RXIDLE_MASK;
+> +        /* report RXEMPTY or RXFULL */
+> +        switch (fifo8_num_used(&s->rx_fifo)) {
+> +        case 0:
+> +            retvalue |=3D R_STATUS_RXEMPTY_MASK;
+> +            break;
+> +        case OT_UART_RX_FIFO_SIZE:
+> +            retvalue |=3D R_STATUS_RXFULL_MASK;
+> +            break;
+> +        default:
+> +            break;
+> +        }
+> +        /* report TXEMPTY+TXIDLE or TXFULL */
+> +        switch (fifo8_num_used(&s->tx_fifo)) {
+> +        case 0:
+> +            retvalue |=3D R_STATUS_TXEMPTY_MASK | R_STATUS_TXIDLE_MASK;
+> +            break;
+> +        case OT_UART_TX_FIFO_SIZE:
+> +            retvalue |=3D R_STATUS_TXFULL_MASK;
+> +            break;
+> +        default:
+> +            break;
+> +        }
+> +        if (!ot_uart_is_tx_enabled(s)) {
+> +            retvalue |=3D R_STATUS_TXIDLE_MASK;
+> +        }
+> +        if (!ot_uart_is_rx_enabled(s)) {
+> +            retvalue |=3D R_STATUS_RXIDLE_MASK;
+> +        }
+> +        break;
+>
+>      case R_RDATA:
+> -        retvalue =3D s->regs[R_RDATA];
+> -        if ((s->regs[R_CTRL] & R_CTRL_RX_MASK) && (s->rx_level > 0)) {
+> -            qemu_chr_fe_accept_input(&s->chr);
+> -
+> -            s->rx_level -=3D 1;
+> -            s->regs[R_STATUS] &=3D ~R_STATUS_RXFULL_MASK;
+> -            if (s->rx_level =3D=3D 0) {
+> -                s->regs[R_STATUS] |=3D R_STATUS_RXIDLE_MASK;
+> -                s->regs[R_STATUS] |=3D R_STATUS_RXEMPTY_MASK;
+> -            }
+> -        }
+> +        retvalue =3D (uint32_t)ot_uart_read_rx_fifo(s);
+>          break;
+>
+>      case R_FIFO_STATUS:
+> -        retvalue =3D s->regs[R_FIFO_STATUS];
+> -
+> -        retvalue |=3D (s->rx_level & 0x1F) << R_FIFO_STATUS_RXLVL_SHIFT;
+> -        retvalue |=3D (s->tx_level & 0x1F) << R_FIFO_STATUS_TXLVL_SHIFT;
+> -
+> -        qemu_log_mask(LOG_UNIMP,
+> -                      "%s: RX fifos are not supported\n", __func__);
+> +        retvalue =3D
+> +            (fifo8_num_used(&s->rx_fifo) & 0xffu) << R_FIFO_STATUS_RXLVL=
+_SHIFT;
+> +        retvalue |=3D
+> +            (fifo8_num_used(&s->tx_fifo) & 0xffu) << R_FIFO_STATUS_TXLVL=
+_SHIFT;
+>          break;
+>
+>      case R_VAL:
+> @@ -416,10 +484,6 @@ static void ot_uart_write(void *opaque, hwaddr addr,=
+ uint64_t val64,
+>              qemu_log_mask(LOG_UNIMP,
+>                            "%s: UART_CTRL_NF is not supported\n", __func_=
+_);
+>          }
+> -        if (value & R_CTRL_SLPBK_MASK) {
+> -            qemu_log_mask(LOG_UNIMP,
+> -                          "%s: UART_CTRL_SLPBK is not supported\n", __fu=
+nc__);
+> -        }
+>          if (value & R_CTRL_LLPBK_MASK) {
+>              qemu_log_mask(LOG_UNIMP,
+>                            "%s: UART_CTRL_LLPBK is not supported\n", __fu=
+nc__);
+> @@ -445,19 +509,19 @@ static void ot_uart_write(void *opaque, hwaddr addr=
+, uint64_t val64,
+>          }
+>          break;
+>      case R_WDATA:
+> -        uart_write_tx_fifo(s, value);
+> +        uart_write_tx_fifo(s, (uint8_t)(value & R_WDATA_WDATA_MASK));
+>          break;
+>
+>      case R_FIFO_CTRL:
+> -        s->regs[R_FIFO_CTRL] =3D value;
+> -
+> +        s->regs[R_FIFO_CTRL] =3D
+> +            value & (R_FIFO_CTRL_RXILVL_MASK | R_FIFO_CTRL_TXILVL_MASK);
+>          if (value & R_FIFO_CTRL_RXRST_MASK) {
+> -            s->rx_level =3D 0;
+> -            qemu_log_mask(LOG_UNIMP,
+> -                          "%s: RX fifos are not supported\n", __func__);
+> +            ot_uart_reset_rx_fifo(s);
+> +            ot_uart_update_irqs(s);
+>          }
+>          if (value & R_FIFO_CTRL_TXRST_MASK) {
+> -            s->tx_level =3D 0;
+> +            ot_uart_reset_tx_fifo(s);
+> +            ot_uart_update_irqs(s);
+>          }
+>          break;
+>      case R_OVRD:
+> --
+> 2.49.1
+>
+>
 
