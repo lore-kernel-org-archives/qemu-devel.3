@@ -4,101 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8390CD5BB4
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 08:09:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67A8ECD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 08:20:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRmqC-0003nU-5f; Tue, 26 May 2026 04:08:44 -0400
+	id 1wRn0R-0005Hp-QO; Tue, 26 May 2026 04:19:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRmqA-0003mn-72
- for qemu-devel@nongnu.org; Tue, 26 May 2026 04:08:42 -0400
-Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRmq8-000270-KS
- for qemu-devel@nongnu.org; Tue, 26 May 2026 04:08:41 -0400
-Received: by mail-yx1-xb130.google.com with SMTP id
- 956f58d0204a3-65ffefd8bd9so1153018d50.0
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 01:08:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779782919; cv=none;
- d=google.com; s=arc-20240605;
- b=caHI1upQWeaQgyDz6HlYxn7abXAIt2qsiSHxu0GUrfMyIzEupmQ5Jz68epb2mP/C58
- La7rqs+/oRYMEfvFtH+YU2ajYGfbRfDgoTowG4fikWld/0sgDlxynyO/sImqZxkIQmpg
- Zgpf75SsSbfplrK2lE/eJmEKtXvWEQKZZDxJ/n16sFM5x6NJ2m5LHo+FIfhs6RUfg/ki
- SNsoh9nalGc+/4BBy9y1SfkRlcgDpOoQHCIBy4W3Mfw5kWKHj0X668SLXzPhOt+iinFz
- eXZqVmr/ZWxdaLDCCq/Zw0KPQTxzNlXAzHjP7ihmzXGWJHiGUNBfD1HjfHFTUHgXi2Qs
- hSog==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=U5DfpMlxZVRYI5k81JFixfaDChV2TY4u44UT/G4IMUc=;
- fh=1EGL808GC7UisafgVSBPpBEoPQPTRUcb3vaSrd4npec=;
- b=Rtm3T6dQnxzYOC17JDh4aJmQn+GBAVG17PXGEHc2GCDGvFv4qeEQx0B7pBxclkCCLp
- ePDHumAvCfatW3S07k5sL8a8rdlhVW5KffBWhLuKMErHJWdTQsfyX7N2KcJ3TWOI4eep
- 6K/+y1Xh3vtdCJtTw3ex1fwCAhR4bjesPXyzF266kA1pCHPR2FmgjcK79VdBGV+qOMR9
- 8OKl5+Pw6uOvppi2tBHsDutYlgToPMlJyIV1MHK/h0/jqeKWvAglIagiR2StcxYRzy2H
- rT57xl+mlsoYgAKsLXwvBC2nTv26yj2WyWHHvYaGws05kWXPli0SpIgipnGEkffCxxG1
- evow==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779782919; x=1780387719; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=U5DfpMlxZVRYI5k81JFixfaDChV2TY4u44UT/G4IMUc=;
- b=N6/zhXHEMrxgG7ZYcl4ZIYynSC11YTxbrVfhwJF3Tcbd20ZNosVDrTBtleQlDUIODl
- a1l5dMiXzq9sGvI4RxeeAPbPogPizvWo1Saipre/wFWsMm94nwWWr10Zi2jNoP739y1M
- p/sqPSKFATlDuqEByq1njOJfKxbeJGpheUuEaHgA9J4abhjHj9sgDt3ra4zetHJIliUm
- UuPyAPyMRKFJFZceM9VK0mlojDbdIARtwUZGXPdAO8YXg+BZr7Ki1kN3BIC9kvOqcX5j
- rbnQwtNK4VS5BNeeiz0mwsLagDqiCTcthX7ur69Qh9RJFZoLdblEOZEGYbJvo+VB/sfI
- SB6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779782919; x=1780387719;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=U5DfpMlxZVRYI5k81JFixfaDChV2TY4u44UT/G4IMUc=;
- b=G4ciRbwI2H5XV5KTZEoPflTyrXXi03tDn/DKOIR+Tyeoy5efNQBiiIXG94kTaqa7uq
- N0pkXCtZkM0JXGJmV0OGDh8Da1TaOXfHd0MmnBkal9VOjTdoWOg2UT9v37ShacdQ06lq
- 4PpUbDFpMEi3VuRYbR5eyvp3LkOQBs5u9tA1H5wJn3CkN6DWzNOra+ItwL+7iiGuJbJv
- rsqqds4OMMp0GaIKvgwMhEZpIOkJwlMAZHSV0/lkVQAJP+lpiy8YZtiJ2m8C5UmM/vbk
- RT+QJMce5WKdXxin2rUFiVwANii+KKE8UJRnBY90SQaMyhQ/DgJxEZctroKWX/6v5eex
- 63vw==
-X-Gm-Message-State: AOJu0YzpP6k7vroQ/aLNq0oPBuDPrnHJ2a1ClLfo/AHYSX9UAL2UAieN
- XC65tUrYh6+SIY4qJL6gdSOPCNfahsKnmvPF5QxwpbDrmPtL7yY0tYwsF3IxbpLoKcy3Jefq4Lz
- O0zgElWvbIaAEoSPb7yKwOfiq41HvwntVxC8Itq6moA==
-X-Gm-Gg: Acq92OFJrXMApqgDz9WTjcWykzTKE7OSmSyTY8buz25g9JawRmxxVG99ncjifBLPbqr
- cQDvMXwCeKH+8Gt/NWq4/Df4X+NgEfr+NU6mvOsq9ct9S2ipJ47EVo9aY8qnzrRa+DL3spESUfp
- FilVDUKjOukroLvYv4SMm79TqkJ2qs+9Qn/8paEwoiyO4rPBjA7oNw5i8E1bh3ulfnnwgnHxJRg
- QdChuYzOSfRLtvZ09MeM/cPCvMTA8VDf0CLdQ0tlV3z38OZ+xDQF7SxKVvlT4BVNS5IIEVau1h5
- TOgGcFdgTWyA6FQwiCxt1WqjuePPOhaab33qp8ZpS8X0tlrV1x5isFuDf2Oz0REGcWc=
-X-Received: by 2002:a53:acd0:0:10b0:65e:14b6:b1ce with SMTP id
- 956f58d0204a3-65ec96337c7mr13756559d50.9.1779782919057; Tue, 26 May 2026
- 01:08:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wRn0O-0005Gz-SN
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 04:19:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wRn0N-0007aW-7P
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 04:19:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779783554;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=U/3pptQ2qnZ2YhvRFjOnsHg+qVvQb2qB6bEVoqGtxAY=;
+ b=PNalxMQYvLxVR5i0bRdV/V97V7s7VPwqOsQyEATh2ryFfzBjnHhDBe6/Wb/2WulLkHV8Mg
+ +sylEkUyWW1lmBv82NmKesLR9KTsLc0Jgj1+GBiEsC+OXmKnp3pGPmMs31yDerI/H1VZN/
+ b0nHbzTrZQ8JSSsmJqfsEeIZRQPBt/I=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-8-ADHpbhqCMd6w0jzkZw92cg-1; Tue,
+ 26 May 2026 04:19:12 -0400
+X-MC-Unique: ADHpbhqCMd6w0jzkZw92cg-1
+X-Mimecast-MFC-AGG-ID: ADHpbhqCMd6w0jzkZw92cg_1779783551
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 53FCC195609E; Tue, 26 May 2026 08:19:11 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.44.32.30])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D0AD01800357; Tue, 26 May 2026 08:19:09 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 09/37] hw/arm/aspeed: Consolidate secure SRAM into SRAM array
+Date: Tue, 26 May 2026 10:18:20 +0200
+Message-ID: <20260526081848.651835-10-clg@redhat.com>
+In-Reply-To: <20260526081848.651835-1-clg@redhat.com>
+References: <20260526081848.651835-1-clg@redhat.com>
 MIME-Version: 1.0
-References: <20260525032634.7754-1-nicholasrighi@gmail.com>
-In-Reply-To: <20260525032634.7754-1-nicholasrighi@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 26 May 2026 09:08:27 +0100
-X-Gm-Features: AVHnY4IaJjBVqZSYxM5YT6vuritWXZQIawL5wLxbuYri-rsE00EpCcdn2BNIIb8
-Message-ID: <CAFEAcA83RtkukDbExv72YztjHZkhLy8JyOc49gY3eaKoW-5jKA@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/bcm2838: Route I2C interrupts to GIC
-To: Nicholas Righi <nicholasrighi@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,40 +84,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 25 May 2026 at 04:26, Nicholas Righi <nicholasrighi@gmail.com> wrote:
->
-> The I2C interrupts are only routed to the legacy interrupt controller. This means
-> that for modern device trees that use the GIC, the interrupts don't work. This patch
-> re-routes the I2C OR'd interrupt from the legacy interrupt controller to the GIC so
-> I2C emulation works out of the box with current kernels.
->
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-> diff --git a/hw/arm/bcm2838.c b/hw/arm/bcm2838.c
-> index c14a854046..6895f70385 100644
-> --- a/hw/arm/bcm2838.c
-> +++ b/hw/arm/bcm2838.c
-> @@ -184,6 +184,9 @@ static void bcm2838_realize(DeviceState *dev, Error **errp)
->      sysbus_connect_irq(SYS_BUS_DEVICE(&ps_base->aux), 0,
->                         qdev_get_gpio_in(gicdev, GIC_SPI_INTERRUPT_AUX_UART1));
->
-> +    qdev_connect_gpio_out(DEVICE(&ps_base->orgated_i2c_irq), 0,
-> +                        qdev_get_gpio_in(gicdev, GIC_SPI_INTERRUPT_I2C));
+Some Aspeed SoCs contain multiple SRAM regions with different
+sizes and MMIO mappings, such as internal SRAM and secure SRAM.
 
-We already connect this output from orgated_i2c_irq to
-somewhere else, in hw/arm/bcm2835_peripherals.c:
+The current implementation models secure SRAM separately from the
+generic SRAM representation, which complicates future multi-SRAM
+support and expansion.
 
-    qdev_connect_gpio_out(DEVICE(&s->orgated_i2c_irq), 0,
-                          qdev_get_gpio_in_named(DEVICE(&s->ic),
-                                                 BCM2835_IC_GPU_IRQ,
-                                                 INTERRUPT_I2C));
+Increase ASPEED_SRAM_NUM to 2 and migrate secure SRAM to use the
+common SRAM array representation. Rename the secure SRAM memmap
+entry to ASPEED_DEV_SRAM1 and update AST10x0 to initialize both
+SRAM regions through sram[] and sram_size[].
 
-It is not possible to connect one GPIO output to two places
-like this -- the second call will silently override the first one.
-You need to create a TYPE_IRQ_SPLIT object, connect the
-output from the device to the input of the splitter, and
-connect the outputs of the splitter to the legacy interrupt
-controller and the GIC.
+This unifies SRAM-like regions under a common representation and
+prepares for future SoCs with additional SRAM regions.
 
-thanks
--- PMM
+No functional change.
+
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260525053036.3305181-5-jamin_lin@aspeedtech.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ include/hw/arm/aspeed_soc.h |  6 ++----
+ hw/arm/aspeed_ast10x0.c     | 16 +++++++++-------
+ 2 files changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index dda602e9f20c..3aac144cd408 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -60,7 +60,7 @@
+ #define ASPEED_PCIE_NUM  3
+ #define ASPEED_INTC_NUM  2
+ #define ASPEED_IOEXP_NUM 2
+-#define ASPEED_SRAM_NUM 1
++#define ASPEED_SRAM_NUM 2
+ 
+ struct AspeedSoCState {
+     DeviceState parent;
+@@ -89,7 +89,6 @@ struct AspeedSoCState {
+     AspeedSBCState sbc;
+     AspeedSLIState sli;
+     AspeedSLIState sliio;
+-    MemoryRegion secsram;
+     UnimplementedDeviceState sbc_unimplemented;
+     AspeedSDMCState sdmc;
+     AspeedPWMState pwm;
+@@ -173,7 +172,6 @@ struct AspeedSoCClass {
+     const char * const *valid_cpu_types;
+     uint32_t silicon_rev;
+     uint64_t sram_size[ASPEED_SRAM_NUM];
+-    uint64_t secsram_size;
+     int pcie_num;
+     int spis_num;
+     int sgpio_num;
+@@ -225,10 +223,10 @@ enum {
+     ASPEED_DEV_SCU,
+     ASPEED_DEV_ADC,
+     ASPEED_DEV_SBC,
+-    ASPEED_DEV_SECSRAM,
+     ASPEED_DEV_EMMC_BC,
+     ASPEED_DEV_VIDEO,
+     ASPEED_DEV_SRAM0,
++    ASPEED_DEV_SRAM1,
+     ASPEED_DEV_SDHCI,
+     ASPEED_DEV_GPIO,
+     ASPEED_DEV_GPIO_1_8V,
+diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
+index b55f788342a6..93c81195b56a 100644
+--- a/hw/arm/aspeed_ast10x0.c
++++ b/hw/arm/aspeed_ast10x0.c
+@@ -21,7 +21,7 @@
+ 
+ static const hwaddr aspeed_soc_ast1030_memmap[] = {
+     [ASPEED_DEV_SRAM0]     = 0x00000000,
+-    [ASPEED_DEV_SECSRAM]   = 0x79000000,
++    [ASPEED_DEV_SRAM1]     = 0x79000000, /* SEC SRAM */
+     [ASPEED_DEV_IOMEM]     = 0x7E600000,
+     [ASPEED_DEV_PWM]       = 0x7E610000,
+     [ASPEED_DEV_FMC]       = 0x7E620000,
+@@ -249,14 +249,16 @@ static bool aspeed_soc_ast10x0_realize(Aspeed10x0SoCState *a, Error **errp)
+     memory_region_add_subregion(s->memory,
+                                 sc->memmap[ASPEED_DEV_SRAM0],
+                                 &s->sram[0]);
+-    memory_region_init_ram(&s->secsram, OBJECT(s), "sec.sram",
+-                           sc->secsram_size, &err);
++
++    /* Internal SEC SRAM */
++    memory_region_init_ram(&s->sram[1], OBJECT(s), "sec.sram",
++                           sc->sram_size[1], &err);
+     if (err != NULL) {
+         error_propagate(errp, err);
+         return false;
+     }
+-    memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SECSRAM],
+-                                &s->secsram);
++    memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SRAM1],
++                                &s->sram[1]);
+ 
+     /* SCU */
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
+@@ -494,7 +496,7 @@ static void aspeed_soc_ast1030_class_init(ObjectClass *klass, const void *data)
+     sc->valid_cpu_types = valid_cpu_types;
+     sc->silicon_rev = AST1030_A1_SILICON_REV;
+     sc->sram_size[0] = 0xc0000;
+-    sc->secsram_size = 0x40000; /* 256 * KiB */
++    sc->sram_size[1] = 0x40000; /* SEC SRAM 256 * KiB */
+     sc->spis_num = 2;
+     sc->ehcis_num = 0;
+     sc->wdts_num = 4;
+@@ -522,7 +524,7 @@ static void aspeed_soc_ast1060_class_init(ObjectClass *klass, const void *data)
+     sc->valid_cpu_types = valid_cpu_types;
+     sc->silicon_rev = AST1060_A2_SILICON_REV;
+     sc->sram_size[0] = 0xc0000;
+-    sc->secsram_size = 0x40000; /* 256 * KiB */
++    sc->sram_size[1] = 0x40000; /* SEC SRAM 256 * KiB */
+     sc->spis_num = 2;
+     sc->wdts_num = 4;
+     sc->uarts_num = 1;
+-- 
+2.54.0
+
 
