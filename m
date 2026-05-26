@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4BF9CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 19:06:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D53ACD5BB1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 19:06:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRx66-0000KD-0P; Tue, 26 May 2026 15:05:50 -0400
+	id 1wRx6i-0000Zg-Bz; Tue, 26 May 2026 15:06:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRx61-0000Jr-LC; Tue, 26 May 2026 15:05:45 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1wRx6V-0000NZ-6h; Tue, 26 May 2026 15:06:17 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRx5z-0004YT-JK; Tue, 26 May 2026 15:05:45 -0400
+ id 1wRx6S-0004eW-OL; Tue, 26 May 2026 15:06:14 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id A5CE260018;
- Tue, 26 May 2026 19:05:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C5A1F00A3A;
- Tue, 26 May 2026 19:05:36 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 9017943BAE;
+ Tue, 26 May 2026 19:06:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A0291F00A3A;
+ Tue, 26 May 2026 19:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779822340;
- bh=DyzwoBWt/EG16LYyQiWtaXeJp63yssRxIxsgq/h38rc=;
- h=From:To:Cc:Subject:Date;
- b=LWYw2Vx9VB0rVmIXY6bqzXPRjTtVo3wFdmIDgBX82x4cCMEw3XM7vBD0LL57kmEMQ
- sQFrzhX4l9APiARCN5Uav3knVYDMFayk64dJE43oG6HBK3frB5wF/4ZQb1Pgm/u0kN
- rvTUQqxvK+qEy7vqeAv8GNWdfi/zGGhsxIqbIJOGZ3rP0H0wi+NlcFwA9K9Uv/abU2
- LxGDgM9DFpVNvrMVawKKodz8sJEzl1vJj04xKiOOh9Rr/vd+2FCJ/wp5Wpjpl4WOdE
- Bk/YS1FHnBnfanWb4qjvmYgu3VEzarnopSp9pxJnSDwZKDXx46Nt3zQhuIyg63PvUb
- ofsxgfXNGAzOw==
+ s=k20260515; t=1779822370;
+ bh=RzAg/z9ESTOIfX4D/3KjFmD6FehyVHYLgvenUfGbwos=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=ORIuHVnTaIWZE7tA/BMfeu0xNX/RJZwxrEpAKez36fGBZxuNJk6cU/5Hem0rEHxer
+ Od83Hd61oFNgSn1smaP4RI7cy5FhchfhtaIrom+hC0HhF1qa2HmobAfzlWPSHNWL+N
+ 0UNqgMX0q3JtzGYyYCIAn6LPJeYkrWA8bZUSjWrKN+XpmoPrfGbryZD1+wYp+Wlprd
+ P+39nTaoENuJ4YCYl/GD8Gh1+061VBOeJd4LUgB97chlPRZQOnSzntFB3nEx+19uvD
+ 9tUBzQJFwvvL62MfePuW9IF2IkHA3jF4zw7CwcHhSJ2ogPqYWeVldeYEswt/VLpTtF
+ 4r+mKITr4A6Zw==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Cornelia Huck <cohuck@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -47,15 +47,16 @@ Cc: Cornelia Huck <cohuck@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
  qemu-s390x@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  David Hildenbrand <david@kernel.org>
-Subject: [PATCH 00/12] linux user patches
-Date: Tue, 26 May 2026 21:05:23 +0200
-Message-ID: <20260526190535.10833-1-deller@kernel.org>
+Subject: [PATCH 08/12] linux-user: Implement finer grained madivse() syscall
+Date: Tue, 26 May 2026 21:05:31 +0200
+Message-ID: <20260526190535.10833-9-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260526190535.10833-1-deller@kernel.org>
+References: <20260526190535.10833-1-deller@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -79,50 +80,73 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-A series of patches for linux-user, specifically many FP fixes in signal
-handling code for sh4, mips, ppc, alpha and s390x (from Matt Turner), a
-madvise() improvement and a ARM cortex-m55 program loading fix (from me), and
-qemu header cleanups (from Peter Maydell).
+Although most madvise() values are hints, some are important and are
+checked by userspace, especially by security-relevant applications like
+BoringSLL.  So, return -EINVAL for those functions which we don't emulate.
 
-Helge Deller (3):
-  linux-user: Implement finer grained madivse() syscall
-  linux-user: Fix typo in function documentation for pgb_addr_set()
-  linux-user: Fix loading static ARM cortex-m55 binaries
+Signed-off-by: Helge Deller <deller@gmx.de>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3489
+---
+ linux-user/mmap.c | 32 +++++++++++++++++++++++++++++++-
+ 1 file changed, 31 insertions(+), 1 deletion(-)
 
-Matt Turner (7):
-  linux-user/ppc: restore fp_status from FPSCR on sigreturn
-  linux-user/mips: save/restore FCSR across signal delivery
-  linux-user/alpha: add coredump support
-  linux-user/sh4: preserve T/M/Q bits across signal delivery
-  linux-user/sh4: restore FP rounding mode on sigreturn
-  target/sh4: sync fp_status when gdb writes FPSCR
-  linux-user/s390x: restore fpu_status rounding mode from FPC on
-    sigreturn
-
-Peter Maydell (2):
-  linux-user: Move init_main_thread() prototype to user-internals.h
-  linux-user: Move cpu_copy() to user-internals.h
-
- linux-user/alpha/elfload.c    | 12 ++++++++++++
- linux-user/alpha/target_elf.h | 13 +++++++++++++
- linux-user/elfload.c          |  4 ++--
- linux-user/mips/signal.c      |  7 +++++++
- linux-user/mmap.c             | 32 +++++++++++++++++++++++++++++++-
- linux-user/ppc/signal.c       |  2 +-
- linux-user/qemu.h             |  5 -----
- linux-user/s390x/signal.c     |  6 +++++-
- linux-user/sh4/signal.c       | 19 ++++++++++++++++---
- linux-user/user-internals.h   | 18 ++++++++++++++++++
- target/mips/cpu.h             |  3 +++
- target/mips/fpu.c             |  5 +++++
- target/s390x/cpu.h            |  1 +
- target/s390x/tcg/fpu_helper.c | 20 ++++++++++++++------
- target/sh4/cpu.h              |  3 +++
- target/sh4/gdbstub.c          |  2 +-
- target/sh4/op_helper.c        |  7 ++++++-
- tests/tcg/sh4/Makefile.target |  7 -------
- 18 files changed, 138 insertions(+), 28 deletions(-)
-
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index b4b7b3e5cc..50916c29a5 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -1282,7 +1282,7 @@ abi_long target_madvise(abi_ulong start, abi_ulong len_in, int advice)
+     case TARGET_MADV_KEEPONFORK:    /* parisc */
+         advice = MADV_KEEPONFORK;
+         break;
+-    /* we do not care about the other MADV_xxx values yet */
++    /* all other MADV_xxx values are the same across architectures */
+     }
+ 
+     /*
+@@ -1307,6 +1307,19 @@ abi_long target_madvise(abi_ulong start, abi_ulong len_in, int advice)
+      */
+     mmap_lock();
+     switch (advice) {
++    case MADV_NORMAL:
++    case MADV_RANDOM:
++    case MADV_SEQUENTIAL:
++    case MADV_WILLNEED:
++    case MADV_DOFORK:
++    case MADV_FREE:
++    case MADV_COLD:
++    case MADV_PAGEOUT:
++        ret = 0; /* OK */
++        break;
++    case MADV_REMOVE:
++        ret = -EOPNOTSUPP;
++        break;
+     case MADV_DONTDUMP:
+         page_set_flags(start, start + len - 1, PAGE_DONTDUMP, 0);
+         break;
+@@ -1324,6 +1337,23 @@ abi_long target_madvise(abi_ulong start, abi_ulong len_in, int advice)
+                 page_reset_target_data(start, start + len - 1);
+             }
+         }
++        break;
++    case MADV_DONTFORK:
++    case MADV_MERGEABLE:
++    case MADV_UNMERGEABLE:
++    case MADV_HWPOISON:
++    case MADV_HUGEPAGE:
++    case MADV_NOHUGEPAGE:
++    case MADV_COLLAPSE:
++    case MADV_POPULATE_READ:
++    case MADV_POPULATE_WRITE:
++    case -1:    /* BoringSSL uses -1 to check if the environment is broken */
++        ret = -EINVAL;
++        break;
++    default:
++        qemu_log_mask(LOG_UNIMP, "Unhandled madvise(%d) call.\n", advice);
++        ret = -EINVAL; /* not yet known advise */
++        break;
+     }
+     mmap_unlock();
+ 
 -- 
 2.54.0
 
