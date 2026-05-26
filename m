@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F911CD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 21:42:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B5A6CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 21:48:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRzWa-0005aS-De; Tue, 26 May 2026 17:41:20 -0400
+	id 1wRzdc-0007sA-Pv; Tue, 26 May 2026 17:48:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wRzWY-0005Zt-4I
- for qemu-devel@nongnu.org; Tue, 26 May 2026 17:41:18 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRzda-0007s0-JR
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 17:48:35 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wRzWW-0001Vu-8S
- for qemu-devel@nongnu.org; Tue, 26 May 2026 17:41:17 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2bc7b311e77so50734805ad.0
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 14:41:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRzdY-0006cv-Mh
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 17:48:34 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-43eb05b1875so5895755f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 14:48:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779831674; x=1780436474; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=gK/gPTVvVrHpf8sngQaR43WX+ed0zg5u4KRi/HrHF6U=;
- b=VacQDjwzRhtlnc/AOwLef4P1CytWF/CAkMzVSlq5Sr4FoDKSDjeMRWd72GoqprJPFy
- q5Fu3MDqtCCJwksjYJ07CgYqzWWcO+o5oiaN+YGmxUA/m1weWvodLekuWwb+jDY7AurT
- PEoYuIqT0L44Qrg4r28EGQRXIpsh6GJGPEKKxUu5l4UEvzrZZ5cqSNp6blALnxj049U8
- GoPqYgX1NoFPIAPaUCP5AljVoWsAEBbfyQTYoTzSYJAalK37OT7oPdG3L9t6J//K4OIS
- +K8bmpHxkjmHRy9BYqG4/otYLEX/0UiEXVbmV8rIuWrEmWTWItFFUFYOcoswNO0PgER/
- f9YQ==
+ d=linaro.org; s=google; t=1779832111; x=1780436911; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=NkxC3Jy5820gswRM40t3ICpf4xC4ZYOyyQPXnYANvUE=;
+ b=As6PAR3nSR6PB46FuJv2vho3V8uXq0MwlrTd5xI+b37uqk26wO3M/XvDPQfyRZizsk
+ KwSYqa1nZe2x7oNePliYDnpwhajPO2yxrcxV6Zzwn2CnhB/a2La6vJhJlDq8PhtXZBYe
+ HjmG1NkkqVlcW6nd7P89LvmXKumC+XB3KywxaI4Sy8pksZOKNzlU+J6iSruVbedgVJDo
+ u+PHPDg9qNoZf+by9MqpHPLA0ooYPUQa8duh4xZHliU+vtIrnhGNBjRA76XBD+7RIMLa
+ toWZeqInpA2ixJAWfpG2ZI1JWEWi/nDJil6fzqb9kin/Eubr7k0RxzwDKmvGibF/m2eN
+ jLOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779831674; x=1780436474;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1779832111; x=1780436911;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gK/gPTVvVrHpf8sngQaR43WX+ed0zg5u4KRi/HrHF6U=;
- b=Z7YYa7C42+8uC+dXhqt33boqUGfHw/tYsKvwZZn33aIfSFJ1YOg5PzrwSfLPv/4SqB
- XNKdQBnsB2JXA2q8VxIU6AvmTMm0fowhVY5lcG1ApNa4ogPlyXEiIwnXS1OGSUUo/WRW
- lnMXErou+r6sHF0wPf76ATPu7ql17o3dKnmU0fq+rx7eDH2eFrW8PIMt+oXbWkdlWKLd
- pPDGvbJ9wljxVH5SDNNs18VGwOZt3B7znYKNXdGH5gS5OhqouOoLFpapLaNaNackmY0o
- cKdlMiSCnMVjKUm1cUNigWnYEGjj5ZKpbK1lDrCzFpG5jVWo3KNUW4CilbO+kAoebUMt
- 1/nQ==
+ bh=NkxC3Jy5820gswRM40t3ICpf4xC4ZYOyyQPXnYANvUE=;
+ b=fWnG+vqB24wQJD/+TZwQ7jtrAZjLlbwftdnzuEok5+cDb8ZdW4qw22GgsC8XyqQ52O
+ W6DucocbyZ84PFMO3LQR/bZ/U9Vk145LQV/KU9qYT9E0EDEkwp3Um0EdNGzKB91eIt+N
+ n1xFCvE7xBprUxtOFVNMfmR2x2M2Y+C17XnUImuam9HYf4gLHWMykjsoHUMnc19IIU86
+ WTr6HMZO58QpF2eRe3MRJBKLA1MVMaYhgGd+40DUmWg4j3TP456/qWD2FOQMJN1fZ7aY
+ W2ak5ssYUAa6lLjh128boHjvOV9Ra3MY5gmzNvQg32YNceUqIiG0nRHN2eFdM350gyeC
+ QHRA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9VlJKO+krEwORxtdqd2G+G+MW6X0Q6wtfO3iPlMfdSnBP0dZehG58Gs0d7mn/Gfqs6xKhgyqr2efGF@nongnu.org
-X-Gm-Message-State: AOJu0YxFUIvdo05syGZksF/dZLzVEStDKjZXr9DlRmV9+b/7MY8/GqBS
- 2NmYojbjqmT1IAYFfu0B42jis6nRNgLjsa+SlkPN9AxMSHGl7pFB5W4+J+/T3J99zhc=
-X-Gm-Gg: Acq92OFH4mnEcRXc7baZZCbzEfhs5qM8QcKjKSozNdnAKftpeyt6FqcRobUAAXUNAzL
- X5dt9stT3a+flPH3YV5BSPALwkk/tB0KMYsNRlVue6fozx9mmN1BOHva2a+tWWG0ru4rd0LvZUT
- +9pN9I9Jk4JtsoDyWTRpHyINHNrdMXz0a4SOu2mxnZ8xxPcL1wPAuJAEdKFFCb2jKwwV2rAG9oE
- XtQC6WAcV9adxjjenZPnri6oOQ3uo6IxD2OaUvkc4cHpW8XMZJexbVyvyAsy8eLSOudeNiYL7BR
- Fhy8ESctoImqYDl1vj2eSo+5ZB0e1hTJE02fQcOrXUHlNclVyptZTFFlEoHfWphhKN+Nci6KmBk
- st5CrXKmlP0fh3aThvbGawN1syZRxU2/s18YEXpCS6khud078Ql87N9AD0cUrWYC5v3OiB7P94A
- 6VY5qi9OLCRR79WuaXb2iCPq9iwk98WE/RNyed
-X-Received: by 2002:a17:903:11c4:b0:2b4:6597:44d9 with SMTP id
- d9443c01a7336-2beb082545dmr175970435ad.8.1779831674310; 
- Tue, 26 May 2026 14:41:14 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2beb56f9100sm127715785ad.37.2026.05.26.14.41.13
+ AFNElJ/mDqvHpGeiEDAu1DCfUL0ppWnRdGDtr/SYDWyAf9OCX0QtuWFFPxWW3LUAOG2B8ZdzJMhbaKe7dnGg@nongnu.org
+X-Gm-Message-State: AOJu0Yz1XOqbcTmc84B23x7yBPiX5eKQWqk1APH6xz+TaOBj1UFdsD/P
+ J025iLKMTReQAzhPMlxl+NJCU1QSjTD2EsWUKiL8U5jzD50FT9lSWpxSgzX/QIrYrMg=
+X-Gm-Gg: Acq92OFOj2xAqk3E9RwV6dxzYYw3P7TSIdPPDkntvi9mssqDmagpJTKrf7zbXHjAqwh
+ EH5x+1Uc0qL6UY8ivonQQ2N7NwdFuOiaDLqsqAfwtcNW/6cjjoxlLv+Pf8AuM2u3/Iqclm3kJKu
+ Z4Qb7Exw9oeRJqeEeRzcEEIngl1Q4tXWcYxfBp9LjDXNzirEFoTB3Hf6M9Wkm8Cy5Mbh5DxRt0q
+ E2Zy/PRR9vAAY527pOFmEV9I6WeyqHpBg3WWelXlK4qDE3WW4woEi8Qt1Za300xshGHCdxJopcA
+ 569A9hszY4n+Fb+1YzCXePb4rTTJS56trvVE4gAwEGMr3RD1yKhG8NivxTBgKyvUEe1C4mbG2YD
+ Vzf/ken8IdE4qLIjbiS79jKzG6Bkr5IGJQQnG9SRlvhl+iwek981nOa1ImYePgLUsQNQl9MfoOg
+ sYDqlKM19b2qz4ft4ula+SXNLG3Zcp8qqNhLL/2eslMVf5lLkfumkdW1z/phRt4Mrnz37wBxcRY
+ X4H
+X-Received: by 2002:a05:6000:4b01:b0:45e:cd0a:b06a with SMTP id
+ ffacd0b85a97d-45ecd0ab0c4mr18142015f8f.26.1779832110744; 
+ Tue, 26 May 2026 14:48:30 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45edb5c2323sm1166485f8f.34.2026.05.26.14.48.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 May 2026 14:41:13 -0700 (PDT)
-Message-ID: <dbcb19ca-9b35-4da1-9bff-caeaf9221137@linaro.org>
-Date: Tue, 26 May 2026 14:41:06 -0700
+ Tue, 26 May 2026 14:48:29 -0700 (PDT)
+Message-ID: <9d64ac0b-607e-4680-9753-94bbf1990194@linaro.org>
+Date: Tue, 26 May 2026 23:48:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: Don't assert if 64-bit EL2 AT insn sees a
- Domain fault
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260526174155.2491217-1-peter.maydell@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: on ai generated and code provenance
 Content-Language: en-US
-In-Reply-To: <20260526174155.2491217-1-peter.maydell@linaro.org>
+To: Warner Losh <imp@bsdimp.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
+ stefanha@redhat.com
+References: <20260524083329-mutt-send-email-mst@kernel.org>
+ <f0bc9023-28c4-4685-b0cc-fc7ad4e6d371@redhat.com>
+ <CANCZdfrn61yr5k=3=E_zE11dw3j2vVsg0PPn0PZ7RAa2agM8kQ@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CANCZdfrn61yr5k=3=E_zE11dw3j2vVsg0PPn0PZ7RAa2agM8kQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,59 +106,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/26/26 10:41, Peter Maydell wrote:
-> The Domain fault type can only happen for 32-bit short-format
-> descriptors.  This means that it almost never needs to be encoded in
-> a long-format fault status code.  However, there is one corner case
-> where we do need to report it as a long-format FSC: if a 64-bit EL2
-> does an AT insn on an AArch32 EL1&0 translation regime that is using
-> short-descriptors and that translation operation hits a Domain fault,
-> then this is reported in the PAR_EL1 in long-format.
+On 25/5/26 19:15, Warner Losh wrote:
+
+> AI's primary issue is verification. The folks being flooded can't verify the
+> good from the bad in the flood and tend to have a knee jerk reaction to
+> protect themselves: ban it.
 > 
-> The PAR_EL1 register description defines that this should be reported
-> as 0b111101 for a level 1 Domain fault or 0b111110 for a level 2
-> Domain fault.
-> 
-> The Arm ARM pseudocode special cases this in the function
-> AArch64_PARFaultStatus() (because no other "fault to LFSC" code path
-> can be a Domain fault).  For QEMU, implement it in arm_fi_to_lfsc().
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 1fa498fe0de97 ("target/arm: Provide fault type enum and FSR conversion functions")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3512
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   target/arm/internals.h | 10 ++++++++++
->   1 file changed, 10 insertions(+)
-> 
-> diff --git a/target/arm/internals.h b/target/arm/internals.h
-> index 00830b1724..bb15b149f9 100644
-> --- a/target/arm/internals.h
-> +++ b/target/arm/internals.h
-> @@ -880,6 +880,16 @@ static inline uint32_t arm_fi_to_lfsc(ARMMMUFaultInfo *fi)
->           assert(fi->level >= 0 && fi->level <= 3);
->           fsc = 0b001100 | fi->level;
->           break;
-> +    case ARMFault_Domain:
-> +        /*
-> +         * This can only happen when doing an AT insn at EL2 for an AArch32
-> +         * stage 1 EL1&0 translation regime using short-descriptors, and
-> +         * the translation hits a Domain fault. This needs to be reported in
-> +         * in the long-format PAR. Compare pseudocode AArch64_PARFault_Status().
+> Unstated issue: How do we help people that want to contribute grow their
+> skills using AI so they make submissions whose quality if good enough to
+> be worth our time to verify and review. It's an industry wide problem, along
+> with how do junior engineers become senior in a world of AI doing the grunt
+> work they used to learn from.
 
-PARFaultStatus.
+While it seems easier to start contributing with new code rather than
+contributing reviewing code, I strongly suggest junier engineers to
+start reviewing before posting patches. That would help to unnarrow
+the maintainer funnel problem. AI could help them there too. But
+maybe I'm opening another can of worms by suggesting that direction.
 
-> +         */
-> +        assert(fi->level == 1 || fi->level == 2);
-> +        fsc = 0b111100 | fi->level;
-> +        break;
->       case ARMFault_Translation:
->           assert(fi->level >= -1 && fi->level <= 3);
->           if (fi->level < 0) {
-
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-
-r~
+> Warner
 
