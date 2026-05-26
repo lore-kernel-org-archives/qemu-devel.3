@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B863BCD5BD0
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:34:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6C04CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:34:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRsme-0000ce-9U; Tue, 26 May 2026 10:29:28 -0400
+	id 1wRsma-0000OB-Mw; Tue, 26 May 2026 10:29:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRsmT-0008Q4-3u
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:20 -0400
+ id 1wRsmN-0008Kv-No
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:13 -0400
 Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRsmQ-0001Gb-Iy
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:16 -0400
+ id 1wRsmL-0001F9-0w
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:11 -0400
 Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-44e1860558fso6825466f8f.0
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:29:14 -0700 (PDT)
+ ffacd0b85a97d-43fe62837baso6261485f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:29:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779805753; x=1780410553; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779805747; x=1780410547; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=wCc5uBVlW40H9499LhJ78HGB3MFCEeh30ulrOkWiyxY=;
- b=YCz3eBiZ3JWp6nAztt/omSwz+keaLKQdCQE7WqUhKs1CPEmoXQNBMa05+L8CFXr0oe
- MGGbzMdZJNGhT7cph8eE98BHlq/z/EON6nGAi9sPbK60rf97oqgiTwZZ4IB3caM/G08r
- 0vBBuoK8W5oCR3RejJf+XceiaB9ZS8xu2Kq6BjydEfw7z2AjoaocRRzbKxJqI2Q6MRIQ
- yRLWQGPMgZ4a5Siet9RPBC2G/JpgqJDhwRr68yMFDvueJkrcj9c/Yr+x5BS4zl0KN6lU
- 0GOg8wI6XqjlsaQSX+0FPnsXNbnCsxgaGjssVdxhEWA4qXI3LCK6ylh4I9H49LaAzsWP
- wxlw==
+ :reply-to; bh=sB4l14E+SamPtLUei0j/FzcwY1KiqKOWEgkGE0g36Sk=;
+ b=OZIA/Blj0FbpdGLF4rBpLAjlLO/5/RVoh9tjlikb4UUScyrABOAjNn1iZT5MLUeJJt
+ 1PH0edcAMqffjlMUGCXPnlf8TIRmZZlFpfScx6nC/GnakrFUJzltStNxEXw46WYY+Tjo
+ 9ef3HK2KCg5WjaWN4HtgTRkdbs3KAbT3ItmN4bzGjPWoyAKfLAw0piDoBkYUEf88YUSO
+ AQUgjwzsAJmOQ3e0kFxF0oaa6umjCZhooK+bGbrc2ruCgW0Ihs5efasv5wc0rUz/FQWu
+ cS77rKoZLhlR2jBozoHk0LndeX5ghGNp468I01clWxhvmkVomvB3aSN98X3sFWHgNszy
+ 0+PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779805753; x=1780410553;
+ d=1e100.net; s=20251104; t=1779805747; x=1780410547;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=wCc5uBVlW40H9499LhJ78HGB3MFCEeh30ulrOkWiyxY=;
- b=tXu65dwT8WwPn8btESNPCoXAAc3MHKF/wA7wBHTYuIKiSu4JIqmiA0sqLcwZ/ZRB+p
- aftQS57KEel2qhkqCECg4POMkAuJX3m1wawyEpPIPzD6c+w4GEh+PlWWMYUHnCPBdk88
- ISwZ4PAm4cLLpqyeW4V8zNx6bSHnLuFaL8PqjH7HaM9bvORsaRRJ2m4/EleJuoE5WPcZ
- RF1dp4hGTE21iMfEvOMdwy/HPSbUqXg1MNeEitukFHi+CL097TnWwL9onky2CxPzlAC6
- g1l6LXwKXXXV3F45OtDOjepokzG/C3qMraN+6kqjqfVtrr7TVcPc9aFmSjo6lq3afu3j
- hJZQ==
-X-Gm-Message-State: AOJu0Yzmh9p+/H1isgEex8dFwS0uZp8Idibzf8EQCknO3PSb0PMniwZ+
- iZJ+RplVX+XW/hJb4Yrb9UeBRzaI8oQk/D90nd/HmSQwxZiVbSXeiY+fnaSAuXins0Lf77HmkRJ
- PW0v3
-X-Gm-Gg: Acq92OHQeu1OfJvFq07OO0Ljcz4sNFTuk00mcfVlgUf9ij5Ckkugjx7FOYSt75u6nO/
- QbLa3bTf3bM8G/gVJndkoQ9l5Z5NiozVGebkhiLM56ydIMpqX/YLU0zoxstny2mvmpYsE/utL0Q
- FHO5URUz4FplyEl6oCjwOv0hknmEu72k+aelXWapCSv0RkIlrghdnLErkydqu3I9LYwyvekqz60
- UhMe65pU6fitxJPJQrqTh7nyIyyKVGjUDIAtMzwN3QINrmHLm94y3GjOOaqOBpauzSABJTbdt38
- Lnhw6VEf0+RnjyFuwsJCOr/IVx7VN8TEsSavqDS62ektGaynmGDomA2xwmdKvHQD3CgIrv27Tkm
- 10BNHfPa/pZl3KVoJCz07N3J40J59jd2TkK6/5jRZX944Oc4rQ/vji6y6miB5HSW1/8NERaW6I/
- xTlnuEGtNOd8KRR/wOGIVFDFwjaad79+euibDDt/JSkdFygJNc3fAVWOPdDbufMRZrQrQGeAABl
- Ou0dcpRAqOTCtC5WNTtkc9tiRaARV4=
-X-Received: by 2002:a05:6000:4701:b0:45e:8978:f176 with SMTP id
- ffacd0b85a97d-45eb365f1bfmr30375288f8f.0.1779805753229; 
- Tue, 26 May 2026 07:29:13 -0700 (PDT)
+ bh=sB4l14E+SamPtLUei0j/FzcwY1KiqKOWEgkGE0g36Sk=;
+ b=GPPDnrcJhXlXf2FNajDxQJEHTg8pRyPam57bBgMxb2i9M3VDwDVQuBu6xMKJ/Ss5yO
+ 3fpNXiXdnkmoETmjqfNVouVKDkoJvuBHCNbUGUK32zK3R1BICI8eJgCPLKCxA49P9kns
+ uLl1wCWQG07ztggOEMM4ZyrxX/OezDgpXHtxTRKx/vQDih7k/m4CZPCPmlk0Q7Pl0IFS
+ 8Ar5D3PolLW9ZisERdYUY52pAebRhAqqie1hPcJ/SM4z1PZRexCcWsMCKhJO9xQqF3vj
+ MPAv08Iz3jAe/hxD3ipvimil/rCBOr4UTlWGVtfEmPkhhzRPiLHSkClpPLRwGSR7101g
+ 5pUw==
+X-Gm-Message-State: AOJu0Yw47UELZyHAIef9KbvqZe1rp5cPLpyXCbtt9O02FOXJTC1nYRmk
+ 0IorWAUjsVmA/9Bz3CbUnfoY1vJ/uaQ/8TBfxaaDJGCdTpgojdg/3NyPvQ/V8MIhm3WGXYYuX5L
+ 6U5Ls
+X-Gm-Gg: Acq92OEPpOjVW2d538UMSnF8bgYvWBbDPwFGkjq+ADUVA9BM/TTVq2xs2UyHpniHIhM
+ O0CelQCAuUuWleRDxmXyWrg1ZY1M2Z0vlx7MA1bGETOrlm5owalLenkKkurF4WxdhXHs8IJGiV6
+ F/dnE4gVI0L7Kh9tXEhotLjjfnUI6I8vNltELW0G6ZiJcsJHIUDAyh712fYp8DPcwq0p2zqzC7H
+ STrWl+uVwv3vwpCPA3iCGCOPxdewqchs1MNfolj7hRwpbSbZurKEAeGFhjdtFXBiBYeUDLU42Uu
+ 0wTFqr54Hrvxw7/jndXTA5UWXpJ37Q+NpmqlIb9lg7Ewz9qIDsxXbCBXVuEi64NLUnMRb9mfgao
+ lmC0Cmt0KBA9x6ukox1yDYcTAvPA/R9CWQz4p7/f8kvLup5FPYXsiKv1VeMdY5es01oxyTZNEz1
+ 2cvOEDdBSHGYEnWdvXX8OQTtGenL+Kj4ZLWtSBxXtWER7eqx07KVX+M2uUsqmTkR10XVUAR6KGa
+ ONYdaX70PDXW3HOj756GEu49kTdFog=
+X-Received: by 2002:a05:6000:2888:b0:45a:dd7a:e33c with SMTP id
+ ffacd0b85a97d-45eb39ec2c4mr33085717f8f.33.1779805747544; 
+ Tue, 26 May 2026 07:29:07 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6d70c51sm38325225f8f.36.2026.05.26.07.29.12
+ ffacd0b85a97d-45eb6d70c51sm38325225f8f.36.2026.05.26.07.29.06
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 07:29:12 -0700 (PDT)
+ Tue, 26 May 2026 07:29:06 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 22/54] target/arm/ptw: Flip sense of get_phys_addr_twostage
- return value
-Date: Tue, 26 May 2026 15:28:18 +0100
-Message-ID: <20260526142850.2326589-23-peter.maydell@linaro.org>
+Subject: [PULL 16/54] target/arm/ptw: Flip sense of get_phys_addr_v6 return
+ value
+Date: Tue, 26 May 2026 15:28:12 +0100
+Message-ID: <20260526142850.2326589-17-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260526142850.2326589-1-peter.maydell@linaro.org>
 References: <20260526142850.2326589-1-peter.maydell@linaro.org>
@@ -105,51 +105,38 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260515142541.571911-10-peter.maydell@linaro.org
+Message-id: 20260515142541.571911-4-peter.maydell@linaro.org
 ---
- target/arm/ptw.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ target/arm/ptw.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index ca4b638c43..fec24f08fd 100644
+index 504ecb622a..33735bc14b 100644
 --- a/target/arm/ptw.c
 +++ b/target/arm/ptw.c
-@@ -3571,7 +3571,7 @@ static bool get_phys_addr_twostage(CPUARMState *env, S1Translate *ptw,
- 
-     /* If S1 fails, return early.  */
-     if (ret) {
--        return ret;
-+        return !ret;
-     }
- 
-     ipa = result->f.phys_addr;
-@@ -3602,7 +3602,7 @@ static bool get_phys_addr_twostage(CPUARMState *env, S1Translate *ptw,
- 
-     /* If S2 fails, return early.  */
-     if (ret) {
--        return ret;
-+        return !ret;
-     }
- 
-     /*
-@@ -3656,7 +3656,7 @@ static bool get_phys_addr_twostage(CPUARMState *env, S1Translate *ptw,
-         result->f.attrs.space = arm_secure_to_space(result->f.attrs.secure);
-     }
- 
+@@ -1326,11 +1326,11 @@ static bool get_phys_addr_v6(CPUARMState *env, S1Translate *ptw,
+     result->f.attrs.space = out_space;
+     result->f.attrs.secure = arm_space_is_secure(out_space);
+     result->f.phys_addr = phys_addr;
 -    return false;
 +    return true;
+ do_fault:
+     fi->domain = domain;
+     fi->level = level;
+-    return true;
++    return false;
  }
  
- static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
-@@ -3724,7 +3724,7 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
-         ptw->in_mmu_idx = mmu_idx = s1_mmu_idx;
-         if (arm_feature(env, ARM_FEATURE_EL2) &&
-             !regime_translation_disabled(env, ARMMMUIdx_Stage2, ptw->in_space)) {
--            return get_phys_addr_twostage(env, ptw, address, access_type,
-+            return !get_phys_addr_twostage(env, ptw, address, access_type,
-                                           memop, result, fi);
-         }
-         /* fall through */
+ /*
+@@ -3791,7 +3791,7 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
+                                   memop, result, fi);
+     } else if (arm_feature(env, ARM_FEATURE_V7) ||
+                regime_sctlr(env, mmu_idx) & SCTLR_XP) {
+-        return get_phys_addr_v6(env, ptw, address, access_type, result, fi);
++        return !get_phys_addr_v6(env, ptw, address, access_type, result, fi);
+     } else {
+         return get_phys_addr_v5(env, ptw, address, access_type, result, fi);
+     }
 -- 
 2.43.0
 
