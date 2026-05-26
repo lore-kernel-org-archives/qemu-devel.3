@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC72CCD6E41
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:30:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50086CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:30:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRsmi-0000s8-Qb; Tue, 26 May 2026 10:29:32 -0400
+	id 1wRsmF-0008Es-0S; Tue, 26 May 2026 10:29:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRsmZ-0000FA-Gl
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:23 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1wRsmD-0008EA-9I
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:01 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRsmX-0001L5-92
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:23 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4904c1ce4c1so43281435e9.3
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:29:20 -0700 (PDT)
+ id 1wRsmB-0001DF-9z
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:01 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-490388fd0dbso51196305e9.0
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:28:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779805760; x=1780410560; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779805738; x=1780410538; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=fbUR0y3m+ZaGpE8A2CtpDj4N7hEhJk70SJ9aVfodHf8=;
- b=FI9pnZMBRj0Rqq5P8GI+UU7fWmdanAY5t2Uaz6GuKjV2rjd4WJq1sLFrjgXkyyN4xI
- tc9Rc3fbvraUV3UiqxdlfoQIUbKZ/04DOQwOWYvGFhdtpqAq6UNGShlJRoUyFB6V42dN
- HEoBKDNTlNKfz/d9J9gVV/SSIIOFPk+U7fkT66sTgS1S73Ipb1ajhIDIdcVpnBgwUg3P
- g/mL75lxQ6oha6kmlwzDJNjQeoJQmDKFyc/+l3y299+Q0gC4siZr0iqQ+yGjjeDIpUhQ
- KJUnrHfnQ7HBcJY6L4a6QphjsZA5NwP+cXJR+fFga2Uj1IlJCN2kCxe4sVsCBCNrKJWd
- kA4A==
+ :reply-to; bh=UUSLoSdfOsc/N+LdpmFz6f24s0YEUSsv6hjm1D7lnC8=;
+ b=D9ODwZsHcezzsnZlDM+Ts30Yr3HVncP43DWsousKdTnQxm7OF8nTHfEyru1v1+gT4w
+ RhaygQQaiUnrCnzn7d9d2o0zDd2O5rGtNHJtEbw/s5KIV5wSy4UK80UDkjaQHK/WXCxz
+ owuoHHAX+i7fWOjW8c4gP6IjWpaC3Kp4wydY9BGA5J95dSqVIL3iprySHCI1uvNVSona
+ 5FxBzLW2wZV00yLKURfliXeON9/qdl7QJGWooak9EoSsCPlq5M1NGlkl8wqpZw1YNwT0
+ f72E3rCHnfmEFba0FvvFVizDLofukd2x2in4LjWmb0iUB6nijEw9ktq1KKkDh1L/jqKj
+ eqyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779805760; x=1780410560;
+ d=1e100.net; s=20251104; t=1779805738; x=1780410538;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=fbUR0y3m+ZaGpE8A2CtpDj4N7hEhJk70SJ9aVfodHf8=;
- b=cUf46d/FjmOgy3xjOzIfojoszCYcwU3xIxNDWhXjGJbfwDlaTrsQ2wvj4lQGlmHTk1
- P0jNyIwE0hgy2SlymbZgnTI3iAalQO18Qoa55cPacwzMi+OqpZSrn3DAeYMNiuqgsNXv
- jpx7cbxIHMGrAPgrzRNfZXm4XXfIQLz1SMSilfLQ4mcMdFDIr1w08VgNkSqKBPars0Wg
- f95doL2wG9upFJCfgRfI0/hrmySIP365uf8Tgk5O+IoegWIXsRpBZ9R+wbKZB6UIMqTO
- hZByyJ7M7C4QDCllX3XdNbpBHAf0eJQF6aANiBFG6v8m7sCX/Gc+UyEvPuJ2aobsTSvt
- w69A==
-X-Gm-Message-State: AOJu0YyMLufUwnDU4cSQdecN5dXAyGug41BVV+NBPDGA/Lu1r8gtGhQP
- v1S4DPRF0Qn37aHrlCUWLv3k9SENK0xV9JT4CeuCJR3P52i1Erp8t4r1uE1Jvzwxn5faLI1waGR
- u+9VY
-X-Gm-Gg: Acq92OF9Itqpg0UQRgRBRMShB6yJEm+ShakdOmxtwcgZuogmzdgQ7yX0c6mP4uuSDlJ
- gX7x3zcUFvVPaq8t91o4rtwmEmzUiThDmbmkgFz9XR6H4DnqfPZj68CtK15c+8tGdpM27hpQdVz
- CuAscbXCY9msXjxLwMhLQxB0FG0sHz07vcKFc2biXJ6UJFjCdKTM6KgPoq+Z/f4mB6kC7J8GN4M
- ZcoIFrQC918gDU/e8N1SXtcrW6WWsDLDcBDPLGINCAdRLICoeQIcrRA940CN34QlAS15khrhhaO
- +XyBKaJo+s/4MeXumjJjjPet2PWvSYznPNwJ7+jcK6vONm1ImWb1ZbQBC3CfqqIbAGvtPP+n32r
- FZHY+B/m/xiWeINVHAHu6AfoXI5AZjtqres1vgNkr4d02oCQPDOc1vu9vwHTuS8aI14sOsYd3fE
- rh5uvmXOWtHqlrKy+OWYbf6D0h1v16H3/IOcFLBl+DYtQUAN75/MjyYdPmo9QLpzmYFDIGzy0Sk
- 5fIR8TIupQ4uSw/7hPA40vvLQfeZro=
-X-Received: by 2002:a05:600c:3581:b0:490:482c:4391 with SMTP id
- 5b1f17b1804b1-490482c4586mr331794845e9.23.1779805759598; 
- Tue, 26 May 2026 07:29:19 -0700 (PDT)
+ bh=UUSLoSdfOsc/N+LdpmFz6f24s0YEUSsv6hjm1D7lnC8=;
+ b=iWWoysfQTgPtKXmxjmoRH02pyK7CdB/O5wY7a1Fm6cMgnwdDiLQKmJ8QcAbK5MK0jJ
+ YZ1k4guoCbyiWpBsi/lxHbef0WioHAfSMVAZTtH4+EkkgQeM4D7qjKePdn3LahANM6wI
+ 66m8QtG/ZD9L0alNE8b7vyRHoKlvqv99siIqFAZEf3rv8FzdK4EzSUqtIMmxIVfxgbzj
+ FOmQeZi2X34bR8Qv2SmG1Jy34P7RBtCH+mzHQ8QbHj4zoPIcanW6TvmHZviu6n/IpMve
+ mUsjJIdnUaM8a64bLTYjBJ1FaBWnr1uczPdG+2487scygN4QTKnmyIzDNHxoVYnj9jQe
+ 2e0A==
+X-Gm-Message-State: AOJu0Yy9B5M21+9y9wc2QR4dQb2+Sdz832/fwOweiWc/Yv7+XTvc+8QP
+ JCyq8ky9qaa8wGomoIpDqBq4gM1jLMiWa7ZoJeKLQz7zEf/jfRzXxKPh6cIQqS3Z/tkXZEKhCV4
+ 68aVx
+X-Gm-Gg: Acq92OEw3Kady6j7SP0FVJx+jDbaR765eO9KVDKzfloxGvFz2mxSdsLmvKqJWX9QYy6
+ eivND4XHFn9a/0fVF6dEw7Y2ibWmICsLoN5tvGNffSBhHJz7q950IrJr+rYxCxdYpGmBwxXfGzg
+ QYj++5OKWF+so/hrL4juZWBx8zDgVXRZ02IL599k7kZ5TU6r3OtrwSaH2CW/7umBuiPtj7rpC6y
+ QApZVuXp03DS6QmW5aExSRoypCQokOXK7VJg5ejOfMAPNJ0kza5eDmClW9Jxo9JYkbsCwfEV642
+ vLLNVyfRIlPusOIzcbK/1A2DjIerJTU5iplweAxqWPmO+s8ivl3rwqP5uyVdGWXZ7V1+XYdWZB6
+ 5Es8OomoBSdqnuu3ARIbqjZyJrRpS/9eUa6HH5o0oknYLmrMAKV35cD830hnKDQ0toFQmtuB7j3
+ aQiCRFBjjp43oF0AsZRjbE4fqfcOcGfyt5Wri/o5etyHYcmKnsSyfI61QSWzvJ0QwG3/7qUcKAj
+ 0+FnDQD99PrPRlScVlBKRqJOxdN+H4=
+X-Received: by 2002:a05:600c:6095:b0:490:51b9:2309 with SMTP id
+ 5b1f17b1804b1-49051b924b1mr257290235e9.29.1779805737589; 
+ Tue, 26 May 2026 07:28:57 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6d70c51sm38325225f8f.36.2026.05.26.07.29.18
+ ffacd0b85a97d-45eb6d70c51sm38325225f8f.36.2026.05.26.07.28.56
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 07:29:18 -0700 (PDT)
+ Tue, 26 May 2026 07:28:56 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 29/54] target/arm: SVE2 FMAXP, FMINP must honour AH=1
-Date: Tue, 26 May 2026 15:28:25 +0100
-Message-ID: <20260526142850.2326589-30-peter.maydell@linaro.org>
+Subject: [PULL 06/54] hw/arm/omap: Delete unused #defines
+Date: Tue, 26 May 2026 15:28:02 +0100
+Message-ID: <20260526142850.2326589-7-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260526142850.2326589-1-peter.maydell@linaro.org>
 References: <20260526142850.2326589-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,81 +100,255 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The behaviour of floating-point maximum and minimum insns has
-some odd special cases when FPCR.AH=1. We get this right in most
-places (for instance, the ASIMD FMAXP, FMINP) but forgot about
-it for the SVE2 versions of FMAXP and FMINP.
+Delete some #defines which we no longer use because they are
+for OMAP SoCs which we dropped support for.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 384433e70983 ("target/arm: Implement FPCR.AH semantics for FMINP and FMAXP")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-id: 20260521122913.1565011-2-peter.maydell@linaro.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260512203414.3633237-6-peter.maydell@linaro.org
 ---
- target/arm/tcg/helper-sve-defs.h | 14 ++++++++++++++
- target/arm/tcg/sve_helper.c      |  8 ++++++++
- target/arm/tcg/translate-sve.c   |  4 ++--
- 3 files changed, 24 insertions(+), 2 deletions(-)
+ include/hw/arm/omap.h | 185 ------------------------------------------
+ 1 file changed, 185 deletions(-)
 
-diff --git a/target/arm/tcg/helper-sve-defs.h b/target/arm/tcg/helper-sve-defs.h
-index c3541a8ca8..cd05dd0fb4 100644
---- a/target/arm/tcg/helper-sve-defs.h
-+++ b/target/arm/tcg/helper-sve-defs.h
-@@ -2914,6 +2914,20 @@ DEF_HELPER_FLAGS_6(sve2_fminp_zpzz_s, TCG_CALL_NO_RWG,
- DEF_HELPER_FLAGS_6(sve2_fminp_zpzz_d, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, fpst, i32)
+diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
+index 96a52d280c..14d6e9d214 100644
+--- a/include/hw/arm/omap.h
++++ b/include/hw/arm/omap.h
+@@ -35,10 +35,7 @@
+ #define OMAP_LOCALBUS_BASE 0x30000000
+ #define OMAP_MPUI_BASE     0xe1000000
  
-+DEF_HELPER_FLAGS_6(sve2_ah_fmaxp_zpzz_h, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_6(sve2_ah_fmaxp_zpzz_s, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_6(sve2_ah_fmaxp_zpzz_d, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+
-+DEF_HELPER_FLAGS_6(sve2_ah_fminp_zpzz_h, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_6(sve2_ah_fminp_zpzz_s, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_6(sve2_ah_fminp_zpzz_d, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+
- DEF_HELPER_FLAGS_5(sve2_eor3, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_5(sve2_bcax, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_5(sve2_bsl1n, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index 062d8881bd..179cbd74fb 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -778,6 +778,14 @@ DO_ZPZZ_PAIR_FP(sve2_fminp_zpzz_h, float16, H1_2, float16_min)
- DO_ZPZZ_PAIR_FP(sve2_fminp_zpzz_s, float32, H1_4, float32_min)
- DO_ZPZZ_PAIR_FP(sve2_fminp_zpzz_d, float64, H1_8, float64_min)
+-#define OMAP730_SRAM_SIZE  0x00032000
+ #define OMAP15XX_SRAM_SIZE 0x00030000
+-#define OMAP16XX_SRAM_SIZE 0x00004000
+-#define OMAP1611_SRAM_SIZE 0x0003e800
+ #define OMAP_CS0_SIZE      0x04000000
+ #define OMAP_CS1_SIZE      0x04000000
+ #define OMAP_CS2_SIZE      0x04000000
+@@ -130,16 +127,6 @@ void omap_gpio_set_clk(Omap1GpioState *gpio, omap_clk clk);
+  * Common OMAP-15xx IRQ numbers for level 1 interrupt handler
+  */
+ #define OMAP_INT_15XX_IH2_IRQ      0
+-#define OMAP_INT_15XX_LB_MMU       17
+-#define OMAP_INT_15XX_LOCAL_BUS    29
+-
+-/*
+- * OMAP-1510 specific IRQ numbers for level 1 interrupt handler
+- */
+-#define OMAP_INT_1510_SPI_TX       4
+-#define OMAP_INT_1510_SPI_RX       5
+-#define OMAP_INT_1510_DSP_MAILBOX1 10
+-#define OMAP_INT_1510_DSP_MAILBOX2 11
  
-+DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_h, float16, H1_2, helper_vfp_ah_maxh)
-+DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_s, float32, H1_4, helper_vfp_ah_maxs)
-+DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_d, float64, H1_8, helper_vfp_ah_maxd)
-+
-+DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_h, float16, H1_2, helper_vfp_ah_minh)
-+DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_s, float32, H1_4, helper_vfp_ah_mins)
-+DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_d, float64, H1_8, helper_vfp_ah_mind)
-+
- #undef DO_ZPZZ_PAIR_FP
+ /*
+  * OMAP-310 specific IRQ numbers for level 1 interrupt handler
+@@ -149,42 +136,6 @@ void omap_gpio_set_clk(Omap1GpioState *gpio, omap_clk clk);
+ #define OMAP_INT_310_HSB_MAILBOX1  12
+ #define OMAP_INT_310_HSAB_MMU      18
  
- /* Three-operand expander, controlled by a predicate, in which the
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index aa7d72a35e..bf9f0ae179 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -7667,8 +7667,8 @@ TRANS_FEAT_NONSTREAMING(HISTSEG, aa64_sve2, gen_gvec_ool_arg_zzz,
- DO_ZPZZ_FP(FADDP, aa64_sme_or_sve2, sve2_faddp_zpzz)
- DO_ZPZZ_FP(FMAXNMP, aa64_sme_or_sve2, sve2_fmaxnmp_zpzz)
- DO_ZPZZ_FP(FMINNMP, aa64_sme_or_sve2, sve2_fminnmp_zpzz)
--DO_ZPZZ_FP(FMAXP, aa64_sme_or_sve2, sve2_fmaxp_zpzz)
--DO_ZPZZ_FP(FMINP, aa64_sme_or_sve2, sve2_fminp_zpzz)
-+DO_ZPZZ_AH_FP(FMAXP, aa64_sme_or_sve2, sve2_fmaxp_zpzz, sve2_ah_fmaxp_zpzz)
-+DO_ZPZZ_AH_FP(FMINP, aa64_sme_or_sve2, sve2_fminp_zpzz, sve2_ah_fminp_zpzz)
+-/*
+- * OMAP-1610 specific IRQ numbers for level 1 interrupt handler
+- */
+-#define OMAP_INT_1610_IH2_IRQ      0
+-#define OMAP_INT_1610_IH2_FIQ      2
+-#define OMAP_INT_1610_McBSP2_TX    4
+-#define OMAP_INT_1610_McBSP2_RX    5
+-#define OMAP_INT_1610_DSP_MAILBOX1 10
+-#define OMAP_INT_1610_DSP_MAILBOX2 11
+-#define OMAP_INT_1610_LCD_LINE     12
+-#define OMAP_INT_1610_GPTIMER1     17
+-#define OMAP_INT_1610_GPTIMER2     18
+-#define OMAP_INT_1610_SSR_FIFO_0   29
+-
+-/*
+- * OMAP-730 specific IRQ numbers for level 1 interrupt handler
+- */
+-#define OMAP_INT_730_IH2_FIQ       0
+-#define OMAP_INT_730_IH2_IRQ       1
+-#define OMAP_INT_730_USB_NON_ISO   2
+-#define OMAP_INT_730_USB_ISO       3
+-#define OMAP_INT_730_ICR           4
+-#define OMAP_INT_730_EAC           5
+-#define OMAP_INT_730_GPIO_BANK1    6
+-#define OMAP_INT_730_GPIO_BANK2    7
+-#define OMAP_INT_730_GPIO_BANK3    8
+-#define OMAP_INT_730_McBSP2TX      10
+-#define OMAP_INT_730_McBSP2RX      11
+-#define OMAP_INT_730_McBSP2RX_OVF  12
+-#define OMAP_INT_730_LCD_LINE      14
+-#define OMAP_INT_730_GSM_PROTECT   15
+-#define OMAP_INT_730_TIMER3        16
+-#define OMAP_INT_730_GPIO_BANK5    17
+-#define OMAP_INT_730_GPIO_BANK6    18
+-#define OMAP_INT_730_SPGIO_WR      29
+-
+ /*
+  * Common IRQ numbers for level 2 interrupt handler
+  */
+@@ -209,15 +160,6 @@ void omap_gpio_set_clk(Omap1GpioState *gpio, omap_clk clk);
+ #define OMAP_INT_RTC_ALARM     26
+ #define OMAP_INT_DSP_MMU       28
  
- static bool do_fmmla(DisasContext *s, arg_rrrr_esz *a,
-                      gen_helper_gvec_4_ptr *fn)
+-/*
+- * OMAP-1510 specific IRQ numbers for level 2 interrupt handler
+- */
+-#define OMAP_INT_1510_BT_MCSI1TX   16
+-#define OMAP_INT_1510_BT_MCSI1RX   17
+-#define OMAP_INT_1510_SoSSI_MATCH  19
+-#define OMAP_INT_1510_MEM_STICK    27
+-#define OMAP_INT_1510_COM_SPI_RO   31
+-
+ /*
+  * OMAP-310 specific IRQ numbers for level 2 interrupt handler
+  */
+@@ -229,103 +171,6 @@ void omap_gpio_set_clk(Omap1GpioState *gpio, omap_clk clk);
+ #define OMAP_INT_310_USB_W2FC_NON_ISO  30
+ #define OMAP_INT_310_McBSP2RX_OF       31
+ 
+-/*
+- * OMAP-1610 specific IRQ numbers for level 2 interrupt handler
+- */
+-#define OMAP_INT_1610_FAC          0
+-#define OMAP_INT_1610_USB_HHC_2    7
+-#define OMAP_INT_1610_USB_OTG      8
+-#define OMAP_INT_1610_SoSSI        9
+-#define OMAP_INT_1610_BT_MCSI1TX   16
+-#define OMAP_INT_1610_BT_MCSI1RX   17
+-#define OMAP_INT_1610_SoSSI_MATCH  19
+-#define OMAP_INT_1610_MEM_STICK    27
+-#define OMAP_INT_1610_McBSP2RX_OF  31
+-#define OMAP_INT_1610_STI          32
+-#define OMAP_INT_1610_STI_WAKEUP   33
+-#define OMAP_INT_1610_GPTIMER3     34
+-#define OMAP_INT_1610_GPTIMER4     35
+-#define OMAP_INT_1610_GPTIMER5     36
+-#define OMAP_INT_1610_GPTIMER6     37
+-#define OMAP_INT_1610_GPTIMER7     38
+-#define OMAP_INT_1610_GPTIMER8     39
+-#define OMAP_INT_1610_GPIO_BANK2   40
+-#define OMAP_INT_1610_GPIO_BANK3   41
+-#define OMAP_INT_1610_MMC2         42
+-#define OMAP_INT_1610_CF           43
+-#define OMAP_INT_1610_WAKE_UP_REQ  46
+-#define OMAP_INT_1610_GPIO_BANK4   48
+-#define OMAP_INT_1610_SPI          49
+-#define OMAP_INT_1610_DMA_CH6      53
+-#define OMAP_INT_1610_DMA_CH7      54
+-#define OMAP_INT_1610_DMA_CH8      55
+-#define OMAP_INT_1610_DMA_CH9      56
+-#define OMAP_INT_1610_DMA_CH10     57
+-#define OMAP_INT_1610_DMA_CH11     58
+-#define OMAP_INT_1610_DMA_CH12     59
+-#define OMAP_INT_1610_DMA_CH13     60
+-#define OMAP_INT_1610_DMA_CH14     61
+-#define OMAP_INT_1610_DMA_CH15     62
+-#define OMAP_INT_1610_NAND         63
+-
+-/*
+- * OMAP-730 specific IRQ numbers for level 2 interrupt handler
+- */
+-#define OMAP_INT_730_HW_ERRORS         0
+-#define OMAP_INT_730_NFIQ_PWR_FAIL     1
+-#define OMAP_INT_730_CFCD              2
+-#define OMAP_INT_730_CFIREQ            3
+-#define OMAP_INT_730_I2C               4
+-#define OMAP_INT_730_PCC               5
+-#define OMAP_INT_730_MPU_EXT_NIRQ      6
+-#define OMAP_INT_730_SPI_100K_1        7
+-#define OMAP_INT_730_SYREN_SPI         8
+-#define OMAP_INT_730_VLYNQ             9
+-#define OMAP_INT_730_GPIO_BANK4        10
+-#define OMAP_INT_730_McBSP1TX          11
+-#define OMAP_INT_730_McBSP1RX          12
+-#define OMAP_INT_730_McBSP1RX_OF       13
+-#define OMAP_INT_730_UART_MODEM_IRDA_2 14
+-#define OMAP_INT_730_UART_MODEM_1      15
+-#define OMAP_INT_730_MCSI              16
+-#define OMAP_INT_730_uWireTX           17
+-#define OMAP_INT_730_uWireRX           18
+-#define OMAP_INT_730_SMC_CD            19
+-#define OMAP_INT_730_SMC_IREQ          20
+-#define OMAP_INT_730_HDQ_1WIRE         21
+-#define OMAP_INT_730_TIMER32K          22
+-#define OMAP_INT_730_MMC_SDIO          23
+-#define OMAP_INT_730_UPLD              24
+-#define OMAP_INT_730_USB_HHC_1         27
+-#define OMAP_INT_730_USB_HHC_2         28
+-#define OMAP_INT_730_USB_GENI          29
+-#define OMAP_INT_730_USB_OTG           30
+-#define OMAP_INT_730_CAMERA_IF         31
+-#define OMAP_INT_730_RNG               32
+-#define OMAP_INT_730_DUAL_MODE_TIMER   33
+-#define OMAP_INT_730_DBB_RF_EN         34
+-#define OMAP_INT_730_MPUIO_KEYPAD      35
+-#define OMAP_INT_730_SHA1_MD5          36
+-#define OMAP_INT_730_SPI_100K_2        37
+-#define OMAP_INT_730_RNG_IDLE          38
+-#define OMAP_INT_730_MPUIO             39
+-#define OMAP_INT_730_LLPC_LCD_CTRL_OFF 40
+-#define OMAP_INT_730_LLPC_OE_FALLING   41
+-#define OMAP_INT_730_LLPC_OE_RISING    42
+-#define OMAP_INT_730_LLPC_VSYNC        43
+-#define OMAP_INT_730_WAKE_UP_REQ       46
+-#define OMAP_INT_730_DMA_CH6           53
+-#define OMAP_INT_730_DMA_CH7           54
+-#define OMAP_INT_730_DMA_CH8           55
+-#define OMAP_INT_730_DMA_CH9           56
+-#define OMAP_INT_730_DMA_CH10          57
+-#define OMAP_INT_730_DMA_CH11          58
+-#define OMAP_INT_730_DMA_CH12          59
+-#define OMAP_INT_730_DMA_CH13          60
+-#define OMAP_INT_730_DMA_CH14          61
+-#define OMAP_INT_730_DMA_CH15          62
+-#define OMAP_INT_730_NAND              63
+-
+ /* omap_dma.c */
+ enum omap_dma_model {
+     omap_dma_3_0,
+@@ -437,9 +282,6 @@ struct omap_dma_lcd_channel_s {
+ #define OMAP_DMA_CAMERA_IF_RX      20
+ #define OMAP_DMA_MMC_TX            21
+ #define OMAP_DMA_MMC_RX            22
+-#define OMAP_DMA_NAND              23  /* Not in OMAP310 */
+-#define OMAP_DMA_IRQ_LCD_LINE      24  /* Not in OMAP310 */
+-#define OMAP_DMA_MEMORY_STICK      25  /* Not in OMAP310 */
+ #define OMAP_DMA_USB_W2FC_RX0      26
+ #define OMAP_DMA_USB_W2FC_RX1      27
+ #define OMAP_DMA_USB_W2FC_RX2      28
+@@ -447,33 +289,6 @@ struct omap_dma_lcd_channel_s {
+ #define OMAP_DMA_USB_W2FC_TX1      30
+ #define OMAP_DMA_USB_W2FC_TX2      31
+ 
+-/* These are only for 1610 */
+-#define OMAP_DMA_CRYPTO_DES_IN         32
+-#define OMAP_DMA_SPI_TX                33
+-#define OMAP_DMA_SPI_RX                34
+-#define OMAP_DMA_CRYPTO_HASH           35
+-#define OMAP_DMA_CCP_ATTN              36
+-#define OMAP_DMA_CCP_FIFO_NOT_EMPTY    37
+-#define OMAP_DMA_CMT_APE_TX_CHAN_0     38
+-#define OMAP_DMA_CMT_APE_RV_CHAN_0     39
+-#define OMAP_DMA_CMT_APE_TX_CHAN_1     40
+-#define OMAP_DMA_CMT_APE_RV_CHAN_1     41
+-#define OMAP_DMA_CMT_APE_TX_CHAN_2     42
+-#define OMAP_DMA_CMT_APE_RV_CHAN_2     43
+-#define OMAP_DMA_CMT_APE_TX_CHAN_3     44
+-#define OMAP_DMA_CMT_APE_RV_CHAN_3     45
+-#define OMAP_DMA_CMT_APE_TX_CHAN_4     46
+-#define OMAP_DMA_CMT_APE_RV_CHAN_4     47
+-#define OMAP_DMA_CMT_APE_TX_CHAN_5     48
+-#define OMAP_DMA_CMT_APE_RV_CHAN_5     49
+-#define OMAP_DMA_CMT_APE_TX_CHAN_6     50
+-#define OMAP_DMA_CMT_APE_RV_CHAN_6     51
+-#define OMAP_DMA_CMT_APE_TX_CHAN_7     52
+-#define OMAP_DMA_CMT_APE_RV_CHAN_7     53
+-#define OMAP_DMA_MMC2_TX               54
+-#define OMAP_DMA_MMC2_RX               55
+-#define OMAP_DMA_CRYPTO_DES_OUT        56
+-
+ struct omap_uart_s;
+ struct omap_uart_s *omap_uart_init(hwaddr base,
+                 qemu_irq irq, omap_clk fclk, omap_clk iclk,
 -- 
 2.43.0
 
