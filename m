@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B96FCD5BCF
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 07:27:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15727CD5BB4
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 07:33:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRmBd-0003cW-A3; Tue, 26 May 2026 03:26:49 -0400
+	id 1wRmHR-0004cs-45; Tue, 26 May 2026 03:32:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wRmBZ-0003br-NC; Tue, 26 May 2026 03:26:46 -0400
+ id 1wRmHO-0004bl-UR; Tue, 26 May 2026 03:32:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wRmBW-0004jU-Ke; Tue, 26 May 2026 03:26:45 -0400
+ id 1wRmHL-00087T-8Y; Tue, 26 May 2026 03:32:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779780393; bh=M7LNcj41LkASSjZ50DAUTiQY8ixbJabyZuR93awXhGs=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=S743THf49uNw9vNuulyg4tT8DNY8XqLwANvhKVOdkcoPOlUHVTqbF8500JRQRN5iF
- pqenrDQkFfJYxjRhntvlWwbMERswxppi7kWQ7oM/kZfsvL51JOv2fYDkn3p2x0bN5e
- 314INyE9PWsMwPyIDwS89gS+JOyWOosfQzBJ3SYNcwxwSEe163uHNV3lF/49B09NsY
- jgkeglB29xwvh1lEr5ULWkaRySYPkedPUVa9Pgb5YAru9pFoAiSco2fbmHP/Go9nSs
- CkSxUJ/rVUUAkLy1PuQyXYecim5aSMZtukCGSbeN7ym87VeGiQGh4mtNXl5Syr4y2g
- gngTrTky1fh9w==
+ t=1779780756; bh=9wjNRyf1+79TxzBB2CLRY4nbOa5ui+EoE3c4EdggVxE=;
+ h=Date:Subject:From:To:Cc:References:In-Reply-To;
+ b=T+5C5sBpDmjrBQRs7j6bOMha7Vyy23AFbZWvKgGHFbm3Zn6AOLx7pd0Lbq/tD4Gbm
+ F/2R1tP/E8gs3+h0Ft4BxToRosTqkeI8aT4HvhkQoE9+kkhdOJgKkdYAk5Qv9OCjQo
+ Y4W4MSuvX90uKa38XozmR/wrytzEiCXsLMkKUnUM+3DvLkx2+aOTMwOiJac1NwVVxq
+ abfRZTwnCooZIKl9T+4xD8kDZ0/ms9YEONpN/FkWOrVeMg+7bTc0k8QqPbUVlwL1tj
+ xj2UOw/d54XXnRLYpHSD54YGHOPKzwSF2pB1BDU5nvxY+MuF0oiCwZRNXxcwxY76Rb
+ xfkF/5r1JFN/w==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 364E41B0A1C;
- Tue, 26 May 2026 10:26:33 +0300 (MSK)
-Message-ID: <bcc0aaa1-8d1c-4f52-a681-85bc903c8d66@tls.msk.ru>
-Date: Tue, 26 May 2026 10:26:36 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id D27DC1B0A2D;
+ Tue, 26 May 2026 10:32:35 +0300 (MSK)
+Message-ID: <03b31f31-31e7-462a-b750-9d02b9b1b6d8@tls.msk.ru>
+Date: Tue, 26 May 2026 10:32:37 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v1] target/riscv: Add mseccfg to VMStateDescription
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: Zishun Yi <vulab@iscas.ac.cn>, Alistair Francis
  <alistair.francis@wdc.com>, Palmer Dabbelt <palmer@dabbelt.com>
 Cc: Weiwei Li <liwei1518@gmail.com>,
@@ -43,8 +44,8 @@ Cc: Weiwei Li <liwei1518@gmail.com>,
  Chao Liu <chao.liu.zevorn@gmail.com>, qemu-riscv@nongnu.org,
  qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
 References: <20260511124828.3210477-1-vulab@iscas.ac.cn>
+ <bcc0aaa1-8d1c-4f52-a681-85bc903c8d66@tls.msk.ru>
 Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -88,9 +89,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260511124828.3210477-1-vulab@iscas.ac.cn>
+In-Reply-To: <bcc0aaa1-8d1c-4f52-a681-85bc903c8d66@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -114,71 +115,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11.05.2026 15:48, Zishun Yi wrote:
-> Currently, the Machine Security Configuration Register (mseccfg) was
-> missing from the live migration state. This omission causes the register
-> to be reset to zero on the destination host after migration.
+On 26.05.2026 10:26, Michael Tokarev wrote:
+> On 11.05.2026 15:48, Zishun Yi wrote:
+>> Currently, the Machine Security Configuration Register (mseccfg) was
+>> missing from the live migration state. This omission causes the register
+>> to be reset to zero on the destination host after migration.
+>>
+>> Fixed by adding vmstate_mseccfg subsection
+>>
+>> This vulnerability was discovered and reported by SpecHunter, an
+>> AI-driven architecture specification analysis tool.
+>>
+>> Link: https://github.com/yizishun/rv-isa-sec/blob/ 
+>> a22e4459cd026ae970791dfbd9cfe5d110fbd46b/output/riscv-isa-manual/ 
+>> pr-1879/qemu.txt#L121
+>> Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
 > 
-> Fixed by adding vmstate_mseccfg subsection
+> This change has been nominated for inclusion into previous stable
+> releases by Alistar.  However I've a concern here: can we add new
+> fields to older machine descriptions this way, and stay migratable?
 > 
-> This vulnerability was discovered and reported by SpecHunter, an
-> AI-driven architecture specification analysis tool.
-> 
-> Link: https://github.com/yizishun/rv-isa-sec/blob/a22e4459cd026ae970791dfbd9cfe5d110fbd46b/output/riscv-isa-manual/pr-1879/qemu.txt#L121
-> Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
+> I understand riscv machine is not versioned.  How does migration work
+> in the first place?
+...
 
-This change has been nominated for inclusion into previous stable
-releases by Alistar.  However I've a concern here: can we add new
-fields to older machine descriptions this way, and stay migratable?
+>>   const VMStateDescription vmstate_riscv_cpu = {
+>>       .name = "cpu",
+>>       .version_id = 11,
+>> @@ -499,6 +518,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+>>           &vmstate_ssp,
+>>           &vmstate_ctr,Add mseccfg to VMStateDescription
+>>           &vmstate_sstc,
+>> +        &vmstate_mseccfg,
+>>           NULL
+>>       }
 
-I understand riscv machine is not versioned.  How does migration work
-in the first place?
+BTW, if we're picking up this commit for 10.0.x series (should we?),
+I guess the previous change in this are should be picked up too,
+v10.1.0-859-gb0daaa172a "target/riscv: Save stimer and vstimer in CPU
+vmstate", which added vmstate_sstc here.
 
 Thanks,
 
 /mjt
-
-> ---
->   target/riscv/machine.c | 20 ++++++++++++++++++++
->   1 file changed, 20 insertions(+)
-> 
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index 09c032a87914..6776e7bf5a11 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -423,6 +423,25 @@ static const VMStateDescription vmstate_sstc = {
->       }
->   };
->   
-> +static bool mseccfg_needed(void *opaque)
-> +{
-> +    RISCVCPU *cpu = opaque;
-> +
-> +    return cpu->cfg.ext_smepmp || cpu->cfg.ext_zkr
-> +        || cpu->cfg.ext_smmpm || cpu->cfg.ext_zicfilp;
-> +}
-> +
-> +static const VMStateDescription vmstate_mseccfg = {
-> +    .name = "cpu/mseccfg",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = mseccfg_needed,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_UINTTL(env.mseccfg, RISCVCPU),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
->   const VMStateDescription vmstate_riscv_cpu = {
->       .name = "cpu",
->       .version_id = 11,
-> @@ -499,6 +518,7 @@ const VMStateDescription vmstate_riscv_cpu = {
->           &vmstate_ssp,
->           &vmstate_ctr,Add mseccfg to VMStateDescription
->           &vmstate_sstc,
-> +        &vmstate_mseccfg,
->           NULL
->       }
->   };
-
 
