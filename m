@@ -4,45 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A93BBCD5BCF
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 03:51:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27B47CD5BB4
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 03:59:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRiod-0008Uw-W5; Mon, 25 May 2026 23:50:52 -0400
+	id 1wRiwT-00014i-T0; Mon, 25 May 2026 23:58:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1wRiob-0008Un-Ed
- for qemu-devel@nongnu.org; Mon, 25 May 2026 23:50:49 -0400
-Received: from [160.191.52.36] (helo=krgm.moe)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1wRioY-00052x-06
- for qemu-devel@nongnu.org; Mon, 25 May 2026 23:50:49 -0400
-Received: from yuno-loong.localnet (unknown [IPv6:2400:e920:0:e::2c])
- by krgm.moe (Postfix) with ESMTPSA id 31840240AE8F;
- Tue, 26 May 2026 11:50:24 +0800 (CST)
-From: SignKirigami <prcups@krgm.moe>
-To: qemu-devel@nongnu.org, Bibo Mao <maobibo@loongson.cn>
-Cc: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: Re: [PATCH 3/4] target/loongarch: translate LVZ CSR and trap
- instructions
-Date: Tue, 26 May 2026 11:50:22 +0800
-Message-ID: <QcvEHw3eQdWKrgUEx8sb2A@krgm.moe>
-In-Reply-To: <3a88b3a6-e4e1-b9b4-af39-5a0fc0c4845d@loongson.cn>
-References: <cover.1779171125.git.prcups@krgm.moe>
- <060310ded8b9a188848f48cabf6afe69fcf9216d.1779171126.git.prcups@krgm.moe>
- <3a88b3a6-e4e1-b9b4-af39-5a0fc0c4845d@loongson.cn>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wRiwP-00013f-8o
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 23:58:54 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wRiwM-0008G5-RL
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 23:58:53 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-bcceb394417so1231040766b.0
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 20:58:50 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779767929; cv=none;
+ d=google.com; s=arc-20240605;
+ b=F7zuOwfFL+yZAot4IZlTtuO3dCbtp+CSlgXJwSUIxwmvfA6xWaJeBjg5z2c+DpHgQo
+ oBz7civakLmUrxRpcq39aBxxxBPWTeZoBXmgo7nFKCAp5OJUCrx1XS/Fh1SDdKCPzCRP
+ REUDVxC8YONvsIMjQT5ZmvdqiLdbzMRrihs9b7JTuqhkoGFeilUnLza5psmJjC5QQA5I
+ pHoYojkDWhA86Y6/CoDkwv1PHDeMx/e0twuruDwW29Q4+VQiKdR52LcUWkECOLpVrGa/
+ yqRfMFdm9z9NreOlgRoT4V5aDa/mEhswXUa4AhMgicnqicXzdtjTDufycproPWTlZ262
+ 6Oxw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=x1LL209bUAmCZZntRVfVwzweRyP48+zW1qnO6AZhCdk=;
+ fh=QiWsCvjH9bUbqYQS7S6uR9oDEBN9S/40XxQJ4IibPDI=;
+ b=G8DEma5Fx9sqX6e67V/kfbuhG/098zCWle/0eZjMZnIuAZ7mTdD8HBKX54JOB1f5IT
+ 8XSkFg+5ERn6CozWaBCPML9fLDiHwpSt3yo/1hac9+KNSprXN80/JKXLcT9Ze4xlEJaw
+ buLd2ysel0l2CQXu9D8JZTy6kFhjFdCWbzpBoPe8CJRAt86Pu8lhcCa7OmL+we2H3u3E
+ q8+cl4BvlJql4R6ekfEi8IksnLepxZiCXurNRgVlGsasf3COuM/lEvJN3zlvDkJ3YAK0
+ 5S1uV2lb3g4og/esJAZYCLD5jboTika5PotQ7BOCYnv33TGY0E/NAQ45tDfDDwe5af8l
+ bk7g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1779767929; x=1780372729; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=x1LL209bUAmCZZntRVfVwzweRyP48+zW1qnO6AZhCdk=;
+ b=Ho3gU/i3WBas/VWInfJpxqFlzgozffI4hcCWPlDRKIUO1k84vy6pwUp/O+ihdut3rR
+ xBXlJiLLNfydN9hrOd5fs6demNnperVjxsJm+r59QawsHfRIuIj5udsi+wYQgJKDduSW
+ NZh9Nb5QIEAqRWPJQpvP/5EVLsU2uSe1rnLfNGihMQuvjiUUE0xxD5VGIWPuazqupUkx
+ yeAtRgeABfKbhEUYvAIS26ks8N0r41JrVarvvnrFjiAgkzFKV86p59eSKykSYh7DyZmw
+ BnEVXb2aZ4LP2X4HkjiW4o5fthynwo3f55UJEdMQPgautYJNOElNI4e11dAC5plY31A6
+ h9Fw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779767929; x=1780372729;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=x1LL209bUAmCZZntRVfVwzweRyP48+zW1qnO6AZhCdk=;
+ b=eOOXVWclZFQKXwqD8B6lMMU3HiLpmFmqQ/yFU9hmczSY4rWN5IJ8jPFuzHIO0ZYtSN
+ ktrjvHPYNF/H9rCbg/CIeSk41myw5t55BiJjVoF7G5/fGIpT8DFdpOP8EryvcBYDn6Xk
+ +lbJ6xnzFF7+tooKe0fLl9dc7f4WnkwwbbMn++p7Esx/hrgqXi4BkO2HH2oFJLvCcKD8
+ Gd22kUwnPIp6OEys7/8U9yNEVhRmjRIGJV3LJkVA2q0KdtKSnu4QVymm6aYNftAVsHXs
+ 8W5NO6ru92r/2nzPgfQWQs0uoCcQYgp5mVYmQ8EvZxhXO93yGd77+XQRTriihvjrxkka
+ eb/A==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/yTglu3WtSLf7a+O0a6Gk0W088Z1aUMuR0lKpL/x9lQf1nVVB1wp4BX9Dqj4HFziEc2qHIWymmDWUJ@nongnu.org
+X-Gm-Message-State: AOJu0Yw/xv5yM7BkzS76tiMR4bsyiFpzHC8KVo9d2afA+IqMGHtqMlk6
+ 6tSsOM9XsMJiBsqCLqeEokr++stB+7C6KEjOLD6SNp54i0WP5J5CIrb/aobOgFbtpsH7wumDuMp
+ iq0hVHE5pyXv2zfyTA5pabOXtu+/HrRI=
+X-Gm-Gg: Acq92OHkc/Ix+oWK99VtCSenBuBYMEBJCX1QsrRz3PrIa4QFfj31uzml/fdg/6v62xZ
+ lgfGTg+oboh04GoLplx4hH/Jja3x9lqiM890RLOASsDV7qeFBH5TLMM2HHieh7eUY6S83XBzj53
+ AEGbNeYizus6JAIMMZe3S2qCV14r2JBMunVmPssbJF4eECaTTdaYszOSmSwWSA1TsW+kV5e0x11
+ nFi844+easvkmiwIa4ZaRMW21YUEQhkoQ/yGzFrTRoO5yH118J0UCloF3FtRBD1hDiuSSrv+fjg
+ Al38+Y+I/JFV/+RVL/rrVHbqPSQiu6Lh2Rh88aLj+7+lTxtkAFgkXO4rG64=
+X-Received: by 2002:a17:907:2674:b0:bd8:61ff:f916 with SMTP id
+ a640c23a62f3a-bdd2aee6c2dmr707689566b.44.1779767928464; Mon, 25 May 2026
+ 20:58:48 -0700 (PDT)
 MIME-Version: 1.0
+References: <177756498815.8917.12449488721849651971-0@git.sr.ht>
+ <177756498815.8917.12449488721849651971-3@git.sr.ht>
+In-Reply-To: <177756498815.8917.12449488721849651971-3@git.sr.ht>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 26 May 2026 13:58:21 +1000
+X-Gm-Features: AVHnY4JJeCvwPMU6781PTtpGpTJmgca-Nb6j4snGQYvDqrMYqRlLUqwXIDS94ZM
+Message-ID: <CAKmqyKPvR7pkKz15_f_Nw7Nrf9e=+kVvJwdF61qtGK3pK-NCGg@mail.gmail.com>
+Subject: Re: [PATCH qemu v4 3/9] ot_uart: update register defs, switch to
+ Fifo8 for tx/rx buffers
+To: "~lexbaileylowrisc" <lex.bailey@lowrisc.org>
+Cc: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu.zevorn@gmail.com>, qemu-devel@nongnu.org, 
+ Amit Kumar-Hermosillo <amitkh@google.com>,
+ nabihestefan <nabihestefan@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 160.191.52.36 (failed)
-Received-SPF: pass client-ip=160.191.52.36; envelope-from=prcups@krgm.moe;
- helo=krgm.moe
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x632.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RDNS_NONE=0.793,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -58,492 +128,363 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-=E5=9C=A8 2026=E5=B9=B45=E6=9C=8822=E6=97=A5=E6=98=9F=E6=9C=9F=E4=BA=94 =E4=
-=B8=AD=E5=9B=BD=E6=A0=87=E5=87=86=E6=97=B6=E9=97=B4 11:16:39=EF=BC=8CBibo M=
-ao =E5=86=99=E9=81=93=EF=BC=9A
->=20
-> On 2026/5/19 =E4=B8=8B=E5=8D=882:30, SignKirigami wrote:
-> > Signed-off-by: SignKirigami <prcups@krgm.moe>
-> > Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-> > ---
-> >   target/loongarch/disas.c                      |   4 +
-> >   target/loongarch/insns.decode                 |  11 +
-> >   .../tcg/insn_trans/trans_privileged.c.inc     | 225 +++++++++++++++++-
-> >   target/loongarch/tcg/translate.c              |   6 +-
-> >   target/loongarch/translate.h                  |   2 +
-> >   5 files changed, 240 insertions(+), 8 deletions(-)
-> >=20
-> > diff --git a/target/loongarch/disas.c b/target/loongarch/disas.c
-> > index 3249ab7ac6..cae416266b 100644
-> > --- a/target/loongarch/disas.c
-> > +++ b/target/loongarch/disas.c
-> > @@ -698,6 +698,10 @@ INSN(tlbfill,      empty)
-> >   INSN(tlbclr,       empty)
-> >   INSN(tlbflush,     empty)
-> >   INSN(invtlb,       i_rr)
-> > +INSN(gcsrrd,       r_csr)
-> > +INSN(gcsrwr,       r_csr)
-> > +INSN(gcsrxchg,     rr_csr)
-> > +INSN(hvcl,         i)
-> >   INSN(cacop,        cop_r_i)
-> >   INSN(lddir,        rr_i)
-> >   INSN(ldpte,        j_i)
-> > diff --git a/target/loongarch/insns.decode b/target/loongarch/insns.dec=
-ode
-> > index 3089d42044..2ade384081 100644
-> > --- a/target/loongarch/insns.decode
-> > +++ b/target/loongarch/insns.decode
-> > @@ -493,6 +493,17 @@ bgeu            0110 11 ................ ..... ...=
-=2E.     @rr_offs16
-> >     csrxchg           0000 0100 .............. ..... .....     @rr_csr
-> >   }
-> >  =20
-> > +#
-> > +# LVZ (LoongArch Virtualization) instructions
-> > +#
-> > +{
-> > +  gcsrrd            0000 0101 .............. 00000 .....     @r_csr
-> > +  gcsrwr            0000 0101 .............. 00001 .....     @r_csr
-> > +  gcsrxchg          0000 0101 .............. ..... .....     @rr_csr
-> > +}
-> > +
-> > +hvcl             0000 0000 0010 1011 1 ...............    @i15
-> > +
-> >   iocsrrd_b        0000 01100100 10000 00000 ..... .....    @rr
-> >   iocsrrd_h        0000 01100100 10000 00001 ..... .....    @rr
-> >   iocsrrd_w        0000 01100100 10000 00010 ..... .....    @rr
-> > diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/t=
-arget/loongarch/tcg/insn_trans/trans_privileged.c.inc
-> > index 2094d182ac..0cb629e5d7 100644
-> > --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-> > +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-> > @@ -39,6 +39,10 @@ GEN_FALSE_TRANS(lddir)
-> >   GEN_FALSE_TRANS(ertn)
-> >   GEN_FALSE_TRANS(dbcl)
-> >   GEN_FALSE_TRANS(idle)
-> > +GEN_FALSE_TRANS(gcsrrd)
-> > +GEN_FALSE_TRANS(gcsrwr)
-> > +GEN_FALSE_TRANS(gcsrxchg)
-> > +GEN_FALSE_TRANS(hvcl)
-> >  =20
-> >   #else
-> >  =20
-> > @@ -69,8 +73,25 @@ static bool set_csr_trans_func(unsigned int csr_num,=
- GenCSRRead readfn,
-> >       return true;
-> >   }
-> >  =20
-> > +static bool set_gcsr_trans_func(unsigned int csr_num, GenCSRRead readf=
-n,
-> > +                                GenCSRWrite writefn)
-> > +{
-> > +    CSRInfo *csr;
-> > +
-> > +    csr =3D get_gcsr(csr_num);
-> > +    if (!csr) {
-> > +        return false;
-> > +    }
-> > +
-> > +    csr->readfn =3D (GenCSRFunc)readfn;
-> > +    csr->writefn =3D (GenCSRFunc)writefn;
-> > +    return true;
-> > +}
-> > +
-> >   #define SET_CSR_FUNC(NAME, read, write)                 \
-> >           set_csr_trans_func(LOONGARCH_CSR_##NAME, read, write)
-> > +#define SET_GCSR_FUNC(NAME, read, write)                \
-> > +        set_gcsr_trans_func(LOONGARCH_CSR_##NAME, read, write)
-> >  =20
-> >   void loongarch_csr_translate_init(void)
-> >   {
-> > @@ -85,14 +106,28 @@ void loongarch_csr_translate_init(void)
-> >       SET_CSR_FUNC(TVAL,  gen_helper_csrrd_tval, NULL);
-> >       SET_CSR_FUNC(TICLR, NULL, gen_helper_csrwr_ticlr);
-> >       SET_CSR_FUNC(MSGIR, gen_helper_csrrd_msgir, NULL);
-> > +    SET_CSR_FUNC(GSTAT, NULL, gen_helper_csrwr_gstat);
-> > +    SET_CSR_FUNC(GTLBC, NULL, gen_helper_csrwr_gtlbc);
-> > +    SET_CSR_FUNC(GINTC, NULL, gen_helper_csrwr_gintc);
-> > +
-> > +    SET_GCSR_FUNC(ESTAT, NULL, gen_helper_gcsrwr_estat);
-> > +    SET_GCSR_FUNC(ASID, NULL, gen_helper_gcsrwr_asid);
-> > +    SET_GCSR_FUNC(PGD, gen_helper_gcsrrd_pgd, NULL);
-> > +    SET_GCSR_FUNC(TCFG, NULL, gen_helper_gcsrwr_tcfg);
-> > +    SET_GCSR_FUNC(TVAL, gen_helper_gcsrrd_tval, NULL);
-> > +    SET_GCSR_FUNC(TICLR, NULL, gen_helper_gcsrwr_ticlr);
-> >   }
-> >   #undef SET_CSR_FUNC
-> > +#undef SET_GCSR_FUNC
-> >  =20
-> >   static bool check_csr_flags(DisasContext *ctx, const CSRInfo *csr, bo=
-ol write)
-> >   {
-> >       if ((csr->flags & CSRFL_READONLY) && write) {
-> >           return false;
-> >       }
-> > +    if ((csr->flags & CSRFL_GUEST_READONLY) && ctx->guest_mode && writ=
-e) {
-> > +        return false;
-> > +    }
-> >       if ((csr->flags & CSRFL_IO) && translator_io_start(&ctx->base)) {
-> >           ctx->base.is_jmp =3D DISAS_EXIT_UPDATE;
-> >       } else if ((csr->flags & CSRFL_EXITTB) && write) {
-> > @@ -110,12 +145,17 @@ static bool trans_csrrd(DisasContext *ctx, arg_cs=
-rrd *a)
-> >       if (check_plv(ctx)) {
-> >           return false;
-> >       }
-> > -    csr =3D get_csr(a->csr);
-> > +    csr =3D ctx->guest_mode ? get_gcsr(a->csr) : get_csr(a->csr);
-> >       if (csr =3D=3D NULL) {
-> >           /* CSR is undefined: read as 0. */
-> >           dest =3D tcg_constant_tl(0);
-> >       } else {
-> >           check_csr_flags(ctx, csr, false);
-> > +        if (ctx->guest_mode && (csr->flags & CSRFL_GSPR)) {
-> > +            gen_helper_gspr(tcg_env);
-> > +            gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
-> > +            return true;
-> > +        }
-> >           dest =3D gpr_dst(ctx, a->rd, EXT_NONE);
-> >           readfn =3D (GenCSRRead)csr->readfn;
-> >           if (readfn) {
-> > @@ -137,12 +177,17 @@ static bool trans_csrwr(DisasContext *ctx, arg_cs=
-rwr *a)
-> >       if (check_plv(ctx)) {
-> >           return false;
-> >       }
-> > -    csr =3D get_csr(a->csr);
-> > +    csr =3D ctx->guest_mode ? get_gcsr(a->csr) : get_csr(a->csr);
-> >       if (csr =3D=3D NULL) {
-> >           /* CSR is undefined: write ignored, read old_value as 0. */
-> >           gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
-> >           return true;
-> >       }
-> > +    if (ctx->guest_mode && (csr->flags & CSRFL_GSPR)) {
-> > +        gen_helper_gspr(tcg_env);
-> > +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
-> > +        return true;
-> > +    }
-> >       if (!check_csr_flags(ctx, csr, true)) {
-> >           /* CSR is readonly: trap. */
-> >           return false;
-> > @@ -170,28 +215,35 @@ static bool trans_csrxchg(DisasContext *ctx, arg_=
-csrxchg *a)
-> >       if (check_plv(ctx)) {
-> >           return false;
-> >       }
-> > -    csr =3D get_csr(a->csr);
-> > +    csr =3D ctx->guest_mode ? get_gcsr(a->csr) : get_csr(a->csr);
-> >       if (csr =3D=3D NULL) {
-> >           /* CSR is undefined: write ignored, read old_value as 0. */
-> >           gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
-> >           return true;
-> >       }
-> > +    if (ctx->guest_mode && (csr->flags & CSRFL_GSPR)) {
-> > +        gen_helper_gspr(tcg_env);
-> > +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
-> > +        return true;
-> > +    }
-> >  =20
-> >       if (!check_csr_flags(ctx, csr, true)) {
-> >           /* CSR is readonly: trap. */
-> >           return false;
-> >       }
-> >  =20
-> > -    /* So far only readonly csrs have readfn. */
-> > -    assert(csr->readfn =3D=3D NULL);
-> > -
-> >       src1 =3D gpr_src(ctx, a->rd, EXT_NONE);
-> >       mask =3D gpr_src(ctx, a->rj, EXT_NONE);
-> >       oldv =3D tcg_temp_new();
-> >       newv =3D tcg_temp_new();
-> >       temp =3D tcg_temp_new();
-> >  =20
-> > -    tcg_gen_ld_tl(oldv, tcg_env, csr->offset);
-> > +    if (csr->readfn) {
-> > +        GenCSRRead readfn =3D (GenCSRRead)csr->readfn;
-> > +        readfn(oldv, tcg_env);
-> > +    } else {
-> > +        tcg_gen_ld_tl(oldv, tcg_env, csr->offset);
-> > +    }
-> >       tcg_gen_and_tl(newv, src1, mask);
-> >       tcg_gen_andc_tl(temp, oldv, mask);
-> >       tcg_gen_or_tl(newv, newv, temp);
-> > @@ -212,6 +264,11 @@ static bool gen_iocsrrd(DisasContext *ctx, arg_rr =
-*a,
-> >       TCGv dest =3D gpr_dst(ctx, a->rd, EXT_NONE);
-> >       TCGv src1 =3D gpr_src(ctx, a->rj, EXT_NONE);
-> >  =20
-> > +    if (ctx->guest_mode) {
-> > +        gen_helper_gspr(tcg_env);
-> > +        return true;
-> > +    }
-> > +
-> >       if (check_plv(ctx)) {
-> >           return false;
-> >       }
-> > @@ -225,6 +282,11 @@ static bool gen_iocsrwr(DisasContext *ctx, arg_rr =
-*a,
-> >       TCGv val =3D gpr_src(ctx, a->rd, EXT_NONE);
-> >       TCGv addr =3D gpr_src(ctx, a->rj, EXT_NONE);
-> >  =20
-> > +    if (ctx->guest_mode) {
-> > +        gen_helper_gspr(tcg_env);
-> > +        return true;
-> > +    }
-> > +
-> >       if (check_plv(ctx)) {
-> >           return false;
-> >       }
-> > @@ -400,6 +462,10 @@ static bool trans_dbcl(DisasContext *ctx, arg_dbcl=
- *a)
-> >       if (check_plv(ctx)) {
-> >           return false;
-> >       }
-> > +    if (ctx->guest_mode) {
-> > +        gen_helper_gspr(tcg_env);
-> > +        return true;
-> > +    }
-> >       generate_exception(ctx, EXCCODE_DBP);
-> >       return true;
-> >   }
-> > @@ -410,9 +476,154 @@ static bool trans_idle(DisasContext *ctx, arg_idl=
-e *a)
-> >           return false;
-> >       }
-> >  =20
-> > +    if (ctx->guest_mode) {
-> > +        gen_helper_gspr(tcg_env);
-> > +        return true;
-> > +    }
-> > +
-> >       tcg_gen_movi_tl(cpu_pc, ctx->base.pc_next + 4);
-> >       gen_helper_idle(tcg_env);
-> >       ctx->base.is_jmp =3D DISAS_NORETURN;
-> >       return true;
-> >   }
-> > +
-> > +static bool trans_gcsrrd(DisasContext *ctx, arg_gcsrrd *a)
-> > +{
-> > +    TCGv dest;
-> > +    const CSRInfo *csr;
-> > +    GenCSRRead readfn;
-> > +
-> > +    if (check_plv(ctx)) {
-> > +        return false;
-> > +    }
-> > +    if (!avail_LVZ(ctx) || ctx->guest_mode) {
-> > +        return false;
-> > +    }
-> > +
-> > +    csr =3D get_gcsr(a->csr);
-> > +    if (csr =3D=3D NULL) {
-> > +        dest =3D tcg_constant_tl(0);
-> > +    } else {
-> > +        dest =3D gpr_dst(ctx, a->rd, EXT_NONE);
-> > +        if (csr->flags & CSRFL_GSPR) {
-> > +            tcg_gen_movi_tl(dest, 0);
-> > +        } else {
-> > +            readfn =3D (GenCSRRead)csr->readfn;
-> > +            if (readfn) {
-> > +                readfn(dest, tcg_env);
-> > +            } else {
-> > +                tcg_gen_ld_tl(dest, tcg_env, csr->offset);
-> > +            }
-> > +        }
-> > +    }
-> > +    gen_set_gpr(a->rd, dest, EXT_NONE);
-> > +    return true;
-> > +}
-> > +
-> > +static bool trans_gcsrwr(DisasContext *ctx, arg_gcsrwr *a)
-> > +{
-> > +    TCGv dest, src1;
-> > +    const CSRInfo *csr;
-> > +    GenCSRWrite writefn;
-> > +
-> > +    if (check_plv(ctx)) {
-> > +        return false;
-> > +    }
-> > +    if (!avail_LVZ(ctx) || ctx->guest_mode) {
-> > +        return false;
-> > +    }
-> > +
-> > +    csr =3D get_gcsr(a->csr);
-> > +    if (csr =3D=3D NULL) {
-> > +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
-> > +        return true;
-> > +    }
-> > +    if (!check_csr_flags(ctx, csr, true)) {
-> > +        return false;
-> > +    }
-> > +    if (csr->flags & CSRFL_GSPR) {
-> > +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
-> > +        return true;
-> > +    }
-> > +
-> > +    src1 =3D gpr_src(ctx, a->rd, EXT_NONE);
-> > +    writefn =3D (GenCSRWrite)csr->writefn;
-> > +    if (writefn) {
-> > +        dest =3D gpr_dst(ctx, a->rd, EXT_NONE);
-> > +        writefn(dest, tcg_env, src1);
-> > +    } else {
-> > +        dest =3D tcg_temp_new();
-> > +        tcg_gen_ld_tl(dest, tcg_env, csr->offset);
-> > +        tcg_gen_st_tl(src1, tcg_env, csr->offset);
-> > +    }
-> > +    gen_set_gpr(a->rd, dest, EXT_NONE);
-> > +    return true;
-> > +}
-> > +
-> > +static bool trans_gcsrxchg(DisasContext *ctx, arg_gcsrxchg *a)
-> > +{
-> > +    TCGv src1, mask, oldv, newv, temp;
-> > +    const CSRInfo *csr;
-> > +    GenCSRRead readfn;
-> > +    GenCSRWrite writefn;
-> > +
-> > +    if (check_plv(ctx)) {
-> > +        return false;
-> > +    }
-> > +    if (!avail_LVZ(ctx) || ctx->guest_mode) {
-> > +        return false;
-> > +    }
-> > +
-> > +    csr =3D get_gcsr(a->csr);
-> > +    if (csr =3D=3D NULL) {
-> > +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
-> > +        return true;
-> > +    }
-> > +    if (!check_csr_flags(ctx, csr, true)) {
-> > +        return false;
-> > +    }
-> > +    if (csr->flags & CSRFL_GSPR) {
-> > +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
-> > +        return true;
-> > +    }
-> > +
-> > +    src1 =3D gpr_src(ctx, a->rd, EXT_NONE);
-> > +    mask =3D gpr_src(ctx, a->rj, EXT_NONE);
-> > +    oldv =3D tcg_temp_new();
-> > +    newv =3D tcg_temp_new();
-> > +    temp =3D tcg_temp_new();
-> > +
-> > +    readfn =3D (GenCSRRead)csr->readfn;
-> > +    if (readfn) {
-> > +        readfn(oldv, tcg_env);
-> > +    } else {
-> > +        tcg_gen_ld_tl(oldv, tcg_env, csr->offset);
-> > +    }
-> > +    tcg_gen_and_tl(newv, src1, mask);
-> > +    tcg_gen_andc_tl(temp, oldv, mask);
-> > +    tcg_gen_or_tl(newv, newv, temp);
-> > +
-> > +    writefn =3D (GenCSRWrite)csr->writefn;
-> > +    if (writefn) {
-> > +        writefn(oldv, tcg_env, newv);
-> > +    } else {
-> > +        tcg_gen_st_tl(newv, tcg_env, csr->offset);
-> > +    }
-> > +    gen_set_gpr(a->rd, oldv, EXT_NONE);
-> > +    return true;
-> > +}
-> > +
-> > +static bool trans_hvcl(DisasContext *ctx, arg_hvcl *a)
-> > +{
-> > +    if (!avail_LVZ(ctx)) {
-> > +        return false;
-> > +    }
-> > +    if (!ctx->guest_mode) {
-> > +        return false;
-> > +    }
-> > +    tcg_gen_movi_tl(cpu_pc, ctx->base.pc_next);
-> > +    gen_helper_hvcl(tcg_env, tcg_constant_i32(a->imm));
-> > +    ctx->base.is_jmp =3D DISAS_NORETURN;
-> > +    return true;
-> > +}
-> >   #endif
-> > diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/tr=
-anslate.c
-> > index 124dce6269..15c83ef72d 100644
-> > --- a/target/loongarch/tcg/translate.c
-> > +++ b/target/loongarch/tcg/translate.c
-> > @@ -122,12 +122,16 @@ static void loongarch_tr_init_disas_context(Disas=
-ContextBase *dcbase,
-> >       CPULoongArchState *env =3D cpu_env(cs);
-> >       DisasContext *ctx =3D container_of(dcbase, DisasContext, base);
-> >  =20
-> > +    ctx->guest_mode =3D (ctx->base.tb->flags & HW_FLAGS_GUEST_MODE) !=
-=3D 0;
-> >       ctx->page_start =3D ctx->base.pc_first & TARGET_PAGE_MASK;
-> >       ctx->plv =3D ctx->base.tb->flags & HW_FLAGS_PLV_MASK;
-> >       if (ctx->base.tb->flags & HW_FLAGS_CRMD_PG) {
-> >           ctx->mem_idx =3D ctx->plv;
-> > +        if (ctx->guest_mode) {
-> > +            ctx->mem_idx +=3D MMU_GUEST_IDX;
-> > +        }
-> >       } else {
-> > -        ctx->mem_idx =3D MMU_DA_IDX;
-> > +        ctx->mem_idx =3D ctx->guest_mode ? MMU_GUEST_DA_IDX : MMU_DA_I=
-DX;
-> >       }
-> >  =20
-> >       /* Bound the number of insns to execute to those left on the page=
-=2E  */
-> > diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
-> > index 8aa8325dc6..db0650e713 100644
-> > --- a/target/loongarch/translate.h
-> > +++ b/target/loongarch/translate.h
-> > @@ -26,6 +26,7 @@
-> >   #define avail_FP_DP(C)  (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP_DP))
-> >   #define avail_LSPW(C)   (FIELD_EX32((C)->cpucfg2, CPUCFG2, LSPW))
-> >   #define avail_LAM(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM))
-> > +#define avail_LVZ(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LVZ))
-> >   #define avail_LAM_BH(C) (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM_BH))
-> >   #define avail_LAMCAS(C) (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAMCAS))
-> >   #define avail_LSX(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LSX))
->=20
-> static void loongarch_tr_init_disas_context(DisasContextBase *dcbase,
->                                              CPUState *cs)
-> {
->=20
->      if (FIELD_EX64(env->cpucfg[2], CPUCFG2, LSX)) {
->          ctx->vl =3D LSX_LEN;
+On Fri, May 1, 2026 at 2:05=E2=80=AFAM ~lexbaileylowrisc
+<lexbaileylowrisc@git.sr.ht> wrote:
+>
+> From: Lex Bailey <lex.bailey@lowrisc.org>
+>
+> The register definitions for the UART device need to be updated to match
+> the documentation at https://opentitan.org/book/hw/ip/uart/doc/registers.=
+html
+>
+> This commit does that, and also switches to using Fifo8 for managing the
+> transmit and receive buffers.
+>
+> Signed-off-by: Lex Bailey <lex.bailey@lowrisc.org>
+> ---
+>  hw/char/ot_uart.c         | 338 ++++++++++++++++++++++----------------
+>  include/hw/char/ot_uart.h |  18 +-
+>  2 files changed, 201 insertions(+), 155 deletions(-)
+>
+> diff --git a/hw/char/ot_uart.c b/hw/char/ot_uart.c
+> index 9478af40f9..3fe7c5efe5 100644
+> --- a/hw/char/ot_uart.c
+> +++ b/hw/char/ot_uart.c
+> @@ -27,6 +27,7 @@
+>
+>  #include "qemu/osdep.h"
+>  #include "hw/char/ot_uart.h"
+> +#include "qemu/fifo8.h"
+>  #include "hw/core/irq.h"
+>  #include "hw/core/qdev-clock.h"
+>  #include "hw/core/qdev-properties.h"
+> @@ -37,16 +38,22 @@
+>  #include "qemu/module.h"
+>
+>  REG32(INTR_STATE, 0x00)
+> -    FIELD(INTR_STATE, TX_WATERMARK, 0, 1)
+> -    FIELD(INTR_STATE, RX_WATERMARK, 1, 1)
+> -    FIELD(INTR_STATE, TX_EMPTY, 2, 1)
+> -    FIELD(INTR_STATE, RX_OVERFLOW, 3, 1)
+> +    SHARED_FIELD(INTR_TX_WATERMARK, 0, 1)
+> +    SHARED_FIELD(INTR_RX_WATERMARK, 1, 1)
+> +    SHARED_FIELD(INTR_TX_DONE, 2, 1)
+> +    SHARED_FIELD(INTR_RX_OVERFLOW, 3, 1)
+> +    SHARED_FIELD(INTR_RX_FRAME_ERR, 4, 1)
+> +    SHARED_FIELD(INTR_RX_BREAK_ERR, 5, 1)
+> +    SHARED_FIELD(INTR_RX_TIMEOUT, 6, 1)
+> +    SHARED_FIELD(INTR_RX_PARITY_ERR, 7, 1)
+> +    SHARED_FIELD(INTR_TX_EMPTY, 8, 1)
+>  REG32(INTR_ENABLE, 0x04)
+>  REG32(INTR_TEST, 0x08)
+>  REG32(ALERT_TEST, 0x0C)
+> +    FIELD(ALERT_TEST, FATAL_FAULT, 0, 1)
+>  REG32(CTRL, 0x10)
+> -    FIELD(CTRL, TX_ENABLE, 0, 1)
+> -    FIELD(CTRL, RX_ENABLE, 1, 1)
+> +    FIELD(CTRL, TX, 0, 1)
+> +    FIELD(CTRL, RX, 1, 1)
+>      FIELD(CTRL, NF, 2, 1)
+>      FIELD(CTRL, SLPBK, 4, 1)
+>      FIELD(CTRL, LLPBK, 5, 1)
+> @@ -58,43 +65,74 @@ REG32(STATUS, 0x14)
+>      FIELD(STATUS, TXFULL, 0, 1)
+>      FIELD(STATUS, RXFULL, 1, 1)
+>      FIELD(STATUS, TXEMPTY, 2, 1)
+> +    FIELD(STATUS, TXIDLE, 3, 1)
+>      FIELD(STATUS, RXIDLE, 4, 1)
+>      FIELD(STATUS, RXEMPTY, 5, 1)
+>  REG32(RDATA, 0x18)
+> +    FIELD(RDATA, RDATA, 0, 8)
+>  REG32(WDATA, 0x1C)
+> +    FIELD(WDATA, WDATA, 0, 8)
+>  REG32(FIFO_CTRL, 0x20)
+>      FIELD(FIFO_CTRL, RXRST, 0, 1)
+>      FIELD(FIFO_CTRL, TXRST, 1, 1)
+>      FIELD(FIFO_CTRL, RXILVL, 2, 3)
+> -    FIELD(FIFO_CTRL, TXILVL, 5, 2)
+> +    FIELD(FIFO_CTRL, TXILVL, 5, 3)
+>  REG32(FIFO_STATUS, 0x24)
+> -    FIELD(FIFO_STATUS, TXLVL, 0, 5)
+> -    FIELD(FIFO_STATUS, RXLVL, 16, 5)
+> +    FIELD(FIFO_STATUS, TXLVL, 0, 8)
+> +    FIELD(FIFO_STATUS, RXLVL, 16, 8)
+>  REG32(OVRD, 0x28)
+> +    FIELD(OVRD, TXEN, 0, 1)
+> +    FIELD(OVRD, TXVAL, 1, 1)
+>  REG32(VAL, 0x2C)
+> +    FIELD(VAL, RX, 0, 16)
+>  REG32(TIMEOUT_CTRL, 0x30)
+> +    FIELD(TIMEOUT_CTRL, VAL, 0, 24)
+> +    FIELD(TIMEOUT_CTRL, EN, 31, 1)
+> +
+> +#define INTR_MASK \
+> +    (INTR_TX_WATERMARK_MASK | INTR_RX_WATERMARK_MASK | INTR_TX_DONE_MASK=
+ | \
+> +     INTR_RX_OVERFLOW_MASK | INTR_RX_FRAME_ERR_MASK | INTR_RX_BREAK_ERR_=
+MASK | \
+> +     INTR_RX_TIMEOUT_MASK | INTR_RX_PARITY_ERR_MASK | INTR_TX_EMPTY_MASK=
+)
+> +
+> +#define CTRL_MASK \
+> +    (R_CTRL_TX_MASK | R_CTRL_RX_MASK | R_CTRL_NF_MASK | R_CTRL_SLPBK_MAS=
+K | \
+> +     R_CTRL_LLPBK_MASK | R_CTRL_PARITY_EN_MASK | R_CTRL_PARITY_ODD_MASK =
+| \
+> +     R_CTRL_RXBLVL_MASK | R_CTRL_NCO_MASK)
+> +
+> +#define OT_UART_NCO_BITS     16
+> +#define OT_UART_TX_FIFO_SIZE 128
+> +#define OT_UART_RX_FIFO_SIZE 128
+> +
+> +#define R32_OFF(_r_) ((_r_) / sizeof(uint32_t))
+> +
+> +#define R_LAST_REG (R_TIMEOUT_CTRL)
+> +#define REGS_COUNT (R_LAST_REG + 1u)
+> +#define REGS_SIZE  (REGS_COUNT * sizeof(uint32_t))
+>
+>  static void ot_uart_update_irqs(OtUARTState *s)
+>  {
+> -    if (s->uart_intr_state & s->uart_intr_enable & R_INTR_STATE_TX_WATER=
+MARK_MASK) {
+> +    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE]
+> +        & INTR_TX_WATERMARK_MASK) {
+>          qemu_set_irq(s->tx_watermark, 1);
+>      } else {
+>          qemu_set_irq(s->tx_watermark, 0);
 >      }
->      if (FIELD_EX64(env->cpucfg[2], CPUCFG2, LASX)) {
->          ctx->vl =3D LASX_LEN;
->      ctx->cpucfg1 =3D env->cpucfg[1];
->      ctx->cpucfg2 =3D env->cpucfg[2];
->      ctx->cpucfg3 =3D env->cpucfg[3];
-> }
->=20
-> There may be some problem with cpucfg configuration, for example host=20
-> has LASX/LSX feature, however vCPU is configured with LASX/LSX feature=20
-> disabled. With the upper piece of code, ctx->cpucfg1 comes from host=20
-> feature setting instead.
->=20
-> Regards
-> Bibo Mao
->=20
-When in guest mode, executing cpucfg will cause a gspr exception and exit t=
-o=20
-host mode, so these data may not be used.
+>
+> -    if (s->uart_intr_state & s->uart_intr_enable & R_INTR_STATE_RX_WATER=
+MARK_MASK) {
+> +    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE]
+> +        & INTR_RX_WATERMARK_MASK) {
+>          qemu_set_irq(s->rx_watermark, 1);
+>      } else {
+>          qemu_set_irq(s->rx_watermark, 0);
+>      }
+>
+> -    if (s->uart_intr_state & s->uart_intr_enable & R_INTR_STATE_TX_EMPTY=
+_MASK) {
+> +    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE] & INTR_TX_EMPTY_M=
+ASK) {
+>          qemu_set_irq(s->tx_empty, 1);
+>      } else {
+>          qemu_set_irq(s->tx_empty, 0);
+>      }
+>
+> -    if (s->uart_intr_state & s->uart_intr_enable & R_INTR_STATE_RX_OVERF=
+LOW_MASK) {
+> +    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE]
+> +        & INTR_RX_OVERFLOW_MASK) {
+>          qemu_set_irq(s->rx_overflow, 1);
+>      } else {
+>          qemu_set_irq(s->rx_overflow, 0);
+> @@ -105,122 +143,133 @@ static int ot_uart_can_receive(void *opaque)
+>  {
+>      OtUARTState *s =3D opaque;
+>
+> -    if ((s->uart_ctrl & R_CTRL_RX_ENABLE_MASK)
+> -           && !(s->uart_status & R_STATUS_RXFULL_MASK)) {
+> -        return 1;
+> +    if (s->regs[R_CTRL] & R_CTRL_RX_MASK) {
+> +        return (int)fifo8_num_free(&s->rx_fifo);
+>      }
+>
+>      return 0;
+>  }
+>
+> +static uint32_t ot_uart_get_rx_watermark_level(const OtUARTState *s)
+> +{
+> +    uint32_t rx_ilvl =3D FIELD_EX32(s->regs[R_FIFO_CTRL], FIFO_CTRL, RXI=
+LVL);
+> +
+> +    return rx_ilvl < 7 ? (1 << rx_ilvl) : 126;
+> +}
+> +
+>  static void ot_uart_receive(void *opaque, const uint8_t *buf, int size)
+>  {
+>      OtUARTState *s =3D opaque;
+> -    uint8_t rx_fifo_level =3D (s->uart_fifo_ctrl & R_FIFO_CTRL_RXILVL_MA=
+SK)
+> -                            >> R_FIFO_CTRL_RXILVL_SHIFT;
+> -
+> -    s->uart_rdata =3D *buf;
+> +    uint32_t rx_watermark_level;
+> +    size_t count =3D MIN(fifo8_num_free(&s->rx_fifo), (size_t)size);
+>
+> -    s->uart_status &=3D ~R_STATUS_RXIDLE_MASK;
+> -    s->uart_status &=3D ~R_STATUS_RXEMPTY_MASK;
+> -    /* The RXFULL is set after receiving a single byte
+> -     * as the FIFO buffers are not yet implemented.
+> -     */
+> -    s->uart_status |=3D R_STATUS_RXFULL_MASK;
+> -    s->rx_level +=3D 1;
+> +    for (int index =3D 0; index < size; index++) {
+> +        fifo8_push(&s->rx_fifo, buf[index]);
+> +    }
+>
+> -    if (size > rx_fifo_level) {
+> -        s->uart_intr_state |=3D R_INTR_STATE_RX_WATERMARK_MASK;
+> +    /* update INTR_STATE */
+> +    if (count !=3D size) {
+> +        s->regs[R_INTR_STATE] |=3D INTR_RX_OVERFLOW_MASK;
+> +    }
+> +    rx_watermark_level =3D ot_uart_get_rx_watermark_level(s);
+> +    if (rx_watermark_level && size >=3D rx_watermark_level) {
+> +        s->regs[R_INTR_STATE] |=3D INTR_RX_WATERMARK_MASK;
+>      }
+>
+>      ot_uart_update_irqs(s);
+>  }
+>
+> -static gboolean ot_uart_xmit(void *do_not_use, GIOCondition cond,
+> -                             void *opaque)
+> +static void ot_uart_reset_tx_fifo(OtUARTState *s)
+>  {
+> -    OtUARTState *s =3D opaque;
+> -    uint8_t tx_fifo_level =3D (s->uart_fifo_ctrl & R_FIFO_CTRL_TXILVL_MA=
+SK)
+> -                            >> R_FIFO_CTRL_TXILVL_SHIFT;
+> -    int ret;
+> -
+> -    /* instant drain the fifo when there's no back-end */
+> -    if (!qemu_chr_fe_backend_connected(&s->chr)) {
+> -        s->tx_level =3D 0;
+> -        return G_SOURCE_REMOVE;
+> +    fifo8_reset(&s->tx_fifo);
+> +    s->regs[R_INTR_STATE] |=3D INTR_TX_EMPTY_MASK;
+> +    s->regs[R_INTR_STATE] |=3D INTR_TX_DONE_MASK;
+> +    if (s->tx_watermark_level) {
+> +        s->regs[R_INTR_STATE] |=3D INTR_TX_WATERMARK_MASK;
+> +        s->tx_watermark_level =3D 0;
+>      }
+> +}
+>
+> -    if (!s->tx_level) {
+> -        s->uart_status &=3D ~R_STATUS_TXFULL_MASK;
+> -        s->uart_status |=3D R_STATUS_TXEMPTY_MASK;
+> -        s->uart_intr_state |=3D R_INTR_STATE_TX_EMPTY_MASK;
+> -        s->uart_intr_state &=3D ~R_INTR_STATE_TX_WATERMARK_MASK;
+> -        ot_uart_update_irqs(s);
+> -        return G_SOURCE_REMOVE;
+> +static void ot_uart_reset_rx_fifo(OtUARTState *s)
+> +{
+> +    fifo8_reset(&s->rx_fifo);
+> +    s->regs[R_INTR_STATE] &=3D ~INTR_RX_WATERMARK_MASK;
+> +    s->regs[R_INTR_STATE] &=3D ~INTR_RX_OVERFLOW_MASK;
+> +    if (FIELD_EX32(s->regs[R_CTRL], CTRL, RX)) {
+> +        qemu_chr_fe_accept_input(&s->chr);
+>      }
+> +}
+>
+> -    ret =3D qemu_chr_fe_write(&s->chr, s->tx_fifo, s->tx_level);
+> +static uint32_t ot_uart_get_tx_watermark_level(const OtUARTState *s)
+> +{
+> +    uint32_t tx_ilvl =3D FIELD_EX32(s->regs[R_FIFO_CTRL], FIFO_CTRL, TXI=
+LVL);
+>
+> -    if (ret >=3D 0) {
+> -        s->tx_level -=3D ret;
+> -        memmove(s->tx_fifo, s->tx_fifo + ret, s->tx_level);
+> -    }
+> +    return tx_ilvl < 7 ? (1 << tx_ilvl) : 64;
+> +}
+>
+> -    if (s->tx_level) {
+> -        guint r =3D qemu_chr_fe_add_watch(&s->chr, G_IO_OUT | G_IO_HUP,
+> -                                        ot_uart_xmit, s);
+> -        if (!r) {
+> -            s->tx_level =3D 0;
+> -            return G_SOURCE_REMOVE;
+> -        }
+> +static void ot_uart_xmit(OtUARTState *s)
+> +{
+> +    const uint8_t *buf;
+> +    uint32_t size;
+> +    int ret;
+> +
+> +    if (fifo8_is_empty(&s->tx_fifo)) {
+> +        return;
+>      }
+>
+> -    /* Clear the TX Full bit */
+> -    if (s->tx_level !=3D OT_UART_TX_FIFO_SIZE) {
+> -        s->uart_status &=3D ~R_STATUS_TXFULL_MASK;
+> +    /* instant drain the fifo when there's no back-end */
+> +    if (!qemu_chr_fe_backend_connected(&s->chr)) {
+> +        ot_uart_reset_tx_fifo(s);
+> +        ot_uart_update_irqs(s);
+> +        return;
+>      }
+>
+> -    /* Disable the TX_WATERMARK IRQ */
+> -    if (s->tx_level < tx_fifo_level) {
+> -        s->uart_intr_state &=3D ~R_INTR_STATE_TX_WATERMARK_MASK;
+> +    /* get a continuous buffer from the FIFO */
+> +    buf =3D
+> +        fifo8_peek_bufptr(&s->tx_fifo, fifo8_num_used(&s->tx_fifo), &siz=
+e);
+> +    /* send as much as possible */
+> +    ret =3D qemu_chr_fe_write(&s->chr, buf, (int)size);
+> +    /* if some characters where sent, remove them from the FIFO */
+> +    if (ret >=3D 0) {
+> +        fifo8_drop(&s->tx_fifo, ret);
+>      }
+>
+> -    /* Set TX empty */
+> -    if (s->tx_level =3D=3D 0) {
+> -        s->uart_status |=3D R_STATUS_TXEMPTY_MASK;
+> -        s->uart_intr_state |=3D R_INTR_STATE_TX_EMPTY_MASK;
+> +    /* update INTR_STATE */
+> +    if (fifo8_is_empty(&s->tx_fifo)) {
+> +        s->regs[R_INTR_STATE] |=3D INTR_TX_EMPTY_MASK;
+> +        s->regs[R_INTR_STATE] |=3D INTR_TX_DONE_MASK;
+> +    }
+> +    if (s->tx_watermark_level &&
+> +        fifo8_num_used(&s->tx_fifo) < s->tx_watermark_level) {
+> +        s->regs[R_INTR_STATE] |=3D INTR_TX_WATERMARK_MASK;
+> +        s->tx_watermark_level =3D 0;
+>      }
+>
+>      ot_uart_update_irqs(s);
+> -    return G_SOURCE_REMOVE;
+>  }
+>
+> -static void uart_write_tx_fifo(OtUARTState *s, const uint8_t *buf,
+> -                               int size)
+> +static void uart_write_tx_fifo(OtUARTState *s, uint8_t val)
+>  {
+>      uint64_t current_time =3D qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+> -    uint8_t tx_fifo_level =3D (s->uart_fifo_ctrl & R_FIFO_CTRL_TXILVL_MA=
+SK)
+> -                            >> R_FIFO_CTRL_TXILVL_SHIFT;
+> -
+> -    if (size > OT_UART_TX_FIFO_SIZE - s->tx_level) {
+> -        size =3D OT_UART_TX_FIFO_SIZE - s->tx_level;
+> +    if (fifo8_is_full(&s->tx_fifo)) {
+>          qemu_log_mask(LOG_GUEST_ERROR, "ot_uart: TX FIFO overflow");
+> +        return;
+>      }
+>
+> -    memcpy(s->tx_fifo + s->tx_level, buf, size);
+> -    s->tx_level +=3D size;
+> +    fifo8_push(&s->tx_fifo, val);
+>
+> -    if (s->tx_level > 0) {
+> -        s->uart_status &=3D ~R_STATUS_TXEMPTY_MASK;
+> +    s->tx_watermark_level =3D ot_uart_get_tx_watermark_level(s);
+> +    if (fifo8_num_used(&s->tx_fifo) < s->tx_watermark_level) {
+> +        /*
+> +         * TX watermark interrupt is raised when FIFO depth goes from ab=
+ove
+> +         * watermark to below. If we haven't reached watermark, reset ca=
+ched
+> +         * watermark level
+> +         */
+> +        s->tx_watermark_level =3D 0;
+>      }
 
-Regards
-SignKirigami
-> > @@ -66,6 +67,7 @@ typedef struct DisasContext {
-> >       TCGv zero;
-> >       bool la64; /* LoongArch64 mode */
-> >       bool va32; /* 32-bit virtual address */
-> > +    bool guest_mode;
-> >       uint32_t cpucfg1;
-> >       uint32_t cpucfg2;
-> >       uint32_t cpucfg3;
-> >=20
->=20
->=20
+Don't we need to update the interrupts at this point?
 
-
-
-
+Alistair
 
