@@ -4,106 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4355BCD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 12:01:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB1E6CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 12:10:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRqSX-0001OT-Sy; Tue, 26 May 2026 08:00:36 -0400
+	id 1wRqbE-0003Mn-Qv; Tue, 26 May 2026 08:09:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wRqSO-0001Na-Tm
- for qemu-devel@nongnu.org; Tue, 26 May 2026 08:00:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wRqSL-0004Cs-Ja
- for qemu-devel@nongnu.org; Tue, 26 May 2026 08:00:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779796819;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ChcPMDadlrI6rIB9RhY/JovaQ2suNNr3Fi9Cc4LIR/8=;
- b=jBtktm52g4TNpvaRSr5u0PUf19DkbPtv7G2coxXiZlj2Ol2dMG1P4kTXWcM7YBhRsIGJ0z
- rFYDd59RF59srmJxM+TtmDmQDnWMk1ynTdeHkoH2luG3e5VKs4JBrw0SXzdGg9e0i9CZ5R
- kkdyCN281kw2Qmll5KxwjKYdUi8KwGw=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-205-hzzz4bv9OCuWG4m2z_IKgQ-1; Tue, 26 May 2026 08:00:17 -0400
-X-MC-Unique: hzzz4bv9OCuWG4m2z_IKgQ-1
-X-Mimecast-MFC-AGG-ID: hzzz4bv9OCuWG4m2z_IKgQ_1779796817
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-48fd233d1e2so16668825e9.1
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 05:00:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779796817; x=1780401617;
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRqb9-0003MP-Oa
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 08:09:29 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRqb6-0002W6-4Q
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 08:09:26 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-44a74032ff8so7782649f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 05:09:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779797359; x=1780402159; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ChcPMDadlrI6rIB9RhY/JovaQ2suNNr3Fi9Cc4LIR/8=;
- b=hAaMbgs4LdVyAjwW641RpLV0tRLtXK0KWebJ19/fJg6EkOyOgTeHUIqW3Suifh0Aa/
- LAsMk1CcrM0Lb9iU2JPEZtqo9rkZvddcuvXwdnAXqLw5sxG6mQpYhFKHts1DaZowTi1F
- vJwNrwBkZPtOEMKCDvPlFii+TuUbT3ZB8+iXaUSAI68VTucX7snrB2FG5eD96SwYYTBA
- plDfcoIZTaLmti1MZFny05izWOIgjKWjBbcE55JJYNHnn2k0WlJlEIFMB1MHB2r7CrLQ
- Www4wDcyjVkHjSisx8dns9pLOLKrSBSwMu35S49Qyi7E8+cz01/NC+OL/KLb1voCp+dg
- yzUg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+QX4pd1f+IIsUTG4+ljG2MqxKSGlMrF+xi6QEyWej5DcZtEaIT4lzeZ0klzFuQIhZxgmQ46OGqtPLl@nongnu.org
-X-Gm-Message-State: AOJu0Yx6BKYONeBw5MMiB8HBixJuWt9JzNgVTxYBkzJrISttVLvDCLhh
- dtmLjBrncUuz+1wmDnQM6+lbGdttmoE+qVsr+gRwqoRBiSfu01b/mML4pCDKKdvsoggrFaCjsBx
- 54wfy5JZuDwUFwEMFHgDMLOUcTA5E5zDNX8Xh2PvfNp/oy6FjkFVpSE6W
-X-Gm-Gg: Acq92OH2PwkwRXMr7jXnTx+jx4zADqb0BLkbahYxNy11FYQQABYuT+GeBEJ4Lirxp6h
- h4QT2+m7jx4lP+7w3Nez1dRchKZTBlrFtvy4yF6tLCBtlhuh83UV0wIgvsgGsEehk2391jIHYNp
- nUF8W91tv5rCjfQ1bP1ejahSgVBXCjKQm+/BS3aOge/P2Y7tw5ZLGigEvL4J2OBoULmSYQ/ZLlz
- +ETBSQ4Hvp/ji45cRd1OdZqtcDEaLhClLY2uoLzTcfoTUbKm52SBcM0y3l0gpgu1+5pmnnsfJdS
- UcW4dkGsApIf4D9nTSOEIX13vNdAWxzx6gJNqSz7lHuxrnRj5DQZrxGR8TVDP4rU3aPkILOpHDp
- pXTZhIC69hFec6gTVYpb09UmH1JNCWWiWwU9KX6fPoBVdJcDurGFCvDpvbV5T6Ztn3485lw==
-X-Received: by 2002:a05:600c:6995:b0:490:482c:4384 with SMTP id
- 5b1f17b1804b1-490482c44ddmr300238565e9.24.1779796816216; 
- Tue, 26 May 2026 05:00:16 -0700 (PDT)
-X-Received: by 2002:a05:600c:6995:b0:490:482c:4384 with SMTP id
- 5b1f17b1804b1-490482c44ddmr300235405e9.24.1779796813946; 
- Tue, 26 May 2026 05:00:13 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49045262c8dsm170633525e9.2.2026.05.26.05.00.12
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=57HzQERrCan/jRIcrFkPBCgEB7wT971pbE1li72yhCk=;
+ b=SttWH0J3w13M6dHiIojhBnrRSjSmBhnRs84bI7hw9IGABwea0Nq6jm7dWVZE8VP+G9
+ ctTycPAL30fWe8ZWZNsCBfhnL3tg2zTf13078cWlXTNlpDGMNu3noYlPG79u44QqVz+2
+ VpPADCN4obPwOk6zYswh3Zb1ddefC5cI9k/+ROqnHU54iFbIILFMcRoJaY9xxSvp+QZX
+ wtnMr+NuMvvVQFcObbgNv2YhJl4ck8JtDfMqiFl9VFTZqs3J8hZI9t/E9KAtTeOSpTmj
+ X40QhotG+dVXbtDmMPcRXC+83qc0fVAhGJNxcS6nNT7c2AuJ86IDvK3rdMOz9sbOOQPJ
+ h99w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779797359; x=1780402159;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=57HzQERrCan/jRIcrFkPBCgEB7wT971pbE1li72yhCk=;
+ b=Iv4XRcLcnwmwCizGAbx4hEkOSvAtQLRBNAs7j9KCQvuuXFad8GWbOcAsTHp8h10iQ/
+ JWoVfyoOvmpnk0fPQULPdX0QMxQXpIrS1gXHzg9XMA9CaOUTSRMvn2GJdxrsr/DAWZVn
+ oFdnEkXkbzzEg5HREGyE/WaAhfwYO7XufnKkRlAXxa1ZOn2iA0tp/K+CbC1X0Pw1re86
+ uAvzgjU3y3rpkZ7xSsRywa2XgpHqAuh1OL+1XaRCSjsFS5HpsVr0eF5d75eCfuJ28K/J
+ YBKSg0VhH48pvbmg260H9Y2uKoKo7tCBC1dI+GRvtwl/yXuD4yyeXKEYIbUiPqB3AZNo
+ Bfyw==
+X-Gm-Message-State: AOJu0YyZognM5JhPpF0xf1Cax2sVBCuifn87G8D9bvKJP3H2by9M28rY
+ 0WgjRjkDQODIR2GbFjRbFho33SRI+wI6AD2C62iNwhh9a8PDY5X/lBCh/Oo1KAWwo30Zngjr0ZR
+ naYiB+k7IIw==
+X-Gm-Gg: Acq92OGvWYw3IGyOQt/YpQPg0bQuhbeOz9bRcwJ9ieEJq18M8M6p1ovfvSaqOd/+qHN
+ yPuZjJz2YsI9KEDc7QfbEuaFhP1Fyq+bgX0u336HSHkpTYHthVUEw1mKSbVwHQ9/xn51ld5M5mp
+ 2ZnE8K+bDipwMzNJ6hqvfAMqV/VBM6p8ItfgULUCRxZMauqYN9PPCsYOW2/+rF34+My0Gmn0H+V
+ 1aYBH5wZ2AuPC7ILg5TEBm5BovFqvE0AbXb3gVts/wX1B6BV6JoVV1cNXRfNmjpA1HBcGBMMw6f
+ TuaGFzJPTLbfIRPHu5QD9J+evb5oK8nuvz7lp2CiXpajSblifShTKj/6vaXWU3DNTiCFUqxGIBn
+ U1eVRExiGnSO0UoFVEANQAS4FE3jn2hMJ0uSEJhb8oBhiyFB3tmR6tUbGwE8NfTmwlntjEZLWeP
+ JIEVCIzMM0AdPAMssaSEf4nKPdGM0Cv0UCP2nroE3mmrNH7mxalWgKnd8wGbCYLmJMfA==
+X-Received: by 2002:a05:600c:c83:b0:48f:d612:3c4a with SMTP id
+ 5b1f17b1804b1-49042488b81mr308715215e9.1.1779797358904; 
+ Tue, 26 May 2026 05:09:18 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49042aeafa8sm105570155e9.27.2026.05.26.05.09.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 May 2026 05:00:13 -0700 (PDT)
-Message-ID: <300179da-7963-4540-acc0-d97c93c7c2c2@redhat.com>
-Date: Tue, 26 May 2026 14:00:11 +0200
+ Tue, 26 May 2026 05:09:18 -0700 (PDT)
+Message-ID: <4a1446f7-4867-46fe-ab80-6dbca9d4956d@linaro.org>
+Date: Tue, 26 May 2026 14:09:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 30/32] hw/arm/virt-acpi: Advertise Tegra241 CMDQV nodes
- in DSDT
+Subject: Re: [PATCH v3 1/2] MAINTAINERS: Transfer FW schema specs section to
+ Daniel
 Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
- nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
- jgg@nvidia.com, zhenzhong.duan@intel.com, kjaju@nvidia.com,
- phrdina@redhat.com
-References: <20260519103727.899332-1-skolothumtho@nvidia.com>
- <20260519103727.899332-31-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260519103727.899332-31-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+To: qemu-devel@nongnu.org, "Daniel P . Berrange" <berrange@redhat.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>, Kashyap Chamarthy
+ <kchamart@redhat.com>, Thomas Huth <thuth@redhat.com>
+References: <20260519173014.98967-1-philmd@linaro.org>
+ <20260519173014.98967-2-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260519173014.98967-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,161 +101,40 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Daniel,
 
+Could you Ack this change?
 
-On 5/19/26 12:37 PM, Shameer Kolothum wrote:
-> From: Nicolin Chen <nicolinc@nvidia.com>
->
-> Add ACPI DSDT support for Tegra241 CMDQV when the SMMUv3 instance is
-> created with tegra241-cmdqv.
->
-> For each accelerated SMMUv3 instance, add a Tegra241 CMDQV device
-> object under the DSDT \_SB namespace, with HID "NVDA200C" and a UID
-> that matches the Identifier of the corresponding SMMUv3 IORT node, so
-> the guest OS can associate the DSDT device with the right SMMU. The
-> _CRS covers the CMDQV MMIO aperture plus its interrupt, and _CCA
-> declares I/O cache coherency.
->
-> See ACPI Specification 6.5, Section 6 (Device Configuration) for
-> _HID/_UID/_CCA/_CRS.
->
-> Generated DSDT entry for a CMDQV instance paired with SMMUv3 Identifier=1:
->   ...
->   Device (CV01)
->   {
->       Name (_HID, "NVDA200C")  // _HID: Hardware ID
->       Name (_UID, One)  // _UID: Unique ID
->       Name (_CCA, One)  // _CCA: Cache Coherency Attribute
->       Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
->       {
->           QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, Cacheable, ReadWrite,
->               0x0000000000000000, // Granularity
->               0x000000000C080000, // Range Minimum
->               0x000000000C0CFFFF, // Range Maximum
->               0x0000000000000000, // Translation Offset
->               0x0000000000050000, // Length
->               ,, , AddressRangeMemory, TypeStatic)
->           Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
->           {
->               0x00000094,
->           }
->       })
->   }
->   ...
-> Generated IORT SMMUv3 node (Identifier = 1):
->
->   ...
->   [048h 0072 001h]                        Type : 04
->   [049h 0073 002h]                      Length : 0058
->   [04Bh 0075 001h]                    Revision : 04
->   [04Ch 0076 004h]                  Identifier : 00000001
->   [050h 0080 004h]               Mapping Count : 00000001
->   [054h 0084 004h]              Mapping Offset : 00000044
->   ...
->
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Co-developed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-
-Eric
+On 19/5/26 19:30, Philippe Mathieu-Daudé wrote:
+> Pass the torch to Daniel, but demote the 'Firmware schema
+> specifications' section from 'Maintained' to 'Odd fixes'.
+> 
+> Suggested-by: Daniel P. Berrange <berrange@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
 > ---
->  hw/arm/virt-acpi-build.c | 52 ++++++++++++++++++++++++++++++++++++++++
->  hw/arm/trace-events      |  1 +
->  2 files changed, 53 insertions(+)
->
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index 9d05982137..99490aa7b1 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -65,6 +65,9 @@
->  #include "target/arm/cpu.h"
->  #include "target/arm/multiprocessing.h"
->  
-> +#include "smmuv3-accel.h"
-> +#include "tegra241-cmdqv.h"
-> +
->  #define ARM_SPI_BASE 32
->  
->  #define ACPI_BUILD_TABLE_SIZE             0x20000
-> @@ -1121,6 +1124,51 @@ static void build_fadt_rev6(GArray *table_data, BIOSLinker *linker,
->      build_fadt(table_data, linker, &fadt, vms->oem_id, vms->oem_table_id);
->  }
->  
-> +static void acpi_dsdt_add_tegra241_cmdqv(Aml *scope, VirtMachineState *vms)
-> +{
-> +    for (int i = 0; i < vms->smmuv3_devices->len; i++) {
-> +        Object *obj = OBJECT(g_ptr_array_index(vms->smmuv3_devices, i));
-> +        PlatformBusDevice *pbus;
-> +        Aml *dev, *crs, *addr;
-> +        SysBusDevice *sbdev;
-> +        hwaddr base;
-> +        uint32_t id;
-> +        int irq;
-> +
-> +        if (smmuv3_accel_cmdqv_type(obj) != SMMUV3_CMDQV_TEGRA241) {
-> +            continue;
-> +        }
-> +        id = object_property_get_uint(obj, "identifier", &error_abort);
-> +        pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
-> +        sbdev = SYS_BUS_DEVICE(obj);
-> +        base = platform_bus_get_mmio_addr(pbus, sbdev, 1);
-> +        base += vms->memmap[VIRT_PLATFORM_BUS].base;
-> +        irq = platform_bus_get_irqn(pbus, sbdev, NUM_SMMU_IRQS);
-> +        irq += vms->irqmap[VIRT_PLATFORM_BUS];
-> +        irq += ARM_SPI_BASE;
-> +
-> +        dev = aml_device("CV%.02u", id);
-> +        aml_append(dev, aml_name_decl("_HID", aml_string("NVDA200C")));
-> +        aml_append(dev, aml_name_decl("_UID", aml_int(id)));
-> +        aml_append(dev, aml_name_decl("_CCA", aml_int(1)));
-> +
-> +        crs = aml_resource_template();
-> +        addr = aml_qword_memory(AML_POS_DECODE, AML_MIN_FIXED, AML_MAX_FIXED,
-> +                                AML_CACHEABLE, AML_READ_WRITE, 0x0, base,
-> +                                base + TEGRA241_CMDQV_IO_LEN - 0x1, 0x0,
-> +                                TEGRA241_CMDQV_IO_LEN);
-> +        aml_append(crs, addr);
-> +        aml_append(crs, aml_interrupt(AML_CONSUMER, AML_EDGE,
-> +                                      AML_ACTIVE_HIGH, AML_EXCLUSIVE,
-> +                                      (uint32_t *)&irq, 1));
-> +        aml_append(dev, aml_name_decl("_CRS", crs));
-> +
-> +        aml_append(scope, dev);
-> +
-> +        trace_virt_acpi_dsdt_tegra241_cmdqv(id, base, irq);
-> +    }
-> +}
-> +
->  /* DSDT */
->  static void
->  build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-> @@ -1185,6 +1233,10 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->      acpi_dsdt_add_tpm(scope, vms);
->  #endif
->  
-> +    if (!vms->legacy_smmuv3_present) {
-> +        acpi_dsdt_add_tegra241_cmdqv(scope, vms);
-> +    }
-> +
->      aml_append(dsdt, scope);
->  
->      pci0_scope = aml_scope("\\_SB.PCI0");
-> diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-> index 5ebb3dc9ea..e49a2b324d 100644
-> --- a/hw/arm/trace-events
-> +++ b/hw/arm/trace-events
-> @@ -9,6 +9,7 @@ omap1_lpg_led(const char *onoff) "omap1 LPG: LED is %s"
->  
->  # virt-acpi-build.c
->  virt_acpi_setup(void) "No fw cfg or ACPI disabled. Bailing out."
-> +virt_acpi_dsdt_tegra241_cmdqv(int smmu_id, uint64_t base, uint32_t irq) "DSDT: add cmdqv node for (id=%d), base=0x%" PRIx64 ", irq=%d"
->  
->  # smmu-common.c
->  smmu_add_mr(const char *name) "%s"
+>   MAINTAINERS | 5 ++---
+>   1 file changed, 2 insertions(+), 3 deletions(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 85651cf2a18..0ba6391dea6 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -4004,10 +4004,9 @@ F: docs/specs/fsi.rst
+>   F: tests/qtest/aspeed_fsi-test.c
+>   
+>   Firmware schema specifications
+> -M: Philippe Mathieu-Daudé <philmd@linaro.org>
+> -R: Daniel P. Berrange <berrange@redhat.com>
+> +M: Daniel P. Berrange <berrange@redhat.com>
+>   R: Kashyap Chamarthy <kchamart@redhat.com>
+> -S: Maintained
+> +S: Odd fixes
+>   F: docs/interop/firmware.json
+>   
+>   EDK2 Firmware
 
 
