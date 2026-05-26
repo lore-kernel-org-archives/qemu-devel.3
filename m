@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20A03CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 20:04:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91F62CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 20:04:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRxzN-0004fL-11; Tue, 26 May 2026 16:02:57 -0400
+	id 1wRxzN-0004fX-Ro; Tue, 26 May 2026 16:02:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRxz9-0004ZY-RE; Tue, 26 May 2026 16:02:46 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ id 1wRxzD-0004aQ-AR; Tue, 26 May 2026 16:02:48 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRxz8-0002u5-27; Tue, 26 May 2026 16:02:43 -0400
+ id 1wRxzB-0002uj-2X; Tue, 26 May 2026 16:02:46 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 47A3F43515;
+ by tor.source.kernel.org (Postfix) with ESMTP id 85345600BB;
+ Tue, 26 May 2026 20:02:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF7D1F00A3A;
  Tue, 26 May 2026 20:02:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D49201F000E9;
- Tue, 26 May 2026 20:02:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779825759;
- bh=pGlSoLvSkWLWM09alJZgROZ3NJFIPwvSs1E7yFYC654=;
+ s=k20260515; t=1779825763;
+ bh=RzAg/z9ESTOIfX4D/3KjFmD6FehyVHYLgvenUfGbwos=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=di+Fdfz4XoQ/QPnbPMlxcSA/NStguprg2514Elzv+645tTbBgaqssnsRigRHM2H7a
- 3RA8IvTnafVY8gi8gWLqyB6aPUQPs+fX+Vqa3EssWaUfUkvJbR3GKpoU8R6EoBSHn1
- XlrLYD2AdibArCyU8pfXds+YwqSKz6mumPhqoxDNlBg4PKAwe8JaYnERAi0mvg78nm
- ChAY7/ZSYAx7fuEG9nLD+FhiSYWfh3g+/Ez/hYhekyW3L0XfsU8azPGcBfUo2Wu2pl
- Jh9o9Xrq2OJpFcSaRrC0u5KoCU6gNBwNLVN0w4G504MSDy8sxRRoX1AF381mMEAygS
- CeaG3kvku/Zaw==
+ b=bFVSGT0p3vp1zsu57dh1SnVsbg3pitv8OorYKKedhy0uyuJnAHrom2cCtWbbCaSyp
+ T/eLNOdnQAYfcRCQyxfy48pPoiPzzYEChHgi8Q8mnLgPfCFY5tCL7gKIGpLiHNSntn
+ FizcZ97uvORQGWlfYJYvfGqqEBIEF2GKkeTlyCQYLmGjrJyz02wl1Hy9icCcDcDGtF
+ 4igvePFvYumLl08JP6rWYNcC3PcUip19OmhE1YsQqmwf+vtF9sKUxG123TQBIDX/0+
+ f0vQ1H2KZTuQ1WW/YrUnIaNee6AlT/AuFgrPoulxk2fK2iRPteyQh+2E+9zVEeGRr2
+ XTEgVegP/xLzQ==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -45,17 +45,16 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>, Aurelien Jarno <aurelien@aurel32.net>
-Subject: [PULL 07/12] linux-user/s390x: restore fpu_status rounding mode from
- FPC on sigreturn
-Date: Tue, 26 May 2026 22:02:02 +0200
-Message-ID: <20260526200207.79738-8-deller@kernel.org>
+Subject: [PULL 08/12] linux-user: Implement finer grained madivse() syscall
+Date: Tue, 26 May 2026 22:02:03 +0200
+Message-ID: <20260526200207.79738-9-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260526200207.79738-1-deller@kernel.org>
 References: <20260526200207.79738-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -77,112 +76,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Helge Deller <deller@gmx.de>
 
-QEMU keeps the s390x floating-point control register (FPC) in env->fpc.
-The rounding mode bits [2:0] of FPC are reflected into the derived
-env->fpu_status via set_float_rounding_mode(); every architectural
-write to FPC goes through HELPER(sfpc) which keeps the two in sync.
+Although most madvise() values are hints, some are important and are
+checked by userspace, especially by security-relevant applications like
+BoringSLL.  So, return -EINVAL for those functions which we don't emulate.
 
-restore_sigregs() restored FPC with a direct assignment:
-
-    __get_user(env->fpc, &sc->fpregs.fpc);
-
-This wrote env->fpc correctly but never updated env->fpu_status, so on
-sigreturn the interrupted code resumed with whatever rounding mode the
-signal handler last installed in fpu_status.
-
-Factor the two-step "write fpc + sync fpu_status" logic out of
-HELPER(sfpc) into cpu_s390x_load_fpc(), declare it in cpu.h, and call
-it from restore_sigregs() in place of the direct assignment.
-
-cpu_s390x_load_fpc() partially reuses the sanity check from
-HELPER(sfpc): if the FPC value has an invalid rounding mode or reserved
-bits set, it falls back to 0, matching the kernel's fpu_lfpc_safe()
-behavior where a corrupt signal frame value causes a specification
-exception and 0 is used instead.
-
-HELPER(sfpc) now calls cpu_s390x_load_fpc() after its full
-specification-exception check, including the FEAT_FLOATING_POINT_EXT
-test that is not needed for the signal restore path.
-
-Fixes: 2941e0fa05 ("linux-user/s390x: Save/restore fpc when handling a signal")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3489
 ---
- linux-user/s390x/signal.c     |  6 +++++-
- target/s390x/cpu.h            |  1 +
- target/s390x/tcg/fpu_helper.c | 20 ++++++++++++++------
- 3 files changed, 20 insertions(+), 7 deletions(-)
+ linux-user/mmap.c | 32 +++++++++++++++++++++++++++++++-
+ 1 file changed, 31 insertions(+), 1 deletion(-)
 
-diff --git a/linux-user/s390x/signal.c b/linux-user/s390x/signal.c
-index 96d1c8d11c..28ad80bde4 100644
---- a/linux-user/s390x/signal.c
-+++ b/linux-user/s390x/signal.c
-@@ -332,7 +332,11 @@ static void restore_sigregs(CPUS390XState *env, target_sigregs *sc)
-     for (i = 0; i < 16; i++) {
-         __get_user(env->aregs[i], &sc->regs.acrs[i]);
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index b4b7b3e5cc..50916c29a5 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -1282,7 +1282,7 @@ abi_long target_madvise(abi_ulong start, abi_ulong len_in, int advice)
+     case TARGET_MADV_KEEPONFORK:    /* parisc */
+         advice = MADV_KEEPONFORK;
+         break;
+-    /* we do not care about the other MADV_xxx values yet */
++    /* all other MADV_xxx values are the same across architectures */
      }
--    __get_user(env->fpc, &sc->fpregs.fpc);
-+    {
-+        uint32_t fpc;
-+        __get_user(fpc, &sc->fpregs.fpc);
-+        cpu_s390x_load_fpc(env, fpc);
-+    }
-     for (i = 0; i < 16; i++) {
-         __get_user(*get_freg(env, i), &sc->fpregs.fprs[i]);
+ 
+     /*
+@@ -1307,6 +1307,19 @@ abi_long target_madvise(abi_ulong start, abi_ulong len_in, int advice)
+      */
+     mmap_lock();
+     switch (advice) {
++    case MADV_NORMAL:
++    case MADV_RANDOM:
++    case MADV_SEQUENTIAL:
++    case MADV_WILLNEED:
++    case MADV_DOFORK:
++    case MADV_FREE:
++    case MADV_COLD:
++    case MADV_PAGEOUT:
++        ret = 0; /* OK */
++        break;
++    case MADV_REMOVE:
++        ret = -EOPNOTSUPP;
++        break;
+     case MADV_DONTDUMP:
+         page_set_flags(start, start + len - 1, PAGE_DONTDUMP, 0);
+         break;
+@@ -1324,6 +1337,23 @@ abi_long target_madvise(abi_ulong start, abi_ulong len_in, int advice)
+                 page_reset_target_data(start, start + len - 1);
+             }
+         }
++        break;
++    case MADV_DONTFORK:
++    case MADV_MERGEABLE:
++    case MADV_UNMERGEABLE:
++    case MADV_HWPOISON:
++    case MADV_HUGEPAGE:
++    case MADV_NOHUGEPAGE:
++    case MADV_COLLAPSE:
++    case MADV_POPULATE_READ:
++    case MADV_POPULATE_WRITE:
++    case -1:    /* BoringSSL uses -1 to check if the environment is broken */
++        ret = -EINVAL;
++        break;
++    default:
++        qemu_log_mask(LOG_UNIMP, "Unhandled madvise(%d) call.\n", advice);
++        ret = -EINVAL; /* not yet known advise */
++        break;
      }
-diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
-index 3acbe83f0f..f55b79ef8a 100644
---- a/target/s390x/cpu.h
-+++ b/target/s390x/cpu.h
-@@ -895,6 +895,7 @@ void s390_init_sigp(void);
- /* helper.c */
- void s390_cpu_set_psw(CPUS390XState *env, uint64_t mask, uint64_t addr);
- uint64_t s390_cpu_get_psw_mask(CPUS390XState *env);
-+void cpu_s390x_load_fpc(CPUS390XState *env, uint32_t fpc);
+     mmap_unlock();
  
- /* outside of target/s390x/ */
- S390CPU *s390_cpu_addr2state(uint16_t cpu_addr);
-diff --git a/target/s390x/tcg/fpu_helper.c b/target/s390x/tcg/fpu_helper.c
-index 6ca0b7162b..107025e675 100644
---- a/target/s390x/tcg/fpu_helper.c
-+++ b/target/s390x/tcg/fpu_helper.c
-@@ -1087,6 +1087,19 @@ static const int fpc_to_rnd[8] = {
-     float_round_to_odd,
- };
- 
-+void cpu_s390x_load_fpc(CPUS390XState *env, uint32_t fpc)
-+{
-+    /*
-+     * Mimic kernel fpu_lfpc_safe(): a corrupt signal frame value that would
-+     * trigger a specification exception instead results in FPC being set to 0.
-+     */
-+    if (fpc_to_rnd[fpc & 0x7] == -1 || fpc & 0x03030088u) {
-+        fpc = 0;
-+    }
-+    env->fpc = fpc;
-+    set_float_rounding_mode(fpc_to_rnd[fpc & 0x7], &env->fpu_status);
-+}
-+
- /* set fpc */
- void HELPER(sfpc)(CPUS390XState *env, uint64_t fpc)
- {
-@@ -1094,12 +1107,7 @@ void HELPER(sfpc)(CPUS390XState *env, uint64_t fpc)
-         (!s390_has_feat(S390_FEAT_FLOATING_POINT_EXT) && fpc & 0x4)) {
-         tcg_s390_program_interrupt(env, PGM_SPECIFICATION, GETPC());
-     }
--
--    /* Install everything in the main FPC.  */
--    env->fpc = fpc;
--
--    /* Install the rounding mode in the shadow fpu_status.  */
--    set_float_rounding_mode(fpc_to_rnd[fpc & 0x7], &env->fpu_status);
-+    cpu_s390x_load_fpc(env, fpc);
- }
- 
- /* set fpc and signal */
 -- 
 2.54.0
 
