@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDB3DCD5BD1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 04:30:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 938B5CD5BCF
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 04:31:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRjQl-0007T8-1c; Tue, 26 May 2026 00:30:15 -0400
+	id 1wRjQd-0007P8-Il; Tue, 26 May 2026 00:30:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lb.workbox@gmail.com>)
- id 1wRjQj-0007SB-E5
- for qemu-devel@nongnu.org; Tue, 26 May 2026 00:30:13 -0400
+ id 1wRjQb-0007OQ-Kd
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 00:30:05 -0400
 Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <lb.workbox@gmail.com>)
- id 1wRjQh-0007aT-Hj
- for qemu-devel@nongnu.org; Tue, 26 May 2026 00:30:13 -0400
+ id 1wRjQZ-0007IF-5a
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 00:30:05 -0400
 Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-490388fd0dbso44960015e9.0
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 21:30:11 -0700 (PDT)
+ 5b1f17b1804b1-4903974854dso39293575e9.3
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 21:30:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779769810; x=1780374610; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VoRWV4KuXE1NBOqs848LK5rIJtwxJka5Ant/9lNcJsw=;
- b=Mpox/IpZNlm7XMHSiZuGEgneHfG1CQZVE/GPffI5lOAq0/kACl4Jgz6xREvkYboKPw
- L7KjM8mrbqsrRcZr/FmRntQYLr9afV24z3JPAMZMyo/FCUP+ESqVi3pAmWL86P5Fi29u
- WoPmkjO1Mg2M/W+1ht/JhKyMRznmxFwRGTdOa+ApmEVnTM3BVPxjnvZbyE9MlOHUhJZ+
- e7U5Jyyao40nxPwv8RqpWbQezcEPEuy3jTwIBGyHuM/lwJ+XhM02BFwld3FpQD0l/NPf
- BOrjSv7nb3TM3s39/FNdkFVXZZHLTXF1ihgwrOpBdZsNya8QfM1FS+b9uXufOd7e4ZD0
- LzSQ==
+ d=gmail.com; s=20251104; t=1779769801; x=1780374601; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=pR4VbMiYp6/ZuZdj902a57UbPmsVcL1enXRYqWopBDc=;
+ b=p1eL4DSjReKhVnbY5r3drqUcbxLTH3Ll2asAcz4RNIJC7LESqLS/5/o1xWuMHsI2wn
+ 4saNUKXIRkEGPKFX41uGDY3aw3UOBp5xfDkFKUkWazyz3lbSapWMWCSyeMOnENd3/uL3
+ 4e5KI6QmD0BGVK7KKCGWstTNt55zREIImuHa0IhCWjkOdFPgvkVJ6gp0JElNhhd/ulSu
+ vOhbbWQLPynzr6Wo7Ya3q9fl67Sjup6JV5vu7QFzFlMLjMri7++vXLnQfJg6Hg9w6ZyK
+ zK9A6rYuRxYmXOvQCrGDBlwFVuTR7lBOYqTD0Quta1QUvM6zFz01d27DJh+Ln/CuAaDO
+ yUzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779769810; x=1780374610;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=VoRWV4KuXE1NBOqs848LK5rIJtwxJka5Ant/9lNcJsw=;
- b=tZd91A9hd7utcs2W25NFLWfUKaodXjoUYdNSPnNX4aIyp8/VBP4gFUZ35xC1NbA+0J
- AWardDrSe0XEUWHbgLgJ7zymk5X0x3pccSvGiByLNS/0ez9PUMpE4Z1X1aOpal09lpX9
- lNkX/dkr4UeZq0Z+uz290l5r9b8Cvi88iPhPgRfMS+DGy9BGppPmDM6+SLjXrbgHMu3A
- lDGkuOB4F/9GowNMdYfsj2EkcLRmYN12p9x/z3wryPJbpr0DxV7OmxPB8CgBTwT5WOgJ
- 18y8/VNujliWxtr1djO5Y7dSzJuTEeiZ7rQ6hrf3z08X593+pIyNkH8CZc88uJ+L/x9O
- Nlaw==
+ d=1e100.net; s=20251104; t=1779769801; x=1780374601;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pR4VbMiYp6/ZuZdj902a57UbPmsVcL1enXRYqWopBDc=;
+ b=AMAuuoiFs5nNm1s7MlWGtb7i4v+y4aei0SqzqQ4tfcdPUOZU3wAro9jW6yx/C2cAIl
+ 9Hk0uLUpgKeoPk/RvEmPkWiM4bzvDwtvBFKJob8TU06WxphDwo2d/79IyOsvXi47L9T3
+ h0zGAhFzNUCBCXYPERuqbOtgjE355ofu5po0FwtuxCfrnNiIPTj7ftjSX2sZXLLMz8tR
+ jZwv07w6ia1g+CokYz4cIBzdpvKXSsDlFfKM0xpeGDgNzzvDQvMxo6LhPMqxpY/OZHyc
+ Sw4S6CoY62whsCb/D+0Scx4cU33VUn4avNZqCnyhiypBEixGJwJuzimdR5FFMlXglVTe
+ qQBQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ96Jvn6uC0qW3HNhtDCtfzD4fPk6r5SJJnVPF2PZfaSCBTsPQXgg0fKIKdbSIHtiZSZmzP8oTCU7rdc@nongnu.org
-X-Gm-Message-State: AOJu0Ywk56X0Dt89vga19nlFjSJldvKrZxaOOOtZL+pqGyAZhaRg5z0f
- Kgk/ndEHkK0OViuKv6wsfctm60MnLgIwhK2lPvLEql8OAZB6La2nTob5
-X-Gm-Gg: Acq92OFzTzfRFe3REpYX6ETLeZsHkElfDCdS4cA8gzuA3gHbex7BGdIn2UEMByF4ecu
- /5UxKwwhq4mMnf9arfej7HBJ3khZvSkSMSH4orNAkTzyCoMgiiaKnV6fLe/iGTh+0hDyORyTpuS
- 8V218OBZzQc/UyWdnsYuTZzNHwZC+C+G2LKKOQw6sCUw/ykBGpE6og0nQTvkbOcHszifxcpg8HS
- MNgA3OIe/EcwkGKgqSPlSY/qx5UwOunMXuKBqmyxaOH2lBlKVCd8PZvqr//orGEiTM45mB1y36u
- Hk+/OdV2TFx9K+t3h+Ml+zCsPvA6IzlA8e5k1S7lEPgDHUhYu9giVhFuWq/Zo+aKbCzob1Gtfx7
- kalKmAIof4/KdUzLZ9gwUBLGynRXsQUluPBLZm2f8Z71xSvmArzWXK/ineWbGqEtM69yhQ3E6oQ
- zm60YGr6t1YNUeVZLsYGNkhmmvgxLclaCITap6+NoOxPFtnLZhfFSj8U0l1jKBH9ew1DvsLAeVN
- Oaq5yNiRVbhBsCXEAyZ1NfG
-X-Received: by 2002:a05:600c:46cb:b0:48e:6db3:ff33 with SMTP id
- 5b1f17b1804b1-490426add7dmr276165165e9.14.1779769810005; 
- Mon, 25 May 2026 21:30:10 -0700 (PDT)
+ AFNElJ+9/yk+9oEN6u7HNDmiRnoUUb9AkmqDdjFTDUJ4KC0oazTYRnGKcb0ico8Tu9S66g4sawpZrb54r+pb@nongnu.org
+X-Gm-Message-State: AOJu0YxgFYthJRFec2tHwMmAieyZ3cjrKSSU6b90jHxDHSw3TueFUACC
+ jm83G6ycXLlow/BDi41RYNtoE/FMdqwNRQ1Q44pErRM5PlLEtGQjDjXM
+X-Gm-Gg: Acq92OEFsEkHC1shUg9IDf06gLdur88jVGnTZz7ItYNp5f/ac9JiujyZScW2nhUaYS/
+ 6XrhaQf/6Sn0nwNWbYB2CQqrcyN0QIF1rcbDC5KlbO43vAmYEElxcm0bpiFMISytUadUHu9GBtO
+ flbkmUBFvUoAMxDkLFNsDHPfDsprR1Hoh6uQp367sl7CRlVkAkBVzJFjOMMqORw95kvm70YoQoX
+ 7WQB0tn2hGHAIGcnigZiJjGaf+jTlYUK8MD+/ISG2n9vnkynfQi7uCuWP6O+90VmSnx5FqoO5ca
+ JawhbNOos97oR914XHE10WMmlDxym/x5xWVcUuRHnAz+YX7VCodBmLnetDH3A2IUAxZenBy6kd1
+ Yb1+vZ8vDQWba1AP89vTYA/76KyF6HGaD3RklvmsM5t8EVGHF6j9J4bBCyVHKglunPAgVVfhrgE
+ xQ1Bwt7APcf59NYr7kCSM2S6Vv5wxrqjTHz+/n4LAnY2e0ohYVZrBpkI2IwSrXC6kvtP+lonp1V
+ zU=
+X-Received: by 2002:a05:600c:8599:b0:485:9a50:3370 with SMTP id
+ 5b1f17b1804b1-490424acb4cmr220397825e9.8.1779769800695; 
+ Mon, 25 May 2026 21:30:00 -0700 (PDT)
 Received: from localhost.localdomain (46-116-239-136.bb.netvision.net.il.
  [46.116.239.136]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49076a6abfasm6659625e9.12.2026.05.25.21.30.08
+ 5b1f17b1804b1-49076a6abfasm6659625e9.12.2026.05.25.21.29.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 May 2026 21:30:09 -0700 (PDT)
+ Mon, 25 May 2026 21:30:00 -0700 (PDT)
 From: Leonid Bloch <lb.workbox@gmail.com>
 To: "Michael S . Tsirkin" <mst@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
@@ -78,13 +77,12 @@ To: "Michael S . Tsirkin" <mst@redhat.com>,
  Dmitry Fleytman <dmitry.fleytman@gmail.com>
 Cc: Leonid Bloch <lb.workbox@gmail.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v4 4/8] docs/specs: Introduce the QEMU AC adapter documentation
-Date: Tue, 26 May 2026 07:29:23 +0300
-Message-ID: <20260526042928.9203-5-lb.workbox@gmail.com>
+Subject: [PATCH v4 0/8] Introduce a battery, AC adapter, and lid button
+Date: Tue, 26 May 2026 07:29:19 +0300
+Message-ID: <20260526042928.9203-1-lb.workbox@gmail.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260526042928.9203-1-lb.workbox@gmail.com>
-References: <20260526042928.9203-1-lb.workbox@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
  envelope-from=lb.workbox@gmail.com; helo=mail-wm1-x32d.google.com
@@ -110,174 +108,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Leonid Bloch <lb.workbox@gmail.com>
----
- MAINTAINERS          |   5 ++
- docs/specs/acad.rst  | 126 +++++++++++++++++++++++++++++++++++++++++++
- docs/specs/index.rst |   1 +
- 3 files changed, 132 insertions(+)
- create mode 100644 docs/specs/acad.rst
+This series introduces three ACPI devices that are particularly useful
+for laptop/mobile virtualization:
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index ce50329f48..47436ec878 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3043,6 +3043,11 @@ F: docs/specs/battery.rst
- F: hw/acpi/battery*
- F: include/hw/acpi/battery.h
- 
-+AC Adapter
-+M: Leonid Bloch <lb.workbox@gmail.com>
-+S: Maintained
-+F: docs/specs/acad.rst
-+
- Subsystems
- ----------
- Overall Audio backends
-diff --git a/docs/specs/acad.rst b/docs/specs/acad.rst
-new file mode 100644
-index 0000000000..af79b4b8d7
---- /dev/null
-+++ b/docs/specs/acad.rst
-@@ -0,0 +1,126 @@
-+.. SPDX-License-Identifier: GPL-2.0-or-later
-+
-+=================
-+AC Adapter Device
-+=================
-+
-+The AC adapter device provides AC power state information to the guest via ACPI.
-+AC adapter state is controlled via QMP commands, providing deterministic control
-+for testing and migration safety.
-+
-+Configuration
-+-------------
-+
-+The AC adapter device is created as an ISA device using ``-device acad``.
-+
-+Properties
-+~~~~~~~~~~
-+
-+``ioport`` (default: 0x53c)
-+  I/O port base address for the AC adapter device register.
-+
-+ACPI Interface
-+--------------
-+
-+The AC adapter device is exposed to the guest as an ACPI device with:
-+
-+* **HID**: ``ACPI0003`` (AC Adapter)
-+* **Device Path**: ``\_SB.ADP0``
-+* **Notification Values**:
-+
-+  * ``0x80``: Status change (connected/disconnected)
-+
-+ACPI Methods
-+~~~~~~~~~~~~
-+
-+``_PSR`` (Power Source)
-+  Returns the current AC adapter state (0 = offline, 1 = online).
-+
-+``_PCL`` (Power Consumer List)
-+  Returns the list of devices powered by this adapter.
-+
-+``_PIF`` (Power Source Information)
-+  Returns static information about the power source including model number,
-+  serial number, and OEM information.
-+
-+I/O Interface
-+-------------
-+
-+The device uses a single I/O port register:
-+
-+* **Port**: ``ioport`` property value (default 0x53c)
-+* **Size**: 1 byte
-+* **Access**: Read-only
-+
-+Register Layout
-+~~~~~~~~~~~~~~~
-+
-+**PWRS** (offset 0x00, 1 byte)
-+  Current AC adapter state:
-+
-+  * ``0x00``: AC adapter offline (unplugged)
-+  * ``0x01``: AC adapter online (plugged in)
-+
-+QMP Commands
-+------------
-+
-+The following QMP commands control the AC adapter state:
-+
-+``ac-adapter-set-state``
-+  Set the AC adapter connection state.
-+
-+  * ``connected``: Whether the AC adapter is connected (boolean)
-+
-+  Example::
-+
-+    -> { "execute": "ac-adapter-set-state",
-+         "arguments": { "connected": true }}
-+    <- { "return": {} }
-+
-+``query-ac-adapter``
-+  Query the current AC adapter state.
-+
-+  Example::
-+
-+    -> { "execute": "query-ac-adapter" }
-+    <- { "return": { "connected": true }}
-+
-+Examples
-+--------
-+
-+Basic usage::
-+
-+  # Start VM with AC adapter
-+  qemu-system-x86_64 -device acad -qmp tcp:localhost:4444,server,wait=off
-+
-+  # From another terminal, set AC adapter state via QMP:
-+  echo '{"execute":"qmp_capabilities"}
-+        {"execute":"ac-adapter-set-state",
-+         "arguments":{"connected":true}}' | \
-+  nc -N localhost 4444
-+
-+Simulate unplugging AC adapter::
-+
-+  # Start with AC adapter connected
-+  echo '{"execute":"ac-adapter-set-state",
-+         "arguments":{"connected":true}}' | nc -N localhost 4444
-+
-+  # Later, disconnect AC adapter
-+  echo '{"execute":"ac-adapter-set-state",
-+         "arguments":{"connected":false}}' | nc -N localhost 4444
-+
-+  # Reconnect AC adapter
-+  echo '{"execute":"ac-adapter-set-state",
-+         "arguments":{"connected":true}}' | nc -N localhost 4444
-+
-+Combined with battery device::
-+
-+  # Create a complete laptop power environment
-+  qemu-system-x86_64 -device battery -device acad
-+
-+  # Simulate unplugging AC while on battery
-+  echo '{"execute":"battery-set-state",
-+         "arguments":{"state":{"present":true,"charging":false,
-+                               "discharging":true,"charge-percent":75}}}
-+        {"execute":"ac-adapter-set-state",
-+         "arguments":{"connected":false}}' | nc -N localhost 4444
-diff --git a/docs/specs/index.rst b/docs/specs/index.rst
-index 3442b76da6..a19c75384c 100644
---- a/docs/specs/index.rst
-+++ b/docs/specs/index.rst
-@@ -22,6 +22,7 @@ guest hardware that is specific to QEMU.
-    acpi_pci_hotplug
-    acpi_nvdimm
-    acpi_erst
-+   acad
-    battery
-    sev-guest-firmware
-    fw_cfg
+* Battery
+* AC adapter
+* Laptop lid button
+
+Link to v3: https://lists.nongnu.org/archive/html/qemu-devel/2025-08/msg04138.html
+Link to GitHub PR, for ease of review: https://github.com/blochl/qemu/pull/4
+
+Changes in v4:
+--------------
+
+* Rebased on latest master
+
+Based on the feedback on v3:
+
+* Documentation patch split: each device is now introduced by a
+  separate documentation patch followed by the code patch.
+
+* sysfs/procfs host mirroring removed from the C devices: QEMU no
+  longer reads /sys or /proc directly. The devices are now purely
+  QMP-controlled. A reference Python script is added in
+  scripts/laptop-mirror.py that demonstrates how a management layer
+  can translate host sysfs/procfs state into the QMP commands.
+
+* Battery I/O region cleanup: the battery registers are now native
+  DWORD-access only, matching the AML AML_DWORD_ACC field layout.
+
+* find_*_device() now reports ambiguity: when more than one matching
+  device is present, QMP returns "More than one X device present".
+
+* QAPI cleanups:
+  - Stray blank documentation lines in *-set-state removed.
+  - All the new types and commands carry "Since: 11.1".
+  - The C devices no longer #include "qemu/error-report.h" now that
+    they don't call warn_report().
+  - battery-set-state now rejects impossible combinations
+    (charging && discharging, charge/discharge without present,
+    out-of-range charge-percent and rate).
+
+* I/O port unknown-address handling: the default branches in the
+  ioport_read paths now g_assert_not_reached() instead of logging and
+  returning 0.
+
+* Set the devices not hotpluggable.
+
+* ISA vs. PCI base: kept ISA. ACPI defines PNP0C0A (battery),
+  ACPI0003 (AC adapter) and PNP0C0D (lid) as namespace devices under
+  \_SB with control methods (_BIF/_BST, _PSR, _LID) - see ACPI 6.5
+  sections 10.2, 10.3 and 9.4
+  (https://uefi.org/sites/default/files/resources/ACPI_Spec_6_5_Aug29.pdf).
+  There is no PCI class code defined for any of these in the first place,
+  and no actual laptop puts them on PCI - the signals come out of the
+  embedded controller and surface as fixed-hardware ACPI devices.
+  Guest power-management code matches the same way: Linux uses
+  drivers/acpi/{battery,ac,button}, Windows acpi.sys, macOS and the
+  BSDs follow the same pattern. Making the devices PCI would mean
+  inventing a device class no guest has a driver for.
+
+Changes in v3:
+--------------
+
+* Rebased on latest master
+* Addressed the v2 review by Igor Mammedov
+
+Changes in v2:
+--------------
+Based on the feedback from Philippe Mathieu-Daudé and Michael S. Tsirkin:
+
+* Complete redesign with dual-mode operation:
+  - QMP control mode (default): Devices are controlled via QMP commands,
+    providing deterministic behavior essential for migration and CI/testing
+  - Host mirroring mode (opt-in): Original sysfs/procfs monitoring behavior,
+    now disabled by default
+
+* Migrated to modern QEMU ACPI architecture:
+  - Devices now implement ACPI_DEV_AML_IF interface
+  - AML generation moved from centralized acpi-build.c to device files
+
+* Added a QMP interface:
+  - battery-set-state/query-battery
+  - ac-adapter-set-state/query-ac-adapter
+  - lid-button-set-state/query-lid-button
+
+* Documentation improvements:
+  - Converted to .rst format
+  - Added examples for both QMP and "fake" sysfs/procfs testing
+
+The dual-mode design ensures these devices are migration-safe and
+deterministic by default, while still allowing host state mirroring
+when explicitly requested for desktop use cases.
+
+Use cases:
+----------
+1. Testing: CI systems can programmatically control power states.
+2. Cloud: Expose a virtual battery for usage-based resource limiting.
+3. Desktop virtualization: Mirror host laptop state to the guest via
+   the laptop-mirror.py reference script (or a libvirt equivalent).
+4. Development: Test power management without physical hardware.
+
+Example usage:
+--------------
+# QMP-controlled battery
+qemu-system-x86_64 -device battery \
+    -qmp unix:/tmp/qmp.sock,server=on,wait=off
+
+# Control via QMP
+{"execute": "battery-set-state",
+ "arguments": {"state": {"present": true, "charging": false,
+                         "discharging": true, "charge-percent": 42,
+                         "rate": 500}}}
+
+# Or, to mirror host laptop state through QMP:
+$builddir/run scripts/laptop-mirror.py -s /tmp/qmp.sock
+
+The series has been tested with Windows and Linux guests, correctly
+showing battery status, AC adapter state, and lid button events in
+guest UIs and triggering appropriate power management actions.
+
+Thanks again for the reviews.
+Leonid.
+
+Leonid Bloch (8):
+  hw/acpi: Support extended GPE handling for additional ACPI devices
+  docs/specs: Introduce the QEMU Battery documentation
+  hw/acpi: Introduce the QEMU Battery
+  docs/specs: Introduce the QEMU AC adapter documentation
+  hw/acpi: Introduce the QEMU AC adapter
+  docs/specs: Introduce the QEMU lid button documentation
+  hw/acpi: Introduce the QEMU lid button
+  scripts: Add laptop-mirror reference script
+
+ MAINTAINERS                          |  27 ++
+ docs/specs/acad.rst                  | 126 ++++++++++
+ docs/specs/battery.rst               | 154 ++++++++++++
+ docs/specs/button.rst                | 131 ++++++++++
+ docs/specs/index.rst                 |   3 +
+ docs/tools/index.rst                 |   1 +
+ docs/tools/laptop-mirror.rst         |  82 ++++++
+ hw/acpi/Kconfig                      |  12 +
+ hw/acpi/acad-stub.c                  |  20 ++
+ hw/acpi/acad.c                       | 251 ++++++++++++++++++
+ hw/acpi/battery-stub.c               |  20 ++
+ hw/acpi/battery.c                    | 364 +++++++++++++++++++++++++++
+ hw/acpi/button-stub.c                |  20 ++
+ hw/acpi/button.c                     | 227 +++++++++++++++++
+ hw/acpi/core.c                       |  17 +-
+ hw/acpi/meson.build                  |   6 +
+ hw/acpi/trace-events                 |  12 +
+ hw/i386/Kconfig                      |   3 +
+ include/hw/acpi/acad.h               |  25 ++
+ include/hw/acpi/acpi_dev_interface.h |   3 +
+ include/hw/acpi/battery.h            |  32 +++
+ include/hw/acpi/button.h             |  23 ++
+ qapi/acpi.json                       | 165 ++++++++++++
+ scripts/laptop-mirror.py             | 219 ++++++++++++++++
+ 24 files changed, 1941 insertions(+), 2 deletions(-)
+ create mode 100644 docs/specs/acad.rst
+ create mode 100644 docs/specs/battery.rst
+ create mode 100644 docs/specs/button.rst
+ create mode 100644 docs/tools/laptop-mirror.rst
+ create mode 100644 hw/acpi/acad-stub.c
+ create mode 100644 hw/acpi/acad.c
+ create mode 100644 hw/acpi/battery-stub.c
+ create mode 100644 hw/acpi/battery.c
+ create mode 100644 hw/acpi/button-stub.c
+ create mode 100644 hw/acpi/button.c
+ create mode 100644 include/hw/acpi/acad.h
+ create mode 100644 include/hw/acpi/battery.h
+ create mode 100644 include/hw/acpi/button.h
+ create mode 100755 scripts/laptop-mirror.py
+
 -- 
 2.54.0
 
