@@ -4,46 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 830FDCD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:51:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17337CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:51:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRt7a-0008Q5-Q9; Tue, 26 May 2026 10:51:06 -0400
+	id 1wRt7i-0008Qm-0T; Tue, 26 May 2026 10:51:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wRt7X-0008PP-34
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:51:03 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wRt7a-0008Q3-2F
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:51:06 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wRt7U-0002Wu-Jf
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:51:02 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wRt7Y-0002XQ-Dq
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:51:05 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 3FF3060128;
- Tue, 26 May 2026 14:50:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D1F51F00A3A;
- Tue, 26 May 2026 14:50:57 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id CA5F943BFA;
+ Tue, 26 May 2026 14:51:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C02C11F00A3A;
+ Tue, 26 May 2026 14:51:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779807058;
- bh=RzAg/z9ESTOIfX4D/3KjFmD6FehyVHYLgvenUfGbwos=;
- h=From:To:Cc:Subject:Date;
- b=RT/iy7YSGnjbGk+fpPKrZVFFslu0CmAA3lLFSXjYh+8OwdZ95QBAMK/KssXQHDLy5
- K2ekP3yayM80QN/gQlemlUDAeA7SjL9PaCVpDVJ8hP8M0HdaXM0oNyJCot85spf7iS
- ftPXQ2mxRcQQ1fwvn3VSh+U61JhMyxMYxkGMgqKQdLPU6c7VCArHbLhxRnAiYJ8xvt
- S9eK1dlyziP5YaIPNa/fLQgGs1ANH2apvlt+NGBicvge5grcryx2/igF0M82RTugj0
- lriyU3HwMAba4ciCMY/XauYveQUOLTnM4J7xnFK71eXNkcjnEvvM61GLkvk5DR4Eqn
- 5/xFCKrFSiG5A==
+ s=k20260515; t=1779807061;
+ bh=EChvl9XZ5ih5a3IxcpSViHIIOPB+pvvi8rzefEMFLoA=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=Li4JNztoLhY8jjBbMePFP84VAbHueFC51h+pMIRc+7kYgvPAxrPUvBO/Tk5rMAvtD
+ g6l8vADyav6ekwz56nd5RN8kdbDrYhiSRXUV7mrjB0sOQCCEmuQgGdVXhb8IfX1yGy
+ GoPFQhVSqJ4pptdgFfnPF74fjzfTnVI1iesFP4kCnUNIGmHoYwh+nnlKuuibhNhC6I
+ 4h3rYMB1YjvAVC9gTF0dlgwJrCTNODtJyks74hZHdDlxIBjqmaucS2BeOwOs5cphIj
+ KfYh6ySby0lVtr3MHB4cZe8DY1MXGqWAUMzGwi/h3oqqnMy4yyWMX/lZH2qK/LLYkI
+ wn6sYptX2JEFA==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>
-Subject: [PATCH 1/2] linux-user: Implement finer grained madivse() syscall
-Date: Tue, 26 May 2026 16:50:48 +0200
-Message-ID: <20260526145049.7239-1-deller@kernel.org>
+Cc: Helge Deller <deller@gmx.de>,
+	Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH 2/2] linux-user: Fix loading static ARM cortex-m55 binaries
+Date: Tue, 26 May 2026 16:50:49 +0200
+Message-ID: <20260526145049.7239-2-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260526145049.7239-1-deller@kernel.org>
+References: <20260526145049.7239-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -67,73 +70,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Although most madvise() values are hints, some are important and are
-checked by userspace, especially by security-relevant applications like
-BoringSLL.  So, return -EINVAL for those functions which we don't emulate.
+Static built ARM binaries for Cortex-m55 may have been linked to have
+their load address at address 0 (because they are effectively a
+bare-metal image). When qemu-user is running as non-root user and will
+try to mmap() a host address at 0 (which is smaller than mmap_min_addr
+according to /proc/sys/vm/mmap_min_addr), it will fail with EPERM and as
+such loading those guest program will fail.
+
+Fix pgb_addr_set() to always return false if the guest_loaddr <
+mmap_min_addr, that way a valdid guest_base address will be calculated
+and the EPERM can be avoided.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3489
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1890
 ---
- linux-user/mmap.c | 32 +++++++++++++++++++++++++++++++-
- 1 file changed, 31 insertions(+), 1 deletion(-)
+ linux-user/elfload.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index b4b7b3e5cc..50916c29a5 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -1282,7 +1282,7 @@ abi_long target_madvise(abi_ulong start, abi_ulong len_in, int advice)
-     case TARGET_MADV_KEEPONFORK:    /* parisc */
-         advice = MADV_KEEPONFORK;
-         break;
--    /* we do not care about the other MADV_xxx values yet */
-+    /* all other MADV_xxx values are the same across architectures */
-     }
- 
-     /*
-@@ -1307,6 +1307,19 @@ abi_long target_madvise(abi_ulong start, abi_ulong len_in, int advice)
-      */
-     mmap_lock();
-     switch (advice) {
-+    case MADV_NORMAL:
-+    case MADV_RANDOM:
-+    case MADV_SEQUENTIAL:
-+    case MADV_WILLNEED:
-+    case MADV_DOFORK:
-+    case MADV_FREE:
-+    case MADV_COLD:
-+    case MADV_PAGEOUT:
-+        ret = 0; /* OK */
-+        break;
-+    case MADV_REMOVE:
-+        ret = -EOPNOTSUPP;
-+        break;
-     case MADV_DONTDUMP:
-         page_set_flags(start, start + len - 1, PAGE_DONTDUMP, 0);
-         break;
-@@ -1324,6 +1337,23 @@ abi_long target_madvise(abi_ulong start, abi_ulong len_in, int advice)
-                 page_reset_target_data(start, start + len - 1);
-             }
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 0e757787d2..77e0526996 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -866,7 +866,7 @@ static bool pgb_addr_set(PGBAddrs *ga, abi_ulong guest_loaddr,
+         if (LO_COMMPAGE != -1 && LO_COMMPAGE < mmap_min_addr) {
+             return false;
          }
-+        break;
-+    case MADV_DONTFORK:
-+    case MADV_MERGEABLE:
-+    case MADV_UNMERGEABLE:
-+    case MADV_HWPOISON:
-+    case MADV_HUGEPAGE:
-+    case MADV_NOHUGEPAGE:
-+    case MADV_COLLAPSE:
-+    case MADV_POPULATE_READ:
-+    case MADV_POPULATE_WRITE:
-+    case -1:    /* BoringSSL uses -1 to check if the environment is broken */
-+        ret = -EINVAL;
-+        break;
-+    default:
-+        qemu_log_mask(LOG_UNIMP, "Unhandled madvise(%d) call.\n", advice);
-+        ret = -EINVAL; /* not yet known advise */
-+        break;
+-        if (guest_loaddr != 0 && guest_loaddr < mmap_min_addr) {
++        if (guest_loaddr < mmap_min_addr) {
+             return false;
+         }
      }
-     mmap_unlock();
- 
 -- 
 2.54.0
 
