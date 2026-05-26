@@ -4,96 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13AF4CD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 18:05:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0832BCD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 18:05:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRw8b-0002VR-IZ; Tue, 26 May 2026 14:04:21 -0400
+	id 1wRw9h-0002ym-U3; Tue, 26 May 2026 14:05:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wRw8R-0002VC-2T
- for qemu-devel@nongnu.org; Tue, 26 May 2026 14:04:12 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wRw9f-0002vn-II
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 14:05:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wRw8O-0001di-6Y
- for qemu-devel@nongnu.org; Tue, 26 May 2026 14:04:10 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wRw9d-0002B5-UL
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 14:05:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779818646;
+ s=mimecast20190719; t=1779818725;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ErvKNckfGI9jf9zfwhwevSdQ6RXXH8OgfaSKTfVdB1U=;
- b=aNYkGDL7YMbeC1l0kTYOl9E776YE9zesIn3WecSk+b7lykw/1XFsoIeFj4emRWqeeG4iQ+
- JhHx2Gu7ZcNAo0799i3e2iFciRNA4s2rbjrMaxIEr/rn0oMcyian5T8sxNleJYLrGSunH1
- XbZ3xVCKkamAk36l1O4WSSuRB13EVSc=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uziicvrsk7jl0hTc1KoJgi0g/une3PHj76G4HEaPbGs=;
+ b=e3Nom/72XRFWD7z2mL3SwKuneVtHf2ijntKtpiUF+BbhDpDHe0525/djGDuZRqMtWXxJSc
+ 1gojxdBOte+ZiBJcXUnM0U+3YkWdZiT70Ge54PCWasnIrbqh4buC2x3bR086KZ10K7Vn3y
+ PoRW9Z4MDkJDAASxO4oQ4JiJpOYG3jM=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-447-cd5lqDgoMBK7I8DuFf72Vg-1; Tue, 26 May 2026 14:04:04 -0400
-X-MC-Unique: cd5lqDgoMBK7I8DuFf72Vg-1
-X-Mimecast-MFC-AGG-ID: cd5lqDgoMBK7I8DuFf72Vg_1779818643
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-49045f93baeso32179045e9.1
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 11:04:04 -0700 (PDT)
+ us-mta-31--zWxvL-eNU6CpJgFGBnpKg-1; Tue, 26 May 2026 14:05:23 -0400
+X-MC-Unique: -zWxvL-eNU6CpJgFGBnpKg-1
+X-Mimecast-MFC-AGG-ID: -zWxvL-eNU6CpJgFGBnpKg_1779818722
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-49047e22ed4so35664365e9.1
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 11:05:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779818643; x=1780423443; darn=nongnu.org;
+ d=redhat.com; s=google; t=1779818722; x=1780423522; darn=nongnu.org;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:from:to
  :cc:subject:date:message-id:reply-to;
- bh=ErvKNckfGI9jf9zfwhwevSdQ6RXXH8OgfaSKTfVdB1U=;
- b=aoK78Ht+LuhJw42HMKsx3C8+wjnwQnjcMvrDhvDfE0PdXrkZKWrOdYOHxRsGzCyoVo
- iscnBWCglr6daWV1TfJEQPqKjBSlM31jxva6h52NplHO/riaIncXW/V2syCUV5Vr9bft
- kK67G3qEbjHjKDQWyNVfVb+1BKXCP5nIQnZoUi43j67s6QMro2+rrqnkWq5C+ZNABZo/
- 36R8rFEU5yyRSuTpCL6+W7s3CqJMkpPVAArvej5RcaEUD+HUieFlfF1AC0xt71MKywuD
- P5qcNaqKBeyBmDOUtM2OdEh0fzi7Om/ncuuy3yyFyPudhHcc4ilrBvdfNdDcQdDKzW5D
- XQ4Q==
+ bh=uziicvrsk7jl0hTc1KoJgi0g/une3PHj76G4HEaPbGs=;
+ b=ACnl5YnEUNWoYVJGcMhVUyD4+WzKRq+V8OHpztov3QXdZDxfxS00xTpOTHr9E/WQ/T
+ bSQc9KZIx7YkF3ELUBU5FXcDVTkWlpvruuvD283mVhdkjxaTWZv1nEKDbI9AYOwP0Wo8
+ +diBJ/QfZfwoOaf3ubqpQB+3BXy+ROBKKwNcH+muFwSU9OFgH8aPXwM5apqOxdMmAjzf
+ z5YFj6o7z/QPZDHjQaod+P/hzBxGPcVJiLvVuUs6OfLLzI9/qgA372k6IfhdRpBnIOhA
+ vzH3Fsu+mJN+qXtNKWfr96ypF+eHBUO1cXnxp2Jx7oZGZ08SzSHKLNptlrENxViBObGk
+ bh/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779818643; x=1780423443;
+ d=1e100.net; s=20251104; t=1779818722; x=1780423522;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ErvKNckfGI9jf9zfwhwevSdQ6RXXH8OgfaSKTfVdB1U=;
- b=NUBkKp5ReWlRXYdGnMSvs/uJxW8Fu/NtlVfUVJKqxYSDeZBRvZEyqAWAWZm6cSMEzy
- XjTOXNAWEH4AgxKSSThTLt+S1rGp1hjSWmZ8zyAziEESW6CZ9MHc+BtBv3sOR6haS2LK
- qnAXxhXdjEU7SpjOQ5o1qLy9aKcaej1Tr0SshH6YbekbjNvzYC57941RNPCj26ubvPr+
- ACz2aCTSys7LeC32XLSmuklSvHP0v5hDUvMbJW3h4BlzTmlksevskNQBQ4w9ucHE80jQ
- 9s/BAcTyM+rLDXa5vp6Hkq9YPZ8TMi0D8Dw8tm2k4Gv9ih09AbLT3L8ok9y15HAYN/6d
- GjNQ==
-X-Gm-Message-State: AOJu0YxYMVdF+gRuZrSuEPIc09VTXOdzBSV0gegZmb4JOnB4gSzZQpuQ
- phma+gDPKNDSaJK/GK3ZDRVo3HVwM4NRUdf0FLlBaod1OSYcLI46hCeH8bvt2wTreZg8Q6wXHFq
- ilsKQsJGXdzz1JkO2wEeRzPMmoI0nfiPMgH0ZRnKHWYGb6Z2qsBma1CNOOMWoVSOj
-X-Gm-Gg: Acq92OGm9S71LwPHF8VkNlJZBAVoHrDJ/3hgSJp5a0WRIoijgZWVboW/8kIyRlkCPFg
- ZoDel3XDUQnpoga4X6KalZBdfk6APIFen4h8Ho5tggfJVGzjkLeX9hXCpxpZTYSjIA2/weXcXCi
- 5aw3gUYV6i6PjBOKwmxlwQYBwlhugPwatHH+rAxdODEjkc1iSINmZoVYcSHzhzjNPqm8N79dXar
- Q9wZw6pP4Y4dSfRI9S/kQzg78axtjIlQKeivX6nIUqM7r0yy2ESzWXdmqc1CnyFyeySW73CUYEZ
- fQKMQhs/Ej0vDO6LZ7NWxpNyGQXnWvYP6+q39393rjaE4c646ZB5HYhIaHIr4q5XT9Db3OCKuG3
- 5oBLfpSnp5xZTAYyWK+obnJsffFShXJ58+BrAsiVc8+Q=
-X-Received: by 2002:a05:600c:5548:b0:48f:e26a:1744 with SMTP id
- 5b1f17b1804b1-490424b0854mr209214215e9.9.1779818643176; 
- Tue, 26 May 2026 11:04:03 -0700 (PDT)
-X-Received: by 2002:a05:600c:5548:b0:48f:e26a:1744 with SMTP id
- 5b1f17b1804b1-490424b0854mr209213595e9.9.1779818642538; 
- Tue, 26 May 2026 11:04:02 -0700 (PDT)
+ bh=uziicvrsk7jl0hTc1KoJgi0g/une3PHj76G4HEaPbGs=;
+ b=hsbeUzgu489M3oHI9QenKFHEHuixRc9UkNnJvQsTdQ9/S9FRw+5AzEEPZ+rmevt9Z2
+ xdVXrahW/3pXv1mxI8rDL6PZ15qa6QBtZmCGF2aInDxAbHdSmOX8dJU6LNK5Zc7QKdsu
+ qE+961jgm2n8P9dHzMQrG8j8+6NPTMEnl7O2RAY8Qh+VZ2cMrypoBIziIyRrP0n7eJaj
+ NTju8u9rHuygV7uNYF4wMPXgf3+ICJi16dHkfxYlWPe4U0KMkAmyVjt5ouS0yH5cjjCK
+ dpNU6z0kTz5bMbpJX7UbeJfVdihLxtg95cEdNUZNJlZXATmJi6TigZErDmfHvl4/BseA
+ 1iQA==
+X-Gm-Message-State: AOJu0YwpdJfkEkYqSAGmcu7nECNA6EEnS3D1elJBfKS4sTgLNO3XxXhg
+ UBVcjjr//KbqBVG7Or03HqvmA80L5V7T3PecqAxgV2FBLqemLy7HOiyFXMtNrtWrwWzpyZmlxn7
+ FImYNb5Yl+M1GuCUWYF8iS3jas0C4Oq3CO+iFOlvY4RMlR5RqtDit2Ap5cAOQlkyM
+X-Gm-Gg: Acq92OEPUMo1flX34CFOwkbLiZ0ytKFuWIyYcpI964iCNIly+S6OFvW1mmg2aBdh0yI
+ GNLyvadll8u/MlrygUOqpuxefhJTNuyLDP6M0Aoa7XaVPS+gGZ0xMOo5riwmBWr2Yn6RDlYgPvr
+ VCxdH9BNsdIYeVwXwB60LochGSaRdC/v64NEegQ2uBiej3nLajYMhHsTQ45tnc6CmiE7Uea8clH
+ sQzMMgOOuXRe1X9VccB11vcuBliK/TJABviF9AiDDVX0QKEekk0Nuj9VOxnjT0O+oyfw0llZZec
+ PMyPn/6AWzmtFU+1dSr7Zpv7ia3gJWv86UV2oYY1+7rM1Fo+x4b9IAGJEV0Yc2+A0hUftAX4rlZ
+ xoOgw8kKVQybaN+9i5xd4L34/Oil+rSozDHejyn8gN2I=
+X-Received: by 2002:a05:600c:8b08:b0:490:601f:d785 with SMTP id
+ 5b1f17b1804b1-490601fd90amr198434585e9.2.1779818722103; 
+ Tue, 26 May 2026 11:05:22 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b08:b0:490:601f:d785 with SMTP id
+ 5b1f17b1804b1-490601fd90amr198433885e9.2.1779818721616; 
+ Tue, 26 May 2026 11:05:21 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-25-45.inter.net.il. [80.230.25.45])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49045284855sm347966975e9.0.2026.05.26.11.04.01
+ 5b1f17b1804b1-49049973b71sm100633615e9.29.2026.05.26.11.05.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 11:04:01 -0700 (PDT)
-Date: Tue, 26 May 2026 14:03:59 -0400
+ Tue, 26 May 2026 11:05:21 -0700 (PDT)
+Date: Tue, 26 May 2026 14:05:18 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-devel@nongnu.org, stefanha@redhat.com
-Subject: Re: on ai generated and code provenance
-Message-ID: <20260526140231-mutt-send-email-mst@kernel.org>
-References: <20260524083329-mutt-send-email-mst@kernel.org>
- <ahXbxzB4C_lr6b0N@redhat.com>
+To: Quan Sun <Quan.Sun@windriver.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, fam@euphon.net,
+ sgarzare@redhat.com
+Subject: Re: [PATCH] hw/scsi/vhost-scsi: fix build with older kernel headers
+Message-ID: <20260526140511-mutt-send-email-mst@kernel.org>
+References: <20260525182730.4098543-1-Quan.Sun@windriver.com>
+ <20260525183656-mutt-send-email-mst@kernel.org>
+ <c783a05b-62cf-44d2-81f5-13b8e3f0f81e@windriver.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ahXbxzB4C_lr6b0N@redhat.com>
+In-Reply-To: <c783a05b-62cf-44d2-81f5-13b8e3f0f81e@windriver.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -118,117 +120,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 26, 2026 at 07:43:35PM +0200, Kevin Wolf wrote:
-> Am 24.05.2026 um 14:42 hat Michael S. Tsirkin geschrieben:
-> > So, I had to reject a perfectly reasonable patch:
-> > https://lore.kernel.org/qemu-devel/20260320193746.242704-1-jinpu.wang@ionos.com/
-> > just because of a tool used to make it.
+On Tue, May 26, 2026 at 10:27:57AM -0400, Quan Sun wrote:
+> 
+> On 5/25/26 6:39 PM, Michael S. Tsirkin wrote:
+> > CAUTION: This email comes from a non Wind River email account!
+> > Do not click links or open attachments unless you recognize the sender and know the content is safe.
 > > 
-> > 
-> > 	How contributors could comply with DCO terms (b) or (c) for the output of AI
-> > 	content generators commonly available today is unclear.  The QEMU project is
-> > 	not willing or able to accept the legal risks of non-compliance.
-> > 
-> > 
-> > But, since this was written, Red Hat's Richard Fontana and Chris Wright
-> > published this piece:
-> > https://www.redhat.com/en/blog/ai-assisted-development-and-open-source-navigating-legal-issues
-> > 
-> > 
-> > Saying, in particular "
-> > 	We understand this concern, but the DCO has never
-> > 	been interpreted to require that every line of a contribution must be
-> > 	the personal creative expression of the contributor or another human
-> > 	developer. 
-> > "
+> > On Mon, May 25, 2026 at 11:27:30AM -0700,Quan.Sun@windriver.com wrote:
+> > > From: Quan Sun<Quan.Sun@windriver.com>
+> > > 
+> > > On build hosts with kernel headers older than 6.0, the system's
+> > > <linux/vhost_types.h> does not define struct vhost_vring_worker or
+> > > struct vhost_worker_state, causing compilation of vhost-scsi.c to
+> > > fail:
+> > > 
+> > >    error: storage size of 'vq_worker' isn't known
+> > > 
+> > > Fix by including standard-headers/linux/vhost_types.h before the
+> > > system's <linux/vhost.h>, matching the existing pattern used in
+> > > hw/virtio/vhost-backend.c. QEMU's bundled header provides the
+> > > struct definitions, and its include guard prevents redefinition
+> > > when the system header pulls in its own vhost_types.h.
+> > > 
+> > > Signed-off-by: Quan Sun<Quan.Sun@windriver.com>
+> > Hmm. maybe replace linux/vhost.h with standard-headers/linux/vhost.h then?
 > 
-> I never found that blog post particularly convincing, especially because
-> they acknowledge a concern:
+> Hi Michael,
 > 
->     There are two versions of this concern. The first is practical: that
->     an AI tool could covertly insert excerpts of proprietary (or
->     license-incompatible) code into an open source project, potentially
->     creating legal risk for maintainers and users. The second is broader
->     and more philosophical: that large language models, trained on vast
->     amounts of open source software, are essentially misappropriating
->     the community’s work, producing outputs stripped of the obligations
->     that open source licenses require.
+> It seems there is no standard-headers/linux/vhost.h in QEMU's tree — only
+> standard-headers/linux/vhost_types.h. The file linux/vhost.h (the kernel
+> header) is
+> still needed here for the vhost-scsi specific definitions (struct
+> vhost_scsi_target, VHOST_SCSI_ABI_VERSION). The approach in this patch
+> matches the existing pattern in hw/virtio/vhost-backend.c, which also
+> includes
+> standard-headers/linux/vhost_types.h before linux/vhost.h to get the struct
+> definitions that may be missing from older host kernel headers.
 > 
->     We think these concerns deserve to be taken seriously.
+> Thanks,
 > 
-> The second one is essentially what I understood the QEMU policy to be
-> about. Unfortunately, the blog post then goes on to only ever deal with
-> the first one and ignore the second one that seems more relevant for us.
-> 
-> So yes, the DCO isn't about "personal creative expression" or whatever
-> (and nobody suggested it is, this is a strawman), but it's about whether
-> the submitter has the legal rights to submit the code. And that's
-> exactly the question we decided we don't want to take a risk on.
-> 
-> 
-> So if that part isn't helpful, what has changed since we introduced the
-> AI policy? It's a few points:
-> 
-> 1. While AI has been in use for a while now, we haven't seen projects
->    accepting AI generated code/content get into big trouble. While it
->    could still happen in the future, it might be an indication that the
->    probability of the risk hitting us is not that high.
-> 
-> 2. The useful part of the blog post is that it tells us that Red Hat
->    considers the risk acceptable. This can inform our assessment of the
->    risks, though of course there might be a significant difference in
->    the impact of the risk for a company with a legal department and an
->    open source community consisting mainly of developers acting as
->    individuals.
-> 
->    I think it's obvious that if the QEMU project gets involved in a
->    legal case, we have a problem (at the very least long lasting
->    distraction from actual work on QEMU), even if we didn't do anything
->    wrong and a good lawyer would easily win the case.
-> 
-> 3. It was easy to just outright ban AI while its results were usually
->    not really usable anyway. This has changed meanwhile, so it's much
->    harder to maintain an absolute ban.
-> 
->    It's not really the best use of my time to look at the idea in
->    AI-generated test cases and then rewrite them from scratch so I can
->    actually submit them. (On the other hand, I think my rewritten
->    submissions were always better and more maintainable than what AI
->    produced initially, so there's that.)
-> 
-> So while my perspective is a lot more nuanced than yours, I do see a
-> shift in the balance and was actually thinking of suggesting a change of
-> the policy myself.
-> 
-> What I was thinking of was allowing AI-generated content in places where
-> it's at least easy to revert if there is ever a problem with it: Tests,
-> documentation etc., but not core code that lots of other things depend
-> on and that will have evolved a lot when we notice a problem and for
-> which throwing away is simply not an option.
+> Quan
 
-OK. what about trivial changes? Using AI as a better sed?
+Alright.
 
-> > I propose adopting linux's rules instead:
-> > https://docs.kernel.org/process/coding-assistants.html
-> > 
-> > which boils down to attribution.
-> 
-> What would we actually do with the detailed information? Why do we care
-> which model was used? Is this helpful commit metadata or is it just free
-> advertising for a handful of companies?
-
-I presume, if a specific model is somehow declared "contaminated" so we
-can locate its output?
-
-> I think I would see more use in a tag like (better name welcome):
-> 
->     AI-used-for: [code|tests|docs|commit message]...
-> 
-> Kevin
-
-I surely don't mind.
-
--- 
-MST
+> > > ---
+> > >   hw/scsi/vhost-scsi.c | 1 +
+> > >   1 file changed, 1 insertion(+)
+> > > 
+> > > diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
+> > > index 699863cc10..10e8fbe503 100644
+> > > --- a/hw/scsi/vhost-scsi.c
+> > > +++ b/hw/scsi/vhost-scsi.c
+> > > @@ -15,6 +15,7 @@
+> > >    */
+> > > 
+> > >   #include "qemu/osdep.h"
+> > > +#include "standard-headers/linux/vhost_types.h"
+> > >   #include <linux/vhost.h>
+> > >   #include <sys/ioctl.h>
+> > >   #include "qapi/error.h"
+> > > --
+> > > 2.43.0
 
 
