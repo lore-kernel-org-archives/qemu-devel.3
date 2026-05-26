@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FB4DCD5BB4
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 04:28:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC773CD5BB4
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 04:30:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRjOb-0006B6-Ix; Tue, 26 May 2026 00:28:01 -0400
+	id 1wRjQ2-0006w5-UU; Tue, 26 May 2026 00:29:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wRjOa-0006Aa-DS
- for qemu-devel@nongnu.org; Tue, 26 May 2026 00:28:00 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ id 1wRjQ2-0006vn-1u
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 00:29:30 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wRjOY-0006MX-1z
- for qemu-devel@nongnu.org; Tue, 26 May 2026 00:28:00 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-bdbac72ac1fso917758066b.3
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 21:27:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779769676; cv=none;
+ id 1wRjQ0-0006uw-3V
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 00:29:29 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-67be41d5eeeso15436145a12.1
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 21:29:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779769764; cv=none;
  d=google.com; s=arc-20240605;
- b=knN7Vj/0iR4Ivf/DIU4WPx5ymk9hVx+UX348O20k2gI4UNbl/2oowpVIT5d5bAQm/J
- 9BQrm10OBxsN0CPKfrL88Mw+NulVpaNhcjguZPTvjc0QAydzU6OdqZk1xldSKzOc5uC7
- /porMqUaQrLQ8XCx2jt+Msrp+LokE7VMrZRnel79IVhBstXN1EFg/CHv7ZdfEwUVn/9C
- 1kDXjJnNeDrfEUYpAcl/RW7DKMyA3am2StWUr/zscK8mcGS77Fl739hc6FOYsMCxR/Pi
- s6nq2vsncqSORbpS39FA0VMl565wP537a8aU7yPoKDGk296Kp1WpzUD7Rz7GUP7oZfeq
- 9vyg==
+ b=GuEwVFgdb7poRIOvjZS2n/dQz/CQG4xMKWc7yaYxjkHPkPu8tKLZsh0Iw9FlGBYZOF
+ DQ8ZroihAMnSVdYOIfivlkC0qa6Km84GbXuSxpbTY5Ly7UGzzz+gBKT+WZf+u6iRcc3b
+ r6GLs6VEBVIBrRB+9YLLkkqcvnEk434PmcAQUTisKW1YXjQtiX0CuDgnAhNxPCksmSjX
+ GBAiR2BIZt68xGE2wlGoZwvjBXp0xQKUsA86gp2iwnPpW2/A/QkoJ/aSi2iAtIdSO9Yg
+ ldS4ri/Ya/M0HNS8r4HUjUOAOSF7/yayN6d3pvmAP8JkIHCA2ZStqyNw05QrT3rJgaxz
+ NBQg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=ePS9319Ld18MjSOXMiF/kpWjWE595WWO+OesX3qR6Lo=;
- fh=vqhj9gNyj3r48x+Jqh0wFVcQVAhsxG1j/bhU6rKsPEk=;
- b=JzlnRcmJ1myQqFrdMGVyOCGq6RVSSWAHCx1HgD7IoHf2QUGvTUjwkOLBWvKbmwvgWN
- 9VlYKUERi1FFnPb2ZzB6XOGOm+gIsD/1r5BTNs8YVXCU9IlSXjUjxVHShqD4J051Kuik
- N2bwYN6+X3/TIIvnZdMR5YBPQpwHev6YvzHJugboG4mbZoaTIDCuUY6GQy54wbrbbgiK
- xEQTyLYshC+S/9tCsHerOP84hfF9UlklXJ9VlLGIMisVfBG5YeLBpFK3PoAp1r0UAAhV
- VIV8BsoI0InkXm9arNs7cLFV98PXjz2VTchUDxkA0twBpp3oMPUaOOQ94grWiCawmCcr
- dZbw==; darn=nongnu.org
+ bh=DW/avr0pVOCF97kNw1Gt3KqWIfDbQyo4pq9ow7g1mLA=;
+ fh=iqex9UdGL3ehkDV5PyNwgn5bga/+qs8i8EynkUyVzzo=;
+ b=C3ZlSDg+As4PD0az/kcA5Kx9jPTwi3OeJtnpkTdiZYdXpNKrKr4drvOIoFNAdCulwj
+ 9i+ooF5myTWNSYRkl3kWuXP/+TWtyS4gYG/2Pv4ApKNIZFMDxNOvaEkANzFyV3jwMl9n
+ qHdiP+h0qtXoRMClbl1RA/TbG7xVcYD9b8Lt141E0hplH/KxNhUk+mXkIF/F3goK2fWP
+ NakZazgxi8PnhfROJGPCoLLAHYEUgFkLnLt0R/38Qp/KviPxSbj44/GPlHKnWed5i77y
+ jslyf4KtOrmSDj5jd8eYRd1cppEeA/65dCB6jeXdTlu6fIqpvFLORGze4esY7AacWT1+
+ Jrfw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779769676; x=1780374476; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779769764; x=1780374564; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ePS9319Ld18MjSOXMiF/kpWjWE595WWO+OesX3qR6Lo=;
- b=oYeJMSSXBor6X/yJ1Q//yKYFD6BVeKtM1qdasECdkwtg4Q9uneQJq94QmPlSqtNX+l
- PLNagI+eDfkwz+ubhUVd64n6hJkF/8qasBGUWmxMMwcP20qyvEchPbRCspiI0twx2IQm
- /HfzUrmNqo5GFjRGfypCYzjHzmrrQYwbDDINv2UV5/39pZyAXHENSwTCVpHMCKZfSdxJ
- gTam7CkPfWkyJ1BB0bU+8Q2opro/wrKrLo9H3/uCTPCYGXoTh3GpZ/b/YQ8rKrsrk8wQ
- 9SfMIdZulBkpyGEXzGKJAHYZH+fGJ9eA3dI2Cw6nHfbR24nQdbbokfj45JTnrR61KCNY
- g4xQ==
+ bh=DW/avr0pVOCF97kNw1Gt3KqWIfDbQyo4pq9ow7g1mLA=;
+ b=HOs8EV5Dtnj7bHb7Oicqw15lozFvoIXOg8XK++zvr9x7pJLohYEPJ1VjtHs6cRXCne
+ hAF02eG6T7FxlVcRRtJUYrbhpnKsnxEDjeSZvoCqDjJ1lt6tfNxb3fgVkMqEvzAlvL/d
+ pYSvt/8mOXhXAkYMoblVsGUaeFWFlpG56nRy3LMRHWKvDXtCS0inhQpkpXrlL04sGhpk
+ I/tiPIIVS9tvdnfYHZ2myGz1lPlrJlM8EHug283M649o9rj2jJpL7lGkSQduUuSmdePp
+ ea5oO/pnhzS2S5ILW/IcjE4eLCHIB6e0xZ915/Z6SsjlsI6sxZMF2wc34Gh6LOEDUkpV
+ kbUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779769676; x=1780374476;
+ d=1e100.net; s=20251104; t=1779769764; x=1780374564;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ePS9319Ld18MjSOXMiF/kpWjWE595WWO+OesX3qR6Lo=;
- b=OMmpYgNSIizKJdgasZJcR1yx11x9zNoUT6PdDx7Ms2IiofDEX9WWCEg4ICQy11AJaC
- +NxKl8aOZjtb3jRxbVz4iaLABKkCMem5ZwFHJAy3pRu9X579mUg3v0gaT64PB1x8CyvK
- 6yQqVqc5KXFT1JLU/58R/1AAeI+djaDyGBEM5yzlgcz/YdE92Z67HwaXxAjXuwU8oFFe
- L7mzpuYZjOe8ANtElngiz3b4XnXME4QESmFP4BCR7luH/L5Gh9bygbxCoeUmglDjqsKt
- 0lLRyk6iMbcfrEJPkzlBD/tkjjGqVnkn5F4zlaURjlHcgMNX7rAvZ+jpQHjEvlbsL9D4
- Pzbw==
+ bh=DW/avr0pVOCF97kNw1Gt3KqWIfDbQyo4pq9ow7g1mLA=;
+ b=WhHxRzIdxgbh0q5dU5bi1gPHIRdLIpU2yvzwSXFWtwqvAyA7JvklhCZADbKisHTI5+
+ r/WLRhZ6cjU1QUAmmH/KvMZoOgwuQn2gDriOGgvDuq+cW9rQ1tjvYKWgABzVxRz6LA5U
+ EhppfZ7zJ1F3/YiF8VbKEdmaRStPLWYG9Mb5IaAnJf7CMCQERlCPiJwt0bKbINO/8zEE
+ d2Mq1nQM++eRDD3f1sdSUZ70NB/R8ZsRKpqFQ2SdcGCDM8FRIMJM4Xyj1AvUDvviNnpK
+ xDyPwM23WSuIKmbfiuNZBAOjKDYoSpKeD6bCFgBZjmUkM+X3Naf4HDr+P8Lb+NcdLJiP
+ 2t7A==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+KYMNoqWqy7jxUUM3ZRTZTJDDAdPMMKIMCQ/PZnNAotw1QYmMtLFNz9ANBFTbYPnWyHPlgN2iky9v9@nongnu.org
-X-Gm-Message-State: AOJu0Yx6v3trkXDQjlhGuAhwLvF6RaapI6qCqsY0dyi/DQgzuuHG091I
- fFWg3IOpCLWETGaQLaI1oBBzoKpzPATX+8ztYmGN65Fumsv0ZnZd909cJbJokH5urk0VXqu18js
- PFu5Gu6HrgW1IIQT80uqOYngjwyu3TJo=
-X-Gm-Gg: Acq92OG1aLDQ8zy/amIpaIIJC7mAvfNb4cDtKgPuNlQzt6Dv4sIDIRZ61cYZNKEIcgu
- ZW7G/xjjwHENsJ6fNoxbeBG4tU0xQw4XuL+sbnL+E5lrDQ3FtEVyrJw6RcwLIIhdlBNcec9lQhp
- J8wBmbpdju4SdlPk0F6S2d+BQxwOcVNUVh5iwy/DcjvXTSczcBlvmCmZewQVMCPQ0R02aiZ/Y+t
- IBDVdkKS5PR2DzFZcqCswx+SYF0iQar2HcXu++U69xzzR2Ma+sOkyF+fwzre0wgAP9Bt8AK8MtW
- ET9SLSoL4aodrR0qeQi603ah0uBsg4qWKzxMDw==
-X-Received: by 2002:a17:907:7750:b0:bc4:b9f5:fe27 with SMTP id
- a640c23a62f3a-bdd22a3f5abmr678002766b.10.1779769676188; Mon, 25 May 2026
- 21:27:56 -0700 (PDT)
+ AFNElJ+ory7GyQ0Go4f7lrvMdKqLwOz/TkIRu4+9+QuLecU9oesFCt2O/vcu5ZdG2EgHIVcxBYvDFXR8e3sU@nongnu.org
+X-Gm-Message-State: AOJu0YyCJCuRZXjPJrC9HyDYkpioF4b8A2ikLWIUFN8DTJRRLPu5eR8/
+ To+5062/AzaDAhWGT1v+qX5MTzwxbtlYqemMfWQxLcPJPaLNYW6zdTUQAIkIsOcLPd4WJMSU+ia
+ veiIQ2Pv9tI6K9K9h5Oor11Rc8sADPL4=
+X-Gm-Gg: Acq92OFFnA8Nd2469cgi9UdzP10cApQ3LOxYu3WRGmRN6U4RasEKJDk01wkVJLqEGmz
+ XAqK1FsUx7IaxZukijaOiX4RekRxkf8GAQQ/EEvdpEKBrBSMoaeSyPfguvLl5FtIrT5hYTDbk63
+ omYL4Af1C6Gyh3L3kKQylwmpxTwIk6KD1Y7xVwL2zDoN2g43GJlg3sJN6ECaJndQmnEMnxPKs2Q
+ ksjsBEGzLCvNESQzd/2OOPyWUw+uQ2knHPZpbIEbZ9fSozyhV4DdnUCGE5LjfQcfn+afv1/JM5S
+ ICw7h2NswTN3zKtPDuId4QdUmiuKMqfPa4oaRw==
+X-Received: by 2002:a17:907:7245:b0:bd4:8b66:c375 with SMTP id
+ a640c23a62f3a-bdd237f3b6bmr923127066b.18.1779769764012; Mon, 25 May 2026
+ 21:29:24 -0700 (PDT)
 MIME-Version: 1.0
 References: <177756498815.8917.12449488721849651971-0@git.sr.ht>
- <177756498815.8917.12449488721849651971-7@git.sr.ht>
-In-Reply-To: <177756498815.8917.12449488721849651971-7@git.sr.ht>
+ <177756498815.8917.12449488721849651971-9@git.sr.ht>
+In-Reply-To: <177756498815.8917.12449488721849651971-9@git.sr.ht>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 26 May 2026 14:27:29 +1000
-X-Gm-Features: AVHnY4KVTyrrqH9xYdP9pDqxF9kZKmRCmLKW4v93zfr9hSAUv-GgL-_EzM4Zs1w
-Message-ID: <CAKmqyKMP_wOVV1yAeGeuT2vnGGB=2DuTgZo0dWr6F5uHt4TwpA@mail.gmail.com>
-Subject: Re: [PATCH qemu v4 7/9] ot_uart: handle break condition
+Date: Tue, 26 May 2026 14:28:57 +1000
+X-Gm-Features: AVHnY4JwKNnL5HoMFsYwK_bzIilUj9sbjKYEY172RC1aCk-5Qy7-Id-gIXqjArA
+Message-ID: <CAKmqyKNLw1sCUcVSMG2GVHuf2bnxBOzZBqpAhvYouSuWAq=nRQ@mail.gmail.com>
+Subject: Re: [PATCH qemu v4 9/9] ot_uart: add tracing
 To: "~lexbaileylowrisc" <lex.bailey@lowrisc.org>
 Cc: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>, 
  Paolo Bonzini <pbonzini@redhat.com>,
@@ -102,8 +102,8 @@ Cc: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>,
  nabihestefan <nabihestefan@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -111,7 +111,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,259 +127,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 1, 2026 at 2:04=E2=80=AFAM ~lexbaileylowrisc
+On Fri, May 1, 2026 at 2:05=E2=80=AFAM ~lexbaileylowrisc
 <lexbaileylowrisc@git.sr.ht> wrote:
 >
 > From: Lex Bailey <lex.bailey@lowrisc.org>
 >
-> What is a break event:
-> Normally, a UART wire is held high by the transmitting device any time th=
-e
-> communication channel is idle (nothing to transmit). If a receiver does n=
-ot see
-> that its receive line is high, this means one of two things:
->     1. there is a transmission happening now
->     2. there is no transmitter connected, and the line is floating or pul=
-led
->        low, or the transmitting device is in a bad state or reset state a=
-nd so
->        it has not yet asserted its TX output.
->
-> In case 1, the line will go high again very soon.
-> In case 2, it is sometimes useful to detect that this is the case and sig=
-nal to
-> the software that this has happened (normally by means of an interrupt)
->
-> The ot_uart device does exactly this in case 2. It detects that this is
-> happening by detecting when the RX pin stays low for an extended period. =
-This
-> period can be configured to be 2, 4, 8, or 16 times a character period. T=
-he
-> character period itself depends on the configuration of the device (baud =
-rate,
-> and parity bit)
->
-> for more details about how this works, there is documentation about the U=
-ART
-> break detection on this page:
-> https://opentitan.org/book/hw/ip/uart/doc/theory_of_operation.html#rx_bre=
-ak_err
->
-> This commit adds a handler for the UART break event, and logic to emulate=
- a
-> break when oversampling is enabled and there is a break event.
+> Added some tracing to the OpenTitan UART for transparency when debugging
 >
 > Signed-off-by: Lex Bailey <lex.bailey@lowrisc.org>
 > ---
->  docs/system/riscv/opentitan-uart.rst | 43 +++++++++++++
->  hw/char/ot_uart.c                    | 92 +++++++++++++++++++++++++++-
->  include/hw/char/ot_uart.h            |  4 ++
->  3 files changed, 136 insertions(+), 3 deletions(-)
->  create mode 100644 docs/system/riscv/opentitan-uart.rst
+>  hw/char/ot_uart.c         | 19 +++++++++++++++++++
+>  hw/char/trace-events      |  8 ++++++++
+>  hw/riscv/opentitan.c      |  1 +
+>  include/hw/char/ot_uart.h |  1 +
+>  4 files changed, 29 insertions(+)
 >
-> diff --git a/docs/system/riscv/opentitan-uart.rst b/docs/system/riscv/ope=
-ntitan-uart.rst
-> new file mode 100644
-> index 0000000000..7ca596712d
-> --- /dev/null
-> +++ b/docs/system/riscv/opentitan-uart.rst
-
-We should just add an OpenTitan Machine documentation here and include
-the UART there.
-
-> @@ -0,0 +1,43 @@
-> +# OpenTitan UART Support
-> +
-> +## Connecting to the UART
-> +
-> +* `-serial mon:stdio`, used as the first `-serial` option, redirects the=
- virtual UART0 to the
-> +  current console/shell.
-> +
-> +* `-chardev socket,id=3Dserial1,host=3Dlocalhost,port=3D8001,server=3Don=
-,wait=3Doff` and
-> +  `-serial chardev:serial1` can be used to redirect UART1 (in this examp=
-le) to a TCP socket. These
-> +  options are not specific to OpenTitan emulation, but are useful to com=
-municate over a UART.
-> +  Note that QEMU offers many `chardev` backends, please check QEMU docum=
-entation for details.
-> +
-> +## Sending Break Conditions
-> +
-> +Break conditions can be sent to the UART on select supported CharDev bac=
-kends (telnet, mux)
-> +or by sending the `chardev-send-break` command with the CharDev ID via t=
-he QEMU Monitor.
-> +Break conditions are treated as transient events and the length of time =
-of a break condition
-> +is not considered.
-> +
-> +## Oversampling
-> +
-> +OpenTitan's UART has a `VAL` register which oversamples the RX pin 16 ti=
-mes per bit.
-> +This cannot be emulated by QEMU which uses a CharDev backend and does no=
-t have a notion of
-> +accurate sampling times.
-> +
-> +If software wishes to poll the `VAL` register to determine break conditi=
-ons, there are
-> +some properties available to help with emulating this use case:
-> +
-> +* `-global ot-uart.oversample-break=3Dtrue` is used to enable UART break=
- oversampling.
-> +  This will attempt to display 16 samples of the last bit received in th=
-e `VAL` register,
-> +  which will be 16 high bits after any UART frame is transmitted (as the=
-se end with a stop
-> +  bit, which is high), or 16 low bits if the UART previously received a =
-break condition
-> +  and has not received any frames since. That is, enabling this property=
- assumes that
-> +  transmitted break conditions are "held" until the next UART transfer i=
-n terms of what
-> +  is being shown in the oversampled `VAL` register.
-> +
-> +* `-global ot-uart.toggle-break=3Dtrue` is used to provide more control =
-over "holding"
-> +  the UART RX break condition like a GPIO strap, and changes the behavio=
-r of a UART
-> +  such that received break condition events now *toggle* the break condi=
-tion state
-> +  rather than keeping it asserted until the next transfer. This allows a=
-ny device talking
-> +  to OpenTitan via UART to have more precise control over when the UART =
-VAL register
-> +  displays idle and when it displays a break condition, as it can precis=
-ely toggle the
-> +  break condition on or off like a GPIO strapping being held down.
 > diff --git a/hw/char/ot_uart.c b/hw/char/ot_uart.c
-> index 3511a42fbe..cdf02da62b 100644
+> index d00f7bee66..910bef00f2 100644
 > --- a/hw/char/ot_uart.c
 > +++ b/hw/char/ot_uart.c
-> @@ -179,6 +179,11 @@ static void ot_uart_receive(void *opaque, const uint=
-8_t *buf, int size)
->      uint32_t rx_watermark_level;
->      size_t count =3D MIN(fifo8_num_free(&s->rx_fifo), (size_t)size);
+> @@ -20,6 +20,7 @@
+>  #include "qemu/osdep.h"
+>  #include "hw/char/ot_uart.h"
+>  #include "qemu/fifo8.h"
+> +#include "hw/core/cpu.h"
+>  #include "hw/core/irq.h"
+>  #include "hw/core/qdev-clock.h"
+>  #include "hw/core/qdev-properties.h"
+> @@ -28,6 +29,7 @@
+>  #include "migration/vmstate.h"
+>  #include "qemu/log.h"
+>  #include "qemu/module.h"
+> +#include "trace.h"
 >
-> +    if (size && !s->toggle_break) {
-> +        /* no longer breaking, so emulate idle in oversampled VAL regist=
-er */
-> +        s->in_break =3D false;
+>  REG32(INTR_STATE, 0x00)
+>      SHARED_FIELD(INTR_TX_WATERMARK, 0, 1)
+> @@ -126,6 +128,9 @@ static void ot_uart_update_irqs(OtUARTState *s)
+>  {
+>      uint32_t state_masked =3D s->regs[R_INTR_STATE] & s->regs[R_INTR_ENA=
+BLE];
+>
+> +    trace_ot_uart_irqs(s->ot_id, s->regs[R_INTR_STATE], s->regs[R_INTR_E=
+NABLE],
+> +                       state_masked);
+> +
+>      for (int index =3D 0; index < OT_UART_IRQ_NUM; index++) {
+>          bool level =3D (state_masked & (1U << index)) !=3D 0;
+>          qemu_set_irq(s->irqs[index], level);
+> @@ -402,6 +407,10 @@ static uint64_t ot_uart_get_baud(OtUARTState *s)
+>      baud *=3D clock_get_hz(s->f_clk);
+>      baud >>=3D 20;
+>
+> +    if (baud) {
+> +        trace_ot_uart_check_baudrate(s->ot_id, baud);
 > +    }
 > +
->      for (int index =3D 0; index < size; index++) {
->          fifo8_push(&s->rx_fifo, buf[index]);
->      }
-> @@ -331,9 +336,40 @@ static void ot_uart_reset_enter(Object *obj, ResetTy=
-pe type)
->
->      s->char_tx_time =3D (NANOSECONDS_PER_SECOND / 230400) * 10;
->
-> +    /*
-> +     * do not reset `s->in_break`, as that tracks whether we are current=
-ly
-> +     * receiving a break condition over UART RX from some device talking
-> +     * to OpenTitan, which should survive resets. The QEMU CharDev only
-> +     * supports transient break events and not the notion of holding the
-> +     * UART in break, so remembering breaks like this is required to
-> +     * support mocking of break conditions in the oversampled `VAL` reg.
-> +     */
-> +    if (s->in_break) {
-> +        /* ignore CTRL.RXBLVL as we have no notion of break "time" */
-> +        s->regs[R_INTR_STATE] |=3D INTR_RX_BREAK_ERR_MASK;
-> +    }
-> +
->      ot_uart_update_irqs(s);
+>      return baud;
 >  }
 >
-> +static void ot_uart_event_handler(void *opaque, QEMUChrEvent event)
-> +{
-> +    OtUARTState *s =3D opaque;
-> +
-> +    if (event =3D=3D CHR_EVENT_BREAK) {
-> +        if (!s->in_break || !s->oversample_break) {
-> +            /* ignore CTRL.RXBLVL as we have no notion of break "time" *=
-/
-> +            s->regs[R_INTR_STATE] |=3D INTR_RX_BREAK_ERR_MASK;
-> +            ot_uart_update_irqs(s);
-> +            /* emulate break in the oversampled VAL register */
-> +            s->in_break =3D true;
-> +        } else if (s->toggle_break) {
-> +            /* emulate toggling break off in the oversampled VAL registe=
-r */
-> +            s->in_break =3D false;
-> +        }
-> +    }
-> +}
-> +
->  static uint8_t ot_uart_read_rx_fifo(OtUARTState *s)
->  {
->      uint8_t val;
-> @@ -355,6 +391,17 @@ static uint8_t ot_uart_read_rx_fifo(OtUARTState *s)
->      return val;
->  }
->
-> +static gboolean ot_uart_watch_cb(void *do_not_use, GIOCondition cond,
-> +                                 void *opaque)
-> +{
-> +    OtUARTState *s =3D opaque;
-> +
-> +    s->watch_tag =3D 0;
-> +    ot_uart_xmit(s);
-> +
-> +    return FALSE;
-> +}
-> +
->  static uint64_t ot_uart_get_baud(OtUARTState *s)
->  {
->      uint64_t baud;
-> @@ -424,6 +471,26 @@ static uint64_t ot_uart_read(void *opaque, hwaddr ad=
+> @@ -503,6 +512,10 @@ static uint64_t ot_uart_read(void *opaque, hwaddr ad=
 dr, unsigned int size)
->          break;
+>          return 0;
+>      }
 >
->      case R_VAL:
-> +        /*
-> +         * This is not trivially implemented due to the QEMU UART
-> +         * interface. There is no way to reliably sample or oversample
-> +         * given our emulated interface, but some software might poll th=
-e
-> +         * value of this register to determine break conditions.
-> +         *
-> +         * As such, default to reporting 16 of the last sample received
-> +         * instead. This defaults to 16 idle high samples (as a stop bit=
- is
-> +         * always the last received), except for when the `oversample-br=
-eak`
-> +         * property is set and a break condition is received over UART R=
-X,
-> +         * where we then show 16 low samples until the next valid UART
-> +         * transmission is received (or break is toggled off with the
-> +         * `toggle-break` property enabled). This will not be accurate, =
-but
-> +         * should be sufficient to support basic software flows that
-> +         * essentially use UART break as a strapping mechanism.
-> +         */
-> +        retvalue =3D (s->in_break && s->oversample_break) ? 0u : UINT16_=
-MAX;
-> +        qemu_log_mask(LOG_UNIMP, "%s: VAL only shows idle%s\n", __func__=
-,
-> +                      (s->oversample_break ? "/break" : ""));
-> +        break;
->      case R_OVRD:
->      case R_TIMEOUT_CTRL:
->          retvalue =3D s->regs[reg];
-> @@ -607,8 +674,27 @@ static const VMStateDescription vmstate_ot_uart =3D =
-{
+> +    uint32_t pc =3D current_cpu->cc->get_pc(current_cpu);
+> +    trace_ot_uart_io_read_out(s->ot_id, (uint32_t)addr, REG_NAME(reg),
+> +                              retvalue, pc);
+> +
+>      return retvalue;
+>  }
+>
+> @@ -514,6 +527,9 @@ static void ot_uart_write(void *opaque, hwaddr addr, =
+uint64_t val64,
+>
+>      hwaddr reg =3D R32_OFF(addr);
+>
+> +    uint32_t pc =3D current_cpu->cc->get_pc(current_cpu);
+> +    trace_ot_uart_io_write(s->ot_id, (uint32_t)addr, REG_NAME(reg), valu=
+e, pc);
+> +
+>      switch (reg) {
+>      case R_INTR_STATE:
+>          /* Write 1 clear */
+> @@ -665,6 +681,7 @@ static const VMStateDescription vmstate_ot_uart =3D {
+>  };
 >
 >  static const Property ot_uart_properties[] =3D {
->      DEFINE_PROP_CHR("chardev", OtUARTState, chr),
-> +    DEFINE_PROP_BOOL("oversample-break", OtUARTState, oversample_break, =
-false),
-> +    DEFINE_PROP_BOOL("toggle-break", OtUARTState, toggle_break, false),
+> +    DEFINE_PROP_STRING("ot-id", OtUARTState, ot_id),
 
-Why have these disabled by default?
+I'm not sure we need this
 
 Alistair
+
+>      DEFINE_PROP_CHR("chardev", OtUARTState, chr),
+>      DEFINE_PROP_BOOL("oversample-break", OtUARTState, oversample_break, =
+false),
+>      DEFINE_PROP_BOOL("toggle-break", OtUARTState, toggle_break, false),
+> @@ -716,6 +733,8 @@ static void ot_uart_realize(DeviceState *dev, Error *=
+*errp)
+>  {
+>      OtUARTState *s =3D OT_UART(dev);
+>
+> +    g_assert(s->ot_id);
+> +
+>      s->fifo_trigger_handle =3D timer_new_ns(QEMU_CLOCK_VIRTUAL,
+>                                            fifo_trigger_update, s);
+>
+> diff --git a/hw/char/trace-events b/hw/char/trace-events
+> index a3fcc77287..17cc9ad2d5 100644
+> --- a/hw/char/trace-events
+> +++ b/hw/char/trace-events
+> @@ -141,3 +141,11 @@ stm32f2xx_usart_receive(char *id, uint8_t chr) " %s =
+receiving '%c'"
+>  # riscv_htif.c
+>  htif_uart_write_to_host(uint8_t device, uint8_t cmd, uint64_t payload) "=
+device: %u cmd: %02u payload: %016" PRIx64
+>  htif_uart_unknown_device_command(uint8_t device, uint8_t cmd, uint64_t p=
+ayload) "device: %u cmd: %02u payload: %016" PRIx64
+> +
+> +# ot_uart.c
+> +ot_uart_check_baudrate(const char *id, unsigned baud) "%s: %u bps"
+> +ot_uart_connect_input_clock(const char *id, const char * srcname) "%s: %=
+s"
+> +ot_uart_debug(const char *id, const char *msg) "%s: %s"
+> +ot_uart_io_read_out(const char *id, uint32_t addr, const char *regname, =
+uint32_t val, uint32_t pc) "%s: addr=3D0x%02x (%s), val=3D0x%x, pc=3D0x%x"
+> +ot_uart_io_write(const char *id, uint32_t addr, const char *regname, uin=
+t32_t val, uint32_t pc) "%s: addr=3D0x%02x (%s), val=3D0x%x, pc=3D0x%x"
+> +ot_uart_irqs(const char *id, uint32_t active, uint32_t mask, uint32_t ef=
+f) "%s: act:0x%08x msk:0x%08x eff:0x%08x"
+> diff --git a/hw/riscv/opentitan.c b/hw/riscv/opentitan.c
+> index 97c33d1b53..163d3ac3d3 100644
+> --- a/hw/riscv/opentitan.c
+> +++ b/hw/riscv/opentitan.c
+> @@ -133,6 +133,7 @@ static void lowrisc_ibex_soc_init(Object *obj)
+>      object_initialize_child(obj, "plic", &s->plic, TYPE_SIFIVE_PLIC);
+>
+>      object_initialize_child(obj, "uart", &s->uart, TYPE_OT_UART);
+> +    object_property_set_str(OBJECT(&s->uart), "ot-id", "uart0", &error_f=
+atal);
+>
+>      object_initialize_child(obj, "timer", &s->timer, TYPE_IBEX_TIMER);
+>
+> diff --git a/include/hw/char/ot_uart.h b/include/hw/char/ot_uart.h
+> index 4dc51142f7..2f538e1f6f 100644
+> --- a/include/hw/char/ot_uart.h
+> +++ b/include/hw/char/ot_uart.h
+> @@ -54,6 +54,7 @@ struct OtUARTState {
+>      bool in_break;
+>      guint watch_tag;
+>
+> +    char *ot_id;
+>      Clock *f_clk;
+>
+>      CharFrontend chr;
+> --
+> 2.49.1
+>
 
