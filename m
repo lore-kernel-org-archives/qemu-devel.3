@@ -4,90 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28401CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 21:07:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6C3ACD5BB1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 21:13:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRyzk-0005zu-90; Tue, 26 May 2026 17:07:24 -0400
+	id 1wRz5P-0007z6-9B; Tue, 26 May 2026 17:13:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wRyzc-0005vs-Op
- for qemu-devel@nongnu.org; Tue, 26 May 2026 17:07:18 -0400
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wRyza-0004XT-1B
- for qemu-devel@nongnu.org; Tue, 26 May 2026 17:07:15 -0400
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wRyzP-00000002UtT-3ghJ; Tue, 26 May 2026 23:07:03 +0200
-Message-ID: <f729ff7f-971c-4e00-88fe-61ded891b9be@maciej.szmigiero.name>
-Date: Tue, 26 May 2026 23:06:58 +0200
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wRz5N-0007yi-As
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 17:13:13 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wRz5K-00080m-6p
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 17:13:13 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4905e190c71so31173335e9.3
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 14:13:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1779829988; x=1780434788; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Hzgnptp30fzy3dfR3ONLx/OlJHIqjK8I6eenmNfhq1c=;
+ b=A/vSFQb1aeJToZmZi7/W30Z/1G0CRddXCjfW8DmDCuMBj+K7O/DNvf/Klw0a+yM5qw
+ ZtjbMh78m3kl0pxrQu0PIFMx9Eg9vsUqHEzjralEiAlI0Sq660Aon1Mvf4YB9G5w0QVM
+ 3JzW/MxdjQrR+mm53SQRXzppkp3aBfXmfSvCP09z239Oy5I92YN+YFoDEYjDWy5tdDOZ
+ 7lC6ujWNUKrLz2c53+Y/lfHuwjFHMcx3Ko65TZ96icW6z5smgkiA+4/T4Z7GWO+Al1/F
+ T1h2recYUaeos9eAgC9nZO3UzCDBHGfbZqbFIp3FKL8wdVpQTL4PGC0OHY7QEr4R5DM7
+ 0beA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779829988; x=1780434788;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Hzgnptp30fzy3dfR3ONLx/OlJHIqjK8I6eenmNfhq1c=;
+ b=oSFs9tmigBNxCYfa0F5gnc4NQ5vR7KpNbPIgEStmwl8RA13Zh8rXgfvFTBSaergx2i
+ wTGtlfmUiLrjb6JWwqVW35S9yO6H8ia+cQiIA6oKjgLVY9FW4PkQbVip6SnsxtDixjTb
+ Y7ncpFlcMvpB+SDu+33JsynWdrR7JKqV1c7tJJfzodp/QnKePD2vga7XkC0dGs51IDX7
+ I15C9xtOpx1DaGlbjx5vR4VC40v4pEd3vLGrqL5vKKA3iz7hVpqnXaYiXbOOzCdg+bb8
+ xIvYelCcKBYrXkNXnDd7hZL0MnKpLupdGooJKZuJk7eM4Ni3HOIcdPCfWV4BN5kbUdFb
+ 9mrA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8HPjtDH6dUGhoDUAmIRTSaIUW33yNSyJ/IibfYRpVMC/GdCtE2F6um+JsARm/W8k90FhOS6/zR+/AY@nongnu.org
+X-Gm-Message-State: AOJu0YxUWBXayXfTyKWEqA4+u555kpNtQGxP/pvp8KjwpdqhIEk0oRz2
+ n0kpFkhFrGIqBMkqYp5liT/jToRq5bj0fRrpbtDG5Vl5AY2pf6ArTFbZ
+X-Gm-Gg: Acq92OFK2DnebC1tSafxrS6I/alWkdmyOc+aAg/T1gFoYww+UsKFFcNfljkYtD6nYSo
+ Fp99X+X2ricsAxyrcmsiVl/x4Lv+a6kXMdZ/cHnFtqT0Dp8U85LWwX1DEdfsIehHfWdvHEfzXo/
+ xrF2CjZ8hS57rO+tURTBWo5b9WqfmsDkIv7QKecPMNBx6k8N24kAi0GVuVh+wCiADY6Q4b10eVQ
+ 5e42SVRj1frovMV/Y0kGc/QYklMvVDT2Bn8BlqRxYJUDaIZFyJnkc4e7OmcbfCAx/LzpWf0/cpG
+ C0jBKxLbsYcrhyA92aeQO+XIh2g1vITW+rHHw9JE41Ql4B7+G+OUP4d7UUYMTiTwig/u5HiDEOU
+ LrC129u5/hsqIp+AsGUSIGDQeq5e8aHYXCA6YOnv8pAv90bcygO7NaQspDLzdKqNLi5cV12T1tO
+ AAmYzojUKGyXyitLa+vLLk6zn/icZqbkg92jnB1V4TDfuqUlHB/EBOri1kGTqs8SsJ4MCQNGuM0
+ gKAn6KjPDAYSaduxf1rBB0ExyZBhB+IILl9FWqDp37YtqoYrzcke7t3YU+dw57Vm+E=
+X-Received: by 2002:a05:600c:c4a3:b0:488:ac01:72b6 with SMTP id
+ 5b1f17b1804b1-490426ceed2mr340930585e9.21.1779829987477; 
+ Tue, 26 May 2026 14:13:07 -0700 (PDT)
+Received: from ehlo.thunderbird.net
+ (dynamic-2a02-3100-1b54-f900-0110-758a-6876-5140.310.pool.telefonica.de.
+ [2a02:3100:1b54:f900:110:758a:6876:5140])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-490454b1ab3sm400712585e9.14.2026.05.26.14.13.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 May 2026 14:13:05 -0700 (PDT)
+Date: Tue, 26 May 2026 21:13:04 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Gaurav Sharma <gaurav.sharma_7@nxp.com>, qemu-devel@nongnu.org
+CC: pbonzini@redhat.com, peter.maydell@linaro.org,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCHv1_3/7=5D_hw/misc=3A_Add_SRC_?=
+ =?US-ASCII?Q?=28System_Reset_Controller=29_to_i=2EMX8MP?=
+In-Reply-To: <20260519175635.3245229-4-gaurav.sharma_7@nxp.com>
+References: <20260519175635.3245229-1-gaurav.sharma_7@nxp.com>
+ <20260519175635.3245229-4-gaurav.sharma_7@nxp.com>
+Message-ID: <345B58C3-FCB2-4D51-8DC4-E426BA1064C3@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] thread-pool: Allow at least 1 thread in
- thread_pool_adjust_max_threads_to_work()
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-References: <b76c763f576b0fb8a35960a8e3c3da59701d2a74.1779390317.git.maciej.szmigiero@oracle.com>
- <ahYDnlAUJ8x1bipq@x1.local>
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Content-Language: en-US, pl-PL
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- xsFNBFpGusUBEADXUMM2t7y9sHhI79+2QUnDdpauIBjZDukPZArwD+sDlx5P+jxaZ13XjUQc
- 6oJdk+jpvKiyzlbKqlDtw/Y2Ob24tg1g/zvkHn8AVUwX+ZWWewSZ0vcwp7u/LvA+w2nJbIL1
- N0/QUUdmxfkWTHhNqgkNX5hEmYqhwUPozFR0zblfD/6+XFR7VM9yT0fZPLqYLNOmGfqAXlxY
- m8nWmi+lxkd/PYqQQwOq6GQwxjRFEvSc09m/YPYo9hxh7a6s8hAP88YOf2PD8oBB1r5E7KGb
- Fv10Qss4CU/3zaiyRTExWwOJnTQdzSbtnM3S8/ZO/sL0FY/b4VLtlZzERAraxHdnPn8GgxYk
- oPtAqoyf52RkCabL9dsXPWYQjkwG8WEUPScHDy8Uoo6imQujshG23A99iPuXcWc/5ld9mIo/
- Ee7kN50MOXwS4vCJSv0cMkVhh77CmGUv5++E/rPcbXPLTPeRVy6SHgdDhIj7elmx2Lgo0cyh
- uyxyBKSuzPvb61nh5EKAGL7kPqflNw7LJkInzHqKHDNu57rVuCHEx4yxcKNB4pdE2SgyPxs9
- 9W7Cz0q2Hd7Yu8GOXvMfQfrBiEV4q4PzidUtV6sLqVq0RMK7LEi0RiZpthwxz0IUFwRw2KS/
- 9Kgs9LmOXYimodrV0pMxpVqcyTepmDSoWzyXNP2NL1+GuQtaTQARAQABzTBNYWNpZWogUy4g
- U3ptaWdpZXJvIDxtYWlsQG1hY2llai5zem1pZ2llcm8ubmFtZT7CwZQEEwEIAD4CGwMFCwkI
- BwIGFQoJCAsCBBYCAwECHgECF4AWIQRyeg1N257Z9gOb7O+Ef143kM4JdwUCaZD5QgUJESzD
- fQAKCRCEf143kM4JdxkAEAC9cPa1ONCizZerNCJR9fI1ezsYWjNYpTWoYWT2vWug8repG8EJ
- E6/l300/TRf0kYy9vNC0PUe+uJeJig2HxfwuCAHECobvvANSEq+KTUXq1sE3tJ7ZKCZwDiR/
- zs4axmFlZVzFUHkzCqH/y7xBBHHQJrtSD0W/Gs1DbCb1xCblyE4uzQ9DytlxkZdVgXt3Fmm8
- Xa6JAxoDnUktl6LWpQ4tW6IRXN4gOQeRQKzREIIbk1gEvba/60JvuS1GX2KK2/SRODspF9TV
- 5IKHmnepKOSpwLhkR3U4uV1D/4aqcJaDsH1krdAse5nkyXXQ7aBMvGLx2KADaoq6uhBFswyZ
- L7/AuhKEq4+YTuvE+EBYJS1YXFCisqQgG2zDGQc2I5AVpQlF6isKa+kcQBT7V27XuSrcsYdH
- Op7nJynlyBg7nYkgAdy+zLgQ+0fgCmtWha5qJUP6oVWcMfA6btSiN+rNkMylqgXbkeHgdDkr
- 1+VshxGvQSMm/4DStFJwZ7zEln9qxr4AQbfdugNZmMb3F/haKvUuNh2TJHICgbwjEDryZipf
- 2iUjqBVVzW4ut7fgHkBq9yw2Vy5ryr+R/N/1Pja6gvtvU53dfDIGXxBRGTQFD92xXVd/Ml8/
- G0QvpiUCuUBvVGJb8k0Xlx9CYWlyFqoNUevPW8e8CCw+j3i+H9tMPuvJjs7AzQRaRrwiAQwA
- xnVmJqeP9VUTISps+WbyYFYlMFfIurl7tzK74bc67KUBp+PHuDP9p4ZcJUGC3UZJP85/GlUV
- dE1NairYWEJQUB7bpogTuzMI825QXIB9z842HwWfP2RW5eDtJMeujzJeFaUpmeTG9snzaYxY
- N3r0TDKj5dZwSIThIMQpsmhH2zylkT0jH7kBPxb8IkCQ1c6wgKITwoHFjTIO0B75U7bBNSDp
- XUaUDvd6T3xd1Fz57ujAvKHrZfWtaNSGwLmUYQAcFvrKDGPB5Z3ggkiTtkmW3OCQbnIxGJJw
- /+HefYhB5/kCcpKUQ2RYcYgCZ0/WcES1xU5dnNe4i0a5gsOFSOYCpNCfTHttVxKxZZTQ/rxj
- XwTuToXmTI4Nehn96t25DHZ0t9L9UEJ0yxH2y8Av4rtf75K2yAXFZa8dHnQgCkyjA/gs0ujG
- wD+Gs7dYQxP4i+rLhwBWD3mawJxLxY0vGwkG7k7npqanlsWlATHpOdqBMUiAR22hs02FikAo
- iXNgWTy7ABEBAAHCwXwEGAEIACYCGwwWIQRyeg1N257Z9gOb7O+Ef143kM4JdwUCaZD5YwUJ
- ESzCOAAKCRCEf143kM4Jd4+KEADEBLxVKXGqinMD1nb/QPA0Rj35WluRdPIB2dcDcyTOtiyN
- ErIQQMhr0W4sxZOd741a2nv89VZKjzBNjihOZgbEuHfG/0lhIZ5t6aF7k4gbMctzQT7utzmD
- y5OoV+/VFHguLThwxRvCMkGEieE8Cb4muYdQgaq1s5ipV1IqF3cDYg2iGupnsYSgOfw7ZyvG
- 9c7Fxn7jiD/wI9eL3AesCkVFbF0r/9yLbuW6vh3kd/+bORO1GK4snSjrZLi04bnihnDfa33N
- Pik3cmUZZANzo+HkADZjJ1pl3DZn1Qj8STk6YhaTtJhLKH4lteAlSS4xRIeoiw/2hbzbRr4j
- hnu96hf6ukM7E7oC89SfWGXZHbUds77MFyKvBTCMJnkQq+PbmYp1vgTnOl3JO7ARZ3rNPkHE
- IpOWDjHRyDiKVVxt2bKaELZrFGcYYTVXt9pUfY1xFt76G0piVr50+jTezgMmZYr7aZOrqlUi
- WHQjcZZbROLql/+ngphSgdthGIhVWrIMHJu1UxnRiwKc/fzDFUZ9hFL+W4ZLm+52TzMatpta
- oNdcP9rtsQjdYMNLuwysP4keDX8yBXADwJD7eQ+ryIIKh6X1lBMIWxeZG5W0DQ6/4BCUEbCe
- 1DqkYRtZyUEzgAbaHliaa5t3dfCtSMz5cAbGqxarXc7bKOjA6P8hCwgP0tEypA==
-In-Reply-To: <ahYDnlAUJ8x1bipq@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,78 +106,702 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26.05.2026 22:33, Peter Xu wrote:
-> On Thu, May 21, 2026 at 09:06:07PM +0200, Maciej S. Szmigiero wrote:
->> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>
->> thread_pool_adjust_max_threads_to_work() is supposed to give each task its
->> own thread by setting the pool max thread count limit accordingly.
->>
->> However, if there aren't any tasks currently in the pool the pool max
->> thread count will be set to 0, which will trigger an assertion failure
->> in thread_pool_set_max_threads() - because setting this value would
->> completely block the pool by not allowing it to process any submitted
->> tasks.
->>
->> This also can happen if a task is submitted via
->> thread_pool_submit_immediate() to an empty pool but the task completes so
->> quickly that by the time this function calls
->> thread_pool_adjust_max_threads_to_work() the pool again has no unfinished
->> tasks in it.
-> 
-> Sorry for a late comment. Just curious: how easy is this to reproduce?
 
-It's difficult to reproduce in most setups.
 
-My main VFIO live migration setup never hit it for more than a year, other
-similar setup hit it recently 3 times.
+Am 19=2E Mai 2026 17:56:31 UTC schrieb Gaurav Sharma <gaurav=2Esharma_7@nx=
+p=2Ecom>:
 
-On the other hand, putting sleep(5) in the middle of
-thread_pool_submit_immediate() makes it reproduce nearly always for me.
+Hi Gurav,
 
->>
->> Fix this by making sure that the pool is allowed to create at least 1
->> thread.
-> 
-> But then it means we have no work and then we will create one thread does
-> nothing..
-
-thread_pool_adjust_max_threads_to_work() is currently called only from
-thread_pool_submit_immediate().
-
-If the API user truly wants no threads in the pool for time being
-(even though this will completely block the pool) they can use
-thread_pool_submit() to submit their task(s).
-This won't call thread_pool_adjust_max_threads_to_work() by itself.
-
-Also, since the thread pool is created with zero initial threads by
-default the patch does *not* mean that the each newly created pool
-will have one idle thread now.
-
-> 
-> I suspect the real culprit is we released the cur_work_lock during the
-> whole process of thread_pool_submit_immediate().  If we take it during the
-> whole window this will be a no-issue too.
-
-True, however this will need splitting both thread_pool_submit() and
-thread_pool_adjust_max_threads_to_work() into two versions each: one
-which takes pool->cur_work_lock, another which does not and then
-take pool->cur_work_lock on their behalf in thread_pool_submit_immediate().
-
-Not to mention this would also mean putting the whole g_thread_pool_push()
--> g_thread_pool_start_thread() machinery under pool->cur_work_lock in this
-case instead of just pool->cur_work increment.
-
-I think doing this such way would add unnecessary complexity considering
-that its alternative of this patch is a single-line trivial change.
-
-> The other question is, if it is awkward to manually adjust num of threads,
-> shall we set num to be -1 (unlimited) while pool created?
-
-We can't - Glib thread pool API does not allow unlimited exclusive pools. 
-> Thanks,
+>From: Bernhard Beschow <shentey@gmail=2Ecom>
 >
-Thanks,
-Maciej
+>Add emulation of the i=2EMX8MP System Reset Controller (SRC)=2E
+>The SRC manages reset control for various subsystems on the i=2EMX8MP SoC=
+=2E
+>SRC registers are used to start/stop/poll the M7 core, hence needed for
+>AMP boot=2E
+>
+>Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
 
+Your SoB is missing here (since you already modified the code)=2E
+
+>---
+> docs/system/arm/imx8m=2Erst    |   1 +
+> hw/arm/Kconfig               |   1 +
+> hw/arm/fsl-imx8mp=2Ec          |  10 +
+> hw/misc/Kconfig              |   3 +
+> hw/misc/imx8mp_src=2Ec         | 431 +++++++++++++++++++++++++++++++++++
+> hw/misc/meson=2Ebuild          |   1 +
+> hw/misc/trace-events         |   5 +
+> include/hw/arm/fsl-imx8mp=2Eh  |   2 +
+> include/hw/misc/imx8mp_src=2Eh |  32 +++
+> 9 files changed, 486 insertions(+)
+> create mode 100644 hw/misc/imx8mp_src=2Ec
+> create mode 100644 include/hw/misc/imx8mp_src=2Eh
+>
+>diff --git a/docs/system/arm/imx8m=2Erst b/docs/system/arm/imx8m=2Erst
+>index 1e110bc810=2E=2E49c100c4b1 100644
+>--- a/docs/system/arm/imx8m=2Erst
+>+++ b/docs/system/arm/imx8m=2Erst
+>@@ -27,6 +27,7 @@ following devices:
+>  * Clock Tree
+>  * General Power Controller (GPC)
+>  * General Purpose Register (GPR)
+>+ * System Reset Controller (SRC)
+
+I'd always (i=2Ee=2E documentation, comments, device descriptions) omit th=
+e redundant abbreviations ("SRC" in this case), also in the other device mo=
+dels=2E
+
+>=20
+> Boot options
+> ------------
+>diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+>index 9e4b71264a=2E=2E8e89e30c45 100644
+>--- a/hw/arm/Kconfig
+>+++ b/hw/arm/Kconfig
+>@@ -602,6 +602,7 @@ config FSL_IMX8MP
+>     select FSL_IMX8MP_CCM
+>     select FSL_IMX8MP_GPC
+>     select FSL_IMX8MP_GPR
+>+    select FSL_IMX8MP_SRC
+>     select IMX
+>     select IMX_FEC
+>     select IMX_I2C
+>diff --git a/hw/arm/fsl-imx8mp=2Ec b/hw/arm/fsl-imx8mp=2Ec
+>index c4aafbdc1c=2E=2E168fcb0334 100644
+>--- a/hw/arm/fsl-imx8mp=2Ec
+>+++ b/hw/arm/fsl-imx8mp=2Ec
+>@@ -208,6 +208,8 @@ static void fsl_imx8mp_init(Object *obj)
+>=20
+>     object_initialize_child(obj, "gpr", &s->gpr, TYPE_IMX8MP_GPR);
+>=20
+>+    object_initialize_child(obj, "src", &s->src, TYPE_IMX8MP_SRC);
+>+
+>     for (i =3D 0; i < FSL_IMX8MP_NUM_UARTS; i++) {
+>         g_autofree char *name =3D g_strdup_printf("uart%d", i + 1);
+>         object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL)=
+;
+>@@ -426,6 +428,13 @@ static void fsl_imx8mp_realize(DeviceState *dev, Err=
+or **errp)
+>                            qdev_get_gpio_in(gicdev, serial_table[i]=2Eir=
+q));
+>     }
+>=20
+>+    /* SRC */
+>+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->src), errp)) {
+>+        return;
+>+    }
+>+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->src), 0,
+>+                    fsl_imx8mp_memmap[FSL_IMX8MP_SRC]=2Eaddr);
+>+
+>     /* GPC */
+>     if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpc), errp)) {
+>         return;
+>@@ -716,6 +725,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Erro=
+r **errp)
+>         case FSL_IMX8MP_PCIE_PHY1:
+>         case FSL_IMX8MP_RAM:
+>         case FSL_IMX8MP_SNVS_HP:
+>+        case FSL_IMX8MP_SRC:
+>         case FSL_IMX8MP_UART1 =2E=2E=2E FSL_IMX8MP_UART4:
+>         case FSL_IMX8MP_USB1 =2E=2E=2E FSL_IMX8MP_USB2:
+>         case FSL_IMX8MP_USDHC1 =2E=2E=2E FSL_IMX8MP_USDHC3:
+>diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+>index 7464788d82=2E=2E185bd6f62a 100644
+>--- a/hw/misc/Kconfig
+>+++ b/hw/misc/Kconfig
+>@@ -107,6 +107,9 @@ config FSL_IMX8MP_GPC
+> config FSL_IMX8MP_GPR
+>     bool
+>=20
+>+config FSL_IMX8MP_SRC
+>+    bool
+>+
+> config STM32_RCC
+>     bool
+>=20
+>diff --git a/hw/misc/imx8mp_src=2Ec b/hw/misc/imx8mp_src=2Ec
+>new file mode 100644
+>index 0000000000=2E=2Ef339a7a088
+>--- /dev/null
+>+++ b/hw/misc/imx8mp_src=2Ec
+>@@ -0,0 +1,431 @@
+>+/*
+>+ * i=2EMX 8M Plus System Reset Controller
+>+ *
+>+ * Copyright (c) 2025 Bernhard Beschow <shentey@gmail=2Ecom>
+>+ *
+>+ * SPDX-License-Identifier: GPL-2=2E0-or-later
+>+ */
+>+
+>+#include "qemu/osdep=2Eh"
+>+#include "hw/misc/imx8mp_src=2Eh"
+>+#include "hw/core/cpu=2Eh"
+>+#include "hw/core/qdev-properties=2Eh"
+>+#include "hw/core/registerfields=2Eh"
+>+#include "target/arm/arm-powerctl=2Eh"
+>+#include "migration/vmstate=2Eh"
+>+#include "qemu/bitops=2Eh"
+>+#include "qemu/log=2Eh"
+>+#include "qemu/main-loop=2Eh"
+>+#include "trace=2Eh"
+>+
+>+REG32(SRC_SCR, 0x0000)
+>+
+>+REG32(SRC_A53RCR0, 0x0004)
+>+    FIELD(SRC_A53RCR0, CORE_RESET3, 7, 1)
+>+    FIELD(SRC_A53RCR0, CORE_RESET2, 6, 1)
+>+    FIELD(SRC_A53RCR0, CORE_RESET1, 5, 1)
+>+    FIELD(SRC_A53RCR0, CORE_RESET0, 4, 1)
+>+
+>+REG32(SRC_A53RCR1, 0x0008)
+>+    FIELD(SRC_A53RCR1, CORE3_ENABLE, 3, 1)
+>+    FIELD(SRC_A53RCR1, CORE2_ENABLE, 2, 1)
+>+    FIELD(SRC_A53RCR1, CORE1_ENABLE, 1, 1)
+>+    FIELD(SRC_A53RCR1, CORE0_ENABLE, 0, 1)
+
+Let's omit the A53 handling for now since it interferes with -smp as Phil =
+pointed out and since it isn't used with direct kernel boot=2E That is, we =
+can remove the A53-related FIELDs for now, as well as the switch cases in f=
+sl_imx8mp_src_write() and any code that would be rendered unused=2E
+
+>+
+>+REG32(SRC_M7RCR, 0x000c)
+>+REG32(SRC_SUPERMIX_RCR, 0x0018)
+>+REG32(SRC_AUDIOMIX_RCR, 0x001c)
+>+REG32(SRC_USBPHY1_RCR, 0x0020)
+>+REG32(SRC_USBPHY2_RCR, 0x0024)
+>+REG32(SRC_MLMIX_RCR, 0x0028)
+>+REG32(SRC_PCIEPHY_RCR, 0x002c)
+>+REG32(SRC_HDMI_RCR, 0x0030)
+>+REG32(SRC_MEDIA_RCR, 0x0034)
+>+REG32(SRC_GPU2D_RCR, 0x0038)
+>+REG32(SRC_GPU3D_RCR, 0x003c)
+>+REG32(SRC_GPU_RCR, 0x0040)
+>+REG32(SRC_VPU_RCR, 0x0044)
+>+REG32(SRC_VPU_G1_RCR, 0x0048)
+>+REG32(SRC_VPU_G2_RCR, 0x004c)
+>+REG32(SRC_VPUVC8KE_RCR, 0x0050)
+>+REG32(SRC_NOC_RCR, 0x0054)
+>+REG32(SRC_SBMR1, 0x0058)
+>+REG32(SRC_SRSR, 0x005c)
+>+REG32(SRC_SISR, 0x0068)
+>+REG32(SRC_SIMR, 0x006c)
+>+
+>+REG32(SRC_SBMR2, 0x0070)
+>+    FIELD(SRC_SBMR2, IPP_BOOT_MODE, 24, 4)
+>+
+>+REG32(SRC_GPR1, 0x0074)
+>+REG32(SRC_GPR2, 0x0078)
+>+REG32(SRC_GPR3, 0x007c)
+>+REG32(SRC_GPR4, 0x0080)
+>+REG32(SRC_GPR5, 0x0084)
+>+REG32(SRC_GPR6, 0x0088)
+>+REG32(SRC_GPR7, 0x008c)
+>+REG32(SRC_GPR8, 0x0090)
+>+REG32(SRC_GPR9, 0x0094)
+>+REG32(SRC_GPR10, 0x0098)
+>+REG32(SRC_DDRC_RCR, 0x1000)
+>+REG32(SRC_HDMIPHY_RCR, 0x1008)
+>+REG32(SRC_MIPIPHY1_RCR, 0x100c)
+>+REG32(SRC_MIPIPHY2_RCR, 0x1010)
+>+REG32(SRC_HSIO_RCR, 0x1014)
+>+REG32(SRC_MEDIAISPDWP_RCR, 0x1018)
+>+
+>+static const char *fsl_imx8mp_src_reg_name(uint32_t reg)
+>+{
+>+    switch (reg) {
+>+    case R_SRC_SCR:
+>+        return " (SRC_SCR)";
+>+    case R_SRC_A53RCR0:
+>+        return " (SRC_A53RCR0)";
+>+    case R_SRC_A53RCR1:
+>+        return " (SRC_A53RCR1)";
+>+    case R_SRC_M7RCR:
+>+        return " (SRC_M7RCR)";
+>+    case R_SRC_SUPERMIX_RCR:
+>+        return " (SRC_SUPERMIX_RCR)";
+>+    case R_SRC_AUDIOMIX_RCR:
+>+        return " (SRC_AUDIOMIX_RCR)";
+>+    case R_SRC_USBPHY1_RCR:
+>+        return " (SRC_USBPHY1_RCR)";
+>+    case R_SRC_USBPHY2_RCR:
+>+        return " (SRC_USBPHY2_RCR)";
+>+    case R_SRC_MLMIX_RCR:
+>+        return " (SRC_MLMIX_RCR)";
+>+    case R_SRC_PCIEPHY_RCR:
+>+        return " (SRC_PCIEPHY_RCR)";
+>+    case R_SRC_HDMI_RCR:
+>+        return " (SRC_HDMI_RCR)";
+>+    case R_SRC_MEDIA_RCR:
+>+        return " (SRC_MEDIA_RCR)";
+>+    case R_SRC_GPU2D_RCR:
+>+        return " (SRC_GPU2D_RCR)";
+>+    case R_SRC_GPU3D_RCR:
+>+        return " (SRC_GPU3D_RCR)";
+>+    case R_SRC_GPU_RCR:
+>+        return " (SRC_GPU_RCR)";
+>+    case R_SRC_VPU_RCR:
+>+        return " (SRC_VPU_RCR)";
+>+    case R_SRC_VPU_G1_RCR:
+>+        return " (SRC_VPU_G1_RCR)";
+>+    case R_SRC_VPU_G2_RCR:
+>+        return " (SRC_VPU_G2_RCR)";
+>+    case R_SRC_VPUVC8KE_RCR:
+>+        return " (SRC_VPUVC8KE_RCR)";
+>+    case R_SRC_NOC_RCR:
+>+        return " (SRC_NOC_RCR)";
+>+    case R_SRC_SBMR1:
+>+        return " (SRC_SBMR1)";
+>+    case R_SRC_SRSR:
+>+        return " (SRC_SRSR)";
+>+    case R_SRC_SISR:
+>+        return " (SRC_SISR)";
+>+    case R_SRC_SIMR:
+>+        return " (SRC_SIMR)";
+>+    case R_SRC_SBMR2:
+>+        return " (SRC_SBMR2)";
+>+    case R_SRC_GPR1:
+>+        return " (SRC_GPR1)";
+>+    case R_SRC_GPR2:
+>+        return " (SRC_GPR2)";
+>+    case R_SRC_GPR3:
+>+        return " (SRC_GPR3)";
+>+    case R_SRC_GPR4:
+>+        return " (SRC_GPR4)";
+>+    case R_SRC_GPR5:
+>+        return " (SRC_GPR5)";
+>+    case R_SRC_GPR6:
+>+        return " (SRC_GPR6)";
+>+    case R_SRC_GPR7:
+>+        return " (SRC_GPR7)";
+>+    case R_SRC_GPR8:
+>+        return " (SRC_GPR8)";
+>+    case R_SRC_GPR9:
+>+        return " (SRC_GPR9)";
+>+    case R_SRC_GPR10:
+>+        return " (SRC_GPR10)";
+>+    case R_SRC_DDRC_RCR:
+>+        return " (SRC_DDRC_RCR)";
+>+    case R_SRC_HDMIPHY_RCR:
+>+        return " (SRC_HDMIPHY_RCR)";
+>+    case R_SRC_MIPIPHY1_RCR:
+>+        return " (SRC_MIPIPHY1_RCR)";
+>+    case R_SRC_MIPIPHY2_RCR:
+>+        return " (SRC_MIPIPHY2_RCR)";
+>+    case R_SRC_HSIO_RCR:
+>+        return " (SRC_HSIO_RCR)";
+>+    case R_SRC_MEDIAISPDWP_RCR:
+>+        return " (SRC_MEDIAISPDWP_RCR)";
+>+    default:
+>+        return " (reserved)";
+>+    }
+>+}
+>+
+>+static uint64_t fsl_imx8mp_src_read(void *opaque, hwaddr offset,
+>+                                    unsigned size)
+>+{
+>+    FslImx8mpSrcState *s =3D opaque;
+>+    const uint32_t reg =3D offset / 4;
+>+    uint32_t value =3D 0;
+>+
+>+    switch (reg) {
+>+    default:
+>+        if (reg < FSL_IMX8MP_SRC_NUM_REGS) {
+>+            value =3D s->regs[reg];
+>+        }
+>+        qemu_log_mask(LOG_UNIMP, "[%s]%s: Unimplemented register at offs=
+et 0x%"
+>+                      HWADDR_PRIx "\n", TYPE_IMX8MP_SRC, __func__,
+>+                      offset);
+>+        break;
+>+    }
+>+
+>+    trace_fsl_imx8mp_src_read(offset, fsl_imx8mp_src_reg_name(reg), valu=
+e);
+>+
+>+    return value;
+>+}
+>+
+>+/*
+>+ * The reset is asynchronous so we need to defer clearing the reset bit =
+until
+>+ * the work is completed=2E
+>+ */
+>+
+>+struct FslImx8mpSrcResetInfo {
+>+    FslImx8mpSrcState *s;
+>+    int reset_bit;
+>+};
+>+
+>+
+>+static void imx8mp_src_reset(DeviceState *dev)
+>+{
+>+    FslImx8mpSrcState *s =3D IMX8MP_SRC(dev);
+>+
+>+    memset(s->regs, 0, sizeof(s->regs));
+>+
+>+    /* Primary A53 core enabled by default */
+>+    s->regs[R_SRC_A53RCR1] =3D BIT(0);
+>+
+>+    /*
+>+     * Default CM7 STOP state for Linux imx-rproc MMIO mode detection=2E
+>+     * Historically your minimal SRC-mmio stub seeded offset 0x0C with 0=
+xA=2E
+>+     * In this model, offset 0x0C is R_SRC_M7RCR=2E
+>+     */
+
+I can't quite parse those comments=2E AI leftover?
+
+>+    s->regs[R_SRC_M7RCR] =3D 0x0000000A;
+
+The reset value in the datasheet is 0000_00A8h=2E In particular, why chang=
+e the 8 to an A? AFAIU SW_M7C_RST is supposed to be set by the guest to tri=
+gger a core reset, and the bit clears itself once the reset process is fini=
+shed=2E
+
+>+
+>+    /* Boot mode field (kept from previous realize-time init) */
+>+    s->regs[R_SRC_SBMR2] =3D FIELD_DP32(s->regs[R_SRC_SBMR2], SRC_SBMR2,
+>+                                      IPP_BOOT_MODE, s->boot_mode);
+
+Let's not worry about the boot mode for now (see also below) and just remo=
+ve this code for now=2E
+
+>+}
+>+
+>+
+>+static void fsl_imx8mp_src_clear_reset_bit(CPUState *cpu, run_on_cpu_dat=
+a data)
+>+{
+>+    struct FslImx8mpSrcResetInfo *ri =3D data=2Ehost_ptr;
+>+    FslImx8mpSrcState *s =3D ri->s;
+>+
+>+    assert(bql_locked());
+>+
+>+    s->regs[R_SRC_A53RCR0] =3D deposit32(s->regs[R_SRC_A53RCR0],
+>+                                       ri->reset_bit, 1, 0);
+>+    trace_fsl_imx8mp_src_clear_reset_bit(fsl_imx8mp_src_reg_name(R_SRC_A=
+53RCR0),
+>+                                         s->regs[R_SRC_A53RCR0]);
+>+
+>+    g_free(ri);
+>+}
+>+
+>+static void fsl_imx8mp_src_defer_clear_reset_bit(FslImx8mpSrcState *s,
+>+                                                  int cpuid,
+>+                                                  unsigned long reset_sh=
+ift)
+>+{
+>+    struct FslImx8mpSrcResetInfo *ri;
+>+    CPUState *cpu =3D arm_get_cpu_by_id(cpuid);
+>+
+>+    if (!cpu) {
+>+        return;
+>+    }
+>+
+>+    ri =3D g_new(struct FslImx8mpSrcResetInfo, 1);
+>+    ri->s =3D s;
+>+    ri->reset_bit =3D reset_shift;
+>+
+>+    async_run_on_cpu(cpu, fsl_imx8mp_src_clear_reset_bit,
+>+                     RUN_ON_CPU_HOST_PTR(ri));
+>+}
+>+
+>+static void fsl_imx8mp_src_write(void *opaque, hwaddr offset, uint64_t v=
+alue,
+>+                                 unsigned size)
+>+{
+>+    FslImx8mpSrcState *s =3D opaque;
+>+    const uint32_t reg =3D offset / 4;
+>+    unsigned long change_mask;
+>+
+>+    change_mask =3D s->regs[reg] ^ (uint32_t)value;
+>+
+>+    switch (reg) {
+>+    case R_SRC_A53RCR0:
+>+        if (FIELD_EX32(change_mask, SRC_A53RCR0, CORE_RESET0)) {
+>+            arm_reset_cpu(0);
+>+            fsl_imx8mp_src_defer_clear_reset_bit(s, 0,
+>+                 R_SRC_A53RCR0_CORE_RESET0_SHIFT);
+>+        }
+>+        if (FIELD_EX32(change_mask, SRC_A53RCR0, CORE_RESET1)) {
+>+            arm_reset_cpu(1);
+>+            fsl_imx8mp_src_defer_clear_reset_bit(s, 1,
+>+                 R_SRC_A53RCR0_CORE_RESET1_SHIFT);
+>+        }
+>+        if (FIELD_EX32(change_mask, SRC_A53RCR0, CORE_RESET2)) {
+>+            arm_reset_cpu(2);
+>+            fsl_imx8mp_src_defer_clear_reset_bit(s, 2,
+>+                 R_SRC_A53RCR0_CORE_RESET2_SHIFT);
+>+        }
+>+        if (FIELD_EX32(change_mask, SRC_A53RCR0, CORE_RESET3)) {
+>+            arm_reset_cpu(3);
+>+            fsl_imx8mp_src_defer_clear_reset_bit(s, 3,
+>+                 R_SRC_A53RCR0_CORE_RESET3_SHIFT);
+>+        }
+>+        s->regs[reg] =3D value;
+>+        break;
+>+    case R_SRC_A53RCR1:
+>+        if (FIELD_EX32(change_mask, SRC_A53RCR1, CORE3_ENABLE)) {
+>+            if (FIELD_EX32(value, SRC_A53RCR1, CORE3_ENABLE)) {
+>+                /* CORE 3 is brought up */
+>+                arm_set_cpu_on(3, s->regs[R_SRC_GPR8] << 2, 0, 3, true);
+>+            } else {
+>+                /* CORE 3 is shut down */
+>+                arm_set_cpu_off(3);
+>+            }
+>+            /* We clear the reset bit as the processor changed state */
+>+            fsl_imx8mp_src_defer_clear_reset_bit(s, 3, R_SRC_A53RCR0_COR=
+E_RESET3_SHIFT);
+>+        }
+>+        if (FIELD_EX32(change_mask, SRC_A53RCR1, CORE2_ENABLE)) {
+>+            if (FIELD_EX32(value, SRC_A53RCR1, CORE2_ENABLE)) {
+>+                /* CORE 2 is brought up */
+>+                arm_set_cpu_on(2, s->regs[R_SRC_GPR6] << 2, 0, 3, true);
+>+            } else {
+>+                /* CORE 2 is shut down */
+>+                arm_set_cpu_off(2);
+>+            }
+>+            /* We clear the reset bit as the processor changed state */
+>+            fsl_imx8mp_src_defer_clear_reset_bit(s, 2, R_SRC_A53RCR0_COR=
+E_RESET2_SHIFT);
+>+        }
+>+        if (FIELD_EX32(change_mask, SRC_A53RCR1, CORE1_ENABLE)) {
+>+            if (FIELD_EX32(value, SRC_A53RCR1, CORE1_ENABLE)) {
+>+                /* CORE 1 is brought up */
+>+                arm_set_cpu_on(1, s->regs[R_SRC_GPR4] << 2, 0, 3, true);
+>+            } else {
+>+                /* CORE 1 is shut down */
+>+                arm_set_cpu_off(1);
+>+            }
+>+            /* We clear the reset bit as the processor changed state */
+>+            fsl_imx8mp_src_defer_clear_reset_bit(s, 1, R_SRC_A53RCR0_COR=
+E_RESET1_SHIFT);
+>+        }
+>+        if (FIELD_EX32(change_mask, SRC_A53RCR1, CORE0_ENABLE)) {
+>+            if (FIELD_EX32(value, SRC_A53RCR1, CORE0_ENABLE)) {
+>+                /* CORE 1 is brought up */
+>+                arm_set_cpu_on(0, s->regs[R_SRC_GPR2] << 2, 0, 3, true);
+>+            } else {
+>+                /* CORE 1 is shut down */
+>+                arm_set_cpu_off(0);
+>+            }
+>+            /* We clear the reset bit as the processor changed state */
+>+            fsl_imx8mp_src_defer_clear_reset_bit(s, 0, R_SRC_A53RCR0_COR=
+E_RESET0_SHIFT);
+>+        }
+>+        s->regs[reg] =3D value;
+>+        break;
+>+    default:
+>+        if (reg < FSL_IMX8MP_SRC_NUM_REGS) {
+>+            s->regs[reg] =3D value;
+>+        }
+>+        qemu_log_mask(LOG_UNIMP, "[%s]%s: Unimplemented register at offs=
+et 0x%"
+>+                      HWADDR_PRIx "\n", TYPE_IMX8MP_SRC, __func__,
+>+                      offset);
+>+        break;
+>+    }
+>+
+>+    trace_fsl_imx8mp_src_write(offset, fsl_imx8mp_src_reg_name(reg), val=
+ue);
+>+}
+>+
+>+static const struct MemoryRegionOps imx8mp_src_ops =3D {
+>+    =2Eread =3D fsl_imx8mp_src_read,
+>+    =2Ewrite =3D fsl_imx8mp_src_write,
+>+    =2Eendianness =3D DEVICE_LITTLE_ENDIAN,
+>+    =2Evalid =3D {
+>+        /*
+>+         * Our device would not work correctly if the guest was doing
+>+         * unaligned access=2E This might not be a limitation on the rea=
+l
+>+         * device but in practice there is no reason for a guest to acce=
+ss
+>+         * this device unaligned=2E
+>+         */
+>+        =2Emin_access_size =3D 4,
+>+        =2Emax_access_size =3D 4,
+>+        =2Eunaligned =3D false,
+>+    },
+>+};
+>+
+>+void imx8mp_src_start_cpu(FslImx8mpSrcState *s, int cpuid)
+>+{
+
+This function is unused and should therefore be removed=2E
+
+>+    switch (cpuid) {
+>+    case 0:
+>+        arm_set_cpu_on(0, s->regs[R_SRC_GPR2] << 2, 0, 3, true);
+>+        break;
+>+    case 1:
+>+        arm_set_cpu_on(1, s->regs[R_SRC_GPR4] << 2, 0, 3, true);
+>+        break;
+>+    case 2:
+>+        arm_set_cpu_on(2, s->regs[R_SRC_GPR6] << 2, 0, 3, true);
+>+        break;
+>+    case 3:
+>+        arm_set_cpu_on(3, s->regs[R_SRC_GPR8] << 2, 0, 3, true);
+>+        break;
+>+    default:
+>+        g_assert_not_reached();
+>+        break;
+>+    }
+>+}
+>+
+>+static void imx8mp_src_realize(DeviceState *dev, Error **errp)
+>+{
+>+    FslImx8mpSrcState *s =3D IMX8MP_SRC(dev);
+>+
+>+    memory_region_init_io(&s->iomem, OBJECT(dev), &imx8mp_src_ops, s,
+>+                          TYPE_IMX8MP_SRC, 0x1000);
+>+    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iomem);
+>+}
+>+
+>+static const VMStateDescription imx8mp_src_vmstate =3D {
+>+    =2Ename =3D TYPE_IMX8MP_SRC,
+>+    =2Eversion_id =3D 1,
+>+    =2Eminimum_version_id =3D 1,
+>+    =2Efields =3D (const VMStateField[]) {
+>+        VMSTATE_UINT32_ARRAY(regs, FslImx8mpSrcState, FSL_IMX8MP_SRC_NUM=
+_REGS),
+>+        VMSTATE_END_OF_LIST()
+>+    },
+>+};
+>+
+>+static const Property imx8mp_src_properties[] =3D {
+>+    DEFINE_PROP_UINT8("boot-mode", FslImx8mpSrcState, boot_mode, 0),
+>+};
+
+This property, and hence the boot_mode attribute, is neither used nor usef=
+ul for now=2E Let's remove both=2E
+
+Best regards,
+Bernhard
+
+>+
+>+static void imx8mp_src_class_init(ObjectClass *klass, const void *data)
+>+{
+>+    DeviceClass *dc =3D DEVICE_CLASS(klass);
+>+
+>+    device_class_set_legacy_reset(dc, imx8mp_src_reset);
+>+    dc->realize =3D imx8mp_src_realize;
+>+    dc->vmsd =3D &imx8mp_src_vmstate;
+>+    device_class_set_props(dc, imx8mp_src_properties);
+>+    dc->desc =3D "i=2EMX 8M Plus System Reset Controller";
+>+}
+>+
+>+static const TypeInfo imx8mp_src_types[] =3D {
+>+    {
+>+        =2Ename          =3D TYPE_IMX8MP_SRC,
+>+        =2Eparent        =3D TYPE_SYS_BUS_DEVICE,
+>+        =2Einstance_size =3D sizeof(FslImx8mpSrcState),
+>+        =2Eclass_init    =3D imx8mp_src_class_init,
+>+    },
+>+};
+>+
+>+DEFINE_TYPES(imx8mp_src_types)
+>diff --git a/hw/misc/meson=2Ebuild b/hw/misc/meson=2Ebuild
+>index 67dd1a98e5=2E=2E174aed40b6 100644
+>--- a/hw/misc/meson=2Ebuild
+>+++ b/hw/misc/meson=2Ebuild
+>@@ -61,6 +61,7 @@ system_ss=2Eadd(when: 'CONFIG_FSL_IMX8MP_ANALOG', if_tr=
+ue: files('imx8mp_analog=2Ec'
+> system_ss=2Eadd(when: 'CONFIG_FSL_IMX8MP_CCM', if_true: files('imx8mp_cc=
+m=2Ec'))
+> system_ss=2Eadd(when: 'CONFIG_FSL_IMX8MP_GPC', if_true: files('imx8mp_gp=
+c=2Ec'))
+> system_ss=2Eadd(when: 'CONFIG_FSL_IMX8MP_GPR', if_true: files('imx8mp_gp=
+r=2Ec'))
+>+system_ss=2Eadd(when: 'CONFIG_FSL_IMX8MP_SRC', if_true: files('imx8mp_sr=
+c=2Ec'))
+> system_ss=2Eadd(when: 'CONFIG_IMX', if_true: files(
+>   'imx25_ccm=2Ec',
+>   'imx31_ccm=2Ec',
+>diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+>index b88accc437=2E=2E080e79787c 100644
+>--- a/hw/misc/trace-events
+>+++ b/hw/misc/trace-events
+>@@ -129,6 +129,11 @@ imx7_gpr_write(uint64_t offset, uint64_t value) "add=
+r 0x%08" PRIx64 "value 0x%08
+> imx7_snvs_read(uint64_t offset, uint64_t value, unsigned size) "i=2EMX S=
+NVS read: offset 0x%08" PRIx64 " value 0x%08" PRIx64 " size %u"
+> imx7_snvs_write(uint64_t offset, uint64_t value, unsigned size) "i=2EMX =
+SNVS write: offset 0x%08" PRIx64 " value 0x%08" PRIx64 " size %u"
+>=20
+>+# imx8mp_src=2Ec
+>+fsl_imx8mp_src_read(uint64_t offset, const char *reg_name, uint32_t valu=
+e) "[0x%" PRIx64 "%s] <- 0x%" PRIx32
+>+fsl_imx8mp_src_write(uint64_t offset, const char *reg_name, uint64_t val=
+ue) "[0x%" PRIx64 "%s] <- 0x%" PRIx64
+>+fsl_imx8mp_src_clear_reset_bit(const char *reg_name, uint32_t value) "re=
+g[%s] <=3D 0x%" PRIx32
+>+
+> # mos6522=2Ec
+> mos6522_set_counter(int index, unsigned int val) "T%d=2Ecounter=3D%d"
+> mos6522_get_next_irq_time(uint16_t latch, int64_t d, int64_t delta) "lat=
+ch=3D%d counter=3D0x%"PRIx64 " delta_next=3D0x%"PRIx64
+>diff --git a/include/hw/arm/fsl-imx8mp=2Eh b/include/hw/arm/fsl-imx8mp=2E=
+h
+>index b3aca1f692=2E=2Ec6c133cc05 100644
+>--- a/include/hw/arm/fsl-imx8mp=2Eh
+>+++ b/include/hw/arm/fsl-imx8mp=2Eh
+>@@ -19,6 +19,7 @@
+> #include "hw/misc/imx8mp_ccm=2Eh"
+> #include "hw/misc/imx8mp_gpc=2Eh"
+> #include "hw/misc/imx8mp_gpr=2Eh"
+>+#include "hw/misc/imx8mp_src=2Eh"
+> #include "hw/net/imx_fec=2Eh"
+> #include "hw/core/or-irq=2Eh"
+> #include "hw/pci-host/designware=2Eh"
+>@@ -64,6 +65,7 @@ struct FslImx8mpState {
+>     IMX8MPAnalogState  analog;
+>     IMX7SNVSState      snvs;
+>     IMXSPIState        spi[FSL_IMX8MP_NUM_ECSPIS];
+>+    FslImx8mpSrcState  src;
+>     IMXI2CState        i2c[FSL_IMX8MP_NUM_I2CS];
+>     IMXSerialState     uart[FSL_IMX8MP_NUM_UARTS];
+>     IMXFECState        enet;
+>diff --git a/include/hw/misc/imx8mp_src=2Eh b/include/hw/misc/imx8mp_src=
+=2Eh
+>new file mode 100644
+>index 0000000000=2E=2E9905d217b8
+>--- /dev/null
+>+++ b/include/hw/misc/imx8mp_src=2Eh
+>@@ -0,0 +1,32 @@
+>+/*
+>+ * i=2EMX 8M Plus System Reset Controller
+>+ *
+>+ * Copyright (c) 2025 Bernhard Beschow <shentey@gmail=2Ecom>
+>+ *
+>+ * SPDX-License-Identifier: GPL-2=2E0-or-later
+>+ */
+>+
+>+#ifndef FSL_IMX8MP_SRC_H
+>+#define FSL_IMX8MP_SRC_H
+>+
+>+#include "hw/core/sysbus=2Eh"
+>+#include "system/memory=2Eh"
+>+#include "qom/object=2Eh"
+>+
+>+#define TYPE_IMX8MP_SRC "fsl-imx8mp-src"
+>+OBJECT_DECLARE_SIMPLE_TYPE(FslImx8mpSrcState, IMX8MP_SRC)
+>+
+>+#define FSL_IMX8MP_SRC_NUM_REGS (0x100 / 4)
+>+
+>+struct FslImx8mpSrcState {
+>+    SysBusDevice parent_obj;
+>+
+>+    MemoryRegion iomem;
+>+
+>+    uint32_t regs[FSL_IMX8MP_SRC_NUM_REGS];
+>+    uint8_t boot_mode;
+>+};
+>+
+>+void imx8mp_src_start_cpu(FslImx8mpSrcState *s, int cpuid);
+>+
+>+#endif /* FSL_IMX8MP_SRC_H */
 
