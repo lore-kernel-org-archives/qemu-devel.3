@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0079ECD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 08:23:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8062CD5BB4
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 08:23:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRn0H-0005DX-8v; Tue, 26 May 2026 04:19:09 -0400
+	id 1wRn1X-0006OK-2Z; Tue, 26 May 2026 04:20:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wRn0F-0005CH-F5
- for qemu-devel@nongnu.org; Tue, 26 May 2026 04:19:07 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wRn0z-0005bI-P1
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 04:19:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wRn0C-0007XN-KS
- for qemu-devel@nongnu.org; Tue, 26 May 2026 04:19:07 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wRn0x-00080S-0i
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 04:19:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779783543;
+ s=mimecast20190719; t=1779783590;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AOIh9+j8SX6nATu4YMNyspTFt1ElE2GFmG4S309qu7k=;
- b=VY60ex7fPHgNWnAuv9oV18E1n1WcTxlL26wC1+ICE15+/AsOKIOqfLYqI01fHw0Mqzs8fp
- IEf+zgcqsgw9rMtsw8H8TQ1K4aDZYKNSWLy7wXPOQ5DrmDgGLqcLQI5KrATWrShdfVZNdu
- 5yf0B7VI7ycs4zMd7IoHYHv9w4mmbEk=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ArNYbH4AId59IPV/W8Pm6esd+JQiuWJyDsRXydgTNZA=;
+ b=i29i919G4k9M0ApdOWj8KgEuDsVt+QM0CRg/ArinoulKFOqViQt7wLTYXgrgpt2TppcAMi
+ JDb4vh6GmVSpgHhpiI1LW+P2QRZXZE7enDoXdkGc6+Jo/uy3Ws3qsda+HAQsjCQZmSsg2u
+ ic4tfYYMRKAMh+dKuPQ5x4b2Magsxms=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-106-X4TZW7T1PGCrKJEV5tpyug-1; Tue,
- 26 May 2026 04:19:00 -0400
-X-MC-Unique: X4TZW7T1PGCrKJEV5tpyug-1
-X-Mimecast-MFC-AGG-ID: X4TZW7T1PGCrKJEV5tpyug_1779783537
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-296-3U3aUu32OZCo9Z7GzGMLsw-1; Tue,
+ 26 May 2026 04:19:46 -0400
+X-MC-Unique: 3U3aUu32OZCo9Z7GzGMLsw-1
+X-Mimecast-MFC-AGG-ID: 3U3aUu32OZCo9Z7GzGMLsw_1779783585
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 59B091956094; Tue, 26 May 2026 08:18:57 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9A3CF1956048; Tue, 26 May 2026 08:19:45 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.30])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7A580180056E; Tue, 26 May 2026 08:18:55 +0000 (UTC)
+ id DC3981800357; Tue, 26 May 2026 08:19:43 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: Kane Chen <kane_chen@aspeedtech.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 02/37] tests/functional/arm/test_aspeed_ast2600_sdk: Add USB
- EHCI test for AST2600 SDK
-Date: Tue, 26 May 2026 10:18:13 +0200
-Message-ID: <20260526081848.651835-3-clg@redhat.com>
+Subject: [PULL 25/37] hw/timer/aspeed_timer: convert to use Resettable
+ interface
+Date: Tue, 26 May 2026 10:18:36 +0200
+Message-ID: <20260526081848.651835-26-clg@redhat.com>
 In-Reply-To: <20260526081848.651835-1-clg@redhat.com>
 References: <20260526081848.651835-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -86,55 +85,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+From: Kane Chen <kane_chen@aspeedtech.com>
 
-Add a functional test to verify USB EHCI support on the AST2600
-SDK machine by attaching a USB keyboard device and checking its
-enumeration via lsusb.
+Replace the legacy reset callback registered via
+device_class_set_legacy_reset() with the Resettable interface.
 
-This introduces a helper routine that runs lsusb in the guest
-and validates that the emulated "QEMU USB Keyboard" is detected.
-
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260504025342.1452605-2-jamin_lin@aspeedtech.com
+Signed-off-by: Kane Chen <kane_chen@aspeedtech.com>
+Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Link: https://lore.kernel.org/qemu-devel/20260525044129.3133916-12-kane_chen@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- tests/functional/arm/test_aspeed_ast2600_sdk.py | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/timer/aspeed_timer.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/tests/functional/arm/test_aspeed_ast2600_sdk.py b/tests/functional/arm/test_aspeed_ast2600_sdk.py
-index d787e90d1024..01548dd1354d 100755
---- a/tests/functional/arm/test_aspeed_ast2600_sdk.py
-+++ b/tests/functional/arm/test_aspeed_ast2600_sdk.py
-@@ -40,6 +40,11 @@ def do_ast2600_i3c_test(self):
-             'i3ctransfer -d /dev/bus/i3c/5-1234567890ab -r 8 | grep 0x | xargs',
-             '0x12 0x34 0x56 0x78 0x90 0xab 0xcd 0xef')
+diff --git a/hw/timer/aspeed_timer.c b/hw/timer/aspeed_timer.c
+index 1e954f7aec5c..69f5c89215c5 100644
+--- a/hw/timer/aspeed_timer.c
++++ b/hw/timer/aspeed_timer.c
+@@ -834,10 +834,10 @@ static void aspeed_timer_realize(DeviceState *dev, Error **errp)
+     sysbus_init_mmio(sbd, &s->iomem);
+ }
  
-+    def do_ast2600_usb_ehci_test(self):
-+        exec_command_and_wait_for_pattern(self,
-+            'lsusb',
-+            'QEMU QEMU USB Keyboard')
-+
-     def test_arm_ast2600_evb_sdk(self):
-         self.set_machine('ast2600-evb')
-         self.require_netdev('user')
-@@ -54,6 +59,7 @@ def test_arm_ast2600_evb_sdk(self):
-         self.vm.add_args('-netdev', 'user,id=net1')
-         self.vm.add_args('-device',
-             'mock-i3c-target,bus=dw.i3c.5,pid=0xab9078563412')
-+        self.vm.add_args('-device', 'usb-kbd,bus=usb-bus.1')
-         self.do_test_arm_aspeed_sdk_start(
-             self.scratch_file("ast2600-default-image", "image-bmc"))
+-static void aspeed_timer_reset(DeviceState *dev)
++static void aspeed_timer_reset_hold(Object *obj, ResetType type)
+ {
+     int i;
+-    AspeedTimerCtrlState *s = ASPEED_TIMER(dev);
++    AspeedTimerCtrlState *s = ASPEED_TIMER(obj);
  
-@@ -81,6 +87,7 @@ def test_arm_ast2600_evb_sdk(self):
-              '/sbin/hwclock -f /dev/rtc1', year)
-         self.do_ast2600_pcie_test()
-         self.do_ast2600_i3c_test()
-+        self.do_ast2600_usb_ehci_test()
+     for (i = 0; i < ASPEED_TIMER_NR_TIMERS; i++) {
+         AspeedTimer *t = &s->timers[i];
+@@ -898,9 +898,10 @@ static const Property aspeed_timer_properties[] = {
+ static void timer_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
  
- 
- if __name__ == '__main__':
+     dc->realize = aspeed_timer_realize;
+-    device_class_set_legacy_reset(dc, aspeed_timer_reset);
++    rc->phases.hold = aspeed_timer_reset_hold;
+     dc->desc = "ASPEED Timer";
+     dc->vmsd = &vmstate_aspeed_timer_state;
+     device_class_set_props(dc, aspeed_timer_properties);
 -- 
 2.54.0
 
