@@ -4,70 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5559ECD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 15:51:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 907D4CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 15:56:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRu2o-0004EE-4x; Tue, 26 May 2026 11:50:14 -0400
+	id 1wRu7z-0005YE-Fm; Tue, 26 May 2026 11:55:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wRu2m-0004AO-Dr
- for qemu-devel@nongnu.org; Tue, 26 May 2026 11:50:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wRu2j-00012P-DO
- for qemu-devel@nongnu.org; Tue, 26 May 2026 11:50:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779810607;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=1qEl1OZmTnlLK0noGKjdEgn6K16qJWjoPhXb8McoxmA=;
- b=aYgR2RRtIUDvw/hzhHlmupc5qJ9xYmAwK8mWo0bFFreQfC3920ZiB4Lhbev0FoOTcCWTCe
- b5CnUv+alDOgQ4DK4SrANYO+BQe5y6atM+KWiVsq+tlv2+AhMh/84AcbC/5ayZmt7n1C+V
- 1O9MXF+QMEuK3ORLIWaCuz+wJT2wW68=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-111-rkJkL7D2MWaHOHBVEO4guw-1; Tue,
- 26 May 2026 11:50:03 -0400
-X-MC-Unique: rkJkL7D2MWaHOHBVEO4guw-1
-X-Mimecast-MFC-AGG-ID: rkJkL7D2MWaHOHBVEO4guw_1779810602
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 072D4180120A; Tue, 26 May 2026 15:50:00 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.201])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9627D19560A3; Tue, 26 May 2026 15:49:58 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
- qemu-stable@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Feifan Qian <bea1e@proton.me>
-Subject: [PATCH] virtio-blk: add missing VIRTIO_BLK_T_SCSI_CMD size check
- (CVE-2026-48914)
-Date: Tue, 26 May 2026 11:49:57 -0400
-Message-ID: <20260526154957.1741622-1-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wRu7w-0005Xd-9Z
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 11:55:32 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wRu7u-0006rI-1S
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 11:55:31 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-654672a6d68so10259308d50.0
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 08:55:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779810929; cv=none;
+ d=google.com; s=arc-20240605;
+ b=cHRY2NITwsuG0+Cm9p+dtWhIKIHTVldoz/BLh/LJ0+MI6b1gPXQrAQ7AwyBTALt75S
+ /E2kOoo0qwI5IQ66qaTF1qUfRDaSs37hCP0XxAm/wRR3iU82pXP/I6BU6whaZEPyxggA
+ KXiMmI2pT9nrve/xG4JZGin6HOByyS3jMT/+KF5Sv9P+21NrSqrFbC44AlN2Id/o3b9D
+ dkAfzE+soL08ykXf+XD6C6OitWlnZzZ4zdcPzig2LW0+yJ4YtVJGzqY8+QGOrHklrZA/
+ a7Ntyxvx2n0maXK7EaPkNEwezjlDaQqRw5H6wSBkAcyQouVyJr3sCP/myFTKW5cS2QNW
+ TMlw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=+b9Kf/CszHgxNBcDmuakcMyonHIw3rytgxgZQ5SEFlc=;
+ fh=ZunbYo7vBCjqSWc9622LTLPHQcfFJMelhG0lIzAt0Bo=;
+ b=fd7/bJYc7S8fCh+BayhS9n34COK7nq/WYKbnpR8U/d0SHU2xWQszPswbfPsLK/yaK3
+ 8OZc4JyXgizmaeD8H/h/0+yEJxqoF3jLIIS81iG2EVWshojH7TkSwrKghBpS3eFMMdHS
+ dDSFzoR56W+foV8QzcY2MM3847poG7xA16Rp8loI+Ey9X7hWNEZgahbg0qdMddgRTadh
+ YpUjFsCKC47Jpms1ukeo6Ym/8u2gJKeRwkESIzMD4OWbOjBLIddJaM/HEYuhpc8+yVbS
+ bH+ntwfjys1s3WKZmEWAwEuNsyYKuAqhDHCYRWBba6JRr85/U19GvNTBjw9feiEr6sjF
+ 9YDA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779810929; x=1780415729; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+b9Kf/CszHgxNBcDmuakcMyonHIw3rytgxgZQ5SEFlc=;
+ b=jCKvTXqIigHF6FNf/Sk3eaWm5ZC/p9Lb6SvLiSn6+5DVnYPxOxh6eGvbNylXUehiv4
+ 1pa923+T0kGYVQ79VJgcUd1RY8TxnXbda0wmhrfXBuHW2iCywwWDk4VzHKQkkUJr/oFX
+ +y+mjd+BkdlsxLNoLcyinRQcSedNIDQLxpyLbtFm1hepttGuVooAkH3RrwlQyUSdEcAI
+ yn7R9dvSTUAnf4724R/rPZWtot95acLp7HkJ44Hk/+80Rf3PfRCoIX3gBkCflfJqKy1o
+ MRS9kbjIKcZfscAxTOu+y0u709WFgeDlCk/HKVlnaGOAI44BdsUnJ/+OR/8xDBabM2xd
+ i6Jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779810929; x=1780415729;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=+b9Kf/CszHgxNBcDmuakcMyonHIw3rytgxgZQ5SEFlc=;
+ b=sOMnoViB7lDFhGofNkO1IHjLt+vGvp82AJ+0d+l2czuo1/+3qlpXdzI1a/dlLIKsbf
+ hR/6/hghubv0DEoA6sz5Mm/DdSwfyaxyymwhNaWaP3W5z+6Tg5cwsvIf+tC5WEitJoA5
+ fwcVikaOl+fBNWunMkRHAZWAVVhdcNT89GQYQ5TH5MbO8uJnXjm49I4qMEeZbRHeoEnH
+ mNUu9LyIuuKYG4xgN0H+TXzRhPVkwS2aSuTybLWE1osJY9AK8YRFqarwqwCRetDm4akJ
+ r/slBJ5tjkt31CdYPPjzaaoVH/XIqOcWaX97GZDTIrM3AyOGKjYROsg5N5w8yOBHzQai
+ rdpQ==
+X-Gm-Message-State: AOJu0Yxm0skNVXIYpDDWd9OaZTcDwp17sjlGFVooyIAEZr5v+Cstkzxe
+ OLwgwR1B8rpG7yQIkYjwcPH12M4WGVviaBvfOej2tT+yL5+yDWL7qBrXEQ41B2+dF0QDCOIt7Lz
+ 2ib2VaynWL72rEaHT6tvaIVi3jnwID5bTGMw4IIryQ2/8degZEQnt
+X-Gm-Gg: Acq92OHsGYLbVm+475zkxLrqMcCr/PYyk72f8n2p43YM94u5CRwhiJ8i1tLurBiby80
+ yB+WkCUU7Y18I7zQO65tARMob46pKwsASQ/cz3JM/GvjXs4p0APJMoNWgmXrAw56EZaZnc7zbMW
+ HR3U/AP6LQX4BhmolYiQouqa17DX5mrHUPV9Y0fCqL+/faRt6r0JxwTKUl32NcLUuQoZ/4XeSiw
+ ivh4x3/lH3rh1YxLbeoKAnBImzyE/b1rHCdUpcRmcWY2OeYkSHekmFT1jAN2mRNzKV+3Tf93jyC
+ SsyfbzTU5vpD/HYflqHP9/8JdOzD7zEuHkFUQvnvKxTnEQXKQ82IOHmmqh/ZFktbQ/0=
+X-Received: by 2002:a05:690e:4846:b0:65e:5aa3:9632 with SMTP id
+ 956f58d0204a3-65ec97a1f0cmr13931280d50.22.1779810928438; Tue, 26 May 2026
+ 08:55:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260519144553.91483-1-philmd@linaro.org>
+In-Reply-To: <20260519144553.91483-1-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 26 May 2026 16:55:16 +0100
+X-Gm-Features: AVHnY4LUaxuF0q6-gl8u_W9ULJLLNlXpmPuppjCisLcKLjEhHuvzM2fg0g1YsA4
+Message-ID: <CAFEAcA9_RB-VjLuy43p5kgkvXNJPa=WyADocKLxRxve1rFq-Ng@mail.gmail.com>
+Subject: Re: [PATCH v8 00/18] single-binary: Make hw/arm/ common
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,47 +115,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Check that the iovec containing struct virtio_scsi_inhdr is large enough
-before storing an error value there.
+On Tue, 19 May 2026 at 15:46, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> Series fully reviewed.
 
-Feifan Qian <bea1e@proton.me> pointed out that this can be used to
-corrupt heap memory when the descriptor uses an MMIO address and a
-length of 1, forcing QEMU to allocate a 1-byte heap bounce buffer.
-virtio_stl_p() stores 4 bytes and therefore corrupts whatever is beyond
-the bounce buffer.
+Since it's all reviewed, if you want to take it via
+a single-binary pullreq you can have my
+Acked-by: Peter Maydell <peter.maydell@linaro.org>
 
-Fixes: CVE-2026-48914
-Fixes: f34e73cd69bd ("virtio-blk: report non-zero status when failing SG_IO requests")
-Reported-by: Feifan Qian <bea1e@proton.me>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- hw/block/virtio-blk.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+Otherwise I can take it in my next arm pullreq, but
+that might be a while as I've just sent one.
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 9cb9f1fb2b..6b92066aff 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -199,10 +199,16 @@ static void virtio_blk_handle_scsi(VirtIOBlockReq *req)
- 
-     /*
-      * The scsi inhdr is placed in the second-to-last input segment, just
--     * before the regular inhdr.
-+     * before the regular inhdr. VIRTIO implementations normally do not rely on
-+     * the precise message framing, but legacy implementations did and so we do
-+     * too for the legacy virtio-blk SCSI request type.
-      *
-      * Just put anything nonzero so that the ioctl fails in the guest.
-      */
-+    if (elem->in_sg[elem->in_num - 2].iov_len != sizeof(*scsi)) {
-+        status = VIRTIO_BLK_S_IOERR;
-+        goto fail;
-+    }
-     scsi = (void *)elem->in_sg[elem->in_num - 2].iov_base;
-     virtio_stl_p(vdev, &scsi->errors, 255);
-     status = VIRTIO_BLK_S_UNSUPP;
--- 
-2.54.0
-
+-- PMM
 
