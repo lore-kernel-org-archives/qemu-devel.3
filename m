@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C8FFCD5BCF
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 06:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7B55CD5BB4
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 06:52:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRldW-0002XA-3T; Tue, 26 May 2026 02:51:35 -0400
+	id 1wRld9-0002K9-NK; Tue, 26 May 2026 02:51:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wRlci-0002HL-Qx
- for qemu-devel@nongnu.org; Tue, 26 May 2026 02:50:50 -0400
+ id 1wRlcd-0002Gi-F5
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 02:50:41 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wRlcf-0000cT-8d
- for qemu-devel@nongnu.org; Tue, 26 May 2026 02:50:44 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1wRlca-0000aj-HT
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 02:50:39 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8Dx8eq9QhVqg0wNAA--.38074S3;
- Tue, 26 May 2026 14:50:37 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxzsC5QhVqbkwNAA--.14357S3;
+ Tue, 26 May 2026 14:50:33 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJCx98C8QhVqNF6RAA--.64567S2;
- Tue, 26 May 2026 14:50:36 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJBxbcK4QhVqM16RAA--.11451S4;
+ Tue, 26 May 2026 14:50:33 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, SignKirigami <prcups@krgm.moe>,
  Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH 12/12] target/loongarch: Add new structure CPUSysState
-Date: Tue, 26 May 2026 14:50:23 +0800
-Message-Id: <20260526065023.1639371-13-maobibo@loongson.cn>
+Subject: [PATCH 08/12] target/loongarch: Use curState in csr_helper.c when
+ accessing CSR registers
+Date: Tue, 26 May 2026 14:50:19 +0800
+Message-Id: <20260526065023.1639371-9-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20260526065023.1639371-1-maobibo@loongson.cn>
 References: <20260526065023.1639371-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCx98C8QhVqNF6RAA--.64567S2
+X-CM-TRANSID: qMiowJBxbcK4QhVqM16RAA--.11451S4
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,271 +67,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-New structure CPUSysState is added here, it contains CSR registers
-now, in future TLB and timer can be moved to this structure also.
-
-It is only code movement, no function change.
+When accessing CSR registers in file csr_helper.c, use curState rather
+than env. There is no function change.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- target/loongarch/cpu.c     |   4 +-
- target/loongarch/cpu.h     |  35 +++++------
- target/loongarch/csr.c     |   4 +-
- target/loongarch/csr.h     |   2 +-
- target/loongarch/machine.c | 116 ++++++++++++++++++-------------------
- 5 files changed, 81 insertions(+), 80 deletions(-)
+ target/loongarch/tcg/csr_helper.c | 55 ++++++++++++++++++-------------
+ 1 file changed, 32 insertions(+), 23 deletions(-)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index a036355e0c..f918fd94b8 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -282,7 +282,7 @@ static void loongarch_la464_initfn(Object *obj)
-     uint32_t data = 0, field;
-     int i;
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index cd35ca93c7..5a93727704 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -20,7 +20,8 @@
  
--    set_current_state(env, env);
-+    set_current_state(env, &env->sys_env[0]);
-     for (i = 0; i < 21; i++) {
-         env->cpucfg[i] = 0x0;
-     }
-@@ -412,7 +412,7 @@ static void loongarch_la132_initfn(Object *obj)
-     uint32_t data = 0;
-     int i;
- 
--    set_current_state(env, env);
-+    set_current_state(env, &env->sys_env[0]);
-     for (i = 0; i < 21; i++) {
-         env->cpucfg[i] = 0x0;
-     }
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index dedb3971e5..9787ad2ec6 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -317,23 +317,7 @@ typedef struct  LoongArchBT {
- #define CPU_VENDOR_LOONGSON   "Loongson"
- #define CPU_MODEL_3A5000      "3A5000"
- #define CPU_MODEL_1C101       "1C101"
--struct CPUArchState;
--typedef struct CPUArchState CPUSysState;
--
--typedef struct CPUArchState {
--    uint64_t gpr[32];
--    uint64_t pc;
--
--    fpr_t fpr[32];
--    bool cf[8];
--    uint32_t fcsr0;
--    lbt_t  lbt;
--
--    uint32_t cpucfg[21];
--    uint32_t pv_features;
--    uint64_t vendor_id;
--    uint64_t cpu_id;
--
-+typedef struct CPUSysState {
-     /* LoongArch CSRs */
-     uint64_t CSR_CRMD;
-     uint64_t CSR_PRMD;
-@@ -395,6 +379,23 @@ typedef struct CPUArchState {
-     uint64_t CSR_MSGIS[N_MSGIS];
-     uint64_t CSR_MSGIR;
-     uint64_t CSR_MSGIE;
-+} CPUSysState;
-+
-+typedef struct CPUArchState {
-+    uint64_t gpr[32];
-+    uint64_t pc;
-+
-+    fpr_t fpr[32];
-+    bool cf[8];
-+    uint32_t fcsr0;
-+    lbt_t  lbt;
-+
-+    uint32_t cpucfg[21];
-+    uint32_t pv_features;
-+    uint64_t vendor_id;
-+    uint64_t cpu_id;
-+    CPUSysState sys_env[1];
-+
-     struct {
-         uint64_t guest_addr;
-     } stealtime;
-diff --git a/target/loongarch/csr.c b/target/loongarch/csr.c
-index d759be316b..9678948c45 100644
---- a/target/loongarch/csr.c
-+++ b/target/loongarch/csr.c
-@@ -9,14 +9,14 @@
- #define CSR_OFF_FUNCS(NAME, FL, RD, WR)                    \
-     [LOONGARCH_CSR_##NAME] = {                             \
-         .name   = (stringify(NAME)),                       \
--        .offset = offsetof(CPULoongArchState, CSR_##NAME), \
-+        .offset = offsetof(CPUSysState, CSR_##NAME),       \
-         .flags = FL, .readfn = RD, .writefn = WR           \
-     }
- 
- #define CSR_OFF_ARRAY(NAME, N)                                \
-     [LOONGARCH_CSR_##NAME(N)] = {                             \
-         .name   = (stringify(NAME##N)),                       \
--        .offset = offsetof(CPULoongArchState, CSR_##NAME[N]), \
-+        .offset = offsetof(CPUSysState, CSR_##NAME[N]),       \
-         .flags = CSRFL_BASIC, .readfn = NULL, .writefn = NULL           \
-     }
- 
-diff --git a/target/loongarch/csr.h b/target/loongarch/csr.h
-index ed7c603a0b..6841968b80 100644
---- a/target/loongarch/csr.h
-+++ b/target/loongarch/csr.h
-@@ -29,6 +29,6 @@ CSRInfo *get_csr(unsigned int csr_num);
- bool set_csr_flag(unsigned int csr_num, int flag);
- static inline int get_csr_offset(const CSRInfo *csr, int vm_level)
+ target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
  {
--    return csr->offset;
-+    return csr->offset + offsetof(CPULoongArchState, sys_env[vm_level]);
+-    int64_t old_v = env->CSR_STLBPS;
++    CPUSysState *cur = get_current_state(env);
++    int64_t old_v = cur->CSR_STLBPS;
+ 
+     /*
+      * The real hardware only supports the min tlb_ps is 12
+@@ -33,7 +34,7 @@ target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
+     } else {
+         /* Only update PS field, reserved bit keeps zero */
+         val = FIELD_DP64(val, CSR_STLBPS, RESERVE, 0);
+-        env->CSR_STLBPS = val;
++        cur->CSR_STLBPS = val;
+     }
+ 
+     return old_v;
+@@ -42,17 +43,18 @@ target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
+ target_ulong helper_csrrd_pgd(CPULoongArchState *env)
+ {
+     int64_t v;
++    CPUSysState *cur = get_current_state(env);
+ 
+-    if (env->CSR_TLBRERA & 0x1) {
+-        v = env->CSR_TLBRBADV;
++    if (cur->CSR_TLBRERA & 0x1) {
++        v = cur->CSR_TLBRBADV;
+     } else {
+-        v = env->CSR_BADV;
++        v = cur->CSR_BADV;
+     }
+ 
+     if ((v >> 63) & 0x1) {
+-        v = env->CSR_PGDH;
++        v = cur->CSR_PGDH;
+     } else {
+-        v = env->CSR_PGDL;
++        v = cur->CSR_PGDL;
+     }
+ 
+     return v;
+@@ -61,10 +63,11 @@ target_ulong helper_csrrd_pgd(CPULoongArchState *env)
+ target_ulong helper_csrrd_cpuid(CPULoongArchState *env)
+ {
+     LoongArchCPU *lac = env_archcpu(env);
++    CPUSysState *cur = get_current_state(env);
+ 
+-    env->CSR_CPUID = CPU(lac)->cpu_index;
++    cur->CSR_CPUID = CPU(lac)->cpu_index;
+ 
+-    return env->CSR_CPUID;
++    return cur->CSR_CPUID;
  }
- #endif /* TARGET_LOONGARCH_CSR_H */
-diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
-index 4db53fec26..a54c5d18a4 100644
---- a/target/loongarch/machine.c
-+++ b/target/loongarch/machine.c
-@@ -58,9 +58,9 @@ static const VMStateDescription vmstate_msgint = {
-     .minimum_version_id = 1,
-     .needed = msgint_needed,
-     .fields = (const VMStateField[]) {
--        VMSTATE_UINT64_ARRAY(env.CSR_MSGIS, LoongArchCPU, N_MSGIS),
--        VMSTATE_UINT64(env.CSR_MSGIR, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_MSGIE, LoongArchCPU),
-+        VMSTATE_UINT64_ARRAY(env.sys_env[0].CSR_MSGIS, LoongArchCPU, N_MSGIS),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_MSGIR, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_MSGIE, LoongArchCPU),
-         VMSTATE_END_OF_LIST()
-     },
- };
-@@ -167,8 +167,8 @@ static const VMStateDescription vmstate_pmu = {
-     .needed = pmu_needed,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32(env.perf_event_num, LoongArchCPU),
--        VMSTATE_UINT64_ARRAY(env.CSR_PERFCTRL, LoongArchCPU, MAX_PERF_EVENTS),
--        VMSTATE_UINT64_ARRAY(env.CSR_PERFCNTR, LoongArchCPU, MAX_PERF_EVENTS),
-+        VMSTATE_UINT64_ARRAY(env.sys_env[0].CSR_PERFCTRL, LoongArchCPU, MAX_PERF_EVENTS),
-+        VMSTATE_UINT64_ARRAY(env.sys_env[0].CSR_PERFCNTR, LoongArchCPU, MAX_PERF_EVENTS),
-         VMSTATE_END_OF_LIST()
-     },
- };
-@@ -215,61 +215,61 @@ const VMStateDescription vmstate_loongarch_cpu = {
-         VMSTATE_UINT64(env.pc, LoongArchCPU),
  
-         /* Remaining CSRs */
--        VMSTATE_UINT64(env.CSR_CRMD, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_PRMD, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_EUEN, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_MISC, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_ECFG, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_ESTAT, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_ERA, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_BADV, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_BADI, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_EENTRY, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_TLBIDX, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_TLBEHI, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_TLBELO0, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_TLBELO1, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_ASID, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_PGDL, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_PGDH, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_PGD, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_PWCL, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_PWCH, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_STLBPS, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_RVACFG, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_PRCFG1, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_PRCFG2, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_PRCFG3, LoongArchCPU),
--        VMSTATE_UINT64_ARRAY(env.CSR_SAVE, LoongArchCPU, 16),
--        VMSTATE_UINT64(env.CSR_TID, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_TCFG, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_TVAL, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_CNTC, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_TICLR, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_LLBCTL, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_IMPCTL1, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_IMPCTL2, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_TLBRENTRY, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_TLBRBADV, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_TLBRERA, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_TLBRSAVE, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_TLBRELO0, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_TLBRELO1, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_TLBREHI, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_TLBRPRMD, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_MERRCTL, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_MERRINFO1, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_MERRINFO2, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_MERRENTRY, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_MERRERA, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_MERRSAVE, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_CTAG, LoongArchCPU),
--        VMSTATE_UINT64_ARRAY(env.CSR_DMW, LoongArchCPU, 4),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_CRMD, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_PRMD, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_EUEN, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_MISC, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_ECFG, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_ESTAT, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_ERA, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_BADV, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_BADI, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_EENTRY, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_TLBIDX, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_TLBEHI, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_TLBELO0, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_TLBELO1, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_ASID, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_PGDL, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_PGDH, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_PGD, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_PWCL, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_PWCH, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_STLBPS, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_RVACFG, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_PRCFG1, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_PRCFG2, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_PRCFG3, LoongArchCPU),
-+        VMSTATE_UINT64_ARRAY(env.sys_env[0].CSR_SAVE, LoongArchCPU, 16),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_TID, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_TCFG, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_TVAL, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_CNTC, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_TICLR, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_LLBCTL, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_IMPCTL1, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_IMPCTL2, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_TLBRENTRY, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_TLBRBADV, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_TLBRERA, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_TLBRSAVE, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_TLBRELO0, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_TLBRELO1, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_TLBREHI, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_TLBRPRMD, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_MERRCTL, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_MERRINFO1, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_MERRINFO2, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_MERRENTRY, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_MERRERA, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_MERRSAVE, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_CTAG, LoongArchCPU),
-+        VMSTATE_UINT64_ARRAY(env.sys_env[0].CSR_DMW, LoongArchCPU, 4),
+ target_ulong helper_csrrd_tval(CPULoongArchState *env)
+@@ -77,16 +80,17 @@ target_ulong helper_csrrd_tval(CPULoongArchState *env)
+ target_ulong helper_csrrd_msgir(CPULoongArchState *env)
+ {
+     int irq, new;
++    CPUSysState *cur = get_current_state(env);
  
-         /* Debug CSRs */
--        VMSTATE_UINT64(env.CSR_DBG, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_DERA, LoongArchCPU),
--        VMSTATE_UINT64(env.CSR_DSAVE, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_DBG, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_DERA, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_env[0].CSR_DSAVE, LoongArchCPU),
+-    irq = find_first_bit((unsigned long *)env->CSR_MSGIS, 256);
++    irq = find_first_bit((unsigned long *)cur->CSR_MSGIS, 256);
+     if (irq < 256) {
+-        clear_bit(irq, (unsigned long *)env->CSR_MSGIS);
+-        new = find_first_bit((unsigned long *)env->CSR_MSGIS, 256);
++        clear_bit(irq, (unsigned long *)cur->CSR_MSGIS);
++        new = find_first_bit((unsigned long *)cur->CSR_MSGIS, 256);
+         if (new < 256) {
+             return irq;
+         }
  
-         VMSTATE_UINT64(kvm_state_counter, LoongArchCPU),
-         /* PV steal time */
+-        env->CSR_ESTAT = FIELD_DP64(env->CSR_ESTAT, CSR_ESTAT, MSGINT, 0);
++        cur->CSR_ESTAT = FIELD_DP64(cur->CSR_ESTAT, CSR_ESTAT, MSGINT, 0);
+     } else {
+         /* bit 31 set 1 for no invalid irq */
+         irq = BIT(31);
+@@ -97,21 +101,23 @@ target_ulong helper_csrrd_msgir(CPULoongArchState *env)
+ 
+ target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
+ {
+-    int64_t old_v = env->CSR_ESTAT;
++    CPUSysState *cur = get_current_state(env);
++    int64_t old_v = cur->CSR_ESTAT;
+ 
+     /* Only IS[1:0] can be written */
+-    env->CSR_ESTAT = deposit64(env->CSR_ESTAT, 0, 2, val);
++    cur->CSR_ESTAT = deposit64(cur->CSR_ESTAT, 0, 2, val);
+ 
+     return old_v;
+ }
+ 
+ target_ulong helper_csrwr_asid(CPULoongArchState *env, target_ulong val)
+ {
+-    int64_t old_v = env->CSR_ASID;
++    CPUSysState *cur = get_current_state(env);
++    int64_t old_v = cur->CSR_ASID;
+ 
+     /* Only ASID filed of CSR_ASID can be written */
+-    env->CSR_ASID = deposit64(env->CSR_ASID, 0, 10, val);
+-    if (old_v != env->CSR_ASID) {
++    cur->CSR_ASID = deposit64(cur->CSR_ASID, 0, 10, val);
++    if (old_v != cur->CSR_ASID) {
+         tlb_flush(env_cpu(env));
+     }
+     return old_v;
+@@ -120,7 +126,8 @@ target_ulong helper_csrwr_asid(CPULoongArchState *env, target_ulong val)
+ target_ulong helper_csrwr_tcfg(CPULoongArchState *env, target_ulong val)
+ {
+     LoongArchCPU *cpu = env_archcpu(env);
+-    int64_t old_v = env->CSR_TCFG;
++    CPUSysState *cur = get_current_state(env);
++    int64_t old_v = cur->CSR_TCFG;
+ 
+     cpu_loongarch_store_constant_timer_config(cpu, val);
+ 
+@@ -143,7 +150,8 @@ target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
+ target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
+ {
+     uint8_t shift, ptbase;
+-    int64_t old_v = env->CSR_PWCL;
++    CPUSysState *cur = get_current_state(env);
++    int64_t old_v = cur->CSR_PWCL;
+ 
+     /*
+      * The real hardware only supports 64bit PTE width now, 128bit or others
+@@ -160,14 +168,15 @@ target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
+          qemu_log_mask(LOG_GUEST_ERROR,
+                       "Attempted set ptbase 2^%d\n", ptbase);
+     }
+-    env->CSR_PWCL = val;
++    cur->CSR_PWCL = val;
+     return old_v;
+ }
+ 
+ target_ulong helper_csrwr_pwch(CPULoongArchState *env, target_ulong val)
+ {
+     uint8_t has_ptw;
+-    int64_t old_v = env->CSR_PWCH;
++    CPUSysState *cur = get_current_state(env);
++    int64_t old_v = cur->CSR_PWCH;
+ 
+     val = FIELD_DP64(val, CSR_PWCH, RESERVE, 0);
+     has_ptw = FIELD_EX32(env->cpucfg[2], CPUCFG2, HPTW);
+@@ -175,6 +184,6 @@ target_ulong helper_csrwr_pwch(CPULoongArchState *env, target_ulong val)
+         val = FIELD_DP64(val, CSR_PWCH, HPTW_EN, 0);
+     }
+ 
+-    env->CSR_PWCH = val;
++    cur->CSR_PWCH = val;
+     return old_v;
+  }
 -- 
 2.39.3
 
