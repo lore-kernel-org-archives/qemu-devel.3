@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F4E4CD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 09:47:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66696CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 09:47:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRoNM-0005ru-FT; Tue, 26 May 2026 05:47:04 -0400
+	id 1wRoO3-000693-00; Tue, 26 May 2026 05:47:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRoNK-0005r5-GO
- for qemu-devel@nongnu.org; Tue, 26 May 2026 05:47:02 -0400
-Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRoO1-00060H-7L
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 05:47:45 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRoNI-0004Fd-DW
- for qemu-devel@nongnu.org; Tue, 26 May 2026 05:47:02 -0400
-Received: by mail-wm1-x341.google.com with SMTP id
- 5b1f17b1804b1-49068493267so12968215e9.1
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 02:46:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRoNz-0004X7-NL
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 05:47:44 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-490388fd0dbso47824785e9.0
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 02:47:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779788818; x=1780393618; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779788862; x=1780393662; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=zKVG0KIYxnF/3RfPEfzH6BbW6IenKOyDdn+K2omGkBk=;
- b=qRNjK0UoTAKsEALRa7QeFZRtLq8zeQDClgeofI2DbWk9eTCpDQYG0aLmkPVQIrwuFw
- A+LXQHtsDT4/P8j+WGAAetGjzDgTApzOb7qdNBRYVqAoUZ7Hdm71280wF2FyPp7vIrPK
- eFSjm9C4wrx8cOGL3aiZlbafG5WvgboARsgp9Ba7oQxPTF1Wo31o5yc3+Wff1vruLXE+
- uN5aHYK5VZuAFVXm0QSPGemJYZHdsDu2aFxwh6/7ej1WjB49dJRv0p6JBFVdEY3nHJnW
- 9OQgSjvaZ6GVaQXA/SUB7dEFFXe1Lnlj+ESyzuYLgaEbpnZVzocrgh7ocQbeUrvhHfE9
- RwwQ==
+ bh=WQByfkMHXiTZOgUeLWC3Vb1eVe9KeDhrLn6kjkPuEfA=;
+ b=IwGLblqxaDs+gYw6KqUORLc837lIOQVPpiWtahpw3NbTxv0DwFtqMrn51WpBCfnMfh
+ VkHIUwk29+Iw4pbKqGnHMDGI0384MvgJ1vy/RnHkslPAF3nTrQuoO2cMrOAvPKwpnN9Z
+ P8HVn6mpOFqSdguFEkVHCowTVqblL5mwcBRBMtgj91zHbqpnuSyNW6X2HvxoArRBWGI2
+ llBSLJ7hUW9rOhuBMQTDlN9GzxO89LwvBYBjmwow6EMLgYR3TjYYB2F+HqRRJGiVVzI/
+ 2LTO1GcsQx13R/XLl55ZkoCv0LGbJQgmXuy+aHO+BGglvLoeKUiX2N52Vf6Ro061df9D
+ Yscg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779788818; x=1780393618;
+ d=1e100.net; s=20251104; t=1779788862; x=1780393662;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=zKVG0KIYxnF/3RfPEfzH6BbW6IenKOyDdn+K2omGkBk=;
- b=BiTGj4pTFb8DRwlHu7Zx6gNi/M8bDqxTaEDdL63Dp9dMdqedyeV7dmi0e+WaqMCgZl
- BoxlQNkvmI19SCHrt3lEVFPEBGWzq1LW7hLsc/FfnzpdClN1DR62l8/+50mojrux61Ut
- PFG25cDEZHGbpQj2OVMV91ZOLYW3tc/EAy3RawYvbITFtNn8RarlP1rHJCn7Gf0KwGcv
- iMLjnPuifYkpjxXcz+I+8Sybbmp3UAFPV9ECBYaFcsUwVofX4Lf2+9wxBKCG++1j7t26
- u5h81M7SdCYlUyphqMa35/1zhfOfnSrHCGpWJV89aiUwxHXopVkYdKIpFLEkpZkgp9JP
- 4cBQ==
-X-Gm-Message-State: AOJu0YyzLXw9ynfTzKYc0ptUdl3EKx6f63JxGGLlZuHXkGXF2amO4mDD
- 4XjVak8E9puC9IyDzi+SyQFgd1V8Rt1SAm5TAyhyZ3RXeduDkMbLdBf17jGafDHTIGE=
-X-Gm-Gg: Acq92OHV/2fqSMQraL4CZYOGA3FvtXKatR+XT47ROY0nSoj3ql4ao93f9KPnyP5TlIi
- S0tW/l4c+DxiR3+Pvpi8CXMd1IkRHGGMZm1sMDoWy3izVcPXwFrgygueqp3HWBSMK/4XI5Cfphd
- l+3xUNeHbfBhjpiYn5EUgyzXg6xTONz+h70VO6TivozjVdvlhx0sBDfOS1N/VKqcB5lsTFX4iTt
- xndOzYy1wIfIBbEyWxN5JuKgbM67Kqt8TUKAsKQHFT7FQ9ryJ+2rDt7fQj5kKhTt5pz/29VUr/Z
- XLENkXuGmmFw3ma9n7fwdtgmldfixVg/M9/kjyfLeK6Qjrn58QAhE8h+fLTT0zSqjRxjHjr9OaT
- slPatlXDHmdkiKjjq0KlISkUf38EIu28ekPb7kLL8hrbl0JJFbY/gsg3BVsXE4s2y0fK0NBoyFE
- IHC+IcW70jssvcZoFI6xOSb4Mw6LvX98SYOYxOxEPCvsPVvHpglfLEkYbwlefX59J0EQ==
-X-Received: by 2002:a05:600d:640f:10b0:490:3ff5:737f with SMTP id
- 5b1f17b1804b1-490426cefe0mr215062065e9.18.1779788818460; 
- Tue, 26 May 2026 02:46:58 -0700 (PDT)
+ bh=WQByfkMHXiTZOgUeLWC3Vb1eVe9KeDhrLn6kjkPuEfA=;
+ b=imNEAJfBGPgP4LqxWNsHEnRnW/r8YKdIphG4RdTaigVY9wJ8j1UHa4i+5r1Ebcz5Ve
+ rQUmqNiLtqpy+oJSx+x5PvnB40IaICe3aelifeENsNsxhBwGDEYVKC5tOTUYrxIdEU7C
+ sjK4+QZ6x6qc3d7q+ywnIg8Sl/i6vLUCUPrqXy+9FnMJmoknCflgZHXwv13wOaB96fsx
+ jl79b/rbVk+6kGjfaQ7D6oPYwDKcc3yP0mSqNXg6HB230adEhy1uAvfUvs5EMiia2LSd
+ qKGRRZwEooDSsLn1zMe0IJo3/1qCuTTAN4h3YM0X0tx2zxwR3foNI/BtbxK0BcZQKYFf
+ 95RQ==
+X-Gm-Message-State: AOJu0Yy3TUYwzsTeHijMWvbC2GdnLIuFouurKVThq4vHapJRp4vs1DGI
+ NnZkAueFCUk6+MmOLjjsySDcSkpTdk4F6bJ+0bBxMBbnNjLuYvziHxPmCxoUx6L4GTg=
+X-Gm-Gg: Acq92OFldNJuWkdLpfgkDoUDV69EBPyQVGE0NyUbANCWK9611dcMMPUQNlGB3MrSP9y
+ Ze9Tk2xgE+k6n6ZFMwEnuJ0TMp+3ak7L05aYgJbZLMuIwm5rgV2jTtAIOPrIxuhW3pO0Zna8xXM
+ jhbBBkX5LxCHTTyAi59WJSE+QNKNzvG74ak5yNdBHwnA1Bh66B/cpVjznla5qGHE/qVL9eGE81C
+ I6gSZ5fcUNz6JniDvhq3IX4hjZijobSfSMnUvMtF06byFqQM0yhe56vYmKxXb6IasRSrdDHN/FO
+ PMmdlyfolzdpkZzxcFnE5qEW79HNK3Hj6zi0hO1Yedf/ZNzJv5Zw2KOfg7kG5P5nA4IYHtuNa6g
+ 6Vf3/8bnJi6L+f+WFSyI1gEzh/aWX4nuwThcqNtyXMHlZW2JKBZKzzkxVCYJZR3VBWxB+iU9snS
+ Qb21k901zBK14A1KficHnQcHwlcye7wfIOzjdGdJXtJkLOlhwXgJZYmkkW1V995v7o4g==
+X-Received: by 2002:a05:600c:4e4b:b0:489:1ba8:5bf0 with SMTP id
+ 5b1f17b1804b1-49069da61c3mr95571345e9.21.1779788861946; 
+ Tue, 26 May 2026 02:47:41 -0700 (PDT)
 Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6d6ebf0sm35183885f8f.34.2026.05.26.02.46.57
+ 5b1f17b1804b1-4904d239184sm129100225e9.2.2026.05.26.02.47.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 May 2026 02:46:57 -0700 (PDT)
-Message-ID: <de0d459c-56eb-4f5f-937d-53f4875d770e@linaro.org>
-Date: Tue, 26 May 2026 11:46:56 +0200
+ Tue, 26 May 2026 02:47:41 -0700 (PDT)
+Message-ID: <ccf24c74-bd7c-4ffd-a483-49919869119a@linaro.org>
+Date: Tue, 26 May 2026 11:47:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/14] target-info: Add target_riscv64()
+Subject: Re: [PATCH 00/12] target/loongarch: Move CSR registers to struct
+ CPUSysState
 Content-Language: en-US
-To: Chao Liu <chao.liu.zevorn@gmail.com>, Anton Johansson <anjo@rev.ng>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com,
- alistair.francis@wdc.com
-References: <20260520-hw-riscv-cpu-int-v3-0-d1123ea63d9c@rev.ng>
- <20260520-hw-riscv-cpu-int-v3-6-d1123ea63d9c@rev.ng>
- <ag6_aQE7WW-BWFnB@ChaodeMacBook-Pro.local>
+To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, SignKirigami <prcups@krgm.moe>,
+ Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+References: <20260526065023.1639371-1-maobibo@loongson.cn>
+ <cb1a9261-d59d-411b-a066-a9e186f26668@linaro.org>
+ <2532f1cf-0f1b-e536-6781-bf5a1292545b@loongson.cn>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ag6_aQE7WW-BWFnB@ChaodeMacBook-Pro.local>
+In-Reply-To: <2532f1cf-0f1b-e536-6781-bf5a1292545b@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::341;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x341.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,66 +105,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/5/26 10:19, Chao Liu wrote:
-> On Wed, May 20, 2026 at 03:12:58PM +0800, Anton Johansson via wrote:
->> Adds a helper function to tell if the binary is targeting riscv64 or
->> not.
->>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> Signed-off-by: Anton Johansson <anjo@rev.ng>
->> ---
->>   include/qemu/target-info.h | 7 +++++++
->>   target-info.c              | 5 +++++
->>   2 files changed, 12 insertions(+)
->>
->> diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
->> index 23c997de54..6c5b714288 100644
->> --- a/include/qemu/target-info.h
->> +++ b/include/qemu/target-info.h
->> @@ -99,4 +99,11 @@ bool target_ppc64(void);
->>    */
->>   bool target_s390x(void);
->>   
->> +/**
-> There’s one extra * character here; otherwise LGTM.
-
-This is the Javadoc tag which is also used by C tools such doxygen:
-https://www.doxygen.nl/manual/docblocks.html#cppblock
-
-We use sphinx with a kerneldoc.py plugin which understands it:
-https://www.kernel.org/doc/Documentation/doc-guide/kernel-doc.rst
-
-i.e. https://www.qemu.org/docs/master/devel/index-api.html
-
+On 26/5/26 11:35, Bibo Mao wrote:
 > 
-> Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 > 
-> Thanks,
-> Chao
->> + * target_riscv64:
->> + *
->> + * Returns whether the target architecture is riscv64
->> + */
->> +bool target_riscv64(void);
->> +
->>   #endif
->> diff --git a/target-info.c b/target-info.c
->> index 28c458fc7a..04c69c41f8 100644
->> --- a/target-info.c
->> +++ b/target-info.c
->> @@ -93,3 +93,8 @@ bool target_s390x(void)
->>   {
->>       return target_arch() == SYS_EMU_TARGET_S390X;
->>   }
->> +
->> +bool target_riscv64(void)
->> +{
->> +    return target_arch() == SYS_EMU_TARGET_RISCV64;
->> +}
+> On 2026/5/26 下午5:11, Philippe Mathieu-Daudé wrote:
+>> On 26/5/26 08:50, Bibo Mao wrote:
+>>> Here new structure CPUSysState is added in CPULoongArchState, CSR
+>>> registers are move in CPUSysState. In later with LVZ supported, there 
+>>> will
+>>> be two copied of CSR registers, so it is simply to add CPUSysState 
+>>> array.
+>>>
+>>> Also new field curState is added which points to CPUSysState at
+>>> beginning, and it can be changed during VM exit/enter entry. There is no
+>>> function change, all is code movement or variable rename.
 >>
->> -- 
->> 2.52.0
+>> Isn't curState misleading? What about:
 >>
->>
+>> -    CPUSysState *cur = get_current_state(env);
+>> +    CSRState *csr = env_csr(env);
+> 
+> get_current_state() actually is misleading. In future "QEMUTimer timer" 
+> will be added in structure CPUSysState(). It is not only CSR registers. 
+> How about something like this which is copied for yours :)
+>    -    CPUSysState *cur = get_current_state(env);
+>    +    SysState *sys = env_sys(env);
+
+LGTM!
 
 
