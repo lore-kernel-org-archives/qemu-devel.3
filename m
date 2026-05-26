@@ -4,108 +4,160 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A456ACD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 16:56:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79F5ECD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 17:15:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRv58-0006wj-On; Tue, 26 May 2026 12:56:42 -0400
+	id 1wRvN4-0001lO-LM; Tue, 26 May 2026 13:15:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wRv57-0006wD-Iq
- for qemu-devel@nongnu.org; Tue, 26 May 2026 12:56:41 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wRv55-0002fr-Fz
- for qemu-devel@nongnu.org; Tue, 26 May 2026 12:56:40 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-83659d38e38so4424481b3a.1
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 09:56:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779814598; cv=none;
- d=google.com; s=arc-20240605;
- b=fyomblDpuj1WLfXDO0kF93FmmpUMeg/9IBT0mXkj3WkW6ftwhnG+RWYu9w/h6rBWXt
- xmB5HUXtFis4p9u7+pQorLKXdyQEi/014W/wnlstVYIzOceX8WezBX53m/3/gSQv1Yq5
- p4eWQUQZBxiiIns6vuEa8XUEL/xnZfJYO1scKSi0mofbNsxZQYVEkMSlOd+UdBFM7MNI
- gCTrPaHDP5rhyTrxWg3S1Ipv/c/kqZmOEYxrfTKBkg9TTLf6QqnD0KA44nZgR5xNXbhV
- b6oBrBmxXO+P4zxB7zTS2lKn8R7fHcmpF4C4Jwb2FYgx5C1e3XuHKFU/U7TrbIamHd1r
- 0dCQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=+X7aV/3RP5tjKhYyDj+mT5Zwu0Ntbg07oxPKseqsyeY=;
- fh=1c2Hxpfbc48VpSNmApyL+VxGgxnbSmXA+2/V0vN06DE=;
- b=Do8ITg79zn4qrMN+96iVVy14qr2ziJezUNKjQPwbJpyoyd690z3MA84hsKNzuK4KmY
- 9DNamfeyAhmYMB/tLb3GqJO5i8t2g0JSgMRV4pFC//AFU7rHW0aTMQKkpzEsBm8tj13v
- ZhM4UAX/dR1upnz6Q7RenCW3SqlZWyF7iZ3wNVflJMyGl4+Syn53UGsaB7my9NJ0h6/f
- WPhXw+AJJIOYtdh5stqXw1HRVIR9C9GyWPpq0Fzrjv82PKd0blFOmMxzQTgL7/f6cV8T
- ZWpCbGLfYMdPIt2FFkyOylSvu5YVtED4mJwwbXow5W3NTR6Z6uRYIiFyVKBtfphmT5/H
- oToA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wRvN3-0001hV-E4
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 13:15:13 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wRvMy-0005vS-D7
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 13:15:10 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64QHCqUx3314536
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 17:15:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ txzeJsAbqhv4SG8XqUKA1wyG1yCph9W+jG9CQ3mf61E=; b=VVNd2USJFAd6xFEh
+ Pslc+qZTTIPrvqKnhZXgVr9dVHmHY6V3onBy35pnCbmybAKjzkpAKuMk15B143Wd
+ n1KJxSwafHkZVBf/FQiVv4XouT9P3FjtOQNmOyJ8x41nHxKVPeQuhjtD4sIGQhwm
+ UdVEzjgdrjyEnTOJzaUgia/CnwaYA05dMSJSTEbiZu6BSfrOx6SKbIC2fvBj+Ih8
+ SW7GppJR9k6puuN53w4qxXQH0v59aW+dDL73u4KSMEEsJnGHih6hqXp1+ItqaU61
+ 7HHF/CUWqoKFLCqCAQGM7BxdgMkYa+YST3h3KaaKWLbcj0AY21zHd8ZeZUlSY8tJ
+ 1eoGSA==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
+ [74.125.82.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4edfqk00vd-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 17:15:04 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id
+ 5a478bee46e88-3048abb847eso1108085eec.0
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 10:15:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779814598; x=1780419398;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+X7aV/3RP5tjKhYyDj+mT5Zwu0Ntbg07oxPKseqsyeY=;
- b=FQd65gG73a/Jdh88zTyvZ4NzqZQQa/b56w7iVylxkG/8XUbM1MNzizeCM1M/Fp8XKn
- c3AIXby7NdOn9x+3a7HXV2Aac08GRoEhZr7xh8ygT6m95CCjckawmdQ7grg6NmxzwlJ9
- 6Z62yZa06yKqEgnqZaH2rfEMn+qwQf0cI+j6tmUavV3hCyZ8mTbfF5n8tKdORM+n3BfV
- kcMXc3evbysh4Gc63aBiEUQQAn58uk46vDLM0LTf3UUZ5JWy8uiI8I846o6WzxoQlIj5
- JOp29R/gfa6Dgnh100wDVuFdmYGun/vU0ALjXODQOMN6DS0DA4CxfaCHv7Ak80nKY5KU
- Audg==
+ d=oss.qualcomm.com; s=google; t=1779815703; x=1780420503; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=txzeJsAbqhv4SG8XqUKA1wyG1yCph9W+jG9CQ3mf61E=;
+ b=MISbhnoCoQbgVEBPAy25Zj6pg1pcK0O8Y2pGPVf0dJ+DIIAyDecEPFbh7AL+A24y/n
+ STfHluBghTnxff3CRdhx/XaYWEnJSjJosctBEZst+NxGiqg+CI7blKOlgk1zWzPOqe69
+ /u9A6LJj/ZKmqyb3A+oa7tG8+7NK5qdIEFGTwQslbUQ1tKVx0BCw/RC2ChbFdYDmSSyu
+ lPsHbb5stCtgQkE63KgYgvBEuYFcGRKxxKY+ht+DHm7S6eCWauMWU/+wxJXtYmv81UTT
+ IzkEKhBa2CPHM4/DUPUS19KfNqHxTzEUvjKxmzzKbXN88QIQQ6PYWspHNvfYXwbw61l4
+ oqZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779814598; x=1780419398;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+X7aV/3RP5tjKhYyDj+mT5Zwu0Ntbg07oxPKseqsyeY=;
- b=TShemAa58vYoHHdq7ZGcdOB51AWnvGherne4ezyneltlCkFHS2/ZtGoX17CebGvZMI
- jAlwyPf9J+sbcQjVR8iCaZLrKQswJFyLz0HXVU3dsVRTpWMH0pYz6K4zSUh1mj+Ql//D
- X2OUGZNg+Q3RW+I8sDlUwmCaLoMD4txWiG0mvd6Oj8/NazvD/Mchm4YBxSryMGcbP/JH
- rG/iyz+pPnxORjpjhHI3z69ejG9xX1rt1tUcus+HieoQhdoPGss/8zLf2fxbEN0TEb24
- b0QgMxtBReGEXP7TnhEIL/qtDMgHDz+qCH2MbSp2a5/tMZVLMazSpknJteGswfijuCgx
- w0vw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/QGXs11WvfCF+sk+AifbTke2z2Yhe+NEpzKtUk+WpxJ4Oyy/csgkcZBmSkAMkk9ncxd9/h74MB+8mD@nongnu.org
-X-Gm-Message-State: AOJu0Yz+t9iaovVF/hx88c7e1C5Fh4bk1oDdrEklcA7z2EhTDvUzC4+r
- z6HgH9WLMonjH8ydU+wxfz+hadpFUWQOlQ7OmsSjLDoxA6NxElHW9CveterNg1rm9ldsDH5PPXQ
- ojvk9TD/3ue1CUAQV9G1Y8WtnW/VeE3O9R6nloVFbNQ==
-X-Gm-Gg: Acq92OHhOiwsYzF6oxSER3mA1yJQebNWfWVRPc9Ztl0+JqFEt6xqgeFCmcjOxgf/hbn
- zavzlZKFGw+e6PsnLSVM3h3CsqOO8vrAQ3PjzAlpb5JaMIbtdLhkI3zQtMb4wOWJO5QJFVsfc2b
- q68jhmb9oNqk83s5hdGw47ge807wI89qI+i9tB2GAxFINPoYfWLqkrEXQ8FlRzew4ev6dSSJRyH
- DY7oFpKPqL3+AvZXlnewn65gdLJU2cjkm1BA55jFYX71drz2lf7t0TMAht9FS2EGIRA5rRu0JHn
- tX8rVcY=
-X-Received: by 2002:a05:6a00:13a6:b0:83e:b22f:373a with SMTP id
- d2e1a72fcca58-8415f31db44mr17823650b3a.11.1779814597870; Tue, 26 May 2026
- 09:56:37 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779815703; x=1780420503;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=txzeJsAbqhv4SG8XqUKA1wyG1yCph9W+jG9CQ3mf61E=;
+ b=Yvhu+LmvWgxsJdV8jvgVkJdH0QodgKTTm3KkUhaUPgAbXbVkTj85xs1DWzvRU5fJuE
+ j5HDZDxQdxzWOd7iMsCF8c+xOil3foqWAU0YJyozEEIED6i2aOn1sICGZOyc2dXqJlr7
+ diYY3wHad7ZmJ/mLQb4dvy71kds0Bm/nXGW6mwzdNQbPbwoxTJwTvaxUDFTGWg+vL+ob
+ 2RgNd3Giwrzws1XHljoviIOiIsK9OTWWGLdlzjzBcL7XixOhMIJKph87QtiCLPeU3zuX
+ R/F7z6NRhSkV95G6x7uqgLH5jI6Os6d0hTVq+HyvBti0jMLUo1+YWbtAZr7k3O8DhdFZ
+ LWag==
+X-Gm-Message-State: AOJu0Yxet334lYkOaV1GZnI6Udw3SFxwto3xRyiln0Fp4KJujbMiJDIv
+ AwfuAL1DAEdC1Hqnp0NzhHhwkq6kPSlFpWiTmMPRqnCi8o1QivYQGt0iuTVhoUtUZSHl8BUQQ+b
+ Fk2MWxa9YJ2oI0bUCHfvOJH3Ez+j1OtlHtKu9CiGAQuT23No7O+kTmgLdpw==
+X-Gm-Gg: Acq92OENmPdgJWf/SpnsC6a58ghqkSLSclGdY8ImxM12A5OnGJtm1hq1wBGyGyRJCXH
+ c55P2cWuU0L/iduQo9DBZx6qnUD+3O7NdvDBq7J2HmTlSfVUjCqOxSF2smafM+RVyhkCln5958m
+ qQ0T2eq0TrfLL9pxVBRwzzVtwSPy40LOqaASbiBQqXkhNgyHS/2/1L+dO2Nvx4a0BtcUevxPOcr
+ KhpM9xVawr1nItCK3oZHaIRbbEQVH0ucFKoXYdbU6diNS9RATA+EFV52lB2nce+XCuJvGw5xcwF
+ kit/uPpRjlKIEQbKtTnoxVF5eIM8GQHQnViqSkxsR0dqOfhTp4wnyZkMV/0Y9CTFbRmVNtkxKUi
+ e3nI9Q2uR4gPpjUi67nBS28z/0uxbGaRYJkSBx0hEUJVj31FRbCQYaSn1i/vw1HF3VPZuAPXmD4
+ OglpkNkJICK5i1Iw==
+X-Received: by 2002:a05:7022:3d12:b0:135:3983:2131 with SMTP id
+ a92af1059eb24-136341c8b21mr7812216c88.21.1779815703385; 
+ Tue, 26 May 2026 10:15:03 -0700 (PDT)
+X-Received: by 2002:a05:7022:3d12:b0:135:3983:2131 with SMTP id
+ a92af1059eb24-136341c8b21mr7812192c88.21.1779815702639; 
+ Tue, 26 May 2026 10:15:02 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1366a40187fsm10207358c88.5.2026.05.26.10.15.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 May 2026 10:15:02 -0700 (PDT)
+Message-ID: <06092208-1b56-4fea-8d92-bf035fbd0fa3@oss.qualcomm.com>
+Date: Tue, 26 May 2026 10:15:00 -0700
 MIME-Version: 1.0
-References: <CANCZdfr6xs9n8sF8AXVWVu9i2_rViKErrMHAVbopnaor4uCN6A@mail.gmail.com>
- <875x8g1pmi.fsf@draig.linaro.org>
- <CANCZdfqT7r9jcTuiwe3=CcjRExL-FP1msx-Q8ftQM5amJ_t0YQ@mail.gmail.com>
- <1795fc9c-f82e-40f1-aab6-ec24ad02a918@linaro.org>
- <CANCZdfp=mCp89NdwVzy-tEo=FNiEu6_H79r5vFRD0-Nk=Cx54Q@mail.gmail.com>
- <CAFEAcA9QeSjN1JV6ieavrr+r7viNo5maAtz5OJctcbWwTNQq9Q@mail.gmail.com>
- <CAFEAcA-bW9zOW6o2OS5uy2Q=dWvq7xQKXeDciDVU5Qs65JekHA@mail.gmail.com>
-In-Reply-To: <CAFEAcA-bW9zOW6o2OS5uy2Q=dWvq7xQKXeDciDVU5Qs65JekHA@mail.gmail.com>
-From: Warner Losh <imp@bsdimp.com>
-Date: Tue, 26 May 2026 10:56:26 -0600
-X-Gm-Features: AVHnY4LLcTa5kiiFgx5jze0kKBOPSD8HbK8fzcV7uZcmiMSpAD_X-JD9ySWEoxg
-Message-ID: <CANCZdfpg1rPbvWaFOfmiiTX8Q=qNxMzRbpH_rVxCOUCxV+c-dw@mail.gmail.com>
-Subject: Re: Question about tb_flush()
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- QEMU Developers <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000df54290652bb60da"
-Received-SPF: none client-ip=2607:f8b0:4864:20::432;
- envelope-from=wlosh@bsdimp.com; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 03/16] tests/Makefile.include: add binary dependency to
+ run-tcg-tests-% rules
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <th.huth+qemu@posteo.eu>, Song Gao <gaosong@loongson.cn>,
+ John Snow <jsnow@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Kyle Evans <kevans@freebsd.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Cleber Rosa <crosa@redhat.com>, Warner Losh <imp@bsdimp.com>,
+ Brad Smith <brad@comstyle.com>, Thomas Huth <thuth@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>, Fabiano Rosas <farosas@suse.de>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org
+References: <20260521131739.540157-1-alex.bennee@linaro.org>
+ <20260521131739.540157-4-alex.bennee@linaro.org>
+ <74e8bc86-cd81-43f9-b5cb-7e3de3bcd3d0@oss.qualcomm.com>
+ <87tsrzl138.fsf@draig.linaro.org>
+ <093614fb-ced1-4b15-b1e1-5da755f87237@oss.qualcomm.com>
+ <87cxymec7b.fsf@draig.linaro.org>
+ <5bd51a1a-4079-4073-bbd8-f0206a1ad458@oss.qualcomm.com>
+ <0f73d717-1621-4c3f-9c5e-9bfdfaffb0b8@oss.qualcomm.com>
+ <877bor9vor.fsf@draig.linaro.org>
+ <7d58926d-a36d-430f-828e-7ebdd9cc4eb5@oss.qualcomm.com>
+ <87qzmyzbut.fsf@draig.linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <87qzmyzbut.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=fqPsol4f c=1 sm=1 tr=0 ts=6a15d518 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=ukH1R-b_AAAA:8 a=EUspDBNiAAAA:8 a=sKbWFtAyOCi-Y_NliJUA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22 a=zUGFzhdS3I8ccRoxxLmr:22
+X-Proofpoint-ORIG-GUID: EvZDs0y6_UQ3wtcuLfiA4xKsZUCRgC7o
+X-Proofpoint-GUID: EvZDs0y6_UQ3wtcuLfiA4xKsZUCRgC7o
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI2MDE0OSBTYWx0ZWRfX4IOnaCmM/wq3
+ f7dmoiLDkZduQA4aVWJyIsrddbEIuQnMq6xOKUYEqK5v5UbcgBw9si9CRVucoEWsBr5uXmtBkll
+ 3w9XAYeCEoY/Ry4dFhH4F0wicYoFP3uzoMecUh0LyLu6pJ7fUWc55dzeiLMrtswmfZJmoQz6Qa9
+ mqQ9sTSoBUzaaBhXh1DAiRI2AuzPKb/g7lbzMtRhP32wjk6d3djwfjKec0divxkU8CxBtW9m2R2
+ tRpBYHUYxHPYes0WY2JUl89AHse+hxhTogkkkMk8QIBSKAJLSNaDIr5uPZazFY9CqR5Cr8Mvn49
+ h9pvxshMQyX70S6GXUo6ZUCoL12tL/uJFwNcuE/Htbfb3aGYmaGWX+P3geqIDNSNxojp3aBBmtD
+ z7hygM1kBE+Q1/S3P2DaWivt7Kdy18RD2sMGF7XIOQ2P8abdPKfXEkqLElxh0jVKWydLUyHrNoe
+ yhUCUzKhrnhJQ4On+uQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-05-26_04,2026-05-26_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 malwarescore=0 lowpriorityscore=0 suspectscore=0
+ priorityscore=1501 phishscore=0 spamscore=0 adultscore=0 impostorscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
+ definitions=main-2605260149
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,104 +173,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000df54290652bb60da
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, May 26, 2026 at 9:23=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
-.org>
-wrote:
-
-> On Tue, 26 May 2026 at 15:52, Peter Maydell <peter.maydell@linaro.org>
-> wrote:
-> > Some stuff has snuck back into qemu.h again (e.g. the
-> > prototype of init_main_thread() could live in user-internals.h
-> > but was put in the wrong place)
+On 5/26/2026 3:47 AM, Alex Bennée wrote:
+> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+> 
+>> On 5/25/2026 11:43 AM, Alex Bennée wrote:
+>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>>
+>>>> On 5/25/2026 8:46 AM, Pierrick Bouvier wrote:
+>>>>> On 5/23/2026 1:56 AM, Alex Bennée wrote:
+>>>>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>>>>>
+>>>>>>> On 5/22/2026 12:02 PM, Alex Bennée wrote:
+>>>>>>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>>>>>>>
+>>>>>>>>> On 5/21/2026 6:17 AM, Alex Bennée wrote:
+>>>>>>>>>> Explicitly set the appropriate QEMU binary as a dependency so we can
+>>>>>>>>>> ensure they get built. This is especially important for MacOS which
+>>>>>>>>>> otherwise only builds the unsigned binaries on a normal "make all"
+>>>>>>>>>> run.
+>>>>>>>>>>
+>>>>>>>>>
+>>>>>>>>> I'm not sure to see why it matters. tcg-tests don't make use of hvf, so
+>>>>>>>>> unsigned binaries are plenty for it.
+>>>>>>>>>
+>>>>>>>>> Which other binary is this building that is not built by default?
+>>>>>>>>>
+>>>>>>>>> In general, if something is not included in "all" target, let's make
+>>>>>>>>> sure it's included there (meson.build?) instead of adding a workaround
+>>>>>>>>> here. Not only tests benefit this, but anyone doing a build on a
+>>>>>>>>> platform that might have optional binaries not built by default.
+>>>>>>>>
+>>>>>>>> If you have a suggestion on how to make that work I'm all ears.
+>>>>>>>>
+>>>>>>>
+>>>>>>> I would be happy to help, but I don't understand what the goal is. I
+>>>>>>> have three questions that should help to provide a suggestion.
+>>>>>>>
+>>>>>>> Which exact test command do you run?
+>>>>>>
+>>>>>> make check-tcg
+>>>>>>
+>>>>>>>
+>>>>>>> ```
+>>>>>>> Explicitly set the appropriate QEMU binary as a dependency so we can
+>>>>>>> ensure they get built.
+>>>>>>> ```
+>>>>>>> Aren't they built by all?
+>>>>>>
+>>>>>> Apparently not.
+>>>>>>
+>>>>>>> It seems to be a dependency, at least for check-tcg:
+>>>>>>> .ninja-goals.check-tcg = all test-plugins
+>>>>>>>
+>>>>>>> ```
+>>>>>>> This is especially important for MacOS which otherwise only builds the
+>>>>>>> unsigned binaries on a normal "make all" run.
+>>>>>>> ```
+>>>>>>> Why do you need signed binaries for testing on MacOS (hvf?)?
+>>>>>>
+>>>>>> In a previous iteration I made configure spit out the unsigned binaries
+>>>>>> to config-target.mak but the request was to fix the dependencies
+>>>>>> instead.
+>>>>>>
+>>>>>> It all works on Linux so I'm not sure why MacOS is being so weird
+>>>>>> because the meson emulators target mechanism should be the same.
+>>>>>>
+>>>>>
+>>>>> Just tried now, and it does not work on Linux neither (make check-tcg
+>>>>> does not build any target beyond tests). Maybe you forgot to clean your
+>>>>> folder?
+>>>>>
+>>>>
+>>>> The root issue is that tests/Makefile.include is included *after*
+>>>> evaluation of ninja-targets in main Makefile. Thus,
+>>>> .ninja-goals.check-tcg is ignored.
+>>>
+>>> So this replaces patch 1/16 - I think we have a circular dependency here.
+>>>
+>>
+>> Indeed, I didn't notice the duplication. While it solves things under
+>> Linux, it doesn't trigger any build on MacOS, which is what you observed
+>> also. I wonder if it's a gmake vs whatever-make difference.
+>>
+>> Another solution that seems ok on both platforms is to use (harmful)
+>> recursive make:
+>>
+>>  .PHONY: check-tcg
+>> -.ninja-goals.check-tcg = all test-plugins
+>> -check-tcg: $(RUN_TCG_TARGET_RULES)
+>> +check-tcg:
+>> + $(MAKE) all test-plugins
+>> + $(MAKE) $(RUN_TCG_TARGET_RULES)
+>>
+>>  .PHONY: clean-tcg
+>>  clean-tcg: $(CLEAN_TCG_TARGET_RULES)
+>>
+>> Or maybe just leave it as it is? Doc already mentions build should be
+>> done before running any test to avoid missing binaries.
+>> Hopefully we'll completely move tcg tests to meson one day, so there is
+>> no need to deal with make idiosyncrasy anymore.
+> 
+> The blocker for that to happen would be meson knowing about anything
+> else than the host compiler and singular cross compiler.
 >
-> I just sent a patchset moving a couple of prototypes out of qemu.h.
->
-> > because this kind of "looks like
-> > a good place to dump random stuff" header is hard to keep clean.
-> > There's probably a better name than "qemu.h" for it.
->
-> While I was doing it I thought about this part. I think in an
-> ideal world we would split qemu.h into different parts, e.g.
-> one header for the TaskState struct definition, one for the
-> user-access functions and macros, and so on (most of the QEMU
-> source files including qemu.h don't need everything it is
-> providing, only one of the three or four groups of APIs).
-> But doing this requires coordination across linux-user and bsd-user
-> so they both split the functions/types out of their qemu.h headers
-> together. That doesn't really seem worth doing to me, at least
-> not now while you still have a large backlog of bsd-user work
-> not upstream yet.
->
 
-Yes. This is absolutely something that I want to do, which is why I asked
-the
-question. I'd like to get through the backlog first (or the bulk of the
-backlog)
-and then start to move to a common design pattern between linux-user and
-bsd-user and maybe find ways to refactor. One issue that I know of right
-now is we compile common-user once for all the builds, so it doesn't depend
-on TARGET defines, while what we need to do is also have something that
-compiles per TARGET for some of the sharing that I see as possible and
-likely
-desireable (see the recent thunk.c thread).
+Meson indeed supports a single compiler + cross compiler at a time.
+However, you can directly generate cross binaries using a custom_target
+or a generator object. This way, meson would generate programs without
+having to know it's a C compiler. Since all files are single source,
+it's not a problem, since we don't need to declare them.
+Generators have the advantage of being less verbose (you declare only
+once how to use them) than custom target when used several times.
 
-While not worth doing TODAY, I see the light at the end of the tunnel for
-upstreaming and want to start thinking about it and start studying things
-so I can start a discussion in the coming months in an intelligent way.
+https://mesonbuild.com/Reference-manual_functions_generator.html
+https://mesonbuild.com/Generating-sources.html#using-generator
 
-Warner
+See a full working example below:
+```
+$ cat meson.build
+project('cross_compile_tests', 'c')
 
---000000000000df54290652bb60da
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+cc_aarch64 = generator(
+               find_program('aarch64-linux-gnu-gcc'),
+               arguments: ['@INPUT@', '-o', '@OUTPUT@', '@EXTRA_ARGS@'],
+               output: '@BASENAME@')
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, May 26,=
- 2026 at 9:23=E2=80=AFAM Peter Maydell &lt;<a href=3D"mailto:peter.maydell@=
-linaro.org">peter.maydell@linaro.org</a>&gt; wrote:<br></div><blockquote cl=
-ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
- rgb(204,204,204);padding-left:1ex">On Tue, 26 May 2026 at 15:52, Peter May=
-dell &lt;<a href=3D"mailto:peter.maydell@linaro.org" target=3D"_blank">pete=
-r.maydell@linaro.org</a>&gt; wrote:<br>
-&gt; Some stuff has snuck back into qemu.h again (e.g. the<br>
-&gt; prototype of init_main_thread() could live in user-internals.h<br>
-&gt; but was put in the wrong place)<br>
-<br>
-I just sent a patchset moving a couple of prototypes out of qemu.h.<br>
-<br>
-&gt; because this kind of &quot;looks like<br>
-&gt; a good place to dump random stuff&quot; header is hard to keep clean.<=
-br>
-&gt; There&#39;s probably a better name than &quot;qemu.h&quot; for it.<br>
-<br>
-While I was doing it I thought about this part. I think in an<br>
-ideal world we would split qemu.h into different parts, e.g.<br>
-one header for the TaskState struct definition, one for the<br>
-user-access functions and macros, and so on (most of the QEMU<br>
-source files including qemu.h don&#39;t need everything it is<br>
-providing, only one of the three or four groups of APIs).<br>
-But doing this requires coordination across linux-user and bsd-user<br>
-so they both split the functions/types out of their qemu.h headers<br>
-together. That doesn&#39;t really seem worth doing to me, at least<br>
-not now while you still have a large backlog of bsd-user work<br>
-not upstream yet.<br></blockquote><div><br></div><div>Yes. This is absolute=
-ly something that I want to do, which is why I asked the</div><div>question=
-. I&#39;d like to get through the backlog first (or the bulk of the backlog=
-)</div><div>and then start to move to a common design pattern between linux=
--user and</div><div>bsd-user and maybe find ways to refactor. One issue tha=
-t I know of right</div><div>now is we compile common-user once for all the =
-builds, so it doesn&#39;t depend</div><div>on TARGET defines, while what we=
- need to do is also have something that</div><div>compiles per TARGET for s=
-ome of the sharing that I see as possible and likely</div><div>desireable (=
-see the recent thunk.c thread).</div><div><br></div><div>While not worth do=
-ing TODAY, I see the light at the end of the tunnel for</div><div>upstreami=
-ng and want to start thinking about it and start studying things</div><div>=
-so I can start a discussion in the coming months in an intelligent way.</di=
-v><div><br></div><div>Warner=C2=A0</div></div></div>
+tests = [
+  cc_aarch64.process('test.c'),
+  cc_aarch64.process('test2.c', extra_args: '-lpthread')
+]
+# we need a target that actually uses tests
+executable('test_aarch64', 'empty_main.c', tests)
 
---000000000000df54290652bb60da--
+$ mkdir -p build && cd build
+$ meson && ninja -v
+[1/4] /usr/bin/aarch64-linux-gnu-gcc ../test.c -o test_aarch64.p/test
+[2/4] /usr/bin/aarch64-linux-gnu-gcc ../test2.c -o test_aarch64.p/test2
+-lpthread
+[3/4] ccache cc -Itest_aarch64.p -I. -I.. -fdiagnostics-color=always
+-D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -O0 -g -MD -MQ
+test_aarch64.p/empty_main.c.o -MF test_aarch64.p/empty_main.c.o.d -o
+test_aarch64.p/empty_main.c.o -c ../empty_main.c
+[4/4] cc  -o test_aarch64 test_aarch64.p/empty_main.c.o -Wl,--as-needed
+-Wl,--no-undefined
+$ file test_aarch64.p/test*
+test_aarch64.p/test:  ELF 64-bit LSB pie executable, ARM aarch64,
+version 1 (SYSV), dynamically linked, interpreter
+/lib/ld-linux-aarch64.so.1,
+BuildID[sha1]=8162b8f045880c75118958ad46be78ed75bb708d, for GNU/Linux
+3.7.0, not stripped
+test_aarch64.p/test2: ELF 64-bit LSB pie executable, ARM aarch64,
+version 1 (SYSV), dynamically linked, interpreter
+/lib/ld-linux-aarch64.so.1,
+BuildID[sha1]=eed48625e02cd436a2708f94e5dd9ce6d5c162a9, for GNU/Linux
+3.7.0, not stripped
+```
+
+We'll need to remove the mechanic to build cross compilers containers.
+In my experience, it's clunky anyway and fails when building several
+from scratch. Try it yourself after cleaning your docker/podman images.
+It's just better and simpler to expect user to install cross compilers.
+
+The only thing that prevented me to implement this before is that I
+didn't know if concerned maintainers would accept it, or just hold onto
+the precious handcrafted Makefiles, into which so much energy and time
+has been spent.
+If it's not the case, then we should definitely move into the direction
+of migrating all this to meson, and rely on meson tests infrastructure.
+
+Regards,
+Pierrick
 
