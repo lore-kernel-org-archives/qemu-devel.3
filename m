@@ -4,89 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63B33CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 11:06:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C68DCD5BD0
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 11:06:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRpb3-0006r3-Tb; Tue, 26 May 2026 07:05:17 -0400
+	id 1wRpZ3-0002fw-7S; Tue, 26 May 2026 07:03:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
- id 1wRpb2-0006po-Fy
- for qemu-devel@nongnu.org; Tue, 26 May 2026 07:05:16 -0400
-Received: from mail-dl1-x1241.google.com ([2607:f8b0:4864:20::1241])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wRpYq-0002bF-5z
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 07:03:00 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
- id 1wRpb0-000838-DE
- for qemu-devel@nongnu.org; Tue, 26 May 2026 07:05:16 -0400
-Received: by mail-dl1-x1241.google.com with SMTP id
- a92af1059eb24-134fe980658so11974860c88.1
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 04:05:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wRpYl-00069L-Gi
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 07:02:58 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4903d5c67bfso25101115e9.1
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 04:02:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779793513; x=1780398313; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779793373; x=1780398173; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+XvviqvKj4ZoSnaaiFnYLjFG8B4wrvLkMwc4gBDkwek=;
- b=r5jU1d4TA2ppQOOfBwsxnxK7s/fmMy909x9t6fiIHiKv5GK3zDmiiqTUojBk0Mz5Xp
- 7j4oL+41w0yuOU7OPJtBe1793BbuwwQJLns0MrTIBzoXHFqO3DfpIWVo9bq34OwaeyOu
- jCfH5YzRMwO3J5KSJQ07CBQYNuCq+B1FJR/mVk4DbDCBrBY4AWXe4joTRzMiWq1dqpYt
- aLzzW1yWG4oLGqDJWL4pG1JEIe0L6uV2SLlnjYt+yOAlUCwaG+tZaZphFbQqLuFufyhb
- FHDssPesblY0k5csUw6gsCCND3sSrStpbdRQBvPS+tuGuNmTTTKxcrNlH2/mlWIwUWZC
- njEg==
+ bh=wVKvvcFZA7qeNP1zeIYLgBVKsLe8igaQLT3KMhNnesE=;
+ b=ts/5J7rPkqtqjA81NzA4BrnBkCvsmQshMT1uCBqbjL+mmHQ+FvG4mcL+TtD5/MFEiW
+ 2d2HHhT9GOm5Wr3Tp8P0eX/pwMlKvIVXN09mI/G+t0J38uFHuuZ1iYD7AtKG/uDutCeb
+ /Hl5kUJY41w3XsB5iYLh9DCwui+dT8Wa0KI9qOkHwCr2V1iiJN8RSF1zLhSz0iHr3MyL
+ Q+0JyKqLHyloXc4cS1ZABaFayTzitbQuOVg7kn4rFXTonBzCx14L4nPM6tJnQ030GNqD
+ dsbanrGj6aUG3kwcRgWZP2jwgKJlLprmYetYLZCSPffwkwgo1dCtnHRr2zmrsglaG3Mv
+ B4Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779793513; x=1780398313;
+ d=1e100.net; s=20251104; t=1779793373; x=1780398173;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=+XvviqvKj4ZoSnaaiFnYLjFG8B4wrvLkMwc4gBDkwek=;
- b=c7NoXbjB/MmwCZbXrJKoCia6lQgLlfKCAJuhsHQOLRIggMjDbPV/ANd2yHiI/VNp5V
- EHtU/NHu84MDeIvMolf45mOyeBwCApFCPC0rTr6Qk1KfkQhxB96GfEMDhOh9jPHfyFYm
- /0sjaXCOpm5lAcgaKeYiLoazTnVTuRmngwKScXkbRzG0ojiMfHOsuuw+f5ILA5C2PfFv
- FagaYKXQiYndtSAklgUrRYin7vfhIkgDjMkAgxOgVWc0cwhceOG//wfyma+aR+p8xDtN
- 2g40g7bxteOcq1oc+mjiLrFXQNcV9AWdDzbrdkWjc/ZCoS4kcwPt1YHjBa2xtyG7yrS8
- n9Dg==
-X-Gm-Message-State: AOJu0YxzLrkXCyS1vmdpTdZVNLctiaIgkjVcHOiV0aMOEyghS2xZk3E1
- yE410ja5aBgFgMfAUTenSNwh42+S02QCrlDrXjp0bS8HftiwJu8Hng4QBSLgozpxOkdU1w==
-X-Gm-Gg: Acq92OEn12+dHM5/XwlMfWRTL9QIPUMbzXTe5YxNOkqH3P2TTcmEz6JCwzFZIoyN4hp
- QzDXMG0ZdA1YDgi1Nbns3WuParvmRPxPJNZH4BF8f25IyYoNZSeWkr68xhllOHbx9va3ZZWnWn9
- uioZffh56qI/VvM7opLuVbeWthyp/mxPBkU7pcWdHK3sN7ERN5/nC5xntEdK8SUhKrzeto5VW3H
- 00oVhzK6jrzh/s9bt1FAmIumaKzqGGJKxaEGzxQ3rZSNDKKGdx4fgAupSdtDxtYUC11HXTwtViF
- pAaiK/hLlFSGCJmv9OONV9AhoTP9ctKGt/dqXLWAJ6MrNxcrRW3ibsdqAoUegHhRrWketWisnXU
- UvfMahgkHUlbSpUwDEFHVBFs/FIUmXZUZ+xVgLV+UAxNnWxCM+dJtTqZXxZ5lwKeEfQFGoj0r4p
- 5OIEjghe0ujnCnNLzqzVQYNK8GNr0uDA35n5Zex+FS6KAsykOgl21vXfD3fn62BHcE00ipwtX1u
- aVUwKNRzlY=
-X-Received: by 2002:a05:7022:22b:b0:136:c565:e851 with SMTP id
- a92af1059eb24-136c565eb5amr3056306c88.31.1779793512600; 
- Tue, 26 May 2026 04:05:12 -0700 (PDT)
-Received: from openkylin.. (ec2-3-101-81-203.us-west-1.compute.amazonaws.com.
- [3.101.81.203]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1366a2e634csm9250276c88.2.2026.05.26.04.05.07
+ bh=wVKvvcFZA7qeNP1zeIYLgBVKsLe8igaQLT3KMhNnesE=;
+ b=l6S5gzW3wVRbMiAf4IUkWx98sXXFM8kuDhuaIXwC2jyeEMtZhcJGr2H+jpqquGrrwV
+ z8LWqQcyGn1q3na8v6X27hdiyxZFTkE0vL1Tvv5EzFrkVvuQtPfXd+r6AJzROfAhMkIf
+ YgE9Bv71tY8ZhKGcp2aX12cbWGzZgMeGuI1um3EALgsmb3uONJive3+vQHpjB8xu5yHY
+ baKKCi5egSm8pfcLSILn/KxwS4CJDll2zcB47WpEinWoizVd85hL4nTRSS4To26XPwOB
+ SYMpBmYPwkYMXH9pvWV3mOk3NAVMn8FCaXhjMEQtUIB/XtCd3HIwPMqa+MZKULFTyImi
+ 0SiQ==
+X-Gm-Message-State: AOJu0YwzLh5uqAUIzSFn4jgEQh0dPyDXIej0v78W/g5InNGZGehQCtye
+ t3cVeSZd/Z6RgQ2AvXVwXsNG0ZubfomT/DVs/OlES3o2xS/dGJNLx7Lv6Q/Ckj682gs=
+X-Gm-Gg: Acq92OFFufv82HAsQI8n8d03cM1wewuVryKK92+KCONRtNelII/26ES4+UH/+68eGsU
+ Tb0fD1bl7DQYpnM/OUdFsYfZBNJQD7GJRLmxSL34+oa8b+tN8vdC8BU8FCsVIjChGTOyyq/hdhC
+ 0dnDwGoi9OmTQZoeccErfczYAW4xOEs0Ying3nuk8JuQap8C4rv9mrkMqDt+fQf/Z1HFCEz0YFN
+ OeAVrr9MAljbvEic+/orMTsMGl0LO3zs5YIPUqBjKnOAKq3nvsNzXlhw7i7EaG5Meo4AgmRQ4ld
+ sf6GqqGNN1djI9smjDwtzxJiaeSBYYRtPhsBkELokKeZso5Y1XVbPEpt3pLaeyO1Numw1SIxuHw
+ D1nOa4J7W7nwUhXmeSgYQAn4hFZ0w/dLTtn3ngCdF9sSg3ntR/q1Mrdy2p7b4fLAJhZvy/RHlNG
+ AyR3kuOi5VcUmc182ezeV5pbA=
+X-Received: by 2002:a05:600c:a402:b0:490:3d62:eb0 with SMTP id
+ 5b1f17b1804b1-490426d7019mr248024605e9.24.1779793373391; 
+ Tue, 26 May 2026 04:02:53 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45eb6d5cb9asm37363433f8f.27.2026.05.26.04.02.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 04:05:11 -0700 (PDT)
-From: Zephyr Li <fritchleybohrer@gmail.com>
+ Tue, 26 May 2026 04:02:51 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id C3A81604B4;
+ Tue, 26 May 2026 12:02:44 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- chao.liu.zevorn@gmail.com, daniel.barboza@oss.qualcomm.com
-Subject: [PATCH v2 1/5] target/riscv: Remove unused tcg/tcg.h include
-Date: Tue, 26 May 2026 19:04:46 +0800
-Message-ID: <32c6c8ac5e0eb7a8da660054bb9e59ddfc154e25.1779792111.git.fritchleybohrer@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1779792111.git.fritchleybohrer@gmail.com>
-References: <cover.1779792111.git.fritchleybohrer@gmail.com>
+Cc: Brad Smith <brad@comstyle.com>, Thomas Huth <thuth@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Kyle Evans <kevans@freebsd.org>,
+ Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ John Snow <jsnow@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>, Song Gao <gaosong@loongson.cn>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org,
+ Warner Losh <imp@bsdimp.com>
+Subject: [PATCH v3 13/14] MAINTAINERS: Cover debian-tricore-cross.docker with
+ TriCore section
+Date: Tue, 26 May 2026 12:02:41 +0100
+Message-ID: <20260526110243.470002-14-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260526110243.470002-1-alex.bennee@linaro.org>
+References: <20260526110243.470002-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1241;
- envelope-from=fritchleybohrer@gmail.com; helo=mail-dl1-x1241.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,24 +118,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
----
- target/riscv/cpu.c | 1 -
- 1 file changed, 1 deletion(-)
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 862834b480..1dea66972d 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -36,7 +36,6 @@
- #include "system/tcg.h"
- #include "kvm/kvm_riscv.h"
- #include "tcg/tcg-cpu.h"
--#include "tcg/tcg.h"
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260518102222.80735-5-philmd@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index a534f91e87a..08363ab5449 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -458,6 +458,7 @@ S: Orphan
+ F: target/tricore/
+ F: hw/tricore/
+ F: include/hw/tricore/
++F: tests/docker/dockerfiles/debian-tricore-cross.docker
+ F: tests/tcg/tricore/
  
- /* RISC-V CPU definitions */
- static const char riscv_single_letter_exts[] = "IEMAFDQCBPVH";
+ Multiarch Linux User Tests
 -- 
-2.43.0
+2.47.3
 
 
