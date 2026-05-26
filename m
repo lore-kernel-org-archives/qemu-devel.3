@@ -4,102 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A481CD5BD1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 09:12:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAF1FCD5BD1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 09:14:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRnqD-00039b-2x; Tue, 26 May 2026 05:12:49 -0400
+	id 1wRnrF-0003bx-SH; Tue, 26 May 2026 05:13:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRnqB-00038z-Bm
- for qemu-devel@nongnu.org; Tue, 26 May 2026 05:12:47 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRnq9-0005Ll-UQ
- for qemu-devel@nongnu.org; Tue, 26 May 2026 05:12:47 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-65c3ea2ebf7so11156393d50.0
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 02:12:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779786765; cv=none;
- d=google.com; s=arc-20240605;
- b=WN96qzBTxBppwECmVFtvxsO0sewHXk6Kyxc6xFIDK1BSBYebaQ6rORuzSm8s07/4Ol
- tAbzTfNDdesCB0uyuRGCa3+x9GRlW8UUl5ifynhYMEn31fVI+HhshIPPrcvFvho4nREh
- ZnFGTJiugeB6p6NeztIb1meM2cFj44sy8A3J+jP2mPcwpyjjCsRcJ6eeXhXdG4LzRQBn
- kQoVfSRKtpIz+6SrKeQ56oMPj8jFnUWdo/y7k/15a3IrLw12zJyDM1KvMGcbEdhYS5zl
- +yKdOwR+a+yktQShV3PCrW38uTTmKc/BUAT+cQQZMYD6hGWWCV0Dgde8TlCX+AEjwDHE
- 4kZA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :dkim-signature;
- bh=HC8+meO32OsYOz+jIi6FNlPmw27OhwMZkgLT/F50Vbk=;
- fh=LFJK72Gi9kspAUivhTFeh0BJIMBMnaY6jXIBCnsw8yc=;
- b=cmXOBVtpMbntxpLr2OF8bp2GBWY6aHk5+HBDXvkIQyhNxINexPUJOUsKqEyrQKwQZ8
- BSxVvE8fAbCFndknRiP7y+oUbMit6xovYGKgtqItMqwcNCr7ek+sQeI49HwZXFAkk6MH
- c+/2vibV4ACznWFsd4Grds/t/NTNHvNcw4xQLrfRdCp9SniuUH8Z6NIPvK0FMHWCX7ga
- 7t+ePcR4iebVsdK1QU4GsnliUsitq/YYE8WtwQVhX+0DyIrPnxPw/If36S+MZEBOIcRv
- BWYILRF4YbzFqe5k57tE4GDiMTLDgy9GZZZKa7riCzLW7OS4WdQlOSC4Ki7D+xLY3Tf7
- OL7Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779786765; x=1780391565; darn=nongnu.org;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=HC8+meO32OsYOz+jIi6FNlPmw27OhwMZkgLT/F50Vbk=;
- b=rIxVkQrFFPylfmBWlSgXsvJk8KygkwD9oSsFDoGCUUQ8IWMy0k3AzBushl58O5q/0K
- FE4UJCM9gFJqOd3zVMtGuIj04y+agiAxmKItIX7JPUsqY5Xzkckvn1iNujfyp1XoJ/8S
- tJalmWtZkwQnr/ai48I/U2ASbzsKZfWAOsFjohID8ZMkcec/3BKtybheDMT2I27bWFa8
- f6bR+FAlDfU2RgqfyTU69KJ6ujwRVDPEu+wfZtLQhnPgHGoEhmC2YzfMLLKYbWyGMgaI
- gBIfyHnV/UMbTDfidTlkjH2T7hO4NDI0IfJ2WzVCkT56oFQZKayLpmYlpYG81mFDvnGn
- P1TA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779786765; x=1780391565;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HC8+meO32OsYOz+jIi6FNlPmw27OhwMZkgLT/F50Vbk=;
- b=iBMT+b7ArkkdH/B3TCAp30KnXy1Jdcb6s274oCB/dbcqNUq7bWuZ5couw9K2cV47bq
- u4+Ulvw2htdh98Gk+jlehHdEVl7A9xNVpMZogNy3tW/D0NKW+s1eq45mDsNRPNWTVsu5
- g4cBWcyDHxxjOa4CzVAxjTEp4m86QcIAZK5P7DsTdRusFrN+qpiRZfKMKgLHr4zz6+Au
- Wqv12zOb1faJNTCgEqNXoIChQc4IuoK63tsFLZPju2d/p5fR2ml/UvYl604ETUcQ+WRW
- wPyJbeIvtmdQcSJk9iIDz21X2mvqT/fqovVEBNj/2AxJvOTwL2LZkdtQg9U39JRVBxSD
- KSwA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8kMQNh0Rww3oJz7ntdpXEOzYgAU2UW77fFuDDYoJXbaHP61P79SWkFSKjOMKqd08TrrVUkrc0L892V@nongnu.org
-X-Gm-Message-State: AOJu0YzSJG0WRRqfA+zXgdBFr2BfgUzBKj+kKiwv4pP6BQwjFYSENRVt
- rz5wihAii1q73IA7n1Q2WaGlp9sSIxZnx2qFrjuwOZ142flAUI7P3963UgWjIPQ+MljIMKUL+et
- /IZVtr9buTlLbogtn6Sw+NJcB/P4cdyrqkrSKvZJpew==
-X-Gm-Gg: Acq92OHFy28LDI2Y/q7plzuekxEGkgag9H+bEUiwrH19Nbu1PpmiutqiQXpt1EIidC7
- hRIsrhndCSUrJid8QNSJjGWyY/xqxZMkq381PDSon3Ducf2n1X2l0zomV3OYIdbBgqpxVlx6QZd
- RH7C/h930PMql6bA0v6Ewqoy4ZlqjV/2OPRCkbl5+FiZYzJ5P+t2GPzK47o2l31YnW0fCrV8kCi
- VzGE/det1/s9UJJIqCvcaKUaUMGYP+9Hkb9efvaXiyOl5XVLxH3fouvGwl2/F+zoRtDTkps5i/d
- afuFyI6MqrEC/ALD5rhtcUvSBDxbx44H+igusfIigYPZ108t8+HutvusR6MEGlfIrZU8NAKtAf0
- kpw==
-X-Received: by 2002:a05:690e:4814:b0:650:3bbc:5375 with SMTP id
- 956f58d0204a3-65ec97ca8camr12366599d50.17.1779786764743; Tue, 26 May 2026
- 02:12:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1wRnrE-0003be-Ei
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 05:13:52 -0400
+Received: from mail-westus2azon11012008.outbound.protection.outlook.com
+ ([52.101.48.8] helo=MW6PR02CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1wRnrC-0006Cm-Uw
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 05:13:52 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=lc3jxs8t05TPYYIR0fujkrs+w2eU0GJ1hZIL6/t3VpOk7a9IJZDN+zNtQwDdkbwmuzJh8BnVT5nJWy6miqvXEveFJ94HQ+qxpJAI9KSTfvGLE8vfX5KJYWahVl8PYLrhmlfExoVa/JiYWrJmVZ3ja7pSEUlHlthlhrDPu8nzRTgN6yPIcPm+qtlIA9jVJ9iqEsXmaJTfwbmPk2PoyjPmzBA7RmWh/gdgopAJ3mc+1B0vCCQULlOcGjdvY28fOQ6aPgZYjJrPFh8LlSHQXKGOTyItOifnMV9/znvR5t76ZQV2atOynvdHT2imjc36Fs6ky6QTeGWmpxA3HrWP5X5yvQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=b4NUSUWenEtUbWArbrJHCCTBmABhjGVR1U3zvPrfr78=;
+ b=gaWu0424GcFFOjU1w4CPYkBfMubqQPV6O+fT71m7b2//i1kBNfK6x/Yitq6islbLbCwiAX9+rtsdcQmcSrRUyGoluqfgntpYLPxRY4wwIP0jMHt9mNSyVLcSyAH3/o/OuWDVLEFh7S2IR6PVfqLr2CU4y9PhSrUqmsFjR3axnsUetzKNd0/D6dSfzaS8BAozy7x0OyYLxh6v27B3TqoT0/ZJlRblP+Vyjhi3urVrXuT+bIp9GCIORX8w6hFLEBDoQRBlIfz/MCQHF525hBA4TWZF5PKSPZf/F6A6+/XA+weOret6fFV/0DhtI/88gAROCyqKMtYr4AbysY00t6zaEg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=b4NUSUWenEtUbWArbrJHCCTBmABhjGVR1U3zvPrfr78=;
+ b=hsJc3x2RI+TjjutrOM7d/dvS3eyH/lFqJEg7axejR5kD4BMw6iVAjslPiQBDivlRdeRNWjV4IGlczMqn5IhgjicvdHzSzoyM1YdtcNNiCrC1cuoW4LwO5ijjBkAv9vxtydDFTlvtWAwe3o0rrvLe1PxoYqOLoWkkTnkwmNs9vDae9tvPCV6vpPwgYonSuVHgF6agudhDiKbdf57bMjUvdZwsmfrFkIAi7VYlvGnz9nwJIy9nDSpJJtbe1orzDsKHP1fs79n9IynyU8JwhzgbrhcJhS1neTjaLPzP+MocRFMbGvkY2fbHGTYRVE8n3T8bR0Nl0ehSPOaGg3j0b4xheA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BL1PR12MB5063.namprd12.prod.outlook.com (2603:10b6:208:31a::11)
+ by DM4PR12MB6471.namprd12.prod.outlook.com (2603:10b6:8:ba::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.11; Tue, 26 May
+ 2026 09:08:42 +0000
+Received: from BL1PR12MB5063.namprd12.prod.outlook.com
+ ([fe80::a0c2:5681:4aca:90da]) by BL1PR12MB5063.namprd12.prod.outlook.com
+ ([fe80::a0c2:5681:4aca:90da%7]) with mapi id 15.21.0071.010; Tue, 26 May 2026
+ 09:08:42 +0000
+Message-ID: <f2c43343-d286-47a7-9596-8de2d5a6e5c5@nvidia.com>
+Date: Tue, 26 May 2026 12:08:34 +0300
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/14] migration: Make switchover-ack re-usable
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Maor Gottlieb <maorg@nvidia.com>
+References: <20260505081423.28326-1-avihaih@nvidia.com>
+ <20260505081423.28326-8-avihaih@nvidia.com> <agy-q-MTVboGUY_G@x1.local>
+ <9631bd0e-5c56-490d-a341-4ad4d5ae91a6@nvidia.com> <ag8cqIGtAfe80lKW@x1.local>
+ <53cca60e-67b0-4ed2-bdae-6ddbaefc1390@nvidia.com> <ahRkT19AVwi4SQA9@x1.local>
+Content-Language: en-US
+From: Avihai Horon <avihaih@nvidia.com>
+In-Reply-To: <ahRkT19AVwi4SQA9@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: FR2P281CA0172.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:9f::6) To BL1PR12MB5063.namprd12.prod.outlook.com
+ (2603:10b6:208:31a::11)
 MIME-Version: 1.0
-References: <20260512203414.3633237-1-peter.maydell@linaro.org>
-In-Reply-To: <20260512203414.3633237-1-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 26 May 2026 10:12:33 +0100
-X-Gm-Features: AVHnY4JqbqpkaNYyzcpJbGnX2qAgK2vNjkBt7KywSQYX4in5oVb3UDhblChR9OY
-Message-ID: <CAFEAcA8NnS99cGdAXja2Rssj7chS82iLX01WTzKxWxTUpxfG7Q@mail.gmail.com>
-Subject: Re: [PATCH 00/12] arm: OMAP: Remove some dead code
-To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL1PR12MB5063:EE_|DM4PR12MB6471:EE_
+X-MS-Office365-Filtering-Correlation-Id: 60bb23ee-afa1-41ad-7584-08debb0661d1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|7416014|376014|1800799024|56012099003|22082099003|18002099003|4143699003|5023799004|11063799006;
+X-Microsoft-Antispam-Message-Info: 7OZ4mXBJhyDOP9sCn1fRfnDV6k1gWjTqoW+i08qa8NobzIr+LuQu10w502hWUEeDEcfGTCsKeAvLw7hprwz5Az5pigyiLaPUfmRwkNA8Q/k/uydyiY/iy/NFJjuzP9yB7u99j2udbDBWsBIaFsXMOlbSzIW2MnQWcxf/WupyXbEH2uE2LU4MA+Jqjkqs3WBDPNK31TO5EmvYUr9jRwIqHiU0AR9dORRaac5crJ31PZptttabx8x2lg+1AKFvjfMQTnHX22Z+XMDLqBdWLnjNdDuvVXAghtZMzTz8QAhSjdXPnhznZ6ohRxJEnNirCpqUVIJXHUXqrhusTcN9eLP+kLMVN1CsHRRQFQM1KJT3Oj0oyoeSXpAEXyH0ockMRbx99AWcPBVVVR6Mu5C/nj1p+wau0qJZpFQbdczulfA2TZ9/KMztjMsoDEF+AF4j9mmSq9xunDtlwa1d5K5Z8/vMKhc+n90uXClmF5xwixapnLBhfXumo9K53oeCyzA3fjYDw/jB8gRdt1XFMS2IAgjiXZynMsbcSlOQb6vkgdHaVAsSqKsnqVfGnhrSbaB5I73AFmHIL5m5CfKwTpuwPsxk/nU3BGElhhh5uXzX9JiH8Kq+D0I6PqHrlC5N/B3sSwpaO5L24x61vJqS0bnR900V3gjyMJnBQjP/FPc8NJl2aZ3i8jtUDr2610dNF7Wa7QV2
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BL1PR12MB5063.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(7416014)(376014)(1800799024)(56012099003)(22082099003)(18002099003)(4143699003)(5023799004)(11063799006);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?c2oxdHZHLzhLUlZSMXlZL0k5QVg2R0dyVjZLaHZzeTFMdlZmbWgwZTJCK3dR?=
+ =?utf-8?B?NVdxTWR3emkzUFF2OTE5eWEyeDFIQzBxSGdKWVdadUczbzZqR1ZBeEh6TEMx?=
+ =?utf-8?B?K25KVCtiYUZHeTZxTVVIcy9JbDY0QTRWaDhpVkcvc0pzblNicjRhcWtzQW1s?=
+ =?utf-8?B?RVp5cGRwaExoaU5zWjRENzcrdkZNZmt3M3pWcE9iU25SZytpYXVnZS8wSGgx?=
+ =?utf-8?B?N1dFdGZCaEhydzJGYlJmeGxQM1BTUHFiODZjcmwyUmNLOUNSVTU4V0JrUG5D?=
+ =?utf-8?B?SVlleEtnZnhiVGNJbGVMQnlsa1lmYWxMWnpLcDVXVnVFNytqdDZlSHRqR1hG?=
+ =?utf-8?B?NkUwMjZCc2J6MUhZRUNpeUZoL05rOFpHb1k2MVVYS0x1bVFyQmE4OU5EdVJq?=
+ =?utf-8?B?ZXJCKzFBK04wZWdoZTlkclcxNXBDNFJaTmdCWThwK3VJVlh5RVZDMjB2VndN?=
+ =?utf-8?B?dGIyRU9wNU1FUXNwZHNsZGJvSVphc1NIVXNJYTM5bGhmaWVWVms5TDZkeWR5?=
+ =?utf-8?B?S0syQnRtN2ZpME5hWXd5b2lQeFRYcnhWNFJzY0xZY2tEd3doUWZicWV3Uisr?=
+ =?utf-8?B?Z3dXOXFqYVd4S3ZOY25DQ25nbWxUaE4zckp1c0VGaVRnenozMVFCUlBiWlRx?=
+ =?utf-8?B?ak5KT1R6eVUzZEF2RWVHOTE5OWNxZnNtSm12c0N4N1YzTUc2bWdZUmVwTXB4?=
+ =?utf-8?B?YlhnTmlYQ2NjUGtLNTQxL2JVRS9SblB6U21KSkVnWnJmZG1DZUw4dGZsSlg4?=
+ =?utf-8?B?bnlkQTBSVE5UZ29QNFZiamNFSk9PUDRvWkE0NmV5dk5HajYyVkEra3lMbjlX?=
+ =?utf-8?B?Nm5MdWhFNDVpQXVZcWVUbDRPMW12b1NGOXN3STM3dTBBR3N2d1p6U3hnMGEz?=
+ =?utf-8?B?dy9pNG84MHB6QXN1bkx6ektpVURJeWthWE15WXZGczBNTEMrb1czV0tpQ01v?=
+ =?utf-8?B?NzVUejlIeDQ3bm1Da29GQ3RHNDlxeWZBbDFrVTY1RlR0Q3FWczZ1YjNWQnpB?=
+ =?utf-8?B?Wi8zNTJ0NmJLQnRxT1p5eE5JRkhmYVIzTG9hYVl5a0hyNWRkMlJEa2VobEIr?=
+ =?utf-8?B?dVhqK2o2UlRvQjhHdXplaFNVWkZOS3RvdjBteVJPNUtvRGFCNGpQN0I4eXF6?=
+ =?utf-8?B?UzBUZzR1RGpzenBaaFdZRE9sOWFxTmVnekF2NmpIOEJKRWxYOGMvU2VLdUdF?=
+ =?utf-8?B?OVprZ0VaK3BITzhtaDZhMnc2K0xxVmlBMmZrUUxxcEFTY2g2eXVqU2ZhUTJw?=
+ =?utf-8?B?cng5RHZxa0wwVW4zblc2MVBxWXo0MStUcWtQSVdFR0dIbGRIdXlUektoZ25z?=
+ =?utf-8?B?OHhMb0p0YjVPV1p2Rml3eElhZ3NsakRnVlhvV1JaMVdEeWR3bGdNcWpHTlBL?=
+ =?utf-8?B?Y2VjeTJYZnVJQkxXZ3FBNlc2MGV5Q1VSVHJsdHhoLy9QWFl3M3RyZ3NRQ3By?=
+ =?utf-8?B?QXl4ZnZSSVJLTk1OdFdBa1FZWk9BSzZXNm0wQjdndmVDMTdUSjF3RHZTZ2gz?=
+ =?utf-8?B?bWtGMUh2WU1hODkwd09YK0tmeXJJVjdJV3cxMnBxM2N1QjRqSHU5dS9EUitT?=
+ =?utf-8?B?N1ZTdUZ1U1htako1TThSbnZ0VkhPTEx0N2w4UWc4bU9jQW9pT2NHR1lkR2Ux?=
+ =?utf-8?B?VksyQ0hMeTZqRG1LMmJ4a0FETU9MbXpGMGhIZlE4SWNHNkxVUmpUekNSNjNz?=
+ =?utf-8?B?NmR1bnc1SVBabTBuR1F2U2xpcDJCNVQ0dUdkSW0vRWRneU4rd1J1bHRwR1lU?=
+ =?utf-8?B?OFp2N0hRNHJrTFJWenVnUStxMk5MU29QeXprWnpWaEZiSm41aVJrc1RSL3lW?=
+ =?utf-8?B?dWQxd0h2eGpyWUNmRWZQM0Q2YXh0TnoxbTdMVUc0cnRLcjNDOG94NDh0a1p1?=
+ =?utf-8?B?M0ltRk9sVU1sYmNqUE1wZ0VNRHgvTFo2Ni9DUkpaNjFaUmJXdjJQWS8yU3NB?=
+ =?utf-8?B?RGQ2Q0c3OEFSVlp2c3A1YWI1aTlJcjl1cXlmUm9tcmRIY0E4QnMwUkl3Z1po?=
+ =?utf-8?B?TDkwR0EwdHJ3U1ozUTlJU3BXc1MyNmMySEpSTFBSeG9RbEUrRlVjcWFxa1pF?=
+ =?utf-8?B?cEI4S0JNNThZM1NheDI3azRvV1FIcmh5STFCQ09ONkNhV0E3MU1EdEVtOFFL?=
+ =?utf-8?B?dE9MRmZUN3JrUzhia0dqNVplM29sUnZYVHZLeHBkTEdkcjlMd0dPTy9QdWVU?=
+ =?utf-8?B?dEI5bmdxbHR2Tll0S2l2NGFwWDAzL2xIbThyK2JCdEIzZXJWdk1iMWxoSjE0?=
+ =?utf-8?B?OHc1b0ZkR0RUWnR3TUhDRmhybDZkT2dWaWtwLyttOHI3YVV1YnB2TjhUZ3NX?=
+ =?utf-8?B?cUk4MlREcVZkbVlYelFPelN6cFhUL2grZ0gwaTFDdm16S01pS3p5UT09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 60bb23ee-afa1-41ad-7584-08debb0661d1
+X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5063.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 May 2026 09:08:42.0463 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Crz6ojJ78Y/Cv6/z4E6lJRkuvv4fGdk1UtL+4dQ677Y74Kru2EQgYjnrUv/tGtuLZF9dbxxfvGnp5ZR5bOlCwg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6471
+Received-SPF: permerror client-ip=52.101.48.8; envelope-from=avihaih@nvidia.com;
+ helo=MW6PR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,35 +159,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 12 May 2026 at 21:34, Peter Maydell <peter.maydell@linaro.org> wrote:
+
+On 5/25/2026 6:01 PM, Peter Xu wrote:
+> External email: Use caution opening links or attachments
 >
-> The arm OMAP SoC code still has some remnants of support for other
-> SoCs in the family that we used to implement, and bits that were
-> there for features that were never implemented and we're hardly
-> likely to implement now.  This patchset removes some of that dead
-> code.  (I noticed this because I was looking at the hw_error() calls
-> and realized they were all in code that was dead or otherwise not
-> needed any more. Then I realized there was actually quite a lot
-> of dead code here...)
+>
+> On Sun, May 24, 2026 at 09:34:48AM +0300, Avihai Horon wrote:
+>> Yes I think so.
+>>
+>> We just need to indicate modules that it’s the last query during switchover
+>> so they can handle it properly.
+>> Do you think it would be reasonable to add a "bool final" param to
+>> save_query_pending handler?
+>>
+>> For RAM it will be used to indicate we are running under the BQL (since
+>> currently save_query_pending runs only outside BQL) and to pass the proper
+>> last_stage param into migration_bitmap_sync_precopy().
+>> For VFIO it will indicate we should not do a query precopy info ioctl (which
+>> is only valid in VFIO precopy states, not while VM is stopped).
+> Yes, a final boolean sounds reasonable, implying both (1) last sync before
+> switchover, VM stopped, (2) BQL held.
+>
+> For VFIO, I double checked the complete() that does not depend on the
+> precopy_bytes fetched, then it should be fine indeed,
+>
+> vfio_save_complete_precopy():
+>      do {
+>          data_size = vfio_save_block(f, vbasedev->migration);
+>          if (data_size < 0) {
+>              return data_size;
+>          }
+>      } while (data_size);
+>
+> It's just werid to see that it doesn't depend on either precopy_bytes or
+> initial_bytes, even if logically it should.. this will be confusing to
+> whoever start reading this code.. but I understand not much we can do with
+> the current kernel API.
+>
+> Side note: should we still better update these fields to make sure they'll
+> be zero after migration? That means vfio_update_estimated_pending_data() in
+> vfio_save_complete_precopy() too, with/without further sanity checks.  That
+> seems to be missing right now.  I'm not sure if it's intentional.
 
-> Peter Maydell (12):
->   hw/arm/omap: Remove omap_mpu_model remnants
->   hw/arm/omap: Remove unused omap_mpuio functions
->   hw/arm/omap: Remove stray unused prototype
->   hw/arm/omap: Remove unused omap1_dma_irq_map[] entries
->   hw/arm/omap: Delete unused #defines
->   hw/arm/omap: Remove unused wakeup irq
->   hw/dma/omap_dma: Remove support for dma_3_0 and dma_3_2
->   hw/dma/omap_dma: Fold omap_dma_sys_read() and omap_dma_sys_write()
->     into callers
->   hw/dma/omap_dma: Remove omap_3_1_compatible_disable flag
->   hw/dma/omap_dma: Remove 3.1 mapping handling
->   hw/dma/omap_dma: Remove unused ifdeffed out code
->   hw/dma/omap_dma: Drop model argument to omap_dma_init()
+Yes, it's intentional, since we don't use these values after calling 
+vfio_save_complete_precopy() -- they are only used for downtime 
+estimation prior switchover.
+Precopy_init/dirty sizes are zeroed in vfio_save_cleanup() though, but 
+not stopcopy_size (however, that's benign, since upon new migration it 
+will be reset before used).
 
-I've applied all but patch 11 to target-arm.next; I'll resend
-11 plus an extra patch to fix the resulting misindents.
+So calling vfio_update_estimated_pending_data() here seems redundant to me.
 
-thanks
--- PMM
+Thanks.
+
 
