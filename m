@@ -4,95 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9282DCD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 15:06:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C29B4CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 15:08:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRtLu-0007Px-9t; Tue, 26 May 2026 11:05:55 -0400
+	id 1wRtOC-00086G-FJ; Tue, 26 May 2026 11:08:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wRtLq-0007Oc-1n
- for qemu-devel@nongnu.org; Tue, 26 May 2026 11:05:51 -0400
-Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wRtLn-0001px-9h
- for qemu-devel@nongnu.org; Tue, 26 May 2026 11:05:49 -0400
-Received: by mail-yx1-xb132.google.com with SMTP id
- 956f58d0204a3-65c2cd216c9so9002734d50.3
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 08:05:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wRtO8-00084i-5H
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 11:08:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wRtO6-0002XG-ND
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 11:08:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779808088;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=nTzMQSKdxFipCdF2ry9Ey+MwrneHn3RX2NvYnEq5DPA=;
+ b=XW4VPDfocYNzPoK8LSYQq5zAaMtJHqrZ768iK3jU0n5RRmJN8p3t3zr7O8OZNlw22K9fAL
+ Ue4E3ZVKzJADilVvcImBqy/T71d211PRU4nNtALG+g+Z6KA//CZtc+yIyqGSScku0E73sG
+ s9KT6l8EAydN5+3ymZSQiz1HMUipHnA=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-528-VezNOO5FMCGaj0wv3hFDjg-1; Tue, 26 May 2026 11:08:03 -0400
+X-MC-Unique: VezNOO5FMCGaj0wv3hFDjg-1
+X-Mimecast-MFC-AGG-ID: VezNOO5FMCGaj0wv3hFDjg_1779808083
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-45e55c44ac1so8476539f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 08:08:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779807943; x=1780412743; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3MfOLILJhLCs5uI9y6v3DME2R5kiBOtj3d4TbB1y6Bw=;
- b=SQZ2FlboTAN9YjbR+zADYs/sob+t6tltpWJAjtjWqBtlHwjwjmTr3Fxgo8nW5RxtN+
- wMaWClrxZdJCHThE5FvY7BUBn9977K1RobyGylEtOf+nA6TiCYvGGdF3lxno7bdoyjJf
- qUVZQF8mnPXd9zmU5Ss2T6ASHhJ/WMWqCi3hI6RpKqkZFmkWvzBGqZgXNaCJDogObOF7
- tvu31KQMKc2LNK1uNksFK0OgKxASA4ydBuxXScpesCN1ONeWT5C1NoJAvFfa9dPCwZQO
- 48jU49OGxw3bO0JwNe8t5lk45P2nbRx03OQh/IKGKIiPYdjNv2DMhtUEP3k5xhOaomCl
- JYFw==
+ d=redhat.com; s=google; t=1779808082; x=1780412882; darn=nongnu.org;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=nTzMQSKdxFipCdF2ry9Ey+MwrneHn3RX2NvYnEq5DPA=;
+ b=Kg3o9LLxOMkQ2q+GjGXn0CDFNqjFhvHblXWM2f8F3naHgU9MG2gugjaI0wtOMNuPyh
+ KVRtjXOJtw2cvJuqUYg5RNcH6b0kJSInWsH1wsiyQCaz/tM5bGpV39m+RaoAhr/W+fZy
+ iFUK2X+UKy2EgaRXJq9wMC1eMOY+0PNFzTyyBqfnhfEJmvkyJi4zoE9HFoed0EoFtbPr
+ qTxI1SrxcGPcE7GTH3EP809kF1QW74yH1SAwgfeFPoC42/uSaZ84TycVyRXZ5+K/xjEx
+ g0weZejmH6M8Yi5qwNeTj/hUMvraAyu5iL3OLmmIhe50NdbqdYBWL84o92csDwQexDm5
+ 4pdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779807943; x=1780412743;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=3MfOLILJhLCs5uI9y6v3DME2R5kiBOtj3d4TbB1y6Bw=;
- b=Q0Ly3rSZLdMmEXSqcQw+yFOssyODTFOigMAE53K39aXHY7607v4xDXj9onoEwT404G
- qWUl6U1yM1PurtkqMmQbnQw3IYrK5Mcq45sGtprQvzk2CurPb0mHpA1xEh8GE/3GH04V
- DApSBYQAbw3QLCvKa569ruPdioYvDpbPVmFbleRtRSPyc1TNC5ViVBOGfcKQpnLZ6voi
- /NIfIdh1G+Irm8qI48NHMhOVCStV5pvU3jQudtnqBAtO7ozqZ78+mTRnCqCULBqAu1No
- BHdETipF9jjijFxz09n+CL88KA5FbKz80Kdzj4KUAKmCOfn/xgpaabyIWgJKiqHKrywF
- ogNA==
-X-Gm-Message-State: AOJu0YzvbC8BePUBEvRBUEaTh1VLHhBmYyxSAtj3ONC16o6o7I3ngBaP
- WfIdzCUPx5cCRRnmD7tJR6fiFT4mLEHKrpv8MQCvh8xcbOKPBetw3wBXFlOLWw==
-X-Gm-Gg: Acq92OH8Elq+GVTTCPhy4Iy3DL5oWhWBuSuZBb6bdmu2H2veCy27sP+UethuyloQHJt
- 6tPUV9D9EpWQHNhr3IPKTMDkVRP4qSUrCshn8MtGb+I7kbQTaTbm0DzNftvosC/f0rqbZtec+aD
- e+rEplk/RyjeYI05sf/BknKPsvz9xN8j7Y+hhf08ZXaivNU+7gQ2KfqVGDdgR60qYPLTPqq82z1
- zoC4KkCCZfN92lwY+bjGMYWT6anqgMgW8Bpfp1UZ6592xBC34P0p8BJtHRRlGR8PWE9ZXRYB1O8
- LR3CpXSM3W9z8MZCI5np8zTZRcloQvQNbFgLgdV6Khb7j67+HRed5suXgEsLQoEULDo8z5UjOcK
- TNayDmFjmP1il+mp/noDNUtl9E60sjssIhazipixebFxmT+CT019QpDsvIIQpg1uYZZ+Yv72Xi1
- hCgkY8GXn+RbqGN6Gv8kSpLSyb5WD9T85kiG980GB/6XL47T4y2QjEHdPErXN2O/P62NSfOZFsq
- 6k=
-X-Received: by 2002:a05:690e:1283:b0:65f:f64c:c5f with SMTP id
- 956f58d0204a3-65ff64c1eacmr7134120d50.29.1779807942755; 
- Tue, 26 May 2026 08:05:42 -0700 (PDT)
-Received: from localhost (107-220-129-194.lightspeed.chrlnc.sbcglobal.net.
- [107.220.129.194]) by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-65ecfd5c952sm6186323d50.12.2026.05.26.08.05.41
+ d=1e100.net; s=20251104; t=1779808082; x=1780412882;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nTzMQSKdxFipCdF2ry9Ey+MwrneHn3RX2NvYnEq5DPA=;
+ b=Hq3l5jvW7e6tiMfT+gG0pytixbrTt4f/+4HjqwiyVLLL7R30bjpcEAdS6HEhcvez+V
+ So45Adx2Hh02INM6z9GMZe1j3eYUMj3jGBB82KBvUlPz9+1OTJO8qT5dwYVN40pZUU9e
+ VVkvy3/Hh1g63D+1b442rHxPHiI6YEWEfIsfzwfmbZc+jsdQ8mzbnlj6WnQHwVer1HNt
+ qVKAyrp9gKSGlMEHpts5rG/LxN5Vc5YVgxG5E555dAQu60jlb08MRFpjXv8fiQk2NFJL
+ c25aOlhz7VB5DE9bvP5u+ijg9YOcLclM0Aw6+N0gRAkRxy4dPPZWgALChMRE1F8WlKYa
+ SUWg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/eD4dZTp/VSmkZmYRyLL9aWhALovCyANEttd8LPLNazdYK7x5kiNj3nsatoPnZwmXjkWTnKbwdZRJT@nongnu.org
+X-Gm-Message-State: AOJu0Yzr7PzLh/a3v8ylp3TIWFzZ01D5gMd6rUP/itD4bhMCu3LlQjIX
+ MYTsaWSUXJPiC6McSp0ThWHxQiz9Cnq+amUuZZTL++9rlQ8DG34+B/7JdB5O+HD/D5xds22Lp/j
+ +aIPGX4wPOEYT8gFa4yWzW0KwXnhI4Ig20ROb2EgSt4kAR5jkahuGbE4G
+X-Gm-Gg: Acq92OH0QnvsSY8shuB86+4bEyN3kCiS9IhFapL3rE6J9U6uhMIqiTwh325V9S9u2E4
+ bNlyv+xj6tEAB8ecOcn6VHMpoimac/C/fCbjKctgBi2ZQUAj9TyebMzK1Bg0z5EgAWvxfv5Atoy
+ IUrfKlHLdsu7z6eaOtJUtmxH2PHUpDgfcs2fTBEcOPz4cU8EDu633Q4AFAsX+k6cQbutQaDbxc9
+ jfZ825ytLC08wwAvtZIrPnwRIuSzuxD5ohO2gWTB32D/LAbUPm9+20eihwJ9ewFRWX/kW0SnHHt
+ iwy+bNQvf5EGe4G8/Nb6vUytqw6PDopUyhK25W7DocNiicrO500RxxjYbJhn9OJvWgoXxJxblZw
+ xwfVbObMlkxdrWmRDawXxNdTXYsGzBLawMW02qpmn/nkDj1VmIWqp4gkx2zWBiIV0DCnZvdk=
+X-Received: by 2002:a05:6000:4a10:b0:441:1fa5:457c with SMTP id
+ ffacd0b85a97d-45eb367f9f6mr33776486f8f.5.1779808082594; 
+ Tue, 26 May 2026 08:08:02 -0700 (PDT)
+X-Received: by 2002:a05:6000:4a10:b0:441:1fa5:457c with SMTP id
+ ffacd0b85a97d-45eb367f9f6mr33776417f8f.5.1779808082068; 
+ Tue, 26 May 2026 08:08:02 -0700 (PDT)
+Received: from rh (p200300f6af2a6100f239e076bbd76784.dip0.t-ipconnect.de.
+ [2003:f6:af2a:6100:f239:e076:bbd7:6784])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45eb6d5cb9asm39251687f8f.27.2026.05.26.08.08.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 08:05:42 -0700 (PDT)
-From: Matt Turner <mattst88@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org,
- Matt Turner <mattst88@gmail.com>, qemu-stable@nongnu.org
-Subject: [PATCH v2] linux-user/s390x: restore fpu_status rounding mode from
- FPC on sigreturn
-Date: Tue, 26 May 2026 11:05:33 -0400
-Message-ID: <20260526150534.170504-1-mattst88@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260525152210.4119543-1-mattst88@gmail.com>
-References: <20260525152210.4119543-1-mattst88@gmail.com>
+ Tue, 26 May 2026 08:08:01 -0700 (PDT)
+Date: Tue, 26 May 2026 17:08:00 +0200 (CEST)
+From: Sebastian Ott <sebott@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>
+cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ kvmarm@lists.linux.dev, peter.maydell@linaro.org, 
+ shaju.abraham@nutanix.com, khushit.shah@nutanix.com, 
+ yangjinqian1@huawei.com, cohuck@redhat.com, richard.henderson@linaro.org, 
+ skolothumtho@nvidia.com, philmd@linaro.org, maz@kernel.org, 
+ oliver.upton@linux.dev, pbonzini@redhat.com, armbru@redhat.com, 
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com
+Subject: Re: [PATCH v5 14/18] target/arm/kvm: Special case REVIDR_EL1 and
+ AIDR_EL1
+In-Reply-To: <20260519132905.145643-15-eric.auger@redhat.com>
+Message-ID: <5f6c1d59-f2d1-e21b-5d83-c5d64ab8a484@redhat.com>
+References: <20260519132905.145643-1-eric.auger@redhat.com>
+ <20260519132905.145643-15-eric.auger@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
- envelope-from=mattst88@gmail.com; helo=mail-yx1-xb132.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,110 +124,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU keeps the s390x floating-point control register (FPC) in env->fpc.
-The rounding mode bits [2:0] of FPC are reflected into the derived
-env->fpu_status via set_float_rounding_mode(); every architectural
-write to FPC goes through HELPER(sfpc) which keeps the two in sync.
+On Tue, 19 May 2026, Eric Auger wrote:
+> Special case REVIDR_EL1 and AIDR_EL1 which are writable but
+> does not expose named fields. They will need to be handled
+> separately
+>
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> ---
+> target/arm/kvm.c | 10 +++++++++-
+> 1 file changed, 9 insertions(+), 1 deletion(-)
+>
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index 960052e67e..6373a66bbd 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -472,7 +472,15 @@ void kvm_arm_expose_idreg_properties(ARMCPU *cpu, ARM64SysReg *regs)
+>                 warn_report("%s: reg %d writable, but not in list of idregs?",
+>                             __func__, i);
+>             } else {
+> -                decode_idreg_writemap(obj, i, mask, &regs[idx]);
+> +                /*
+> +                 * special case REVIDR_EL1 and AIDR_EL1 which are writable but
+> +                 * does not expose named fields. They will need to be handled
+> +                 * separately
+> +                 */
 
-restore_sigregs() restored FPC with a direct assignment:
+"Special case REVIDR_EL1 and AIDR_EL1 which are writable but
+do not expose named fields. They will need to be handled
+separately."
 
-    __get_user(env->fpc, &sc->fpregs.fpc);
-
-This wrote env->fpc correctly but never updated env->fpu_status, so on
-sigreturn the interrupted code resumed with whatever rounding mode the
-signal handler last installed in fpu_status.
-
-Factor the two-step "write fpc + sync fpu_status" logic out of
-HELPER(sfpc) into cpu_s390x_load_fpc(), declare it in cpu.h, and call
-it from restore_sigregs() in place of the direct assignment.
-
-cpu_s390x_load_fpc() partially reuses the sanity check from
-HELPER(sfpc): if the FPC value has an invalid rounding mode or reserved
-bits set, it falls back to 0, matching the kernel's fpu_lfpc_safe()
-behavior where a corrupt signal frame value causes a specification
-exception and 0 is used instead.
-
-HELPER(sfpc) now calls cpu_s390x_load_fpc() after its full
-specification-exception check, including the FEAT_FLOATING_POINT_EXT
-test that is not needed for the signal restore path.
-
-Fixes: 2941e0fa05 ("linux-user/s390x: Save/restore fpc when handling a signal")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Matt Turner <mattst88@gmail.com>
----
- linux-user/s390x/signal.c     |  6 +++++-
- target/s390x/cpu.h            |  1 +
- target/s390x/tcg/fpu_helper.c | 20 ++++++++++++++------
- 3 files changed, 20 insertions(+), 7 deletions(-)
-
-diff --git ./linux-user/s390x/signal.c ./linux-user/s390x/signal.c
-index 96d1c8d11c..28ad80bde4 100644
---- ./linux-user/s390x/signal.c
-+++ ./linux-user/s390x/signal.c
-@@ -332,7 +332,11 @@ static void restore_sigregs(CPUS390XState *env, target_sigregs *sc)
-     for (i = 0; i < 16; i++) {
-         __get_user(env->aregs[i], &sc->regs.acrs[i]);
-     }
--    __get_user(env->fpc, &sc->fpregs.fpc);
-+    {
-+        uint32_t fpc;
-+        __get_user(fpc, &sc->fpregs.fpc);
-+        cpu_s390x_load_fpc(env, fpc);
-+    }
-     for (i = 0; i < 16; i++) {
-         __get_user(*get_freg(env, i), &sc->fpregs.fprs[i]);
-     }
-diff --git ./target/s390x/cpu.h ./target/s390x/cpu.h
-index 3acbe83f0f..f55b79ef8a 100644
---- ./target/s390x/cpu.h
-+++ ./target/s390x/cpu.h
-@@ -895,6 +895,7 @@ void s390_init_sigp(void);
- /* helper.c */
- void s390_cpu_set_psw(CPUS390XState *env, uint64_t mask, uint64_t addr);
- uint64_t s390_cpu_get_psw_mask(CPUS390XState *env);
-+void cpu_s390x_load_fpc(CPUS390XState *env, uint32_t fpc);
- 
- /* outside of target/s390x/ */
- S390CPU *s390_cpu_addr2state(uint16_t cpu_addr);
-diff --git ./target/s390x/tcg/fpu_helper.c ./target/s390x/tcg/fpu_helper.c
-index 6ca0b7162b..107025e675 100644
---- ./target/s390x/tcg/fpu_helper.c
-+++ ./target/s390x/tcg/fpu_helper.c
-@@ -1087,6 +1087,19 @@ static const int fpc_to_rnd[8] = {
-     float_round_to_odd,
- };
- 
-+void cpu_s390x_load_fpc(CPUS390XState *env, uint32_t fpc)
-+{
-+    /*
-+     * Mimic kernel fpu_lfpc_safe(): a corrupt signal frame value that would
-+     * trigger a specification exception instead results in FPC being set to 0.
-+     */
-+    if (fpc_to_rnd[fpc & 0x7] == -1 || fpc & 0x03030088u) {
-+        fpc = 0;
-+    }
-+    env->fpc = fpc;
-+    set_float_rounding_mode(fpc_to_rnd[fpc & 0x7], &env->fpu_status);
-+}
-+
- /* set fpc */
- void HELPER(sfpc)(CPUS390XState *env, uint64_t fpc)
- {
-@@ -1094,12 +1107,7 @@ void HELPER(sfpc)(CPUS390XState *env, uint64_t fpc)
-         (!s390_has_feat(S390_FEAT_FLOATING_POINT_EXT) && fpc & 0x4)) {
-         tcg_s390_program_interrupt(env, PGM_SPECIFICATION, GETPC());
-     }
--
--    /* Install everything in the main FPC.  */
--    env->fpc = fpc;
--
--    /* Install the rounding mode in the shadow fpu_status.  */
--    set_float_rounding_mode(fpc_to_rnd[fpc & 0x7], &env->fpu_status);
-+    cpu_s390x_load_fpc(env, fpc);
- }
- 
- /* set fpc and signal */
--- 
-2.53.0
+Reviewed-by: Sebastian Ott <sebott@redhat.com>
 
 
