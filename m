@@ -4,53 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32AFBCD5BB4
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 06:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08CA0CD5BCF
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 06:53:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRldK-0002Q0-0g; Tue, 26 May 2026 02:51:22 -0400
+	id 1wRlfA-0006kk-Ja; Tue, 26 May 2026 02:53:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wRlcd-0002Gj-Hw
- for qemu-devel@nongnu.org; Tue, 26 May 2026 02:50:41 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wRlca-0000ag-Fy
- for qemu-devel@nongnu.org; Tue, 26 May 2026 02:50:39 -0400
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8DxVei5QhVqZkwNAA--.32131S3;
- Tue, 26 May 2026 14:50:33 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJBxbcK4QhVqM16RAA--.11451S2;
- Tue, 26 May 2026 14:50:32 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, SignKirigami <prcups@krgm.moe>,
- Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH 06/12] target/loongarch: Use curState in tlb_helper.c when
- accessing CSR registers
-Date: Tue, 26 May 2026 14:50:17 +0800
-Message-Id: <20260526065023.1639371-7-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20260526065023.1639371-1-maobibo@loongson.cn>
-References: <20260526065023.1639371-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <petr.pavlu@suse.com>)
+ id 1wRlf7-0006k6-Bd
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 02:53:13 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <petr.pavlu@suse.com>)
+ id 1wRlf5-0001H3-He
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 02:53:13 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-44e1860558fso6501819f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 23:53:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=suse.com; s=google; t=1779778389; x=1780383189; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=yXWASYjT/jE4WzpKhE8nVhHkzGwmPlTITkkcMF0D8BI=;
+ b=OcyFE50vWkW7lqG9vib5EPsYGlfRMtTJHbtReQgSWlJVRWx06gmSC9E6bXJluOPXlr
+ rzUpFIbdQrz02iZEoQgghfErHwBHRo63Ndc+9n8lj70u71qOKpLNsrg66+cAR+U8wr3b
+ ajvRLA1HWprze22LnsY1HejpHEflFq+FyPj2nu4iYVbu7+Fo2T5haoVjlrMypBLIIFzz
+ da0hBWe5lfziudAoY4yAcqMFKSQ84pRY6cESpSVObq6i3Vk3XEt4+5v8d5CkLRWUfKXz
+ 5pJhKs9db/JM0ObxV/OuMBENy57Gro99biIxi/FVyhXwz6bx8ZWUB3o4IaTV8Cydhybu
+ GHzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779778389; x=1780383189;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yXWASYjT/jE4WzpKhE8nVhHkzGwmPlTITkkcMF0D8BI=;
+ b=nfVU9hQDUCgMLqdF1gQ8Z3Mrr1lB2kkQYCYQVw0jodw0t5uz4AzEh3dFGTsCvkw1wQ
+ mBujlHa7CGUOPRMVHGJVW8yNco9q4dYzLS51PptRyDSUT1AJwSIQlmbk7ghHUiuoDUV+
+ 9I4VBL2V5+PWueLD2mQ9kK3vBAD0oVgPIxMgFD8+Z+WfxRLxUwo0x7C9r2A8CpWTpKli
+ 6O6+kSUA+Wosx3hgaXA+riOqzAI6ML3zKZ2EU30DqnyAiPnf7MHfNmorC6n5jAYZ1li2
+ rVLqQq5ugIQOrBe9w4UCu6BnKR2PmUBpexoo5jblpMgs7NF2szZjxBm42CyUr7C/qCay
+ E1cg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ81Aes4jVgswQa7AeeWubSPtOEaQ1O9m5woZkL3A8fnzRgNGgAwbhlYt9ZEIZZ/2CKXOy/DFtTs/0wd@nongnu.org
+X-Gm-Message-State: AOJu0YxzSHjvJsY0OJQxx3N6n75B7dUjOL6z9EuZDPHC7rRhJ1bNUvQ+
+ 7UOTNWnO2iIvh6MVdshZZFcz5xp7c9Yw7P7MiRcTJ+1UA1Ptva9bX0Th2vZJxXz/WRI=
+X-Gm-Gg: Acq92OEAhvEzztQWvom85pwt1M+P5oS3ClpCY+kWm0Q/ZbleQLGBfIZ0YisuE6Eu/5Y
+ JlW6uVslLkHfb1idyO0bLSAk72aF6pypVe+dky4b19vhEmZ4LRZXhPb5KKELtCx/93Ae/29uAzL
+ oOk9Fqyc85Wed568qJbsmnNich3g0xVG8MXJIoxWcNH8tAchjB0HWnySZ03pAOymoGqETNq62xT
+ aW6Svrbqd90l+LpEgHjunuEszPgfjO/OBOvcuL9oA0xK6OIdvDJ6gsqekJQ+7cjuIHu9ZgwTkp8
+ rSx9ucp7yBcLdB05jF3Gv8qSRodqoAalndcGu3KNaN/YvnTTKB07Cb6q6lq7agS+PtpUNlDxTOe
+ EhY24fWBQp/g7itje/DzF/O27nBghSqgrT9NKn3Nqs6CVECJ8lU4cc9PcmZmxixGS4Ag6Aqzt2+
+ a4iuWYEpPmGZT82F/QH/USjFkhCRzLiqSwsMPFC36QyiYNE4nu3LF75C00HHWH5gJufYxIZUgKq
+ W8xXjJh5HwU5jW+eUPg23isWqUEgG4VsvkqIdCivDrz9FTCEAY3gjKu71dM7EgX+2GDzJghPTR2
+ wfLW
+X-Received: by 2002:a05:6000:2003:b0:43b:4136:1e6f with SMTP id
+ ffacd0b85a97d-45eb38e4b46mr29516257f8f.38.1779778389230; 
+ Mon, 25 May 2026 23:53:09 -0700 (PDT)
+Received: from ?IPV6:2a00:1028:838d:271e:8e3b:4aff:fe4c:a100?
+ (dynamic-2a00-1028-838d-271e-8e3b-4aff-fe4c-a100.ipv6.o2.cz.
+ [2a00:1028:838d:271e:8e3b:4aff:fe4c:a100])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45eb6c9ba2esm33848641f8f.8.2026.05.25.23.53.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 25 May 2026 23:53:08 -0700 (PDT)
+Message-ID: <88c5ca1d-eeda-4023-bc7a-397b92780db9@suse.com>
+Date: Tue, 26 May 2026 08:53:06 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxbcK4QhVqM16RAA--.11451S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/11] Convert moduleparams to seq_buf
+To: Kees Cook <kees@kernel.org>
+Cc: Luis Chamberlain <mcgrof@kernel.org>, Pengpeng Hou
+ <pengpeng@iscas.ac.cn>, Richard Weinberger <richard@nod.at>,
+ Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+ Johannes Berg <johannes@sipsolutions.net>,
+ "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>,
+ Corey Minyard <corey@minyard.net>, Gabriel Somlo <somlo@cmu.edu>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Jani Nikula <jani.nikula@linux.intel.com>,
+ Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+ Rodrigo Vivi <rodrigo.vivi@intel.com>, Tvrtko Ursulin
+ <tursulin@ursulin.net>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>, Bart Van Assche <bvanassche@acm.org>,
+ Jason Gunthorpe <jgg@ziepe.ca>, Leon Romanovsky <leon@kernel.org>,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+ Hans de Goede <hansg@kernel.org>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Hannes Reinecke <hare@suse.de>,
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>,
+ Daniel Lezcano <daniel.lezcano@kernel.org>, Zhang Rui <rui.zhang@intel.com>,
+ Lukasz Luba <lukasz.luba@arm.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jiri Slaby <jirislaby@kernel.org>, Alan Stern <stern@rowland.harvard.edu>,
+ Jason Wang <jasowang@redhat.com>, Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+ =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>,
+ Jason Baron <jbaron@akamai.com>, Jim Cromie <jim.cromie@gmail.com>,
+ Tiwei Bie <tiwei.btw@antgroup.com>, Benjamin Berg <benjamin.berg@intel.com>,
+ =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+ "David E. Box" <david.e.box@linux.intel.com>,
+ "Maciej W. Rozycki" <macro@orcam.me.uk>,
+ Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+ Peter Zijlstra <peterz@infradead.org>, Heiko Carstens <hca@linux.ibm.com>,
+ Vasily Gorbik <gor@linux.ibm.com>, Sean Christopherson <seanjc@google.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Gleixner <tglx@kernel.org>,
+ Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+ Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
+ "H. Peter Anvin" <hpa@zytor.com>, Vinod Koul <vkoul@kernel.org>,
+ Frank Li <Frank.Li@kernel.org>, Daniel Gomez <da.gomez@kernel.org>,
+ Sami Tolvanen <samitolvanen@google.com>, Aaron Tomlin <atomlin@atomlin.com>,
+ Alexander Potapenko <glider@google.com>, Marco Elver <elver@google.com>,
+ Dmitry Vyukov <dvyukov@google.com>, Andrew Morton
+ <akpm@linux-foundation.org>, John Johansen <john.johansen@canonical.com>,
+ Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>,
+ "Serge E. Hallyn" <serge@hallyn.com>,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Georgia Garcia <georgia.garcia@canonical.com>, kvm@vger.kernel.org,
+ dmaengine@vger.kernel.org, linux-modules@vger.kernel.org,
+ kasan-dev@googlegroups.com, linux-mm@kvack.org, apparmor@lists.ubuntu.com,
+ linux-security-module@vger.kernel.org, linux-um@lists.infradead.org,
+ linux-acpi@vger.kernel.org, openipmi-developer@lists.sourceforge.net,
+ qemu-devel@nongnu.org, intel-gfx@lists.freedesktop.org,
+ dri-devel@lists.freedesktop.org, linux-rdma@vger.kernel.org,
+ linux-media@vger.kernel.org, linux-pci@vger.kernel.org,
+ linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
+ linuxppc-dev@lists.ozlabs.org, linux-serial@vger.kernel.org,
+ linux-usb@vger.kernel.org, usb-storage@lists.one-eyed-alien.net,
+ virtualization@lists.linux.dev, linux-kernel@vger.kernel.org,
+ linux-arch@vger.kernel.org, netdev@vger.kernel.org,
+ linux-fsdevel@vger.kernel.org, linux-hardening@vger.kernel.org
+References: <20260521133315.work.845-kees@kernel.org>
+Content-Language: en-US
+From: Petr Pavlu <petr.pavlu@suse.com>
+In-Reply-To: <20260521133315.work.845-kees@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=petr.pavlu@suse.com; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,364 +166,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When accessing CSR registers in file tlb_helper.c, use curState rather
-than env. There is no function change.
+On 5/21/26 3:33 PM, Kees Cook wrote:
+> Hi,
+> 
+> I tried to trim the CC list here, but it's still pretty huge...
+> 
+> We've had a long-standing issue with "write to a string pointer" callbacks
+> that don't bounds check the destination (and for which the bounds is
+> also not part of the callback prototype, even if it is "known" to be
+> PAGE_SIZE, which sysfs_emit() depends on). Both moduleparams and sysfs
+> use this pattern. As a first step, and to test the migration method,
+> migrate moduleparams first.
+> 
+> There are 2 "mechanical" treewide patches that are handled by Coccinelle:
+> - treewide: Convert struct kernel_param_ops initializers to DEFINE_KERNEL_PARAM_OPS
+> - treewide: Convert custom kernel_param_ops .get callbacks to seq_buf via cocci
+> 
+> The last treewide patch is manual, and may need to be broken up into
+> per-subsystem patches, though I'd prefer to avoid this, as it would
+> extend the migration from 1 relase to at least 2 releases. (1 to
+> release the migration infrastructure, then 1 release to collect all the
+> subsystem changes, and possibly 1 more release to remove the migration
+> infrastructure.)
+> 
+> Thoughts, questions?
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- target/loongarch/tcg/tlb_helper.c | 137 +++++++++++++++++-------------
- 1 file changed, 77 insertions(+), 60 deletions(-)
+This looks reasonable to me. I added a few minor comments on the patches
+but they already look solid.
 
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index 892e0eb473..69331cb02d 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -36,16 +36,19 @@ static bool tlb_match_asid(bool global, int asid, int tlb_asid)
- 
- bool check_ps(CPULoongArchState *env, uint8_t tlb_ps)
- {
-+    CPUSysState *cur = get_current_state(env);
-+
-     if (tlb_ps >= 64) {
-         return false;
-     }
--    return BIT_ULL(tlb_ps) & (env->CSR_PRCFG2);
-+    return BIT_ULL(tlb_ps) & (cur->CSR_PRCFG2);
- }
- 
- static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
-                                 MMUAccessType access_type, TLBRet tlb_error)
- {
-     CPUState *cs = env_cpu(env);
-+    CPUSysState *cur = get_current_state(env);
- 
-     switch (tlb_error) {
-     default:
-@@ -62,7 +65,7 @@ static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
-         } else if (access_type == MMU_INST_FETCH) {
-             cs->exception_index = EXCCODE_PIF;
-         }
--        env->CSR_TLBRERA = FIELD_DP64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 1);
-+        cur->CSR_TLBRERA = FIELD_DP64(cur->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 1);
-         break;
-     case TLBRET_INVALID:
-         /* TLB match with no valid bit */
-@@ -93,19 +96,19 @@ static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
-     }
- 
-     if (tlb_error == TLBRET_NOMATCH) {
--        env->CSR_TLBRBADV = address;
-+        cur->CSR_TLBRBADV = address;
-         if (is_la64(env)) {
--            env->CSR_TLBREHI = FIELD_DP64(env->CSR_TLBREHI, CSR_TLBREHI_64,
-+            cur->CSR_TLBREHI = FIELD_DP64(cur->CSR_TLBREHI, CSR_TLBREHI_64,
-                                         VPPN, extract64(address, 13, 35));
-         } else {
--            env->CSR_TLBREHI = FIELD_DP64(env->CSR_TLBREHI, CSR_TLBREHI_32,
-+            cur->CSR_TLBREHI = FIELD_DP64(cur->CSR_TLBREHI, CSR_TLBREHI_32,
-                                         VPPN, extract64(address, 13, 19));
-         }
-     } else {
--        if (!FIELD_EX64(env->CSR_DBG, CSR_DBG, DST)) {
--            env->CSR_BADV = address;
-+        if (!FIELD_EX64(cur->CSR_DBG, CSR_DBG, DST)) {
-+            cur->CSR_BADV = address;
-         }
--        env->CSR_TLBEHI = address & (TARGET_PAGE_MASK << 1);
-+        cur->CSR_TLBEHI = address & (TARGET_PAGE_MASK << 1);
-    }
- }
- 
-@@ -142,8 +145,9 @@ static void invalidate_tlb(CPULoongArchState *env, int index)
-     LoongArchTLB *tlb;
-     uint16_t csr_asid, tlb_asid, tlb_g;
-     uint8_t tlb_e;
-+    CPUSysState *cur = get_current_state(env);
- 
--    csr_asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
-+    csr_asid = FIELD_EX64(cur->CSR_ASID, CSR_ASID, ASID);
-     tlb = &env->tlb[index];
-     tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
-     if (!tlb_e) {
-@@ -165,25 +169,26 @@ static void sptw_prepare_context(CPULoongArchState *env, MMUContext *context)
- {
-     uint64_t lo0, lo1, csr_vppn;
-     uint8_t csr_ps;
-+    CPUSysState *cur = get_current_state(env);
- 
--    if (FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
--        csr_ps = FIELD_EX64(env->CSR_TLBREHI, CSR_TLBREHI, PS);
-+    if (FIELD_EX64(cur->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
-+        csr_ps = FIELD_EX64(cur->CSR_TLBREHI, CSR_TLBREHI, PS);
-         if (is_la64(env)) {
--            csr_vppn = FIELD_EX64(env->CSR_TLBREHI, CSR_TLBREHI_64, VPPN);
-+            csr_vppn = FIELD_EX64(cur->CSR_TLBREHI, CSR_TLBREHI_64, VPPN);
-         } else {
--            csr_vppn = FIELD_EX64(env->CSR_TLBREHI, CSR_TLBREHI_32, VPPN);
-+            csr_vppn = FIELD_EX64(cur->CSR_TLBREHI, CSR_TLBREHI_32, VPPN);
-         }
--        lo0 = env->CSR_TLBRELO0;
--        lo1 = env->CSR_TLBRELO1;
-+        lo0 = cur->CSR_TLBRELO0;
-+        lo1 = cur->CSR_TLBRELO1;
-     } else {
--        csr_ps = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, PS);
-+        csr_ps = FIELD_EX64(cur->CSR_TLBIDX, CSR_TLBIDX, PS);
-         if (is_la64(env)) {
--            csr_vppn = FIELD_EX64(env->CSR_TLBEHI, CSR_TLBEHI_64, VPPN);
-+            csr_vppn = FIELD_EX64(cur->CSR_TLBEHI, CSR_TLBEHI_64, VPPN);
-         } else {
--            csr_vppn = FIELD_EX64(env->CSR_TLBEHI, CSR_TLBEHI_32, VPPN);
-+            csr_vppn = FIELD_EX64(cur->CSR_TLBEHI, CSR_TLBEHI_32, VPPN);
-         }
--        lo0 = env->CSR_TLBELO0;
--        lo1 = env->CSR_TLBELO1;
-+        lo0 = cur->CSR_TLBELO0;
-+        lo1 = cur->CSR_TLBELO1;
-     }
- 
-     context->ps = csr_ps;
-@@ -198,6 +203,7 @@ static void fill_tlb_entry(CPULoongArchState *env, LoongArchTLB *tlb,
-     uint64_t lo0, lo1, csr_vppn;
-     uint16_t csr_asid;
-     uint8_t csr_ps;
-+    CPUSysState *cur = get_current_state(env);
- 
-     csr_vppn = context->addr >> R_TLB_MISC_VPPN_SHIFT;
-     csr_ps   = context->ps;
-@@ -208,7 +214,7 @@ static void fill_tlb_entry(CPULoongArchState *env, LoongArchTLB *tlb,
-     tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, PS, csr_ps);
-     tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, VPPN, csr_vppn);
-     tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 1);
--    csr_asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
-+    csr_asid = FIELD_EX64(cur->CSR_ASID, CSR_ASID, ASID);
-     tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, ASID, csr_asid);
- 
-     tlb->tlb_entry0 = lo0;
-@@ -241,8 +247,9 @@ static LoongArchTLB *loongarch_tlb_search_cb(CPULoongArchState *env,
-     bool tlb_g;
-     int i, compare_shift;
-     uint64_t vpn, tlb_vppn;
-+    CPUSysState *cur = get_current_state(env);
- 
--    stlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
-+    stlb_ps = FIELD_EX64(cur->CSR_STLBPS, CSR_STLBPS, PS);
-     vpn = (vaddr & TARGET_VIRT_MASK) >> (stlb_ps + 1);
-     stlb_idx = vpn & 0xff; /* VA[25:15] <==> TLBIDX.index for 16KiB Page */
-     compare_shift = stlb_ps + 1 - R_TLB_MISC_VPPN_SHIFT;
-@@ -289,9 +296,10 @@ static bool loongarch_tlb_search(CPULoongArchState *env, vaddr vaddr,
-     int csr_asid;
-     tlb_match func;
-     LoongArchTLB *tlb;
-+    CPUSysState *cur = get_current_state(env);
- 
-     func = tlb_match_any;
--    csr_asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
-+    csr_asid = FIELD_EX64(cur->CSR_ASID, CSR_ASID, ASID);
-     tlb = loongarch_tlb_search_cb(env, vaddr, csr_asid, func);
-     if (tlb) {
-         *index = tlb - env->tlb;
-@@ -304,20 +312,21 @@ static bool loongarch_tlb_search(CPULoongArchState *env, vaddr vaddr,
- void helper_tlbsrch(CPULoongArchState *env)
- {
-     int index, match;
-+    CPUSysState *cur = get_current_state(env);
- 
--    if (FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
--        match = loongarch_tlb_search(env, env->CSR_TLBREHI, &index);
-+    if (FIELD_EX64(cur->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
-+        match = loongarch_tlb_search(env, cur->CSR_TLBREHI, &index);
-     } else {
--        match = loongarch_tlb_search(env, env->CSR_TLBEHI, &index);
-+        match = loongarch_tlb_search(env, cur->CSR_TLBEHI, &index);
-     }
- 
-     if (match) {
--        env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX, index);
--        env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX, NE, 0);
-+        cur->CSR_TLBIDX = FIELD_DP64(cur->CSR_TLBIDX, CSR_TLBIDX, INDEX, index);
-+        cur->CSR_TLBIDX = FIELD_DP64(cur->CSR_TLBIDX, CSR_TLBIDX, NE, 0);
-         return;
-     }
- 
--    env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX, NE, 1);
-+    cur->CSR_TLBIDX = FIELD_DP64(cur->CSR_TLBIDX, CSR_TLBIDX, NE, 1);
- }
- 
- void helper_tlbrd(CPULoongArchState *env)
-@@ -325,29 +334,30 @@ void helper_tlbrd(CPULoongArchState *env)
-     LoongArchTLB *tlb;
-     int index;
-     uint8_t tlb_ps, tlb_e;
-+    CPUSysState *cur = get_current_state(env);
- 
--    index = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX);
-+    index = FIELD_EX64(cur->CSR_TLBIDX, CSR_TLBIDX, INDEX);
-     tlb = &env->tlb[index];
-     tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
-     tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
- 
-     if (!tlb_e) {
-         /* Invalid TLB entry */
--        env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX, NE, 1);
--        env->CSR_ASID  = FIELD_DP64(env->CSR_ASID, CSR_ASID, ASID, 0);
--        env->CSR_TLBEHI = 0;
--        env->CSR_TLBELO0 = 0;
--        env->CSR_TLBELO1 = 0;
--        env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX, PS, 0);
-+        cur->CSR_TLBIDX = FIELD_DP64(cur->CSR_TLBIDX, CSR_TLBIDX, NE, 1);
-+        cur->CSR_ASID  = FIELD_DP64(cur->CSR_ASID, CSR_ASID, ASID, 0);
-+        cur->CSR_TLBEHI = 0;
-+        cur->CSR_TLBELO0 = 0;
-+        cur->CSR_TLBELO1 = 0;
-+        cur->CSR_TLBIDX = FIELD_DP64(cur->CSR_TLBIDX, CSR_TLBIDX, PS, 0);
-     } else {
-         /* Valid TLB entry */
--        env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX, NE, 0);
--        env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX,
-+        cur->CSR_TLBIDX = FIELD_DP64(cur->CSR_TLBIDX, CSR_TLBIDX, NE, 0);
-+        cur->CSR_TLBIDX = FIELD_DP64(cur->CSR_TLBIDX, CSR_TLBIDX,
-                                      PS, (tlb_ps & 0x3f));
--        env->CSR_TLBEHI = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN) <<
-+        cur->CSR_TLBEHI = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN) <<
-                                      R_TLB_MISC_VPPN_SHIFT;
--        env->CSR_TLBELO0 = tlb->tlb_entry0;
--        env->CSR_TLBELO1 = tlb->tlb_entry1;
-+        cur->CSR_TLBELO0 = tlb->tlb_entry0;
-+        cur->CSR_TLBELO1 = tlb->tlb_entry1;
-     }
- }
- 
-@@ -380,10 +390,11 @@ static void update_tlb_index(CPULoongArchState *env, MMUContext *context,
- 
- void helper_tlbwr(CPULoongArchState *env)
- {
--    int index = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX);
-+    CPUSysState *cur = get_current_state(env);
-+    int index = FIELD_EX64(cur->CSR_TLBIDX, CSR_TLBIDX, INDEX);
-     MMUContext context;
- 
--    if (FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, NE)) {
-+    if (FIELD_EX64(cur->CSR_TLBIDX, CSR_TLBIDX, NE)) {
-         invalidate_tlb(env, index);
-         return;
-     }
-@@ -400,10 +411,11 @@ static int get_tlb_random_index(CPULoongArchState *env, vaddr addr,
-     uint16_t asid, tlb_asid, stlb_ps;
-     LoongArchTLB *tlb;
-     uint8_t tlb_e, tlb_g;
-+    CPUSysState *cur = get_current_state(env);
- 
-     /* Validity of stlb_ps is checked in helper_csrwr_stlbps() */
--    stlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
--    asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
-+    stlb_ps = FIELD_EX64(cur->CSR_STLBPS, CSR_STLBPS, PS);
-+    asid = FIELD_EX64(cur->CSR_ASID, CSR_ASID, ASID);
-     if (pagesize == stlb_ps) {
-         /* Only write into STLB bits [47:13] */
-         address = addr & ~MAKE_64BIT_MASK(0, R_CSR_TLBEHI_64_VPPN_SHIFT);
-@@ -461,15 +473,16 @@ void helper_tlbfill(CPULoongArchState *env)
-     vaddr entryhi;
-     int index, pagesize;
-     MMUContext context;
-+    CPUSysState *cur = get_current_state(env);
- 
--    if (FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
--        entryhi = env->CSR_TLBREHI;
-+    if (FIELD_EX64(cur->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
-+        entryhi = cur->CSR_TLBREHI;
-         /* Validity of pagesize is checked in helper_ldpte() */
--        pagesize = FIELD_EX64(env->CSR_TLBREHI, CSR_TLBREHI, PS);
-+        pagesize = FIELD_EX64(cur->CSR_TLBREHI, CSR_TLBREHI, PS);
-     } else {
--        entryhi = env->CSR_TLBEHI;
-+        entryhi = cur->CSR_TLBEHI;
-         /* Validity of pagesize is checked in helper_tlbrd() */
--        pagesize = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, PS);
-+        pagesize = FIELD_EX64(cur->CSR_TLBIDX, CSR_TLBIDX, PS);
-     }
- 
-     sptw_prepare_context(env, &context);
-@@ -483,9 +496,10 @@ void helper_tlbclr(CPULoongArchState *env)
-     LoongArchTLB *tlb;
-     int i, index;
-     uint16_t csr_asid, tlb_asid, tlb_g;
-+    CPUSysState *cur = get_current_state(env);
- 
--    csr_asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
--    index = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX);
-+    csr_asid = FIELD_EX64(cur->CSR_ASID, CSR_ASID, ASID);
-+    index = FIELD_EX64(cur->CSR_TLBIDX, CSR_TLBIDX, INDEX);
- 
-     if (index < LOONGARCH_STLB) {
-         /* STLB. One line per operation */
-@@ -515,8 +529,9 @@ void helper_tlbclr(CPULoongArchState *env)
- void helper_tlbflush(CPULoongArchState *env)
- {
-     int i, index;
-+    CPUSysState *cur = get_current_state(env);
- 
--    index = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX);
-+    index = FIELD_EX64(cur->CSR_TLBIDX, CSR_TLBIDX, INDEX);
- 
-     if (index < LOONGARCH_STLB) {
-         /* STLB. One line per operation */
-@@ -711,6 +726,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
-     uint64_t palen_mask = loongarch_palen_mask(env);
-     uint64_t dir_base, dir_width;
-     uint64_t val;
-+    CPUSysState *cur = get_current_state(env);
- 
-     if (unlikely((level == 0) || (level > 4))) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-@@ -732,7 +748,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
-         }
-     }
- 
--    badvaddr = env->CSR_TLBRBADV;
-+    badvaddr = cur->CSR_TLBRBADV;
-     base = base & palen_mask;
-     get_dir_base_width(env, &dir_base, &dir_width, level);
-     index = (badvaddr >> dir_base) & ((1 << dir_width) - 1);
-@@ -747,10 +763,11 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
- {
-     CPUState *cs = env_cpu(env);
-     hwaddr phys, tmp0, ptindex, ptoffset0, ptoffset1;
-+    CPUSysState *cur = get_current_state(env);
-     uint64_t pte_raw;
-     uint64_t badv;
--    uint64_t ptbase = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE);
--    uint64_t ptwidth = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTWIDTH);
-+    uint64_t ptbase = FIELD_EX64(cur->CSR_PWCL, CSR_PWCL, PTBASE);
-+    uint64_t ptwidth = FIELD_EX64(cur->CSR_PWCL, CSR_PWCL, PTWIDTH);
-     uint64_t palen_mask = loongarch_palen_mask(env);
-     uint64_t dir_base, dir_width;
-     uint8_t  ps;
-@@ -796,7 +813,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
-             return;
-         }
-     } else {
--        badv = env->CSR_TLBRBADV;
-+        badv = cur->CSR_TLBRBADV;
- 
-         base = base & palen_mask;
- 
-@@ -812,11 +829,11 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
-     }
- 
-     if (odd) {
--        env->CSR_TLBRELO1 = tmp0;
-+        cur->CSR_TLBRELO1 = tmp0;
-     } else {
--        env->CSR_TLBRELO0 = tmp0;
-+        cur->CSR_TLBRELO0 = tmp0;
-     }
--    env->CSR_TLBREHI = FIELD_DP64(env->CSR_TLBREHI, CSR_TLBREHI, PS, ps);
-+    cur->CSR_TLBREHI = FIELD_DP64(cur->CSR_TLBREHI, CSR_TLBREHI, PS, ps);
- }
- 
- static TLBRet loongarch_map_tlb_entry(CPULoongArchState *env,
 -- 
-2.39.3
-
+Thanks,
+Petr
 
