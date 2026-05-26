@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3A61CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 17:57:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94722CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 17:57:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRw1I-00022P-SD; Tue, 26 May 2026 13:56:48 -0400
+	id 1wRw1j-0002Hp-Fc; Tue, 26 May 2026 13:57:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wRw1H-00021P-2p
- for qemu-devel@nongnu.org; Tue, 26 May 2026 13:56:47 -0400
+ id 1wRw1e-0002AS-Js
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 13:57:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wRw1E-0007xN-S5
- for qemu-devel@nongnu.org; Tue, 26 May 2026 13:56:46 -0400
+ id 1wRw1c-00085M-ST
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 13:57:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779818204;
+ s=mimecast20190719; t=1779818228;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GGNiVyk3smt3QCBdx3Hb8LIxSZAyBf2ULYTGIW9VfTc=;
- b=C3p1jxzkKID7oQ1ddQA+O6mU0xMTbZA0CqU5zH5t6ivQZ+x/Nd7sgGn3gzIRPIyWchjHTv
- yEQvKo9SsDApbeCV/nIFoQJkxkfVuVAEHvHXkw64J99JVr7N0HChwmmw6gGLuttiXG6FDO
- hzVKcIoNwXR5bb13PoEtsovn3Q/47Og=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Wd46RPv1cpVjcJdKvZTejd8Ngdtpj1qfzxjn3ahDdkA=;
+ b=C7w8YuuyDxu8LbJ9Jk4dzwjt5kkwia5MoBAFBAFOq19DTL8ykXxfrIVTEuflvypi62Soqw
+ aNOOMywFwKALv5EUaJLw9y/FoG8QnaDxhIcEUPlCGJhED5gBBn23V8pH5MXqVAzqY/7+Dz
+ GAHMsto5j9QbAbe9Kui2ElZtGNWf7HM=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-58-dkaBYBsLN9irGJoVyTBkeQ-1; Tue, 26 May 2026 13:56:42 -0400
-X-MC-Unique: dkaBYBsLN9irGJoVyTBkeQ-1
-X-Mimecast-MFC-AGG-ID: dkaBYBsLN9irGJoVyTBkeQ_1779818201
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-45aeac88af4so8810858f8f.3
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 10:56:42 -0700 (PDT)
+ us-mta-530-rBakSNYtOI6saAAE1_0lkw-1; Tue, 26 May 2026 13:57:06 -0400
+X-MC-Unique: rBakSNYtOI6saAAE1_0lkw-1
+X-Mimecast-MFC-AGG-ID: rBakSNYtOI6saAAE1_0lkw_1779818225
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-48fe40b61a3so70758055e9.3
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 10:57:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779818201; x=1780423001; darn=nongnu.org;
+ d=redhat.com; s=google; t=1779818225; x=1780423025; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GGNiVyk3smt3QCBdx3Hb8LIxSZAyBf2ULYTGIW9VfTc=;
- b=U1g1rHZ0QHYDRTdYdFrG4+1KQDCKWnu6xVhUn1Gh6MsakXK8AHyQ2GUqeSkL5aIJV4
- MNeLgdeEaPtY0oZiKzAVCBbcTtyNs50gUEojrn5kCSHZJJYU2TBH/iIz1DXa1OOOpcGj
- yVbbdwcB1V8zbOl9+3RJ0bK4RDAxF+16iCnNnMonZlERWuhvfILA2kCVBDBdXz7hl1Tn
- BD8LUFt+kZxFvFepLVngf/KK7vuDu8pOmePt6W4Ngj81IzY+mCEwNdR7x96MUjPJ5zW9
- QNkoquP0IQ29+PPV3ANlCXH5gzlo7ig/b+1AfYP51wGiMzZfnNE5HPVEnHlsj5tDql1J
- DLlw==
+ bh=Wd46RPv1cpVjcJdKvZTejd8Ngdtpj1qfzxjn3ahDdkA=;
+ b=Nw/oCQjH8nEknobK1xOVpUo1TXhH4f8t6dBnP2LarimGQS/6Il6KwFN0uCcqq1s7u/
+ 3kEHGmyp7ehzDfnH2aQMPFQsilBHghi+JRR1mOq0rJKSAyE0EnBY38jxcLsIThD9vz0h
+ xNUyMLN28VWRvqrLc5wmcbYqhIihu5Lx4AFpSAOavKPdwWTq7588GpnuuW6kuzfh3Pgs
+ oHq5oeh1OAgP0KK+E35aunZEAI0iYwU2nOWQ9r1COnFMv0E49cbrCX0EqBStKDdMF+qF
+ TL4EKRYyEpygeTRF+yS/sQizM/p/gZUAShZK8ieYNFiY7Y4tBgxks5wUQh1qxy+BScrT
+ FlCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779818201; x=1780423001;
+ d=1e100.net; s=20251104; t=1779818225; x=1780423025;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=GGNiVyk3smt3QCBdx3Hb8LIxSZAyBf2ULYTGIW9VfTc=;
- b=YoXpV5QYOtWu99C/Qu/Jy2B3nRddUGR/EbtOrT2AfEIe+mj3895mbz53aedXe5+Czw
- P4rTseLH1Dqq2aWaz9sEDh5o1GWQocsJURHsecIJy7qUjx3dt9kpBJBAoha+sPJJHsVm
- pvPGdqXVo13yaVkYldXTt+kq81ij/WmsCps5IsIpiaHTyUQCNWI35hdSUGeKvLyifU9Q
- GoUei2PAxB+tPkEWTrYfZwwyTSCOFnP9X7B4zNnl2vsUEp/Q67Nitqa84X+EHs/Ssz9r
- hB+DSjMY/hT+r+6KITAGwmCCyJ68LNxvxpUwpsZ/p1kRdJwDCbHEfqhiEkEFA30LQ9/U
- TqfQ==
-X-Gm-Message-State: AOJu0YxlHJPq5PxpVqb6cMr5IKx7EJS0o80qrx1ovyZ82OihVhCZF137
- 5ooojXLIb5AIhCca5udMKYC/84X2geIHxpyxBjDT+/vF0Su2olv8Fxn2rF6pmvvK+UXKWeVCSIK
- CCmw4qa+++bw8CE3b0mI3UsAHw8iorxXQQYYl1o1L7P6eLQBh6TDMt9CU7AKzLqa6yyehUEgm4V
- DbbXA8YPWFE8o+GTCkYzRJM5yDaaALD89LA9Wp2iQc
-X-Gm-Gg: Acq92OE9JzLIwWWR9TlKnSFlsXLZYvNVnftRicK7RGN9dF0j35Tfjk9k7blv6DmMnzu
- fSyFgM0H9KpHLfHCjAu0Quj0L3Cd9/PEnE4QIxeJ7T3359gLNCBdBWS0aYmGZPVimjt3+cO4cbd
- KWg9KT8H7+fXbGergsoxkQho+8KgSW8LT4s4U8bShY+IyMJvL0Adk5KO7e5VfKvwtSxWYpUG+vp
- 6UGbntu2ftMjPPFtSSLBxAIYlvdJmv/uF2UPaTFNqagCkHSbbTtooXTOjCODuyoHskHFsqWOE6J
- 5jixzHP/wgrQdB4z8MabjBWSp+JX/aMtxliTcu7YRFEbaaSnx3aJcELevudq1x9FOree7n+gl5A
- 2Mk1VozD+8nHOJd6VYwb5YeGfcQCZrnNMR6F9SBj0IDzkOZcV64STkEuKGc9aDp09ruIGSoIcfR
- gz2zKJiI93g430oW8fc1ysf2frOxg=
-X-Received: by 2002:a05:600c:a402:b0:486:fd5c:2b35 with SMTP id
- 5b1f17b1804b1-490426adf66mr270778695e9.13.1779818201458; 
- Tue, 26 May 2026 10:56:41 -0700 (PDT)
-X-Received: by 2002:a05:600c:a402:b0:486:fd5c:2b35 with SMTP id
- 5b1f17b1804b1-490426adf66mr270778305e9.13.1779818201028; 
- Tue, 26 May 2026 10:56:41 -0700 (PDT)
+ bh=Wd46RPv1cpVjcJdKvZTejd8Ngdtpj1qfzxjn3ahDdkA=;
+ b=hbbMwGTUYAGE/64Xr7vPlVaY210ruAClBSOCBHV3kKYyu3N/9F4b0VofDbSzwGZ5jG
+ Ynb97a+Oig6u1wpDQPLDiURjvB+TAGJLR9UbDJ9eGhSt7Wllvby1gAxZeP+4M6h1/f0r
+ qbPY9GsvcN9r2LxOnvXoKFIY2YwUHCXv0mTQQWxc3nRLDKrw3r+dYKOuhiz8nDA9lcxR
+ pe7N2OXzz2/vZ6T+ayesAd4B2UvPtOLWHr3zXNJdRF6KYNS61q7HwQ1fDt7RE+TLkkX3
+ NMsVJrek5tKtGcHD2g0Nxa/xjuRMfNm9zx+eVKXntF6HBQwlOa/W+BA+2MHFJ4lhLOD3
+ 3AEQ==
+X-Gm-Message-State: AOJu0YyBxSzykV2bvweUhHa6/cn9kzSB08x4fTT4SngcGSKtxxKKsvZx
+ nSmcYrzUgU14D/Qat8fFzd7cVsZJ0L0mYCJTsK914Li99wU79ejHiAa92V/nj8NO/NwrkdWynT1
+ tKNtzWMSjs4Lm/6muuBo4ZhlIp5oxXBYAfwgbkn/BVSRXBrcUkK+lxGyC770kXDJpG2I39LSrVt
+ /JJVldarR7TOImJW+T11WWH3IJIbkxo2KzIIaFxgbF
+X-Gm-Gg: Acq92OGkyNz/CTgWVUEWkyjeNusB64Ka4KQX5gA6XkjTwIPnZE1e+rM5Xqktb0HcDvs
+ 1ZQNvTBJLGuVGg48dpq7edYmkdCYTl7hZ2wkzrDWYDroZ+qWBbUqC8RHwYd3AxmTZNUsLAAXNqn
+ PTw74cBPH3QguCElM2P3JE7z8PjRoWjn64lW/ihcq8fspBgUINmQLrGeCmqSAVRMlmT5ib3GqpV
+ 4Ezr/KQGbHrbfKh0nDaISZtgFbKMTOizytqucA13J4tj0n0vQWMohs75Sp3y3LY471GPZjN8FO6
+ KEr/RBZ+Fa88KWnH0kN6DnvU2CnM8Asr+WDiKj41T/I8Q+BMVgup8d505TQZLkIiRL5r+24fshH
+ NcXeiqznYekA6yA7WguJm5Q+RhwXqAOQDb8z8+Gr4TN7xJSKKzP0bKWYR5XKYYnl++HQRHOHZ6o
+ gEUBcdzW/+S/qLlYIe7rcfJOxeVlY=
+X-Received: by 2002:a05:600d:6414:20b0:490:4b89:5359 with SMTP id
+ 5b1f17b1804b1-4904b895514mr211213435e9.1.1779818225520; 
+ Tue, 26 May 2026 10:57:05 -0700 (PDT)
+X-Received: by 2002:a05:600d:6414:20b0:490:4b89:5359 with SMTP id
+ 5b1f17b1804b1-4904b895514mr211213235e9.1.1779818225105; 
+ Tue, 26 May 2026 10:57:05 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.251.208])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490454a0b9asm336792355e9.11.2026.05.26.10.56.39
+ ffacd0b85a97d-45eb6d6ebf0sm38630648f8f.34.2026.05.26.10.57.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 10:56:39 -0700 (PDT)
+ Tue, 26 May 2026 10:57:04 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org,
 	armbru@redhat.com,
 	marcandre.lureau@redhat.com
-Subject: [PATCH v3 08/19] rust/qobject: add Display/Debug
-Date: Tue, 26 May 2026 19:56:07 +0200
-Message-ID: <20260526175618.227743-9-pbonzini@redhat.com>
+Subject: [PATCH v3 16/19] scripts/rustc_args: add --no-strict-cfg
+Date: Tue, 26 May 2026 19:56:15 +0200
+Message-ID: <20260526175618.227743-17-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260526175618.227743-1-pbonzini@redhat.com>
 References: <20260526175618.227743-1-pbonzini@redhat.com>
@@ -125,58 +125,64 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
+Allow to generate all --cfg flags, regardless of Cargo.toml content.
+We can't easily list and include all the features used by QAPI types.
+Access via #[cfg()] then requires #![allow(unexpected_cfgs)].
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/util/src/qobject/mod.rs | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ scripts/rust/rustc_args.py | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/rust/util/src/qobject/mod.rs b/rust/util/src/qobject/mod.rs
-index d2dde9ba0f1..3e22dc8bb3f 100644
---- a/rust/util/src/qobject/mod.rs
-+++ b/rust/util/src/qobject/mod.rs
-@@ -12,6 +12,7 @@
- mod serialize;
- mod serializer;
+diff --git a/scripts/rust/rustc_args.py b/scripts/rust/rustc_args.py
+index 8098053720a..6a156b9608e 100644
+--- a/scripts/rust/rustc_args.py
++++ b/scripts/rust/rustc_args.py
+@@ -108,7 +108,7 @@ def generate_lint_flags(cargo_toml: CargoTOML) -> Iterable[str]:
+         yield from lint.flags
  
-+use core::fmt::{self, Debug, Display};
- use std::{
-     cell::UnsafeCell,
-     ffi::{c_char, CString},
-@@ -272,6 +273,33 @@ fn drop(&mut self) {
-     }
- }
  
-+impl Display for QObject {
-+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-+        // replace with a plain serializer?
-+        match_qobject! { (self) =>
-+            () => write!(f, "QNull"),
-+            bool(b) => write!(f, "QBool({})", if b { "true" } else { "false" }),
-+            i64(n) => write!(f, "QNumI64({})", n),
-+            u64(n) => write!(f, "QNumU64({})", n),
-+            f64(n) => write!(f, "QNumDouble({})", n),
-+            CStr(s) => write!(f, "QString({})", s.to_str().unwrap_or("bad CStr")),
-+            QList(_) => write!(f, "QList"),
-+            QDict(_) => write!(f, "QDict"),
-+        }
-+    }
-+}
-+
-+impl Debug for QObject {
-+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-+        let val = self.to_string();
-+        f.debug_struct("QObject")
-+            .field("ptr", &self.0.get())
-+            .field("refcnt()", &self.refcnt())
-+            .field("to_string()", &val)
-+            .finish()
-+    }
-+}
-+
- macro_rules! match_qobject {
-     (@internal ($qobj:expr) =>
-         $(() => $unit:expr,)?
+-def generate_cfg_flags(header: str, cargo_toml: CargoTOML) -> Iterable[str]:
++def generate_cfg_flags(header: str, cargo_toml: Optional[CargoTOML]) -> Iterable[str]:
+     """Converts defines from config[..].h headers to rustc --cfg flags."""
+ 
+     with open(header, encoding="utf-8") as cfg:
+@@ -117,8 +117,9 @@ def generate_cfg_flags(header: str, cargo_toml: CargoTOML) -> Iterable[str]:
+     cfg_list = []
+     for cfg in config:
+         name = cfg[0]
+-        if f'cfg({name})' not in cargo_toml.check_cfg:
+-            continue
++        if cargo_toml:
++            if f'cfg({name})' not in cargo_toml.check_cfg:
++                continue
+         if len(cfg) >= 2 and cfg[1] != "1":
+             continue
+         cfg_list.append("--cfg")
+@@ -179,6 +180,13 @@ def main() -> None:
+         required=False,
+         default="1.0.0",
+     )
++    parser.add_argument(
++        "--no-strict-cfg",
++        help="only generate expected cfg",
++        action="store_false",
++        dest="strict_cfg",
++        default=True,
++    )
+     args = parser.parse_args()
+     if args.verbose:
+         logging.basicConfig(level=logging.DEBUG)
+@@ -209,7 +217,7 @@ def main() -> None:
+                     print(f'cfg(feature,values("{feature}"))')
+ 
+     for header in args.config_headers:
+-        for tok in generate_cfg_flags(header, cargo_toml):
++        for tok in generate_cfg_flags(header, cargo_toml if args.strict_cfg else None):
+             print(tok)
+ 
+ 
 -- 
 2.54.0
 
