@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B7DDCD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 11:34:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3414CD5BD0
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 11:34:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRq2S-0007vr-FT; Tue, 26 May 2026 07:33:36 -0400
+	id 1wRq2O-0007ts-06; Tue, 26 May 2026 07:33:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wRq2G-0007sc-QQ
- for qemu-devel@nongnu.org; Tue, 26 May 2026 07:33:26 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1wRq2F-0007sF-01
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 07:33:24 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wRq2B-0002GH-0P
- for qemu-devel@nongnu.org; Tue, 26 May 2026 07:33:23 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-687d82dd690so4534487a12.2
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 04:33:16 -0700 (PDT)
+ id 1wRq29-0002BN-12
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 07:33:22 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-44a5174670eso5886303f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 04:33:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1779795196; x=1780399996; darn=nongnu.org;
+ d=mihalicyn.com; s=mihalicyn; t=1779795191; x=1780399991; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ypSkvCgKChX8xCJjZ8z4M9qxsiXUJZOoGadv//QNwsU=;
- b=TY2RnMkOYIXArXi84TLqaMPQoadRgOWfqzQjp6LyisIxpS5bcLEkGudSWJV4KF3QfG
- xplvWIy1n1GzyF59iDx+AkjrjuyJ4zrSZhGh04/dafRr3Cu8BLXbKcBbvHXfzsQK6BDo
- ySAeqXTKQEN76ifCxQhb4rQZOUgcIr0660rb8=
+ bh=SQ0ITkKkq7CNygDh4eSh4qF4WgeXLzNwg5O26NH6KOE=;
+ b=FYNgOBUWUmp1p+yNRPezHHcw43r1WO+8F5qsJ+DpfIoLEtZL19RWzGcsQPF7FISv4J
+ X7TsazIN1iSKan1FQzDdV2KL6Ouo5Doji9e8QYmeBiRoX5jp6zr7HrDLwN+5L22n8Lv6
+ nsopMWlrmOnf1g5dkR1KvHaADA4bQVB/M7irM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779795196; x=1780399996;
+ d=1e100.net; s=20251104; t=1779795191; x=1780399991;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ypSkvCgKChX8xCJjZ8z4M9qxsiXUJZOoGadv//QNwsU=;
- b=is2LP7OuFohGrqN8gUOJohaXtOEl02QRS632axzBrbq/SHGUJ+fNXcdGn/tmcJXnc+
- vIP3eM2zJCSxn0iFeiHK0GOlOr7eTZjldGIqJnGOdr6Zi+1vkvE9Pr7+6E6gkiWhibMS
- YZD3c83CbGGLqZzxSjn1bcIcKKp+7zyvpYFqZ/f7nGLl0Qq3yhf9mZYbwIrEg5LV7I30
- TEiNbkiwwcmaGnLvkgYmtw0oiQ5ez9yUdwOVLbhCzb3RfOorKwgenXAQemkRSYgYHrqB
- rke4uuio3VfXdsYRQ4PoyJ5js5i6tbKAIgGoe52UxMx55C0H/XWlYEGNEEk6ifcetjVQ
- eRoA==
-X-Gm-Message-State: AOJu0Yy0D4oCTdUFnINpZ9A/A5LQVkBoUEe7X6Moa4S/d+/XFIHWZhrD
- ek1C5H9/lhrZDCqHVlL/YG3YMFZR/lj0U78PyHrN1V1HWmfKFAKpUWg8ozpuZ7ptKXm1pOffbkE
- zWMnLSjs=
-X-Gm-Gg: Acq92OEKi35+04PzN/lBTVS0sN3FPKRMHai2TMs09W3b5fXBHZokcUwnDlfLl5q53o4
- L4BR13WI8Mh+E2wvKQMTXZrQrKRO+PCsoTEsuUb6wClR4wihiPvz/S6jRQ7XvCR1xPMx1CPrDCQ
- GnKTcj1/upEWunfiR4vfFh7uEd03jnD9NNz1q+GN8Gr0mf0XeN6qHecBBhbjMQDlAw1m9iebKVd
- nmVOxvy5646LiLTsKCKEcPNEywhRpqEmSbnBImWRWnTHszqUYvDtCt3K/74Z6o0FnpeoE/WX1lx
- NPMWedvd2kWdL3/r76c0a0ldSzLoq4RolDWDu+Z4r7aeMyHjRiaXB4D6mJNlx9w3ldj4UQYwEiL
- eTRT+rpc63CHgzmA+u4e8H7v5eTgMXC3807e0LEGFN/LHlRdNjfA5sauZ5UUFTvJRmv9thyxBZC
- VtyXc2XE41h/2/xKcrCxa3WyN5riRg+PEaJ+2F1j6o6c4a16lFtGHEFUW0mhA7zHVdTm7wfjeAl
- giXbLS2G+aMvb1wuUMQKUQ=
-X-Received: by 2002:a05:600d:644d:20b0:490:3cb4:f1b3 with SMTP id
- 5b1f17b1804b1-490426c5a3dmr217972515e9.16.1779795185629; 
- Tue, 26 May 2026 04:33:05 -0700 (PDT)
+ bh=SQ0ITkKkq7CNygDh4eSh4qF4WgeXLzNwg5O26NH6KOE=;
+ b=Q6AGI9zdHDIwwX1Jq7FxHk1CWC/F2phYnsjvJJv9+U7UKtqFVzCSgDlUi38OsbR2go
+ cskMQhoT6Cb5tfPCLyFIk8aVGTe3YWGrjZU5sXuhsiEWfJ+9hj5IBsj1GifOCsyK20bs
+ /TAucZ3szjCunEICCt4b5QevE1E/2S13K7oGB0Qqi5Bu5KRsDuYmx1Op7eOwCtOnthIr
+ Ca1tOMEAsW7Y/o6o3dMrfMJg22uOxttMxQQX8soepdZ8pg7YV95nc+TLTKvz2cGXy+DT
+ s5Pl82soiMkKw9YvVZ2WBQt+tA9fDGsHWmgpqFkuXNy8HEfXIXupcpwIUFgkNYfoOJ2U
+ 1YIQ==
+X-Gm-Message-State: AOJu0Yx3MyEmdHcFEF5a9hQwAEtlA9TVP6TfZ1xCJzQtZrGz7Swk6CkH
+ bDF2jSqdA8Q1FIYGkNY3RvPaxVzDgcRifR0XKEcQHPy8oxUku33Iisheh2JZv471kZBCkEO6U4/
+ G7cQkHeA=
+X-Gm-Gg: Acq92OG2b3c3nK4YXAQATRc9XVh9u1XMlBFn9i5RGDPxFctkkXokaDt1BsmT43B+Kpj
+ LWCo4hlASgfUfHJ085zAe2EwmagqXcNZitPZRenDsl6piSc7I5AtCSdttfvyaDrX4H1xaGM8u4a
+ HudUnTw8mOG1p8shRk2b+ec4Onz4G7K4XXbCEcSdyPvbhvrDERiC2Mk6K1/als1RcMOZ0iz5zls
+ Nth5Y5CdaSLkXXVfiQ89TwiL4eo0+cqclayjBdc89ZKoxekE56Oe0Uk9qgYNqf+a7idhO8NdDoV
+ fuJJPU/IuayEKq8nS44dIGfvCpww8AymaQi8AsOmWr/BtfH+Rk/wpUu5KLfBa7WioB20p9dkfpb
+ PDXFNEczbCB/7TpQja1Tj79uVaTtTHKvHmtZ10R3FaCFPkGTHaSXLa4qfL9T0j3ozs+iY1Lkmk0
+ YtC+8UmCePhqQviVfthmn1k0e9UJuu+BnPHjEOI0vxoNfSWnEqbhxAuLetuMdOZvUeHg7jlC3Ax
+ qHgVPm6LUo3G3JAZ3cnuGQ=
+X-Received: by 2002:a05:6000:18ac:b0:45e:9431:ee3c with SMTP id
+ ffacd0b85a97d-45eb36813b0mr29916908f8f.10.1779795190853; 
+ Tue, 26 May 2026 04:33:10 -0700 (PDT)
 Received: from alex-laptop.lan
  (p200300cf57228c00840292fb31d0d80a.dip0.t-ipconnect.de.
  [2003:cf:5722:8c00:8402:92fb:31d0:d80a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6d4ca0dsm34366870f8f.18.2026.05.26.04.33.04
+ ffacd0b85a97d-45eb6d4ca0dsm34366870f8f.18.2026.05.26.04.33.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 04:33:05 -0700 (PDT)
+ Tue, 26 May 2026 04:33:10 -0700 (PDT)
 From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
@@ -77,18 +77,18 @@ Cc: Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
  Alexander Mikhalitsyn <alexander@mihalicyn.com>,
  =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
  Peter Xu <peterx@redhat.com>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>,
- Klaus Jensen <k.jensen@samsung.com>
-Subject: [PATCH v8 2/8] hw/nvme: add migration blockers for non-supported cases
-Date: Tue, 26 May 2026 13:32:55 +0200
-Message-ID: <20260526113301.91492-3-alexander@mihalicyn.com>
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Subject: [PATCH v8 7/8] tests/functional/x86_64: add migration test for NVMe
+ device
+Date: Tue, 26 May 2026 13:33:00 +0200
+Message-ID: <20260526113301.91492-8-alexander@mihalicyn.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260526113301.91492-1-alexander@mihalicyn.com>
 References: <20260526113301.91492-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=alexander@mihalicyn.com; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,320 +113,208 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-Let's block migration for cases we don't support:
-- SR-IOV
-- CMB
-- PMR
-- SPDM
+Introduce a very simple test to ensure that NVMe device
+migration works fine.
 
-No functional changes here, because NVMe migration is
-not supported at all as of this commit.
+Test plan is simple:
+1. prepare VM with NVMe device
+2. run workload that produces relatively heavy IO on the device
+3. migrate VM
+4. ensure that workload is alive and finishes without errors
 
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+Test can be run as simple as:
+$ meson test 'func-x86_64-nvme_migration' --setup thorough -C build
+
+In the future we can extend this approach, and introduce some
+fio-based tests. And probably, it makes sense to make this test
+to apply not only to NVMe device, but also virtio-{blk,scsi},
+ide, sata and other migratable devices.
+
 Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 ---
- hw/nvme/ctrl.c       | 206 +++++++++++++++++++++++++++++++++++++++++++
- hw/nvme/nvme.h       |   3 +
- include/block/nvme.h |  12 +++
- 3 files changed, 221 insertions(+)
+ tests/functional/x86_64/meson.build           |   1 +
+ .../functional/x86_64/test_nvme_migration.py  | 159 ++++++++++++++++++
+ 2 files changed, 160 insertions(+)
+ create mode 100755 tests/functional/x86_64/test_nvme_migration.py
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 815f39173c8..6ecaa67f3f5 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -209,6 +209,7 @@
- #include "hw/pci/msix.h"
- #include "hw/pci/pcie_sriov.h"
- #include "system/spdm-socket.h"
-+#include "migration/blocker.h"
- #include "migration/vmstate.h"
- 
- #include "nvme.h"
-@@ -252,6 +253,7 @@ static const bool nvme_feature_support[NVME_FID_MAX] = {
-     [NVME_COMMAND_SET_PROFILE]      = true,
-     [NVME_FDP_MODE]                 = true,
-     [NVME_FDP_EVENTS]               = true,
-+    /* if you add something here, please update nvme_set_migration_blockers() */
- };
- 
- static const uint32_t nvme_feature_cap[NVME_FID_MAX] = {
-@@ -4603,6 +4605,7 @@ static uint16_t nvme_io_mgmt_send(NvmeCtrl *n, NvmeRequest *req)
-         return 0;
-     case NVME_IOMS_MO_RUH_UPDATE:
-         return nvme_io_mgmt_send_ruh_update(n, req);
-+    /* if you add something here, please update nvme_set_migration_blockers() */
-     default:
-         return NVME_INVALID_FIELD | NVME_DNR;
-     };
-@@ -7522,6 +7525,10 @@ static uint16_t nvme_security_receive(NvmeCtrl *n, NvmeRequest *req)
- 
- static uint16_t nvme_directive_send(NvmeCtrl *n, NvmeRequest *req)
- {
-+    /*
-+     * When adding a new dtype handling here,
-+     * please also update nvme_set_migration_blockers().
-+     */
-     return NVME_INVALID_FIELD | NVME_DNR;
- }
- 
-@@ -9233,6 +9240,199 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
-     }
- }
- 
-+#define BLOCKER_FEATURES_MAX_LEN 256
+diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
+index 1ed10ad6c29..fd77f19d726 100644
+--- a/tests/functional/x86_64/meson.build
++++ b/tests/functional/x86_64/meson.build
+@@ -37,6 +37,7 @@ tests_x86_64_system_thorough = [
+   'linux_initrd',
+   'multiprocess',
+   'netdev_ethtool',
++  'nvme_migration',
+   'replay',
+   'reverse_debug',
+   'tuxrun',
+diff --git a/tests/functional/x86_64/test_nvme_migration.py b/tests/functional/x86_64/test_nvme_migration.py
+new file mode 100755
+index 00000000000..3788a8e3473
+--- /dev/null
++++ b/tests/functional/x86_64/test_nvme_migration.py
+@@ -0,0 +1,159 @@
++#!/usr/bin/env python3
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# x86_64 NVMe migration test
 +
-+static inline void nvme_add_blocker_feature(char *blocker_features, const char *feature)
-+{
-+    if (strlen(blocker_features) > 0) {
-+        g_strlcat(blocker_features, ", ", BLOCKER_FEATURES_MAX_LEN);
-+    }
-+    g_strlcat(blocker_features, feature, BLOCKER_FEATURES_MAX_LEN);
-+}
++from migration import MigrationTest
++from qemu_test import QemuSystemTest, Asset
++from qemu_test import wait_for_console_pattern
++from qemu_test import exec_command, exec_command_and_wait_for_pattern
 +
-+static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
-+{
-+    uint64_t unsupported_cap, cap = ldq_le_p(&n->bar.cap);
-+    char blocker_features[BLOCKER_FEATURES_MAX_LEN] = "";
-+    bool adm_cmd_security_checked = false;
-+    bool cmd_io_mgmt_checked = false;
-+    bool cmd_zone_checked = false;
 +
-+    /*
-+     * Idea of this function is simple, we iterate over all Command Sets and
-+     * for each supported command we provide a special handling logic to
-+     * determine if we should block migration or not.
-+     *
-+     * For instance, we have NVME_ADM_CMD_NS_ATTACHMENT and it is always
-+     * available to the guest, but if there is only 1 namespace, then it is
-+     * safe to allow migration, but if there are more, then we need to block
-+     * migration because we don't handle this in migration code yet.
-+     */
-+    for (int opcode = 0; opcode < sizeof(n->cse.acs) / sizeof(n->cse.acs[0]); opcode++) {
-+        /* Is command supported? */
-+        if (!n->cse.acs[opcode]) {
-+            continue;
-+        }
++class X8664NVMeMigrationTest(MigrationTest):
++    ASSET_KERNEL = Asset(
++        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
++         '/31/Server/x86_64/os/images/pxeboot/vmlinuz'),
++        'd4738d03dbbe083ca610d0821d0a8f1488bebbdccef54ce33e3adb35fda00129')
 +
-+        switch (opcode) {
-+        case NVME_ADM_CMD_DELETE_SQ:
-+        case NVME_ADM_CMD_CREATE_SQ:
-+        case NVME_ADM_CMD_GET_LOG_PAGE:
-+        case NVME_ADM_CMD_DELETE_CQ:
-+        case NVME_ADM_CMD_CREATE_CQ:
-+        case NVME_ADM_CMD_IDENTIFY:
-+        case NVME_ADM_CMD_ABORT:
-+        case NVME_ADM_CMD_SET_FEATURES:
-+        case NVME_ADM_CMD_GET_FEATURES:
-+        case NVME_ADM_CMD_ASYNC_EV_REQ:
-+        case NVME_ADM_CMD_DBBUF_CONFIG:
-+        case NVME_ADM_CMD_FORMAT_NVM:
-+        case NVME_ADM_CMD_DIRECTIVE_SEND:
-+        case NVME_ADM_CMD_DIRECTIVE_RECV:
-+            break;
-+        case NVME_ADM_CMD_NS_ATTACHMENT:
-+            int namespaces_num = 0;
-+            for (int i = 1; i <= NVME_MAX_NAMESPACES; i++) {
-+                NvmeNamespace *ns = nvme_subsys_ns(n->subsys, i);
-+                if (!ns) {
-+                    continue;
-+                }
++    ASSET_INITRD = Asset(
++        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
++         '/31/Server/x86_64/os/images/pxeboot/initrd.img'),
++        '277cd6c7adf77c7e63d73bbb2cded8ef9e2d3a2f100000e92ff1f8396513cd8b')
 +
-+                namespaces_num++;
-+            }
++    ASSET_DISKIMAGE = Asset(
++        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
++         '/31/Cloud/x86_64/images/Fedora-Cloud-Base-31-1.9.x86_64.qcow2'),
++        'e3c1b309d9203604922d6e255c2c5d098a309c2d46215d8fc026954f3c5c27a0')
 +
-+            if (namespaces_num > 1) {
-+                nvme_add_blocker_feature(blocker_features, "Namespace Attachment");
-+            }
++    DEFAULT_KERNEL_PARAMS = ('root=/dev/nvme0n1p1 console=ttyS0 net.ifnames=0 '
++                             'rd.rescue quiet')
 +
-+            break;
-+        case NVME_ADM_CMD_VIRT_MNGMT:
-+            if (n->params.sriov_max_vfs) {
-+                nvme_add_blocker_feature(blocker_features, "SR-IOV");
-+            }
++    def wait_for_console_pattern(self, success_message, vm):
++        wait_for_console_pattern(
++            self,
++            success_message,
++            failure_message="Kernel panic - not syncing",
++            vm=vm,
++        )
 +
-+            break;
-+        case NVME_ADM_CMD_SECURITY_SEND:
-+        case NVME_ADM_CMD_SECURITY_RECV:
-+            if (adm_cmd_security_checked) {
-+                break;
-+            }
++    def exec_command_and_check(self, command, vm):
++        prompt = '# '
++        exec_command_and_wait_for_pattern(self,
++                                        f"{command} && echo OK || echo FAIL",
++                                        'FAIL', vm=vm)
++        # Note, that commands we send to the console are echo-ed back, so if we have a word "FAIL"
++        # in the command itself, we should expect to see it once.
++        wait_for_console_pattern(self, 'OK', failure_message="FAIL", vm=vm)
++        self.wait_for_console_pattern(prompt, vm)
 +
-+            if (pci_dev->spdm_port) {
-+                nvme_add_blocker_feature(blocker_features, "SPDM");
-+            }
++    def configure_machine(self, vm):
++        kernel_path = self.ASSET_KERNEL.fetch()
++        initrd_path = self.ASSET_INITRD.fetch()
++        diskimage_path = self.ASSET_DISKIMAGE.fetch()
 +
-+            adm_cmd_security_checked = true;
++        vm.set_console()
++        vm.add_args("-cpu", "max")
++        vm.add_args("-m", "2G")
++        vm.add_args("-accel", "kvm")
 +
-+            break;
-+        default:
-+            g_assert_not_reached();
-+        }
-+    }
++        vm.add_args('-drive',
++                         f'file={diskimage_path},if=none,id=drv0,snapshot=on')
++        vm.add_args('-device', 'nvme,bus=pcie.0,' +
++                         'drive=drv0,id=nvme-disk0,serial=nvmemigratetest,bootindex=1')
 +
-+    for (int opcode = 0; opcode < sizeof(n->cse.iocs.nvm) / sizeof(n->cse.iocs.nvm[0]); opcode++) {
-+        if (!n->cse.iocs.nvm[opcode]) {
-+            continue;
-+        }
++        vm.add_args(
++            "-kernel",
++            kernel_path,
++            "-initrd",
++            initrd_path,
++            "-append",
++            self.DEFAULT_KERNEL_PARAMS
++        )
 +
-+        switch (opcode) {
-+        case NVME_CMD_FLUSH:
-+        case NVME_CMD_WRITE:
-+        case NVME_CMD_READ:
-+        case NVME_CMD_COMPARE:
-+        case NVME_CMD_WRITE_ZEROES:
-+        case NVME_CMD_DSM:
-+        case NVME_CMD_VERIFY:
-+        case NVME_CMD_COPY:
-+            break;
-+        case NVME_CMD_IO_MGMT_RECV:
-+        case NVME_CMD_IO_MGMT_SEND:
-+            if (cmd_io_mgmt_checked) {
-+                break;
-+            }
++    def launch_source_vm(self, vm):
++        vm.launch()
 +
-+            /* check for NVME_IOMS_MO_RUH_UPDATE */
-+            if (n->subsys->params.fdp.enabled) {
-+                nvme_add_blocker_feature(blocker_features, "FDP");
-+            }
++        self.wait_for_console_pattern('Entering emergency mode.', vm)
++        prompt = '# '
++        self.wait_for_console_pattern(prompt, vm)
 +
-+            cmd_io_mgmt_checked = true;
++        # Synchronize on NVMe driver creating the root device
++        exec_command_and_wait_for_pattern(self,
++                        "while ! (dmesg -c | grep nvme0n1:) ; do sleep 1 ; done",
++                        "nvme0n1", vm=vm)
++        self.wait_for_console_pattern(prompt, vm)
 +
-+            break;
-+        default:
-+            g_assert_not_reached();
-+        }
-+    }
++        # prepare system
++        exec_command_and_wait_for_pattern(self, 'mount /dev/nvme0n1p1 /sysroot',
++                                          prompt, vm=vm)
++        exec_command_and_wait_for_pattern(self, 'chroot /sysroot',
++                                          prompt, vm=vm)
++        exec_command_and_wait_for_pattern(self, 'mount -t proc proc /proc',
++                                          prompt, vm=vm)
++        exec_command_and_wait_for_pattern(self, 'mount -t sysfs sysfs /sys',
++                                          prompt, vm=vm)
 +
-+    for (int opcode = 0; opcode < sizeof(n->cse.iocs.zoned) / sizeof(n->cse.iocs.zoned[0]); opcode++) {
-+        /*
-+         * If command isn't supported or we have the same command
-+         * in n->cse.iocs.nvm, then we can skip it here.
-+         */
-+        if (!n->cse.iocs.zoned[opcode] || n->cse.iocs.nvm[opcode]) {
-+            continue;
-+        }
++        # Run workload before migration to check if it continues to run properly after migration
++        #
++        # Workload is simple: it continuously calculates checksums of all files in /usr/bin
++        # to generate some I/O load on the NVMe disk and at the same time it drops caches to
++        # make sure that we have some read I/O on the disk as well.
++        # If there are any issues with the migration of the NVMe device, we should see errors
++        # in dmesg and consequently in the workload log.
++        exec_command_and_wait_for_pattern(self,
++                                        "(while [ ! -f /tmp/test_nvme_migration_workload.stop ]; do \
++                                            rm -f /tmp/test_nvme_migration_workload.iteration_finished; \
++                                            echo 3 > /proc/sys/vm/drop_caches; \
++                                            find /usr/bin -type f -exec cksum {} \\;; \
++                                            touch /tmp/test_nvme_migration_workload.iteration_finished; \
++                                        done) > /dev/null 2> /tmp/test_nvme_migration_workload.errors &",
++                                        prompt, vm=vm)
++        exec_command_and_wait_for_pattern(self, 'echo $! > /tmp/test_nvme_migration_workload.pid',
++                                          prompt, vm=vm)
 +
-+        switch (opcode) {
-+        case NVME_CMD_ZONE_APPEND:
-+        case NVME_CMD_ZONE_MGMT_SEND:
-+        case NVME_CMD_ZONE_MGMT_RECV:
-+            if (cmd_zone_checked) {
-+                break;
-+            }
++        # check if process is alive and running
++        self.exec_command_and_check("kill -0 $(cat /tmp/test_nvme_migration_workload.pid)", vm)
 +
-+            for (int i = 1; i <= NVME_MAX_NAMESPACES; i++) {
-+                NvmeNamespace *ns = nvme_subsys_ns(n->subsys, i);
-+                if (!ns) {
-+                    continue;
-+                }
++    def assert_dest_vm(self, vm):
++        prompt = '# '
 +
-+                if (ns->params.zoned) {
-+                    nvme_add_blocker_feature(blocker_features, "Zoned Namespace");
-+                    break;
-+                }
-+            }
++        # check if process is alive and running after migration, if not - fail the test
++        self.exec_command_and_check("kill -0 $(cat /tmp/test_nvme_migration_workload.pid)", vm)
 +
-+            cmd_zone_checked = true;
++        # signal workload to stop
++        exec_command_and_wait_for_pattern(self, 'touch /tmp/test_nvme_migration_workload.stop',
++                                          prompt, vm=vm)
 +
-+            break;
-+        default:
-+            g_assert_not_reached();
-+        }
-+    }
++        # wait workload to finish, because we want to examine log to see if there are any errors
++        exec_command_and_wait_for_pattern(self,
++                                        "while [ ! -f /tmp/test_nvme_migration_workload.iteration_finished ]; do sleep 1; done;",
++                                        prompt, vm=vm)
 +
-+    /*
-+     * Try our best to explicitly detect all not supported caps,
-+     * to let users know what features cause migration to be blocked,
-+     * but in case we miss handling here, everything else will be
-+     * covered by unsupported_cap check.
-+     */
-+    if (NVME_CAP_CMBS(cap)) {
-+        nvme_add_blocker_feature(blocker_features, "CMB");
-+        cap &= ~((uint64_t)CAP_CMBS_MASK << CAP_CMBS_SHIFT);
-+    }
++        exec_command_and_wait_for_pattern(self, 'cat /tmp/test_nvme_migration_workload.errors',
++                                          prompt, vm=vm)
 +
-+    if (NVME_CAP_PMRS(cap)) {
-+        nvme_add_blocker_feature(blocker_features, "PMR");
-+        cap &= ~((uint64_t)CAP_PMRS_MASK << CAP_PMRS_SHIFT);
-+    }
++        # fail the test if non-empty
++        self.exec_command_and_check("[ ! -s /tmp/test_nvme_migration_workload.errors ]", vm)
 +
-+    unsupported_cap = cap & ~NVME_MIGRATION_SUPPORTED_CAP_BITS;
-+    if (unsupported_cap) {
-+        nvme_add_blocker_feature(blocker_features, "unknown capability");
-+    }
++    def test_migration_with_tcp_localhost(self):
++        self.set_machine('q35')
++        self.require_accelerator("kvm")
 +
-+    assert(n->migration_blocker == NULL);
-+    if (strlen(blocker_features) > 0) {
-+        error_setg(&n->migration_blocker, "Migration is not supported for %s", blocker_features);
-+        if (migrate_add_blocker(&n->migration_blocker, errp) < 0) {
-+            return false;
-+        }
-+    }
++        self.migration_with_tcp_localhost()
 +
-+    return true;
-+}
++    def test_migration_with_unix(self):
++        self.set_machine('q35')
++        self.require_accelerator("kvm")
 +
- static int nvme_init_subsys(NvmeCtrl *n, Error **errp)
- {
-     int cntlid;
-@@ -9338,6 +9538,10 @@ static void nvme_realize(PCIDevice *pci_dev, Error **errp)
- 
-         n->subsys->namespaces[ns->params.nsid] = ns;
-     }
++        self.migration_with_unix()
 +
-+    if (!nvme_set_migration_blockers(n, pci_dev, errp)) {
-+        return;
-+    }
- }
- 
- static void nvme_exit(PCIDevice *pci_dev)
-@@ -9390,6 +9594,8 @@ static void nvme_exit(PCIDevice *pci_dev)
-     }
- 
-     memory_region_del_subregion(&n->bar0, &n->iomem);
++    def test_migration_with_exec(self):
++        self.set_machine('q35')
++        self.require_accelerator("kvm")
 +
-+    migrate_del_blocker(&n->migration_blocker);
- }
- 
- static const Property nvme_props[] = {
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index 5ef3ebee29e..05aee24a15c 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -668,6 +668,9 @@ typedef struct NvmeCtrl {
- 
-     /* Socket mapping to SPDM over NVMe Security In/Out commands */
-     int spdm_socket;
++        self.migration_with_exec()
 +
-+    /* Migration-related stuff */
-+    Error *migration_blocker;
- } NvmeCtrl;
- 
- typedef enum NvmeResetType {
-diff --git a/include/block/nvme.h b/include/block/nvme.h
-index e4e7be51205..17a7c7818d7 100644
---- a/include/block/nvme.h
-+++ b/include/block/nvme.h
-@@ -141,6 +141,18 @@ enum NvmeCapMask {
- #define NVME_CAP_SET_CMBS(cap, val)   \
-     ((cap) |= (uint64_t)((val) & CAP_CMBS_MASK)   << CAP_CMBS_SHIFT)
- 
-+#define NVME_MIGRATION_SUPPORTED_CAP_BITS ( \
-+      ((uint64_t)CAP_MQES_MASK   << CAP_MQES_SHIFT)   \
-+    | ((uint64_t)CAP_CQR_MASK    << CAP_CQR_SHIFT)    \
-+    | ((uint64_t)CAP_AMS_MASK    << CAP_AMS_SHIFT)    \
-+    | ((uint64_t)CAP_TO_MASK     << CAP_TO_SHIFT)     \
-+    | ((uint64_t)CAP_DSTRD_MASK  << CAP_DSTRD_SHIFT)  \
-+    | ((uint64_t)CAP_NSSRS_MASK  << CAP_NSSRS_SHIFT)  \
-+    | ((uint64_t)CAP_CSS_MASK    << CAP_CSS_SHIFT)    \
-+    | ((uint64_t)CAP_MPSMIN_MASK << CAP_MPSMIN_SHIFT) \
-+    | ((uint64_t)CAP_MPSMAX_MASK << CAP_MPSMAX_SHIFT) \
-+)
 +
- enum NvmeCapCss {
-     NVME_CAP_CSS_NCSS    = 1 << 0,
-     NVME_CAP_CSS_IOCSS   = 1 << 6,
++if __name__ == '__main__':
++    MigrationTest.main()
 -- 
 2.47.3
 
