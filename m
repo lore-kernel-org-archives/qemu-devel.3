@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81C7DCD6E40
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:34:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA57ECD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:35:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRsmZ-0000FU-LN; Tue, 26 May 2026 10:29:23 -0400
+	id 1wRssj-0002V5-0m; Tue, 26 May 2026 10:35:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRsmF-0008FE-LN
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:05 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRssR-0002TM-HK
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:35:31 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRsmE-0001Dm-0q
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:03 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-45ed9336049so488925f8f.0
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:29:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRssP-0004t9-Rm
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:35:27 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-48e6db3ff7eso55155735e9.0
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:35:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779805740; x=1780410540; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=iKoI6jb4oPXbwYLz4nwwqaE8QARRc2bglnNlB7mB23c=;
- b=W3oaxyBrk7/m+Clr/mq5wcH/vkauAiCbJzlazFZKxudSPwA1Cpsd+WEkw9fm0blwuS
- aFXRdyKO88rwtNjB8owKUEcEp0ZhJQERQx6OUwT9Tejz5PB9kPOHIhbqvho3XrUJfkoH
- R1sZWJR+lyKbt6Unkt8uMRel0/HcSKRDFiYckY/su9ryqoRkN79PqfQfQmcXlJ3auwCr
- W3QQQq5pib0VYQdBBDSdAcU7uzc5XIH+qHoiAe7u2LxX82grPnqzS5AyMt8YJnXtknLC
- Y6tUa4CvxnFUC0BLxU6/tXqcGC2weaWiJ5w4b6OuSyjV8uH7h6tdhFpJGe+dJsAM0Sqp
- qBHA==
+ d=linaro.org; s=google; t=1779806124; x=1780410924; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qB4L/AZ5trifDDdSMq98eqH/+l50WKyyBEZ3CvsgjmE=;
+ b=e6WzRMs4n/OtZRKj7vB9u9WD/SgReXTAaNl4qs874VbFQt2qPpwRofntxzWwd/4szf
+ UoP27kkTYKB+rzUXfy3K0d0FdLzs0B4WapP3ROgvhi7aKVDtsqtEyHiqTAD6epaNRgDD
+ ExzinBXwphLYFf4hv3Bc1Lp9/nkvu/siSetaVDRbgsIxmVO8o2xntYlsTHx40CzAt38A
+ cG4RJgGFADuXwAEHarHZjk5KULPI11g6GmkaIy/yWa1DFYPn4E0MXUepbs3yynOzwLbe
+ H9SkCVDco+7gN0IHntwZ0HfAaKA6zBz8rnAAL6nqtyEQIWbfx9tCRMb8UqwQrcMvkAWr
+ yGmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779805740; x=1780410540;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=iKoI6jb4oPXbwYLz4nwwqaE8QARRc2bglnNlB7mB23c=;
- b=WuquzBQ/oTTaEFlPSN5XioezadBXEaq2o6bO7EhHuQ3QKOHiJf7l+PJccsXgOvnFms
- e7tah/MN11rE8zHOtq8OgCk9h9ce/Qc4rW06j4z/w7eqgf3vIC/pFS/mjxr5maXIA6XX
- 29hjyXO3wJjfOcIDvLLB0WS+8pdS3c8w+DybNG0w8V0XvYpJ5BKixVAmgh8n9x9KY9GN
- deuo/MmTXrTQnvY4SZCbSxtoSEE9CAKFbx2rkXeKfBOuTwA3J8Mz9BZOmP1IVXVoVI66
- 09hJhd5oeFhmvYQCZaP3zUkgEerH2QYIzxNYYgo6uQH786NDlc+OpPy0W8D43w0vGNbd
- LcBw==
-X-Gm-Message-State: AOJu0YwBTxehYHlWMjStjkQKOdpuynB6Zn4XHCXcbX1++5TEO76oPcRb
- S2ht0gtlmr4T5hcCrQYRlfaEjgZXQWQXtMMO3sSyeIGa3+EQAIzD5nA+M4xjff7eqOHNlohBSty
- toceQ
-X-Gm-Gg: Acq92OFrC1/v6xnU0e515BScSXpS1xgUNwwcyqLHzyTa/OXmYCW2O/qT7jDP4Dlj5kL
- QnvFT/sCk/ZUf0qPdAmKwXeuzycCQtboRmux4H3uMG9iz8uU/qFKuQKXoondE0HTQjVIb4hPoxb
- aCtJt6YWR8GyT1w5qo7fVZHhfWx9Dzri3Gnuif55NH68nBxZTczseNPR2gEWDU8o8jbFMFHnWmu
- RELgjwpkSOK4qYZm6IZaer1VqUO8+XkZOYsU0OfZ/3bOUWz1ugikaFNQNW9sOCc0I9HL5LDYE7M
- IXkRAA7J4BJPljn1Hf/xks6UJnz2yLegTJr8fuOeysKJjAtl6uW6jSi5L9JQJ/rPC5y8VSwcTzM
- XJ1Adk6LEoeoE2cww+waP5Veht2IuCAkjReDT129D25kaeC0JEXCevDlcQOSz7uIBiVaCzk4EO3
- yhzI+IQKBJhYO6iDxGeu0Jkxa0Jq33oC9BV+7m0T+ZoTsUor5KmDnMTSEa1Q3Lnl2zUazMAETHa
- zQsjm5y/TER8/sjKJWYjDlu4niIJww=
-X-Received: by 2002:a05:6000:2688:b0:43d:309b:9c4f with SMTP id
- ffacd0b85a97d-45eb3670427mr31446204f8f.6.1779805740479; 
- Tue, 26 May 2026 07:29:00 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6d70c51sm38325225f8f.36.2026.05.26.07.28.59
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 07:28:59 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 09/54] hw/dma/omap_dma: Fold omap_dma_sys_read() and
- omap_dma_sys_write() into callers
-Date: Tue, 26 May 2026 15:28:05 +0100
-Message-ID: <20260526142850.2326589-10-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260526142850.2326589-1-peter.maydell@linaro.org>
-References: <20260526142850.2326589-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20251104; t=1779806124; x=1780410924;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qB4L/AZ5trifDDdSMq98eqH/+l50WKyyBEZ3CvsgjmE=;
+ b=hKB/I0XcbDBPY+O3etR04jcS6aMCVyHcaSImGZE3cSfOxRjUlGvIk8Z0CiRN/igGzI
+ C3ivTSNJgKZPnP9TmG2XdNY1INya1RiCIfa10xbzznLbaCvdv/72DVVC5lI/ZAZQJJ1E
+ fxtvVdqVof82GOdAYXwTuBsW13dp3VhICqwaDTPP+sNxMqTbKKprWcULQ2/m43cFnA44
+ H2naWFU67djL3qamVf6pFYtHs1pUkyrjGQioz/p8DnrJe67I8DoKGkYYNQz03PTbaWMa
+ Q5ekoDdwomSJFEHdLg1dKjLxvgTepj1SZzR897Hhdsm0NQD18Mw69AX6nXpFms8KvCsJ
+ 3XqA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/z7X9iOWMCLE/ShAk1eKE3l7IQEe+v3qb+5Qvtk74BwNSZdcN8VuUsIWkb6Hh6Ug/fwjorloqLZhA1@nongnu.org
+X-Gm-Message-State: AOJu0Yx7xwnG5yFqv32S8w0dAK0hjHpZyK2eed8/yKXMGzAVno9b/LPv
+ mI7zj2FrqdbOqNhyVtN/M19/XBSBEy2On1E/CCS6vTPQPv+jqCg2kvtjuWLjDVv74F8=
+X-Gm-Gg: Acq92OGiYrRtml2w4CwsunrHGkYenVwq0ZAEot/j0PBCZNpJYOL0Oiv8Y0Klv2l3kxD
+ ptyG2j+jaB4BYw3D1qfL+iwspoHE/vQYGQvEM9B7N7Pq0VDiRN5dnoAMnwjv3eD29MNC9qqQ20W
+ H6hH4J1zMx9aBKZVvlv47u6EfL6aujwxmKqm3AzYsNZSpv6tMkdnbmjVP8gV8HdsgAHOp4kBfZd
+ 1WV0rIoyxEa/6FZhLns1ytTbAxwvQRanDmkgDUqJXxTdlzMrq58BpcLGWkITP/W2c7VmdQeVr7a
+ P03C4ZqyKiM7crk0EGacefJ/Ky9KVi+LxM8M0YSzbfLPvEBK0A4cpJxvy2QJHhCHMwoNQzqy+dC
+ DiqkKZWG/jk4L0W9hiG3gmjnHwsXYPPOzNEwq/CJnBKiwBZTHeBrcpYzSsDZbpePqw6avWuXhtF
+ yWEAuT5lt04rxjMiLvvpIT3Pipk4DqPTqkqGjMVGvE8ML533i0pJZemJYzPVTcEll0dg==
+X-Received: by 2002:a05:600c:3b8d:b0:490:50eb:b753 with SMTP id
+ 5b1f17b1804b1-4905eab6ee4mr200368135e9.32.1779806124112; 
+ Tue, 26 May 2026 07:35:24 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45eb6cd151asm35250042f8f.13.2026.05.26.07.35.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 May 2026 07:35:23 -0700 (PDT)
+Message-ID: <a63e95c9-d878-407d-8f42-beeb26010304@linaro.org>
+Date: Tue, 26 May 2026 16:35:22 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/uefi: fix parse_hexstr
+Content-Language: en-US
+To: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
+Cc: mcascell@redhat.com, Feifan Qian <bea1e@proton.me>
+References: <20260526135948.599148-1-kraxel@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260526135948.599148-1-kraxel@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,180 +102,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now we have removed the DMA 3.2 support, we call omap_dma_sys_read()
-only for the single address offset 0x400, and similarly for
-omap_dma_sys_write().  The other cases in those functions are DMA
-3.2-only and now dead code.  Fold the 0x400 register directly into
-the callers, and remove the rest.
+On 26/5/26 15:59, Gerd Hoffmann wrote:
+> Make sure we actually have two input characters available before going
+> to parse two hex digits.  Fixes one byte buffer overflow of the output
+> buffer in case the input string has an odd number of characters.
+> 
+> Fixes: CVE-2026-48915
+> Fixes: 12058948abdf ("hw/uefi: add var-service-json.c + qapi for NV vars.")
+> Reported-by: Feifan Qian <bea1e@proton.me>
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> ---
+>   hw/uefi/var-service-json.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260512203414.3633237-9-peter.maydell@linaro.org
----
- hw/dma/omap_dma.c | 121 ++--------------------------------------------
- 1 file changed, 5 insertions(+), 116 deletions(-)
-
-diff --git a/hw/dma/omap_dma.c b/hw/dma/omap_dma.c
-index 9a86d90b4e..49348f40c5 100644
---- a/hw/dma/omap_dma.c
-+++ b/hw/dma/omap_dma.c
-@@ -317,16 +317,6 @@ static void omap_dma_interrupts_3_1_update(struct omap_dma_s *s)
-         qemu_irq_raise(ch[5].irq);
- }
- 
--static void omap_dma_interrupts_3_2_update(struct omap_dma_s *s)
--{
--    struct omap_dma_channel_s *ch = s->ch;
--    int i;
--
--    for (i = s->chans; i; ch ++, i --)
--        if (ch->status)
--            qemu_irq_raise(ch->irq);
--}
--
- static void omap_dma_enable_3_1_mapping(struct omap_dma_s *s)
- {
-     s->omap_3_1_mapping_disabled = 0;
-@@ -334,13 +324,6 @@ static void omap_dma_enable_3_1_mapping(struct omap_dma_s *s)
-     s->intr_update = omap_dma_interrupts_3_1_update;
- }
- 
--static void omap_dma_disable_3_1_mapping(struct omap_dma_s *s)
--{
--    s->omap_3_1_mapping_disabled = 1;
--    s->chans = 16;
--    s->intr_update = omap_dma_interrupts_3_2_update;
--}
--
- static void omap_dma_process_request(struct omap_dma_s *s, int request)
- {
-     int channel;
-@@ -1106,98 +1089,6 @@ static int omap_dma_3_1_lcd_read(struct omap_dma_lcd_channel_s *s, int offset,
-     return 0;
- }
- 
--static int omap_dma_sys_write(struct omap_dma_s *s, int offset, uint16_t value)
--{
--    switch (offset) {
--    case 0x400: /* SYS_DMA_GCR */
--        s->gcr = value;
--        break;
--
--    case 0x404: /* DMA_GSCR */
--        if (value & 0x8)
--            omap_dma_disable_3_1_mapping(s);
--        else
--            omap_dma_enable_3_1_mapping(s);
--        break;
--
--    case 0x408: /* DMA_GRST */
--        if (value & 0x1)
--            omap_dma_reset(s->dma);
--        break;
--
--    default:
--        return 1;
--    }
--    return 0;
--}
--
--static int omap_dma_sys_read(struct omap_dma_s *s, int offset,
--                uint16_t *ret)
--{
--    switch (offset) {
--    case 0x400: /* SYS_DMA_GCR */
--        *ret = s->gcr;
--        break;
--
--    case 0x404: /* DMA_GSCR */
--        *ret = s->omap_3_1_mapping_disabled << 3;
--        break;
--
--    case 0x408: /* DMA_GRST */
--        *ret = 0;
--        break;
--
--    case 0x442: /* DMA_HW_ID */
--    case 0x444: /* DMA_PCh2_ID */
--    case 0x446: /* DMA_PCh0_ID */
--    case 0x448: /* DMA_PCh1_ID */
--    case 0x44a: /* DMA_PChG_ID */
--    case 0x44c: /* DMA_PChD_ID */
--        *ret = 1;
--        break;
--
--    case 0x44e: /* DMA_CAPS_0_U */
--        *ret = (s->caps[0] >> 16) & 0xffff;
--        break;
--    case 0x450: /* DMA_CAPS_0_L */
--        *ret = (s->caps[0] >>  0) & 0xffff;
--        break;
--
--    case 0x452: /* DMA_CAPS_1_U */
--        *ret = (s->caps[1] >> 16) & 0xffff;
--        break;
--    case 0x454: /* DMA_CAPS_1_L */
--        *ret = (s->caps[1] >>  0) & 0xffff;
--        break;
--
--    case 0x456: /* DMA_CAPS_2 */
--        *ret = s->caps[2];
--        break;
--
--    case 0x458: /* DMA_CAPS_3 */
--        *ret = s->caps[3];
--        break;
--
--    case 0x45a: /* DMA_CAPS_4 */
--        *ret = s->caps[4];
--        break;
--
--    case 0x460: /* DMA_PCh2_SR */
--    case 0x480: /* DMA_PCh0_SR */
--    case 0x482: /* DMA_PCh1_SR */
--    case 0x4c0: /* DMA_PChD_SR_0 */
--        qemu_log_mask(LOG_UNIMP,
--                      "%s: Physical Channel Status Registers not implemented\n",
--                      __func__);
--        *ret = 0xff;
--        break;
--
--    default:
--        return 1;
--    }
--    return 0;
--}
--
- static uint64_t omap_dma_read(void *opaque, hwaddr addr, unsigned size)
- {
-     struct omap_dma_s *s = opaque;
-@@ -1225,10 +1116,9 @@ static uint64_t omap_dma_read(void *opaque, hwaddr addr, unsigned size)
- 
-     case 0x404 ... 0x4fe:
-         break;
--    case 0x400:
--        if (omap_dma_sys_read(s, addr, &ret))
--            break;
--        return ret;
-+    case 0x400: /* SYS_DMA_GCR */
-+        return s->gcr;
-+        break;
- 
-     case 0xb00 ... 0xbfe:
-         break;
-@@ -1265,9 +1155,8 @@ static void omap_dma_write(void *opaque, hwaddr addr,
- 
-     case 0x404 ... 0x4fe:
-         break;
--    case 0x400:
--        if (omap_dma_sys_write(s, addr, value))
--            break;
-+    case 0x400: /* SYS_DMA_GCR */
-+        s->gcr = value;
-         return;
- 
-     case 0xb00 ... 0xbfe:
--- 
-2.43.0
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
