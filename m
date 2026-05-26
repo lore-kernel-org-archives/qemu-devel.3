@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAF20CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:34:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACA15CD5BD0
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:34:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRsoW-0003ca-9I; Tue, 26 May 2026 10:31:24 -0400
+	id 1wRsmm-00010H-9f; Tue, 26 May 2026 10:29:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRsmw-0001c3-Kq
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:46 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1wRsml-0000zJ-Jq
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:35 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRsmu-0001VT-Rb
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:46 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-45e6a4d0be0so4722330f8f.1
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:29:44 -0700 (PDT)
+ id 1wRsmj-0001P2-Sq
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:35 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-490388fd0dbso51202785e9.0
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:29:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779805783; x=1780410583; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779805772; x=1780410572; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=i/q2wfhAByWiYzfnLkFT+2vC1TzNOMSgQe7MpYCYhW0=;
- b=c4+LS7vnKAxvYQDLGa0GdFUfHXXc1JDx++3GxgTvATpcjaPSEwPiDLiEdIsosMgupR
- culQpn8QQvFd4OEOUumbfraUX5DatpRu9fONwKz1GEWGtKeeQYZBwaTO8ZTqgaQPhup/
- immcPN5JY3DBoKsgj9Gcz1+zqyZj1WoJHYJtDvGw0tg9134kjo1kInFLH7Ylv0q0/gEG
- BSz4MnHPYrqtUtt/T0fLb5rQ4Mhl3hHiYqjHma+dY3zrsHQNzsqpqRn3aErb1I2GCfjA
- Fo4ZqKYpHEi5yfZ3T2DKfyn2r43vWHKPlWBZZYsbCYc226/Uuj/hxBfZCrDGCXcMK/RC
- Fe5w==
+ :reply-to; bh=9AqD1oHDlEi7hjoiK1h0GkH5UvTjIhBiTLaTuxECtGI=;
+ b=BSIDisU908VhKqEdR2HpH1Xj/HS8+guONNmPuR/bVJFNnActWq6kNdAvnJ3L6cV+F+
+ KXzq1SVz02Lcugq8yJIsTrzOfulei3TbqQvCjN5y6lELgICFUtvX9pffU1zzn5weIW62
+ MqiWKOk1Xj2LpgiGCgBA5Dni5TdHWGDz+jRljGLEjw/T5wVxtEUvrRgquRCXCtVZ47rW
+ Zzks9QU3LmFw44z9bTbwWwBUpDblZiW8Nap0z4b9abz7EAlvmnnU90/sL3jz8f/4EMg+
+ 7Ukt3d+VGXRKuojhRxPfIapI5QqwyEhvKBhlj6+xU1zuyhHc0wCKZL+MYssv+O5OUKiA
+ QPXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779805783; x=1780410583;
+ d=1e100.net; s=20251104; t=1779805772; x=1780410572;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=i/q2wfhAByWiYzfnLkFT+2vC1TzNOMSgQe7MpYCYhW0=;
- b=Nrhhc6AnTGQz5nIjjRD5e/cCGh8NsSAoecm8aJq72bPsrx/g7v5A3/d0qd302GtyRm
- dIylLlFJTOrLjRcK0NCx2+w9LJQbefVOQURi/zJwBaYVy1KPsTxstknMRHycIqVYYTFR
- +3/N3sKCTeBajmF/MhBWctiXpX7oChvyV8EosR/tEO5wjrTOPsBMweNC5ayGYMMdirkg
- CttKWsZ/ILTNg/2tOjW/UvkOgb8XYasw4tzVOF5JC6j7dslj57iRSmymEq1Z6h9IR6oM
- 5BLC2G/EA2eymb7BorqE0eAuAGYAZm+Qz9tiOh/qtM6arAPn16mfDsvthwUSEj1X/NmJ
- +LUQ==
-X-Gm-Message-State: AOJu0YwpSxSh4NM3BguuIx2f6kf1PlvJRXhc9/IRAmcp9Oa3bxMEThke
- UkgnBC8YykKClkIbF9PP/QmvVsaKpvC/rASCQUrXSKH+41E+I9MhQpOJc1lRwa67lM3wtiRA21T
- l0f+V
-X-Gm-Gg: Acq92OFbt8SNdL2sxOQrmecIKSdr2QnB8fzOEcrs/K79oZwOytCAHY+iVDm4am0VkCj
- n3yndyWe/BsYZ8RGPuOFVAxrESCwK/CiXDIgr/5PVlL6rhIugpgIxE67PaYYtG+gdGLPbQrHfzu
- qE0Yq+169AY1SelRDcwFQeZSUUQEupQ79bKHYqbwl1ME1HMqAEOAj8JbDd4Cd+FhjcabYBTM1xf
- hVueUKdThgGkvh309I67pUCnRrst3PyXECs8s9ShDT3dCHNQWs02Qj/W4OvvsM6UVDkKXxeVbGh
- E8aFv2tyPxSXFaVGQyQ2DxxSpyRgEh3PriFMH/E25GzRQJJzG/2F7Kb2V5xlcESOWl5jqql6qwM
- 2r61wYTbCiBMjywfMv/Cik1bkRGx686JuSYir7fDCqlIWaktR8qPPJpG7EsuSMCvydlJW8Sm+y7
- AyKTGmKFKY7ChmKVYSVe3LOGKgOEN8Q586NpRy0FWj3ghyM2uo2nq1Cx29IK/nM1TMC00hMBEd2
- tpFEqTyJjHAMG2UYevB8bBpYWM92gd7tniMq7lxqg==
-X-Received: by 2002:a5d:64c2:0:b0:44b:5398:4e85 with SMTP id
- ffacd0b85a97d-45eb38afb20mr30851967f8f.22.1779805783385; 
- Tue, 26 May 2026 07:29:43 -0700 (PDT)
+ bh=9AqD1oHDlEi7hjoiK1h0GkH5UvTjIhBiTLaTuxECtGI=;
+ b=F0WErgPftEhoqHSoqf7uHwtAGjSy5PqvQ+JkH1NzQ5atlv6lYxlichE80mzWnRQ43a
+ Pgv5SmMfhisnXHBRGOGpITN4thSd3mp6KX2QoQi7RdjRwawTetaqLVKebK4+m7F+DSqd
+ MJYq1JNB0bM9SEYJOZf+8PN628N/22fufhRDibx7G19joIhoKX2ebFIGqsAEJsf/+nH5
+ 9rcmOsMwjxJ4bnwUrLyTRDrcnlz6y0gO52fZh7NFxjl5EJbAJxOhuaKbqNjOxdqUYUcX
+ r7FFgBItyZBbkT1n9opgTnm3L0I2GwPBzN/vne27m4FoOD7sUr/jJZY/NEhrKdSxTuFr
+ iNzw==
+X-Gm-Message-State: AOJu0YxBlBt1HPpNI3rRLfm0hpVcoZkhkf03IV4NQ56N5AB9LZUrDfEq
+ a7F2QXewRDTUJdwN2s2cCLGUQu+KoLv9dCRlBvKTCWALZXHem+H3aYp9yXY199/2hm21jy1Z+ts
+ F+u4e
+X-Gm-Gg: Acq92OGZi1Sg6EelBBocfbxSOaYup2w/LW/pi+2n6rpGR1T5j6AmHMvSOPiuPOn9VMl
+ Ln8zy3tyuKkX+pwXllwgaeyQ8fhxFwPpxonTd9QIzA8XEFC+mN4ld1PCi8L0rivDGrMTcFVGu6B
+ Kztx5Ear7uA/2pNpALzdx5jFc99EpCMXuI6FnzJjzUHmXO84x558cjjWre6cqZH1ZEZpvakTvfv
+ /h/enkTouqFLE8Utoa8NwPoG8lRAl/sviE5zov/xaf9qU395MfJQagaMwuvXVGRQWmAJAqtOzDx
+ QYvG0jZzeQQZ6vt+pPe7QHC37chuAWKG5F8NNMDjvO4Xysa+Ojqig/PzG7bCP908XumOrKZBWU/
+ mf1ZyvwifD6DGuhWb/gnftcauaq64hNlsg1eV1McAjF3fMYHma3o+wSMwIzxgpihZgWezoVtlUk
+ mw69iWPWA7cAjImBgNh1Qrh8mqLE/Etk6OC7jBsYTvGS/rFDPpd7zZ07VeP3gI32ITQvPQjAjQQ
+ Ahw1Hc3Fdq+2IRC0u1PL+xtk72Y11MriSRaluLO2A==
+X-Received: by 2002:a05:600c:3b20:b0:48e:8741:fd53 with SMTP id
+ 5b1f17b1804b1-490426adc1amr289814525e9.15.1779805772325; 
+ Tue, 26 May 2026 07:29:32 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6d70c51sm38325225f8f.36.2026.05.26.07.29.42
+ ffacd0b85a97d-45eb6d70c51sm38325225f8f.36.2026.05.26.07.29.31
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 07:29:42 -0700 (PDT)
+ Tue, 26 May 2026 07:29:31 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 53/54] target/arm: Split vector-type.h from cpu.h
-Date: Tue, 26 May 2026 15:28:49 +0100
-Message-ID: <20260526142850.2326589-54-peter.maydell@linaro.org>
+Subject: [PULL 41/54] target/arm: Enable EnFPM bits for FEAT_FPMR
+Date: Tue, 26 May 2026 15:28:37 +0100
+Message-ID: <20260526142850.2326589-42-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260526142850.2326589-1-peter.maydell@linaro.org>
 References: <20260526142850.2326589-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,125 +102,63 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-We want to be able to reference ARMVectorType etc from
-common code, so move it out of cpu.h.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260522220306.235200-23-richard.henderson@linaro.org
+Message-id: 20260522220306.235200-11-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu.h         | 38 +---------------------------------
- target/arm/vector-type.h | 44 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 45 insertions(+), 37 deletions(-)
- create mode 100644 target/arm/vector-type.h
+ target/arm/cpu.c    | 3 +++
+ target/arm/helper.c | 9 +++++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 2a93de4132..85552b573c 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -35,6 +35,7 @@
- #include "target/arm/cpu-sysregs.h"
- #include "target/arm/mmuidx.h"
- #include "hw/intc/arm_gicv5_types.h"
-+#include "target/arm/vector-type.h"
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index e1ea41fdc5..84b2cc70e2 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -742,6 +742,9 @@ void arm_emulate_firmware_reset(CPUState *cpustate, int target_el)
+             if (cpu_isar_feature(aa64_mec, cpu)) {
+                 env->cp15.scr_el3 |= SCR_MECEN;
+             }
++            if (cpu_isar_feature(aa64_fpmr, cpu)) {
++                env->cp15.scr_el3 |= SCR_ENFPM;
++            }
+         }
  
- #define EXCP_UDEF            1   /* undefined instruction */
- #define EXCP_SWI             2   /* software interrupt */
-@@ -140,43 +141,6 @@ typedef struct ARMGenericTimer {
-     uint64_t ctl; /* Timer Control register */
- } ARMGenericTimer;
+         if (target_el == 2) {
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index ae1dd42dc4..7eb7031294 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -787,6 +787,9 @@ static void scr_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
+         if (cpu_isar_feature(aa64_mec, cpu)) {
+             valid_mask |= SCR_MECEN;
+         }
++        if (cpu_isar_feature(aa64_fpmr, cpu)) {
++            valid_mask |= SCR_ENFPM;
++        }
+     } else {
+         valid_mask &= ~(SCR_RW | SCR_ST);
+         if (cpu_isar_feature(aa32_ras, cpu)) {
+@@ -3973,6 +3976,9 @@ static void hcrx_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     if (cpu_isar_feature(aa64_gcs, cpu)) {
+         valid_mask |= HCRX_GCSEN;
+     }
++    if (cpu_isar_feature(aa64_fpmr, cpu)) {
++        valid_mask |= HCRX_ENFPM;
++    }
  
--/* Define a maximum sized vector register.
-- * For 32-bit, this is a 128-bit NEON/AdvSIMD register.
-- * For 64-bit, this is a 2048-bit SVE register.
-- *
-- * Note that the mapping between S, D, and Q views of the register bank
-- * differs between AArch64 and AArch32.
-- * In AArch32:
-- *  Qn = regs[n].d[1]:regs[n].d[0]
-- *  Dn = regs[n / 2].d[n & 1]
-- *  Sn = regs[n / 4].d[n % 4 / 2],
-- *       bits 31..0 for even n, and bits 63..32 for odd n
-- *       (and regs[16] to regs[31] are inaccessible)
-- * In AArch64:
-- *  Zn = regs[n].d[*]
-- *  Qn = regs[n].d[1]:regs[n].d[0]
-- *  Dn = regs[n].d[0]
-- *  Sn = regs[n].d[0] bits 31..0
-- *  Hn = regs[n].d[0] bits 15..0
-- *
-- * This corresponds to the architecturally defined mapping between
-- * the two execution states, and means we do not need to explicitly
-- * map these registers when changing states.
-- *
-- * Align the data for use with TCG host vector operations.
-- */
--
--#define ARM_MAX_VQ    16
--
--typedef struct ARMVectorReg {
--    uint64_t d[2 * ARM_MAX_VQ] QEMU_ALIGNED(16);
--} ARMVectorReg;
--
--/* In AArch32 mode, predicate registers do not exist at all.  */
--typedef struct ARMPredicateReg {
--    uint64_t p[DIV_ROUND_UP(2 * ARM_MAX_VQ, 8)] QEMU_ALIGNED(16);
--} ARMPredicateReg;
--
- /* In AArch32 mode, PAC keys do not exist at all.  */
- typedef struct ARMPACKey {
-     uint64_t lo, hi;
-diff --git a/target/arm/vector-type.h b/target/arm/vector-type.h
-new file mode 100644
-index 0000000000..d94c0d986e
---- /dev/null
-+++ b/target/arm/vector-type.h
-@@ -0,0 +1,44 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#ifndef TARGET_ARM_VECTOR_TYPE_H
-+#define TARGET_ARM_VECTOR_TYPE_H
-+
-+/*
-+ * Define a maximum sized vector register.
-+ * For 32-bit, this is a 128-bit NEON/AdvSIMD register.
-+ * For 64-bit, this is a 2048-bit SVE register.
-+ *
-+ * Note that the mapping between S, D, and Q views of the register bank
-+ * differs between AArch64 and AArch32.
-+ * In AArch32:
-+ *  Qn = regs[n].d[1]:regs[n].d[0]
-+ *  Dn = regs[n / 2].d[n & 1]
-+ *  Sn = regs[n / 4].d[n % 4 / 2],
-+ *       bits 31..0 for even n, and bits 63..32 for odd n
-+ *       (and regs[16] to regs[31] are inaccessible)
-+ * In AArch64:
-+ *  Zn = regs[n].d[*]
-+ *  Qn = regs[n].d[1]:regs[n].d[0]
-+ *  Dn = regs[n].d[0]
-+ *  Sn = regs[n].d[0] bits 31..0
-+ *  Hn = regs[n].d[0] bits 15..0
-+ *
-+ * This corresponds to the architecturally defined mapping between
-+ * the two execution states, and means we do not need to explicitly
-+ * map these registers when changing states.
-+ *
-+ * Align the data for use with TCG host vector operations.
-+ */
-+
-+#define ARM_MAX_VQ    16
-+
-+typedef struct ARMVectorReg {
-+    uint64_t d[2 * ARM_MAX_VQ] QEMU_ALIGNED(16);
-+} ARMVectorReg;
-+
-+/* In AArch32 mode, predicate registers do not exist at all.  */
-+typedef struct ARMPredicateReg {
-+    uint64_t p[DIV_ROUND_UP(2 * ARM_MAX_VQ, 8)] QEMU_ALIGNED(16);
-+} ARMPredicateReg;
-+
-+#endif
+     /* Clear RES0 bits.  */
+     env->cp15.hcrx_el2 = value & valid_mask;
+@@ -4046,6 +4052,9 @@ uint64_t arm_hcrx_el2_eff(CPUARMState *env)
+         if (cpu_isar_feature(aa64_gcs, cpu)) {
+             hcrx |= HCRX_GCSEN;
+         }
++        if (cpu_isar_feature(aa64_fpmr, cpu)) {
++            hcrx |= HCRX_ENFPM;
++        }
+         return hcrx;
+     }
+     if (arm_feature(env, ARM_FEATURE_EL3) && !(env->cp15.scr_el3 & SCR_HXEN)) {
 -- 
 2.43.0
 
