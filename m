@@ -4,95 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 535E5CD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 09:14:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 613C9CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 09:16:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRnrf-0003gM-OG; Tue, 26 May 2026 05:14:19 -0400
+	id 1wRnu2-0004cA-TG; Tue, 26 May 2026 05:16:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRnrZ-0003fu-9Y
- for qemu-devel@nongnu.org; Tue, 26 May 2026 05:14:13 -0400
-Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wRnu1-0004bo-Bq
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 05:16:45 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRnrX-0006Te-IO
- for qemu-devel@nongnu.org; Tue, 26 May 2026 05:14:13 -0400
-Received: by mail-wr1-x442.google.com with SMTP id
- ffacd0b85a97d-44e1ebb3122so6303963f8f.2
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 02:14:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wRntz-0000GZ-OI
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 05:16:45 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-7bdf83185bbso100855177b3.2
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 02:16:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779787002; cv=none;
+ d=google.com; s=arc-20240605;
+ b=L6+RVneMO+IGG3ReSyFXzNbPTwPRwX4Sg2hCZxKMpbUxajUxgiVOMxkN1RJVLjK/6I
+ BuugFwv0VmpIwoBEdmf2d4YvwUCi+eTZS2ByEvSfV/9p8mB1/pP8AcXQiY6R3biVJUJX
+ q65Hiy+0CZ3fENUXuZExVWyFScKWxPX6+hM+PnfsKsMRofI/E5iGFdmK68dfmmC7EBYJ
+ CAGPPfJeCwxj+98nmtpb3Rjh8ficYWX+OX/tBF7K9PBfensIkNHpmlnhwykryr18XKjt
+ vo2/+l7dVC2Giji6L6MypRlQodTdOozFHQxT0VDK0Pe9V4ZKyUwTbGAuD8Lfv9GTyidD
+ T7Kg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :dkim-signature;
+ bh=qQm5IUUOEJMJxBOveOn6m8VarH/FynIw8RGfUUbzmHI=;
+ fh=6WB3AHQOWhs+zS2cjouo6O5uBaUmMIjVRV3nKvv4xAw=;
+ b=EmfhH1U0pKAdBLdadux5LnOqIFl0FZkKpDHfdaiXqvlPqjnm3pG8U55fVLe/2grZsj
+ k7KqTE/1+Jer5pd/grX3YZIIKHJPrkEvy/oxwVzDE1deLkJHlILkwCBrZIuHOMDSaSJJ
+ bDOgfO2QmWOcsL3B86YHM2dKHezdJWprfjEmuZrvcCQOge04xsVxsCqCyUH5y5B/TwEy
+ Mxlyt2MeDXrBblXERPHw7S8q0urNaFJtcG3ssXqJr71YZzXYMj+1afnckelwNughtx1e
+ js9I5wdB1//b6eMt7O++QCd0xZxZKptFxLo6Ag5bj4a0mtmwepcPBEeSYRzgC6wiAAfZ
+ /l1g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779786849; x=1780391649; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1779787002; x=1780391802; darn=nongnu.org;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
  :from:to:cc:subject:date:message-id:reply-to;
- bh=nWbVrlX0nj+3Uug3k7bJ2d5MbKjBetVtl28RCg8MFN0=;
- b=IxmPtB7VH8OXBWk32mFcjPHjT9udqvu7BaWOJiTS1744IH9G2+fAbHbl5fW4Zua06A
- GoRGZLgBTbKsKfUFw4HcjjGDd5pW7UXTBhzYx7CuH4qkDD2itcmXfDib82dHtwWznadC
- tZl7FLpk60AoK6jG5dQ+60HSf1q531UXMbqMvJJpl2JOaKceo3my/t0R692R7kLKSxGS
- TAi9H77gCjuwgXoRgioN7o/bG867KGMn/oz5JNm/5lWWzZM/EYURxzNONP8/GEBjq2rg
- foPMfA106w8lRJAnjBx4inweRr2wtOn0U7w92LdRisis1Rm4llEo/sYXJMgf7hzp/wbh
- +0+A==
+ bh=qQm5IUUOEJMJxBOveOn6m8VarH/FynIw8RGfUUbzmHI=;
+ b=UjFoDaaPZN4GlwKiaudGeed+/GjAda2MnfYObnenClVINp0Qw3jIGfldleUsg9RIZj
+ agtMamDN8TTPSvL4EoN5rvakYe54V/DFbK3/w/dAVOHspGo2TOrkjqPz3x34Qq2ghjO9
+ 4DeFvZLtpzLcf/xdBh2415SscR6ZJCnHkB+KtbtUpCI6EyXRKYRSemxQpnGY99Y0B0wQ
+ RQr650nszVsSp76ZvuY9vGYTMlJkC8lF+fCn+RICSfo3B1Wc6wJc6OOius22W7qKFG+T
+ YNs5N1F/waJqt9DWi1eeIklaV1TUpExXe8WLx7NEm5V01sOLgXMyLpohjaxo25VsJ+Sd
+ aNMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779786849; x=1780391649;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1779787002; x=1780391802;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nWbVrlX0nj+3Uug3k7bJ2d5MbKjBetVtl28RCg8MFN0=;
- b=VlV9fYUKxPS5tT7g9DDLP9dmSBAsC0ws7DHH9kYtVqGmZsHLzUCGj3ZuN/j8PaAIjQ
- VS2/e1VfpJLk9aX/663m7F0+j5ybeIILbEj5Sz6kPJvz2ci3ZLoLcp9ma9GR65JIBV0p
- 0hbbdIrao19jQMqfHUbTcfrmSUEenthuj5prcaZ0S7vdNrdGvMjo4HE7irmnMdlbwG92
- iPsDIin6cFnQLwZ/V+/yTdhtn5sdxhQFijf7NAWD6cQ8n3iUrRXbY055msBXQHVYqP+3
- d/SNs0yhItzNi8vAW6vWdYYfueCGs1h2QzjUuFJZWYJvLSvyUY2/o6yfpqc/1jZI7gmG
- wZ8Q==
+ bh=qQm5IUUOEJMJxBOveOn6m8VarH/FynIw8RGfUUbzmHI=;
+ b=qLDud3Ng2bBazhw+pnWiV3OtQJK/rAd6xyrf7EzRnvPckbRbbjLxcYOBcAGHqiT5/m
+ XgnFwNBOMDHtAFQKvVODZJ8VtKqHfzt1bsHdWv8rVK6f7nY6uZFGe+hwOtjQqgUJEkKh
+ zsmHbYXaGh9VfmzsvZP8th2mr/ekAOSMd5EFi6I9V57GY1X8iYBuvUYY7dGDJdNJlkf6
+ +CVywaJIEjyNsXIZolIX+SF29qSCQO5rgZN/6PRUAmtYBKcZh0AyJSiK5hhij6AM7cso
+ 3wjQszbK3kEWjfAggoAlNfjsk7GmVQ1PmBOlOA/7SWzsA+T+gva+JzV6nb5qFFXt2+w6
+ 3zLw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ81uH+IVKe3Sxo88zV+Wg6bgte6Sa1SXwqGnwh2wRSejkVxBWw1F0rfo+sQtyU0AvgzwROttXA4UXQG@nongnu.org
-X-Gm-Message-State: AOJu0YzulvN62n/skfAVVIAphP0XDjQO31E+5XwIB+z8AiIL/PB2T2H0
- lVuoBIQPqfZFSQmk1VftlGjry8gJgy1TbXyjTqRQwSJCQ+O5g2epLbaOByGuIsT8dzCs1HrQFps
- vqOsnGBP85vFy
-X-Gm-Gg: Acq92OHczmojGlYxC6EEO1Ja+eB4sz+N5V2xaFaamG/LRIRZ0vFQMRWQID5pBMreI1Y
- JpxG+Q2bb8fxydUva8ZZRZ9Guud9tNi8FSlhwJYCWp7eZg3mbsjlVyL6mBTNBYSR6DNXq8PlatP
- TyDWdD/TjwyFFPKPvzY0yxWb0dIzi+SJoAYjDPCpjGHGVeui2k2Z6pq33kE3VsYdktvE60fZs3U
- RXEEAOkN7R5QnExCgPek+UZHsWxLhyioz6KJ5sm+1+SAy1+eyTufG5J2NrvHWwp64ry56d6NZiw
- qGBLmo8OHbyP8AhSf+EVie6doT8NTeNjw0e87NwIkv59vYPzKQ/pb95dntKjKq2yaG0jr/aassI
- 7I2fpK2VJKLF72JqsSA9hRNDLmxFOmghHaqUxrm8IxFpEzObrqgEQ3+hAvjwm9ne0VV8sKNRdPW
- I2nfjcS9wb452eeqw19uJuiWYR4L/SsY7ohw19MSUbM08r+E73KU13MMFUVS9MP8qBGg==
-X-Received: by 2002:a5d:59c6:0:b0:449:c1e8:7655 with SMTP id
- ffacd0b85a97d-45eb39e1e97mr28504285f8f.27.1779786849392; 
- Tue, 26 May 2026 02:14:09 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6cd10acsm28245005f8f.15.2026.05.26.02.14.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 May 2026 02:14:08 -0700 (PDT)
-Message-ID: <19f602ec-d2fa-42c8-b09e-26596617ef35@linaro.org>
-Date: Tue, 26 May 2026 11:14:07 +0200
+ AFNElJ/b37IMBIMHIvOmCFuP50UiYL2+n9/mUO3bv7TNylu+SDbp7uLVxbecoKFR9uffC58pFpCnAcwEDD8Z@nongnu.org
+X-Gm-Message-State: AOJu0YyWC7wbT7m33qd3MpIk4UK7k87X6FjvRErw35xsIWQ8jxwDk2GD
+ gj4tWLdLrtwpq+2fCdwym4dTkzgW62onrruNl4eRBxMz2N3Du5t6PiRz2qtt/i5o+5LHqBJY120
+ jwozmzOMqUwVPUroy9+QoY/Dx3bmD11v7GEOXGvgm0x83+BdKzpVo
+X-Gm-Gg: Acq92OHdju8PZmh2a9svFnAA7iUhQDpjqUIJrEyxUqbSC7PRW/I3xRhxnEGf8JwraqH
+ r6bZpO2hizVeoxNB0L8ZRU8l4ClnKGzZQvzIIT5ejRuYhH+c0OkYwp3+Hh7Lkgh/77ah7J1YS8Z
+ cstyJjCZw2fxTjwxvyOL1lLarkHf0ACZUEqzXzW360NduTxNez6HktWdK+R45Qjbx/NlRuub0ja
+ Z3328NCtRx8Ce/eCiUtjJlqHC0WVNhdcOP1/HmuRtw2a2dgL0gXFD2vllT2BJHkUui6KfuPolx+
+ Z+n5iGbE7qK92wGw6saGBnLMt0uEq+loslRSmscNMw1bGno5PuOqD9wIok+rU5yBxmy+pNvwvM4
+ 1Hg==
+X-Received: by 2002:a05:690c:6f06:b0:7bd:5b06:b35e with SMTP id
+ 00721157ae682-7d33b0445d1mr182806817b3.47.1779787002350; Tue, 26 May 2026
+ 02:16:42 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [EXT] Re: [PATCHv1 6/7] hw/arm: Enable Cortex-M7 AMP boot on
- i.MX8MP
-Content-Language: en-US
-To: Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "shentey@gmail.com" <shentey@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Markus Armbruster <armbru@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-References: <20260519175635.3245229-1-gaurav.sharma_7@nxp.com>
- <20260519175635.3245229-7-gaurav.sharma_7@nxp.com>
- <28c31997-b4db-436c-bff7-12ead07254fd@linaro.org>
- <2aaa4dfc-cf5d-4381-9c77-d78679819ba7@linaro.org>
- <AM0PR04MB4370F4FD3CBBF074F41FD12C870C2@AM0PR04MB4370.eurprd04.prod.outlook.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <AM0PR04MB4370F4FD3CBBF074F41FD12C870C2@AM0PR04MB4370.eurprd04.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::442;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x442.google.com
+References: <20260515142541.571911-1-peter.maydell@linaro.org>
+In-Reply-To: <20260515142541.571911-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 26 May 2026 10:16:30 +0100
+X-Gm-Features: AVHnY4IStFn3JjfVh-J2NU7wXrAW3b0jK0T2sfKJXvi8I3kgoq4xZoMJrJ7eYG4
+Message-ID: <CAFEAcA_WZA+XpmEDcrD4YfmQ8re6XeQJRLRQYap18C=1AvviCg@mail.gmail.com>
+Subject: Re: [RFC PATCH 00/14] target/arm/ptw: Flip sense of get_phys_addr*
+ function return values
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,90 +116,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/5/26 21:14, Gaurav Sharma wrote:
-> 
-> 
->> -----Original Message-----
->> From: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Sent: 20 May 2026 03:18
->> To: Gaurav Sharma <gaurav.sharma_7@nxp.com>; qemu-devel@nongnu.org
->> Cc: pbonzini@redhat.com; peter.maydell@linaro.org; shentey@gmail.com;
->> Zhao Liu <zhao1.liu@intel.com>; Pierrick Bouvier
->> <pierrick.bouvier@oss.qualcomm.com>; Markus Armbruster
->> <armbru@redhat.com>; Alistair Francis <alistair.francis@wdc.com>; Daniel
->> Henrique Barboza <daniel.barboza@oss.qualcomm.com>
->> Subject: [EXT] Re: [PATCHv1 6/7] hw/arm: Enable Cortex-M7 AMP boot on
->> i.MX8MP
->>
->> Caution: This is an external email. Please take care when clicking links or
->> opening attachments. When in doubt, report the message using the 'Report
->> this email' button
->>
->>
->> On 19/5/26 23:45, Philippe Mathieu-Daudé wrote:
->>> Hi Gaurav,
->>>
->>> On 19/5/26 19:56, Gaurav Sharma wrote:
->>>> Configure the i.MX8MP to boot the Cortex-M7 core alongside the
->>>> Cortex-A53 cores in an Asymmetric Multiprocessing (AMP)
->>>> configuration. The M7 firmware can be loaded and started from Linux
->>>> running on the A53 cores via the remoteproc framework.
->>>>
->>>> CM7 boot is made optional. A GPR IRQ is connected to a cpuwait handler.
->>>> The handler translates the CPUWAIT into STOP and RUN.It follows the
->>>> classic Cortex-M boot sequence: initial SP and reset vector taken
->>>> from the vector table.
->>>>
->>>> Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
->>>> ---
->>>>    docs/system/arm/imx8m.rst   |  86 +++++++++++++++++++++-
->>>>    hw/arm/fsl-imx8mp.c         | 143
->> ++++++++++++++++++++++++++++++++++++
->>>>    include/hw/arm/fsl-imx8mp.h |  13 +++-
->>>>    3 files changed, 240 insertions(+), 2 deletions(-)
->>>
->>>
->>>> @@ -72,7 +155,8 @@ For i.MX 8M Plus EVK:
->>>>    .. code-block:: bash
->>>>      $ qemu-system-aarch64 -M imx8mp-evk \
->>>> -      -display none -serial null -serial stdio \
->>>> +      -display none -serial null -serial stdio -serial null -serial
->>>> + /
->>>> tmp/imx8mp-uart4 \
->>>> +      -smp 4,maxcpus=5 -global fsl-imx8mp.enable-cm7=on \
->>>
->>> Not a blocker; I wonder if this is a good use of the -smp/maxcpus
->>> (thinking about long term AMP modelling).
->>>
->>> Maybe we could use a machine property for the M core, and keep the smp
->>> default value to the A core cluster:
->>>
->>>     -M imx8mp-evk,enable_cm7=on -smp 4
->>
->> I missed you already add a machine 'enable-cm7' property in this very same
->> patch :)
->>
->>    static const Property fsl_imx8mp_properties[] = {
->>        DEFINE_PROP_UINT32("fec1-phy-num", FslImx8mpState, phy_num, 0),
->>        DEFINE_PROP_BOOL("fec1-phy-connected", FslImx8mpState,
->> phy_connected, true),
->> +    DEFINE_PROP_BOOL("enable-cm7", FslImx8mpState, enable_cm7, false),
->> +    DEFINE_PROP_UINT32("cm7-vector-base", FslImx8mpState,
->> +                       cm7_vector_base, 0x80000000),
->>    };
->>
->>>
->>> But IMHO even better is to always create all cores like on real
->>> hardware. If the M7 is not used it is just sitting here, created and
->>> halted, not disturbing anything. Personally I'd rather not accepting
->>> any -smp option for such machine, just reporting an error if used "Can
->>> not restrict this machine, it is always created with 4 Cortex A and 1
->>> Cortex M".
->>>
-> 
-> Hi Philippe,
-> 
-> Since the emulation should be as close to the hardware as possible, that means we can always leave the M7 realized (even if it is not being used). Wouldn't it be better to avoid passing 'smp' , 'maxcpus' or even 'enable-cm7' in the cli ? We can configure the defaults instead. A simple "qemu-system-aarch64 -M imx8mp-evk" should suffice.
+On Fri, 15 May 2026 at 15:25, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> This patchset changes all the get_phys_addr* functions in the arm
+> page-table-walk code so that instead of "return true on translation
+> failure, false on success" they are "return true on success, false on
+> failure". This convention seems more intuitive and it matches the
+> sense we use for the translate_for_debug and tlb_fill_align methods.
+>
+> I've marked it RFC for two reasons:
+> (1) I'm on the fence about whether the upheaval is worth it; I
+> think on balance yes, especially now I've done the work, but
+> you could argue the other way
+> (2) I'm open to suggestions of whether the patchset could
+> be better structured for review
 
-Yes, the simpler the better :)
+Since the patchset has got review from Phillipe and Richard
+(thankyou!) and no adverse comment, I'm going to take this as
+consensus that this change is worth doing.
+
+I've applied the series to target-arm.next.
+
+-- PMM
 
