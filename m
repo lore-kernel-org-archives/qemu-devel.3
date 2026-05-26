@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FE09CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:31:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29C9FCD5BD0
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:31:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRsmE-0008Ed-5u; Tue, 26 May 2026 10:29:02 -0400
+	id 1wRsmq-0001GD-QM; Tue, 26 May 2026 10:29:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRsmA-0008D8-1M
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:28:58 -0400
+ id 1wRsmo-00013r-2y
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:38 -0400
 Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRsm8-0001CU-H4
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:28:57 -0400
+ id 1wRsmm-0001T6-IK
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:37 -0400
 Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-459bf19e87bso6313709f8f.1
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:28:56 -0700 (PDT)
+ ffacd0b85a97d-45ea19f412aso3138014f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:29:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779805735; x=1780410535; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779805775; x=1780410575; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=UdjTHLYBetoc9TKYb2f7ANqXYXx1r+CPBHy+H/sXTwU=;
- b=V+z7ajN1Y+vmpzG9JHEBkOuFkosSHAigufDohtOVruoss5NVymRfKV/9lS9H1A4HTP
- OFhwLg2KpJ3Ko8peBtgZu7/lkzCfcTj2nklY9Kpim9NpC7I2RY6r14SIWihzMsayt+IF
- S490VBlP3CpxAfKA/Rl8JUYxSJrg6vBgs/SyMCzWCGqrpddyKDdZmUtWBb3ywZlhwENN
- DOVmF9slbIAYN9tM2XWwMiZLg3KvWBqrK5KV6Z/6DSqlp25sucuKeybffhrBbN9JC4YF
- +JNKMjDFzp4VAWjkBF9JxvnYhVGcqQNn2ugOok+0k6hHN//4AR5ccxFdLlvGJBkoaIfm
- X0Pw==
+ :reply-to; bh=mt2hX80wseQewY57S1j4Yf/t3dERnLFFl4xcPkBbimI=;
+ b=Vx/LEy1bFAuX4Z9zBbb0gzSgHQzZN32LQeO2O2XEUHREjXm1863AjfwTZXvDttlOzy
+ /1PPo2AfWAGVMgbAGbUtc1eddDHk/ss/eRBiwsjWunDq6cQVFqAWJe+lxAKOufkp/2cp
+ tZIuTbOsRycKU55HVFoYk5g+kf5F2pYrjT7aElyHcwdFZf0QG7863UoGORds5Ga4aB5O
+ y1WbrwkuU+L0RnCYV2scPqNOhR+gFcWrj7WvqQeDL586K32gvq/seWv8iC+qlzMpzGd/
+ 41dwCxYralWiKKfVu5fOjL8DG0TyG0ZTZsA2qsRqjvHJ25xtjWYn1ZUX9pHJ5QAfP0iQ
+ 7eUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779805735; x=1780410535;
+ d=1e100.net; s=20251104; t=1779805775; x=1780410575;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=UdjTHLYBetoc9TKYb2f7ANqXYXx1r+CPBHy+H/sXTwU=;
- b=lSchERdshCOKEnBBKAcVofScdgXCbr5vKt0axKDHP+hcb14E11OLUDaaA1uQgv3Crv
- URwP4Z54KCzuHmlW8BQAXu5Yz9pPv/y1/ibQ2qocaNQjypg80xHd5dVF7OwMDs82SOW/
- x6FOQMJzhel+gSeMLZAYZ8e3BLXzLsxLRMCSXjSYbxkCZu3YRv66/1YzKv6sdsU+5oJN
- wHL9l+iUdySINnkmwnSpFDRHUNw9uDBVvsReAcKTaynFlXelcc2r6pw3ynrkyrcSzNtq
- 5ww9m1Av0X9FVTrHlV/HfLu96juBFKZ9fJhToYdpnCkmq0qk7MQo8+YGq+vE0FWbwEV4
- bPbw==
-X-Gm-Message-State: AOJu0YwHiH1yE6uT69lnCbXeO/0f+0qQ8O3jeEl1vzDnOhWNjDAthrEd
- EaWftgkPDLGYDumKnOyNTvVs8E873t1jmgP9JXJ+zEjgRJkK6dpb8sEvRbIAYq/5rBEP2CnOmQr
- I3XQ7
-X-Gm-Gg: Acq92OFDaMw/wx8CvfzRJgJ/qNAVkCDbP5BmTRdOC/ZAtGU51Dr6hcKO+YREebrW6zJ
- kwG3diMMoUCKBHqQajjd9CtbrAiAUeBBcEuaTy93Q7Mk2A8EO8ST6Sx/i70qHBNbQTpQts5kfjJ
- KmcS7T6/qv6JYnBtms0L8UfAtRlM8cvmeUWsS1ljSn8TByCr90O9F6jxD6wn0GjaZWbS0EbIBuR
- O9ziqlyJkG5G+45YDhMjbUbFo+d7kmJJKzflquaEzsKPrIaAFxDKdDwlZHm6vnB6gMYLCxzQib7
- pNRAGX+Gsmm237ycA2IyhHA0fyT4CMOkkEXpi+9tvUkfxnxs/tOR04WVKaSChHOB5wRFwitQbK6
- nqrAew0isJp0yYnjRXkrtymSgJQdvImAeK9qUQ4AiIQiyVdvPBsolt8o3V3X/+XcHgaj+kt1ZwX
- Le7yl8AWMXMkqiMF4nWO2ElvkuZB6R+5m+EK1tfMfXo+irN87PNoFsePuemzsS5OqLOec5hMFQE
- 9zdPzHjhiQtz08jXB1Vsv9hIbOzBWo=
-X-Received: by 2002:a05:6000:2384:b0:441:3144:efc5 with SMTP id
- ffacd0b85a97d-45eb38e4fd0mr32446382f8f.42.1779805734838; 
- Tue, 26 May 2026 07:28:54 -0700 (PDT)
+ bh=mt2hX80wseQewY57S1j4Yf/t3dERnLFFl4xcPkBbimI=;
+ b=VHfJbUCrNqPSJABmObx/Rar5PUP/Fgc/qFmfVuH7O5E+Qe+tjf+ADejatFns6FYiS1
+ 38mcx4ZfX8tNdfMk7HTWg9FnaGRybRsmZYWEj2DyBgPYrOR3dGg5t/deZhubgDe3L7HE
+ wG7lFy4tb5s9gvIA5cl1vfF8W2u4mmtdP6CcIErlDapOH5CjtnqNEk62jOWlrboNrNZ3
+ B9mAIMDz71sSHJhsG5wQQJm0/vGf9jTwj/wVldNbXEKzDZ88tC9q2Nd5cqr0qR43iC/I
+ RbKrcDw/y9lc0/2wKmpn6sZUu2nqIdpFt5l81w/8yeHGkfv8e1DSeU2goUl/SDzCC7hd
+ Pxfw==
+X-Gm-Message-State: AOJu0Ywyl9+RmqnIN37P1Kavkw1QH0GDA0s/qQF5nZL9AKcVrtuLBB/D
+ Ss4DPwJjnQpsyXryZZSum4C4XiG7MM4xwyqASfDOTYEtA9aU7viMgOXh93n7BLsmZ3NKKUqZ1/v
+ fcPyE
+X-Gm-Gg: Acq92OHuPBYyHn7n2Dw+AUBz+AAEFvYLVFwuN7UHoyCJc+CzAYEl2si0XSu1LKjRMe5
+ NZzgz9f+dLVqEuhV32rH6d1xCc/8/aGaZmq2qR43qbKRuqF617OaKDF5CLvX6Dju3VbTMOacKl8
+ ceitsbhLIw9LXONfrMlj1lWJY1hTDxxbC4WoH0fKAXzL/2tGERdQo4i+mXlYvdbO6CMrIyGg4Ot
+ lugSC23pC4iIJuFrKHelNNI7mVq+L3wYYKcMNQe+CnTluI0T4jg9fNLG3+UPdXWyR3oBXihgSwh
+ Jp1E0rBQJ7KXWMPHySaVCjYF0j/kW1oFJJjEWVnXWR4klVmd2NQmyvIIEZCahbFONRlery+jRvE
+ qn3j+R+ChbhphA8zQlBlEM3yW9EqSxM1+NBBs7ngwLnBj8VWMAnHH6i9C2O3u6/ZW/YrsKzNERy
+ g5j13IBZhp18QSymGapzn8kJrG/Mz+D90Xz3Yz4Yvb+Yl4mZ6LvWYb12g731mCfDBTjRaEJiMlp
+ x1YTRDaJFhFwMSSADeCBo8BETwE0DREvpSNHNaNPg==
+X-Received: by 2002:a05:6000:4a05:b0:451:bee9:17c8 with SMTP id
+ ffacd0b85a97d-45eb36b0275mr29355745f8f.6.1779805775192; 
+ Tue, 26 May 2026 07:29:35 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6d70c51sm38325225f8f.36.2026.05.26.07.28.53
+ ffacd0b85a97d-45eb6d70c51sm38325225f8f.36.2026.05.26.07.29.34
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 07:28:54 -0700 (PDT)
+ Tue, 26 May 2026 07:29:34 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/54] hw/arm/omap: Remove unused omap_mpuio functions
-Date: Tue, 26 May 2026 15:27:59 +0100
-Message-ID: <20260526142850.2326589-4-peter.maydell@linaro.org>
+Subject: [PULL 44/54] target/arm: Trap direct acceses to FPMR
+Date: Tue, 26 May 2026 15:28:40 +0100
+Message-ID: <20260526142850.2326589-45-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260526142850.2326589-1-peter.maydell@linaro.org>
 References: <20260526142850.2326589-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::430;
  envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
@@ -101,81 +100,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The omap1.c file includes some functions which used to be used by the
-other OMAP SoC variants which we removed a while ago, but which we
-missed when doing that removal.  They have no callers, so we can
-delete them.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-This code was the last user of hw_error() in this file, so we
-can also remove the hw-error.h include.
-
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260522220306.235200-14-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260512203414.3633237-3-peter.maydell@linaro.org
 ---
- hw/arm/omap1.c        | 26 --------------------------
- include/hw/arm/omap.h |  3 ---
- 2 files changed, 29 deletions(-)
+ target/arm/tcg/translate-a64.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/hw/arm/omap1.c b/hw/arm/omap1.c
-index c9f9c3ef40..15087ba03e 100644
---- a/hw/arm/omap1.c
-+++ b/hw/arm/omap1.c
-@@ -25,7 +25,6 @@
- #include "target/arm/cpu.h"
- #include "system/address-spaces.h"
- #include "exec/cpu-common.h"
--#include "hw/core/hw-error.h"
- #include "hw/core/irq.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/arm/boot.h"
-@@ -2095,31 +2094,6 @@ static struct omap_mpuio_s *omap_mpuio_init(MemoryRegion *memory,
-     return s;
- }
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index d1a581acfd..41dd013784 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -2899,6 +2899,10 @@ static void handle_sys(DisasContext *s, bool isread,
+     }
  
--qemu_irq *omap_mpuio_in_get(struct omap_mpuio_s *s)
--{
--    return s->in;
--}
--
--void omap_mpuio_out_set(struct omap_mpuio_s *s, int line, qemu_irq handler)
--{
--    if (line >= 16 || line < 0)
--        hw_error("%s: No GPIO line %i\n", __func__, line);
--    s->handler[line] = handler;
--}
--
--void omap_mpuio_key(struct omap_mpuio_s *s, int row, int col, int down)
--{
--    if (row >= 5 || row < 0)
--        hw_error("%s: No key %i-%i\n", __func__, col, row);
--
--    if (down)
--        s->buttons[row] |= 1 << col;
--    else
--        s->buttons[row] &= ~(1 << col);
--
--    omap_mpuio_kbd_update(s);
--}
--
- /* MicroWire Interface */
- struct omap_uwire_s {
-     MemoryRegion iomem;
-diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
-index 6ea47293a6..dc63323210 100644
---- a/include/hw/arm/omap.h
-+++ b/include/hw/arm/omap.h
-@@ -486,9 +486,6 @@ struct omap_uart_s *omap_uart_init(hwaddr base,
- void omap_uart_reset(struct omap_uart_s *s);
- 
- struct omap_mpuio_s;
--qemu_irq *omap_mpuio_in_get(struct omap_mpuio_s *s);
--void omap_mpuio_out_set(struct omap_mpuio_s *s, int line, qemu_irq handler);
--void omap_mpuio_key(struct omap_mpuio_s *s, int row, int col, int down);
- 
- struct omap_uwire_s;
- 
+     if (!skip_fp_access_checks) {
++        if ((ri->type & ARM_CP_FPMR) && s->fpmr_el != 0) {
++            gen_exception_insn_el(s, 0, EXCP_UDEF, syndrome, s->fpmr_el);
++            return;
++        }
+         if ((ri->type & ARM_CP_FPU) && !fp_access_check_only(s)) {
+             return;
+         } else if ((ri->type & ARM_CP_SVE) && !sve_access_check(s)) {
 -- 
 2.43.0
 
