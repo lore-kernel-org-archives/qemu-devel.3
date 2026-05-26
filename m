@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8019ECD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 19:06:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E948DCD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 19:07:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRx6s-0000es-Kw; Tue, 26 May 2026 15:06:38 -0400
+	id 1wRx6e-0000YJ-HI; Tue, 26 May 2026 15:06:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRx6i-0000a3-NX; Tue, 26 May 2026 15:06:30 -0400
+ id 1wRx6O-0000NI-0c; Tue, 26 May 2026 15:06:17 -0400
 Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRx6g-0004jW-VY; Tue, 26 May 2026 15:06:28 -0400
+ id 1wRx6L-0004dz-8E; Tue, 26 May 2026 15:06:07 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 1AA8E600CB;
- Tue, 26 May 2026 19:06:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C9AF1F00A3A;
- Tue, 26 May 2026 19:06:22 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 34B4E60120;
+ Tue, 26 May 2026 19:06:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980B71F00A3A;
+ Tue, 26 May 2026 19:05:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779822385;
- bh=E8bOW7It6eBbYAycvmoXErdMpix7xPsPMO3AvIAjmOg=;
+ s=k20260515; t=1779822362;
+ bh=/5CGgZ/X7uMiJB5eErY0sF7KyvBhWLSMYSs2M1AmyjE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=CQ+g5vWDm1WqXR31ZXiO0zfxHtouPqW62wi7dsVNsBBpZMB4v4ituVXil4z1RrWQH
- n6K7CbPEy5vi9toi2iVqHD1PYuQzFDoiwY6vGvrg5WdRj6B8K00UCASxTzNVqAtrZt
- ipsWF4hDyqUq4cD1wn4e6u6XMHWTaI3ARJi2OwZo7SFUW6Taup9ao+k3KJWHJCwy/Q
- VLedlvOIpRP5ztYDdHpwRBhR/gi96wifTBLbKmcaMhShD91VGncnvaqn5GTt5tPvp8
- WZ43bL9Zi3gj44IKTzUFhPJRRFJkkjKYFmntnN+yYNA0VFeWndYdfHIKPH3cTvwsXe
- 6SRKrv84rVkhA==
+ b=Wq+k3sEEzsKuqSqsP70oMVOoqzKo6K5R5vEaC9KfgVLbQG1VEyEP1N3sGlJxUkPlH
+ mDivh+G6Xn8KeCttNBrM4x0SxkLck67fFr+iFd8jXLJcIQNB9aKtlZ07vN2HKrzZxz
+ L0ukvNh/jGgRqDMoSpLRGXdMyVDyQQq3a94mNQ7KoMUlZBBayW3eKgCvMz89KySg2l
+ Zr7C6SfO6edS1QjDFczOpMNhY0JOwdYUCHQ0x0WxrEq+01P0RuX+F1z6uoGLNFMX+W
+ qmLV4PzuQUTkCMReHOwJTHCdwPpI7PMiYFlQ3fqU7h8tlo2ptaSIaloMAeLifs04Ss
+ ofhyVbKuIP8TA==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Cornelia Huck <cohuck@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -47,9 +47,9 @@ Cc: Cornelia Huck <cohuck@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
  qemu-s390x@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  David Hildenbrand <david@kernel.org>
-Subject: [PATCH 12/12] linux-user: Move cpu_copy() to user-internals.h
-Date: Tue, 26 May 2026 21:05:35 +0200
-Message-ID: <20260526190535.10833-13-deller@kernel.org>
+Subject: [PATCH 06/12] target/sh4: sync fp_status when gdb writes FPSCR
+Date: Tue, 26 May 2026 21:05:29 +0200
+Message-ID: <20260526190535.10833-7-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260526190535.10833-1-deller@kernel.org>
 References: <20260526190535.10833-1-deller@kernel.org>
@@ -78,46 +78,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Matt Turner <mattst88@gmail.com>
 
-We only use cpu_copy() inside linux-user, so we don't need to have
-the prototype in qemu.h available to code outside linux-user; move it
-to user-internals.h.
+sh4_cpu_gdb_write_register() wrote the incoming FPSCR value straight
+into env->fpscr, leaving the derived env->fp_status (rounding mode and
+flush-to-zero) stale, so a gdb-initiated FPSCR change did not take
+effect for subsequent FP operations. Use cpu_load_fpscr() instead, the
+same way the adjacent case already uses cpu_write_sr() for SR.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Helge Deller <deller@gmx.de>
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/qemu.h           | 3 ---
- linux-user/user-internals.h | 3 +++
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ target/sh4/gdbstub.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/linux-user/qemu.h b/linux-user/qemu.h
-index 474489f046..07fe801628 100644
---- a/linux-user/qemu.h
-+++ b/linux-user/qemu.h
-@@ -368,7 +368,4 @@ void *lock_user_string(abi_ulong guest_addr);
- #define unlock_user_struct(host_ptr, guest_addr, copy)		\
-     unlock_user(host_ptr, guest_addr, (copy) ? sizeof(*host_ptr) : 0)
- 
--/* Clone cpu state */
--CPUArchState *cpu_copy(CPUArchState *env);
--
- #endif /* QEMU_H */
-diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
-index fbfd12237f..0380d44fe9 100644
---- a/linux-user/user-internals.h
-+++ b/linux-user/user-internals.h
-@@ -209,6 +209,9 @@ static inline void begin_parallel_context(CPUState *cs)
-  */
- void init_main_thread(CPUState *cs, struct image_info *info);
- 
-+/* Clone cpu state */
-+CPUArchState *cpu_copy(CPUArchState *env);
-+
- /*
-  * Include target-specific struct and function definitions;
-  * they may need access to the target-independent structures
+diff --git a/target/sh4/gdbstub.c b/target/sh4/gdbstub.c
+index 4f36e800d2..bdc8c1d164 100644
+--- a/target/sh4/gdbstub.c
++++ b/target/sh4/gdbstub.c
+@@ -113,7 +113,7 @@ int superh_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+         env->fpul = ldl_p(mem_buf);
+         break;
+     case 24:
+-        env->fpscr = ldl_p(mem_buf);
++        cpu_load_fpscr(env, ldl_p(mem_buf));
+         break;
+     case 25 ... 40:
+         if (env->fpscr & FPSCR_FR) {
 -- 
 2.54.0
 
