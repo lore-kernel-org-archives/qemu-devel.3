@@ -4,96 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEF7ECD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 12:39:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E8D2CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 12:43:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRr4Q-000755-TM; Tue, 26 May 2026 08:39:42 -0400
+	id 1wRr7a-00085R-DW; Tue, 26 May 2026 08:42:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wRr4P-00074x-DL
- for qemu-devel@nongnu.org; Tue, 26 May 2026 08:39:41 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1wRr7Q-00084k-MY
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 08:42:49 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wRr4M-0003tS-VD
- for qemu-devel@nongnu.org; Tue, 26 May 2026 08:39:41 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-44e1ebb3122so6439941f8f.2
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 05:39:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779799177; cv=none;
+ id 1wRr7O-0005il-95
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 08:42:48 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-43fe62837baso6172172f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 05:42:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779799364; cv=none;
  d=google.com; s=arc-20240605;
- b=ipXDbz6ccY3HRHyOdiwLYEIssnQMysJQ9d0sWBYPf4Q2xCit2MJbsdPWztw0/G7US7
- DKoeCN0B8Rg9mp6hhoqQTaSyuhcLoBpR7RXHxbOO/ov19aFKGXYTtt4W4oMhclNXAelo
- FU19+s88BygHF1z3AzL5MFM4cBjGn4D0DY+WQFXX5cnbmCLb8oSHsstfc8+Ve0GpAUow
- 02gx7ftG+4Okb5UH76m+MaQQ4Htze8GGt/TmfYVzjoiud5tQWAey3jRZfFFVhyo5uNG7
- BNb9orWJT8RDdMQd9ceMasskCH+DjZu6ebII6QUUNGqUzqcmEqreDQzMMKqN1xX0HeoI
- jFGg==
+ b=J8M1myRszzseJ3tY2cmr+B3p5ksSvt+agQCpsqrnxbrUHRL7jnqKoulgkGPp4TWR2N
+ x13RhNfG3zn6DWPEanXtT5c1xDUUN1D3BzpneaetfsWxAI89ud/2xyd+OTiYspQM7pyT
+ FacIZWGXZiZXSLLB3W09sfAH1A3Zrf/KMtg7/OmVSvOghI1ekEnzIb5MS39FoL3x+cLi
+ QGK2xTOYa4VzUkhK0iV80DJMINFl/+Q6JRf96ZqyoJK8fDRM2rd4l3Lftj12jo7vONmV
+ /+0xaMVLGXs7xhciQqgB0/BB1TaUqzgRh8RMR5vpK4I4ltVaa8WqgUrjyzVAJjn93UgJ
+ nf8w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=pARtVzn1OU32tRuPSzKkYHNeTOoyWYwIt9k4iR+SNsY=;
- fh=Z2Y+RJAyCvgSBYbNzYU3X4MXpw1pcmINz6UYe+pax2w=;
- b=RwhypabS3lw5W5OgmrPpVKdcKqHMqrWAb9wvPPA3AX4Fpa7mbaxY0TAkAe8o1kiauz
- W12tltcZXwQ0Dae2b5p2hdnjOYRPsS6amaf3clUkmOrD+y9E8uYqYwkZP+nRgEIUowq5
- 4P2DqptjmqatIjCjkp3uv6+uM/yjwvDYCBn4D0DynaF/WufEu6ckyd2U8v5XCWK3DaZV
- u0j1wX1jopTr+oJKVsmYJowMOOEOpTYIgiEa3MI6DNOkWYMf3YzAG23nbBefStmKiCSF
- peXtAOQM5ECvHS2HxinQ2kuq2QH7jRqMgUOVk3THigf2dzXmabjAzV0PiFI8aNvAPgcI
- 7yPA==; darn=nongnu.org
+ bh=B4f6TMgkzv91D6IZ3dfq+ozw159Oyar4LWARXkrkgpE=;
+ fh=B22JtR9ZUsXUrdiOg5Iw9LSBCcKra7oUC9BuSyZP/90=;
+ b=cJ/s9mzc4mvlD/2qeIEh6UH8fcHOWo5W5FcmFqBFItLgw5O2DTgN2XxYTkzJizzCK3
+ luO7Zh6ioZ+ji5zKhNyBX5gVZCDgtopKun0WAL9L7Ta0wn377KMjSNC98DScVFfRhenF
+ dGF4oTjI+yS3X1PTDYeApXZlP5xWiqPo3EywbgzuC0JTJjNsQPRH3Q4HYqiy1YsY1n4B
+ 33cNSYcGWiCxmIKl7bn+IiW4V9hwO5FYVR2Gr732Edm8zXPaOwk8dkXZZxslNCF8wOOS
+ CW/m8eVS+7YuyOiT/QQoRRlV87A5PyRjsPJ+eQrfu+Tb2eRBl0ZEW6Q1BMfQIq9DX3V/
+ HfIA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779799177; x=1780403977; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779799364; x=1780404164; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pARtVzn1OU32tRuPSzKkYHNeTOoyWYwIt9k4iR+SNsY=;
- b=BC1J8WXHLE/9iUylkBrVHs/1zny+BRcQlaQn3xAQ94ah2m3oxJ2mst9R39EK6K5v6p
- bhx7aB6cNZTqg8sq23crWY89DJpGd4PkiiImrWaJYdi9D2ybfIWJ6ZHVlJJb5GmEiM3e
- 0Ra0jX8Ud224p7JZor+rcX0VcVRmkN5hua8u4wmQxg7G3ucMvN6irU06vyaOzurggw+o
- NLe3jADtFV+j9oiNRXGqUF/YiQ0OwyVwRAhFy7LpxSKscKhHN5oMi8jZ4dhT9Jyi8CiO
- JzfawqO3KFYh/chYkLnD9R/ZUg2o5LGOPy4CneMqUT0lLbo4geFhSS9YskAVfuUa0iJD
- c0UA==
+ bh=B4f6TMgkzv91D6IZ3dfq+ozw159Oyar4LWARXkrkgpE=;
+ b=dLwFtgC9n9O4VnqiEkKEbQPTFLVtSp/5ujkfbUky4npv0CQtMyL5M/QoABa66VKB1b
+ BmqafYi9tBoOUty/Bf0IHWvhRYCHzy+u/iznm+shepElLhMRRMKpCPXUXdRVUrZKwfT1
+ yrStTuX00wj4ih5OOm9r2oOYKpg/i5TS7M/Eec55XMJ809Qhi/bkFUDapWO9atdriNkj
+ TxodcyBSwjRf0NKh4OaM5agft77il5ES1MwNzlc8pre3plK+Xuw9ohbxsQFQTIvImLCa
+ nJiPiA7NxRxezVryxGUc2eBJo78qfnPk/ZzUG09buB5JEpLAUee0CK3zyEysa7bJXyx3
+ dPJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779799177; x=1780403977;
+ d=1e100.net; s=20251104; t=1779799364; x=1780404164;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=pARtVzn1OU32tRuPSzKkYHNeTOoyWYwIt9k4iR+SNsY=;
- b=YYoDfuls9C8EKfYtY+i5Rxrfb/lheK/aZ4viuVpbhhmdRY3bfrp/WpMzypYUErh1kU
- jOefXtT1GGxki6yrpWy/A+ylmxPnSUhhMc5jGmY9dVGqsKEcBNf8OzLBn99zZjzOdYCq
- d4few2ZzsLH+pZaw9lS/vKyx9c0LZQBUg1bFRd+Hm1yNqn1QNbo/iFtI7XhP6wMPAY3u
- crP4857XjSZbzzgxzEOcXvVxReFgmvK+Rf+U8JL5DOJjikbdzXyEQEpR9DkGtqteN5g1
- ocqBfIaYivpPgWUsg5iQ4dz9u/UIoCf6N8dvjGgPIugQbGoBYjY9B8HC7Ezu01gLd4mK
- i6Sw==
-X-Gm-Message-State: AOJu0YxEcAQH/E0OVdP3LLJncNpqvyHzammYlaUajLmC8p8TLNZmboFi
- KhUXKAMuqjzxMYqd4CdZ4VyTAhUp9bcfwZcAnmB3iGXoTUX9LCS3A7p1xOKdBt80TNh/zBavmOD
- CsMAszG5+94AuK0K6aWAo0B2DKDNylnWy0ytW3aeyvw==
-X-Gm-Gg: Acq92OEywvPE6MrliQ0H2CS+WXD3xk6X6DGQ4+1o16FzzykdrYYBnIyk0kCY3vEjX6f
- jOYWqfJwTjUOucn+1UseJMTJ/B7WpJy2kGMOUKqkgEN/y4/uoaKwvYaKUOb2mbqo+wps8efK9sh
- AyTSF3LSoPEoGKdEmVuRXtgA8Nfu09AduT8iZUUaDfq1+zAFFmiVY9Ej1mjDRebzk6PyzScwW/k
- MllDkkLfdN8yF28vb3fTSS1QSat1X9rPmGznywC7LU9vdY5r4HzCyBxWujquk4y1WadBYcJD2yr
- wXAVE4mjTPfyGW1SRV4y5p2Y4NeVuo1k7IuUrYAuu8LRkEXHqg==
+ bh=B4f6TMgkzv91D6IZ3dfq+ozw159Oyar4LWARXkrkgpE=;
+ b=dQtwnbUSCdYPIB9NmRmMDdolmiZRRt0nWbKJqcXyIa5gm960FLACq/nolDoMgjVXRH
+ ktHKS3NpoUXi/tM55hyEpMmKEvSXUPOanMOUrdhXIH/ebjkC9bSEqP38QqzOMSlpNBsX
+ dO/QnIUsZ7EgB0aA6ngEL9JFKgVPCVFBOEfYg2sI8QqW6JCmlopUwN1TMDvk6YDISazu
+ VJBcwylts+ABd7fnL9EMzMO7HYjKyi1Llk/UjBuTMgaTLVNEivkOqOqbiIpJumje82fj
+ V1LXfNlunMRhfBslC5WXoOr2T3prb6lejJcu34MgR9VtogC2OSo4xVGWIw1ipgI0VQXr
+ iA3A==
+X-Gm-Message-State: AOJu0YzpIOOImUHn9/CtpgEZ80hlMsR0lFIHG3WYelvwfM4YMkdAn5PH
+ DE9E1OQVFrPOk1UK+tRJcFEv6DCTddcUDaPxb87Xr0pL2rZN6zcnmmo1wBCabQt4+RzD5EhjDcr
+ wPUouISzWlWinlnLI9kAVj7R2KQFbCClkbbJFwpKWWhel/b1UsgYL
+X-Gm-Gg: Acq92OG+0OGuxwBeKx3omI+9pS8s7EZw0G7zgrXlAZtg1EvIwQ95lE0fR0pRmegdtGc
+ 9k67J+lMvN+l8TTilAWKPfIqlezp38ylNMzqpizZZ7XTkD++mxH+MW1nD5J4w+R0TZR3rygmwhH
+ ciPXh9JXDkJDT1GHKO9GTzejCUW+eWrbJA7GMB5ryVAIDqRH40PNjmSeAlJWgD0yKu3XrYkkAm6
+ Jivv4meOBO9/WsS+cYLOFNZ6zsS9UbP/bB/1aYPsZz0skdo9Nc7XjBCzfQM2CJNtwy3Dg4DZlpO
+ uibIH4olZ8Wj38iXmQPymBE9WVcUp+PSzFBGDEydlAxPBP0Wkbe6MgZenk/kx/W0DM4KFJE=
 X-Received: by 2002:a05:6000:25e8:b0:43c:ef4f:79e4 with SMTP id
- ffacd0b85a97d-45eb3af14fcmr31911304f8f.37.1779799177141; Tue, 26 May 2026
- 05:39:37 -0700 (PDT)
+ ffacd0b85a97d-45eb3af14fcmr31933475f8f.37.1779799364197; Tue, 26 May 2026
+ 05:42:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260526122137.64378-1-philmd@linaro.org>
-In-Reply-To: <20260526122137.64378-1-philmd@linaro.org>
+References: <20260526092546.149241-1-pbonzini@redhat.com>
+ <CAAjaMXaRijkxAWDFsQy_6wA0peWeCtfrRrFYYgO=3PM6d-s5GQ@mail.gmail.com>
+In-Reply-To: <CAAjaMXaRijkxAWDFsQy_6wA0peWeCtfrRrFYYgO=3PM6d-s5GQ@mail.gmail.com>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Tue, 26 May 2026 15:39:10 +0300
-X-Gm-Features: AVHnY4JIisdh1MRJJZ7omTMja0PbcfIbF9EamwzZg0hO-CsSLq-4Ak9XqvGuGTI
-Message-ID: <CAAjaMXZTCKmNFH_ELDRN9KLMnP_7Wf-yoEEux4cAZYbMMcJGZg@mail.gmail.com>
-Subject: Re: [PATCH] MAINTAINERS: Update PhilMD's email address
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Date: Tue, 26 May 2026 15:42:18 +0300
+X-Gm-Features: AVHnY4KjF78kZK_E3BDGeVX0-jOSfViICNEBY8nCLmi20Wnwd6JMy9Ai1OJFm-8
+Message-ID: <CAAjaMXY7QnrygSJtTGU4DEOhC-ezSeBdTz4ZYOQz54TsKQtRwQ@mail.gmail.com>
+Subject: Re: [PATCH preview 0/6] rust: use meson automatic parsing of
+ Cargo.toml
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,316 +117,197 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe,
+On Tue, May 26, 2026 at 3:25=E2=80=AFPM Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org> wrote:
+>
+> On Tue, May 26, 2026 at 12:26=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.c=
+om> wrote:
+> >
+> > These are relatively old patches, but it's time to post them now
+> > that the light is visible at the end of the Meson tunnel.
+> >
+> > Meson 1.11.x greatly increased the ability to parse Cargo.toml
+> > and automatically build complete targets out of the information in
+> > there---this was more or less always the intention when Manos decided
+> > to build Rust crates with Meson, but it took some time to get there.
+> >
+> > It still does not support cross compiling, but that should be added in
+> > 1.12.0 and should be completely transparent, so it is already possible
+> > to post patches for the final shape of the Meson rules.
+> >
+> > With this change, it is possible to have a much more compact
+> > description of Rust devices in meson.build, compared to what
+> > was used before:
+> >
+> >   _libhpet_rs =3D cargo_ws.package('hpet').library()
+> >   rust_devices_ss.add(when: 'CONFIG_X_HPET_RUST', if_true: [declare_dep=
+endency(
+> >     link_whole: [_libhpet_rs],
+> >     variables: {'crate': 'hpet'},
+> >   )])
+> >
+> > For a description of Cargo support in Meson see
+> > https://mesonbuild.com/Rust.html
+> > and https://mesonbuild.com/Rust-module.html#workspace.
+> >
+> > Paolo
+> >
+> > Paolo Bonzini (6):
+> >   meson: use compiler_target() to get rustc target
+> >   rust: switch to cargo subprojects
+> >   rust: switch to autogenerated meson rules
+> >   rust: remove unnecessary wrap files
+> >   rust: use meson automatic parsing of Cargo.toml
+> >   scripts: remove now dead parts of rustc_args.py
+>
+> Missing patch to update minimum meson version check in configure (it's
+> hardcoded to 1.10.0)?
 
-On Tue, May 26, 2026 at 3:22=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> philmd@linaro.org will stop working starting 2026-06-01,
-> use my personal email instead.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
-> Based-on: <20260519173014.98967-1-philmd@linaro.org>
-> Cc: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> ---
->  MAINTAINERS | 58 ++++++++++++++++++++++++++---------------------------
->  .mailmap    |  6 +++---
->  2 files changed, 32 insertions(+), 32 deletions(-)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 172f87ebda9..0808dd49d06 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -68,7 +68,7 @@ Project policy and developer guides
->  R: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->  R: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->  R: Markus Armbruster <armbru@redhat.com>
-> -R: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +R: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  W: https://www.qemu.org/docs/master/devel/index.html
->  S: Odd Fixes
->  F: docs/devel/build-environment.rst
-> @@ -132,7 +132,7 @@ T: git https://gitlab.com/cohuck/qemu.git s390-next
->  L: qemu-s390x@nongnu.org
->
->  MIPS general architecture support
-> -M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  R: Jiaxun Yang <jiaxun.yang@flygoat.com>
->  S: Odd Fixes
->  K: ^Subject:.*(?i)mips
-> @@ -302,7 +302,7 @@ F: tests/docker/dockerfiles/debian-microblaze-cross.d=
-/build-toolchain.sh
->  F: tests/functional/microblaze/
->
->  MIPS TCG CPUs
-> -M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  R: Aurelien Jarno <aurelien@aurel32.net>
->  R: Jiaxun Yang <jiaxun.yang@flygoat.com>
->  R: Aleksandar Rikalo <arikalo@gmail.com>
-> @@ -533,7 +533,7 @@ Guest CPU Cores (other accelerators)
->  Overall
->  M: Richard Henderson <richard.henderson@linaro.org>
->  R: Paolo Bonzini <pbonzini@redhat.com>
-> -R: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +R: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  S: Maintained
->  F: include/exec/cpu*.h
->  F: include/exec/target_long.h
-> @@ -696,7 +696,7 @@ F: qemu.nsi
->  F: scripts/nsis.py
->
->  Darwin (macOS, iOS)
-> -M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  S: Odd Fixes
->  F: .gitlab-ci.d/cirrus/macos-*
->  F: */*.m
-> @@ -1012,7 +1012,7 @@ F: tests/functional/arm/test_quanta_gsj.py
->
->  Raspberry Pi
->  M: Peter Maydell <peter.maydell@linaro.org>
-> -R: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +R: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  L: qemu-arm@nongnu.org
->  S: Odd Fixes
->  F: hw/arm/raspi.c
-> @@ -1314,7 +1314,7 @@ F: include/hw/misc/avr_power.h
->  F: hw/misc/avr_power.c
->
->  Arduino
-> -M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  S: Maintained
->  F: hw/avr/arduino.c
->  F: tests/functional/avr/test_uno.py
-> @@ -1448,7 +1448,7 @@ F: hw/microblaze/petalogix_ml605_mmu.c
->  MIPS Machines
->  -------------
->  Overall MIPS Machines
-> -M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  S: Odd Fixes
->  F: configs/devices/mips*/*
->  F: hw/mips/
-> @@ -1465,7 +1465,7 @@ F: hw/dma/rc4030.c
->  F: hw/nvram/ds1225y.c
->
->  Malta
-> -M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  R: Aurelien Jarno <aurelien@aurel32.net>
->  S: Odd Fixes
->  F: hw/isa/piix.c
-> @@ -1479,7 +1479,7 @@ F: tests/functional/mips*/test_tuxrun.py
->
->  Fuloong 2E
->  M: Huacai Chen <chenhuacai@kernel.org>
-> -M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  R: Jiaxun Yang <jiaxun.yang@flygoat.com>
->  S: Odd Fixes
->  F: hw/mips/fuloong2e.c
-> @@ -1503,7 +1503,7 @@ F: include/hw/intc/loongson_liointc.h
->  F: tests/functional/mips64el/test_loongson3v.py
->
->  Boston
-> -M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  R: Aleksandar Rikalo <arikalo@gmail.com>
->  S: Odd Fixes
->  F: hw/core/loader-fit.c
-> @@ -2032,7 +2032,7 @@ F: include/hw/i386/nitro_enclave.h
->  F: docs/system/i386/nitro-enclave.rst
->
->  Machine core
-> -M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  R: Zhao Liu <zhao1.liu@intel.com>
->  S: Maintained
->  F: hw/core/cpu-common.c
-> @@ -2055,7 +2055,7 @@ F: tests/unit/test-smp-parse.c
->
->  TargetInfo API
->  M: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> -M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  S: Supported
->  F: include/qemu/target-info*.h
->  F: target-info*.c
-> @@ -2279,7 +2279,7 @@ F: docs/system/virtio-net-failover.rst
->  T: git https://github.com/jasowang/qemu.git net
->
->  Parallel NOR Flash devices
-> -M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  S: Maintained
->  F: hw/block/pflash_cfi*.c
->  F: include/hw/block/flash.h
-> @@ -2311,7 +2311,7 @@ S: Maintained
->  F: hw/ssi/xilinx_*
->
->  SD (Secure Card)
-> -M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  M: Bin Meng <bmeng.cn@gmail.com>
->  L: qemu-block@nongnu.org
->  S: Odd Fixes
-> @@ -2765,14 +2765,14 @@ F: docs/specs/vmgenid.rst
->  F: tests/qtest/vmgenid-test.c
->
->  LED
-> -M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  S: Maintained
->  F: include/hw/misc/led.h
->  F: hw/misc/led.c
->
->  Unimplemented device
->  M: Peter Maydell <peter.maydell@linaro.org>
-> -R: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +R: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  R: Ani Sinha <ani@anisinha.ca>
->  S: Maintained
->  F: include/hw/misc/unimp.h
-> @@ -2780,7 +2780,7 @@ F: hw/misc/unimp.c
->
->  Empty slot
->  M: Artyom Tarasenko <atar4qemu@gmail.com>
-> -R: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +R: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  R: Ani Sinha <ani@anisinha.ca>
->  S: Maintained
->  F: include/hw/misc/empty_slot.h
-> @@ -2859,14 +2859,14 @@ F: hw/display/apple-gfx*
->
->  PIIX4 South Bridge (i82371AB)
->  M: Herv=C3=A9 Poussineau <hpoussin@reactos.org>
-> -M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  S: Maintained
->  F: hw/isa/piix.c
->  F: include/hw/southbridge/piix.h
->
->  VIA South Bridges (VT82C686B, VT8231)
->  M: BALATON Zoltan <balaton@eik.bme.hu>
-> -M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  R: Jiaxun Yang <jiaxun.yang@flygoat.com>
->  S: Maintained
->  F: hw/isa/vt82c686.c
-> @@ -2931,13 +2931,13 @@ F: hw/intc/openpic.c
->  F: include/hw/ppc/openpic.h
->
->  MIPS CPS
-> -M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  S: Odd Fixes
->  F: hw/misc/mips_*
->  F: include/hw/misc/mips_*
->
->  MIPS GIC
-> -M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  S: Odd Fixes
->  F: hw/intc/mips_gic.c
->  F: hw/timer/mips_gictimer.c
-> @@ -3063,7 +3063,7 @@ F: audio/alsaaudio.c
->
->  Core Audio framework backend
->  M: Gerd Hoffmann <kraxel@redhat.com>
-> -M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  R: Christian Schoenebeck <qemu_oss@crudebyte.com>
->  R: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->  S: Odd Fixes
-> @@ -3318,7 +3318,7 @@ F: tests/functional/ppc64/test_fadump.py
->
->  GDB stub
->  M: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> -R: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +R: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  S: Maintained
->  F: docs/system/gdb.rst
->  F: gdbstub/*
-> @@ -3332,7 +3332,7 @@ T: git https://gitlab.com/stsquad/qemu gdbstub/next
->  Memory API
->  M: Paolo Bonzini <pbonzini@redhat.com>
->  M: Peter Xu <peterx@redhat.com>
-> -R: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +R: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  S: Supported
->  F: include/system/ioport.h
->  F: include/exec/memop.h
-> @@ -3387,7 +3387,7 @@ F: tests/functional/generic/test_vnc.py
->
->  Cocoa graphics
->  M: Peter Maydell <peter.maydell@linaro.org>
-> -M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  R: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->  S: Odd Fixes
->  F: ui/cocoa.m
-> @@ -3950,7 +3950,7 @@ S: Maintained
->  F: contrib/elf2dmp/
->
->  Overall sensors
-> -M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  S: Odd Fixes
->  F: hw/sensor
->  F: include/hw/sensor
-> @@ -4511,7 +4511,7 @@ W: https://cirrus-ci.com/github/qemu/qemu
->
->  Functional testing framework
->  M: Thomas Huth <th.huth+qemu@posteo.eu>
-> -R: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +R: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  R: Daniel P. Berrange <berrange@redhat.com>
->  S: Odd Fixes
->  F: docs/devel/testing/functional.rst
-> @@ -4567,7 +4567,7 @@ Meson
->  M: Paolo Bonzini <pbonzini@redhat.com>
->  R: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->  R: Daniel P. Berrange <berrange@redhat.com>
-> -R: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> +R: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  R: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->  S: Maintained
->  F: meson.build
-> diff --git a/.mailmap b/.mailmap
-> index ce569d83f4a..ab6796090fe 100644
-> --- a/.mailmap
-> +++ b/.mailmap
-> @@ -104,9 +104,9 @@ Paul Burton <paulburton@kernel.org> <paul.burton@mips=
-.com>
->  Paul Burton <paulburton@kernel.org> <paul.burton@imgtec.com>
->  Paul Burton <paulburton@kernel.org> <paul@archlinuxmips.org>
->  Paul Burton <paulburton@kernel.org> <pburton@wavecomp.com>
-> -Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> <f4bug@amsat.org>
-> -Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> <philmd@redhat.com>
-> -Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> <philmd@fungible.com>
-> +Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com> <f4bug@amsat.org>
-> +Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com> <philmd@redhat.com>
-> +Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com> <philmd@fungible.com>
 
-You forgot
+pythondeps.toml points to 1.11.1 already, but if these new changes
+require 1.11 then I expect building to stop working with meson 1.10
+and rust enabled
 
-+Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com> <philmd@linaro.org>
-
-With this change:
-
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-
->  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> <pierrick.bouvier@l=
-inaro.org>
->  Roman Bolshakov <rbolshakov@ddn.com> <r.bolshakov@yadro.com>
->  Sriram Yagnaraman <sriram.yagnaraman@ericsson.com> <sriram.yagnaraman@es=
-t.tech>
-> --
-> 2.53.0
 >
->
+> >
+> >  configure                                     |  3 -
+> >  meson.build                                   | 13 +--
+> >  rust/Cargo.lock =3D> Cargo.lock                 |  0
+> >  rust/Cargo.toml =3D> Cargo.toml                 |  6 +-
+> >  rust/bindings/chardev-sys/meson.build         | 11 +--
+> >  rust/bindings/hwcore-sys/meson.build          | 11 +--
+> >  rust/bindings/migration-sys/meson.build       | 11 +--
+> >  rust/bindings/qom-sys/meson.build             | 11 +--
+> >  rust/bindings/system-sys/meson.build          | 11 +--
+> >  rust/bindings/util-sys/meson.build            | 11 +--
+> >  rust/bits/meson.build                         |  7 +-
+> >  rust/bql/meson.build                          | 13 +--
+> >  rust/chardev/meson.build                      |  8 +-
+> >  rust/common/meson.build                       | 10 +--
+> >  rust/hw/char/pl011/meson.build                | 22 +----
+> >  rust/hw/core/meson.build                      | 10 +--
+> >  rust/hw/timer/hpet/meson.build                | 17 +---
+> >  rust/meson.build                              | 32 +-------
+> >  rust/migration/meson.build                    |  8 +-
+> >  rust/qemu-macros/meson.build                  | 12 +--
+> >  rust/qom/meson.build                          |  8 +-
+> >  rust/system/meson.build                       |  8 +-
+> >  rust/trace/meson.build                        |  9 +--
+> >  rust/util/meson.build                         |  7 +-
+> >  scripts/qapi/rs_types.py                      |  2 +-
+> >  scripts/rust/rustc_args.py                    | 80 +------------------
+> >  subprojects/anyhow-1-rs.wrap                  |  7 --
+> >  subprojects/arbitrary-int-1-rs.wrap           | 10 ---
+> >  subprojects/attrs-0.2-rs.wrap                 |  7 --
+> >  subprojects/bilge-0.2-rs.wrap                 | 10 ---
+> >  subprojects/bilge-impl-0.2-rs.wrap            | 10 ---
+> >  subprojects/either-1-rs.wrap                  | 10 ---
+> >  subprojects/foreign-0.3-rs.wrap               |  7 --
+> >  subprojects/glib-sys-0.21-rs.wrap             |  7 --
+> >  subprojects/itertools-0.11-rs.wrap            | 10 ---
+> >  subprojects/libc-0.2-rs.wrap                  |  7 --
+> >  .../packagefiles/anyhow-1-rs/meson.build      | 33 --------
+> >  .../anyhow-1-rs/meson/meson.build             |  9 +++
+> >  .../arbitrary-int-1-rs/meson.build            | 21 -----
+> >  .../packagefiles/attrs-0.2-rs/meson.build     | 33 --------
+> >  .../packagefiles/bilge-0.2-rs/meson.build     | 31 -------
+> >  .../bilge-impl-0.2-rs/meson.build             | 44 ----------
+> >  .../bilge-impl-0.2-rs/meson/meson.build       |  3 +
+> >  .../packagefiles/either-1-rs/meson.build      | 26 ------
+> >  .../packagefiles/foreign-0.3-rs/meson.build   | 26 ------
+> >  .../packagefiles/glib-sys-0.21-rs/meson.build | 33 --------
+> >  .../itertools-0.11-rs/meson.build             | 32 --------
+> >  .../packagefiles/libc-0.2-rs/meson.build      | 37 ---------
+> >  .../libc-0.2-rs/meson/meson.build             | 16 ++++
+> >  .../proc-macro-error-1-rs/meson.build         | 41 ----------
+> >  .../proc-macro-error-1-rs/meson/meson.build   |  3 +
+> >  .../proc-macro-error-attr-1-rs/meson.build    | 31 -------
+> >  .../meson/meson.build                         |  3 +
+> >  .../packagefiles/proc-macro2-1-rs/meson.build | 35 --------
+> >  .../proc-macro2-1-rs/meson/meson.build        |  6 ++
+> >  .../packagefiles/quote-1-rs/meson.build       | 31 -------
+> >  .../packagefiles/serde-1-rs/meson.build       | 36 ---------
+> >  .../packagefiles/serde_core-1-rs/meson.build  | 25 ------
+> >  .../serde_core-1-rs/private.rs.in             |  6 ++
+> >  .../serde_derive-1-rs/meson.build             | 35 --------
+> >  subprojects/packagefiles/syn-2-rs/meson.build | 43 ----------
+> >  .../unicode-ident-1-rs/meson.build            | 22 -----
+> >  subprojects/probe-0.5-rs.wrap                 |  7 --
+> >  subprojects/proc-macro-error-1-rs.wrap        | 10 ---
+> >  subprojects/proc-macro-error-attr-1-rs.wrap   | 10 ---
+> >  subprojects/proc-macro2-1-rs.wrap             | 10 ---
+> >  subprojects/quote-1-rs.wrap                   | 10 ---
+> >  subprojects/serde-1-rs.wrap                   |  5 +-
+> >  subprojects/serde_core-1-rs.wrap              |  5 +-
+> >  subprojects/serde_derive-1-rs.wrap            |  5 +-
+> >  subprojects/syn-2-rs.wrap                     | 10 ---
+> >  subprojects/unicode-ident-1-rs.wrap           | 10 ---
+> >  72 files changed, 116 insertions(+), 1053 deletions(-)
+> >  rename rust/Cargo.lock =3D> Cargo.lock (100%)
+> >  rename rust/Cargo.toml =3D> Cargo.toml (97%)
+> >  delete mode 100644 subprojects/anyhow-1-rs.wrap
+> >  delete mode 100644 subprojects/arbitrary-int-1-rs.wrap
+> >  delete mode 100644 subprojects/attrs-0.2-rs.wrap
+> >  delete mode 100644 subprojects/bilge-0.2-rs.wrap
+> >  delete mode 100644 subprojects/bilge-impl-0.2-rs.wrap
+> >  delete mode 100644 subprojects/either-1-rs.wrap
+> >  delete mode 100644 subprojects/foreign-0.3-rs.wrap
+> >  delete mode 100644 subprojects/glib-sys-0.21-rs.wrap
+> >  delete mode 100644 subprojects/itertools-0.11-rs.wrap
+> >  delete mode 100644 subprojects/libc-0.2-rs.wrap
+> >  delete mode 100644 subprojects/packagefiles/anyhow-1-rs/meson.build
+> >  create mode 100644 subprojects/packagefiles/anyhow-1-rs/meson/meson.bu=
+ild
+> >  delete mode 100644 subprojects/packagefiles/arbitrary-int-1-rs/meson.b=
+uild
+> >  delete mode 100644 subprojects/packagefiles/attrs-0.2-rs/meson.build
+> >  delete mode 100644 subprojects/packagefiles/bilge-0.2-rs/meson.build
+> >  delete mode 100644 subprojects/packagefiles/bilge-impl-0.2-rs/meson.bu=
+ild
+> >  create mode 100644 subprojects/packagefiles/bilge-impl-0.2-rs/meson/me=
+son.build
+> >  delete mode 100644 subprojects/packagefiles/either-1-rs/meson.build
+> >  delete mode 100644 subprojects/packagefiles/foreign-0.3-rs/meson.build
+> >  delete mode 100644 subprojects/packagefiles/glib-sys-0.21-rs/meson.bui=
+ld
+> >  delete mode 100644 subprojects/packagefiles/itertools-0.11-rs/meson.bu=
+ild
+> >  delete mode 100644 subprojects/packagefiles/libc-0.2-rs/meson.build
+> >  create mode 100644 subprojects/packagefiles/libc-0.2-rs/meson/meson.bu=
+ild
+> >  delete mode 100644 subprojects/packagefiles/proc-macro-error-1-rs/meso=
+n.build
+> >  create mode 100644 subprojects/packagefiles/proc-macro-error-1-rs/meso=
+n/meson.build
+> >  delete mode 100644 subprojects/packagefiles/proc-macro-error-attr-1-rs=
+/meson.build
+> >  create mode 100644 subprojects/packagefiles/proc-macro-error-attr-1-rs=
+/meson/meson.build
+> >  delete mode 100644 subprojects/packagefiles/proc-macro2-1-rs/meson.bui=
+ld
+> >  create mode 100644 subprojects/packagefiles/proc-macro2-1-rs/meson/mes=
+on.build
+> >  delete mode 100644 subprojects/packagefiles/quote-1-rs/meson.build
+> >  delete mode 100644 subprojects/packagefiles/serde-1-rs/meson.build
+> >  delete mode 100644 subprojects/packagefiles/serde_core-1-rs/meson.buil=
+d
+> >  create mode 100644 subprojects/packagefiles/serde_core-1-rs/private.rs=
+.in
+> >  delete mode 100644 subprojects/packagefiles/serde_derive-1-rs/meson.bu=
+ild
+> >  delete mode 100644 subprojects/packagefiles/syn-2-rs/meson.build
+> >  delete mode 100644 subprojects/packagefiles/unicode-ident-1-rs/meson.b=
+uild
+> >  delete mode 100644 subprojects/probe-0.5-rs.wrap
+> >  delete mode 100644 subprojects/proc-macro-error-1-rs.wrap
+> >  delete mode 100644 subprojects/proc-macro-error-attr-1-rs.wrap
+> >  delete mode 100644 subprojects/proc-macro2-1-rs.wrap
+> >  delete mode 100644 subprojects/quote-1-rs.wrap
+> >  delete mode 100644 subprojects/syn-2-rs.wrap
+> >  delete mode 100644 subprojects/unicode-ident-1-rs.wrap
+> >
+> > --
+> > 2.54.0
+> >
+> >
 
