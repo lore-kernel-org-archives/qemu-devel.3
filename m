@@ -4,97 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16ABFCD5BD1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 04:31:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10DB5CD5BCF
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 04:59:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRjR1-0007up-Cx; Tue, 26 May 2026 00:30:31 -0400
+	id 1wRjs3-00057z-1C; Tue, 26 May 2026 00:58:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lb.workbox@gmail.com>)
- id 1wRjQt-0007eI-1y
- for qemu-devel@nongnu.org; Tue, 26 May 2026 00:30:23 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <lb.workbox@gmail.com>)
- id 1wRjQq-0007bx-Mw
- for qemu-devel@nongnu.org; Tue, 26 May 2026 00:30:22 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-49050ff7cbdso24928115e9.2
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 21:30:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779769819; x=1780374619; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xeRRTnWnaEVO/UepoOFJKLi/LO7+Q/LxWMTun4QJ2wA=;
- b=gICVKZXwqdpgeJSEDi+hpGUIrJv7PbG/8BhYy9+QIu5O+GO721aNJWVZqB0kvuiavz
- efh9ixXtEwzQkvzAV21tRGZV5N/9CdcvU65FisLiygj0yyO5n7gF8mWhAZoklAGTFd7O
- 8T/2hhtx+G0xS4dME81xs7iVR2wf+KG18nYwpZztKGsIeIo1J4lNaisVSiYBRIR4Kefh
- bsbwulyYj4UitPQb9GEwre6ygz4mKj39o4KOn2pBKtR0M7a12PT1kzpst97it1kWrbrT
- wi37kfNa7v9Fxkmtd/tKbJXQTP0ECb0px66q/Tl7EPl2Zl4dDdf5iWDdJ0FGIc59acEl
- wHzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779769819; x=1780374619;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=xeRRTnWnaEVO/UepoOFJKLi/LO7+Q/LxWMTun4QJ2wA=;
- b=bGVA0trHcm7qssH4rdt7iKLJ3P9HAZLZXGBBnmTiit8aYV/iHDf4wIvdtUAdvy+anA
- PPrUPreCJxBvKleJlKM5CAvgfnWA869HbaoemNjlp+k7Gcht+Pb2tI07ropujVDC7JLa
- GnxU2TwvE86ufG+TowjSLj0IYFQ8f7akVbpme2VoBdmyxRyxpur/+zWe/0dvVBvoXnfW
- 2H2Kt2VO2wjCYs8PZU9tYcgogLhhm6TY5HF1eaWzxYp2pQ0E0dAjTSaCXmY6zws8sz0O
- n2kHX+IhqwfkAyjSE993Y4TTgWB6PMMQQrwMLubETXavlh9IcZFOmZ3ZpOiPyIruVvD4
- x1ig==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/lF0rEsoOOeb5+VTJEH3voW3sVUp8VS/NEM9kflET6gpPJPqgpCs9COdZJf6k38oIrZ+Iw3SOaT7im@nongnu.org
-X-Gm-Message-State: AOJu0YxraYJRgHWrdAdTkZfMiGKa0Rt5wO7F7i9q4kSP5SFdUFpOrlha
- Odg2PVn2k7hrXN69fD83TZrtFxan/JApz0K1W23gQbDJgEmwnyiPTZcF
-X-Gm-Gg: Acq92OGhXZgUYJJ6edOw39lj+9n+fyLyWZMEXxJGtuJPE9sNWUPQS17Ji2uhqlQsXgp
- uNMSHOvBuFgj/dFJvVjMAAlaBzhJivzPkYFza7L9QGQpSlg5Qjr2+DdqsYJS9W37uDEOOpy0NKc
- FDmdsVKuHdPz0fxvRR1rq0FsHTwLIs21oHTlm0jZHt3KPJ41UVESnlbmLOKO3sdW2601aZ/u1T6
- uoJBlCi0Kubit0qpfefNkoOuBkG/nUSD3jgS4Q/V1hxXbkCOYxa4AbbP5SH6jKlAUtZ7VoO37f8
- Y2R35023xjqp6HSI57I841HVLfbIZvJvqxi7CY8Zgz7cqpAf0i2fH2Tqb8paHLRzFoPhqi+GeWg
- NG8yJhs1bW0eyu6qvhVSOKIHskpjfnOd0DrwEo45Q/mR+gSq2AEZRrYdp94yfvuNOESenhkRRuS
- yjFEPQx3zCnpWtdeq+cYgjftqWTgftGWUq1mAjMyAXTTQarM+i8lYHLDDrWLGUlZ3PifBW0yfTk
- Go=
-X-Received: by 2002:a05:600c:45ce:b0:490:59cc:998e with SMTP id
- 5b1f17b1804b1-49059cc99famr148876495e9.3.1779769818990; 
- Mon, 25 May 2026 21:30:18 -0700 (PDT)
-Received: from localhost.localdomain (46-116-239-136.bb.netvision.net.il.
- [46.116.239.136]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49076a6abfasm6659625e9.12.2026.05.25.21.30.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 May 2026 21:30:18 -0700 (PDT)
-From: Leonid Bloch <lb.workbox@gmail.com>
-To: "Michael S . Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <ehabkost@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>
-Cc: Leonid Bloch <lb.workbox@gmail.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH v4 8/8] scripts: Add laptop-mirror reference script
-Date: Tue, 26 May 2026 07:29:27 +0300
-Message-ID: <20260526042928.9203-9-lb.workbox@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260526042928.9203-1-lb.workbox@gmail.com>
-References: <20260526042928.9203-1-lb.workbox@gmail.com>
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1wRjs1-00057n-NX; Tue, 26 May 2026 00:58:25 -0400
+Received: from smtpout1.mo528.mail-out.ovh.net ([46.105.34.251])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1wRjry-0003oC-DY; Tue, 26 May 2026 00:58:25 -0400
+Received: from director3.derp.mail-out.ovh.net
+ (director3.derp.mail-out.ovh.net [152.228.215.222])
+ by mo528.mail-out.ovh.net (Postfix) with ESMTPS id 4gPgVm73mQz6KYf;
+ Tue, 26 May 2026 04:58:08 +0000 (UTC)
+Received: from director3.derp.mail-out.ovh.net
+ (director3.derp.mail-out.ovh.net. [127.0.0.1])
+ by director3.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Tue, 26 May 2026 04:58:08 +0000 (UTC)
+Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.178.179])
+ by director3.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4gPgVm24V8z5vfw;
+ Tue, 26 May 2026 04:58:08 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.0])
+ (Authenticated sender: clg@kaod.org)
+ by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
+ 462BE1923B66; Tue, 26 May 2026 04:58:06 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-109S003456d7b70-830f-4b80-91d5-ea97919d5be2,
+ F49BC9865E6D06A1207BBF08B4ECD36E7EFD173C) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <2c3e1577-abe8-49b5-acc8-0321dc3c8327@kaod.org>
+Date: Tue, 26 May 2026 06:58:05 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/9] hw/arm/aspeed: Introduce initial AST1040 support
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20260525053036.3305181-1-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260525053036.3305181-1-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=lb.workbox@gmail.com; helo=mail-wm1-x32b.google.com
+x-ovh-tracer-id: 2909325360855297139
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTEWpvJPjkkXJQdh36+On+JpBs6mt0c9Y+hpSuJmYfkHv+XU8j/iP0+l04M2jU/i9oJ+HFk9N4oKzfRI9AKzutmeVBOrPyxsJ0dBWxp+Wbv444iEE8/jaRf7Wwj2MDNGyQJ/nFQFnX3yJ7Mx3LkZtXimuPrQmkuXXW3a0baFO8gg6PBYANC0XYdoxwZ2Hmf79KyyCI9kCgInsMTmYqvNplWfJvd0r6XVTMJuFBmWVK9BLO4HA0NN3MWYIIZ0z91chQe4OnoxnE6BO86p5yaugICGt7BAFQcjiizqmFYHYj5WhwVugKKs7ksg64mEVZu8DgLWaQgLUVJHhDEHzDqbYKE6oxDrxG8uHcn7giYTqVv0mvUS5JSnZaY8akemdpCJNMuYhUCvxdW9DPH1uI03g0lNlANbNmoItG+mpApPQU9Xaz113Xmco1NOF3EW1Q91+U6kodFevjY4hTJ6InSm45eHRa1LyDJeiZUA6/MLRJPTNG/yZIgr1XFovjI9NaFOVH54/Ycn4FEepTDcLwENhN64ah38/hiruYYzxVzb0UQ9FU5o+KbdBhky37bPH9gIF24WWJuxLChJFjSU9cvx1PC3TJOARPKP1h0o9Y0s0b9v+svCthGGkQhRJFsLa1DdGLx4q/ztc8Qc55do+SqgRgrk2JrEEtrNl0ILSFMC7huMbg
+DKIM-Signature: a=rsa-sha256; bh=5PJEF0nEBrpqFkXQvli2CRht++wUq+P27DnXdV8UsT8=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1779771490; v=1;
+ b=ItKPI0U/lATr2SCa5i/jUQ+6CnVDqASp9HwG45OMifF6QKvAAS1FHQ68lPtVcsoZPxyCkop3
+ nQL9PDHoEHbrbUD27F4xacfpPl9JTYkgWCltgupaxxiTSgxQBXTPD/L7UZ3NX3+07IC5Nswblm5
+ xWFgeS55flBm7ofOyM6/anhqOVImIyrgYUcn2MpapVVkZ4bLDGsbFqQw8h4Px6JoeMxdGTUzjiN
+ 5IQQ8c3bVvobPWD16WHi+UgTbwoA++gHfrTb/BRyQrMA4B4yUs4TggeLyd53P72NNuf2QLnpj7G
+ qpAOgdBrWAkJeFt3goh+0T1gmjkzSjgqO/pvE9WLSWm7w==
+Received-SPF: pass client-ip=46.105.34.251; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo528.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,365 +135,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an in-tree Python reference implementation that reads the host's
-battery, AC adapter and lid state from sysfs/procfs and forwards changes
-to a running QEMU guest through the battery-set-state,
-ac-adapter-set-state and lid-button-set-state QMP commands.
+On 5/25/26 07:30, Jamin Lin wrote:
+> This series introduces the initial ASPEED AST1040 support for QEMU.
+> 
+> AST1040 is the next-generation bridge/BIC controller platform
+> following AST1030 and is based on an ARM Cortex-M4F CPU core.
+> Since QEMU currently does not provide Cortex-M4F support, the
+> existing Cortex-M4 CPU model is used temporarily.
+> 
+> The current implementation provides enough functionality to boot
+> basic firmware environments with UART console support, HyperRAM/SRAM
+> mapping, and NVIC interrupt handling.
+> 
+> Currently this series is able to boot Zephyr successfully to the
+> shell prompt:
+> 
+>    uart:~$
+> 
+> Example command line:
+> 
+>    ./build/qemu-system-arm \
+>        -machine ast1040-evb \
+>        -kernel <zephyr.elf> \
+>        -serial mon:stdio \
+>        -snapshot \
+>        -nographic
+> 
+> There are many different types of RAM, including DRAM, SRAM, SDRAM, PSRAM,
+> SECSRAM, and HyperRAM. To support these memory types, we need to introduce
+> distinct variable names for their memory regions and memory sizes.
+> 
+> In addition, the SoC contains multiple SRAM instances. To make the code more
+> flexible and maintainable, I am considering changing the array structure to
+> support internal memory types such as SRAM, SDRAM, PSRAM, HyperRAM, and SECSRAM.
+> 
+> For example:
+> 
+> sram[NUM]
+> sram_size[NUM]
+> ASPEED_DEV_SRAMX
+> 
+> v1:
+>    - AST1040 silicon revision ID
+>    - SDRAM support in the Aspeed SoC framework
+>    - Initial AST1040 SoC model
+>    - AST1040 EVB machine model
+> 
+> v2:
+>    - Add AST1040 functional test
+>    - Add AST1040 documentation
+>    - Convert SRAM MemoryRegion to array type
+>    - Convert SRAM size definition to array type
+>    
+> Jamin Lin (9):
+>    hw/arm/aspeed: Convert SRAM MemoryRegion to array type
+>    hw/arm/aspeed: Convert SRAM size definition to array type
+>    hw/arm/aspeed: Rename SRAM memmap entry for multi-SRAM support
+>    hw/arm/aspeed: Consolidate secure SRAM into SRAM array
+>    hw/misc/aspeed_scu: Add AST1040 A0 silicon revision ID
+>    hw/arm/aspeed: Introduce AST1040 A0 SoC model
+>    hw/arm/aspeed: Add AST1040 EVB machine model
+>    tests/function/aspeed: Add AST1040 functional test
+>    docs/system/arm/aspeed: Add AST1040 Bridge IC evaluation board
+> 
+>   docs/system/arm/aspeed.rst                  |  18 +-
+>   include/hw/arm/aspeed_soc.h                 |  11 +-
+>   include/hw/misc/aspeed_scu.h                |   1 +
+>   hw/arm/aspeed_ast1040.c                     | 254 ++++++++++++++++++++
+>   hw/arm/aspeed_ast1040_evb.c                 |  73 ++++++
+>   hw/arm/aspeed_ast10x0.c                     |  29 ++-
+>   hw/arm/aspeed_ast2400.c                     |  14 +-
+>   hw/arm/aspeed_ast2600.c                     |  10 +-
+>   hw/arm/aspeed_ast27x0-ssp.c                 |   4 +-
+>   hw/arm/aspeed_ast27x0-tsp.c                 |   4 +-
+>   hw/arm/aspeed_ast27x0.c                     |  12 +-
+>   hw/misc/aspeed_scu.c                        |   1 +
+>   hw/arm/meson.build                          |   4 +-
+>   tests/functional/arm/meson.build            |   1 +
+>   tests/functional/arm/test_aspeed_ast1040.py |  35 +++
+>   15 files changed, 424 insertions(+), 47 deletions(-)
+>   create mode 100644 hw/arm/aspeed_ast1040.c
+>   create mode 100644 hw/arm/aspeed_ast1040_evb.c
+>   create mode 100644 tests/functional/arm/test_aspeed_ast1040.py
+> 
 
-This script is intended as an example for management layers
-(such as libvirt) to follow when wiring host hardware to those devices,
-not as an end-user deployment tool.
+For the series,
 
-Signed-off-by: Leonid Bloch <lb.workbox@gmail.com>
----
- MAINTAINERS                  |   6 +
- docs/tools/index.rst         |   1 +
- docs/tools/laptop-mirror.rst |  82 +++++++++++++
- scripts/laptop-mirror.py     | 219 +++++++++++++++++++++++++++++++++++
- 4 files changed, 308 insertions(+)
- create mode 100644 docs/tools/laptop-mirror.rst
- create mode 100755 scripts/laptop-mirror.py
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 1f8f3e247e..9616544d29 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3057,6 +3057,12 @@ F: docs/specs/button.rst
- F: hw/acpi/button*
- F: include/hw/acpi/button.h
- 
-+Laptop mirror
-+M: Leonid Bloch <lb.workbox@gmail.com>
-+S: Maintained
-+F: docs/tools/laptop-mirror.rst
-+F: scripts/laptop-mirror.py
-+
- Subsystems
- ----------
- Overall Audio backends
-diff --git a/docs/tools/index.rst b/docs/tools/index.rst
-index 868c3c4d9d..0c8fa6010f 100644
---- a/docs/tools/index.rst
-+++ b/docs/tools/index.rst
-@@ -17,3 +17,4 @@ command line utilities and other standalone programs.
-    qemu-trace-stap
-    qemu-vmsr-helper
-    qemu-vnc
-+   laptop-mirror
-diff --git a/docs/tools/laptop-mirror.rst b/docs/tools/laptop-mirror.rst
-new file mode 100644
-index 0000000000..62fc2f92c3
---- /dev/null
-+++ b/docs/tools/laptop-mirror.rst
-@@ -0,0 +1,82 @@
-+=======================
-+QEMU laptop mirror tool
-+=======================
-+
-+Synopsis
-+--------
-+
-+**laptop-mirror.py** [*OPTIONS*]
-+
-+Description
-+-----------
-+
-+``laptop-mirror.py`` polls the host's battery, AC adapter and lid state
-+from sysfs/procfs and forwards every change to a running QEMU guest using
-+the ``battery-set-state``, ``ac-adapter-set-state`` and
-+``lid-button-set-state`` QMP commands. This script is a reference for how
-+a management layer (libvirt or similar) can wire host hardware to them,
-+and isn't meant for production use as-is.
-+
-+Options
-+-------
-+
-+.. program:: laptop-mirror.py
-+
-+.. option:: -s SOCKET, --socket SOCKET
-+
-+  QMP socket: a Unix path or ``host:port``. Falls back to ``$QMP_SOCKET``.
-+
-+.. option:: -i SECONDS, --interval SECONDS
-+
-+  Polling interval, in seconds. Default ``2.0``.
-+
-+.. option:: --battery, --no-battery
-+
-+  Mirror the battery (default: on).
-+
-+.. option:: --ac-adapter, --no-ac-adapter
-+
-+  Mirror the AC adapter (default: on).
-+
-+.. option:: --lid, --no-lid
-+
-+  Mirror the lid button (default: on). A device that is enabled but not
-+  present on the host is silently skipped.
-+
-+.. option:: -v, --verbose
-+
-+  ``-v`` logs every state change; ``-vv`` adds debug output.
-+
-+Example
-+-------
-+
-+Start QEMU with the laptop devices and a QMP socket::
-+
-+  qemu-system-x86_64 \
-+      -device battery -device acad -device button \
-+      -qmp unix:/tmp/qmp.sock,server=on,wait=off \
-+      ...
-+
-+Then mirror your host state::
-+
-+  export QMP_SOCKET=/tmp/qmp.sock
-+  $builddir/run scripts/laptop-mirror.py -v
-+
-+The script depends on the in-tree ``qemu.qmp`` package; ``$builddir/run``
-+puts it on ``PYTHONPATH``.
-+
-+Caveats
-+-------
-+
-+* QMP allows one client at a time. If ``qmp-shell``, libvirt or another
-+  script is already connected, the mirror times out after ten seconds and
-+  exits with an error.
-+* When QEMU runs as root, its Unix QMP socket is root-owned. Run the
-+  mirror as root too, ``chmod`` the socket after QEMU is up, or expose
-+  QMP over TCP.
-+
-+See also
-+--------
-+
-+:doc:`/specs/battery`, :doc:`/specs/acad`, :doc:`/specs/button`,
-+:manpage:`qemu-qmp-ref(7)`
-diff --git a/scripts/laptop-mirror.py b/scripts/laptop-mirror.py
-new file mode 100755
-index 0000000000..8db76e4ff9
---- /dev/null
-+++ b/scripts/laptop-mirror.py
-@@ -0,0 +1,219 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# Copyright (c) 2025-2026 Leonid Bloch <lb.workbox@gmail.com>
-+
-+"""Reference: mirror host laptop power state into a QEMU guest via QMP.
-+
-+The C devices (battery/acad/button) are pure QMP-controlled; this script
-+shows how a management layer (libvirt etc.) might wire host sysfs/procfs
-+state to the QMP commands.  See docs/tools/laptop-mirror.rst.
-+"""
-+from __future__ import annotations
-+
-+import argparse
-+import logging
-+import os
-+import signal
-+import socket
-+import sys
-+import time
-+from pathlib import Path
-+from typing import Any
-+
-+try:
-+    from qemu.qmp import QMPError
-+    from qemu.qmp.legacy import QEMUMonitorProtocol
-+except ModuleNotFoundError as exc:
-+    print(f"Module '{exc.name}' not found.", file=sys.stderr)
-+    print(f"Try $builddir/run {' '.join(sys.argv)}", file=sys.stderr)
-+    sys.exit(1)
-+
-+
-+log = logging.getLogger("laptop-mirror")
-+
-+POWER_SUPPLY = Path("/sys/class/power_supply")
-+ACPI_BUTTON = Path("/proc/acpi/button")
-+
-+
-+def read_str(p: Path) -> str | None:
-+    try:
-+        return p.read_text().strip()
-+    except OSError:
-+        return None
-+
-+
-+def read_int(p: Path) -> int | None:
-+    s = read_str(p)
-+    try:
-+        return int(s) if s is not None else None
-+    except ValueError:
-+        return None
-+
-+
-+def find_supply(kind: str) -> Path | None:
-+    if not POWER_SUPPLY.is_dir():
-+        return None
-+    for d in sorted(POWER_SUPPLY.iterdir()):
-+        if read_str(d / "type") == kind:
-+            return d
-+    return None
-+
-+
-+def find_lid() -> Path | None:
-+    lid_dir = ACPI_BUTTON / "lid"
-+    if not lid_dir.is_dir():
-+        return None
-+    for sub in sorted(lid_dir.iterdir()):
-+        if (state := sub / "state").is_file():
-+            return state
-+    return None
-+
-+
-+def battery_state(path: Path) -> dict[str, Any] | None:
-+    status = read_str(path / "status") or ""
-+    cap = read_int(path / "capacity")
-+    if cap is None:
-+        en, ef = read_int(path / "energy_now"), read_int(path / "energy_full")
-+        if en is None or not ef:
-+            return None
-+        cap = en * 100 // ef
-+
-+    state: dict[str, Any] = {
-+        "present": True,
-+        "charging": status == "Charging",
-+        "discharging": status == "Discharging",
-+        "charge-percent": max(0, min(100, cap)),
-+    }
-+    pw = read_int(path / "power_now")
-+    if pw is not None:
-+        state["rate"] = abs(pw) // 1000
-+    return state
-+
-+
-+def ac_online(path: Path) -> bool | None:
-+    v = read_int(path / "online")
-+    return None if v is None else bool(v)
-+
-+
-+def lid_open(path: Path) -> bool | None:
-+    s = read_str(path)
-+    return None if s is None else "open" in s.lower()
-+
-+
-+def qmp_connect(address, timeout):
-+    if isinstance(address, tuple):
-+        sock = socket.create_connection(address, timeout=timeout)
-+    else:
-+        sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-+        sock.settimeout(timeout)
-+        sock.connect(address)
-+    sock.settimeout(timeout)
-+    if not sock.recv(1, socket.MSG_PEEK):
-+        sock.close()
-+        raise TimeoutError
-+    sock.settimeout(None)
-+    return sock
-+
-+
-+def parse_args() -> argparse.Namespace:
-+    p = argparse.ArgumentParser(
-+        description="Mirror host laptop hardware state to a QEMU guest "
-+                    "via QMP.")
-+    p.add_argument("-s", "--socket", default=os.environ.get("QMP_SOCKET"),
-+                   help="QMP socket: unix path or addr:port "
-+                        "(default: $QMP_SOCKET)")
-+    p.add_argument("-i", "--interval", type=float, default=2.0,
-+                   metavar="SECONDS",
-+                   help="polling interval in seconds (default: 2.0)")
-+    p.add_argument("-v", "--verbose", action="count", default=0,
-+                   help="increase verbosity (-v info, -vv debug)")
-+    p.add_argument("--battery", action=argparse.BooleanOptionalAction,
-+                   default=True, help="monitor the battery")
-+    p.add_argument("--ac-adapter", action=argparse.BooleanOptionalAction,
-+                   default=True, help="monitor the AC adapter")
-+    p.add_argument("--lid", action=argparse.BooleanOptionalAction,
-+                   default=True, help="monitor the lid button")
-+    args = p.parse_args()
-+    if not args.socket:
-+        p.error("--socket is required (or set $QMP_SOCKET)")
-+    if args.interval <= 0:
-+        p.error("--interval must be positive")
-+    if not (args.battery or args.ac_adapter or args.lid):
-+        p.error("at least one device must be enabled")
-+    return args
-+
-+
-+def main() -> int:
-+    args = parse_args()
-+    levels = [logging.WARNING, logging.INFO, logging.DEBUG]
-+    logging.basicConfig(level=levels[min(args.verbose, 2)],
-+                        format="%(message)s", stream=sys.stderr)
-+    logging.getLogger("qemu.qmp").setLevel(logging.CRITICAL)
-+
-+    bat = find_supply("Battery") if args.battery else None
-+    ac = find_supply("Mains") if args.ac_adapter else None
-+    lid = find_lid() if args.lid else None
-+    if not (bat or ac or lid):
-+        log.error("No host laptop devices found to mirror")
-+        return 1
-+    for name, path in (("battery", bat), ("ac-adapter", ac), ("lid", lid)):
-+        if path is not None:
-+            log.info("Mirroring %s from %s", name, path)
-+
-+    try:
-+        sock = qmp_connect(QEMUMonitorProtocol.parse_address(args.socket), 10)
-+    except TimeoutError:
-+        log.error("Timed out negotiating QMP with %s. Is another QMP "
-+                  "client (e.g. qmp-shell) holding the socket?", args.socket)
-+        return 1
-+    except OSError as exc:
-+        log.error("Could not connect to %s: %s", args.socket, exc)
-+        return 1
-+
-+    qmp = QEMUMonitorProtocol(sock)
-+    try:
-+        qmp.connect()
-+    except QMPError as exc:
-+        log.error("QMP error: %s", exc)
-+        return 1
-+
-+    prev: dict[str, dict[str, Any]] = {}
-+
-+    def push(command: str, payload: dict[str, Any]) -> None:
-+        if prev.get(command) == payload:
-+            return
-+        try:
-+            qmp.cmd(command, **payload)
-+        except QMPError as exc:
-+            log.warning("%s failed: %s", command, exc)
-+            return
-+        prev[command] = payload
-+        log.info("%s -> %s", command, payload)
-+
-+    running = True
-+
-+    def stop(_signum, _frame):
-+        nonlocal running
-+        running = False
-+
-+    signal.signal(signal.SIGINT, stop)
-+    signal.signal(signal.SIGTERM, stop)
-+
-+    try:
-+        while running:
-+            if bat and (s := battery_state(bat)) is not None:
-+                push("battery-set-state", {"state": s})
-+            if ac and (c := ac_online(ac)) is not None:
-+                push("ac-adapter-set-state", {"connected": c})
-+            if lid and (o := lid_open(lid)) is not None:
-+                push("lid-button-set-state", {"open": o})
-+            time.sleep(args.interval)
-+        return 0
-+    finally:
-+        qmp.close()
-+
-+
-+if __name__ == "__main__":
-+    sys.exit(main())
--- 
-2.54.0
+Thanks,
+
+C.
 
 
