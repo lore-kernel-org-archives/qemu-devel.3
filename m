@@ -4,91 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF1FCCD5BCF
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 07:42:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07005CD5BB4
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 07:46:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRmPp-0005nF-5j; Tue, 26 May 2026 03:41:29 -0400
+	id 1wRmUW-0006YB-Tt; Tue, 26 May 2026 03:46:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRmPn-0005mV-06
- for qemu-devel@nongnu.org; Tue, 26 May 2026 03:41:27 -0400
-Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRmPk-0005Sy-U1
- for qemu-devel@nongnu.org; Tue, 26 May 2026 03:41:26 -0400
-Received: by mail-wm1-x344.google.com with SMTP id
- 5b1f17b1804b1-48a563e4ef7so75386855e9.0
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 00:41:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779781282; x=1780386082; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=uHX5Sa8IV2+bMPgLn5lbvz4boRjGhnMJfQeYkEH8gJY=;
- b=oof5P+nF6Aql1Hpdd6xFDJYL+YVOI72ChUPz8sEiogTsbcDNIoLBPc/krchS9IYhXC
- 6OvHEQo1FQ9RlM31KGzYHPnaHs/g0MFemowzj+hB/nZN1CH9jy/WUz8inpB6ymIAU/4C
- hvfmrWvY83qRzkMy5aj6ARUreq1m/GNhIuyG3HPVkm2Ox9ZJf456P8gs2o0fe5C7aWw+
- upy0EUjX8pVhUd/LMV/sBLt8uOTW4gNJ+u0823YvckeNj8ToXdc4zScvyo4Y86byzFQW
- KLKlfdl4vv7FChTfSARRZp864bK6n74iNGakvmgLqXZrf+LDuYHPBUKX/PnzsxX7IoIA
- jBtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779781282; x=1780386082;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=uHX5Sa8IV2+bMPgLn5lbvz4boRjGhnMJfQeYkEH8gJY=;
- b=qKF1R/MiQxCupeUTAFpUHJiuhwOcwag+ICNYz4JpWlG3FIr+Phu3RR3FPGqUto3qx2
- X+SVwt2TxFi6hghvQ3ag8CQ94gYAw19F5GWJ9/wNzLQRnIuXldRCa8MqCbFV0IWVf3sj
- KEPOvQLiqTbkHGres4y4ywc2gZXExYYFX23V6sf86DmibO3ln9yb3DBuitrtePyu1xoP
- phgg/7ArOkRkAbom2p2/5TYkjjUEo+VP7ydxgSmTmWsNqHgpZPVdAzMQnnNq/67FFWHa
- wmmGUBV5ca5Thmy6+UlpfVRh+odSn2Fo3hNY3OG3hwJj/K/2SpnV8tndMLLCrFrPmglz
- EKKA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ99yBzBgTjut8GUPsOUZHQ+WkwVSujJru9CXtb3rJP4T7swkKu8XA66e48HZ8BlA7MTWGVEcj2U6nGT@nongnu.org
-X-Gm-Message-State: AOJu0Yx1WypaYGXGkEWh/AjB7yAv7YN/v2Dq+QIwwWsBLINRtuA1o+pw
- k+U/NzjnxT05BO7aEMvi9Xh/zaEMQQEBlbia8Uc4ZXZ/cngeJB2ilrKQBFKi+Va8VLw=
-X-Gm-Gg: Acq92OFHcHUSHSImBuxDbrB4vTAEXyn3uLYCECjtCIYfvKuVojOtzdcqEyjaGWoieR1
- GgCQbGBPg4/0YAV4vZqL+ZyDWaZv40HvN44QLgaVWUhFalP0d3D05RC6uo2W+sDihfsTVS3INl+
- QX84WXcMlFUgHXA+7HP8oItgyiDo/LRHA//SHH+4xPaUDbgwWIWwizL1Dkb+f3xuw2HAsIuVQKt
- 2gL2QVk+sPcTt4K3lTEc0gfp6jtgoMujfS4P6qMYsL5oXFbMdb/AUPhBmdxQTJ5V/xp2i/WbwKG
- y4feiWkghcIQIVHHvNc/nBWJRRccL0BDah6SUh0Jj5AW3IiC0Zi89WU2aom8qAcwhMLmClwciKO
- qh2yzqyqvHpigjpRT1yXUZXs3SjDijBIp2tn4PUZlKdBLlfpPYTAeZJnkKy61Yj35SDpuK5qaXB
- JuWR6uTRuyikYYqjBwfLEaH/ZFwoniXmbSNj+sZ8HXk6mxON7Bamon+WP6rhoz8p2HfA==
-X-Received: by 2002:a05:600c:1381:b0:490:51e2:bc86 with SMTP id
- 5b1f17b1804b1-49051e2be87mr204020555e9.23.1779781282459; 
- Tue, 26 May 2026 00:41:22 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6d49132sm33395777f8f.24.2026.05.26.00.41.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 May 2026 00:41:21 -0700 (PDT)
-Message-ID: <d8faee69-7962-42ab-800d-803189730695@linaro.org>
-Date: Tue, 26 May 2026 09:41:19 +0200
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1wRmUS-0006Xj-KM
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 03:46:16 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1wRmUP-00073u-L1
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 03:46:16 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8CxncDATxVqqVANAA--.14190S3;
+ Tue, 26 May 2026 15:46:08 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJDxaeC8TxVq+WSRAA--.14155S3;
+ Tue, 26 May 2026 15:46:07 +0800 (CST)
+Subject: Re: [PATCH 00/12] target/loongarch: Move CSR registers to struct
+ CPUSysState
+To: Bibo Mao <maobibo@loongson.cn>, =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?=
+ <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, SignKirigami <prcups@krgm.moe>,
+ Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+References: <20260526065023.1639371-1-maobibo@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <e922a116-ae19-bb16-8dbb-5ad276430e5b@loongson.cn>
+Date: Tue, 26 May 2026 15:48:08 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Fix no-TCG build
-To: Zephyr Li <fritchleybohrer@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- chao.liu.zevorn@gmail.com, daniel.barboza@oss.qualcomm.com
-References: <20260526024851.2014325-1-fritchleybohrer@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260526065023.1639371-1-maobibo@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-In-Reply-To: <20260526024851.2014325-1-fritchleybohrer@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::344;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x344.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-CM-TRANSID: qMiowJDxaeC8TxVq+WSRAA--.14155S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7AFyUWr48GFyfWFyrXF47trc_yoW5Jr1xpr
+ 4xurn8KrWkKFZrJFn7Xa4aqa4DXr17Gw42v3Z3trW0kay5Aryxur4kt392gF4DJ34UWryj
+ q3WrC34UZFWUZabCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8zw
+ Z7UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-2.97, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,234 +84,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+ÔÚ 2026/5/26 ÏÂÎç2:50, Bibo Mao Ð´µÀ:
+> Here new structure CPUSysState is added in CPULoongArchState, CSR
+> registers are move in CPUSysState. In later with LVZ supported, there will
+> be two copied of CSR registers, so it is simply to add CPUSysState array.
+>
+> Also new field curState is added which points to CPUSysState at
+> beginning, and it can be changed during VM exit/enter entry. There is no
+> function change, all is code movement or variable rename.
+>
+> Bibo Mao (12):
+>    target/loongarch: Add new field curState in CPULoongArchState
+>    target/loongarch: Use curState in cpu.c when accessing CSR registers
+>    target/loongarch: Use curState in cpu_helper.c when accessing CSR
+>      registers
+>    target/loongarch: Use curState in file arch_dump.c when accessing CSR
+>      registers
+>    target/loongarch: Use curState in kvm.c when accessing CSR registers
+>    target/loongarch: Use curState in tlb_helper.c when accessing CSR
+>      registers
+>    target/loongarch: Use curState in tcg_cpu.c when accessing CSR
+>      registers
+>    target/loongarch: Use curState in csr_helper.c when accessing CSR
+>      registers
+>    target/loongarch: Use curState in op_helper.c when accessing CSR
+>      registers
+>    target/loongarch: Add default CSRFL_BASIC info with flags field
+>    target/loongarch: Add wrapper function get_csr_offset()
+>    target/loongarch: Add new structure CPUSysState
+>
+>   hw/intc/loongarch_dintc.c                     |   4 +-
+>   target/loongarch/arch_dump.c                  |   5 +-
+>   target/loongarch/cpu-mmu.h                    |   4 +-
+>   target/loongarch/cpu.c                        | 120 ++++-----
+>   target/loongarch/cpu.h                        |  49 ++--
+>   target/loongarch/cpu_helper.c                 |  41 ++--
+>   target/loongarch/csr.c                        |  10 +-
+>   target/loongarch/csr.h                        |   5 +
+>   target/loongarch/gdbstub.c                    |   3 +-
+>   target/loongarch/kvm/kvm.c                    | 228 +++++++++---------
+>   target/loongarch/machine.c                    | 116 ++++-----
+>   target/loongarch/tcg/constant_timer.c         |  10 +-
+>   target/loongarch/tcg/csr_helper.c             |  55 +++--
+>   .../tcg/insn_trans/trans_extra.c.inc          |  11 +-
+>   .../tcg/insn_trans/trans_privileged.c.inc     |  16 +-
+>   target/loongarch/tcg/op_helper.c              |  45 ++--
+>   target/loongarch/tcg/tcg_cpu.c                | 107 ++++----
+>   target/loongarch/tcg/tlb_helper.c             | 137 ++++++-----
+>   18 files changed, 531 insertions(+), 435 deletions(-)
+>
 Hi,
+The files in linux-user/loongarch64/* also need to be modified.
 
-On 26/5/26 04:48, Zephyr Li wrote:
-> Building riscv64-softmmu with --disable-tcg currently fails because
-> RISC-V still builds or references TCG-only sources and helpers in the
-> no-TCG configuration.
-> 
-> Move TCG-only helper and translator sources under CONFIG_TCG, guard the
-> remaining TCG-only code in common files, and move common CSR helpers out
-> of TCG-only helper files.
-> 
-> misa writes still rely on the TCG extension validation path. Since
-> x-misa-w is a TCG-only experimental property, reject it during CPU
-> realize when TCG is not available.
+Thanks.
+Song Gao
+> base-commit: cbf877d67a812be17a9ce404a589e1bdf722c1f6
 
-Please split as one logical change per patch (i.e. moving FPU flags
-in one, exception path in another, ...).
-
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3483
-> 
-> Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
-> ---
-> Testing:
-> - riscv64-softmmu --enable-kvm --disable-tcg --enable-debug builds
->    successfully.
-> - riscv64-softmmu --enable-debug builds successfully.
-> - qemu-system-riscv64 -M virt,accel=qtest -cpu rv64,x-misa-w=true \
->        -S -nographic reports "x-misa-w requires TCG".
-> 
->   target/riscv/cpu.c        |  9 +++++++
->   target/riscv/cpu_helper.c | 53 +++++++++++++++++++++++++++++++++++++++
->   target/riscv/csr.c        | 18 +++++++++++--
->   target/riscv/fpu_helper.c | 27 --------------------
->   target/riscv/meson.build  |  9 ++++---
->   target/riscv/op_helper.c  | 15 -----------
->   6 files changed, 84 insertions(+), 47 deletions(-)
-> 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 862834b480..3f4563fce2 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -36,7 +36,9 @@
->   #include "system/tcg.h"
->   #include "kvm/kvm_riscv.h"
->   #include "tcg/tcg-cpu.h"
-> +#ifdef CONFIG_TCG
->   #include "tcg/tcg.h"
-
-Apparently this header isn't needed at all.
-
-> +#endif
->   
->   /* RISC-V CPU definitions */
->   static const char riscv_single_letter_exts[] = "IEMAFDQCBPVH";
-> @@ -956,6 +958,13 @@ static void riscv_cpu_realize(DeviceState *dev, Error **errp)
->       RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(dev);
->       Error *local_err = NULL;
->   
-> +#ifndef CONFIG_TCG
-> +    if (cpu->cfg.misa_w) {
-> +        error_setg(errp, "x-misa-w requires TCG");
-> +        return;
-> +    }
-> +#endif
-> +
->       cpu_exec_realizefn(cs, &local_err);
->       if (local_err != NULL) {
->           error_propagate(errp, local_err);
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 17305e1bb7..e53a5d567d 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -21,6 +21,7 @@
->   #include "qemu/log.h"
->   #include "qemu/main-loop.h"
->   #include "cpu.h"
-> +#include "fpu/softfloat.h"
->   #include "internals.h"
->   #include "pmu.h"
->   #include "exec/cputlb.h"
-> @@ -28,8 +29,10 @@
->   #include "exec/target_page.h"
->   #include "system/memory.h"
->   #include "instmap.h"
-> +#ifdef CONFIG_TCG
->   #include "tcg/tcg-op.h"
->   #include "accel/tcg/cpu-ops.h"
-> +#endif
->   #include "trace.h"
->   #include "semihosting/common-semi.h"
->   #include "exec/icount.h"
-> @@ -38,6 +41,52 @@
->   #include "pmp.h"
->   #include "qemu/plugin.h"
->   
-> +/* Exceptions processing helpers */
-> +G_NORETURN void riscv_raise_exception(CPURISCVState *env,
-> +                                      RISCVException exception,
-> +                                      uintptr_t pc)
-> +{
-> +    CPUState *cs = env_cpu(env);
-> +
-> +    trace_riscv_exception(exception,
-> +                          riscv_cpu_get_trap_name(exception, false),
-> +                          env->pc);
-> +
-> +    cs->exception_index = exception;
-> +#ifdef CONFIG_TCG
-> +    cpu_loop_exit_restore(cs, pc);
-> +#else
-> +    qemu_build_not_reached();
-> +#endif
-> +}
-> +
-> +target_ulong riscv_cpu_get_fflags(CPURISCVState *env)
-> +{
-> +    int soft = get_float_exception_flags(&env->fp_status);
-> +    target_ulong hard = 0;
-> +
-> +    hard |= (soft & float_flag_inexact) ? FPEXC_NX : 0;
-> +    hard |= (soft & float_flag_underflow) ? FPEXC_UF : 0;
-> +    hard |= (soft & float_flag_overflow) ? FPEXC_OF : 0;
-> +    hard |= (soft & float_flag_divbyzero) ? FPEXC_DZ : 0;
-> +    hard |= (soft & float_flag_invalid) ? FPEXC_NV : 0;
-> +
-> +    return hard;
-> +}
-> +
-> +void riscv_cpu_set_fflags(CPURISCVState *env, target_ulong hard)
-> +{
-> +    int soft = 0;
-> +
-> +    soft |= (hard & FPEXC_NX) ? float_flag_inexact : 0;
-> +    soft |= (hard & FPEXC_UF) ? float_flag_underflow : 0;
-> +    soft |= (hard & FPEXC_OF) ? float_flag_overflow : 0;
-> +    soft |= (hard & FPEXC_DZ) ? float_flag_divbyzero : 0;
-> +    soft |= (hard & FPEXC_NV) ? float_flag_invalid : 0;
-> +
-> +    set_float_exception_flags(soft, &env->fp_status);
-> +}
-> +
->   int riscv_env_mmu_index(CPURISCVState *env, bool ifetch)
->   {
->   #ifdef CONFIG_USER_ONLY
-> @@ -1667,6 +1716,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
->       return TRANSLATE_SUCCESS;
->   }
->   
-> +#ifdef CONFIG_TCG
->   static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
->                                   MMUAccessType access_type, bool pmp_violation,
->                                   bool first_stage, bool two_stage,
-> @@ -1709,6 +1759,7 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
->       env->two_stage_lookup = two_stage;
->       env->two_stage_indirect_lookup = two_stage_indirect;
->   }
-> +#endif
->   
->   hwaddr riscv_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
->   {
-> @@ -1733,6 +1784,7 @@ hwaddr riscv_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
->       return phys_addr;
->   }
->   
-> +#ifdef CONFIG_TCG
->   void riscv_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
->                                        vaddr addr, unsigned size,
->                                        MMUAccessType access_type,
-> @@ -1957,6 +2009,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
->   
->       return true;
->   }
-> +#endif
->   
->   static target_ulong riscv_transformed_insn(CPURISCVState *env,
->                                              target_ulong insn,
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 5514e0f455..04fa320ff8 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -2135,21 +2135,31 @@ static RISCVException read_misa(CPURISCVState *env, int csrno,
->   
->   static target_ulong get_next_pc(CPURISCVState *env, uintptr_t ra)
->   {
-> +    /* Outside of a running cpu, env contains the next pc. */
-> +    if (ra == 0) {
-> +        return env->pc;
-> +    }
-> +
-> +#ifdef CONFIG_TCG
->       uint64_t data[INSN_START_WORDS];
->   
-> -    /* Outside of a running cpu, env contains the next pc. */
-> -    if (ra == 0 || !cpu_unwind_state_data(env_cpu(env), ra, data)) {
-> +    if (!cpu_unwind_state_data(env_cpu(env), ra, data)) {
->           return env->pc;
->       }
->   
->       /* Within unwind data, [0] is pc and [1] is the opcode. */
->       return data[0] + insn_len(data[1]);
-> +#else
-> +    qemu_build_not_reached();
-> +#endif
->   }
->   
->   static RISCVException write_misa(CPURISCVState *env, int csrno,
->                                    target_ulong val, uintptr_t ra)
->   {
-> +#ifdef CONFIG_TCG
->       RISCVCPU *cpu = env_archcpu(env);
-> +#endif
->       uint32_t orig_misa_ext = env->misa_ext;
->       Error *local_err = NULL;
->   
-> @@ -2178,7 +2188,11 @@ static RISCVException write_misa(CPURISCVState *env, int csrno,
->       }
->   
->       env->misa_ext = val;
-> +#ifdef CONFIG_TCG
->       riscv_cpu_validate_set_extensions(cpu, &local_err);
-
-Maybe clearer to add as a stub?
-
-> +#else
-> +    qemu_build_not_reached();
-> +#endif
->       if (local_err != NULL) {
->           /* Rollback on validation error */
->           qemu_log_mask(LOG_GUEST_ERROR, "Unable to write MISA ext value "
 
