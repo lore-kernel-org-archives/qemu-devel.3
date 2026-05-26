@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9A6DCD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 11:05:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 129D5CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 11:05:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRpbB-0007MZ-Io; Tue, 26 May 2026 07:05:25 -0400
+	id 1wRpay-0006iK-3g; Tue, 26 May 2026 07:05:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
- id 1wRpbA-0007Dz-19
- for qemu-devel@nongnu.org; Tue, 26 May 2026 07:05:24 -0400
-Received: from mail-dy1-x1344.google.com ([2607:f8b0:4864:20::1344])
+ id 1wRpax-0006eD-29
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 07:05:11 -0400
+Received: from mail-dl1-x1241.google.com ([2607:f8b0:4864:20::1241])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
- id 1wRpb8-0008Cq-93
- for qemu-devel@nongnu.org; Tue, 26 May 2026 07:05:23 -0400
-Received: by mail-dy1-x1344.google.com with SMTP id
- 5a478bee46e88-3042a388168so3124758eec.1
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 04:05:21 -0700 (PDT)
+ id 1wRpav-0007y4-FT
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 07:05:10 -0400
+Received: by mail-dl1-x1241.google.com with SMTP id
+ a92af1059eb24-1329fc4bf77so9245039c88.1
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 04:05:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779793521; x=1780398321; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779793508; x=1780398308; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HZ2SEKYQIUrZHs3Nx+7QeMR2uW/p7CVSETlES67ZrAA=;
- b=RykhbUjpy8bxu0htsvotfZ73mol4GH6Yn8lA4LVN56ex7U+8OP4/SELffATNfG2zJ8
- rGDd0AFOEsaimc5gUmkIn0BhqNfJPUfxcpLuKBWz+iq0FHs1YGppGp913IEUH9qfwL6r
- p6mzzm483YTqu+Ag7iUFcjO7e6GSR911xnBXwBeVUtEjNGyOTkbBPL4+rIvVrZ6C5C2F
- waoDey+2gCP39ATDSdD4Ti8v6s+Q++14EFBAx/OOWeuuie3gZ9YuTN8auyARJRA7KWc8
- hqSGcMxi/K7awcE/z4HTSxMw2h1lspvQhlhk7RShLR+jfdxn9XL6WJCY+jA5l43MgwX6
- bbWQ==
+ bh=7LNTrsDW4vwaM7sTeKBcMHIN/LyHr74i/KHeH1OCs0M=;
+ b=m2d9pJIfA8tVSR8usmJpX+GONsiD7SfprCAg5e82YBGV6/JGtDQXjwA93ROzNqH9st
+ GJlSHjSomndt/djCTJFi6Daeyl5RcLtqHZRqvMCNxGj6Jn8/bOZ15or0Eemmm+NrnH/j
+ 7dRes0rYXa8FOuSj49cJNHOUKA2WoUP5dMo1y183lZkUVIYYNF6j5XlJJCSJTYNOxMvp
+ rrjBQ8Mnx5ZMT4joTqP/J3oXNb5or4zxTvxzvaOKZZlB+OTZPKs8pBoWuaV9ZtDMYdc5
+ y9l2jpiqrXJ1r/GbCNjmNJIvNEEKOYZcuZ8eE7aNeCQbDulDbmIVjbCYGUmJjgi2MBpy
+ vR2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779793521; x=1780398321;
+ d=1e100.net; s=20251104; t=1779793508; x=1780398308;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=HZ2SEKYQIUrZHs3Nx+7QeMR2uW/p7CVSETlES67ZrAA=;
- b=fCD+pSLYV8ZqTneWXFeYl1duMIQ1fD+W3coyVyD6LH9ep++zZSyBHE9/hDOvSDBwtf
- GAhQGeemUqxvuAMXDGKOip3gaJN7ALpguqiEPGt2JUbewsoA2NklsZc82/evqVKnphHo
- YduRN71YVKDs3h/rr6o6eUivWq4ECCFJUJ5TILIeAkuLC2NV6KspH6b1rWBGapSEukhW
- HlWierpPsqL904+tLaPPv0dM8YRyTXlaAl65KrXo1+wscwTnJfs3kxZn3MfSmieLLZ0N
- c7EtNwBmR3OdbGvh8yOIGLC9iRQE3EqtHsZgJyApfvux+9cmKnBXzEChYREgRA0iSm2a
- OYLA==
-X-Gm-Message-State: AOJu0YzDWBmVi0HzM0FpMU35YJbDoHYleSYloi8s7eJBZirN1m67Kah1
- uEPiX6Ly3hWWc0vacyHsiEPAUNU1n5XB6TY8UKkCgRIZl0lc3hZ9igoPdtSSTf5VJi1H+A==
-X-Gm-Gg: Acq92OG4hR6a3CA693KYEbbkIAp1IwaNMkACFGbEkcMgF1xTyEQZ6u4u6FjpdDG6fw+
- GayILGD2iJq02wCxzcLmWhm+GtncOac9cH81ojRER2XZgNyIz+hum/0rvN8ZdAnd+wBXxh7WzT7
- j0esHt6tqCbwNXtwK990i4w6eKgyFjA3v6adckWyWuNW+urO4OCVIslxk5gQSKDY+CtGvNSElAP
- FO/46QLY/KR9vV7IoHXqy94YZqzD9EWZzexHXgh48zaQmFMrjjIkGFh1/kg/YpWoTFOf6Arg3I6
- V8PGGek2/CG09WkxrA3KZG/WZq1iJY1n/o+MZDtKTuLbK1WfET8wCSfYn4AFJSevJOk4LiOAEpo
- 8dqfgLuLQgg2UTsYiB4EolISWNDalTKH/BfeZAPcIP8yva7Oc5iSMI2bVS94zBjEb8R9No70wwU
- BHLKtjhHLXkwfM7dI231aLjZ7vWJX9D4Nqc8auJ/ZnPMqtvVRw7sEY7mg7OlImvV25/FxJn48ji
- 9LU+JMOsdEaka0fZy82+A==
-X-Received: by 2002:a05:7301:388a:b0:304:81b6:fd51 with SMTP id
- 5a478bee46e88-30481b6fe6dmr2930315eec.6.1779793520496; 
- Tue, 26 May 2026 04:05:20 -0700 (PDT)
+ bh=7LNTrsDW4vwaM7sTeKBcMHIN/LyHr74i/KHeH1OCs0M=;
+ b=PLyHzLaChqdliW0LYPc/cfwJo/5QR6T+NxCrITth0cD2Di1UAPvBBKAx4ceH6mfWib
+ rXopfxw8zNJylygyC++/P9qW2e2UXY/uO7PV2v2XJLMLhO2F7XWhxmaZtGJb2DXOupQ5
+ tBNFJO3KtfW8M8H3xeMYlqbmEjKZspCQnENk2Ax3w0RonmefUBdbuqE1dZqSxCv9LrNs
+ C2FexGa1mhPcSxATsKQFSB9G0JmiZLnoSbRed6sOVySrbhyFUHH2ZipvEBy4CsgjeyZC
+ Nz8z+4pnSbkCHKNxetnnU8f/JfKZiWHrjwTIAqKdapG7y7FVNGmcRTTZW96vgaYWS2Ys
+ sDrg==
+X-Gm-Message-State: AOJu0Yz4gRXhgdXagt2I3sNUnK98/FUV3A06DQqbz9dr4DnKsEhqX94E
+ KJX3jIQ2sQTfmgJzTUpetgqxbKktSQDVceYRBFnxZZ8PToMAfQ481rmQiQDxChTc5drIOA==
+X-Gm-Gg: Acq92OEbFZ26mNEtOmXZ+rgnt48Sp3fuUF3LZvtANsmeZIXmANpLgFBtUr/+AttWq+S
+ QVAhSvdXPwLpBgDvQXQv9uQ9u2bkEoDWV4zp+Em+MIA1IMxAWdXb9R4l+UkNy60xyJBZSGKvOFq
+ JWwF+j6GesExpA9WSWney4Dil1pVKaByn/Ra/SAdda7t+QngWRW1d1FoAJKBi0l/x9jXBQCYyYd
+ Hxyt4YBjehwN3Tw++o/ZKbiUr9oBz1cPmPXYZPAu9EviBYdzp14/ij5ZuLatI1r1+7v411DckpR
+ VpRmMihK/R4/7OqdAoKsio4ghttIP8JQqAuA0yglHRC6jqU+hMgVeATkzGV6WTAIYq1aVrqE1+K
+ hk6Po8w8gQxQKx2h22ob1VR6Wez9u507UUgv24WS2IHUPu2Xp6Ou7KG3/0OJpBFTJc35RzFTWQ8
+ F9d7jZTH4B6EeahPiYyVVTKYcEYeGg/embPutRkqQudiRTvf9mQ3w/RdHgRf8WDFTUPhX1uEnef
+ IN5uBB4fDXNY6sPCNj+NQ==
+X-Received: by 2002:a05:7022:1b17:b0:136:e4f:d2b2 with SMTP id
+ a92af1059eb24-1365fc6927bmr6837874c88.29.1779793507421; 
+ Tue, 26 May 2026 04:05:07 -0700 (PDT)
 Received: from openkylin.. (ec2-3-101-81-203.us-west-1.compute.amazonaws.com.
  [3.101.81.203]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1366a2e634csm9250276c88.2.2026.05.26.04.05.16
+ a92af1059eb24-1366a2e634csm9250276c88.2.2026.05.26.04.05.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 04:05:19 -0700 (PDT)
+ Tue, 26 May 2026 04:05:06 -0700 (PDT)
 From: Zephyr Li <fritchleybohrer@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
  chao.liu.zevorn@gmail.com, daniel.barboza@oss.qualcomm.com
-Subject: [PATCH v2 3/5] target/riscv: Move riscv_raise_exception() to common
- code
-Date: Tue, 26 May 2026 19:04:48 +0800
-Message-ID: <79175d7516dd98709c9703feca3ef0bc7b9e6b86.1779792111.git.fritchleybohrer@gmail.com>
+Subject: [PATCH v2 0/5] target/riscv: Fix no-TCG build
+Date: Tue, 26 May 2026 19:04:45 +0800
+Message-ID: <cover.1779792111.git.fritchleybohrer@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1779792111.git.fritchleybohrer@gmail.com>
-References: <cover.1779792111.git.fritchleybohrer@gmail.com>
+In-Reply-To: <20260526024454.2013810-1-fritchleybohrer@gmail.com>
+References: <20260526024454.2013810-1-fritchleybohrer@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1344;
- envelope-from=fritchleybohrer@gmail.com; helo=mail-dy1-x1344.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1241;
+ envelope-from=fritchleybohrer@gmail.com; helo=mail-dl1-x1241.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,68 +102,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
----
- target/riscv/cpu_helper.c | 19 +++++++++++++++++++
- target/riscv/op_helper.c  | 15 ---------------
- 2 files changed, 19 insertions(+), 15 deletions(-)
+This series fixes the riscv64-softmmu --disable-tcg build by keeping
+TCG-only files and code out of no-TCG builds, while keeping common
+helpers available for non-TCG configurations.
 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 678c106ae5..752752d520 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -39,6 +39,25 @@
- #include "pmp.h"
- #include "qemu/plugin.h"
- 
-+/* Exceptions processing helpers */
-+G_NORETURN void riscv_raise_exception(CPURISCVState *env,
-+                                      RISCVException exception,
-+                                      uintptr_t pc)
-+{
-+    CPUState *cs = env_cpu(env);
-+
-+    trace_riscv_exception(exception,
-+                          riscv_cpu_get_trap_name(exception, false),
-+                          env->pc);
-+
-+    cs->exception_index = exception;
-+#ifdef CONFIG_TCG
-+    cpu_loop_exit_restore(cs, pc);
-+#else
-+    qemu_build_not_reached();
-+#endif
-+}
-+
- target_ulong riscv_cpu_get_fflags(CPURISCVState *env)
- {
-     int soft = get_float_exception_flags(&env->fp_status);
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index 81873014cb..d17a8bbf10 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -28,21 +28,6 @@
- #include "exec/tlb-flags.h"
- #include "trace.h"
- 
--/* Exceptions processing helpers */
--G_NORETURN void riscv_raise_exception(CPURISCVState *env,
--                                      RISCVException exception,
--                                      uintptr_t pc)
--{
--    CPUState *cs = env_cpu(env);
--
--    trace_riscv_exception(exception,
--                          riscv_cpu_get_trap_name(exception, false),
--                          env->pc);
--
--    cs->exception_index = exception;
--    cpu_loop_exit_restore(cs, pc);
--}
--
- void helper_raise_exception(CPURISCVState *env, uint32_t exception)
- {
-     riscv_raise_exception(env, exception, 0);
+The first patches move common helpers out of TCG-only helper files. The
+later patches reject x-misa-w when TCG is unavailable, provide a no-TCG
+stub for riscv_cpu_validate_set_extensions(), and build RISC-V TCG-only
+sources only when TCG is enabled.
+
+Changes in v2:
+- Split the original patch into smaller logical patches.
+- Drop the unused tcg/tcg.h include.
+- Add a no-TCG stub for riscv_cpu_validate_set_extensions().
+- Keep x-misa-w rejected during CPU realize when TCG is unavailable.
+
+Testing:
+- riscv64-softmmu --enable-kvm --disable-tcg --enable-debug builds
+  successfully.
+- riscv64-softmmu --enable-debug builds successfully.
+- qemu-system-riscv64 -M virt,accel=qtest -cpu rv64,x-misa-w=true \
+  -S -nographic reports "x-misa-w requires TCG".
+
+Zephyr Li (5):
+  target/riscv: Remove unused tcg/tcg.h include
+  target/riscv: Move fflags helpers to common code
+  target/riscv: Move riscv_raise_exception() to common code
+  target/riscv: Reject x-misa-w without TCG
+  target/riscv: Build TCG-only code only with TCG
+
+ target/riscv/cpu.c         |  8 +++++-
+ target/riscv/cpu_helper.c  | 53 ++++++++++++++++++++++++++++++++++++++
+ target/riscv/csr.c         | 11 ++++++--
+ target/riscv/fpu_helper.c  | 27 -------------------
+ target/riscv/meson.build   |  9 ++++---
+ target/riscv/op_helper.c   | 15 -----------
+ target/riscv/tcg/tcg-cpu.h | 10 +++++++
+ 7 files changed, 85 insertions(+), 48 deletions(-)
+
 -- 
 2.43.0
 
