@@ -4,54 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42194CD5BB4
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 05:02:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23973CD5BB4
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 05:14:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRjvh-0006Su-IS; Tue, 26 May 2026 01:02:13 -0400
+	id 1wRk6a-00019t-V1; Tue, 26 May 2026 01:13:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wRjvf-0006Qu-JQ; Tue, 26 May 2026 01:02:11 -0400
-Received: from smtpout1.mo2.mail-out.ovh.net ([79.137.123.219])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wRk6Z-00019V-4e
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 01:13:27 -0400
+Received: from smtpout6.mo537.mail-out.ovh.net ([51.210.91.25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wRjvd-0005tn-2p; Tue, 26 May 2026 01:02:11 -0400
-Received: from director4.derp.mail-out.ovh.net
- (director4.derp.mail-out.ovh.net [79.137.60.37])
- by mo2.mail-out.ovh.net (Postfix) with ESMTPS id 4gPgbJ40myz40RZ;
- Tue, 26 May 2026 05:02:03 +0000 (UTC)
-Received: from director4.derp.mail-out.ovh.net
- (director4.derp.mail-out.ovh.net. [127.0.0.1])
- by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Tue, 26 May 2026 05:02:03 +0000 (UTC)
-Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.188.202])
- by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4gPgbH5HlJz1xwM;
- Tue, 26 May 2026 05:02:03 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.5])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wRk6W-0004dn-Mn
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 01:13:26 -0400
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net [51.68.80.175])
+ by mo537.mail-out.ovh.net (Postfix) with ESMTPS id 4gPgrH0VPzz43n9;
+ Tue, 26 May 2026 05:13:19 +0000 (UTC)
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net. [127.0.0.1])
+ by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <alistair@alistair23.me>; Tue, 26 May 2026 05:13:18 +0000 (UTC)
+Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.178.252])
+ by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4gPgrG4dS3z5w88; Tue, 26 May 2026 05:13:18 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.3])
  (Authenticated sender: clg@kaod.org)
- by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- EBBD21923B66; Tue, 26 May 2026 05:02:01 +0000 (UTC)
+ by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 801D21B43B9E;
+ Tue, 26 May 2026 05:13:16 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-99G003ae58a0b4-f137-4353-87d8-4d484cc71073,
+ (GARM-107S001e107d090-97b6-4fe9-8189-b91d52419373,
  F49BC9865E6D06A1207BBF08B4ECD36E7EFD173C) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <5eaabbc7-6813-4b29-9e21-2e4698c0ec0f@kaod.org>
-Date: Tue, 26 May 2026 07:02:01 +0200
+Message-ID: <5207df68-1010-40af-a369-ac4b8a11e57c@kaod.org>
+Date: Tue, 26 May 2026 07:13:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/9] hw/arm/aspeed: Introduce initial AST1040 support
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
+Subject: Re: [PATCH v1 00/23] hw/aspeed: Convert Aspeed devices to use
+ Resettable interface
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen
+ <kane_chen@aspeedtech.com>, Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Ninad Palsule <ninad@linux.ibm.com>, Joe Komlodi <komlodi@google.com>,
+ Nabih Estefan <nabihestefan@google.com>, Jason Wang <jasowang@redhat.com>,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20260525053036.3305181-1-jamin_lin@aspeedtech.com>
+References: <20260525044129.3133916-1-kane_chen@aspeedtech.com>
+ <TYPPR06MB8206D1D6B283918E5FDC9172FC0A2@TYPPR06MB8206.apcprd06.prod.outlook.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -96,30 +99,30 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260525053036.3305181-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <TYPPR06MB8206D1D6B283918E5FDC9172FC0A2@TYPPR06MB8206.apcprd06.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 2975471979953695859
+x-ovh-tracer-id: 3165467588364577852
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFD/zxHn9U3jW86hPhC+PPXXUdJAUEblKGUpFeLXFTtrtZV9CUFdFVTPohLAxm4nz+C73N53Ka/+GLmg/OkmK9rl7It/zM5o0d+gDsMeLiLECQ7m0ZMwNXSQNmGI5hBghve+g+OZXDNQVCm/I6EQvqFFE2NrCbe4imfR8qo5DJnhW+zBOAk7nU+7zYiz6kCeiI+9GCfkePkCOw1w0RhKfQ4CsC46cPQuq+GfXCYUh6UbhEBcfLUPfUqVOyDpBjqOO8Wjo2dHpe+De7+9obc/KPAnpHJ6SMmDlcknNuC3+Dd/HJhbegTxcrh6PlkIXf0tDIi8fAcPwHCpeS4fMvOTnXHJNOSXdJ2jC/EfQ9fKv4j4NHsqyJ9vi5rgbMYDyVZafdmRE/SxbwlmLUbK4VtgCaSwc0AuGnUM5DOPa4m83jOcUKR7oaEXtx5YC/aWgBQbtsO+y9wx27aaNY6FbBVZ+hljy0DzBGvpdzWTzksl19JNWtKPH+a/7L7KzX4HxoY528FFTJjb1Y9ybgkQ2AnjZhMTvVUbSF2paysArwU+BF6VtJYCQUpvNEiUEzoKDV3s76hUG3AqNymROWyKir7F/s3gSiMpcV65A9ogmPjo15hNzZt91hBMmmdKBUlIs/vp1VQcu0v5vWU7UoSjxhR9f68bfz65O/iSOQIIVhYGQGj9Q
-DKIM-Signature: a=rsa-sha256; bh=xoD/S71BTxNXTkTg3lPeiyNJike4ZCWXCdTvlHoXa9s=; 
+X-VR-SPAMCAUSE: dmFkZTFEVyLqT26Eez+uyTnebDjLexlIm8pLmFy/yvR8bZYxsxdGusFp9M1xPXKx5UwkeaRwnhxax/HeQa0pK+XHa9sNKjZcHncEV2calSgQS4i4R/B4VGWF+prpw3uFLJx5lntnFDndYGL19dXrdRinVOgF4p8gC8TeFMCYLxLiuQPsffzQh1kvwFA7Q0C7LQoYuRYq6+S0pZrFKRLf5wNdkT2S40chXCl1DdQLaGatzQ10dNlx0gYkkgODJXUkqQAemxTCEZMQ1OZGOOmozthVqEUPFMSRhlyGRnqer2bwT/qmmIHJImowTdJpj4YtVwK1qu8ej0G9JKz2ngn1AeC3hhaKMc41zZk0EFoR+I7TK07QXUaw1ZYLR3n4/6sozw0NvDGV1aYFyT7h5tn1+V/cTuOrls13gnAd1zvLiR0WUEI0uWxZc+mOqA4p7IyKLoD0hWg4zb+L+X13Pa2pctGn9Goa0BrM6WukQerv7JvsxRD3FYQs4B1aKpVawVw7j9WFTEF3ajeYRu8prm+8KRax292IpDq5oqXLLzmbwIyIV1tPeDbbAGLfI5A8eY20A0dVOHHorepswQBsGlnX6eZBYMcCgn1w7P4YuP4oZwKJzddiOAA5SxgEFLhnNfx7m4XxgGPiVW19ZNOQ8MThW6+EV9vNVUgG+OuHYPMRqGK2kaBHLg
+DKIM-Signature: a=rsa-sha256; bh=f1wUjqoJ842WzzH0QZCSfUiHpIsiCqO2y3RBsNMgYCk=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1779771726; v=1;
- b=a6OSFv6NqTNvTS4ua/Bo8O/CjSsIbxYB0utf5IBaDNnp7R7qhro8OvHH486eqTrja2RSvwAc
- 1R3EvkTOYZw8SVRWtGb383chx3jzGIqRkn4HRmlzGJVAendVF5G1F3mQytKRGjaqblXi4T1LOdd
- GCfjHPt/w1y6tb8Bn/gnmFpHl9zbFsqErhVZPP9ya8Cw0s0kqhowtWan+QUAlAEEh1LLy1kqJ6j
- TYPT6wCBDIbdn4lkpXkBeI3LOEnjOZ5fcScfOnAxj0BL5wTWchg+8oaOPiAEu9B2TgTjVzFMGO3
- Qhy0y+QDmQYiLQ8QbZQEjITm8zyv5YK7r1YAupHvkRDIg==
-Received-SPF: pass client-ip=79.137.123.219; envelope-from=clg@kaod.org;
- helo=smtpout1.mo2.mail-out.ovh.net
+ t=1779772401; v=1;
+ b=wVkJFwM90LMjQCXZyUKbUtidu60hElM7fMa0zjrVA0Ee3H32OriCYa/gWSWDBhSzSMQ79Yf/
+ zrSTuz0tbkX2smdeaUpx/lT55Ce5pPJvPd9QFQIgdnjxigMla8Dd2QfC37n1TC8hwWOrK+SF7s/
+ zyHNNpy/GLC29cCp+oGH3c2D78yDE8NFHuavk1vREtXyNwFZTvq325bQpQHZ0u32vFZTIsfa4H9
+ 20yJkZ+Xl0zmontfZilqiwaDFXrzexsiEORKIWJwjP3oONlVcBMCtaB0csPhCLP3hKyHN1gqJPn
+ QrBQbdOkiHuXqjhdCaQ+Rr9nhakMgpaLqI2lFc2m538Sw==
+Received-SPF: pass client-ip=51.210.91.25; envelope-from=clg@kaod.org;
+ helo=smtpout6.mo537.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,96 +138,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/25/26 07:30, Jamin Lin wrote:
-> This series introduces the initial ASPEED AST1040 support for QEMU.
-> 
-> AST1040 is the next-generation bridge/BIC controller platform
-> following AST1030 and is based on an ARM Cortex-M4F CPU core.
-> Since QEMU currently does not provide Cortex-M4F support, the
-> existing Cortex-M4 CPU model is used temporarily.
-> 
-> The current implementation provides enough functionality to boot
-> basic firmware environments with UART console support, HyperRAM/SRAM
-> mapping, and NVIC interrupt handling.
-> 
-> Currently this series is able to boot Zephyr successfully to the
-> shell prompt:
-> 
->    uart:~$
-> 
-> Example command line:
-> 
->    ./build/qemu-system-arm \
->        -machine ast1040-evb \
->        -kernel <zephyr.elf> \
->        -serial mon:stdio \
->        -snapshot \
->        -nographic
-> 
-> There are many different types of RAM, including DRAM, SRAM, SDRAM, PSRAM,
-> SECSRAM, and HyperRAM. To support these memory types, we need to introduce
-> distinct variable names for their memory regions and memory sizes.
-> 
-> In addition, the SoC contains multiple SRAM instances. To make the code more
-> flexible and maintainable, I am considering changing the array structure to
-> support internal memory types such as SRAM, SDRAM, PSRAM, HyperRAM, and SECSRAM.
-> 
-> For example:
-> 
-> sram[NUM]
-> sram_size[NUM]
-> ASPEED_DEV_SRAMX
-> 
-> v1:
->    - AST1040 silicon revision ID
->    - SDRAM support in the Aspeed SoC framework
->    - Initial AST1040 SoC model
->    - AST1040 EVB machine model
-> 
-> v2:
->    - Add AST1040 functional test
->    - Add AST1040 documentation
->    - Convert SRAM MemoryRegion to array type
->    - Convert SRAM size definition to array type
->    
-> Jamin Lin (9):
->    hw/arm/aspeed: Convert SRAM MemoryRegion to array type
->    hw/arm/aspeed: Convert SRAM size definition to array type
->    hw/arm/aspeed: Rename SRAM memmap entry for multi-SRAM support
->    hw/arm/aspeed: Consolidate secure SRAM into SRAM array
->    hw/misc/aspeed_scu: Add AST1040 A0 silicon revision ID
->    hw/arm/aspeed: Introduce AST1040 A0 SoC model
->    hw/arm/aspeed: Add AST1040 EVB machine model
->    tests/function/aspeed: Add AST1040 functional test
->    docs/system/arm/aspeed: Add AST1040 Bridge IC evaluation board
-> 
->   docs/system/arm/aspeed.rst                  |  18 +-
->   include/hw/arm/aspeed_soc.h                 |  11 +-
->   include/hw/misc/aspeed_scu.h                |   1 +
->   hw/arm/aspeed_ast1040.c                     | 254 ++++++++++++++++++++
->   hw/arm/aspeed_ast1040_evb.c                 |  73 ++++++
->   hw/arm/aspeed_ast10x0.c                     |  29 ++-
->   hw/arm/aspeed_ast2400.c                     |  14 +-
->   hw/arm/aspeed_ast2600.c                     |  10 +-
->   hw/arm/aspeed_ast27x0-ssp.c                 |   4 +-
->   hw/arm/aspeed_ast27x0-tsp.c                 |   4 +-
->   hw/arm/aspeed_ast27x0.c                     |  12 +-
->   hw/misc/aspeed_scu.c                        |   1 +
->   hw/arm/meson.build                          |   4 +-
->   tests/functional/arm/meson.build            |   1 +
->   tests/functional/arm/test_aspeed_ast1040.py |  35 +++
->   15 files changed, 424 insertions(+), 47 deletions(-)
->   create mode 100644 hw/arm/aspeed_ast1040.c
->   create mode 100644 hw/arm/aspeed_ast1040_evb.c
->   create mode 100644 tests/functional/arm/test_aspeed_ast1040.py
-> 
+Jamin,
 
-Applied to
+On 5/25/26 06:44, Jamin Lin wrote:
+>> Subject: [PATCH v1 00/23] hw/aspeed: Convert Aspeed devices to use
+>> Resettable interface
+>>
+>> Hi,
+>>
+>> This series converts Aspeed device drivers from the legacy reset callback
+>> registered via device_class_set_legacy_reset() to the Resettable interface by
+>> setting rc->phases.hold directly.
+>>
+>> Best Regards,
+>> Kane
+>> ---
+>>
+>> Kane-Chen-AS (23):
+>>    hw/misc/aspeed_pwm: convert to use Resettable interface
+>>    hw/misc/aspeed_peci: convert to use Resettable interface
+>>    hw/misc/aspeed_hace: convert to use Resettable interface
+>>    hw/misc/aspeed_sbc: convert to use Resettable interface
+>>    hw/misc/aspeed_xdma: convert to use Resettable interface
+>>    hw/misc/aspeed_lpc: convert to use Resettable interface
+>>    hw/misc/aspeed_sdmc: convert to use Resettable interface
+>>    hw/misc/aspeed_scu: convert to use Resettable interface
+>>    hw/misc/aspeed_ltpi: convert to use Resettable interface
+>>    hw/pci-host/aspeed_pcie: convert to use Resettable interface
+>>    hw/timer/aspeed_timer: convert to use Resettable interface
+>>    hw/gpio/aspeed_gpio: convert to use Resettable interface
+>>    hw/sd/aspeed_sdhci: convert to use Resettable interface
+>>    hw/ssi/aspeed_smc: convert to use Resettable interface
+>>    hw/intc/aspeed_vic: convert to use Resettable interface
+>>    hw/intc/aspeed_intc: convert to use Resettable interface
+>>    hw/i3c/aspeed_i3c: convert to use Resettable interface
+>>    hw/watchdog/wdt_aspeed: convert to use Resettable interface
+>>    hw/net/ftgmac100: convert to use Resettable interface
+>>    hw/fsi/aspeed_apb2opb: convert to use Resettable interface
+>>    hw/rtc/aspeed_rtc: convert to use Resettable interface
+>>    hw/adc/aspeed_adc: convert to use Resettable interface
+>>    hw/i2c/aspeed_i2c: convert to use Resettable interface
+>>
+>>   hw/adc/aspeed_adc.c       |  7 ++++---
+>>   hw/fsi/aspeed_apb2opb.c   |  7 ++++---
+>>   hw/gpio/aspeed_gpio.c     |  7 ++++---
+>>   hw/i2c/aspeed_i2c.c       | 14 ++++++++------
+>>   hw/i3c/aspeed_i3c.c       |  7 ++++---
+>>   hw/intc/aspeed_intc.c     |  7 ++++---
+>>   hw/intc/aspeed_vic.c      |  7 ++++---
+>>   hw/misc/aspeed_hace.c     |  7 ++++---
+>>   hw/misc/aspeed_lpc.c      |  7 ++++---
+>>   hw/misc/aspeed_ltpi.c     |  7 ++++---
+>>   hw/misc/aspeed_peci.c     |  7 ++++---
+>>   hw/misc/aspeed_pwm.c      |  7 ++++---
+>>   hw/misc/aspeed_sbc.c      |  7 ++++---
+>>   hw/misc/aspeed_scu.c      | 39 ++++++++++++++++++++++-----------------
+>>   hw/misc/aspeed_sdmc.c     | 14 ++++++++------
+>>   hw/misc/aspeed_xdma.c     |  7 ++++---
+>>   hw/net/ftgmac100.c        | 14 ++++++++------
+>>   hw/pci-host/aspeed_pcie.c | 21 ++++++++++++---------
+>>   hw/rtc/aspeed_rtc.c       |  7 ++++---
+>>   hw/sd/aspeed_sdhci.c      |  7 ++++---
+>>   hw/ssi/aspeed_smc.c       |  7 ++++---
+>>   hw/timer/aspeed_timer.c   |  7 ++++---
+>>   hw/watchdog/wdt_aspeed.c  |  7 ++++---
+>>   23 files changed, 130 insertions(+), 98 deletions(-)
+>>
+>> --
+>> 2.43.0
+> 
+> This patch series
+> 
+> Reviewed-by Jamin Lin <jamin_lin@aspeedtech.com>
+> 
+> Thanks,
+> Jamin
 
-     https://github.com/legoater/qemu aspeed-next
+
+This email did not reach the mailing list for some reason. Could you resend
+please ?
 
 Thanks,
 
 C.
-
 
