@@ -4,67 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2AD5CD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 01:18:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 460E7CD5BC9
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 02:16:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRgQd-0004m1-6g; Mon, 25 May 2026 21:17:55 -0400
+	id 1wRhKN-0003Ua-Rm; Mon, 25 May 2026 22:15:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wRgQa-0004ld-Kj
- for qemu-devel@nongnu.org; Mon, 25 May 2026 21:17:52 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wRgQW-0003hJ-Ij
- for qemu-devel@nongnu.org; Mon, 25 May 2026 21:17:52 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Bxdniu9BRqTzsNAA--.13309S3;
- Tue, 26 May 2026 09:17:35 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJDxysGs9BRqPSuRAA--.10582S3;
- Tue, 26 May 2026 09:17:32 +0800 (CST)
-Subject: Re: [PATCH v3 0/4] LoongArch : Add KVM DINTC support
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, lixianglai@loongson.cn, chenhuacai@loongson.cn
-References: <20260525084645.3328690-1-gaosong@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <7fa7d47f-a3e0-3402-5ca9-56a07e3c8b0a@loongson.cn>
-Date: Tue, 26 May 2026 09:14:30 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wRhKL-0003U7-Vf
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 22:15:29 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wRhKJ-0003C7-L6
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 22:15:29 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-67b8d9c26bbso20305436a12.2
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 19:15:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779761725; cv=none;
+ d=google.com; s=arc-20240605;
+ b=MjXxZfNkXsxG8dUI4SRQho50aEE0Tf0Me7SmAmkduNlGp9R8bKuNMuw2LahkMorxSI
+ j9xXvRaYwLPDOGfd4UO6HzTOHssUikItFXJ0O0eUAywT1XnNN0EPyfNEDlqwbvPM9+nU
+ EbEG+B6uh6i3qtnYzqHwEfUlU48gne8tKarYwCC1N962JJH4vseWtzP23HAulqdZvHgs
+ Gjn/dr6bDe/SGcxTKBbkycdMByjIwgDPSjVMfvQ4FS0VYTyOWqbmpIMKU8oC1f2ru5tO
+ vrkjdI5gJC6P6HcUK1WPgJhVdGDPVxRz21hPYB3NR7IgPz77rkPeFsCiQidnB9AcKXGJ
+ l82A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=oCDTD8lH0y6C8BeRbEgLqHJNbnDfaJ7MDj91cAjqHHc=;
+ fh=TtG/iV8sfBZwdR9sl0n8UMsaUtOivjwzY4oaHz5eVkY=;
+ b=IedtLbZBMU74PvF2fkHsIGOOY9HrpjIsb3aa4ywL70JKJ+SeyODLdhQwFn6UEw3fRs
+ jApw9gn+tOkUQcpXzI7kfeCkhCBkLMTurC7/iBmKX2XXtpG8ajjDluSU1wgWRPBWmTFN
+ viWYzi2YVx5eXs9hB2QbO/yqKBurrnqUbKaHjKj1qX6JgjJGGzUPAeRzuF0aFp8nnRoa
+ KO4/jVmGBkmNOgNs/b3mxyn1BydUGgjYaUx52dA3gBL8IX24SWhOCK59+AEpdFKr9zAL
+ YhaHVeiEo6Q3BCA/VCk93jeMJcwXVh2E2F2X7k4eo3ojrZQR5KL4VZj1UWOLk/jGFfzc
+ omaA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1779761725; x=1780366525; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=oCDTD8lH0y6C8BeRbEgLqHJNbnDfaJ7MDj91cAjqHHc=;
+ b=SWbT55heKpo3ZsXAjbM9Rv0w2ervEgbh3UiHPph6qkERmKAYOFb0Hs4XJHgFNX5aEq
+ Id1Hza3+bmKfmDQoywN+xdkcYU3C4NPeVWduEmu20gp++vnlm9xelpSrUQ8NAlmrZOOc
+ 5Nq956O6DkD3loPRSWvnhieeDAqM5DIWV6FHt0Mz9jxNOTxmga09vf+egysyivZ2AgYA
+ f0kAN2GO19QmQW/UvkTFjppFP5gjXqhw66+ZjS2JXiMPpq+bFlf7A8yh4hYkWgRgTZb6
+ vCmVunDeCTkR5t8HNw2NvgjIeckcj9GjTyP98KWUWZn0WnPCTMxgWu6Nb8mihZkzq1Hv
+ xSkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779761725; x=1780366525;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=oCDTD8lH0y6C8BeRbEgLqHJNbnDfaJ7MDj91cAjqHHc=;
+ b=XE8YtO3ZRIZas6BeZaIPOO4klQ7xPpZffrYUKfSy9vz2wCyvqRLyMQDHzn7DMIwbgA
+ 1qR3V5JllsGoB7Xcn4yK2dy4Lkjd3BnTKnzHuHEOLdj/Akb80ETSS+/xvoE65jcppLWB
+ ZP5CaxHGd/tgOnp/I7+88kY2/sccvX98eZIft0Rai5x63NmCGVz/kzWXr4EUp7sByhVz
+ rc34hYfCQ/Y7KW1Uzt/LsDNjNZNR4jrAh/+6Izv0QJE9icgoKXFoPaaGrhogRKDUqqTq
+ MQFFC2K7R0fP2wQz9dbSfnIv298b859wS/b2XhHt17odfgRFQbdJ2epjvDpwSh62+8eW
+ /H1w==
+X-Gm-Message-State: AOJu0YyAjzXmzEv+a3guWSePq/9nKC3gS8L5CBFld6sqwZbg6oWs60/U
+ rtYoNoUUe6eagMiT52UzKbIWb83Dd5EdtLQgBWNlhFc0AcgkOpqNy84EiBqc5pn3C3veaAqCOea
+ dHViEqz1k9sOVbLgePz0S4SunFyNkQGxNr6OEnFPy8g==
+X-Gm-Gg: Acq92OGJFYPjPPGGars1enbxeSuQNiNiR/stCKEhcj7Hf5rZhXfjD49JBxWllQaAnIr
+ V9n+MJXTfDbq+nOa9ex9/sazMQCTMdGJJ8ZaQInX7fPZrYOmUIxsBXoxsPjEHPo3jsMZzQ6F3Yr
+ jy1P/rT2zpQsFtgNhAONx+q7GDbFXIY93oSsfGz6dvwujA2BpzUO66g6YmtPL6Qng++WQffvwB+
+ KnH/SCUtFTnxLKImFwNwDAwBT/Kf3Ozu+41wpF+EhvW+NzltqwB9mvTu4VaqRmHdk81A+6fpza9
+ RHmNS+OIfSGgF1xJ3uMwgfwNOsOyfSTNgQwwGQ==
+X-Received: by 2002:a17:907:3f13:b0:bc5:1329:a1c8 with SMTP id
+ a640c23a62f3a-bdd25ce8c6bmr846524866b.31.1779761724858; Mon, 25 May 2026
+ 19:15:24 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20260525084645.3328690-1-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxysGs9BRqPSuRAA--.10582S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxuw1fZF4DJr4UKFW8tF13GFX_yoW7Ww1xpa
- 47Ar15Wr98Gr9xAF1kZ3Waqr48XFs7A3ZF9FyUW3s2krZa9F18u3s29r1kXF9Fy348CFy8
- XF43GryDuF9rZrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWUJVW8JwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CPfJUU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260522000324.23255-1-alistair.francis@wdc.com>
+ <76440da5-9f2a-4536-babc-082359812713@tls.msk.ru>
+In-Reply-To: <76440da5-9f2a-4536-babc-082359812713@tls.msk.ru>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 26 May 2026 12:14:58 +1000
+X-Gm-Features: AVHnY4J0Cu_aoPDqmqUd3WJJOEDz4rpipF0xuS1VDAOUH094gipveH5cP8qbKg8
+Message-ID: <CAKmqyKN2N0pJGvazDTfnxLhy9d5LUhjEgq-Kq11wNX2-Ajyvzw@mail.gmail.com>
+Subject: Re: [PULL 00/48] riscv-to-apply queue
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>, 
+ qemu-stable <qemu-stable@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,141 +118,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, May 26, 2026 at 3:43=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> wr=
+ote:
+>
+> On 22.05.2026 03:02, alistair23@gmail.com wrote:
+>
+> > RISC-V PR for 11.1.
+> >
+> > * Remove spike as default machine
+> > * Deprecate the shakti_c machine
+> > * Set MISA.[C|X] based on the selected extensions
+> > * Update Maintainers for OpenSBI Firmware
+> > * Update OpenSBI to v1.8.1
+> > * Avoid RISCVCPU copy in PMU FDT setup
+> > * A collection of specification compliance improvements
+> > * Fix Svnapot 64KB pages
+> > * Handle source overlap of vector widening reduction instructions
+> > * Check interrupt in SiFive UART after txctrl register is written
+> > * Fix medeleg[11] read-only zero bit for M-mode ECALL
+> > * Fix tail handling for vmv.s.x and vfmv.s.f
+> > * Update the local AIA interrupt mask
+> > * Add KVM support for Zicbop and BFloat16 extensions
+> > * Fix the IOMMU FSC SV32 capability check
+> > * Avoid caching PCI device IDs in the IOMMU
+> > * Implement Microchip mpfs ioscb PLLs and sysreg clock dividers
+> > * Remove the internal CPU riscv_cpu_* arrays
+> > * Fix IOCOUNTINH.CY toggle detection
+> > * Fix the read of pmpaddr(0-63) CSRs
+> > * Make hpmcounterh return the upper 32-bits
+> > * Minor fixes and enhancements of RISC-V AIA devices
+> > * Re-process IOMMU command queue after clearing CMD_ILL
+> >
+> > ----------------------------------------------------------------
+> > Abhigyan Kumar (1):
+> >        target/riscv: Fix medeleg[11] read-only zero bit for M-mode ECAL=
+L
+> >
+> > Alistair Francis (4):
+> >        target/riscv: Remove spike as default machine
+> >        target/riscv: Deprecate the shakti_c machine
+> >        MAINTAINERS: Maintain OpenSBI Firmware
+> >        target/riscv: Update the local interrupt mask
+> >
+> > Andrew Jones (1):
+> >        hw/riscv/riscv-iommu: Fix Svnapot 64KB pages
+> >
+> > Anton Blanchard (1):
+> >        target/riscv: rvv: Handle source overlap of vector widening redu=
+ction instructions
+> >
+> > Chengbo Gao (1):
+> >        hw/riscv/riscv-iommu: Avoid caching PCI device IDs
+> >
+> > Daniel Henrique Barboza (16):
+> >        roms/opensbi: Update to v1.8.1
+> >        target/riscv/cpu.c: add xlrbr isa_edata_arr[] entry
+> >        target/riscv/cpu.c: fix smctr/ssctr isa_edata_arr[] order
+> >        target/riscv: make riscv-qmp-cmds use isa_data_arr[]
+> >        target/riscv/tcg: treat all exts equally in cpu_disable_priv_spe=
+c_isa_exts
+> >        target/riscv/tcg: use only isa_edata_arr[] in cpu_cfg_ext_get_na=
+me()
+> >        target/riscv/cpu.c: remove riscv_cpu_enable_named_feat()
+> >        target/riscv: remove riscv_cpu_named_features[]
+> >        target/riscv/tcg: use isa_edata_arr[] in riscv_cpu_update_misa_x=
+()
+> >        target/riscv/kvm: use isa_edata_arr[] for unavailable props
+> >        target/riscv/tcg: use isa_edata_arr[] to enable max exts
+> >        target/riscv/tcg: use cfg_offset as cpu_set_multi_ext cb opaque
+> >        target/riscv: do not set defaults in cpu prop callback
+> >        target/riscv/tcg: use isa_edata_arr[] to create user props
+> >        target/riscv/cpu: remove riscv_cpu_* arrays
+> >        target/riscv/csr.c: fix read of pmpaddr(0-63) CSRs
+> >
+> > Fangyu Yu (1):
+> >        hw/riscv/riscv-iommu: Fix IOCOUNTINH.CY toggle detection
+> >
+> > Frank Chang (3):
+> >        target/riscv: Update MISA.C for Zc* extensions
+> >        target/riscv: Update MISA.X for non-standard extensions
+> >        hw/char: Check interrupt after txctrl register is written
+> >
+> > Guenter Roeck (1):
+> >        hw: misc: Implement Microchip mpfs ioscb PLLs and sysreg clock d=
+ividers
+> >
+> > Jay Chang (1):
+> >        hw/riscv: riscv-iommu: Re-process command queue after clearing C=
+MD_ILL
+> >
+> > Jim Shu (4):
+> >        hw/intc: riscv_aplic: Fix level trigger IRQ in direct delivery m=
+ode
+> >        hw/intc: riscv_aplic: Add reset API to APLIC
+> >        hw/intc: riscv_imsic: Add reset API to IMSIC
+> >        hw/intc: riscv_aplic: add trace events of APLIC read/write funct=
+ion
+> >
+> > Mohamed Ayman (1):
+> >        riscv: virt: avoid RISCVCPU copy in PMU FDT setup
+> >
+> > Portia Stephens (1):
+> >        target/riscv: Make hpmcounterh return the upper 32-bits
+> >
+> > Zishun Yi (9):
+> >        target/riscv: Allow mseccfg access based on ext_zicfilp
+> >        target/riscv: add Zvknha as an implied extension for Zvknhb
+> >        target/riscv: Remove unconditional MENVCFG_CDE from mask
+> >        target/riscv: Fix missing CDE check for scountinhibit
+> >        target/riscv/pmp: Fix integer overflow in TOR and NA4 address co=
+mputation
+> >        target/riscv: Add mseccfg to VMStateDescription
+> >        target/riscv: clear mseccfg on reset for all dependent extension=
+s
+> >        hw/riscv/riscv-iommu: fix FSC SV32 capability check
+> >        hw/riscv/virt-acpi-build: Fix off-by-one error in RIMT ID mappin=
+g
+> >
+> > Zongmin Zhou (2):
+> >        target/riscv/kvm: add KVM support for Zicbop extension
+> >        target/riscv/kvm: Add BFloat16 extensions support
+> >
+> > chen.zhongyao@zte.com.cn (1):
+> >        target/riscv: Fix tail handling for vmv.s.x and vfmv.s.f
+>
+> It looks like this pull request includes quite a number of patches which
+> are qemu-stable material, some small and/or unimportant, some more
+> visible.  Examples:
+>
+>   target/riscv: Fix medeleg[11] read-only zero bit for M-mode ECALL
+>   target/riscv: Update the local interrupt mask
+>
+> but knowing nothing about riscv, I don't have expertise to choose which
+> of them to pick up.  Should we pick sometihng to currently active stable
+> branches, which are 10.0 (lts), 10.2 and 11.0?
 
-Hi Song,
+Yeah, we should. Again I forgot to go through them and CC stable.
 
-There is AI review comments about DMSI about irqchip-in-kernel driver, I 
-think it had better be handled before starting new feature.
+These commits should be backported to any branches they apply to (if
+they don't apply don't worry):
 
-https://sashiko.dev/#/patchset/20260522064945.614486-1-maobibo%40loongson.cn
+53cc9747ed target/riscv/csr.c: fix read of pmpaddr(0-63) CSRs (by
+Daniel Henrique Barboza 12 days ago)
+8158a74f0a target/riscv: clear mseccfg on reset for all dependent
+extensions (by Zishun Yi 2 weeks ago)
+27f9566dcd target/riscv: Update the local interrupt mask (by Alistair
+Francis 13 days ago)
+eccb1d6940 target/riscv: Add mseccfg to VMStateDescription (by Zishun
+Yi 2 weeks ago)
+612f22c19d target/riscv/pmp: Fix integer overflow in TOR and NA4
+address computation (by Zishun Yi 2 weeks ago)
+a0946caf1d target/riscv: Fix medeleg[11] read-only zero bit for M-mode
+ECALL (by Abhigyan Kumar 4 weeks ago)
+e07077a766 hw/char: Check interrupt after txctrl register is written
+(by Frank Chang 13 days ago)
+caf3bef5f0 target/riscv: rvv: Handle source overlap of vector widening
+reduction instructions (by Anton Blanchard 6 weeks ago)
+2494836232 target/riscv: Allow mseccfg access based on ext_zicfilp (by
+Zishun Yi 2 weeks ago)
+613bb1949f target/riscv: Update MISA.X for non-standard extensions (by
+Frank Chang 5 weeks ago)
+f0433a8bc4 target/riscv: Update MISA.C for Zc* extensions (by Frank
+Chang 5 weeks ago)
 
-This is a pre-existing issue, but looking at dmsintc_inject_irq(), could 
-it read uninitialized host stack memory? The local array unsigned long 
-vector[4] is declared without initialization. If atomic64_read() returns 
-0 for an index, the corresponding vector[i] element is not assigned and 
-retains uninitialized stack data:
-   arch/loongarch/kvm/intc/dmsintc.c:dmsintc_inject_irq() {
-         unsigned long vector[4], old;
-         ...
-         for (i = 0; i < 4; i++) {
-                 old = atomic64_read(&(ds->vector_map[i]));
-                 if (old)
-                      vector[i] = atomic64_xchg(&(ds->vector_map[i]), 0);
-         }
-         if (vector[0]) {
-                 old = kvm_read_hw_gcsr(LOONGARCH_CSR_ISR0);
-                 kvm_write_hw_gcsr(LOONGARCH_CSR_ISR0, vector[0] | old);
-         }
-         ...
-}
-If the uninitialized stack memory contains non-zero garbage, it could be
-written to the guest's LOONGARCH_CSR_ISRx registers, potentially causing 
-a guest-to-host information leak or spurious interrupts.
+Plus the ones that already CC qemu-stable.
 
-Regards
-Bibo Mao
+Alistair
 
-On 2026/5/25 下午4:46, Song Gao wrote:
-> From: gaosong <gaosong@loongson.cn>
-> 
-> Hi
-> 
-> This series adds KVM put/get support for msgint CSRs and introduces
-> msgint feature checks. It also adds kvm_dintc_realize() when
-> kvm_irqchip_in_kernel is enabled, which creates and initializes the DINTC
-> device in kernel mode.
-> 
-> Since the kernel now supports DINTC on the KVM model,
-> this series of updates will no longer use the' RFC' header;
-> 
-> In addition, this series updates the Linux header files to version 7.1-rc4,
-> and updates the `update-linux-headers.sh` script to include `typelimits.h`.
-> 
-> About Testing:
-> 1. run script with '-cpu max,msgint=on' and 'virt,dmsi=on.'
-> '
-> ./build/qemu-system-loongarch64 -accel kvm \
->       -bios /usr/share/edk2/loongarch64/QEMU_EFI-silent-pflash.raw \
->       -cpu max,msgint=on\
->       -smp 4 \
->       -machine virt,dmsi=on,kernel_irqchip=on\
->       -m 16G \
->       -netdev tap,id=net0,ifname=tap0,script=/root/net.sh,downscript=no,vhost=on,queues=4 \
->      -device virtio-net-pci,netdev=net0,mq=on,vectors=128,mac=52:54:00:12:34:56 \
->       -monitor telnet:localhost:4418,server,nowait \
->      -device virtio-gpu-pci \
->      -drive if=none,id=disk0,file=/home/kvm/lns23.qcow2,format=qcow2 \
->      -device virtio-blk-pci,drive=disk0,id=virtio_disk0 \
->      --nographic
-> '
-> 2  the vm can work well with with net test, such as netperf or iperf test.
-> 
-> V3:
->     Rebase,add patch4 to disable msgint in KVM model.
-> 
-> 
+>
 > Thanks,
-> Song Gao
-> 
-> Cédric Le Goater (1):
->    linux-headers: Update to Linux v7.1-rc4
-> 
-> Song Gao (2):
->    target/loongarch: Add kvm support dintc
->    Add dintc kvm_irqchip_in_kernel support
-> 
-> gaosong (1):
->    targe/loongarch: KVM disable msgint
-> 
->   hw/intc/loongarch_dintc.c                     |  13 +
->   hw/intc/loongarch_dintc_kvm.c                 |  48 ++
->   hw/intc/meson.build                           |   2 +
->   include/hw/intc/loongarch_dintc.h             |  10 +
->   include/standard-headers/drm/drm_fourcc.h     |  28 +-
->   include/standard-headers/linux/const.h        |  18 +
->   include/standard-headers/linux/ethtool.h      |  28 +-
->   .../linux/input-event-codes.h                 |  13 +
->   include/standard-headers/linux/pci_regs.h     |  71 ++-
->   include/standard-headers/linux/typelimits.h   |   8 +
->   include/standard-headers/linux/virtio_ring.h  |   5 +-
->   include/standard-headers/linux/virtio_rtc.h   | 237 ++++++++++
->   include/standard-headers/linux/vmclock-abi.h  |  20 +
->   linux-headers/asm-arm64/kvm.h                 |   1 +
->   linux-headers/asm-arm64/unistd_64.h           |   1 +
->   linux-headers/asm-generic/unistd.h            |   5 +-
->   linux-headers/asm-loongarch/kvm.h             |   5 +
->   linux-headers/asm-loongarch/kvm_para.h        |   1 +
->   linux-headers/asm-loongarch/unistd_64.h       |   2 +
->   linux-headers/asm-mips/unistd_n32.h           |   1 +
->   linux-headers/asm-mips/unistd_n64.h           |   1 +
->   linux-headers/asm-mips/unistd_o32.h           |   1 +
->   linux-headers/asm-powerpc/unistd_32.h         |   1 +
->   linux-headers/asm-powerpc/unistd_64.h         |   1 +
->   linux-headers/asm-riscv/kvm.h                 |  11 +-
->   linux-headers/asm-riscv/ptrace.h              |  37 ++
->   linux-headers/asm-riscv/unistd_32.h           |   1 +
->   linux-headers/asm-riscv/unistd_64.h           |   1 +
->   linux-headers/asm-s390/unistd_32.h            | 446 ------------------
->   linux-headers/asm-s390/unistd_64.h            |   1 +
->   linux-headers/asm-x86/kvm.h                   |  21 +-
->   linux-headers/asm-x86/unistd_32.h             |   1 +
->   linux-headers/asm-x86/unistd_64.h             |   1 +
->   linux-headers/asm-x86/unistd_x32.h            |   1 +
->   linux-headers/linux/const.h                   |  18 +
->   linux-headers/linux/iommufd.h                 |  48 ++
->   linux-headers/linux/kvm.h                     |  46 +-
->   linux-headers/linux/mshv.h                    |   4 +-
->   linux-headers/linux/psp-sev.h                 |   2 +-
->   linux-headers/linux/stddef.h                  |   4 +
->   linux-headers/linux/vduse.h                   |  85 +++-
->   linux-headers/linux/vfio.h                    |  30 + >   target/loongarch/cpu.c                        |   8 +-
->   target/loongarch/cpu.h                        |   1 +
->   target/loongarch/kvm/kvm.c                    |  74 +++
->   45 files changed, 866 insertions(+), 496 deletions(-)
->   create mode 100644 hw/intc/loongarch_dintc_kvm.c
->   create mode 100644 include/standard-headers/linux/typelimits.h
->   create mode 100644 include/standard-headers/linux/virtio_rtc.h
->   delete mode 100644 linux-headers/asm-s390/unistd_32.h
-> 
-
+>
+> /mjt
 
