@@ -4,85 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB36ACD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 10:26:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BF55CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 10:32:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRozg-0001aG-ON; Tue, 26 May 2026 06:26:40 -0400
+	id 1wRp4w-0002yA-5F; Tue, 26 May 2026 06:32:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wRozd-0001Zu-P0
- for qemu-devel@nongnu.org; Tue, 26 May 2026 06:26:38 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wRp4r-0002wY-9h
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 06:32:03 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wRozb-00082s-Kx
- for qemu-devel@nongnu.org; Tue, 26 May 2026 06:26:37 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-49050bfe053so5605895e9.3
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 03:26:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wRp4p-0002vk-Nl
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 06:32:00 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-651bf695701so10019002d50.2
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 03:31:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779791518; cv=none;
+ d=google.com; s=arc-20240605;
+ b=iocwVwAuphTH3rolLRbVDixLD0Pnr2MSKfxExU1j6FU938AzUEk1yu97kmTGeDKqJ+
+ p1detitnl8yQWGbMpHaiw0791xO97SzNskILXufeCOe0VKG1vgDLowL0exWQXwyBIjIu
+ GqwLxPPVMekaE7Up3RurZMIDPTQ2Fu1ypoL8v0J9oSuLOV2IHS/o37dgVQcrNXoklZem
+ KabXcUK8ysg6denmZSsshU1t7u/BwFAK5DraLLYv0YPEcl2sO9Av65YYnkq/c5qM4haR
+ GgWqfBWV+Xg9CER8E1+kGHJrWZwGlmw+CuQwf3dGhy9ddscsObylq+w3oTbi807X5rFi
+ HCBg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=CdB3Xeo/RDXmP5Hwr6H+wNirmuNzl+E2KmzTP4eU6wI=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=esfms3QYPP+ismez1HesNWfMNHpI9+tqJ8jQyRFKr7prjY41XX7jY55BC7dXIhASm9
+ /+I8R0Vi9/QCNRMvgsktPYrEpCfEEno2EjRGZIlj53Rzp4K1XivEMmWxsTaYSXQfrdtO
+ erj/x3XzhTih2xFoOXLh83JM6p020Gh9wn0oVpLqahmXF6Tptpq3fkr9y8p6xs7UwnVR
+ +ufVI6HfMxCjAnzx8NcuhAuWCFVpK7pO6TdPYymBx0QuFJWDSjlyAX0hQwJyneqDTGOk
+ V4ib3lhrRNVoi4zM5wVRJLuTcnQAxlkKrj6elj8nRtfNOxGggjbu2FMGLfE8rIvX75dl
+ 0F1A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779791193; x=1780395993; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AL2B9lxj85PgaoPWFz4TL283sM8mMu5xvDy/JJxwFRI=;
- b=hx0oELTIIHvet++8he3IXvBBVHQXx+VoNDrtKID8PRZ6TIGiB3oaS7N9ivaVo/sJTf
- f7XoxU5vbThSHRdSnG3xckqqNtYMuFAx6tPr2RHh9+kKjNGjRnhg61W1pn4hwHt2PCEy
- fuKl3gxDJYRHHr5lEcb25+OsBS6Io0eR7ygXgxFn1JJdzASr8DBZyRepeklFP0OwHgXq
- tY8jFs1IjiHsZuGK3AHeJSznePojy6T+cXpDZYU8geAbYo6YZLmbQDBN+Mqr/3Xu1QsE
- zJVab8X1Y0ag2VDZhtnoR+KRbsuuizmVzc5SZ04OgWvhFFX/qt8HEotfHNRPVbVYn4Pf
- DPVw==
+ d=linaro.org; s=google; t=1779791518; x=1780396318; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=CdB3Xeo/RDXmP5Hwr6H+wNirmuNzl+E2KmzTP4eU6wI=;
+ b=xbtWwZFJKE9wdQKz8LFXv25hSPZq2ESDDf5qWyYIPtO1dNBFAEd33KM4BBv9oOZK4M
+ XWg9PP4SquzKRtbRmGzcuxHV9XdYHbcZmtQLAcntIRlNg0z+4B/Ikjy3sadVyd1Jd+x+
+ GkVCS3AkFHQ/XbQMv6gTBGCZJJg17CiwllDOUtq3ZKmdFPex56Y797bXcmkwos0xWf0h
+ H63CwbZ26G1ufNSKp7LMI3o2rAK2WZf2hO57LqZyENERIFMHvehO3HJlPwvYd3B1RVhb
+ PiZx34qrvVtoP5mEfV0Y9BC3lI6VYk85TZr0TSIpo6WuSXY4eu4jXS3gEi1urylwPW68
+ M93Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779791193; x=1780395993;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AL2B9lxj85PgaoPWFz4TL283sM8mMu5xvDy/JJxwFRI=;
- b=EjOpdDWHVIxu6RiwOQpcOS6TWy71rVT32F48w6T9rUZPJ87ZiDAwz3T7Zn89Wm8J8s
- igNny5NA3hGTnQP35Qzl8qa8zuLxxIPsm+vr7vocRPJ9ZnsefCozNRpv8fUGQiXVuzZD
- PCuIJaPDjJOqYeBdiA8AqRUrH6R5O7S17w9hSyD0igV/qWSt6kwcSPnha2VktkjhO9n/
- c9lHiHUTmMvTKcF3aGWU0/Vp3j37OVwEzG8PcRLnne50f/zNXYupOAfM5glOdiHyNpwo
- wCLSf34dPrtvvEflKNRm2mEybNBiqCiM4yEg6QYVTf88GE5Z07GKH/b24U3jzaXyjDQ0
- Axvg==
-X-Gm-Message-State: AOJu0YyBPAYxeYfYrKCvoMuVwmyVFXxDwimEUr4d29A5X1An4SFTtbgu
- nb7ZE1FO/D1+q6yi21UDmHWEwQKQ9AptHgzBqlCkV1hak44LY5Hs7DP7qxV5TINc+Fg=
-X-Gm-Gg: Acq92OGb1tjtLrHNhmDPBpqcy5vCGSIaUEO7Hr5TVicpMOZuyTpxHkd4DogJ5JIYmCH
- 6zE0X2cflOVm7+5gPLB7YwtH481osJe3pNuvHdqsCgazs6I3jiD/ksgYFa7JQvlKB203gUPhKX4
- tt05oiqWNo2XVujZFvR83g7qvb2ukinO0BtMcli4m2v/9+S/Bn5c0ccp9GiS2uuPzfSt6Fzmske
- Dl+fCKyZXaudrUpP1dcpFzKnWQsR0If7ilOklgrTX+cRvWQt5mqOEIvmWSgpjRHzPLJW97p7BsY
- viS5G0+K3umBLu5pMZckkptUxEYUQ5ey3ZWPotk7G6bxKBFvTmNJ1HzWRn+I2R2nrsqJ47SBAeY
- adn3p293JXFHy+n0iA62A32viIS+bzPrsmqeNWlbyF9psRgHGF/cgliEb7OZ/7DKho4XSM4Xe+y
- jcOqsfS/MXt1TzKu2bTHlC/sk=
-X-Received: by 2002:a05:600c:4511:b0:490:6869:46c3 with SMTP id
- 5b1f17b1804b1-490686947bemr105705525e9.30.1779791193048; 
- Tue, 26 May 2026 03:26:33 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6d493dfsm35071131f8f.23.2026.05.26.03.26.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 03:26:32 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5904E5F7DC;
- Tue, 26 May 2026 11:26:31 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  pbonzini@redhat.com,
- stefanha@redhat.com,  imp@bsdimp.com
-Subject: Re: [PATCH] code-provenance: add exceptions
-In-Reply-To: <0bb3f577eff40a6a834d14db94a1612a2108ec67.1779748353.git.mst@redhat.com>
- (Michael S. Tsirkin's message of "Mon, 25 May 2026 18:34:08 -0400")
-References: <0bb3f577eff40a6a834d14db94a1612a2108ec67.1779748353.git.mst@redhat.com>
-User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Tue, 26 May 2026 11:26:31 +0100
-Message-ID: <87wlwqzctk.fsf@draig.linaro.org>
+ d=1e100.net; s=20251104; t=1779791518; x=1780396318;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CdB3Xeo/RDXmP5Hwr6H+wNirmuNzl+E2KmzTP4eU6wI=;
+ b=fd1LXEsHufQeR5LDCzYRgvtOtQNhxq2XKOzwcQnQl/qTfvHNtJcgAlxUGejdHej4sm
+ TQuDS6b3pgGlieTJGQnQgphe5Hsuzqy59GnDaZPqq19CPvDG4zpAvFxbj8w+PnsxDkJ5
+ X29aw+971v3eSezmwcxkuAoGvztcSRn+5RcARzeRx9PmtvPdY39pUqz2gJEERBcL1bPq
+ TAkZwlIRouOZirPKYnNEWmRUjDf6Is8rEyClG0yyNQ6mU53NSk74nRHSGYhm4FwBUNZx
+ NXsIQdYtqA97jl11FZOvs2UuJNfn9qLCPboEHfQf2Whk0F0ZNWJjdZaWsbEkrOnKs9Pz
+ 9NCg==
+X-Gm-Message-State: AOJu0Yz4z3V/WAXWMnilReGACJXd9sDYMCpHVB4u6SZFe00f4ZphRBX1
+ c2JMntkDDVwduoVRu6cnbuHdcJRMzxe957AWrOMjl538tdPQbGBsvX6ygWFlc22aWiOzrqwlTKu
+ Sv04Ija0QHL4D7bSvH1r2tUk1RRQXe2EnYkVVT0vILA==
+X-Gm-Gg: Acq92OE4zzhF9eH1D7gexL14ikZq93aTBpTsuSPYg+ZLssn4a/XMG79yBqnFPq3KCvO
+ a5MJqD0hITMpka+JMz1LHCoabQ3WdAoxVud0mXawPoSOC26Upqce4R+ZvYvOYTkjcGtPVBDRg1l
+ FVPbnaHSxmYLWxZewNs4Vk9uvIT7YQzM/wlPCk+kuDvPna7QuxSLt0Hfr6a/ADr/koyt5tyFbP+
+ uLd6mgVHuu9ThN3zxQ9VcSKLtGCtcxP37NZjIhB2udS99wydWENDnOE8bizMV+/Dl2NLjJcDFZv
+ 08R4XeRiuhlOU7ytLOPJYvBqSlrIK4xZFBT8ZPYJzFWUj6tJOYQLPOcm0Vm2Li91kuA=
+X-Received: by 2002:a05:690e:4844:b0:65e:41a4:54d2 with SMTP id
+ 956f58d0204a3-65ec98d662cmr12268126d50.32.1779791518107; Tue, 26 May 2026
+ 03:31:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
+References: <20260522220306.235200-1-richard.henderson@linaro.org>
+ <20260522220306.235200-17-richard.henderson@linaro.org>
+In-Reply-To: <20260522220306.235200-17-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 26 May 2026 11:31:46 +0100
+X-Gm-Features: AVHnY4IFc21ZkDYeOmP5SOvU9FXHwRAU5aY35cUDb5mhypfKxGx8rRpIrRa3KjU
+Message-ID: <CAFEAcA_DGdtL534Sp49zq9dnt7b4fQEFc8f-FvoT0KU7bvd_Bg@mail.gmail.com>
+Subject: Re: [PATCH v7 16/64] linux-user/aarch64: Implement FPMR signal frames
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,59 +114,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
-
-> As a first step towards moving with the times, let's add
-> exceptions. Let's also do what linux does and ask for tags
-> on ai generated code.
+On Fri, 22 May 2026 at 23:05, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> This is not going far enough imho but will hopefully be
-> noncontroversial.
->
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  docs/devel/code-provenance.rst | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
->
-> diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.=
-rst
-> index 4e6a9afe0d..c3ed7f5e69 100644
-> --- a/docs/devel/code-provenance.rst
-> +++ b/docs/devel/code-provenance.rst
-> @@ -347,3 +347,22 @@ requirements for contribution.  In particular, the "=
-Signed-off-by"
->  label in a patch submission is a statement that the author takes
->  responsibility for the entire contents of the patch, including any parts
->  that were generated or assisted by AI tools or other tools.
-> +
-> +1. When AI generated part of the contribution is not creative in nature
-> +   (so not even copyrighteable).
-> +
-> +2. When the creative part of the contribution is clearly QEMU-specific
-> +   (so derived from the prompt).
-> +
+>  linux-user/aarch64/signal.c | 44 ++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 43 insertions(+), 1 deletion(-)
 
-Before we start adding exceptions I think we need to be more explicitly
-clear about the responsibility of the person who adds the s-o-b to the
-patches.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Once we open the door to AI assisted contributions we need to be ready
-for a potential avalanche of slop.
+Side question -- have we ever looked at whether we can run
+the signal-frame test cases in the kernel's
+tools/testing/selftests/arm64/signal ?
 
-> +
-> +Attribution
-> +^^^^^^^^^^
-> +
-> +AI agents must not add Signed-off-by tags. Instead,
-> +contributions should include an Assisted-by tag, like this:
-> +
-> +  Assisted-by: AGENT_NAME:MODEL_VERSION
-> +
-> +For example:
-> +
-> +  Assisted-by: Claude:claude-opus-4-6
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+thanks
+-- PMM
 
