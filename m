@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67A8ECD5BC8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75CEBCD5BDD
 	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 08:20:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRn0R-0005Hp-QO; Tue, 26 May 2026 04:19:19 -0400
+	id 1wRn0G-0005DM-Qx; Tue, 26 May 2026 04:19:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wRn0O-0005Gz-SN
- for qemu-devel@nongnu.org; Tue, 26 May 2026 04:19:17 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wRn0F-0005Cd-Pm
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 04:19:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wRn0N-0007aW-7P
- for qemu-devel@nongnu.org; Tue, 26 May 2026 04:19:16 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wRn0D-0007Xo-3n
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 04:19:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779783554;
+ s=mimecast20190719; t=1779783544;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=U/3pptQ2qnZ2YhvRFjOnsHg+qVvQb2qB6bEVoqGtxAY=;
- b=PNalxMQYvLxVR5i0bRdV/V97V7s7VPwqOsQyEATh2ryFfzBjnHhDBe6/Wb/2WulLkHV8Mg
- +sylEkUyWW1lmBv82NmKesLR9KTsLc0Jgj1+GBiEsC+OXmKnp3pGPmMs31yDerI/H1VZN/
- b0nHbzTrZQ8JSSsmJqfsEeIZRQPBt/I=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=b4gGzKqYkZPtmFpeWH6+ZIWiEl85pUcGY2JyRRLoYIQ=;
+ b=dtAy2R2b3uefbUt0CdX0451O8hkiIrB+Uegfn9o/Y3pdpyDi3n7+wHZJpjEGC+BkBVlpNz
+ jshdBwWh6In9rat+Qw9pqwZrfbCuHtiXPOWlIY0hZCLzWB6c3BKF9NBpiweNdYegdON2wB
+ ZKyAPiOXkdqdgnnXsycySRk2rc/JwCQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-8-ADHpbhqCMd6w0jzkZw92cg-1; Tue,
- 26 May 2026 04:19:12 -0400
-X-MC-Unique: ADHpbhqCMd6w0jzkZw92cg-1
-X-Mimecast-MFC-AGG-ID: ADHpbhqCMd6w0jzkZw92cg_1779783551
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-46-4zegLKX8OIildaC280HBRw-1; Tue,
+ 26 May 2026 04:19:00 -0400
+X-MC-Unique: 4zegLKX8OIildaC280HBRw-1
+X-Mimecast-MFC-AGG-ID: 4zegLKX8OIildaC280HBRw_1779783539
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 53FCC195609E; Tue, 26 May 2026 08:19:11 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5E75418002E0; Tue, 26 May 2026 08:18:59 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.30])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D0AD01800357; Tue, 26 May 2026 08:19:09 +0000 (UTC)
+ id CD3DA180056E; Tue, 26 May 2026 08:18:57 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
+Cc: William de Abreu Pinho <williamdapinho@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 09/37] hw/arm/aspeed: Consolidate secure SRAM into SRAM array
-Date: Tue, 26 May 2026 10:18:20 +0200
-Message-ID: <20260526081848.651835-10-clg@redhat.com>
+Subject: [PULL 03/37] tests/functional/aspeed: introduce FacebookAspeedTest
+Date: Tue, 26 May 2026 10:18:14 +0200
+Message-ID: <20260526081848.651835-4-clg@redhat.com>
 In-Reply-To: <20260526081848.651835-1-clg@redhat.com>
 References: <20260526081848.651835-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -61,14 +61,13 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,127 +83,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+From: William de Abreu Pinho <williamdapinho@gmail.com>
 
-Some Aspeed SoCs contain multiple SRAM regions with different
-sizes and MMIO mappings, such as internal SRAM and secure SRAM.
+Facebook OpenBMC Images include an early script [1] that lowers the
+console log level to warning.  This suppresses the "Hostname set to"
+message from the serial console.  Introduce FacebookAspeedTest (a
+subclass of AspeedTest), that waits for login prompt instead.  Update
+bletchley-bmc and catalina-bmc to use the new class.
 
-The current implementation models secure SRAM separately from the
-generic SRAM representation, which complicates future multi-SRAM
-support and expansion.
+This is also used by the anacapa-bmc machine introduced in the following
+patch.
 
-Increase ASPEED_SRAM_NUM to 2 and migrate secure SRAM to use the
-common SRAM array representation. Rename the secure SRAM memmap
-entry to ASPEED_DEV_SRAM1 and update AST10x0 to initialize both
-SRAM regions through sram[] and sram_size[].
+[1]: https://github.com/openbmc/openbmc/blob/6a56a45931fb7015a3fc18553415909105b484d6/meta-facebook/recipes-phosphor/initrdscripts/phosphor-static-norootfs-init/999-reduce-printk
 
-This unifies SRAM-like regions under a common representation and
-prepares for future SoCs with additional SRAM regions.
-
-No functional change.
-
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Signed-off-by: William de Abreu Pinho <williamdapinho@gmail.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260525053036.3305181-5-jamin_lin@aspeedtech.com
+Link: https://lore.kernel.org/qemu-devel/20260519-add-anacapa-machine-v3-1-56c23993a20a@gmail.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/arm/aspeed_soc.h |  6 ++----
- hw/arm/aspeed_ast10x0.c     | 16 +++++++++-------
- 2 files changed, 11 insertions(+), 11 deletions(-)
+ tests/functional/arm/test_aspeed_bletchley.py | 6 +++---
+ tests/functional/arm/test_aspeed_catalina.py  | 6 +++---
+ tests/functional/aspeed.py                    | 8 ++++++++
+ 3 files changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index dda602e9f20c..3aac144cd408 100644
---- a/include/hw/arm/aspeed_soc.h
-+++ b/include/hw/arm/aspeed_soc.h
-@@ -60,7 +60,7 @@
- #define ASPEED_PCIE_NUM  3
- #define ASPEED_INTC_NUM  2
- #define ASPEED_IOEXP_NUM 2
--#define ASPEED_SRAM_NUM 1
-+#define ASPEED_SRAM_NUM 2
+diff --git a/tests/functional/arm/test_aspeed_bletchley.py b/tests/functional/arm/test_aspeed_bletchley.py
+index 5a60b24b3d2c..3000d0c302b1 100755
+--- a/tests/functional/arm/test_aspeed_bletchley.py
++++ b/tests/functional/arm/test_aspeed_bletchley.py
+@@ -5,10 +5,10 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
- struct AspeedSoCState {
-     DeviceState parent;
-@@ -89,7 +89,6 @@ struct AspeedSoCState {
-     AspeedSBCState sbc;
-     AspeedSLIState sli;
-     AspeedSLIState sliio;
--    MemoryRegion secsram;
-     UnimplementedDeviceState sbc_unimplemented;
-     AspeedSDMCState sdmc;
-     AspeedPWMState pwm;
-@@ -173,7 +172,6 @@ struct AspeedSoCClass {
-     const char * const *valid_cpu_types;
-     uint32_t silicon_rev;
-     uint64_t sram_size[ASPEED_SRAM_NUM];
--    uint64_t secsram_size;
-     int pcie_num;
-     int spis_num;
-     int sgpio_num;
-@@ -225,10 +223,10 @@ enum {
-     ASPEED_DEV_SCU,
-     ASPEED_DEV_ADC,
-     ASPEED_DEV_SBC,
--    ASPEED_DEV_SECSRAM,
-     ASPEED_DEV_EMMC_BC,
-     ASPEED_DEV_VIDEO,
-     ASPEED_DEV_SRAM0,
-+    ASPEED_DEV_SRAM1,
-     ASPEED_DEV_SDHCI,
-     ASPEED_DEV_GPIO,
-     ASPEED_DEV_GPIO_1_8V,
-diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
-index b55f788342a6..93c81195b56a 100644
---- a/hw/arm/aspeed_ast10x0.c
-+++ b/hw/arm/aspeed_ast10x0.c
-@@ -21,7 +21,7 @@
+ from qemu_test import Asset
+-from aspeed import AspeedTest
++from aspeed import FacebookAspeedTest
  
- static const hwaddr aspeed_soc_ast1030_memmap[] = {
-     [ASPEED_DEV_SRAM0]     = 0x00000000,
--    [ASPEED_DEV_SECSRAM]   = 0x79000000,
-+    [ASPEED_DEV_SRAM1]     = 0x79000000, /* SEC SRAM */
-     [ASPEED_DEV_IOMEM]     = 0x7E600000,
-     [ASPEED_DEV_PWM]       = 0x7E610000,
-     [ASPEED_DEV_FMC]       = 0x7E620000,
-@@ -249,14 +249,16 @@ static bool aspeed_soc_ast10x0_realize(Aspeed10x0SoCState *a, Error **errp)
-     memory_region_add_subregion(s->memory,
-                                 sc->memmap[ASPEED_DEV_SRAM0],
-                                 &s->sram[0]);
--    memory_region_init_ram(&s->secsram, OBJECT(s), "sec.sram",
--                           sc->secsram_size, &err);
+ 
+-class BletchleyMachine(AspeedTest):
++class BletchleyMachine(FacebookAspeedTest):
+ 
+     ASSET_BLETCHLEY_FLASH = Asset(
+         'https://github.com/legoater/qemu-aspeed-boot/raw/master/images/bletchley-bmc/openbmc-20250128071329/obmc-phosphor-image-bletchley-20250128071329.static.mtd.xz',
+@@ -22,4 +22,4 @@ def test_arm_ast2600_bletchley_openbmc(self):
+                                         soc='AST2600 rev A3')
+ 
+ if __name__ == '__main__':
+-    AspeedTest.main()
++    FacebookAspeedTest.main()
+diff --git a/tests/functional/arm/test_aspeed_catalina.py b/tests/functional/arm/test_aspeed_catalina.py
+index dc2f24e7b43c..2694e4b005b7 100755
+--- a/tests/functional/arm/test_aspeed_catalina.py
++++ b/tests/functional/arm/test_aspeed_catalina.py
+@@ -5,10 +5,10 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ from qemu_test import Asset
+-from aspeed import AspeedTest
++from aspeed import FacebookAspeedTest
+ 
+ 
+-class CatalinaMachine(AspeedTest):
++class CatalinaMachine(FacebookAspeedTest):
+ 
+     ASSET_CATALINA_FLASH = Asset(
+         'https://github.com/legoater/qemu-aspeed-boot/raw/a866feb5ef81245b4827a214584bf6bcc72939f6/images/catalina-bmc/obmc-phosphor-image-catalina-20250619123021.static.mtd.xz',
+@@ -22,4 +22,4 @@ def test_arm_ast2600_catalina_openbmc(self):
+                                         soc='AST2600 rev A3')
+ 
+ if __name__ == '__main__':
+-    AspeedTest.main()
++    FacebookAspeedTest.main()
+diff --git a/tests/functional/aspeed.py b/tests/functional/aspeed.py
+index 47e84e035bd0..88b659093467 100644
+--- a/tests/functional/aspeed.py
++++ b/tests/functional/aspeed.py
+@@ -28,6 +28,9 @@ def do_test_arm_aspeed_openbmc(self, machine, image, uboot='2019.04',
+         self.wait_for_console_pattern(f'Booting Linux on physical CPU {cpu_id}')
+         self.wait_for_console_pattern(f'ASPEED {soc}')
+         self.wait_for_console_pattern('/init as init process')
++        self.wait_for_boot_complete(hostname)
 +
-+    /* Internal SEC SRAM */
-+    memory_region_init_ram(&s->sram[1], OBJECT(s), "sec.sram",
-+                           sc->sram_size[1], &err);
-     if (err != NULL) {
-         error_propagate(errp, err);
-         return false;
-     }
--    memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SECSRAM],
--                                &s->secsram);
-+    memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SRAM1],
-+                                &s->sram[1]);
++    def wait_for_boot_complete(self, hostname):
+         self.wait_for_console_pattern(f'systemd[1]: Hostname set to <{hostname}>.')
  
-     /* SCU */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
-@@ -494,7 +496,7 @@ static void aspeed_soc_ast1030_class_init(ObjectClass *klass, const void *data)
-     sc->valid_cpu_types = valid_cpu_types;
-     sc->silicon_rev = AST1030_A1_SILICON_REV;
-     sc->sram_size[0] = 0xc0000;
--    sc->secsram_size = 0x40000; /* 256 * KiB */
-+    sc->sram_size[1] = 0x40000; /* SEC SRAM 256 * KiB */
-     sc->spis_num = 2;
-     sc->ehcis_num = 0;
-     sc->wdts_num = 4;
-@@ -522,7 +524,7 @@ static void aspeed_soc_ast1060_class_init(ObjectClass *klass, const void *data)
-     sc->valid_cpu_types = valid_cpu_types;
-     sc->silicon_rev = AST1060_A2_SILICON_REV;
-     sc->sram_size[0] = 0xc0000;
--    sc->secsram_size = 0x40000; /* 256 * KiB */
-+    sc->sram_size[1] = 0x40000; /* SEC SRAM 256 * KiB */
-     sc->spis_num = 2;
-     sc->wdts_num = 4;
-     sc->uarts_num = 1;
+     def do_test_arm_aspeed_buildroot_start(self, image, cpu_id, pattern='Aspeed EVB'):
+@@ -69,3 +72,8 @@ def generate_otpmem_image(self):
+             f.write(pattern)
+         return path
+ 
++
++class FacebookAspeedTest(AspeedTest):
++
++    def wait_for_boot_complete(self, hostname):
++        self.wait_for_console_pattern(f'{hostname} login:')
 -- 
 2.54.0
 
