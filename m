@@ -4,83 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 293ABCD5BD1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 09:11:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A481CD5BD1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 09:12:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRnot-0002VX-B6; Tue, 26 May 2026 05:11:27 -0400
+	id 1wRnqD-00039b-2x; Tue, 26 May 2026 05:12:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRnos-0002VP-FR
- for qemu-devel@nongnu.org; Tue, 26 May 2026 05:11:26 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wRnqB-00038z-Bm
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 05:12:47 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRnor-0003fj-1i
- for qemu-devel@nongnu.org; Tue, 26 May 2026 05:11:26 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-4526a8170ceso5188499f8f.2
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 02:11:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wRnq9-0005Ll-UQ
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 05:12:47 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-65c3ea2ebf7so11156393d50.0
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 02:12:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779786765; cv=none;
+ d=google.com; s=arc-20240605;
+ b=WN96qzBTxBppwECmVFtvxsO0sewHXk6Kyxc6xFIDK1BSBYebaQ6rORuzSm8s07/4Ol
+ tAbzTfNDdesCB0uyuRGCa3+x9GRlW8UUl5ifynhYMEn31fVI+HhshIPPrcvFvho4nREh
+ ZnFGTJiugeB6p6NeztIb1meM2cFj44sy8A3J+jP2mPcwpyjjCsRcJ6eeXhXdG4LzRQBn
+ kQoVfSRKtpIz+6SrKeQ56oMPj8jFnUWdo/y7k/15a3IrLw12zJyDM1KvMGcbEdhYS5zl
+ +yKdOwR+a+yktQShV3PCrW38uTTmKc/BUAT+cQQZMYD6hGWWCV0Dgde8TlCX+AEjwDHE
+ 4kZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :dkim-signature;
+ bh=HC8+meO32OsYOz+jIi6FNlPmw27OhwMZkgLT/F50Vbk=;
+ fh=LFJK72Gi9kspAUivhTFeh0BJIMBMnaY6jXIBCnsw8yc=;
+ b=cmXOBVtpMbntxpLr2OF8bp2GBWY6aHk5+HBDXvkIQyhNxINexPUJOUsKqEyrQKwQZ8
+ BSxVvE8fAbCFndknRiP7y+oUbMit6xovYGKgtqItMqwcNCr7ek+sQeI49HwZXFAkk6MH
+ c+/2vibV4ACznWFsd4Grds/t/NTNHvNcw4xQLrfRdCp9SniuUH8Z6NIPvK0FMHWCX7ga
+ 7t+ePcR4iebVsdK1QU4GsnliUsitq/YYE8WtwQVhX+0DyIrPnxPw/If36S+MZEBOIcRv
+ BWYILRF4YbzFqe5k57tE4GDiMTLDgy9GZZZKa7riCzLW7OS4WdQlOSC4Ki7D+xLY3Tf7
+ OL7Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779786683; x=1780391483; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1779786765; x=1780391565; darn=nongnu.org;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
  :from:to:cc:subject:date:message-id:reply-to;
- bh=5ewR9/pJ7zpGsnotvO2ZaYJWAJQz7w2OOLTCNHabvak=;
- b=nJBLF7PavlLqSDgLgs/c3+6hsBnUTBVXM/Qqx9iTYqUCtq5pk3wp71akxEr6OcmfXD
- x7zTbKtO9VEqLA5Q2dQWcfx2ezCqrcwhyLAYF5HPuSjfdIxNpLDZKhlr8xuHXuL0MsNO
- qOFMigwjc8IgRitN56fYPYE9TfZLkyF+f2l8Gt5ZvB3EwwdPc67ubpIlLSuuXqujTkAp
- pO901gis+VoVqfqDg6jso38C2sk6SaDN/bRgRauFO84hDatjGsmfsrenH6Vd0W/YUVGg
- MBd+xtM14W//sUTBCm5304IhWfRGm2Ywl2wD1jFxQ+AIWYuY3mQDFl+0W2BQU1zey4fC
- kF1w==
+ bh=HC8+meO32OsYOz+jIi6FNlPmw27OhwMZkgLT/F50Vbk=;
+ b=rIxVkQrFFPylfmBWlSgXsvJk8KygkwD9oSsFDoGCUUQ8IWMy0k3AzBushl58O5q/0K
+ FE4UJCM9gFJqOd3zVMtGuIj04y+agiAxmKItIX7JPUsqY5Xzkckvn1iNujfyp1XoJ/8S
+ tJalmWtZkwQnr/ai48I/U2ASbzsKZfWAOsFjohID8ZMkcec/3BKtybheDMT2I27bWFa8
+ f6bR+FAlDfU2RgqfyTU69KJ6ujwRVDPEu+wfZtLQhnPgHGoEhmC2YzfMLLKYbWyGMgaI
+ gBIfyHnV/UMbTDfidTlkjH2T7hO4NDI0IfJ2WzVCkT56oFQZKayLpmYlpYG81mFDvnGn
+ P1TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779786683; x=1780391483;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1779786765; x=1780391565;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=5ewR9/pJ7zpGsnotvO2ZaYJWAJQz7w2OOLTCNHabvak=;
- b=XMP5qHozEyuTwieAqdFh6jFA9P9sQ4uodE2cwROXgqa7E8RreSRh9xRInLcQFUNUG+
- tqf+rLtpnDRUQRlqo+vQxHaDtlMuSWqHydHhedBhnZ4QtIbeH8qhTyIAGveOCkxs0bKR
- T1/bvbpiEUgtd6HeBMCCEssseEvNQzKnpRvdnYUy9JLqTBsKFBTUZ6uHfIoG6OwZDSC2
- sl39lEXlxK5Zy8QAbUysXcp2F6ZYeTXlu3T3mdAUx5vQjw7dYU9nuwWYK2N+2zj2IVrg
- WNDFTVqqPm/ExAA/dX17dA9JOefka/7dmJo7AW5WK+tGlFvExSLBfW/1k3lMjWJwVXIv
- 1WRQ==
-X-Gm-Message-State: AOJu0YyAgqNpFe6Eyuo1mtKoY9QbtluXUTJi7yHcHjXlqmftoRGdwTdN
- lE6chTyIlzZ4qGpZBimKoOlmgpLl41Yx+HxTTvwyqlwq58/z1fRYX1T6gQrUWr2k+ms=
-X-Gm-Gg: Acq92OFeh1Xr/AZpVDfQNSibwpSNT9Dy0O6KNuj/1xhIo0q15faiqP7ZMKOJbhvtc+t
- QaxHQ8bZcDBNAMWz8LjLvlGtwxZw/EbB+vtUapq5ICH7H4D9VD0QQoiTp0bXQOTVNw427mZj4VW
- P0oQ+6z03bpN2wurNmuXW1r+kpCH+C28A39OKg6y6uL75rpK8yjdb64cWicSECOBGg9tXfSOcFc
- A7s83r4bWIRaB1/eYOmmLmiCglQSg3fuCBXLuOp9Sh8p/Q20u8S+XLLqjrU01KD1FGcixp0c42Q
- qshjJDJUV1ssuxtVI7B6GuRB+WX1t+m1V03w4KpbBCQtUpIGbwNaDDoyhpOHH4iVBIpovuPpE/K
- vMtB08E4Gyrjjc7VDuqiPVOJ9uxN2Vl+BtvWW64MJZaCEgXydadE0LYH6OEhpv/pM1+2+IG8bPx
- R9f43NnELh5+6PdrvMQlRopr5qLb+O326SgUYA/P2JXY6D1n/JNHfBM1tNf82MaA5Mgw==
-X-Received: by 2002:a05:600c:5298:b0:48f:e230:1d12 with SMTP id
- 5b1f17b1804b1-490428dd63emr308841015e9.31.1779786683192; 
- Tue, 26 May 2026 02:11:23 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49042ce8722sm105185025e9.34.2026.05.26.02.11.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 May 2026 02:11:21 -0700 (PDT)
-Message-ID: <cb1a9261-d59d-411b-a066-a9e186f26668@linaro.org>
-Date: Tue, 26 May 2026 11:11:19 +0200
+ bh=HC8+meO32OsYOz+jIi6FNlPmw27OhwMZkgLT/F50Vbk=;
+ b=iBMT+b7ArkkdH/B3TCAp30KnXy1Jdcb6s274oCB/dbcqNUq7bWuZ5couw9K2cV47bq
+ u4+Ulvw2htdh98Gk+jlehHdEVl7A9xNVpMZogNy3tW/D0NKW+s1eq45mDsNRPNWTVsu5
+ g4cBWcyDHxxjOa4CzVAxjTEp4m86QcIAZK5P7DsTdRusFrN+qpiRZfKMKgLHr4zz6+Au
+ Wqv12zOb1faJNTCgEqNXoIChQc4IuoK63tsFLZPju2d/p5fR2ml/UvYl604ETUcQ+WRW
+ wPyJbeIvtmdQcSJk9iIDz21X2mvqT/fqovVEBNj/2AxJvOTwL2LZkdtQg9U39JRVBxSD
+ KSwA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8kMQNh0Rww3oJz7ntdpXEOzYgAU2UW77fFuDDYoJXbaHP61P79SWkFSKjOMKqd08TrrVUkrc0L892V@nongnu.org
+X-Gm-Message-State: AOJu0YzSJG0WRRqfA+zXgdBFr2BfgUzBKj+kKiwv4pP6BQwjFYSENRVt
+ rz5wihAii1q73IA7n1Q2WaGlp9sSIxZnx2qFrjuwOZ142flAUI7P3963UgWjIPQ+MljIMKUL+et
+ /IZVtr9buTlLbogtn6Sw+NJcB/P4cdyrqkrSKvZJpew==
+X-Gm-Gg: Acq92OHFy28LDI2Y/q7plzuekxEGkgag9H+bEUiwrH19Nbu1PpmiutqiQXpt1EIidC7
+ hRIsrhndCSUrJid8QNSJjGWyY/xqxZMkq381PDSon3Ducf2n1X2l0zomV3OYIdbBgqpxVlx6QZd
+ RH7C/h930PMql6bA0v6Ewqoy4ZlqjV/2OPRCkbl5+FiZYzJ5P+t2GPzK47o2l31YnW0fCrV8kCi
+ VzGE/det1/s9UJJIqCvcaKUaUMGYP+9Hkb9efvaXiyOl5XVLxH3fouvGwl2/F+zoRtDTkps5i/d
+ afuFyI6MqrEC/ALD5rhtcUvSBDxbx44H+igusfIigYPZ108t8+HutvusR6MEGlfIrZU8NAKtAf0
+ kpw==
+X-Received: by 2002:a05:690e:4814:b0:650:3bbc:5375 with SMTP id
+ 956f58d0204a3-65ec97ca8camr12366599d50.17.1779786764743; Tue, 26 May 2026
+ 02:12:44 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/12] target/loongarch: Move CSR registers to struct
- CPUSysState
-Content-Language: en-US
-To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, SignKirigami <prcups@krgm.moe>,
- Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-References: <20260526065023.1639371-1-maobibo@loongson.cn>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260526065023.1639371-1-maobibo@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+References: <20260512203414.3633237-1-peter.maydell@linaro.org>
+In-Reply-To: <20260512203414.3633237-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 26 May 2026 10:12:33 +0100
+X-Gm-Features: AVHnY4JqbqpkaNYyzcpJbGnX2qAgK2vNjkBt7KywSQYX4in5oVb3UDhblChR9OY
+Message-ID: <CAFEAcA8NnS99cGdAXja2Rssj7chS82iLX01WTzKxWxTUpxfG7Q@mail.gmail.com>
+Subject: Re: [PATCH 00/12] arm: OMAP: Remove some dead code
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,17 +115,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/5/26 08:50, Bibo Mao wrote:
-> Here new structure CPUSysState is added in CPULoongArchState, CSR
-> registers are move in CPUSysState. In later with LVZ supported, there will
-> be two copied of CSR registers, so it is simply to add CPUSysState array.
-> 
-> Also new field curState is added which points to CPUSysState at
-> beginning, and it can be changed during VM exit/enter entry. There is no
-> function change, all is code movement or variable rename.
+On Tue, 12 May 2026 at 21:34, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> The arm OMAP SoC code still has some remnants of support for other
+> SoCs in the family that we used to implement, and bits that were
+> there for features that were never implemented and we're hardly
+> likely to implement now.  This patchset removes some of that dead
+> code.  (I noticed this because I was looking at the hw_error() calls
+> and realized they were all in code that was dead or otherwise not
+> needed any more. Then I realized there was actually quite a lot
+> of dead code here...)
 
-Isn't curState misleading? What about:
+> Peter Maydell (12):
+>   hw/arm/omap: Remove omap_mpu_model remnants
+>   hw/arm/omap: Remove unused omap_mpuio functions
+>   hw/arm/omap: Remove stray unused prototype
+>   hw/arm/omap: Remove unused omap1_dma_irq_map[] entries
+>   hw/arm/omap: Delete unused #defines
+>   hw/arm/omap: Remove unused wakeup irq
+>   hw/dma/omap_dma: Remove support for dma_3_0 and dma_3_2
+>   hw/dma/omap_dma: Fold omap_dma_sys_read() and omap_dma_sys_write()
+>     into callers
+>   hw/dma/omap_dma: Remove omap_3_1_compatible_disable flag
+>   hw/dma/omap_dma: Remove 3.1 mapping handling
+>   hw/dma/omap_dma: Remove unused ifdeffed out code
+>   hw/dma/omap_dma: Drop model argument to omap_dma_init()
 
--    CPUSysState *cur = get_current_state(env);
-+    CSRState *csr = env_csr(env);
+I've applied all but patch 11 to target-arm.next; I'll resend
+11 plus an extra patch to fix the resulting misindents.
+
+thanks
+-- PMM
 
