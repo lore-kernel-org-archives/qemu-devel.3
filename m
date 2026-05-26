@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FB93CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 20:38:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A403CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 20:38:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRyXB-0000c5-H7; Tue, 26 May 2026 16:37:53 -0400
+	id 1wRyX2-0000ac-8M; Tue, 26 May 2026 16:37:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRyX6-0000bf-RS
- for qemu-devel@nongnu.org; Tue, 26 May 2026 16:37:48 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRyWz-0000Zc-5P
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 16:37:41 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRyX5-0006pk-4j
- for qemu-devel@nongnu.org; Tue, 26 May 2026 16:37:48 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-49041e84237so38131515e9.1
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 13:37:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRyWx-0006oE-Cu
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 16:37:40 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4891e5b9c1fso94949535e9.2
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 13:37:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779827865; x=1780432665; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779827858; x=1780432658; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GpOhw5w0OQWgKeewy6hW+oiYNCxDv2biTVZ26Aup/v8=;
- b=xyfFC5L6AyUAaPsBm7FT5irRzk+YAaStAJ5VYIGEOP2RRGrjFwk2dEwMJ5goQ12RI5
- 76oqnlDO9fSRgZ9ycIPQFXEXDsP+sA/VFiymTKrcO81fvptCTP+67mIUa1yTie+cqKUO
- y95jzdNNt/wZH+ayhds4qzVvVOjjopN1UfLQfdmK80XWHr6zLTBp0LZn5kVZ8ZqmaPYL
- Mid2Axdcm3Sw5T8JgwZ/qOLRk+U2W614QZuJSZdzLDEMCPwtg9w3ho+0H1KeUNP4kvhO
- ar1I6GBvcrK1AiUVs0g8jqwE3qhFoyl2JGDfOOwAmGwc9cxYGhDuZ3veDNBlcw+dhZfX
- 3jcQ==
+ bh=K7fE/F+6UJ2P7juY/o9Y89pkxTy9idikRNCFiEAOtZY=;
+ b=aAHS0P+ZgxbsENClBsX9lxeyCp4iLZvf1iWRedq+n7pg61aOGnvPRtmIiiLepyNXAp
+ yrddcb4hKY+HTJi/iMXdv7a1Sht5G5nzc5RMsyGlLZiWYXnqbCTIbfNU60su8qjzcCK6
+ Xb/qin3p4Ej5Uz4Uxp3US0LynwTa3euLLhtnfCEBSejktvXDdGqWxXQGeFq8VrW2WiB/
+ eCCnyTVyP297jtlCDpWKeMcX0S3wA++ImXSouzTsXgJvz5M+VZKSfqZ/H1Fyo8KOj23M
+ YQCxCCR3NIGFcaMBKCF1pT+Q7CbTW+AaM/4dVTpDAhC/vTvCq0/bYIAGTWswzZU6SAUd
+ IJ1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779827865; x=1780432665;
+ d=1e100.net; s=20251104; t=1779827858; x=1780432658;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=GpOhw5w0OQWgKeewy6hW+oiYNCxDv2biTVZ26Aup/v8=;
- b=G/1+7B8vnGG4XzLlay1G6bqKF50l2LLI6c/zEiEy/emRiwqMt+VdTbizX6/xd7qpwq
- CY1QnmU9yyO15Qa0b1N9kbgTxc7uJ9Z5J3yspWBpzjUOxy9xK9YDBhkTXPFJnbugVSL3
- i8tvcijP/iTAHoBOn0h590fm887xD/QG9P42qj+kPosg/5aByWeuisIjX6CsgjNcAvtQ
- 0Dd/NoAoTspuTAz5O13HG1plW0iI7IVI7CjU3FDVXieDmgeB4iL+rX3ILHBbTMhgB71m
- 0DIcQD5s1d5Za5ZR6qRUAfwl0WNiuHQNs3nsGUwTraxI/NPlTZnLXSuyTeVmHqgGy/ZR
- iebw==
-X-Gm-Message-State: AOJu0YwoDZNZh4r1TAbg8jwJpEyjjegzRrJGqwgNpwc7a9ocMdrWvQMK
- DaxSc1XgQBhEdm77HjCocMUBV8Udl22Zd9yBGKt0R0TKyLGOtNottqGqVC2N6HEcNoafgNIkdnm
- Q9VYw6ROXgA==
-X-Gm-Gg: Acq92OEE4dOwsF7kwCn0OGHnZ4NExWknp/LwMJSCeDY1u9ONdFrR2OpJ6amfN0r1liE
- SQdcw9zeANkgH224EDbpO+OuYW6E1mUO6nwwq8PKghI1MaAyGn4cMD2+lXJUoQ+3gUApq7I4Sqq
- w6pzmLMjr33lEPjuiuoqg+PAsFkG5njoASsGPI7czWIQfSXlyGHm2c8S8HRQAksYobr40swpRWz
- SiKp2uG/E7GxB/npXIaVUrB5BLzxxnUEjHB4uotZTdzuC3Wpxe/es4y3VfcNg/67Jk1Ylc1csi9
- B3uQl0M2GPeWzcooOMEzkP4qCKy9gaGguy7Q76D87y3k1gZ/EgjLp83NkIGLys3erhjuEyG3MvS
- ocHBrz9hb+7U5aoovPKlrKVCDopfndNLpsrQMmo9EEP1T3zMqdatJ4Q55FjL3j5yxpZq6kIVSUJ
- 1cHJXmF+g7EGxabcqzSqO563+GxbKmr8o7YywnwyVf142Zo7CdMBeYkLFP2pQaakWQmA==
-X-Received: by 2002:a7b:c7ca:0:b0:490:4b89:5372 with SMTP id
- 5b1f17b1804b1-4904b8956c5mr176027065e9.11.1779827865492; 
- Tue, 26 May 2026 13:37:45 -0700 (PDT)
+ bh=K7fE/F+6UJ2P7juY/o9Y89pkxTy9idikRNCFiEAOtZY=;
+ b=gdnld0Gd/ws4zHlnzvEBW13bDN6nlJFlD7ifRrX3RzbgYyfUo3PRJtlR003TsVjvUN
+ Vya5Qdi7pIzgixyhuFQZ1r2/gBAuhwbwv4/D84Gs50xcRCn+yzrr16GmbV8309z1jatk
+ r/o1QI2ifaJCZ69XWD2MdRmgO5sSNpnXbuG32VtSHZ8UNCsTl7nr/onzD9O2jJkO1R/F
+ ZEcyr8QTzNqOqzcL88g2UoWiIFAfU1/6L9B5unTpvF8BT8sYDzcvimNcACzzsoZwibsT
+ ZJC0k9AVv+q3DUSJWfieGoDycDM2vM8ZF+cP29KI+q1c5SjzchpCQde9CBjo+GPZcZrF
+ UysQ==
+X-Gm-Message-State: AOJu0Yx4CjdjCSvvjft1cr88FQqome5zSS1WZnTMV6YztkPfvCtWdeMn
+ gJNGoMWBsWGNTrp4E8CtQazQhkt/R7fxvHxzUpagMECAuDWkgNSasQSIKnGaMzHRTrWb180w5VU
+ As/QrE4lLyg==
+X-Gm-Gg: Acq92OEAbDIhG7UrxkWgcloAgx8J8hgmWxtuvQ3V5RixS+vhOeDpBStIGtt73BftFt6
+ 0ZHxEBUkYidi4jjb+GsQrENob5JQ0V//VZC3JWArUP8xlL3rFG960Wv95DYPgOi6PUJebcO2hh/
+ CO9WlFQY/dH3uiqqMS7gqP9+tcAZGJE6jTbQhybXmBatwU5377Dut1a08lylYS9KSewmGwmHq/4
+ spRc+WpGK7Ic+hfnxi8u23u7ptMNnN19Wr1e+xLv5UsR3NekV1RLXOy4z3rksDRO4ngwFoZxTEG
+ H2C+aGbDLjWNGWQmQkcqeih+M3de2DHbb70OerQiDrIsYnWTUaFqJjWtKbguHVLP218GKq0LYTR
+ FRtwoIB7/cu2FyyV5zaJOgCPFefmkwgrw/6N8DfhI6qfmdvKgBHZ21/sVGH3ABgKkemMDF0v+1j
+ l95nPSc1aG69sELnx52E1VtZHfRlBByXAyXJfkHOPpZ7miWflMCv/R2EX6ndIZgwDdxw==
+X-Received: by 2002:a05:600c:3b02:b0:48a:581c:ead with SMTP id
+ 5b1f17b1804b1-490425ac8a1mr343418145e9.10.1779827857958; 
+ Tue, 26 May 2026 13:37:37 -0700 (PDT)
 Received: from m17.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490454cfcaesm344673275e9.4.2026.05.26.13.37.43
+ ffacd0b85a97d-45edb5584b8sm749790f8f.11.2026.05.26.13.37.37
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 26 May 2026 13:37:44 -0700 (PDT)
+ Tue, 26 May 2026 13:37:37 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH v9 03/17] hw/arm/aspeed: Do not realize 64-bit CPU types under
- QTest
-Date: Tue, 26 May 2026 22:37:08 +0200
-Message-ID: <20260526203722.79463-4-philmd@linaro.org>
+Subject: [PATCH v9 02/17] hw/arm/raspi: Build objects once
+Date: Tue, 26 May 2026 22:37:07 +0200
+Message-ID: <20260526203722.79463-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260526203722.79463-1-philmd@linaro.org>
 References: <20260526203722.79463-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,65 +99,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-aspeed_ast27x0.c models 2 similar SoC based on a 64-bit only
-CPU (Cortex-A35), only available in the 64-bit binary.
+Now than Raspi machines can be filtered when running a
+qemu-system-arm or qemu-system-aarch64 binary, we can
+remove the TARGET_AARCH64 #ifdef'ry and compile the
+aspeed.c file once, moving it from arm_ss[] source set
+to arm_common_ss[]. Note, we expose the TYPE_BCM2837
+and TYPE_BCM2838 types to qemu-system-arm, but they are
+not user-creatable, so not an issue.
 
-If we build this file as common object, these SoCs become
-available in both 32 and 64-bit binaries; however when running
-the introspection test on the 32-bit binary, the init() method
-tries to init the Cortex-A35 type -- although not realizing it
--- which is not available. Simply skip CPU initialization when
-running QTests on a 32-bit binary, asserting the realization
-step is not reached.
-
-Suggested-by: Cédric Le Goater <clg@kaod.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Acked-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/aspeed_ast27x0.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ hw/arm/bcm2836.c   | 4 ----
+ hw/arm/raspi.c     | 4 ----
+ hw/arm/meson.build | 8 ++++++--
+ 3 files changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index d7ce14e8c56..dddd7d21060 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -18,6 +18,7 @@
- #include "qemu/error-report.h"
- #include "hw/i2c/aspeed_i2c.h"
- #include "net/net.h"
-+#include "system/qtest.h"
- #include "system/system.h"
- #include "hw/intc/arm_gicv3.h"
- #include "qobject/qlist.h"
-@@ -419,6 +420,15 @@ static void aspeed_soc_ast2700_init(Object *obj)
-     }
+diff --git a/hw/arm/bcm2836.c b/hw/arm/bcm2836.c
+index 03825e69d06..f4ecea908bd 100644
+--- a/hw/arm/bcm2836.c
++++ b/hw/arm/bcm2836.c
+@@ -195,7 +195,6 @@ static void bcm2836_class_init(ObjectClass *oc, const void *data)
+     dc->realize = bcm2836_realize;
+ };
  
-     for (i = 0; i < sc->num_cpus; i++) {
-+        if (qtest_enabled() && !target_aarch64()) {
-+            /*
-+             * Introspection qtest just want to create this object
-+             * without realizing it. ARM_CPU_TYPE_NAME("cortex-a35")
-+             * is not available on 32-bit binary: skip it since we
-+             * won't even realize it.
-+             */
-+            continue;
-+        }
-         object_initialize_child(obj, "cpu[*]", &a->cpu[i],
-                                 aspeed_soc_cpu_type(sc->valid_cpu_types));
-     }
-@@ -693,6 +703,10 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     qemu_irq irq;
-     int uart;
+-#ifdef TARGET_AARCH64
+ static void bcm2837_class_init(ObjectClass *oc, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+@@ -208,7 +207,6 @@ static void bcm2837_class_init(ObjectClass *oc, const void *data)
+     bc->clusterid = 0x0;
+     dc->realize = bcm2836_realize;
+ };
+-#endif
  
-+    if (qtest_enabled() && !target_aarch64()) {
-+        g_assert_not_reached();
-+    }
-+
-     /* Default boot region (SPI memory or ROMs) */
-     memory_region_init(&s->spi_boot_container, OBJECT(s),
-                        "aspeed.spi_boot_container", 0x400000000);
+ static const TypeInfo bcm283x_types[] = {
+     {
+@@ -219,12 +217,10 @@ static const TypeInfo bcm283x_types[] = {
+         .name           = TYPE_BCM2836,
+         .parent         = TYPE_BCM283X,
+         .class_init     = bcm2836_class_init,
+-#ifdef TARGET_AARCH64
+     }, {
+         .name           = TYPE_BCM2837,
+         .parent         = TYPE_BCM283X,
+         .class_init     = bcm2837_class_init,
+-#endif
+     }, {
+         .name           = TYPE_BCM283X,
+         .parent         = TYPE_BCM283X_BASE,
+diff --git a/hw/arm/raspi.c b/hw/arm/raspi.c
+index 00e4a10466a..3f99e87428c 100644
+--- a/hw/arm/raspi.c
++++ b/hw/arm/raspi.c
+@@ -367,7 +367,6 @@ static void raspi2b_machine_class_init(ObjectClass *oc, const void *data)
+     raspi_machine_class_init(mc, rmc->board_rev);
+ };
+ 
+-#ifdef TARGET_AARCH64
+ static void raspi3ap_machine_class_init(ObjectClass *oc, const void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+@@ -387,7 +386,6 @@ static void raspi3b_machine_class_init(ObjectClass *oc, const void *data)
+     rmc->board_rev = 0xa02082;
+     raspi_machine_class_init(mc, rmc->board_rev);
+ };
+-#endif /* TARGET_AARCH64 */
+ 
+ static const TypeInfo raspi_machine_types[] = {
+     {
+@@ -405,7 +403,6 @@ static const TypeInfo raspi_machine_types[] = {
+         .parent         = TYPE_RASPI_MACHINE,
+         .class_init     = raspi2b_machine_class_init,
+         .interfaces     = arm_machine_interfaces,
+-#ifdef TARGET_AARCH64
+     }, {
+         .name           = MACHINE_TYPE_NAME("raspi3ap"),
+         .parent         = TYPE_RASPI_MACHINE,
+@@ -416,7 +413,6 @@ static const TypeInfo raspi_machine_types[] = {
+         .parent         = TYPE_RASPI_MACHINE,
+         .class_init     = raspi3b_machine_class_init,
+         .interfaces     = aarch64_machine_interfaces,
+-#endif
+     }, {
+         .name           = TYPE_RASPI_MACHINE,
+         .parent         = TYPE_RASPI_BASE_MACHINE,
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 68d204bb4eb..f149ed68d09 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -27,8 +27,12 @@ arm_common_ss.add(when: 'CONFIG_ALLWINNER_A10', if_true: files('allwinner-a10.c'
+ arm_common_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-h3.c', 'orangepi.c'))
+ arm_common_ss.add(when: 'CONFIG_ALLWINNER_R40', if_true: files('allwinner-r40.c', 'bananapi_m2u.c'))
+ arm_common_ss.add(when: 'CONFIG_MAX78000_SOC', if_true: files('max78000_soc.c'))
+-arm_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2836.c', 'raspi.c'))
+-arm_common_ss.add(when: ['CONFIG_RASPI', 'TARGET_AARCH64'], if_true: files('bcm2838.c', 'raspi4b.c'))
++arm_common_ss.add(when: 'CONFIG_RASPI', if_true: files(
++  'bcm2836.c',
++  'bcm2838.c',
++  'raspi.c',
++  'raspi4b.c'
++))
+ arm_common_ss.add(when: 'CONFIG_STM32F100_SOC', if_true: files('stm32f100_soc.c'))
+ arm_common_ss.add(when: 'CONFIG_STM32F205_SOC', if_true: files('stm32f205_soc.c'))
+ arm_common_ss.add(when: 'CONFIG_STM32F405_SOC', if_true: files('stm32f405_soc.c'))
 -- 
 2.53.0
 
