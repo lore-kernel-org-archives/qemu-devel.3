@@ -4,106 +4,190 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FC8ACD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 16:54:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BFD9CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 16:54:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRv2F-00053m-Mf; Tue, 26 May 2026 12:53:43 -0400
+	id 1wRv2n-0005Tx-6V; Tue, 26 May 2026 12:54:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wRv28-000531-7S
- for qemu-devel@nongnu.org; Tue, 26 May 2026 12:53:36 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wRv24-0001Yb-P2
- for qemu-devel@nongnu.org; Tue, 26 May 2026 12:53:35 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-36a7bbb9698so2437458a91.2
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 09:53:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779814396; cv=none;
- d=google.com; s=arc-20240605;
- b=RrbsqBibqRbwe2k7dGS6QwhVcz6OEkBXc3RTyM+3AQP6czF4UPx5/0ji97I2ViS5ur
- ED6gF/ct2NjQCh2FYDUpkwZI8iIGgBkUr1k5f26noADTHW9u9Wo4njRtiUeFfuJA5UDN
- Z8Q7RD+Ju+YO+spogMOSdDcQrou7D04npLWqQrUPxQEPi9w+lTT/U9sBSgkHIt/Y73el
- qjw4Hlq9VKEOYsYVnz+ItXNpKBFOTa+Tqv10V4n6V75L9MEom+96dIVnmfOUx0UimVW5
- IQH9/2nOC3Ah87KJNpUC+DUdjaBzQr1il9eR3005B/1I0VPXWNq9LzZs4MalCGBYg29S
- qyHA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=mSQYLIRLyxbj4oGNaJxinz2w0pVgxwjAAOHIfE4y/HU=;
- fh=H/IZ07pC+iNkLxrlI2gKRh6o6s0Eeq7oehTVHOpdVFs=;
- b=aRB9adrWpjhKwKXXJZZH3/xPQ9VWsHQnQ0K9ynBOVg0+fPbV3159eRyDaVezTLNUER
- wmJNgGTi/UwXaXiIafe2imDXxJUatxkTb+nesY4Ye46dVm9r34jSoJdY0dMB680bOyQN
- g5vn1RVXahyVG6cTwscUTxY5PkzVrIHYaOatV7dxwSbjDAoeYmoznNU4Zt9E8cmwWlvY
- imBGEd2P8i33Vy4JCytW5HTL5NA+MmZUmNABhpzrVaB9R4fCGNHd1kZ+83urfkP/ny1n
- 7xasfkKhEzHdkRdpE2dB1zOF8wgdjeboMVhXshC94NQDxosM0TvuI9NHNGcELx0xmM7n
- 7a8A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779814396; x=1780419196;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=mSQYLIRLyxbj4oGNaJxinz2w0pVgxwjAAOHIfE4y/HU=;
- b=SQDkw9my7R7RIvxowXeSsBs7WwiKIelRN3A4Hjev+5s/aoRxJrZVp1meZtA2xT4HHt
- PIO2+41NSgwb9sbEA6UIDtl+QrfUMAgXSiWIjYTHEbT23FN+/XYjn6B+KDNuFF1KGDFC
- 2CgxENWjplOUuYYRopViRDBrk9EsR7i2IsBPGy5xMHsqCzwxqbom3wAIwspiMRc1D9GO
- qhRgjPSn7nS9NGMQCe9rXdpX5NBudNTMfrI5knynYTukchpGVBmTE2N6Nb8X0R8/ctQP
- eFS2elvpJwrWj8eVdszR1LbxP09bJg0zEYS9MERYQqEduyXrrwAEhBKXiIXeGk+z8K+H
- D2uA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779814396; x=1780419196;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mSQYLIRLyxbj4oGNaJxinz2w0pVgxwjAAOHIfE4y/HU=;
- b=GQ8QcMW6zb1pi2ThHybo0xV+UK75CJLkdwFuV4IeApdKq7j3C5dVaYMJYuym4uunnb
- bfqq6GDhQfxBIHO5Vmqsi1FCNT72vuFU3t3IsZIGOHOTM9+DfFPnq4m9tJXaXPQP4V8A
- Nvt8QrkHxVfxF1zcKIH/5n02FiPca3qvAvLY0ami1APXtTG43/gPdoolHJGBxGbYbVb4
- hEATXp1OYwmchs0MEenxi/OsHTw/Tqh0lgLbOYBvCjx4kewj60sTPMmMvo1r1GwvBp3q
- xwOrDUwGC9NPdztj8AuZcELvIxoo6GFvy7gjF/fGyAG6rg95hC9nFvYOZlGS34sLyND5
- Y3hA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9Cr8AMxrSEnVMrOBHtlRHRqh1WByYLln2hQtoL1TS96ytJBHEfZRk8ZXszbqmSU7TBwurV7LVBxsTN@nongnu.org
-X-Gm-Message-State: AOJu0YxLx6YGh/QYqLyuB8rFNK1qj6xHVhw1XXNppjDTZTbnO8JknjWw
- bWlpAu77a7avxfMrNAe9I0r4adNTNZqiFGnwIvZfuSBMO9tD76GP41Bf+uyT2U1eA0crhIk57wf
- yKxN/fJLLlTWeNNgcagUs1WpxOC1YKzL6jutN1TpLpg==
-X-Gm-Gg: Acq92OHR9i86ueuHZxPywqBJ2zNB1qzrHvlvv+g+tx3pCtyFT/PYy/MZOVjiK0yac6a
- WS6U19/Ja6d93j+UQgGBJVdvd9bIX2PVc3uFaCDNw7m7RgGa3a5qgYua/LVqjtVx3uwPERvKkri
- T/iyi88sEjFaerZcvKvh84WB19XNs54EN39UU8+GBdaA5GXsAG8NiKW/78gpfbzkzNfUw3nCx09
- 3PcKhndV6Dy3v4qXHVKOLES0I8pq73eq9EFhxTwgyliWT/D7NT8giFPB4l7kITTnsWqFtYPfWpt
- 4PbvXVg=
-X-Received: by 2002:a17:90b:38cc:b0:361:45df:102 with SMTP id
- 98e67ed59e1d1-36a6765b589mr18578982a91.17.1779814395774; Tue, 26 May 2026
- 09:53:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wRv2k-0005PM-PX
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 12:54:14 -0400
+Received: from mout.gmx.net ([212.227.15.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wRv2j-0001z5-0m
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 12:54:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1779814450; x=1780419250; i=deller@gmx.de;
+ bh=sXev5Eml93xEuRXjlz5vNrKuq8Ih9YB0kOE2gY21b7I=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=VW95naJy8qeacdh9ccQQkUTBh7CwMd4Xuz4knTNcizTQqI0ceCUvjFVPnm02E0th
+ SsbvFdsZSdqeL/rKPeYi5bXGIDKi/syaad8cmLJPxsgQWAi/JztFEL8zf67qk1WaY
+ e3KCCw/wGQc/3zRpa9Wbr+tVS8xOGFrztHCfNzVk4C1GszjeSqFKR8MOuiyHsxn64
+ HAVFqzVmfmix4UdpKuag12KuYk9OK08GrcmHwFSYhul/XMt1hB0hLNylz5t7Bn5/p
+ tEb54nfkmx+8t0K0EQc96IG+gRD7rTVVU56NBnwBNba+gDNtdZ/XwcK7MZZQJTMF6
+ W54uynxnSusC3DZf0g==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MowKi-1x73sK1yzG-00ZdYV; Tue, 26
+ May 2026 18:54:10 +0200
+Message-ID: <595ed781-6aea-4fd6-8108-f157aad2e275@gmx.de>
+Date: Tue, 26 May 2026 18:54:09 +0200
 MIME-Version: 1.0
-References: <CANCZdfr6xs9n8sF8AXVWVu9i2_rViKErrMHAVbopnaor4uCN6A@mail.gmail.com>
- <875x8g1pmi.fsf@draig.linaro.org>
- <CANCZdfqT7r9jcTuiwe3=CcjRExL-FP1msx-Q8ftQM5amJ_t0YQ@mail.gmail.com>
- <1795fc9c-f82e-40f1-aab6-ec24ad02a918@linaro.org>
- <CANCZdfp=mCp89NdwVzy-tEo=FNiEu6_H79r5vFRD0-Nk=Cx54Q@mail.gmail.com>
- <b2cfb0cf-bec5-49ca-add2-20fed4c36250@linaro.org>
-In-Reply-To: <b2cfb0cf-bec5-49ca-add2-20fed4c36250@linaro.org>
-From: Warner Losh <imp@bsdimp.com>
-Date: Tue, 26 May 2026 10:53:04 -0600
-X-Gm-Features: AVHnY4Ij2A51uokAExTlQvhq3_lfQ_9HbFHJ5rlx1xAxE1L5XpaMA7OpX703-EY
-Message-ID: <CANCZdfqYEvaMs0-dng5khm9Oo7TOJNnYNv_O0KbwT6EfY8npkQ@mail.gmail.com>
-Subject: Re: Question about tb_flush()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- QEMU Developers <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000d3979b0652bb5476"
-Received-SPF: none client-ip=2607:f8b0:4864:20::1035;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1035.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] linux-user: Move init_main_thread() prototype to
+ user-internals.h
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+References: <20260526151757.2371476-1-peter.maydell@linaro.org>
+ <20260526151757.2371476-2-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ xsFNBF3Ia3MBEAD3nmWzMgQByYAWnb9cNqspnkb2GLVKzhoH2QD4eRpyDLA/3smlClbeKkWT
+ HLnjgkbPFDmcmCz5V0Wv1mKYRClAHPCIBIJgyICqqUZo2qGmKstUx3pFAiztlXBANpRECgwJ
+ r+8w6mkccOM9GhoPU0vMaD/UVJcJQzvrxVHO8EHS36aUkjKd6cOpdVbCt3qx8cEhCmaFEO6u
+ CL+k5AZQoABbFQEBocZE1/lSYzaHkcHrjn4cQjc3CffXnUVYwlo8EYOtAHgMDC39s9a7S90L
+ 69l6G73lYBD/Br5lnDPlG6dKfGFZZpQ1h8/x+Qz366Ojfq9MuuRJg7ZQpe6foiOtqwKym/zV
+ dVvSdOOc5sHSpfwu5+BVAAyBd6hw4NddlAQUjHSRs3zJ9OfrEx2d3mIfXZ7+pMhZ7qX0Axlq
+ Lq+B5cfLpzkPAgKn11tfXFxP+hcPHIts0bnDz4EEp+HraW+oRCH2m57Y9zhcJTOJaLw4YpTY
+ GRUlF076vZ2Hz/xMEvIJddRGId7UXZgH9a32NDf+BUjWEZvFt1wFSW1r7zb7oGCwZMy2LI/G
+ aHQv/N0NeFMd28z+deyxd0k1CGefHJuJcOJDVtcE1rGQ43aDhWSpXvXKDj42vFD2We6uIo9D
+ 1VNre2+uAxFzqqf026H6cH8hin9Vnx7p3uq3Dka/Y/qmRFnKVQARAQABzRxIZWxnZSBEZWxs
+ ZXIgPGRlbGxlckBnbXguZGU+wsGRBBMBCAA7AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheA
+ FiEERUSCKCzZENvvPSX4Pl89BKeiRgMFAl3J1zsCGQEACgkQPl89BKeiRgNK7xAAg6kJTPje
+ uBm9PJTUxXaoaLJFXbYdSPfXhqX/BI9Xi2VzhwC2nSmizdFbeobQBTtRIz5LPhjk95t11q0s
+ uP5htzNISPpwxiYZGKrNnXfcPlziI2bUtlz4ke34cLK6MIl1kbS0/kJBxhiXyvyTWk2JmkMi
+ REjR84lCMAoJd1OM9XGFOg94BT5aLlEKFcld9qj7B4UFpma8RbRUpUWdo0omAEgrnhaKJwV8
+ qt0ULaF/kyP5qbI8iA2PAvIjq73dA4LNKdMFPG7Rw8yITQ1Vi0DlDgDT2RLvKxEQC0o3C6O4
+ iQq7qamsThLK0JSDRdLDnq6Phv+Yahd7sDMYuk3gIdoyczRkXzncWAYq7XTWl7nZYBVXG1D8
+ gkdclsnHzEKpTQIzn/rGyZshsjL4pxVUIpw/vdfx8oNRLKj7iduf11g2kFP71e9v2PP94ik3
+ Xi9oszP+fP770J0B8QM8w745BrcQm41SsILjArK+5mMHrYhM4ZFN7aipK3UXDNs3vjN+t0zi
+ qErzlrxXtsX4J6nqjs/mF9frVkpv7OTAzj7pjFHv0Bu8pRm4AyW6Y5/H6jOup6nkJdP/AFDu
+ 5ImdlA0jhr3iLk9s9WnjBUHyMYu+HD7qR3yhX6uWxg2oB2FWVMRLXbPEt2hRGq09rVQS7DBy
+ dbZgPwou7pD8MTfQhGmDJFKm2jvOwU0EXchrcwEQAOsDQjdtPeaRt8EP2pc8tG+g9eiiX9Sh
+ rX87SLSeKF6uHpEJ3VbhafIU6A7hy7RcIJnQz0hEUdXjH774B8YD3JKnAtfAyuIU2/rOGa/v
+ UN4BY6U6TVIOv9piVQByBthGQh4YHhePSKtPzK9Pv/6rd8H3IWnJK/dXiUDQllkedrENXrZp
+ eLUjhyp94ooo9XqRl44YqlsrSUh+BzW7wqwfmu26UjmAzIZYVCPCq5IjD96QrhLf6naY6En3
+ ++tqCAWPkqKvWfRdXPOz4GK08uhcBp3jZHTVkcbo5qahVpv8Y8mzOvSIAxnIjb+cklVxjyY9
+ dVlrhfKiK5L+zA2fWUreVBqLs1SjfHm5OGuQ2qqzVcMYJGH/uisJn22VXB1c48yYyGv2HUN5
+ lC1JHQUV9734I5cczA2Gfo27nTHy3zANj4hy+s/q1adzvn7hMokU7OehwKrNXafFfwWVK3OG
+ 1dSjWtgIv5KJi1XZk5TV6JlPZSqj4D8pUwIx3KSp0cD7xTEZATRfc47Yc+cyKcXG034tNEAc
+ xZNTR1kMi9njdxc1wzM9T6pspTtA0vuD3ee94Dg+nDrH1As24uwfFLguiILPzpl0kLaPYYgB
+ wumlL2nGcB6RVRRFMiAS5uOTEk+sJ/tRiQwO3K8vmaECaNJRfJC7weH+jww1Dzo0f1TP6rUa
+ fTBRABEBAAHCwXYEGAEIACAWIQRFRIIoLNkQ2+89Jfg+Xz0Ep6JGAwUCXchrcwIbDAAKCRA+
+ Xz0Ep6JGAxtdEAC54NQMBwjUNqBNCMsh6WrwQwbg9tkJw718QHPw43gKFSxFIYzdBzD/YMPH
+ l+2fFiefvmI4uNDjlyCITGSM+T6b8cA7YAKvZhzJyJSS7pRzsIKGjhk7zADL1+PJei9p9idy
+ RbmFKo0dAL+ac0t/EZULHGPuIiavWLgwYLVoUEBwz86ZtEtVmDmEsj8ryWw75ZIarNDhV74s
+ BdM2ffUJk3+vWe25BPcJiaZkTuFt+xt2CdbvpZv3IPrEkp9GAKof2hHdFCRKMtgxBo8Kao6p
+ Ws/Vv68FusAi94ySuZT3fp1xGWWf5+1jX4ylC//w0Rj85QihTpA2MylORUNFvH0MRJx4mlFk
+ XN6G+5jIIJhG46LUucQ28+VyEDNcGL3tarnkw8ngEhAbnvMJ2RTx8vGh7PssKaGzAUmNNZiG
+ MB4mPKqvDZ02j1wp7vthQcOEg08z1+XHXb8ZZKST7yTVa5P89JymGE8CBGdQaAXnqYK3/yWf
+ FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
+ 4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
+ ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
+In-Reply-To: <20260526151757.2371476-2-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:lqqHe/cf7VNsX7MOxt28+iEGUtst5Ig74ECY8wihSjfoZd5bdaf
+ hrBzOTjGjjMllTEn0zXlIseKS5FUZbSUOOVH4Sp5lw+oNwgaDUA5aLpyRQIqG3sSrkLda8s
+ lMMaoZ4U6VvTClBJXfqUCZIpxZpIsujqUf+IkJLsUR5KacmmnFiBmmsCq8OAgG8jzFy6ben
+ MCzgbhcE/ewDAkeZI/B0Q==
+UI-OutboundReport: notjunk:1;M01:P0:G8z1AGbaTzo=;hntJBm0gBYIYSrH1bGEysI1SudJ
+ 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
+ 7rQkMNQEXvN96Ajqpk=
+Received-SPF: pass client-ip=212.227.15.15; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,233 +203,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000d3979b0652bb5476
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 5/26/26 17:17, Peter Maydell wrote:
+> The init_main_thread() prototype is needed only by code internal to
+> linux-user/, so it doesn't need to be in qemu.h (which is also pulled
+> in by various files outside linux-user/).
+>=20
+> Move the prototype to user-internals.h, and give it a documentation
+> comment.
+>=20
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   linux-user/qemu.h           |  2 --
+>   linux-user/user-internals.h | 15 +++++++++++++++
+>   2 files changed, 15 insertions(+), 2 deletions(-)
 
-On Tue, May 26, 2026 at 8:44=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 <philmd=
-@linaro.org>
-wrote:
-
-> On 26/5/26 16:39, Warner Losh wrote:
-> > On Tue, May 26, 2026 at 1:53=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 <
-> philmd@linaro.org>
-> > wrote:
-> >
-> >> On 24/5/26 18:57, Warner Losh wrote:
-> >>> On Sun, Feb 1, 2026 at 7:54=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@=
-linaro.org>
-> >> wrote:
-> >>>
-> >>>> Warner Losh <imp@bsdimp.com> writes:
-> >>>>
-> >>>>> OK. I've updated bsd-user fork from last year to yesterday. I had o=
-ne
-> >>>> question.
-> >>>>>
-> >>>>> I see that we've gone from tb_flush() to queue_tb_flush(). Why was
-> >> that?
-> >>>> And is it a drop in?
-> >>>>> FreeBSD's fork has this in the thread creation:
-> >>>>>
-> >>>>>       /*
-> >>>>>        * If this is our first additional thread, we need to ensure =
-we
-> >>>>>        * generate code for parallel execution and flush old
-> >> translations.
-> >>>>>        * Do this now so that the copy gets CF_PARALLEL too.
-> >>>>>        */
-> >>>>>       if (!(cpu->tcg_cflags & CF_PARALLEL)) {
-> >>>>>           cpu->tcg_cflags |=3D CF_PARALLEL;
-> >>>>>           tb_flush(cpu);
-> >>>>>       }
-> >>>>>
-> >>>>> I think the right thing to do is to just change this to
-> >>>> queue_tb_flush(cpu), and that compiles. I'd like to get some
-> >> confirmation,
-> >>>> though.
-> >>>>> Did I parse the changes right?
-> >>>>
-> >>>> Yes, because ultimately we use safe work which:
-> >>>>
-> >>>>    * Schedules the function @func for execution on the vCPU @cpu
-> >>>> asynchronously,
-> >>>>    * while all other vCPUs are sleeping.
-> >>>>
-> >>>
-> >>> So I've done this in the latest blitz branch. I encountered one
-> gotcha. I
-> >>> replaced it in the one place, but that didn't work too well. I finall=
-y
-> >>> tracked down the issue: I had implemented the change in only one plac=
-e
-> >>> instead of the three required locations. I also had to bring the
-> >>> begin_parallel_context() function over from linux-user. I like
-> >>> user-internal.h that's in linux user. What is your touchstone for
-> >> deciding
-> >>> where that code belongs in it? I'd like to do the same in bsd-user on=
-ce
-> >> my
-> >>> upstream focus shift to refinement of blitz and maybe my next cool
-> thing
-> >>> there.
-> >>
-> >> All common code should go under common-user/ and include/user/.
-> >>
-> >
-> > Great! I look forward to growing this directory.. But I was trying to
-> ask a
-> > slightly
-> > different question: What belongs in user-internal.h? What's the current
-> > rubric
-> > for linux-user in that regard?
->
-> We try to have cross-subsystem APIs exposed in include/. When we need to
-> share some structure / method only within a single subsystem, we do not
-> expose the prototype via include/ and add a local header.
->
-> So linux-user/linux-user-internal.h should only contains things to share
-> within linux-user/, and not related to bsd-user.
->
-
-It's slightly related to bsd-user since my intention was to create a
-bsd-user/user-internal.h since I liked the design. So I was curious what
-linux-user's process for deciding where to put different things since
-there's
-several include files now. I understand the qemu.h being too wide a net and
-wanting to limit what's in there (bsd-user has a decade of refactoring to
-catch
-up with there). I'm trying to understand the choices linux-user has made to
-use
-them as a baseline for future bsd-user refactoring. The things that are in
-there
-now don't seem to have an obvious unifying thread to them. Is this
-documented
-somewhere, or just in the different commits for the files?
-
-Warner
-
---000000000000d3979b0652bb5476
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, May 26,=
- 2026 at 8:44=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:=
-philmd@linaro.org">philmd@linaro.org</a>&gt; wrote:<br></div><blockquote cl=
-ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
- rgb(204,204,204);padding-left:1ex">On 26/5/26 16:39, Warner Losh wrote:<br=
->
-&gt; On Tue, May 26, 2026 at 1:53=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 &l=
-t;<a href=3D"mailto:philmd@linaro.org" target=3D"_blank">philmd@linaro.org<=
-/a>&gt;<br>
-&gt; wrote:<br>
-&gt; <br>
-&gt;&gt; On 24/5/26 18:57, Warner Losh wrote:<br>
-&gt;&gt;&gt; On Sun, Feb 1, 2026 at 7:54=E2=80=AFAM Alex Benn=C3=A9e &lt;<a=
- href=3D"mailto:alex.bennee@linaro.org" target=3D"_blank">alex.bennee@linar=
-o.org</a>&gt;<br>
-&gt;&gt; wrote:<br>
-&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt; Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" target=
-=3D"_blank">imp@bsdimp.com</a>&gt; writes:<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt;&gt; OK. I&#39;ve updated bsd-user fork from last year to y=
-esterday. I had one<br>
-&gt;&gt;&gt;&gt; question.<br>
-&gt;&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt;&gt; I see that we&#39;ve gone from tb_flush() to queue_tb_=
-flush(). Why was<br>
-&gt;&gt; that?<br>
-&gt;&gt;&gt;&gt; And is it a drop in?<br>
-&gt;&gt;&gt;&gt;&gt; FreeBSD&#39;s fork has this in the thread creation:<br=
->
-&gt;&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0/*<br>
-&gt;&gt;&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 * If this is our first addi=
-tional thread, we need to ensure we<br>
-&gt;&gt;&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 * generate code for paralle=
-l execution and flush old<br>
-&gt;&gt; translations.<br>
-&gt;&gt;&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 * Do this now so that the c=
-opy gets CF_PARALLEL too.<br>
-&gt;&gt;&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 */<br>
-&gt;&gt;&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0if (!(cpu-&gt;tcg_cflags &am=
-p; CF_PARALLEL)) {<br>
-&gt;&gt;&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cpu-&gt;tcg_cf=
-lags |=3D CF_PARALLEL;<br>
-&gt;&gt;&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0tb_flush(cpu);=
-<br>
-&gt;&gt;&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt;&gt; I think the right thing to do is to just change this t=
-o<br>
-&gt;&gt;&gt;&gt; queue_tb_flush(cpu), and that compiles. I&#39;d like to ge=
-t some<br>
-&gt;&gt; confirmation,<br>
-&gt;&gt;&gt;&gt; though.<br>
-&gt;&gt;&gt;&gt;&gt; Did I parse the changes right?<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt; Yes, because ultimately we use safe work which:<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt;=C2=A0 =C2=A0 * Schedules the function @func for execution =
-on the vCPU @cpu<br>
-&gt;&gt;&gt;&gt; asynchronously,<br>
-&gt;&gt;&gt;&gt;=C2=A0 =C2=A0 * while all other vCPUs are sleeping.<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;<br>
-&gt;&gt;&gt; So I&#39;ve done this in the latest blitz branch. I encountere=
-d one gotcha. I<br>
-&gt;&gt;&gt; replaced it in the one place, but that didn&#39;t work too wel=
-l. I finally<br>
-&gt;&gt;&gt; tracked down the issue: I had implemented the change in only o=
-ne place<br>
-&gt;&gt;&gt; instead of the three required locations. I also had to bring t=
-he<br>
-&gt;&gt;&gt; begin_parallel_context() function over from linux-user. I like=
-<br>
-&gt;&gt;&gt; user-internal.h that&#39;s in linux user. What is your touchst=
-one for<br>
-&gt;&gt; deciding<br>
-&gt;&gt;&gt; where that code belongs in it? I&#39;d like to do the same in =
-bsd-user once<br>
-&gt;&gt; my<br>
-&gt;&gt;&gt; upstream focus shift to refinement of blitz and maybe my next =
-cool thing<br>
-&gt;&gt;&gt; there.<br>
-&gt;&gt;<br>
-&gt;&gt; All common code should go under common-user/ and include/user/.<br=
->
-&gt;&gt;<br>
-&gt; <br>
-&gt; Great! I look forward to growing this directory.. But I was trying to =
-ask a<br>
-&gt; slightly<br>
-&gt; different question: What belongs in user-internal.h? What&#39;s the cu=
-rrent<br>
-&gt; rubric<br>
-&gt; for linux-user in that regard?<br>
-<br>
-We try to have cross-subsystem APIs exposed in include/. When we need to<br=
->
-share some structure / method only within a single subsystem, we do not<br>
-expose the prototype via include/ and add a local header.<br>
-<br>
-So linux-user/linux-user-internal.h should only contains things to share<br=
->
-within linux-user/, and not related to bsd-user.<br></blockquote><div><br><=
-/div><div>It&#39;s slightly related to bsd-user since my intention was to c=
-reate a</div><div>bsd-user/user-internal.h since I liked the design. So I w=
-as curious what</div><div>linux-user&#39;s process for deciding where to pu=
-t different things since there&#39;s</div><div>several include files now. I=
- understand the qemu.h being too wide a net and</div><div>wanting to limit =
-what&#39;s in there (bsd-user has a decade of refactoring to catch</div><di=
-v>up with there). I&#39;m trying to understand the choices linux-user has m=
-ade to use</div><div>them as a baseline for future bsd-user refactoring. Th=
-e things that are in there</div><div>now don&#39;t seem to have an obvious =
-unifying thread to them. Is this documented</div><div>somewhere, or just in=
- the different commits for the files?</div><div><br></div><div>Warner</div>=
-<div>=C2=A0</div></div></div>
-
---000000000000d3979b0652bb5476--
+Reviewed-by: Helge Deller <deller@gmx.de>
 
