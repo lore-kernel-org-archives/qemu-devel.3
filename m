@@ -4,114 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79E7DCD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 12:23:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A54A8CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 12:26:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRqof-0007Ea-PX; Tue, 26 May 2026 08:23:25 -0400
+	id 1wRqrj-00009Y-1t; Tue, 26 May 2026 08:26:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wRqob-0007ED-1C
- for qemu-devel@nongnu.org; Tue, 26 May 2026 08:23:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wRqoZ-0002jl-0J
- for qemu-devel@nongnu.org; Tue, 26 May 2026 08:23:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779798198;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gcWiWnssDtm0NRgR5p21ra5xS/uoQBhKYvYOhGUUuHI=;
- b=MOwf5Fe4o6LO1cTHP5TAuiPOvJIUNSzN72n89CiEW0ZkH2NzK5DFRkx6QkPa6rE9S/ebmR
- UFBJJo8xhTDhmJQjDbu8Jg7TvpsbOx8DrkTf9RfQqV1wDb2ZIa/ujg8jCHPYwdV04yw7qW
- +fyushPxVxcEyNUkdUW6wO3ZpBKEzrM=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-470-E9Az_4nhNXamkvTAhI2xdQ-1; Tue, 26 May 2026 08:23:15 -0400
-X-MC-Unique: E9Az_4nhNXamkvTAhI2xdQ-1
-X-Mimecast-MFC-AGG-ID: E9Az_4nhNXamkvTAhI2xdQ_1779798194
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-4411a36715dso6855992f8f.2
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 05:23:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779798194; x=1780402994;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1wRqrW-00005M-Nu
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 08:26:23 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1wRqrT-0004IQ-8m
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 08:26:21 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-44a14580111so7851570f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 05:26:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779798377; cv=none;
+ d=google.com; s=arc-20240605;
+ b=NN76l4sdBCdM1U7IvyjfIQ7jKR8PFJtKO/ZW7FtCgVs1niHnajgez/QfEHHFGbzNIV
+ YJof5NE6YNU9wFIIn0JotfroKNXZCwd64tcu6lDfk8dNlCat5lh1S9bPBK6TLy3ix8lO
+ WVdUtEZKrmUz8WLuTRFW3MydbahjoQJV85MrJZ7YkKOj1WF05WARgUSuO+0vLLmU2efl
+ N/T9fOxgYS5Uz5KkpdHgYlmp6JClOzH410QHSsEU4I7ZvjrbaRkTtWfyoIb80NOQP7mU
+ Bdl1JSnNrANqsOOH8982lMMZDnmiajnuoncr21p7UWdmUfzFb/yWFt0NsrJlAfuFne4Y
+ prgA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=o7hWIS2WNvbrQR2SwzJeU13LJQ/PseWsZxtCae+c7Ds=;
+ fh=B22JtR9ZUsXUrdiOg5Iw9LSBCcKra7oUC9BuSyZP/90=;
+ b=F95Yz1RAbzJM8yxvcg8hTBC3HA4tg84l97XJCfSd/e7PpqqieHmPmWY8COD0pwW4xn
+ bNwGNcDm+BqC/GbL06Sg3ZZcuT7seoepZOrClHyZRj0ta+gaMJ41YoK3PD3708/EdcwP
+ fmdAieDA0wEioTlYRSNgdmSKpsZWmyMalppm0jDH4A4mNUfH4k2QYGOy2s3l8/A6SgBH
+ TapjKDqmRRX8OU1VVVYIHjWnGrrai4UfrtXcLvsivvw1AvS+WKphTv7ZeHkrPPpb5Hfd
+ dZPL8FbCwgkxPxz5rNZRNbkDBR6HGGidPUA2YnQxkfhxuGYqgZ095Ht/gbdS7TyVxs/P
+ ybGA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779798377; x=1780403177; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gcWiWnssDtm0NRgR5p21ra5xS/uoQBhKYvYOhGUUuHI=;
- b=GlZyXcCU15bxwff5/VA0v7RE/WMUDjtK440s222Ok8WWGRdGK8kg2cllG0hrZqB91u
- Cf4qjsWJg0icfigjrArHWBAHtYBKQJ4urO2q87Odw8K+Ukd4dcovltnII52ybLX4Sx3N
- iJq24pEFHQ/sPevOkXs9Ls3IIzwdmQKat/Dxv7BFdBK7eMSUDHsD7weDhUNY64zaIzU2
- VI/1OZzcApnrStmSihzfWZZvBUH2HkRv1geb78gg/KkIdAyM3HBFub0U+2rXkDRV1LmD
- 0mUEjZzYTPap72WZYHO9Zj4o3Jzo6LFjgqnfxctdG4sebR1rLa6aY2UT0xTL5o/SLLVu
- vo8Q==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9NvPqItGOCGi74fFWA6tmk9naBJJhXGFbz/Ie1o7YBr5deK2JeWOe7hCzebeI010Xn1G0Lo3uIfWiP@nongnu.org
-X-Gm-Message-State: AOJu0Ywz9y41xYCXFPxK9HggXAWwEa1eZcjceVLmoBIay3UMpYrPFfo5
- WwZjQJ7INaHEBBYsfFXvpZjdAee4FsCuIwG5+KyV9YI0V33+CCZQbnHZwJMx2dJeUeQD0bLIg3Q
- LDMr36RUjkM4chEDZngLola4SndeNwg5QrUS1zrZpZ2SLBQBTfsXBYVsF
-X-Gm-Gg: Acq92OH7bRIMemFG6k6xNBPLORZpaGpaNHIu+lhylCTdSNaV9OHKFAsYUL1I/oKyEOK
- Yq4N5BABMRKiZ6E32f5PO85+E4ZUM62bKtCScj/hwo/g/C9n8trxIo9rSJVI2lUEBG9CJ7ic22h
- bTqUajYDCw2fGTPkF3Sjemj7M4EZiHPh30RChhfTnSRT3bqI4/4BIaZIW5v4yeaf/t4Ltw9NwKM
- Xx/Fl+RZQ8qv1bz2nUl1JyYM7DE+s+pzwk7yBWRYZMcq+UNa4TFv2jucBs9rBQFFwTqvexdi+W5
- AFAmOmM446AM7N7V/wlRh7VXUn7PXrT8DKHjwE6qzSPTggIUgyEeU1QZm2mpDgXFLh5a7jAHCVo
- ZeARcWVGK5Qqu+KJSWuQjr8Aei2zIiZzv5TD9Q6QjNTdYlXRZ7ddY8spZocJ6RXN0yXomUxPw/j
- Kjf2L0
-X-Received: by 2002:a5d:6f18:0:b0:449:acdb:3009 with SMTP id
- ffacd0b85a97d-45eb38a83bbmr32103736f8f.6.1779798193913; 
- Tue, 26 May 2026 05:23:13 -0700 (PDT)
-X-Received: by 2002:a5d:6f18:0:b0:449:acdb:3009 with SMTP id
- ffacd0b85a97d-45eb38a83bbmr32103687f8f.6.1779798193377; 
- Tue, 26 May 2026 05:23:13 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6d49132sm35208408f8f.24.2026.05.26.05.23.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 May 2026 05:23:12 -0700 (PDT)
-Message-ID: <16a8a487-9998-4e36-9fc6-897c1bcc4ced@redhat.com>
-Date: Tue, 26 May 2026 14:23:11 +0200
+ bh=o7hWIS2WNvbrQR2SwzJeU13LJQ/PseWsZxtCae+c7Ds=;
+ b=Re1767AxRs1NxEgrVtMjPIeeJkZ/5ZHRucbVhQoGxBIL53+yZHNhAXFzqwMNpWSid8
+ nIQGqNrTo8CKgUcALDNEOKrnSh7mPKiZT5xAYcGzMNSGpd0f4ZsXq6uOKiIy1WAnrGIO
+ iR59mX5f7VlphOOr29w4WfUSYAeTUrTqq6dIC3Q0CPswu5oHB/RAajXGr1r1TQs2kXtd
+ mLcMWCWvEHtHDvXxil364aZOJ7qcnZ3WdC4Y8mV69jXk3YnwN3DY3Rz8NFjvGh0aWzx3
+ DdNtyYqY8DxdFqWqfACK/4nHX0IorwpRtHzCND63r/QCqYJUL3DVAtJNy1FdiFKVbIQF
+ ofQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779798377; x=1780403177;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=o7hWIS2WNvbrQR2SwzJeU13LJQ/PseWsZxtCae+c7Ds=;
+ b=LsYZZ41Vtj+Lft8S+lqrYhj4tQj47vurx0rrKRJghIts9ZSHF0c8Rm/4Bl6ERMdwze
+ wZrNx6M3TAOQDPV8twFZkic5uiKNj9tK9cyZtN521ggw/Enejs7EkbCY4xH/ocwRKpIn
+ aBitVyUtRHMYg/gv7J9T8Mfoa9ga9juvJE/FRRm/whqznSYNCJpkA1kpDz8mp4yzShSr
+ rABU220ZmcWXhIF09c3G5X33N3YIwfGbxZLMGugO1YZExqCmRZQliNp//my1+eBlgMlV
+ wt0zxIvGi/TSF2Yrue0aFhMBa7ly8RznAYsUO6NIesN1F2sbS1iTh1tMlckFrBGR6cE0
+ /qFA==
+X-Gm-Message-State: AOJu0YytWBpmWX2psbfm3HV6KeljnopRyBTQT2pkrr4coWT/qTEYRPaT
+ z+0BhIXa/ahvsiTOQKs/syCn2ZioCCgaKYtKC7RoZ/CLGMxwhka1OtfybKLvqMQIL4UJ8GRpxaG
+ EVVN6RUiYZMcKNZEqo3wVvRtrswLPxIluFbfRzZrJJuK1TbhA80Kf
+X-Gm-Gg: Acq92OGP7s2yWl9mDTNwkC/dHaABfbu2ber4NpPT5/Z9UHE8gxVGxZWPJdI1K8mgxFD
+ qNYUlHe1GPy60HO5mgbRoA3nt//JOK1MLztxOxl4ALrzGfQ/G5VuEkkUZZvQ9t84TMFbqNKw0rk
+ h6kdt+5X6Zp/EqHN3OXrQK0GZBfh6tEWrer8+sT4Xm7WK6a3WXi8awFws6eZIELa1odAJdDSZas
+ twzOoXGiNy3B7hZePVvrXKP9jFTDHHxn9aWL+9dGraTuA5cpWRBbtXlos5lWf+928tm6t4Ej+V9
+ SH6DdPYEcuFcT9d+M1c4ZVEqiSWwcoU8nsIMKAJxim7pQNJng8bQSlrD9CL7
+X-Received: by 2002:a05:6000:4b06:b0:43b:5672:efe with SMTP id
+ ffacd0b85a97d-45eb3688fdcmr28010283f8f.9.1779798376662; Tue, 26 May 2026
+ 05:26:16 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 24/32] hw/arm/tegra241-cmdqv: Read and propagate
- Tegra241 CMDQV errors
-Content-Language: en-US
-To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "clg@redhat.com" <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>,
- Nicolin Chen <nicolinc@nvidia.com>, Nathan Chen <nathanc@nvidia.com>,
- Matt Ochs <mochs@nvidia.com>, Jiandi An <jan@nvidia.com>,
- Jason Gunthorpe <jgg@nvidia.com>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- Krishnakant Jaju <kjaju@nvidia.com>, "phrdina@redhat.com"
- <phrdina@redhat.com>
-References: <20260519103727.899332-1-skolothumtho@nvidia.com>
- <20260519103727.899332-25-skolothumtho@nvidia.com>
- <8183d160-d588-4124-886d-a37dc4f92620@redhat.com>
- <CH3PR12MB75483B20E508737D529F1214AB0B2@CH3PR12MB7548.namprd12.prod.outlook.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <CH3PR12MB75483B20E508737D529F1214AB0B2@CH3PR12MB7548.namprd12.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260526092546.149241-1-pbonzini@redhat.com>
+In-Reply-To: <20260526092546.149241-1-pbonzini@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Tue, 26 May 2026 15:25:50 +0300
+X-Gm-Features: AVHnY4Keg0lSkBpc0Pt5haf7cx-YrRZmI1q0hZKqhN-VP9ayXygWwE8r8Ro_l7Y
+Message-ID: <CAAjaMXaRijkxAWDFsQy_6wA0peWeCtfrRrFYYgO=3PM6d-s5GQ@mail.gmail.com>
+Subject: Re: [PATCH preview 0/6] rust: use meson automatic parsing of
+ Cargo.toml
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,123 +113,188 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, May 26, 2026 at 12:26=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com=
+> wrote:
+>
+> These are relatively old patches, but it's time to post them now
+> that the light is visible at the end of the Meson tunnel.
+>
+> Meson 1.11.x greatly increased the ability to parse Cargo.toml
+> and automatically build complete targets out of the information in
+> there---this was more or less always the intention when Manos decided
+> to build Rust crates with Meson, but it took some time to get there.
+>
+> It still does not support cross compiling, but that should be added in
+> 1.12.0 and should be completely transparent, so it is already possible
+> to post patches for the final shape of the Meson rules.
+>
+> With this change, it is possible to have a much more compact
+> description of Rust devices in meson.build, compared to what
+> was used before:
+>
+>   _libhpet_rs =3D cargo_ws.package('hpet').library()
+>   rust_devices_ss.add(when: 'CONFIG_X_HPET_RUST', if_true: [declare_depen=
+dency(
+>     link_whole: [_libhpet_rs],
+>     variables: {'crate': 'hpet'},
+>   )])
+>
+> For a description of Cargo support in Meson see
+> https://mesonbuild.com/Rust.html
+> and https://mesonbuild.com/Rust-module.html#workspace.
+>
+> Paolo
+>
+> Paolo Bonzini (6):
+>   meson: use compiler_target() to get rustc target
+>   rust: switch to cargo subprojects
+>   rust: switch to autogenerated meson rules
+>   rust: remove unnecessary wrap files
+>   rust: use meson automatic parsing of Cargo.toml
+>   scripts: remove now dead parts of rustc_args.py
 
+Missing patch to update minimum meson version check in configure (it's
+hardcoded to 1.10.0)?
 
-On 5/26/26 11:51 AM, Shameer Kolothum Thodi wrote:
-> Hi Eric,
 >
->> -----Original Message-----
->> From: Eric Auger <eric.auger@redhat.com>
->> Sent: 26 May 2026 09:27
->> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>; qemu-
->> arm@nongnu.org; qemu-devel@nongnu.org
->> Cc: peter.maydell@linaro.org; clg@redhat.com; alex@shazbot.org; Nicolin
->> Chen <nicolinc@nvidia.com>; Nathan Chen <nathanc@nvidia.com>; Matt
->> Ochs <mochs@nvidia.com>; Jiandi An <jan@nvidia.com>; Jason Gunthorpe
->> <jgg@nvidia.com>; zhenzhong.duan@intel.com; Krishnakant Jaju
->> <kjaju@nvidia.com>; phrdina@redhat.com
->> Subject: Re: [PATCH v5 24/32] hw/arm/tegra241-cmdqv: Read and propagate
->> Tegra241 CMDQV errors
->>
->> External email: Use caution opening links or attachments
->>
->>
->> Hi Shameer,
->>
->> On 5/19/26 12:37 PM, Shameer Kolothum wrote:
->>> Install an event handler on the CMDQV vEVENTQ fd to read and propagate
->>> host received CMDQV errors to the guest.
->>>
->>> The handler runs in QEMU's main loop, using a non-blocking fd registered
->>> via qemu_set_fd_handler().
->>>
->>> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
->>> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
->>> ---
->>>  hw/arm/tegra241-cmdqv.c | 60
->> +++++++++++++++++++++++++++++++++++++++++
->>>  hw/arm/trace-events     |  1 +
->>>  2 files changed, 61 insertions(+)
->>>
->>> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
->>> index 853c548e58..0bba2c1801 100644
->>> --- a/hw/arm/tegra241-cmdqv.c
->>> +++ b/hw/arm/tegra241-cmdqv.c
->>> @@ -14,6 +14,7 @@
->>>
->>>  #include "hw/arm/smmuv3.h"
->>>  #include "hw/arm/smmuv3-common.h"
->>> +#include "hw/core/irq.h"
->>>  #include "smmuv3-accel.h"
->>>  #include "tegra241-cmdqv.h"
->>>  #include "trace.h"
->>> @@ -736,6 +737,48 @@ out:
->>>      trace_tegra241_cmdqv_write_mmio(offset, value, size);
->>>  }
->>>
->>> +static void tegra241_cmdqv_event_read(void *opaque)
->>> +{
->>> +    Tegra241CMDQV *cmdqv = opaque;
->>> +    IOMMUFDVeventq *veventq = cmdqv->veventq;
->>> +    struct {
->>> +        struct iommufd_vevent_header hdr;
->>> +        struct iommu_vevent_tegra241_cmdqv vevent;
->>> +    } buf;
->>> +    Error *local_err = NULL;
->>> +
->>> +    if (!smmuv3_accel_event_read_validate(veventq,
->>> +                                          IOMMU_VEVENTQ_TYPE_TEGRA241_CMDQV,
->>> +                                          &buf, sizeof(buf), &local_err)) {
->>> +        warn_report_err_once(local_err);
->>> +        return;
->>> +    }
->>> +
->>> +    if (buf.vevent.lvcmdq_err_map[0] || buf.vevent.lvcmdq_err_map[1]) {
->>> +        cmdqv->vintf_cmdq_err_map[0] =
->>> +            extract64(buf.vevent.lvcmdq_err_map[0], 0, 32);
->>> +        cmdqv->vintf_cmdq_err_map[1] =
->>> +            extract64(buf.vevent.lvcmdq_err_map[0], 32, 32);
->>> +        cmdqv->vintf_cmdq_err_map[2] =
->>> +            extract64(buf.vevent.lvcmdq_err_map[1], 0, 32);
->>> +        cmdqv->vintf_cmdq_err_map[3] =
->>> +            extract64(buf.vevent.lvcmdq_err_map[1], 32, 32);
->>> +        /*
->>> +         * CMDQV_CMDQ_ERR_MAP and VINTF0_LVCMDQ_ERR_MAP are
->> distinct
->>> +         * registers (different MMIO offsets). With only VINTF0 exposed
->>> +         * they carry the same data, so mirror.
->>> +         */
->>> +        for (int i = 0; i < 4; i++) {
->>> +            cmdqv->cmdq_err_map[i] = cmdqv->vintf_cmdq_err_map[i];
->>> +        }
->>> +        cmdqv->vi_err_map[0] |= 0x1;
->>> +        qemu_irq_pulse(cmdqv->irq);
->> I don't see SMMU_CMDQV_VI_ERR_MAP_0 updated anywhere. If I
->> understand
->> correctly, if you get an error on any VCMDQ you should update it.
-> This one above does that:
-> cmdqv->vi_err_map[0] |= 0x1; it sets bit 0, which is the
-> error bit for VINTF0 (the only VINTF QEMU exposes).
+>  configure                                     |  3 -
+>  meson.build                                   | 13 +--
+>  rust/Cargo.lock =3D> Cargo.lock                 |  0
+>  rust/Cargo.toml =3D> Cargo.toml                 |  6 +-
+>  rust/bindings/chardev-sys/meson.build         | 11 +--
+>  rust/bindings/hwcore-sys/meson.build          | 11 +--
+>  rust/bindings/migration-sys/meson.build       | 11 +--
+>  rust/bindings/qom-sys/meson.build             | 11 +--
+>  rust/bindings/system-sys/meson.build          | 11 +--
+>  rust/bindings/util-sys/meson.build            | 11 +--
+>  rust/bits/meson.build                         |  7 +-
+>  rust/bql/meson.build                          | 13 +--
+>  rust/chardev/meson.build                      |  8 +-
+>  rust/common/meson.build                       | 10 +--
+>  rust/hw/char/pl011/meson.build                | 22 +----
+>  rust/hw/core/meson.build                      | 10 +--
+>  rust/hw/timer/hpet/meson.build                | 17 +---
+>  rust/meson.build                              | 32 +-------
+>  rust/migration/meson.build                    |  8 +-
+>  rust/qemu-macros/meson.build                  | 12 +--
+>  rust/qom/meson.build                          |  8 +-
+>  rust/system/meson.build                       |  8 +-
+>  rust/trace/meson.build                        |  9 +--
+>  rust/util/meson.build                         |  7 +-
+>  scripts/qapi/rs_types.py                      |  2 +-
+>  scripts/rust/rustc_args.py                    | 80 +------------------
+>  subprojects/anyhow-1-rs.wrap                  |  7 --
+>  subprojects/arbitrary-int-1-rs.wrap           | 10 ---
+>  subprojects/attrs-0.2-rs.wrap                 |  7 --
+>  subprojects/bilge-0.2-rs.wrap                 | 10 ---
+>  subprojects/bilge-impl-0.2-rs.wrap            | 10 ---
+>  subprojects/either-1-rs.wrap                  | 10 ---
+>  subprojects/foreign-0.3-rs.wrap               |  7 --
+>  subprojects/glib-sys-0.21-rs.wrap             |  7 --
+>  subprojects/itertools-0.11-rs.wrap            | 10 ---
+>  subprojects/libc-0.2-rs.wrap                  |  7 --
+>  .../packagefiles/anyhow-1-rs/meson.build      | 33 --------
+>  .../anyhow-1-rs/meson/meson.build             |  9 +++
+>  .../arbitrary-int-1-rs/meson.build            | 21 -----
+>  .../packagefiles/attrs-0.2-rs/meson.build     | 33 --------
+>  .../packagefiles/bilge-0.2-rs/meson.build     | 31 -------
+>  .../bilge-impl-0.2-rs/meson.build             | 44 ----------
+>  .../bilge-impl-0.2-rs/meson/meson.build       |  3 +
+>  .../packagefiles/either-1-rs/meson.build      | 26 ------
+>  .../packagefiles/foreign-0.3-rs/meson.build   | 26 ------
+>  .../packagefiles/glib-sys-0.21-rs/meson.build | 33 --------
+>  .../itertools-0.11-rs/meson.build             | 32 --------
+>  .../packagefiles/libc-0.2-rs/meson.build      | 37 ---------
+>  .../libc-0.2-rs/meson/meson.build             | 16 ++++
+>  .../proc-macro-error-1-rs/meson.build         | 41 ----------
+>  .../proc-macro-error-1-rs/meson/meson.build   |  3 +
+>  .../proc-macro-error-attr-1-rs/meson.build    | 31 -------
+>  .../meson/meson.build                         |  3 +
+>  .../packagefiles/proc-macro2-1-rs/meson.build | 35 --------
+>  .../proc-macro2-1-rs/meson/meson.build        |  6 ++
+>  .../packagefiles/quote-1-rs/meson.build       | 31 -------
+>  .../packagefiles/serde-1-rs/meson.build       | 36 ---------
+>  .../packagefiles/serde_core-1-rs/meson.build  | 25 ------
+>  .../serde_core-1-rs/private.rs.in             |  6 ++
+>  .../serde_derive-1-rs/meson.build             | 35 --------
+>  subprojects/packagefiles/syn-2-rs/meson.build | 43 ----------
+>  .../unicode-ident-1-rs/meson.build            | 22 -----
+>  subprojects/probe-0.5-rs.wrap                 |  7 --
+>  subprojects/proc-macro-error-1-rs.wrap        | 10 ---
+>  subprojects/proc-macro-error-attr-1-rs.wrap   | 10 ---
+>  subprojects/proc-macro2-1-rs.wrap             | 10 ---
+>  subprojects/quote-1-rs.wrap                   | 10 ---
+>  subprojects/serde-1-rs.wrap                   |  5 +-
+>  subprojects/serde_core-1-rs.wrap              |  5 +-
+>  subprojects/serde_derive-1-rs.wrap            |  5 +-
+>  subprojects/syn-2-rs.wrap                     | 10 ---
+>  subprojects/unicode-ident-1-rs.wrap           | 10 ---
+>  72 files changed, 116 insertions(+), 1053 deletions(-)
+>  rename rust/Cargo.lock =3D> Cargo.lock (100%)
+>  rename rust/Cargo.toml =3D> Cargo.toml (97%)
+>  delete mode 100644 subprojects/anyhow-1-rs.wrap
+>  delete mode 100644 subprojects/arbitrary-int-1-rs.wrap
+>  delete mode 100644 subprojects/attrs-0.2-rs.wrap
+>  delete mode 100644 subprojects/bilge-0.2-rs.wrap
+>  delete mode 100644 subprojects/bilge-impl-0.2-rs.wrap
+>  delete mode 100644 subprojects/either-1-rs.wrap
+>  delete mode 100644 subprojects/foreign-0.3-rs.wrap
+>  delete mode 100644 subprojects/glib-sys-0.21-rs.wrap
+>  delete mode 100644 subprojects/itertools-0.11-rs.wrap
+>  delete mode 100644 subprojects/libc-0.2-rs.wrap
+>  delete mode 100644 subprojects/packagefiles/anyhow-1-rs/meson.build
+>  create mode 100644 subprojects/packagefiles/anyhow-1-rs/meson/meson.buil=
+d
+>  delete mode 100644 subprojects/packagefiles/arbitrary-int-1-rs/meson.bui=
+ld
+>  delete mode 100644 subprojects/packagefiles/attrs-0.2-rs/meson.build
+>  delete mode 100644 subprojects/packagefiles/bilge-0.2-rs/meson.build
+>  delete mode 100644 subprojects/packagefiles/bilge-impl-0.2-rs/meson.buil=
+d
+>  create mode 100644 subprojects/packagefiles/bilge-impl-0.2-rs/meson/meso=
+n.build
+>  delete mode 100644 subprojects/packagefiles/either-1-rs/meson.build
+>  delete mode 100644 subprojects/packagefiles/foreign-0.3-rs/meson.build
+>  delete mode 100644 subprojects/packagefiles/glib-sys-0.21-rs/meson.build
+>  delete mode 100644 subprojects/packagefiles/itertools-0.11-rs/meson.buil=
+d
+>  delete mode 100644 subprojects/packagefiles/libc-0.2-rs/meson.build
+>  create mode 100644 subprojects/packagefiles/libc-0.2-rs/meson/meson.buil=
+d
+>  delete mode 100644 subprojects/packagefiles/proc-macro-error-1-rs/meson.=
+build
+>  create mode 100644 subprojects/packagefiles/proc-macro-error-1-rs/meson/=
+meson.build
+>  delete mode 100644 subprojects/packagefiles/proc-macro-error-attr-1-rs/m=
+eson.build
+>  create mode 100644 subprojects/packagefiles/proc-macro-error-attr-1-rs/m=
+eson/meson.build
+>  delete mode 100644 subprojects/packagefiles/proc-macro2-1-rs/meson.build
+>  create mode 100644 subprojects/packagefiles/proc-macro2-1-rs/meson/meson=
+.build
+>  delete mode 100644 subprojects/packagefiles/quote-1-rs/meson.build
+>  delete mode 100644 subprojects/packagefiles/serde-1-rs/meson.build
+>  delete mode 100644 subprojects/packagefiles/serde_core-1-rs/meson.build
+>  create mode 100644 subprojects/packagefiles/serde_core-1-rs/private.rs.i=
+n
+>  delete mode 100644 subprojects/packagefiles/serde_derive-1-rs/meson.buil=
+d
+>  delete mode 100644 subprojects/packagefiles/syn-2-rs/meson.build
+>  delete mode 100644 subprojects/packagefiles/unicode-ident-1-rs/meson.bui=
+ld
+>  delete mode 100644 subprojects/probe-0.5-rs.wrap
+>  delete mode 100644 subprojects/proc-macro-error-1-rs.wrap
+>  delete mode 100644 subprojects/proc-macro-error-attr-1-rs.wrap
+>  delete mode 100644 subprojects/proc-macro2-1-rs.wrap
+>  delete mode 100644 subprojects/quote-1-rs.wrap
+>  delete mode 100644 subprojects/syn-2-rs.wrap
+>  delete mode 100644 subprojects/unicode-ident-1-rs.wrap
 >
-> I will add a comment to make it clear.
-Ah OK. Let's add a comment then.
-
-Eric
+> --
+> 2.54.0
 >
->  Also
->> the triggering of the irq should depnd on SMMU_CMDQ_VI_INT_MASK0, no?
-> Right. will add:
 >
-> if (!(cmdqv->vi_int_mask[0] & BIT(0))) {
->         qemu_irq_pulse(cmdqv->irq);
->     }
->
-> Thanks,
-> Shameer
->
-
 
