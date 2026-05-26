@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8062CD5BB4
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 08:23:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 028FACD5BB4
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 08:23:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRn1X-0006OK-2Z; Tue, 26 May 2026 04:20:27 -0400
+	id 1wRn0d-0005Rz-Qn; Tue, 26 May 2026 04:19:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wRn0z-0005bI-P1
- for qemu-devel@nongnu.org; Tue, 26 May 2026 04:19:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wRn0W-0005LK-O6
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 04:19:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wRn0x-00080S-0i
- for qemu-devel@nongnu.org; Tue, 26 May 2026 04:19:53 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wRn0V-0007iZ-24
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 04:19:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779783590;
+ s=mimecast20190719; t=1779783562;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ArNYbH4AId59IPV/W8Pm6esd+JQiuWJyDsRXydgTNZA=;
- b=i29i919G4k9M0ApdOWj8KgEuDsVt+QM0CRg/ArinoulKFOqViQt7wLTYXgrgpt2TppcAMi
- JDb4vh6GmVSpgHhpiI1LW+P2QRZXZE7enDoXdkGc6+Jo/uy3Ws3qsda+HAQsjCQZmSsg2u
- ic4tfYYMRKAMh+dKuPQ5x4b2Magsxms=
+ bh=CFhFJk4wW847wXcDxweUhmJvk4UnLP+9BFlsu69yODg=;
+ b=Lhek2G/70CS4iHlCy3sQl25IZkIVM2A/5ag73ueHsSsMofp3IFXjb1HrAXLw4b7P8qvjzA
+ /eComKe4b2mvIYBx272qiWK1qDYtx+hIuTNQmCKsL/SmAoA//MAYEvm2yAWeDlCyb7lh9Q
+ hl0FL4ApfmykSHXqem0tOKlBAzUzY8U=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-296-3U3aUu32OZCo9Z7GzGMLsw-1; Tue,
- 26 May 2026 04:19:46 -0400
-X-MC-Unique: 3U3aUu32OZCo9Z7GzGMLsw-1
-X-Mimecast-MFC-AGG-ID: 3U3aUu32OZCo9Z7GzGMLsw_1779783585
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-259-SgLOwYwKN0uYm44Y1GCM0g-1; Tue,
+ 26 May 2026 04:19:20 -0400
+X-MC-Unique: SgLOwYwKN0uYm44Y1GCM0g-1
+X-Mimecast-MFC-AGG-ID: SgLOwYwKN0uYm44Y1GCM0g_1779783559
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9A3CF1956048; Tue, 26 May 2026 08:19:45 +0000 (UTC)
+ id 2E8A91956067; Tue, 26 May 2026 08:19:19 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.30])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DC3981800357; Tue, 26 May 2026 08:19:43 +0000 (UTC)
+ id ACF151800267; Tue, 26 May 2026 08:19:17 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Kane Chen <kane_chen@aspeedtech.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 25/37] hw/timer/aspeed_timer: convert to use Resettable
- interface
-Date: Tue, 26 May 2026 10:18:36 +0200
-Message-ID: <20260526081848.651835-26-clg@redhat.com>
+Subject: [PULL 13/37] tests/function/aspeed: Add AST1040 functional test
+Date: Tue, 26 May 2026 10:18:24 +0200
+Message-ID: <20260526081848.651835-14-clg@redhat.com>
 In-Reply-To: <20260526081848.651835-1-clg@redhat.com>
 References: <20260526081848.651835-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
 X-Spam_score: 0.8
 X-Spam_bar: /
 X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -85,48 +84,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kane Chen <kane_chen@aspeedtech.com>
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Replace the legacy reset callback registered via
-device_class_set_legacy_reset() with the Resettable interface.
+Add a new functional test for the ast1040-evb machine to
+validate Zephyr firmware boot flow in QEMU.
 
-Signed-off-by: Kane Chen <kane_chen@aspeedtech.com>
-Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Link: https://lore.kernel.org/qemu-devel/20260525044129.3133916-12-kane_chen@aspeedtech.com
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260525053036.3305181-9-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/timer/aspeed_timer.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ tests/functional/arm/meson.build            |  1 +
+ tests/functional/arm/test_aspeed_ast1040.py | 35 +++++++++++++++++++++
+ 2 files changed, 36 insertions(+)
+ create mode 100644 tests/functional/arm/test_aspeed_ast1040.py
 
-diff --git a/hw/timer/aspeed_timer.c b/hw/timer/aspeed_timer.c
-index 1e954f7aec5c..69f5c89215c5 100644
---- a/hw/timer/aspeed_timer.c
-+++ b/hw/timer/aspeed_timer.c
-@@ -834,10 +834,10 @@ static void aspeed_timer_realize(DeviceState *dev, Error **errp)
-     sysbus_init_mmio(sbd, &s->iomem);
- }
+diff --git a/tests/functional/arm/meson.build b/tests/functional/arm/meson.build
+index 959179a56f6d..61b00932db93 100644
+--- a/tests/functional/arm/meson.build
++++ b/tests/functional/arm/meson.build
+@@ -34,6 +34,7 @@ tests_arm_system_quick = [
  
--static void aspeed_timer_reset(DeviceState *dev)
-+static void aspeed_timer_reset_hold(Object *obj, ResetType type)
- {
-     int i;
--    AspeedTimerCtrlState *s = ASPEED_TIMER(dev);
-+    AspeedTimerCtrlState *s = ASPEED_TIMER(obj);
- 
-     for (i = 0; i < ASPEED_TIMER_NR_TIMERS; i++) {
-         AspeedTimer *t = &s->timers[i];
-@@ -898,9 +898,10 @@ static const Property aspeed_timer_properties[] = {
- static void timer_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
- 
-     dc->realize = aspeed_timer_realize;
--    device_class_set_legacy_reset(dc, aspeed_timer_reset);
-+    rc->phases.hold = aspeed_timer_reset_hold;
-     dc->desc = "ASPEED Timer";
-     dc->vmsd = &vmstate_aspeed_timer_state;
-     device_class_set_props(dc, aspeed_timer_properties);
+ tests_arm_system_thorough = [
+   'aspeed_ast1030',
++  'aspeed_ast1040',
+   'aspeed_ast1060',
+   'aspeed_palmetto',
+   'aspeed_romulus',
+diff --git a/tests/functional/arm/test_aspeed_ast1040.py b/tests/functional/arm/test_aspeed_ast1040.py
+new file mode 100644
+index 000000000000..e4d8ecb37a58
+--- /dev/null
++++ b/tests/functional/arm/test_aspeed_ast1040.py
+@@ -0,0 +1,35 @@
++#!/usr/bin/env python3
++#
++# Functional test that boots the ASPEED SoCs with firmware
++#
++# Copyright (C) 2026 ASPEED Technology Inc
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from aspeed import AspeedTest
++from qemu_test import Asset, exec_command_and_wait_for_pattern
++
++
++class AST1040Machine(AspeedTest):
++
++    ASSET_ZEPHYR_3_07 = Asset(
++        ('https://github.com/AspeedTech-BMC'
++         '/zephyr/releases/download/v00.03.07/ast1040-evb-demo.zip'),
++         'b5189797c22c2d732ddc27670c1efdeba821a2747c9c7434f190791125baa121')
++
++    def test_arm_ast1040_zephyros(self):
++        self.set_machine('ast1040-evb')
++
++        kernel_name = "zephyr.bin"
++        kernel_file = self.archive_extract(
++            self.ASSET_ZEPHYR_3_07, member=kernel_name)
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', kernel_file, '-nographic')
++        self.vm.launch()
++        self.wait_for_console_pattern("uart:~$")
++        exec_command_and_wait_for_pattern(self, "help",
++                                          "Available commands")
++
++if __name__ == '__main__':
++    AspeedTest.main()
 -- 
 2.54.0
 
