@@ -4,71 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57ABBCD5BB4
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 08:32:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BE50CD5BB4
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 08:34:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRnCS-00071Q-Gu; Tue, 26 May 2026 04:31:44 -0400
+	id 1wRnEr-0007eO-9t; Tue, 26 May 2026 04:34:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wRnCQ-00071B-5F
- for qemu-devel@nongnu.org; Tue, 26 May 2026 04:31:42 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wRnCM-0005JG-UN
- for qemu-devel@nongnu.org; Tue, 26 May 2026 04:31:41 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8BxzsBjWhVqJVQNAA--.14436S3;
- Tue, 26 May 2026 16:31:31 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJAxWcFiWhVql2uRAA--.937S3;
- Tue, 26 May 2026 16:31:30 +0800 (CST)
-Subject: Re: [PATCH 00/12] target/loongarch: Move CSR registers to struct
- CPUSysState
-To: gaosong <gaosong@loongson.cn>, =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?=
- <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, SignKirigami <prcups@krgm.moe>,
- Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-References: <20260526065023.1639371-1-maobibo@loongson.cn>
- <e922a116-ae19-bb16-8dbb-5ad276430e5b@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <b1872865-1748-e89b-f6ad-2f3104496563@loongson.cn>
-Date: Tue, 26 May 2026 16:28:28 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRnEo-0007eG-3h
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 04:34:10 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRnEl-0006Q0-TQ
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 04:34:09 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-45ed18d8a1bso680765f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 01:34:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779784446; x=1780389246; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=dIbZQULdQpi60GblvsROKJz0POqC21/fZjac+UlEaLs=;
+ b=T5GdH86wkBo6C8rAIqJZI0++iztGvYmSGIO4Ret44h7ccSB8RBfrE5Vv8VMrXqCMCM
+ RlVSN8hWAfw7SpzzX13sxRZdCGdPIbz+fA5CMxaxtHe8U1qyULPuwHSxKdw8KG1Bu7dH
+ Q4xr+UwqtdZ7HhFcCla8TThqI/vE5gi4ri4wfk3rGzTGXN4xz12UCHTq4bDfJB7uI9Fs
+ C34XlQQzNfP4MBTyiOr6X+24lp+eMKhvuETa6uourvek5X6vlU3DKozvjDOxfVTNxYSQ
+ LJFqoYjwiOhqnt+3uY9xnazzr2j/1T7Lj4wOFAyIYVLNQ2Tr0YfiSm7PFhpQKlmLxGKB
+ dwGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779784446; x=1780389246;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dIbZQULdQpi60GblvsROKJz0POqC21/fZjac+UlEaLs=;
+ b=Jb0rK3A7+RFb8eG3TAhVV/Z3ua2IRcfK8bvO7HSlAZAir8MVHKe5VW+hOKFqdQxoKp
+ vDD5FpK5p5I8Z56yrlcXdWkgJ8sLXlULiMHfi/BUek8/FuWq12rENSX6LzDSLbQFLFLg
+ ERpQa4LL7TzHXzYDT0uwutgxP+DqKi8WQuBMr3K9t24O+llrr0zW47vqDoq9BbwMp7P2
+ UrJEEgAsGilkVR6yFfUo5xyBNc+YKAeL+v6d+lFXdk8zUiOHQO1Qo6c+xdrHf5xYhFTG
+ gtvGnxeXBvn3pFzAwHfQnhq2+HCKozFq/KbCZgyYIYCIPco0Lo+0wJI9HCrtYOANvm6r
+ JibQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+YDx5WSTAsGGm0VXw32M5PQCMSOtDWt6hvKRVmmLmtQ1Cwf6NqTEbtoqXZ3OQMLv0Zv6JbvFt7Wzb9@nongnu.org
+X-Gm-Message-State: AOJu0YweKPuGFRYE+4Q0Wy5+LegOeQrKhMA7CMgKHnPGRgWES4gwybMo
+ guNqhOfiBjqss0FbgXBfQPmJK5vjiCqQihoWvwmH0xdbsl3unPj/oT/32qzIJz6Qm18=
+X-Gm-Gg: Acq92OEs18rVCUhQGc2jmBCJw88yAUG4wJtVboYlvuj0FkdiBc7/mlv1J+0B6bsi7cV
+ J9Ctps8S6hheeDvQmS7XPg0TmNPWJ99tJ51bkrdzUjaSWqdm58gppFhhExlK6X4Cpu6wSqYcTvQ
+ JRuW8iUBZcaQOKGdvSxwohircYs7ZJaozy/4zADGOOegV9sOBFrnlwR7NrZkZRMiFX7s7J1HGFH
+ l3Y0Fs2bKHZ0vh704QpluSLNxkfcGQN8pR+LiDVxIxZg4hzGj58XRdn1/AEkyqhewy9eVKzFr8x
+ 90cASmDKfxKx767bf6DRx5msytrMgC5wGJ/QJAetcV4DXxIjNzpESYyuZnu1yTU2F5N8EvPUj61
+ 2YJSI1FsoxLTsT+rvXGBHS3BkjhjKo/JFOJ+xynSUIh0u4YmFxsmOZDoUln9QBJb9RO6faqk/5E
+ 7c2YH2X4Nq+U4U+SVFuUWDdzs++asafhJqQqW8j9/SOvDStLB3ssMTV+P3Up3FESbP7mE0HT0=
+X-Received: by 2002:a05:6000:178c:b0:43d:6f0f:32fe with SMTP id
+ ffacd0b85a97d-45eb38b86demr30772894f8f.31.1779784446179; 
+ Tue, 26 May 2026 01:34:06 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45eb6c9b980sm30812143f8f.3.2026.05.26.01.34.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 May 2026 01:34:05 -0700 (PDT)
+Message-ID: <85827a75-e224-448d-8c16-5ca9238737e5@linaro.org>
+Date: Tue, 26 May 2026 10:34:04 +0200
 MIME-Version: 1.0
-In-Reply-To: <e922a116-ae19-bb16-8dbb-5ad276430e5b@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL v2 19/39] hw/riscv: Add Microblaze V generic board
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxWcFiWhVql2uRAA--.937S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxWF48ur4DJF4fWFW8Aw4UWrX_yoW5KF4xpr
- 1xCr15JrW8GrZ7Jr1UXw15JFyDJr1UGw17X3WftFy8AF15Jr1jqr48X3yqgF17Jw48GF1j
- qF1UAr4UZFyUXwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9Sb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
- 67AKxVWUAVWUtwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
- 8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
- CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
- 1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBI
- daVFxhVjvjDU0xZFpf9x07jYSoJUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+To: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org
+Cc: Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
+ Michal Simek <michal.simek@amd.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>
+References: <20241220015441.317236-1-alistair.francis@wdc.com>
+ <20241220015441.317236-20-alistair.francis@wdc.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241220015441.317236-20-alistair.francis@wdc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,69 +105,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Sai,
 
-
-On 2026/5/26 下午3:48, gaosong wrote:
-> 在 2026/5/26 下午2:50, Bibo Mao 写道:
->> Here new structure CPUSysState is added in CPULoongArchState, CSR
->> registers are move in CPUSysState. In later with LVZ supported, there 
->> will
->> be two copied of CSR registers, so it is simply to add CPUSysState array.
->>
->> Also new field curState is added which points to CPUSysState at
->> beginning, and it can be changed during VM exit/enter entry. There is no
->> function change, all is code movement or variable rename.
->>
->> Bibo Mao (12):
->>    target/loongarch: Add new field curState in CPULoongArchState
->>    target/loongarch: Use curState in cpu.c when accessing CSR registers
->>    target/loongarch: Use curState in cpu_helper.c when accessing CSR
->>      registers
->>    target/loongarch: Use curState in file arch_dump.c when accessing CSR
->>      registers
->>    target/loongarch: Use curState in kvm.c when accessing CSR registers
->>    target/loongarch: Use curState in tlb_helper.c when accessing CSR
->>      registers
->>    target/loongarch: Use curState in tcg_cpu.c when accessing CSR
->>      registers
->>    target/loongarch: Use curState in csr_helper.c when accessing CSR
->>      registers
->>    target/loongarch: Use curState in op_helper.c when accessing CSR
->>      registers
->>    target/loongarch: Add default CSRFL_BASIC info with flags field
->>    target/loongarch: Add wrapper function get_csr_offset()
->>    target/loongarch: Add new structure CPUSysState
->>
->>   hw/intc/loongarch_dintc.c                     |   4 +-
->>   target/loongarch/arch_dump.c                  |   5 +-
->>   target/loongarch/cpu-mmu.h                    |   4 +-
->>   target/loongarch/cpu.c                        | 120 ++++-----
->>   target/loongarch/cpu.h                        |  49 ++--
->>   target/loongarch/cpu_helper.c                 |  41 ++--
->>   target/loongarch/csr.c                        |  10 +-
->>   target/loongarch/csr.h                        |   5 +
->>   target/loongarch/gdbstub.c                    |   3 +-
->>   target/loongarch/kvm/kvm.c                    | 228 +++++++++---------
->>   target/loongarch/machine.c                    | 116 ++++-----
->>   target/loongarch/tcg/constant_timer.c         |  10 +-
->>   target/loongarch/tcg/csr_helper.c             |  55 +++--
->>   .../tcg/insn_trans/trans_extra.c.inc          |  11 +-
->>   .../tcg/insn_trans/trans_privileged.c.inc     |  16 +-
->>   target/loongarch/tcg/op_helper.c              |  45 ++--
->>   target/loongarch/tcg/tcg_cpu.c                | 107 ++++----
->>   target/loongarch/tcg/tlb_helper.c             | 137 ++++++-----
->>   18 files changed, 531 insertions(+), 435 deletions(-)
->>
-> Hi,
-> The files in linux-user/loongarch64/* also need to be modified.
-oops, loongarch-linux-user is missing here. Thanks for the reporting.
-Will add and test this target.
-
-Regards
-Bibo Mao
+On 20/12/24 02:54, Alistair Francis wrote:
+> From: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
 > 
-> Thanks.
-> Song Gao
->> base-commit: cbf877d67a812be17a9ce404a589e1bdf722c1f6
+> Add a basic board with interrupt controller (intc), timer, serial
+> (uartlite), small memory called LMB@0 (128kB) and DDR@0x80000000
+> (configured via command line eg. -m 2g).
+> This is basic configuration which matches HW generated out of AMD Vivado
+> (design tools). But initial configuration is going beyond what it is
+> configured by default because validation should be done on other
+> configurations too. That's why wire also additional uart16500, axi
+> ethernet(with axi dma).
+> GPIOs, i2c and qspi is also listed for completeness.
+> 
+> IRQ map is: (addr)
+> 0 - timer (0x41c00000)
+> 1 - uartlite (0x40600000)
+> 2 - i2c (0x40800000)
+> 3 - qspi (0x44a00000)
+> 4 - uart16550 (0x44a10000)
+> 5 - emaclite (0x40e00000)
+> 6 - timer2 (0x41c10000)
+> 7 - axi emac (0x40c00000)
+> 8 - axi dma (0x41e00000)
+> 9 - axi dma
+> 10 - gpio (0x40000000)
+> 11 - gpio2 (0x40010000)
+> 12 - gpio3 (0x40020000)
+> 
+> Signed-off-by: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+> Signed-off-by: Michal Simek <michal.simek@amd.com>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+> Message-ID: <20241125134739.18189-1-sai.pavan.boddu@amd.com>
+> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+> ---
+>   MAINTAINERS                                |   6 +
+>   docs/system/riscv/microblaze-v-generic.rst |  42 +++++
+>   docs/system/target-riscv.rst               |   1 +
+>   hw/riscv/microblaze-v-generic.c            | 184 +++++++++++++++++++++
+>   hw/riscv/Kconfig                           |   8 +
+>   hw/riscv/meson.build                       |   1 +
+>   6 files changed, 242 insertions(+)
+>   create mode 100644 docs/system/riscv/microblaze-v-generic.rst
+>   create mode 100644 hw/riscv/microblaze-v-generic.c
+
+
+> +static void mb_v_generic_machine_init(MachineClass *mc)
+> +{
+> +    mc->desc = "AMD Microblaze-V generic platform";
+> +    mc->init = mb_v_generic_init;
+> +    mc->min_cpus = 1;
+> +    mc->max_cpus = 1;
+> +    mc->default_cpu_type = TYPE_RISCV_CPU_BASE;
+
+Could you use or provide a proper CPU type for this machine?
+
+> +    mc->default_cpus = 1;
+> +}
 
 
