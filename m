@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6C04CD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:34:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25759CD5BD0
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:34:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRsma-0000OB-Mw; Tue, 26 May 2026 10:29:24 -0400
+	id 1wRsma-0000Mi-A3; Tue, 26 May 2026 10:29:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRsmN-0008Kv-No
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:13 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1wRsmJ-0008KS-GK
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:10 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRsmL-0001F9-0w
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:11 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-43fe62837baso6261485f8f.3
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:29:08 -0700 (PDT)
+ id 1wRsmH-0001ET-5G
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:07 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-43fe608cb92so6502078f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:29:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779805747; x=1780410547; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779805743; x=1780410543; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=sB4l14E+SamPtLUei0j/FzcwY1KiqKOWEgkGE0g36Sk=;
- b=OZIA/Blj0FbpdGLF4rBpLAjlLO/5/RVoh9tjlikb4UUScyrABOAjNn1iZT5MLUeJJt
- 1PH0edcAMqffjlMUGCXPnlf8TIRmZZlFpfScx6nC/GnakrFUJzltStNxEXw46WYY+Tjo
- 9ef3HK2KCg5WjaWN4HtgTRkdbs3KAbT3ItmN4bzGjPWoyAKfLAw0piDoBkYUEf88YUSO
- AQUgjwzsAJmOQ3e0kFxF0oaa6umjCZhooK+bGbrc2ruCgW0Ihs5efasv5wc0rUz/FQWu
- cS77rKoZLhlR2jBozoHk0LndeX5ghGNp468I01clWxhvmkVomvB3aSN98X3sFWHgNszy
- 0+PA==
+ :reply-to; bh=c3n7Oc7aeyIf5LNC1yLJVtTuyTWdjNqILdaKFA1BwMU=;
+ b=f3jkK2FFU+rKOM/hCnldiY3ViHICSMGcS7mQb3sRFR57ibAn4Bgn0vZSvmpEeVAzFy
+ OLeDkmIIxr6VKyCIRLuBgInRXkGNGrvG3v0Fct8qHMGfdRwCwHMEvJ92PNBn2aqv0Ptu
+ RSvQbdCqs7nVglfwQafV6FBoGbQ6vmBWFTY/lnPw0Wo2IroBIbQcRItYnfVyo6TtXS9E
+ KrtqwcG1eBzcYn10t5Lmwa6N7rbkGdBBz4UB7y9Z9kYJkdqyiE0yZFKM/Tu9v2aAKBtv
+ iuLXnW+d+VBr3SvjsjXngBGLk7KjGhpWii4BPZSEM1ZwHsKWHY0UBRE78ot2XtmlttrJ
+ XXeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779805747; x=1780410547;
+ d=1e100.net; s=20251104; t=1779805743; x=1780410543;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=sB4l14E+SamPtLUei0j/FzcwY1KiqKOWEgkGE0g36Sk=;
- b=GPPDnrcJhXlXf2FNajDxQJEHTg8pRyPam57bBgMxb2i9M3VDwDVQuBu6xMKJ/Ss5yO
- 3fpNXiXdnkmoETmjqfNVouVKDkoJvuBHCNbUGUK32zK3R1BICI8eJgCPLKCxA49P9kns
- uLl1wCWQG07ztggOEMM4ZyrxX/OezDgpXHtxTRKx/vQDih7k/m4CZPCPmlk0Q7Pl0IFS
- 8Ar5D3PolLW9ZisERdYUY52pAebRhAqqie1hPcJ/SM4z1PZRexCcWsMCKhJO9xQqF3vj
- MPAv08Iz3jAe/hxD3ipvimil/rCBOr4UTlWGVtfEmPkhhzRPiLHSkClpPLRwGSR7101g
- 5pUw==
-X-Gm-Message-State: AOJu0Yw47UELZyHAIef9KbvqZe1rp5cPLpyXCbtt9O02FOXJTC1nYRmk
- 0IorWAUjsVmA/9Bz3CbUnfoY1vJ/uaQ/8TBfxaaDJGCdTpgojdg/3NyPvQ/V8MIhm3WGXYYuX5L
- 6U5Ls
-X-Gm-Gg: Acq92OEPpOjVW2d538UMSnF8bgYvWBbDPwFGkjq+ADUVA9BM/TTVq2xs2UyHpniHIhM
- O0CelQCAuUuWleRDxmXyWrg1ZY1M2Z0vlx7MA1bGETOrlm5owalLenkKkurF4WxdhXHs8IJGiV6
- F/dnE4gVI0L7Kh9tXEhotLjjfnUI6I8vNltELW0G6ZiJcsJHIUDAyh712fYp8DPcwq0p2zqzC7H
- STrWl+uVwv3vwpCPA3iCGCOPxdewqchs1MNfolj7hRwpbSbZurKEAeGFhjdtFXBiBYeUDLU42Uu
- 0wTFqr54Hrvxw7/jndXTA5UWXpJ37Q+NpmqlIb9lg7Ewz9qIDsxXbCBXVuEi64NLUnMRb9mfgao
- lmC0Cmt0KBA9x6ukox1yDYcTAvPA/R9CWQz4p7/f8kvLup5FPYXsiKv1VeMdY5es01oxyTZNEz1
- 2cvOEDdBSHGYEnWdvXX8OQTtGenL+Kj4ZLWtSBxXtWER7eqx07KVX+M2uUsqmTkR10XVUAR6KGa
- ONYdaX70PDXW3HOj756GEu49kTdFog=
-X-Received: by 2002:a05:6000:2888:b0:45a:dd7a:e33c with SMTP id
- ffacd0b85a97d-45eb39ec2c4mr33085717f8f.33.1779805747544; 
- Tue, 26 May 2026 07:29:07 -0700 (PDT)
+ bh=c3n7Oc7aeyIf5LNC1yLJVtTuyTWdjNqILdaKFA1BwMU=;
+ b=cn2Xlp813vrrBAHRQVwbuYN+lp8Owd4vXeGyEgSlTA0uhFyFFmpNdWvx/O0VkfqCAN
+ Ct8Fk0Ykamx0qbKiEHgrdi0aIU/gzHFywaGtzUOUFVhSpUulPAO2VpfUHhDMWrYCt6gr
+ KAsHVmbEXKqeopqOAODrj/eV6G1TCzBkH26IIsW3hQjgmTKsGnT34+MHixgiT5ltO5NI
+ EayU+t/9GHIutlBMuyZiL+iiqdjTXOq0Sqos/iRYc4fMgd8aqRiJV6ovmOAH0vjBR8HP
+ FqmGOWkAVitRrrDRJUCOL4qyUCItz2lQsQQp3U+8XJRE2/Ji5PpLK7g3EzJAexwZb0M1
+ 4/tw==
+X-Gm-Message-State: AOJu0YzhaIHr8us9xNS+oQRY49nZeklJZA32LDWUEYe5NjZT5/TnGNPV
+ bIOqPWSHcPV8xJaA3DVBrSMKYVT2RTB0fmkVxPa/nwKpJcaOTEHmDyYB403nWMR4vxRNs2q10Wg
+ b0s8m
+X-Gm-Gg: Acq92OEuQjI0EhakCKRCl5z0bDgTg2jkR2d/HuJjYVyK0wv62XANBSJ9NVa+kbxcmCv
+ 0hjObD61J2hjKFJ8GyfOcNL9H1nUg/UZvfjE1orrsl6rfCC8meDMMHSH0jdPx+LwtdeufotuGXa
+ w8khrctSLtfe9OweTDvIEdfLnwK0FMscdTuhcXv0X0qgOYNqXvYjlhct3ip+x+oANYyTIWS84cF
+ 3jCXqYMJ9V/FE7tYUfxhLv2R9m2bfRMMGAJXEGA7BqMB0VeAxWz3my1OY9FnE+7gHpMewZM87fo
+ Zw/jCpS4UaetSdNmNtcMbPvlhlPy0E1N4azL/OVZ2/ILAY1Dn9t8rvgKLUWxYlLOwsmCC4SNZ24
+ +ylWk9/5SmoWUSO8L8WaZT2nu+MwMHJJ/g5LXTS2qvYv1vS1y9S/um7Orp67p7ZNzumXakD/fXd
+ 23D2d0MdS4sMP+PshFTGyq7gHQ4z57O1T+CI8lw0Xiczrgf6C9fhGlNsXRixL2Cv2jBgrxuH32g
+ Qt7s9jC/j8HDDeIkbESaEwBB/2mPmapK+j6j3yC/Q==
+X-Received: by 2002:a05:6000:430b:b0:43d:75a2:44aa with SMTP id
+ ffacd0b85a97d-45eb38e4db6mr31296310f8f.43.1779805743451; 
+ Tue, 26 May 2026 07:29:03 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6d70c51sm38325225f8f.36.2026.05.26.07.29.06
+ ffacd0b85a97d-45eb6d70c51sm38325225f8f.36.2026.05.26.07.29.02
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 07:29:06 -0700 (PDT)
+ Tue, 26 May 2026 07:29:02 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 16/54] target/arm/ptw: Flip sense of get_phys_addr_v6 return
- value
-Date: Tue, 26 May 2026 15:28:12 +0100
-Message-ID: <20260526142850.2326589-17-peter.maydell@linaro.org>
+Subject: [PULL 12/54] hw/dma/omap_dma: Drop model argument to omap_dma_init()
+Date: Tue, 26 May 2026 15:28:08 +0100
+Message-ID: <20260526142850.2326589-13-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260526142850.2326589-1-peter.maydell@linaro.org>
 References: <20260526142850.2326589-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,41 +101,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The model argument to omap_dma_init() is always omap_dma_3_1, and all
+we do with it now is assert this; drop the argument and the enum.
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260515142541.571911-4-peter.maydell@linaro.org
+Message-id: 20260512203414.3633237-13-peter.maydell@linaro.org
 ---
- target/arm/ptw.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ hw/arm/omap1.c        |  2 +-
+ hw/dma/omap_dma.c     |  8 +++-----
+ include/hw/arm/omap.h | 12 +++---------
+ 3 files changed, 7 insertions(+), 15 deletions(-)
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 504ecb622a..33735bc14b 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -1326,11 +1326,11 @@ static bool get_phys_addr_v6(CPUARMState *env, S1Translate *ptw,
-     result->f.attrs.space = out_space;
-     result->f.attrs.secure = arm_space_is_secure(out_space);
-     result->f.phys_addr = phys_addr;
--    return false;
-+    return true;
- do_fault:
-     fi->domain = domain;
-     fi->level = level;
--    return true;
-+    return false;
+diff --git a/hw/arm/omap1.c b/hw/arm/omap1.c
+index 80168644ce..44f9dd67c3 100644
+--- a/hw/arm/omap1.c
++++ b/hw/arm/omap1.c
+@@ -3789,7 +3789,7 @@ struct omap_mpu_state_s *omap310_mpu_init(MemoryRegion *dram,
+     }
+     s->dma = omap_dma_init(0xfffed800, dma_irqs, system_memory,
+                            qdev_get_gpio_in(s->ih[0], OMAP_INT_DMA_LCD),
+-                           s, omap_findclk(s, "dma_ck"), omap_dma_3_1);
++                           s, omap_findclk(s, "dma_ck"));
+ 
+     s->port[emiff    ].addr_valid = omap_validate_emiff_addr;
+     s->port[emifs    ].addr_valid = omap_validate_emifs_addr;
+diff --git a/hw/dma/omap_dma.c b/hw/dma/omap_dma.c
+index b05e46724c..b042e7c59c 100644
+--- a/hw/dma/omap_dma.c
++++ b/hw/dma/omap_dma.c
+@@ -1169,15 +1169,13 @@ static void omap_dma_clk_update(void *opaque, int line, int on)
  }
  
- /*
-@@ -3791,7 +3791,7 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
-                                   memop, result, fi);
-     } else if (arm_feature(env, ARM_FEATURE_V7) ||
-                regime_sctlr(env, mmu_idx) & SCTLR_XP) {
--        return get_phys_addr_v6(env, ptw, address, access_type, result, fi);
-+        return !get_phys_addr_v6(env, ptw, address, access_type, result, fi);
-     } else {
-         return get_phys_addr_v5(env, ptw, address, access_type, result, fi);
-     }
+ struct soc_dma_s *omap_dma_init(hwaddr base, qemu_irq *irqs,
+-                MemoryRegion *sysmem,
+-                qemu_irq lcd_irq, struct omap_mpu_state_s *mpu, omap_clk clk,
+-                enum omap_dma_model model)
++                                MemoryRegion *sysmem,
++                                qemu_irq lcd_irq,
++                                struct omap_mpu_state_s *mpu, omap_clk clk)
+ {
+     int num_irqs, memsize, i;
+     struct omap_dma_s *s = g_new0(struct omap_dma_s, 1);
+ 
+-    assert(model == omap_dma_3_1);
+-
+     num_irqs = 6;
+     memsize = 0x800;
+     s->mpu = mpu;
+diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
+index 36569815e8..2675d064f2 100644
+--- a/include/hw/arm/omap.h
++++ b/include/hw/arm/omap.h
+@@ -172,17 +172,11 @@ void omap_gpio_set_clk(Omap1GpioState *gpio, omap_clk clk);
+ #define OMAP_INT_310_McBSP2RX_OF       31
+ 
+ /* omap_dma.c */
+-enum omap_dma_model {
+-    omap_dma_3_0,
+-    omap_dma_3_1,
+-    omap_dma_3_2,
+-};
+-
+ struct soc_dma_s;
+ struct soc_dma_s *omap_dma_init(hwaddr base, qemu_irq *irqs,
+-                MemoryRegion *sysmem,
+-                qemu_irq lcd_irq, struct omap_mpu_state_s *mpu, omap_clk clk,
+-                enum omap_dma_model model);
++                                MemoryRegion *sysmem,
++                                qemu_irq lcd_irq,
++                                struct omap_mpu_state_s *mpu, omap_clk clk);
+ void omap_dma_reset(struct soc_dma_s *s);
+ 
+ struct dma_irq_map {
 -- 
 2.43.0
 
