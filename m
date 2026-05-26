@@ -4,99 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D2B4CD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 15:19:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39CC8CD5BD0
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 15:19:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRtYE-0002Nl-MD; Tue, 26 May 2026 11:18:38 -0400
+	id 1wRtXg-0002Jd-VV; Tue, 26 May 2026 11:18:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wRtYD-0002NL-3V
- for qemu-devel@nongnu.org; Tue, 26 May 2026 11:18:37 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wRtXf-0002In-Cj
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 11:18:03 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wRtYB-000807-Er
- for qemu-devel@nongnu.org; Tue, 26 May 2026 11:18:36 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-bd21ffaca79so1980876966b.0
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 08:18:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779808713; cv=none;
- d=google.com; s=arc-20240605;
- b=B8wAHXFSSe8I6buw4jjoTM2fBZlDuhIUQ5d3v4n099krSj/RLfrYk8HCsr0bkc+hXR
- eS2QD+FWKZwINm69A7vLZM6htE0BXluz8EvF628yIuQkdRaDu7zaqtgQ7m/VwRYz6yph
- sNXEs0nmG0XstbdQNy8qLcmSgFAqCuvjd8Jf3Zd/KzZJh9yVpK6n6+i8YU/X4Wcju6JA
- hTJnDFX174XPNteDp7KXvLD0S3jZUOm9JA71fSOGCiU8A0gUxllsOQg7e4UhLwgukKh5
- buB594oQfTrNBH5/54si6mOTVoiQj1k5VVN+8ITURK3GXoZCt7Vf2RYDNhhA6FOYWsRo
- Sk6g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=IVThKAysnnJFckUmsvjGSuR6FKYHsCUmETx/QObSKsc=;
- fh=Q9dsMRTk+dymOtqMnm4zjFnvJsI8ndl93sYRZpilaGk=;
- b=Yw9vynNyLdxqxYfr4lDkNBdqujsaZjTxjOW8iVBRh2Z6ne0uEU4N1+K/9kpysubbj1
- qN5t86RjnjRM83NnUGeyo/ueRTGMO5vWp4cmqChrLHpXO7x5Oiu0FhVDx4mzBU0RByeb
- JYtbhJt2UWgcfhzxnlssXCVA7R89ABh2sQJzDsoxGaxrvXl1DvwXrtLV9PkG/90dZrjf
- 473vznS66KeWX8/f1dZ83Xa8y2oOI7iQCVj0Bv8ykK3E+eY6Em1+uH5P4umJpSYe5sm1
- 7KLngSabc0ExIFQnQLkGrEoDXI8FLNSEBwQowb+8wQJfn5mU91ZouSsLLfkMcPiWCQYj
- 9z5A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wRtXd-0007UI-H5
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 11:18:03 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4891b0786beso72109995e9.1
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 08:18:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779808713; x=1780413513; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=IVThKAysnnJFckUmsvjGSuR6FKYHsCUmETx/QObSKsc=;
- b=Qq5B7SiMYZCU1t9qT+7RpLYJLYRRimn7OB2d8LTq7o2WWOy/87waWaqEKziBVDT5AN
- maEHFzHTABG240vKyf9To22QrUrjuO4hJGSbMZPGoB6PB1/QbHJwLdl5mMgW5v18Yzde
- eFIzZkFcb1/DApuXJVfDAukvlLqXF5hbQ4YaXTt1YwcQhLFqU/63CkfiiK4CmBXnob1I
- TU7LT5VoEebqr78qy4BAz8kLbRpiMM8icB8AOncULnSV+0P0vW8QI55GH4R17FGIwJ9s
- Vf/A4wU4+NPJDu9YJdA2mMd0xvmh42zj/mjJhgghDtBXaVDuYOo1qM0pzEXWPVbjPB5X
- JI2Q==
+ d=linaro.org; s=google; t=1779808679; x=1780413479; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=/WSc1DWINEqAPD0KjQwOvLeQ5c6wA/WoSThA/Y8G36E=;
+ b=TyG15d+2aZpuUq+PoY9VUbKlCF4Nu8yiL9/xE7GHG2CSa6W4iBi1ZHY2Ha7JKVu8s1
+ WozBELZifwuf941lSyamvn4VEJcNPgexumxYph9zjJ2xk3IBY3Qwny/MW6WJd1AJXk8H
+ pMlttFZD9Wnhrsz2MKW+OTfPznBpVoJ6Fin3rONTMyPYOYEq4iaXMToR/oFwpzBEl3Dw
+ FPLNi3lZgJEVjik+iXI+XSOxj/eHMf9RFoB1AruqFnnoboddi4t71Ds+p/WG5YEGQ5ju
+ eoxw1NazCPFkX7aBUSLA2aeTRbl8Iexu+/dDepPy/LyUdZHnxXbU9p3vu6CWkXhTduAi
+ DnAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779808713; x=1780413513;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IVThKAysnnJFckUmsvjGSuR6FKYHsCUmETx/QObSKsc=;
- b=TJShIM2K2zYgYcGCF7YNZ0N0OFbOboqab6CGlPhzB3wYBP3/E8R6LjqvgcNdCIFFsb
- LAB12hgh0BpTICFphybpNjudue7bGW5Oj0R4urkm4sCjlV7hBtq3n+rxTx6K7j2ZdXPe
- reqbEC7tP5wzvP5QYGsRMbNWTA760wZh3dIMKNe99wX4jWfJUxZY80EjWkQM1SzE8HHg
- mYDnzRfdcS+Prwt95em2ury2+eh3CYZBf2ZL6thFQJylMhkAIm9Fis6u0PJQliHvo4+T
- M7miLgkRW1UMZnBrUAnvn1L0kvbo1yr2ZgF3E43xR/y41uJgLENTluFyMgruvWUBte6e
- A1JQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/TcutaPFjJbHmLvVS4KlBtmmfn9iRI7uYIBwubc0Kgfuiu7PxjaaIvyFomogyFgPzWhNJZOXpIAJaz@nongnu.org
-X-Gm-Message-State: AOJu0YxOP5eWzfKquH7bSekapm0g9nPu6tYagFABQ9KzY0Kq9sFL3eF/
- tDvfwZoEtbX//Kh2LuowUZRifj7r9VNbUZbSxlsfZlFJuHCKy3xZCUsTdau4pIsZWFW2PBOdwmC
- WtH1HQHcn1mX9T5zm25ARqyQof9C0dm4=
-X-Gm-Gg: Acq92OHfVzCrabbB6INn1PSR7gDg8zp3pdiYv5v3Zmwk1buZgXRzdu1w7I3xztFHzIV
- 0pShlcScYyL1+wfF/rtBf/u4WdOH1iQPYDSbT+Blct4nLTGMEO9U4BCdamBYg+bKbu1tIt4voTg
- v5lqyWFY1a5ttFNj5bbi4fmlT3LWVrUODQh8zHx1AeNEldCxAJPTSwatjCeFPqfwWLK5g4CEhYm
- 3qDvQ0Rh8inWfRAryi5PKwp3A3KUXO+TxDwhNG2zoE4cvvHJxQm8XZ1R9Hy5yqLE7aVCJeFbsMP
- ifalAG3wA/sOwPBsZGBP6wb909YZw2BQoQsxL3Ggig==
-X-Received: by 2002:a17:907:d0c:b0:bd5:1ad4:cd73 with SMTP id
- a640c23a62f3a-bdbff5847aamr1261485166b.2.1779808712913; Tue, 26 May 2026
- 08:18:32 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779808679; x=1780413479;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/WSc1DWINEqAPD0KjQwOvLeQ5c6wA/WoSThA/Y8G36E=;
+ b=YrQzqfS5tMtedkuwwj4ug/nFlFzjMrPQOcc5yxWZ6Q0yyAfTLjDKxQ3wnxtphAJKk2
+ rwFwDw28Vek9QxEM9rLz8+Z2VD1bv8vdzHt66Zx6FOhA2xp2JcOTDY1qeo3+r7Z+MxvA
+ qz2EXkuPKdVHd3qvOi/2hq2OAnUOWHHpzpnMuNvRtXDis84aHIIfZcsq0y7pMCmMLzXe
+ BOT/9LvVJNKqvg7P4GYqNyip2QV+9dzbMCIxX4fkve2BY9R9BpNpMZ+W24nbNqRF9C9b
+ e8FT1zE+7tUnPpmDQ6M4w0jXeShV/M/oM95isVnHdplhfJysNvtsSAeTUrr9JIyD0oeE
+ V2Dw==
+X-Gm-Message-State: AOJu0YwMZJ7YgIzNXTiknHjc194M8ZmwPqrhRfBCUaMG887kgH39KtSl
+ JpATEANaMqtLRU+ZFuKXGNUYrhnYMVLt1hlinNzTpLPAEQfSfhwFaNhtcPm/WWBxZud8z6hCCUu
+ EaqJr
+X-Gm-Gg: Acq92OHK0us19FvYfFR+bdZtJas4/EXHVemYEk3JidMYCYe+LbqlhWWtxT0h/fkuo2W
+ YlUMwyhUdb0OwbYOG+iAp0CLhYz7qfrRwNFC51lKRYUl4ZThmvoQ2j51uYgthOfFcUDkMt34Lg8
+ +oXPfSzDZ0zGPwLK64ix5XI0+Tew89cl+PWvhpsbbhRHI3KKWGuvrVr0Uy7MuJF+sID5TtMHoRy
+ a0gDCxD7uiMyv+Z3OmL+4YIlDlU3VF/ZWHhZlBfPvyFXpnGlQuisUnNBs0tcgOrFXlRSgQj/yYO
+ qdlJZf9YbZUqwbgMk16K3WRDuF+c3VNEyzSI3rWzDdX9qgpq7yMg9kvCkoA9EtshzX4o0lW7YPX
+ Hsd6Kyk949rwuczcZNNHdkq4O6jVi3khc2r0M1Q972j1V1RbD+seYz2TE1SVy2nFbhTLSsa6OH3
+ 5UExI8pmWesb/UxbIcb5g190DdxfHrB+vxXZiQvk9rHmyf+hweklUsPC2lkKZGoAS/6/1vZ0LNH
+ Oh3vgrVgTVD5vlxC/t9zHPhpPLwerM=
+X-Received: by 2002:a05:600d:8444:20b0:48f:e230:2a21 with SMTP id
+ 5b1f17b1804b1-490428ee28emr236207835e9.32.1779808679307; 
+ Tue, 26 May 2026 08:17:59 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49042ce923asm111485275e9.35.2026.05.26.08.17.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 May 2026 08:17:58 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH 0/2] linux-user: tidy up qemu.h
+Date: Tue, 26 May 2026 16:17:55 +0100
+Message-ID: <20260526151757.2371476-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Tue, 26 May 2026 11:18:20 -0400
-X-Gm-Features: AVHnY4KV-RW43o2de8E0eLWRRI-elwwObzNOfbPqlrIIjU6dFY3PDA0bkNLIRnU
-Message-ID: <CAJSP0QUzgvjca16p+HXJTtfbBiT4TM7t6CWYusCwrEAyTWCFpA@mail.gmail.com>
-Subject: Migration broken with libslirp 4.9.2
-To: Samuel Thibault <samuel.thibault@ens-lyon.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alex Bennee <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Peter Xu <peterx@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=stefanha@gmail.com; helo=mail-ej1-x62a.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -114,13 +99,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Samuel,
-QEMU's CI has started failing migration tests with libslirp 4.9.2. An
-issue has been filed here:
-https://gitlab.freedesktop.org/slirp/libslirp/-/work_items/94
+linux-user has a qemu.h header which is intended for types and
+prototypes that need to be used by source files outside linux-user
+itself (e.g.  the gdbstub or the semihosting code).  Prototypes that
+are only needed within linux-user itself live in user-internals.h.
 
-Please let the QEMU community know if any help is needed fixing the issue.
+This patchset moves a couple of prototypes that snuck into qemu.h
+when they ought to live in user-internals.h.
 
-Thanks,
-Stefan
+thanks
+-- PMM
+
+Peter Maydell (2):
+  linux-user: Move init_main_thread() prototype to user-internals.h
+  linux-user: Move cpu_copy() to user-internals.h
+
+ linux-user/qemu.h           |  5 -----
+ linux-user/user-internals.h | 18 ++++++++++++++++++
+ 2 files changed, 18 insertions(+), 5 deletions(-)
+
+-- 
+2.43.0
+
 
