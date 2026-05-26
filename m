@@ -4,94 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EDA5CD5BC9
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 00:56:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F116CD5BC9
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 00:59:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRg68-0001ks-Ra; Mon, 25 May 2026 20:56:44 -0400
+	id 1wRg8q-0002zC-Si; Mon, 25 May 2026 20:59:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wRg5s-0001SX-CP
- for qemu-devel@nongnu.org; Mon, 25 May 2026 20:56:28 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1wRg8p-0002yq-CA
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 20:59:31 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wRg5n-0007Av-VE
- for qemu-devel@nongnu.org; Mon, 25 May 2026 20:56:25 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-367c2a39fcfso4597353a91.3
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 17:56:23 -0700 (PDT)
+ id 1wRg8n-0000Yj-SV
+ for qemu-devel@nongnu.org; Mon, 25 May 2026 20:59:31 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-3697f25d26eso5252371a91.1
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 17:59:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779756982; x=1780361782; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779757167; x=1780361967; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=uFpt4VOCnZhzZqjaTPlctGv0zya+v+8QKGsP2bPsAZs=;
- b=XrbtqRUGNnKuZrOWMZy1AXrc8a2TT/jIrhXbikkCs9tpB04vsLp/yXcEoR30QDly1b
- vpA9nKuT1L9O21S0GoCsSjN0Ejlr2KD44tTD1XEYMkEDdUpdMArK1kvn4dfuFMGsXL5w
- CQYj6GVkcMzfN0V6+rqGq4OQP6TCmQu1YD9rloQm9T/JxU1dO+p/2EXGmW0SjZZOdwPb
- SlOtJ/79FDtUISkIfHYlGRYyFhVvscBVW4WJgoHWWXQYtPHl0mL2dXmV5dqxqfrxV3xH
- 1176TugiuDjfuHXmDunqvXNFmVpCGEmk9bYglfx8QdvyUZcjRehaW2vdSsj7UqVa46I2
- uaDQ==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=hDuVAeR6vhRwTXisvyB4W45rC5DZKRJvjCnRb3FnuuM=;
+ b=DnGVEIoUBZybIqhLWBcJbCH1xYbJ20zSO0+xDUute8jeHF+4CgENJYldOFaIiRwP1h
+ Lq8ENCKrDoKzioFRdFKnotkyBvyl95h0Snc8vn+nVZGrlYEZLhPMrRiJ2OgQ7R0j7JD/
+ KCQMwKLW9sfsHG/jkOGLmuDIZ53HSEIWLfqHEaDyfApo2uwa8sqI4dRuduYAPYkALgsd
+ TQ5fxcu1cyG2KzV0IDIikxabpd5rj4PF1ibHeaqzzioT2ec8iLH0oRyOOZU/ruM1WUKp
+ N6YgTZnC0eNzRaORfZmkk4xYgYVPJ+MAUNb9YydOeZwg0HDGdBsbPdQyPyrzGAxwl9c/
+ cY9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779756982; x=1780361782;
+ d=1e100.net; s=20251104; t=1779757167; x=1780361967;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=uFpt4VOCnZhzZqjaTPlctGv0zya+v+8QKGsP2bPsAZs=;
- b=Td/HiOp6D+0R5HdeD+4ZOM+GapcJaGPFtECh3pF6UvCPFkdsS+CinUzpjMIeRmvkY8
- JbhmxeaxVascQ+jU/jpdz5y/W3+ywp0uOdWuMwXMsW+gVyXkC9ZAsGIuxlMxrgo/6Zqn
- DrnlmTzux8uPplIxxjNIy0LUkdu+TcuA/RzfoWlTUhzyxh61M7elJwUh/Zm6CuBn0i07
- JgPj8SwKFB0ss0BvP6p64FjN1wSaLXlTe9IKL54ja5MmXxu2aiMXgqtpLGul3HkmlJG9
- dCy8MFAjR4NAwZ93yDrmPwzrdlz/qMbwHNNdMOKj5PJLeWQpHq4aalyzrYe3/wWxTJPF
- T+jw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/SX4pkcLDNMT70pknJITApRzuZpLScYopQ35NEoLMrzHTL+5Jb1VfinXGhc0qs5ntb3KDOCrnc0dLG@nongnu.org
-X-Gm-Message-State: AOJu0YyFg2eMOvT2o478ZFq1I1MpUxYeD2dObaKZJFTYkORUOc9MI2fI
- u26aqQB8lx+fTHaOTPAxdNMok9uIaElC8Uiv05D0jHFxtHouO3bo6D8Sx8hMpguFodY=
-X-Gm-Gg: Acq92OFVNZYrX9dfvpj5/QLyhpj61deceXkrNhg0Is9XQTyCYmmUpLtP9cx/33u87mx
- 139w4R3+x0yDjQyDf3PbRhKYYfD8W2fTRISBKhFx7aT7CLl6VIYOEP3kieoGVjGoVUW88btcJ//
- kcIRNOgiCtLZUYE/6ioAZ17rMV6lhpPx8QjJSm0UejfECbnuSsQFOAZP7ugTbbwdviWNYxMvCxr
- x7409nCDSNjjEaVS+Lr984c0KLZSPqkh9REvt+sRdOylQvU3BOfucMJB0oYypyspXDfMrNJSjoc
- wY1oneiOXwYtVOxpMXZ+Srs1CHwE+puxyM1QU+qaaPm9gyfzDWmvjSb3Tb0EbrQUQ+GlFC0mJC3
- w+RqaArwE5bymtu7YGbLRofP/wdqub4Nh1jp+vpdYpCuPHWTing6ixvrPjcrkVs+lKi34mLgxB1
- /EAQHl3TSdY79CbnNsKsFzuxvDtd2uLDQMNtvX
-X-Received: by 2002:a17:90b:3807:b0:366:2e1f:393 with SMTP id
- 98e67ed59e1d1-36a676291d3mr17190155a91.21.1779756982176; 
- Mon, 25 May 2026 17:56:22 -0700 (PDT)
+ bh=hDuVAeR6vhRwTXisvyB4W45rC5DZKRJvjCnRb3FnuuM=;
+ b=D4iCXVEdgh80zh4A6JxbdC0Tx9fkBUvACtUDsMsI7td2WMX6/F6axr+xNt/ISw8Hsh
+ NbrRXelO4tkdJM3AuhsVgnrZHc1z2QpXGlolmt4KZA2wu3/6VzxtABqvIx4Wmo6fu2SB
+ t6qzsPcefr8t7iwJrZ6quXHWxKnqyJjZHgPhlu5WQuvHgeCmSr/xSslMoAxzUQizOH1z
+ V7kN2kVpTAofEcm0t1ORzsL7xkD8WHx5Q96QExBb1Z163vJtV4OvXFIC412jExHdn89G
+ VlzA3dyPrlMnj3JxU8cV/XgdyuMQ0uugiSiko4TEqticMndgRzuMeM1dHGTYeLRDp8rA
+ gp1w==
+X-Gm-Message-State: AOJu0Yyft7+xrA5TzCm/1FFeWqIhNuYmOAsweCbIEQON+GI63/Mt2GL4
+ aT+VNHOJnTOhu+Ul8aOpqqNCSyl55Au4Z1mD8BilVNcuk0e2cKUYSab8AiWNizkkf31dYtpdn8B
+ Ys8XTDmU=
+X-Gm-Gg: Acq92OE43ojLPCM7tIM013vzq4rarcel6n/gRnwf+0/mvgIG2uRxiXCDl2B6vqwT5gs
+ uXq954jXnohvs6g3YPeH12FlgjiupCVdJ5C0zLCSD+WwX75+Md2OWnLhnul+zewu1FalXYIcm1C
+ S03G61g/Uz7f4Qxzg7SN6qktf3I+NQPnkC267uBUDG4/QyUHqxKRgwOsGSTT4FhcnSMltw3XnYS
+ pY5jGOIqsf4w+EvS2YDpwDoeDbGQDHRI3l1Z0YauUROIzzedtug0Q+dS5PJFwC/4wCm+ssBEbRl
+ mU3DZZQC/q+5YI6Hu/9x4jyDHkqYFE6rSI3fd+k7pqv2FkE/hFK0cBVlFQpfisMMaTNKsXKPjz1
+ v/IVV8fPrGkI/BhOJphilxa2U9hNjFaOdyf+1MWHITqWVlqXDcvWms4sHpadsc1zfNj+eDlaP7z
+ vr8dtzCXoVUpttoVfyWO7OvoQhbq7gWqd55nQ5HzS2HbZ67UpIke2hqMUIWQ==
+X-Received: by 2002:a17:90b:5343:b0:35f:bb33:d72c with SMTP id
+ 98e67ed59e1d1-36a6773cf81mr13220636a91.4.1779757167422; 
+ Mon, 25 May 2026 17:59:27 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.142.33])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-36a6c44a44asm6693635a91.2.2026.05.25.17.56.21
+ 98e67ed59e1d1-36a71d93e6fsm10529869a91.4.2026.05.25.17.59.26
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 25 May 2026 17:56:21 -0700 (PDT)
-Message-ID: <fae95369-8b4f-42e6-ad26-7ffe948c4cfd@linaro.org>
-Date: Mon, 25 May 2026 17:56:20 -0700
+ Mon, 25 May 2026 17:59:26 -0700 (PDT)
+Message-ID: <bd8df63e-c2b0-4f78-b9e6-7324e2b240d3@linaro.org>
+Date: Mon, 25 May 2026 17:59:25 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] target/sh4: sync fp_status when gdb writes FPSCR
-To: Matt Turner <mattst88@gmail.com>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>, qemu-stable@nongnu.org
-References: <20260525152642.4121729-1-mattst88@gmail.com>
- <20260525152642.4121729-3-mattst88@gmail.com>
+Subject: Re: [PATCH] linux-user/ppc: restore fp_status from FPSCR on sigreturn
+To: qemu-devel@nongnu.org
+References: <20260525152312.4120017-1-mattst88@gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260525152642.4121729-3-mattst88@gmail.com>
+In-Reply-To: <20260525152312.4120017-1-mattst88@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,32 +103,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/25/26 08:26, Matt Turner wrote:
-> sh4_cpu_gdb_write_register() wrote the incoming FPSCR value straight
-> into env->fpscr, leaving the derived env->fp_status (rounding mode and
-> flush-to-zero) stale, so a gdb-initiated FPSCR change did not take
-> effect for subsequent FP operations. Use cpu_load_fpscr() instead, the
-> same way the adjacent case already uses cpu_write_sr() for SR.
+On 5/25/26 08:23, Matt Turner wrote:
+> restore_user_regs() restores the PPC FPSCR with a direct assignment:
 > 
+>      env->fpscr = (uint32_t) fpscr;
+> 
+> ppc_store_fpscr() exists precisely to write FPSCR and keep the derived
+> env->fp_status in sync: it calls fpscr_set_rounding_mode() to update
+> the softfloat rounding mode, and set_float_rebias_overflow/underflow()
+> to reflect the FP_OE/FP_UE enable bits.  The direct assignment bypasses
+> all of this.
+> 
+> On sigreturn, interrupted code resumes with whatever rounding mode and
+> overflow/underflow-rebias state the signal handler last installed in
+> fp_status, rather than the state that was saved at signal delivery.
+> 
+> Replace the direct assign with ppc_store_fpscr().  The FPSCR_MTFS_MASK
+> applied inside ppc_store_fpscr() only excludes the computed FP_FEX and
+> FP_VX bits, which it re-derives correctly from the exception and enable
+> bits in the restored value.
+> 
+> Fixes: bcd4933a23 ("linux-user: ppc signal handling")
 > Cc: qemu-stable@nongnu.org
 > ---
->   target/sh4/gdbstub.c | 2 +-
+>   linux-user/ppc/signal.c | 2 +-
 >   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git ./target/sh4/gdbstub.c ./target/sh4/gdbstub.c
-> index 4f36e800d2..bdc8c1d164 100644
-> --- ./target/sh4/gdbstub.c
-> +++ ./target/sh4/gdbstub.c
-> @@ -113,7 +113,7 @@ int superh_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
->           env->fpul = ldl_p(mem_buf);
->           break;
->       case 24:
-> -        env->fpscr = ldl_p(mem_buf);
-> +        cpu_load_fpscr(env, ldl_p(mem_buf));
->           break;
->       case 25 ... 40:
->           if (env->fpscr & FPSCR_FR) {
+> diff --git ./linux-user/ppc/signal.c ./linux-user/ppc/signal.c
+> index a9c10e0987..ab1afea30a 100644
+> --- ./linux-user/ppc/signal.c
+> +++ ./linux-user/ppc/signal.c
+> @@ -420,7 +420,7 @@ static void restore_user_regs(CPUPPCState *env,
+>               __get_user(*fpr, &frame->mc_fregs[i]);
+>           }
+>           __get_user(fpscr, &frame->mc_fregs[32]);
+> -        env->fpscr = (uint32_t) fpscr;
+> +        ppc_store_fpscr(env, (uint32_t) fpscr);
+>       }
+>   
+>   #if !defined(TARGET_PPC64)
 
+I think the cast is wrong.  With that dropped,
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
