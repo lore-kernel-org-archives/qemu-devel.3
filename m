@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9961ECD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 09:58:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD7B6CD5BD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 09:58:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRoY3-0000A7-QO; Tue, 26 May 2026 05:58:07 -0400
+	id 1wRoXv-0008Uz-EV; Tue, 26 May 2026 05:57:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRoY2-00009p-7T
- for qemu-devel@nongnu.org; Tue, 26 May 2026 05:58:06 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRoXu-0008SI-Et
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 05:57:58 -0400
+Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRoY0-0000XT-Ll
- for qemu-devel@nongnu.org; Tue, 26 May 2026 05:58:05 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-49050ff7cbdso27690255e9.2
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 02:58:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRoXs-0000VB-Qn
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 05:57:58 -0400
+Received: by mail-wm1-x343.google.com with SMTP id
+ 5b1f17b1804b1-48fde648a71so67818645e9.0
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 02:57:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779789483; x=1780394283; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779789475; x=1780394275; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Zy8eiABwRpCam2ogJ6+dKB3dvQ/4Eln/DRD1aKrsllg=;
- b=osJemNmp7rJ+NIP5gXp20d/QWVU5Wlv8JLQ/tfx0IlP6h3FwA7EXvhyT0e3f+DaV+6
- KyILXn82GId1LcZu56TcNwW07nNvmB3hIfk3sWJ83Tk7V9Sb+0Fe+FqjLedXwSqYnekq
- QBOeNd8K1/k7sYXza2eyUg9/kjHcvojSNOL/wa+XYus43DPWEgsscNZs3S5pQQuJ2yeR
- H2dgKqWd1ItxLb3jZJwZHwKz/HxeyQo2u1mtEMmG/2dsDlFG3iGLLEBm4NjUccuCHIQW
- Sd3DgRxGdDZI9WnzVN0cbSx66OHEu68by6VmvSd/fH3lmqrHDE9Lv/5Ru4a8tjTRHxdO
- 0yTA==
+ bh=okE4M75YzjDtywKE9rAcAkUOOM4qAq1H17UH1rYCeIw=;
+ b=uVHeaSchWFEOesPAik0UiuowH/LWu+JgQjsms8rgBWhks+N0zhrCyF+RnbXE3+Iqtd
+ 4FrCBMkQKkoDrdrkcSD2kXR3TsijpQY+H9lHQWZoNiNXXEj/pWosq+BSc0TaAqQJMGVA
+ S41t3bYAG3yldhO+QUJc50S5ery6MuiHCF3/92wGFNXSvnXJiEr6BEt8au6Q8aAsVLq1
+ ClP7PLQBSJjomtmcbo1bLSV/q8sHg4vhDoShs02BS7nAdE0Ta/beyWsmKOP4IXWagsud
+ jtbxuAhNNkedSpkBy1HleYwjgpgYIKwPA3VhLWuzm6nrsFIlPVIZ6DzkD/ATkhoj81tQ
+ CMfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779789483; x=1780394283;
+ d=1e100.net; s=20251104; t=1779789475; x=1780394275;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Zy8eiABwRpCam2ogJ6+dKB3dvQ/4Eln/DRD1aKrsllg=;
- b=m8s17yedAf6TqY1NRo8oAjkcg3RaxzDQDbO69J1gz63RVF5caJyq6iI+AqfTf0RZ6U
- tng7vXWkE+ncVAOjHdk+fn0nFMAeYPHPtGZ+oyv3Xk8M9FNGFr2Cckxo7XAtWzIwyMRV
- EpaGhjXIF8tmcYH644n7t0wrnmkhE8gn2dbwEHBa9a6M8AdDnLy08ld754HRIoUlLnZy
- JnomQFlY1M1/fP+WziGuB3M1D6/7xkMR3SKxJgM8ZmjTDamE3QTHBcxH5AFecleglT3z
- iY5GRnx98su5W7/ky1mjXbXzSjLNWf4lv4YVv3g1MYPhIhck+ncRATKbNRpYF1A07oO3
- JCnQ==
-X-Gm-Message-State: AOJu0YwEuLopCPa9FHNzItTqERdtJdazU2AOvBeGKodcpyfVL2iW0sFu
- WjNCBzKFmMqUCJkadPb3V0Sy0aYR/8IUdDm7OUkNDVbUOVOFRzd+kbryt7MdItI6JC9eIazQ+75
- /R/hcfKJ1RA==
-X-Gm-Gg: Acq92OH8mbv+mo7SLMDWB0mcBr1FAdHwq24cJzbBKAAYogc7+LiaP3TU77JUZqjLRkJ
- 04GxtZe/lweq8skfiCw6Uo4KNlWYk9BWTmOSd8HGhaxAqNt7bGL3QRGEbC4+0sdJbQbeukqzEEi
- bpDv9j3bN2btwXqXAEbDt/fQf2ePZyvJXeqF7LiO24LlHhw/bZMhyzxOfolLaEyTsb3dFLlouDs
- FD6dKmoPbrvYp5Kv4BFXrkwY8QdYechp+VllPZzSYVyQjNOVHpcl3EOnvINF/4QtLlUHP9WjWE3
- 9SspjM4eX+EDVWB+4E0bHoSkd470NRbTjz0p1aEhZzjFybmjxb7QPBAz+iP3PbKEfWWG3WZBO82
- GYOtADktDLIv/OAK7YZihzmNnDfVyDEFYcS2uZYMDv5LoQq629BgjcW6v3ig5jvy3Yw3YT6mKQQ
- ee63PbsYEAZ77vj2bhICR3O74Mj0Q9IB+7005UR2g1V+gHfdnhekPJl7M=
-X-Received: by 2002:a05:600c:1c0a:b0:490:402f:324d with SMTP id
- 5b1f17b1804b1-490428e03admr291296075e9.29.1779789483010; 
- Tue, 26 May 2026 02:58:03 -0700 (PDT)
+ bh=okE4M75YzjDtywKE9rAcAkUOOM4qAq1H17UH1rYCeIw=;
+ b=QfDkXUqG93llc2QIAHEIEkZzKLQFmTE7ktgeqxUi4jswZr0yju9M9B2jqKITs0flwU
+ aKprsd9eBGNr1NQUfNdkH/5OWucaaza9NSkILBgUQpXIry3wamVeQXPls1+biFEzB/IT
+ MuhKSdXViflZOdW7u6xbOU4afyuae1YYZO+bUpqKG2agmYNyxgZEK1qoC7766tP2GNNj
+ twufCeZlG1JjqADSrFBcg1EZKEq7fMiN5jDhRpd/CVgvmMxCH3IETnNl5xTVUd5qj3m8
+ 99glC3UCQUSEnxWX9zILz1Cw347QcyeEW9JchUAfmKnE8NuBNBLxQU2yXLJ/jhtKN3JR
+ OORg==
+X-Gm-Message-State: AOJu0Yy2DCB5J1CxHjyvQ559SYg2L1v2jmP5H3DetaBTxJCNoUN6bI7x
+ GXKGW3LCGkrPrHj9+lxg/TwxCkXHPr+CGYPdpLSHw9xiZoT1bn1LwJgkvNojMSxYXHuvolPVmQh
+ Bk28CMosEAVzn
+X-Gm-Gg: Acq92OF6I6l1jvIjoX7/jjzKv0wItYy/Sscq+x3EPuhRjHPl2PZmr1xhjvLN+m3h98k
+ 5pbNoTU+cJtLabPRF6L0Q/30+lD2E5ahyOeM9uK2zsVt3pPBcNjB6AwulJ5Fx9CMLKkiZP14ism
+ QsgOApF7XOd867Da/FZRSAaYkVrrvGEvzIjbsqmBNPngwncTwLpunOyI4NrXqgtUmJh33s7ONzn
+ zMQFnstwDJItYUQye7Z0BCeOFQFioWPTofJbxYld1fxdo8uNssRc9SPTrMc1dgWAwUYS/kRdeo8
+ SxI7l45iTfSQGYIZNUHKvETk113UD1zi2t2RbVyu5LLlv+Gj/39Vhss02eSGEL6rTeouheoCMsJ
+ OUJdPPag6jmcoffovy35U6CWD8xnI9PLluY8af4KKb3GYJ4OhyMGDzaoQcQehpjnHaTqkOakLDC
+ feAbDuv9EuJqnr24zGmsRqWG9Ua7D2JrT98WGLTyKS3WO2lP11E3hvWA0=
+X-Received: by 2002:a05:600c:3b08:b0:490:50ff:d394 with SMTP id
+ 5b1f17b1804b1-49050ffd4f7mr225810005e9.16.1779789475243; 
+ Tue, 26 May 2026 02:57:55 -0700 (PDT)
 Received: from m17.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49049973b71sm91270615e9.29.2026.05.26.02.58.01
+ ffacd0b85a97d-45eb6d4903bsm31719981f8f.21.2026.05.26.02.57.54
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 26 May 2026 02:58:01 -0700 (PDT)
+ Tue, 26 May 2026 02:57:54 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>,
@@ -74,17 +74,18 @@ Cc: qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>,
  Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH 4/4] hw/riscv/virt: Inline TYPE_RISCV_CPU_BASE definition
-Date: Tue, 26 May 2026 11:57:31 +0200
-Message-ID: <20260526095731.63525-5-philmd@linaro.org>
+Subject: [PATCH 3/4] hw/riscv/microblaze-v: Use RV32I / RV64I CPU type by
+ default
+Date: Tue, 26 May 2026 11:57:30 +0200
+Message-ID: <20260526095731.63525-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260526095731.63525-1-philmd@linaro.org>
 References: <20260526095731.63525-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::343;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,54 +108,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TYPE_RISCV_CPU_BASE is only use by the 'virt' machine.
-Inline it, replacing a built time check by a runtime one.
+Per [*]:
+
+  AMD MicroBlaze™ V processor Key Capabilities:
+
+  - Configurable ISA support for RV32I and RV64I Base
+    Integer Instruction Set
+
+[*] https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/microblaze-v.html
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/riscv/cpu.h | 6 ------
- hw/riscv/virt.c    | 4 +++-
- 2 files changed, 3 insertions(+), 7 deletions(-)
+ hw/riscv/microblaze-v-generic.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 7d79c7a5a7e..0d2ecd9d6ba 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -39,12 +39,6 @@ typedef struct CPUArchState CPURISCVState;
- 
- #define CPU_RESOLVING_TYPE TYPE_RISCV_CPU
- 
--#if defined(TARGET_RISCV32)
--# define TYPE_RISCV_CPU_BASE            TYPE_RISCV_CPU_BASE32
--#elif defined(TARGET_RISCV64)
--# define TYPE_RISCV_CPU_BASE            TYPE_RISCV_CPU_BASE64
--#endif
--
- /*
-  * b0: Whether a instruction always raise a store AMO or not.
+diff --git a/hw/riscv/microblaze-v-generic.c b/hw/riscv/microblaze-v-generic.c
+index b0494b1ac50..04a201dcd95 100644
+--- a/hw/riscv/microblaze-v-generic.c
++++ b/hw/riscv/microblaze-v-generic.c
+@@ -14,6 +14,7 @@
   */
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 3d06c9c6104..8371b28c27a 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -22,6 +22,7 @@
- #include "qemu/units.h"
- #include "qemu/error-report.h"
- #include "qemu/guest-random.h"
+ 
+ #include "qemu/osdep.h"
 +#include "qemu/target-info.h"
+ #include "qemu/units.h"
  #include "qapi/error.h"
- #include "hw/core/boards.h"
- #include "hw/core/loader.h"
-@@ -1932,7 +1933,8 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
-     mc->desc = "RISC-V VirtIO board";
-     mc->init = virt_machine_init;
-     mc->max_cpus = VIRT_CPUS_MAX;
+ #include "target/riscv/cpu.h"
+@@ -182,7 +183,8 @@ static void mb_v_generic_machine_init(MachineClass *mc)
+     mc->init = mb_v_generic_init;
+     mc->min_cpus = 1;
+     mc->max_cpus = 1;
 -    mc->default_cpu_type = TYPE_RISCV_CPU_BASE;
-+    mc->default_cpu_type = target_riscv64() ? TYPE_RISCV_CPU_BASE64
-+                                            : TYPE_RISCV_CPU_BASE32;
-     mc->block_default_type = IF_VIRTIO;
-     mc->no_cdrom = 1;
-     mc->pci_allow_0_address = true;
++    mc->default_cpu_type = target_riscv64() ? TYPE_RISCV_CPU_RV64I
++                                            : TYPE_RISCV_CPU_RV32I;
+     mc->default_cpus = 1;
+ }
+ 
 -- 
 2.53.0
 
