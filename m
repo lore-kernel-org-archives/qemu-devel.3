@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E948DCD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 19:07:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06FFFCD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 19:07:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRx6e-0000YJ-HI; Tue, 26 May 2026 15:06:24 -0400
+	id 1wRx6q-0000cc-Js; Tue, 26 May 2026 15:06:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRx6O-0000NI-0c; Tue, 26 May 2026 15:06:17 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1wRx6b-0000Uo-Ey; Tue, 26 May 2026 15:06:21 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRx6L-0004dz-8E; Tue, 26 May 2026 15:06:07 -0400
+ id 1wRx6Z-0004hN-Jg; Tue, 26 May 2026 15:06:21 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 34B4E60120;
- Tue, 26 May 2026 19:06:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980B71F00A3A;
- Tue, 26 May 2026 19:05:59 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 1CF0B438F3;
+ Tue, 26 May 2026 19:06:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC33B1F000E9;
+ Tue, 26 May 2026 19:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779822362;
- bh=/5CGgZ/X7uMiJB5eErY0sF7KyvBhWLSMYSs2M1AmyjE=;
+ s=k20260515; t=1779822378;
+ bh=YmDrG2TezwoliurUbxDzBvTiekL3RGYCv9IQwkBdxx8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Wq+k3sEEzsKuqSqsP70oMVOoqzKo6K5R5vEaC9KfgVLbQG1VEyEP1N3sGlJxUkPlH
- mDivh+G6Xn8KeCttNBrM4x0SxkLck67fFr+iFd8jXLJcIQNB9aKtlZ07vN2HKrzZxz
- L0ukvNh/jGgRqDMoSpLRGXdMyVDyQQq3a94mNQ7KoMUlZBBayW3eKgCvMz89KySg2l
- Zr7C6SfO6edS1QjDFczOpMNhY0JOwdYUCHQ0x0WxrEq+01P0RuX+F1z6uoGLNFMX+W
- qmLV4PzuQUTkCMReHOwJTHCdwPpI7PMiYFlQ3fqU7h8tlo2ptaSIaloMAeLifs04Ss
- ofhyVbKuIP8TA==
+ b=npX76Brbf2MixQO187ZMVQ6vKX5oeNNSSSsc3DreDvoucNyVrMptk6EhXpi4EwT+B
+ MQt4VHAca8OORzlmY0DSKKa+e58MoiKCf/Wi1NrzbLsWH/R5Rm9dXBh5c2YIGvrGHA
+ tf8gu7CwOtC2/uq/MPZ8LBSa0ZxbjPdyetlLkacH4LxND5e0sYoh+83T0KfGj/fDkg
+ XUVW0imxoqakv0X4t0Ecm3JnBP75FuKt2NbD3Zxg2YCkDAm113G9CA11UOC00peA6Q
+ Dtx9oiPOpKdcd2QMeIFN5/oAekKu4IFzZlrcjj3OJO6nCufz9uL7tpMDEBYUdmvoRF
+ pVk+t/cKGPVXA==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Cornelia Huck <cohuck@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -47,16 +47,16 @@ Cc: Cornelia Huck <cohuck@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
  qemu-s390x@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  David Hildenbrand <david@kernel.org>
-Subject: [PATCH 06/12] target/sh4: sync fp_status when gdb writes FPSCR
-Date: Tue, 26 May 2026 21:05:29 +0200
-Message-ID: <20260526190535.10833-7-deller@kernel.org>
+Subject: [PATCH 10/12] linux-user: Fix loading static ARM cortex-m55 binaries
+Date: Tue, 26 May 2026 21:05:33 +0200
+Message-ID: <20260526190535.10833-11-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260526190535.10833-1-deller@kernel.org>
 References: <20260526190535.10833-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -78,36 +78,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Helge Deller <deller@gmx.de>
 
-sh4_cpu_gdb_write_register() wrote the incoming FPSCR value straight
-into env->fpscr, leaving the derived env->fp_status (rounding mode and
-flush-to-zero) stale, so a gdb-initiated FPSCR change did not take
-effect for subsequent FP operations. Use cpu_load_fpscr() instead, the
-same way the adjacent case already uses cpu_write_sr() for SR.
+Static built ARM binaries for Cortex-m55 may have been linked to have
+their load address at address 0 (because they are effectively a
+bare-metal image). When qemu-user is running as non-root user and will
+try to mmap() a host address at 0 (which is smaller than mmap_min_addr
+according to /proc/sys/vm/mmap_min_addr), it will fail with EPERM and as
+such loading those guest program will fail.
 
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Matt Turner <mattst88@gmail.com>
+Fix pgb_addr_set() to always return false if the guest_loaddr <
+mmap_min_addr, that way a valdid guest_base address will be calculated
+and the EPERM can be avoided.
+
 Signed-off-by: Helge Deller <deller@gmx.de>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1890
 ---
- target/sh4/gdbstub.c | 2 +-
+ linux-user/elfload.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/sh4/gdbstub.c b/target/sh4/gdbstub.c
-index 4f36e800d2..bdc8c1d164 100644
---- a/target/sh4/gdbstub.c
-+++ b/target/sh4/gdbstub.c
-@@ -113,7 +113,7 @@ int superh_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
-         env->fpul = ldl_p(mem_buf);
-         break;
-     case 24:
--        env->fpscr = ldl_p(mem_buf);
-+        cpu_load_fpscr(env, ldl_p(mem_buf));
-         break;
-     case 25 ... 40:
-         if (env->fpscr & FPSCR_FR) {
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index f7625c0952..62f12e4149 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -866,7 +866,7 @@ static bool pgb_addr_set(PGBAddrs *ga, abi_ulong guest_loaddr,
+         if (LO_COMMPAGE != -1 && LO_COMMPAGE < mmap_min_addr) {
+             return false;
+         }
+-        if (guest_loaddr != 0 && guest_loaddr < mmap_min_addr) {
++        if (guest_loaddr < mmap_min_addr) {
+             return false;
+         }
+     }
 -- 
 2.54.0
 
