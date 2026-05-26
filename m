@@ -4,71 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19B81CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:59:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9282DCD5BB1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 15:06:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRtFe-0004dO-BO; Tue, 26 May 2026 10:59:26 -0400
+	id 1wRtLu-0007Px-9t; Tue, 26 May 2026 11:05:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wRtFW-0004Mm-Q6
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:59:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wRtFV-0007DU-7q
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:59:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779807556;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ATTUON2i4IU+4SKtIzQw+ncHlBNg6Q6D4XxNkZ38H5k=;
- b=GfiMOgMXoMGwUeTqslkkYa0D8AV/AHcRA5XJTxq9bZDjD9SljpTGDsnjyyG1O/psXKlg5r
- o325dYjrChaYE62ymQjCAOY7NKZYfdYv+Pr5ck121FS1BW/6ZZaPQDVoY+Ud8i0sSSvuKB
- FU6Yk/6sieJDkftGGs/bp12CkIRQKJc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-554-8U5jcD-zO3WvE_mvqn0FQw-1; Tue,
- 26 May 2026 10:59:11 -0400
-X-MC-Unique: 8U5jcD-zO3WvE_mvqn0FQw-1
-X-Mimecast-MFC-AGG-ID: 8U5jcD-zO3WvE_mvqn0FQw_1779807550
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 34821180061B; Tue, 26 May 2026 14:59:10 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.201])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C51DA1681; Tue, 26 May 2026 14:59:09 +0000 (UTC)
-Date: Tue, 26 May 2026 10:59:08 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, stefanha@gmail.com,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PULL v3 00/38] Ui patches
-Message-ID: <20260526145908.GA1733401@fedora>
-References: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1wRtLq-0007Oc-1n
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 11:05:51 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1wRtLn-0001px-9h
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 11:05:49 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-65c2cd216c9so9002734d50.3
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 08:05:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1779807943; x=1780412743; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3MfOLILJhLCs5uI9y6v3DME2R5kiBOtj3d4TbB1y6Bw=;
+ b=SQZ2FlboTAN9YjbR+zADYs/sob+t6tltpWJAjtjWqBtlHwjwjmTr3Fxgo8nW5RxtN+
+ wMaWClrxZdJCHThE5FvY7BUBn9977K1RobyGylEtOf+nA6TiCYvGGdF3lxno7bdoyjJf
+ qUVZQF8mnPXd9zmU5Ss2T6ASHhJ/WMWqCi3hI6RpKqkZFmkWvzBGqZgXNaCJDogObOF7
+ tvu31KQMKc2LNK1uNksFK0OgKxASA4ydBuxXScpesCN1ONeWT5C1NoJAvFfa9dPCwZQO
+ 48jU49OGxw3bO0JwNe8t5lk45P2nbRx03OQh/IKGKIiPYdjNv2DMhtUEP3k5xhOaomCl
+ JYFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779807943; x=1780412743;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=3MfOLILJhLCs5uI9y6v3DME2R5kiBOtj3d4TbB1y6Bw=;
+ b=Q0Ly3rSZLdMmEXSqcQw+yFOssyODTFOigMAE53K39aXHY7607v4xDXj9onoEwT404G
+ qWUl6U1yM1PurtkqMmQbnQw3IYrK5Mcq45sGtprQvzk2CurPb0mHpA1xEh8GE/3GH04V
+ DApSBYQAbw3QLCvKa569ruPdioYvDpbPVmFbleRtRSPyc1TNC5ViVBOGfcKQpnLZ6voi
+ /NIfIdh1G+Irm8qI48NHMhOVCStV5pvU3jQudtnqBAtO7ozqZ78+mTRnCqCULBqAu1No
+ BHdETipF9jjijFxz09n+CL88KA5FbKz80Kdzj4KUAKmCOfn/xgpaabyIWgJKiqHKrywF
+ ogNA==
+X-Gm-Message-State: AOJu0YzvbC8BePUBEvRBUEaTh1VLHhBmYyxSAtj3ONC16o6o7I3ngBaP
+ WfIdzCUPx5cCRRnmD7tJR6fiFT4mLEHKrpv8MQCvh8xcbOKPBetw3wBXFlOLWw==
+X-Gm-Gg: Acq92OH8Elq+GVTTCPhy4Iy3DL5oWhWBuSuZBb6bdmu2H2veCy27sP+UethuyloQHJt
+ 6tPUV9D9EpWQHNhr3IPKTMDkVRP4qSUrCshn8MtGb+I7kbQTaTbm0DzNftvosC/f0rqbZtec+aD
+ e+rEplk/RyjeYI05sf/BknKPsvz9xN8j7Y+hhf08ZXaivNU+7gQ2KfqVGDdgR60qYPLTPqq82z1
+ zoC4KkCCZfN92lwY+bjGMYWT6anqgMgW8Bpfp1UZ6592xBC34P0p8BJtHRRlGR8PWE9ZXRYB1O8
+ LR3CpXSM3W9z8MZCI5np8zTZRcloQvQNbFgLgdV6Khb7j67+HRed5suXgEsLQoEULDo8z5UjOcK
+ TNayDmFjmP1il+mp/noDNUtl9E60sjssIhazipixebFxmT+CT019QpDsvIIQpg1uYZZ+Yv72Xi1
+ hCgkY8GXn+RbqGN6Gv8kSpLSyb5WD9T85kiG980GB/6XL47T4y2QjEHdPErXN2O/P62NSfOZFsq
+ 6k=
+X-Received: by 2002:a05:690e:1283:b0:65f:f64c:c5f with SMTP id
+ 956f58d0204a3-65ff64c1eacmr7134120d50.29.1779807942755; 
+ Tue, 26 May 2026 08:05:42 -0700 (PDT)
+Received: from localhost (107-220-129-194.lightspeed.chrlnc.sbcglobal.net.
+ [107.220.129.194]) by smtp.gmail.com with ESMTPSA id
+ 956f58d0204a3-65ecfd5c952sm6186323d50.12.2026.05.26.08.05.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 May 2026 08:05:42 -0700 (PDT)
+From: Matt Turner <mattst88@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org,
+ Matt Turner <mattst88@gmail.com>, qemu-stable@nongnu.org
+Subject: [PATCH v2] linux-user/s390x: restore fpu_status rounding mode from
+ FPC on sigreturn
+Date: Tue, 26 May 2026 11:05:33 -0400
+Message-ID: <20260526150534.170504-1-mattst88@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260525152210.4119543-1-mattst88@gmail.com>
+References: <20260525152210.4119543-1-mattst88@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="YBPrUXO9SBHSR81t"
-Content-Disposition: inline
-In-Reply-To: <20260525063223.1409791-1-marcandre.lureau@redhat.com>
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=mattst88@gmail.com; helo=mail-yx1-xb132.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,30 +108,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+QEMU keeps the s390x floating-point control register (FPC) in env->fpc.
+The rounding mode bits [2:0] of FPC are reflected into the derived
+env->fpu_status via set_float_rounding_mode(); every architectural
+write to FPC goes through HELPER(sfpc) which keeps the two in sync.
 
---YBPrUXO9SBHSR81t
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+restore_sigregs() restored FPC with a direct assignment:
 
-Applied, thanks.
+    __get_user(env->fpc, &sc->fpregs.fpc);
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
+This wrote env->fpc correctly but never updated env->fpu_status, so on
+sigreturn the interrupted code resumed with whatever rounding mode the
+signal handler last installed in fpu_status.
 
---YBPrUXO9SBHSR81t
-Content-Type: application/pgp-signature; name=signature.asc
+Factor the two-step "write fpc + sync fpu_status" logic out of
+HELPER(sfpc) into cpu_s390x_load_fpc(), declare it in cpu.h, and call
+it from restore_sigregs() in place of the direct assignment.
 
------BEGIN PGP SIGNATURE-----
+cpu_s390x_load_fpc() partially reuses the sanity check from
+HELPER(sfpc): if the FPC value has an invalid rounding mode or reserved
+bits set, it falls back to 0, matching the kernel's fpu_lfpc_safe()
+behavior where a corrupt signal frame value causes a specification
+exception and 0 is used instead.
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmoVtTwACgkQnKSrs4Gr
-c8jXtgf+MUCRARGmEt+Ay0eEELSEnSpl5Xel8Rqp/V8DFH61YiEa4PVU8jZgiKFH
-J6lLeJ7q9eqccDSufXdeHQyH1Nb1gsv3+k1OXAPIjshfsSoFXjFXq0cUMlheSsw9
-lB6X0rxHWimVu+qN7JalkTuueT5AlIopDJfV9VSbeaj8NkU0vc5SAEFvU/zbrpZo
-mmh0XLFUYENSnkChQRiyZsZj9RxUNeJKZGroV4DTLIkn48JmgeuLwTHceiAm9P8j
-NLgPcXleEKJs2WBxQo/H6oQa0WRvXeqKuPBMRZNr7UYT2qE6Jf2UdUnOqeC4Snjt
-JgZEfHgjh0q0KAj4cOReWR/kPGLoDw==
-=5Hdi
------END PGP SIGNATURE-----
+HELPER(sfpc) now calls cpu_s390x_load_fpc() after its full
+specification-exception check, including the FEAT_FLOATING_POINT_EXT
+test that is not needed for the signal restore path.
 
---YBPrUXO9SBHSR81t--
+Fixes: 2941e0fa05 ("linux-user/s390x: Save/restore fpc when handling a signal")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+---
+ linux-user/s390x/signal.c     |  6 +++++-
+ target/s390x/cpu.h            |  1 +
+ target/s390x/tcg/fpu_helper.c | 20 ++++++++++++++------
+ 3 files changed, 20 insertions(+), 7 deletions(-)
+
+diff --git ./linux-user/s390x/signal.c ./linux-user/s390x/signal.c
+index 96d1c8d11c..28ad80bde4 100644
+--- ./linux-user/s390x/signal.c
++++ ./linux-user/s390x/signal.c
+@@ -332,7 +332,11 @@ static void restore_sigregs(CPUS390XState *env, target_sigregs *sc)
+     for (i = 0; i < 16; i++) {
+         __get_user(env->aregs[i], &sc->regs.acrs[i]);
+     }
+-    __get_user(env->fpc, &sc->fpregs.fpc);
++    {
++        uint32_t fpc;
++        __get_user(fpc, &sc->fpregs.fpc);
++        cpu_s390x_load_fpc(env, fpc);
++    }
+     for (i = 0; i < 16; i++) {
+         __get_user(*get_freg(env, i), &sc->fpregs.fprs[i]);
+     }
+diff --git ./target/s390x/cpu.h ./target/s390x/cpu.h
+index 3acbe83f0f..f55b79ef8a 100644
+--- ./target/s390x/cpu.h
++++ ./target/s390x/cpu.h
+@@ -895,6 +895,7 @@ void s390_init_sigp(void);
+ /* helper.c */
+ void s390_cpu_set_psw(CPUS390XState *env, uint64_t mask, uint64_t addr);
+ uint64_t s390_cpu_get_psw_mask(CPUS390XState *env);
++void cpu_s390x_load_fpc(CPUS390XState *env, uint32_t fpc);
+ 
+ /* outside of target/s390x/ */
+ S390CPU *s390_cpu_addr2state(uint16_t cpu_addr);
+diff --git ./target/s390x/tcg/fpu_helper.c ./target/s390x/tcg/fpu_helper.c
+index 6ca0b7162b..107025e675 100644
+--- ./target/s390x/tcg/fpu_helper.c
++++ ./target/s390x/tcg/fpu_helper.c
+@@ -1087,6 +1087,19 @@ static const int fpc_to_rnd[8] = {
+     float_round_to_odd,
+ };
+ 
++void cpu_s390x_load_fpc(CPUS390XState *env, uint32_t fpc)
++{
++    /*
++     * Mimic kernel fpu_lfpc_safe(): a corrupt signal frame value that would
++     * trigger a specification exception instead results in FPC being set to 0.
++     */
++    if (fpc_to_rnd[fpc & 0x7] == -1 || fpc & 0x03030088u) {
++        fpc = 0;
++    }
++    env->fpc = fpc;
++    set_float_rounding_mode(fpc_to_rnd[fpc & 0x7], &env->fpu_status);
++}
++
+ /* set fpc */
+ void HELPER(sfpc)(CPUS390XState *env, uint64_t fpc)
+ {
+@@ -1094,12 +1107,7 @@ void HELPER(sfpc)(CPUS390XState *env, uint64_t fpc)
+         (!s390_has_feat(S390_FEAT_FLOATING_POINT_EXT) && fpc & 0x4)) {
+         tcg_s390_program_interrupt(env, PGM_SPECIFICATION, GETPC());
+     }
+-
+-    /* Install everything in the main FPC.  */
+-    env->fpc = fpc;
+-
+-    /* Install the rounding mode in the shadow fpu_status.  */
+-    set_float_rounding_mode(fpc_to_rnd[fpc & 0x7], &env->fpu_status);
++    cpu_s390x_load_fpc(env, fpc);
+ }
+ 
+ /* set fpc and signal */
+-- 
+2.53.0
 
 
