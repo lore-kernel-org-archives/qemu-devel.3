@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19012CD5BD1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 20:04:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 099A7CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 20:04:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRxzE-0004ZN-Gh; Tue, 26 May 2026 16:02:50 -0400
+	id 1wRxzJ-0004cn-Lv; Tue, 26 May 2026 16:02:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRxyk-0004X5-V4; Tue, 26 May 2026 16:02:18 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1wRxz5-0004Yr-AS; Tue, 26 May 2026 16:02:42 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRxyj-0002VP-5M; Tue, 26 May 2026 16:02:18 -0400
+ id 1wRxz2-0002tb-Va; Tue, 26 May 2026 16:02:39 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 0C9C9600AB;
- Tue, 26 May 2026 20:02:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67D661F000E9;
- Tue, 26 May 2026 20:02:09 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id A95E260018;
+ Tue, 26 May 2026 20:02:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16C541F000E9;
+ Tue, 26 May 2026 20:02:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779825732;
- bh=11cK/N1dyEAOpS4nPioXZ6+e4u/b3GAU4J5LilP1+8c=;
- h=From:To:Cc:Subject:Date;
- b=jGXY6uLePmSn0Iz8f4WFgd2T7HF7TMsc2LlbFjyZMOmmMc3+DojOANgKXLQqz6U3T
- /RETQXgvsfPtgTafo3cKsBiS42VLD+aed2WU0GJHeqZOrpXLgc4paXeMM7Dd0/bzEQ
- AtjPgG4/25zX6jlDplvJ9IO84XQ6SfVpQ8LtQ6gsiOdWn2N6+Ltuyr4ipwzZZfz3bR
- BDIs6a8Xt6JFnZii3juyL1fGPoNr18fMD9JFM7Gl6wIIU1o7VsRjFU6suygOayDCNK
- Ha7rfZRqwtJF3l852k21hRuh25awuBfKrNkYktaZ8QoWfU3XaPUT3MB3POAPeh5yKf
- HzzdYRJr+sfQg==
+ s=k20260515; t=1779825755;
+ bh=/5CGgZ/X7uMiJB5eErY0sF7KyvBhWLSMYSs2M1AmyjE=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=k05PsMWPPh62P0iB2EFPjw4LbPghg9/m/xDMQFhs90AJoZ0N7ajGuun/sAxpFB6//
+ IFm//WiagQWielC99Sf0hLNCbUucDOummX/oyvFLh7JnBySO6we47J+9K1wTfB82BD
+ Wmfz/NGPYWUXN9log3lVtwyqp12EYWsXS446kUGM6UNaYuQluCHUCB4OUFYqovHdJk
+ oKf5rSOxRc0/6jShkOgEYOuNmR3vCqumE13VQDt9uZAfRa88j7GApD1Jl0OHvwC/nP
+ S1dIvWhU17mAujQhTIJoLbNff6qB/6fJ8LcLxPINxFDDY/tpI3TpLJ5MDijGc771hQ
+ FIhMDAoSaR00w==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -45,15 +45,16 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>, Aurelien Jarno <aurelien@aurel32.net>
-Subject: [PULL 00/12] Linux user next patches
-Date: Tue, 26 May 2026 22:01:55 +0200
-Message-ID: <20260526200207.79738-1-deller@kernel.org>
+Subject: [PULL 06/12] target/sh4: sync fp_status when gdb writes FPSCR
+Date: Tue, 26 May 2026 22:02:01 +0200
+Message-ID: <20260526200207.79738-7-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260526200207.79738-1-deller@kernel.org>
+References: <20260526200207.79738-1-deller@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -75,69 +76,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Matt Turner <mattst88@gmail.com>
 
-The following changes since commit 554cbfb1cf4601d2762f5315c884319e361b24cb:
+sh4_cpu_gdb_write_register() wrote the incoming FPSCR value straight
+into env->fpscr, leaving the derived env->fp_status (rounding mode and
+flush-to-zero) stale, so a gdb-initiated FPSCR change did not take
+effect for subsequent FP operations. Use cpu_load_fpscr() instead, the
+same way the adjacent case already uses cpu_write_sr() for SR.
 
-  Merge tag 'ui-pull-request' of https://gitlab.com/marcandre.lureau/qemu into staging (2026-05-26 10:38:13 -0400)
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+---
+ target/sh4/gdbstub.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-are available in the Git repository at:
-
-  https://github.com/hdeller/qemu-hppa.git tags/linux-user-next-pull-request
-
-for you to fetch changes up to b501a44d26be4cf70ba77500365aadbf21494e74:
-
-  linux-user: Move cpu_copy() to user-internals.h (2026-05-26 20:56:29 +0200)
-
-----------------------------------------------------------------
-linux user patches
-
-A series of patches for linux-user, specifically many FPU fixes in signal
-handling code for sh4, mips, ppc, alpha and s390x (from Matt Turner), a
-madvise() improvement and a ARM cortex-m55 program loading fix (from me),
-and qemu header cleanups (from Peter Maydell).
-
-----------------------------------------------------------------
-
-Helge Deller (3):
-  linux-user: Implement finer grained madivse() syscall
-  linux-user: Fix typo in function documentation for pgb_addr_set()
-  linux-user: Fix loading static ARM cortex-m55 binaries
-
-Matt Turner (7):
-  linux-user/ppc: restore fp_status from FPSCR on sigreturn
-  linux-user/mips: save/restore FCSR across signal delivery
-  linux-user/alpha: add coredump support
-  linux-user/sh4: preserve T/M/Q bits across signal delivery
-  linux-user/sh4: restore FP rounding mode on sigreturn
-  target/sh4: sync fp_status when gdb writes FPSCR
-  linux-user/s390x: restore fpu_status rounding mode from FPC on
-    sigreturn
-
-Peter Maydell (2):
-  linux-user: Move init_main_thread() prototype to user-internals.h
-  linux-user: Move cpu_copy() to user-internals.h
-
- linux-user/alpha/elfload.c    | 12 ++++++++++++
- linux-user/alpha/target_elf.h | 13 +++++++++++++
- linux-user/elfload.c          |  4 ++--
- linux-user/mips/signal.c      |  7 +++++++
- linux-user/mmap.c             | 32 +++++++++++++++++++++++++++++++-
- linux-user/ppc/signal.c       |  2 +-
- linux-user/qemu.h             |  5 -----
- linux-user/s390x/signal.c     |  6 +++++-
- linux-user/sh4/signal.c       | 19 ++++++++++++++++---
- linux-user/user-internals.h   | 18 ++++++++++++++++++
- target/mips/cpu.h             |  3 +++
- target/mips/fpu.c             |  5 +++++
- target/s390x/cpu.h            |  1 +
- target/s390x/tcg/fpu_helper.c | 20 ++++++++++++++------
- target/sh4/cpu.h              |  3 +++
- target/sh4/gdbstub.c          |  2 +-
- target/sh4/op_helper.c        |  7 ++++++-
- tests/tcg/sh4/Makefile.target |  7 -------
- 18 files changed, 138 insertions(+), 28 deletions(-)
-
+diff --git a/target/sh4/gdbstub.c b/target/sh4/gdbstub.c
+index 4f36e800d2..bdc8c1d164 100644
+--- a/target/sh4/gdbstub.c
++++ b/target/sh4/gdbstub.c
+@@ -113,7 +113,7 @@ int superh_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+         env->fpul = ldl_p(mem_buf);
+         break;
+     case 24:
+-        env->fpscr = ldl_p(mem_buf);
++        cpu_load_fpscr(env, ldl_p(mem_buf));
+         break;
+     case 25 ... 40:
+         if (env->fpscr & FPSCR_FR) {
 -- 
 2.54.0
 
