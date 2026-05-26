@@ -4,105 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20AFDCD5BD0
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 09:26:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB815CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 09:26:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRo37-0007O1-OQ; Tue, 26 May 2026 05:26:09 -0400
+	id 1wRo2x-0007K7-A8; Tue, 26 May 2026 05:25:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wRo34-0007Lh-BF
- for qemu-devel@nongnu.org; Tue, 26 May 2026 05:26:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wRo2w-0007JZ-9b
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 05:25:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wRo2z-00073q-Oo
- for qemu-devel@nongnu.org; Tue, 26 May 2026 05:26:05 -0400
+ id 1wRo2t-0006wW-FD
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 05:25:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779787561;
+ s=mimecast20190719; t=1779787554;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TY8mlBhBGEKNFGowfTH7/khG7dYr2XbHpJdlPwV+L9c=;
- b=O98IGbbbNEJfzH77yAZO7AnFtOWwrYnSOiVn+nLz1oqeEqNDJYjxjRDwtnx6EEtnXgAo5R
- H/p7l1Mz1SCSyQ0W7rFrrYNJVzxnE7OL1pjLPVCond7XpSrfJQseNSD3BQQdPiqZsLCeC+
- lyFWKewH6EhGPjGknO0vIGRyOmdm9hE=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=MEGdCbUofPtIcGQH3KB5wa2VZQM5oIMJXiQ94dNbrTU=;
+ b=hkF7EPcoRTwNc3tKcLxHa3yUs5MOkVWwpECH8c17evZaLxMNqZjnuVJTfpO6GsHDRwLbIm
+ Nh0XOlvbMhO0UHSUoSaNlhs6YODHQTSqbOUiurgjMJ7tlql7tjqsrn3W/pW1m717wbPYiw
+ id4IcST3UfKfSLgLJG9hPWZBW5DT7tY=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-240-dCPm2O9SOk6Q58gVof5g3A-1; Tue, 26 May 2026 05:25:59 -0400
-X-MC-Unique: dCPm2O9SOk6Q58gVof5g3A-1
-X-Mimecast-MFC-AGG-ID: dCPm2O9SOk6Q58gVof5g3A_1779787558
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-4411a2c034fso9499587f8f.3
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 02:25:59 -0700 (PDT)
+ us-mta-633-Bbd-OPdHOy6TFU6wlsAGDg-1; Tue, 26 May 2026 05:25:52 -0400
+X-MC-Unique: Bbd-OPdHOy6TFU6wlsAGDg-1
+X-Mimecast-MFC-AGG-ID: Bbd-OPdHOy6TFU6wlsAGDg_1779787552
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-49045243094so57297975e9.2
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 02:25:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779787558; x=1780392358; darn=nongnu.org;
+ d=redhat.com; s=google; t=1779787552; x=1780392352; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=TY8mlBhBGEKNFGowfTH7/khG7dYr2XbHpJdlPwV+L9c=;
- b=Tb7ln1tS0n5+PN72y1R0QNsTLsJ2q3F2dEQxN5eMopSCqBANLPnwGNjZpEyJcDS6Bj
- GQSitGeCwA/cZvWFpSu4y1euqbiF1V6ooZzPzIerQGKk1njk/5ASDb8spG+aaeqOKysO
- /SGGb49fAEx3yOMx2a0I6zqUeS2olBgqDEM/1g4RU9mIoWX/JyuQKjf06dbEZ19e/iIH
- KqRXVDJNozmnbNvixI/zng/tW42q/iDsSJWvqhE5zWb/zcOF0YfyDueG/EKmMZWojkU+
- B7cwJS0BKwViumDJqo6WSL/en7O8dTOkdixNYPwRGPPKEUd9AWtzanC1HKeZs6P2x/y+
- 7aCw==
+ :reply-to; bh=MEGdCbUofPtIcGQH3KB5wa2VZQM5oIMJXiQ94dNbrTU=;
+ b=iBhMdb9O/eKlx+J37/VL0228ISvvSm44XkMrIvk1M+1lm2Df/uz0h7cCgSH7xRRfsg
+ UlVnYYV5SR24+r6YbY/R4qM5JjndHoqRMY3lWzAeW5NQxgyb0GDJzHdGCNEh42tZN2rS
+ 9NQJBw5WqtZRkFWiBleXiolv6V3q1fePwphQ+T5Yma8NWqI1pOCOE8VNF7Yr69SUipv7
+ etFd9QKkDdScR9sFl54fLz251aXz8D9wV+ELSwgS8oeKEZkbHnD3Tiaz4tPu7uZcfuh6
+ SZ66Lex7s/RFf3J6PTh6MiII2Gfj9AKNyHz1O6wq9p4eQ9AgyO0q5BTSJUr3+zAhLIH9
+ uk7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779787558; x=1780392358;
+ d=1e100.net; s=20251104; t=1779787552; x=1780392352;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=TY8mlBhBGEKNFGowfTH7/khG7dYr2XbHpJdlPwV+L9c=;
- b=WHBA01dQXH0gUiHlxnJUxTvQ5HxQ4l0e8cVJ/zmrRjv8M7qeGzmx0gyLg2qnrifCuo
- 1Tc1Yv6S+rZaWJA3LC0Yhs8e6OHeRrrgV9DpVXWP4qIrlN4aDt74obVzBPReoH6fYFLq
- edEt9hhLFKezDbInnhPUszjEGFc3w6Mn2xv1bxnKjcAgw/G4l3YA4DuH+r+xxYq3thJD
- OiWZhBkhhTpxFAmSKrKUvgomXIgiR3Wyat5wAT/nQgYu08rjckF7ytO8VsJmO1MBFrmI
- JI4yGSMT2G9vIJUDqqF77OhgJB034HUsPjByARbXhDpYM2DQ4/3YSSnDyaWp+1ozczoe
- CPTQ==
-X-Gm-Message-State: AOJu0YzSiyjbIw6mU8uMHmBcZbTyORbR+O1RUbaky0HOqPgKfHy6YkW0
- wr5I2vu63i9ImBIyCd4zZk9YSqp+d2VAJoCWXXgYs3YOBNrO+JayMsfgOQR5tlUR/vY4D0GUmmf
- 0/7xTNVRzIMqJMpH84f4AtlSS2QPyLDMf8SYj0ocL+UHQFjhscm4BRCRiIwJCV7JjuRenrJiqa0
- dGzi3obXYZ1rNlCO1n29RpnP+fau4lrN/YTYJCDBEc
-X-Gm-Gg: Acq92OHDwNU95nBqlS6GNlmtRIIMur6zYCfcViraemPLuSnlJ0KJaDxHBTdplz+1WLo
- NJqFqd3u6xGzjaBiCthWO++P8Rj5HuOKetMq35AQszoReTk9M5XrSXgCuHgPHhPNOWowBVhl9ph
- KsVd35Pr/kMWW9FmM+rlSZ049M6yAmdoNE8EywjOEf/tD9WAvBuptKCqjoZ6XML+RqVD/kX1WBT
- hxK0U1b7NO0d+lw4VooxPkImly/Cb5FR8vocSopwKKkxknJ4gQsxEYt+kk6oMVZeHU5ydoVKzOK
- 0o7MgHDYA5ETPWK8QJ9ng7US2c09gKjEj452P2J1dk23lNfY+xOJ4jkLK0jiDaTRZ6kOzl+GmIh
- XcW1yx5FBNS9CtJK5VjJoMVN9X+Db4X3Sx1mV1rFLESSBhXCArmIItlEgbAwO8Af+IeW7lpi6fR
- W2jGlwQXv8o1y6lVYQ2aLHSDOinFc=
-X-Received: by 2002:a05:600c:1553:b0:490:58ef:cea7 with SMTP id
- 5b1f17b1804b1-49058efcf6amr197894225e9.22.1779787557821; 
- Tue, 26 May 2026 02:25:57 -0700 (PDT)
-X-Received: by 2002:a05:600c:1553:b0:490:58ef:cea7 with SMTP id
- 5b1f17b1804b1-49058efcf6amr197893245e9.22.1779787557013; 
- Tue, 26 May 2026 02:25:57 -0700 (PDT)
+ bh=MEGdCbUofPtIcGQH3KB5wa2VZQM5oIMJXiQ94dNbrTU=;
+ b=aC/UYmP3I5i5MtBfJ/Df53ML8rAHum2sjLLyV9sOhszkWAyU41vydyuR0RM22miTZj
+ DL6oO1mb5biDF6Es4U+SbbrO+IOWG2I34IX+S4Cpg/IP75G4DcFWkv4fRUwMH6XDvroB
+ 7ohtdo0Jmf7n1h70kUOEc6aFNeLyd5o/6Z57HJj2khWrjt0MFjIjV5Q0N0w5oc5h+fX9
+ Mcqb4Vr6aojowS4BpIPxFDu5hQeUsdpVnHWWZjoSgdL6uAzuj+oyHLkOe/usS9/bfGV4
+ +tjotX1M7EzohHLpSxmbgUZ+HP4UQk+KX4p9iL99dED/kH4+2bU3SpitzAd5idx9Jlmb
+ 1YnA==
+X-Gm-Message-State: AOJu0YwWScRuhwIBw+F7BAejgCD/h08nV7HUpcjYdwRWbpOJCDjtTqW7
+ JkqNkqLcD+o4HJ6G5WYQ0icUoRjLNIM7hMZDNhyz/QXU4sg6NH45b+LNV27tE86L8GvN8pODTOJ
+ m+CYQldlLVYiYFEGwPUUYn0pJzx3U4tHCzSqeP20hN7m0N2tzre74o9SZcVhbWqZkXHUjy5iU9z
+ tiuRLLu37e5Ah4BuI+jXEXGnFqtrakWB3pnbEWS09J
+X-Gm-Gg: Acq92OG4+TlTTwmki/wbCKu8kNH+hhZhMq8wi6fFS0e4I114Rg+lpTyIGFEaSVbarc3
+ FPqKz6eRsxWl1fTY8mQJJ05PnLC9/6f1z+iZ5xPzzmPfjn61z0qoJY5wylfxXgtGwEj6bvVt0hx
+ b8rw171SyLMMuv1BD6/mujSiblPxSN5hUiSzqBEsjGh2xYHVjMvVCYmAFaVQe2J5Q//gPNAZV0g
+ cOgz710U1c7OiXMJNPtVE5ITXGi5DJ1lz02n9CoToYLpG/FsuwEAafJOAjM5meZpt0CMjAVWekF
+ e8L9rEYCbzf4FUxOAo4OgJImFadgXLUo3YRDmfzmEimUVzqW/Eq3E6WYVGtla5wmfNymAyrdrz/
+ xWE054Bgyb7VyGq4insKc1yt6Alu88beBkzjT7YyE95MO9G4ZSouRq/LBvGKQAuIZafnXpV4OUj
+ aE3sQvlab53yFAmJCoExhUfCvZoMo=
+X-Received: by 2002:a05:600c:5288:b0:490:50e8:45c3 with SMTP id
+ 5b1f17b1804b1-49050e846f9mr226346705e9.0.1779787551469; 
+ Tue, 26 May 2026 02:25:51 -0700 (PDT)
+X-Received: by 2002:a05:600c:5288:b0:490:50e8:45c3 with SMTP id
+ 5b1f17b1804b1-49050e846f9mr226345545e9.0.1779787550562; 
+ Tue, 26 May 2026 02:25:50 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.251.208])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6c9de2dsm32643768f8f.4.2026.05.26.02.25.55
+ 5b1f17b1804b1-490454b7d57sm307668755e9.15.2026.05.26.02.25.49
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 02:25:56 -0700 (PDT)
+ Tue, 26 May 2026 02:25:49 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 5/6] rust: use meson automatic parsing of Cargo.toml
-Date: Tue, 26 May 2026 11:25:44 +0200
-Message-ID: <20260526092546.149241-6-pbonzini@redhat.com>
+Subject: [PATCH 2/6] rust: switch to cargo subprojects
+Date: Tue, 26 May 2026 11:25:41 +0200
+Message-ID: <20260526092546.149241-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260526092546.149241-1-pbonzini@redhat.com>
 References: <20260526092546.149241-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,467 +119,426 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Finally, automatic parsing of Cargo.toml is also possible for QEMU's own
-crates, not just for subprojects.  This removes the need to list the
-dependencies and language editions in both Cargo.toml and meson.build
-files.
+Let Meson parse Cargo.lock and Cargo.toml and figure out the set
+of Rust build dependencies.  For now, the only change is that
+subprojects are retrieved with "cargo_ws.subproject('NAME')"
+instead of "subproject('NAME-API-rs')".  However, just calling
+"import('rust').workspace()" enables extra functionality that
+operates by parsing Cargo.toml; it will be introduced a step
+at a time in subsequent commits.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- meson.build                             |  7 +------
- rust/bindings/chardev-sys/meson.build   | 11 ++++-------
- rust/bindings/hwcore-sys/meson.build    | 11 ++++-------
- rust/bindings/migration-sys/meson.build | 11 ++++-------
- rust/bindings/qom-sys/meson.build       | 11 ++++-------
- rust/bindings/system-sys/meson.build    | 11 ++++-------
- rust/bindings/util-sys/meson.build      | 11 ++++-------
- rust/bits/meson.build                   |  7 ++-----
- rust/bql/meson.build                    | 13 +++----------
- rust/chardev/meson.build                |  8 ++------
- rust/common/meson.build                 | 10 +++-------
- rust/hw/char/pl011/meson.build          | 22 +---------------------
- rust/hw/core/meson.build                | 10 ++--------
- rust/hw/timer/hpet/meson.build          | 17 +----------------
- rust/meson.build                        | 13 ++-----------
- rust/migration/meson.build              |  8 ++------
- rust/qemu-macros/meson.build            | 12 ++----------
- rust/qom/meson.build                    |  8 ++------
- rust/system/meson.build                 |  8 ++------
- rust/trace/meson.build                  |  9 +++------
- rust/util/meson.build                   |  7 ++-----
- 21 files changed, 54 insertions(+), 171 deletions(-)
+ meson.build                                 |  3 +-
+ rust/Cargo.lock => Cargo.lock               |  0
+ rust/Cargo.toml => Cargo.toml               |  6 +--
+ rust/meson.build                            | 43 +++++++--------------
+ subprojects/anyhow-1-rs.wrap                |  5 ++-
+ subprojects/arbitrary-int-1-rs.wrap         |  2 +-
+ subprojects/attrs-0.2-rs.wrap               |  5 ++-
+ subprojects/bilge-0.2-rs.wrap               |  2 +-
+ subprojects/bilge-impl-0.2-rs.wrap          |  4 +-
+ subprojects/either-1-rs.wrap                |  4 +-
+ subprojects/foreign-0.3-rs.wrap             |  5 ++-
+ subprojects/glib-sys-0.21-rs.wrap           |  5 ++-
+ subprojects/itertools-0.11-rs.wrap          |  4 +-
+ subprojects/libc-0.2-rs.wrap                |  2 +-
+ subprojects/probe-0.5-rs.wrap               |  5 ++-
+ subprojects/proc-macro-error-1-rs.wrap      |  4 +-
+ subprojects/proc-macro-error-attr-1-rs.wrap |  4 +-
+ subprojects/proc-macro2-1-rs.wrap           |  4 +-
+ subprojects/quote-1-rs.wrap                 |  4 +-
+ subprojects/serde-1-rs.wrap                 |  4 +-
+ subprojects/serde_core-1-rs.wrap            |  4 +-
+ subprojects/serde_derive-1-rs.wrap          |  4 +-
+ subprojects/syn-2-rs.wrap                   |  4 +-
+ subprojects/unicode-ident-1-rs.wrap         |  4 +-
+ 24 files changed, 66 insertions(+), 65 deletions(-)
+ rename rust/Cargo.lock => Cargo.lock (100%)
+ rename rust/Cargo.toml => Cargo.toml (97%)
 
 diff --git a/meson.build b/meson.build
-index 91d74fa198c..17c8751f92d 100644
+index c265a00aed6..91d74fa198c 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -134,12 +134,7 @@ if have_rust
- 
+@@ -130,7 +130,8 @@ endif
+ if have_rust
+   rustc_args = [find_program('scripts/rust/rustc_args.py'),
+     '--rustc-version', rustc.version(),
+-    '--workspace', meson.project_source_root() / 'rust']
++    '--workspace', meson.project_source_root()]
++
    rustfmt = find_program('rustfmt', required: false)
  
--  rustc_lint_args = run_command(rustc_args, '--lints',
--     capture: true, check: true).stdout().strip().splitlines()
--  if get_option('strict_rust_lints')
--    rustc_lint_args += ['-Dwarnings', '-Funknown_lints']
--  endif
--
-+  rustc_lint_args = get_option('strict_rust_lints') ?  ['-Dwarnings', '-Funknown_lints'] : []
-   add_project_arguments(rustc_lint_args + ['--cfg', 'MESON'],
-       native: false, language: 'rust')
-   add_project_arguments(rustc_lint_args + ['--cfg', 'MESON'],
-diff --git a/rust/bindings/chardev-sys/meson.build b/rust/bindings/chardev-sys/meson.build
-index 458075b8060..7af5d74dd51 100644
---- a/rust/bindings/chardev-sys/meson.build
-+++ b/rust/bindings/chardev-sys/meson.build
-@@ -1,12 +1,9 @@
- _bindgen_chardev_rs = rust.bindgen(
-   args: bindgen_args_common + bindgen_args_data['chardev-sys'].split(),
-   kwargs: bindgen_kwargs)
--_chardev_sys_rs = static_library(
--  'chardev_sys',
--  structured_sources(['lib.rs', _bindgen_chardev_rs]),
--  override_options: ['rust_std=2021', 'build.rust_std=2021'],
--  rust_abi: 'rust',
--  dependencies: [glib_sys_rs, common_rs, qom_sys_rs, util_sys_rs],
--)
-+
-+_chardev_sys_rs = cargo_ws.package('chardev-sys').library(
-+  structured_sources(['lib.rs', _bindgen_chardev_rs]))
-+cargo_ws.package('chardev-sys').override_dependency(declare_dependency(link_with: _chardev_sys_rs))
+   rustc_lint_args = run_command(rustc_args, '--lints',
+diff --git a/rust/Cargo.lock b/Cargo.lock
+similarity index 100%
+rename from rust/Cargo.lock
+rename to Cargo.lock
+diff --git a/rust/Cargo.toml b/Cargo.toml
+similarity index 97%
+rename from rust/Cargo.toml
+rename to Cargo.toml
+index 15296ac8636..6bd38e2d8e1 100644
+--- a/rust/Cargo.toml
++++ b/Cargo.toml
+@@ -1,9 +1,9 @@
+ [workspace]
+ resolver = "2"
+ members = [
+-    "hw/char/pl011",
+-    "hw/timer/hpet",
+-    "tests",
++    "rust/hw/char/pl011",
++    "rust/hw/timer/hpet",
++    "rust/tests",
+ ]
  
- chardev_sys_rs = declare_dependency(link_with: [_chardev_sys_rs])
-diff --git a/rust/bindings/hwcore-sys/meson.build b/rust/bindings/hwcore-sys/meson.build
-index 3d51947b4a4..6b8d218f691 100644
---- a/rust/bindings/hwcore-sys/meson.build
-+++ b/rust/bindings/hwcore-sys/meson.build
-@@ -1,12 +1,9 @@
- _bindgen_hwcore_rs = rust.bindgen(
-   args: bindgen_args_common + bindgen_args_data['hwcore-sys'].split(),
-   kwargs: bindgen_kwargs)
--_hwcore_sys_rs = static_library(
--  'hwcore_sys',
--  structured_sources(['lib.rs', _bindgen_hwcore_rs]),
--  override_options: ['rust_std=2021', 'build.rust_std=2021'],
--  rust_abi: 'rust',
--  dependencies: [common_rs, glib_sys_rs, qom_sys_rs, util_sys_rs, migration_sys_rs, chardev_sys_rs],
--)
-+
-+_hwcore_sys_rs = cargo_ws.package('hwcore-sys').library(
-+  structured_sources(['lib.rs', _bindgen_hwcore_rs]))
-+cargo_ws.package('hwcore-sys').override_dependency(declare_dependency(link_with: _hwcore_sys_rs))
- 
- hwcore_sys_rs = declare_dependency(link_with: [_hwcore_sys_rs])
-diff --git a/rust/bindings/migration-sys/meson.build b/rust/bindings/migration-sys/meson.build
-index 9243acba300..91f2967c9b3 100644
---- a/rust/bindings/migration-sys/meson.build
-+++ b/rust/bindings/migration-sys/meson.build
-@@ -1,12 +1,9 @@
- _bindgen_migration_rs = rust.bindgen(
-   args: bindgen_args_common + bindgen_args_data['migration-sys'].split(),
-   kwargs: bindgen_kwargs)
--_migration_sys_rs = static_library(
--  'migration_sys',
--  structured_sources(['lib.rs', _bindgen_migration_rs]),
--  override_options: ['rust_std=2021', 'build.rust_std=2021'],
--  rust_abi: 'rust',
--  dependencies: [glib_sys_rs, common_rs, util_sys_rs],
--)
-+
-+_migration_sys_rs = cargo_ws.package('migration-sys').library(
-+  structured_sources(['lib.rs', _bindgen_migration_rs]))
-+cargo_ws.package('migration-sys').override_dependency(declare_dependency(link_with: _migration_sys_rs))
- 
- migration_sys_rs = declare_dependency(link_with: [_migration_sys_rs])
-diff --git a/rust/bindings/qom-sys/meson.build b/rust/bindings/qom-sys/meson.build
-index 8f8ae7d1bc8..540e55eea88 100644
---- a/rust/bindings/qom-sys/meson.build
-+++ b/rust/bindings/qom-sys/meson.build
-@@ -1,12 +1,9 @@
- _bindgen_qom_rs = rust.bindgen(
-   args: bindgen_args_common + bindgen_args_data['qom-sys'].split(),
-   kwargs: bindgen_kwargs)
--_qom_sys_rs = static_library(
--  'qom_sys',
--  structured_sources(['lib.rs', _bindgen_qom_rs]),
--  override_options: ['rust_std=2021', 'build.rust_std=2021'],
--  rust_abi: 'rust',
--  dependencies: [glib_sys_rs, util_sys_rs],
--)
-+
-+_qom_sys_rs = cargo_ws.package('qom-sys').library(
-+  structured_sources(['lib.rs', _bindgen_qom_rs]))
-+cargo_ws.package('qom-sys').override_dependency(declare_dependency(link_with: _qom_sys_rs))
- 
- qom_sys_rs = declare_dependency(link_with: [_qom_sys_rs])
-diff --git a/rust/bindings/system-sys/meson.build b/rust/bindings/system-sys/meson.build
-index aa5e8801149..b1f4770499c 100644
---- a/rust/bindings/system-sys/meson.build
-+++ b/rust/bindings/system-sys/meson.build
-@@ -1,12 +1,9 @@
- _bindgen_system_rs = rust.bindgen(
-   args: bindgen_args_common + bindgen_args_data['system-sys'].split(),
-   kwargs: bindgen_kwargs)
--_system_sys_rs = static_library(
--  'system_sys',
--  structured_sources(['lib.rs', _bindgen_system_rs]),
--  override_options: ['rust_std=2021', 'build.rust_std=2021'],
--  rust_abi: 'rust',
--  dependencies: [common_rs, glib_sys_rs, hwcore_sys_rs, migration_sys_rs, qom_sys_rs, util_sys_rs],
--)
-+
-+_system_sys_rs = cargo_ws.package('system-sys').library(
-+  structured_sources(['lib.rs', _bindgen_system_rs]))
-+cargo_ws.package('system-sys').override_dependency(declare_dependency(link_with: _system_sys_rs))
- 
- system_sys_rs = declare_dependency(link_with: [_system_sys_rs])
-diff --git a/rust/bindings/util-sys/meson.build b/rust/bindings/util-sys/meson.build
-index c37f50a94bd..5a9db6152e1 100644
---- a/rust/bindings/util-sys/meson.build
-+++ b/rust/bindings/util-sys/meson.build
-@@ -1,12 +1,9 @@
- _bindgen_util_rs = rust.bindgen(
-   args: bindgen_args_common + bindgen_args_data['util-sys'].split(),
-   kwargs: bindgen_kwargs)
--_util_sys_rs = static_library(
--  'util_sys',
--  structured_sources(['lib.rs', _bindgen_util_rs]),
--  override_options: ['rust_std=2021', 'build.rust_std=2021'],
--  rust_abi: 'rust',
--  dependencies: [glib_sys_rs],
--)
-+
-+_util_sys_rs = cargo_ws.package('util-sys').library(
-+  structured_sources(['lib.rs', _bindgen_util_rs]))
-+cargo_ws.package('util-sys').override_dependency(declare_dependency(link_with: _util_sys_rs))
- 
- util_sys_rs = declare_dependency(link_with: [_util_sys_rs])
-diff --git a/rust/bits/meson.build b/rust/bits/meson.build
-index c0094ffcf38..c64a17ba154 100644
---- a/rust/bits/meson.build
-+++ b/rust/bits/meson.build
-@@ -1,8 +1,5 @@
--_bits_rs = static_library(
--  'bits',
--  'src/lib.rs',
--  dependencies: [qemu_macros],
--)
-+_bits_rs = cargo_ws.package('bits').library()
-+cargo_ws.package('bits').override_dependency(declare_dependency(link_with: _bits_rs))
- 
- bits_rs = declare_dependency(link_with: _bits_rs)
- 
-diff --git a/rust/bql/meson.build b/rust/bql/meson.build
-index de295d2983e..8bdc9b53a2c 100644
---- a/rust/bql/meson.build
-+++ b/rust/bql/meson.build
-@@ -1,17 +1,10 @@
--_bql_cfg = run_command(rustc_args,
--  '--config-headers', config_host_h, '--features', files('Cargo.toml'),
--  capture: true, check: true).stdout().strip().splitlines()
--
-+_bql_cfg = []
- if get_option('debug_mutex')
-   _bql_cfg += ['--cfg', 'feature="debug_cell"']
- endif
- 
--_bql_rs = static_library(
--  'bql',
--  'src/lib.rs',
--  rust_args: _bql_cfg,
--  dependencies: [glib_sys_rs, util_sys_rs],
--)
-+_bql_rs = cargo_ws.package('bql').library(rust_args: _bql_cfg)
-+cargo_ws.package('bql').override_dependency(declare_dependency(link_with: _bql_rs))
- 
- bql_rs = declare_dependency(link_with: [_bql_rs],
-   dependencies: [qemuutil])
-diff --git a/rust/chardev/meson.build b/rust/chardev/meson.build
-index 7b267fd23ae..f3462e9209e 100644
---- a/rust/chardev/meson.build
-+++ b/rust/chardev/meson.build
-@@ -1,8 +1,4 @@
--_chardev_rs = static_library(
--  'chardev',
--  'src/lib.rs',
--  link_with: [_bql_rs, _migration_rs, _qom_rs, _util_rs],
--  dependencies: [glib_sys_rs, common_rs, qemu_macros, chardev_sys_rs],
--)
-+_chardev_rs = cargo_ws.package('chardev').library()
-+cargo_ws.package('chardev').override_dependency(declare_dependency(link_with: _chardev_rs))
- 
- chardev_rs = declare_dependency(link_with: [_chardev_rs], dependencies: [chardev, qemuutil])
-diff --git a/rust/common/meson.build b/rust/common/meson.build
-index 57091b18fc4..43afe417dcd 100644
---- a/rust/common/meson.build
-+++ b/rust/common/meson.build
-@@ -1,13 +1,9 @@
- _common_cfg = run_command(rustc_args,
--  '--config-headers', config_host_h, '--features', files('Cargo.toml'),
-+  '--config-headers', config_host_h, files('Cargo.toml'),
-   capture: true, check: true).stdout().strip().splitlines()
- 
--_common_rs = static_library(
--  'common',
--  'src/lib.rs',
--  rust_args: _common_cfg,
--  dependencies: [libc_rs, qemu_macros],
--)
-+_common_rs = cargo_ws.package('common').library(rust_args: _common_cfg)
-+cargo_ws.package('common').override_dependency(declare_dependency(link_with: _common_rs))
- 
- common_rs = declare_dependency(link_with: [_common_rs])
- 
-diff --git a/rust/hw/char/pl011/meson.build b/rust/hw/char/pl011/meson.build
-index 1a1a09e5083..92b7d375f75 100644
---- a/rust/hw/char/pl011/meson.build
-+++ b/rust/hw/char/pl011/meson.build
-@@ -8,8 +8,7 @@ _libpl011_bindings_inc_rs = rust.bindgen(
-   kwargs: bindgen_kwargs,
- )
- 
--_libpl011_rs = static_library(
--  'pl011',
-+_libpl011_rs = cargo_ws.package('pl011').library(
-   structured_sources(
-     [
-       'src/lib.rs',
-@@ -19,25 +18,6 @@ _libpl011_rs = static_library(
-     ],
-     {'.' : _libpl011_bindings_inc_rs},
-   ),
--  override_options: ['rust_std=2021', 'build.rust_std=2021'],
--  rust_abi: 'rust',
--  link_with: [
--    _util_rs,
--    _migration_rs,
--    _bql_rs,
--    _qom_rs,
--    _chardev_rs,
--    _system_rs,
--    _hwcore_rs,
--    _trace_rs
--  ],
--  dependencies: [
--    bilge_rs,
--    bilge_impl_rs,
--    bits_rs,
--    common_rs,
--    glib_sys_rs,
--  ],
- )
- 
- rust_devices_ss.add(when: 'CONFIG_X_PL011_RUST', if_true: [declare_dependency(
-diff --git a/rust/hw/core/meson.build b/rust/hw/core/meson.build
-index 6d1bfd4d204..da0f13d3149 100644
---- a/rust/hw/core/meson.build
-+++ b/rust/hw/core/meson.build
-@@ -1,11 +1,5 @@
--_hwcore_rs = static_library(
--  'hwcore',
--  'src/lib.rs',
--  override_options: ['rust_std=2021', 'build.rust_std=2021'],
--  rust_abi: 'rust',
--  link_with: [_bql_rs, _chardev_rs, _migration_rs, _qom_rs, _util_rs],
--  dependencies: [glib_sys_rs, qemu_macros, common_rs, hwcore_sys_rs],
--)
-+_hwcore_rs = cargo_ws.package('hwcore').library()
-+cargo_ws.package('hwcore').override_dependency(declare_dependency(link_with: _hwcore_rs))
- 
- hwcore_rs = declare_dependency(link_with: [_hwcore_rs],
-   dependencies: [qom_rs, hwcore])
-diff --git a/rust/hw/timer/hpet/meson.build b/rust/hw/timer/hpet/meson.build
-index 3bb7ce2a6ca..419e8f40b70 100644
---- a/rust/hw/timer/hpet/meson.build
-+++ b/rust/hw/timer/hpet/meson.build
-@@ -1,19 +1,4 @@
--_libhpet_rs = static_library(
--  'hpet',
--  files('src/lib.rs'),
--  override_options: ['rust_std=2021', 'build.rust_std=2021'],
--  rust_abi: 'rust',
--  link_with: [
--    _util_rs,
--    _migration_rs,
--    _bql_rs,
--    _qom_rs,
--    _system_rs,
--    _hwcore_rs,
--    _trace_rs,
--  ],
--  dependencies: [common_rs],
--)
-+_libhpet_rs = cargo_ws.package('hpet').library()
- 
- rust_devices_ss.add(when: 'CONFIG_X_HPET_RUST', if_true: [declare_dependency(
-   link_whole: [_libhpet_rs],
+ [workspace.package]
 diff --git a/rust/meson.build b/rust/meson.build
-index d580c7cbeef..266c2add358 100644
+index 96e93f56e22..d580c7cbeef 100644
 --- a/rust/meson.build
 +++ b/rust/meson.build
-@@ -5,19 +5,10 @@ else
+@@ -4,35 +4,20 @@ else
+   message('Rust enabled but it is only used by system emulators.')
  endif
  
- cargo_ws = import('rust').workspace()
--anyhow_rs = cargo_ws.subproject('anyhow').dependency()
--bilge_rs = cargo_ws.subproject('bilge').dependency()
--bilge_impl_rs = cargo_ws.subproject('bilge-impl').dependency()
--foreign_rs = cargo_ws.subproject('foreign').dependency()
--glib_sys_rs = cargo_ws.subproject('glib-sys').dependency()
--libc_rs = cargo_ws.subproject('libc').dependency()
--probe_rs = cargo_ws.subproject('probe').dependency()
-+
-+# used by QAPI tests, which are still not handled via cargo_ws
- serde_rs = cargo_ws.subproject('serde').dependency()
- serde_derive_rs = cargo_ws.subproject('serde_derive').dependency()
--quote_rs_native = cargo_ws.subproject('quote').dependency()
--syn_rs_native = cargo_ws.subproject('syn').dependency()
--proc_macro2_rs_native = cargo_ws.subproject('proc-macro2').dependency()
--attrs_rs_native = cargo_ws.subproject('attrs').dependency()
+-subproject('anyhow-1-rs', required: true)
+-subproject('bilge-0.2-rs', required: true)
+-subproject('bilge-impl-0.2-rs', required: true)
+-subproject('foreign-0.3-rs', required: true)
+-subproject('glib-sys-0.21-rs', required: true)
+-subproject('libc-0.2-rs', required: true)
+-subproject('probe-0.5-rs', required: true)
+-subproject('serde-1-rs', required: true)
+-subproject('serde_derive-1-rs', required: true)
+-
+-anyhow_rs = dependency('anyhow-1-rs')
+-bilge_rs = dependency('bilge-0.2-rs')
+-bilge_impl_rs = dependency('bilge-impl-0.2-rs')
+-foreign_rs = dependency('foreign-0.3-rs')
+-glib_sys_rs = dependency('glib-sys-0.21-rs')
+-libc_rs = dependency('libc-0.2-rs')
+-probe_rs = dependency('probe-0.5-rs')
+-serde_rs = dependency('serde-1-rs')
+-serde_derive_rs = dependency('serde_derive-1-rs', native: true)
+-
+-subproject('proc-macro2-1-rs', required: true)
+-subproject('quote-1-rs', required: true)
+-subproject('syn-2-rs', required: true)
+-subproject('attrs-0.2-rs', required: true)
+-
+-quote_rs_native = dependency('quote-1-rs', native: true)
+-syn_rs_native = dependency('syn-2-rs', native: true)
+-proc_macro2_rs_native = dependency('proc-macro2-1-rs', native: true)
+-attrs_rs_native = dependency('attrs-0.2-rs', native: true)
++cargo_ws = import('rust').workspace()
++anyhow_rs = cargo_ws.subproject('anyhow').dependency()
++bilge_rs = cargo_ws.subproject('bilge').dependency()
++bilge_impl_rs = cargo_ws.subproject('bilge-impl').dependency()
++foreign_rs = cargo_ws.subproject('foreign').dependency()
++glib_sys_rs = cargo_ws.subproject('glib-sys').dependency()
++libc_rs = cargo_ws.subproject('libc').dependency()
++probe_rs = cargo_ws.subproject('probe').dependency()
++serde_rs = cargo_ws.subproject('serde').dependency()
++serde_derive_rs = cargo_ws.subproject('serde_derive').dependency()
++quote_rs_native = cargo_ws.subproject('quote').dependency()
++syn_rs_native = cargo_ws.subproject('syn').dependency()
++proc_macro2_rs_native = cargo_ws.subproject('proc-macro2').dependency()
++attrs_rs_native = cargo_ws.subproject('attrs').dependency()
  
  genrs = []
  
-diff --git a/rust/migration/meson.build b/rust/migration/meson.build
-index 96266897770..b9ba82989e3 100644
---- a/rust/migration/meson.build
-+++ b/rust/migration/meson.build
-@@ -1,9 +1,5 @@
--_migration_rs = static_library(
--  'migration',
--  'src/lib.rs',
--  link_with: [_util_rs, _bql_rs],
--  dependencies: [common_rs, glib_sys_rs, qemu_macros, migration_sys_rs],
--)
-+_migration_rs = cargo_ws.package('migration').library()
-+cargo_ws.package('migration').override_dependency(declare_dependency(link_with: _migration_rs))
+diff --git a/subprojects/anyhow-1-rs.wrap b/subprojects/anyhow-1-rs.wrap
+index a69a3645b49..132c70c467e 100644
+--- a/subprojects/anyhow-1-rs.wrap
++++ b/subprojects/anyhow-1-rs.wrap
+@@ -3,5 +3,8 @@ directory = anyhow-1.0.98
+ source_url = https://crates.io/api/v1/crates/anyhow/1.0.98/download
+ source_filename = anyhow-1.0.98.tar.gz
+ source_hash = e16d2d3311acee920a9eb8d33b8cbc1787ce4a264e85f964c2404b969bdcd487
+-#method = cargo
++method = cargo
+ patch_directory = anyhow-1-rs
++
++# bump this version number on every change to meson.build or the patches:
++# v2
+diff --git a/subprojects/arbitrary-int-1-rs.wrap b/subprojects/arbitrary-int-1-rs.wrap
+index a1838b20b0f..f8d7c68da64 100644
+--- a/subprojects/arbitrary-int-1-rs.wrap
++++ b/subprojects/arbitrary-int-1-rs.wrap
+@@ -3,7 +3,7 @@ directory = arbitrary-int-1.2.7
+ source_url = https://crates.io/api/v1/crates/arbitrary-int/1.2.7/download
+ source_filename = arbitrary-int-1.2.7.tar.gz
+ source_hash = c84fc003e338a6f69fbd4f7fe9f92b535ff13e9af8997f3b14b6ddff8b1df46d
+-#method = cargo
++method = cargo
+ patch_directory = arbitrary-int-1-rs
  
- migration_rs = declare_dependency(link_with: [_migration_rs],
-   dependencies: [bql_rs, migration, qemuutil])
-diff --git a/rust/qemu-macros/meson.build b/rust/qemu-macros/meson.build
-index cdea5bf439e..7b25ccefe35 100644
---- a/rust/qemu-macros/meson.build
-+++ b/rust/qemu-macros/meson.build
-@@ -1,13 +1,5 @@
--_qemu_macros_rs = rust.proc_macro(
--  'qemu_macros',
--  files('src/lib.rs'),
--  dependencies: [
--    attrs_rs_native,
--    proc_macro2_rs_native,
--    quote_rs_native,
--    syn_rs_native,
--  ],
--)
-+_qemu_macros_rs = cargo_ws.package('qemu_macros').proc_macro()
-+cargo_ws.package('qemu_macros').override_dependency(declare_dependency(link_with: _qemu_macros_rs))
+ # bump this version number on every change to meson.build or the patches:
+diff --git a/subprojects/attrs-0.2-rs.wrap b/subprojects/attrs-0.2-rs.wrap
+index cd43c91d63e..99d2e43fb3b 100644
+--- a/subprojects/attrs-0.2-rs.wrap
++++ b/subprojects/attrs-0.2-rs.wrap
+@@ -3,5 +3,8 @@ directory = attrs-0.2.9
+ source_url = https://crates.io/api/v1/crates/attrs/0.2.9/download
+ source_filename = attrs-0.2.9.tar.gz
+ source_hash = 2a207d40f43de65285f3de0509bb6cb16bc46098864fce957122bbacce327e5f
+-#method = cargo
++method = cargo
+ patch_directory = attrs-0.2-rs
++
++# bump this version number on every change to meson.build or the patches:
++# v2
+diff --git a/subprojects/bilge-0.2-rs.wrap b/subprojects/bilge-0.2-rs.wrap
+index 900bb1497b9..cb202cfd9fe 100644
+--- a/subprojects/bilge-0.2-rs.wrap
++++ b/subprojects/bilge-0.2-rs.wrap
+@@ -3,7 +3,7 @@ directory = bilge-0.2.0
+ source_url = https://crates.io/api/v1/crates/bilge/0.2.0/download
+ source_filename = bilge-0.2.0.tar.gz
+ source_hash = dc707ed8ebf81de5cd6c7f48f54b4c8621760926cdf35a57000747c512e67b57
+-#method = cargo
++method = cargo
+ patch_directory = bilge-0.2-rs
  
- qemu_macros = declare_dependency(
-   link_with: _qemu_macros_rs,
-diff --git a/rust/qom/meson.build b/rust/qom/meson.build
-index 9865da280cf..6736cfb24c2 100644
---- a/rust/qom/meson.build
-+++ b/rust/qom/meson.build
-@@ -1,9 +1,5 @@
--_qom_rs = static_library(
--  'qom',
--  'src/lib.rs',
--  link_with: [_bql_rs, _migration_rs],
--  dependencies: [common_rs, glib_sys_rs, qemu_macros, qom_sys_rs],
--)
-+_qom_rs = cargo_ws.package('qom').library()
-+cargo_ws.package('qom').override_dependency(declare_dependency(link_with: _qom_rs))
+ # bump this version number on every change to meson.build or the patches:
+diff --git a/subprojects/bilge-impl-0.2-rs.wrap b/subprojects/bilge-impl-0.2-rs.wrap
+index 4f84eca1ccd..e423b6cec66 100644
+--- a/subprojects/bilge-impl-0.2-rs.wrap
++++ b/subprojects/bilge-impl-0.2-rs.wrap
+@@ -3,8 +3,8 @@ directory = bilge-impl-0.2.0
+ source_url = https://crates.io/api/v1/crates/bilge-impl/0.2.0/download
+ source_filename = bilge-impl-0.2.0.tar.gz
+ source_hash = feb11e002038ad243af39c2068c8a72bcf147acf05025dcdb916fcc000adb2d8
+-#method = cargo
++method = cargo
+ patch_directory = bilge-impl-0.2-rs
  
- qom_rs = declare_dependency(link_with: [_qom_rs], dependencies: [qemu_macros, qom, qemuutil])
+ # bump this version number on every change to meson.build or the patches:
+-# v2
++# v3
+diff --git a/subprojects/either-1-rs.wrap b/subprojects/either-1-rs.wrap
+index 352e11cfee6..b70787d882e 100644
+--- a/subprojects/either-1-rs.wrap
++++ b/subprojects/either-1-rs.wrap
+@@ -3,8 +3,8 @@ directory = either-1.12.0
+ source_url = https://crates.io/api/v1/crates/either/1.12.0/download
+ source_filename = either-1.12.0.tar.gz
+ source_hash = 3dca9240753cf90908d7e4aac30f630662b02aebaa1b58a3cadabdb23385b58b
+-#method = cargo
++method = cargo
+ patch_directory = either-1-rs
  
-diff --git a/rust/system/meson.build b/rust/system/meson.build
-index 89c1f2b84d1..b1edcd6bbe7 100644
---- a/rust/system/meson.build
-+++ b/rust/system/meson.build
-@@ -1,9 +1,5 @@
--_system_rs = static_library(
--  'system',
--  'src/lib.rs',
--  link_with: [_bql_rs, _hwcore_rs, _migration_rs, _qom_rs, _util_rs],
--  dependencies: [glib_sys_rs, common_rs, qemu_macros, system_sys_rs],
--)
-+_system_rs = cargo_ws.package('system').library()
-+cargo_ws.package('system').override_dependency(declare_dependency(link_with: _system_rs))
+ # bump this version number on every change to meson.build or the patches:
+-# v2
++# v3
+diff --git a/subprojects/foreign-0.3-rs.wrap b/subprojects/foreign-0.3-rs.wrap
+index 0d218ec2c25..bae22b1f2a3 100644
+--- a/subprojects/foreign-0.3-rs.wrap
++++ b/subprojects/foreign-0.3-rs.wrap
+@@ -3,5 +3,8 @@ directory = foreign-0.3.1
+ source_url = https://crates.io/api/v1/crates/foreign/0.3.1/download
+ source_filename = foreign-0.3.1.tar.gz
+ source_hash = 17ca1b5be8c9d320daf386f1809c7acc0cb09accbae795c2001953fa50585846
+-#method = cargo
++method = cargo
+ patch_directory = foreign-0.3-rs
++
++# bump this version number on every change to meson.build or the patches:
++# v2
+diff --git a/subprojects/glib-sys-0.21-rs.wrap b/subprojects/glib-sys-0.21-rs.wrap
+index 313ced731ac..af849352a38 100644
+--- a/subprojects/glib-sys-0.21-rs.wrap
++++ b/subprojects/glib-sys-0.21-rs.wrap
+@@ -3,5 +3,8 @@ directory = glib-sys-0.21.2
+ source_url = https://crates.io/api/v1/crates/glib-sys/0.21.2/download
+ source_filename = glib-sys-0.21.2.tar.gz
+ source_hash = d09d3d0fddf7239521674e57b0465dfbd844632fec54f059f7f56112e3f927e1
+-#method = cargo
++method = cargo
+ patch_directory = glib-sys-0.21-rs
++
++# bump this version number on every change to meson.build or the patches:
++# v2
+diff --git a/subprojects/itertools-0.11-rs.wrap b/subprojects/itertools-0.11-rs.wrap
+index ee12d0053bc..b52a2314340 100644
+--- a/subprojects/itertools-0.11-rs.wrap
++++ b/subprojects/itertools-0.11-rs.wrap
+@@ -3,8 +3,8 @@ directory = itertools-0.11.0
+ source_url = https://crates.io/api/v1/crates/itertools/0.11.0/download
+ source_filename = itertools-0.11.0.tar.gz
+ source_hash = b1c173a5686ce8bfa551b3563d0c2170bf24ca44da99c7ca4bfdab5418c3fe57
+-#method = cargo
++method = cargo
+ patch_directory = itertools-0.11-rs
  
- system_rs = declare_dependency(link_with: [_system_rs],
-   dependencies: [hwcore])
-diff --git a/rust/trace/meson.build b/rust/trace/meson.build
-index 0071a49cf72..b049f73b542 100644
---- a/rust/trace/meson.build
-+++ b/rust/trace/meson.build
-@@ -7,11 +7,8 @@ lib_rs = configure_file(
-     'MESON_BUILD_ROOT': meson.project_build_root(),
-   })
+ # bump this version number on every change to meson.build or the patches:
+-# v2
++# v3
+diff --git a/subprojects/libc-0.2-rs.wrap b/subprojects/libc-0.2-rs.wrap
+index bbe08f87883..488330178ed 100644
+--- a/subprojects/libc-0.2-rs.wrap
++++ b/subprojects/libc-0.2-rs.wrap
+@@ -3,5 +3,5 @@ directory = libc-0.2.162
+ source_url = https://crates.io/api/v1/crates/libc/0.2.162/download
+ source_filename = libc-0.2.162.tar.gz
+ source_hash = 18d287de67fe55fd7e1581fe933d965a5a9477b38e949cfa9f8574ef01506398
+-#method = cargo
++method = cargo
+ patch_directory = libc-0.2-rs
+diff --git a/subprojects/probe-0.5-rs.wrap b/subprojects/probe-0.5-rs.wrap
+index 73229ee1c29..bd23c0ea789 100644
+--- a/subprojects/probe-0.5-rs.wrap
++++ b/subprojects/probe-0.5-rs.wrap
+@@ -3,5 +3,8 @@ directory = probe-0.5.2
+ source_url = https://crates.io/api/v1/crates/probe/0.5.2/download
+ source_filename = probe-0.5.2.tar.gz
+ source_hash = 136558b6e1ebaecc92755d0ffaf9421f519531bed30cc2ad23b22cb00965cc5e
+-#method = cargo
++method = cargo
+ patch_directory = probe-0.5-rs
++
++# bump this version number on every change to meson.build or the patches:
++# v1
+diff --git a/subprojects/proc-macro-error-1-rs.wrap b/subprojects/proc-macro-error-1-rs.wrap
+index 59f892f7825..e57921bfadc 100644
+--- a/subprojects/proc-macro-error-1-rs.wrap
++++ b/subprojects/proc-macro-error-1-rs.wrap
+@@ -3,8 +3,8 @@ directory = proc-macro-error-1.0.4
+ source_url = https://crates.io/api/v1/crates/proc-macro-error/1.0.4/download
+ source_filename = proc-macro-error-1.0.4.tar.gz
+ source_hash = da25490ff9892aab3fcf7c36f08cfb902dd3e71ca0f9f9517bea02a73a5ce38c
+-#method = cargo
++method = cargo
+ patch_directory = proc-macro-error-1-rs
  
--_trace_rs = static_library(
--  'trace',             # Library name,
--  lib_rs,
--  trace_rs_targets,         # List of generated `.rs` custom targets
--  dependencies: [libc_rs, probe_rs],
--)
-+_trace_rs = cargo_ws.package('trace').library(
-+  structured_sources([lib_rs, trace_rs_targets]))
-+cargo_ws.package('trace').override_dependency(declare_dependency(link_with: _trace_rs))
+ # bump this version number on every change to meson.build or the patches:
+-# v2
++# v3
+diff --git a/subprojects/proc-macro-error-attr-1-rs.wrap b/subprojects/proc-macro-error-attr-1-rs.wrap
+index 5aeb224a103..02d18f3393d 100644
+--- a/subprojects/proc-macro-error-attr-1-rs.wrap
++++ b/subprojects/proc-macro-error-attr-1-rs.wrap
+@@ -3,8 +3,8 @@ directory = proc-macro-error-attr-1.0.4
+ source_url = https://crates.io/api/v1/crates/proc-macro-error-attr/1.0.4/download
+ source_filename = proc-macro-error-attr-1.0.4.tar.gz
+ source_hash = a1be40180e52ecc98ad80b184934baf3d0d29f979574e439af5a55274b35f869
+-#method = cargo
++method = cargo
+ patch_directory = proc-macro-error-attr-1-rs
  
- trace_rs = declare_dependency(link_with: _trace_rs)
-diff --git a/rust/util/meson.build b/rust/util/meson.build
-index 3edd8245bfc..427427f1915 100644
---- a/rust/util/meson.build
-+++ b/rust/util/meson.build
-@@ -1,8 +1,5 @@
--_util_rs = static_library(
--  'util',
--  'src/lib.rs',
--  dependencies: [anyhow_rs, libc_rs, foreign_rs, glib_sys_rs, common_rs, serde_rs, util_sys_rs],
--)
-+_util_rs = cargo_ws.package('util').library()
-+cargo_ws.package('util').override_dependency(declare_dependency(link_with: _util_rs))
+ # bump this version number on every change to meson.build or the patches:
+-# v2
++# v3
+diff --git a/subprojects/proc-macro2-1-rs.wrap b/subprojects/proc-macro2-1-rs.wrap
+index 0f06cd8e111..676d1a3a8ca 100644
+--- a/subprojects/proc-macro2-1-rs.wrap
++++ b/subprojects/proc-macro2-1-rs.wrap
+@@ -3,8 +3,8 @@ directory = proc-macro2-1.0.95
+ source_url = https://crates.io/api/v1/crates/proc-macro2/1.0.95/download
+ source_filename = proc-macro2-1.0.95.0.tar.gz
+ source_hash = 02b3e5e68a3a1a02aad3ec490a98007cbc13c37cbe84a3cd7b8e406d76e7f778
+-#method = cargo
++method = cargo
+ patch_directory = proc-macro2-1-rs
  
- util_rs = declare_dependency(link_with: [_util_rs], dependencies: [qemuutil, qom])
+ # bump this version number on every change to meson.build or the patches:
+-# v2
++# v3
+diff --git a/subprojects/quote-1-rs.wrap b/subprojects/quote-1-rs.wrap
+index 8b721dfa00b..dab58490a4f 100644
+--- a/subprojects/quote-1-rs.wrap
++++ b/subprojects/quote-1-rs.wrap
+@@ -3,8 +3,8 @@ directory = quote-1.0.36
+ source_url = https://crates.io/api/v1/crates/quote/1.0.36/download
+ source_filename = quote-1.0.36.0.tar.gz
+ source_hash = 0fa76aaf39101c457836aec0ce2316dbdc3ab723cdda1c6bd4e6ad4208acaca7
+-#method = cargo
++method = cargo
+ patch_directory = quote-1-rs
  
+ # bump this version number on every change to meson.build or the patches:
+-# v2
++# v3
+diff --git a/subprojects/serde-1-rs.wrap b/subprojects/serde-1-rs.wrap
+index 56746dd0f43..9792592d480 100644
+--- a/subprojects/serde-1-rs.wrap
++++ b/subprojects/serde-1-rs.wrap
+@@ -3,9 +3,9 @@ directory = serde-1.0.226
+ source_url = https://crates.io/api/v1/crates/serde/1.0.226/download
+ source_filename = serde-1.0.226.0.tar.gz
+ source_hash = 0dca6411025b24b60bfa7ec1fe1f8e710ac09782dca409ee8237ba74b51295fd
+-#method = cargo
++method = cargo
+ diff_files = serde-1.0.226-include.patch
+ patch_directory = serde-1-rs
+ 
+ # bump this version number on every change to meson.build or the patches:
+-# v1
++# v2
+diff --git a/subprojects/serde_core-1-rs.wrap b/subprojects/serde_core-1-rs.wrap
+index 3692e754935..ff2e59430b1 100644
+--- a/subprojects/serde_core-1-rs.wrap
++++ b/subprojects/serde_core-1-rs.wrap
+@@ -3,9 +3,9 @@ directory = serde_core-1.0.226
+ source_url = https://crates.io/api/v1/crates/serde_core/1.0.226/download
+ source_filename = serde_core-1.0.226.0.tar.gz
+ source_hash = ba2ba63999edb9dac981fb34b3e5c0d111a69b0924e253ed29d83f7c99e966a4
+-#method = cargo
++method = cargo
+ diff_files = serde_core-1.0.226-include.patch
+ patch_directory = serde_core-1-rs
+ 
+ # bump this version number on every change to meson.build or the patches:
+-# v1
++# v2
+diff --git a/subprojects/serde_derive-1-rs.wrap b/subprojects/serde_derive-1-rs.wrap
+index 00c92dc79cf..ed345a7f840 100644
+--- a/subprojects/serde_derive-1-rs.wrap
++++ b/subprojects/serde_derive-1-rs.wrap
+@@ -3,9 +3,9 @@ directory = serde_derive-1.0.226
+ source_url = https://crates.io/api/v1/crates/serde_derive/1.0.226/download
+ source_filename = serde_derive-1.0.226.0.tar.gz
+ source_hash = 8db53ae22f34573731bafa1db20f04027b2d25e02d8205921b569171699cdb33
+-#method = cargo
++method = cargo
+ diff_files = serde_derive-1.0.226-include.patch
+ patch_directory = serde_derive-1-rs
+ 
+ # bump this version number on every change to meson.build or the patches:
+-# v1
++# v2
+diff --git a/subprojects/syn-2-rs.wrap b/subprojects/syn-2-rs.wrap
+index 1e5e9d9fb6e..4b545c7980c 100644
+--- a/subprojects/syn-2-rs.wrap
++++ b/subprojects/syn-2-rs.wrap
+@@ -3,8 +3,8 @@ directory = syn-2.0.104
+ source_url = https://crates.io/api/v1/crates/syn/2.0.104/download
+ source_filename = syn-2.0.104.0.tar.gz
+ source_hash = 17b6f705963418cdb9927482fa304bc562ece2fdd4f616084c50b7023b435a40
+-#method = cargo
++method = cargo
+ patch_directory = syn-2-rs
+ 
+ # bump this version number on every change to meson.build or the patches:
+-# v2
++# v3
+diff --git a/subprojects/unicode-ident-1-rs.wrap b/subprojects/unicode-ident-1-rs.wrap
+index 50988f612e2..0a5e097953e 100644
+--- a/subprojects/unicode-ident-1-rs.wrap
++++ b/subprojects/unicode-ident-1-rs.wrap
+@@ -3,8 +3,8 @@ directory = unicode-ident-1.0.12
+ source_url = https://crates.io/api/v1/crates/unicode-ident/1.0.12/download
+ source_filename = unicode-ident-1.0.12.tar.gz
+ source_hash = 3354b9ac3fae1ff6755cb6db53683adb661634f67557942dea4facebec0fee4b
+-#method = cargo
++method = cargo
+ patch_directory = unicode-ident-1-rs
+ 
+ # bump this version number on every change to meson.build or the patches:
+-# v2
++# v3
 -- 
 2.54.0
 
