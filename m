@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3744ECD5BB4
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 07:53:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADCCFCD5BCF
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 07:55:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRmbU-0001ZE-QQ; Tue, 26 May 2026 03:53:32 -0400
+	id 1wRmcp-00024H-Je; Tue, 26 May 2026 03:54:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRmbR-0001Yy-Vo
- for qemu-devel@nongnu.org; Tue, 26 May 2026 03:53:30 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRmco-000241-0X
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 03:54:54 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRmbQ-0001Di-6N
- for qemu-devel@nongnu.org; Tue, 26 May 2026 03:53:29 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-44c350a5b87so6064513f8f.3
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 00:53:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRmcm-0001Ql-FU
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 03:54:53 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4891e5b9c1fso87861655e9.2
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 00:54:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779782006; x=1780386806; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779782091; x=1780386891; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=qx+ECvWwuD3fVS2DwNgsdzXTplYhEnUT+SXfgvBEGMU=;
- b=F1SUDOVY0qfRASvEzxBnEZ5UnXQnNBOmPZBk/CR1yW2lD1gYN/7l6P3ryG7NmuinUE
- pkR3BBJTHyD8i7e/6KSSQ7q1GEVMfgm43a9Z5lGiZaUW1gLC26LN9hSMi30gPCYO0wsC
- oQ4dS1/ftMFCCEn/fSfvZYHKn9ysYgfig3GjzEUfoLg4flUUnesztROy53xDTxT0RCnc
- U7kyDPpaOIc6QCUoTD51bBHuFLWNRjJikNBQTtKCD/O2sQhHqycMxx+B8OF+C64kMyAD
- 0aa/lT90MPeVfyx2myh9jFC+mCeqN4oyK6UorNTe0ezMRq9dM4FBLK0EyZWindHLICHG
- /ESg==
+ bh=x5XzM6w1KgUJ0EGSCYnqdxmvLuRwc8fdi6jOh4E2J3E=;
+ b=RBzgGptU0waROUtsw8kJFwDiC3snpMt8MAGaXpwsMTRg0kWPBTp/KQjdtjzwdVG/bs
+ oGBbrXEe60YLHiWFga54Le0jyr7eIqd0GMFFuw2XG8+pWpNoxKFR4fLe/JOIHbxVS2rH
+ 9d6imwVxQAFaPNZONOE2l3IR359gXwfLnmJzuEKvOeMxcd8vFGEOiuASeW4df/HWIZqE
+ s+BIpCoDUOew3D7RF+7QETzaI5YNppuNlZjeenrOYUDo+m8m8RTragl0ALgufx+f+qq8
+ L4PftkUBKvI2DAM593QeC3jWtM+9Tg8DHYc0MeSVcSVJk5b3JsUxZQNlGnQhGKQI74Fr
+ lKJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779782006; x=1780386806;
+ d=1e100.net; s=20251104; t=1779782091; x=1780386891;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=qx+ECvWwuD3fVS2DwNgsdzXTplYhEnUT+SXfgvBEGMU=;
- b=q5j2DBGrlWa2rmV//dYFstcwJcjF6dR3CUwqdvJwu8JP9qwm3qGzjkFoNwDrHRx0ah
- Fjku/F7PFf6rM7LJnENdFAq70zqICTtllLz9ovjA5pozTF2mb4KHUzoIRhnzwlFZ6PA5
- BjazIJnpAd5Di8UTkF1bW7VTXDWj4FiZIdcySpoqtIs8SRAx+b39V1iN9UQPTwaJ6oGp
- 1YmuNAmj2Q8JOkd0UFQH8obyjzLl1CR5RrH4Pbx17JvPgwfwaiVsOebE3UTq8dbbAetg
- f6SMmR13hbHLnOC9ShxVxxjKIPVpUYAI5bkNOnc5gXGL1MYaDX9fpEsega0a/hFmWhnd
- WdMg==
-X-Gm-Message-State: AOJu0Yxl9J2n3Ov8tliTx2e5jmRul0P8W/JObLR4g8E2G1PjnTBKce/N
- CegNiZ34PxVSLDu5PdLFw55uSoh53kW7DYTtr0tOb1fxaF7OduA9TQIQQkUOcDeLrcoVta70fZK
- BQ18IamE/7g==
-X-Gm-Gg: Acq92OETRte6uK2oVoQ+04lqu21hNv3sZGGwAfMlgY1NzDZib+T5QoGkOfzo//QzwUM
- +9lx2svnxyMtobBuJ+oBAI422mXy3+WTM7f5IVNSwRdF7akXR/zFIQ1ApmL75VR+Xd+M0rXg5sL
- 0vRxu2uJ46+oEoJX6wQQZShvmiOCr3+BK41vn6GQV+h5ic5X+qCfKU5q+XFMqcgK0FUq51vCsP1
- hqJVpSJD9ITj1+HpvHJBmTHgyono9CC1SGZzg6+UatIrt/ruXjudxYtJUtQR7COv6ke09BpeKl7
- gbYsCdmV0FVmwKCt5n/96TnE+sfKNt4n8QW+IJdvCpGESRbb+SZucNfPg1T0SUR+fbWjvm33jfQ
- x4ZsLXMcEpofc+TSOnAcvjR1P+PhjokG5p2WY1lvtMU3vQL3mygym+WYUBLjZaTP5pLK3IPYyBx
- aumSwgSK2LAJHFyuxYwr+svmCCnSCaV6PgBglFjp0f0ceFyAzgPnslgK7DSDYCaGzJ8w==
-X-Received: by 2002:a05:6000:2508:b0:43c:f5a0:4e56 with SMTP id
- ffacd0b85a97d-45eb38e0867mr29200041f8f.42.1779782006378; 
- Tue, 26 May 2026 00:53:26 -0700 (PDT)
+ bh=x5XzM6w1KgUJ0EGSCYnqdxmvLuRwc8fdi6jOh4E2J3E=;
+ b=rWSpfvTlqw4nkXottHRAcaLZpl+JJ7EuU+boSX40tPKgPKVWSYNOJvDMjzwg3apAfk
+ OADOVKSiPTPMC2+1OkrMypxhpzkBzudJoKcjYYdXJ8205AONaKHRiPHYI3JChMVNlM+8
+ DFPPL2puV0mU164rwpT+26+fDjOMC86DNgKfaspHUCU4/3vTw5wym+rJa9ternT27JZb
+ RistadjKYSfZnZUlvZjFJts6Gv5KHQTffWTYALUQfMV57L0EDSUUnSnZt1d1mwk3p6ii
+ UWifsD+ITPOn4dQ93wl5CUuSHvrzCK+m+xwqsyZwyxVHxAovBHlDT0KiVxrJeqT9FTrS
+ bhLw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/B3WjERFxn5FwSHQQPL2lshaWrPSNHaDkr4YZFiDpy4TF0Mrl5K52DDJL6+ExK0JCJPwDtU2tqCKRK@nongnu.org
+X-Gm-Message-State: AOJu0Yws8YcH245Bop5FpntgCJVH/T3tsldVr8DigsA5tSF6lBNBc4g+
+ /3dcwlRFTEXGrcZKNjalEFYv/tpKGI5y2zlRUrhyk6iujcThq2IXDDXMFd9FrQ4qMnvPgTFdhdj
+ AhXPoRpEGRw==
+X-Gm-Gg: Acq92OEsyCTzGCZ5LJsaHk5JRVQvbYvEN34W596NEdPu8R1AAzZsf5ZeEh9/S/esYSU
+ i3YmHlcjEyjdqmK7A5aTgnRI210wmsqSvX70eRC4cUkmu2Y+/xSepziv8dMjU2VY9Eq2CBgQKao
+ ejD1LWjO6ERroFo5noeBKjWa4/7RpjwGMQOLvvsoRc5UcWYqDAbXfsBtSDZVF6w/L9NnlRX1vwf
+ lBLAD8IlQ8jFOCbEHE1j8UwNjPCpRfKlGkaa+sL8rVEjOsd/pokE2a+iXNK420RUhvhm/OQtJVc
+ 5CO6Wcy8tTm98yU/F967IgV2W5ztWyW4KUWC78xAlhxAKKdkq0PQskuo7kCnjgLT8qnodxf+HW+
+ u50PWzk9Hgy4Urqk0npP3QDjQnJl9KJzzuh4pLiyT9OcYNJOk42wzFUg8f9rjKp4LvLvpvXLAcT
+ Vjo0b7XiadtPXVZdm1bE6xCD0o57HbWg7ADvankERxYTZy7UjAhnDY2u2i6nN0bCGYmeHSx2bVc
+ z2+
+X-Received: by 2002:a05:600c:a106:b0:48e:635a:18d2 with SMTP id
+ 5b1f17b1804b1-490424a0d41mr190350365e9.2.1779782090712; 
+ Tue, 26 May 2026 00:54:50 -0700 (PDT)
 Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6d49132sm33475032f8f.24.2026.05.26.00.53.25
+ 5b1f17b1804b1-490454c5eb0sm328776535e9.2.2026.05.26.00.54.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 May 2026 00:53:25 -0700 (PDT)
-Message-ID: <1795fc9c-f82e-40f1-aab6-ec24ad02a918@linaro.org>
-Date: Tue, 26 May 2026 09:53:24 +0200
+ Tue, 26 May 2026 00:54:49 -0700 (PDT)
+Message-ID: <bcb8cfb2-6091-4576-be61-22d312805ff0@linaro.org>
+Date: Tue, 26 May 2026 09:54:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Question about tb_flush()
+Subject: Re: [PATCH] hw/arm/bcm2838: Route I2C interrupts to GIC
 Content-Language: en-US
-To: Warner Losh <imp@bsdimp.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: QEMU Developers <qemu-devel@nongnu.org>
-References: <CANCZdfr6xs9n8sF8AXVWVu9i2_rViKErrMHAVbopnaor4uCN6A@mail.gmail.com>
- <875x8g1pmi.fsf@draig.linaro.org>
- <CANCZdfqT7r9jcTuiwe3=CcjRExL-FP1msx-Q8ftQM5amJ_t0YQ@mail.gmail.com>
+To: Nicholas Righi <nicholasrighi@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+References: <20260525032634.7754-1-nicholasrighi@gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CANCZdfqT7r9jcTuiwe3=CcjRExL-FP1msx-Q8ftQM5amJ_t0YQ@mail.gmail.com>
+In-Reply-To: <20260525032634.7754-1-nicholasrighi@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,49 +104,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/5/26 18:57, Warner Losh wrote:
-> On Sun, Feb 1, 2026 at 7:54 AM Alex Bennée <alex.bennee@linaro.org> wrote:
+On 25/5/26 05:26, Nicholas Righi wrote:
+> The I2C interrupts are only routed to the legacy interrupt controller. This means
+> that for modern device trees that use the GIC, the interrupts don't work. This patch
+> re-routes the I2C OR'd interrupt from the legacy interrupt controller to the GIC so
+> I2C emulation works out of the box with current kernels.
 > 
->> Warner Losh <imp@bsdimp.com> writes:
->>
->>> OK. I've updated bsd-user fork from last year to yesterday. I had one
->> question.
->>>
->>> I see that we've gone from tb_flush() to queue_tb_flush(). Why was that?
->> And is it a drop in?
->>> FreeBSD's fork has this in the thread creation:
->>>
->>>      /*
->>>       * If this is our first additional thread, we need to ensure we
->>>       * generate code for parallel execution and flush old translations.
->>>       * Do this now so that the copy gets CF_PARALLEL too.
->>>       */
->>>      if (!(cpu->tcg_cflags & CF_PARALLEL)) {
->>>          cpu->tcg_cflags |= CF_PARALLEL;
->>>          tb_flush(cpu);
->>>      }
->>>
->>> I think the right thing to do is to just change this to
->> queue_tb_flush(cpu), and that compiles. I'd like to get some confirmation,
->> though.
->>> Did I parse the changes right?
->>
->> Yes, because ultimately we use safe work which:
->>
->>   * Schedules the function @func for execution on the vCPU @cpu
->> asynchronously,
->>   * while all other vCPUs are sleeping.
->>
+> Testing
 > 
-> So I've done this in the latest blitz branch. I encountered one gotcha. I
-> replaced it in the one place, but that didn't work too well. I finally
-> tracked down the issue: I had implemented the change in only one place
-> instead of the three required locations. I also had to bring the
-> begin_parallel_context() function over from linux-user. I like
-> user-internal.h that's in linux user. What is your touchstone for deciding
-> where that code belongs in it? I'd like to do the same in bsd-user once my
-> upstream focus shift to refinement of blitz and maybe my next cool thing
-> there.
+> Add these lines to QEMU invocation
+> 
+> -drive if=none,id=i2c_storage,format=raw,file=eeprom.bin \
+> -device at24c-eeprom,bus=i2c-bus.1,address=0x50,drive=i2c_storage,rom-size=4096 \
+> 
+> note: eeprom.bin is all zeros
+> 
+> Before this change, running i2c get to read from EEPROM would result in this
+> 
+> i2cget -y 1 0x50
+> Error: Read failed
+> 
+> After this change, running i2c to read from EEPROM results in this
+> 
+> i2cget -y 1 0x50
+> 0x00
+> 
+> The eeprom can now also be enabled in the device tree. Before the
+> eeprom driver load would fail due to the read failing
+> 
+> ls -l /sys/bus/i2c/devices/i2c-1/1-0050/ | grep -i eeprom
+> -rw------- 1 root root 4096 May 17 16:57 eeprom
+> 
+> Signed-off-by: Nicholas Righi <nicholasrighi@gmail.com>
+> ---
+>   hw/arm/bcm2838.c                     | 3 +++
+>   include/hw/arm/bcm2838_peripherals.h | 1 +
+>   2 files changed, 4 insertions(+)
 
-All common code should go under common-user/ and include/user/.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
