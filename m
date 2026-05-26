@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 938B5CD5BCF
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 04:31:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16ABFCD5BD1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 04:31:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRjQd-0007P8-Il; Tue, 26 May 2026 00:30:07 -0400
+	id 1wRjR1-0007up-Cx; Tue, 26 May 2026 00:30:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lb.workbox@gmail.com>)
- id 1wRjQb-0007OQ-Kd
- for qemu-devel@nongnu.org; Tue, 26 May 2026 00:30:05 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1wRjQt-0007eI-1y
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 00:30:23 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <lb.workbox@gmail.com>)
- id 1wRjQZ-0007IF-5a
- for qemu-devel@nongnu.org; Tue, 26 May 2026 00:30:05 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4903974854dso39293575e9.3
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 21:30:02 -0700 (PDT)
+ id 1wRjQq-0007bx-Mw
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 00:30:22 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-49050ff7cbdso24928115e9.2
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 21:30:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779769801; x=1780374601; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=pR4VbMiYp6/ZuZdj902a57UbPmsVcL1enXRYqWopBDc=;
- b=p1eL4DSjReKhVnbY5r3drqUcbxLTH3Ll2asAcz4RNIJC7LESqLS/5/o1xWuMHsI2wn
- 4saNUKXIRkEGPKFX41uGDY3aw3UOBp5xfDkFKUkWazyz3lbSapWMWCSyeMOnENd3/uL3
- 4e5KI6QmD0BGVK7KKCGWstTNt55zREIImuHa0IhCWjkOdFPgvkVJ6gp0JElNhhd/ulSu
- vOhbbWQLPynzr6Wo7Ya3q9fl67Sjup6JV5vu7QFzFlMLjMri7++vXLnQfJg6Hg9w6ZyK
- zK9A6rYuRxYmXOvQCrGDBlwFVuTR7lBOYqTD0Quta1QUvM6zFz01d27DJh+Ln/CuAaDO
- yUzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779769801; x=1780374601;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1779769819; x=1780374619; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pR4VbMiYp6/ZuZdj902a57UbPmsVcL1enXRYqWopBDc=;
- b=AMAuuoiFs5nNm1s7MlWGtb7i4v+y4aei0SqzqQ4tfcdPUOZU3wAro9jW6yx/C2cAIl
- 9Hk0uLUpgKeoPk/RvEmPkWiM4bzvDwtvBFKJob8TU06WxphDwo2d/79IyOsvXi47L9T3
- h0zGAhFzNUCBCXYPERuqbOtgjE355ofu5po0FwtuxCfrnNiIPTj7ftjSX2sZXLLMz8tR
- jZwv07w6ia1g+CokYz4cIBzdpvKXSsDlFfKM0xpeGDgNzzvDQvMxo6LhPMqxpY/OZHyc
- Sw4S6CoY62whsCb/D+0Scx4cU33VUn4avNZqCnyhiypBEixGJwJuzimdR5FFMlXglVTe
- qQBQ==
+ bh=xeRRTnWnaEVO/UepoOFJKLi/LO7+Q/LxWMTun4QJ2wA=;
+ b=gICVKZXwqdpgeJSEDi+hpGUIrJv7PbG/8BhYy9+QIu5O+GO721aNJWVZqB0kvuiavz
+ efh9ixXtEwzQkvzAV21tRGZV5N/9CdcvU65FisLiygj0yyO5n7gF8mWhAZoklAGTFd7O
+ 8T/2hhtx+G0xS4dME81xs7iVR2wf+KG18nYwpZztKGsIeIo1J4lNaisVSiYBRIR4Kefh
+ bsbwulyYj4UitPQb9GEwre6ygz4mKj39o4KOn2pBKtR0M7a12PT1kzpst97it1kWrbrT
+ wi37kfNa7v9Fxkmtd/tKbJXQTP0ECb0px66q/Tl7EPl2Zl4dDdf5iWDdJ0FGIc59acEl
+ wHzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779769819; x=1780374619;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=xeRRTnWnaEVO/UepoOFJKLi/LO7+Q/LxWMTun4QJ2wA=;
+ b=bGVA0trHcm7qssH4rdt7iKLJ3P9HAZLZXGBBnmTiit8aYV/iHDf4wIvdtUAdvy+anA
+ PPrUPreCJxBvKleJlKM5CAvgfnWA869HbaoemNjlp+k7Gcht+Pb2tI07ropujVDC7JLa
+ GnxU2TwvE86ufG+TowjSLj0IYFQ8f7akVbpme2VoBdmyxRyxpur/+zWe/0dvVBvoXnfW
+ 2H2Kt2VO2wjCYs8PZU9tYcgogLhhm6TY5HF1eaWzxYp2pQ0E0dAjTSaCXmY6zws8sz0O
+ n2kHX+IhqwfkAyjSE993Y4TTgWB6PMMQQrwMLubETXavlh9IcZFOmZ3ZpOiPyIruVvD4
+ x1ig==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+9/yk+9oEN6u7HNDmiRnoUUb9AkmqDdjFTDUJ4KC0oazTYRnGKcb0ico8Tu9S66g4sawpZrb54r+pb@nongnu.org
-X-Gm-Message-State: AOJu0YxgFYthJRFec2tHwMmAieyZ3cjrKSSU6b90jHxDHSw3TueFUACC
- jm83G6ycXLlow/BDi41RYNtoE/FMdqwNRQ1Q44pErRM5PlLEtGQjDjXM
-X-Gm-Gg: Acq92OEFsEkHC1shUg9IDf06gLdur88jVGnTZz7ItYNp5f/ac9JiujyZScW2nhUaYS/
- 6XrhaQf/6Sn0nwNWbYB2CQqrcyN0QIF1rcbDC5KlbO43vAmYEElxcm0bpiFMISytUadUHu9GBtO
- flbkmUBFvUoAMxDkLFNsDHPfDsprR1Hoh6uQp367sl7CRlVkAkBVzJFjOMMqORw95kvm70YoQoX
- 7WQB0tn2hGHAIGcnigZiJjGaf+jTlYUK8MD+/ISG2n9vnkynfQi7uCuWP6O+90VmSnx5FqoO5ca
- JawhbNOos97oR914XHE10WMmlDxym/x5xWVcUuRHnAz+YX7VCodBmLnetDH3A2IUAxZenBy6kd1
- Yb1+vZ8vDQWba1AP89vTYA/76KyF6HGaD3RklvmsM5t8EVGHF6j9J4bBCyVHKglunPAgVVfhrgE
- xQ1Bwt7APcf59NYr7kCSM2S6Vv5wxrqjTHz+/n4LAnY2e0ohYVZrBpkI2IwSrXC6kvtP+lonp1V
- zU=
-X-Received: by 2002:a05:600c:8599:b0:485:9a50:3370 with SMTP id
- 5b1f17b1804b1-490424acb4cmr220397825e9.8.1779769800695; 
- Mon, 25 May 2026 21:30:00 -0700 (PDT)
+ AFNElJ/lF0rEsoOOeb5+VTJEH3voW3sVUp8VS/NEM9kflET6gpPJPqgpCs9COdZJf6k38oIrZ+Iw3SOaT7im@nongnu.org
+X-Gm-Message-State: AOJu0YxraYJRgHWrdAdTkZfMiGKa0Rt5wO7F7i9q4kSP5SFdUFpOrlha
+ Odg2PVn2k7hrXN69fD83TZrtFxan/JApz0K1W23gQbDJgEmwnyiPTZcF
+X-Gm-Gg: Acq92OGhXZgUYJJ6edOw39lj+9n+fyLyWZMEXxJGtuJPE9sNWUPQS17Ji2uhqlQsXgp
+ uNMSHOvBuFgj/dFJvVjMAAlaBzhJivzPkYFza7L9QGQpSlg5Qjr2+DdqsYJS9W37uDEOOpy0NKc
+ FDmdsVKuHdPz0fxvRR1rq0FsHTwLIs21oHTlm0jZHt3KPJ41UVESnlbmLOKO3sdW2601aZ/u1T6
+ uoJBlCi0Kubit0qpfefNkoOuBkG/nUSD3jgS4Q/V1hxXbkCOYxa4AbbP5SH6jKlAUtZ7VoO37f8
+ Y2R35023xjqp6HSI57I841HVLfbIZvJvqxi7CY8Zgz7cqpAf0i2fH2Tqb8paHLRzFoPhqi+GeWg
+ NG8yJhs1bW0eyu6qvhVSOKIHskpjfnOd0DrwEo45Q/mR+gSq2AEZRrYdp94yfvuNOESenhkRRuS
+ yjFEPQx3zCnpWtdeq+cYgjftqWTgftGWUq1mAjMyAXTTQarM+i8lYHLDDrWLGUlZ3PifBW0yfTk
+ Go=
+X-Received: by 2002:a05:600c:45ce:b0:490:59cc:998e with SMTP id
+ 5b1f17b1804b1-49059cc99famr148876495e9.3.1779769818990; 
+ Mon, 25 May 2026 21:30:18 -0700 (PDT)
 Received: from localhost.localdomain (46-116-239-136.bb.netvision.net.il.
  [46.116.239.136]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49076a6abfasm6659625e9.12.2026.05.25.21.29.59
+ 5b1f17b1804b1-49076a6abfasm6659625e9.12.2026.05.25.21.30.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 May 2026 21:30:00 -0700 (PDT)
+ Mon, 25 May 2026 21:30:18 -0700 (PDT)
 From: Leonid Bloch <lb.workbox@gmail.com>
 To: "Michael S . Tsirkin" <mst@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
@@ -77,15 +78,16 @@ To: "Michael S . Tsirkin" <mst@redhat.com>,
  Dmitry Fleytman <dmitry.fleytman@gmail.com>
 Cc: Leonid Bloch <lb.workbox@gmail.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v4 0/8] Introduce a battery, AC adapter, and lid button
-Date: Tue, 26 May 2026 07:29:19 +0300
-Message-ID: <20260526042928.9203-1-lb.workbox@gmail.com>
+Subject: [PATCH v4 8/8] scripts: Add laptop-mirror reference script
+Date: Tue, 26 May 2026 07:29:27 +0300
+Message-ID: <20260526042928.9203-9-lb.workbox@gmail.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260526042928.9203-1-lb.workbox@gmail.com>
+References: <20260526042928.9203-1-lb.workbox@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=lb.workbox@gmail.com; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=lb.workbox@gmail.com; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,179 +110,364 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series introduces three ACPI devices that are particularly useful
-for laptop/mobile virtualization:
+Add an in-tree Python reference implementation that reads the host's
+battery, AC adapter and lid state from sysfs/procfs and forwards changes
+to a running QEMU guest through the battery-set-state,
+ac-adapter-set-state and lid-button-set-state QMP commands.
 
-* Battery
-* AC adapter
-* Laptop lid button
+This script is intended as an example for management layers
+(such as libvirt) to follow when wiring host hardware to those devices,
+not as an end-user deployment tool.
 
-Link to v3: https://lists.nongnu.org/archive/html/qemu-devel/2025-08/msg04138.html
-Link to GitHub PR, for ease of review: https://github.com/blochl/qemu/pull/4
-
-Changes in v4:
---------------
-
-* Rebased on latest master
-
-Based on the feedback on v3:
-
-* Documentation patch split: each device is now introduced by a
-  separate documentation patch followed by the code patch.
-
-* sysfs/procfs host mirroring removed from the C devices: QEMU no
-  longer reads /sys or /proc directly. The devices are now purely
-  QMP-controlled. A reference Python script is added in
-  scripts/laptop-mirror.py that demonstrates how a management layer
-  can translate host sysfs/procfs state into the QMP commands.
-
-* Battery I/O region cleanup: the battery registers are now native
-  DWORD-access only, matching the AML AML_DWORD_ACC field layout.
-
-* find_*_device() now reports ambiguity: when more than one matching
-  device is present, QMP returns "More than one X device present".
-
-* QAPI cleanups:
-  - Stray blank documentation lines in *-set-state removed.
-  - All the new types and commands carry "Since: 11.1".
-  - The C devices no longer #include "qemu/error-report.h" now that
-    they don't call warn_report().
-  - battery-set-state now rejects impossible combinations
-    (charging && discharging, charge/discharge without present,
-    out-of-range charge-percent and rate).
-
-* I/O port unknown-address handling: the default branches in the
-  ioport_read paths now g_assert_not_reached() instead of logging and
-  returning 0.
-
-* Set the devices not hotpluggable.
-
-* ISA vs. PCI base: kept ISA. ACPI defines PNP0C0A (battery),
-  ACPI0003 (AC adapter) and PNP0C0D (lid) as namespace devices under
-  \_SB with control methods (_BIF/_BST, _PSR, _LID) - see ACPI 6.5
-  sections 10.2, 10.3 and 9.4
-  (https://uefi.org/sites/default/files/resources/ACPI_Spec_6_5_Aug29.pdf).
-  There is no PCI class code defined for any of these in the first place,
-  and no actual laptop puts them on PCI - the signals come out of the
-  embedded controller and surface as fixed-hardware ACPI devices.
-  Guest power-management code matches the same way: Linux uses
-  drivers/acpi/{battery,ac,button}, Windows acpi.sys, macOS and the
-  BSDs follow the same pattern. Making the devices PCI would mean
-  inventing a device class no guest has a driver for.
-
-Changes in v3:
---------------
-
-* Rebased on latest master
-* Addressed the v2 review by Igor Mammedov
-
-Changes in v2:
---------------
-Based on the feedback from Philippe Mathieu-Daudé and Michael S. Tsirkin:
-
-* Complete redesign with dual-mode operation:
-  - QMP control mode (default): Devices are controlled via QMP commands,
-    providing deterministic behavior essential for migration and CI/testing
-  - Host mirroring mode (opt-in): Original sysfs/procfs monitoring behavior,
-    now disabled by default
-
-* Migrated to modern QEMU ACPI architecture:
-  - Devices now implement ACPI_DEV_AML_IF interface
-  - AML generation moved from centralized acpi-build.c to device files
-
-* Added a QMP interface:
-  - battery-set-state/query-battery
-  - ac-adapter-set-state/query-ac-adapter
-  - lid-button-set-state/query-lid-button
-
-* Documentation improvements:
-  - Converted to .rst format
-  - Added examples for both QMP and "fake" sysfs/procfs testing
-
-The dual-mode design ensures these devices are migration-safe and
-deterministic by default, while still allowing host state mirroring
-when explicitly requested for desktop use cases.
-
-Use cases:
-----------
-1. Testing: CI systems can programmatically control power states.
-2. Cloud: Expose a virtual battery for usage-based resource limiting.
-3. Desktop virtualization: Mirror host laptop state to the guest via
-   the laptop-mirror.py reference script (or a libvirt equivalent).
-4. Development: Test power management without physical hardware.
-
-Example usage:
---------------
-# QMP-controlled battery
-qemu-system-x86_64 -device battery \
-    -qmp unix:/tmp/qmp.sock,server=on,wait=off
-
-# Control via QMP
-{"execute": "battery-set-state",
- "arguments": {"state": {"present": true, "charging": false,
-                         "discharging": true, "charge-percent": 42,
-                         "rate": 500}}}
-
-# Or, to mirror host laptop state through QMP:
-$builddir/run scripts/laptop-mirror.py -s /tmp/qmp.sock
-
-The series has been tested with Windows and Linux guests, correctly
-showing battery status, AC adapter state, and lid button events in
-guest UIs and triggering appropriate power management actions.
-
-Thanks again for the reviews.
-Leonid.
-
-Leonid Bloch (8):
-  hw/acpi: Support extended GPE handling for additional ACPI devices
-  docs/specs: Introduce the QEMU Battery documentation
-  hw/acpi: Introduce the QEMU Battery
-  docs/specs: Introduce the QEMU AC adapter documentation
-  hw/acpi: Introduce the QEMU AC adapter
-  docs/specs: Introduce the QEMU lid button documentation
-  hw/acpi: Introduce the QEMU lid button
-  scripts: Add laptop-mirror reference script
-
- MAINTAINERS                          |  27 ++
- docs/specs/acad.rst                  | 126 ++++++++++
- docs/specs/battery.rst               | 154 ++++++++++++
- docs/specs/button.rst                | 131 ++++++++++
- docs/specs/index.rst                 |   3 +
- docs/tools/index.rst                 |   1 +
- docs/tools/laptop-mirror.rst         |  82 ++++++
- hw/acpi/Kconfig                      |  12 +
- hw/acpi/acad-stub.c                  |  20 ++
- hw/acpi/acad.c                       | 251 ++++++++++++++++++
- hw/acpi/battery-stub.c               |  20 ++
- hw/acpi/battery.c                    | 364 +++++++++++++++++++++++++++
- hw/acpi/button-stub.c                |  20 ++
- hw/acpi/button.c                     | 227 +++++++++++++++++
- hw/acpi/core.c                       |  17 +-
- hw/acpi/meson.build                  |   6 +
- hw/acpi/trace-events                 |  12 +
- hw/i386/Kconfig                      |   3 +
- include/hw/acpi/acad.h               |  25 ++
- include/hw/acpi/acpi_dev_interface.h |   3 +
- include/hw/acpi/battery.h            |  32 +++
- include/hw/acpi/button.h             |  23 ++
- qapi/acpi.json                       | 165 ++++++++++++
- scripts/laptop-mirror.py             | 219 ++++++++++++++++
- 24 files changed, 1941 insertions(+), 2 deletions(-)
- create mode 100644 docs/specs/acad.rst
- create mode 100644 docs/specs/battery.rst
- create mode 100644 docs/specs/button.rst
+Signed-off-by: Leonid Bloch <lb.workbox@gmail.com>
+---
+ MAINTAINERS                  |   6 +
+ docs/tools/index.rst         |   1 +
+ docs/tools/laptop-mirror.rst |  82 +++++++++++++
+ scripts/laptop-mirror.py     | 219 +++++++++++++++++++++++++++++++++++
+ 4 files changed, 308 insertions(+)
  create mode 100644 docs/tools/laptop-mirror.rst
- create mode 100644 hw/acpi/acad-stub.c
- create mode 100644 hw/acpi/acad.c
- create mode 100644 hw/acpi/battery-stub.c
- create mode 100644 hw/acpi/battery.c
- create mode 100644 hw/acpi/button-stub.c
- create mode 100644 hw/acpi/button.c
- create mode 100644 include/hw/acpi/acad.h
- create mode 100644 include/hw/acpi/battery.h
- create mode 100644 include/hw/acpi/button.h
  create mode 100755 scripts/laptop-mirror.py
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 1f8f3e247e..9616544d29 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3057,6 +3057,12 @@ F: docs/specs/button.rst
+ F: hw/acpi/button*
+ F: include/hw/acpi/button.h
+ 
++Laptop mirror
++M: Leonid Bloch <lb.workbox@gmail.com>
++S: Maintained
++F: docs/tools/laptop-mirror.rst
++F: scripts/laptop-mirror.py
++
+ Subsystems
+ ----------
+ Overall Audio backends
+diff --git a/docs/tools/index.rst b/docs/tools/index.rst
+index 868c3c4d9d..0c8fa6010f 100644
+--- a/docs/tools/index.rst
++++ b/docs/tools/index.rst
+@@ -17,3 +17,4 @@ command line utilities and other standalone programs.
+    qemu-trace-stap
+    qemu-vmsr-helper
+    qemu-vnc
++   laptop-mirror
+diff --git a/docs/tools/laptop-mirror.rst b/docs/tools/laptop-mirror.rst
+new file mode 100644
+index 0000000000..62fc2f92c3
+--- /dev/null
++++ b/docs/tools/laptop-mirror.rst
+@@ -0,0 +1,82 @@
++=======================
++QEMU laptop mirror tool
++=======================
++
++Synopsis
++--------
++
++**laptop-mirror.py** [*OPTIONS*]
++
++Description
++-----------
++
++``laptop-mirror.py`` polls the host's battery, AC adapter and lid state
++from sysfs/procfs and forwards every change to a running QEMU guest using
++the ``battery-set-state``, ``ac-adapter-set-state`` and
++``lid-button-set-state`` QMP commands. This script is a reference for how
++a management layer (libvirt or similar) can wire host hardware to them,
++and isn't meant for production use as-is.
++
++Options
++-------
++
++.. program:: laptop-mirror.py
++
++.. option:: -s SOCKET, --socket SOCKET
++
++  QMP socket: a Unix path or ``host:port``. Falls back to ``$QMP_SOCKET``.
++
++.. option:: -i SECONDS, --interval SECONDS
++
++  Polling interval, in seconds. Default ``2.0``.
++
++.. option:: --battery, --no-battery
++
++  Mirror the battery (default: on).
++
++.. option:: --ac-adapter, --no-ac-adapter
++
++  Mirror the AC adapter (default: on).
++
++.. option:: --lid, --no-lid
++
++  Mirror the lid button (default: on). A device that is enabled but not
++  present on the host is silently skipped.
++
++.. option:: -v, --verbose
++
++  ``-v`` logs every state change; ``-vv`` adds debug output.
++
++Example
++-------
++
++Start QEMU with the laptop devices and a QMP socket::
++
++  qemu-system-x86_64 \
++      -device battery -device acad -device button \
++      -qmp unix:/tmp/qmp.sock,server=on,wait=off \
++      ...
++
++Then mirror your host state::
++
++  export QMP_SOCKET=/tmp/qmp.sock
++  $builddir/run scripts/laptop-mirror.py -v
++
++The script depends on the in-tree ``qemu.qmp`` package; ``$builddir/run``
++puts it on ``PYTHONPATH``.
++
++Caveats
++-------
++
++* QMP allows one client at a time. If ``qmp-shell``, libvirt or another
++  script is already connected, the mirror times out after ten seconds and
++  exits with an error.
++* When QEMU runs as root, its Unix QMP socket is root-owned. Run the
++  mirror as root too, ``chmod`` the socket after QEMU is up, or expose
++  QMP over TCP.
++
++See also
++--------
++
++:doc:`/specs/battery`, :doc:`/specs/acad`, :doc:`/specs/button`,
++:manpage:`qemu-qmp-ref(7)`
+diff --git a/scripts/laptop-mirror.py b/scripts/laptop-mirror.py
+new file mode 100755
+index 0000000000..8db76e4ff9
+--- /dev/null
++++ b/scripts/laptop-mirror.py
+@@ -0,0 +1,219 @@
++#!/usr/bin/env python3
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# Copyright (c) 2025-2026 Leonid Bloch <lb.workbox@gmail.com>
++
++"""Reference: mirror host laptop power state into a QEMU guest via QMP.
++
++The C devices (battery/acad/button) are pure QMP-controlled; this script
++shows how a management layer (libvirt etc.) might wire host sysfs/procfs
++state to the QMP commands.  See docs/tools/laptop-mirror.rst.
++"""
++from __future__ import annotations
++
++import argparse
++import logging
++import os
++import signal
++import socket
++import sys
++import time
++from pathlib import Path
++from typing import Any
++
++try:
++    from qemu.qmp import QMPError
++    from qemu.qmp.legacy import QEMUMonitorProtocol
++except ModuleNotFoundError as exc:
++    print(f"Module '{exc.name}' not found.", file=sys.stderr)
++    print(f"Try $builddir/run {' '.join(sys.argv)}", file=sys.stderr)
++    sys.exit(1)
++
++
++log = logging.getLogger("laptop-mirror")
++
++POWER_SUPPLY = Path("/sys/class/power_supply")
++ACPI_BUTTON = Path("/proc/acpi/button")
++
++
++def read_str(p: Path) -> str | None:
++    try:
++        return p.read_text().strip()
++    except OSError:
++        return None
++
++
++def read_int(p: Path) -> int | None:
++    s = read_str(p)
++    try:
++        return int(s) if s is not None else None
++    except ValueError:
++        return None
++
++
++def find_supply(kind: str) -> Path | None:
++    if not POWER_SUPPLY.is_dir():
++        return None
++    for d in sorted(POWER_SUPPLY.iterdir()):
++        if read_str(d / "type") == kind:
++            return d
++    return None
++
++
++def find_lid() -> Path | None:
++    lid_dir = ACPI_BUTTON / "lid"
++    if not lid_dir.is_dir():
++        return None
++    for sub in sorted(lid_dir.iterdir()):
++        if (state := sub / "state").is_file():
++            return state
++    return None
++
++
++def battery_state(path: Path) -> dict[str, Any] | None:
++    status = read_str(path / "status") or ""
++    cap = read_int(path / "capacity")
++    if cap is None:
++        en, ef = read_int(path / "energy_now"), read_int(path / "energy_full")
++        if en is None or not ef:
++            return None
++        cap = en * 100 // ef
++
++    state: dict[str, Any] = {
++        "present": True,
++        "charging": status == "Charging",
++        "discharging": status == "Discharging",
++        "charge-percent": max(0, min(100, cap)),
++    }
++    pw = read_int(path / "power_now")
++    if pw is not None:
++        state["rate"] = abs(pw) // 1000
++    return state
++
++
++def ac_online(path: Path) -> bool | None:
++    v = read_int(path / "online")
++    return None if v is None else bool(v)
++
++
++def lid_open(path: Path) -> bool | None:
++    s = read_str(path)
++    return None if s is None else "open" in s.lower()
++
++
++def qmp_connect(address, timeout):
++    if isinstance(address, tuple):
++        sock = socket.create_connection(address, timeout=timeout)
++    else:
++        sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
++        sock.settimeout(timeout)
++        sock.connect(address)
++    sock.settimeout(timeout)
++    if not sock.recv(1, socket.MSG_PEEK):
++        sock.close()
++        raise TimeoutError
++    sock.settimeout(None)
++    return sock
++
++
++def parse_args() -> argparse.Namespace:
++    p = argparse.ArgumentParser(
++        description="Mirror host laptop hardware state to a QEMU guest "
++                    "via QMP.")
++    p.add_argument("-s", "--socket", default=os.environ.get("QMP_SOCKET"),
++                   help="QMP socket: unix path or addr:port "
++                        "(default: $QMP_SOCKET)")
++    p.add_argument("-i", "--interval", type=float, default=2.0,
++                   metavar="SECONDS",
++                   help="polling interval in seconds (default: 2.0)")
++    p.add_argument("-v", "--verbose", action="count", default=0,
++                   help="increase verbosity (-v info, -vv debug)")
++    p.add_argument("--battery", action=argparse.BooleanOptionalAction,
++                   default=True, help="monitor the battery")
++    p.add_argument("--ac-adapter", action=argparse.BooleanOptionalAction,
++                   default=True, help="monitor the AC adapter")
++    p.add_argument("--lid", action=argparse.BooleanOptionalAction,
++                   default=True, help="monitor the lid button")
++    args = p.parse_args()
++    if not args.socket:
++        p.error("--socket is required (or set $QMP_SOCKET)")
++    if args.interval <= 0:
++        p.error("--interval must be positive")
++    if not (args.battery or args.ac_adapter or args.lid):
++        p.error("at least one device must be enabled")
++    return args
++
++
++def main() -> int:
++    args = parse_args()
++    levels = [logging.WARNING, logging.INFO, logging.DEBUG]
++    logging.basicConfig(level=levels[min(args.verbose, 2)],
++                        format="%(message)s", stream=sys.stderr)
++    logging.getLogger("qemu.qmp").setLevel(logging.CRITICAL)
++
++    bat = find_supply("Battery") if args.battery else None
++    ac = find_supply("Mains") if args.ac_adapter else None
++    lid = find_lid() if args.lid else None
++    if not (bat or ac or lid):
++        log.error("No host laptop devices found to mirror")
++        return 1
++    for name, path in (("battery", bat), ("ac-adapter", ac), ("lid", lid)):
++        if path is not None:
++            log.info("Mirroring %s from %s", name, path)
++
++    try:
++        sock = qmp_connect(QEMUMonitorProtocol.parse_address(args.socket), 10)
++    except TimeoutError:
++        log.error("Timed out negotiating QMP with %s. Is another QMP "
++                  "client (e.g. qmp-shell) holding the socket?", args.socket)
++        return 1
++    except OSError as exc:
++        log.error("Could not connect to %s: %s", args.socket, exc)
++        return 1
++
++    qmp = QEMUMonitorProtocol(sock)
++    try:
++        qmp.connect()
++    except QMPError as exc:
++        log.error("QMP error: %s", exc)
++        return 1
++
++    prev: dict[str, dict[str, Any]] = {}
++
++    def push(command: str, payload: dict[str, Any]) -> None:
++        if prev.get(command) == payload:
++            return
++        try:
++            qmp.cmd(command, **payload)
++        except QMPError as exc:
++            log.warning("%s failed: %s", command, exc)
++            return
++        prev[command] = payload
++        log.info("%s -> %s", command, payload)
++
++    running = True
++
++    def stop(_signum, _frame):
++        nonlocal running
++        running = False
++
++    signal.signal(signal.SIGINT, stop)
++    signal.signal(signal.SIGTERM, stop)
++
++    try:
++        while running:
++            if bat and (s := battery_state(bat)) is not None:
++                push("battery-set-state", {"state": s})
++            if ac and (c := ac_online(ac)) is not None:
++                push("ac-adapter-set-state", {"connected": c})
++            if lid and (o := lid_open(lid)) is not None:
++                push("lid-button-set-state", {"open": o})
++            time.sleep(args.interval)
++        return 0
++    finally:
++        qmp.close()
++
++
++if __name__ == "__main__":
++    sys.exit(main())
 -- 
 2.54.0
 
