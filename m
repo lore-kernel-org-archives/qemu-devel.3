@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16286CD5BC8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19012CD5BD1
 	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 20:04:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRxzK-0004dL-KL; Tue, 26 May 2026 16:02:54 -0400
+	id 1wRxzE-0004ZN-Gh; Tue, 26 May 2026 16:02:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRxzF-0004at-MS; Tue, 26 May 2026 16:02:50 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ id 1wRxyk-0004X5-V4; Tue, 26 May 2026 16:02:18 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRxzE-0002vL-2Y; Tue, 26 May 2026 16:02:49 -0400
+ id 1wRxyj-0002VP-5M; Tue, 26 May 2026 16:02:18 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id CEAFF403B6;
- Tue, 26 May 2026 20:02:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A1F1F00A3E;
- Tue, 26 May 2026 20:02:43 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 0C9C9600AB;
+ Tue, 26 May 2026 20:02:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67D661F000E9;
+ Tue, 26 May 2026 20:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779825766;
- bh=C6sVTMGfaU3enExNWt9KUDNtvH2iTrHHDQG1z3ZZxHI=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=AAh6ydRefl/bYGaAYTncsoCg4aIsxV9SJKWVIFZ90Z8UIM52kHQLDEnOfmKs5yF/M
- X/swpnhR4klC99rL9usydksot6TLrCIb8igMYmkmJ6C3pkI5iOwRFTwcdLH/HoB0Jy
- YqPGy9WuWnJHw7rAEWsp1kHJxhgWdPGLkFsTZEYFbHqqyN9zmjRRt/LNuFkMVvSrzt
- ATEVFx7Q4MNklN0Shrsx3JgWjVjfMoVdvTNSzMoeQx0//j3Y69O1VMUFmrrPbv7yQI
- NX5dUFK3NcAF+f4h6AjzcujprZKWCBCCs3xVdJeoOi3eX5aZzxdOtqMKZjI3EotgcD
- vdj6LvuQvpj5w==
+ s=k20260515; t=1779825732;
+ bh=11cK/N1dyEAOpS4nPioXZ6+e4u/b3GAU4J5LilP1+8c=;
+ h=From:To:Cc:Subject:Date;
+ b=jGXY6uLePmSn0Iz8f4WFgd2T7HF7TMsc2LlbFjyZMOmmMc3+DojOANgKXLQqz6U3T
+ /RETQXgvsfPtgTafo3cKsBiS42VLD+aed2WU0GJHeqZOrpXLgc4paXeMM7Dd0/bzEQ
+ AtjPgG4/25zX6jlDplvJ9IO84XQ6SfVpQ8LtQ6gsiOdWn2N6+Ltuyr4ipwzZZfz3bR
+ BDIs6a8Xt6JFnZii3juyL1fGPoNr18fMD9JFM7Gl6wIIU1o7VsRjFU6suygOayDCNK
+ Ha7rfZRqwtJF3l852k21hRuh25awuBfKrNkYktaZ8QoWfU3XaPUT3MB3POAPeh5yKf
+ HzzdYRJr+sfQg==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -45,18 +45,15 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>, Aurelien Jarno <aurelien@aurel32.net>
-Subject: [PULL 09/12] linux-user: Fix typo in function documentation for
- pgb_addr_set()
-Date: Tue, 26 May 2026 22:02:04 +0200
-Message-ID: <20260526200207.79738-10-deller@kernel.org>
+Subject: [PULL 00/12] Linux user next patches
+Date: Tue, 26 May 2026 22:01:55 +0200
+Message-ID: <20260526200207.79738-1-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260526200207.79738-1-deller@kernel.org>
-References: <20260526200207.79738-1-deller@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -80,28 +77,67 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-The third parameter is called guest_hiaddr.
+The following changes since commit 554cbfb1cf4601d2762f5315c884319e361b24cb:
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- linux-user/elfload.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+  Merge tag 'ui-pull-request' of https://gitlab.com/marcandre.lureau/qemu into staging (2026-05-26 10:38:13 -0400)
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 0e757787d2..f7625c0952 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -848,7 +848,7 @@ static bool pgb_try_mmap_set(const PGBAddrs *ga, uintptr_t base, uintptr_t brk)
-  * pgb_addr_set:
-  * @ga: output set of guest addrs
-  * @guest_loaddr: guest image low address
-- * @guest_loaddr: guest image high address
-+ * @guest_hiaddr: guest image high address
-  * @identity: create for identity mapping
-  *
-  * Fill in @ga with the image, COMMPAGE and NULL page.
+are available in the Git repository at:
+
+  https://github.com/hdeller/qemu-hppa.git tags/linux-user-next-pull-request
+
+for you to fetch changes up to b501a44d26be4cf70ba77500365aadbf21494e74:
+
+  linux-user: Move cpu_copy() to user-internals.h (2026-05-26 20:56:29 +0200)
+
+----------------------------------------------------------------
+linux user patches
+
+A series of patches for linux-user, specifically many FPU fixes in signal
+handling code for sh4, mips, ppc, alpha and s390x (from Matt Turner), a
+madvise() improvement and a ARM cortex-m55 program loading fix (from me),
+and qemu header cleanups (from Peter Maydell).
+
+----------------------------------------------------------------
+
+Helge Deller (3):
+  linux-user: Implement finer grained madivse() syscall
+  linux-user: Fix typo in function documentation for pgb_addr_set()
+  linux-user: Fix loading static ARM cortex-m55 binaries
+
+Matt Turner (7):
+  linux-user/ppc: restore fp_status from FPSCR on sigreturn
+  linux-user/mips: save/restore FCSR across signal delivery
+  linux-user/alpha: add coredump support
+  linux-user/sh4: preserve T/M/Q bits across signal delivery
+  linux-user/sh4: restore FP rounding mode on sigreturn
+  target/sh4: sync fp_status when gdb writes FPSCR
+  linux-user/s390x: restore fpu_status rounding mode from FPC on
+    sigreturn
+
+Peter Maydell (2):
+  linux-user: Move init_main_thread() prototype to user-internals.h
+  linux-user: Move cpu_copy() to user-internals.h
+
+ linux-user/alpha/elfload.c    | 12 ++++++++++++
+ linux-user/alpha/target_elf.h | 13 +++++++++++++
+ linux-user/elfload.c          |  4 ++--
+ linux-user/mips/signal.c      |  7 +++++++
+ linux-user/mmap.c             | 32 +++++++++++++++++++++++++++++++-
+ linux-user/ppc/signal.c       |  2 +-
+ linux-user/qemu.h             |  5 -----
+ linux-user/s390x/signal.c     |  6 +++++-
+ linux-user/sh4/signal.c       | 19 ++++++++++++++++---
+ linux-user/user-internals.h   | 18 ++++++++++++++++++
+ target/mips/cpu.h             |  3 +++
+ target/mips/fpu.c             |  5 +++++
+ target/s390x/cpu.h            |  1 +
+ target/s390x/tcg/fpu_helper.c | 20 ++++++++++++++------
+ target/sh4/cpu.h              |  3 +++
+ target/sh4/gdbstub.c          |  2 +-
+ target/sh4/op_helper.c        |  7 ++++++-
+ tests/tcg/sh4/Makefile.target |  7 -------
+ 18 files changed, 138 insertions(+), 28 deletions(-)
+
 -- 
 2.54.0
 
