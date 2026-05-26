@@ -4,88 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D07E0CD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 15:18:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D2B4CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 15:19:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRtXh-0002K4-VZ; Tue, 26 May 2026 11:18:06 -0400
+	id 1wRtYE-0002Nl-MD; Tue, 26 May 2026 11:18:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRtXg-0002JB-Gv
- for qemu-devel@nongnu.org; Tue, 26 May 2026 11:18:04 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wRtYD-0002NL-3V
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 11:18:37 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRtXd-0007UR-W6
- for qemu-devel@nongnu.org; Tue, 26 May 2026 11:18:04 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-45ed9336049so541450f8f.0
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 08:18:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wRtYB-000807-Er
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 11:18:36 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-bd21ffaca79so1980876966b.0
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 08:18:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779808713; cv=none;
+ d=google.com; s=arc-20240605;
+ b=B8wAHXFSSe8I6buw4jjoTM2fBZlDuhIUQ5d3v4n099krSj/RLfrYk8HCsr0bkc+hXR
+ eS2QD+FWKZwINm69A7vLZM6htE0BXluz8EvF628yIuQkdRaDu7zaqtgQ7m/VwRYz6yph
+ sNXEs0nmG0XstbdQNy8qLcmSgFAqCuvjd8Jf3Zd/KzZJh9yVpK6n6+i8YU/X4Wcju6JA
+ hTJnDFX174XPNteDp7KXvLD0S3jZUOm9JA71fSOGCiU8A0gUxllsOQg7e4UhLwgukKh5
+ buB594oQfTrNBH5/54si6mOTVoiQj1k5VVN+8ITURK3GXoZCt7Vf2RYDNhhA6FOYWsRo
+ Sk6g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=IVThKAysnnJFckUmsvjGSuR6FKYHsCUmETx/QObSKsc=;
+ fh=Q9dsMRTk+dymOtqMnm4zjFnvJsI8ndl93sYRZpilaGk=;
+ b=Yw9vynNyLdxqxYfr4lDkNBdqujsaZjTxjOW8iVBRh2Z6ne0uEU4N1+K/9kpysubbj1
+ qN5t86RjnjRM83NnUGeyo/ueRTGMO5vWp4cmqChrLHpXO7x5Oiu0FhVDx4mzBU0RByeb
+ JYtbhJt2UWgcfhzxnlssXCVA7R89ABh2sQJzDsoxGaxrvXl1DvwXrtLV9PkG/90dZrjf
+ 473vznS66KeWX8/f1dZ83Xa8y2oOI7iQCVj0Bv8ykK3E+eY6Em1+uH5P4umJpSYe5sm1
+ 7KLngSabc0ExIFQnQLkGrEoDXI8FLNSEBwQowb+8wQJfn5mU91ZouSsLLfkMcPiWCQYj
+ 9z5A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779808680; x=1780413480; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ce62S3udliLiLQHSuUUmSL5npolTfaaGB+C/mMt/HY0=;
- b=zGGikwuZBMGLtuGv1w0FPac6CeKDTIYYdrz/tS17XSH+z05EJkBYRM0HdmqFRfLD7V
- SssNX2W1Qq1xhj5O94mcZftWmwngvrHDPWMzSsag7hMROXWpEai8lF9xxH7CTE4Z7yBe
- f3lPd8VvS1Zw8fhyWIQu9FRvYzSLbuDOId6N+sWGWYAKP4CLOiQU3LIeCxhf38xTX3Da
- gFupDVO6RUU8CdKwo+JVH0DTAA1G4KNkNWf4XJQz/noPJVSkUwXlopsYGGmETTCbSsex
- vdKf2K51BapMMH1kQePPLTwzerKTSIts7Tx7jLnI7WBIxSp10FwoSq6MSOWaJEqFSKhY
- j4lA==
+ d=gmail.com; s=20251104; t=1779808713; x=1780413513; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=IVThKAysnnJFckUmsvjGSuR6FKYHsCUmETx/QObSKsc=;
+ b=Qq5B7SiMYZCU1t9qT+7RpLYJLYRRimn7OB2d8LTq7o2WWOy/87waWaqEKziBVDT5AN
+ maEHFzHTABG240vKyf9To22QrUrjuO4hJGSbMZPGoB6PB1/QbHJwLdl5mMgW5v18Yzde
+ eFIzZkFcb1/DApuXJVfDAukvlLqXF5hbQ4YaXTt1YwcQhLFqU/63CkfiiK4CmBXnob1I
+ TU7LT5VoEebqr78qy4BAz8kLbRpiMM8icB8AOncULnSV+0P0vW8QI55GH4R17FGIwJ9s
+ Vf/A4wU4+NPJDu9YJdA2mMd0xvmh42zj/mjJhgghDtBXaVDuYOo1qM0pzEXWPVbjPB5X
+ JI2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779808680; x=1780413480;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Ce62S3udliLiLQHSuUUmSL5npolTfaaGB+C/mMt/HY0=;
- b=Dw0LJazpZkOc5RTudFxNEJdECypR8LbJx79Su0YslC0s7ih2tHM9a+RBrUvaAWls6t
- KCOYB24v7iNz28nmirrGLhtI8sYiJzdsKg9riTdTrLzgU2XsvwHuc9Z5pg5bfaW/TLFT
- G97xMzC1rhA96ZLS1oUc0wGGt5cbsgbVDITbm/vliZGVq+qUmyp9WgB3dRX/+7YGd2bP
- Uz9uBnMOwJInSxOyXuWUypSG0Ke5znG+jZfzdvYNbckZFepmO74pSGPlYG6jP2hF8rMS
- eR1in/vvVv5BUKnojlULUjEu4BIFrXflv1wF4xe79kH558AK9MP1EpAkv2EeEur+ErrL
- 60ZQ==
-X-Gm-Message-State: AOJu0YzpU5MCAOMQWBr9L0QB/VRZU8pLZ6udodtwcqJoDs4uSWjuxlIO
- dfysssOyCkw2k/rAzo/CR56Zxv2WOYd/M3NxRgSSKh5FIPZTa0SZR3XlHR6M/tiPhmgwlzeUBR9
- 5PT/S
-X-Gm-Gg: Acq92OHrfzQJOnmtvXJA9RKT1gIYklo+ekHidXZlZsCPAQ4nBFlaBKdRGhwhNptruv1
- 8IGOqNVkC70OI7xoHWLmMga2npdUGl6Dh0ajqJAhKEP/l3DWpcNjHFaETSD8hRjouflHQJ6HUuy
- 9htygRuThFMhdRKQh+pNKvRcfWTkbJOtgpg3a/Uv4eHWLnCuVuFstmoxL09QktYrKV7HN0ACzUC
- dAnI7pq8jwGXbrxu5cQk0lxXyu84CHcNBqjnq7iSDTP4UlGn8a/U6OFCcuFLGPE2zNv2gS53DMX
- x4XOY3uVx0l0YCB4VROc/yjt6DRwZ1xqUItug0GTC2M/la6etGKY/3iArDtcI3W746dDtI3bLsi
- CvkcueTlYnimtCzJPyffP2fw78Ohy7ym5tDP1/91RrNXOWj7IfM6mhS2HMpfVhcP7zdB5cbgCAL
- 9XahcTzVDLA01+ojNqA5grnvewuJIRSjFxUcbp+BrHqXKuFurpeEjjijVeBxjbF4Un6+EjLuw6L
- SMcdCHwKOUHTBfGWee6IObIZaBTSZ2y2tNBKSCFgHtqL/aTI2Cg
-X-Received: by 2002:a05:600c:4592:b0:490:6237:5212 with SMTP id
- 5b1f17b1804b1-4906237533fmr147168715e9.9.1779808680219; 
- Tue, 26 May 2026 08:18:00 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49042ce923asm111485275e9.35.2026.05.26.08.17.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 08:17:59 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH 1/2] linux-user: Move init_main_thread() prototype to
- user-internals.h
-Date: Tue, 26 May 2026 16:17:56 +0100
-Message-ID: <20260526151757.2371476-2-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260526151757.2371476-1-peter.maydell@linaro.org>
-References: <20260526151757.2371476-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20251104; t=1779808713; x=1780413513;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IVThKAysnnJFckUmsvjGSuR6FKYHsCUmETx/QObSKsc=;
+ b=TJShIM2K2zYgYcGCF7YNZ0N0OFbOboqab6CGlPhzB3wYBP3/E8R6LjqvgcNdCIFFsb
+ LAB12hgh0BpTICFphybpNjudue7bGW5Oj0R4urkm4sCjlV7hBtq3n+rxTx6K7j2ZdXPe
+ reqbEC7tP5wzvP5QYGsRMbNWTA760wZh3dIMKNe99wX4jWfJUxZY80EjWkQM1SzE8HHg
+ mYDnzRfdcS+Prwt95em2ury2+eh3CYZBf2ZL6thFQJylMhkAIm9Fis6u0PJQliHvo4+T
+ M7miLgkRW1UMZnBrUAnvn1L0kvbo1yr2ZgF3E43xR/y41uJgLENTluFyMgruvWUBte6e
+ A1JQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/TcutaPFjJbHmLvVS4KlBtmmfn9iRI7uYIBwubc0Kgfuiu7PxjaaIvyFomogyFgPzWhNJZOXpIAJaz@nongnu.org
+X-Gm-Message-State: AOJu0YxOP5eWzfKquH7bSekapm0g9nPu6tYagFABQ9KzY0Kq9sFL3eF/
+ tDvfwZoEtbX//Kh2LuowUZRifj7r9VNbUZbSxlsfZlFJuHCKy3xZCUsTdau4pIsZWFW2PBOdwmC
+ WtH1HQHcn1mX9T5zm25ARqyQof9C0dm4=
+X-Gm-Gg: Acq92OHfVzCrabbB6INn1PSR7gDg8zp3pdiYv5v3Zmwk1buZgXRzdu1w7I3xztFHzIV
+ 0pShlcScYyL1+wfF/rtBf/u4WdOH1iQPYDSbT+Blct4nLTGMEO9U4BCdamBYg+bKbu1tIt4voTg
+ v5lqyWFY1a5ttFNj5bbi4fmlT3LWVrUODQh8zHx1AeNEldCxAJPTSwatjCeFPqfwWLK5g4CEhYm
+ 3qDvQ0Rh8inWfRAryi5PKwp3A3KUXO+TxDwhNG2zoE4cvvHJxQm8XZ1R9Hy5yqLE7aVCJeFbsMP
+ ifalAG3wA/sOwPBsZGBP6wb909YZw2BQoQsxL3Ggig==
+X-Received: by 2002:a17:907:d0c:b0:bd5:1ad4:cd73 with SMTP id
+ a640c23a62f3a-bdbff5847aamr1261485166b.2.1779808712913; Tue, 26 May 2026
+ 08:18:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Tue, 26 May 2026 11:18:20 -0400
+X-Gm-Features: AVHnY4KV-RW43o2de8E0eLWRRI-elwwObzNOfbPqlrIIjU6dFY3PDA0bkNLIRnU
+Message-ID: <CAJSP0QUzgvjca16p+HXJTtfbBiT4TM7t6CWYusCwrEAyTWCFpA@mail.gmail.com>
+Subject: Migration broken with libslirp 4.9.2
+To: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Alex Bennee <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Peter Xu <peterx@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=stefanha@gmail.com; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,57 +114,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The init_main_thread() prototype is needed only by code internal to
-linux-user/, so it doesn't need to be in qemu.h (which is also pulled
-in by various files outside linux-user/).
+Hi Samuel,
+QEMU's CI has started failing migration tests with libslirp 4.9.2. An
+issue has been filed here:
+https://gitlab.freedesktop.org/slirp/libslirp/-/work_items/94
 
-Move the prototype to user-internals.h, and give it a documentation
-comment.
+Please let the QEMU community know if any help is needed fixing the issue.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- linux-user/qemu.h           |  2 --
- linux-user/user-internals.h | 15 +++++++++++++++
- 2 files changed, 15 insertions(+), 2 deletions(-)
-
-diff --git a/linux-user/qemu.h b/linux-user/qemu.h
-index 7f98fb2607..474489f046 100644
---- a/linux-user/qemu.h
-+++ b/linux-user/qemu.h
-@@ -371,6 +371,4 @@ void *lock_user_string(abi_ulong guest_addr);
- /* Clone cpu state */
- CPUArchState *cpu_copy(CPUArchState *env);
- 
--void init_main_thread(CPUState *cs, struct image_info *info);
--
- #endif /* QEMU_H */
-diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
-index 21daf422b7..fbfd12237f 100644
---- a/linux-user/user-internals.h
-+++ b/linux-user/user-internals.h
-@@ -194,6 +194,21 @@ static inline void begin_parallel_context(CPUState *cs)
-     }
- }
- 
-+/**
-+ * init_main_thread: Set CPU state for main thread
-+ * @cs: CPU context to set
-+ * @info: information about the image being loaded
-+ *
-+ * This function must be provided by the per-target code. It should
-+ * set the initial CPU state based on the information about the
-+ * starting binary in @image_info. This will be at a minimum setting
-+ * the initial guest program counter and stack pointer; it should
-+ * also set up any other guest register values where the Linux ABI
-+ * defines that they start set to some other value than what the
-+ * guest CPU architecture gives you out of reset.
-+ */
-+void init_main_thread(CPUState *cs, struct image_info *info);
-+
- /*
-  * Include target-specific struct and function definitions;
-  * they may need access to the target-independent structures
--- 
-2.43.0
-
+Thanks,
+Stefan
 
