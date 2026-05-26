@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A9FCCD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:31:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29E41CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:31:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRsmw-0001W8-MW; Tue, 26 May 2026 10:29:48 -0400
+	id 1wRsmi-0000qa-A4; Tue, 26 May 2026 10:29:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRsmr-0001IL-46
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:41 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1wRsmX-000068-VB
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:22 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRsmp-0001UI-83
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:40 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-45e6a4d0be0so4722277f8f.1
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:29:38 -0700 (PDT)
+ id 1wRsmW-0001Kh-6Z
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:21 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-48d146705b4so112878315e9.3
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:29:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779805778; x=1780410578; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779805758; x=1780410558; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=4pfkmfO6w1kOno/o5NKaV1qIY+DkeTQ+Jd3ugyh66bk=;
- b=FJDKcPn18DOZEEWqSztAAw/UxwfN+jwnFD2ZqISenldK3uCBPOGs4BXlLxXLzSYZuF
- Qo15WIF57WHEzadAhY+t+Epsnvqvg01SZ5EFgm4QHhVlfYFdBeVBz4Kgeuk08xV5Xh78
- 1ZXQ3rkrQ4xr1vsm6XaELwUKZ0KLqAsu7/fxGAk6JYy42jyFcDgQohv/grIg6SNbAoTN
- WXUAm0Z6fyvgSa7BrLFGjkXnHC6S0Fi2UBzLzXaFirbGMAhgR5/aPCCb4Qmy4ExPbQlr
- 52NBSrqR30OAq9Euwruv+lnaQhoCF7TliOiLe9N66pxf2GVlV1oNkMQnRPoDRckBdZqO
- f9kQ==
+ :reply-to; bh=nw9+ZkGYvqLC/PP3ScE0XL1JrYtjlJc9Fw+E/KuN0R8=;
+ b=kmNtd7W0yXHkmsrn8fSLp+2fi3XDC1W1QBhaFj95qvUymhINC10Vz4D4Nvh/14jw9C
+ Uz0GAixGHUL0dAV/p41htZjQn81BgoqOEJbeKlOqX0M7lGkLZpnJC687NTVoTtejMaSs
+ I90eep6fQIuU/HqdZsXrWMuCKrd3fXm3DPI5ZPMEN1KGy5uPAlvWkxeQrhL0FuGkhgm0
+ dYwtpD2VQ7KMlMnpUmDZqPyHWuuyxqlA9863UcVe6g51geA1g0mP9EtGoyDBiylI571O
+ AOlf013kJ+kc/FDFWGH0Eac9PJU1jNzwHlE36s6CBOsV4a5k1Cp4b96T6BlyRSWZU3uD
+ hTPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779805778; x=1780410578;
+ d=1e100.net; s=20251104; t=1779805758; x=1780410558;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=4pfkmfO6w1kOno/o5NKaV1qIY+DkeTQ+Jd3ugyh66bk=;
- b=U4ZqZVSdYfGzL6X6XU2DUlrNYm+bP1kDEOAx8cF3paj1s79GRbpaJ/uwx0Nrl7jFTG
- xrVmIVYJQtn3s5hufJYTfyhcTVshCnVVUaiDXLEBEbIueugdwZKYXwTcsBkz507WAB/M
- y0IEAjuQb62VEf+Ry5mj0IB/wkbDJqAkwXeo70hFvxaPeJwVzTujX621T1iN4p6u60kT
- FV9me1E6HYdLoihKLIe4TIOR234IT3iRsusS+2KNzTzF+wsYj8AWS4DR1zH2EaETZvD9
- vNKdJZdINt8HfG0JjrGZxt5rM2HAdV7oqWUNp9u63AwqC3H0mUTDZo2IKLMxlH1QK0GQ
- 4U3g==
-X-Gm-Message-State: AOJu0Yy87j35p37fOPfIU43mp0GvCrhdGbY72NeLuWeFmn6jpkdGhEbS
- pMVpclM60qUPJ4srAohK7bZzC4QVDPN2rl3+31yg8pnAJ8Z/l4sSKyOu8IRISF+rbPtKo/3FvJU
- IRbTv
-X-Gm-Gg: Acq92OFOaHWEni4LjnmqNvd81q9IQ76Q05v2tzzUHnGwAZXmtE96gbORDbcuCcogGw+
- fMNHLvaR71qhAIsBoto9j8sv0oPXayASKsBgoBJtvhxDnRqearCjBdFXe6IJH82SRJup3wRTAZ9
- 7UCay/a+c7NwvITMilntmxN7BlLyIGsdBTMBBUUGvBvttEdFoPTYZqm9I7Dkv+rGXaLvEJ2VLWW
- mFfvy8IRYxxQRfhv603k513Vsbb8y1d+Zptuho8pu3EiW5tRmOiAX7LJJ4SN2/yAlx3bpig4jUY
- 7yA8rTgE3gtD9fEgxapnPFmbHhVfSxZhbrocUesqmu6bvEQPE/QlOMG/0RK58A6x42OkFQ7G2zp
- EF1arz1JRYaBYhZiFVzRELEEQRr3/Ppb+xs5q9qIEFlTQj3hXitEfQcAre1+3u46sVKgArc8zMY
- xLnZPUB/okNJ7SWvPq/QwjlB5mazxizOGKSmb1wXWKA0Pr8jZ80jwvjg9y4CkFEvva5WgaMzRA+
- 8LQhZui8CcqLwEVudpKP4bEcrEi1GY=
-X-Received: by 2002:a05:6000:4704:b0:43d:300b:2285 with SMTP id
- ffacd0b85a97d-45eb3690494mr32812115f8f.11.1779805777811; 
- Tue, 26 May 2026 07:29:37 -0700 (PDT)
+ bh=nw9+ZkGYvqLC/PP3ScE0XL1JrYtjlJc9Fw+E/KuN0R8=;
+ b=aAL2pzcYkLauByG3LRc8gNYHdQwDLyJpb5Khg3yHrMxP430XiUqIu/0CYJc9pDwMRK
+ Mcp6EAKo3jK0o3hLSnPdpdOyq2fshNy0mvvnL3mmtOtLI1lHt1fyNMxOj7a5vB1dxE4/
+ PqXftXfKc5LWac2V0fvW2+BtZfuQSdcUGm0va2U+gcWjhVEu0XM0b3bwsmfHKNbWrEJA
+ wzvdLjFW2nQW0WNe+Y1MHdNGcg1Em07oOdzEAJTGpcZVRE8b8mBUBiSY4Htr17/qz9x3
+ 6GFDKiTbi2nipGVegMJQXWjp8O0DELkpKkxx04BVF84o/R8noqA6Cl4heJeRd5VDtR+x
+ qoUA==
+X-Gm-Message-State: AOJu0Yz0P8BoTsL+tu+VrK3xyiv2AoTHOlf9XW32uufzTFcW9z+5uVeK
+ PCYA7zJsis0p4Zh4+eyGarJsSygstM/pDd+orM1AgQQj/9ziuXeqeKbsvV3cQrwHweX9x+DJOlI
+ AMzDN
+X-Gm-Gg: Acq92OHTBa9xKRcwmwdrdwL5byAxI4enB6mEJCl0ur1y6VuS9avJ+EMG+bpoVFUIYN8
+ aY77UlE4N+XqoKcb6aaNC4QakBZ1ml41uvjGa20TXKxPBr0U43uWoldf43ERy9vAxbf2yHILreF
+ MgLWXn3w9VXlbSKZhhmZBheEyyxiYsVC+pxouxdL83Xdp7MUcWWwTGRQkuk36qNPjgTO0LK5Bdx
+ g/VaamAGiuL+ih5JsreyzwCME0chVDur5e6v2yQKF9M3+M7IVPY1DsygmRkIUu3KbW+VWsqILgk
+ opbw8wZqPeR+gSOLUWcuXG/MFZLohwkDHwTU0uYYZTcW+A/lLe5bNY3bgzbkii6OFtPeCcjx9wT
+ OtSA5XQvf8ia7puyy2PgH8WNOyYit2/z+V0uERkFShtou/9YKSKcuL7G3ZfWGVNQrfQJJ/XT2wM
+ 3M5lzi4JibdlDaKG8t8AKq0FkZPuaJtAbKFGFqPme8Y7VeriwbiBOpmOJXEaVzMVj+lmbsKBdXl
+ gAzRlyaQjg1GriYoy7ccHtRaVq9/8bxNk2c0XQNQg==
+X-Received: by 2002:a05:600c:46c6:b0:490:46df:a87a with SMTP id
+ 5b1f17b1804b1-49046dfa9c1mr330826665e9.1.1779805757705; 
+ Tue, 26 May 2026 07:29:17 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6d70c51sm38325225f8f.36.2026.05.26.07.29.37
+ ffacd0b85a97d-45eb6d70c51sm38325225f8f.36.2026.05.26.07.29.16
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 07:29:37 -0700 (PDT)
+ Tue, 26 May 2026 07:29:17 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 47/54] linux-user/aarch64: Implement FPMR signal frames
-Date: Tue, 26 May 2026 15:28:43 +0100
-Message-ID: <20260526142850.2326589-48-peter.maydell@linaro.org>
+Subject: [PULL 27/54] target/arm/ptw: Flip sense of get_phys_addr return value
+Date: Tue, 26 May 2026 15:28:23 +0100
+Message-ID: <20260526142850.2326589-28-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260526142850.2326589-1-peter.maydell@linaro.org>
 References: <20260526142850.2326589-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,127 +101,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+This completes the conversion of this family of functions to
+returning true on success and false on failure.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260522220306.235200-17-richard.henderson@linaro.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260515142541.571911-15-peter.maydell@linaro.org
 ---
- linux-user/aarch64/signal.c | 44 ++++++++++++++++++++++++++++++++++++-
- 1 file changed, 43 insertions(+), 1 deletion(-)
+ target/arm/internals.h      | 2 +-
+ target/arm/ptw.c            | 2 +-
+ target/arm/tcg/m_helper.c   | 8 ++++----
+ target/arm/tcg/tlb_helper.c | 6 +++---
+ 4 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/linux-user/aarch64/signal.c b/linux-user/aarch64/signal.c
-index f7edfa249e..899fce7643 100644
---- a/linux-user/aarch64/signal.c
-+++ b/linux-user/aarch64/signal.c
-@@ -73,6 +73,13 @@ struct target_esr_context {
-     uint64_t esr;
- };
- 
-+#define TARGET_FPMR_MAGIC   0x46504d52
-+
-+struct target_fpmr_context {
-+    struct target_aarch64_ctx head;
-+    uint64_t fpmr;
-+};
-+
- #define TARGET_EXTRA_MAGIC  0x45585401
- 
- struct target_extra_context {
-@@ -362,6 +369,14 @@ static bool target_setup_gcs_record(struct target_gcs_context *ctx,
-     return true;
- }
- 
-+static void target_setup_fpmr_record(struct target_fpmr_context *ctx,
-+                                     CPUARMState *env)
-+{
-+    __put_user(TARGET_FPMR_MAGIC, &ctx->head.magic);
-+    __put_user(sizeof(*ctx), &ctx->head.size);
-+    __put_user(env->vfp.fpmr, &ctx->fpmr);
-+}
-+
- static void target_restore_general_frame(CPUARMState *env,
-                                          struct target_rt_sigframe *sf)
- {
-@@ -518,6 +533,12 @@ static void target_restore_tpidr2_record(CPUARMState *env,
-     __get_user(env->cp15.tpidr2_el0, &tpidr2->tpidr2);
- }
- 
-+static void target_restore_fpmr_record(CPUARMState *env,
-+                                       struct target_fpmr_context *fpmr)
-+{
-+    __get_user(env->vfp.fpmr, &fpmr->fpmr);
-+}
-+
- static bool target_restore_zt_record(CPUARMState *env,
-                                      struct target_zt_context *zt, int size,
-                                      int svcr)
-@@ -610,6 +631,7 @@ static int target_restore_sigframe(CPUARMState *env,
-     struct target_tpidr2_context *tpidr2 = NULL;
-     struct target_zt_context *zt = NULL;
-     struct target_gcs_context *gcs = NULL;
-+    struct target_fpmr_context *fpmr = NULL;
-     uint64_t extra_datap = 0;
-     bool used_extra = false;
-     bool rebuild_hflags = false;
-@@ -691,6 +713,15 @@ static int target_restore_sigframe(CPUARMState *env,
-             gcs = (struct target_gcs_context *)ctx;
-             break;
- 
-+        case TARGET_FPMR_MAGIC:
-+            if (fpmr
-+                || size != sizeof(struct target_fpmr_context)
-+                || !cpu_isar_feature(aa64_fpmr, env_archcpu(env))) {
-+                goto err;
-+            }
-+            fpmr = (struct target_fpmr_context *)ctx;
-+            break;
-+
-         case TARGET_EXTRA_MAGIC:
-             if (extra || size != sizeof(struct target_extra_context)) {
-                 goto err;
-@@ -735,6 +766,9 @@ static int target_restore_sigframe(CPUARMState *env,
-     if (tpidr2) {
-         target_restore_tpidr2_record(env, tpidr2);
-     }
-+    if (fpmr) {
-+        target_restore_fpmr_record(env, fpmr);
-+    }
-     /*
-      * NB that we must restore ZT after ZA so the check that there's
-      * no ZT record if SVCR.ZA is 0 gets the right value of SVCR.
-@@ -817,7 +851,7 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
-                                uc.tuc_mcontext.__reserved),
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 139c8d1769..fcc08ece90 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1500,7 +1500,7 @@ typedef struct GetPhysAddrResult {
+  * by doing a translation table walk on MMU based systems or using the
+  * MPU state on MPU based systems.
+  *
+- * Returns false if the translation was successful. Otherwise, phys_ptr, attrs,
++ * Returns true if the translation was successful. Otherwise, phys_ptr, attrs,
+  * prot and page_size may not be filled in, and the populated fsr value provides
+  * information on why the translation aborted, in the format of a
+  * DFSR/IFSR fault register, with the following caveats:
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index d1f23340aa..0a5201763a 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -3939,7 +3939,7 @@ bool get_phys_addr(CPUARMState *env, vaddr address,
+         .in_prot_check = 1 << access_type,
      };
-     int fpsimd_ofs, fr_ofs, sve_ofs = 0, za_ofs = 0, tpidr2_ofs = 0;
--    int zt_ofs = 0, esr_ofs = 0, gcs_ofs = 0;
-+    int zt_ofs = 0, esr_ofs = 0, gcs_ofs = 0, fpmr_ofs = 0;
-     int sve_size = 0, za_size = 0, tpidr2_size = 0, zt_size = 0;
-     struct target_rt_sigframe *frame;
-     struct target_rt_frame_record *fr;
-@@ -841,6 +875,11 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
-                                        &layout);
-     }
  
-+    if (cpu_isar_feature(aa64_fpmr, env_archcpu(env))) {
-+        fpmr_ofs = alloc_sigframe_space(sizeof(struct target_fpmr_context),
-+                                        &layout);
-+    }
-+
-     /* SVE state needs saving only if it exists.  */
-     if (cpu_isar_feature(aa64_sve, env_archcpu(env)) ||
-         cpu_isar_feature(aa64_sme, env_archcpu(env))) {
-@@ -917,6 +956,9 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
-         !target_setup_gcs_record((void *)frame + gcs_ofs, env, return_addr)) {
-         goto give_sigsegv;
+-    return !get_phys_addr_gpc(env, &ptw, address, access_type,
++    return get_phys_addr_gpc(env, &ptw, address, access_type,
+                              memop, result, fi);
+ }
+ 
+diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
+index f2059ed8b0..c5a553a5d4 100644
+--- a/target/arm/tcg/m_helper.c
++++ b/target/arm/tcg/m_helper.c
+@@ -222,7 +222,7 @@ static bool v7m_stack_write(ARMCPU *cpu, uint32_t addr, uint32_t value,
+     int exc;
+     bool exc_secure;
+ 
+-    if (get_phys_addr(env, addr, MMU_DATA_STORE, 0, mmu_idx, &res, &fi)) {
++    if (!get_phys_addr(env, addr, MMU_DATA_STORE, 0, mmu_idx, &res, &fi)) {
+         /* MPU/SAU lookup failed */
+         if (fi.type == ARMFault_QEMU_SFault) {
+             if (mode == STACK_LAZYFP) {
+@@ -311,7 +311,7 @@ static bool v7m_stack_read(ARMCPU *cpu, uint32_t *dest, uint32_t addr,
+     bool exc_secure;
+     uint32_t value;
+ 
+-    if (get_phys_addr(env, addr, MMU_DATA_LOAD, 0, mmu_idx, &res, &fi)) {
++    if (!get_phys_addr(env, addr, MMU_DATA_LOAD, 0, mmu_idx, &res, &fi)) {
+         /* MPU/SAU lookup failed */
+         if (fi.type == ARMFault_QEMU_SFault) {
+             qemu_log_mask(CPU_LOG_INT,
+@@ -2023,7 +2023,7 @@ static bool v7m_read_half_insn(ARMCPU *cpu, ARMMMUIdx mmu_idx, bool secure,
+                       "...really SecureFault with SFSR.INVEP\n");
+         return false;
      }
-+    if (fpmr_ofs) {
-+        target_setup_fpmr_record((void *)frame + fpmr_ofs, env);
-+    }
-     target_setup_end_record((void *)frame + layout.std_end_ofs);
-     if (layout.extra_ofs) {
-         target_setup_extra_record((void *)frame + layout.extra_ofs,
+-    if (get_phys_addr(env, addr, MMU_INST_FETCH, 0, mmu_idx, &res, &fi)) {
++    if (!get_phys_addr(env, addr, MMU_INST_FETCH, 0, mmu_idx, &res, &fi)) {
+         /* the MPU lookup failed */
+         env->v7m.cfsr[env->v7m.secure] |= R_V7M_CFSR_IACCVIOL_MASK;
+         armv7m_nvic_set_pending(env->nvic, ARMV7M_EXCP_MEM, env->v7m.secure);
+@@ -2059,7 +2059,7 @@ static bool v7m_read_sg_stack_word(ARMCPU *cpu, ARMMMUIdx mmu_idx,
+     ARMMMUFaultInfo fi = {};
+     uint32_t value;
+ 
+-    if (get_phys_addr(env, addr, MMU_DATA_LOAD, 0, mmu_idx, &res, &fi)) {
++    if (!get_phys_addr(env, addr, MMU_DATA_LOAD, 0, mmu_idx, &res, &fi)) {
+         /* MPU/SAU lookup failed */
+         if (fi.type == ARMFault_QEMU_SFault) {
+             qemu_log_mask(CPU_LOG_INT,
+diff --git a/target/arm/tcg/tlb_helper.c b/target/arm/tcg/tlb_helper.c
+index bbe1e70bc4..f90765cb59 100644
+--- a/target/arm/tcg/tlb_helper.c
++++ b/target/arm/tcg/tlb_helper.c
+@@ -361,9 +361,9 @@ bool arm_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr address,
+         fi->type = ARMFault_Alignment;
+     } else if (address & ((1 << memop_alignment_bits(memop)) - 1)) {
+         fi->type = ARMFault_Alignment;
+-    } else if (!get_phys_addr(&cpu->env, address, access_type, memop,
+-                              core_to_arm_mmu_idx(&cpu->env, mmu_idx),
+-                              &res, fi)) {
++    } else if (get_phys_addr(&cpu->env, address, access_type, memop,
++                             core_to_arm_mmu_idx(&cpu->env, mmu_idx),
++                             &res, fi)) {
+         res.f.extra.arm.pte_attrs = res.cacheattrs.attrs;
+         res.f.extra.arm.shareability = res.cacheattrs.shareability;
+         *out = res.f;
 -- 
 2.43.0
 
