@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27B47CD5BB4
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 03:59:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2DF1CD5BCF
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 04:05:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRiwT-00014i-T0; Mon, 25 May 2026 23:58:57 -0400
+	id 1wRj2G-0001uQ-Is; Tue, 26 May 2026 00:04:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wRiwP-00013f-8o
- for qemu-devel@nongnu.org; Mon, 25 May 2026 23:58:54 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ id 1wRj29-0001to-DF
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 00:04:50 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wRiwM-0008G5-RL
- for qemu-devel@nongnu.org; Mon, 25 May 2026 23:58:53 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-bcceb394417so1231040766b.0
- for <qemu-devel@nongnu.org>; Mon, 25 May 2026 20:58:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779767929; cv=none;
+ id 1wRj26-00022s-I0
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 00:04:48 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-bdbac72ac1fso915714866b.3
+ for <qemu-devel@nongnu.org>; Mon, 25 May 2026 21:04:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779768285; cv=none;
  d=google.com; s=arc-20240605;
- b=F7zuOwfFL+yZAot4IZlTtuO3dCbtp+CSlgXJwSUIxwmvfA6xWaJeBjg5z2c+DpHgQo
- oBz7civakLmUrxRpcq39aBxxxBPWTeZoBXmgo7nFKCAp5OJUCrx1XS/Fh1SDdKCPzCRP
- REUDVxC8YONvsIMjQT5ZmvdqiLdbzMRrihs9b7JTuqhkoGFeilUnLza5psmJjC5QQA5I
- pHoYojkDWhA86Y6/CoDkwv1PHDeMx/e0twuruDwW29Q4+VQiKdR52LcUWkECOLpVrGa/
- yqRfMFdm9z9NreOlgRoT4V5aDa/mEhswXUa4AhMgicnqicXzdtjTDufycproPWTlZ262
- 6Oxw==
+ b=fNWwtRwCx0vP7kDDX43V4F+ts/zkKxbn1QBYAHGNTVa7Ofyy4FY27Onb7DOx+KAHXP
+ 4ebL8VgEeD6G1A5DHfHSVJ+b+aqUWsF1ZDKkvEXr2X2hLAwoi3dpL4JvlNjK5+NNx3dQ
+ ZYrATdvpBfxzrIs9HtRyKdoLpfq1a+3OLDqgBIQrGsqzg203S3e9cfgTpTqrkJFuZzUt
+ V7UXyhEPWjBoWsi2UBx0kRmTk/Hs4B02wYPvaHhc2+OXJhkBwg5x7FmmARViF/ikXPcb
+ ds1IPxTU8RlCdGzGHz3mvkx5CjhVui3vffFLTHev+mRhpotz8dd4huyhIfPpAgS1d9S5
+ ieYg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=x1LL209bUAmCZZntRVfVwzweRyP48+zW1qnO6AZhCdk=;
- fh=QiWsCvjH9bUbqYQS7S6uR9oDEBN9S/40XxQJ4IibPDI=;
- b=G8DEma5Fx9sqX6e67V/kfbuhG/098zCWle/0eZjMZnIuAZ7mTdD8HBKX54JOB1f5IT
- 8XSkFg+5ERn6CozWaBCPML9fLDiHwpSt3yo/1hac9+KNSprXN80/JKXLcT9Ze4xlEJaw
- buLd2ysel0l2CQXu9D8JZTy6kFhjFdCWbzpBoPe8CJRAt86Pu8lhcCa7OmL+we2H3u3E
- q8+cl4BvlJql4R6ekfEi8IksnLepxZiCXurNRgVlGsasf3COuM/lEvJN3zlvDkJ3YAK0
- 5S1uV2lb3g4og/esJAZYCLD5jboTika5PotQ7BOCYnv33TGY0E/NAQ45tDfDDwe5af8l
- bk7g==; darn=nongnu.org
+ bh=kBtq3ixjuEP/t+P18ax8i+uWhIFgBbGELwYCqOi3kSY=;
+ fh=fficikQgOnaS3OyIm1qgecqAAiuWpxxlfAwnIk0DXQM=;
+ b=D3XzizzKS8Srt6cduXRA7Y03L+sc3xccm2TZ+XKh6pRkfH9+YM275/C9ER1ZrCOMPI
+ fYpx4Wp2M3gW8oFYInm2JZBHfhkCtx/bbjt5GFz2u3wl8Y2EVYNjjjlxmhDSCXIAnvQe
+ RwfoIJ6kttNde06Ou8EvFf9mAyQ2l9ekgCKi8CyDoDwUDNh062sJ/KAX56hgLVsiNPgV
+ UvzmXnG81cm/P5ZKJeqWIpMuBYRwuGbJ1lJl9XJhmjanBdENHf8pgv6on7Wmxsj6FN4x
+ jqAs0eTG1rfQvGrcaKTp7tHH0OIfiBbtiYk9UsWYX3Y8rcE7GM358uqvAvfUa+uk48T1
+ vsLA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779767929; x=1780372729; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779768285; x=1780373085; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=x1LL209bUAmCZZntRVfVwzweRyP48+zW1qnO6AZhCdk=;
- b=Ho3gU/i3WBas/VWInfJpxqFlzgozffI4hcCWPlDRKIUO1k84vy6pwUp/O+ihdut3rR
- xBXlJiLLNfydN9hrOd5fs6demNnperVjxsJm+r59QawsHfRIuIj5udsi+wYQgJKDduSW
- NZh9Nb5QIEAqRWPJQpvP/5EVLsU2uSe1rnLfNGihMQuvjiUUE0xxD5VGIWPuazqupUkx
- yeAtRgeABfKbhEUYvAIS26ks8N0r41JrVarvvnrFjiAgkzFKV86p59eSKykSYh7DyZmw
- BnEVXb2aZ4LP2X4HkjiW4o5fthynwo3f55UJEdMQPgautYJNOElNI4e11dAC5plY31A6
- h9Fw==
+ bh=kBtq3ixjuEP/t+P18ax8i+uWhIFgBbGELwYCqOi3kSY=;
+ b=Jrimaw/+dqE60L4nD3iRiKF/p0mRCMYdusQZdZAsEUm6dkZwATCIT2DPf0YSzG8F3q
+ tZrGUm1izGhxgWwz+SY4r6l8zZgsbB2l0+CeEZEDJH1xEE/0as4zweu73RZ24jc+L1hY
+ Iqmupe6cUF/nEZUOXaicMCl8T+1rpyuen1IZI4GPFDMHw0etUWQQ9IqFu2spA8YITCfn
+ X4gqKmB9m6OFu/CwpRAj6fEIdINZGrTqoqhdzsjJjTxIBayqNYq1TYfPRAllKopKyPqi
+ ktSr1HHlr1C6JRs+QoUSJ/ctKvIdPgAKhtUMsjMCFuMjxNfYLaA1jqbbyAkDMDbZbgZ7
+ SlUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779767929; x=1780372729;
+ d=1e100.net; s=20251104; t=1779768285; x=1780373085;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=x1LL209bUAmCZZntRVfVwzweRyP48+zW1qnO6AZhCdk=;
- b=eOOXVWclZFQKXwqD8B6lMMU3HiLpmFmqQ/yFU9hmczSY4rWN5IJ8jPFuzHIO0ZYtSN
- ktrjvHPYNF/H9rCbg/CIeSk41myw5t55BiJjVoF7G5/fGIpT8DFdpOP8EryvcBYDn6Xk
- +lbJ6xnzFF7+tooKe0fLl9dc7f4WnkwwbbMn++p7Esx/hrgqXi4BkO2HH2oFJLvCcKD8
- Gd22kUwnPIp6OEys7/8U9yNEVhRmjRIGJV3LJkVA2q0KdtKSnu4QVymm6aYNftAVsHXs
- 8W5NO6ru92r/2nzPgfQWQs0uoCcQYgp5mVYmQ8EvZxhXO93yGd77+XQRTriihvjrxkka
- eb/A==
+ bh=kBtq3ixjuEP/t+P18ax8i+uWhIFgBbGELwYCqOi3kSY=;
+ b=FPLOMvKwPDAwG77hyM6hqgwmES9arKZF2OdnZ+6JbaG3tiNv+NvhZMx9s39X9djA6t
+ JzhHIiBWgDZig5D2gJmFZ1uasNa8uMICTDMLafLpmTnhyX1KmUWHZp9mFTbn7tDH7jb8
+ 7CSJTg6/pAVwyR+Iy9TN+QiY2e+LitPeJ0OI/6q0HxAdSXRTjphqDPoVwg46tVhmG6ur
+ /+uE8P7Lg+Ke27x8fXbt/EjJ4sPEJoYKiHuOlJLSHAd7xqeLkKuDLwr1jnlhq1xAhmVD
+ e3QbuCajWPUJfqq7G5rh5x6HfajWjEDXJXhDUswWIpUpJYdMnmJcVnIqkmjzNdSnOhi/
+ 91Mg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/yTglu3WtSLf7a+O0a6Gk0W088Z1aUMuR0lKpL/x9lQf1nVVB1wp4BX9Dqj4HFziEc2qHIWymmDWUJ@nongnu.org
-X-Gm-Message-State: AOJu0Yw/xv5yM7BkzS76tiMR4bsyiFpzHC8KVo9d2afA+IqMGHtqMlk6
- 6tSsOM9XsMJiBsqCLqeEokr++stB+7C6KEjOLD6SNp54i0WP5J5CIrb/aobOgFbtpsH7wumDuMp
- iq0hVHE5pyXv2zfyTA5pabOXtu+/HrRI=
-X-Gm-Gg: Acq92OHkc/Ix+oWK99VtCSenBuBYMEBJCX1QsrRz3PrIa4QFfj31uzml/fdg/6v62xZ
- lgfGTg+oboh04GoLplx4hH/Jja3x9lqiM890RLOASsDV7qeFBH5TLMM2HHieh7eUY6S83XBzj53
- AEGbNeYizus6JAIMMZe3S2qCV14r2JBMunVmPssbJF4eECaTTdaYszOSmSwWSA1TsW+kV5e0x11
- nFi844+easvkmiwIa4ZaRMW21YUEQhkoQ/yGzFrTRoO5yH118J0UCloF3FtRBD1hDiuSSrv+fjg
- Al38+Y+I/JFV/+RVL/rrVHbqPSQiu6Lh2Rh88aLj+7+lTxtkAFgkXO4rG64=
-X-Received: by 2002:a17:907:2674:b0:bd8:61ff:f916 with SMTP id
- a640c23a62f3a-bdd2aee6c2dmr707689566b.44.1779767928464; Mon, 25 May 2026
- 20:58:48 -0700 (PDT)
+ AFNElJ+C2JhMRkmJ1D+YJhB6mw/1rRYEGYcQtXk7Xjm6dI0Lq5iojt2KAhOGesAwTM8UZYq3T9Agwsa0tqk3@nongnu.org
+X-Gm-Message-State: AOJu0Yzpo9OLONxaYZU2gZkCfF+JN+iLGyCGlWj189pj+RH+aPo0M8V+
+ /Hn7QzBSXRJ0Yxhrs1+gcXB6NQLhL8rpY73dpZUXjBBvC77lyQOq+9FnibP6cmMDgW5DuxY6qy7
+ ZEFdIQ66Na7yhdVcMs+Wjeh8aR9IFkNQ=
+X-Gm-Gg: Acq92OE21hQzUHpTgolzxQrajOfIoyJBWRAE7R8r3tLKO251gTplTPVUROQxDYapfMo
+ GPGQftcNYizAB/sWissqzj3Vn5DGhzeMEovTNDgSxshRiy1Y/vPwC8tHhZiiFCi7rFQbhKXHi9j
+ UlLEOvz+EXepdbGGfopGiU3/n4sGTqK9yuXbm06nyLACYClgs1TVqgQtHrE1DygxyMQQhu5pd4f
+ 7CY31IvkV8QHCFuMd4rjhOr1bPb6B/EHvKPhrg8RL7mcsZnvW6VxWsLcpmWqL7rROitBKx/CVwK
+ NN0xJPwrE2k9olLHwGTNdLSGZnyuOOznJqUtlA==
+X-Received: by 2002:a17:906:8446:b0:bae:d29c:4e28 with SMTP id
+ a640c23a62f3a-bdd2330ea37mr796595066b.12.1779768284822; Mon, 25 May 2026
+ 21:04:44 -0700 (PDT)
 MIME-Version: 1.0
 References: <177756498815.8917.12449488721849651971-0@git.sr.ht>
- <177756498815.8917.12449488721849651971-3@git.sr.ht>
-In-Reply-To: <177756498815.8917.12449488721849651971-3@git.sr.ht>
+ <177756498815.8917.12449488721849651971-5@git.sr.ht>
+In-Reply-To: <177756498815.8917.12449488721849651971-5@git.sr.ht>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 26 May 2026 13:58:21 +1000
-X-Gm-Features: AVHnY4JJeCvwPMU6781PTtpGpTJmgca-Nb6j4snGQYvDqrMYqRlLUqwXIDS94ZM
-Message-ID: <CAKmqyKPvR7pkKz15_f_Nw7Nrf9e=+kVvJwdF61qtGK3pK-NCGg@mail.gmail.com>
-Subject: Re: [PATCH qemu v4 3/9] ot_uart: update register defs, switch to
- Fifo8 for tx/rx buffers
+Date: Tue, 26 May 2026 14:04:17 +1000
+X-Gm-Features: AVHnY4LBMn22daOawB-KCE4OFIkcFKKoCmiFFq1wuYnLVP3e-m_Lqboj4NGwy7w
+Message-ID: <CAKmqyKNxR6+-pexcx8xzRKcWo3yYFiwQf8Q7EcfvKYEntaJXfw@mail.gmail.com>
+Subject: Re: [PATCH qemu v4 5/9] ot_uart: gather similar behaviours togeter in
+ register read and write
 To: "~lexbaileylowrisc" <lex.bailey@lowrisc.org>
 Cc: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>, 
  Paolo Bonzini <pbonzini@redhat.com>,
@@ -103,8 +103,8 @@ Cc: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>,
  nabihestefan <nabihestefan@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -128,363 +128,235 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 1, 2026 at 2:05=E2=80=AFAM ~lexbaileylowrisc
+On Fri, May 1, 2026 at 2:04=E2=80=AFAM ~lexbaileylowrisc
 <lexbaileylowrisc@git.sr.ht> wrote:
 >
 > From: Lex Bailey <lex.bailey@lowrisc.org>
 >
-> The register definitions for the UART device need to be updated to match
-> the documentation at https://opentitan.org/book/hw/ip/uart/doc/registers.=
-html
+> the register read and write functions are each a large switch statement w=
+ith
+> many similar behaviours in, this is mostly for enabling the use of specif=
+ic
+> register names inside of log messages. this commit adds a lookup table fo=
+r
+> register names and uses that instead, allowing much of the code in the re=
+gister
+> read and write functions to be deduplicated.
 >
-> This commit does that, and also switches to using Fifo8 for managing the
-> transmit and receive buffers.
+> the write function was also missing a switch case for R_ALERT_TEST, so I =
+added
+> that in this commit since it has a very simple implementation for now
 >
 > Signed-off-by: Lex Bailey <lex.bailey@lowrisc.org>
+
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+
+Alistair
+
 > ---
->  hw/char/ot_uart.c         | 338 ++++++++++++++++++++++----------------
->  include/hw/char/ot_uart.h |  18 +-
->  2 files changed, 201 insertions(+), 155 deletions(-)
+>  hw/char/ot_uart.c | 103 ++++++++++++++++++++++++----------------------
+>  1 file changed, 53 insertions(+), 50 deletions(-)
 >
 > diff --git a/hw/char/ot_uart.c b/hw/char/ot_uart.c
-> index 9478af40f9..3fe7c5efe5 100644
+> index 62c182cbed..2247db7110 100644
 > --- a/hw/char/ot_uart.c
 > +++ b/hw/char/ot_uart.c
-> @@ -27,6 +27,7 @@
->
->  #include "qemu/osdep.h"
->  #include "hw/char/ot_uart.h"
-> +#include "qemu/fifo8.h"
->  #include "hw/core/irq.h"
->  #include "hw/core/qdev-clock.h"
->  #include "hw/core/qdev-properties.h"
-> @@ -37,16 +38,22 @@
->  #include "qemu/module.h"
->
->  REG32(INTR_STATE, 0x00)
-> -    FIELD(INTR_STATE, TX_WATERMARK, 0, 1)
-> -    FIELD(INTR_STATE, RX_WATERMARK, 1, 1)
-> -    FIELD(INTR_STATE, TX_EMPTY, 2, 1)
-> -    FIELD(INTR_STATE, RX_OVERFLOW, 3, 1)
-> +    SHARED_FIELD(INTR_TX_WATERMARK, 0, 1)
-> +    SHARED_FIELD(INTR_RX_WATERMARK, 1, 1)
-> +    SHARED_FIELD(INTR_TX_DONE, 2, 1)
-> +    SHARED_FIELD(INTR_RX_OVERFLOW, 3, 1)
-> +    SHARED_FIELD(INTR_RX_FRAME_ERR, 4, 1)
-> +    SHARED_FIELD(INTR_RX_BREAK_ERR, 5, 1)
-> +    SHARED_FIELD(INTR_RX_TIMEOUT, 6, 1)
-> +    SHARED_FIELD(INTR_RX_PARITY_ERR, 7, 1)
-> +    SHARED_FIELD(INTR_TX_EMPTY, 8, 1)
->  REG32(INTR_ENABLE, 0x04)
->  REG32(INTR_TEST, 0x08)
->  REG32(ALERT_TEST, 0x0C)
-> +    FIELD(ALERT_TEST, FATAL_FAULT, 0, 1)
->  REG32(CTRL, 0x10)
-> -    FIELD(CTRL, TX_ENABLE, 0, 1)
-> -    FIELD(CTRL, RX_ENABLE, 1, 1)
-> +    FIELD(CTRL, TX, 0, 1)
-> +    FIELD(CTRL, RX, 1, 1)
->      FIELD(CTRL, NF, 2, 1)
->      FIELD(CTRL, SLPBK, 4, 1)
->      FIELD(CTRL, LLPBK, 5, 1)
-> @@ -58,43 +65,74 @@ REG32(STATUS, 0x14)
->      FIELD(STATUS, TXFULL, 0, 1)
->      FIELD(STATUS, RXFULL, 1, 1)
->      FIELD(STATUS, TXEMPTY, 2, 1)
-> +    FIELD(STATUS, TXIDLE, 3, 1)
->      FIELD(STATUS, RXIDLE, 4, 1)
->      FIELD(STATUS, RXEMPTY, 5, 1)
->  REG32(RDATA, 0x18)
-> +    FIELD(RDATA, RDATA, 0, 8)
->  REG32(WDATA, 0x1C)
-> +    FIELD(WDATA, WDATA, 0, 8)
->  REG32(FIFO_CTRL, 0x20)
->      FIELD(FIFO_CTRL, RXRST, 0, 1)
->      FIELD(FIFO_CTRL, TXRST, 1, 1)
->      FIELD(FIFO_CTRL, RXILVL, 2, 3)
-> -    FIELD(FIFO_CTRL, TXILVL, 5, 2)
-> +    FIELD(FIFO_CTRL, TXILVL, 5, 3)
->  REG32(FIFO_STATUS, 0x24)
-> -    FIELD(FIFO_STATUS, TXLVL, 0, 5)
-> -    FIELD(FIFO_STATUS, RXLVL, 16, 5)
-> +    FIELD(FIFO_STATUS, TXLVL, 0, 8)
-> +    FIELD(FIFO_STATUS, RXLVL, 16, 8)
->  REG32(OVRD, 0x28)
-> +    FIELD(OVRD, TXEN, 0, 1)
-> +    FIELD(OVRD, TXVAL, 1, 1)
->  REG32(VAL, 0x2C)
-> +    FIELD(VAL, RX, 0, 16)
->  REG32(TIMEOUT_CTRL, 0x30)
-> +    FIELD(TIMEOUT_CTRL, VAL, 0, 24)
-> +    FIELD(TIMEOUT_CTRL, EN, 31, 1)
+> @@ -109,6 +109,26 @@ REG32(TIMEOUT_CTRL, 0x30)
+>  #define R_LAST_REG (R_TIMEOUT_CTRL)
+>  #define REGS_COUNT (R_LAST_REG + 1u)
+>  #define REGS_SIZE  (REGS_COUNT * sizeof(uint32_t))
+> +#define REG_NAME(_reg_) \
+> +    ((((_reg_) < REGS_COUNT) && REG_NAMES[_reg_]) ? REG_NAMES[_reg_] : "=
+?")
 > +
-> +#define INTR_MASK \
-> +    (INTR_TX_WATERMARK_MASK | INTR_RX_WATERMARK_MASK | INTR_TX_DONE_MASK=
- | \
-> +     INTR_RX_OVERFLOW_MASK | INTR_RX_FRAME_ERR_MASK | INTR_RX_BREAK_ERR_=
-MASK | \
-> +     INTR_RX_TIMEOUT_MASK | INTR_RX_PARITY_ERR_MASK | INTR_TX_EMPTY_MASK=
-)
-> +
-> +#define CTRL_MASK \
-> +    (R_CTRL_TX_MASK | R_CTRL_RX_MASK | R_CTRL_NF_MASK | R_CTRL_SLPBK_MAS=
-K | \
-> +     R_CTRL_LLPBK_MASK | R_CTRL_PARITY_EN_MASK | R_CTRL_PARITY_ODD_MASK =
-| \
-> +     R_CTRL_RXBLVL_MASK | R_CTRL_NCO_MASK)
-> +
-> +#define OT_UART_NCO_BITS     16
-> +#define OT_UART_TX_FIFO_SIZE 128
-> +#define OT_UART_RX_FIFO_SIZE 128
-> +
-> +#define R32_OFF(_r_) ((_r_) / sizeof(uint32_t))
-> +
-> +#define R_LAST_REG (R_TIMEOUT_CTRL)
-> +#define REGS_COUNT (R_LAST_REG + 1u)
-> +#define REGS_SIZE  (REGS_COUNT * sizeof(uint32_t))
+> +#define REG_NAME_ENTRY(_reg_) [R_##_reg_] =3D stringify(_reg_)
+> +static const char *REG_NAMES[REGS_COUNT] =3D {
+> +    REG_NAME_ENTRY(INTR_STATE),
+> +    REG_NAME_ENTRY(INTR_ENABLE),
+> +    REG_NAME_ENTRY(INTR_TEST),
+> +    REG_NAME_ENTRY(ALERT_TEST),
+> +    REG_NAME_ENTRY(CTRL),
+> +    REG_NAME_ENTRY(STATUS),
+> +    REG_NAME_ENTRY(RDATA),
+> +    REG_NAME_ENTRY(WDATA),
+> +    REG_NAME_ENTRY(FIFO_CTRL),
+> +    REG_NAME_ENTRY(FIFO_STATUS),
+> +    REG_NAME_ENTRY(OVRD),
+> +    REG_NAME_ENTRY(VAL),
+> +    REG_NAME_ENTRY(TIMEOUT_CTRL),
+> +};
+> +#undef REG_NAME_ENTRY
 >
 >  static void ot_uart_update_irqs(OtUARTState *s)
 >  {
-> -    if (s->uart_intr_state & s->uart_intr_enable & R_INTR_STATE_TX_WATER=
-MARK_MASK) {
-> +    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE]
-> +        & INTR_TX_WATERMARK_MASK) {
->          qemu_set_irq(s->tx_watermark, 1);
->      } else {
->          qemu_set_irq(s->tx_watermark, 0);
->      }
->
-> -    if (s->uart_intr_state & s->uart_intr_enable & R_INTR_STATE_RX_WATER=
-MARK_MASK) {
-> +    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE]
-> +        & INTR_RX_WATERMARK_MASK) {
->          qemu_set_irq(s->rx_watermark, 1);
->      } else {
->          qemu_set_irq(s->rx_watermark, 0);
->      }
->
-> -    if (s->uart_intr_state & s->uart_intr_enable & R_INTR_STATE_TX_EMPTY=
-_MASK) {
-> +    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE] & INTR_TX_EMPTY_M=
-ASK) {
->          qemu_set_irq(s->tx_empty, 1);
->      } else {
->          qemu_set_irq(s->tx_empty, 0);
->      }
->
-> -    if (s->uart_intr_state & s->uart_intr_enable & R_INTR_STATE_RX_OVERF=
-LOW_MASK) {
-> +    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE]
-> +        & INTR_RX_OVERFLOW_MASK) {
->          qemu_set_irq(s->rx_overflow, 1);
->      } else {
->          qemu_set_irq(s->rx_overflow, 0);
-> @@ -105,122 +143,133 @@ static int ot_uart_can_receive(void *opaque)
->  {
+> @@ -301,23 +321,14 @@ static uint64_t ot_uart_read(void *opaque, hwaddr a=
+ddr, unsigned int size)
 >      OtUARTState *s =3D opaque;
+>      uint64_t retvalue =3D 0;
 >
-> -    if ((s->uart_ctrl & R_CTRL_RX_ENABLE_MASK)
-> -           && !(s->uart_status & R_STATUS_RXFULL_MASK)) {
-> -        return 1;
-> +    if (s->regs[R_CTRL] & R_CTRL_RX_MASK) {
-> +        return (int)fifo8_num_free(&s->rx_fifo);
->      }
+> -    switch (addr >> 2) {
+> +    hwaddr reg =3D R32_OFF(addr);
+> +    switch (reg) {
+>      case R_INTR_STATE:
+> -        retvalue =3D s->regs[R_INTR_STATE];
+> -        break;
+>      case R_INTR_ENABLE:
+> -        retvalue =3D s->regs[R_INTR_ENABLE];
+> -        break;
+> -    case R_INTR_TEST:
+> -        qemu_log_mask(LOG_GUEST_ERROR,
+> -                      "%s: wdata is write only\n", __func__);
+> -        break;
+> -
+>      case R_CTRL:
+> -        retvalue =3D s->regs[R_CTRL];
+> -        break;
+> +    case R_FIFO_CTRL:
+>      case R_STATUS:
+> -        retvalue =3D s->regs[R_STATUS];
+> +        retvalue =3D s->regs[reg];
+>          break;
 >
->      return 0;
->  }
+>      case R_RDATA:
+> @@ -333,14 +344,7 @@ static uint64_t ot_uart_read(void *opaque, hwaddr ad=
+dr, unsigned int size)
+>              }
+>          }
+>          break;
+> -    case R_WDATA:
+> -        qemu_log_mask(LOG_GUEST_ERROR,
+> -                      "%s: wdata is write only\n", __func__);
+> -        break;
 >
-> +static uint32_t ot_uart_get_rx_watermark_level(const OtUARTState *s)
-> +{
-> +    uint32_t rx_ilvl =3D FIELD_EX32(s->regs[R_FIFO_CTRL], FIFO_CTRL, RXI=
-LVL);
+> -    case R_FIFO_CTRL:
+> -        retvalue =3D s->regs[R_FIFO_CTRL];
+> -        break;
+>      case R_FIFO_STATUS:
+>          retvalue =3D s->regs[R_FIFO_STATUS];
+>
+> @@ -351,21 +355,21 @@ static uint64_t ot_uart_read(void *opaque, hwaddr a=
+ddr, unsigned int size)
+>                        "%s: RX fifos are not supported\n", __func__);
+>          break;
+>
+> -    case R_OVRD:
+> -        retvalue =3D s->regs[R_OVRD];
+> -        qemu_log_mask(LOG_UNIMP,
+> -                      "%s: ovrd is not supported\n", __func__);
+> -        break;
+>      case R_VAL:
+> -        retvalue =3D s->regs[R_VAL];
+> -        qemu_log_mask(LOG_UNIMP,
+> -                      "%s: val is not supported\n", __func__);
+> -        break;
+> +    case R_OVRD:
+>      case R_TIMEOUT_CTRL:
+> -        retvalue =3D s->regs[R_TIMEOUT_CTRL];
+> +        retvalue =3D s->regs[reg];
+>          qemu_log_mask(LOG_UNIMP,
+> -                      "%s: timeout_ctrl is not supported\n", __func__);
+> +                      "%s: %s is not supported\n", __func__, REG_NAME(re=
+g));
+> +        break;
 > +
-> +    return rx_ilvl < 7 ? (1 << rx_ilvl) : 126;
-> +}
+> +    case R_ALERT_TEST:
+> +    case R_INTR_TEST:
+> +    case R_WDATA:
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: %s is write only\n", __func__, REG_NAME(reg))=
+;
+>          break;
 > +
->  static void ot_uart_receive(void *opaque, const uint8_t *buf, int size)
->  {
+>      default:
+>          qemu_log_mask(LOG_GUEST_ERROR,
+>                        "%s: Bad offset 0x%"HWADDR_PRIx"\n", __func__, add=
+r);
+> @@ -381,7 +385,9 @@ static void ot_uart_write(void *opaque, hwaddr addr, =
+uint64_t val64,
 >      OtUARTState *s =3D opaque;
-> -    uint8_t rx_fifo_level =3D (s->uart_fifo_ctrl & R_FIFO_CTRL_RXILVL_MA=
-SK)
-> -                            >> R_FIFO_CTRL_RXILVL_SHIFT;
-> -
-> -    s->uart_rdata =3D *buf;
-> +    uint32_t rx_watermark_level;
-> +    size_t count =3D MIN(fifo8_num_free(&s->rx_fifo), (size_t)size);
+>      uint32_t value =3D val64;
 >
-> -    s->uart_status &=3D ~R_STATUS_RXIDLE_MASK;
-> -    s->uart_status &=3D ~R_STATUS_RXEMPTY_MASK;
-> -    /* The RXFULL is set after receiving a single byte
-> -     * as the FIFO buffers are not yet implemented.
-> -     */
-> -    s->uart_status |=3D R_STATUS_RXFULL_MASK;
-> -    s->rx_level +=3D 1;
-> +    for (int index =3D 0; index < size; index++) {
-> +        fifo8_push(&s->rx_fifo, buf[index]);
-> +    }
->
-> -    if (size > rx_fifo_level) {
-> -        s->uart_intr_state |=3D R_INTR_STATE_RX_WATERMARK_MASK;
-> +    /* update INTR_STATE */
-> +    if (count !=3D size) {
-> +        s->regs[R_INTR_STATE] |=3D INTR_RX_OVERFLOW_MASK;
-> +    }
-> +    rx_watermark_level =3D ot_uart_get_rx_watermark_level(s);
-> +    if (rx_watermark_level && size >=3D rx_watermark_level) {
-> +        s->regs[R_INTR_STATE] |=3D INTR_RX_WATERMARK_MASK;
->      }
->
->      ot_uart_update_irqs(s);
->  }
->
-> -static gboolean ot_uart_xmit(void *do_not_use, GIOCondition cond,
-> -                             void *opaque)
-> +static void ot_uart_reset_tx_fifo(OtUARTState *s)
->  {
-> -    OtUARTState *s =3D opaque;
-> -    uint8_t tx_fifo_level =3D (s->uart_fifo_ctrl & R_FIFO_CTRL_TXILVL_MA=
-SK)
-> -                            >> R_FIFO_CTRL_TXILVL_SHIFT;
-> -    int ret;
-> -
-> -    /* instant drain the fifo when there's no back-end */
-> -    if (!qemu_chr_fe_backend_connected(&s->chr)) {
-> -        s->tx_level =3D 0;
-> -        return G_SOURCE_REMOVE;
-> +    fifo8_reset(&s->tx_fifo);
-> +    s->regs[R_INTR_STATE] |=3D INTR_TX_EMPTY_MASK;
-> +    s->regs[R_INTR_STATE] |=3D INTR_TX_DONE_MASK;
-> +    if (s->tx_watermark_level) {
-> +        s->regs[R_INTR_STATE] |=3D INTR_TX_WATERMARK_MASK;
-> +        s->tx_watermark_level =3D 0;
->      }
-> +}
->
-> -    if (!s->tx_level) {
-> -        s->uart_status &=3D ~R_STATUS_TXFULL_MASK;
-> -        s->uart_status |=3D R_STATUS_TXEMPTY_MASK;
-> -        s->uart_intr_state |=3D R_INTR_STATE_TX_EMPTY_MASK;
-> -        s->uart_intr_state &=3D ~R_INTR_STATE_TX_WATERMARK_MASK;
-> -        ot_uart_update_irqs(s);
-> -        return G_SOURCE_REMOVE;
-> +static void ot_uart_reset_rx_fifo(OtUARTState *s)
-> +{
-> +    fifo8_reset(&s->rx_fifo);
-> +    s->regs[R_INTR_STATE] &=3D ~INTR_RX_WATERMARK_MASK;
-> +    s->regs[R_INTR_STATE] &=3D ~INTR_RX_OVERFLOW_MASK;
-> +    if (FIELD_EX32(s->regs[R_CTRL], CTRL, RX)) {
-> +        qemu_chr_fe_accept_input(&s->chr);
->      }
-> +}
->
-> -    ret =3D qemu_chr_fe_write(&s->chr, s->tx_fifo, s->tx_level);
-> +static uint32_t ot_uart_get_tx_watermark_level(const OtUARTState *s)
-> +{
-> +    uint32_t tx_ilvl =3D FIELD_EX32(s->regs[R_FIFO_CTRL], FIFO_CTRL, TXI=
-LVL);
->
-> -    if (ret >=3D 0) {
-> -        s->tx_level -=3D ret;
-> -        memmove(s->tx_fifo, s->tx_fifo + ret, s->tx_level);
-> -    }
-> +    return tx_ilvl < 7 ? (1 << tx_ilvl) : 64;
-> +}
->
-> -    if (s->tx_level) {
-> -        guint r =3D qemu_chr_fe_add_watch(&s->chr, G_IO_OUT | G_IO_HUP,
-> -                                        ot_uart_xmit, s);
-> -        if (!r) {
-> -            s->tx_level =3D 0;
-> -            return G_SOURCE_REMOVE;
-> -        }
-> +static void ot_uart_xmit(OtUARTState *s)
-> +{
-> +    const uint8_t *buf;
-> +    uint32_t size;
-> +    int ret;
+> -    switch (addr >> 2) {
+> +    hwaddr reg =3D R32_OFF(addr);
 > +
-> +    if (fifo8_is_empty(&s->tx_fifo)) {
-> +        return;
->      }
->
-> -    /* Clear the TX Full bit */
-> -    if (s->tx_level !=3D OT_UART_TX_FIFO_SIZE) {
-> -        s->uart_status &=3D ~R_STATUS_TXFULL_MASK;
-> +    /* instant drain the fifo when there's no back-end */
-> +    if (!qemu_chr_fe_backend_connected(&s->chr)) {
-> +        ot_uart_reset_tx_fifo(s);
-> +        ot_uart_update_irqs(s);
-> +        return;
->      }
->
-> -    /* Disable the TX_WATERMARK IRQ */
-> -    if (s->tx_level < tx_fifo_level) {
-> -        s->uart_intr_state &=3D ~R_INTR_STATE_TX_WATERMARK_MASK;
-> +    /* get a continuous buffer from the FIFO */
-> +    buf =3D
-> +        fifo8_peek_bufptr(&s->tx_fifo, fifo8_num_used(&s->tx_fifo), &siz=
-e);
-> +    /* send as much as possible */
-> +    ret =3D qemu_chr_fe_write(&s->chr, buf, (int)size);
-> +    /* if some characters where sent, remove them from the FIFO */
-> +    if (ret >=3D 0) {
-> +        fifo8_drop(&s->tx_fifo, ret);
->      }
->
-> -    /* Set TX empty */
-> -    if (s->tx_level =3D=3D 0) {
-> -        s->uart_status |=3D R_STATUS_TXEMPTY_MASK;
-> -        s->uart_intr_state |=3D R_INTR_STATE_TX_EMPTY_MASK;
-> +    /* update INTR_STATE */
-> +    if (fifo8_is_empty(&s->tx_fifo)) {
-> +        s->regs[R_INTR_STATE] |=3D INTR_TX_EMPTY_MASK;
-> +        s->regs[R_INTR_STATE] |=3D INTR_TX_DONE_MASK;
-> +    }
-> +    if (s->tx_watermark_level &&
-> +        fifo8_num_used(&s->tx_fifo) < s->tx_watermark_level) {
-> +        s->regs[R_INTR_STATE] |=3D INTR_TX_WATERMARK_MASK;
-> +        s->tx_watermark_level =3D 0;
->      }
->
->      ot_uart_update_irqs(s);
-> -    return G_SOURCE_REMOVE;
->  }
->
-> -static void uart_write_tx_fifo(OtUARTState *s, const uint8_t *buf,
-> -                               int size)
-> +static void uart_write_tx_fifo(OtUARTState *s, uint8_t val)
->  {
->      uint64_t current_time =3D qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-> -    uint8_t tx_fifo_level =3D (s->uart_fifo_ctrl & R_FIFO_CTRL_TXILVL_MA=
-SK)
-> -                            >> R_FIFO_CTRL_TXILVL_SHIFT;
+> +    switch (reg) {
+>      case R_INTR_STATE:
+>          /* Write 1 clear */
+>          value &=3D INTR_MASK;
+> @@ -398,7 +404,11 @@ static void ot_uart_write(void *opaque, hwaddr addr,=
+ uint64_t val64,
+>          s->regs[R_INTR_STATE] |=3D value;
+>          ot_uart_update_irqs(s);
+>          break;
 > -
-> -    if (size > OT_UART_TX_FIFO_SIZE - s->tx_level) {
-> -        size =3D OT_UART_TX_FIFO_SIZE - s->tx_level;
-> +    if (fifo8_is_full(&s->tx_fifo)) {
->          qemu_log_mask(LOG_GUEST_ERROR, "ot_uart: TX FIFO overflow");
-> +        return;
->      }
+> +    case R_ALERT_TEST:
+> +        value &=3D R_ALERT_TEST_FATAL_FAULT_MASK;
+> +        s->regs[reg] =3D value;
+> +        /* This will also set an IRQ once the alert handler is added */
+> +        break;
+>      case R_CTRL:
+>          s->regs[R_CTRL] =3D value;
 >
-> -    memcpy(s->tx_fifo + s->tx_level, buf, size);
-> -    s->tx_level +=3D size;
-> +    fifo8_push(&s->tx_fifo, val);
+> @@ -434,15 +444,6 @@ static void ot_uart_write(void *opaque, hwaddr addr,=
+ uint64_t val64,
+>              s->char_tx_time =3D (NANOSECONDS_PER_SECOND / baud) * 10;
+>          }
+>          break;
+> -    case R_STATUS:
+> -        qemu_log_mask(LOG_GUEST_ERROR,
+> -                      "%s: status is read only\n", __func__);
+> -        break;
+> -
+> -    case R_RDATA:
+> -        qemu_log_mask(LOG_GUEST_ERROR,
+> -                      "%s: rdata is read only\n", __func__);
+> -        break;
+>      case R_WDATA:
+>          uart_write_tx_fifo(s, value);
+>          break;
+> @@ -459,10 +460,6 @@ static void ot_uart_write(void *opaque, hwaddr addr,=
+ uint64_t val64,
+>              s->tx_level =3D 0;
+>          }
+>          break;
+> -    case R_FIFO_STATUS:
+> -        qemu_log_mask(LOG_GUEST_ERROR,
+> -                      "%s: fifo_status is read only\n", __func__);
+> -        break;
+>      case R_OVRD:
+>          if (value & R_OVRD_TXEN_MASK) {
+>              qemu_log_mask(LOG_UNIMP, "%s: OVRD.TXEN is not supported\n",
+> @@ -470,16 +467,22 @@ static void ot_uart_write(void *opaque, hwaddr addr=
+, uint64_t val64,
+>          }
+>          s->regs[R_OVRD] =3D value & R_OVRD_TXVAL_MASK;
+>          break;
+> -    case R_VAL:
+> -        qemu_log_mask(LOG_GUEST_ERROR,
+> -                      "%s: val is read only\n", __func__);
+> -        break;
+> +
+>      case R_TIMEOUT_CTRL:
+>          s->regs[R_TIMEOUT_CTRL] =3D
+>              value & (R_TIMEOUT_CTRL_EN_MASK | R_TIMEOUT_CTRL_VAL_MASK);
+>          qemu_log_mask(LOG_UNIMP,
+>                        "%s: timeout_ctrl is not supported\n", __func__);
+>          break;
+> +
+> +    case R_STATUS:
+> +    case R_RDATA:
+> +    case R_FIFO_STATUS:
+> +    case R_VAL:
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: %s is read only\n", __func__, REG_NAME(reg));
+> +        break;
+> +
+>      default:
+>          qemu_log_mask(LOG_GUEST_ERROR,
+>                        "%s: Bad offset 0x%"HWADDR_PRIx"\n", __func__, add=
+r);
+> --
+> 2.49.1
 >
-> -    if (s->tx_level > 0) {
-> -        s->uart_status &=3D ~R_STATUS_TXEMPTY_MASK;
-> +    s->tx_watermark_level =3D ot_uart_get_tx_watermark_level(s);
-> +    if (fifo8_num_used(&s->tx_fifo) < s->tx_watermark_level) {
-> +        /*
-> +         * TX watermark interrupt is raised when FIFO depth goes from ab=
-ove
-> +         * watermark to below. If we haven't reached watermark, reset ca=
-ched
-> +         * watermark level
-> +         */
-> +        s->tx_watermark_level =3D 0;
->      }
-
-Don't we need to update the interrupts at this point?
-
-Alistair
+>
 
