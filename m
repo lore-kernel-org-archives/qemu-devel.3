@@ -4,106 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 947A7CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 12:10:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2725CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 12:10:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRqc2-0003cT-6E; Tue, 26 May 2026 08:10:22 -0400
+	id 1wRqcM-0004OS-VJ; Tue, 26 May 2026 08:10:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wRqby-0003Yq-8h
- for qemu-devel@nongnu.org; Tue, 26 May 2026 08:10:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wRqbw-00035x-Eq
- for qemu-devel@nongnu.org; Tue, 26 May 2026 08:10:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779797414;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=csEOSBTG2KZbG+8hsbMcouVzgTZMLxCUZ30OYvJTSz8=;
- b=cYUSuBtogESEHVjFnycyUNNKLQtGFee3EE277aP70uaAfQ6RTVcPrLE1GqopZipEZw30Jv
- 33Y+Q8Azx3WzkmTGSmWn5DWxZ85LtQbe5SREcKCJSUWHazAwi2pAhjYNiIUGuFCpBYOPov
- wh0qQzMeWiR71JY670Q5sN+6vjF+/EI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-623-HT2Rcwa0OKelkwfhorRX4A-1; Tue, 26 May 2026 08:10:11 -0400
-X-MC-Unique: HT2Rcwa0OKelkwfhorRX4A-1
-X-Mimecast-MFC-AGG-ID: HT2Rcwa0OKelkwfhorRX4A_1779797410
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49047e9ca88so32745295e9.3
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 05:10:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779797410; x=1780402210;
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRqcL-0004Np-3X
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 08:10:41 -0400
+Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRqcI-0003Oa-U0
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 08:10:40 -0400
+Received: by mail-wr1-x442.google.com with SMTP id
+ ffacd0b85a97d-44e1860558fso6717467f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 05:10:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779797437; x=1780402237; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=csEOSBTG2KZbG+8hsbMcouVzgTZMLxCUZ30OYvJTSz8=;
- b=OsOSCaP3AeXxF/QOgTA1gj9vfzIh8q0n+wHSLxCWupn/bi1bRJrQU4lI/mlcs4U3vu
- ABbAhwZhsTxF9b/F+cHjbqe0HdeVp7T93gLbB4bw6iZXR083frBO303fjKvjj7EeXsTF
- Y8kyYmPRIUtTqpiFkzMzUVrmjSodok2aG/lp0t4AkJLEJvYTpM9fzUMngQCWoRKThhnx
- u5w8A+1t5UTaqdqoB9yAQnm1nHNGB5/x6zq+Wd0BYSKh1sEW9ynCsUpxRSl42dbQpsE9
- DKjZ2377aUPA0xZVOdYD7x/JtYBhgNi4qHG7EHj9t+BZ4jyjxFcGnQDwgFCfeGExI/PA
- RBsw==
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=omi6Rjsk4frv/VP+iHUj04TNqlDMrsp7VIGVIQ0jqtU=;
+ b=wySmgDXG2uD3P1ftvlMTTePP3xEgfmz4pdhkfWbi47g5BiDXjI0T390ukKLYZlcBLo
+ E1cW6g9zqqmq/mlPD+akt0ZCBvufVMubqO1EKAcixv/UsznDMaxaW40qHc5jtmPy6e6l
+ jbCmDQY7IUpuGEqK7YwDjEzA1dPWTMIKJ1FJ2EkcIb67zoDw9SeagroQmTMYYVCIm2UJ
+ 8jC8P/Y7jK5YoK8vTSKxUOkQepNYIfXfFF8v8kaydiC1eSCzpujtfKxB+2m1w6xbPHiV
+ Ft7NbU+LRTOZpajQk8dMlPGR4Gml2dxxmUHFVSMV2p4sBlCsB6Txbj/tJoFWIDxbQJkj
+ cpbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779797437; x=1780402237;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=omi6Rjsk4frv/VP+iHUj04TNqlDMrsp7VIGVIQ0jqtU=;
+ b=Tk40ztQO80o073nth/hMTjfQoytk3ZlCWsVeF02m6g+cwm0vjf+RABKkob3Vw0gsAI
+ F0Un+qbGrM6ISfBjb9ab6uJNhgGNTOIYbfCtZCvBjJ3b+VIaMmiSHo0nVpnw1qqhdX56
+ c9ja99brFRb4U6Gw7W2Tzlku1RJPur/ex7dzy7IrcOyLLcIV8KaebZslTwyM4yUtA9kD
+ RNILIIa5UY+Us2VezbdqGTlrG/+4Z6Uq+yNy66EWpyoPjdRTwbrTyEQHXy4gWp9mFNfW
+ VVcFHluvqTy7N0ppCZU1O3Zk0x+J1WqW8DIe8qYiD4UQqNRw4L/NZCCSx56MNMIjCL5P
+ NIIQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8qri4Ng+O7OimAbVpp948qpyqzYj+BHGZFzAnZmQcbUL9CTUG/Z3mc253QycWzlv3kjF9+yPJOx83f@nongnu.org
-X-Gm-Message-State: AOJu0YydO6SEsPjbt5LYEUgg3RqbsDP43/vNFuv+ncxEo36VF7NII4um
- kw5nLLmwHJO15PTvoY8CvTG8cALmZVNFNExvRD0vwF+RqWkB29xJdQbWPCGx2xjiCgT3Elw0ABd
- 9cqMm+y9zGxYmTBog0znK7cGPX6e+cD8Dt+KbS8MxcFa0gD57QLqY8YWi
-X-Gm-Gg: Acq92OGMHXbj6EEAMxkzPVqISfxnnDo4lvlef7YtUDwJCkJnld8T/f9UD5GJetf8rRH
- wvLElrCbVIqj/OlZ0I9S0x8eb8tz+7KPjggsSpR2i67sThetKRp9q8jqY8MKLtQb7ZTrwT2WPhK
- OzV2gL+xxLJCcZaoPPcypIFTnKMVO/e3HD9j5ACATvAcYMXjuO0OsQu7U3D4BPoFR5dycgc+Ngq
- ZtWPgdPjyQI/HppVTH4e9ZWSla92kg7Vz7T6O1P6p1hx6pwOWNNAEZ9CKsILCXY75RizYChY6D9
- SI0z4HVtKulLV+e+Vy/txRZpiSOu4FnnjHXDWCRk83whgyqbrvhNbKEbvgLGpDx87dx/IITV33F
- D8dOeetLPK70oTGT7mRG/IQ820MtMg1qrDJPNHPy9mjcsFeMRFHPY0fN/DOvtrrZ8pnifWg==
-X-Received: by 2002:a05:600c:8b08:b0:490:601f:d785 with SMTP id
- 5b1f17b1804b1-490601fd90amr171169175e9.2.1779797410124; 
- Tue, 26 May 2026 05:10:10 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b08:b0:490:601f:d785 with SMTP id
- 5b1f17b1804b1-490601fd90amr171168195e9.2.1779797409600; 
- Tue, 26 May 2026 05:10:09 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4904526c926sm569761115e9.1.2026.05.26.05.10.08
+ AFNElJ8SQYAuuQM2/mujmC9J6ASMCePqUKTislD8VIw1dMYC8FW5o4rKguo3URRRzyThU8GROsOGOBQOYEbM@nongnu.org
+X-Gm-Message-State: AOJu0YyVTrhcwQdCHv4qOl5MrxqnquaofFcdLVBX0kkgokny0rZsghlA
+ 0jv0JNtFjOhux0Aywn/gpDKFOFr1mRpGTqsrQy1oVW/1rEiI6j8aKpPXduWGw9iso4M=
+X-Gm-Gg: Acq92OFv8gVczG64LZbdRnHfi3icopY6idgM3zoKmBwVxPmFnhB0GxdpniTP3YSNMYx
+ EVu3o8osqzjyB6PNZanHiXArRqiyrX3vabULwIltSgOQ2204m0h0dbXcVjmi6Msx1uNz6jNJHUv
+ 1Dj7LZVkJmvxuctcHjuELDklpXi8JwwAJj1mqeyFeO147BL2+J3gCeO4sjaZ/RvA/xaeBuq3ggX
+ 6AYMmsUfLgt/jcFbzug4KVepHRpflU4LnT6XFWMhQ6TUgo2v5RBkyKt/wdbZatwDzAkJBK4+QK2
+ yGcWphsXxBoBaZGQx4YwHjZRoFc3FTmKrwy6zWd0Gg28RtuSHYmRqV6pKiUujeZb5zJQFdsxCxX
+ 4EoGkFKqIcAjXCdpVPa0alcP7W6PMm/P1Kxdni6Ys5on0vWKTedQpH/pGpPhneEQu+eLF+RmOMI
+ g9qnCXMNXPjNuONNXuXNiqidH4vslbcKQL+zBcJszp92EXOCLMj/5i+903FKxKi2hlHQ==
+X-Received: by 2002:a05:6000:2889:b0:43c:fdd:ea96 with SMTP id
+ ffacd0b85a97d-45eb38c5259mr31089296f8f.26.1779797436798; 
+ Tue, 26 May 2026 05:10:36 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45eb6d5c32esm33947373f8f.26.2026.05.26.05.10.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 May 2026 05:10:09 -0700 (PDT)
-Message-ID: <2fc4efe0-7177-40b6-8c8e-e3a99de140e3@redhat.com>
-Date: Tue, 26 May 2026 14:10:07 +0200
+ Tue, 26 May 2026 05:10:36 -0700 (PDT)
+Message-ID: <94235cb5-60de-4ff3-9ea0-9f87c046a513@linaro.org>
+Date: Tue, 26 May 2026 14:10:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 32/32] hw/arm/smmuv3: Add cmdqv property for SMMUv3
- device
+Subject: Re: [PATCH] system/physmem: Synchronize ram_list accesses
 Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
- nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
- jgg@nvidia.com, zhenzhong.duan@intel.com, kjaju@nvidia.com,
- phrdina@redhat.com
-References: <20260519103727.899332-1-skolothumtho@nvidia.com>
- <20260519103727.899332-33-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260519103727.899332-33-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20260523-tsan-v1-1-07d5eb9dcaa2@rsg.ci.i.u-tokyo.ac.jp>
+ <b0754ae4-41bd-4f9d-b24b-9981ebea5a3e@linaro.org>
+ <39c1c69a-0c4e-43f3-9abb-269fc100024c@rsg.ci.i.u-tokyo.ac.jp>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <39c1c69a-0c4e-43f3-9abb-269fc100024c@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::442;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x442.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,79 +103,147 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 26/5/26 13:58, Akihiko Odaki wrote:
+> 
+> 
+> On 2026/05/26 18:22, Philippe Mathieu-Daudé wrote:
+>> On 23/5/26 14:38, Akihiko Odaki wrote:
+>>> Alex Bennée reported a ThreadSanitizer warning about a plain concurrent
+>>> access to ram_list [1]. Ensure the concurrent accesses to ram_list are
+>>> properly synchronized with atomic accesses, mutexes, or RCU.
+>>>
+>>> First, the plain assignments of ram_list.mru_block are replaced with
+>>> qatomic_set(). A comment in qemu_get_ram_block() explains why the
+>>> ordering requirement is relaxed, but it still needs to be atomically
+>>> accessed. include/qemu/atomic.h says:
+>>>
+>>>> The C11 memory model says that variables that are accessed from
+>>>> different threads should at least be done with __ATOMIC_RELAXED
+>>>> primitives or the result is undefined. Generally this has little to
+>>>> no effect on the generated code but not using the atomic primitives
+>>>> will get flagged by sanitizers as a violation.
+>>>
+>>> Second, ram_list.version accesses are replaced with atomic operations
+>>> or protected with a mutex. Unlike ram_list.mru_block, ram_list.version
+>>> has tighter ordering requirements for one of its goals: ensuring that
+>>> the reader-held rs->last_seen_block value is invalidated whenever a RAM
+>>> block is reclaimed between two RCU reader critical sections. Below are
+>>> steps a reader and an updater follow:
+>>>
+>>> Reader:
+>>>
+>>> R-1. Enter the first RCU read-side critical section:
+>>> R-1-1. rs->last_version = qatomic_load_acquire(&ram_list.version)
+>>> R-1-2. rs->last_seen_block = an element of ram_list.blocks
+>>> R-2. Enter the second RCU read-side critical section:
+>>> R-2-1. if (qatomic_read(&ram_list.version) != rs->last_version)
+>>> R-2-2.     rs->last_seen_block = NULL
+>>>
+>>> Updater:
+>>>
+>>> W-1. Enter a ram_list.mutex critical section
+>>> W-1-1. Update ram_list.blocks
+>>> W-1-2. qatomic_store_release(&ram_list.version, ram_list.version + 1)
+>>> W-2. Enter another ram_list.mutex critical section
+>>> W-2-1. QLIST_REMOVE_RCU(block, next)
+>>> W-2-2. qatomic_store_release(&ram_list.version, ram_list.version + 1)
+>>> W-2-3. call_rcu(block, reclaim_ramblock, rcu)
+>>>
+>>> W-1-2 represents the write observed by R-1-1.
+>>>
+>>> ram_list.version is read non-atomically on the update side because the
+>>> update side is serialized with ram_list.mutex. The other ram_list
+>>> accesses in these steps are reasoned about in two cases.
+>>>
+>>> When the grace period of W-2-3 contains R-2:
+>>>      qatomic_load_acquire() at R-1-1 and qatomic_store_release() at 
+>>> W-1-2
+>>>      enforce the following ordering:
+>>>          W-1-1 -> W-1-2 -> R-1-1 -> R-1-2
+>>>      The value of ram_list.blocks stored by W-1-1 or a newer value that
+>>>      was loaded by R-1-2 is still valid because of the grace period.
+>>>
+>>> When the grace period of W-2-3 ends before R-2:
+>>>      call_rcu() at W-2-3 and the read-side critical section at R-2 
+>>> ensure
+>>>      the following ordering:
+>>>          W-2-2 -> W-2-3 -> the grace period -> R-2 -> R-2-1
+>>>      The value of ram_list.version stored by W-2-2 or a newer value that
+>>>      was loaded by R-2-1 differs from rs->last_version and the reader
+>>>      invalidates rs->last_seen_block.
+>>>
+>>> Together, these steps ensure that rs->last_seen_block is invalidated
+>>> whenever necessary. With added atomic operations, pre-existing memory
+>>> barriers are no longer necessary and are removed.
+>>>
+>>> Any other ram_list accesses are already properly synchronized.
+>>>
+>>> [1] https://lore.kernel.org/qemu-devel/878q9fbmap.fsf@draig.linaro.org/
+>>>
+>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>> ---
+>>>   migration/ram.c  | 10 +++++-----
+>>>   system/physmem.c | 16 +++++++---------
+>>>   2 files changed, 12 insertions(+), 14 deletions(-)
+>>
+>>
+>>> @@ -2260,11 +2260,10 @@ static void ram_block_add(RAMBlock 
+>>> *new_block, Error **errp)
+>>>       } else { /* list is empty */
+>>>           QLIST_INSERT_HEAD_RCU(&ram_list.blocks, new_block, next);
+>>>       }
+>>> -    ram_list.mru_block = NULL;
+>>> +    qatomic_set(&ram_list.mru_block, NULL);
+>>>       /* Write list before version */
+>>> -    smp_wmb();
+>>> -    ram_list.version++;
+>>> +    qatomic_store_release(&ram_list.version, ram_list.version + 1);
+>>
+>> Should this be:
+>>
+>>         qatomic_store_release(&ram_list.version,
+>>                               qatomic_read(&ram_list.version) + 1);
+>>
+>>>       qemu_mutex_unlock_ramlist();
+>>>       physical_memory_set_dirty_range(new_block->offset,
+>>> @@ -2608,10 +2607,9 @@ void qemu_ram_free(RAMBlock *block)
+>>>       name = cpr_name(block->mr);
+>>>       cpr_delete_fd(name, 0);
+>>>       QLIST_REMOVE_RCU(block, next);
+>>> -    ram_list.mru_block = NULL;
+>>> +    qatomic_set(&ram_list.mru_block, NULL);
+>>>       /* Write list before version */
+>>> -    smp_wmb();
+>>> -    ram_list.version++;
+>>> +    qatomic_store_release(&ram_list.version, ram_list.version + 1);
+>>
+>> ditto?
+> 
+> ram_list.version is read non-atomically on the update side because the 
+> update side is serialized with ram_list.mutex.
 
+Great.
 
-On 5/19/26 12:37 PM, Shameer Kolothum wrote:
-> Introduce a "cmdqv" property to enable Tegra241 CMDQV support.
-> This is only enabled for accelerated SMMUv3 devices.
->
-> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Thanks
-
-Eric
-> ---
->  hw/arm/smmuv3.c | 8 ++++++++
->  qemu-options.hx | 8 ++++++++
->  2 files changed, 16 insertions(+)
->
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index 763b86c417..8c13489a5c 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -1994,6 +1994,10 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
->                         "bits if accel=on");
->              return false;
->          }
-> +        if (s->cmdqv == ON_OFF_AUTO_ON) {
-> +            error_setg(errp, "cmdqv can only be enabled if accel=on");
-> +            return false;
-> +        }
->          return true;
->      }
->  
-> @@ -2144,6 +2148,7 @@ static const Property smmuv3_properties[] = {
->      DEFINE_PROP_OAS_MODE("oas", SMMUv3State, oas, OAS_MODE_AUTO),
->      DEFINE_PROP_SSIDSIZE_MODE("ssidsize", SMMUv3State, ssidsize,
->                                SSID_SIZE_MODE_AUTO),
-> +    DEFINE_PROP_ON_OFF_AUTO("cmdqv", SMMUv3State, cmdqv, ON_OFF_AUTO_AUTO),
->  };
->  
->  static void smmuv3_instance_init(Object *obj)
-> @@ -2188,6 +2193,9 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
->          "A value of N allows SSIDs in the range [0 .. 2^N - 1]. "
->          "A value of 0 disables SubstreamID support. A value greater "
->          "than 0 is required to enable PASID support.");
-> +    object_class_property_set_description(klass, "cmdqv",
-> +        "Enable/disable CMDQV support (for accel=on). "
-> +        "Valid values are on, off, and auto. Defaults to auto.");
->  }
->  
->  static int smmuv3_notify_flag_changed(IOMMUMemoryRegion *iommu,
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index 46b02a1bb3..c8b8f4e69a 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -1329,6 +1329,14 @@ SRST
->          - With accel=on, auto means the value is automatically derived from the host SMMU.
->          - With accel=off, auto is resolved to 0.
->  
-> +    ``cmdqv=on|off|auto`` (default: auto)
-> +        Enable hardware Command Queue Virtualization (CMDQV) for the
-> +        SMMUv3 command queue. Currently only the NVIDIA Tegra241 CMDQV
-> +        implementation is supported.
-> +
-> +        - With accel=on, auto means the value is automatically derived from the host SMMU.
-> +        - With accel=off, auto is resolved to 'off'.
-> +
->  ``-device amd-iommu[,option=...]``
->      Enables emulation of an AMD-Vi I/O Memory Management Unit (IOMMU).
->      Only available with ``-machine q35``, it supports the following options:
+> 
+>>
+>>>       call_rcu(block, reclaim_ramblock, rcu);
+>>>       qemu_mutex_unlock_ramlist();
+>>>   }
+>>>
+>>> ---
+>>> base-commit: e89049b3ba5f1f0468bc0d294173345597514a1b
+>>> change-id: 20260520-tsan-c6f1aa909a90
+>>>
+>>> Best regards,
+>>> -- 
+>>> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>>
+>>
+> 
 
 
