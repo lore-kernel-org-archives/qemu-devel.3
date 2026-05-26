@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1B49CD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 19:07:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBCC9CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 19:07:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRx6d-0000W5-29; Tue, 26 May 2026 15:06:23 -0400
+	id 1wRx6c-0000Us-3T; Tue, 26 May 2026 15:06:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRx6I-0000Mb-2W; Tue, 26 May 2026 15:06:06 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ id 1wRx6F-0000M3-8r; Tue, 26 May 2026 15:06:01 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1wRx6G-0004dm-Dq; Tue, 26 May 2026 15:06:01 -0400
+ id 1wRx6D-0004ba-Ma; Tue, 26 May 2026 15:05:59 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 41A2D42AE9;
- Tue, 26 May 2026 19:05:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D19D51F00A3A;
+ by tor.source.kernel.org (Postfix) with ESMTP id A6A6C600AB;
  Tue, 26 May 2026 19:05:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 161181F000E9;
+ Tue, 26 May 2026 19:05:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779822359;
- bh=0dQnwUFE5S5dYS/jm+p+iJZyIvrikm45NzygrKgjVW0=;
+ s=k20260515; t=1779822355;
+ bh=2NUQ5FfWOGem1CUHXmWxzCYzWNN2B5soNsg/vFqDPfI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Gh1SmD3bkhkgwI3nS+xCmNo3TjXk3lIogOtfsFd3AEjyjem3rYFgJWkgS034m4Ggg
- qnkMN7B6Mq4HJhuz4uHYRlJMvcn49rYWnm+rDEDicvEJa4zNd3WCGK8c4qO72OkIrZ
- Y1D4n/rSfy6cUZKNAPryB9qaxDkUaSUBmVQm8XJIdaR4LzLkdTTGdId6nFjB6z7iXl
- GG6+yLDEG5Q+bZFAWSni8tqx4v2T5vJvocPN7xioHQspLBWXNgpIxF2uNRl73t0DfJ
- 1osxVrYqnPO5ZjJU9JWm46QSSwKU9TlihVAzfcqOtNg15wSY8K7iPDqwDazrr/85UQ
- 5EpCLoHs0KJqg==
+ b=oGokoU6WBrdDSTBX5HduQ3NU8nI/7EohgU/Lye8N4/gDGGBunFmn4M5idzSl9SBnq
+ nuX0cUWd3HD+A6jZUn7fTvEzRtKnDUYb9PtNiPzGCLKkU2FFPxwgjbFkbmVat1tkqe
+ Y3nJ2mTG7+i3P8SIVON/F/AfcvaLDC+xIAppgbtt8vKgzHf0Nj7Fb1WB6huiPaxCXE
+ 8kogdgyZum0l3nDh1H9dXjy5XEag9/AQOJmBMsKJHaHT+B5cC7uTX0xS8xW3CWvPtj
+ X+6tdLa0oaSLb9kpbf15//A6mTRlIBnhLfpb7W/nQcnWL82QeyQuIf0GgqUp4Xc77e
+ SGXhy/ZoOurHA==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Cornelia Huck <cohuck@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -47,16 +47,17 @@ Cc: Cornelia Huck <cohuck@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
  qemu-s390x@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  David Hildenbrand <david@kernel.org>
-Subject: [PATCH 05/12] linux-user/sh4: restore FP rounding mode on sigreturn
-Date: Tue, 26 May 2026 21:05:28 +0200
-Message-ID: <20260526190535.10833-6-deller@kernel.org>
+Subject: [PATCH 04/12] linux-user/sh4: preserve T/M/Q bits across signal
+ delivery
+Date: Tue, 26 May 2026 21:05:27 +0200
+Message-ID: <20260526190535.10833-5-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260526190535.10833-1-deller@kernel.org>
 References: <20260526190535.10833-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -80,23 +81,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Matt Turner <mattst88@gmail.com>
 
-The SH4 FPSCR rounding-mode (RM) and denormal (DN) bits are not held
-only in env->fpscr: they are also reflected into the derived
-env->fp_status via set_float_rounding_mode()/set_flush_to_zero(). The
-guest keeps the two in sync by routing every write to FPSCR through
-helper_ld_fpscr().
+QEMU keeps the SH4 T, M and Q status-register bits outside env->sr, in
+the dedicated env->sr_t, env->sr_m and env->sr_q fields; cpu_read_sr()
+folds them back into the architectural SR value and cpu_write_sr()
+splits them back out.
 
-restore_sigcontext() wrote the saved value straight into env->fpscr and
-never touched env->fp_status, so on sigreturn the interrupted code
-resumed with whatever FP rounding mode and flush-to-zero setting the
-signal handler last installed. (regs->flags = 0 forces the FR/SZ/PR TB
-flags to be recomputed, but fp_status is runtime float state, not a TB
-flag, so it was left stale.) This is the FP analogue of the T/M/Q bit
-problem just fixed for the integer status register.
+setup_sigcontext() saved the bare env->sr (so the T/M/Q bits were always
+zero in the signal frame) and restore_sigcontext() wrote the value
+straight back into env->sr without updating sr_t/sr_m/sr_q. As a result
+the T bit was never preserved across signal delivery: on sigreturn the
+interrupted code resumed with whatever T value the signal handler last
+left behind. Any conditional branch (or addc/subc/rotcl/div1, etc.)
+immediately following the interrupted instruction could then take the
+wrong path.
 
-Factor the FPSCR -> fp_status synchronisation out of helper_ld_fpscr()
-into cpu_load_fpscr() and use it from restore_sigcontext() so the
-rounding mode round-trips correctly across signal delivery.
+This is the cause of the long-standing intermittent failures of the
+tests/tcg/multiarch/signals.c test on sh4, which was marked BROKEN. With
+a SIGRTMIN timer firing every millisecond across many threads, the race
+was hit a few percent of the time and corrupted the guest heap, surfacing
+as a SIGSEGV in memset, a malloc assertion, or an rseq registration abort.
+
+Traced on a deterministic rr recording: a cmp/hi set T=0, the timer
+signal interrupted the very next instruction (a bf), the handler left
+T=1, and the resumed bf took glibc calloc's MORECORE_CLEARS branch,
+using the old top-chunk size as the clear length for a freshly split
+small chunk and running memset off the end of the heap.
+
+Fix setup_sigcontext()/restore_sigcontext() to use cpu_read_sr() and
+cpu_write_sr() so the T, M and Q bits round-trip correctly, and drop the
+BROKEN annotation on the sh4 signals test.
 
 Fixes: c3b5bc8ab3 ("SH4: Signal handling for the user space emulator, by Magnus Damm.")
 Cc: qemu-stable@nongnu.org
@@ -105,66 +118,60 @@ Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/sh4/signal.c | 7 ++++++-
- target/sh4/cpu.h        | 3 +++
- target/sh4/op_helper.c  | 7 ++++++-
- 3 files changed, 15 insertions(+), 2 deletions(-)
+ linux-user/sh4/signal.c       | 12 ++++++++++--
+ tests/tcg/sh4/Makefile.target |  7 -------
+ 2 files changed, 10 insertions(+), 9 deletions(-)
 
 diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
-index cc36425c49..00290d6e40 100644
+index d70be24c38..cc36425c49 100644
 --- a/linux-user/sh4/signal.c
 +++ b/linux-user/sh4/signal.c
-@@ -173,7 +173,12 @@ static void restore_sigcontext(CPUSH4State *regs, struct target_sigcontext *sc)
+@@ -131,8 +131,10 @@ static void setup_sigcontext(struct target_sigcontext *sc,
+     COPY(gregs[14]); COPY(gregs[15]);
+     COPY(gbr); COPY(mach);
+     COPY(macl); COPY(pr);
+-    COPY(sr); COPY(pc);
++    COPY(pc);
+ #undef COPY
++    /* The T, M and Q bits live outside env->sr; fold them back in. */
++    __put_user(cpu_read_sr(regs), &sc->sc_sr);
+ 
+     for (i=0; i<16; i++) {
+         __put_user(regs->fregs[i], &sc->sc_fpregs[i]);
+@@ -159,8 +161,14 @@ static void restore_sigcontext(CPUSH4State *regs, struct target_sigcontext *sc)
+     COPY(gregs[14]); COPY(gregs[15]);
+     COPY(gbr); COPY(mach);
+     COPY(macl); COPY(pr);
+-    COPY(sr); COPY(pc);
++    COPY(pc);
+ #undef COPY
++    /* The T, M and Q bits live outside env->sr; unfold them. */
++    {
++        uint32_t sr;
++        __get_user(sr, &sc->sc_sr);
++        cpu_write_sr(regs, sr);
++    }
+ 
      for (i=0; i<16; i++) {
          __get_user(regs->fregs[i], &sc->sc_fpregs[i]);
-     }
--    __get_user(regs->fpscr, &sc->sc_fpscr);
-+    /* Resync the derived float_status state, not just env->fpscr. */
-+    {
-+        uint32_t fpscr;
-+        __get_user(fpscr, &sc->sc_fpscr);
-+        cpu_load_fpscr(regs, fpscr);
-+    }
-     __get_user(regs->fpul, &sc->sc_fpul);
+diff --git a/tests/tcg/sh4/Makefile.target b/tests/tcg/sh4/Makefile.target
+index 7852fa62d8..b7a8737be0 100644
+--- a/tests/tcg/sh4/Makefile.target
++++ b/tests/tcg/sh4/Makefile.target
+@@ -3,13 +3,6 @@
+ # SuperH specific tweaks
+ #
  
-     regs->tra = -1;         /* disable syscall checks */
-diff --git a/target/sh4/cpu.h b/target/sh4/cpu.h
-index 4b0f3f6d97..3302702376 100644
---- a/target/sh4/cpu.h
-+++ b/target/sh4/cpu.h
-@@ -379,4 +379,7 @@ static inline void cpu_write_sr(CPUSH4State *env, uint32_t sr)
-     env->sr = sr & ~((1u << SR_M) | (1u << SR_Q) | (1u << SR_T));
- }
+-# This triggers failures for sh4-linux about 10% of the time.
+-# Random SIGSEGV at unpredictable guest address, cause unknown.
+-run-signals: signals
+-	$(call skip-test, $<, "BROKEN")
+-run-plugin-signals-with-%:
+-	$(call skip-test, $<, "BROKEN")
+-
+ VPATH += $(SRC_PATH)/tests/tcg/sh4
  
-+/* Set FPSCR and the derived float_status rounding/flush-to-zero state. */
-+void cpu_load_fpscr(CPUSH4State *env, uint32_t val);
-+
- #endif /* SH4_CPU_H */
-diff --git a/target/sh4/op_helper.c b/target/sh4/op_helper.c
-index 669bc84cb6..cf0f80e4a5 100644
---- a/target/sh4/op_helper.c
-+++ b/target/sh4/op_helper.c
-@@ -204,7 +204,7 @@ void helper_macw(CPUSH4State *env, int32_t arg0, int32_t arg1)
-     }
- }
- 
--void helper_ld_fpscr(CPUSH4State *env, uint32_t val)
-+void cpu_load_fpscr(CPUSH4State *env, uint32_t val)
- {
-     env->fpscr = val & FPSCR_MASK;
-     if ((val & FPSCR_RM_MASK) == FPSCR_RM_ZERO) {
-@@ -215,6 +215,11 @@ void helper_ld_fpscr(CPUSH4State *env, uint32_t val)
-     set_flush_to_zero((val & FPSCR_DN) != 0, &env->fp_status);
- }
- 
-+void helper_ld_fpscr(CPUSH4State *env, uint32_t val)
-+{
-+    cpu_load_fpscr(env, val);
-+}
-+
- static void update_fpscr(CPUSH4State *env, uintptr_t retaddr)
- {
-     int xcpt, cause, enable;
+ test-macl: CFLAGS += -O -g
 -- 
 2.54.0
 
