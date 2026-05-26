@@ -4,151 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E8D4CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:03:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2704DCD5BB1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:07:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRsN6-00077v-Ri; Tue, 26 May 2026 10:03:04 -0400
+	id 1wRsQo-0000yz-FH; Tue, 26 May 2026 10:06:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wRsMx-00073S-RM; Tue, 26 May 2026 10:02:56 -0400
-Received: from mail-centralusazlp170110009.outbound.protection.outlook.com
- ([2a01:111:f403:c111::9] helo=DM5PR21CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wRsMw-0000Fv-7L; Tue, 26 May 2026 10:02:55 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Fdm7eYRTHPoIWwEyV1RsgnrllIJOn0H91GKBCIg2QLjwk8XMNC5kP9T9qTu+26kOMQCT3PxfZaRIa/qW9B6FIMrSlPEbiyZ2Cux6LY2M625uAV2Hnyysbwa+KFCIU/bB4dtte9znN/+3bLBDwDYJiIA4gd3uD0gv0oaJjigxkmoPYrPqhBwcRzaIHqSpoFA68q9kvB9ycM81DyHcRTeqGDunvp6vvkWYH/VDguum/V967BawbGJBxZDVrWrzEfLShKsY2mdHjLQktU6QEAa4Zd6u1ixjaFWKpafqfToB139ZLYXNVOXo5GlTS5GV700sUEs1CaYMwwNajx7Vx2jyrg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=S5KfwnF2NRH78qD8AaeT/KIHk1TyXIGNOESODyTblCw=;
- b=LZGtd3DonvvAon+fJUesrVBCc1TlLQ7jSmPnC+1Us7ZUqe6tz2ijVNW+EHVJCTzHB+r3/YRL8ZUsnJH0phqY8vAc49SuFg1ZtjH1wEJipeK7y3wUIBelokLBxFJSXcbiWBxkIPTKvk7jvYptkfspsc39/ECP5lozK4eBI08KTxpLRz+9d//m5oHGluMcEId/xXS86kW59ADrZT8cyiLpOs/yaWGeoZnzxfqiJ5D51IqzcugXiRT2oz7gZEmucPNzkDgEOb2yQmF8Ph/OTi03fgDZ6w+YF82kfEiqin/o/hDcCRT9oYRKSq3LrbjRNK9avUa+1CR7BDX9QvC7SKNs3g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=S5KfwnF2NRH78qD8AaeT/KIHk1TyXIGNOESODyTblCw=;
- b=YJ3EbZcq7T0LQ8liVNhgNYXFtJvDiU0lX/8Ikd4f1qQyXkuZvzlaEpV1mLXQU+i1Q2wQHCe51qUXu9n9Re+oflcEnZFB0188PxUav7YJgbEikPJ4G6Uk6JeNV3/RMjxn+fdsg4Q7KXYBhlt6k96wu6zegbUzBvj0t5Ay73MDvjBamnlIi1zBm2wIn1drSXFYXqAbA11+ICBv9dMIfKrRMtuNEbg8AMmWkgK+qrlNi0eTvdm4nBDpNPUKLOY1skJxSQLIp7SLhjeedhPV/KFJXSphm1hh3ddRUqIXxKMkY/V421A/Y8mcLY9ueXEDdNQswj6a09Cy1gWbxusKX44xvw==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by DS2PR12MB9822.namprd12.prod.outlook.com (2603:10b6:8:2ba::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.20; Tue, 26 May
- 2026 14:02:46 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de%6]) with mapi id 15.21.0048.019; Tue, 26 May 2026
- 14:02:44 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "clg@redhat.com"
- <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>, Nicolin Chen
- <nicolinc@nvidia.com>, Nathan Chen <nathanc@nvidia.com>, Matt Ochs
- <mochs@nvidia.com>, Jiandi An <jan@nvidia.com>, Jason Gunthorpe
- <jgg@nvidia.com>, "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- Krishnakant Jaju <kjaju@nvidia.com>, "phrdina@redhat.com"
- <phrdina@redhat.com>
-Subject: RE: [PATCH v5 20/32] hw/arm/tegra241-cmdqv: Use mmap'd VINTF page0 as
- VCMDQ backing
-Thread-Topic: [PATCH v5 20/32] hw/arm/tegra241-cmdqv: Use mmap'd VINTF page0
- as VCMDQ backing
-Thread-Index: AQHc53vX8b5hQLEz8Ei+yyPG8IlkFrYYf/mAgAAU0JCAB7BHgIAABORwgAAU6gCAAAEKIA==
-Date: Tue, 26 May 2026 14:02:44 +0000
-Message-ID: <CH3PR12MB754860679276DAB70E0DAF4DAB0B2@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20260519103727.899332-1-skolothumtho@nvidia.com>
- <20260519103727.899332-21-skolothumtho@nvidia.com>
- <2a4edb3b-064b-4c46-8737-1bd74d5f22e9@redhat.com>
- <CH3PR12MB754807F1C34CCB89A73A219EAB0E2@CH3PR12MB7548.namprd12.prod.outlook.com>
- <862edcac-d8b0-465a-bc58-11678ff15890@redhat.com>
- <CH3PR12MB75481CAA2DD727BC68C88AA3AB0B2@CH3PR12MB7548.namprd12.prod.outlook.com>
- <c2b6e502-0bd5-4b1f-b2c3-dcbc760ca733@redhat.com>
-In-Reply-To: <c2b6e502-0bd5-4b1f-b2c3-dcbc760ca733@redhat.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|DS2PR12MB9822:EE_
-x-ms-office365-filtering-correlation-id: 7b110d2b-a032-4177-8253-08debb2f7597
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|366016|1800799024|38070700021|11063799006|4143699003|3023799007|18002099003|56012099003|22082099003;
-x-microsoft-antispam-message-info: N9ngzyQVeY9w72agttSqdeDrhd5dokmB9KZV1bwzJ6zcoSYOjHvu87KRFGQv37J/tyeKvlLQKSDEVzo0Gpbvz6Yok2IH7BqRbaVKpSNCEmUH3mObyjx7d2h7y8qCpyY1B3SLexRPncdoZ3O/2KO42yPG6irs6fexem4FzxgJVN4CQlXQU/1Gb3zdTcFLzDrndORJaSwQhTrgkPqDfmi1EE0XpV3XqaxyKe7bE0xmFiWdCy1MjtsjOpiwEiLqX9DfcS5Qn19ynxImMyLHXxQZx8SO/DmC1hovCPkETSRcAGRzt2fic11LeTzHZPWBrVV7i9l89PoraXLKXinx1veMyrY5BYZGru16jvmpm13kTI+qeqe7oHXi85+j1JkLgqSHeFpGGsJWnLOoXMI1ZE99nb0eOkn39RJhaipgbYyJvgldbkbScllkQaPzlfzkiQhw/SKehysc7zAaaxatK7jNc2iNAKZK2PNnmsb+s5U5Equ21LAaPjeLLPVQ52k6LLq6kVMEe7VzDJ5U4QYmvWW/TfjWE4/GmtzccXXQd26TVtnbostsIYwnq+O9L6V3VYpvvbvAnt3gIPz6grskZBsMWIQMMyTd+2bQ8P1BheLnvhgrGSnFQ8nqmRVGHPAbCyR4L3iwOiQh880/+mgO4vfr1xjmNXVowD5qQ51uS+rDnClVa+DHXI0Vzf1s9jCw1m/sufhwFaFee6fbGEJnMQsRozgZI7X1/VGNJEdpCw+wCwqUv6iUIwuR0vFF1KclVpUM
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(38070700021)(11063799006)(4143699003)(3023799007)(18002099003)(56012099003)(22082099003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?dXQxaWY0ZitIcmRlRXBtRXQzMHJ6V0lwUnBXTmFpQ2NySnZ6dTl5MEg0bW12?=
- =?utf-8?B?ZE5tQ0Jtall1VFc0YnNNbXh4TUZnQ0NVbnBLYUlzd1ZqMEJkZ2xvempaS2dQ?=
- =?utf-8?B?VkdoS2RaNGpqdDV2MXFjeU4yM2p0UitEYTRZcTdZd09HTmdSakl5TldyYUN1?=
- =?utf-8?B?WkFkcHhxK29VQm9UVkVXanFYUytIaWRjN2RmL1NrNFIxenJ4VlJTYmR2dDFU?=
- =?utf-8?B?c05BT2tkUjRFa2xrTi9sQk4ydXdKZktHYlU3WTh5VWVzTzVINUg4YmRraGxu?=
- =?utf-8?B?dEVyeUx5WkhDVk02UE9oVU5wTzQ2OVQ1eGtMQ3lDMXFFQ2RHTUFHMUFSeDMr?=
- =?utf-8?B?cEpna1FNTUpHOUhvS3I3TWExT1B6bHBnbFlGdmFTUDNCbXJDSE5lMy9ncGp6?=
- =?utf-8?B?KzlhdjRzc2poRktWKzFnaDVvYk9VTU5PaUxBWE9CYnJhZ25lT2lTVjMvNCtB?=
- =?utf-8?B?NFVCWnNpMTMwbUppb0xKNm9oVDRSTDMyREFobVNqc29pMmZ3bmF0bHRUUkVV?=
- =?utf-8?B?Q1JaQ3BIYzZEVnVNeUN2aWVqUFdlOXNHYjRPNFFpdXVwbmRHN1B1bUdobG5D?=
- =?utf-8?B?QXhRYWNoU0pRVVM1WWNZTjduTXVyOGFsWjdMcy8wR3c4cW1HTEtKLzZ1Ritu?=
- =?utf-8?B?WERGcUNzYU9CYlJ2WkFXYXpOb1oxUU15aEw4S0pYQi92REE2VkljWkwyL0hG?=
- =?utf-8?B?ZEt6UFhORForOHNleUEyTi9IRm10V3VGNlBxR3BLdHN0WmN0MGNoS3pqWlY5?=
- =?utf-8?B?SXViN1FMOFJRTFBETEltSTlHNGpteGx3N0o5Ly9tdlorWUFvQWNqeXoxTm1C?=
- =?utf-8?B?QlUyUy9YNzdnUDdsWnM5V2I1Vm83ZVY3RVlmTjl6WEFKYnNTUndnRkx6QjAw?=
- =?utf-8?B?K3NTS1RyakpFOVdDUnV1akZVTGwwRytDU0x5cG5vZkxBM05mWmJEb0F0VE1x?=
- =?utf-8?B?YmRQeFhLV1VDMW5wcUlTeC9OWjVaeWFLNyszL1N6VFVnUkc1Q2djenJTdWIx?=
- =?utf-8?B?T0NrRHQyb2ZDWG1xRTlsZnhwNkQxck9RTmNoRWNkNFlXSFdYeExwalhFTzlH?=
- =?utf-8?B?czVOUW9uYzVFUzhyd1htS0tpV01paWtlYms4UzdSK1dIdENkdHBFcXpUWXlZ?=
- =?utf-8?B?amR3L0lKNVp1azJEajN5aEI2Y2xoZU45TVFaUktUUWhBdzNFZ3kvZFUwNUJ3?=
- =?utf-8?B?UWliK2RsMUFrUWozRkFHelhERXlYbUJVVnAraW9XZDFGNE9PaG1panphMk96?=
- =?utf-8?B?WmZmYVh5M09IMFNvQndsVjhGN2VRbXYwa1JET1AxRUFlSm0rdUZqYTRDd2lQ?=
- =?utf-8?B?aWNSdjJ1Z3Vkd1BrVHJNdHF0bVdDWjQxWmQ4ZHRSY0NVUU9kcjhhNkpvc01m?=
- =?utf-8?B?VC90RXFkTXpKSGxySm1obHZsN0JJVHRCWVMyL04xeUx5RXUvdkloSWRFRFJq?=
- =?utf-8?B?RHZzWDRzQm5GdU94U29lc0FPRFNseVFhMzFVeXZSSEU0V1oxU01hdWdLb2V1?=
- =?utf-8?B?ek84c2NkMm5ubDFwb0NmWjN4YXBCYzVHZ2FlcE1wbWJ3b3pGR1Q2MWxXdDZZ?=
- =?utf-8?B?ejZNdS82R3AyUTRicUJNTWhESDl5d2NPRUFOa24rSUtJK2U4YXdvN0hvSjh5?=
- =?utf-8?B?b3ZqQ0pwM21qRmpUWTkzWHAzb2dsd2s0dWxiVytoYUxPeTZ3RnBMbVB3aita?=
- =?utf-8?B?L1hyaEpOTlhmTTNESXVhRjNYRTZKK256VWtUMXp1dCtZSU5OWFlacXBVSCtG?=
- =?utf-8?B?UjNVY1V1K1FSTTJmWHZQZEpGV0lMVVJtRUFoaGtpSXdpcXkyY0hia1IyczlI?=
- =?utf-8?B?T0tjaDJaVUI1N29IcmRoN3NnWFJMRHdWc04zU0tlWHlTeHg4UDg3aXA4d1dt?=
- =?utf-8?B?RGNDYjBIVzZFbWZRc2hDbGRZbWJYSnlreUhWWkhMSkFmMVNLUWZoa3pQTXE3?=
- =?utf-8?B?cGtNN3dvMndldlBPL1F4UDBQaVd0Q1hiRTNKM2lEN2craWZNV3ZlYzh2UjQx?=
- =?utf-8?B?WmkrZE56bkwwY1htM2RSRkdLbjkyMjVvdGZCWGI0YVZZdGQram56RVZFMExq?=
- =?utf-8?B?UWhoN3RCYzVRTmM4bWNIUmlKVjkwQllFR05pb3B1VmgxM2F3M2hHNDRNQlFW?=
- =?utf-8?B?T1dlQzJPSnBvQzhFUnBHQitoKzJRL1pxUjRlY1ZxOUxqUHNnYlhTa3RNcW43?=
- =?utf-8?B?NCtWWmZqMjM1ZSsvbWphcFFCQVdzVVY0am1mZFpRUEtFSmZlb1VncVhxUnRm?=
- =?utf-8?B?Zkx2TnFKOUNtUC9wWHBHcVp5NUR1MHBPYjFHcnhmcGR2aisrN2lUd1crNlZ3?=
- =?utf-8?B?KzBsNkh4alI3VmF4NUk0QU5ZOTNyOWlXRzV0aWRkdDRHTmoyUDA2dz09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wRsQk-0000yL-Or
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:06:51 -0400
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wRsQi-00028s-Bb
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:06:50 -0400
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-65db820588aso8641684d50.2
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:06:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779804407; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Y5WIGDS+mZUmCSoEdU6EYMitQlVt6z4P4F+9EgZwQgCCsoKRSfC1HzbEjnTovybCZJ
+ OM0xQPZpEX6yF+5rCDVWVXHORImaVsGuIywbOBon5/gcHqRa7kuhExn6rDNarMtr8FHE
+ zfigqqJjani4UQEyTqbPK98pP0RRFQ1rPKIFT9upEOFJV1UwQZ9ch+n0sAnBUmNMQQXX
+ iIEJmMWSf0sSz1ogy8acUho4l7X5aFtOTE6hPHLZ0U0GUuO6q6EyPvQaBuoQLjlkgtPR
+ 5R2FWa0ySJyf9PZ4B4UkqXDTkS5CXuwUaecXPpNUGsaeo30iUn7fR6SZX2t1LWnCGvrp
+ O5vA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=oJIXEHLOG94+gKFQayaNzHb5vZnp7h6xGvRAnhkbxOg=;
+ fh=VUZ7eJox894qpEuQTEFSefKlY4l3x+uBmRGBSaSsOHU=;
+ b=OymU4xXGkVrrqSBJfAtRJEg0AOUYUNFlJRy7Od5zsvK2j68qdn1rOJgrU3gIMb9LPD
+ /bPwssmn7agWGI/JCW35p3G/8cWo7Tlws9XMDvcAbtjsaX2MNLTvMliKjTjf6Q4dkrK4
+ sd3azO5O3jF+HN1hOHA9MBt9yyyUoEmDCeEvMP7UK/mbFHTTECWx/pfnqtSI26jeeDQy
+ Df0SWz3xtCAZb5M0qZ0sFhVRSMD8cEFbWm4/613qwClZemA+7Q9TsOA3sRzRPo4leGDZ
+ hcS5LtdbH9MR7q64HbhbXEoXLlU8Pi3frv66WpogyTmlBSixNtoNtrVKSoJ3DO1ljtiM
+ 0hWA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779804407; x=1780409207; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=oJIXEHLOG94+gKFQayaNzHb5vZnp7h6xGvRAnhkbxOg=;
+ b=mz/K/gmVJqmntKk2f38WgqrM6c8yLwbtFYAG1ddWj3R37oEZP7VJAL9bXiuEuwVx1F
+ Vb61dSQpaRNrOX7W9DLd6WcPtmvnV5YRCpjUpLuuYD/eW0XAHIsZECfXa8dpErzHu3Kj
+ eCDsdyt+S5GzzErBMmHuekpgAG85neO9MC8W5tHemzIMSj9LPIS8A+iL1CZq+z8qPtum
+ JKjn2SCESXaA3eq4MWRAHE7bfjSnJTLaDjz3Y7mRC7sXw9hPbuW12lwtAGglQzzDBy5j
+ LmUVESzkST3ZBt5/BEguKjytAwmCU8EPnarxWHXcWdRyYSSC9jcM9cjzbIxfJ03vvMWh
+ iB2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779804407; x=1780409207;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=oJIXEHLOG94+gKFQayaNzHb5vZnp7h6xGvRAnhkbxOg=;
+ b=CGShCmYWi1dG2QooyegrngJp/ekKlYEgcL0r/AohWsG+ET4HtiIjbFw74zvbW6Up6a
+ eIOW9KOzHtXYQuxKHNBpgpOIkDcspni9B8UcocWQ5xSjiIfZLSR2/JT8MjtHwr9sP1Y4
+ hdNzlGtesmmEgf8jEjP9k2flH6wZHnVu/z9T83FlMziahTYjrjV4kiFwjqGDB0fs2Jfg
+ 5mP+Seni1PimueRU4xd6G0UodJuN39dsEIV8mkuiE5IL1Kz8gGpjA8FJFyONGP414Ra3
+ WxqVS2/kUiHyw/8MwnYTNyhsv3odQlRULTd6Qt9/ovkdbOa9eMgJwyXsRys4438q7rI0
+ u23w==
+X-Gm-Message-State: AOJu0YwJDLbqAnEXQHoTd26qMo9tFDUA5umwHps6Jb6JeXwz95kqV+SM
+ F0u1SoYRXRq23iUvWhfJ4+MOfsypv4XREwShgLdY6hQj3XxF7IZ4nswEbn7xlT77audRmEk2ysZ
+ qE3P/nKDiThVQWwD81y8Qk1bBDt4oQDK1/slXyADVVg==
+X-Gm-Gg: Acq92OFxr5zOj2f2B/dmgG7Pffc97EVpnr8UiUpycAJ/aeB77UeIiP1YCVpp6oCCJrh
+ FXITFjDi08VdSwgAmTstJiLgA6L+bCbJbQ9Kyek56XCjGPHoZvTWRp7t2hCL7b6hwiq+9EfFznR
+ zsmiGsnlvZneX7klT77WtENjUY9vPm9zxRSg/R7/7ItDFSLQgG5XQs7K4dOpcm+UECvUpT7Yqm7
+ /DGcml+sq0NEumyW25QF6ZW4OGL+BuRtOYxUaO8HH5KXM1hzWpKIh6xNzLMlU0lC6PLdmWT6mLt
+ uxswqznDAr6+0Mjg8ejZte7gAahh7NLtBNC5C6THTabxsk70mPqiL9iguqrfCDaa5lQ=
+X-Received: by 2002:a05:690e:d05:b0:65e:a7cb:509d with SMTP id
+ 956f58d0204a3-65ec99cfd09mr19409165d50.55.1779804406714; Tue, 26 May 2026
+ 07:06:46 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7b110d2b-a032-4177-8253-08debb2f7597
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 May 2026 14:02:44.3285 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 5FeZtSMiSiMHhYfLKTlViHk4l5D5hDm5furRCP/TT+9aWZK9JLGbSOEqLTxoQL1K58na4MEyvSttNWbZBDT0gg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS2PR12MB9822
-Received-SPF: permerror client-ip=2a01:111:f403:c111::9;
- envelope-from=skolothumtho@nvidia.com;
- helo=DM5PR21CU001.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+References: <20260430091832.1846637-1-kchiu@axiado.com>
+ <20260430091832.1846637-2-kchiu@axiado.com>
+In-Reply-To: <20260430091832.1846637-2-kchiu@axiado.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 26 May 2026 15:06:35 +0100
+X-Gm-Features: AVHnY4JOy-fwD9Cc_6j0ImvbTAgbs_XW9ewLeLhs3V6YaMnSolADsHfU1UJMHxw
+Message-ID: <CAFEAcA8dRq+hqCZ+eSHdafwEccd4coqHZ12nxWAkyDOG3GEkgg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] hw/arm: Add Axiado SoC AX3000
+To: Kuan-Jui Chiu <kchiu@axiado.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,47 +114,425 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogRXJpYyBBdWdlciA8ZXJp
-Yy5hdWdlckByZWRoYXQuY29tPg0KPiBTZW50OiAyNiBNYXkgMjAyNiAxNDo1Mw0KPiBUbzogU2hh
-bWVlciBLb2xvdGh1bSBUaG9kaSA8c2tvbG90aHVtdGhvQG52aWRpYS5jb20+OyBxZW11LQ0KPiBh
-cm1Abm9uZ251Lm9yZzsgcWVtdS1kZXZlbEBub25nbnUub3JnDQo+IENjOiBwZXRlci5tYXlkZWxs
-QGxpbmFyby5vcmc7IGNsZ0ByZWRoYXQuY29tOyBhbGV4QHNoYXpib3Qub3JnOyBOaWNvbGluDQo+
-IENoZW4gPG5pY29saW5jQG52aWRpYS5jb20+OyBOYXRoYW4gQ2hlbiA8bmF0aGFuY0BudmlkaWEu
-Y29tPjsgTWF0dA0KPiBPY2hzIDxtb2Noc0BudmlkaWEuY29tPjsgSmlhbmRpIEFuIDxqYW5AbnZp
-ZGlhLmNvbT47IEphc29uIEd1bnRob3JwZQ0KPiA8amdnQG52aWRpYS5jb20+OyB6aGVuemhvbmcu
-ZHVhbkBpbnRlbC5jb207IEtyaXNobmFrYW50IEphanUNCj4gPGtqYWp1QG52aWRpYS5jb20+OyBw
-aHJkaW5hQHJlZGhhdC5jb20NCj4gU3ViamVjdDogUmU6IFtQQVRDSCB2NSAyMC8zMl0gaHcvYXJt
-L3RlZ3JhMjQxLWNtZHF2OiBVc2UgbW1hcCdkIFZJTlRGDQo+IHBhZ2UwIGFzIFZDTURRIGJhY2tp
-bmcNCj4gDQo+IEV4dGVybmFsIGVtYWlsOiBVc2UgY2F1dGlvbiBvcGVuaW5nIGxpbmtzIG9yIGF0
-dGFjaG1lbnRzDQo+IA0KPiANCj4gT24gNS8yNi8yNiAzOjAwIFBNLCBTaGFtZWVyIEtvbG90aHVt
-IFRob2RpIHdyb3RlOg0KPiA+PiB0aGUgYWNjZXNzIGlzIGRyb3BwZWQgd2l0aCBubyBGYXVsdC9J
-bnRlcnJ1cHQuIg0KPiA+ICJXaGlsZSB0aGUgc29mdHdhcmUgY2FuIHByb2dyYW0gdGhlIFZpcnR1
-YWwgQ01EUShzKSBkaXJlY3RseSB1c2luZyB0aGUNCj4gPiAgIGRpcmVjdCBWQ01EUSBhcGVydHVy
-ZSAoYW5kIG5vdCB0aHJvdWdoIHRoZSBWaXJ0dWFsIEludGVyZmFjZSksIGl0IGlzDQo+ID4gICBy
-ZXF1aXJlZCB0aGF0IHRoZSBWQ01EUSBiZSBhbGxvY2F0ZWQgdG8gYSBWaXJ0dWFsIEludGVyZmFj
-ZSBiZWZvcmUgaXQNCj4gPiAgIGlzIHVzZWQgdG8gc2VuZCBjb21tYW5kcyB0byB0aGUgU01NVS4i
-DQo+ID4NCj4gPiBBc3N1bWluZyB5b3VyIHF1ZXN0aW9uIGlzIHJlZ2FyZGluZyB0aGUgYWJvdmUg
-cXVvdGU6DQo+ID4NCj4gPiBUaGUgcXVvdGUgaXMgYWJvdXQgdGhlIGRpcmVjdCBhcGVydHVyZSBh
-bmQgc2F5cyB0aGUgc29mdHdhcmUgImNhbg0KPiA+IHByb2dyYW0gdGhlIFZpcnR1YWwgQ01EUShz
-KSBkaXJlY3RseSB1c2luZyB0aGUgZGlyZWN0IFZDTURRIGFwZXJ0dXJlIiwNCj4gPiBhbmQgb25s
-eSB0aGUgInNlbmQgY29tbWFuZHMgdG8gdGhlIFNNTVUiIHN0ZXAgaXMgZ2F0ZWQgYnkgVklOVEYN
-Cj4gPiBhbGxvY2F0aW9uLiBJZiBkaXJlY3QtYXBlcnR1cmUgd3JpdGVzIHdlcmUgYWxzbyBkcm9w
-cGVkIGZvciB1bmFsbG9jYXRlZA0KPiA+IFZDTURRcywgdGhlICJjYW4gcHJvZ3JhbSBkaXJlY3Rs
-eSIgd29yZGluZyB3b3VsZG4ndCBiZSBtZWFuaW5nZnVsLg0KPiA+DQo+ID4gIkNhbiBwcm9ncmFt
-IiBiZWhhdmlvdXI6DQo+ID4NCj4gPiB3cml0ZSAweDEwIC0+ICBBX1ZDTURRMV9QUk9EX0lORFgN
-Cj4gPiByZWFkICAgICAgIEFfVkNNRFExX1BST0RfSU5EWCAgLy8gcmVhZCByZXR1cm5zIDB4MTAN
-Cj4gPg0KPiA+DQo+ID4gIkRyb3AiIGJlaGF2aW91cjoNCj4gPg0KPiA+IHdyaXRlIDB4MTAgLT4g
-IEFfVkNNRFExX1BST0RfSU5EWA0KPiA+IHJlYWQgICAgICAgQV9WQ01EUTFfUFJPRF9JTkRYICAv
-LyByZWFkIHJldHVybnMgMCBvciB1bmRlZmluZWQNCj4gPg0KPiA+IEhvcGUgdGhpcyBhbnN3ZXJz
-IHlvdXIgcXVlc3Rpb24uIGxldCBtZSBrbm93IGlmIG5vdC4NCj4gDQo+IE9uIG15IGVuZCwgSSBy
-ZWFkIHRoYXQgdGhlIHNvZnR3YXJlIGNhbiB1c2UgZWl0aGVyIHRoZSBkaXJlY3QgdmlldyBvcg0K
-PiB0aGUgVklOVEYgdmlldyBhcyBsb25nIGFzIHRoZSBjbWRxdiBpcyBtYXBwZWQuIEFuZCBpZiB0
-aGUgdmNtZHEgaXMgbm90DQo+IG1hcHBlZCB3ZSBhcmUgbm90IHJlYWxseSB0b2xkIHdoYXQgaGFw
-cGVucy4NCj4gQnV0IGFueXdheSB0aGlzIHVzZSBjYXNlIG9mIHVzaW5nIHRoZSBkaXJlY3Qgdmll
-dyBsb29rcyBwcmV0dHkgbWFyZ2luYWwsDQo+IGRvZXNuJ3QgaXQuDQoNClllcywgdGhlIGRpcmVj
-dCBhcGVydHVyZSByZWFkL3dyaXRlIGlzbid0IGFuIGV4cGVjdGVkIGNvbW1vbiB1c2UgY2FzZS4N
-Cg0KIFNvIGZlZWwgZnJlZSB0byBpbnRlcnByZXQgaXQgYXMgeW91IGFncmVlIHdpdGggTmljb2xp
-biBhbmQNCj4gSFcgZXhwZXJ0cy4NCg0KVGhhbmtzLiBJIHdpbGwga2VlcCBpdCBhcyBpcyBhbmQg
-aGF2ZSBhbm90aGVyIGxvb2sgYXQgdGhlICJvdmVydmlldyINCnNlY3Rpb24gdG8gaW1wcm92ZSB0
-aGUgZGVzY3JpcHRpb24gb2YgdGhpcy4NCg0KVGhhbmtzLA0KU2hhbWVlcg0KDQo=
+On Thu, 30 Apr 2026 at 10:19, Kuan-Jui Chiu <kchiu@axiado.com> wrote:
+>
+> This patch adds new model for Axiado SoC AX3000 which supports
+>     4 Cortex-A53 ARM64 CPUs
+>     Arm Generic Interrupt Controller v3
+>     4 Cadence UARTs
+>     1 SDHCI controller with eMMC PHY
+>
+> Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
+> ---
+>  MAINTAINERS                  |   9 ++
+>  hw/arm/Kconfig               |   8 ++
+>  hw/arm/ax3000-soc.c          | 232 +++++++++++++++++++++++++++++++++++
+>  hw/arm/meson.build           |   3 +
+>  hw/sd/Kconfig                |   4 +
+>  hw/sd/axiado_sdhci.c         | 100 +++++++++++++++
+
+Adding the new SDHCI controller should be its own patch.
+
+>  hw/sd/meson.build            |   1 +
+>  include/hw/arm/ax3000-soc.h  |  78 ++++++++++++
+>  include/hw/sd/axiado_sdhci.h |  21 ++++
+>  9 files changed, 456 insertions(+)
+>  create mode 100644 hw/arm/ax3000-soc.c
+>  create mode 100644 hw/sd/axiado_sdhci.c
+>  create mode 100644 include/hw/arm/ax3000-soc.h
+>  create mode 100644 include/hw/sd/axiado_sdhci.h
+
+
+
+> +static uint64_t pll_read(void *opaque, hwaddr offset, unsigned size)
+> +{
+> +    switch (offset) {
+> +    case CLKRST_CPU_PLL_POSTDIV_OFFSET:
+> +        return 0x20891b;
+> +    case CLKRST_CPU_PLL_STS_OFFSET:
+> +        return 0x01;
+> +    default:
+> +        return 0x00;
+> +    }
+> +}
+> +
+> +static void pll_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+> +{
+> +    /* TBD */
+> +}
+> +
+> +static const MemoryRegionOps pll_ops = {
+> +    .read = pll_read,
+> +    .write = pll_write,
+> +    .endianness = DEVICE_LITTLE_ENDIAN,
+
+MemoryRegionOps should always explicitly specify a set
+of .impl and .valid fields to say what the min_access_size
+and max_access_size are. (.valid is what the hardware
+permits; .impl is what the functions handle; the memory
+system core code can somewhat bridge the gap if your
+implementation handles a more restrictive set of sizes
+than the guest is allowed to use.) e.g. if the hardware
+is "must always be 32 bit accesses then set all of
+.valid.min_access_size, .valid.max_access_size,
+.impl.min_access_size, .impl.max_access_size to 4.
+
+> +};
+
+This looks like it should be its own device in its own
+file, not a free-standing set of MemoryRegionOps and
+MemoryRegion in this file.
+
+> +static void ax3000_init(Object *obj)
+> +{
+> +    Ax3000SoCState *s = AX3000_SOC(obj);
+> +    Ax3000SoCClass *sc = AX3000_SOC_GET_CLASS(s);
+> +    int i;
+
+These days we tend to favour declaring the variable
+inside the for loop:
+  for (int i = 0; ... ; ...)
+
+
+> +
+> +    for (i = 0; i < sc->num_cpus; i++) {
+> +        g_autofree char *name = g_strdup_printf("cpu%d", i);
+> +        object_initialize_child(obj, name, &s->cpu[i],
+> +                                ARM_CPU_TYPE_NAME("cortex-a53"));
+> +    }
+> +
+> +    object_initialize_child(obj, "gic", &s->gic, gicv3_class_name());
+> +
+> +    for (i = 0; i < AX3000_NUM_UARTS; i++) {
+> +        g_autofree char *name = g_strdup_printf("uart%d", i);
+> +        object_initialize_child(obj, name, &s->uart[i], TYPE_CADENCE_UART);
+> +    }
+> +
+> +    object_initialize_child(obj, "sdhci0", &s->sdhci0, TYPE_AXIADO_SDHCI);
+> +}
+> +
+> +static void ax3000_realize(DeviceState *dev, Error **errp)
+> +{
+> +    Ax3000SoCState *s = AX3000_SOC(dev);
+> +    Ax3000SoCClass *sc = AX3000_SOC_GET_CLASS(s);
+> +    SysBusDevice *gic_sbd = SYS_BUS_DEVICE(&s->gic);
+> +    DeviceState *gic_dev = DEVICE(&s->gic);
+> +    QList *redist_region_count;
+> +    SysBusDevice *sdhci0_sbd;
+> +    DeviceState *card;
+> +    int i;
+> +
+> +    /* CPUs */
+> +    for (i = 0; i < sc->num_cpus; i++) {
+> +        object_property_set_int(OBJECT(&s->cpu[i]), "cntfrq", 8000000,
+> +                                &error_abort);
+> +
+> +        if (object_property_find(OBJECT(&s->cpu[i]), "has_el3")) {
+> +            object_property_set_bool(OBJECT(&s->cpu[i]), "has_el3",
+> +                                     false, &error_abort);
+> +        }
+> +
+> +        if (!qdev_realize(DEVICE(&s->cpu[i]), NULL, errp)) {
+> +            return;
+> +        }
+> +    }
+> +
+> +    /* GIC */
+> +    qdev_prop_set_uint32(gic_dev, "num-cpu", sc->num_cpus);
+> +    qdev_prop_set_uint32(gic_dev, "num-irq",
+> +                         AX3000_NUM_IRQS + GIC_INTERNAL);
+> +
+> +    redist_region_count = qlist_new();
+> +    qlist_append_int(redist_region_count, sc->num_cpus);
+> +    qdev_prop_set_array(gic_dev, "redist-region-count", redist_region_count);
+> +
+> +    if (!sysbus_realize(gic_sbd, errp)) {
+> +        return;
+> +    }
+> +
+> +    sysbus_mmio_map(gic_sbd, 0, AX3000_GIC_DIST_BASE);
+> +    sysbus_mmio_map(gic_sbd, 1, AX3000_GIC_REDIST_BASE);
+> +
+> +    /*
+> +     * Wire the outputs from each CPU's generic timer and the GICv3
+> +     * maintenance interrupt signal to the appropriate GIC PPI inputs, and
+> +     * the GIC's IRQ/FIQ interrupt outputs to the CPU's inputs.
+> +     */
+> +    for (i = 0; i < sc->num_cpus; i++) {
+> +        DeviceState *cpu_dev = DEVICE(&s->cpu[i]);
+> +        int intidbase = AX3000_NUM_IRQS + i * GIC_INTERNAL;
+> +        qemu_irq irq;
+> +
+> +        /*
+> +         * Mapping from the output timer irq lines from the CPU to the
+> +         * GIC PPI inputs.
+> +         */
+> +        static const int timer_irqs[] = {
+> +            [GTIMER_PHYS] = ARCH_TIMER_NS_EL1_IRQ,
+> +            [GTIMER_VIRT] = ARCH_TIMER_VIRT_IRQ,
+> +            [GTIMER_HYP]  = ARCH_TIMER_NS_EL2_IRQ,
+> +            [GTIMER_SEC]  = ARCH_TIMER_S_EL1_IRQ
+> +        };
+> +
+> +        for (int j = 0; j < ARRAY_SIZE(timer_irqs); j++) {
+> +            irq = qdev_get_gpio_in(gic_dev, intidbase + timer_irqs[j]);
+> +            qdev_connect_gpio_out(cpu_dev, j, irq);
+> +        }
+> +
+> +        irq = qdev_get_gpio_in(gic_dev, intidbase + ARCH_GIC_MAINT_IRQ);
+> +        qdev_connect_gpio_out_named(cpu_dev, "gicv3-maintenance-interrupt",
+> +                                        0, irq);
+> +
+> +        sysbus_connect_irq(gic_sbd, i,
+> +                           qdev_get_gpio_in(cpu_dev, ARM_CPU_IRQ));
+> +        sysbus_connect_irq(gic_sbd, i + sc->num_cpus,
+> +                           qdev_get_gpio_in(cpu_dev, ARM_CPU_FIQ));
+> +        sysbus_connect_irq(gic_sbd, i + 2 * sc->num_cpus,
+> +                           qdev_get_gpio_in(cpu_dev, ARM_CPU_VIRQ));
+> +        sysbus_connect_irq(gic_sbd, i + 3 * sc->num_cpus,
+> +                           qdev_get_gpio_in(cpu_dev, ARM_CPU_VFIQ));
+> +    }
+> +
+> +    /* DRAM */
+> +    for (i = 0; i < AX3000_NUM_BANKS; i++) {
+> +        struct {
+> +            hwaddr addr;
+> +            size_t size;
+> +            const char *name;
+> +        } dram_table[] = {
+> +            { AX3000_DRAM0_BASE, AX3000_DRAM0_SIZE, "dram0" },
+> +            { AX3000_DRAM1_BASE, AX3000_DRAM1_SIZE, "dram1" }
+> +        };
+> +
+> +        memory_region_init_ram(&s->dram[i], OBJECT(s), dram_table[i].name,
+> +                               dram_table[i].size, &error_fatal);
+> +        memory_region_add_subregion(get_system_memory(), dram_table[i].addr,
+> +                                    &s->dram[i]);
+> +    }
+> +
+> +    /* UARTs */
+> +    for (i = 0; i < AX3000_NUM_UARTS; i++) {
+> +        struct {
+> +            hwaddr addr;
+> +            unsigned int irq;
+> +        } serial_table[] = {
+> +            { AX3000_UART0_BASE, AX3000_UART0_IRQ },
+> +            { AX3000_UART1_BASE, AX3000_UART1_IRQ },
+> +            { AX3000_UART2_BASE, AX3000_UART2_IRQ },
+> +            { AX3000_UART3_BASE, AX3000_UART3_IRQ }
+> +        };
+> +
+> +        qdev_prop_set_chr(DEVICE(&s->uart[i]), "chardev", serial_hd(i));
+> +        if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart[i]), errp)) {
+> +            return;
+> +        }
+> +
+> +        sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart[i]), 0, serial_table[i].addr);
+> +        sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart[i]), 0,
+> +                           qdev_get_gpio_in(gic_dev, serial_table[i].irq));
+> +    }
+> +
+> +    /* Timer control */
+> +    create_unimplemented_device("ax3000.timerctrl", AX3000_TIMER_CTRL, 32);
+> +
+> +    /* PLL control */
+> +    memory_region_init_io(&s->pll_ctrl, OBJECT(s), &pll_ops, s,
+> +                          "ax3000.pllctrl", 32);
+> +    memory_region_add_subregion(get_system_memory(), AX3000_PLL_BASE,
+> +                                &s->pll_ctrl);
+> +
+> +    /* SDHCI */
+> +    sdhci0_sbd = SYS_BUS_DEVICE(&s->sdhci0);
+> +    if (!sysbus_realize(sdhci0_sbd, errp)) {
+> +        return;
+> +    }
+> +
+> +    sysbus_mmio_map(sdhci0_sbd, 0, AX3000_SDHCI0_BASE);
+> +    sysbus_mmio_map(sdhci0_sbd, 1, AX3000_EMMC_PHY_BASE);
+> +    sysbus_connect_irq(sdhci0_sbd, 0,
+> +                       qdev_get_gpio_in(gic_dev, AX3000_SDHCI0_IRQ));
+> +
+> +    card = qdev_new(TYPE_SD_CARD);
+> +    qdev_prop_set_drive_err(card, "drive",
+> +                            blk_by_legacy_dinfo((drive_get(IF_SD, 0, 0))),
+> +                            &error_fatal);
+> +    qdev_realize_and_unref(card, s->sdhci0.sd_bus, &error_fatal);
+> +}
+> +
+> +static void ax3000_class_init(ObjectClass *oc, const void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(oc);
+> +    Ax3000SoCClass *sc = AX3000_SOC_CLASS(oc);
+> +
+> +    dc->desc = "Axiado SoC AX3000";
+> +    dc->realize = ax3000_realize;
+> +    sc->num_cpus = AX3000_NUM_CPUS;
+> +}
+> +
+> +static const TypeInfo axiado_soc_types[] = {
+> +    {
+> +        .name           = TYPE_AX3000_SOC,
+> +        .parent         = TYPE_SYS_BUS_DEVICE,
+> +        .instance_size  = sizeof(Ax3000SoCState),
+> +        .instance_init  = ax3000_init,
+> +        .class_init     = ax3000_class_init,
+> +    }
+> +};
+> +
+> +DEFINE_TYPES(axiado_soc_types)
+> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+> index b187b946f0..e32f5eb0c7 100644
+> --- a/hw/arm/meson.build
+> +++ b/hw/arm/meson.build
+> @@ -105,6 +105,9 @@ arm_common_ss.add(when: 'CONFIG_SX1', if_true: files('omap_sx1.c'))
+>  arm_common_ss.add(when: 'CONFIG_VERSATILE', if_true: files('versatilepb.c'))
+>  arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
+>
+> +arm_common_ss.add(when: ['CONFIG_AXIADO_SOC', 'TARGET_AARCH64'], if_true: files(
+> +  'ax3000-soc.c'))
+> +
+>  arm_common_ss.add(files('boot.c'))
+>
+>  hw_arch += {'arm': arm_ss}
+> diff --git a/hw/sd/Kconfig b/hw/sd/Kconfig
+> index 633b9afec9..c69bf24f8d 100644
+> --- a/hw/sd/Kconfig
+> +++ b/hw/sd/Kconfig
+> @@ -23,3 +23,7 @@ config SDHCI_PCI
+>  config CADENCE_SDHCI
+>      bool
+>      select SDHCI
+> +
+> +config AXIADO_SDHCI
+> +    bool
+> +    select SDHCI
+> diff --git a/hw/sd/axiado_sdhci.c b/hw/sd/axiado_sdhci.c
+> new file mode 100644
+> index 0000000000..219d49079e
+> --- /dev/null
+> +++ b/hw/sd/axiado_sdhci.c
+> @@ -0,0 +1,100 @@
+> +/*
+> + * Axiado SD Host Controller
+> + *
+> + * Author: Kuan-Jui Chiu <kchiu@axiado.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "hw/sd/axiado_sdhci.h"
+> +#include "sdhci-internal.h"
+> +#include "qapi/error.h"
+> +#include "hw/core/qdev-properties.h"
+> +
+> +#define EMMC_PHY_ID     0x00
+> +#define EMMC_PHY_STATUS 0x50
+> +
+> +static uint64_t emmc_phy_read(void *opaque, hwaddr offset, unsigned size)
+> +{
+> +    uint32_t val = 0x00;
+> +
+> +    switch (offset) {
+> +    case EMMC_PHY_ID:
+> +        val = 0x3dff6870;
+> +        break;
+> +    case EMMC_PHY_STATUS:
+> +        /* Make DLL_RDY | CAL_DONE */
+> +        val =  (1u << 0) | (1u << 6);
+
+If this comment is trying to say what these bits are, better to
+define symbolic constants for the bits and use those.
+
+> +        break;
+> +    default:
+> +        break;
+> +    }
+> +
+> +    return val;
+> +}
+> +
+> +static void emmc_phy_write(void *opaque, hwaddr offset, uint64_t value,
+> +                            unsigned size)
+> +{
+> +    /* TBD */
+
+Don't leave bare TBD/TODO comments in the code. It's OK not to
+necessarily implement everything at the start, but the
+comment should explain what is missing. In six months
+time, will somebody other than you be able to look at the
+file and know what is still to do ?
+
+> +}
+> +
+> +static const MemoryRegionOps emmc_phy_ops = {
+> +    .read = emmc_phy_read,
+> +    .write = emmc_phy_write,
+> +    .endianness = DEVICE_LITTLE_ENDIAN,
+
+This should specify access sizes too.
+
+> +};
+> +
+> +static void axiado_sdhci_realize(DeviceState *dev, Error **errp)
+> +{
+> +    AxiadoSDHCIState *s = AXIADO_SDHCI(dev);
+> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+> +    SysBusDevice *sdhci_sbd;
+> +
+> +    object_initialize_child(OBJECT(s), "sdhci", &s->sdhci,
+> +                            TYPE_SYSBUS_SDHCI);
+
+Generally devices should do the object_initialize_child for
+child-objects in their instance_init function, and
+realize in their realize function. (Occasionally there's a
+reason this isn't possible.)
+
+> +
+> +    qdev_prop_set_uint64(DEVICE(&s->sdhci), "capareg", 0x216737eed0b0);
+> +    qdev_prop_set_uint64(DEVICE(&s->sdhci), "sd-spec-version", 3);
+> +
+> +    sdhci_sbd = SYS_BUS_DEVICE(&s->sdhci);
+> +    sysbus_realize(sdhci_sbd, errp);
+> +    if (*errp) {
+> +        return;
+> +    }
+> +
+> +    sysbus_init_mmio(sbd, sysbus_mmio_get_region(sdhci_sbd, 0));
+> +
+> +    /* Propagate IRQ from SDHCI and SD bus  */
+> +    sysbus_pass_irq(sbd, sdhci_sbd);
+> +    s->sd_bus = qdev_get_child_bus(DEVICE(sdhci_sbd), "sd-bus");
+> +
+> +    /* Initialize eMMC PHY MMIO */
+> +    memory_region_init_io(&s->emmc_phy, OBJECT(s), &emmc_phy_ops, s,
+> +                          "axiado.emmc-phy", 0x1000);
+> +
+> +    sysbus_init_mmio(sbd, &s->emmc_phy);
+> +}
+> +
+> +static void axiado_sdhci_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +
+> +    dc->realize = axiado_sdhci_realize;
+> +    dc->desc = "Axiado SD Host Controller with eMMC PHY";
+> +}
+> +
+> +static const TypeInfo axiado_sdhci_info = {
+> +    .name          = TYPE_AXIADO_SDHCI,
+> +    .parent        = TYPE_SYS_BUS_DEVICE,
+> +    .instance_size = sizeof(AxiadoSDHCIState),
+> +    .class_init    = axiado_sdhci_class_init,
+> +};
+> +
+> +static void axiado_sdhci_register_types(void)
+> +{
+> +    type_register_static(&axiado_sdhci_info);
+> +}
+> +
+> +type_init(axiado_sdhci_register_types);
+
+thanks
+-- PMM
 
