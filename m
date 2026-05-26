@@ -4,71 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 572BACD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 08:27:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71C6DCD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 08:29:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRn0L-0005G3-Tv; Tue, 26 May 2026 04:19:13 -0400
+	id 1wRn9z-00062R-Ks; Tue, 26 May 2026 04:29:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wRn0K-0005Es-2g
- for qemu-devel@nongnu.org; Tue, 26 May 2026 04:19:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wRn0H-0007Yr-H3
- for qemu-devel@nongnu.org; Tue, 26 May 2026 04:19:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779783548;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nsZ4c4IahTTnDOY15MyAbWhe223pG0fyhiIrF8LxD2Y=;
- b=gd0euKJSULBG8L+p/QO4y7jOTop1N56AhZlwlpLTYrbN+TGqvBJss/lkHU2DnVNyE8IDmk
- MKyuDkTuRgdUS+MN+Br3RNpaAqqaIr7J6dQ+oAelOR6MXltGh3FynAUHbhzIrcFF6PcSLb
- GuH1WgHTt6iyuK4Exuf+Hi+JCTaLYyQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-134-3xcHmhMXOzS6Y3gdp1MB4w-1; Tue,
- 26 May 2026 04:19:04 -0400
-X-MC-Unique: 3xcHmhMXOzS6Y3gdp1MB4w-1
-X-Mimecast-MFC-AGG-ID: 3xcHmhMXOzS6Y3gdp1MB4w_1779783543
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3AE9019560B3; Tue, 26 May 2026 08:19:03 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.32.30])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B8DA51800760; Tue, 26 May 2026 08:19:01 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: William de Abreu Pinho <williamdapinho@gmail.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 05/37] hw/arm/aspeed: anacapa: add FRU EEPROM data
-Date: Tue, 26 May 2026 10:18:16 +0200
-Message-ID: <20260526081848.651835-6-clg@redhat.com>
-In-Reply-To: <20260526081848.651835-1-clg@redhat.com>
-References: <20260526081848.651835-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wRn9y-00062J-Ig
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 04:29:10 -0400
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wRn9x-0003iw-4E
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 04:29:10 -0400
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-651bc83e74aso10521776d50.2
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 01:29:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779784148; cv=none;
+ d=google.com; s=arc-20240605;
+ b=SkFLtH6cBePJawLufAGpjKgcSBCtmXQw8TexDPdyCOadjr5gO8YjbyULEyBlkas+Md
+ 8i1QpyU9jcLfhQgnI3XF6fx9tuc8f6BD3b5oYt90bmgBfijSMdOhVTknOdnPy+jHlo3G
+ zOCavvQggTNaHF+CY1xB6G6Gedw81GzVqhdO8W1bsTyajZLmqEKP3EW6t70UHMptV0gh
+ 8oaEZaW5VRhL0N90wa7UcdDkVxZGgfqGWCD0ML/CkxCilVHwyPvAv0lkZhUYOzRU8DHx
+ tX7JYDMKkcBtlCfQLjXPI4/igudVpYOyhJ2QkNmprGsH2PcDPPwC3byYGK/yTnefGrba
+ hrjA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=nn3x1RDv26LQABJq/Ywa0h1jCCRknpCEbyt+hDeuZNA=;
+ fh=0TpuJ5xMEdyYhxgmah8+B0r0IhovP0nnBx9IC1o47sw=;
+ b=I+ywjjA78cBZe55QFE+z0il3V0c/xQQ8o3++g0PG535EyQEOQ9wVsoQJhvH1bzcYZx
+ SOrxm/laL8j3nJXLC19w0tmEe5gQBzN+9fhiHkHQbCBZ2/Fq2R6yI0BjTQZX6fb+vlSI
+ hQ1JEK1N31cjE2qu/hBPbfp38zC5sNGInuxcvqgRTG7yQ6vYEFF9HLXsFQWURSd3LzH7
+ 63vnKVj6LExaaMC7e4mVuNpEZzGGSOEJcvLZv43kkjUpwV9o+GM69MT/fmW4j6pTma8E
+ gFviydlrQ/he/vdmQcYqXnNkVetxF0pBx2R/443pbCEXbdPqfcBlKO+VkUvW7amgE3au
+ 2bvg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779784148; x=1780388948; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=nn3x1RDv26LQABJq/Ywa0h1jCCRknpCEbyt+hDeuZNA=;
+ b=YrSRtmfQu+eqNAlM26t19DsNXP5DGL5c7NRb7v/7tmfv7zB+pSlSF2Tcyc4H/CYbYA
+ 0Yid/YZfotm6FSl04sH+TWQvrswUl1QBjXACuwFNadfFQX+pMobJJNhf1n/wUTz/PO34
+ ChNshSPTPXJPtE6sD5iDrafLHGvkN2uRMJegrKSJlt6dqPKE8Qo4qTtQRLyTuPYEjUHO
+ bHnI88fZ+nJWoWDfXpViJmVEvo3nPK5gi/NQ0AsaXuBg4Sd/NKDXkA1T9ib5TnbBOsFO
+ Ltg84q8zGzjAMT6c9AWbLcqusI965DmeVJ4PJ/j/bZviOO6CKcWX041DTw6WaXr2iQzt
+ n1QQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779784148; x=1780388948;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nn3x1RDv26LQABJq/Ywa0h1jCCRknpCEbyt+hDeuZNA=;
+ b=EoLwVI4KPD+ZcW+d2K8LZJlEwdth7DfIwEQhi43mxGnhcX+jAmnMkbfAbe+vmK3BJ+
+ UJSIOhASg8R/NlNW2JgF9xo9dj4bP9i6jZr64lRmUxxd7N7kzMgB1Qo4I72E/3aBrSzC
+ wFo6qRzo348QM8O83Uaq0pVxmXj7T2vXZ+QCLcclCSh33ge6WmhGkwru1OonlFj8Yc/U
+ VmNHYKnW2BYsCSldlen+dSncLBcV6abyflmFiTQIgpiAsYgg/Ll2YYS8QyVYOMCLfAeU
+ MH0MhwZtfIo8byRk6SK5F7wa25HEFkrNhMtV0fGYH3BH4E/TPyXSzHyzOFSiAXg1VIQR
+ TyQA==
+X-Gm-Message-State: AOJu0YyiAHDDwyFRtRyDiKn4iaFKNZEh0ag/xUf7YVSnq7hIyAEs2Kgs
+ sLfripi9AaJJiD4cO00LbbqKgH/Fp+/thGfQWpHze/EbNIHwwJtRLTsG+sdBpGyNFQ+qP9rr3fp
+ kjfSGjKQQaVimu59JAaS8pR7Vo/xsKDyM/IkSIlGaNw==
+X-Gm-Gg: Acq92OFI66JCWdVam9bREBbBN3PzkZhW6+KYszhq2+5NwRTvBS/iENUZ3qCiHJhcyU8
+ zTGXUIAAk8B+5hO8zTKyzHKrKe6wjXkELnOILA2jIyyPQIqddFZ4JYIG43df48j/2ZwXleHuWGg
+ RXNqnpVmaxC+L6qdznAWNjxPHxHvdZZUvQOthh7l8zZDTBFnMxP1NH2ovN3iI0OXe24TRU6YyIb
+ qXW+VFzGdhp0ecRUBdykHn39wZ8MWwzHkkaL4BF6qsBn9O/uMh/M8liXNHjR6aRK+HKujI6SzYG
+ Wqt4m34UTxwmfrG+h0S+hNlK/DAhBfnErLbFGv8JNVsCp9+bo6oXdakIF2lCiM5cQu0=
+X-Received: by 2002:a05:690e:4382:b0:651:b86f:3657 with SMTP id
+ 956f58d0204a3-65ec98de00amr11322867d50.36.1779784147955; Tue, 26 May 2026
+ 01:29:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <0bb3f577eff40a6a834d14db94a1612a2108ec67.1779748353.git.mst@redhat.com>
+In-Reply-To: <0bb3f577eff40a6a834d14db94a1612a2108ec67.1779748353.git.mst@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 26 May 2026 09:28:56 +0100
+X-Gm-Features: AVHnY4JNkdDREjY7IAaV1R5uWjBP7iMrjrgoQUxcrfsYPWwSfYD5Qg7qPQIrq2c
+Message-ID: <CAFEAcA-QrP0BagM6Tdk7rG055+vQ8pi0JMZkAdDy72odHcXXtQ@mail.gmail.com>
+Subject: Re: [PATCH] code-provenance: add exceptions
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, pbonzini@redhat.com, 
+ stefanha@redhat.com, imp@bsdimp.com, alex.bennee@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,303 +115,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: William de Abreu Pinho <williamdapinho@gmail.com>
+On Mon, 25 May 2026 at 23:35, Michael S. Tsirkin <mst@redhat.com> wrote:
+>
+> As a first step towards moving with the times, let's add
+> exceptions. Let's also do what linux does and ask for tags
+> on ai generated code.
+>
+> This is not going far enough imho but will hopefully be
+> noncontroversial.
 
-Use frugen to generate FRU data for the following components: HPM MB,
-R-PDB, L-PDB, SCM, BSM, R Bridge Board, L Bridge Board, and HPM board
-ID.
+I think we should have the discussion first and change the
+policy text second, please. Especially your
 
-Signed-off-by: William de Abreu Pinho <williamdapinho@gmail.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260519-add-anacapa-machine-v3-3-56c23993a20a@gmail.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- hw/arm/aspeed_ast2600_anacapa.c | 225 ++++++++++++++++++++++++++++++--
- 1 file changed, 217 insertions(+), 8 deletions(-)
++2. When the creative part of the contribution is clearly QEMU-specific
++   (so derived from the prompt).
 
-diff --git a/hw/arm/aspeed_ast2600_anacapa.c b/hw/arm/aspeed_ast2600_anacapa.c
-index c24f00d44cde..a1c8111a9344 100644
---- a/hw/arm/aspeed_ast2600_anacapa.c
-+++ b/hw/arm/aspeed_ast2600_anacapa.c
-@@ -20,6 +20,207 @@
- #define ANACAPA_BMC_HW_STRAP2 0x00000000
- #define ANACAPA_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
- 
-+/*
-+ * "Anacapa HPM (MB)" FRU data. Generated with frugen.
-+ *
-+ *    {
-+ *      "board": { "mfg": "Inventec", "pname": "Anacapa QEMU MB EVT2",
-+ *                 "pn": "00000000000", "serial": "00000000000000" },
-+ *      "product": { "mfg": "Inventec", "pname": "CI-Anacapa",
-+ *                   "pn": "10000000001", "ver": "MP",
-+ *                   "serial": "10000000000000", "atag": "QEMU" }
-+ *    }
-+ */
-+static const uint8_t hpm_eeprom[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x08, 0x00, 0x00, 0xf6, 0x01, 0x07, 0x19, 0xb4,
-+    0xa4, 0xf2, 0xc8, 0x49, 0x6e, 0x76, 0x65, 0x6e, 0x74, 0x65, 0x63, 0xd4,
-+    0x41, 0x6e, 0x61, 0x63, 0x61, 0x70, 0x61, 0x20, 0x51, 0x45, 0x4d, 0x55,
-+    0x20, 0x4d, 0x42, 0x20, 0x45, 0x56, 0x54, 0x32, 0x47, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x46, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a, 0xc0,
-+    0xc1, 0x00, 0x00, 0xb8, 0x01, 0x06, 0x19, 0xc8, 0x49, 0x6e, 0x76, 0x65,
-+    0x6e, 0x74, 0x65, 0x63, 0xca, 0x43, 0x49, 0x2d, 0x41, 0x6e, 0x61, 0x63,
-+    0x61, 0x70, 0x61, 0x46, 0x10, 0x00, 0x00, 0x00, 0x00, 0x1a, 0x82, 0x2d,
-+    0x0c, 0x47, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x83, 0x71, 0xd9,
-+    0xd6, 0xc0, 0xc1, 0x0e
-+};
-+static const size_t hpm_eeprom_len = sizeof(hpm_eeprom);
-+
-+/*
-+ * "Anacapa R-PDB" FRU data. Generated with frugen.
-+ *
-+ *    {
-+ *      "board": { "mfg": "Inventec", "pname": "Anacapa QEMU RPDB",
-+ *                 "pn": "00000000000", "serial": "00000000000000" },
-+ *      "product": { "mfg": "Inventec", "pname": "CI-Anacapa",
-+ *                   "pn": "10000000001", "ver": "MP",
-+ *                   "serial": "10000000000000", "atag": "QEMU" }
-+ *    }
-+ */
-+static const uint8_t rpdb_eeprom[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x08, 0x00, 0x00, 0xf6, 0x01, 0x07, 0x19, 0x41,
-+    0x2d, 0xf2, 0xc8, 0x49, 0x6e, 0x76, 0x65, 0x6e, 0x74, 0x65, 0x63, 0xd1,
-+    0x41, 0x6e, 0x61, 0x63, 0x61, 0x70, 0x61, 0x20, 0x51, 0x45, 0x4d, 0x55,
-+    0x20, 0x52, 0x50, 0x44, 0x42, 0x47, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x46, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a, 0xc0, 0xc1, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x4d, 0x01, 0x06, 0x19, 0xc8, 0x49, 0x6e, 0x76, 0x65,
-+    0x6e, 0x74, 0x65, 0x63, 0xca, 0x43, 0x49, 0x2d, 0x41, 0x6e, 0x61, 0x63,
-+    0x61, 0x70, 0x61, 0x46, 0x10, 0x00, 0x00, 0x00, 0x00, 0x1a, 0x82, 0x2d,
-+    0x0c, 0x47, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x83, 0x71, 0xd9,
-+    0xd6, 0xc0, 0xc1, 0x0e
-+};
-+static const size_t rpdb_eeprom_len = sizeof(rpdb_eeprom);
-+
-+/*
-+ * "Anacapa L-PDB" FRU data. Generated with frugen.
-+ *
-+ *    {
-+ *      "board": { "mfg": "Inventec", "pname": "Anacapa QEMU LPDB",
-+ *                 "pn": "00000000000", "serial": "00000000000000" },
-+ *      "product": { "mfg": "Inventec", "pname": "CI-Anacapa",
-+ *                   "pn": "10000000001", "ver": "MP",
-+ *                   "serial": "10000000000000", "atag": "QEMU" }
-+ *    }
-+ */
-+static const uint8_t lpdb_eeprom[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x08, 0x00, 0x00, 0xf6, 0x01, 0x07, 0x19, 0x41,
-+    0x2d, 0xf2, 0xc8, 0x49, 0x6e, 0x76, 0x65, 0x6e, 0x74, 0x65, 0x63, 0xd1,
-+    0x41, 0x6e, 0x61, 0x63, 0x61, 0x70, 0x61, 0x20, 0x51, 0x45, 0x4d, 0x55,
-+    0x20, 0x4c, 0x50, 0x44, 0x42, 0x47, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x46, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a, 0xc0, 0xc1, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x53, 0x01, 0x06, 0x19, 0xc8, 0x49, 0x6e, 0x76, 0x65,
-+    0x6e, 0x74, 0x65, 0x63, 0xca, 0x43, 0x49, 0x2d, 0x41, 0x6e, 0x61, 0x63,
-+    0x61, 0x70, 0x61, 0x46, 0x10, 0x00, 0x00, 0x00, 0x00, 0x1a, 0x82, 0x2d,
-+    0x0c, 0x47, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x83, 0x71, 0xd9,
-+    0xd6, 0xc0, 0xc1, 0x0e
-+};
-+static const size_t lpdb_eeprom_len = sizeof(lpdb_eeprom);
-+
-+/*
-+ * "Anacapa SCM" FRU data. Generated with frugen.
-+ *
-+ *    {
-+ *      "board": { "mfg": "Quanta", "pname": "Anacapa SCM",
-+ *                 "pn": "00000000000", "serial": "00000000000000" },
-+ *      "product": { "mfg": "Quanta", "pname": "CI-Anacapa",
-+ *                   "pn": "10000000001", "ver": "MP",
-+ *                   "serial": "10000000000000", "atag": "QEMU" }
-+ *    }
-+ */
-+static const uint8_t scm_eeprom[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x07, 0x00, 0x00, 0xf7, 0x01, 0x06, 0x19, 0x41,
-+    0x2d, 0xf2, 0xc6, 0x51, 0x75, 0x61, 0x6e, 0x74, 0x61, 0xcb, 0x41, 0x6e,
-+    0x61, 0x63, 0x61, 0x70, 0x61, 0x20, 0x53, 0x43, 0x4d, 0x47, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x46, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a,
-+    0xc0, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc5, 0x01, 0x06, 0x19, 0xc6,
-+    0x51, 0x75, 0x61, 0x6e, 0x74, 0x61, 0xca, 0x43, 0x49, 0x2d, 0x41, 0x6e,
-+    0x61, 0x63, 0x61, 0x70, 0x61, 0x46, 0x10, 0x00, 0x00, 0x00, 0x00, 0x1a,
-+    0x82, 0x2d, 0x0c, 0x47, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x83,
-+    0x71, 0xd9, 0xd6, 0xc0, 0xc1, 0x00, 0x00, 0xe2
-+};
-+static const size_t scm_eeprom_len = sizeof(scm_eeprom);
-+
-+/*
-+ * "Anacapa BMC Storage Module" FRU data. Generated with frugen.
-+ *
-+ *    {
-+ *      "board": { "mfg": "Quanta", "pname": "Anacapa BMC Storage Module",
-+ *                 "pn": "00000000000", "serial": "00000000000000" },
-+ *      "product": { "mfg": "Quanta", "pname": "CI-Anacapa",
-+ *                   "pn": "10000000001", "ver": "MP",
-+ *                   "serial": "10000000000000", "atag": "QEMU" }
-+ *    }
-+ */
-+static const uint8_t bsm_eeprom[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x0a, 0x00, 0x00, 0xf4, 0x01, 0x09, 0x00, 0x00,
-+    0x00, 0x00, 0xc6, 0x51, 0x75, 0x61, 0x6e, 0x74, 0x61, 0xda, 0x41, 0x6e,
-+    0x61, 0x63, 0x61, 0x70, 0x61, 0x20, 0x42, 0x4d, 0x43, 0x20, 0x53, 0x74,
-+    0x6f, 0x72, 0x61, 0x67, 0x65, 0x20, 0x4d, 0x6f, 0x64, 0x75, 0x6c, 0x65,
-+    0xce, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30,
-+    0x30, 0x30, 0x30, 0xcb, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30,
-+    0x30, 0x30, 0x30, 0xc0, 0xc1, 0x00, 0x00, 0x10, 0x01, 0x08, 0x00, 0xc6,
-+    0x51, 0x75, 0x61, 0x6e, 0x74, 0x61, 0xca, 0x43, 0x49, 0x2d, 0x41, 0x6e,
-+    0x61, 0x63, 0x61, 0x70, 0x61, 0xcb, 0x31, 0x30, 0x30, 0x30, 0x30, 0x30,
-+    0x30, 0x30, 0x30, 0x30, 0x31, 0xc2, 0x4d, 0x50, 0xce, 0x31, 0x30, 0x30,
-+    0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0xc4,
-+    0x51, 0x45, 0x4d, 0x55, 0xc0, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77,
-+};
-+static const size_t bsm_eeprom_len = sizeof(bsm_eeprom);
-+
-+/*
-+ * "Anacapa R Bridge Board" FRU data. Generated with frugen.
-+ *
-+ *    {
-+ *      "board": { "mfg": "Inventec", "pname": "Anacapa QEMU RBB EVT2",
-+ *                 "pn": "00000000000", "serial": "00000000000000" },
-+ *      "product": { "mfg": "Inventec", "pname": "CI-Anacapa",
-+ *                   "pn": "10000000001", "ver": "MP",
-+ *                   "serial": "10000000000000", "atag": "QEMU" }
-+ *    }
-+ */
-+static const uint8_t rbb_eeprom[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x08, 0x00, 0x00, 0xf6, 0x01, 0x07, 0x19, 0xb4,
-+    0xa4, 0xf2, 0xc8, 0x49, 0x6e, 0x76, 0x65, 0x6e, 0x74, 0x65, 0x63, 0xd5,
-+    0x41, 0x6e, 0x61, 0x63, 0x61, 0x70, 0x61, 0x20, 0x51, 0x45, 0x4d, 0x55,
-+    0x20, 0x52, 0x42, 0x42, 0x20, 0x45, 0x56, 0x54, 0x32, 0x47, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x46, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a,
-+    0xc0, 0xc1, 0x00, 0x70, 0x01, 0x06, 0x19, 0xc8, 0x49, 0x6e, 0x76, 0x65,
-+    0x6e, 0x74, 0x65, 0x63, 0xca, 0x43, 0x49, 0x2d, 0x41, 0x6e, 0x61, 0x63,
-+    0x61, 0x70, 0x61, 0x46, 0x10, 0x00, 0x00, 0x00, 0x00, 0x1a, 0x82, 0x2d,
-+    0x0c, 0x47, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x83, 0x71, 0xd9,
-+    0xd6, 0xc0, 0xc1, 0x0e
-+};
-+static const size_t rbb_eeprom_len = sizeof(rbb_eeprom);
-+
-+/*
-+ * "Anacapa L Bridge Board" FRU data. Generated with frugen.
-+ *
-+ *    {
-+ *      "board": { "mfg": "Inventec", "pname": "Anacapa QEMU LBB EVT2",
-+ *                 "pn": "00000000000", "serial": "00000000000000" },
-+ *      "product": { "mfg": "Inventec", "pname": "CI-Anacapa",
-+ *                   "pn": "10000000001", "ver": "MP",
-+ *                   "serial": "10000000000000", "atag": "QEMU" }
-+ *    }
-+ */
-+static const uint8_t lbb_eeprom[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x08, 0x00, 0x00, 0xf6, 0x01, 0x07, 0x19, 0xb4,
-+    0xa4, 0xf2, 0xc8, 0x49, 0x6e, 0x76, 0x65, 0x6e, 0x74, 0x65, 0x63, 0xd5,
-+    0x41, 0x6e, 0x61, 0x63, 0x61, 0x70, 0x61, 0x20, 0x51, 0x45, 0x4d, 0x55,
-+    0x20, 0x4c, 0x42, 0x42, 0x20, 0x45, 0x56, 0x54, 0x32, 0x47, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x46, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a,
-+    0xc0, 0xc1, 0x00, 0x76, 0x01, 0x06, 0x19, 0xc8, 0x49, 0x6e, 0x76, 0x65,
-+    0x6e, 0x74, 0x65, 0x63, 0xca, 0x43, 0x49, 0x2d, 0x41, 0x6e, 0x61, 0x63,
-+    0x61, 0x70, 0x61, 0x46, 0x10, 0x00, 0x00, 0x00, 0x00, 0x1a, 0x82, 0x2d,
-+    0x0c, 0x47, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x83, 0x71, 0xd9,
-+    0xd6, 0xc0, 0xc1, 0x0e
-+};
-+static const size_t lbb_eeprom_len = sizeof(lbb_eeprom);
-+
-+/*
-+ * "Anacapa HPM BRD ID" FRU data. Generated with frugen.
-+ *
-+ *    {
-+ *      "board": { "mfg": "Inventec", "pname": "Anacapa HPM BRD ID",
-+ *                 "pn": "00000000000", "serial": "00000000000000" },
-+ *      "product": { "mfg": "Inventec", "pname": "CI-Anacapa",
-+ *                   "pn": "10000000001", "ver": "MP",
-+ *                   "serial": "10000000000000", "atag": "QEMU" }
-+ *    }
-+ */
-+static const uint8_t hpm_brd_id_eeprom[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x08, 0x00, 0x00, 0xf6, 0x01, 0x07, 0x19, 0x41,
-+    0x2d, 0xf2, 0xc8, 0x49, 0x6e, 0x76, 0x65, 0x6e, 0x74, 0x65, 0x63, 0xd2,
-+    0x41, 0x6e, 0x61, 0x63, 0x61, 0x70, 0x61, 0x20, 0x48, 0x50, 0x4d, 0x20,
-+    0x42, 0x52, 0x44, 0x20, 0x49, 0x44, 0x47, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x46, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a, 0xc0, 0xc1, 0x00,
-+    0x00, 0x00, 0x00, 0x42, 0x01, 0x06, 0x19, 0xc8, 0x49, 0x6e, 0x76, 0x65,
-+    0x6e, 0x74, 0x65, 0x63, 0xca, 0x43, 0x49, 0x2d, 0x41, 0x6e, 0x61, 0x63,
-+    0x61, 0x70, 0x61, 0x46, 0x10, 0x00, 0x00, 0x00, 0x00, 0x1a, 0x82, 0x2d,
-+    0x0c, 0x47, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x83, 0x71, 0xd9,
-+    0xd6, 0xc0, 0xc1, 0x0e
-+};
-+static const size_t hpm_brd_id_eeprom_len = sizeof(hpm_brd_id_eeprom);
-+
- static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
- {
-     /* Reference: aspeed-bmc-facebook-anacapa.dts */
-@@ -50,7 +251,8 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
- 
-     /* &i2c6 */
-     /* eeprom@50 */
--    at24c_eeprom_init(i2c[6], 0x50, 32 * KiB);
-+    at24c_eeprom_init_rom(i2c[6], 0x50, 32 * KiB,
-+                          hpm_eeprom, hpm_eeprom_len);
- 
-     /* &i2c8 */
-     /* i2c-mux@72 (PCA9546) */
-@@ -65,7 +267,8 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
-     i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0),
-                             TYPE_PCA9552, 0x24);
-     /* eeprom@50 */
--    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 0), 0x50, 16 * KiB);
-+    at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 0), 0x50, 16 * KiB,
-+                          rpdb_eeprom, rpdb_eeprom_len);
- 
-     /* i2c8mux ch1 */
-     /* pca9555@22 */
-@@ -75,13 +278,16 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
-     i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 1),
-                             TYPE_PCA9552, 0x24);
-     /* eeprom@50 */
--    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x50, 16 * KiB);
-+    at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 1), 0x50, 16 * KiB,
-+                          lpdb_eeprom, lpdb_eeprom_len);
- 
-     /* &i2c9 */
-     /* eeprom@50 */
--    at24c_eeprom_init(i2c[9], 0x50, 16 * KiB);
-+    at24c_eeprom_init_rom(i2c[9], 0x50, 16 * KiB,
-+                          scm_eeprom, scm_eeprom_len);
-     /* eeprom@56 */
--    at24c_eeprom_init(i2c[9], 0x56, 8 * KiB);
-+    at24c_eeprom_init_rom(i2c[9], 0x56, 8 * KiB,
-+                          bsm_eeprom, bsm_eeprom_len);
- 
-     /* &i2c10 */
-     /* i2c-mux@71 (PCA9548) */
-@@ -92,7 +298,8 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
-     i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5),
-                             TYPE_PCA9552, 0x22);
-     /* eeprom@52 */
--    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 5), 0x52, 32 * KiB);
-+    at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 5), 0x52, 32 * KiB,
-+                          rbb_eeprom, rbb_eeprom_len);
- 
-     /* &i2c11 */
-     /* i2c-mux@71 (PCA9548) */
-@@ -105,7 +312,8 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
-     i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5),
-                             TYPE_PCA9552, 0x22);
-     /* eeprom@52 */
--    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 5), 0x52, 32 * KiB);
-+    at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 5), 0x52, 32 * KiB,
-+                          lbb_eeprom, lbb_eeprom_len);
- 
-     /* &i2c13 */
-     /* i2c-mux@70 (PCA9548) */
-@@ -116,7 +324,8 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
- 
-     /* i2c13mux ch4 */
-     /* eeprom@51 */
--    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 4), 0x51, 32 * KiB);
-+    at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 4), 0x51, 32 * KiB,
-+                          hpm_brd_id_eeprom, hpm_brd_id_eeprom_len);
- 
-     /* i2c13mux ch7 */
-     /* nfc@28 — no model */
--- 
-2.54.0
+I don't currently feel I would agree with: I think it is
+a lot broader than I would like to have us permit.
 
+I suspect that discussion consensus is likely to land somewhere
+around permitting the kind of thing you have in mind in your
+first bullet point, but we will likely want to be more expansive
+in describing it and giving examples of what we do and don't
+consider to be in-scope.
+
+thanks
+-- PMM
 
