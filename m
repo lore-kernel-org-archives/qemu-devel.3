@@ -4,97 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AF57CD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 11:35:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7861CD5BD0
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 11:36:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRq2V-0007z4-E5; Tue, 26 May 2026 07:33:39 -0400
+	id 1wRq4q-0003ur-1L; Tue, 26 May 2026 07:36:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wRq2G-0007sf-Rm
- for qemu-devel@nongnu.org; Tue, 26 May 2026 07:33:26 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wRq2B-0002DL-1S
- for qemu-devel@nongnu.org; Tue, 26 May 2026 07:33:23 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-4526a8170ceso5285601f8f.2
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 04:33:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wRq4o-0003ua-3J
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 07:36:02 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wRq4k-00057e-9D
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 07:36:01 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64Q7Kkmq507064
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 11:35:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ wstwRG0e4C8qsFOqw6SshCdz21oIWKY+UFI6BVwME3g=; b=XDGbqIkBMc8P28gF
+ ZSDmp10/5XojlNA/EEV+CIfcg3Cc9D0GjPeciS2Lg2WwgpGDctTx7eRdH4FCegVk
+ tfZd7ZrPHkHiMbSPsaVw9NPHZdVJUoRN0IUfxiWAI3lieILC8RwT9/5c8KDsfXsw
+ Z6iDrtyS8sV7QB79H8gZ3fo4ynpeHNgCTZe5D9pd+LG/36nCu7oG7nAs3ZoHGlNw
+ Y/fLxVsmnZd6h+MyFHyvwmbrfX7L2C1nZ7i93uQeq8RnbZ8r4DkB2gKG6O9oQRED
+ wYnaVfflATSJqIBkYW5AMtl6h3Ebm7EfRvZFQyVj7+EY/wJWJ8k216kvKcTQI3S0
+ vFDwEw==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ecpyqkupy-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 11:35:54 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-8b552610488so58440386d6.0
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 04:35:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1779795192; x=1780399992; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vQ2Ei269qNhwnX8ilyNPENKBqWr0adLcLNyR21NmpyI=;
- b=TfsoYWZWlpGfO8gR/2xxyHhVLMhO3TQ7f/HRZODxCcJ4I0nIXbyZUdqx5OiBeml0T7
- zGXIRGZZAtwgiub9SdFQhhKdj5SlRcbLHrV8KxHa0VD0oiF4xtbyb75FVWGfS/FoX/25
- l9WbwNv50HtNwzl1MGE0FPXqpO18048VYxB6g=
+ d=oss.qualcomm.com; s=google; t=1779795354; x=1780400154; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wstwRG0e4C8qsFOqw6SshCdz21oIWKY+UFI6BVwME3g=;
+ b=d2/a1e1gmB5VRcKQMATTN984AWhoJ8Do+j6x2tRLLCs8VPWweCPgcnOUNPZeuvQqio
+ fTB2SB2KQVXL+RutF4eRR/YownUMOpvaZXuRHk2aU8jf92U0/S3zW52pzsY8GSPnypZc
+ kaP5RAQ3ps5iF3a+Ad6CPE9wBQjEL7X2bUiOrglrTRtg3EbRFskl4547ZJKjjom7MDid
+ SNrUVx4qhxz45qUe7UAmTEI4ymv5YzGJUi06jNr6KUVzb57VgKusNyEZWrbEBaCGPYMU
+ 8PYRshxI0cs5+BxMEY8ou2BC11a4bdCdLWs5CmQvCedkv9aQoYnnPsvM702y6WVqnVQt
+ gMEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779795192; x=1780399992;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=vQ2Ei269qNhwnX8ilyNPENKBqWr0adLcLNyR21NmpyI=;
- b=TJaQRKErbE/VGa1+T8ghpkNxXtpSltItDYWmc411io+owX1taR5yylCLA51p/wXjDV
- 8R8sOue0eecCCZeRYKuMkFBxNLEpt78Cr0Iz6DJP7FETA50IAAx2jFEH96EN0CaZ2pLh
- nYoT5g907kiTe4A0AeMmyieTN2C1S94m8b6VAbe4XFD/LtQ2jNr9Nvc80cajS+YHbEeD
- NJKgjslN4UN1KHe7GRWokPLDQySjiIHbZD+XdbDWbPOlhduGdTEkVu2e6XDfCHN1ixc7
- 4fzF3RA0DDuBkzsGWkBrwAdaThvO+lg8RxTDwtfgGQM6hKxrGGhPVIRTj7tdQlig/auT
- KUtA==
-X-Gm-Message-State: AOJu0Yx19SjQPlgnltB0r+vSwGDEGBZ+h9pWAIDBDNoikYUR+vnzyRH6
- x+9KAYGaXsZBMl9KtZ6aJslVlydEZR6bfwmSKsmdy44HQjJtRySbmGbaqOMbLId/YqOfikV5Tzn
- VhLLWfUc=
-X-Gm-Gg: Acq92OHnNrzEr7mPXktsOeUikS0hqx5gCnYEdiI3NHgPbPGnRQjfz9+GlJn0hxElD3g
- 1C4NJTkyo1JZZQKLc6BP84zfQiaYQIIxu/ZIS96SBPtO6ks5CwYlDGn/zcBrXnfMmIgUDI0j0WA
- +lLCmsHaawo/Nc9tesfRVt6dlbCw4qLC/qSCNemyM5zeb0Gx5UMbExNufdKyF7d+anwG7VXplYR
- 8Ry3mO4A3zWwS8z8aYON/J0eAuuugtA5Pc/SfMfabmAI0TMGWKvr3htwR6H8vyReEAOJi1LjQTT
- ERzhAuiO0NTbGz48n4otq1nJe6lfixP7bscWRmgKJLHd8HZG4VjDQ6EEmQquEn2O3JF/zedyVPj
- oZeCbj7Lbp/R2SfkZ5JhHQ43K5Z5DnLZof33hqmCZ9ROyRxkRNdZdF17cjMrTpIjgDYbajY6LtN
- 1EufwwQotaaZCcS6HxY+SJ1RkF0dziH3ZSC535UhP7jB4lVOi8+qfPBQKBh/3O2TyWOQcT69hJN
- DlGAEgYa/aTu06I1DKMXMg=
-X-Received: by 2002:adf:e009:0:10b0:43d:c95b:c46f with SMTP id
- ffacd0b85a97d-45eb38bfdebmr22120030f8f.38.1779795191891; 
- Tue, 26 May 2026 04:33:11 -0700 (PDT)
-Received: from alex-laptop.lan
- (p200300cf57228c00840292fb31d0d80a.dip0.t-ipconnect.de.
- [2003:cf:5722:8c00:8402:92fb:31d0:d80a])
+ d=1e100.net; s=20251104; t=1779795354; x=1780400154;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wstwRG0e4C8qsFOqw6SshCdz21oIWKY+UFI6BVwME3g=;
+ b=cyBbcmqSUdfqFVokJ9Fkawj3MtWpbuuK+CuUmuGVU6lkgv236h1t+6cwc0QlmzMiw2
+ /YdH5lyjn+5ce/mJZVe5dnbZsB7J/qite9V6BnZcrwS8HUG8OQCuzKeDzgVxPz183Or3
+ jb3s788pRUuMoJ6uZkIWwmULnokajZ5m1MeNoRuZwpRtmTZ0i+XxeXzJ4rdWPhCrO+y2
+ E/W99zW0ubEzElN+ltBA9UDEfbyWeE7/KZuQGicwlaJdV8GnnNX5CsRC1Vw/JDh4yBBJ
+ polgKxl0pGHq5QPnAczW52arhWVEbnx9p1pU/yxpmpaQ4QEoeCtB7vB3TjHfuad3+3/+
+ YPeg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ96sHb5ovw2BpMeoSDovCwCmGMJEnZG2DpvGASNMhagx1R0zwXyrt06mlqAaWzMxgCc1hLlZqkZ2A1R@nongnu.org
+X-Gm-Message-State: AOJu0Yzp1ppDP0zDFtvNJftxljZ+ysQtdbqT70dx9tpGcSh7vj7U6cmv
+ SKIknIjqDDFrc5VMNioM1ii20h+vhDLkFMOZyDYGkQbx/Y0URL102INfRXgAW1LrmKo4bkKPWPJ
+ 8hIVyujf24LaewixVzOQ7anPHJaTm0ZyvfKlPgS2XZzwA/Dtyps4zlyA9Pw==
+X-Gm-Gg: Acq92OE8FShP4SlC8cDltWEXaOKQgQWP+SfJsIU6Hzm6zrgnYIXjzbhSicFJTqWjjIW
+ vq1YvXBODFWTiejirecvQBQqwVgmn4UJFg6MANaCyba8gLSqmhgPo8IXS0bYpzBJU5yzsNAh9GJ
+ gfwcPNULMhaJPR57GzXx492RJTc4ZS5xDiioniPCE9Fu8gYhOaqck4I7s/j33phCD2xLbc2q2QE
+ ZDp2BC9V7gnz8TlWYDd9sbly+ouAQbQPkUWbnzPAlolWh37bvGKL0PtqDdYN8RnH3dnjloBU4o7
+ b6ff3X/GCaJ/i9ATRMsiH1606FylTpZhN/pyjSCmZQYrnk+CB8mDEAZGduErn4ng5SK9k9s79Vo
+ OkUW7/83EDAjDktnQKDG36q0O0dXEpMY6X/ikItd6npTdBmqI/VUUqgm9JXg=
+X-Received: by 2002:a05:6214:33c4:b0:89a:9ef:1922 with SMTP id
+ 6a1803df08f44-8cc7b5c06e0mr309598166d6.40.1779795353790; 
+ Tue, 26 May 2026 04:35:53 -0700 (PDT)
+X-Received: by 2002:a05:6214:33c4:b0:89a:9ef:1922 with SMTP id
+ 6a1803df08f44-8cc7b5c06e0mr309597606d6.40.1779795353340; 
+ Tue, 26 May 2026 04:35:53 -0700 (PDT)
+Received: from [192.168.68.106] ([191.202.238.222])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6d4ca0dsm34366870f8f.18.2026.05.26.04.33.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 04:33:11 -0700 (PDT)
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-To: qemu-devel@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Keith Busch <kbusch@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, qemu-block@nongnu.org,
- Klaus Jensen <its@irrelevant.dk>, Laurent Vivier <lvivier@redhat.com>,
- Jesper Devantier <foss@defmacro.it>, Kevin Wolf <kwolf@redhat.com>,
- Fam Zheng <fam@euphon.net>, Zhao Liu <zhao1.liu@intel.com>,
- Alexander Mikhalitsyn <alexander@mihalicyn.com>,
- =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
- Peter Xu <peterx@redhat.com>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH v8 8/8] tests/qtest/nvme-test: add migration test with full CQ
-Date: Tue, 26 May 2026 13:33:01 +0200
-Message-ID: <20260526113301.91492-9-alexander@mihalicyn.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260526113301.91492-1-alexander@mihalicyn.com>
-References: <20260526113301.91492-1-alexander@mihalicyn.com>
+ 6a1803df08f44-8cc80deae74sm139370746d6.11.2026.05.26.04.35.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 May 2026 04:35:52 -0700 (PDT)
+Message-ID: <9f8b2370-7b0f-4302-9ced-93993214bc11@oss.qualcomm.com>
+Date: Tue, 26 May 2026 08:35:49 -0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 37/48] target/riscv: do not set defaults in cpu prop
+ callback
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ alistair23@gmail.com, qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>
+References: <20260522000324.23255-1-alistair.francis@wdc.com>
+ <20260522000324.23255-38-alistair.francis@wdc.com>
+ <f99bbe2d-07d6-4cd5-a309-78d521f9127d@linaro.org>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <f99bbe2d-07d6-4cd5-a309-78d521f9127d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=alexander@mihalicyn.com; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Authority-Analysis: v=2.4 cv=dtfrzVg4 c=1 sm=1 tr=0 ts=6a15859a cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=etEqFfc6qwXwpI8uT8rzbw==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=JF9118EUAAAA:8 a=R6idZvmv3lllwpMSse8A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=OIgjcC2v60KrkQgK7BGD:22
+ a=xVlTc564ipvMDusKsbsT:22
+X-Proofpoint-GUID: Jhe_j-LDc73kkQsmVgFr6kcCoysiR2rL
+X-Proofpoint-ORIG-GUID: Jhe_j-LDc73kkQsmVgFr6kcCoysiR2rL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI2MDEwMCBTYWx0ZWRfX+7bK+G1CNjw3
+ EMx+X4OoI02NsoGG2wUXeE5+B+if8vXBgDyunYQNi9FfYZeEqXmcLNojMsujRXqWER8PxpkLdDs
+ cJHt681XDh/5GdZJXHRBbS72uYnjH3YQ/hz8opMmDjD6en0gLRN7Zqwart+03bPfhcv+s4zLv7a
+ LSOVTREFx1jt5QwWQAoszpt96K9MI61bemn7xzrdSajfebGjkEneA1PWmLj35CHhI2TOuVj9yc2
+ 5jOeazfIeQxo9KLTu3sfwSxmiKaWfrRbUJ4am9r1wSTr+kX93NQ11XWD1xPWLy+LuVsU7nskUeR
+ 646dFX3PRKSwQYgXjyDLET3f0PJamJsGyItJmef5L08BJ8CQHPXgHiYrKaL7gjcu7qq+WBPPQLN
+ ryeJ/mY0QV5hG44AvGdwqSzE0bwy03viJQ5BLqX627awF00pUwP7fhWop44EXSDV8LDNh8NUPis
+ O66t1iWDIwka/OYnRqA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-05-26_02,2026-05-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 suspectscore=0 bulkscore=0 phishscore=0
+ adultscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605260100
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,453 +155,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-As suggested by Stefan [1], let's add a migration test to cover
-rare scenario when CQ is full of non-processed CQEs and migration
-happens.
 
-To run this test:
-$ meson test -C build 'qtest-x86_64/qos-test'
+On 5/26/2026 5:26 AM, Philippe Mathieu-Daudé wrote:
+> On 22/5/26 02:03, alistair23@gmail.com wrote:
+>> From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+>>
+>> Do not rely on riscv_cpu_* arrays to set rv32/rv64 CPU defaults - add
+>> them to the CPU definition like we do with all other CPUs (aside from
+>> 'max').
+> 
+> Hmm this change is unfortunate, I was about to replace the 3 machine
+> uses of TYPE_RISCV_CPU_BASE by "max" (they were semantically identical).
+> 
+> Why do we need these "base" CPU types and can't use "max" instead?
+> Because they are "fake but stable" why "max" doesn't aim to be?
 
-Link: https://lore.kernel.org/qemu-devel/20260408183529.GB319710@fedora/ [1]
-Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
-Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
----
-v7:
-    - fixed endianness bugs (and tested on s390x machine)
-    - code style changes (don't use ptr type for physical addresses)
-v6:
-    - test added
----
- tests/qtest/nvme-test.c | 395 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 395 insertions(+)
+rv32 and rv64 don't have a cohesive design.  They happen to be the
+default CPUs that we kept using since the start of the RISC-V port 8
+years go, and each new extension added back then was turned on by
+default on those CPUs.  There's no deep meaning or reasoning behind
+the default extensions of each of them.
 
-diff --git a/tests/qtest/nvme-test.c b/tests/qtest/nvme-test.c
-index 4aec1651e6e..4d063ee971f 100644
---- a/tests/qtest/nvme-test.c
-+++ b/tests/qtest/nvme-test.c
-@@ -8,9 +8,12 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include <glib/gstdio.h>
-+#include "qemu/bswap.h"
- #include "qemu/module.h"
- #include "qemu/units.h"
- #include "libqtest.h"
-+#include "libqtest-single.h"
- #include "libqos/qgraph.h"
- #include "libqos/pci.h"
- #include "block/nvme.h"
-@@ -142,6 +145,396 @@ static void nvmetest_pmr_reg_test(void *obj, void *data, QGuestAllocator *alloc)
-     qpci_iounmap(pdev, pmr_bar);
- }
- 
-+#define PAGE_SIZE 4096
-+
-+typedef struct nvme_ctrl nvme_ctrl;
-+
-+typedef struct nvme_queue {
-+    nvme_ctrl *ctrl;
-+    uint64_t doorbell;
-+    uint32_t size;
-+} nvme_queue;
-+
-+typedef struct nvme_cq {
-+    nvme_queue common;
-+    uint64_t phys_cqe; /* NvmeCqe* */
-+    uint16_t head;
-+    uint8_t phase;
-+} nvme_cq;
-+
-+typedef struct nvme_sq {
-+    nvme_queue common;
-+    uint64_t phys_sqe; /* NvmeCmd* */
-+    nvme_cq *cq;
-+    uint16_t head;
-+    uint16_t tail;
-+} nvme_sq;
-+
-+struct nvme_ctrl {
-+    QGuestAllocator *alloc;
-+    QPCIDevice *pdev;
-+    QPCIBar bar;
-+
-+    uint32_t db_stride;
-+
-+    nvme_sq admin_sq;
-+    nvme_cq admin_cq;
-+};
-+
-+#define PHYS_ADDR_OF(T, base_phys_addr, accessor) \
-+    (uint64_t)&((T *)base_phys_addr)accessor
-+
-+static void nvme_init_queue_common(nvme_ctrl *ctrl, nvme_queue *q,
-+                                   uint16_t db_idx, uint32_t size)
-+{
-+    q->ctrl = ctrl;
-+    q->doorbell = (sizeof(NvmeBar) + db_idx * ctrl->db_stride);
-+    g_test_message(" q %p db_idx %u doorbell %lx", q, db_idx, q->doorbell);
-+    q->size = size;
-+}
-+
-+static void nvme_init_sq(nvme_ctrl *ctrl, nvme_sq *sq, uint16_t db_idx,
-+                         uint32_t size, nvme_cq *cq)
-+{
-+    nvme_init_queue_common(ctrl, &sq->common, db_idx, size);
-+
-+    sq->phys_sqe = guest_alloc(ctrl->alloc, PAGE_SIZE);
-+    g_assert(sq->phys_sqe);
-+
-+    g_test_message("sq %p db_idx %u sqe 0x%" PRIx64, sq, db_idx, sq->phys_sqe);
-+    sq->cq = cq;
-+    sq->head = 0;
-+    sq->tail = 0;
-+}
-+
-+static void nvme_init_cq(nvme_ctrl *ctrl, nvme_cq *cq, uint16_t db_idx,
-+                         uint32_t size)
-+{
-+    nvme_init_queue_common(ctrl, &cq->common, db_idx, size);
-+
-+    cq->phys_cqe = guest_alloc(ctrl->alloc, PAGE_SIZE);
-+    g_assert(cq->phys_cqe);
-+
-+    g_test_message("cq %p db_idx %u cqe 0x%" PRIx64, cq, db_idx, cq->phys_cqe);
-+    cq->head = 0;
-+    cq->phase = 1;
-+}
-+
-+static int nvme_cqe_pending(nvme_cq *cq)
-+{
-+    uint16_t status = qtest_readw(cq->common.ctrl->pdev->bus->qts,
-+                                  PHYS_ADDR_OF(NvmeCqe, cq->phys_cqe, [cq->head].status));
-+    return (status & 1) == cq->phase;
-+}
-+
-+static int nvme_is_cqe_success(NvmeCqe *cqe)
-+{
-+    return (le16_to_cpu(cqe->status) >> 1) == NVME_SUCCESS;
-+}
-+
-+static NvmeCqe nvme_handle_cqe(nvme_sq *sq)
-+{
-+    nvme_cq *cq = sq->cq;
-+    uint64_t phys_cqe = PHYS_ADDR_OF(NvmeCqe, cq->phys_cqe, [cq->head]); /* NvmeCqe* */
-+    NvmeCqe cqe;
-+    uint16_t cq_next_head;
-+
-+    g_assert(nvme_cqe_pending(cq));
-+
-+    qtest_memread(sq->common.ctrl->pdev->bus->qts, phys_cqe, &cqe, sizeof(cqe));
-+
-+    cq_next_head = (cq->head + 1) % cq->common.size;
-+    g_test_message("cq %p head %u -> %u", cq, cq->head, cq_next_head);
-+    if (cq_next_head < cq->head) {
-+        cq->phase ^= 1;
-+    }
-+    cq->head = cq_next_head;
-+
-+    if (cqe.sq_head != sq->head) {
-+        sq->head = cqe.sq_head;
-+        g_test_message("sq %p head = %u", sq, sq->head);
-+    }
-+
-+    qpci_io_writel(cq->common.ctrl->pdev, cq->common.ctrl->bar, cq->common.doorbell, cq->head);
-+
-+    return cqe;
-+}
-+
-+static NvmeCqe nvme_wait(nvme_sq *sq)
-+{
-+    int i;
-+    bool ready = false;
-+
-+    for (i = 0; i < 10; i++) {
-+        if (nvme_cqe_pending(sq->cq)) {
-+            ready = true;
-+            break;
-+        }
-+
-+        g_usleep(1000);
-+    }
-+
-+    g_assert(ready);
-+
-+    return nvme_handle_cqe(sq);
-+}
-+
-+static uint64_t nvme_get_next_sqe(nvme_sq *sq, uint8_t opcode, uint16_t cid, uint64_t prp1)
-+{
-+    uint64_t phys_sqe = PHYS_ADDR_OF(NvmeCmd, sq->phys_sqe, [sq->tail]);
-+
-+    if (((sq->tail + 1) % sq->common.size) == sq->head) {
-+        /* no space in SQ */
-+        g_test_message("%s head %d tail %d", __func__, sq->head, sq->tail);
-+        g_assert(false);
-+        return 0;
-+    }
-+
-+    qtest_memset(sq->common.ctrl->pdev->bus->qts,
-+                 phys_sqe, 0, sizeof(NvmeCmd));
-+
-+    #define GUEST_MEM_WRITE(fn, phys_addr, val) \
-+        fn(sq->common.ctrl->pdev->bus->qts, phys_addr, (val))
-+
-+    GUEST_MEM_WRITE(qtest_writeb, PHYS_ADDR_OF(NvmeCmd, phys_sqe, ->opcode), opcode);
-+    GUEST_MEM_WRITE(qtest_writew, PHYS_ADDR_OF(NvmeCmd, phys_sqe, ->cid), cid);
-+    GUEST_MEM_WRITE(qtest_writeq, PHYS_ADDR_OF(NvmeCmd, phys_sqe, ->dptr.prp1), prp1);
-+
-+    #undef GUEST_MEM_WRITE
-+
-+    g_test_message("sq %p next_sqe %u sqe 0x%" PRIx64, sq, sq->tail, phys_sqe);
-+    return phys_sqe;
-+}
-+
-+static void nvme_commit_sqe(nvme_sq *sq)
-+{
-+    g_test_message("sq %p commit sqe tail %u", sq, sq->tail);
-+    sq->tail = (sq->tail + 1) % sq->common.size;
-+    qpci_io_writel(sq->common.ctrl->pdev, sq->common.ctrl->bar, sq->common.doorbell, sq->tail);
-+}
-+
-+static uint64_t nvme_admin_identify_ctrl(nvme_ctrl *ctrl, uint16_t cid, bool no_wait)
-+{
-+    uint64_t phys_cmd_identify; /* NvmeCmd* */
-+    uint64_t phys_identify; /* NvmeIdCtrl* */
-+    NvmeCqe cqe;
-+
-+    g_test_message("sending req cid %u no_wait %d", cid, no_wait);
-+
-+    phys_identify = guest_alloc(ctrl->alloc, PAGE_SIZE);
-+    g_assert(phys_identify);
-+
-+    phys_cmd_identify = nvme_get_next_sqe(&ctrl->admin_sq,
-+                                          NVME_ADM_CMD_IDENTIFY, cid,
-+                                          phys_identify);
-+    g_assert(phys_cmd_identify);
-+
-+    #define GUEST_MEM_WRITE(fn, phys_addr, val) \
-+        fn(ctrl->pdev->bus->qts, phys_addr, (val))
-+
-+    GUEST_MEM_WRITE(qtest_writel, PHYS_ADDR_OF(NvmeCmd, phys_cmd_identify, ->nsid), 0);
-+    GUEST_MEM_WRITE(qtest_writel, PHYS_ADDR_OF(NvmeIdentify, phys_cmd_identify, ->cns), NVME_ID_CNS_CTRL);
-+
-+    #undef GUEST_MEM_WRITE
-+
-+    nvme_commit_sqe(&ctrl->admin_sq);
-+
-+    if (no_wait) {
-+        return phys_identify;
-+    }
-+
-+    cqe = nvme_wait(&ctrl->admin_sq);
-+    g_assert(nvme_is_cqe_success(&cqe));
-+    g_assert(le16_to_cpu(cqe.cid) == cid);
-+
-+    return phys_identify;
-+}
-+
-+static void nvme_wait_ready(nvme_ctrl *ctrl, int val)
-+{
-+    int i;
-+
-+    for (i = 0; i < 10; i++) {
-+        uint32_t csts = qpci_io_readl(ctrl->pdev, ctrl->bar, NVME_REG_CSTS);
-+        g_test_message("%s: csts %x", __func__, csts);
-+
-+        if (NVME_CSTS_RDY(csts) == val) {
-+            return;
-+        }
-+
-+        g_usleep(1000);
-+    }
-+
-+    g_assert(false);
-+}
-+
-+static void test_migrate_setup_nvme_ctrl(nvme_ctrl *ctrl)
-+{
-+    uint64_t cap;
-+
-+    /* disable controller */
-+    qpci_io_writel(ctrl->pdev, ctrl->bar, NVME_REG_CC, 0);
-+    nvme_wait_ready(ctrl, 0);
-+
-+    cap = qpci_io_readq(ctrl->pdev, ctrl->bar, NVME_REG_CAP);
-+    ctrl->db_stride = 4 << NVME_CAP_DSTRD(cap);
-+
-+    nvme_init_cq(ctrl, &ctrl->admin_cq, 1, 2 /* CQEs num */);
-+    nvme_init_sq(ctrl, &ctrl->admin_sq, 0, 4 /* SQEs num */, &ctrl->admin_cq);
-+
-+    qpci_io_writel(ctrl->pdev, ctrl->bar, NVME_REG_AQA,
-+        ((ctrl->admin_cq.common.size - 1) << AQA_ACQS_SHIFT) |
-+        ((ctrl->admin_sq.common.size - 1) << AQA_ASQS_SHIFT)
-+    );
-+
-+    qpci_io_writeq(ctrl->pdev, ctrl->bar,
-+                   NVME_REG_ASQ, (uint64_t)ctrl->admin_sq.phys_sqe);
-+    qpci_io_writeq(ctrl->pdev, ctrl->bar,
-+                   NVME_REG_ACQ, (uint64_t)ctrl->admin_cq.phys_cqe);
-+
-+    /* enable controller */
-+    {
-+        uint32_t cc = 0;
-+        NVME_SET_CC_EN(cc, 1);
-+        qpci_io_writel(ctrl->pdev, ctrl->bar, NVME_REG_CC, cc);
-+    }
-+
-+    nvme_wait_ready(ctrl, 1);
-+}
-+
-+typedef struct test_migrate_req {
-+    uint16_t cid;
-+    bool handle_cqe;
-+    uint64_t phys_identify; /* NvmeIdCtrl* */
-+} test_migrate_req;
-+
-+static void test_migrate_send_nvme_reqs(nvme_ctrl *ctrl, test_migrate_req *reqs,
-+                                        int num)
-+{
-+    int i;
-+
-+    for (i = 0; i < num; i++) {
-+        reqs[i].phys_identify = nvme_admin_identify_ctrl(ctrl, reqs[i].cid,
-+                                                         !reqs[i].handle_cqe);
-+        g_assert(reqs[i].phys_identify);
-+
-+        if (reqs[i].handle_cqe) {
-+            guest_free(ctrl->alloc, reqs[i].phys_identify);
-+        }
-+    }
-+}
-+
-+static void test_migrate_check_nvme(nvme_ctrl *ctrl, test_migrate_req *reqs, int num)
-+{
-+    int i;
-+
-+    for (i = 0; i < num; i++) {
-+        NvmeCqe cqe;
-+
-+        if (reqs[i].handle_cqe) {
-+            continue;
-+        }
-+
-+        cqe = nvme_wait(&ctrl->admin_sq);
-+        g_assert(nvme_is_cqe_success(&cqe));
-+
-+        g_assert_cmpint(le16_to_cpu(cqe.cid), ==, reqs[i].cid);
-+
-+        #define GUEST_MEM_READB(phys_addr) \
-+                    qtest_readb(ctrl->pdev->bus->qts, (phys_addr))
-+
-+        g_assert_cmpint(GUEST_MEM_READB(PHYS_ADDR_OF(NvmeIdCtrl, reqs[i].phys_identify, ->ieee[0])), ==, 0x0);
-+        g_assert_cmpint(GUEST_MEM_READB(PHYS_ADDR_OF(NvmeIdCtrl, reqs[i].phys_identify, ->ieee[1])), ==, 0x54);
-+        g_assert_cmpint(GUEST_MEM_READB(PHYS_ADDR_OF(NvmeIdCtrl, reqs[i].phys_identify, ->ieee[2])), ==, 0x52);
-+
-+        #undef GUEST_MEM_READB
-+
-+        guest_free(ctrl->alloc, reqs[i].phys_identify);
-+    }
-+}
-+
-+static void test_migrate(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    g_autofree gchar *tmpfs = NULL;
-+    GError *err = NULL;
-+    g_autofree gchar *mig_path;
-+    g_autofree gchar *uri;
-+    GString *dest_cmdline;
-+    QTestState *to;
-+    QDict *rsp;
-+    QNvme *nvme = obj;
-+    QPCIDevice *pdev = &nvme->dev;
-+    g_autofree nvme_ctrl *ctrl;
-+    test_migrate_req test_reqs[] = {
-+        { 123, true },
-+        { 456, false },
-+        { 300, false },
-+        { 333, false }
-+    };
-+
-+    /* create temporary dir and prepare unix socket path for migration */
-+    tmpfs = g_dir_make_tmp("nvme-test-XXXXXX", &err);
-+    if (!tmpfs) {
-+        g_test_message("Can't create temporary directory in %s: %s",
-+                       g_get_tmp_dir(), err->message);
-+        g_error_free(err);
-+    }
-+    g_assert(tmpfs);
-+
-+    mig_path = g_strdup_printf("%s/socket.mig", tmpfs);
-+    uri = g_strdup_printf("unix:%s", mig_path);
-+
-+    /* enable NVMe PCI device */
-+    qpci_device_enable(pdev);
-+
-+    ctrl = g_malloc0(sizeof(*ctrl));
-+    ctrl->alloc = alloc;
-+    ctrl->pdev = pdev;
-+    ctrl->bar = qpci_iomap(ctrl->pdev, 0, NULL);
-+    g_assert(pdev->bus->qts == global_qtest);
-+
-+    test_migrate_setup_nvme_ctrl(ctrl);
-+    test_migrate_send_nvme_reqs(ctrl, test_reqs, ARRAY_SIZE(test_reqs));
-+
-+    qpci_iounmap(ctrl->pdev, ctrl->bar);
-+
-+    dest_cmdline = g_string_new(qos_get_current_command_line());
-+    g_string_append_printf(dest_cmdline, " -incoming %s", uri);
-+
-+    /* Create destination VM */
-+    to = qtest_init(dest_cmdline->str);
-+
-+    /* Get access to PCI device from destination VM */
-+    nvme = qos_allocate_objects(to, &ctrl->alloc);
-+    pdev = &nvme->dev;
-+    ctrl->pdev = pdev;
-+    ctrl->bar = qpci_iomap(ctrl->pdev, 0, NULL);
-+    g_assert(pdev->bus->qts == to);
-+
-+    /* Migrate VM */
-+    rsp = qmp("{ 'execute': 'migrate', 'arguments': { 'uri': %s } }", uri);
-+    g_assert(qdict_haskey(rsp, "return"));
-+    qobject_unref(rsp);
-+
-+    /* Wait when source VM is stopped */
-+    qmp_eventwait("STOP");
-+
-+    /* Copy guest physical memory allocator state */
-+    migrate_allocator(alloc, ctrl->alloc);
-+
-+    /* Wait for destination VM to become alive */
-+    qtest_qmp_eventwait(to, "RESUME");
-+
-+    test_migrate_check_nvme(ctrl, test_reqs, ARRAY_SIZE(test_reqs));
-+
-+    qpci_iounmap(ctrl->pdev, ctrl->bar);
-+
-+    qtest_quit(to);
-+    g_unlink(mig_path);
-+    g_rmdir(tmpfs);
-+    g_string_free(dest_cmdline, true);
-+}
-+
- static void nvme_register_nodes(void)
- {
-     QOSGraphEdgeOptions opts = {
-@@ -168,6 +561,8 @@ static void nvme_register_nodes(void)
-     });
- 
-     qos_add_test("reg-read", "nvme", nvmetest_reg_read_test, NULL);
-+
-+    qos_add_test("migrate", "nvme", test_migrate, NULL);
- }
- 
- libqos_init(nvme_register_nodes);
--- 
-2.47.3
+I discussed with Alistair a couple of times about making rv32/rv64
+as aliases for 'max'.  From what I understood your idea would go
+in line with that.  In that case I think you can go ahead with your change.
+
+Bear in mind that we'll need to put this change somewhere in the docs
+because every other rv64 user will have a lot of extra extensions to
+deal with.  We might have to deal with ppl complaining about some
+particular OS setup stop working, we'll provide workarounds, and life
+will go on.
+
+
+
+Cheers,
+Daniel
+
+
+
+
+> 
+>>
+>> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+>> Acked-by: Alistair Francis <alistair.francis@wdc.com>
+>> Message-ID: <20260512032926.1978818-13-daniel.barboza@oss.qualcomm.com>
+>> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+>> ---
+>>   target/riscv/cpu.c         | 40 ++++++++++++++++++++++++++++++++++++++
+>>   target/riscv/tcg/tcg-cpu.c | 14 -------------
+>>   2 files changed, 40 insertions(+), 14 deletions(-)
+>>
+>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+>> index 64e3fa4ef0..5d3383f335 100644
+>> --- a/target/riscv/cpu.c
+>> +++ b/target/riscv/cpu.c
+>> @@ -3076,6 +3076,26 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+>>       DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE32, TYPE_RISCV_DYNAMIC_CPU,
+>>           .cfg.max_satp_mode = VM_1_10_SV32,
+>>           .misa_mxl_max = MXL_RV32,
+>> +
+>> +        /*  Default extensions as of QEMU 11.1.  */
+>> +        .cfg.ext_zicbom = true,
+>> +        .cfg.ext_zicbop = true,
+>> +        .cfg.ext_zicboz = true,
+>> +        .cfg.ext_zicntr = true,
+>> +        .cfg.ext_zicsr = true,
+>> +        .cfg.ext_zifencei = true,
+>> +        .cfg.ext_zihintntl = true,
+>> +        .cfg.ext_zihintpause = true,
+>> +        .cfg.ext_zihpm = true,
+>> +        .cfg.ext_zawrs = true,
+>> +        .cfg.ext_zfa = true,
+>> +        .cfg.ext_zba = true,
+>> +        .cfg.ext_zbb = true,
+>> +        .cfg.ext_zbc = true,
+>> +        .cfg.ext_zbs = true,
+>> +        .cfg.ext_sstc = true,
+>> +        .cfg.ext_svadu = true,
+>> +        .cfg.ext_svvptc = true,
+>>       ),
+>>       DEFINE_RISCV_CPU(TYPE_RISCV_CPU_IBEX, TYPE_RISCV_VENDOR_CPU,
+>> @@ -3128,6 +3148,26 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+>>       DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE64, TYPE_RISCV_DYNAMIC_CPU,
+>>           .cfg.max_satp_mode = VM_1_10_SV57,
+>>           .misa_mxl_max = MXL_RV64,
+>> +
+>> +        /*  Default extensions as of QEMU 11.1.  */
+>> +        .cfg.ext_zicbom = true,
+>> +        .cfg.ext_zicbop = true,
+>> +        .cfg.ext_zicboz = true,
+>> +        .cfg.ext_zicntr = true,
+>> +        .cfg.ext_zicsr = true,
+>> +        .cfg.ext_zifencei = true,
+>> +        .cfg.ext_zihintntl = true,
+>> +        .cfg.ext_zihintpause = true,
+>> +        .cfg.ext_zihpm = true,
+>> +        .cfg.ext_zawrs = true,
+>> +        .cfg.ext_zfa = true,
+>> +        .cfg.ext_zba = true,
+>> +        .cfg.ext_zbb = true,
+>> +        .cfg.ext_zbc = true,
+>> +        .cfg.ext_zbs = true,
+>> +        .cfg.ext_sstc = true,
+>> +        .cfg.ext_svadu = true,
+>> +        .cfg.ext_svvptc = true,
+>>       ),
+>>       DEFINE_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_E51, TYPE_RISCV_CPU_SIFIVE_E,
+>> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+>> index 50d9218a75..7575884d7e 100644
+>> --- a/target/riscv/tcg/tcg-cpu.c
+>> +++ b/target/riscv/tcg/tcg-cpu.c
+>> @@ -1553,24 +1553,10 @@ static void cpu_get_multi_ext_cfg(Object *obj, Visitor *v, const char *name,
+>>   static void cpu_add_multi_ext_prop(Object *cpu_obj,
+>>                                      const RISCVCPUMultiExtConfig *multi_cfg)
+>>   {
+>> -    bool generic_cpu = riscv_cpu_is_generic(cpu_obj);
+>> -
+>>       object_property_add(cpu_obj, multi_cfg->name, "bool",
+>>                           cpu_get_multi_ext_cfg,
+>>                           cpu_set_multi_ext_cfg,
+>>                           NULL, (void *)&multi_cfg->offset);
+>> -
+>> -    if (!generic_cpu) {
+>> -        return;
+>> -    }
+>> -
+>> -    /*
+>> -     * Set def val directly instead of using
+>> -     * object_property_set_bool() to save the set()
+>> -     * callback hash for user inputs.
+>> -     */
+>> -    isa_ext_update_enabled(RISCV_CPU(cpu_obj), multi_cfg->offset,
+>> -                           multi_cfg->enabled);
+>>   }
+>>   static void riscv_cpu_add_multiext_prop_array(Object *obj,
+> 
 
 
