@@ -4,188 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40482CD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 16:56:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A456ACD5BB1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 16:56:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRv4f-0006c3-7x; Tue, 26 May 2026 12:56:13 -0400
+	id 1wRv58-0006wj-On; Tue, 26 May 2026 12:56:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wRv4Z-0006bn-Ri
- for qemu-devel@nongnu.org; Tue, 26 May 2026 12:56:08 -0400
-Received: from mout.gmx.net ([212.227.15.19])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wRv4Y-0002dv-6l
- for qemu-devel@nongnu.org; Tue, 26 May 2026 12:56:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1779814560; x=1780419360; i=deller@gmx.de;
- bh=LepGH1xNGofPS7cb/Pb4QaIbogbR27i2pTkhJsdMdtQ=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=aWUbrLyOcV9AupDYoFEZPeFPKNxK3offDV+KuiqS+YRH2XgagF8gTl3Y+Wl25KLs
- mGkEOtJcBsiaw3TPHyizHi9wuPHaiIirY3M9iyt2uH7TyeGO8sox0oibTvOcYJEWr
- Ybbcxy3TBo7NxFFrE35SFYV+HTiYMA5fPVC9U1ydBBxfsa2upiVPkr7NVPwFsUrx5
- ARislehwmLUuMekI+aN/r58TAUuBcAVCpFE+tFQ5KY1V5cvVD9eSmjgoCU7PA63Xz
- GBmIcRi0MT7WIf6jDhtrYDpGMuvwLyFsrrPQDVe8lj5VwZcHrR7yz3NZAqsxRHAUl
- 48709OxABdD7EtEbwQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mk0JW-1xC1O42yBU-00pqxQ; Tue, 26
- May 2026 18:56:00 +0200
-Message-ID: <ec6bc270-660e-41b9-a00a-f6e9e2b984ed@gmx.de>
-Date: Tue, 26 May 2026 18:55:59 +0200
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wRv57-0006wD-Iq
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 12:56:41 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wRv55-0002fr-Fz
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 12:56:40 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-83659d38e38so4424481b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 09:56:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779814598; cv=none;
+ d=google.com; s=arc-20240605;
+ b=fyomblDpuj1WLfXDO0kF93FmmpUMeg/9IBT0mXkj3WkW6ftwhnG+RWYu9w/h6rBWXt
+ xmB5HUXtFis4p9u7+pQorLKXdyQEi/014W/wnlstVYIzOceX8WezBX53m/3/gSQv1Yq5
+ p4eWQUQZBxiiIns6vuEa8XUEL/xnZfJYO1scKSi0mofbNsxZQYVEkMSlOd+UdBFM7MNI
+ gCTrPaHDP5rhyTrxWg3S1Ipv/c/kqZmOEYxrfTKBkg9TTLf6QqnD0KA44nZgR5xNXbhV
+ b6oBrBmxXO+P4zxB7zTS2lKn8R7fHcmpF4C4Jwb2FYgx5C1e3XuHKFU/U7TrbIamHd1r
+ 0dCQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=+X7aV/3RP5tjKhYyDj+mT5Zwu0Ntbg07oxPKseqsyeY=;
+ fh=1c2Hxpfbc48VpSNmApyL+VxGgxnbSmXA+2/V0vN06DE=;
+ b=Do8ITg79zn4qrMN+96iVVy14qr2ziJezUNKjQPwbJpyoyd690z3MA84hsKNzuK4KmY
+ 9DNamfeyAhmYMB/tLb3GqJO5i8t2g0JSgMRV4pFC//AFU7rHW0aTMQKkpzEsBm8tj13v
+ ZhM4UAX/dR1upnz6Q7RenCW3SqlZWyF7iZ3wNVflJMyGl4+Syn53UGsaB7my9NJ0h6/f
+ WPhXw+AJJIOYtdh5stqXw1HRVIR9C9GyWPpq0Fzrjv82PKd0blFOmMxzQTgL7/f6cV8T
+ ZWpCbGLfYMdPIt2FFkyOylSvu5YVtED4mJwwbXow5W3NTR6Z6uRYIiFyVKBtfphmT5/H
+ oToA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779814598; x=1780419398;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=+X7aV/3RP5tjKhYyDj+mT5Zwu0Ntbg07oxPKseqsyeY=;
+ b=FQd65gG73a/Jdh88zTyvZ4NzqZQQa/b56w7iVylxkG/8XUbM1MNzizeCM1M/Fp8XKn
+ c3AIXby7NdOn9x+3a7HXV2Aac08GRoEhZr7xh8ygT6m95CCjckawmdQ7grg6NmxzwlJ9
+ 6Z62yZa06yKqEgnqZaH2rfEMn+qwQf0cI+j6tmUavV3hCyZ8mTbfF5n8tKdORM+n3BfV
+ kcMXc3evbysh4Gc63aBiEUQQAn58uk46vDLM0LTf3UUZ5JWy8uiI8I846o6WzxoQlIj5
+ JOp29R/gfa6Dgnh100wDVuFdmYGun/vU0ALjXODQOMN6DS0DA4CxfaCHv7Ak80nKY5KU
+ Audg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779814598; x=1780419398;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+X7aV/3RP5tjKhYyDj+mT5Zwu0Ntbg07oxPKseqsyeY=;
+ b=TShemAa58vYoHHdq7ZGcdOB51AWnvGherne4ezyneltlCkFHS2/ZtGoX17CebGvZMI
+ jAlwyPf9J+sbcQjVR8iCaZLrKQswJFyLz0HXVU3dsVRTpWMH0pYz6K4zSUh1mj+Ql//D
+ X2OUGZNg+Q3RW+I8sDlUwmCaLoMD4txWiG0mvd6Oj8/NazvD/Mchm4YBxSryMGcbP/JH
+ rG/iyz+pPnxORjpjhHI3z69ejG9xX1rt1tUcus+HieoQhdoPGss/8zLf2fxbEN0TEb24
+ b0QgMxtBReGEXP7TnhEIL/qtDMgHDz+qCH2MbSp2a5/tMZVLMazSpknJteGswfijuCgx
+ w0vw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/QGXs11WvfCF+sk+AifbTke2z2Yhe+NEpzKtUk+WpxJ4Oyy/csgkcZBmSkAMkk9ncxd9/h74MB+8mD@nongnu.org
+X-Gm-Message-State: AOJu0Yz+t9iaovVF/hx88c7e1C5Fh4bk1oDdrEklcA7z2EhTDvUzC4+r
+ z6HgH9WLMonjH8ydU+wxfz+hadpFUWQOlQ7OmsSjLDoxA6NxElHW9CveterNg1rm9ldsDH5PPXQ
+ ojvk9TD/3ue1CUAQV9G1Y8WtnW/VeE3O9R6nloVFbNQ==
+X-Gm-Gg: Acq92OHhOiwsYzF6oxSER3mA1yJQebNWfWVRPc9Ztl0+JqFEt6xqgeFCmcjOxgf/hbn
+ zavzlZKFGw+e6PsnLSVM3h3CsqOO8vrAQ3PjzAlpb5JaMIbtdLhkI3zQtMb4wOWJO5QJFVsfc2b
+ q68jhmb9oNqk83s5hdGw47ge807wI89qI+i9tB2GAxFINPoYfWLqkrEXQ8FlRzew4ev6dSSJRyH
+ DY7oFpKPqL3+AvZXlnewn65gdLJU2cjkm1BA55jFYX71drz2lf7t0TMAht9FS2EGIRA5rRu0JHn
+ tX8rVcY=
+X-Received: by 2002:a05:6a00:13a6:b0:83e:b22f:373a with SMTP id
+ d2e1a72fcca58-8415f31db44mr17823650b3a.11.1779814597870; Tue, 26 May 2026
+ 09:56:37 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] linux-user: Move cpu_copy() to user-internals.h
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20260526151757.2371476-1-peter.maydell@linaro.org>
- <20260526151757.2371476-3-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <20260526151757.2371476-3-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:rSQIZ2S1i288bqQdFM+4R9gvkS+zZxVSwPh4Va8OE92aOSAry2+
- h1LvJRDZdhTph/v0e624YcIGWDXJe78Uz6EwJpNwgo6Q6qmRyKISwIabVnZkGGVclbZMdYN
- CQqTkNW+azVGCsfJ0+Elr4J/4K6fFdZVQ7mGxHx/X3BmRUE7+r69GeCS+MwyPU1mBpYOhy7
- DbHxXQYWLFLRfVY5lplew==
-UI-OutboundReport: notjunk:1;M01:P0:g1VMzNjCY6M=;HoA9bJpBOA+fsvr0yklA01LsDLx
- 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
- 3JKCpCc4vavwEurCdF1wBP/Vqzo=
-Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <CANCZdfr6xs9n8sF8AXVWVu9i2_rViKErrMHAVbopnaor4uCN6A@mail.gmail.com>
+ <875x8g1pmi.fsf@draig.linaro.org>
+ <CANCZdfqT7r9jcTuiwe3=CcjRExL-FP1msx-Q8ftQM5amJ_t0YQ@mail.gmail.com>
+ <1795fc9c-f82e-40f1-aab6-ec24ad02a918@linaro.org>
+ <CANCZdfp=mCp89NdwVzy-tEo=FNiEu6_H79r5vFRD0-Nk=Cx54Q@mail.gmail.com>
+ <CAFEAcA9QeSjN1JV6ieavrr+r7viNo5maAtz5OJctcbWwTNQq9Q@mail.gmail.com>
+ <CAFEAcA-bW9zOW6o2OS5uy2Q=dWvq7xQKXeDciDVU5Qs65JekHA@mail.gmail.com>
+In-Reply-To: <CAFEAcA-bW9zOW6o2OS5uy2Q=dWvq7xQKXeDciDVU5Qs65JekHA@mail.gmail.com>
+From: Warner Losh <imp@bsdimp.com>
+Date: Tue, 26 May 2026 10:56:26 -0600
+X-Gm-Features: AVHnY4LLcTa5kiiFgx5jze0kKBOPSD8HbK8fzcV7uZcmiMSpAD_X-JD9ySWEoxg
+Message-ID: <CANCZdfpg1rPbvWaFOfmiiTX8Q=qNxMzRbpH_rVxCOUCxV+c-dw@mail.gmail.com>
+Subject: Re: Question about tb_flush()
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ QEMU Developers <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000df54290652bb60da"
+Received-SPF: none client-ip=2607:f8b0:4864:20::432;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -201,16 +121,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/26/26 17:17, Peter Maydell wrote:
-> We only use cpu_copy() inside linux-user, so we don't need to have
-> the prototype in qemu.h available to code outside linux-user; move it
-> to user-internals.h.
->=20
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   linux-user/qemu.h           | 3 ---
->   linux-user/user-internals.h | 3 +++
->   2 files changed, 3 insertions(+), 3 deletions(-)
+--000000000000df54290652bb60da
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Helge Deller <deller@gmx.de>
+On Tue, May 26, 2026 at 9:23=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
+.org>
+wrote:
+
+> On Tue, 26 May 2026 at 15:52, Peter Maydell <peter.maydell@linaro.org>
+> wrote:
+> > Some stuff has snuck back into qemu.h again (e.g. the
+> > prototype of init_main_thread() could live in user-internals.h
+> > but was put in the wrong place)
+>
+> I just sent a patchset moving a couple of prototypes out of qemu.h.
+>
+> > because this kind of "looks like
+> > a good place to dump random stuff" header is hard to keep clean.
+> > There's probably a better name than "qemu.h" for it.
+>
+> While I was doing it I thought about this part. I think in an
+> ideal world we would split qemu.h into different parts, e.g.
+> one header for the TaskState struct definition, one for the
+> user-access functions and macros, and so on (most of the QEMU
+> source files including qemu.h don't need everything it is
+> providing, only one of the three or four groups of APIs).
+> But doing this requires coordination across linux-user and bsd-user
+> so they both split the functions/types out of their qemu.h headers
+> together. That doesn't really seem worth doing to me, at least
+> not now while you still have a large backlog of bsd-user work
+> not upstream yet.
+>
+
+Yes. This is absolutely something that I want to do, which is why I asked
+the
+question. I'd like to get through the backlog first (or the bulk of the
+backlog)
+and then start to move to a common design pattern between linux-user and
+bsd-user and maybe find ways to refactor. One issue that I know of right
+now is we compile common-user once for all the builds, so it doesn't depend
+on TARGET defines, while what we need to do is also have something that
+compiles per TARGET for some of the sharing that I see as possible and
+likely
+desireable (see the recent thunk.c thread).
+
+While not worth doing TODAY, I see the light at the end of the tunnel for
+upstreaming and want to start thinking about it and start studying things
+so I can start a discussion in the coming months in an intelligent way.
+
+Warner
+
+--000000000000df54290652bb60da
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, May 26,=
+ 2026 at 9:23=E2=80=AFAM Peter Maydell &lt;<a href=3D"mailto:peter.maydell@=
+linaro.org">peter.maydell@linaro.org</a>&gt; wrote:<br></div><blockquote cl=
+ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
+ rgb(204,204,204);padding-left:1ex">On Tue, 26 May 2026 at 15:52, Peter May=
+dell &lt;<a href=3D"mailto:peter.maydell@linaro.org" target=3D"_blank">pete=
+r.maydell@linaro.org</a>&gt; wrote:<br>
+&gt; Some stuff has snuck back into qemu.h again (e.g. the<br>
+&gt; prototype of init_main_thread() could live in user-internals.h<br>
+&gt; but was put in the wrong place)<br>
+<br>
+I just sent a patchset moving a couple of prototypes out of qemu.h.<br>
+<br>
+&gt; because this kind of &quot;looks like<br>
+&gt; a good place to dump random stuff&quot; header is hard to keep clean.<=
+br>
+&gt; There&#39;s probably a better name than &quot;qemu.h&quot; for it.<br>
+<br>
+While I was doing it I thought about this part. I think in an<br>
+ideal world we would split qemu.h into different parts, e.g.<br>
+one header for the TaskState struct definition, one for the<br>
+user-access functions and macros, and so on (most of the QEMU<br>
+source files including qemu.h don&#39;t need everything it is<br>
+providing, only one of the three or four groups of APIs).<br>
+But doing this requires coordination across linux-user and bsd-user<br>
+so they both split the functions/types out of their qemu.h headers<br>
+together. That doesn&#39;t really seem worth doing to me, at least<br>
+not now while you still have a large backlog of bsd-user work<br>
+not upstream yet.<br></blockquote><div><br></div><div>Yes. This is absolute=
+ly something that I want to do, which is why I asked the</div><div>question=
+. I&#39;d like to get through the backlog first (or the bulk of the backlog=
+)</div><div>and then start to move to a common design pattern between linux=
+-user and</div><div>bsd-user and maybe find ways to refactor. One issue tha=
+t I know of right</div><div>now is we compile common-user once for all the =
+builds, so it doesn&#39;t depend</div><div>on TARGET defines, while what we=
+ need to do is also have something that</div><div>compiles per TARGET for s=
+ome of the sharing that I see as possible and likely</div><div>desireable (=
+see the recent thunk.c thread).</div><div><br></div><div>While not worth do=
+ing TODAY, I see the light at the end of the tunnel for</div><div>upstreami=
+ng and want to start thinking about it and start studying things</div><div>=
+so I can start a discussion in the coming months in an intelligent way.</di=
+v><div><br></div><div>Warner=C2=A0</div></div></div>
+
+--000000000000df54290652bb60da--
 
