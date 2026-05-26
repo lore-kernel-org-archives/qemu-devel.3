@@ -4,113 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C880CD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:38:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15C41CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:40:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRsuy-00032G-FU; Tue, 26 May 2026 10:38:04 -0400
+	id 1wRswl-0003cD-OX; Tue, 26 May 2026 10:39:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1wRsup-00031M-Ia
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:37:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1wRsun-0005zp-2i
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:37:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779806271;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RgCfk9VGyvOdsQ/VBQnBbMM85hx/l+tI/fX8KGz1+7U=;
- b=EiqlmHWRK61+Mp55lObM+JFlm6qkH7dUx8PTyJ5fM4d5ZpIzAcNlYBVZcKkw0Xw7F6tiM2
- vL+XxNbCr+u9CIbJelSuQL0Pi9T2cf2UykmVm5L/SLkvPdqg3KLnFFGylFfDxlPgOcdOhT
- ykW8PV9mv5p89DGa8lybVwC7QUYyleM=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-658-uZy_KG8TORmaZveO1nxaPQ-1; Tue, 26 May 2026 10:37:49 -0400
-X-MC-Unique: uZy_KG8TORmaZveO1nxaPQ-1
-X-Mimecast-MFC-AGG-ID: uZy_KG8TORmaZveO1nxaPQ_1779806268
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4905428aad6so28693435e9.1
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:37:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wRswi-0003bv-I1
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:39:52 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wRswf-0006Yv-An
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:39:51 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2be75f658f3so54528245ad.1
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:39:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779806386; cv=none;
+ d=google.com; s=arc-20240605;
+ b=KhLbxqeNSyn9MFTSWk9GoctusrgwWwl4rhSMO1dVXrLD6JlC7TWy9SH5pKsQeKtlss
+ EPI12IBWR/K89qNHihQ41eO/7hYM9Rkx8QS/9GXsnO/SyuHBR7AK5cvoWpE3bzcwN3te
+ bAaeNssepI51g2WuHmMk8sfMjeuo01vV37Tinaq1luv9KYmtet53O/p7lookqNRA7wrw
+ vptJ6nQtApAS8LbaBBKMahbaroM3bpj8y9WA79hm/qUebGSuaWZGjwp4BCKRuKfjkGTS
+ cn94E5Tttg8lp2hV3K/ggTDwX1YULaHKHgnb0+To5wQdHDd/ym3tbwsNHTCh4xLmh3mW
+ 2Fzw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=3qZRhSPRSsCAAgZhbiVpMXGCD0KuME3Ah8i+pfcm4B4=;
+ fh=i7n7yFxVJwI9pZ8YevroTv1Xgfs6QvvDuaANtvA+rTY=;
+ b=XlvUvcfr4lXPk6CN11wzLE2gsWQfwraY5cDTwuB1Jy2zKj0bYNcHz10jMaJb0ZjHnu
+ HFfghwBOQRGcCSWkouFbjuyWQcRwJmt3mK8AtXTA6Px1VvrPNDx9zumDEBmK5Psq81BQ
+ HCAqvM6kpR3KaMkfOkw8lr+afxlm8lHC+MLj/j36fBi+3XOw4cUjjS9cU+vJ6NxI+uG+
+ EHvj7dhQRffTColBK6AeoE5ifo4V0qm9gDnp2E54D9z9e+H+cN3iRLdOsnPs2h0IxK1a
+ 3oDFlwFknBzoKgvLof7aIa1FdsF7cR/Ou7hAWo/e/VP00fIOBAMbLnS7Luip82f/i801
+ JxAw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779806268; x=1780411068; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=RgCfk9VGyvOdsQ/VBQnBbMM85hx/l+tI/fX8KGz1+7U=;
- b=lT6SBxWNnUMlqVV2tsER9vwtqrPfEo7JRahvsTT5eZfb3CjeEUD2yZD8P3oOON2Rpb
- Q+H24OuWnePQYFTqcmumRloi/dqsy7toR3eE/0RNuZTCQmLWBhjZXtulnFtj3ef2d50z
- Fu99hjH0pW/nTFYRKvHUMDRG7uYLo6aBsOUv/gno/YIAVQ2tIgrFPdpegUypL5Oacgsh
- RjeTaeS0UrzN7Tw9JcUpoCIXRZDBmILmWGlN19RJdUuEtCLjwAOsQuRhWdzi18kRRSYu
- S+gjxyE8Egz831pUnVwYJw4e20ReLkTo7V0nVpuPEqDK2f+Z2Ls91ciZMLMJdHzSD/Fr
- 1z2A==
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779806386; x=1780411186;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=3qZRhSPRSsCAAgZhbiVpMXGCD0KuME3Ah8i+pfcm4B4=;
+ b=ZrdNRvqmJxdHQM8blPhIRje+jKAnrnE5MoznwsQCrqXPXjcAGBG8rWpAYQthPYQFzY
+ aUMJy/F7r/1yZnqC43z5rnOXVUsS2WP8TXps9f5QFQSazkLIMfsKVWjfwnA7FJRZfjez
+ 9OeAQ3UxOYFeXg0r9Vx127F91y5IIHDgdcRaaKa++2pPmcnQYrgBbJBAqBS1V9Ps9jQN
+ oXaCre+sbz0YFIvTh4zXZFH7gfp0bO7Upca7r2TvUbwWegh5u2tQQG5Av8zUoJuqdKBi
+ DANXetxX4a2+SBrckozNrgN4LCo4w9xGnqWOzWM2McRG4XdL2uAUXa0jxOHD0ZNKBdFh
+ TYaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779806268; x=1780411068;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=RgCfk9VGyvOdsQ/VBQnBbMM85hx/l+tI/fX8KGz1+7U=;
- b=hjI8RpuwFURda+Pxa4S6sqtUs71Ib48OZhoujJ/XX2XdE3E0OR65WYQhD1Br7yv6bH
- 7lXppuDtn6i3ikeEdK6xfvsyaT9luTe9df0eylrr39QU0jQDCQfZYk1OpWYgGj6Ysnis
- bTSSWgzkoBGA/nJw5RcP/CZa3sSSLzZM+tb3hWSDy22O4j52CQ34ajW7UyYtbwRcrQ0s
- uj6rMCst6nI/419JSR9khn89tyJ32DOJGjpPv83NvYPy2zaz9E5Cca/ZVrUqcVQOJ8V0
- +pZiE5UfLgJSGSJRFWNySi1LmmjKThAcWUPw5HP9XwIbCYT3EjpZmOIKuvewZvZU9Pl/
- TqGw==
+ d=1e100.net; s=20251104; t=1779806386; x=1780411186;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3qZRhSPRSsCAAgZhbiVpMXGCD0KuME3Ah8i+pfcm4B4=;
+ b=Q0bGBEW1oUZDvUaiTWpPy/uhnnQyKLQlloxYHkv2/DsY0Rjrs4K8fNVbrQcm01CUKZ
+ RsmlczkzmiYLzctDB2w9IwaRv1wPYGKnerpj82w7XfTmTtqOFzaZKIkT7sLD29goKYus
+ hiVg9IFJyR3cA8KNlw0OqfQgYMKnYokNRQBI5cr+50cc8D5FE5p0+e61x58bjj5LDKUK
+ EqvINjz0gA1xAF8XVPK/AborehL5ld3+hgjVicoz0+1qlPlg/h2K4SD3u/Y32uCoZnG5
+ cgL6NusVTmzMsRXMt1i2e43cDM+LuZH4k7qJAHgReqZJIicAm5hrLHazx/TaUTQeXEmg
+ YN5w==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/jhbCW1CK1ujm58PcS8BykVbSBs6KggOrUR9R9/CdQBlW7dSZREOBavBf9rfgRUzYPPKxbwTKEfmf2@nongnu.org
-X-Gm-Message-State: AOJu0Yyrp6UZGCnxwpPSHrWMfIvKdVqaWpQ4PsqVD7LOYyUTqKRBRbHP
- K5vA036eDo4tVzgkVkZWXYeZ9D//RBBoXX4Hl7BmqMUqgFtiWAOqQMvxw4e7m/leJ9SOF610YwQ
- yog6uk0xfTX6c5YzeAZ8ZJ7KQH/KqjWWYrm+K8sEKMkKSUEPnPVfmtRSQTqYmCnpf
-X-Gm-Gg: Acq92OEZoaFGm0AnTDw3TvziZ2yNUo9t/QdJDNXVhN/zUDa1AY1oDF5qeCcKetOTn2a
- h+wwawn6HEwOY9q5+/I+sQ3bOdW/75wTARNqa+9tjMzWD7tJzHOuSpsfe4HBlqzsLTmRv2caf7T
- BBjY16NztSHTladEIBSIK+pLyyTdC6aNRNptAl6WfZnka++O+WSl5tmPpF25DKCDNrKk2Hm6e1N
- /GFcgyR7ntlWiFloNF/aoJV26sibBIWGP4ejeU8eRlIiT5+4KWolNMjq2NAy5u6Z0SGkP4Gyk03
- PKl+qoPIWd8iKyQDnB5PzQRS7sADpMV6k415PY+d19Es0qc6svZTiUnWYmzMQU5lZs4C5j3wJ1y
- iySOiObpUaKFBkWrGzeMLlNoeYRaCWKZj9c9/smxHXGCIStHMU/VC0LqpFT73TtvI
-X-Received: by 2002:a05:600c:35c8:b0:490:44eb:c1e7 with SMTP id
- 5b1f17b1804b1-49044ebc2d5mr345205735e9.30.1779806267922; 
- Tue, 26 May 2026 07:37:47 -0700 (PDT)
-X-Received: by 2002:a05:600c:35c8:b0:490:44eb:c1e7 with SMTP id
- 5b1f17b1804b1-49044ebc2d5mr345205245e9.30.1779806267562; 
- Tue, 26 May 2026 07:37:47 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490454a0b82sm348259265e9.9.2026.05.26.07.37.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 May 2026 07:37:47 -0700 (PDT)
-Message-ID: <98236231-c7d5-4866-8cdd-9d318f4d0634@redhat.com>
-Date: Tue, 26 May 2026 16:37:45 +0200
+ AFNElJ9UIzjrEmC4KrQglmxgK5LNbZyWnOe4SJ4VPdj6WVsjpTR8LishEOxkvpsUqI1HBT7fJf+OIsIEaq6D@nongnu.org
+X-Gm-Message-State: AOJu0YzCaj1/de4UmaS38fWYinHHuK9NVcd/zQ/8kMISQ7G9Wpt+hCj4
+ OkH6E5hlJa49PiGeABizytuboaSx+gnHeQfOlVEybFzWVYBdhm+EIUvA/0qu7qAKRs0LB2ORItY
+ UV1KeMrNsPYs3lCGrxAx1Mxj1tJLp4bfj0YRgT9QF3Q==
+X-Gm-Gg: Acq92OFO1axGzlgYY5eLpNFmQK3luSqc8F0WrN4ML0qKkMTaeOK3OlTb0+IhJ6eHXlR
+ wUlxHIQ7nmukfJzJypsbMIwpxWSHCa0VQNMLX/t1aXFgIdXsclIqSBBQ98rTswisNAXjCbALyi0
+ LriYlX/YLenLrrruWL03FY/7mwUduUcspx/OJpqgFo/E4FH4Dvc04Gdz7gtHfeF/3qpLpvmD4nB
+ dRhsbDt8XFtaFPYmmzl/6GRlfq7JPtQlA02GJhF2pFB+XyQkkQxniidbFDovod5Ab+wLDAWhPVv
+ M5kLOBE=
+X-Received: by 2002:a17:903:240a:b0:2bc:cb56:123a with SMTP id
+ d9443c01a7336-2beb0701cf6mr196887105ad.15.1779806386197; Tue, 26 May 2026
+ 07:39:46 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 18/21] sbsa_gwdt: reduce code ident
-Content-Language: en-US
-To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
-Cc: mst@redhat.com, anisinha@redhat.com, pbonzini@redhat.com,
- peter.maydell@linaro.org, shannon.zhaosl@gmail.com, philmd@linaro.org,
- zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com,
- qemu-arm@nongnu.org
-References: <20260303092532.2410177-1-imammedo@redhat.com>
- <20260303092532.2410177-19-imammedo@redhat.com>
-From: Eric Auger <eauger@redhat.com>
-In-Reply-To: <20260303092532.2410177-19-imammedo@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eauger@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <CANCZdfr6xs9n8sF8AXVWVu9i2_rViKErrMHAVbopnaor4uCN6A@mail.gmail.com>
+ <875x8g1pmi.fsf@draig.linaro.org>
+ <CANCZdfqT7r9jcTuiwe3=CcjRExL-FP1msx-Q8ftQM5amJ_t0YQ@mail.gmail.com>
+ <1795fc9c-f82e-40f1-aab6-ec24ad02a918@linaro.org>
+In-Reply-To: <1795fc9c-f82e-40f1-aab6-ec24ad02a918@linaro.org>
+From: Warner Losh <imp@bsdimp.com>
+Date: Tue, 26 May 2026 08:39:35 -0600
+X-Gm-Features: AVHnY4IYl4pk5jZNcq6Rx2ngl9Y_P7FbgYvhU2_HYC1f9g53XqxeXom_RETiHCY
+Message-ID: <CANCZdfp=mCp89NdwVzy-tEo=FNiEu6_H79r5vFRD0-Nk=Cx54Q@mail.gmail.com>
+Subject: Re: Question about tb_flush()
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ QEMU Developers <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="0000000000006b24530652b97797"
+Received-SPF: none client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,66 +117,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--0000000000006b24530652b97797
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, May 26, 2026 at 1:53=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 <philmd=
+@linaro.org>
+wrote:
 
-On 3/3/26 10:25 AM, Igor Mammedov wrote:
-> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> On 24/5/26 18:57, Warner Losh wrote:
+> > On Sun, Feb 1, 2026 at 7:54=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@li=
+naro.org>
+> wrote:
+> >
+> >> Warner Losh <imp@bsdimp.com> writes:
+> >>
+> >>> OK. I've updated bsd-user fork from last year to yesterday. I had one
+> >> question.
+> >>>
+> >>> I see that we've gone from tb_flush() to queue_tb_flush(). Why was
+> that?
+> >> And is it a drop in?
+> >>> FreeBSD's fork has this in the thread creation:
+> >>>
+> >>>      /*
+> >>>       * If this is our first additional thread, we need to ensure we
+> >>>       * generate code for parallel execution and flush old
+> translations.
+> >>>       * Do this now so that the copy gets CF_PARALLEL too.
+> >>>       */
+> >>>      if (!(cpu->tcg_cflags & CF_PARALLEL)) {
+> >>>          cpu->tcg_cflags |=3D CF_PARALLEL;
+> >>>          tb_flush(cpu);
+> >>>      }
+> >>>
+> >>> I think the right thing to do is to just change this to
+> >> queue_tb_flush(cpu), and that compiles. I'd like to get some
+> confirmation,
+> >> though.
+> >>> Did I parse the changes right?
+> >>
+> >> Yes, because ultimately we use safe work which:
+> >>
+> >>   * Schedules the function @func for execution on the vCPU @cpu
+> >> asynchronously,
+> >>   * while all other vCPUs are sleeping.
+> >>
+> >
+> > So I've done this in the latest blitz branch. I encountered one gotcha.=
+ I
+> > replaced it in the one place, but that didn't work too well. I finally
+> > tracked down the issue: I had implemented the change in only one place
+> > instead of the three required locations. I also had to bring the
+> > begin_parallel_context() function over from linux-user. I like
+> > user-internal.h that's in linux user. What is your touchstone for
+> deciding
+> > where that code belongs in it? I'd like to do the same in bsd-user once
+> my
+> > upstream focus shift to refinement of blitz and maybe my next cool thin=
+g
+> > there.
+>
+> All common code should go under common-user/ and include/user/.
+>
 
-Eric
-> ---
->  hw/watchdog/sbsa_gwdt.c | 38 ++++++++++++++++++++------------------
->  1 file changed, 20 insertions(+), 18 deletions(-)
-> 
-> diff --git a/hw/watchdog/sbsa_gwdt.c b/hw/watchdog/sbsa_gwdt.c
-> index 40d80f7f2b..91f9a4202c 100644
-> --- a/hw/watchdog/sbsa_gwdt.c
-> +++ b/hw/watchdog/sbsa_gwdt.c
-> @@ -105,25 +105,27 @@ static void sbsa_gwdt_update_timer(SBSA_GWDTState *s, WdtRefreshType rtype)
->  
->      timer_del(s->timer);
->  
-> -    if (s->wcs & SBSA_GWDT_WCS_EN) {
-> -        /*
-> -         * Extract the upper 16 bits from woru & 32 bits from worl
-> -         * registers to construct the 48 bit offset value
-> -         */
-> -        timeout = s->woru;
-> -        timeout <<= 32;
-> -        timeout |= s->worl;
-> -        timeout = muldiv64(timeout, NANOSECONDS_PER_SECOND, s->freq);
-> -        timeout += qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-> -
-> -        if ((rtype == EXPLICIT_REFRESH) || ((rtype == TIMEOUT_REFRESH) &&
-> -                (!(s->wcs & SBSA_GWDT_WCS_WS0)))) {
-> -            /* store the current timeout value into compare registers */
-> -            s->wcvu = timeout >> 32;
-> -            s->wcvl = timeout;
-> -        }
-> -        timer_mod(s->timer, timeout);
-> +    if (!(s->wcs & SBSA_GWDT_WCS_EN)) {
-> +        return;
-> +    }
-> +
-> +    /*
-> +     * Extract the upper 16 bits from woru & 32 bits from worl
-> +     * registers to construct the 48 bit offset value
-> +     */
-> +    timeout = s->woru;
-> +    timeout <<= 32;
-> +    timeout |= s->worl;
-> +    timeout = muldiv64(timeout, NANOSECONDS_PER_SECOND, s->freq);
-> +    timeout += qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-> +
-> +    if ((rtype == EXPLICIT_REFRESH) || ((rtype == TIMEOUT_REFRESH) &&
-> +            (!(s->wcs & SBSA_GWDT_WCS_WS0)))) {
-> +        /* store the current timeout value into compare registers */
-> +        s->wcvu = timeout >> 32;
-> +        s->wcvl = timeout;
->      }
-> +    timer_mod(s->timer, timeout);
->  }
->  
->  static void sbsa_gwdt_rwrite(void *opaque, hwaddr offset, uint64_t data,
+Great! I look forward to growing this directory.. But I was trying to ask a
+slightly
+different question: What belongs in user-internal.h? What's the current
+rubric
+for linux-user in that regard?
 
+Warner
+
+--0000000000006b24530652b97797
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, May 26,=
+ 2026 at 1:53=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:=
+philmd@linaro.org">philmd@linaro.org</a>&gt; wrote:<br></div><blockquote cl=
+ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
+ rgb(204,204,204);padding-left:1ex">On 24/5/26 18:57, Warner Losh wrote:<br=
+>
+&gt; On Sun, Feb 1, 2026 at 7:54=E2=80=AFAM Alex Benn=C3=A9e &lt;<a href=3D=
+"mailto:alex.bennee@linaro.org" target=3D"_blank">alex.bennee@linaro.org</a=
+>&gt; wrote:<br>
+&gt; <br>
+&gt;&gt; Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" target=3D"_blank=
+">imp@bsdimp.com</a>&gt; writes:<br>
+&gt;&gt;<br>
+&gt;&gt;&gt; OK. I&#39;ve updated bsd-user fork from last year to yesterday=
+. I had one<br>
+&gt;&gt; question.<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; I see that we&#39;ve gone from tb_flush() to queue_tb_flush().=
+ Why was that?<br>
+&gt;&gt; And is it a drop in?<br>
+&gt;&gt;&gt; FreeBSD&#39;s fork has this in the thread creation:<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 /*<br>
+&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* If this is our first additional th=
+read, we need to ensure we<br>
+&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* generate code for parallel executi=
+on and flush old translations.<br>
+&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* Do this now so that the copy gets =
+CF_PARALLEL too.<br>
+&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
+&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 if (!(cpu-&gt;tcg_cflags &amp; CF_PARALLEL=
+)) {<br>
+&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu-&gt;tcg_cflags |=3D CF_P=
+ARALLEL;<br>
+&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tb_flush(cpu);<br>
+&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; I think the right thing to do is to just change this to<br>
+&gt;&gt; queue_tb_flush(cpu), and that compiles. I&#39;d like to get some c=
+onfirmation,<br>
+&gt;&gt; though.<br>
+&gt;&gt;&gt; Did I parse the changes right?<br>
+&gt;&gt;<br>
+&gt;&gt; Yes, because ultimately we use safe work which:<br>
+&gt;&gt;<br>
+&gt;&gt;=C2=A0 =C2=A0* Schedules the function @func for execution on the vC=
+PU @cpu<br>
+&gt;&gt; asynchronously,<br>
+&gt;&gt;=C2=A0 =C2=A0* while all other vCPUs are sleeping.<br>
+&gt;&gt;<br>
+&gt; <br>
+&gt; So I&#39;ve done this in the latest blitz branch. I encountered one go=
+tcha. I<br>
+&gt; replaced it in the one place, but that didn&#39;t work too well. I fin=
+ally<br>
+&gt; tracked down the issue: I had implemented the change in only one place=
+<br>
+&gt; instead of the three required locations. I also had to bring the<br>
+&gt; begin_parallel_context() function over from linux-user. I like<br>
+&gt; user-internal.h that&#39;s in linux user. What is your touchstone for =
+deciding<br>
+&gt; where that code belongs in it? I&#39;d like to do the same in bsd-user=
+ once my<br>
+&gt; upstream focus shift to refinement of blitz and maybe my next cool thi=
+ng<br>
+&gt; there.<br>
+<br>
+All common code should go under common-user/ and include/user/.<br></blockq=
+uote><div><br></div><div>Great! I look forward to growing this directory.. =
+But I was trying to ask a slightly</div><div>different question: What belon=
+gs in user-internal.h? What&#39;s the current rubric</div><div>for linux-us=
+er in that regard?</div><div><br></div><div>Warner</div></div></div>
+
+--0000000000006b24530652b97797--
 
