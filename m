@@ -4,114 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E29BDCD5BD0
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:00:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E7F6CD5BB1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:02:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRsJj-0004qr-1w; Tue, 26 May 2026 09:59:35 -0400
+	id 1wRsM7-0006Ht-C1; Tue, 26 May 2026 10:02:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1wRsJi-0004qi-7t
- for qemu-devel@nongnu.org; Tue, 26 May 2026 09:59:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1wRsJd-00077i-HK
- for qemu-devel@nongnu.org; Tue, 26 May 2026 09:59:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779803967;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Tm+vk7b7hM9z9WUMCqJo2kSLoI0BR/fiYKzq/Qm41ao=;
- b=LqKAvmozwKzu0kLrI0k5D3sEvFZGjQkMq3e4t9FmkkUogIeQInreXeeRr3qCi6SCLRyuDU
- Ks9YGDj+q8QJcSPb7dtpGIg4hNjvmBwi5myuDe6k9pN9YztkEax04guAm4Ws8O+5KMFj/q
- HCtbEqmGWXw0G0oW1QJ+MBm2OsDB6Mo=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-696-7py90pu7M9SBoL3hQFsNbg-1; Tue, 26 May 2026 09:58:13 -0400
-X-MC-Unique: 7py90pu7M9SBoL3hQFsNbg-1
-X-Mimecast-MFC-AGG-ID: 7py90pu7M9SBoL3hQFsNbg_1779803891
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-44d79da8cf7so8003584f8f.2
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 06:58:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wRsM5-0006GI-Pf
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:02:01 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wRsM3-0008AG-5r
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:02:01 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-c827313dac0so5186323a12.1
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:01:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779804117; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ZBdU2tpMzG/4Y7d8PzZTq7RW3xBdW7CjC5c7EY7p558Xq5cprNQdXxfyUYueZ+ROst
+ S02f6jzuZDwjWe3F3j3NdzlX2IiViVs4+g/j9TpzPuraJx+mDXgmNXO91f7IHq9hYRR7
+ AB71pv0XRUCWR3+1KrUvXOc3RdfZNdyhepiqcrlpsuIY46hkIdHDBNeZOUAsYOtyOiRV
+ poKS9Kaw/bM3G0PQd8xc8yThItbfoACC0eSMVFFUA7Fm3jpbpPCNuwDiSQdMO5fjn8fN
+ ver/VFB5h+fK63q3fXIWmF4vDottYOGvtG5mZIL14uNB1+Vu2ekRMhh/oGqF5i8QiJWJ
+ hk0A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=4nrtbJp1RnwyYAQqSDFBjMposO3NP/wdFsMl3fVXHiY=;
+ fh=ad/3fmeB6ZBiXBBpwBMDo5D2uwtDzHziUf1c7git1k8=;
+ b=OFshH0nKbTaVfUYnlTHMWimf+sMCjQ4ZefIymKgZom9gkBUCxUBa5yqVinPsbUsum4
+ 1EvsuaUJM1n3uuSQqTdbxkw4hw4ykrGptk5OUWzjoUsw53ETtlaTbIcCv9k2klljt/Mw
+ kYDC2QGNgiyOUFYhwO0LV+Pjuzti50apF5X0BvosBWq5BgC0F2ZC2MuAxQJ4o3vbTQ07
+ maHOcCmw4ovfqWK1teXlxsvZslX4JbHMGohMOeut3q7w0Z/VcMQG+HAtbaaNZAKw39i2
+ p3yHcHjFJgLNUQCUnuDb4z3gvwxOupKxcyuT0Th+n1DpUiJBDfsdoxUsRVa0jrYvAvKl
+ q/UQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779803891; x=1780408691; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Tm+vk7b7hM9z9WUMCqJo2kSLoI0BR/fiYKzq/Qm41ao=;
- b=JWvFpIH23ZL+c+uFY+J6iwREEEVjqOR6h3cfBlz1+7un5XR2nBDYH8N9HZagkfzoku
- iHC/xf19J1endUCQh37QIWTi7PdYJiVvcsQZhx2Tau2UrNYLV8K7/bT2EltqcTTuL1lT
- rLpb7VMsO5OBoI9Po11siOsKzkm8ClVxZ0ot5WYLPfgb8QeIaBkebIPwrmVCeqqAs/G+
- xShr/YqAiMxmcqokPr5a4O6S4ZKblYmoavOPZH6kzwzyYG3HTPRnHO26+0fsvIILIO/t
- PW+DMd8BNNQPfeQ9y+oYNFNnthc+ARUCDMqtyslPCnFQlkAo3V3/xkY+U33QoKz6P0nT
- 3aiw==
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779804117; x=1780408917;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=4nrtbJp1RnwyYAQqSDFBjMposO3NP/wdFsMl3fVXHiY=;
+ b=scyoPUQiCRn28VE8TFrY/8AFfA3w2JmZ72MvXNxkywr8khsE/FSbkPt716gvRjhSnM
+ tN8rnct8e6uwAaGNRKvN1Lstw3dlszu+PKGWBd4zNzxBqNndF/Te5byTypyARboU7WDS
+ x2jlhhjuEnwYtElTdRB51gMdzLpPYKRwpZ648uHAUCfWAQh9tSn2/g/uSTrUv5enrsoK
+ ABfva0HJ4Wa0627m0CN+G9Ew+zj3pm574EV15zkURQhQN5y8F/xz+fybEGlzEx1uWCVT
+ 91kXrZVL3M8C97OrVOs+YUsCZ8SJFPLojr2GsOro0IFfA7kLqCOXaBoXJetxJ6o9TNa7
+ wAmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779803891; x=1780408691;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Tm+vk7b7hM9z9WUMCqJo2kSLoI0BR/fiYKzq/Qm41ao=;
- b=X9oz8Bk+u4AW8aeDiLcYmypV2nAJn+i+zPV5ITLn1eB7eJg7BB/uiUn2OT+AqGRxVJ
- N9V7SUQUn9uWAreqZJLWzE15MXNyTW5XhSB/EJnl4IiC05t2Dn4z3ZWcgUTrsXBlwzbZ
- dURDZEJbeb7iYxMmmJw0E2NoNCPK31uRANXtIz0vNDBZvfje947zFJIzlq0XLHXPr1YL
- lzZ7cOxy7gUFSpphT1HktUUOvxcxPVmUr9mWWDktkxQ5qy3tbKQcspJUdHUz+ZScT0NI
- TX00OUs+LtKPGs+ju07XRguK2QgOS6n3UH6N1PyEGsXZOkV+uN6cEKx5kx3WCk3hajjT
- L0/Q==
+ d=1e100.net; s=20251104; t=1779804117; x=1780408917;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4nrtbJp1RnwyYAQqSDFBjMposO3NP/wdFsMl3fVXHiY=;
+ b=LQiGJURaTT1UXz0+PzNLUJ11K7nGUKRb3GdFWv/RxM2UqQhmmaFxSPQon6t40Ok7BZ
+ kJdl0wryDny73Y3NCn7ZFVvqqnK3vttQavfgSMb9k+JAgkB7tWUZKJUpz0xExUqwPADR
+ aDAbYz2C6gtTMRAD0N6GbIeReB+r9xpcWE297V7mJhcTUliRsAIjEprArLpO5OsR5VAX
+ gBUkupPx59eO8LzM8ViEV9obt75aNbbtrsBIkqSiJnA2G0dwngU/2HJb7bTCdYV/wBh6
+ Ui/D9ajxBjBGdEzP4oeFhWu8DuJiU4nY6bwRObkXAm+PZQcsWHRE0Gp3sU8K5TDfz5G1
+ SubQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+qxqUznOirfvIym+D6xyPDLSxXpL+nKROFSWyclgFoS1TbUNaPtJmB6gFLNJwsii/rElfcqGaFN8v2@nongnu.org
-X-Gm-Message-State: AOJu0YxHcZHHxTAcfnJ0+Cp3xqLo2MsfiK5y7fvPopmaKQ4jhyCtc/rV
- 5D186/IFpA//NnjFfpaoNoKoALQDnmmFouX3kNtV+KhtSa/T6/hbhgXppnZbNxaVA8ENAjYIdqR
- JaRje6eBdraXAfnTLAkCAV3zLoUy4y3RijIGBiFaSJbc4RyixMfe0O76a
-X-Gm-Gg: Acq92OHPsYYDlkbOsiSP/E2z9GHaW4EGxfqWOiP1eLvy6VesamKSTRA5HZvEMCgEQiw
- qrbNZi+U1NQm2qaI292N6wSSCNlX97n4HMr2J5V/7Iu6yUZxlR33zR5S/4H+Tz3f2cOmnedUpot
- L9Phn/k+Sjs5QKOQ7zNuowS42L30oCsB5LvaDCkhhDBMBwxfA5rwwbDZhYnEHHN5Q+GMPCiBx56
- P4OZ2jLdTzu0niQw/1vXXNZBUUXSPa/a4haseBJqPlix+TmP5k/CSPRAe9R2sSUaJ2JXni41ACU
- rgcPM5jUjukYklwJZnx24C9QjZKm8tycCER48yN+2zWrU/WAAVe8+EUezbXKRq5LnGo2GL7+eNV
- V9Ruc6droRe2dOuaH3nSX/TdpjR52Aj+qC2o/QTVvS4KO1UULWGClN438vJdAfKOqvvtLmbr9ko
- c=
-X-Received: by 2002:a05:6000:18af:b0:43b:3b80:6776 with SMTP id
- ffacd0b85a97d-45eb38badd5mr32703485f8f.30.1779803890863; 
- Tue, 26 May 2026 06:58:10 -0700 (PDT)
-X-Received: by 2002:a05:6000:18af:b0:43b:3b80:6776 with SMTP id
- ffacd0b85a97d-45eb38badd5mr32703398f8f.30.1779803890309; 
- Tue, 26 May 2026 06:58:10 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ed1939c6asm14695725f8f.2.2026.05.26.06.58.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 May 2026 06:58:09 -0700 (PDT)
-Message-ID: <4cdd38f4-4efc-48c5-a236-a40449ad8e85@redhat.com>
-Date: Tue, 26 May 2026 15:58:08 +0200
+ AFNElJ96EvXDDdURIvbfyhDNE1yBH0WbAiV9p06j5viFOXOmh/e0kgyLXzdnBJGPPBjd8oJqdQMS4+svBGWL@nongnu.org
+X-Gm-Message-State: AOJu0YwtFFgEeKfmyCVFrVjiRQDAOK0yQwmgZak8OSVYEU32phEvcAx2
+ G6nJkERscEydx7XuH4mGKBmD2ohWWvmyeSpskDtemt0Cvy6WIFelHFz0M/yqPwkfScbJr2Qy8E6
+ e/KhaZ/MFaPYSfeoZ0axNxbxqgWsCPBsyR5scuXpfzCGSMSPpgMLS
+X-Gm-Gg: Acq92OE8bQ2qhdVxnEiNGkWViDxAizK23kopBpzdoVcmpdknmK55kNqu3HeMllNDNbb
+ soXRiCAXss++ZNVLGp9d1ReCbvFW6VfveCeuVFRaN4J2xV1jAs97ZxsQBScXwl6Tyud02BmQ4D6
+ gGcjgSCTOaCq2Oo6q2+tizql/6Wp0DE0duo7Lp5SZZt4BGWtgNY6FHAiuXLdLeG6mYhtqY3XtAT
+ vrTL8KblCNjFvGKsAF7lyB2P/WHniDGEcCSuEkrUlIuRHn4wplNrseK7U6r6+vXhQSt9pzmDdVN
+ M163CMOzcdcPpgcMgfH7wunwmSGQVJLBxLrl
+X-Received: by 2002:a05:6a21:68e:b0:35d:cc9a:8bc1 with SMTP id
+ adf61e73a8af0-3b329806c52mr14613534637.27.1779804115372; Tue, 26 May 2026
+ 07:01:55 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/21] arm: virt: create sbsa_gwdt watchdog
-Content-Language: en-US
-To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
-Cc: mst@redhat.com, anisinha@redhat.com, pbonzini@redhat.com,
- peter.maydell@linaro.org, shannon.zhaosl@gmail.com, philmd@linaro.org,
- zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com,
- qemu-arm@nongnu.org
-References: <20260303092532.2410177-1-imammedo@redhat.com>
- <20260303092532.2410177-10-imammedo@redhat.com>
-From: Eric Auger <eauger@redhat.com>
-In-Reply-To: <20260303092532.2410177-10-imammedo@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eauger@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20260524083329-mutt-send-email-mst@kernel.org>
+ <f0bc9023-28c4-4685-b0cc-fc7ad4e6d371@redhat.com>
+ <CAFEAcA9wMRFJWrjGHcd2nfhgXovyuS=dDJvCXWZkgmD_eez27A@mail.gmail.com>
+ <CABgObfYSy-sctHcUW3hPxQZ8ZGOYHLi3HaW+FrEQ9kKitMAVZg@mail.gmail.com>
+ <e875fb45-9697-a6d0-fbe0-d0531eb2c911@eik.bme.hu>
+ <CAJSP0QWt_xB9a7UG3nved=m_5-Qmxy8qeAofh4c1M3a6qJanMQ@mail.gmail.com>
+In-Reply-To: <CAJSP0QWt_xB9a7UG3nved=m_5-Qmxy8qeAofh4c1M3a6qJanMQ@mail.gmail.com>
+From: Warner Losh <imp@bsdimp.com>
+Date: Tue, 26 May 2026 08:01:43 -0600
+X-Gm-Features: AVHnY4LJFv1WRjscxQPvpw-sovSfx_rRmF3aJAaWtQVMDrps16EkV6zUs7t0jL8
+Message-ID: <CANCZdfo9VJtj3ZPhnnLNB5OOhoEQEDvCjVQcdXp2gV-_7ru_oQ@mail.gmail.com>
+Subject: Re: on ai generated and code provenance
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ qemu-devel <qemu-devel@nongnu.org>, "Hajnoczi, Stefan" <stefanha@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000111b1d0652b8f0da"
+Received-SPF: none client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pg1-x52a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,200 +121,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Igor,
+--000000000000111b1d0652b8f0da
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 3/3/26 10:25 AM, Igor Mammedov wrote:
-> Allow to use SBSA generic watchdog with virt machine type.
-> (includes conditional generation of corresponding FDT and
-> ACPI GTDT descriptors)
-> 
-> Use '-device sbsa_gwdt' to command line to enable it.
-I thank that in general Peter is not a big fan of dynamic instantiation
-of sysbus devices. Don't you have means to instantiate it statically in
-arm virt memory map?
+On Tue, May 26, 2026, 7:24=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.com> =
+wrote:
 
-Eric
-> 
-> Tested with Fedora 43:
->   FDT: -M virt,acpi=off -device sbsa_gwdt
->   ACPI: -M virt -device sbsa_gwdt
-> 
-> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-> ---
->  hw/arm/Kconfig           |  1 +
->  hw/arm/virt-acpi-build.c | 33 +++++++++++++++++++++++++++++++--
->  hw/arm/virt.c            |  2 ++
->  hw/core/sysbus-fdt.c     | 32 ++++++++++++++++++++++++++++++++
->  hw/watchdog/sbsa_gwdt.c  |  1 +
->  5 files changed, 67 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-> index c66c452737..1222efadd1 100644
-> --- a/hw/arm/Kconfig
-> +++ b/hw/arm/Kconfig
-> @@ -36,6 +36,7 @@ config ARM_VIRT
->      select VIRTIO_MEM_SUPPORTED
->      select ACPI_CXL
->      select ACPI_HMAT
-> +    select WDT_SBSA
->  
->  config CUBIEBOARD
->      bool
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index 719d2f994e..9c14b1d4d5 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -64,6 +64,7 @@
->  #include "hw/virtio/virtio-acpi.h"
->  #include "target/arm/cpu.h"
->  #include "target/arm/multiprocessing.h"
-> +#include "hw/watchdog/sbsa_gwdt.h"
->  
->  #define ARM_SPI_BASE 32
->  
-> @@ -863,6 +864,8 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->      const uint32_t irqflags = 0;  /* Interrupt is Level triggered  */
->      AcpiTable table = { .sig = "GTDT", .rev = 3, .oem_id = vms->oem_id,
->                          .oem_table_id = vms->oem_table_id };
-> +    uint32_t gtdt_start = table_data->len;
-> +    Object *wdt = object_resolve_type_unambiguous(TYPE_WDT_SBSA, NULL);
->  
->      acpi_table_begin(&table, table_data);
->  
-> @@ -893,10 +896,15 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->      build_append_int_noprefix(table_data, irqflags, 4);
->      /* CntReadBase Physical address */
->      build_append_int_noprefix(table_data, 0xFFFFFFFFFFFFFFFF, 8);
-> +
->      /* Platform Timer Count */
-> -    build_append_int_noprefix(table_data, 0, 4);
-> +    build_append_int_noprefix(table_data,  wdt ? 1 : 0, 4);
->      /* Platform Timer Offset */
-> -    build_append_int_noprefix(table_data, 0, 4);
-> +    build_append_int_noprefix(table_data,
-> +        wdt ? (table_data->len - gtdt_start) +
-> +              4 + 4 + 4 /* len of this & following 2 fields to skip */
-> +            : 0, 4);
-> +
->      if (vms->ns_el2_virt_timer_irq) {
->          /* Virtual EL2 Timer GSIV */
->          build_append_int_noprefix(table_data, ARCH_TIMER_NS_EL2_VIRT_IRQ, 4);
-> @@ -906,6 +914,27 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->          build_append_int_noprefix(table_data, 0, 4);
->          build_append_int_noprefix(table_data, 0, 4);
->      }
-> +
-> +    /* ACPI 6.5 spec: 5.2.25.2 ARM Generic Watchdog Structure (Table 5-124) */
-> +    if (wdt) {
-> +        PlatformBusDevice *pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
-> +        SysBusDevice *sd = SYS_BUS_DEVICE(wdt);
-> +        hwaddr mmio_base = vms->memmap[VIRT_PLATFORM_BUS].base;
-> +        hwaddr rbase = mmio_base + platform_bus_get_mmio_addr(pbus, sd, 0);
-> +        hwaddr cbase = mmio_base + platform_bus_get_mmio_addr(pbus, sd, 1);
-> +        int irq = ARM_SPI_BASE + vms->irqmap[VIRT_PLATFORM_BUS] +
-> +                  platform_bus_get_irqn(pbus, sd, 0);
-> +
-> +        build_append_int_noprefix(table_data, 1 /* Type: Watchdog GT */, 1);
-> +        build_append_int_noprefix(table_data, 28 /* Length */, 2);
-> +        build_append_int_noprefix(table_data, 0, 1);  /* Reserved */
-> +        /* RefreshFrame Physical Address */
-> +        build_append_int_noprefix(table_data, rbase, 8);
-> +        /* WatchdogControlFrame Physical Address */
-> +        build_append_int_noprefix(table_data, cbase, 8);
-> +        build_append_int_noprefix(table_data, irq, 4); /* Watchdog Timer GSIV */
-> +        build_append_int_noprefix(table_data, 0, 4); /* Watchdog Timer Flags */
-> +    }
->      acpi_table_end(linker, &table);
->  }
->  
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index cab2e21e8a..a87991b591 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -95,6 +95,7 @@
->  #include "hw/cxl/cxl.h"
->  #include "hw/cxl/cxl_host.h"
->  #include "qemu/guest-random.h"
-> +#include "hw/watchdog/sbsa_gwdt.h"
->  
->  static GlobalProperty arm_virt_compat_defaults[] = {
->      { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
-> @@ -3474,6 +3475,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
->      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
->      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
->      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_ARM_SMMUV3);
-> +    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_WDT_SBSA);
->  #ifdef CONFIG_TPM
->      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
->  #endif
-> diff --git a/hw/core/sysbus-fdt.c b/hw/core/sysbus-fdt.c
-> index 89d0c46445..76aa1bc579 100644
-> --- a/hw/core/sysbus-fdt.c
-> +++ b/hw/core/sysbus-fdt.c
-> @@ -36,6 +36,7 @@
->  #include "hw/display/ramfb.h"
->  #include "hw/uefi/var-service-api.h"
->  #include "hw/arm/fdt.h"
-> +#include "hw/watchdog/sbsa_gwdt.h"
->  
->  /*
->   * internal struct that contains the information to create dynamic
-> @@ -118,6 +119,36 @@ static int add_uefi_vars_node(SysBusDevice *sbdev, void *opaque)
->      return 0;
->  }
->  
-> +static int add_sbsa_gwdt_node(SysBusDevice *sbdev, void *opaque)
-> +{
-> +    PlatformBusFDTData *data = opaque;
-> +    PlatformBusDevice *pbus = data->pbus;
-> +    const char *parent_node = data->pbus_node_name;
-> +    void *fdt = data->fdt;
-> +    uint64_t cbase, rbase;
-> +    char *nodename;
-> +    int irq;
-> +
-> +    cbase = platform_bus_get_mmio_addr(pbus, sbdev, 1);  /* control frame */
-> +    rbase = platform_bus_get_mmio_addr(pbus, sbdev, 0);  /* refresh frame */
-> +    irq = platform_bus_get_irqn(pbus, sbdev, 0);
-> +
-> +    nodename = g_strdup_printf("%s/watchdog@%" PRIx64, parent_node, cbase);
-> +    qemu_fdt_add_subnode(fdt, nodename);
-> +
-> +    qemu_fdt_setprop_string(fdt, nodename, "compatible", "arm,sbsa-gwdt");
-> +    qemu_fdt_setprop_cells(fdt, nodename, "reg",
-> +                           cbase, SBSA_GWDT_CMMIO_SIZE,
-> +                           rbase, SBSA_GWDT_RMMIO_SIZE);
-> +    qemu_fdt_setprop_cells(fdt, nodename, "interrupts",
-> +                           GIC_FDT_IRQ_TYPE_SPI, data->irq_start + irq,
-> +                           GIC_FDT_IRQ_FLAGS_LEVEL_HI);
-> +    qemu_fdt_setprop_cell(fdt, nodename, "timeout-sec", 30);
-> +
-> +    g_free(nodename);
-> +    return 0;
-> +}
-> +
->  static int no_fdt_node(SysBusDevice *sbdev, void *opaque)
->  {
->      return 0;
-> @@ -140,6 +171,7 @@ static const BindingEntry bindings[] = {
->      TYPE_BINDING(TYPE_ARM_SMMUV3, no_fdt_node),
->      TYPE_BINDING(TYPE_RAMFB_DEVICE, no_fdt_node),
->      TYPE_BINDING(TYPE_UEFI_VARS_SYSBUS, add_uefi_vars_node),
-> +    TYPE_BINDING(TYPE_WDT_SBSA, add_sbsa_gwdt_node),
->      TYPE_BINDING("", NULL), /* last element */
->  };
->  
-> diff --git a/hw/watchdog/sbsa_gwdt.c b/hw/watchdog/sbsa_gwdt.c
-> index acb970e8b3..c4dd8005b7 100644
-> --- a/hw/watchdog/sbsa_gwdt.c
-> +++ b/hw/watchdog/sbsa_gwdt.c
-> @@ -285,6 +285,7 @@ static void wdt_sbsa_gwdt_class_init(ObjectClass *klass, const void *data)
->      dc->realize = wdt_sbsa_gwdt_realize;
->      device_class_set_legacy_reset(dc, wdt_sbsa_gwdt_reset);
->      dc->hotpluggable = false;
-> +    dc->user_creatable = true;
->      set_bit(DEVICE_CATEGORY_WATCHDOG, dc->categories);
->      dc->vmsd = &vmstate_sbsa_gwdt;
->      dc->desc = "SBSA-compliant generic watchdog device";
+> On Tue, May 26, 2026 at 7:28=E2=80=AFAM BALATON Zoltan <balaton@eik.bme.h=
+u> wrote:
+> > On Tue, 26 May 2026, Paolo Bonzini wrote:
+> > > Il mar 26 mag 2026, 10:23 Peter Maydell <peter.maydell@linaro.org> ha
+> > > scritto:
+> > >
+> > >>> Personally I think QEMU's
+> > >>> policy is fine but we should start introducing exceptions, possibly
+> > >>> including large contributions with pre-authorization (but not
+> > >>> pre-approval) from the maintainer.
+> > >>
+> > >> I want to note that [...] while we were essentially in the "blanket
+> ban"
+> > >> state anyway, there was no particular need to have the discussion
+> about
+> > >> other reasons we might also want to be restrictive or cautious about
+> AI
+> > >> contributions, but those other reasons and viewpoints don't go away
+> > >> automatically with the legal one.
+> > >>
+> > >> I have quite a lot of sympathy with the rationale behind the Zig
+> policy,
+> > >> for instance: https://kristoff.it/blog/contributor-poker-and-ai/ I
+> spend
+> > >> quite a lot of time reviewing patches for things which are features =
+I
+> don't
+> > >> necessarily personally care about. I'm happy with doing that for oth=
+er
+> > >> people who are hopefully learning and gaining something from the
+> process;
+> > >> I'm much less interested in reviewing a mountain of LLM-generated
+> patches.
+> > >>
+> > >
+> > > I agree and that's a good argument for pre-discussion with the
+> maintainers.
+> > > It would anyway be the right thing to do for large contributions, but
+> it's
+> > > even more important with AI given the different balance between
+> contributor
+> > > and reviewer.
+> >
+> > I think the real problem is people who don't know what they are doing y=
+et
+> > use an AI to generate a patch and submit it anyway. Reviewers are then
+> > flooded with nonsense that they have to look at to find out if there's
+> > anything useful in it which takes their time from doing more useful
+> > things. So the policy should make clear that we don't accept patches
+> > generated by AI that no human has read and understood before submission
+> > and adding a S-o-b should also mean (besides that the submitter made su=
+re
+> > there's no copyright infringement) that that person has knowledge about
+> > the patch and is willing to correct it. Then reviewers can just bounce =
+AI
+> > nonsense back to the conrtibutor or ignore it if they don't reply (or
+> > reply with more AI nonsense suggesting they don't know what the patch
+> does
+> > so can't correct it). I think that's the real fear that has led to the =
+AI
+> > ban and the copyright issues were just a convenient excuse. Maybe
+> > clarifying this in the policy could be done although there will always =
+be
+> > people who ignore documents. So maybe what we want is no direct
+> submission
+> > of AI generated patches without at least a human inbetween who has
+> already
+> > reviewed tha patch before sending it to the list.
+>
+> That sounds reasonable.
+>
 
+I agree.
+
+And for large submission we can have a smaller limit for AI or other poorly
+explained code.
+
+Warner
+
+>
+
+--000000000000111b1d0652b8f0da
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, May 26, 2026, 7:24=E2=80=
+=AFAM Stefan Hajnoczi &lt;<a href=3D"mailto:stefanha@gmail.com">stefanha@gm=
+ail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"=
+margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On Tue, May =
+26, 2026 at 7:28=E2=80=AFAM BALATON Zoltan &lt;<a href=3D"mailto:balaton@ei=
+k.bme.hu" target=3D"_blank" rel=3D"noreferrer">balaton@eik.bme.hu</a>&gt; w=
+rote:<br>
+&gt; On Tue, 26 May 2026, Paolo Bonzini wrote:<br>
+&gt; &gt; Il mar 26 mag 2026, 10:23 Peter Maydell &lt;<a href=3D"mailto:pet=
+er.maydell@linaro.org" target=3D"_blank" rel=3D"noreferrer">peter.maydell@l=
+inaro.org</a>&gt; ha<br>
+&gt; &gt; scritto:<br>
+&gt; &gt;<br>
+&gt; &gt;&gt;&gt; Personally I think QEMU&#39;s<br>
+&gt; &gt;&gt;&gt; policy is fine but we should start introducing exceptions=
+, possibly<br>
+&gt; &gt;&gt;&gt; including large contributions with pre-authorization (but=
+ not<br>
+&gt; &gt;&gt;&gt; pre-approval) from the maintainer.<br>
+&gt; &gt;&gt;<br>
+&gt; &gt;&gt; I want to note that [...] while we were essentially in the &q=
+uot;blanket ban&quot;<br>
+&gt; &gt;&gt; state anyway, there was no particular need to have the discus=
+sion about<br>
+&gt; &gt;&gt; other reasons we might also want to be restrictive or cautiou=
+s about AI<br>
+&gt; &gt;&gt; contributions, but those other reasons and viewpoints don&#39=
+;t go away<br>
+&gt; &gt;&gt; automatically with the legal one.<br>
+&gt; &gt;&gt;<br>
+&gt; &gt;&gt; I have quite a lot of sympathy with the rationale behind the =
+Zig policy,<br>
+&gt; &gt;&gt; for instance: <a href=3D"https://kristoff.it/blog/contributor=
+-poker-and-ai/" rel=3D"noreferrer noreferrer" target=3D"_blank">https://kri=
+stoff.it/blog/contributor-poker-and-ai/</a> I spend<br>
+&gt; &gt;&gt; quite a lot of time reviewing patches for things which are fe=
+atures I don&#39;t<br>
+&gt; &gt;&gt; necessarily personally care about. I&#39;m happy with doing t=
+hat for other<br>
+&gt; &gt;&gt; people who are hopefully learning and gaining something from =
+the process;<br>
+&gt; &gt;&gt; I&#39;m much less interested in reviewing a mountain of LLM-g=
+enerated patches.<br>
+&gt; &gt;&gt;<br>
+&gt; &gt;<br>
+&gt; &gt; I agree and that&#39;s a good argument for pre-discussion with th=
+e maintainers.<br>
+&gt; &gt; It would anyway be the right thing to do for large contributions,=
+ but it&#39;s<br>
+&gt; &gt; even more important with AI given the different balance between c=
+ontributor<br>
+&gt; &gt; and reviewer.<br>
+&gt;<br>
+&gt; I think the real problem is people who don&#39;t know what they are do=
+ing yet<br>
+&gt; use an AI to generate a patch and submit it anyway. Reviewers are then=
+<br>
+&gt; flooded with nonsense that they have to look at to find out if there&#=
+39;s<br>
+&gt; anything useful in it which takes their time from doing more useful<br=
+>
+&gt; things. So the policy should make clear that we don&#39;t accept patch=
+es<br>
+&gt; generated by AI that no human has read and understood before submissio=
+n<br>
+&gt; and adding a S-o-b should also mean (besides that the submitter made s=
+ure<br>
+&gt; there&#39;s no copyright infringement) that that person has knowledge =
+about<br>
+&gt; the patch and is willing to correct it. Then reviewers can just bounce=
+ AI<br>
+&gt; nonsense back to the conrtibutor or ignore it if they don&#39;t reply =
+(or<br>
+&gt; reply with more AI nonsense suggesting they don&#39;t know what the pa=
+tch does<br>
+&gt; so can&#39;t correct it). I think that&#39;s the real fear that has le=
+d to the AI<br>
+&gt; ban and the copyright issues were just a convenient excuse. Maybe<br>
+&gt; clarifying this in the policy could be done although there will always=
+ be<br>
+&gt; people who ignore documents. So maybe what we want is no direct submis=
+sion<br>
+&gt; of AI generated patches without at least a human inbetween who has alr=
+eady<br>
+&gt; reviewed tha patch before sending it to the list.<br>
+<br>
+That sounds reasonable.<br></blockquote></div></div><div dir=3D"auto"><br><=
+/div><div dir=3D"auto">I agree.</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">And for large submission we can have a smaller limit for AI or ot=
+her poorly explained code.</div><div dir=3D"auto"><br></div><div dir=3D"aut=
+o">Warner</div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_cont=
+ainer"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-=
+left:1px #ccc solid;padding-left:1ex"></blockquote></div></div><div dir=3D"=
+auto"><div class=3D"gmail_quote gmail_quote_container"><blockquote class=3D=
+"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding=
+-left:1ex">
+</blockquote></div></div></div>
+
+--000000000000111b1d0652b8f0da--
 
