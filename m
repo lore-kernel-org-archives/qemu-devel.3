@@ -4,107 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09540CD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 19:32:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0D13CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 19:36:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRxUz-0001dR-8d; Tue, 26 May 2026 15:31:35 -0400
+	id 1wRxYs-0003jI-TB; Tue, 26 May 2026 15:35:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wRxUd-0001Yc-DT
- for qemu-devel@nongnu.org; Tue, 26 May 2026 15:31:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wRxUa-0001WG-JA
- for qemu-devel@nongnu.org; Tue, 26 May 2026 15:31:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779823866;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sk2OA06M0ZiBfceNU+j+5ToFPiMTNNfr43gltGLJr7c=;
- b=FjhXr0af16JVlbmnGRKv+qLW+iG+0696MnJY/eoEW5AZp5zcgfqweFQHK20cH+0EyXUQgw
- JCTDlyCol2uSV/cCrJO0/Cf0339VNfI8gEEUi2bQ9Ej7O7GtjJuAwv9i0PBLcRdZoVY2R5
- dhoBrwIX5IlLvwaFyhOm5ZXgNKj6QBw=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-569-dBwIPUNAM6OtXgoIqApU4g-1; Tue, 26 May 2026 15:31:03 -0400
-X-MC-Unique: dBwIPUNAM6OtXgoIqApU4g-1
-X-Mimecast-MFC-AGG-ID: dBwIPUNAM6OtXgoIqApU4g_1779823862
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-48fde68e420so85937405e9.0
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 12:31:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wRxYo-0003iY-5K
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 15:35:30 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wRxYm-00053h-Bq
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 15:35:29 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-651bc83e74aso11251769d50.2
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 12:35:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779824127; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Q9Gite3IUnCkqIPa3f/+Ch6bHhmOmfCBprstRmQh2ao8ZXez7XBlFBN3pFZLSciGcj
+ 0G+BLJ6v5BzLVXlWUyMgFvr1UYa47i57AxFY+nmde4Rfpedq60Ig5O4yJwMDd+CxIXM0
+ u73yJ6DlYbUET40lVsgw7jFGcaO24w0R8UGm6nfXApegaa57+TaPyAvkFsAS8LAHlvVT
+ HFJpEisEXqrTWCoc8pytu/8DfB1YS9raV3TOns5dE4Ml/ewe+IIjs+ykaOKDYxIu0Y7N
+ kRbUDxQBDLF9J7sHlJE1FnwPw5nnyN2Aa9jAQ3lbSbzNleWZ5olr+8RyadZpwlSUO419
+ AK8A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :dkim-signature;
+ bh=6PnqVaY/NN2kfARNKe9yvKSpfkwhROM4WdwQun3RfVY=;
+ fh=PsKphPeJjYIi9dqXmYXpxYNjV6k0X4EwqnInklkzmR4=;
+ b=O6EMeHmCzocW53oROydT0lUFAVQn5G9v64YEw5oxvE7md0ypxXty6VTaiaXnH2JwVK
+ kWlX586ar+TNGFh7C1Tln4ddhHRzwzPxOUuLnuvH4wB4RKP5ro1rEl5cV8aOXF/PTcl5
+ 5SP6sDeZFxckoxNBAayaX4UY6KMz7JFAEHR4zpanQEjhbzbJmKDLNBtM9rfRAKtz3edu
+ /FnTzIBqrtbYuPwvuMrmPjw1yj7TahmnMUkZQGo7yolpg6tl2JirY8+PzFEhbk8RfxB4
+ TPiyLL4EqdRy6otrZVCe+rqHMtqRt/AolKElwC4Dt5SIJM2oenokveTxp0pFxjHkVnxa
+ KvUQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779823862; x=1780428662; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=sk2OA06M0ZiBfceNU+j+5ToFPiMTNNfr43gltGLJr7c=;
- b=r82W58xcWhGAJNfwveHd3YFOqVEvN1qJd2Buf8QvzI29gve6vk4HQHxd9UnSPg+qMB
- YGlD36ArssTPL60krgwxEHTbnfqadZkhUbnzkdIZmFmjF4fMt1QG1PdUv/hfMLDbf6fJ
- J+dwwF22132fXxFCqHbCfFg+LoWx1PO5q94lBe2MMX86YRcMTWeysCh2eZewmQ0NvVt0
- QsgrPxV7fHEPrdrTdslrT9EMqeJyqHw4+mvpOFgQOiJJxe6JYwqpm0+f7puP4ONQVk2l
- 2zkYTAzI71l6x4H5mP1lh7jvc8Fndf4ONDHaOWidyw0RhjnCxNl6L9VQ/V8xqbVN09ez
- tT9g==
+ d=linaro.org; s=google; t=1779824127; x=1780428927; darn=nongnu.org;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=6PnqVaY/NN2kfARNKe9yvKSpfkwhROM4WdwQun3RfVY=;
+ b=BMpc8DNO/6SWVzdha6aDIrHXAYQfzd1jDVbl+g0MPUD/iZNbHO+lt1gf4WL8xLQygH
+ ngUEfslr4FYehZTezdpca01bMaRr2L0V8SJf62eP1qgtfHUu0/Vh46juxuTVrmTZPK8Z
+ 4z/B6I27xf6i5Igv0GLkKxgMjp8o/r9HVwk2/sj1bRVV5XxenKde6kzBVzPG88JGYGO0
+ XoQ1bFO9wDqIK+7NWqdXg33+qxPBC7Xyy/JTIRzKMcxvfT957XYSkiSCTlk7Rf4DGS1l
+ 4AJxTs+izuTTi+jCo+cSgOr0Ju50qCDgeUO5y/p1Fb14CptMcKbJ3krbO864W18ZhBAl
+ WOeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779823862; x=1780428662;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sk2OA06M0ZiBfceNU+j+5ToFPiMTNNfr43gltGLJr7c=;
- b=NRL4enrB8ibbjftfSsp5DZLtF0pZCxMmPXBOohmGKypUUhWvl1wt/z/VSSSo8B5ka7
- xIz2P4ykCMdrLq9/4dKWznBLSm3mK/uuTSCDfe9rNU/NUUi5/Kj49OMlThcTa8bSSeDY
- V1AQAwuYdZTXJkqeXwwv4c5QD/5V/tZ2u/PjzKsXdHLZsu15dhqR3enASE+C8EFamSoJ
- yx7f/3CAoihRFiezjmEQsJS03wj1T0bQu8+o70s0IHX48E6+ECjR5rOk36WS0ec00Nk0
- k/NNLwPK2GFsTlz4wmkve0FSFEsMKn1ZeFSwrtY073dFBtuRAZRS/Rsjft0BjNtboNZ7
- avDg==
-X-Gm-Message-State: AOJu0YzmcBodoQV8Ffpb2Tz58wcCadz2IKfdXHxtFtZN2arln1MVYsyJ
- S/HSRkbudQwIgs0Z0m5e1bAAMOtjbaO8Mj41fVIcdsB7oGEq7lSeb0H62dr8PBfSH2Ug380Af9P
- fWVt5a7AXnqN3jR85+70PIEpSOpQe9hn0Ldrab8xlDFjUXtxrLQ5nCoMm
-X-Gm-Gg: Acq92OG983hzhUOkuL/0noscGlVum6MIgzxJYMSkztTB9gFZ/B44bC06AG3rUhsCsnz
- QPPFr9qczo+J9fV1RtJ/NhA+WqvfRnPI2Yxwm8edUQ+IpJxTG/4GBdm4cs2cgR0ioF2wOUnm3lb
- 5lTWkSYU2EKpPnzBKtHESiZXPMXyTGgetxoFHH8EaG4IKtOrluKkEvHM7xmwAAjXYRwNlLgA8cw
- KRCsOE+cujbxi0UoatxZSbl/XIjddL7/hBzAz55TEfmUzSGIT+ZMVKkyq51bojXu3nVwD87wtsn
- B7Boj9exZ9tC0UKnYW9bMsb85S8oilLUQO1CWYpgvH6ZWKZ85Xs0t0IyVhApGUPrJRsUsUYoaza
- /S6GPor+nh/yCGNHrRKoQtg6/N+FyM2tDVgR08Vkr4w8=
-X-Received: by 2002:a05:600c:3581:b0:490:482c:4391 with SMTP id
- 5b1f17b1804b1-490482c4586mr352884435e9.23.1779823862411; 
- Tue, 26 May 2026 12:31:02 -0700 (PDT)
-X-Received: by 2002:a05:600c:3581:b0:490:482c:4391 with SMTP id
- 5b1f17b1804b1-490482c4586mr352883865e9.23.1779823861804; 
- Tue, 26 May 2026 12:31:01 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-25-45.inter.net.il. [80.230.25.45])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4907e7d0967sm2492855e9.11.2026.05.26.12.31.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 12:31:01 -0700 (PDT)
-Date: Tue, 26 May 2026 15:30:58 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-devel@nongnu.org, stefanha@redhat.com
-Subject: Re: on ai generated and code provenance
-Message-ID: <20260526152526-mutt-send-email-mst@kernel.org>
-References: <20260524083329-mutt-send-email-mst@kernel.org>
- <ahXbxzB4C_lr6b0N@redhat.com>
- <20260526140231-mutt-send-email-mst@kernel.org>
- <ahXtqyuIa4XqkMHb@redhat.com>
+ d=1e100.net; s=20251104; t=1779824127; x=1780428927;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=6PnqVaY/NN2kfARNKe9yvKSpfkwhROM4WdwQun3RfVY=;
+ b=qWF6KrY6QNRLEq5EIO1hQVQmuQAtzEeiVybF/gOWgDpmxaTPneg1o5q1YDY0Pwzvgy
+ YUsbMeS9T22bWmZkIfUH5gH5OfKBlMEEohcpJZFPALNOY4lazU6KuJgDsEEnoyCElFhQ
+ TdHe5oQ6+gmoO4Vow4R+TzjcbHqr0pGHkrrw9G8JDB5YYxjZ8zWAE1F7PXxsrOKrpaDo
+ BqyM9MLLhmSTDjaGcwmhGCSd08t6tcBPXP+/MOxks65nlanQf1JwC+KsfQCu+v/8weki
+ zKlbOUcEO2t0yv5Bln5b89Kr2RuD1PTm6gcv8fPI5zCiLQ2Ae8tqpiSdkmLte+5w+a0m
+ WgUA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+uJuv+G12UJOqUuKU5uMLQtVAat1nVPJtXk/sr/SsqT/+YIrHA+BUSnliTouBc1nv0GT+xOcNTZtCK@nongnu.org
+X-Gm-Message-State: AOJu0YwhhX3NoMLnDy1q7lDX93ahl0dZcYTuNnVV9H+Rfkb6mYcwOm7n
+ wmGUHor8L4+US2UQqslTdvSa15IDoT6KskcsMRsm4NQFV59GP9IDGnstWVbplKdvj0RAEIBJPqp
+ lJyls0M97u/uRUr/suNanv4bDpMD9898P84IATCPw3Q==
+X-Gm-Gg: Acq92OHWGMEmbC2tyr1M+9TPKzfuGGqlYIP41PcYEIJKPDrx3Xc1ncRdwIuwjKVoPFQ
+ uAzOvTHfs4fZPQ8TGS2Umua6UsGua0A9GeFLaqN7dlWqlgbzYH2FlSOgWXktfMf/Uf8B6DNNakZ
+ Ice7h7pEWA3H3mogV4080ThC2G+FBkFnd9F5fRmYlLx8uOghiGO5yQm4g7OHsi7IIYksFjdBN5I
+ qiAR8LZncmCYGv5sexc3sNFWsp0oGc9QlBnwDiqUUlNPDKQUckADoQwaYPcdvgdrO+IKmKbnbuR
+ 1055MGi9+VDM9VlwUgDBAP31gE1enoj6hpVXdyIPeBZ8sBoVcSM3D0wWQr6ewxK68qCYIjHsCKO
+ y01pEEvgAOTG1
+X-Received: by 2002:a53:b1c3:0:b0:65c:2b92:f8de with SMTP id
+ 956f58d0204a3-65ec9808584mr15451807d50.28.1779824126670; Tue, 26 May 2026
+ 12:35:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ahXtqyuIa4XqkMHb@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260526174155.2491217-1-peter.maydell@linaro.org>
+In-Reply-To: <20260526174155.2491217-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 26 May 2026 20:35:15 +0100
+X-Gm-Features: AVHnY4L3r75_kZNWoOipqsJoijL-re3oIYdX5SBKVTZIMVgYWh1PfJw-_HfyngI
+Message-ID: <CAFEAcA-dKxq8S=Mb7NfgRp3060QwokbUkxey5u-XcwB77Nam3A@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: Don't assert if 64-bit EL2 AT insn sees a
+ Domain fault
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,173 +116,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 26, 2026 at 08:59:55PM +0200, Kevin Wolf wrote:
-> Am 26.05.2026 um 20:03 hat Michael S. Tsirkin geschrieben:
-> > On Tue, May 26, 2026 at 07:43:35PM +0200, Kevin Wolf wrote:
-> > > Am 24.05.2026 um 14:42 hat Michael S. Tsirkin geschrieben:
-> > > > So, I had to reject a perfectly reasonable patch:
-> > > > https://lore.kernel.org/qemu-devel/20260320193746.242704-1-jinpu.wang@ionos.com/
-> > > > just because of a tool used to make it.
-> > > > 
-> > > > 
-> > > > 	How contributors could comply with DCO terms (b) or (c) for the output of AI
-> > > > 	content generators commonly available today is unclear.  The QEMU project is
-> > > > 	not willing or able to accept the legal risks of non-compliance.
-> > > > 
-> > > > 
-> > > > But, since this was written, Red Hat's Richard Fontana and Chris Wright
-> > > > published this piece:
-> > > > https://www.redhat.com/en/blog/ai-assisted-development-and-open-source-navigating-legal-issues
-> > > > 
-> > > > 
-> > > > Saying, in particular "
-> > > > 	We understand this concern, but the DCO has never
-> > > > 	been interpreted to require that every line of a contribution must be
-> > > > 	the personal creative expression of the contributor or another human
-> > > > 	developer. 
-> > > > "
-> > > 
-> > > I never found that blog post particularly convincing, especially because
-> > > they acknowledge a concern:
-> > > 
-> > >     There are two versions of this concern. The first is practical: that
-> > >     an AI tool could covertly insert excerpts of proprietary (or
-> > >     license-incompatible) code into an open source project, potentially
-> > >     creating legal risk for maintainers and users. The second is broader
-> > >     and more philosophical: that large language models, trained on vast
-> > >     amounts of open source software, are essentially misappropriating
-> > >     the community’s work, producing outputs stripped of the obligations
-> > >     that open source licenses require.
-> > > 
-> > >     We think these concerns deserve to be taken seriously.
-> > > 
-> > > The second one is essentially what I understood the QEMU policy to be
-> > > about. Unfortunately, the blog post then goes on to only ever deal with
-> > > the first one and ignore the second one that seems more relevant for us.
-> > > 
-> > > So yes, the DCO isn't about "personal creative expression" or whatever
-> > > (and nobody suggested it is, this is a strawman), but it's about whether
-> > > the submitter has the legal rights to submit the code. And that's
-> > > exactly the question we decided we don't want to take a risk on.
-> > > 
-> > > 
-> > > So if that part isn't helpful, what has changed since we introduced the
-> > > AI policy? It's a few points:
-> > > 
-> > > 1. While AI has been in use for a while now, we haven't seen projects
-> > >    accepting AI generated code/content get into big trouble. While it
-> > >    could still happen in the future, it might be an indication that the
-> > >    probability of the risk hitting us is not that high.
-> > > 
-> > > 2. The useful part of the blog post is that it tells us that Red Hat
-> > >    considers the risk acceptable. This can inform our assessment of the
-> > >    risks, though of course there might be a significant difference in
-> > >    the impact of the risk for a company with a legal department and an
-> > >    open source community consisting mainly of developers acting as
-> > >    individuals.
-> > > 
-> > >    I think it's obvious that if the QEMU project gets involved in a
-> > >    legal case, we have a problem (at the very least long lasting
-> > >    distraction from actual work on QEMU), even if we didn't do anything
-> > >    wrong and a good lawyer would easily win the case.
-> > > 
-> > > 3. It was easy to just outright ban AI while its results were usually
-> > >    not really usable anyway. This has changed meanwhile, so it's much
-> > >    harder to maintain an absolute ban.
-> > > 
-> > >    It's not really the best use of my time to look at the idea in
-> > >    AI-generated test cases and then rewrite them from scratch so I can
-> > >    actually submit them. (On the other hand, I think my rewritten
-> > >    submissions were always better and more maintainable than what AI
-> > >    produced initially, so there's that.)
-> > > 
-> > > So while my perspective is a lot more nuanced than yours, I do see a
-> > > shift in the balance and was actually thinking of suggesting a change of
-> > > the policy myself.
-> > > 
-> > > What I was thinking of was allowing AI-generated content in places where
-> > > it's at least easy to revert if there is ever a problem with it: Tests,
-> > > documentation etc., but not core code that lots of other things depend
-> > > on and that will have evolved a lot when we notice a problem and for
-> > > which throwing away is simply not an option.
-> > 
-> > OK. what about trivial changes? Using AI as a better sed?
-> 
-> The above is just what I was thinking of suggesting myself. I didn't
-> mean to imply that I'm opposed to anything else, but just thought I'd
-> post it as an example of fairly obvious things we could allow.
-> 
-> Of course, it also shows my own pain points. I don't see that much use
-> in it for generating code for QEMU proper, because these changes tend to
-> be few lines and I have an opinion on each of the lines - tests are the
-> opposite, lots of boilerplate and I don't care much how elegant they
-> are because nothing else will build on them anyway.
-> 
-> So yes, trivial patches is another obvious starting point. The challenge
-> there is defining the line where a patch stops being trivial. So I'm not
-> completely sure if making this distinction in a policy is a good idea;
-> maybe practically speaking it has to be all or nothing in terms of
-> creativity (for lack of a better word).
+On Tue, 26 May 2026 at 18:41, Peter Maydell <peter.maydell@linaro.org> wrote:
+> +    case ARMFault_Domain:
+> +        /*
+> +         * This can only happen when doing an AT insn at EL2 for an AArch32
+> +         * stage 1 EL1&0 translation regime using short-descriptors, and
+> +         * the translation hits a Domain fault. This needs to be reported in
+> +         * in the long-format PAR. Compare pseudocode AArch64_PARFault_Status().
+> +         */
 
-Let the maintainers decide?
+The "in in" here should just be "in".
 
-Or we can enumerate things:
-- fixing tool (compiler/checkpatch/smatch) errors/warnings in obvious ways (e.g. suggested by the
-  tools itself, such as initializing an uninitialized variable)
-- propagating API changes (e.g. rebasing a patch after an API change)
-- anything that could be done by a perl/sed/coccinelle script
-- adding or fixing code comments
-
-
-
-> As an aside, personally, I'm not convinced that AI can be a "better
-> sed". If it's really about mechanical changes, I think the resulting
-> patch is much more reviewable if the agent doesn't modify the code, but
-> just generate the sed command line or the Coccinelle patch and that is
-> included in the commit message. Reviewers can then just review that and
-> then reproduce the result themselves for comparison. This is impossible
-> with AI prompts and agents do tend to forget an instance of something to
-> replace here and there, so you do have to review the result carefully.
-> 
-> But none of these "better sed" problems need to handled in an AI policy.
-> If a patch is hard to review, the maintainer will already reject it on
-> those grounds.
-
-Absolutely.
-
-> > > > I propose adopting linux's rules instead:
-> > > > https://docs.kernel.org/process/coding-assistants.html
-> > > > 
-> > > > which boils down to attribution.
-> > > 
-> > > What would we actually do with the detailed information? Why do we care
-> > > which model was used? Is this helpful commit metadata or is it just free
-> > > advertising for a handful of companies?
-> > 
-> > I presume, if a specific model is somehow declared "contaminated" so we
-> > can locate its output?
-> 
-> Contaminated in what respect?
-> 
-> Quality? Might be because of malicious intentions or just because the
-> model happens to be bad at a specific question. Review and testing must
-> be able to catch quality problems. I don't think this is different from
-> any other contributions.
-> 
-> Copyright? If so, then we're back to "can you really sign the DCO?"
-> 
-> Something completely different?
-> 
-> > > I think I would see more use in a tag like (better name welcome):
-> > > 
-> > >     AI-used-for: [code|tests|docs|commit message]...
-> > > 
-> > > Kevin
-> > 
-> > I surely don't mind.
-> 
-> Great. Let's see what others think.
-> 
-> Kevin
-
+-- PMM
 
