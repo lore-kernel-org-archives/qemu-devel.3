@@ -4,105 +4,173 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB8E2CD5BD5
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 22:49:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ADB6CD5BD5
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 23:21:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wS0Za-0004Ap-Aa; Tue, 26 May 2026 18:48:30 -0400
+	id 1wS14o-0003RE-4d; Tue, 26 May 2026 19:20:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wS0ZY-0004AK-Rb
- for qemu-devel@nongnu.org; Tue, 26 May 2026 18:48:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1)
+ (envelope-from <prvs=599a94ef2=Alistair.Francis@wdc.com>)
+ id 1wS14l-0003QT-J1; Tue, 26 May 2026 19:20:43 -0400
+Received: from esa4.hgst.iphmx.com ([216.71.154.42])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wS0ZW-0007CK-6G
- for qemu-devel@nongnu.org; Tue, 26 May 2026 18:48:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779835704;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gBmZ8GaKhZik2UYG+VH5gSYV5iKZ+tSgFbEI0NhZJek=;
- b=Rq5eqT4e+LMths1l3aG7cijK4olI7bvtmviIsYyLXLA3Mv+mGJ0J03p43S+sG31SY3cFd4
- 96ZhqArkBePjhKRo9c1+Xc55K5YZ1jldTWOhG71Ee2KkpQEx1EsWYnjTa7GQ7kmVm11W2F
- 7qig4gGYJ2D5gmhOm6h6+n/qhvZ6EGk=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-683-5rHQTjA4Nx-ljBLDhXAo3g-1; Tue, 26 May 2026 18:48:22 -0400
-X-MC-Unique: 5rHQTjA4Nx-ljBLDhXAo3g-1
-X-Mimecast-MFC-AGG-ID: 5rHQTjA4Nx-ljBLDhXAo3g_1779835702
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-516eaf9fb76so63154731cf.1
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 15:48:22 -0700 (PDT)
+ (Exim 4.90_1)
+ (envelope-from <prvs=599a94ef2=Alistair.Francis@wdc.com>)
+ id 1wS14j-0000AW-Io; Tue, 26 May 2026 19:20:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
+ t=1779837641; x=1811373641;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=blyf/FaZ+qsgzUcJSQ94GqJRpYmZPxEhPZGZ4JgHeyQ=;
+ b=nne7sxgM22bv97t0UVnXuzNRS+aChkBeYNURGJfxHYlTqyablYWJrOV/
+ 4bW3IrBymIRVGMRcTiNZ3/fdHwjv5EhKSlxsMfEk4JD8p7FyENyHHvXED
+ YDUm4dLAJHEgL+K6DbNhnXgfZn2zosmpoJwxfNP6lnJkMX091xnAMyoJ2
+ fvwsQxbDVFA70EhMV74oK/dZNL1mOfG9mTxlPJ1GxoC6Exak7iCs92wgS
+ CNogpZ+xbbW4AQvTCvvFEbMBY2Xu9gir2mvCLqtInS+OhNqiFCao0far3
+ Pk8tMKhVHlowXw9evRD4/mNFwgF+M02SU/JkfGDPBA+JmXvHaRzHCo4mZ A==;
+X-CSE-ConnectionGUID: cZiFKsKzQsaCRDNiFM5AcQ==
+X-CSE-MsgGUID: FBya+mESTregJoHRDUttGg==
+X-IronPort-AV: E=Sophos;i="6.24,170,1774281600"; d="scan'208";a="143711627"
+Received: from mail-westus3azon11010012.outbound.protection.outlook.com (HELO
+ PH7PR06CU001.outbound.protection.outlook.com) ([52.101.201.12])
+ by ob1.hgst.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
+ 27 May 2026 07:20:35 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=fDzTfIhXgp93pq6yR/e2SY2/6pEGE3RA+tHdrnEZfWec+YF9E7lKlphg/bggQYrY+ebcZmljCvQGDJGXOaUVRlNUdmWBP1GXy7X+OczQWvzbyEnYDV2H5DVYNzEaTh/Iqkii/Pv5rasaNOys5HWJz9Sc9ndF8XgUvhjM+Fx4QalUtWdM7xvs885ppDiVJ7dNbBtlB/o0GM4vEGgmgx4JJtAqY3nC/IWOesy5/eTEm48ECufB77cuxlybd3gAmUTiCFq/kBL6vmHvgeShyWtgBXKyyvvD/v+JIleirQaxmXGRTdB9n6eVVcm900xUBUx8b6fbCJH6FBICkoidoRBwng==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=blyf/FaZ+qsgzUcJSQ94GqJRpYmZPxEhPZGZ4JgHeyQ=;
+ b=UxG9BDAxa1eatlYyBzz20i7ViOoQBunerbzkREgV78eiUcxkLmd/gNJyEDZueeOpIy1oWE7pxhIlmJJkgct4QBlH5oX2thmyh4Ag70CQfc9ATWDOmui+C+/UKbJgUrQ70LkE5xPcQqqWrRSVisoPCcuFhkKTMtp1jEKtsPe0ZeJjYpHSL2eLicmXlHAEUvccGUJvs55cOiJqU1a1JVs+MhSOO9I19dlD11t8baulnVzctknl1Zo1s1toU8wN9NxFGook/WXvfYME8q3c7hE7S4MaYrFvgWDdxvSbuRvSnogQ5G33jRkIqLfGYvP4XRyQVywD/RZVt8nJi6gf3R1Q1g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
+ header.d=wdc.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779835702; x=1780440502; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=gBmZ8GaKhZik2UYG+VH5gSYV5iKZ+tSgFbEI0NhZJek=;
- b=NvFd52xdbyhPfDd1vTZANERD6OsGmKHHEWzyltQkcn/+AuxROBKd5ljblYPqchDwJy
- PbK26EW7utgsufUtW2I3sjeFpLfCtc6ExVoo5dFRbPa14f9NxscMJahITZpwcgJj6ReD
- E3eFeZYacNJRZ7ijCTKVMzUBhanuuupCbntLZ1XyZjrdjQhmkw7M+y2Xtx858ZHqRsvI
- 0vbUQspGI6jcZzWhF89TgpCdGei2VBbq4grpgQXs7K3KreBgVvEgabNNiFSUsbbORWJi
- I6I+RJbBJZg/DLFlfLz+zVoN3Qycu8krof+4EkB1EO0gh3+kNu5E31KxbCzBucSnn4py
- ramg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779835702; x=1780440502;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=gBmZ8GaKhZik2UYG+VH5gSYV5iKZ+tSgFbEI0NhZJek=;
- b=o8MhPI8Bl/MY95QKc4OMGABgKkzCg/HnYm19Bd/bq8dEfx1cwTJiSfqsDu5seJrnTE
- OqV9DHylvbIZHJypUiXyOiHRwHFWTEmfF1105yCFVbF/ZTsrQwqqdszg6NhDsvGMGVSf
- CdaPg7CiZESCC2PuyJnCgT5KChbq2gCpP8uWczUHD4MqxzHxbvfy3ckBE7rkIa1OVtKb
- 0GMecB7LH2V5SZqgmxALG80jzLArWb+z3h4BcJyBGa2LCfm19A0jWqCVQiBxPzkGS4QC
- W40/Fp9thhPKd2e8Obs3ALVAhmHaetbrccjvZJM682kTJgNOkDAyY3V0NDfUtPNA14oO
- ASCw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+d7vzx+u53PQ4m2L8SL1gcq92c64aytAgJ/9A/Rn4Z5VAmIRsOxdTMXIDf2OniTLsSQwBvJ3Au04O6@nongnu.org
-X-Gm-Message-State: AOJu0YwJHRq2HGNG7JwNnW6LD6iGrTFl09xJbyBFiNnQefl6KQ2CYq4l
- mU9Y1t8p1GR3KbqAD5cRhzLGrDyXBav6BA2tZv9sgKiSBtPgoaE9hbT9hvYYQX3JOGoUNZzpBw5
- LYPYS3QdEbJg3VnwiDHPpfuwcgDnN4ZSMRRRxR7EAOcHTco2nTM8816fZ
-X-Gm-Gg: Acq92OG5wOg+qUUk/RSagMQ0bNh5SDf8k8qRu2k9sCN2DqiwA9dTSSMPu+v2+r7Y2X9
- KLMk2JQ5Bpf1trKttppe4mBpf9yo97gvxn0luwESZxu6Meztq2T/xbxedr2q9PEzjxyTh6Q/w+y
- S69Zzbb5hitwvBkTvACPTFJzpPRT5+cQxtn/787SGlV4RWACGXe8z7/lNuCQaqtILYKY4qhHHmD
- 8IT4yTqD+ff19g43Fqs5EnP5WlJG177yM4fpz8+D0Hf47QN3hK0W7ki/dvW2jAuC0jPM+yqMWux
- RwZjq/6vr0ED3JmAgNv7tm/z+JR5LFHLuHy0Xulpr/p7xojQQiBxxMNBajFKuuOXahPKGwqgNLo
- zx+wGFjDNAXDIWVyydNP+QLGwkjdUOMU4wILLaMOgEBKpapI=
-X-Received: by 2002:a05:622a:5143:b0:50e:defb:9dca with SMTP id
- d75a77b69052e-516d467c294mr290499861cf.45.1779835701844; 
- Tue, 26 May 2026 15:48:21 -0700 (PDT)
-X-Received: by 2002:a05:622a:5143:b0:50e:defb:9dca with SMTP id
- d75a77b69052e-516d467c294mr290499491cf.45.1779835701301; 
- Tue, 26 May 2026 15:48:21 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-5170b691d15sm18103401cf.11.2026.05.26.15.48.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 15:48:20 -0700 (PDT)
-Date: Tue, 26 May 2026 18:48:19 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] thread-pool: Allow at least 1 thread in
- thread_pool_adjust_max_threads_to_work()
-Message-ID: <ahYjM4IO1bpgHk-0@x1.local>
-References: <b76c763f576b0fb8a35960a8e3c3da59701d2a74.1779390317.git.maciej.szmigiero@oracle.com>
- <ahYDnlAUJ8x1bipq@x1.local>
- <f729ff7f-971c-4e00-88fe-61ded891b9be@maciej.szmigiero.name>
+ d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=blyf/FaZ+qsgzUcJSQ94GqJRpYmZPxEhPZGZ4JgHeyQ=;
+ b=FaRKh56HflXZu/4n8ayTQcuGdp0PmLbczxNXAp9GHSRsQxyIKviEceTgG6QyqjxOVlmuoPJCK29iCRrmm+hCmaWe9SKG7B96mw5Fp/nVx5MMgZuQ04LTzF53VQNMTMFi4iPm0+Mv+1jZBuIxxPfB/b1sSOeDDvSvobmHO4GueAs=
+Received: from CH5PR04MB9550.namprd04.prod.outlook.com (2603:10b6:610:20e::17)
+ by LV0PR04MB9814.namprd04.prod.outlook.com (2603:10b6:408:331::22)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.17; Tue, 26 May
+ 2026 23:20:33 +0000
+Received: from CH5PR04MB9550.namprd04.prod.outlook.com
+ ([fe80::2dd5:1dc8:e3e7:5d31]) by CH5PR04MB9550.namprd04.prod.outlook.com
+ ([fe80::2dd5:1dc8:e3e7:5d31%4]) with mapi id 15.21.0071.011; Tue, 26 May 2026
+ 23:20:33 +0000
+From: Alistair Francis <Alistair.Francis@wdc.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "philmd@linaro.org"
+ <philmd@linaro.org>
+CC: "daniel.barboza@oss.qualcomm.com" <daniel.barboza@oss.qualcomm.com>,
+ "chao.liu.zevorn@gmail.com" <chao.liu.zevorn@gmail.com>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>,
+ "palmer@dabbelt.com" <palmer@dabbelt.com>, "anjo@rev.ng" <anjo@rev.ng>,
+ "sai.pavan.boddu@amd.com" <sai.pavan.boddu@amd.com>, "liwei1518@gmail.com"
+ <liwei1518@gmail.com>, "pierrick.bouvier@oss.qualcomm.com"
+ <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH 1/4] hw/riscv/spike: Use 'max' CPU type by default
+Thread-Topic: [PATCH 1/4] hw/riscv/spike: Use 'max' CPU type by default
+Thread-Index: AQHc7PYgP0n4XZbiykWfnCFYuxkdgrYg8pIA
+Date: Tue, 26 May 2026 23:20:33 +0000
+Message-ID: <9cdad47eb6abcbbf105b845af9509795c5702eca.camel@wdc.com>
+References: <20260526095731.63525-1-philmd@linaro.org>
+ <20260526095731.63525-2-philmd@linaro.org>
+In-Reply-To: <20260526095731.63525-2-philmd@linaro.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Evolution 3.60.1 (by Flathub.org) 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=wdc.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH5PR04MB9550:EE_|LV0PR04MB9814:EE_
+x-ms-office365-filtering-correlation-id: 72adc65a-eeb9-4e51-8ef8-08debb7d629f
+wdcipoutbound: EOP-TRUE
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|10070799003|366016|19092799006|1800799024|7416014|18002099003|22082099003|38070700021|56012099006|4143699003|11063799006;
+x-microsoft-antispam-message-info: T4F6lPjuqKM9TCBRM6zMCGxV5aT8JAAOWPtWyXlqG6kXE2QmfZapYujOmePLhoA3KUyAcb00y6gPcXhmamhw3j0gWZJZuxPH1QJ+NWhbjUU+DslBxjsUU7s8A77ZrqwQ7puaRj/IObGRBsyq4uymPGno5TJ5D9zBH38snhZFj4yl7OY/YRs2e0hfyk0fnphSUoA/88ej/HxeMVvEDqjXKnOeKoIXuuFUR2oB6+LnK9ubOZDDjkfI/DLtr3EEeaETfSk5f57noTDqgScMtjU3QoUvZ4iw0DMir5KWVYHmD3uQLPSM8AvScM5AyvmfFV0PNTABbWkMlGGyBDjHQHZm1ZuBxAOg66Pq6lhO4ohGhDjGYl5Cj+ywKRXjuYf+VLj3CsKQHR8ud5e/ISeWMhvXfwV3H0Gq0BRQ9UhI3tj9XKcl9oM1BadbR8jiDVF88l9r6GdaDRog0o0owSl/ZU4c45uUDC4BmH/HJ/HhBaeAUKE5zDXwooFcVyWwYERFAtAtMWlmCK/rSRge+nHfsdG8w9whxhvGZFpcyhKM7FdDqawHwckXgUelqHy7mssUsPnXo8W12nK9z+ZD1iAr5nCiVyKRvfSfUW3Jgc0UNdzBVRl97076hdevIPQZQPYosx7jUmSRjDPsS+6xtC/aSBjfHX73lqfrZexLxRoyZHJizKt3GTnrJ/ukPmJUs9sg7oZMMePbumy68CuBmVm67XurcEgr49HVNAWbt3U+yQH15Fd809FmsLeU3anxPyvYMjv0
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH5PR04MB9550.namprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(10070799003)(366016)(19092799006)(1800799024)(7416014)(18002099003)(22082099003)(38070700021)(56012099006)(4143699003)(11063799006);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 2
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?eGlJakV6YWUvMEY1cWE3V3Q1Y0t4YzUzNjlGckZBOVJzMU4zdDdJTTl4bHNB?=
+ =?utf-8?B?Y0d1OTBHTXowVzkxZWNoSk5yWlQzWE5qQ0dVL3NwSlFHb0h3UGlGSTFkN1Ay?=
+ =?utf-8?B?c0lXSXJMc2Z4d0lWZG54TW1YN0d0U1VzYkxKSHkzSzJteC9wRERCTGREK3lq?=
+ =?utf-8?B?UDg3ZEYzR1djY0RmZGwvQmVpcTBqOUYyWGhxTjJNaG5jS3duQ2FZaFc1VVlL?=
+ =?utf-8?B?S3lGSzVNZTJOSzhRbm05Vm1DWGd6YVdPK0Vub29qaHp3U2dxMlpnaEJlaTg0?=
+ =?utf-8?B?NUp6aityYk1ySHdQUERKK1ROK2xlVWVpc3FadjJiZmIvaitiSWtMdTc0SFlz?=
+ =?utf-8?B?S09uZ3Fzb2M4bUgyUlQ4RG1ocW8rWkFEQTMyMkdDVUlkbEFaWDhMM0ZSK1B5?=
+ =?utf-8?B?bkxGK2JhUkxtL1drYk1TM1JleUFCWU4yQi8yWmJrZ1FyQ0VldTg5R0ZlUnJs?=
+ =?utf-8?B?am5tM1ZBOU5WdGZUQy9ReG8xeU5VcURwKytxZzFlbGFqYU1KLzdvei9TcGx4?=
+ =?utf-8?B?amxCTjZJM2NLNXdlbzlFd01SNnFpVkMyckNWWi8xVy85MDUxSyt2SjRnZEg1?=
+ =?utf-8?B?bnNpTVZBOHREOXJRc0ZOWVBMWmRUTFRXTi9mZHQxU3lNNzJVOVJHR3JzTU9u?=
+ =?utf-8?B?MmIzNlowYzVSRjdGd3VPNHdwYlNtTm5Lb3d3YmpxVlZCbHVSSkc3UU80TVFz?=
+ =?utf-8?B?Z3dPRUk2Z1BqSHovdEV3bzBNZ092ZTN2NnRQV3JiYjlDUDVDaDhDNG5ZYll3?=
+ =?utf-8?B?aml4Q2RhcnhxVGYwdE1nR0RLS21pME9rc0FIY2JOQXRTYW1EMVZtRW5HWXlo?=
+ =?utf-8?B?ZmZGcTJHSnRERWdrWTROUUk2QlJJS2ZyYlZEcDhrQ2l2c3hpTE1uUm9nRThO?=
+ =?utf-8?B?YTlDZUxDUjVUc0hNRU1saXpsbkxGaXd5Wll4Y2ltSzZESm15emNEcUZwM3c2?=
+ =?utf-8?B?OTJiZGhqZkorYkloZENFUEwvNkFGTUsyaDBVWVNsMU1HUTM0OStMaUF2Qklm?=
+ =?utf-8?B?dEZ4dDZIWWJaT2dIQ05mS010eWl2NDlnUzBWYXA0LytJTXFvVGlFRkM0R0Nk?=
+ =?utf-8?B?OUhzb0k0VHpYUFFaYUxsbWdpVVRERFFLQktva2JqbTRxWU4rUldYOGs0NWZX?=
+ =?utf-8?B?NVpIRlZNTW5sblpXQnl0WTdYbTR6WHVRcWM0UUZubUFlTHNoMTJIL2dmSE1J?=
+ =?utf-8?B?bFYvYkFzTHg2QThpaUNSM21yYlg3NGhmYkJ0d2p5eExlY2dMZVhuSDFWMmlW?=
+ =?utf-8?B?UkxiTTU5aDh1dlhvcmkrK2NJRUgxT2E5RFdXZU5NaGJpZ2NPSXJjNUJwSkI0?=
+ =?utf-8?B?VFFnYWxyYUx0dEsvSytNZXJ5LzZ3eWQrVEpVaVN6UkgxRE5rUjJqTE0rRjFl?=
+ =?utf-8?B?NnovUzNwZ0g0QTZiZ051Zm5ZbWlkSHpoSUdCYSt6ell4NmFWK0E1aEN5MVhn?=
+ =?utf-8?B?eFNxWTFGQU9kRHRUMnU5WHRYaFVpNkQxWWdQUitXYTJQRE0xcnA4am1XKzQ2?=
+ =?utf-8?B?aDV2VWZGa2VTUVNHdEVJV1VwcEZxYnlZSHRQNm9iZ3EvaXlzUDFHQnRmbFJq?=
+ =?utf-8?B?OWxoQzBiNEJXVnF5NVVxNFVvTWVVTFAvWG40bHBESUdTYUVpTWYzaTBQdW00?=
+ =?utf-8?B?ZlE2NElIRG5BbDhYWTUrRXBJbGd1bEhzS2dYQ0xwZHZOSGd5T2xiYi9pY293?=
+ =?utf-8?B?RldpWFJrbjlMRUNqcWoxZVMxNi9RcWF0YTQwMzdQbS90clNPcGNwSzBoWVor?=
+ =?utf-8?B?ZDZ3cW0veUFDMlVnTGNvZHJaU0wwSmJieTJEQWdvcXdCRG1FRkFqZ1JBRGx6?=
+ =?utf-8?B?M3k5SGh1ZS90L1hmMS9RUTdPaEl3MUdJZVVxakdMUmlBNHg5NE1vNUZnTldF?=
+ =?utf-8?B?d3hNZ3NDRG1VdUxjQXUramM2ODdvd2RJTDJHTmpMdW5hZW1oWUhlZ3JSQ2E1?=
+ =?utf-8?B?UjhtQ0J0anpVaW1jNVNvTjJYVUo3Zk8zbnorWVF2WXpyaXN4WnJzQWFVaGI4?=
+ =?utf-8?B?ZmVMb09ZNHBnZzNpbWRtUXVwWTl5SHRtOHZoZHp0OGV1S25zSWFPRGFjRWlr?=
+ =?utf-8?B?UUl0czZpQnNvR0JaNTFLMEc2aUEwNE1IdXFvcHloZXFPOEZlRzNqdEE4eGlJ?=
+ =?utf-8?B?bEtVZ0UxeEtzQVE1aVZpa0dvUTQ1SkNTUWhqMThySzVnOWZZSTU1amMySVdD?=
+ =?utf-8?B?Rmhkb2lBcVo1K1JqcHczRjRqcjZiVFJSQzl4Q0dnSU14SzVEdEltR1RhcXlP?=
+ =?utf-8?B?c3l0RWVRRVROcXBiSkNjcnRXUndTdVhPUmNyRVhuN0tOZnRnRUlvWmtVa2RR?=
+ =?utf-8?B?TVA4bk9MT0xKbjdFck8vOWlFSDR6Z05idlFYVWdDeTQ2OFBRS0xjaXBSanB2?=
+ =?utf-8?Q?JITCymNJAca5q4BUP1HTj7kTW0P6BDXW7M7SeQMYR7iwi?=
+x-ms-exchange-antispam-messagedata-1: PjkzZhLfQnA1sXWujCXjLA+7/innRUfUzJc=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <65371500444C054A9E93E5276B0496B7@namprd04.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <f729ff7f-971c-4e00-88fe-61ded891b9be@maciej.szmigiero.name>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Exchange-RoutingPolicyChecked: FyxqlcfF3XSlWJ7FzT4V6mSH8MoD0ksQrWw/rAxyfK55rMlp6cXCHCy9AQtEvRUg7DkSoMWyBPWkvf2/GEb1NdD4tBhje4U7Rfe6FBX4m7mfvb7PJs3i3LtH3LT00aBYbYo+v23dDyaRRvQ3lV47f3Smb9aglUOS8K3HsIZYYE4MGLQDCYHOxzvNgUFwwAVHAzHWk+qeBPuOmT1I0p7C70ab/udYbjw9f2614WEnYJuzO5FdwArVoi5AZfQWzMoi9E7k0ETdmTuXfjRMn/SDIi1iCcZey5wXZ4sMI4lU9FKVWVZAJXzx9dN4jbqFPim/IKmlYpxKKT8i00d04R0y4Q==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: vd98Aj4g6C94p7DIaSNxWpvYE0ggj2rmbP/psDYEpU+hz8bosPJ/Dhe4LIGKY2qrc3sOVtdaXFYkIo1nFTX/0ivIJeEjXeFyjihE6x8pNqpS6jr1EIPJeOpnur/7dlXfXukX88s8fq1VSv76ikOKgQqRmRjTH+3CltPgbtZi/qVsrDLAYoNhN+2VCCgMxbFHkXmZvrtHd9LUsF7I0GnUKMW3rH2mtfNuM8FhszYTvBhNauJyycczeF/79m0YyTaPzYe+iaQW/DWhOhA0ooTAvNM/+yK4toMJlKyIbvV4iKs7FTh0ryvnaR1K1jT27hDJoqdS2AYi2Kxh2ZsmR3Nzdrhr8rWQl0nZzHKOvdJIB49ZSZkYnKMfME2ze0IqCYGq/zEhBedE/zz8H1FuY36Gv2v4Wsi64LloVkBqiYC1RZQgLVVd/0VhuR1TA3BkSg329bUTP/piKNkeSha947CyeVexxIP9dH20uHiapEEgj8XuOgNvOISMwPt4Oh51eMJVmISa1mZKbg1jouLtSkqE12FxhD5wVAzfmh7AHxlsYA76K7kOl4GHrSMy4pIYnFYZ6jb8gnZ1zDCF6DDB/y5gvP6JlNbRlH8hH7SoNjoiBrJZjhl8bX7LTk02cZ+fKYno
+X-OriginatorOrg: wdc.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH5PR04MB9550.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 72adc65a-eeb9-4e51-8ef8-08debb7d629f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 May 2026 23:20:33.2559 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: d7gP9G9XiTfK84ZB+jbTA9BaevRPSpnR5EGFqRuDhS41IlXeA2kzbWZDvFWkrc8y4P7nNP3wHj7YN7LqrtQOOocX8bheSm4DskubirojCz0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV0PR04MB9814
+Received-SPF: pass client-ip=216.71.154.42;
+ envelope-from=prvs=599a94ef2=Alistair.Francis@wdc.com;
+ helo=esa4.hgst.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,100 +186,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 26, 2026 at 11:06:58PM +0200, Maciej S. Szmigiero wrote:
-> On 26.05.2026 22:33, Peter Xu wrote:
-> > On Thu, May 21, 2026 at 09:06:07PM +0200, Maciej S. Szmigiero wrote:
-> > > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-> > > 
-> > > thread_pool_adjust_max_threads_to_work() is supposed to give each task its
-> > > own thread by setting the pool max thread count limit accordingly.
-> > > 
-> > > However, if there aren't any tasks currently in the pool the pool max
-> > > thread count will be set to 0, which will trigger an assertion failure
-> > > in thread_pool_set_max_threads() - because setting this value would
-> > > completely block the pool by not allowing it to process any submitted
-> > > tasks.
-> > > 
-> > > This also can happen if a task is submitted via
-> > > thread_pool_submit_immediate() to an empty pool but the task completes so
-> > > quickly that by the time this function calls
-> > > thread_pool_adjust_max_threads_to_work() the pool again has no unfinished
-> > > tasks in it.
-> > 
-> > Sorry for a late comment. Just curious: how easy is this to reproduce?
-> 
-> It's difficult to reproduce in most setups.
-> 
-> My main VFIO live migration setup never hit it for more than a year, other
-> similar setup hit it recently 3 times.
-> 
-> On the other hand, putting sleep(5) in the middle of
-> thread_pool_submit_immediate() makes it reproduce nearly always for me.
-
-Thanks, I'll attach this info to the patch when queuing.
-
-> 
-> > > 
-> > > Fix this by making sure that the pool is allowed to create at least 1
-> > > thread.
-> > 
-> > But then it means we have no work and then we will create one thread does
-> > nothing..
-> 
-> thread_pool_adjust_max_threads_to_work() is currently called only from
-> thread_pool_submit_immediate().
-> 
-> If the API user truly wants no threads in the pool for time being
-> (even though this will completely block the pool) they can use
-> thread_pool_submit() to submit their task(s).
-> This won't call thread_pool_adjust_max_threads_to_work() by itself.
-> 
-> Also, since the thread pool is created with zero initial threads by
-> default the patch does *not* mean that the each newly created pool
-> will have one idle thread now.
-
-This is another small problem.  I think the ideal case is we create threads
-before hand, not on-demand here.  It should be faster. I don't know how
-much, maybe it's not measurable, but IIUC that's one good thing about
-exclusive thread pool that we didn't really leverage.
-
-I think the system on both sides should know exactly how many threads we
-need, hence they can create them before downtime starts.  During the
-process, we shouldn't need to adjust num of threads, also avoid the bug
-like this.  But I'll leave that to you to decide if it's worthwhile.
-
-> 
-> > 
-> > I suspect the real culprit is we released the cur_work_lock during the
-> > whole process of thread_pool_submit_immediate().  If we take it during the
-> > whole window this will be a no-issue too.
-> 
-> True, however this will need splitting both thread_pool_submit() and
-> thread_pool_adjust_max_threads_to_work() into two versions each: one
-> which takes pool->cur_work_lock, another which does not and then
-> take pool->cur_work_lock on their behalf in thread_pool_submit_immediate().
-> 
-> Not to mention this would also mean putting the whole g_thread_pool_push()
-> -> g_thread_pool_start_thread() machinery under pool->cur_work_lock in this
-> case instead of just pool->cur_work increment.
-> 
-> I think doing this such way would add unnecessary complexity considering
-> that its alternative of this patch is a single-line trivial change.
-> 
-> > The other question is, if it is awkward to manually adjust num of threads,
-> > shall we set num to be -1 (unlimited) while pool created?
-> 
-> We can't - Glib thread pool API does not allow unlimited exclusive pools.
-
-If we don't care about pre-init of thread pools, I'm actually not sure if
-we need exclusive pool at all.. maybe it'll still help, to e.g. inherit
-scheduler setup of migration thread.
-
-But it's ok anyway, I'll queue this patch for now.
-
-Thanks,
-
--- 
-Peter Xu
-
+T24gVHVlLCAyMDI2LTA1LTI2IGF0IDExOjU3ICswMjAwLCBQaGlsaXBwZSBNYXRoaWV1LURhdWTD
+qSB3cm90ZToNCj4gVGhlIFNwaWtlIFJJU0MtViBJU0EgU2ltdWxhdG9yIGFpbXMgZm9yIG1heGlt
+dW0gY292ZXJhZ2UsDQo+IHNvIGNhbiBzdGFydCB3aXRoIHRoZSAnbWF4JyBDUFUgdHlwZSBieSBk
+ZWZhdWx0Lg0KPiANCj4gU2lnbmVkLW9mZi1ieTogUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgPHBo
+aWxtZEBsaW5hcm8ub3JnPg0KDQpSZXZpZXdlZC1ieTogQWxpc3RhaXIgRnJhbmNpcyA8YWxpc3Rh
+aXIuZnJhbmNpc0B3ZGMuY29tPg0KDQpBbGlzdGFpcg0KDQo+IC0tLQ0KPiDCoGh3L3Jpc2N2L3Nw
+aWtlLmMgfCAyICstDQo+IMKgMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspLCAxIGRlbGV0
+aW9uKC0pDQo+IA0KPiBkaWZmIC0tZ2l0IGEvaHcvcmlzY3Yvc3Bpa2UuYyBiL2h3L3Jpc2N2L3Nw
+aWtlLmMNCj4gaW5kZXggODdmZTBmMjQyZjUuLjA4ZWI3ZWRiOTJmIDEwMDY0NA0KPiAtLS0gYS9o
+dy9yaXNjdi9zcGlrZS5jDQo+ICsrKyBiL2h3L3Jpc2N2L3NwaWtlLmMNCj4gQEAgLTM0MSw3ICsz
+NDEsNyBAQCBzdGF0aWMgdm9pZCBzcGlrZV9tYWNoaW5lX2NsYXNzX2luaXQoT2JqZWN0Q2xhc3MN
+Cj4gKm9jLCBjb25zdCB2b2lkICpkYXRhKQ0KPiDCoMKgwqDCoCBtYy0+ZGVzYyA9ICJSSVNDLVYg
+U3Bpa2UgYm9hcmQiOw0KPiDCoMKgwqDCoCBtYy0+aW5pdCA9IHNwaWtlX2JvYXJkX2luaXQ7DQo+
+IMKgwqDCoMKgIG1jLT5tYXhfY3B1cyA9IFNQSUtFX0NQVVNfTUFYOw0KPiAtwqDCoMKgIG1jLT5k
+ZWZhdWx0X2NwdV90eXBlID0gVFlQRV9SSVNDVl9DUFVfQkFTRTsNCj4gK8KgwqDCoCBtYy0+ZGVm
+YXVsdF9jcHVfdHlwZSA9IFRZUEVfUklTQ1ZfQ1BVX01BWDsNCj4gwqDCoMKgwqAgbWMtPnBvc3Np
+YmxlX2NwdV9hcmNoX2lkcyA9IHJpc2N2X251bWFfcG9zc2libGVfY3B1X2FyY2hfaWRzOw0KPiDC
+oMKgwqDCoCBtYy0+Y3B1X2luZGV4X3RvX2luc3RhbmNlX3Byb3BzID0gcmlzY3ZfbnVtYV9jcHVf
+aW5kZXhfdG9fcHJvcHM7DQo+IMKgwqDCoMKgIG1jLT5nZXRfZGVmYXVsdF9jcHVfbm9kZV9pZCA9
+DQo+IHJpc2N2X251bWFfZ2V0X2RlZmF1bHRfY3B1X25vZGVfaWQ7DQo=
 
