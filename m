@@ -4,84 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFA2CCD5BC8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 12:22:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F4188CD5BC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 12:22:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRqnF-0006Go-Qj; Tue, 26 May 2026 08:21:58 -0400
+	id 1wRqne-0006Pw-5t; Tue, 26 May 2026 08:22:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRqn8-0006C7-6X
- for qemu-devel@nongnu.org; Tue, 26 May 2026 08:21:51 -0400
-Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wRqn3-0001UU-H4
- for qemu-devel@nongnu.org; Tue, 26 May 2026 08:21:48 -0400
-Received: by mail-wm1-x343.google.com with SMTP id
- 5b1f17b1804b1-4891c0620bcso65918915e9.1
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 05:21:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779798100; x=1780402900; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=T66DzUxB9G+Y3bF9fajkYzQItq4Sq9LaroUazUR6YLc=;
- b=z0bsywTT2gqn70oT5zOnBumIPAf0bi0gnpdclIERN5v/JBos07cg86+yTnB/TlWmbU
- euSMY2EwBh4aptoPneVHhO/ClEo+OE9Bq9oxcTghCHCYoZqzcfOeY1yJS4bz+0es34Tb
- HQWAPoIUpWRsGIwBPHwsMlyd1T4QA/Wpb7IelrKRpLzK7aO3uGZ1TozHHD1RJWgmGt8i
- 4/hxCsaStC+acx1ZcPN/Eo/mb5w+t/qemdtUPjTCiIwtlmQqoO4R/Gav9+qb5cbECPyw
- Z2f2nWgsP0bkTbzdu/bf/DlI2H1Sg3qJElc1f+3mgre4xMdfQNv/dfhn0848QrXVs5rY
- Zmmw==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wRqnZ-0006P7-9i
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 08:22:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wRqnX-0002CS-Ey
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 08:22:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779798134;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=xegYGdHu279bzwjsX3IA0WBIJCVVU/0/HehgFZDv+RY=;
+ b=cqk1JDTrgEqzGcUCC9IyXfw0njp+2YVdoOX65303W3QYcEcW78T4nDTt9MnNt6OF+jVVN7
+ PFTy79sAhgnhfhOaKGEIfCm+KGPEw7w2YSQcfUZPbFJq13G011VyV/4a0pkTHTi6XgKayt
+ 8JNnTTQ7aLlfsOIZ1h20RWkVAyh5d40=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-540-IC605TTMNourPsOsdAxwfg-1; Tue, 26 May 2026 08:22:13 -0400
+X-MC-Unique: IC605TTMNourPsOsdAxwfg-1
+X-Mimecast-MFC-AGG-ID: IC605TTMNourPsOsdAxwfg_1779798132
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-48ff0eb77b5so15578405e9.0
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 05:22:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779798100; x=1780402900;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1779798132; x=1780402932;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=T66DzUxB9G+Y3bF9fajkYzQItq4Sq9LaroUazUR6YLc=;
- b=EmKmgchTZQaUn173GO6JW/qCkHMa4kEKPsFGg6MCUFLnmqYoiiEXP+iY/jCJ/WeZJY
- Wh9ApYYmldDleQKqJrJK+qoVxrLRPtSGsVnl3b6nIzwK3v7IvKGvXjBY0utlw9JhwTxK
- NEKNwsss1yAU+Rm2u0keMbO6Ii2a/9yNXlZ6XQSa8stwCTwpLEFNskxJbwQH14YjjPpJ
- Rr3nNvXlVi7no19qz/UGJyEkVlAfzfn0mHGc2jT1/H3BsN/2a2UKnKm3CFZKeEGOjo2x
- gb2WXwgnPXqeJYjVjcxAloPjSGySFS5EingBUWuhnytKoYeqOxDouIAEh7Clk2kTRNzc
- SVXA==
-X-Gm-Message-State: AOJu0Yzf990Iz+GVPwU6vu8YZWMU2XrCq7QWT2WEOOsJpfUR8oqZuTwg
- y5ULVW+AYZouIcQhaSg54qmR988PihGbxQgt7ausxlJLmFKzYgUR24ua78QU8aPYgKwOzjI9kw8
- JcUPCgLiSHf+v
-X-Gm-Gg: Acq92OGTlbpaDiWhAqZ+HyU0qovaiv24QNGySdLS/0V9ZGykNKSaEP1kiBqX2XyEAPC
- LINj1Uu+8465TJThlLWQG9r/PwYKUZFj6gRDx3+GjopV1GPBH59CZrAMrEn0dmyyoY2Jp6pmQRc
- hhvIqkVgF+z17fkkmwDuVwI+MXx3BIndL3Ur2RXyL8Q7dpT1bgdalhA5bct80Vw5p3SyBBOMGKj
- y2h+GAcHrs10Q8C9FC7cGpfQOJ4IfbejCikpaCnVUw4X0g3uOo9y1nUFEx3vwJgRB6rL7rDH+JN
- +a32hEh5PNY41+ISZfUGrqkVdipEoZqGOzT1ZEeuEJ2A7bwAgK62x5sIMIW/nhSGfShVlIiQkIM
- hGvsVCPsJthdkFG/s8eswuIBTID6CyuofLQ+p/jigeG2Zu9ZHs3cM5jC/WY2C4W30ND9slFRcPJ
- UFOp+x356fnsvKa2hvUp/UHFfhbZa2vV3eWjyXx03MFiEkNoN/AikodyU=
-X-Received: by 2002:a05:600c:1393:b0:489:1d74:56d with SMTP id
- 5b1f17b1804b1-490428e15e9mr296486065e9.29.1779798100003; 
- Tue, 26 May 2026 05:21:40 -0700 (PDT)
-Received: from m17.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
+ bh=xegYGdHu279bzwjsX3IA0WBIJCVVU/0/HehgFZDv+RY=;
+ b=gJBLhDlT4fB3yCxw2ATy86joxs/IBKQfh+334l5S0lBX8eyva/9L+M2rS1SLPyigs+
+ oumBzQYJv0ePo6ZPgYxK7i8SaxgYTcIS39zzHPkvs9YnYsXmJ+7v1meJ4c7fUPC5rlxJ
+ MbX712SOmO86IFh++bzaPmit2Nwdh3yQ+jo00LH54v1AGLbFqEhNOxpzK8dGqfcgf6Ib
+ MM2Ldn6DRI5EFCG0livekKZIcciE3kxx1nAY+4an1Ybr6kj8FlV4g01fyqFXBSpXYfDK
+ 0DUNUdwzTBtZWfVfBv1NvmRKyzEC8igMzZg5DJA6GsE5fWyI8iDB8V2khdEai1ZuTDtO
+ DVMA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8aXs6Nm9aieU73YMn/BW3lxIKvQVmfSvoS62wrTFg5Yxozi7nDHbECErMhfEJ5ZtJd1IAyYYGraMfJ@nongnu.org
+X-Gm-Message-State: AOJu0Yybedz6Wj7Bfp6jsYozvffteGNKOEzGIHJRfz0NAyCo/DuOnRWs
+ pswCJk19+h+i4tjtEqCm3MKnyVX7HLSALcG6mYreaioAGyBYAqtu102HjY2Zzp9ebTG+APw3JhM
+ 8osu0nlw8P06IUXpoxFcHl9+SRlY04lNvmR2qvug/fW6F3RgQ3Va3mEEx
+X-Gm-Gg: Acq92OEq97Y90aRGYhPjRvt7+ByMWAPXLe5J4HyCXj+hBqFCyuvw19IWVvygr//J9AI
+ urjaVjARV/WZUf0kAfb+FwtISt9hBGrbHj8Uj6tE5NNl3uuf8OIg/9PzQhYabJ7H4jE//djM6Fg
+ ORnsCpNuU75ssmTALeHLw2hcp70qzGW7YB9vHlz6U2SbjHHCMY9PGnmTaogCNgdEkj8+l5o7O2z
+ 3bmhXtSX4hRpB1Pa2DKzFp9dnl1zETBSCLVjPSlE2Fbhy4UkGcS090OJNTqxZDNvb57C6LphUXb
+ dE13QFyL/opcvhdS8RhI1vE3JzqXbtwUkA3RCiy0BPEMrBUnGrLYA54xAvv4LRFu382fFaGAQiK
+ PMmb9N6rbjXfVoTGb6lrCXNkCo8DN3mfFbPzJkylvy/iproY1Foxjt5E3mszeWyIaI0DXQw==
+X-Received: by 2002:a05:600c:35cf:b0:490:3bad:3784 with SMTP id
+ 5b1f17b1804b1-490426bc6demr350772025e9.18.1779798131807; 
+ Tue, 26 May 2026 05:22:11 -0700 (PDT)
+X-Received: by 2002:a05:600c:35cf:b0:490:3bad:3784 with SMTP id
+ 5b1f17b1804b1-490426bc6demr350770975e9.18.1779798131138; 
+ Tue, 26 May 2026 05:22:11 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490424974a8sm162926165e9.4.2026.05.26.05.21.38
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 26 May 2026 05:21:38 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH] MAINTAINERS: Update PhilMD's email address
-Date: Tue, 26 May 2026 14:21:37 +0200
-Message-ID: <20260526122137.64378-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
+ ffacd0b85a97d-45eb6c9de2dsm33799258f8f.4.2026.05.26.05.22.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 May 2026 05:22:10 -0700 (PDT)
+Message-ID: <ffdb0b2c-0795-4ed4-9bfb-dcd0564f7da9@redhat.com>
+Date: Tue, 26 May 2026 14:22:09 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 19/32] hw/arm/tegra241-cmdqv: Allocate HW VCMDQs once
+ configured
+Content-Language: en-US
+To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
+ Nicolin Chen <nicolinc@nvidia.com>
+Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "clg@redhat.com" <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>,
+ Nathan Chen <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
+ Jiandi An <jan@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ Krishnakant Jaju <kjaju@nvidia.com>, "phrdina@redhat.com"
+ <phrdina@redhat.com>
+References: <20260519103727.899332-1-skolothumtho@nvidia.com>
+ <20260519103727.899332-20-skolothumtho@nvidia.com>
+ <166c5efb-0fa3-49f6-a1e7-faec85a6ec44@redhat.com>
+ <CH3PR12MB7548314422301EA66803DD40AB0E2@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <69ec35de-1f7c-40ae-9ea5-3727c047c590@redhat.com>
+ <ag9/KMztV/pb7lA0@Asurada-Nvidia>
+ <e3af7e21-f5cd-47fa-85f3-d8744b529246@redhat.com>
+ <CH3PR12MB75483876FED87775450277C9AB0B2@CH3PR12MB7548.namprd12.prod.outlook.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <CH3PR12MB75483876FED87775450277C9AB0B2@CH3PR12MB7548.namprd12.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::343;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,300 +127,78 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-philmd@linaro.org will stop working starting 2026-06-01,
-use my personal email instead.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-Based-on: <20260519173014.98967-1-philmd@linaro.org>
-Cc: Alex Bennée <alex.bennee@linaro.org>
----
- MAINTAINERS | 58 ++++++++++++++++++++++++++---------------------------
- .mailmap    |  6 +++---
- 2 files changed, 32 insertions(+), 32 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 172f87ebda9..0808dd49d06 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -68,7 +68,7 @@ Project policy and developer guides
- R: Alex Bennée <alex.bennee@linaro.org>
- R: Daniel P. Berrangé <berrange@redhat.com>
- R: Markus Armbruster <armbru@redhat.com>
--R: Philippe Mathieu-Daudé <philmd@linaro.org>
-+R: Philippe Mathieu-Daudé <philmd@mailo.com>
- W: https://www.qemu.org/docs/master/devel/index.html
- S: Odd Fixes
- F: docs/devel/build-environment.rst
-@@ -132,7 +132,7 @@ T: git https://gitlab.com/cohuck/qemu.git s390-next
- L: qemu-s390x@nongnu.org
- 
- MIPS general architecture support
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Jiaxun Yang <jiaxun.yang@flygoat.com>
- S: Odd Fixes
- K: ^Subject:.*(?i)mips
-@@ -302,7 +302,7 @@ F: tests/docker/dockerfiles/debian-microblaze-cross.d/build-toolchain.sh
- F: tests/functional/microblaze/
- 
- MIPS TCG CPUs
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Aurelien Jarno <aurelien@aurel32.net>
- R: Jiaxun Yang <jiaxun.yang@flygoat.com>
- R: Aleksandar Rikalo <arikalo@gmail.com>
-@@ -533,7 +533,7 @@ Guest CPU Cores (other accelerators)
- Overall
- M: Richard Henderson <richard.henderson@linaro.org>
- R: Paolo Bonzini <pbonzini@redhat.com>
--R: Philippe Mathieu-Daudé <philmd@linaro.org>
-+R: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Maintained
- F: include/exec/cpu*.h
- F: include/exec/target_long.h
-@@ -696,7 +696,7 @@ F: qemu.nsi
- F: scripts/nsis.py
- 
- Darwin (macOS, iOS)
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Odd Fixes
- F: .gitlab-ci.d/cirrus/macos-*
- F: */*.m
-@@ -1012,7 +1012,7 @@ F: tests/functional/arm/test_quanta_gsj.py
- 
- Raspberry Pi
- M: Peter Maydell <peter.maydell@linaro.org>
--R: Philippe Mathieu-Daudé <philmd@linaro.org>
-+R: Philippe Mathieu-Daudé <philmd@mailo.com>
- L: qemu-arm@nongnu.org
- S: Odd Fixes
- F: hw/arm/raspi.c
-@@ -1314,7 +1314,7 @@ F: include/hw/misc/avr_power.h
- F: hw/misc/avr_power.c
- 
- Arduino
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Maintained
- F: hw/avr/arduino.c
- F: tests/functional/avr/test_uno.py
-@@ -1448,7 +1448,7 @@ F: hw/microblaze/petalogix_ml605_mmu.c
- MIPS Machines
- -------------
- Overall MIPS Machines
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Odd Fixes
- F: configs/devices/mips*/*
- F: hw/mips/
-@@ -1465,7 +1465,7 @@ F: hw/dma/rc4030.c
- F: hw/nvram/ds1225y.c
- 
- Malta
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Aurelien Jarno <aurelien@aurel32.net>
- S: Odd Fixes
- F: hw/isa/piix.c
-@@ -1479,7 +1479,7 @@ F: tests/functional/mips*/test_tuxrun.py
- 
- Fuloong 2E
- M: Huacai Chen <chenhuacai@kernel.org>
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Jiaxun Yang <jiaxun.yang@flygoat.com>
- S: Odd Fixes
- F: hw/mips/fuloong2e.c
-@@ -1503,7 +1503,7 @@ F: include/hw/intc/loongson_liointc.h
- F: tests/functional/mips64el/test_loongson3v.py
- 
- Boston
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Aleksandar Rikalo <arikalo@gmail.com>
- S: Odd Fixes
- F: hw/core/loader-fit.c
-@@ -2032,7 +2032,7 @@ F: include/hw/i386/nitro_enclave.h
- F: docs/system/i386/nitro-enclave.rst
- 
- Machine core
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Zhao Liu <zhao1.liu@intel.com>
- S: Maintained
- F: hw/core/cpu-common.c
-@@ -2055,7 +2055,7 @@ F: tests/unit/test-smp-parse.c
- 
- TargetInfo API
- M: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Supported
- F: include/qemu/target-info*.h
- F: target-info*.c
-@@ -2279,7 +2279,7 @@ F: docs/system/virtio-net-failover.rst
- T: git https://github.com/jasowang/qemu.git net
- 
- Parallel NOR Flash devices
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Maintained
- F: hw/block/pflash_cfi*.c
- F: include/hw/block/flash.h
-@@ -2311,7 +2311,7 @@ S: Maintained
- F: hw/ssi/xilinx_*
- 
- SD (Secure Card)
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- M: Bin Meng <bmeng.cn@gmail.com>
- L: qemu-block@nongnu.org
- S: Odd Fixes
-@@ -2765,14 +2765,14 @@ F: docs/specs/vmgenid.rst
- F: tests/qtest/vmgenid-test.c
- 
- LED
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Maintained
- F: include/hw/misc/led.h
- F: hw/misc/led.c
- 
- Unimplemented device
- M: Peter Maydell <peter.maydell@linaro.org>
--R: Philippe Mathieu-Daudé <philmd@linaro.org>
-+R: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Ani Sinha <ani@anisinha.ca>
- S: Maintained
- F: include/hw/misc/unimp.h
-@@ -2780,7 +2780,7 @@ F: hw/misc/unimp.c
- 
- Empty slot
- M: Artyom Tarasenko <atar4qemu@gmail.com>
--R: Philippe Mathieu-Daudé <philmd@linaro.org>
-+R: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Ani Sinha <ani@anisinha.ca>
- S: Maintained
- F: include/hw/misc/empty_slot.h
-@@ -2859,14 +2859,14 @@ F: hw/display/apple-gfx*
- 
- PIIX4 South Bridge (i82371AB)
- M: Hervé Poussineau <hpoussin@reactos.org>
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Maintained
- F: hw/isa/piix.c
- F: include/hw/southbridge/piix.h
- 
- VIA South Bridges (VT82C686B, VT8231)
- M: BALATON Zoltan <balaton@eik.bme.hu>
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Jiaxun Yang <jiaxun.yang@flygoat.com>
- S: Maintained
- F: hw/isa/vt82c686.c
-@@ -2931,13 +2931,13 @@ F: hw/intc/openpic.c
- F: include/hw/ppc/openpic.h
- 
- MIPS CPS
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Odd Fixes
- F: hw/misc/mips_*
- F: include/hw/misc/mips_*
- 
- MIPS GIC
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Odd Fixes
- F: hw/intc/mips_gic.c
- F: hw/timer/mips_gictimer.c
-@@ -3063,7 +3063,7 @@ F: audio/alsaaudio.c
- 
- Core Audio framework backend
- M: Gerd Hoffmann <kraxel@redhat.com>
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Christian Schoenebeck <qemu_oss@crudebyte.com>
- R: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
- S: Odd Fixes
-@@ -3318,7 +3318,7 @@ F: tests/functional/ppc64/test_fadump.py
- 
- GDB stub
- M: Alex Bennée <alex.bennee@linaro.org>
--R: Philippe Mathieu-Daudé <philmd@linaro.org>
-+R: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Maintained
- F: docs/system/gdb.rst
- F: gdbstub/*
-@@ -3332,7 +3332,7 @@ T: git https://gitlab.com/stsquad/qemu gdbstub/next
- Memory API
- M: Paolo Bonzini <pbonzini@redhat.com>
- M: Peter Xu <peterx@redhat.com>
--R: Philippe Mathieu-Daudé <philmd@linaro.org>
-+R: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Supported
- F: include/system/ioport.h
- F: include/exec/memop.h
-@@ -3387,7 +3387,7 @@ F: tests/functional/generic/test_vnc.py
- 
- Cocoa graphics
- M: Peter Maydell <peter.maydell@linaro.org>
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
- S: Odd Fixes
- F: ui/cocoa.m
-@@ -3950,7 +3950,7 @@ S: Maintained
- F: contrib/elf2dmp/
- 
- Overall sensors
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Odd Fixes
- F: hw/sensor
- F: include/hw/sensor
-@@ -4511,7 +4511,7 @@ W: https://cirrus-ci.com/github/qemu/qemu
- 
- Functional testing framework
- M: Thomas Huth <th.huth+qemu@posteo.eu>
--R: Philippe Mathieu-Daudé <philmd@linaro.org>
-+R: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Daniel P. Berrange <berrange@redhat.com>
- S: Odd Fixes
- F: docs/devel/testing/functional.rst
-@@ -4567,7 +4567,7 @@ Meson
- M: Paolo Bonzini <pbonzini@redhat.com>
- R: Marc-André Lureau <marcandre.lureau@redhat.com>
- R: Daniel P. Berrange <berrange@redhat.com>
--R: Philippe Mathieu-Daudé <philmd@linaro.org>
-+R: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
- S: Maintained
- F: meson.build
-diff --git a/.mailmap b/.mailmap
-index ce569d83f4a..ab6796090fe 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -104,9 +104,9 @@ Paul Burton <paulburton@kernel.org> <paul.burton@mips.com>
- Paul Burton <paulburton@kernel.org> <paul.burton@imgtec.com>
- Paul Burton <paulburton@kernel.org> <paul@archlinuxmips.org>
- Paul Burton <paulburton@kernel.org> <pburton@wavecomp.com>
--Philippe Mathieu-Daudé <philmd@linaro.org> <f4bug@amsat.org>
--Philippe Mathieu-Daudé <philmd@linaro.org> <philmd@redhat.com>
--Philippe Mathieu-Daudé <philmd@linaro.org> <philmd@fungible.com>
-+Philippe Mathieu-Daudé <philmd@mailo.com> <f4bug@amsat.org>
-+Philippe Mathieu-Daudé <philmd@mailo.com> <philmd@redhat.com>
-+Philippe Mathieu-Daudé <philmd@mailo.com> <philmd@fungible.com>
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> <pierrick.bouvier@linaro.org>
- Roman Bolshakov <rbolshakov@ddn.com> <r.bolshakov@yadro.com>
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com> <sriram.yagnaraman@est.tech>
--- 
-2.53.0
+On 5/26/26 12:24 PM, Shameer Kolothum Thodi wrote:
+>
+>> -----Original Message-----
+>> From: Eric Auger <eric.auger@redhat.com>
+>> Sent: 26 May 2026 09:37
+>> To: Nicolin Chen <nicolinc@nvidia.com>
+>> Cc: Shameer Kolothum Thodi <skolothumtho@nvidia.com>; qemu-
+>> arm@nongnu.org; qemu-devel@nongnu.org; peter.maydell@linaro.org;
+>> clg@redhat.com; alex@shazbot.org; Nathan Chen <nathanc@nvidia.com>;
+>> Matt Ochs <mochs@nvidia.com>; Jiandi An <jan@nvidia.com>; Jason
+>> Gunthorpe <jgg@nvidia.com>; zhenzhong.duan@intel.com; Krishnakant Jaju
+>> <kjaju@nvidia.com>; phrdina@redhat.com
+>> Subject: Re: [PATCH v5 19/32] hw/arm/tegra241-cmdqv: Allocate HW
+>> VCMDQs once configured
+>>
+>> External email: Use caution opening links or attachments
+>>
+>>
+>> Hi Nicolin,
+>>
+>> On 5/21/26 11:54 PM, Nicolin Chen wrote:
+>>> On Thu, May 21, 2026 at 03:27:17PM +0200, Eric Auger wrote:
+>>>> On 5/21/26 2:26 PM, Shameer Kolothum Thodi wrote:
+>>>>>>> +    /* Ignore any invalid address. This may come as part of reset etc. */
+>>>>>>> +    if (!address_space_range_is_ram(&address_space_memory, addr,
+>> size)) {
+>>>>>> why do you need to test the whole range and not only the start addressa
+>>>>> That was to make it more defensive based on v4 discussion here:
+>>>>> https://lore.kernel.org/qemu-devel/aft%2FDTFLqQnufzWl@nvidia.com/
+>>>>>
+>>>>> Please let me know if there is a better way.
+>>>> Well it is unclear to me. You want to make sure the GPA was fully set
+>>>> through the H and L regs. To me that's enough. As far as I understand
+>>>> Nicolin's reply, the kernel checks the rest. But please sync with Jason
+>>>> or Nicolin
+>>> Yes. Kernel checks if the range is in the stage-2 page table, i.e.,
+>>> mapped GPAs. One caveat: mapped GPA doesn't guarantee it's is_ram.
+>>>
+>>> So, what if the GPA is in the IO space (PCI BAR) or reserved space
+>>> (firmware)?
+> Looking at our helper address_space_range_is_ram(), it isn't foolproof
+> for the above cases. For the PCI BAR case we could add:
+>
+>     if (!memory_region_is_ram(mr) || memory_region_is_ram_device(mr)) {
+>         return false;
+>     }
+>
+> But I'm not sure how to tackle the reserved spaces. For firmware ROM
+> we could add a memory_region_is_rom() check, but the others will
+> still look like normal RAM, so they're hard to detect at this layer.
+>
+>>> AFAIK, kernel doesn't have a way to know. So, it's VMM's job to do
+>>> so.
+>> would it jeopardize the host integrity or would it just break the
+>> misbehaving guest. If the latest I am not sure this is critical to
+>> check. We are not checking either with regular SMMU cmd queues
+> I think it would just be the guest shooting itself in the foot. Can't think
+> of a host security/integrity issue here. So we could drop the check if
+> that's preferred.
+
+In that case I would rather simplify and remove the check. But that's my
+humble opinion ;-)
+
+Eric
+>
+> Thanks,
+> Shameer
 
 
