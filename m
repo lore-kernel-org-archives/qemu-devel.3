@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5F01CD5BB1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0DF8CD5BD0
 	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:31:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRsmf-0000ez-2K; Tue, 26 May 2026 10:29:29 -0400
+	id 1wRsoS-0003Eb-RN; Tue, 26 May 2026 10:31:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRsmU-0008T8-TJ
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:20 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1wRsmy-0001ex-DN
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:50 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRsmT-0001KR-D4
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:18 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-43d7645adbdso6661974f8f.1
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:29:17 -0700 (PDT)
+ id 1wRsmw-0001Ve-0C
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:47 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-49056b9f04aso40329775e9.0
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:29:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779805756; x=1780410556; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779805784; x=1780410584; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=/htVi7EBPeCyHiWwBzi+o97F5mILVA770CYe2rqVw5I=;
- b=wgFBqvKbk3ghvP4sse+/eNhTz/mhpL6s+5lImM6NlYhh+C2GRSc9Ad82U25PcLqSYF
- DeL10QLxUTCyVu4ZCap6rN3Mq5AmiVZEcq5VsQ2ul10I0UVBNquRGUEu4QTLqLR43OpE
- IyOh4DcumlU3MztrOYM+I8vs8QeSw5f2XsrTDPNTD2NQ+Kfxv18iBkJQGLjQKDpaEH53
- GwmEVtwYGUworit3Bh4zRVdAHbBRsKIugL0Jvi4S242dWkNJgWiY3BdNeWGxFg6iFytN
- fjdunCuWt3REJt54hOo6q6tVeXCjAOxTDUc5cJIxfRE311H4PpafilJx9U9AWD3TaAg9
- 5nzw==
+ :reply-to; bh=C8LTepMhdhYYWsj5ukZo6Hqe529dZMs/c5IW2NmqJJ4=;
+ b=zDVclAYiRTMPIuuehi0pqD1CXJ8OMWuIq+to3kZLXVPaEau7QCcAvXk2XPDWjFjFHB
+ O+WS0x5Dw/miSHGHaHf5FLlDI72dZU5DibVR2kajXNXoAMXWMpwd2/7CbaDJ+xzjB11m
+ 8PecvHkVMiUtZB7J+Si2tu0IWSko96H2ECy57X0Ayf4oIStZnJqbXs9DtCzHAAWH6h4r
+ IAYsQTlff7d9rHuUe0UJSXZJ1FmdVLU42K3vFJ9HYEUFfd/2YTJHP1MK/I8OfxCeoaq8
+ h7nK0vAelvGd4pATzWOtMDGP4C8nK547sEnXszdwD1RDeCqzWhX8DRc31ljmSwxjxtYO
+ c9Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779805756; x=1780410556;
+ d=1e100.net; s=20251104; t=1779805784; x=1780410584;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=/htVi7EBPeCyHiWwBzi+o97F5mILVA770CYe2rqVw5I=;
- b=lNzzJD8vlpTtHKfdwJlVnQ202mI82Rnw9uAeZe/IyIw2tYIacqgfa7sxevJdttPbDC
- TeWkX5zkD0cNLUOSHzXeHVPnb5uwbQgccnaDDsn6p0DuxgtBgF653QpAN//YJphxy/gG
- ku8dJDHFRjqdQMbMJwxHBapamseB5VaYH8TRzejNnCBMlJsEC53wJUmMK/gLF0EtVn0+
- JBDoj0aa170TtX5INW7r050wtgah25yKPAks4RDYqSubVySVZlHF7r+Zz3dEHyMHT1ei
- qAlrOWWwjHT2xrnoof8B9e2cPPt9Jk8gKGFr7cA59dHECUeqU0b1s627RJ4TV+MRoxG2
- 2Euw==
-X-Gm-Message-State: AOJu0YxjUkAZFlGc5W5tLzAT6U7PIQ+8C4LIEZH2J8V/NCSWc0Qj7yFR
- 7ef+FTKWQsiDBG3ifUMNEDe85X7kgB68n69XbfFBBvyS/zD/kKgs6kqJLo2sSRY61oJAkaQ+NSq
- 74Rnw
-X-Gm-Gg: Acq92OH+OUyf6i4KLy5uF35Zzzw9QLgB7lkQarEpPlocTETx3VkL6C3T80o7JOy45ar
- sAsXPGsMVfuPB8e3mLy0G1M2AYAQ/SKxW8p26Mf2Imzn2dclnSyLyQFSx0khOFCe7OgvCH6YBLx
- P9i49T8tiAbfvLUMjIm6pSsvPW+hsPN27pwkMGNebwOGovz/yuu+B0e52vIPu0/Ao/dpn4qa5pd
- lZmt6YfLnWC3dnKRlPRqyiy5pV03cyIyNoc5n7gnu+y5vE2nqUDTF84s8OdhdSgJe/5nCcSDfHH
- /gxL/F+qX4bgVy4At4XWzaL0Fdd2e5vM2l+hg/kst5yAF98VUzdx0aiOEBGoyQspKmqs07O5MOu
- An5qtXu+CUzTyXZ9N/3MQrts0qDyIXoriJVC9RithfuFFQJ3yzcfWqp3wUclHU1K4mZVzJEKmOM
- l9c/QHDAcwFI33hJcEQRLA3XVJd92FikmLL+dcs/uNpb8MuSTFhNX0MG6u3FS8GRNsR8j1FltDQ
- QBVSqVf6PsQcqg95z4cQEcBP//ao/ptvOpG9YhAHXlD8Dx6ppak
-X-Received: by 2002:a5d:6f18:0:b0:449:acdb:3009 with SMTP id
- ffacd0b85a97d-45eb38a83bbmr32973430f8f.6.1779805756040; 
- Tue, 26 May 2026 07:29:16 -0700 (PDT)
+ bh=C8LTepMhdhYYWsj5ukZo6Hqe529dZMs/c5IW2NmqJJ4=;
+ b=SwStxSFZBe+sppXpa0PZabwUC1pg5lTgiVl9V1oI+JgFUExh9PUEW0N25WN6B96AQN
+ QAgjdtw5J0sFG2UnwQh7x04qbvEdFo2QDzupE9DQrKVOHY7riqZ7ix9NfcLHvjnXyA3X
+ vGgxTHdabpRne0szhtlEU4dap+0pHOzPKpRjaGPHAb3GkXmlY9QgfcxMB2FBuqI/sIun
+ kd82RUDlPHqGTDsg8qygJ1R6XYNoA/J8HinyP9QahsqhME6r2kvxB0SrHrTCdJxHQijr
+ hwvt+7m4PcZzJlGPRytchae/MLiCUqdNk6SssrJitnSSDvaHkP2H7dT3lttKgju1lpC9
+ QOtA==
+X-Gm-Message-State: AOJu0Yw3eakUJV1u/21Ms+1TYRpo4p20Jpzpl1fsZ4hFS7alWLB6bojH
+ 3e5xVSP8AAASG6TBD+g1+SIIUtMYQ4/VyIQ/T3nBncBC86vT8FBJDZMDG/gsbsnGKvAmcX/FGav
+ 4KW7b
+X-Gm-Gg: Acq92OHijUP07P6PE/MkGRtqXrDP++vzLxhXOjjbL8I5VQYA69GUnvYjO8dzWgVjxsZ
+ N3ad1qX7HnnT52nBKyUg0oBJT124gmkXc9Ug6ebiKpuoZ5NHSM/R4hN5/oXDxxpO3xZ/jVzXfC1
+ qrIeUf7pVVCUrxkPcrHSzDo+rHt8gAYjPOL/GlLFPwJFHFN3lvKezBPzawu0gtqaWFCgya+Yu88
+ Yh2WKLyaRlyb/GBgEwiZRiGcFAXUvhvfF8+HPDhEb0ANsSJUtCnsAtRfFFZRh2t8B2PoxrXzSZ0
+ zlBM5bdregTw2bmG29nyEX40xpycaxpEr8+RswuLY7cLam4LlrbKgmEpqNITn0IkxcpkRPWZvQh
+ JiIYmvtQEmO8oMgUFw0xSPhjsytxcbeMqnSfeRAHt/UdFCqcICkdEbPlTE7tsCpLaz+ALEoKnur
+ gWoscs0TpUZ4EbGTP9AjJGDuvtTzz6+KUGSHXHnCD7lWT63FHSyw1F6eGXCLTWJNPiT5GkFi25S
+ HhHNj9ERUiFGxNijjXENac5CtblzT+4kHBbxzMrCg==
+X-Received: by 2002:a05:6000:26c4:b0:44a:2555:f8a9 with SMTP id
+ ffacd0b85a97d-45eb369072emr31076759f8f.10.1779805784330; 
+ Tue, 26 May 2026 07:29:44 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6d70c51sm38325225f8f.36.2026.05.26.07.29.15
+ ffacd0b85a97d-45eb6d70c51sm38325225f8f.36.2026.05.26.07.29.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 07:29:15 -0700 (PDT)
+ Tue, 26 May 2026 07:29:43 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 25/54] target/arm/ptw: Flip sense of arm_cpu_get_phys_addr
- return value
-Date: Tue, 26 May 2026 15:28:21 +0100
-Message-ID: <20260526142850.2326589-26-peter.maydell@linaro.org>
+Subject: [PULL 54/54] target/arm: Move vectors_overlap to vec_internal.h
+Date: Tue, 26 May 2026 15:28:50 +0100
+Message-ID: <20260526142850.2326589-55-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260526142850.2326589-1-peter.maydell@linaro.org>
 References: <20260526142850.2326589-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,54 +101,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260515142541.571911-13-peter.maydell@linaro.org
----
- target/arm/ptw.c | 13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+From: Richard Henderson <richard.henderson@linaro.org>
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 6146367e23..8cfa22fb69 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -3965,7 +3965,7 @@ static bool arm_cpu_get_phys_addr(CPUARMState *env, vaddr addr,
-         result->attrs.debug = 1;
-         result->lg_page_size = res.f.lg_page_size;
+We will shortly need this outside of sme_helper.c.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260522220306.235200-24-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/tcg/sme_helper.c   | 6 ------
+ target/arm/tcg/vec_internal.h | 8 ++++++++
+ 2 files changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index ab5999c592..0055e97a2b 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -33,12 +33,6 @@
+ #define HELPER_H "tcg/helper-sme-defs.h"
+ #include "exec/helper-info.c.inc"
+ 
+-static bool vectors_overlap(ARMVectorReg *x, unsigned nx,
+-                            ARMVectorReg *y, unsigned ny)
+-{
+-    return !(x + nx <= y || y + ny <= x);
+-}
+-
+ void helper_set_svcr(CPUARMState *env, uint32_t val, uint32_t mask)
+ {
+     aarch64_set_svcr(env, val, mask);
+diff --git a/target/arm/tcg/vec_internal.h b/target/arm/tcg/vec_internal.h
+index 758e3db1c3..84f7f15228 100644
+--- a/target/arm/tcg/vec_internal.h
++++ b/target/arm/tcg/vec_internal.h
+@@ -21,6 +21,7 @@
+ #define TARGET_ARM_VEC_INTERNAL_H
+ 
+ #include "fpu/softfloat.h"
++#include "vector-type.h"
+ 
+ typedef struct CPUArchState CPUARMState;
+ 
+@@ -463,6 +464,13 @@ static inline void depositn(uint64_t *p, unsigned pos,
      }
--    return !ok;
-+    return ok;
  }
  
- bool arm_cpu_translate_for_debug(CPUState *cs, vaddr addr,
-@@ -3975,12 +3975,7 @@ bool arm_cpu_translate_for_debug(CPUState *cs, vaddr addr,
-     CPUARMState *env = &cpu->env;
-     ARMMMUIdx mmu_idx = arm_mmu_idx(env);
- 
--    /*
--     * Note that this function returns true on translation success,
--     * but arm_cpu_get_phys_addr() and all the other get_phys_addr
--     * style functions in this file return true on failure.
--     */
--    if (!arm_cpu_get_phys_addr(env, addr, result, mmu_idx)) {
-+    if (arm_cpu_get_phys_addr(env, addr, result, mmu_idx)) {
-         return true;
-     }
- 
-@@ -3992,10 +3987,10 @@ bool arm_cpu_translate_for_debug(CPUState *cs, vaddr addr,
-     switch (mmu_idx) {
-     case ARMMMUIdx_E10_1:
-     case ARMMMUIdx_E10_1_PAN:
--        return !arm_cpu_get_phys_addr(env, addr, result, ARMMMUIdx_E10_0);
-+        return arm_cpu_get_phys_addr(env, addr, result, ARMMMUIdx_E10_0);
-     case ARMMMUIdx_E20_2:
-     case ARMMMUIdx_E20_2_PAN:
--        return !arm_cpu_get_phys_addr(env, addr, result, ARMMMUIdx_E20_0);
-+        return arm_cpu_get_phys_addr(env, addr, result, ARMMMUIdx_E20_0);
-     default:
-         /* translation failed */
-         return false;
++/* Determine if [x, x+nx) overlaps [y, y+ny). */
++static inline bool vectors_overlap(ARMVectorReg *x, unsigned nx,
++                                   ARMVectorReg *y, unsigned ny)
++{
++    return !(x + nx <= y || y + ny <= x);
++}
++
+ #define DO_3OP(NAME, FUNC, TYPE) \
+ void HELPER(NAME)(void *vd, void *vn, void *vm,                            \
+                   float_status * stat, uint32_t desc)                      \
 -- 
 2.43.0
 
