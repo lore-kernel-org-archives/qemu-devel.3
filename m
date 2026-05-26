@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A9BDCD5BB1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:30:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30A93CD5BD0
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 May 2026 14:30:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wRsmb-0000Wx-Tb; Tue, 26 May 2026 10:29:25 -0400
+	id 1wRsmB-0008Du-PV; Tue, 26 May 2026 10:28:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRsmU-0008T7-HX
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:20 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1wRsmA-0008Db-Qc
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:28:58 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wRsmS-0001KB-Iu
- for qemu-devel@nongnu.org; Tue, 26 May 2026 10:29:17 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-43d76dd4ee8so6253059f8f.2
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:29:16 -0700 (PDT)
+ id 1wRsm9-0001Cp-B2
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 10:28:58 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4906238c62eso21302605e9.3
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 07:28:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779805755; x=1780410555; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779805736; x=1780410536; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=R3ory+fpoxCHFqI4j913Yzu0vAlCVPr6aD908OJVlG4=;
- b=X3278JSQLaIVTaof4nOxVJqaV+F8nqX9hNb7cyBlvJl4mFfapSVWK1XyjZczwcaDS5
- am48gTMXJVm9SpnF6LE8lJtxD5xiIcuNROzDlevg3Xbvp2g+DcDByaTwB35GJnMS8Ryf
- rfMVdWsOe/3RaX/l5LGrcAlLcu+KOAKylQ0mBKG0xKGrFg7Ki4LREfQ4pme44uS+HE9n
- UxdqoXQFIzO2Bv/jrsQFw5uxmDHYK3zx+jDoUjBIbnt7/bzeeNJd0e0TadV5j4Go+HrM
- VQaj6TsKvSxweeyotSVFI6swLKQioqqxDndlaUQQFJx8Zedwu0w5+XoBBtME5ZRiE+t5
- 0oYg==
+ :reply-to; bh=WmSJAPow+YW2bigyZhXGopkY/S/FugrDTMkszzNRmr4=;
+ b=lL3vVHiOOxTPLPpa4nDsmb5AJ60wT3CO8tu+VmOR16JK+BBPPkYoONaokcdk+1wUmB
+ 0jDpsMZGfmyGsHBf228JUc1y8v70prKTvlR7QHbrwmn/TyB9KsVfFpd2vytUFpNSViYi
+ OfiJQlsXBJ8Dmy4t4tFkkCcdgFGgtDpVuoPvkbYTUIPHJcWWzB5lX3FjiOvqe0l1KDUJ
+ Ji0wjPHm6Le86S9GmK5XWwGqMTmi1jYcWSKWPu0SKttV/BzQI1uOI8EMido3WWSicmzr
+ ElgQExrcHfRAHz1wsyc4LrZmzWyasn1u46dirScj3U38qS/g8k0TaVN/bNMircGXzJ3F
+ cAig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779805755; x=1780410555;
+ d=1e100.net; s=20251104; t=1779805736; x=1780410536;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=R3ory+fpoxCHFqI4j913Yzu0vAlCVPr6aD908OJVlG4=;
- b=QMWzLIDISC7nLKeKSNpbqXo0OwxvhdnUEJFpXq4UO1rDPBMdeojnuvxp5lW12KvMUH
- KxpgqahCgO+fprPXHjDXUKdW29UER6OlWPsr2qygyvDJRBy0uY+R5N/HejdLim3VMxZN
- TSv+6Kx/dZ6+tmBE6GrncYX1udC/Qjll1pOz3v5QwQd+YELV6nJtKQnrbHjJAzNdXJqW
- sgJToePesNKUMzkgCvgSFsMn278XmHrkmXnhkfF0gyW8SUo67Gg7R/TcWldKA1DEJwxR
- JRL7s0n6FX7xqwREyaty51IWGgkRxwC+kPWgcU8tHNEdibV0YM34lToNtrSiP8oHkdXE
- r60g==
-X-Gm-Message-State: AOJu0YwR2HG81CnFCbGlLrCgOr0TrFQWkILMbVTyDAvQjA5fbdzqWWuC
- WriYqzBEjx8BFEydKScJ6cB6KWXnnSWLDn+BhEGIdqxGUHTiTG1X2m1eJp/mDYByXzZjzL0lF4S
- rTb5K
-X-Gm-Gg: Acq92OHJUbZSg5SwDRqznLxX0/gKK0WsBBa2Zk7aJmTYCfYRdpP6ale+6oleiUVF0uX
- tpFiaKdAqYyMx2gDAv6Edpi37qJtexFQ26/wZsiVaqkRdcWSqjDQenIiKYTzOLkB5s3gbPGH4ud
- N7nkq/cLBd51h5vMjWv9SxjzewxbERBououycGWVbt/30wdImKUUlXsqY4hXhqnWlu4DSSF2+6R
- +42z6chTDvi/jY7s/WgUEssDQ+zBXzdsC/ei5ID1kkjyab/OxEe8aIdUgqRFzmc+lCZ24cGkjQ9
- AWwqd1d5LGcrtQob5/LVlAUcLP8t2W2Lf/Lz4qs9Q/skNmNkIfjSrOpXirtjfEOvrRi6iaDsJ7u
- iP3QlwPpKEGtUow5HXD0/vcCk3cJOI/Iy6k3YgNFm1zwoLnV+kzxi28SyYEcp72Fh9O9PWu4Q4A
- rpGqX75S0yPaqSbejaYKmYWWT5FXNOm0u40LtZbCfsgxJ17TB/2Oqil1zf9QweRFONivhh99k2S
- ybyw6LywIi3967tS4vwEwKj2fmcwbY=
-X-Received: by 2002:a05:6000:4701:b0:44a:525b:2851 with SMTP id
- ffacd0b85a97d-45eb369c4e3mr31183397f8f.10.1779805755046; 
- Tue, 26 May 2026 07:29:15 -0700 (PDT)
+ bh=WmSJAPow+YW2bigyZhXGopkY/S/FugrDTMkszzNRmr4=;
+ b=BVMTltmK7k8dqqub3iHJJ/YYW7mkCiOCbnYm5NaTm9/xt2dWQsols3T/7YvnInj9g1
+ r+Z+P+4eyt1I4ADxQohBoC6hO0Uf3S017BLn/74cRF1RVhJPfSyWEi/F2q41bVmfIiDI
+ PP33lqoF51OMNCEpbTc+GQ6vb0j/TH6HOdlNyMVzLCoK3Eeo9VnLHtwPsQsDmJ50zv5T
+ VHsUjrFJygyB+8nEScAMjRNjQZy0kQ6vLJIN4E0cUZiqGHoXInSBFMwM6C897BPfDRyL
+ 3Erkp7ldg86eo7yMgINwUG8AN1fnyaviYow6Qe+c9PrO25g83ZdwJbjV6EcXqohOZj14
+ rNJA==
+X-Gm-Message-State: AOJu0YyEQXPKfsdRQDceVuvqWph12OL/wpkjVk/2nx+IX39ZYqYj/cdN
+ 6e/IkbydohQY/99Axk18h3ZvrcKnqNkEqKBT0+iSv8OxvgvC1rJkwlQW0B8E2OfxNKynOUc+irM
+ fzL5f
+X-Gm-Gg: Acq92OHTFhED5njESGzft1jDkZnHxZDfPL92nJ9ug8gAa3j5oW0rJHmQ8cGgs7HEUE7
+ DV8co3YSymxhk4NHoRh+ACfWy1irlCIt12AXPXzif+kdHQvILk2MXLk7eGFUjlLyTP5TR/rfFfa
+ wpmGOpIqQdM4fdOSnMtbUjG7T3otfRR0irHKaoclEUAGSWEyLzFT2bZE40Nv0BtIc4U7NxHf/3V
+ QgBri5uuF/nBHGU5joMT1SGKzwIsdXYWy5FH9qlxFvToOmOJ8HdAM1pY7kF8SMhIJ2MgV+jeRAj
+ gR0/27fIvgl/Ay7EcTcl7vIU0ke/K6hLaewIPk8pLIIT1YmftW/KGpGTXkpd+SdAfkEDJUYFYBX
+ cB1kH/jKy4YUf8SoqLZmyhe3hGByL/Pxvqc4Sk2eD4ZyKTxUlwZF/tZU7JalaogLAw69DF6JI3z
+ gzq2Mk1FdQ0lQoJ7kINW1hgJc0L8WBFeBGbKeWrRFIjfF/LAI7F/NJM+s/DLIuwfIy5xDyML4KE
+ K1aS3sP3cNEmd4AuEbFOQC8USSwk5wr+KcRk45F3w==
+X-Received: by 2002:a05:600c:46cb:b0:489:1c1f:35f1 with SMTP id
+ 5b1f17b1804b1-49042482762mr323974865e9.4.1779805735966; 
+ Tue, 26 May 2026 07:28:55 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eb6d70c51sm38325225f8f.36.2026.05.26.07.29.14
+ ffacd0b85a97d-45eb6d70c51sm38325225f8f.36.2026.05.26.07.28.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 May 2026 07:29:14 -0700 (PDT)
+ Tue, 26 May 2026 07:28:55 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 24/54] target/arm/ptw: Flip sense of get_phys_addr_gpc return
- value
-Date: Tue, 26 May 2026 15:28:20 +0100
-Message-ID: <20260526142850.2326589-25-peter.maydell@linaro.org>
+Subject: [PULL 04/54] hw/arm/omap: Remove stray unused prototype
+Date: Tue, 26 May 2026 15:28:00 +0100
+Message-ID: <20260526142850.2326589-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260526142850.2326589-1-peter.maydell@linaro.org>
 References: <20260526142850.2326589-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,79 +100,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260515142541.571911-12-peter.maydell@linaro.org
----
- target/arm/ptw.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+When we removed the support for most of the OMAP SoCs, we missed
+deleting a function prototype that was for a function defined in
+removed code.  Delete it now.
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 4538ffeb10..6146367e23 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -667,7 +667,7 @@ static bool S1_ptw_translate(CPUARMState *env, S1Translate *ptw,
-         };
-         GetPhysAddrResult s2 = { };
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260512203414.3633237-4-peter.maydell@linaro.org
+---
+ include/hw/arm/omap.h | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
+index dc63323210..96a52d280c 100644
+--- a/include/hw/arm/omap.h
++++ b/include/hw/arm/omap.h
+@@ -338,10 +338,6 @@ struct soc_dma_s *omap_dma_init(hwaddr base, qemu_irq *irqs,
+                 MemoryRegion *sysmem,
+                 qemu_irq lcd_irq, struct omap_mpu_state_s *mpu, omap_clk clk,
+                 enum omap_dma_model model);
+-struct soc_dma_s *omap_dma4_init(hwaddr base, qemu_irq *irqs,
+-                MemoryRegion *sysmem,
+-                struct omap_mpu_state_s *mpu, int fifo,
+-                int chans, omap_clk iclk, omap_clk fclk);
+ void omap_dma_reset(struct soc_dma_s *s);
  
--        if (get_phys_addr_gpc(env, &s2ptw, addr, MMU_DATA_LOAD, 0, &s2, fi)) {
-+        if (!get_phys_addr_gpc(env, &s2ptw, addr, MMU_DATA_LOAD, 0, &s2, fi)) {
-             goto fail;
-         }
- 
-@@ -3806,7 +3806,7 @@ static bool get_phys_addr_gpc(CPUARMState *env, S1Translate *ptw,
- {
-     if (!get_phys_addr_nogpc(env, ptw, address, access_type,
-                             memop, result, fi)) {
--        return true;
-+        return false;
-     }
- 
-     if (FIELD_EX64(env->cp15.gpccr_el3, GPCCR, GPC)) {
-@@ -3826,11 +3826,11 @@ static bool get_phys_addr_gpc(CPUARMState *env, S1Translate *ptw,
-                                           result->f.attrs.space, ptw->in_space,
-                                           fi)) {
-             fi->type = ARMFault_GPCFOnOutput;
--            return true;
-+            return false;
-         }
-     }
- 
--    return false;
-+    return true;
- }
- 
- bool get_phys_addr_for_at(CPUARMState *env, vaddr address,
-@@ -3939,7 +3939,7 @@ bool get_phys_addr(CPUARMState *env, vaddr address,
-         .in_prot_check = 1 << access_type,
-     };
- 
--    return get_phys_addr_gpc(env, &ptw, address, access_type,
-+    return !get_phys_addr_gpc(env, &ptw, address, access_type,
-                              memop, result, fi);
- }
- 
-@@ -3956,16 +3956,16 @@ static bool arm_cpu_get_phys_addr(CPUARMState *env, vaddr addr,
-     };
-     GetPhysAddrResult res = {};
-     ARMMMUFaultInfo fi = {};
--    bool fault = get_phys_addr_gpc(env, &ptw, addr, MMU_DATA_LOAD, 0, &res, &fi);
-+    bool ok = get_phys_addr_gpc(env, &ptw, addr, MMU_DATA_LOAD, 0, &res, &fi);
- 
--    if (!fault) {
-+    if (ok) {
-         /* translation succeeded */
-         result->physaddr = res.f.phys_addr;
-         result->attrs = res.f.attrs;
-         result->attrs.debug = 1;
-         result->lg_page_size = res.f.lg_page_size;
-     }
--    return fault;
-+    return !ok;
- }
- 
- bool arm_cpu_translate_for_debug(CPUState *cs, vaddr addr,
+ struct dma_irq_map {
 -- 
 2.43.0
 
