@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67731CD4F54
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FD35CD5BD0
 	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 19:13:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSJfm-0006Xt-3Q; Wed, 27 May 2026 15:12:11 -0400
+	id 1wSJfm-0006Xp-2w; Wed, 27 May 2026 15:12:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wSJfi-0006Wo-0a
- for qemu-devel@nongnu.org; Wed, 27 May 2026 15:12:06 -0400
+ id 1wSJff-0006WU-8O
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 15:12:03 -0400
 Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wSJfc-0000ab-Ii
- for qemu-devel@nongnu.org; Wed, 27 May 2026 15:12:05 -0400
+ id 1wSJfb-0000ZT-23
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 15:12:02 -0400
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:2925:0:640:1f39:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 205588080A;
- Wed, 27 May 2026 22:11:59 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 179C68846D;
+ Wed, 27 May 2026 22:11:54 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:69::1:d])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id qBf3L80XU0U0-VC5gNUvB; Wed, 27 May 2026 22:11:58 +0300
+ id qBf3L80XU0U0-WudqLmRk; Wed, 27 May 2026 22:11:53 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1779909118;
- bh=KTp/pPAQgqp/zvkDHuiMwunwW4/ajjuB2DC44LrntNM=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=k6OUtrpmw2WD1WmTJF57YEwpPJIw4vtd+N1akarXjNIrkmYYVN6RH4eAIZa9LgRgF
- L44Oal9ir6QA6QdqHuYwJ+2xKq9jpO0XL1/PqPqaqXsteKICFHYK6FAodREA7aS3za
- DCwNC3VVaOeeEVi31T8pslSn0eTSOfdZZvB33zT8=
+ s=default; t=1779909113;
+ bh=baDN5MFrrJnasvlDANZGJUy8nlquw0iSNhmO4CN4MsY=;
+ h=Message-ID:Date:Cc:Subject:To:From;
+ b=T51jdpI6cYSL4Y2/E4CyvQC5KLxUhiKHkivODJl60QRrdv6sPJVaU57fZDPSYhtgh
+ ko3p04fdokaBKjYpNA6ygM1kTXWHLrvSy7zXxv86TTpLwgB4FHA/HzSxVQPuZMcS4z
+ lkECiQxoVAN8Rz2Zdd8j5Rc+fMUxJCWs6uFiMxZ0=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -45,15 +45,13 @@ To: jasowang@redhat.com,
 Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
  raphael.s.norwitz@gmail.com, bchaney@akamai.com, vsementsov@yandex-team.ru,
  qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
- yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
- Eric Blake <eblake@redhat.com>
-Subject: [PATCH v17 06/10] qapi: add local migration parameter
-Date: Wed, 27 May 2026 22:11:45 +0300
-Message-ID: <20260527191150.250333-7-vsementsov@yandex-team.ru>
+ yc-core@yandex-team.ru, mark.caveayland@nutanix.com
+Subject: [PATCH v17 00/10] virtio-net: live-TAP local migration
+Date: Wed, 27 May 2026 22:11:39 +0300
+Message-ID: <20260527191150.250333-1-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260527191150.250333-1-vsementsov@yandex-team.ru>
-References: <20260527191150.250333-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=178.154.239.136;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
@@ -77,138 +75,257 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We are going to implement local-migration feature: some devices will be
-able to transfer open file descriptors through migration stream (which
-must UNIX domain socket for that purpose).  This allows to transfer the
-whole backend state without reconnecting and restarting the backend
-service. For example, virtio-net will migrate its attached TAP netdev,
-together with its connected file descriptors.
+Hi all!
 
-In this commit we introduce a migration parameter, which enables
-the feature for devices that support it (none at the moment).
+Here is a migration for TAP net backend, including its properties and
+open fds.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Acked-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Ben Chaney <bchaney@akamai.com>
----
- include/migration/misc.h |  2 ++
- migration/options.c      | 18 +++++++++++++++++-
- qapi/migration.json      | 12 ++++++++++--
- 3 files changed, 29 insertions(+), 3 deletions(-)
+With this new feature, management software doesn't need to initialize
+new TAP and do a switch to it. Nothing should be done around
+virtio-net in local migration: it just migrates and continues to use
+same TAP device. So we avoid extra logic in management software, extra
+allocations in kernel (for new TAP), and corresponding extra delay in
+migration downtime.
 
-diff --git a/include/migration/misc.h b/include/migration/misc.h
-index 3159a5e53c3..b14dc70ea3d 100644
---- a/include/migration/misc.h
-+++ b/include/migration/misc.h
-@@ -156,4 +156,6 @@ bool multifd_device_state_save_thread_should_exit(void);
- void multifd_abort_device_state_save_threads(void);
- bool multifd_join_device_state_save_threads(void);
- 
-+bool migrate_local(void);
-+
- #endif
-diff --git a/migration/options.c b/migration/options.c
-index 5cbfd29099b..ba5f9440a08 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -14,6 +14,7 @@
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
- #include "qemu/units.h"
-+#include "qapi/util.h"
- #include "exec/target_page.h"
- #include "qapi/clone-visitor.h"
- #include "qapi/error.h"
-@@ -25,6 +26,7 @@
- #include "migration/colo.h"
- #include "migration/cpr.h"
- #include "migration/misc.h"
-+#include "migration/options.h"
- #include "migration.h"
- #include "migration-stats.h"
- #include "qemu-file.h"
-@@ -348,6 +350,12 @@ bool migrate_mapped_ram(void)
-     return s->capabilities[MIGRATION_CAPABILITY_MAPPED_RAM];
- }
- 
-+bool migrate_local(void)
-+{
-+    MigrationState *s = migrate_get_current();
-+    return s->parameters.local;
-+}
-+
- bool migrate_ignore_shared(void)
- {
-     MigrationState *s = migrate_get_current();
-@@ -1076,7 +1084,7 @@ static void migrate_mark_all_params_present(MigrationParameters *p)
-         &p->has_announce_step, &p->has_block_bitmap_mapping,
-         &p->has_x_vcpu_dirty_limit_period, &p->has_vcpu_dirty_limit,
-         &p->has_mode, &p->has_zero_page_detection, &p->has_direct_io,
--        &p->has_x_rdma_chunk_size, &p->has_cpr_exec_command,
-+        &p->has_x_rdma_chunk_size, &p->has_cpr_exec_command, &p->has_local,
-     };
- 
-     len = ARRAY_SIZE(has_fields);
-@@ -1424,6 +1432,10 @@ static void migrate_params_test_apply(MigrationParameters *params,
-         qapi_free_strList(dest->cpr_exec_command);
-         dest->cpr_exec_command = QAPI_CLONE(strList, params->cpr_exec_command);
-     }
-+
-+    if (params->has_local) {
-+        dest->local = params->local;
-+    }
- }
- 
- static void migrate_params_apply(MigrationParameters *params)
-@@ -1556,6 +1568,10 @@ static void migrate_params_apply(MigrationParameters *params)
-         s->parameters.cpr_exec_command =
-             QAPI_CLONE(strList, params->cpr_exec_command);
-     }
-+
-+    if (params->has_local) {
-+        s->parameters.local = params->local;
-+    }
- }
- 
- void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 27a79705569..bc331815da0 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -836,7 +836,8 @@
-            'zero-page-detection',
-            'direct-io',
-            { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
--           'cpr-exec-command'] }
-+           'cpr-exec-command',
-+           'local'] }
- 
- ##
- # @migrate-set-parameters:
-@@ -1018,6 +1019,12 @@
- #     Must be set to the same value on both source and destination
- #     before migration starts.  (Since 11.1)
- #
-+# @local: Enable local migration for devices that support it.  Backend
-+#     state and its file descriptors can then be passed to the
-+#     destination in the migration channel.  The migration channel
-+#     must be a Unix domain socket.  Usually needs to be enabled per
-+#     device.  (Since 11.1)
-+#
- # Features:
- #
- # @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
-@@ -1059,7 +1066,8 @@
-             '*direct-io': 'bool',
-             '*x-rdma-chunk-size': { 'type': 'uint64',
-                                     'features': [ 'unstable' ] },
--            '*cpr-exec-command': [ 'str' ]} }
-+            '*cpr-exec-command': [ 'str' ],
-+            '*local': 'bool' } }
- 
- ##
- # @query-migrate-parameters:
+v17: rework interface
+02-04: new
+07: - drop local-migration parameter for virtio-net and the whole
+      code to migrate backends (they should migrate by themselves).
+    - drop virtio_net_update_host_features(), and call
+      peer_test_vnet_hdr() and virtio_net_get_features() directly
+      from post-load handlers
+    - drop r-b
+08: - add local-migratieon-supported property (instead of
+      local-migration that is dropped in 07)
+    - register own vmstate
+    - add check for being in incoming migration when use incoming-fds
+    - drop r-b, a-b
+10: only move 'local_migration=local' from virtio-net device
+    to 'local-migration-supported": local' in netdev. keep r-bs
+
+Based-on: <20260318113144.15697-1-vsementsov@yandex-team.ru>
+    "[PATCH v4 00/13] net: refactoring and fixes"
+
+v17 is pushed to
+
+    https://gitlab.com/vsementsov/qemu.git
+      tag: up-tap-fd-migration-with-bk-opt-v17
+
+To run the test, use sudo, as test needs to configure TAP device:
+
+    sudo PYTHONPATH=python:tests/functional \
+    QEMU_TEST_QEMU_BINARY=$PWD/build/qemu-system-x86_64 \
+    MESON_BUILD_ROOT=$PWD/build \
+    ./build/pyvenv/bin/python3 tests/functional/x86_64/test_tap_migration.py
+
+Or, to test the feature by hand, you may follow the instruction:
+
+1. Prerequisites
+----------------
+
+    QEMU=/path/to/your/build/qemu-system-x86_64
+
+# download same image as in test
+
+    wget -O /tmp/alpine.iso "https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/x86_64/alpine-standard-3.22.1-x86_64.iso"
+
+
+# prepare tap device (be careful to not break your own networks)
+
+    sudo ip tuntap add dev tap0 mode tap multi_queue
+    sudo ip addr add 192.168.100.1/24 dev tap0
+    sudo ip link set tap0 up
+
+
+2. Start source VM
+------------------
+
+Open terminal A, and run:
+
+    $QEMU \
+        -name source \
+        -machine q35 \
+        -accel kvm \
+        -m 1G \
+        -object memory-backend-file,id=ram0,size=1G,mem-path=/dev/shm/qemu_migration_test,share=on \
+        -machine memory-backend=ram0 \
+        -drive file=/tmp/alpine.iso,media=cdrom,format=raw \
+        -device pcie-pci-bridge,id=pci.1,bus=pcie.0 \
+        -netdev tap,id=netdev.1,ifname=tap0,queues=4,vnet_hdr=on,script=no,downscript=no,local-migration-supported=on \
+        -device virtio-net-pci,netdev=netdev.1,id=vnet.1,bus=pci.1,mq=on,vectors=18,romfile=,disable-legacy=off \
+        -serial stdio \
+        -nographic \
+        -qmp unix:/tmp/qmp-source.sock,server=on,wait=off
+
+Wait for Alpine to boot.  When you see the login prompt, log in as root
+(no password):
+
+    localhost login: root
+
+Configure the guest network:
+
+    ip addr add 192.168.100.2/24 dev eth0
+    ip link set eth0 up
+
+Verify connectivity from the guest:
+
+    ping -c 3 192.168.100.1
+
+And from the host (in another terminal):
+
+    ping -c 3 192.168.100.2
+
+
+3. Start target VM
+------------------
+
+Open terminal B.  The target VM uses the same shared memory file and
+the same ISO.  The NIC is configured with incoming-fds=on — it will
+not open tap0 itself; instead it will receive the TAP file descriptors
+from the source over the migration channel.
+
+    $QEMU \
+        -name target \
+        -machine q35 \
+        -accel kvm \
+        -m 1G \
+        -object memory-backend-file,id=ram0,size=1G,mem-path=/dev/shm/qemu_migration_test,share=on \
+        -machine memory-backend=ram0 \
+        -drive file=/tmp/alpine.iso,media=cdrom,format=raw \
+        -device pcie-pci-bridge,id=pci.1,bus=pcie.0 \
+        -netdev tap,id=netdev.1,queues=4,script=no,downscript=no,local-migration-supported=on,incoming-fds=on \
+        -device virtio-net-pci,netdev=netdev.1,id=vnet.1,bus=pci.1,mq=on,vectors=18,romfile=,disable-legacy=off \
+        -serial stdio \
+        -nographic \
+        -qmp unix:/tmp/qmp-target.sock,server=on,wait=off \
+        -incoming defer
+
+
+4. Start migration
+------------------
+
+Open terminal C and connect to the source QMP socket:
+
+    socat - UNIX-CONNECT:/tmp/qmp-source.sock
+
+Negotiate capabilities and configure migration:
+
+    {"execute": "qmp_capabilities"}
+
+    {"execute": "migrate-set-capabilities", "arguments": {
+        "capabilities": [
+            {"capability": "events",          "state": true},
+            {"capability": "x-ignore-shared", "state": true}
+        ]
+    }}
+
+    {"execute": "migrate-set-parameters", "arguments": {"local": true}}
+
+Open terminal D and connect to the target QMP socket:
+
+    socat - UNIX-CONNECT:/tmp/qmp-target.sock
+
+Negotiate capabilities and configure migration:
+
+    {"execute": "qmp_capabilities"}
+
+    {"execute": "migrate-set-capabilities", "arguments": {
+        "capabilities": [
+            {"capability": "events",          "state": true},
+            {"capability": "x-ignore-shared", "state": true}
+        ]
+    }}
+
+    {"execute": "migrate-set-parameters", "arguments": {"local": true}}
+
+Tell the target to listen for the incoming migration (terminal D):
+
+    {"execute": "migrate-incoming",
+     "arguments": {"uri": "unix:/tmp/migration.sock"}}
+
+Trigger the migration from the source (terminal C):
+
+    {"execute": "migrate",
+     "arguments": {"uri": "unix:/tmp/migration.sock"}}
+
+Poll migration status until it completes (terminal C):
+
+    {"execute": "query-migrate"}
+    # repeat until "status" == "completed"
+
+Or just wait for the MIGRATION event that QEMU emits automatically:
+
+    # {"event": "MIGRATION", "data": {"status": "completed"}, ...}
+
+Once the source reports "completed", resume the target VM (terminal D):
+
+    {"execute": "cont"}
+
+The target VM is now running with the migrated state and the TAP file
+descriptors that were passed from the source.
+
+Verify that the guest is still reachable from the host:
+
+    ping -c 3 192.168.100.2
+
+And from inside the guest (terminal B, target serial console):
+
+    ping -c 3 192.168.100.1
+
+
+5. Cleanup
+----------
+
+Shut down the target VM (terminal D):
+
+    {"execute": "quit"}
+
+Shut down the source VM (terminal C):
+
+    {"execute": "quit"}
+
+Remove the TAP device:
+
+    sudo ip tuntap del tap0 mode tap multi_queue
+
+Remove the shared memory file:
+
+    rm /dev/shm/qemu_migration_test
+
+Remove leftover sockets if they still exist:
+
+    rm -f /tmp/migration.sock /tmp/qmp-source.sock /tmp/qmp-target.sock 
+
+Vladimir Sementsov-Ogievskiy (10):
+  net/tap: move vhost-net open() calls to tap_parse_vhost_fds()
+  net/tap: move vhost initialization to tap_setup_vhost()
+  net/tap: use container_of instead of DO_UPCAST
+  net/tap: QOMify tap backend
+  net/tap: add TYPE_VMSTATE_IF interface
+  qapi: add local migration parameter
+  virtio-net: support local migration of backend
+  net/tap: support local migration with virtio-net
+  tests/functional: add skipWithoutSudo() decorator
+  tests/functional: add test_tap_migration
+
+ hw/core/machine.c                             |   2 +
+ hw/net/virtio-net.c                           |  89 +++-
+ include/hw/virtio/virtio-net.h                |   1 +
+ include/migration/misc.h                      |   2 +
+ include/migration/vmstate.h                   |   2 +
+ include/net/net.h                             |   9 +
+ include/net/tap.h                             |   2 +
+ migration/options.c                           |  18 +-
+ net/net.c                                     |  14 +-
+ net/tap.c                                     | 429 +++++++++++++---
+ qapi/migration.json                           |  12 +-
+ qapi/net.json                                 |  20 +-
+ tests/functional/qemu_test/decorators.py      |  16 +
+ tests/functional/x86_64/meson.build           |   1 +
+ tests/functional/x86_64/test_tap_migration.py | 458 ++++++++++++++++++
+ 15 files changed, 986 insertions(+), 89 deletions(-)
+ create mode 100755 tests/functional/x86_64/test_tap_migration.py
+
 -- 
 2.52.0
 
