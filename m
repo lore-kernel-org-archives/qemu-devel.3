@@ -4,91 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 313A7CD5BD0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 18:13:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 997C6CD5BD0
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 18:16:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSIkH-0001dq-Ox; Wed, 27 May 2026 14:12:51 -0400
+	id 1wSIna-0003Ig-9l; Wed, 27 May 2026 14:16:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wSIjy-0001aJ-Je
- for qemu-devel@nongnu.org; Wed, 27 May 2026 14:12:27 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wSIjs-0008F5-JE
- for qemu-devel@nongnu.org; Wed, 27 May 2026 14:12:25 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-36974217d4eso7932230a91.2
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 11:12:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779905537; x=1780510337; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Yjc4zRVTqjvfw3B2vmefcl+mtHeKUz7dIGmVTZ9WeIQ=;
- b=tgY+DcuK9QF6d7k4OTYAAQ3OgLrlS7dhc8pemjFRS+uyapzuBTZw30tceaKS3Pa4UU
- xc72xui/JOh66x1RQfNDalDprShPl/W0MwXMqYCBBmZW4qaq7tJeGFTNESdV8JUjzIXY
- KLg/W6QhYTGTlNnP2bn5XbDVNbzIMeopGksATG1UtRPjegX+jYsS+mdi/oJ7bwodrHBE
- hrhDd4JN7Y98q9f8w2cazwZUvc4cIH3GGL73qymGJH+FMQOdQqQyNvzUS+7c6+pYDFMF
- c3bJKvt+MU0VQ34jnfbskF12RQ0xYFtR8NqxrHHZ8l2UitXhEjGcFPg3/ybWGkn0RF6e
- VC2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779905537; x=1780510337;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Yjc4zRVTqjvfw3B2vmefcl+mtHeKUz7dIGmVTZ9WeIQ=;
- b=ZQQx2zqWcfv13QeAt6om1Tbhwxphh9yv5J5QWx8BWC0+pbeTN82988y2SdrmkKqmXE
- Wy5v4UBYXavdSmEuGUfvvBcMlF6hbD+QlM+cxzaImXEATDDtqwEKp4irNXV2wTEhdrVH
- k8Jf8PtSy9xHd0oYnFX0uUOlVf7L6Xg4n7tDBp7AVqC/ZYBAQNL476PAhiUmWAxMb1Ky
- sUvNbhkK9WrEVBdrkRKdLPMvdxY1y4DAwwA5s4Olg6afrdDE9iW5SdizvPlJdxr262pt
- Vf7EtqADTMO08LjojvrMye7T8vbW7ZxfGoLtA2iKN1Yu2ahV8JFwKx03Wdd+mXm3qmrQ
- W4bA==
-X-Gm-Message-State: AOJu0Yw+AQF8IrMvXrW+cS3UrQmRTgbY7f32ABB15RuF54Bx0t7INujX
- mpurtzRaGAD7Oo0MgfcCEyHqNrAsW6Yby65VSEU7vvw/O8U/znh3z6KsWxr34/CoTrE=
-X-Gm-Gg: Acq92OHpKMEvbnosaKMPK4V+JH93b/prefamNsLg5/nr7/IeUawnGStlfOl1d84DV84
- o2SRnsAKOv0JeL5h/y+b/GxXrm9K/BW2lJmGOm/DIbqIDRodN5xEFTEiRk32ccPATNJkAO01nBD
- ZQVx6H2Ohb64vPs+DuMzgxdQVW/Ky7AhLBIGW/rqmj+pd4CpTkiwhTzozmKnXnJpwkzQY1s0jr6
- dA345k3v/sQvxU5hkc+z4s6xHu6HPFlG7G4D2fvtRb3s2hogyQ3U2KKu6jQFJQ1kaC+YZlICnBK
- k7Pqgct7N3F/hQpNCWmB4Vk28H3W5k0pG3C2aTKnI4voTS7wJDcyKYXLnIQLjfuQDIToQPHehsy
- p9rPt26Zo85o4+LbJpzuZQuL3otg2LEKR1T6LLHFhvdtK392uY/7GZXzoHFQxutE91w0Of6AA1F
- 5lflLX/FIGFNUJ/rK+uR8hC8W7YIzhf/yyTIYw8lRQ22Z1uBI=
-X-Received: by 2002:a17:90b:2e86:b0:369:e217:d110 with SMTP id
- 98e67ed59e1d1-36a678b86a9mr22554745a91.27.1779905536636; 
- Wed, 27 May 2026 11:12:16 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-36a723dfa2dsm15937295a91.16.2026.05.27.11.12.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 May 2026 11:12:15 -0700 (PDT)
-Message-ID: <0a61c0ac-1147-4983-8d60-8fec0ef8025a@linaro.org>
-Date: Wed, 27 May 2026 11:12:13 -0700
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wSInY-0003I3-Ty
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 14:16:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wSInX-0001cy-IQ
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 14:16:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779905766;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=POc/+WfHzHWz8k02l7Ni+KisQvIGSX/K+2stjcaJccg=;
+ b=O8bXuULdbWDTHA1ZQ7Sr8j3yT+4tLHCjo5Ho4DKjrli/vK82zVvv7e3bPdd9NAWklOVMcN
+ Nz90SxuOT9XDC2gsiwT9XvOzbRP+TEA+4oiIhF7irxfuT+R3bQ7Dy78DfWv+vbOvnxvJJP
+ bPeuYkLgIPOwj/r0Ma7praOUc4wao5k=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-472-wjVf8s15NUCmQOMcbZpYnw-1; Wed,
+ 27 May 2026 14:16:01 -0400
+X-MC-Unique: wjVf8s15NUCmQOMcbZpYnw-1
+X-Mimecast-MFC-AGG-ID: wjVf8s15NUCmQOMcbZpYnw_1779905755
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A88E51955F18; Wed, 27 May 2026 18:15:55 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.86])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 24C231800347; Wed, 27 May 2026 18:15:54 +0000 (UTC)
+Date: Wed, 27 May 2026 14:15:53 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, hreitz@redhat.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH] iotests/136: Test stats-intervals with -blockdev/-device
+Message-ID: <20260527181553.GB1762453@fedora>
+References: <20260521101854.31997-1-kwolf@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user: Fix loading static ARM cortex-m55 binaries
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-References: <20260525230308.137009-1-deller@kernel.org>
- <00cbde94-39fa-44d3-9db0-1ddafd66656c@linaro.org>
- <CAFEAcA-h20EQWNyWrQxX=WVMuT=kj-XzunuwE6bqyw_ivtw-AQ@mail.gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA-h20EQWNyWrQxX=WVMuT=kj-XzunuwE6bqyw_ivtw-AQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="2dWyU7yPBErKVlA3"
+Content-Disposition: inline
+In-Reply-To: <20260521101854.31997-1-kwolf@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,34 +84,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/27/26 09:40, Peter Maydell wrote:
-> On Wed, 27 May 2026 at 16:42, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
->>
->> On 5/25/26 16:03, Helge Deller wrote:
->>> From: Helge Deller <deller@gmx.de>
->>>
->>> Static built ARM binaries for Cortex-m55 may have been linked to have
->>> their load address at address 0.
->>
->> This is a problem.  We also use 0 for "unassigned" a-la ET_DYN.
->>
->> Perhaps ideally we'd pass around a separate flag for ET_EXEC vs ET_DYN, but ET_EXEC with 0
->> is not a valid binary precisely because it attempts to map at the zero page.
->>
->> Honestly, I think this is user error.  While we support some m-profile binaries in
->> linux-user mode which the Linux kernel does not, for the explicit benefit of the GCC
->> testsuite, there are limits.
-> 
-> But if the user explicitly passes a guest-base address on their
-> QEMU command line, we run the binary happily. If we refused
-> to run the binary at all that would be one thing (and not
-> unreasonable, as you say). But it does seem to me like a
-> problem in our "pick a guest-base" logic that we fail to
-> identify one that would work fine for this particular binary.
 
-Then we need to do the work to track PIE separately, without overloading 0.
+--2dWyU7yPBErKVlA3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Thu, May 21, 2026 at 12:18:54PM +0200, Kevin Wolf wrote:
+> Commit 9f0c763e introduced the "stats-intervals" qdev property for
+> block devices, a setting that was previously only accessible with
+> -drive. Extend the corresponding test to include test cases that set the
+> property on -device instead, both with -drive and -blockdev.
+>=20
+> We wouldn't really improve coverage with testing every combination of
+> account_invalid and account_failed with all modes to set up statistics,
+> so it seems good enough to test all combinations with the old way, and
+> only both True or both False with the additional ways.
+>=20
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> ---
+>  tests/qemu-iotests/136     | 87 ++++++++++++++++++++++++++++++++------
+>  tests/qemu-iotests/136.out |  4 +-
+>  2 files changed, 77 insertions(+), 14 deletions(-)
 
-r~
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+
+--2dWyU7yPBErKVlA3
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmoXNNkACgkQnKSrs4Gr
+c8isJQf9E+IdPTKPL/39x1uFehIiPhXAW1gsaqvjVVsseRfsevyf2D8MZ/1h1Wzk
+9iABEjLZufQZ3EQqLhncWxp7+sLwNicC2/ID/dH6dB5WFfpFpSFcDL8GDJQ7d7bv
+RtpAyEEKQbZ/CgTxA/0HLFhuFFHxV7b3wijZV6K6rSwE3CaHOTsQpgrmbomjaGLJ
+F3ODKrHUyp8iRL03KuFiVn0/snVvnO/RWM7Fylafzf/2XNZ743rzpSrB7+uWZjOZ
+GuMrmVG4cyP5ZDHcH9xtJoCV7KknhE8UAMms7RzVlJhTZKaL3ijvkUDWeXUcZAhA
+JZjIead1zz6PSywt/b/04q3n8Ju5ZA==
+=zPjJ
+-----END PGP SIGNATURE-----
+
+--2dWyU7yPBErKVlA3--
+
 
