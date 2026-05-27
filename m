@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E4BACD5BD5
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:34:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 585EACD5BC9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:34:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSBZy-0008Tb-Fe; Wed, 27 May 2026 06:33:38 -0400
+	id 1wSBZd-0006wq-6c; Wed, 27 May 2026 06:33:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBZs-0008FZ-V5
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:33:33 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBZG-0006ig-Jl
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:32:57 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBZq-0001M9-KV
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:33:32 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-49039a8851fso60080025e9.2
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:33:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBZB-00016t-VI
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:32:53 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-490426d72f7so48815835e9.3
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:32:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779878009; x=1780482809; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779877968; x=1780482768; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=qdyX5nkRrZiX43NfEyLT47duyF0GQSZ6Obo632h2eNQ=;
- b=reFz+jU2UJz+WnohW8QRp63fJadTX4FB5UuF8Vn9YQOhtWhnLAv+0tDPcxZL6hKZf+
- vuVyRubKyBJi+mIqLC2WlanZw9LgSwx/sE9h/+bXHPVq8PUfaUzXVQvoBnzOn/nI4Jqk
- +NO6f0uhwf6ZKh5xsqBlZuTYC8d6sccuCAb/xoaFLJH1SwDOsmIUKnGwNtr4eaTo8BJ6
- 2bMePh+Au06pr40cLyRjQO6C96t3EiObzbpER/7oQ6+8cTWH37EABFRAHJfuFi+8w4tI
- WGw0g+MyOOrwCtuqReHRTPQp0sgAnK3YjamuG8vMrazXp6GzU9Ved22x2VzKtX9E6Ibg
- XPkg==
+ :reply-to; bh=KC9M/BPGtRZabupmwKtiK6pkpu9e/Wyfnwu/kI1Is1I=;
+ b=C5V/yvNNhnH5IlBIqlaWXFyhwim/yavZhGuAGobJm8K+/rNNxi5QWACGoy3mu+WAi4
+ G6SpgLI7gASiBS8mAdevS2hYVXUMD1rne04jXQoR88SwqZMM3T7olhkbfdJcH/RjWpz3
+ SfNbFw+NXQyjLK4/otU+VnOWHu25eAb+xcUaDqRstfq3YhOo92G0nz1b5hGOePmcMuYH
+ IsILqqh/qdr5anz8wv8hbgit/jfyLoDGw6tt4lhhXGS7FvATd2ZyPtEtQvhrPdDkUAqQ
+ 7I/JFSm1wjaNcWEAMYX1M8mh3vM/JQA8ZbKmkSVCxgcTp5LbOBfdNH6hfkH+uqWBnT9h
+ wtig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779878009; x=1780482809;
+ d=1e100.net; s=20251104; t=1779877968; x=1780482768;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=qdyX5nkRrZiX43NfEyLT47duyF0GQSZ6Obo632h2eNQ=;
- b=pXL88rjzzIEo/SvyFrnrAOwtJqBeDXN1Twq5J7kyek3HJG0l+9di91VsDQHBMOFVe0
- +qUrzjMBSU7mdKcdOudKGtt26/8A5PdpV5fjMfTLLM9+zus+f6yOf2mTH1270neMMhBJ
- em1ir9rHUAso8LYcXcpKH6KoYSxKUS1saboAbrgSxte94093Sizoc6+dARJUG644Q8O2
- 71sVP6y4ZEvZ27tPwFAoHRRLGfjk4WPrFAGI30l4bUBEDhCMqmHKFh4fgXcwc6KZTcEQ
- qMl1mcTamyWaoeNJ+wIHgMZ5buVgXCMYHpZpLk93UdJu20WCLgTLlTh1PTTxABsQuzF8
- 9trg==
-X-Gm-Message-State: AOJu0YxIAwQoKaJdJ/gvJp+X8byM976kr7tkd6cvOwYI7T+yAYesszuu
- QTYzzfiElvU2a8lroo3N92qfxJ8NkgbEIdtSMVX3NBu+6DJM/hQC3jnRxH8PTznB7cb2mzciREN
- fNg68ex4GfA==
-X-Gm-Gg: Acq92OEfCGvDHD+vNb67hSiN+FL41ktXK4qLL2wJBO1GMJ5FCqXaX8ia9IRNxKJ2g9u
- oQJv3voG+OOVUjDYcjIhZ+NEeNTQFaNJB8pw2Eun4DGmKbQ6lsmWnU6WekaAlaLx4YCxRkImkb3
- j3hwMhVvWHmVNvSwFOzJgLy6fD4Y4oLOmqlwuEfnl9LIxcpsUajHL/SPIwEmdWIjfBSZ5/rqRL9
- VMeF5TPTrdIVIjBgezC58iIsScJOXUQKtKPDwpxLsP2PBsv0OKBkVuCe7ltporLRlHnzaoUK6gH
- Etk6IRqY+HPZN+Tor3FCK/Ukl41OdaC9013VDNlI6AyMuQ3IJLkZdh5S84oHt/6Y3g+tVKEuxTh
- D6Q0+XDTf/7JVFrd2t40deijFx+jFkyuhaXn+aGAQD9e95ac/Zj+ku80kWJ74w2y4D+5E2NFi6l
- 5xYiqAElvRvKcOD8HogIjHhJHyYg+dZdH4M23Mj0cEDEspBl8L0PiRmTw4nG2D3WTKKUxanpRyg
- YvV
-X-Received: by 2002:a05:600c:4743:b0:490:53d3:4767 with SMTP id
- 5b1f17b1804b1-49053d34a6dmr282695265e9.7.1779878008732; 
- Wed, 27 May 2026 03:33:28 -0700 (PDT)
+ bh=KC9M/BPGtRZabupmwKtiK6pkpu9e/Wyfnwu/kI1Is1I=;
+ b=VjJac/KyNNaL+g1B2uZA7RfBR5UpA5b89q35jmmaxBQ97+8mVL+p2TwmMntL6OtclA
+ Q7F2xwCtQXDddYLNLSkWITIU7dqmT9RQ99bsw6kATw3smMMoan0wrlXMxBtysNF+qkzV
+ 8cdl5lcdumaKSH5NuHTZz2jt12aUbnL+YMFpA69A+t/QxBJioGSmUR5GHjl+0dicOiZT
+ w8azpFyXZdur9jq/4/a0fwCWaEmYsUMGpVt0NnzNd3jVBrHh3Pqg1Iqk9IjsdNJuSkiF
+ W9n5dLp+Jm6vzntfF2ENEqGjK0ywtnAZHjnq0yQ05PmV4w2z2g5hQ35m9YXdb1gVLcy0
+ MHdg==
+X-Gm-Message-State: AOJu0YyrhjfARIWQ6flFLjwtuss1367O8qYm+er7IaRhOpXW0Q52O74O
+ huKO3U71shtxTt34nu1k2f/j7C3EiefOF7E2jm8Wraplv32arOBuFuM3gbdvdtdIaVn9uVYq8YB
+ ARILECRI0Aw==
+X-Gm-Gg: Acq92OEQw68r2x260c+AfTfoDbbSonhUFueEnC/fo6AyXJrAMFCymHdWpKsH4n5Yj9k
+ UAbqd2SIhPZCwS6RsauGznVBlz97Kmfz1tdMg91i3TCrqlP+s+ddFWVnMylIjtdHhcosgBPvMGs
+ BFCQyvs1qGI/sneRq62iSkxguCMij3nOH/68uS8QHDwcbFijfVH3vEB9IvwB6X/4pcgiiHlT0ks
+ V2yraJYbdcN5vWOfA/RHGB99/RS+YAv8T0e5hTQQ1WzJSXg0yzUCkf7lu+KqFKysTgSKt80NAzI
+ MkVUT88wDpbRE8jYmxQ3JCocrEgNhYC+uxdRyMxd1O3gce0lCGyT5gfrcAxWH0qFUVXL7g0kaUI
+ ZfzO7ctw8AecZAWq4vu1885BBm1vSf9uEAwr54mG3exnvstL68ab/S5d2K9db5I5V1YJlWrxH9f
+ isPp7YHb6CIDlLUyF+zZ4aH3sU9Fnw5zVQoLlkN86j7khD+t/LyYsDOeQ=
+X-Received: by 2002:a05:600c:1992:b0:48a:76a3:2b9b with SMTP id
+ 5b1f17b1804b1-490426c5416mr356231065e9.17.1779877968139; 
+ Wed, 27 May 2026 03:32:48 -0700 (PDT)
 Received: from m17.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4907e627b1csm23188065e9.0.2026.05.27.03.33.27
+ 5b1f17b1804b1-4904561a160sm445846315e9.9.2026.05.27.03.32.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 27 May 2026 03:33:28 -0700 (PDT)
+ Wed, 27 May 2026 03:32:47 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 25/32] target/arm: Re-use common aarch64_aa32_a57_init() helper
-Date: Wed, 27 May 2026 12:30:29 +0200
-Message-ID: <20260527103037.4461-26-philmd@linaro.org>
+Subject: [PULL 19/32] target/arm: Build cpu64.o as common object
+Date: Wed, 27 May 2026 12:30:23 +0200
+Message-ID: <20260527103037.4461-20-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260527103037.4461-1-philmd@linaro.org>
 References: <20260527103037.4461-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,262 +98,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make aarch64_aa32_a57_init() common by exposing its prototype
-and defining it in cpu-max.c. Call it in arm_max_initfn()
-restricted to AArch32.
+While gdbstub64.o is already built once, build it as
+common object, reducing target-specific set in arm_ss[].
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Acked-by: Peter Maydell <peter.maydell@linaro.org>
-Message-Id: <20260526203722.79463-15-philmd@linaro.org>
+Message-Id: <20260526203722.79463-9-philmd@linaro.org>
 ---
- target/arm/internals.h |  1 +
- target/arm/cpu-max.c   | 74 ++++++++++++++++++++++++++++++++++++++++++
- target/arm/cpu64.c     | 71 ----------------------------------------
- target/arm/tcg/cpu32.c | 48 ++-------------------------
- 4 files changed, 77 insertions(+), 117 deletions(-)
+ target/arm/tcg/meson.build | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 5a2263799c7..27414e7481f 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1773,6 +1773,7 @@ void aarch64_max_tcg_initfn(Object *obj);
- void aarch64_add_pauth_properties(Object *obj);
- void aarch64_add_sve_properties(Object *obj);
- void aarch64_add_sme_properties(Object *obj);
-+void aarch64_aa32_a57_init(Object *obj, bool aa32_only);
+diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
+index b0f5342245b..d5a95bf54f2 100644
+--- a/target/arm/tcg/meson.build
++++ b/target/arm/tcg/meson.build
+@@ -35,7 +35,6 @@ arm_ss.add(files(
+ ))
  
- /* Return true if the gdbstub is presenting an AArch64 CPU */
- static inline bool arm_gdbstub_is_aarch64(ARMCPU *cpu)
-diff --git a/target/arm/cpu-max.c b/target/arm/cpu-max.c
-index 9fd48ce46e2..6fc54ebe74e 100644
---- a/target/arm/cpu-max.c
-+++ b/target/arm/cpu-max.c
-@@ -7,7 +7,81 @@
-  */
+ arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
+-  'cpu64.c',
+   'gengvec64.c',
+   'translate-a64.c',
+   'translate-sve.c',
+@@ -80,6 +79,9 @@ arm_common_user_system_ss.add(
+   'vec_helper.c',
+   'vfp_helper.c',
+ ))
++arm_common_user_system_ss.add(when: 'TARGET_AARCH64', if_true: files(
++  'cpu64.c',
++))
  
- #include "qemu/osdep.h"
-+#include "qemu/units.h"
-+#include "system/kvm.h"
- #include "target/arm/internals.h"
-+#include "target/arm/cpregs.h"
-+
-+void aarch64_aa32_a57_init(Object *obj, bool aa32_only)
-+{
-+    ARMCPU *cpu = ARM_CPU(obj);
-+    ARMISARegisters *isar = &cpu->isar;
-+    const bool aarch64_enabled = !aa32_only;
-+
-+    cpu->dtb_compatible = "arm,cortex-a57";
-+    set_feature(&cpu->env, ARM_FEATURE_V8);
-+    set_feature(&cpu->env, ARM_FEATURE_NEON);
-+    set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
-+    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
-+    if (aarch64_enabled) {
-+        set_feature(&cpu->env, ARM_FEATURE_AARCH64);
-+    }
-+    set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
-+    set_feature(&cpu->env, ARM_FEATURE_EL2);
-+    set_feature(&cpu->env, ARM_FEATURE_EL3);
-+    set_feature(&cpu->env, ARM_FEATURE_PMU);
-+    if (kvm_enabled()) {
-+        cpu->kvm_target = QEMU_KVM_ARM_TARGET_CORTEX_A57;
-+    }
-+    cpu->midr = 0x411fd070;
-+    cpu->revidr = 0x00000000;
-+    cpu->reset_fpsid = 0x41034070;
-+    cpu->isar.mvfr0 = 0x10110222;
-+    cpu->isar.mvfr1 = 0x12111111;
-+    cpu->isar.mvfr2 = 0x00000043;
-+    cpu->ctr = 0x8444c004;
-+    cpu->reset_sctlr = 0x00c50838;
-+    SET_IDREG(isar, ID_PFR0, 0x00000131);
-+    SET_IDREG(isar, ID_PFR1, 0x00011011);
-+    SET_IDREG(isar, ID_DFR0, 0x03010066);
-+    SET_IDREG(isar, ID_AFR0, 0x00000000);
-+    SET_IDREG(isar, ID_MMFR0, 0x10101105);
-+    SET_IDREG(isar, ID_MMFR1, 0x40000000);
-+    SET_IDREG(isar, ID_MMFR2, 0x01260000);
-+    SET_IDREG(isar, ID_MMFR3, 0x02102211);
-+    SET_IDREG(isar, ID_ISAR0, 0x02101110);
-+    SET_IDREG(isar, ID_ISAR1, 0x13112111);
-+    SET_IDREG(isar, ID_ISAR2, 0x21232042);
-+    SET_IDREG(isar, ID_ISAR3, 0x01112131);
-+    SET_IDREG(isar, ID_ISAR4, 0x00011142);
-+    SET_IDREG(isar, ID_ISAR5, 0x00011121);
-+    SET_IDREG(isar, ID_ISAR6, 0);
-+    if (aarch64_enabled) {
-+        SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
-+        SET_IDREG(isar, ID_AA64DFR0, 0x10305106);
-+        SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
-+        SET_IDREG(isar, ID_AA64MMFR0, 0x00001124);
-+    }
-+    cpu->isar.dbgdidr = 0x3516d000;
-+    cpu->isar.dbgdevid = 0x01110f13;
-+    cpu->isar.dbgdevid1 = 0x2;
-+    cpu->isar.reset_pmcr_el0 = 0x41013000;
-+    SET_IDREG(isar, CLIDR, 0x0a200023);
-+    /* 32KB L1 dcache */
-+    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 32 * KiB, 7);
-+    /* 48KB L1 icache */
-+    cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 3, 64, 48 * KiB, 2);
-+    /* 2048KB L2 cache */
-+    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 16, 64, 2 * MiB, 7);
-+    if (aarch64_enabled) {
-+        set_dczid_bs(cpu, 4); /* 64 bytes */
-+        cpu->gic_num_lrs = 4;
-+        cpu->gic_vpribits = 5;
-+        cpu->gic_vprebits = 5;
-+        cpu->gic_pribits = 5;
-+    }
-+    define_cortex_a72_a57_a53_cp_reginfo(cpu);
-+}
- 
- /* Share AArch32 -cpu max features with AArch64. */
- void aa32_max_features(ARMCPU *cpu)
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 7dce17fdb20..499d154dace 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -686,77 +686,6 @@ void aarch64_cpu_lpa2_finalize(ARMCPU *cpu, Error **errp)
-     SET_IDREG(&cpu->isar, ID_AA64MMFR0, t);
- }
- 
--static void aarch64_aa32_a57_init(Object *obj, bool aa32_only)
--{
--    ARMCPU *cpu = ARM_CPU(obj);
--    ARMISARegisters *isar = &cpu->isar;
--    const bool aarch64_enabled = !aa32_only;
--
--    cpu->dtb_compatible = "arm,cortex-a57";
--    set_feature(&cpu->env, ARM_FEATURE_V8);
--    set_feature(&cpu->env, ARM_FEATURE_NEON);
--    set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
--    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
--    if (aarch64_enabled) {
--        set_feature(&cpu->env, ARM_FEATURE_AARCH64);
--    }
--    set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
--    set_feature(&cpu->env, ARM_FEATURE_EL2);
--    set_feature(&cpu->env, ARM_FEATURE_EL3);
--    set_feature(&cpu->env, ARM_FEATURE_PMU);
--    if (kvm_enabled()) {
--        cpu->kvm_target = QEMU_KVM_ARM_TARGET_CORTEX_A57;
--    }
--    cpu->midr = 0x411fd070;
--    cpu->revidr = 0x00000000;
--    cpu->reset_fpsid = 0x41034070;
--    cpu->isar.mvfr0 = 0x10110222;
--    cpu->isar.mvfr1 = 0x12111111;
--    cpu->isar.mvfr2 = 0x00000043;
--    cpu->ctr = 0x8444c004;
--    cpu->reset_sctlr = 0x00c50838;
--    SET_IDREG(isar, ID_PFR0, 0x00000131);
--    SET_IDREG(isar, ID_PFR1, 0x00011011);
--    SET_IDREG(isar, ID_DFR0, 0x03010066);
--    SET_IDREG(isar, ID_AFR0, 0x00000000);
--    SET_IDREG(isar, ID_MMFR0, 0x10101105);
--    SET_IDREG(isar, ID_MMFR1, 0x40000000);
--    SET_IDREG(isar, ID_MMFR2, 0x01260000);
--    SET_IDREG(isar, ID_MMFR3, 0x02102211);
--    SET_IDREG(isar, ID_ISAR0, 0x02101110);
--    SET_IDREG(isar, ID_ISAR1, 0x13112111);
--    SET_IDREG(isar, ID_ISAR2, 0x21232042);
--    SET_IDREG(isar, ID_ISAR3, 0x01112131);
--    SET_IDREG(isar, ID_ISAR4, 0x00011142);
--    SET_IDREG(isar, ID_ISAR5, 0x00011121);
--    SET_IDREG(isar, ID_ISAR6, 0);
--    if (aarch64_enabled) {
--        SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
--        SET_IDREG(isar, ID_AA64DFR0, 0x10305106);
--        SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
--        SET_IDREG(isar, ID_AA64MMFR0, 0x00001124);
--    }
--    cpu->isar.dbgdidr = 0x3516d000;
--    cpu->isar.dbgdevid = 0x01110f13;
--    cpu->isar.dbgdevid1 = 0x2;
--    cpu->isar.reset_pmcr_el0 = 0x41013000;
--    SET_IDREG(isar, CLIDR, 0x0a200023);
--    /* 32KB L1 dcache */
--    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 32 * KiB, 7);
--    /* 48KB L1 icache */
--    cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 3, 64, 48 * KiB, 2);
--    /* 2048KB L2 cache */
--    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 16, 64, 2 * MiB, 7);
--    if (aarch64_enabled) {
--        set_dczid_bs(cpu, 4); /* 64 bytes */
--        cpu->gic_num_lrs = 4;
--        cpu->gic_vpribits = 5;
--        cpu->gic_vprebits = 5;
--        cpu->gic_pribits = 5;
--    }
--    define_cortex_a72_a57_a53_cp_reginfo(cpu);
--}
--
- static void aarch64_a57_initfn(Object *obj)
- {
-     aarch64_aa32_a57_init(obj, false);
-diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
-index 2e8afc28602..a2f730451fb 100644
---- a/target/arm/tcg/cpu32.c
-+++ b/target/arm/tcg/cpu32.c
-@@ -720,53 +720,9 @@ static void sa1110_initfn(Object *obj)
- static void arm_max_initfn(Object *obj)
- {
-     ARMCPU *cpu = ARM_CPU(obj);
--    ARMISARegisters *isar = &cpu->isar;
- 
--    /* aarch64_a57_initfn, advertising none of the aarch64 features */
--    cpu->dtb_compatible = "arm,cortex-a57";
--    set_feature(&cpu->env, ARM_FEATURE_V8);
--    set_feature(&cpu->env, ARM_FEATURE_NEON);
--    set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
--    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
--    set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
--    set_feature(&cpu->env, ARM_FEATURE_EL2);
--    set_feature(&cpu->env, ARM_FEATURE_EL3);
--    set_feature(&cpu->env, ARM_FEATURE_PMU);
--    cpu->midr = 0x411fd070;
--    cpu->revidr = 0x00000000;
--    cpu->reset_fpsid = 0x41034070;
--    cpu->isar.mvfr0 = 0x10110222;
--    cpu->isar.mvfr1 = 0x12111111;
--    cpu->isar.mvfr2 = 0x00000043;
--    cpu->ctr = 0x8444c004;
--    cpu->reset_sctlr = 0x00c50838;
--    SET_IDREG(isar, ID_PFR0, 0x00000131);
--    SET_IDREG(isar, ID_PFR1, 0x00011011);
--    SET_IDREG(isar, ID_DFR0, 0x03010066);
--    SET_IDREG(isar, ID_AFR0, 0x00000000);
--    SET_IDREG(isar, ID_MMFR0, 0x10101105);
--    SET_IDREG(isar, ID_MMFR1, 0x40000000);
--    SET_IDREG(isar, ID_MMFR2, 0x01260000);
--    SET_IDREG(isar, ID_MMFR3, 0x02102211);
--    SET_IDREG(isar, ID_ISAR0, 0x02101110);
--    SET_IDREG(isar, ID_ISAR1, 0x13112111);
--    SET_IDREG(isar, ID_ISAR2, 0x21232042);
--    SET_IDREG(isar, ID_ISAR3, 0x01112131);
--    SET_IDREG(isar, ID_ISAR4, 0x00011142);
--    SET_IDREG(isar, ID_ISAR5, 0x00011121);
--    SET_IDREG(isar, ID_ISAR6, 0);
--    cpu->isar.dbgdidr = 0x3516d000;
--    cpu->isar.dbgdevid = 0x01110f13;
--    cpu->isar.dbgdevid1 = 0x2;
--    cpu->isar.reset_pmcr_el0 = 0x41013000;
--    SET_IDREG(isar, CLIDR, 0x0a200023);
--    /* 32KB L1 dcache */
--    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 32 * KiB, 7);
--    /* 48KB L1 icache */
--    cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 3, 64, 48 * KiB, 2);
--    /* 2048KB L2 cache */
--    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 16, 64, 2 * MiB, 7);
--    define_cortex_a72_a57_a53_cp_reginfo(cpu);
-+    /* Cortex-A57 advertising none of the aarch64 features */
-+    aarch64_aa32_a57_init(obj, true);
- 
-     aa32_max_features(cpu);
- 
+ arm_common_system_ss.add(files(
+   'cpregs-at.c',
 -- 
 2.53.0
 
