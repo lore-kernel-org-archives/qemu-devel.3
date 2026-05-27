@@ -4,162 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A598FCD5BD0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 20:56:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F19A5CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 21:07:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSLHo-0005pO-Nz; Wed, 27 May 2026 16:55:32 -0400
+	id 1wSLSO-0007xH-S5; Wed, 27 May 2026 17:06:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wSLHm-0005lC-P5
- for qemu-devel@nongnu.org; Wed, 27 May 2026 16:55:30 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wSLHk-0006a9-K9
- for qemu-devel@nongnu.org; Wed, 27 May 2026 16:55:30 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64RKlecE124445
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 20:55:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- BUk9+IXcVgGbb0ZfCLkGaCqqOZFsiQUjXIssHj5OG2o=; b=fMmo/ZfMHfuThY5x
- h4Hw9saM57ERu4I2vUub7Ea+mfo1nGAPcmXC6Rt1aZw4fqlt4WbT4H/SHdArUxWd
- ZYnDd1dtTm6cy+Qv3Mag8eKyPHcW/wmO3nwuYlLaEunDFprCSDutMx9Zrx8w83pI
- nndATj9YvLteYxiRq2sAQTwpesRYYNOb4gNxJ3HTm/lvjMOsB9u5cONk2cBw6zW5
- n/PjUoJIhO1+uUBgcjfTd4thwyVeWfdBxENFbpKwoUlp1nNeA23ox7rQEN9BK4Yw
- jdJYl+JZk2jhNcI2vv5WI9tTyKlu+gckUujKq7i2cx0cgTTp4acjAcg40b5UBg2E
- fvD4TQ==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ee7yag1t9-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 20:55:24 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-3041ab826ddso11770496eec.0
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 13:55:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wSLSO-0007wq-3b
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 17:06:28 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wSLSM-0002a4-9v
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 17:06:27 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-bd85ebb368fso1799754066b.1
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 14:06:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779915985; cv=none;
+ d=google.com; s=arc-20240605;
+ b=NyfvGYAFQVMKZ13CVV7S/mhmkO6DcMH5ijdaIg0bPZSAaHaiBkzXNB6nWEitmXRD5S
+ 68Zq1g7k+U861zmB1N/YidOnN8HeTHxADx2mzjnkZ3z2WbhAPBJLzUAHvdLEKfMWfRUx
+ RIMhXtqqEF+aqcwIO/o3tsvuhvxI8/Gx9t6viAyyrtOZ7T8xE4vqKScLgI77K7CzJmyU
+ bQI67i529r3hqLWS00OUL1GVHXjLeo6n/F2R9cqXU3J88sj5NxGByMp0DKfAP1IdTPo6
+ WJJdj/DkSeBMb0namu32WjjI1aZk6rP/q0Uo08X9mQF26Q1TJto9iYVpqkHpY0NKwX+J
+ LXEg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=dweQ5y+KlunnRHzU71+MAEjvJSanMYXjwF+wo7+7lCU=;
+ fh=DRPOatXgQr66kwcis/bI7oQT+jBra5OX+sdxVTD7Am8=;
+ b=DW9jAQ+1Qzt7opB3Z5wNjBb3fE6/BE+Ye/DZH8Mk7hLIknZicrrS9FfoKj6yrvnhBb
+ 55yG7RRENbkpePjl+wpD+TgYZ1deAZUAydao+vM/6+XiM/NEs+iOIcOB9eEu4BgHWMol
+ Vri3bNsBwTGz9UJ2Lyx+F7R43DZ62HTc2FqRaDVmju7SKZAuPF7DwYbsGruwxFrhBe6P
+ KDLw2QB/KdXgBnGaXaFKGuGwJ368NAPJ3b8/elXo+jpvdl28mRgSvn0POPHRnfg7DAPN
+ ELlegUTZK2dpZuMDAqhDrq3lymNM6H3hmQIkhbezzUMD/vAahlOPHAPrlKcujaAW2q5j
+ T+AA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1779915324; x=1780520124; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=BUk9+IXcVgGbb0ZfCLkGaCqqOZFsiQUjXIssHj5OG2o=;
- b=RXNVGX0Q26H4pwUjIk8iuqyOZLjHO30kehmqiygPhkfPypcDIsIXegY7u+EHV+KQti
- c9p9TP1DdT8nHygx8u7INVmGMtrUpfLVFyZKMoD8LVOVy93cTABU6GFpqVOndMLyCRWN
- 6WRdldQbgmZ/MQQV4H87FS1oV6D+bk9Ed2pYqD5anZ5uyyO3QjlY6VQZzvsfDnmdqJ20
- IcRvhCSu5LM+oRpxyRInBnBn2erawjGxqe86P7ewUwaZqz25NFVW7dU1heFh1n8SjUQ9
- 1lvZRLuvF92rhMYnqbeS1g+b5QrlpoQgypJIfrJPwWCrUN8haJsidtODM9/ioQwa5+oN
- qf4w==
+ d=gmail.com; s=20251104; t=1779915985; x=1780520785; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dweQ5y+KlunnRHzU71+MAEjvJSanMYXjwF+wo7+7lCU=;
+ b=Dd+BAA9fHTGAggL+pyPfxpbiiXeo0SWGz6rgdRD0QSgFlIlqTDhc+wfMSWCF6f/Kl+
+ mK5V0t1XX62tVWFJzsjrbIju6OR9zPEs++rjjF72USbqB8Dt9OUedfuqel2KPP3FgnUT
+ chiCPghszJE+mQSHOMjMPESjEszrg1Q6RTdWu+gZAQCC/EzyocgIpc67a2DID8/9kkCI
+ IUQql844bvqA26FMKjz5t+/SBvKXxqCupQ1v8WZ1MhJwBJCM3+DVdEwdpKzds7iivPm+
+ RYuK/asQgjIVDkl9pVciJ5MQK0uqxTyKCnXU9b5eKPZykiFushx//UWIHBZ9MUuykQsu
+ WHYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779915324; x=1780520124;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BUk9+IXcVgGbb0ZfCLkGaCqqOZFsiQUjXIssHj5OG2o=;
- b=StVYokgp4OEVEsRmWKIYW4zaaeH0W8yLJTCwa1Q0+Z3rxJBGBoqPLIIc7ieDh/014A
- rBr/XUr0pfXbSwLb5skyibZ9YdsPlXpQyswJuGsn9E5GqBYlAW9YPXz/4H2uyJTSFn7R
- 7MZf8OOm/esPKU+8LIjzB0ERWB6oF0o/gRkpEuSBH9oMT0brMbc4rMPlwXCF8FQXVZ29
- Yatjy7yeibZRyLU+PZ7KLcLzqEXJ2b6IlWvXWp3VezIAndb9ZD+uDHyThJUfdjF0G4Qa
- abdmTWAXJQzqxeuwM2mg9dBJia+HE7v6dhom9VuNV/Bk+WeSjCi5zxoKyAfWXRf5A5ro
- ystA==
-X-Gm-Message-State: AOJu0YxMlXebRoebkUaxJA3X3L7aLn4RJ4Dr0/kI8/GUW+WUJ5J09CF3
- fTOf1agiBDuvdh3QM56mrFQHpaZuLwUaIzgpSC/adM6B9twRFJP3UzYcUgUEU+g+K+RIODaSpRA
- 1gVwNpYRO2TaMDg2zSEYac7+pUpHrmGo45hrnTBQAd1xzErgCQ2IjGbd/hQ==
-X-Gm-Gg: Acq92OHcMpCD0caslbnfN9YalG1q3VAR0QidyOmXiNTMfazYnu4Tqbu4MvoDWp3OYME
- wDwjrvM4PZvhTmzS8AI5Vd4SnLcrTGPXKJqzaORglMcbPh1Fb4y4u+ryykiDfGfQCNo6eWSZ9qe
- i+wBSNFrHx+5fM8bwLK8PbqNyuw46z8+ZP3hcdqTLajqZKS+ByJAwbKypAHtP1dBVLhVWIpHyyt
- jMcCJ/27jlLCz5gdNBIKh3VG6KXwaz8dfBhfGgR++8WJ1PmKg2+6VZrka2jUhSUy6BCAyA42N+q
- NNXUL4M3GCbQPRo9X3e9kjIzfmYcNzS6ZDEz7N/7KdxYtd7FQqLylCgUOjbodjDGAZNIxRoonIl
- 63VgXLj6y/J7dS0roGIaHj7d+YNaH/k4b8lZec7fQIwKgTHrQFK+lwmAl9pVeQu3E57EZPSwnIm
- lAAx4VK6+JQuRxPfxe/HZVJugC
-X-Received: by 2002:a05:7300:ac94:b0:304:5a9c:644c with SMTP id
- 5a478bee46e88-3045a9c6cffmr7813600eec.15.1779915323876; 
- Wed, 27 May 2026 13:55:23 -0700 (PDT)
-X-Received: by 2002:a05:7300:ac94:b0:304:5a9c:644c with SMTP id
- 5a478bee46e88-3045a9c6cffmr7813566eec.15.1779915323306; 
- Wed, 27 May 2026 13:55:23 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30452461cb5sm20044274eec.31.2026.05.27.13.55.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 May 2026 13:55:22 -0700 (PDT)
-Message-ID: <86385e93-5425-4145-8a9f-0f72ed5de022@oss.qualcomm.com>
-Date: Wed, 27 May 2026 13:55:20 -0700
+ d=1e100.net; s=20251104; t=1779915985; x=1780520785;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=dweQ5y+KlunnRHzU71+MAEjvJSanMYXjwF+wo7+7lCU=;
+ b=rg8VInukVIrnFNYeh9U6TStF7HJKfiwTKjfpjDGyGGabGJ3go3yBd0UyZ2ioUq+4H4
+ HB/nN5NwRiz3X0gS2cm9TPhzJ2GKxpcBfzJc4WhmPzUMnRzWHEoe3w0zIVJOhmHhNd6D
+ OO3VNTBM94n5c7A8VSYxXqmhNg2527a53XD4tYdyBxiff5x7N5Ytc1nREzbqmNtuHIPt
+ mP4P5gQYPx8i7TANhUzYAuImTuklKSmK2f7ykiSQMEgSeW9EkDKQloW9UyfYSVd/2QSW
+ rCb6hDBwc2RGjunzuSxPYFqqFCSIwqd1T6goV24J/fqb45G6WI0XUsregCQE0LN4ansj
+ 6D+A==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+P8WtBGHFkkenE7MhZQWfeXqZ18yE2g9h79Ni/ihrjdAZ8NPJZPHSAPzuzi8n/ZKdVVRp1g11iiB5S@nongnu.org
+X-Gm-Message-State: AOJu0YyVWvbs0E95CsElTgzXfLa9hOQMzYsB5X6PQ3Wsu2n9ZoheaIXR
+ dnuH080mz0cfzy+1TrYOhHCpi5vKxU0/yazEqb8YqAEqiBF7djI9+3Mr3WgszHFePYBbVnxzRoW
+ 3LY50Kc1/lDGeRn9qESe64FnPnYtMvAc=
+X-Gm-Gg: Acq92OELDopkJTEvIk90DEC/1gDK2hKiXRb2NsOZOoFsm7WfUTrVFqaE/EcIOO8eJyT
+ Y0ogSL+J2AHD8Cdc/SSebFr3JlIcp+WjrwF76afBiYu/k339FuxmUgzA8NJGVEXJ1rb5k/2xZXl
+ ojLBx71YlyUqP11Tb9wYfZMFy+S5dgabVX3x2BYkEQfu9SlDoeVwMhuOW7LdbdepGE/YQCqNv4S
+ ryWaFwtedM6A6q9vTkGe0tSo5xerqkO2VxaJr8p1Hm5VcQh/ar65sKFBY3Vps6gTOi76zliNVat
+ G1REwn3n9d2XKH5aqWqK3/DOnq7nd27dIaack2VivkSoSyVu02qL
+X-Received: by 2002:a17:906:4fce:b0:bd4:e62e:d399 with SMTP id
+ a640c23a62f3a-bdd25ceb7d0mr1588571266b.26.1779915984628; Wed, 27 May 2026
+ 14:06:24 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/16] tests/Makefile.include: add binary dependency to
- run-tcg-tests-% rules
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <th.huth+qemu@posteo.eu>, Song Gao <gaosong@loongson.cn>,
- John Snow <jsnow@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Kyle Evans <kevans@freebsd.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Cleber Rosa <crosa@redhat.com>, Warner Losh <imp@bsdimp.com>,
- Brad Smith <brad@comstyle.com>, Thomas Huth <thuth@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>, Fabiano Rosas <farosas@suse.de>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org
-References: <20260521131739.540157-1-alex.bennee@linaro.org>
- <20260521131739.540157-4-alex.bennee@linaro.org>
- <74e8bc86-cd81-43f9-b5cb-7e3de3bcd3d0@oss.qualcomm.com>
- <87tsrzl138.fsf@draig.linaro.org>
- <093614fb-ced1-4b15-b1e1-5da755f87237@oss.qualcomm.com>
- <87cxymec7b.fsf@draig.linaro.org>
- <5bd51a1a-4079-4073-bbd8-f0206a1ad458@oss.qualcomm.com>
- <0f73d717-1621-4c3f-9c5e-9bfdfaffb0b8@oss.qualcomm.com>
- <877bor9vor.fsf@draig.linaro.org>
- <7d58926d-a36d-430f-828e-7ebdd9cc4eb5@oss.qualcomm.com>
- <87qzmyzbut.fsf@draig.linaro.org>
- <06092208-1b56-4fea-8d92-bf035fbd0fa3@oss.qualcomm.com>
- <87fr3eyrvp.fsf@draig.linaro.org>
- <8a878679-733c-451c-8053-663a74f8d4a7@oss.qualcomm.com>
- <87a4tlz897.fsf@draig.linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <87a4tlz897.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: RkoADkqzIKclvtWaWJ-ZPnNibdLD2ezo
-X-Proofpoint-GUID: RkoADkqzIKclvtWaWJ-ZPnNibdLD2ezo
-X-Authority-Analysis: v=2.4 cv=E/r9Y6dl c=1 sm=1 tr=0 ts=6a175a3c cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=EUspDBNiAAAA:8 a=7JdIQKnF0icQP4fr_JkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=6Ab_bkdmUrQuMsNx7PHu:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI3MDIwOSBTYWx0ZWRfXyHjojHfl2/Rf
- C9RI3zGACu3sqpSiEVn0o+GST0jp/uonHfAiU9BMOYrpasLkdw+6WOGNk+sHLHaNQQBrZP87LlL
- uR5zGakYschvlqTG44HoWwanX5arPfjkbALN7m/bpFJBWqMroyZoYp2JUl+UFenGq4M90xNxIJ1
- /dVYDq4OGeMr3UpfcyiX4X6REjMlApKb3coT9WGAKP2ci26+i3e1SRBG63n8anGqi+qTLTBp5St
- VkH3UktFUpr+xYuYdWjPlP/6I/uFFjUla7HoyITXJQhXOBxKjTC8dRq3isWGu5EM/qB1r4d7JB1
- bp9Kh52lxLJHj31CzHHqYSM4ebO9r6hiLrr1irGFuwMz1aJqof9onQ8sxG8qVSebLDD6S75YI7y
- Ema+qbRoUTt516VabvBh8UFBFFjaILw1dv2E4EHoiBDXFYVEDrJScWKRofEVbMStaOmPXx8N5cs
- XVdiZP5nkV2o0+VsLjw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-05-27_04,2026-05-26_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 lowpriorityscore=0 adultscore=0 priorityscore=1501 phishscore=0
- impostorscore=0 bulkscore=0 malwarescore=0 suspectscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605270209
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260109120837.2772961-1-f.ebner@proxmox.com>
+ <20260202221634.GB429972@fedora>
+ <36a69637-d7b9-42cb-b16f-473091efb3ee@proxmox.com>
+ <aYS_G-QHlbucVpUd@redhat.com>
+In-Reply-To: <aYS_G-QHlbucVpUd@redhat.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Wed, 27 May 2026 17:06:10 -0400
+X-Gm-Features: AVHnY4IlWVj3sRm5M2OvPTcnKxt7A7fhdhE7mQp1_1rkNvNTvmvhHm9J-wq4wa4
+Message-ID: <CAJSP0QX22xxAq7sYChGMq9up3YOAXuxrbe99_8YoLFV0pKj0Zg@mail.gmail.com>
+Subject: Re: [RFC v2 0/6] block/io: avoid failure caused by misaligned
+ BLKZEROOUT ioctl
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Fiona Ebner <f.ebner@proxmox.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ qemu-devel@nongnu.org, 
+ qemu-block@nongnu.org, hreitz@redhat.com, fam@euphon.net
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=stefanha@gmail.com; helo=mail-ej1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -176,110 +123,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/26/2026 11:17 PM, Alex Bennée wrote:
-> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
-> 
->> On 5/26/2026 10:58 AM, Alex Bennée wrote:
->>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->>>
->>>> On 5/26/2026 3:47 AM, Alex Bennée wrote:
->>>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->>>>>
->>>>>> On 5/25/2026 11:43 AM, Alex Bennée wrote:
->>>>>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->>>>>>>
->>>>>>>> On 5/25/2026 8:46 AM, Pierrick Bouvier wrote:
->>>>>>>>> On 5/23/2026 1:56 AM, Alex Bennée wrote:
->>>>>>>>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->>>>>>>>>>
->>>>>>>>>>> On 5/22/2026 12:02 PM, Alex Bennée wrote:
->>>>>>>>>>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->>>>>>>>>>>>
->>>>>>>>>>>>> On 5/21/2026 6:17 AM, Alex Bennée wrote:
-> <snip>
->>>>
->>>> We'll need to remove the mechanic to build cross compilers containers.
->>>> In my experience, it's clunky anyway and fails when building several
->>>> from scratch. Try it yourself after cleaning your docker/podman images.
->>>> It's just better and simpler to expect user to install cross
->>>> compilers.
->>>
->>> That would loose a bunch of functionality and doesn't help users running
->>> anything that isn't Debian.
->>>
->>
->> Out of fedora, who does it exclude?
-> 
-> RHEL, CentOS, SuSE
-> 
-> The cross compiler situation may have improved since - Debian has always
-> been ahead of the curve in its multi-arch support.
-> 
->> We can still provide a fat debian container with all cross compilers
->> embedded for people who don't run ubuntu/debian.
->>
->>>> The only thing that prevented me to implement this before is that I
->>>> didn't know if concerned maintainers would accept it, or just hold onto
->>>> the precious handcrafted Makefiles, into which so much energy and time
->>>> has been spent.
->>>
->>> There is no desire to hold onto Makefiles, but I do want to keep the
->>> same capabilities as the current system. The driver for containerising
->>> the compilers was that setting up cross compilers is a barrier to
->>> contributors who want to be able to add and build tests.
->>>
->>
->> Personally, this "smart" layer has been a barrier even on Debian, since
->> by default it tries to build them, and it fails from scratch.
->> Give it a try by purging your docker images, and run a make check-tcg
->> -j$(nproc). I doubt anyone is really running check-tcg with this in real
->> life.
-> 
-> What do you mean? I run check-tcg all the time.
-> 
-> Which containers fail to build for you? The main cross-compiler one
-> (debian-all-test-cross) is built all the time.
+On Thu, Feb 5, 2026 at 11:03=E2=80=AFAM Kevin Wolf <kwolf@redhat.com> wrote=
+:
 >
-
-Build is working out of the box now.
-However, it seems that only tests for aarch64, arm and x86_64 are run
-when using containers without having installed cross compilers.
-Maybe it's another carefully handcrafted feature of tcg Makefiles?
-
->> But well, if the cross-container thing is *really* a blocker, we can
->> just wrap build and run in a script per cross compiler, that does
->> docker/podman build && docker/podman run and call that.
-> 
-> We still have the remnants of that in the docker.py script although for
-> most containers we moved to invoking docker (or podman) directly.
+> Am 05.02.2026 um 13:13 hat Fiona Ebner geschrieben:
+> > Hi Stefan,
+> >
+> > Am 02.02.26 um 11:15 PM schrieb Stefan Hajnoczi:
+> > > On Fri, Jan 09, 2026 at 01:08:27PM +0100, Fiona Ebner wrote:
+> > >> Previous discussion here:
+> > >> https://lore.kernel.org/qemu-devel/20260105143416.737482-1-f.ebner@p=
+roxmox.com/
+> > >>
+> > >> Commit 5634622bcb ("file-posix: allow BLKZEROOUT with -t writeback")
+> > >> enables the BLKZEROOUT ioctl when using 'writeback' cache, regressin=
+g
+> > >> certain 'qemu-img convert' invocations, because of a pre-existing
+> > >> issue. Namely, the BLKZEROOUT ioctl might fail with errno EINVAL whe=
+n
+> > >> the request is shorter than the block size of the block device.
+> > >>
+> > >> Stefan suggested prioritizing bl.pwrite_zeroes_alignment in
+> > >> bdrv_co_do_zero_pwritev(). This RFC explores that approach and the
+> > >> issues with qcow2 I encountered, where
+> > >> bl.pwrite_zeroes_alignment =3D s->subcluster_size;
+> > >> I would be happy to discuss potential solutions and whether we shoul=
+d
+> > >> use this approach after all.
+> > >
+> > > Hi Fiona,
+> > > I wanted to continue this discussion. My thoughts are that making
+> > > bdrv_co_do_zero_pwritev() use bl.pwrite_zeroes_alignment is the right
+> > > long-term solution to keep all the padding logic in one place.
+> > >
+> > > On the other hand, your series shows it involves fixing a bunch of te=
+st
+> > > failures and that's not fun. The original bug that is being solved he=
+re
+> > > is my doing, so feel free to hand this over to me if you decide you
+> > > don't want to work on it.
+> >
+> > in your other mail, you mentioned you'll ask Kevin for his opinion. So
+> > in part, I was waiting for that. But I also was side-tracked by other
+> > things, and it will be 1-2 more weeks until I can really focus on this
+> > again. If that is too long, please go ahead and pick it up.
 >
+> I didn't review this thoroughly yet, but I agree that considering the
+> alignment from the start is the better solution and also more consistent
+> with what we're already doing for normal reads and writes.
+>
+> We just need to make sure that we use the right alignments in the right
+> places, which can be a bit confusing with the fallbacks to buffered zero
+> writes here and there.
+>
+> I assume that there is enough time left to do this before the 11.0
+> release and there is no need to take something like v1 as an
+> intermediate solution?
 
-Maybe that's why I encountered issues in the past, and now it works out
-of the box.
+No progress has been made and I'm unable to commit time at the moment.
 
-> Also bear in mind the containers are also used to cross build QEMU
-> itself. 
-> 
->>
->> Now we solved the problem with system tests, and cross compilers, is
->> there another thing that is absolutely needed from Makefiles?
->>
->>>> If it's not the case, then we should definitely move into the direction
->>>> of migrating all this to meson, and rely on meson tests infrastructure.
->>>>
+Is everyone okay with merging Fiona's smaller original patch? While it
+would be nice to implement a deeper fix, it's better to have a fix and
+I think there is no great risk merging the original patch.
 
-To add on top of this, I would be happy to help with the transition, but
-I want to make sure you'll accept it first, with a list of requirements.
+https://lore.kernel.org/qemu-devel/20260105143416.737482-1-f.ebner@proxmox.=
+com/
 
-I'm a bit tired of seeing patches in your subsystems get stuck for
-weeks, without any proper review, to finally be (re)posted again in a
-new series, blocked for more weeks, and finally reach upstream one month
-later or worse. It's truly exhausting for everyone contributing in such
-places.
-
->>>> Regards,
->>>> Pierrick
->>>
-> 
-
+Stefan
 
