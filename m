@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82F8BCD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:32:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51B48CD5BD5
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:32:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSBYP-0003lw-B0; Wed, 27 May 2026 06:32:01 -0400
+	id 1wSBYD-0003Cr-Im; Wed, 27 May 2026 06:31:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBYL-0003ck-Qf
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:31:57 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBYA-00038j-F0
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:31:46 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBYK-0000qi-0n
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:31:57 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-48d146705b4so122368715e9.3
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:31:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBY6-0000nx-WD
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:31:44 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-49068493267so22161205e9.1
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:31:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779877914; x=1780482714; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779877901; x=1780482701; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=YIKJoy/xA0XKj07xKvGej7htS8zXYPvR5YPrJoMb0t8=;
- b=Kiy9HW19FUteegX2xIj1Hq58FQDy++oxqkfE8N/9TGhs1EUcuzaJqkHm1A2M4yvRDi
- xGu0axtSjn7KOHtYqxJrDQOo0YmWyMpDbhYBl/FP/b2HnciOh7tYDruurJB92rfppaC6
- WWQD4KXvNqfLDGeTp6zpqqjjtIXz0zmyUCT5ZoiQVmaakmbUipc7URbil2ShF9ZtHsf1
- DFK3TT1skUrVLx+2izqj8mAMvk6UHUqre+q9vitgt+wCWr+yqiZGCa72tuYbH7spkPto
- lVAKNXD6udsfgaPfbgp0yBzXtxuzqs69nLDT1p3PGmN+roPHddiPlXxtS4jk/3wfj9WI
- luFA==
+ :reply-to; bh=cCU7iyJB4xSEL6mENr2z5sz2xBo7bB8P5f9pioDXOHY=;
+ b=A6tewBu16YO2rr9EYgN6rlVSiPk/YQ1/tZvYbBELLGrDqb6anA1Jfikl9rqvx9ncXE
+ 7Z8FJpoFN70BofLQaLIZlqBewOlsR4JTWU7cHFNirK7UOzvG7Ik3NlFKn5D+V7z+lQp2
+ VxVlhAm66uE2s+wniW+o7/8C0xzNx8BKqSROyO+quoJimWC3Krx7Tf1XfwmKF/o7ti2I
+ awnWHbobKty/NIsM3tBM1Bv3HBuJlIqxkHeVlhp+yEvXmZje6Idi1k+obx6l7y3IFx88
+ mYbqeLREbyGqZLCOGvVhDUFGobDbjF0HtoqlBPzdO7eLbL8L3PIhFLH0vfOijJodUr3y
+ ZUkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779877914; x=1780482714;
+ d=1e100.net; s=20251104; t=1779877901; x=1780482701;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=YIKJoy/xA0XKj07xKvGej7htS8zXYPvR5YPrJoMb0t8=;
- b=ORJDf+Nev2BNpFzMIzb5m2sv1FqVitFYmndaC65dj1LaaM1vHQGJlQcKKJ8x7XjFzr
- qUCeCKlSGRyTlqbHGFiA8ZIEFkQ6HYZbSpimFThp7KxPhtBlwKtynEYsweEZq9syp/CH
- sCYXXjMuXZqP1HkTG6kGwKWSSTAXtqyAhLVlFSJh7604uMGoh041w0foL2GNLfLyKYUj
- fsnFLkAtOxuukdm3u/HwSHqVX2VznkUfJMConGj/z7JzJAKu6HivHZDLF7tAQlqsKcOP
- +XO6iWlhorgevhN3m8L4OJuKEl3feJJqudPBQmUL6CILkk2h2XvJ94OGPWTp3zkHQYfB
- LDmQ==
-X-Gm-Message-State: AOJu0YzYGJQfDOgCuqxYnjZch8CtWcucP2XRZoecatnZUGFlx6xfvlGP
- HTwWZ6cJxn5iF7KNV5gxVBxIzEjG7BPIN9A04EU0GiuiqdNNIv5lKdISyHbGtlD5CIKW+zbGj2w
- fAK1scvlZUw==
-X-Gm-Gg: Acq92OEdHt6FflQyfCCZQApydFRg8g3ahG8/ObyKnO7DqEYNXKQ6ovIkAgrEtz61UHI
- sioL94+b0kkYbOP5kTf8YWiTjcnU2oBd1Iqsx3N3EOFIHZ+Xgt9n1z6sYPFu8BSSEGDHplEIcE1
- yIaQga+Uf+NRpnksH2fx33a23QouaNOQApVwBZsb3bhf+P2Cu0r3NKyM78sx/M7vU1G6waf2udi
- DzvRjtmpB81C9w/WULLHJtsqLouRvdC2VKRUwvONwCjql4kLeDfs0srV04t2iWQIJjmMS+UJdJv
- IF4LP82tbusTut2r7lW3XO3sJ7UQqdkmPfru6hTeBYkHNoYmC5R/m3nco5ECVsEwHC/isIev2en
- KRIara7R0dbrNYnuREQ4Esf110s/qNKoixAp89hyNAl9US9AYddgSKQYgnZbbHyD9METQBgEr7u
- g5TLXCXn3o61X/w2rXlwbQnAL0Ch17NVGNQ0v3GY40scPTGXeqcIJPvUjnfVB6+tOLQg==
-X-Received: by 2002:a05:600c:83c6:b0:490:5872:e641 with SMTP id
- 5b1f17b1804b1-4905872e758mr280289885e9.18.1779877914332; 
- Wed, 27 May 2026 03:31:54 -0700 (PDT)
+ bh=cCU7iyJB4xSEL6mENr2z5sz2xBo7bB8P5f9pioDXOHY=;
+ b=qDoZItK8RzVu+FgpoQpiCeLn143JiZeJ0miPREdQHY7CXG1oorEHLrb8Mo1/D7esfp
+ +xhqzV6kFy6q+vW68MNO3PPjE54YzqdkS0VY0R3WbGjUGkprxz1FgKmg1qOCy3tXZA8X
+ kF4gno9zJx7B/fPjocfGeynlngDs6prB/x1VMY9YXO0pkWCcqMSRmuA2md8KCUqzIw+q
+ javcSRlEsclIf1nTek6kPk8jKMndeCmR1+BDq9SDXtlya69KBWNPdFcpvJwzCSURU5YO
+ 6prDcukMq3nCyCmu9cRlBZGkQ5pThiWhR+P1E5QPtaqwvJyJTt/aoPNQb18zwi9gybqJ
+ sWRQ==
+X-Gm-Message-State: AOJu0YyMN12DTH8wJVTJGtS2UNPyLfg67T9cbYXAPM0iTtPaFzoPXAY0
+ CUkJuFm6YHbGKjr/GPuMuByYlAbemHRhq1zv0+KG1iGtmr1wFUlEK24SsQJbvUqafRj/ZY7Yl7/
+ +biB9/JbU9Q==
+X-Gm-Gg: Acq92OFx9bb8bRKpHrQHBwYWHJMXkYBfGJprkQDa5PSlj0k2xcIEamrtoRY5oC+ffAu
+ fbNXilYKUS6C6DZLLhnhuWZz7k6XjbANuqMLiRfgHpTb9NkTJrCarfd9W7hhGtgKN5nxT4kxeSn
+ +RqGSrfwdKZLuohe7gR8NXH99tCQ9HE5PWAMefPB8ha1T00zPyo5zRTpzJaEPEkoj0L9lx+wj1U
+ IawtIK0xHCsNwSO4CN3O9sZ+IBcn0n0PMQnewocB0BdvM4P4TM4lc1GrwWYnUDJH+y2eWRNudTu
+ bhFM4oPfiY7C/FWrmXNr9naM2Q6ibGd2jp9csN7Sa0Q9bz614vRwDkDcG5G7pcvEp6oiBZHf+Bl
+ o8enDIMF5qnOhxpsx7WRUOFLdYZiteTJt7S5GROLsZYxYtm3aMCltTYTszx2td5DPiKYw/a1tGq
+ gWkYr435P1jNFgMopA690RSdfpsdN2uLTLrMe3iqL8PMEZnTCPJIPX3/A=
+X-Received: by 2002:a05:600c:8681:b0:490:b07:5f27 with SMTP id
+ 5b1f17b1804b1-490428cc2d7mr265048835e9.24.1779877900961; 
+ Wed, 27 May 2026 03:31:40 -0700 (PDT)
 Received: from m17.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490454c60b5sm425259475e9.1.2026.05.27.03.31.53
+ ffacd0b85a97d-45edb5a2a73sm5045366f8f.22.2026.05.27.03.31.39
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 27 May 2026 03:31:53 -0700 (PDT)
+ Wed, 27 May 2026 03:31:40 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 11/32] target/hppa: Inline UNALIGN() macro
-Date: Wed, 27 May 2026 12:30:15 +0200
-Message-ID: <20260527103037.4461-12-philmd@linaro.org>
+Subject: [PULL 09/32] target/riscv: Use float_raise
+Date: Wed, 27 May 2026 12:30:13 +0200
+Message-ID: <20260527103037.4461-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260527103037.4461-1-philmd@linaro.org>
 References: <20260527103037.4461-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,83 +98,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Directly access DisasContext::mo_align in place.
+From: Anton Blanchard <antonb@tenstorrent.com>
 
+Use float_raise instead of open coding it.
+
+Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Max Chou <max.chou@sifive.com>
+Message-ID: <20260521110824.1091323-1-antonb@tenstorrent.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Message-Id: <20260513074323.10616-3-philmd@linaro.org>
 ---
- target/hppa/translate.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ target/riscv/vector_helper.c | 35 +++++++++++++++++------------------
+ 1 file changed, 17 insertions(+), 18 deletions(-)
 
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index a05e7e70d19..4e348225654 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -95,10 +95,8 @@ typedef struct DisasContext {
- } DisasContext;
- 
- #ifdef CONFIG_USER_ONLY
--#define UNALIGN(C)       ((C)->mo_align)
- #define MMU_DISABLED(C)  false
- #else
--#define UNALIGN(C)       ((C)->mo_align)
- #define MMU_DISABLED(C)  MMU_IDX_MMU_DISABLED((C)->mmu_idx)
- #endif
- 
-@@ -1603,10 +1601,11 @@ static void do_load_32(DisasContext *ctx, TCGv_i32 dest, unsigned rb,
-     /* Caller uses nullify_over/nullify_end.  */
-     assert(ctx->null_cond.c == TCG_COND_NEVER);
- 
-+    mop |= ctx->mo_align;
-     mop |= mo_endian(ctx);
-     form_gva(ctx, &addr, &ofs, rb, rx, scale, disp, sp, modify,
-              MMU_DISABLED(ctx));
--    tcg_gen_qemu_ld_i32(dest, addr, ctx->mmu_idx, mop | UNALIGN(ctx));
-+    tcg_gen_qemu_ld_i32(dest, addr, ctx->mmu_idx, mop);
-     if (modify) {
-         save_gpr(ctx, rb, ofs);
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index 12788b4b74e..954a85c03a1 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -4084,7 +4084,7 @@ static bfloat16 frsqrt7_h_bf16(bfloat16 f, float_status *s)
+         (bfloat16_is_infinity(f) && sign) ||
+         (bfloat16_is_normal(f) && sign) ||
+         (bfloat16_is_zero_or_denormal(f) && !bfloat16_is_zero(f) && sign)) {
+-        s->float_exception_flags |= float_flag_invalid;
++        float_raise(float_flag_invalid, s);
+         return bfloat16_default_nan(s);
      }
-@@ -1622,10 +1621,11 @@ static void do_load_64(DisasContext *ctx, TCGv_i64 dest, unsigned rb,
-     /* Caller uses nullify_over/nullify_end.  */
-     assert(ctx->null_cond.c == TCG_COND_NEVER);
  
-+    mop |= ctx->mo_align;
-     mop |= mo_endian(ctx);
--    form_gva(ctx, &addr, &ofs, rb, rx, scale, disp, sp, modify,
-+     form_gva(ctx, &addr, &ofs, rb, rx, scale, disp, sp, modify,
-              MMU_DISABLED(ctx));
--    tcg_gen_qemu_ld_i64(dest, addr, ctx->mmu_idx, mop | UNALIGN(ctx));
-+    tcg_gen_qemu_ld_i64(dest, addr, ctx->mmu_idx, mop);
-     if (modify) {
-         save_gpr(ctx, rb, ofs);
-     }
-@@ -1641,10 +1641,11 @@ static void do_store_32(DisasContext *ctx, TCGv_i32 src, unsigned rb,
-     /* Caller uses nullify_over/nullify_end.  */
-     assert(ctx->null_cond.c == TCG_COND_NEVER);
+@@ -4095,7 +4095,7 @@ static bfloat16 frsqrt7_h_bf16(bfloat16 f, float_status *s)
  
-+    mop |= ctx->mo_align;
-     mop |= mo_endian(ctx);
-     form_gva(ctx, &addr, &ofs, rb, rx, scale, disp, sp, modify,
-              MMU_DISABLED(ctx));
--    tcg_gen_qemu_st_i32(src, addr, ctx->mmu_idx, mop | UNALIGN(ctx));
-+    tcg_gen_qemu_st_i32(src, addr, ctx->mmu_idx, mop);
-     if (modify) {
-         save_gpr(ctx, rb, ofs);
+     /* frsqrt7(+-0) = +-inf */
+     if (bfloat16_is_zero(f)) {
+-        s->float_exception_flags |= float_flag_divbyzero;
++        float_raise(float_flag_divbyzero, s);
+         return bfloat16_set_sign(bfloat16_infinity, sign);
      }
-@@ -1660,10 +1661,11 @@ static void do_store_64(DisasContext *ctx, TCGv_i64 src, unsigned rb,
-     /* Caller uses nullify_over/nullify_end.  */
-     assert(ctx->null_cond.c == TCG_COND_NEVER);
  
-+    mop |= ctx->mo_align;
-     mop |= mo_endian(ctx);
-     form_gva(ctx, &addr, &ofs, rb, rx, scale, disp, sp, modify,
-              MMU_DISABLED(ctx));
--    tcg_gen_qemu_st_i64(src, addr, ctx->mmu_idx, mop | UNALIGN(ctx));
-+    tcg_gen_qemu_st_i64(src, addr, ctx->mmu_idx, mop);
-     if (modify) {
-         save_gpr(ctx, rb, ofs);
+@@ -4124,7 +4124,7 @@ static float16 frsqrt7_h(float16 f, float_status *s)
+         (float16_is_infinity(f) && sign) ||
+         (float16_is_normal(f) && sign) ||
+         (float16_is_zero_or_denormal(f) && !float16_is_zero(f) && sign)) {
+-        s->float_exception_flags |= float_flag_invalid;
++        float_raise(float_flag_invalid, s);
+         return float16_default_nan(s);
      }
+ 
+@@ -4135,7 +4135,7 @@ static float16 frsqrt7_h(float16 f, float_status *s)
+ 
+     /* frsqrt7(+-0) = +-inf */
+     if (float16_is_zero(f)) {
+-        s->float_exception_flags |= float_flag_divbyzero;
++        float_raise(float_flag_divbyzero, s);
+         return float16_set_sign(float16_infinity, sign);
+     }
+ 
+@@ -4164,7 +4164,7 @@ static float32 frsqrt7_s(float32 f, float_status *s)
+         (float32_is_infinity(f) && sign) ||
+         (float32_is_normal(f) && sign) ||
+         (float32_is_zero_or_denormal(f) && !float32_is_zero(f) && sign)) {
+-        s->float_exception_flags |= float_flag_invalid;
++        float_raise(float_flag_invalid, s);
+         return float32_default_nan(s);
+     }
+ 
+@@ -4175,7 +4175,7 @@ static float32 frsqrt7_s(float32 f, float_status *s)
+ 
+     /* frsqrt7(+-0) = +-inf */
+     if (float32_is_zero(f)) {
+-        s->float_exception_flags |= float_flag_divbyzero;
++        float_raise(float_flag_divbyzero, s);
+         return float32_set_sign(float32_infinity, sign);
+     }
+ 
+@@ -4204,7 +4204,7 @@ static float64 frsqrt7_d(float64 f, float_status *s)
+         (float64_is_infinity(f) && sign) ||
+         (float64_is_normal(f) && sign) ||
+         (float64_is_zero_or_denormal(f) && !float64_is_zero(f) && sign)) {
+-        s->float_exception_flags |= float_flag_invalid;
++        float_raise(float_flag_invalid, s);
+         return float64_default_nan(s);
+     }
+ 
+@@ -4215,7 +4215,7 @@ static float64 frsqrt7_d(float64 f, float_status *s)
+ 
+     /* frsqrt7(+-0) = +-inf */
+     if (float64_is_zero(f)) {
+-        s->float_exception_flags |= float_flag_divbyzero;
++        float_raise(float_flag_divbyzero, s);
+         return float64_set_sign(float64_infinity, sign);
+     }
+ 
+@@ -4285,8 +4285,7 @@ static uint64_t frec7(uint64_t f, int exp_size, int frac_size,
+              * Overflow to inf or max value of same sign,
+              * depending on sign and rounding mode.
+              */
+-            s->float_exception_flags |= (float_flag_inexact |
+-                                         float_flag_overflow);
++            float_raise(float_flag_inexact | float_flag_overflow, s);
+ 
+             if ((get_float_rounding_mode(s) == float_round_to_zero) ||
+                 ((get_float_rounding_mode(s) == float_round_down) && !sign) ||
+@@ -4338,13 +4337,13 @@ static bfloat16 frec7_h_bf16(bfloat16 f, float_status *s)
+ 
+     /* frec7(+-0) = +-inf */
+     if (bfloat16_is_zero(f)) {
+-        s->float_exception_flags |= float_flag_divbyzero;
++        float_raise(float_flag_divbyzero, s);
+         return bfloat16_set_sign(bfloat16_infinity, sign);
+     }
+ 
+     /* frec7(sNaN) = canonical NaN */
+     if (bfloat16_is_signaling_nan(f, s)) {
+-        s->float_exception_flags |= float_flag_invalid;
++        float_raise(float_flag_invalid, s);
+         return bfloat16_default_nan(s);
+     }
+ 
+@@ -4370,13 +4369,13 @@ static float16 frec7_h(float16 f, float_status *s)
+ 
+     /* frec7(+-0) = +-inf */
+     if (float16_is_zero(f)) {
+-        s->float_exception_flags |= float_flag_divbyzero;
++        float_raise(float_flag_divbyzero, s);
+         return float16_set_sign(float16_infinity, sign);
+     }
+ 
+     /* frec7(sNaN) = canonical NaN */
+     if (float16_is_signaling_nan(f, s)) {
+-        s->float_exception_flags |= float_flag_invalid;
++        float_raise(float_flag_invalid, s);
+         return float16_default_nan(s);
+     }
+ 
+@@ -4402,13 +4401,13 @@ static float32 frec7_s(float32 f, float_status *s)
+ 
+     /* frec7(+-0) = +-inf */
+     if (float32_is_zero(f)) {
+-        s->float_exception_flags |= float_flag_divbyzero;
++        float_raise(float_flag_divbyzero, s);
+         return float32_set_sign(float32_infinity, sign);
+     }
+ 
+     /* frec7(sNaN) = canonical NaN */
+     if (float32_is_signaling_nan(f, s)) {
+-        s->float_exception_flags |= float_flag_invalid;
++        float_raise(float_flag_invalid, s);
+         return float32_default_nan(s);
+     }
+ 
+@@ -4434,13 +4433,13 @@ static float64 frec7_d(float64 f, float_status *s)
+ 
+     /* frec7(+-0) = +-inf */
+     if (float64_is_zero(f)) {
+-        s->float_exception_flags |= float_flag_divbyzero;
++        float_raise(float_flag_divbyzero, s);
+         return float64_set_sign(float64_infinity, sign);
+     }
+ 
+     /* frec7(sNaN) = canonical NaN */
+     if (float64_is_signaling_nan(f, s)) {
+-        s->float_exception_flags |= float_flag_invalid;
++        float_raise(float_flag_invalid, s);
+         return float64_default_nan(s);
+     }
+ 
 -- 
 2.53.0
 
