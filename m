@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7E87CD5BC9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:34:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB9BCD5BD5
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:34:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSBaj-0000uX-DF; Wed, 27 May 2026 06:34:25 -0400
+	id 1wSBak-00013Z-JI; Wed, 27 May 2026 06:34:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBaC-0000gn-Mj
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:34:00 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBaJ-0000kJ-Gf
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:34:08 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBaA-0001Wj-RW
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:33:52 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4891e86fabeso20231855e9.1
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:33:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBaI-0001YY-22
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:33:59 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-449d6c68ed8so7333207f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:33:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779878029; x=1780482829; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779878036; x=1780482836; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=u67kjyPTepS/e93MWxOon0fy/0XAdOHZfpnppxqxRLs=;
- b=DLIpx6gOgZq+dvQnhwtXj5nq+Bhmx9hfNUucwlU/lcxtaHCVIjecLylam+g+acHLq+
- 6eaVc6McBXiYM9IJFkzvNyWWC5yEOlcB/nNZwfFQFcjvk7LxaAwNiQe3UOPytdLo8XFr
- m0LlL8gfHs9FnBPinbyPRVYindneJ0J/eng/nIoZeSMTRyYS7zrWzXzgIXORSIJq6qEF
- irjsRNpIW0vU+Y1bsumS5wWwWzYTxtZCIgjAzTtSnXukoUy1J6a/G2SHW57HgNDqmrfK
- XkIwSnxRvK+Bm4UvBRuD+zy+EzwKlx2cf33J80sCRWuI26QJN04PuQ/SujY60PYl5JLG
- YkFQ==
+ :reply-to; bh=oSxUUOnjiAxfT93OaoyxUXEHMBW0TB4q/jHVjnYZEBE=;
+ b=pcRG/uP5u00zEm8jlzOriMtZCMw9GLv9Q65CeG+FmzGIDgRb6QwgwC4ot+qmVq9DEC
+ VJ7l7+ernBPjVy/VBtLNTYu9ZN/u3yhpI4rc/530GpQr6IYZODtEYDPBO13Z8McVLyWd
+ DZVCoOp0q3z5DHGcKgIx/0TSWETj23YPKWjA0Gz6756hKlALIodQwTAsZ5FVThwg+XQb
+ Tc1LLkCLrtYv5wat1CxLbLlWUBAyJviHLU4J3SegjVgHRJeFWWDaxJKgv75AnnXYMlwE
+ 9GBJ0KRBsfhOkVWKqtV0UvmgyLBWsYEtzO6KKZKSTTXyTAB7cvjSI9S50jDgm1MJ4oyI
+ i3dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779878029; x=1780482829;
+ d=1e100.net; s=20251104; t=1779878036; x=1780482836;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=u67kjyPTepS/e93MWxOon0fy/0XAdOHZfpnppxqxRLs=;
- b=A1bq+SW6S0hraGsCeO0zUSDCbur1wfSG+etAj5BGCvsvsBb6ipKbQi6SYobrivLMBI
- wYoOnIPBImz/v+gB0LwDJIsTBGi478d28PP4RCmOSz6MMrLMZvSIYGwVHKx+4HVRXhuo
- lC7XjN6I183JnvWrDUJ/sydqvWoGfA1zGeW9UiawswMzunnWZL57Fxt7ZSQQiOkjjM6x
- JOa1CyiePpd/7eZDw94ukW8G/hBpJRpGXhlWtWYJSLt7jApu0R+c7+jLN6Y4foNyYmpF
- Z0vYjZvpvXm0scG0R3YWBoqfGxHre8hqZFfZpDeGYGrkE7zhyaHABefViipoORBaZQYl
- /TAw==
-X-Gm-Message-State: AOJu0YzXLNgB+/DKd7zwG53n+suz+uVyeOFC+ObZ2hXtwtAVdBIXy4sN
- 5kqrlplVKKC9TFaFGdbSqMevc4XhMnwwNEYdv5UQa7uRfiOYX4kz7ph5QfB/PkMPB8Tg6/OnoIM
- 5WpNQES9PQw==
-X-Gm-Gg: Acq92OHX2adJzblyzwgBvL1oFLnkC9W+6Hhl7DS2hYYs51zOrH6K1DQZsemZyeq5KEK
- jyuG7QTntVnLA/sq9RxQ1yUpmtjdZ3QWtkTdgZnVTDBf1JEhJUJliq5h4SplGK72mxyTmqRxVBx
- o1gPaWqNH6jJGQPq/kzrZYUxLGDxMlA6VTKO26YmU+lGktIgekKsSRgSIvbPLSYA1YFbBpjiWQY
- 06Hn7mUKFI6LWnortttTv3l2NxGKCrotUjEWi3xZLXkzXFNffhmOUqZ6Temof92sScWl23W/4Yc
- dVqzIW5lulSo81W85zjB+XoCk8Zegolh4Vo5Wz/mO/StBG0n5eVacPwuTryJP0yZmKDJnf544Mo
- S5ON0VtaWjoAZpiQCIE+9P02EmvIkW3WpxYtRQND8cK9tXcy1Z5fJYrt62pdP5QEOic8Ea2HDUD
- na6U4QjsAGWuu3XPbSRn6ukWA+/zmLuValoBz9jSgGGDdSchbN9FzB+4ExJR4QAUR25yKywn+kq
- c6D
-X-Received: by 2002:a05:600c:4f0f:b0:490:50e4:7224 with SMTP id
- 5b1f17b1804b1-49050e474d4mr359406905e9.3.1779878029003; 
- Wed, 27 May 2026 03:33:49 -0700 (PDT)
+ bh=oSxUUOnjiAxfT93OaoyxUXEHMBW0TB4q/jHVjnYZEBE=;
+ b=nNJI6inPJd//9ErJ/o+KNO2fOANLMZ1LZfvpOTrjHIALX+8LSEdrYFqHjGjtcu3kWv
+ 5WXruqLdsiZo7JT+0hRET5P2sEGDUP0fT5uTLazLVrErxPlrkpTgRDa53SqV0w6ZfbaE
+ ZeAfY6Nt4JFmjbNpCUeIQ7z6CHZoz+8phz76CfY2KbNDB1fyJiDd9pij6tnRmSOJ670q
+ ynQC2LqJqRlSgyKXDpOl3y6SgemWKqf4TdF7qC1yHgtAOJFJUyu6OqAs8+qBMQE4SdZU
+ ikHcREN/VID2oqo3J7CyzAxK5fWwSF2JpRc5ne+h3jxPiCLTwPzV55OaN2B3HiFkxGuT
+ zaVQ==
+X-Gm-Message-State: AOJu0YyPmixqVUV/faSM2XeNTMHREsZNxbSc28REtXgudmuNGDPXTVZ6
+ jThuGCC5ryGuXibSO4hHQGrcEROGBqEzbUd85AtQsBjRLdEt2oMkpEeFIEnVwMvXpL7AEsZHgFa
+ UPV2lmbdyig==
+X-Gm-Gg: Acq92OHODee5RmODxi8H9lDKcr2VWspIYBBZETlhB/QBOj99jdOyaevK7TAJ/e/GDzL
+ dRPptj4znleCpzFTDIKlUpKGpHd4A/ZclP2oSixw7xdauZSu/NlFKKFHTA9DOC1XlIv3RxcoJR3
+ PXyXaM9Mr3iBS1zmfDTrRxp6IQOW/5if7R5m/XfRRpZffFwgvVZ9BJN5O3WZBQ6gKYBv+bCKu7Q
+ 56tI0zuNXxeydS1/78BGhCrxgMTZeyWBESeuZwnhePejlzhMxaNnC0+D3AKMwkslQKNoUnCadkv
+ XTDFtdPTSkhCX0oGyA5VwAXCUf/VzYp52OcvsoJSwC0vHPYhOfB/vNfdMgW9ZsX4fdQpNu3k/cu
+ tky0NfCoPrrWZSbPw1DbO1xy3++pSA77mJ2fyBfzI2EyCEW4spc/n8h0TI64Afx/1AeAKAAAbh6
+ t5h30P7bpl2FTluuNCNFT7CrqLyvtcPd4wbbHpDx47GLCXWRUKWuo9CGaXxUtL7FLRroVjRb6lM
+ xgJ
+X-Received: by 2002:a05:6000:1acd:b0:448:69c0:8da0 with SMTP id
+ ffacd0b85a97d-45eb3692456mr37198079f8f.7.1779878036043; 
+ Wed, 27 May 2026 03:33:56 -0700 (PDT)
 Received: from m17.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4904527dbf3sm367040605e9.6.2026.05.27.03.33.48
+ ffacd0b85a97d-45edb557545sm5701043f8f.12.2026.05.27.03.33.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 27 May 2026 03:33:48 -0700 (PDT)
+ Wed, 27 May 2026 03:33:55 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 28/32] target/arm: Build cpu-max.c once
-Date: Wed, 27 May 2026 12:30:32 +0200
-Message-ID: <20260527103037.4461-29-philmd@linaro.org>
+Subject: [PULL 29/32] tests/tcg: Explicitly check for 64-bit z/Architecture
+Date: Wed, 27 May 2026 12:30:33 +0200
+Message-ID: <20260527103037.4461-30-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260527103037.4461-1-philmd@linaro.org>
 References: <20260527103037.4461-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,66 +99,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Call TargetInfo::target_aarch64() at runtime, allowing to
-remove the target-specific TARGET_AARCH64 definition and
-build cpu-max.c once as common object.
+We do not support the 32-bit ESA/390 target, only the
+64-bit z/Architecture.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Acked-by: Peter Maydell <peter.maydell@linaro.org>
-Message-Id: <20260526203722.79463-18-philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20260519171240.97420-5-philmd@linaro.org>
 ---
- target/arm/cpu-max.c   | 8 ++------
- target/arm/meson.build | 2 +-
- 2 files changed, 3 insertions(+), 7 deletions(-)
+ tests/tcg/multiarch/nop_func.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/arm/cpu-max.c b/target/arm/cpu-max.c
-index 8cf8edc6535..d38bdfcf811 100644
---- a/target/arm/cpu-max.c
-+++ b/target/arm/cpu-max.c
-@@ -8,6 +8,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/units.h"
-+#include "qemu/target-info.h"
- #include "system/hw_accel.h"
- #include "system/kvm.h"
- #include "system/qtest.h"
-@@ -190,12 +191,7 @@ void aa32_max_features(ARMCPU *cpu)
- static void cpu_max_initfn(Object *obj)
- {
-     ARMCPU *cpu = ARM_CPU(obj);
--
--#ifdef TARGET_AARCH64
--    const bool aarch64_enabled = true;
--#else
--    const bool aarch64_enabled = false;
--#endif /* !TARGET_AARCH64 */
-+    const bool aarch64_enabled = target_aarch64();
- 
-     if (hwaccel_enabled()) {
-         assert(aarch64_enabled);
-diff --git a/target/arm/meson.build b/target/arm/meson.build
-index 3e02941d0d5..9408131d178 100644
---- a/target/arm/meson.build
-+++ b/target/arm/meson.build
-@@ -9,7 +9,6 @@ arm_user_ss = ss.source_set()
- arm_common_system_ss.add(files('gdbstub.c'))
- arm_user_ss.add(files('gdbstub.c'))
- 
--arm_ss.add(files('cpu-max.c'))
- arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
-   'cpu64.c',
- ))
-@@ -20,6 +19,7 @@ arm_common_ss.add(files(
- arm_common_user_system_ss.add(files(
-   'cpregs-gcs.c',
-   'cpregs-pmu.c',
-+  'cpu-max.c',
-   'debug_helper.c',
-   'helper.c',
-   'vfp_fpscr.c',
+diff --git a/tests/tcg/multiarch/nop_func.h b/tests/tcg/multiarch/nop_func.h
+index f714d210000..26d3a76eb62 100644
+--- a/tests/tcg/multiarch/nop_func.h
++++ b/tests/tcg/multiarch/nop_func.h
+@@ -15,7 +15,7 @@ static const char nop_func[] = {
+     0x1e, 0xff, 0x2f, 0xe1,     /* bx lr */
+ #elif defined(__riscv)
+     0x67, 0x80, 0x00, 0x00,     /* ret */
+-#elif defined(__s390__)
++#elif defined(__s390x__)
+     0x07, 0xfe,                 /* br %r14 */
+ #elif defined(__i386__) || defined(__x86_64__)
+     0xc3,                       /* ret */
 -- 
 2.53.0
 
