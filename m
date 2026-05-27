@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2073BCD5BDE
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 05:02:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DEE7CD6E41
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 05:02:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wS6Ny-0001I7-IH; Wed, 27 May 2026 01:00:54 -0400
+	id 1wS6O0-0001Jv-Mo; Wed, 27 May 2026 01:00:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wS6Nv-0001FJ-Fi; Wed, 27 May 2026 01:00:51 -0400
+ id 1wS6Nx-0001H3-Km; Wed, 27 May 2026 01:00:53 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wS6Nt-0004EF-R4; Wed, 27 May 2026 01:00:51 -0400
+ id 1wS6Nw-0004FE-3K; Wed, 27 May 2026 01:00:53 -0400
 Received: from localhost (unknown [131.107.147.136])
- by linux.microsoft.com (Postfix) with ESMTPSA id A2BD120B716D;
- Tue, 26 May 2026 22:00:37 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com A2BD120B716D
+ by linux.microsoft.com (Postfix) with ESMTPSA id ADBA420B7170;
+ Tue, 26 May 2026 22:00:40 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com ADBA420B7170
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1779858037;
- bh=fWNd/JjLcK2tqzFwCo6zR4cXEWjzV9boQ7HURZ9IUVs=;
+ s=default; t=1779858040;
+ bh=M0dQZgOvh3qogZqc1/5XkDlPMKxnSJ46dXPHgd+iD/k=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=nu2kFqe5R+3HtuAqa+B0AcIhyuVFHcRFP3P28kpnrQK4LEPhZsVziO9ZVCozURnfd
- 414bDgsxqjVtX6tMZ4NhfNYP39iPjYEidE6S1cBBGRVGIWTXTNRp+kQvQnZzPLCFzw
- M7HiYNoGz1QRR5bYLGM12q75VUhhZmLF+HJ/MSvM=
+ b=fpZh8yCs5ZR/IY6spzRGYrrtdy+7VC/mYhezq7qbxA6EOt5M8GUxRJGYi/bSwvfiq
+ bCAYKvTMf0vL0OVzw2WrwdJtGmh+P4Uo0ZOF4nAZv4MPPRx7cM0fn6AwttNNodo30E
+ 1WxihwDvtnqTuJ5AxaYDSEhUfkIMBlUXALZ91YVI=
 From: Aastha Rawat <aastharawat@linux.microsoft.com>
-Date: Wed, 27 May 2026 05:00:42 +0000
-Subject: [PATCH v4 06/15] target/arm: convert host CPU feature ifdef ladder
- to runtime checks
+Date: Wed, 27 May 2026 05:00:45 +0000
+Subject: [PATCH v4 09/15] target/arm: cpu: Mark MSHV supporting PSCI 1.3
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260527-mshv_accel_arm64_supp-v4-6-66d871dcdc53@linux.microsoft.com>
+Message-Id: <20260527-mshv_accel_arm64_supp-v4-9-66d871dcdc53@linux.microsoft.com>
 References: <20260527-mshv_accel_arm64_supp-v4-0-66d871dcdc53@linux.microsoft.com>
 In-Reply-To: <20260527-mshv_accel_arm64_supp-v4-0-66d871dcdc53@linux.microsoft.com>
 To: qemu-devel@nongnu.org
@@ -77,64 +76,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the compile-time #if/#elif preprocessor ladder in
-aarch64_host_initfn() with runtime calls and add mshv_enabled() to it.
-This ensures the correct accelerator is selected at runtime when
-multiple accelerators are compiled in.
-
-Add CONFIG_MSHV to the aarch64_cpus[] guard so that mshv accelerator can
-register the "host" CPU type.
+MSHV supports PSCI 1.3. Expose this version to guests.
 
 Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- target/arm/cpu64.c | 25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ target/arm/cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index b38a78aac3..aed84a3c0b 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -859,17 +859,21 @@ static void aarch64_host_initfn(Object *obj)
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 524ed3536a..aa1b3c364b 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1247,7 +1247,7 @@ static void arm_cpu_initfn(Object *obj)
+     if (tcg_enabled() || hvf_enabled()) {
+         /* TCG and HVF implement PSCI 1.1 */
+         cpu->psci_version = QEMU_PSCI_VERSION_1_1;
+-    } else if (whpx_enabled()) {
++    } else if (whpx_enabled() || mshv_enabled()) {
+         cpu->psci_version = QEMU_PSCI_VERSION_1_3;
      }
- #endif
- 
-+    if (mshv_enabled()) {
-+        mshv_arm_set_cpu_features_from_host(cpu);
-+    } else if (kvm_enabled()) {
- #if defined(CONFIG_KVM)
--    kvm_arm_set_cpreg_mig_tolerances(cpu);
--    kvm_arm_set_cpu_features_from_host(cpu);
--    aarch64_add_sve_properties(obj);
--#elif defined(CONFIG_HVF)
--    hvf_arm_set_cpu_features_from_host(cpu);
--#elif defined(CONFIG_WHPX)
--    whpx_arm_set_cpu_features_from_host(cpu);
--#else
--    g_assert_not_reached();
-+        kvm_arm_set_cpreg_mig_tolerances(cpu);
- #endif
-+        kvm_arm_set_cpu_features_from_host(cpu);
-+        aarch64_add_sve_properties(obj);
-+    } else if (hvf_enabled()) {
-+        hvf_arm_set_cpu_features_from_host(cpu);
-+    } else if (whpx_enabled()) {
-+        whpx_arm_set_cpu_features_from_host(cpu);
-+    } else {
-+        g_assert_not_reached();
-+    }
-     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
-         aarch64_add_pauth_properties(obj);
-     }
-@@ -897,7 +901,8 @@ static const ARMCPUInfo aarch64_cpus[] = {
-     { .name = "cortex-a57",         .initfn = aarch64_a57_initfn },
-     { .name = "cortex-a53",         .initfn = aarch64_a53_initfn },
-     { .name = "max",                .initfn = aarch64_max_initfn },
--#if defined(CONFIG_KVM) || defined(CONFIG_HVF) || defined(CONFIG_WHPX)
-+#if defined(CONFIG_KVM) || defined(CONFIG_HVF) || \
-+    defined(CONFIG_WHPX) || defined(CONFIG_MSHV)
-     { .name = "host",               .initfn = aarch64_host_initfn },
- #endif
- };
+ }
 
 -- 
 2.45.4
