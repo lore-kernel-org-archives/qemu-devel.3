@@ -4,95 +4,178 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D3E4CD5BD0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 15:27:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEE8ECD5BD0
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 15:28:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSGA3-0003Wt-GA; Wed, 27 May 2026 11:27:11 -0400
+	id 1wSGBX-0004HC-73; Wed, 27 May 2026 11:28:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wSG9o-0003Tf-Kt
- for qemu-devel@nongnu.org; Wed, 27 May 2026 11:27:03 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wSG9m-0003dA-Ux
- for qemu-devel@nongnu.org; Wed, 27 May 2026 11:26:56 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-c8025aecc40so5466254a12.0
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 08:26:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779895613; x=1780500413; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ILCVxiLOiVg+g6Pjgfzl5arsUOrVOLofq1UK5DFGc4o=;
- b=fVj3WhfLelfps2beBVbPJGq6YDSyZDq1iZQIppBP/pt1j+ec7W8YzVqcnYjF01C5qy
- wiekQqajJJl8uwNPXO2ppq+NTVvO/NwXXp5Dp9YY8wb6+MrlsFhTnZjMXEXBUOHwLwqK
- brYFv0GX4N2LoQ+QhvIGcbZji8za8nlK+b9gVrl6BPLWkP8qeLfSTDzPEq13nxBGwEWT
- WOHjGKChB7y5yzkDDw7TZbNWcvOIqPaWONb5AsuVa7FjWTpNn2XaOa3juCZ9tTKehUse
- 6/KmuoiyA2UHDMVgP8RlUq+2Js0sy5NgUPcwbxPbXydp34V9EEeVnmzh7zMQ1HYjTGyl
- 0EUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779895613; x=1780500413;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ILCVxiLOiVg+g6Pjgfzl5arsUOrVOLofq1UK5DFGc4o=;
- b=cFQaRxzwgYVTgvG1iqBX8VjR9e/eC05xt2dT3f485V4u0NKupoH0hP4SwCLjdF4hin
- 2bXl7FwXz4eLFifUPI4GOPwZntNbAEY7gh09WWYyjXhS4G3OSZ2WCc+cp9F9k2DscPuN
- /VMiea1MQDLt79GTrjI5JJOHlhychgnOs3pwvl+EVky73e3A+5wrG4GEcJRjm7u7GXWD
- Y7s79taKfSFuVzlY2ZZbkklHp8F/RfvClSgTZ2vGC2bCi1Kr4+zpczyJSr7nFfZjk2Zw
- evo+BG+zyVjyMinDhc8KtFYTVZK2BtLAfNSQhwCxqpxB9sYey0h0eXoRZw6AzpMe3G0f
- y5cg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ89cJFgWVk10LYDHv9WTZnKKEqrmVxC+oUj3YWCxd5YEV7x1lX7jk2VaNZGsAR2mvxrL1ACkfSxpjMV@nongnu.org
-X-Gm-Message-State: AOJu0Yy8nDQeh1bY8K2vJzEq1HhsliBYNQSXYCcB8Ai+6ddsiMc9AnW/
- ylQPlTea7JA7LW10xilGUyuuFZqFHzswlxWNCIfxU46gY9c+bZdLb/drKqoUtgiNEYM=
-X-Gm-Gg: Acq92OHybj0B6xctdJ/RPal1EEV19EkeBxYcyFr7ivqEMZ1HQ5DmOEwQpkRbLxNejh2
- eso0YQmRLfiy5E+6qJxFmCQ97XRQSgRxU1S2zGufCMmflTnnbjbd2L7DBC5p71+RKkNqU7YnBp3
- plt33ucwRB7iqCZoEA0BkBWTyCiaB/pz6ED7W/bjK2LrY8nNeVfS4ozWA2HatWsFdz+vzB8YGKL
- P9ggUpN/CpHp+JUErNPRyNJi0765GosdEu46gJSQ4tcs0O6+IFG6Rs5XEcBQ75/59TMWVXKZ3OL
- ZksNuaRjkrhtV+69MhFiEXaXNfPW2B4Fwc0XI5qyH/PMc8jMFRoD48nzWf/jvV+E7+SfJSWODxN
- Ma7cgTYXQb5SMH4R10RFnYkUTNT4CUPlipSNaqqVdB71I3suYtc49+Ts6bbPMD4BIwdhjsdXRol
- tWIOhAiUWF+bYTmOM/fFYw9wVg7rIqghQlhVnniSIL756vmaQ=
-X-Received: by 2002:a05:6300:68c2:20b0:3aa:f9e0:7a29 with SMTP id
- adf61e73a8af0-3b307fd0643mr14357941637.37.1779895612510; 
- Wed, 27 May 2026 08:26:52 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c8520561e94sm14181051a12.22.2026.05.27.08.26.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 May 2026 08:26:51 -0700 (PDT)
-Message-ID: <5479a7e3-fe6e-4399-8c20-5a8136957030@linaro.org>
-Date: Wed, 27 May 2026 08:26:49 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/sh4: decode_gusa: recognize add#imm with prior mov
- Rm,Rn
-To: yoshinori.sato@nifty.com
-Cc: Matt Turner <mattst88@gmail.com>, qemu-devel@nongnu.org,
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20260525152739.4122267-1-mattst88@gmail.com>
- <20c744a7-369f-4abf-93f5-c6553c3340fd@linaro.org>
- <878q95asor.wl-yoshinori.sato@nifty.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
+ id 1wSGBO-0004Cz-Pz; Wed, 27 May 2026 11:28:34 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
+ id 1wSGBJ-0004Tl-9A; Wed, 27 May 2026 11:28:34 -0400
+Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64RCrhUH2567277; Wed, 27 May 2026 08:28:09 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-id:content-transfer-encoding:content-type:date:from
+ :in-reply-to:message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=K/TaOcSocds5dyFCH8KfBz6vn1adZTMGI0ZCRJoIA
+ wo=; b=bDvF/yR+SGwg/N7X83kkLIMO43Ph7is9MJNekGlRYtTdLenBh0F5pQL4l
+ 2GYfMU0LK4GsmEB38PMHUFnFQAL2YxlQcab7mxxkXuPLUR5HuiW9b/HEi5CwT8BZ
+ eL47p1m42SxYdirPlAywHDa3FrfV4FX4STpadkP2/6P8AM7inlIMc3VK7JGGAEjh
+ FjUSpaKrdTEpbJHxrMOyHKf9rAOQ3byzKZfV8C2B4n4HiAuFIwuypGQ00OCbwTfX
+ YUzn8Isxdg8inkYdKn2FkVrsqaR8amibx3hY/SoNxYq54/kOB0oRxdOPMaYKPAct
+ g3MCLD4wZqMRsS5I6+3t+y/BdazvQ==
+Received: from ph7pr06cu001.outbound.protection.outlook.com
+ (mail-westus3azon11020119.outbound.protection.outlook.com [52.101.201.119])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4edg592nek-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Wed, 27 May 2026 08:28:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=vXRJin8RWKmb2VcK51bcTpjpklVExVPjWRkt8vvJYwEtCvbKHWF2pedW0J0sjR3KYozZNkoizAsiDOSNAxiyOEG7cdm4J2rJriAB77XeqrdhY89C4SLOllAm8YLOaIHXI96qsSRudEKBZ+gR3fiFSJnTb8Q9kzkD6CwejGEHXlVVB87Jp/9Djbu22Re3YQUpPQPx7hwJazBY8sPKC7YTVbCtvT3Y8rUmQof1y4nNyMJzYa7r2n+BIBC68DTeO52h3MBDK04c2ygXMURApfJsj/2HO3zFf4x9iQkTzSaS+FRThLbLm0v5nQ5S8ln3aH/0Cmr4uWi7Ae5Wl932A57Cmg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=K/TaOcSocds5dyFCH8KfBz6vn1adZTMGI0ZCRJoIAwo=;
+ b=EQcdJ4q3HdKEKcG2+3ZM9l9lwq0lP0hzwtfgqB4dIPto0w+YUQqSZQz71fhJHleNwBQCX970qy+KwdXokQISr7WiaqycwEOTtm8o8aoDgmm4c8t8KEAwPMlrvMDdTSpFNIu2HgaDGxgEWpT73U7tKozAlmpaanEvi8ANih508ZKRvERzwR3lnQ1pRFiHzIStXeo2BlZQCdzH805uX5/AIO39+pfTv5byNcdD+V2oQBPeZJ4khNf5fWEr4fOJS/cP/soe3GRSg504eujMiKj4hHNoMBiX9Mvdf0XPaUMfDG+5G4KwSmd08W8QCoGmzYy9bWZ5PmIXO7j9MnFqhVdUIA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=K/TaOcSocds5dyFCH8KfBz6vn1adZTMGI0ZCRJoIAwo=;
+ b=kFhjRpT/LVKsbt4QfpfnlXGP7nULruryhQxOFBdkB/ZRS+YVvvUoaRt2v6ZSCi6qxPuPZy3SPFL61Raes5DPf3rdBOXHxNFb9XtEWDIIHw95pu1YhRrMGJpHEWxhFcfZAKlqc4CPMCgmXoxcrdiTiQKGdokNUxHST+EkS4un0lp+ShmoQYiN96RCNNQTebkT6OMaX5XJUswTcGBAYEsRaVDnmPC6o8ppBWkzMuEiRdECuf/eJc/8uWB8q/mVp++a/7wGTCDb6srSPoEhtkzMkXr2dAl+0km2ryDQXG6O8oujsAGYPZI48bP4Qejn7aeiinvdZd4YZ3OpnBbmNg0uxQ==
+Received: from SA2PR02MB7564.namprd02.prod.outlook.com (2603:10b6:806:146::23)
+ by BY5PR02MB6472.namprd02.prod.outlook.com (2603:10b6:a03:1d7::23)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.13; Wed, 27 May
+ 2026 15:28:06 +0000
+Received: from SA2PR02MB7564.namprd02.prod.outlook.com
+ ([fe80::1ea5:acb6:ebe1:e1c4]) by SA2PR02MB7564.namprd02.prod.outlook.com
+ ([fe80::1ea5:acb6:ebe1:e1c4%6]) with mapi id 15.21.0071.011; Wed, 27 May 2026
+ 15:28:05 +0000
+From: Khushit Shah <khushit.shah@nutanix.com>
+To: Eric Auger <eric.auger@redhat.com>
+CC: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Shaju Abraham
+ <shaju.abraham@nutanix.com>, "yangjinqian1@huawei.com"
+ <yangjinqian1@huawei.com>, "cohuck@redhat.com" <cohuck@redhat.com>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "sebott@redhat.com" <sebott@redhat.com>, "skolothumtho@nvidia.com"
+ <skolothumtho@nvidia.com>, "philmd@linaro.org" <philmd@linaro.org>,
+ "maz@kernel.org" <maz@kernel.org>, "oliver.upton@linux.dev"
+ <oliver.upton@linux.dev>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "armbru@redhat.com" <armbru@redhat.com>, "berrange@redhat.com"
+ <berrange@redhat.com>, "abologna@redhat.com" <abologna@redhat.com>,
+ "jdenemar@redhat.com" <jdenemar@redhat.com>
+Subject: Re: [PATCH v5 12/18] arm/kvm: write back modified ID regs to KVM
+Thread-Topic: [PATCH v5 12/18] arm/kvm: write back modified ID regs to KVM
+Thread-Index: AQHc55O3Z83/o4B/sUidnhGgkCnOE7Yh/r8AgAAM4IA=
+Date: Wed, 27 May 2026 15:28:05 +0000
+Message-ID: <5B64C821-01F8-48E2-8F68-95000AC9DF4F@nutanix.com>
+References: <20260519132905.145643-1-eric.auger@redhat.com>
+ <20260519132905.145643-13-eric.auger@redhat.com>
+ <A29EDF01-278F-4975-9659-44359311204D@nutanix.com>
+In-Reply-To: <A29EDF01-278F-4975-9659-44359311204D@nutanix.com>
+Accept-Language: en-GB, en-US
 Content-Language: en-US
-In-Reply-To: <878q95asor.wl-yoshinori.sato@nifty.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SA2PR02MB7564:EE_|BY5PR02MB6472:EE_
+x-ms-office365-filtering-correlation-id: e0f5714c-312d-4967-a8a9-08debc048caf
+x-proofpoint-crosstenant: true
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|7416014|376014|366016|38070700021|18002099003|22082099003|6133799003|56012099006|4143699003;
+x-microsoft-antispam-message-info: k1vDPK77WZLUdWt7Ar+UAUs8vQWi2BMUu8zEsAt4ZgbhU1wS2H54UbJImAzWjNmZLUgh0LlyxI+DazDntbCe+0dSJlK3fh4amDbjxZXKnJn1FCID5ZuKMSxSwlEQSYwZobZgIHJiwcbI9qZLgX6jWg5kupV7OLBLG58kRQWGJ/CH1+N5GGwa3vwtUTDa+ju5esObAar7G20WCbKfifpGVTlAv4CuoQN+73DLII+ZKHHgIfnogoivp+DH5WcskPNT/ADLJkW1DyoUqhPsNMfor3VtIggD55c5WQ1rVo0D5WppOHluFK8XvWfZ1xWuMPQQQ7eXdYS1lwAON+SuIMAaS/mku29mmmqwxH89dtrl1KFan9Cu6uXeYjn7HdNN6BMd1vZad3Atd4+e/a/ZS59q5GrudA5pF3TYeNDy+YRj9Fobu05JI5a3rm9O/Ty27fI/XSAI2QInC/VYkURCbf/JvJta6mLJrA0eDi5Uhd+3Qr5c1nVUP3OX9fItjz+PFlSeJHkaTXpJGKi3vSmN4YrMq1dVoy1dMQuUZoOXr1RMjeaRAnYqgErvmawi9JONS1fQhRtdU8oPM3Md5GmrvyAi1G+LOu1XzIYwdPFHTAQbyi7gD7SaPcmYvLd/wky/3hedbFp2lpw48CUgLEQEYiNhjz7XGpDWXqoIRCwwdycLdv3SmhJqpvXqgnRy1KEokl+HxWffqZZZVit0P7mKpL2TLxCh+hofUu/x+Z3APAyRnoRz71QKh0frs9KL+yZuN2ca
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SA2PR02MB7564.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(7416014)(376014)(366016)(38070700021)(18002099003)(22082099003)(6133799003)(56012099006)(4143699003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?o1hIManSxQSjt+JYwiOwNv7q9S76og9/lWSYZPpG8xsZFQfs3Z6NTt8O/3uY?=
+ =?us-ascii?Q?T/CoopBbZySiNB8R5+zyrv4yWqQfoFatIw/gJQWVDgrw6buUaMqk9XzWxwXd?=
+ =?us-ascii?Q?5kfzTE8FZbiIx79Tw6fl+J/XBZ0lB8cKJJ7N+MfcjxZZUV/kZCB4gUi1FSR7?=
+ =?us-ascii?Q?SAlbfU2RK10n0B39+VL7Y62aQFds3tNCOX6BJ1z0hHqZ66eQJHdxYYp3Ww2d?=
+ =?us-ascii?Q?WT/e3r5Adg0q300pqmgLdd8UywpKQ+4DhSiNRNdeg4rJlPqS5XATbCNXFLGU?=
+ =?us-ascii?Q?lKLW53N1dPsuyP6MHFzH/JIB4HdgYQDim641mZHYCQVYfoC+vSe5jKw/hofz?=
+ =?us-ascii?Q?+dnx+CwqY01VVujEQY7JdnkqOytDFcaWlHNpu1StCSH7kdZs1UdErj3gcrYn?=
+ =?us-ascii?Q?iztFwZUZcbzoMp7gYNRPaY8hX3gvTR1rgtCwPXo3amTdAURHoqaxLKHoOn67?=
+ =?us-ascii?Q?EB4w7ZMgFNzqtYPKjFm1+x+2+lk9H+osr8ioJGsleJDytEQB413jrJ6suKaU?=
+ =?us-ascii?Q?+3K4UbTpydk9SwAApthon2xb6OSHzlN6uBNHOC0scSEKqZCruZfF96Xy8AY1?=
+ =?us-ascii?Q?FDuz3Uamin5uBw5Twt6c44JgvrYQTkVz7RM/TDvvEZkr3S7MfqDG2Qm3TkKF?=
+ =?us-ascii?Q?Cz5dm44EFHDGfdbRYWS/E5fxqwWumPKGlg633Z+oOtOEwuy/tvLMb9RF/KEb?=
+ =?us-ascii?Q?bPSuA8vGK4ATrvMF19krK66bWv8BH4awii4ktWMov27qcTSaM+fM2ljrb7ju?=
+ =?us-ascii?Q?dHxbmYC+xCInRJ5H/EKIJfPhy5rSWKEI2J7Gbhty0KRCy4ehzbsbVgi8ucfa?=
+ =?us-ascii?Q?MTWV1fkFIr3J2LqauxpmJeHZhXdOHJBGMmdT3zibvm3WZ0QmcDyZlUpTkENh?=
+ =?us-ascii?Q?L6KFjrJf7WqeiAL/mfmvURSDZS7aiZ6lXmr574SULZXIz3Z8yymKUvznqMZ3?=
+ =?us-ascii?Q?TAW9K5VJ7BjJj7YqWkhynVBHjwTl5AGOXK/5L+fhfVoPfIZKUGVNwYzpwBJl?=
+ =?us-ascii?Q?szJk3f7vxopcViFCi+18RGFd4dJMLrt/rSqv2OD2equvhVgSuU/fCEyofKWg?=
+ =?us-ascii?Q?8cbzdkpnGbBp0ubksYGothfYWhzCYnfN4XlJBbwixcCLUs4nJXLhgkwtSHY6?=
+ =?us-ascii?Q?t2TZ1yCSggUMPkf+CdUe+8W3rifMIRJl5//3DsUDwO5E+sqdzMGL3WkL0IvF?=
+ =?us-ascii?Q?8PleAkeZuHu0xt/plenAmU1Mh2qksWp1ThcQMXgLo6SSmY0UMInQbIz/4M6Q?=
+ =?us-ascii?Q?5qYDXnSXzoBnDFp9G3kkqYrZdRwDUnXjprnmk3XppRVAc7LcIQK3NjCYmfQB?=
+ =?us-ascii?Q?dV6kJwklkr80k4jYWO/40q/ivpvZxxlU4c6hYm3twPDlTFo0aXcGNCiMwnIV?=
+ =?us-ascii?Q?x99W15wnb44nZVVPeECr9ZdPcVPKIgVtFjsOcMS5p0Wp0j8LPVYIBVIy0Jjq?=
+ =?us-ascii?Q?KXFR3hzlvhbxVuA0YOKV4RY3Kc/DRWtyx6yPqDLamPrzUBe2IZYKSi0dolDe?=
+ =?us-ascii?Q?eHQTpgnVUkW0PFaSgiIxUebSuf6vcC6xdq7HmOx8ZrpYRfYAj9p60pu5torD?=
+ =?us-ascii?Q?G8gSAU3euCTWarrF2FmMo1Fqd9H6JW7qQDHK7ExF0II9oXuS5lHONphRLItM?=
+ =?us-ascii?Q?tyV2uNhzmuF7xptURM1RtdKQQdOfioWOqM3rnfsOYdvAvdU4vgncEog6pZ0w?=
+ =?us-ascii?Q?kyaTxm3P8CTiQtGDGum0U28nO86lSVgejCllPZnbpDBNwObwfPa0TcS8aWX2?=
+ =?us-ascii?Q?g953SoMTrbszlnbUfz2YeQz6ylDV5ss=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <E2795337ABF6514BB99A1662154CCA1C@namprd02.prod.outlook.com>
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-Exchange-RoutingPolicyChecked: GJmebHSPLj3GZFcIJxYw73/gdgebr7AxJJeIcVIm4HN4CTY0fKA0DbVGVUaXyhWbSfMCdBvsRKzLO6mzEL7hhFoyfsxoCKqb9rzjGVJKe5ms3J4z0+yoMC27qh0kGgN8PPsH5+PKDUlg5q8KtHSnUi4TyZcyEzzetnJ68yYLKc/haJI7vTubMZGh+c9nRF1Y0xkw2q/mVvMW1RQlS2/3yzOYKHBS9SLRkJwYiiLKfL2tj0GT5OkJG+h8w5aXrYhW/RjieFkb2HOQEAZCcuuHA1JQ8fs+mbYrMuwqg+kn9wnXQIM7x7WlYp542kJvIASm6msyNNfLBGWnsAM6BrpA+w==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SA2PR02MB7564.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e0f5714c-312d-4967-a8a9-08debc048caf
+X-MS-Exchange-CrossTenant-originalarrivaltime: 27 May 2026 15:28:05.9104 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: EIF7b54lUyNwiiySwUCqox5BlLtyOITr0hVOkh74jYCmSw6bDWXE4E7Kg9K7HRhNp1lcCT2RK+mxtBaY7rFGHOGh7RA3Y61NqE/Mw5ObsvI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR02MB6472
+X-Proofpoint-ORIG-GUID: q3DGSsxwktrueePF8DiJYJIgXOivnjnI
+X-Proofpoint-GUID: q3DGSsxwktrueePF8DiJYJIgXOivnjnI
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI3MDE1NCBTYWx0ZWRfX/yRgfs1R+whA
+ GwqLaZ14VpYWu7FYH4akhi3dJ6PA36QnkO6sL0Okw8UEEtiFLWIK8Vrz9iipOEL114hjQN8aKcK
+ 7w7sSX0k3FkVv6q1PQPtcWzaVO6k+MDDfy/70i06aST+pIaGoDHDyCv9JyX5Tr2oLQ0ZfuoZVyR
+ yfhpGST7qAeTTHSde0zrRSbyjYPIQHX/stHA+QlwZFLnNS1Yjnbd65J4LmpbfqXSRGaLx3vS7OH
+ AMzPAin9b+MqxPS4BecirAopwo7IBlsVLByrVmV5tizWHBJYIS2nVYd7Fg3pOIJldSSVaxdf/mx
+ bnHdnVcks1TQI6UQFZw3EQ161D5inhbx/4v4VGQCbPsuyOjSaKAZMiPctuVqLGZ7l/l1rI483cQ
+ LtB2206kmHeh441/Vh+lK/ay/Jk04u3pYBgW9zo/GHO4+BsSdtSbv0RXZtLZRcGDOxsEpfN1WEG
+ xyM2388TZ/s3uilpsmg==
+X-Authority-Analysis: v=2.4 cv=aNnAb79m c=1 sm=1 tr=0 ts=6a170d88 cx=c_pps
+ a=j7k210cWVAfXhyiYu0S74w==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=NGcC8JguVDcA:10 a=0kUYKlekyDsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VofLwUrZ8Iiv6rRUPXIb:22 a=0LlEyIVc8U2lsR7dKhuH:22 a=64Cc0HZtAAAA:8
+ a=9g9Rteg0ShzoPARwiFAA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-05-27_02,2026-05-26_03,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=khushit.shah@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,55 +192,263 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/27/26 06:27, yoshinori.sato@nifty.com wrote:
-> On Tue, 26 May 2026 09:55:28 +0900,
-> Richard Henderson wrote:
->>
->> On 5/25/26 08:27, Matt Turner wrote:
->>> The gUSA pattern matcher rejected `add #imm, Rn` whenever any prior
->>> `mov Rm, Rn` appeared (mv_src >= 0), forcing a fallback to
->>> cpu_exec_step_atomic for sequences like:
->>>
->>>     mov.l  @r2, r3      ; load
->>>     mov    r3, r7       ; save old value (mv_src == ld_dst)
->>>     add    #1, r7       ; increment copy
->>>     mov.l  r7, @r2      ; store
->>>
->>> When mv_src == ld_dst the move merely copies the loaded value to
->>> preserve it -- exactly the situation already accepted for the
->>> `add Rm, Rn` form. The immediate form can be handled identically with
->>> tcg_gen_atomic_fetch_add_i32 + tcg_gen_add_i32, so translate it inline
->>> instead of taking the slower single-step atomic fallback.
->>> ---
->>>    target/sh4/translate.c | 2 +-
->>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git ./target/sh4/translate.c ./target/sh4/translate.c
->>> index 5adf650744..d38a6bd352 100644
->>> --- ./target/sh4/translate.c
->>> +++ ./target/sh4/translate.c
->>> @@ -1974,7 +1974,7 @@ static void decode_gusa(DisasContext *ctx, CPUSH4State *env)
->>>            break;
->>>          case 0x7000 ... 0x700f: /* add #imm,Rn */
->>> -        if (op_dst != B11_8 || mv_src >= 0) {
->>> +        if (op_dst != B11_8 || (mv_src >= 0 && mv_src != ld_dst)) {
->>>                goto fail;
->>
->> Hmm, but then you don't further constrain B11_8.
->>
->> For the given example, afaics, B11_8 == op_dst, so we're failing only
->> because mv_src >= 0.  Do we actually need the mv_src check?  I'm
->> guessing not.
->>
->>
->> r~
-> 
-> This check is necessary because the intention is to cause failure in the
-> case of an unintended sequence of instructions.
+From 92b813355251d61ab7941a8df500ab35c0a34193 Mon Sep 17 00:00:00 2001
+From: Khushit Shah <khushit.shah@nutanix.com>
+Date: Mon, 25 May 2026 17:51:54 +0530
+Subject: [PATCH] target/arm/kvm: cache host ID register views with and
+ without EL2
 
-Of course, but what's the unintended sequence prevented by mv_src >= 0?
-Matt has identified a sequence that *is* possible, which is prevented by that check.
+kvm_arm_get_host_cpu_features() probes the host by spinning up a
+scratch vCPU and reading its ID registers. When the host kernel
+advertises nested virtualization, the scratch was always created with
+KVM_ARM_VCPU_HAS_EL2, which makes the kernel run limit_nv_id_reg() on
+that vCPU and force several ID register fields (e.g.
+ID_AA64MMFR4_EL1.NV_frac, parts of ID_AA64DFR0_EL1, etc.) to values
+that match KVM's nested-virt emulation rather than the raw host
+capability.
 
+Split the cache into two slots indexed by with_el2 (lazily populated)
+and plumb the selector through kvm_arm_set_cpu_features_from_host()
+and kvm_arm_get_host_isar(). Callers pick the view that matches their
+intent.
 
-r~
+Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
+---
+Patch 1, part of RFC v2 for named models for arm.
+will not cleanly apply but for the gist of the solution.
+---
+ target/arm/arm-cpu-models.c |  5 +++--
+ target/arm/arm-qmp-cmds.c   |  4 ++--
+ target/arm/cpu64.c          |  2 +-
+ target/arm/kvm-stub.c       |  7 ++++++-
+ target/arm/kvm.c            | 37 +++++++++++++++++++++----------------
+ target/arm/kvm_arm.h        |  5 +++--
+ 6 files changed, 36 insertions(+), 24 deletions(-)
+
+diff --git a/target/arm/arm-cpu-models.c b/target/arm/arm-cpu-models.c
+index 9265bb776a..31765be55b 100644
+--- a/target/arm/arm-cpu-models.c
++++ b/target/arm/arm-cpu-models.c
+@@ -549,7 +549,8 @@ static void arm_named_cpu_initfn(Object *obj)
+         return;
+     }
+=20
+-    kvm_arm_set_cpu_features_from_host(cpu);
++    /* For now let's not support nested virt for named models */
++    kvm_arm_set_cpu_features_from_host(cpu, false);
+     if (!arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
+         return;
+     }
+@@ -592,7 +593,7 @@ void arm_cpu_class_check_missing_features(ARMCPUClass *=
+acc, strList **blockers)
+         }
+     }
+=20
+-    arm_idregs_get_blockers(cpu, kvm_arm_get_host_isar(), blockers);
++    arm_idregs_get_blockers(cpu, kvm_arm_get_host_isar(false), blockers);
+ out:
+     object_unref(obj);
+ }
+diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
+index 84341a2105..453442ab93 100644
+--- a/target/arm/arm-qmp-cmds.c
++++ b/target/arm/arm-qmp-cmds.c
+@@ -82,7 +82,7 @@ CpuPropSupportedValues *qmp_query_cpu_props_supported_val=
+ues(Error **errp)
+         QList *sv =3D qlist_new();
+=20
+         arm_prop_append_supported_values(pdesc,
+-                                         kvm_arm_get_host_isar(), sv);
++                                         kvm_arm_get_host_isar(false), sv)=
+;
+         qdict_put_obj(props, pdesc->name, QOBJECT(sv));
+     }
+=20
+@@ -119,7 +119,7 @@ CpuPropInfoList *qmp_query_arm_cpu_named_model_prop_inf=
+o(Error **errp)
+=20
+         sv =3D qlist_new();
+         arm_prop_append_supported_values(pdesc,
+-                                         kvm_arm_get_host_isar(), sv);
++                                         kvm_arm_get_host_isar(false), sv)=
+;
+=20
+         prop_info->supported_values =3D QOBJECT(sv);
+         prop_info->composite =3D NULL;
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 109cead3c8..16b4d87dc1 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -875,7 +875,7 @@ static void aarch64_host_initfn(Object *obj)
+=20
+ #if defined(CONFIG_KVM)
+     kvm_arm_set_cpreg_mig_tolerances(cpu);
+-    kvm_arm_set_cpu_features_from_host(cpu);
++    kvm_arm_set_cpu_features_from_host(cpu, true);
+     aarch64_add_sve_properties(obj);
+     arm_add_cpu_props(obj);
+ #elif defined(CONFIG_HVF)
+diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
+index 88cbe8d85c..98f41818ba 100644
+--- a/target/arm/kvm-stub.c
++++ b/target/arm/kvm-stub.c
+@@ -45,7 +45,7 @@ bool kvm_arm_el2_supported(void)
+ /*
+  * These functions should never actually be called without KVM support.
+  */
+-void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
++void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu, bool with_el2)
+ {
+     g_assert_not_reached();
+ }
+@@ -119,3 +119,8 @@ char *kvm_print_register_name(uint64_t regidx)
+ {
+     g_assert_not_reached();
+ }
++
++const ARMISARegisters *kvm_arm_get_host_isar(bool with_el2)
++{
++    return NULL;
++}
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 9f8368712f..c26ed485a3 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -65,7 +65,7 @@ typedef struct ARMHostCPUFeatures {
+     const char *dtb_compatible;
+ } ARMHostCPUFeatures;
+=20
+-static ARMHostCPUFeatures arm_host_cpu_features;
++static ARMHostCPUFeatures arm_host_cpu_features[2];
+=20
+ #define DEF(NAME, OP0, OP1, CRN, CRM, OP2) [NAME##_IDX] =3D #NAME,
+ const char * const sysreg_names[NUM_ID_IDX] =3D {
+@@ -349,7 +349,7 @@ static uint32_t kvm_arm_sve_get_vls(int fd)
+     return vls[0] & MAKE_64BIT_MASK(0, ARM_MAX_VQ);
+ }
+=20
+-static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
++static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf, bool w=
+ith_el2)
+ {
+     /* Identify the feature bits corresponding to the host CPU, and
+      * fill out the ARMHostCPUClass fields accordingly. To do this
+@@ -389,7 +389,7 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFea=
+tures *ahcf)
+      * Ask for EL2 if supported.
+      */
+     el2_supported =3D kvm_arm_el2_supported();
+-    if (el2_supported) {
++    if (el2_supported && with_el2) {
+         init.features[0] |=3D 1 << KVM_ARM_VCPU_HAS_EL2;
+     }
+=20
+@@ -528,7 +528,7 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFea=
+tures *ahcf)
+             err |=3D get_host_cpu_reg(fd, ahcf, ID_AA64ZFR0_EL1_IDX);
+=20
+             /* Read the set of supported vector lengths. */
+-            arm_host_cpu_features.sve_vq_supported =3D kvm_arm_sve_get_vls=
+(fd);
++            ahcf->sve_vq_supported =3D kvm_arm_sve_get_vls(fd);
+         }
+     }
+     /*
+@@ -586,15 +586,15 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUF=
+eatures *ahcf)
+     ahcf->features =3D features;
+ }
+=20
+-void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
++void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu, bool with_el2)
+ {
+     CPUARMState *env =3D &cpu->env;
+=20
+-    if (!arm_host_cpu_features.dtb_compatible) {
+-        kvm_arm_get_host_cpu_features(&arm_host_cpu_features);
++    if (!arm_host_cpu_features[with_el2].dtb_compatible) {
++        kvm_arm_get_host_cpu_features(&arm_host_cpu_features[with_el2], wi=
+th_el2);
+     }
+=20
+-    cpu->kvm_target =3D arm_host_cpu_features.target;
++    cpu->kvm_target =3D arm_host_cpu_features[with_el2].target;
+=20
+     if (cpu->kvm_target =3D=3D QEMU_KVM_ARM_TARGET_NONE) {
+         /*
+@@ -605,15 +605,18 @@ void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
+         return;
+     }
+=20
+-    cpu->dtb_compatible =3D arm_host_cpu_features.dtb_compatible;
+-    cpu->isar =3D arm_host_cpu_features.isar;
+-    cpu->sve_vq.supported =3D arm_host_cpu_features.sve_vq_supported;
+-    env->features =3D arm_host_cpu_features.features;
++    cpu->dtb_compatible =3D arm_host_cpu_features[with_el2].dtb_compatible=
+;
++    cpu->isar =3D arm_host_cpu_features[with_el2].isar;
++    cpu->sve_vq.supported =3D arm_host_cpu_features[with_el2].sve_vq_suppo=
+rted;
++    env->features =3D arm_host_cpu_features[with_el2].features;
+ }
+=20
+-const ARMISARegisters *kvm_arm_get_host_isar(void)
++const ARMISARegisters *kvm_arm_get_host_isar(bool with_el2)
+ {
+-    return &arm_host_cpu_features.isar;
++    if (!arm_host_cpu_features[with_el2].dtb_compatible) {
++        kvm_arm_get_host_cpu_features(&arm_host_cpu_features[with_el2], wi=
+th_el2);
++    }
++    return &arm_host_cpu_features[with_el2].isar;
+ }
+=20
+ static bool kvm_no_adjvtime_get(Object *obj, Error **errp)
+@@ -2331,9 +2334,11 @@ int kvm_arch_init_vcpu(CPUState *cs)
+                 "  host=3D0x%016" PRIx64 "\n",
+                 _i, sysreg_names[_i] ? sysreg_names[_i] : "(null)",
+                 cpu->isar.idregs[_i],
+-                arm_host_cpu_features.isar.idregs[_i]);
++                arm_host_cpu_features[cpu->has_el2].isar.idregs[_i]);
+     }
+-    if (!arm_idregs_validate_safe_rule(cpu, &arm_host_cpu_features.isar, &=
+err)) {
++
++    /* validate the cpu->isar.idregs[] against the ahcf->isar.idregs[], se=
+lect ahcf based on the cpu->has_el2 */
++    if (!arm_idregs_validate_safe_rule(cpu, &arm_host_cpu_features[cpu->ha=
+s_el2].isar, &err)) {
+         error_report_err(err);
+         return -EINVAL;
+     }
+diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+index 750dbe1ef4..538f87e69e 100644
+--- a/target/arm/kvm_arm.h
++++ b/target/arm/kvm_arm.h
+@@ -129,11 +129,12 @@ void kvm_arm_destroy_scratch_host_vcpu(int *fdarray);
+ /**
+  * kvm_arm_set_cpu_features_from_host:
+  * @cpu: ARMCPU to set the features for
++ * @with_el2: probe the host with the EL2-enabled scratch vCPU view
+  *
+  * Set up the ARMCPU struct fields up to match the information probed
+  * from the host CPU.
+  */
+-void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu);
++void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu, bool with_el2);
+=20
+ /**
+  * kvm_arm_add_vcpu_properties:
+@@ -231,7 +232,7 @@ void kvm_arm_enable_mte(Object *cpuobj, Error **errp);
+=20
+ void arm_cpu_kvm_set_irq(void *arm_cpu, int irq, int level);
+=20
+-const ARMISARegisters *kvm_arm_get_host_isar(void);
++const ARMISARegisters *kvm_arm_get_host_isar(bool with_el2);
+=20
+ void arm_gic_cap_kvm_probe(GICCapability *v2, GICCapability *v3);
+=20
+--=20
+2.52.0
+
 
