@@ -4,79 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF0E3CD5BD5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98C3DCD4F54
 	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:31:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSBXT-0002Wn-Ci; Wed, 27 May 2026 06:31:05 -0400
+	id 1wSBXC-0002VG-0w; Wed, 27 May 2026 06:30:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBXN-0002WK-3B
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:30:57 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBXA-0002Uk-5f
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:30:44 -0400
+Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBXL-0000Va-Bb
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:30:56 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-449de065cb3so11343840f8f.2
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:30:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBX8-0000RX-2e
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:30:43 -0400
+Received: by mail-wr1-x444.google.com with SMTP id
+ ffacd0b85a97d-44c350a5b87so6823367f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:30:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779877854; x=1780482654; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=FJ8ak+0/XSX/wIzO+MXBzVbVY4iJXA3Z+okdJxd6QFU=;
- b=dpbVudN+tA5HSNKxCURrdBc1IOfltym9v1dr0vMqO7QAGWmoqRY61GTB29YPftZ2bm
- WM1VmCXn/ndquRo6N87MEGcligQg5waWnr2L8JsWEJ8y9KmrVbBSMbolE932BWvhGPuP
- T3UHuwSBBKRMUkdl7ApiTXNsVHklbG1+JEo/uFaiBdX1xP2lgFDU3EEPTLVtoQhl8z7e
- +r3Ko/c9wkk4tsKlvBZZq7TZEsbkaEcrUkq6NtZ8p191vgxtW2jMjnVod3tJ3pRWB7es
- YyyGO5GCQGYktNHCDexkeSPIsrmFUhEpplLvW1sYzkLqnVrSjL8CIZmCpROjVTnIHUqA
- X9zQ==
+ d=linaro.org; s=google; t=1779877840; x=1780482640; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=rt6h1Uj4mU1NjlkJ31k12U1Y1gI1H2BlvErbNjtXemo=;
+ b=UYszPiwp09btuYQq5/kuqPO0Ni3FvOUMbaFBXvBbaU+xwh3bV3UBZ3tI7DZjlDTz2z
+ ENy7oH8WxYu1otL3yTyyI05xAYweH6OKp0fu0qleVjcy9UOSyXkKNpvmxLBDeRcpGslO
+ rjOKnUeE6SSABzYjreyPHgxrWCZ7Me2xr3Paq6fc0DeYj/svAVGfcKUVgJbim51FIQi0
+ B1mq5bPUc0cjIqPBfzL3v+jdOui0MvhDq+2jOH5SVQLwo5OLJzS/SWZzfJ3lXvDRSQFl
+ /k5XVWotJPGRlsHSFkAGIgUHOiG1bFOqgaG/HNCc44kKbKWBCyq6kbFZ7SOoS/UHEhSy
+ Mx6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779877854; x=1780482654;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=FJ8ak+0/XSX/wIzO+MXBzVbVY4iJXA3Z+okdJxd6QFU=;
- b=gkG3Uh81nLC/esB3tw7wIJc0rwx9A5OGJWJcejZ3f2whO3wNJGXsEYMdYTHOPGMNy4
- RA+Ctzl0+vZvGUSMJew8mD9Jzv4uJ93J0OPJMljxEIU0DIfH2oBXKQd0xddAHZ+kpxpt
- QE5tzxN2bB9fsBjaXT0sR0NpVzNZ4gylq0b1Ku1eOIfvGlEML7ISynH+u+QFmDO604pL
- xiUOYNNhINyQEB8guqibJ7Jsvu2/zmkvK08ilT4mMHb6Py0pA5sEfipMLKg+cLHoP7Ux
- 5BgJCvSCKCBoh8Vf7nOwNKVMQQ/okdhDrOCqfhbczi0WnyLGzGjaFLQnOLWk0bCInPH0
- uk8g==
-X-Gm-Message-State: AOJu0YwyCOk776/oHCjCCmxeKbtWW701mCk6dQeiFH1WDCD4NGi9BGgn
- b1+uVO9UFXWOF4h/TGXvZredpKnB0ZW+D3F9YV7G5vO9/4Bg2DSA5vRrMEcihZB34tc3oyy/LxS
- 03ocN8qPUnA==
-X-Gm-Gg: Acq92OElExfAcVIxDvLx4ZOPIjGr+MhiU6pSwQat8lMNkSOJzbjfV8ctidv2YFn5hzE
- rzP3hbsMswQU25RfK8rNpBCeWE33WVidKYpn/FrA4YS+X22ze8Al45AvbBscTJ33l+fw3Xk8/j6
- FR8XcRilo7mj+IGMICrEk/if4Y4dIeeiy0FjbUbf8pd/6WswWXjrxi/l0wrQsEdbs+C8GmENbf4
- C/wC0YIOzaHBDzbZV30VxU29Ued4ISh5HRjVtvnHJ7+LKeGZUU9rtSoT9jD9J4E66I0OWtW8HVB
- 5Oz+2gG3zXfNPm57gCD7hIQ27gfVElzYM6yDyoqvEhnhGAgDDai9Soy2yQmHfNjXdSyx7Q52htM
- ReBsq+aqGvoquck0ICm7YcewEGIJt9X0Q5PgohDkXidjsfahUusuiKLNzaGb0mB0/OsdfYKRclp
- gEmCJ5TiDk4PeOg53CoHM37mw4BhgVbQPFYAddTuu7kJmJ6nHd6g8nb60=
-X-Received: by 2002:a5d:5e8c:0:b0:43c:f90b:5668 with SMTP id
- ffacd0b85a97d-45eb36acd72mr36118042f8f.23.1779877853251; 
- Wed, 27 May 2026 03:30:53 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779877840; x=1780482640;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rt6h1Uj4mU1NjlkJ31k12U1Y1gI1H2BlvErbNjtXemo=;
+ b=ggV+logTKRcwjn3y6uyLr/4SQ/lUY4htY/dfznIUE/ybSYc87gTUpOUHSvHh7OJlMy
+ edh163jpO9BQO0KNl0K3f1ubKyvA49Ck6eTvzmMDAlPrVn7rrk7KGT50X3llOYVd0EN1
+ B7twqQUqeAYUHu7qmgeFUd5zKg1EFN1Nq8Jf8C8DDCtB5ETFvRIRzEH6UorcstwL3NCh
+ TqR1MYSe4E7jdIld0DStn7a1fiJ1uqEd0YV4cisJPzU+Bk6t+L4ebEY6hb1+U5F7fJYr
+ 8QT4SU3VdR8/y3gpF5csyz+O/opiQuMhzZ77Og+XjqA9Kj+OqR8FHyjucgyjNSA9Kx88
+ F1zg==
+X-Gm-Message-State: AOJu0Yyh7ivHwe4Rao7LlXjnP1kK0eTE+WgYukJghDKCPy3q7JwF+Y3y
+ oNKMbcYcVidt6uS4nAMjHm677+dlYvuXbWH53wk4mGluNj1U982mFmSr5ko2Kdxr6sjYtSudqbo
+ 4Nuxp4nWl0YZ8
+X-Gm-Gg: Acq92OFceDAAq3K4CYcdZOIrPx4BxuG0q0Z/YAv4TQoBNHHVIIuobrxIl7gWZzvoJfG
+ Ph0jWCYSQg2fQVliq8AfWKwN6eAqkokU8IEOUQiY0l4vD7dC19k4VR7jelR57zNVVs1M3CW76YE
+ tlSeOsPAoT11+PcewwnpDifch58rVWYfzWNp1mmvV916uiXONY/AFlUR1UHIOpm1KrypFWnb3BF
+ 2ZRy84X8A8m/ttm5OUFHbhSsSb6ckshNmwlGcs7huEiVsCW1aXluGh9E1YPGz6UL0ZkTPimDO7G
+ JVFCGq/ybJgCRxdZY7FaqPZ/osXdKPefGe7bCFDE/cfQinUO8Fk02XdX/c0o0gA2UG6bQYqyMxy
+ ft+9Y+z6GEsSyYOjHVgZF8/8ycuLDBvtHfHFs24aVr7SZU1ucUU0hvFD1IXS3yl0xG9rfJCWTAK
+ lXY9IfxRY6souvBbstQNoJy6J+6iVYqxKW09woObyy71zqIFKxwu4zJ33sDhRkZYJFaA==
+X-Received: by 2002:a05:6000:26d1:b0:451:1143:7df5 with SMTP id
+ ffacd0b85a97d-45eb38e041fmr39380475f8f.41.1779877839522; 
+ Wed, 27 May 2026 03:30:39 -0700 (PDT)
 Received: from m17.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45edb54a432sm7149104f8f.3.2026.05.27.03.30.52
+ ffacd0b85a97d-45edb548dfasm4820593f8f.4.2026.05.27.03.30.37
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 27 May 2026 03:30:52 -0700 (PDT)
+ Wed, 27 May 2026 03:30:38 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/32] hw/riscv: Add macros and globals for simplifying machine
- definitions
-Date: Wed, 27 May 2026 12:30:06 +0200
-Message-ID: <20260527103037.4461-3-philmd@linaro.org>
+Subject: [PULL 00/32] Single binary patches for 2026-05-27
+Date: Wed, 27 May 2026 12:30:04 +0200
+Message-ID: <20260527103037.4461-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260527103037.4461-1-philmd@linaro.org>
-References: <20260527103037.4461-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::444;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x444.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,92 +96,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anton Johansson <anjo@rev.ng>
+The following changes since commit 3f89b5de5b1ff16873bcda7d5f3ff5b9164f691e:
 
-Adds macros and global interfaces for defining machines available only
-in qemu-system-riscv32, qemu-system-riscv64, or both.
+  Merge tag 'pull-target-arm-20260526' of https://gitlab.com/pm215/qemu into staging (2026-05-26 13:20:15 -0400)
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-Id: <20260520-hw-riscv-cpu-int-v3-3-d1123ea63d9c@rev.ng>
-[PMD: Constify InterfaceInfo]
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/riscv/machines-qom.h | 26 ++++++++++++++++++++++++++
- target/riscv/machine.c          | 19 ++++++++++++++++++-
- 2 files changed, 44 insertions(+), 1 deletion(-)
+are available in the Git repository at:
 
-diff --git a/include/hw/riscv/machines-qom.h b/include/hw/riscv/machines-qom.h
-index 69fcf61fd72..ee346227bb2 100644
---- a/include/hw/riscv/machines-qom.h
-+++ b/include/hw/riscv/machines-qom.h
-@@ -17,4 +17,30 @@
- #define TYPE_TARGET_RISCV64_MACHINE \
-         "target-info-riscv64-machine"
- 
-+/*
-+ * Interfaces specifying whether a given QOM object is available in
-+ * qemu-system-riscv32, qemu-system-riscv64, or both.
-+ */
-+
-+extern const InterfaceInfo riscv32_machine_interfaces[];
-+extern const InterfaceInfo riscv64_machine_interfaces[];
-+extern const InterfaceInfo riscv32_64_machine_interfaces[];
-+
-+/*
-+ * Helper macros for defining machines available in qemu-system-riscv32,
-+ * qemu-system-riscv64, or both.
-+ */
-+
-+#define DEFINE_MACHINE_RISCV32(namestr, machine_initfn) \
-+        DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, \
-+                                            riscv32_machine_interfaces)
-+
-+#define DEFINE_MACHINE_RISCV64(namestr, machine_initfn) \
-+        DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, \
-+                                            riscv64_machine_interfaces)
-+
-+#define DEFINE_MACHINE_RISCV32_64(namestr, machine_initfn) \
-+        DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, \
-+                                            riscv32_64_machine_interfaces)
-+
- #endif
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 6776e7bf5a1..b92e38b11a7 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -22,7 +22,8 @@
- #include "system/kvm.h"
- #include "migration/cpu.h"
- #include "exec/icount.h"
--#include "debug.h"
-+#include "target/riscv/debug.h"
-+#include "hw/riscv/machines-qom.h"
- 
- static bool pmp_needed(void *opaque)
- {
-@@ -522,3 +523,19 @@ const VMStateDescription vmstate_riscv_cpu = {
-         NULL
-     }
- };
-+
-+const InterfaceInfo riscv32_machine_interfaces[] = {
-+    { TYPE_TARGET_RISCV32_MACHINE },
-+    { }
-+};
-+
-+const InterfaceInfo riscv64_machine_interfaces[] = {
-+    { TYPE_TARGET_RISCV64_MACHINE },
-+    { }
-+};
-+
-+const InterfaceInfo riscv32_64_machine_interfaces[] = {
-+    { TYPE_TARGET_RISCV32_MACHINE },
-+    { TYPE_TARGET_RISCV64_MACHINE },
-+    { }
-+};
+  https://github.com/philmd/qemu.git tags/single-binary-20260527
+
+for you to fetch changes up to 5505e1cd0248fd87cbdbb16bb322a34db16d3e98:
+
+  MAINTAINERS: Update PhilMD's email address (2026-05-27 12:27:22 +0200)
+
+All following checkpatch.pl warnings ignored since files are covered:
+
+  WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+
+----------------------------------------------------------------
+Various patches related to single binary effort:
+
+- Preparatory patches to build RISCV machines once
+- Build ARM machines once
+- Build ARM 'max' CPU once
+- Few MAINTAINERS updates
+----------------------------------------------------------------
+
+Anton Blanchard (1):
+  target/riscv: Use float_raise
+
+Anton Johansson (6):
+  hw/riscv: Register generic riscv[32|64] QOM interfaces
+  hw/riscv: Add macros and globals for simplifying machine definitions
+  hw/core: Add riscv[32|64] to "none" machine
+  hw/riscv: Filter machine types for qemu-system-riscv32/64 binaries
+  configs/target: Implement per-binary TargetInfo structure for riscv
+  target-info: Add target_riscv64()
+
+Brian Cain (1):
+  MAINTAINERS: update qualcomm git tree URL
+
+Djordje Todorovic (1):
+  target/riscv: Define MSTATUS_SBE and MSTATUS_MBE bit masks
+
+Philippe Mathieu-Daudé (23):
+  hw/riscv/spike: Use 'max' CPU type by default
+  target/hppa: Use DisasContext::mo_align in system emulation
+  target/hppa: Inline UNALIGN() macro
+  hw/arm/raspi: Initialize 64-bit CPU types during DeviceRealize()
+  hw/arm/raspi: Build objects once
+  hw/arm/aspeed: Do not realize 64-bit CPU types under QTest
+  hw/arm/aspeed: Build objects once
+  hw/arm/meson: Remove now unused arm_ss[] source set
+  target/arm: Introduce common system/user meson source set
+  target/arm: Build gdbstub64.o as common object
+  target/arm: Build cpu64.o as common object
+  target/arm: Extract common code related to 'max' CPU
+  target/arm: Use make_ccsidr(LEGACY) in 32 bit 'max' CPU type
+  target/arm: Implement DBGDEVID* registers in max AArch32 CPU
+  target/arm: Only set %kvm_target when KVM is enabled
+  target/arm: Factor aarch64_aa32_a57_init() out
+  target/arm: Re-use common aarch64_aa32_a57_init() helper
+  target/arm: Define 'max' CPU type in cpu-max.c
+  target/arm: Build cpu32-system.o as common object
+  target/arm: Build cpu-max.c once
+  tests/tcg: Explicitly check for 64-bit z/Architecture
+  MAINTAINERS: Remove PhilMD from firmware sections
+  MAINTAINERS: Update PhilMD's email address
+
+ MAINTAINERS                                |  67 +++---
+ include/hw/riscv/machines-qom.h            |  46 ++++
+ include/qemu/target-info.h                 |   7 +
+ target/arm/internals.h                     |   2 +
+ target/riscv/cpu_bits.h                    |   2 +
+ tests/tcg/multiarch/nop_func.h             |   2 +-
+ configs/targets/riscv32-softmmu.c          |  26 +++
+ configs/targets/riscv64-softmmu.c          |  26 +++
+ hw/arm/aspeed_ast27x0.c                    |  14 ++
+ hw/arm/bcm2836.c                           |  14 +-
+ hw/arm/raspi.c                             |   4 -
+ hw/core/null-machine.c                     |   3 +
+ hw/riscv/boston-aia.c                      |   3 +-
+ hw/riscv/microblaze-v-generic.c            |   3 +-
+ hw/riscv/microchip_pfsoc.c                 |   2 +
+ hw/riscv/opentitan.c                       |   2 +
+ hw/riscv/shakti_c.c                        |   2 +
+ hw/riscv/sifive_e.c                        |   2 +
+ hw/riscv/sifive_u.c                        |   2 +
+ hw/riscv/spike.c                           |   4 +-
+ hw/riscv/virt.c                            |   3 +
+ hw/riscv/xiangshan_kmh.c                   |   2 +
+ target-info-qom.c                          |   9 +
+ target-info.c                              |   5 +
+ target/arm/cpu-max.c                       | 241 +++++++++++++++++++++
+ target/arm/cpu64.c                         |  80 +------
+ target/arm/tcg/{cpu32.c => cpu32-system.c} | 174 +--------------
+ target/arm/tcg/stubs32.c                   |  10 +
+ target/hppa/translate.c                    |  23 +-
+ target/riscv/machine.c                     |  19 +-
+ target/riscv/vector_helper.c               |  35 ++-
+ .mailmap                                   |   7 +-
+ configs/targets/meson.build                |   1 +
+ contrib/gitdm/group-map-individuals        |   1 +
+ hw/arm/meson.build                         |  15 +-
+ target/arm/meson.build                     |  26 ++-
+ target/arm/tcg/meson.build                 |  57 ++---
+ 37 files changed, 550 insertions(+), 391 deletions(-)
+ create mode 100644 include/hw/riscv/machines-qom.h
+ create mode 100644 configs/targets/riscv32-softmmu.c
+ create mode 100644 configs/targets/riscv64-softmmu.c
+ create mode 100644 target/arm/cpu-max.c
+ rename target/arm/tcg/{cpu32.c => cpu32-system.c} (81%)
+
 -- 
 2.53.0
 
