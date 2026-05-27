@@ -4,100 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BA87CD5BD0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 20:16:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85A51CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 20:16:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSKfo-0000rU-LP; Wed, 27 May 2026 16:16:16 -0400
+	id 1wSKei-0007IN-Ko; Wed, 27 May 2026 16:15:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSKf6-0008F5-If
- for qemu-devel@nongnu.org; Wed, 27 May 2026 16:15:36 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSKeh-0007Ds-9M
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 16:15:07 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSKf4-0005ii-GC
- for qemu-devel@nongnu.org; Wed, 27 May 2026 16:15:32 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-49042aeeb75so73034115e9.1
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 13:15:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSKee-0005UO-96
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 16:15:06 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-48a3e9862f0so63868455e9.1
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 13:15:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779912929; x=1780517729; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=qFt0e6x/Zi69UDOFZwUEpR6Wz4PUACFzWItgBxs6Ljs=;
- b=rrkAhFAcuFPcIWIKMHAKXcPlkk2M7Gs8v62CVRGHyeAVkMEh6qwG8/XfOzL/sU8krk
- /xrok5WJEh4pdSFRNL7gK56X4t6rrTWi/G7OAIPED9nl4u8bpzUHr2k0HrwDZ5eJoeXH
- oo4w2NowcFfh7WuPdQWKvXWqQZOGPbyvPr3r1ekr6tj82oqrHi0KgxZ4+rDN4y4LhKCj
- Qa9ZkhxlDkl9UjD/MQWx1d2UiBEFVtPG+2ckLMP/yXDsgeJJXLZx93MMZWYdVxH1QVH0
- PAdlCGvINv3MYFr4djgDd07mb/IiCOJhgT5qh1NxcvtPaVsAQczOQ64RagCV7wTpRgVn
- mS2Q==
+ d=linaro.org; s=google; t=1779912903; x=1780517703; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Hk3lZmLUM148KRJytCSWPjv/9H9/R4UDf3r1IZOQ7wI=;
+ b=a0QP1rluNDFD3qbiqURROT3IoJLqDDQmDfbHCDUKqtR/uiKcOkM6hNM7cpW1YOgqHC
+ cyfyt71sdTBHh6PsVTfa6n/kMdLYfYP4xqYJmamOUJ+K0zboo/X5NMjXmZV+yT75wrLl
+ PwErSs9h4rq1paHG1u5+BT/h0N/1kN0ntcYK2URINbZQvM1XXOQyy0ZJu85a6w7y6hwL
+ EbOKgbuXTgtolS8Q7Y9BTiXzLc9nKxaDa6hElCUCvXRsanCiaU8z0K+zDx2h0Q4vYVCN
+ zb+9ykGH+MQHFgp8YHLoHNW8DjvGtMHpU5XyfEtpL8sKJYBzJyuli+3oZ6Vm+Mxn0zOg
+ iLmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779912929; x=1780517729;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qFt0e6x/Zi69UDOFZwUEpR6Wz4PUACFzWItgBxs6Ljs=;
- b=Yb2JAJj7Qad8bd2uXPZDDTL5Ly/Sce2bQlG0ueJrlkIwgA5XD1zdxtRiRE1bV2KKKs
- fYP6+lO2A/48UBq5QWmDhMepeUPgpG88zmFKi+1VUrEuqIg3AFhjW4S8yKKn3cJylyfN
- FZ9vQYA/FKKVECcnYnb0ac+Rz8ZFhY9gJHn9FuQYmRd9Dk2YNpxQMGssGUqjP32ckx6d
- g6JhggPHany7wbvcAvotyh8PZLZP+C8PrMh9dJBF/v/YhMpIcnoY3YVaieKhU3OwuqnK
- 5uTNRBwZarTTr+wgtLM1ipce+xIBKIuXW4LJN/Kkm1sR5QlKL90TbuTMixJX05y5OkLq
- pqxg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ832oi3O3//naGO6sOv9ko5dMVsmzBh2g8cW7iHO4PhMUoIaA6JdS7rz9gW+fmlh3NCBtYj5pEAStCM@nongnu.org
-X-Gm-Message-State: AOJu0YxRlHn5IaQCEnL+Cve92n8ZLgHP+Lla8IjVDghoN9VpcLPQEL0I
- OMC620KvMVI3vc3rYfKPiwMMHl8YcNhbHtHzcdu/XvpUi9Kr4xD22X5kWoh1ifpEFmc=
-X-Gm-Gg: Acq92OGGruEE4aVUtNPMQ/PWRHmeU4wydgGDX5qR7nahZezcHVbuLRzXh8PTNfxZp2h
- YYS7nvP2sWJk33+xBrjoETwUSDDem/bMbE9zgUfH+c9yB0tmGdRwqWBKUJtqnCkwRqTJuoX1YM2
- XSIPLqVBoKZq+GdtuXdq82ajWvk87NNrEN4DUb0n9OSCloJZ+7HpZeQ3pTjSb3uWukHsYkPpzQh
- B/q/mKTE0KpAeU2//Je5roSM3fyNBefOkL/mL+zSF1bDyBBzl1987U7vHNGlUOhEZBFRnLAzKuh
- eNHdYUymlxlk97zf+697+N/XDECZlmgMyGpqSQ1hpKeJq9cB9sQmH65zOAZDcMuIwoeYyrHjaGf
- OinVX87gbgfSoD9QFLDb5/J6GZwrPz/jrFopQoyaWcd/nNdXlhgQeUQdpYl15djy/YGjgoMi2Wq
- RFVfk8vkeVkzVAuIba/U9TsqPKZ/i16Sjil8Hl4fsCkPIRn0B08w1FfEQ8ju9cCgbC/xVnwA7Li
- asK
-X-Received: by 2002:a05:600c:4f0f:b0:490:5149:a242 with SMTP id
- 5b1f17b1804b1-4905149afd4mr395260365e9.5.1779912928985; 
- Wed, 27 May 2026 13:15:28 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4904527f7f7sm619573865e9.7.2026.05.27.13.15.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 May 2026 13:15:27 -0700 (PDT)
-Message-ID: <174c5540-2525-4fa9-9aaf-faf21f185fd4@linaro.org>
-Date: Wed, 27 May 2026 22:15:26 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/riscv: Add support for a custom CPU arch state
-Content-Language: en-US
-To: Portia Stephens <portias@tenstorrent.com>,
- Alistair <alistair@alistair23.me>, Portia Stephens
- <stephensportia@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
+ d=1e100.net; s=20251104; t=1779912903; x=1780517703;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Hk3lZmLUM148KRJytCSWPjv/9H9/R4UDf3r1IZOQ7wI=;
+ b=g9F8whbAvXevnY374wLycDH4UlMiA+ZKIFaCwrvn6K2z2dYHuw24H/s4mxY+3gZURk
+ SuFGQDemFlnYiEfzVyKEDM8kNdVvjZ8zjpCdQbpkV+l7Plm/aFNa1hXAyxOuf1la3zvn
+ xmQFZjMqq9rG8Fd7BG45PhwyiDV9L1PW85M8DHqtsQrnxREd7l6dTiekFKaSvQ2zWl7B
+ QlVLF0DxmmyExvyrmk3v/gJBoAM9n2Oy6ziozWZOa/mLv1AjfUGo+lUXwIGwfatvMgYY
+ yk8wReheG5/aBCtq92X/jX3qNZ7gY9nBz5iawgqlctX6L6+4bm+X1LE1rsobyH1Mw9Ry
+ rjxQ==
+X-Gm-Message-State: AOJu0YwKpWMPz9Reqk11FEIQPem4cFCpsbTMDwNu9UDke/6yXXBgefWi
+ SsqTMErvSqZAIMSVFTbdOA57hrzU8r7UPX72th0AWtbOuFIeD+ftn9aSnDadvCI+Z77TBbrC3Gj
+ SjCCTRZMn+w==
+X-Gm-Gg: Acq92OERYfBEJS//jsOb/8atnZsLmd6gVnq18vGznSdbCwdIXTBk9TznS+R3uOFoQfk
+ pU7RKeu7qZSO8tCgEk2P9pMofAKYq5zJHtYCC9uYEDNGODQD6LlITUOfZcgpVuAYQjU2ISMlz7i
+ Q04JCZc6rR5hKPu3dGCPP6oZjulkepIdcnwvFKMepMkdK/LR5UsbhUzkico+3n30JQPC2MVZHHh
+ 6zfwGnPZc1YHvcA0CDmKc4O2DYJHI27S5wL2o2NdRzzbZaL38hRrGOIfprSbUdyE9ODXAO2wPo1
+ hEhWNYucbLI1fVL8QLbqFaNb6+9py9MKt1KANygnYZimU+6B3MNjMukHpRDsBt9IEw0ukHCRZHx
+ OQd5qpQN1Q6PQ7Vu9pDa2bWdtebRtEmvamuxwsu2KxXDi9fi0xCknrREAvRXqTyG/9J/8gXPFL0
+ /7m5BpqU6mGjX9mFO+QtWBYoolQ7YeWy8f5ZVB9T39yDorbM/iXivykkrzP8UDq87JpjBJL9M1x
+ vzE
+X-Received: by 2002:a05:600c:1992:b0:48a:79d8:a8d6 with SMTP id
+ 5b1f17b1804b1-4904245f54cmr327778735e9.7.1779912902617; 
+ Wed, 27 May 2026 13:15:02 -0700 (PDT)
+Received: from m17.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4908eab248csm259365e9.14.2026.05.27.13.15.01
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 27 May 2026 13:15:01 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-riscv@nongnu.org, Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ Anton Johansson <anjo@rev.ng>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Chao Liu <chao.liu.zevorn@gmail.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Portia Stephens <portias@oss.tenstorrent.com>
-References: <20260527030327.2289-1-stephensportia@gmail.com>
- <02b1f49a-84f8-4762-a21d-13c8087f6c0a@app.fastmail.com>
- <3455d2a8-2345-4810-a8bd-8cb9b0c284bb@linaro.org>
- <dbaa7445-b4a4-45df-8ec0-b71cfded9d6e@tenstorrent.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <dbaa7445-b4a4-45df-8ec0-b71cfded9d6e@tenstorrent.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Christoph Muellner <christoph.muellner@vrull.eu>,
+ Djordje Todorovic <djordje.todorovic@htecgroup.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v11 09/12] target/riscv: Add big-endian CPU configuration
+ field and reset logic
+Date: Wed, 27 May 2026 22:13:45 +0200
+Message-ID: <20260527201348.29511-10-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260527201348.29511-1-philmd@linaro.org>
+References: <20260527201348.29511-1-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,135 +111,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/5/26 21:41, Portia Stephens wrote:
-> 
-> 
-> On 27/5/2026 3:58 PM, Philippe Mathieu-Daudé wrote:
->> Hi,
->>
->> On 27/5/26 05:41, Alistair wrote:
->>> On Wed, 27 May 2026, at 1:03 PM, stephensportia@gmail.com wrote:
->>>> From: Portia Stephens <portias@oss.tenstorrent.com>
->>>>
->>>> Custom vendor CSR implementations may require custom state information.
->>>> This adds a custom_arch-state struct to the CPUArchState. It also 
->>>> adds a
->>>> RISCVCPUDef function pointer for handling allocation and initialization
->>>> of the custom_arch_state as well as a reset function pointer for 
->>>> setting
->>>> the custom_arch_state fields to known values on reset.
->>>>
->>>> Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
->>>> ---
->>>> target/riscv/cpu.c | 15 +++++++++++++++
->>>> target/riscv/cpu.h |  7 +++++++
->>>> 2 files changed, 22 insertions(+)
->>>>
->>>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
->>>> index 862834b480..ca557d27b5 100644
->>>> --- a/target/riscv/cpu.c
->>>> +++ b/target/riscv/cpu.c
->>>> @@ -819,6 +819,10 @@ static void riscv_cpu_reset_hold(Object *obj, 
->>>> ResetType type)
->>>>       if (kvm_enabled()) {
->>>>           kvm_riscv_reset_vcpu(cpu);
->>>>       }
->>>> +
->>>> +    if (mcc->def->custom_arch_state_reset) {
->>>> +        mcc->def->custom_arch_state_reset(env);
->>
->> ResetType shouldn't be discarded IMO.
-> 
-> Are you referring to Alistair's comment about why do we need reset? Yes 
-> it is necessary to set the registers to a known state after a reset. A 
-> finalize function is probably also needed since init will allocate the 
-> struct.
+From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 
-No; you introduce the RISCVCPUDef::custom_arch_state_init() handler
-but discard the ResetType argument. Implementations could use it.
+Add a big_endian field to RISCVCPUConfig and wire it into the CPU
+reset path. When cfg.big_endian is set, riscv_cpu_reset_hold()
+writes 1 into the MSTATUS MBE/SBE/UBE fields using set_field();
+otherwise it writes 0. This makes the reset value deterministic on
+both cold and warm reset.
 
-> 
->>
->>>> +    }
->>>> #endif
->>>> }
->>>> @@ -1167,6 +1171,9 @@ static void riscv_cpu_init(Object *obj)
->>>>       if (mcc->def->custom_csrs) {
->>>>           riscv_register_custom_csrs(cpu, mcc->def->custom_csrs);
->>>>       }
->>>> +    if (mcc->def->custom_arch_state_init) {
->>>> +        mcc->def->custom_arch_state_init(&cpu->env);
->>>> +    }
->>>> #endif
->>>>       accel_cpu_instance_init(CPU(obj));
->>>> @@ -2706,6 +2713,14 @@ static void 
->>>> riscv_cpu_class_base_init(ObjectClass *c, const void *data)
->>>>               assert(!mcc->def->custom_csrs);
->>>>               mcc->def->custom_csrs = def->custom_csrs;
->>>>           }
->>>> +        if (def->custom_arch_state_init) {
->>>> +            assert(!mcc->def->custom_arch_state_init);
->>>> +            mcc->def->custom_arch_state_init = def- 
->>>> >custom_arch_state_init;
->>>> +        }
->>>> +        if (def->custom_arch_state_reset) {
->>>> +            assert(!mcc->def->custom_arch_state_reset);
->>>> +            mcc->def->custom_arch_state_reset = def- 
->>>> >custom_arch_state_reset;
->>>> +        }
->>>>       }
->>>>       if (!object_class_is_abstract(c)) {
->>>> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
->>>> index 7d79c7a5a7..8132c65012 100644
->>>> --- a/target/riscv/cpu.h
->>>> +++ b/target/riscv/cpu.h
->>>> @@ -213,6 +213,9 @@ typedef struct PMUFixedCtrState {
->>>>           uint64_t counter_virt_prev[2];
->>>> } PMUFixedCtrState;
->>>> +typedef void (*riscv_csr_custom_init_fn)(CPURISCVState *env);
->>>> +typedef void (*riscv_csr_custom_reset_fn)(CPURISCVState *env);
->>>> +
->>>> struct CPUArchState {
->>>>       target_ulong gpr[32];
->>>>       target_ulong gprh[32]; /* 64 top bits of the 128-bit registers */
->>>> @@ -509,6 +512,8 @@ struct CPUArchState {
->>>>       uint64_t rnmip;
->>>>       uint64_t rnmi_irqvec;
->>>>       uint64_t rnmi_excpvec;
->>>> +
->>>> +    const void *custom_arch_state;
->>>> };
->>>> /*
->>>> @@ -561,6 +566,8 @@ typedef struct RISCVCPUDef {
->>>>       RISCVCPUConfig cfg;
->>>>       bool bare;
->>>>       const RISCVCSR *custom_csrs;
->>>> +    riscv_csr_custom_init_fn custom_arch_state_init;
->>>> +    riscv_csr_custom_reset_fn custom_arch_state_reset;
->>>
->>> Why do we need an init and a reset? I assume init is to allocate the 
->>> stuct, but that should probably be commented here.
->>>
->>> How do you expect these to be set? Do you have an example?
->>
->> I don't see the point of upstreaming this patch without concrete
->> example. So far it is maintenance burden without any value.
-> 
-> Okay.
-> 
->>
->>>
->>> Alistair
->>>
->>>> } RISCVCPUDef;
->>>> /**
->>>> -- 
->>>> 2.43.0
->>>>
->>>>
->>>>
->>>
->>
-> 
+This models fixed-endian harts, not mixed-endian implementations where
+the guest can toggle MBE/SBE/UBE at runtime. The MBE/SBE/UBE bits are
+not included in the writable mask of any mstatus/mstatush/sstatus CSR
+write path (unchanged by this series), so the value chosen at reset is
+effectively hardwired per section 3.1.6.5 of the RISC-V Privileged
+Specification.
+
+The user-facing property and documentation are added in a later patch,
+once the full endianness support is in place.
+
+Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/riscv/cpu_cfg_fields.h.inc | 1 +
+ target/riscv/cpu.c                | 7 +++++++
+ 2 files changed, 8 insertions(+)
+
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+index 734fa079f28..9eb47af0a76 100644
+--- a/target/riscv/cpu_cfg_fields.h.inc
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -157,6 +157,7 @@ BOOL_FIELD(ext_xmipscmov)
+ BOOL_FIELD(ext_xmipslsp)
+ BOOL_FIELD(ext_xlrbr)
+ 
++BOOL_FIELD(big_endian)
+ BOOL_FIELD(mmu)
+ BOOL_FIELD(pmp)
+ BOOL_FIELD(debug)
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 52f143f1cd4..fef424f2bf9 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -739,6 +739,13 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+             env->mstatus = set_field(env->mstatus, MSTATUS_MDT, 1);
+         }
+     }
++    /*
++     * Model fixed-endian harts: MBE/SBE/UBE are initialized from the
++     * CPU configuration and are intentionally not writable via status CSRs.
++     */
++    env->mstatus = set_field(env->mstatus, MSTATUS_MBE, cpu->cfg.big_endian);
++    env->mstatus = set_field(env->mstatus, MSTATUS_SBE, cpu->cfg.big_endian);
++    env->mstatus = set_field(env->mstatus, MSTATUS_UBE, cpu->cfg.big_endian);
+     env->mcause = 0;
+     env->miclaim = MIP_SGEIP;
+     env->pc = env->resetvec;
+-- 
+2.53.0
 
 
