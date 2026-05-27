@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9369CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 19:14:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81EE4CD6E43
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 19:14:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSJfr-0006ZY-2y; Wed, 27 May 2026 15:12:15 -0400
+	id 1wSJft-0006aK-DQ; Wed, 27 May 2026 15:12:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wSJfl-0006Xu-G1
+ id 1wSJfk-0006Xo-9M
  for qemu-devel@nongnu.org; Wed, 27 May 2026 15:12:09 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wSJfh-0000bf-O7
- for qemu-devel@nongnu.org; Wed, 27 May 2026 15:12:09 -0400
+ id 1wSJff-0000bD-Fw
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 15:12:07 -0400
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:2925:0:640:1f39:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id C1C2FC0482;
- Wed, 27 May 2026 22:12:03 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 7612A88481;
+ Wed, 27 May 2026 22:12:01 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:69::1:d])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id qBf3L80XU0U0-NW2RxciL; Wed, 27 May 2026 22:12:02 +0300
+ id qBf3L80XU0U0-7R18QPgU; Wed, 27 May 2026 22:12:00 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1779909122;
- bh=jJlKQDXIfT0mwN96oQ516AKc8S4vKzFC7fJkk9M73Tc=;
+ s=default; t=1779909120;
+ bh=qx1Ad2zujHxdEpruVjFNJqpz2VqXBNkmIJc/XEc8578=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=tOaMrAwS+UtdlZI6C376XC0jRIjR8xPJWP0uaRnBBDYPu5ZQgzbuIONjqJr7MvzQz
- 5mBYJUFxNu6vzDALTTP6hMD+CT5ESsp+922Xwj0+3kFNN+XrR6sCz8bOswyrkgQICz
- /NGmbMAG7yNIAFzG85617/ysEDc/k5LNHnx+ZMco=
+ b=Lmw7aQT0BGcEMIlA7uODtOQV7RjVQEW7ne8lYJk95HcQRFdR0gAmB0jQ3oWxusihI
+ Cep8XI5QFv7d9hI2wdfbwlszRyGKpJXffg+1aOM8UBsIEAAqiu2JOCHqq5UDUyC7gL
+ VE47yLeiTjUJKBDHiCSe7jPs/V9pq9oM2+S1KCaY=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -46,17 +47,18 @@ Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
  raphael.s.norwitz@gmail.com, bchaney@akamai.com, vsementsov@yandex-team.ru,
  qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
  yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v17 10/10] tests/functional: add test_tap_migration
-Date: Wed, 27 May 2026 22:11:49 +0300
-Message-ID: <20260527191150.250333-11-vsementsov@yandex-team.ru>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Eric Blake <eblake@redhat.com>
+Subject: [PATCH v17 08/10] net/tap: support local migration with virtio-net
+Date: Wed, 27 May 2026 22:11:47 +0300
+Message-ID: <20260527191150.250333-9-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260527191150.250333-1-vsementsov@yandex-team.ru>
 References: <20260527191150.250333-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -77,491 +79,468 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add test for a new local-migration migration of virtio-net/tap, with fd
-passing through UNIX socket.
+Support transferring of TAP state (including open fd).
+
+Add new property "local-migration-supported", which defines,
+is local-migration is actually supported for this TAP device.
+Starting from 11.1 MT it's enabled by default.
+
+Note, that local-migration (including migrating opened FDs
+through migration channel, which must be UNIX socket), is
+enabled by global "local" migration parameters. But individual
+devices may have additional options to enable/disable it
+personally.
+
+Add new option "incoming-fds", which should be set to true on
+target for incoming migration work. It says "do not open any
+files, but instead wait for FDs coming from migration stream".
+"local-migration-supported" option is not enough, as it work in pair
+with migration parameter "local", and intialization process
+of TAP device should not depend on migration parameters.
+
+For new option require explicitly unset script and downscript,
+to keep possibility of implementing support for them in the
+future.
+
+Note disabling read polling on source stop for TAP migration:
+otherwise, source process may steal packages from TAP fd even
+after source vm STOP.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Ben Chaney <bchaney@akamai.com>
 ---
- tests/functional/x86_64/meson.build           |   1 +
- tests/functional/x86_64/test_tap_migration.py | 458 ++++++++++++++++++
- 2 files changed, 459 insertions(+)
- create mode 100755 tests/functional/x86_64/test_tap_migration.py
+ hw/core/machine.c |   2 +
+ net/tap.c         | 221 +++++++++++++++++++++++++++++++++++++++++++---
+ qapi/net.json     |  20 ++++-
+ 3 files changed, 231 insertions(+), 12 deletions(-)
 
-diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
-index 1ed10ad6c29..c4bb14f034b 100644
---- a/tests/functional/x86_64/meson.build
-+++ b/tests/functional/x86_64/meson.build
-@@ -45,4 +45,5 @@ tests_x86_64_system_thorough = [
-   'virtio_balloon',
-   'virtio_gpu',
-   'rebuild_vmfd',
-+  'tap_migration',
- ]
-diff --git a/tests/functional/x86_64/test_tap_migration.py b/tests/functional/x86_64/test_tap_migration.py
-new file mode 100755
-index 00000000000..6c99cd82834
---- /dev/null
-+++ b/tests/functional/x86_64/test_tap_migration.py
-@@ -0,0 +1,458 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that tests TAP local migration
-+# with fd passing
-+#
-+# Copyright (c) Yandex Technologies LLC, 2026
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import os
-+import time
-+import subprocess
-+from subprocess import run
-+import signal
-+import ctypes
-+import ctypes.util
-+import unittest
-+from contextlib import contextmanager, ExitStack
-+from typing import Tuple
-+
-+from qemu_test import (
-+    LinuxKernelTest,
-+    Asset,
-+    exec_command_and_wait_for_pattern,
-+)
-+from qemu_test.decorators import skipWithoutSudo
-+
-+
-+GUEST_IP = "192.168.100.2"
-+GUEST_IP_MASK = f"{GUEST_IP}/24"
-+GUEST_MAC = "d6:0d:75:f8:0f:b7"
-+HOST_IP = "192.168.100.1"
-+HOST_IP_MASK = f"{HOST_IP}/24"
-+TAP_ID = "tap0"
-+TAP_ID2 = "tap1"
-+TAP_MAC = "e6:1d:44:b5:03:5d"
-+NETNS = f"qemu_test_ns_{os.getpid()}"
-+
-+
-+def ip(args, check=True) -> None:
-+    """Run ip command with sudo"""
-+    run(["sudo", "ip"] + args, check=check)
-+
-+
-+@contextmanager
-+def switch_netns(netns_name):
-+    libc = ctypes.CDLL(ctypes.util.find_library("c"))
-+    netns_path = f"/var/run/netns/{netns_name}"
-+
-+    def switch_to_fd(fd, check: bool = False):
-+        """Switch to netns by file descriptor"""
-+        SYS_setns = 308
-+        CLONE_NEWNET = 0x40000000
-+        ret = libc.syscall(SYS_setns, fd, CLONE_NEWNET)
-+        if check and ret != 0:
-+            raise RuntimeError("syscall SETNS failed")
-+
-+    with ExitStack() as stack:
-+        original_netns_fd = os.open("/proc/self/ns/net", os.O_RDONLY)
-+        stack.callback(os.close, original_netns_fd)
-+
-+        ip(["netns", "add", netns_name])
-+        stack.callback(ip, ["netns", "del", netns_name], check=False)
-+
-+        new_netns_fd = os.open(netns_path, os.O_RDONLY)
-+        stack.callback(os.close, new_netns_fd)
-+
-+        switch_to_fd(new_netns_fd)
-+        stack.callback(switch_to_fd, original_netns_fd, check=False)
-+
-+        yield
-+
-+
-+def del_tap(tap_name: str = TAP_ID) -> None:
-+    ip(["tuntap", "del", tap_name, "mode", "tap", "multi_queue"], check=False)
-+
-+
-+def init_tap(tap_name: str = TAP_ID, with_ip: bool = True) -> None:
-+    ip(["tuntap", "add", "dev", tap_name, "mode", "tap", "multi_queue"])
-+    if with_ip:
-+        ip(["link", "set", "dev", tap_name, "address", TAP_MAC])
-+        ip(["addr", "add", HOST_IP_MASK, "dev", tap_name])
-+    ip(["link", "set", tap_name, "up"])
-+
-+
-+def switch_network_to_tap2() -> None:
-+    ip(["link", "set", TAP_ID2, "down"])
-+    ip(["link", "set", TAP_ID, "down"])
-+    ip(["addr", "delete", HOST_IP_MASK, "dev", TAP_ID])
-+    ip(["link", "set", "dev", TAP_ID2, "address", TAP_MAC])
-+    ip(["addr", "add", HOST_IP_MASK, "dev", TAP_ID2])
-+    ip(["link", "set", TAP_ID2, "up"])
-+
-+
-+def parse_ping_line(line: str) -> float:
-+    # suspect lines like
-+    # [1748524876.590509] 64 bytes from 94.245.155.3 \
-+    #      (94.245.155.3): icmp_seq=1 ttl=250 time=101 ms
-+    spl = line.split()
-+    return float(spl[0][1:-1])
-+
-+
-+def parse_ping_output(out) -> Tuple[bool, float, float]:
-+    lines = [x for x in out.split("\n") if x.startswith("[")]
-+
-+    try:
-+        first_no_ans = next(
-+            (ind for ind in range(len(lines)) if lines[ind][20:26] == "no ans")
-+        )
-+    except StopIteration:
-+        return False, parse_ping_line(lines[0]), parse_ping_line(lines[-1])
-+
-+    last_no_ans = next(
-+        ind
-+        for ind in range(len(lines) - 1, -1, -1)
-+        if lines[ind][20:26] == "no ans"
-+    )
-+
-+    return (
-+        True,
-+        parse_ping_line(lines[first_no_ans]),
-+        parse_ping_line(lines[last_no_ans]),
-+    )
-+
-+
-+def wait_migration_finish(source_vm, target_vm):
-+    migr_events = (
-+        ("MIGRATION", {"data": {"status": "completed"}}),
-+        ("MIGRATION", {"data": {"status": "failed"}}),
-+    )
-+
-+    source_e = source_vm.events_wait(migr_events)["data"]
-+    target_e = target_vm.events_wait(migr_events)["data"]
-+
-+    source_s = source_vm.cmd("query-status")["status"]
-+    target_s = target_vm.cmd("query-status")["status"]
-+
-+    assert (
-+        source_e["status"] == "completed"
-+        and target_e["status"] == "completed"
-+        and source_s == "postmigrate"
-+        and target_s == "paused"
-+    ), f"""Migration failed:
-+    SRC status: {source_s}
-+    SRC event: {source_e}
-+    TGT status: {target_s}
-+    TGT event:{target_e}"""
-+
-+
-+@skipWithoutSudo()
-+class TAPFdMigration(LinuxKernelTest):
-+
-+    ASSET_KERNEL = Asset(
-+        (
-+            "https://archives.fedoraproject.org/pub/archive/fedora/linux/releases"
-+            "/31/Server/x86_64/os/images/pxeboot/vmlinuz"
-+        ),
-+        "d4738d03dbbe083ca610d0821d0a8f1488bebbdccef54ce33e3adb35fda00129",
-+    )
-+
-+    ASSET_INITRD = Asset(
-+        (
-+            "https://archives.fedoraproject.org/pub/archive/fedora/linux/releases"
-+            "/31/Server/x86_64/os/images/pxeboot/initrd.img"
-+        ),
-+        "277cd6c7adf77c7e63d73bbb2cded8ef9e2d3a2f100000e92ff1f8396513cd8b",
-+    )
-+
-+    ASSET_ALPINE_ISO = Asset(
-+        (
-+            "https://dl-cdn.alpinelinux.org/"
-+            "alpine/v3.22/releases/x86_64/alpine-standard-3.22.1-x86_64.iso"
-+        ),
-+        "96d1b44ea1b8a5a884f193526d92edb4676054e9fa903ad2f016441a0fe13089",
-+    )
-+
-+    @classmethod
-+    def setUpClass(cls):
-+        super().setUpClass()
-+
-+        try:
-+            cls.netns_context = switch_netns(NETNS)
-+            cls.netns_context.__enter__()
-+        except (OSError, subprocess.CalledProcessError) as e:
-+            raise unittest.SkipTest(f"can't switch network namespace: {e}")
-+
-+    @classmethod
-+    def tearDownClass(cls):
-+        if hasattr(cls, "netns_context"):
-+            cls.netns_context.__exit__(None, None, None)
-+        super().tearDownClass()
-+
-+    def setUp(self):
-+        super().setUp()
-+
-+        init_tap()
-+
-+        self.outer_ping_proc = None
-+        self.shm_path = None
-+
-+    def tearDown(self):
-+        try:
-+            del_tap(TAP_ID)
-+            del_tap(TAP_ID2)
-+
-+            if self.outer_ping_proc:
-+                self.stop_outer_ping()
-+
-+            if self.shm_path:
-+                os.unlink(self.shm_path)
-+        finally:
-+            super().tearDown()
-+
-+    def start_outer_ping(self) -> None:
-+        assert self.outer_ping_proc is None
-+        self.outer_ping_log = self.scratch_file("ping.log")
-+        with open(self.outer_ping_log, "w") as f:
-+            self.outer_ping_proc = subprocess.Popen(
-+                ["ping", "-i", "0", "-O", "-D", GUEST_IP],
-+                text=True,
-+                stdout=f,
-+            )
-+
-+    def stop_outer_ping(self) -> str:
-+        assert self.outer_ping_proc
-+        self.outer_ping_proc.send_signal(signal.SIGINT)
-+
-+        self.outer_ping_proc.communicate(timeout=5)
-+        self.outer_ping_proc = None
-+
-+        with open(self.outer_ping_log) as f:
-+            return f.read()
-+
-+    def stop_ping_and_check(self, stop_time, resume_time):
-+        ping_res = self.stop_outer_ping()
-+
-+        discon, a, b = parse_ping_output(ping_res)
-+
-+        if not discon:
-+            text = (
-+                f"STOP: {stop_time}, RESUME: {resume_time}," f"PING: {a} - {b}"
-+            )
-+            if a > stop_time or b < resume_time:
-+                self.fail(f"PING failed: {text}")
-+            self.log.info(f"PING: no packets lost: {text}")
-+            return
-+
-+        text = (
-+            f"STOP: {stop_time}, RESUME: {resume_time},"
-+            f"PING: disconnect: {a} - {b}"
-+        )
-+        self.log.info(text)
-+        eps = 0.05
-+        if a < stop_time - eps or b > resume_time + eps:
-+            self.fail(text)
-+
-+    def one_ping_from_guest(self, vm) -> None:
-+        exec_command_and_wait_for_pattern(
-+            self,
-+            f"ping -c 1 -W 1 {HOST_IP}",
-+            "1 packets transmitted, 1 packets received",
-+            "1 packets transmitted, 0 packets received",
-+            vm=vm,
-+        )
-+        self.wait_for_console_pattern("# ", vm=vm)
-+
-+    def one_ping_from_host(self) -> None:
-+        run(
-+            ["ping", "-c", "1", "-W", "1", GUEST_IP],
-+            stdout=subprocess.DEVNULL,
-+            check=True,
-+        )
-+
-+    def setup_shared_memory(self):
-+        self.shm_path = f"/dev/shm/qemu_test_{os.getpid()}"
-+
-+        try:
-+            with open(self.shm_path, "wb") as f:
-+                f.write(b"\0" * (1024 * 1024 * 1024))  # 1GB
-+        except Exception as e:
-+            self.fail(f"Failed to create shared memory file: {e}")
-+
-+    def prepare_and_launch_vm(
-+        self, shm_path, vhost, incoming=False, vm=None, local=True
-+    ):
-+        if not vm:
-+            vm = self.vm
-+
-+        vm.set_console()
-+        vm.add_args("-accel", "kvm")
-+        vm.add_args("-device", "pcie-pci-bridge,id=pci.1,bus=pcie.0")
-+        vm.add_args("-m", "1G")
-+
-+        vm.add_args(
-+            "-object",
-+            f"memory-backend-file,id=ram0,size=1G,mem-path={shm_path},share=on",
-+        )
-+        vm.add_args("-machine", "memory-backend=ram0")
-+
-+        vm.add_args(
-+            "-drive",
-+            f"file={self.ASSET_ALPINE_ISO.fetch()},media=cdrom,format=raw",
-+        )
-+
-+        vm.add_args("-S")
-+
-+        if incoming:
-+            vm.add_args("-incoming", "defer")
-+
-+        vm_s = "target" if incoming else "source"
-+        self.log.info(f"Launching {vm_s} VM")
-+        vm.launch()
-+
-+        if not local:
-+            tap_name = TAP_ID2 if incoming else TAP_ID
-+        else:
-+            tap_name = TAP_ID
-+
-+        self.add_virtio_net(vm, vhost, tap_name, local, incoming)
-+
-+        self.set_migration_capabilities(vm, local)
-+
-+    def add_virtio_net(
-+        self, vm, vhost: bool, tap_name: str, local: bool, incoming: bool
-+    ):
-+        incoming_fds = local and incoming
-+        netdev_params = {
-+            "id": "netdev.1",
-+            "vhost": vhost,
-+            "type": "tap",
-+            "queues": 4,
-+            "incoming-fds": incoming_fds,
-+            "script": "no",
-+            "downscript": "no",
-+            "local-migration-supported": local,
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 63baff859f3..306f01b1a68 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -36,11 +36,13 @@
+ #include "hw/virtio/virtio-pci.h"
+ #include "hw/virtio/virtio-net.h"
+ #include "hw/virtio/virtio-iommu.h"
++#include "net/tap.h"
+ #include "hw/acpi/generic_event_device.h"
+ #include "qemu/audio.h"
+ 
+ GlobalProperty hw_compat_11_0[] = {
+     { "chardev-vc", "encoding", "cp437" },
++    { TYPE_TAP_NETDEV, "local-migration-supported", "false" },
+ };
+ const size_t hw_compat_11_0_len = G_N_ELEMENTS(hw_compat_11_0);
+ 
+diff --git a/net/tap.c b/net/tap.c
+index 529ed4b0f5b..c84daad9895 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -36,13 +36,19 @@
+ #include "net/net.h"
+ #include "clients.h"
+ #include "monitor/monitor.h"
++#include "system/runstate.h"
+ #include "system/system.h"
++#include "migration/misc.h"
+ #include "qapi/error.h"
+ #include "qemu/cutils.h"
+ #include "qemu/error-report.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/sockets.h"
+ #include "hw/virtio/vhost.h"
++#include "hw/core/vmstate-if.h"
++#include "migration/vmstate.h"
++#include "qom/object.h"
++#include "qom/compat-properties.h"
+ 
+ #include "net/tap.h"
+ #include "net/util.h"
+@@ -70,6 +76,8 @@ static const int kernel_feature_bits[] = {
+ 
+ OBJECT_DECLARE_SIMPLE_TYPE(TAPState, TAP_NETDEV)
+ 
++static const VMStateDescription vmstate_tap;
++
+ struct TAPState {
+     Object parent_obj;
+ 
+@@ -92,6 +100,9 @@ struct TAPState {
+     Notifier exit;
+ 
+     int queue_index;
++    bool read_poll_detached;
++    VMChangeStateEntry *vmstate;
++    bool local_migration_supported;
+ };
+ 
+ static void launch_script(const char *setup_script, const char *ifname,
+@@ -100,19 +111,25 @@ static void launch_script(const char *setup_script, const char *ifname,
+ static void tap_send(void *opaque);
+ static void tap_writable(void *opaque);
+ 
++static bool tap_is_explicit_no_script(const char *script_arg)
++{
++    return script_arg &&
++        (script_arg[0] == '\0' || strcmp(script_arg, "no") == 0);
++}
++
+ static char *tap_parse_script(const char *script_arg, const char *default_path)
+ {
+     g_autofree char *res = g_strdup(script_arg);
+ 
+-    if (!res) {
+-        res = get_relocated_path(default_path);
++    if (tap_is_explicit_no_script(script_arg)) {
++        return NULL;
+     }
+ 
+-    if (res[0] == '\0' || strcmp(res, "no") == 0) {
+-        return NULL;
++    if (!script_arg) {
++        return get_relocated_path(default_path);
+     }
+ 
+-    return g_steal_pointer(&res);
++    return g_strdup(script_arg);
+ }
+ 
+ static void tap_update_fd_handler(TAPState *s)
+@@ -129,6 +146,23 @@ static void tap_read_poll(TAPState *s, bool enable)
+     tap_update_fd_handler(s);
+ }
+ 
++static void tap_vm_state_change(void *opaque, bool running, RunState state)
++{
++    TAPState *s = opaque;
++
++    if (running) {
++        if (s->read_poll_detached) {
++            tap_read_poll(s, true);
++            s->read_poll_detached = false;
 +        }
++    } else if (state == RUN_STATE_FINISH_MIGRATE) {
++        if (s->read_poll) {
++            s->read_poll_detached = true;
++            tap_read_poll(s, false);
++        }
++    }
++}
 +
-+        if not incoming_fds:
-+            netdev_params["vnet_hdr"] = True
-+            netdev_params["ifname"] = tap_name
+ static void tap_write_poll(TAPState *s, bool enable)
+ {
+     s->write_poll = enable;
+@@ -359,10 +393,17 @@ static void tap_cleanup(NetClientState *nc)
+         s->exit.notify = NULL;
+     }
+ 
++    if (s->vmstate) {
++        qemu_del_vm_change_state_handler(s->vmstate);
++        s->vmstate = NULL;
++    }
 +
-+        vm.cmd("netdev_add", netdev_params)
+     tap_read_poll(s, false);
+     tap_write_poll(s, false);
+     close(s->fd);
+     s->fd = -1;
 +
-+        vm.cmd(
-+            "device_add",
-+            driver="virtio-net-pci",
-+            romfile="",
-+            id="vnet.1",
-+            netdev="netdev.1",
-+            mq=True,
-+            vectors=18,
-+            bus="pci.1",
-+            mac=GUEST_MAC,
-+            disable_legacy="off",
-+        )
++    vmstate_unregister(VMSTATE_IF(s), &vmstate_tap, s);
+ }
+ 
+ static void tap_poll(NetClientState *nc, bool enable)
+@@ -399,6 +440,73 @@ static VHostNetState *tap_get_vhost_net(NetClientState *nc)
+     return s->vhost_net;
+ }
+ 
++static bool tap_is_wait_incoming(NetClientState *nc)
++{
++    TAPState *s = container_of(nc, TAPState, nc);
++    assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
++    return s->fd == -1;
++}
 +
-+    def set_migration_capabilities(self, vm, local=True):
-+        vm.cmd(
-+            "migrate-set-capabilities",
-+            {
-+                "capabilities": [
-+                    {"capability": "events", "state": True},
-+                    {"capability": "x-ignore-shared", "state": True},
-+                ]
-+            },
-+        )
-+        vm.cmd("migrate-set-parameters", {"local": local})
++static int tap_pre_load(void *opaque)
++{
++    TAPState *s = opaque;
 +
-+    def setup_guest_network(self) -> None:
-+        exec_command_and_wait_for_pattern(self, "ip addr", "# ")
-+        exec_command_and_wait_for_pattern(
-+            self,
-+            f"ip addr add {GUEST_IP_MASK} dev eth0 && "
-+            "ip link set eth0 up && echo OK",
-+            "OK",
-+        )
-+        self.wait_for_console_pattern("# ")
++    if (s->fd != -1) {
++        error_report(
++            "TAP is already initialized and cannot receive incoming fd");
++        return -EINVAL;
++    }
 +
-+    def do_test_tap_fd_migration(self, vhost, local=True):
-+        self.require_accelerator("kvm")
-+        self.set_machine("q35")
++    return 0;
++}
 +
-+        socket_dir = self.socket_dir()
-+        migration_socket = os.path.join(socket_dir.name, "migration.sock")
++static bool tap_setup_vhost(TAPState *s, Error **errp);
 +
-+        self.setup_shared_memory()
++static int tap_post_load(void *opaque, int version_id)
++{
++    TAPState *s = opaque;
++    Error *local_err = NULL;
 +
-+        # Setup second TAP if needed
-+        if not local:
-+            del_tap(TAP_ID2)
-+            init_tap(TAP_ID2, with_ip=False)
++    tap_read_poll(s, true);
 +
-+        self.prepare_and_launch_vm(self.shm_path, vhost, local=local)
-+        self.vm.cmd("cont")
-+        self.wait_for_console_pattern("login:")
-+        exec_command_and_wait_for_pattern(self, "root", "# ")
++    if (s->fd < 0) {
++        return -1;
++    }
 +
-+        self.setup_guest_network()
++    if (!tap_setup_vhost(s, &local_err)) {
++        error_prepend(&local_err,
++                      "Failed to setup vhost during TAP post-load: ");
++        error_report_err(local_err);
++        return -1;
++    }
 +
-+        self.one_ping_from_guest(self.vm)
-+        self.one_ping_from_host()
-+        self.start_outer_ping()
++    return 0;
++}
 +
-+        # Get some successful pings before migration
-+        time.sleep(0.5)
++static bool tap_needed(void *opaque)
++{
++    TAPState *s = opaque;
 +
-+        target_vm = self.get_vm(name="target")
-+        self.prepare_and_launch_vm(
-+            self.shm_path,
-+            vhost,
-+            incoming=True,
-+            vm=target_vm,
-+            local=local,
-+        )
++    return s->local_migration_supported && migrate_local();
++}
 +
-+        target_vm.cmd("migrate-incoming", {"uri": f"unix:{migration_socket}"})
++static const VMStateDescription vmstate_tap = {
++    .name = "net-tap",
++    .priority = MIG_PRI_BACKEND,
++    .pre_load = tap_pre_load,
++    .post_load = tap_post_load,
++    .needed = tap_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_FD(fd, TAPState),
++        VMSTATE_BOOL(using_vnet_hdr, TAPState),
++        VMSTATE_BOOL(has_ufo, TAPState),
++        VMSTATE_BOOL(has_uso, TAPState),
++        VMSTATE_BOOL(has_tunnel, TAPState),
++        VMSTATE_BOOL(enabled, TAPState),
++        VMSTATE_UINT32(host_vnet_hdr_len, TAPState),
++        VMSTATE_END_OF_LIST()
++    }
++};
+ 
+ static char *tap_vmstate_if_get_id(VMStateIf *obj)
+ {
+@@ -407,17 +515,42 @@ static char *tap_vmstate_if_get_id(VMStateIf *obj)
+     return res;
+ }
+ 
++static bool tap_get_local_migration_supported_prop(Object *obj, Error **errp)
++{
++    TAPState *s = TAP_NETDEV(obj);
++    return s->local_migration_supported;
++}
 +
-+        self.log.info("Starting migration")
-+        freeze_start = time.time()
-+        self.vm.cmd("migrate", {"uri": f"unix:{migration_socket}"})
++static void tap_set_local_migration_supported_prop(Object *obj, bool value,
++                                                   Error **errp)
++{
++    TAPState *s = TAP_NETDEV(obj);
++    s->local_migration_supported = value;
++}
 +
-+        self.log.info("Waiting for migration completion")
-+        wait_migration_finish(self.vm, target_vm)
++static void tap_instance_init(Object *obj)
++{
++    TAPState *s = TAP_NETDEV(obj);
++    s->local_migration_supported = true;
++}
 +
-+        # Switch network to tap1 if not using local-migration
-+        if not local:
-+            switch_network_to_tap2()
+ static void tap_class_init(ObjectClass *klass, const void *data)
+ {
+     VMStateIfClass *vc = VMSTATE_IF_CLASS(klass);
+ 
+     vc->get_id = tap_vmstate_if_get_id;
 +
-+        target_vm.cmd("cont")
-+        freeze_end = time.time()
++    object_class_property_add_bool(klass, "local-migration-supported",
++                                   tap_get_local_migration_supported_prop,
++                                   tap_set_local_migration_supported_prop);
+ }
+ 
+ static const TypeInfo tap_netdev_info = {
+     .name = TYPE_TAP_NETDEV,
+     .parent = TYPE_OBJECT,
+     .instance_size = sizeof(TAPState),
++    .instance_init = tap_instance_init,
++    .instance_post_init = object_apply_compat_props,
+     .class_init = tap_class_init,
+     .interfaces = (const InterfaceInfo[]) {
+         { TYPE_VMSTATE_IF },
+@@ -450,13 +583,16 @@ static NetClientInfo net_tap_info = {
+     .set_vnet_le = tap_set_vnet_le,
+     .set_vnet_be = tap_set_vnet_be,
+     .set_steering_ebpf = tap_set_steering_ebpf,
++    .is_wait_incoming = tap_is_wait_incoming,
+     .get_vhost_net = tap_get_vhost_net,
+ };
+ 
+ static TAPState *new_tap(NetClientState *peer,
+                          const char *model,
+                          const char *name,
+-                         int queue_index)
++                         int queue_index,
++                         bool has_local_migration_supported,
++                         bool local_migration_supported)
+ {
+     TAPState *s = TAP_NETDEV(object_new(TYPE_TAP_NETDEV));
+ 
+@@ -465,6 +601,12 @@ static TAPState *new_tap(NetClientState *peer,
+ 
+     s->queue_index = queue_index;
+ 
++    if (has_local_migration_supported) {
++        s->local_migration_supported = local_migration_supported;
++    }
 +
-+        self.vm.shutdown()
++    vmstate_register(VMSTATE_IF(s), VMSTATE_INSTANCE_ID_ANY, &vmstate_tap, s);
 +
-+        self.log.info("Verifying PING on target VM after migration")
-+        self.one_ping_from_guest(target_vm)
-+        self.one_ping_from_host()
+     return s;
+ }
+ 
+@@ -473,10 +615,14 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
+                                  const char *name,
+                                  int fd,
+                                  int vnet_hdr,
+-                                 int queue_index)
++                                 int queue_index,
++                                 bool has_local_migration_supported,
++                                 bool local_migration_supported)
+ {
+     NetOffloads ol = {};
+-    TAPState *s = new_tap(peer, model, name, queue_index);
++    TAPState *s = new_tap(peer, model, name, queue_index,
++                          has_local_migration_supported,
++                          local_migration_supported);
+ 
+     s->fd = fd;
+     s->host_vnet_hdr_len = vnet_hdr ? sizeof(struct virtio_net_hdr) : 0;
+@@ -713,7 +859,7 @@ int net_init_bridge(const Netdev *netdev, const char *name,
+         close(fd);
+         return -1;
+     }
+-    s = net_tap_fd_init(peer, "bridge", name, fd, vnet_hdr, 0);
++    s = net_tap_fd_init(peer, "bridge", name, fd, vnet_hdr, 0, true, false);
+ 
+     qemu_set_info_str(&s->nc, "helper=%s,br=%s", helper, br);
+ 
+@@ -793,11 +939,16 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+                              Error **errp)
+ {
+     TAPState *s = net_tap_fd_init(peer, tap->helper ? "bridge" : "tap",
+-                                  name, fd, vnet_hdr, queue_index);
++                                  name, fd, vnet_hdr, queue_index,
++                                  tap->has_local_migration_supported,
++                                  tap->local_migration_supported);
+     bool sndbuf_required = tap->has_sndbuf;
+     int sndbuf =
+         (tap->has_sndbuf && tap->sndbuf) ? MIN(tap->sndbuf, INT_MAX) : INT_MAX;
+ 
++    s->read_poll_detached = false;
++    s->vmstate = qemu_add_vm_change_state_handler(tap_vm_state_change, s);
 +
-+        # And a bit more pings after source shutdown
-+        time.sleep(0.3)
-+        self.stop_ping_and_check(freeze_start, freeze_end)
+     if (!tap_set_sndbuf(fd, sndbuf, sndbuf_required ? errp : NULL) &&
+         sndbuf_required) {
+         goto failed;
+@@ -960,6 +1111,31 @@ int net_init_tap(const Netdev *netdev, const char *name,
+         return -1;
+     }
+ 
++    if (tap->incoming_fds &&
++        (tap->fd || tap->fds || tap->helper || tap->br || tap->ifname ||
++         tap->has_sndbuf || tap->has_vnet_hdr)) {
++        error_setg(errp, "incoming-fds is incompatible with "
++                   "fd=, fds=, helper=, br=, ifname=, sndbuf= and vnet_hdr=");
++        return -1;
++    }
 +
-+        target_vm.shutdown()
++    if (tap->incoming_fds &&
++        !(tap_is_explicit_no_script(tap->script) &&
++          tap_is_explicit_no_script(tap->downscript))) {
++        /*
++         * script="" and downscript="" are silently supported to be consistent
++         * with cases without incoming_fds, but do not care to put this into
++         * error message.
++         */
++        error_setg(errp, "incoming-fds requires script=no and downscript=no");
++        return -1;
++    }
 +
-+    def test_tap_fd_migration(self):
-+        self.do_test_tap_fd_migration(False)
++    if (tap->incoming_fds && !runstate_check(RUN_STATE_INMIGRATE)) {
++        error_setg(errp, "incoming-fds requires -incoming commandline option");
++        return -1;
++    }
 +
-+    def test_tap_fd_migration_vhost(self):
-+        self.do_test_tap_fd_migration(True)
+     queues = tap_parse_fds_and_queues(tap, &fds, errp);
+     if (queues < 0) {
+         return -1;
+@@ -978,7 +1154,30 @@ int net_init_tap(const Netdev *netdev, const char *name,
+         goto fail;
+     }
+ 
+-    if (fds) {
++    if (tap->incoming_fds) {
++        for (i = 0; i < queues; i++) {
++            TAPState *s = new_tap(peer, "tap", name, i,
++                                  tap->has_local_migration_supported,
++                                  tap->local_migration_supported);
 +
-+    def test_tap_new_tap_migration(self):
-+        self.do_test_tap_fd_migration(False, local=False)
++            if (!s->local_migration_supported) {
++                error_setg(errp,
++                           "incoming-fds=true requires local-migration-supported=true");
++                qemu_del_net_client(&s->nc);
++                return -1;
++            }
 +
-+    def test_tap_new_tap_migration_vhost(self):
-+        self.do_test_tap_fd_migration(True, local=False)
++            qemu_set_info_str(&s->nc, "incoming");
 +
-+
-+if __name__ == "__main__":
-+    LinuxKernelTest.main()
++            s->fd = -1;
++            if (vhost_fds) {
++                s->vhostfd = vhost_fds[i];
++                s->vhost_busyloop_timeout = tap->has_poll_us ? tap->poll_us : 0;
++            } else {
++                s->vhostfd = -1;
++            }
++        }
++    } else if (fds) {
+         for (i = 0; i < queues; i++) {
+             if (i == 0) {
+                 vnet_hdr = tap_probe_vnet_hdr(fds[i], errp);
+diff --git a/qapi/net.json b/qapi/net.json
+index 1a6382825c5..c5d87ba308b 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -425,6 +425,22 @@
+ # @poll-us: maximum number of microseconds that could be spent on busy
+ #     polling for tap (since 2.7)
+ #
++# @incoming-fds: do not open or create any TAP devices.  Prepare for
++#     getting TAP file descriptors from incoming migration stream.
++#     The option is incompatible with any of @fd, @fds, @helper, @br,
++#     @ifname, @sndbuf and @vnet_hdr options, and requires @script and
++#     @downscript be explicitly set to nothing (empty string or "no"),
++#     and requires also @local-migration-supported to be true, "local"
++#     migration parameter be set as well, and QEMU being in incoming
++#     migration state.  (Since 11.1)
++#
++# @local-migration-supported: enable local migration for this TAP
++#     backend.  When set, local migration is enabled/disabled by
++#     "local" migration parameter for this TAP backend.  When unset,
++#     "local" migration parameter is ignored for this TAP backend.
++#     (Since 11.1.  Defaults to true for MT >= 11.1, and to false for
++#     MT < 11.1)
++#
+ # Since: 1.2
+ ##
+ { 'struct': 'NetdevTapOptions',
+@@ -443,7 +459,9 @@
+     '*vhostfds':   'str',
+     '*vhostforce': 'bool',
+     '*queues':     'uint32',
+-    '*poll-us':    'uint32'} }
++    '*poll-us':    'uint32',
++    '*incoming-fds': 'bool',
++    '*local-migration-supported': 'bool' } }
+ 
+ ##
+ # @NetdevSocketOptions:
 -- 
 2.52.0
 
