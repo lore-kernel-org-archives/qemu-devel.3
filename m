@@ -4,110 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA969CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 09:52:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9A2BCD5BD5
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:02:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSAw4-0005Q6-Hx; Wed, 27 May 2026 05:52:24 -0400
+	id 1wSB4t-0006l5-1M; Wed, 27 May 2026 06:01:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1wSAw2-0005Pl-Tt
- for qemu-devel@nongnu.org; Wed, 27 May 2026 05:52:23 -0400
-Received: from flow-a1-smtp.messagingengine.com ([103.168.172.136])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wSB4m-0006kk-QY
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:01:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1wSAw0-0006L8-Rg
- for qemu-devel@nongnu.org; Wed, 27 May 2026 05:52:22 -0400
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailflow.phl.internal (Postfix) with ESMTP id DC20113800FA;
- Wed, 27 May 2026 05:52:19 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-01.internal (MEProxy); Wed, 27 May 2026 05:52:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alyssa.is; h=cc
- :cc:content-type:content-type:date:date:from:from:in-reply-to
- :in-reply-to:message-id:mime-version:references:reply-to:subject
- :subject:to:to; s=fm2; t=1779875539; x=1779882739; bh=sdxuVNdBgf
- /FUuHboOxbaJwS7/oZr93FT1WsF+6fy3A=; b=RjAHOpieVt0eiqViIMHCPrOATL
- K8vMiqsG+2IugK9zqq9ilL7dtnNoeKZgG/gl3BlGVZhQ9oz69cChLH0T4mOqQBm8
- wZeTE+jdx16BZpQq0f10yVSZVCt2y2D8AdnmrRsIguZ7J9XG8ZY0CX7ef1ijSaki
- IMEkWV59LK8+pvLaSAdg8BEe+IpBq3hul5NZG/Tsl89EEvkhEBp+yeRfzQORPJyk
- /+WjXkM7EPSqfm+Uch7KBFe8kRUYoVIOpXZ6+p8PQ1+fxnKPPe6xqqy6dY0JDaky
- mQhKlM+knHWO9cQqXhwpvhcAWIkuhWwdH+fc2vKS5CxVYuuhCscKCO7edMDw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
- 1779875539; x=1779882739; bh=sdxuVNdBgf/FUuHboOxbaJwS7/oZr93FT1W
- sF+6fy3A=; b=qNbNF4UqYBmBhamDaS0aJUfO0QzFxoJVbmNA+1teZsByLI3sllW
- /0YBtisn0Fl5YZfc+WKfg2mjpa9L8eIC3YrNkavTsx4bWI1/PSGadUzB/AKg/IXa
- hC59fb2RTEu9UHjFlkpVHXQoLEIbVv+UGdobfrPFwn/4j6KKJ3cV5/PXIVt1FJJK
- jLkFIm+aWtO4PWOER/GkZqFN4VVoepnw5IzBJts8qDh+BqmH8Vk8cLk4RXeXMC7C
- ZCNO3tU+9ORG/viZcjtaIx3db1DIvm3EwqQa/Ylo7DwPLNccIusjeIF12qBVyJzT
- SO8P2lpbiLz1or1PmlSprYUezfFDsz9kjjw==
-X-ME-Sender: <xms:074Wahb83KO7XEjT9VghEHknfrDhK6m-QFSxm8ZuOC7e7SZhGSxUlA>
- <xme:074WaqAgpN0kMufXSbrmRMdO-rDkqDEmfbvhNaR7V9S5tleNT_YjJB_5i9pelxEou
- ZuWKLnfueSPy7Fbl45cdEcmXA6zXdU5ZEVS4K782xe5F7s5XDsfKw>
-X-ME-Received: <xmr:074WaoCJcw6r_3ENMXzEL0CJMgYPIZKeiyK7PPsTVGtBC7b2NMjYSUD0qgC3giujqgKzqdSNKD6WfRqkKbwTK4nhqBbZGgcf9wSZlA>
-X-ME-Proxy-Cause: dmFkZTE+S095pb8OkHCbvBMFvoPHWh/hdhSpcXg65cvq6DMEqdIbzvzs2KdVWdnfMbirNa
- pYsMXF2UjqxZIzTkoBv90DF4GHTeHt0Du/eY6fjMDzUcIqpIccHCbuyErHLRc5unxYWzNn
- ZjtBX5jwlLFWflRRiGrKySgYkIIzzB5ziVFJNQI3AV9u0TBq34GEExG6bb39XVVRmt6JHG
- 3qcXTVmVs6oREfRnLwvBUkTpoCQDgZAeMwYCHfg5Gk4EpZ9LXMsM9XvxVkeqljpCZV/3/2
- +7NMhcZYSvpZ61gaUiFyC9VT2kZj7hQDAvyddhhxlwquo3qt5eULPtdqHCTma7VQCM3YIc
- kEQquAwDskb0IuqPxhUeXeVHBPo9+1rOKF+zrIcF0AQcUNJPsR123yBTI3OHGoa4Q5wges
- 4CWe9pcjbNA41S+1REY+pwVkwxyaurn8hdjyZc4UxXMUzm5JqjcPSn5FP2KaOntteB1hRS
- Bmbm6iUiIHZFRy4A2itFdJoky7FM5zCOjfujt1FgnL++v7wifeK7rhyG88m+BvMqK7dxPH
- aCw1spDmZkvxH6+LHCPu07raMfwKlJXCypTzVYcs8Kc9O0PjiaDNpbYxaAzQ7+0BqfzicE
- A+ttYByh8Tvkx7KKxulQxrNEANpPcYtI/2noBL5QriZHo0Ax72eCTrdiWmZg
-X-ME-Proxy: <xmx:074WamEyzHzY5ECiU5Tc8tMaTVZYP39LPQd8XHWe0hMJaFTY83V_dQ>
- <xmx:074Wark1m_VuIzN2cXOKEFaPY5EVkiwv1ryrz_3m6xvPS8QS0BynxQ>
- <xmx:074WajsJN_x6d1gc9200_6s_AoiQjPemvbo8qZXCQYDcvevQ6ks1gg>
- <xmx:074WavMAStocrJkVq4i8ZMzEksOiJaGIoqUX-uI4YSfllLzXmZdzfQ>
- <xmx:074WahrxWRnxG7PjMZLnmgPHahtfnWICuQa6k9NbP2myz0g5-Z3lJfuy>
-Feedback-ID: i12284293:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 27 May 2026 05:52:18 -0400 (EDT)
-Received: by mbp.qyliss.net (Postfix, from userid 1000)
- id 4D5EA819B4E8; Wed, 27 May 2026 11:52:15 +0200 (CEST)
-From: Alyssa Ross <hi@alyssa.is>
-To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, Demi Marie Obenour
- <demiobenour@gmail.com>, Albert Esteve <aesteve@redhat.com>, Markus
- Armbruster <armbru@redhat.com>, "Daniel P. Berrange"
- <berrange@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake
- <eblake@redhat.com>, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, Elena Ufimtseva
- <elena.ufimtseva@oracle.com>, Auger Eric <eric.auger@redhat.com>,
- felipe@nutanix.com, Jan Kiszka <jan.kiszka@web.de>, Joao Martins
- <joao.m.martins@oracle.com>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter
- Maydell <peter.maydell@linaro.org>, Phil =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, QEMU Developers <qemu-devel@nongnu.org>, Richard
- Henderson <richard.henderson@linaro.org>, Bernhard Beschow
- <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth
- <thuth@redhat.com>
-Subject: vhost-user implementations
-In-Reply-To: <87y0h5xl7h.fsf@draig.linaro.org>
-References: <875x4fmzcv.fsf@draig.linaro.org>
- <96181e0d-4c75-430a-9b80-9d8d0eabcce7@gmail.com>
- <CAAjaMXbFhtiHgiUwmJFXti25+vXRebjtaD6fFD+GkOHsDny=Bg@mail.gmail.com>
- <878q961nkz.fsf@draig.linaro.org> <87mrxlgt6u.fsf@alyssa.is>
- <87y0h5xl7h.fsf@draig.linaro.org>
-Date: Wed, 27 May 2026 11:52:13 +0200
-Message-ID: <877bopgoxe.fsf@alyssa.is>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wSB4k-0005bk-0s
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:01:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779876079;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Ay2apyt8Zf8k21e9UKkTDBEyVVh69T608NmlPGJLJnY=;
+ b=eRQ24tacBEspYmgCG0SdmH5XZcEIBILlP/xjySM4JBYhIamb0BhKIRnrAxtCDI39T+hh6J
+ vNu0kcVkEwb0GIgFghqsIjIp/AYcuA1yjl+a1AOlclvdeR5naaBtDoLmRU2MO70JnGIEhs
+ 44XU2L5e4x5lJQSaYiKcWlL929TR2Pw=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-257-zhPvB4XNP5SIg12YmY5l-Q-1; Wed,
+ 27 May 2026 06:01:15 -0400
+X-MC-Unique: zhPvB4XNP5SIg12YmY5l-Q-1
+X-Mimecast-MFC-AGG-ID: zhPvB4XNP5SIg12YmY5l-Q_1779876074
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1589519560A7; Wed, 27 May 2026 10:01:14 +0000 (UTC)
+Received: from [10.44.32.217] (unknown [10.44.32.217])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D01C01800352; Wed, 27 May 2026 10:01:11 +0000 (UTC)
+Message-ID: <f8791a2d-257b-4233-aafb-ccd45e695542@redhat.com>
+Date: Wed, 27 May 2026 12:01:10 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Received-SPF: pass client-ip=103.168.172.136; envelope-from=hi@alyssa.is;
- helo=flow-a1-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: on ai generated and code provenance
+To: Kevin Wolf <kwolf@redhat.com>, Warner Losh <imp@bsdimp.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
+ stefanha@redhat.com
+References: <20260524083329-mutt-send-email-mst@kernel.org>
+ <ahXbxzB4C_lr6b0N@redhat.com> <20260526140231-mutt-send-email-mst@kernel.org>
+ <ahXtqyuIa4XqkMHb@redhat.com> <20260526152526-mutt-send-email-mst@kernel.org>
+ <CANCZdfonroZmdRRpPdHzTKR_m8qyVdSG14gXB-K3BTuv=Qgw9g@mail.gmail.com>
+ <ahauQKLOU1tzDtbb@redhat.com>
+Content-Language: en-US
+From: Paolo Bonzini <pbonzini@redhat.com>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <ahauQKLOU1tzDtbb@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,48 +126,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---=-=-=
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+On 5/27/26 10:41, Kevin Wolf wrote:
+> Am 26.05.2026 um 21:52 hat Warner Losh geschrieben:
+>> The QEMU Project currently may accept limited uses of AI that produce
+>> high quality patches that are limited in the creative content added.
+>> While maintainers will ultimately decide, changes like the following
+>> fall within this policy
+>> 1. Fixing obvious warnings in the obvious ways suggested by the tool
+>> 2. Tree wide API changes, and other similar mechanical changes done
+>>     today with perl/python/sed/coccinelle
+> 
+> As I said in the paragraph you quoted below, I don't think we should
+> encourage using AI for tasks that a deterministic tool could do.
 
-Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+In some cases such a tool does not exist.  Much to my surprise, there is 
+no tool to do static type inference on Python code, but AI is very good 
+at doing it.
 
-> *everyone - do we have a comprehensive list of who implements vhost-user
->  these days?
+> Letting AI perform the change directly instead may be an acceptable
+> shortcut for a one-man hobby project that nobody else will ever look at,
+> but in the context of a community project like QEMU in which your
+> changes have to be reviewed and understood by others, it matters a lot
+> that the output of the tool is reproducible. Otherwise, you're creating
+> unnecessary work for others, and that isn't acceptable.
 
-I'll get started with some implementations I know about :)
+When applicable, going through coccinelle (with the aid of AI if needed! 
+is indeed a good middle ground as it helps reviewers for large changes. 
+If you have many slightly different but easily separated changes (e.g. 
+you can split the patch by struct field), it may make things worse.
 
-Frontends
-=2D--------
+Its also worth noting that in other cases even sed or coccinelle, while 
+deterministic, cannot produce 100% of the patch.
 
-=E2=80=A2 crosvm
-=E2=80=A2 QEMU
-=E2=80=A2 Cloud Hypervisor
-=E2=80=A2 Firecracker
-=E2=80=A2 StratoVirt
-=E2=80=A2 alioth
-=E2=80=A2 Dragonball
+> So maybe we should even explicitly mention a recommendation like the
+> following:
+> 
+>      If you can use a deterministic tool, don't use AI instead. If you
+>      don't know how to use the deterministic tool, use the AI to tell you
+>      how to use it instead of trying to replace it.
 
-Backends
-=2D-------
+I like it.
 
-=E2=80=A2 vhost-device
-=E2=80=A2 virtiofsd
-=E2=80=A2 crosvm
-=E2=80=A2 Cloud Hypervisor
-=E2=80=A2 Spectrum's router
-=E2=80=A2 DPDK
-=E2=80=A2 SPDK
+>> 3. Limited, small changes to fix bugs or add a small new feature whose
+>>     scope is less than about 100 lines and the originator can explain
+>>     them all or the meta issues about the patch.
+> 
+> Not sure if mentioning a number of lines is wise. 100 lines can be
+> mostly boilerplate and simple sequential code or they can be a deeply
+> nested complex algorithm.
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
+I'd put the threshold at 20-50 at most.
 
------BEGIN PGP SIGNATURE-----
+> I think I would see more use in a tag like (better name welcome):
+> 
+>     AI-used-for: [code|tests|docs|commit message]...
 
-iHUEARYKAB0WIQRV/neXydHjZma5XLJbRZGEIw/wogUCaha+zgAKCRBbRZGEIw/w
-oij6AP9oxfTpit70vxL+LFN2oFRYRe1eYdFpNlkHr4hVNzrUvwD8C8romkD67VTN
-EHodpyLuEhxQb679lwq86/keibYoyg4=
-=EM/x
------END PGP SIGNATURE-----
---=-=-=--
+I like this *a lot*.  No need for free advertisement, but some 
+traceability is useful.
+
+For tools such as sed or coccinelle, having the exact script in the 
+patch or commit message useful.  Plus, the execution of the script more 
+or lesss delimits the commit by itself (or 90%+ of it).  For LLMs it's a 
+bit less clear cut because separating docs makes little sense.  And the 
+exact model is pointless, it will be obsolete in 6 months and provide no 
+useful information.
+
+So, something like:
+
+------------------- 8< -------------------
+Use of AI-generated content
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The QEMU project currently allows using AI/LLM tools to produce patches 
+in scenarios with limited creative content:
+
+Mechanical changes
+   If you can use a deterministic tool or a script, don't use AI instead.
+   If you don't know how to do the change deterministically, you may
+   ask the AI for help, rather than having it stand in for the tools.
+
+Small bug fixes
+   These should be limited to 20 lines of code or less, not including
+   tests.  You are still expected to understand and explain your changes
+   and the rationale behind them.
+
+These boundaries do not apply to other uses of AI, such as researching
+APIs or algorithms, static analysis, or debugging, provided their output
+is not included in contributions.  Larger uses of AI are allowed as an 
+experiment, but they should be agreed upon with the maintainer prior to 
+submission.
+
+Use of AI does not remove the need for authors to comply with all other
+requirements for contribution.  In particular, the "Signed-off-by"
+label in a patch submission is a statement that the author takes
+responsibility for the entire contents of the patch, certifying that
+their patch submission is made in accordance with the rules of the
+`Developer's Certificate of Origin (DCO) <dco>`.
+
+Commit messages for AI-assisted changes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When AI/LLM tools produce or substantively shape your patch, add an 
+``AI-used-for:`` trailer.  The text of the trailer could be one or more 
+of ``code``, ``tests``, ``docs``, ``research``, possibly followed by an 
+explanation in parentheses::
+
+     AI-used-for: tests, docs
+     AI-used-for: code
+     AI-used-for: code (refactoring)
+     AI-used-for: code (prototype)
+     AI-used-for: research
+
+The trailer is intended as a clarification of your DCO obligations as 
+well as to guide reviewers.  It is not intended for minimal presence 
+such as autocomplete or asking for a pre-review of the patch, and it 
+does not remove your responsibility to understand the changes that you 
+are submitting.
+
+Include the prompt in the commit message if it helps a reviewer judge 
+the result:
+
+* yes: "move field ``foo`` from ``struct aa`` to ``struct bb``.  If a 
+function already has a local variable or parameter of type ``struct 
+bb``, use it instead of accessing ``aa.bb``."
+
+* yes: "add an implementation of the trait for ``Mutex<T: MyTrait>``, 
+forwarding the member functions to ``T`` while taking the lock around 
+the calls".
+
+* no: "write user-facing documentation for the new tool"
+
+* no: "write testcases for the new functions"
+
+Deterministic tooling (sed, coccinelle, formatters) is out of scope for 
+the trailer, but should be mentioned in the commit message.
+
 
