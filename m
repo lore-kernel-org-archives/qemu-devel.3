@@ -4,110 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30D1CCD5BDE
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 02:52:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9E92CD5BDE
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 03:04:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wS4N2-0001kb-T1; Tue, 26 May 2026 22:51:48 -0400
+	id 1wS4Ya-0003t8-To; Tue, 26 May 2026 23:03:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
- id 1wS4Mz-0001gU-Jx
- for qemu-devel@nongnu.org; Tue, 26 May 2026 22:51:46 -0400
-Received: from mail-lj1-x243.google.com ([2a00:1450:4864:20::243])
+ (Exim 4.90_1) (envelope-from <stephensportia@gmail.com>)
+ id 1wS4YX-0003sW-HM
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 23:03:42 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
- id 1wS4Mw-0001qh-O3
- for qemu-devel@nongnu.org; Tue, 26 May 2026 22:51:45 -0400
-Received: by mail-lj1-x243.google.com with SMTP id
- 38308e7fff4ca-39556b00a85so82742401fa.0
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 19:51:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779850297; cv=none;
- d=google.com; s=arc-20240605;
- b=GcVKchOIATl9A7M9L4AGTaQsdw2C2CO+ljjn6pSw3M5KG5vy3ktp2Q7/Y1ZAZRlV4i
- QB6+WHYvTdcx1SWgzB77LV17tRoVjhVG9YPT1Q3eCEqW35xOz/bWcrImoVeHm5Ce9FN3
- NICWc0YzPu6OF1JS6hii+ezTlHQyeuOrXt3GZwLBswxdDxWD62Uc2B0R9oxFM1CfmeWK
- 9NZqsZvjSXPAp4i31Ff9MUUFW138Ozu+g6xXJBoucsRdSrkSqVK7ltXvv1zxoz5kOY6Z
- SEVJMUFqW9E2cpiXHITdcmAuM8yeDa7J2k1JrR+1ar8uF5U636ev2TjxjVUdo3I6YXnO
- Vi9g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=WCk6AhWtJfOyvuGJlXvmxmIfxIUYrbTjVFvyl7XyjwA=;
- fh=cGXp66taJ7oVFSchAJCSGREWquHCSyEPFjRudmCzoXo=;
- b=l0GLSnI7pVMFCYudGTSi9aYsekOsuKVpKCVRKeZzviyBAJiWcG/tHl7AbPXDXBT0CF
- JXQPyL4lyRQRZ51MoLgPSAVvtP46fvGC/PY1veFTVWamn+IYtms0ph23Es11l6ron1Cm
- AfMRneny9rOHCZtivLOrg8o4KwiDo8FXElHmGkwkvqDwYhU56B2IwfJMwN/grNbKWBR2
- SIVo/EAJPIPq8PA7+yAoLUCSJU2FT5rhoYItsFyNM8Oqfdod7nyCrRJvP0StScmpM1VR
- JKEEBPaDC1FusaFOpwu09uqD5xI2X/p+YS7V4cT/LbeJ/vwCS/1yfK3J4OUCk2NAXoDt
- 8nXQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <stephensportia@gmail.com>)
+ id 1wS4YT-0006x7-P5
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 23:03:40 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-369576666d5so5420428a91.0
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 20:03:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779850297; x=1780455097; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=WCk6AhWtJfOyvuGJlXvmxmIfxIUYrbTjVFvyl7XyjwA=;
- b=dTbBqXOlIukA1JfI6RB4JElatU2vX4pFJy3e3fi5JZjcpye9FSC8kwjnweVs90kTJL
- 1wxk0NsB/+H/VljwUq5XhSKttiAlgTfT++DTjKRJbQq82mGhcEhZlbyx/4Q7V+dPteHJ
- y4TsCwurSN4GAsk65G2h8hiQz+4l+B5uEYe4i2MZzXPZtUIW953NHz1zAQpged2tUJ2s
- orMFBq7TKZ3Fa3JmiDGOY9sr10ImD4eFSq8ZixkShxT8nD18JcuXm1UTTEoKSWPD6hxA
- 41FhyM/4F4hABchTxVgK+FjsBA1VeXknPmJkNNqcUgzAk4JnOfbLkwWiPC0DDWlh8Oyi
- V4Pg==
+ d=gmail.com; s=20251104; t=1779851015; x=1780455815; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=w8Mnvq4YXXdp6FicaglW0P+r4r0ymZQMV2gBaPgU5EE=;
+ b=F4/9864VMtDrwEg4HHdGpZMHQfrrBurkiAhOtIUk9U55rz5zoMN3XoihPmWRbMUmgg
+ MDyJ6EehNHvM2ZmQ0otbtRAKXHjsaxQNur3+Y9I+TitRM1W/bFyybmdYokqtJXRGwqN4
+ jR4GPIBDwma1Nq/lrTfrOxciJu+o57ORlZe5OccKcgf4diaW/Fcy6LCwGAffGjB9+ME2
+ Bt2VBzJFUFDK4CaNFffR7aJ/+s71jXRZwAvDisvH4EA5UUsRxmp7nqRD1lRCZdZwXDDJ
+ EgH0uQhvGx4QY7Qvb8hXvEOs/8lWEjhwEAtvUEP0FUjGU/NjnzyRvBv96F1Yw0Dti4wS
+ uYyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779850297; x=1780455097;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1779851015; x=1780455815;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WCk6AhWtJfOyvuGJlXvmxmIfxIUYrbTjVFvyl7XyjwA=;
- b=YF7B9q9G/1Y5jESh595PLAMNTt4H2KHtL+7bOQYgALfqEfM86f5nIINY2w1zV7ziCq
- 5dVuuZXbmCyQkqaZZgB9voNOTDbAJ42RSCc24RmtGNvCteBFhVGsbfQMswEPz5ts65K1
- mXNoLQqAhdJlCwOfBZtj2S6f+Nal3ajUrzrnrKD/7D+5VlcFWkyKpxS9ke1sXUB7WYTp
- 82NIbs9tMLUC1cBdJLvfNUPYp21opyqbcd5+ylv18EHNcfE5weLT/NL0op72lf6X/bW1
- rXe/4dh0JCvCjqGEVoPnhaAq+cH5CaIx7jH1545d2rbTEWNKwEPhyzWZbi0eZRaSPUTT
- fPEg==
-X-Gm-Message-State: AOJu0YwYu5vFCWHPXMcsCGUqKnBGvVAncmU9C46WV+z4QBqyPmMYnR2L
- UjzqqviHGdLntWVb13NnNn5qjikViFdGGhnbYd4eWpRYuCCW+8kdKHJ9SlcAoyOI+pKnmx/UTOH
- yheQ7T4PBPBsMT+Nls156efUDrDQoCks=
-X-Gm-Gg: Acq92OFZ1RmoKbUYAYLjlGmZwHBPvwGH1jdIjanrapTgKW0NDDq484i0JDj5KrI1+K5
- F/sN0SRFwm2a3oALaUL+k0gOb23fOMnYA4WKUb8dfQircaOeYqaU0mvG27t7Zw6rK8DBkulSipT
- NonJX4nORvM4ldG0XhVvXRbaA9deAp995CR/IPSRN9BB2ftFb+xsiUNvwK5v3Q1Ce1xRj54I7DG
- vkG4p4c1cpgKK0URwyxC28sErQVIjT2lqppCHIP3VZlO5Lhl7SvgqJGAweiPolOdKYcn6QWvZYO
- KU8BCd5mhCB7WmVk
-X-Received: by 2002:a2e:bd86:0:b0:393:975b:5634 with SMTP id
- 38308e7fff4ca-395d8c0f870mr95124411fa.11.1779850297134; Tue, 26 May 2026
- 19:51:37 -0700 (PDT)
+ bh=w8Mnvq4YXXdp6FicaglW0P+r4r0ymZQMV2gBaPgU5EE=;
+ b=N501ifX6A4QH9p2kOvvGm+I9topjSiYIXEctwXCQ29JgnM4Vscf0H9R2qIdiLtnSh8
+ lT2IIuGKf+HpYkx/aCZKop5cW+Nvkx8VCXXfFfwe4O6yKj9aUdJF/4rCG0o+sZX94kzY
+ DD8jRa2THrC2CtCOXO0En+B5wufhlYj29jy+59xKkDe/dYyd+wVn89SCjw1MkOamcFJR
+ xOQ/NOvnrieN2RPwuZHCqBalfEmbmVzTm7eCcRQpamVMdmZfpiQmA8NmjFxrr7G4k2Nl
+ dI3bEVGFWeGlmZzi3QeNjh8lAhbcwneCiUx4QPVKy9RT3/svPKK6W9ZHOkk0R4ICK0e3
+ IbqA==
+X-Gm-Message-State: AOJu0YzOUmapOk0M0mVtNxx3E6sMNxIqiQHNnLdG0rHe8+UXBncFABzM
+ jfCgwDTiVadhyGk3Dt+leLQDWl2yDHfEdaugP9I1O1aNKc5wpYXZwTDNfxe2GDmq
+X-Gm-Gg: Acq92OG8/zs63Y5XQKRw6ve35R1pbgCDKSpbP9jmLaXdbmGHZgpspDMBHYX1njESmyC
+ 4hbuaxmhJFgrIcRL50S6jzP+bch3kpI1ov1k47OATnO2Yy2meET14rANlHaJvvufZsgAx3IWQ1k
+ b9XCYbjHvbH0qDJqsFHtW2wDsk1jV1ImT3dnAdBn+cwDBcNfw2G0iLKF3nm4NShGFpOQhA5Hjc7
+ Pk6p44nzV/5pbi/6+RDVL1Zbm/UuisjffEBmxFH0dkZ6eIr+x3UCNfo3XJaOgOf3uUr/ZOuvMzh
+ vyGm6rDEXSA4y4LklKvcqW6SsfXg82hmek9iPoCKsirbZHD+hpK47VS4HXhyiER+XdpdqVRQg+x
+ FnFy3CnkRfeHO11gA/mof6t0uzDuyVmCA59tFv9L9cr6NMuLn2bQXdM4EkNgKNP7ol1JKytoD/S
+ xxFbck32nfn9vxasL+Y+jou1XVKc+ZGzmt7bT720OxXTLikMPDkP7TvOa98fh0UGodT1boM+BwS
+ mfbSRo=
+X-Received: by 2002:a17:90b:38cd:b0:369:2e00:1ff0 with SMTP id
+ 98e67ed59e1d1-36a6749e96amr20166917a91.6.1779851015096; 
+ Tue, 26 May 2026 20:03:35 -0700 (PDT)
+Received: from lima-default.tail89d63.ts.net ([159.196.41.205])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c852056dadasm11137984a12.26.2026.05.26.20.03.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 May 2026 20:03:34 -0700 (PDT)
+From: stephensportia@gmail.com
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Portia Stephens <portias@oss.tenstorrent.com>
+Subject: [PATCH v2] target/riscv: Add support for a custom CPU arch state
+Date: Wed, 27 May 2026 13:03:27 +1000
+Message-ID: <20260527030327.2289-1-stephensportia@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <cover.1779792111.git.fritchleybohrer@gmail.com>
- <c33bea8085f103db209eaf06f978297bba727d88.1779792111.git.fritchleybohrer@gmail.com>
- <4e562850-06c3-48f0-9023-d1c5df71e828@linaro.org>
- <c254529af5aee1c33bc143ad72d79839231465f1.camel@wdc.com>
-In-Reply-To: <c254529af5aee1c33bc143ad72d79839231465f1.camel@wdc.com>
-From: Zephyr Li <fritchleybohrer@gmail.com>
-Date: Wed, 27 May 2026 10:51:22 +0800
-X-Gm-Features: AVHnY4L3hvD0DltQ-Gjxrd3cvs-VE7Q28jXvhsJjQF_thzmDhkBaQOLgo5GMqXI
-Message-ID: <CAN4PorV7mPptdABf08XAeh++xR6Vg43sFGdY_M8pJAGTg5MYVg@mail.gmail.com>
-Subject: Re: [PATCH v2 4/5] target/riscv: Reject x-misa-w without TCG
-To: Alistair Francis <Alistair.Francis@wdc.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "philmd@linaro.org" <philmd@linaro.org>, 
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "palmer@dabbelt.com" <palmer@dabbelt.com>, 
- "daniel.barboza@oss.qualcomm.com" <daniel.barboza@oss.qualcomm.com>, 
- "chao.liu.zevorn@gmail.com" <chao.liu.zevorn@gmail.com>,
- "liwei1518@gmail.com" <liwei1518@gmail.com>, 
- "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>
-Content-Type: multipart/alternative; boundary="000000000000b6d11b0652c3b0db"
-Received-SPF: pass client-ip=2a00:1450:4864:20::243;
- envelope-from=fritchleybohrer@gmail.com; helo=mail-lj1-x243.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=stephensportia@gmail.com; helo=mail-pj1-x102f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,222 +102,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000b6d11b0652c3b0db
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From: Portia Stephens <portias@oss.tenstorrent.com>
 
-Thanks Philippe and Alistair.
+Custom vendor CSR implementations may require custom state information.
+This adds a custom_arch-state struct to the CPUArchState. It also adds a
+RISCVCPUDef function pointer for handling allocation and initialization
+of the custom_arch_state as well as a reset function pointer for setting
+the custom_arch_state fields to known values on reset.
 
-I see, I misunderstood the stub suggestion and also treated
-riscv_cpu_validate_set_extensions() too much as a TCG-only helper.
+Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
+---
+ target/riscv/cpu.c | 15 +++++++++++++++
+ target/riscv/cpu.h |  7 +++++++
+ 2 files changed, 22 insertions(+)
 
-I'll take another look at the validation logic. If the checks are common
-architecture feature restrictions, I'll avoid hiding the helper behind a
-no-TCG unreachable stub and instead try to move or split the validation
-so the common part is available outside TCG as well.
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 862834b480..ca557d27b5 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -819,6 +819,10 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+     if (kvm_enabled()) {
+         kvm_riscv_reset_vcpu(cpu);
+     }
++
++    if (mcc->def->custom_arch_state_reset) {
++        mcc->def->custom_arch_state_reset(env);
++    }
+ #endif
+ }
+ 
+@@ -1167,6 +1171,9 @@ static void riscv_cpu_init(Object *obj)
+     if (mcc->def->custom_csrs) {
+         riscv_register_custom_csrs(cpu, mcc->def->custom_csrs);
+     }
++    if (mcc->def->custom_arch_state_init) {
++        mcc->def->custom_arch_state_init(&cpu->env);
++    }
+ #endif
+ 
+     accel_cpu_instance_init(CPU(obj));
+@@ -2706,6 +2713,14 @@ static void riscv_cpu_class_base_init(ObjectClass *c, const void *data)
+             assert(!mcc->def->custom_csrs);
+             mcc->def->custom_csrs = def->custom_csrs;
+         }
++        if (def->custom_arch_state_init) {
++            assert(!mcc->def->custom_arch_state_init);
++            mcc->def->custom_arch_state_init = def->custom_arch_state_init;
++        }
++        if (def->custom_arch_state_reset) {
++            assert(!mcc->def->custom_arch_state_reset);
++            mcc->def->custom_arch_state_reset = def->custom_arch_state_reset;
++        }
+     }
+ 
+     if (!object_class_is_abstract(c)) {
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 7d79c7a5a7..8132c65012 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -213,6 +213,9 @@ typedef struct PMUFixedCtrState {
+         uint64_t counter_virt_prev[2];
+ } PMUFixedCtrState;
+ 
++typedef void (*riscv_csr_custom_init_fn)(CPURISCVState *env);
++typedef void (*riscv_csr_custom_reset_fn)(CPURISCVState *env);
++
+ struct CPUArchState {
+     target_ulong gpr[32];
+     target_ulong gprh[32]; /* 64 top bits of the 128-bit registers */
+@@ -509,6 +512,8 @@ struct CPUArchState {
+     uint64_t rnmip;
+     uint64_t rnmi_irqvec;
+     uint64_t rnmi_excpvec;
++
++    const void *custom_arch_state;
+ };
+ 
+ /*
+@@ -561,6 +566,8 @@ typedef struct RISCVCPUDef {
+     RISCVCPUConfig cfg;
+     bool bare;
+     const RISCVCSR *custom_csrs;
++    riscv_csr_custom_init_fn custom_arch_state_init;
++    riscv_csr_custom_reset_fn custom_arch_state_reset;
+ } RISCVCPUDef;
+ 
+ /**
+-- 
+2.43.0
 
-If I still need to reject some no-TCG configuration, I'll make the reason
-explicit in the commit message.
-
-Thanks,
-Zephyr
-
-On Wed, May 27, 2026 at 7:52=E2=80=AFAM Alistair Francis <Alistair.Francis@=
-wdc.com>
-wrote:
-
-> On Tue, 2026-05-26 at 14:19 +0200, Philippe Mathieu-Daud=C3=A9 wrote:
-> > On 26/5/26 13:04, Zephyr Li wrote:
-> > > Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
-> > > ---
-> > >   target/riscv/cpu.c         |  7 +++++++
-> > >   target/riscv/tcg/tcg-cpu.h | 10 ++++++++++
-> > >   2 files changed, 17 insertions(+)
-> > >
-> > > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> > > index 1dea66972d..8f54610097 100644
-> > > --- a/target/riscv/cpu.c
-> > > +++ b/target/riscv/cpu.c
-> > > @@ -955,6 +955,13 @@ static void riscv_cpu_realize(DeviceState
-> > > *dev, Error **errp)
-> > >       RISCVCPUClass *mcc =3D RISCV_CPU_GET_CLASS(dev);
-> > >       Error *local_err =3D NULL;
-> > >
-> > > +#ifndef CONFIG_TCG
-> > > +    if (cpu->cfg.misa_w) {
-> > > +        error_setg(errp, "x-misa-w requires TCG");
-> > > +        return;
-> > > +    }
-> > > +#endif
-> > > +
-> > >       cpu_exec_realizefn(cs, &local_err);
-> > >       if (local_err !=3D NULL) {
-> > >           error_propagate(errp, local_err);
-> > > diff --git a/target/riscv/tcg/tcg-cpu.h b/target/riscv/tcg/tcg-
-> > > cpu.h
-> > > index a23716a5ac..20ad294f88 100644
-> > > --- a/target/riscv/tcg/tcg-cpu.h
-> > > +++ b/target/riscv/tcg/tcg-cpu.h
-> > > @@ -22,7 +22,17 @@
-> > >
-> > >   #include "cpu.h"
-> > >
-> > > +#ifdef CONFIG_TCG
-> > >   void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error
-> > > **errp);
-> > > +#else
-> > > +static inline void riscv_cpu_validate_set_extensions(RISCVCPU
-> > > *cpu,
-> > > +                                                     Error **errp)
-> > > +{
-> > > +    (void)cpu;
-> > > +    (void)errp;
-> > > +    qemu_build_not_reached();
-> >
-> > By stub I meant a new unit file added to the stub_ss[] meson source
-> > set.
-> >
-> > Anyway, I'm not familiar enough with RISCV but if it works similarly
-> > to
-> > ARM I'd expect an accelerated 'host' CPU type to have all host-
-> > enabled
-> > features, with the ability to deselect few of them. In that case, the
-> > riscv_cpu_validate_set_extensions() helper wouldn't be TCG specific
-> > (since validating the architecture restrictions).
->
-> Agreed. This at least needs a commit comment describing why this should
-> be disabled
->
-> Alistair
->
-> >
-> > If you need accelerator-specific CPU feature validators, you could
-> > dispatch in riscv_cpu_validate_set_extensions, eventually expanding
-> > AccelOpsClass.
-> >
-> > > +}
-> > > +#endif
-> > >   void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error
-> > > **errp);
-> > >   bool riscv_cpu_tcg_compatible(RISCVCPU *cpu);
-> > >
->
-
---000000000000b6d11b0652c3b0db
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Thanks Philippe and Alistair.<br><br>I see, I misunderstoo=
-d the stub suggestion and also treated<br>riscv_cpu_validate_set_extensions=
-() too much as a TCG-only helper.<br><br>I&#39;ll take another look at the =
-validation logic. If the checks are common<br>architecture feature restrict=
-ions, I&#39;ll avoid hiding the helper behind a<br>no-TCG unreachable stub =
-and instead try to move or split the validation<br>so the common part is av=
-ailable outside TCG as well.<br><br>If I still need to reject some no-TCG c=
-onfiguration, I&#39;ll make the reason<br>explicit in the commit message.<b=
-r><br>Thanks,<br>Zephyr</div><br><div class=3D"gmail_quote gmail_quote_cont=
-ainer"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, May 27, 2026 at 7:52=
-=E2=80=AFAM Alistair Francis &lt;<a href=3D"mailto:Alistair.Francis@wdc.com=
-">Alistair.Francis@wdc.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex">On Tue, 2026-05-26 at 14:19 +0200, Philippe Mathi=
-eu-Daud=C3=A9 wrote:<br>
-&gt; On 26/5/26 13:04, Zephyr Li wrote:<br>
-&gt; &gt; Signed-off-by: Zephyr Li &lt;<a href=3D"mailto:fritchleybohrer@gm=
-ail.com" target=3D"_blank">fritchleybohrer@gmail.com</a>&gt;<br>
-&gt; &gt; ---<br>
-&gt; &gt; =C2=A0 target/riscv/cpu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 |=C2=A0 7 +++++++<br>
-&gt; &gt; =C2=A0 target/riscv/tcg/tcg-cpu.h | 10 ++++++++++<br>
-&gt; &gt; =C2=A0 2 files changed, 17 insertions(+)<br>
-&gt; &gt; <br>
-&gt; &gt; diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c<br>
-&gt; &gt; index 1dea66972d..8f54610097 100644<br>
-&gt; &gt; --- a/target/riscv/cpu.c<br>
-&gt; &gt; +++ b/target/riscv/cpu.c<br>
-&gt; &gt; @@ -955,6 +955,13 @@ static void riscv_cpu_realize(DeviceState<br=
->
-&gt; &gt; *dev, Error **errp)<br>
-&gt; &gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 RISCVCPUClass *mcc =3D RISCV_CPU_G=
-ET_CLASS(dev);<br>
-&gt; &gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Error *local_err =3D NULL;<br>
-&gt; &gt; =C2=A0 <br>
-&gt; &gt; +#ifndef CONFIG_TCG<br>
-&gt; &gt; +=C2=A0=C2=A0=C2=A0 if (cpu-&gt;cfg.misa_w) {<br>
-&gt; &gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 error_setg(errp, &quo=
-t;x-misa-w requires TCG&quot;);<br>
-&gt; &gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;<br>
-&gt; &gt; +=C2=A0=C2=A0=C2=A0 }<br>
-&gt; &gt; +#endif<br>
-&gt; &gt; +<br>
-&gt; &gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 cpu_exec_realizefn(cs, &amp;local_=
-err);<br>
-&gt; &gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (local_err !=3D NULL) {<br>
-&gt; &gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 error_prop=
-agate(errp, local_err);<br>
-&gt; &gt; diff --git a/target/riscv/tcg/tcg-cpu.h b/target/riscv/tcg/tcg-<b=
-r>
-&gt; &gt; cpu.h<br>
-&gt; &gt; index a23716a5ac..20ad294f88 100644<br>
-&gt; &gt; --- a/target/riscv/tcg/tcg-cpu.h<br>
-&gt; &gt; +++ b/target/riscv/tcg/tcg-cpu.h<br>
-&gt; &gt; @@ -22,7 +22,17 @@<br>
-&gt; &gt; =C2=A0 <br>
-&gt; &gt; =C2=A0 #include &quot;cpu.h&quot;<br>
-&gt; &gt; =C2=A0 <br>
-&gt; &gt; +#ifdef CONFIG_TCG<br>
-&gt; &gt; =C2=A0 void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Erro=
-r<br>
-&gt; &gt; **errp);<br>
-&gt; &gt; +#else<br>
-&gt; &gt; +static inline void riscv_cpu_validate_set_extensions(RISCVCPU<br=
->
-&gt; &gt; *cpu,<br>
-&gt; &gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 Error **errp)<br>
-&gt; &gt; +{<br>
-&gt; &gt; +=C2=A0=C2=A0=C2=A0 (void)cpu;<br>
-&gt; &gt; +=C2=A0=C2=A0=C2=A0 (void)errp;<br>
-&gt; &gt; +=C2=A0=C2=A0=C2=A0 qemu_build_not_reached();<br>
-&gt; <br>
-&gt; By stub I meant a new unit file added to the stub_ss[] meson source<br=
->
-&gt; set.<br>
-&gt; <br>
-&gt; Anyway, I&#39;m not familiar enough with RISCV but if it works similar=
-ly<br>
-&gt; to<br>
-&gt; ARM I&#39;d expect an accelerated &#39;host&#39; CPU type to have all =
-host-<br>
-&gt; enabled<br>
-&gt; features, with the ability to deselect few of them. In that case, the<=
-br>
-&gt; riscv_cpu_validate_set_extensions() helper wouldn&#39;t be TCG specifi=
-c<br>
-&gt; (since validating the architecture restrictions).<br>
-<br>
-Agreed. This at least needs a commit comment describing why this should<br>
-be disabled<br>
-<br>
-Alistair<br>
-<br>
-&gt; <br>
-&gt; If you need accelerator-specific CPU feature validators, you could<br>
-&gt; dispatch in riscv_cpu_validate_set_extensions, eventually expanding<br=
->
-&gt; AccelOpsClass.<br>
-&gt; <br>
-&gt; &gt; +}<br>
-&gt; &gt; +#endif<br>
-&gt; &gt; =C2=A0 void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error<=
-br>
-&gt; &gt; **errp);<br>
-&gt; &gt; =C2=A0 bool riscv_cpu_tcg_compatible(RISCVCPU *cpu);<br>
-&gt; &gt; =C2=A0 <br>
-</blockquote></div>
-
---000000000000b6d11b0652c3b0db--
 
