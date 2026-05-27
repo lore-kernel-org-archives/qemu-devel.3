@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFF17CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 11:44:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A892CD5BD5
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 11:45:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSCfd-0005OH-5A; Wed, 27 May 2026 07:43:33 -0400
+	id 1wSCfZ-0005L3-Q8; Wed, 27 May 2026 07:43:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSCfb-0005MJ-Bq
- for qemu-devel@nongnu.org; Wed, 27 May 2026 07:43:31 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1wSCfY-0005JI-1C
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 07:43:28 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSCfY-00006R-5J
- for qemu-devel@nongnu.org; Wed, 27 May 2026 07:43:31 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-44a74032ff8so8628233f8f.1
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 04:43:27 -0700 (PDT)
+ id 1wSCfU-0008Uc-TI
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 07:43:27 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-48fde648a71so77041875e9.0
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 04:43:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779882206; x=1780487006; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779882203; x=1780487003; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FBl31Y76dj9Fn6xR53TQmxaU3MhNp2vGodHlX1p76nM=;
- b=JN8pheJNsmJeT+dftAkIYC6RpeQ5T0K8V8VtNnPjMTEfXH8mH9eUQ1h51ggSE+lfTN
- k0UHuRRy9wqDKliTbEdSif1HrnTN5/JZ0pecBekYBuCaFXjA/K2TKdFvNFbJ8wuTXjEU
- kCpBqh0GFPKgGo+gVj9mG2Qx6Vpk5wCoI2Jzfy1gpeF873wD2SS1l7Gpvb2ba8wFKFU9
- YdPq1T+mrtRhXSWyPKUUQ7Y3hJVLkZ3exnOhMKadtOGpjA5gBE8JtrScVo9eeJzcJIrG
- jB/w+pKWCkrmjekyz6gTQOJuY0rPHdn5LBUuLMK9T9J08hfvh6I0vAHq7/XEGDuCvRSO
- p4eA==
+ bh=Vr/dCWZqkxecamIVH5FjFCNfp5PazmhoCWjfR1OvVNg=;
+ b=SogYB00knIA9Uql+I2ujVkTkelh37FDKuyP++dNS4ZzoUX5jpuiarx8fODIbVQwMgG
+ lDQGWRSIftyE05pG7oPtq3nEEHo46tWLhI8CnPsLZY8u0l8U3K5Pm0N/YZ4C+5GqJs/U
+ Sa5nvGurWY6AXw/c1FDNZgp0a7/NAwVresaq07GnxzHrCobaID2VbojXVtZ9PC2lz9pU
+ Nkl6AP2Ie5TQEHI9vViZh8Qe+4quUuD6j2LBJ0KOaF8tOjg8p7hMYSaz/CbuNBfw3vFG
+ 6ULP/zdE5aiiy8dv0gmEHHOPelBswZ0jn/vpzfrgYDXzVTEKZs/OjNaagECuYqa2Ys3w
+ hxnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779882206; x=1780487006;
+ d=1e100.net; s=20251104; t=1779882203; x=1780487003;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=FBl31Y76dj9Fn6xR53TQmxaU3MhNp2vGodHlX1p76nM=;
- b=Wxwhrsf+cYEs8JW1fhgTGV+PvJJma1MiVKWLGjt1hS5PaTWUrL0kSkklzATPl3nU7w
- P6MIsSlgMol+eaIufehcIqIVuRTQKT0b/HM/TOQ3KCxlA0Xhv/yiOFSFHYT8lrYNlPI6
- go2OdIIRw6eH1PflJf1CYeqATEpApxW7jWptecnW88uQl642V4JOZA9nJOhYl71xBvJ9
- tkDq/izbRcXiSwNi5UMhVWUpfVomsgwNvg8c0tkBxxlQUQakNl9dWSBmLlldL3UxV+Nd
- sqzY5/b5KMEVTzViRLCHrA2k2LnGmVKdrtLcWPbl/fXyxLVMo5ghRFF4vN0EY4fWRuo+
- TQ4A==
-X-Gm-Message-State: AOJu0Yw/LPJ6n9/R1cEvgVhZk19kOsrALaR+ACGkoRJf5wfp3fHI1qtC
- uPZqIXZ/whZhSdhN0lKJ/i+5kmADEsXjNQFZDWfBRXcJQACHZsYO21OfGgie0+Fmni0=
-X-Gm-Gg: Acq92OH1qEvzIOHcWW2il0NqmHiXRAvvwLzJMBqULyCFunyCO8VlxNJGZhb9+8VAR8A
- B8ueRu2ARm6xfesrqX60PJpRe6tMVJt6Ud2XLFyyjXJW1gNUVwuu7zU+d7q7NsX/vEzntqr/z1A
- B3brMyl3avrewZqEA45onqrDqqmMIRZjyiFvw+8JjE7Kj8Y3iD7oXjDH8J1voeSCbL0C7R82bkF
- 5/CGTgP37GLQL3+Fk8yPGhNOL2kB5RjRJqntJUSyVrceSE4NKyuC1kJnJ977P1pBPJpLHeBc/M6
- UZ1ehiNlwTn9S4Ovhk94w91Fc37rfPvOuMlY/EWM7hxSCx9V5xzktllpR6ArRXK7Pr74l65tO4W
- icx5Of59AFHQBrVCzQlNKKghkCRiHAj9ZG8aJvoUjgImsjq7yYbW73LNnFSCZenT1YMu9gpXmQS
- y8K5ZT243zXgyxBiWBgg5zZ5+ZWn15HA4E2g==
-X-Received: by 2002:a05:600c:8b08:b0:490:601f:d785 with SMTP id
- 5b1f17b1804b1-490601fd90amr251387705e9.2.1779882206437; 
- Wed, 27 May 2026 04:43:26 -0700 (PDT)
+ bh=Vr/dCWZqkxecamIVH5FjFCNfp5PazmhoCWjfR1OvVNg=;
+ b=n19ArKbmcE7isUQC7JInefszrH8Gc9IIsDl3UWUcYnifbc4KgQckcLx0QkK9c41Ltk
+ DwPoV2jewUSW785zlLSBsNr9PdTmIyGHAvNrT0tkMvyDvj7x37WIPkfuQ3JwI3lpFmFy
+ SIFc5PKhMz1AQNc10QRk9OyqrAujXrGSzR1qmxahNb81YD5DjCtaaBwelmBc8bbwoxtn
+ tFAH5qDJXi7YsjjmMlN4oZsqSLwZ4Gmt1voZYBXFcNC2K07VARzN6bW5N1Q4fuEH3Bhg
+ 9079Whes4WzuOM3wW6a/zm2mYnuaicBwpFuPldzGgnKn7Aj6IBSYX5RJQqUFD45auGCM
+ viyw==
+X-Gm-Message-State: AOJu0YzG9N5Pb/IjcVbL/ncjHjbBVmDQ4Q3Y8ufW3wZEBJ2uJ2LYXXch
+ fOikj0cL4BQ+bfOu0jLQkzoOtdA7uZfx+Q87hXS9ahstcPJQnNnK2ExfLX4gM0uFksw=
+X-Gm-Gg: Acq92OGv8K+7Pjs69i8Fgq1VJRwizK640uoGrW5FP0kRJBXvWn9K6j3J04cSXBBYE9J
+ 8qC8H69VOZInk8H6IzeRwmjWR6tuwR+FxhHDMcz75PXgRqZtEkTE+Tvva39O82MWM0ol/KkfiIl
+ iVhtiZUcdbhh1jfDHYGGfBCU7Fbsn0dSwKb6V2dIbgTRscfv4qAsnn8eLA0G9+hX3ILNzlEhpTn
+ klp2SKPZhBzrJ11+yhE0Oq1dCzWcFsSsVeXungVzEjVskXhu9xToKz2AqLx/Q7CjmtwGnuTPXq2
+ RUsR2k4L2uhv3O40L0fHBV/owGiXtPVnYZ7Tkp080R6xERMII376ShXa303xrEG0YSVSGIMMrAf
+ WMAmJynRMFw0burVI/3SEZS4+fD3JkF+SZVmlfh52cIZrFCUD7JSh1fpsv5wiOZZ943t1iojHw/
+ V36c7tV1MwHXAtzIORsA4H0Qs+k/p6XGy0Yw==
+X-Received: by 2002:a05:600c:6992:b0:490:5000:917 with SMTP id
+ 5b1f17b1804b1-49050000ae6mr310718185e9.1.1779882203368; 
+ Wed, 27 May 2026 04:43:23 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45edb557679sm9411055f8f.10.2026.05.27.04.43.23
+ 5b1f17b1804b1-490454c600esm383473175e9.3.2026.05.27.04.43.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 May 2026 04:43:24 -0700 (PDT)
+ Wed, 27 May 2026 04:43:21 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 572CF5FD5B;
+ by draig.lan (Postfix) with ESMTP id 24CF75FB96;
  Wed, 27 May 2026 12:43:21 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -74,17 +74,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v6 5/8] target/arm: implements SEV/SEVL for all modes
-Date: Wed, 27 May 2026 12:43:17 +0100
-Message-ID: <20260527114320.1581552-6-alex.bennee@linaro.org>
+Subject: [PATCH v6 3/8] target/arm: redefine event stream fields
+Date: Wed, 27 May 2026 12:43:15 +0100
+Message-ID: <20260527114320.1581552-4-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260527114320.1581552-1-alex.bennee@linaro.org>
 References: <20260527114320.1581552-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,195 +107,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the restrictions that make this a M-profile only operation and
-enable the instructions for all Arm profiles.
+The event stream control bits are the same for both CNTHCTL and
+CNTKCTL so rather than duplicating the definitions rename them to be
+useful in both cases.
+
+We will need these in a later commit when we start implementing event
+streams.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
 ---
-v2
-  - fix alignment in a32.decode
-  - set bool directly, defend with QEMU_BUILD_BUG_ON
-  - s/instructions/profiles/
-  - share get_event_reg between translate/translate-a64
----
- target/arm/tcg/translate.h     | 18 ++++++++++++++++++
- target/arm/tcg/a32.decode      |  5 ++---
- target/arm/tcg/a64.decode      |  5 ++---
- target/arm/tcg/t16.decode      |  4 +---
- target/arm/tcg/t32.decode      |  4 +---
- target/arm/tcg/op_helper.c     |  4 +---
- target/arm/tcg/translate-a64.c | 17 +++++++++++++++++
- target/arm/tcg/translate.c     | 13 ++++++++-----
- 8 files changed, 50 insertions(+), 20 deletions(-)
+ target/arm/internals.h | 11 +++++++----
+ target/arm/helper.c    |  8 ++++----
+ 2 files changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index 77fdc5f3a17..340848793d4 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -854,6 +854,24 @@ static inline void gen_restore_rmode(TCGv_i32 old, TCGv_ptr fpst)
-     gen_helper_set_rmode(old, old, fpst);
- }
- 
-+/*
-+ * Event Register signalling.
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 7deaf1ab6de..0c22781919b 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -269,14 +269,17 @@ FIELD(VSTCR, SA, 30, 1)
+  * have different bit definitions, and EL1PCTEN might be
+  * bit 0 or bit 10. We use _E2H1 and _E2H0 suffixes to
+  * disambiguate if necessary.
 + *
-+ * A bunch of activities trigger events, we just need to latch on to
-+ * true. The event eventually gets consumed by WFE/WFET.
-+ *
-+ * user-mode treats these as NOPs.
-+ */
-+
-+static inline void gen_event_reg(void)
-+{
-+#ifndef CONFIG_USER_ONLY
-+    TCGv_i32 set_event = tcg_constant_i32(1);
-+    QEMU_BUILD_BUG_ON(sizeof_field(CPUARMState, event_register) != 1);
-+    tcg_gen_st8_i32(set_event, tcg_env, offsetof(CPUARMState, event_register));
-+#endif
-+}
-+
- /*
-  * Helpers for implementing sets of trans_* functions.
-  * Defer the implementation of NAME to FUNC, with optional extra arguments.
-diff --git a/target/arm/tcg/a32.decode b/target/arm/tcg/a32.decode
-index f2ca4809495..547aa2b1490 100644
---- a/target/arm/tcg/a32.decode
-+++ b/target/arm/tcg/a32.decode
-@@ -192,9 +192,8 @@ SMULTT           .... 0001 0110 .... 0000 .... 1110 ....      @rd0mn
-       WFE        ---- 0011 0010 0000 1111 ---- 0000 0010
-       WFI        ---- 0011 0010 0000 1111 ---- 0000 0011
++ * The event stream bits (EVN*) are in the same position for
++ * CNTKCTL_EL1/CTNKCTL.
+  */
+ FIELD(CNTHCTL, EL0PCTEN_E2H1, 0, 1)
+ FIELD(CNTHCTL, EL0VCTEN_E2H1, 1, 1)
+ FIELD(CNTHCTL, EL1PCTEN_E2H0, 0, 1)
+ FIELD(CNTHCTL, EL1PCEN_E2H0, 1, 1)
+-FIELD(CNTHCTL, EVNTEN, 2, 1)
+-FIELD(CNTHCTL, EVNTDIR, 3, 1)
+-FIELD(CNTHCTL, EVNTI, 4, 4)
++FIELD(CNTxCTL, EVNTEN, 2, 1)
++FIELD(CNTxCTL, EVNTDIR, 3, 1)
++FIELD(CNTxCTL, EVNTI, 4, 4)
+ FIELD(CNTHCTL, EL0VTEN, 8, 1)
+ FIELD(CNTHCTL, EL0PTEN, 9, 1)
+ FIELD(CNTHCTL, EL1PCTEN_E2H1, 10, 1)
+@@ -286,7 +289,7 @@ FIELD(CNTHCTL, EL1TVT, 13, 1)
+ FIELD(CNTHCTL, EL1TVCT, 14, 1)
+ FIELD(CNTHCTL, EL1NVPCT, 15, 1)
+ FIELD(CNTHCTL, EL1NVVCT, 16, 1)
+-FIELD(CNTHCTL, EVNTIS, 17, 1)
++FIELD(CNTxCTL, EVNTIS, 17, 1)
+ FIELD(CNTHCTL, CNTVMASK, 18, 1)
+ FIELD(CNTHCTL, CNTPMASK, 19, 1)
  
--      # TODO: Implement SEV, SEVL; may help SMP performance.
--      # SEV      ---- 0011 0010 0000 1111 ---- 0000 0100
--      # SEVL     ---- 0011 0010 0000 1111 ---- 0000 0101
-+      SEV        ---- 0011 0010 0000 1111 ---- 0000 0100
-+      SEVL       ---- 0011 0010 0000 1111 ---- 0000 0101
- 
-       ESB        ---- 0011 0010 0000 1111 ---- 0001 0000
-     ]
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 01b1b3e38be..dcb3099dd5c 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -237,9 +237,8 @@ ERETA           1101011 0100 11111 00001 m:1 11111 11111 &reta  # ERETAA, ERETAB
-     YIELD       1101 0101 0000 0011 0010 0000 001 11111
-     WFE         1101 0101 0000 0011 0010 0000 010 11111
-     WFI         1101 0101 0000 0011 0010 0000 011 11111
--    # We implement WFE to never block, so our SEV/SEVL are NOPs
--    # SEV       1101 0101 0000 0011 0010 0000 100 11111
--    # SEVL      1101 0101 0000 0011 0010 0000 101 11111
-+    SEV         1101 0101 0000 0011 0010 0000 100 11111
-+    SEVL        1101 0101 0000 0011 0010 0000 101 11111
-     # Our DGL is a NOP because we don't merge memory accesses anyway.
-     # DGL       1101 0101 0000 0011 0010 0000 110 11111
-     XPACLRI     1101 0101 0000 0011 0010 0000 111 11111
-diff --git a/target/arm/tcg/t16.decode b/target/arm/tcg/t16.decode
-index 778fbf16275..9a8f89538ac 100644
---- a/target/arm/tcg/t16.decode
-+++ b/target/arm/tcg/t16.decode
-@@ -228,10 +228,8 @@ REVSH           1011 1010 11 ... ...            @rdm
-     WFE         1011 1111 0010 0000
-     WFI         1011 1111 0011 0000
- 
--    # M-profile SEV is implemented.
--    # TODO: Implement SEV for other profiles, and SEVL for all profiles; may help SMP performance.
-     SEV         1011 1111 0100 0000
--    # SEVL      1011 1111 0101 0000
-+    SEVL        1011 1111 0101 0000
- 
-     # The canonical nop has the second nibble as 0000, but the whole of the
-     # rest of the space is a reserved hint, behaves as nop.
-diff --git a/target/arm/tcg/t32.decode b/target/arm/tcg/t32.decode
-index 49b8d0037ec..8ae277fe112 100644
---- a/target/arm/tcg/t32.decode
-+++ b/target/arm/tcg/t32.decode
-@@ -369,10 +369,8 @@ CLZ              1111 1010 1011 ---- 1111 .... 1000 ....      @rdm
-         WFE      1111 0011 1010 1111 1000 0000 0000 0010
-         WFI      1111 0011 1010 1111 1000 0000 0000 0011
- 
--        # M-profile SEV is implemented.
--        # TODO: Implement SEV for other profiles, and SEVL for all profiles; may help SMP performance.
-         SEV      1111 0011 1010 1111 1000 0000 0000 0100
--        # SEVL   1111 0011 1010 1111 1000 0000 0000 0101
-+        SEVL     1111 0011 1010 1111 1000 0000 0000 0101
- 
-         ESB      1111 0011 1010 1111 1000 0000 0001 0000
-       ]
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 504526153a6..2b1fb1e059d 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -476,9 +476,7 @@ void HELPER(sev)(CPUARMState *env)
-     CPUState *cs = env_cpu(env);
-     CPU_FOREACH(cs) {
-         ARMCPU *target_cpu = ARM_CPU(cs);
--        if (arm_feature(&target_cpu->env, ARM_FEATURE_M)) {
--            target_cpu->env.event_register = true;
--        }
-+        target_cpu->env.event_register = true;
-         if (!qemu_cpu_is_self(cs)) {
-             qemu_cpu_kick(cs);
-         }
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index d057241e9df..88c5832fcbe 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -2033,6 +2033,23 @@ static bool trans_WFI(DisasContext *s, arg_WFI *a)
-     return true;
- }
- 
-+static bool trans_SEV(DisasContext *s, arg_SEV *a)
-+{
-+    /*
-+     * SEV is a NOP for user-mode emulation.
-+     */
-+#ifndef CONFIG_USER_ONLY
-+    gen_helper_sev(tcg_env);
-+#endif
-+    return true;
-+}
-+
-+static bool trans_SEVL(DisasContext *s, arg_SEV *a)
-+{
-+    gen_event_reg();
-+    return true;
-+}
-+
- static bool trans_WFE(DisasContext *s, arg_WFI *a)
- {
-     /*
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index c744b163453..e1e5539f571 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -3246,17 +3246,20 @@ static bool trans_YIELD(DisasContext *s, arg_YIELD *a)
- static bool trans_SEV(DisasContext *s, arg_SEV *a)
- {
-     /*
--     * Currently SEV is a NOP for non-M-profile and in user-mode emulation.
--     * For system-mode M-profile, it sets the event register.
-+     * SEV is a NOP for user-mode emulation.
-      */
- #ifndef CONFIG_USER_ONLY
--    if (arm_dc_feature(s, ARM_FEATURE_M)) {
--        gen_helper_sev(tcg_env);
--    }
-+    gen_helper_sev(tcg_env);
- #endif
-     return true;
- }
- 
-+static bool trans_SEVL(DisasContext *s, arg_SEV *a)
-+{
-+    gen_event_reg();
-+    return true;
-+}
-+
- static bool trans_WFE(DisasContext *s, arg_WFE *a)
- {
-     /*
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 8240f1b3848..3b06bd80a01 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -1766,9 +1766,9 @@ static void gt_cnthctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     uint32_t valid_mask =
+         R_CNTHCTL_EL0PCTEN_E2H1_MASK |
+         R_CNTHCTL_EL0VCTEN_E2H1_MASK |
+-        R_CNTHCTL_EVNTEN_MASK |
+-        R_CNTHCTL_EVNTDIR_MASK |
+-        R_CNTHCTL_EVNTI_MASK |
++        R_CNTxCTL_EVNTEN_MASK |
++        R_CNTxCTL_EVNTDIR_MASK |
++        R_CNTxCTL_EVNTI_MASK |
+         R_CNTHCTL_EL0VTEN_MASK |
+         R_CNTHCTL_EL0PTEN_MASK |
+         R_CNTHCTL_EL1PCTEN_E2H1_MASK |
+@@ -1783,7 +1783,7 @@ static void gt_cnthctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
+             R_CNTHCTL_EL1TVCT_MASK |
+             R_CNTHCTL_EL1NVPCT_MASK |
+             R_CNTHCTL_EL1NVVCT_MASK |
+-            R_CNTHCTL_EVNTIS_MASK;
++            R_CNTxCTL_EVNTIS_MASK;
+     }
+     if (cpu_isar_feature(aa64_ecv, cpu)) {
+         valid_mask |= R_CNTHCTL_ECV_MASK;
 -- 
 2.47.3
 
