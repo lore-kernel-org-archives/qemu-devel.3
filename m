@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A46E2CD5BD0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 20:15:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A313CD6E43
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 20:16:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSKeb-0006xA-HS; Wed, 27 May 2026 16:15:01 -0400
+	id 1wSKeq-0007fY-QF; Wed, 27 May 2026 16:15:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSKeZ-0006s8-QA
- for qemu-devel@nongnu.org; Wed, 27 May 2026 16:14:59 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSKep-0007cM-KZ
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 16:15:15 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSKeY-0005OU-3f
- for qemu-devel@nongnu.org; Wed, 27 May 2026 16:14:59 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-452169ae568so7822705f8f.3
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 13:14:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSKen-0005ck-3O
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 16:15:15 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-45ee1a56328so230674f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 13:15:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779912895; x=1780517695; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779912911; x=1780517711; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TeblK7/EUpTWApgaalqExSacjBZVjtrb39D4H9GOeNI=;
- b=LSYyblJyObQ0eaTDCf7C5Q0v0NHMnRvZIwSbw1jPJAmGskcA+jjl0475q1cKi54YTI
- 05l3p4Hldv+2yPPweCg6mcvuHxEhhg3weYjikkzTfrJePsfh+a2fe1LeQ4wEchrAzIgs
- 3Py+IosL2p1mmsu4WUuqF8IH2yTwti5kAwv59isPQmlY6f/xLK2HdQHpuQMqS2r4dMi6
- 8GfrGleb6dOnTyDwvUW3tJAmZyWRpdW7kvzNNbgagav7Kg6VGRjHVeE4A41AyEZMzkNT
- FSW/FMz6/Uas1QnyEnqVCD0893W5n6oN98dLYVC6QwvmFdSu+9m9PQBjrfotbDrKljVJ
- 4IHg==
+ bh=Qu8O8rtS738a8Ucf54GvfcNN/jmoBkFJcUUMjuQGH6U=;
+ b=Pm2GKr2GEscF7enPwXigzaaHHUn3RQyYH4AuN9shWFC7MTdt4JEMSDZPgi3bSay4MY
+ 7wl+LKlyXlMN388BHOnXaurezgeCdA/A7P4h1U+Z56H8gyHky6XiPmDzzqQJzDd23si+
+ ++y6IR7S9FLTlNmg2s13sdhnX2baoglQNY/iWtiCeSl3ckwLZdAEv0mZSwxHc4bczEm7
+ dDPg0ryFbL9I4k3aq7tcCCLx6Z3LUQ8YUSfKlQfg+FVWU3ikCKVO+D6y4BeSSQGlrA2R
+ FhEcLvs9AUl7GY3K7XByASUT32E4Gl2g3ZgxfiaT5x+A+Fg6BdwzSduANjFsdFnnQrv8
+ M0nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779912895; x=1780517695;
+ d=1e100.net; s=20251104; t=1779912911; x=1780517711;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=TeblK7/EUpTWApgaalqExSacjBZVjtrb39D4H9GOeNI=;
- b=mw94wgAfczQuLHP1D3ZRt4TdxLiu/NcMbE3n8O/m+DfcjVN2Jl76coSAJs0f3EkNPn
- aEsJa4nBBTwixk61gC4pO9Fyo80A3BfRattrtxx/rlA+4reLEK3BDIMSQuQy379P2rV5
- DzsZZNp4aGoqIyftG6DN843lovNash7m3villf5e+rUiqEAy04byBIfd3DGWKikcWWd8
- Mm2jKe5wNwh9imIe9XvyUEAl6SoPYxrphaYxd2D4KbpHtuU73W8ZMmivxlIME14eRVrA
- sC+xUlgvlpN9G40tAfiL7rsoUug5E75DqxMfym96UQcg6RnUUzJusjCeV3use7MgWtCT
- J9xA==
-X-Gm-Message-State: AOJu0Yy68Aa0gRr5hLL2J92vL0EqTn87FisjTNcJfZpVY7zauslCq3rL
- N6W9rv9Zc8XDGDl1GFffTlhB4lAmz3sAj11fL7ZQGdXGfuDC+STDZCinqImd1SwvjyTv1cHfJQi
- cXifCNd1+UA==
-X-Gm-Gg: Acq92OF1Kx18e5sX3E3iRji95plNSeK/yBG55ge0g0e5k5v717fhvR76VJOt7m7Iz8h
- 2oNnkJ8CitxyvM9QxlEGsoKF+yv7H0Sfxwx5whCsIhSwKkd12RSNkisHb4kQb61QLpIfAmJquD+
- z2L9/zkEEiHs9XEI3834JOPkrSi/C2aVBH6tEiMl6mA1Kfzoz1QmMj6V/QNte+lAfcPvnccZfyd
- TcbWNv7otYKY6FGuy7K4RYjiyceIkCxEMO4SIxwJZrB8FizIT9UFRnF2DwNZBWNibwSjjtbAGe8
- Uve7xgnfsQYEsJOjJ0WAA95wA9Lto/BkLLX+SZ3a/4njxFdrO8umnGH/qVF5Gi8Jb8qIb4nezy6
- m7ZBVf0ZMmHKMf/tH0StnmUoOHo6O82czW6Fzo3eblXAPyC1GG6Ls4jg8xinJkV9shPc1lMlqn9
- 3nQj8xlZZIo4HeYqwkotZdDt+nHj1tHUuBVvfw2iitlaStsZEF+FyPtROfj03Yyqs3JQ==
-X-Received: by 2002:a05:6000:2f82:b0:45e:d3d4:c230 with SMTP id
- ffacd0b85a97d-45ed3d4d1cbmr19415767f8f.38.1779912895146; 
- Wed, 27 May 2026 13:14:55 -0700 (PDT)
+ bh=Qu8O8rtS738a8Ucf54GvfcNN/jmoBkFJcUUMjuQGH6U=;
+ b=ituM1S95m35GKtEG5oYtotA7J9IPCDVEhQ/GapooXUQH7CUKiGuI5x8m1we3siAHdE
+ DcrMDyYmwlOG6eCnE3xyNm/QZ+w7UhDiIVAvYBf3fNsq/BJi+kuBuaDHioH+AeLyEVuv
+ cTTOI1CW2ddo4C0LwV7AdDr5VVdW4bjO+Yz/Q/D1S4QAMJ0sHfZTr0hpwwKWDDLzcYYO
+ IoxQv+3m061+sCtuNqVPR/RQkBTsgM2FADgv6x5frxP97RqdTvMlcMa+0L12UnAnx135
+ 5uEX+x5KcxxXCwGy//p3OI+Bi4fBXvmEmpZqiFi746uWNTYyhbsuwZHJSORSYIJWTF8h
+ FQaQ==
+X-Gm-Message-State: AOJu0Yzp9bYH6R9Rw9xW/EhUI42K20PPNYtu/GbeNgKG/wtytoNCbWv6
+ YLV2xJmGm972GjHd2Rure8mz0aL67uhJ2x8CptKtouc/JDZZQJ6baR1QLdsdLiPLcC1QTXPrjXy
+ sxLQwhz3IvA==
+X-Gm-Gg: Acq92OGYza0IMbT/MRTc58viC5SQdkAgEdQKnmlSQfDXrhjTsK01vUekASGEwj0SFBj
+ xQvTjVp7Fmc1NGXM7sYlWsYh4iQgqTibiDvr1l+cDbRQf3KSgaeUc/bn1hHjfktmJVIZP8cHtCh
+ j1bvjhx6hAxuqDoFE1/G1rxTKUT4TSYrQqlZy1WuNSRdzc41uunMSJYxgWfAM6fY30K2KMjeyIq
+ XdPF2LET2sC6eR1+tmIHenM7V8TWIsJmcPLa+MBllCBhQgD7piUaC7BnjQQw5KzRmQrQHBPAdOp
+ ZH2//1r+GnD+jmTim4RNj/vZHzmWlAhpWzcuTv8SW20xbsZWPOWc3x/r1v9X9FInjlN5+fbxham
+ LBxrUhrP26a2tgxi8QEUtFFxUKzf6ddZDzrSnnHS330ACb2N/12GxH8LA3vJ+szTQEE4mvAw3CN
+ KkJcKASdu1pKolKv5LkhdbpYrXemMAU2+pHh5r76EyOJYXDU6Vguyf4ElY4dvgOETX82/XzWZFY
+ qU+
+X-Received: by 2002:a05:6000:468c:b0:45e:dabf:a00e with SMTP id
+ ffacd0b85a97d-45edabfa2d2mr5891652f8f.31.1779912910665; 
+ Wed, 27 May 2026 13:15:10 -0700 (PDT)
 Received: from m17.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45edb557679sm14753300f8f.10.2026.05.27.13.14.53
+ ffacd0b85a97d-45edb54a432sm11756563f8f.3.2026.05.27.13.15.08
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 27 May 2026 13:14:54 -0700 (PDT)
+ Wed, 27 May 2026 13:15:09 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -74,25 +75,26 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Christoph Muellner <christoph.muellner@vrull.eu>,
+ Djordje Todorovic <djordje.todorovic@htecgroup.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v11 08/12] hw/riscv/boot: Replace cpu_to_le32() -> const_le32()
-Date: Wed, 27 May 2026 22:13:44 +0200
-Message-ID: <20260527201348.29511-9-philmd@linaro.org>
+Subject: [PATCH v11 10/12] hw/riscv/boot: Honour data endianness
+Date: Wed, 27 May 2026 22:13:46 +0200
+Message-ID: <20260527201348.29511-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260527201348.29511-1-philmd@linaro.org>
 References: <20260527201348.29511-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,73 +110,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than adapting the array endianness when it it
-filled, directly initialize the CODE words with the
-correct endianness.
+From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 
+Check the hart endianness property and use it throughout the boot code:
+
+- ELF loading: pass ELFDATA2MSB or ELFDATA2LSB based on endianness
+- Firmware dynamic info
+- Reset vector: instructions (entries 0-5) remain always little-endian,
+  data words (entries 6-9) use target data endianness.
+
+Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+Co-developed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/riscv/boot.c | 30 +++++++++++++-----------------
- 1 file changed, 13 insertions(+), 17 deletions(-)
+ hw/riscv/boot.c | 40 ++++++++++++++++++++++++++++------------
+ 1 file changed, 28 insertions(+), 12 deletions(-)
 
 diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-index c6ab1cc8cfb..4297949f6be 100644
+index 4297949f6be..7c9cd614681 100644
 --- a/hw/riscv/boot.c
 +++ b/hw/riscv/boot.c
-@@ -454,40 +454,36 @@ void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayState *harts
-                                uint64_t kernel_entry,
+@@ -407,21 +407,31 @@ void riscv_rom_copy_firmware_info(MachineState *machine,
+     struct fw_dynamic_info64 dinfo64;
+     void *dinfo_ptr = NULL;
+     size_t dinfo_len;
++    const bool rv32 = riscv_is_32bit(harts);
++    const bool be = harts->harts[0].cfg.big_endian;
+ 
+-    if (riscv_is_32bit(harts)) {
+-        dinfo32.magic = cpu_to_le32(FW_DYNAMIC_INFO_MAGIC_VALUE);
+-        dinfo32.version = cpu_to_le32(FW_DYNAMIC_INFO_VERSION);
+-        dinfo32.next_mode = cpu_to_le32(FW_DYNAMIC_INFO_NEXT_MODE_S);
+-        dinfo32.next_addr = cpu_to_le32(kernel_entry);
++    if (rv32) {
++        dinfo32.magic = be ? cpu_to_be32(FW_DYNAMIC_INFO_MAGIC_VALUE)
++                           : cpu_to_le32(FW_DYNAMIC_INFO_MAGIC_VALUE);
++        dinfo32.version = be ? cpu_to_be32(FW_DYNAMIC_INFO_VERSION)
++                             : cpu_to_le32(FW_DYNAMIC_INFO_VERSION);
++        dinfo32.next_mode = be ? cpu_to_be32(FW_DYNAMIC_INFO_NEXT_MODE_S)
++                               : cpu_to_le32(FW_DYNAMIC_INFO_NEXT_MODE_S);
++        dinfo32.next_addr = be ? cpu_to_be32(kernel_entry)
++                               : cpu_to_le32(kernel_entry);
+         dinfo32.options = 0;
+         dinfo32.boot_hart = 0;
+         dinfo_ptr = &dinfo32;
+         dinfo_len = sizeof(dinfo32);
+     } else {
+-        dinfo64.magic = cpu_to_le64(FW_DYNAMIC_INFO_MAGIC_VALUE);
+-        dinfo64.version = cpu_to_le64(FW_DYNAMIC_INFO_VERSION);
+-        dinfo64.next_mode = cpu_to_le64(FW_DYNAMIC_INFO_NEXT_MODE_S);
+-        dinfo64.next_addr = cpu_to_le64(kernel_entry);
++        dinfo64.magic = be ? cpu_to_be64(FW_DYNAMIC_INFO_MAGIC_VALUE)
++                           : cpu_to_le64(FW_DYNAMIC_INFO_MAGIC_VALUE);
++        dinfo64.version = be ? cpu_to_be64(FW_DYNAMIC_INFO_VERSION)
++                             : cpu_to_le64(FW_DYNAMIC_INFO_VERSION);
++        dinfo64.next_mode = be ? cpu_to_be64(FW_DYNAMIC_INFO_NEXT_MODE_S)
++                               : cpu_to_le64(FW_DYNAMIC_INFO_NEXT_MODE_S);
++        dinfo64.next_addr = be ? cpu_to_be64(kernel_entry)
++                               : cpu_to_le64(kernel_entry);
+         dinfo64.options = 0;
+         dinfo64.boot_hart = 0;
+         dinfo_ptr = &dinfo64;
+@@ -455,6 +465,7 @@ void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayState *harts
                                 uint64_t fdt_load_addr)
  {
--    int i;
      const bool rv32 = riscv_is_32bit(harts);
++    const bool big_endian = harts->harts[0].cfg.big_endian;
      uint32_t reset_vec[CODE_WORDS + DATA_WORDS];
  
--    /* .text */
--    reset_vec[0] = 0x00000297;                  /* 1:  auipc  t0, %pcrel_hi(fw_dyn) */
--    reset_vec[1] = 0x02828613;                  /*     addi   a2, t0, %pcrel_lo(1b) */
-+    /* .text (RISC-V instructions are always little-endian) */
-+    reset_vec[0] = const_le32(0x00000297);      /* 1:  auipc  t0, %pcrel_hi(fw_dyn) */
-+    reset_vec[1] = const_le32(0x02828613);      /*     addi   a2, t0, %pcrel_lo(1b) */
-+    reset_vec[2] = const_le32(0xf1402573);      /*     csrr   a0, mhartid  */
-     if (harts->harts[0].cfg.ext_zicsr) {
--        reset_vec[2] = 0xf1402573;              /*     csrr   a0, mhartid  */
-+        reset_vec[2] = const_le32(0xf1402573);  /*     csrr   a0, mhartid  */
-     } else {
-         /*
-          * The Zicsr extension has been disabled, so let's ensure we don't
-          * run the CSR instruction. Let's fill the address with a non
-          * compressed nop.
-          */
--        reset_vec[2] = 0x00000013;              /*     addi   x0, x0, 0 */
-+        reset_vec[2] = const_le32(0x00000013);  /*     addi   x0, x0, 0 */
+     /* .text (RISC-V instructions are always little-endian) */
+@@ -480,9 +491,14 @@ void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayState *harts
      }
-     if (rv32) {
--        reset_vec[3] = 0x0202a583;              /*     lw     a1, 32(t0) */
--        reset_vec[4] = 0x0182a283;              /*     lw     t0, 24(t0) */
-+        reset_vec[3] = const_le32(0x0202a583);  /*     lw     a1, 32(t0) */
-+        reset_vec[4] = const_le32(0x0182a283);  /*     lw     t0, 24(t0) */
-     } else {
--        reset_vec[3] = 0x0202b583;              /*     ld     a1, 32(t0) */
--        reset_vec[4] = 0x0182b283;              /*     ld     t0, 24(t0) */
-+        reset_vec[3] = const_le32(0x0202b583);  /*     ld     a1, 32(t0) */
-+        reset_vec[4] = const_le32(0x0182b283);  /*     ld     t0, 24(t0) */
-     }
--    reset_vec[5] = 0x00028067;                  /*     jr     t0 */
-+    reset_vec[5] = const_le32(0x00028067);      /*     jr     t0 */
+     reset_vec[5] = const_le32(0x00028067);      /*     jr     t0 */
  
-     /* .data */
--    stq_p(&reset_vec[6], start_addr);           /* start:       .dword */
--    stq_p(&reset_vec[8], fdt_load_addr);        /* fdt_laddr:   .dword */
-+    stq_le_p(&reset_vec[6], start_addr);        /* start:       .dword */
-+    stq_le_p(&reset_vec[8], fdt_load_addr);     /* fdt_laddr:   .dword */
+-    /* .data */
+-    stq_le_p(&reset_vec[6], start_addr);        /* start:       .dword */
+-    stq_le_p(&reset_vec[8], fdt_load_addr);     /* fdt_laddr:   .dword */
++    /* .data (must match the firmware's data endianness) */
++    if (big_endian) {
++        stq_be_p(&reset_vec[6], start_addr);    /* start:       .dword */
++        stq_be_p(&reset_vec[8], fdt_load_addr); /* fdt_laddr:   .dword */
++    } else {
++        stq_le_p(&reset_vec[6], start_addr);
++        stq_le_p(&reset_vec[8], fdt_load_addr);
++    }
  
--    /* copy in the reset vector in little_endian byte order */
--    for (i = 0; i < ARRAY_SIZE(reset_vec); i++) {
--        reset_vec[i] = cpu_to_le32(reset_vec[i]);
--    }
      rom_add_blob_fixed_as("mrom.reset", reset_vec, sizeof(reset_vec),
                            rom_base, &address_space_memory);
-     riscv_rom_copy_firmware_info(machine, harts,
 -- 
 2.53.0
 
