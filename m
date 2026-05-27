@@ -4,72 +4,191 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C9CFCD6E44
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 15:08:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A355CCD5BD0
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 15:09:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSFq6-0001Y6-IY; Wed, 27 May 2026 11:06:34 -0400
+	id 1wSFsf-0004BV-PY; Wed, 27 May 2026 11:09:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wSFq4-0001WZ-LK; Wed, 27 May 2026 11:06:32 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
+ id 1wSFsb-0004AE-Mu; Wed, 27 May 2026 11:09:10 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wSFpx-0003dS-OY; Wed, 27 May 2026 11:06:32 -0400
-Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
- [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64RF5nBm078744
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 28 May 2026 00:06:09 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=GsBOkcgqvossjjRmJLtfzPtwWVVe0gT2Rq5UeFjN7lE=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1779894369; v=1;
- b=gNDUngj/BHs5LsTYANMq36Qs+xXwviizB8Q7Vav2pXtD/+MFA0HUHyKai2KcYELE
- JgpC93S9i9UEsI50HxfHFfkkzZR56pyOOIvytb41eUeIVqiR3XeA3cwkBGZKZcto
- KBbh647MS5xcPJdRuPC82xbDQIRkZbbq+5FE31ehsuvqyNtEf5jqMZ9cJi+ZEnLk
- XhUlMSwVl/Hn96crp2wcXbo1e/rzbtT5+Ps7yalSZbTxuIxScX9Nm3Wd/7YOoftJ
- fvmZUvdENkrRZ7LZR94PyTR9PDb7ZASWwfwGnI+zUbsHAMvFzmbaE4WL/CT7AOk1
- vd+nb47uh0LnjuQLAZ2mAQ==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 28 May 2026 00:05:45 +0900
-Subject: [PATCH v7 5/5] test/acpi: aarch64/virt: Update golden masters for
- DSDT and MCFG
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
+ id 1wSFsX-0004Yf-LJ; Wed, 27 May 2026 11:09:09 -0400
+Received: from pps.filterd (m0127841.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64RCs6i82641613; Wed, 27 May 2026 08:08:45 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-id:content-transfer-encoding:content-type:date:from
+ :in-reply-to:message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=rbVzfsCJ7cGUHEb6d81DUGnREwRgv9uR7SWFwx2P9
+ wQ=; b=uO/dHJGto2jwo5iC/tEgMF44my+PhU7TCfydZYuOJcXC12eiq9A4BIczw
+ zi3hkZ+nFFtACOniA2cn2bIPHVOxQIFirWWrIK5voAJaL7lYTkQaHnsGsi41PY0T
+ zTnYLZbcby475N8nyXWP7VVga9fawGdw/UnBOW3/1kwB6ibKBnHG6Hc4ZT+LuZBm
+ 8Wbyd6LobpxAdDlssvgvMn/0xRjIGAokkm/u2hV6Wp1a0y1i7WTCK88305BZSQID
+ fHBVY629grguPp66bfEan7gTBo5a/rMlyTcq9PHkrIrtcTEgsbz41GDc/AHfeCi4
+ C2ofCa55oalAzV5XpI2qxCh16x33A==
+Received: from ch5pr02cu005.outbound.protection.outlook.com
+ (mail-northcentralusazon11022103.outbound.protection.outlook.com
+ [40.107.200.103])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4edkqt22cv-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Wed, 27 May 2026 08:08:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ygPY+xEkU0q4cqrjZMdCBC+ctzY/3h4wVpzj8HuWsbkXOCz175+BcG/gjboF4FMlpXZQsdR2tjQ83ctxJgERZCLERFZ+1+tf+0K3a0oPfuzXqSijz14VaqYj68eKHxfYVMMjmF3kSQWPuOqGD/9rxIyKqg+l78g10bX0r4/lHL1ZpSnGgWar+Q528e4ORjjFiePzcacFv5G/rryDxLWFKMlLTmUrvxBcLrOg2Idxerfpb7PUSJoibpgUf7ds918KC866SWFpEOfE1TAc97Dhfy1o00qXT5mPxFejPBt0TMTox6os8r/Pnxev6jZ7tPW6j4hTe4l1Yje8i3+yCXqsIg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rbVzfsCJ7cGUHEb6d81DUGnREwRgv9uR7SWFwx2P9wQ=;
+ b=MPFLZ58EX2gC7T+3gCryU6IZEcjcTJAvZ54WG4MJg9Rq/SSDFpjGbzZQoDPXYr8eJXOimpCYnMRlVhjsBHP1X648kcVDydlYX1cZPPGUTFB8ptDm0u0FhMWvGLfvl6WKdP5NnDmnNHplZDt/5hmRhzJzOuyANGB57hlBZ5BYyBiAx/Kjwq52grF4H8+sQfNk8FLiVH9evz4o0ltEpnXzNyWMBlFNpw3bpejP7vjuMUykbkybfMaWNEeVROUYmh8lb1zGL3cLaSkMqJF9A0THrbwyEZVcWXQtX1Ap96PwF/hly9obJLLVJh5lzalHQ8HRFeEI66fm6dbxe18JaKPNyw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rbVzfsCJ7cGUHEb6d81DUGnREwRgv9uR7SWFwx2P9wQ=;
+ b=n7lnoi5K72vBeUhfljojre3MUmDABriM6PUcCyPNsYdPhKQjF1Bn+UVHpFhT0SpohO9BY42bCoKyiQgUQX54NpdmNzTB9VT9NoeeZcUr9eFgIl41ZCW3Lo7/MvAdUPy20whNCIPL1YifHB9Ted8lqeSYNFM3izsnq5GLTemw18XfUuokidnl4J+2YtZhgzsw12NKcNZUUJ3ruJbkWSxdt8ea2B2MfUNYoGAfAMWbBjf/E98MWv7hZVFCudbo/0L0a8ZiM7HAwvYE71Tjgfu6yi7/EQn21ye/PvVzMN3uhdVBHOuqXRyEjZkW42geZxLvckG+BrSR9nvNhIIweWSC1A==
+Received: from SA2PR02MB7564.namprd02.prod.outlook.com (2603:10b6:806:146::23)
+ by SJ0PR02MB7469.namprd02.prod.outlook.com (2603:10b6:a03:293::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.13; Wed, 27 May
+ 2026 15:08:42 +0000
+Received: from SA2PR02MB7564.namprd02.prod.outlook.com
+ ([fe80::1ea5:acb6:ebe1:e1c4]) by SA2PR02MB7564.namprd02.prod.outlook.com
+ ([fe80::1ea5:acb6:ebe1:e1c4%6]) with mapi id 15.21.0071.011; Wed, 27 May 2026
+ 15:08:42 +0000
+From: Khushit Shah <khushit.shah@nutanix.com>
+To: Eric Auger <eric.auger@redhat.com>
+CC: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Shaju Abraham
+ <shaju.abraham@nutanix.com>, "yangjinqian1@huawei.com"
+ <yangjinqian1@huawei.com>, "cohuck@redhat.com" <cohuck@redhat.com>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "sebott@redhat.com" <sebott@redhat.com>, "skolothumtho@nvidia.com"
+ <skolothumtho@nvidia.com>, "philmd@linaro.org" <philmd@linaro.org>,
+ "maz@kernel.org" <maz@kernel.org>, "oliver.upton@linux.dev"
+ <oliver.upton@linux.dev>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "armbru@redhat.com" <armbru@redhat.com>, "berrange@redhat.com"
+ <berrange@redhat.com>, "abologna@redhat.com" <abologna@redhat.com>,
+ "jdenemar@redhat.com" <jdenemar@redhat.com>
+Subject: Re: [PATCH v5 13/18] target/arm/kvm: Introduce
+ kvm_arm_expose_idreg_properties
+Thread-Topic: [PATCH v5 13/18] target/arm/kvm: Introduce
+ kvm_arm_expose_idreg_properties
+Thread-Index: AQHc55O5Scpifk99ukS97TxWxklCprYiBjUA
+Date: Wed, 27 May 2026 15:08:42 +0000
+Message-ID: <3344B74E-39B1-421D-8417-373A688DB372@nutanix.com>
+References: <20260519132905.145643-1-eric.auger@redhat.com>
+ <20260519132905.145643-14-eric.auger@redhat.com>
+In-Reply-To: <20260519132905.145643-14-eric.auger@redhat.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SA2PR02MB7564:EE_|SJ0PR02MB7469:EE_
+x-ms-office365-filtering-correlation-id: 32efdaa7-d1bd-44d9-6bfa-08debc01d752
+x-proofpoint-crosstenant: true
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|7416014|366016|376014|1800799024|22082099003|18002099003|38070700021|4143699003|3023799007|6133799003|56012099006;
+x-microsoft-antispam-message-info: opKk5cwCdy+pQnmJc7e/gmBvZ5pY0bbh4jk2kufAXSgVa5GWzwrdNXVGfN1BNE/fesGuvT+w8ydiZwAfAIzFsF1ezXhozIGy32ww+YLrk4JcKsXGk/eWLfKL5lOLWFDuMQwv2pO55je7I5WUyN/TD4XUBphGdYm4MWyN1HgO+fiZ732fm99i3yBJ8ohaKDCaLR/LH50cU7BQnYb2x2ItljFSMjOECwB8th8biewpg4v0r8Ux7rxC8XAf3qSJNFGniF7WNV/SG5HuHg9L08C9Zk8972yKtuvy+VSaMoXy4FLsOHReWzYbS0RP35vXS9LCWLJwwimdHWO56IgLYE+4ZLJzW+Bg+jdC2xQ4tnrBf9GDXac2jp7eYOm+vJ9c9K1gAPccp56jSO/PC4LjGb1vjCmOyfdwO6AJ6lWOh6QumTambPn0rvj9RJl4OabsE5DM+ANVCA8E0491DByovpBln3vu1N21bQmS89aS9C916B6v8ZNT8lK3H82MCwWQZaLOMMj5+KCxMQ0DMyMD50VC4BwZrgLJs2E/h1SoEOZhjJsygox61kwIhtiuiEUNk02awn8+ozXrpWPmOFmhAd9zMyziou6iKJslf1Y8Jr5w9fNqgXTfSt4aejvj55dQAowvlF64cwhdCH4YoIoVkVKCIzheT0QcaUJowaev+yxpYVSyJJuZb/cXdaSVz0XLVap9FMNT/Ol69BvoNQEGpYTdzqyNGXL/CcnwRIwuXouoyb5C7r7dRnw72pcCvA71E0l9
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SA2PR02MB7564.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(366016)(376014)(1800799024)(22082099003)(18002099003)(38070700021)(4143699003)(3023799007)(6133799003)(56012099006);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: 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
+ =?utf-8?Q?AbKqIhR2uIlYP6/c=3D?=
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260528-virt-v7-5-42c4d18620b8@rsg.ci.i.u-tokyo.ac.jp>
-References: <20260528-virt-v7-0-42c4d18620b8@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260528-virt-v7-0-42c4d18620b8@rsg.ci.i.u-tokyo.ac.jp>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Eric Auger <eric.auger@redhat.com>, Andrew Jones <ajones@ventanamicro.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.16-dev-16047
-X-Developer-Signature: v=1; a=openpgp-sha256; l=64133;
- i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=bEiMcJWn3Q6KwSEKQ6lNsd69XELKIs5DDGCpPQtd/ZM=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ5Y4R3zDJRvOTc6XD713+3v84tc1T70WMN+4NSOvh9fIz
- eXNFbv8jlIWBjEuBlkxRZaUot3cGtG1nwoT4ltg5rAygQxh4OIUgInE1zH8lWZ+PHPjyffadzzM
- tz0qeO09qSFA7IZK9bbHM7LOnupkCWVk+BFgoXlj0uqtIQaXpb7EctSJbtqwN/j/ikdyz6KORT2
- JYAQA
-X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
- fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-ID: <5DCD8803A8214F4FBE51D28F769AB7D2@namprd02.prod.outlook.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-Exchange-RoutingPolicyChecked: HCIAU9Px+fnXq8AhcqaZKFwY942zX+KQVqX90EURAa5ZDLSv8zSm4XP9aC1H3oKC/vrJ/n0k6XYDAKeNPyjZjClT2XfUZsJY8jQhNC0fpy6G9VD7pMgeQYX1cg063PF7S1RetcluX5HNUeduXiEt6ylE7O+8xoHEnjg1O1p94z8RvUZcaDo5/MVCezhhi97nllEnv3PZmg5jIz9tkWsXL/Xkj/bbJc3CcUpDpMUCHK2NyBQVe/SsO0z4NVmEybHKcYX9sBwRY0/gBfZ6r3rjBa7WA5HR63p63IibkmsOFzfx56QWKfFrNbLnYKE2M6LI9lgrQ8bpbSRIyP09BqanEA==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SA2PR02MB7564.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 32efdaa7-d1bd-44d9-6bfa-08debc01d752
+X-MS-Exchange-CrossTenant-originalarrivaltime: 27 May 2026 15:08:42.6414 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: RZF2kIvqSeANnN8chtsyYrZpESB12Jq2GnrVrpLyQEPyFsZV00oCrEN3chXANij26DiWNoPv7ipcWGEWpJVZd51Le8IcjKgKEwGTnSbeytc=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR02MB7469
+X-Authority-Analysis: v=2.4 cv=Z8Tc2nRA c=1 sm=1 tr=0 ts=6a1708fc cx=c_pps
+ a=K7AEBdpZSLD1v8U6HgG+qg==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=NGcC8JguVDcA:10 a=0kUYKlekyDsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VofLwUrZ8Iiv6rRUPXIb:22 a=jxMXjlTPpCISP5mWtjnE:22 a=20KFwNOVAAAA:8
+ a=1lYWbA8OXB3mZj8Tv7oA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: QQS3iIqV8nZHlxZPEInwWF-7KdrxSxBa
+X-Proofpoint-ORIG-GUID: QQS3iIqV8nZHlxZPEInwWF-7KdrxSxBa
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI3MDE1MCBTYWx0ZWRfX9cNi4BaoBB5B
+ /3wwGa5l8nHJ2z5xyQ9JOB//LCleU0vKD2Dbo9V/YryHFhCILECV2WuMKMVpODuQn7XqVQhdJWK
+ Tw/k63C0TUh21AUWD/+O1sg6VAwq24xxeibXYwFcQOLeCVSc6iGImplvUPSv6We6qMWxYy0p/ia
+ UvxuTU5eD1h7jjnhGHc3JobfEJyPqsu7isLTJVYtP8RGAUbKx5egdikvUrR1cxVHtLtDMsTXeFe
+ KvZFM52T/rzBdKtnIELqLSQU6X1ggTc8bNQhA87fm6V0gpOj8h+UrrR9K9eKLMxR4TqMz8Lopga
+ Jf7jyOxTfg+r/KzYcqpEmWqp6Ai6EKqOpts1i5fJCY4psq481yavopHBgx1bunD+Y5OF5uxLi2D
+ nf675dtSzlh0S8NGLkXLyae5ZNo0PNddnj3HxqJC15OQmTjFOG7M8h7EuI8iy6CNfx63aZzO3vJ
+ FFwPMYiVfRSfC8ceqiQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-05-27_02,2026-05-26_03,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=khushit.shah@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,1654 +204,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-@@ -1,36 +1,36 @@
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20240322 (64-bit version)
-  * Copyright (c) 2000 - 2023 Intel Corporation
-  *
-- * Disassembly of tests/data/acpi/aarch64/virt/MCFG
-+ * Disassembly of /tmp/aml-EFVEJ3
-  *
-  * ACPI Data Table [MCFG]
-  *
-  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue (in hex)
-  */
-
- [000h 0000 004h]                   Signature : "MCFG"    [Memory Mapped Configuration Table]
- [004h 0004 004h]                Table Length : 0000003C
- [008h 0008 001h]                    Revision : 01
--[009h 0009 001h]                    Checksum : EC
-+[009h 0009 001h]                    Checksum : AC
- [00Ah 0010 006h]                      Oem ID : "BOCHS "
- [010h 0016 008h]                Oem Table ID : "BXPC    "
- [018h 0024 004h]                Oem Revision : 00000001
- [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
- [020h 0032 004h]       Asl Compiler Revision : 00000001
-
- [024h 0036 008h]                    Reserved : 0000000000000000
-
--[02Ch 0044 008h]                Base Address : 0000004010000000
-+[02Ch 0044 008h]                Base Address : 0000000090000000
- [034h 0052 002h]        Segment Group Number : 0000
- [036h 0054 001h]            Start Bus Number : 00
- [037h 0055 001h]              End Bus Number : FF
- [038h 0056 004h]                    Reserved : 00000000
-
- Raw Table Data: Length 60 (0x3C)
-
--    0000: 4D 43 46 47 3C 00 00 00 01 EC 42 4F 43 48 53 20  // MCFG<.....BOCHS
-+    0000: 4D 43 46 47 3C 00 00 00 01 AC 42 4F 43 48 53 20  // MCFG<.....BOCHS
-     0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
--    0020: 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 10  // ................
--    0030: 40 00 00 00 00 00 00 FF 00 00 00 00              // @...........
-+    0020: 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 90  // ................
-+    0030: 00 00 00 00 00 00 00 FF 00 00 00 00              // ............
-
-@@ -1,30 +1,30 @@
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20240322 (64-bit version)
-  * Copyright (c) 2000 - 2023 Intel Corporation
-  *
-  * Disassembling to symbolic ASL+ operators
-  *
-- * Disassembly of tests/data/acpi/aarch64/virt/DSDT
-+ * Disassembly of /tmp/aml-5GVEJ3
-  *
-  * Original Table Header:
-  *     Signature        "DSDT"
-- *     Length           0x000014D9 (5337)
-+ *     Length           0x000014D5 (5333)
-  *     Revision         0x02
-- *     Checksum         0xA5
-+ *     Checksum         0xF7
-  *     OEM ID           "BOCHS "
-  *     OEM Table ID     "BXPC    "
-  *     OEM Revision     0x00000001 (1)
-  *     Compiler ID      "BXPC"
-  *     Compiler Version 0x00000001 (1)
-  */
- DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
- {
-     Scope (\_SB)
-     {
-         Device (C000)
-         {
-             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
-             Name (_UID, Zero)  // _UID: Unique ID
-         }
-
-@@ -1751,33 +1751,33 @@
-                     0x001FFFFF,
-                     0x02,
-                     L001,
-                     Zero
-                 },
-
-                 Package (0x04)
-                 {
-                     0x001FFFFF,
-                     0x03,
-                     L002,
-                     Zero
-                 }
-             })
-             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
-             {
--                Return (0x0000004010000000)
-+                Return (0x90000000)
-             }
-
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
-                     0x0000,             // Granularity
-                     0x0000,             // Range Minimum
-                     0x00FF,             // Range Maximum
-                     0x0000,             // Translation Offset
-                     0x0100,             // Length
-                     ,, )
-                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                     0x00000000,         // Granularity
-                     0x10000000,         // Range Minimum
-                     0x3EFEFFFF,         // Range Maximum
-                     0x00000000,         // Translation Offset
-@@ -1840,34 +1840,34 @@
-                     }
-                 }
-
-                 Return (Buffer (One)
-                 {
-                      0x00                                             // .
-                 })
-             }
-
-             Device (RES0)
-             {
-                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
-                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-                 {
-                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                         0x0000000000000000, // Granularity
--                        0x0000004010000000, // Range Minimum
--                        0x000000401FFFFFFF, // Range Maximum
-+                        0x0000000090000000, // Range Minimum
-+                        0x000000009FFFFFFF, // Range Maximum
-                         0x0000000000000000, // Translation Offset
-                         0x0000000010000000, // Length
-                         ,, , AddressRangeMemory, TypeStatic)
-                 })
-             }
-         }
-
-         Device (\_SB.GED)
-         {
-             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
-             Name (_UID, "GED")  // _UID: Unique ID
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
-                 {
-                     0x00000029,
-
-@@ -1,30 +1,30 @@
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20240322 (64-bit version)
-  * Copyright (c) 2000 - 2023 Intel Corporation
-  *
-  * Disassembling to symbolic ASL+ operators
-  *
-- * Disassembly of tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt
-+ * Disassembly of /tmp/aml-HQ03I3
-  *
-  * Original Table Header:
-  *     Signature        "DSDT"
-- *     Length           0x0000152F (5423)
-+ *     Length           0x0000152B (5419)
-  *     Revision         0x02
-- *     Checksum         0x70
-+ *     Checksum         0xB3
-  *     OEM ID           "BOCHS "
-  *     OEM Table ID     "BXPC    "
-  *     OEM Revision     0x00000001 (1)
-  *     Compiler ID      "BXPC"
-  *     Compiler Version 0x00000001 (1)
-  */
- DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
- {
-     Scope (\_SB)
-     {
-         Device (C000)
-         {
-             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
-             Name (_UID, Zero)  // _UID: Unique ID
-         }
-
-@@ -1769,33 +1769,33 @@
-                     0x001FFFFF,
-                     0x02,
-                     L001,
-                     Zero
-                 },
-
-                 Package (0x04)
-                 {
-                     0x001FFFFF,
-                     0x03,
-                     L002,
-                     Zero
-                 }
-             })
-             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
-             {
--                Return (0x0000004010000000)
-+                Return (0x90000000)
-             }
-
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
-                     0x0000,             // Granularity
-                     0x0000,             // Range Minimum
-                     0x00FF,             // Range Maximum
-                     0x0000,             // Translation Offset
-                     0x0100,             // Length
-                     ,, )
-                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                     0x00000000,         // Granularity
-                     0x10000000,         // Range Minimum
-                     0x3EFEFFFF,         // Range Maximum
-                     0x00000000,         // Translation Offset
-@@ -1858,34 +1858,34 @@
-                     }
-                 }
-
-                 Return (Buffer (One)
-                 {
-                      0x00                                             // .
-                 })
-             }
-
-             Device (RES0)
-             {
-                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
-                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-                 {
-                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                         0x0000000000000000, // Granularity
--                        0x0000004010000000, // Range Minimum
--                        0x000000401FFFFFFF, // Range Maximum
-+                        0x0000000090000000, // Range Minimum
-+                        0x000000009FFFFFFF, // Range Maximum
-                         0x0000000000000000, // Translation Offset
-                         0x0000000010000000, // Length
-                         ,, , AddressRangeMemory, TypeStatic)
-                 })
-             }
-         }
-
-         Device (\_SB.GED)
-         {
-             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
-             Name (_UID, "GED")  // _UID: Unique ID
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
-                 {
-                     0x00000029,
-
-@@ -1,30 +1,30 @@
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20240322 (64-bit version)
-  * Copyright (c) 2000 - 2023 Intel Corporation
-  *
-  * Disassembling to symbolic ASL+ operators
-  *
-- * Disassembly of tests/data/acpi/aarch64/virt/DSDT.topology
-+ * Disassembly of /tmp/aml-UC05I3
-  *
-  * Original Table Header:
-  *     Signature        "DSDT"
-- *     Length           0x000015A3 (5539)
-+ *     Length           0x0000159F (5535)
-  *     Revision         0x02
-- *     Checksum         0x99
-+ *     Checksum         0xEB
-  *     OEM ID           "BOCHS "
-  *     OEM Table ID     "BXPC    "
-  *     OEM Revision     0x00000001 (1)
-  *     Compiler ID      "BXPC"
-  *     Compiler Version 0x00000001 (1)
-  */
- DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
- {
-     Scope (\_SB)
-     {
-         Device (C000)
-         {
-             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
-             Name (_UID, Zero)  // _UID: Unique ID
-         }
-
-@@ -1793,33 +1793,33 @@
-                     0x001FFFFF,
-                     0x02,
-                     L001,
-                     Zero
-                 },
-
-                 Package (0x04)
-                 {
-                     0x001FFFFF,
-                     0x03,
-                     L002,
-                     Zero
-                 }
-             })
-             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
-             {
--                Return (0x0000004010000000)
-+                Return (0x90000000)
-             }
-
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
-                     0x0000,             // Granularity
-                     0x0000,             // Range Minimum
-                     0x00FF,             // Range Maximum
-                     0x0000,             // Translation Offset
-                     0x0100,             // Length
-                     ,, )
-                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                     0x00000000,         // Granularity
-                     0x10000000,         // Range Minimum
-                     0x3EFEFFFF,         // Range Maximum
-                     0x00000000,         // Translation Offset
-@@ -1882,34 +1882,34 @@
-                     }
-                 }
-
-                 Return (Buffer (One)
-                 {
-                      0x00                                             // .
-                 })
-             }
-
-             Device (RES0)
-             {
-                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
-                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-                 {
-                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                         0x0000000000000000, // Granularity
--                        0x0000004010000000, // Range Minimum
--                        0x000000401FFFFFFF, // Range Maximum
-+                        0x0000000090000000, // Range Minimum
-+                        0x000000009FFFFFFF, // Range Maximum
-                         0x0000000000000000, // Translation Offset
-                         0x0000000010000000, // Length
-                         ,, , AddressRangeMemory, TypeStatic)
-                 })
-             }
-         }
-
-         Device (\_SB.GED)
-         {
-             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
-             Name (_UID, "GED")  // _UID: Unique ID
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
-                 {
-                     0x00000029,
-
-@@ -1,30 +1,30 @@
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20240322 (64-bit version)
-  * Copyright (c) 2000 - 2023 Intel Corporation
-  *
-  * Disassembling to symbolic ASL+ operators
-  *
-- * Disassembly of tests/data/acpi/aarch64/virt/DSDT
-+ * Disassembly of /tmp/aml-TZRGJ3
-  *
-  * Original Table Header:
-  *     Signature        "DSDT"
-- *     Length           0x000014D9 (5337)
-+ *     Length           0x000014D5 (5333)
-  *     Revision         0x02
-- *     Checksum         0xA5
-+ *     Checksum         0xF7
-  *     OEM ID           "BOCHS "
-  *     OEM Table ID     "BXPC    "
-  *     OEM Revision     0x00000001 (1)
-  *     Compiler ID      "BXPC"
-  *     Compiler Version 0x00000001 (1)
-  */
- DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
- {
-     Scope (\_SB)
-     {
-         Device (C000)
-         {
-             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
-             Name (_UID, Zero)  // _UID: Unique ID
-         }
-
-@@ -1751,33 +1751,33 @@
-                     0x001FFFFF,
-                     0x02,
-                     L001,
-                     Zero
-                 },
-
-                 Package (0x04)
-                 {
-                     0x001FFFFF,
-                     0x03,
-                     L002,
-                     Zero
-                 }
-             })
-             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
-             {
--                Return (0x0000004010000000)
-+                Return (0x90000000)
-             }
-
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
-                     0x0000,             // Granularity
-                     0x0000,             // Range Minimum
-                     0x00FF,             // Range Maximum
-                     0x0000,             // Translation Offset
-                     0x0100,             // Length
-                     ,, )
-                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                     0x00000000,         // Granularity
-                     0x10000000,         // Range Minimum
-                     0x3EFEFFFF,         // Range Maximum
-                     0x00000000,         // Translation Offset
-@@ -1840,34 +1840,34 @@
-                     }
-                 }
-
-                 Return (Buffer (One)
-                 {
-                      0x00                                             // .
-                 })
-             }
-
-             Device (RES0)
-             {
-                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
-                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-                 {
-                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                         0x0000000000000000, // Granularity
--                        0x0000004010000000, // Range Minimum
--                        0x000000401FFFFFFF, // Range Maximum
-+                        0x0000000090000000, // Range Minimum
-+                        0x000000009FFFFFFF, // Range Maximum
-                         0x0000000000000000, // Translation Offset
-                         0x0000000010000000, // Length
-                         ,, , AddressRangeMemory, TypeStatic)
-                 })
-             }
-         }
-
-         Device (\_SB.GED)
-         {
-             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
-             Name (_UID, "GED")  // _UID: Unique ID
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
-                 {
-                     0x00000029,
-
-@@ -1,30 +1,30 @@
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20240322 (64-bit version)
-  * Copyright (c) 2000 - 2023 Intel Corporation
-  *
-  * Disassembling to symbolic ASL+ operators
-  *
-- * Disassembly of tests/data/acpi/aarch64/virt/DSDT
-+ * Disassembly of /tmp/aml-9EZ4I3
-  *
-  * Original Table Header:
-  *     Signature        "DSDT"
-- *     Length           0x000014D9 (5337)
-+ *     Length           0x000014D5 (5333)
-  *     Revision         0x02
-- *     Checksum         0xA5
-+ *     Checksum         0xF7
-  *     OEM ID           "BOCHS "
-  *     OEM Table ID     "BXPC    "
-  *     OEM Revision     0x00000001 (1)
-  *     Compiler ID      "BXPC"
-  *     Compiler Version 0x00000001 (1)
-  */
- DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
- {
-     Scope (\_SB)
-     {
-         Device (C000)
-         {
-             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
-             Name (_UID, Zero)  // _UID: Unique ID
-         }
-
-@@ -1751,33 +1751,33 @@
-                     0x001FFFFF,
-                     0x02,
-                     L001,
-                     Zero
-                 },
-
-                 Package (0x04)
-                 {
-                     0x001FFFFF,
-                     0x03,
-                     L002,
-                     Zero
-                 }
-             })
-             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
-             {
--                Return (0x0000004010000000)
-+                Return (0x90000000)
-             }
-
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
-                     0x0000,             // Granularity
-                     0x0000,             // Range Minimum
-                     0x00FF,             // Range Maximum
-                     0x0000,             // Translation Offset
-                     0x0100,             // Length
-                     ,, )
-                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                     0x00000000,         // Granularity
-                     0x10000000,         // Range Minimum
-                     0x3EFEFFFF,         // Range Maximum
-                     0x00000000,         // Translation Offset
-@@ -1840,34 +1840,34 @@
-                     }
-                 }
-
-                 Return (Buffer (One)
-                 {
-                      0x00                                             // .
-                 })
-             }
-
-             Device (RES0)
-             {
-                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
-                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-                 {
-                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                         0x0000000000000000, // Granularity
--                        0x0000004010000000, // Range Minimum
--                        0x000000401FFFFFFF, // Range Maximum
-+                        0x0000000090000000, // Range Minimum
-+                        0x000000009FFFFFFF, // Range Maximum
-                         0x0000000000000000, // Translation Offset
-                         0x0000000010000000, // Length
-                         ,, , AddressRangeMemory, TypeStatic)
-                 })
-             }
-         }
-
-         Device (\_SB.GED)
-         {
-             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
-             Name (_UID, "GED")  // _UID: Unique ID
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
-                 {
-                     0x00000029,
-
-@@ -1,30 +1,30 @@
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20240322 (64-bit version)
-  * Copyright (c) 2000 - 2023 Intel Corporation
-  *
-  * Disassembling to symbolic ASL+ operators
-  *
-- * Disassembly of tests/data/acpi/aarch64/virt/DSDT.memhp
-+ * Disassembly of /tmp/aml-32Q9I3
-  *
-  * Original Table Header:
-  *     Signature        "DSDT"
-  *     Length           0x00001A2A (6698)
-  *     Revision         0x02
-- *     Checksum         0xD4
-+ *     Checksum         0x11
-  *     OEM ID           "BOCHS "
-  *     OEM Table ID     "BXPC    "
-  *     OEM Revision     0x00000001 (1)
-  *     Compiler ID      "BXPC"
-  *     Compiler Version 0x00000001 (1)
-  */
- DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
- {
-     External (_SB_.NVDR, UnknownObj)
-
-     Scope (\_SB)
-     {
-         Device (C000)
-         {
-             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
-             Name (_UID, Zero)  // _UID: Unique ID
-@@ -1753,33 +1753,33 @@
-                     0x001FFFFF,
-                     0x02,
-                     L001,
-                     Zero
-                 },
-
-                 Package (0x04)
-                 {
-                     0x001FFFFF,
-                     0x03,
-                     L002,
-                     Zero
-                 }
-             })
-             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
-             {
--                Return (0x0000004010000000)
-+                Return (0x0000000190000000)
-             }
-
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
-                     0x0000,             // Granularity
-                     0x0000,             // Range Minimum
-                     0x00FF,             // Range Maximum
-                     0x0000,             // Translation Offset
-                     0x0100,             // Length
-                     ,, )
-                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                     0x00000000,         // Granularity
-                     0x10000000,         // Range Minimum
-                     0x3EFEFFFF,         // Range Maximum
-                     0x00000000,         // Translation Offset
-@@ -1842,34 +1842,34 @@
-                     }
-                 }
-
-                 Return (Buffer (One)
-                 {
-                      0x00                                             // .
-                 })
-             }
-
-             Device (RES0)
-             {
-                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
-                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-                 {
-                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                         0x0000000000000000, // Granularity
--                        0x0000004010000000, // Range Minimum
--                        0x000000401FFFFFFF, // Range Maximum
-+                        0x0000000190000000, // Range Minimum
-+                        0x000000019FFFFFFF, // Range Maximum
-                         0x0000000000000000, // Translation Offset
-                         0x0000000010000000, // Length
-                         ,, , AddressRangeMemory, TypeStatic)
-                 })
-             }
-         }
-
-         Device (\_SB.GED)
-         {
-             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
-             Name (_UID, "GED")  // _UID: Unique ID
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
-                 {
-                     0x00000029,
-
-@@ -1,30 +1,30 @@
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20240322 (64-bit version)
-  * Copyright (c) 2000 - 2023 Intel Corporation
-  *
-  * Disassembling to symbolic ASL+ operators
-  *
-- * Disassembly of tests/data/acpi/aarch64/virt/DSDT.acpipcihp
-+ * Disassembly of /tmp/aml-DCVWI3
-  *
-  * Original Table Header:
-  *     Signature        "DSDT"
-- *     Length           0x00001866 (6246)
-+ *     Length           0x00001862 (6242)
-  *     Revision         0x02
-- *     Checksum         0x71
-+ *     Checksum         0xC3
-  *     OEM ID           "BOCHS "
-  *     OEM Table ID     "BXPC    "
-  *     OEM Revision     0x00000001 (1)
-  *     Compiler ID      "BXPC"
-  *     Compiler Version 0x00000001 (1)
-  */
- DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
- {
-     Scope (\_SB)
-     {
-         Device (C000)
-         {
-             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
-             Name (_UID, Zero)  // _UID: Unique ID
-         }
-
-@@ -1751,33 +1751,33 @@
-                     0x001FFFFF,
-                     0x02,
-                     L001,
-                     Zero
-                 },
-
-                 Package (0x04)
-                 {
-                     0x001FFFFF,
-                     0x03,
-                     L002,
-                     Zero
-                 }
-             })
-             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
-             {
--                Return (0x0000004010000000)
-+                Return (0x90000000)
-             }
-
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
-                     0x0000,             // Granularity
-                     0x0000,             // Range Minimum
-                     0x00FF,             // Range Maximum
-                     0x0000,             // Translation Offset
-                     0x0100,             // Length
-                     ,, )
-                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                     0x00000000,         // Granularity
-                     0x10000000,         // Range Minimum
-                     0x3EFEFFFF,         // Range Maximum
-                     0x00000000,         // Translation Offset
-@@ -1840,34 +1840,34 @@
-                     }
-                 }
-
-                 Return (Buffer (One)
-                 {
-                      0x00                                             // .
-                 })
-             }
-
-             Device (RES0)
-             {
-                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
-                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-                 {
-                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                         0x0000000000000000, // Granularity
--                        0x0000004010000000, // Range Minimum
--                        0x000000401FFFFFFF, // Range Maximum
-+                        0x0000000090000000, // Range Minimum
-+                        0x000000009FFFFFFF, // Range Maximum
-                         0x0000000000000000, // Translation Offset
-                         0x0000000010000000, // Length
-                         ,, , AddressRangeMemory, TypeStatic)
-                 })
-             }
-         }
-
-         Device (\_SB.GED)
-         {
-             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
-             Name (_UID, "GED")  // _UID: Unique ID
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
-                 {
-                     0x00000029,
-
-@@ -1,30 +1,30 @@
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20240322 (64-bit version)
-  * Copyright (c) 2000 - 2023 Intel Corporation
-  *
-  * Disassembling to symbolic ASL+ operators
-  *
-- * Disassembly of tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex
-+ * Disassembly of /tmp/aml-KHOBJ3
-  *
-  * Original Table Header:
-  *     Signature        "DSDT"
-- *     Length           0x0000150F (5391)
-+ *     Length           0x0000150B (5387)
-  *     Revision         0x02
-- *     Checksum         0x4C
-+ *     Checksum         0x9E
-  *     OEM ID           "BOCHS "
-  *     OEM Table ID     "BXPC    "
-  *     OEM Revision     0x00000001 (1)
-  *     Compiler ID      "BXPC"
-  *     Compiler Version 0x00000001 (1)
-  */
- DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
- {
-     Scope (\_SB)
-     {
-         Device (C000)
-         {
-             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
-             Name (_UID, Zero)  // _UID: Unique ID
-         }
-
-@@ -1751,33 +1751,33 @@
-                     0x001FFFFF,
-                     0x02,
-                     L001,
-                     Zero
-                 },
-
-                 Package (0x04)
-                 {
-                     0x001FFFFF,
-                     0x03,
-                     L002,
-                     Zero
-                 }
-             })
-             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
-             {
--                Return (0x0000004010000000)
-+                Return (0x90000000)
-             }
-
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
-                     0x0000,             // Granularity
-                     0x0000,             // Range Minimum
-                     0x00FF,             // Range Maximum
-                     0x0000,             // Translation Offset
-                     0x0100,             // Length
-                     ,, )
-                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                     0x00000000,         // Granularity
-                     0x10000000,         // Range Minimum
-                     0x3EFEFFFF,         // Range Maximum
-                     0x00000000,         // Translation Offset
-@@ -1840,34 +1840,34 @@
-                     }
-                 }
-
-                 Return (Buffer (One)
-                 {
-                      0x00                                             // .
-                 })
-             }
-
-             Device (RES0)
-             {
-                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
-                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-                 {
-                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                         0x0000000000000000, // Granularity
--                        0x0000004010000000, // Range Minimum
--                        0x000000401FFFFFFF, // Range Maximum
-+                        0x0000000090000000, // Range Minimum
-+                        0x000000009FFFFFFF, // Range Maximum
-                         0x0000000000000000, // Translation Offset
-                         0x0000000010000000, // Length
-                         ,, , AddressRangeMemory, TypeStatic)
-                 })
-             }
-         }
-
-         Device (\_SB.GED)
-         {
-             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
-             Name (_UID, "GED")  // _UID: Unique ID
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
-                 {
-                     0x00000029,
-
-@@ -1,30 +1,30 @@
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20240322 (64-bit version)
-  * Copyright (c) 2000 - 2023 Intel Corporation
-  *
-  * Disassembling to symbolic ASL+ operators
-  *
-- * Disassembly of tests/data/acpi/aarch64/virt/DSDT.pxb
-+ * Disassembly of /tmp/aml-FHLGJ3
-  *
-  * Original Table Header:
-  *     Signature        "DSDT"
-- *     Length           0x00001E84 (7812)
-+ *     Length           0x00001E80 (7808)
-  *     Revision         0x02
-- *     Checksum         0x15
-+ *     Checksum         0x67
-  *     OEM ID           "BOCHS "
-  *     OEM Table ID     "BXPC    "
-  *     OEM Revision     0x00000001 (1)
-  *     Compiler ID      "BXPC"
-  *     Compiler Version 0x00000001 (1)
-  */
- DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
- {
-     Scope (\_SB)
-     {
-         Device (C000)
-         {
-             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
-             Name (_UID, Zero)  // _UID: Unique ID
-         }
-
-@@ -2936,33 +2936,33 @@
-                     0x001FFFFF,
-                     0x02,
-                     L001,
-                     Zero
-                 },
-
-                 Package (0x04)
-                 {
-                     0x001FFFFF,
-                     0x03,
-                     L002,
-                     Zero
-                 }
-             })
-             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
-             {
--                Return (0x0000004010000000)
-+                Return (0x90000000)
-             }
-
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
-                     0x0000,             // Granularity
-                     0x0000,             // Range Minimum
-                     0x007F,             // Range Maximum
-                     0x0000,             // Translation Offset
-                     0x0080,             // Length
-                     ,, )
-                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                     0x00000000,         // Granularity
-                     0x10000000,         // Range Minimum
-                     0x3EFEFFFF,         // Range Maximum
-                     0x00000000,         // Translation Offset
-@@ -3025,34 +3025,34 @@
-                     }
-                 }
-
-                 Return (Buffer (One)
-                 {
-                      0x00                                             // .
-                 })
-             }
-
-             Device (RES0)
-             {
-                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
-                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-                 {
-                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                         0x0000000000000000, // Granularity
--                        0x0000004010000000, // Range Minimum
--                        0x000000401FFFFFFF, // Range Maximum
-+                        0x0000000090000000, // Range Minimum
-+                        0x000000009FFFFFFF, // Range Maximum
-                         0x0000000000000000, // Translation Offset
-                         0x0000000010000000, // Length
-                         ,, , AddressRangeMemory, TypeStatic)
-                 })
-             }
-         }
-
-         Device (\_SB.GED)
-         {
-             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
-             Name (_UID, "GED")  // _UID: Unique ID
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
-                 {
-                     0x00000029,
-
-@@ -1,30 +1,30 @@
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20240322 (64-bit version)
-  * Copyright (c) 2000 - 2023 Intel Corporation
-  *
-  * Disassembling to symbolic ASL+ operators
-  *
-- * Disassembly of tests/data/acpi/aarch64/virt/DSDT
-+ * Disassembly of /tmp/aml-BP7DJ3
-  *
-  * Original Table Header:
-  *     Signature        "DSDT"
-- *     Length           0x000014D9 (5337)
-+ *     Length           0x000014D5 (5333)
-  *     Revision         0x02
-- *     Checksum         0xA5
-+ *     Checksum         0xF7
-  *     OEM ID           "BOCHS "
-  *     OEM Table ID     "BXPC    "
-  *     OEM Revision     0x00000001 (1)
-  *     Compiler ID      "BXPC"
-  *     Compiler Version 0x00000001 (1)
-  */
- DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
- {
-     Scope (\_SB)
-     {
-         Device (C000)
-         {
-             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
-             Name (_UID, Zero)  // _UID: Unique ID
-         }
-
-@@ -1751,33 +1751,33 @@
-                     0x001FFFFF,
-                     0x02,
-                     L001,
-                     Zero
-                 },
-
-                 Package (0x04)
-                 {
-                     0x001FFFFF,
-                     0x03,
-                     L002,
-                     Zero
-                 }
-             })
-             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
-             {
--                Return (0x0000004010000000)
-+                Return (0x90000000)
-             }
-
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
-                     0x0000,             // Granularity
-                     0x0000,             // Range Minimum
-                     0x00FF,             // Range Maximum
-                     0x0000,             // Translation Offset
-                     0x0100,             // Length
-                     ,, )
-                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                     0x00000000,         // Granularity
-                     0x10000000,         // Range Minimum
-                     0x3EFEFFFF,         // Range Maximum
-                     0x00000000,         // Translation Offset
-@@ -1840,34 +1840,34 @@
-                     }
-                 }
-
-                 Return (Buffer (One)
-                 {
-                      0x00                                             // .
-                 })
-             }
-
-             Device (RES0)
-             {
-                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
-                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-                 {
-                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                         0x0000000000000000, // Granularity
--                        0x0000004010000000, // Range Minimum
--                        0x000000401FFFFFFF, // Range Maximum
-+                        0x0000000090000000, // Range Minimum
-+                        0x000000009FFFFFFF, // Range Maximum
-                         0x0000000000000000, // Translation Offset
-                         0x0000000010000000, // Length
-                         ,, , AddressRangeMemory, TypeStatic)
-                 })
-             }
-         }
-
-         Device (\_SB.GED)
-         {
-             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
-             Name (_UID, "GED")  // _UID: Unique ID
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
-                 {
-                     0x00000029,
-
-@@ -1,30 +1,30 @@
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20240322 (64-bit version)
-  * Copyright (c) 2000 - 2023 Intel Corporation
-  *
-  * Disassembling to symbolic ASL+ operators
-  *
-- * Disassembly of tests/data/acpi/aarch64/virt/DSDT.viot
-+ * Disassembly of /tmp/aml-ARLYI3
-  *
-  * Original Table Header:
-  *     Signature        "DSDT"
-- *     Length           0x000014EA (5354)
-+ *     Length           0x000014E6 (5350)
-  *     Revision         0x02
-- *     Checksum         0x47
-+ *     Checksum         0x99
-  *     OEM ID           "BOCHS "
-  *     OEM Table ID     "BXPC    "
-  *     OEM Revision     0x00000001 (1)
-  *     Compiler ID      "BXPC"
-  *     Compiler Version 0x00000001 (1)
-  */
- DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
- {
-     Scope (\_SB)
-     {
-         Device (C000)
-         {
-             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
-             Name (_UID, Zero)  // _UID: Unique ID
-         }
-
-@@ -1751,33 +1751,33 @@
-                     0x001FFFFF,
-                     0x02,
-                     L001,
-                     Zero
-                 },
-
-                 Package (0x04)
-                 {
-                     0x001FFFFF,
-                     0x03,
-                     L002,
-                     Zero
-                 }
-             })
-             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
-             {
--                Return (0x0000004010000000)
-+                Return (0x90000000)
-             }
-
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
-                     0x0000,             // Granularity
-                     0x0000,             // Range Minimum
-                     0x00FF,             // Range Maximum
-                     0x0000,             // Translation Offset
-                     0x0100,             // Length
-                     ,, )
-                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                     0x00000000,         // Granularity
-                     0x10000000,         // Range Minimum
-                     0x3EFEFFFF,         // Range Maximum
-                     0x00000000,         // Translation Offset
-@@ -1840,34 +1840,34 @@
-                     }
-                 }
-
-                 Return (Buffer (One)
-                 {
-                      0x00                                             // .
-                 })
-             }
-
-             Device (RES0)
-             {
-                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
-                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-                 {
-                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                         0x0000000000000000, // Granularity
--                        0x0000004010000000, // Range Minimum
--                        0x000000401FFFFFFF, // Range Maximum
-+                        0x0000000090000000, // Range Minimum
-+                        0x000000009FFFFFFF, // Range Maximum
-                         0x0000000000000000, // Translation Offset
-                         0x0000000010000000, // Length
-                         ,, , AddressRangeMemory, TypeStatic)
-                 })
-             }
-         }
-
-         Device (\_SB.GED)
-         {
-             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
-             Name (_UID, "GED")  // _UID: Unique ID
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
-                 {
-                     0x00000029,
-
-@@ -1,30 +1,30 @@
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20240322 (64-bit version)
-  * Copyright (c) 2000 - 2023 Intel Corporation
-  *
-  * Disassembling to symbolic ASL+ operators
-  *
-- * Disassembly of tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy
-+ * Disassembly of /tmp/aml-XDBZI3
-  *
-  * Original Table Header:
-  *     Signature        "DSDT"
-- *     Length           0x00002822 (10274)
-+ *     Length           0x0000281E (10270)
-  *     Revision         0x02
-- *     Checksum         0xAB
-+ *     Checksum         0xFD
-  *     OEM ID           "BOCHS "
-  *     OEM Table ID     "BXPC    "
-  *     OEM Revision     0x00000001 (1)
-  *     Compiler ID      "BXPC"
-  *     Compiler Version 0x00000001 (1)
-  */
- DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
- {
-     Scope (\_SB)
-     {
-         Device (C000)
-         {
-             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
-             Name (_UID, Zero)  // _UID: Unique ID
-         }
-
-@@ -4121,33 +4121,33 @@
-                     0x001FFFFF,
-                     0x02,
-                     L001,
-                     Zero
-                 },
-
-                 Package (0x04)
-                 {
-                     0x001FFFFF,
-                     0x03,
-                     L002,
-                     Zero
-                 }
-             })
-             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
-             {
--                Return (0x0000004010000000)
-+                Return (0x90000000)
-             }
-
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
-                     0x0000,             // Granularity
-                     0x0000,             // Range Minimum
-                     0x000F,             // Range Maximum
-                     0x0000,             // Translation Offset
-                     0x0010,             // Length
-                     ,, )
-                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                     0x00000000,         // Granularity
-                     0x10000000,         // Range Minimum
-                     0x3EFEFFFF,         // Range Maximum
-                     0x00000000,         // Translation Offset
-@@ -4210,34 +4210,34 @@
-                     }
-                 }
-
-                 Return (Buffer (One)
-                 {
-                      0x00                                             // .
-                 })
-             }
-
-             Device (RES0)
-             {
-                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
-                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-                 {
-                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                         0x0000000000000000, // Granularity
--                        0x0000004010000000, // Range Minimum
--                        0x000000401FFFFFFF, // Range Maximum
-+                        0x0000000090000000, // Range Minimum
-+                        0x000000009FFFFFFF, // Range Maximum
-                         0x0000000000000000, // Translation Offset
-                         0x0000000010000000, // Length
-                         ,, , AddressRangeMemory, TypeStatic)
-                 })
-             }
-         }
-
-         Device (\_SB.GED)
-         {
-             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
-             Name (_UID, "GED")  // _UID: Unique ID
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
-                 {
-                     0x00000029,
-
-@@ -1,30 +1,30 @@
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20240322 (64-bit version)
-  * Copyright (c) 2000 - 2023 Intel Corporation
-  *
-  * Disassembling to symbolic ASL+ operators
-  *
-- * Disassembly of tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev
-+ * Disassembly of /tmp/aml-OB0ZI3
-  *
-  * Original Table Header:
-  *     Signature        "DSDT"
-- *     Length           0x00002822 (10274)
-+ *     Length           0x0000281E (10270)
-  *     Revision         0x02
-- *     Checksum         0xAB
-+ *     Checksum         0xFD
-  *     OEM ID           "BOCHS "
-  *     OEM Table ID     "BXPC    "
-  *     OEM Revision     0x00000001 (1)
-  *     Compiler ID      "BXPC"
-  *     Compiler Version 0x00000001 (1)
-  */
- DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
- {
-     Scope (\_SB)
-     {
-         Device (C000)
-         {
-             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
-             Name (_UID, Zero)  // _UID: Unique ID
-         }
-
-@@ -4121,33 +4121,33 @@
-                     0x001FFFFF,
-                     0x02,
-                     L001,
-                     Zero
-                 },
-
-                 Package (0x04)
-                 {
-                     0x001FFFFF,
-                     0x03,
-                     L002,
-                     Zero
-                 }
-             })
-             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
-             {
--                Return (0x0000004010000000)
-+                Return (0x90000000)
-             }
-
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
-                     0x0000,             // Granularity
-                     0x0000,             // Range Minimum
-                     0x000F,             // Range Maximum
-                     0x0000,             // Translation Offset
-                     0x0010,             // Length
-                     ,, )
-                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                     0x00000000,         // Granularity
-                     0x10000000,         // Range Minimum
-                     0x3EFEFFFF,         // Range Maximum
-                     0x00000000,         // Translation Offset
-@@ -4210,34 +4210,34 @@
-                     }
-                 }
-
-                 Return (Buffer (One)
-                 {
-                      0x00                                             // .
-                 })
-             }
-
-             Device (RES0)
-             {
-                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
-                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-                 {
-                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-                         0x0000000000000000, // Granularity
--                        0x0000004010000000, // Range Minimum
--                        0x000000401FFFFFFF, // Range Maximum
-+                        0x0000000090000000, // Range Minimum
-+                        0x000000009FFFFFFF, // Range Maximum
-                         0x0000000000000000, // Translation Offset
-                         0x0000000010000000, // Length
-                         ,, , AddressRangeMemory, TypeStatic)
-                 })
-             }
-         }
-
-         Device (\_SB.GED)
-         {
-             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
-             Name (_UID, "GED")  // _UID: Unique ID
-             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-             {
-                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
-                 {
-                     0x00000029,
-
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
- tests/qtest/bios-tables-test-allowed-diff.h      |  11 -----------
- tests/data/acpi/aarch64/virt/DSDT                | Bin 5337 -> 5333 bytes
- tests/data/acpi/aarch64/virt/DSDT.11.0           | Bin 0 -> 5337 bytes
- tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt   | Bin 5423 -> 5419 bytes
- tests/data/acpi/aarch64/virt/DSDT.acpipcihp      | Bin 6246 -> 6242 bytes
- tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex | Bin 5391 -> 5387 bytes
- tests/data/acpi/aarch64/virt/DSDT.memhp          | Bin 6698 -> 6698 bytes
- tests/data/acpi/aarch64/virt/DSDT.pxb            | Bin 7812 -> 7808 bytes
- tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev     | Bin 10274 -> 10270 bytes
- tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy  | Bin 10274 -> 10270 bytes
- tests/data/acpi/aarch64/virt/DSDT.topology       | Bin 5539 -> 5535 bytes
- tests/data/acpi/aarch64/virt/DSDT.viot           | Bin 5354 -> 5350 bytes
- tests/data/acpi/aarch64/virt/MCFG                | Bin 60 -> 60 bytes
- tests/data/acpi/aarch64/virt/MCFG.11.0           | Bin 0 -> 60 bytes
- tests/data/acpi/aarch64/virt/MCFG.memhp          | Bin 0 -> 60 bytes
- 15 files changed, 11 deletions(-)
-
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index efb00724d09f..dfb8523c8bf4 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,12 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/aarch64/virt/DSDT",
--"tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt",
--"tests/data/acpi/aarch64/virt/DSDT.acpipcihp",
--"tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex",
--"tests/data/acpi/aarch64/virt/DSDT.memhp",
--"tests/data/acpi/aarch64/virt/DSDT.pxb",
--"tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev",
--"tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy",
--"tests/data/acpi/aarch64/virt/DSDT.topology",
--"tests/data/acpi/aarch64/virt/DSDT.viot",
--"tests/data/acpi/aarch64/virt/MCFG",
-diff --git a/tests/data/acpi/aarch64/virt/DSDT b/tests/data/acpi/aarch64/virt/DSDT
-index 35a862e44714d26ded01d40dc147e76cc73a1c84..649b1e78d57748d3d941c9b79d7d30cfb43ec7ca 100644
-GIT binary patch
-delta 65
-zcmV-H0KWg(Db*<oL{mgm)f4~#0{4*$8v%*2CPxYZMzd}Tp$7~MUqeDc0Hh26005A)
-X9}-ys3XlK*00960|DOP}f)iH(cgzzn
-
-delta 69
-zcmcbrc~g_iCD<k8rU(NA)6$7t(u}<u)!exly*B4@Eo2uEh<A2!WLUz-z`!8jz`($;
-WSz0KPkqgZH|Np<d!{$2Sa7F-)LJ}(g
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.11.0 b/tests/data/acpi/aarch64/virt/DSDT.11.0
-new file mode 100644
-index 0000000000000000000000000000000000000000..35a862e44714d26ded01d40dc147e76cc73a1c84
-GIT binary patch
-literal 5337
-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
-
-literal 0
-HcmV?d00001
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt b/tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt
-index 7ce35f0d8606d17f3ddb9aa090c97c7ac9a38982..aa813cbcc4e8ac8ba7c68c3aac590eaa0eb90a28 100644
-GIT binary patch
-delta 66
-zcmV-I0KNaODyu3AL{mgmD-{3$0<)0{8v>6<u_v4g0Y<aL3ZVxK3|~V+K>(x-0001x
-Yvvm?#0Sb@+00030|Nox=v)B_?0cSN6mH+?%
-
-delta 70
-zcmZ3jwO)(MCD<iIUzCA?sbC_PG*h$3M)f&dj9#0Ma4lpP5Qukna%5P-$H2fK;K0DZ
-Xu(?nul93C{{Qv*Iyu;=z!r_bndzTWD
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.acpipcihp b/tests/data/acpi/aarch64/virt/DSDT.acpipcihp
-index 6d1765c31017dede80d1d87f8fa7c6dd055d1839..5bd4a06dd193f065e2b9d2686bb371ebb3bfc620 100644
-GIT binary patch
-delta 65
-zcmV-H0KWg`Fyb%@L{mgmVi*7b0>hCC8v%#0CPxYZMzd}Tp$7~MUqeDc0Hh26005A)
-X9}-ys3XlK*00960|DOP}f)nHfU)K{t
-
-delta 69
-zcmaE4@XUbACD<h-O@e`esc<5fG-LNhHFqvXug!T}3)uw(;+>rw8J6%dFfa%>FfcG|
-WmKKU+<N`DQ|Nk%Vu(?k72@3#oSrR?~
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex b/tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex
-index 61cce30c7471faa4a9b7e3562dcb4ab9b3519a21..ec8ebbfdafabdd790297ec8728e9922c24c1b132 100644
-GIT binary patch
-delta 65
-zcmeCz>ek|N33dtL7G+>ynm3V4nz3`EnmZSx+vYs3h3q^$@y<?;3`=+z7#JpOmKTa-
-V<eI?1z`*eT|Nr?6o127t837go5wQRO
-
-delta 69
-zcmeCy>eu3O33dtL7iC~z@|nmb&Dgt9&7F(UYjYmgLUsXxcxNX^h9!Iq3=9Ge3=9mL
-WrG+9Hxxmc-|NqN7Y_1dTWdr~us1U6H
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.memhp b/tests/data/acpi/aarch64/virt/DSDT.memhp
-index ffc5f1c0d1090582672c60ade3eb1bc41acc5ef7..8a6cafac00d406077d6a369747c6e383d94a0786 100644
-GIT binary patch
-delta 43
-zcmZ2wvdV<ZCD<iIONxPkNpK^VfDqFJ#?3N9F^pUj7#SEC{{R0!pK)`O@Cr5n?UM{C
-
-delta 43
-zcmZ2wvdV<ZCD<iIONxPk>B>ef0U;&<hs`oVF^pUS4h#$o|NsA&ci7w{yn+n?_kav3
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.pxb b/tests/data/acpi/aarch64/virt/DSDT.pxb
-index f98dcbfc6b823bce6d5710e8056a4e260fb92a02..356e610fdffb6fea0a763517b62df0ed0c64ab97 100644
-GIT binary patch
-delta 65
-zcmV-H0KWf(J%Bw5L{mgmfF1w<0%ws58v%x~Ce#xFMzi}9p$7~MUqeDc0Hh26005A)
-XtQ%PY3XlK*00960|DOP}4;^&@V;K`h
-
-delta 69
-zcmZp$ZL#HY33dr-kz-(B5}n8;&Dgb3?TRp?*XG~C3)uw(;+>rw8J6%dFfa%>FfcG|
-WULhUH$OUHp|Nmd!VKcXEDI)-PzY;<K
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev b/tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev
-index 6c12a7aaf8a6315bac968a685f5b6673e7248817..f1419cbda7167ed5a36410f71c52e3d2a22218fe 100644
-GIT binary patch
-delta 73
-zcmV-P0Ji_4P@Yf<L{mgm9w-0+0{xK+8v%o{CSe@~Mv_oNNt6E*AG50+eg_N;UqeDc
-f0Hh26005A)IVD*E3XlK*00960|DOP}oF;|=B@-5f
-
-delta 77
-zcmbOiuqc4bCD<iINrQobY4t=dX~y=AYKgL}UXucxJtzMcmfyTuwvJsuAl})@kzolR
-f0|SGA0|NuYW>eKjMlLY(|NsB;4x4AFwJ`z!LyZ-I
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy b/tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy
-index 6c12a7aaf8a6315bac968a685f5b6673e7248817..f1419cbda7167ed5a36410f71c52e3d2a22218fe 100644
-GIT binary patch
-delta 73
-zcmV-P0Ji_4P@Yf<L{mgm9w-0+0{xK+8v%o{CSe@~Mv_oNNt6E*AG50+eg_N;UqeDc
-f0Hh26005A)IVD*E3XlK*00960|DOP}oF;|=B@-5f
-
-delta 77
-zcmbOiuqc4bCD<iINrQobY4t=dX~y=AYKgL}UXucxJtzMcmfyTuwvJsuAl})@kzolR
-f0|SGA0|NuYW>eKjMlLY(|NsB;4x4AFwJ`z!LyZ-I
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.topology b/tests/data/acpi/aarch64/virt/DSDT.topology
-index 208a3163a6bf2a59cf421418dcb16ad1156285c6..33a9c4c397ca498f5b3fbcc7e7e446fe8ac0b125 100644
-GIT binary patch
-delta 65
-zcmV-H0KWgDE1xS0L{mgmpA`TA0_%|q8v%o{CJ_q(Mzc5zp$7~MUqeDc0Hh26005A)
-X=@MB13XlK*00960|DOP}OcYlEOyd%(
-
-delta 69
-zcmbQQy;z&eCD<iou_yxr)69un(v0mJ)daa2y*68LFJu=Gh<A2!WLUz-z`!8jz`($;
-W`KeGOBNv$Y|Nnn^hs_=$;fw%X^%184
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.viot b/tests/data/acpi/aarch64/virt/DSDT.viot
-index f81e3e6cc794d77ea66b7e27b1afe56e248132b6..625ce32b13706b83d4400548dcf8b81485dba965 100644
-GIT binary patch
-delta 65
-zcmV-H0KWg~Dds5(L{mgm<`e(`0-2Et8v%*2CPxYZMzd}Tp$7~MUqeDc0Hh26005A)
-X9}-ys3XlK*00960|DOP}f)i)~acmP6
-
-delta 69
-zcmaE+`AU<^CD<k8l?Vd^llw$2X~y1-YVKT&UYql{7P1Qn#5+4VGA!X^U|<k%U|?X_
-WEG-nt$OUHp|Nmd!VRM~u1|tB5HWCp4
-
-diff --git a/tests/data/acpi/aarch64/virt/MCFG b/tests/data/acpi/aarch64/virt/MCFG
-index f4ae3203a4e9258a397c9912332178640209637b..99e75f326c3c7fc3be5154c4667f34995e33dbc2 100644
-GIT binary patch
-delta 30
-ecmcDq;qrBMbGKn&U|?J`kxP|#0s{p62T=f4aRlW6
-
-delta 30
-fcmcDq;qrBMbGKn&U|@VRkxP|Vz<~h_{)0#WS8)X8
-
-diff --git a/tests/data/acpi/aarch64/virt/MCFG.11.0 b/tests/data/acpi/aarch64/virt/MCFG.11.0
-new file mode 100644
-index 0000000000000000000000000000000000000000..f4ae3203a4e9258a397c9912332178640209637b
-GIT binary patch
-literal 60
-ucmeZuc5}C3U|?W;<K*w`5v<@85#X$#prF9Wz`y`vgJ>im-~i$L2T=ezMF;@^
-
-literal 0
-HcmV?d00001
-
-diff --git a/tests/data/acpi/aarch64/virt/MCFG.memhp b/tests/data/acpi/aarch64/virt/MCFG.memhp
-new file mode 100644
-index 0000000000000000000000000000000000000000..360f1dbbea17e4857f1c26a172ff533eef446823
-GIT binary patch
-literal 60
-ucmeZuc5}C3U|?We?d0$55v<@85#X$#prF9Wz`y`vgJ>i$0m}am5(5A*-UtBz
-
-literal 0
-HcmV?d00001
-
-
--- 
-2.54.0
-
+DQoNCj4gT24gMTkgTWF5IDIwMjYsIGF0IDY6NTfigK9QTSwgRXJpYyBBdWdlciA8ZXJpYy5hdWdl
+ckByZWRoYXQuY29tPiB3cm90ZToNCj4gDQo+ICEtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tfA0KPiAgQ0FVVElPTjogRXh0
+ZXJuYWwgRW1haWwNCj4gDQo+IHwtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIQ0KPiANCj4gVGhpcyBoZWxwZXIgZGVjb2Rl
+IHRoZSBJRCByZWcgd3JpdGFibGUgbWFzaywgbWF0Y2hlcyBpdCBhZ2FpbnN0DQo+IElEIHJlZyBm
+aWVsZHMgZGVmaW5lZCBpbiB0YXJnZXQvYXJtL2NwdS1pZHJlZ3MuaC5pbmMgYW5kDQo+IGZvciBl
+YWNoIHdyaXRhYmxlIG5hbWVkIGZpZWxkLCBnZW5lcmF0ZXMgYSB1aW50NjQgcHJvcGVydHkuDQo+
+IA0KPiBTaWduZWQtb2ZmLWJ5OiBFcmljIEF1Z2VyIDxlcmljLmF1Z2VyQHJlZGhhdC5jb20+DQo+
+IA0KPiAtLS0NCj4gDQo+IHY0IC0+IHY1Og0KPiAtIGZyZWUgcHJvcF9uYW1lDQo+IC0gY2hlY2sg
+Y3B1LT53cml0YWJsZV9tYXAgYXMgYSBwcmVhbWJsZSBpbiBrdm1fYXJtX2V4cG9zZV9pZHJlZ19w
+cm9wZXJ0aWVzDQo+IC0tLQ0KPiB0YXJnZXQvYXJtL2t2bS5jICAgICAgICB8IDEzNSArKysrKysr
+KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrDQo+IHRhcmdldC9hcm0va3ZtX2FybS5o
+ICAgIHwgIDEwICsrKw0KPiB0YXJnZXQvYXJtL3RyYWNlLWV2ZW50cyB8ICAgNCArKw0KPiAzIGZp
+bGVzIGNoYW5nZWQsIDE0OSBpbnNlcnRpb25zKCspDQo+IA0KPiBkaWZmIC0tZ2l0IGEvdGFyZ2V0
+L2FybS9rdm0uYyBiL3RhcmdldC9hcm0va3ZtLmMNCj4gaW5kZXggMzBjNTE3NWM2OC4uOTYwMDUy
+ZTY3ZSAxMDA2NDQNCj4gLS0tIGEvdGFyZ2V0L2FybS9rdm0uYw0KPiArKysgYi90YXJnZXQvYXJt
+L2t2bS5jDQo+IEBAIC0zNDMsNiArMzQzLDE0MSBAQCBzdGF0aWMgaW50IGdldF9ob3N0X2NwdV9p
+ZHJlZ3MoQVJNQ1BVICpjcHUsIGludCBmZCwgQVJNSG9zdENQVUZlYXR1cmVzICphaGNmKQ0KPiAg
+ICAgcmV0dXJuIGVycjsNCj4gfQ0KPiANCj4gK3N0YXRpYyBBUk02NFN5c1JlZ0ZpZWxkICpnZXRf
+ZmllbGQoaW50IGksIEFSTTY0U3lzUmVnICpyZWcpDQo+ICt7DQo+ICsgICAgZm9yIChpbnQgZiA9
+IDA7IGYgPCByZWctPmZpZWxkc19jb3VudDsgZisrKSB7DQo+ICsgICAgICAgIHN0cnVjdCBBUk02
+NFN5c1JlZ0ZpZWxkICpmaWVsZCA9ICZyZWctPmZpZWxkc1tmXTsNCj4gKyAgICAgICAgaW50IHVw
+cGVyID0gZmllbGQtPnNoaWZ0ICsgZmllbGQtPmxlbmd0aCAtIDE7DQo+ICsNCj4gKyAgICAgICAg
+aWYgKGkgPj0gZmllbGQtPnNoaWZ0ICYmIGkgPD0gdXBwZXIpIHsNCj4gKyAgICAgICAgICAgIHJl
+dHVybiBmaWVsZDsNCj4gKyAgICAgICAgfQ0KPiArICAgIH0NCj4gKyAgICByZXR1cm4gTlVMTDsN
+Cj4gK30NCj4gKw0KPiArc3RhdGljIHZvaWQgc2V0X3N5c3JlZ19wcm9wKE9iamVjdCAqb2JqLCBW
+aXNpdG9yICp2LA0KPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgIGNvbnN0IGNoYXIgKm5h
+bWUsIHZvaWQgKm9wYXF1ZSwNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICBFcnJvciAq
+KmVycnApDQo+ICt7DQo+ICsgICAgQVJNNjRTeXNSZWdGaWVsZCAqZmllbGQgPSAoQVJNNjRTeXNS
+ZWdGaWVsZCAqKW9wYXF1ZTsNCj4gKyAgICBBUk1DUFUgKmNwdSA9IEFSTV9DUFUob2JqKTsNCj4g
+KyAgICB1aW50NjRfdCAqaWRyZWdzID0gY3B1LT5pc2FyLmlkcmVnczsNCj4gKyAgICB1aW50NjRf
+dCBvbGQsIHZhbHVlLCBtYXNrOw0KPiArICAgIGludCBsb3dlciA9IGZpZWxkLT5zaGlmdDsNCj4g
+KyAgICBpbnQgbGVuZ3RoID0gZmllbGQtPmxlbmd0aDsNCj4gKyAgICBpbnQgaW5kZXggPSBmaWVs
+ZC0+aW5kZXg7DQo+ICsNCj4gKyAgICBpZiAoIXZpc2l0X3R5cGVfdWludDY0KHYsIG5hbWUsICZ2
+YWx1ZSwgZXJycCkpIHsNCj4gKyAgICAgICAgcmV0dXJuOw0KPiArICAgIH0NCj4gKw0KPiArICAg
+IGlmIChsZW5ndGggPCA2NCAmJiB2YWx1ZSA+ICgoMSA8PCBsZW5ndGgpIC0gMSkpIHsNCj4gKyAg
+ICAgICAgZXJyb3Jfc2V0ZyhlcnJwLA0KPiArICAgICAgICAgICAgICAgICAgICJpZHJlZyAlcyBz
+ZXQgdmFsdWUgKDB4JWx4KSBleGNlZWRzIGxlbmd0aCBvZiBmaWVsZCAoJWQpISIsDQo+ICsgICAg
+ICAgICAgICAgICAgICAgbmFtZSwgdmFsdWUsIGxlbmd0aCk7DQo+ICsgICAgICAgIHJldHVybjsN
+Cj4gKyAgICB9DQo+ICsNCj4gKyAgICBtYXNrID0gTUFLRV82NEJJVF9NQVNLKGxvd2VyLCBsZW5n
+dGgpOw0KPiArICAgIHZhbHVlID0gdmFsdWUgPDwgbG93ZXI7DQo+ICsgICAgb2xkID0gaWRyZWdz
+W2luZGV4XTsNCj4gKyAgICBpZHJlZ3NbaW5kZXhdID0gb2xkICYgfm1hc2s7DQo+ICsgICAgaWRy
+ZWdzW2luZGV4XSB8PSB2YWx1ZTsNCj4gKyAgICB0cmFjZV9zZXRfc3lzcmVnX3Byb3AobmFtZSwg
+b2xkLCBtYXNrLCB2YWx1ZSwgaWRyZWdzW2luZGV4XSk7DQo+ICt9DQo+ICsNCj4gK3N0YXRpYyB2
+b2lkIGdldF9zeXNyZWdfcHJvcChPYmplY3QgKm9iaiwgVmlzaXRvciAqdiwNCj4gKyAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICBjb25zdCBjaGFyICpuYW1lLCB2b2lkICpvcGFxdWUsDQo+ICsg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgRXJyb3IgKiplcnJwKQ0KPiArew0KPiArICAgIEFS
+TTY0U3lzUmVnRmllbGQgKmZpZWxkID0gKEFSTTY0U3lzUmVnRmllbGQgKilvcGFxdWU7DQo+ICsg
+ICAgQVJNQ1BVICpjcHUgPSBBUk1fQ1BVKG9iaik7DQo+ICsgICAgdWludDY0X3QgKmlkcmVncyA9
+IGNwdS0+aXNhci5pZHJlZ3M7DQo+ICsgICAgdWludDY0X3QgdmFsdWUsIG1hc2s7DQo+ICsgICAg
+aW50IGxvd2VyID0gZmllbGQtPnNoaWZ0Ow0KPiArICAgIGludCBsZW5ndGggPSBmaWVsZC0+bGVu
+Z3RoOw0KPiArICAgIGludCBpbmRleCA9IGZpZWxkLT5pbmRleDsNCj4gKw0KPiArICAgIG1hc2sg
+PSBNQUtFXzY0QklUX01BU0sobG93ZXIsIGxlbmd0aCk7DQo+ICsgICAgdmFsdWUgPSAoaWRyZWdz
+W2luZGV4XSAmIG1hc2spID4+IGxvd2VyOw0KPiArICAgIHZpc2l0X3R5cGVfdWludDY0KHYsIG5h
+bWUsICZ2YWx1ZSwgZXJycCk7DQo+ICsgICAgdHJhY2VfZ2V0X3N5c3JlZ19wcm9wKG5hbWUsIHZh
+bHVlKTsNCj4gK30NCj4gKw0KPiArLyoNCj4gKyAqIGRlY29kZV9pZHJlZ193cml0ZW1hcDogR2Vu
+ZXJhdGUgcHJvcHMgZm9yIHdyaXRhYmxlIGZpZWxkcw0KPiArICoNCj4gKyAqIEBvYmo6IENQVSBv
+YmplY3QNCj4gKyAqIEBpbmRleDogaW5kZXggb2YgdGhlIHN5c3JlZw0KPiArICogQG1hcDogd3Jp
+dGFibGUgbWFwIGZvciB0aGUgc3lzcmVnDQo+ICsgKiBAcmVnOiBkZXNjcmlwdGlvbiBvZiB0aGUg
+c3lzcmVnDQo+ICsgKi8NCj4gK3N0YXRpYyBpbnQNCj4gK2RlY29kZV9pZHJlZ193cml0ZW1hcChP
+YmplY3QgKm9iaiwgaW50IGluZGV4LCB1aW50NjRfdCBtYXAsIEFSTTY0U3lzUmVnICpyZWcpDQo+
+ICt7DQo+ICsgICAgaW50IGkgPSBjdHo2NChtYXApOw0KPiArICAgIGludCBuYl9zeXNyZWdfcHJv
+cHMgPSAwOw0KPiArDQo+ICsgICAgd2hpbGUgKG1hcCkgew0KPiArICAgICAgICBBUk02NFN5c1Jl
+Z0ZpZWxkICpmaWVsZCA9IGdldF9maWVsZChpLCByZWcpOw0KPiArICAgICAgICBpbnQgbG93ZXIs
+IHVwcGVyOw0KPiArICAgICAgICBjaGFyICpwcm9wX25hbWU7DQo+ICsgICAgICAgIHVpbnQ2NF90
+IG1hc2s7DQo+ICsNCj4gKyAgICAgICAgaWYgKCFmaWVsZCkgew0KPiArICAgICAgICAgICAgd2Fy
+bl9yZXBvcnQoIiVzIGJpdCAlZCBvZiAlcyBpcyB3cml0YWJsZSBidXQgbm8gbmFtZWQgZmllbGQg
+Ig0KPiArICAgICAgICAgICAgICAgICAgICAgICAgImluIHRhcmdldC9hcm0vY3B1LWlkcmVncy5o
+LmluYyIsDQo+ICsgICAgICAgICAgICAgICAgICAgICAgICBfX2Z1bmNfXywgaSwgcmVnLT5uYW1l
+KTsNCj4gKyAgICAgICAgICAgIHdhcm5fcmVwb3J0KCIlcyBpcyB0YXJnZXQvYXJtL2NwdS1pZHJl
+Z3MuaC5pbmM/IiwgX19mdW5jX18pOw0KPiArICAgICAgICAgICAgbWFwID0gIG1hcCAmIH5CSVRf
+VUxMKGkpOw0KPiArICAgICAgICAgICAgaSA9IGN0ejY0KG1hcCk7DQo+ICsgICAgICAgICAgICBj
+b250aW51ZTsNCj4gKyAgICAgICAgfQ0KPiArICAgICAgICBsb3dlciA9IGZpZWxkLT5zaGlmdDsN
+Cj4gKyAgICAgICAgdXBwZXIgPSBmaWVsZC0+c2hpZnQgKyBmaWVsZC0+bGVuZ3RoIC0gMTsNCj4g
+KyAgICAgICAgcHJvcF9uYW1lID0gZ19zdHJkdXBfcHJpbnRmKCJTWVNSRUdfJXNfJXMiLCByZWct
+Pm5hbWUsIGZpZWxkLT5uYW1lKTsNCj4gKyAgICAgICAgdHJhY2VfZGVjb2RlX2lkcmVnX3dyaXRl
+bWFwKGZpZWxkLT5uYW1lLCBsb3dlciwgdXBwZXIsIHByb3BfbmFtZSk7DQo+ICsgICAgICAgIG9i
+amVjdF9wcm9wZXJ0eV9hZGQob2JqLCBwcm9wX25hbWUsICJ1aW50NjQiLA0KPiArICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgIGdldF9zeXNyZWdfcHJvcCwgc2V0X3N5c3JlZ19wcm9wLCBOVUxM
+LCBmaWVsZCk7DQo+ICsgICAgICAgIGdfZnJlZShwcm9wX25hbWUpOw0KPiArICAgICAgICBuYl9z
+eXNyZWdfcHJvcHMrKzsNCj4gKw0KPiArICAgICAgICBtYXNrID0gTUFLRV82NEJJVF9NQVNLKGxv
+d2VyLCBmaWVsZC0+bGVuZ3RoKTsNCj4gKyAgICAgICAgbWFwID0gbWFwICYgfm1hc2s7DQo+ICsg
+ICAgICAgIGkgPSBjdHo2NChtYXApOw0KPiArICAgIH0NCj4gKyAgICB0cmFjZV9uYl9zeXNyZWdf
+cHJvcHMocmVnLT5uYW1lLCBuYl9zeXNyZWdfcHJvcHMpOw0KPiArICAgIHJldHVybiAwOw0KPiAr
+fQ0KPiArDQo+ICsvKiBhbmFseXplIHRoZSB3cml0YWJsZSBtYXNrIGFuZCBnZW5lcmF0ZSBwcm9w
+ZXJ0aWVzIGZvciB3cml0YWJsZSBmaWVsZHMgKi8NCj4gK3ZvaWQga3ZtX2FybV9leHBvc2VfaWRy
+ZWdfcHJvcGVydGllcyhBUk1DUFUgKmNwdSwgQVJNNjRTeXNSZWcgKnJlZ3MpDQo+ICt7DQo+ICsg
+ICAgaW50IGksIGlkeDsNCj4gKyAgICBPYmplY3QgKm9iaiA9IE9CSkVDVChjcHUpOw0KPiArDQo+
+ICsgICAgaWYgKCFjcHUtPndyaXRhYmxlX21hcCkgew0KPiArICAgICAgICByZXR1cm47DQo+ICsg
+ICAgfQ0KPiArDQo+ICsgICAgZm9yIChpID0gMDsgaSA8IEtWTV9BUk1fRkVBVFVSRV9JRF9SQU5H
+RV9TSVpFOyBpKyspIHsNCj4gKyAgICAgICAgdWludDY0X3QgbWFzayA9IGNwdS0+d3JpdGFibGVf
+bWFwW2ldOw0KPiArDQo+ICsgICAgICAgIGlmIChtYXNrKSB7DQo+ICsgICAgICAgICAgICAvKiBy
+ZWcgQGkgaGFzIHNvbWUgd3JpdGFibGUgZmllbGRzLCBkZWNvZGUgdGhlbSAqLw0KPiArICAgICAg
+ICAgICAgaWR4ID0ga3ZtX2ZlYXR1cmVfaWR4X3RvX2lkcmVnc19pZHgoaSk7DQo+ICsgICAgICAg
+ICAgICBpZiAoaWR4IDwgMCkgew0KPiArICAgICAgICAgICAgICAgIC8qIG5vIG1hdGNoaW5nIHJl
+Zz8gKi8NCj4gKyAgICAgICAgICAgICAgICB3YXJuX3JlcG9ydCgiJXM6IHJlZyAlZCB3cml0YWJs
+ZSwgYnV0IG5vdCBpbiBsaXN0IG9mIGlkcmVncz8iLA0KPiArICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIF9fZnVuY19fLCBpKTsNCj4gKyAgICAgICAgICAgIH0gZWxzZSB7DQo+ICsgICAgICAg
+ICAgICAgICAgZGVjb2RlX2lkcmVnX3dyaXRlbWFwKG9iaiwgaSwgbWFzaywgJnJlZ3NbaWR4XSk7
+DQo+ICsgICAgICAgICAgICB9DQo+ICsgICAgICAgIH0NCj4gKyAgICB9DQo+ICt9DQo+ICsNCj4g
+c3RhdGljIHZvaWQNCj4ga3ZtX2FybV9nZXRfaG9zdF9jcHVfZmVhdHVyZXMoQVJNQ1BVICpjcHUs
+IEFSTUhvc3RDUFVGZWF0dXJlcyAqYWhjZikNCj4gew0KPiBkaWZmIC0tZ2l0IGEvdGFyZ2V0L2Fy
+bS9rdm1fYXJtLmggYi90YXJnZXQvYXJtL2t2bV9hcm0uaA0KPiBpbmRleCBjMWMyZTdlYzM3Li44
+NDQ2YTljYmYwIDEwMDY0NA0KPiAtLS0gYS90YXJnZXQvYXJtL2t2bV9hcm0uaA0KPiArKysgYi90
+YXJnZXQvYXJtL2t2bV9hcm0uaA0KPiBAQCAtMTQyLDYgKzE0MiwxNiBAQCB2b2lkIGt2bV9hcm1f
+c2V0X2NwdV9mZWF0dXJlc19mcm9tX2hvc3QoQVJNQ1BVICpjcHUpOw0KPiAgKi8NCj4gdm9pZCBr
+dm1fYXJtX2FkZF92Y3B1X3Byb3BlcnRpZXMoQVJNQ1BVICpjcHUpOw0KPiANCj4gK3R5cGVkZWYg
+c3RydWN0IEFSTTY0U3lzUmVnIEFSTTY0U3lzUmVnOw0KPiArLyoqDQo+ICsgKiBrdm1fYXJtX2V4
+cG9zZV9pZHJlZ19wcm9wZXJ0aWVzOg0KPiArICogQGNwdTogVGhlIENQVSBvYmplY3QgdG8gZ2Vu
+ZXJhdGUgdGhlIHByb3BlcnRpZXMgZm9yDQo+ICsgKiBAcmVnOiByZWdpc3RlcnMgZnJvbSB0aGUg
+aG9zdA0KPiArICoNCj4gKyAqIGFuYWx5emUgdGhlIHdyaXRhYmxlIG1hc2sgYW5kIGdlbmVyYXRl
+IHByb3BlcnRpZXMgZm9yIHdyaXRhYmxlIGZpZWxkcw0KPiArICovDQo+ICt2b2lkIGt2bV9hcm1f
+ZXhwb3NlX2lkcmVnX3Byb3BlcnRpZXMoQVJNQ1BVICpjcHUsIEFSTTY0U3lzUmVnICpyZWdzKTsN
+Cj4gKw0KPiAvKioNCj4gICoga3ZtX2FybV9zdGVhbF90aW1lX2ZpbmFsaXplOg0KPiAgKiBAY3B1
+OiBBUk1DUFUgZm9yIHdoaWNoIHRvIGZpbmFsaXplIGt2bS1zdGVhbC10aW1lDQo+IGRpZmYgLS1n
+aXQgYS90YXJnZXQvYXJtL3RyYWNlLWV2ZW50cyBiL3RhcmdldC9hcm0vdHJhY2UtZXZlbnRzDQo+
+IGluZGV4IGMyNWQyYTExOTEuLmQ3MmFkNmI2NzEgMTAwNjQ0DQo+IC0tLSBhL3RhcmdldC9hcm0v
+dHJhY2UtZXZlbnRzDQo+ICsrKyBiL3RhcmdldC9hcm0vdHJhY2UtZXZlbnRzDQo+IEBAIC0xNSw2
+ICsxNSwxMCBAQCBhcm1fZ3RfdXBkYXRlX2lycShpbnQgdGltZXIsIGludCBpcnFzdGF0ZSkgImd0
+X3VwZGF0ZV9pcnE6IHRpbWVyICVkIGlycXN0YXRlICVkIg0KPiBrdm1fYXJtX2ZpeHVwX21zaV9y
+b3V0ZSh1aW50NjRfdCBpb3ZhLCB1aW50NjRfdCBncGEpICJNU0kgaW92YSA9IDB4JSJQUkl4NjQi
+IGlzIHRyYW5zbGF0ZWQgaW50byAweCUiUFJJeDY0DQo+IGdldF9ob3N0X2NwdV9pZHJlZ3MoY29u
+c3QgY2hhciAqbmFtZSwgdWludDY0X3QgdmFsdWUpICJzY3JhdGNoIHZjcHUgaG9zdCB2YWx1ZSBm
+b3IgJXMgaXMgMHglIlBSSXg2NA0KPiBrdm1fYXJtX3dyaXRhYmxlX2lkcmVnc190b19jcHJlZ19s
+aXN0KGNvbnN0IGNoYXIgKm5hbWUsIHVpbnQ2NF90IHByZXZpb3VzLCB1aW50NjRfdCBuZXcpICIl
+cyBvdmVyd3JpdGUgZGVmYXVsdCAweCUiUFJJeDY0IiB3aXRoIDB4JSJQUkl4NjQNCj4gK2RlY29k
+ZV9pZHJlZ193cml0ZW1hcChjb25zdCBjaGFyKiBuYW1lLCBpbnQgbG93ZXIsIGludCB1cHBlciwg
+Y2hhciAqcHJvcF9uYW1lKSAiJXMgWyVkOiVkXSBpcyB3cml0YWJsZSAocHJvcCAlcykiDQo+ICtn
+ZXRfc3lzcmVnX3Byb3AoY29uc3QgY2hhciAqbmFtZSwgdWludDY0X3QgdmFsdWUpICIlcyAweCUi
+UFJJeDY0DQo+ICtzZXRfc3lzcmVnX3Byb3AoY29uc3QgY2hhciAqbmFtZSwgdWludDY0X3Qgb2xk
+LCB1aW50NjRfdCBtYXNrLCB1aW50NjRfdCBmaWVsZF92YWx1ZSwgdWludDY0X3QgbmV3KSAiJXMg
+b2xkIHJlZyB2YWx1ZT0weCUiUFJJeDY0IiBtYXNrPTB4JSJQUkl4NjQiIG5ldyBmaWVsZCB2YWx1
+ZT0weCUiUFJJeDY0IiBuZXcgcmVnIHZhbHVlPTB4JSJQUkl4NjQNCj4gK25iX3N5c3JlZ19wcm9w
+cyhjb25zdCBjaGFyICpuYW1lLCBpbnQgY291bnQpICIlczogJWQgU1lTUkVHIHByb3BlcnRpZXMi
+DQo+IA0KPiAjIGNwdS5jDQo+IGFybV9jcHVfcmVzZXQodWludDY0X3QgbXBfYWZmKSAiY3B1ICUi
+IFBSSXU2NA0KPiAtLSANCj4gMi41My4wDQo+IA0KDQpXaHkgb25seSBleHBvc2UgdGhlIHdyaXRh
+YmxlIGZpZWxkcz8gSSBhc3N1bWUgYW55IG1hbmFnZW1lbnQgbGF5ZXIgd291bGQgYWxzbw0KYXRs
+ZWFzdCBsaWtlIHRvIGtub3cgdGhlIHZhbHVlcyBvZiBub24td3JpdGFibGUgZmllbGRzLiBJZiB0
+aGV5IGp1c3Qga25vdyBhYm91dCANCndyaXRhYmxlIGZpZWxkcy4gSG93IHdpbGwgdGhleSBrbm93
+IGlmIGEgbWlncmF0aW9uIGlzIHNhZmUgYmV0d2VlbiB0d28gbm9kZXM/DQoNCkkgdW5kZXJzdGFu
+ZCB3ZSBjYW5ub3Qgd3JpdGUgdG8gbm9uLXdyaXRhYmxlIGZpZWxkcyBidXQgdGhhdCBkb2VzIG5v
+dCBtZWFuIHdlDQpjYW5ub3QgZXhwb3NlIHRoZSBob3N0IHZhbHVlcyBmb3IgdGhvc2UgZmllbGRz
+Lg0KDQpXYXJtIFJlZ2FyZHMsDQpLaHVzaGl0
 
