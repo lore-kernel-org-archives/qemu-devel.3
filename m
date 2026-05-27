@@ -4,70 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB4A1CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 19:14:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 351CFCD6E43
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 19:42:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSJft-0006a0-9p; Wed, 27 May 2026 15:12:17 -0400
+	id 1wSK8C-0007JJ-5M; Wed, 27 May 2026 15:41:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wSJfg-0006Wf-Nw
- for qemu-devel@nongnu.org; Wed, 27 May 2026 15:12:06 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wSJfb-0000Zp-5K
- for qemu-devel@nongnu.org; Wed, 27 May 2026 15:12:04 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:2925:0:640:1f39:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id B0C1CC047F;
- Wed, 27 May 2026 22:11:55 +0300 (MSK)
-Received: from vsementsov-lin (unknown [2a02:6bf:8080:69::1:d])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id qBf3L80XU0U0-Q1Rv4Iu3; Wed, 27 May 2026 22:11:55 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1779909115;
- bh=MHNHKpsaKxEG/HXJGV9pieljiEBGn7ao27riAn99Abw=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=J3dAx510Ei0jXLMTk5sSa2VyzqM1DagnOEXZDBNnJjZwYu9z1cDcBpe50ISTnkQmy
- s270D06bT2teg/2KdkJ5ua9r4Zh2M3dH35hzdElw5Mm1c1LM0UkZ5CUnKBhOA8PF6V
- cjIqHiIX0+hqDZYNjUjdZdUNODjZ+TsdTEdG87TM=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: jasowang@redhat.com,
-	mst@redhat.com
-Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
- raphael.s.norwitz@gmail.com, bchaney@akamai.com, vsementsov@yandex-team.ru,
- qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
- yc-core@yandex-team.ru, mark.caveayland@nutanix.com
-Subject: [PATCH v17 02/10] net/tap: move vhost initialization to
- tap_setup_vhost()
-Date: Wed, 27 May 2026 22:11:41 +0300
-Message-ID: <20260527191150.250333-3-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260527191150.250333-1-vsementsov@yandex-team.ru>
-References: <20260527191150.250333-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
+ id 1wSK87-0007In-Rr
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 15:41:29 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
+ id 1wSK86-00076b-20
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 15:41:27 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-835451c5debso477565b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 12:41:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tenstorrent.com; s=google; t=1779910882; x=1780515682; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=I1uv2V9eNJqol31KIWezrM9t3ncL7xHa9H49nUk1I6w=;
+ b=AByy8BIQgLZS3qygjRvoO+06YGDHlaTZzcY4fdTNIqO+CsWIQIdgwqrPys7jsljxV1
+ UuQNV7ZNmOqgEa1AqphWoKQSiYfRvBN6+k4SrY6nQdkewNbJM6k+QS84FvZ4/yNFSdO3
+ rMow0BugfIux7LT0iUXy0KgFI7bMZw0Uy6so08uchIKb4fCp5Y7nbzUwB9KWg5dbpdrn
+ fyucWhU0+QfrP/wLhgwjnqcIXzEDd/xAW6RAaCoPTrPCpYhYYJVWOHvWR0/cgo9rZ1wp
+ UXVxASoX9NAa6LnbHRoXQs39WbOLpdbr46KpZfoNoj97+/IHr2HRCkcNn2Qv7OKesDRa
+ Unrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779910882; x=1780515682;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=I1uv2V9eNJqol31KIWezrM9t3ncL7xHa9H49nUk1I6w=;
+ b=gKAKnsjeEfybv/dpl3gIT4rRCR9zmPSedrj+4QQBQSE2HNP6MwWTaE6fyDoHGRCsGM
+ zWoqE61u3CHNwVwsB7z5YpNh+R8A9FRCoOKjeKVaoltjv4q30aTocT6d1vLzy9RGR1t9
+ 6DD/WAzhEgJc3xnlLsVoEQS1DrJxwx87gIuW/e1wMbZePalbCo+9L1Y4Sw1+jzPb7br3
+ WIoYGCfD/J2FH7IcashiImMZpXEWqZ3dYeZF2JLISW4a5h69+knsNEKv6tqMy5ADMi+L
+ E/CW4lh0aNhtfSfYLybavODky3ClVtG20pNM2Ut2samXXqlXbcwA8cM8+qb4rRBvGoKi
+ Hudg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/i4HA+USe7Q0lDYnG30gVVSJEfLp/j57oUex6Bb3l7Dy0jfSkSP8EFrR5/IkPRx2Frcfgrf2w4a3Pf@nongnu.org
+X-Gm-Message-State: AOJu0YzGVfjK70TgQlZeavQ35qy9GuLmaWQx379adLdKCrzl923ou3mT
+ Eh5+xVrT8fQ6kUOrowynpe1+yvCf77IpFTs9umVohgn1YZlEuenK1hkwoX8TYZXjgkw=
+X-Gm-Gg: Acq92OHuk0t6aNr0wRE3hkvoTKBk99GRr6XXe6rRGXECjfPSZ7sxlrkXcy/9pbLFVmf
+ VRvJNHOPR/sTp1A4jv7ER70Yr2YmoaANCmrzqPu3Af2aXxPsjgAjvpiOWpUPvT5A8dS43BP1243
+ p5i89u+Eq88B1swVawHrckG5HcsO8F+43gDCqiNTqod+LqvzwBTc2NWy6N6GZbYdK8Dq9OW9EW4
+ Kh0puIyWZEFoNJY6NuOu+ZwbhNm0nJ7lUqR4u8+TeFcsgkwWzI0CBRetdeWh9DVl6U7dxIKus4j
+ m233mK34Ow4JxQW0jgtS2ZElADZxi0qky4ymi/ixj2i55IjkaWstT0FBJnkWR7eWWylSQammZaI
+ 3t5anoaExkK6U/VDlyL92qsjaau9Kd2Ts+/31mF/DWj6XMUyssgTiq099qwAppq9JrXxS4pZbj5
+ Zvj7aZQf2kzkuOzcuJ2aR4RlcJsa8BtUexh7orV/gieX0UH+/DaUEB5z+5
+X-Received: by 2002:a05:6a00:39aa:b0:82f:6a82:4231 with SMTP id
+ d2e1a72fcca58-841ee07ea9emr120885b3a.1.1779910882355; 
+ Wed, 27 May 2026 12:41:22 -0700 (PDT)
+Received: from [172.16.1.33] ([159.196.41.205])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-841d6e80246sm3818486b3a.12.2026.05.27.12.41.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 27 May 2026 12:41:21 -0700 (PDT)
+Message-ID: <dbaa7445-b4a4-45df-8ec0-b71cfded9d6e@tenstorrent.com>
+Date: Thu, 28 May 2026 05:41:15 +1000
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] target/riscv: Add support for a custom CPU arch state
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alistair <alistair@alistair23.me>, Portia Stephens
+ <stephensportia@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Portia Stephens <portias@oss.tenstorrent.com>
+References: <20260527030327.2289-1-stephensportia@gmail.com>
+ <02b1f49a-84f8-4762-a21d-13c8087f6c0a@app.fastmail.com>
+ <3455d2a8-2345-4810-a8bd-8cb9b0c284bb@linaro.org>
+Content-Language: en-US
+From: Portia Stephens <portias@tenstorrent.com>
+In-Reply-To: <3455d2a8-2345-4810-a8bd-8cb9b0c284bb@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=portias@tenstorrent.com; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -79,104 +113,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make a new helper function in a way it can be reused later for
-TAP fd-migration feature: we'll need to initialize vhost in a later
-point when we doesn't have access to QAPI parameters.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Ben Chaney <bchaney@akamai.com>
----
- net/tap.c | 62 ++++++++++++++++++++++++++++++++++---------------------
- 1 file changed, 38 insertions(+), 24 deletions(-)
 
-diff --git a/net/tap.c b/net/tap.c
-index d941c67895e..9d6213fc3e5 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -71,6 +71,8 @@ static const int kernel_feature_bits[] = {
- typedef struct TAPState {
-     NetClientState nc;
-     int fd;
-+    int vhostfd;
-+    uint32_t vhost_busyloop_timeout;
-     char down_script[1024];
-     char down_script_arg[128];
-     uint8_t buf[NET_BUFSIZE];
-@@ -702,6 +704,38 @@ static int net_tap_init(const NetdevTapOptions *tap, int *vnet_hdr,
-     return fd;
- }
- 
-+static bool tap_setup_vhost(TAPState *s, Error **errp)
-+{
-+    VhostNetOptions options;
-+
-+    if (s->vhostfd == -1) {
-+        return true;
-+    }
-+
-+    options.backend_type = VHOST_BACKEND_TYPE_KERNEL;
-+    options.net_backend = &s->nc;
-+    options.busyloop_timeout = s->vhost_busyloop_timeout;
-+    options.opaque = (void *)(uintptr_t)s->vhostfd;
-+    options.nvqs = 2;
-+    options.feature_bits = kernel_feature_bits;
-+    options.get_acked_features = NULL;
-+    options.save_acked_features = NULL;
-+    options.max_tx_queue_size = 0;
-+    options.is_vhost_user = false;
-+
-+    s->vhost_net = vhost_net_init(&options);
-+    if (!s->vhost_net) {
-+        error_setg(errp,
-+                   "vhost-net requested but could not be initialized");
-+        return false;
-+    }
-+
-+    /* vhostfd ownership is passed to s->vhost_net */
-+    s->vhostfd = -1;
-+
-+    return true;
-+}
-+
- static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
-                              const char *name,
-                              const char *ifname, const char *script,
-@@ -736,30 +770,10 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
-         }
-     }
- 
--    if (vhostfd != -1) {
--        VhostNetOptions options;
--
--        options.backend_type = VHOST_BACKEND_TYPE_KERNEL;
--        options.net_backend = &s->nc;
--        if (tap->has_poll_us) {
--            options.busyloop_timeout = tap->poll_us;
--        } else {
--            options.busyloop_timeout = 0;
--        }
--        options.opaque = (void *)(uintptr_t)vhostfd;
--        options.nvqs = 2;
--        options.feature_bits = kernel_feature_bits;
--        options.get_acked_features = NULL;
--        options.save_acked_features = NULL;
--        options.max_tx_queue_size = 0;
--        options.is_vhost_user = false;
--
--        s->vhost_net = vhost_net_init(&options);
--        if (!s->vhost_net) {
--            error_setg(errp,
--                       "vhost-net requested but could not be initialized");
--            goto failed;
--        }
-+    s->vhostfd = vhostfd;
-+    s->vhost_busyloop_timeout = tap->has_poll_us ? tap->poll_us : 0;
-+    if (!tap_setup_vhost(s, errp)) {
-+        return false;
-     }
- 
-     return true;
--- 
-2.52.0
+On 27/5/2026 3:58 PM, Philippe Mathieu-Daudé wrote:
+> Hi,
+> 
+> On 27/5/26 05:41, Alistair wrote:
+>> On Wed, 27 May 2026, at 1:03 PM, stephensportia@gmail.com wrote:
+>>> From: Portia Stephens <portias@oss.tenstorrent.com>
+>>>
+>>> Custom vendor CSR implementations may require custom state information.
+>>> This adds a custom_arch-state struct to the CPUArchState. It also adds a
+>>> RISCVCPUDef function pointer for handling allocation and initialization
+>>> of the custom_arch_state as well as a reset function pointer for setting
+>>> the custom_arch_state fields to known values on reset.
+>>>
+>>> Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
+>>> ---
+>>> target/riscv/cpu.c | 15 +++++++++++++++
+>>> target/riscv/cpu.h |  7 +++++++
+>>> 2 files changed, 22 insertions(+)
+>>>
+>>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+>>> index 862834b480..ca557d27b5 100644
+>>> --- a/target/riscv/cpu.c
+>>> +++ b/target/riscv/cpu.c
+>>> @@ -819,6 +819,10 @@ static void riscv_cpu_reset_hold(Object *obj, 
+>>> ResetType type)
+>>>       if (kvm_enabled()) {
+>>>           kvm_riscv_reset_vcpu(cpu);
+>>>       }
+>>> +
+>>> +    if (mcc->def->custom_arch_state_reset) {
+>>> +        mcc->def->custom_arch_state_reset(env);
+> 
+> ResetType shouldn't be discarded IMO.
+
+Are you referring to Alistair's comment about why do we need reset? Yes 
+it is necessary to set the registers to a known state after a reset. A 
+finalize function is probably also needed since init will allocate the 
+struct.
+
+> 
+>>> +    }
+>>> #endif
+>>> }
+>>> @@ -1167,6 +1171,9 @@ static void riscv_cpu_init(Object *obj)
+>>>       if (mcc->def->custom_csrs) {
+>>>           riscv_register_custom_csrs(cpu, mcc->def->custom_csrs);
+>>>       }
+>>> +    if (mcc->def->custom_arch_state_init) {
+>>> +        mcc->def->custom_arch_state_init(&cpu->env);
+>>> +    }
+>>> #endif
+>>>       accel_cpu_instance_init(CPU(obj));
+>>> @@ -2706,6 +2713,14 @@ static void 
+>>> riscv_cpu_class_base_init(ObjectClass *c, const void *data)
+>>>               assert(!mcc->def->custom_csrs);
+>>>               mcc->def->custom_csrs = def->custom_csrs;
+>>>           }
+>>> +        if (def->custom_arch_state_init) {
+>>> +            assert(!mcc->def->custom_arch_state_init);
+>>> +            mcc->def->custom_arch_state_init = def- 
+>>> >custom_arch_state_init;
+>>> +        }
+>>> +        if (def->custom_arch_state_reset) {
+>>> +            assert(!mcc->def->custom_arch_state_reset);
+>>> +            mcc->def->custom_arch_state_reset = def- 
+>>> >custom_arch_state_reset;
+>>> +        }
+>>>       }
+>>>       if (!object_class_is_abstract(c)) {
+>>> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+>>> index 7d79c7a5a7..8132c65012 100644
+>>> --- a/target/riscv/cpu.h
+>>> +++ b/target/riscv/cpu.h
+>>> @@ -213,6 +213,9 @@ typedef struct PMUFixedCtrState {
+>>>           uint64_t counter_virt_prev[2];
+>>> } PMUFixedCtrState;
+>>> +typedef void (*riscv_csr_custom_init_fn)(CPURISCVState *env);
+>>> +typedef void (*riscv_csr_custom_reset_fn)(CPURISCVState *env);
+>>> +
+>>> struct CPUArchState {
+>>>       target_ulong gpr[32];
+>>>       target_ulong gprh[32]; /* 64 top bits of the 128-bit registers */
+>>> @@ -509,6 +512,8 @@ struct CPUArchState {
+>>>       uint64_t rnmip;
+>>>       uint64_t rnmi_irqvec;
+>>>       uint64_t rnmi_excpvec;
+>>> +
+>>> +    const void *custom_arch_state;
+>>> };
+>>> /*
+>>> @@ -561,6 +566,8 @@ typedef struct RISCVCPUDef {
+>>>       RISCVCPUConfig cfg;
+>>>       bool bare;
+>>>       const RISCVCSR *custom_csrs;
+>>> +    riscv_csr_custom_init_fn custom_arch_state_init;
+>>> +    riscv_csr_custom_reset_fn custom_arch_state_reset;
+>>
+>> Why do we need an init and a reset? I assume init is to allocate the 
+>> stuct, but that should probably be commented here.
+>>
+>> How do you expect these to be set? Do you have an example?
+> 
+> I don't see the point of upstreaming this patch without concrete
+> example. So far it is maintenance burden without any value.
+
+Okay.
+
+> 
+>>
+>> Alistair
+>>
+>>> } RISCVCPUDef;
+>>> /**
+>>> -- 
+>>> 2.43.0
+>>>
+>>>
+>>>
+>>
+> 
 
 
