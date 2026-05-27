@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FD35CD5BD0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 19:13:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FE33CD5BD0
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 19:13:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSJfm-0006Xp-2w; Wed, 27 May 2026 15:12:11 -0400
+	id 1wSJft-0006ap-VR; Wed, 27 May 2026 15:12:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wSJff-0006WU-8O
- for qemu-devel@nongnu.org; Wed, 27 May 2026 15:12:03 -0400
+ id 1wSJfi-0006XU-Gx
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 15:12:07 -0400
 Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wSJfb-0000ZT-23
- for qemu-devel@nongnu.org; Wed, 27 May 2026 15:12:02 -0400
+ id 1wSJfd-0000at-ED
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 15:12:06 -0400
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:2925:0:640:1f39:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 179C68846D;
- Wed, 27 May 2026 22:11:54 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 1989688488;
+ Wed, 27 May 2026 22:12:00 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:69::1:d])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id qBf3L80XU0U0-WudqLmRk; Wed, 27 May 2026 22:11:53 +0300
+ id qBf3L80XU0U0-fwChcYum; Wed, 27 May 2026 22:11:59 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1779909113;
- bh=baDN5MFrrJnasvlDANZGJUy8nlquw0iSNhmO4CN4MsY=;
- h=Message-ID:Date:Cc:Subject:To:From;
- b=T51jdpI6cYSL4Y2/E4CyvQC5KLxUhiKHkivODJl60QRrdv6sPJVaU57fZDPSYhtgh
- ko3p04fdokaBKjYpNA6ygM1kTXWHLrvSy7zXxv86TTpLwgB4FHA/HzSxVQPuZMcS4z
- lkECiQxoVAN8Rz2Zdd8j5Rc+fMUxJCWs6uFiMxZ0=
+ s=default; t=1779909119;
+ bh=jMkSOAnGpVRf0VTnJs7rx42AV58qrFern/G4h2ROPa0=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=OS4i12R2TtoFW7B/ZJt8sCR7gXWkI+l4NPLDaf0KrS+qLeJ+ff0sCmej1LskJ9l2h
+ rcG14I/K/fM2BgQ233S3aqs4hioXuYvqK7ZntAAwgDHfTbCve35TCCpMk951Kbqr0x
+ Qn+nC2NoO3rSTOEq/mhQLGWGurR55iAG5C2Xba7A=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -46,12 +46,13 @@ Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
  raphael.s.norwitz@gmail.com, bchaney@akamai.com, vsementsov@yandex-team.ru,
  qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
  yc-core@yandex-team.ru, mark.caveayland@nutanix.com
-Subject: [PATCH v17 00/10] virtio-net: live-TAP local migration
-Date: Wed, 27 May 2026 22:11:39 +0300
-Message-ID: <20260527191150.250333-1-vsementsov@yandex-team.ru>
+Subject: [PATCH v17 07/10] virtio-net: support local migration of backend
+Date: Wed, 27 May 2026 22:11:46 +0300
+Message-ID: <20260527191150.250333-8-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260527191150.250333-1-vsementsov@yandex-team.ru>
+References: <20260527191150.250333-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=178.154.239.136;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
@@ -75,257 +76,224 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all!
-
-Here is a migration for TAP net backend, including its properties and
-open fds.
-
-With this new feature, management software doesn't need to initialize
-new TAP and do a switch to it. Nothing should be done around
-virtio-net in local migration: it just migrates and continues to use
-same TAP device. So we avoid extra logic in management software, extra
-allocations in kernel (for new TAP), and corresponding extra delay in
-migration downtime.
-
-v17: rework interface
-02-04: new
-07: - drop local-migration parameter for virtio-net and the whole
-      code to migrate backends (they should migrate by themselves).
-    - drop virtio_net_update_host_features(), and call
-      peer_test_vnet_hdr() and virtio_net_get_features() directly
-      from post-load handlers
-    - drop r-b
-08: - add local-migratieon-supported property (instead of
-      local-migration that is dropped in 07)
-    - register own vmstate
-    - add check for being in incoming migration when use incoming-fds
-    - drop r-b, a-b
-10: only move 'local_migration=local' from virtio-net device
-    to 'local-migration-supported": local' in netdev. keep r-bs
-
-Based-on: <20260318113144.15697-1-vsementsov@yandex-team.ru>
-    "[PATCH v4 00/13] net: refactoring and fixes"
-
-v17 is pushed to
-
-    https://gitlab.com/vsementsov/qemu.git
-      tag: up-tap-fd-migration-with-bk-opt-v17
-
-To run the test, use sudo, as test needs to configure TAP device:
-
-    sudo PYTHONPATH=python:tests/functional \
-    QEMU_TEST_QEMU_BINARY=$PWD/build/qemu-system-x86_64 \
-    MESON_BUILD_ROOT=$PWD/build \
-    ./build/pyvenv/bin/python3 tests/functional/x86_64/test_tap_migration.py
-
-Or, to test the feature by hand, you may follow the instruction:
-
-1. Prerequisites
-----------------
-
-    QEMU=/path/to/your/build/qemu-system-x86_64
-
-# download same image as in test
-
-    wget -O /tmp/alpine.iso "https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/x86_64/alpine-standard-3.22.1-x86_64.iso"
-
-
-# prepare tap device (be careful to not break your own networks)
-
-    sudo ip tuntap add dev tap0 mode tap multi_queue
-    sudo ip addr add 192.168.100.1/24 dev tap0
-    sudo ip link set tap0 up
-
-
-2. Start source VM
-------------------
-
-Open terminal A, and run:
-
-    $QEMU \
-        -name source \
-        -machine q35 \
-        -accel kvm \
-        -m 1G \
-        -object memory-backend-file,id=ram0,size=1G,mem-path=/dev/shm/qemu_migration_test,share=on \
-        -machine memory-backend=ram0 \
-        -drive file=/tmp/alpine.iso,media=cdrom,format=raw \
-        -device pcie-pci-bridge,id=pci.1,bus=pcie.0 \
-        -netdev tap,id=netdev.1,ifname=tap0,queues=4,vnet_hdr=on,script=no,downscript=no,local-migration-supported=on \
-        -device virtio-net-pci,netdev=netdev.1,id=vnet.1,bus=pci.1,mq=on,vectors=18,romfile=,disable-legacy=off \
-        -serial stdio \
-        -nographic \
-        -qmp unix:/tmp/qmp-source.sock,server=on,wait=off
-
-Wait for Alpine to boot.  When you see the login prompt, log in as root
-(no password):
-
-    localhost login: root
-
-Configure the guest network:
-
-    ip addr add 192.168.100.2/24 dev eth0
-    ip link set eth0 up
-
-Verify connectivity from the guest:
-
-    ping -c 3 192.168.100.1
-
-And from the host (in another terminal):
-
-    ping -c 3 192.168.100.2
-
-
-3. Start target VM
-------------------
-
-Open terminal B.  The target VM uses the same shared memory file and
-the same ISO.  The NIC is configured with incoming-fds=on — it will
-not open tap0 itself; instead it will receive the TAP file descriptors
-from the source over the migration channel.
-
-    $QEMU \
-        -name target \
-        -machine q35 \
-        -accel kvm \
-        -m 1G \
-        -object memory-backend-file,id=ram0,size=1G,mem-path=/dev/shm/qemu_migration_test,share=on \
-        -machine memory-backend=ram0 \
-        -drive file=/tmp/alpine.iso,media=cdrom,format=raw \
-        -device pcie-pci-bridge,id=pci.1,bus=pcie.0 \
-        -netdev tap,id=netdev.1,queues=4,script=no,downscript=no,local-migration-supported=on,incoming-fds=on \
-        -device virtio-net-pci,netdev=netdev.1,id=vnet.1,bus=pci.1,mq=on,vectors=18,romfile=,disable-legacy=off \
-        -serial stdio \
-        -nographic \
-        -qmp unix:/tmp/qmp-target.sock,server=on,wait=off \
-        -incoming defer
-
-
-4. Start migration
-------------------
-
-Open terminal C and connect to the source QMP socket:
-
-    socat - UNIX-CONNECT:/tmp/qmp-source.sock
-
-Negotiate capabilities and configure migration:
-
-    {"execute": "qmp_capabilities"}
-
-    {"execute": "migrate-set-capabilities", "arguments": {
-        "capabilities": [
-            {"capability": "events",          "state": true},
-            {"capability": "x-ignore-shared", "state": true}
-        ]
-    }}
-
-    {"execute": "migrate-set-parameters", "arguments": {"local": true}}
-
-Open terminal D and connect to the target QMP socket:
-
-    socat - UNIX-CONNECT:/tmp/qmp-target.sock
-
-Negotiate capabilities and configure migration:
-
-    {"execute": "qmp_capabilities"}
-
-    {"execute": "migrate-set-capabilities", "arguments": {
-        "capabilities": [
-            {"capability": "events",          "state": true},
-            {"capability": "x-ignore-shared", "state": true}
-        ]
-    }}
-
-    {"execute": "migrate-set-parameters", "arguments": {"local": true}}
-
-Tell the target to listen for the incoming migration (terminal D):
-
-    {"execute": "migrate-incoming",
-     "arguments": {"uri": "unix:/tmp/migration.sock"}}
-
-Trigger the migration from the source (terminal C):
-
-    {"execute": "migrate",
-     "arguments": {"uri": "unix:/tmp/migration.sock"}}
-
-Poll migration status until it completes (terminal C):
-
-    {"execute": "query-migrate"}
-    # repeat until "status" == "completed"
-
-Or just wait for the MIGRATION event that QEMU emits automatically:
-
-    # {"event": "MIGRATION", "data": {"status": "completed"}, ...}
-
-Once the source reports "completed", resume the target VM (terminal D):
-
-    {"execute": "cont"}
-
-The target VM is now running with the migrated state and the TAP file
-descriptors that were passed from the source.
-
-Verify that the guest is still reachable from the host:
-
-    ping -c 3 192.168.100.2
-
-And from inside the guest (terminal B, target serial console):
-
-    ping -c 3 192.168.100.1
-
-
-5. Cleanup
-----------
-
-Shut down the target VM (terminal D):
-
-    {"execute": "quit"}
-
-Shut down the source VM (terminal C):
-
-    {"execute": "quit"}
-
-Remove the TAP device:
-
-    sudo ip tuntap del tap0 mode tap multi_queue
-
-Remove the shared memory file:
-
-    rm /dev/shm/qemu_migration_test
-
-Remove leftover sockets if they still exist:
-
-    rm -f /tmp/migration.sock /tmp/qmp-source.sock /tmp/qmp-target.sock 
-
-Vladimir Sementsov-Ogievskiy (10):
-  net/tap: move vhost-net open() calls to tap_parse_vhost_fds()
-  net/tap: move vhost initialization to tap_setup_vhost()
-  net/tap: use container_of instead of DO_UPCAST
-  net/tap: QOMify tap backend
-  net/tap: add TYPE_VMSTATE_IF interface
-  qapi: add local migration parameter
-  virtio-net: support local migration of backend
-  net/tap: support local migration with virtio-net
-  tests/functional: add skipWithoutSudo() decorator
-  tests/functional: add test_tap_migration
-
- hw/core/machine.c                             |   2 +
- hw/net/virtio-net.c                           |  89 +++-
- include/hw/virtio/virtio-net.h                |   1 +
- include/migration/misc.h                      |   2 +
- include/migration/vmstate.h                   |   2 +
- include/net/net.h                             |   9 +
- include/net/tap.h                             |   2 +
- migration/options.c                           |  18 +-
- net/net.c                                     |  14 +-
- net/tap.c                                     | 429 +++++++++++++---
- qapi/migration.json                           |  12 +-
- qapi/net.json                                 |  20 +-
- tests/functional/qemu_test/decorators.py      |  16 +
- tests/functional/x86_64/meson.build           |   1 +
- tests/functional/x86_64/test_tap_migration.py | 458 ++++++++++++++++++
- 15 files changed, 986 insertions(+), 89 deletions(-)
- create mode 100755 tests/functional/x86_64/test_tap_migration.py
-
+Next commit will introduce live-migration (with fd-passing) for
+TAP net backend. So, now we prepare virtio-net for it
+Add virtio-net option local-migration, which is true by default,
+but false for older machine types, which doesn't support the feature.
+
+We introduce interface for live-migrating backends:
+
+1. ->is_wait_incoming() handler, so that virtio-net knows, that
+   backend is not fully intialized, as it waits for incoming migration
+   stream.
+
+2. MIG_PRI_BACKEND priority: backends should migrate with higher
+   priority than virtio-net, so that we can do final preparations
+   here in post-load handlers and be sure, that backends are already
+   prepared.
+
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ hw/net/virtio-net.c            | 89 +++++++++++++++++++++++++++++++++-
+ include/hw/virtio/virtio-net.h |  1 +
+ include/migration/vmstate.h    |  2 +
+ include/net/net.h              |  2 +
+ 4 files changed, 93 insertions(+), 1 deletion(-)
+
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 2a5d642a647..e23ae6052a2 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -40,6 +40,7 @@
+ #include "migration/misc.h"
+ #include "standard-headers/linux/ethtool.h"
+ #include "system/system.h"
++#include "system/runstate.h"
+ #include "system/replay.h"
+ #include "trace.h"
+ #include "monitor/qdev.h"
+@@ -3060,7 +3061,17 @@ static void virtio_net_set_multiqueue(VirtIONet *n, int multiqueue)
+     n->multiqueue = multiqueue;
+     virtio_net_change_num_queues(n, max * 2 + 1);
+ 
+-    virtio_net_set_queue_pairs(n);
++    /*
++     * virtio_net_set_multiqueue() called from set_features(0) on early
++     * reset, when peer may wait for incoming (and is not initialized
++     * yet).
++     * Don't worry about it: virtio_net_set_queue_pairs() will be called
++     * later from virtio_net_post_load_device(), and anyway will be
++     * no-op for local incoming migration with live backend passing.
++     */
++    if (!n->peers_wait_incoming) {
++        virtio_net_set_queue_pairs(n);
++    }
+ }
+ 
+ static int virtio_net_pre_load_queues(VirtIODevice *vdev, uint32_t n)
+@@ -3089,6 +3100,17 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
+ 
+     virtio_add_feature_ex(features, VIRTIO_NET_F_MAC);
+ 
++    if (n->peers_wait_incoming) {
++        /*
++         * Excessive feature set is OK for early initialization when
++         * we wait for local incoming migration: actual guest-negotiated
++         * features will come with migration stream anyway. And we are sure
++         * that we support same host-features as source, because the backend
++         * is the same (the same TAP device, for example).
++         */
++        return;
++    }
++
+     if (!peer_has_vnet_hdr(n)) {
+         virtio_clear_feature_ex(features, VIRTIO_NET_F_CSUM);
+         virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO4);
+@@ -3185,6 +3207,7 @@ static int virtio_net_post_load_device(void *opaque, int version_id)
+     VirtIODevice *vdev = VIRTIO_DEVICE(n);
+     int i, link_down;
+     bool has_tunnel_hdr = virtio_has_tunnel_hdr(vdev->guest_features_ex);
++    Error *local_err = NULL;
+ 
+     trace_virtio_net_post_load_device();
+     virtio_net_set_mrg_rx_bufs(n, n->mergeable_rx_bufs,
+@@ -3242,6 +3265,20 @@ static int virtio_net_post_load_device(void *opaque, int version_id)
+     }
+ 
+     virtio_net_commit_rss_config(n);
++
++    /*
++     * If live-migration is enabled for some backend, than backend
++     * has already been migrated at higher priority (MIG_PRI_BACKEND)
++     * and virtio_net_vnet_post_load() has already called
++     * peer_test_vnet_hdr().  Recompute host_features so that virtio-net
++     * reflects the capabilities of the restored backend.
++     */
++    virtio_net_get_features(vdev, &vdev->host_features, &local_err);
++    if (local_err) {
++        error_report_err(local_err);
++        return -EINVAL;
++    }
++
+     return 0;
+ }
+ 
+@@ -3392,6 +3429,14 @@ static int virtio_net_vnet_post_load(void *opaque, int version_id)
+ {
+     struct VirtIONetMigTmp *tmp = opaque;
+ 
++    /*
++     * If live-migration is enabled for some backend, than backend
++     * has already been migrated at higher priority (MIG_PRI_BACKEND),
++     * so n->has_vnet_hdr can be refreshed from the live backend right
++     * here.
++     */
++    peer_test_vnet_hdr(tmp->parent);
++
+     if (tmp->has_vnet_hdr && !peer_has_vnet_hdr(tmp->parent)) {
+         error_report("virtio-net: saved image requires vnet_hdr=on");
+         return -EINVAL;
+@@ -3864,6 +3909,42 @@ static bool failover_hide_primary_device(DeviceListener *listener,
+     return qatomic_read(&n->failover_primary_hidden);
+ }
+ 
++static bool virtio_net_check_peers_wait_incoming(VirtIONet *n, bool *waiting,
++                                                 Error **errp)
++{
++    bool has_waiting = false;
++    bool has_not_waiting = false;
++
++    for (int i = 0; i < n->max_queue_pairs; i++) {
++        NetClientState *peer = n->nic->ncs[i].peer;
++        if (!peer) {
++            continue;
++        }
++
++        if (peer->info->is_wait_incoming &&
++            peer->info->is_wait_incoming(peer)) {
++            has_waiting = true;
++        } else {
++            has_not_waiting = true;
++        }
++
++        if (has_waiting && has_not_waiting) {
++            error_setg(errp, "Mixed peer states: some peers wait for incoming "
++                       "migration while others don't");
++            return false;
++        }
++    }
++
++    if (has_waiting && !runstate_check(RUN_STATE_INMIGRATE)) {
++        error_setg(errp, "Peers wait for incoming, but it's not an incoming "
++                   "migration.");
++        return false;
++    }
++
++    *waiting = has_waiting;
++    return true;
++}
++
+ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+ {
+     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+@@ -4001,6 +4082,12 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+         n->nic->ncs[i].do_not_pad = true;
+     }
+ 
++    if (!virtio_net_check_peers_wait_incoming(n, &n->peers_wait_incoming,
++                                              errp)) {
++        virtio_cleanup(vdev);
++        return;
++    }
++
+     peer_test_vnet_hdr(n);
+     if (peer_has_vnet_hdr(n)) {
+         n->host_hdr_len = sizeof(struct virtio_net_hdr);
+diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
+index 371e3764282..8c967760c2a 100644
+--- a/include/hw/virtio/virtio-net.h
++++ b/include/hw/virtio/virtio-net.h
+@@ -230,6 +230,7 @@ struct VirtIONet {
+     struct EBPFRSSContext ebpf_rss;
+     uint32_t nr_ebpf_rss_fds;
+     char **ebpf_rss_fds;
++    bool peers_wait_incoming;
+ };
+ 
+ size_t virtio_net_handle_ctrl_iov(VirtIODevice *vdev,
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 0a8a2e85a63..c92c41397ae 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -178,6 +178,8 @@ typedef enum {
+ 
+     MIG_PRI_LOW,                /* Must happen after default */
+     MIG_PRI_DEFAULT,
++    MIG_PRI_BACKEND,            /* Must happen before emulated devices, */
++                                /* e.g. virtio-net */
+     MIG_PRI_IOMMU,              /* Must happen before PCI devices */
+     MIG_PRI_PCI_BUS,            /* Must happen before IOMMU */
+     MIG_PRI_VIRTIO_MEM,         /* Must happen before IOMMU */
+diff --git a/include/net/net.h b/include/net/net.h
+index bdf16bb3e64..658b0d0aaf1 100644
+--- a/include/net/net.h
++++ b/include/net/net.h
+@@ -81,6 +81,7 @@ typedef void (SocketReadStateFinalize)(SocketReadState *rs);
+ typedef void (NetAnnounce)(NetClientState *);
+ typedef bool (SetSteeringEBPF)(NetClientState *, int);
+ typedef bool (NetCheckPeerType)(NetClientState *, ObjectClass *, Error **);
++typedef bool (IsWaitIncoming)(NetClientState *);
+ typedef struct vhost_net *(GetVHostNet)(NetClientState *nc);
+ 
+ typedef struct NetClientInfo {
+@@ -109,6 +110,7 @@ typedef struct NetClientInfo {
+     NetAnnounce *announce;
+     SetSteeringEBPF *set_steering_ebpf;
+     NetCheckPeerType *check_peer_type;
++    IsWaitIncoming *is_wait_incoming;
+     GetVHostNet *get_vhost_net;
+ } NetClientInfo;
+ 
 -- 
 2.52.0
 
