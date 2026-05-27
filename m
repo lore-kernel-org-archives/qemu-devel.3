@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87991CD5BDE
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 05:48:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDBF3CD5BDE
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 05:48:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wS77N-0006C3-Tp; Wed, 27 May 2026 01:47:50 -0400
+	id 1wS77N-0006C2-St; Wed, 27 May 2026 01:47:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1wS77J-0006Bd-9D
+ id 1wS77I-0006Bc-KM
  for qemu-devel@nongnu.org; Wed, 27 May 2026 01:47:45 -0400
 Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1wS77E-0000YZ-Ks
- for qemu-devel@nongnu.org; Wed, 27 May 2026 01:47:44 -0400
+ id 1wS77A-0000Y7-QH
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 01:47:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1779860861; x=1811396861;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=ObrnK8sswiz7nE7VythAfsMjXrhnyul9Z0RsYGLoX80=;
- b=bK4THnaVgLMgkBi6Il1Q4NXLoT2Q/zOB71dXEnZYuWMBwigc2jmpb6SU
- nxLQwLztkXryoZFvnUb+My4qLhy6hMJi5GEWxbngTLfpAVHmREGEehvsQ
- our8sSBgFiFkeBWINvTEX+t8YrgN5HDMVGClR5m1om6b5OADoVZoslGl0
- XanCp+HpoTVIofOQzWNUEmpUokoWRQ9z47zGZ8kk2V+WdpVEgGkisxQo2
- cpv+SD/ID9r6b2IfjNzb3TUYKHP68gu2meg0YABJDa4gFAK2x39Ny8fM+
- +t4kW6Rut9A20F8puazsNunvsyP9PzWXqR6JIruAUvwG8rFjglLbLEifi w==;
-X-CSE-ConnectionGUID: l04daoHTRR+G5wTjCjIzcA==
-X-CSE-MsgGUID: lC8H+RX8Qeqn33RAWpN5aQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11798"; a="90988074"
-X-IronPort-AV: E=Sophos;i="6.24,170,1774335600"; d="scan'208";a="90988074"
+ t=1779860857; x=1811396857;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=6bMdeNuSFmUSUOOKpWJqiR3I8MzwrD1C40zrHH6mP30=;
+ b=Kdni9ZpVOe6VzHLop3fuZUR6SL23AYNCylGkEDPLGRy5JPoss5pcKZMf
+ 1tn/sczHdOdg9Anp5KtlJs+ghDDuCdT8x5uEHcK7AjMG7UMgIDgpoDZGc
+ Wd8de/b94b8BVbtThCG0iPLT9/XbXDiAhjKSl5wwaiwuKiM85sQalgEYD
+ zAmwi5We5vi+rFeOULN8FNtECg4w4swAvFTXmpoacr6Ndg2Uy3eg3wl90
+ 5t631sa31OgwePj0pntTW9wYmna7buZWw6ScvPCLWhpuhc7mceZ1ebH3d
+ hM5IAvo/7eHmA5Ikd+L6XR7g1/lAPc0tOnVEgrK/eDrkYfM4TvD+k38tZ Q==;
+X-CSE-ConnectionGUID: 4M2qu8n6StmFUIGXVffzHg==
+X-CSE-MsgGUID: 5YgRZU2XQAy8g2fi/mkMTQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11798"; a="90988071"
+X-IronPort-AV: E=Sophos;i="6.24,170,1774335600"; d="scan'208";a="90988071"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 May 2026 22:47:37 -0700
-X-CSE-ConnectionGUID: IaNpUcevTnqBqv3/bZhwCw==
-X-CSE-MsgGUID: b2inOO3vR1+l9Gwcf9GSjg==
+ 26 May 2026 22:47:33 -0700
+X-CSE-ConnectionGUID: 3V7T1C/jRESWmsRO+MV55g==
+X-CSE-MsgGUID: 7Ba7lO2kSgyf3f6wVr/Dnw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,170,1774335600"; d="scan'208";a="241086659"
+X-IronPort-AV: E=Sophos;i="6.24,170,1774335600"; d="scan'208";a="241086644"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 May 2026 22:47:34 -0700
+ 26 May 2026 22:47:30 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
@@ -53,13 +53,11 @@ Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@bull.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  xudong.hao@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v6 01/17] vfio/iommufd: Extend attach/detach_hwpt callback
- implementations with pasid
-Date: Wed, 27 May 2026 01:46:39 -0400
-Message-ID: <20260527054658.1021096-2-zhenzhong.duan@intel.com>
+Subject: [PATCH v6 00/17] intel_iommu: Enable PASID support for passthrough
+ device
+Date: Wed, 27 May 2026 01:46:38 -0400
+Message-ID: <20260527054658.1021096-1-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260527054658.1021096-1-zhenzhong.duan@intel.com>
-References: <20260527054658.1021096-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -87,185 +85,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For attachment with pasid, pasid together with flag VFIO_DEVICE_ATTACH_PASID
-should be passed in.
+Hi,
 
-Define IOMMU_NO_PASID to represent device attachment without pasid same as
-in kernel.
+Now we already support first stage translation with passthrough device
+backed by nested translation in host, but only for IOMMU_NO_PASID.
 
-The implementation is similar for detachment.
+Structure VTDAddressSpace includes some elements suitable for emulated
+device and passthrough device without PASID, e.g., address space,
+different memory regions, etc, it is also protected by vtd iommu lock,
+all these are useless and become a burden for passthrough device with
+PASID.
 
-Suggested-by: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Tested-by: Xudong Hao <xudong.hao@intel.com>
----
- include/hw/core/iommu.h |  3 +++
- hw/vfio/iommufd.c       | 44 +++++++++++++++++++++++++----------------
- hw/vfio/trace-events    |  4 ++--
- 3 files changed, 32 insertions(+), 19 deletions(-)
+When there are lots of PASIDs used in one device, the AS and MRs are
+all registered to memory core and impact the whole system performance.
 
-diff --git a/include/hw/core/iommu.h b/include/hw/core/iommu.h
-index cd59a367ce..7fb5c81c9f 100644
---- a/include/hw/core/iommu.h
-+++ b/include/hw/core/iommu.h
-@@ -30,4 +30,7 @@ enum host_iommu_quirks {
-     HOST_IOMMU_QUIRK_NESTING_PARENT_BYPASS_RO = BIT_ULL(0),
- };
- 
-+/* ABI constant: IOMMU_NO_PASID must always be 0 (keep in sync with kernel) */
-+#define IOMMU_NO_PASID 0
-+
- #endif /* HW_IOMMU_H */
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index df148a49a7..f86f6f0d7b 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -20,6 +20,7 @@
- #include "trace.h"
- #include "qapi/error.h"
- #include "system/iommufd.h"
-+#include "hw/core/iommu.h"
- #include "hw/core/qdev.h"
- #include "hw/vfio/vfio-cpr.h"
- #include "system/reset.h"
-@@ -305,43 +306,48 @@ out:
-     return ret;
- }
- 
--static int iommufd_cdev_attach_ioas_hwpt(VFIODevice *vbasedev, uint32_t id,
--                                         Error **errp)
-+static int iommufd_cdev_pasid_attach_ioas_hwpt(VFIODevice *vbasedev,
-+                                               uint32_t pasid, uint32_t id,
-+                                               Error **errp)
- {
-     int iommufd = vbasedev->iommufd->fd;
-     struct vfio_device_attach_iommufd_pt attach_data = {
-         .argsz = sizeof(attach_data),
--        .flags = 0,
-+        .flags = pasid == IOMMU_NO_PASID ? 0 : VFIO_DEVICE_ATTACH_PASID,
-+        .pasid = pasid,
-         .pt_id = id,
-     };
- 
-     /* Attach device to an IOAS or hwpt within iommufd */
-     if (ioctl(vbasedev->fd, VFIO_DEVICE_ATTACH_IOMMUFD_PT, &attach_data)) {
-         error_setg_errno(errp, errno,
--                         "[iommufd=%d] error attach %s (%d) to id=%d",
--                         iommufd, vbasedev->name, vbasedev->fd, id);
-+                         "[iommufd=%d] error attach %s (%d) pasid %d to id=%d",
-+                         iommufd, vbasedev->name, vbasedev->fd, pasid, id);
-         return -errno;
-     }
- 
--    trace_iommufd_cdev_attach_ioas_hwpt(iommufd, vbasedev->name,
--                                        vbasedev->fd, id);
-+    trace_iommufd_cdev_pasid_attach_ioas_hwpt(iommufd, vbasedev->name,
-+                                              vbasedev->fd, pasid, id);
-     return 0;
- }
- 
--static bool iommufd_cdev_detach_ioas_hwpt(VFIODevice *vbasedev, Error **errp)
-+static bool iommufd_cdev_pasid_detach_ioas_hwpt(VFIODevice *vbasedev,
-+                                                uint32_t pasid, Error **errp)
- {
-     int iommufd = vbasedev->iommufd->fd;
-     struct vfio_device_detach_iommufd_pt detach_data = {
-         .argsz = sizeof(detach_data),
--        .flags = 0,
-+        .flags = pasid == IOMMU_NO_PASID ? 0 : VFIO_DEVICE_DETACH_PASID,
-+        .pasid = pasid,
-     };
- 
-     if (ioctl(vbasedev->fd, VFIO_DEVICE_DETACH_IOMMUFD_PT, &detach_data)) {
--        error_setg_errno(errp, errno, "detach %s failed", vbasedev->name);
-+        error_setg_errno(errp, errno, "detach %s pasid %d failed",
-+                         vbasedev->name, pasid);
-         return false;
-     }
- 
--    trace_iommufd_cdev_detach_ioas_hwpt(iommufd, vbasedev->name);
-+    trace_iommufd_cdev_pasid_detach_ioas_hwpt(iommufd, vbasedev->name, pasid);
-     return true;
- }
- 
-@@ -363,7 +369,8 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
-     /* Try to find a domain */
-     QLIST_FOREACH(hwpt, &container->hwpt_list, next) {
-         if (!cpr_is_incoming()) {
--            ret = iommufd_cdev_attach_ioas_hwpt(vbasedev, hwpt->hwpt_id, errp);
-+            ret = iommufd_cdev_pasid_attach_ioas_hwpt(vbasedev, IOMMU_NO_PASID,
-+                                                      hwpt->hwpt_id, errp);
-         } else if (vbasedev->cpr.hwpt_id == hwpt->hwpt_id) {
-             ret = 0;
-         } else {
-@@ -442,7 +449,8 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
-         return false;
-     }
- 
--    ret = iommufd_cdev_attach_ioas_hwpt(vbasedev, hwpt_id, errp);
-+    ret = iommufd_cdev_pasid_attach_ioas_hwpt(vbasedev, IOMMU_NO_PASID, hwpt_id,
-+                                              errp);
-     if (ret) {
-         iommufd_backend_free_id(container->be, hwpt_id);
-         return false;
-@@ -495,7 +503,8 @@ static bool iommufd_cdev_attach_container(VFIODevice *vbasedev,
- 
-     /* If CPR, we are already attached to ioas_id. */
-     return cpr_is_incoming() ||
--           !iommufd_cdev_attach_ioas_hwpt(vbasedev, container->ioas_id, errp);
-+           !iommufd_cdev_pasid_attach_ioas_hwpt(vbasedev, IOMMU_NO_PASID,
-+                                                container->ioas_id, errp);
- }
- 
- static void iommufd_cdev_detach_container(VFIODevice *vbasedev,
-@@ -503,7 +512,7 @@ static void iommufd_cdev_detach_container(VFIODevice *vbasedev,
- {
-     Error *err = NULL;
- 
--    if (!iommufd_cdev_detach_ioas_hwpt(vbasedev, &err)) {
-+    if (!iommufd_cdev_pasid_detach_ioas_hwpt(vbasedev, IOMMU_NO_PASID, &err)) {
-         error_report_err(err);
-     }
- 
-@@ -929,7 +938,8 @@ host_iommu_device_iommufd_vfio_attach_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
- {
-     VFIODevice *vbasedev = HOST_IOMMU_DEVICE(hiodi)->agent;
- 
--    return !iommufd_cdev_attach_ioas_hwpt(vbasedev, hwpt_id, errp);
-+    return !iommufd_cdev_pasid_attach_ioas_hwpt(vbasedev, IOMMU_NO_PASID,
-+                                                hwpt_id, errp);
- }
- 
- static bool
-@@ -938,7 +948,7 @@ host_iommu_device_iommufd_vfio_detach_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
- {
-     VFIODevice *vbasedev = HOST_IOMMU_DEVICE(hiodi)->agent;
- 
--    return iommufd_cdev_detach_ioas_hwpt(vbasedev, errp);
-+    return iommufd_cdev_pasid_detach_ioas_hwpt(vbasedev, IOMMU_NO_PASID, errp);
- }
- 
- static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
-diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index 2049159015..8dbb477298 100644
---- a/hw/vfio/trace-events
-+++ b/hw/vfio/trace-events
-@@ -183,8 +183,8 @@ vfio_vmstate_change_prepare(const char *name, int running, const char *reason, c
- 
- iommufd_cdev_connect_and_bind(int iommufd, const char *name, int devfd, int devid) " [iommufd=%d] Successfully bound device %s (fd=%d): output devid=%d"
- iommufd_cdev_getfd(const char *dev, int devfd) " %s (fd=%d)"
--iommufd_cdev_attach_ioas_hwpt(int iommufd, const char *name, int devfd, int id) " [iommufd=%d] Successfully attached device %s (%d) to id=%d"
--iommufd_cdev_detach_ioas_hwpt(int iommufd, const char *name) " [iommufd=%d] Successfully detached %s"
-+iommufd_cdev_pasid_attach_ioas_hwpt(int iommufd, const char *name, int devfd, uint32_t pasid, int id) " [iommufd=%d] Successfully attached device %s (%d) pasid %u to id=%d"
-+iommufd_cdev_pasid_detach_ioas_hwpt(int iommufd, const char *name, uint32_t pasid) " [iommufd=%d] Successfully detached %s pasid %u"
- iommufd_cdev_fail_attach_existing_container(const char *msg) " %s"
- iommufd_cdev_alloc_ioas(int iommufd, int ioas_id) " [iommufd=%d] new IOMMUFD container with ioasid=%d"
- iommufd_cdev_device_info(char *name, int devfd, int num_irqs, int num_regions, int flags) " %s (%d) num_irqs=%d num_regions=%d flags=%d"
+So instead of using VTDAddressSpace to cache pasid entry for each pasid
+of a passthrough device, we define a light weight structure
+VTDAccelPASIDCacheEntry with only necessary elements for each pasid. We
+will use this struct as a parameter to conduct binding/unbinding to
+nested hwpt, to record the current binded nested hwpt and even future
+PRQ support. It's also designed to support IOMMU_NO_PASID.
+
+The potential full definition of VTDAccelPASIDCacheEntry may like:
+
+  typedef struct VTDAccelPASIDCacheEntry {
+      VTDHostIOMMUDevice *vtd_hiod;
+      VTDPASIDEntry pasid_entry;
+      uint32_t pasid;
+      uint32_t fs_hwpt_id;
+      uint32_t fault_id;
+      int fault_fd;
+      QLIST_HEAD(, VTDPRQEntry) vtd_prq_list;
+      IOMMUPRINotifier pri_notifier_entry;
+      IOMMUPRINotifier *pri_notifier;
+      QLIST_ENTRY(VTDAccelPASIDCacheEntry) next;
+  } VTDAccelPASIDCacheEntry;
+
+Based on newest master branch.
+GIT branch: https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_pasid.v6
+
+PATCH01-10: Some preparing work
+PATCH11-15: Handle PASID entry addition/removal and bind/unbind
+PATCH16-17: Add PASID related check and enable PASID for passthrough device
+
+Tests:
+Tested with DSA device which driver uses 2 PASIDs by default.
+
+Thanks
+Zhenzhong
+
+Changelog:
+v6:
+- add comments that IOMMU_NO_PASID should be fixed to 0 (Clement)
+- add a refactor patch to update vtd_dev_get_pe_from_pasid() with passing in BDF (Liuyi)
+- add a fix patch to pass pasid != IOMMU_NO_PASID to vtd_report_fault() (Liuyi)
+- delete vtd_hiod_get_pe_from_pasid() and use vtd_dev_get_pe_from_pasid() instead (Liuyi)
+- polish commit log and comments in code (Liuyi)
+
+v5:
+- use %u for pasid print (Shammer)
+- s/attachment/detachment in API doc (Shammer)
+- save iommu pasid in vtd_as to avoid the check of PCI pasid whenever possible (Clement)
+- commit log minor tweak on patch3 and patch7 (Liuyi)
+- use name 'pasid-bits' for pasid property (Liuyi)
+
+v4:
+- improve documents of VIOMMU_FLAGs (Cédric)
+- add a cleanup patch to simplify the check between PCI pasid and VTD pasid (Clement)
+- rebase to newest master branch
+
+v3:
+- fix @Pasid parameter's comment (Liuyi)
+- introduce a wrapper vtd_accel_delete_pc() (Liuyi)
+- drop patch12 in v2 to avoid a race condition (Clement)
+- s/PASID_0/IOMMU_NO_PASID s/gloal/global s/as_it/hiod_it (Liuyi)
+- make trace_vtd_device_at/detach_hwpt use IOMMU_NO_PASID (Liuyi)
+- change _accel subfix style naming to vtd_accel_ prefix style (Liuyi)
+- drop unnecessary parameter vtd_hiod* from vtd_destroy_old_fs_hwpt() (Liuyi)
+- introduce a new flag VIOMMU_FLAG_WANT_PASID_ATTACH for pasid attach (Nicolin)
+
+v2:
+- move the check "s->pasid > PCI_EXT_CAP_PASID_MAX_WIDTH" to patch5 (Clement)
+- move #include "hw/core/iommu.h" before #include "hw/core/qdev.h" (Liuyi)
+- polish the comment about @Pasid parameter (Liuyi)
+- s/pe/pasid_entry, s/as_it/hiod_it, s/vtd_find_add_pc/vtd_accel_fill_pc (Liuyi)
+- s/VTDACCELPASIDCacheEntry/VTDAccelPASIDCacheEntry (Liuyi)
+- add explanation in code about PASID removal before addition (Liuyi)
+- polish the comment about scope of VTDAccelPASIDCacheEntry vs VTDPASIDCacheEntry (Liuyi)
+- add an optimization to bypass PASID entry addition for PASID selective pv_inv_dsc (Liuyi)
+
+v1:
+- use naming pattern "XXX_SET_THENAME" same as smmu (Clement)
+- fix s->pasid check (Clement)
+
+RFCv2:
+- extend attach/detach_hwpt() instead of introducing new callbacks (Shammer)
+- Define IOMMU_NO_PASID for device attachment without pasid (Nicolin)
+- update vtd_destroy_old_fs_hwpt()'s parameter for naming consistency (Clement)
+- check pasid bits size to be no more than 20 bits (Clement)
+- initialize local variable max_pasid_log2 to 0 (Cédric)
+
+
+Zhenzhong Duan (17):
+  vfio/iommufd: Extend attach/detach_hwpt callback implementations with
+    pasid
+  iommufd: Extend attach/detach_hwpt callbacks to support pasid
+  vfio/iommufd: Create nesting parent hwpt with IOMMU_HWPT_ALLOC_PASID
+    flag
+  intel_iommu: Create the nested hwpt with IOMMU_HWPT_ALLOC_PASID flag
+  intel_iommu: Rename pasid property to "pasid-bits" and define it as
+    type uint8
+  intel_iommu: make vtd_dev_get_pe_from_pasid() more generic
+  intel_iommu: Export some functions
+  intel_iommu: Fix PASID validity check in fault reporting
+  intel_iommu: Use IOMMU_NO_PASID and delete PASID_0
+  intel_iommu: Refactor PASID processing to use IOMMU_NO_PASID
+    internally
+  intel_iommu_accel: Handle PASID entry addition for pc_inv_dsc request
+  intel_iommu_accel: Handle PASID entry removal for pc_inv_dsc request
+  intel_iommu_accel: Bypass PASID entry addition for just deleted entry
+  intel_iommu_accel: Handle PASID entry removal for system reset
+  intel_iommu_accel: Switch to VTDAccelPASIDCacheEntry for PASID
+    bind/unbind and PIOTLB invalidation
+  intel_iommu_accel: Add pasid bits size check
+  intel_iommu: Expose flag VIOMMU_FLAG_PASID_SUPPORTED and
+    VIOMMU_FLAG_WANT_PASID_ATTACH
+
+ hw/i386/intel_iommu_accel.h    |  20 +-
+ hw/i386/intel_iommu_internal.h |  44 +++-
+ include/hw/core/iommu.h        |  14 ++
+ include/hw/i386/intel_iommu.h  |   4 +-
+ include/hw/vfio/vfio-device.h  |   1 +
+ include/system/iommufd.h       |  18 +-
+ include/system/memory.h        |   2 +-
+ backends/iommufd.c             |   9 +-
+ hw/arm/smmuv3-accel.c          |  12 +-
+ hw/i386/intel_iommu.c          | 264 ++++++++++------------
+ hw/i386/intel_iommu_accel.c    | 395 +++++++++++++++++++++++++++------
+ hw/vfio/device.c               |  11 +
+ hw/vfio/iommufd.c              |  56 +++--
+ hw/vfio/trace-events           |   4 +-
+ 14 files changed, 594 insertions(+), 260 deletions(-)
+
 -- 
 2.47.3
 
