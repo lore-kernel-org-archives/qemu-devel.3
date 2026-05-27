@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51B48CD5BD5
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:32:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8316ACD6E44
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:32:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSBYD-0003Cr-Im; Wed, 27 May 2026 06:31:49 -0400
+	id 1wSBYA-000361-Ms; Wed, 27 May 2026 06:31:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBYA-00038j-F0
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:31:46 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBXr-0002fT-8i
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:31:30 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBY6-0000nx-WD
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:31:44 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-49068493267so22161205e9.1
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:31:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBXo-0000hC-3A
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:31:25 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4905e190c71so37323985e9.3
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:31:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779877901; x=1780482701; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779877881; x=1780482681; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=cCU7iyJB4xSEL6mENr2z5sz2xBo7bB8P5f9pioDXOHY=;
- b=A6tewBu16YO2rr9EYgN6rlVSiPk/YQ1/tZvYbBELLGrDqb6anA1Jfikl9rqvx9ncXE
- 7Z8FJpoFN70BofLQaLIZlqBewOlsR4JTWU7cHFNirK7UOzvG7Ik3NlFKn5D+V7z+lQp2
- VxVlhAm66uE2s+wniW+o7/8C0xzNx8BKqSROyO+quoJimWC3Krx7Tf1XfwmKF/o7ti2I
- awnWHbobKty/NIsM3tBM1Bv3HBuJlIqxkHeVlhp+yEvXmZje6Idi1k+obx6l7y3IFx88
- mYbqeLREbyGqZLCOGvVhDUFGobDbjF0HtoqlBPzdO7eLbL8L3PIhFLH0vfOijJodUr3y
- ZUkA==
+ :reply-to; bh=Fyhzru2QJzGx3OiH4Fu2CWJeT2XrRyL0uXKObwjgup8=;
+ b=MztGSCe9HHs0bfkdrIWaJGvnKHXDIbea9qZwjCVmASyzC0XIB+rxlRqxlB1EELrg5j
+ RdUcJLLaO5/R8XiM+Wnw6juhkgp4JX2SAYPGsLWwcui7w60pGBZx8nsP7VKGic0iuA0U
+ 4ZhkNApyHbGi65YkgXRqEpvInaddv5zCjn4am2upGW7D6V/jSWC5wvwYghtwhiY7euMp
+ epFF6goip3P8tjVn4BxWNm2aISRmwle6UX20/qXC20VVbJRHFH56p+W9f7TDhmjsT3WK
+ 4kNrAqESyKufuo/U/uIejcFF1mFVNTehBOADTRhGbWz0hO7uDusQbTC0L5sroLApOxFT
+ QqGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779877901; x=1780482701;
+ d=1e100.net; s=20251104; t=1779877881; x=1780482681;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=cCU7iyJB4xSEL6mENr2z5sz2xBo7bB8P5f9pioDXOHY=;
- b=qDoZItK8RzVu+FgpoQpiCeLn143JiZeJ0miPREdQHY7CXG1oorEHLrb8Mo1/D7esfp
- +xhqzV6kFy6q+vW68MNO3PPjE54YzqdkS0VY0R3WbGjUGkprxz1FgKmg1qOCy3tXZA8X
- kF4gno9zJx7B/fPjocfGeynlngDs6prB/x1VMY9YXO0pkWCcqMSRmuA2md8KCUqzIw+q
- javcSRlEsclIf1nTek6kPk8jKMndeCmR1+BDq9SDXtlya69KBWNPdFcpvJwzCSURU5YO
- 6prDcukMq3nCyCmu9cRlBZGkQ5pThiWhR+P1E5QPtaqwvJyJTt/aoPNQb18zwi9gybqJ
- sWRQ==
-X-Gm-Message-State: AOJu0YyMN12DTH8wJVTJGtS2UNPyLfg67T9cbYXAPM0iTtPaFzoPXAY0
- CUkJuFm6YHbGKjr/GPuMuByYlAbemHRhq1zv0+KG1iGtmr1wFUlEK24SsQJbvUqafRj/ZY7Yl7/
- +biB9/JbU9Q==
-X-Gm-Gg: Acq92OFx9bb8bRKpHrQHBwYWHJMXkYBfGJprkQDa5PSlj0k2xcIEamrtoRY5oC+ffAu
- fbNXilYKUS6C6DZLLhnhuWZz7k6XjbANuqMLiRfgHpTb9NkTJrCarfd9W7hhGtgKN5nxT4kxeSn
- +RqGSrfwdKZLuohe7gR8NXH99tCQ9HE5PWAMefPB8ha1T00zPyo5zRTpzJaEPEkoj0L9lx+wj1U
- IawtIK0xHCsNwSO4CN3O9sZ+IBcn0n0PMQnewocB0BdvM4P4TM4lc1GrwWYnUDJH+y2eWRNudTu
- bhFM4oPfiY7C/FWrmXNr9naM2Q6ibGd2jp9csN7Sa0Q9bz614vRwDkDcG5G7pcvEp6oiBZHf+Bl
- o8enDIMF5qnOhxpsx7WRUOFLdYZiteTJt7S5GROLsZYxYtm3aMCltTYTszx2td5DPiKYw/a1tGq
- gWkYr435P1jNFgMopA690RSdfpsdN2uLTLrMe3iqL8PMEZnTCPJIPX3/A=
-X-Received: by 2002:a05:600c:8681:b0:490:b07:5f27 with SMTP id
- 5b1f17b1804b1-490428cc2d7mr265048835e9.24.1779877900961; 
- Wed, 27 May 2026 03:31:40 -0700 (PDT)
+ bh=Fyhzru2QJzGx3OiH4Fu2CWJeT2XrRyL0uXKObwjgup8=;
+ b=GMWxqj2X7+eh/5EvrI250tLPUYMq6iWVm0vLbJWjADX/ovbQWBLx0UaNsTJJTAxTd1
+ zqRg82GXHHv0VTohbIlaVqXSdR5tAA5L1M1LIKVbMIaECnZWv6ENjnRh4iwJmAnQjeSH
+ /RtjWVDxKol4MutMhidtqZbAAsyZwkaKd3Nq8NV/cjHkkJXcIS9yMqVNQsPHo7jqSRA5
+ fx0hQmY77uxWTCw9r4e1tLEwZGSA+i4SGJ6nXlkA5JbKjpPL1oLqs0S7hrdStwmtj2qG
+ KiB5knC+ZObKmxprTtt/BPhfjxFOWGKY/len5xLXL4iUQhFJT2dNm2pr9MQOCyRTc0Cz
+ ItgQ==
+X-Gm-Message-State: AOJu0Yz/QgrevSdpiE+xNFhb9GpnypshlCzEl/er9pNqVFZSurubQseX
+ H8cHFM+9mI+Y/lTRtuF3zqLDgcZvMeKpRFY2GcKUHaJWnYDYGlt1zBIB7yeYCC+1dRnFVnJgQIk
+ 4SLCXB6wJ3w==
+X-Gm-Gg: Acq92OHA2G9CR68r0x1RDh+BeKQdA26uB3UD7N+UXQfTtQeZnIfAcDyf+bUktl2pQ+e
+ nYKKXyiwdD2Y7CrDAeG8+olktSCamK8ahfc/DrP8EysfbddptafpPIYwsE5gDLpjMQWouQZwlsG
+ iAFzrGv+GzFyu319GOatc47ZTCgA9xpBVEx/mPZsMJeHCIRb+LV/oM8098NDO4kXv7AeQb3Y4ve
+ c5FK7qr9C9lOH6yqvgV/j4Xzuc43vgtikECMH+8eyvrNmF3ejQ0TlPnCp5mHG8EDEVqJZVtuo+8
+ IVWVFjKgdMb6SbVqJN2VlSAxKONaNiSXPppGd2/JvgFKg0Dwrre00rwf/ZCBtBI39TmgatjYhUF
+ oqSjWmncaoXwhYKmG9sPhe9ANrD+8XGwWEbx8PvB2h1x3++tVpboxNxwDzguHgjd45jMmKwDj9Y
+ hRYYM/iji4roBbnnSvZsf9b2hFxtWmbBS7j5I9kyOg79wsAVxEeSDoWlGLvATOxpoYeA==
+X-Received: by 2002:a05:600c:46cb:b0:48d:366:b962 with SMTP id
+ 5b1f17b1804b1-4904248776fmr371692425e9.6.1779877880737; 
+ Wed, 27 May 2026 03:31:20 -0700 (PDT)
 Received: from m17.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45edb5a2a73sm5045366f8f.22.2026.05.27.03.31.39
+ ffacd0b85a97d-45edb5b314dsm4522664f8f.30.2026.05.27.03.31.19
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 27 May 2026 03:31:40 -0700 (PDT)
+ Wed, 27 May 2026 03:31:19 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/32] target/riscv: Use float_raise
-Date: Wed, 27 May 2026 12:30:13 +0200
-Message-ID: <20260527103037.4461-10-philmd@linaro.org>
+Subject: [PULL 06/32] configs/target: Implement per-binary TargetInfo
+ structure for riscv
+Date: Wed, 27 May 2026 12:30:10 +0200
+Message-ID: <20260527103037.4461-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260527103037.4461-1-philmd@linaro.org>
 References: <20260527103037.4461-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,170 +99,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anton Blanchard <antonb@tenstorrent.com>
+From: Anton Johansson <anjo@rev.ng>
 
-Use float_raise instead of open coding it.
+Defines TargetInfo for 32- and 64-bit riscv binaries.
 
-Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Max Chou <max.chou@sifive.com>
-Message-ID: <20260521110824.1091323-1-antonb@tenstorrent.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-Id: <20260520-hw-riscv-cpu-int-v3-6-d1123ea63d9c@rev.ng>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/riscv/vector_helper.c | 35 +++++++++++++++++------------------
- 1 file changed, 17 insertions(+), 18 deletions(-)
+ configs/targets/riscv32-softmmu.c | 26 ++++++++++++++++++++++++++
+ configs/targets/riscv64-softmmu.c | 26 ++++++++++++++++++++++++++
+ configs/targets/meson.build       |  1 +
+ 3 files changed, 53 insertions(+)
+ create mode 100644 configs/targets/riscv32-softmmu.c
+ create mode 100644 configs/targets/riscv64-softmmu.c
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 12788b4b74e..954a85c03a1 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -4084,7 +4084,7 @@ static bfloat16 frsqrt7_h_bf16(bfloat16 f, float_status *s)
-         (bfloat16_is_infinity(f) && sign) ||
-         (bfloat16_is_normal(f) && sign) ||
-         (bfloat16_is_zero_or_denormal(f) && !bfloat16_is_zero(f) && sign)) {
--        s->float_exception_flags |= float_flag_invalid;
-+        float_raise(float_flag_invalid, s);
-         return bfloat16_default_nan(s);
-     }
- 
-@@ -4095,7 +4095,7 @@ static bfloat16 frsqrt7_h_bf16(bfloat16 f, float_status *s)
- 
-     /* frsqrt7(+-0) = +-inf */
-     if (bfloat16_is_zero(f)) {
--        s->float_exception_flags |= float_flag_divbyzero;
-+        float_raise(float_flag_divbyzero, s);
-         return bfloat16_set_sign(bfloat16_infinity, sign);
-     }
- 
-@@ -4124,7 +4124,7 @@ static float16 frsqrt7_h(float16 f, float_status *s)
-         (float16_is_infinity(f) && sign) ||
-         (float16_is_normal(f) && sign) ||
-         (float16_is_zero_or_denormal(f) && !float16_is_zero(f) && sign)) {
--        s->float_exception_flags |= float_flag_invalid;
-+        float_raise(float_flag_invalid, s);
-         return float16_default_nan(s);
-     }
- 
-@@ -4135,7 +4135,7 @@ static float16 frsqrt7_h(float16 f, float_status *s)
- 
-     /* frsqrt7(+-0) = +-inf */
-     if (float16_is_zero(f)) {
--        s->float_exception_flags |= float_flag_divbyzero;
-+        float_raise(float_flag_divbyzero, s);
-         return float16_set_sign(float16_infinity, sign);
-     }
- 
-@@ -4164,7 +4164,7 @@ static float32 frsqrt7_s(float32 f, float_status *s)
-         (float32_is_infinity(f) && sign) ||
-         (float32_is_normal(f) && sign) ||
-         (float32_is_zero_or_denormal(f) && !float32_is_zero(f) && sign)) {
--        s->float_exception_flags |= float_flag_invalid;
-+        float_raise(float_flag_invalid, s);
-         return float32_default_nan(s);
-     }
- 
-@@ -4175,7 +4175,7 @@ static float32 frsqrt7_s(float32 f, float_status *s)
- 
-     /* frsqrt7(+-0) = +-inf */
-     if (float32_is_zero(f)) {
--        s->float_exception_flags |= float_flag_divbyzero;
-+        float_raise(float_flag_divbyzero, s);
-         return float32_set_sign(float32_infinity, sign);
-     }
- 
-@@ -4204,7 +4204,7 @@ static float64 frsqrt7_d(float64 f, float_status *s)
-         (float64_is_infinity(f) && sign) ||
-         (float64_is_normal(f) && sign) ||
-         (float64_is_zero_or_denormal(f) && !float64_is_zero(f) && sign)) {
--        s->float_exception_flags |= float_flag_invalid;
-+        float_raise(float_flag_invalid, s);
-         return float64_default_nan(s);
-     }
- 
-@@ -4215,7 +4215,7 @@ static float64 frsqrt7_d(float64 f, float_status *s)
- 
-     /* frsqrt7(+-0) = +-inf */
-     if (float64_is_zero(f)) {
--        s->float_exception_flags |= float_flag_divbyzero;
-+        float_raise(float_flag_divbyzero, s);
-         return float64_set_sign(float64_infinity, sign);
-     }
- 
-@@ -4285,8 +4285,7 @@ static uint64_t frec7(uint64_t f, int exp_size, int frac_size,
-              * Overflow to inf or max value of same sign,
-              * depending on sign and rounding mode.
-              */
--            s->float_exception_flags |= (float_flag_inexact |
--                                         float_flag_overflow);
-+            float_raise(float_flag_inexact | float_flag_overflow, s);
- 
-             if ((get_float_rounding_mode(s) == float_round_to_zero) ||
-                 ((get_float_rounding_mode(s) == float_round_down) && !sign) ||
-@@ -4338,13 +4337,13 @@ static bfloat16 frec7_h_bf16(bfloat16 f, float_status *s)
- 
-     /* frec7(+-0) = +-inf */
-     if (bfloat16_is_zero(f)) {
--        s->float_exception_flags |= float_flag_divbyzero;
-+        float_raise(float_flag_divbyzero, s);
-         return bfloat16_set_sign(bfloat16_infinity, sign);
-     }
- 
-     /* frec7(sNaN) = canonical NaN */
-     if (bfloat16_is_signaling_nan(f, s)) {
--        s->float_exception_flags |= float_flag_invalid;
-+        float_raise(float_flag_invalid, s);
-         return bfloat16_default_nan(s);
-     }
- 
-@@ -4370,13 +4369,13 @@ static float16 frec7_h(float16 f, float_status *s)
- 
-     /* frec7(+-0) = +-inf */
-     if (float16_is_zero(f)) {
--        s->float_exception_flags |= float_flag_divbyzero;
-+        float_raise(float_flag_divbyzero, s);
-         return float16_set_sign(float16_infinity, sign);
-     }
- 
-     /* frec7(sNaN) = canonical NaN */
-     if (float16_is_signaling_nan(f, s)) {
--        s->float_exception_flags |= float_flag_invalid;
-+        float_raise(float_flag_invalid, s);
-         return float16_default_nan(s);
-     }
- 
-@@ -4402,13 +4401,13 @@ static float32 frec7_s(float32 f, float_status *s)
- 
-     /* frec7(+-0) = +-inf */
-     if (float32_is_zero(f)) {
--        s->float_exception_flags |= float_flag_divbyzero;
-+        float_raise(float_flag_divbyzero, s);
-         return float32_set_sign(float32_infinity, sign);
-     }
- 
-     /* frec7(sNaN) = canonical NaN */
-     if (float32_is_signaling_nan(f, s)) {
--        s->float_exception_flags |= float_flag_invalid;
-+        float_raise(float_flag_invalid, s);
-         return float32_default_nan(s);
-     }
- 
-@@ -4434,13 +4433,13 @@ static float64 frec7_d(float64 f, float_status *s)
- 
-     /* frec7(+-0) = +-inf */
-     if (float64_is_zero(f)) {
--        s->float_exception_flags |= float_flag_divbyzero;
-+        float_raise(float_flag_divbyzero, s);
-         return float64_set_sign(float64_infinity, sign);
-     }
- 
-     /* frec7(sNaN) = canonical NaN */
-     if (float64_is_signaling_nan(f, s)) {
--        s->float_exception_flags |= float_flag_invalid;
-+        float_raise(float_flag_invalid, s);
-         return float64_default_nan(s);
-     }
- 
+diff --git a/configs/targets/riscv32-softmmu.c b/configs/targets/riscv32-softmmu.c
+new file mode 100644
+index 00000000000..752c813077e
+--- /dev/null
++++ b/configs/targets/riscv32-softmmu.c
+@@ -0,0 +1,26 @@
++/*
++ * QEMU binary/target API (qemu-system-riscv32)
++ *
++ *  Copyright (c) rev.ng Labs Srl.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/target-info-impl.h"
++#include "qemu/target-info-init.h"
++#include "hw/riscv/machines-qom.h"
++#include "target/riscv/cpu-qom.h"
++#include "target/riscv/cpu-param.h"
++
++static const TargetInfo target_info_riscv32_system = {
++    .target_name = "riscv32",
++    .target_arch = SYS_EMU_TARGET_RISCV32,
++    .long_bits = 32,
++    .cpu_type = TYPE_RISCV_CPU,
++    .machine_typename = TYPE_TARGET_RISCV32_MACHINE,
++    .endianness = ENDIAN_MODE_LITTLE,
++    .page_bits_init = TARGET_PAGE_BITS,
++};
++
++target_info_init(target_info_riscv32_system)
+diff --git a/configs/targets/riscv64-softmmu.c b/configs/targets/riscv64-softmmu.c
+new file mode 100644
+index 00000000000..5150f0fe9d9
+--- /dev/null
++++ b/configs/targets/riscv64-softmmu.c
+@@ -0,0 +1,26 @@
++/*
++ * QEMU binary/target API (qemu-system-riscv64)
++ *
++ *  Copyright (c) rev.ng Labs Srl.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/target-info-impl.h"
++#include "qemu/target-info-init.h"
++#include "hw/riscv/machines-qom.h"
++#include "target/riscv/cpu-qom.h"
++#include "target/riscv/cpu-param.h"
++
++static const TargetInfo target_info_riscv64_system = {
++    .target_name = "riscv64",
++    .target_arch = SYS_EMU_TARGET_RISCV64,
++    .long_bits = 64,
++    .cpu_type = TYPE_RISCV_CPU,
++    .machine_typename = TYPE_TARGET_RISCV64_MACHINE,
++    .endianness = ENDIAN_MODE_LITTLE,
++    .page_bits_init = TARGET_PAGE_BITS,
++};
++
++target_info_init(target_info_riscv64_system)
+diff --git a/configs/targets/meson.build b/configs/targets/meson.build
+index cca2514eb51..2ab4d27eaf5 100644
+--- a/configs/targets/meson.build
++++ b/configs/targets/meson.build
+@@ -1,5 +1,6 @@
+ foreach target : [
+       'arm-softmmu', 'aarch64-softmmu',
++      'riscv32-softmmu', 'riscv64-softmmu'
+   ]
+   config_target_info += {target : files(target + '.c')}
+ endforeach
 -- 
 2.53.0
 
