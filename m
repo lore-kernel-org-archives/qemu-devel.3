@@ -4,78 +4,191 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FA0FCD6E44
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 15:45:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71826CD5BD0
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 15:45:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSGRd-0003Dk-7b; Wed, 27 May 2026 11:45:21 -0400
+	id 1wSGRb-0003Ck-Qg; Wed, 27 May 2026 11:45:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>)
- id 1wSGRZ-0003CU-HS; Wed, 27 May 2026 11:45:18 -0400
-Received: from smtpx.feld.cvut.cz ([2001:718:2:1516::210:153]
- helo=smtpx.fel.cvut.cz)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_CHACHA20_POLY1305:256)
- (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>)
- id 1wSGRT-0005z5-Nk; Wed, 27 May 2026 11:45:15 -0400
-Received: from localhost (unknown [192.168.200.27])
- by smtpx.fel.cvut.cz (Postfix) with ESMTP id 84734F064;
- Wed, 27 May 2026 17:45:02 +0200 (CEST)
-X-Virus-Scanned: IMAP STYX AMAVIS
-Authentication-Results: cerokez-250.feld.cvut.cz (amavis);
- dkim=pass (2048-bit key) header.d=fel.cvut.cz
-Received: from smtpx.fel.cvut.cz ([192.168.200.2])
- by localhost (cerokez-250.feld.cvut.cz [192.168.200.27]) (amavis, port 10060)
- with ESMTP id 7QT77C1oMh4u; Wed, 27 May 2026 17:45:01 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fel.cvut.cz;
- s=felmail; t=1779896303;
- bh=fE19YoDJr0H3xkso9GICPamHx1IFHU/eRXXo7yQyeG8=;
- h=From:To:Subject:Date:Cc:References:In-Reply-To:From;
- b=DE0Q7D1HmyVVRjkTuHEHaBjnM3/9iQWP8/4xCywJYzTHI+tZuIE9UPRTI+thjl1eh
- s+Ah2HX0D4GseNIEnv7WAY4SM8Eqd24C9JXuDlk/We2CEgbk76zjOsDD9znUgZKo+x
- 91NBy4sg3g3mbACRLL+r4uHL0X42ZdnULgJ+Hd4Rdw6pfCBEgl516a0erZrwKJjv3d
- miDfOZRv/B/IHWj7xvgLZxAtzAiY5jHlhTd4O0JgBJJgltZ1hMWtz1eouVWtgMw4B1
- dJE8duKqMWRxUu3elyLVUiCQ9Jt/moRszvtTMDSiUz7LJ2RZQaxTUe8NE9Ahle3PnA
- PPh1c0exvklxw==
-Received: from [147.32.86.192] (unknown [147.32.86.192])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: pisa)
- by smtpx.fel.cvut.cz (Postfix) with ESMTPSA id A2A1BF387;
- Wed, 27 May 2026 17:38:22 +0200 (CEST)
-From: Pavel Pisa <pisa@fel.cvut.cz>
-To: "Marc Kleine-Budde" <mkl@pengutronix.de>
-Subject: Re: [PATCH v3 0/7] hw/arm/sabrelite: Add FlexCAN support
-Date: Wed, 27 May 2026 17:38:21 +0200
-User-Agent: KMail/1.9.10
-Cc: Bernhard Beschow <shentey@gmail.com>,
- =?utf-8?q?Maty=C3=A1=C5=A1_Bobek?= <matyas.bobek@gmail.com>,
- Matyas Bobek <bobekmat@fel.cvut.cz>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Oliver Hartkopp <socketcan@hartkopp.net>,
- Nikita Ostrenkov <n.ostrenkov@gmail.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, linux-can@vger.kernel.org,
- Sascha Hauer <s.hauer@pengutronix.de>,
- Andrey Volkov <andrey.volkov@munic.io>
-References: <cover.1777571962.git.matyas.bobek@gmail.com>
- <CAFEAcA95RcGhhN8ZqVeOgRyhRqSar23EnJhCjVgKBwoqXBJwjw@mail.gmail.com>
- <08A7BC6B-7019-45C4-B581-0A26AD3AA554@gmail.com>
-In-Reply-To: <08A7BC6B-7019-45C4-B581-0A26AD3AA554@gmail.com>
-X-KMail-QuotePrefix: > 
+ (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
+ id 1wSGRU-0003Bj-RC; Wed, 27 May 2026 11:45:13 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
+ id 1wSGRR-0005yj-VX; Wed, 27 May 2026 11:45:12 -0400
+Received: from pps.filterd (m0127841.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64RCs6mw2641613; Wed, 27 May 2026 08:44:45 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-id:content-transfer-encoding:content-type:date:from
+ :in-reply-to:message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=SQvRDzQENpCt+RMk9gm1C96RDQJIqhPxClqPKGCv2
+ O4=; b=zBRRe0SIlLDco12DWJw9R69s4h0sZbssTVcxIuOKUfHZokRpEDEjSgqSQ
+ E28Tzu0VJvV29zewjalWWRc9jwuKcdoCcA3a7Tp+bKnNwK5QzrLRBbzbbefyw/vu
+ vC8SaUHQTCi1/M+4jbaAZeqR9VcKlG2KROORw2Coq8A51MNV4unkXwIGOgiWfXpd
+ OMhJKHIq/5pM9IOq8dVjiIRyMGhKv4E2SuFpGUS7hhx5USq1ln3ZQZFlmNBh367l
+ SPKLAj8GM5zi5Txo1Hxu2HM4woD6oVKMI6e667ElRoPlE4danP7UMV2laamUQtsE
+ f1ag740A1BDMZ/9C6KMpUuO9GweJQ==
+Received: from bn8pr05cu002.outbound.protection.outlook.com
+ (mail-eastus2azon11021093.outbound.protection.outlook.com [52.101.57.93])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4edkqt25ky-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Wed, 27 May 2026 08:44:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=f+T5ZZN3e6oHRBibF6Fzii4Jfy7FHUVGYiynDt1mENfsMPLd4BQ/oR064NWqPzkHXJxGndPe6OTbt+x6y5zd/mD03YVi4o2R8C80YkMMn5TVn6Wz1XicpOHIEgzUgzws8W3gqObITaPbrdFhGFblze+gVvR4f6soYSLpkc457SnOQ103un6uV1g6Tc+0VfwTE9dLaOpykQ9ltELyr9wjwG7+Mng3LXDzqVEi8dC4x7U7xriW+jiYjCtnHeARiWshatJScL0f3vv3wMnq7O226n9baP8JkyskDsV7814DYZtD+2kx31KvCSR3RsbcTcxUWt2gC6601mJDFCaWizKncQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=SQvRDzQENpCt+RMk9gm1C96RDQJIqhPxClqPKGCv2O4=;
+ b=QVY/HjnRSk0BcVxCXokExl8Xb0sHstGyiJVeZgYOM8BIOG6lWM+Rg/X+hQIJVX9TKw+aNAi3bVLzePw0h6jkPw8m1MI3/aoRWuMj0fGvfoKkROUQpWv5ssgTegPOoae6Ex5MXofwbcRG8afI6tF4z4J+si31gc7/BLlNV0B7nutCA+FRXRETh+hToSX+OTHoHSsxyV4TgQ6an8VqiJHc0IJqwy6N50bNZ984bo+1V1o+zwiXZo1KEewwULdTWiMgqWJm1Yoch16uCRtvtzJZ733ysKSn1nbWcrZ8VUTvf++UKc9b9/d5XmBXDBXgnnpKIBpEu49RbqDKmBD0QLIxsg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SQvRDzQENpCt+RMk9gm1C96RDQJIqhPxClqPKGCv2O4=;
+ b=SnIuzk9obWd5kcsImHIjveTGpsJtpaXYgU3oQ6p9zSs1SFOg1vVtoSG8MMfK91+FRtjpXJwxlycWda/6JJE9TmP/O0w8GldUVGLB709nGklvC4pGB9zJ2TGbdNqANPa42qc6dfQqVZfDzvtsNmcM8y0ODjIzfxNp3hdycNj77KG03U8jwRLTFFLAmcO08ktOG+OqLYcoPtO0Xku36RRUqTMfqG79cMlKf3ot7B6KiLB+2DuHHHGujwDNZzVE02Sca7XnQ0SZGKEbZnViA+MHuARlS4q9I3gKCzswi9XNJoYvKWsav8yzllSqF49LEL41jnE+D8FGNKbi4piZSnv0aA==
+Received: from SA2PR02MB7564.namprd02.prod.outlook.com (2603:10b6:806:146::23)
+ by CHXPR02MB11332.namprd02.prod.outlook.com (2603:10b6:610:2f9::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.13; Wed, 27 May
+ 2026 15:44:43 +0000
+Received: from SA2PR02MB7564.namprd02.prod.outlook.com
+ ([fe80::1ea5:acb6:ebe1:e1c4]) by SA2PR02MB7564.namprd02.prod.outlook.com
+ ([fe80::1ea5:acb6:ebe1:e1c4%6]) with mapi id 15.21.0071.011; Wed, 27 May 2026
+ 15:44:43 +0000
+From: Khushit Shah <khushit.shah@nutanix.com>
+To: "eric.auger@redhat.com" <eric.auger@redhat.com>
+CC: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Shaju Abraham
+ <shaju.abraham@nutanix.com>, "yangjinqian1@huawei.com"
+ <yangjinqian1@huawei.com>, "cohuck@redhat.com" <cohuck@redhat.com>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "sebott@redhat.com" <sebott@redhat.com>, "skolothumtho@nvidia.com"
+ <skolothumtho@nvidia.com>, "philmd@linaro.org" <philmd@linaro.org>,
+ "maz@kernel.org" <maz@kernel.org>, "oliver.upton@linux.dev"
+ <oliver.upton@linux.dev>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "armbru@redhat.com" <armbru@redhat.com>, "berrange@redhat.com"
+ <berrange@redhat.com>, "abologna@redhat.com" <abologna@redhat.com>,
+ "jdenemar@redhat.com" <jdenemar@redhat.com>
+Subject: Re: [PATCH v5 13/18] target/arm/kvm: Introduce
+ kvm_arm_expose_idreg_properties
+Thread-Topic: [PATCH v5 13/18] target/arm/kvm: Introduce
+ kvm_arm_expose_idreg_properties
+Thread-Index: AQHc55O5Scpifk99ukS97TxWxklCprYiBjUAgAAGyYCAAANEAA==
+Date: Wed, 27 May 2026 15:44:43 +0000
+Message-ID: <F50EB764-5F22-42AD-89E2-677BF7DB453B@nutanix.com>
+References: <20260519132905.145643-1-eric.auger@redhat.com>
+ <20260519132905.145643-14-eric.auger@redhat.com>
+ <3344B74E-39B1-421D-8417-373A688DB372@nutanix.com>
+ <c4a38526-a803-4e69-b6ca-f6bf0583198a@redhat.com>
+In-Reply-To: <c4a38526-a803-4e69-b6ca-f6bf0583198a@redhat.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SA2PR02MB7564:EE_|CHXPR02MB11332:EE_
+x-ms-office365-filtering-correlation-id: 25270fdc-76ab-4f34-374f-08debc06df15
+x-proofpoint-crosstenant: true
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|7416014|376014|366016|1800799024|38070700021|4143699003|56012099006|22082099003|18002099003;
+x-microsoft-antispam-message-info: WO4LUyWvWGpFES01xW2PsBunbDghc6FWPSZyn2lm3vOO5KVju61pDkBlpgkS0f/JUDiWu/Mj+CUiJjzsliNFCBhBcsY1ez143fmRDC14YdvzCoU3ETzltRuGTfgCVHb3FAW9ICiT7GbrdJsaSysBdDF3ov9ke0Q0qF72d+T29Ss2R/NKVB8MF4VLHdq1OM6mnuH4zqXevLkrw4OFfczvC10+wFkrfz0AGvC7OT91147GR4Vsi1SsAWuNhbwwig8n/SU6T0UlQvs0PebauxN2b0X++h3Gznrr3+KOzI9Cxlu0/lOu0O+R1jHZ7FH62GJPC2eY/EXGgwk9QkiOIepo/Lwlqn91DVyTVNITdJw0XBTlrQ+XKxjyderqTJNhp2PU1H3j5X6vJ+tCejtgTqg2jcMQQ7DLmKbluZYJfh+edyQOTfg+gPC9OczZKfMUKnt0WTrHvAOHsluAJLb+vEJBVDSyeDP0pYFjNfd+AHmVSJT67i+B15RaqGy+lPtNrxgCwrKdtlLj1jgZwoQkb7PO/gpK59ch7YD/maQ3Oxtd0ACSBs4j0ESQE1K8wHoc8fXnVN3etzxCCKp973w5NWWUQcHHVo70Y57QsRBGH6gKfAIRO/nqTMP6Q0tTGfTTORVpU9eJxUemBvyE6sA+pWkfgI6ymtXe85bhQwO+xTa+AFkTSmioIAMbeFzrDdRH7u0vb8Bt4LGwYfwccrJCr48XLh1fz7PBilxkj/2mgs3T3PAB9SPGnBzGoIio7D4cI2zz
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SA2PR02MB7564.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(366016)(1800799024)(38070700021)(4143699003)(56012099006)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?QVIzQkh2bzFUNXJNaytYUGt6VWFHZTJ6NXlmaUFvV2pLdXNZQzUxZVMwUlBQ?=
+ =?utf-8?B?U1JIeDYvUlc3TFdGQ2MzNE14WHZ0cXVWazUvdjh2bjJYRTQrdlVaYXVTbUdL?=
+ =?utf-8?B?WUwvOFZSZmFvaVVLdE0ydlEwK1FqZXFzd09OWlppbVpRdmdBS0VrQnV1Rnpv?=
+ =?utf-8?B?S1h6aTBYekNPQlp2dWZKbXZNZDdwQTZydWJnOUFwc3hZL2xyaE9XZjA0M0Mx?=
+ =?utf-8?B?aHp1QWFmRGhxWXF4alJ3NVdGQS9xaVhqcEpOSnl2Z0NqaGVid0tVY0kyS01E?=
+ =?utf-8?B?VlJrTkozR3FvV3d5aTJHNnI5bE5lc0doeGI0UkVQVnNzR0hKZWt6N2l4UHdR?=
+ =?utf-8?B?UFE0R0hVc0g2cmxmVDdnY2xTR2VaNUZZR3Y3L3hLT1p3WkFabDBtL2FPWndQ?=
+ =?utf-8?B?b0RSVGM2VkV1Y3BiTHFVVnVsdnc1N2tTeEVodU5Fak43MFJXcmJQQzdtWXFJ?=
+ =?utf-8?B?RDNkNG9peE8yRGhaRnpvMWJFaXlqaFZ5QXNyOCtlYmxtQkdrMGpqcllpTkV0?=
+ =?utf-8?B?SGJhNDlqTXkzdXNmVjZRMGpUOFBFanQ4cVNCcUowWWJra2VKbExhSDd0RVhi?=
+ =?utf-8?B?V3NoTjEwd3hUQ3RlWVQ3dWxMTnFMcGt4aTk3V3FSb0pUK29kUmxYSHFCd0NS?=
+ =?utf-8?B?Q2hqZU0xK2tvc2pvSm83YXU1NzJUMWNRZTFDWFFGWUdsaTgzbm1oLzNaY3RF?=
+ =?utf-8?B?QTgzVWZFZUFuTXFZc2djcFZMZ3lRT3AyR0ZBUUdPOEp3SmcrS1FTZWJieS83?=
+ =?utf-8?B?R1BWSngvVUFESEo5TVZZOWZKaXY4QVFCOEU2MEswZXM2RmxDbko3MlQxRXA0?=
+ =?utf-8?B?UEhPRmNLWXVaNGwrQUl1UWRwZlBHQzRkL0lHMzhtSnBKU3JvcEFCN2orc3RS?=
+ =?utf-8?B?eVIrRmZIdEhiUGF5WkpyM29Vdm91aGEyQjR0eXE4SGNTYk9GSE5ZVExlaW1O?=
+ =?utf-8?B?ZHNlUU1yMXNnaUVNMVBORWc2UXdVem0wczYwRVd6WDZSYlpnVUYveHh3Nzhz?=
+ =?utf-8?B?SUdIVWF0QXRydHJycUdLcldxekY4cDdkSXhjSnpUZzBSbWVhWERtTDEraWoz?=
+ =?utf-8?B?V3FaZ1NzeTlOVDk5SG1OeUFVRGV0VTdnSkRCczFCaUdDWEswdEV6SWxIaGhS?=
+ =?utf-8?B?Smd3dmVmM0F3N3JGOTdnN1cvMEFVdmMwQ0NvQnVXWDVxcWNGZTBtQVFkV0ZB?=
+ =?utf-8?B?K2pJVHh5Q3l1YUlvR0lQYVVvNmxjQlkwMDZXM1dTZkljWjNYV09UWXJ0MjI1?=
+ =?utf-8?B?S24zOTFxLzhFSzJabk5EakppMnh4dmhkZ2NQZGhlYTk4Rld0RGh4REg5cnlB?=
+ =?utf-8?B?K3NrdUttZjFWYU5ZOUgzQyt3clozQTVraGhhRXB3MFd4bXBLUG5qMGY3dEFW?=
+ =?utf-8?B?YnZESFoyaVNvS3lKTERBSGVBNG1Hcm5BNVpoVHltUGtydG1qZTZ1L0FsVDhm?=
+ =?utf-8?B?YkYvNHRsamlIcy9EdVBGbStSaUxGRlhrb3pONUpJZGUzK09mR0FCclFCWDQx?=
+ =?utf-8?B?L2dVWGJXY1VRWUtsaTVVeGJvUzBnY3JmTjZFd3hELzFUTmVuR3ZoZHZMMTBI?=
+ =?utf-8?B?a3hDZEcyZ3BlNUZrNXRQUzJTd3RZemM4U2NtcEZyZzNJYW1nNGhuaHp6dmZI?=
+ =?utf-8?B?eXRuRXRpM1QyMDhmZXRKeWw1RENhN1piWnZmd1l5elZoQWIwUm5FeEJKTzZE?=
+ =?utf-8?B?VUc3MGM3VStLT1N3WDBpa3NpK0ZtQ0M0bU5WaWhLWmFYOVZOV3RhWkVLeGpX?=
+ =?utf-8?B?QVdlREd6NFdPQVlIaDNMdzFNNUxJbFpCYkxjN2xxRkY5ZUVrNnI0TGwvSytK?=
+ =?utf-8?B?a0dTbytKSGRwdHdWZXhLbE9EQXZzWGl6K1h6UXEySEhDalM5YytneE00blk4?=
+ =?utf-8?B?UmljbWJ0NmxjSlBzRzYzczdxbCtUc0pZNzhUejR1dDB5NXArUkZ2WVBzT2ZF?=
+ =?utf-8?B?U3hpTXJBcVExVUZ0c2dZRXZPeC9mZkdXRHpoNFdkT2xleWp3c0FySjRZdjNI?=
+ =?utf-8?B?SXR4dFRZZXFydktRWlpWV2duZW4yMHZrejc0TnU2bU14aDJVbGV3YlFERVVa?=
+ =?utf-8?B?cWsvc1FFN3NHU1RlZi9DYkh4YmFnV0hGdHp6aUVCVElwMjVqM093aDgyMXpU?=
+ =?utf-8?B?RXVaUmRLK3o0NENxZXpYU2VzelRSSG9OTklaQTVsL1pDNUYxTDFoMGdyWHF0?=
+ =?utf-8?B?T1ZUZzhVTmtWYWJNM210bzdRWXRQUzluYVdSeFJyMjNNR3dtMlhjOHI2QVFD?=
+ =?utf-8?B?R041aCtHcXk2ejByMEtkWGRqOEZCQ3pJM1NNc2JXaFhvS3FGVzkrcWtWN1Np?=
+ =?utf-8?B?dDAwNFZoNVIxUjBXMklaV3cwU09tdUJPNzJuSmFFVWU2dnpGQ0hBQ0RFTVJL?=
+ =?utf-8?Q?kup24dA75j7V5gFE=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <9097045F1FB07044A150670FB5B8DD59@namprd02.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-Message-Id: <202605271738.21722.pisa@fel.cvut.cz>
-Received-SPF: pass client-ip=2001:718:2:1516::210:153;
- envelope-from=pisa@fel.cvut.cz; helo=smtpx.fel.cvut.cz
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, NICE_REPLY_A=-2.97, SPF_HELO_NONE=0.001,
+X-Exchange-RoutingPolicyChecked: hcHTS7lsdDmMgv5SjfQw40UGBpuTVltFK1k+lQC0ql1/vrbGbBpQ8QqJkCwGwak1G62SUQXfvfDSU6cMyXx5Rx0KTF+0vFekqBZjgI9Sw0tRaxqwOCKpYVMJbb6zLuUVm3CVs4gWXvgGvk2sGzAFF2YmyGBA+SZbX93JQAwiNPXZz1Jidizmc2qcCQyUz13QkcPADYzDYWx6vNyDi+83uvVE4zYLgZVqPd4r3JE5Da5c2DTZqd6iJxB9G3Wyq8z/CzHaHy9WW/Yf2Y8RQXbUvdcw5JDcNDq0ubUE+8v28n2WXrnw+7gh9plXXbLThSkta5m6fPjkNfaj33ICpv9gDg==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SA2PR02MB7564.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 25270fdc-76ab-4f34-374f-08debc06df15
+X-MS-Exchange-CrossTenant-originalarrivaltime: 27 May 2026 15:44:43.1120 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 5DRymFNNxdxq3meRSdw8a2VIwVXblBw5SzCUV2lkeaexLmUz5MenE+22PdnstVPrQjTdONs0gfCf/b2lpB7VmHHn93oRnR1XXA6/3N0jAwI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CHXPR02MB11332
+X-Authority-Analysis: v=2.4 cv=Z8Tc2nRA c=1 sm=1 tr=0 ts=6a17116d cx=c_pps
+ a=sVyPeiiUi2aMWm4r2qpWVQ==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=NGcC8JguVDcA:10 a=0kUYKlekyDsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VofLwUrZ8Iiv6rRUPXIb:22 a=jxMXjlTPpCISP5mWtjnE:22 a=20KFwNOVAAAA:8
+ a=yt8oDgAaeGEy77Q33qIA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: RVc2VHLX8DwnzJbgU3GlGjJpPGF8Wl_2
+X-Proofpoint-ORIG-GUID: RVc2VHLX8DwnzJbgU3GlGjJpPGF8Wl_2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI3MDE1NiBTYWx0ZWRfX3iOyApZOz9U7
+ o9gXHFGoahw25ab2BzBc9W0ZpjAGf07nPDOaUMFED28BxCBxCEeTQ6yMMPVtrRM+ivq5ZX2km+g
+ /Vp8VB4izpAKT6FWnGuTSNhWFPhrYxn/m3e/V6nYqwudxffrUlVItD6h1fuT4vHMVikn4P+xISy
+ c33KNPOqDvAZHh0zsnRLdxCpTjY6cPRfKoeWhM7GviXhTmcQgxpN+8zgLdfowJT2md3q2uOh5EY
+ jLaDFxQyXhULzsNZU5R1qzuYZ+v23r+FpbsRx/I5CBnkwvwn8J08prKWEyvUp6ZUDsdVQzqEADe
+ zXtP7Ibxn+jFk7Cj5S+lWMPgDVFzSUEed5y3cp2MAnCnu8u3HgWUJwvrT+cS17QWioz9GpFRMoD
+ 5Ii95M0FXm0h5mjj6qqPNy6B2X4YJW3YzGIv0bhsi3ju+tlbwO3WLDMZsfB/vhYReWey6KezUh8
+ ZWHetq+tJ4mU7rbWG6A==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-05-27_02,2026-05-26_03,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=khushit.shah@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,374 +205,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Marc,
-
-please, provide your opinion, the license for small Linux kernel
-headers excepts seems to be the last and only blocker for mainlining.
-See the copied code below.
-
-On Wednesday 27 of May 2026 12:42:23 Bernhard Beschow wrote:
-> Am 8. Mai 2026 12:10:21 UTC schrieb Peter Maydell <peter.maydell@linaro.o=
-rg>:
-> >On Tue, 5 May 2026 at 21:21, Bernhard Beschow <shentey@gmail.com> wrote:
-> >> Am 5. Mai 2026 18:41:52 UTC schrieb Peter Maydell <peter.maydell@linar=
-o.org>:
-> >> >On Tue, 5 May 2026 at 19:03, Bernhard Beschow <shentey@gmail.com> wro=
-te:
-> >> >> I guess the only open issue is the licensing of struct FlexcanRegs
-> >> >> [1] which originates from Linux? How do we proceed here?
-> >> >>
-> >> >> Best regards,
-> >> >> Bernhard
-> >> >>
-> >> >> [1]
-> >> >> https://lore.kernel.org/qemu-devel/202603211316.18181.pisa@fel.cvut=
-=2Ec
-> >> >>z/
-> >> >
-> >> >Could you say what the problem is? In general there is no problem
-> >> >with taking header structs from the Linux kernel, as they are
-> >> >GPL-2-only and that is a QEMU-compatible license. The relevant
-> >> >source files or pieces of source files would need to be noted
-> >> >as 2-only rather than our default of 2-or-later, but that is
-> >> >doable -- we already do that for other things we have borrowed
-> >> >from the kernel.
-> >>
-> >> In
-> >> https://lore.kernel.org/qemu-devel/f3cb3166-c3f8-4ed8-8c9a-cbf48b071d1=
-e@
-> >>gmail.com/ I raised this review question: "The following structure looks
-> >> like being based on Linux. Does this affect the copyright of this file=
-?"
-> >> I was just asking for advice and I'm glad the solution is that easy.
-> >
-> >If the struct was copied from the kernel, then it's GPL-2.0-only,
-> >and we should just note the license and where we got the code from.
-> >
-> >If the struct is just very similar to the kernel's one because
-> >it's the obvious representation taken from the datasheet, then
-> >it's not related to the kernel code and we can treat it as
-> >GPL-2.0-or-later like the rest of the file.
-> >
-> >Since Maty=C3=A1=C5=A1 says in the cover letter here "the headers (struct
-> >FlexcanRegs and flexcan_regs.h macros) were copied from the Linux
-> >kernel" then we're in case 1.
-> >
-> >You can mark this up by having the file's SPDX tag be
-> >"SPDX-License-Identifier: (GPL-2.0-only AND GPL-2.0-or-later)"
-> >Then have a normal comment in the file next to the part that is
-> >2.0-only that says
-> >/*
-> > * [This struct / the macros X, Y, Z / whatever ] are borrowed
-> > * from the Linux kernel, and so (unlike the rest of this file)
-> > * they are GPL-2.0-only.
-> > */
->
-> Ping
->
-> Any news? With just the license issue remaining, it would be nice to get
-> FlexCAN support into the upcoming release.
-
-The problem is that QEMU maintainers decided to prefer GPL-2.0-or-later
-as the rule for new contributions and Matyas Bobek has reused
-next excepts from Linux kernel sources
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/dri=
-vers/net/can/flexcan/flexcan-core.c
-
-which have license
-
-// SPDX-License-Identifier: GPL-2.0
-//
-// flexcan.c - FLEXCAN CAN controller driver
-//
-// Copyright (c) 2005-2006 Varma Electronics Oy
-// Copyright (c) 2009 Sascha Hauer, Pengutronix
-// Copyright (c) 2010-2017 Pengutronix, Marc Kleine-Budde <kernel@pengutron=
-ix.de>
-// Copyright (c) 2014 David Jander, Protonic Holland
-//
-// Based on code originally by Andrey Volkov <avolkov@varma-el.com>
-
-
-I think, personally, that the code excepts are on the edge
-of the rules for copyright applications because the lines are direct
-transformation of the offests and bit-fields found in the original
-=46reeScale/NXP manuals so there should be no problem to use them for
-QEMU and revwite from scratch for copyright clarity with a little
-different naming rules would make only more mess for future updates
-to FexCAN 3 etc.
-
-Thanaks in advance
-
-Pavel
-
-hw/net/can/flexcan_regs.h
-
-+/**
-+ * These macros ware originally written for the Linux kernel
-+ * by Marc Kleine-Budde.
-+ */
-+
-+/* FLEXCAN module configuration register (CANMCR) bits */
-+#define FLEXCAN_MCR_MDIS                BIT(31)
-+#define FLEXCAN_MCR_FRZ                 BIT(30)
-+#define FLEXCAN_MCR_FEN                 BIT(29)
-+#define FLEXCAN_MCR_HALT                BIT(28)
-+#define FLEXCAN_MCR_NOT_RDY             BIT(27)
-+#define FLEXCAN_MCR_WAK_MSK             BIT(26)
-+#define FLEXCAN_MCR_SOFTRST             BIT(25)
-+#define FLEXCAN_MCR_FRZ_ACK             BIT(24)
-+#define FLEXCAN_MCR_SUPV                BIT(23)
-+#define FLEXCAN_MCR_SLF_WAK             BIT(22)
-+#define FLEXCAN_MCR_WRN_EN              BIT(21)
-+#define FLEXCAN_MCR_LPM_ACK             BIT(20)
-+#define FLEXCAN_MCR_WAK_SRC             BIT(19)
-+#define FLEXCAN_MCR_DOZE                BIT(18)
-+#define FLEXCAN_MCR_SRX_DIS             BIT(17)
-+#define FLEXCAN_MCR_IRMQ                BIT(16)
-+#define FLEXCAN_MCR_LPRIO_EN            BIT(13)
-+#define FLEXCAN_MCR_AEN                 BIT(12)
-+#define FLEXCAN_MCR_FDEN                BIT(11)
-+#define FLEXCAN_MCR_MAXMB(x)            ((x) & 0x7f)
-+#define FLEXCAN_MCR_IDAM_A              (0x0 << 8)
-+#define FLEXCAN_MCR_IDAM_B              (0x1 << 8)
-+#define FLEXCAN_MCR_IDAM_C              (0x2 << 8)
-+#define FLEXCAN_MCR_IDAM_D              (0x3 << 8)
-+#define FLEXCAN_MCR_IDAM_MASK           (0x3 << 8)
-+
-+/* FLEXCAN control register (CANCTRL) bits */
-+#define FLEXCAN_CTRL_PRESDIV(x)         (((x) & 0xFF) << 24)
-+#define FLEXCAN_CTRL_PRESDIV_MASK       FLEXCAN_CTRL_PRESDIV(UINT32_MAX)
-+#define FLEXCAN_CTRL_RJW(x)             (((x) & 0x03) << 22)
-+#define FLEXCAN_CTRL_RJW_MASK           FLEXCAN_CTRL_RJW(UINT32_MAX)
-+#define FLEXCAN_CTRL_PSEG1(x)           (((x) & 0x07) << 19)
-+#define FLEXCAN_CTRL_PSEG1_MASK         FLEXCAN_CTRL_PSEG1(UINT32_MAX)
-+#define FLEXCAN_CTRL_PSEG2(x)           (((x) & 0x07) << 16)
-+#define FLEXCAN_CTRL_PSEG2_MASK         FLEXCAN_CTRL_PSEG2(UINT32_MAX)
-+#define FLEXCAN_CTRL_BOFF_MSK           BIT(15)
-+#define FLEXCAN_CTRL_ERR_MSK            BIT(14)
-+#define FLEXCAN_CTRL_CLK_SRC            BIT(13)
-+#define FLEXCAN_CTRL_LPB                BIT(12)
-+#define FLEXCAN_CTRL_TWRN_MSK           BIT(11)
-+#define FLEXCAN_CTRL_RWRN_MSK           BIT(10)
-+#define FLEXCAN_CTRL_SMP                BIT(7)
-+#define FLEXCAN_CTRL_BOFF_REC           BIT(6)
-+#define FLEXCAN_CTRL_TSYN               BIT(5)
-+#define FLEXCAN_CTRL_LBUF               BIT(4)
-+#define FLEXCAN_CTRL_LOM                BIT(3)
-+#define FLEXCAN_CTRL_PROPSEG(x)         ((x) & 0x07)
-+#define FLEXCAN_CTRL_PROPSEG_MASK       FLEXCAN_CTRL_PROPSEG(UINT32_MAX)
-+#define FLEXCAN_CTRL_ERR_BUS            (FLEXCAN_CTRL_ERR_MSK)
-+#define FLEXCAN_CTRL_ERR_STATE \
-+        (FLEXCAN_CTRL_TWRN_MSK | FLEXCAN_CTRL_RWRN_MSK | \
-+         FLEXCAN_CTRL_BOFF_MSK)
-+#define FLEXCAN_CTRL_ERR_ALL \
-+        (FLEXCAN_CTRL_ERR_BUS | FLEXCAN_CTRL_ERR_STATE)
-+
-+/* FLEXCAN control register 2 (CTRL2) bits */
-+#define FLEXCAN_CTRL2_ECRWRE            BIT(29)
-+#define FLEXCAN_CTRL2_WRMFRZ            BIT(28)
-+#define FLEXCAN_CTRL2_RFFN(x)           (((x) & 0x0f) << 24)
-+#define FLEXCAN_CTRL2_TASD(x)           (((x) & 0x1f) << 19)
-+#define FLEXCAN_CTRL2_MRP               BIT(18)
-+#define FLEXCAN_CTRL2_RRS               BIT(17)
-+#define FLEXCAN_CTRL2_EACEN             BIT(16)
-+#define FLEXCAN_CTRL2_ISOCANFDEN        BIT(12)
-+
-+/* FLEXCAN memory error control register (MECR) bits */
-+#define FLEXCAN_MECR_ECRWRDIS           BIT(31)
-+#define FLEXCAN_MECR_HANCEI_MSK         BIT(19)
-+#define FLEXCAN_MECR_FANCEI_MSK         BIT(18)
-+#define FLEXCAN_MECR_CEI_MSK            BIT(16)
-+#define FLEXCAN_MECR_HAERRIE            BIT(15)
-+#define FLEXCAN_MECR_FAERRIE            BIT(14)
-+#define FLEXCAN_MECR_EXTERRIE           BIT(13)
-+#define FLEXCAN_MECR_RERRDIS            BIT(9)
-+#define FLEXCAN_MECR_ECCDIS             BIT(8)
-+#define FLEXCAN_MECR_NCEFAFRZ           BIT(7)
-+
-+/* FLEXCAN error and status register (ESR) bits */
-+#define FLEXCAN_ESR_SYNCH               BIT(18)
-+#define FLEXCAN_ESR_TWRN_INT            BIT(17)
-+#define FLEXCAN_ESR_RWRN_INT            BIT(16)
-+#define FLEXCAN_ESR_BIT1_ERR            BIT(15)
-+#define FLEXCAN_ESR_BIT0_ERR            BIT(14)
-+#define FLEXCAN_ESR_ACK_ERR             BIT(13)
-+#define FLEXCAN_ESR_CRC_ERR             BIT(12)
-+#define FLEXCAN_ESR_FRM_ERR             BIT(11)
-+#define FLEXCAN_ESR_STF_ERR             BIT(10)
-+#define FLEXCAN_ESR_TX_WRN              BIT(9)
-+#define FLEXCAN_ESR_RX_WRN              BIT(8)
-+#define FLEXCAN_ESR_IDLE                BIT(7)
-+#define FLEXCAN_ESR_BOFF_INT            BIT(2)
-+#define FLEXCAN_ESR_ERR_INT             BIT(1)
-+#define FLEXCAN_ESR_WAK_INT             BIT(0)
-+
-+/* FLEXCAN Bit Timing register (CBT) bits */
-+#define FLEXCAN_CBT_BTF                 BIT(31)
-+#define FLEXCAN_CBT_EPRESDIV_MASK       FLEXCAN_GENMASK(30, 21)
-+#define FLEXCAN_CBT_ERJW_MASK           FLEXCAN_GENMASK(20, 16)
-+#define FLEXCAN_CBT_EPROPSEG_MASK       FLEXCAN_GENMASK(15, 10)
-+#define FLEXCAN_CBT_EPSEG1_MASK         FLEXCAN_GENMASK(9, 5)
-+#define FLEXCAN_CBT_EPSEG2_MASK         FLEXCAN_GENMASK(4, 0)
-+
-+/* FLEXCAN FD control register (FDCTRL) bits */
-+#define FLEXCAN_FDCTRL_FDRATE           BIT(31)
-+#define FLEXCAN_FDCTRL_MBDSR1           FLEXCAN_GENMASK(20, 19)
-+#define FLEXCAN_FDCTRL_MBDSR0           FLEXCAN_GENMASK(17, 16)
-+#define FLEXCAN_FDCTRL_MBDSR_8          0x0
-+#define FLEXCAN_FDCTRL_MBDSR_12         0x1
-+#define FLEXCAN_FDCTRL_MBDSR_32         0x2
-+#define FLEXCAN_FDCTRL_MBDSR_64         0x3
-+#define FLEXCAN_FDCTRL_TDCEN            BIT(15)
-+#define FLEXCAN_FDCTRL_TDCFAIL          BIT(14)
-+#define FLEXCAN_FDCTRL_TDCOFF           FLEXCAN_GENMASK(12, 8)
-+#define FLEXCAN_FDCTRL_TDCVAL           FLEXCAN_GENMASK(5, 0)
-+
-+/* FLEXCAN FD Bit Timing register (FDCBT) bits */
-+#define FLEXCAN_FDCBT_FPRESDIV_MASK     FLEXCAN_GENMASK(29, 20)
-+#define FLEXCAN_FDCBT_FRJW_MASK         FLEXCAN_GENMASK(18, 16)
-+#define FLEXCAN_FDCBT_FPROPSEG_MASK     FLEXCAN_GENMASK(14, 10)
-+#define FLEXCAN_FDCBT_FPSEG1_MASK       FLEXCAN_GENMASK(7, 5)
-+#define FLEXCAN_FDCBT_FPSEG2_MASK       FLEXCAN_GENMASK(2, 0)
-+
-+/* FLEXCAN CRC Register (CRCR) bits */
-+#define FLEXCAN_CRCR_MBCRC_MASK         FLEXCAN_GENMASK(22, 16)
-+#define FLEXCAN_CRCR_MBCRC(x)           (((x) & FLEXCAN_CRCR_MBCRC_MASK) <=
-< 16)
-+#define FLEXCAN_CRCR_TXCRC_MASK         FLEXCAN_GENMASK(14, 0)
-+#define FLEXCAN_CRCR_TXCRC(x)           ((x) & FLEXCAN_CRCR_TXCRC_MASK)
-+
-+/* FLEXCAN interrupt flag register (IFLAG) bits */
-+/* Errata ERR005829 step7: Reserve first valid MB */
-+#define I_FIFO_OVERFLOW  7
-+#define I_FIFO_WARN      6
-+#define I_FIFO_AVAILABLE 5
-+
-+#define FLEXCAN_TX_MB_RESERVED_RX_FIFO  8
-+#define FLEXCAN_TX_MB_RESERVED_RX_MAILBOX       0
-+#define FLEXCAN_RX_MB_RX_MAILBOX_FIRST  (FLEXCAN_TX_MB_RESERVED_RX_MAILBOX=
- + 1)
-+#define FLEXCAN_IFLAG_MB(x)             BIT_ULL(x)
-+#define FLEXCAN_IFLAG_RX_FIFO_OVERFLOW  BIT(I_FIFO_OVERFLOW)
-+#define FLEXCAN_IFLAG_RX_FIFO_WARN      BIT(I_FIFO_WARN)
-+#define FLEXCAN_IFLAG_RX_FIFO_AVAILABLE BIT(I_FIFO_AVAILABLE)
-+
-+/* FLEXCAN message buffers */
-+#define FLEXCAN_MB_CODE_RX_BUSY_BIT     (0x1 << 24)
-+#define FLEXCAN_MB_CODE_RX_INACTIVE     (0x0 << 24)
-+#define FLEXCAN_MB_CODE_RX_EMPTY        (0x4 << 24)
-+#define FLEXCAN_MB_CODE_RX_FULL         (0x2 << 24)
-+#define FLEXCAN_MB_CODE_RX_OVERRUN      (0x6 << 24)
-+#define FLEXCAN_MB_CODE_RX_RANSWER      (0xa << 24)
-+
-+#define FLEXCAN_MB_CODE_TX_INACTIVE     (0x8 << 24)
-+#define FLEXCAN_MB_CODE_TX_ABORT        (0x9 << 24)
-+#define FLEXCAN_MB_CODE_TX_DATA         (0xc << 24)
-+#define FLEXCAN_MB_CODE_TX_TANSWER      (0xe << 24)
-+
-+#define FLEXCAN_MB_CODE(x)              (((x) & 0xF) << 24)
-+#define FLEXCAN_MB_CODE_MASK            FLEXCAN_MB_CODE(UINT32_MAX)
-+
-+#define FLEXCAN_MB_CNT_EDL              BIT(31)
-+#define FLEXCAN_MB_CNT_BRS              BIT(30)
-+#define FLEXCAN_MB_CNT_ESI              BIT(29)
-+#define FLEXCAN_MB_CNT_SRR              BIT(22)
-+#define FLEXCAN_MB_CNT_IDE              BIT(21)
-+#define FLEXCAN_MB_CNT_RTR              BIT(20)
-+#define FLEXCAN_MB_CNT_LENGTH(x)        (((x) & 0xF) << 16)
-+#define FLEXCAN_MB_CNT_TIMESTAMP(x)     ((x) & 0xFFFF)
-+#define FLEXCAN_MB_CNT_TIMESTAMP_MASK   FLEXCAN_MB_CNT_TIMESTAMP(UINT32_MA=
-X)
-
-+/* view of single message buffer registers */
-+typedef struct FlexcanRegsMessageBuffer {
-+    uint32_t can_ctrl;
-+    uint32_t can_id;
-+    uint32_t data[2];
-+} FlexcanRegsMessageBuffer;
-
-
-include/hw/net/flexcan.h
-
-+/**
-+ * Structure of the hardware registers
-+ *
-+ * originally created for the Linux kernel by Marc Kleine-Budde
-+ */
-+typedef struct FlexcanRegs {
-+    uint32_t mcr;                /* 0x00 */
-+    uint32_t ctrl;               /* 0x04 - not affected by soft reset */
-+    uint32_t timer;              /* 0x08 */
-+    uint32_t tcr;                /* 0x0C */
-+    uint32_t rxmgmask;           /* 0x10 - not affected by soft reset */
-+    uint32_t rx14mask;           /* 0x14 - not affected by soft reset */
-+    uint32_t rx15mask;           /* 0x18 - not affected by soft reset */
-+    uint32_t ecr;                /* 0x1C */
-+    uint32_t esr;                /* 0x20 */
-+    uint32_t imask2;             /* 0x24 */
-+    uint32_t imask1;             /* 0x28 */
-+    uint32_t iflag2;             /* 0x2C */
-+    uint32_t iflag1;             /* 0x30 */
-+    union {                      /* 0x34 */
-+        uint32_t gfwr_mx28;      /* MX28, MX53 */
-+        uint32_t ctrl2;          /* MX6, VF610 - not affected by soft rese=
-t */
-+    };
-+    uint32_t esr2;               /* 0x38 */
-+    uint32_t imeur;              /* 0x3C, unused */
-+    uint32_t lrfr;               /* 0x40, unused */
-+    uint32_t crcr;               /* 0x44 */
-+    uint32_t rxfgmask;           /* 0x48 */
-+    uint32_t rxfir;              /* 0x4C - not affected by soft reset */
-+    uint32_t cbt;                /* 0x50, unused - not affected by soft re=
-set */
-+    uint32_t _reserved2;         /* 0x54 */
-+    uint32_t dbg1;               /* 0x58, unused */
-+    uint32_t dbg2;               /* 0x5C, unused */
-+    uint32_t _reserved3[8];      /* 0x60 */
-+    union {                      /* 0x80 - not affected by soft reset */
-+        uint32_t mb[sizeof(FlexcanRegsMessageBuffer) * FLEXCAN_MAILBOX_COU=
-NT];
-+        FlexcanRegsMessageBuffer mbs[FLEXCAN_MAILBOX_COUNT];
-+        FlexcanRegsRXFifo fifo;
-+    };
-+    uint32_t _reserved4[256];    /* 0x480 */
-+    uint32_t rximr[64];          /* 0x880 - not affected by soft reset */
-+    uint32_t _reserved5[24];     /* 0x980 */
-+    uint32_t gfwr_mx6;           /* 0x9E0 - MX6 */
-+
-+    /* the rest is unused except for SMB */
-+    uint32_t _reserved6[39];     /* 0x9E4 */
-+    uint32_t _rxfir[6];          /* 0xA80 */
-+    uint32_t _reserved8[2];      /* 0xA98 */
-+    uint32_t _rxmgmask;          /* 0xAA0 */
-+    uint32_t _rxfgmask;          /* 0xAA4 */
-+    uint32_t _rx14mask;          /* 0xAA8 */
-+    uint32_t _rx15mask;          /* 0xAAC */
-+    uint32_t tx_smb[4];          /* 0xAB0 */
-+    union {                      /* 0xAC0, used for SMB emulation */
-+        uint32_t rx_smb0_raw[4];
-+        FlexcanRegsMessageBuffer rx_smb0;
-+    };
-+    uint32_t rx_smb1[4];         /* 0xAD0 */
-+    uint32_t mecr;               /* 0xAE0 */
-+    uint32_t erriar;             /* 0xAE4 */
-+    uint32_t erridpr;            /* 0xAE8 */
-+    uint32_t errippr;            /* 0xAEC */
-+    uint32_t rerrar;             /* 0xAF0 */
-+    uint32_t rerrdr;             /* 0xAF4 */
-+    uint32_t rerrsynr;           /* 0xAF8 */
-+    uint32_t errsr;              /* 0xAFC */
-+    uint32_t _reserved7[64];     /* 0xB00 */
-+    uint32_t fdctrl;             /* 0xC00 - not affected by soft reset */
-+    uint32_t fdcbt;              /* 0xC04 - not affected by soft reset */
-+    uint32_t fdcrc;              /* 0xC08 */
-+    uint32_t _reserved9[199];    /* 0xC0C */
-+    uint32_t tx_smb_fd[18];      /* 0xF28 */
-+    uint32_t rx_smb0_fd[18];     /* 0xF70 */
-+    uint32_t rx_smb1_fd[18];     /* 0xFB8 */
-+} FlexcanRegs;
-+
+DQoNCj4gT24gMjcgTWF5IDIwMjYsIGF0IDk6MDLigK9QTSwgRXJpYyBBdWdlciA8ZXJpYy5hdWdl
+ckByZWRoYXQuY29tPiB3cm90ZToNCj4gDQo+IEkgcmVwbGllZCBzZXBhcmF0ZWx5IHRvIHRoaXMg
+b24geW91ciBzZXJpZXMgdGhyZWFkLiBJIGFtIGluY2xpbmVkIHRvIGRvDQo+IHNvIGJ1dCB0aGlz
+IHJhaXNlcyBhbm90aGVyIHByb2JsZW1hdGljIGZvciB0aGUgbGF5ZXJlZCBwcm9kdWN0cyB0byBr
+bm93DQo+IHdoaWNoIG1pc21hdGNoIGNhbiBiZSBmaXhlZA0KPiANCj4gVGhhbmtzDQo+IA0KPiBF
+cmljDQo+IA0KDQoNCkhlbmNlIHRoZSBzYWZlLXZhbHVlIHRhZ3MgOiksIHNuZWFrIHBlZWsgdG8g
+djIgb2YgUkZDLCB3aXRoIHNhZmUtdmFsdWUgdGFncy4NCkZvciBlYWNoIHByb3Agd2UgY2FuIHNh
+eToNCiAgICAgICAgLi4uDQogICAgICAgIHsNCiAgICAgICAgICAgICJuYW1lIjogImZlYXRfUkRN
+IiwNCiAgICAgICAgICAgICJzdXBwb3J0ZWQtdmFsdWVzIjogWw0KICAgICAgICAgICAgICAgICJv
+ZmYiLA0KICAgICAgICAgICAgICAgICJvbiINCiAgICAgICAgICAgIF0sDQogICAgICAgICAgICAi
+dHlwZSI6ICJzdHJpbmciDQogICAgICAgIH0sDQogICAgICAgIHsNCiAgICAgICAgICAgICJuYW1l
+IjogImZlYXRfQVRPTUlDIiwNCiAgICAgICAgICAgICJzdXBwb3J0ZWQtdmFsdWVzIjogWw0KICAg
+ICAgICAgICAgICAgICJvZmYiLA0KICAgICAgICAgICAgICAgICJvbiINCiAgICAgICAgICAgIF0s
+DQogICAgICAgICAgICAidHlwZSI6ICJzdHJpbmciDQogICAgICAgIH0sDQogICAgICAgIHsNCiAg
+ICAgICAgICAgICJuYW1lIjogImZlYXRfQ1JDMzIiLA0KICAgICAgICAgICAgInN1cHBvcnRlZC12
+YWx1ZXMiOiBbDQogICAgICAgICAgICAgICAgIm9mZiIsDQogICAgICAgICAgICAgICAgIm9uIg0K
+ICAgICAgICAgICAgXSwNCiAgICAgICAgICAgICJ0eXBlIjogInN0cmluZyINCiAgICAgICAgfSwN
+CiAgICAgICAgew0KICAgICAgICAgICAgIm5hbWUiOiAiZmVhdF9TSEEyIiwNCiAgICAgICAgICAg
+ICJzdXBwb3J0ZWQtdmFsdWVzIjogWw0KICAgICAgICAgICAgICAgICJvZmYiLA0KICAgICAgICAg
+ICAgICAgICJzaGEyNTYiLA0KICAgICAgICAgICAgICAgICJzaGE1MTIiDQogICAgICAgICAgICBd
+LA0KICAgICAgICAgICAgInR5cGUiOiAic3RyaW5nIg0KICAgICAgICB9LA0KICAgICAgICB7DQog
+ICAgICAgICAgICAibmFtZSI6ICJmZWF0X1NIQTEiLA0KICAgICAgICAgICAgInN1cHBvcnRlZC12
+YWx1ZXMiOiBbDQogICAgICAgICAgICAgICAgIm9mZiIsDQogICAgICAgICAgICAgICAgIm9uIg0K
+ICAgICAgICAgICAgXSwNCiAgICAgICAgICAgICJ0eXBlIjogInN0cmluZyINCiAgICAgICAgfSwN
+CiAgICAgICAgew0KICAgICAgICAgICAgIm5hbWUiOiAiZmVhdF9BRVMiLA0KICAgICAgICAgICAg
+InN1cHBvcnRlZC12YWx1ZXMiOiBbDQogICAgICAgICAgICAgICAgIm9mZiIsDQogICAgICAgICAg
+ICAgICAgImFlcyIsDQogICAgICAgICAgICAgICAgInBtdWxsIg0KICAgICAgICAgICAgXSwNCiAg
+ICAgICAgICAgICJ0eXBlIjogInN0cmluZyINCiAgICAgICAgfQ0KICAgICAgICB7DQogICAgICAg
+ICAgICAibmFtZSI6ICJmZWF0X05WIiwNCiAgICAgICAgICAgICJzdXBwb3J0ZWQtdmFsdWVzIjog
+Ww0KICAgICAgICAgICAgICAgICIwLjAiDQogICAgICAgICAgICBdLA0KICAgICAgICAgICAgInR5
+cGUiOiAic3RyaW5nIg0KICAgICAgICB9LA0KICAgICAgICB7DQogICAgICAgICAgICAibmFtZSI6
+ICJmZWF0X1JBUyIsDQogICAgICAgICAgICAic3VwcG9ydGVkLXZhbHVlcyI6IFsNCiAgICAgICAg
+ICAgICAgICAiMC4wIiwNCiAgICAgICAgICAgICAgICAiMS4wIiwNCiAgICAgICAgICAgICAgICAi
+MS4xX2Jhc2UiDQogICAgICAgICAgICBdLA0KICAgICAgICAgICAgInR5cGUiOiAic3RyaW5nIg0K
+ICAgICAgICB9LA0KICAgICAgICB7DQogICAgICAgICAgICAibmFtZSI6ICJmZWF0X01QQU0iLA0K
+ICAgICAgICAgICAgInN1cHBvcnRlZC12YWx1ZXMiOiBbDQogICAgICAgICAgICAgICAgIjAuMCIN
+CiAgICAgICAgICAgIF0sDQogICAgICAgICAgICAidHlwZSI6ICJzdHJpbmciDQogICAgICAgIH0s
+DQogICAgICAgIHsNCiAgICAgICAgICAgICJuYW1lIjogImZlYXRfQ1NWMiIsDQogICAgICAgICAg
+ICAic3VwcG9ydGVkLXZhbHVlcyI6IFsNCiAgICAgICAgICAgICAgICAiMC4wIiwNCiAgICAgICAg
+ICAgICAgICAiMS4wIg0KICAgICAgICAgICAgXSwNCiAgICAgICAgICAgICJ0eXBlIjogInN0cmlu
+ZyINCiAgICAgICAgfSwNCiAgICAgICAg4oCmDQoNCg0KCUkgYW0gaW5jbGluZWQgdG8gZG8gc28g
+YnV0IHRoaXMgcmFpc2VzIGFub3RoZXIgcHJvYmxlbWF0aWMgZm9yIHRoZSAJbGF5ZXJlZCBwcm9k
+dWN0cyB0byBrbm93IHdoaWNoIG1pc21hdGNoIGNhbiBiZSBmaXhlZA0KCQ0KSSBhbSB0ZW1wdGVk
+IHRvIG1ha2UgdGhlIHNhbWUgYXJndW1lbnQgZm9yIHdyaXRhYmxlIGZpZWxkczogaG93IHdpbGwg
+dGhlDQpsYXllcmVkIHByb2R1Y3RzIGtub3cgd2hpY2ggdmFsdWVzIGFyZSBzYWZlIChvciBlZmZl
+Y3RpdmVseSBjYW4gYmUgc2V0Pyk/DQoNCkkga25vdyByaWdodCBub3cgd2UgZG9u4oCZdCBhZ3Jl
+ZSBvbiBrZWVwaW5nIHNhZmUtdmFsdWUgdGFncyBvciBkZWZhdWx0IHZhbHVlcy4NCkJ1dCwgSSBo
+b3BlIHRoZSBhYm92ZSBpbmNsaW5lcyB5b3UgdG93YXJkcyBrZWVwaW5nIHRob3NlIDopIA0KDQpX
+YXJtIFJlZ2FyZHMsDQpLaHVzaGl0
 
