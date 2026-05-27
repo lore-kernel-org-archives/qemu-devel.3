@@ -4,109 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54897CD5BDE
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 09:21:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73D2BCD5BD5
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 09:49:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSARj-00079K-MN; Wed, 27 May 2026 05:21:03 -0400
+	id 1wSAsR-0003Si-D5; Wed, 27 May 2026 05:48:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSARh-00078u-ER
- for qemu-devel@nongnu.org; Wed, 27 May 2026 05:21:01 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSARf-0000Be-Ca
- for qemu-devel@nongnu.org; Wed, 27 May 2026 05:21:01 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-49056b9f04aso51353375e9.0
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 02:20:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779873657; x=1780478457; darn=nongnu.org;
- h=mime-version:message-id:date:user-agent:references:in-reply-to
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=fZc/2epVtxsSF5dBX0Uqe2VcfjpXL6wihdF61Lb5eyw=;
- b=H2tXfnH8g5AwfoqvNeCl8LM8f4+jDLjoANg8turJG+LWYblA3YPPkXvi03zXFjZdsC
- m/f6cw2uOKc+BXqPSrj3MSsKjY+hc0uWVUAMWVXdcXvZRNbnIdgJXI3OeQCA/Xxlajqd
- lhupepp6y9A2xVB+j8XX0zozwS5QecKlFD9oE6ZUavVwc9Ig5TZdsy0lxMK7aO5JyYQt
- n94DnR/RbhXqeu9QZ1hSMSdp/gsxAlS0rYP76gvCiK57GWMak6m7NGMv9SK+wxwWjIgh
- PyU00HdVgZJpr/c6pz8CDkiSEYM99QG+0OmMAVHpW8mT+CtjF2ENMprFADzgQGLHudmt
- 53Bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779873657; x=1780478457;
- h=mime-version:message-id:date:user-agent:references:in-reply-to
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=fZc/2epVtxsSF5dBX0Uqe2VcfjpXL6wihdF61Lb5eyw=;
- b=Z4WtSsr0uFP4vvsvV65peoynCIH+mj59tKwBveV5X92XCk7t11+EJ9xKiUYCt/PywO
- UiDBtDJ+69Ib3bvN+7N+PMxXFwYYL0WNJoCk2kEeKe34lS+uMNAAfRr3j6PwljRPWjvb
- HIwCjbAHcZNaTEFK+r28Hf5MiAMFOnIc2ztKzRWRZdL8O+88lvINc4JJS39hRswd1Ouf
- +54ET7CHZ5WSjg74G72RteXFQH4I2bsICLtjUEAbQ3790kG1ouzVtt+tvd3Sir/NI+a3
- lC2yXdKDpYlYGCxltRTzivUBsy7fWsk67xFkjEO6o8mqhu8jz/fQrxhbuQpJhhdNTimw
- 82Fg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+uTPApleGWWSaztxAUzBiX4+l8IW6Cj45DsA7+qV37pEnRu1ppA+LlmBvhd5GRVgz0ao2BNu7zWXYi@nongnu.org
-X-Gm-Message-State: AOJu0Yyh11S6PQrNH4SUKe6HPwRR7nsLMQY/TVK/leJAlmty6YR91yVH
- 2Qy5iz9S5z3gmsqU0bemjOjjHn8r7QCyjfQwZa710NPtNbK/SEscYR+0y2MO/2tzvW0=
-X-Gm-Gg: Acq92OHvLY7Nx/33y2Z0k9sacD5/NissMB8IB24b9KIIWRCHbWSFSI5uY4Hf2JVqV3k
- 72sOUNAEebLRgzYfjgQIhGHDR4eC65K2OnI8Xq9wcsouBERYTCwlwgX5AQRaxtKC2Cf+dHTvLZv
- sx/3M3vNc3Z4Stpq2LPhS+XPsLWdNei0iEfX/m+b7J1uYPf8/HB80mhnS4ujXR5Lna9x6MbY9u7
- nkNLecajqE9BoPsIMYUIfd4CzgnNualgudz1x6e6F2Kc1uwnu9XO5UWMo/AvtVUVJpSoHeA1XYJ
- F9hvbjg0XYO99Qt2zZPasyhfrL1oxt3HWK3fZ0ft/PJNNQKWC2Ch2+WaVopFwMSnsXgjTPuQ7Hk
- 40MdzBa1dzNY+jsTp9Wn7Y3ax+gPL28k7zpmOW8+zVfmYYdBrfbNGkPSWShdMk9xHb4hFfiwaJt
- 8fz59Nw9OgDpcXpy8pNDb/g0UodTIluzmm/A==
-X-Received: by 2002:a05:600c:4f0f:b0:490:50e4:7224 with SMTP id
- 5b1f17b1804b1-49050e474d4mr354362315e9.3.1779873657420; 
- Wed, 27 May 2026 02:20:57 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490454db285sm356591905e9.5.2026.05.27.02.20.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 May 2026 02:20:56 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2B28E5F7F0;
- Wed, 27 May 2026 10:20:54 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Alyssa Ross <hi@alyssa.is>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,  Demi Marie
- Obenour <demiobenour@gmail.com>,  Albert Esteve <aesteve@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,  "Daniel P. Berrange"
- <berrange@redhat.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake
- <eblake@redhat.com>,  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,  Elena Ufimtseva
- <elena.ufimtseva@oracle.com>,  Auger Eric <eric.auger@redhat.com>,
- felipe@nutanix.com,  Jan Kiszka <jan.kiszka@web.de>,  Joao Martins
- <joao.m.martins@oracle.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@gmail.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Peter
- Maydell <peter.maydell@linaro.org>,  Phil =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  QEMU Developers <qemu-devel@nongnu.org>,  Richard
- Henderson <richard.henderson@linaro.org>,  Bernhard Beschow
- <shentey@gmail.com>,  Stefan Hajnoczi <stefanha@gmail.com>,  Thomas Huth
- <thuth@redhat.com>,  Wei Wang <wei.w.wang@intel.com>
-Subject: Re: vhost-user(?) breaking changes
-In-Reply-To: <87mrxlgt6u.fsf@alyssa.is> (Alyssa Ross's message of "Wed, 27 May
- 2026 10:20:09 +0200")
-References: <875x4fmzcv.fsf@draig.linaro.org>
- <96181e0d-4c75-430a-9b80-9d8d0eabcce7@gmail.com>
- <CAAjaMXbFhtiHgiUwmJFXti25+vXRebjtaD6fFD+GkOHsDny=Bg@mail.gmail.com>
- <878q961nkz.fsf@draig.linaro.org> <87mrxlgt6u.fsf@alyssa.is>
-User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Wed, 27 May 2026 10:20:34 +0100
-Message-ID: <87y0h5xl7h.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1wSAsD-0003Rg-1a
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 05:48:27 -0400
+Received: from mgamail.intel.com ([192.198.163.8])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1wSAsA-0001qK-GU
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 05:48:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1779875302; x=1811411302;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=PHMKaNBqL4XM/ZCqlJQJlX9naT3bGTmTWlk8uaJ0aQ4=;
+ b=RJs1Ijm+jq5YuVMvtfVou+Je8txFrogrScx/pAZ4WrAeXcy/XA2clr9y
+ GBi3cqrykIrGxxIuD06KcHD3734Hr97oIzGtCKvaFRR1OU/xEHcenfjOS
+ /3iJIoOpsLI4ClyNvoO+NQsRKCqPHsVZX4J7RzToy8hxUpKz8QGD/q0o4
+ HITWPFiOysPPfUqHgNpF/ZFMLaBdCOYArbTl5UfGpYiVgfO4/ynnx5H1j
+ +48PspHAB/0GmxObjfpEWCYyGV2r8uRzTJjWjsaTXs83f654+DyxAUOgE
+ u3o4XEuUgMOgMOK7xiMzV8orfjqpb0IkRZ/Lrx9VsCr93GcjLSRtqSn+j A==;
+X-CSE-ConnectionGUID: 86rASzT2RPiPloUHLQUR8Q==
+X-CSE-MsgGUID: i0P8q9mqQFmk3rJgVDGnmw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11798"; a="98275831"
+X-IronPort-AV: E=Sophos;i="6.24,171,1774335600"; d="scan'208";a="98275831"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 May 2026 02:48:17 -0700
+X-CSE-ConnectionGUID: d41eWYKeTxW9qdxYsn6bRw==
+X-CSE-MsgGUID: OE+u8L4URWGQBbl6VlOAJw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,171,1774335600"; d="scan'208";a="239584559"
+Received: from unknown (HELO [10.239.158.45]) ([10.239.158.45])
+ by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 May 2026 02:48:15 -0700
+Message-ID: <7a9fe710-679e-4366-9eeb-3aba148773d7@intel.com>
+Date: Wed, 27 May 2026 17:48:12 +0800
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 13/13] RFC: hw/virtio: start virtio-mem guest_memfd
+ regions as shared
+To: Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Chenyi Qiang <chenyi.qiang@intel.com>
+References: <20260504-rdm5-v4-0-bdf61e57c1e1@redhat.com>
+ <20260504-rdm5-v4-13-bdf61e57c1e1@redhat.com> <agTjb3M8ElUAlfp1@x1.local>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <agTjb3M8ElUAlfp1@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.8; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.999, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,71 +87,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---=-=-=
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+On 5/14/2026 4:47 AM, Peter Xu wrote:
+> On Mon, May 04, 2026 at 04:30:19PM +0400, Marc-André Lureau wrote:
+>> In TDX guests, virtio-mem plug/unplug/re-plug fails because
+>> kvm_set_phys_mem() unconditionally sets KVM memory attributes to
+>> PRIVATE for all guest_memfd regions. On re-plug, the PRIVATE->PRIVATE
+>> transition is a no-op, so KVM doesn't re-AUG pages and the guest's
+>> TDG.MEM.PAGE.ACCEPT fails.
+> 
+> Know little on TDX, please bare with me..
+> 
+> I saw KVM does a seamcall to ADD or AUG whenever a new EPT pte is set, via
+> this path:
+> 
+>          __tdp_mmu_set_spte_atomic
+>          set_external_spte_present
+>          tdx_sept_set_private_spte <------
+> 
+> On unplug, I'm expecting with your prior patches, gmem pages will be
+> truncated properly, so they'll be all gone.
+> 
+> Then, qemu does replug -> guest gets that event, start access page -> EPT
+> violation, KVM resolving page fault with __tdp_mmu_set_spte_atomic() (per
+> above) and a new page -> triggering AUG (not ADD, since it's post-boot).
+> 
+> Could you elaborate here why AUG is missing in the first place?
 
-Alyssa Ross <hi@alyssa.is> writes:
+Peter, you analysis is correct.
 
-> [Trimming CC substantially.]
->
-> Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
->
->> Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
->>
->>> On Mon, May 25, 2026 at 5:03=E2=80=AFAM Demi Marie Obenour
->>> <demiobenour@gmail.com> wrote:
->>>>
->>>> The first is whether vhost-user memory regions
->>>> are guaranteed to not overlap.  I sent a patch in
->>>> https://lore.kernel.org/qemu-devel/20260522-vhost-user-dev-v1-1-b31646=
-cf19b8@gmail.com
->>>> to guarantee this is not the case.  However, this is technically a
->>>> breaking spec change.  The virtio vhost-user device I'm working on
->>>> requires this.
->>
->> Breaking spec changes are always a red flag because of whats already
->> deployed. Are you sure there is no way to make changes optional with use
->> of feature flags?
->
-> There's some nuance between breaking changes and clarifications though,
-> right?  e.g. 97f24a0496 ("vhost-user.rst: clarify when FDs can be sent")
-> tightened things up, so could also have been in principle have been seen
-> as a breaking change, but not practically.
+The reason why plug -> unplug -> re-plug fails, is QEMU fails to discard 
+the private memory so that KVM doesn't zap the private mapping. When 
+re-plug and guest re-accepts, KVM doesn't get involved. Not discard the 
+private memory on unplug leads to another issue that the private memory 
+is still accessible to the guest.
 
-Sure - if in practice we are encoding an assumption that wasn't explicit
-but everyone* was making anyway I think that fair.
+But patch 11 fixes this. Patch 11 should be enough and we don't need 
+this patch. For guest kernel side, we need to ensure the guest kernel 
+accepts the new plugged memory, and no "start-shared" trick is required.
 
-> Are there likely to be devices that use overlapping memory regions
-> today?  Would we expect that to work?
-
-I personally don't know - and I didn't feel qualified to opine either
-way. This opens up the wider question of who would know and are they
-following discussions about this on qemu-devel?
-
-For that see the other thread I've just started where you and a bunch of
-others are CC'd ;-)
-
-*everyone - do we have a comprehensive list of who implements vhost-user
- these days?
-
-=2D-=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQFLBAEBCgA1FiEEZoWumedRZ7yvyN81+9DbCVqeKkQFAmoWt3UXHGFsZXguYmVu
-bmVlQGxpbmFyby5vcmcACgkQ+9DbCVqeKkTTrQf+NvYrK9nKnEvqM5cJwadRVyIy
-T+qXEE8++L2jTeyjyap/XRZM2ng2oNt4zwnV0tSSzJ2xd4KeLMYB5WrGhxzo5Ki3
-Vj2t8S8vjtL+4/Gb9Eeh6uZzRdMyPuPr/JTia0FOqV27p4SWEdHgug9zlytLUNKv
-KfqPQau9ItetzfwFkI0Qa1wTmK6wtD668ft4L/g8raS6RqgowGv57dtvVM2cfhZC
-bhKlELEAtxAn/QsHYQ7mmaj0ZuqCGRIKghVBTww1rGWlqWW8ck++g9RMr/DYJh1j
-tjEaGvvSlCWayiIFaY+Dq5zDNrkAHj1aygP/Qr+xLWK+whTgPiROmbUoVj1Cxw==
-=RlWk
------END PGP SIGNATURE-----
---=-=-=--
+BTW, "start-shared" memory for coco is not something good. It violates 
+the contract that all the memory for Coco VM is initial private 
+(accepted or unaccepted) from EFI spec. We probably should avoid 
+introducing exception unless we have to.
 
