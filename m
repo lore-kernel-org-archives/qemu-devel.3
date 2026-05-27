@@ -4,58 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCB07CD5BDE
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 04:46:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21F08CD5BDE
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 05:01:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wS68t-0006Ov-Pu; Wed, 27 May 2026 00:45:19 -0400
+	id 1wS6O2-0001Kr-7w; Wed, 27 May 2026 01:00:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cyan@cyano.uk>) id 1wS4uI-0000Nw-HZ
- for qemu-devel@nongnu.org; Tue, 26 May 2026 23:26:10 -0400
-Received: from jupiter.guys.cyano.uk ([45.63.120.176])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cyan@cyano.uk>) id 1wS4uF-00086Z-GI
- for qemu-devel@nongnu.org; Tue, 26 May 2026 23:26:10 -0400
-From: Xinhui Yang <cyan@cyano.uk>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cyano.uk; s=dkim;
- t=1779852365;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DA2Fq6qRN2b8ffmO7KgmPEvLxrLD7L6pNW52nGXFP/Y=;
- b=d9nN65KOtybN1hScZUISd6kLOj6Wbgdeg71Wn1QPcVDIjhN1oewW5kUxLBUoXZBkIiT+1e
- PPsw/8YcB+2Z4p5THgN+zt56excj2R0RVvQGh0KFYM3q1kGZXjRAzk4hg7wrHqvL9jWJW/
- 78GuOMsmQrT4C12varWoQRzeen0+KZcsxh/C5uJxGKNNLAJSFfgOQla0KPUKiiSPpmlMeS
- 7HjRqzgC2SxaAb5O9P+IxOGrjLrXt701bzRhhjUojqXuwcnElh1YOVkObU07QDTVgcXFau
- DXGOvwOHtg9SJTGxtCmLVV3S/VP5OTUztNVu4OcrnL3A9BHZgkOSvp/P5OHLfA==
-Authentication-Results: jupiter.guys.cyano.uk;
- auth=pass smtp.mailfrom=cyan@cyano.uk
-To: qemu-devel@nognu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-devel@nongnu.org, Mingcong Bai <jeffbai@aosc.io>,
- Xinhui Yang <cyan@cyano.uk>
-Subject: [PATCH 1/2] linux-user: implement fsmount(2) series of syscalls
-Date: Wed, 27 May 2026 11:23:38 +0800
-Message-ID: <25cbaed0600435611356ffbc6c5c7a310e803d97.1779850946.git.cyan@cyano.uk>
-In-Reply-To: <cover.1779850946.git.cyan@cyano.uk>
-References: <cover.1779850946.git.cyan@cyano.uk>
+ (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
+ id 1wS6Nx-0001Gw-Ew; Wed, 27 May 2026 01:00:53 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <aastharawat@linux.microsoft.com>)
+ id 1wS6Nv-0004Em-IC; Wed, 27 May 2026 01:00:53 -0400
+Received: from localhost (unknown [131.107.147.136])
+ by linux.microsoft.com (Postfix) with ESMTPSA id E14E720B716F;
+ Tue, 26 May 2026 22:00:39 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com E14E720B716F
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1779858039;
+ bh=0j3thrHMRbNXhEGSi4mSHAo5S/+B16ZolXMhJcH00JQ=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+ b=E+w37ppf3fhWVdmZkzjhw2FDBIwFVqlkXNdgTNS5RSN5ydWoZIXCkR0w/TRR5XEUS
+ Ka4SV0w140WJSXu5707Jnvef1/lQAqPdq5XI1kcExU0eFs3mSCR0AYSyPX11pldT5w
+ 9DNNylrNIqhgt6X5q+fl5iThVTxPvW7li+Mz6QO8=
+From: Aastha Rawat <aastharawat@linux.microsoft.com>
+Date: Wed, 27 May 2026 05:00:44 +0000
+Subject: [PATCH v4 08/15] accel/mshv: Add access_vp_regs synthetic proc
+ features
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: --
-Received-SPF: pass client-ip=45.63.120.176; envelope-from=cyan@cyano.uk;
- helo=jupiter.guys.cyano.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260527-mshv_accel_arm64_supp-v4-8-66d871dcdc53@linux.microsoft.com>
+References: <20260527-mshv_accel_arm64_supp-v4-0-66d871dcdc53@linux.microsoft.com>
+In-Reply-To: <20260527-mshv_accel_arm64_supp-v4-0-66d871dcdc53@linux.microsoft.com>
+To: qemu-devel@nongnu.org
+Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, 
+ Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Anirudh Rayabharam <anirudh@anirudhrb.com>, 
+ Aastha Rawat <aastharawat@linux.microsoft.com>, qemu-arm@nongnu.org, 
+ Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>, 
+ Mohamed Mediouni <mohamed@unpredictable.fr>, 
+ =?utf-8?q?Doru_Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Magnus Kulke <magnus.kulke@linux.microsoft.com>
+X-Mailer: b4 0.15.1
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=aastharawat@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 27 May 2026 00:45:06 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,110 +77,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series of syscalls replaces the old mount(2) syscall with a series
-of syscalls that operates around a filesystem context. This series of
-syscalls are available since Linux 5.2 and glibc 2.36+.
+Enable access_vp_regs feature for regs. In arm64, this feature bit
+allows the guest to set VP registers using hypercall. This wasn't
+required for x86 because such registers are set using wrmsr instead of
+hypercall.
 
-Their users include systemd since v259 and libmount from util-linux, and
-possibly other widely used projects.
-
-Preliminary checks are implemented to ensure the validity of the
-interface.
-
-Signed-off-by: Xinhui Yang <cyan@cyano.uk>
+Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
 ---
- linux-user/syscall.c | 77 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 77 insertions(+)
+ accel/mshv/mshv-all.c     |  1 +
+ include/hw/hyperv/hvhdk.h | 91 ++++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 91 insertions(+), 1 deletion(-)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 7d7a7b489c..1e0e7d3298 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -14412,6 +14412,83 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         return do_map_shadow_stack(cpu_env, arg1, arg2, arg3);
- #endif
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index 294955788a..927e1b39bb 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -156,6 +156,7 @@ static int set_synthetic_proc_features(int vm_fd)
+     features.tb_flush_hypercalls = 1;
+     features.synthetic_cluster_ipi = 1;
+     features.direct_synthetic_timers = 1;
++    features.access_vp_regs = 1;
  
-+#if defined(TARGET_NR_fsopen)
-+    case TARGET_NR_fsopen:
-+        {
-+            p = lock_user_string(arg1);
-+            if (!p) {
-+                return -TARGET_EFAULT;
-+            }
-+            ret = get_errno(fsopen(p, arg2));
-+            unlock_user(p, arg1, 0);
-+        }
-+        return ret;
-+    case TARGET_NR_fsconfig:
-+        {
-+            /*
-+             * fsconfig(int, int, char *, void *, int)
-+             * NOTE: p4 is nullable and its type might not be a string.
-+             */
-+            void *p3, *p4;
-+            int cmd = (int) arg2;
-+            switch (cmd) {
-+            case FSCONFIG_SET_BINARY:
-+            case FSCONFIG_SET_STRING:
-+            case FSCONFIG_SET_PATH:
-+            case FSCONFIG_SET_PATH_EMPTY:
-+                p3 = lock_user_string(arg3);
-+                if (cmd != FSCONFIG_SET_BINARY) {
-+                    /* key and value must be strings. */
-+                    p4 = lock_user_string(arg4);
-+                } else {
-+                    /* Otherise the value must be a raw buffer. */
-+                    p4 = lock_user(VERIFY_READ, arg4, arg5, 1);
-+                }
-+                if (!p3 || !p4) {
-+                    return -TARGET_EFAULT;
-+                }
-+                ret = get_errno(fsconfig(arg1, arg2, p3, p4, arg5));
-+                unlock_user(p3, arg3, 0);
-+                unlock_user(p4, arg4, 0);
-+                break;
+     mshv_arch_amend_proc_features(&features);
+ 
+diff --git a/include/hw/hyperv/hvhdk.h b/include/hw/hyperv/hvhdk.h
+index 4695ceb92c..0261063908 100644
+--- a/include/hw/hyperv/hvhdk.h
++++ b/include/hw/hyperv/hvhdk.h
+@@ -94,11 +94,16 @@ union hv_partition_synthetic_processor_features {
+          */
+         uint64_t access_partition_reference_tsc:1;
+ 
++#if defined(__x86_64__)
 +
-+            case FSCONFIG_SET_FLAG:
-+            case FSCONFIG_SET_FD:
-+                /* value must be NULL. */
-+                p3 = lock_user_string(arg3);
-+                if (!p3 || arg4) {
-+                    return -TARGET_EFAULT;
-+                }
-+                ret = get_errno(fsconfig(arg1, arg2, p3, NULL, arg5));
-+                unlock_user(p3, arg3, 0);
-+                break;
-+            case FSCONFIG_CMD_CREATE:
-+            case FSCONFIG_CMD_RECONFIGURE:
-+#ifdef FSCONFIG_CMD_CREATE_EXCL
-+            case FSCONFIG_CMD_CREATE_EXCL:
+         /*
+          * Partition has access to the guest idle reg. Corresponds to
+          * access_guest_idle_reg privilege.
+          */
+         uint64_t access_guest_idle_reg:1;
++#else
++        uint64_t reserved_z10:1;
 +#endif
-+                /* key and value must be NULL, aux must be 0. */
-+                if (arg3 || arg4 || arg5) {
-+                    return -TARGET_EFAULT;
-+                }
-+                ret = get_errno(fsconfig(arg1, arg2, NULL, NULL, 0));
-+                break;
-+            default:
-+                return -TARGET_EFAULT;
-+            }
-+        }
-+        return ret;
-+    case TARGET_NR_fsmount:
-+        ret = get_errno(fsmount(arg1, arg2, arg3));
-+        return ret;
-+    case TARGET_NR_fspick:
-+        {
-+            p = lock_user_string(arg2);
-+            ret = get_errno(fspick(arg1, p, arg3));
-+            unlock_user(p, arg2, 0);
-+        }
-+        return ret;
+ 
+         /*
+          * Partition has access to frequency regs. corresponds to
+@@ -110,11 +115,16 @@ union hv_partition_synthetic_processor_features {
+         uint64_t reserved_z13:1; /* Reserved for access_root_scheduler_reg */
+         uint64_t reserved_z14:1; /* Reserved for access_tsc_invariant_controls */
+ 
++#if defined(__x86_64__)
++
+         /*
+          * Extended GVA ranges for HvCallFlushVirtualAddressList hypercall.
+          * Corresponds to privilege.
+          */
+         uint64_t enable_extended_gva_ranges_for_flush_virtual_address_list:1;
++#else
++        uint64_t reserved_z15:1;
 +#endif
-     default:
-         qemu_log_mask(LOG_UNIMP, "Unsupported syscall: %d\n", num);
-         return -TARGET_ENOSYS;
+ 
+         uint64_t reserved_z16:1; /* Reserved for access_vsm. */
+         uint64_t reserved_z17:1; /* Reserved for access_vp_registers. */
+@@ -161,13 +171,92 @@ union hv_partition_synthetic_processor_features {
+         /* HvCallRetargetDeviceInterrupt is supported. */
+         uint64_t retarget_device_interrupt:1;
+ 
++#if defined(__x86_64__)
+         /* HvCallRestorePartitionTime is supported. */
+         uint64_t restore_time:1;
+ 
+         /* EnlightenedVmcs nested enlightenment is supported. */
+         uint64_t enlightened_vmcs:1;
+ 
+-        uint64_t reserved:30;
++        uint64_t nested_debug_ctl:1;
++        uint64_t synthetic_time_unhalted_timer:1;
++        uint64_t idle_spec_ctrl:1;
++
++#else
++        uint64_t reserved_z31:1;
++        uint64_t reserved_z32:1;
++        uint64_t reserved_z33:1;
++        uint64_t reserved_z34:1;
++        uint64_t reserved_z35:1;
++#endif
++
++#if defined(__aarch64__)
++        /*
++         * Register intercepts supported in V1. As more registers are supported
++         * in future releases, new bits will be added here to prevent migration
++         * between incompatible hosts.
++         *
++         * List of registers supported in V1:
++         * 1. TPIDRRO_EL0
++         * 2. TPIDR_EL1
++         * 3. SCTLR_EL1 - Supports write intercept mask.
++         * 4. VBAR_EL1
++         * 5. TCR_EL1 - Supports write intercept mask.
++         * 6. MAIR_EL1 - Supports write intercept mask.
++         * 7. CPACR_EL1 - Supports write intercept mask.
++         * 8. CONTEXTIDR_EL1
++         * 9. PAuth keys (total 10 registers)
++         * 10. HvArm64RegisterSyntheticException
++         */
++        uint64_t register_intercepts_v1:1;
++#else
++        uint64_t reserved_z36:1;
++#endif
++
++        /* HvCallWakeVps is supported */
++        uint64_t wake_vps:1;
++
++        /*
++         * HvCallGet/SetVpRegisters is supported.
++         * Corresponds to AccessVpRegisters privilege.
++         * This feature only affects exo partitions.
++         */
++        uint64_t access_vp_regs:1;
++
++#if defined(__aarch64__)
++        /* HvCallSyncContext/Ex is supported. */
++        uint64_t sync_context:1;
++#else
++        uint64_t reserved_z39:1;
++#endif /* __aarch64__ */
++
++        /*
++         * Management VTL synic support is allowed.
++         * Corresponds to the ManagementVtlSynicSupport privilege.
++         */
++        uint64_t management_vtl_synic_support:1;
++
++#if defined(__x86_64__)
++        /*
++         * Hypervisor supports guest mechanism to signal pending interrupts to
++         * paravisor.
++         */
++        uint64_t proxy_interrupt_doorbell_support:1;
++#else
++        uint64_t reserved_z41:1;
++#endif
++
++#if defined(__aarch64__)
++        /* InterceptSystemResetAvailable is exposed. */
++        uint64_t intercept_system_reset:1;
++#else
++        uint64_t reserved_z42:1;
++#endif
++
++        /* Hypercalls for host MMIO operations are available. */
++        uint64_t mmio_hypercalls:1;
++
++        uint64_t reserved:20;
+     };
+ };
+ 
+
 -- 
-2.52.0
+2.45.4
 
 
