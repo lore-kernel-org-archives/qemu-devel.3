@@ -4,84 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01530CD5BD0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 16:06:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5118ACD5BD0
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 16:09:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSGlu-0000IL-TN; Wed, 27 May 2026 12:06:18 -0400
+	id 1wSGot-0002i6-QM; Wed, 27 May 2026 12:09:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <physicalmtea@gmail.com>)
- id 1wSGls-0000Az-5Y
- for qemu-devel@nongnu.org; Wed, 27 May 2026 12:06:16 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <physicalmtea@gmail.com>)
- id 1wSGlq-0000Td-GI
- for qemu-devel@nongnu.org; Wed, 27 May 2026 12:06:15 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-36b51e021baso578780a91.0
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 09:06:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779897970; x=1780502770; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=YwSQGpMS7TnjacMtNTAjbhseUfxxA5Zhhx/keg3j6+E=;
- b=kgsiV3fwlxvihLlRvcB8dngBTOZ1GjL/AbUqUqflTtRlHtGWPBm+F0v8mxb0G1OEyx
- tXMGEsCypdYYPX5Q961E+W4KAjPqYM+o1Hse60y1eqYR40lPvSjJdgQbZEGhu9KxMcRK
- oPTxEGqmfmliMF+H+kqfs7L7M+SkvmYFZdERwm+D4KB/R3I96hdJ/UxjX2L6wjBrig3w
- NW+Ybc559JtauPnDEcjWMQLywzTF5RhlFJ/YxrZM9VQrhtFyvSCYr7ogbdIvtpauT8As
- OsA6v24fdCl9vRPgwx/G4imkqb9PEKVuHSJil0p5DoXYmYLLznK23UErSA4IljSdMC77
- AKEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779897970; x=1780502770;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YwSQGpMS7TnjacMtNTAjbhseUfxxA5Zhhx/keg3j6+E=;
- b=JqRCmYO24DQcaOdVW70/MJl6VWHUZjtqwzZNm7lF3BBhVM5I8m6Eu3xS1NqhYcLdT+
- JlpTznX/41iFwvMC9vtz8xyPZM9/Wi4YUb0XZhs25xeR4ZX3422KTtoPiJm8+VqDkMXz
- bmkQ1fo567WFRQucmKxi+dnhAyykPRRyeFMLSRq6HcCWNdOgm6tgDxRxLMX9E55tgwUy
- IdWwiPbsnVyO+OrxEbR+keUySobEX7nFRHenWL9SmvdtcxEPlcuaFUGiEMKXm9qy6h/a
- RTZiFF1AWg86JsTFFA7L8KzHyN6tcHFiBCeW/xGjo5hE65nIaPz/iOaYGGlixPvpKQ/Q
- S8vQ==
-X-Gm-Message-State: AOJu0Yz9KlYR1hMM9aZN1Eo7HQqQIsJ8sZr9+X7y2+QxZNm0O3KlB8/L
- 5N3GGindEp4qzOh7l4m3W0C0bFZTZVvIBIO41KzatHfHef3Ro2vFVqU8t3kF38IokJSWYA==
-X-Gm-Gg: Acq92OFC7AplgCATOw1nZ8sl/JEBFvDb8TD9RQD3zjT6X/v3cuBwHFN2GS1eGh6UkU+
- Pc75Nn5KdGKA9JPmQYgzls8T881d8Icpe5RXtCtxlb/AmXQTHkTk0p+3UAaetmVhXh3I0RL6G4E
- TSYGP5PVIcWnhx9FuOZR2dZh0fHkZjwdH8cOiC8/oPiaPz9aYP/NpkbgP2BKWFgRFG/dj1XNWLZ
- 3ItwrYDGsbHtyXWANTRHMnSao+gV1VxqUOPin8psWqgv1/cCjRdrBGsJoRhDcHQeMXeWhq7IMgD
- sWIWRI7GcLFztZchOQEWBITcfkeInptAJ0A64JewtghZHHyEUeP/lEsqJCCMJvR9G8vcvwexqhS
- tmREHLdtcqaSrxAS3aa16d1bIoBLic+xyHveOL0tGHbR8ZKiGJJVB+Ks2v2j0wqFxwuoVNXGnnj
- RRaAn5GyKwQLPKCuXQffYgTywS0g==
-X-Received: by 2002:a17:90a:d008:b0:36b:203d:9755 with SMTP id
- 98e67ed59e1d1-36b203d99c6mr5191518a91.19.1779897969502; 
- Wed, 27 May 2026 09:06:09 -0700 (PDT)
-Received: from gmail.com ([188.253.121.102]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-36a723cfb57sm20773612a91.15.2026.05.27.09.06.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 May 2026 09:06:08 -0700 (PDT)
-From: Jia Jia <physicalmtea@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, stefanha@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
- qemu-block@nongnu.org, Jia Jia <physicalmtea@gmail.com>,
- qemu-stable@nongnu.org
-Subject: [PATCH] virtio-blk: fix short scsi inhdr host OOB write
-Date: Thu, 28 May 2026 00:03:28 +0800
-Message-Id: <20260527160328.315585-1-physicalmtea@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <mkl@pengutronix.de>)
+ id 1wSGor-0002hh-Cb
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 12:09:21 -0400
+Received: from metis.whiteo.stw.pengutronix.de ([2a0a:edc0:2:b01:1d::104])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mkl@pengutronix.de>)
+ id 1wSGoo-0003ew-GZ
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 12:09:20 -0400
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+ by metis.whiteo.stw.pengutronix.de with esmtp (Exim 4.92)
+ (envelope-from <mkl@pengutronix.de>)
+ id 1wSGof-0005BL-PJ; Wed, 27 May 2026 18:09:09 +0200
+Received: from moin.white.stw.pengutronix.de ([2a0a:edc0:0:b01:1d::7b]
+ helo=bjornoya.blackshift.org)
+ by drehscheibe.grey.stw.pengutronix.de with esmtps (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
+ (envelope-from <mkl@pengutronix.de>) id 1wSGoe-0028V9-0P;
+ Wed, 27 May 2026 18:09:08 +0200
+Received: from pengutronix.de (p4ffb2dc6.dip0.t-ipconnect.de [79.251.45.198])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ (Authenticated sender: mkl-all@blackshift.org)
+ by smtp.blackshift.org (Postfix) with ESMTPSA id 51A205432C7;
+ Wed, 27 May 2026 16:09:08 +0000 (UTC)
+Date: Wed, 27 May 2026 18:09:07 +0200
+From: Marc Kleine-Budde <mkl@pengutronix.de>
+To: Pavel Pisa <pisa@fel.cvut.cz>
+Cc: Bernhard Beschow <shentey@gmail.com>, 
+ =?utf-8?B?TWF0ecOhxaE=?= Bobek <matyas.bobek@gmail.com>,
+ Matyas Bobek <bobekmat@fel.cvut.cz>, qemu-devel@nongnu.org, 
+ qemu-arm@nongnu.org, Oliver Hartkopp <socketcan@hartkopp.net>, 
+ Nikita Ostrenkov <n.ostrenkov@gmail.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, linux-can@vger.kernel.org,
+ Sascha Hauer <s.hauer@pengutronix.de>, 
+ Andrey Volkov <andrey.volkov@munic.io>
+Subject: Re: [PATCH v3 0/7] hw/arm/sabrelite: Add FlexCAN support
+Message-ID: <20260527-fast-unbiased-flamingo-5c5cbe-mkl@pengutronix.de>
+X-AI: stop_reason: "refusal"
+References: <cover.1777571962.git.matyas.bobek@gmail.com>
+ <CAFEAcA95RcGhhN8ZqVeOgRyhRqSar23EnJhCjVgKBwoqXBJwjw@mail.gmail.com>
+ <08A7BC6B-7019-45C4-B581-0A26AD3AA554@gmail.com>
+ <202605271738.21722.pisa@fel.cvut.cz>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=physicalmtea@gmail.com; helo=mail-pj1-x1029.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="jpf24v3oghdzyj2v"
+Content-Disposition: inline
+In-Reply-To: <202605271738.21722.pisa@fel.cvut.cz>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: mkl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de);
+ SAEximRunCond expanded to false
+X-PTX-Original-Recipient: qemu-devel@nongnu.org
+Received-SPF: pass client-ip=2a0a:edc0:2:b01:1d::104;
+ envelope-from=mkl@pengutronix.de; helo=metis.whiteo.stw.pengutronix.de
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,67 +88,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio_blk_handle_scsi() only validates the input/output descriptor
-counts and then unconditionally treats the second-to-last input
-descriptor as a struct virtio_scsi_inhdr.
 
-If that descriptor is shorter than struct virtio_scsi_inhdr, the host
-still performs a 4-byte virtio_stl_p() store while writing scsi->errors.
+--jpf24v3oghdzyj2v
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v3 0/7] hw/arm/sabrelite: Add FlexCAN support
+MIME-Version: 1.0
 
-This is reproducible as a host-side heap-buffer-overflow under ASAN:
+Hello,
 
-  ==4022698==ERROR: AddressSanitizer: heap-buffer-overflow on address
-  0x504000023570 at pc 0x5e4be9c09800 bp 0x7ffebf4d7510 sp 0x7ffebf4d7500
-  WRITE of size 4 at 0x504000023570 thread T0
-      #0 0x5e4be9c097ff in stl_he_p include/qemu/bswap.h:284
-      #1 0x5e4be9c09c4d in stl_le_p include/qemu/bswap.h:331
-      #2 0x5e4be9c0a48b in virtio_stl_p include/hw/virtio/virtio-access.h:38
-      #3 0x5e4be9c0c201 in virtio_blk_handle_scsi ../hw/block/virtio-blk.c:207
-      #4 0x5e4be9c1578b in virtio_blk_handle_request ../hw/block/virtio-blk.c:926
-      #5 0x5e4be9c160e3 in virtio_blk_handle_vq ../hw/block/virtio-blk.c:1025
-      #6 0x5e4be9c16529 in virtio_blk_handle_output ../hw/block/virtio-blk.c:1058
-      #7 0x5e4bea713ad9 in virtio_queue_notify_vq ../hw/virtio/virtio.c:2507
-      #8 0x5e4bea724bfc in virtio_queue_host_notifier_read ../hw/virtio/virtio.c:3981
+On 27.05.2026 17:38:21, Pavel Pisa wrote:
+> please, provide your opinion, the license for small Linux kernel
+> headers excepts seems to be the last and only blocker for mainlining.
+> See the copied code below.
 
-The same run shows the short descriptor being mapped through the
-bounce-buffer path:
+not sure how much help I can provide...
 
-  allocated by thread T0 here:
-      #0 0x736faf8b4a57 in __interceptor_calloc
-      #1 0x736faf1a5c50 in g_malloc0
-      #2 0x5e4bea925458 in address_space_map ../system/physmem.c:3746
-      #3 0x5e4bea6f7633 in dma_memory_map include/system/dma.h:212
-      #4 0x5e4bea70610a in virtqueue_map_desc ../hw/virtio/virtio.c:1637
-      #5 0x5e4bea70824e in virtqueue_split_pop ../hw/virtio/virtio.c:1817
-      #6 0x5e4bea70c9a8 in virtqueue_pop ../hw/virtio/virtio.c:2039
-      #7 0x5e4be9c0be03 in virtio_blk_get_request ../hw/block/virtio-blk.c:172
+> On Wednesday 27 of May 2026 12:42:23 Bernhard Beschow wrote:
+> > Am 8. Mai 2026 12:10:21 UTC schrieb Peter Maydell <peter.maydell@linaro=
+=2Eorg>:
+> > >On Tue, 5 May 2026 at 21:21, Bernhard Beschow <shentey@gmail.com> wrot=
+e:
+> > >> Am 5. Mai 2026 18:41:52 UTC schrieb Peter Maydell <peter.maydell@lin=
+aro.org>:
+> > >> >On Tue, 5 May 2026 at 19:03, Bernhard Beschow <shentey@gmail.com> w=
+rote:
+> > >> >> I guess the only open issue is the licensing of struct FlexcanRegs
+> > >> >> [1] which originates from Linux? How do we proceed here?
+> > >> >>
+> > >> >> Best regards,
+> > >> >> Bernhard
+> > >> >>
+> > >> >> [1]
+> > >> >> https://lore.kernel.org/qemu-devel/202603211316.18181.pisa@fel.cv=
+ut.c
+> > >> >>z/
+> > >> >
+> > >> >Could you say what the problem is? In general there is no problem
+> > >> >with taking header structs from the Linux kernel, as they are
+> > >> >GPL-2-only and that is a QEMU-compatible license. The relevant
+> > >> >source files or pieces of source files would need to be noted
+> > >> >as 2-only rather than our default of 2-or-later, but that is
+> > >> >doable -- we already do that for other things we have borrowed
+> > >> >from the kernel.
 
-Reject requests whose second-to-last input descriptor is too short to
-hold struct virtio_scsi_inhdr.
+This would be IMHO the cleared solution. Put these macros into a
+separate file with the proper license and copyright headers copied from
+the kernel driver.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Jia Jia <physicalmtea@gmail.com>
----
- hw/block/virtio-blk.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+> > >> In
+> > >> https://lore.kernel.org/qemu-devel/f3cb3166-c3f8-4ed8-8c9a-cbf48b071=
+d1e@
+> > >>gmail.com/ I raised this review question: "The following structure lo=
+oks
+> > >> like being based on Linux. Does this affect the copyright of this fi=
+le?"
+> > >> I was just asking for advice and I'm glad the solution is that easy.
+> > >
+> > >If the struct was copied from the kernel, then it's GPL-2.0-only,
+> > >and we should just note the license and where we got the code from.
+> > >
+> > >If the struct is just very similar to the kernel's one because
+> > >it's the obvious representation taken from the datasheet, then
+> > >it's not related to the kernel code and we can treat it as
+> > >GPL-2.0-or-later like the rest of the file.
+> > >
+> > >Since Maty=C3=A1=C5=A1 says in the cover letter here "the headers (str=
+uct
+> > >FlexcanRegs and flexcan_regs.h macros) were copied from the Linux
+> > >kernel" then we're in case 1.
+> > >
+> > >You can mark this up by having the file's SPDX tag be
+> > >"SPDX-License-Identifier: (GPL-2.0-only AND GPL-2.0-or-later)"
+> > >Then have a normal comment in the file next to the part that is
+> > >2.0-only that says
+> > >/*
+> > > * [This struct / the macros X, Y, Z / whatever ] are borrowed
+> > > * from the Linux kernel, and so (unlike the rest of this file)
+> > > * they are GPL-2.0-only.
+> > > */
+> >
+> > Ping
+> >
+> > Any news? With just the license issue remaining, it would be nice to get
+> > FlexCAN support into the upcoming release.
+>
+> The problem is that QEMU maintainers decided to prefer GPL-2.0-or-later
+> as the rule for new contributions and Matyas Bobek has reused
+> next excepts from Linux kernel sources
+>
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/d=
+rivers/net/can/flexcan/flexcan-core.c
+>
+> which have license
+>
+> // SPDX-License-Identifier: GPL-2.0
+> //
+> // flexcan.c - FLEXCAN CAN controller driver
+> //
+> // Copyright (c) 2005-2006 Varma Electronics Oy
+> // Copyright (c) 2009 Sascha Hauer, Pengutronix
+> // Copyright (c) 2010-2017 Pengutronix, Marc Kleine-Budde <kernel@pengutr=
+onix.de>
+> // Copyright (c) 2014 David Jander, Protonic Holland
+> //
+> // Based on code originally by Andrey Volkov <avolkov@varma-el.com>
+>
+>
+> I think, personally, that the code excepts are on the edge
+> of the rules for copyright applications because the lines are direct
+> transformation of the offests and bit-fields found in the original
+> FreeScale/NXP manuals so there should be no problem to use them for
+> QEMU and revwite from scratch for copyright clarity with a little
+> different naming rules would make only more mess for future updates
+> to FexCAN 3 etc.
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 9cb9f1fb2b..418e0dd9c6 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -197,6 +197,12 @@ static void virtio_blk_handle_scsi(VirtIOBlockReq *req)
-         goto fail;
-     }
- 
-+    if (elem->in_sg[elem->in_num - 2].iov_len <
-+        sizeof(struct virtio_scsi_inhdr)) {
-+        status = VIRTIO_BLK_S_IOERR;
-+        goto fail;
-+    }
-+
-     /*
-      * The scsi inhdr is placed in the second-to-last input segment, just
-      * before the regular inhdr.
--- 
-2.34.1
+As you target currently imx6 only, you can re-create them from the imx6
+data sheet, it already comes with "C" compatible naming scheme, e.g.:
+
+| "Rx Mailboxes Global Mask Register (FLEXCAN1_RXMGMASK)"
+
+> hw/net/can/flexcan_regs.h
+>
+> +/**
+> + * These macros ware originally written for the Linux kernel
+> + * by Marc Kleine-Budde.
+> + */
+
+This is not 100% correct. I'm the git-author of the initial mainline
+flexcan commit e955cead0311 ("CAN: Add Flexcan CAN controller driver"),
+but it already comes with these copyright statements:
+
++ * Copyright (c) 2005-2006 Varma Electronics Oy
++ * Copyright (c) 2009 Sascha Hauer, Pengutronix
++ * Copyright (c) 2010 Marc Kleine-Budde, Pengutronix
++ *
++ * Based on code originally by Andrey Volkov <avolkov@varma-el.com>
+
+So I cannot re-license even the initial file alone, Sascha is my
+co-worker.
+
+Hope that helps,
+Marc
+
+--
+Pengutronix e.K.                 | Marc Kleine-Budde          |
+Embedded Linux                   | https://www.pengutronix.de |
+Vertretung N=C3=BCrnberg              | Phone: +49-5121-206917-129 |
+Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
+
+--jpf24v3oghdzyj2v
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSl+MghEFFAdY3pYJLMOmT6rpmt0gUCahcXIQAKCRDMOmT6rpmt
+0v4gAPkBScCslAu1TO4gkoW/E6JLO0XMxAIl96ySfr8RsOqb9wEAluZKARleMrh/
+K959yIMlkc6r/ialHAPgBlJPrqfZVAI=
+=psEc
+-----END PGP SIGNATURE-----
+
+--jpf24v3oghdzyj2v--
 
