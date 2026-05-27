@@ -4,129 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0212ECD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 20:04:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3052CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 20:15:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSKUC-0003iU-Pz; Wed, 27 May 2026 16:04:16 -0400
+	id 1wSKeI-0006Fw-Cb; Wed, 27 May 2026 16:14:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wSKU5-0003go-7d
- for qemu-devel@nongnu.org; Wed, 27 May 2026 16:04:09 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wSKU3-0000lV-Li
- for qemu-devel@nongnu.org; Wed, 27 May 2026 16:04:08 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64RJK5si1478047
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 20:04:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=qcppdkim1; bh=wKvzJM0/pfMzRrRrsF7hHywoPZdYNpspiCf
- KmJ9YSws=; b=NpVol1TAa0+coqjZMAZSQkN1GwvIY0fwVZcs6pHiN+McdaR3h00
- C6zybYMTAFR9eABRVaBp7bTbGJq9vq6GFYnrHUng6uwqWAiV1DWy7C9uaTHImcKx
- wjAIHR2nzeeB6wcVTWulx4lqYyxXu0V0+y13xQ61PcMM08oaxz6IbkElsSjUc/0E
- daITBMuZP+V8JRcaZksyOW0PK1DbGxzQYrOHsv15N9Qrzfcr/GvYTWnQgTSJ1z7Z
- v4gy5Fx6wNLwlUNZk1PjxPQrmmAR8Lfl8XbhoAWeeUfffX9CqMkmUszvHNM+afju
- zsD2hxcJD392RRvCQ7xn9UcVQH9jAhzYuLw==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ee0a89tmk-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 20:04:05 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-516d58f74b0so67337871cf.0
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 13:04:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSKeB-0006FK-Ml
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 16:14:37 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSKeA-0005Dm-73
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 16:14:35 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-49041fb8c23so45884075e9.0
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 13:14:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1779912245; x=1780517045; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=wKvzJM0/pfMzRrRrsF7hHywoPZdYNpspiCfKmJ9YSws=;
- b=F8pTOwk9h0d8kkbPOifrCKIIU7rrn/9hEWIDmJrUiUKcihOZcFFYApw8l/472CmU3d
- A4pWj8QrFV9FVbdyDZiBA478QPmaljWCkdPCTHMhs4kLnd8wp8uUmByK+xC4Hib5Ld+b
- qG/ZjVu/zECblQzig+dI7DrqvF2vEoPn8KsDL27LhfXPmfi+pL9DYmPYqEznrsu5WuKq
- kI5qweuygrnEIdS6TH4l185XM6IeceAW/v+5zkTpFx3f2RueUdgJ3prT3JdXHpY7ckMx
- mE0JOu36fBNGWyWZMGTnn2ZgrJOeJUZcw9/QcAtHlu67OmuxGiv2xFMxSlPgUyZooHa/
- 6jVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779912245; x=1780517045;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1779912873; x=1780517673; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wKvzJM0/pfMzRrRrsF7hHywoPZdYNpspiCfKmJ9YSws=;
- b=mdVaeNkmZ33SulXFoqjgxDYixaMlWbk4+/sPpdGVeedk03W48Pv4oeicZNIgimfZut
- rGnWliNzke7N7disk1KKv9uBJxmAz2o3QsIQ5fwVooTWke4p9G9Hf0Tpfh1zrsN5Mysh
- uJmvYnINXGMB3S/evcEaUZxF9NL+wtKe75VlxqjlSio7TfuSSqCQ+R/t5Ljh04QyMf6w
- 5G0rXsvG3y88qlQvg+jXvoTWUXwhG+q5xB5yfydbipCpsoD5KbZ7m/NHFDeOru9atA1K
- o3QId0+3VnfzYk9lqq57H7+3JrXAOErcR/oUQJBrOLvtTPsegVsQSz6sWmakaJLrouDL
- eXTQ==
-X-Gm-Message-State: AOJu0Yz8gHutIHUPy6U98CH0cwWJOD3VyOp/j/+kl8Mxyb7854fJpIwL
- P/Vdb/lBseP50jWSRGRUVXXgsRvbYUaiaTPUOn8mf1XHMLrFZ8KyljfY/ERHTDFnZGkGY3+uPya
- OhvVypCajywMTtBPRg0QpQu0EYoLxUa/rc+hP6Z5xbemwOxfqlra0EVSK9rOWYozDtQ==
-X-Gm-Gg: Acq92OE4Mf6TVYzRFRRrJmZSWEZ0culo8bZxWKInGm9Js0ZRPnUX3cV2SUAbxVSJhr2
- Rlp5mtjPHFOaArErDHCT5KtGlCO1kRN5pxX8BWHEBqfjm5x1F3G7qFMTeL3WMZoIxypZWMqQJI+
- 8FCPyMPS80psa9BWTasqyLxQEqPjV2LdHW9IGFWSVs9Z5G3luz04B0IARRemRU64EIRHZkGLN9k
- GR4hErlii/NHN117JRgIdLX6OscaUAwMP9IgF9wWaT5Dkhmcn3M9te6OHATl1bkQRPqrkQfuMVx
- 1wcU31Jk2Wyk6+v2Ine+j8JKJY8h0XAIp7BMCZqmIQefkRxJYBvbYhp+M8K74lZsuNHXzJr0ozK
- sJ+0PnGwNIqvAP1niUiUi6MZ+4mkbKXSDDWUk9Oo6kqhJ+6OEaJgOypkEMpClr8jp2j5bbQ==
-X-Received: by 2002:a05:622a:d11:b0:50f:f0be:dc7b with SMTP id
- d75a77b69052e-516d436f66amr265104761cf.39.1779912244904; 
- Wed, 27 May 2026 13:04:04 -0700 (PDT)
-X-Received: by 2002:a05:622a:d11:b0:50f:f0be:dc7b with SMTP id
- d75a77b69052e-516d436f66amr265100061cf.39.1779912239639; 
- Wed, 27 May 2026 13:03:59 -0700 (PDT)
-Received: from QCOM-UWl2o8bcGT.qualcomm.com ([177.170.117.62])
+ bh=qhljTQ/lMvAqMZBeTUmtazgm5zjo86lQdzWtUmmZ4BA=;
+ b=YgHtjtJCq2kDMsRk51WLDDb/OsJzziwLFPTYvdFIpCoCedTMHCztTvIpDCp0jEYT2I
+ jl8+3YkgZ+/qBkXkdpLMc8kOT8bMzWmltv/z6qOIwObrCO5QNP3xfgQU+Q5PJg051gyC
+ v4I9EP7GP4iKRoJDn9+nvWQyWX71++vJn1EYo1sTqx6tge24gXioFSXPFe5HSxc/gaAD
+ nbilE7lQk/6JgHh1VjJ56EYWdzfhH9zmHLo/RHCLApQ+wXxwBsV9/VY8lEagz3g8+hgT
+ Z0+pvuNHubQQfiZb80909wPDQjq6y0x2pwO6ZE67LZSl45rAidjOCs3R6k8K6NT94Yy/
+ pp2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779912873; x=1780517673;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=qhljTQ/lMvAqMZBeTUmtazgm5zjo86lQdzWtUmmZ4BA=;
+ b=FEPrpGCtMO7pINne/+TPo5+2mHNTT9LqMBg+cBw3z+wANi0wWH40J4i0jXD1oCk+1/
+ kO2iirzVq/hy3RPcNKB7XdHwbf0jhdTVW8VXTYH5o4dNuZOgVCs2b8p/DIC0Lly7Hj/S
+ i+Uk4PLdultWovKB/DNed64noZWKeAhNFoCZkaMD9pNznzlUmuVT1DUCCgzswcMY4Cas
+ bWXrplU/4fZ+tJTsxNssPYlvrnV5+VwMSKQp181iuoFtg6ZarZIrrxRI/F+eiBTdo78O
+ unh5lQsXdprEbfksuMfTLp7eONink96x84nqH4SC+7V4YojkngRavD5I2qrs41SfOqKz
+ c7wg==
+X-Gm-Message-State: AOJu0YzgEsncI6PsS9DQchpI514+ykLGDfKR5KB9ig1uvnhbAlQhwhLT
+ da9Wr5MNk0KITK4VCzu0FlLcvgNa9Z1IYpEbzs7Jy7nTispnmCSVDUBxTBfBujVz5WLUbbDFYxo
+ KZKokXVmZzQ==
+X-Gm-Gg: Acq92OHHgQS098rO4091htZBQyz3hqkPjZ97cAq6yWR5d9gU2nZe3g1tmglPd/uy/cG
+ V8gqcS6ptX940s09GKXpWkkG3Ou+8n4xtfAREbp6bZ3BhvJ9uxXzWSfoTvNhmj22HkhA4KM8ECm
+ HDlQU6L+jc+qa7/V4c8RdXy1Tb38iPWl3DF8Z0/0hDpUcy/FrxDl2vf8WeAJ0kbsU0QMHtHu5r4
+ UEqcH6j9XQu2qXFx8mk6+KsoDCRDuUxmnmUFkJMEJwjzC07hUHGqVZpCfp+0nb98akh5GLsFMo7
+ v8sYVS+8/zFhbwr4gYIC+eIYaBb5y5PgzHGCJUQF8Iy98JT0V8KmJ3bG0nTVt1DAYbY2K5B6iqf
+ N9DIw740YzjlY1uGNGO1uUd/fEdCodUvv6PE5yKXNC3dw2qKxoexpKF31sBBXDmUfcRNlWgebO9
+ SKyrFYN73SoaT10Hw2ElcI6lktyQAYEY/JIBIh6PxBtAyYGZoZOZYlG+Vf7hk9pUbMJA==
+X-Received: by 2002:a05:600c:8599:b0:48a:525b:e148 with SMTP id
+ 5b1f17b1804b1-490424ac7ccmr302211295e9.4.1779912872781; 
+ Wed, 27 May 2026 13:14:32 -0700 (PDT)
+Received: from m17.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-517069f2464sm52069441cf.2.2026.05.27.13.03.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 May 2026 13:03:59 -0700 (PDT)
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+ ffacd0b85a97d-45ee5a84e92sm88842f8f.35.2026.05.27.13.14.31
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 27 May 2026 13:14:32 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Subject: [PATCH v2 0/1] disas/riscv.c: fix inst_length()
-Date: Wed, 27 May 2026 17:03:54 -0300
-Message-ID: <20260527200355.2068879-1-daniel.barboza@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-riscv@nongnu.org, Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ Anton Johansson <anjo@rev.ng>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Christoph Muellner <christoph.muellner@vrull.eu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v11 05/12] target/riscv: Remove target_ulong use in
+ get_physical_address()
+Date: Wed, 27 May 2026 22:13:41 +0200
+Message-ID: <20260527201348.29511-6-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260527201348.29511-1-philmd@linaro.org>
+References: <20260527201348.29511-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=XrrK/1F9 c=1 sm=1 tr=0 ts=6a174e35 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
- a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=rzjuppfKegOKSJajtWEA:9 a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-GUID: zbL9N2JOqz24Il2Zs72T_Ks8cz6N5xST
-X-Proofpoint-ORIG-GUID: zbL9N2JOqz24Il2Zs72T_Ks8cz6N5xST
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI3MDIwMCBTYWx0ZWRfXzQNlltxZcPgo
- 5YxLASJc6Us7GalDGmZJedv3R3sa89Amy5xKOKZbl3CKRl+0uJiJV/vcCk/gekR6fmcGFewK4q2
- SnAfNEg7dnARYdGScRjJF0djkNqyJfDyeKGSytq7OLGHH3Jw5X5/MybLVHA5KAkFBC0CAt7uNP6
- V5bUyCI1SrmE/9iBDReWuGsA2r9SavsQ8276FSJGqZQWH0g/Wum/9XFrgnlJh98Q/SosAQ9p5EE
- CVr+xye6RDMhyMkUbVcOfSodkvYlsjO+AkLwCcaQN8M/nbFpTHSGpCGUhvrSe2bPqrwtuhJ06zZ
- gJjOvCD/YC77gca4o0VWTqZIuDoB0tOLBMIIh5a2JpUepRiJubE3wghF7OaAbxpDiU/4hfrsm6X
- A+rSJYGhz0pK4aCziUNMkJYzzmUlZeOCAHrtUgtn8JA3ilpsf/+CY3LXUJhgWPSEP6mC1AUFqjE
- v+vK04RbpM0rd5t//7A==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-05-27_04,2026-05-26_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015 impostorscore=0
- spamscore=0 suspectscore=0 malwarescore=0 priorityscore=1501 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605270200
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,27 +109,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+Use uint32_t for RV32, uint64_t otherwise.
 
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/riscv/cpu_helper.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-In this new version we're fixing the disas function by reducing the
-encodings we support, which is super fine.  Thanks to Alistair for
-pointing this out in the v1 review.
-
-
-Changes from v1:
-- support only 16 and 32 bit inst length as specified in the RISC-V
-  unpriv ISA
-- v1 link: https://lore.kernel.org/qemu-devel/20260520173522.1794433-1-daniel.barboza@oss.qualcomm.com/ 
-
-
-Daniel Henrique Barboza (1):
-  disas/riscv.c: fix inst_length()
-
- disas/riscv.c | 20 ++------------------
- 1 file changed, 2 insertions(+), 18 deletions(-)
-
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 6da67e132eb..fd7c6ac1b23 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1625,16 +1625,18 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+             return TRANSLATE_FAIL;
+         }
+ 
+-        target_ulong *pte_pa = qemu_map_ram_ptr(mr->ram_block, addr1);
+-        target_ulong old_pte;
++        void *pte_pa = qemu_map_ram_ptr(mr->ram_block, addr1);
++        uint64_t old_pte;
+ 
+         if (riscv_cpu_sxl(env) == MXL_RV32) {
+-            old_pte = qatomic_cmpxchg((uint32_t *)pte_pa, cpu_to_le32(pte),
+-                                      cpu_to_le32(updated_pte));
++            uint32_t cmp = cpu_to_le32(pte);
++            uint32_t val = cpu_to_le32(updated_pte);
++            old_pte = qatomic_cmpxchg((uint32_t *)pte_pa, cmp, val);
+             old_pte = le32_to_cpu(old_pte);
+         } else {
+-            old_pte = qatomic_cmpxchg(pte_pa, cpu_to_le64(pte),
+-                                      cpu_to_le64(updated_pte));
++            uint64_t cmp = cpu_to_le64(pte);
++            uint64_t val = cpu_to_le64(updated_pte);
++            old_pte = qatomic_cmpxchg((uint64_t *)pte_pa, cmp, val);
+             old_pte = le64_to_cpu(old_pte);
+         }
+         if (old_pte != pte) {
 -- 
-2.43.0
+2.53.0
 
 
