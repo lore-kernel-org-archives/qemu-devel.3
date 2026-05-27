@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68035CD4F54
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8B9BCD6E44
 	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 05:03:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wS6Nw-0001G7-BJ; Wed, 27 May 2026 01:00:52 -0400
+	id 1wS6Nw-0001GS-Lu; Wed, 27 May 2026 01:00:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wS6Nt-0001Do-Nf; Wed, 27 May 2026 01:00:49 -0400
+ id 1wS6Nt-0001Dp-O7; Wed, 27 May 2026 01:00:49 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wS6Nr-0004DY-IM; Wed, 27 May 2026 01:00:49 -0400
+ id 1wS6Nr-0004De-Uu; Wed, 27 May 2026 01:00:49 -0400
 Received: from localhost (unknown [131.107.147.136])
- by linux.microsoft.com (Postfix) with ESMTPSA id 9768320B7168;
- Tue, 26 May 2026 22:00:35 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9768320B7168
+ by linux.microsoft.com (Postfix) with ESMTPSA id 4F59D20B716A;
+ Tue, 26 May 2026 22:00:36 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 4F59D20B716A
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1779858035;
- bh=SVVE05ssW8rPC/UBJmKvjTa2MlwVESBC5sb0zdr2tBs=;
+ s=default; t=1779858036;
+ bh=qtlP0uBJP+8WkJRoY5C7ajRNqn+hFDb3SPRaB45GNYc=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=HMu4YlwS358Ll3HlWTyKGFlHsNiuhpSyon4zEjOKU5H+A2+ZresY3Zj8MxwEgr4l2
- ckFojFNPfYHLmAaMbsX7r6ecKxl2kwiBmskdOuGPCJ1SPnaY8i6Xp2GtW/NGQUWhcl
- pHh1lrukr4PmV07WlswjWsc0w/bVD10bdZ/ER76g=
+ b=HpVvhJ6mW/7ZXqo0GhIDHNIk+9o6LokJeZqgkc0qJtZjRYFOY1r+8b/rqY8nsiT2C
+ yEJjWi2aioSohJJlG+qZTO/MZ8IJliYKmEk4adKSTLrmbNPqKlJm6FAZerQEJ5IzP0
+ pxqWcLGxGt+a0zXJZr2IHsrxgrmaszyo5lb6SsAc=
 From: Aastha Rawat <aastharawat@linux.microsoft.com>
-Date: Wed, 27 May 2026 05:00:39 +0000
-Subject: [PATCH v4 03/15] accel/mshv: add arch-specific accelerator init hook
+Date: Wed, 27 May 2026 05:00:40 +0000
+Subject: [PATCH v4 04/15] meson, target/arm/mshv: Enable arm64 build & add
+ initial MSHV support
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260527-mshv_accel_arm64_supp-v4-3-66d871dcdc53@linux.microsoft.com>
+Message-Id: <20260527-mshv_accel_arm64_supp-v4-4-66d871dcdc53@linux.microsoft.com>
 References: <20260527-mshv_accel_arm64_supp-v4-0-66d871dcdc53@linux.microsoft.com>
 In-Reply-To: <20260527-mshv_accel_arm64_supp-v4-0-66d871dcdc53@linux.microsoft.com>
 To: qemu-devel@nongnu.org
@@ -76,200 +77,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>
+Enable the build of the MSHV accelerator for arm64 in the Meson build
+system. Introduce initial files and stub implementations to support MSHV
+for the ARM target.
 
-Introduce mshv_arch_accel_init() as an arch-specific hook called early
-in mshv_init(), before VM creation. This allows each architecture to
-perform platform-specific initialization at accelerator init time.
-
-For x86, the hook calls mshv_init_mmio_emu() which was previously called
-directly from the common init path. Also move set_unimplemented_msr_action()
-and mshv_arch_post_init_vm() from mshv-cpu.c to the new mshv-all.c, as
-they are not vCPU-specific.
-
-Signed-off-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
+Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
 ---
- accel/mshv/mshv-all.c        |  5 ++-
- include/system/mshv_int.h    |  1 +
- target/i386/mshv/meson.build |  1 +
- target/i386/mshv/mshv-all.c  | 80 ++++++++++++++++++++++++++++++++++++++++++++
- target/i386/mshv/mshv-cpu.c  | 40 ----------------------
- 5 files changed, 86 insertions(+), 41 deletions(-)
+ meson.build                 |  8 +++----
+ target/arm/meson.build      |  1 +
+ target/arm/mshv/meson.build |  7 ++++++
+ target/arm/mshv/mshv-all.c  | 56 +++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 68 insertions(+), 4 deletions(-)
 
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index 58af674bd9..65095798e2 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -448,7 +448,10 @@ static int mshv_init(AccelState *as, MachineState *ms)
-         return -1;
-     }
+diff --git a/meson.build b/meson.build
+index eb07491819..ff54d48e6e 100644
+--- a/meson.build
++++ b/meson.build
+@@ -305,7 +305,8 @@ if cpu == 'aarch64'
+   accelerator_targets += {
+     'CONFIG_HVF': ['aarch64-softmmu'],
+     'CONFIG_NITRO': ['aarch64-softmmu'],
+-    'CONFIG_WHPX': ['aarch64-softmmu']
++    'CONFIG_WHPX': ['aarch64-softmmu'],
++    'CONFIG_MSHV': ['aarch64-softmmu'],
+   }
+ elif cpu == 'x86_64'
+   accelerator_targets += {
+@@ -871,10 +872,9 @@ if get_option('kvm').allowed() and host_os == 'linux'
+ endif
  
--    mshv_init_mmio_emu();
-+    ret = mshv_arch_accel_init(as, ms, mshv_fd);
-+    if (ret < 0) {
-+        return -1;
-+    }
+ if get_option('mshv').allowed() and host_os == 'linux'
+-  if get_option('mshv').enabled() and host_machine.cpu() != 'x86_64'
+-    error('mshv accelerator requires x64_64 host')
++  if host_machine.cpu() in [ 'x86_64', 'aarch64' ]
++    accelerators += 'CONFIG_MSHV'
+   endif
+-  accelerators += 'CONFIG_MSHV'
+ endif
  
-     mshv_init_msicontrol();
+ if get_option('whpx').allowed() and host_os == 'windows'
+diff --git a/target/arm/meson.build b/target/arm/meson.build
+index 4723f9f170..74d21544b9 100644
+--- a/target/arm/meson.build
++++ b/target/arm/meson.build
+@@ -58,6 +58,7 @@ arm_common_system_ss.add(files(
  
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index ff3ab957b5..c72c91cd23 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -96,6 +96,7 @@ void mshv_arch_init_vcpu(CPUState *cpu);
- void mshv_arch_destroy_vcpu(CPUState *cpu);
- void mshv_arch_amend_proc_features(
-     union hv_partition_synthetic_processor_features *features);
-+int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd);
- int mshv_arch_post_init_vm(int vm_fd);
- void mshv_setup_hvcall_args(AccelCPUState *state);
+ subdir('hvf')
+ subdir('whpx')
++subdir('mshv')
  
-diff --git a/target/i386/mshv/meson.build b/target/i386/mshv/meson.build
-index 6091c21887..ce54e134cb 100644
---- a/target/i386/mshv/meson.build
-+++ b/target/i386/mshv/meson.build
-@@ -1,6 +1,7 @@
- i386_mshv_ss = ss.source_set()
- 
- i386_mshv_ss.add(files(
-+  'mshv-all.c',
-   'mshv-cpu.c',
-   'msr.c',
- ))
-diff --git a/target/i386/mshv/mshv-all.c b/target/i386/mshv/mshv-all.c
+ if 'CONFIG_TCG' in config_all_accel
+    subdir('tcg')
+diff --git a/target/arm/mshv/meson.build b/target/arm/mshv/meson.build
 new file mode 100644
-index 0000000000..f0b43aa86f
+index 0000000000..169643691e
 --- /dev/null
-+++ b/target/i386/mshv/mshv-all.c
-@@ -0,0 +1,80 @@
++++ b/target/arm/mshv/meson.build
+@@ -0,0 +1,7 @@
++arm_mshv_ss = ss.source_set()
++
++arm_mshv_ss.add(files(
++  'mshv-all.c',
++))
++
++arm_system_ss.add_all(when: 'CONFIG_MSHV', if_true: arm_mshv_ss)
+diff --git a/target/arm/mshv/mshv-all.c b/target/arm/mshv/mshv-all.c
+new file mode 100644
+index 0000000000..32adf26838
+--- /dev/null
++++ b/target/arm/mshv/mshv-all.c
+@@ -0,0 +1,56 @@
 +/*
 + * QEMU MSHV support
 + *
 + * Copyright Microsoft, Corp. 2026
 + *
-+ * Authors: Ziqiao Zhou   <ziqiaozhou@microsoft.com>
-+ *          Magnus Kulke  <magnuskulke@microsoft.com>
-+ *          Jinank Jain   <jinankjain@microsoft.com>
++ * Authors: Aastha Rawat          <aastharawat@linux.microsoft.com>
++ *          Anirudh Rayabharam    <anirudh@anirudhrb.com>
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "qemu/osdep.h"
-+#include "qemu/error-report.h"
-+#include "qemu/memalign.h"
-+
++#include "hw/arm/virt.h"
 +#include "system/mshv.h"
 +#include "system/mshv_int.h"
-+#include "system/address-spaces.h"
-+#include "linux/mshv.h"
-+#include "hw/hyperv/hvgdk.h"
-+#include "hw/hyperv/hvgdk_mini.h"
-+#include "hw/hyperv/hvhdk_mini.h"
-+#include "hw/i386/apic_internal.h"
 +
-+#include "cpu.h"
-+#include "emulate/x86_decode.h"
-+#include "emulate/x86_emu.h"
-+#include "emulate/x86_flags.h"
-+
-+#include "trace-accel_mshv.h"
-+#include "trace.h"
-+
-+#include <sys/ioctl.h>
-+
-+int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd)
++int mshv_load_regs(CPUState *cpu)
 +{
-+    mshv_init_mmio_emu();
 +    return 0;
 +}
 +
-+/*
-+ * Default Microsoft Hypervisor behavior for unimplemented MSR is to send a
-+ * fault to the guest if it tries to access it. It is possible to override
-+ * this behavior with a more suitable option i.e., ignore writes from the guest
-+ * and return zero in attempt to read unimplemented.
-+ */
-+static int set_unimplemented_msr_action(int vm_fd)
++int mshv_arch_put_registers(const CPUState *cpu)
 +{
-+    struct hv_input_set_partition_property in = {0};
-+    struct mshv_root_hvcall args = {0};
-+
-+    in.property_code  = HV_PARTITION_PROPERTY_UNIMPLEMENTED_MSR_ACTION;
-+    in.property_value = HV_UNIMPLEMENTED_MSR_ACTION_IGNORE_WRITE_READ_ZERO;
-+
-+    args.code   = HVCALL_SET_PARTITION_PROPERTY;
-+    args.in_sz  = sizeof(in);
-+    args.in_ptr = (uint64_t)&in;
-+
-+    trace_mshv_hvcall_args("unimplemented_msr_action", args.code, args.in_sz);
-+
-+    int ret = mshv_hvcall(vm_fd, &args);
-+    if (ret < 0) {
-+        error_report("Failed to set unimplemented MSR action");
-+        return -1;
-+    }
 +    return 0;
++}
++
++int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
++{
++    return 0;
++}
++
++void mshv_arch_init_vcpu(CPUState *cpu)
++{
++
++}
++
++void mshv_arch_destroy_vcpu(CPUState *cpu)
++{
++
++}
++
++int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd)
++{
++    return 0;
++}
++
++void mshv_arch_amend_proc_features(
++    union hv_partition_synthetic_processor_features *features)
++{
++
 +}
 +
 +int mshv_arch_post_init_vm(int vm_fd)
 +{
-+    int ret;
-+
-+    ret = set_unimplemented_msr_action(vm_fd);
-+    if (ret < 0) {
-+        error_report("Failed to set unimplemented MSR action");
-+    }
-+
-+    return ret;
++    return 0;
 +}
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index e1df5e8a17..18e5b5206f 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -1507,43 +1507,3 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
-     state->hvcall_args = (MshvHvCallArgs){0};
-     g_clear_pointer(&env->emu_mmio_buf, g_free);
- }
--
--/*
-- * Default Microsoft Hypervisor behavior for unimplemented MSR is to send a
-- * fault to the guest if it tries to access it. It is possible to override
-- * this behavior with a more suitable option i.e., ignore writes from the guest
-- * and return zero in attempt to read unimplemented.
-- */
--static int set_unimplemented_msr_action(int vm_fd)
--{
--    struct hv_input_set_partition_property in = {0};
--    struct mshv_root_hvcall args = {0};
--
--    in.property_code  = HV_PARTITION_PROPERTY_UNIMPLEMENTED_MSR_ACTION;
--    in.property_value = HV_UNIMPLEMENTED_MSR_ACTION_IGNORE_WRITE_READ_ZERO;
--
--    args.code   = HVCALL_SET_PARTITION_PROPERTY;
--    args.in_sz  = sizeof(in);
--    args.in_ptr = (uint64_t)&in;
--
--    trace_mshv_hvcall_args("unimplemented_msr_action", args.code, args.in_sz);
--
--    int ret = mshv_hvcall(vm_fd, &args);
--    if (ret < 0) {
--        error_report("Failed to set unimplemented MSR action");
--        return -1;
--    }
--    return 0;
--}
--
--int mshv_arch_post_init_vm(int vm_fd)
--{
--    int ret;
--
--    ret = set_unimplemented_msr_action(vm_fd);
--    if (ret < 0) {
--        error_report("Failed to set unimplemented MSR action");
--    }
--
--    return ret;
--}
 
 -- 
 2.45.4
