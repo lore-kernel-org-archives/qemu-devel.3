@@ -4,168 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3C36CD5BD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 02:19:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30D1CCD5BDE
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 02:52:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wS3qi-0004xr-LQ; Tue, 26 May 2026 22:18:24 -0400
+	id 1wS4N2-0001kb-T1; Tue, 26 May 2026 22:51:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=6009f06ea=Alistair.Francis@wdc.com>)
- id 1wS3qh-0004xL-Bb; Tue, 26 May 2026 22:18:23 -0400
-Received: from esa1.hgst.iphmx.com ([68.232.141.245])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=6009f06ea=Alistair.Francis@wdc.com>)
- id 1wS3qd-0007yl-TU; Tue, 26 May 2026 22:18:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
- t=1779848300; x=1811384300;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-id:content-transfer-encoding: mime-version;
- bh=GiTiQgU4/MnrZ9stERdazrs//47AitDRGJu4pKJClf8=;
- b=WqS9d8inKRKJxqfCyPQskQfirni+KyASJJ91epX7IksbxhS2gNUUuh8M
- 8/iGPaMARv6MjDiFkICbXD+Tt1qM7OOlHaHRU1wZgqJv4CNxLynahmlJT
- YGk5ClF/k0k4sitJP8NFxijzlovK8Xv6S+ge9Gf4Eny7scLPYh4moyMId
- SlvGirYyhibRoSmHW+t68pYZzIhH26+Ic4c9xDzCmclln+Wh6fNt5w3ae
- BneZZ9svkkTouSPaOi9xaL4Z4Ek68oo9cduk68hfZ2WFjpO9xV/Kr5Tf1
- aBXYWVF1SD0yNnm5LJyf57KT2seluQzyr8V30XGwZGpOLQj5Cx7x+ZXSp A==;
-X-CSE-ConnectionGUID: VDlRuWfwRxGrsNLiNCD+2g==
-X-CSE-MsgGUID: MAe84uakSdmcF0ZvNy+rPw==
-X-IronPort-AV: E=Sophos;i="6.24,170,1774281600"; d="scan'208";a="147476961"
-Received: from mail-westus2azon11012046.outbound.protection.outlook.com (HELO
- MW6PR02CU001.outbound.protection.outlook.com) ([52.101.48.46])
- by ob1.hgst.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
- 27 May 2026 10:17:47 +0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PfSpsj/iTFfPSQX17MoUJTOP8QrYO84so4gHyiO8aaC23w5CRvn6EL1tWCZcAYQ5/LYWcGeaLz/YQOKXdzBGSAYwXR91Fgp4cdeaQ22wCbGcPqE8626sjyhcDSoIOJ+uadkW1PF32en5Z1Yzjo0onHYq2xT4pmU03g2dPgdl6gmvZKwahVleZKpIOTh1O4+woRJEcvUNVOhEkyzzrN+ZodX4+jb1yqEeF7mKTShrLL770ElLrxYp9AHEARPrEAFC5U3fwp8EdHIaFF7mGTSXoSwctx5MsUSWoiBjuEIDnZvnu38nMr2qWttyjaFQPxmMF8WbyORHS8m0gqrHVvVMlw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GiTiQgU4/MnrZ9stERdazrs//47AitDRGJu4pKJClf8=;
- b=PdHIKQtrNx7sP2+8VGWL29BreuCLhOWuYKGbH3xr9k1ZcazihjZPVDZZS5fuYjbfHBtQoGJEQbUjhBByxULRgiGRkkSnUQ2p2LtJsUXh1UqGyFzjBrVPCYyRNYhIs1lJgGauyJ1S+C9Z2fRZ2RrqJjjSncAKAbUk4oNMAjV+Eptr8N1JJ/U7ZY5YRZ7qJdbSBsIkZNPbbxeXnT8dcoHdLbfU6T8S50Yfagv1icofWqmgm3qC0CWgp0snYLDClQ74h3Ocb/Tn3JIZOCntIjhbl6FfutthjOTy0W0ZfzFIVWqYph1j3xEein0hCDjaqAf212B8SYtafp4cDyjdSe/x5w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
- header.d=wdc.com; arc=none
+ (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
+ id 1wS4Mz-0001gU-Jx
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 22:51:46 -0400
+Received: from mail-lj1-x243.google.com ([2a00:1450:4864:20::243])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
+ id 1wS4Mw-0001qh-O3
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 22:51:45 -0400
+Received: by mail-lj1-x243.google.com with SMTP id
+ 38308e7fff4ca-39556b00a85so82742401fa.0
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 19:51:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779850297; cv=none;
+ d=google.com; s=arc-20240605;
+ b=GcVKchOIATl9A7M9L4AGTaQsdw2C2CO+ljjn6pSw3M5KG5vy3ktp2Q7/Y1ZAZRlV4i
+ QB6+WHYvTdcx1SWgzB77LV17tRoVjhVG9YPT1Q3eCEqW35xOz/bWcrImoVeHm5Ce9FN3
+ NICWc0YzPu6OF1JS6hii+ezTlHQyeuOrXt3GZwLBswxdDxWD62Uc2B0R9oxFM1CfmeWK
+ 9NZqsZvjSXPAp4i31Ff9MUUFW138Ozu+g6xXJBoucsRdSrkSqVK7ltXvv1zxoz5kOY6Z
+ SEVJMUFqW9E2cpiXHITdcmAuM8yeDa7J2k1JrR+1ar8uF5U636ev2TjxjVUdo3I6YXnO
+ Vi9g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=WCk6AhWtJfOyvuGJlXvmxmIfxIUYrbTjVFvyl7XyjwA=;
+ fh=cGXp66taJ7oVFSchAJCSGREWquHCSyEPFjRudmCzoXo=;
+ b=l0GLSnI7pVMFCYudGTSi9aYsekOsuKVpKCVRKeZzviyBAJiWcG/tHl7AbPXDXBT0CF
+ JXQPyL4lyRQRZ51MoLgPSAVvtP46fvGC/PY1veFTVWamn+IYtms0ph23Es11l6ron1Cm
+ AfMRneny9rOHCZtivLOrg8o4KwiDo8FXElHmGkwkvqDwYhU56B2IwfJMwN/grNbKWBR2
+ SIVo/EAJPIPq8PA7+yAoLUCSJU2FT5rhoYItsFyNM8Oqfdod7nyCrRJvP0StScmpM1VR
+ JKEEBPaDC1FusaFOpwu09uqD5xI2X/p+YS7V4cT/LbeJ/vwCS/1yfK3J4OUCk2NAXoDt
+ 8nXQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GiTiQgU4/MnrZ9stERdazrs//47AitDRGJu4pKJClf8=;
- b=RDm4V8wGaL6WbLdI7VET0MkuT1x+WEuxQB1rqdLg1BiLyKLlFTGlQ7KaQp92XIedXKgO5wF3eeqlUNRMdbqnNUNVuIu40WSvZQR925CuHR37ORRIKUqySazC0oTieCpS4TmF/YM8nV2qjC1XP9LNU8HJaNId1NMIGGo1HtgPe7s=
-Received: from BY1PR04MB9561.namprd04.prod.outlook.com (2603:10b6:a03:5b6::11)
- by SA2PR04MB7596.namprd04.prod.outlook.com (2603:10b6:806:140::6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.12; Wed, 27 May
- 2026 02:17:44 +0000
-Received: from BY1PR04MB9561.namprd04.prod.outlook.com
- ([fe80::3869:e494:2fa8:9888]) by BY1PR04MB9561.namprd04.prod.outlook.com
- ([fe80::3869:e494:2fa8:9888%4]) with mapi id 15.21.0071.011; Wed, 27 May 2026
- 02:17:44 +0000
-From: Alistair Francis <Alistair.Francis@wdc.com>
-To: "daniel.barboza@oss.qualcomm.com" <daniel.barboza@oss.qualcomm.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "chao.liu.zevorn@gmail.com" <chao.liu.zevorn@gmail.com>,
- "liwei1518@gmail.com" <liwei1518@gmail.com>, "zhiwei_liu@linux.alibaba.com"
- <zhiwei_liu@linux.alibaba.com>
-Subject: Re: [PATCH] target/riscv/cpu_helper.c: add PMA access fault
-Thread-Topic: [PATCH] target/riscv/cpu_helper.c: add PMA access fault
-Thread-Index: AQHc6g/7MmrJ+IkaMEatyUJa3/RMvbYhKd+A
-Date: Wed, 27 May 2026 02:17:44 +0000
-Message-ID: <e2fb894c28eeb187f16ff29f3f777f44da17fa35.camel@wdc.com>
-References: <20260522172502.320529-1-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260522172502.320529-1-daniel.barboza@oss.qualcomm.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Evolution 3.60.1 (by Flathub.org) 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=wdc.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BY1PR04MB9561:EE_|SA2PR04MB7596:EE_
-x-ms-office365-filtering-correlation-id: 6b533657-0bcc-459c-104b-08debb962352
-wdcipoutbound: EOP-TRUE
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|10070799003|1800799024|366016|19092799006|11063799006|6133799003|22082099003|18002099003|38070700021|56012099006|13003099007;
-x-microsoft-antispam-message-info: HOWvCDklZuDXFj2KGywud3B+V6HGtKUdKeP7XYB7y1e6QripFdRmfMiaGa/lMJQOGKB7fgQtxfzDeVSMMgCSDO03r9oPk+DqTZg4OikpgqMn1NxoW2OkGkROd1yhuxVQJdxKnbri6PRuGlCnRkuwzfXdOHHJfpKdReYPbIMHrRjgOUV6Nz++18Kks4qRGjWv5631EXTqAhEIya1HrRmozXbfEDZ2EWW6DnLS3xvcCvPlGf42a3z8x78tCqzFiiTxhFaUa2Axem43Tid5In6w15hxM37j5JJe59dXcd61kJwFkBrizapi8WlWWnUqAjhyu5dW1N3+fUZ/L0J2utQ8GX3BoTD88162OrbdejZ+bQwmAtJr4sYyR2jrRwfETxv0AvufBzUxND/eSE+5/BcOLPI3KxTvOgdl6uurA0fVeQMMF1ZxUk5eZ/XNK71tI16+h5C+JnkwycQbvC+glQ/skqp1c4rDPdyVlWdtzHm9WpfczHW5oQCwSSN8DIS/LgWWhu90kDczd8vJrxwOYcxTgE0T2dhc/4FX6P1yeSkJ2G4efhqAv3hSEuL14a9gamshL9DA7NZ10E89jDmP3lnmb2yxu63XUHWgX5jZTWJYQ1viPDH2qX9C96SlwhXDUf42UyLwximTHxFsu5k8H7vWm+cHtjGdKGYEYsDOk2malETHE5pnI3n6bWHU659rpmCpuJLQumhcoy1USk1EMvYwibm6G8OXAUnYMVPpqA30hJ7RqCQD7ACjCTmwdAGxBVfZ
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BY1PR04MB9561.namprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(10070799003)(1800799024)(366016)(19092799006)(11063799006)(6133799003)(22082099003)(18002099003)(38070700021)(56012099006)(13003099007);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 2
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?RXhVTTEwTzB4bVVHTEpMSmgyL3pFZlVtMEUxNFFSOGFPTzI2QysrSkJpWmsv?=
- =?utf-8?B?Ym1zbjBhbi9ubjlVMjRLM3B5LzRqakoxdHlwUU5Mb0kzNGt4M2htMzR4aXU3?=
- =?utf-8?B?Nk1XUUlwb0NSbjBqR29OTUl4U21DVm16aXFOd1VKdnc3cDZiWnR6M3JQdHhU?=
- =?utf-8?B?WUl2Z3haL3ArNWxCM0IwRjZmcVo1OFZ4djJsLzNkbFlxTkRub21EOHNyUmp2?=
- =?utf-8?B?QjZ5bDlvYWNTM1pBUHpPV2J5RXE0OHNBV3h5cUFHTUNySGJKRVA5MzJqL0M1?=
- =?utf-8?B?bGhiNnRnRDlFbmF3QnFSK2dBR3BJbDVQQllWTHg4VTN1eUc5QmNIekhRMzF1?=
- =?utf-8?B?elk3eXdxa2JMbmxyK2UwTW5pWjRKa0ZSZEF5a3BVYTY2VG1lOGE3VHRWWG9x?=
- =?utf-8?B?aFIyL1RLZHB3UldSbXFvT0VSRHBQcUh0Ky9YekducVFxNU9xNzhlN1g2YzVJ?=
- =?utf-8?B?VlV6MkJ0QkltR0Y2cUp6VlFVR2FmeTUwZ0lwaUIyYURvYjNUazgvaGFXUGFl?=
- =?utf-8?B?VTNLOXduODN5Ni9LQTRxWGhjYytMcEY2SjN2emYvU3F5STh6WnlnaFBleHBl?=
- =?utf-8?B?SER5MEx4K0tjUTdlNjBXWjlQYjhkYis4V0VZQnVCYlRoMVBxcUIydEJveGNT?=
- =?utf-8?B?MFpUVHNHM0h1L2t2L1VUYU53TXMvcHRrRUo2eFNJaDFOZmgrZThZakVHSjFv?=
- =?utf-8?B?WmxwYTBsUmRnd3NNWHdvdkk4MVczOVJSS09VbUhjenR6ZWRVd0VQVmJHRzhE?=
- =?utf-8?B?azdoaGY1N0N3YnpjdG11YUpPaW9ZbTJOL2FJSEE5bzZkQU82bmtQeVYzcVRQ?=
- =?utf-8?B?aXQrRXFYSjFyT2hQdmhLRHVYUWQwOWxLR1UxTUljK0dhMjkyVnY2b0VBK3p1?=
- =?utf-8?B?T2ozRGRnNnFlQ1Z1NlBhRVduWGx3TGxtMDNUWUhHQ3ZFNVovM0NqZEJpb1Fu?=
- =?utf-8?B?N3JxM0hQWTk2cldPNGlOc1lJK3l0MnhGT0oyT3h0U0J4L0VkTVJpTDRKK05F?=
- =?utf-8?B?cWJnM0VySTJ5ZVdnYzRaa3pTWVhrTEYzWnJQT0xEcXBKZGphU3oxVEY2Wkgv?=
- =?utf-8?B?U2swZm9GODI2YzM2ekxNZkhWUWRrRjN3YVhtMTFYRmJWNXBRUVJ2cVZSSFo2?=
- =?utf-8?B?STlpcmF0WnVSdUR6WHM3NVI4enFOaldELzVYWGIwTkM1L2ZwVVRBVEoyYUtB?=
- =?utf-8?B?U1J4cThmOTN0MEl1cDgvdjFDZEd3TzdWMm1QQ2FNcGk0ZU9XTW5lUzZ4UlEw?=
- =?utf-8?B?SFFrMW5hUngvTkZPMU5peUFUMzBRZGZQVlFkc2FvVEJOK25ObWhPYVhYdjlY?=
- =?utf-8?B?ZTVza3MyMkE3SG04NUJIc3d4ZmhaelB5WGNlU280TGh6RVBvOFRxQUxBY1hW?=
- =?utf-8?B?bTRyaFdVa2w4Y0tFOXhFRVNERSs0T1lDdmhKTmZlVWpzWGd0Q0xycm5zMzdB?=
- =?utf-8?B?cXVScWVKQU9zZmxIVEpHdDFPeElaS2lyaHR2RHAyeXc5VjRuYnBWaEhkWGJz?=
- =?utf-8?B?cGlFcDVlOUNLQlhrL1B5ZkNQZUN0UzZ6NEZPTEFIV0FkRm13b2N4RlRaWThk?=
- =?utf-8?B?R0hWdmU5cHVUTVFDSWEzRXRJYlhRZ3J6ZFhPMFZyZm5HdkdTenZ3ZXFVaC9h?=
- =?utf-8?B?c0xSSHpDL002THJINmxHaDdhRHEySGZHS1pLTGtXYUZybzRyVUc4WjFPeWc4?=
- =?utf-8?B?Wm5pWnhrVFVFR0docWNTRUt4WVVVczlXWUJMcklTUnhmNzUrUC9sSSt3aTNo?=
- =?utf-8?B?VXoxL3kzTnZVS0k4L1FLWVF3QVdMMWhqdm1zY21oWDhzT090S1Q5U0x4akdF?=
- =?utf-8?B?QS83bUxxR3YzNHZVbG1DTHljQ3VTckErYm9kelQ0aENPZjFuSEJvSXd1MkFj?=
- =?utf-8?B?b2h1M0RMc0hMeE1sZlZ4cXREU1dJQjUxQkNETUJ3Y3VZNDhyNVE5aFljcVF6?=
- =?utf-8?B?VjF0Wjh2TlN1dmRBVzgwVUVoZFFGQ1RZQXRaeGZyYTk0dDJsdWtHWTlnbW92?=
- =?utf-8?B?NmhzQTlyeENsVERGdVpSM0Z4SzNibmJLOG1GWjVVN0xxcjVPdDhFNnJadHhi?=
- =?utf-8?B?SXM1NEpsTDliNzl6dXUwdHpkZm9IeFRJWnRxMTRHYmFjR1hyNEZCc0l1Sy9w?=
- =?utf-8?B?ZGZzQy9yV0ZpeG9UWjdHZUlQSENId0dCWEFxVmN6VC9hU0c4RGtIZ2VKYi85?=
- =?utf-8?B?V2ZxcDZPcStOVW1TSEJhTXFza3hlOTNwNTdGcWZ5azhVdGQxYWtRc1lLbjNk?=
- =?utf-8?B?UEhsNCtSRGJxdHF1YXVHbkIwdm0rQ09JMHBubVQ2MUpoMjl5MzBjNVk2blFm?=
- =?utf-8?B?RDN2KzZaRDNGU2lsNzBLdkhPZ2Uxbkc3aWhQMmRaWkJLb2czVm9HZVdZODh3?=
- =?utf-8?Q?MB0Tgpq4GSA8Sob6c0vzqQsGTsZdWQd6AmcgMWzKvjtu6?=
-x-ms-exchange-antispam-messagedata-1: s/vcw93hkqXEvPqZBtv8oEjhNNVO9k8ClUs=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <BEAD00764D42F54BBDCC2D9200E4874B@namprd04.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ d=gmail.com; s=20251104; t=1779850297; x=1780455097; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=WCk6AhWtJfOyvuGJlXvmxmIfxIUYrbTjVFvyl7XyjwA=;
+ b=dTbBqXOlIukA1JfI6RB4JElatU2vX4pFJy3e3fi5JZjcpye9FSC8kwjnweVs90kTJL
+ 1wxk0NsB/+H/VljwUq5XhSKttiAlgTfT++DTjKRJbQq82mGhcEhZlbyx/4Q7V+dPteHJ
+ y4TsCwurSN4GAsk65G2h8hiQz+4l+B5uEYe4i2MZzXPZtUIW953NHz1zAQpged2tUJ2s
+ orMFBq7TKZ3Fa3JmiDGOY9sr10ImD4eFSq8ZixkShxT8nD18JcuXm1UTTEoKSWPD6hxA
+ 41FhyM/4F4hABchTxVgK+FjsBA1VeXknPmJkNNqcUgzAk4JnOfbLkwWiPC0DDWlh8Oyi
+ V4Pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779850297; x=1780455097;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=WCk6AhWtJfOyvuGJlXvmxmIfxIUYrbTjVFvyl7XyjwA=;
+ b=YF7B9q9G/1Y5jESh595PLAMNTt4H2KHtL+7bOQYgALfqEfM86f5nIINY2w1zV7ziCq
+ 5dVuuZXbmCyQkqaZZgB9voNOTDbAJ42RSCc24RmtGNvCteBFhVGsbfQMswEPz5ts65K1
+ mXNoLQqAhdJlCwOfBZtj2S6f+Nal3ajUrzrnrKD/7D+5VlcFWkyKpxS9ke1sXUB7WYTp
+ 82NIbs9tMLUC1cBdJLvfNUPYp21opyqbcd5+ylv18EHNcfE5weLT/NL0op72lf6X/bW1
+ rXe/4dh0JCvCjqGEVoPnhaAq+cH5CaIx7jH1545d2rbTEWNKwEPhyzWZbi0eZRaSPUTT
+ fPEg==
+X-Gm-Message-State: AOJu0YwYu5vFCWHPXMcsCGUqKnBGvVAncmU9C46WV+z4QBqyPmMYnR2L
+ UjzqqviHGdLntWVb13NnNn5qjikViFdGGhnbYd4eWpRYuCCW+8kdKHJ9SlcAoyOI+pKnmx/UTOH
+ yheQ7T4PBPBsMT+Nls156efUDrDQoCks=
+X-Gm-Gg: Acq92OFZ1RmoKbUYAYLjlGmZwHBPvwGH1jdIjanrapTgKW0NDDq484i0JDj5KrI1+K5
+ F/sN0SRFwm2a3oALaUL+k0gOb23fOMnYA4WKUb8dfQircaOeYqaU0mvG27t7Zw6rK8DBkulSipT
+ NonJX4nORvM4ldG0XhVvXRbaA9deAp995CR/IPSRN9BB2ftFb+xsiUNvwK5v3Q1Ce1xRj54I7DG
+ vkG4p4c1cpgKK0URwyxC28sErQVIjT2lqppCHIP3VZlO5Lhl7SvgqJGAweiPolOdKYcn6QWvZYO
+ KU8BCd5mhCB7WmVk
+X-Received: by 2002:a2e:bd86:0:b0:393:975b:5634 with SMTP id
+ 38308e7fff4ca-395d8c0f870mr95124411fa.11.1779850297134; Tue, 26 May 2026
+ 19:51:37 -0700 (PDT)
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: om8zkOvBKeQLCeKblFTx13x63bhw0/uWSECH9QnxOwRIXiELpP9DehTfYS9zLWicf8upjEpYObDtBfr7k/8R7cpl4f29xuF7wDG2aqIYAKyOYR44XStKH7XEOdCVE2MFCh4dDsV0ujTc3GblZJ6i7F+3GIb90eruM0qnP9ATor2Yo6KsrdWXt2qByNUrE72DlXoxOUvLywuVOYetJxHEVLszkoGXhfr/a94ThuLv88XYrw+IPJO/2k8s1Iamc93LjyzosE1OgMsp+B9gf/T6wcx71Gk5a0Gsq3Gt4UilfaD3eU+rJxSBHnAx4QilVVBLWVJKvN1w+nh6CIqK1JgdxQ==
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: pdoZNlITl/QrcW3wM3Sqb5ebt6SX17nPvwMEYUtiC0iOjbWmzUVUghP6WZwXWu9+Ey+Bba85QeayGunJAoJ9ZmLZW5T7N47Tlj61g5SqNelfmn6rLD6ysdj/xFAQXuayPpdvOl0twgd/AlBuKBJmvOsxfJgD4JDHRMAJY9ttRvghrnl7T553s44WQaQnfSzPgFk3fgD8kSEdJlr6p2IqXmLqw7OllGEm/wN0PWloOngfIiUf9QRkCrwJAVI7ZdEPDCWj2id4oGgPcSmxuWKsMgbT1VXi7Q5IYxy5kl2Tv8Wk+x2RaXh09IE5/Y1O9gvPmegXF8UfgRjKLPkGyH8gXiQpOiNG6vrdaxrdRAnVCYhwKiZTbLjnMBmF1ruzQDhuAPBV7GUeOPzqwr2esylRyeNAaR29nu0x3PIP7WiPObHI94laTedLnnk3oG8eISJ2Znsph6zmCFQQV8Kdqgsg3GmslGu3YGFvyI7x5BXy8U8PAGnVtP963vDfWJ5ZUFefNel8Vo+tyvr9CQkUuUAu3MItXUKGc/CZaJvPc57GHQzbuSOCHUEXU/nw7LZDVX/T+ZKHzfYu2PZDcVbFN+SEwDkPWl+7zVl+EpnpAb9jdnNPFXryREPWEkO8I43rJIo3
-X-OriginatorOrg: wdc.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BY1PR04MB9561.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6b533657-0bcc-459c-104b-08debb962352
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 May 2026 02:17:44.4748 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: B4Qlz8FOm4I1JkFHwxWP5W7XUiHxFZPsKV3CFxuKkt6PpHUSob/KLOll61fYl8CcftpvMD4cpaM3ghvGJnIA3TgAkdYFuKQvPSQEIn8dYqo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR04MB7596
-Received-SPF: pass client-ip=68.232.141.245;
- envelope-from=prvs=6009f06ea=Alistair.Francis@wdc.com;
- helo=esa1.hgst.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <cover.1779792111.git.fritchleybohrer@gmail.com>
+ <c33bea8085f103db209eaf06f978297bba727d88.1779792111.git.fritchleybohrer@gmail.com>
+ <4e562850-06c3-48f0-9023-d1c5df71e828@linaro.org>
+ <c254529af5aee1c33bc143ad72d79839231465f1.camel@wdc.com>
+In-Reply-To: <c254529af5aee1c33bc143ad72d79839231465f1.camel@wdc.com>
+From: Zephyr Li <fritchleybohrer@gmail.com>
+Date: Wed, 27 May 2026 10:51:22 +0800
+X-Gm-Features: AVHnY4L3hvD0DltQ-Gjxrd3cvs-VE7Q28jXvhsJjQF_thzmDhkBaQOLgo5GMqXI
+Message-ID: <CAN4PorV7mPptdABf08XAeh++xR6Vg43sFGdY_M8pJAGTg5MYVg@mail.gmail.com>
+Subject: Re: [PATCH v2 4/5] target/riscv: Reject x-misa-w without TCG
+To: Alistair Francis <Alistair.Francis@wdc.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "philmd@linaro.org" <philmd@linaro.org>, 
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "palmer@dabbelt.com" <palmer@dabbelt.com>, 
+ "daniel.barboza@oss.qualcomm.com" <daniel.barboza@oss.qualcomm.com>, 
+ "chao.liu.zevorn@gmail.com" <chao.liu.zevorn@gmail.com>,
+ "liwei1518@gmail.com" <liwei1518@gmail.com>, 
+ "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>
+Content-Type: multipart/alternative; boundary="000000000000b6d11b0652c3b0db"
+Received-SPF: pass client-ip=2a00:1450:4864:20::243;
+ envelope-from=fritchleybohrer@gmail.com; helo=mail-lj1-x243.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -181,134 +123,222 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gRnJpLCAyMDI2LTA1LTIyIGF0IDE0OjI1IC0wMzAwLCBEYW5pZWwgSGVucmlxdWUgQmFyYm96
-YSB3cm90ZToKPiBXZSdyZSBub3QgZG9pbmcgYW55dGhpbmcgc3BlY2lhbCB3LnIudCBQTUEgKFBo
-eXNpY2FsIE1lbW9yeSBBY2Nlc3MpCj4gcmVsYXRlZCBmYXVsdHMsIGhhbmRsaW5nIHRoZW0gbGlr
-ZSByZWd1bGFyIGZhdWx0cyB0aGF0IHdpbGwKPiBldmVudHVhbGx5Cj4gdHVybiB0byBiZSByZWd1
-bGFyIHBhZ2UgZmF1bHRzLgo+IAo+IFR1cm5zIG91dCB3ZSBjYW4ndCBkbyB0aGF0LsKgIFByaXYg
-c3BlYyBzZWN0aW9uICJWaXJ0dWFsIEFkZHJlc3MKPiBUcmFuc2xhdGlvbiBQcm9jZXNzIiBtZW50
-aW9uczoKPiAKPiAiSWYgYSBzdG9yZSB0byB0aGUgUFRFIGF0IGFkZHJlc3MgYSt2YS52cG5baV3D
-l1BURVNJWkUgd291bGQgdmlvbGF0ZSBhCj4gUE1BIG9yIFBNUCBjaGVjaywgcmFpc2UgYW4gYWNj
-ZXNzLWZhdWx0IGV4Y2VwdGlvbiBjb3JyZXNwb25kaW5nIHRvCj4gdGhlCj4gb3JpZ2luYWwgYWNj
-ZXNzIHR5cGUuIgo+IAo+IFRoaXMgbWVhbnMgdGhhdCB3ZSBzaG91bGQgaGFuZGxlIFBNQSB2aW9s
-YXRpb25zIHdpdGggYWNjZXNzIGZhdWx0cywKPiBsaWtlCj4gd2UncmUgYWxyZWFkeSBkb2luZyB3
-aXRoIFBNUC7CoCBPbmUgY2xlYXIgY29kZSBwYXRoIHdoZXJlIHdlIHNob3VsZAo+IHRocm93Cj4g
-YSBQTUEgZmFpbHVyZSwgZXhwb3NlZCBieSBbMV0sIGlzIHRoZSBlcnJvciByZXR1cm4gZnJvbQo+
-IGFkZHJlc3Nfc3BhY2VfbGQqIGNhbGwuCj4gCj4gVGhlcmUncyBhIHNlcGFyYXRlZCBpc3N1ZSB3
-aXRoIHRoZSBlcnJvciBjb2RlIGJlaW5nIHJldHVybmVkIGJ5IHRoZW0KPiAoaXQKPiBhbHdheXMg
-cmV0dXJuIERFQ09ERV9FUlJPUiBldmVuIHdpdGggJ3JlamVjdGVkJyByZWFkcykgdGhhdCB3ZSdy
-ZQo+IGdvaW5nCj4gdG8gd29yayBhcm91bmQgaXQgYnkgYXNzdW1pbmcgdGhhdCB3ZSBkaWQgYSBn
-b29kIGpvYiB3aXRoIHRoZSBQVEUKPiBhZGRyZXNzIHNhbml0aXphdGlvbiBiZWZvcmVoYW5kLCBh
-bmQgaW50ZXJwcmV0IHRoYXQgdGhlIGVycm9yIGhlcmUgaXMKPiByZWxhdGVkIHRvIFBNQS7CoCBU
-aGlzIGlzIG9mIGNvdXJzZSBub3QgaWRlYWwgYnV0IGZpeGluZyB0aGlzIFFFTVUgQVBJCj4gaXMK
-PiBvdXQgb2Ygc2NvcGUgZm9yIHRoaXMgd29yay4KPiAKPiBBbGwgdGhpcyBzYWlkLCB3ZSdsbCBz
-ZXQgdGhlIG5ldyBwbXBfcG1hX3Zpb2xhdGlvbiBmbGFnIHdoZW4gd2UgaGF2ZQo+IGVpdGhlciBh
-IFBNUCBvciBhIFBNQSBmYXVsdCwgYW5kIGV2ZXJ5dGhpbmcgZWxzZSBzaGFsbCBmYWxsIGludG8K
-PiBwbGFjZS4KPiAKPiBbMV0gaHR0cHM6Ly9naXRsYWIuY29tL3FlbXUtcHJvamVjdC9xZW11Ly0v
-d29ya19pdGVtcy8zNTAyCj4gCj4gUmVzb2x2ZXM6IGh0dHBzOi8vZ2l0bGFiLmNvbS9xZW11LXBy
-b2plY3QvcWVtdS8tL3dvcmtfaXRlbXMvMzUwMgo+IFNpZ25lZC1vZmYtYnk6IERhbmllbCBIZW5y
-aXF1ZSBCYXJib3phCj4gPGRhbmllbC5iYXJib3phQG9zcy5xdWFsY29tbS5jb20+CgpSZXZpZXdl
-ZC1ieTogQWxpc3RhaXIgRnJhbmNpcyA8YWxpc3RhaXIuZnJhbmNpc0B3ZGMuY29tPgoKQWxpc3Rh
-aXIKCj4gLS0tCj4gwqB0YXJnZXQvcmlzY3YvY3B1LmjCoMKgwqDCoMKgwqDCoCB8wqAgMyArKy0K
-PiDCoHRhcmdldC9yaXNjdi9jcHVfaGVscGVyLmMgfCAzNCArKysrKysrKysrKysrKysrKysrKysr
-KysrLS0tLS0tLS0tCj4gwqAyIGZpbGVzIGNoYW5nZWQsIDI3IGluc2VydGlvbnMoKyksIDEwIGRl
-bGV0aW9ucygtKQo+IAo+IGRpZmYgLS1naXQgYS90YXJnZXQvcmlzY3YvY3B1LmggYi90YXJnZXQv
-cmlzY3YvY3B1LmgKPiBpbmRleCA3ZDc5YzdhNWE3Li5lNWUxNjg3MTc3IDEwMDY0NAo+IC0tLSBh
-L3RhcmdldC9yaXNjdi9jcHUuaAo+ICsrKyBiL3RhcmdldC9yaXNjdi9jcHUuaAo+IEBAIC0xMzEs
-NyArMTMxLDggQEAgZW51bSB7Cj4gwqDCoMKgwqAgVFJBTlNMQVRFX1NVQ0NFU1MsCj4gwqDCoMKg
-wqAgVFJBTlNMQVRFX0ZBSUwsCj4gwqDCoMKgwqAgVFJBTlNMQVRFX1BNUF9GQUlMLAo+IC3CoMKg
-wqAgVFJBTlNMQVRFX0dfU1RBR0VfRkFJTAo+ICvCoMKgwqAgVFJBTlNMQVRFX0dfU1RBR0VfRkFJ
-TCwKPiArwqDCoMKgIFRSQU5TTEFURV9QTUFfRkFJTCwKPiDCoH07Cj4gwqAKPiDCoC8qIEV4dGVu
-c2lvbiBjb250ZXh0IHN0YXR1cyAqLwo+IGRpZmYgLS1naXQgYS90YXJnZXQvcmlzY3YvY3B1X2hl
-bHBlci5jIGIvdGFyZ2V0L3Jpc2N2L2NwdV9oZWxwZXIuYwo+IGluZGV4IDE3MzA1ZTFiYjcuLjUz
-MDNkOWY3ZjQgMTAwNjQ0Cj4gLS0tIGEvdGFyZ2V0L3Jpc2N2L2NwdV9oZWxwZXIuYwo+ICsrKyBi
-L3RhcmdldC9yaXNjdi9jcHVfaGVscGVyLmMKPiBAQCAtMTQyNCw3ICsxNDI0LDIyIEBAIHN0YXRp
-YyBpbnQgZ2V0X3BoeXNpY2FsX2FkZHJlc3MoQ1BVUklTQ1ZTdGF0ZQo+ICplbnYsIGh3YWRkciAq
-cGh5c2ljYWwsCj4gwqDCoMKgwqDCoMKgwqDCoCB9Cj4gwqAKPiDCoMKgwqDCoMKgwqDCoMKgIGlm
-IChyZXMgIT0gTUVNVFhfT0spIHsKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCByZXR1cm4gVFJB
-TlNMQVRFX0ZBSUw7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgLyoKPiArwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgICogVGhlIHJlc3VsdCBvZiBhZGRyZXNzX3NwYWNlXyogQVBJcyBhYm92ZSBk
-b2VzIG5vdAo+IHRha2UgaW50bwo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgKiBjb25zaWRl
-cmF0aW9uIHJlamVjdCByZWFkcywgcHV0dGluZyBhbGwgZXJyb3JzIGluIHRoZQo+IHNhbWUKPiAr
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICogY2F0aGVnb3J5IChERUNPREVfRVJST1IpLCBhbHRo
-b3VnaCB0aGVyZSdzIGEgY2xlYXIKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICogZGlzdGlu
-Y3Rpb24gYmV0d2VlbiBhIHJlamVjdGVkIHJlYWQgdmVyc3VzIG90aGVyCj4gZXJyb3JzCj4gK8Kg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAqIChzZWUgbWVtb3J5X3JlZ2lvbl9kaXNwYXRjaF9yZWFk
-KCkgLT4KPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICogbWVtb3J5X3JlZ2lvbl9hY2Nlc3Nf
-dmFsaWQoKSkuwqAgVGhpcyBpcyBzb21ldGhpbmcKPiB0aGF0Cj4gK8KgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoCAqIHdlIG1pZ2h0IGhhdmUgdG8gZGVhbCB3aXRoIGNvcmUgUUVNVSBsb2dpYyBzb21l
-IG90aGVyCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAqIGRheS4KPiArwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgICoKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICogRm9yIHRoaXMgcGFy
-dGljdWxhciBlcnJvciBwYXRoLCBnaXZlbiB0aGF0IHdlIG1hZGUKPiBjaGVja3MKPiArwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgICogdy5yLnQgbGVnYWwgUFRFIGFkZHJlc3MgYmVmb3JlIGNhbGxp
-bmcgdGhvc2UgQVBJcywKPiB3ZSdsbAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgKiBhc3N1
-bWUgdGhhdCBhbnl0aGluZyAhPSBNRU1UWF9PSyBtZWFucyBhIHJlamVjdGVkCj4gcmVhZCwKPiAr
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICogaS5lLiBhIFBNQSBlcnJvci4KPiArwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgICovCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgcmV0dXJuIFRSQU5T
-TEFURV9QTUFfRkFJTDsKPiDCoMKgwqDCoMKgwqDCoMKgIH0KPiDCoAo+IMKgwqDCoMKgwqDCoMKg
-wqAgaWYgKHJpc2N2X2NwdV9zeGwoZW52KSA9PSBNWExfUlYzMikgewo+IEBAIC0xNjY4LDcgKzE2
-ODMsOCBAQCBzdGF0aWMgaW50IGdldF9waHlzaWNhbF9hZGRyZXNzKENQVVJJU0NWU3RhdGUKPiAq
-ZW52LCBod2FkZHIgKnBoeXNpY2FsLAo+IMKgfQo+IMKgCj4gwqBzdGF0aWMgdm9pZCByYWlzZV9t
-bXVfZXhjZXB0aW9uKENQVVJJU0NWU3RhdGUgKmVudiwgdGFyZ2V0X3Vsb25nCj4gYWRkcmVzcywK
-PiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqAgTU1VQWNjZXNzVHlwZSBhY2Nlc3NfdHlwZSwgYm9vbAo+IHBtcF92aW9sYXRpb24s
-Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgIE1NVUFjY2Vzc1R5cGUgYWNjZXNzX3R5cGUsCj4gK8KgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGJvb2wgcG1wX3Bt
-YV92aW9sYXRpb24sCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBib29sIGZpcnN0X3N0YWdlLCBib29sIHR3b19zdGFnZSwK
-PiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgIGJvb2wgdHdvX3N0YWdlX2luZGlyZWN0KQo+IMKgewo+IEBAIC0xNjc2LDcgKzE2
-OTIsNyBAQCBzdGF0aWMgdm9pZCByYWlzZV9tbXVfZXhjZXB0aW9uKENQVVJJU0NWU3RhdGUKPiAq
-ZW52LCB0YXJnZXRfdWxvbmcgYWRkcmVzcywKPiDCoAo+IMKgwqDCoMKgIHN3aXRjaCAoYWNjZXNz
-X3R5cGUpIHsKPiDCoMKgwqDCoCBjYXNlIE1NVV9JTlNUX0ZFVENIOgo+IC3CoMKgwqDCoMKgwqDC
-oCBpZiAocG1wX3Zpb2xhdGlvbikgewo+ICvCoMKgwqDCoMKgwqDCoCBpZiAocG1wX3BtYV92aW9s
-YXRpb24pIHsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgY3MtPmV4Y2VwdGlvbl9pbmRleCA9
-IFJJU0NWX0VYQ1BfSU5TVF9BQ0NFU1NfRkFVTFQ7Cj4gwqDCoMKgwqDCoMKgwqDCoCB9IGVsc2Ug
-aWYgKGVudi0+dmlydF9lbmFibGVkICYmICFmaXJzdF9zdGFnZSkgewo+IMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoCBjcy0+ZXhjZXB0aW9uX2luZGV4ID0gUklTQ1ZfRVhDUF9JTlNUX0dVRVNUX1BB
-R0VfRkFVTFQ7Cj4gQEAgLTE2ODUsNyArMTcwMSw3IEBAIHN0YXRpYyB2b2lkIHJhaXNlX21tdV9l
-eGNlcHRpb24oQ1BVUklTQ1ZTdGF0ZQo+ICplbnYsIHRhcmdldF91bG9uZyBhZGRyZXNzLAo+IMKg
-wqDCoMKgwqDCoMKgwqAgfQo+IMKgwqDCoMKgwqDCoMKgwqAgYnJlYWs7Cj4gwqDCoMKgwqAgY2Fz
-ZSBNTVVfREFUQV9MT0FEOgo+IC3CoMKgwqDCoMKgwqDCoCBpZiAocG1wX3Zpb2xhdGlvbikgewo+
-ICvCoMKgwqDCoMKgwqDCoCBpZiAocG1wX3BtYV92aW9sYXRpb24pIHsKPiDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgY3MtPmV4Y2VwdGlvbl9pbmRleCA9IFJJU0NWX0VYQ1BfTE9BRF9BQ0NFU1Nf
-RkFVTFQ7Cj4gwqDCoMKgwqDCoMKgwqDCoCB9IGVsc2UgaWYgKHR3b19zdGFnZSAmJiAhZmlyc3Rf
-c3RhZ2UpIHsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgY3MtPmV4Y2VwdGlvbl9pbmRleCA9
-Cj4gUklTQ1ZfRVhDUF9MT0FEX0dVRVNUX0FDQ0VTU19GQVVMVDsKPiBAQCAtMTY5NCw3ICsxNzEw
-LDcgQEAgc3RhdGljIHZvaWQgcmFpc2VfbW11X2V4Y2VwdGlvbihDUFVSSVNDVlN0YXRlCj4gKmVu
-diwgdGFyZ2V0X3Vsb25nIGFkZHJlc3MsCj4gwqDCoMKgwqDCoMKgwqDCoCB9Cj4gwqDCoMKgwqDC
-oMKgwqDCoCBicmVhazsKPiDCoMKgwqDCoCBjYXNlIE1NVV9EQVRBX1NUT1JFOgo+IC3CoMKgwqDC
-oMKgwqDCoCBpZiAocG1wX3Zpb2xhdGlvbikgewo+ICvCoMKgwqDCoMKgwqDCoCBpZiAocG1wX3Bt
-YV92aW9sYXRpb24pIHsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgY3MtPmV4Y2VwdGlvbl9p
-bmRleCA9IFJJU0NWX0VYQ1BfU1RPUkVfQU1PX0FDQ0VTU19GQVVMVDsKPiDCoMKgwqDCoMKgwqDC
-oMKgIH0gZWxzZSBpZiAodHdvX3N0YWdlICYmICFmaXJzdF9zdGFnZSkgewo+IMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoCBjcy0+ZXhjZXB0aW9uX2luZGV4ID0KPiBSSVNDVl9FWENQX1NUT1JFX0dV
-RVNUX0FNT19BQ0NFU1NfRkFVTFQ7Cj4gQEAgLTE4MjAsNyArMTgzNiw3IEBAIGJvb2wgcmlzY3Zf
-Y3B1X3RsYl9maWxsKENQVVN0YXRlICpjcywgdmFkZHIKPiBhZGRyZXNzLCBpbnQgc2l6ZSwKPiDC
-oMKgwqDCoCB2YWRkciBpbV9hZGRyZXNzOwo+IMKgwqDCoMKgIGh3YWRkciBwYSA9IDA7Cj4gwqDC
-oMKgwqAgaW50IHByb3QsIHByb3QyLCBwcm90X3BtcDsKPiAtwqDCoMKgIGJvb2wgcG1wX3Zpb2xh
-dGlvbiA9IGZhbHNlOwo+ICvCoMKgwqAgYm9vbCBwbXBfcG1hX3Zpb2xhdGlvbiA9IGZhbHNlOwo+
-IMKgwqDCoMKgIGJvb2wgZmlyc3Rfc3RhZ2VfZXJyb3IgPSB0cnVlOwo+IMKgwqDCoMKgIGJvb2wg
-dHdvX3N0YWdlX2xvb2t1cCA9IG1tdWlkeF8yc3RhZ2UobW11X2lkeCk7Cj4gwqDCoMKgwqAgYm9v
-bCB0d29fc3RhZ2VfaW5kaXJlY3RfZXJyb3IgPSBmYWxzZTsKPiBAQCAtMTkyMSw4ICsxOTM3LDgg
-QEAgYm9vbCByaXNjdl9jcHVfdGxiX2ZpbGwoQ1BVU3RhdGUgKmNzLCB2YWRkcgo+IGFkZHJlc3Ms
-IGludCBzaXplLAo+IMKgwqDCoMKgwqDCoMKgwqAgfQo+IMKgwqDCoMKgIH0KPiDCoAo+IC3CoMKg
-wqAgaWYgKHJldCA9PSBUUkFOU0xBVEVfUE1QX0ZBSUwpIHsKPiAtwqDCoMKgwqDCoMKgwqAgcG1w
-X3Zpb2xhdGlvbiA9IHRydWU7Cj4gK8KgwqDCoCBpZiAocmV0ID09IFRSQU5TTEFURV9QTVBfRkFJ
-TCB8fCByZXQgPT0gVFJBTlNMQVRFX1BNQV9GQUlMKSB7Cj4gK8KgwqDCoMKgwqDCoMKgIHBtcF9w
-bWFfdmlvbGF0aW9uID0gdHJ1ZTsKPiDCoMKgwqDCoCB9Cj4gwqAKPiDCoMKgwqDCoCBpZiAocmV0
-ID09IFRSQU5TTEFURV9TVUNDRVNTKSB7Cj4gQEAgLTE5NDksNyArMTk2NSw3IEBAIGJvb2wgcmlz
-Y3ZfY3B1X3RsYl9maWxsKENQVVN0YXRlICpjcywgdmFkZHIKPiBhZGRyZXNzLCBpbnQgc2l6ZSwK
-PiDCoMKgwqDCoMKgwqDCoMKgIGNwdV9jaGVja193YXRjaHBvaW50KGNzLCBhZGRyZXNzLCBzaXpl
-LAo+IE1FTVRYQVRUUlNfVU5TUEVDSUZJRUQsCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB3cF9hY2Nlc3MsIHJldGFkZHIpOwo+IMKg
-Cj4gLcKgwqDCoMKgwqDCoMKgIHJhaXNlX21tdV9leGNlcHRpb24oZW52LCBhZGRyZXNzLCBhY2Nl
-c3NfdHlwZSwKPiBwbXBfdmlvbGF0aW9uLAo+ICvCoMKgwqDCoMKgwqDCoCByYWlzZV9tbXVfZXhj
-ZXB0aW9uKGVudiwgYWRkcmVzcywgYWNjZXNzX3R5cGUsCj4gcG1wX3BtYV92aW9sYXRpb24sCj4g
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
-Zmlyc3Rfc3RhZ2VfZXJyb3IsIHR3b19zdGFnZV9sb29rdXAsCj4gwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdHdvX3N0YWdlX2luZGlyZWN0
-X2Vycm9yKTsKPiDCoMKgwqDCoMKgwqDCoMKgIGNwdV9sb29wX2V4aXRfcmVzdG9yZShjcywgcmV0
-YWRkcik7Cg==
+--000000000000b6d11b0652c3b0db
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Thanks Philippe and Alistair.
+
+I see, I misunderstood the stub suggestion and also treated
+riscv_cpu_validate_set_extensions() too much as a TCG-only helper.
+
+I'll take another look at the validation logic. If the checks are common
+architecture feature restrictions, I'll avoid hiding the helper behind a
+no-TCG unreachable stub and instead try to move or split the validation
+so the common part is available outside TCG as well.
+
+If I still need to reject some no-TCG configuration, I'll make the reason
+explicit in the commit message.
+
+Thanks,
+Zephyr
+
+On Wed, May 27, 2026 at 7:52=E2=80=AFAM Alistair Francis <Alistair.Francis@=
+wdc.com>
+wrote:
+
+> On Tue, 2026-05-26 at 14:19 +0200, Philippe Mathieu-Daud=C3=A9 wrote:
+> > On 26/5/26 13:04, Zephyr Li wrote:
+> > > Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
+> > > ---
+> > >   target/riscv/cpu.c         |  7 +++++++
+> > >   target/riscv/tcg/tcg-cpu.h | 10 ++++++++++
+> > >   2 files changed, 17 insertions(+)
+> > >
+> > > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> > > index 1dea66972d..8f54610097 100644
+> > > --- a/target/riscv/cpu.c
+> > > +++ b/target/riscv/cpu.c
+> > > @@ -955,6 +955,13 @@ static void riscv_cpu_realize(DeviceState
+> > > *dev, Error **errp)
+> > >       RISCVCPUClass *mcc =3D RISCV_CPU_GET_CLASS(dev);
+> > >       Error *local_err =3D NULL;
+> > >
+> > > +#ifndef CONFIG_TCG
+> > > +    if (cpu->cfg.misa_w) {
+> > > +        error_setg(errp, "x-misa-w requires TCG");
+> > > +        return;
+> > > +    }
+> > > +#endif
+> > > +
+> > >       cpu_exec_realizefn(cs, &local_err);
+> > >       if (local_err !=3D NULL) {
+> > >           error_propagate(errp, local_err);
+> > > diff --git a/target/riscv/tcg/tcg-cpu.h b/target/riscv/tcg/tcg-
+> > > cpu.h
+> > > index a23716a5ac..20ad294f88 100644
+> > > --- a/target/riscv/tcg/tcg-cpu.h
+> > > +++ b/target/riscv/tcg/tcg-cpu.h
+> > > @@ -22,7 +22,17 @@
+> > >
+> > >   #include "cpu.h"
+> > >
+> > > +#ifdef CONFIG_TCG
+> > >   void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error
+> > > **errp);
+> > > +#else
+> > > +static inline void riscv_cpu_validate_set_extensions(RISCVCPU
+> > > *cpu,
+> > > +                                                     Error **errp)
+> > > +{
+> > > +    (void)cpu;
+> > > +    (void)errp;
+> > > +    qemu_build_not_reached();
+> >
+> > By stub I meant a new unit file added to the stub_ss[] meson source
+> > set.
+> >
+> > Anyway, I'm not familiar enough with RISCV but if it works similarly
+> > to
+> > ARM I'd expect an accelerated 'host' CPU type to have all host-
+> > enabled
+> > features, with the ability to deselect few of them. In that case, the
+> > riscv_cpu_validate_set_extensions() helper wouldn't be TCG specific
+> > (since validating the architecture restrictions).
+>
+> Agreed. This at least needs a commit comment describing why this should
+> be disabled
+>
+> Alistair
+>
+> >
+> > If you need accelerator-specific CPU feature validators, you could
+> > dispatch in riscv_cpu_validate_set_extensions, eventually expanding
+> > AccelOpsClass.
+> >
+> > > +}
+> > > +#endif
+> > >   void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error
+> > > **errp);
+> > >   bool riscv_cpu_tcg_compatible(RISCVCPU *cpu);
+> > >
+>
+
+--000000000000b6d11b0652c3b0db
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Thanks Philippe and Alistair.<br><br>I see, I misunderstoo=
+d the stub suggestion and also treated<br>riscv_cpu_validate_set_extensions=
+() too much as a TCG-only helper.<br><br>I&#39;ll take another look at the =
+validation logic. If the checks are common<br>architecture feature restrict=
+ions, I&#39;ll avoid hiding the helper behind a<br>no-TCG unreachable stub =
+and instead try to move or split the validation<br>so the common part is av=
+ailable outside TCG as well.<br><br>If I still need to reject some no-TCG c=
+onfiguration, I&#39;ll make the reason<br>explicit in the commit message.<b=
+r><br>Thanks,<br>Zephyr</div><br><div class=3D"gmail_quote gmail_quote_cont=
+ainer"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, May 27, 2026 at 7:52=
+=E2=80=AFAM Alistair Francis &lt;<a href=3D"mailto:Alistair.Francis@wdc.com=
+">Alistair.Francis@wdc.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
+il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
+04,204);padding-left:1ex">On Tue, 2026-05-26 at 14:19 +0200, Philippe Mathi=
+eu-Daud=C3=A9 wrote:<br>
+&gt; On 26/5/26 13:04, Zephyr Li wrote:<br>
+&gt; &gt; Signed-off-by: Zephyr Li &lt;<a href=3D"mailto:fritchleybohrer@gm=
+ail.com" target=3D"_blank">fritchleybohrer@gmail.com</a>&gt;<br>
+&gt; &gt; ---<br>
+&gt; &gt; =C2=A0 target/riscv/cpu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 |=C2=A0 7 +++++++<br>
+&gt; &gt; =C2=A0 target/riscv/tcg/tcg-cpu.h | 10 ++++++++++<br>
+&gt; &gt; =C2=A0 2 files changed, 17 insertions(+)<br>
+&gt; &gt; <br>
+&gt; &gt; diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c<br>
+&gt; &gt; index 1dea66972d..8f54610097 100644<br>
+&gt; &gt; --- a/target/riscv/cpu.c<br>
+&gt; &gt; +++ b/target/riscv/cpu.c<br>
+&gt; &gt; @@ -955,6 +955,13 @@ static void riscv_cpu_realize(DeviceState<br=
+>
+&gt; &gt; *dev, Error **errp)<br>
+&gt; &gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 RISCVCPUClass *mcc =3D RISCV_CPU_G=
+ET_CLASS(dev);<br>
+&gt; &gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Error *local_err =3D NULL;<br>
+&gt; &gt; =C2=A0 <br>
+&gt; &gt; +#ifndef CONFIG_TCG<br>
+&gt; &gt; +=C2=A0=C2=A0=C2=A0 if (cpu-&gt;cfg.misa_w) {<br>
+&gt; &gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 error_setg(errp, &quo=
+t;x-misa-w requires TCG&quot;);<br>
+&gt; &gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;<br>
+&gt; &gt; +=C2=A0=C2=A0=C2=A0 }<br>
+&gt; &gt; +#endif<br>
+&gt; &gt; +<br>
+&gt; &gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 cpu_exec_realizefn(cs, &amp;local_=
+err);<br>
+&gt; &gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (local_err !=3D NULL) {<br>
+&gt; &gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 error_prop=
+agate(errp, local_err);<br>
+&gt; &gt; diff --git a/target/riscv/tcg/tcg-cpu.h b/target/riscv/tcg/tcg-<b=
+r>
+&gt; &gt; cpu.h<br>
+&gt; &gt; index a23716a5ac..20ad294f88 100644<br>
+&gt; &gt; --- a/target/riscv/tcg/tcg-cpu.h<br>
+&gt; &gt; +++ b/target/riscv/tcg/tcg-cpu.h<br>
+&gt; &gt; @@ -22,7 +22,17 @@<br>
+&gt; &gt; =C2=A0 <br>
+&gt; &gt; =C2=A0 #include &quot;cpu.h&quot;<br>
+&gt; &gt; =C2=A0 <br>
+&gt; &gt; +#ifdef CONFIG_TCG<br>
+&gt; &gt; =C2=A0 void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Erro=
+r<br>
+&gt; &gt; **errp);<br>
+&gt; &gt; +#else<br>
+&gt; &gt; +static inline void riscv_cpu_validate_set_extensions(RISCVCPU<br=
+>
+&gt; &gt; *cpu,<br>
+&gt; &gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 Error **errp)<br>
+&gt; &gt; +{<br>
+&gt; &gt; +=C2=A0=C2=A0=C2=A0 (void)cpu;<br>
+&gt; &gt; +=C2=A0=C2=A0=C2=A0 (void)errp;<br>
+&gt; &gt; +=C2=A0=C2=A0=C2=A0 qemu_build_not_reached();<br>
+&gt; <br>
+&gt; By stub I meant a new unit file added to the stub_ss[] meson source<br=
+>
+&gt; set.<br>
+&gt; <br>
+&gt; Anyway, I&#39;m not familiar enough with RISCV but if it works similar=
+ly<br>
+&gt; to<br>
+&gt; ARM I&#39;d expect an accelerated &#39;host&#39; CPU type to have all =
+host-<br>
+&gt; enabled<br>
+&gt; features, with the ability to deselect few of them. In that case, the<=
+br>
+&gt; riscv_cpu_validate_set_extensions() helper wouldn&#39;t be TCG specifi=
+c<br>
+&gt; (since validating the architecture restrictions).<br>
+<br>
+Agreed. This at least needs a commit comment describing why this should<br>
+be disabled<br>
+<br>
+Alistair<br>
+<br>
+&gt; <br>
+&gt; If you need accelerator-specific CPU feature validators, you could<br>
+&gt; dispatch in riscv_cpu_validate_set_extensions, eventually expanding<br=
+>
+&gt; AccelOpsClass.<br>
+&gt; <br>
+&gt; &gt; +}<br>
+&gt; &gt; +#endif<br>
+&gt; &gt; =C2=A0 void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error<=
+br>
+&gt; &gt; **errp);<br>
+&gt; &gt; =C2=A0 bool riscv_cpu_tcg_compatible(RISCVCPU *cpu);<br>
+&gt; &gt; =C2=A0 <br>
+</blockquote></div>
+
+--000000000000b6d11b0652c3b0db--
 
