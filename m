@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A963FCD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 20:16:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BA8FCD5BD0
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 20:16:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSKfT-0008SS-2P; Wed, 27 May 2026 16:15:55 -0400
+	id 1wSKeS-0006Py-Ay; Wed, 27 May 2026 16:14:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSKf5-0008Ex-0j
- for qemu-devel@nongnu.org; Wed, 27 May 2026 16:15:32 -0400
-Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSKeQ-0006PN-Mw
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 16:14:50 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSKf2-0005hi-NW
- for qemu-devel@nongnu.org; Wed, 27 May 2026 16:15:30 -0400
-Received: by mail-wr1-x444.google.com with SMTP id
- ffacd0b85a97d-43d76dd4ee8so7374427f8f.2
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 13:15:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSKeP-0005ND-12
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 16:14:50 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-49048e043e5so44524935e9.1
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 13:14:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779912927; x=1780517727; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779912888; x=1780517688; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=b8I4Uj8QzoYfgxdM3WVJzGYEDhLFU1gsMiq89h2j04Y=;
- b=XDFwQHo0k2oD+p8403JXgsdeKnR8HsoArOjrehWwUsTfgXu0bcycS2Tn211A22+8a9
- jOQWfsisoJ5xuexyAsAJpi3bl44o8DgUnrQ4wpnztMJP9joczWHMXRiFvZ6QWM68nEtg
- w8DJIEt8L86VkJV06f0L7PeW5n1SP2Tvw2YtAm9N9gkHrTtEPr5vr0eMLXJRl03VTDew
- joNSc1YWzzY9ACTG6RaR3JKMpK01Xl+HJDhjtcHmQIJbsAqAMvw1+ShsgvKMONiCMphC
- +fD9ptuR9X2cr0sKgJZ4n/cPByZg8og6zNHkbMV0qT/fPI/4t0Cp+uRhmKvR1x5aMqlS
- xZaQ==
+ bh=g8sLi8TpVj+WiyqU3QlE4wdZYfoI/mwrAP3TeMVzFfg=;
+ b=poRX/UaTOaAnJdZnmJMgpeV+XXzQ5Xh8NXmyP9PBYDWeTAK+GQb0k3yCllRW8kyUI2
+ Xwo70uQ6p84jlbSM0Muwv3DH4CMHeomEGOb301IYKtOnPT6fVMkS+bB40cxCHLpkpBBO
+ de2XpuKCH4tcn9MY4kVMDwJx8yBs74tEbYIqwjgVGPifsyCLKwjF3i/luPbIWKZhiQRq
+ T6iSI7AE2TggsvE6C0uJ85DD2MAR9QYOu+cbd1tHPXofpqAsADQicP/hKLr4IQSfQg4R
+ EqB6BXgSbDJJ96rm5s5jrbK0pBBAnqi9s714ng5IJ21UGKx4Wgdu2wdwb1k7M532nkRp
+ OcMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779912927; x=1780517727;
+ d=1e100.net; s=20251104; t=1779912888; x=1780517688;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=b8I4Uj8QzoYfgxdM3WVJzGYEDhLFU1gsMiq89h2j04Y=;
- b=CJg7uYO59W649QcLyNvCMdSj9icnmCesjQkLsTFrwumTJdsMpxHHYkBeZ/nkSi5Tzg
- X7S2ooT9Emf6fPBzmfcCqsQLrDvxJ+m7Bg3efP73m6BiW7UsVX4M+wLdq2439MSkX4Ax
- ZNEWZvH01YSspVX9WNkIJfFIAjXI7UlIalrkvdLjXDdzPLJrVDXPOUYAPSg7GKkHi/GR
- yM1qAUkCaC0wzokQbXVsHyT5BUiToISWOXzTkbyLBtbiNiC4L/1FYYioxN9aQXu7oeSV
- 5h1/RDryLAYdicEDJ5BwgvDVSGoOa/7OvWqA/GORYIgPpXipOGCLalPPA1dys/wO9NEf
- 9gxA==
-X-Gm-Message-State: AOJu0YzK0AWN0fEMR3ssVbrUXXJopS9txwbTyNACOLId6hYXW7heDKdo
- l4636AhPtchCGUq9FGRQqfVY4YCxE3QMdfD+zA0fYKyXY+WutKxBYDfSeTD7NqNrNdJQynG8W19
- 6vvv7n6yxCGyv
-X-Gm-Gg: Acq92OFB2/cJnSwaiBQCDOEFyDlnZl+OWVfDi4DcZ0cI6pmMZrfLgYapl99SZtC0ks0
- ei2t0zhIKHzWAPP1wA6dV1Yixq5Epui4dMe4sm93YeFTCmsN+fFVUe2FDveCCCH4rlGO3oW5lth
- VorBHVHqaAd2WI2nBDtmAIgAEex3A/Skbdh0CY0bpevwI8AmI0ri4GjxayLR8azCYU4AhuRQd59
- BBxFvNBX2vIwnTJ8hTpj6aSxLGzynA0Y2fDxjt8gKXJKhqmof4BLiS1r4rMXGCF9vNOFx4oq46k
- LPl5QY9Zh+t1b5S5yBbieaFwTZOS/QRlRnB+XNDK/A3aFQ+SwnzyS+W6Z6wR5D1APwpnsnTkoGj
- 2U6/GP8m4DOBWeBKky/+53esNNmsoN3qM3KG7eCrMQqPLtCimdQ2/cEf+fIWYI3fR2lsqeIvWz/
- ukUMBdKOF5ByLgKSHkw9J/McEOJ5Wr83F2KeJWzNXDmR5RCdxFDXc6+mCwNdQX33R/zQ==
-X-Received: by 2002:a05:6000:400d:b0:43d:71b:204b with SMTP id
- ffacd0b85a97d-45eb38c2367mr43530079f8f.39.1779912927037; 
- Wed, 27 May 2026 13:15:27 -0700 (PDT)
+ bh=g8sLi8TpVj+WiyqU3QlE4wdZYfoI/mwrAP3TeMVzFfg=;
+ b=f3z+IpSDfT5FPdNfOpxY35uEDIG/OxoF3rmuQD52DfAIfpQgKr9frHurlV7rk+MLrT
+ AcgTPvgNwCYZa+Z5szLZqE+M23vefO87fdmXbScqSXKo+MvoBYfU8xTKcmwu5+LnFDlJ
+ YRMT/2iQt8Adi7kR/Aep0vIa5g9gMVYoEmxnn62i7B+3+jJKmTMck7dcEf+CIhVXQeYK
+ PkPTMHKW+l9fS74xuwu7oqaQCp4ZYf67mmAYA5AS6hlDPssnVh25zedf4R0LGsEXjHLz
+ Hotqzma9GCPdDUnUbRr6JI45hYkCYqAgbmgNuqQW/hQn5TtWvpxjg4qddSnMj7P8pSTN
+ VrtQ==
+X-Gm-Message-State: AOJu0YxKTzExP2nZhVwyo+VMSChL3iYD9iORfUhthZijcXCF6/4+3akS
+ bVT8HAqKMXbULtCY1u8DOTeISJVbuY6PQvHpFOG/OR8eeqYlzpdUTaVYSINAel1sDmVazzVe34w
+ V3UnuPzLpxA==
+X-Gm-Gg: Acq92OGnlHK6y6ii5etbsE7fP8A9VvXeCwpU/s2gWLv3CKPbI5K1oRUi8CVqJ/QarWC
+ 0r+gz6i/AlcVQT2PWgZEW+b1CTYJB7Hxv+yyLeaY7dDZi+5Qe4WserKBbqhX6GIfqyoAp0xs4Ka
+ 1h99X5lc2UJry2flcA9OMM1QsCocEGZ6hOX/zlJS5QMbrJy2KaNjN+UsKfUzjEyFEjFG/Cb6CTB
+ Fn1vGlGaLKebv9v0EFdzc+ELPM8tUkXI6bWhz7rEYc44lac6GimDvDhktNyLVq2y0XKKSQ7KYF4
+ xcxfbMswUIRnjc1wtVARY9qJoWy81WCWqIWxxrNBz+rqhcsP+erPYBmbzCahQl7r+nHaRafOVPO
+ 1kpbIC/+q8IKgB2XQTuTpfcSvejod7fnmhW3EekANFg4F6FjNUZQl7yeackbA60di+RiboVJWz9
+ JoYNA70X3UP1qWOJEswIjnqLkqStmiLHiurF8QeZ2cTeVRaHaCEXD/47YZBD6Q5YyEjw==
+X-Received: by 2002:a05:600c:8484:b0:490:3c94:a3c6 with SMTP id
+ 5b1f17b1804b1-490428e205cmr425199855e9.26.1779912887601; 
+ Wed, 27 May 2026 13:14:47 -0700 (PDT)
 Received: from m17.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45edb5c1e59sm7714019f8f.33.2026.05.27.13.15.24
+ 5b1f17b1804b1-490454ea134sm461293765e9.8.2026.05.27.13.14.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 27 May 2026 13:15:26 -0700 (PDT)
+ Wed, 27 May 2026 13:14:46 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -74,27 +74,26 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Christoph Muellner <christoph.muellner@vrull.eu>,
- Djordje Todorovic <djordje.todorovic@htecgroup.com>,
- Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v11 12/12] tests/functional: Add RISC-V endianness test
-Date: Wed, 27 May 2026 22:13:48 +0200
-Message-ID: <20260527201348.29511-13-philmd@linaro.org>
+Subject: [PATCH v11 07/12] hw/riscv/boot: Rewrite setup_rom_reset_vec() using
+ load/store API
+Date: Wed, 27 May 2026 22:13:43 +0200
+Message-ID: <20260527201348.29511-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260527201348.29511-1-philmd@linaro.org>
 References: <20260527201348.29511-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::444;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x444.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,96 +109,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+In order to make the following commits easier to review, do
+not pre-initialize the reset_vec[] array, fill each word one
+by one. Set the start and FDT load addresses using the load/
+store APIs.
 
-Add functional test for the RISC-V 'big-endian' CPU property.
-
-Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- tests/functional/riscv64/meson.build        |  1 +
- tests/functional/riscv64/test_endianness.py | 57 +++++++++++++++++++++
- 2 files changed, 58 insertions(+)
- create mode 100644 tests/functional/riscv64/test_endianness.py
+ hw/riscv/boot.c | 53 ++++++++++++++++++++++---------------------------
+ 1 file changed, 24 insertions(+), 29 deletions(-)
 
-diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
-index b996c89d7df..5871211e899 100644
---- a/tests/functional/riscv64/meson.build
-+++ b/tests/functional/riscv64/meson.build
-@@ -11,6 +11,7 @@ tests_riscv64_system_quick = [
- ]
+diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+index ae2f86c7ceb..c6ab1cc8cfb 100644
+--- a/hw/riscv/boot.c
++++ b/hw/riscv/boot.c
+@@ -18,6 +18,7 @@
+  */
  
- tests_riscv64_system_thorough = [
-+  'endianness',
-   'boston',
-   'sifive_u',
-   'tuxrun',
-diff --git a/tests/functional/riscv64/test_endianness.py b/tests/functional/riscv64/test_endianness.py
-new file mode 100644
-index 00000000000..9e0b3b7db5c
---- /dev/null
-+++ b/tests/functional/riscv64/test_endianness.py
-@@ -0,0 +1,57 @@
-+#!/usr/bin/env python3
-+#
-+# Functional tests for RISC-V big-endian support
-+#
-+# Copyright (c) 2026 MIPS
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
+ #include "qemu/osdep.h"
++#include "qemu/bswap.h"
+ #include "qemu/datadir.h"
+ #include "qemu/units.h"
+ #include "qemu/error-report.h"
+@@ -444,6 +445,9 @@ void riscv_rom_copy_firmware_info(MachineState *machine,
+                            &address_space_memory);
+ }
+ 
++#define CODE_WORDS 6
++#define DATA_WORDS 4
 +
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern
+ void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayState *harts,
+                                hwaddr start_addr,
+                                hwaddr rom_base, hwaddr rom_size,
+@@ -451,43 +455,34 @@ void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayState *harts
+                                uint64_t fdt_load_addr)
+ {
+     int i;
+-    uint32_t start_addr_hi32 = 0x00000000;
+-    uint32_t fdt_load_addr_hi32 = 0x00000000;
++    const bool rv32 = riscv_is_32bit(harts);
++    uint32_t reset_vec[CODE_WORDS + DATA_WORDS];
+ 
+-    if (!riscv_is_32bit(harts)) {
+-        start_addr_hi32 = start_addr >> 32;
+-        fdt_load_addr_hi32 = fdt_load_addr >> 32;
+-    }
+-    /* reset vector */
+-    uint32_t reset_vec[10] = {
+-        0x00000297,                  /* 1:  auipc  t0, %pcrel_hi(fw_dyn) */
+-        0x02828613,                  /*     addi   a2, t0, %pcrel_lo(1b) */
+-        0xf1402573,                  /*     csrr   a0, mhartid  */
+-        0,
+-        0,
+-        0x00028067,                  /*     jr     t0 */
+-        start_addr,                  /* start: .dword */
+-        start_addr_hi32,
+-        fdt_load_addr,               /* fdt_laddr: .dword */
+-        fdt_load_addr_hi32,
+-                                     /* fw_dyn: */
+-    };
+-    if (riscv_is_32bit(harts)) {
+-        reset_vec[3] = 0x0202a583;   /*     lw     a1, 32(t0) */
+-        reset_vec[4] = 0x0182a283;   /*     lw     t0, 24(t0) */
++    /* .text */
++    reset_vec[0] = 0x00000297;                  /* 1:  auipc  t0, %pcrel_hi(fw_dyn) */
++    reset_vec[1] = 0x02828613;                  /*     addi   a2, t0, %pcrel_lo(1b) */
++    if (harts->harts[0].cfg.ext_zicsr) {
++        reset_vec[2] = 0xf1402573;              /*     csrr   a0, mhartid  */
+     } else {
+-        reset_vec[3] = 0x0202b583;   /*     ld     a1, 32(t0) */
+-        reset_vec[4] = 0x0182b283;   /*     ld     t0, 24(t0) */
+-    }
+-
+-    if (!harts->harts[0].cfg.ext_zicsr) {
+         /*
+          * The Zicsr extension has been disabled, so let's ensure we don't
+          * run the CSR instruction. Let's fill the address with a non
+          * compressed nop.
+          */
+-        reset_vec[2] = 0x00000013;   /*     addi   x0, x0, 0 */
++        reset_vec[2] = 0x00000013;              /*     addi   x0, x0, 0 */
+     }
++    if (rv32) {
++        reset_vec[3] = 0x0202a583;              /*     lw     a1, 32(t0) */
++        reset_vec[4] = 0x0182a283;              /*     lw     t0, 24(t0) */
++    } else {
++        reset_vec[3] = 0x0202b583;              /*     ld     a1, 32(t0) */
++        reset_vec[4] = 0x0182b283;              /*     ld     t0, 24(t0) */
++    }
++    reset_vec[5] = 0x00028067;                  /*     jr     t0 */
 +
-+
-+class RiscvBigEndian(QemuSystemTest):
-+    """
-+    Tests for RISC-V runtime big-endian data support.
-+
-+    Uses a bare-metal RV64 ELF that detects data endianness at runtime
-+    by storing a 32-bit word and reading back byte 0. Prints "ENDIAN: BE"
-+    or "ENDIAN: LE" to the NS16550A UART on the virt machine.
-+    """
-+
-+    timeout = 10
-+
-+    ASSET_BE_TEST = Asset(
-+        'https://github.com/MIPS/linux-test-downloads/raw/main/'
-+        'riscvbe-baremetal/be-test-bare-metal.elf',
-+        '9ad51b675e101de65908fadbac064ed1d0564c17463715d09dd734db86ea0f58')
-+
-+    def _run_bare_metal(self, big_endian=False):
-+        self.set_machine('virt')
-+        kernel = self.ASSET_BE_TEST.fetch()
-+        self.vm.add_args('-bios', 'none')
-+        self.vm.add_args('-kernel', kernel)
-+        if big_endian:
-+            self.vm.add_args('-cpu', 'rv64,big-endian=on')
-+        self.vm.set_console()
-+        self.vm.launch()
-+        expected = 'ENDIAN: BE' if big_endian else 'ENDIAN: LE'
-+        wait_for_console_pattern(self, expected)
-+
-+    def test_bare_metal_littleendian(self):
-+        """
-+        Boot bare-metal ELF on virt with default little-endian CPU.
-+        Expects "ENDIAN: LE" on UART.
-+        """
-+        self._run_bare_metal(big_endian=False)
-+
-+    def test_bare_metal_bigendian(self):
-+        """
-+        Boot bare-metal ELF on virt with big-endian=on CPU property.
-+        Expects "ENDIAN: BE" on UART.
-+        """
-+        self._run_bare_metal(big_endian=True)
-+
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
++    /* .data */
++    stq_p(&reset_vec[6], start_addr);           /* start:       .dword */
++    stq_p(&reset_vec[8], fdt_load_addr);        /* fdt_laddr:   .dword */
+ 
+     /* copy in the reset vector in little_endian byte order */
+     for (i = 0; i < ARRAY_SIZE(reset_vec); i++) {
 -- 
 2.53.0
 
