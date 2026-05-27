@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E58CCD5BD0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 16:02:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39F69CD5BD0
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 16:05:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSGhG-0003eA-Tf; Wed, 27 May 2026 12:01:30 -0400
+	id 1wSGko-0007OZ-7r; Wed, 27 May 2026 12:05:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wSGhF-0003cF-3w
- for qemu-devel@nongnu.org; Wed, 27 May 2026 12:01:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wSGkm-0007OD-Jn
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 12:05:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wSGhC-0005V3-Va
- for qemu-devel@nongnu.org; Wed, 27 May 2026 12:01:28 -0400
+ id 1wSGkk-00088f-K4
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 12:05:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779897686;
+ s=mimecast20190719; t=1779897905;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RiPe4Prk+kzBu6QwStAHXAFHar9zGaaOXhVcZMTjvIk=;
- b=Qq3V/ZPGYSjBgl3tMZSG/dlS3fxEKQ/jIgg/UUQv5gRywT+0IxwBc79DayEC5jOtT2tRLQ
- dLBlEf3LQlDTiM/ssPk6LgxhrvV+kvBTEggHyB8qZeCmlokC6itwkc1mNSg+6dWzHsl+F+
- nXp5T4ye5PCaFHjwCw1NznyF8o8Tqqs=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jmx5VvulXmU8ksGA1QX9PtZR7i2VA/lb19l1GvSvoMs=;
+ b=O2uK9z13Po90dtj6tyGvzGrwddf9uhKHY9NaA+yna3tZ6SCUd7VFNABnXHERMaeaX19tP6
+ EKRTp84ZKhYaKG1wY4zAnGvdmYkv8gnV/VotO9Xfsws9EGp5mNNAjrrzRYOnmXwfg/Kt+9
+ +zaSjQXVLZtj49rdcqKswcGh4HitoOk=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-613-YlTu7y0WOqajhEpUMIRgJw-1; Wed, 27 May 2026 12:01:21 -0400
-X-MC-Unique: YlTu7y0WOqajhEpUMIRgJw-1
-X-Mimecast-MFC-AGG-ID: YlTu7y0WOqajhEpUMIRgJw_1779897680
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4905428aad6so38682405e9.1
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 09:01:21 -0700 (PDT)
+ us-mta-682-lTXt7bTmPp675PCqQwhHXw-1; Wed, 27 May 2026 12:05:04 -0400
+X-MC-Unique: lTXt7bTmPp675PCqQwhHXw-1
+X-Mimecast-MFC-AGG-ID: lTXt7bTmPp675PCqQwhHXw_1779897902
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-44f1b4d0fb0so7342850f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 09:05:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779897680; x=1780502480;
+ d=1e100.net; s=20251104; t=1779897902; x=1780502702;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RiPe4Prk+kzBu6QwStAHXAFHar9zGaaOXhVcZMTjvIk=;
- b=VLKekhzQrft0YdU/Cr9rQzTnX21EIKR4x0F4qSPw+bao0nO8ySM/g/4kBcFc9Xftog
- zORZd7idlcZEXkwxDEV6yK5It6m410GpEpPKiqWxm60WxxfaMRxiHMmqlba6xAQTFi7e
- 8bwHLEoxRoRrRwW0OqvQy4sDPPRyEtEKitj22oZ/9bDe0COohTtxBFY/gFwdnjsApYy3
- amyANLjfaIijHHvWTULTFyQuiFm4qfh0824cnQk5TT9Rupqy7fY66WQ/erv0dZo4cb0S
- 9httieEDVFA0Ijx8joNI1k5Zr0r1VpoVLTdm1PuD7RFO6PMEdrnA22WkPXI7XXOkWEi7
- 0OfA==
+ bh=jmx5VvulXmU8ksGA1QX9PtZR7i2VA/lb19l1GvSvoMs=;
+ b=NFHJYdP+MSoaESKIosZzLrEvkXzgMDid/YBnUr0hhxwNz/qxOVI/7vKM5dcJLR2WEK
+ T6BzuLxeS1s8laPHLw1aHUrfdYn3G3cZCQoYK/UHSRCvXCVVePXnz7pf2W6lO1zQfWNr
+ NVJzELzxGH7qzUZQpigPknb6T7PBbQ+5tOKEC2+99skYz+IOL31cMRy2DfoyoLUzt0lg
+ M5HiL/7OMoJyhBmD6uSKznr12m+Atkrev2AjgRk4QFbNpG7TYyH8cYhYosRwq3Lf6Di/
+ wTKit8zq+DgTkeDxqgIM7+PVrmbDe1tAzqZntoFM3vGfhIZ5bFwKNRA5TBYHYWtTeIka
+ QMkg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8XE5rlBM0ydPpqFFdp9rmvZQMUgbU4Eu9JqQ++TNPUpZgC2/5V+/9SxmYfWhQGcoQdlNXGgMHLt/in@nongnu.org
-X-Gm-Message-State: AOJu0YyUwFrpJbne/7zsVBAllUGkGWtHpJMYQVPZ0MqUp+XwXjpSh1MP
- f6CFbaRzapqSxT/zE9Q8GlANGulobLqpetyecNolwusE8TvbdmEOVALnr6nZoAgYJSlSeU61sko
- 5Y3EUuaQ0tmNXHEXCcnU5ICuL5j4fnQhGJVZxLr+8VXQBt8z6GWHZTjr8
-X-Gm-Gg: Acq92OHMbaNONR++PdK2YNgtd/4QpAHBYHeSA/JwoKVU9e34QvjF0DlsbVf/AOMDHFC
- DMQa1L0asntQiRanTk2GaNcF7SohxcEQSYPgsZpwLBliIU2ifZf+9mJZm9N5eOWb3n058TWso3h
- dlJSK184CROPI6vPlCOEELKJhOGYS3CWsYrq+SDnvbiMWWv+2MML7puLEdhcvhJ2envwz8RiMxb
- ZBgnxt+pmw7MgNUUgLRM1llt4xinw7A7IB0UiNKCZnz/baMour34ddvTttCngZonBffOIlASKI/
- BBW593nspQdEhT56RFl4LbT1mMrJp1YN4pIbkaPRM85nGjpKDpifeKI5NdnUSwN/SArtTGzLE4W
- lJUjIsYBnVYTWY58HtTKwJFqDfDbWXfAD2IfTkPNnzXJ1rN0enkcL63Qm3KRtBcVr7zclxA==
-X-Received: by 2002:a05:600c:3b02:b0:48f:d1c0:5cd3 with SMTP id
- 5b1f17b1804b1-490424b3189mr405188615e9.13.1779897680092; 
- Wed, 27 May 2026 09:01:20 -0700 (PDT)
-X-Received: by 2002:a05:600c:3b02:b0:48f:d1c0:5cd3 with SMTP id
- 5b1f17b1804b1-490424b3189mr405187915e9.13.1779897679614; 
- Wed, 27 May 2026 09:01:19 -0700 (PDT)
+ AFNElJ8O8Xte84ng49EFKJzOgED7SUNr4Cz3LeingtMzrqYAY4AEN7ARdrKR87BIaIhWbH5PyUPPQV1QtoDg@nongnu.org
+X-Gm-Message-State: AOJu0YyL3vqPbs929U1/t9NHYnQfZ1Mlw4ktErF1/ZKrQzTNKZeNoudd
+ sQsVXR2gIf/x+ZGoQ+Bwr5poXPpnHBCrEc83svEWtUG2I8iFUFG33Nh2alUdUdAWrMQJ1gvZXEv
+ UM+q9AbfRDtqUQAvkPZ0EarJUPDguXgY3a3gYpsY4AH2VXGKrYdSSnXz9
+X-Gm-Gg: Acq92OFHX3GY4NCGq1ZFuYhI63Y8fCU2i64r2yyaT7QlLKW9MR9vdgoWb3+HsUMiwo6
+ yh7CzluM0V209CeNcodMs6ZQkcv/g7HiwXGxQQJVJ1bvjx7oJmXYOqGdXwar/BBi/kRBQzieQH4
+ ZC3/L5JRNg4TREgt+7nRe53mlpEg3KovzdFPcllAgngPMfikyAykqNGYw3vdyhz/zdxysZf1F8C
+ 9OrHsLxBZahTl/EQpMx8ormrrUwicaKdTiHUqka++g2Uir564z6DLSsMg/keE4cBjnMGhF6E5h2
+ 2+WInT3rZzzFyi9QbO+PgRI3ne96OgY35cVa7N54qpzJSxzTxygf6AftrhBMTXOCF8Oz/eidTyF
+ I7T0nd7GDt+CKwXadm7mvwQifGyV98dmGgkUiB8JvHgsh6A3RJyg1GNOncnwhPmr7m2VraItBtl
+ +O+Wn0
+X-Received: by 2002:a05:6000:1888:b0:441:1e1e:a050 with SMTP id
+ ffacd0b85a97d-45eb38b8a09mr40497342f8f.16.1779897902001; 
+ Wed, 27 May 2026 09:05:02 -0700 (PDT)
+X-Received: by 2002:a05:6000:1888:b0:441:1e1e:a050 with SMTP id
+ ffacd0b85a97d-45eb38b8a09mr40497254f8f.16.1779897901534; 
+ Wed, 27 May 2026 09:05:01 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4904527f7f7sm601871475e9.7.2026.05.27.09.01.17
+ ffacd0b85a97d-45edb5a296bsm6557834f8f.21.2026.05.27.09.04.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 May 2026 09:01:18 -0700 (PDT)
-Message-ID: <72f22825-d810-4fa1-8fc5-123ae06af91e@redhat.com>
-Date: Wed, 27 May 2026 18:01:16 +0200
+ Wed, 27 May 2026 09:05:00 -0700 (PDT)
+Message-ID: <2fd2057d-c74b-4bbe-b2d0-cb9ed092a37d@redhat.com>
+Date: Wed, 27 May 2026 18:04:58 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 15/18] target/arm/kvm: Ignore some writable bits that
- shouldn't be
+Subject: Re: [PATCH v5 16/18] target/arm/cpu: Expose writable ID reg field
+ properties on the kvm host vcpu model
 Content-Language: en-US
 To: Khushit Shah <khushit.shah@nutanix.com>
 Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
@@ -103,23 +104,23 @@ Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
  "abologna@redhat.com" <abologna@redhat.com>,
  "jdenemar@redhat.com" <jdenemar@redhat.com>
 References: <20260519132905.145643-1-eric.auger@redhat.com>
- <20260519132905.145643-16-eric.auger@redhat.com>
- <E5402D74-AE00-4088-801C-C87A749E17C9@nutanix.com>
- <80fa5157-2376-4010-88b2-deb6ab50f87f@redhat.com>
- <6CA1EBCE-BA44-42A1-81D3-1A723C6F0CC3@nutanix.com>
+ <20260519132905.145643-17-eric.auger@redhat.com>
+ <30F66A6A-E26B-486C-81D1-8E1B2CCB558A@nutanix.com>
+ <6c14a58a-60ab-419f-9395-ca3489f6cff8@redhat.com>
+ <CA136979-E0CC-420E-9271-63CF27CD7DA5@nutanix.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <6CA1EBCE-BA44-42A1-81D3-1A723C6F0CC3@nutanix.com>
+In-Reply-To: <CA136979-E0CC-420E-9271-63CF27CD7DA5@nutanix.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,22 +139,18 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 5/27/26 5:54 PM, Khushit Shah wrote:
->
->> On 27 May 2026, at 9:15 PM, Eric Auger <eric.auger@redhat.com> wrote:
->>
->> What would it change anyway, if we detect we have a writable field
->> matching a RESx field, I guess we would continue raising a warning, no?
-> At-least for named models we want values for each bit in 
-> ID register.
-but if a field is RESx why don't you want to overwrite it? Are there
-cases where a field is RESx depending on a condition?
+On 5/27/26 5:56 PM, Khushit Shah wrote:
+> So you are saying, if I do, 
+> 	-cpu host,sve=on,SYSREG_ID_AA64PFR0_SVE=0
+> QEMU will still show sve capabilities to the guest?
+Yes that's what I expect. Require more extensive testing though. That
+could be way to handle coexistence of different levels of granulaity.
+Lowest level applies first, overriden by legacy compositive options. I
+guess if you plan to introduce other layers of compositive props you
+will most probably handle this situation too.
 
 Thanks
 
 Eric
->
-> Warm Regards,
-> Khushit
 
 
