@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF70CCD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:32:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A199DCD5BC9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:32:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSBYV-0004Bb-7u; Wed, 27 May 2026 06:32:07 -0400
+	id 1wSBYb-0004jL-Sk; Wed, 27 May 2026 06:32:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBYS-00040r-LS
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:32:04 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBYZ-0004WQ-FB
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:32:11 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBYQ-0000re-QZ
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:32:04 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-49048e043e5so39588115e9.1
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:32:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBYX-0000yg-CH
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:32:11 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-4526a8170ceso5925960f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:32:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779877921; x=1780482721; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779877928; x=1780482728; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=4FOlc9hiKzCXvW/hEdSAqPQWX+ikblJBIP13gYL3JC4=;
- b=dT3fmvzGAAe9bGLkaYIkocrheWCvSpJDR+aLTSKJRy9wM0x1zgXoGDaYDDjA5iw6bf
- BfcCQKobtI4M22q5qpwIKmI3rJpxUXUVgGaETHQwvoa3vjPlRiYbhqeZCywqFRV+3LuX
- HzPFYvHOgXAyYsljLzxmSK68adHPV2mICRBwjTpFbax9YxnbQJQLT+EGC0QBivw7+l6C
- XNTEL54TBkUzrvqmQ5Uy4APGvRccC64C6fcY9zd/qBkbIT1gmHKqzGlY4pwZjfdQK7nh
- zZNglYBT4YYHTs+Nv5nUHqCHLtRa7AYEovBUj8hWhMj7tW25+qj4V93FqrnDzPmLh44E
- E+5w==
+ :reply-to; bh=uz68UNFgHkIaQwTnrD8tL+17ttgq41ToDfNqGD1o+U0=;
+ b=FA0/0q2or1EQOrAjC62w5pmjrC3iugQJNCuixvbCDWRT7aupFRNFb7gpwWY+Jz4QKG
+ G/95+HHAZNFWvzMKSTF35S0VwKFVqbVXaelamHBydLlTc1j19px/X1xN/jAw1l1wdWUd
+ gK3RDJuG7DoaFm9vBaSLR8duwlB7eC9tuWkTwNdIQESIDLUdYVVBg/bXBCGDf/J+8TXN
+ SwrFlZDrw2rZrm69xs5ol2m59M1hhArj2nZat/f4qe7fxlUF5rocTDJan6mDRxPMYoAt
+ cE30CB0fHs2SjEQkheHrx4PnmG+00cS9dTNZVvkKGWTEdYuXWFanx1vr4+RmP97u7vhP
+ HxPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779877921; x=1780482721;
+ d=1e100.net; s=20251104; t=1779877928; x=1780482728;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=4FOlc9hiKzCXvW/hEdSAqPQWX+ikblJBIP13gYL3JC4=;
- b=Goz6bIiZFcJnuOXqMZbIBsLmEBsNXM8M3ECDYVUh8kFMyIgq9NdrFeBa4NmnR7djS3
- pVEIdJ8dkfWSLCEJAP+hwkfbgR/4Wn9kQg3GfKEAY/OezAJM5MUQou3HMBRGjVdvrQGQ
- DLyQtDd3mZ8otK/ikrAejBFqislKt+b0V1ELz6QvZyzYj/mRvmqZYtRZOdMzPohkf2bO
- X23Q2ey2teRP3EFlOciQ4OGSZGlPcBlprmNohyTuO0tmCSRi+oPoYVqb+cIzTPR6g+hj
- 4mMXWllRUA+ITuyBXy58Pxf3uL5LpQNvn5qA/DAcGaFZBGEp3xrPvOH6wNhggyXUhQ5x
- ucjw==
-X-Gm-Message-State: AOJu0YzYKCN6EfUiAh5IfJcfSwJp8wEeUspeiR5oSVoMiTr3p3xKxmEr
- 49dFOtr7/rS1mmafBqNaoqsRKWOOlKauLmikNfg1xWogy+Niu8T4JJ8dQr58M3FgNW4zWLE30GP
- 98yXMyK2OmQ==
-X-Gm-Gg: Acq92OER/Ks8eUiljzyRJEff7ksDUntCbvwnR6tU2fktzSGm7F0g3YZhh7JFKxr+NhJ
- iwos6yU3MYlyMWxuhs4Q2I9c+6/PYrhEO9I+5q8/nyZT5rF4A0hKfT0tr8xqnekX3syB94W/gBF
- I89VKHKlk4dx/TPQww81lylMibc4EsrtFzq3hN6Ydn3q0g8gmCnRu676sZEtw1Una31tiOh+2ip
- FrtmpeeJXXmOVUYdrmObYk/7tVtDLkWdUoPRAqVALli+cwl8cldKhCmUFMhYZdYcALszrXrZF7J
- RfkRpBy4K5AeRMw13F7XTC7EMVb0eYdnErG2xBhQm9ZY0r6VwL6NktG3ToYvxRzj2CaX9cI/Y23
- 2mmkzM2hxBE/XjrK+ieh5PWzF17/tDWO1WH2RU1b+IImnv6jXKrWaK16mZvAyltVv5AhvDquU4d
- WEUJb+NrTnEPmgWpYP0GOLW4eI0fxgIDJ1HwB2jvT+OuNkZAHRBpv/SJk=
-X-Received: by 2002:a05:600d:6451:10b0:48a:563c:c8c0 with SMTP id
- 5b1f17b1804b1-4904249d11amr272533435e9.7.1779877920960; 
- Wed, 27 May 2026 03:32:00 -0700 (PDT)
+ bh=uz68UNFgHkIaQwTnrD8tL+17ttgq41ToDfNqGD1o+U0=;
+ b=TTnJWe39oU788UwIUf83/azrKCDOkK7omUnAIgUc32XcGPkAQ1/Xdlrn4YMqQIfvyH
+ 4nMJOQGZdKksvFgGEktIErPlSo4eKCfyx0hA3Oxjj0gp6JSAl+HKxFD5/78WAAY3rdJ5
+ W3DZI6fHNq/AuyaEYTU8SOdorqLzOYLoOVVeqZIPTUJjjSctWHXjV+hLAJ3XHaLAPoZ9
+ um7DjdJFYayImnWWhUbbC4eIkss+gpKm/2Cuq3esK/DaC7lVVbqaupv+VPTo52APd0El
+ VcvAOVLz8RNapMOYV1EjfpdDe6l0ZP2JQsMPiAPGSPLHSfYvNNv+fKQCjjI8N+hIuzZI
+ hFWA==
+X-Gm-Message-State: AOJu0YwiYLJbOfbBIpdvGo1pYd/IQuc+R3eNv2XUB2/bU6SOyoY7SiAd
+ F4N2ef/2aW5sbr3WX8RBTYg8Q4/fSIRxu5D1/7E+KzxAwbuvvBnDX/i5SC4yqBP9bspKwrjneUg
+ ckZPiAdElLQ==
+X-Gm-Gg: Acq92OGxNoMYP+ELYCexwWrea/iA0LFgMSRn2wU5Rh+ZWj2rbsWrv/1vq01mVR5OHXs
+ obIj+f3eEa2WFw2Ph/jd4manFRHQgVsI79bOpPBJgwe6UEVZ4XGM51+zuIuSOP8uXmvSTg2oth2
+ 1ZtyJnkpdltSl1duReYGQGdSTnBUjM3ipF4kYV2Qpl42yi6tWZ0CCm+vQk9XBbhdQVZ9X3fYTY2
+ X73rNh/c6GqY/7Gm2N7mM9SD2v/OVfw6y1Q1dhrWAopE8o4NVzGfBprYrIaRIkuP506qXVaDk8Y
+ ZMCtG/cbXONoP5ZNbSilmj8q0q8c/fQNK8icJcWGSV/KlE7nrfhw5BWngwLA7fIX6lFy1blC4qZ
+ iOMjwViScsPrxjCyP16Zc1X8IDGv+pjkppBmL/ihuHbS3cvYhiH/gAIkYNCFSGehpGxhgfO6kos
+ yINTmJUtrGn0RdPO8T5LST8ic0XW7Fk6+nMsfC6Ql73a0YOSeZYT5bykPRyHcAxpoPwg==
+X-Received: by 2002:a05:6000:26cf:b0:448:7049:a6c9 with SMTP id
+ ffacd0b85a97d-45eb3688808mr36796162f8f.5.1779877927622; 
+ Wed, 27 May 2026 03:32:07 -0700 (PDT)
 Received: from m17.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490454cfcaesm382045755e9.4.2026.05.27.03.32.00
+ ffacd0b85a97d-45edb4bae01sm5029551f8f.0.2026.05.27.03.32.06
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 27 May 2026 03:32:00 -0700 (PDT)
+ Wed, 27 May 2026 03:32:06 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 12/32] hw/arm/raspi: Initialize 64-bit CPU types during
- DeviceRealize()
-Date: Wed, 27 May 2026 12:30:16 +0200
-Message-ID: <20260527103037.4461-13-philmd@linaro.org>
+Subject: [PULL 13/32] hw/arm/raspi: Build objects once
+Date: Wed, 27 May 2026 12:30:17 +0200
+Message-ID: <20260527103037.4461-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260527103037.4461-1-philmd@linaro.org>
 References: <20260527103037.4461-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,57 +98,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-bcm2836.c models 3 similar SoC: BCM2835, BCM2836 and BCM2837.
-The BCM2837 is a 64-bit only SoC (Cortex-A53), only available
-in the 64-bit binary.
-
-If we build this file as common object, all BCM SoCs become
-available in both 32 and 64-bit binaries; however when running
-the introspection test on the 32-bit binary, the BCM2837 init()
-method tries to init the Cortex-A53 type -- although not
-realizing it -- which is not available. This can be avoided by
-deferring the CPU type initialization to the SoC DeviceRealize
-step (this is safe because nothing uses the CPU type before,
-only the GIC access them, just after their realization).
+Now than Raspi machines can be filtered when running a
+qemu-system-arm or qemu-system-aarch64 binary, we can
+remove the TARGET_AARCH64 #ifdef'ry and compile the
+aspeed.c file once, moving it from arm_ss[] source set
+to arm_common_ss[]. Note, we expose the TYPE_BCM2837
+and TYPE_BCM2838 types to qemu-system-arm, but they are
+not user-creatable, so not an issue.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Acked-by: Peter Maydell <peter.maydell@linaro.org>
-Message-Id: <20260526203722.79463-2-philmd@linaro.org>
+Message-Id: <20260526203722.79463-3-philmd@linaro.org>
 ---
- hw/arm/bcm2836.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ hw/arm/bcm2836.c   | 4 ----
+ hw/arm/raspi.c     | 4 ----
+ hw/arm/meson.build | 8 ++++++--
+ 3 files changed, 6 insertions(+), 10 deletions(-)
 
 diff --git a/hw/arm/bcm2836.c b/hw/arm/bcm2836.c
-index ee2f44debd1..03825e69d06 100644
+index 03825e69d06..f4ecea908bd 100644
 --- a/hw/arm/bcm2836.c
 +++ b/hw/arm/bcm2836.c
-@@ -25,12 +25,7 @@ static void bcm283x_base_init(Object *obj)
+@@ -195,7 +195,6 @@ static void bcm2836_class_init(ObjectClass *oc, const void *data)
+     dc->realize = bcm2836_realize;
+ };
+ 
+-#ifdef TARGET_AARCH64
+ static void bcm2837_class_init(ObjectClass *oc, const void *data)
  {
-     BCM283XBaseState *s = BCM283X_BASE(obj);
-     BCM283XBaseClass *bc = BCM283X_BASE_GET_CLASS(obj);
--    int n;
+     DeviceClass *dc = DEVICE_CLASS(oc);
+@@ -208,7 +207,6 @@ static void bcm2837_class_init(ObjectClass *oc, const void *data)
+     bc->clusterid = 0x0;
+     dc->realize = bcm2836_realize;
+ };
+-#endif
  
--    for (n = 0; n < bc->core_count; n++) {
--        object_initialize_child(obj, "cpu[*]", &s->cpu[n].core,
--                                bc->cpu_type);
--    }
-     if (bc->core_count > 1) {
-         qdev_property_add_static(DEVICE(obj), &bcm2836_enabled_cores_property);
-         qdev_prop_set_uint32(DEVICE(obj), "enabled-cpus", bc->core_count);
-@@ -65,6 +60,11 @@ bool bcm283x_common_realize(DeviceState *dev, BCMSocPeripheralBaseState *ps,
-     BCM283XBaseClass *bc = BCM283X_BASE_GET_CLASS(dev);
-     Object *obj;
+ static const TypeInfo bcm283x_types[] = {
+     {
+@@ -219,12 +217,10 @@ static const TypeInfo bcm283x_types[] = {
+         .name           = TYPE_BCM2836,
+         .parent         = TYPE_BCM283X,
+         .class_init     = bcm2836_class_init,
+-#ifdef TARGET_AARCH64
+     }, {
+         .name           = TYPE_BCM2837,
+         .parent         = TYPE_BCM283X,
+         .class_init     = bcm2837_class_init,
+-#endif
+     }, {
+         .name           = TYPE_BCM283X,
+         .parent         = TYPE_BCM283X_BASE,
+diff --git a/hw/arm/raspi.c b/hw/arm/raspi.c
+index 00e4a10466a..3f99e87428c 100644
+--- a/hw/arm/raspi.c
++++ b/hw/arm/raspi.c
+@@ -367,7 +367,6 @@ static void raspi2b_machine_class_init(ObjectClass *oc, const void *data)
+     raspi_machine_class_init(mc, rmc->board_rev);
+ };
  
-+    for (int n = 0; n < bc->core_count; n++) {
-+        object_initialize_child(OBJECT(dev), "cpu[*]", &s->cpu[n].core,
-+                                bc->cpu_type);
-+    }
-+
-     /* common peripherals from bcm2835 */
+-#ifdef TARGET_AARCH64
+ static void raspi3ap_machine_class_init(ObjectClass *oc, const void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+@@ -387,7 +386,6 @@ static void raspi3b_machine_class_init(ObjectClass *oc, const void *data)
+     rmc->board_rev = 0xa02082;
+     raspi_machine_class_init(mc, rmc->board_rev);
+ };
+-#endif /* TARGET_AARCH64 */
  
-     obj = object_property_get_link(OBJECT(dev), "ram", &error_abort);
+ static const TypeInfo raspi_machine_types[] = {
+     {
+@@ -405,7 +403,6 @@ static const TypeInfo raspi_machine_types[] = {
+         .parent         = TYPE_RASPI_MACHINE,
+         .class_init     = raspi2b_machine_class_init,
+         .interfaces     = arm_machine_interfaces,
+-#ifdef TARGET_AARCH64
+     }, {
+         .name           = MACHINE_TYPE_NAME("raspi3ap"),
+         .parent         = TYPE_RASPI_MACHINE,
+@@ -416,7 +413,6 @@ static const TypeInfo raspi_machine_types[] = {
+         .parent         = TYPE_RASPI_MACHINE,
+         .class_init     = raspi3b_machine_class_init,
+         .interfaces     = aarch64_machine_interfaces,
+-#endif
+     }, {
+         .name           = TYPE_RASPI_MACHINE,
+         .parent         = TYPE_RASPI_BASE_MACHINE,
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 68d204bb4eb..f149ed68d09 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -27,8 +27,12 @@ arm_common_ss.add(when: 'CONFIG_ALLWINNER_A10', if_true: files('allwinner-a10.c'
+ arm_common_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-h3.c', 'orangepi.c'))
+ arm_common_ss.add(when: 'CONFIG_ALLWINNER_R40', if_true: files('allwinner-r40.c', 'bananapi_m2u.c'))
+ arm_common_ss.add(when: 'CONFIG_MAX78000_SOC', if_true: files('max78000_soc.c'))
+-arm_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2836.c', 'raspi.c'))
+-arm_common_ss.add(when: ['CONFIG_RASPI', 'TARGET_AARCH64'], if_true: files('bcm2838.c', 'raspi4b.c'))
++arm_common_ss.add(when: 'CONFIG_RASPI', if_true: files(
++  'bcm2836.c',
++  'bcm2838.c',
++  'raspi.c',
++  'raspi4b.c'
++))
+ arm_common_ss.add(when: 'CONFIG_STM32F100_SOC', if_true: files('stm32f100_soc.c'))
+ arm_common_ss.add(when: 'CONFIG_STM32F205_SOC', if_true: files('stm32f205_soc.c'))
+ arm_common_ss.add(when: 'CONFIG_STM32F405_SOC', if_true: files('stm32f405_soc.c'))
 -- 
 2.53.0
 
