@@ -4,79 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 611CCCD6E41
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 07:25:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98684CD5BDE
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 07:37:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wS8dD-0003JV-Vv; Wed, 27 May 2026 03:24:48 -0400
+	id 1wS8od-0005k3-4X; Wed, 27 May 2026 03:36:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wS8dB-0003JK-LU
- for qemu-devel@nongnu.org; Wed, 27 May 2026 03:24:46 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <torbjorn.svensson@foss.st.com>)
+ id 1wS8oa-0005jN-Rw; Wed, 27 May 2026 03:36:33 -0400
+Received: from mail-westeuropeazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::6] helo=AM0PR02CU008.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wS8d8-0004oW-PR
- for qemu-devel@nongnu.org; Wed, 27 May 2026 03:24:45 -0400
-Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c08:7605:0:640:8d9a:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id D640F80739;
- Wed, 27 May 2026 10:24:36 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:69::1:d] (unknown [2a02:6bf:8080:69::1:d])
- by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp)
- with ESMTPSA id YOTNxJ0WBmI0-XqjYu0I2; 
- Wed, 27 May 2026 10:24:35 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1779866675;
- bh=4/eAW7rNPgeu/LFrsWbu7QKi/UV4KyKSgTWlE70Q3a8=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=JtLMm2g8pT0yqX4fwgQd4R0zUYxEJuQuFwbcRzxn+meeyejxpr3JPnTydD80nQUvb
- AIoeUkeH87IconoV+p8e3agxWu05AbYZIYfRsibbMhJtC7qwS+SUhQ6C/triFD8O/T
- dt/IewJBtSmWlg4zDDAvSi+ncosYg6c61sxv+2kY=
-Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <b15693e1-161b-463d-9772-089d7a848f30@yandex-team.ru>
-Date: Wed, 27 May 2026 10:24:34 +0300
+ (Exim 4.90_1) (envelope-from <torbjorn.svensson@foss.st.com>)
+ id 1wS8oY-0002FA-JW; Wed, 27 May 2026 03:36:32 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=bbFZFca6DFvEgH1q7mpBmomnBCbD+T1AGOVXcKI1HGvCuihlcIitDW0aLyK1bJ3ZNQaILZCqegO3JyGyQqVpaLNlAzFFqSnLZqnQzBZ02fqlFz6M4C8RzkggdcAq6n0Wdgtj18bkgq5VulnaIrOXWzJtQPGvaFDLS0+//j1hFDXRGDGuYUgn+Aeqol21HGskKTxLCf3HgBoVnKikBjo0MxQ9gh5Mr0ytjP87te7vDNiYFz4ih58eqUUEfBbJ/knBD/tXYbnGV/l5GJY0DRqXyoEqJDpe0vEv6Ma+3YpYWW6c97hy/zmfAcF7VZnYSGZ0kpSuYm4t0DiZp9ux4/bSBg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=gEeee33uDgRYZeNg/1MSULfJjZrqEgh9/ez4XPenLZc=;
+ b=rgv+7/vcjPlZ81fDfX/PkvC9iQKypB5YsDzmIL8Jc1y95ML4i/9zcMS+Ndvgw5jN0uh80E5OIw2oDHHUxG9PI7XEcZBRLVWEmr6InzAH5kM7b8BbZasBJ2CkNqgztDob1gaT/p3RQYLeuvVTJbvFjPBBUkxw7Op7rwteL7DCgjo2eBXFJb1gJ6O8I8trHOzNaRKXfzzJ+7U6n34FGOkbDNib6inl6eRMyqEECCVCdNsdHYPI0pL6xAtVzgEZyGvzAY9qMOjEfIh4FiwafhxGPs+tCmQfq8RMa9IsFe9tk0YFcfeqGrC28bw+rVr3JMyZ0CdLX4zl72ZWKllpyWPwiw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 164.130.1.60) smtp.rcpttodomain=nongnu.org smtp.mailfrom=foss.st.com;
+ dmarc=fail (p=none sp=none pct=100) action=none header.from=foss.st.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=gEeee33uDgRYZeNg/1MSULfJjZrqEgh9/ez4XPenLZc=;
+ b=LGkIDJAd4D6Bx/tqRCMjFkKuDAAYn4ZtiHGVAM+XK4Fvc1VS7qnnm/IlsT7FjItRCsbTDNFqoUj/fR5HIFvFdF4EjGgle8EQc7ksDlCL+MscOJvZJb7AIUZc2A2iUiIaoyZ/Xmui8Lxt/Wi2JxV3fubRJaBMLeIT+leWVB1+DOQZqB1X+ar2faO5eqlQK/LHNE8Z7jTCrTIOoQBjoL/2ETML8xi3IblcbwUuvNOXv+2AXDuJIEgp/4kxZTyINnVGOi1cOULf9RKxXVrR4/evOGcykGWA8qvu+n6VD1mHveKY2uomkVWxMYuESCzgc8TcdoQQrAMwcLv9WF6XtnJQhQ==
+Received: from DU2P251CA0010.EURP251.PROD.OUTLOOK.COM (2603:10a6:10:230::25)
+ by DU0PR10MB6319.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:10:3b0::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.11; Wed, 27 May
+ 2026 07:36:22 +0000
+Received: from DB1PEPF000509FF.eurprd03.prod.outlook.com
+ (2603:10a6:10:230:cafe::3b) by DU2P251CA0010.outlook.office365.com
+ (2603:10a6:10:230::25) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.71.13 via Frontend Transport; Wed, 27
+ May 2026 07:36:20 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 164.130.1.60)
+ smtp.mailfrom=foss.st.com; dkim=none (message not signed)
+ header.d=none;dmarc=fail action=none header.from=foss.st.com;
+Received-SPF: Fail (protection.outlook.com: domain of foss.st.com does not
+ designate 164.130.1.60 as permitted sender) receiver=protection.outlook.com;
+ client-ip=164.130.1.60; helo=smtpO365.st.com;
+Received: from smtpO365.st.com (164.130.1.60) by
+ DB1PEPF000509FF.mail.protection.outlook.com (10.167.242.41) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.48.11 via Frontend Transport; Wed, 27 May 2026 07:36:20 +0000
+Received: from STKDAG1NODE2.st.com (10.75.128.133) by smtpO365.st.com
+ (10.250.44.72) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Wed, 27 May
+ 2026 09:40:01 +0200
+Received: from [10.74.16.102] (10.74.16.102) by STKDAG1NODE2.st.com
+ (10.75.128.133) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Wed, 27 May
+ 2026 09:36:04 +0200
+Message-ID: <b50cb0e2-5198-460c-abee-ba86c7002a96@foss.st.com>
+Date: Wed, 27 May 2026 09:36:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 5/8] virtio-net: support local migration of backend
-To: Peter Xu <peterx@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, jasowang@redhat.com,
- armbru@redhat.com, farosas@suse.de, raphael.s.norwitz@gmail.com,
- bchaney@akamai.com, qemu-devel@nongnu.org, berrange@redhat.com,
- pbonzini@redhat.com, yc-core@yandex-team.ru,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260522120534.77653-1-vsementsov@yandex-team.ru>
- <20260522120534.77653-6-vsementsov@yandex-team.ru>
- <20260524050632-mutt-send-email-mst@kernel.org>
- <c34e9bba-0e98-4694-870f-5f92f34f1076@yandex-team.ru>
- <ahRgbmVKuonjprB2@x1.local>
- <62045016-a892-43b8-87b1-869ef8d8e9d7@yandex-team.ru>
- <ahXcvpShorJoI4iD@x1.local>
+Subject: [PING] [PATCH 0/3] target/arm: add support for Cortex-M pointer
+ authentication code
+To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+CC: Peter Maydell <peter.maydell@linaro.org>, Richard Henderson
+ <richard.henderson@linaro.org>
+References: <20260518-pr-pacbti-v1-0-8932a885b03d@foss.st.com>
+From: Torbjorn SVENSSON <torbjorn.svensson@foss.st.com>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <ahXcvpShorJoI4iD@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20260518-pr-pacbti-v1-0-8932a885b03d@foss.st.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.74.16.102]
+X-ClientProxiedBy: ENXCAS1NODE2.st.com (10.75.128.138) To STKDAG1NODE2.st.com
+ (10.75.128.133)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DB1PEPF000509FF:EE_|DU0PR10MB6319:EE_
+X-MS-Office365-Filtering-Correlation-Id: 448416c5-74e2-4ef3-71be-08debbc2a580
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|82310400026|1800799024|36860700016|13003099007|11063799006|22082099003|18002099003|3023799007|56012099006;
+X-Microsoft-Antispam-Message-Info: inVJZRrjqF7AI/h1i1jyejlLREiMAm1V+ZBztTjqioeg6sCwEAGQ7TzJMe4RdEFwHc1iu8jDfPKS+uR3d775PbpgK/1ME91hY6MzW4r2hw68SmGAWwvBc4NfKa363Mph1iC/+hOsKWmpXGsH+wvRWbvvncmxv/3h5x74MQDlHS/RJrochcpf+y60rw1roy1M6wFC0g7sWW6Epg3xMR7wLb6oHLWVLVloWXtWvf6TRx6eoHJvr7aFiSs5pDL+HEhyfeiBw3IVSAlEwwRHL+Cei4N/KKGmZvapZCv2CoQO4Mna/j/lDoTr0185vDiyBWOIsoAwRBODCEEaLJlHDdUQfuyixEKIQpRmP3rrXwRb7b1jn69ZGGZA1zcjuPsllJirMXe0AQNE/pizc76bTDAR5BJ0OAxAAI5tfeT2I5zSic3V0IlfKk+zFi9BDS8ojnApEquyJe3/PolENkqBnCbDCVRNuZZMA6mZ6tr8pD3vOYyyaHMpbGq57CiZIZdbkQcOFHiAjY8D3PfNbTkutob5WsbNLd3I3f0vkaeAGUTeBswyRBmK/RU8zm0lQG+L7V05vk9InikmNRkFruNeCIHxdCNllIwSl0KjX2Y01uyzlXhu2CF+BrktoKvixr4r2057+qObHmxuijXeSjP9T3YdgADPTus9ezbSo00WqpJbOBoMQMNIHVPv8YyX+XrjrcbYqvXPm5KRpSR+FSD+vAVk66EtH179wgvWMoZ+9x9b5NA=
+X-Forefront-Antispam-Report: CIP:164.130.1.60; CTRY:IT; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:smtpO365.st.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(82310400026)(1800799024)(36860700016)(13003099007)(11063799006)(22082099003)(18002099003)(3023799007)(56012099006);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: UUjteYeZa0qCv9WYOSufCRogcKKoAbLkgJGBqN518rSW+zuKbO/AHhbOJAQCq1diERGImeIJ+WKGJBqdcDACMv1kJyKlYKrYDR1CQILOz2xZNajSyEJWTEEpCLz3qP1Xl8SFphJFdNpx56hLtWwVFYlGYVYe/3wWWaeGsTeO/7hOmLgPwxA3NGoYswW5GNYbd7FnZYamvxi6dq9tof3UA1uu4SMS5gP5lyJOKXY3WXoXAA51RkIYKQouQhyGM2cr2uOrwV6bFeCLWXvJH0c13Oi8LzdfTb08cs4Ef1VfNiGns37NzrboxQ0DnJ50iY8MVoG7DKpJwPYyVUahQ0lnaHLv1hD6u0fwbkRsktqKLiCbo3OGkNeryZXQ4khBIxxjlnDa7hTuYeGqsMHkQ4XHDCZwBxuKMfLnQBmWstJvDswUw4i9HB9rStX4JSz1HuN2
+X-OriginatorOrg: foss.st.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 May 2026 07:36:20.6798 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 448416c5-74e2-4ef3-71be-08debbc2a580
+X-MS-Exchange-CrossTenant-Id: 75e027c9-20d5-47d5-b82f-77d7cd041e8f
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=75e027c9-20d5-47d5-b82f-77d7cd041e8f; Ip=[164.130.1.60];
+ Helo=[smtpO365.st.com]
+X-MS-Exchange-CrossTenant-AuthSource: DB1PEPF000509FF.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0PR10MB6319
+Received-SPF: pass client-ip=2a01:111:f403:c201::6;
+ envelope-from=torbjorn.svensson@foss.st.com;
+ helo=AM0PR02CU008.outbound.protection.outlook.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -88,133 +130,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26.05.26 20:47, Peter Xu wrote:
-> On Tue, May 26, 2026 at 02:23:55PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> On 25.05.26 17:45, Peter Xu wrote:
->>> On Mon, May 25, 2026 at 04:51:55PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->>>> On 24.05.26 12:09, Michael S. Tsirkin wrote:
->>>>> On Fri, May 22, 2026 at 03:05:30PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->>>>>> Add virtio-net option local-migration, which is true by default,
->>>>>> but false for older machine types, which doesn't support the feature.
->>>>>>
->>>>>> When both global migration parameter "local" and new virtio-net
->>>>>> parameter "local-migration" are true, virtio-net transfer the whole
->>>>>> net backend to the destination, including open file descriptors.
->>>>>> Of-course, its only for local migration and the channel must be
->>>>>> UNIX domain socket.
->>>>>>
->>>>>> This way management tool should not care about creating new TAP, and
->>>>>> should not handle switching to it. Migration downtime become shorter.
->>>>>>
->>>>>> Support for TAP will come in the next commit.
->>>>>>
->>>>>> Signed-off-by: Vladimir Sementsov-Ogievskiy<vsementsov@yandex-team.ru>
->>>>>> Reviewed-by: Ben Chaney<bchaney@akamai.com>
->>>>> I don't get why is this a device property?
->>>>> It's clearly a backend thing?
->>>>>
->>>> Hmm.
->>>>
->>>> We want to be able to disable fd-migration per device, when common "local"
->>>> migration parameter is on.
->>>>
->>>> That's why we have parameter for virtio-net. It's also good, that we may
->>>> enable it by default for newer machine types, to make fd-migration a default
->>>> path.
->>>>
->>>> To be honest, it seems that the only thing in this patch (except for interface),
->>>> which is not about backand, is that we want to do virtio_net_update_host_features()
->>>> after backends incoming migration finished. For this, it's comfortable to have
->>>> backend migration as part of device migration stream.
->>>>
->>>> --
->>>>
->>>> Imagine, we move "local-migration" parameter to TAP device. This raise a lot of questions:
->>> Hmm, I thought we discussed this quite some time ago..  I can't remember
->>> details, but I'll try to comment with what I can still remember.
->>>
->>>> 1. We loss a possibility to set good default in machine type. Ok, we probably may add
->>>> a property to "migration" object, but this property will look like "TAP-local-migration",
->>>> and raise discussion again, that it should be property of TAP..
->>> If you recall I worked on the other series because of this desire of having
->>> tap be able to be QOMified and also support machine compat properties:
->>>
->>> https://lore.kernel.org/all/20251209162857.857593-2-peterx@redhat.com/
->>>
->>> I didn't get a lot of feedback supporting having TYPE_OBJECT_COMPAT, maybe
->>> it's an overkill only to apply object_apply_compat_props().
->>>
->>> However, just to say we can still QOMify TAP and then add its own
->>> instance_post_init() to also do object_apply_compat_props(), like quite a
->>> few other existing users, then this (1) isn't a problem, and it doesn't
->>> need to depend on my series either.
->>
->> Thanks for reminding and explanation. Previously, I thought that
->> QOMification is huge task, and your series is required. Now I see,
->> that it is not so difficult. All that's left for me to say is
->> "let's try it")
->>
->>
->> Here is an experimental diff on top on this series. If you like it,
->> I'll resend with proper division into commits:
+Gentle ping! :)
+
+There is apparently also a ticket for this work (that I did not see before I sent the patches): https://linaro.atlassian.net/browse/QEMU-444
+
+
+On 2026-05-18 18:13, Torbjörn SVENSSON wrote:
+> Testing an arm-none-eabi GCC toolchain using QEMU gives unpredictable
+> test results for some test cases. In the GCC testsuite function
+> check_effective_target_arm_pacbti_hw, the testsuite tries to identify
+> if the target supports PACBTI instructions. The test consists of:
 > 
-> I don't know networking, but in general it looks pretty neat to me, thanks.
+>          __attribute__ ((naked)) int
+>          main (void)
+>          {
+>            asm ("pac r12, lr, sp");
+>            asm ("mov r0, #0");
+>            asm ("autg r12, lr, sp");
+>            asm ("bx lr");
+>          }
 > 
-> Only a few nitpicks inline where I can spot.
+> Running the above code in QEMU will cause LR to get corrupted.
+> The reson for the corruption is that AUTG overlaps with the SMMLA
+> instruction, and SMMLA will write the result to Rn, that for
+> `AUTG R12, LR, SP` happens to match `LR`.
 
-[..]
+The above statement is not entirely true.
+SMMLA is writing the result to Rd and that happens to match PC, not Rn and LR.
+Sorry for the confusion this might have caused.
 
->> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
->> index 0a8a2e85a63..e7b3cd7db01 100644
->> --- a/include/migration/vmstate.h
->> +++ b/include/migration/vmstate.h
->> @@ -178,6 +178,7 @@ typedef enum {
->>       MIG_PRI_LOW,                /* Must happen after default */
->>       MIG_PRI_DEFAULT,
->> +    MIG_PRI_TAP,                /* Must happen before virtio-net device */
+Kind regards,
+Torbjörn
+
+> The solution to the above problem is to define the following new
+> Cortex-M instructions in QEMU:
 > 
-> It's a tradition we put random names here, but they should be cleaned up at
-> some point.  For this one, it's easy to categorize it on the 1st day, maybe
-> MIG_PRI_BACKEND?  Which should include anything that is a backend of an
-> emulated devices.  Keeping the comment would be still very nice, though (by
-> mentioning the dependency of virtio-net over TAP).
-
-OK
-
+> * AUT
+> * AUTG
+> * BXAUT
+> * PAC
+> * PACBTI
+> * PACG
 > 
->>       MIG_PRI_IOMMU,              /* Must happen before PCI devices */
->>       MIG_PRI_PCI_BUS,            /* Must happen before IOMMU */
->>       MIG_PRI_VIRTIO_MEM,         /* Must happen before IOMMU */
-
-[..]
-
->> --- a/qapi/net.json
->> +++ b/qapi/net.json
->> @@ -429,9 +429,18 @@
->>   #     getting TAP file descriptors from incoming migration stream.
->>   #     The option is incompatible with any of @fd, @fds, @helper, @br,
->>   #     @ifname, @sndbuf and @vnet_hdr options, and requires @script and
->> -#     @downscript be explicitly set to nothing (empty string or "no")
->> +#     @downscript be explicitly set to nothing (empty string or "no"),
->> +#     and requires also @local-migration to be set an "local"
->> +#     migration parameter be set as well.
->>   #     (Since 11.1)
->>   #
->> +# @local-migration: enable local migration for this TAP backend.
+> This patch series only implements the pointer authentication code part
+> of PACBTI. The branch target identification part is not implemented.
 > 
-> I would maybe call it "supported", then we can differenciate "enablement of
-> the feature" versus "devices support this feature".
+> Signed-off-by: Torbjörn SVENSSON <torbjorn.svensson@foss.st.com>
+> ---
+> Torbjörn SVENSSON (3):
+>        target/arm/tcg: define cortex-m85 cpu
+>        target/arm/tcg: add PAC related instructions
+>        target/arm: implement v8.1-m PAC support
 > 
-> Not a big deal, though.  Below lines explain everything well, so looks good
-> with/without changing.
+>   target/arm/cpu-features.h  |   6 ++
+>   target/arm/internals.h     |   2 +
+>   target/arm/tcg/cpu-v7m.c   |  40 +++++++++++++
+>   target/arm/tcg/m_helper.c  |  17 ++++++
+>   target/arm/tcg/t32.decode  |  21 ++++++-
+>   target/arm/tcg/translate.c | 138 +++++++++++++++++++++++++++++++++++++++++++++
+>   6 files changed, 221 insertions(+), 3 deletions(-)
+> ---
+> base-commit: ac6721b88df944ade0048822b2b74210f543d656
+> change-id: 20260518-pr-pacbti-366d7acbe1be
+> 
+> Best regards,
 
-
-OK for me, will do.
-
-
-Thanks for fast answer, I'll make v17 soon.
-
--- 
-Best regards,
-Vladimir
 
