@@ -4,97 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E27A5CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 07:11:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 611CCCD6E41
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 07:25:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wS8QL-0000j2-8U; Wed, 27 May 2026 03:11:29 -0400
+	id 1wS8dD-0003JV-Vv; Wed, 27 May 2026 03:24:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wS8Q6-0000hx-9A
- for qemu-devel@nongnu.org; Wed, 27 May 2026 03:11:17 -0400
-Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wS8Q0-0005PP-AM
- for qemu-devel@nongnu.org; Wed, 27 May 2026 03:11:12 -0400
-Received: by mail-wr1-x442.google.com with SMTP id
- ffacd0b85a97d-44a74032ff8so8418328f8f.1
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 00:11:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779865864; x=1780470664; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=cX9AAQunfh7nFSqIKocFQrwgm+kCjja121/pRKimQSE=;
- b=HumiZeoEMnD3A2w2gwvjzI8/C0qYSxXT9N5AlckzUOuYVVm5AMRT2ffQqK7XHkJYmI
- XqZ/CUM65TCyNBCTs5thuV3B8VaGYT4H2StlfZblYNE1tBO9ASLrDEj6x9gQsBwHKqp5
- LRS4bA2BcqbgYRo/2KxrkXaKIAdjZiKxzPCqAbOkRvoXecJA+2AorTl61VEPoo5F9xQv
- UvQe0FKkJto59c2+ic9TjR3ozaVgyWSIm0+x3ykaNbHlnCWBukZgZaQIa/a+k4465ZVv
- wJjQj5doRgO5jsV8vai400pllEaKpVDn4SJNICStHXCESB9M+v3O44tpVDO9dJ+5o2TO
- 2+7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779865864; x=1780470664;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=cX9AAQunfh7nFSqIKocFQrwgm+kCjja121/pRKimQSE=;
- b=FjYtGQ5J2ZwGiT1gUCtdwnXuO4k79UX9yeaNfgzFlhHPuPX7W/slgk4SbSE9BXV2JQ
- hWl8ZEBbk9sLlDJUUQk5XsZEKmuLIbIIiGlKq5fB5nAWYzvHflp08YWtg6R6b/VzvZx5
- k26+1C22Y4sr+H9nQgggdXxVOM+X5TwCzoT8AqcuHFj7VPnwCwFDfK+IJ4ZXXpuydZwP
- XTEvhyq8Gk5lhbuiQA3MrwoyihGMk11GmHGDA7t3w4Oo9YxiIMBY4j0djImdziLHZWNb
- AMVgQXd2gOJdRg71rNevmErP5vTMQC3idIqL6nS+6jl+YzfuUc1eSVEO4IxkfcUxwe+o
- yO5A==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9hUnpz9VeS8++MyXgQ/zW1QG/NoHozaAAcFG8OpLH2oDHQKNm8c1/QzWlrD6wxv1s+nL4roff+hwMX@nongnu.org
-X-Gm-Message-State: AOJu0YyleRWZ7KFBqsTRB/16MfUY/jaOrFW/zqalTTu/sOOEvz9dDXYn
- eVAVq9l21RAC2mfvr+L7gm7ID10H3QeGarkf6SFfajXPUo35kBnWQ3PBX9sqOqEqUtU=
-X-Gm-Gg: Acq92OFIMEq4/Ol5hPM2xG+IOV5DhAzycv3X+GrZ+fgxoewMhc+9OED8sjvjQRwHBTc
- eIRlsKBliesWA2HgnqAfbJFHpgA7y/Wpz5AJr7wGWgnIOccT3yRh7ZPuruRxt3Dijj3J6otyg2i
- gw+1T//JDcBGOY93ZqmH9Qk6v4Ek2yWbxbqYqhMtUuNbIheKcvUnTgfODolXaQsNr6V5SHZk9bZ
- u21mlrWu+wqhm8iWYRSqi7nl6k9s1Mg+AaYo4VhJuepv68S+ynrM6EBduWN6IkL6jkcWDta7m8O
- KpaFPZHJ+fmL26Qlw0KonO5yPuog3AZ5iJAAK+FOF631SZevClwX++M7pkYm0r6pzIjKakbMYNY
- awBvCJ5jn6Viv1S8YLpu4Kb6U2HH9A9vW/i5yqGyBtJfRF23Ba8iZwK39y+v0rm3hndsezg7PGA
- gR6E5CQoDT9xyrgVHEA1DsW3YHRdKmEO8s3fRrvmV7nSgSN+nW1BFJ72YqEEuGzMQgxg==
-X-Received: by 2002:a05:6000:26ce:b0:45e:891c:648e with SMTP id
- ffacd0b85a97d-45eb36703damr35094420f8f.8.1779865864413; 
- Wed, 27 May 2026 00:11:04 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45edb5b2bbfsm4242928f8f.32.2026.05.27.00.11.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 May 2026 00:11:03 -0700 (PDT)
-Message-ID: <fdc6eaa4-fccf-46e7-99cb-1962fd8a47c0@linaro.org>
-Date: Wed, 27 May 2026 09:11:02 +0200
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wS8dB-0003JK-LU
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 03:24:46 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wS8d8-0004oW-PR
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 03:24:45 -0400
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c08:7605:0:640:8d9a:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id D640F80739;
+ Wed, 27 May 2026 10:24:36 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:69::1:d] (unknown [2a02:6bf:8080:69::1:d])
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp)
+ with ESMTPSA id YOTNxJ0WBmI0-XqjYu0I2; 
+ Wed, 27 May 2026 10:24:35 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1779866675;
+ bh=4/eAW7rNPgeu/LFrsWbu7QKi/UV4KyKSgTWlE70Q3a8=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=JtLMm2g8pT0yqX4fwgQd4R0zUYxEJuQuFwbcRzxn+meeyejxpr3JPnTydD80nQUvb
+ AIoeUkeH87IconoV+p8e3agxWu05AbYZIYfRsibbMhJtC7qwS+SUhQ6C/triFD8O/T
+ dt/IewJBtSmWlg4zDDAvSi+ncosYg6c61sxv+2kY=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <b15693e1-161b-463d-9772-089d7a848f30@yandex-team.ru>
+Date: Wed, 27 May 2026 10:24:34 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: on ai generated and code provenance
+Subject: Re: [PATCH v16 5/8] virtio-net: support local migration of backend
+To: Peter Xu <peterx@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, jasowang@redhat.com,
+ armbru@redhat.com, farosas@suse.de, raphael.s.norwitz@gmail.com,
+ bchaney@akamai.com, qemu-devel@nongnu.org, berrange@redhat.com,
+ pbonzini@redhat.com, yc-core@yandex-team.ru,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260522120534.77653-1-vsementsov@yandex-team.ru>
+ <20260522120534.77653-6-vsementsov@yandex-team.ru>
+ <20260524050632-mutt-send-email-mst@kernel.org>
+ <c34e9bba-0e98-4694-870f-5f92f34f1076@yandex-team.ru>
+ <ahRgbmVKuonjprB2@x1.local>
+ <62045016-a892-43b8-87b1-869ef8d8e9d7@yandex-team.ru>
+ <ahXcvpShorJoI4iD@x1.local>
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
- stefanha@redhat.com
-References: <20260524083329-mutt-send-email-mst@kernel.org>
- <f0bc9023-28c4-4685-b0cc-fc7ad4e6d371@redhat.com>
- <CAFEAcA9wMRFJWrjGHcd2nfhgXovyuS=dDJvCXWZkgmD_eez27A@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA9wMRFJWrjGHcd2nfhgXovyuS=dDJvCXWZkgmD_eez27A@mail.gmail.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <ahXcvpShorJoI4iD@x1.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::442;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x442.google.com
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -106,22 +88,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/5/26 10:23, Peter Maydell wrote:
-
-> I have quite a lot of sympathy with the rationale behind the
-> Zig policy, for instance:
->   https://kristoff.it/blog/contributor-poker-and-ai/
-
-Thanks for sharing this link!
-
-> I spend quite a lot of time reviewing patches for things which
-> are features I don't necessarily personally care about. I'm
-> happy with doing that for other people who are hopefully
-> learning and gaining something from the process; I'm much
-> less interested in reviewing a mountain of LLM-generated patches.
+On 26.05.26 20:47, Peter Xu wrote:
+> On Tue, May 26, 2026 at 02:23:55PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> On 25.05.26 17:45, Peter Xu wrote:
+>>> On Mon, May 25, 2026 at 04:51:55PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>>>> On 24.05.26 12:09, Michael S. Tsirkin wrote:
+>>>>> On Fri, May 22, 2026 at 03:05:30PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>>>>>> Add virtio-net option local-migration, which is true by default,
+>>>>>> but false for older machine types, which doesn't support the feature.
+>>>>>>
+>>>>>> When both global migration parameter "local" and new virtio-net
+>>>>>> parameter "local-migration" are true, virtio-net transfer the whole
+>>>>>> net backend to the destination, including open file descriptors.
+>>>>>> Of-course, its only for local migration and the channel must be
+>>>>>> UNIX domain socket.
+>>>>>>
+>>>>>> This way management tool should not care about creating new TAP, and
+>>>>>> should not handle switching to it. Migration downtime become shorter.
+>>>>>>
+>>>>>> Support for TAP will come in the next commit.
+>>>>>>
+>>>>>> Signed-off-by: Vladimir Sementsov-Ogievskiy<vsementsov@yandex-team.ru>
+>>>>>> Reviewed-by: Ben Chaney<bchaney@akamai.com>
+>>>>> I don't get why is this a device property?
+>>>>> It's clearly a backend thing?
+>>>>>
+>>>> Hmm.
+>>>>
+>>>> We want to be able to disable fd-migration per device, when common "local"
+>>>> migration parameter is on.
+>>>>
+>>>> That's why we have parameter for virtio-net. It's also good, that we may
+>>>> enable it by default for newer machine types, to make fd-migration a default
+>>>> path.
+>>>>
+>>>> To be honest, it seems that the only thing in this patch (except for interface),
+>>>> which is not about backand, is that we want to do virtio_net_update_host_features()
+>>>> after backends incoming migration finished. For this, it's comfortable to have
+>>>> backend migration as part of device migration stream.
+>>>>
+>>>> --
+>>>>
+>>>> Imagine, we move "local-migration" parameter to TAP device. This raise a lot of questions:
+>>> Hmm, I thought we discussed this quite some time ago..  I can't remember
+>>> details, but I'll try to comment with what I can still remember.
+>>>
+>>>> 1. We loss a possibility to set good default in machine type. Ok, we probably may add
+>>>> a property to "migration" object, but this property will look like "TAP-local-migration",
+>>>> and raise discussion again, that it should be property of TAP..
+>>> If you recall I worked on the other series because of this desire of having
+>>> tap be able to be QOMified and also support machine compat properties:
+>>>
+>>> https://lore.kernel.org/all/20251209162857.857593-2-peterx@redhat.com/
+>>>
+>>> I didn't get a lot of feedback supporting having TYPE_OBJECT_COMPAT, maybe
+>>> it's an overkill only to apply object_apply_compat_props().
+>>>
+>>> However, just to say we can still QOMify TAP and then add its own
+>>> instance_post_init() to also do object_apply_compat_props(), like quite a
+>>> few other existing users, then this (1) isn't a problem, and it doesn't
+>>> need to depend on my series either.
+>>
+>> Thanks for reminding and explanation. Previously, I thought that
+>> QOMification is huge task, and your series is required. Now I see,
+>> that it is not so difficult. All that's left for me to say is
+>> "let's try it")
+>>
+>>
+>> Here is an experimental diff on top on this series. If you like it,
+>> I'll resend with proper division into commits:
 > 
-> thanks
-> -- PMM
+> I don't know networking, but in general it looks pretty neat to me, thanks.
 > 
+> Only a few nitpicks inline where I can spot.
 
+[..]
+
+>> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+>> index 0a8a2e85a63..e7b3cd7db01 100644
+>> --- a/include/migration/vmstate.h
+>> +++ b/include/migration/vmstate.h
+>> @@ -178,6 +178,7 @@ typedef enum {
+>>       MIG_PRI_LOW,                /* Must happen after default */
+>>       MIG_PRI_DEFAULT,
+>> +    MIG_PRI_TAP,                /* Must happen before virtio-net device */
+> 
+> It's a tradition we put random names here, but they should be cleaned up at
+> some point.  For this one, it's easy to categorize it on the 1st day, maybe
+> MIG_PRI_BACKEND?  Which should include anything that is a backend of an
+> emulated devices.  Keeping the comment would be still very nice, though (by
+> mentioning the dependency of virtio-net over TAP).
+
+OK
+
+> 
+>>       MIG_PRI_IOMMU,              /* Must happen before PCI devices */
+>>       MIG_PRI_PCI_BUS,            /* Must happen before IOMMU */
+>>       MIG_PRI_VIRTIO_MEM,         /* Must happen before IOMMU */
+
+[..]
+
+>> --- a/qapi/net.json
+>> +++ b/qapi/net.json
+>> @@ -429,9 +429,18 @@
+>>   #     getting TAP file descriptors from incoming migration stream.
+>>   #     The option is incompatible with any of @fd, @fds, @helper, @br,
+>>   #     @ifname, @sndbuf and @vnet_hdr options, and requires @script and
+>> -#     @downscript be explicitly set to nothing (empty string or "no")
+>> +#     @downscript be explicitly set to nothing (empty string or "no"),
+>> +#     and requires also @local-migration to be set an "local"
+>> +#     migration parameter be set as well.
+>>   #     (Since 11.1)
+>>   #
+>> +# @local-migration: enable local migration for this TAP backend.
+> 
+> I would maybe call it "supported", then we can differenciate "enablement of
+> the feature" versus "devices support this feature".
+> 
+> Not a big deal, though.  Below lines explain everything well, so looks good
+> with/without changing.
+
+
+OK for me, will do.
+
+
+Thanks for fast answer, I'll make v17 soon.
+
+-- 
+Best regards,
+Vladimir
 
