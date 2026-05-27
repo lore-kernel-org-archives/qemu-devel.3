@@ -4,90 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29989CD5BDE
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 09:14:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54897CD5BDE
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 09:21:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSAKr-00056b-Gd; Wed, 27 May 2026 05:13:57 -0400
+	id 1wSARj-00079K-MN; Wed, 27 May 2026 05:21:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSAKn-00056P-NO
- for qemu-devel@nongnu.org; Wed, 27 May 2026 05:13:54 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ id 1wSARh-00078u-ER
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 05:21:01 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSAKm-0007In-1Q
- for qemu-devel@nongnu.org; Wed, 27 May 2026 05:13:53 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-44dd5cb0f81so8128477f8f.0
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 02:13:51 -0700 (PDT)
+ id 1wSARf-0000Be-Ca
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 05:21:01 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-49056b9f04aso51353375e9.0
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 02:20:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779873230; x=1780478030; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ d=linaro.org; s=google; t=1779873657; x=1780478457; darn=nongnu.org;
+ h=mime-version:message-id:date:user-agent:references:in-reply-to
  :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=k89uV43GsFYF7LuEhcEFZMHEV5G0rCccRoV7T0MulpU=;
- b=XT5iW04rEQ2mFc+96NQeghen7HPpWL92y/U9chpxj4PrYuGwaqPQ2vXhLiWc4nrM9x
- RlwAZO/qk11o4Hcv9IBY28Q3DIU04s5ttQBi2647YMqUaOz/hS3XwzdLAFnhlPwNQ/ED
- e+tTEBZaGJkKh+DAS7vEqMCvBh9n9fgjrFnAAqxc/DUhLtg3koUBWce/cn7ThI8wi60I
- hiF5RZJkvrc8rLbYDItLyuWRFNPD0zxVke+ZbZYSWDMS+zx9BgtjBEQl1gA4UoV61xd8
- hk/7kE3J2V76D/PfX0xUpDXg9JY/fVILckeI3fM4gL8wD5Dh3eNy83bspZ0cUglfvyBD
- REYA==
+ bh=fZc/2epVtxsSF5dBX0Uqe2VcfjpXL6wihdF61Lb5eyw=;
+ b=H2tXfnH8g5AwfoqvNeCl8LM8f4+jDLjoANg8turJG+LWYblA3YPPkXvi03zXFjZdsC
+ m/f6cw2uOKc+BXqPSrj3MSsKjY+hc0uWVUAMWVXdcXvZRNbnIdgJXI3OeQCA/Xxlajqd
+ lhupepp6y9A2xVB+j8XX0zozwS5QecKlFD9oE6ZUavVwc9Ig5TZdsy0lxMK7aO5JyYQt
+ n94DnR/RbhXqeu9QZ1hSMSdp/gsxAlS0rYP76gvCiK57GWMak6m7NGMv9SK+wxwWjIgh
+ PyU00HdVgZJpr/c6pz8CDkiSEYM99QG+0OmMAVHpW8mT+CtjF2ENMprFADzgQGLHudmt
+ 53Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779873230; x=1780478030;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ d=1e100.net; s=20251104; t=1779873657; x=1780478457;
+ h=mime-version:message-id:date:user-agent:references:in-reply-to
  :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=k89uV43GsFYF7LuEhcEFZMHEV5G0rCccRoV7T0MulpU=;
- b=EpXLIP9o67FWn+l61xYpa6AJECM1qy6S1G4NnhiVpEp0auqeWyVO/ougnkMiQbzhYg
- PHg5v/XsxEp/UcWJdMk+BeNeap+hffMCJLWOvLo5bXboRiisHr3kYgcYhIyYw6027fCX
- b3CsvSqs0HbL7dCtwdo4dD047IKUZJjygqd3/FStCdGPTND7ajXo9Rt7LfEB2XTiKfXQ
- MUvpQ4WubFYo+5PQlL3oXD0TY+BUwJoiA/ZR1P4hGMW34CoWZJM6GqjU8DH+8m42H9FA
- GoBN05H92q7zxx8WES+lj2WOvL4ISxXbXDgAyKsMefzhsteKAL4yrtovBGRrN2jJQGgS
- j2iA==
-X-Gm-Message-State: AOJu0YxE/bKDIeB+jtUk7nMBjzeMNBKBOr/SgB2qLcxEYOumz5M1dapA
- /E/mNqr9kbXmAZzlbzdPAmmRzTQVs4JSqn3cjo4iGd+jKEq1c1ShdDGLzqPu7tl2UpY=
-X-Gm-Gg: Acq92OFsVTjXx2dItF9x1dO0zbiVUcATHwu1ckyRquM+aqLuxu83AYvkMF930B4WsSs
- ynaz7LtRkDhJ3cfBqyDXETLhuG1j9mdjVtRUIP2MRWvLUwozFLmR3HKEA55CBdzBYsuWm5l+f79
- BnEBWfRHbrRn9DuaJ0/X4xOANy+inpV3RnW6Xe63+/jhJxrRdkkY60NW87qKbKcbE0d1roVPMP6
- jcElIFYDsuaZnwv+GZucJte7yapnXJAABLyPCZNj3DDbm9J2oMr2a72ZJPc4FfyBxZBcL8ypAQt
- K7v3s8wEcQKNJaethzg5lQkJqGIwLHGySnGBkC6lVS+hZEHWp44eic1eQRmkTo/g0b8YiD8w7HB
- REGcVChamIotieGUgtj2Xa7ZgXevCREB4l+O68EGQwQHrNTo95EggWLb8R/VoybPsuxR9oNB8UN
- Ko3iq/llgQC61KZwWISLIUNE8=
-X-Received: by 2002:a05:6000:2888:b0:45d:4c30:81a6 with SMTP id
- ffacd0b85a97d-45eb30de822mr34820497f8f.5.1779873229458; 
- Wed, 27 May 2026 02:13:49 -0700 (PDT)
+ bh=fZc/2epVtxsSF5dBX0Uqe2VcfjpXL6wihdF61Lb5eyw=;
+ b=Z4WtSsr0uFP4vvsvV65peoynCIH+mj59tKwBveV5X92XCk7t11+EJ9xKiUYCt/PywO
+ UiDBtDJ+69Ib3bvN+7N+PMxXFwYYL0WNJoCk2kEeKe34lS+uMNAAfRr3j6PwljRPWjvb
+ HIwCjbAHcZNaTEFK+r28Hf5MiAMFOnIc2ztKzRWRZdL8O+88lvINc4JJS39hRswd1Ouf
+ +54ET7CHZ5WSjg74G72RteXFQH4I2bsICLtjUEAbQ3790kG1ouzVtt+tvd3Sir/NI+a3
+ lC2yXdKDpYlYGCxltRTzivUBsy7fWsk67xFkjEO6o8mqhu8jz/fQrxhbuQpJhhdNTimw
+ 82Fg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+uTPApleGWWSaztxAUzBiX4+l8IW6Cj45DsA7+qV37pEnRu1ppA+LlmBvhd5GRVgz0ao2BNu7zWXYi@nongnu.org
+X-Gm-Message-State: AOJu0Yyh11S6PQrNH4SUKe6HPwRR7nsLMQY/TVK/leJAlmty6YR91yVH
+ 2Qy5iz9S5z3gmsqU0bemjOjjHn8r7QCyjfQwZa710NPtNbK/SEscYR+0y2MO/2tzvW0=
+X-Gm-Gg: Acq92OHvLY7Nx/33y2Z0k9sacD5/NissMB8IB24b9KIIWRCHbWSFSI5uY4Hf2JVqV3k
+ 72sOUNAEebLRgzYfjgQIhGHDR4eC65K2OnI8Xq9wcsouBERYTCwlwgX5AQRaxtKC2Cf+dHTvLZv
+ sx/3M3vNc3Z4Stpq2LPhS+XPsLWdNei0iEfX/m+b7J1uYPf8/HB80mhnS4ujXR5Lna9x6MbY9u7
+ nkNLecajqE9BoPsIMYUIfd4CzgnNualgudz1x6e6F2Kc1uwnu9XO5UWMo/AvtVUVJpSoHeA1XYJ
+ F9hvbjg0XYO99Qt2zZPasyhfrL1oxt3HWK3fZ0ft/PJNNQKWC2Ch2+WaVopFwMSnsXgjTPuQ7Hk
+ 40MdzBa1dzNY+jsTp9Wn7Y3ax+gPL28k7zpmOW8+zVfmYYdBrfbNGkPSWShdMk9xHb4hFfiwaJt
+ 8fz59Nw9OgDpcXpy8pNDb/g0UodTIluzmm/A==
+X-Received: by 2002:a05:600c:4f0f:b0:490:50e4:7224 with SMTP id
+ 5b1f17b1804b1-49050e474d4mr354362315e9.3.1779873657420; 
+ Wed, 27 May 2026 02:20:57 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45edb557545sm5226363f8f.12.2026.05.27.02.13.48
+ 5b1f17b1804b1-490454db285sm356591905e9.5.2026.05.27.02.20.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 May 2026 02:13:48 -0700 (PDT)
+ Wed, 27 May 2026 02:20:56 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CA1A15F7F0;
- Wed, 27 May 2026 10:13:47 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 2B28E5F7F0;
+ Wed, 27 May 2026 10:20:54 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel <qemu-devel@nongnu.org>,  virtio-comment@lists.linux.dev,
- dev@lists.cloudhypervisor.org, rust-vmm@lists.opendev.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Stefano Garzarella
- <sgarzare@redhat.com>, Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>, Demi Marie Obenour
- <demi@invisiblethingslab.com>, Alyssa Ross <hi@alyssa.is>, Albert Esteve
- <aesteve@redhat.com>, Mark Burton <MBURTON@QTI.QUALCOMM.COM>, Matti Moell
- <matti@qti.qualcomm.com>, Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>, Stefan Hajnoczi <stefanha@redhat.com>,
- Viresh Kumar <viresh.kumar@linaro.org>, Dorinda Bassey
- <dbassey@redhat.com>, Sergio Lopez <slp@redhat.com>, Vishwanath Seshagiri
- <vishs@meta.com>, Rob Bradford <rbradford@meta.com>, Zhengyu Zhao
- <zhaozhengyu@bytedance.com>, Jorge E. Moreira <jemoreira@google.com>
-Subject: Where should the vhost-user specification live?
+To: Alyssa Ross <hi@alyssa.is>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,  Demi Marie
+ Obenour <demiobenour@gmail.com>,  Albert Esteve <aesteve@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,  "Daniel P. Berrange"
+ <berrange@redhat.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eric Blake
+ <eblake@redhat.com>,  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,  Elena Ufimtseva
+ <elena.ufimtseva@oracle.com>,  Auger Eric <eric.auger@redhat.com>,
+ felipe@nutanix.com,  Jan Kiszka <jan.kiszka@web.de>,  Joao Martins
+ <joao.m.martins@oracle.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@gmail.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Peter
+ Maydell <peter.maydell@linaro.org>,  Phil =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  QEMU Developers <qemu-devel@nongnu.org>,  Richard
+ Henderson <richard.henderson@linaro.org>,  Bernhard Beschow
+ <shentey@gmail.com>,  Stefan Hajnoczi <stefanha@gmail.com>,  Thomas Huth
+ <thuth@redhat.com>,  Wei Wang <wei.w.wang@intel.com>
+Subject: Re: vhost-user(?) breaking changes
+In-Reply-To: <87mrxlgt6u.fsf@alyssa.is> (Alyssa Ross's message of "Wed, 27 May
+ 2026 10:20:09 +0200")
+References: <875x4fmzcv.fsf@draig.linaro.org>
+ <96181e0d-4c75-430a-9b80-9d8d0eabcce7@gmail.com>
+ <CAAjaMXbFhtiHgiUwmJFXti25+vXRebjtaD6fFD+GkOHsDny=Bg@mail.gmail.com>
+ <878q961nkz.fsf@draig.linaro.org> <87mrxlgt6u.fsf@alyssa.is>
 User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Wed, 27 May 2026 10:13:47 +0100
-Message-ID: <874ijtz038.fsf@draig.linaro.org>
+Date: Wed, 27 May 2026 10:20:34 +0100
+Message-ID: <87y0h5xl7h.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,59 +122,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Alyssa Ross <hi@alyssa.is> writes:
 
-Apologies for the wide cross-posting but I wanted to find as many
-interested parties as possible.
+> [Trimming CC substantially.]
+>
+> Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+>
+>> Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
+>>
+>>> On Mon, May 25, 2026 at 5:03=E2=80=AFAM Demi Marie Obenour
+>>> <demiobenour@gmail.com> wrote:
+>>>>
+>>>> The first is whether vhost-user memory regions
+>>>> are guaranteed to not overlap.  I sent a patch in
+>>>> https://lore.kernel.org/qemu-devel/20260522-vhost-user-dev-v1-1-b31646=
+cf19b8@gmail.com
+>>>> to guarantee this is not the case.  However, this is technically a
+>>>> breaking spec change.  The virtio vhost-user device I'm working on
+>>>> requires this.
+>>
+>> Breaking spec changes are always a red flag because of whats already
+>> deployed. Are you sure there is no way to make changes optional with use
+>> of feature flags?
+>
+> There's some nuance between breaking changes and clarifications though,
+> right?  e.g. 97f24a0496 ("vhost-user.rst: clarify when FDs can be sent")
+> tightened things up, so could also have been in principle have been seen
+> as a breaking change, but not practically.
 
-The vhost-user specification currently lives in the main qemu
-repository (docs/interop/vhost-user.rst) mainly due to historical
-reasons. QEMU was one of the first VMMs to implement vhost-user and the
-spec needed to live somewhere.
+Sure - if in practice we are encoding an assumption that wasn't explicit
+but everyone* was making anyway I think that fair.
 
-However there are now vhost-user implementations for QEMU, rust-vmm,
-cloud hypervisor and I think CrosVM. We get queries about changing or
-updating the spec on qemu-devel from time to time and I feel that given
-it is an interoperability specification we should think about hosting
-it and its discussions elsewhere.
+> Are there likely to be devices that use overlapping memory regions
+> today?  Would we expect that to work?
 
-I think broadly there are 4 options:
+I personally don't know - and I didn't feel qualified to opine either
+way. This opens up the wider question of who would know and are they
+following discussions about this on qemu-devel?
 
-  *  Move into the OASIS VirtIO group as an appendix/addendum to the main
-     VirtIO spec.
+For that see the other thread I've just started where you and a bunch of
+others are CC'd ;-)
 
-     This probably brings the widest visibility to changes to those that
-     might be affected. However it does come with a certain amount of
-     bureaucracy with the OASIS process where only members can vote on
-     changes. While intimately tied to VirtIO it's concerns are more
-     focused on practical implementation details of the IPC between VMMs
-     and device backends.
+*everyone - do we have a comprehensive list of who implements vhost-user
+ these days?
 
-  * Move to a separate project under the qemu-project space.
-
-    QEMU hosts a number of sub-projects and mirrors so it would be easy
-    enough to split the spec into its own repo. Changes to the
-    specification could then be divorced from QEMU's release cycle and
-    at the maintainers option issues and merging strategies could be
-    configured for just the specification.
-
-  * Create a new project just for vhost-user
-
-    The interested parties could decide where to host (github, gitlab,
-    forgejo, whatever..) and decide to move away from mailing lists
-    altogether or create a mailing list but manage changes via the forge
-    interface.
-
-  * Status quo
-
-    Just keep the spec where it is and muddle through as before. Maybe
-    we could improve the contribution documentation for how and when
-    changes are discussed.
-
-Any thoughts?
-
---=20
+=2D-=20
 Alex Benn=C3=A9e
 Virtualisation Tech Lead @ Linaro
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFLBAEBCgA1FiEEZoWumedRZ7yvyN81+9DbCVqeKkQFAmoWt3UXHGFsZXguYmVu
+bmVlQGxpbmFyby5vcmcACgkQ+9DbCVqeKkTTrQf+NvYrK9nKnEvqM5cJwadRVyIy
+T+qXEE8++L2jTeyjyap/XRZM2ng2oNt4zwnV0tSSzJ2xd4KeLMYB5WrGhxzo5Ki3
+Vj2t8S8vjtL+4/Gb9Eeh6uZzRdMyPuPr/JTia0FOqV27p4SWEdHgug9zlytLUNKv
+KfqPQau9ItetzfwFkI0Qa1wTmK6wtD668ft4L/g8raS6RqgowGv57dtvVM2cfhZC
+bhKlELEAtxAn/QsHYQ7mmaj0ZuqCGRIKghVBTww1rGWlqWW8ck++g9RMr/DYJh1j
+tjEaGvvSlCWayiIFaY+Dq5zDNrkAHj1aygP/Qr+xLWK+whTgPiROmbUoVj1Cxw==
+=RlWk
+-----END PGP SIGNATURE-----
+--=-=-=--
 
