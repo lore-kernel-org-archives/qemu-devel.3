@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F12D1CD5BD5
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 12:28:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AFDECD5BD5
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 12:28:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSDMP-0002eV-NL; Wed, 27 May 2026 08:27:45 -0400
+	id 1wSDLt-0002Xv-4F; Wed, 27 May 2026 08:27:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wSDMA-0002cH-CR
- for qemu-devel@nongnu.org; Wed, 27 May 2026 08:27:31 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wSDLr-0002XG-Df
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 08:27:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wSDM3-0001IN-DW
- for qemu-devel@nongnu.org; Wed, 27 May 2026 08:27:25 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wSDLp-0001Di-RO
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 08:27:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779884840;
+ s=mimecast20190719; t=1779884829;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ecoeh+dXW+2sbY1dM3bn6PVG7tvn/OHmgWQlApnH9Ls=;
- b=OmWAr/R6gWlMPMtjxQR0Dc6ziD+Ys1lAKZTvdfTDlpc8amRDXziAILLjWdIG7qdLuOJvny
- chh9YTy+oH8CIW2K1DySCmqu38OmF34mHBspgxgCs8rbCWp3AZXXHCtbnjHld2dAk2TVKa
- CAE5VpKBJq8W3r0U5Su5VXcSAnTjrh4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=yfqvP5baxDnt5+u1NcVjOwCLLD/dIvxkWNcuEY8EDHE=;
+ b=Xi6iHETynTl4rZfmM4Ki9LcXmy6C3NuHu2XvULuUTw5iOhqOtu7oxHB66TH9vHrltoK4UH
+ xdV9fbuydwi+EY3/VXgWwAWtR9dWDLQRISC5GnrgKJgXMNF9Ui+V0Qd51Ywf1WDFUI7Pv8
+ kXEGJ3K0ZZg/Qs51SL17e+27KFCZc4Y=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-365-rVzwigFqMIKtbQWe7KGEVQ-1; Wed,
- 27 May 2026 08:27:16 -0400
-X-MC-Unique: rVzwigFqMIKtbQWe7KGEVQ-1
-X-Mimecast-MFC-AGG-ID: rVzwigFqMIKtbQWe7KGEVQ_1779884835
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-225-EQc5-04LPQaLUgGCjKDCOA-1; Wed,
+ 27 May 2026 08:27:07 -0400
+X-MC-Unique: EQc5-04LPQaLUgGCjKDCOA-1
+X-Mimecast-MFC-AGG-ID: EQc5-04LPQaLUgGCjKDCOA_1779884826
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C0D4F195608A; Wed, 27 May 2026 12:27:14 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0F5E018005B8; Wed, 27 May 2026 12:27:06 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.48.55])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1D24230001BB; Wed, 27 May 2026 12:27:12 +0000 (UTC)
+ id 7870730001BB; Wed, 27 May 2026 12:27:04 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: GuoHan Zhao <zhaoguohan@kylinos.cn>, John Levon <john.levon@nutanix.com>,
+Cc: Jagannathan Raman <jag.raman@oracle.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 4/7] vfio-user: disconnect container when device info query
- fails
-Date: Wed, 27 May 2026 14:26:57 +0200
-Message-ID: <20260527122700.1589764-5-clg@redhat.com>
+Subject: [PULL 1/7] MAINTAINERS: Mark Multi-process QEMU as Odd Fixes
+Date: Wed, 27 May 2026 14:26:54 +0200
+Message-ID: <20260527122700.1589764-2-clg@redhat.com>
 In-Reply-To: <20260527122700.1589764-1-clg@redhat.com>
 References: <20260527122700.1589764-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -61,14 +61,13 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,44 +83,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: GuoHan Zhao <zhaoguohan@kylinos.cn>
+From: Jagannathan Raman <jag.raman@oracle.com>
 
-vfio_user_device_attach() connects the vfio-user container before querying
-VFIO_USER_DEVICE_GET_INFO.  If the device info query fails,
-vfio_device_prepare() has not run yet, so vbasedev->bcontainer is still
-NULL and the later vfio_device_detach() cleanup path cannot reach the new
-container.
+Reflect the current maintenance expectations for Multi-process QEMU by
+changing its status from Maintained to Odd Fixes.
 
-Disconnect the container before returning the attach failure so the listener,
-RAM discard state, object reference and address space reference are released
-on this error path.
-
-Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
-Reviewed-by: John Levon <john.levon@nutanix.com>
-Link: https://lore.kernel.org/qemu-devel/20260522065637.4109499-1-zhaoguohan@kylinos.cn
+Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260521143827.64285-1-jag.raman@oracle.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio-user/container.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/vfio-user/container.c b/hw/vfio-user/container.c
-index 796289a469033ef47fa7199dbe30d02f0ba83ada..dc23b06eebf1da5cccaab9b648becb986623213d 100644
---- a/hw/vfio-user/container.c
-+++ b/hw/vfio-user/container.c
-@@ -309,7 +309,12 @@ static bool vfio_user_device_attach(const char *name, VFIODevice *vbasedev,
-         return false;
-     }
- 
--    return vfio_user_device_get(container, vbasedev, errp);
-+    if (!vfio_user_device_get(container, vbasedev, errp)) {
-+        vfio_user_container_disconnect(container);
-+        return false;
-+    }
-+
-+    return true;
- }
- 
- static void vfio_user_device_detach(VFIODevice *vbasedev)
+diff --git a/MAINTAINERS b/MAINTAINERS
+index cd5c4831e2769d2f5911dafd1780ae500d17519d..0df44d028a3d139d07556c5b5e51cca381b02492 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4435,7 +4435,7 @@ F: tests/tcg/aarch64/system/semiheap.c
+ Multi-process QEMU
+ M: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+ M: Jagannathan Raman <jag.raman@oracle.com>
+-S: Maintained
++S: Odd Fixes
+ F: docs/devel/multi-process.rst
+ F: docs/system/multi-process.rst
+ F: hw/pci-host/remote.c
 -- 
 2.54.0
 
