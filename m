@@ -4,128 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8854CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 12:20:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D36A1CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 12:27:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSDFP-0000HL-Nh; Wed, 27 May 2026 08:20:31 -0400
+	id 1wSDLs-0002Xj-KI; Wed, 27 May 2026 08:27:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wSDFO-0000GH-V4
- for qemu-devel@nongnu.org; Wed, 27 May 2026 08:20:30 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wSDFE-0005FC-1C
- for qemu-devel@nongnu.org; Wed, 27 May 2026 08:20:30 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wSDLq-0002X8-Q3
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 08:27:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wSDLo-0001Ah-4o
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 08:27:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779884826;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=SOdfET/fdkap+zJjB14WErwi6GQt6AXCmsDfpIvY+6A=;
+ b=fGeWCmyBKIv4VJLi14DqkOIXhUq4wf6V0KTkhJROpZ+nAasNnRdF3ZSknWRu0PHVO6V5Uj
+ x09RP2qBczs1SYnpW110isodgSR83ShTrKno78ZotrjlOw5orWkeEZl+ZconJmwyyUA3/U
+ BQ4dCeGq7lgvT3fn7RmncqEesEv5l2E=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-121-bcmwF0i-NuK6IYnsCeMt6g-1; Wed,
+ 27 May 2026 08:27:04 -0400
+X-MC-Unique: bcmwF0i-NuK6IYnsCeMt6g-1
+X-Mimecast-MFC-AGG-ID: bcmwF0i-NuK6IYnsCeMt6g_1779884824
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 5771566D8C;
- Wed, 27 May 2026 12:20:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1779884413; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SMh2ZbfWuMrYqMLc50GjJSV3MmJVgG0EOPNs56bHIgg=;
- b=aqc7VH3hXxv9cFhGFC4AxxF1NoAkZa/hvVw1YMJVzbSiTMLdVH3Y60nLO65l8HA7YLHMFT
- bD0ju4jPwuS0o+jjA7NtcnuaV/EgB2xEVzSw3J21TkGIK2v5Revqeu/tAizofsfVyect0F
- tXH28/8q08rT4mcVBkUthZhzMWZyOQw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1779884413;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SMh2ZbfWuMrYqMLc50GjJSV3MmJVgG0EOPNs56bHIgg=;
- b=GWIcmqWIPwzSm+ThoKSenn6kGrbwmHGjTn0bGIyAmzlRFuJDPMWKmjOxCkIjm7gJkYoa7o
- 39nqMcA99g1UfHBw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=aqc7VH3h;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=GWIcmqWI
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1779884413; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SMh2ZbfWuMrYqMLc50GjJSV3MmJVgG0EOPNs56bHIgg=;
- b=aqc7VH3hXxv9cFhGFC4AxxF1NoAkZa/hvVw1YMJVzbSiTMLdVH3Y60nLO65l8HA7YLHMFT
- bD0ju4jPwuS0o+jjA7NtcnuaV/EgB2xEVzSw3J21TkGIK2v5Revqeu/tAizofsfVyect0F
- tXH28/8q08rT4mcVBkUthZhzMWZyOQw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1779884413;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SMh2ZbfWuMrYqMLc50GjJSV3MmJVgG0EOPNs56bHIgg=;
- b=GWIcmqWIPwzSm+ThoKSenn6kGrbwmHGjTn0bGIyAmzlRFuJDPMWKmjOxCkIjm7gJkYoa7o
- 39nqMcA99g1UfHBw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E12E95A817;
- Wed, 27 May 2026 12:20:12 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id x/EILHzhFmqDXwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 27 May 2026 12:20:12 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Michael Tokarev <mjt@tls.msk.ru>, Alistair Francis
- <Alistair.Francis@wdc.com>, "vulab@iscas.ac.cn" <vulab@iscas.ac.cn>,
- "palmer@dabbelt.com" <palmer@dabbelt.com>
-Cc: "chao.liu.zevorn@gmail.com" <chao.liu.zevorn@gmail.com>,
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "daniel.barboza@oss.qualcomm.com" <daniel.barboza@oss.qualcomm.com>,
- "qemu-stable@nongnu.org" <qemu-stable@nongnu.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "liwei1518@gmail.com" <liwei1518@gmail.com>,
- "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>, Peter Xu
- <peterx@redhat.com>
-Subject: Re: [PATCH v1] target/riscv: Add mseccfg to VMStateDescription
-In-Reply-To: <bf46f39c-6173-4cfd-b374-63529892a1fb@tls.msk.ru>
-References: <20260511124828.3210477-1-vulab@iscas.ac.cn>
- <bcc0aaa1-8d1c-4f52-a681-85bc903c8d66@tls.msk.ru>
- <6e42ecc1026a057e07e73386463bd57e1467a46f.camel@wdc.com>
- <bf46f39c-6173-4cfd-b374-63529892a1fb@tls.msk.ru>
-Date: Wed, 27 May 2026 09:20:10 -0300
-Message-ID: <87ecix59j9.fsf@suse.de>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0737519560AE
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 12:27:04 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.44.48.55])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id CD95230001BB; Wed, 27 May 2026 12:27:02 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 0/7] vfio queue
+Date: Wed, 27 May 2026 14:26:53 +0200
+Message-ID: <20260527122700.1589764-1-clg@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 5771566D8C
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; ARC_NA(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[12];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
- TO_DN_EQ_ADDR_SOME(0.00)[];
- FREEMAIL_CC(0.00)[gmail.com,nongnu.org,oss.qualcomm.com,linux.alibaba.com,redhat.com];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
- TAGGED_RCPT(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:dkim,
- imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,73 +80,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Michael Tokarev <mjt@tls.msk.ru> writes:
+The following changes since commit 3f89b5de5b1ff16873bcda7d5f3ff5b9164f691e:
 
-> On 27.05.2026 02:57, Alistair Francis wrote:
->> On Tue, 2026-05-26 at 10:26 +0300, Michael Tokarev wrote:
->
->>> This change has been nominated for inclusion into previous stable
->>> releases by Alistar.=C2=A0 However I've a concern here: can we add new
->>> fields to older machine descriptions this way, and stay migratable?
->>=20
->> I was under the impression that we could, but as I write this I start
->> to think that no we can't.
->>=20
->> We don't have to backport this then
->
-> hmm.
->
->>> I understand riscv machine is not versioned.=C2=A0 How does migration w=
-ork
->>> in the first place?
->>=20
->> As in the virt machine isn't versioned? or `vmstate_riscv_cpu` isn't
->> versioned?
->
-> For i386, we've pc-q35-10.0, pc-8.2, etc - versioned after qemu.
-> Each version has strictly defined set of properties, and there's
-> conversion between different versions when doing cross-version=20
-> migration.  So it's possible to migrate a VM when the set of
-> properties changes.
->
-> I don't see similar construct for riscv.  And since we do change
-> things in there, modifying set of properties in various areas in
-> the migration stream, - I dunno how migration works in riscv qemu
-> land.  So I'm asking.. :)
->
+  Merge tag 'pull-target-arm-20260526' of https://gitlab.com/pm215/qemu into staging (2026-05-26 13:20:15 -0400)
 
-There are no migration compatibility guarantees for an unversioned
-machine type. Only migration and snapshots from same-version QEMUs are
-expected to work in this case. Other scenarios may or may not work.
+are available in the Git repository at:
 
->  From what I understand, migration should fail when the target qemu
-> has different set of properties compared to the current one, - no?
->
+  https://github.com/legoater/qemu/ tags/pull-vfio-20260527
 
-The addition from this patch is in a subsection, so .needed will
-determine whether it will be put on the stream. If we backport the
-change, then the stable QEMU build will (likely) start sending this
-subsection, which the old, non-stable QEMU will not recognize and
-migration will fail. Migration from stable-stable would likely work.
+for you to fetch changes up to e6c47bebdf8628e635e1ba970919ca96d572dbbe:
 
-So any stable versions that (would) contain this patch are likely to
-block migration from that version into an unpatched QEMU.
+  vfio/container: Restrict dma_map_file() to shared RAM or RAM devices (2026-05-27 12:15:17 +0200)
 
-Note that since the machine is unversioned, migration from QEMU x to
-QEMU x+1 is already prone to being broken.
+----------------------------------------------------------------
+vfio queue:
 
-> But if it works, we should apply this patch to older/stable releases,
-> there should be no issues in there.
->
-> But again, I don't understand the mechanism here.
->
-> I'm adding Peter and Fabiano to Cc (maintainers of the migration code),
-> -- can you clarify please?
->
+* Fix vfio-user: container disconnect on device info query failure,
+  reject zero DMA and migration page size capabilities
+* Fix dma_map_file() to avoid DMA against MAP_PRIVATE RAMBlocks
+* Remove unused vfio_region_unmap()
+* Update linux-headers to Linux v7.1-rc4
+* Mark Multi-process QEMU as Odd Fixes in MAINTAINERS
 
-@Peter, I hope I got it right, feel free to correct me.
+----------------------------------------------------------------
+Chenyi Qiang (1):
+      vfio/container: Restrict dma_map_file() to shared RAM or RAM devices
 
-> Thanks,
->
-> /mjt
+Cédric Le Goater (1):
+      linux-headers: Update to Linux v7.1-rc4
+
+GuoHan Zhao (3):
+      vfio-user: disconnect container when device info query fails
+      vfio-user: reject zero DMA page size capability
+      vfio-user: reject zero migration page size capability
+
+Jagannathan Raman (1):
+      MAINTAINERS: Mark Multi-process QEMU as Odd Fixes
+
+Xiaoyao Li (1):
+      vfio: Clean up vfio_region_unmap()
+
+ MAINTAINERS                                        |   2 +-
+ hw/vfio/vfio-region.h                              |   1 -
+ include/standard-headers/drm/drm_fourcc.h          |  28 +-
+ include/standard-headers/linux/const.h             |  18 +
+ include/standard-headers/linux/ethtool.h           |  28 +-
+ include/standard-headers/linux/input-event-codes.h |  13 +
+ include/standard-headers/linux/pci_regs.h          |  71 +++-
+ include/standard-headers/linux/typelimits.h        |   8 +
+ include/standard-headers/linux/virtio_ring.h       |   5 +-
+ include/standard-headers/linux/virtio_rtc.h        | 237 +++++++++++
+ include/standard-headers/linux/vmclock-abi.h       |  20 +
+ linux-headers/asm-arm64/kvm.h                      |   1 +
+ linux-headers/asm-arm64/unistd_64.h                |   1 +
+ linux-headers/asm-generic/unistd.h                 |   5 +-
+ linux-headers/asm-loongarch/kvm.h                  |   5 +
+ linux-headers/asm-loongarch/kvm_para.h             |   1 +
+ linux-headers/asm-loongarch/unistd_64.h            |   2 +
+ linux-headers/asm-mips/unistd_n32.h                |   1 +
+ linux-headers/asm-mips/unistd_n64.h                |   1 +
+ linux-headers/asm-mips/unistd_o32.h                |   1 +
+ linux-headers/asm-powerpc/unistd_32.h              |   1 +
+ linux-headers/asm-powerpc/unistd_64.h              |   1 +
+ linux-headers/asm-riscv/kvm.h                      |  11 +-
+ linux-headers/asm-riscv/ptrace.h                   |  37 ++
+ linux-headers/asm-riscv/unistd_32.h                |   1 +
+ linux-headers/asm-riscv/unistd_64.h                |   1 +
+ linux-headers/asm-s390/unistd_32.h                 | 446 ---------------------
+ linux-headers/asm-s390/unistd_64.h                 |   1 +
+ linux-headers/asm-x86/kvm.h                        |  21 +-
+ linux-headers/asm-x86/unistd_32.h                  |   1 +
+ linux-headers/asm-x86/unistd_64.h                  |   1 +
+ linux-headers/asm-x86/unistd_x32.h                 |   1 +
+ linux-headers/linux/const.h                        |  18 +
+ linux-headers/linux/iommufd.h                      |  48 +++
+ linux-headers/linux/kvm.h                          |  46 ++-
+ linux-headers/linux/mshv.h                         |   4 +-
+ linux-headers/linux/psp-sev.h                      |   2 +-
+ linux-headers/linux/stddef.h                       |   4 +
+ linux-headers/linux/vduse.h                        |  85 +++-
+ linux-headers/linux/vfio.h                         |  30 +-
+ hw/vfio-user/container.c                           |   7 +-
+ hw/vfio-user/proxy.c                               |  16 +-
+ hw/vfio/container.c                                |  34 +-
+ hw/vfio/region.c                                   |  15 -
+ 44 files changed, 761 insertions(+), 520 deletions(-)
+ create mode 100644 include/standard-headers/linux/typelimits.h
+ create mode 100644 include/standard-headers/linux/virtio_rtc.h
+ delete mode 100644 linux-headers/asm-s390/unistd_32.h
+
 
