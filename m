@@ -4,85 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C47ECD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:35:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADE32CD5BC9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:43:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSBal-0001Dk-TX; Wed, 27 May 2026 06:34:28 -0400
+	id 1wSBiv-0007bv-0l; Wed, 27 May 2026 06:42:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBaS-0000m4-0s
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:34:12 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wSBit-0007bc-9T
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:42:51 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBaO-0001b4-LU
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:34:07 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-48d146705b4so122391915e9.3
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:34:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wSBir-0005Jq-KH
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:42:51 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4903997fcb5so60733655e9.2
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:42:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779878043; x=1780482843; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=BDxMo5/9OgUZXKqAgMxYAx4x+l4PPjRCkQ2+p6SpiYc=;
- b=m+20tJRzEIfxPOrlRH9ZkGFNTg1F4o52F/7feDAIPQC8Q4aKWPkfxz+wsWcgglNzNA
- qteA4crZUQZBEtHr7OTjEIr75xTy1/IGELF3hL7e1+TuddSi85GkQa6N1qgT+VblH1HN
- AnPtv/U2IFbX3AyCvpQa6spb9q6K/vK+g1lZAHw7WqVssXghtzNjt7Jsdk3lByS7BOqr
- XelNoU2Npo1KSS0sCqiDlZI6XAS5O+VCRW8P5Rykq5fT9UOcD6vyo3Kya7JMxbuiMZ4E
- OhyyAdomBWp/xgfgrrdK/RxYadq2uavqAIGTDa60twvR6WSncAWEXAd/krnWS6cIA7G2
- 9jgw==
+ d=gmail.com; s=20251104; t=1779878568; x=1780483368; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wBZPSB/Yj/ayi0IgH3V5as1qAK4wfKZ+qn+MumQvJyk=;
+ b=RkW1cBHZR+BNTwNL7ooK3K7/8IxrCmeUsARwK/DEyvm1p4ZApOc8iNkfzz1AmcCOoB
+ CIP8rKAPy9j7XKnxbXNTItMX9z8IKkuXP4Pm8AfDpc3epjvvmGACyBMJSUB+lKL7gWCa
+ f+M0aIrBlbGo3/lyR2DEgKWcosfw5951Qev0B5qodJsz+UcNgLC5aebQ2l8hD+gnfYn2
+ Pdm3FnG8Z/TtavwUSaO3cYSMS0IvmApNqRZseTMiSfMUtj1i3zw41/kGLmpsOxe8pXlz
+ I+/gdUgg2+9/oNkKkjNKcsl4ThCSdVA+jjEDHZ0u8CsVDFuwrTCkypUcEyXk/X8KBkao
+ Idvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779878043; x=1780482843;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=BDxMo5/9OgUZXKqAgMxYAx4x+l4PPjRCkQ2+p6SpiYc=;
- b=lV0ZBjHaCwowZEJiTnsybsxpIGZOH7c34Gi3uy9RFdb0gXQhVMOFPfskwdauBgc8f1
- uDcgrG3tD3OFxdLSBX34jidmi0DxOkONs3DvVgYi1q42NajSIin6zh9xK3zbCbuQokNH
- NXP3rnQzLn0f8y2zb5c5bMARinBEaQpRXGGs3VDJb4odGj0aNA1Q/m/68vtTzrzCBMol
- unobPRT1XQBg2BhvL7yS7zQTkqPu9BscGtI1Za1179RJFySdt+E75SsaD8pvrQ1g1Wy3
- RfHsM60a+3iF15xptzPAl2Ra93vpnIXEWcL5UllIgcAtfEdTSb00fCWCvozc1nLcS28c
- r0/w==
-X-Gm-Message-State: AOJu0YyXPknjMovSfz9TQQtHKBMbt2K5QFowJwcZN58DBI7471L3pWVm
- /OLCwI9CRBDiAmNZQWcmrx3f/FCwuDLVfQAx0cihPncMkSEoeK1ox1bJlyuLxFsOGhr6LlnmeRd
- WU+ghIYkWSA==
-X-Gm-Gg: Acq92OGgsHZ6f0/m4as0USkZau4wMCSwniSvUmZQnboc0Ton6ZWCBPIbyqVdvvo+0w1
- duNGFz7hgj4V6rioipQNvBlq4ZazM0QmjOjndAZItnIE5RtRdy41Db01S4Yejht6/N6lrTxP5bo
- 5yPKfS1lH8guOQ3RxYZrPUFS6zGM8FM8nvcbh2dK/Vv4crQiKqPI8SavtpR4q2xRz5kQiNuwOeD
- IE214LocBqZUTXkpPfhwmUBcaUakty9YyWsHe2/+QiN50saEX1U9lQK6Q3gwen027XBf0FTAfxS
- +3cmaDo5V6FtPfyM1J2WS8E4XXYIa6TOpMPmEM08ud2ObsCCozNdN4Lvq09fDHVfI4RIRoFIBjq
- QHVuOnREOiMbyV1RjEpvNbifZEUQthv60YkNYKkP9ze5FJ68TLxtJsDvXzxcZCvfba4Z9VhP+Zv
- RdYInIwTWlbCWtmQazchy95Wqb3Aq+mNUpySB+96pcswL4Y/6UEmw8VtsMKlK5GlLPQg==
-X-Received: by 2002:a7b:cb8b:0:b0:490:3fdd:d353 with SMTP id
- 5b1f17b1804b1-490424ad5d3mr240683055e9.8.1779878042843; 
- Wed, 27 May 2026 03:34:02 -0700 (PDT)
-Received: from m17.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
+ d=1e100.net; s=20251104; t=1779878568; x=1780483368;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=wBZPSB/Yj/ayi0IgH3V5as1qAK4wfKZ+qn+MumQvJyk=;
+ b=nvqFU4SQGqdvIBziLuZNa1H5Kn58gkVNdBD2r2VeygSkhSJn61E4VoNQVDtbuuoHAC
+ TjYbYoxKY6tp34zZh+/WX5IHFqocBzu70aNGug3bSG0+XhFs03gWpEVixtDJf6H2p0aM
+ NgdYFTsZOYK7KX1mx9c4pg0LU9rbXWgOHCc6jjAZSz054hDfU8nxKQ2ZLJpUk9/HH3ou
+ F4MtnirLmUeXY34cIxlP1zfuUJzv1Kr+34c2b/T8QqE4+CL8Z21WGRaZ7UWB20ymiChi
+ 9tFJiQGPBmiONlhvjjI2ycy+SRaTQbuQRs11a1x0KoIu8t6yWIAsf4YxtPTi+F2Buxpr
+ 43BQ==
+X-Gm-Message-State: AOJu0Yw3D/Ks8tqXxTeDcXZTg6gUq8llnpZQCOTYUyuaRtl3EgLkt5Hv
+ 5oZHBaWu2Lxg8ViErUZF5JrdrJfNwzclr6Ialjw3cdqInMrR6c3JnSDz
+X-Gm-Gg: Acq92OFe0oV80hCJi9jOeweKjOmlBiZuZyUxQtF6+iK0njfD2Kb5LMyImUQ4UJpdpW5
+ hQkKyjRGWO8xlnOU0V10FGr1qcHTzzrVj7nh4FsaYNKqdMhmv5uPAfQSR8uupqgTbs814jZxGcK
+ Gt8aZXixANziVaSzg14640PpxAVchLdb2tM6WB+8qu0J0vq2BTu1fdBocIY5NBa0qIG14PRMdW5
+ zOfGfBGZNAlZg7SU38ZblMaNuAYUJoPhFuBB+jj4Qqz17Eof4JHlGgGKV9/KJ11MnLHM++KwqUf
+ IxvoKi5thDHKxdaOzbgNiVaSdAK+jSQxwiOhyNfJuOUbirWKyw9jvjSvopokTdea3FxQOAz38Y6
+ zhgxQoLWgi2FNxvEixeEecxD0JphVb+FpccF/hiXo85VSSq5vfKXoIX88B4LNbOcvHclWbVZ0BQ
+ 4GTMsAzsdnOYyni4BAUP9gWIGMLN0Z
+X-Received: by 2002:a05:600d:6447:10b0:48f:d5b8:5b07 with SMTP id
+ 5b1f17b1804b1-490426c5b1emr271376255e9.20.1779878567601; 
+ Wed, 27 May 2026 03:42:47 -0700 (PDT)
+Received: from ehlo.thunderbird.net ([62.214.191.67])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4904561a33dsm354994905e9.11.2026.05.27.03.34.01
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 27 May 2026 03:34:02 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 30/32] MAINTAINERS: Remove PhilMD from firmware sections
-Date: Wed, 27 May 2026 12:30:34 +0200
-Message-ID: <20260527103037.4461-31-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260527103037.4461-1-philmd@linaro.org>
-References: <20260527103037.4461-1-philmd@linaro.org>
+ 5b1f17b1804b1-4907e627b1csm23452065e9.0.2026.05.27.03.42.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 27 May 2026 03:42:47 -0700 (PDT)
+Date: Wed, 27 May 2026 10:42:23 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: =?UTF-8?Q?Maty=C3=A1=C5=A1_Bobek?= <matyas.bobek@gmail.com>,
+ Pavel Pisa <pisa@fel.cvut.cz>, Matyas Bobek <bobekmat@fel.cvut.cz>
+CC: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Marc Kleine-Budde <mkl@pengutronix.de>,
+ Oliver Hartkopp <socketcan@hartkopp.net>,
+ Nikita Ostrenkov <n.ostrenkov@gmail.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH v3 0/7] hw/arm/sabrelite: Add FlexCAN support
+In-Reply-To: <CAFEAcA95RcGhhN8ZqVeOgRyhRqSar23EnJhCjVgKBwoqXBJwjw@mail.gmail.com>
+References: <cover.1777571962.git.matyas.bobek@gmail.com>
+ <1B6ED5DC-6808-4A41-B8FA-B2C97C5C8933@gmail.com>
+ <CAFEAcA9kQNdx=gwSd_Ec=R2nwegT1R-BEiC9yXvfr23VJHDZiA@mail.gmail.com>
+ <936E6AF6-32BA-4236-B8A2-0A8E8748D9C1@gmail.com>
+ <CAFEAcA95RcGhhN8ZqVeOgRyhRqSar23EnJhCjVgKBwoqXBJwjw@mail.gmail.com>
+Message-ID: <08A7BC6B-7019-45C4-B581-0A26AD3AA554@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,54 +108,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I'm not paid to support this code. I haven't followed
-it neither, so be fair and just remove myself. Demote
-the status to 'Orphaned'.
 
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Cc: Daniel P. Berrange <berrange@redhat.com>
-Cc: Kashyap Chamarthy <kchamart@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20260519173014.98967-3-philmd@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-Id: <20260527063102.91205-1-philmd@linaro.org>
----
- MAINTAINERS | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index cd5c4831e27..15982c04614 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2874,9 +2874,8 @@ F: hw/usb/vt82c686-uhci-pci.c
- F: include/hw/isa/vt82c686.h
- 
- Firmware configuration (fw_cfg)
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
- R: Gerd Hoffmann <kraxel@redhat.com>
--S: Supported
-+S: Orphaned
- F: docs/specs/fw_cfg.rst
- F: hw/nvram/fw_cfg*.c
- F: stubs/fw_cfg.c
-@@ -4004,14 +4003,12 @@ F: docs/specs/fsi.rst
- F: tests/qtest/aspeed_fsi-test.c
- 
- Firmware schema specifications
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
- R: Daniel P. Berrange <berrange@redhat.com>
- R: Kashyap Chamarthy <kchamart@redhat.com>
--S: Maintained
-+S: Orphan
- F: docs/interop/firmware.json
- 
- EDK2 Firmware
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
- M: Gerd Hoffmann <kraxel@redhat.com>
- S: Supported
- F: hw/i386/*ovmf*
--- 
-2.53.0
+Am 8=2E Mai 2026 12:10:21 UTC schrieb Peter Maydell <peter=2Emaydell@linar=
+o=2Eorg>:
+>On Tue, 5 May 2026 at 21:21, Bernhard Beschow <shentey@gmail=2Ecom> wrote=
+:
+>> Am 5=2E Mai 2026 18:41:52 UTC schrieb Peter Maydell <peter=2Emaydell@li=
+naro=2Eorg>:
+>> >On Tue, 5 May 2026 at 19:03, Bernhard Beschow <shentey@gmail=2Ecom> wr=
+ote:
+>> >> I guess the only open issue is the licensing of struct FlexcanRegs [=
+1] which originates from Linux? How do we proceed here?
+>> >>
+>> >> Best regards,
+>> >> Bernhard
+>> >>
+>> >> [1] https://lore=2Ekernel=2Eorg/qemu-devel/202603211316=2E18181=2Epi=
+sa@fel=2Ecvut=2Ecz/
+>> >
+>> >Could you say what the problem is? In general there is no problem
+>> >with taking header structs from the Linux kernel, as they are
+>> >GPL-2-only and that is a QEMU-compatible license=2E The relevant
+>> >source files or pieces of source files would need to be noted
+>> >as 2-only rather than our default of 2-or-later, but that is
+>> >doable -- we already do that for other things we have borrowed
+>> >from the kernel=2E
+>>
+>> In https://lore=2Ekernel=2Eorg/qemu-devel/f3cb3166-c3f8-4ed8-8c9a-cbf48=
+b071d1e@gmail=2Ecom/ I raised this review question: "The following structur=
+e looks like being based on Linux=2E Does this affect the copyright of this=
+ file?" I was just asking for advice and I'm glad the solution is that easy=
+=2E
+>
+>If the struct was copied from the kernel, then it's GPL-2=2E0-only,
+>and we should just note the license and where we got the code from=2E
+>
+>If the struct is just very similar to the kernel's one because
+>it's the obvious representation taken from the datasheet, then
+>it's not related to the kernel code and we can treat it as
+>GPL-2=2E0-or-later like the rest of the file=2E
+>
+>Since Maty=C3=A1=C5=A1 says in the cover letter here "the headers (struct
+>FlexcanRegs and flexcan_regs=2Eh macros) were copied from the Linux
+>kernel" then we're in case 1=2E
+>
+>You can mark this up by having the file's SPDX tag be
+>"SPDX-License-Identifier: (GPL-2=2E0-only AND GPL-2=2E0-or-later)"
+>Then have a normal comment in the file next to the part that is
+>2=2E0-only that says
+>/*
+> * [This struct / the macros X, Y, Z / whatever ] are borrowed
+> * from the Linux kernel, and so (unlike the rest of this file)
+> * they are GPL-2=2E0-only=2E
+> */
 
+Ping
+
+Any news? With just the license issue remaining, it would be nice to get F=
+lexCAN support into the upcoming release=2E
+
+>
+>thanks
+>-- PMM
 
