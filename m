@@ -4,123 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E722CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 16:20:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4423CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 16:26:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSGz3-0005wl-PX; Wed, 27 May 2026 12:19:53 -0400
+	id 1wSH5B-0001ih-KB; Wed, 27 May 2026 12:26:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wSGz0-0005uJ-Qz
- for qemu-devel@nongnu.org; Wed, 27 May 2026 12:19:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wSGyy-0005U4-EN
- for qemu-devel@nongnu.org; Wed, 27 May 2026 12:19:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779898787;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EWehKC6VzlOi12pDotLZu0gXRvyJlSMzVrHQdPkljoo=;
- b=hSNgbYRZxhKJlp67EZ03JrkHJ2ljkVJO4X9dohfwymEVov8F67nOgv2yWIpwC88YgjPwcH
- B0LooMaXNOQ90qgmm5o5jN+6D2qcg1rfNJ1JprCi7nBGov5mhlGFxAc/53WJdkoFZMdjYi
- sra3de3DR+o7TD05awthiw0q+SlyPlc=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-397-p4F0gNhpNQeBaQAeXLseBw-1; Wed, 27 May 2026 12:19:45 -0400
-X-MC-Unique: p4F0gNhpNQeBaQAeXLseBw-1
-X-Mimecast-MFC-AGG-ID: p4F0gNhpNQeBaQAeXLseBw_1779898784
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-49047e9ca88so45310035e9.3
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 09:19:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wSH59-0001iK-Tf
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 12:26:11 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wSH58-0001Sy-8C
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 12:26:11 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-3684a6f3b0bso5925439a91.1
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 09:26:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779899168; x=1780503968; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=raPv35VFx65G4bNurRSKoQmaqVPNMgQIU+QDlQiy3OY=;
+ b=ZGw05c0mGi7qEd0V0URRIvsGV/HPpfDNtdzPCKfNTEUoOzcrx71l8WjKY6GQdzQegx
+ hq6zjJIxRqLEStOn7dluxfnFhHU2JjLwSn3qiclb8WFtnjomi/ujWNCaRioyS0RbPfOP
+ dz5ho9M/Tpehp8P+ONZybVhDRCOA8+CMGtjPUpDhTJCIWBUgyDFQ8h5NxXGt1ZWtNaeN
+ A6tYVOAzi5HpiXU31KAMBlRLnFCcob0j0w4P+QGBz4BRSGTD7/LTWN73O7iHzbo+fD0P
+ 6EtB1LgUK8mJX17WfTzW71V1iGM3zcdl0J4sPyXRKh7IZxMjXcXpwFcu49tKHLsZVSeO
+ 4lwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779898784; x=1780503584;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EWehKC6VzlOi12pDotLZu0gXRvyJlSMzVrHQdPkljoo=;
- b=KoqzCO6gFndGhEAvn+bKYNdctNUwWqXKygySL0dJmlDxiNRM/MTg/nN6BoaE5XKu9n
- /8FjYy2DUCk5/whOrjmRIuKIXWG1WU9oP/G/cufceE8LpPQaspBwzK0XiSSBFyKtaUYD
- f9ya0+motDrBtdexcVKB1HzE9taPmnZ9sNmM6n0F4sZtHlrLQn12/yK7oNMtjtU1bRlX
- QiZRIMF1svxYojPDzay+jLmx5uM0uHNPpKP+8N4vfnB/l4KdSCpAagaxHgJJfZgNHJ6o
- kQWOk+Jz06d+6B3VaOzz02rsccacKkij4qIE/NxYbO+vry8wcTEa9UCZg/rHxXf99R+H
- Bo3w==
+ d=1e100.net; s=20251104; t=1779899168; x=1780503968;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=raPv35VFx65G4bNurRSKoQmaqVPNMgQIU+QDlQiy3OY=;
+ b=D0tfFtH1MA+q1WvexAnnQcuhBN/8Md1bWiiZ8TpHyA2BcF9/PPiG+W3DvxihF6Jlha
+ J2LPlPdKuWvXlUGXt91+VEzApJMK9IMb8w0nr18XxmxUqFCYRlmAoRTKV7zeNMqPkETs
+ PfyCst1IPlVekQRBaxVESQ0SBTBVLdZJy6U2bxqEF+vzv6JQAaxTMwRivZEBIBA4Fc8f
+ Yv43v0fMO/Z4lLFSINLazV8TjK97eD2DUvG8xsu5R4Z9od1IYVHv4ZDaPONYJwFDIx9i
+ KsYQtJaAqttbns45Mzr+fjS3YgLd2otherX5vADFgp6fl/hvjCO3Z7ZD7X53PZ4BkqyK
+ 3Esw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8Y7TL12L7tw/gVs3ImnOp7sokEjwmtpebP78B6YPeEqc9higpV8vjc2g8tKu24Dgjd59cwcx4Y4epX@nongnu.org
-X-Gm-Message-State: AOJu0YwGuUxwshsVwHBOnmh5mNL76CmGof9wCmFFL2NzmOujb6y7tWd9
- BDyo6fMVKhlno/QwMeAAxViqMM9vN+977QApzB83aSnADdEY6HzS3aQ11QBkgS8ZfVz7H4fv0xl
- ViaydVfWJGfMsi0UP1NzFjZjVK1AhEBazeVqBJhd5qQIml62G73TgIp/N
-X-Gm-Gg: Acq92OHCfE4OdTYpkGXAqqw/3JKH3QvM+HmJot1F7Vj7ibeGzb509eu8cco/1qARe4w
- YWh9ZHjh0hvgACdvLgd/R72K/sx08Z0Rhg6jnq7S0e5tx/XAjpHZue1injcC16Y8itBcw3uOxml
- B9EXQXiQd6dj3lXyobP04y6dx0DiH/qX0GvYoy/nlFt1BpOBlMjfGkbI+7xauPtog6OLM5J5/Lu
- v30oFBXtRbKOAfRHwbFXEUvdHf7sunlLoz+GPxQLaMd9xs7Ct/pbCgqOr8nH6D9djJIT6t5GM2T
- jajtN06dvFMW5JLE3KT7wbS/AJ8KJUGXij9A7qL0JtL+/54zh+UVEGygEaL9/jnvmTpw/0U0gcm
- gXOjREludYeTDnFf457emz059MIIhi4dzhneBZMws1G0z1hk95LAMRWt8tn0w1Hwl8Qs9C5Xyz4
- uIuHk0
-X-Received: by 2002:a05:600c:4746:b0:490:469c:556b with SMTP id
- 5b1f17b1804b1-490469c56d6mr377120075e9.12.1779898784006; 
- Wed, 27 May 2026 09:19:44 -0700 (PDT)
-X-Received: by 2002:a05:600c:4746:b0:490:469c:556b with SMTP id
- 5b1f17b1804b1-490469c56d6mr377119545e9.12.1779898783505; 
- Wed, 27 May 2026 09:19:43 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ AFNElJ/mfd0bNgaPgWxlp2ihettjSgUw4bAhKVJT2qIVJbJTJcsoOKgofgC3SDLHavUJXfiCqHuMfOpyi+dk@nongnu.org
+X-Gm-Message-State: AOJu0YxELxu93y9JBJHf0YpRgc7fD33eKc3abWw6gAxO86K8c9KM95na
+ waFAN7HqwX7gAe2aMgQ4asdfnYiEkFq8f61Pz9eirKhZ2HC/x/R2bl0DfetlnKLy5F4=
+X-Gm-Gg: Acq92OEvGpWcMDCQzrCkEdQVIxI/9hUJodME3HkGKstG910+0c79MUc+j4NilQqkHbk
+ IVRDn+aWdQhz3j+3165hx9sr49R/l59yahp4R2SXESfMHk0y9OPIKGGC1cbITSXxfm8fVRxS0OD
+ 9/P8xVQ2L6xPyli4KScH59+MEXCvtbNwXiOPHN0LJ9YeR2wvDdkO8batlWnrJaYSowC7kuLdWN6
+ KI5GQnEP2VuZOkD1JKOvkcZjJOd7Md8QYcOpgaAe38D5SX2xBot/Z0DxyQCg+BYU3b4gn4vt3FW
+ ZxoOPNjzOw48ueuK+3W6nQrWSmumX3mHFSnsHzi6JA1fA3rraohOhRThwf65oj4bzh/Eiv7u+0F
+ bQ4DPrPJFv8fA5AK0HUXI6sqd5VzbMGw5Mn3JuXkzh79OYWRQRSVZSF15UJsZ19/Z6NegtE6WMs
+ l0N7IQWFzCWynM1jwLzwkMRk95ieXawcJeW07cfpoGJIWlb/I=
+X-Received: by 2002:a17:902:f605:b0:2ba:7617:a755 with SMTP id
+ d9443c01a7336-2bea23e2544mr248869645ad.25.1779899167543; 
+ Wed, 27 May 2026 09:26:07 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4904561a198sm396774325e9.10.2026.05.27.09.19.42
+ d9443c01a7336-2beb591a277sm161468345ad.80.2026.05.27.09.26.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 May 2026 09:19:43 -0700 (PDT)
-Message-ID: <63a8bd66-c324-4d2f-9d6b-1ea35e72db5b@redhat.com>
-Date: Wed, 27 May 2026 18:19:41 +0200
+ Wed, 27 May 2026 09:26:07 -0700 (PDT)
+Message-ID: <9131d89f-f390-4031-8e46-0cce55d88bd8@linaro.org>
+Date: Wed, 27 May 2026 09:26:04 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 13/18] target/arm/kvm: Introduce
- kvm_arm_expose_idreg_properties
+Subject: Re: [PULL 03/12] linux-user/alpha: add coredump support
+To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-s390x@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Helge Deller <deller@gmx.de>,
+ Aleksandar Rikalo <arikalo@gmail.com>, David Hildenbrand <david@kernel.org>,
+ Laurent Vivier <laurent@vivier.eu>, Cornelia Huck <cohuck@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Aurelien Jarno <aurelien@aurel32.net>
+References: <20260526200207.79738-1-deller@kernel.org>
+ <20260526200207.79738-4-deller@kernel.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-To: Khushit Shah <khushit.shah@nutanix.com>
-Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Shaju Abraham <shaju.abraham@nutanix.com>,
- "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>,
- "cohuck@redhat.com" <cohuck@redhat.com>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "sebott@redhat.com" <sebott@redhat.com>,
- "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "philmd@linaro.org" <philmd@linaro.org>, "maz@kernel.org" <maz@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>,
- "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>
-References: <20260519132905.145643-1-eric.auger@redhat.com>
- <20260519132905.145643-14-eric.auger@redhat.com>
- <3344B74E-39B1-421D-8417-373A688DB372@nutanix.com>
- <c4a38526-a803-4e69-b6ca-f6bf0583198a@redhat.com>
- <F50EB764-5F22-42AD-89E2-677BF7DB453B@nutanix.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <F50EB764-5F22-42AD-89E2-677BF7DB453B@nutanix.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+In-Reply-To: <20260526200207.79738-4-deller@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,139 +110,83 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 5/26/26 13:01, Helge Deller wrote:
+> From: Matt Turner <mattst88@gmail.com>
+> 
+> Define HAVE_ELF_CORE_DUMP and target_elf_gregset_t in target_elf.h,
+> mirroring the kernel's elf_gregset_t (ELF_NGREG = 66): r0-r31
+> [0..31], f0-f31 [32..63], pc [64], ps [65].  Implement
+> elf_core_copy_regs() in elfload.c to populate the gregset from
+> CPUAlphaState.
+> 
+> Without this, bprm->core_dump is NULL for Alpha targets.  When a
+> guest signal goes unhandled, dump_core_and_abort() skips the core
+> write and falls through to die_with_signal(), which re-raises the
+> signal to the host.  The host kernel then writes an x86-64 core file
+> for the qemu-alpha process instead of an Alpha guest core.
+> 
+> Signed-off-by: Matt Turner <mattst88@gmail.com>
+> Signed-off-by: Helge Deller <deller@gmx.de>
+> ---
+>   linux-user/alpha/elfload.c    | 12 ++++++++++++
+>   linux-user/alpha/target_elf.h | 13 +++++++++++++
+>   2 files changed, 25 insertions(+)
+> 
+> diff --git a/linux-user/alpha/elfload.c b/linux-user/alpha/elfload.c
+> index 1e44475c47..c86f9cf2bb 100644
+> --- a/linux-user/alpha/elfload.c
+> +++ b/linux-user/alpha/elfload.c
+> @@ -3,8 +3,20 @@
+>   #include "qemu/osdep.h"
+>   #include "qemu.h"
+>   #include "loader.h"
+> +#include "target_elf.h"
+>   
+>   
+> +void elf_core_copy_regs(target_elf_gregset_t *r, const CPUAlphaState *env)
+> +{
+> +    int i;
+> +
+> +    for (i = 0; i < 31; i++) {
+> +        r->regs[i] = tswap64(env->ir[i]);
+> +    }
+> +    r->pc = tswap64(env->pc);
+> +    r->ps = 0;
+> +}
+
+This has a bug, per review from today.
 
 
-On 5/27/26 5:44 PM, Khushit Shah wrote:
->
->> On 27 May 2026, at 9:02 PM, Eric Auger <eric.auger@redhat.com> wrote:
->>
->> I replied separately to this on your series thread. I am inclined to do
->> so but this raises another problematic for the layered products to know
->> which mismatch can be fixed
->>
->> Thanks
->>
->> Eric
->>
->
-> Hence the safe-value tags :), sneak peek to v2 of RFC, with safe-value tags.
-> For each prop we can say:
->         ...
->         {
->             "name": "feat_RDM",
->             "supported-values": [
->                 "off",
->                 "on"
->             ],
->             "type": "string"
->         },
->         {
->             "name": "feat_ATOMIC",
->             "supported-values": [
->                 "off",
->                 "on"
->             ],
->             "type": "string"
->         },
->         {
->             "name": "feat_CRC32",
->             "supported-values": [
->                 "off",
->                 "on"
->             ],
->             "type": "string"
->         },
->         {
->             "name": "feat_SHA2",
->             "supported-values": [
->                 "off",
->                 "sha256",
->                 "sha512"
->             ],
->             "type": "string"
->         },
->         {
->             "name": "feat_SHA1",
->             "supported-values": [
->                 "off",
->                 "on"
->             ],
->             "type": "string"
->         },
->         {
->             "name": "feat_AES",
->             "supported-values": [
->                 "off",
->                 "aes",
->                 "pmull"
->             ],
->             "type": "string"
->         }
->         {
->             "name": "feat_NV",
->             "supported-values": [
->                 "0.0"
->             ],
->             "type": "string"
->         },
->         {
->             "name": "feat_RAS",
->             "supported-values": [
->                 "0.0",
->                 "1.0",
->                 "1.1_base"
->             ],
->             "type": "string"
->         },
->         {
->             "name": "feat_MPAM",
->             "supported-values": [
->                 "0.0"
->             ],
->             "type": "string"
->         },
->         {
->             "name": "feat_CSV2",
->             "supported-values": [
->                 "0.0",
->                 "1.0"
->             ],
->             "type": "string"
->         },
-I am not sure what the above represents
->         …
->
->
-> 	I am inclined to do so but this raises another problematic for the 	layered products to know which mismatch can be fixed
-> 	
-> I am tempted to make the same argument for writable fields: how will the
-> layered products know which values are safe (or effectively can be set?)?
->
-> I know right now we don’t agree on keeping safe-value tags or default values.
-> But, I hope the above inclines you towards keeping those :) 
+r~
 
-OK I think I now understand what you plan to do with safe_rule (which,
-as far as I understand is not currently implemented in your v1). With a
-"tool" like 
-
-query-cpu-model-expansion you would be able to retrieve the host value. If it does not match your named model default value, you can use the safe_rule to see if it could be applied, without relying on any scratch vcpu instantiation. This makes sense in the context of providing ways for layered products to see which vcpu model can be used, assuming there is no other way like scratch vcpu instantiation.
-
-Is that a correct understanding?
-
-I think this implies that we need to return more information though query-cpu-model-expansion than what we currently do (at least in [1] we only return the value). We would need to return whether the prop value can apply on this host (its default value is same as host value or OK with regards to host value and safe rule and the ID reg field is writable). This most probably means we need to enhance the prop value to contain more fields.
-
-Thoughts?
-
-Eric
-
-
-
->
-> Warm Regards,
-> Khushit
+> +
+>   const char *get_elf_cpu_model(uint32_t eflags)
+>   {
+>       return "ev67";
+> diff --git a/linux-user/alpha/target_elf.h b/linux-user/alpha/target_elf.h
+> index 864dc6e2e6..bf3bd21b09 100644
+> --- a/linux-user/alpha/target_elf.h
+> +++ b/linux-user/alpha/target_elf.h
+> @@ -11,4 +11,17 @@
+>   #define ELF_CLASS               ELFCLASS64
+>   #define ELF_MACHINE             EM_ALPHA
+>   
+> +#define HAVE_ELF_CORE_DUMP      1
+> +
+> +/*
+> + * Matches the kernel's elf_gregset_t (ELF_NGREG = 33):
+> + *   r0-r30 at indices 0-30, pc at 31, ps at 32.
+> + * r31 (hardwired zero) is not stored; pc occupies index 31.
+> + */
+> +typedef struct target_elf_gregset_t {
+> +    abi_ulong regs[31];  /* integer registers r0-r30  [0..30] */
+> +    abi_ulong pc;        /* program counter           [31]    */
+> +    abi_ulong ps;        /* processor status          [32]    */
+> +} target_elf_gregset_t;
+> +
+>   #endif
 
 
