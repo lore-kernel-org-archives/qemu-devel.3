@@ -4,177 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28B02CD5BC9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:46:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D91D7CD5BD5
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:54:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSBmV-0000Ba-H2; Wed, 27 May 2026 06:46:35 -0400
+	id 1wSBuP-0002O1-P6; Wed, 27 May 2026 06:54:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1wSBmT-0000BM-95
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:46:33 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1wSBmO-0006bn-OX
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:46:32 -0400
-Received: from pps.filterd (m0127840.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64R8oihH2157771; Wed, 27 May 2026 03:46:23 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=yYgi/zfSufa3PlFERCSUiZPtg+5Ta9A/wPdSSISzT
- 4g=; b=Z1H5PQRDnytaNeKHtDuTXhUCjU69VOu/tGymA1dckpY4ccca7kBppBA3d
- yo+HzPbxnLetDhmFZz3fHT81KEZ36McqiuvfAFB+KBf7wopdY/+CmjG5b9aHD4rx
- iJWFBuq+Jd6tsa1hgP/3eq06autUmafZ2GiZ3vNALAo0rEABb+P+MLs446l/Lxkz
- Z6JmFauE3ofHimQcpa9LT8r1e/YzSIo+N8QBTkRrmg9FivdCUl71QVetwIQ2/AF4
- rGhaA6+FtTc8nPiEDeFInDqF5Tm678LfR4JatclGtUhEyQJQuwQQSwyzivlL4Xa1
- Vbetl9vBWp28o37MezoKHSyz7Glig==
-Received: from bl0pr03cu003.outbound.protection.outlook.com
- (mail-eastusazon11022087.outbound.protection.outlook.com [52.101.53.87])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4edg2a212v-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 27 May 2026 03:46:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PIzBoFO7dC41BEMUfxmwaNVOXO5jyV9cPrL8bK3AwjfA0cs4ueU7t5abMpZn2XLJfzdtZjVvKAwVQlbemiuzAnVWsfKf2nrV/g0N3tlXz105QV2LaydN1AsrDo5fStuLYSEYIfHix7Ne+CtNNc/kQDz8Ny4IyGnouHwqTfpJPQ9e4lK9hH8L3A6C/+E0OjCy5dN8HKo9cPBB6SCLXFob9zi8cqslqLsIF1lao0b689Mewf9wjuTBNAi27KOwqiKmusvtE5rdRFyExx1YBvstkJOH+TqFbqRnZKHUb1nOX2MOxFs5Ws4xWf4m9OiF+k20FbF7tHBwkwAN/6Oas20zEA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yYgi/zfSufa3PlFERCSUiZPtg+5Ta9A/wPdSSISzT4g=;
- b=H72TZ+oIizFRIhs0xfkbYOm9CUsuqYQj0Zx8AQ9Y7Fi+oaYcKbsb/rI5b6eHbT4FeZvk/DIMzMI2bOInttzE19Hvzgu+HqIX7KQSEyqBlxBpSK5SL5m5gnKLqCBau/haUwv0Wa0TkKtOf3pr2V23UDeQhjNlMFA4v1eG/PN8Diq2cVZqYv14FzwNiOdLsJxplako3mBZ0LNZe1ZqZnE0W/kh6v8ZG0nHckrhEpJfar1Hu3Ta27y+/L/YBYbADQkOf4qBrjPoLbUom3mZhVxau09X9TDyLgwO56vRu9ITZiF0msOk+GNp3ZVb0JLPjZ32qdjt4O+P7PC72HNec9ClKA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yYgi/zfSufa3PlFERCSUiZPtg+5Ta9A/wPdSSISzT4g=;
- b=smJPGm1MFZdnaubD/i8ta+yJtY7oeIXjayjtMLSn7ZD/VLKPa9UnPh7sPH/tYKvFU66reBPF9vlAq/4r2tAQPFi3LrrIa3rLVGBWuePqWtiqXI2mnYXZb7AK6d4I6p2gY63tFOmQwBXiDlSQqXrjX9KwpRuz2S0DGKigJR57mj8WhTtDCJjRymklCc2UT/z4VO+BFnUxB3yxeePy54QRuh0OMvpTms25hTVy6fbLhNs8RHddn0XPdN1QLnNPG7ScGvhMS/ua3YcTSodZa8NdA9r0PcAgI0iJcw2+RaeAP4YntGsVsLQwW/ll6YvAfrLezON0LehPfVFGuEDrE4eGhw==
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
- by SA3PR02MB9394.namprd02.prod.outlook.com (2603:10b6:806:311::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.12; Wed, 27 May
- 2026 10:46:21 +0000
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250%6]) with mapi id 15.21.0071.011; Wed, 27 May 2026
- 10:46:19 +0000
-Message-ID: <a9bd3a80-400d-4984-aef3-5e49107f3379@nutanix.com>
-Date: Wed, 27 May 2026 11:46:13 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 0/8] virtio-net: live-TAP local migration
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- jasowang@redhat.com, mst@redhat.com
-Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
- raphael.s.norwitz@gmail.com, bchaney@akamai.com, qemu-devel@nongnu.org,
- berrange@redhat.com, pbonzini@redhat.com, yc-core@yandex-team.ru
-References: <20260522120534.77653-1-vsementsov@yandex-team.ru>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-In-Reply-To: <20260522120534.77653-1-vsementsov@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PA7P264CA0111.FRAP264.PROD.OUTLOOK.COM
- (2603:10a6:102:34c::13) To PH0PR02MB7159.namprd02.prod.outlook.com
- (2603:10b6:510:16::8)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wSBuK-0002Nr-3r
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:54:40 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wSBuH-0003Qz-Tm
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:54:39 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-67fd8befac7so3179294a12.2
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:54:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779879276; cv=none;
+ d=google.com; s=arc-20240605;
+ b=BzqLTrXd4BVRmu+8Astg6T014WVO1+IxTskj6E98fq2lv+Nqw2Ml/Ac1zLauiGusvr
+ kLfZFLBYTEP4tqmZrubEXoV9epfZK55fzqH8LrkQu0hziS/YiIJNRW8iBxpfRA2f1uWX
+ u1R6zeh+jqBc6dFKzrE/5FtvUaPE3IG/rh6UrB+sz24Mv7HmO/LYZ8pv+/UGe++9TO99
+ PyO9TT1fhQmLY9uDeW+yZ0GxHXw+hQ8Yczh/ng+1zYxSD//yaE9PXyeHGcmhsGPFDUOU
+ LI5GHS9P19hALpcTkDCHEWtozRYORsS8qzoO30RPcpKDkvoZae0X6vKB1bJOuIbIOvqO
+ krWQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=XYgeLjStHgd+GIsYPubMujIdj17ke1+ldm6qrL8mrEA=;
+ fh=vc+OM9yZPS0uyYOT1xfyR/0AQQZ8z93uMpwxTPdOsBY=;
+ b=gW7UVKmVMdm8IyP+WmTZ1NM8UjvbnbGt/JNMfgQIXwc3B8TKujAHcaAAaEEb4+nR3o
+ NBLMUjLeU5Btod0KpyG2P5ssYnA7cLNBUVj2KO8oj9I6AtlFwvz8Y8cBQ72OzmQ5q9RJ
+ eQRb30w+p6ygu1vc/NY+lRMrwmFBDB+/cwMJ8bGYub/tBO3UWmji3Yz6Nvls5UCtM1CK
+ uvCgCz4nmSmQSajdPmCNbrvm3UOvima+QpSEbJ2/D8xgShfwF5OWIrbEeGs9Sy7vKTOR
+ cxFeVrYHpUsf3IAQFdVoAfmS/mp+mQ/Hv50CfOUoWW17I3EkHahP1RI0ls7BuqrpqI65
+ m5KQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1779879276; x=1780484076; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XYgeLjStHgd+GIsYPubMujIdj17ke1+ldm6qrL8mrEA=;
+ b=K43fXI0lg8KbqVNsITYHZLQn3jnMtfHg92kUiRXMnghlez6gVQdxksy1GoW9YR2vvw
+ u4svbRFz3ex//zkNjX7Uym9dnhPMsd7AC2lPBXicHAA/pNauznq1H0MxMakcAlnSH9ir
+ sH1KNpCPph/cIzoCurKx5BI7hI1TY4ixfBca1TheE55RTeh9hJeNlh+y7EddYkBjO9Sj
+ MLBNKCwRmM41OJGfYPxDIYp3b9ZjYbycElFh+jeuWQE8R90drxuryt0iqfIgIP5vTfdn
+ 88SVI9QnkfrOUtqgRseshpFLGh2gt7Jw9zlU2gQOqghyoG7CyhaHX4Wo/6dtMoeL9bnV
+ BozQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779879276; x=1780484076;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=XYgeLjStHgd+GIsYPubMujIdj17ke1+ldm6qrL8mrEA=;
+ b=lQ5qp2G53BcXHqjFGV2Gpea+1eCWXqo9MTNclDk9VqVgDF2eab0Cr5RveQ/tVhbgvs
+ 3dgGZHlTRla6I8hOrkOz/BExwOWYC/xS6NJWCNx7XIXcb9a87EnoLkzws1C99/LOR3x+
+ /vBVpu+R6euR05k+3BTG5+q8NiQFfrKX5dJe3b8/6MbCGDF4t2K13QHIlJtsq7NYRsd9
+ Wvg7Cfqhj8y0J/f2fgtGtjWP2KDO/p6dAkfwXSq1wRqvPpj/CXZ850t/bknV0qBK7reA
+ zMXSv40mIhWP08FETdCcQYezShWLgNSybAlVUVIPXQp9rRBX1YF7SR+ffuzWx98w5oQR
+ mQDA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+Gkg1ar9PmDoJ/T1NeO6uPCqkFhXUeUw63Xl2WahomrkN0QUPgJR+XAjw9K5rzJpc9EWqNFLEXREau@nongnu.org
+X-Gm-Message-State: AOJu0YwfVSp3opKFfJ+US+535o1jCiBSHlLFoYMEsgzbRUrtEAQVOXlb
+ iBhGTETeA7TRarRq+mDxCF4xx54lC4dDsEJLvu2S0RiR0/7a+sFYVRlDNbLq0w2rROLcOtAQI45
+ 8ybh9kNI7Hcp3oRcEvkL9DR7Iuo9tGMc=
+X-Gm-Gg: Acq92OFZ9CTjyheAlkdxS6dCJad76LOgl9KAoafV+xlR0DI20j/l12bbJ4kE1faGj9E
+ LPoNolWLHO2nuKlWo+4E3HcBuRl8kSYzOEwqo0k3vokueJ9RYeWTUImuWVNGK5ZPCgkCdaLnxwA
+ 9NCs4wvOIob+VisEep9z6+IM9A9JGxwr+LTrpYOSOMluwZQhbGk+hnXl8hssUGLPUYQQCdt3e2S
+ Rr+X2mtxQ8ghBT67Dr7J1rcS86UhcLqic2ckYhe5fGJse05ca6hPMMt39JA1dLFMzfHF2jXU7JS
+ Cmlvh5TCnVbJMNtWGFI=
+X-Received: by 2002:a17:907:b5a3:b0:ba4:f501:cb8b with SMTP id
+ a640c23a62f3a-bdd22f294a3mr996715866b.16.1779879275514; Wed, 27 May 2026
+ 03:54:35 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|SA3PR02MB9394:EE_
-X-MS-Office365-Filtering-Correlation-Id: bf33bad1-cdf0-46ba-0acd-08debbdd2f79
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|7416014|376014|366016|22082099003|18002099003|6133799003|5023799004|56012099006;
-X-Microsoft-Antispam-Message-Info: 4E1/tRBYTihoegwhnR6vmrdZLZVxr2LkVKu4r2bKVHbxRxIgBAlmfJQtsjAySK4MrxXQ80Yazal6Kb/cCNR4Vd/e1x+XeW8YUzG+sv6GoPxFENk6oDGocMrBE15K+r8a5Vxt03N9YBb6uhBO4XsLGsk0iPZrWUka4fzo4zIHBqSZAxCOBjS8DKulMdflWse6I2BpWEg2zo/L7Fn+oUI/2DYdfyADCzgSsN8QgfP5Ai9CvQKCyv5Qwca5sAOh+SuOSkUb915ymcWDEtPKtYWr6OlSwb9pPjQQm72mcaQb99zamLVvC8p3Gar/ZRJj2G9mKoB2fMyp381XcmVFVuM87HmLSlRaOwD4w52hqBW4Km2jKyFYTVabjIYyWqCQ00BFNsutFoVWsiM1ovtxbD/ir79PvKffvN5l4RXNBHwEX6ou7/ed5QBPfbBPQPki+Yq46WAR4Vikwny23JHqYgSXvlTrSUhOldE7Tgd4y02WWQZfxa5juJPJGYpOg7ms9leQsq3rKIzBLWWHruzYJ9xuVRuX3728V7Nfg6ay/tEbeS4coFWZzNbzI25JQy4bEnf0yVs5UZvnSTlICTMt6NKEdteIpS/M4CyRbBZMkroGac9OGC9P7K2tpPzzWXD/5rf3MT7UsFbq3nQoK4Dy6Rh6kK2tTeFJZ/5CHyasixMPJWIgMuKOneFtsSWAwikcqhiD
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(7416014)(376014)(366016)(22082099003)(18002099003)(6133799003)(5023799004)(56012099006);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?c24vV0ZSZk4zQjlpWFdGNjdwNjVjNWpXc2c5eDJ3S2w1MVdXUTNSRk1KbnRD?=
- =?utf-8?B?MTBYOFZETHJCS1plSzZSa2hJNkREMXI5ZWhxcVdvcjRCZ2cyRG5EOEZkZnI0?=
- =?utf-8?B?ZFZOTTh2aFJHNUtRTUxEbU40NXVsSUJtcnlyazVoMGpsK0p5aWFRbWdHeHls?=
- =?utf-8?B?R0dSSEgybTBVUk9pb0dKNDNBajk1MEk2aTJhMkhYbFlTamFxbjVLNWJJdnVL?=
- =?utf-8?B?U1pvMzU2VUZtcERQQnAxT1pBTFo4bFpWamdBTy9CbWh2QWxaLzBMZnRVYXNO?=
- =?utf-8?B?RU15T1AxWTVGRUpUS054WkUrdW9KeGRBNkpKZVNHRlAydm1jTUhoYTBLZ0Vk?=
- =?utf-8?B?aWI1cytMekRJenJVUjd2MzUxc1Q2YmVqZjFjREYxOEZKNTRFbXI5STZtQURG?=
- =?utf-8?B?Z2VVZE5zZzNubXpQMFdzMVE3TjJQNmIxUFRrK2VySmY0R0c4MDFHa3VtRldx?=
- =?utf-8?B?YTdTd3ZkcGZGcHI2R2tXUnNoZjFTcUFEcmVsWkFoM0lRa2M2ekxCSk83ZVlX?=
- =?utf-8?B?c0t2czUvcE9YaFl1NE4rNGJsQTVpa1NJK2ZzNzUyKzVvZTdwNlZnWTlsNjBv?=
- =?utf-8?B?RmdhdFZXUnljNTBQdEtjbERUSFNWd2tLTTNUUUo1N1IwK2NSYjF5bFZDUk5T?=
- =?utf-8?B?WXJrMURTdlNtaFl5NkQ2U2xLeWg5K2hoRFhJUTZrbWRkbm5vcnRManJ1NVZ3?=
- =?utf-8?B?bjV5YXFkZGdoTG1OQm9wZGIxOUxpVHk4ZTJmRWwyTGxjNi9lR0JqL1pTTXFu?=
- =?utf-8?B?RTR3T2t2TnAvem5kTmFGZFBWYjB0OHNXcHYrNEhJQUpKcTRHb1V0UVZOSlcw?=
- =?utf-8?B?aWNHWEhvVTdkcFkwQUdVU2FCejlMblk0S2dFc3pCWDllNUlxODFpQ09JMGFF?=
- =?utf-8?B?eGNCV0pGT2VJUVBuRVAxd3lvQk90WE5WR3FSUGtSODZla3A2Y00vdUlPcExD?=
- =?utf-8?B?bGU0bENEa2NYa3loa3pVb0kySUFiL05ucVJKbVRzekZjMFRZWGpYUlovSGtj?=
- =?utf-8?B?V1FEeTlIY3VCVzV3WkwxRU90bGs3SnJnczFkOHM4UFAwdEZsSUJzZE5ud28x?=
- =?utf-8?B?L1VFeDJiU3NYNXU5ZzBLSXp3ekJWUURwOXF2RzNSRnl1T1o2c3V0RTdNRURH?=
- =?utf-8?B?Wlo3UkJBMTc2Q1hlcVFEK1BVd3JVSFVoQm5XUVdiQ09FRHdQVGVxYXdMWHdn?=
- =?utf-8?B?eU80SGlXbU15NkVITWV0RnpabjdZU3lTZzVKb25tK2U5YWVyK2dEd2xOakdY?=
- =?utf-8?B?QzhvWEVJUlRmZjBvSExSK3k5NS9LdTAyTm00UUppQW9FUHJ5dEZzMHBZc1NG?=
- =?utf-8?B?U2xQY1RULzJxWEIxc2NIZjEzTzZCMkcvWVJBaEhPUGo5d3RaZWxXKzVzMGdu?=
- =?utf-8?B?eXBBeTFuTlNqMHdTZ09HQ09LZ2JGTGdFMkpjeGk5YnRkblVYcG9USVJKaUZw?=
- =?utf-8?B?Y0dHS0I4dnhuL2o5a1MzR3RNVGFoVnc5WlgwUkRGem1mZGJhNkZCM29PaExV?=
- =?utf-8?B?Wm9DVGw3Z3VRZ3ZndVVxOFZTajE3aTZCaEJzQ3lkYkxJRDFEb3pyTEJVMzdW?=
- =?utf-8?B?MzBGTlFldGM4T1h3bUxtenhkNTBYSmloamdSUHRUMEpVRHhqVmhCcWMxTjR4?=
- =?utf-8?B?cy9jNmVRTzl0WGlWUDkyS08wMVRzaG90bjBWd1ZIcUswM0s4T0RkQzBmakZM?=
- =?utf-8?B?cXpySFZKNmkvNWlqa2x4ckg3alBobkdKNnpxNVlaUG9RNHVmdFdXcUxZNzZM?=
- =?utf-8?B?MFlydmw3OU92eVA4di9ITklLWDYxRmFZd0w2SFQxRVRKSlp4N1FKSDFLaitN?=
- =?utf-8?B?UUdhR3BGZERZRlJaVmViM0ZGaGR6bmN4U2pUd2pwY1h2QmlZdE0xY3Y5T1pU?=
- =?utf-8?B?a241MSsyUUNhYkdKcWVja2lPcGNTOVd2UkpXN04zMnhpdXV3SVhOZVZYOW9S?=
- =?utf-8?B?cUNOM21MZjI3VGVOS0tuVUdqUU8zelB5RGpCd0NRZWtrSUZXWC9ZSE8rSjFP?=
- =?utf-8?B?aC9sNHJPZUxKYjNtajFSOE1YczdOaEhkNWJWL2tJUi9VTnhxb3dZWTNDeDJ4?=
- =?utf-8?B?NW9GYnloLzBEYk0yVm9NUGtJZ3hGM29Rbys3RGxnbFZzMWVZcWdBNWFlUzJB?=
- =?utf-8?B?Q25IcFFHQnBoTFpUMUMyWi9jNWFzVXFHaXdiU0FnbXBqbnB4Zkw0RndpUUt3?=
- =?utf-8?B?RXdORndOck9XK21WMC8zeGxNRWVGZDI2a3hIRXVDVG5WZ0JIb1l0Rmk1c3NB?=
- =?utf-8?B?azZhbnFKeUtkVWxSMFRHNWUrcy9yVW03SlZwV0ZuSS90TEQ4dUFFZnVKMUVW?=
- =?utf-8?B?bllHWjF2Qm9GT3lxZWVkb1JEOTM4YkIwZ1FubmFURm1Sd1F1MWdjNFZXMTBU?=
- =?utf-8?Q?vfycyUoyDOvgdiFc=3D?=
-X-Exchange-RoutingPolicyChecked: MvICLBxjt418gjgxxEZ7GKyXE0UtmA2ebs0+w9mXlvU/JQFn8slDAQzfGAyE5DUjX0xRf9BybkF7o7cTgylLnOa3KU9Qfws7LoKYYS3Y2N+VACiL0J6IhAC07gp4YiigEiblnJjUJhT1TrQUfhxkFmdpU2dub8ewXGVGkjMffQpx2CeBrAFaYCXI8QnPwzck/oygsFKbexijhHX3W7Ln4cqSwgBC5NQOR8DUmnIxN6HAzKIbw7Ou3OgTEQZ7HrcBUbVeK1cWJj4NIPmplfuAGlTJbjR3R7jKJXcnaESNAmi0Su9z+g3/EdHlm4O/uB3sz2qGMgiXQX3OMc8zl+8rxQ==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bf33bad1-cdf0-46ba-0acd-08debbdd2f79
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 May 2026 10:46:19.4241 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: a+S9HlrYcFgQmux9oV9wJNFk+ipntZDtep6xkEK6kq0opVm3K9mYX861YNm8v31iPlb2UQjtWbSbVxltkKZL21HEBJqA3FDTNP6DvjFJbsw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR02MB9394
-X-Proofpoint-ORIG-GUID: IxHr3IVk8DQv5lBj5RTEuhE17ePS32HP
-X-Authority-Analysis: v=2.4 cv=fr7sol4f c=1 sm=1 tr=0 ts=6a16cb7e cx=c_pps
- a=w/xsMB98MdRKPpKwYm4Ziw==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=_-M8LpHI31CeLmyZm6wg:22
- a=6R7veym_AAAA:8 a=gHyj-mOlIS55BAtS5HkA:9 a=QEXdDO2ut3YA:10
- a=ILCOIF4F_8SzUMnO7jNM:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI3MDEwNCBTYWx0ZWRfX2yoErtRglUR0
- rvG0fw85+ULXmtWRvRQmk+JIrSxHBg2nV8vPXsdyBBrucSm7ZMWRDwqUmdsDmyTtX6Wc3xos7we
- iyN+KDrTHeDt+O1DwpNHVpIJHGp3MvI0Ihk7LF5+FLCbZGN2DMjOYIP5TsNz1axVOxveKLmyfO7
- w1fQ0ziSQ6Q3eRbOlPkJmCTQM/wco0XQJ4KqzH5vwSAV95GRBENBL4qVJzJZcz0lI5njFgmE3NB
- HeL2ADmRTNi/9GmPqsnd/6RcKeTMJPj2FwYkn8rHXaKrdCQAQKxyAFLwuyQRjgCkl+CLHUx9plv
- Y8REH1VPfQiBkb6ibL5INHVmdx7xo7xNRAxukXj6y8qWByraecb6FxhMd3D1h0ebm6EOyeWtzN0
- RZ2UU+GfApFXO7kHuuEVChLY5iC/dfGAktFHGP3O3Oq0zWrZIGQLKERh6Z+5wzTabqKAf798jAA
- mYH+zwjd+RnaACaRrPw==
-X-Proofpoint-GUID: IxHr3IVk8DQv5lBj5RTEuhE17ePS32HP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-05-27_01,2026-05-26_03,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+References: <20260524083329-mutt-send-email-mst@kernel.org>
+ <ahXbxzB4C_lr6b0N@redhat.com> <20260526140231-mutt-send-email-mst@kernel.org>
+ <ahXtqyuIa4XqkMHb@redhat.com> <20260526152526-mutt-send-email-mst@kernel.org>
+ <CANCZdfonroZmdRRpPdHzTKR_m8qyVdSG14gXB-K3BTuv=Qgw9g@mail.gmail.com>
+ <ahauQKLOU1tzDtbb@redhat.com>
+ <f8791a2d-257b-4233-aafb-ccd45e695542@redhat.com>
+In-Reply-To: <f8791a2d-257b-4233-aafb-ccd45e695542@redhat.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 27 May 2026 20:54:07 +1000
+X-Gm-Features: AVHnY4JWfIt9TJOL-O1ovXPrKAdA3y1ufVenZWZ5I4DTfQOu7aFCk9xfefBGn3c
+Message-ID: <CAKmqyKOsdJYbh8SAvzpv3rpF7TUE68sHR34rDy8sc+d=j1L9vw@mail.gmail.com>
+Subject: Re: on ai generated and code provenance
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, Warner Losh <imp@bsdimp.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
+ stefanha@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -191,71 +125,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/05/2026 13:05, Vladimir Sementsov-Ogievskiy wrote:
+On Wed, May 27, 2026 at 8:02=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
+ wrote:
+>
+> On 5/27/26 10:41, Kevin Wolf wrote:
+> > Am 26.05.2026 um 21:52 hat Warner Losh geschrieben:
+> >> The QEMU Project currently may accept limited uses of AI that produce
+> >> high quality patches that are limited in the creative content added.
+> >> While maintainers will ultimately decide, changes like the following
+> >> fall within this policy
+> >> 1. Fixing obvious warnings in the obvious ways suggested by the tool
+> >> 2. Tree wide API changes, and other similar mechanical changes done
+> >>     today with perl/python/sed/coccinelle
+> >
+> > As I said in the paragraph you quoted below, I don't think we should
+> > encourage using AI for tasks that a deterministic tool could do.
+>
+> In some cases such a tool does not exist.  Much to my surprise, there is
+> no tool to do static type inference on Python code, but AI is very good
+> at doing it.
+>
+> > Letting AI perform the change directly instead may be an acceptable
+> > shortcut for a one-man hobby project that nobody else will ever look at=
+,
+> > but in the context of a community project like QEMU in which your
+> > changes have to be reviewed and understood by others, it matters a lot
+> > that the output of the tool is reproducible. Otherwise, you're creating
+> > unnecessary work for others, and that isn't acceptable.
+>
+> When applicable, going through coccinelle (with the aid of AI if needed!
+> is indeed a good middle ground as it helps reviewers for large changes.
+> If you have many slightly different but easily separated changes (e.g.
+> you can split the patch by struct field), it may make things worse.
+>
+> Its also worth noting that in other cases even sed or coccinelle, while
+> deterministic, cannot produce 100% of the patch.
+>
+> > So maybe we should even explicitly mention a recommendation like the
+> > following:
+> >
+> >      If you can use a deterministic tool, don't use AI instead. If you
+> >      don't know how to use the deterministic tool, use the AI to tell y=
+ou
+> >      how to use it instead of trying to replace it.
+>
+> I like it.
+>
+> >> 3. Limited, small changes to fix bugs or add a small new feature whose
+> >>     scope is less than about 100 lines and the originator can explain
+> >>     them all or the meta issues about the patch.
+> >
+> > Not sure if mentioning a number of lines is wise. 100 lines can be
+> > mostly boilerplate and simple sequential code or they can be a deeply
+> > nested complex algorithm.
+>
+> I'd put the threshold at 20-50 at most.
+>
+> > I think I would see more use in a tag like (better name welcome):
+> >
+> >     AI-used-for: [code|tests|docs|commit message]...
+>
+> I like this *a lot*.  No need for free advertisement, but some
+> traceability is useful.
+>
+> For tools such as sed or coccinelle, having the exact script in the
+> patch or commit message useful.  Plus, the execution of the script more
+> or lesss delimits the commit by itself (or 90%+ of it).  For LLMs it's a
+> bit less clear cut because separating docs makes little sense.  And the
+> exact model is pointless, it will be obsolete in 6 months and provide no
+> useful information.
+>
+> So, something like:
+>
+> ------------------- 8< -------------------
+> Use of AI-generated content
+> ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>
+> The QEMU project currently allows using AI/LLM tools to produce patches
+> in scenarios with limited creative content:
+>
+> Mechanical changes
+>    If you can use a deterministic tool or a script, don't use AI instead.
+>    If you don't know how to do the change deterministically, you may
+>    ask the AI for help, rather than having it stand in for the tools.
+>
+> Small bug fixes
+>    These should be limited to 20 lines of code or less, not including
+>    tests.  You are still expected to understand and explain your changes
+>    and the rationale behind them.
 
-> Hi all!
-> 
-> Here is a new migration parameter "local", which allows to
-> enable local migration of TAP virtio-net backend (and maybe other
-> devices and backends in future), including its properties and open
-> fds.
-> 
-> With this new option, management software doesn't need to initialize
-> new TAP and do a switch to it. Nothing should be done around
-> virtio-net in local migration: it just migrates and continues to use
-> same TAP device. So we avoid extra logic in management software, extra
-> allocations in kernel (for new TAP), and corresponding extra delay in
-> migration downtime.
-> 
-> v16: rebase on master (on top of "[PATCH v4 00/13] net: refactoring and fixes"),
-> 01-08: add r-b by Ben
-> 06: add a-b by Markus
-> 07: small fix, exclude vnet_hdr= and ifname= arguments when
->      incoming-fds is set (they are not allowed actually, and
->      netdev_add fails), keep r-b by Ben.
-> 
-> Based-on: <20260318113144.15697-1-vsementsov@yandex-team.ru>
->      "[PATCH v4 00/13] net: refactoring and fixes"
-> 
-> Vladimir Sementsov-Ogievskiy (8):
->    net/tap: move vhost-net open() calls to tap_parse_vhost_fds()
->    net/tap: move vhost initialization to tap_setup_vhost()
->    qapi: add local migration parameter
->    net: introduce vmstate_net_peer_backend
->    virtio-net: support local migration of backend
->    net/tap: support local migration with virtio-net
->    tests/functional: add skipWithoutSudo() decorator
->    tests/functional: add test_tap_migration
-> 
->   hw/core/machine.c                             |   1 +
->   hw/i386/pc_q35.c                              |   1 +
->   hw/net/virtio-net.c                           | 137 +++++-
->   include/hw/virtio/virtio-net.h                |   2 +
->   include/migration/misc.h                      |   2 +
->   include/net/net.h                             |   6 +
->   migration/options.c                           |  18 +-
->   net/net.c                                     |  47 ++
->   net/tap.c                                     | 246 ++++++++--
->   qapi/migration.json                           |  12 +-
->   qapi/net.json                                 |  10 +-
->   tests/functional/qemu_test/decorators.py      |  16 +
->   tests/functional/x86_64/meson.build           |   1 +
->   tests/functional/x86_64/test_tap_migration.py | 458 ++++++++++++++++++
->   14 files changed, 906 insertions(+), 51 deletions(-)
->   create mode 100755 tests/functional/x86_64/test_tap_migration.py
+Coming back to Peter's earlier comments and the Zig policy, one thing
+we have in RISC-V is people are running AI tools against QEMU and the
+RISC-V spec to identify places where we don't meet the spec. They then
+write patches and submit them upstream. The patches appear human
+written, so have been accepted.
 
-I've been looking at this series to try and understand how CPR migration 
-works with network devices, so I'd be interested to have a look at this.
+A lot of the bugs found are corner cases that people aren't actually
+hitting. From my use of AI review systems in the past, they do tend to
+be very nit-picky. So it's not too hard to catch issues that users
+won't actually hit and fix them. It's a valid fix, but easy to
+inundate reviewers. If this process was entirely run by an LLM it
+could be way too much.
 
-Do you have a working example command line and monitor sequence as a 
-reference? I've tried a few examples but I appear to be missing some 
-context, and there's nothing in the cover letter to help out :)
+So maybe we should add something here about don't send large numbers
+of "small bug fix" patches. So someone doesn't point an AI at QEMU and
+a spec and generate huge numbers of patches, all of which are just
+small bug fixes.
 
-Also do you have a git branch somewhere with your latest changes?
+Alistair
 
-
-ATB,
-
-Mark.
-
+>
+> These boundaries do not apply to other uses of AI, such as researching
+> APIs or algorithms, static analysis, or debugging, provided their output
+> is not included in contributions.  Larger uses of AI are allowed as an
+> experiment, but they should be agreed upon with the maintainer prior to
+> submission.
+>
+> Use of AI does not remove the need for authors to comply with all other
+> requirements for contribution.  In particular, the "Signed-off-by"
+> label in a patch submission is a statement that the author takes
+> responsibility for the entire contents of the patch, certifying that
+> their patch submission is made in accordance with the rules of the
+> `Developer's Certificate of Origin (DCO) <dco>`.
+>
+> Commit messages for AI-assisted changes
+> ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>
+> When AI/LLM tools produce or substantively shape your patch, add an
+> ``AI-used-for:`` trailer.  The text of the trailer could be one or more
+> of ``code``, ``tests``, ``docs``, ``research``, possibly followed by an
+> explanation in parentheses::
+>
+>      AI-used-for: tests, docs
+>      AI-used-for: code
+>      AI-used-for: code (refactoring)
+>      AI-used-for: code (prototype)
+>      AI-used-for: research
+>
+> The trailer is intended as a clarification of your DCO obligations as
+> well as to guide reviewers.  It is not intended for minimal presence
+> such as autocomplete or asking for a pre-review of the patch, and it
+> does not remove your responsibility to understand the changes that you
+> are submitting.
+>
+> Include the prompt in the commit message if it helps a reviewer judge
+> the result:
+>
+> * yes: "move field ``foo`` from ``struct aa`` to ``struct bb``.  If a
+> function already has a local variable or parameter of type ``struct
+> bb``, use it instead of accessing ``aa.bb``."
+>
+> * yes: "add an implementation of the trait for ``Mutex<T: MyTrait>``,
+> forwarding the member functions to ``T`` while taking the lock around
+> the calls".
+>
+> * no: "write user-facing documentation for the new tool"
+>
+> * no: "write testcases for the new functions"
+>
+> Deterministic tooling (sed, coccinelle, formatters) is out of scope for
+> the trailer, but should be mentioned in the commit message.
+>
+>
 
