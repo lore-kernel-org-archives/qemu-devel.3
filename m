@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F608CD5BC9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:34:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBC1CCD5BC9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:34:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSBao-0001Tm-0Q; Wed, 27 May 2026 06:34:30 -0400
+	id 1wSBYv-0006FM-Dc; Wed, 27 May 2026 06:32:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBaa-0000og-AJ
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:34:19 -0400
-Received: from mail-wr1-x443.google.com ([2a00:1450:4864:20::443])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBYt-00063s-9F
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:32:31 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBaX-0001ds-BF
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:34:15 -0400
-Received: by mail-wr1-x443.google.com with SMTP id
- ffacd0b85a97d-44e1860558fso7318760f8f.0
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:34:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBYr-000144-OF
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:32:30 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4893940bb5eso62121025e9.3
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:32:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779878051; x=1780482851; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779877948; x=1780482748; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ttRC7jhcF8srzoB9LI+SHHsPyswGDW9kHUSpZKI/FE0=;
- b=wTbSuYd55YvqCyLerit5Ehqtog4V/CfKj5UrG75nBIxYLaOXP+0CC/WRE6KpSgnP9K
- Qy3bYDEmivXyRfCEk77zs3rHiMNoNa84QkarQV5qsOv8vxlgEan0Clqm6w72rkkB8qgD
- eJuR9mxVhXERFpzViTSGFw+CR9oMXaMC3AhTIudNTsMNWwXfxcwgx2oI6OfHFxwp4BCP
- XHBsWHnm39R25lbtVxYWpczje5/Lfmjuwqrm/7cN9i0XUz3DrdqTMT1q41G3Q3Bmtb9S
- wyeVZY25AasqWd9ExJmJzSqnZqVljEodNg1Tkhd+/USncaRzdQBLHstrhvUALyY2olKt
- i9Gw==
+ :reply-to; bh=e6O/ogzr+K6mAT+/rTwXwSrAD8WtOVYWXrLB9FiOP2c=;
+ b=zdc/oB7EfUOG59OYnvixTlgTOk6a23xLXfuDYioPUkwHDR3Jk9PHSm+R76yfnsqr8I
+ sCeuBKvZlK/zo2Kr/Ja+RQagG4hbda5/jVY4PEimHVztEasa6t7x6gQo+Vqn6CkkNiNQ
+ v3gbY5xKb/81nGPtfV6BBPKsiUTOxWXKWjNVwsldkfNn4ayyzCql5+ukeFArYvt5FLrB
+ zUG7ggT2Jy22mG35Y8d0I/oHUi1QULpR6aBeHUGBTHK+emfhn5izkK6ex+ZHgADVY3nS
+ +7DW40snhR4lAryMcZo7mKbcqOiJsdABWr7vFVdmBPUSUOSt7JWmJ8BWNUWu3H6TF4Th
+ hZGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779878051; x=1780482851;
+ d=1e100.net; s=20251104; t=1779877948; x=1780482748;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=ttRC7jhcF8srzoB9LI+SHHsPyswGDW9kHUSpZKI/FE0=;
- b=gLBbVrLvJpp2mktPAzdrzd7KPYj6CUa7H55rOI8NrhaFIFs35EovWqsK1PmcgGuQT1
- mJXynJkCPnl0v0lDUu30DBP8RjpToY+T+XU0siQYS3d3mMi/GTUcswF+E6yS4swCyxfS
- WMgiZHmbi2h65wlw07ChLXG4qumygigBgRBFS6mfSHz3Z0pLD/hwrK8cisg2hIH7NRGd
- jaQrFSdA8B3RizpG4T12aVysAkNEvrIeOlRcUs/VbhSjWSKA4RFW8HbbyR1aV9Uc8HsH
- gtchr4Ujci2UhwuKtAkXA0AR2c7GOSvdQAQzVxPxpqVFxQTY7316ZecX0JJfrJppJ6Cr
- DGCQ==
-X-Gm-Message-State: AOJu0YwmYemQ8l5/DxbsCdGjk6eXziHLTY4fhP+k9SZ81DBOqCHyv1FH
- JCvImgok8I6UbqEA3+SBwKbjw9/kzNyenL6te3iFTJedFIh9cpUkjoZ77/bO1XyuHfv6pAnY6XA
- /kjRGjRMrdQ4T
-X-Gm-Gg: Acq92OHDLCr8BgR2eDusSUYXLFfXb0q6OLszmyn2z71iI2dyst4bW5xfX3K0MJlfXmK
- d+CW8oDUWoBQWZP/TZytiaVWVLQNS2tU7OTe4UAlhTvg1AHdTH28s4+GtlJI9JQ1+c3RcG0Lw1K
- ALbV17m4kNd+ESDsR8g1F0jAJTq+lgW6rBGBe77ZIcOh0k0gL63iXXLRl1/+8wJ8z6wiPkm6j76
- Dp/IolcH1wGKWe7eGnVC4fvOKXw7XJJ/zODPwqFAYwvjmxtOWr8rofEyBYMMio6VURlJj32sT5T
- gWu2Nfo4fxwiuTlc85J/OCAlGpL7ZVghEdIeQ1AUSWlWIGqJ9Gfh3m4QtcMeGrUIFQJ+GQPbb8I
- ephNvrxjxodXAFG4XbYYqQXjT6oZIuhgCn3oeFQ351zd+M2w1mQ/vKWr1V5K2Ppg8iNWxEtAmeD
- 4YjuvYz4CD1HJ1gaGFuHXx3FPGN/s0meXgwAMWJr3YHIgROwtqo7p9AvM=
-X-Received: by 2002:a05:6000:4919:b0:454:a41f:d082 with SMTP id
- ffacd0b85a97d-45eb36b0242mr32720975f8f.3.1779878050922; 
- Wed, 27 May 2026 03:34:10 -0700 (PDT)
+ bh=e6O/ogzr+K6mAT+/rTwXwSrAD8WtOVYWXrLB9FiOP2c=;
+ b=sRth1672E451qFL5K8h6LJu7JONNbUbgHQaFu1wTW2zet8YbmbuPUYCFEcPjyXtWj0
+ pGh27LXdneBrbLFCp8s6vX5XeHtctTCHDnVNn99WlOHB3jM6YL0L6yUo4jD2sigzxQK8
+ lVP6HltSy4tiBAiq05hqdzW1ktbZjO5g8IVEwwyF6X8OZ7N+SWXR84/fwWTKiC1hwd66
+ xJ8ZozhndP13k2D1vGarHv4Wz3DLR1TLFBiSr5SMyczXje7I+MBqaqmPrnDVSM2WpSCh
+ LHYP1z1ghC/vLeh9Hno/HhK3BbzQ9jtfhMXjjWCEeYnfr9curMBelvnrmMaDV6FNzIV5
+ brNg==
+X-Gm-Message-State: AOJu0Yxnq121GO5Kk+2Yt+ZPAa67UixNF3DDPfmUAeWkz/bo49DnXvn8
+ uirQIt1kdjxZXpy2A2hG6LSaRcLjoZYoum+1MD06nCf8T/Mre4B/QEmdhBxWeIOVH21eMeCqr/B
+ OlTuZFsg74g==
+X-Gm-Gg: Acq92OHxiYZLTuldsfZoweEEcFN3Ju9BaVY9Jxrc45Sd0Ue/0TB7g2OZz7Ou9lz7mHU
+ /nqA0mJbE5vSnUfEbhM0wuIFs5armx6UkJ3YoFUourbP/tzWQaPEDpePZ0UJiIBrrxa9IyVB3yq
+ eL5XJlRFm0fBFQQL6QzA7jSZzjIuGOSe9TBBUN8H7lTmyDyU2qyj87K5kBEriVuRqIGqGvpbzit
+ Cx5xDty9YRfb4L6uhqre4vh0w15odDw1z+KNno3DTZKAgVch+lDzIpRibiplVabDduGMse8VWvN
+ rXb72hKd6JydMCgPyAkOcevUipKSpOFnliZzxOnCQG7zo8obDmdBqJAayAN+1z9CQMamDFVWWQz
+ Ce/vx4WrhhwzeW3OW6IdOHdpkG+zAEBn3bYe0vHrb37JXKW7aIKy9nwndI4u9ZToDlG4ViXyNEj
+ ygKLsyfS28hqEYRgPC39RCe+LFF3ogT5eVKaLAO2UY53mACRXTfJxhI0YbiRzBiyKtTw==
+X-Received: by 2002:a05:600c:a012:b0:490:5191:6e26 with SMTP id
+ 5b1f17b1804b1-490519170bamr325194295e9.18.1779877948027; 
+ Wed, 27 May 2026 03:32:28 -0700 (PDT)
 Received: from m17.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45edb5c47a2sm4950494f8f.37.2026.05.27.03.34.08
+ 5b1f17b1804b1-4907e7ceefdsm22256065e9.2.2026.05.27.03.32.26
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 27 May 2026 03:34:09 -0700 (PDT)
+ Wed, 27 May 2026 03:32:27 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 31/32] MAINTAINERS: update qualcomm git tree URL
-Date: Wed, 27 May 2026 12:30:35 +0200
-Message-ID: <20260527103037.4461-32-philmd@linaro.org>
+Subject: [PULL 16/32] hw/arm/meson: Remove now unused arm_ss[] source set
+Date: Wed, 27 May 2026 12:30:20 +0200
+Message-ID: <20260527103037.4461-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260527103037.4461-1-philmd@linaro.org>
 References: <20260527103037.4461-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::443;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x443.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,34 +98,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-
-The git repo has been migrated to https://github.com/qualcomm/qemu
-
-Note also that for some time, https://github.com/quic/qemu should continue
-to redirect to https://github.com/qualcomm/qemu
-
-Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260522222827.3239334-1-brian.cain@oss.qualcomm.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Acked-by: Peter Maydell <peter.maydell@linaro.org>
+Message-Id: <20260526203722.79463-6-philmd@linaro.org>
 ---
- MAINTAINERS | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/arm/meson.build | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 15982c04614..35ab2b458a4 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -259,7 +259,7 @@ F: disas/hexagon.c
- F: configs/targets/hexagon-linux-user/default.mak
- F: docker/dockerfiles/debian-hexagon-cross.docker
- F: gdbstub/gdb-xml/hexagon*.xml
--T: git https://github.com/quic/qemu.git hex-next
-+T: git https://github.com/qualcomm/qemu.git hex-next
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 22e8ad924a2..8f66a80e10e 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -1,4 +1,3 @@
+-arm_ss = ss.source_set()
+ arm_common_ss = ss.source_set()
+ arm_common_ss.add(when: 'CONFIG_ARM_VIRT', if_true: files('virt.c'))
+ arm_common_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
+@@ -111,5 +110,4 @@ arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
  
- Hexagon idef-parser
- M: Alessandro Di Federico <ale@rev.ng>
+ arm_common_ss.add(files('boot.c'))
+ 
+-hw_arch += {'arm': arm_ss}
+ hw_common_arch += {'arm': arm_common_ss}
 -- 
 2.53.0
 
