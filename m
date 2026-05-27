@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE2B9CD6E44
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 06:19:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82075CD5BDE
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 06:19:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wS7ZZ-00043a-Ml; Wed, 27 May 2026 02:16:58 -0400
+	id 1wS7Ze-00047T-F1; Wed, 27 May 2026 02:17:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wS7ZK-0003vm-55
- for qemu-devel@nongnu.org; Wed, 27 May 2026 02:16:44 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ id 1wS7ZO-0003x8-1i
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 02:16:47 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wS7ZH-0003yt-9t
- for qemu-devel@nongnu.org; Wed, 27 May 2026 02:16:41 -0400
+ id 1wS7ZL-000430-1A
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 02:16:44 -0400
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:2925:0:640:1f39:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id F06DD8078A;
- Wed, 27 May 2026 09:16:37 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id A5F8880765;
+ Wed, 27 May 2026 09:16:41 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:69::1:d])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id QGSCNG0ZtGk0-Dw12idiD; Wed, 27 May 2026 09:16:37 +0300
+ id QGSCNG0ZtGk0-LXI6GsnN; Wed, 27 May 2026 09:16:41 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1779862597;
- bh=z7NzS2BOltO1smLgMQemP3Hs/WnVs4xBnAPGQOKC/zU=;
+ s=default; t=1779862601;
+ bh=p7Mm9GudtPAeqe5zCfAh27owVpQGvscwVTdaF2yAkKc=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=OE87RdNzfYMt4HtclF9NB7ln/2dTl70X/1sYxsBOvegxLI008c7C+zVhPB7y67O++
- pEvv8dbVEgND1A57rafg+nnB9GAvXVXjpyDoW71NoeqKaJOrN5iZV+e1FKD2U+9uFL
- vyCLyDJZe5thhmQYrgosaPMjZ7A/5I9xhfE+JV8Y=
+ b=buFFtxz9C3zw5t1YSwjIDEvEpUXveR6D0tZ6KjNWN8Lhku7MQBn/hHrzrby4YUa7g
+ 8rc+nCjGxElXdGtGEqN7JT2UwWBWsh2OwpPFroQeiD5Y/WaA10aOeZ2/69MdQEIQs6
+ z1qHqWylI646WtWfN7vGAZ2oGssyYaKlHMRyT6TU=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -45,15 +44,16 @@ To: mst@redhat.com
 Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
  vsementsov@yandex-team.ru, yc-core@yandex-team.ru,
  d-tatianin@yandex-team.ru, Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Subject: [PATCH v7 09/22] vhost-user: keep QIOChannelSocket for backend channel
-Date: Wed, 27 May 2026 09:16:10 +0300
-Message-ID: <20260527061625.11167-10-vsementsov@yandex-team.ru>
+Subject: [PATCH v7 14/22] vhost: vhost_virtqueue_start(): drop extra local
+ variables
+Date: Wed, 27 May 2026 09:16:15 +0300
+Message-ID: <20260527061625.11167-15-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260527061625.11167-1-vsementsov@yandex-team.ru>
 References: <20260527061625.11167-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.136;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -75,80 +75,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Keep QIOChannelSocket pointer instead of more generic
-QIOChannel. No real difference for now, but it would
-be simpler to migrate socket fd in further commit.
+One letter named variables doesn't really help to read the code,
+and they simply duplicate structure fields.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Acked-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 ---
- hw/virtio/vhost-user.c | 21 ++++++++++-----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+ hw/virtio/vhost.c | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 68dd89cd8f8..31eaf65430e 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -239,7 +239,7 @@ struct vhost_user {
-     struct vhost_dev *dev;
-     /* Shared between vhost devs of the same virtio device */
-     VhostUserState *user;
--    QIOChannel *backend_ioc;
-+    QIOChannelSocket *backend_sioc;
-     GSource *backend_src;
-     NotifierWithReturn postcopy_notifier;
-     struct PostCopyFD  postcopy_fd;
-@@ -1796,8 +1796,8 @@ static void close_backend_channel(struct vhost_user *u)
-     g_source_destroy(u->backend_src);
-     g_source_unref(u->backend_src);
-     u->backend_src = NULL;
--    object_unref(OBJECT(u->backend_ioc));
--    u->backend_ioc = NULL;
-+    object_unref(OBJECT(u->backend_sioc));
-+    u->backend_sioc = NULL;
- }
- 
- static gboolean backend_read(QIOChannel *ioc, GIOCondition condition,
-@@ -1909,7 +1909,6 @@ static int vhost_setup_backend_channel(struct vhost_dev *dev)
-     bool reply_supported =
-         vhost_user_has_protocol_feature(dev, VHOST_USER_PROTOCOL_F_REPLY_ACK);
-     Error *local_err = NULL;
--    QIOChannel *ioc;
- 
-     if (!vhost_user_has_protocol_feature(
-             dev, VHOST_USER_PROTOCOL_F_BACKEND_REQ)) {
-@@ -1922,15 +1921,15 @@ static int vhost_setup_backend_channel(struct vhost_dev *dev)
-         return -saved_errno;
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index d5bafbcc4b3..a3bf7e5a9b8 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1277,7 +1277,6 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+     BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
+     VirtioBusState *vbus = VIRTIO_BUS(qbus);
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(vbus);
+-    hwaddr l;
+     int r;
+     int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, idx);
+     struct vhost_vring_file file = {
+@@ -1302,23 +1301,17 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+         /* Queue might not be ready for start */
+         return 0;
      }
- 
--    ioc = QIO_CHANNEL(qio_channel_socket_new_fd(sv[0], &local_err));
--    if (!ioc) {
-+    u->backend_sioc = qio_channel_socket_new_fd(sv[0], &local_err);
-+    if (!u->backend_sioc) {
-         error_report_err(local_err);
-         return -ECONNREFUSED;
+-
+-    l = vq->desc_size;
+-    vq->desc = vhost_memory_map(dev, vq->desc_phys, l, false);
++    vq->desc = vhost_memory_map(dev, vq->desc_phys, vq->desc_size, false);
+     if (!vq->desc) {
+         r = -ENOMEM;
+         goto fail;
      }
--    u->backend_ioc = ioc;
--    u->backend_src = qio_channel_add_watch_source(u->backend_ioc,
--                                                G_IO_IN | G_IO_HUP,
--                                                backend_read, dev, NULL, NULL);
-+    u->backend_src = qio_channel_add_watch_source(QIO_CHANNEL(u->backend_sioc),
-+                                                  G_IO_IN | G_IO_HUP,
-+                                                  backend_read, dev,
-+                                                  NULL, NULL);
- 
-     if (reply_supported) {
-         msg.hdr.flags |= VHOST_USER_NEED_REPLY_MASK;
-@@ -2350,7 +2349,7 @@ static int vhost_user_backend_cleanup(struct vhost_dev *dev)
-         close(u->postcopy_fd.fd);
-         u->postcopy_fd.handler = NULL;
+-
+-    l = vq->avail_size;
+-    vq->avail = vhost_memory_map(dev, vq->avail_phys, l, false);
++    vq->avail = vhost_memory_map(dev, vq->avail_phys, vq->avail_size, false);
+     if (!vq->avail) {
+         r = -ENOMEM;
+         goto fail;
      }
--    if (u->backend_ioc) {
-+    if (u->backend_sioc) {
-         close_backend_channel(u);
-     }
-     g_free(u->region_rb);
+-
+-    l = vq->used_size;
+-    vq->used = vhost_memory_map(dev, vq->used_phys, l, true);
++    vq->used = vhost_memory_map(dev, vq->used_phys, vq->used_size, true);
+     if (!vq->used) {
+         r = -ENOMEM;
+         goto fail;
 -- 
 2.52.0
 
