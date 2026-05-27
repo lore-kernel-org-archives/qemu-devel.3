@@ -4,49 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8199FCD5BD0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 16:58:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07A9ACD5BD0
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 16:59:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSHaW-0002Kx-Me; Wed, 27 May 2026 12:58:36 -0400
+	id 1wSHaX-0002Li-JK; Wed, 27 May 2026 12:58:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey@volkov.fr>)
- id 1wSHEy-0004at-Qo; Wed, 27 May 2026 12:36:20 -0400
-Received: from 102.0.133.77.rev.sfr.net ([77.133.0.102] helo=gate.volkov.fr)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey@volkov.fr>)
- id 1wSHEv-0008Po-0W; Wed, 27 May 2026 12:36:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=volkov.fr; s=mail;
- t=1779899327; bh=UV9o693cXq2MXAg+NgwqJE3ZvSyFZVBNk1AsZwhSgnY=;
- h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
- b=CmT1jauPrbHNPasYu13Mn1IK+kpWC/0Gm2s1OOR9uIJ4srE+tCPH1LkXyrg1J3SY0
- nBxTjR0NtHatOPMKc95cYhkeJVkxOi+LXrwn628CczmjbNZ2Ih+tU4c0cg/Qm8p4BS
- E+dBOpw93lHZFVWC1+ORIxQZBi9pMQ/decdLBKWH9IrXQzxgu1DntFz+ms4celEzLz
- 1KYZ/mNiQyoaOV6jP8/22Jr8WegfPBTweRPAPepHSUd8r4MOfA2TbpF2IUft5yVWiF
- vMyKlHdpliyVyTvBEMKFeZlxzxxltENA3TacPMZMLNxOTQGNKep263nv7Wdj0gIZFK
- 7GbVlCwbE0xkQ==
-X-Virus-Scanned: Debian amavisd-new at volkov.fr
-Authentication-Results: gate.volkov.fr;
- dmarc=fail (p=reject dis=none) header.from=volkov.fr
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=volkov.fr; s=mail;
- t=1779899325; bh=UV9o693cXq2MXAg+NgwqJE3ZvSyFZVBNk1AsZwhSgnY=;
- h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
- b=WiAbyXxBKFS664nACyyvBjL+dwpBMp+eX5EfieeXKRILx4QhK+s2uQ7f78WDVl4f/
- ytTTZgvmbhUll7cf0IP4UC/rSt+NNZhwKNi6gzXDOC27QaArQAs4oGyC7nDCk2atZY
- evKFi55c+5uTGxr5Y0I0xvNAJShj4KUBCo+Jx7ihV14hjpxC7yvtAyNAT2R2mjYcz+
- qxs1wAd/Q8FItuxpaR0WDriFRYdu2L6p4WO9sfppodNMaQvqchVezg+EligTZzqKYK
- a4xbXspylUm6WIK6HwBgfMITQ0/I01i6v1n9niZOzn/TozW66RiF+W4KxbJoO9UxYY
- 32MOYjk4XYkKg==
+ (Exim 4.90_1) (envelope-from <andrey.volkov@munic.io>)
+ id 1wSH4j-0001DU-2J
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 12:25:45 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <andrey.volkov@munic.io>)
+ id 1wSH4f-0000vL-D4
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 12:25:44 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-49040362e4aso64062905e9.0
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 09:25:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=munic.io; s=google; t=1779899139; x=1780503939; darn=nongnu.org;
+ h=in-reply-to:from:content-language:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Bhelo/g6Gj9Asn80jJVTHV1RMjn1Iys/Wy8fpC7JP3Y=;
+ b=dzrWfOhfKbaN2wyAklIqc3CEhf5o1qnUr8KqWe75+F8cnKN1vUvYXxeHRF2x1PqdxL
+ 2OEPI+GQ8M3q/2g4GZCzHhNB3g6SyiGMYo3myuOIvus3PnFz7qddPN7MDf0VFbp/KDrm
+ EtiPcJpeo/a+Y4NdbKpf5dlHX3jAqsgpxMpnk8Mo31qhsYfyRtN7XbOSHzZseiRAxBfg
+ NjyC7dRU69ttLC9jLO97bilGS4CpMApMlitzUcjpjS71M56gZgcolDnwxbvxYHoJFYSd
+ Iu4Ig21JPddfK5LYlFD5vHqKpk3V2jRCpw+pApdkqCgQqnuMx7nlZaAZNAsiSCntQpRZ
+ K8ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779899139; x=1780503939;
+ h=in-reply-to:from:content-language:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Bhelo/g6Gj9Asn80jJVTHV1RMjn1Iys/Wy8fpC7JP3Y=;
+ b=gTbV7s19ncd1hfFsAXNZpVgiDT9H94iwr8bgsWkLFrIuHeb5jcqYSn/7pCWx1Wy0eW
+ d6UhpnlGIytr+s49qeEqDn9hchru7mjjC/i6L68KKwmxcSaIW66T7xEYHSctrrOyv6pv
+ IP4E6dfVThwFKY1MFAdlNJYgWuWso3uFBB6qKNp/9yRa6QSkqyB8JcASf2TwNbvJ5gdj
+ pTlUE7EzktiH1Tb3B1d46/MfX3IlvUaK47Z8fxtz9UVtta3neDqFx2OXwfKO8DiYIi+V
+ Cc0zZunq4MiB5g0aBhMWY2B5b52Q/i+v13wHYuxBafRPnXUjT3ZjqMO8eSYpTAMDYbfb
+ 3eJg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8HPC3MbJYcb9YjFymj30ThxovO7LycT1ywfMyQP3CAoffd2g0XdwU74xbzd/CjPeIeu4da5tMmxWuc@nongnu.org
+X-Gm-Message-State: AOJu0YyZ6cxgAHQAnp1tt1Wno9GFM15VZ5/J6rsTpDryPYVa1MQPqnnj
+ NqmauB7fIq7Ybw/fuhRy4f3Gwix82nWnrybQ5WF8JRIJXP589SuKPkQCfKEeydwdEUA=
+X-Gm-Gg: Acq92OFHBi5MNiA0OhhYofAM4gxxCuV+jDH4154KTEbJNuyyJeEHZRsybKkztDyIy+k
+ ELUOp1h1ky4R99qFH09K9E4YAGyL/bGZkZiKrGG3rKBHFQHO3wTmCmoYAsP3cZ5dkgqG9SD71bp
+ MkseOhqemftkaX0VoH8uCvZMJJpnp0Qtb5DLLqqcsZbYtGqKJfjZDEOlNXmvPZfOxHKrUBwm7pm
+ RQBfcTuPaXXNh/rl0NyFEm7lytV9l/VPLHDGO3Nqd204u3AHSiwzZL92Qr0TX8bbD57bgFckMOK
+ UnOAOWEeCYDOp/7dvQYCFoHyaZA3gn8WG/rNWiovUrH4SkpJGgWjf3kOtXxo7dYpb4LMz+U48qM
+ Yi3Y5q6T3BzLgEnbwzfyjZ5bJmofAAIxzC70UowDsL9LU/5fncFi+px9sNVuUhufggiofLS6dWy
+ iEf7QllX4/XlI7XiNlVVTXbEUE1/87Yjm6dlz5SHhblb1SlYS/63mNO6Fzd10yaSKTulgbiYOZR
+ wtQPtq9aoi99z4=
+X-Received: by 2002:a05:600c:c8d:b0:490:6869:46d2 with SMTP id
+ 5b1f17b1804b1-490686947f8mr200321395e9.0.1779899138536; 
+ Wed, 27 May 2026 09:25:38 -0700 (PDT)
+Received: from [10.42.100.36]
+ (static-qvn-qvs-183113.business.bouyguestelecom.com. [89.87.183.113])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45edb5b1a28sm7082898f8f.26.2026.05.27.09.25.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 27 May 2026 09:25:37 -0700 (PDT)
 Content-Type: multipart/alternative;
- boundary="------------Yemmp1GXL3ppSoKb3O6BgkaV"
-Message-ID: <bb86bba6-7971-4168-88a6-ad215bef3d58@volkov.fr>
-Date: Wed, 27 May 2026 18:28:44 +0200
+ boundary="------------wTShK8bmI0h0030tb6qHhyyH"
+Message-ID: <07cc057c-61b3-4744-96fa-1d792989cb4c@munic.io>
+Date: Wed, 27 May 2026 18:25:37 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 0/7] hw/arm/sabrelite: Add FlexCAN support
-Content-Language: en-US
-From: Andrey VOLKOV <andrey@volkov.fr>
 To: Marc Kleine-Budde <mkl@pengutronix.de>, Pavel Pisa <pisa@fel.cvut.cz>
 Cc: Bernhard Beschow <shentey@gmail.com>,
  =?UTF-8?B?TWF0ecOhxaEgQm9iZWs=?= <matyas.bobek@gmail.com>,
@@ -61,17 +89,18 @@ References: <cover.1777571962.git.matyas.bobek@gmail.com>
  <08A7BC6B-7019-45C4-B581-0A26AD3AA554@gmail.com>
  <202605271738.21722.pisa@fel.cvut.cz>
  <20260527-fast-unbiased-flamingo-5c5cbe-mkl@pengutronix.de>
- <07cc057c-61b3-4744-96fa-1d792989cb4c@munic.io>
-In-Reply-To: <07cc057c-61b3-4744-96fa-1d792989cb4c@munic.io>
-Received-SPF: pass client-ip=77.133.0.102; envelope-from=andrey@volkov.fr;
- helo=gate.volkov.fr
-X-Spam_score_int: 1
-X-Spam_score: 0.1
-X-Spam_bar: /
-X-Spam_report: (0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, DYN_RDNS_AND_INLINE_IMAGE=1.168,
- HTML_MESSAGE=0.001, RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
+Content-Language: en-US
+From: Andrei VOLKOV <andrey.volkov@munic.io>
+In-Reply-To: <20260527-fast-unbiased-flamingo-5c5cbe-mkl@pengutronix.de>
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=andrey.volkov@munic.io; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Wed, 27 May 2026 12:58:35 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,176 +118,170 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 This is a multi-part message in MIME format.
---------------Yemmp1GXL3ppSoKb3O6BgkaV
+--------------wTShK8bmI0h0030tb6qHhyyH
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
+Hello Pavel, Marc,
 
-Le 27/05/2026 à 18:25, Andrei VOLKOV a écrit :
->
-> Hello Pavel, Marc,
->
-> As the original author, I have no objection to reusing (my part of) 
-> the header under GPL-2.0-or-later. The reason it was not done that way 
-> in 2005/2006 is simple: only GPLv2 existed at the time.
->
-> All the more so since, as already noted, the code in question is 
-> essentially a direct transcription of offsets and bit-fields from the 
-> Freescale/NXP datasheets, which leaves very little room for a 
-> meaningful copyright claim in the first place.
->
-> Personally, I would prefer that this code not be rewritten and be kept 
-> as is, to avoid introducing subtle bugs in QEMU later on.
-> That said, @Sascha and @David may have a different opinion.
->
-> PS: andrey.volkov@munic.io is my correct current work address, but I 
-> would prefer to use my personal one for this discussion.
->
-This one: andrey@volkov.fr
+As the original author, I have no objection to reusing (my part of) the 
+header under GPL-2.0-or-later. The reason it was not done that way in 
+2005/2006 is simple: only GPLv2 existed at the time.
 
+All the more so since, as already noted, the code in question is 
+essentially a direct transcription of offsets and bit-fields from the 
+Freescale/NXP datasheets, which leaves very little room for a meaningful 
+copyright claim in the first place.
+
+Personally, I would prefer that this code not be rewritten and be kept 
+as is, to avoid introducing subtle bugs in QEMU later on.
+That said, @Sascha and @David may have a different opinion.
+
+PS: andrey.volkov@munic.io is my correct current work address, but I 
+would prefer to use my personal one for this discussion.
+
+Regards,
+Andrey Volkov
+
+Le 27/05/2026 à 18:09, Marc Kleine-Budde a écrit :
+> Hello,
 >
-> Regards,
-> Andrey Volkov
+> On 27.05.2026 17:38:21, Pavel Pisa wrote:
+>> please, provide your opinion, the license for small Linux kernel
+>> headers excepts seems to be the last and only blocker for mainlining.
+>> See the copied code below.
+> not sure how much help I can provide...
 >
-> Le 27/05/2026 à 18:09, Marc Kleine-Budde a écrit :
->> Hello,
->>
->> On 27.05.2026 17:38:21, Pavel Pisa wrote:
->>> please, provide your opinion, the license for small Linux kernel
->>> headers excepts seems to be the last and only blocker for mainlining.
->>> See the copied code below.
->> not sure how much help I can provide...
->>
->>> On Wednesday 27 of May 2026 12:42:23 Bernhard Beschow wrote:
->>>> Am 8. Mai 2026 12:10:21 UTC schrieb Peter Maydell<peter.maydell@linaro.org>:
->>>>> On Tue, 5 May 2026 at 21:21, Bernhard Beschow<shentey@gmail.com> wrote:
->>>>>> Am 5. Mai 2026 18:41:52 UTC schrieb Peter Maydell<peter.maydell@linaro.org>:
->>>>>>> On Tue, 5 May 2026 at 19:03, Bernhard Beschow<shentey@gmail.com> wrote:
->>>>>>>> I guess the only open issue is the licensing of struct FlexcanRegs
->>>>>>>> [1] which originates from Linux? How do we proceed here?
->>>>>>>>
->>>>>>>> Best regards,
->>>>>>>> Bernhard
->>>>>>>>
->>>>>>>> [1]
->>>>>>>> https://lore.kernel.org/qemu-devel/202603211316.18181.pisa@fel.cvut.c
->>>>>>>> z/
->>>>>>> Could you say what the problem is? In general there is no problem
->>>>>>> with taking header structs from the Linux kernel, as they are
->>>>>>> GPL-2-only and that is a QEMU-compatible license. The relevant
->>>>>>> source files or pieces of source files would need to be noted
->>>>>>> as 2-only rather than our default of 2-or-later, but that is
->>>>>>> doable -- we already do that for other things we have borrowed
->>>>>> >from the kernel.
->> This would be IMHO the cleared solution. Put these macros into a
->> separate file with the proper license and copyright headers copied from
->> the kernel driver.
->>
->>>>>> In
->>>>>> https://lore.kernel.org/qemu-devel/f3cb3166-c3f8-4ed8-8c9a-cbf48b071d1e@
->>>>>> gmail.com/ I raised this review question: "The following structure looks
->>>>>> like being based on Linux. Does this affect the copyright of this file?"
->>>>>> I was just asking for advice and I'm glad the solution is that easy.
->>>>> If the struct was copied from the kernel, then it's GPL-2.0-only,
->>>>> and we should just note the license and where we got the code from.
->>>>>
->>>>> If the struct is just very similar to the kernel's one because
->>>>> it's the obvious representation taken from the datasheet, then
->>>>> it's not related to the kernel code and we can treat it as
->>>>> GPL-2.0-or-later like the rest of the file.
->>>>>
->>>>> Since Matyáš says in the cover letter here "the headers (struct
->>>>> FlexcanRegs and flexcan_regs.h macros) were copied from the Linux
->>>>> kernel" then we're in case 1.
->>>>>
->>>>> You can mark this up by having the file's SPDX tag be
->>>>> "SPDX-License-Identifier: (GPL-2.0-only AND GPL-2.0-or-later)"
->>>>> Then have a normal comment in the file next to the part that is
->>>>> 2.0-only that says
->>>>> /*
->>>>> * [This struct / the macros X, Y, Z / whatever ] are borrowed
->>>>> * from the Linux kernel, and so (unlike the rest of this file)
->>>>> * they are GPL-2.0-only.
->>>>> */
->>>> Ping
+>> On Wednesday 27 of May 2026 12:42:23 Bernhard Beschow wrote:
+>>> Am 8. Mai 2026 12:10:21 UTC schrieb Peter Maydell<peter.maydell@linaro.org>:
+>>>> On Tue, 5 May 2026 at 21:21, Bernhard Beschow<shentey@gmail.com> wrote:
+>>>>> Am 5. Mai 2026 18:41:52 UTC schrieb Peter Maydell<peter.maydell@linaro.org>:
+>>>>>> On Tue, 5 May 2026 at 19:03, Bernhard Beschow<shentey@gmail.com> wrote:
+>>>>>>> I guess the only open issue is the licensing of struct FlexcanRegs
+>>>>>>> [1] which originates from Linux? How do we proceed here?
+>>>>>>>
+>>>>>>> Best regards,
+>>>>>>> Bernhard
+>>>>>>>
+>>>>>>> [1]
+>>>>>>> https://lore.kernel.org/qemu-devel/202603211316.18181.pisa@fel.cvut.c
+>>>>>>> z/
+>>>>>> Could you say what the problem is? In general there is no problem
+>>>>>> with taking header structs from the Linux kernel, as they are
+>>>>>> GPL-2-only and that is a QEMU-compatible license. The relevant
+>>>>>> source files or pieces of source files would need to be noted
+>>>>>> as 2-only rather than our default of 2-or-later, but that is
+>>>>>> doable -- we already do that for other things we have borrowed
+>>>>> >from the kernel.
+> This would be IMHO the cleared solution. Put these macros into a
+> separate file with the proper license and copyright headers copied from
+> the kernel driver.
+>
+>>>>> In
+>>>>> https://lore.kernel.org/qemu-devel/f3cb3166-c3f8-4ed8-8c9a-cbf48b071d1e@
+>>>>> gmail.com/ I raised this review question: "The following structure looks
+>>>>> like being based on Linux. Does this affect the copyright of this file?"
+>>>>> I was just asking for advice and I'm glad the solution is that easy.
+>>>> If the struct was copied from the kernel, then it's GPL-2.0-only,
+>>>> and we should just note the license and where we got the code from.
 >>>>
->>>> Any news? With just the license issue remaining, it would be nice to get
->>>> FlexCAN support into the upcoming release.
->>> The problem is that QEMU maintainers decided to prefer GPL-2.0-or-later
->>> as the rule for new contributions and Matyas Bobek has reused
->>> next excepts from Linux kernel sources
+>>>> If the struct is just very similar to the kernel's one because
+>>>> it's the obvious representation taken from the datasheet, then
+>>>> it's not related to the kernel code and we can treat it as
+>>>> GPL-2.0-or-later like the rest of the file.
+>>>>
+>>>> Since Matyáš says in the cover letter here "the headers (struct
+>>>> FlexcanRegs and flexcan_regs.h macros) were copied from the Linux
+>>>> kernel" then we're in case 1.
+>>>>
+>>>> You can mark this up by having the file's SPDX tag be
+>>>> "SPDX-License-Identifier: (GPL-2.0-only AND GPL-2.0-or-later)"
+>>>> Then have a normal comment in the file next to the part that is
+>>>> 2.0-only that says
+>>>> /*
+>>>> * [This struct / the macros X, Y, Z / whatever ] are borrowed
+>>>> * from the Linux kernel, and so (unlike the rest of this file)
+>>>> * they are GPL-2.0-only.
+>>>> */
+>>> Ping
 >>>
->>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/net/can/flexcan/flexcan-core.c
->>>
->>> which have license
->>>
->>> // SPDX-License-Identifier: GPL-2.0
->>> //
->>> // flexcan.c - FLEXCAN CAN controller driver
->>> //
->>> // Copyright (c) 2005-2006 Varma Electronics Oy
->>> // Copyright (c) 2009 Sascha Hauer, Pengutronix
->>> // Copyright (c) 2010-2017 Pengutronix, Marc Kleine-Budde<kernel@pengutronix.de>
->>> // Copyright (c) 2014 David Jander, Protonic Holland
->>> //
->>> // Based on code originally by Andrey Volkov<avolkov@varma-el.com>
->>>
->>>
->>> I think, personally, that the code excepts are on the edge
->>> of the rules for copyright applications because the lines are direct
->>> transformation of the offests and bit-fields found in the original
->>> FreeScale/NXP manuals so there should be no problem to use them for
->>> QEMU and revwite from scratch for copyright clarity with a little
->>> different naming rules would make only more mess for future updates
->>> to FexCAN 3 etc.
->> As you target currently imx6 only, you can re-create them from the imx6
->> data sheet, it already comes with "C" compatible naming scheme, e.g.:
+>>> Any news? With just the license issue remaining, it would be nice to get
+>>> FlexCAN support into the upcoming release.
+>> The problem is that QEMU maintainers decided to prefer GPL-2.0-or-later
+>> as the rule for new contributions and Matyas Bobek has reused
+>> next excepts from Linux kernel sources
 >>
->> | "Rx Mailboxes Global Mask Register (FLEXCAN1_RXMGMASK)"
+>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/net/can/flexcan/flexcan-core.c
 >>
->>> hw/net/can/flexcan_regs.h
->>>
->>> +/**
->>> + * These macros ware originally written for the Linux kernel
->>> + * by Marc Kleine-Budde.
->>> + */
->> This is not 100% correct. I'm the git-author of the initial mainline
->> flexcan commit e955cead0311 ("CAN: Add Flexcan CAN controller driver"),
->> but it already comes with these copyright statements:
+>> which have license
 >>
->> + * Copyright (c) 2005-2006 Varma Electronics Oy
->> + * Copyright (c) 2009 Sascha Hauer, Pengutronix
->> + * Copyright (c) 2010 Marc Kleine-Budde, Pengutronix
->> + *
->> + * Based on code originally by Andrey Volkov<avolkov@varma-el.com>
+>> // SPDX-License-Identifier: GPL-2.0
+>> //
+>> // flexcan.c - FLEXCAN CAN controller driver
+>> //
+>> // Copyright (c) 2005-2006 Varma Electronics Oy
+>> // Copyright (c) 2009 Sascha Hauer, Pengutronix
+>> // Copyright (c) 2010-2017 Pengutronix, Marc Kleine-Budde<kernel@pengutronix.de>
+>> // Copyright (c) 2014 David Jander, Protonic Holland
+>> //
+>> // Based on code originally by Andrey Volkov<avolkov@varma-el.com>
 >>
->> So I cannot re-license even the initial file alone, Sascha is my
->> co-worker.
 >>
->> Hope that helps,
->> Marc
->>
->> --
->> Pengutronix e.K.                 | Marc Kleine-Budde          |
->> Embedded Linux                   |https://www.pengutronix.de |
->> Vertretung Nürnberg              | Phone: +49-5121-206917-129 |
->> Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
-> -- 
+>> I think, personally, that the code excepts are on the edge
+>> of the rules for copyright applications because the lines are direct
+>> transformation of the offests and bit-fields found in the original
+>> FreeScale/NXP manuals so there should be no problem to use them for
+>> QEMU and revwite from scratch for copyright clarity with a little
+>> different naming rules would make only more mess for future updates
+>> to FexCAN 3 etc.
+> As you target currently imx6 only, you can re-create them from the imx6
+> data sheet, it already comes with "C" compatible naming scheme, e.g.:
 >
-> *Andrei VOLKOV — MUNIC CAR DATA
-> *Senior Software Engineer**
+> | "Rx Mailboxes Global Mask Register (FLEXCAN1_RXMGMASK)"
 >
-> https://www.munic.io
+>> hw/net/can/flexcan_regs.h
+>>
+>> +/**
+>> + * These macros ware originally written for the Linux kernel
+>> + * by Marc Kleine-Budde.
+>> + */
+> This is not 100% correct. I'm the git-author of the initial mainline
+> flexcan commit e955cead0311 ("CAN: Add Flexcan CAN controller driver"),
+> but it already comes with these copyright statements:
 >
-> 39 avenue de Paris, 94800 Villejuif — France
+> + * Copyright (c) 2005-2006 Varma Electronics Oy
+> + * Copyright (c) 2009 Sascha Hauer, Pengutronix
+> + * Copyright (c) 2010 Marc Kleine-Budde, Pengutronix
+> + *
+> + * Based on code originally by Andrey Volkov<avolkov@varma-el.com>
 >
-> tel: +33 (0) 1 42 11 93 25
+> So I cannot re-license even the initial file alone, Sascha is my
+> co-worker.
 >
---------------Yemmp1GXL3ppSoKb3O6BgkaV
-Content-Type: multipart/related;
- boundary="------------tfNAxW8w91aEwBFA1YO94tcu"
+> Hope that helps,
+> Marc
+>
+> --
+> Pengutronix e.K.                 | Marc Kleine-Budde          |
+> Embedded Linux                   |https://www.pengutronix.de |
+> Vertretung Nürnberg              | Phone: +49-5121-206917-129 |
+> Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
+-- 
 
---------------tfNAxW8w91aEwBFA1YO94tcu
+*Andrei VOLKOV — MUNIC CAR DATA
+*Senior Software Engineer**
+
+https://www.munic.io
+
+39 avenue de Paris, 94800 Villejuif — France
+
+tel: +33 (0) 1 42 11 93 25
+
+--------------wTShK8bmI0h0030tb6qHhyyH
+Content-Type: multipart/related;
+ boundary="------------03n501iz3uFMlSOE12omd33P"
+
+--------------03n501iz3uFMlSOE12omd33P
 Content-Type: text/html; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
@@ -268,134 +291,106 @@ Content-Transfer-Encoding: 8bit
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   </head>
   <body style="padding-bottom: 1px;">
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">Le 27/05/2026 à 18:25, Andrei VOLKOV a
-      écrit :<br>
+    <p>Hello Pavel, Marc,<br>
+      <br>
+      As the original author, I have no objection to reusing (my part
+      of) the header under GPL-2.0-or-later. The reason it was not done
+      that way in 2005/2006 is simple: only GPLv2 existed at the time.<br>
+      <br>
+      All the more so since, as already noted, the code in question is
+      essentially a direct transcription of offsets and bit-fields from
+      the Freescale/NXP datasheets, which leaves very little room for a
+      meaningful copyright claim in the first place.<br>
+      <br>
+      Personally, I would prefer that this code not be rewritten and be
+      kept as is, to avoid introducing subtle bugs in QEMU later on.<br>
+      That said, @Sascha and @David may have a different opinion.<br>
+      <br>
+      PS: <a class="moz-txt-link-abbreviated" href="mailto:andrey.volkov@munic.io">andrey.volkov@munic.io</a> is my correct current work address, but
+      I would prefer to use my personal one for this discussion.<br>
+      <br>
+      Regards,<br>
+      Andrey Volkov</p>
+    <div class="moz-cite-prefix">Le 27/05/2026 à 18:09, Marc
+      Kleine-Budde a écrit :<br>
     </div>
     <blockquote type="cite"
-      cite="mid:07cc057c-61b3-4744-96fa-1d792989cb4c@munic.io">
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <p>Hello Pavel, Marc,<br>
-        <br>
-        As the original author, I have no objection to reusing (my part
-        of) the header under GPL-2.0-or-later. The reason it was not
-        done that way in 2005/2006 is simple: only GPLv2 existed at the
-        time.<br>
-        <br>
-        All the more so since, as already noted, the code in question is
-        essentially a direct transcription of offsets and bit-fields
-        from the Freescale/NXP datasheets, which leaves very little room
-        for a meaningful copyright claim in the first place.<br>
-        <br>
-        Personally, I would prefer that this code not be rewritten and
-        be kept as is, to avoid introducing subtle bugs in QEMU later
-        on.<br>
-        That said, @Sascha and @David may have a different opinion.<br>
-        <br>
-        PS: <a class="moz-txt-link-abbreviated moz-txt-link-freetext"
-          href="mailto:andrey.volkov@munic.io" moz-do-not-send="true">andrey.volkov@munic.io</a>
-        is my correct current work address, but I would prefer to use my
-        personal one for this discussion.<br>
-      </p>
-    </blockquote>
-    This one: <a class="moz-txt-link-abbreviated" href="mailto:andrey@volkov.fr">andrey@volkov.fr</a><br>
-    <br>
-    <blockquote type="cite"
-      cite="mid:07cc057c-61b3-4744-96fa-1d792989cb4c@munic.io">
-      <p><br>
-        Regards,<br>
-        Andrey Volkov</p>
-      <div class="moz-cite-prefix">Le 27/05/2026 à 18:09, Marc
-        Kleine-Budde a écrit :<br>
-      </div>
-      <blockquote type="cite"
 cite="mid:20260527-fast-unbiased-flamingo-5c5cbe-mkl@pengutronix.de">
-        <pre wrap="" class="moz-quote-pre">Hello,
+      <pre wrap="" class="moz-quote-pre">Hello,
 
 On 27.05.2026 17:38:21, Pavel Pisa wrote:
 </pre>
-        <blockquote type="cite">
-          <pre wrap="" class="moz-quote-pre">please, provide your opinion, the license for small Linux kernel
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">please, provide your opinion, the license for small Linux kernel
 headers excepts seems to be the last and only blocker for mainlining.
 See the copied code below.
 </pre>
-        </blockquote>
-        <pre wrap="" class="moz-quote-pre">not sure how much help I can provide...
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+not sure how much help I can provide...
 
 </pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">On Wednesday 27 of May 2026 12:42:23 Bernhard Beschow wrote:
+</pre>
         <blockquote type="cite">
-          <pre wrap="" class="moz-quote-pre">On Wednesday 27 of May 2026 12:42:23 Bernhard Beschow wrote:
+          <pre wrap="" class="moz-quote-pre">Am 8. Mai 2026 12:10:21 UTC schrieb Peter Maydell <a class="moz-txt-link-rfc2396E" href="mailto:peter.maydell@linaro.org">&lt;peter.maydell@linaro.org&gt;</a>:
 </pre>
           <blockquote type="cite">
-            <pre wrap="" class="moz-quote-pre">Am 8. Mai 2026 12:10:21 UTC schrieb Peter Maydell <a
-            class="moz-txt-link-rfc2396E"
-            href="mailto:peter.maydell@linaro.org"
-            moz-do-not-send="true">&lt;peter.maydell@linaro.org&gt;</a>:
+            <pre wrap="" class="moz-quote-pre">On Tue, 5 May 2026 at 21:21, Bernhard Beschow <a class="moz-txt-link-rfc2396E" href="mailto:shentey@gmail.com">&lt;shentey@gmail.com&gt;</a> wrote:
 </pre>
             <blockquote type="cite">
-              <pre wrap="" class="moz-quote-pre">On Tue, 5 May 2026 at 21:21, Bernhard Beschow <a
-              class="moz-txt-link-rfc2396E"
-              href="mailto:shentey@gmail.com" moz-do-not-send="true">&lt;shentey@gmail.com&gt;</a> wrote:
+              <pre wrap="" class="moz-quote-pre">Am 5. Mai 2026 18:41:52 UTC schrieb Peter Maydell <a class="moz-txt-link-rfc2396E" href="mailto:peter.maydell@linaro.org">&lt;peter.maydell@linaro.org&gt;</a>:
 </pre>
               <blockquote type="cite">
-                <pre wrap="" class="moz-quote-pre">Am 5. Mai 2026 18:41:52 UTC schrieb Peter Maydell <a
-                class="moz-txt-link-rfc2396E"
-                href="mailto:peter.maydell@linaro.org"
-                moz-do-not-send="true">&lt;peter.maydell@linaro.org&gt;</a>:
+                <pre wrap="" class="moz-quote-pre">On Tue, 5 May 2026 at 19:03, Bernhard Beschow <a class="moz-txt-link-rfc2396E" href="mailto:shentey@gmail.com">&lt;shentey@gmail.com&gt;</a> wrote:
 </pre>
                 <blockquote type="cite">
-                  <pre wrap="" class="moz-quote-pre">On Tue, 5 May 2026 at 19:03, Bernhard Beschow <a
-                  class="moz-txt-link-rfc2396E"
-                  href="mailto:shentey@gmail.com" moz-do-not-send="true">&lt;shentey@gmail.com&gt;</a> wrote:
-</pre>
-                  <blockquote type="cite">
-                    <pre wrap="" class="moz-quote-pre">I guess the only open issue is the licensing of struct FlexcanRegs
+                  <pre wrap="" class="moz-quote-pre">I guess the only open issue is the licensing of struct FlexcanRegs
 [1] which originates from Linux? How do we proceed here?
 
 Best regards,
 Bernhard
 
 [1]
-<a class="moz-txt-link-freetext"
-href="https://lore.kernel.org/qemu-devel/202603211316.18181.pisa@fel.cvut.c"
-                    moz-do-not-send="true">https://lore.kernel.org/qemu-devel/202603211316.18181.pisa@fel.cvut.c</a>
+<a class="moz-txt-link-freetext" href="https://lore.kernel.org/qemu-devel/202603211316.18181.pisa@fel.cvut.c">https://lore.kernel.org/qemu-devel/202603211316.18181.pisa@fel.cvut.c</a>
 z/
 </pre>
-                  </blockquote>
-                  <pre wrap="" class="moz-quote-pre">Could you say what the problem is? In general there is no problem
+                </blockquote>
+                <pre wrap="" class="moz-quote-pre">
+Could you say what the problem is? In general there is no problem
 with taking header structs from the Linux kernel, as they are
 GPL-2-only and that is a QEMU-compatible license. The relevant
 source files or pieces of source files would need to be noted
 as 2-only rather than our default of 2-or-later, but that is
 doable -- we already do that for other things we have borrowed
 </pre>
-                </blockquote>
-                <pre wrap="" class="moz-quote-pre">&gt;from the kernel.
-</pre>
               </blockquote>
+              <pre wrap="" class="moz-quote-pre">&gt;from the kernel.
+</pre>
             </blockquote>
           </blockquote>
         </blockquote>
-        <pre wrap="" class="moz-quote-pre">This would be IMHO the cleared solution. Put these macros into a
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+This would be IMHO the cleared solution. Put these macros into a
 separate file with the proper license and copyright headers copied from
 the kernel driver.
 
 </pre>
+      <blockquote type="cite">
         <blockquote type="cite">
           <blockquote type="cite">
             <blockquote type="cite">
-              <blockquote type="cite">
-                <pre wrap="" class="moz-quote-pre">In
-<a class="moz-txt-link-freetext"
-href="https://lore.kernel.org/qemu-devel/f3cb3166-c3f8-4ed8-8c9a-cbf48b071d1e@"
-                moz-do-not-send="true">https://lore.kernel.org/qemu-devel/f3cb3166-c3f8-4ed8-8c9a-cbf48b071d1e@</a>
+              <pre wrap="" class="moz-quote-pre">In
+<a class="moz-txt-link-freetext" href="https://lore.kernel.org/qemu-devel/f3cb3166-c3f8-4ed8-8c9a-cbf48b071d1e@">https://lore.kernel.org/qemu-devel/f3cb3166-c3f8-4ed8-8c9a-cbf48b071d1e@</a>
 gmail.com/ I raised this review question: "The following structure looks
 like being based on Linux. Does this affect the copyright of this file?"
 I was just asking for advice and I'm glad the solution is that easy.
 </pre>
-              </blockquote>
-              <pre wrap="" class="moz-quote-pre">If the struct was copied from the kernel, then it's GPL-2.0-only,
+            </blockquote>
+            <pre wrap="" class="moz-quote-pre">
+If the struct was copied from the kernel, then it's GPL-2.0-only,
 and we should just note the license and where we got the code from.
 
 If the struct is just very similar to the kernel's one because
@@ -417,20 +412,20 @@ Then have a normal comment in the file next to the part that is
 * they are GPL-2.0-only.
 */
 </pre>
-            </blockquote>
-            <pre wrap="" class="moz-quote-pre">Ping
+          </blockquote>
+          <pre wrap="" class="moz-quote-pre">
+Ping
 
 Any news? With just the license issue remaining, it would be nice to get
 FlexCAN support into the upcoming release.
 </pre>
-          </blockquote>
-          <pre wrap="" class="moz-quote-pre">The problem is that QEMU maintainers decided to prefer GPL-2.0-or-later
+        </blockquote>
+        <pre wrap="" class="moz-quote-pre">
+The problem is that QEMU maintainers decided to prefer GPL-2.0-or-later
 as the rule for new contributions and Matyas Bobek has reused
 next excepts from Linux kernel sources
 
-<a class="moz-txt-link-freetext"
-href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/net/can/flexcan/flexcan-core.c"
-          moz-do-not-send="true">https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/net/can/flexcan/flexcan-core.c</a>
+<a class="moz-txt-link-freetext" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/net/can/flexcan/flexcan-core.c">https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/net/can/flexcan/flexcan-core.c</a>
 
 which have license
 
@@ -440,14 +435,10 @@ which have license
 //
 // Copyright (c) 2005-2006 Varma Electronics Oy
 // Copyright (c) 2009 Sascha Hauer, Pengutronix
-// Copyright (c) 2010-2017 Pengutronix, Marc Kleine-Budde <a
-          class="moz-txt-link-rfc2396E"
-          href="mailto:kernel@pengutronix.de" moz-do-not-send="true">&lt;kernel@pengutronix.de&gt;</a>
+// Copyright (c) 2010-2017 Pengutronix, Marc Kleine-Budde <a class="moz-txt-link-rfc2396E" href="mailto:kernel@pengutronix.de">&lt;kernel@pengutronix.de&gt;</a>
 // Copyright (c) 2014 David Jander, Protonic Holland
 //
-// Based on code originally by Andrey Volkov <a
-          class="moz-txt-link-rfc2396E"
-          href="mailto:avolkov@varma-el.com" moz-do-not-send="true">&lt;avolkov@varma-el.com&gt;</a>
+// Based on code originally by Andrey Volkov <a class="moz-txt-link-rfc2396E" href="mailto:avolkov@varma-el.com">&lt;avolkov@varma-el.com&gt;</a>
 
 
 I think, personally, that the code excepts are on the edge
@@ -458,23 +449,25 @@ QEMU and revwite from scratch for copyright clarity with a little
 different naming rules would make only more mess for future updates
 to FexCAN 3 etc.
 </pre>
-        </blockquote>
-        <pre wrap="" class="moz-quote-pre">As you target currently imx6 only, you can re-create them from the imx6
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+As you target currently imx6 only, you can re-create them from the imx6
 data sheet, it already comes with "C" compatible naming scheme, e.g.:
 
 | "Rx Mailboxes Global Mask Register (FLEXCAN1_RXMGMASK)"
 
 </pre>
-        <blockquote type="cite">
-          <pre wrap="" class="moz-quote-pre">hw/net/can/flexcan_regs.h
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">hw/net/can/flexcan_regs.h
 
 +/**
 + * These macros ware originally written for the Linux kernel
 + * by Marc Kleine-Budde.
 + */
 </pre>
-        </blockquote>
-        <pre wrap="" class="moz-quote-pre">This is not 100% correct. I'm the git-author of the initial mainline
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+This is not 100% correct. I'm the git-author of the initial mainline
 flexcan commit e955cead0311 ("CAN: Add Flexcan CAN controller driver"),
 but it already comes with these copyright statements:
 
@@ -482,9 +475,7 @@ but it already comes with these copyright statements:
 + * Copyright (c) 2009 Sascha Hauer, Pengutronix
 + * Copyright (c) 2010 Marc Kleine-Budde, Pengutronix
 + *
-+ * Based on code originally by Andrey Volkov <a
-        class="moz-txt-link-rfc2396E" href="mailto:avolkov@varma-el.com"
-        moz-do-not-send="true">&lt;avolkov@varma-el.com&gt;</a>
++ * Based on code originally by Andrey Volkov <a class="moz-txt-link-rfc2396E" href="mailto:avolkov@varma-el.com">&lt;avolkov@varma-el.com&gt;</a>
 
 So I cannot re-license even the initial file alone, Sascha is my
 co-worker.
@@ -494,48 +485,44 @@ Marc
 
 --
 Pengutronix e.K.                 | Marc Kleine-Budde          |
-Embedded Linux                   | <a class="moz-txt-link-freetext"
-        href="https://www.pengutronix.de" moz-do-not-send="true">https://www.pengutronix.de</a> |
+Embedded Linux                   | <a class="moz-txt-link-freetext" href="https://www.pengutronix.de">https://www.pengutronix.de</a> |
 Vertretung Nürnberg              | Phone: +49-5121-206917-129 |
 Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
 </pre>
-      </blockquote>
-      <div class="moz-signature">-- <br>
-        <meta http-equiv="content-type"
-          content="text/html; charset=UTF-8">
-        <style type="text/css">p{margin-bottom:.25cm;line-height:115%;background:transparent}a:link{color:#000080;text-decoration:underline}</style>
-        <p lang="en-US" style="margin-bottom:0;line-height:100%"><font
-            color="#1e497d"><font face="Verdana, sans-serif"><font
-                size="2" style="font-size:10pt"><b>Andrei VOLKOV — <font
-                    size="2" style="font-size:9pt">MUNIC </font><font
-                    size="1" style="font-size:7pt">CAR DATA</font><br>
-                </b><span style="font-weight:normal">Senior Software
-                  Engineer</span><b> </b></font></font></font></p>
-        <p style="line-height:100%;margin-bottom:0"><font
-            color="#1e497d"><font face="Verdana"><font size="2"
-                style="font-size:9pt"><span lang="en-US"><a
-                    href="https://www.munic.io/" target="_blank"
-                    class="moz-txt-link-freetext" moz-do-not-send="true">https://www.munic.io</a></span></font></font></font></p>
-        <p lang="en-US" style="margin-bottom:0;line-height:100%"><font
-            color="#1e497d"><font face="Verdana"><font size="1"
-                style="font-size:7pt">39 avenue de Paris, 94800
-                Villejuif — France</font></font></font></p>
-        <p lang="en-US" style="margin-bottom:0;line-height:100%"><font
-            color="#1e497d"><font face="Verdana"><font size="2"
-                style="font-size:9pt">tel: <font color="#1255cc">+33
-                  (0) 1 42 11 93 25</font></font></font></font></p>
-        <p style="line-height:100%;margin-bottom:0"><img
-            src="cid:part1.Sfu03IIQ.Fj97bhby@volkov.fr" name="Image1"
-            align="bottom" width="174" height="69" border="0" class=""></p>
-      </div>
-      <lt-container></lt-container>
     </blockquote>
+    <div class="moz-signature">-- <br>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style type="text/css">@page{size:21cm 29.7cm;margin-left:2cm;margin-right:1cm;margin-top:1cm;margin-bottom:1cm}p{margin-bottom:.25cm;line-height:115%;background:transparent}a:link{color:#000080;text-decoration:underline}</style>
+      <p lang="en-US" style="margin-bottom:0;line-height:100%"><font
+          color="#1e497d"><font face="Verdana, sans-serif"><font
+              size="2" style="font-size:10pt"><b>Andrei VOLKOV — <font
+                  size="2" style="font-size:9pt">MUNIC </font><font
+                  size="1" style="font-size:7pt">CAR DATA</font><br>
+              </b><span style="font-weight:normal">Senior Software
+                Engineer</span><b> </b></font></font></font></p>
+      <p style="line-height:100%;margin-bottom:0"><font color="#1e497d"><font
+            face="Verdana"><font size="2" style="font-size:9pt"><span
+                lang="en-US"><a href="https://www.munic.io/"
+                  target="_blank" class="moz-txt-link-freetext">https://www.munic.io</a></span></font></font></font></p>
+      <p lang="en-US" style="margin-bottom:0;line-height:100%"><font
+          color="#1e497d"><font face="Verdana"><font size="1"
+              style="font-size:7pt">39 avenue de Paris, 94800 Villejuif
+              — France</font></font></font></p>
+      <p lang="en-US" style="margin-bottom:0;line-height:100%"><font
+          color="#1e497d"><font face="Verdana"><font size="2"
+              style="font-size:9pt">tel: <font color="#1255cc">+33 (0)
+                1 42 11 93 25</font></font></font></font></p>
+      <p style="line-height:100%;margin-bottom:0"><img
+          src="cid:part1.RMpphHl4.E05mU3g1@munic.io" name="Image1"
+          align="bottom" width="174" height="69" border="0"></p>
+    </div>
   </body>
+  <lt-container></lt-container>
 </html>
---------------tfNAxW8w91aEwBFA1YO94tcu
+--------------03n501iz3uFMlSOE12omd33P
 Content-Type: image/png; name="Image1"
 Content-Disposition: inline; filename="Image1"
-Content-Id: <part1.Sfu03IIQ.Fj97bhby@volkov.fr>
+Content-Id: <part1.RMpphHl4.E05mU3g1@munic.io>
 Content-Transfer-Encoding: base64
 
 iVBORw0KGgoAAAANSUhEUgAAAWQAAABuCAYAAAAQ92nyAAAAAXNSR0IArs4c6QAAAIRlWElm
@@ -718,7 +705,7 @@ htactAnEBQ9XcQSWpCUH60JJXD+0NhQGGUicEGmd48ckRFkPcMnAH5CplHoHrQ8g2d5xuOMk
 TkSMFb2gWwlDvM9xxKvd3XsfL3SsW2vDDDOjAaOBSauB/wfN2Inr7xQ8twAAAABJRU5ErkJg
 gg==
 
---------------tfNAxW8w91aEwBFA1YO94tcu--
+--------------03n501iz3uFMlSOE12omd33P--
 
---------------Yemmp1GXL3ppSoKb3O6BgkaV--
+--------------wTShK8bmI0h0030tb6qHhyyH--
 
