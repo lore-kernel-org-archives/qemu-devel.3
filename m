@@ -4,76 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6854CD5BC9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:54:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2FC9CD5BC9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 11:07:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSBtr-0002Jo-MT; Wed, 27 May 2026 06:54:11 -0400
+	id 1wSC5f-0004Uq-Lo; Wed, 27 May 2026 07:06:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wSBtm-0002JW-DI
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:54:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wSC5c-0004Ua-Tn; Wed, 27 May 2026 07:06:21 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wSBtj-000391-Va
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:54:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779879242;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IpBkGNPbCCITitsLclmtV3ZXE7qV/scPCH4S2ZWrQV8=;
- b=YVlN11EtIHWq6sKjM2Uf+0VCFCzc2YGVgBW88H85YTVG/vnWHb759tzB6FGSIyacVaKQBz
- JtFuTd5GUCwIUHs4/34IFpc7yZNlvLZJnN0N0dsym1dWG1bjaFz6PYpfBQ2inGZ+A3QVPd
- K5UUMvsTS3PPSZGret8yvt8KgurPn4I=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-682-l1-sRvOYNRenq0plmkGxYw-1; Wed,
- 27 May 2026 06:53:57 -0400
-X-MC-Unique: l1-sRvOYNRenq0plmkGxYw-1
-X-Mimecast-MFC-AGG-ID: l1-sRvOYNRenq0plmkGxYw_1779879236
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8DFDC1956088; Wed, 27 May 2026 10:53:56 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.48.98])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 75A991687; Wed, 27 May 2026 10:53:54 +0000 (UTC)
-Date: Wed, 27 May 2026 12:53:52 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Warner Losh <imp@bsdimp.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-devel@nongnu.org, stefanha@redhat.com
-Subject: Re: on ai generated and code provenance
-Message-ID: <ahbNQJlv736Ajlkz@redhat.com>
-References: <20260524083329-mutt-send-email-mst@kernel.org>
- <ahXbxzB4C_lr6b0N@redhat.com>
- <20260526140231-mutt-send-email-mst@kernel.org>
- <ahXtqyuIa4XqkMHb@redhat.com>
- <20260526152526-mutt-send-email-mst@kernel.org>
- <CANCZdfonroZmdRRpPdHzTKR_m8qyVdSG14gXB-K3BTuv=Qgw9g@mail.gmail.com>
- <ahauQKLOU1tzDtbb@redhat.com>
- <f8791a2d-257b-4233-aafb-ccd45e695542@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wSC5Z-0001Tv-T5; Wed, 27 May 2026 07:06:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1779879961; bh=8xdqxDSHwsQ8MpYFsmEAbDVMmDAx1vWXh9Y1nZyDtMY=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=YQ9pu/cvFmnO20cisrArCySB5ljS2q2oH8K4eAQQOSU3B6XFhPAaUpF8u1psZ635l
+ NfY2saCM2pPmBQgitVYgGXqM4D66Ghf5Fwwa/0EPsdlcUGvwxZ8+ltoKEw4tDQiZCW
+ 17iJEzhMNKviyNjIW/SAH+HB+n4Q/Bk7oX2NllMG2vqdB18bwApoEwIx49/kX66mYL
+ +RRb9K89bUOQEN8vDDryWVyYP3v7RxUF2UPhcsrur4dEiIRGmf0safBaJAZ9YtnSh8
+ JT+3guXT9MSodLY7tTFlsX/bPcQkEkqqOic4q0nz3IOjUEy3O6AzzrrFsCb8kIWnAu
+ jWRV6XmhAEIjw==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id D5DB41B1AD2;
+ Wed, 27 May 2026 14:06:01 +0300 (MSK)
+Message-ID: <d5cad829-a61c-45fe-85b7-0a310cb882cd@tls.msk.ru>
+Date: Wed, 27 May 2026 14:06:06 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f8791a2d-257b-4233-aafb-ccd45e695542@redhat.com>
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] linux-user/mips64: fix elf_core_copy_regs register
+ layout in core files
+To: Matt Turner <mattst88@gmail.com>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-stable@nongnu.org
+References: <20260521184119.1631958-1-mattst88@gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260521184119.1631958-1-mattst88@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,173 +113,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 27.05.2026 um 12:01 hat Paolo Bonzini geschrieben:
-> On 5/27/26 10:41, Kevin Wolf wrote:
-> > Am 26.05.2026 um 21:52 hat Warner Losh geschrieben:
-> > > The QEMU Project currently may accept limited uses of AI that produce
-> > > high quality patches that are limited in the creative content added.
-> > > While maintainers will ultimately decide, changes like the following
-> > > fall within this policy
-> > > 1. Fixing obvious warnings in the obvious ways suggested by the tool
-> > > 2. Tree wide API changes, and other similar mechanical changes done
-> > >     today with perl/python/sed/coccinelle
-> > 
-> > As I said in the paragraph you quoted below, I don't think we should
-> > encourage using AI for tasks that a deterministic tool could do.
+On 21.05.2026 21:41, Matt Turner wrote:
+> mips64/elfload.c uses #include "../mips/elfload.c" to share code. When
+> the compiler processes mips/elfload.c the quoted #include "target_elf.h"
+> resolves relative to the including file's directory, so it picks up
+> mips/target_elf.h instead of mips64/target_elf.h.  mips/target_elf.h
+> pulls in mips/target_ptrace.h, whose target_pt_regs has a pad0[6] field
+> before regs[].  As a result elf_core_copy_regs writes:
 > 
-> In some cases such a tool does not exist.
+>    r->pt.regs[i]   -> reserved[6+i]   (shifted by 6 from the correct index)
+>    r->pt.cp0_epc   -> reserved[40]    (correct mips64 N64 index is 34)
+> 
+> The Linux kernel and glibc both use the mips64 N64 layout (no pad0): EPC
+> at reserved[34].  Debuggers and libunwind reading the core with N64
+> constants therefore see a completely wrong register set — EPC points to
+> GP, RA holds the branch target instead of the link address, etc.
+> 
+> Fix by:
+>   - Guarding the mips32 elf_core_copy_regs in mips/elfload.c with #ifndef
+>     TARGET_MIPS64 so it is not compiled for mips64/mipsn32 targets.
+>   - Providing a mips64-specific elf_core_copy_regs in mips64/elfload.c
+>     that writes directly to r->reserved[i] with the correct N64 indices,
+>     bypassing the struct field names that are tainted by the wrong header
+>     include.
+> 
+> The mipsn32 (TARGET_ABI_MIPSN32) and mips64el targets are covered by the
+> same mips64/elfload.c and benefit from the same fix.
 
-Then it's not a task that a deterministic tool could do.
+This code was different before the linux/elfload.c split into targets -
+before the split, all this was in single linux/elfload.c file.  While
+this patch should not be needed before the split (eg. for stable-10.0
+branch), the following patch is apparently needed still.
 
-Of course, you can always write a new tool that does the exact thing you
-want to change. But that's not what I was talking about here, I was
-really talking about existing common tools.
+Can you verify please, and maybe provide a similar fix for 10.0.x too -
+provided it's actually needed there?
 
-> Much to my surprise, there is no tool to do static type inference on
-> Python code, but AI is very good at doing it.
+Thanks,
 
-I think this is a special case that has a different balance anyway. When
-reviewing such a patch, I would skim the change for the general approach
-and if I like it, but checking for consistency and completeness is
-something I would use mypy for - that is, a deterministic tool that can
-verify the change. So I'd still use one, just at a different time.
+/mjt
 
-(It actually also might be a rare instance where someone (TM) should
-actually write the tool because it would be generally useful.)
-
-> > Letting AI perform the change directly instead may be an acceptable
-> > shortcut for a one-man hobby project that nobody else will ever look at,
-> > but in the context of a community project like QEMU in which your
-> > changes have to be reviewed and understood by others, it matters a lot
-> > that the output of the tool is reproducible. Otherwise, you're creating
-> > unnecessary work for others, and that isn't acceptable.
+> Signed-off-by: Matt Turner <mattst88@gmail.com>
+> Cc: qemu-stable@nongnu.org
+> ---
+> v2: Use tswap32/tswap64 instead of tswapl
 > 
-> When applicable, going through coccinelle (with the aid of AI if needed! is
-> indeed a good middle ground as it helps reviewers for large changes. If you
-> have many slightly different but easily separated changes (e.g. you can
-> split the patch by struct field), it may make things worse.
+>   linux-user/mips/elfload.c   |  2 ++
+>   linux-user/mips64/elfload.c | 29 +++++++++++++++++++++++++++++
+>   2 files changed, 31 insertions(+)
 > 
-> Its also worth noting that in other cases even sed or coccinelle, while
-> deterministic, cannot produce 100% of the patch.
-
-Agreed, it's all a case of "if possible, prefer this", not "you have to
-do this 100% of the time".
-
-> > So maybe we should even explicitly mention a recommendation like the
-> > following:
-> > 
-> >      If you can use a deterministic tool, don't use AI instead. If you
-> >      don't know how to use the deterministic tool, use the AI to tell you
-> >      how to use it instead of trying to replace it.
-> 
-> I like it.
-> 
-> > > 3. Limited, small changes to fix bugs or add a small new feature whose
-> > >     scope is less than about 100 lines and the originator can explain
-> > >     them all or the meta issues about the patch.
-> > 
-> > Not sure if mentioning a number of lines is wise. 100 lines can be
-> > mostly boilerplate and simple sequential code or they can be a deeply
-> > nested complex algorithm.
-> 
-> I'd put the threshold at 20-50 at most.
-> 
-> > I think I would see more use in a tag like (better name welcome):
-> > 
-> >     AI-used-for: [code|tests|docs|commit message]...
-> 
-> I like this *a lot*.  No need for free advertisement, but some traceability
-> is useful.
-> 
-> For tools such as sed or coccinelle, having the exact script in the patch or
-> commit message useful.  Plus, the execution of the script more or lesss
-> delimits the commit by itself (or 90%+ of it).  For LLMs it's a bit less
-> clear cut because separating docs makes little sense.  And the exact model
-> is pointless, it will be obsolete in 6 months and provide no useful
-> information.
-> 
-> So, something like:
-> 
-> ------------------- 8< -------------------
-> Use of AI-generated content
-> ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> 
-> The QEMU project currently allows using AI/LLM tools to produce patches in
-> scenarios with limited creative content:
-> 
-> Mechanical changes
->   If you can use a deterministic tool or a script, don't use AI instead.
->   If you don't know how to do the change deterministically, you may
->   ask the AI for help, rather than having it stand in for the tools.
-> 
-> Small bug fixes
->   These should be limited to 20 lines of code or less, not including
->   tests.  You are still expected to understand and explain your changes
->   and the rationale behind them.
-
-I agree with "not including tests". But I think this would be more
-consistent if we also add new tests (that come without a small bug fix
-at the same time; either because the problem is already fixed or because
-the fix is too complex to qualify) as another allowed category.
-
-(To be honest, I'm a bit biased here because allowing tests is my single
-biggest wish from an AI policy update.)
-
-> These boundaries do not apply to other uses of AI, such as researching
-> APIs or algorithms, static analysis, or debugging, provided their output
-> is not included in contributions.  Larger uses of AI are allowed as an
-> experiment, but they should be agreed upon with the maintainer prior to
-> submission.
-> 
-> Use of AI does not remove the need for authors to comply with all other
-> requirements for contribution.  In particular, the "Signed-off-by"
-> label in a patch submission is a statement that the author takes
-> responsibility for the entire contents of the patch, certifying that
-> their patch submission is made in accordance with the rules of the
-> `Developer's Certificate of Origin (DCO) <dco>`.
-> 
-> Commit messages for AI-assisted changes
-> ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> 
-> When AI/LLM tools produce or substantively shape your patch, add an
-> ``AI-used-for:`` trailer.  The text of the trailer could be one or more of
-> ``code``, ``tests``, ``docs``, ``research``, possibly followed by an
-> explanation in parentheses::
-
-Include a category for commit messages, or are we expecting that commit
-messages are always written by a human? If so, that should be explicit.
-
->     AI-used-for: tests, docs
->     AI-used-for: code
->     AI-used-for: code (refactoring)
->     AI-used-for: code (prototype)
->     AI-used-for: research
-> 
-> The trailer is intended as a clarification of your DCO obligations as well
-> as to guide reviewers.  It is not intended for minimal presence such as
-> autocomplete or asking for a pre-review of the patch, and it does not remove
-> your responsibility to understand the changes that you are submitting.
-> 
-> Include the prompt in the commit message if it helps a reviewer judge the
-> result:
-> 
-> * yes: "move field ``foo`` from ``struct aa`` to ``struct bb``.  If a
-> function already has a local variable or parameter of type ``struct bb``,
-> use it instead of accessing ``aa.bb``."
-> 
-> * yes: "add an implementation of the trait for ``Mutex<T: MyTrait>``,
-> forwarding the member functions to ``T`` while taking the lock around the
-> calls".
-> 
-> * no: "write user-facing documentation for the new tool"
-> 
-> * no: "write testcases for the new functions"
-> 
-> Deterministic tooling (sed, coccinelle, formatters) is out of scope for the
-> trailer, but should be mentioned in the commit message.
-
-Apart from the above comments, this looks good to me.
-
-Kevin
+> diff --git ./linux-user/mips/elfload.c ./linux-user/mips/elfload.c
+> index cc5bbf05ab..1a46e180cf 100644
+> --- ./linux-user/mips/elfload.c
+> +++ ./linux-user/mips/elfload.c
+> @@ -131,6 +131,7 @@ const char *get_elf_base_platform(CPUState *cs)
+>   #undef MATCH_PLATFORM_INSN
+>   
+>   /* See linux kernel: arch/mips/kernel/process.c:elf_dump_regs.  */
+> +#ifndef TARGET_MIPS64
+>   void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
+>   {
+>       for (int i = 1; i < ARRAY_SIZE(env->active_tc.gpr); i++) {
+> @@ -146,3 +147,4 @@ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
+>       r->pt.cp0_status = tswapl(env->CP0_Status);
+>       r->pt.cp0_cause = tswapl(env->CP0_Cause);
+>   }
+> +#endif
+> diff --git ./linux-user/mips64/elfload.c ./linux-user/mips64/elfload.c
+> index b719555e65..9081ae8111 100644
+> --- ./linux-user/mips64/elfload.c
+> +++ ./linux-user/mips64/elfload.c
+> @@ -1 +1,30 @@
+>   #include "../mips/elfload.c"
+> +
+> +/*
+> + * mips/elfload.c defines elf_core_copy_regs guarded by #ifndef TARGET_MIPS64.
+> + *
+> + * We must provide the mips64 version here.  We cannot use r->pt.regs[] because
+> + * when mips/elfload.c is #include'd above its "#include "target_elf.h"" resolves
+> + * to mips/target_elf.h (compiler searches the including file's directory first),
+> + * which pulls in mips/target_ptrace.h.  That struct has pad0[6] before regs[],
+> + * so r->pt.regs[i] writes to reserved[6+i] — offset by 6 from what the kernel
+> + * and glibc expect for the N64 ABI (EPC at reserved[34], not reserved[40]).
+> + *
+> + * Write directly to reserved[] using the mips64 N64 index layout:
+> + *   R0-R31 at reserved[0..31], LO at [32], HI at [33], EPC at [34].
+> + */
+> +void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
+> +{
+> +    /* R0 is always 0; r->reserved is zero-initialised by the caller */
+> +    for (int i = 1; i < 32; i++) {
+> +        r->reserved[i] = tswap64(env->active_tc.gpr[i]);
+> +    }
+> +    r->reserved[26] = 0;   /* k0 */
+> +    r->reserved[27] = 0;   /* k1 */
+> +    r->reserved[32] = tswap64(env->active_tc.LO[0]);
+> +    r->reserved[33] = tswap64(env->active_tc.HI[0]);
+> +    r->reserved[34] = tswap64(env->active_tc.PC);
+> +    r->reserved[35] = tswap64(env->CP0_BadVAddr);
+> +    r->reserved[36] = tswap64(env->CP0_Status);
+> +    r->reserved[37] = tswap64(env->CP0_Cause);
+> +}
 
 
