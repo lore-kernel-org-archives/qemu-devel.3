@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0528CD5BD0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 15:07:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E3F9CD5BD5
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 15:07:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSFq3-0001VD-Av; Wed, 27 May 2026 11:06:32 -0400
+	id 1wSFq3-0001V0-Ak; Wed, 27 May 2026 11:06:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wSFq1-0001UF-Ar; Wed, 27 May 2026 11:06:29 -0400
+ id 1wSFq1-0001U6-2p; Wed, 27 May 2026 11:06:29 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wSFpx-0003dR-OX; Wed, 27 May 2026 11:06:29 -0400
+ id 1wSFpx-0003dh-Od; Wed, 27 May 2026 11:06:28 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64RF5nBl078744
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64RF5nBi078744
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
  Thu, 28 May 2026 00:06:08 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=Dk9esH+Fk8rSH8ovg2aY7QTovyrHdSXzbZzrE1JpDmc=; 
+DKIM-Signature: a=rsa-sha256; bh=X0SPhmE0Xjpslj3iCmCvjK2ymSjQtmkUR5qYU1FCc1w=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1779894369; v=1;
- b=AXLaPuuo0kkDpmbonUcVDJztesV6GYeYIq93WRMHyGXYdXeFBZk82UynU1caXpxv
- 1g7PFwFpgRCU00Bo8fbM9aKNxrJEWcaPLjOUZ1YzcAoq8wLn/oeJfF7bLOkmiw4Y
- k43ETfgOwYmm6/SozT2x0rMoWUbmFhJ+KSRy/RwunHpbJsQxayYjdPY8z6a6qbH3
- pTubvrTzis/hZa/vni8PdIs/AiPzNPYHsd1yuGnYfDTqd989rBWVju9XqHpV/eqE
- n1IGdsopCJcnOIVJ5wcf4OYCkIZQNg0TBYeOu8NtsVvqriYAYp8axZwsHIPFu89Z
- F8qsqvtuSosRBhsusF2/nw==
+ s=rs20250326; t=1779894368; v=1;
+ b=YwGeIZpx7WJOiEzhzCmp+WLQgkjMt4iAQVdtcm8rISphUijhdEEkJVMqzxXK6M2V
+ niDvp2d8/XT7bLgsOQ/5EE3jOIKv4H2S6To61RAfMsYljYPZ+cmBQeB1MIz0qFI+
+ 0U1CbkL83jareBnwjTSvtxzaS4/JVoWbqcvcWvxbDJPTy2qApxELGEBPHnVM3hOe
+ DUNhTT8y3n8TVuXg5Q5dFy/rX5jRWFUOQu0hgyF4FcaiV/gqAWRtui78++fFsPoU
+ yJA00hW7wLQ6qQV/oZEybEhAuzB5IOhJfEgj1Q/A4ZmgtutApxfzKs4SkDbHwsRT
+ qAN16AgV3XWKhnl0UDWE+A==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 28 May 2026 00:05:44 +0900
-Subject: [PATCH v7 4/5] hw/arm/virt: Relax the lower bound of HighMem MMIO
- region size
+Date: Thu, 28 May 2026 00:05:41 +0900
+Subject: [PATCH v7 1/5] test/acpi: aarch64/virt: Test version 11.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260528-virt-v7-4-42c4d18620b8@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260528-virt-v7-1-42c4d18620b8@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260528-virt-v7-0-42c4d18620b8@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260528-virt-v7-0-42c4d18620b8@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -51,15 +50,16 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
 X-Mailer: b4 0.16-dev-16047
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4988;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2100;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=IDqNDuoTnTZhnDAFjYZMWy3jwXqBtU4Lg6QQ0mAdB7A=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ5Y4R9w1d0F595ezzF5PVb1uJ2KR7+fJosWbnnoovvGAm
- ODXphcdpSwMYlwMsmKKLClFu7k1oms/FSbEt8DMYWUCGcLAxSkAEzm8mpHhLsemY9f0nvHeWVEY
- /Fal/9fGPdpdZ0y35vf6930rqthZwPDf/WRWycN8/2WHElL6MrkC95V9jHTdUO+ScSi0+EnyjEh
- mAA==
+ bh=SEb0vlNxL6dzhkzJ1YzRxn1j5mKStS1Z9+siY2A2vQM=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ5Y4R8ypzrsiZ5nu+1z6tk59jkDfesOlhnGSM+fItnaFf
+ TKYraTSUcrCIMbFICumyJJStJtbI7r2U2FCfAvMHFYmkCEMXJwCMBGrk4wMkyr0/x/lT5aqCtz1
+ QuC6U4vB5Uilu1Jr4lds7Zs7qfTZRkaGp+xMHPc470vHtc0uLp35RWHRtU8yx+5+Umo3n1r8Lli
+ ECQA=
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -85,126 +85,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Relax the lower bound of the HighMem MMIO region size to make it more
-likely that the region fits in the PA space.
+A future commit changes the memory map for the latest version of the
+machine. Test that the memory map of the previous version is preserved.
 
-The lower bound was especially problematic on Apple M2. The current
-lower bound, 512 GiB, is too big to fit in the limited PA space on the
-hardware. That makes the HighMem MMIO region unavailable and limits the
-PCIe MMIO space to the base MMIO region. The base MMIO region is not big
-enough to contain a large hostmem window configured for virtio-gpu-gl-pci
-with DRM native context, for example.
-
-Relax the lower bound to 64 KiB, matching the memory map comment that
-says "devices should generally be placed at multiples of 0x10000, to
-accommodate guests using 64K pages." Also, automatically lower the
-default HighMem MMIO region size to fit in the PA space for the latest
-machine version; the older machine versions retain the previous default
-HighMem MMIO region size for compatibility.
-
+Suggested-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 ---
- docs/system/arm/virt.rst |  2 +-
- include/hw/arm/virt.h    |  1 +
- hw/arm/virt.c            | 22 ++++++++++++++--------
- 3 files changed, 16 insertions(+), 9 deletions(-)
+ tests/qtest/bios-tables-test.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
-index f811e662d68d..c8284ce2fa0e 100644
---- a/docs/system/arm/virt.rst
-+++ b/docs/system/arm/virt.rst
-@@ -149,7 +149,7 @@ highmem-mmio
- 
- highmem-mmio-size
-   Set the high memory region size for PCI MMIO. Must be a power of 2 and
--  greater than or equal to the default size (512G).
-+  greater than or equal to 64 KiB.
- 
- gic-version
-   Specify the version of the Generic Interrupt Controller (GIC) to provide.
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index 6c8ba8f3185b..7aa289d3936f 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -143,6 +143,7 @@ typedef enum VirtGICType {
- struct VirtMachineClass {
-     MachineClass parent;
-     hwaddr min_highmem_base;
-+    hwaddr high_pcie_mmio_size;
-     bool no_tcg_its;
-     bool no_highmem_compact;
-     bool no_kvm_steal_time;
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 78a85a966ad7..dd97b0dd6a42 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -222,8 +222,7 @@ static const MemMapEntry base_memmap[] = {
- };
- 
- /* Update the docs for highmem-mmio-size when changing this default */
--#define DEFAULT_HIGH_PCIE_MMIO_SIZE_GB 512
--#define DEFAULT_HIGH_PCIE_MMIO_SIZE (DEFAULT_HIGH_PCIE_MMIO_SIZE_GB * GiB)
-+#define MAX_DEFAULT_HIGH_PCIE_MMIO_SIZE (512 * GiB)
- 
- /*
-  * Highmem IO Regions: This memory map is floating, located after the RAM.
-@@ -249,7 +248,7 @@ static MemMapEntry extended_memmap[] = {
-     [VIRT_CXL_HOST] =           { 0x0, 64 * KiB * 16 }, /* 16 UID */
-     [VIRT_HIGH_PCIE_ECAM] =     { 0x0, 256 * MiB },
-     /* Second PCIe window */
--    [VIRT_HIGH_PCIE_MMIO] =     { 0x0, DEFAULT_HIGH_PCIE_MMIO_SIZE },
-+    [VIRT_HIGH_PCIE_MMIO] =     { 0x0, 0 },
-     /* Any CXL Fixed memory windows come here */
- };
- 
-@@ -2448,9 +2447,14 @@ static void virt_set_high_memmap(VirtMachineState *vms,
- 
-     for (i = VIRT_LOWMEMMAP_LAST; i < ARRAY_SIZE(extended_memmap); i++) {
-         region_enabled = virt_get_high_memmap_enabled(vms, i);
--        region_base = ROUND_UP(base, extended_memmap[i].size);
-         region_size = extended_memmap[i].size;
- 
-+        if (i == VIRT_HIGH_PCIE_MMIO && !region_size) {
-+            region_size = CLAMP(pow2floor(BIT_ULL(pa_bits) - base),
-+                                64 * KiB, MAX_DEFAULT_HIGH_PCIE_MMIO_SIZE);
-+        }
-+
-+        region_base = ROUND_UP(base, region_size);
-         vms->memmap[i].base = region_base;
-         vms->memmap[i].size = region_size;
- 
-@@ -3340,11 +3344,9 @@ static void virt_set_highmem_mmio_size(Object *obj, Visitor *v,
-         return;
-     }
- 
--    if (size < DEFAULT_HIGH_PCIE_MMIO_SIZE) {
--        char *sz = size_to_str(DEFAULT_HIGH_PCIE_MMIO_SIZE);
-+    if (size < 64 * KiB) {
-         error_setg(errp, "highmem-mmio-size cannot be set to a lower value "
--                         "than the default (%s)", sz);
--        g_free(sz);
-+                         "than 64 KiB");
-         return;
-     }
- 
-@@ -4271,6 +4273,8 @@ static void virt_instance_init(Object *obj)
-     VirtMachineState *vms = VIRT_MACHINE(obj);
-     VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
- 
-+    extended_memmap[VIRT_HIGH_PCIE_MMIO].size = vmc->high_pcie_mmio_size;
-+
-     /* EL3 is disabled by default on virt: this makes us consistent
-      * between KVM and TCG for this board, and it also allows us to
-      * boot UEFI blobs which assume no TrustZone support.
-@@ -4372,6 +4376,8 @@ static void virt_machine_11_0_options(MachineClass *mc)
-      * < 255GiB we keep the legacy memory map.
-      */
-     vmc->min_highmem_base = base_memmap[VIRT_MEM].base + LEGACY_RAMLIMIT_BYTES;
-+
-+    vmc->high_pcie_mmio_size = MAX_DEFAULT_HIGH_PCIE_MMIO_SIZE;
+diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+index 510751799e48..00e62699197a 100644
+--- a/tests/qtest/bios-tables-test.c
++++ b/tests/qtest/bios-tables-test.c
+@@ -2214,6 +2214,28 @@ static void test_acpi_aarch64_virt_tcg(void)
+     free_test_data(&data);
  }
- DEFINE_VIRT_MACHINE(11, 0)
  
++static void test_acpi_aarch64_virt_tcg_11_0(void)
++{
++    test_data data = {
++        .machine = "virt",
++        .machine_param = "-11.0",
++        .arch = "aarch64",
++        .variant = ".11.0",
++        .tcg_only = true,
++        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
++        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
++        .ram_start = 0x40000000ULL,
++        .scan_len = 128ULL * MiB,
++    };
++
++    data.smbios_cpu_max_speed = 2900;
++    data.smbios_cpu_curr_speed = 2700;
++    test_acpi_one("-cpu cortex-a57 -machine ras=on "
++                  "-smbios type=4,max-speed=2900,current-speed=2700", &data);
++    free_test_data(&data);
++}
++
+ static void test_acpi_aarch64_virt_tcg_topology(void)
+ {
+     test_data data = {
+@@ -2851,6 +2873,8 @@ int main(int argc, char *argv[])
+     } else if (strcmp(arch, "aarch64") == 0) {
+         if (has_tcg && qtest_has_device("virtio-blk-pci")) {
+             qtest_add_func("acpi/virt", test_acpi_aarch64_virt_tcg);
++            qtest_add_func("acpi/virt/11.0",
++                           test_acpi_aarch64_virt_tcg_11_0);
+             qtest_add_func("acpi/virt/acpihmatvirt",
+                            test_acpi_aarch64_virt_tcg_acpi_hmat);
+             qtest_add_func("acpi/virt/topology",
 
 -- 
 2.54.0
