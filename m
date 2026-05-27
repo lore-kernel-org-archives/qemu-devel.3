@@ -4,95 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADE32CD5BC9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:43:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD18CCD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:44:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSBiv-0007bv-0l; Wed, 27 May 2026 06:42:53 -0400
+	id 1wSBjw-0007mi-Sp; Wed, 27 May 2026 06:43:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wSBit-0007bc-9T
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:42:51 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wSBjr-0007jh-UW
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:43:52 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wSBir-0005Jq-KH
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:42:51 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4903997fcb5so60733655e9.2
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:42:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wSBjg-0005gU-Gw
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:43:44 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4896c22fcbaso98843895e9.0
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:43:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779878568; x=1780483368; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1779878618; x=1780483418; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wBZPSB/Yj/ayi0IgH3V5as1qAK4wfKZ+qn+MumQvJyk=;
- b=RkW1cBHZR+BNTwNL7ooK3K7/8IxrCmeUsARwK/DEyvm1p4ZApOc8iNkfzz1AmcCOoB
- CIP8rKAPy9j7XKnxbXNTItMX9z8IKkuXP4Pm8AfDpc3epjvvmGACyBMJSUB+lKL7gWCa
- f+M0aIrBlbGo3/lyR2DEgKWcosfw5951Qev0B5qodJsz+UcNgLC5aebQ2l8hD+gnfYn2
- Pdm3FnG8Z/TtavwUSaO3cYSMS0IvmApNqRZseTMiSfMUtj1i3zw41/kGLmpsOxe8pXlz
- I+/gdUgg2+9/oNkKkjNKcsl4ThCSdVA+jjEDHZ0u8CsVDFuwrTCkypUcEyXk/X8KBkao
- Idvg==
+ bh=FoN7XqTOPy9x0TS1tqLwqrv0ll8w3xbiqy6e58MeGLk=;
+ b=gxt7UGjNhPibLhF3GyCSBJ9jHYxX48EehjjBAEIPW5TTyn/l6f40zO0GVO/nNzA15c
+ 8V9Ly2THktP7hv6FeDQ/kCx3r2t0GHNvFaROHrlCYfPolljgy3hrbcyVQQO8CQw2+NjP
+ bTKdPobpfyXpNyUMuXN9LRchLvyVLbh9bB3LGF7zo++G8P6RZCxbB8rX6ZjjzPF/WCFb
+ gkhAL9ULDEh594beVhpKX5irjDWoREvHenTK8/Q5vXw+ZStsYkP3Do0qtVeJzMAWMIWA
+ Wjvl2y71/3LYaQ7w11cGKsJn2IUQ3xuFXLdUcVuRXI5FtGXenJMqj1LF4nhLP4XRkrZO
+ Dziw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779878568; x=1780483368;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=wBZPSB/Yj/ayi0IgH3V5as1qAK4wfKZ+qn+MumQvJyk=;
- b=nvqFU4SQGqdvIBziLuZNa1H5Kn58gkVNdBD2r2VeygSkhSJn61E4VoNQVDtbuuoHAC
- TjYbYoxKY6tp34zZh+/WX5IHFqocBzu70aNGug3bSG0+XhFs03gWpEVixtDJf6H2p0aM
- NgdYFTsZOYK7KX1mx9c4pg0LU9rbXWgOHCc6jjAZSz054hDfU8nxKQ2ZLJpUk9/HH3ou
- F4MtnirLmUeXY34cIxlP1zfuUJzv1Kr+34c2b/T8QqE4+CL8Z21WGRaZ7UWB20ymiChi
- 9tFJiQGPBmiONlhvjjI2ycy+SRaTQbuQRs11a1x0KoIu8t6yWIAsf4YxtPTi+F2Buxpr
- 43BQ==
-X-Gm-Message-State: AOJu0Yw3D/Ks8tqXxTeDcXZTg6gUq8llnpZQCOTYUyuaRtl3EgLkt5Hv
- 5oZHBaWu2Lxg8ViErUZF5JrdrJfNwzclr6Ialjw3cdqInMrR6c3JnSDz
-X-Gm-Gg: Acq92OFe0oV80hCJi9jOeweKjOmlBiZuZyUxQtF6+iK0njfD2Kb5LMyImUQ4UJpdpW5
- hQkKyjRGWO8xlnOU0V10FGr1qcHTzzrVj7nh4FsaYNKqdMhmv5uPAfQSR8uupqgTbs814jZxGcK
- Gt8aZXixANziVaSzg14640PpxAVchLdb2tM6WB+8qu0J0vq2BTu1fdBocIY5NBa0qIG14PRMdW5
- zOfGfBGZNAlZg7SU38ZblMaNuAYUJoPhFuBB+jj4Qqz17Eof4JHlGgGKV9/KJ11MnLHM++KwqUf
- IxvoKi5thDHKxdaOzbgNiVaSdAK+jSQxwiOhyNfJuOUbirWKyw9jvjSvopokTdea3FxQOAz38Y6
- zhgxQoLWgi2FNxvEixeEecxD0JphVb+FpccF/hiXo85VSSq5vfKXoIX88B4LNbOcvHclWbVZ0BQ
- 4GTMsAzsdnOYyni4BAUP9gWIGMLN0Z
-X-Received: by 2002:a05:600d:6447:10b0:48f:d5b8:5b07 with SMTP id
- 5b1f17b1804b1-490426c5b1emr271376255e9.20.1779878567601; 
- Wed, 27 May 2026 03:42:47 -0700 (PDT)
-Received: from ehlo.thunderbird.net ([62.214.191.67])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4907e627b1csm23452065e9.0.2026.05.27.03.42.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 May 2026 03:42:47 -0700 (PDT)
-Date: Wed, 27 May 2026 10:42:23 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: =?UTF-8?Q?Maty=C3=A1=C5=A1_Bobek?= <matyas.bobek@gmail.com>,
- Pavel Pisa <pisa@fel.cvut.cz>, Matyas Bobek <bobekmat@fel.cvut.cz>
-CC: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Marc Kleine-Budde <mkl@pengutronix.de>,
- Oliver Hartkopp <socketcan@hartkopp.net>,
- Nikita Ostrenkov <n.ostrenkov@gmail.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v3 0/7] hw/arm/sabrelite: Add FlexCAN support
-In-Reply-To: <CAFEAcA95RcGhhN8ZqVeOgRyhRqSar23EnJhCjVgKBwoqXBJwjw@mail.gmail.com>
-References: <cover.1777571962.git.matyas.bobek@gmail.com>
- <1B6ED5DC-6808-4A41-B8FA-B2C97C5C8933@gmail.com>
- <CAFEAcA9kQNdx=gwSd_Ec=R2nwegT1R-BEiC9yXvfr23VJHDZiA@mail.gmail.com>
- <936E6AF6-32BA-4236-B8A2-0A8E8748D9C1@gmail.com>
- <CAFEAcA95RcGhhN8ZqVeOgRyhRqSar23EnJhCjVgKBwoqXBJwjw@mail.gmail.com>
-Message-ID: <08A7BC6B-7019-45C4-B581-0A26AD3AA554@gmail.com>
+ d=1e100.net; s=20251104; t=1779878618; x=1780483418;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=FoN7XqTOPy9x0TS1tqLwqrv0ll8w3xbiqy6e58MeGLk=;
+ b=YfrjJ8YJ5cm6Qv5lfidCuou/vrmIb+Nf02mPkU7Umav0uB0ONW4O/b/TJH824NvAda
+ JDmPwFgMPBeHQUdTwgdAp1YGX4OQSmqM0+QaSXzwtmPR7oyvLnoBUQuk6qqH83I9vg0I
+ KYuziQwWq+uKjmuQW5I597niD+pxqb9sVHynfa2AwuOob+/cJ8Iq/YvfaCkVaux1PXUt
+ gD7DsWR5vBrGk197rA2iJQTv3Qj7PrMbsUB3/rHXuC/A1YbdcpMDstCiqd9f0r5m6QmH
+ IylKVHKmFr5qGB4/3M3ccSuh0Q2IYoGADPZTcXobaIAD+BJhvgpW4cuqJ+rYvsxguzof
+ 7aPA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9zXuieWi5hC/uU4wmq93K81NJSbIKIJsnaksbOkY8Dw6cZor/Ens0xJ9RbSdb4Ohaxn2gz+PwGJ+k4@nongnu.org
+X-Gm-Message-State: AOJu0YxgUmATBeohHNz7E7wqVhp1mAl9TYJ7TXR+gQprFF9uCEeWECgE
+ Cj6EYOfjhmS9q5GyYFmONl9DHa1K3svZitb3AxTTq3E4TvUQPjj7CBYaKRwFzCQSFcpdHhH2neT
+ 7Ezqv
+X-Gm-Gg: Acq92OH4NCQ8xxSursXxQ/gPMfvv7tXvX/HB430LIXhEUNG5jNtGuJ1z285SW7hLl/b
+ L6GOmvX7Xvga9p8bD51fgAN3ljzh77SrRoRLbTJaCxJx26H/typiIQsuNMp2gPAW/XS+AOUB4Xo
+ sF4PiDDetYQtRY2nocm5BAUJRH14s7X3lI1r+YTNCuCUhi9jvxZgDnG/ZHFjHLxrYDn6eNnnX3G
+ wzz0WMUSGrWKzuvxq6GlHGFq/yIyA6lCFinSPHFqACZhpgn5vipQRD4M3ZAFhsveDZTfi7oFMJG
+ JwsAAHyELAIz7hc79I+CPRdwq4pBEFJRXS2I+lqV3FLsnthLaPyIh4kKresHq6en0o9budEJPXt
+ 9DqQgNgvrCn10/Oq29JuWQmrALTsqMJY4Bjz4gU8KW4UvNZHcmkR57wD1N2h3J8W8GDbiuf4UXw
+ AP2RrbBmUFOXGjdBFe1lU8NKk=
+X-Received: by 2002:a05:600c:4fcd:b0:490:81cb:d67 with SMTP id
+ 5b1f17b1804b1-49081cb0d90mr37781705e9.32.1779878617560; 
+ Wed, 27 May 2026 03:43:37 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4907e69dc39sm15733735e9.4.2026.05.27.03.43.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 27 May 2026 03:43:36 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id C80625F7F0;
+ Wed, 27 May 2026 11:43:35 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>,  Warner Losh <imp@bsdimp.com>,  "Michael
+ S. Tsirkin" <mst@redhat.com>,  qemu-devel@nongnu.org,  stefanha@redhat.com
+Subject: Re: on ai generated and code provenance
+In-Reply-To: <f8791a2d-257b-4233-aafb-ccd45e695542@redhat.com> (Paolo
+ Bonzini's message of "Wed, 27 May 2026 12:01:10 +0200")
+References: <20260524083329-mutt-send-email-mst@kernel.org>
+ <ahXbxzB4C_lr6b0N@redhat.com>
+ <20260526140231-mutt-send-email-mst@kernel.org>
+ <ahXtqyuIa4XqkMHb@redhat.com>
+ <20260526152526-mutt-send-email-mst@kernel.org>
+ <CANCZdfonroZmdRRpPdHzTKR_m8qyVdSG14gXB-K3BTuv=Qgw9g@mail.gmail.com>
+ <ahauQKLOU1tzDtbb@redhat.com>
+ <f8791a2d-257b-4233-aafb-ccd45e695542@redhat.com>
+User-Agent: mu4e 1.14.1; emacs 30.1
+Date: Wed, 27 May 2026 11:43:35 +0100
+Message-ID: <87se7dxhd4.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,67 +114,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
+> On 5/27/26 10:41, Kevin Wolf wrote:
+>> Am 26.05.2026 um 21:52 hat Warner Losh geschrieben:
+>>> The QEMU Project currently may accept limited uses of AI that produce
+>>> high quality patches that are limited in the creative content added.
+>>> While maintainers will ultimately decide, changes like the following
+>>> fall within this policy
+>>> 1. Fixing obvious warnings in the obvious ways suggested by the tool
+>>> 2. Tree wide API changes, and other similar mechanical changes done
+>>>     today with perl/python/sed/coccinelle
+>> As I said in the paragraph you quoted below, I don't think we should
+>> encourage using AI for tasks that a deterministic tool could do.
+>
+> In some cases such a tool does not exist.  Much to my surprise, there
+> is no tool to do static type inference on Python code, but AI is very
+> good at doing it.
+>
+>> Letting AI perform the change directly instead may be an acceptable
+>> shortcut for a one-man hobby project that nobody else will ever look at,
+>> but in the context of a community project like QEMU in which your
+>> changes have to be reviewed and understood by others, it matters a lot
+>> that the output of the tool is reproducible. Otherwise, you're creating
+>> unnecessary work for others, and that isn't acceptable.
+>
+> When applicable, going through coccinelle (with the aid of AI if
+> needed! is indeed a good middle ground as it helps reviewers for large
+> changes. If you have many slightly different but easily separated
+> changes (e.g. you can split the patch by struct field), it may make
+> things worse.
+>
+> Its also worth noting that in other cases even sed or coccinelle,
+> while deterministic, cannot produce 100% of the patch.
+>
+>> So maybe we should even explicitly mention a recommendation like the
+>> following:
+>>      If you can use a deterministic tool, don't use AI instead. If
+>> you
+>>      don't know how to use the deterministic tool, use the AI to tell you
+>>      how to use it instead of trying to replace it.
+>
+> I like it.
+>
+>>> 3. Limited, small changes to fix bugs or add a small new feature whose
+>>>     scope is less than about 100 lines and the originator can explain
+>>>     them all or the meta issues about the patch.
+>> Not sure if mentioning a number of lines is wise. 100 lines can be
+>> mostly boilerplate and simple sequential code or they can be a deeply
+>> nested complex algorithm.
+>
+> I'd put the threshold at 20-50 at most.
+>
+>> I think I would see more use in a tag like (better name welcome):
+>>     AI-used-for: [code|tests|docs|commit message]...
+>
+> I like this *a lot*.  No need for free advertisement, but some
+> traceability is useful.
+>
+> For tools such as sed or coccinelle, having the exact script in the
+> patch or commit message useful.  Plus, the execution of the script
+> more or lesss delimits the commit by itself (or 90%+ of it).  For LLMs
+> it's a bit less clear cut because separating docs makes little sense.
+> And the exact model is pointless, it will be obsolete in 6 months and
+> provide no useful information.
+>
+> So, something like:
+>
+> ------------------- 8< -------------------
+> Use of AI-generated content
+> ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>
+> The QEMU project currently allows using AI/LLM tools to produce
+> patches in scenarios with limited creative content:
+>
+> Mechanical changes
+>   If you can use a deterministic tool or a script, don't use AI instead.
+>   If you don't know how to do the change deterministically, you may
+>   ask the AI for help, rather than having it stand in for the tools.
 
-Am 8=2E Mai 2026 12:10:21 UTC schrieb Peter Maydell <peter=2Emaydell@linar=
-o=2Eorg>:
->On Tue, 5 May 2026 at 21:21, Bernhard Beschow <shentey@gmail=2Ecom> wrote=
-:
->> Am 5=2E Mai 2026 18:41:52 UTC schrieb Peter Maydell <peter=2Emaydell@li=
-naro=2Eorg>:
->> >On Tue, 5 May 2026 at 19:03, Bernhard Beschow <shentey@gmail=2Ecom> wr=
-ote:
->> >> I guess the only open issue is the licensing of struct FlexcanRegs [=
-1] which originates from Linux? How do we proceed here?
->> >>
->> >> Best regards,
->> >> Bernhard
->> >>
->> >> [1] https://lore=2Ekernel=2Eorg/qemu-devel/202603211316=2E18181=2Epi=
-sa@fel=2Ecvut=2Ecz/
->> >
->> >Could you say what the problem is? In general there is no problem
->> >with taking header structs from the Linux kernel, as they are
->> >GPL-2-only and that is a QEMU-compatible license=2E The relevant
->> >source files or pieces of source files would need to be noted
->> >as 2-only rather than our default of 2-or-later, but that is
->> >doable -- we already do that for other things we have borrowed
->> >from the kernel=2E
->>
->> In https://lore=2Ekernel=2Eorg/qemu-devel/f3cb3166-c3f8-4ed8-8c9a-cbf48=
-b071d1e@gmail=2Ecom/ I raised this review question: "The following structur=
-e looks like being based on Linux=2E Does this affect the copyright of this=
- file?" I was just asking for advice and I'm glad the solution is that easy=
-=2E
->
->If the struct was copied from the kernel, then it's GPL-2=2E0-only,
->and we should just note the license and where we got the code from=2E
->
->If the struct is just very similar to the kernel's one because
->it's the obvious representation taken from the datasheet, then
->it's not related to the kernel code and we can treat it as
->GPL-2=2E0-or-later like the rest of the file=2E
->
->Since Maty=C3=A1=C5=A1 says in the cover letter here "the headers (struct
->FlexcanRegs and flexcan_regs=2Eh macros) were copied from the Linux
->kernel" then we're in case 1=2E
->
->You can mark this up by having the file's SPDX tag be
->"SPDX-License-Identifier: (GPL-2=2E0-only AND GPL-2=2E0-or-later)"
->Then have a normal comment in the file next to the part that is
->2=2E0-only that says
->/*
-> * [This struct / the macros X, Y, Z / whatever ] are borrowed
-> * from the Linux kernel, and so (unlike the rest of this file)
-> * they are GPL-2=2E0-only=2E
-> */
+I like the idea of pointing people towards tools but I wouldn't be quite
+so prescriptive. The series MST referred to was easily eyeball-able and
+I suspect the extra steps would generate friction for contributions.
+That said the wider the change to the code base the more likely a random
+hallucination can get lost in the noise.
 
-Ping
+Maybe:
 
-Any news? With just the license issue remaining, it would be nice to get F=
-lexCAN support into the upcoming release=2E
+  Mechanical changes
+    Using AI tools to make simple mechanical changes is allowed. For larger
+    tree-wide changes it is strongly recommended to use a deterministic
+    tool like `sed` or `coccinelle`. You can use AI to help you craft the
+    invocation for you.
 
+?
+
+> Small bug fixes
+>   These should be limited to 20 lines of code or less, not including
+>   tests.  You are still expected to understand and explain your changes
+>   and the rationale behind them.
 >
->thanks
->-- PMM
+> These boundaries do not apply to other uses of AI, such as researching
+> APIs or algorithms, static analysis, or debugging, provided their output
+> is not included in contributions.  Larger uses of AI are allowed as an
+> experiment, but they should be agreed upon with the maintainer prior
+> to submission.
+>
+> Use of AI does not remove the need for authors to comply with all other
+> requirements for contribution.  In particular, the "Signed-off-by"
+> label in a patch submission is a statement that the author takes
+> responsibility for the entire contents of the patch, certifying that
+> their patch submission is made in accordance with the rules of the
+> `Developer's Certificate of Origin (DCO) <dco>`.
+>
+> Commit messages for AI-assisted changes
+> ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>
+> When AI/LLM tools produce or substantively shape your patch, add an
+> ``AI-used-for:`` trailer.  The text of the trailer could be one or
+> more of ``code``, ``tests``, ``docs``, ``research``, possibly followed
+> by an explanation in parentheses::
+>
+>     AI-used-for: tests, docs
+>     AI-used-for: code
+>     AI-used-for: code (refactoring)
+>     AI-used-for: code (prototype)
+>     AI-used-for: research
+>
+> The trailer is intended as a clarification of your DCO obligations as
+> well as to guide reviewers.  It is not intended for minimal presence
+> such as autocomplete or asking for a pre-review of the patch, and it
+> does not remove your responsibility to understand the changes that you
+> are submitting.
+>
+> Include the prompt in the commit message if it helps a reviewer judge
+> the result:
+>
+> * yes: "move field ``foo`` from ``struct aa`` to ``struct bb``.  If a
+>   function already has a local variable or parameter of type ``struct
+>   bb``, use it instead of accessing ``aa.bb``."
+>
+> * yes: "add an implementation of the trait for ``Mutex<T: MyTrait>``,
+>   forwarding the member functions to ``T`` while taking the lock
+>   around the calls".
+>
+> * no: "write user-facing documentation for the new tool"
+>
+> * no: "write testcases for the new functions"
+>
+> Deterministic tooling (sed, coccinelle, formatters) is out of scope
+> for the trailer, but should be mentioned in the commit message.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
