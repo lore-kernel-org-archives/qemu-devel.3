@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3052CD4F54
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2A60CD5BD0
 	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 20:15:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSKeI-0006Fw-Cb; Wed, 27 May 2026 16:14:43 -0400
+	id 1wSKdw-00065t-H2; Wed, 27 May 2026 16:14:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSKeB-0006FK-Ml
- for qemu-devel@nongnu.org; Wed, 27 May 2026 16:14:37 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSKds-00065P-Rh
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 16:14:17 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSKeA-0005Dm-73
- for qemu-devel@nongnu.org; Wed, 27 May 2026 16:14:35 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-49041fb8c23so45884075e9.0
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 13:14:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSKdr-000577-9P
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 16:14:16 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-48fde648a71so80271075e9.0
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 13:14:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779912873; x=1780517673; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779912854; x=1780517654; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qhljTQ/lMvAqMZBeTUmtazgm5zjo86lQdzWtUmmZ4BA=;
- b=YgHtjtJCq2kDMsRk51WLDDb/OsJzziwLFPTYvdFIpCoCedTMHCztTvIpDCp0jEYT2I
- jl8+3YkgZ+/qBkXkdpLMc8kOT8bMzWmltv/z6qOIwObrCO5QNP3xfgQU+Q5PJg051gyC
- v4I9EP7GP4iKRoJDn9+nvWQyWX71++vJn1EYo1sTqx6tge24gXioFSXPFe5HSxc/gaAD
- nbilE7lQk/6JgHh1VjJ56EYWdzfhH9zmHLo/RHCLApQ+wXxwBsV9/VY8lEagz3g8+hgT
- Z0+pvuNHubQQfiZb80909wPDQjq6y0x2pwO6ZE67LZSl45rAidjOCs3R6k8K6NT94Yy/
- pp2Q==
+ bh=fcS3pGu767DyDfpU/yLApw18aqoV6ysV4gLdhBJ6clc=;
+ b=vHBQ0aZEiJvZkgi2YtrA9uih9g8Ou7mfZPVwe6gxYyx2cHKtrkkuqwsJE9POlEqpYf
+ YNFj+hqfRMrZP2o7y2VitUXu6Fx/FEYTrHdE3/4H2dRmslpZs7/CzGtKobWjCy9KKcG9
+ M6acgmup1/ZO/wJ3pCTxvIGoysbkWnaIfPXEvGeVTv+UdsjHCn/cGmHkkIeVnQ49bVsI
+ qVM/KqPvfX8LDhiZCffLDQLOhDS7uL0iPlvZwqNhaP58MfVrCu15635+vn3sgfkirCIP
+ 73Y7nII0bJn4Jl/L8M1H9bP1szqYGl0rop3Tlg03nhFhdv0iU/Vu5fWkq140C2r+jZ2k
+ DzYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779912873; x=1780517673;
+ d=1e100.net; s=20251104; t=1779912854; x=1780517654;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=qhljTQ/lMvAqMZBeTUmtazgm5zjo86lQdzWtUmmZ4BA=;
- b=FEPrpGCtMO7pINne/+TPo5+2mHNTT9LqMBg+cBw3z+wANi0wWH40J4i0jXD1oCk+1/
- kO2iirzVq/hy3RPcNKB7XdHwbf0jhdTVW8VXTYH5o4dNuZOgVCs2b8p/DIC0Lly7Hj/S
- i+Uk4PLdultWovKB/DNed64noZWKeAhNFoCZkaMD9pNznzlUmuVT1DUCCgzswcMY4Cas
- bWXrplU/4fZ+tJTsxNssPYlvrnV5+VwMSKQp181iuoFtg6ZarZIrrxRI/F+eiBTdo78O
- unh5lQsXdprEbfksuMfTLp7eONink96x84nqH4SC+7V4YojkngRavD5I2qrs41SfOqKz
- c7wg==
-X-Gm-Message-State: AOJu0YzgEsncI6PsS9DQchpI514+ykLGDfKR5KB9ig1uvnhbAlQhwhLT
- da9Wr5MNk0KITK4VCzu0FlLcvgNa9Z1IYpEbzs7Jy7nTispnmCSVDUBxTBfBujVz5WLUbbDFYxo
- KZKokXVmZzQ==
-X-Gm-Gg: Acq92OHHgQS098rO4091htZBQyz3hqkPjZ97cAq6yWR5d9gU2nZe3g1tmglPd/uy/cG
- V8gqcS6ptX940s09GKXpWkkG3Ou+8n4xtfAREbp6bZ3BhvJ9uxXzWSfoTvNhmj22HkhA4KM8ECm
- HDlQU6L+jc+qa7/V4c8RdXy1Tb38iPWl3DF8Z0/0hDpUcy/FrxDl2vf8WeAJ0kbsU0QMHtHu5r4
- UEqcH6j9XQu2qXFx8mk6+KsoDCRDuUxmnmUFkJMEJwjzC07hUHGqVZpCfp+0nb98akh5GLsFMo7
- v8sYVS+8/zFhbwr4gYIC+eIYaBb5y5PgzHGCJUQF8Iy98JT0V8KmJ3bG0nTVt1DAYbY2K5B6iqf
- N9DIw740YzjlY1uGNGO1uUd/fEdCodUvv6PE5yKXNC3dw2qKxoexpKF31sBBXDmUfcRNlWgebO9
- SKyrFYN73SoaT10Hw2ElcI6lktyQAYEY/JIBIh6PxBtAyYGZoZOZYlG+Vf7hk9pUbMJA==
-X-Received: by 2002:a05:600c:8599:b0:48a:525b:e148 with SMTP id
- 5b1f17b1804b1-490424ac7ccmr302211295e9.4.1779912872781; 
- Wed, 27 May 2026 13:14:32 -0700 (PDT)
+ bh=fcS3pGu767DyDfpU/yLApw18aqoV6ysV4gLdhBJ6clc=;
+ b=tV01RyEXvSvvMGbwvUln7qQjFM3EG20Lxv48+rksUvylz6igeHLbfcq+Hr0GbqlFRa
+ WYTh03yBcSSvqhbHptnRNpO1/Yx70WLZMN7cDRpoI2SVAe+lkxmU/cDVv6pct6YaCkUw
+ RNjFWzBc55+rwNjVolJMGGfKpv0g6/HECGLz+R2jzh7M3ac5HKU1IuKTX6sFjWqMtenE
+ iaBlkfCIO6uV8Ftk1uH8fJdnvFqwyA6dl5NNuD6/ezkfHHp/UwJuDSq6KLba6tH6/d4j
+ 2+A63DLtbNotaHW5vKT52BEggxjydo1VtXIBqY4TKJI4a3wYg1AEDy5C+/SMaUvEfjXr
+ G2gA==
+X-Gm-Message-State: AOJu0YyCLZZAqJUE0qVD2db9voBzw9S/+GtI/PrmW4inDXVrADxQCvX0
+ qOjSPWiDxWoPQNnMRvPn3Xt0mBdI07mzF8rxbl8IZypC6BLLxTitQ4v0hSTF5kzlrScg1PHB75Z
+ PYtmNWTh1dA==
+X-Gm-Gg: Acq92OHZ0FP1LtcqGyRrG1XoXvEPUTe/Ja4dWFtt5rlFiILmw3I/yyAfi+gr5r8Lk9B
+ r1FGRWXALIO/r8QqzEmNsS7GyK1l2ZRgE9Hu5DM0qUoiy28tU8RVSg3K7fzaoYUagYot4b0fevx
+ iPSXcv5oqEnzFNkz/RJHpSYoz4VIkZFlKa5c9dOaVpM4OjfNhdKTa+Tkg3t9rZ6Z208B6JcpFCI
+ ZjzyvM2IeFD0a/PXuVx/MXJj8QqoPEsCoL8KKU2HyqRtu1G674/we6mOwlJDkVP3MRUZjSGn0aY
+ k3I21mGJFQ7agt9aaXuc5W1TN+Ndegk174MTazgu6igKnCcU8/HJj6j94fHGfPXHNeikCyg1Ljr
+ hsJre/MwMt6ySYZJLgvqgr9sSthasW2eivJaX0P3FB437BKQ0oZDTbIeYbpn4QFb+LDHQ20/VcP
+ CbUF0xGa0iGZBQzTbcrE9EDObFuUcyFanlmZXvqTb5Hde34nqqFXdu860QMOvstg040Q==
+X-Received: by 2002:a05:600c:1c0b:b0:48a:53cb:8604 with SMTP id
+ 5b1f17b1804b1-490426a495amr384507365e9.14.1779912853653; 
+ Wed, 27 May 2026 13:14:13 -0700 (PDT)
 Received: from m17.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ee5a84e92sm88842f8f.35.2026.05.27.13.14.31
+ 5b1f17b1804b1-4904561a33dsm385306125e9.11.2026.05.27.13.14.12
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 27 May 2026 13:14:32 -0700 (PDT)
+ Wed, 27 May 2026 13:14:12 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -75,18 +75,18 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Christoph Muellner <christoph.muellner@vrull.eu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v11 05/12] target/riscv: Remove target_ulong use in
- get_physical_address()
-Date: Wed, 27 May 2026 22:13:41 +0200
-Message-ID: <20260527201348.29511-6-philmd@linaro.org>
+Subject: [PATCH v11 03/12] target/riscv: Assert PTE.N/PBMT bits are not
+ expected on RV32
+Date: Wed, 27 May 2026 22:13:39 +0200
+Message-ID: <20260527201348.29511-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260527201348.29511-1-philmd@linaro.org>
 References: <20260527201348.29511-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,42 +109,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use uint32_t for RV32, uint64_t otherwise.
+PTE_N and PTE_PBMT are undefined on RV64, assert we are not
+under RV32.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/riscv/cpu_helper.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ target/riscv/cpu_helper.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 6da67e132eb..fd7c6ac1b23 100644
+index 17305e1bb75..f86bfdb32e7 100644
 --- a/target/riscv/cpu_helper.c
 +++ b/target/riscv/cpu_helper.c
-@@ -1625,16 +1625,18 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+@@ -1490,6 +1490,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+         return TRANSLATE_FAIL;
+     }
+     if (!pbmte && (pte & PTE_PBMT)) {
++        assert(riscv_cpu_sxl(env) != MXL_RV32);
+         /* Reserved without Svpbmt. */
+         qemu_log_mask(LOG_GUEST_ERROR, "%s: PBMT bits set in PTE, "
+                       "and Svpbmt extension is disabled: "
+@@ -1643,6 +1644,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+     target_ulong vpn = addr >> PGSHIFT;
+ 
+     if (riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N)) {
++        assert(riscv_cpu_sxl(env) != MXL_RV32);
+         napot_bits = ctzl(ppn) + 1;
+         if ((i != (levels - 1)) || (napot_bits != 4)) {
              return TRANSLATE_FAIL;
-         }
- 
--        target_ulong *pte_pa = qemu_map_ram_ptr(mr->ram_block, addr1);
--        target_ulong old_pte;
-+        void *pte_pa = qemu_map_ram_ptr(mr->ram_block, addr1);
-+        uint64_t old_pte;
- 
-         if (riscv_cpu_sxl(env) == MXL_RV32) {
--            old_pte = qatomic_cmpxchg((uint32_t *)pte_pa, cpu_to_le32(pte),
--                                      cpu_to_le32(updated_pte));
-+            uint32_t cmp = cpu_to_le32(pte);
-+            uint32_t val = cpu_to_le32(updated_pte);
-+            old_pte = qatomic_cmpxchg((uint32_t *)pte_pa, cmp, val);
-             old_pte = le32_to_cpu(old_pte);
-         } else {
--            old_pte = qatomic_cmpxchg(pte_pa, cpu_to_le64(pte),
--                                      cpu_to_le64(updated_pte));
-+            uint64_t cmp = cpu_to_le64(pte);
-+            uint64_t val = cpu_to_le64(updated_pte);
-+            old_pte = qatomic_cmpxchg((uint64_t *)pte_pa, cmp, val);
-             old_pte = le64_to_cpu(old_pte);
-         }
-         if (old_pte != pte) {
 -- 
 2.53.0
 
