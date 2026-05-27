@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1DC7CD4F54
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7AC2CD5BD0
 	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 19:12:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSJfq-0006ZU-U5; Wed, 27 May 2026 15:12:14 -0400
+	id 1wSJfs-0006Zw-MP; Wed, 27 May 2026 15:12:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wSJfg-0006We-KD
+ id 1wSJfg-0006Wb-Fa
  for qemu-devel@nongnu.org; Wed, 27 May 2026 15:12:05 -0400
 Received: from forwardcorp1a.mail.yandex.net
  ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wSJfb-0000aP-W9
+ id 1wSJfb-0000ZZ-9H
  for qemu-devel@nongnu.org; Wed, 27 May 2026 15:12:04 -0400
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:2925:0:640:1f39:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 3C585C0480;
- Wed, 27 May 2026 22:11:58 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id E64D8C047E;
+ Wed, 27 May 2026 22:11:54 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:69::1:d])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id qBf3L80XU0U0-vixGv8dV; Wed, 27 May 2026 22:11:57 +0300
+ id qBf3L80XU0U0-c8yOarQc; Wed, 27 May 2026 22:11:54 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1779909117;
- bh=RfxqEWeC5J3TOrUYoue0YXr866vhpXJeCI5NgyUxaA4=;
+ s=default; t=1779909114;
+ bh=DkBQ+3UK9HWOhVq6Ht+r7CrNRq1WQFFe3oGX/Jg2oPM=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=xhCN2TTXH4xAwDBobjtxPXzoT2Ezmj2dYGVZGgrdJ4dOnVZLq2thmDS1bfZ+d8hQD
- I87zmaOp5FbvJK/NBXSnSsGgxBPSDE++QptaOwI5v6KDZbDb80NZ3Ucb7mrW6DObq7
- ZFh8kDU3v8m/seWRcdeTOgAO8qbm+WgPy9F9iWIo=
+ b=o4yTz5n5peYFm4fFSn2srnan3XnxtM+PV73/6h8yP1i0qSPAJnCCEomlb8+9owdK1
+ Gxkdqw7RMxrkpUQ7eH4hPGLmdb32HX7oOeyO++xK0F/IzSjV3nXT6+fAq9JA/GoXfx
+ VkZ/0rwfevh0AtX1uCXeM7IiYpwjbcVhNXxW3gIw=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -47,9 +47,10 @@ Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
  raphael.s.norwitz@gmail.com, bchaney@akamai.com, vsementsov@yandex-team.ru,
  qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
  yc-core@yandex-team.ru, mark.caveayland@nutanix.com
-Subject: [PATCH v17 05/10] net/tap: add TYPE_VMSTATE_IF interface
-Date: Wed, 27 May 2026 22:11:44 +0300
-Message-ID: <20260527191150.250333-6-vsementsov@yandex-team.ru>
+Subject: [PATCH v17 01/10] net/tap: move vhost-net open() calls to
+ tap_parse_vhost_fds()
+Date: Wed, 27 May 2026 22:11:40 +0300
+Message-ID: <20260527191150.250333-2-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260527191150.250333-1-vsementsov@yandex-team.ru>
 References: <20260527191150.250333-1-vsementsov@yandex-team.ru>
@@ -78,137 +79,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We'll need it to implement TAP backend live migration.
+1. Simplify code path: get vhostfds for all cases in one function.
+
+2. Prepare for further tap-fd-migraton feature, when we'll need to
+postpone vhost initialization up to post-load stage.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Ben Chaney <bchaney@akamai.com>
 ---
- net/tap.c | 43 ++++++++++++++++++++++++++++++++++---------
- 1 file changed, 34 insertions(+), 9 deletions(-)
+ net/tap.c | 39 ++++++++++++++++++++++-----------------
+ 1 file changed, 22 insertions(+), 17 deletions(-)
 
 diff --git a/net/tap.c b/net/tap.c
-index 9c04cd4770b..529ed4b0f5b 100644
+index 57ffb09885c..d941c67895e 100644
 --- a/net/tap.c
 +++ b/net/tap.c
-@@ -43,7 +43,6 @@
- #include "qemu/main-loop.h"
- #include "qemu/sockets.h"
- #include "hw/virtio/vhost.h"
--#include "qom/object.h"
- 
- #include "net/tap.h"
- #include "net/util.h"
-@@ -91,6 +90,8 @@ struct TAPState {
-     VHostNetState *vhost_net;
-     unsigned host_vnet_hdr_len;
-     Notifier exit;
-+
-+    int queue_index;
- };
- 
- static void launch_script(const char *setup_script, const char *ifname,
-@@ -399,10 +400,29 @@ static VHostNetState *tap_get_vhost_net(NetClientState *nc)
- }
- 
- 
-+static char *tap_vmstate_if_get_id(VMStateIf *obj)
-+{
-+    TAPState *s = TAP_NETDEV(obj);
-+    char *res = g_strdup_printf("%s/%d", s->nc.name, s->queue_index);
-+    return res;
-+}
-+
-+static void tap_class_init(ObjectClass *klass, const void *data)
-+{
-+    VMStateIfClass *vc = VMSTATE_IF_CLASS(klass);
-+
-+    vc->get_id = tap_vmstate_if_get_id;
-+}
-+
- static const TypeInfo tap_netdev_info = {
-     .name = TYPE_TAP_NETDEV,
-     .parent = TYPE_OBJECT,
-     .instance_size = sizeof(TAPState),
-+    .class_init = tap_class_init,
-+    .interfaces = (const InterfaceInfo[]) {
-+        { TYPE_VMSTATE_IF },
-+        { }
-+    },
- };
- 
- static void tap_net_client_destructor(NetClientState *nc)
-@@ -435,13 +455,16 @@ static NetClientInfo net_tap_info = {
- 
- static TAPState *new_tap(NetClientState *peer,
-                          const char *model,
--                         const char *name)
-+                         const char *name,
-+                         int queue_index)
- {
-     TAPState *s = TAP_NETDEV(object_new(TYPE_TAP_NETDEV));
- 
-     qemu_net_client_setup(&s->nc, &net_tap_info, peer, model, name,
-                           tap_net_client_destructor, true);
- 
-+    s->queue_index = queue_index;
-+
-     return s;
- }
- 
-@@ -449,10 +472,11 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
-                                  const char *model,
-                                  const char *name,
-                                  int fd,
--                                 int vnet_hdr)
-+                                 int vnet_hdr,
-+                                 int queue_index)
- {
-     NetOffloads ol = {};
--    TAPState *s = new_tap(peer, model, name);
-+    TAPState *s = new_tap(peer, model, name, queue_index);
- 
-     s->fd = fd;
-     s->host_vnet_hdr_len = vnet_hdr ? sizeof(struct virtio_net_hdr) : 0;
-@@ -689,7 +713,7 @@ int net_init_bridge(const Netdev *netdev, const char *name,
-         close(fd);
-         return -1;
+@@ -736,8 +736,7 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         }
      }
--    s = net_tap_fd_init(peer, "bridge", name, fd, vnet_hdr);
-+    s = net_tap_fd_init(peer, "bridge", name, fd, vnet_hdr, 0);
  
-     qemu_set_info_str(&s->nc, "helper=%s,br=%s", helper, br);
+-    if (tap->has_vhost ? tap->vhost :
+-        (vhostfd != -1) || (tap->has_vhostforce && tap->vhostforce)) {
++    if (vhostfd != -1) {
+         VhostNetOptions options;
  
-@@ -765,10 +789,11 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
-                              const char *name,
-                              const char *ifname, const char *script,
-                              const char *downscript, int vhostfd,
--                             int vnet_hdr, int fd, Error **errp)
-+                             int vnet_hdr, int fd, int queue_index,
-+                             Error **errp)
+         options.backend_type = VHOST_BACKEND_TYPE_KERNEL;
+@@ -747,17 +746,6 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         } else {
+             options.busyloop_timeout = 0;
+         }
+-
+-        if (vhostfd == -1) {
+-            vhostfd = open("/dev/vhost-net", O_RDWR);
+-            if (vhostfd < 0) {
+-                error_setg_file_open(errp, errno, "/dev/vhost-net");
+-                goto failed;
+-            }
+-            if (!qemu_set_blocking(vhostfd, false, errp)) {
+-                goto failed;
+-            }
+-        }
+         options.opaque = (void *)(uintptr_t)vhostfd;
+         options.nvqs = 2;
+         options.feature_bits = kernel_feature_bits;
+@@ -843,14 +831,31 @@ static int tap_parse_fds_and_queues(const NetdevTapOptions *tap, int **fds,
+ static bool tap_parse_vhost_fds(const NetdevTapOptions *tap, int **vhost_fds,
+                                 int queues, Error **errp)
  {
-     TAPState *s = net_tap_fd_init(peer, tap->helper ? "bridge" : "tap",
--                                  name, fd, vnet_hdr);
-+                                  name, fd, vnet_hdr, queue_index);
-     bool sndbuf_required = tap->has_sndbuf;
-     int sndbuf =
-         (tap->has_sndbuf && tap->sndbuf) ? MIN(tap->sndbuf, INT_MAX) : INT_MAX;
-@@ -969,7 +994,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
-             if (!net_init_tap_one(tap, peer, name, ifname,
-                                   NULL, NULL,
-                                   vhost_fds ? vhost_fds[i] : -1,
--                                  vnet_hdr, fds[i], errp)) {
-+                                  vnet_hdr, fds[i], i, errp)) {
-                 goto fail;
-             }
-         }
-@@ -1003,7 +1028,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
-                                   i >= 1 ? NULL : script,
-                                   i >= 1 ? NULL : downscript,
-                                   vhost_fds ? vhost_fds[i] : -1,
--                                  vnet_hdr, fd, errp)) {
-+                                  vnet_hdr, fd, i, errp)) {
-                 goto fail;
-             }
-         }
+-    if (!(tap->vhostfd || tap->vhostfds)) {
++    bool need_vhost = tap->has_vhost ? tap->vhost :
++        ((tap->vhostfd || tap->vhostfds) ||
++         (tap->has_vhostforce && tap->vhostforce));
++
++    if (!need_vhost) {
+         *vhost_fds = NULL;
+         return true;
+     }
+ 
+-    if (net_parse_fds(tap->vhostfd ?: tap->vhostfds,
+-                      vhost_fds, queues, errp) < 0) {
+-        return false;
++    if (tap->vhostfd || tap->vhostfds) {
++        if (net_parse_fds(tap->vhostfd ?: tap->vhostfds,
++                          vhost_fds, queues, errp) < 0) {
++            return false;
++        }
++    } else {
++        *vhost_fds = g_new(int, queues);
++        for (int i = 0; i < queues; i++) {
++            int vhostfd = open("/dev/vhost-net", O_RDWR);
++            if (vhostfd < 0) {
++                error_setg_file_open(errp, errno, "/dev/vhost-net");
++                net_free_fds(*vhost_fds, i);
++                return false;
++            }
++            (*vhost_fds)[i] = vhostfd;
++        }
+     }
+ 
+     if (!unblock_fds(*vhost_fds, queues, errp)) {
 -- 
 2.52.0
 
