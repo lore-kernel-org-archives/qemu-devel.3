@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA55ACD5BC9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:31:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CC8ECD5BC9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:32:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSBXz-0002j4-Uf; Wed, 27 May 2026 06:31:36 -0400
+	id 1wSBYH-0003Rf-RF; Wed, 27 May 2026 06:31:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBXT-0002Xi-JH
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:31:05 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBYF-0003Jj-Hu
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:31:51 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBXR-0000dT-Qz
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:31:03 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-44b330c5cc6so8901996f8f.1
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:31:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBYD-0000op-U7
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:31:51 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-44a5174670eso6442615f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:31:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779877860; x=1780482660; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779877908; x=1780482708; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=AcCbzOhdgXdWzpF5itQB+2yWkmCvrd9B2ZdWGldADZ8=;
- b=r/+4ADBWKr+d+EjgGTc+s0cz/dGAFe2YkmqyV9JpU8qsx/MfpNwHK9x9kQgyhMswee
- pZxyyTWSEa7N08f+acASd7kSpNnXQca0eXU22tVy87WSoqqsNjxFiWDu6wDhA63wQfaB
- Ap9v3JjiJ6Qi938zOT/75oZuEANOHNWo6mR9CFaFeFIeRPulZbq6Kp5zrao9JtSTFqjA
- 77n3G5sdMvnGX4OoQqKYpBsnmvg2g5YHqz+c783OFw41pp5amEYjq8ZDJRMzzpEvJOFh
- NeopB9F9w1kwYmHawOQhp/8jt92KefXG+5Z5pfP4hxyFEXul4A89PkIhHOGr1Jk0eszi
- Quow==
+ :reply-to; bh=eAeAS637wuKZNTrGUk8qfUmYuZS+oEmQbAobgzLnoz4=;
+ b=VWTCTCyaF+zFTgUUPMjIh9pFH0QRan1zr9a+8MBh/52XrpsRotB+eNt9WUOY/MN4oA
+ spZ95cW9Oj9Dxs1nZ9am07ZRt93I37mIOuNEUTZ7fYtNu10XJYrH3yB6lCqtcASkGMps
+ 3urbBbtOaoEc/qdinglQRlFNLPMshaNuDh9RzdVbBpkfBYCj0EpFlMbB9mnb/hEP8c9b
+ 6Sizr5T4WTEOtr/RGbFZyoGCbgyfZ74pbhIr/6y/el5PtuVTh84XDWKz/LdhSb1sdFj4
+ hFRmUSFyY9DH2Bm/RViVcFqBJj4DtAtmRK0m75LqeNW14dXWht1qw1n2pmXS+9kVYujR
+ LEVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779877860; x=1780482660;
+ d=1e100.net; s=20251104; t=1779877908; x=1780482708;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=AcCbzOhdgXdWzpF5itQB+2yWkmCvrd9B2ZdWGldADZ8=;
- b=NVOesMMAovibfxhNjgyYZ5YbEkA8omCqAwM86+B1JSdo1ddo838KWickf4kgW7TUSb
- feUzdCUPTYE543y88EptkkPKhCi36YElAwKYBMRouqvK9Efp3Thr/QxNrECbdzrHVFDY
- Q2H4bRcMRTCEQjuwth6xrIpwGIvyj+2xh+Vft8QN8lrP/0oEZJSbGwKVqk7WDHRtoFyZ
- pFuDDiDtVah0kmj9UXlPFHwWTzFTZqT+R70xCh+l18vFRzJizbx1od/F/8GoA5Nca7Nl
- YpYqNzvGep19fHbUsMy1Y2f0OQ0WP8nHgPz1MDqmc6UYfq09wnqESY40FhC2yg0kfYZ/
- NJeA==
-X-Gm-Message-State: AOJu0YwzUXzph9W5INiKuetYdUJULRuT3V6GH5byYY03RNkdUF9A3tuM
- QBCf3SN0bGSPUUa9Fuj9gu7iNQf9GFoIWGGhHP0fUVv43uQXj7mxQkO9YrMF1/4ZziEWE7/t1vF
- D9N4My4fAIA==
-X-Gm-Gg: Acq92OGJJESpqHyRk5RzBOK+cyIA1m/myBqFvqkZzl+Z8DiLjOKXam0o8k9q73+gGQ/
- 0UdZzoMTjTTPcuL4uC+K0vY66QWsZZzDFVP+vubeCu+HR48DEi/dwnF599XBIOfVRhx5TrzVrAP
- YiYl6i9/9uqr0+jbH4js+vDkAYEc4upSZsnT7ULC1NsWPVO+wIqn8BImCTIzPB0iSByFLJTVmoz
- 4soxypOq678GwER+RHIlzDRpuGYA1S7jTG1cBPHA/DdvPp5GtD9eScWotx5SAAmFkkLjAA5qpeL
- w6MLL+c3qXin6zkZu7VFCIuOL9yCHdtfVFkVL4PNoQcD5JiLBWFQTtQEKDNIbIG+GOJ0NErWthp
- 8C8S1+8dRpGE3rzisbFIl7ZD0rkJAqJGNkk7ubh+QTei+m6FmrI7Zalhd0GvHexZ91SD7xAaGOS
- 050vcY7Ayujbf6nh2V33EToonOliVRpJ7lj2FB/W84RjRHG474NdkQKfw=
-X-Received: by 2002:a05:6000:1446:b0:45e:7415:8c4c with SMTP id
- ffacd0b85a97d-45eb38e0657mr39507516f8f.43.1779877860024; 
- Wed, 27 May 2026 03:31:00 -0700 (PDT)
+ bh=eAeAS637wuKZNTrGUk8qfUmYuZS+oEmQbAobgzLnoz4=;
+ b=FJGXaG0kqt6wJDTiIhSXcRbAwMa3c/q3WJ16deFUJZQcMtBS30KDLUubxU3lgXxJXc
+ L+cVb9WRlM9KIVw3AGW+WA98DqYE8iN00BNHzmZVTT41Kewcxk0XztAnaDV2DG1H84Sp
+ cxJYSzlZTeOZzo/Q61YqD18UspzJ+mjOFI+2hT8kGpnyPpWgR3qt3QO48GmoWE89KsT5
+ Fh28lFqWw7Dxn2BhJmSwMo/1KhWa2w0NwldMuN7auN6WedSUWgRo8/iSyqCweoCCGcoJ
+ vyqmwZJQoNU8zkjlvMhI2vI302d8n/CBcO0aoU1OcGkyFIntFkMa1+1w0BvMClMHnWrT
+ Lukw==
+X-Gm-Message-State: AOJu0Yx+LBIZ69oc4oHPkSH5gbM8/flDC8PJ2D0PMR7ijy0Ky16weJyB
+ VWsshnLU2h/kqqAZlZ+d4lyHwP2uTdgf+IwvMCToAnoqFpzqnDaDDsT1AMViYYKnaFiWQs+393T
+ 9QLQed6idTQ==
+X-Gm-Gg: Acq92OG0OiW5Z450RD3bGN2Z+XxXHo5OnOmj8QS0qZMuea9MJC2EbpXLaBEAuoEUFKK
+ Yv7tSRdaA3MnQg1TGD+mbqOT+ixmYr1JLbK3+so5N/InGJSJLebf6Kr8V8/lgc3yCmfhLNsTyp9
+ H/lqW6oQrDVNlNtCnKnMNu7Wsq3klMz+BH3QKNp/BjLUQy3vAmftNAY30n65+GkVP+5gCDZj+hk
+ OF0S1BtR1ZEprCjSrOSfngIZyvY89+XhdH7SB0C2iXT8SnkjoK/PEOa7lnFvAQN2R2BN7I1nvFr
+ DfYDabR1BYFFxrmv3/cLEFIKF+JJIXt9kpi/wG8sUjMYRGeZPLd9fGC1fSJ36rMnlksmixqhCVx
+ V8v3u7BpeO3OIaNrsIKoUVEEBBZXH0CE8hO0bWqzeTeD/AEAR4f4zwXnyo2xOW6j0vVn8W7Z9K5
+ /cD2jQ8hjsvFueDMdfrXaVuBqS9Ac64w7t+GqkMnSAil32j5VZqfC3CMGte56eVbOtIg==
+X-Received: by 2002:a05:600c:5298:b0:48f:e230:c3fb with SMTP id
+ 5b1f17b1804b1-490428ddd40mr397436575e9.33.1779877907730; 
+ Wed, 27 May 2026 03:31:47 -0700 (PDT)
 Received: from m17.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45edb557545sm5683150f8f.12.2026.05.27.03.30.59
+ 5b1f17b1804b1-4904527dbf3sm366945225e9.6.2026.05.27.03.31.46
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 27 May 2026 03:30:59 -0700 (PDT)
+ Wed, 27 May 2026 03:31:47 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/32] hw/core: Add riscv[32|64] to "none" machine
-Date: Wed, 27 May 2026 12:30:07 +0200
-Message-ID: <20260527103037.4461-4-philmd@linaro.org>
+Subject: [PULL 10/32] target/hppa: Use DisasContext::mo_align in system
+ emulation
+Date: Wed, 27 May 2026 12:30:14 +0200
+Message-ID: <20260527103037.4461-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260527103037.4461-1-philmd@linaro.org>
 References: <20260527103037.4461-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,37 +99,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anton Johansson <anjo@rev.ng>
+Rename 'unalign' as 'mo_align' and use it in system emulation too.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-Id: <20260520-hw-riscv-cpu-int-v3-5-d1123ea63d9c@rev.ng>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Message-Id: <20260513074323.10616-2-philmd@linaro.org>
 ---
- hw/core/null-machine.c | 3 +++
- 1 file changed, 3 insertions(+)
+ target/hppa/translate.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/hw/core/null-machine.c b/hw/core/null-machine.c
-index c52b022d3aa..f132a7b89b4 100644
---- a/hw/core/null-machine.c
-+++ b/hw/core/null-machine.c
-@@ -17,6 +17,7 @@
- #include "system/address-spaces.h"
- #include "hw/core/cpu.h"
- #include "hw/arm/machines-qom.h"
-+#include "hw/riscv/machines-qom.h"
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index cf57ec518d4..a05e7e70d19 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -91,16 +91,14 @@ typedef struct DisasContext {
+     bool is_pa20;
+     bool insn_start_updated;
  
- static void machine_none_init(MachineState *mch)
- {
-@@ -59,4 +60,6 @@ static void machine_none_machine_init(MachineClass *mc)
- DEFINE_MACHINE_WITH_INTERFACES("none", machine_none_machine_init,
-                                { TYPE_TARGET_AARCH64_MACHINE },
-                                { TYPE_TARGET_ARM_MACHINE },
-+                               { TYPE_TARGET_RISCV32_MACHINE },
-+                               { TYPE_TARGET_RISCV64_MACHINE },
-                                { })
+-#ifdef CONFIG_USER_ONLY
+-    MemOp unalign;
+-#endif
++    MemOp mo_align;
+ } DisasContext;
+ 
+ #ifdef CONFIG_USER_ONLY
+-#define UNALIGN(C)       (C)->unalign
++#define UNALIGN(C)       ((C)->mo_align)
+ #define MMU_DISABLED(C)  false
+ #else
+-#define UNALIGN(C)       MO_ALIGN
++#define UNALIGN(C)       ((C)->mo_align)
+ #define MMU_DISABLED(C)  MMU_IDX_MMU_DISABLED((C)->mmu_idx)
+ #endif
+ 
+@@ -4654,12 +4652,13 @@ static void hppa_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+ #ifdef CONFIG_USER_ONLY
+     ctx->privilege = PRIV_USER;
+     ctx->mmu_idx = MMU_USER_IDX;
+-    ctx->unalign = (ctx->tb_flags & TB_FLAG_UNALIGN ? MO_UNALN : MO_ALIGN);
++    ctx->mo_align = (ctx->tb_flags & TB_FLAG_UNALIGN) ? MO_UNALN : MO_ALIGN;
+ #else
+     ctx->privilege = (ctx->tb_flags >> TB_FLAG_PRIV_SHIFT) & 3;
+     ctx->mmu_idx = (ctx->tb_flags & PSW_D
+                     ? PRIV_P_TO_MMU_IDX(ctx->privilege, ctx->tb_flags & PSW_P)
+                     : ctx->tb_flags & PSW_W ? MMU_ABS_W_IDX : MMU_ABS_IDX);
++    ctx->mo_align = MO_ALIGN;
+ #endif
+ 
+     cs_base = ctx->base.tb->cs_base;
 -- 
 2.53.0
 
