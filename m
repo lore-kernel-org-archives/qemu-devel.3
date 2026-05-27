@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0196CD5BC9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:35:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AED5BCD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:35:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSBal-0001EE-Uw; Wed, 27 May 2026 06:34:28 -0400
+	id 1wSBZ3-0006Rs-1O; Wed, 27 May 2026 06:32:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBah-0000qa-KQ
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:34:24 -0400
-Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBZ0-0006PR-Gy
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:32:38 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBad-0001fO-TW
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:34:23 -0400
-Received: by mail-wr1-x442.google.com with SMTP id
- ffacd0b85a97d-44a5174670eso6444064f8f.1
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:34:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBYy-00014R-FH
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:32:38 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-49042aeeb75so66845095e9.1
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:32:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779878058; x=1780482858; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779877955; x=1780482755; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=RlcCfBWYoAC7TsrOi3tJoY9ajjCNZ9l5SfcUTdGZRKM=;
- b=gmreIPyNlZLzU28qUGh6yC8XPorWqP/XsXCo7MMDMCh/XLZiC2l8FlkmqCxojI7vIU
- /UhftgwFkBnGY5yzskce7BVyJMWAbwqIh18n840f7aGQ8NL9UPgFixF4zas6/iDjeLHH
- 07OEd5pULi6Xbw7bEphoni8B9IwmPp4OciSHSAKG/PpTpzr9s707VpZd8OnfHcPlv+9v
- zvDb1OAgR1ZIkzmXHcxAgE8boJjGRXMLfeH8kfH/nP0w3EX7bt+A6oDpTdQxl0ypWWdu
- 3veHenUAymsJ6M7LUzXvJsGW0UGIDR+C3Ieb/q5ujYMdJ3yO+aGO0LDcYUq8BFogTyts
- m8OQ==
+ :reply-to; bh=I9340WSLhVpvCMgW/nLw1BtgOmu1GxYGZiZMrp9lCdw=;
+ b=X66QHOMi8KsxFk3+1YLm+CFwrdgpDUn8YSFTKezqdK6YvhR9d6g6525k865E4uDljN
+ 4d+cGVjIrfYl/VcRPB6Kwe//A2yHhU87p8WaDSLH234R+Igj104T31zTCdbIDAW0Hja5
+ pnFGE2VPdYuoPk46LXyIuC9fRg+vKsOtGTNZzJPF0FGi2kS5255gsgwjhFOCbT0I5U7H
+ 10yaipwdVWBpcCo20K6dsi8o27LhVFPKvYJU/hXjsTOMK6d8+80x+eM+YfrzKuJwPBpX
+ suBAGkgWKx1N+p7jDBsZCB1kkRXMxeEO2l3/+hxUZMtHPyoUv+RBZf7nYeLa/CteDRCQ
+ 49cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779878058; x=1780482858;
+ d=1e100.net; s=20251104; t=1779877955; x=1780482755;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=RlcCfBWYoAC7TsrOi3tJoY9ajjCNZ9l5SfcUTdGZRKM=;
- b=FLmTL1nnARa78dlDZwM6d9pjEH3ZAPwJAYIBZZ3CIkCrApMkaEWtlnRDICaCKNK1Av
- kh0B+6+ii2VMfj9Yz6H+FlL2LZ/FZzuh2h3BmyVMWjHFQLi7bOcQr6Jwnzz4Lu5R9Lgx
- 8xzmpwKX7yqfymSus8G1UvyXRUBd3/JxsLx2/J/AK4HNH0jC9cQddenJI/i23V+zN5oM
- eP6fXd6TexTipuqe84k7OWx27xjRKb7AhNxwAUsbwSHdxWUcj75dVfJ6rqkIAeOWWmKI
- pL9a1psuljo7OPA+5Z4GXc61QN5uGkqdMHsmngY2xKwkB9qLI6lDFiKesu76BEoIKQB3
- BC3A==
-X-Gm-Message-State: AOJu0YwB9GDaGV7p3c/LQgkyYxtzwBTvdJGZ/9OIz0ydvNA8thZ9sLqK
- qjophUNKRPQVGvR3qVLQhWGIW7h9u8KvYwe0t5Gh0zZPRK3E3IORgQCWNeCiGe01AJiHLh2hTC2
- h558FklTJlXsj
-X-Gm-Gg: Acq92OGvvRBOKuX1rZSq2+QeggPU7O5Ex5kWJ7KC3oIwqFhwRB/NEQ9EH1T1G9zfSak
- m0gyV4NNk6Ksf+cQyH/L8sXzo+yHXHGFE4oaNTkshIhlWMrh7yAxCVFG33SBkyJLSnZ0qs1M9V1
- mlGT59nOWrbPwOKiT43VDtIvcJ9yitDuYo4nI5IrGgurG7u4cD70jDXjxN+4MBH1YUrtacD5jMi
- /7qYfQotWSTOAfgjP2v1/y86GiO2qBkcq2KKR00OvJ/hMoFSbPgHwnXATpBZg9GTh37IvaI2E1X
- anjSktXM/jo2eccLlpCwFTTvMDMeZ80ub381gFtQwN8TzfdXxNvOmB9QswrvJeNlAdTSl7TZ90T
- nEdqmR7YG50hjrHnsc2Kl0msDGJPJGrcnpR4IGqDmh4n6gs+dAWTr6OxA6qM7ZZcIrqEkmNBZ5i
- HMup4DqgiQpHusNBoMSViJgZqUYpF1L5Y+E1lwvzX5DJYauWeYTCXR1+v5G0cJ4Q/hjsZClaXaH
- Mb+
-X-Received: by 2002:a05:6000:2007:b0:44a:247e:67b4 with SMTP id
- ffacd0b85a97d-45eb3689031mr37482444f8f.18.1779878058123; 
- Wed, 27 May 2026 03:34:18 -0700 (PDT)
+ bh=I9340WSLhVpvCMgW/nLw1BtgOmu1GxYGZiZMrp9lCdw=;
+ b=lJpjJE2uFhP0VN0AkspF/0fLa05JXbaYJQm67Dyd6i0DTmrkVju1TrLP+zrG8Zs3T0
+ bxHDP57FN0v9p6ZsuzhjUZLzSQEb/7mTsA/knHLg2z1o34om1zorarBS6ad/bzRmgxP5
+ rfiohuCiWBrA+VnTROZSlqFdUlT+EC2Z6eqV5FJrlZAsAlugyqnTKPVKfeToG3/xrxXP
+ 3M+UUSY0a+GCjSniVc/x4EZK42SIVf0kJ4/P+ehDJxuMbORwCtcpBEJt+pGfewoOsvBc
+ k7BwnHzqAnfSykvLVnYYTz8iseGWwqfJQYr61sKPRLzblRJLB7Zm3cDr7NzhR71Jpgzf
+ 9VAQ==
+X-Gm-Message-State: AOJu0YwfoxnreuALMOU/KiyQbuKY3u1QZr9tg1Itmj67u83EqVZcIxyO
+ sBqKEEn4rAGfBjL7cwLPXi1zmvGb+qt/ve4AvlqtwZffvBTDym9syKfYa50SvRpBjdonktw7Dkv
+ tXCiNZrTikg==
+X-Gm-Gg: Acq92OHxH/NSCqcIzxfuZF/Mgc7sRmJwmWDEuCrE4DL3BGB2yyZtqwFTzjo2Lc3M60A
+ rS0IyLEcRp/4GYW+Gvo+YZUB1aX7X5DjDMk5yIWMdNSucPe0rRt3rfG7+0WdTtNQhSNKT51DrT4
+ eEPk+eLbqMFROFqe+wo2AfIpQvl1hZpzPh/mKzPaHL5LvVOfM3ViZbL7uz58FrcJEhQn/AKjhl+
+ S/whSDn/OYioThPRevjHi7QfB92Hnf+uzYLxq5aDElpOMAKBPM/Gu3vIhDXrKAPOm85ycNQS1H2
+ iTgoTjoEH78IAns9A0Dd7AWD2uiSWEHd243ABlYuhnucg8mdXS2RU7/YoI/raVU4EeSyCDB2TN7
+ y5QlR7uzCu2hoBRAnOO1pF/Ix1meP47gHSPFa2a34MtV4opxjXG9F+jsc2GJ76+/tRRzuC70y6I
+ IOmZqhq6miywT9ogpLTdwBdGPJXMGCkasE4zbhhv0veHUkpYwnI7rjoa8=
+X-Received: by 2002:a05:600c:8692:b0:490:3fa2:1b93 with SMTP id
+ 5b1f17b1804b1-490424b0e35mr239428855e9.13.1779877954902; 
+ Wed, 27 May 2026 03:32:34 -0700 (PDT)
 Received: from m17.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45edb5a2a07sm4593353f8f.19.2026.05.27.03.34.16
+ 5b1f17b1804b1-490809c313csm13582855e9.30.2026.05.27.03.32.34
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 27 May 2026 03:34:17 -0700 (PDT)
+ Wed, 27 May 2026 03:32:34 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 32/32] MAINTAINERS: Update PhilMD's email address
-Date: Wed, 27 May 2026 12:30:36 +0200
-Message-ID: <20260527103037.4461-33-philmd@linaro.org>
+Subject: [PULL 17/32] target/arm: Introduce common system/user meson source set
+Date: Wed, 27 May 2026 12:30:21 +0200
+Message-ID: <20260527103037.4461-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260527103037.4461-1-philmd@linaro.org>
 References: <20260527103037.4461-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::442;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x442.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,308 +98,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-philmd@linaro.org will stop working starting 2026-06-01,
-use my personal email instead. Update mailmap and gitdm
-accordingly.
+Introduce a source set common to system / user.
+No logical change intended.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-Id: <20260527065943.92554-1-philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Acked-by: Peter Maydell <peter.maydell@linaro.org>
+Message-Id: <20260526203722.79463-7-philmd@linaro.org>
 ---
- MAINTAINERS                         | 58 ++++++++++++++---------------
- .mailmap                            |  7 ++--
- contrib/gitdm/group-map-individuals |  1 +
- 3 files changed, 34 insertions(+), 32 deletions(-)
+ target/arm/meson.build     | 21 +++++++++--------
+ target/arm/tcg/meson.build | 48 ++++++++++++--------------------------
+ 2 files changed, 26 insertions(+), 43 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 35ab2b458a4..892380a6d51 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -68,7 +68,7 @@ Project policy and developer guides
- R: Alex Bennée <alex.bennee@linaro.org>
- R: Daniel P. Berrangé <berrange@redhat.com>
- R: Markus Armbruster <armbru@redhat.com>
--R: Philippe Mathieu-Daudé <philmd@linaro.org>
-+R: Philippe Mathieu-Daudé <philmd@mailo.com>
- W: https://www.qemu.org/docs/master/devel/index.html
- S: Odd Fixes
- F: docs/devel/build-environment.rst
-@@ -132,7 +132,7 @@ T: git https://gitlab.com/cohuck/qemu.git s390-next
- L: qemu-s390x@nongnu.org
+diff --git a/target/arm/meson.build b/target/arm/meson.build
+index 4723f9f170a..e56fc943bdf 100644
+--- a/target/arm/meson.build
++++ b/target/arm/meson.build
+@@ -1,6 +1,7 @@
+ arm_ss = ss.source_set()
+ arm_common_ss = ss.source_set()
+ arm_common_system_ss = ss.source_set()
++arm_common_user_system_ss = ss.source_set()
+ arm_system_ss = ss.source_set()
+ arm_stubs_ss = ss.source_set()
+ arm_user_ss = ss.source_set()
+@@ -16,6 +17,13 @@ arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
+ arm_common_ss.add(files(
+   'mmuidx.c',
+ ))
++arm_common_user_system_ss.add(files(
++  'cpregs-gcs.c',
++  'cpregs-pmu.c',
++  'debug_helper.c',
++  'helper.c',
++  'vfp_fpscr.c',
++))
  
- MIPS general architecture support
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Jiaxun Yang <jiaxun.yang@flygoat.com>
- S: Odd Fixes
- K: ^Subject:.*(?i)mips
-@@ -302,7 +302,7 @@ F: tests/docker/dockerfiles/debian-microblaze-cross.d/build-toolchain.sh
- F: tests/functional/microblaze/
+ arm_common_system_ss.add(files(
+   'arm-qmp-cmds.c',
+@@ -26,11 +34,6 @@ arm_system_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
+ arm_user_ss.add(files('cpu.c'))
+ arm_stubs_ss.add(files('cpu32-stubs.c'))
+ arm_user_ss.add(files(
+-  'cpregs-gcs.c',
+-  'cpregs-pmu.c',
+-  'debug_helper.c',
+-  'helper.c',
+-  'vfp_fpscr.c',
+   'el2-stubs.c',
+   'cpregs-omap-stub.c',
+ ))
+@@ -45,15 +48,10 @@ arm_common_system_ss.add(files(
+   'arch_dump.c',
+   'arm-powerctl.c',
+   'cortex-regs.c',
+-  'cpregs-gcs.c',
+   'cpregs-omap.c',
+-  'cpregs-pmu.c',
+   'cpu-irq.c',
+-  'debug_helper.c',
+-  'helper.c',
+   'machine.c',
+   'ptw.c',
+-  'vfp_fpscr.c',
+ ))
  
- MIPS TCG CPUs
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Aurelien Jarno <aurelien@aurel32.net>
- R: Jiaxun Yang <jiaxun.yang@flygoat.com>
- R: Aleksandar Rikalo <arikalo@gmail.com>
-@@ -533,7 +533,7 @@ Guest CPU Cores (other accelerators)
- Overall
- M: Richard Henderson <richard.henderson@linaro.org>
- R: Paolo Bonzini <pbonzini@redhat.com>
--R: Philippe Mathieu-Daudé <philmd@linaro.org>
-+R: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Maintained
- F: include/exec/cpu*.h
- F: include/exec/target_long.h
-@@ -696,7 +696,7 @@ F: qemu.nsi
- F: scripts/nsis.py
+ subdir('hvf')
+@@ -65,6 +63,9 @@ else
+     arm_common_system_ss.add(files('tcg-stubs.c'))
+ endif
  
- Darwin (macOS, iOS)
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Odd Fixes
- F: .gitlab-ci.d/cirrus/macos-*
- F: */*.m
-@@ -1012,7 +1012,7 @@ F: tests/functional/arm/test_quanta_gsj.py
++arm_user_ss.add_all(arm_common_user_system_ss)
++arm_common_system_ss.add_all(arm_common_user_system_ss)
++
+ target_arch += {'arm': arm_ss}
+ target_system_arch += {'arm': arm_system_ss}
+ target_user_arch += {'arm': arm_user_ss}
+diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
+index 1b751d59183..b0f5342245b 100644
+--- a/target/arm/tcg/meson.build
++++ b/target/arm/tcg/meson.build
+@@ -52,60 +52,42 @@ arm_common_system_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('cpu-v7m.c'))
+ arm_user_ss.add(when: 'TARGET_AARCH64', if_false: files('cpu-v7m.c'))
  
- Raspberry Pi
- M: Peter Maydell <peter.maydell@linaro.org>
--R: Philippe Mathieu-Daudé <philmd@linaro.org>
-+R: Philippe Mathieu-Daudé <philmd@mailo.com>
- L: qemu-arm@nongnu.org
- S: Odd Fixes
- F: hw/arm/raspi.c
-@@ -1314,7 +1314,7 @@ F: include/hw/misc/avr_power.h
- F: hw/misc/avr_power.c
+ arm_common_ss.add(zlib)
+-
+ arm_common_ss.add(files(
+   'arith_helper.c',
+   'crypto_helper.c',
+   'idau.c',
+ ))
  
- Arduino
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Maintained
- F: hw/avr/arduino.c
- F: tests/functional/avr/test_uno.py
-@@ -1448,7 +1448,7 @@ F: hw/microblaze/petalogix_ml605_mmu.c
- MIPS Machines
- -------------
- Overall MIPS Machines
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Odd Fixes
- F: configs/devices/mips*/*
- F: hw/mips/
-@@ -1465,7 +1465,7 @@ F: hw/dma/rc4030.c
- F: hw/nvram/ds1225y.c
- 
- Malta
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Aurelien Jarno <aurelien@aurel32.net>
- S: Odd Fixes
- F: hw/isa/piix.c
-@@ -1479,7 +1479,7 @@ F: tests/functional/mips*/test_tuxrun.py
- 
- Fuloong 2E
- M: Huacai Chen <chenhuacai@kernel.org>
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Jiaxun Yang <jiaxun.yang@flygoat.com>
- S: Odd Fixes
- F: hw/mips/fuloong2e.c
-@@ -1503,7 +1503,7 @@ F: include/hw/intc/loongson_liointc.h
- F: tests/functional/mips64el/test_loongson3v.py
- 
- Boston
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Aleksandar Rikalo <arikalo@gmail.com>
- S: Odd Fixes
- F: hw/core/loader-fit.c
-@@ -2032,7 +2032,7 @@ F: include/hw/i386/nitro_enclave.h
- F: docs/system/i386/nitro-enclave.rst
- 
- Machine core
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Zhao Liu <zhao1.liu@intel.com>
- S: Maintained
- F: hw/core/cpu-common.c
-@@ -2055,7 +2055,7 @@ F: tests/unit/test-smp-parse.c
- 
- TargetInfo API
- M: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Supported
- F: include/qemu/target-info*.h
- F: target-info*.c
-@@ -2279,7 +2279,7 @@ F: docs/system/virtio-net-failover.rst
- T: git https://github.com/jasowang/qemu.git net
- 
- Parallel NOR Flash devices
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Maintained
- F: hw/block/pflash_cfi*.c
- F: include/hw/block/flash.h
-@@ -2311,7 +2311,7 @@ S: Maintained
- F: hw/ssi/xilinx_*
- 
- SD (Secure Card)
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- M: Bin Meng <bmeng.cn@gmail.com>
- L: qemu-block@nongnu.org
- S: Odd Fixes
-@@ -2765,14 +2765,14 @@ F: docs/specs/vmgenid.rst
- F: tests/qtest/vmgenid-test.c
- 
- LED
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Maintained
- F: include/hw/misc/led.h
- F: hw/misc/led.c
- 
- Unimplemented device
- M: Peter Maydell <peter.maydell@linaro.org>
--R: Philippe Mathieu-Daudé <philmd@linaro.org>
-+R: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Ani Sinha <ani@anisinha.ca>
- S: Maintained
- F: include/hw/misc/unimp.h
-@@ -2780,7 +2780,7 @@ F: hw/misc/unimp.c
- 
- Empty slot
- M: Artyom Tarasenko <atar4qemu@gmail.com>
--R: Philippe Mathieu-Daudé <philmd@linaro.org>
-+R: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Ani Sinha <ani@anisinha.ca>
- S: Maintained
- F: include/hw/misc/empty_slot.h
-@@ -2859,14 +2859,14 @@ F: hw/display/apple-gfx*
- 
- PIIX4 South Bridge (i82371AB)
- M: Hervé Poussineau <hpoussin@reactos.org>
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Maintained
- F: hw/isa/piix.c
- F: include/hw/southbridge/piix.h
- 
- VIA South Bridges (VT82C686B, VT8231)
- M: BALATON Zoltan <balaton@eik.bme.hu>
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Jiaxun Yang <jiaxun.yang@flygoat.com>
- S: Maintained
- F: hw/isa/vt82c686.c
-@@ -2931,13 +2931,13 @@ F: hw/intc/openpic.c
- F: include/hw/ppc/openpic.h
- 
- MIPS CPS
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Odd Fixes
- F: hw/misc/mips_*
- F: include/hw/misc/mips_*
- 
- MIPS GIC
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Odd Fixes
- F: hw/intc/mips_gic.c
- F: hw/timer/mips_gictimer.c
-@@ -3063,7 +3063,7 @@ F: audio/alsaaudio.c
- 
- Core Audio framework backend
- M: Gerd Hoffmann <kraxel@redhat.com>
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Christian Schoenebeck <qemu_oss@crudebyte.com>
- R: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
- S: Odd Fixes
-@@ -3318,7 +3318,7 @@ F: tests/functional/ppc64/test_fadump.py
- 
- GDB stub
- M: Alex Bennée <alex.bennee@linaro.org>
--R: Philippe Mathieu-Daudé <philmd@linaro.org>
-+R: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Maintained
- F: docs/system/gdb.rst
- F: gdbstub/*
-@@ -3332,7 +3332,7 @@ T: git https://gitlab.com/stsquad/qemu gdbstub/next
- Memory API
- M: Paolo Bonzini <pbonzini@redhat.com>
- M: Peter Xu <peterx@redhat.com>
--R: Philippe Mathieu-Daudé <philmd@linaro.org>
-+R: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Supported
- F: include/system/ioport.h
- F: include/exec/memop.h
-@@ -3387,7 +3387,7 @@ F: tests/functional/generic/test_vnc.py
- 
- Cocoa graphics
- M: Peter Maydell <peter.maydell@linaro.org>
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
- S: Odd Fixes
- F: ui/cocoa.m
-@@ -3950,7 +3950,7 @@ S: Maintained
- F: contrib/elf2dmp/
- 
- Overall sensors
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Odd Fixes
- F: hw/sensor
- F: include/hw/sensor
-@@ -4511,7 +4511,7 @@ W: https://cirrus-ci.com/github/qemu/qemu
- 
- Functional testing framework
- M: Thomas Huth <th.huth+qemu@posteo.eu>
--R: Philippe Mathieu-Daudé <philmd@linaro.org>
-+R: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Daniel P. Berrange <berrange@redhat.com>
- S: Odd Fixes
- F: docs/devel/testing/functional.rst
-@@ -4567,7 +4567,7 @@ Meson
- M: Paolo Bonzini <pbonzini@redhat.com>
- R: Marc-André Lureau <marcandre.lureau@redhat.com>
- R: Daniel P. Berrange <berrange@redhat.com>
--R: Philippe Mathieu-Daudé <philmd@linaro.org>
-+R: Philippe Mathieu-Daudé <philmd@mailo.com>
- R: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
- S: Maintained
- F: meson.build
-diff --git a/.mailmap b/.mailmap
-index ce569d83f4a..273661c758e 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -104,9 +104,10 @@ Paul Burton <paulburton@kernel.org> <paul.burton@mips.com>
- Paul Burton <paulburton@kernel.org> <paul.burton@imgtec.com>
- Paul Burton <paulburton@kernel.org> <paul@archlinuxmips.org>
- Paul Burton <paulburton@kernel.org> <pburton@wavecomp.com>
--Philippe Mathieu-Daudé <philmd@linaro.org> <f4bug@amsat.org>
--Philippe Mathieu-Daudé <philmd@linaro.org> <philmd@redhat.com>
--Philippe Mathieu-Daudé <philmd@linaro.org> <philmd@fungible.com>
-+Philippe Mathieu-Daudé <philmd@mailo.com> <f4bug@amsat.org>
-+Philippe Mathieu-Daudé <philmd@mailo.com> <philmd@redhat.com>
-+Philippe Mathieu-Daudé <philmd@mailo.com> <philmd@fungible.com>
-+Philippe Mathieu-Daudé <philmd@mailo.com> <philmd@linaro.org>
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> <pierrick.bouvier@linaro.org>
- Roman Bolshakov <rbolshakov@ddn.com> <r.bolshakov@yadro.com>
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com> <sriram.yagnaraman@est.tech>
-diff --git a/contrib/gitdm/group-map-individuals b/contrib/gitdm/group-map-individuals
-index 4f4645a84cb..178b393b8c3 100644
---- a/contrib/gitdm/group-map-individuals
-+++ b/contrib/gitdm/group-map-individuals
-@@ -45,3 +45,4 @@ Jason@zx2c4.com
- amarjargal16@gmail.com
- me@sean.taipei
- kosasihwilliam4@gmail.com
-+philmd@mailo.com
+-arm_common_system_ss.add(
++arm_common_user_system_ss.add(
+   m_nocp_d,
+   mve_d,
+   neon_d,
+   translate32_d,
+   vfp_d,
+   files(
+-  'cpregs-at.c',
+   'debug.c',
+-  'gicv5-cpuif.c',
+-  'hflags.c',
+   'gengvec.c',
++  'hflags.c',
+   'm_helper.c',
+   'mve_helper.c',
+   'neon_helper.c',
+   'op_helper.c',
++  'translate.c',
++  'translate-m-nocp.c',
++  'translate-mve.c',
++  'translate-neon.c',
++  'translate-vfp.c',
++  'vec_helper.c',
++  'vfp_helper.c',
++))
++
++arm_common_system_ss.add(files(
++  'cpregs-at.c',
++  'gicv5-cpuif.c',
+   'psci.c',
+   'tlb_helper.c',
+   'tlb-insns.c',
+-  'translate.c',
+-  'translate-m-nocp.c',
+-  'translate-mve.c',
+-  'translate-neon.c',
+-  'translate-vfp.c',
+-  'vec_helper.c',
+-  'vfp_helper.c',
+ ))
+-arm_user_ss.add(
+-  m_nocp_d,
+-  mve_d,
+-  neon_d,
+-  translate32_d,
+-  vfp_d,
+-  files(
+-  'debug.c',
+-  'gengvec.c',
+-  'hflags.c',
+-  'm_helper.c',
+-  'mve_helper.c',
+-  'neon_helper.c',
+-  'op_helper.c',
++arm_user_ss.add(files(
+   'tlb_helper.c',
+-  'translate.c',
+-  'translate-m-nocp.c',
+-  'translate-mve.c',
+-  'translate-neon.c',
+-  'translate-vfp.c',
+-  'vec_helper.c',
+-  'vfp_helper.c',
+ ))
 -- 
 2.53.0
 
