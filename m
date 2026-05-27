@@ -4,72 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97C69CD5BDE
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 04:23:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 541F5CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 04:46:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wS5nL-0002fl-Oc; Wed, 27 May 2026 00:23:03 -0400
+	id 1wS68i-0006EC-0T; Wed, 27 May 2026 00:45:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michaeljclark@mac.com>)
- id 1wS5nI-0002f1-DX
- for qemu-devel@nongnu.org; Wed, 27 May 2026 00:23:01 -0400
-Received: from ms-2003f-snip4-1.eps.apple.com ([57.103.72.142]
- helo=outbound.ms.icloud.com)
+ (Exim 4.90_1) (envelope-from <cyan@cyano.uk>) id 1wS4uH-0000NZ-7v
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 23:26:09 -0400
+Received: from jupiter.guys.cyano.uk ([45.63.120.176])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michaeljclark@mac.com>)
- id 1wS5nG-0000B3-G2
- for qemu-devel@nongnu.org; Wed, 27 May 2026 00:23:00 -0400
-Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-3a-60-percent-2 (Postfix) with ESMTPS id
- 1BCAE180012C
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 04:22:52 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQhKAkMOUhxBCE4dXwJLVxQEFVoOXwpXHFMbXwxFAHIdWBsdDlgGEhZdRV4MVEVRH1RYQQ4KWhIYXBRcUFgeRhJWDV0JGQZBXlAbXwJCDxwTVhUTHUMZDysISgRDB0UCXgslEwlTVl8RWlZQAlpLXxldRQ9aUQoFEQ0bA0AGXwMSFEwGCwJGUxFfQR4IAl8CFQkdVQsOClQwVBlQQ1QEX04ZDEodUlZbE1UXRgk=
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mac.com; s=1a1hai;
- t=1779855775; x=1782447775; bh=soQUqDB6EMAoeTOqu0SOvlCcw2MYQzPUU18P4gPt89w=;
- h=Message-ID:Date:MIME-Version:Subject:From:To:Content-Type:x-icloud-hme;
- b=mulLfLB/TXjHHEBkkbfHgWJywQu43RZH/OXWWNXipihAlWbGsAmrxkDhoTMY2eJ0KXbEtBO5sb0zcswxTDqj5GcalEn0Se0JO2jADKa7enq8svrXmWeQQGzcuzeCzxRQiTcepE0dKQNQsdICUKCr7uMkcZ0zbaA3k0H6o/T7njXm6kwtW+dkkUV+MTyd7ZyxhfB8Lci0WWAxaJ5u2q4H6pzB9w08b+Y+/+Nvl7JC/brktrecy8YTREfkfYRtGpkmzSO17H9G3yYUtJXf9hTblq66X4agEH7j5tNy1TmW/AvTKVRCEyL8pcvFOU5pMNG5YNevYIwlrAEtIZXaNVWU5g==
-Received: from [192.168.1.3] (unknown [17.57.154.37])
- by p00-icloudmta-asmtp-us-west-3a-60-percent-2 (Postfix) with ESMTPSA id
- CCC761800115
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 04:22:51 +0000 (UTC)
-Message-ID: <7fa7a4c0-141b-45f5-aaf9-e540e0eff9af@mac.com>
-Date: Wed, 27 May 2026 16:22:49 +1200
+ (Exim 4.90_1) (envelope-from <cyan@cyano.uk>) id 1wS4uE-00085d-VK
+ for qemu-devel@nongnu.org; Tue, 26 May 2026 23:26:08 -0400
+From: Xinhui Yang <cyan@cyano.uk>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cyano.uk; s=dkim;
+ t=1779852359;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=oAi0r8LlJV9Gj6w0/vD0o4M4G/rwiBwXXf9Ccy4OYZE=;
+ b=CgFYUODiTgmM4A+Jgx3jTzwu1S7JGRA6+8BcCLEPOPnUr/L+8hvEE5UPHCBFV8xz+PaKHz
+ 6jBYB9j884NhaO+oVC1RYb7RXBQnh0FWFBv5gGedvMRV1s+94c4/j1lgQ+Fsb8Gu96nrpo
+ KJSVhxleptAcdBeqrFCC35s3Q5dGLZgIxNpYJEEyRkzc6tgiR07qOBPEhAEG3vBR1iuu5h
+ BP02UMIelF7Kf+nc2KGhYR741pS6XhQX/+MnhMtkSGPRUWqZjSDWRUuYibXH4isPl+/4qT
+ /5uTrF2zQVOTyNoiJIBKq6zz24OGjr+wZGZ9TaqFSiDXjEyqbX4cooZGcnagKw==
+Authentication-Results: jupiter.guys.cyano.uk;
+ auth=pass smtp.mailfrom=cyan@cyano.uk
+To: qemu-devel@nognu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-devel@nongnu.org, Mingcong Bai <jeffbai@aosc.io>,
+ Xinhui Yang <cyan@cyano.uk>
+Subject: [PATCH 0/2] linux-user: implement fsmount(2) series of syscalls
+Date: Wed, 27 May 2026 11:23:37 +0800
+Message-ID: <cover.1779850946.git.cyan@cyano.uk>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: GLYPH: TLB miss handlers, virtualization, and modes
-From: Michael Clark <michaeljclark@mac.com>
-To: qemu-devel <qemu-devel@nongnu.org>
-References: <2143170d-8998-4812-9204-57febae9d755@mac.com>
- <4cab865f-f9aa-4add-8c1c-08a9048041d0@mac.com>
-Content-Language: en-US
-In-Reply-To: <4cab865f-f9aa-4add-8c1c-08a9048041d0@mac.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI3MDA0MCBTYWx0ZWRfX2Ru1zMvBj3kt
- K4f9UT6yLz1pSUvCr78nQsA2PXKdl5Om7hsrAIgcrn5tKrg02IvzbyXPreoe7fvtJ57xoyLWsNV
- eIJ8hw8eUkiTLJbMLtiJUC1C0hGNKAcnkJ8DZUueB2UhK5yN086NUMHQh9xwSaASKzrrtaINCOI
- 7BbJORyuKMTZGbyiv8S8cc6x9GOBZNO2Sr9dzfEWtuRbw81YIrqo0GJveCyuEaAKJUthocDrkoL
- SKHWIaLfQ7uDTg0AHAhBlQl2N7Wj5hQHLLArBXfquuFQLoiijJjUED8R8AZXjttMaWopuEsNpgY
- TKyYGvcG48MR1qIdstsp7K9lTdJmkIh77I2gn2GIAvaHX/zAstodSxkYlVtR0I=
-X-Proofpoint-GUID: ywrnQBroPbLBmjkWB3s4HohLl-uzlgb1
-X-Authority-Info-Out: v=2.4 cv=B+S0EetM c=1 sm=1 tr=0 ts=6a16719d
- cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=IkcTkHD0fZMA:10
- a=NGcC8JguVDcA:10 a=x7bEGLp0ZPQA:10 a=u0hES8UrWMkA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=YJ9zdN9lAAAA:8 a=NEAV23lmAAAA:8
- a=M55iCpE8kyM7TKSI8u0A:9 a=QEXdDO2ut3YA:10 a=eqbXquKEjoujS2g1hgVW:22
-X-Proofpoint-ORIG-GUID: ywrnQBroPbLBmjkWB3s4HohLl-uzlgb1
-Received-SPF: pass client-ip=57.103.72.142; envelope-from=michaeljclark@mac.com;
- helo=outbound.ms.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+X-Spamd-Bar: +
+Received-SPF: pass client-ip=45.63.120.176; envelope-from=cyan@cyano.uk;
+ helo=jupiter.guys.cyano.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 27 May 2026 00:45:05 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,37 +67,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/18/26 17:18, Michael Clark wrote:
-> rather lengthy update on a high-level architecture exploration:
-> 
-> - https://metaparadigm.com/~mclark/glyph.pdf
-> 
-> I have reached an inflection point with nested virtualization and SLAT.
-> I believe I expose enough from an architectural perspective to support
-> SLAT in this version of the architecture, theoretically, as we have a
-> dominating machine capability for each virtual domain. it still needs
-> testing in a full system architectural simulator. I think this version
-> of the specification is worth a fine look, though. I just made a change
-> to domain context switching for nested traps, keeping in mind SLAT plus
-> TLB miss handlers for first level address translation.
+The motivation of the implementation is to make the systemd-nspawn
+container to boot guest OSes with systemd v259+, otherwise any systemd
+service requires importing credentials will fail, including journald,
+D-Bus service and getty. We used to work around this issue by patching
+systemd to retry the clone() without CLONE_NEWNS, which is not and can
+not be implemented in QEMU user emulation.
 
-received some feedback and made several more simplifications:
+mount(8) from util-linux works because it will fallback to the old
+mount(2) syscall if fsmount(8) series of syscalls is not available.
 
-- page color caps are trimmed to the subset mapping to Intel PKRU.
-- the array extension (image load store) has been commented out.
-- domain capability trap routing has been further simplified.
+Tested good on an x86-64 host, with:
 
-curious on feedback for the domain capabilities privilege model.
-it still needs to be tested in simulation. they should be amenable
-to accelerated translation as they only need to be checked on
-interrupts and access to privileged registers or instructions.
-user-mode plus single supervisor would occupy two domain slots.
-page table colors has a pretty direct mapping to Intel PKRU.
+- an AOSC OS mips64r6el guest, which boots successfully with full systemd
+  support using systemd-nspawn(1).
+- a Gentoo ppc (big endian) guest, which boots successfully with full
+  systemd support, using systemd-nspawn(1).
 
-4K pages using the default scheme without TLB miss handlers should
-be amenable to fast shadow paging on Intel X86. there are still lots
-of missing details. VM and instruction fences are not yet defined.
-of course we need to add the instructions. that will be done last:
+Xinhui Yang (2):
+  linux-user: implement fsmount(2) series of syscalls
+  linux-user/strace: add fsmount series of syscalls
 
-- https://github.com/larkmjc/x86
+ linux-user/strace.c    | 102 +++++++++++++++++++++++++++++++++++++++++
+ linux-user/strace.list |  15 ++++++
+ linux-user/syscall.c   |  77 +++++++++++++++++++++++++++++++
+ 3 files changed, 194 insertions(+)
+
+-- 
+2.52.0
+
 
