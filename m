@@ -4,115 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A40E9CD5BD0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 16:57:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47E9BCD5BD0
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 16:57:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSHYU-00015D-JP; Wed, 27 May 2026 12:56:30 -0400
+	id 1wSHZP-0001ZA-Gv; Wed, 27 May 2026 12:57:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wSHYS-00014Y-BN
- for qemu-devel@nongnu.org; Wed, 27 May 2026 12:56:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wSHYP-0003kk-Hr
- for qemu-devel@nongnu.org; Wed, 27 May 2026 12:56:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779900983;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Y15XOa0+PFgmzYqDLTmxXFUr1q9T5CGzEJ7f2iAhC90=;
- b=O7i0xNmvYCMjV8zXqULwz6PpnXhenPXaKzmXagFjTGL3qd9n4Bm9Oe7hdnJHNxbkL+ZI/T
- 4JGN+hFFDBE1HmdCM5rb1Up72as4UphOGDD5KumHn/cUN1/LvyVS2Nl6UMoLZzhWiJz7TW
- wlx9btmAXALOF7ArZW9VIpB9GQqfp8s=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-447-SGAv-vkLPpWP9hfLOWkPdQ-1; Wed, 27 May 2026 12:56:22 -0400
-X-MC-Unique: SGAv-vkLPpWP9hfLOWkPdQ-1
-X-Mimecast-MFC-AGG-ID: SGAv-vkLPpWP9hfLOWkPdQ_1779900981
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49043386b3fso53052775e9.3
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 09:56:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wSHZN-0001YX-P7
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 12:57:25 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wSHZL-0005fe-9d
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 12:57:25 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-3660ab73adbso8730827a91.1
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 09:57:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779901041; cv=none;
+ d=google.com; s=arc-20240605;
+ b=X18SfktELCON3gXfrrVZVman0pgnv7tJaz8NcDp8wD+0rnB8bXGbkknT93W323Lr/y
+ fAExrgX6F1Hy+XXyQ7EhqlZeZUcvWqUJR+egeVbcFfP6vKfJjlCyXP58hX7S2YpMtxic
+ P+Erja4w942VMWICp+yQZI5pwnOREjgXaL3ChymkbgntqBBvs1gbT8vOG2jWQkWgVtYg
+ YQttE07uQUHlR4IbNOy3C3X9B2Q0JRCVelRiyQs9x+/skhFIRsZoE1WtNr8DeGvY/PuN
+ 0vw4e++QEMvr/SDUfAcuF1LAUgwM/lU0a8/9deaOC91/S9FzWLs3txSs+5CCqwMpkt2A
+ COiQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=qCnISHlQuiGGEZaD1SIoc1SBMiprb6FDEoNofKEFb0Y=;
+ fh=uMj/EDvKn0qVlTxfKNuaGPRxI4BH9UBT26RGBxfyfDQ=;
+ b=FMdKG1PWCQGuHlZUG5W4pXbwkrQz9G0IEgAkOcQP3qXVVlrHT+sHS7+OGfdQINmUf1
+ hdZePZyXlVsHsUy1XG4NYd8AIIpnig8hroJDMkZtV5lZl/AIZoDQ4ZOU+9T0biqxI+yG
+ 1Hj1hodPjjc8WXVCew7EcTFMiYrv+sOekIssnwekB4eoh0ujJpZzoej6iTDhN1dSnp2g
+ O42ki6eGwDLYrSEVrGfIycGqlJWeTpxCk87sPsprdOdWw5fuJIw/4esLG+M4jOo+bGDJ
+ TxvckiP+TGylgH3VPzRQBkOPeu0mgl7x6IwbL4w5I2GbUWXfyrC2NBo3NdTQ1mu66PBL
+ Bsww==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779900981; x=1780505781; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=Y15XOa0+PFgmzYqDLTmxXFUr1q9T5CGzEJ7f2iAhC90=;
- b=bfuK3uGwG3VDRqrN5XlX4Rh0O8o7yf+dy+R7plraaqpeRHl/BNvJtDDkfQSUTieYfR
- mGeps+qvn1ioTNQjMroKZrAAR9ymfCSo3ORww5123QZaAfx4HKqmzgkNzzenvIUKKR+G
- u09oe2BNr4lHQ510QvUMcTtB0qtL/4WHX65TrKECtsEdIAGCdCuF9bv/ScuLFzMpnpJe
- M8uY0U2kaAWsS7NQNyBZzxLVN4hD7VBS0cJ454N50O+DGyQ+BZDamjzrYMNduV7xPhPR
- V4kxjhihunvumJsMCXVo7EnmYh+bKVtXiNJbgsMLEnz/DyQFqH3CV0K/ovRrEV1Ccicu
- GI8A==
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779901041; x=1780505841;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=qCnISHlQuiGGEZaD1SIoc1SBMiprb6FDEoNofKEFb0Y=;
+ b=uPQH/EO7J6bqgqk30MnLZ/unrfnZHURj1z3fWoFLzsQPGqRofIrTWKfSJyK4ShxcOu
+ vTHIfJu5imcP/i54tVEyvdm/9mPEztcsyOYkbfveWGz/MlUXan50g8NEyZ3qNwapg3Js
+ K80P58FQ8CgU25/h7xZQ2RLDkcBDHWhOEYqaaOzdAaCLIidCLIl+WxdGz4kpFGpYEiem
+ XHPDcFGYG+B2trwPJIa5sGTJVBTMhOy4ns+/eNJLkzEAGk871fTCWUOJOWpOouHYLRkx
+ NqnsJ8omYiUXCGnBTpdKOAydPIE10mz2ZofzOvWa2yBu1Rypaa7FLQ0DaC/RZsElt5Dq
+ DE9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779900981; x=1780505781;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Y15XOa0+PFgmzYqDLTmxXFUr1q9T5CGzEJ7f2iAhC90=;
- b=dFJTD0OhNeEgx6P/WgJVxiz7aSlVfBk4mghUPZ/QLufmqowbHQLoO7ptApCfddY+wV
- 1q2fdG/AXhiMECtfRnEm6epCReT3jGh4SciVicSoffLKCnIYe361ZG4NB4rUaSlWKqxI
- 3JyNcXOkedNinV9Pn5bIG2Aj3aaFqRBPcFXRkUg7cNWDEGWz0alDk3uIqf5EtDiAhI1k
- 1BVLuscOqjZ+c4iQVk2m/ZY/kwDRlq+7OOALI4dQHMwzWWMmb824jD1FO/JPLrq88BNv
- KXxEc9MI7baWFXx56NmDTjEP3gu5Pa6n5BPjXIZFBxuca1nMa5qg9/6uOY5qv1Uxhfbf
- FoCA==
+ d=1e100.net; s=20251104; t=1779901041; x=1780505841;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qCnISHlQuiGGEZaD1SIoc1SBMiprb6FDEoNofKEFb0Y=;
+ b=osY9DWqyP8ixxAZwvx9vrQ1gc4Kamo1jNO58Dc/6n604wU2qisf2f95UB6IbMhBCNp
+ wOWBnJXoRrs4YYNOt0AgQa6O38v9ceIs0Upr/1Aha5vqsdPmXImcrGBLLwadMGtHT7AT
+ tXx6siuzUT5IIlWijp2TrS/dbZ9J2pYSiks9GFzw1VE5ul+k+7rliIqjmu78mK5zP9M8
+ lY/Wb/NzESw8gyIcPwXRJZ0c1TxtlOpKXPqLT/em90/hKZizsrNLNPSqy9+IB6n+axNx
+ P2mzmDM9uTT2ZQt9p1A70n3cooaXpOUWPfwc5uaoZWYgTd2pxUK3YRWW2g7ZnfpqNIll
+ JgRA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9gGmd8d+2OMHoCITVP7s9ykByiAQatRmK3zqWF5N1fgpNfuVi6DJ7xAAvKNr38TuG0GMCkImMpKVCv@nongnu.org
-X-Gm-Message-State: AOJu0Yz2l2Cfy7i9dn2aViQYhKtRl3M76lFlo3Ou8/1Hc9tZ/dJrM0SK
- S2TuTh2/BZnPNEVsNhc+x3PryjrjIArK0zhY+sGi3pgo7Jp0YUq+8nL19b691M5oXVAva6EqQG6
- uQ1DbOakD+DTAI6576NtQtNUsv+6g5t/03DCgpq42EXTq7Z/nd0OFaRVF
-X-Gm-Gg: Acq92OG25+THWz5zn0xDqvpiSOftOZYyPjonu4n5XoKeV7mHWLlxth0cD2K24bPEyjs
- GEx9/rWxzwzdLGwyfHQ0HOnGs4iAtpei0QbmhNOVsPxd8anRSS1HVagG+hKZwWrddH1rJ80E6+q
- At7jTW0E6fRze7dsM9jX8r9033S2Q1WBNL0SFooabvAZFtojkNOUgMVgf/drfdQi+6D2od3cXgC
- 8o3/u+8GiIQu1+7jqONe9qAnb08y4BGovYVejD0oH3TZmsKAdZsYif78GBq5ApHrADiSNXMmPIK
- wD6ZYUpN6mNBlXf2Rp1fSJCDp1PrayJuXQWiuTbSSy6n7CyL+Kg7VNtS+to4Ih4T+sNz+gkj5Om
- DgHnELCXfIUk0
-X-Received: by 2002:a05:600c:45c9:b0:490:5cb3:e94a with SMTP id
- 5b1f17b1804b1-4905cb3eb81mr264233485e9.2.1779900980855; 
- Wed, 27 May 2026 09:56:20 -0700 (PDT)
-X-Received: by 2002:a05:600c:45c9:b0:490:5cb3:e94a with SMTP id
- 5b1f17b1804b1-4905cb3eb81mr264232885e9.2.1779900980225; 
- Wed, 27 May 2026 09:56:20 -0700 (PDT)
-Received: from redhat.com ([31.187.78.155]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45edb548dfasm6840450f8f.4.2026.05.27.09.56.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 May 2026 09:56:19 -0700 (PDT)
-Date: Wed, 27 May 2026 12:56:17 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: Warner Losh <imp@bsdimp.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org, stefanha@redhat.com
-Subject: Re: on ai generated and code provenance
-Message-ID: <20260527125411-mutt-send-email-mst@kernel.org>
-References: <20260526140231-mutt-send-email-mst@kernel.org>
- <ahXtqyuIa4XqkMHb@redhat.com>
- <20260526152526-mutt-send-email-mst@kernel.org>
+ AFNElJ+qmOKfDpqmUlinQH8yWLZEsMqv26/Oyl1Y1P4oUyIXzPVjR7hHEN6YWW6LTN5GOVgw5oJSaA1OU5v3@nongnu.org
+X-Gm-Message-State: AOJu0Yy2npTs9bMV0lsjPwuGOs8b2ND80dlR4PqpkAsKDfB8iTyqDz2z
+ 2IsT1Q0F/Z0aI47w2lZ9i0SyRmwh7h9nbRE+G25FbJyHcPzJu6Fjv/sMvXGvn7SQVYI3KMV40Iq
+ 63BsmUTUkIMqew0c311DKG8NethWPLzizv2EKweOrb4+ouCBP2gA6oSk=
+X-Gm-Gg: Acq92OGuGqX8dT//t8obT6uM20RgYWgOQoFi4daSkzTlfszsfdZ4HPz9/241rpv/r+T
+ 2912Pdz9Sew2gbpwG4zH8FCxjEKj/HZ04WZSb5kXDku8pDz3EwdyrKA0QxhrVd4QIKspmErAcZ2
+ AUOX5KusGW3nYfzX2VxyUVWZS0n8WHEieg6qdkrA8xPKO66sS9s7xpG35CIMuP/GVK4Ok5IdkKr
+ pTcLexPE1hDLR3GJZ9V6E2yQP/3lNB2P6N8sY0UroSDVISorTqStg/g1cbzdhOEbj9b3FZh4KhV
+ JzhJdQUOBO61OGu1Xw==
+X-Received: by 2002:a17:90b:4d10:b0:368:3830:a8bd with SMTP id
+ 98e67ed59e1d1-36a476e8096mr22374113a91.7.1779901041405; Wed, 27 May 2026
+ 09:57:21 -0700 (PDT)
+MIME-Version: 1.0
+References: <20260524083329-mutt-send-email-mst@kernel.org>
+ <ahXbxzB4C_lr6b0N@redhat.com> <20260526140231-mutt-send-email-mst@kernel.org>
+ <ahXtqyuIa4XqkMHb@redhat.com> <20260526152526-mutt-send-email-mst@kernel.org>
  <CANCZdfonroZmdRRpPdHzTKR_m8qyVdSG14gXB-K3BTuv=Qgw9g@mail.gmail.com>
  <ahauQKLOU1tzDtbb@redhat.com>
  <f8791a2d-257b-4233-aafb-ccd45e695542@redhat.com>
  <CANCZdfrZFwq3Rq8xifJtvz2o8_3_z=4OTxvknv3x9b719bZK4Q@mail.gmail.com>
- <ahcE-pDc_7tTrsz3@redhat.com>
- <20260527123942-mutt-send-email-mst@kernel.org>
- <ahcgxpvXFoPE0C-X@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ahcgxpvXFoPE0C-X@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ <8416cfdf-b9a6-427c-8118-fd2ed7661f2e@redhat.com>
+ <20260527124115-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20260527124115-mutt-send-email-mst@kernel.org>
+From: Warner Losh <imp@bsdimp.com>
+Date: Wed, 27 May 2026 10:57:09 -0600
+X-Gm-Features: AVHnY4Lj1VPTAGmDzNh30XwTdINL8-JNiZ4jjY4rwjsE1p3MJtns4ZrEK_OG95s
+Message-ID: <CANCZdfqSEzhjE5Ts+B3hL3GSmT0vw_Q=t_-4BkYugOUNR4_+XA@mail.gmail.com>
+Subject: Re: on ai generated and code provenance
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-devel@nongnu.org, stefanha@redhat.com
+Content-Type: multipart/alternative; boundary="0000000000004f01a20652cf81e7"
+Received-SPF: none client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x102b.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,62 +122,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 27, 2026 at 06:50:14PM +0200, Kevin Wolf wrote:
-> Am 27.05.2026 um 18:41 hat Michael S. Tsirkin geschrieben:
-> > On Wed, May 27, 2026 at 04:51:38PM +0200, Kevin Wolf wrote:
-> > > Am 27.05.2026 um 16:14 hat Warner Losh geschrieben:
-> > > > On Wed, May 27, 2026 at 4:01 AM Paolo Bonzini <pbonzini@redhat.com> wrote:
-> > > > > Commit messages for AI-assisted changes
-> > > > > ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> > > > >
-> > > > > When AI/LLM tools produce or substantively shape your patch, add an
-> > > > > ``AI-used-for:`` trailer.  The text of the trailer could be one or more
-> > > > > of ``code``, ``tests``, ``docs``, ``research``, possibly followed by an
-> > > > > explanation in parentheses::
-> > > > >
-> > > > >      AI-used-for: tests, docs
-> > > > >      AI-used-for: code
-> > > > >      AI-used-for: code (refactoring)
-> > > > >      AI-used-for: code (prototype)
-> > > > >      AI-used-for: research
-> > > > >
-> > > > > The trailer is intended as a clarification of your DCO obligations as
-> > > > > well as to guide reviewers.  It is not intended for minimal presence
-> > > > > such as autocomplete or asking for a pre-review of the patch, and it
-> > > > > does not remove your responsibility to understand the changes that you
-> > > > > are submitting.
-> > > > 
-> > > > Why invent something new here when Assisted-by: is used elsewhere
-> > > > and is likely more familiar to other users.
-> > > 
-> > > Because Assisted-by: gives different information, which at least to me
-> > > isn't really interesting at all. It's much more interesting to me if the
-> > > code I'm looking at is generated, or if you only generated the tests.
-> > 
-> > I personally am interested to know which models work better than others.
-> > Contributions are about reputation not just code.  I'll learn which
-> > models produce better output, just like I learn to trust specific
-> > contributors better.
-> 
-> You don't see how well the model worked. What you see is filtered by the
-> submitter, and the policy we're discussing is specifically made to make
-> sure that bad results never reach the list.
-> 
-> Even for things that do reach the list, Assisted-by: doesn't tell you
-> how much of the submission is AI-generated and it also doesn't tell you
-> if it's "I used model X and a simple prompt gave me the perfect result
-> in the first attempt" or "I used model X and it took me two days of back
-> and forth and eventually I just rewrote most of it, but there are a few
-> AI-generated lines left".
-> 
-> So what you should trust is the contributor, not an Assisted-by: tag.
-> 
-> Kevin
+--0000000000004f01a20652cf81e7
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Well, AI-used-for research isn't really useful to me at all then.
-Why do I care about research?
+On Wed, May 27, 2026 at 10:48=E2=80=AFAM Michael S. Tsirkin <mst@redhat.com=
+> wrote:
 
--- 
-MST
+> On Wed, May 27, 2026 at 06:05:47PM +0200, Paolo Bonzini wrote:
+> > On 5/27/26 16:14, Warner Losh wrote:
+> > > Why invent something new here when Assisted-by: is used elsewhere
+> > > and is likely more familiar to other users.
+> >
+> > Because Assisted-by was invented by AI companies to get free
+> advertisement.
+>
+> Jonathan Corbet is in the pocket of AI companies? Or Sasha Levin?
+> https://lore.kernel.org/lkml/20251223122110.2496946-1-sashal@kernel.org/
+> https://lore.kernel.org/lkml/877bqtlzug.fsf@trenco.lwn.net/
 
+
+Yea. Assisted-by was not invented by AI companies. That's just rubbish.
+
+See https://github.com/anthropics/claude-code/issues/36105 for the open
+issue with Claude.
+
+> (It's not just me; see
+> > https://akselmo.dev/posts/stop-advertising-in-your-commits/ for an
+> example).
+>
+> Does not impress me as being either super informed or super
+> professional.
+>
+
+Yea, seems crazy.
+
+
+> > Also, it does not answer any interesting question.
+>
+> It does for me - I will learn which models are more likely to produce
+> bad slop.
+>
+
+Same. I can tell the difference in the degree of slop between the different
+models
+and have sometimes selected the older one over the newer one because it doe=
+s
+a better job.
+
+
+> > Not using it is also a good way to sieve people who didn't bother to re=
+ad
+> > the policy, now that I think about it.
+>
+> In my experience, AI tools add "Co-developed-by:" tags by default. One
+> has to read the policy to add Assisted-by.
+>
+
+Co-authored-by: you mean? That's what claude adds for me. I had to take
+extra effort to add the new Assisted-by: to my patch review.
+
+Warner
+
+--0000000000004f01a20652cf81e7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, May 27,=
+ 2026 at 10:48=E2=80=AFAM Michael S. Tsirkin &lt;<a href=3D"mailto:mst@redh=
+at.com">mst@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_q=
+uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
+04);padding-left:1ex">On Wed, May 27, 2026 at 06:05:47PM +0200, Paolo Bonzi=
+ni wrote:<br>
+&gt; On 5/27/26 16:14, Warner Losh wrote:<br>
+&gt; &gt; Why invent something new here when Assisted-by: is used elsewhere=
+<br>
+&gt; &gt; and is likely more familiar to other users.<br>
+&gt; <br>
+&gt; Because Assisted-by was invented by AI companies to get free advertise=
+ment.<br>
+<br>
+Jonathan Corbet is in the pocket of AI companies? Or Sasha Levin?<br>
+<a href=3D"https://lore.kernel.org/lkml/20251223122110.2496946-1-sashal@ker=
+nel.org/" rel=3D"noreferrer" target=3D"_blank">https://lore.kernel.org/lkml=
+/20251223122110.2496946-1-sashal@kernel.org/</a><br>
+<a href=3D"https://lore.kernel.org/lkml/877bqtlzug.fsf@trenco.lwn.net/" rel=
+=3D"noreferrer" target=3D"_blank">https://lore.kernel.org/lkml/877bqtlzug.f=
+sf@trenco.lwn.net/</a></blockquote><div><br></div><div>Yea. Assisted-by was=
+ not invented by AI companies. That&#39;s just rubbish.</div><div><br></div=
+><div>See=C2=A0<a href=3D"https://github.com/anthropics/claude-code/issues/=
+36105">https://github.com/anthropics/claude-code/issues/36105</a> for the=
+=C2=A0open</div><div>issue with Claude.</div><div><br></div><blockquote cla=
+ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
+rgb(204,204,204);padding-left:1ex">
+&gt; (It&#39;s not just me; see<br>
+&gt; <a href=3D"https://akselmo.dev/posts/stop-advertising-in-your-commits/=
+" rel=3D"noreferrer" target=3D"_blank">https://akselmo.dev/posts/stop-adver=
+tising-in-your-commits/</a> for an example).<br>
+<br>
+Does not impress me as being either super informed or super<br>
+professional.<br></blockquote><div><br></div><div>Yea, seems crazy.</div><d=
+iv>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0p=
+x 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+&gt; Also, it does not answer any interesting question.<br>
+<br>
+It does for me - I will learn which models are more likely to produce<br>
+bad slop.<br></blockquote><div><br></div><div>Same. I can tell the differen=
+ce in the degree of slop between the different models</div><div>and have so=
+metimes selected the older one over the newer one because it does</div><div=
+>a better job.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" styl=
+e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
+g-left:1ex">
+&gt; Not using it is also a good way to sieve people who didn&#39;t bother =
+to read<br>
+&gt; the policy, now that I think about it.<br>
+<br>
+In my experience, AI tools add &quot;Co-developed-by:&quot; tags by default=
+. One<br>
+has to read the policy to add Assisted-by.<br></blockquote><div><br></div><=
+div>Co-authored-by: you mean? That&#39;s what claude adds for me. I had to =
+take</div><div>extra effort to add the new Assisted-by: to my patch review.=
+=C2=A0</div><div><br></div><div>Warner</div><div><br></div></div></div>
+
+--0000000000004f01a20652cf81e7--
 
