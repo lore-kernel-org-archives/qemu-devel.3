@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BA8FCD5BD0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 20:16:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A236CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 20:16:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSKeS-0006Py-Ay; Wed, 27 May 2026 16:14:52 -0400
+	id 1wSKdd-00062M-TW; Wed, 27 May 2026 16:14:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSKeQ-0006PN-Mw
- for qemu-devel@nongnu.org; Wed, 27 May 2026 16:14:50 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSKdY-00061L-Fp
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 16:13:56 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSKeP-0005ND-12
- for qemu-devel@nongnu.org; Wed, 27 May 2026 16:14:50 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-49048e043e5so44524935e9.1
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 13:14:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSKdV-00052h-91
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 16:13:56 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-49050bfe053so25752565e9.3
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 13:13:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779912888; x=1780517688; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=g8sLi8TpVj+WiyqU3QlE4wdZYfoI/mwrAP3TeMVzFfg=;
- b=poRX/UaTOaAnJdZnmJMgpeV+XXzQ5Xh8NXmyP9PBYDWeTAK+GQb0k3yCllRW8kyUI2
- Xwo70uQ6p84jlbSM0Muwv3DH4CMHeomEGOb301IYKtOnPT6fVMkS+bB40cxCHLpkpBBO
- de2XpuKCH4tcn9MY4kVMDwJx8yBs74tEbYIqwjgVGPifsyCLKwjF3i/luPbIWKZhiQRq
- T6iSI7AE2TggsvE6C0uJ85DD2MAR9QYOu+cbd1tHPXofpqAsADQicP/hKLr4IQSfQg4R
- EqB6BXgSbDJJ96rm5s5jrbK0pBBAnqi9s714ng5IJ21UGKx4Wgdu2wdwb1k7M532nkRp
- OcMQ==
+ d=linaro.org; s=google; t=1779912831; x=1780517631; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=8G9c8wRGou6KDpPdZGIpyix00Ld4OWP7+GlBI62bb34=;
+ b=lisJq1T0/8x9HgAsvfH6BGJUTlkEIXBwwVWoy/u5UmoH3hArRc4SePK8BIa+mgWIVG
+ NcrDogGxYEO4JxiwwlTTl9eTzxiNMn6ej7Vfd5v2+ZhMaMtmLpOKgALEYWrbsR+AaEkD
+ QmHp7u7SzboTttwSZI8KYZqKrMcG3w1fRroM8HVZv6U8fkP7jJzV1NtQfcSwifn9fX8g
+ rRfx5d2DDTTbiV390GXz0o5kbF0gxGqDMO3Uhx+XQJdxH/KfuwoEB+dRj8JfaEyCPWRK
+ F/Hz8uOWSJhud/FKfVtSI28CvGipX+9ikI1NxnxmdqKSz1aO1bR+0UFj3CHsv+Ey7yI+
+ WKlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779912888; x=1780517688;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=g8sLi8TpVj+WiyqU3QlE4wdZYfoI/mwrAP3TeMVzFfg=;
- b=f3z+IpSDfT5FPdNfOpxY35uEDIG/OxoF3rmuQD52DfAIfpQgKr9frHurlV7rk+MLrT
- AcgTPvgNwCYZa+Z5szLZqE+M23vefO87fdmXbScqSXKo+MvoBYfU8xTKcmwu5+LnFDlJ
- YRMT/2iQt8Adi7kR/Aep0vIa5g9gMVYoEmxnn62i7B+3+jJKmTMck7dcEf+CIhVXQeYK
- PkPTMHKW+l9fS74xuwu7oqaQCp4ZYf67mmAYA5AS6hlDPssnVh25zedf4R0LGsEXjHLz
- Hotqzma9GCPdDUnUbRr6JI45hYkCYqAgbmgNuqQW/hQn5TtWvpxjg4qddSnMj7P8pSTN
- VrtQ==
-X-Gm-Message-State: AOJu0YxKTzExP2nZhVwyo+VMSChL3iYD9iORfUhthZijcXCF6/4+3akS
- bVT8HAqKMXbULtCY1u8DOTeISJVbuY6PQvHpFOG/OR8eeqYlzpdUTaVYSINAel1sDmVazzVe34w
- V3UnuPzLpxA==
-X-Gm-Gg: Acq92OGnlHK6y6ii5etbsE7fP8A9VvXeCwpU/s2gWLv3CKPbI5K1oRUi8CVqJ/QarWC
- 0r+gz6i/AlcVQT2PWgZEW+b1CTYJB7Hxv+yyLeaY7dDZi+5Qe4WserKBbqhX6GIfqyoAp0xs4Ka
- 1h99X5lc2UJry2flcA9OMM1QsCocEGZ6hOX/zlJS5QMbrJy2KaNjN+UsKfUzjEyFEjFG/Cb6CTB
- Fn1vGlGaLKebv9v0EFdzc+ELPM8tUkXI6bWhz7rEYc44lac6GimDvDhktNyLVq2y0XKKSQ7KYF4
- xcxfbMswUIRnjc1wtVARY9qJoWy81WCWqIWxxrNBz+rqhcsP+erPYBmbzCahQl7r+nHaRafOVPO
- 1kpbIC/+q8IKgB2XQTuTpfcSvejod7fnmhW3EekANFg4F6FjNUZQl7yeackbA60di+RiboVJWz9
- JoYNA70X3UP1qWOJEswIjnqLkqStmiLHiurF8QeZ2cTeVRaHaCEXD/47YZBD6Q5YyEjw==
-X-Received: by 2002:a05:600c:8484:b0:490:3c94:a3c6 with SMTP id
- 5b1f17b1804b1-490428e205cmr425199855e9.26.1779912887601; 
- Wed, 27 May 2026 13:14:47 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779912831; x=1780517631;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8G9c8wRGou6KDpPdZGIpyix00Ld4OWP7+GlBI62bb34=;
+ b=BdD15YMiPH2s/1CdbdPZP82ZvXt7uLPu3PUbWNhlmN5UAgJkMGNaKL2hVz+FDwaeZD
+ PkVcyKRKSUXNTd9XuEpOqIjK/82/X5r4s85f23UnFUQO+1pTrmVmnaKgacpJT9B1lMwF
+ C8/lLx5/aPkmrwvhwBzZDIe1gIG4YA5fAXY44KUI25pyMbTSF2tBg/PkGcSmYOfNAg8O
+ DKNzyDHAAkCI5o5zXjip1oYedoiolLryy7eX8e9VlzxMlTTh5qac5UrzezrRVHs3Ionp
+ nXPckx+dLFAO69prqslDIvyF/k90GVnlMFoSQRcXrtHYuGSW2RDgH+Okwk0Z3qb8s2iQ
+ /zqQ==
+X-Gm-Message-State: AOJu0YywJckXisrOodr8w2tobQJa0gYCe9wFjS3gEKQJT0MPS42qOK7k
+ i2nsKDRUeJrG9sydOQPSSJGXn44nLNjNMAhBNb3AzI+WKJHRFfvV9ddrH5xPwoNrbSLotJlU5ba
+ l4YUnNdnUIQ==
+X-Gm-Gg: Acq92OFRcxIs8pkjf2wAMfaBK/nRy5zd1qO2rrWDPP/gocfco2FC5uWLNZdWm0XMUWo
+ Lqnpisov1FVC8QKeFgkR2IXTwHNkvkCnzTuoGKMZoiR22SLOzvUq8pCgBVoq/4gHRPDULekJaZt
+ QmpKnIo9Q5wTfcQKmyf923kJ3Mcr4AYd6Gvv2GiLG3zdYi+kPIo2b2J32RGzhhSEgY0/oz0/bVc
+ I5bkeNeR9mXdoW0DxANuFmVmEy4d5XWL7wV3by6HZkA6cy5SVY7tuB5HQS/DqtvjGLK59tEvWQX
+ WktjTO5ZxUcwPcORZcVq8Pqh55THaMCawYSMktlMeTjma0AMuT+Twva1kcxAIrf+Rh4+3g0hNLm
+ 3kiPdqiepzQjfoD0BjnAMMqdesULVtBtm5sIJKJx86qlA3o4RVQMF/lJnRYBlx+A0KijrNn6k4p
+ X4mewzGqYWkBZ6ab6+kQ6Tks7a33H8qWwR6jzDuJsqB879LkgzFxmQlRJpgiYbk3dIRQ==
+X-Received: by 2002:a05:600c:3511:b0:490:6e1a:8a45 with SMTP id
+ 5b1f17b1804b1-4906e1a8ad5mr185323905e9.25.1779912831384; 
+ Wed, 27 May 2026 13:13:51 -0700 (PDT)
 Received: from m17.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490454ea134sm461293765e9.8.2026.05.27.13.14.46
+ ffacd0b85a97d-45edb5584b8sm8116578f8f.11.2026.05.27.13.13.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 27 May 2026 13:14:46 -0700 (PDT)
+ Wed, 27 May 2026 13:13:50 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -75,18 +74,15 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Christoph Muellner <christoph.muellner@vrull.eu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v11 07/12] hw/riscv/boot: Rewrite setup_rom_reset_vec() using
- load/store API
-Date: Wed, 27 May 2026 22:13:43 +0200
-Message-ID: <20260527201348.29511-8-philmd@linaro.org>
+Subject: [PATCH v11 00/12] Add RISC-V big-endian target support
+Date: Wed, 27 May 2026 22:13:36 +0200
+Message-ID: <20260527201348.29511-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260527201348.29511-1-philmd@linaro.org>
-References: <20260527201348.29511-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,102 +105,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to make the following commits easier to review, do
-not pre-initialize the reset_vec[] array, fill each word one
-by one. Set the start and FDT load addresses using the load/
-store APIs.
+v11:
+- rewrite some patches while reviewing for mainstream integration
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/riscv/boot.c | 53 ++++++++++++++++++++++---------------------------
- 1 file changed, 24 insertions(+), 29 deletions(-)
+v10 cover from Djordje:
 
-diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-index ae2f86c7ceb..c6ab1cc8cfb 100644
---- a/hw/riscv/boot.c
-+++ b/hw/riscv/boot.c
-@@ -18,6 +18,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/bswap.h"
- #include "qemu/datadir.h"
- #include "qemu/units.h"
- #include "qemu/error-report.h"
-@@ -444,6 +445,9 @@ void riscv_rom_copy_firmware_info(MachineState *machine,
-                            &address_space_memory);
- }
- 
-+#define CODE_WORDS 6
-+#define DATA_WORDS 4
-+
- void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayState *harts,
-                                hwaddr start_addr,
-                                hwaddr rom_base, hwaddr rom_size,
-@@ -451,43 +455,34 @@ void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayState *harts
-                                uint64_t fdt_load_addr)
- {
-     int i;
--    uint32_t start_addr_hi32 = 0x00000000;
--    uint32_t fdt_load_addr_hi32 = 0x00000000;
-+    const bool rv32 = riscv_is_32bit(harts);
-+    uint32_t reset_vec[CODE_WORDS + DATA_WORDS];
- 
--    if (!riscv_is_32bit(harts)) {
--        start_addr_hi32 = start_addr >> 32;
--        fdt_load_addr_hi32 = fdt_load_addr >> 32;
--    }
--    /* reset vector */
--    uint32_t reset_vec[10] = {
--        0x00000297,                  /* 1:  auipc  t0, %pcrel_hi(fw_dyn) */
--        0x02828613,                  /*     addi   a2, t0, %pcrel_lo(1b) */
--        0xf1402573,                  /*     csrr   a0, mhartid  */
--        0,
--        0,
--        0x00028067,                  /*     jr     t0 */
--        start_addr,                  /* start: .dword */
--        start_addr_hi32,
--        fdt_load_addr,               /* fdt_laddr: .dword */
--        fdt_load_addr_hi32,
--                                     /* fw_dyn: */
--    };
--    if (riscv_is_32bit(harts)) {
--        reset_vec[3] = 0x0202a583;   /*     lw     a1, 32(t0) */
--        reset_vec[4] = 0x0182a283;   /*     lw     t0, 24(t0) */
-+    /* .text */
-+    reset_vec[0] = 0x00000297;                  /* 1:  auipc  t0, %pcrel_hi(fw_dyn) */
-+    reset_vec[1] = 0x02828613;                  /*     addi   a2, t0, %pcrel_lo(1b) */
-+    if (harts->harts[0].cfg.ext_zicsr) {
-+        reset_vec[2] = 0xf1402573;              /*     csrr   a0, mhartid  */
-     } else {
--        reset_vec[3] = 0x0202b583;   /*     ld     a1, 32(t0) */
--        reset_vec[4] = 0x0182b283;   /*     ld     t0, 24(t0) */
--    }
--
--    if (!harts->harts[0].cfg.ext_zicsr) {
-         /*
-          * The Zicsr extension has been disabled, so let's ensure we don't
-          * run the CSR instruction. Let's fill the address with a non
-          * compressed nop.
-          */
--        reset_vec[2] = 0x00000013;   /*     addi   x0, x0, 0 */
-+        reset_vec[2] = 0x00000013;              /*     addi   x0, x0, 0 */
-     }
-+    if (rv32) {
-+        reset_vec[3] = 0x0202a583;              /*     lw     a1, 32(t0) */
-+        reset_vec[4] = 0x0182a283;              /*     lw     t0, 24(t0) */
-+    } else {
-+        reset_vec[3] = 0x0202b583;              /*     ld     a1, 32(t0) */
-+        reset_vec[4] = 0x0182b283;              /*     ld     t0, 24(t0) */
-+    }
-+    reset_vec[5] = 0x00028067;                  /*     jr     t0 */
-+
-+    /* .data */
-+    stq_p(&reset_vec[6], start_addr);           /* start:       .dword */
-+    stq_p(&reset_vec[8], fdt_load_addr);        /* fdt_laddr:   .dword */
- 
-     /* copy in the reset vector in little_endian byte order */
-     for (i = 0; i < ARRAY_SIZE(reset_vec); i++) {
+Hi all,
+
+This series adds big-endian data support for RISC-V system emulation.
+
+Following the discussion on previous versions, this series models
+fixed-endian harts, not a mixed-endian implementation where software can
+toggle MBE/SBE/UBE at runtime. The reset value of MBE/SBE/UBE is selected
+from the CPU configuration. These bits remain outside the
+mstatus/mstatush/sstatus writable masks, so they are effectively hardwired
+to 0 for the default little-endian CPUs and to 1 when `big-endian=on`.
+
+The user-visible `big-endian` CPU property is exposed only after the data
+path, boot path, and page-table walk support are in place, so the series
+remains bisectable.
+
+Djordje Todorovic (6):
+  target/riscv: Implement runtime data endianness via MSTATUS bits
+  target/riscv: Fix page table walk endianness for big-endian harts
+  target/riscv: Add big-endian CPU configuration field and reset logic
+  hw/riscv/boot: Honour data endianness
+  target/riscv: Expose and document the CPU 'big-endian' property
+  tests/functional: Add RISC-V endianness test
+
+Philippe Mathieu-Daudé (6):
+  target/riscv: Initialize DisasContext::mo_endian once
+  target/riscv: Assert PTE.N/PBMT bits are not expected on RV32
+  target/riscv: De-indent some code in get_physical_address()
+  target/riscv: Remove target_ulong use in get_physical_address()
+  hw/riscv/boot: Rewrite setup_rom_reset_vec() using load/store API
+  hw/riscv/boot: Replace cpu_to_le32() -> const_le32()
+
+ docs/system/target-riscv.rst                  | 29 ++++++
+ target/riscv/cpu.h                            |  1 +
+ target/riscv/internals.h                      | 29 ++++--
+ target/riscv/cpu_cfg_fields.h.inc             |  1 +
+ hw/riscv/boot.c                               | 93 ++++++++++---------
+ target/riscv/cpu.c                            | 15 ++-
+ target/riscv/cpu_helper.c                     | 44 +++++----
+ target/riscv/tcg/tcg-cpu.c                    |  2 +
+ target/riscv/translate.c                      | 22 ++---
+ target/riscv/insn_trans/trans_rva.c.inc       |  4 +-
+ target/riscv/insn_trans/trans_rvd.c.inc       |  4 +-
+ target/riscv/insn_trans/trans_rvf.c.inc       |  4 +-
+ target/riscv/insn_trans/trans_rvi.c.inc       |  8 +-
+ target/riscv/insn_trans/trans_rvzacas.c.inc   |  4 +-
+ target/riscv/insn_trans/trans_rvzalasr.c.inc  |  4 +-
+ target/riscv/insn_trans/trans_rvzce.c.inc     |  4 +-
+ target/riscv/insn_trans/trans_rvzfh.c.inc     |  4 +-
+ target/riscv/insn_trans/trans_rvzicfiss.c.inc |  4 +-
+ target/riscv/insn_trans/trans_xmips.c.inc     |  8 +-
+ target/riscv/insn_trans/trans_xthead.c.inc    | 16 ++--
+ target/riscv/insn_trans/trans_zilsd.c.inc     |  4 +-
+ tests/functional/riscv64/meson.build          |  1 +
+ tests/functional/riscv64/test_endianness.py   | 57 ++++++++++++
+ 23 files changed, 240 insertions(+), 122 deletions(-)
+ create mode 100644 tests/functional/riscv64/test_endianness.py
+
 -- 
 2.53.0
 
