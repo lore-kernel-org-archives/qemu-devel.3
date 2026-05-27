@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D18E9CD5BDE
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 06:19:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17408CD5BDE
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 06:20:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wS7Zf-00047h-2L; Wed, 27 May 2026 02:17:03 -0400
+	id 1wS7Zg-00049H-KM; Wed, 27 May 2026 02:17:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wS7ZS-000403-6s
- for qemu-devel@nongnu.org; Wed, 27 May 2026 02:16:51 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ id 1wS7ZM-0003wg-IY
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 02:16:46 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wS7ZN-00049D-T0
- for qemu-devel@nongnu.org; Wed, 27 May 2026 02:16:49 -0400
+ id 1wS7ZJ-00040Q-KI
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 02:16:43 -0400
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:2925:0:640:1f39:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 84DBD80604;
- Wed, 27 May 2026 09:16:44 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 2CC4180773;
+ Wed, 27 May 2026 09:16:40 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:69::1:d])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id QGSCNG0ZtGk0-GUOagDyy; Wed, 27 May 2026 09:16:43 +0300
+ id QGSCNG0ZtGk0-1QA2gkap; Wed, 27 May 2026 09:16:39 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1779862604;
- bh=vyElk3FXLNKWSELumKfi8IPDAq8aQq0zwO2Sd49gLCs=;
+ s=default; t=1779862599;
+ bh=DVN2E1fV05CJbMdBv0cpyI66en0JLWifnhyATE8IemA=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=L1/MVGxLAusx91VHG0s3HpIt3lNNnz1fwtB+apHiRTNuQZ7n19lxBXt8841wjdMSx
- Q96DMLaprYuBecvD+I+AlEDpHk9F4cHY6U3ScLfbIRuRNHogrYI6xkw6VRxgro0Vys
- KYnaV82Tk3Y7FLG0lEdPOYBZ+BruU7tcXPYyy8so=
+ b=A7iMHsEkVqfYC45zlXHib4ZECklDO4L5Y/dP+r6WuIkHmZUdVczumxxRPkzTUEiUR
+ VBCG6DDTnkoB2eaTlAWVzR/v+7IX/U2FdYDpREE6oiw/SH8nhzOsg7HkT9ZnsLVuIu
+ Zo4uj4ytOcfhBt9yJ0zfsGFFsuzINTBMER8KqrHY=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -45,17 +44,16 @@ To: mst@redhat.com
 Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
  vsementsov@yandex-team.ru, yc-core@yandex-team.ru,
  d-tatianin@yandex-team.ru, Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Subject: [PATCH v7 18/22] vhost: vhost_dev_init(): simplify features
- initialization
-Date: Wed, 27 May 2026 09:16:19 +0300
-Message-ID: <20260527061625.11167-19-vsementsov@yandex-team.ru>
+Subject: [PATCH v7 12/22] vhost: simplify calls to vhost_memory_unmap()
+Date: Wed, 27 May 2026 09:16:13 +0300
+Message-ID: <20260527061625.11167-13-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260527061625.11167-1-vsementsov@yandex-team.ru>
 References: <20260527061625.11167-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -76,71 +74,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Drop extra variable and extra function parameter passing, initialize
-dev._features directly.
+No reason to calculate memory size again, as we have corresponding
+variable for each vring.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
 Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 ---
- hw/virtio/vhost.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ hw/virtio/vhost.c | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
 
 diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 55ce7ae977f..93c6a5f5e9a 100644
+index b9b7a984e33..f43e563f0de 100644
 --- a/hw/virtio/vhost.c
 +++ b/hw/virtio/vhost.c
-@@ -1560,18 +1560,17 @@ static void vhost_virtqueue_cleanup(struct vhost_virtqueue *vq)
-     }
- }
+@@ -1383,12 +1383,9 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+     return 0;
  
--static int vhost_dev_get_features(struct vhost_dev *hdev,
--                                  uint64_t *features)
-+static int vhost_dev_init_features(struct vhost_dev *hdev)
- {
-     uint64_t features64;
-     int r;
- 
-     if (hdev->vhost_ops->vhost_get_features_ex) {
--        return hdev->vhost_ops->vhost_get_features_ex(hdev, features);
-+        return hdev->vhost_ops->vhost_get_features_ex(hdev, hdev->_features_ex);
-     }
- 
-     r = hdev->vhost_ops->vhost_get_features(hdev, &features64);
--    virtio_features_from_u64(features, features64);
-+    virtio_features_from_u64(hdev->_features_ex, features64);
+ fail:
+-    vhost_memory_unmap(dev, &vq->used, virtio_queue_get_used_size(vdev, idx),
+-                       0, 0);
+-    vhost_memory_unmap(dev, &vq->avail, virtio_queue_get_avail_size(vdev, idx),
+-                       0, 0);
+-    vhost_memory_unmap(dev, &vq->desc, virtio_queue_get_desc_size(vdev, idx),
+-                       0, 0);
++    vhost_memory_unmap(dev, &vq->used, vq->used_size, 0, 0);
++    vhost_memory_unmap(dev, &vq->avail, vq->avail_size, 0, 0);
++    vhost_memory_unmap(dev, &vq->desc, vq->desc_size, 0, 0);
      return r;
  }
  
-@@ -1579,7 +1578,6 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
-                    VhostBackendType backend_type, uint32_t busyloop_timeout,
-                    Error **errp)
- {
--    uint64_t features[VIRTIO_FEATURES_NU64S];
-     unsigned int used, reserved, limit;
-     int i, r, n_initialized_vqs = 0;
- 
-@@ -1600,9 +1598,9 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
-         goto fail;
+@@ -1435,12 +1432,9 @@ static int do_vhost_virtqueue_stop(struct vhost_dev *dev,
+                                                 vhost_vq_index);
      }
  
--    r = vhost_dev_get_features(hdev, features);
-+    r = vhost_dev_init_features(hdev);
-     if (r < 0) {
--        error_setg_errno(errp, -r, "vhost_get_features failed");
-+        error_setg_errno(errp, -r, "vhost_init_features failed");
-         goto fail;
-     }
+-    vhost_memory_unmap(dev, &vq->used, virtio_queue_get_used_size(vdev, idx),
+-                       1, virtio_queue_get_used_size(vdev, idx));
+-    vhost_memory_unmap(dev, &vq->avail, virtio_queue_get_avail_size(vdev, idx),
+-                       0, virtio_queue_get_avail_size(vdev, idx));
+-    vhost_memory_unmap(dev, &vq->desc, virtio_queue_get_desc_size(vdev, idx),
+-                       0, virtio_queue_get_desc_size(vdev, idx));
++    vhost_memory_unmap(dev, &vq->used, vq->used_size, 1, vq->used_size);
++    vhost_memory_unmap(dev, &vq->avail, vq->avail_size, 0, vq->avail_size);
++    vhost_memory_unmap(dev, &vq->desc, vq->desc_size, 0, vq->desc_size);
+     return r;
+ }
  
-@@ -1628,8 +1626,6 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
-         }
-     }
- 
--    virtio_features_copy(hdev->_features_ex, features);
--
-     hdev->memory_listener = (MemoryListener) {
-         .name = "vhost",
-         .begin = vhost_begin,
 -- 
 2.52.0
 
