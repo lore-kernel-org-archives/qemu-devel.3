@@ -4,121 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49C47CD5BD0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 15:46:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86329CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 15:47:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSGSH-0003p6-QL; Wed, 27 May 2026 11:46:02 -0400
+	id 1wSGTe-0004rA-63; Wed, 27 May 2026 11:47:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wSGSE-0003m1-QV
- for qemu-devel@nongnu.org; Wed, 27 May 2026 11:45:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wSGSD-0006cn-42
- for qemu-devel@nongnu.org; Wed, 27 May 2026 11:45:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779896756;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9muSlnmiwd2mhBLAgro+7z3m7qZ5WDxt0cKhMmUlN+E=;
- b=HDl2qtVjFhfWXaL10UqystNmUW7aH8CO3PAnpbUppq49MI8cLFN4roVTuJeYLxTmldx2b/
- ytnTaygm9jp8LujPAaj4CjbU41X6nUyBADu5YhJF2n4OBADCOBQMPFkUKGYl4HwgWkNo2S
- EPk9A6fvNtPIQ3zCJZYwghlPvuYrjWc=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-348-sktSE2gyOLqHCUgXtzwuJQ-1; Wed, 27 May 2026 11:45:53 -0400
-X-MC-Unique: sktSE2gyOLqHCUgXtzwuJQ-1
-X-Mimecast-MFC-AGG-ID: sktSE2gyOLqHCUgXtzwuJQ_1779896752
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4903dcb32f8so51869585e9.0
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 08:45:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wSGTV-0004qH-I6
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 11:47:17 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wSGTQ-0007KN-LY
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 11:47:14 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2b788a98557so77133545ad.2
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 08:47:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779896831; x=1780501631; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=tDoyv/Ygmfr7CRPIvOINuRexPPTxTNrrwr1+BRAT45U=;
+ b=dgB1GDnussfk0tvjil/tOfxI3tlp5bbcl5dfSDWmNgCzZlsyHle0OH5UlXy+wTC3zk
+ FjWsqeVaeMO/X2EhuWuFVF2qTaBxsvqdD07d5DMNfJBUvWCWhMVyrEvgQHtLHYUph1ht
+ sGU3/EKk0O7J6a4wzBjPT+UsRjbFmeMVtsLbnZ21AIyTa3oNhA3cY+2vORbgAxEUcRD0
+ RprL0TFV8U305YxMQ0EHhDVnUAXcB7Tp3y2XROigDcO9thj1uycOXDOXPhz+RKRxGiZU
+ TufU9F5+PpZXjWUsvZZ8nkdhlXmGPmGUUzMDf53kLyTFCOtPvY2i7In7LjUs+X39EAUx
+ sthA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779896752; x=1780501552;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9muSlnmiwd2mhBLAgro+7z3m7qZ5WDxt0cKhMmUlN+E=;
- b=oAxZzRST4b9DVwkd6HaoJpQlsSjYsY7WseADPTin7mUYzHheKz67f0FMwxS8hvTx00
- m5GXt/rjFUd5sve9wOuYuozwgtjA3glwlRckMXhWtwMXfsMZPcW5OSAY4YhwDFVyj7YP
- 1Zqy6oJsJW5GH8KN+OUNMzph4iOdaKnDIAUbJ4aBzF+vkdFIY1bu+Hoi0ji6QyiemXnr
- z2R2VRndzikQXXNeCvXz6LvTnm1LRLEyGnZarETWIxmAnD5zLx3L4yVzAQ7YSV47zw3y
- H2pJvnEyM3R0l3PnTXLKx5ay5aG33W94xQK7EVeKZd2PMVCLw3vP1eVk3mSoAcp04RSS
- wWxQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/4BW2peUueqfCOCHriJbDY9B1073ak+KooOHy6iht7exi2KRpLIPv2u8Jv+6sBpLMYprI1xZ5cTciI@nongnu.org
-X-Gm-Message-State: AOJu0YwgYZog/aOfmCjlnETkdwmA/xsK2hdZOxuXpLiHyPcX7sgzx5c4
- ENUkTkxtl74kWAp2BE4JOBNphQdwtNGGcDN2cIK7zRmzMtr6xLEY0/oPQ63Sw2GWCRq/5jFbSHI
- 8zE3G6A3MSukf6kkW+26rc4H7sJIqbr2em+4356moC7bcMYF0yTS/YHMq
-X-Gm-Gg: Acq92OHABYEVnk/z+wyRnpNJh3lyDw/GYiuyu8h0pop/azWrSlUpkntDJYBQilZucYd
- EDrteYcZOBXay9vDBco6rnZpLtzw8ORSIsRPnArS63Xhpirbpcq6T+MTvwO0rnsnGFTgr2/a8z7
- bovTVqAX4FcU6Rdbt/VKD2LBNBIWxiLxACCjm1kUjS/sw03kbt24msu8Vtm2SRWNkw2nCLkLGo1
- VMpCjUuqqqPOQTFv36cNYfK7l24e7gSnI5EGGSMfsvvmGrdL/KHETYmmuTv9IGGX2A9g3dSn9Yy
- +NehEkkcdyfmv4F1p+Lh//mzcvwZPA94fL14Pgrc2ZK7Hl91tIHq4fv/8Aw1g7m14mhN6ibLG2l
- Gu5Ro6uvvHJknAaA9klG9r2e3g4CaOL2xFvmcVMEvrsQV47uIXmYVugQl24ys6fY5ht+VrFdEo0
- dZE06Q
-X-Received: by 2002:a05:600c:4ecc:b0:488:aa33:dcbd with SMTP id
- 5b1f17b1804b1-490428db91cmr360447635e9.26.1779896752302; 
- Wed, 27 May 2026 08:45:52 -0700 (PDT)
-X-Received: by 2002:a05:600c:4ecc:b0:488:aa33:dcbd with SMTP id
- 5b1f17b1804b1-490428db91cmr360446945e9.26.1779896751891; 
- Wed, 27 May 2026 08:45:51 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ d=1e100.net; s=20251104; t=1779896831; x=1780501631;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tDoyv/Ygmfr7CRPIvOINuRexPPTxTNrrwr1+BRAT45U=;
+ b=IS/Jd2xLgUETLCsQ4KBF9370u9Z5KaqFnFgnFGF4GrDWZ7TanYCOKg0Y858ulQ8/lh
+ +TrKu0qRfcRJX1aLi4QilcUnRp/lOl0QBNEqy2Fp/lUTRSvxA+N/+NH0s6Kt4QtnvO0x
+ Ozhl/WDeeFatyC1+oEH8ieNTHqd+5H5yYe2F4ErmkLPza64OqSojtiUwSfxqnkVWjfGW
+ 3ubuIf45qyD/oXnIMhqyAZoduChxJIcmbKG5C5Qdmw3eLJ5V6cIo4xyACFpiEGIZvK9X
+ 6F3cpM/ZlMhxB12ACT1nFsq10+I/0ArtIqxswsAbLzLyXNZGNisaFBJoDRyfoBNoIj7B
+ LCOA==
+X-Gm-Message-State: AOJu0YwtxS/fiLwiQsv4cZPtzX4Ov3CuHf/rFN15tNJJ5fwXTgkk0Plb
+ hbBdEDQqFVY5pNwbGhr9sG7T0vEzWh4F/l2Dqyoc09RaikzWhPhsbfmDdc6vWMyh2nOFPef83iQ
+ 7m0+7S9c=
+X-Gm-Gg: Acq92OHthNfePKAwyRGP3U6BKw0ZvKCHn9scMTcweEv+5hkGZBeCmL4hB8fzKPnk8mm
+ DnuSLX0pFpGxqDJNBe8y8x6/zM8XboGqWBrPGEexszmaaf4cHBDGeWjdXajNMmhKrAiePdOslSH
+ bQBlbnuLymOQBOQY9nppgQfvVDFqLTdaV4YnxQvezyxAjwcyFA1aiwVfcNlP53T88nDPqHe4Oxy
+ wgd3PmUmi04ZcWytQpESACPAWzIvXsDsfxgQzcSxwmNMOrDGvfmZ8YEnv574dbaY6Yq7ehJRnoC
+ bcoPeyMrfkOdpznGYn6nLcie57zN2rJHiXvVRi/AWJX9ITzq5XM372dXQhxBEwLUyq7iJmLpwo/
+ 5MXJkPlXufykHDmBd0AqgFNBs9kvG5PCDfMLY1Yq+8WjEqx44uxM81LOg5RqPuXp2hGe4+9gEg1
+ 6HlHVxXVyn0jDMbRqnE2I97RqhRPU2ySaQvt09IJ/bO0fePE8=
+X-Received: by 2002:a17:903:2bce:b0:2b7:a1ff:b239 with SMTP id
+ d9443c01a7336-2beb0599ca0mr249479935ad.14.1779896830777; 
+ Wed, 27 May 2026 08:47:10 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4908097a320sm27674265e9.3.2026.05.27.08.45.50
+ d9443c01a7336-2beb58c4f20sm154691465ad.61.2026.05.27.08.47.09
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 May 2026 08:45:51 -0700 (PDT)
-Message-ID: <80fa5157-2376-4010-88b2-deb6ab50f87f@redhat.com>
-Date: Wed, 27 May 2026 17:45:49 +0200
+ Wed, 27 May 2026 08:47:10 -0700 (PDT)
+Message-ID: <7e1d5874-1a7c-48b3-9e1b-187ed6463c30@linaro.org>
+Date: Wed, 27 May 2026 08:47:08 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 15/18] target/arm/kvm: Ignore some writable bits that
- shouldn't be
+Subject: Re: [PATCH 2/2] linux-user: Fix loading static ARM cortex-m55 binaries
+To: qemu-devel@nongnu.org
+References: <20260526145049.7239-1-deller@kernel.org>
+ <20260526145049.7239-2-deller@kernel.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-To: Khushit Shah <khushit.shah@nutanix.com>
-Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Shaju Abraham <shaju.abraham@nutanix.com>,
- "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>,
- "cohuck@redhat.com" <cohuck@redhat.com>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "sebott@redhat.com" <sebott@redhat.com>,
- "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "philmd@linaro.org" <philmd@linaro.org>, "maz@kernel.org" <maz@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>,
- "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>
-References: <20260519132905.145643-1-eric.auger@redhat.com>
- <20260519132905.145643-16-eric.auger@redhat.com>
- <E5402D74-AE00-4088-801C-C87A749E17C9@nutanix.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <E5402D74-AE00-4088-801C-C87A749E17C9@nutanix.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+In-Reply-To: <20260526145049.7239-2-deller@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,91 +101,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 5/26/26 07:50, Helge Deller wrote:
+> From: Helge Deller <deller@gmx.de>
+> 
+> Static built ARM binaries for Cortex-m55 may have been linked to have
+> their load address at address 0 (because they are effectively a
+> bare-metal image). When qemu-user is running as non-root user and will
+> try to mmap() a host address at 0 (which is smaller than mmap_min_addr
+> according to /proc/sys/vm/mmap_min_addr), it will fail with EPERM and as
+> such loading those guest program will fail.
+> 
+> Fix pgb_addr_set() to always return false if the guest_loaddr <
+> mmap_min_addr, that way a valdid guest_base address will be calculated
+> and the EPERM can be avoided.
+> 
+> Signed-off-by: Helge Deller <deller@gmx.de>
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1890
+> ---
+>   linux-user/elfload.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+> index 0e757787d2..77e0526996 100644
+> --- a/linux-user/elfload.c
+> +++ b/linux-user/elfload.c
+> @@ -866,7 +866,7 @@ static bool pgb_addr_set(PGBAddrs *ga, abi_ulong guest_loaddr,
+>           if (LO_COMMPAGE != -1 && LO_COMMPAGE < mmap_min_addr) {
+>               return false;
+>           }
+> -        if (guest_loaddr != 0 && guest_loaddr < mmap_min_addr) {
+> +        if (guest_loaddr < mmap_min_addr) {
+>               return false;
+>           }
+>       }
+
+Nack for ET_DYN aka PIE binaries.
 
 
-On 5/27/26 4:46 PM, Khushit Shah wrote:
->
->> On 19 May 2026, at 6:57 PM, Eric Auger <eric.auger@redhat.com> wrote:
->>
->>
->> KVM currently reports some bits as writable whereas they are
->> RES0 or RAZ. This is detected because the code attempts to
->> match those bits against a named field and this later does not
->> exist in target/arm/cpu-idregs.h.inc.
->>
->> Let's silence warnings until those bits get fixed in the kernel.
->>
->> This was observed with v7.1-rc4 kernel.
->>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> ---
->> target/arm/kvm.c | 23 +++++++++++++++++++----
->> 1 file changed, 19 insertions(+), 4 deletions(-)
->>
->> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
->> index 6373a66bbd..1688cc2106 100644
->> --- a/target/arm/kvm.c
->> +++ b/target/arm/kvm.c
->> @@ -405,6 +405,19 @@ static void get_sysreg_prop(Object *obj, Visitor *v,
->>     trace_get_sysreg_prop(name, value);
->> }
->>
->> +static bool ignore_unnamed_writable_field(ARM64SysReg *reg, int i)
->> +{
->> +    if ((!strcmp(reg->name, "ID_ISAR0_EL1") && i >= 28 && i <= 31) || /* RES0 */
->> +        (!strcmp(reg->name, "ID_ISAR5_EL1") && i >= 20 && i <= 23) || /* RES0 */
->> +        (!strcmp(reg->name, "MVFR2_EL1") && i >= 8 && i <= 31) || /* RES0 */
->> +        (!strcmp(reg->name, "ID_PFR2_EL1") && i >= 12 && i <= 31) || /* RES0 */
->> +        (!strcmp(reg->name, "ID_MMFR5_EL1") && i >= 8 && i <= 31) || /* RES0 */
->> +        (!strcmp(reg->name, "ID_AA64FPFR0_EL1") && i >= 2 && i <= 7)) { /* RAZ */
->> +        return true;
->> +    }
->> +    return false;
->> +}
->> +
->> /*
->>  * decode_idreg_writemap: Generate props for writable fields
->>  *
->> @@ -426,10 +439,12 @@ decode_idreg_writemap(Object *obj, int index, uint64_t map, ARM64SysReg *reg)
->>         uint64_t mask;
->>
->>         if (!field) {
->> -            warn_report("%s bit %d of %s is writable but no named field "
->> -                        "in target/arm/cpu-idregs.h.inc",
->> -                        __func__, i, reg->name);
->> -            warn_report("%s is target/arm/cpu-idregs.h.inc?", __func__);
->> +            if (!ignore_unnamed_writable_field(reg, i)) {
->> +                warn_report("%s bit %d of %s is writable but no named field "
->> +                            "in target/arm/cpu-idregs.h.inc",
->> +                            __func__, i, reg->name);
->> +                warn_report("%s is target/arm/cpu-idregs.h.inc?", __func__);
->> +            }
->>             map =  map & ~BIT_ULL(i);
->>             i = ctz64(map);
->>             continue;
->> — 
-> This is why I feel the generated cpu-idregs.h.inc should also have information of
-> RES0/1 fields as in our RFC. These fields will obviously have only one architecturally
-> valid value, hence we will never allow user to write something else.
-The good thing is it allowed to detect that kind of kernel inconsistency ;-)
-
-RES fields are not defined either in target/arm/cpu-features.h and since
-they are not meant to be touched, it was not that obvious to add them.
-
-What would it change anyway, if we detect we have a writable field
-matching a RESx field, I guess we would continue raising a warning, no?
-
-Thanks
-
-Eric
-
- 
->
-> Warm Regards,
-> Khushit
-
+r~
 
