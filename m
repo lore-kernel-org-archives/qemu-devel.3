@@ -4,87 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97815CD5BD5
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 13:34:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C92BCD5BD5
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 13:46:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSEOB-0005yT-06; Wed, 27 May 2026 09:33:39 -0400
+	id 1wSEaH-0008El-D1; Wed, 27 May 2026 09:46:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSEO8-0005xo-Pc
- for qemu-devel@nongnu.org; Wed, 27 May 2026 09:33:36 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wSEaE-0008Ds-L7
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 09:46:06 -0400
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSEO7-0002JA-2z
- for qemu-devel@nongnu.org; Wed, 27 May 2026 09:33:36 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-44e5624c053so7012799f8f.2
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 06:33:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wSEaC-0002V8-7L
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 09:46:05 -0400
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-65c09c1d000so9549810d50.1
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 06:46:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779889563; cv=none;
+ d=google.com; s=arc-20240605;
+ b=IxqZcGwBRfOOQAIyRYSKjKiI0T/XIOm+bFoslNWbOc0EQcwp8Rm/9g4CRTdTci99R+
+ B5ry1vNNnetGnsy0xAUZmGx1CNKpeBzRaA/SX5/tVT1/6HawN0FLxm6abOQnLQzXbJA1
+ s6YCIPElUuR20WfwIjXEh/W8XG49S8OO7RpWS0ZAdR8P0UwDaLgwn8ADrt7K7y2+KYcT
+ m1fYs55jiAMZ7b7awUknYQcGascoccBRIFWiksvwmS7Tad960jTamUMZgrkjnA9GSPkj
+ MVJMil/I3R1z9NqwmYE1y+YRaliDqqnpAwCF3tPfPgDnITMtqeJK7gfJ2lXtPvGwukDX
+ A2nA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=zKez7CTsEAnr8w/XmrsR8XNxR2TmTtCqXl2btG1HJcQ=;
+ fh=JxaqNUTa3rjBRt2iFCtZ9WPPa8f0nt/IFdycPpB373c=;
+ b=LFqgKAiD190O383+qziItvAq+sYzrJcE4LCtebGBUZ2NZnI3g5hIETvq2RbNlaySN7
+ C1YppztOedx/0gbuxBFXWfZXoQuW7NWnzNuSNQGFwdBuP/sO+UQtv5goPKFLhhzz1vnz
+ vFBY/IFeBXhKUMtTndtZMrryAI6i3A1/hv+k9IWP/doEOvkqPadPvfHrIaH/6ITc7DA2
+ K17708gE8hPcWyIlTGJgXzS6Es7nksOXRoQ6r3enLkTgS8atSv3pUKHgJgrhCc3//pLh
+ JA6vQBVbO5R9j8Wx69uyO+8UH2ZjVN61QR/VD0iyYjhvhbVUuPc96vsh8ZpggX58VzRg
+ 7GxA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779888813; x=1780493613; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gB8BM9o205SK4nZQZ8Fne9PayL3l3YRAC9i9Pf8IgZ8=;
- b=vOeSOo9CPDIGcokYvziC6dxNc6jqr1q9znha0P7KGS0ru9TXMpNlmK9Uj/Jp22kx+x
- FvyJK5sO0brP5u6dDIumngcyOgf5+CCm6M3VXXZEjGHrSiFZvWi7TxhuhbRgndoeUV3r
- 1swxPGzn0gcUixBIfHV78pjRwgx2CnyN8YUg/Qe9k/fFqG6lfiJO+uC6/cZp/7n8r5Tl
- vHnhGu9G0jVx/dpPLyfetOzqDT6o6AaANE2Q6QfoG+4yfOMfIOo0SPTrNwaMoFeuWqvX
- +dDOuuUi55+bMLM0Bc8/Uxc7/szLbVABcHl9EatLTpuRBMg96tGgO5E6mwc06HqyOz6I
- FfGw==
+ d=linaro.org; s=google; t=1779889563; x=1780494363; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=zKez7CTsEAnr8w/XmrsR8XNxR2TmTtCqXl2btG1HJcQ=;
+ b=NVeugKAY43G/4VVnqW+pI1zmmYZGp7dsfoQhVAAAIts8zCpSDWe+BmhnCQzf28G/y7
+ vMpkmiWiA1TD+weXcXu7PI+iAqctG9WsfuWaM9nAh8xYIW0js+2Dit7kvBpMkKRVsool
+ Nl5jHB7HPdTOd1m/tf+Qjxv/fZVPr4Y4NHnVAJcNc0WahN+fJIk/jabXad/W7wVOFKTh
+ 1SWOaiun4OckH2r5UJvX+evuuDkxGlv+oQB5K2+m3dkflXNaQv37mFUvaltmUQIy8jW8
+ vnuF16H5VLAEa3zpmoFcdY9NWqrG8yPCvo4sFpBvJSuLhP6ogto82QARe4yr5vCvPwVH
+ ZNYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779888813; x=1780493613;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gB8BM9o205SK4nZQZ8Fne9PayL3l3YRAC9i9Pf8IgZ8=;
- b=NWIySZ7yWFtdbww+UnHrnu6y/v84+j0vpkxJUAlGdPsYZDZRS7ydOGb426vWW0PiAS
- UtO5liu4fG+YMLcASORj2zDfB9dqbYYSo5+xqsLG8vBwM/OOSMUJmkyEKrVUz0bZPdph
- hh1Ppj4G/aM1N6+1qk72TurpUUNq1Qh/mvAtRFEmia0mNadgpH/jnk1dxu55jCIbXH3u
- MmlKdLmXsJbCGIkszOl0hzHL2a71gUoBGWS4/kPXu0NeK1jHnr1Q63D54exZnMisne5J
- iaT1ArQ/J8AKmYBTBHfZJnMYhg+VAy2Urxw7eqbMwTEHV0V8OCHANtMCwMUtLWp0AO7g
- 4Yvg==
-X-Gm-Message-State: AOJu0YxRMBvhIaGR0LqFRCNsyUqeBwdXpWW+ao3asKmOiadTU4XduCeq
- ZaMFP+ike9wszGh1aA8VihWnmPK3EaSlrRSGylXaxHBBHXSfkm3KhMHaUjgp0giJ6feYEH0tB5b
- X3fqU
-X-Gm-Gg: Acq92OHUcwtYrhEzLqEl9DZWiYNlOmxl3GGrY+ndlw6Tjzd6ktKtzswCdL7Y1xB533E
- kOWeApqi0CodWtZ6HpTuV8YilK11oWvSEaJWHxv/vQqzzIh84SZGvVsOYEz+WrtNuDlHz9qKxXX
- r0x4dpdMOzzYV7oUPzaH1YVqtBrAa7q05ScgTS1OQ26TVt++cmjsbWzD8A7pAYIbrtHnbTE9f8H
- L2bF1KiMkJCrKUZDUO7loqZoqrsKHk7yJJveuye0cP3N8ix/QrrcuCqoS+yuMwB/6AV8MVSDbam
- AZCl3bhct34MZiwFPSQaBojTd4qRqZBscHx+Ko/2ohiKvXmeJYyhaZv+QexXVTW0HoOoOhvju4E
- 9jwuQUR7jwQav32l5bpCq6QeD16VWk6yZwxNfM+u3DHm51qtlp4G0ww1/IqU2FHKO9fPZHLZxTI
- qLrbVaTIQqIWKTL2oigbT/HfF/HUENMmWKCg==
-X-Received: by 2002:a05:6000:2007:b0:44a:247e:67b4 with SMTP id
- ffacd0b85a97d-45eb3689031mr38653570f8f.18.1779888812608; 
- Wed, 27 May 2026 06:33:32 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45edb5c44e4sm5918860f8f.36.2026.05.27.06.33.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 May 2026 06:33:31 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D64145F7F0;
- Wed, 27 May 2026 14:33:30 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: =?utf-8?Q?Torbj=C3=B6rn?= SVENSSON <torbjorn.svensson@foss.st.com>
-Cc: <qemu-devel@nongnu.org>,  Peter Maydell <peter.maydell@linaro.org>,
- <qemu-arm@nongnu.org>
-Subject: Re: [PATCH 2/3] target/arm/tcg: add PAC related instructions
-In-Reply-To: <20260518-pr-pacbti-v1-2-8932a885b03d@foss.st.com>
- (=?utf-8?Q?=22Torbj=C3=B6rn?=
- SVENSSON"'s message of "Mon, 18 May 2026 18:14:00 +0200")
-References: <20260518-pr-pacbti-v1-0-8932a885b03d@foss.st.com>
- <20260518-pr-pacbti-v1-2-8932a885b03d@foss.st.com>
-User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Wed, 27 May 2026 14:33:30 +0100
-Message-ID: <87bje1x9hx.fsf@draig.linaro.org>
+ d=1e100.net; s=20251104; t=1779889563; x=1780494363;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zKez7CTsEAnr8w/XmrsR8XNxR2TmTtCqXl2btG1HJcQ=;
+ b=YNG/4T7xuGXqGhajnm/brBQbCyLu9VF23TNt55nIXwqeFAD4YYnAyncQyPXjVmugdK
+ 73WmsGQS55XqSdOC1tU5JAuAyaGvvIMbAiJsU3euxzBbtkz3PonJj87NSC/A6N9nPkwZ
+ sj+a3T0M2crbX4BHDYVzlPFsNM7G1MP8Svlu+av965fr8MTfmZPSDfIPC3Wnvq2TeLEG
+ akl2Aa4HmNhn66r6Di8TzIQ35hRIKSSTwYa6kGAFtCsoYgMk5eHXlohFHDLQyJdTeZ3s
+ T71YJM5Rv2LV6UM/BgcT9VXHjVZpmRtVWRb0/7Evy4ngaBKmDuOnNYQmULHEyyWyJApa
+ KV4A==
+X-Gm-Message-State: AOJu0YyEkEDGCGtbHLPBTQbBCKiD3uVmyStuXLxCb5oIYVcKBM0TqLk9
+ gFQWtKwJcHO5b9wROmgFT8IP2GJUoOPRa3oKQqVF+w1dKW84CLmNZALD2brJMSdn2JmGwkKq2RW
+ /8iC/Z1EkWsCEbg+WUQe4gTlScnmLCSyBikmmTFp9kA==
+X-Gm-Gg: Acq92OHI7tcAkVCKkEWXByFZspL+TeyzF+hWTfybJrOkT9Fiiqgt+O+np+2XH1LxPnX
+ DA+WVdLUjmcIq2XATICIAOgWPsbAgJUqcFyTz4NlqcthQVx83fh49hGmugqU2tVx9EILMk1S7mb
+ jnX1MDs172d8sFTjSR5lncIkUO2TLliriNNRij/dzp9j1j3k6Lsh9CkqytK4Jfkm0ZWstgWT4iT
+ cBdzi24QcaSCdSP9SEQWkKDHdux7eYCg7ved4/eK/cm6ubafg2HuB71DwFnXsjG2/DogLuZ0XXG
+ a5l2FjDxUsuCliuegECPCUU/+MjFG53GcQWdZ4PC6cYBXRLvDwb2itR0kCzJreTfI5BiH7Z0fFK
+ YyA==
+X-Received: by 2002:a05:690e:408d:b0:65e:275b:1631 with SMTP id
+ 956f58d0204a3-65eacf56157mr19849173d50.31.1779889562618; Wed, 27 May 2026
+ 06:46:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
+References: <20260527091711.3901-1-liugang24219@sangfor.com.cn>
+In-Reply-To: <20260527091711.3901-1-liugang24219@sangfor.com.cn>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 27 May 2026 14:45:51 +0100
+X-Gm-Features: AVHnY4IplAytSYRTBTrgi6tkD1HnCDxWyKPr_VUGUt_3d5RM7v06nx9cCuJFz58
+Message-ID: <CAFEAcA8dwHV8F48kb-013rxkG9kKcZhym9_qarKmoeUfeh0YWw@mail.gmail.com>
+Subject: Re: [PATCH] hw/net/e1000: Use address_space_stb for Rx descriptor
+ status write on aarch64
+To: Liu Gang <liugang24219@sangfor.com.cn>
+Cc: qemu-devel@nongnu.org, jasowang@redhat.com, 
+ Ding Hui <dinghui@sangfor.com.cn>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,98 +118,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Torbj=C3=B6rn SVENSSON <torbjorn.svensson@foss.st.com> writes:
-
-> This commit adds the pointer authentication instructions from the Arm
-> v8.1-m PACBTI extension.
-> While the instructions are properly recognized, they are all NOPs.
+On Wed, 27 May 2026 at 14:23, Liu Gang <liugang24219@sangfor.com.cn> wrote:
 >
-> Signed-off-by: Torbj=C3=B6rn SVENSSON <torbjorn.svensson@foss.st.com>
+> From: LiuGang <liugang24219@sangfor.com.cn>
+>
+> In x86 environments, writing the Rx descriptor status byte with a single
+> pci_dma_write() works correctly. However, on aarch64 with glibc 2.24+,
+> the memcpy/memmove implementation uses a branchless sequence that copies
+> the same byte three times when count == 1. This results in three
+> consecutive STRB operations.
+> Ref: https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/aarch64/memcpy.S;hb=refs/heads/release/2.24/master#l124
+>
+> When the guest uses an e1000 NIC and DPDK, this behavior can cause
+> packet reception to stop or packets to be dropped repeatedly. Under
+> normal operation, DPDK clears the DD flag after processing a packet and
+> then updates RDT. But due to the triple STRB from memcpy/memmove, the
+> DD flag may be cleared and then immediately set again. This causes DPDK
+> to consume the same packet twice, making RDT be incremented by one extra.
+> As a result, RDH == RDT, and QEMU mistakenly considers the receive
+> queue full, stopping packet reception.
+>
+> The issue can be reproduced on aarch64 using the adapted test program:
+> https://github.com/cdkey/e1000_poc
+>
+> Replace pci_dma_write() with address_space_stb() to write the DD status
+> byte directly, avoiding the problematic memcpy/memmove sequence and
+> resolving the issue.
+>
+> Fixes: 034d00d48581("e1000: set RX descriptor status in a separate
+> operation")
+> Signed-off-by: Liu Gang <liugang24219@sangfor.com.cn>
+> Signed-off-by: Ding Hui <dinghui@sangfor.com.cn>
 > ---
->  target/arm/tcg/t32.decode  | 21 +++++++++++++---
->  target/arm/tcg/translate.c | 62 ++++++++++++++++++++++++++++++++++++++++=
-++++++
->  2 files changed, 80 insertions(+), 3 deletions(-)
+>  hw/net/e1000.c | 12 ++++++++++--
+>  1 file changed, 10 insertions(+), 2 deletions(-)
 >
-> diff --git a/target/arm/tcg/t32.decode b/target/arm/tcg/t32.decode
-> index 49b8d0037e..a885eed101 100644
-> --- a/target/arm/tcg/t32.decode
-> +++ b/target/arm/tcg/t32.decode
-> @@ -263,6 +263,7 @@ BFCI             1111 0011 011 0 .... 0 ... .... ..0.=
-....     @bfi
->  @s0_rnadm        .... .... .... rn:4 ra:4 rd:4 .... rm:4      &s_rrrr s=
-=3D0
->  @s0_rn0dm        .... .... .... rn:4 .... rd:4 .... rm:4      &s_rrrr ra=
-=3D0 s=3D0
->  @rnadm           .... .... .... rn:4 ra:4 rd:4 .... rm:4      &rrrr
-> +@rna0m           .... .... .... rn:4 ra:4 .... .... rm:4      &rrrr rd=
-=3D0
->  @rn0dm           .... .... .... rn:4 .... rd:4 .... rm:4      &rrrr ra=
-=3D0
->  @rndm            .... .... .... rn:4 .... rd:4 .... rm:4      &rrr
->  @rdm             .... .... .... .... .... rd:4 .... rm:4      &rr
-> @@ -319,9 +320,18 @@ SMLALDX          1111 1011 1100 .... .... .... 1101 =
-....      @rnadm
->  SMLSLD           1111 1011 1101 .... .... .... 1100 ....      @rnadm
->  SMLSLDX          1111 1011 1101 .... .... .... 1101 ....      @rnadm
->=20=20
-> -SMMLA            1111 1011 0101 .... .... .... 0000 ....      @rnadm
-> -SMMLAR           1111 1011 0101 .... .... .... 0001 ....      @rnadm
-> -SMMLS            1111 1011 0110 .... .... .... 0000 ....      @rnadm
-> +{
-> +  AUTG           1111 1011 0101 .... .... 1111 0000 ....      @rna0m
-> +  SMMLA          1111 1011 0101 .... .... .... 0000 ....      @rnadm
-> +}
-> +{
-> +  BXAUT          1111 1011 0101 .... .... 1111 0001 ....      @rna0m
-> +  SMMLAR         1111 1011 0101 .... .... .... 0001 ....      @rnadm
-> +}
-> +{
-> +  PACG           1111 1011 0110 .... 1111 .... 0000 ....      @rndm
-> +  SMMLS          1111 1011 0110 .... .... .... 0000 ....      @rnadm
-> +}
->  SMMLSR           1111 1011 0110 .... .... .... 0001 ....      @rnadm
->=20=20
->  SDIV             1111 1011 1001 .... 1111 .... 1111 ....      @rndm
-> @@ -375,6 +385,11 @@ CLZ              1111 1010 1011 ---- 1111 .... 1000 =
-....      @rdm
->          # SEVL   1111 0011 1010 1111 1000 0000 0000 0101
->=20=20
->          ESB      1111 0011 1010 1111 1000 0000 0001 0000
-> +
-> +        # v8.1-m PACBTI extention
-> +        AUT      1111 0011 1010 1111 1000 0000 0010 1101
-> +        PAC      1111 0011 1010 1111 1000 0000 0001 1101
-> +        PACBTI   1111 0011 1010 1111 1000 0000 0000 1101
->        ]
->=20=20
->        # The canonical nop ends in 0000 0000, but the whole rest
-> diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-> index c744b16345..ae1351ef03 100644
-> --- a/target/arm/tcg/translate.c
-> +++ b/target/arm/tcg/translate.c
-> @@ -5012,6 +5012,68 @@ static bool trans_SMMLSR(DisasContext *s, arg_rrrr=
- *a)
->      return op_smmla(s, a, true, true);
+> diff --git a/hw/net/e1000.c b/hw/net/e1000.c
+> index 202ad40401..f7be035e0f 100644
+> --- a/hw/net/e1000.c
+> +++ b/hw/net/e1000.c
+> @@ -869,6 +869,14 @@ e1000_receiver_overrun(E1000State *s, size_t size)
+>      set_ics(s, 0, E1000_ICS_RXO);
 >  }
->=20=20
-> +static bool trans_PAC(DisasContext *s, arg_empty *a)
+>
+> +static inline void
+> +e1000_dma_write_byte(PCIDevice *d, dma_addr_t addr, uint8_t val)
 > +{
-> +    if (!arm_dc_feature(s, ARM_FEATURE_V8_1M)) {
-> +        return false;
-> +    }
+> +    AddressSpace *as = pci_get_address_space(d);
+> +    dma_barrier(as, DMA_DIRECTION_FROM_DEVICE);
+> +    address_space_stb(as, addr, val, MEMTXATTRS_UNSPECIFIED, NULL);
 
-These are the wrong feature tests. I would bring the
-isar_feature_aa32_m_pacbti from 3/3 into this patch and invert the logic
-in the same way the a64 does:
+I don't think there's any guarantee that we won't write
+multiple times to the memory in this case either. This
+eventually boils down to calling address_space_stm_internal
+which for dispatch to RAM calls stm_p(), which for a byte
+write will call stb_p(), which is "*(uint8_t *)ptr = v;"
+and there's no guarantee in the C standard about that doing
+only a single byte store to memory.
 
-    if (dc_isar_feature(aa32_m_pacbti, s)) {
-        /* treat as NOP for now */
-        return true;
-    }
-    return false;
+I think this change only gives different behaviour by accident,
+not by design.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+-- PMM
 
