@@ -4,113 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B08AECD5BDE
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 07:48:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A20CCD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 07:55:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wS8zZ-0000Ng-Qr; Wed, 27 May 2026 03:47:53 -0400
+	id 1wS96U-000272-1y; Wed, 27 May 2026 03:55:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1wS8zX-0000NN-6f
- for qemu-devel@nongnu.org; Wed, 27 May 2026 03:47:51 -0400
-Received: from mail-centralusazon11011058.outbound.protection.outlook.com
- ([52.101.62.58] helo=DM5PR21CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wS96M-00026g-9a
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 03:54:55 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1wS8zT-0005hf-80
- for qemu-devel@nongnu.org; Wed, 27 May 2026 03:47:50 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=R2ujHgPBZDu6m1izEzixkrgorYQwyeI0ZA5pmsQsVH9gTYSRVxG1+ME8tu7bsWMUXK/PTDmVCrlPMy5SoptSpEL+q6LmXgf4GyYY8PNwBRp4vIBOinoA+X8GOhX45M3rfG2OVmUPr2QjghjG1DPzyvSD/moDv4EGKL59w2p063LeI3JNu2KN0ySgr1q8tO9vn0fWviSiKy1PdkE8fBVK4C+6kAXfPrdybcymNNqlOtgEO5rkbA6+wG8jK/hKiZ8t4G6e0by+9JZHcWZgei8hMJDiZHkc7/s2ooCyCmkp3nGzKGzGm9ut3wnttCSo4t9i3CwR8yrEwT5opdT8K8cYwg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8g8i4fFZEcbffLSZsfq4Gqh+3mjw9747tgKNsZHuejc=;
- b=ZxoXyyO9rRUY0ngWuasHuvIfetzjsoqtt8KxXCTcIW8BbcW7yXA6EUXHZJpDZtA67xC1qTXnKrLsXZKwjmr+c6tMznotFaiBMldObwFQQoKjRSZicBIQi9A1vxk929w0MwaVMb+1Jqa47nhvyC4zNgNtMTYCXco3lZFh0qm9BQ6ZV5CGSJJYMdhCwGtzuNxqI6CnfW8FdpsBEe0QzBPomV4SxhVlEQuCVbn/oQxLly2hkQdmdfayErj5+kiynfwDdDUNZH0CgyDAFpJIaNwZxbczgOKYgoSh33X66Fa2ANraCsQ/tipNSRRFZfPdAb3tnac8OHFi8vUj83xzg++5Ww==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8g8i4fFZEcbffLSZsfq4Gqh+3mjw9747tgKNsZHuejc=;
- b=BTlTmA19NuLnxiQ2Dzf6oeLqnEHy8vmlxo2nO41Qjftd182ygcKGUMt1yfzOODEv8HUSZomXu0/Fm//0G7wbqzURdjtalVbSShZZq+cxf1jTEihW6dzDwVpsJg4D1oEKHDLuB674s0XtKVhcLD5jSPeSocpEHZDWwQua1vLiyL4=
-Received: from IA4P220CA0001.NAMP220.PROD.OUTLOOK.COM (2603:10b6:208:558::14)
- by DM4PR12MB6327.namprd12.prod.outlook.com (2603:10b6:8:a2::9) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.71.11; Wed, 27 May 2026 07:42:36 +0000
-Received: from MN1PEPF0000F0E0.namprd04.prod.outlook.com
- (2603:10b6:208:558:cafe::2) by IA4P220CA0001.outlook.office365.com
- (2603:10b6:208:558::14) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.71.13 via Frontend Transport; Wed, 27
- May 2026 07:42:36 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- MN1PEPF0000F0E0.mail.protection.outlook.com (10.167.242.38) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.71.7 via Frontend Transport; Wed, 27 May 2026 07:42:35 +0000
-Received: from k-Super-Server.amd.com (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Wed, 27 May
- 2026 02:42:33 -0500
-From: fanhuang <FangSheng.Huang@amd.com>
-To: <qemu-devel@nongnu.org>, <imammedo@redhat.com>, <david@kernel.org>,
- <gourry@gourry.net>
-CC: <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>, fanhuang
- <FangSheng.Huang@amd.com>
-Subject: [PATCH v8 0/1] hw/mem: add spm-memory device for Specific Purpose
- Memory
-Date: Wed, 27 May 2026 15:42:14 +0800
-Message-ID: <20260527074215.229119-1-FangSheng.Huang@amd.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wS96I-00009K-He
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 03:54:53 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64R7shdG008214
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 27 May 2026 16:54:43 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=w8Gp9y6kX40wtjI5fRyXeeMhGhPBM79Q4XK+7pvo8RI=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1779868483; v=1;
+ b=utFkg48y7lx/bNv0GzzpAFi9hUvqROIMy1eZ3fbCVbVhqQ4F7kjc1y6iKzMe+At4
+ RbWpXBUS+hwSNLCEcpyXqweTrkkuzUszIr27ox7fwN12alwwEpV5qI4EjTTrcqcP
+ H+y/dO82ppsmRx0ZUWP7oWCJO5Q/oD5L0EBieVTJtGb2+/S8yu6aBd38aCUR5Qyi
+ a8j7m+xXJBKkGJ6btGJETtTuGrfA1HryQB91a7vQesKOIWywbCYNBILVtY9/WE/e
+ 7BN8HiV3WYa1EPaCS86nT0FvB06G3lf2vREvWjxeU0/lxGBYQbszhNXa4uAmtre+
+ 3KXTETZ5rf1/7qUiGuYwDA==
+Message-ID: <8d81e622-1397-4579-bbe5-50ee174a3272@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 27 May 2026 16:54:42 +0900
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] system/physmem: Synchronize ram_list accesses
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20260523-tsan-v1-1-07d5eb9dcaa2@rsg.ci.i.u-tokyo.ac.jp>
+ <ahYSO98JgdYJrP2e@x1.local>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <ahYSO98JgdYJrP2e@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MN1PEPF0000F0E0:EE_|DM4PR12MB6327:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0964cd5e-f934-40b5-7085-08debbc3852a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|82310400026|36860700016|376014|13003099007|11063799006|6133799003|56012099006|18002099003|43062017;
-X-Microsoft-Antispam-Message-Info: p1hWwbiwHQfyt2AYjE9fcqNjhnXDthrmeu2NEjGaxoU1XJ9t78CcVnklOJbG09hemiecVCojaTEVWhb0sD9wK1n4i/2oZu9tmOq+EgOoQU2h59cqpUZx/nAdiGyaKC252QGFSD4vHE8atSEPlxX6WNpGGTVOjo12LrcO6qvCsGunOf67fmBBJ00vD58n5tKQqNjHx22HssZ0LED75T6fiYbo7a7ndSJ2l1mj6ZnPrDWG35/jgct/BR1d3Ve/ZjiNE65Ls47/UttuHjJkQX4ImIw1Iqi0P2yHzLnTjxIUPU8rmT3i/PsDGlNarrRg2c5AbuLeaqBhCy04nkdASS6GdJX+pdBrDqzCyvI7iZC133xrYg27SZtblXZRdnGg0a5S4NAD3fk8BmTPRhF3iKabb0SOzCslTwZfc3VFzBg9ZchOzivDE2d6HUkucPf+LubiBgyy6htBoV97CppATpNhnMzHvBPI3OAqPfRxdtIvzAVZReJQDLSwbM8KdV/HFW+o+EF8iCZEHDDRIyXvVSyTAQyRrAENRUqtbO/1+Kjm8RJYElvKUx4EcrBuQ5iPJpKO231LDEgtkRFG0FsiFyN4R1wKssigCCwjM6t4LDl/y2Wtx6iQkpXw7qTDe9ziGIpBztZE+Lc2SpFYWJe80j2/UxmNNwcZ6iXAjEZnccTpDKZxC5cumcpEftydw8danUD3j5gzswZetBwZEyJr1Tx8kNXjpEdt/8vZitYCFpd4P0W6vGbL+lgv7kYdmWmEde5GOF/ICkIBFBEw33V1svqFqs/+vzBe+uyE3GrzrxjxkBQ=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(82310400026)(36860700016)(376014)(13003099007)(11063799006)(6133799003)(56012099006)(18002099003)(43062017);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 1FYZ6bwnD26jtsvwe1iuDthK3L145/yFEfea8pCGk/9DxDo7UXjx+aSFgVJXxMbiqaMjA8vD1sETuC5NYuA7MNZUvPYYMM77J02IOBn0eTRA/8ZRZzDglkWSqb9M2ik1pT+cg8LULgx/HbQZbNjqYpYJ5YDuYcHh++j/UfQlUJYX0F3oAn54hi160pDlS6jeGsvKKBH4zSx0QDcAP8tncsG3APDGVbluGp3N0qD/Y0gB5Q945BMPrxb+yvFDHo7h+Puv588QE7U6WXH1nE6DuEW+uWIeNgvEKLAvs+CCfqbSPmTOA3gwbHUDL4hAoCJSTaK4mxkV76auYML5rv+gmtfr1hX3auljC+CaTpcwwb7DldMtXWQFkucUOOj/6zTMFL3WTlG1xPidX4JT02kb1l2vaaZlnKgdx5Gn9Ua/bqvVF8asFAGKyGbG6sb86mEI
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 May 2026 07:42:35.9922 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0964cd5e-f934-40b5-7085-08debbc3852a
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: MN1PEPF0000F0E0.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6327
-Received-SPF: permerror client-ip=52.101.62.58;
- envelope-from=FangSheng.Huang@amd.com;
- helo=DM5PR21CU001.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,97 +76,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds a TYPE_MEMORY_DEVICE subclass `spm-memory` for boot-time
-SOFT_RESERVED guest memory, following the direction from the v7 thread [1].
+On 2026/05/27 6:35, Peter Xu wrote:
+> On Sat, May 23, 2026 at 09:38:28PM +0900, Akihiko Odaki wrote:
+>> Alex Bennée reported a ThreadSanitizer warning about a plain concurrent
+>> access to ram_list [1]. Ensure the concurrent accesses to ram_list are
+>> properly synchronized with atomic accesses, mutexes, or RCU.
+>>
+>> First, the plain assignments of ram_list.mru_block are replaced with
+>> qatomic_set(). A comment in qemu_get_ram_block() explains why the
+>> ordering requirement is relaxed, but it still needs to be atomically
+>> accessed. include/qemu/atomic.h says:
+>>
+>>> The C11 memory model says that variables that are accessed from
+>>> different threads should at least be done with __ATOMIC_RELAXED
+>>> primitives or the result is undefined. Generally this has little to
+>>> no effect on the generated code but not using the atomic primitives
+>>> will get flagged by sanitizers as a violation.
+>>
+>> Second, ram_list.version accesses are replaced with atomic operations
+>> or protected with a mutex. Unlike ram_list.mru_block, ram_list.version
+>> has tighter ordering requirements for one of its goals: ensuring that
+>> the reader-held rs->last_seen_block value is invalidated whenever a RAM
+>> block is reclaimed between two RCU reader critical sections. Below are
+>> steps a reader and an updater follow:
+>>
+>> Reader:
+>>
+>> R-1. Enter the first RCU read-side critical section:
+>> R-1-1. rs->last_version = qatomic_load_acquire(&ram_list.version)
+>> R-1-2. rs->last_seen_block = an element of ram_list.blocks
+>> R-2. Enter the second RCU read-side critical section:
+>> R-2-1. if (qatomic_read(&ram_list.version) != rs->last_version)
+>> R-2-2.     rs->last_seen_block = NULL
+>>
+>> Updater:
+>>
+>> W-1. Enter a ram_list.mutex critical section
+>> W-1-1. Update ram_list.blocks
+>> W-1-2. qatomic_store_release(&ram_list.version, ram_list.version + 1)
+>> W-2. Enter another ram_list.mutex critical section
+>> W-2-1. QLIST_REMOVE_RCU(block, next)
+>> W-2-2. qatomic_store_release(&ram_list.version, ram_list.version + 1)
+>> W-2-3. call_rcu(block, reclaim_ramblock, rcu)
+>>
+>> W-1-2 represents the write observed by R-1-1.
+>>
+>> ram_list.version is read non-atomically on the update side because the
+>> update side is serialized with ram_list.mutex. The other ram_list
+>> accesses in these steps are reasoned about in two cases.
+>>
+>> When the grace period of W-2-3 contains R-2:
+>>      qatomic_load_acquire() at R-1-1 and qatomic_store_release() at W-1-2
+>>      enforce the following ordering:
+>>          W-1-1 -> W-1-2 -> R-1-1 -> R-1-2
+>>      The value of ram_list.blocks stored by W-1-1 or a newer value that
+>>      was loaded by R-1-2 is still valid because of the grace period.
+>>
+>> When the grace period of W-2-3 ends before R-2:
+>>      call_rcu() at W-2-3 and the read-side critical section at R-2 ensure
+>>      the following ordering:
+>>          W-2-2 -> W-2-3 -> the grace period -> R-2 -> R-2-1
+>>      The value of ram_list.version stored by W-2-2 or a newer value that
+>>      was loaded by R-2-1 differs from rs->last_version and the reader
+>>      invalidates rs->last_seen_block.
+>>
+>> Together, these steps ensure that rs->last_seen_block is invalidated
+>> whenever necessary. With added atomic operations, pre-existing memory
+>> barriers are no longer necessary and are removed.
+>>
+>> Any other ram_list accesses are already properly synchronized.
+>>
+>> [1] https://lore.kernel.org/qemu-devel/878q9fbmap.fsf@draig.linaro.org/
+>>
+>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> 
+> Above link [1] also mentioned about a hang.  Just to double check: we're
+> only trying to silent the TSAN warning (which is a false positive), right?
 
-Background
-----------
+The hang is irrelevant and this is indeed to address the TSAN warning, 
+though I'm a bit reluctant to call it false positive because, strictly 
+speaking, the code actually relies on undefined behavior.
 
-This series targets coherent CPU + accelerator shared-address-space
-systems, where the accelerator's HBM is not a device-private framebuffer
-behind a PCIe BAR but a tier of host system memory: visible to the CPU
-in the platform physical address space, shared coherently with the
-accelerator over the platform fabric, and bound to a NUMA proximity
-domain set by platform firmware at boot fabric training.
+> 
+>> ---
+>>   migration/ram.c  | 10 +++++-----
+>>   system/physmem.c | 16 +++++++---------
+>>   2 files changed, 12 insertions(+), 14 deletions(-)
+>>
+>> diff --git a/migration/ram.c b/migration/ram.c
+>> index fc38ffbf8af1..6da24d725861 100644
+>> --- a/migration/ram.c
+>> +++ b/migration/ram.c
+>> @@ -2495,7 +2495,10 @@ static void ram_state_reset(RAMState *rs)
+>>   
+>>       rs->last_seen_block = NULL;
+>>       rs->last_page = 0;
+>> -    rs->last_version = ram_list.version;
+>> +
+>> +    /* Read version before ram_list.blocks */
+>> +    rs->last_version = qatomic_load_acquire(&ram_list.version);
+>> +
+>>       rs->xbzrle_started = false;
+>>   
+>>       ram_page_hint_reset(&rs->page_hint);
+>> @@ -3270,13 +3273,10 @@ static int ram_save_iterate(QEMUFile *f, void *opaque)
+>>        */
+>>       WITH_QEMU_LOCK_GUARD(&rs->bitmap_mutex) {
+>>           WITH_RCU_READ_LOCK_GUARD() {
+>> -            if (ram_list.version != rs->last_version) {
+>> +            if (qatomic_read(&ram_list.version) != rs->last_version) {
+>>                   ram_state_reset(rs);
+>>               }
+> 
+> Not directly relevant to this patch, but I never thought into why this few
+> lines are needed at all, and then I found I don't have an answer..
+> 
+> Here, ram_list version change should only happen during ramblock
+> add/remove.  I can think of a few special cases:
+> 
+> a) device add/remove (e.g. dimms) causing new / removing ramblocks, should
+>     never happen as qdev code fails any device add/remove attempt during
+>     migration (qdev_device_add_from_qdict, qdev_unplug)
+> 
+> b) virtio-mem, which only manages one memory backend, hence one ramblock,
+>     no add/remove
+> 
+> c) virtio-gpu, will do random add/remove with memory_region_init_ram_ptr()
+>     which means ramblocks are not migratable
+> 
+> PS: I recall we have other special cases like ROM sizes can change on dest
+> QEMU, but it's about used_length, not about version boosts, so doesn't
+> matter here.
+> 
+> Both a) and b) should make sure no change on version, c) will change
+> version, but in a case where the ramblock is destined to be not migratable,
+> hence not visible to migration core.
+> 
+> The patch itself looks all fine, but I'm just wondering if we should just
+> remove this check completely or even try to somehow trap it from happening
+> (if we can rule out things like virtio-gpu): if something really changed,
+> it'll be a serious problem because we sync ramblock list already during
+> ram_save_setup.
 
-For such a region to function correctly in the guest, two things must
-hold simultaneously: the CPU memory subsystem has to see it in the
-system memory map (so the CPU side can address it), and it has to be
-reserved exclusively for the accelerator's driver (so the kernel's
-general allocator does not hand HBM pages to unrelated workloads). The
-SOFT_RESERVED memory type in E820 plus a matching SRAT memory-affinity
-entry is the mechanism that delivers both: a firmware-produced topology
-that the CPU memory subsystem honors and the accelerator's driver
-consumes for its own range.
+There is another edge case: a ram_list.blocks change may be propagated 
+to the thread calling ram_save_setup() and ram_save_iterate() at 
+different timing. We are only ensuring that ram_list.blocks changes 
+invalidating old blocks are delivered with WITH_RCU_READ_LOCK_GUARD().
 
-Approach
---------
+So I think there is a theoretical race condition that breaks migration, 
+though triggering it in practice may not be realistic.
 
-The patch adds a new TYPE_MEMORY_DEVICE subclass `spm-memory`. Each
-instance binds one host memory backend to a single NUMA proximity
-domain and is boot-time only; placement, hotplug rejection, and QMP
-introspection come from the existing memory-device framework. The
-device emits one E820 SOFT_RESERVED entry per instance at
-machine_done and one SRAT memory-affinity entry per instance at
-acpi-build, the latter flagged ENABLED only.
+Regards,
+Akihiko Odaki
 
-The device_memory SRAT umbrella entry in hw/i386/acpi-build.c is
-restructured into a per-kind partition: for each plugged
-TYPE_SPM_MEMORY device the partition emits an ENABLED entry at the
-device's proximity_domain, and the remaining sub-ranges (gaps between
-SPM devices, leading and trailing padding, and ranges occupied by
-non-SPM memory devices) are emitted as HOTPLUGGABLE | ENABLED entries
-at the placeholder PXM (nb_numa_nodes - 1).
-
-No firmware-side change is required: the existing OVMF and SeaBIOS
-handling for E820 SOFT_RESERVED and ACPI SRAT covers the guest-facing
-contract.
-
-Testing
--------
-
-Verified end-to-end on SeaBIOS and OVMF, q35 + KVM, for:
-
-- single spm-memory instance (natural placement and explicit addr=)
-- two spm-memory instances on different NUMA nodes (tight pack and
-  with inter-device gap)
-- one spm-memory + one pc-dimm on different NUMA nodes
-
-Guest observations: /proc/iomem shows SOFT_RESERVED at the expected
-addresses, dmesg SRAT parsing finds the per-device memory_affinity
-entries with correct PXM.
-
-Previous versions
------------------
-
-  v1: https://lore.kernel.org/qemu-devel/20250924103324.2074819-1-FangSheng.Huang@amd.com/
-  v2: https://lore.kernel.org/qemu-devel/20251020090701.4036748-1-FangSheng.Huang@amd.com/
-  v3: https://lore.kernel.org/qemu-devel/20251208105137.2058928-1-FangSheng.Huang@amd.com/
-  v4: https://lore.kernel.org/qemu-devel/20251209093841.2250527-1-FangSheng.Huang@amd.com/
-  v5: https://lore.kernel.org/qemu-devel/20260123024312.1601732-1-FangSheng.Huang@amd.com/
-  v6: https://lore.kernel.org/qemu-devel/20260226105023.256568-1-FangSheng.Huang@amd.com/
-  v7: https://lore.kernel.org/qemu-devel/20260306082735.1106690-1-FangSheng.Huang@amd.com/
-
-  [1] v7 thread above, closed out by:
-      https://lore.kernel.org/qemu-devel/666a7ba1-5d3a-4732-b872-0d9fb2fe8461@amd.com/
-
-fanhuang (1):
-  hw/mem: add spm-memory device for Specific Purpose Memory
-
- MAINTAINERS                  |   2 +
- hw/i386/Kconfig              |   2 +
- hw/i386/acpi-build.c         | 105 ++++++++++++--
- hw/i386/e820_memory_layout.h |  11 +-
- hw/mem/Kconfig               |   4 +
- hw/mem/meson.build           |   1 +
- hw/mem/spm-memory.c          | 269 +++++++++++++++++++++++++++++++++++
- include/hw/mem/spm-memory.h  |  43 ++++++
- qapi/machine.json            |  43 +++++-
- 9 files changed, 459 insertions(+), 21 deletions(-)
- create mode 100644 hw/mem/spm-memory.c
- create mode 100644 include/hw/mem/spm-memory.h
-
--- 
-2.34.1
+> 
+> Thanks,
+> 
+>>   
+>> -            /* Read version before ram_list.blocks */
+>> -            smp_rmb();
+>> -
+>>               ret = rdma_registration_start(f, RAM_CONTROL_ROUND);
+>>               if (ret < 0) {
+>>                   qemu_file_set_error(f, ret);
+>> diff --git a/system/physmem.c b/system/physmem.c
+>> index 7bcbf8757361..9e1ac13e8259 100644
+>> --- a/system/physmem.c
+>> +++ b/system/physmem.c
+>> @@ -839,12 +839,12 @@ found:
+>>       /* It is safe to write mru_block outside the BQL.  This
+>>        * is what happens:
+>>        *
+>> -     *     mru_block = xxx
+>> +     *     qatomic_set(&mru_block, xxx)
+>>        *     rcu_read_unlock()
+>>        *                                        xxx removed from list
+>>        *                  rcu_read_lock()
+>>        *                  read mru_block
+>> -     *                                        mru_block = NULL;
+>> +     *                                        qatomic_set(&mru_block, NULL);
+>>        *                                        call_rcu(reclaim_ramblock, xxx);
+>>        *                  rcu_read_unlock()
+>>        *
+>> @@ -852,7 +852,7 @@ found:
+>>        * when it was placed into the list.  Here we're just making an extra
+>>        * copy of the pointer.
+>>        */
+>> -    ram_list.mru_block = block;
+>> +    qatomic_set(&ram_list.mru_block, block);
+>>       return block;
+>>   }
+>>   
+>> @@ -2260,11 +2260,10 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+>>       } else { /* list is empty */
+>>           QLIST_INSERT_HEAD_RCU(&ram_list.blocks, new_block, next);
+>>       }
+>> -    ram_list.mru_block = NULL;
+>> +    qatomic_set(&ram_list.mru_block, NULL);
+>>   
+>>       /* Write list before version */
+>> -    smp_wmb();
+>> -    ram_list.version++;
+>> +    qatomic_store_release(&ram_list.version, ram_list.version + 1);
+>>       qemu_mutex_unlock_ramlist();
+>>   
+>>       physical_memory_set_dirty_range(new_block->offset,
+>> @@ -2608,10 +2607,9 @@ void qemu_ram_free(RAMBlock *block)
+>>       name = cpr_name(block->mr);
+>>       cpr_delete_fd(name, 0);
+>>       QLIST_REMOVE_RCU(block, next);
+>> -    ram_list.mru_block = NULL;
+>> +    qatomic_set(&ram_list.mru_block, NULL);
+>>       /* Write list before version */
+>> -    smp_wmb();
+>> -    ram_list.version++;
+>> +    qatomic_store_release(&ram_list.version, ram_list.version + 1);
+>>       call_rcu(block, reclaim_ramblock, rcu);
+>>       qemu_mutex_unlock_ramlist();
+>>   }
+>>
+>> ---
+>> base-commit: e89049b3ba5f1f0468bc0d294173345597514a1b
+>> change-id: 20260520-tsan-c6f1aa909a90
+>>
+>> Best regards,
+>> --
+>> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>
+> 
 
 
