@@ -4,104 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BD8FCD5BD0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 11:41:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 348A2CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 11:44:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSCdh-0004Vx-0g; Wed, 27 May 2026 07:41:33 -0400
+	id 1wSCfX-0005IE-PN; Wed, 27 May 2026 07:43:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSCdf-0004VE-7e
- for qemu-devel@nongnu.org; Wed, 27 May 2026 07:41:31 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wSCfW-0005Hg-IK
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 07:43:26 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSCdd-00084z-JD
- for qemu-devel@nongnu.org; Wed, 27 May 2026 07:41:30 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-651c5d525f6so11739812d50.3
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 04:41:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779882087; cv=none;
- d=google.com; s=arc-20240605;
- b=hMxYaZbdXaS29wsWUzSCEDo3cfqhqHCNeoenWC2J74fz1ugQLOo+JJRoeJceG7J0hG
- 4b7fyMEIlluQkgDTjJ0/0qD567kjLeGUiFqK7bui5xI20Tx8CdNmQAYTDG1um8SYvgPc
- a8yzlfcFRDzxx97ZWELe1sIHqpZp+QU03b3dZc1oY5YkVSZdXL+HpQG1TdnJ5UhgLF5t
- s3ma346EbLPdohbtQoh1DjBE8kGL5r3sA1HVLcMdDlNd2Lzwwde2M8P5x3EKpMoz/2lV
- QzsoFeMifyqyPXflSyaiY2NEftV0pfNqoqrTNeZrAy3sb7SRGps6HCzUehUPooIgVgNn
- hfAg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=XkR+AybXjGG2p2Dmx4jWubDTlAGb4l0M6h3du5nOV1s=;
- fh=/+4k31CWrsbasIqjmVONAqvkOLM9ZI/djlQT4ejhq/I=;
- b=MC3cKGCr04xluVmEicmdSes7WtujK+RUskl79qB31X0CdveROeueyNBZq3QZTxIsBc
- X55DjqI6xPcD0tr1akUkrft98zhyoPrdoVXI3liHb6GSFvIlJA5nZVN8XCceSUEt7LK6
- DTsyNZe1yhdsTEKnIdcGQVy1o5cscVpamrGF91Sumu7MU7H8nzPS0ZOLZX9GVTZUgJIx
- w2935RizNl4bti2PItsVdNhNb+yJ8TVyzbofWvSb5pAZt3eVjx6L1iw8bLOWdIF8MGG1
- 1+TLn20nM6qoQiOk5qjemjYm5GiStxcWVkVJCrKfpDVCNlc4KPJrs/Xkhi2wOwnJ1hPz
- YiBQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wSCfU-0008UA-O0
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 07:43:26 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4891e5b9c1fso100163315e9.2
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 04:43:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779882087; x=1780486887; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=XkR+AybXjGG2p2Dmx4jWubDTlAGb4l0M6h3du5nOV1s=;
- b=M30cDDOS1KkQrOkvb4lWpLfZUVu7eTLHzvjxnDB+K+eCplzxAoPpua83446BzsLTYY
- odnpMJStCnLgsoQLHmb4XZsVLeD/Dc2+Mepj0Zv4hbbJuP02BVW3bwcSjgNxrZgZKMBK
- DrHl80jjbvCSLVyvMq/P+Sichz5YHHMlDoLuGYcfT6V+4wZ9sCo5CiosFLyE1Lxqml9p
- axcrrarNYHTwU3KV7qlgjI1ASoCBMV4/3U5I74hrv3/7DIoz7OVBCg3Z01FblVnnQgCD
- 2B6e4kptdpveNnAfvzafqHZpA+IoIV7qLvoPaxC3A6LjMzKB+UIEUE65NjpiugP51mR4
- B3BQ==
+ d=linaro.org; s=google; t=1779882202; x=1780487002; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=IDYcqy+lALeYVl8Mkv8O83zszmMK8AJuHWXrTl78/K0=;
+ b=BHJiP8S2sPrw05u36vAC8Z1+gx6wjhtXrsx1ECjV8Q77LRuLK8J+wBdrVEaJlxXTlV
+ JHkuTe+4N8G1IdxIiiGwA5MOwORXXMr7tYVbIwVDkPsE1lJhPPH/KhkOVyDfTve1Ymuo
+ 9fZMU2AIHX03p+l8ji4AyA02ekcmu7XVqhIFR5+q7300uhGjNSM49wBMDDDnTkox9YD6
+ HJVHXGnUZ7wQpftQrm51AXrWH5FS4nQiHEMVVL2xkkSEDHIp3lIdlLmtVCcyXMqgy8E9
+ tbpfqdt2G0D8u9R9wKcMs5wyGHfHMOysvmJa9kHAX/sSZmfuYJwqwMIPS3T2sCQanbxJ
+ p33A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779882087; x=1780486887;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1779882202; x=1780487002;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XkR+AybXjGG2p2Dmx4jWubDTlAGb4l0M6h3du5nOV1s=;
- b=HgpzU/FFehrFyGXGh0URpobayg1qJqCVmJLIfO4BX/3JW6qwqSC0VhVlf05keCAYAq
- 3GrocFgxt74NMBKjkx2pC7+AwYEFlNBopULOLmcc12UNnIGWzB5Fze3lmgXroDzGbNdm
- AUq4zh8ApbH8EK66K8+HwD15UJVeHF7h9BoXfZzXtHsieT4iInGa5/5WgLSv0NH5uEUo
- iL+PdjThSLj7QC8OaH+ArNdeFEet/GJNLy3jLt5vJjDbV2T7MeNX/YcA0DWr8txJ8jnv
- 6qeCIbq8wv3hfuF+Xc43NX5gjbfrMKLt/OBgasJ570aVIXEYxJvihlFQaSn1WN9st/tv
- pAGw==
-X-Gm-Message-State: AOJu0YxLWAB5apu5IMSSv7tT5C5wJOSQQvuhk1A4W2PNi1S9UWZJHzFc
- 76lRn9xGNoVFtDMCnPTjHRln5uMie8bfzrxsxFIQsC+dXxouHYURfgniyI7nf0RPxb9m26CdeuN
- xEPH+vnJFXEDCsJh3QbOGcOWBEOaSqCTUIICRGHCrNw==
-X-Gm-Gg: Acq92OGz9uOsBKGq36IIHpQdXJ4ZrrK19+572TKKlhyz9Oqir8pnAylU3+ti/iI9SEh
- BTF+BEK8AwBpKw5rz1NHBxDoda8bLMO85JoyN5OI+ntSGEL3WIBUpi+RK7irq57Z1NiY+eXmi6c
- lqmHLwyqf3gNLqTMJE2H4BUi8jQyCUodiQIaKkHWAji1naNIrlJN2DQ6O7bhD1R2lc/Csq3cqwP
- fm2jk5XzgFQKkfQvCKu0gg53pUnWh2axpkmlM6CAriAVj095NZZVeYgJz0qBmGRLB2IODa+7CvO
- 3ABdKh94Mqe7x7dywNGRnQHkQfohJ4cOkpCDKEe6O8Z98LDkVBi+rcTUE3DcIXUpmm1RfJi37FR
- CAA==
-X-Received: by 2002:a53:ac9d:0:b0:65e:3d3a:de24 with SMTP id
- 956f58d0204a3-65ec9932e79mr21210200d50.44.1779882087323; Wed, 27 May 2026
- 04:41:27 -0700 (PDT)
+ bh=IDYcqy+lALeYVl8Mkv8O83zszmMK8AJuHWXrTl78/K0=;
+ b=fl6xFTAVbJPVAsp8j+c9dTBrub1pEq8L5x8EYWh20462CHh2W8hjwnhDTxEm4j336j
+ M3nGC7XolGTQ7M21mYpWnw1Me2IV7HdtbsZZeFFPABMg8BIXZbBABb176dQcCrlKrwxa
+ Wd5gcDYlW/DQUQfg5EraIEKc7rqFoKWoAxNv7C4kVfd+w8+LDrw9AjLSypH9TO0vb/QW
+ /kgO3zKdXzhEuLHWUZH7nnZdgJLEZGdXz6cqYzQU59i/mDeQvWGIITChsw0MmtA3Z6Eu
+ YNd7ZDbCITve0xJOGhyGkdpVLIjm1/ZqEL0Js+iuDFJo8pI9b/Ap8+j0JfXu13sG8PjD
+ OyTA==
+X-Gm-Message-State: AOJu0YzQj3U2mfTpGegNnHWZIPe0Ej3pzPngnINky0hgrsflxMLkL+QZ
+ oFSg9n8NxAK73udJXrrSmCMd6RAVW7+QhTpvWCewSI7I6E88wAxGjWk0b0MxV/rucoo=
+X-Gm-Gg: Acq92OGwNKpLQHhZuyrNQdtzGBfTJEeCXcFB1o/JKRVCEVcWtK2JJgFbirPLENcsrrL
+ IDZ6rLVlpKt/v/ZJuDd/hzi3IiImwqxkdQ1ZCP56+wCkX+hY+vtPQaTiDqvrvtIGAReN7Unuy+M
+ IRQbHJj8qZu3NgwkG9QIQ8X1eN25nzbnJcT9QxYtLaPOeuTqB/JugXMz63Tk2V4wQ7g0TyUCd5o
+ G6vy41rJJYw83y8HaDAVhWSJGHdKy263wBVZbai8m5eGbk4plDG+XgA1VjRf6p0b4UcwM/sB2b5
+ k0n2PEXZhNjkJL36QCS4cJTXzVHQxTeoIGnVAPZQYJRqqimCMa/lbHUWDhCCXWNhiX5huf+4GqK
+ dzcQLvLwDOyT/FN5pjQVEH/BZNhg51QJNF8Xl42XoQDgBH66YXv/oWc0CgZe4sw6Kew3P3oM7qq
+ rsPxiaU+fPyMe2RfpQbr27oro=
+X-Received: by 2002:a05:600c:4f88:b0:490:50eb:b777 with SMTP id
+ 5b1f17b1804b1-49050ebb9e0mr346140385e9.5.1779882202494; 
+ Wed, 27 May 2026 04:43:22 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-490454b1ab3sm441824325e9.14.2026.05.27.04.43.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 27 May 2026 04:43:21 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id C902E5F7F0;
+ Wed, 27 May 2026 12:43:20 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Pedro Barbuda <pbarbuda@microsoft.com>, Alexander Graf <agraf@csgraf.de>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v6 0/8] target/arm: fully model WFxT instructions for A-profile
+Date: Wed, 27 May 2026 12:43:12 +0100
+Message-ID: <20260527114320.1581552-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-References: <20260526200207.79738-1-deller@kernel.org>
-In-Reply-To: <20260526200207.79738-1-deller@kernel.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 27 May 2026 12:41:14 +0100
-X-Gm-Features: AVHnY4JdBkIdBNsu2ZiN_8a1TheYNQQHxWag6ge9YhadXGcyHBm0dBw75oxMwxY
-Message-ID: <CAFEAcA9_qa=oE2NeVwB1PWFE9R30zOJMvvieg0n-nATm7W4HJg@mail.gmail.com>
-Subject: Re: [PULL 00/12] Linux user next patches
-To: Helge Deller <deller@kernel.org>
-Cc: qemu-devel@nongnu.org, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-s390x@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Farman <farman@linux.ibm.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, Helge Deller <deller@gmx.de>, 
- Aleksandar Rikalo <arikalo@gmail.com>, David Hildenbrand <david@kernel.org>,
- Laurent Vivier <laurent@vivier.eu>, 
- Cornelia Huck <cohuck@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Yoshinori Sato <yoshinori.sato@nifty.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Ilya Leoshkevich <iii@linux.ibm.com>, Aurelien Jarno <aurelien@aurel32.net>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -124,36 +103,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 26 May 2026 at 21:04, Helge Deller <deller@kernel.org> wrote:
->
-> From: Helge Deller <deller@gmx.de>
->
-> The following changes since commit 554cbfb1cf4601d2762f5315c884319e361b24cb:
->
->   Merge tag 'ui-pull-request' of https://gitlab.com/marcandre.lureau/qemu into staging (2026-05-26 10:38:13 -0400)
->
-> are available in the Git repository at:
->
->   https://github.com/hdeller/qemu-hppa.git tags/linux-user-next-pull-request
->
-> for you to fetch changes up to b501a44d26be4cf70ba77500365aadbf21494e74:
->
->   linux-user: Move cpu_copy() to user-internals.h (2026-05-26 20:56:29 +0200)
->
-> ----------------------------------------------------------------
-> linux user patches
->
-> A series of patches for linux-user, specifically many FPU fixes in signal
-> handling code for sh4, mips, ppc, alpha and s390x (from Matt Turner), a
-> madvise() improvement and a ARM cortex-m55 program loading fix (from me),
-> and qemu header cleanups (from Peter Maydell).
+This series fully models the behaviour of WFxT instructions. We
+already had support for WFE for M-profile but we left off A-profile as
+it has more potential sources of wake-ups. The main one is the event
+stream which includes events from significant bits of the timer
+ticking over.
 
->   linux-user: Fix loading static ARM cortex-m55 binaries
+The refactoring from the previous iterations of the patch have now
+been merged.
 
-This patch has been on the list only a few days and hasn't been
-reviewed yet -- please can you not put it in a pullreq? It's
-on my list to look at.
+I've dropped trying to fully model the global monitor in favour of
+taking advantage of the architectural flexibility to have an IMPDEF
+event wake up for any reason. We treat the setting of exclusive_addr
+as such a reason because it indicates the current vCPU is in a ldstx
+exclusive region and we don't want the guest to deadlock. This does mean
+the system won't sleep on WFE enabled locks but people shouldn't be
+relying on QEMU to model real world sleep patterns anyway given the
+efficiency of emulation compared to real HW.
 
-thanks
--- PMM
+I've written a test case using kvm-unit-tests:
+
+  Message-ID: <20260527111822.1563679-1-alex.bennee@linaro.org>
+  Date: Wed, 27 May 2026 12:18:21 +0100
+  Subject: [kvm-unit-tests PATCH v2] arm: add wfx test case
+  From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+
+Only the following patches still need review:
+
+  target/arm: enable event stream on WFE instructions
+  target/arm: fix WFET typo in syndrome
+
+v6
+  - add typo fix
+  - addressed rth's comments
+
+v5
+  - addressed rth's comments
+  - all but one patch now reviewed
+
+v4
+  - precursor refactor patches now merged
+  - dropped global monitor emulation
+  - addressed other comments
+  - tested with check-tcg and kvm-unit-test wfx tests
+
+v3
+  - fixed the WFE exception handling
+
+v2
+  - I've kept the tests separate, see:
+
+    Message-ID: <20260417164328.1009132-1-alex.bennee@linaro.org>
+    Date: Fri, 17 Apr 2026 17:43:20 +0100
+    Subject: [PATCH 0/7] tests/tcg: more capabilities for aarch64-softmmu tests
+    From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+
+  - tweaks to global monitor behaviour
+  - STLR/STL will also trigger events to avoid deadlocks
+  - see under the --- in the patches for details
+
+Alex.
+
+Alex Bennée (8):
+  target/arm: fix WFET typo in syndrome
+  target/arm: teach arm_cpu_has_work about halting reasons
+  target/arm: redefine event stream fields
+  target/arm: ensure aarch64 DISAS_WFE will exit
+  target/arm: implements SEV/SEVL for all modes
+  target/arm: enable event stream on WFE instructions
+  target/arm: handle the WFE trap case
+  target/arm: implement WFET
+
+ target/arm/cpu.h               |  16 +++
+ target/arm/internals.h         |  22 ++-
+ target/arm/syndrome.h          |   2 +-
+ target/arm/tcg/helper-defs.h   |   3 +-
+ target/arm/tcg/translate.h     |  18 +++
+ target/arm/tcg/a32.decode      |   5 +-
+ target/arm/tcg/a64.decode      |   5 +-
+ target/arm/tcg/t16.decode      |   4 +-
+ target/arm/tcg/t32.decode      |   4 +-
+ target/arm/arm-powerctl.c      |   6 +-
+ target/arm/cpu.c               |  53 +++++--
+ target/arm/helper.c            |   8 +-
+ target/arm/kvm.c               |   5 +-
+ target/arm/machine.c           |   2 +-
+ target/arm/tcg/op_helper.c     | 253 ++++++++++++++++++++++++++++++---
+ target/arm/tcg/translate-a64.c |  64 +++++----
+ target/arm/tcg/translate.c     |  31 ++--
+ 17 files changed, 395 insertions(+), 106 deletions(-)
+
+-- 
+2.47.3
+
 
