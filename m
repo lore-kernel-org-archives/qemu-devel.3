@@ -4,111 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25F58CD5BD0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 12:59:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85211CD5BD5
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 13:04:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSDqi-0004FT-Es; Wed, 27 May 2026 08:59:04 -0400
+	id 1wSDv2-0005eX-Ru; Wed, 27 May 2026 09:03:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1wSDqe-0004F0-EI
- for qemu-devel@nongnu.org; Wed, 27 May 2026 08:59:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wSDux-0005e7-Sb
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 09:03:28 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1wSDqb-00082q-Lt
- for qemu-devel@nongnu.org; Wed, 27 May 2026 08:58:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779886736;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=iEQAfLvOet6qO6R1zNac4aqvvCu/csDx1DZhIdUpyCE=;
- b=QIuiGOL6e2WHjWHGIkGd/ZSyzo1nWO7hEFjxBPR5wAnqhWOBS5ZqVUHWjF3O4omyIaP/A8
- X5fT1kb8UemY26eG3duOZ6QCe3GljCsRY60dmORY15ryh15LNW/tuuUfLa6yRT+/gMEdtg
- 0KcBFidNCB/W79AEayKaIYi1yo9wQ/s=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-607-R3JzypXDP7qyTP1xLGfdZQ-1; Wed, 27 May 2026 08:58:54 -0400
-X-MC-Unique: R3JzypXDP7qyTP1xLGfdZQ-1
-X-Mimecast-MFC-AGG-ID: R3JzypXDP7qyTP1xLGfdZQ_1779886734
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-45ed830a0eeso1279581f8f.3
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 05:58:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wSDus-0001zF-Ts
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 09:03:25 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64R8mXVc1176637
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 13:03:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ v6UsJ/6dYhMpJoP3Z/opvE0adzRWWrjw2gI+WVgKDks=; b=VPSRFYfcN2jV+xKl
+ QzHDtKQorj2Li6snOF8AadvHKunmEGvKO4o1BGE5d2oSF+Wiga0A6GZnmsZ6RRNK
+ TDKEXWGmkuEkhSJC/rBC3tMsHQr7vnttEJlIZzmpTCkV8HvNtZKBCd3Jt8E28gXF
+ VKYkFTUdqUIuctPuMMpMeVc64mSmnA7NxP3Cws42Hg00Hzy/44Gpli628uHV0nDO
+ DKQSe1uBoMM4MmtEnwsd8c7ebCnKOb2FFQKwAoz1tmAIUiVhZqfx9Sq8Jeo41l6f
+ ioCQdjmjpfPEwmT+VDb+hdnTFKOXh2kL6rGA9QpdA2Aa0SlBFFA7IbUcYqWrtn4K
+ uMh7vA==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4edndnjk1a-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 13:03:19 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-8aca4660827so228231316d6.3
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 06:03:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779886733; x=1780491533; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iEQAfLvOet6qO6R1zNac4aqvvCu/csDx1DZhIdUpyCE=;
- b=bPqOa1RRduvqexf/k+h5pcpifDLU2jE2rQyUBT5LDNqCn15oCRN40Jw6Iy3eaGUV8k
- 4LsupOuLbHIjrNTPYy67EaK8gBg1Xjg+nWZmFfd8H5nGhFy+INUvAua49msUfKru2V00
- eFm4QC3ozZvtmbKBT/u0HS7FJpZCq72prgPA08Du9E6Qu56JpdmJwxxqCwa+BkaYNb8d
- BYEbZITtn77KN+vVkIGGR7TqOja2KI2FWvl106VIh3+KVTNPTupJuDlWUer6Q/wX2Tx6
- GhzWGnbP98alXScg9F+Dgh29IIK0U3SLhFZJnpow7e9c7SJY5AI0dzKGsxSDUxZBXuD9
- oy7g==
+ d=oss.qualcomm.com; s=google; t=1779886999; x=1780491799; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=v6UsJ/6dYhMpJoP3Z/opvE0adzRWWrjw2gI+WVgKDks=;
+ b=jtvswT7+vt2GtdBsxSyeUYlV66KNgz5pnKqMXSdjglRpW7HrbvwFcjBEM9Otk8+QaO
+ a7PTqk0EFEUs95IE1crmqc9nDE/6yqfeOLaeCkN4cIUvs/OwyMwICev1okRynySesyls
+ PTAPZ7xYSQhOeDy7ZFD1EN1B7yWF7pdwn7/kCOdFEzARpfqLEnGPax8/kGgQrg6mwRzb
+ SjH8sWHlQScO/Mp93ekXcL3+OeolEOYZdr1izBJcwIxSKHMN2oyFWW3/2sP+qFVqeK0r
+ pctEY++Pa6zvk+HB20LpuVjB2NFFE80Ld35LtK0/cvvRPVr2Q1KNppuNo/xeHVuAXjxt
+ zq9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779886733; x=1780491533;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=iEQAfLvOet6qO6R1zNac4aqvvCu/csDx1DZhIdUpyCE=;
- b=VaHccp5bq+xDy/hD+82DfwL9T7FtTzFW7p2t/vjz4CuhxMF1h4fiP2GXWM0YA4cNyh
- gRfqI/5YLijZ7mF05xFY09tzxt3fggS8HsvG9tgBoK0nJmFmnh67t6b/hgyc+duDDH98
- M4VP/VelZtb6RYNinKoHDpXl0om6pPNVB4d+RT3D5XWY97qM1LNoFWGrkODJ1fey1wEP
- ZQ6Tvk1Qbg9Xb98R3xPpVnaSMByNEMSGnolfPs4foYqBirZ+7eUTJgscQLVS2XO9lH9/
- ViaJok/GDl4nJjHuM2RZlr4N6nxufai5O1O0s2EnuNWO0xnYlSTmK3v0PpOAkQ4Sl4r3
- a0Qg==
-X-Gm-Message-State: AOJu0YxzpKl0lxpi7cGdlEu6Ts9lm8yjrJ8Kf0SUZuGcOZ1u3jbv8idM
- +5b3hMI7M0RVYd2r8RMR1BNUZPYWoMyxg/fS9Yk1eC0XD+yNIJjsLYN9n9Xg+3hdlHy3sE2htlG
- To1SRgFiGGczLzNE6CyBEiDPYtF4OksKwFCtXWFqGsP70ukgOO7BzvdvW
-X-Gm-Gg: Acq92OE3+oJJYdi+4O4Yrw0R+tvCKti2pyvFfzG6pdH6Mkj5ZHwitcYtltemPgcHJo+
- PL3aNV2Y2XWevdgkVbfIdkP1TFreWHuFOBOamr2CjiTByQBWWy0CJ5nLkC15Zmn0uigODmJmtt/
- UVoBWwBb2moOMg8pDIDL8dbPTsq9xVHEodIcpktS37D+CarhVUY6OLsV+FSnaVKeJYZCcLLphjH
- eydCrRRKYIpiOomR95GdT3IcWJ53po7W2tpUPHF+zLl6wjsJHXH5ZFxZEeK7aAiscVuuY27W4Ac
- 7zWxOV3sihZvVSBbZr7bNYHABL7Ix3zqSRRbjwKGeHBi9MNZYR3Z3L0AAaic3NpxtT9sMACvGOF
- NT0bkrg==
-X-Received: by 2002:a05:600c:a402:b0:48f:d1c0:721e with SMTP id
- 5b1f17b1804b1-490426b294amr265356135e9.12.1779886733602; 
- Wed, 27 May 2026 05:58:53 -0700 (PDT)
-X-Received: by 2002:a05:600c:a402:b0:48f:d1c0:721e with SMTP id
- 5b1f17b1804b1-490426b294amr265355855e9.12.1779886733205; 
- Wed, 27 May 2026 05:58:53 -0700 (PDT)
-Received: from imammedo ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490809c2dc2sm16208485e9.28.2026.05.27.05.58.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 May 2026 05:58:52 -0700 (PDT)
-Date: Wed, 27 May 2026 14:58:51 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Eric Auger <eauger@redhat.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, anisinha@redhat.com,
- pbonzini@redhat.com, peter.maydell@linaro.org, shannon.zhaosl@gmail.com,
- philmd@linaro.org, zhao1.liu@intel.com, rad@semihalf.com,
- leif.lindholm@oss.qualcomm.com, qemu-arm@nongnu.org
-Subject: Re: [PATCH v2 16/21] tests: acpi: arm/virt: add GTDT watchdog table
- test case
-Message-ID: <20260527145851.2b0abebd@imammedo>
-In-Reply-To: <cba87a73-0458-445e-8c12-683ca639f2de@redhat.com>
-References: <20260303092532.2410177-1-imammedo@redhat.com>
- <20260303092532.2410177-17-imammedo@redhat.com>
- <cba87a73-0458-445e-8c12-683ca639f2de@redhat.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20251104; t=1779886999; x=1780491799;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=v6UsJ/6dYhMpJoP3Z/opvE0adzRWWrjw2gI+WVgKDks=;
+ b=o0MmjRjs3JYwTQZucNdLKGGK4BnFFPkay3f98yXfVZEasMjsxeDCHwd7ZgH+e4kF3l
+ qUFI8TZuswccAeDUcmACmVzfiNOGSdQ08z9Y+2909vWJtNLAuGwthDKzPnY+p8osUKwi
+ 6JGYFNatt8BT6sP7M/1ebHHXq7ikblDp77aWd/1ZmhvUWZEolz3Miaky/wtkLm1ac3f0
+ RfnwAQlcOjV2FkoUc1WIEfSI1SX+KLh4svNWu3ep5N+sbbkWMAVgoWMj9YOsz7NLKlt4
+ U7V5OPLNLEydJrVYeCDavyL77YG6hLr1jV6QA03JP9TvZ7/Og7Ovj1Jwv9BUl8pO4QTE
+ 5isg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8wYWwrxCoLaVqH0UCYSnbz6B1761gURz9B1JqhkpmKN/KVQZk+1FdMMscjMNu4DZzLq0Q0JaPYYPvF@nongnu.org
+X-Gm-Message-State: AOJu0YwWPg1fvS/Wm+XgWPb51pg/UxUHyAz+maaaX0VFpOE0NDo2EZDd
+ 56rPc1eXKNBFU2TIloNnn7AU+Ozr8Nbp7hCcOIBOIAurYBxg6oCbmQMVAgBNZBiVlEBE/Nqk4RI
+ 1u9ygZ8Zbl/GPGMIwLRoxmJRndPsEZ2+WOUCuxBPoDBjKVNEgfbPFsWkm2g==
+X-Gm-Gg: Acq92OH4hDKQmJYGYJ00+Wc9RMllHLyaNjnfy2WZl3VabWTNy+5PjaUpP2FqMF1cmO7
+ ZJWF0dNcoWddD96EsL4Hj/IW4YUPqy9hHEI9cL3Lb3jzkNT8hhdFYYRCe6vX0oV/x6BaSNJmaaF
+ 2egFcOQFoCYWGBtjMUMCiWE/2Emh+zoJU6FsQtnG6Pgcyc5K28jxtSpcvMTAx2I6EfMTyf2F6oq
+ 4PV1JLFdjklCKqSUIfMokCmuubCd9hsArQUF3O6orNGqjy7yZbTLN2CB6rz6FMUaQzEIbp+S8VO
+ MK9JAWKkvpqe+/ypW3Iq+r70AGT88OFL4zMDXIjDxZYMeG/GTWNOCuXhPDc8PnB5FQGU0rJCvIM
+ MeJz5t2WEpPe99bKFc4duxWDI8ZhdX7eN3BfrCbTVKUdtwGRjXLTSeqlN1rE=
+X-Received: by 2002:a05:6214:5093:b0:8a0:3bd8:5950 with SMTP id
+ 6a1803df08f44-8cc7b5c0bb4mr360314496d6.23.1779886998477; 
+ Wed, 27 May 2026 06:03:18 -0700 (PDT)
+X-Received: by 2002:a05:6214:5093:b0:8a0:3bd8:5950 with SMTP id
+ 6a1803df08f44-8cc7b5c0bb4mr360313896d6.23.1779886997970; 
+ Wed, 27 May 2026 06:03:17 -0700 (PDT)
+Received: from [192.168.68.106] ([191.202.238.222])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8ccb377fc60sm48915546d6.17.2026.05.27.06.03.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 27 May 2026 06:03:17 -0700 (PDT)
+Message-ID: <1e6c1a0a-7d20-492d-ac18-74f6f1630e9a@oss.qualcomm.com>
+Date: Wed, 27 May 2026 10:03:13 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 0/9] target/riscv: Add RISC-V Zvfofp8min extension
+ support
+To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, alistair23@gmail.com
+References: <20260427060928.2322570-1-max.chou@sifive.com>
+ <ahZQDCgHelFQfHQM@sifive.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <ahZQDCgHelFQfHQM@sifive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-Authority-Analysis: v=2.4 cv=PpSjqQM3 c=1 sm=1 tr=0 ts=6a16eb97 cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=etEqFfc6qwXwpI8uT8rzbw==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=xvfqbYfxAAAA:20 a=NW8-NIpsAAAA:8 a=pFyQfRViAAAA:8 a=nuMlGqz7nuL4QzUz3m8A:9
+ a=QEXdDO2ut3YA:10 a=OIgjcC2v60KrkQgK7BGD:22 a=FTAPkevyI8KQvgyCdMRv:22
+ a=oJz5jJLG1JtSoe7EL652:22 a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-ORIG-GUID: L7uHB-o6lLHbB3N1VioaOtHNC4-mnOwC
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI3MDEyNyBTYWx0ZWRfX/WlcYCwJrOss
+ uBN5Ahok40FI1YE04PIxdF3BCv9DAOBzL/V3zhaY9B4KRD1HLuFIVilRTJtzoUQMBAu1G58tRGq
+ uJv6oYCFPIIzyTXe03xvcExqMvNv1K63NB3/S2HAGtfACnLifbMSwLYUTUytDJhKVRUzSg3Jvyb
+ gK2pK2C4UbQW2a08D8wOxKleVEb/6E+5DogqH/oJKP4bVUEy3jEnJ55l2wcPP+pHSU/PHcAWTaj
+ 4itRXGBSrff+EQa/4BG54lVaVanQiFV8QIG+kQuj/KuKkDHkR+3Wy9pfFP7jju2b+EhyP3kZHSK
+ DbTaz2rWo1GPs1ZruuKTxYxxlcJLI6uqiWjndIJKFEBfBPH6xDcVaf+i0a4FEKp9xmXXQsewa/o
+ PkBhR/tbNmkCALuUu0Jx8OFjdx6zPP+jWclsSgCct87FiTGuWaDVA6P2AYf7etNQR15oKv6Qe9V
+ MUsb/fTj9Pw1t6e/qeA==
+X-Proofpoint-GUID: L7uHB-o6lLHbB3N1VioaOtHNC4-mnOwC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-05-27_02,2026-05-26_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 priorityscore=1501 malwarescore=0 suspectscore=0 clxscore=1015
+ adultscore=0 phishscore=0 impostorscore=0 lowpriorityscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605270127
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,63 +157,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 26 May 2026 16:44:08 +0200
-Eric Auger <eauger@redhat.com> wrote:
+Hi Max!
 
-> On 3/3/26 10:25 AM, Igor Mammedov wrote:
-> > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-> > ---
-> >  tests/qtest/bios-tables-test.c | 20 ++++++++++++++++++++
-> >  1 file changed, 20 insertions(+)
-> > 
-> > diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-> > index 5082866184..11c6854af8 100644
-> > --- a/tests/qtest/bios-tables-test.c
-> > +++ b/tests/qtest/bios-tables-test.c
-> > @@ -2290,6 +2290,24 @@ static void test_acpi_aarch64_virt_tcg_wdat(void)
-> >      free_test_data(&data);
-> >  }
-> >  
-> > +static void test_acpi_aarch64_virt_tcg_gtdt_wd(void)
-> > +{
-> > +    test_data data = {
-> > +        .machine = "virt",
-> > +        .arch = "aarch64",
-> > +        .variant = ".gwdt",
-> > +        .tcg_only = true,
-> > +        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
-> > +        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
-> > +        .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
-> > +        .ram_start = 0x40000000ULL,
-> > +        .scan_len = 128ULL * MiB,
-> > +    };
-> > +
-> > +    test_acpi_one("-cpu cortex-a57 " "-device sbsa_gwdt", &data);  
-> depends on the instantiation strategy, ie. whether Peter is OK with
-> dynamic sysbus instantiation
+On 5/26/2026 11:00 PM, Max Chou wrote:
+> Gental ping.
 
-machine option in v1 to do the same opened another can of worms
-that I think consensus was it would be better go with -device. 
+
+I believe we'll need a resend with a rebase due to changes done in the
+last PR, in particular a change I did where I removed the riscv_cpu_*
+arrays.  In other words: we don't need patch 8 anymore.
+
+
+Thanks,
+Daniel
 
 > 
-> Thanks
-> 
-> Eric
-> > +    free_test_data(&data);
-> > +}
-> > +
-> >  static void test_acpi_q35_viot(void)
-> >  {
-> >      test_data data = {
-> > @@ -2910,6 +2928,8 @@ int main(int argc, char *argv[])
-> >              }
-> >              qtest_add_func("acpi/virt/acpi-watchdog",
-> >                             test_acpi_aarch64_virt_tcg_wdat);
-> > +            qtest_add_func("acpi/virt/gwdt-watchdog",
-> > +                           test_acpi_aarch64_virt_tcg_gtdt_wd);
-> >          }
-> >      } else if (strcmp(arch, "riscv64") == 0) {
-> >          if (has_tcg && qtest_has_device("virtio-blk-pci")) {  
-> 
+> On 2026-04-27 14:09, Max Chou wrote:
+>> This patchset adds support for the RISC-V Zvfofp8min isa extension that
+>> provide conversion operations for OCP FP formats.
+>>
+>> * riscv-isa-manual tag: https://github.com/riscv/riscv-isa-manual/releases/tag/zvfofp8min-0.9
+>>
+>> Zvfofp8min (v0.9):
+>>    The Zvfofp8min extension provides minimal vector conversion support
+>>    for OFP8 formats. It requires the Zve32f extension and leverages the
+>>    altfmt field in the VTYPE CSR (introduced by Zvfbfa) to select between
+>>    E4M3 (altfmt=0) and E5M2 (altfmt=1) formats.
+>>    - Canonical NaN for both E4M3 and E5M2 is 0x7f
+>>    - All NaNs are treated as quiet NaNs
+>>    Instructions added/extended:
+>>    - vfwcvtbf16.f.f.v: OFP8 to BF16 widening conversion
+>>    - vfncvtbf16.f.f.w: BF16 to OFP8 narrowing conversion
+>>    - vfncvtbf16.sat.f.f.w: BF16 to OFP8 with saturation (new)
+>>    - vfncvt.f.f.q: FP32 to OFP8 quad-narrowing conversion (new)
+>>    - vfncvt.sat.f.f.q: FP32 to OFP8 with saturation (new)
+>>
+>> Changes in v5
+>> - Drop Zvfofp4min which is not going through the RVIA ratification
+>>    process yet.
+>> - Fix typos.
+>> - Rebase on riscv-to-apply.next (commit bf76a00)
+>>
+>> Chagnes in v4
+>> - Rebase on riscv-to-apply.next (commit 21101a7)
+>> - Remove the softfloat library related patches (Thanks for RH's help to
+>>    split this part)
+>> - Add missing illegal ALTFMT SEW pattern checking for Zvfofp8min in
+>>    patch 4 (target/riscv: rvv: Make vfwcvtbf16.f.f.v support OFP8 to BF16
+>>    conversion for Zvfofp8min extension)
+>>
+>> Changes in v3
+>> - Add floatN_nan_is_snan to simply the quiet/signaling NaN checking flow
+>>    in patch 2 & 3
+>> - Add patch 4 to fix pseudo-NaN handling in FPATAN/FYL2XP1/FYL2X helpers
+>>
+>> Changes in v2
+>> - Merged v1 patch 2 & 3 to v2 patch 3, v1 patch 4 & 5 to v2 patch 4
+>> - Added new v2 patch 2 to refactor the IEEE format NaN classification
+>>    functions (float16, bfloat16, float32, float64) to use internal helper
+>>    functions, reducing code duplication and improving maintainability.
+>>    The OCP FP8 NaN classification functions follow the same pattern.
+>> - Refactored softfloat implementation to use capability-based FloatFmt
+>>    flags (no_infinity, limited_nan, overflow_raises_invalid, normal_frac_max)
+>>    instead of monolithic flags
+>> - Removed ocp_fp8e5m2_no_signal_nan and ocp_fp8_same_canonical_nan flags
+>>    from float_status; now using local float_status with no_signaling_nans
+>>    and default_nan_pattern for RISC-V Zvfofp8min instructions
+>> - Rebased on latest riscv-to-apply.next with zvfbfa v3 patchset
+>>
+>> v4: <20260304134006.2908449-1-max.chou@sifive.com>
+>> v3: <20260204051756.667397-1-max.chou@sifive.com>
+>> v2: <20260127063723.442734-1-max.chou@sifive.com>
+>> v1: <20260108151650.16329-1-max.chou@sifive.com>
+>>
+>> References
+>> * OCP FP8 specification:
+>>    https://www.opencompute.org/documents/ocp-8-bit-floating-point-specification-ofp8-revision-1-0-2023-12-01-pdf-1
+>>
+>>
+>> Max Chou (9):
+>>    target/riscv: rvv: Fix NOP_UU_B vs2 width
+>>    target/riscv: Add cfg property for Zvfofp8min extension
+>>    target/riscv: Add implied rules for Zvfofp8min extension
+>>    target/riscv: rvv: Make vfwcvtbf16.f.f.v support OFP8 to BF16
+>>      conversion for Zvfofp8min extension
+>>    target/riscv: rvv: Make vfncvtbf16.f.f.w support BF16 to OFP8
+>>      conversion for Zvfofp8min extension
+>>    target/riscv: rvv: Add vfncvtbf16.sat.f.f.w instruction for Zvfofp8min
+>>      extension
+>>    target/riscv: rvv: Add vfncvt.f.f.q and vfncvt.sat.f.f.q instructions
+>>      for Zvfofp8min extension
+>>    target/riscv: Expose Zvfofp8min property
+>>    disas/riscv: Add support of Zvfofp8min extension
+>>
+>>   disas/riscv.c                              |   9 ++
+>>   target/riscv/cpu.c                         |  15 ++-
+>>   target/riscv/cpu_cfg_fields.h.inc          |   1 +
+>>   target/riscv/helper.h                      |  12 +++
+>>   target/riscv/insn32.decode                 |   5 +
+>>   target/riscv/insn_trans/trans_rvbf16.c.inc |  32 +++++--
+>>   target/riscv/insn_trans/trans_rvofp8.c.inc | 105 +++++++++++++++++++++
+>>   target/riscv/insn_trans/trans_rvv.c.inc    |  39 ++++++++
+>>   target/riscv/tcg/tcg-cpu.c                 |   5 +
+>>   target/riscv/translate.c                   |   1 +
+>>   target/riscv/vector_helper.c               | 104 +++++++++++++++++++-
+>>   11 files changed, 315 insertions(+), 13 deletions(-)
+>>   create mode 100644 target/riscv/insn_trans/trans_rvofp8.c.inc
+>>
+>> -- 
+>> 2.52.0
+>>
 
 
