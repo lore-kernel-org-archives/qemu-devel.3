@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AED5BCD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:35:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C47ECD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 10:35:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSBZ3-0006Rs-1O; Wed, 27 May 2026 06:32:41 -0400
+	id 1wSBal-0001Dk-TX; Wed, 27 May 2026 06:34:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBZ0-0006PR-Gy
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:32:38 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBaS-0000m4-0s
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:34:12 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBYy-00014R-FH
- for qemu-devel@nongnu.org; Wed, 27 May 2026 06:32:38 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-49042aeeb75so66845095e9.1
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:32:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSBaO-0001b4-LU
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 06:34:07 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-48d146705b4so122391915e9.3
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 03:34:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779877955; x=1780482755; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779878043; x=1780482843; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=I9340WSLhVpvCMgW/nLw1BtgOmu1GxYGZiZMrp9lCdw=;
- b=X66QHOMi8KsxFk3+1YLm+CFwrdgpDUn8YSFTKezqdK6YvhR9d6g6525k865E4uDljN
- 4d+cGVjIrfYl/VcRPB6Kwe//A2yHhU87p8WaDSLH234R+Igj104T31zTCdbIDAW0Hja5
- pnFGE2VPdYuoPk46LXyIuC9fRg+vKsOtGTNZzJPF0FGi2kS5255gsgwjhFOCbT0I5U7H
- 10yaipwdVWBpcCo20K6dsi8o27LhVFPKvYJU/hXjsTOMK6d8+80x+eM+YfrzKuJwPBpX
- suBAGkgWKx1N+p7jDBsZCB1kkRXMxeEO2l3/+hxUZMtHPyoUv+RBZf7nYeLa/CteDRCQ
- 49cA==
+ :reply-to; bh=BDxMo5/9OgUZXKqAgMxYAx4x+l4PPjRCkQ2+p6SpiYc=;
+ b=m+20tJRzEIfxPOrlRH9ZkGFNTg1F4o52F/7feDAIPQC8Q4aKWPkfxz+wsWcgglNzNA
+ qteA4crZUQZBEtHr7OTjEIr75xTy1/IGELF3hL7e1+TuddSi85GkQa6N1qgT+VblH1HN
+ AnPtv/U2IFbX3AyCvpQa6spb9q6K/vK+g1lZAHw7WqVssXghtzNjt7Jsdk3lByS7BOqr
+ XelNoU2Npo1KSS0sCqiDlZI6XAS5O+VCRW8P5Rykq5fT9UOcD6vyo3Kya7JMxbuiMZ4E
+ OhyyAdomBWp/xgfgrrdK/RxYadq2uavqAIGTDa60twvR6WSncAWEXAd/krnWS6cIA7G2
+ 9jgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779877955; x=1780482755;
+ d=1e100.net; s=20251104; t=1779878043; x=1780482843;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=I9340WSLhVpvCMgW/nLw1BtgOmu1GxYGZiZMrp9lCdw=;
- b=lJpjJE2uFhP0VN0AkspF/0fLa05JXbaYJQm67Dyd6i0DTmrkVju1TrLP+zrG8Zs3T0
- bxHDP57FN0v9p6ZsuzhjUZLzSQEb/7mTsA/knHLg2z1o34om1zorarBS6ad/bzRmgxP5
- rfiohuCiWBrA+VnTROZSlqFdUlT+EC2Z6eqV5FJrlZAsAlugyqnTKPVKfeToG3/xrxXP
- 3M+UUSY0a+GCjSniVc/x4EZK42SIVf0kJ4/P+ehDJxuMbORwCtcpBEJt+pGfewoOsvBc
- k7BwnHzqAnfSykvLVnYYTz8iseGWwqfJQYr61sKPRLzblRJLB7Zm3cDr7NzhR71Jpgzf
- 9VAQ==
-X-Gm-Message-State: AOJu0YwfoxnreuALMOU/KiyQbuKY3u1QZr9tg1Itmj67u83EqVZcIxyO
- sBqKEEn4rAGfBjL7cwLPXi1zmvGb+qt/ve4AvlqtwZffvBTDym9syKfYa50SvRpBjdonktw7Dkv
- tXCiNZrTikg==
-X-Gm-Gg: Acq92OHxH/NSCqcIzxfuZF/Mgc7sRmJwmWDEuCrE4DL3BGB2yyZtqwFTzjo2Lc3M60A
- rS0IyLEcRp/4GYW+Gvo+YZUB1aX7X5DjDMk5yIWMdNSucPe0rRt3rfG7+0WdTtNQhSNKT51DrT4
- eEPk+eLbqMFROFqe+wo2AfIpQvl1hZpzPh/mKzPaHL5LvVOfM3ViZbL7uz58FrcJEhQn/AKjhl+
- S/whSDn/OYioThPRevjHi7QfB92Hnf+uzYLxq5aDElpOMAKBPM/Gu3vIhDXrKAPOm85ycNQS1H2
- iTgoTjoEH78IAns9A0Dd7AWD2uiSWEHd243ABlYuhnucg8mdXS2RU7/YoI/raVU4EeSyCDB2TN7
- y5QlR7uzCu2hoBRAnOO1pF/Ix1meP47gHSPFa2a34MtV4opxjXG9F+jsc2GJ76+/tRRzuC70y6I
- IOmZqhq6miywT9ogpLTdwBdGPJXMGCkasE4zbhhv0veHUkpYwnI7rjoa8=
-X-Received: by 2002:a05:600c:8692:b0:490:3fa2:1b93 with SMTP id
- 5b1f17b1804b1-490424b0e35mr239428855e9.13.1779877954902; 
- Wed, 27 May 2026 03:32:34 -0700 (PDT)
+ bh=BDxMo5/9OgUZXKqAgMxYAx4x+l4PPjRCkQ2+p6SpiYc=;
+ b=lV0ZBjHaCwowZEJiTnsybsxpIGZOH7c34Gi3uy9RFdb0gXQhVMOFPfskwdauBgc8f1
+ uDcgrG3tD3OFxdLSBX34jidmi0DxOkONs3DvVgYi1q42NajSIin6zh9xK3zbCbuQokNH
+ NXP3rnQzLn0f8y2zb5c5bMARinBEaQpRXGGs3VDJb4odGj0aNA1Q/m/68vtTzrzCBMol
+ unobPRT1XQBg2BhvL7yS7zQTkqPu9BscGtI1Za1179RJFySdt+E75SsaD8pvrQ1g1Wy3
+ RfHsM60a+3iF15xptzPAl2Ra93vpnIXEWcL5UllIgcAtfEdTSb00fCWCvozc1nLcS28c
+ r0/w==
+X-Gm-Message-State: AOJu0YyXPknjMovSfz9TQQtHKBMbt2K5QFowJwcZN58DBI7471L3pWVm
+ /OLCwI9CRBDiAmNZQWcmrx3f/FCwuDLVfQAx0cihPncMkSEoeK1ox1bJlyuLxFsOGhr6LlnmeRd
+ WU+ghIYkWSA==
+X-Gm-Gg: Acq92OGgsHZ6f0/m4as0USkZau4wMCSwniSvUmZQnboc0Ton6ZWCBPIbyqVdvvo+0w1
+ duNGFz7hgj4V6rioipQNvBlq4ZazM0QmjOjndAZItnIE5RtRdy41Db01S4Yejht6/N6lrTxP5bo
+ 5yPKfS1lH8guOQ3RxYZrPUFS6zGM8FM8nvcbh2dK/Vv4crQiKqPI8SavtpR4q2xRz5kQiNuwOeD
+ IE214LocBqZUTXkpPfhwmUBcaUakty9YyWsHe2/+QiN50saEX1U9lQK6Q3gwen027XBf0FTAfxS
+ +3cmaDo5V6FtPfyM1J2WS8E4XXYIa6TOpMPmEM08ud2ObsCCozNdN4Lvq09fDHVfI4RIRoFIBjq
+ QHVuOnREOiMbyV1RjEpvNbifZEUQthv60YkNYKkP9ze5FJ68TLxtJsDvXzxcZCvfba4Z9VhP+Zv
+ RdYInIwTWlbCWtmQazchy95Wqb3Aq+mNUpySB+96pcswL4Y/6UEmw8VtsMKlK5GlLPQg==
+X-Received: by 2002:a7b:cb8b:0:b0:490:3fdd:d353 with SMTP id
+ 5b1f17b1804b1-490424ad5d3mr240683055e9.8.1779878042843; 
+ Wed, 27 May 2026 03:34:02 -0700 (PDT)
 Received: from m17.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490809c313csm13582855e9.30.2026.05.27.03.32.34
+ 5b1f17b1804b1-4904561a33dsm354994905e9.11.2026.05.27.03.34.01
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 27 May 2026 03:32:34 -0700 (PDT)
+ Wed, 27 May 2026 03:34:02 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 17/32] target/arm: Introduce common system/user meson source set
-Date: Wed, 27 May 2026 12:30:21 +0200
-Message-ID: <20260527103037.4461-18-philmd@linaro.org>
+Subject: [PULL 30/32] MAINTAINERS: Remove PhilMD from firmware sections
+Date: Wed, 27 May 2026 12:30:34 +0200
+Message-ID: <20260527103037.4461-31-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260527103037.4461-1-philmd@linaro.org>
 References: <20260527103037.4461-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,163 +98,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a source set common to system / user.
-No logical change intended.
+I'm not paid to support this code. I haven't followed
+it neither, so be fair and just remove myself. Demote
+the status to 'Orphaned'.
 
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Daniel P. Berrange <berrange@redhat.com>
+Cc: Kashyap Chamarthy <kchamart@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20260519173014.98967-3-philmd@linaro.org>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Acked-by: Peter Maydell <peter.maydell@linaro.org>
-Message-Id: <20260526203722.79463-7-philmd@linaro.org>
+Message-Id: <20260527063102.91205-1-philmd@linaro.org>
 ---
- target/arm/meson.build     | 21 +++++++++--------
- target/arm/tcg/meson.build | 48 ++++++++++++--------------------------
- 2 files changed, 26 insertions(+), 43 deletions(-)
+ MAINTAINERS | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/target/arm/meson.build b/target/arm/meson.build
-index 4723f9f170a..e56fc943bdf 100644
---- a/target/arm/meson.build
-+++ b/target/arm/meson.build
-@@ -1,6 +1,7 @@
- arm_ss = ss.source_set()
- arm_common_ss = ss.source_set()
- arm_common_system_ss = ss.source_set()
-+arm_common_user_system_ss = ss.source_set()
- arm_system_ss = ss.source_set()
- arm_stubs_ss = ss.source_set()
- arm_user_ss = ss.source_set()
-@@ -16,6 +17,13 @@ arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
- arm_common_ss.add(files(
-   'mmuidx.c',
- ))
-+arm_common_user_system_ss.add(files(
-+  'cpregs-gcs.c',
-+  'cpregs-pmu.c',
-+  'debug_helper.c',
-+  'helper.c',
-+  'vfp_fpscr.c',
-+))
+diff --git a/MAINTAINERS b/MAINTAINERS
+index cd5c4831e27..15982c04614 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2874,9 +2874,8 @@ F: hw/usb/vt82c686-uhci-pci.c
+ F: include/hw/isa/vt82c686.h
  
- arm_common_system_ss.add(files(
-   'arm-qmp-cmds.c',
-@@ -26,11 +34,6 @@ arm_system_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
- arm_user_ss.add(files('cpu.c'))
- arm_stubs_ss.add(files('cpu32-stubs.c'))
- arm_user_ss.add(files(
--  'cpregs-gcs.c',
--  'cpregs-pmu.c',
--  'debug_helper.c',
--  'helper.c',
--  'vfp_fpscr.c',
-   'el2-stubs.c',
-   'cpregs-omap-stub.c',
- ))
-@@ -45,15 +48,10 @@ arm_common_system_ss.add(files(
-   'arch_dump.c',
-   'arm-powerctl.c',
-   'cortex-regs.c',
--  'cpregs-gcs.c',
-   'cpregs-omap.c',
--  'cpregs-pmu.c',
-   'cpu-irq.c',
--  'debug_helper.c',
--  'helper.c',
-   'machine.c',
-   'ptw.c',
--  'vfp_fpscr.c',
- ))
+ Firmware configuration (fw_cfg)
+-M: Philippe Mathieu-Daudé <philmd@linaro.org>
+ R: Gerd Hoffmann <kraxel@redhat.com>
+-S: Supported
++S: Orphaned
+ F: docs/specs/fw_cfg.rst
+ F: hw/nvram/fw_cfg*.c
+ F: stubs/fw_cfg.c
+@@ -4004,14 +4003,12 @@ F: docs/specs/fsi.rst
+ F: tests/qtest/aspeed_fsi-test.c
  
- subdir('hvf')
-@@ -65,6 +63,9 @@ else
-     arm_common_system_ss.add(files('tcg-stubs.c'))
- endif
+ Firmware schema specifications
+-M: Philippe Mathieu-Daudé <philmd@linaro.org>
+ R: Daniel P. Berrange <berrange@redhat.com>
+ R: Kashyap Chamarthy <kchamart@redhat.com>
+-S: Maintained
++S: Orphan
+ F: docs/interop/firmware.json
  
-+arm_user_ss.add_all(arm_common_user_system_ss)
-+arm_common_system_ss.add_all(arm_common_user_system_ss)
-+
- target_arch += {'arm': arm_ss}
- target_system_arch += {'arm': arm_system_ss}
- target_user_arch += {'arm': arm_user_ss}
-diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
-index 1b751d59183..b0f5342245b 100644
---- a/target/arm/tcg/meson.build
-+++ b/target/arm/tcg/meson.build
-@@ -52,60 +52,42 @@ arm_common_system_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('cpu-v7m.c'))
- arm_user_ss.add(when: 'TARGET_AARCH64', if_false: files('cpu-v7m.c'))
- 
- arm_common_ss.add(zlib)
--
- arm_common_ss.add(files(
-   'arith_helper.c',
-   'crypto_helper.c',
-   'idau.c',
- ))
- 
--arm_common_system_ss.add(
-+arm_common_user_system_ss.add(
-   m_nocp_d,
-   mve_d,
-   neon_d,
-   translate32_d,
-   vfp_d,
-   files(
--  'cpregs-at.c',
-   'debug.c',
--  'gicv5-cpuif.c',
--  'hflags.c',
-   'gengvec.c',
-+  'hflags.c',
-   'm_helper.c',
-   'mve_helper.c',
-   'neon_helper.c',
-   'op_helper.c',
-+  'translate.c',
-+  'translate-m-nocp.c',
-+  'translate-mve.c',
-+  'translate-neon.c',
-+  'translate-vfp.c',
-+  'vec_helper.c',
-+  'vfp_helper.c',
-+))
-+
-+arm_common_system_ss.add(files(
-+  'cpregs-at.c',
-+  'gicv5-cpuif.c',
-   'psci.c',
-   'tlb_helper.c',
-   'tlb-insns.c',
--  'translate.c',
--  'translate-m-nocp.c',
--  'translate-mve.c',
--  'translate-neon.c',
--  'translate-vfp.c',
--  'vec_helper.c',
--  'vfp_helper.c',
- ))
--arm_user_ss.add(
--  m_nocp_d,
--  mve_d,
--  neon_d,
--  translate32_d,
--  vfp_d,
--  files(
--  'debug.c',
--  'gengvec.c',
--  'hflags.c',
--  'm_helper.c',
--  'mve_helper.c',
--  'neon_helper.c',
--  'op_helper.c',
-+arm_user_ss.add(files(
-   'tlb_helper.c',
--  'translate.c',
--  'translate-m-nocp.c',
--  'translate-mve.c',
--  'translate-neon.c',
--  'translate-vfp.c',
--  'vec_helper.c',
--  'vfp_helper.c',
- ))
+ EDK2 Firmware
+-M: Philippe Mathieu-Daudé <philmd@linaro.org>
+ M: Gerd Hoffmann <kraxel@redhat.com>
+ S: Supported
+ F: hw/i386/*ovmf*
 -- 
 2.53.0
 
