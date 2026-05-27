@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21F08CD5BDE
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 05:01:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2073BCD5BDE
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 05:02:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wS6O2-0001Kr-7w; Wed, 27 May 2026 01:00:59 -0400
+	id 1wS6Ny-0001I7-IH; Wed, 27 May 2026 01:00:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wS6Nx-0001Gw-Ew; Wed, 27 May 2026 01:00:53 -0400
+ id 1wS6Nv-0001FJ-Fi; Wed, 27 May 2026 01:00:51 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wS6Nv-0004Em-IC; Wed, 27 May 2026 01:00:53 -0400
+ id 1wS6Nt-0004EF-R4; Wed, 27 May 2026 01:00:51 -0400
 Received: from localhost (unknown [131.107.147.136])
- by linux.microsoft.com (Postfix) with ESMTPSA id E14E720B716F;
- Tue, 26 May 2026 22:00:39 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com E14E720B716F
+ by linux.microsoft.com (Postfix) with ESMTPSA id A2BD120B716D;
+ Tue, 26 May 2026 22:00:37 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com A2BD120B716D
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1779858039;
- bh=0j3thrHMRbNXhEGSi4mSHAo5S/+B16ZolXMhJcH00JQ=;
+ s=default; t=1779858037;
+ bh=fWNd/JjLcK2tqzFwCo6zR4cXEWjzV9boQ7HURZ9IUVs=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=E+w37ppf3fhWVdmZkzjhw2FDBIwFVqlkXNdgTNS5RSN5ydWoZIXCkR0w/TRR5XEUS
- Ka4SV0w140WJSXu5707Jnvef1/lQAqPdq5XI1kcExU0eFs3mSCR0AYSyPX11pldT5w
- 9DNNylrNIqhgt6X5q+fl5iThVTxPvW7li+Mz6QO8=
+ b=nu2kFqe5R+3HtuAqa+B0AcIhyuVFHcRFP3P28kpnrQK4LEPhZsVziO9ZVCozURnfd
+ 414bDgsxqjVtX6tMZ4NhfNYP39iPjYEidE6S1cBBGRVGIWTXTNRp+kQvQnZzPLCFzw
+ M7HiYNoGz1QRR5bYLGM12q75VUhhZmLF+HJ/MSvM=
 From: Aastha Rawat <aastharawat@linux.microsoft.com>
-Date: Wed, 27 May 2026 05:00:44 +0000
-Subject: [PATCH v4 08/15] accel/mshv: Add access_vp_regs synthetic proc
- features
+Date: Wed, 27 May 2026 05:00:42 +0000
+Subject: [PATCH v4 06/15] target/arm: convert host CPU feature ifdef ladder
+ to runtime checks
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260527-mshv_accel_arm64_supp-v4-8-66d871dcdc53@linux.microsoft.com>
+Message-Id: <20260527-mshv_accel_arm64_supp-v4-6-66d871dcdc53@linux.microsoft.com>
 References: <20260527-mshv_accel_arm64_supp-v4-0-66d871dcdc53@linux.microsoft.com>
 In-Reply-To: <20260527-mshv_accel_arm64_supp-v4-0-66d871dcdc53@linux.microsoft.com>
 To: qemu-devel@nongnu.org
@@ -77,161 +77,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Enable access_vp_regs feature for regs. In arm64, this feature bit
-allows the guest to set VP registers using hypercall. This wasn't
-required for x86 because such registers are set using wrmsr instead of
-hypercall.
+Replace the compile-time #if/#elif preprocessor ladder in
+aarch64_host_initfn() with runtime calls and add mshv_enabled() to it.
+This ensures the correct accelerator is selected at runtime when
+multiple accelerators are compiled in.
+
+Add CONFIG_MSHV to the aarch64_cpus[] guard so that mshv accelerator can
+register the "host" CPU type.
 
 Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
 ---
- accel/mshv/mshv-all.c     |  1 +
- include/hw/hyperv/hvhdk.h | 91 ++++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 91 insertions(+), 1 deletion(-)
+ target/arm/cpu64.c | 25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index 294955788a..927e1b39bb 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -156,6 +156,7 @@ static int set_synthetic_proc_features(int vm_fd)
-     features.tb_flush_hypercalls = 1;
-     features.synthetic_cluster_ipi = 1;
-     features.direct_synthetic_timers = 1;
-+    features.access_vp_regs = 1;
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index b38a78aac3..aed84a3c0b 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -859,17 +859,21 @@ static void aarch64_host_initfn(Object *obj)
+     }
+ #endif
  
-     mshv_arch_amend_proc_features(&features);
- 
-diff --git a/include/hw/hyperv/hvhdk.h b/include/hw/hyperv/hvhdk.h
-index 4695ceb92c..0261063908 100644
---- a/include/hw/hyperv/hvhdk.h
-+++ b/include/hw/hyperv/hvhdk.h
-@@ -94,11 +94,16 @@ union hv_partition_synthetic_processor_features {
-          */
-         uint64_t access_partition_reference_tsc:1;
- 
-+#if defined(__x86_64__)
-+
-         /*
-          * Partition has access to the guest idle reg. Corresponds to
-          * access_guest_idle_reg privilege.
-          */
-         uint64_t access_guest_idle_reg:1;
-+#else
-+        uint64_t reserved_z10:1;
-+#endif
- 
-         /*
-          * Partition has access to frequency regs. corresponds to
-@@ -110,11 +115,16 @@ union hv_partition_synthetic_processor_features {
-         uint64_t reserved_z13:1; /* Reserved for access_root_scheduler_reg */
-         uint64_t reserved_z14:1; /* Reserved for access_tsc_invariant_controls */
- 
-+#if defined(__x86_64__)
-+
-         /*
-          * Extended GVA ranges for HvCallFlushVirtualAddressList hypercall.
-          * Corresponds to privilege.
-          */
-         uint64_t enable_extended_gva_ranges_for_flush_virtual_address_list:1;
-+#else
-+        uint64_t reserved_z15:1;
-+#endif
- 
-         uint64_t reserved_z16:1; /* Reserved for access_vsm. */
-         uint64_t reserved_z17:1; /* Reserved for access_vp_registers. */
-@@ -161,13 +171,92 @@ union hv_partition_synthetic_processor_features {
-         /* HvCallRetargetDeviceInterrupt is supported. */
-         uint64_t retarget_device_interrupt:1;
- 
-+#if defined(__x86_64__)
-         /* HvCallRestorePartitionTime is supported. */
-         uint64_t restore_time:1;
- 
-         /* EnlightenedVmcs nested enlightenment is supported. */
-         uint64_t enlightened_vmcs:1;
- 
--        uint64_t reserved:30;
-+        uint64_t nested_debug_ctl:1;
-+        uint64_t synthetic_time_unhalted_timer:1;
-+        uint64_t idle_spec_ctrl:1;
-+
-+#else
-+        uint64_t reserved_z31:1;
-+        uint64_t reserved_z32:1;
-+        uint64_t reserved_z33:1;
-+        uint64_t reserved_z34:1;
-+        uint64_t reserved_z35:1;
-+#endif
-+
-+#if defined(__aarch64__)
-+        /*
-+         * Register intercepts supported in V1. As more registers are supported
-+         * in future releases, new bits will be added here to prevent migration
-+         * between incompatible hosts.
-+         *
-+         * List of registers supported in V1:
-+         * 1. TPIDRRO_EL0
-+         * 2. TPIDR_EL1
-+         * 3. SCTLR_EL1 - Supports write intercept mask.
-+         * 4. VBAR_EL1
-+         * 5. TCR_EL1 - Supports write intercept mask.
-+         * 6. MAIR_EL1 - Supports write intercept mask.
-+         * 7. CPACR_EL1 - Supports write intercept mask.
-+         * 8. CONTEXTIDR_EL1
-+         * 9. PAuth keys (total 10 registers)
-+         * 10. HvArm64RegisterSyntheticException
-+         */
-+        uint64_t register_intercepts_v1:1;
-+#else
-+        uint64_t reserved_z36:1;
-+#endif
-+
-+        /* HvCallWakeVps is supported */
-+        uint64_t wake_vps:1;
-+
-+        /*
-+         * HvCallGet/SetVpRegisters is supported.
-+         * Corresponds to AccessVpRegisters privilege.
-+         * This feature only affects exo partitions.
-+         */
-+        uint64_t access_vp_regs:1;
-+
-+#if defined(__aarch64__)
-+        /* HvCallSyncContext/Ex is supported. */
-+        uint64_t sync_context:1;
-+#else
-+        uint64_t reserved_z39:1;
-+#endif /* __aarch64__ */
-+
-+        /*
-+         * Management VTL synic support is allowed.
-+         * Corresponds to the ManagementVtlSynicSupport privilege.
-+         */
-+        uint64_t management_vtl_synic_support:1;
-+
-+#if defined(__x86_64__)
-+        /*
-+         * Hypervisor supports guest mechanism to signal pending interrupts to
-+         * paravisor.
-+         */
-+        uint64_t proxy_interrupt_doorbell_support:1;
-+#else
-+        uint64_t reserved_z41:1;
-+#endif
-+
-+#if defined(__aarch64__)
-+        /* InterceptSystemResetAvailable is exposed. */
-+        uint64_t intercept_system_reset:1;
-+#else
-+        uint64_t reserved_z42:1;
-+#endif
-+
-+        /* Hypercalls for host MMIO operations are available. */
-+        uint64_t mmio_hypercalls:1;
-+
-+        uint64_t reserved:20;
-     };
++    if (mshv_enabled()) {
++        mshv_arm_set_cpu_features_from_host(cpu);
++    } else if (kvm_enabled()) {
+ #if defined(CONFIG_KVM)
+-    kvm_arm_set_cpreg_mig_tolerances(cpu);
+-    kvm_arm_set_cpu_features_from_host(cpu);
+-    aarch64_add_sve_properties(obj);
+-#elif defined(CONFIG_HVF)
+-    hvf_arm_set_cpu_features_from_host(cpu);
+-#elif defined(CONFIG_WHPX)
+-    whpx_arm_set_cpu_features_from_host(cpu);
+-#else
+-    g_assert_not_reached();
++        kvm_arm_set_cpreg_mig_tolerances(cpu);
+ #endif
++        kvm_arm_set_cpu_features_from_host(cpu);
++        aarch64_add_sve_properties(obj);
++    } else if (hvf_enabled()) {
++        hvf_arm_set_cpu_features_from_host(cpu);
++    } else if (whpx_enabled()) {
++        whpx_arm_set_cpu_features_from_host(cpu);
++    } else {
++        g_assert_not_reached();
++    }
+     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
+         aarch64_add_pauth_properties(obj);
+     }
+@@ -897,7 +901,8 @@ static const ARMCPUInfo aarch64_cpus[] = {
+     { .name = "cortex-a57",         .initfn = aarch64_a57_initfn },
+     { .name = "cortex-a53",         .initfn = aarch64_a53_initfn },
+     { .name = "max",                .initfn = aarch64_max_initfn },
+-#if defined(CONFIG_KVM) || defined(CONFIG_HVF) || defined(CONFIG_WHPX)
++#if defined(CONFIG_KVM) || defined(CONFIG_HVF) || \
++    defined(CONFIG_WHPX) || defined(CONFIG_MSHV)
+     { .name = "host",               .initfn = aarch64_host_initfn },
+ #endif
  };
- 
 
 -- 
 2.45.4
