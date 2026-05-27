@@ -4,91 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AFD9CD5BD5
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 06:22:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFD9BCD5BDE
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 06:30:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wS7eu-0005XM-R3; Wed, 27 May 2026 02:22:28 -0400
+	id 1wS7mB-0007Ac-7L; Wed, 27 May 2026 02:29:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wS7es-0005Wz-8K
- for qemu-devel@nongnu.org; Wed, 27 May 2026 02:22:26 -0400
-Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wS7eo-0000jJ-UK
- for qemu-devel@nongnu.org; Wed, 27 May 2026 02:22:24 -0400
-Received: by mail-wm1-x344.google.com with SMTP id
- 5b1f17b1804b1-4905e190c71so34148195e9.3
- for <qemu-devel@nongnu.org>; Tue, 26 May 2026 23:22:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wS7m5-00078f-5b
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 02:29:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wS7m3-0007ud-7R
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 02:29:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779863389;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JExJPPFLzVkYK23Ymb0qqNKDhD/YOhK6O4Mtx8xPHYI=;
+ b=D4pHWbx1/eRPxNk+xE2V+YPjd6FMRKzjg5HNMlKtF2BKzdEDBJYlB0QpcN3oEvRpGI/GGe
+ FLJa5huS0pCltt/u0fLt6jZEUnTASTdfIgFByAQQSh2ZucK7BOYqRVbd6+7fkoj+Ybq9O5
+ 1mDc5W9d/bCe90vbXcWm5NoE1Xj2kCE=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-523-Q55RYU_IN5aye_GVMNjk5Q-1; Wed, 27 May 2026 02:29:47 -0400
+X-MC-Unique: Q55RYU_IN5aye_GVMNjk5Q-1
+X-Mimecast-MFC-AGG-ID: Q55RYU_IN5aye_GVMNjk5Q_1779863386
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-44f1b4d0fb0so7002345f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 26 May 2026 23:29:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779862941; x=1780467741; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=64TzK3svwOxTh2XTVm+owsgybYQF7CIoJU7bOfWr3PE=;
- b=v12aN220bM+n6e49AgvB0SR1FFfAJ1CSZrlkfXE5/F5pgz6ubxFI/v2EK864Jdg0ST
- 94zAZZKZTC+FnxUfLjK7Vqr9IT8Lz6E4+1537Nh9YXm+yNHHNGiHTymzkUmu+OXjOmH8
- fCjiu2hPHMwc2sXF1qz9RC/ry7N3gGLnV8zV9uFbUor1qhrV8NBVnrpwOVG8kODX1ufD
- xFVNxd9DeRC34QyrFpU6Hvm7DZWVvcoYEgxStxGL39j9LUYNnjDJYKkPdM2pCpjWhJZv
- trrMlgbcP3NbTqNJWZ8bUFDZgthVntLQnZ5HLer3ddAryRdWgmM81RYOs4TLIgM5lFJx
- HBaA==
+ d=redhat.com; s=google; t=1779863386; x=1780468186; darn=nongnu.org;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=JExJPPFLzVkYK23Ymb0qqNKDhD/YOhK6O4Mtx8xPHYI=;
+ b=Fjtm8QGtZJNsrxhe40xgCXBVfsV7NqtPSkRILZ3kbCVI0vqQEPA/j6kPO49H7m5SwC
+ jxjkz4lKedDOhVt2U6p5FhFAzIQ0aBLcXjovaZEBwNpIvQ0a74ABVmZSaBvDmiMCtexr
+ gPzfiYIsGBuWsajsRZyPp/TWFOu3IqULu9zt08so8fGR9gvvAL+mA2FfFUewWLTxo/uN
+ hxA451WdzvcyPZQrreRiklzOHqZ1MSPZEpOzB0EK0nJ1K6uswCAGK1t9xKRh2v6Ip3OB
+ EjvJgEYJF5tWuM5Og+yXGSXg2qWtDjzmFtwTC0g3qLTfGtC9N4azfRYCS1Zc1Guf3S9L
+ 9hfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779862941; x=1780467741;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20251104; t=1779863386; x=1780468186;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=64TzK3svwOxTh2XTVm+owsgybYQF7CIoJU7bOfWr3PE=;
- b=URx9IoHydUgAldRYSe/ISekDdnUAQAwPrOKixjRfBfsBAAcdx2B07VAWn38Tkw/C2F
- 3Q2BIGUC8FPbwEzi+v83cGiQugJRWePairbhf7FA4UQiv2mm1K8R469QwypLgm5wvB+Q
- kwB15ns7J0KBlQ/aDTLUS/y21udrbIdtI50J86UIY7MoAwiXGnXh6HM/a+7IphGC7Om/
- xTdirHT3PpTG0azQksFAi+5aRzdvH2aIm7F1hxVppSyoSx25solBB9Q2mBaePC8VivAY
- 910k2LPBMa6XX9MHS7NO5pYi5OC104wYndW508SjDBA9tlPGAsFKyimGZgORp8mUG9OU
- pkjA==
-X-Gm-Message-State: AOJu0YzAawsqNvA743J/l3bVgrFRPXKzp2yINyR4thtJkbYAxIrm/lM6
- cmlOu5Rh0Jth3MvbO5GzoNHvmb3tVZCrUHp6epkvGsCKtetxXItW268dk24Mwc0Nt6p11LRUgvN
- 8OlI3LQKrdPuK
-X-Gm-Gg: Acq92OFlGlnivfqIucEVAvkGyjlwGSxHDO8sHrfh7gLeJsD8bLb18zBtyEXXjbkxw3M
- Os8b0ZPgDKsw6T6BfYj9zKmyINd/I6Wws4OME60YF9VXZmJ4buwybXk9G/nm+NhIgAmpRf35Z4l
- LsKyapY6trTgvjQahSF5GBF67q8Q6PkewdYQuXRh/iU5Pb0KTlxWz6KnyOLGUI7gIF2r8TZwCHL
- zYGK86O9qlBTCVObLwrsrb+t/DLrqvkSzh06BM7Gyyfg5da+wmMu16ll7etRd/0kNAAp4h8Qp9A
- Wf+4rYZLFC0xi/AUxzfYCq3JCTo4c3Ni4aM7z1rqBA7FRJLw38Yd8FEtYRqqdg4FQvl0OuidHxZ
- yfsPintoLqqteZU1r8ig5IjQAPPqOgi4oNTk3X0AHHvuVsyJYQ9YPUSfXZXQHbIWxg2Xn7jnc6r
- xwcJ7Ttc9nubi+wQq8lkcmL83MJevuYTZ+NDjPhjliGWR7li1pBYsanLI7QrT1AIhGgwEjmcrqZ
- oqV
-X-Received: by 2002:a05:600c:8681:b0:490:b07:5f27 with SMTP id
- 5b1f17b1804b1-490428cc2d7mr254746045e9.24.1779862940967; 
- Tue, 26 May 2026 23:22:20 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4907e6a60c4sm15599035e9.1.2026.05.26.23.22.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 May 2026 23:22:20 -0700 (PDT)
-Message-ID: <4236f3aa-e3ac-4449-bd35-4265a684ada4@linaro.org>
-Date: Wed, 27 May 2026 08:22:19 +0200
+ bh=JExJPPFLzVkYK23Ymb0qqNKDhD/YOhK6O4Mtx8xPHYI=;
+ b=Kt/KkZtx/14Ev34x+MPZiWe1FSsA/KlDvNT7b3co9le1ml8gXQMusYyd9zV+IhyjJh
+ qLrHSTP54u9BWH9uhhAme6pz+v36G/ihcFDJHjrpItSKiMTGzvK4qv5oN707/iD3C6gM
+ J5i0OFV1b7o/jEryadlS0TTLWrljsAWxUnmlKJ1NcsNuy1B4APe/Laf+W4lnR31Syopc
+ 1FQ3MwpLirn+GL1o85Yr1H7Oh8lnh5AZey7V+c+VywVGNChFZTzc9+1aJ8SEC42Su4hG
+ F8d5Y09TByvPkntR2o/Tg7n7SSV9OnUsNJuw5DI3/fvimRq68jY0fZbh5AV1wAi7wLXt
+ s++g==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8F++BTqGh2O5dRpBG3iTerhbEPfiOZcVC0ThuTT22FuvFrrlCXuiUAv2aND/OR7bG8tguQiMq/IB2i@nongnu.org
+X-Gm-Message-State: AOJu0YxqlWcro6bzCZkLOelCFnzhtlydhXQPXLbO66wDKLMPYnTmHKjq
+ yaUu5xZJEU5SEotOWMonksr3Y9wNQx9cmDC4ncMdzpCjtf/N4UFxIBJM+y9Cy3ZgapjnVUJFhkD
+ 7Y2778OdeOf92D0/I5ej1p0QWJ/KKmnLo4QnC+65nI0RqgycBL42GiCRw
+X-Gm-Gg: Acq92OGSRWD3r4V+EEu9B8ZVM1oDXv8zezCVsQ77WXagnQ4z3DMZ3K6xEhEWnApjkNY
+ yeePXfpzdbIUi1uuQbzC5TucTdp+GQGcu7rlNPjtwJKOZAuprIsC5eFNQjryde8LWvXSNIbUdlg
+ Oc2QiU76DEYXb5wcIiTkPSlJOnKvzHj0IwAUAqDVvMRE3HAw/oM7WiIOjTJyEEb9ojwPmtYKVl1
+ PPa26ulc8kWDzwd8TBf+mQ3IMnRwMJo6g562+cxvCjbR+hH524Ye58tfL/Rn/OAk0ksaU1neIzT
+ K0sPAPLVkvKRWHhaao3V6BvhUzcU30IqEtrXPUp72hRAYxpQ1Oww1cD3uoULHX90uY0trjK3dB7
+ pWGJHwJ0NuqxFLaGe3vFEjSBFKJMeiQgbyKx3to8wrUvQx4uvq+TBQPrpwXM+HBA2ImPdtbg=
+X-Received: by 2002:a05:6000:1447:b0:452:d03a:7abe with SMTP id
+ ffacd0b85a97d-45eb38b91c3mr38816069f8f.17.1779863386122; 
+ Tue, 26 May 2026 23:29:46 -0700 (PDT)
+X-Received: by 2002:a05:6000:1447:b0:452:d03a:7abe with SMTP id
+ ffacd0b85a97d-45eb38b91c3mr38816017f8f.17.1779863385730; 
+ Tue, 26 May 2026 23:29:45 -0700 (PDT)
+Received: from rh (p200300f6af2a6100f239e076bbd76784.dip0.t-ipconnect.de.
+ [2003:f6:af2a:6100:f239:e076:bbd7:6784])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45edb54959bsm4149286f8f.1.2026.05.26.23.29.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 May 2026 23:29:45 -0700 (PDT)
+Date: Wed, 27 May 2026 08:29:44 +0200 (CEST)
+From: Sebastian Ott <sebott@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>
+cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ kvmarm@lists.linux.dev, peter.maydell@linaro.org, 
+ shaju.abraham@nutanix.com, khushit.shah@nutanix.com, 
+ yangjinqian1@huawei.com, cohuck@redhat.com, richard.henderson@linaro.org, 
+ skolothumtho@nvidia.com, philmd@linaro.org, maz@kernel.org, 
+ oliver.upton@linux.dev, pbonzini@redhat.com, armbru@redhat.com, 
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com
+Subject: Re: [PATCH v5 17/18] arm-qmp-cmds: introspection for ID register props
+In-Reply-To: <20260519132905.145643-18-eric.auger@redhat.com>
+Message-ID: <10ae56f5-6fc7-fe58-1e17-7c3b968045be@redhat.com>
+References: <20260519132905.145643-1-eric.auger@redhat.com>
+ <20260519132905.145643-18-eric.auger@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Remove Yuri Benditovich bouncing email
-Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Yuri Benditovich <ybendito@redhat.com>,
- Andrew Melnychenko <andrew@daynix.com>
-References: <20260513072703.9710-1-philmd@linaro.org>
- <87y0he1vh2.fsf@pond.sub.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <87y0he1vh2.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::344;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x344.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sebott@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,47 +123,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/5/26 07:49, Markus Armbruster wrote:
-> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
-> 
->>   Final-Recipient: rfc822; yuri.benditovich@daynix.com
->>   Action: failed
->>   Status: 5.1.1
->>   Diagnostic-Code: smtp; 550-5.1.1 The email account that you tried to reach does not exist. Please try
->>    550-5.1.1 double-checking the recipient's email address for typos or
->>    550-5.1.1 unnecessary spaces. For more information, go to
->>    550 5.1.1  https://support.google.com/mail/?p=NoSuchUser ffacd0b85a97d-45c62bf01dbsor217235f8f.7 - gsmtp
->>   Last-Attempt-Date: Wed, 13 May 2026 00:02:47 -0700 (PDT)
->>
->> Cc: Yuri Benditovich <ybendito@redhat.com>
->> Cc: Andrew Melnychenko <andrew@daynix.com>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   MAINTAINERS | 1 -
->>   1 file changed, 1 deletion(-)
->>
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index 0790d13505c..64849c6e866 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -4487,7 +4487,6 @@ F: tests/functional/x86_64/test_vfio_user_client.py
->>   EBPF:
->>   M: Jason Wang <jasowang@redhat.com>
->>   R: Andrew Melnychenko <andrew@daynix.com>
->> -R: Yuri Benditovich <yuri.benditovich@daynix.com>
->>   S: Maintained
->>   F: docs/devel/ebpf_rss.rst
->>   F: ebpf/*
-> 
-> Yuri posted a fix some time ago, but it fell through the cracks:
-> 
->      Subject: [PATCH] MAINTAINERS: update ebpf reviewers
->      Date: Sat,  6 Dec 2025 11:33:45 +0200
->      Message-ID: <20251206093345.71031-1-ybendito@redhat.com>
->      https://lore.kernel.org/qemu-devel/20251206093345.71031-1-ybendito@redhat.com/
-> 
-> I'll pick it up.
+On Tue, 19 May 2026, Eric Auger wrote:
+> From: Cornelia Huck <cohuck@redhat.com>
+>
+> Implement the capability to query available ID register values by
+> adding SYSREG_* options and values to the cpu model expansion for the
+> host model, if available.
+>
+> Excerpt:
+> (QEMU) query-cpu-model-expansion type=full model={"name":"host"}
+> {"return": {"model": {"name": "host", "props":
+> {"SYSREG_ID_AA64PFR0_EL1_EL3": 1224979098931106066,
+ 				 ^
+This looks wrong - more like the full reg value and not just EL3..
 
-No worries, I already put Yuri in my ignore list. I suppose this is the
-fate of email lists workflow.
+> "SYSREG_ID_AA64ISAR2_EL1_CLRBHB": 0,
+> ../..
+>
+> So this allows the upper stack to detect available writable ID
+> regs and the "host passthrough model" values.
+>
+> [CH: moved SYSREG_* values to host model]
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+>
+
+Reviewed-by: Sebastian Ott <sebott@redhat.com>
+
 
