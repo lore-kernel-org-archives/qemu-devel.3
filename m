@@ -4,43 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C930FCD5BDE
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 05:03:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FED2CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 05:04:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wS6Nu-0001EN-LH; Wed, 27 May 2026 01:00:50 -0400
+	id 1wS6OI-0001MN-QC; Wed, 27 May 2026 01:01:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wS6Ns-0001DD-8W; Wed, 27 May 2026 01:00:48 -0400
+ id 1wS6OI-0001MB-00; Wed, 27 May 2026 01:01:14 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wS6Np-0004CJ-FT; Wed, 27 May 2026 01:00:47 -0400
+ id 1wS6OG-0004EF-Dx; Wed, 27 May 2026 01:01:13 -0400
 Received: from localhost (unknown [131.107.147.136])
- by linux.microsoft.com (Postfix) with ESMTPSA id 9BF2820B7167;
- Tue, 26 May 2026 22:00:31 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9BF2820B7167
+ by linux.microsoft.com (Postfix) with ESMTPSA id 279D920B7171;
+ Tue, 26 May 2026 22:00:41 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 279D920B7171
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1779858031;
- bh=0ZHTtTFUNSr4udkgwkl1TcslEnTYypPic+caP5FPNL8=;
- h=From:Subject:Date:To:Cc:From;
- b=CL6y4yfehxKZBjPR5eZ3sopXcBgO0BKGvf56btwLD92cGv++I0YX9rkbV8et8Mc8G
- rvvV7IcxzjgdXcP6SNnbjhe0hVDr/8ocbw739Nbcj60/rZchFqt6Ur4nAhKDbuD8Jr
- oflSFvPwwH6zPyCGl4/YXsIf5wtQsWZhuK39eU7Y=
+ s=default; t=1779858041;
+ bh=rR42O+0rVDaPThPxlEfqyoRuOVFaZyLyobxHuZwCe8o=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+ b=GVL7aI9XzntZ4cvbor3KyT8zaebeCOx87PWCjdz1n5cUHkzEOvOXiMrWe+1V4XTpP
+ l5B0Ork1GgtDM6awGmv7qjR7czsO0hsPLXoiDGDbn73eOtFLB4GCY91lTM2PJyPvbd
+ vUceKmlGS/+rEHMtj9i80a6X4LvaazorYAv98Ox8=
 From: Aastha Rawat <aastharawat@linux.microsoft.com>
-Subject: [PATCH v4 00/15] Add ARM64 support for MSHV accelerator
-Date: Wed, 27 May 2026 05:00:36 +0000
-Message-Id: <20260527-mshv_accel_arm64_supp-v4-0-66d871dcdc53@linux.microsoft.com>
+Date: Wed, 27 May 2026 05:00:46 +0000
+Subject: [PATCH v4 10/15] accel/mshv: implement cpu_thread_is_idle() hook
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAHR6FmoC/4XNQQ6CMBCF4auQri1poRZwxT2MIW0dZBJoSQuNx
- nB3iy5cGZf/S+abJwngEQI5ZU/iIWJAZ1OIQ0bMoOwNKF5Tk4IVkpWc0ykMsVPGwNgpP0nRhXW
- eKdRSM1YXCkCQdDt76PH+ds+X1AOGxfnH+03k+/pPjJwyakoum0ZX2vC+VRb9eh28zo2byK7G8
- iuJ4qdUJknIpj8KUVW1Vu2Idr3nExrvguuXj7dt2wtOafksDgEAAA==
-X-Change-ID: 20260311-mshv_accel_arm64_supp-e86b0082aee4
+Message-Id: <20260527-mshv_accel_arm64_supp-v4-10-66d871dcdc53@linux.microsoft.com>
+References: <20260527-mshv_accel_arm64_supp-v4-0-66d871dcdc53@linux.microsoft.com>
+In-Reply-To: <20260527-mshv_accel_arm64_supp-v4-0-66d871dcdc53@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, 
  Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, 
@@ -79,117 +76,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds ARM64 guest support to the MSHV (Microsoft Hypervisor)
-accelerator, enabling QEMU to run aarch64 VMs on Microsoft's hypervisor
-using the mshv Linux kernel module.
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
-The first few patches refactor the existing x86 MSHV code to separate
-arch-specific pieces from common infrastructure: moving MSR handling to
-target/i386, extracting shared register hypercall helpers, provisioning
-host CPU features, and introducing arch-specific init hooks.
+In MSHV the hypervisor APIC is always used, so we to implement this hook
+to make sure the AP's vcpu thread is not blocked waiting for an INIT SIPI
+by the BSP. Without this change soft reboots with -smp cpus>=2 will
+hang.
 
-The remaining patches add the ARM64 backend:
- - vCPU state get/set using hypervisor register hypercalls
- - -cpu host support by querying ID registers from the hypervisor
- - vCPU run loop with MMIO emulation via ESR_EL2 syndrome decoding
- - In-kernel vGICv3 backed by HVCALL_ASSERT_VIRTUAL_INTERRUPT
- - Interrupt control structure adjustments for arm64
-
-With this series, a standard aarch64 virt machine can be launched with:
-  qemu-system-aarch64 -accel mshv -cpu host -M virt ...
-
-Caveats:
-- Live migration is not yet supported.
-
+Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
 ---
-Changes in v2:
-- Removed PATCH: "accel/mshv: provision guests with the same features as host".
-- Extracted common MMIO emulation logic for hvf, whpx and mshv to a
-  common place.
-- Fixed checkpatch errors/warnings.
-- Picked up reviewed-by tags.
-- Link to v1: https://lore.kernel.org/qemu-devel/20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com
+ accel/mshv/mshv-all.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
----
-Changes in v3:
-- Handled GPA Intercept in vCPU run loop to fix EDK2 firmware boot.
-- Updated the cover letter: removed caveat about EDK2 firmware boot as
-  it is now fixed.
-- Link to v2: https://lore.kernel.org/qemu-devel/20260402-mshv_accel_arm64_supp-v2-0-754895c15e9e@linux.microsoft.com/
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index 927e1b39bb..61a9d58546 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -719,11 +719,23 @@ static const TypeInfo mshv_accel_type = {
+     .instance_size = sizeof(MshvState),
+ };
+ 
++/*
++ * Haulted vCPUs must still enter mshv_cpu_exec() so that MSHV_RUN_VP
++ * is called and the hypervisor can wake them (via SIPI on x86 or
++ * PSCI on ARM64).
++ */
++
++static bool mshv_vcpu_thread_is_idle(CPUState *cpu)
++{
++    return false;
++}
++
+ static void mshv_accel_ops_class_init(ObjectClass *oc, const void *data)
+ {
+     AccelOpsClass *ops = ACCEL_OPS_CLASS(oc);
+ 
+     ops->create_vcpu_thread = mshv_start_vcpu_thread;
++    ops->cpu_thread_is_idle = mshv_vcpu_thread_is_idle;
+     ops->synchronize_post_init = mshv_cpu_synchronize_post_init;
+     ops->synchronize_post_reset = mshv_cpu_synchronize_post_reset;
+     ops->synchronize_state = mshv_cpu_synchronize;
 
----
-Changes in v4:
-- Split "target/arm: convert host CPU features ifdef ladder to runtime
-  checks" out of the -cpu host patch to separate the refactoring.
-- Refactored MMIO emulation helper (arm_emulate_mmio) to use callback
-  ops for per-register access avoiding full CPU state sync for single
-  register MMIo operations for HVF & WHPX.
-- Reordered patches: moved "arch-specific accelerator init hook" earlier
-  (patch 3), before the arm64 build enablenment.
-- Updated cpu_thread_is_idle() comment to be arch-neutral.
-- Link to v3: https://lore.kernel.org/qemu-devel/20260421-mshv_accel_arm64_supp-v3-0-469f544778ba@linux.microsoft.com
-
----
-Aastha Rawat (9):
-      accel/mshv: move msr.c to target/i386
-      accel/mshv: extract common CPU register helpers
-      meson, target/arm/mshv: Enable arm64 build & add initial MSHV support
-      target/arm/mshv: implement vcpu state operations for ARM64
-      target/arm: convert host CPU feature ifdef ladder to runtime checks
-      target/arm/mshv: implement -cpu host for MSHV
-      accel/mshv: Add access_vp_regs synthetic proc features
-      target/arm: cpu: Mark MSHV supporting PSCI 1.3
-      target/arm: extract MMIO emulation logic for HVF & WHPX
-
-Anirudh Rayabharam (Microsoft) (5):
-      accel/mshv: add arch-specific accelerator init hook
-      target/arm/mshv: add vCPU run loop
-      include/hw/hyperv: adjust hv_interrupt_control structure for arm64
-      hw/intc,target/arm/mshv: add MSHV vGICv3 implementation
-      MAINTAINERS: updates for MSHV arm64 code
-
-Magnus Kulke (1):
-      accel/mshv: implement cpu_thread_is_idle() hook
-
- MAINTAINERS                        |   8 +
- accel/mshv/irq.c                   |   2 +
- accel/mshv/meson.build             |   4 +-
- accel/mshv/mshv-all.c              |  26 +-
- accel/mshv/mshv-cpu-common.c       | 151 ++++++++++
- hw/arm/virt.c                      |  15 +-
- hw/intc/arm_gicv3_common.c         |   6 +-
- hw/intc/arm_gicv3_mshv.c           | 181 ++++++++++++
- hw/intc/meson.build                |   1 +
- include/hw/hyperv/hvgdk_mini.h     | 130 +++++++++
- include/hw/hyperv/hvhdk.h          | 101 ++++++-
- include/hw/hyperv/hvhdk_mini.h     |   6 +
- include/hw/intc/arm_gicv3_common.h |   2 +-
- include/system/hw_accel.h          |   3 +-
- include/system/mshv.h              |   2 +
- include/system/mshv_int.h          |   6 +-
- meson.build                        |   8 +-
- target/arm/cpu.c                   |   8 +-
- target/arm/cpu64.c                 |  27 +-
- target/arm/helper.c                |  62 ++++
- target/arm/helper.h                |  16 ++
- target/arm/hvf/hvf.c               |  57 ++--
- target/arm/meson.build             |   1 +
- target/arm/mshv/meson.build        |   7 +
- target/arm/mshv/mshv-all.c         | 572 +++++++++++++++++++++++++++++++++++++
- target/arm/mshv_arm.h              |  18 ++
- target/arm/syndrome.h              |  47 +++
- target/arm/whpx/whpx-all.c         |  41 ++-
- target/i386/mshv/meson.build       |   2 +
- target/i386/mshv/mshv-all.c        |  85 ++++++
- target/i386/mshv/mshv-cpu.c        | 170 +----------
- {accel => target/i386}/mshv/msr.c  |   0
- 32 files changed, 1505 insertions(+), 260 deletions(-)
----
-base-commit: 554cbfb1cf4601d2762f5315c884319e361b24cb
-change-id: 20260311-mshv_accel_arm64_supp-e86b0082aee4
-
-Best regards,
---  
-Aastha Rawat <aastharawat@linux.microsoft.com>
+-- 
+2.45.4
 
 
