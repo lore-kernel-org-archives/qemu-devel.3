@@ -4,156 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C917CCD5BDE
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 07:10:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E27A5CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 May 2026 07:11:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wS8OX-0008QL-Cj; Wed, 27 May 2026 03:09:37 -0400
+	id 1wS8QL-0000j2-8U; Wed, 27 May 2026 03:11:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wS8OU-0008QB-Nl
- for qemu-devel@nongnu.org; Wed, 27 May 2026 03:09:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wS8OS-0003ZL-2K
- for qemu-devel@nongnu.org; Wed, 27 May 2026 03:09:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779865768;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=b4N9UNyr/ZjQ+rUy5dNOotAQOJ5iH5R+A9jvCsCAzoI=;
- b=i2fNop2vvs4XX3grRjd4fUUJg3CWBzaJfCy4LLOJhU1jSJBguJFEgW2SPtQ4F3am16vAV1
- uJxmid32xuVXGIFU+ssn1sj/4fSMsf4dR5FsHtVTOnFv1fnQEmBBXzIAIlW2oixS10LqgX
- Qrkg/EOCxXH00ivE4S0oggiSbLWZD94=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-344-n8jCFwmsMFe60ZwbG3bE1Q-1; Wed, 27 May 2026 03:09:26 -0400
-X-MC-Unique: n8jCFwmsMFe60ZwbG3bE1Q-1
-X-Mimecast-MFC-AGG-ID: n8jCFwmsMFe60ZwbG3bE1Q_1779865765
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-45ea38c03a1so5197237f8f.1
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 00:09:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wS8Q6-0000hx-9A
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 03:11:17 -0400
+Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wS8Q0-0005PP-AM
+ for qemu-devel@nongnu.org; Wed, 27 May 2026 03:11:12 -0400
+Received: by mail-wr1-x442.google.com with SMTP id
+ ffacd0b85a97d-44a74032ff8so8418328f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 00:11:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779865765; x=1780470565; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=b4N9UNyr/ZjQ+rUy5dNOotAQOJ5iH5R+A9jvCsCAzoI=;
- b=TPBm7i1z7pWhmlqjyvTnYCSMD0njVZoNu+AakK0omOveTH5sAy4xeSdrsoLPyHefj5
- RDLeD/e2iCohRAUY5l6HUwtt8KCOKjRJBKgLT++4FLM3tyuvr9H/ZzP+mIKkSZiot3bF
- rAZaMY1ABVs+BbW906fAfJmIvz4+HQ8j+WDBLIFyyg5P0UxGzgh4RncqpMpVkWgHJx/m
- ng5+s/f78ZeyCdQBT8VOANu0KdtbailgbG5fUf2MpssTx+5h+A4v/BCLA9Mc+6MBfgwC
- f/YdcN15RRQxjMiIH7Ru91pYpwIumCakOnKRw2s0M3MnBQKHnGIWJLUTG5CA1vgOYjKf
- H6lw==
+ d=linaro.org; s=google; t=1779865864; x=1780470664; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=cX9AAQunfh7nFSqIKocFQrwgm+kCjja121/pRKimQSE=;
+ b=HumiZeoEMnD3A2w2gwvjzI8/C0qYSxXT9N5AlckzUOuYVVm5AMRT2ffQqK7XHkJYmI
+ XqZ/CUM65TCyNBCTs5thuV3B8VaGYT4H2StlfZblYNE1tBO9ASLrDEj6x9gQsBwHKqp5
+ LRS4bA2BcqbgYRo/2KxrkXaKIAdjZiKxzPCqAbOkRvoXecJA+2AorTl61VEPoo5F9xQv
+ UvQe0FKkJto59c2+ic9TjR3ozaVgyWSIm0+x3ykaNbHlnCWBukZgZaQIa/a+k4465ZVv
+ wJjQj5doRgO5jsV8vai400pllEaKpVDn4SJNICStHXCESB9M+v3O44tpVDO9dJ+5o2TO
+ 2+7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779865765; x=1780470565;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=b4N9UNyr/ZjQ+rUy5dNOotAQOJ5iH5R+A9jvCsCAzoI=;
- b=QkllZkUzGFwA39QnJhyKMbbyaQ3crx65RK0Fr1YkxuvyVs3bwcPWbYEVJzgjTLo1xX
- G70tZgEuyPln4R8vkZ9qv+3EudN34qjyvEeOlWAk/lzIt9EYW/YCjJFn6DgioTRZGHPs
- pdIi7viMKNgMYgToDc+f4rSB1UiDZnsM49l9XDRRYeRrinHr+1EdsiRpFA8ymMJ2VHx3
- bxtRtwCRbdjilWVME8W7+clEgm47qYZ8YwAIrureKxBoyqT0yKVxLQstjcuZqurYEtaI
- Fk/nDYpDalAcdgrStPdfFIk39E946dNDJNvRFR4OJ2GWUDw1gZmrhmlaDafTa4tB6X0o
- nOEA==
+ d=1e100.net; s=20251104; t=1779865864; x=1780470664;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=cX9AAQunfh7nFSqIKocFQrwgm+kCjja121/pRKimQSE=;
+ b=FjYtGQ5J2ZwGiT1gUCtdwnXuO4k79UX9yeaNfgzFlhHPuPX7W/slgk4SbSE9BXV2JQ
+ hWl8ZEBbk9sLlDJUUQk5XsZEKmuLIbIIiGlKq5fB5nAWYzvHflp08YWtg6R6b/VzvZx5
+ k26+1C22Y4sr+H9nQgggdXxVOM+X5TwCzoT8AqcuHFj7VPnwCwFDfK+IJ4ZXXpuydZwP
+ XTEvhyq8Gk5lhbuiQA3MrwoyihGMk11GmHGDA7t3w4Oo9YxiIMBY4j0djImdziLHZWNb
+ AMVgQXd2gOJdRg71rNevmErP5vTMQC3idIqL6nS+6jl+YzfuUc1eSVEO4IxkfcUxwe+o
+ yO5A==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9GjaXFgRGq7Xr7Qiq/jz/PSIO9ySokNq9bGq3tBug6Tlyk6Jc2Dn+vvHpSW5UsskHoJRSnR2ucqDAl@nongnu.org
-X-Gm-Message-State: AOJu0YwYFRx9vNbPH0F7b5mokoS5KweMJr74rkkQvIGX6GjmRTCZzhV4
- vQ7qhtSzpLmWRISSrOeGLwU9F2yCRwQbTvt9TVMT1YhL8UNA2nyxE6hIAHCqoN1Hkasg/SBZPlu
- lYIVwQ676EiztiYTZ6NBauS4Q7FsEeogSzSsxpYc2oJ88NNPozbDn/0zp
-X-Gm-Gg: Acq92OGOLQSEplK8ZJZd/xNfmJzKmspF9C1/McwsFzkdRh2ZIrwMNpzDw7MTGExUdA/
- 2teYIKRd1GOikfB7Fad3OA1Wqf8wyGOpnanvm2yjtzUzEW7R6pt9peKoIJemR4dfmpwaD5trT83
- QHeEJzRC5h2GzzBF9TqXNeKqyP4G1/FUI7wYwePNqB5C0aDxQ2s9GV4ax91x7/MIM1RfDM3z1P4
- 0a9xUtUYPTAQMu+zAB63DqFer/90+j7aGM+sTqxu0eBaGNSMRJGYajNtjbn4QHhI/cnTfJHdBQl
- Kf1lN9QTqjX2tzlzhxcSmTUxvi114AHsOS7dz7PiYa8j5UDSwrMPwTyGa4X09RtyQWMOBtR/1nx
- NIcEttQLRBirUFbipW6mQleCKtip30uwvPUlcCmV3TzJWBJJRehDz0Ey3sZkD6RkqeOlqd7w=
-X-Received: by 2002:a05:6000:290e:b0:452:6aaf:76cb with SMTP id
- ffacd0b85a97d-45eb36706d9mr36703815f8f.1.1779865765143; 
- Wed, 27 May 2026 00:09:25 -0700 (PDT)
-X-Received: by 2002:a05:6000:290e:b0:452:6aaf:76cb with SMTP id
- ffacd0b85a97d-45eb36706d9mr36703745f8f.1.1779865764574; 
- Wed, 27 May 2026 00:09:24 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45edb5c44e4sm3874015f8f.36.2026.05.27.00.09.23
+ AFNElJ9hUnpz9VeS8++MyXgQ/zW1QG/NoHozaAAcFG8OpLH2oDHQKNm8c1/QzWlrD6wxv1s+nL4roff+hwMX@nongnu.org
+X-Gm-Message-State: AOJu0YyleRWZ7KFBqsTRB/16MfUY/jaOrFW/zqalTTu/sOOEvz9dDXYn
+ eVAVq9l21RAC2mfvr+L7gm7ID10H3QeGarkf6SFfajXPUo35kBnWQ3PBX9sqOqEqUtU=
+X-Gm-Gg: Acq92OFIMEq4/Ol5hPM2xG+IOV5DhAzycv3X+GrZ+fgxoewMhc+9OED8sjvjQRwHBTc
+ eIRlsKBliesWA2HgnqAfbJFHpgA7y/Wpz5AJr7wGWgnIOccT3yRh7ZPuruRxt3Dijj3J6otyg2i
+ gw+1T//JDcBGOY93ZqmH9Qk6v4Ek2yWbxbqYqhMtUuNbIheKcvUnTgfODolXaQsNr6V5SHZk9bZ
+ u21mlrWu+wqhm8iWYRSqi7nl6k9s1Mg+AaYo4VhJuepv68S+ynrM6EBduWN6IkL6jkcWDta7m8O
+ KpaFPZHJ+fmL26Qlw0KonO5yPuog3AZ5iJAAK+FOF631SZevClwX++M7pkYm0r6pzIjKakbMYNY
+ awBvCJ5jn6Viv1S8YLpu4Kb6U2HH9A9vW/i5yqGyBtJfRF23Ba8iZwK39y+v0rm3hndsezg7PGA
+ gR6E5CQoDT9xyrgVHEA1DsW3YHRdKmEO8s3fRrvmV7nSgSN+nW1BFJ72YqEEuGzMQgxg==
+X-Received: by 2002:a05:6000:26ce:b0:45e:891c:648e with SMTP id
+ ffacd0b85a97d-45eb36703damr35094420f8f.8.1779865864413; 
+ Wed, 27 May 2026 00:11:04 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45edb5b2bbfsm4242928f8f.32.2026.05.27.00.11.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 May 2026 00:09:23 -0700 (PDT)
-Message-ID: <f35846a2-9b1b-4dfc-b2fa-d4894f413f2e@redhat.com>
-Date: Wed, 27 May 2026 09:09:22 +0200
+ Wed, 27 May 2026 00:11:03 -0700 (PDT)
+Message-ID: <fdc6eaa4-fccf-46e7-99cb-1962fd8a47c0@linaro.org>
+Date: Wed, 27 May 2026 09:11:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio/container: Restrict dma_map_file() to shared RAM
-To: Chenyi Qiang <chenyi.qiang@intel.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex@shazbot.org>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Farrah Chen <farrah.chen@intel.com>
-References: <20260519055756.70575-1-chenyi.qiang@intel.com>
- <03ca3a6a-5545-4410-9c0b-dbbc106bff98@redhat.com>
- <e2d56d20-1d58-42e9-8c6e-6d6b9167d7cb@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <e2d56d20-1d58-42e9-8c6e-6d6b9167d7cb@intel.com>
+Subject: Re: on ai generated and code provenance
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
+ stefanha@redhat.com
+References: <20260524083329-mutt-send-email-mst@kernel.org>
+ <f0bc9023-28c4-4685-b0cc-fc7ad4e6d371@redhat.com>
+ <CAFEAcA9wMRFJWrjGHcd2nfhgXovyuS=dDJvCXWZkgmD_eez27A@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA9wMRFJWrjGHcd2nfhgXovyuS=dDJvCXWZkgmD_eez27A@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::442;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x442.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,153 +106,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/27/26 05:14, Chenyi Qiang wrote:
-> 
-> 
-> On 5/27/2026 3:44 AM, Cédric Le Goater wrote:
->> Hello Chenyi,
->>
->>
->> On 5/19/26 07:57, Chenyi Qiang wrote:
->>> vfio_container_dma_map() uses dma_map_file() whenever a RAMBlock has an
->>> fd and the VFIO IOMMU backend supports file-based DMA mapping. That is
->>> not correct for private file-backed RAM.
->>>
->>> dma_map_file() resolves PFNs from the backing file, but private
->>> mappings can run on different PFNs than the file itself. As a result,
->>> using dma_map_file() on a private RAMBlock can program DMA against pages
->>> that do not back QEMU's actual guest memory.
->>>
->>> This was observed with hugetlbfs-backed guest memory and iommufd/VFIO:
->>> share=on works, while share=off can fault because the file-backed PFNs
->>> can diverge from the PFNs backing QEMU's private mapping.
->>>
->>> Fix this by using dma_map_file() only for shared RAMBlocks.
->>>
->>> Fixes: fb32965b6dd8 ("vfio/iommufd: use IOMMU_IOAS_MAP_FILE")
->>> Reported-by: Farrah Chen <farrah.chen@intel.com>
->>> Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220776
->>> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
->>> ---
->>>    hw/vfio/container.c | 2 +-
->>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
->>> index 4c2816b574..c5a3c60a27 100644
->>> --- a/hw/vfio/container.c
->>> +++ b/hw/vfio/container.c
->>> @@ -82,7 +82,7 @@ int vfio_container_dma_map(VFIOContainer *bcontainer,
->>>        RAMBlock *rb = mr->ram_block;
->>>        int mfd = rb ? qemu_ram_get_fd(rb) : -1;
->>>    -    if (mfd >= 0 && vioc->dma_map_file) {
->>> +    if (mfd >= 0 && vioc->dma_map_file && qemu_ram_is_shared(rb)) {
->>
->> I think we should introduce an helper to check that the conditions
->> for using the .dma_map_file() handler are met. Something like :
->>
->>      if (vfio_container_can_dma_map_file(bcontainer, ...)) {
->>            RAMBlock *rb = mr->ram_block;
->>     
->> and
->>
->>   /*
->>    * We can use IOMMU DMA mapping (IOMMU_IOAS_MAP_FILE) for :
->>    *
->>    * 1) Guest RAM blocks explicitly configured as shared (MAP_SHARED)
->>    * 2) RAM device sub-regions (MMIO BARs)
->>    *
->>    * Private RAM mappings (MAP_PRIVATE) are strictly excluded. Because
->>    * they are subject to copy-on-write (COW) anomalies, their
->>    * underlying PFNs can permanently diverge from the backing file
->>    */
->>    bool vfio_container_can_dma_map_file(VFIOContainer *bcontainer, ...)
->>    {
->>       return ...
->>    }
->>
->> How's that ?
-> Thanks for the review. I'm fine with introducing the helper.
-> 
-> But I'm not sure if it's cleaner to include duplicated calculations in both the caller and helper.
->   
-> +static bool vfio_container_can_dma_map_file(VFIOContainer *bcontainer, RAMBlock *rb)
-> +{
-> +    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-> +
-> +    return rb && qemu_ram_get_fd(rb) >= 0 && vioc->dma_map_file &&
-> +           qemu_ram_is_shared(rb);
-> +}
-> +
-> 
-> int vfio_container_dma_map(VFIOContainer *bcontainer, ...)
-> {
->       ...
->       RAMBlock *rb = mr->ram_block;
->       int mfd = rb ? qemu_ram_get_fd(rb) : -1;
->   
-> -    if (mfd >= 0 && vioc->dma_map_file && qemu_ram_is_shared(rb)) {
-> +    if (vfio_container_can_dma_map_file(bcontainer, rb)) {
->           unsigned long start = vaddr - qemu_ram_get_host_addr(rb);
->           unsigned long offset = qemu_ram_get_fd_offset(rb);
-> 
-> Perhaps it can be simplified slightly.
-> 
+On 26/5/26 10:23, Peter Maydell wrote:
 
-I was thinking moving the check on qemu_ram_get_fd(rb) within the
-new routine. Something like :
-   
+> I have quite a lot of sympathy with the rationale behind the
+> Zig policy, for instance:
+>   https://kristoff.it/blog/contributor-poker-and-ai/
 
-   static bool vfio_container_can_dma_map_file(VFIOContainer *bcontainer,
-                                               MemoryRegion *mr, int *fd)
-   {
-       VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-       RAMBlock *rb = mr->ram_block;
-   
-       if (!vioc->dma_map_file || !rb) {
-           return false;
-       }
-   
-       *fd = qemu_ram_get_fd(rb);
-       if (*fd < 0) {
-           return false;
-       }
-   
-       /*
-        * We can use IOMMU DMA mapping (IOMMU_IOAS_MAP_FILE) for :
-        *
-        * 1) Guest RAM blocks explicitly configured as shared (MAP_SHARED)
-        * 2) RAM device sub-regions (MMIO BARs)
-        *
-        * Private RAM mappings (MAP_PRIVATE) are strictly excluded. Because
-        * they are subject to copy-on-write (COW) anomalies, their underlying
-        * PFNs can permanently diverge from the backing file
-        */
-       return qemu_ram_is_shared(rb) || memory_region_is_ram_device(mr);
-   }
+Thanks for sharing this link!
 
-or simpler :
-
-   static bool vfio_container_can_dma_map_file(MemoryRegion *mr, int *fd)
-   {
-       RAMBlock *rb = mr->ram_block;
-  
-       if (!rb) {
-           return false;
-       }
-  
-       *fd = qemu_ram_get_fd(rb);
-       if (*fd < 0) {
-           return false;
-       }
-  
-       /* ... */	
-       return qemu_ram_is_shared(rb) || memory_region_is_ram_device(mr);
-   }
-  
-I think option 2. is best. you choose.
-
-Thanks,
-
-C.
+> I spend quite a lot of time reviewing patches for things which
+> are features I don't necessarily personally care about. I'm
+> happy with doing that for other people who are hopefully
+> learning and gaining something from the process; I'm much
+> less interested in reviewing a mountain of LLM-generated patches.
+> 
+> thanks
+> -- PMM
+> 
 
 
