@@ -4,111 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37DADCD5BD1
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 10:14:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5C36CD5BD1
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 10:16:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSXkE-0000aj-Aa; Thu, 28 May 2026 06:13:42 -0400
+	id 1wSXn8-0001Fg-OD; Thu, 28 May 2026 06:16:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSXkA-0000aT-AJ
- for qemu-devel@nongnu.org; Thu, 28 May 2026 06:13:38 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1wSXn5-0001DS-7U
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 06:16:39 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSXk7-0000fl-2L
- for qemu-devel@nongnu.org; Thu, 28 May 2026 06:13:36 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4906238c62eso39803985e9.3
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 03:13:34 -0700 (PDT)
+ id 1wSXn3-00028p-Il
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 06:16:38 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-490686877a1so29802905e9.0
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 03:16:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779963213; x=1780568013; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779963396; x=1780568196; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gbyuZgG6AkLETi0yBsD+It6Az1xMY7xBHjetWH8EGuM=;
- b=nDg68BQC7hYASlR2rhTpoZeVLKa9NG7rR/tni8Qs0LtJAnXBQA2DO9WsC2NPbn0WuI
- 4hFmLY2nixiURlbcGZXitJ+K9lbE/Oduc6QEx9QOuIG2sTlmpDn5zq8H3Oul4xgTK7pG
- 5N2bfAx5R+oQheUrHezkI2K1KjZoEIdY5TwAmSF34TsRqpwe07XKgGNcVbMt852NG71N
- WLL8Fbas1iYifvC0B6GBQYcsUKWuaa+E85VuRaonysz+NkjqrYteuDjCuJXzVltC7LPH
- TexpqKjcDGoimlHi6BU0ln2tW1VgoehORphPFwF6u+VhvKt9Z1k27vnmzykeZmaBu7TM
- cppw==
+ bh=H1xrkQf3BWF1aGx10+8zTAefU0dp5D6GrwoTAQbjgQA=;
+ b=HWwcMS1BytDqmC6zs8TJh7kdTxTNaG5RLIJWYSINH6EYmuB+dj+hT0kkiFwL4nODB0
+ eY6HOxo7t592cmQpQ8BMdhTccr4no6CrJAsN7AjoGSPsgXMbsR6DjydexoiPdi8ja1sr
+ Vpn6zWHjnMkaEtsWQWE5r9iX9fWqg3GunaDAguJ73ecojWiTqkPr3xwwLoo658GoMFJh
+ AbZXUc/1pom+Mw67Ig3lL5+b7LInLDNtbK7riigRBBF+9Js8InJzDvSiDCSdbmMiVOOS
+ tKse/hQyGMNNRC3h0CB+KK5r7xVFz2QVTeCIMBjDXjyN/LKNsEBzcYlonWRiODEkfST3
+ YPmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779963213; x=1780568013;
+ d=1e100.net; s=20251104; t=1779963396; x=1780568196;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gbyuZgG6AkLETi0yBsD+It6Az1xMY7xBHjetWH8EGuM=;
- b=ZcCNSnOxbIyUEvqqZu1PxLPyg4Qxmz95UTcSPoyauDFXDl/BciS5/0smk2n1PvxrWx
- iVOo09j5LbngSZivUyrl0wbbhT2pSfURA5WcupwsOlNRTAbBdPl9EDHSq91nNsy+6HGZ
- kTdPZSFA22uzidggbqjf4U1iJiGIDKaGzIFSXgHBV6XAWAMTkl3sWZxcOOwpviPUrqCi
- 60nmSggwKiVlK4iiWYTal29itDUQIL9svOLV9CuVvhnXVXiPjnHpkkKZHJdyYp36tmVy
- R5ZODu86l4EdXdHXw3Kxqx3gUKGaWfYc35EHgQjFFa07Ylt+QPMyIfmxpxsRpt/Vi9N+
- kH3g==
-X-Gm-Message-State: AOJu0YzovlmDOND+slqeeCJesoZdElrGvrXEY+8A4KdWdBUIXPWBDG6Y
- Q2q0VPkK1AJlgRjHzw+v9hBp+lZktVff+WGTgPk//ru3nUq8neW4kBXGQS+uRED7Nb8=
-X-Gm-Gg: Acq92OFgc/ig2luNwNB5Mb//IGV4uTdd48fnFPrWp8xGh6PzjOPuhR4n6KQMSaiDwHh
- PC7TeWrDXwAyjjpfGWYOC7r04SoEbCCzLaeteaoHSxxPSudcsbGiNA2AyqSCc9OZWEvCel1LTxV
- e5GE7ILNMEiiHQDCqXJjIVo8Jx5orB0+7sDZHsmTsoazPdmqq1jFD7JYPfSwEXOnKc8DmUiUvor
- ykMb36MAW8jk4tasv/PwCUN/tNPPpswAuoJVQpVq+M6znQf+L80dKhfOhhdsD3DDu9d8aUtSAOf
- E3/RDH/9gWraHbdooXUP/B7eXFU5W+m5J3EeNhJHROGLyKD1ABWD5IPTFREnLGOTBQi9NmJbu22
- SwxyrKLLYMosKLoXK7fTtL/FWLRLU5vB+ClXntNNUrgaz0OCceJuz6yDJFY+BUkK8+rVijDP6nf
- 4X3VKHGKNiMc+1begdXTqKjfxLK+MS2Sve4g==
-X-Received: by 2002:a05:600c:6094:b0:490:625e:bb68 with SMTP id
- 5b1f17b1804b1-490625ebc14mr289953765e9.3.1779963212662; 
- Thu, 28 May 2026 03:13:32 -0700 (PDT)
+ bh=H1xrkQf3BWF1aGx10+8zTAefU0dp5D6GrwoTAQbjgQA=;
+ b=U3RIHi6UFO0PI/G9HWmhFWwJrpmH/RKqKgjny6Zw+a1BE2qimk/3pBTRIEfi1kV9dA
+ c4CDN7zh6blD5MOAvfuWQWPHRs23702H2VgVAMT5B665iRgrWVj+kpH+rOtMuQ6nWsw1
+ rVPaSzQm+o9y9B8WvWRwLO+XIWa4WLxZIpDZmNM2j1Y4CHzXVfirNCRahfNyJiROxV8f
+ WmFM1n3lW+neZTXyZrAtxhC6WnEkXoTGc/IStxKDOeY1pvA4lc/zmLzDgL5rTC3pqRS0
+ PW9B2WGxRiFvcRw2N0QdNWRrfr3ePBGa9Mm5xGveoQiTRl76HVZ0ITTTNRVhAweQm17n
+ ObOw==
+X-Gm-Message-State: AOJu0Yz0ebpFpIKqcCWp0fAw06oorHowFUKrs7Cd/D1R1JJwNAn1DBka
+ T3TO2Lh2q3KT4H1g3dskNKlC5zpxGIih+w/priWPT9C1TTzFDutGmo5Wo9UELB7kcTx8Wjj0im2
+ 5fAst
+X-Gm-Gg: Acq92OHEaDeOgzyyI+qBdyXKkOysiht/cHwmNk30xERImigKJCyQrOjrqJaLGWE4fIr
+ SqdhMAje4IbpmXD1qU2pxDjLSUCZzzZqVGzhqQiCYkGKUwB8NRa3k5w8AcEzsJ+7p+M92/Yq2h5
+ FDf5/5lelvv/R7Od6mmT8B8N7h3/DBmvyTslldJgOaO1Uen/KF2FARfKHTOMtzo+KIvdQm352nC
+ tF87KBOEofGQsPVBSOsomNBOhgarg2NvDhWYf3WmOFAqm5VGAHQxlaUTbdxRmQ/bg8lyGHfvtpF
+ /b0SNeXgu1pKTUgQ3+hjrF30pAokPMAFLKmqz2POAe82EDmLU8vKS5SpeWEJ0wJ17tsvbRnaGbI
+ wEcqmbLmvK2E0QjLEF/zDNPQRMpUw6NocA/J4QaM9rmWYLO/hc4H44KRzLv7rSjVXQvnRzBOLV4
+ O9laCAOavNdF1NEgKO93xhn1eK85vWQSgEUg==
+X-Received: by 2002:a7b:cb93:0:b0:490:548f:6ca0 with SMTP id
+ 5b1f17b1804b1-4909478d48cmr11136075e9.8.1779963395764; 
+ Thu, 28 May 2026 03:16:35 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4909235f98bsm42288825e9.1.2026.05.28.03.13.31
+ ffacd0b85a97d-45eeb36c40asm1902229f8f.13.2026.05.28.03.16.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 May 2026 03:13:31 -0700 (PDT)
+ Thu, 28 May 2026 03:16:35 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AF9625F886;
- Thu, 28 May 2026 11:13:30 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 386A65F886;
+ Thu, 28 May 2026 11:16:34 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Thomas Huth
- <th.huth+qemu@posteo.eu>,
- Song Gao <gaosong@loongson.cn>,  John Snow <jsnow@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Kyle Evans
- <kevans@freebsd.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,  Cleber Rosa
- <crosa@redhat.com>,  Warner Losh <imp@bsdimp.com>,  Brad Smith
- <brad@comstyle.com>,  Thomas Huth <thuth@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Max Filippov <jcmvbkbc@gmail.com>,  Brian Cain
- <brian.cain@oss.qualcomm.com>,  Fabiano Rosas <farosas@suse.de>,  Peter
- Maydell <peter.maydell@linaro.org>,  Richard Henderson
- <richard.henderson@linaro.org>,  qemu-arm@nongnu.org
-Subject: Re: [PATCH v2 03/16] tests/Makefile.include: add binary dependency
- to run-tcg-tests-% rules
-In-Reply-To: <86385e93-5425-4145-8a9f-0f72ed5de022@oss.qualcomm.com> (Pierrick
- Bouvier's message of "Wed, 27 May 2026 13:55:20 -0700")
-References: <20260521131739.540157-1-alex.bennee@linaro.org>
- <20260521131739.540157-4-alex.bennee@linaro.org>
- <74e8bc86-cd81-43f9-b5cb-7e3de3bcd3d0@oss.qualcomm.com>
- <87tsrzl138.fsf@draig.linaro.org>
- <093614fb-ced1-4b15-b1e1-5da755f87237@oss.qualcomm.com>
- <87cxymec7b.fsf@draig.linaro.org>
- <5bd51a1a-4079-4073-bbd8-f0206a1ad458@oss.qualcomm.com>
- <0f73d717-1621-4c3f-9c5e-9bfdfaffb0b8@oss.qualcomm.com>
- <877bor9vor.fsf@draig.linaro.org>
- <7d58926d-a36d-430f-828e-7ebdd9cc4eb5@oss.qualcomm.com>
- <87qzmyzbut.fsf@draig.linaro.org>
- <06092208-1b56-4fea-8d92-bf035fbd0fa3@oss.qualcomm.com>
- <87fr3eyrvp.fsf@draig.linaro.org>
- <8a878679-733c-451c-8053-663a74f8d4a7@oss.qualcomm.com>
- <87a4tlz897.fsf@draig.linaro.org>
- <86385e93-5425-4145-8a9f-0f72ed5de022@oss.qualcomm.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Pierrick
+ Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Richard Henderson
+ <richard.henderson@linaro.org>
+Subject: Re: [PATCH 2/3] docs/devel/tcg-ops: List more vector opcodes
+In-Reply-To: <20260504125032.35465-3-philmd@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 4 May 2026 14:50:30
+ +0200")
+References: <20260504125032.35465-1-philmd@linaro.org>
+ <20260504125032.35465-3-philmd@linaro.org>
 User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Thu, 28 May 2026 11:13:30 +0100
-Message-ID: <87o6hzx2np.fsf@draig.linaro.org>
+Date: Thu, 28 May 2026 11:16:34 +0100
+Message-ID: <87ik87x2il.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -131,116 +108,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-> On 5/26/2026 11:17 PM, Alex Benn=C3=A9e wrote:
->> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->>=20
-<snip>
->>=20
->> What do you mean? I run check-tcg all the time.
->>=20
->> Which containers fail to build for you? The main cross-compiler one
->> (debian-all-test-cross) is built all the time.
->>
+> Few logical and arithmetic vector opcodes are missing, list them.
 >
-> Build is working out of the box now.
-> However, it seems that only tests for aarch64, arm and x86_64 are run
-> when using containers without having installed cross compilers.
-> Maybe it's another carefully handcrafted feature of tcg Makefiles?
-
-Works for me over here. Do you have podman or docker installed?
-
-It's true the Makefile has to jump through some hoops to compute
-TCG_TESTS_TARGETS from TCG_TESTS_WITH_COMPILERS (config-host.mak) and
-CONFIGURED_TCG_TARGETS (via $(wildcard *-config-target.h)). Is that
-where it fails?
-
-As I've said before I'm not wedded to Makefiles, in fact I would look
-forward to a world when I can run an individual test directly from
-meson. However I'm not prepared to throw away functionality, especially
-the ability of new developers/testers to build the tests without having
-to install cross-compilers. That would take us back to the *before
-times* when TCG tests where hardly ever run and tended to bitrot.
-
->>> But well, if the cross-container thing is *really* a blocker, we can
->>> just wrap build and run in a script per cross compiler, that does
->>> docker/podman build && docker/podman run and call that.
->>=20
->> We still have the remnants of that in the docker.py script although for
->> most containers we moved to invoking docker (or podman) directly.
->>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  docs/devel/tcg-ops.rst | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 >
-> Maybe that's why I encountered issues in the past, and now it works out
-> of the box.
+> diff --git a/docs/devel/tcg-ops.rst b/docs/devel/tcg-ops.rst
+> index c417ebe65a8..56c0b0bd3de 100644
+> --- a/docs/devel/tcg-ops.rst
+> +++ b/docs/devel/tcg-ops.rst
+> @@ -816,10 +816,16 @@ specifies the length of the element (if applicable)=
+ in log2 8-bit units.
+>=20=20
+>     * - and_vec *v0*, *v1*, *v2*
+>=20=20
+> +       nand_vec *v0*, *v1*, *v2*
+> +
+>         or_vec *v0*, *v1*, *v2*
+>=20=20
+> +       nor_vec *v0*, *v1*, *v2*
+> +
+>         xor_vec *v0*, *v1*, *v2*
+>=20=20
+> +       eqv_vec *v0*, *v1*, *v2*
+> +
+>         andc_vec *v0*, *v1*, *v2*
+>=20=20
+>         orc_vec *v0*, *v1*, *v2*
+> @@ -852,6 +858,8 @@ specifies the length of the element (if applicable) i=
+n log2 8-bit units.
+>=20=20
+>         sars_vec *v0*, *v1*, *s2*
+>=20=20
+> +       rotls_vec *v0*, *v1*, *s2*
+> +
+>       - | Similarly for logical and arithmetic right shift, and left rota=
+te.
+>=20=20
+>     * - shlv_vec *v0*, *v1*, *v2*
 
-The original script attempted to deal with caching layers and the
-consequences of custom USER/UID on local machines. Nowadays it is mostly
-used as a basic wrapper around "probe" for the runtime and is still used
-by the binfmt_misc and toolchain wrappers.
+Longer term it would be nice to just auto-generate these from tcg-op.h
+and tcg-op-common.h but I guess we would need to see if kdoc can handle
+grouping of sets of ops rather than having to exhaustively enumerate
+every bitop with comments.=20
 
-For porting to meson it might be worth just having a minimal wrapper
-just for building rather than mess with it.
+Anyway:
 
->> Also bear in mind the containers are also used to cross build QEMU
->> itself.=20
->>=20
->>>
->>> Now we solved the problem with system tests, and cross compilers, is
->>> there another thing that is absolutely needed from Makefiles?
->>>
->>>>> If it's not the case, then we should definitely move into the directi=
-on
->>>>> of migrating all this to meson, and rely on meson tests infrastructur=
-e.
->>>>>
->
-> To add on top of this, I would be happy to help with the transition, but
-> I want to make sure you'll accept it first, with a list of
-> requirements.
-
-For check-tcg the requirements are simple:
-
-  - support building tests with containers
-  - handle all existing tests
-    - per-arch *-user and *-softmmu
-      - including post test validation checks (conditional-diff-out, valida=
-te-memory-counts.py, etc...)
-      - per-target overrides (some targets are broken for some tests)
-      - custom QEMU_OPTS for some tests
-      - including sub-arch tests (e.g. x86_64 includes i386, mips64el inclu=
-des mips64 etc...)
-    - multiarch tests for all *-user targets
-    - multiarch tests for all *-softmmu targets with boot.S
-    - gdbstub tests
-      - don't forget gdb feature probing for arch and arch features (e.g. G=
-DB_HAS_SME_TILES)
-    - record/replay tests
-    - tcg plugin tests
-      - modulate plugins over tests to avoid combinatorial explosion
-      - filter some plugins from general testing (e.g. patch)
-      - filter some plugins based on mode (e.g. syscall)
-      - specific plugins with specific tests (e.g. patch, memory)
-    - support build variations
-      - compiler feature probing to gate tests
-      - custom cflags for some tests
-      - alternate cflag builds for some tests (e.g. sha512-[vector|sse|mvx|=
-...])
-      - build scripts (e.g. test-mmx.py)
-
-with meson TCG_TEST_FILTER should be obsolete.
-
-> I'm a bit tired of seeing patches in your subsystems get stuck for
-> weeks, without any proper review, to finally be (re)posted again in a
-> new series, blocked for more weeks, and finally reach upstream one month
-> later or worse. It's truly exhausting for everyone contributing in such
-> places.
-
-What can I say - reviews are welcome. I always list what patches are
-still waiting for review in the cover letter. I should also add for
-testing/next I try to be extra careful that regressions don't slip in
-because keeping the testing sub-system stable is important to support
-things like bisection.
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
 --=20
 Alex Benn=C3=A9e
