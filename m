@@ -4,93 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC0BFCD4F54
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 19:56:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AACCCD5BD5
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 19:59:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSgqX-0001Ls-82; Thu, 28 May 2026 15:56:49 -0400
+	id 1wSgt4-0002d9-O6; Thu, 28 May 2026 15:59:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSgqW-0001LQ-EW
- for qemu-devel@nongnu.org; Thu, 28 May 2026 15:56:48 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSgt2-0002cg-S5
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 15:59:24 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSgqU-0002YU-S7
- for qemu-devel@nongnu.org; Thu, 28 May 2026 15:56:48 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-49048e043e5so54706615e9.1
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 12:56:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSgt1-0003KU-0B
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 15:59:24 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-45eecb8bf67so604117f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 12:59:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779998205; x=1780603005; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779998361; x=1780603161; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=nju+bWqiSLv4j414+OVM3LqArzmjjxHIuUcGqQjDJ1M=;
- b=fc0VJWgOew6BcUyjnsR1oJpJwsyhboD3YO3BqYEOw/Nc7QGKlDENoD879KhuUPZETF
- 8eqOslGwNdodTaszFXIl31hSoZ9YzbFUruSKZXVF+EYIPKIjui+wIVeT6OKnutHBiQ58
- XbfezvGiHKlvjG4xsl/w4hDkwBUhq3XTWIQGWA3/iFr2kUX/ksAvGiIvc0GYUZonD43O
- wFbyhMREFm9EboLtpfUBuOOW9rbsDxGt1nKrtCTW3rKADF6p7TYRqR5uHLSm4BuDk7rQ
- FXHmINNN2uzNDmkwhVpOE2jclETLMc2+8q4BkY+iUPUczgtz04B+YUnLTZKvUlbiixxb
- ckiA==
+ bh=35ZIK+RqQMFZhBbuaSVeKgHe7hxSXLxyc9A4qk60P4k=;
+ b=aiKUPuFNT9MP/7UoQVq2v7/cvSENTDhwRN1DF4F2CoMeJEVb2sSGvyvXyKbF06AnU6
+ 1gkWYXTN7Uvg1a9l0ddUeVHt0Xezm61GwUbVlSZerzjquAghN8gn14AnJpPJ76YQfJ+3
+ YmwowqVApmfXPaOi3+CMx7fu6WUyMVwgEjXoTujbhvLm/pZi79K/WcYJyfFf9nqGlbeK
+ Z7GoecLBULkFpQ1JEzJlxEZHMpLDyA1K5pSuWGIW9aUM10wRZHWcvuYqtRuWLsdlskmr
+ yw9eMQOeAg3W9ejl6SrdcdMd3+sl3kY5GCJ8GOfHxS61idMx2bSVQqn41ZjbRRbnr0Du
+ tHyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779998205; x=1780603005;
+ d=1e100.net; s=20251104; t=1779998361; x=1780603161;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nju+bWqiSLv4j414+OVM3LqArzmjjxHIuUcGqQjDJ1M=;
- b=SbeAIN3UfYj7IXfBDEt01G/ZvX0Bd6iVvvS3k3ki43YHKVuef0r/dPOs2Ev4pNNNt9
- YKVtIKEdt94SoaHc+k4ap/k51Wh4Iju+sh6PoFi5dYybPr32A4j9800ikcZid4euMxPc
- KbwEJNXxxG/5C5ibSElsYV79s3joZpB3JxEgbQR77SXvGcyPJ0izzQudIziqgpNG91DJ
- oJ6xqUzK7GdA9I2uxbno5cPmMn37RPJPEUWm9Z1C+LlLq+ICkwnQKs+URMFdSCOLwGbb
- joCFiyR+RDXspiUzXZfnqzPsg1YnYnstxLjenhvVMDYsoZWXSssEBfeddPTRAKi1M+4j
- X+0w==
+ bh=35ZIK+RqQMFZhBbuaSVeKgHe7hxSXLxyc9A4qk60P4k=;
+ b=dlm+gCA//801EygiUx4/6Vpo7IJ/EuOh8AB9GqPUbpSiTsSgfEuKMINwty6zRI31c+
+ yGs3hYCmnODFMumSnDnXrtO5XKO1+/w/Danh2y7qmqGSUHUrdoxk8KWi+NfSQfJhNpiq
+ eesCSJiynbvMjdPlfJ9vrYDJAtYtoZOAE/ljo3bxxqRTQulnanGUeoXzG8weFOMiwY/4
+ QNQ4ptqnjsd7Jjk+f5ZdB+/2vvtEqx7HHFsxM4dIVEKA8NYWFesd4EpjAgVbPfr3C17D
+ EPE52HHmIpFUFImehqwLjQ1yxEU2oi5o7KUgQveOjzwmIEYpnrm3GZgtLtn05X7XxCGc
+ sEqw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/kzIFTBFr4zApscK3+B6IrSfHK/6qqWqKrn2mGIKuwwEVYT5tx2oRhD5kt6MHPJ2R32RE2f2FHjB1I@nongnu.org
-X-Gm-Message-State: AOJu0Yy2jxdgeHxPKVNpKs9WxKunvKE3CtBE2lgpWZ6iE7q9YccVMucr
- /xxq5hgMum/o+g+51w3e/TNvixyNwmfy4tYgFu8YZHnPagTqYkxuIJ7K2fwf+snjHoI=
-X-Gm-Gg: Acq92OFx9NIOUY+aNUsb0EnpzEVs2tP5ELKceogDfpXb/rzIrxKvsSeIx3iqASeB+n6
- RahLwceKn9rCcnjCH7/zvcQNUsELcQmriBctxHgqH91tVJ9+NbdqvYtarEDpRvNVmdIZVoO1HkE
- kXFXJ8BJYbqh5cRVGDsHTlvuQUFlsFD8H8c3N6zggaeyAAtReDQbi81Vpc2qhndMAAxYN17iSVz
- O6hpFzaS7P7MsYQGuYRIkD234tv/iAZgwJb07cmn/2TJWPHyrCB25QuJ8kSCJYa1Im1Qfwe6p0S
- +/Uw0Qyr2jCCc27lD6V+l7+qXX+62GVAeqDD0mCRXT1/lPrYIimGolTbsH2d5X+yFJEkcsPBWbc
- +GoeJRWiYDN0M8DCtFp4aStiXg3KuanGiTjw7Y28G/6hbimkYRhCu+vU/Wc19atgz2Pj7Hc0IFj
- 0RhFdPgRBp3yhn78fzZIEgpxG/ASxLsTA6svgr84NCSvekcL6oxovMv/p49ZAkpVE/KVWmU4rbI
- E+k
-X-Received: by 2002:a05:600d:60ab:b0:490:59cc:999f with SMTP id
- 5b1f17b1804b1-4909bf8b18emr927605e9.4.1779998205068; 
- Thu, 28 May 2026 12:56:45 -0700 (PDT)
+ AFNElJ/DVWmj25L0Kc4yS6Eejbo9uIOFtdkgSOhBD67AFl5icFSssYiloBJEls7QERWJAynhpv6ovHtM1/gq@nongnu.org
+X-Gm-Message-State: AOJu0YxVvVWehLcm+QOCVZedl41hP4TuDnUjSZB6to0fptULiAQkMVJc
+ FP1DUWg08NZd2o5GheZQWVl9RoRLUhAkUCxh9Ms4oqWRoxEn9dHvk++aLJ1KFo819cY=
+X-Gm-Gg: Acq92OGxS2DNuMGdo9KdS8etaOOyRMzcFKLRWhlxWIvoKc/g6B/9IqZePzcovggaNqB
+ RPun3XGV48asEO8VC2h5xR6Dgkbe3rY1DisLwDdIK3W3U6Gs77ajPPH4zlqbrfx483Cvjl/NQHW
+ UPHcgYSkKDdmjKlxrQwm0I++1k6vfwvumE8JweTpQ17p1LRKoPRsl5iTNVXP3HXPhQiROKwe0re
+ ZxZ8xXLUBQEA1tTDNLS0gpLmvOOw+80h2lTYSeZrBELYx8PHkpYYVSj2dfB6Y5EYB/SRRoI/nGh
+ sRqkV/i782ZdWpbYwoeC2S4Eqi9jVKgzb67QIMg9iS6SoM8DXFOb6nvJ6rd92EwRCOn4ShC16F3
+ NYUPv1gKNx2pnsSTfLHij8ILBwGPKKRMIHEDhNAWHUiAqE+yWgjFfUZ7PFwMiPa6geAxor/BEMJ
+ B0VjIgPKGBADsjrcjm0IPCALsqqHj2g7UAmYOv7Gu+XfJm28m6KrFmsbiaVp0QflD5SAdFvLXXE
+ ZnO
+X-Received: by 2002:adf:e008:0:10b0:43d:1bf6:30f7 with SMTP id
+ ffacd0b85a97d-45ef04d9350mr667316f8f.18.1779998360603; 
+ Thu, 28 May 2026 12:59:20 -0700 (PDT)
 Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4909284a895sm56605965e9.8.2026.05.28.12.56.42
+ ffacd0b85a97d-45eec5eba06sm4321566f8f.22.2026.05.28.12.59.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 May 2026 12:56:43 -0700 (PDT)
-Message-ID: <e636c43a-a613-4819-a272-61fef832627c@linaro.org>
-Date: Thu, 28 May 2026 21:56:41 +0200
+ Thu, 28 May 2026 12:59:19 -0700 (PDT)
+Message-ID: <dc1b9965-4ac3-4157-91e3-edb9d93556cf@linaro.org>
+Date: Thu, 28 May 2026 21:59:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 08/12] hw/riscv/boot: Replace cpu_to_le32() ->
- const_le32()
+Subject: Re: [PATCH] accel/common: Remove last bit of target-specific code
 Content-Language: en-US
 To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Djordje Todorovic
- <Djordje.Todorovic@htecgroup.com>, Anton Johansson <anjo@rev.ng>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Christoph Muellner <christoph.muellner@vrull.eu>
-References: <20260527201348.29511-1-philmd@linaro.org>
- <20260527201348.29511-9-philmd@linaro.org>
- <9d0853dd-5c22-4c46-9c42-a76d18230271@oss.qualcomm.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Anton Johansson <anjo@rev.ng>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260528140857.44130-1-philmd@linaro.org>
+ <b2a58b62-b061-4bdf-b459-9953b7f373fe@oss.qualcomm.com>
+ <5b693f87-2f9a-4564-9efb-83c815bcb20e@oss.qualcomm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <9d0853dd-5c22-4c46-9c42-a76d18230271@oss.qualcomm.com>
+In-Reply-To: <5b693f87-2f9a-4564-9efb-83c815bcb20e@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,31 +109,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/5/26 21:40, Pierrick Bouvier wrote:
-> On 5/27/2026 1:13 PM, Philippe Mathieu-Daudé wrote:
->> Rather than adapting the array endianness when it it
->> filled, directly initialize the CODE words with the
->> correct endianness.
+On 28/5/26 20:47, Pierrick Bouvier wrote:
+> On 5/28/2026 11:47 AM, Pierrick Bouvier wrote:
+>> On 5/28/2026 7:08 AM, Philippe Mathieu-Daudé wrote:
+>>> Initialize the TypeInfo structure at runtime using the TargetInfo
+>>> API to resolve TYPE_ACCEL_CPU, replacing CPU_RESOLVING_TYPE by
+>>> target_cpu_type(). Since the code is no more target-specific, move
+>>> it to accel-common.c, removing the need for accel-target.c.
+>>>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>> Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>>
+>>> Pierrick, this is an alternative for both
+>>> 20260528051642.115721-4-pierrick.bouvier@oss.qualcomm.com
+>>> and
+>>> 20260528051642.115721-5-pierrick.bouvier@oss.qualcomm.com
+>>> for your "single-binary: fix compilation/execution for {arm,
+>>> aarch32, microblaze}" series. WDYT?
+>>> ---
+>>>   accel/accel-common.c | 15 +++++++++++++++
+>>>   accel/accel-target.c | 41 -----------------------------------------
+>>>   accel/meson.build    |  1 -
+>>>   3 files changed, 15 insertions(+), 42 deletions(-)
+>>>   delete mode 100644 accel/accel-target.c
+>>>
+>>> diff --git a/accel/accel-common.c b/accel/accel-common.c
+>>> index 9c5b4111c8d..62590a7d9a6 100644
+>>> --- a/accel/accel-common.c
+>>> +++ b/accel/accel-common.c
+>>> @@ -134,3 +134,18 @@ static const TypeInfo accel_types[] = {
+>>>   };
+>>>   
+>>>   DEFINE_TYPES(accel_types)
+>>> +
+>>> +static void register_accel_target_type(void)
+>>> +{
+>>> +    g_autofree char *name = g_strconcat("accel-", target_cpu_type(), NULL);
+>>> +    const TypeInfo accel_cpu_type = {
+>>> +        .name = name,
+>>> +        .parent = TYPE_OBJECT,
+>>> +        .abstract = true,
+>>> +        .class_size = sizeof(AccelCPUClass),
+>>> +    };
+>>> +
+>>> +    type_register_static(&accel_cpu_type);
+>>> +}
+>>> +
+>>> +type_init(register_accel_target_type);
+>>> diff --git a/accel/accel-target.c b/accel/accel-target.c
+>>> deleted file mode 100644
+>>> index 7fd392fbc4a..00000000000
+>>> --- a/accel/accel-target.c
+>>> +++ /dev/null
+>>> @@ -1,41 +0,0 @@
+>>> -/*
+>>> - * QEMU accel class, components common to system emulation and user mode
+>>> - *
+>>> - * Copyright (c) 2003-2008 Fabrice Bellard
+>>> - * Copyright (c) 2014 Red Hat Inc.
+>>> - *
+>>> - * Permission is hereby granted, free of charge, to any person obtaining a copy
+>>> - * of this software and associated documentation files (the "Software"), to deal
+>>> - * in the Software without restriction, including without limitation the rights
+>>> - * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+>>> - * copies of the Software, and to permit persons to whom the Software is
+>>> - * furnished to do so, subject to the following conditions:
+>>> - *
+>>> - * The above copyright notice and this permission notice shall be included in
+>>> - * all copies or substantial portions of the Software.
+>>> - *
+>>> - * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+>>> - * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+>>> - * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+>>> - * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+>>> - * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+>>> - * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+>>> - * THE SOFTWARE.
+>>> - */
+>>> -
+>>> -#include "qemu/osdep.h"
+>>> -#include "accel/accel-cpu-target.h"
+>>> -
+>>> -static const TypeInfo accel_cpu_type = {
+>>> -    .name = TYPE_ACCEL_CPU,
+>>> -    .parent = TYPE_OBJECT,
+>>> -    .abstract = true,
+>>> -    .class_size = sizeof(AccelCPUClass),
+>>> -};
+>>> -
+>>> -static void register_accel_types(void)
+>>> -{
+>>> -    type_register_static(&accel_cpu_type);
+>>> -}
+>>> -
+>>> -type_init(register_accel_types);
+>>> diff --git a/accel/meson.build b/accel/meson.build
+>>> index 7da12b9741f..1b5b37e3097 100644
+>>> --- a/accel/meson.build
+>>> +++ b/accel/meson.build
+>>> @@ -1,5 +1,4 @@
+>>>   common_ss.add(files('accel-common.c'))
+>>> -specific_ss.add(files('accel-target.c'))
+>>>   system_ss.add(files('accel-system.c', 'accel-blocker.c', 'accel-qmp.c', 'accel-irq.c'))
+>>>   user_ss.add(files('accel-user.c'))
+>>>   
 >>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   hw/riscv/boot.c | 30 +++++++++++++-----------------
->>   1 file changed, 13 insertions(+), 17 deletions(-)
+>> I'm open to follow this approach first .
+>> The only downside is that it limits to a single accelerator parent type,
+>> which will be a problem as soon as we have two arch using this framework
+>> for tcg. Nothing we can't solve later though.
+
+Good point. I'll see how to handle that (as a following up patch).
+
 >>
+>> Regards,
+>> Pierrick
 > 
-> One could argue original version is more readable.
-> Any specific reason for rewriting things this way (performance, personal
-> preference, other)?
-> Not a blocker, just want to understand the original motivation.
-
-Looking at the following changes, I think it makes more sense to
-have the CODE section const little-endian, while the DATA section
-is swapped. Otherwise we'd need 2 distinct loops.
-
-> 
+> Forgot :)
 > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> 
-> Regards,
-> Pierrick
 
 
