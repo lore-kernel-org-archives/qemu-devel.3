@@ -4,113 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97287CD4F54
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 14:33:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EFDDCD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 14:38:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSbnk-00063n-Nx; Thu, 28 May 2026 10:33:36 -0400
+	id 1wSbrZ-0007PN-T6; Thu, 28 May 2026 10:37:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sheldon.qi@canonical.com>)
- id 1wSbkM-0004fH-Ri
- for qemu-devel@nongnu.org; Thu, 28 May 2026 10:30:06 -0400
-Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1wSbrX-0007OF-G9
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 10:37:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sheldon.qi@canonical.com>)
- id 1wSbkK-0000YQ-QU
- for qemu-devel@nongnu.org; Thu, 28 May 2026 10:30:06 -0400
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 1E36A3FA54
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 14:30:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20251003; t=1779978601;
- bh=4vuM9QE5ZOYJh2fuZffkiBl/XpAbZnfydLGidVOT+f0=;
- h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type;
- b=ZHFd8FX26PbqnayNdh3l31NlhAztBvxzrsypAowPrpcBgyJuvZ5Z5QzxQa+VyPXEx
- SUn+J8qjytZCSQ8hPHTtcjK+1p4sAmjCEvu5wuQfzLv3153F6wB49J0ApTgAia6dDI
- 8vlYNqKHbRS5+Gc22LRiblJx/mFne1Pv6NwfHCWDbRmbm/+e0fJlvapjyjShhn6ayx
- 7adf694v4vSRJQAsKJtuKyy+3HOtlFITmHBjBgQ9cgBMvbREt9kE+d/VfLWLbwzsnL
- 1O7m6Mw6/f+kBr/CdRsLrIVWFC2C+6J6zzxC0XwZoCCBpiggPr3Qwemj8UY7ZGCfyd
- cDC+Si55McJXgaZPykYlGems0R4Z79ewLrc0PlZLlgeSHgShRuaDScH09B+PJLgNie
- 9KsJo8GEOWAn8UzcsZKBJhUHv/psYVWfOMi6B+rm6U+VBSUKqAWCaMMpQVu8WlOlTb
- 5RszmEaHSaE3ZE0FwIE/KR+CV4TvK/XC5nAnFhzb9MnWJ3RsXYn3ncpi2l0gBIMfJm
- KrKgO3MU2eS4cb33lUX7oPpjRoKIq942xZH1iKiqiQNPMLxjbAdutN0h5kZCL5Zkz+
- qI87q7wEtuQHc9/4rZbfk+B20z0V7kK0RUT1nHAejljIPM07iH3M0cte12tKsEH+Xq
- 2zIMB8cb+nL/p+jJ0QCEu0/w=
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-bde08e20ce9so147918066b.0
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 07:30:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779978601; cv=none;
- d=google.com; s=arc-20240605;
- b=jUBdJ2nYjsfJySq8lTdx2nnI8ivDcCGVkVNMKKHJwVPjbwdA+Im3pVb+cEZWiazAdq
- ARU7JExD4y3NTiKafzZo9+R31B+Z7j17MJfy/DqD5P0DGCPquSltctW9tnJRIFLbDZWv
- m0DbHQ5/H0XG1acEoTPoaAJnoSExqHsSPv0XgjfU4JrYeirPOMWqcVZ4u5jKLZC0houl
- tfpQVLwOwPlVtFrBZhKE8U12IO3guyvpRhKBNSrjD8cog8p+aBK5f9seU4HDukmW5Uqw
- NRqlNC4iUCZn560WlcZwn2Xa0i34nV96K9wdF7ejPcTvEnyNJIGj7KVR+R9nt2YQR29K
- u78A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:mime-version;
- bh=4vuM9QE5ZOYJh2fuZffkiBl/XpAbZnfydLGidVOT+f0=;
- fh=pIJyiNsqAR4QJ2/4Ht//unTjXixvYgZ9MMlZLY+AKKI=;
- b=GfjTovssnO5z6mTKqyByF8d/oHfe33a1FcbpuxmM3d/aZkuhl5t3p7DE/6ejTgi45b
- VIRUFjcUZDRT2QkR0oCQali6DdqCBphBZ/WFh7yfcGLEfR/x0fFBntbPCmlaTBQ+8lOy
- W5/KW+lBn773DlsPNDAD99P7Pu0rnCC3DzzroiRUgDBB1a4h4oth1lNWiIfIMHgHdgWg
- 2XqXSLHqrw16pwrNzDMSplUx/nFjLJbkOWV/LtLk+rWiP/7QKUCl7GJEJZwwE8AyDme5
- ZZGYk778y34onmgpvqoRFDLfxAEPKO7S/KgENsa/EoPkrbvUa4P58w274zdBCVu2I97I
- 1DaA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1wSbrT-00043N-Iu
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 10:37:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779979041;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ds9ttEKj2xzKrTvEKxprrQ+Q6jkK0OdbfVZ16DgyZ6I=;
+ b=abz50JKNA3ha3O46VtNiaJjiMWEm/BkeWEnUsgpNzSaqB3oPkMz47mujkL2Cc6iDrmiui0
+ QeNMThcxHE41JdkDFYIqLqxQ7ZIrX87ZZpDVCfvX7LnKduqDdbcwtjtAhBAsXZz2NTkNlc
+ F+s3KKi2PCSKCI99IyqvqP2n0wIOJAg=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-265-9xurlTbgMh29o-cTabNYDA-1; Thu, 28 May 2026 10:37:18 -0400
+X-MC-Unique: 9xurlTbgMh29o-cTabNYDA-1
+X-Mimecast-MFC-AGG-ID: 9xurlTbgMh29o-cTabNYDA_1779979037
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-48fdacf2616so67944075e9.3
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 07:37:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1779979037; x=1780583837; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ds9ttEKj2xzKrTvEKxprrQ+Q6jkK0OdbfVZ16DgyZ6I=;
+ b=CJBmU9rudaVt27IAu6l+aOi4sLeFA6ApLkVRhwBZVGu1SyZehVoWUTN8Wg3gJiq4n/
+ 2DFxs0CgbKntCJE/ByEjBImi44yS/PpcCMTATTHd9YWaDr/7yR2YSIaa62gqADj7S1xv
+ wihlVMFjokGn2rxviuZqol7ZUO8Rk4Q5FC/zpbLwsa6n/M9rfzEs5IaHjIu/3jWn6Ws7
+ mO3qK00BhYfdcXxGX9SHHCMNpEiDuXEOuYIlUbNQwmyUgKvTD1Idw1dFiAuoTxT2anLE
+ avUn4FsEmpZjGFNzfII8p29Z7TJzpxjinFT1XjUBj0/NKfAuZWvvB/V/g/IgNAk7sD63
+ GmOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779978600; x=1780583400;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4vuM9QE5ZOYJh2fuZffkiBl/XpAbZnfydLGidVOT+f0=;
- b=KNN76wbC40nkBWQlgU/KqlK68VcUgUh7GXuQB3Dv6PIjijHEFl8B2rhRoV/swY2/XE
- vPd/mDObbnL/pelZPooc/J8IuT0QXKZm34vK5Bu9dxYIuyHVujOLd6aJA7eXYrQCkdgy
- pPtjdgfbrEvX3kRCNVn+gS8rYjUtK7E0NskchR6hofimVLnx2ShSKwE48eyftTJiqBlZ
- UeDYqP8vTxmdaTPr6Txph3MLzt6U+pjBiAGdvJ7JsDbf6skkZSh5nAUOPkn0U8lC11IQ
- OXhKGEC2Onh+mJvVfjs4siX0LdkbzIURMRFObUBk4rEAsRt0gFDeqB/gGuRtD3ZVXxjL
- E2Vw==
-X-Gm-Message-State: AOJu0YyTVJ1UKSqyZkeyC32jVl+7QYDwlwUJj+Q2D9AyqLPheSsPab3a
- plJ7Lln9z4RxfAZox3o4RWh44ayT1ChuKWqCm7jjjq3rzeGsE0+o6ft6mlrSmcTlZqwilZMlzVn
- d8EdOFvpk46cvfrAE8RgzJO+Ic8SjrfNqCisnXHUo1ar6A2kmAMup3pnT/3uQKkzJ/tb+ptc0sa
- d5l/kO2qWBsXNoLwIaesnLVxQHhzJzWQAumA3fQs6DkD0kNKX+HMEHpvQWDw==
-X-Gm-Gg: Acq92OHEb85TNfbNTm+Z71RLN8lqMbg/5sWmVYxOdzwpw2PUrKZs5BuBAmYLkUgnbmn
- pUQmW2jIkapNRBet6V6PqckR8JylZ1CjYNPljx/y/B0csnP5IHKDZF6+0a6odv1b7vKtKzIOgtp
- k2MeiSLBB9lhGOAnAmBviCmHGtCJ5mTn3v7TFc3E3RZxUmy7irZBqunpKVDnIkxLAApMJYnm3B7
- JvPGdq8KaN2aHJdiR8=
-X-Received: by 2002:a17:907:3ccb:b0:be3:dfa6:3117 with SMTP id
- a640c23a62f3a-be86d71c29cmr108716966b.3.1779978600677; 
- Thu, 28 May 2026 07:30:00 -0700 (PDT)
-X-Received: by 2002:a17:907:3ccb:b0:be3:dfa6:3117 with SMTP id
- a640c23a62f3a-be86d71c29cmr108715366b.3.1779978600209; Thu, 28 May 2026
- 07:30:00 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779979037; x=1780583837;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ds9ttEKj2xzKrTvEKxprrQ+Q6jkK0OdbfVZ16DgyZ6I=;
+ b=exNO6WyUlPRlPNPpccZrzwfm96A5lHDa3YI/t7LYSpecTF5FbK9yg1qQsP9ceIoUzT
+ ikPvMpVLIBUWlmHfRuWXoNwTi66seWaGlfekGnqlBf4lpDSAiPUiCbOr6l8oFRnbpwqD
+ IESXF4axLnScFDRG31awDHvqEzEmoPUesEwDuZXlZxOD1x4vrAPt9fwoBRsIY7s5jLWM
+ gaKfYvbH+TVorhJ/6OufrEO3WzF9c3ti/WF2AD2HZW01lMd+TvyGadiLWj8ljCxSM8Je
+ cnjlVWYKfvlteHSpLat8BZaOJ3pPSUHijPndaeGN5opAuIAknMOqVjgBMOCO0Rz0SOl3
+ unfQ==
+X-Gm-Message-State: AOJu0Yya/6tcKxNH7rh/uHM4hSWh2hyO9tG5lX1lMxV5dUQOtuXVI5Jn
+ t0To3X3kjgOeYqAxVGFxRk1k5icuZi3b2WANwg/RTnFv8GHHNmSggmb6oCsY3tmEJ697mq4dGWn
+ 03MOdczAKZ/cRjGO8aHDTGm2/VrBUJY/BsHwsv1Qb5mF62Dc6BelyNVeM
+X-Gm-Gg: Acq92OH5eD3po1uYhxHRs64egBR2M8zFToKYUPfeY7mwUdUUygXwiY5iwFPeOpNtci4
+ W02uuaAKf0+3iRIl7Ol5wapW4vhuUG+jF0raXT7LhcJ5xNe+ynYha/6kAj0JiAVU+nydu/t8sqf
+ yAjqZ3MiMgzLI7NVWndoMuCK2Lntc524Ys8lWdF5LAmAU3dNdEXl6U5xRWIw6AV75NnbDKhlRlO
+ wtyQkeX0VNSkdD74KG2qyI/lKiXg5nwsz98zl1Dru14qyurJmDYd4FN2xJQSPTMiZfczD/UkhiJ
+ F1QKMNbHq2/41xHPoFYGxqVaoXd6kTgTR5n7WN7d9fzF8/+mCaxa1Wc8u7IaAIv7ez1Udq98Fgg
+ oBar5FijOxKumg1ZK
+X-Received: by 2002:a05:600c:5548:b0:48f:e26a:1744 with SMTP id
+ 5b1f17b1804b1-490424b0854mr297297035e9.9.1779979037129; 
+ Thu, 28 May 2026 07:37:17 -0700 (PDT)
+X-Received: by 2002:a05:600c:5548:b0:48f:e26a:1744 with SMTP id
+ 5b1f17b1804b1-490424b0854mr297296655e9.9.1779979036636; 
+ Thu, 28 May 2026 07:37:16 -0700 (PDT)
+Received: from imammedo ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4909284586bsm43762495e9.8.2026.05.28.07.37.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 28 May 2026 07:37:16 -0700 (PDT)
+Date: Thu, 28 May 2026 16:37:14 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Eric Auger <eauger@redhat.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, anisinha@redhat.com,
+ pbonzini@redhat.com, peter.maydell@linaro.org, shannon.zhaosl@gmail.com,
+ philmd@linaro.org, zhao1.liu@intel.com, rad@semihalf.com,
+ leif.lindholm@oss.qualcomm.com, qemu-arm@nongnu.org, "Daniel P.
+ =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>
+Subject: Re: [PATCH v2 09/21] arm: virt: create sbsa_gwdt watchdog
+Message-ID: <20260528163714.7efb851e@imammedo>
+In-Reply-To: <b6895403-e294-44de-b77d-511cddadb567@redhat.com>
+References: <20260303092532.2410177-1-imammedo@redhat.com>
+ <20260303092532.2410177-10-imammedo@redhat.com>
+ <4cdd38f4-4efc-48c5-a236-a40449ad8e85@redhat.com>
+ <20260527144955.64eff309@imammedo>
+ <affe914f-157f-4125-93c5-abb94df3ab5b@redhat.com>
+ <b6895403-e294-44de-b77d-511cddadb567@redhat.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-From: Sheldon Qi <sheldon.qi@canonical.com>
-Date: Thu, 28 May 2026 22:29:42 +0800
-X-Gm-Features: AVHnY4IsJvgd7e7sSI_ghYgft0wwKzHxYnqFdc77M8xs8hNPgtDaUk04Li4FDp8
-Message-ID: <CAN3A0YpG0571=uNMsbKNs+Xf+i4WxVKnCTQQKCuyP7t3Zk4dgA@mail.gmail.com>
-Subject: [PATCH] block/curl: fix Win32 socket handling in curl_sock_cb
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, kwolf@redhat.com, hreitz@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=185.125.188.122;
- envelope-from=sheldon.qi@canonical.com;
- helo=smtp-relay-internal-0.canonical.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 28 May 2026 10:33:35 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -125,125 +128,308 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From 5cf4935ab0770d2d45d32ae5bb3531c0c9a5848e Mon Sep 17 00:00:00 2001
-From: Sheldon Qi <sheldon.qi@canonical.com>
-Date: Thu, 28 May 2026 21:28:06 +0800
-Subject: [PATCH] block/curl: fix Win32 socket handling in curl_sock_cb
+On Thu, 28 May 2026 11:59:06 +0200
+Eric Auger <eauger@redhat.com> wrote:
 
-On Windows libcurl passes raw SOCKET values (UINT_PTR, 64-bit on x64)
-that don't fit in int, so GINT_TO_POINTER() truncates the upper bits.
-Wrap them in CRT fds via _open_osfhandle / _get_osfhandle so that
-aio_set_fd_handler and curl_multi_socket_action receive valid CRT fds.
-This matches the pattern already used by io/channel-watch.c,
-ui/spice-core.c, monitor/fds.c, and util/aio-win32.c.
+> Hi,
+> 
+> On 5/28/26 11:04 AM, Eric Auger wrote:
+> > Hi Igor,
+> > 
+> > On 5/27/26 2:49 PM, Igor Mammedov wrote:  
+> >> On Tue, 26 May 2026 15:58:08 +0200
+> >> Eric Auger <eauger@redhat.com> wrote:
+> >>  
+> >>> Hi Igor,
+> >>>
+> >>> On 3/3/26 10:25 AM, Igor Mammedov wrote:  
+> >>>> Allow to use SBSA generic watchdog with virt machine type.
+> >>>> (includes conditional generation of corresponding FDT and
+> >>>> ACPI GTDT descriptors)
+> >>>>
+> >>>> Use '-device sbsa_gwdt' to command line to enable it.    
+> >>> I thank that in general Peter is not a big fan of dynamic instantiation
+> >>> of sysbus devices. Don't you have means to instantiate it statically in
+> >>> arm virt memory map?  
 
-Close the CRT fd wrapper in curl_drop_socket and on CURL_POLL_REMOVE
-so libcurl retains ownership of the underlying SOCKET.
+On Peter's part, there weren't any objection to the idea using -device.
+(neither in v1 nor in this revision).
 
-Signed-off-by: Sheldon Qi <sheldon.qi@canonical.com>
----
- block/curl.c | 44 +++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 41 insertions(+), 3 deletions(-)
 
-diff --git a/block/curl.c b/block/curl.c
-index 684c677ef7..0884d96fe6 100644
---- a/block/curl.c
-+++ b/block/curl.c
-@@ -110,7 +110,8 @@ typedef struct BDRVCURLState {
-     QEMUTimer timer;
-     uint64_t len;
-     CURLState states[CURL_NUM_STATES];
--    GHashTable *sockets; /* GINT_TO_POINTER(fd) -> socket */
-+    /* GSIZE_TO_POINTER(raw_sock) on Win32, GINT_TO_POINTER(fd) elsewhere. */
-+    GHashTable *sockets;
-     char *url;
-     size_t readahead_size;
-     bool sslverify;
-@@ -136,6 +137,10 @@ static gboolean curl_drop_socket(void *key, void
-*value, void *opaque)
+> >> /me neither
+> >>
+> >> in previous version there was a machine option to enable the feature
+> >> to that was rejected in favor of device.
+> >>
+> >> in this case for platform  -device of sysbus based device, I don't think
+> >> we can do better that dynamic sysbus.   
+> > 
+> > sorry I may have missed some previous discussion details. As far as I
+> > can read, I understand you could instantiate the wdt in a free MMIO
+> > slot, unconfitionnaly just as it is done in hw/arm/sbsa-ref.c. Maybe add
+> > a compat to avoid having it by default on older machine types. Then
+> > about the type of the integration gtdt or wat, can't you have a device
+> > compat?  
+> After further reading of the previous version thread, I wonder if you
+> shouldn't always instantiate the watchdog in the machine instead.
+> 
+> Add a device property allowing to switch between GWDT or WDAT version.
+> 
+> In arm virt,
+> 
+> 1) if you discover the GWDT version is selected (default) you generate
+> both dt and GTDT ACPI table
+> 2) if you discover the WDAT version is selected, you only generate WDAT
+> ACPI description and you output an error in case of DT boot.
+> 
+> You may add a machine no_wdt flag to handle compats for older machine
+> types if needed.
 
-     aio_set_fd_handler(s->aio_context, socket->fd,
-                        NULL, NULL, NULL, NULL, NULL);
-+#ifdef _WIN32
-+    /* Close CRT fd wrapper; libcurl owns the underlying SOCKET.  */
-+    qemu_close_socket_osfhandle(socket->fd);
-+#endif
-     return true;
- }
+rereading v1 thread it seems that there weren't much objection to adding
+a dedicated virt machine property to enable 'wdat' [1] /like what is done to q35/.
 
-@@ -167,13 +172,29 @@ static int curl_sock_cb(CURL *curl,
-curl_socket_t fd, int action,
-     BDRVCURLState *s = userp;
-     CURLSocket *socket;
+problem was in conflating too generic whatchdog=none/auto/native/acpi into
+one knob and discussion quickly went down rabbit hole of semantics.
 
-+#ifdef _WIN32
-+    /*
-+     * libcurl passes raw SOCKET (UINT_PTR, 64-bit on x64) which doesn't
-+     * fit in GINT_TO_POINTER; wrap in a CRT fd and use GSIZE_TO_POINTER
-+     * for the hash key.
-+     */
-+    socket = g_hash_table_lookup(s->sockets, GSIZE_TO_POINTER((gsize)fd));
-+#else
-     socket = g_hash_table_lookup(s->sockets, GINT_TO_POINTER(fd));
-+#endif
-     if (!socket) {
-         socket = g_new0(CURLSocket, 1);
--        socket->fd = fd;
-         socket->s = s;
-+#ifdef _WIN32
-+        socket->fd = _open_osfhandle(fd, _O_BINARY);
-+        g_hash_table_insert(s->sockets, GSIZE_TO_POINTER((gsize)fd), socket);
-+#else
-+        socket->fd = fd;
-         g_hash_table_insert(s->sockets, GINT_TO_POINTER(fd), socket);
-+#endif
-     }
-+    /* Switch to the CRT fd so the rest of the function stays unchanged. */
-+    fd = (curl_socket_t)(intptr_t)socket->fd;
+For Q35, we don't really have a choice as it's already builtin device,
+but for arm/virt we can do better than a bunch of compats and proxy
+properties. (as Markus noted in v1 review, we've done that/still do
+but it doesn't scale well)
 
-     trace_curl_sock_cb(action, (int)fd);
-     switch (action) {
-@@ -197,7 +218,17 @@ static int curl_sock_cb(CURL *curl, curl_socket_t
-fd, int action,
-     }
+I can go old route and revert to simplified v1 that would:
+  * make gwdt builtin device on arm/virt board
+    (i.e. default to SBSA native watchdog with GTDT ACPI table
+     and relevant FDT entries)
+  * add a machine.gwdt-wdat=on|off property
+     1. that will make gwdt to use 1KHz frequency
+     2. enable WDAT ACPI table
+     3. disable GTDT ACPI table and relevant FDT entries
+        as they are mutually exclusive with #1 point 
+  * add a compat knob to disable gwdt on old machine types.
 
-     if (action == CURL_POLL_REMOVE) {
-+#ifdef _WIN32
-+        {
-+            /* _get_osfhandle recovers the raw SOCKET for the hash key. */
-+            curl_socket_t raw_sock = _get_osfhandle(socket->fd);
-+            qemu_close_socket_osfhandle(socket->fd);
-+            g_hash_table_remove(s->sockets,
-+                                GSIZE_TO_POINTER((gsize)raw_sock));
-+        }
-+#else
-         g_hash_table_remove(s->sockets, GINT_TO_POINTER(fd));
-+#endif
-     }
+Re-spinning that wouldn't take much effort, all the code already exist,
+just needs mostly reshuffling. 
 
-     return 0;
-@@ -409,13 +440,20 @@ static void curl_multi_do_locked(CURLSocket *socket)
-     BDRVCURLState *s = socket->s;
-     int running;
-     int r;
-+    curl_socket_t sockfd;
-+#ifdef _WIN32
-+    /* socket->fd is a CRT fd; _get_osfhandle gets the raw SOCKET.  */
-+    sockfd = _get_osfhandle(socket->fd);
-+#else
-+    sockfd = socket->fd;
-+#endif
+1) I think Daniel was ok having something like gwdt-wdat=on|off
+   from libvirt pov.
 
-     if (!s->multi) {
-         return;
-     }
+That said,
+Having watchdog as an optional -device is much cleaner compared to
+adding knobs to machine (both internal compats and external to enable
+specific watchdog).
 
-     do {
--        r = curl_multi_socket_action(s->multi, socket->fd, 0, &running);
-+        r = curl_multi_socket_action(s->multi, sockfd, 0, &running);
-     } while (r == CURLM_CALL_MULTI_PERFORM);
- }
+Good (well bad actualy) example of compats/props is set of
+ITS ones, one eventually can untangle what depends on what
+and how that works together, but I'd rather avoid doing that. 
 
--- 
-2.47.3
+Perhaps I went overboard with move to -device.
+Anyways, all I can do is suggest in my opinion a better way,
+but it's upto arm folks to pick a preferred approach.
+
+> Would that make sense?
+> 
+> Otherwise, can you point me the msgid where the -device was prefered?
+Sorry, rereading v1 thread, -device was just an idea to try
+(but by no means a preferred/consensus one).
+
+> 
+> Thanks
+> 
+> Eric
+> > 
+> > Thanks
+> > 
+> > Eric
+> >   
+> >>
+> >>    
+> >>>
+> >>> Eric  
+> >>>>
+> >>>> Tested with Fedora 43:
+> >>>>   FDT: -M virt,acpi=off -device sbsa_gwdt
+> >>>>   ACPI: -M virt -device sbsa_gwdt
+> >>>>
+> >>>> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> >>>> ---
+> >>>>  hw/arm/Kconfig           |  1 +
+> >>>>  hw/arm/virt-acpi-build.c | 33 +++++++++++++++++++++++++++++++--
+> >>>>  hw/arm/virt.c            |  2 ++
+> >>>>  hw/core/sysbus-fdt.c     | 32 ++++++++++++++++++++++++++++++++
+> >>>>  hw/watchdog/sbsa_gwdt.c  |  1 +
+> >>>>  5 files changed, 67 insertions(+), 2 deletions(-)
+> >>>>
+> >>>> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+> >>>> index c66c452737..1222efadd1 100644
+> >>>> --- a/hw/arm/Kconfig
+> >>>> +++ b/hw/arm/Kconfig
+> >>>> @@ -36,6 +36,7 @@ config ARM_VIRT
+> >>>>      select VIRTIO_MEM_SUPPORTED
+> >>>>      select ACPI_CXL
+> >>>>      select ACPI_HMAT
+> >>>> +    select WDT_SBSA
+> >>>>  
+> >>>>  config CUBIEBOARD
+> >>>>      bool
+> >>>> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> >>>> index 719d2f994e..9c14b1d4d5 100644
+> >>>> --- a/hw/arm/virt-acpi-build.c
+> >>>> +++ b/hw/arm/virt-acpi-build.c
+> >>>> @@ -64,6 +64,7 @@
+> >>>>  #include "hw/virtio/virtio-acpi.h"
+> >>>>  #include "target/arm/cpu.h"
+> >>>>  #include "target/arm/multiprocessing.h"
+> >>>> +#include "hw/watchdog/sbsa_gwdt.h"
+> >>>>  
+> >>>>  #define ARM_SPI_BASE 32
+> >>>>  
+> >>>> @@ -863,6 +864,8 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+> >>>>      const uint32_t irqflags = 0;  /* Interrupt is Level triggered  */
+> >>>>      AcpiTable table = { .sig = "GTDT", .rev = 3, .oem_id = vms->oem_id,
+> >>>>                          .oem_table_id = vms->oem_table_id };
+> >>>> +    uint32_t gtdt_start = table_data->len;
+> >>>> +    Object *wdt = object_resolve_type_unambiguous(TYPE_WDT_SBSA, NULL);
+> >>>>  
+> >>>>      acpi_table_begin(&table, table_data);
+> >>>>  
+> >>>> @@ -893,10 +896,15 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+> >>>>      build_append_int_noprefix(table_data, irqflags, 4);
+> >>>>      /* CntReadBase Physical address */
+> >>>>      build_append_int_noprefix(table_data, 0xFFFFFFFFFFFFFFFF, 8);
+> >>>> +
+> >>>>      /* Platform Timer Count */
+> >>>> -    build_append_int_noprefix(table_data, 0, 4);
+> >>>> +    build_append_int_noprefix(table_data,  wdt ? 1 : 0, 4);
+> >>>>      /* Platform Timer Offset */
+> >>>> -    build_append_int_noprefix(table_data, 0, 4);
+> >>>> +    build_append_int_noprefix(table_data,
+> >>>> +        wdt ? (table_data->len - gtdt_start) +
+> >>>> +              4 + 4 + 4 /* len of this & following 2 fields to skip */
+> >>>> +            : 0, 4);
+> >>>> +
+> >>>>      if (vms->ns_el2_virt_timer_irq) {
+> >>>>          /* Virtual EL2 Timer GSIV */
+> >>>>          build_append_int_noprefix(table_data, ARCH_TIMER_NS_EL2_VIRT_IRQ, 4);
+> >>>> @@ -906,6 +914,27 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+> >>>>          build_append_int_noprefix(table_data, 0, 4);
+> >>>>          build_append_int_noprefix(table_data, 0, 4);
+> >>>>      }
+> >>>> +
+> >>>> +    /* ACPI 6.5 spec: 5.2.25.2 ARM Generic Watchdog Structure (Table 5-124) */
+> >>>> +    if (wdt) {
+> >>>> +        PlatformBusDevice *pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
+> >>>> +        SysBusDevice *sd = SYS_BUS_DEVICE(wdt);
+> >>>> +        hwaddr mmio_base = vms->memmap[VIRT_PLATFORM_BUS].base;
+> >>>> +        hwaddr rbase = mmio_base + platform_bus_get_mmio_addr(pbus, sd, 0);
+> >>>> +        hwaddr cbase = mmio_base + platform_bus_get_mmio_addr(pbus, sd, 1);
+> >>>> +        int irq = ARM_SPI_BASE + vms->irqmap[VIRT_PLATFORM_BUS] +
+> >>>> +                  platform_bus_get_irqn(pbus, sd, 0);
+> >>>> +
+> >>>> +        build_append_int_noprefix(table_data, 1 /* Type: Watchdog GT */, 1);
+> >>>> +        build_append_int_noprefix(table_data, 28 /* Length */, 2);
+> >>>> +        build_append_int_noprefix(table_data, 0, 1);  /* Reserved */
+> >>>> +        /* RefreshFrame Physical Address */
+> >>>> +        build_append_int_noprefix(table_data, rbase, 8);
+> >>>> +        /* WatchdogControlFrame Physical Address */
+> >>>> +        build_append_int_noprefix(table_data, cbase, 8);
+> >>>> +        build_append_int_noprefix(table_data, irq, 4); /* Watchdog Timer GSIV */
+> >>>> +        build_append_int_noprefix(table_data, 0, 4); /* Watchdog Timer Flags */
+> >>>> +    }
+> >>>>      acpi_table_end(linker, &table);
+> >>>>  }
+> >>>>  
+> >>>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> >>>> index cab2e21e8a..a87991b591 100644
+> >>>> --- a/hw/arm/virt.c
+> >>>> +++ b/hw/arm/virt.c
+> >>>> @@ -95,6 +95,7 @@
+> >>>>  #include "hw/cxl/cxl.h"
+> >>>>  #include "hw/cxl/cxl_host.h"
+> >>>>  #include "qemu/guest-random.h"
+> >>>> +#include "hw/watchdog/sbsa_gwdt.h"
+> >>>>  
+> >>>>  static GlobalProperty arm_virt_compat_defaults[] = {
+> >>>>      { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
+> >>>> @@ -3474,6 +3475,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+> >>>>      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
+> >>>>      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
+> >>>>      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_ARM_SMMUV3);
+> >>>> +    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_WDT_SBSA);
+> >>>>  #ifdef CONFIG_TPM
+> >>>>      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
+> >>>>  #endif
+> >>>> diff --git a/hw/core/sysbus-fdt.c b/hw/core/sysbus-fdt.c
+> >>>> index 89d0c46445..76aa1bc579 100644
+> >>>> --- a/hw/core/sysbus-fdt.c
+> >>>> +++ b/hw/core/sysbus-fdt.c
+> >>>> @@ -36,6 +36,7 @@
+> >>>>  #include "hw/display/ramfb.h"
+> >>>>  #include "hw/uefi/var-service-api.h"
+> >>>>  #include "hw/arm/fdt.h"
+> >>>> +#include "hw/watchdog/sbsa_gwdt.h"
+> >>>>  
+> >>>>  /*
+> >>>>   * internal struct that contains the information to create dynamic
+> >>>> @@ -118,6 +119,36 @@ static int add_uefi_vars_node(SysBusDevice *sbdev, void *opaque)
+> >>>>      return 0;
+> >>>>  }
+> >>>>  
+> >>>> +static int add_sbsa_gwdt_node(SysBusDevice *sbdev, void *opaque)
+> >>>> +{
+> >>>> +    PlatformBusFDTData *data = opaque;
+> >>>> +    PlatformBusDevice *pbus = data->pbus;
+> >>>> +    const char *parent_node = data->pbus_node_name;
+> >>>> +    void *fdt = data->fdt;
+> >>>> +    uint64_t cbase, rbase;
+> >>>> +    char *nodename;
+> >>>> +    int irq;
+> >>>> +
+> >>>> +    cbase = platform_bus_get_mmio_addr(pbus, sbdev, 1);  /* control frame */
+> >>>> +    rbase = platform_bus_get_mmio_addr(pbus, sbdev, 0);  /* refresh frame */
+> >>>> +    irq = platform_bus_get_irqn(pbus, sbdev, 0);
+> >>>> +
+> >>>> +    nodename = g_strdup_printf("%s/watchdog@%" PRIx64, parent_node, cbase);
+> >>>> +    qemu_fdt_add_subnode(fdt, nodename);
+> >>>> +
+> >>>> +    qemu_fdt_setprop_string(fdt, nodename, "compatible", "arm,sbsa-gwdt");
+> >>>> +    qemu_fdt_setprop_cells(fdt, nodename, "reg",
+> >>>> +                           cbase, SBSA_GWDT_CMMIO_SIZE,
+> >>>> +                           rbase, SBSA_GWDT_RMMIO_SIZE);
+> >>>> +    qemu_fdt_setprop_cells(fdt, nodename, "interrupts",
+> >>>> +                           GIC_FDT_IRQ_TYPE_SPI, data->irq_start + irq,
+> >>>> +                           GIC_FDT_IRQ_FLAGS_LEVEL_HI);
+> >>>> +    qemu_fdt_setprop_cell(fdt, nodename, "timeout-sec", 30);
+> >>>> +
+> >>>> +    g_free(nodename);
+> >>>> +    return 0;
+> >>>> +}
+> >>>> +
+> >>>>  static int no_fdt_node(SysBusDevice *sbdev, void *opaque)
+> >>>>  {
+> >>>>      return 0;
+> >>>> @@ -140,6 +171,7 @@ static const BindingEntry bindings[] = {
+> >>>>      TYPE_BINDING(TYPE_ARM_SMMUV3, no_fdt_node),
+> >>>>      TYPE_BINDING(TYPE_RAMFB_DEVICE, no_fdt_node),
+> >>>>      TYPE_BINDING(TYPE_UEFI_VARS_SYSBUS, add_uefi_vars_node),
+> >>>> +    TYPE_BINDING(TYPE_WDT_SBSA, add_sbsa_gwdt_node),
+> >>>>      TYPE_BINDING("", NULL), /* last element */
+> >>>>  };
+> >>>>  
+> >>>> diff --git a/hw/watchdog/sbsa_gwdt.c b/hw/watchdog/sbsa_gwdt.c
+> >>>> index acb970e8b3..c4dd8005b7 100644
+> >>>> --- a/hw/watchdog/sbsa_gwdt.c
+> >>>> +++ b/hw/watchdog/sbsa_gwdt.c
+> >>>> @@ -285,6 +285,7 @@ static void wdt_sbsa_gwdt_class_init(ObjectClass *klass, const void *data)
+> >>>>      dc->realize = wdt_sbsa_gwdt_realize;
+> >>>>      device_class_set_legacy_reset(dc, wdt_sbsa_gwdt_reset);
+> >>>>      dc->hotpluggable = false;
+> >>>> +    dc->user_creatable = true;
+> >>>>      set_bit(DEVICE_CATEGORY_WATCHDOG, dc->categories);
+> >>>>      dc->vmsd = &vmstate_sbsa_gwdt;
+> >>>>      dc->desc = "SBSA-compliant generic watchdog device";    
+> >>>  
+> >>  
+> >   
+> 
+
 
