@@ -4,114 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D11FFCD5BD1
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 09:05:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B3ECCD5BD1
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 09:05:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSWfi-0003H0-BG; Thu, 28 May 2026 05:04:58 -0400
+	id 1wSWfL-0002iw-Rg; Thu, 28 May 2026 05:04:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1wSWfg-0003Ax-Vy
- for qemu-devel@nongnu.org; Thu, 28 May 2026 05:04:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wSWfK-0002iB-0j; Thu, 28 May 2026 05:04:34 -0400
+Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
+ ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1wSWfd-000463-6T
- for qemu-devel@nongnu.org; Thu, 28 May 2026 05:04:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779959091;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OlfAxM1RDNMVaR8SE7cGyWusiP+mWhUJm09D8Y/p8Ak=;
- b=EZkw+HEc+oSNuidBUsFxsxqlJukUbX8+PQ7iVPzy1FrmPtlGrepUM+GsUOwwAJk1i61o0K
- LtVxa7rfnB9secmuFCXnNyhgRRT16Y9OXwyvMjtcfbZWF1L3k3+hI+3arcglLA4yWQVYFg
- ezL+K1E7ILnizXlbgaOQu3O0X6kAzXs=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-45-mBB_I6y_OeOerEhfQcoy5g-1; Thu, 28 May 2026 05:04:50 -0400
-X-MC-Unique: mBB_I6y_OeOerEhfQcoy5g-1
-X-Mimecast-MFC-AGG-ID: mBB_I6y_OeOerEhfQcoy5g_1779959089
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-45ed830a0eeso1834624f8f.3
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 02:04:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779959089; x=1780563889; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=OlfAxM1RDNMVaR8SE7cGyWusiP+mWhUJm09D8Y/p8Ak=;
- b=Fo5y4TFxmjpfuKY9mM91rkAflELJbwM6OPfO5rgVJApX2W0a3FxgwF0FOo0dn5IvoT
- QWmAomUBBCa6agNNzNH9hyFFRKHdbEA8YUioARA6KLBwvdtmC1/5LkFZpCsiDUScK2V7
- lmdygmtvY0BpvYfU0H0FC4WWAaLzXpL3AC5ZKzIEgF+x5vYNmSoOOpvx9z9tdynDkvL8
- dRZ5LqbRL3dlnAsS1xnXpFW7t8P0L3oBkmAzHYqSXcp4EXXPQGPTrj2t8/7eCvsq93C1
- PqTpzqyBTVCZtWp+OhzfyFtmtLoqOaA94vBaQZge1T8eEgWYxkAruhVIQvkyRjHCHs+w
- vyGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779959089; x=1780563889;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=OlfAxM1RDNMVaR8SE7cGyWusiP+mWhUJm09D8Y/p8Ak=;
- b=NCv5Nj6pcSEdOB/N1e+dbpztleMg1S7A1n82biv/lEYbA1K5wEUu5/zl2DLs4eWmEM
- wDkJIqLuqIMsxKc59B8XGkit2ZPsHmH/XX7CRh6/zhju6tj/MltnG/dBYkhR0fxteKhq
- kRtzLIkfuRTOl/uCbyjA5rF3B+91ijgjLF/qV6G9FVCjG2fqPXZFE0cpC1WF7vbt5dxO
- 18PvZu85Cfe4/Qu/VkRIcuhlYucMYm1cCZ6QTj91Hrek38cvBEXzVCbLQsNAvVrRI560
- IxoXkgjiYXs7KYWhZHxaLvXIcGpWER6yGQ2TEig1f978EF6P8hKIz88Qrm43RgKWqLnP
- IveQ==
-X-Gm-Message-State: AOJu0YxhoZ6PjN+656DbZP9v1ZFKBfx191bURdTynpcFiBbygCTiiIKG
- Icd3xEZA9gZECKqrXdSh75+XUI3aztByYGwcrEYgR7Ao3CE9sn4cfwtbqWwdlOXqAAgfTAt0v6E
- lnMd4EypTWnfUJGlhL/TqsobrSDNqgZzYbyI7DWPaDbmtWnBYG6ji1UgI
-X-Gm-Gg: Acq92OFk3TbdTyXP4wo/t5EggCBrXULD+I3CbkbLfAtNzim1vuSJ2Z3WFE8F59sa/Zj
- H0bjMzQz1IMTsQRi3oOFS6JWAv7CHYhw8ZN5/PDfzUtZJsRkVs5FmT8eepIHSwmt8Si7DYsKndF
- 5T9m5rs1g33vwarzoy1Dmr4VBCUGo7P72OQkg8cxbloxXsoT9KRZbctEnt1zmLcOQFVeliW/tIz
- acb0aAQDapxG+wSJr9U+dl13uQwkybez6zFo6PdOOq7+C1eV+15Id9os7tJPwm5L+++l/2GDQa1
- QdGMHy04c6Ql6GZLd+VaGcAeqAvU3nTFpB5Yjj31GVgSpW0Ce4kuPgai8NoNMetaoiHuc0+ErWg
- QxPdcJ4AWaewA0kW72y4H+txLYtfdxgCEVJHfJDu9jBAcftstGbG5IjVjTUALq4/Nemb9lmP0VY
- U=
-X-Received: by 2002:a05:6000:4a05:b0:451:bee9:17c8 with SMTP id
- ffacd0b85a97d-45eb36b0275mr41613784f8f.6.1779959088808; 
- Thu, 28 May 2026 02:04:48 -0700 (PDT)
-X-Received: by 2002:a05:6000:4a05:b0:451:bee9:17c8 with SMTP id
- ffacd0b85a97d-45eb36b0275mr41613720f8f.6.1779959088332; 
- Thu, 28 May 2026 02:04:48 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eec5eba06sm836043f8f.22.2026.05.28.02.04.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 May 2026 02:04:47 -0700 (PDT)
-Message-ID: <affe914f-157f-4125-93c5-abb94df3ab5b@redhat.com>
-Date: Thu, 28 May 2026 11:04:46 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/21] arm: virt: create sbsa_gwdt watchdog
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wSWfI-0003vk-Fb; Thu, 28 May 2026 05:04:33 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=afP4Qe85s6PzuDj3tysKWtG5d55kdzEEluGyxIjgwdQBMFjseeUt3/unCkvlIc50iQhElmwgEJRHSjoxIXyG7Fz2SxA9OyxCHb4pshdLC3kRplpfMuBfxs/hSBCYb8nLRdUyIKthhPfOCOnG25SyLMQUuJoD7eQuaWnUOwjHV3HqgClrIlEKa4s4PYX+ObkJhDP6KDNpDLsuXVQ9U0/TvI/kd1fUYjHfc6M9oXKgdV7bZXlaLjrVQDS8pAQt3xqdX2XkdfgzbYUd4jtyhBSqc34F08TwgwFzxf/kJeynMJz1l1W4NuBy581TOPluuQ+KNDLWgtz/V8MNcU507oK71w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fPK9leXWJtDSrBbcQc8l/8IVnNN6OdTqcGHilPkG/TY=;
+ b=S19a+6BovBLXH8d5Xe0GcDgXsFM6meNg+IsnHcCjEEWZPJ5ZN4D7Aj+Q6C79iFhGQOtrndWXVa3ppFHDT/XBs1T5zkX9bgtApCqGP+nsd8FhYaMdwHz+0Q6Fz7uH8fSeGVlABkcYOfCLjeHS74znqV160AwCYwY3PAI4kfFGiwjtQMrAUHd5ddnk2xKBJjpS8EI7eWDPygocn19jayRGMB6+tS+3irMruFLD63SmZj9If6BnEf6ehQuVGngs5ai1CXPsNlxqa7rofQq/AwTiQ1HTnVhVMh3hH2wW1y0/xoMI5sXyG4adw1tL50vKAfPyFSeyKxap6Xnp+EluYCi7pA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fPK9leXWJtDSrBbcQc8l/8IVnNN6OdTqcGHilPkG/TY=;
+ b=nits5NZmQW6ehrVSIy3Y6+iDoe/6jzbAaa6HFlHUHhH5PtRPgW1qy7B4/V87nNoBHsYUsfWckrzRYjzhnnP2pyw3kiOyI/HkD+OgXCJa4Hfn9zt/QeDucDSdlkSWnOF9GKLYG1Wprs3rjZOZyiHdeBT4/45e4oQeVk/ye/sPTqdxFeicivcTqodLnNYAfQHPpUn7DxMINj7LPr0X4ieE9LYRYKQIP+rpRnJnlDnQ2Nr8xn9b5SDTxiD1CbtFkxUoBs6vrw7UHyyuSAsRLMbGM9PJ1VTL16KXYyUNZdINyaxxnfN8rk0OcjS+hKJtrcWw3e1XsIhcA8vw6nlU06fvIg==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by CH2PR12MB4263.namprd12.prod.outlook.com (2603:10b6:610:a6::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.19; Thu, 28 May
+ 2026 09:02:50 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de%6]) with mapi id 15.21.0071.011; Thu, 28 May 2026
+ 09:02:50 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: "eric.auger@redhat.com" <eric.auger@redhat.com>, Nathan Chen
+ <nathanc@nvidia.com>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: Peter Maydell <peter.maydell@linaro.org>,
+ =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Zhao Liu
+ <zhao1.liu@intel.com>, Matt Ochs <mochs@nvidia.com>, Nicolin Chen
+ <nicolinc@nvidia.com>
+Subject: RE: [PATCH v4 2/9] hw/arm/smmuv3: Improve accel SMMUv3 usage
+ documentation
+Thread-Topic: [PATCH v4 2/9] hw/arm/smmuv3: Improve accel SMMUv3 usage
+ documentation
+Thread-Index: AQHc7iaD+r8P+WgxNkKuOoS58pwc9LYjHzYAgAAFmgA=
+Date: Thu, 28 May 2026 09:02:50 +0000
+Message-ID: <CH3PR12MB75481D70032929A89D643630AB092@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20260527221631.612026-1-nathanc@nvidia.com>
+ <20260527221631.612026-3-nathanc@nvidia.com>
+ <5a0afcaa-3fa2-498c-86a9-32480619e973@redhat.com>
+In-Reply-To: <5a0afcaa-3fa2-498c-86a9-32480619e973@redhat.com>
+Accept-Language: en-US, en-GB
 Content-Language: en-US
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, anisinha@redhat.com,
- pbonzini@redhat.com, peter.maydell@linaro.org, shannon.zhaosl@gmail.com,
- philmd@linaro.org, zhao1.liu@intel.com, rad@semihalf.com,
- leif.lindholm@oss.qualcomm.com, qemu-arm@nongnu.org
-References: <20260303092532.2410177-1-imammedo@redhat.com>
- <20260303092532.2410177-10-imammedo@redhat.com>
- <4cdd38f4-4efc-48c5-a236-a40449ad8e85@redhat.com>
- <20260527144955.64eff309@imammedo>
-From: Eric Auger <eauger@redhat.com>
-In-Reply-To: <20260527144955.64eff309@imammedo>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eauger@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|CH2PR12MB4263:EE_
+x-ms-office365-filtering-correlation-id: f1dcfee9-1cb1-4668-a191-08debc97e51c
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|1800799024|366016|38070700021|22082099003|18002099003|56012099006|4143699003|11063799006;
+x-microsoft-antispam-message-info: MlYMeH5M3UsGvP0YFV4HIgkcqYqd90asPu97EnlQ+0/ab47Kx320YSL7e/8y1lRzMcRdmOb9VafA2uOhfJbqYoeDLqr5qoBDxcxZ21LJjtziVzbvFIi+bJxc/IVKRuXn8qxYeaF2FxdHJOEqzmUpbVIDnjmAurM6wh/WfQL13Rfwq+721ZArLXBJhiJNmErq9fdfvOGncD5u3fVSUUt26JSsz3PjotI2/kqpBuO/vHXki14mArj8CX/zu4tlzgt2jwcSbV5dgAfYLfmpnVziayHONgPn11lJPOnxsbISMLsxvULGs5CWF485nwhRuktbj+wNJ8GlcU6vPzlPAGb/dTqBqIrxvTlhVBO0WDxN97pKcZ3WGC2butQ/O9xir0C9dPb/dti6UcfLtrDZJK9xUQjgvs4BoWMUDGBGqQ4En17eNHYbTsBl8R8k+7hLpwh8warsTYzXcvFxdXofSglBVrnm4yZMwMupag1HVCb5ktEVwJMMuHPFFGphvpHx7IEWCDCzc8J0jjxt7Ob1xERdCC2Iy1LKlsjCZh3MNwZwvbBkSLX2u5CmPsXR5ERgSYFp0bC7nk68WftStGQrI2OPukeLafPCyxWL/crsTp1/MPVRJdPgvFu1EZcdMLEa/G1AgMLcNdKdvYgJmj+jI/sHEa8gCuVaq8JC0MYhJB4tQZMMut8gsu3tVTE8bdNdIpriDX5brNOI5p4YIePCTCpCCGJpr4Wnbdynn06j0sdJyG71iJ23ooNgrwsF2C6+IjTn
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(38070700021)(22082099003)(18002099003)(56012099006)(4143699003)(11063799006);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?dm40cE05YzZ4M09jdEVHRU5ualdURlFOMmFxbkJoZlE3WkZoZ2gzNEJUaGNz?=
+ =?utf-8?B?L3JIVC9CaGZhMnkrNnkwSFlNR0tRbEdtL1VBNXY1UE5ia1o0a1k5R0NCeW1S?=
+ =?utf-8?B?T1cvcUlOQ0xHQlh1andmM2hkT0hFLythRXJPL05paUJ4Rm80bXJFOFhXdCtw?=
+ =?utf-8?B?Yjh1b0hqYmQwMnF0dTNZKzJUMjFIaDVjT1E3WDVKd3FoRDREbm41Zm5hNzZT?=
+ =?utf-8?B?U1JyMFRXRGNTSVlEdXhrUDNPaWpoWVcwZjdpYTFSeE5ucmxGakNsL1c4dTJE?=
+ =?utf-8?B?Ymc1OHRxM0hKY2F0cEhoRlkwRnRyVkZZTUFQVVk5Yk1OallwQkhLdWRaSFA3?=
+ =?utf-8?B?ZkN6Zytnc0N5S3p6K200UzJWSjZTR1hEQ0ZKUGM3emdUREVMdDNmcWpOS3FX?=
+ =?utf-8?B?amRGTGdqVjdqWkt1Znl4eDNqMC9BMVdrcUNnSjcwOU1NdmwrVk9EYTdGVzBD?=
+ =?utf-8?B?UVd6dlJYRTJIbGZtWHpTcTh2QkRJMlJWVDdYQ3dSYzYxWE9VeU9vY2w3b2xR?=
+ =?utf-8?B?Ym5Xd2pzWWFUNjBCeHFZdzc0aXV6NnNYc3pRbUFoeHJWT1B0dEI4U1BLdEJX?=
+ =?utf-8?B?MXZPbDlBS0IwRVpoZzB1YXFyUnhVN291SEI1NWFVYTFTa0RHWFFHdnlLVFUx?=
+ =?utf-8?B?R1NYN09mcXNMZjEvVjBTM3drQmZZZ1pSN04yVXNDV3o0c0dVREhuRnZUNVBJ?=
+ =?utf-8?B?WjFBcnovaWVyQmo3czFNQlMybHI4N3lDSSs2a0dvU1ByUWFrNlR3Z3BSeUVE?=
+ =?utf-8?B?ejd2dEt6b0h0dTc3d3gzSUkxcmxxYjd2alNzaHZWdHJlVHpjWWg3bkNMa2NX?=
+ =?utf-8?B?R1p0QjhUODNFYkNaZExCM1l6WGpJU1kyUHdEYTFLbGdaRlZPemtZVXFSYXBF?=
+ =?utf-8?B?Mm5ZN2M2eUhlaHYvQkFoaEIzRytrVzFoaTBlNktGdGZZVENDWml1Y29tWnB5?=
+ =?utf-8?B?S0pRc0Y5TVN2WXc5Z0lzZkFJSnlXY2xDNFM2MUZzTkhuRDRaaGNMS2s2aFh4?=
+ =?utf-8?B?V2xxdy8rZGdTMWtBQWFneFQ5Q2V4bHIyZW5DYW5YaU9JWUZHamxodnk4TXYz?=
+ =?utf-8?B?NUI0VWRyNldIR1FwaTZraFlpZzd1aWF0M21lemQ1YXRPWVpOTktGc0pHTzhY?=
+ =?utf-8?B?anRqdHhocVdTcnI3OU9jQ20wSk1oRkNvTC9ObmExWHoxMFlpOHllSWJKdWVU?=
+ =?utf-8?B?bjcxYWxKMFhOd21BK0ZCaVJYWHlrbFR2ckFQMThzd0hiUFNoZk8vK2tFMlZK?=
+ =?utf-8?B?N2ZvaklhbGw4akRqRzJ6NGVwTklJWlN0Z3BSK3ZTenoxVU5xbHU2V2FBdnVs?=
+ =?utf-8?B?R2c4ZTNXQjlkMDFoV0RCaFpIMmFNSUEvQmV0b2NTcXhNYy92R1VNYko3TUE5?=
+ =?utf-8?B?TkRKT1lOQ3dBNHZhK3JnSmIyRFB1U3JhOENmQVA0RW9DRCtTdDkvTDBCbHJz?=
+ =?utf-8?B?d1RmeVRnMWpYaitYcU9zWFVYQSsvK01TT01RdnI4L1JBS29WemxFb1MxdWJw?=
+ =?utf-8?B?MEpKVGlJMlJXUUxHQkhzYm1oY0xDNjFIZ1QxRzEvdjZjdytNaGxiRzVjSHNB?=
+ =?utf-8?B?SXV2QThuL2x4Y2t0TU9jV0d3TWtVWFUrd1lXY29xNnpMNmNHdEJJRlZhQUV3?=
+ =?utf-8?B?UDFRNldlOU02NzAxV2FFczE5L2dsd0xWMVUyV3VraTQ1K2lLQnE2VmovVTdj?=
+ =?utf-8?B?WXJpUXNxbTZIMVFnT2VlejZ4cnlxUVc1VEI0WVB5RUJzZUwxM0xjNmQzZ2U3?=
+ =?utf-8?B?RU0zMFY1L2o5Ym1wYXFLeG9NUVMwREpxU1NROFZ4UTFubmxZQ3hJaDB2S3h5?=
+ =?utf-8?B?bmVzS1MyaVZiZmpYbTlBQncvRm9tSzFGQkluMjZ2MjJrWUxIZ003QzRFa2sv?=
+ =?utf-8?B?ZHVvc2ZVbHpmRHRGUFZ1dThXWDRGMkMvWW8zSmdCS3U3WEpvSC9yMlVMKzZr?=
+ =?utf-8?B?dnRFUk54VWxPZmRxV3lZcDh1NzM5ejBHWVBWUU0zUG01RGV0MGZQcTFYMnJE?=
+ =?utf-8?B?Tk9QRlhlU0V3VXpyYjZTOENWR0xrL3Rkcmx5RUtMSDhTSFVnVjA0VHRpaXNK?=
+ =?utf-8?B?ajFUWVZSM1I0bnd0dTRtTEZGdVBjZGsyNzNoVWRKdEtPaTBaSURNWXZqWEVB?=
+ =?utf-8?B?U29MTGl6V2RtZ2tkSGVLRU41SFllellCUVN3bEpaeU16LzVUcFAySDhGWk4z?=
+ =?utf-8?B?OU1TcWxhaFZiL01UdDJHREFlUnNrYmJSaWFwdG1lTkR2bkhyYW9EcFpUNlBH?=
+ =?utf-8?B?ZW0rZzJtdVprcHNyOW1rTlZPdWg0QXN6aGI2M3FxUm54YlFFRDAxN2NKZEdR?=
+ =?utf-8?B?TWtaZmttMTNwR01PVktYTlZ1RTcyRlNBRzZQVDdOaVM0TG1ZMUdHUT09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f1dcfee9-1cb1-4668-a191-08debc97e51c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 May 2026 09:02:50.2548 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: d6xWjr3z7pky01ZlHTU1oGlNR8fyLRW8OmF1H+VqVYE5x6zpYCWN6NiouAaUuYr831b87/u/sn62ryEE8w0CPQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4263
+Received-SPF: permerror client-ip=2a01:111:f403:c100::f;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=BL2PR02CU003.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,230 +158,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Igor,
-
-On 5/27/26 2:49 PM, Igor Mammedov wrote:
-> On Tue, 26 May 2026 15:58:08 +0200
-> Eric Auger <eauger@redhat.com> wrote:
-> 
->> Hi Igor,
->>
->> On 3/3/26 10:25 AM, Igor Mammedov wrote:
->>> Allow to use SBSA generic watchdog with virt machine type.
->>> (includes conditional generation of corresponding FDT and
->>> ACPI GTDT descriptors)
->>>
->>> Use '-device sbsa_gwdt' to command line to enable it.  
->> I thank that in general Peter is not a big fan of dynamic instantiation
->> of sysbus devices. Don't you have means to instantiate it statically in
->> arm virt memory map?
-> 
-> /me neither
-> 
-> in previous version there was a machine option to enable the feature
-> to that was rejected in favor of device.
-> 
-> in this case for platform  -device of sysbus based device, I don't think
-> we can do better that dynamic sysbus. 
-
-sorry I may have missed some previous discussion details. As far as I
-can read, I understand you could instantiate the wdt in a free MMIO
-slot, unconfitionnaly just as it is done in hw/arm/sbsa-ref.c. Maybe add
-a compat to avoid having it by default on older machine types. Then
-about the type of the integration gtdt or wat, can't you have a device
-compat?
-
-Thanks
-
-Eric
-
-> 
->  
->>
->> Eric
->>>
->>> Tested with Fedora 43:
->>>   FDT: -M virt,acpi=off -device sbsa_gwdt
->>>   ACPI: -M virt -device sbsa_gwdt
->>>
->>> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
->>> ---
->>>  hw/arm/Kconfig           |  1 +
->>>  hw/arm/virt-acpi-build.c | 33 +++++++++++++++++++++++++++++++--
->>>  hw/arm/virt.c            |  2 ++
->>>  hw/core/sysbus-fdt.c     | 32 ++++++++++++++++++++++++++++++++
->>>  hw/watchdog/sbsa_gwdt.c  |  1 +
->>>  5 files changed, 67 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
->>> index c66c452737..1222efadd1 100644
->>> --- a/hw/arm/Kconfig
->>> +++ b/hw/arm/Kconfig
->>> @@ -36,6 +36,7 @@ config ARM_VIRT
->>>      select VIRTIO_MEM_SUPPORTED
->>>      select ACPI_CXL
->>>      select ACPI_HMAT
->>> +    select WDT_SBSA
->>>  
->>>  config CUBIEBOARD
->>>      bool
->>> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
->>> index 719d2f994e..9c14b1d4d5 100644
->>> --- a/hw/arm/virt-acpi-build.c
->>> +++ b/hw/arm/virt-acpi-build.c
->>> @@ -64,6 +64,7 @@
->>>  #include "hw/virtio/virtio-acpi.h"
->>>  #include "target/arm/cpu.h"
->>>  #include "target/arm/multiprocessing.h"
->>> +#include "hw/watchdog/sbsa_gwdt.h"
->>>  
->>>  #define ARM_SPI_BASE 32
->>>  
->>> @@ -863,6 +864,8 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->>>      const uint32_t irqflags = 0;  /* Interrupt is Level triggered  */
->>>      AcpiTable table = { .sig = "GTDT", .rev = 3, .oem_id = vms->oem_id,
->>>                          .oem_table_id = vms->oem_table_id };
->>> +    uint32_t gtdt_start = table_data->len;
->>> +    Object *wdt = object_resolve_type_unambiguous(TYPE_WDT_SBSA, NULL);
->>>  
->>>      acpi_table_begin(&table, table_data);
->>>  
->>> @@ -893,10 +896,15 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->>>      build_append_int_noprefix(table_data, irqflags, 4);
->>>      /* CntReadBase Physical address */
->>>      build_append_int_noprefix(table_data, 0xFFFFFFFFFFFFFFFF, 8);
->>> +
->>>      /* Platform Timer Count */
->>> -    build_append_int_noprefix(table_data, 0, 4);
->>> +    build_append_int_noprefix(table_data,  wdt ? 1 : 0, 4);
->>>      /* Platform Timer Offset */
->>> -    build_append_int_noprefix(table_data, 0, 4);
->>> +    build_append_int_noprefix(table_data,
->>> +        wdt ? (table_data->len - gtdt_start) +
->>> +              4 + 4 + 4 /* len of this & following 2 fields to skip */
->>> +            : 0, 4);
->>> +
->>>      if (vms->ns_el2_virt_timer_irq) {
->>>          /* Virtual EL2 Timer GSIV */
->>>          build_append_int_noprefix(table_data, ARCH_TIMER_NS_EL2_VIRT_IRQ, 4);
->>> @@ -906,6 +914,27 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->>>          build_append_int_noprefix(table_data, 0, 4);
->>>          build_append_int_noprefix(table_data, 0, 4);
->>>      }
->>> +
->>> +    /* ACPI 6.5 spec: 5.2.25.2 ARM Generic Watchdog Structure (Table 5-124) */
->>> +    if (wdt) {
->>> +        PlatformBusDevice *pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
->>> +        SysBusDevice *sd = SYS_BUS_DEVICE(wdt);
->>> +        hwaddr mmio_base = vms->memmap[VIRT_PLATFORM_BUS].base;
->>> +        hwaddr rbase = mmio_base + platform_bus_get_mmio_addr(pbus, sd, 0);
->>> +        hwaddr cbase = mmio_base + platform_bus_get_mmio_addr(pbus, sd, 1);
->>> +        int irq = ARM_SPI_BASE + vms->irqmap[VIRT_PLATFORM_BUS] +
->>> +                  platform_bus_get_irqn(pbus, sd, 0);
->>> +
->>> +        build_append_int_noprefix(table_data, 1 /* Type: Watchdog GT */, 1);
->>> +        build_append_int_noprefix(table_data, 28 /* Length */, 2);
->>> +        build_append_int_noprefix(table_data, 0, 1);  /* Reserved */
->>> +        /* RefreshFrame Physical Address */
->>> +        build_append_int_noprefix(table_data, rbase, 8);
->>> +        /* WatchdogControlFrame Physical Address */
->>> +        build_append_int_noprefix(table_data, cbase, 8);
->>> +        build_append_int_noprefix(table_data, irq, 4); /* Watchdog Timer GSIV */
->>> +        build_append_int_noprefix(table_data, 0, 4); /* Watchdog Timer Flags */
->>> +    }
->>>      acpi_table_end(linker, &table);
->>>  }
->>>  
->>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
->>> index cab2e21e8a..a87991b591 100644
->>> --- a/hw/arm/virt.c
->>> +++ b/hw/arm/virt.c
->>> @@ -95,6 +95,7 @@
->>>  #include "hw/cxl/cxl.h"
->>>  #include "hw/cxl/cxl_host.h"
->>>  #include "qemu/guest-random.h"
->>> +#include "hw/watchdog/sbsa_gwdt.h"
->>>  
->>>  static GlobalProperty arm_virt_compat_defaults[] = {
->>>      { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
->>> @@ -3474,6 +3475,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
->>>      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
->>>      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
->>>      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_ARM_SMMUV3);
->>> +    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_WDT_SBSA);
->>>  #ifdef CONFIG_TPM
->>>      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
->>>  #endif
->>> diff --git a/hw/core/sysbus-fdt.c b/hw/core/sysbus-fdt.c
->>> index 89d0c46445..76aa1bc579 100644
->>> --- a/hw/core/sysbus-fdt.c
->>> +++ b/hw/core/sysbus-fdt.c
->>> @@ -36,6 +36,7 @@
->>>  #include "hw/display/ramfb.h"
->>>  #include "hw/uefi/var-service-api.h"
->>>  #include "hw/arm/fdt.h"
->>> +#include "hw/watchdog/sbsa_gwdt.h"
->>>  
->>>  /*
->>>   * internal struct that contains the information to create dynamic
->>> @@ -118,6 +119,36 @@ static int add_uefi_vars_node(SysBusDevice *sbdev, void *opaque)
->>>      return 0;
->>>  }
->>>  
->>> +static int add_sbsa_gwdt_node(SysBusDevice *sbdev, void *opaque)
->>> +{
->>> +    PlatformBusFDTData *data = opaque;
->>> +    PlatformBusDevice *pbus = data->pbus;
->>> +    const char *parent_node = data->pbus_node_name;
->>> +    void *fdt = data->fdt;
->>> +    uint64_t cbase, rbase;
->>> +    char *nodename;
->>> +    int irq;
->>> +
->>> +    cbase = platform_bus_get_mmio_addr(pbus, sbdev, 1);  /* control frame */
->>> +    rbase = platform_bus_get_mmio_addr(pbus, sbdev, 0);  /* refresh frame */
->>> +    irq = platform_bus_get_irqn(pbus, sbdev, 0);
->>> +
->>> +    nodename = g_strdup_printf("%s/watchdog@%" PRIx64, parent_node, cbase);
->>> +    qemu_fdt_add_subnode(fdt, nodename);
->>> +
->>> +    qemu_fdt_setprop_string(fdt, nodename, "compatible", "arm,sbsa-gwdt");
->>> +    qemu_fdt_setprop_cells(fdt, nodename, "reg",
->>> +                           cbase, SBSA_GWDT_CMMIO_SIZE,
->>> +                           rbase, SBSA_GWDT_RMMIO_SIZE);
->>> +    qemu_fdt_setprop_cells(fdt, nodename, "interrupts",
->>> +                           GIC_FDT_IRQ_TYPE_SPI, data->irq_start + irq,
->>> +                           GIC_FDT_IRQ_FLAGS_LEVEL_HI);
->>> +    qemu_fdt_setprop_cell(fdt, nodename, "timeout-sec", 30);
->>> +
->>> +    g_free(nodename);
->>> +    return 0;
->>> +}
->>> +
->>>  static int no_fdt_node(SysBusDevice *sbdev, void *opaque)
->>>  {
->>>      return 0;
->>> @@ -140,6 +171,7 @@ static const BindingEntry bindings[] = {
->>>      TYPE_BINDING(TYPE_ARM_SMMUV3, no_fdt_node),
->>>      TYPE_BINDING(TYPE_RAMFB_DEVICE, no_fdt_node),
->>>      TYPE_BINDING(TYPE_UEFI_VARS_SYSBUS, add_uefi_vars_node),
->>> +    TYPE_BINDING(TYPE_WDT_SBSA, add_sbsa_gwdt_node),
->>>      TYPE_BINDING("", NULL), /* last element */
->>>  };
->>>  
->>> diff --git a/hw/watchdog/sbsa_gwdt.c b/hw/watchdog/sbsa_gwdt.c
->>> index acb970e8b3..c4dd8005b7 100644
->>> --- a/hw/watchdog/sbsa_gwdt.c
->>> +++ b/hw/watchdog/sbsa_gwdt.c
->>> @@ -285,6 +285,7 @@ static void wdt_sbsa_gwdt_class_init(ObjectClass *klass, const void *data)
->>>      dc->realize = wdt_sbsa_gwdt_realize;
->>>      device_class_set_legacy_reset(dc, wdt_sbsa_gwdt_reset);
->>>      dc->hotpluggable = false;
->>> +    dc->user_creatable = true;
->>>      set_bit(DEVICE_CATEGORY_WATCHDOG, dc->categories);
->>>      dc->vmsd = &vmstate_sbsa_gwdt;
->>>      dc->desc = "SBSA-compliant generic watchdog device";  
->>
-> 
-
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogRXJpYyBBdWdlciA8ZXJp
+Yy5hdWdlckByZWRoYXQuY29tPg0KPiBTZW50OiAyOCBNYXkgMjAyNiAwOTo0MQ0KPiBUbzogTmF0
+aGFuIENoZW4gPG5hdGhhbmNAbnZpZGlhLmNvbT47IHFlbXUtYXJtQG5vbmdudS5vcmc7IHFlbXUt
+DQo+IGRldmVsQG5vbmdudS5vcmcNCj4gQ2M6IFBldGVyIE1heWRlbGwgPHBldGVyLm1heWRlbGxA
+bGluYXJvLm9yZz47IFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpDQo+IDxwaGlsbWRAbGluYXJvLm9y
+Zz47IFpoYW8gTGl1IDx6aGFvMS5saXVAaW50ZWwuY29tPjsgTWF0dCBPY2hzDQo+IDxtb2Noc0Bu
+dmlkaWEuY29tPjsgTmljb2xpbiBDaGVuIDxuaWNvbGluY0BudmlkaWEuY29tPjsgU2hhbWVlcg0K
+PiBLb2xvdGh1bSBUaG9kaSA8c2tvbG90aHVtdGhvQG52aWRpYS5jb20+DQo+IFN1YmplY3Q6IFJl
+OiBbUEFUQ0ggdjQgMi85XSBody9hcm0vc21tdXYzOiBJbXByb3ZlIGFjY2VsIFNNTVV2MyB1c2Fn
+ZQ0KPiBkb2N1bWVudGF0aW9uDQo+IA0KPiBFeHRlcm5hbCBlbWFpbDogVXNlIGNhdXRpb24gb3Bl
+bmluZyBsaW5rcyBvciBhdHRhY2htZW50cw0KPiANCj4gDQo+IE9uIDUvMjgvMjYgMTI6MTYgQU0s
+IE5hdGhhbiBDaGVuIHdyb3RlOg0KPiA+IEZyb206IE5hdGhhbiBDaGVuIDxuYXRoYW5jQG52aWRp
+YS5jb20+DQo+ID4NCj4gPiBBZGQgYSBzdGF0ZW1lbnQgdG8gY2xhcmlmeSB0aGF0IHRoZSBob3N0
+IFNNTVV2MyBtdXN0IHN1cHBvcnQgSFctDQo+IGFjY2VsZXJhdGVkDQo+ID4gdmZpby1wY2kgZGV2
+aWNlIGFzc2lnbm1lbnQgd2hlbiBzZXR0aW5nIGFjY2VsPW9uLg0KPiA+DQo+ID4gU3VnZ2VzdGVk
+LWJ5OiBFcmljIEF1Z2VyIDxlcmljLmF1Z2VyQHJlZGhhdC5jb20+DQo+IEh1bSBkaWQgSSBzdWdn
+ZXN0IHRoYXQgOy0pDQo+ID4gU2lnbmVkLW9mZi1ieTogTmF0aGFuIENoZW4gPG5hdGhhbmNAbnZp
+ZGlhLmNvbT4NCj4gPiAtLS0NCj4gPiAgaHcvYXJtL3NtbXV2My5jIHwgNCArKystDQo+ID4gIDEg
+ZmlsZSBjaGFuZ2VkLCAzIGluc2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkNCj4gPg0KPiA+IGRp
+ZmYgLS1naXQgYS9ody9hcm0vc21tdXYzLmMgYi9ody9hcm0vc21tdXYzLmMNCj4gPiBpbmRleCAw
+YzY1ZGM4YzkxLi5hOGM0OWE0OGFjIDEwMDY0NA0KPiA+IC0tLSBhL2h3L2FybS9zbW11djMuYw0K
+PiA+ICsrKyBiL2h3L2FybS9zbW11djMuYw0KPiA+IEBAIC0yMTY1LDcgKzIxNjUsOSBAQCBzdGF0
+aWMgdm9pZCBzbW11djNfY2xhc3NfaW5pdChPYmplY3RDbGFzcyAqa2xhc3MsDQo+IGNvbnN0IHZv
+aWQgKmRhdGEpDQo+ID4NCj4gPiAgICAgIG9iamVjdF9jbGFzc19wcm9wZXJ0eV9zZXRfZGVzY3Jp
+cHRpb24oa2xhc3MsICJhY2NlbCIsDQo+ID4gICAgICAgICAgIkVuYWJsZSBTTU1VdjMgYWNjZWxl
+cmF0b3Igc3VwcG9ydC4gQWxsb3dzIGhvc3QgU01NVXYzIHRvIGJlICINCj4gPiAtICAgICAgICAi
+Y29uZmlndXJlZCBpbiBuZXN0ZWQgbW9kZSBmb3IgdmZpby1wY2kgZGV2IGFzc2lnbm1lbnQiKTsN
+Cj4gPiArICAgICAgICAiY29uZmlndXJlZCBpbiBuZXN0ZWQgbW9kZSBmb3IgdmZpby1wY2kgZGV2
+IGFzc2lnbm1lbnQuIFBsZWFzZSAiDQo+ID4gKyAgICAgICAgImVuc3VyZSB0aGUgaG9zdCBTTU1V
+djMgc3VwcG9ydHMgaGFyZHdhcmUtYWNjZWxlcmF0ZWQgVkZJTy1QQ0kgIg0KPiA+ICsgICAgICAg
+ICJkZXZpY2UgYXNzaWdubWVudCBiZWZvcmUgZW5hYmxpbmcuIik7DQo+IHRoaXMgaXMgYSByYXRo
+ZXIgYWJzdHJhY3Qgc3RhdGVtZW50LiBXaGF0IGlzIHRoZSBhY3R1YWwgaG9zdA0KPiByZXF1aXJl
+bWVudCwgZHVhbCB0cmFuc2xhdGlvbiBzdGFnZSBzdXBwb3J0Pw0KDQpJIHRoaW5rIFNNTVV2MyBz
+cGVjIGNhbGxzIGl0IGFzICJuZXN0ZWQgdHJhbnNsYXRpb24iIHN1cHBvcnQuDQoNClRoYW5rcywN
+ClNoYW1lZXINCg==
 
