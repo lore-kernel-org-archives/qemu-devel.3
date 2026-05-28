@@ -4,51 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F7E0CD5BD5
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 06:09:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5677FCD6E45
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 06:11:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSTv9-0002Rq-84; Thu, 28 May 2026 02:08:43 -0400
+	id 1wSTxU-0003Di-RP; Thu, 28 May 2026 02:11:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wSTv7-0002Rd-PY; Thu, 28 May 2026 02:08:41 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wSTv3-00035Y-Sh; Thu, 28 May 2026 02:08:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779948505; bh=c44dBrC6At6dQjughRh7N4MI8rtI90SDpcW9UUj+IA8=;
- h=Subject:From:To:Cc:Date;
- b=iK6Sk3660wnPpKXKsCZWRXkcu23H6itKNq3WPV7RsuxvmTvkB6vO4QwlRozXr7vgN
- 9fnql0u+va5RHPE+RgT3xyu0O+0Q+2LMU7VvAEufoZY/TB9/MnWc3W3NIslUzKFyXL
- IJuGsHaVvbX+87TewH6CnIl0Yo41t73Lb2U1IIB9WOQXd6BUEOwul2cdRYfKIsrJ/e
- Mik9VapkcB5hzwf3w55mq7vd4WmG33Ldh3BgRUsAl+jB5Tyj/bAt/nhLtzljnxHKKu
- XO0mujkTwM7rgjCyRb7gfP7EVTtPOafMHkTSCtdD3yXlJgSMJeXOVN3laAus0npONr
- AEHZGqHLJrhFQ==
-Received: from think4mjt.localdomain (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 056391B1F19;
- Thu, 28 May 2026 09:08:25 +0300 (MSK)
-Received: by think4mjt.localdomain (Postfix, from userid 1000)
- id B09C41691A3; Thu, 28 May 2026 09:08:31 +0300 (MSK)
-Subject: [ANNOUNCE] QEMU 10.0.10 Stable released
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1wSTxT-0003D4-74
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 02:11:07 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1wSTxR-0004Ep-Fv
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 02:11:06 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-45eebccc346so44092f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 23:11:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779948663; cv=none;
+ d=google.com; s=arc-20240605;
+ b=VINsz6/oNba+IsY/GFYWe22xZ1bmFuOviKrSSu4obxJGj+F+ErqDX/lGHuVlCQIWop
+ o3J7DXo9TFj2gY0FvX/Ibh0dXkBCdqY0LcrfWL/3xzoFzpAMwZJ5WitNOSHSBhjpOBxJ
+ WBBQU8+wlgmBMvVEGMHlJ+RBSh1x5RjQnH5NCeTFEKZpfap1ufVLRZHExrft0Pw0rCV9
+ ctvfQEF+ZmsXBH7ZM7lWwmE4aRZtXDu81ECC3XM0cAbjm9UbGPDC/zIkWByDSXkXFTep
+ QjzLzpCkDKB8nyy6c0bSInW93nb1JTFncxQzYRY2SrN0prj3B98iKvaGwYU6ieL0QIiu
+ 54zw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=BmP2mmq5DU6SnVzp3/Y3fQwcmxPvDtZzg2yLss5TQQY=;
+ fh=XBvXNygMbloJp+VR+lP4ESgdVtRHCxc7UtbU1PDcF3s=;
+ b=UfrwpEFTwRsFC9AxUx9bMqpPVz+3LIBweGoDUgKX7IoscJE1CyeqaJ76g01dMJkaDy
+ JH+dNZ2ieZ0fcw1uhEfnp4tZ1XcW8N+apo7chUIVOT/EZ+tDyccvgz7t22SSnCbJmlpJ
+ 2aAPLOvA40i5D/KNe+58kwVy/x5sLBCSq9iQ0/8LQPHgObb3UNCLY5XgVhxh3vqyaXM4
+ Bc2sUNivBThMnAP2nuLIxrZSiupjbynV/XKeZZDJTu0r+cnYQl0Q1dtNHIDYCP8O/2kz
+ /Dd8xCEou8FNs6eVA1gMbKZivn8leRzQXNpM4p0EUWr0wMFYwqZLpbiNHsS/SL5/aFHa
+ Xw4Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779948663; x=1780553463; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BmP2mmq5DU6SnVzp3/Y3fQwcmxPvDtZzg2yLss5TQQY=;
+ b=rKcLT9T8cPXSwpHJJHtqWah12HeEu3OwHhKYCeCpH4PLIF5Tb75OPGm7IF4BaCjxqK
+ Z5D761XsMnkiQmLXotqrhWOVMoxo3F7e2ZWkCxIeXOEHhhE0box54pT3iGyhV8kl9yY1
+ J+PMw+AkvvXBSw+URxdy2YnDHbmnrSRELgcNcEs+aTTCR/7EgYbiit7YWpxiKrTIPUv3
+ Vp6qN47pB52PZW9mO4iHNNpfEtftxtt1TJ53YGXl7lDAj8puh5IyVOAfzd9nViGuBlTu
+ ikjv2edIgKiRPYH02aI6a+xZGZAqps9PLVUWPAo7eEMkoza60f1n9l9vpjdbspinzayV
+ sByA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779948663; x=1780553463;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=BmP2mmq5DU6SnVzp3/Y3fQwcmxPvDtZzg2yLss5TQQY=;
+ b=jdfkjCK6u9PVLiiRI6nONebwcP/TH/RhzsY3wf1Jng2Cw6hTiTbZo5HnP0ByrS4XcO
+ awMNuJNb6SgpnYj+rGDx3bYSin/Lb7yG2O8041fD33rtgvOpSH3D6MnZtEHkKj9XzesZ
+ v5w1M/5U4Z2TTSCqBNs8f/P6irDp9KH9it/PPAZ4twRjb1MnBSfxgo4fwIvK7YUbMG32
+ OZIzczUoPzl1/uxmU0/ICJfkN3J5NjDD8Av98BEyh0iUTkF3JQD9F+dS4nrW7E2KS6FT
+ wlPiATJL+f+z4EPP80kymVrglYrG+lSekzZiw1raokCGQj1kT3eW1VwclCAluUu2dEKl
+ 07bw==
+X-Gm-Message-State: AOJu0YxlSPpIfKhFb0vc8/Uvaaz4DVLMZB4ngX3wtnTSEC+o+WIdplwg
+ rSr9460NecSry7Ng4CWQxJ8iJZr/Wu9dZaohb/Gk3OjdhFQf0CNX5HiWjsjww1aF9v3gKqxCFCB
+ JTGxVTvBNHIbCHnV/dU+OIVwxisuUK8VgqTeaBSPRow==
+X-Gm-Gg: Acq92OFRx2cSiUzFUDpgBhDuf2uR1lvHHRcr77JQc44IKwsrSYNTGrhcQrH0dwWMatB
+ SJpmYEruucruZrWHtGWZYh91hHgVnHq/NPo2uEJxlrQY/NdtYoy/h+3Qwca0atAbws+SOG7J0fi
+ ztkcSrM7VMA+jSd7g3WLDBcxEIPJvKIL0L6VBUsFhn79JpodgdgsD4ZxFxX6bKMFhREyNThB86i
+ s4KHe+Z/KAee2uiI43UyIoEIudfjKHAgfFJcVqsTPB+a5ouoQH22/vcU2HfzrC6+GJ9d45BWj7s
+ /jN/LzWZfBsu4NKhS3S0QpPSxV7UEzbyWFxqy8JfYlm3urNkmJ2IwAqST82U0ndGxYeG4ro=
+X-Received: by 2002:a5d:5e87:0:b0:45e:eafd:bb33 with SMTP id
+ ffacd0b85a97d-45eeafdbc63mr595844f8f.29.1779948663291; Wed, 27 May 2026
+ 23:11:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260528051642.115721-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260528051642.115721-7-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260528051642.115721-7-pierrick.bouvier@oss.qualcomm.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Thu, 28 May 2026 09:10:37 +0300
+X-Gm-Features: AVHnY4JHzF2g7cNPKdI8yWGi-BoNXwjgTxUCplvyczRd5X9FUcNlnhGVFGoJXfw
+Message-ID: <CAAjaMXZJ395DJmNGUrEivN3=+3KZRgYHxn3OPKMQw-D9Q3E3Dg@mail.gmail.com>
+Subject: Re: [PATCH 06/10] hw/net: use stub_ss for vhost_net-stub.c
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, 
+ Eric Farman <farman@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>,
+ Helge Deller <deller@gmx.de>, 
+ Michael Rolnik <mrolnik@gmail.com>, Aurelien Jarno <aurelien@aurel32.net>,
+ qemu-arm@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Laurent Vivier <laurent@vivier.eu>, Glenn Miles <milesg@linux.ibm.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-s390x@nongnu.org, 
+ Zhao Liu <zhao1.liu@intel.com>, Alex Williamson <alex@shazbot.org>, 
+ Brian Cain <brian.cain@oss.qualcomm.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-ppc@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Jason Wang <jasowang@redhat.com>, 
+ Stafford Horne <shorne@gmail.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Max Filippov <jcmvbkbc@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Cornelia Huck <cohuck@redhat.com>, Song Gao <gaosong@loongson.cn>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>, 
+ Peter Xu <peterx@redhat.com>, Pedro Barbuda <pbarbuda@microsoft.com>, 
+ Chinmay Rath <rathc@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ qemu-riscv@nongnu.org, David Hildenbrand <david@kernel.org>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, Aleksandar Rikalo <arikalo@gmail.com>,
+ Fabiano Rosas <farosas@suse.de>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20260528060831.B09C41691A3@think4mjt.localdomain>
-Date: Thu, 28 May 2026 09:08:31 +0300 (MSK)
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, MIME_QP_LONG_LINE=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,303 +149,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi everyone,
+On Thu, May 28, 2026 at 8:19=E2=80=AFAM Pierrick Bouvier
+<pierrick.bouvier@oss.qualcomm.com> wrote:
+>
+> Removes conflict with several targets where some support vhost, and some
+> don't.
+>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
 
-The QEMU v10.0.10 stable release is now available.
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-You can grab the tarball from our download page here:
-
-  https://www.qemu.org/download/#source
-
-  https://download.qemu.org/qemu-10.0.10.tar.xz
-  https://download.qemu.org/qemu-10.0.10.tar.xz.sig (signature)
-
-v10.0.10 is now tagged in the official qemu.git repository, and the
-stable-10.0 branch has been updated accordingly:
-
-  https://gitlab.com/qemu-project/qemu/-/commits/stable-10.0
-
-There are 133 changes since the previous v10.0.9 release.
-These changes, among others, fixes several discovered vulnerabilities
-in the UEFI code (CVE-2026-5744, CVE-2026-8341, CVE-2026-41435, CVE-2026-41436,
-CVE-2026-41437, CVE-2026-41438, CVE-2026-41439, CVE-2026-41440), 2 virtio-gpu
-vulnerabilies (CVE-2026-3886, CVE-2026-6502), virtio-blk and virtio-scsi
-vulnerabilies (CVE-2026-5761, CVE-2026-5763), an issue in lsi53c895a controller
-(CVE-2024-6519), and an issue in ohci controller code (CVE-2026-3890).
-
-Thank you everyone who has been involved and helped with the stable series!
-
-/mjt
-
-Changelog (stable-10.0-hash master-hash Author Name: Commmit-Subject):
-
-4fef525eea Michael Tokarev:
- Update version for 10.0.10 release
-0df8e9466b e3082ab3b3 Denis V. Lunev:
- block/graph-lock: fix missed wakeup in bdrv_graph_co_rdunlock()
-4693cc8686 f27aea1896 Kevin Wolf:
- block: Add more defaults to DEFAULT_BLOCK_CONF
-0166a057c7 a1310cc628 Kevin Wolf:
- block: Create DEFAULT_BLOCK_CONF macro
-cf1a95791c 2fa24e9755 Kevin Wolf:
- ide-test: Test reset during TRIM
-9a14eb952a 92854c9c75 Kevin Wolf:
- ide-test: Factor out wait_dma_completion()
-1824728e2e c1c71a7e16 Kevin Wolf:
- ide: Clean up ide_trim_co_entry() to be idiomatic coroutine code
-0f7f9e0fe0 095c08a7ba Kevin Wolf:
- ide: Minimal fix for deadlock between TRIM and drain
-a42e233c59 53074ba033 Kevin Wolf:
- block: Add flags parameter to blk_*_pdiscard()
-0a0af01730 34a6763776 Kevin Wolf:
- block: Add blk_co_start/end_request() and BDRV_REQ_NO_QUEUE
-396229165a d5e4090177 Kevin Wolf:
- blkdebug: Add 'delay-ns' option
-651f822082 9ac5aa7227 Matt Turner:
- linux-user/sh4: Fix setup_sigtramp to match Linux kernel trampoline pattern
-e693705466 c3176e6457 Matt Turner:
- linux-user/sh4: Fix target_ucontext tuc_link field type
-704c6355db 6b5aef7cac Helge Deller:
- linux-user: Fix AT_EXECFN in AUXV for symlinked programs
-95eb2a9207 2293d8b4bd Klaus Jensen:
- hw/nvme: fix admin cq msix setup
-c2b5686679 039b057c09 Peter Maydell:
- tests/functional/qemu_test/asset.py: Don't use setxattr when it doesn't exist
-53a405c2df a163fc1f86 Peter Maydell:
- meson.build: Add -fzero-init-padding-bits=all
-328c4efcbe a824f3531a Peter Maydell:
- hw/i2c/microbit_i2c: Don't index off end of twi_read_sequence[]
-b009309972 c6aa2d0ac1 Cédric Le Goater:
- aspeed/hace: Prevent total_req_len overflow
-23d47ab876 534a52755b Cédric Le Goater:
- aspeed/hace: Fix out-of-bounds read in has_padding()
-a9619146f7 27d14251b9 Peter Maydell:
- hw/display/cirrus_vga: Fix packed-24 color-expansion transparent copies
-8ab668fcaa aefeecb413 Peter Maydell:
- hw/display/cirrus_vga: Fix packed-24 color-expansion transparent pattern fills
-149ae83454 619c2da19a Jeuk Kim:
- hw/ufs: Keep MCQ SQs alive while requests are outstanding
-8898027474 4a909c00b9 Jeuk Kim:
- hw/ufs: Reject zero-depth MCQ queues
-644e5f0c72 283d921e77 Jeuk Kim:
- hw/ufs: Guard MCQ CQ accesses against missing queues
-3be34408cf 332ea29787 Jeuk Kim:
- hw/ufs: Validate MCQ SQ references before use
-4264ab7d5b b33fd8ab1c Gerd Hoffmann:
- hw/uefi: check auth.hdr_length minimum size
-75791d8424 b4680c02b8 Gerd Hoffmann:
- hw/uefi: avoid possibly unaligned variable_auth_2 struct field access
-a47465c034 22b7b222d8 Gerd Hoffmann:
- hw/uefi: verify data size before accessing it in wrap_pkcs7
-e035b69bef c45b460d16 Gerd Hoffmann:
- hw/uefi: add name_size check to uefi_vars_mm_lock_variable()
-8136b98b2e 5247b3034c Gerd Hoffmann:
- hw/uefi: fix ucs2 string helper functions
-7b6746e726 94d9a8b2c9 Gerd Hoffmann:
- hw/uefi: verify pio_xfer_offset before calculating buffer checksum
-c11db18a9f f252769a23 Gerd Hoffmann:
- hw/uefi: fix buffer overruns
-5b790d64c3 18b664c900 Peter Maydell:
- hw/misc/bcm2835_rng: Specify valid memory access sizes
-01f2eb29bf f443b68763 Peter Maydell:
- target/arm: Report IL=0 for Thumb 16-bit BKPT insn
-3b48a82b81 41c417290d Philippe Mathieu-Daudé:
- target/microblaze: Fix endianness used to disassemble
-baf584404f f35f0f1ca1 liugan1:
- hw/intc/arm_gicv3: Fix NS write to ICC_AP1Rn_EL1 when prebits < 7
-b99e16eb01 a7f27d6903 宋文武:
- hw/net/allwinner-sun8i-emac: Flush queued packets when rx is enabled
-d5056ae28d 774e6f5c15 Vivien LEGER:
- hw/ppc/e500: fix bus-frequency property hardcoded to zero in CPU FDT node
-ca8b1aea7f ea585b1022 BALATON Zoltan:
- hw/ppc/e500: Move clock and TB frequency to machine class
-a3c3b0c18e 7a05be8c70 Cédric Le Goater:
- tests/rcutorture: Fix build error
-daf89461af 1aee8067fc kiki:
- hw/intc/xics: Add a check for an invalid server id
-1078b6f08e 9667bf3249 Helge Deller:
- linux-user: Translate errno in IP_RECVERR and IPV6_RECVERR
-b76d44e977 08dc3e240f Helge Deller:
- linux-user: Allow getsockopt() with NULL optval address
-59561e535c 9fb681792d Helge Deller:
- linux-user: Flush errors by using exit() instead of _exit() in error path
-9e375dd0a1 dcb6e96257 Helge Deller:
- linux-user: Add missing CDROM ioctls
-45846350ca 5dcc64828d Alistair Francis:
- target/riscv: Use ELEN for Fractional LMUL check
-6883570012 175afdb0d1 Alistair Francis:
- target/riscv: Don't OR mip.SEIP when mvien is one
-f5ab17c3e1 d107b74807 Alistair Francis:
- target/riscv: Generate access fault if sc comparison fails
-73172a8a64 14808578cc Munkhbaatar Enkhbaatar:
- riscv_htif: reject invalid signature ranges (end <= begin)
-13f59cb2f1 d5b33fc180 Sebastián Alba Vives:
- hw/intc: fix heap OOB in ACLINT MTIMER multi-socket
-e988f135a7 b2e874bfec Sebastián Alba Vives:
- target/riscv: fix stale ptshift and base on page walk restart
-265e2dd873 4cb2f91773 Yicong Yang:
- hw/riscv/virt-acpi-build.c: Use kvm timer frequency when kvm enabled
-b10683c3ad 9e7734ead1 Helge Deller:
- linux-user: Flush errors by using exit() instead of _exit() in error path
-c7cc43dcd9 e2af3eadc0 Helge Deller:
- linux-user: Use abi_int for imr_ifindex in ip_mreqn struct
-95a80ecb0b b03a6ac6fa Helge Deller:
- linux-user: Fix CLONE_PARENT_SETTID when using fork-like clone
-57326ab579 07c7decaa5 Helge Deller:
- linux-user: Add getsockopt() for SO_RCVTIMEO_NEW and SO_SNDTIMEO_NEW
-60e6dddff7 edb4588309 Helge Deller:
- linux-user: Add setsockopt() for SO_RCVTIMEO_NEW and SO_SNDTIMEO_NEW
-542abc51d8 8b60ed8354 Helge Deller:
- linux-user: Define SO_TIMESTAMP*_NEW and SO_RCVTIMEIO_NEW
-38fb994cf4 4c681ba3b8 James Hilliard:
- linux-user/mips: sync k0 TLS for EF_MIPS_MACH_OCTEON userlands
-1411df4df3 1730e6f33f Alistair Francis:
- linux-user/strace: Use pointer type for read and write values
-c532e31252 784f1dde90 Richard Henderson:
- linux-user/arm/nwfpe: Use thread-local storage for qemufpa
-2a03182240 c8ea175900 Richard Henderson:
- linux-user/arm/nwfpe: Replace user_registers with current_cpu
-7f0290dd8e 93484c768f Gyorgy Tamasi:
- linux-user: Don't define target_stat64 struct for loongarch64
-4780c8e152 029f10e852 Yixin Wei:
- linux-user: fix off-by-one in host_to_target_for_each_rtattr()
-ebb8933335 654dce6c52 Matt Turner:
- linux-user/ppc: Fix ppc64 rt_sigframe stack offset
-c1fcb682e5 3ab47a47d7 Thomas Huth:
- hw/sh4/sh7750: Remove forgotten abort() in the MM_ITLB_DATA handler
-a16faafd30 c0306d2b8f Thomas Huth:
- hw/misc: Fix the valid access size to the avr-power device
-80fdb861b1 d41ce10d0f Vladimir Sementsov-Ogievskiy:
- migration: vmstate_save_state_v: fix double error_setg
-ba3ed73d27 30fad722ce Alex Bennée:
- hw/display: don't accidentally autofree existing virgl resources
-631f055e2d 79bc177186 Stepan Popov:
- meson: add missing semicolon in pthread_condattr_setclock test
-396a517d0c 76ad26dd17 Paolo Bonzini:
- target/i386/tcg: fix decoding of MOVBE and CRC32 in 16-bit mode
-b9eb5becd6 3eae91a8b9 Simon Scherer:
- target/i386: fix missing PF_INSTR in SIGSEGV context
-1ba3edb77e 87e1226e6f Marc-André Lureau:
- target/i386: fix strList leak in x86_cpu_get_unavailable_features
-0ad3a00e4e 027ad866bd Pierrick Bouvier:
- target/arm/tcg/translate.c: remove MO_TE usage
-dde66ed86a 181fdf8a7e Marc-André Lureau:
- ui/console-vc: fix off-by-one in CSI J 2 (clear entire screen)
-0eeca728d7 52cf667ed2 GuoHan Zhao:
- ui/spice-app: detect runtime directory creation failures
-c7d777379e 7437b3eab6 Werner de Carne:
- serial COM: windows serial COM PollingFunc don't sleep
-27577a064f f1b1db98cc Bernhard Beschow:
- util/cutils: Fix heap corruption under Windows
-e715b72ff6 4913ae36f9 Stefan Hajnoczi:
- virtio-blk: fix zone report buffer out-of-memory (CVE-2026-5761)
-20822b3b62 4e6fb62fb0 Dietmar Maurer:
- qemu-keymap: fix altgr modifier lookup for newer xkeyboard-config
-c870df8f16 af74c9e46b Gerd Hoffmann:
- hw/uefi: fix heap overflow (CVE-2026-5744)
-1884511ed6 7997130293 Paolo Bonzini:
- virtio-scsi: pass the same cdb_size to virtio_scsi_pop_req and virtio_scsi_handle_cmd_req_prepare
-0d4a6d7e06 4e4832dd72 Nguyen Dinh Phi:
- util/readline: Fix out-of-bounds access in readline_insert_char().
-1438343753 566594f108 Alex Bennée:
- target/arm: fix fault_s1ns for stage 2 faults
-767f37942c 84771c64a5 Peter Maydell:
- target/arm: do_ats_write(): avoid assertion when ptw failed
-1629a7860e 7e966ef38f Nicholas Piggin:
- bsd-user, linux-user: signal: recursive signal delivery fix
-e9f848cc15 fa6dfcc373 Sun Haoyu:
- linux-user: Make openat2() use -L for absolute paths
-db901b89cc 9b7d64686b Sun Haoyu:
- linux-user: update select timeout writeback
-53946af76f 22966937f4 Clayton Craft:
- linux-user: fix name_to_handle_at when AT_HANDLE_MNT_ID_UNIQUE flag is set
-fba104f0a1 17fbf3e18c Daniel P. Berrangé:
- util: fix missing aio_wait sym in qemu guest agent only build
-d09cb865b3 fc1a2ec7da hongmianquan:
- monitor: Fix deadlock in monitor_cleanup
-a4995bbea2 ccc613f96c Kevin Wolf:
- scsi: Don't consider LOGICAL UNIT NOT SUPPORTED guest recoverable
-dadfcfe5f9 59c1d31136 Kevin Wolf:
- ide: Fix potential assertion failure on VM stop for PIO read error
-901872398d 3cae0b46be Marc-André Lureau:
- ui/vnc-jobs: fix VncRectEntry leak on job cleanup
-5cbf2a2c1e a0721c099b Peter Maydell:
- hw/net/rocker: Avoid double-free of l2_flood.group_ids
-e8db39494a d459131ff5 Paolo Bonzini:
- lsi53c895a: keep SCSIRequest alive during DMA
-4a1ac90ea4 7c7aaaa342 Paolo Bonzini:
- lsi53c895a: keep lsi_request alive as long as the SCSIRequest
-d0644443f1 1ca38f84e1 Paolo Bonzini:
- lsi53c895a: keep lsi_request and SCSIRequest in local variables
-8dc591c4d9 64807c84e8 Paolo Bonzini:
- lsi53c895a: do not do anything else if a reset is requested by writing ISTAT0
-d5f0c3aa7e 4862d2c951 Paolo Bonzini:
- lsi53c895a: keep a reference to the device while SCRIPTS execute
-4d61a1ca97 08497afcb2 Peter Maydell:
- scripts/qemu-guest-agent/fsfreeze-hook: Fix syslog-fallback logic
-203589d581 65b9f4791c Peter Maydell:
- scripts/qemu-guest-agent/fsfreeze-hook: Avoid use of PIPESTATUS
-6e3d65c3d2 b5abb655fa Peter Maydell:
- scripts/qemu-guest-agent/fsfreeze-hook: Avoid bash-isms
-0714b8b26f eb5cc99aff Kaixuan Li:
- hw/nvme: fix heap-buffer-overflow in nvme_abort
-3ef71d2b93 55720ba97d Pankaj Raghav:
- hw/nvme: re-enable wzds bit in namespace dlfeat
-931a7f55d4 539421a428 Richard Henderson:
- tcg: Pass host-endian values to plugin_gen_mem_callbacks_*
-5585c4d5fc cb1e8c18df Jenny Guanni Qu:
- hw/audio/sb16: validate VMState fields in post_load
-84afbc0cb7 51fc8443c1 GuoHan Zhao:
- block/curl: free s->password in cleanup paths
-860738a04f 7eca3d4883 Hanna Czenczek:
- linux-aio: Resubmit tails of short reads/writes
-1db94bea95 cc03b62df4 Hanna Czenczek:
- linux-aio: Put all parameters into qemu_laiocb
-905a465a7a 5a2fa06b09 Tao Ding:
- hw/dma/pl080: Fix transfer logic in PL080
-86d5341303 0376e9c2dd Peter Maydell:
- linux-user/i386/signal.c: Correct definition of target_fpstate_32
-341fccc208 80c5be9458 Cédric Le Goater:
- hw/ssi/aspeed_smc: Convert mem ops to read/write_with_attrs for error handling
-aec9eb4cc1 fa4a759fc1 Cédric Le Goater:
- hw/net/ftgmac100: Improve DMA error handling
-1392caa885 129922c2bc Jenny Guanni Qu:
- hw/usb/hcd-ohci: check for MPS=0 to avoid infinite loop
-dc02bc06bc 6257754bb9 Paolo Bonzini:
- rust: suggest passing --locked to "cargo install"
-181cb43348 0e8ad6a846 Max Chou:
- target/riscv: rvv: Fix page probe issues in vext_ldff
-f852a82ac2 5568177738 Max Chou:
- target/riscv: rvv: Fix missing flags merge in probe_pages for cross-page accesses
-6235b276d0 d887736225 Paolo Savini:
- Expand the probe_pages helper function to handle probe flags.
-54c829cbe0 9dbfd4e28d Wesley Hershberger:
- block: Drop detach_subchain for bdrv_replace_node
-b36743f165 c035d5eadf Marc-André Lureau:
- virtio-gpu: fix overflow check when allocating 2d image
-f990473869 c20f143cc9 Fabiano Rosas:
- io: Fix TLS bye task leak
-7860faac8c ba48bff09f Shivang Upadhyay:
- ppc/pnv: generate dtb after machine initialization is complete
-b7460b0d54 a16d4c2f16 Shivang Upadhyay:
- ppc/pnv: fix dumpdtb option
-4ec49f1159 9ac85f4cc7 Fiona Ebner:
- block/mirror: fix assertion failure upon duplicate complete for job using 'replaces'
-d5e7ad8915 9c8430f5d6 Alberto Garcia:
- throttle-group: Fix race condition in throttle_group_restart_queue()
-7cc54cca5a 2741d2cc39 Sergei Heifetz:
- target/i386: fix NULL pointer dereference in legacy-cache=off handling
-44083a648b f9b16f7915 Tao Ding:
- hw/dma/pl080: Ignore bottom 2 bits of LLI register
-ec3261995a b6e61d1cc3 Tao Ding:
- hw/dma/pl080: Update interrupts after pl080_run()
-3c89612471 37c9f6fce5 Peter Maydell:
- hw/dma/pl080: Handle bogus swidth and dwidth in transfers
-5788573b71 5e5b278d2b Razvan Ghiorghe:
- linux-user: fix mremap with old_size=0 for shared mappings
-9336732d22 2ff529c6f6 Razvan Ghiorghe:
- linux-user: Fix zero_bss for RX PT_LOAD segments
-e5bf6a39f0 b83a42dc77 Peter Maydell:
- hw/net/rtl8319: Work around GCC sanitizer / -Wstringop-overflow bug
-
+>  hw/net/meson.build | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
+>
+> diff --git a/hw/net/meson.build b/hw/net/meson.build
+> index 31025874699..84f142df222 100644
+> --- a/hw/net/meson.build
+> +++ b/hw/net/meson.build
+> @@ -48,10 +48,9 @@ system_ss.add(when: 'CONFIG_VIRTIO_NET', if_true: file=
+s('net_rx_pkt.c'))
+>  system_ss.add(when: 'CONFIG_VIRTIO_NET', if_true: files('virtio-net.c'))
+>
+>  if have_vhost_net
+> -  system_ss.add(when: 'CONFIG_VIRTIO_NET', if_true: files('vhost_net.c')=
+, if_false: files('vhost_net-stub.c'))
+> -else
+> -  system_ss.add(files('vhost_net-stub.c'))
+> +  system_ss.add(when: 'CONFIG_VIRTIO_NET', if_true: files('vhost_net.c')=
+)
+>  endif
+> +stub_ss.add(files('vhost_net-stub.c'))
+>
+>  system_ss.add(when: 'CONFIG_ETSEC', if_true: files(
+>    'fsl_etsec/etsec.c',
+> --
+> 2.47.3
+>
+>
 
