@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 584C0CD5BD1
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 05:26:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0419CD5BD5
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 05:26:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSTG6-0002xf-Ol; Thu, 28 May 2026 01:26:18 -0400
+	id 1wSTGT-0003YH-TB; Thu, 28 May 2026 01:26:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wSTG5-0002vv-57
- for qemu-devel@nongnu.org; Thu, 28 May 2026 01:26:17 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1wSTGS-0003WQ-Va
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 01:26:41 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wSTG1-0000Rd-2k
- for qemu-devel@nongnu.org; Thu, 28 May 2026 01:26:15 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4903974854dso58654055e9.3
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 22:26:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779945971; cv=none;
+ id 1wSTGQ-0000xo-2c
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 01:26:40 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-44e1ebb3122so7539794f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 22:26:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779945996; cv=none;
  d=google.com; s=arc-20240605;
- b=JpWp2s7H4k9Oa1RRGPFAy0JtVz7sbXkf3scbPIV/q7MWI1Gm14wGNnatzuwh2gNnIM
- 5ZG65XwuzFKsFMSUez/5ZMGUPnncy30t8ZPOp9VGGHmmexndRhvZrmtvYGbXRaUOqlER
- kWb88DTv1wsRCeQpd6IzmDbW0jEHxO2PHePWK2FDcHWQnz2ctG1h00npwZUXgMyAPOX3
- LhcDiJT1jeJ0eS/HMAw9q+1k6DSsrO1o+RsamOGRcqbNL6yWgMzmm0bGCA7/UM3MEjIq
- SKIGAtdYg0o0vnqi/J5YeaZRe5NS9veFpi54RY6mN2WVIOOZVMD1huO/Fmbq7K7HzWwP
- KPvA==
+ b=lI242RkkokMedfuQKI/RF+mOyoquQw1vwiSFqyKE11nToCkozaNGOidIb9hnNYSqAr
+ bSsuNho03hIpARH9N7SaeDyCBbZTXoKqN4aYmcKWt2RpSmbHMQa9lWzr9qWFJA+5nbJB
+ rxOY3pdSxYpZP2udWtQGb0NIjB2bnai6Q7j6kbE0YF2gLr530UgwryyuGi+GRz1xnsBt
+ IxolloMzp/etGcn6SKtPZXmYALlehUwgnH8XCDUwid+Swln+CvRlhNr8lIvXjifIw9im
+ lxK/G1Z5/SuBgPn9Gks5UFM60H6VAH7BqVCJ+4jqe5GnO2lAV8LuYvMREIkRrlgLnD6l
+ iaCA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=vz8TqbIohTQ8fN1xrWGabOSiqk1+f4dc86NYMrIYKZs=;
+ bh=vANGD2vKWELwqFShufjM35Wn78nC95DsZ2JfSKglkLA=;
  fh=XBvXNygMbloJp+VR+lP4ESgdVtRHCxc7UtbU1PDcF3s=;
- b=E9QbSaDRJCGEWD7UceSk0qANk1DYO/1noA7pb8voercb8blDMVdAUqb+0fbBDKDWzF
- OLpfrHnN5R8Nnv7Lq1fpymAgW7Jt0n3Fat1kYP6JV5SKcumP0/RQpV+sk7J0LH3h2XtU
- /9XsFzMlmS5+EKVORImXjADtfFm5JP12H7JFPY6QI3Vxtq5GxcAQsIrEQfqCLYQz+GTo
- ClOQ7I+afdKGC6tVKrXWbg/RqzLb0T0YVhfkl0h/DE4ymy9j7al1NNkjkFLeVwfT63xT
- FuZDqQvS0j44OlzgQAfckH8P/J9yfrRVB/9cFaUt3RAPsbUNWLGfc3syzkiU4thaTeVa
- TmUQ==; darn=nongnu.org
+ b=P0Zt3iqtbdS17D5WpVIx0uemctxIGjS/ExHPeKdjbBY6HjU+XxBW/HcNweIvLd6Ooh
+ KcZXXT6UcQruQDh+EdExxyp5aS/OwJC00roHmTgCuoJ8lkbPNnRxbvpFVNHfDR47tGWa
+ y1zUG05RQGGXF/1GxS/7I8oFlIfUalK8AUTy/MlzI+KQFvJG8sEEgVn9BcPE3YBXs7pX
+ axHQeYnB7QQLNAobctluOKvwpH7CynjGYD2ImdojFb3QolvIn/3CHUYDoXdr5t0Qsjo6
+ w/kgN7uHoU7qgGm2sVMdZiC7TO8osAxUZZMYUp3hcOoI9fuy95goy4uo7UW1HnqeM2AI
+ Ogng==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779945971; x=1780550771; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779945996; x=1780550796; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vz8TqbIohTQ8fN1xrWGabOSiqk1+f4dc86NYMrIYKZs=;
- b=ZJZuE5jrfibzVlkRVbsCXE6HVibnTBjVIOl0mY1tqiWyFPKfm3AkrEA863bZYgzVla
- fTkC4N21ThhpmlUW2Y8oup4LED2N/vTl8fb4H+Pu0u6KpG6OBdbLmFZFkkLsn0h4z9bO
- UV0oTJ5Aq7jdJll9LifKEeTYhsUfQ8SSCls7NeF21C7MaylofjUJqtmuAb01hSpgknaM
- EA91JHIS4sLhLm6mKbyWDqYsWki3T1oQymgjB+niAeCHXzSqi5r0dKy7iml4o3MOXP46
- K2Z6XXklmo/7CZK3knAcrh/gZrs0jITZwt1JREhcNkj3Fix2EH0YpNRHYNfzIpmwDlsu
- 1TrA==
+ bh=vANGD2vKWELwqFShufjM35Wn78nC95DsZ2JfSKglkLA=;
+ b=CZn9qSsOL8P1UKhtpIWiUITGVuP9UDHJcoGYm4uZgtsX6l2X8WaTFFd+m7yPHhXU4y
+ 7WBA2Y9eKofufAjp5ja5iWzVjnYKSvtVPLeWTXgYQUJ3qk9OMSmrYou1mEzCtWtc0rZV
+ YFUwKO/Pa+f6/JTsPRrdaQ1fBT2iauBapBb21CfRLIy7U2mthnPhafNBIkLFWdIi5ER2
+ DCC0EH8H7nfB5gExiv58Rx44DkI7r6Y51LR0uxuQ9wxcB4d99RViQWTYmO/9MeZjgj2X
+ zNUqrSdonW5trSvw/wj3+jsuHV9GjJ7AHLLWiDYkPEdRPCGCua9WlqeSqegSRfHXrE7T
+ fR7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779945971; x=1780550771;
+ d=1e100.net; s=20251104; t=1779945996; x=1780550796;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vz8TqbIohTQ8fN1xrWGabOSiqk1+f4dc86NYMrIYKZs=;
- b=KhyCzG1Ph2mDc0s2Klkn57hQMiQCAnNT4YwCqFuo4s4dlDyQpMjzbz1s+pteiU78jn
- OBq9PSn8axpWSGgMyk/9DzKkxMJRBgtv2VVbP6yH//8YtfWPwOcL7rQgcC/g2LJpdH/w
- lc2hi5AaRjVDpmWnQh9Fz3qXjcm0efSy9420nyKW/soJfMxCxPNwaNybMy5AaBwkWbbz
- u129jvmjKiaOolWr9CS2CWTEKL9embbFhGUrewclvUdO6xsTjK5bnhpiIwd0450MTvYF
- Tfznnci4Fse51kAWbW/itMUnzOR394ol3LOLzJsKu0a6Kql0JsYX0t5511xy98eWCa2L
- I9rg==
-X-Gm-Message-State: AOJu0YzyYstnKuogXTRIhkjVjpTQtv3sT/qqDsf0C/YGQ6JIqJKfNaC9
- +qN7lyiIa+p2JTPX9uwyBHVpJW5pUL/YobgpRzhBNRCO5QGS50GFKhyLfwJjpfTL7JArnQ/5nH5
- PAoD+yBp+crN58urw1qKIcyz8Tcd89AL9CUaZyOgYyQ==
-X-Gm-Gg: Acq92OEnzNQ0I0vXRJplMIBeMVyRKS19MpM/7pwqdYO8HBLI8h5EpY2x1jZi7uI8DYd
- j9PtLmoJ+PLp1UWaAZRaq5JWSOZjrtxbQkcP3g6zTGaNDY6AFKq3SuGqc7s5+h/ONDQhg/ou4lX
- uR83kbRLaxSMREdpAHCagdw+0DZjGjXL2sroqniPmSAOtT9dFF0UEukv0IjWpHeT3iNnsBGrqeh
- 4KgOsZSSvDR2qyq0lZPhEb36BGU4v/o45v9aNNipnG7GnUFgbR2JFF1PWo678I7Tomj0ZcSFU8m
- iz19fjuSNGqyloTg/MuG2eavZ2IMkdp3Zl+GcULA/mu3cysmOdmCjfKwWX4H
-X-Received: by 2002:a05:600c:6217:b0:490:44d0:11b6 with SMTP id
- 5b1f17b1804b1-49044d01257mr424122455e9.12.1779945970504; Wed, 27 May 2026
- 22:26:10 -0700 (PDT)
+ bh=vANGD2vKWELwqFShufjM35Wn78nC95DsZ2JfSKglkLA=;
+ b=Q6exBfhyLpnKXsUj4zpHSPBYkZ2+eQhunRe8CCX3q4NMF67oYyYJFdljNL+KkuqbU1
+ cNR7c2UDxACaqazCaphFeoVXTuH8ReCgbrrfU/pN4hkGmMgu0f7bsex0R5PEeJIt6Gx0
+ 61WXCg+UEYBAIrMXs3Fa+bw71V4QIbX81Q+gfLisekHj8Xg3hPPqvHg4RGsaRVylS1b0
+ tG8DIz66SZnU7VmEZU/anEPH1fMAI6hWAS3AAOOWJ9+3QUUXYFICCYi2bin1YJSERnzU
+ p3tfhP6l+PGBkmOj2SiavWk/rLgiVBWjR1rMCdjEU9TJeGpGfW25z659OwivYWeKqCSA
+ DsKQ==
+X-Gm-Message-State: AOJu0YwqExcV6Mxg3iC19lSh+F99B/kukiy05igGIhP4KYWn/Z2XRavG
+ TRbuN+61P8LapWNzyVcLszP4Fu0QA7lfDs6kEssgZ0Jba/UTdN39UYRFB/jY4m1sB44+H+5jYUZ
+ zEPCpzIY3N9vBLMaD22jM39Z6dje1yXG8KGvNYf/y3g==
+X-Gm-Gg: Acq92OGZHDVZVt38WCLoqvxjR0da+JrG2rHIxm6LHFyRa7jXtQ4tuCgIhWGLaBSTsEu
+ lDyRZZPhbHEuoWIOnqZKk1jBcHC24tUVBJ91tpI28EkdBn54KBbnH88uVuUOeNClnuXbkma4GwP
+ ZQcE6xYLBbm2sNFdSVS9mMJ1b9sgqfMTOtcwqddUUBFPamTxCFbm+dPx9Bk1V4ef8LMTXKfJuye
+ 7GLauY0wHS9GtC9+lQPQpKvf4kToL/GlfTqAFwb+2Q1icHfGl3kMkNknvBJgvomlzm+LO7l3dHo
+ n0pkXJ01WPzPj43/61JIjfvBCzMVxnAven6ASUOEnAlO1+93SdZrFq3EO/9C
+X-Received: by 2002:a05:6000:4013:b0:45e:ea68:523e with SMTP id
+ ffacd0b85a97d-45eea6852d2mr838639f8f.21.1779945996132; Wed, 27 May 2026
+ 22:26:36 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260528051642.115721-1-pierrick.bouvier@oss.qualcomm.com>
- <20260528051642.115721-10-pierrick.bouvier@oss.qualcomm.com>
-In-Reply-To: <20260528051642.115721-10-pierrick.bouvier@oss.qualcomm.com>
+ <20260528051642.115721-11-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260528051642.115721-11-pierrick.bouvier@oss.qualcomm.com>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Thu, 28 May 2026 08:25:44 +0300
-X-Gm-Features: AVHnY4JGjkNLld-f8_LXRbM-7SGVNZI6QT5eUV9zvTKqSZL5To-aSG22maQhFD0
-Message-ID: <CAAjaMXZdFFi-dKVLWNTVcpYCVVAX3dB=JYbvpwyfLt758xEEhg@mail.gmail.com>
-Subject: Re: [PATCH 09/10] target/microblaze: rename helper unaligned_access
- to microblaze_unaligned_access
+Date: Thu, 28 May 2026 08:26:10 +0300
+X-Gm-Features: AVHnY4Lnq7uJaaGNAHaSPUgkdNQ4b1KOFG2UyRct1meAgQqJuFhJ4sx-DGrqXdY
+Message-ID: <CAAjaMXZP+VwCvntg=c6tuJg-AkTvsfhH1QtR1-OhJFmE9qAcig@mail.gmail.com>
+Subject: Re: [PATCH 10/10] hw/vfio: use stub_ss for iommufd-stubs.c
 To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
  Alistair Francis <alistair.francis@wdc.com>,
@@ -126,8 +125,8 @@ Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Fabiano Rosas <farosas@suse.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -153,62 +152,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Thu, May 28, 2026 at 8:19=E2=80=AFAM Pierrick Bouvier
 <pierrick.bouvier@oss.qualcomm.com> wrote:
 >
-> Solves conflict with aarch64 unaligned_access.
+> Solves conflict for vmstate_cpr_vfio_devices.
 >
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 > ---
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
->  target/microblaze/helper.c    | 2 +-
->  target/microblaze/helper.h    | 2 +-
->  target/microblaze/translate.c | 2 +-
->  3 files changed, 3 insertions(+), 3 deletions(-)
+>  hw/vfio/meson.build | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c
-> index f81c4f625b5..3434ea47e8c 100644
-> --- a/target/microblaze/helper.c
-> +++ b/target/microblaze/helper.c
-> @@ -69,7 +69,7 @@ void mb_cpu_do_unaligned_access(CPUState *cs, vaddr add=
-r,
->
->  #ifndef CONFIG_USER_ONLY
->
-> -void HELPER(unaligned_access)(CPUMBState *env, uint64_t addr)
-> +void HELPER(microblaze_unaligned_access)(CPUMBState *env, uint64_t addr)
->  {
->      mb_unaligned_access_internal(env_cpu(env), addr, GETPC());
->  }
-> diff --git a/target/microblaze/helper.h b/target/microblaze/helper.h
-> index 01eba592b26..1429c1727ef 100644
-> --- a/target/microblaze/helper.h
-> +++ b/target/microblaze/helper.h
-> @@ -27,7 +27,7 @@ DEF_HELPER_FLAGS_3(put, TCG_CALL_NO_RWG, void, i32, i32=
-, i32)
->  #ifndef CONFIG_USER_ONLY
->  DEF_HELPER_FLAGS_3(mmu_read, TCG_CALL_NO_RWG, i32, env, i32, i32)
->  DEF_HELPER_FLAGS_4(mmu_write, TCG_CALL_NO_RWG, void, env, i32, i32, i32)
-> -DEF_HELPER_FLAGS_2(unaligned_access, TCG_CALL_NO_WG, noreturn, env, i64)
-> +DEF_HELPER_FLAGS_2(microblaze_unaligned_access, TCG_CALL_NO_WG, noreturn=
-, env, i64)
->  DEF_HELPER_FLAGS_2(lbuea, TCG_CALL_NO_WG, i32, env, i64)
->  DEF_HELPER_FLAGS_2(lhuea_be, TCG_CALL_NO_WG, i32, env, i64)
->  DEF_HELPER_FLAGS_2(lhuea_le, TCG_CALL_NO_WG, i32, env, i64)
-> diff --git a/target/microblaze/translate.c b/target/microblaze/translate.=
-c
-> index 74b5420ed24..a93f14d6e09 100644
-> --- a/target/microblaze/translate.c
-> +++ b/target/microblaze/translate.c
-> @@ -692,7 +692,7 @@ static void gen_alignment_check_ea(DisasContext *dc, =
-TCGv_i64 ea, int rb,
->          record_unaligned_ess(dc, rd, size, store);
->
->          tcg_gen_brcondi_i64(TCG_COND_TSTEQ, ea, (1 << size) - 1, over);
-> -        gen_helper_unaligned_access(tcg_env, ea);
-> +        gen_helper_microblaze_unaligned_access(tcg_env, ea);
->          gen_set_label(over);
->      }
->  }
+> diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
+> index fa0ea6ecf0e..c7c31b78f68 100644
+> --- a/hw/vfio/meson.build
+> +++ b/hw/vfio/meson.build
+> @@ -34,7 +34,7 @@ system_ss.add(when: ['CONFIG_VFIO', 'CONFIG_IOMMUFD'], =
+if_true: files(
+>    'iommufd.c',
+>    'cpr-iommufd.c',
+>  ))
+> -system_ss.add(when: 'CONFIG_IOMMUFD', if_false: files('iommufd-stubs.c')=
+)
+> +stub_ss.add(files('iommufd-stubs.c'))
+>  system_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
+>    'display.c',
+>  ))
 > --
 > 2.47.3
 >
