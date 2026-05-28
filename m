@@ -4,108 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A74DCD6E4C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3BF4CD4F54
 	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 23:32:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSkCF-00042F-J2; Thu, 28 May 2026 19:31:27 -0400
+	id 1wSkCR-000439-9d; Thu, 28 May 2026 19:31:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wSkCA-00041i-TL
- for qemu-devel@nongnu.org; Thu, 28 May 2026 19:31:22 -0400
-Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wSkCN-00042k-Rp
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 19:31:37 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wSkBo-00076f-55
- for qemu-devel@nongnu.org; Thu, 28 May 2026 19:31:22 -0400
-Received: by mail-lf1-x135.google.com with SMTP id
- 2adb3069b0e04-5aa4b131940so2667570e87.0
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 16:27:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780010821; cv=none;
- d=google.com; s=arc-20240605;
- b=ZUYxMdoza9PFPFW06hCiZ5ftP35Qtc5EX/zXyhX70mlF/Wpr8WIumaZkkRD2bdMa3T
- Ee5+EW/NuHqcCx0Uwrn6umt8wv564xfoCgQv4seBzE7wfNCnWcFLEXIH7mdaGYyxuAPa
- GcxtbPNohV68HPtr3r5kcMQTNX/osLqjuujLo2vzzNIP2q823MSHwNTiDFIgSDH4EQXa
- M/rDWQ0p2s9TWJLfcotXdfeo8V3xvdCiciM7RAmK90JG2BYjBxiW8slkc21XwM7QuCph
- nsYBLT/FvX8es/GsgkJBjS9c2Co53gbyV8jR2AbbLDZ3X8LLDNNhIrXc4G8OWn7VwBgh
- lgoA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=plpsoRt2exjMbwmGXjSp6aTajnbvdj2DAeWS7lfCGGU=;
- fh=j8pax7V+CraaRTWYClyarRdqomUw72bOD0sU3w6uFtE=;
- b=J2NWNZB8EpYnKdeeWkKdIX3ZRuC4bUqLmhhKbgu7WRTpM5WIArx+O2ZZBEAzHAPVOZ
- FscoiN6JlW3JkNVHb09OFIuuH+jrDxasrBRhyaW5Y/d0NGS/j5XiwBdAQ8is35QGNbqO
- +O3pHp9PHpYtGk0Sbez14linIjlc+cyqZ49Xqd273AFZpvAW3V/Ei8ETtptQGkEsNXFo
- cSLzorfcAUDa2ghh3uWUSYBZqWopljV/IRSykG1EJP6S5oPtSBuUMQeOYSu96F0/VZSs
- l3RpIRc9fZbtgcu/51ixkxndv3zIoJ/T7Is7/wuicAimq0oqlqnJA58cK8kBavLrFLOt
- eirQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780010821; x=1780615621; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=plpsoRt2exjMbwmGXjSp6aTajnbvdj2DAeWS7lfCGGU=;
- b=FILsVHL/2TLZQAtGQZclB+VtdJiYT+Mt1Ps/GtBxjyhiNsp4N00ch1yxV8xd69EoDY
- lbjIa04jKiTvKd02/sn8P9da0F114ziJfMVTKZbILWNCd2gcTSCkUA8IX62gV7SndHTO
- nYu12Kz0BMN+6a5BEzftq3z7RVCWwvf4tTP+S1zteEE88uxk6AuOO1481q4BpK9P02mE
- G1mj48kraG6OodFCDv96plwdoOvnIP2Nb7UJlqQqv8KIEMItjEUf9Z9Ri2mmII2lPV4l
- Wk3dgPnVwBCVcaSBB7OS49CKJbUlExmv3WyNoUC/pc4cecmt4nEyEWPoS4PI60LarrPn
- mZXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780010821; x=1780615621;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=plpsoRt2exjMbwmGXjSp6aTajnbvdj2DAeWS7lfCGGU=;
- b=V98Jn2fp5QRdHSBbtY580/p0mX42CQVEEizWqKNhIc2P8g+ILQulNZhLcGTv6saLVU
- F+WvCc4L/2Yn3L3xmTR7gcbXaLGGmHpqU8sbK6PsQjG/iaBg1vF6SbNS80dGFN/wxjoA
- tpCy5OI78HXTJn+HBH+OI74Xr1CYo2NgBR1V6MaUqQY22q9+cLa0EMS2RWPK8+omUtfn
- IScVK//oqNMzxEKjZvATJUMQeG0dw64PCHA3j+i2rG7qMdcktCmog8TgDYoj1mI6Eupd
- /z7VzTmoZFtlHntygcTHe4IOC6H/HLWWMYlwZjtPH4W06NoPnB8nIubS7lVevQPS3jFu
- FNiw==
-X-Gm-Message-State: AOJu0YxYk47GR+gKGscvhm7j45jzk09T/tRgrbpWZM2oDfPKxQy6kDwW
- NRYqbKjLOjGg0Q85NHgNTe7FO11gE3Ms2zyPGTQMQWUpquKPElXTmlZtyefGc838jqVl18HTMPM
- su9qC4OIUKgol9SMwhf2DKh7qG6+WnFo=
-X-Gm-Gg: Acq92OG8Iy/aCUm7j6F/s1u/01QXgg4PpvgckEWMPMi6s43T7EDADchZ3ZAWzBHX5sY
- i557Y+5RRZf5EX9nsulN2SvEeTCvTFSDaSiCjX4BijdnpQsyXnPm/wCemDETejgtsK9T0z7fPLr
- VsNURR++Xuooi2eEVmxY+bytxOxBcXo1sySiXeP6Wbk0hbddxvoAelXFEvG1m56rsSdNGu4Pzjx
- 6iipLKrnT2GC6ryfdgq3BvMhnsliZJeqMHOq/Tp8U+LYeihMln3A5T45FF5pmM/0tMO0XVy/jX+
- J1yYa4szQQ64jh1uViFK
-X-Received: by 2002:a05:6512:3e12:b0:5a4:6f5:6c2d with SMTP id
- 2adb3069b0e04-5aa5949b53emr52672e87.31.1780010821193; Thu, 28 May 2026
- 16:27:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wSkBo-0007DT-JU
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 19:31:34 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 87E3F6A9CF;
+ Thu, 28 May 2026 23:24:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1780010670; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=wNPBp7saHpQ7aaiomD6TKjeSb6yDerJLpyT6uEeR1+A=;
+ b=MpKfDpI+zKgbkBOCXCgIFZHXjiYi3c9t4p8uvM6OryIdlX+NUccrqK8AZPTcFk8KQmwi0u
+ Z5le5Sg63pR1GgqK/8V/Uk56hgmkJAH/a4vJedfK4qZeVPDMlcq+WU4GZb9/6NYPtu9tG2
+ bnWq17tTqtl6Vuw9Xs9FWxvNWL1Wd3k=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1780010670;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=wNPBp7saHpQ7aaiomD6TKjeSb6yDerJLpyT6uEeR1+A=;
+ b=eoNtcq15gFb1YLN5yieh/+CZ+o5QFtyC3iP5GC1TJqwjwHoK9hEWkTM2aFvgteJnMMbsXV
+ u2rzXJ/fp7g/4iAA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1780010670; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=wNPBp7saHpQ7aaiomD6TKjeSb6yDerJLpyT6uEeR1+A=;
+ b=MpKfDpI+zKgbkBOCXCgIFZHXjiYi3c9t4p8uvM6OryIdlX+NUccrqK8AZPTcFk8KQmwi0u
+ Z5le5Sg63pR1GgqK/8V/Uk56hgmkJAH/a4vJedfK4qZeVPDMlcq+WU4GZb9/6NYPtu9tG2
+ bnWq17tTqtl6Vuw9Xs9FWxvNWL1Wd3k=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1780010670;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=wNPBp7saHpQ7aaiomD6TKjeSb6yDerJLpyT6uEeR1+A=;
+ b=eoNtcq15gFb1YLN5yieh/+CZ+o5QFtyC3iP5GC1TJqwjwHoK9hEWkTM2aFvgteJnMMbsXV
+ u2rzXJ/fp7g/4iAA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1DDB35B03B;
+ Thu, 28 May 2026 23:24:29 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id OpTXN63OGGqQDAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 28 May 2026 23:24:29 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, Mark
+ Kanda <mark.kanda@oracle.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>, Jason Wang
+ <jasowang@redhat.com>, Ben Chaney <bchaney@akamai.com>, Vladimir
+ Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: Re: [PATCH RFC 2/2] migration/cpr: Opt-in "mode" parameter for
+ early boot access
+In-Reply-To: <20260528212947.368132-3-peterx@redhat.com>
+References: <20260528212947.368132-1-peterx@redhat.com>
+ <20260528212947.368132-3-peterx@redhat.com>
+Date: Thu, 28 May 2026 20:24:23 -0300
+Message-ID: <87mrxjt8wo.fsf@suse.de>
 MIME-Version: 1.0
-References: <20260521184119.1631958-1-mattst88@gmail.com>
- <d5cad829-a61c-45fe-85b7-0a310cb882cd@tls.msk.ru>
-In-Reply-To: <d5cad829-a61c-45fe-85b7-0a310cb882cd@tls.msk.ru>
-From: Matt Turner <mattst88@gmail.com>
-Date: Thu, 28 May 2026 19:26:48 -0400
-X-Gm-Features: AVHnY4JQ9Whb8IXnv1_DKx9rDjAz-2e7A4HjnlPQMn9tBlh9AL8LPl5wdpfobgw
-Message-ID: <CAEdQ38EuNCBnjYg0oednDTrJC_aN-pzWZawyG7AGqiwcfj534w@mail.gmail.com>
-Subject: Re: [PATCH 1/3] linux-user/mips64: fix elf_core_copy_regs register
- layout in core files
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
- Helge Deller <deller@gmx.de>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::135;
- envelope-from=mattst88@gmail.com; helo=mail-lf1-x135.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[12];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,62 +120,221 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 27, 2026 at 7:06=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> wr=
-ote:
+Peter Xu <peterx@redhat.com> writes:
+
+> Make "mode" to be the first parameter to opt-in for early boot access.  CPR
+> will start to consume this early boot parameter.  With this, we can remove
+> the special "incoming_mode" variable together with cpr_get_incoming_mode().
 >
-> On 21.05.2026 21:41, Matt Turner wrote:
-> > mips64/elfload.c uses #include "../mips/elfload.c" to share code. When
-> > the compiler processes mips/elfload.c the quoted #include "target_elf.h=
-"
-> > resolves relative to the including file's directory, so it picks up
-> > mips/target_elf.h instead of mips64/target_elf.h.  mips/target_elf.h
-> > pulls in mips/target_ptrace.h, whose target_pt_regs has a pad0[6] field
-> > before regs[].  As a result elf_core_copy_regs writes:
-> >
-> >    r->pt.regs[i]   -> reserved[6+i]   (shifted by 6 from the correct in=
-dex)
-> >    r->pt.cp0_epc   -> reserved[40]    (correct mips64 N64 index is 34)
-> >
-> > The Linux kernel and glibc both use the mips64 N64 layout (no pad0): EP=
-C
-> > at reserved[34].  Debuggers and libunwind reading the core with N64
-> > constants therefore see a completely wrong register set =E2=80=94 EPC p=
-oints to
-> > GP, RA holds the branch target instead of the link address, etc.
-> >
-> > Fix by:
-> >   - Guarding the mips32 elf_core_copy_regs in mips/elfload.c with #ifnd=
-ef
-> >     TARGET_MIPS64 so it is not compiled for mips64/mipsn32 targets.
-> >   - Providing a mips64-specific elf_core_copy_regs in mips64/elfload.c
-> >     that writes directly to r->reserved[i] with the correct N64 indices=
-,
-> >     bypassing the struct field names that are tainted by the wrong head=
-er
-> >     include.
-> >
-> > The mipsn32 (TARGET_ABI_MIPSN32) and mips64el targets are covered by th=
-e
-> > same mips64/elfload.c and benefit from the same fix.
+
+Hmm, it's now possible to invoke QEMU with:
+
+-incoming config:mode=cpr-exec,cpr-exec-command=-incoming config:
+
+Seems like it could be an issue.
+
+> One thing to mention is, to make cpr_is_incoming() work like before, we
+> need to do extra check on INMIGRATE runstate to make sure it only returns
+> true while during the incoming migration.
+
+...
+
+> It used to be achieved by a
+> pretty hackish "cpr_set_incoming_mode(MIG_MODE_NONE)" when incoming
+> migration destroys.  Now we can remove it.
+
+That's not it, I think. cpr_is_incoming() only returns true on incoming
+migration because on outgoing there's no parsing of -incoming and
+therefore cpr_state_load() doesn't call cpr_set_incoming_mode().
+
 >
-> This code was different before the linux/elfload.c split into targets -
-> before the split, all this was in single linux/elfload.c file.  While
-> this patch should not be needed before the split (eg. for stable-10.0
-> branch), the following patch is apparently needed still.
+> Another good side effect is, we can finally drop MIG_MODE_NONE: it was
+> never a valid value, only used by the temp global variable.
 >
-> Can you verify please, and maybe provide a similar fix for 10.0.x too -
-> provided it's actually needed there?
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  include/migration/cpr.h |  3 ---
+>  migration/migration.h   |  3 +++
+>  migration/cpr.c         | 18 +++++++++---------
+>  migration/migration.c   | 37 ++++++++++++++++++++++++++++++++++++-
+>  migration/options.c     | 10 +++-------
+>  5 files changed, 51 insertions(+), 20 deletions(-)
+>
+> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+> index 56fb67e6b4..27061ad629 100644
+> --- a/include/migration/cpr.h
+> +++ b/include/migration/cpr.h
+> @@ -12,8 +12,6 @@
+>  #include "io/channel.h"
+>  #include "qemu/queue.h"
+>  
+> -#define MIG_MODE_NONE           -1
+> -
+>  #define QEMU_CPR_FILE_MAGIC     0x51435052
+>  #define QEMU_CPR_FILE_VERSION   0x00000001
+>  #define CPR_STATE "CprState"
+> @@ -38,7 +36,6 @@ int cpr_open_fd(const char *path, int flags, const char *name, int id,
+>  typedef bool (*cpr_walk_fd_cb)(int fd);
+>  bool cpr_walk_fd(cpr_walk_fd_cb cb);
+>  
+> -MigMode cpr_get_incoming_mode(void);
+>  void cpr_set_incoming_mode(MigMode mode);
+>  bool cpr_is_incoming(void);
+>  
+> diff --git a/migration/migration.h b/migration/migration.h
+> index 841f49b215..9fa97f6d9a 100644
+> --- a/migration/migration.h
+> +++ b/migration/migration.h
+> @@ -609,4 +609,7 @@ void migration_bitmap_sync_precopy(bool last_stage);
+>  void dirty_bitmap_mig_init(void);
+>  bool should_send_vmdesc(void);
+>  
+> +void migration_parameters_boot_set_mode(MigMode mode);
+> +MigrationParameters *migration_get_parameters(void);
+> +
+>  #endif
+> diff --git a/migration/cpr.c b/migration/cpr.c
+> index bca43e9bf3..1f49afe109 100644
+> --- a/migration/cpr.c
+> +++ b/migration/cpr.c
+> @@ -16,6 +16,7 @@
+>  #include "migration/qemu-file.h"
+>  #include "migration/savevm.h"
+>  #include "migration/vmstate.h"
+> +#include "migration/migration.h"
+>  #include "monitor/monitor.h"
+>  #include "system/runstate.h"
+>  #include "trace.h"
+> @@ -239,21 +240,20 @@ QIOChannel *cpr_state_ioc(void)
+>      return qemu_file_get_ioc(cpr_state_file);
+>  }
+>  
+> -static MigMode incoming_mode = MIG_MODE_NONE;
+> -
+> -MigMode cpr_get_incoming_mode(void)
+> -{
+> -    return incoming_mode;
+> -}
+> -
+>  void cpr_set_incoming_mode(MigMode mode)
+>  {
+> -    incoming_mode = mode;
+> +    migration_parameters_boot_set_mode(mode);
+>  }
+>  
+>  bool cpr_is_incoming(void)
+>  {
+> -    return incoming_mode != MIG_MODE_NONE;
+> +    MigMode mode = migrate_mode();
+> +
+> +    if (!runstate_check(RUN_STATE_INMIGRATE)) {
+> +        return false;
+> +    }
+> +
+> +    return mode == MIG_MODE_CPR_EXEC || mode == MIG_MODE_CPR_TRANSFER;
+>  }
+>  
+>  bool cpr_state_save(MigrationChannel *channel, Error **errp)
+> diff --git a/migration/migration.c b/migration/migration.c
+> index d918be7a44..d7591571ed 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -145,6 +145,42 @@ static void migration_parameters_boot_apply(void)
+>      }
+>  }
+>  
+> +static void migration_parameters_boot_init(void)
+> +{
+> +    if (!mig_boot_params) {
+> +        mig_boot_params = g_new0(MigrationParameters, 1);
+> +    }
+> +}
+> +
+> +/*
+> + * This should only be used during boot by CPR.  NOTE: This is only needed
+> + * to be compatible with old CPR use case, if we decide to have users
+> + * switch to -incoming config:mode=cpr-* then this can be removed.
 
-I just took a look at this.
+This new scheme does create some usability weirdness of allowing a
+parameter to be set in -incoming and then to be changed later with
+migrate-set-parameters. Hopefully it's ok.
 
-10.2 & 11.0: clean cherry-picks.
+> + */
+> +void migration_parameters_boot_set_mode(MigMode mode)
+> +{
+> +    assert(!current_migration);
+> +    migration_parameters_boot_init();
+> +    mig_boot_params->has_mode = true;
+> +    mig_boot_params->mode = mode;
 
-10.0 & 10.1: not affected by any of the issues fixed in this series.
-Looks like all the issues were introduced by commit a8081da18d
-("linux-user: Move elf_core_copy_regs to mips/elfload.c"). If I'd
-realized that beforehand I would have inserted a Fixes: tag and saved
-you the email :)
+I bet there's some visitor trick that could make this function generic
+for all parameters.
 
-Thanks,
-Matt
+> +}
+> +
+> +/*
+> + * Get the effective migration parameter object.
+> + *
+> + * Three possibilities:
+> + * - Migration object has been initialized, always use it, or,
+> + * - Migration boot parameters are initialized, then use it, or,
+> + * - return NULL
+
+Hmm, can't we create the early parameters unconditionally so there's no
+NULL case here? A bit annoying having to check for NULL for (eventually)
+every parameter, even on the source side.
+
+> + *
+> + * Callers should always check non-NULL pointer first before use.
+> + */
+> +MigrationParameters *migration_get_parameters(void)
+> +{
+> +    return current_migration ?
+> +        &current_migration->parameters : mig_boot_params;
+> +}
+
+Feels like time to drop the global parameters already. It's a weird
+cognitive load having to grasp that there's two MigrationParameters,
+both used in outgoing and incoming, but one can only be set in
+incoming. The one stored in current_migration might be used
+interchangeably with the one that's flying around. One lives inside and
+shares lifetime with MigrationState, the other is dynamically allocated
+and has a shorter lifetime.
+
+> +
+>  static void migration_downtime_start(MigrationState *s)
+>  {
+>      trace_vmstate_downtime_checkpoint("src-downtime-start");
+> @@ -546,7 +582,6 @@ void migration_incoming_state_destroy(void)
+>          mis->postcopy_qemufile_dst = NULL;
+>      }
+>  
+> -    cpr_set_incoming_mode(MIG_MODE_NONE);
+>      yank_unregister_instance(MIGRATION_YANK_INSTANCE);
+>  }
+>  
+> diff --git a/migration/options.c b/migration/options.c
+> index 5cbfd29099..c1209cbec3 100644
+> --- a/migration/options.c
+> +++ b/migration/options.c
+> @@ -886,16 +886,12 @@ uint64_t migrate_max_postcopy_bandwidth(void)
+>      return s->parameters.max_postcopy_bandwidth;
+>  }
+>  
+> +/* Opt-in "mode" parameter to be available even during boot */
+>  MigMode migrate_mode(void)
+>  {
+> -    MigMode mode = cpr_get_incoming_mode();
+> +    MigrationParameters *params = migration_get_parameters();
+>  
+> -    if (mode == MIG_MODE_NONE) {
+> -        mode = migrate_get_current()->parameters.mode;
+> -    }
+> -
+> -    assert(mode >= 0 && mode < MIG_MODE__MAX);
+> -    return mode;
+> +    return params ? params->mode : MIG_MODE_NORMAL;
+>  }
+>  
+>  int migrate_multifd_channels(void)
 
