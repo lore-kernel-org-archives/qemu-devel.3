@@ -4,88 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5C36CD5BD1
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 10:16:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 202FFCD6E44
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 10:23:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSXn8-0001Fg-OD; Thu, 28 May 2026 06:16:42 -0400
+	id 1wSXtR-0004Ah-M4; Thu, 28 May 2026 06:23:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSXn5-0001DS-7U
- for qemu-devel@nongnu.org; Thu, 28 May 2026 06:16:39 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wSXtP-0004A8-NW
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 06:23:11 -0400
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSXn3-00028p-Il
- for qemu-devel@nongnu.org; Thu, 28 May 2026 06:16:38 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-490686877a1so29802905e9.0
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 03:16:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wSXtO-00067Z-56
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 06:23:11 -0400
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-6603e24a7f9so494905d50.2
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 03:23:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779963789; cv=none;
+ d=google.com; s=arc-20240605;
+ b=gh5JQ9GMbWNv0NTh1w8Pw7nuZZYLf6L9c2FpkB/aU3nXCJqkdUPAfoqQ1/i0l86fZp
+ 43Ofk7Fm7l0t0hEYnOJoIevoxX0iRwv40GlbEYOSXh7g8kxvHdV13gRQTRNwQF3TUhba
+ WRbWEwZN3IeiO+CNE31k+C/nr4/7HFXYs3/uKzipOuj2z8Kg78slUEdnFyMi8tZdijN0
+ dhOCCDQkRE/8ziHXgqZWmyaKiGXHWbgimfth0Sl0OgAtZgfBn4ZNPIVrMxOOlGoS20Dx
+ siJ6gj3jyKZ75vrEgd9T5Lxdu2OjF8E2lGyvNSDuYYENzqbbhjKGHNhP4mk27TGcSEPg
+ m6WA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Ih0tAGC2oD+ODfyMV7mnUd5xBZ1bDG8Oxezd/MEAjeM=;
+ fh=FWtyXIX1K30Gh1JIPWWinn1E8IuOwxOeZI6Shz32Tr4=;
+ b=FAXDvJ8JxyWLkmdpWpK8uRzU38JcT1Jg7WcVFJMrWOPPFLXhaSChayIJuc+cOcdZPk
+ igzAI7OfY0Lxi9YiRbNTC8dpd9mlZfNOboRwKUroXAChP2/1+Q7Ru4ZYdgfGOhgBR0tS
+ B3zkuLH1H76l4Y7eXpWyQ70v/pX+dSeIAaNBrX7HqtaVgNWunc47cJRuhDUvcigfOW8n
+ ao8AVikE+W/RNLj04rchskgRQFklGuiRySBpVGM85qiBcz7uGi77sMmk8iXDe0tuMe8y
+ gETEgdrxC4x87r46ymiVjQOhlwMd83XaH/S1lujf7BasIHC77hvVJlTvTNnal2GCpjlF
+ mrEw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779963396; x=1780568196; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1779963789; x=1780568589; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=H1xrkQf3BWF1aGx10+8zTAefU0dp5D6GrwoTAQbjgQA=;
- b=HWwcMS1BytDqmC6zs8TJh7kdTxTNaG5RLIJWYSINH6EYmuB+dj+hT0kkiFwL4nODB0
- eY6HOxo7t592cmQpQ8BMdhTccr4no6CrJAsN7AjoGSPsgXMbsR6DjydexoiPdi8ja1sr
- Vpn6zWHjnMkaEtsWQWE5r9iX9fWqg3GunaDAguJ73ecojWiTqkPr3xwwLoo658GoMFJh
- AbZXUc/1pom+Mw67Ig3lL5+b7LInLDNtbK7riigRBBF+9Js8InJzDvSiDCSdbmMiVOOS
- tKse/hQyGMNNRC3h0CB+KK5r7xVFz2QVTeCIMBjDXjyN/LKNsEBzcYlonWRiODEkfST3
- YPmg==
+ bh=Ih0tAGC2oD+ODfyMV7mnUd5xBZ1bDG8Oxezd/MEAjeM=;
+ b=nbAfmwllpdqt6R6FbbG5mlNf68PXMCe3hJHi+FL/a6MKcvZiyVd6SRxrXGsFDGONqN
+ yIiSdBPAIXT8SuBgoHOBzhEUZxTWj4YCIez/YWHl5JegXTerhYiJFBUEv6WE10DeYobB
+ Ve0fLIWTRfx0ydpF2QyUaMu2H5GCQHFb0rsZud7ro46vHZLE5t3j0ECJXmqk1AyRVS9m
+ FqDoCqobh+IdUReANkocGc3Iu49z+WntxZH2DQ7wYKL+wtfkhWOr+cyv5dw8bBc5EL3d
+ MJfYUHwM4D8ZFmWo0mfQ3HD9sXOqeG3LaMLFdZQIP9W3NKVJAtK5Pz7tUULZ1EO9JBEw
+ 6cYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779963396; x=1780568196;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=H1xrkQf3BWF1aGx10+8zTAefU0dp5D6GrwoTAQbjgQA=;
- b=U3RIHi6UFO0PI/G9HWmhFWwJrpmH/RKqKgjny6Zw+a1BE2qimk/3pBTRIEfi1kV9dA
- c4CDN7zh6blD5MOAvfuWQWPHRs23702H2VgVAMT5B665iRgrWVj+kpH+rOtMuQ6nWsw1
- rVPaSzQm+o9y9B8WvWRwLO+XIWa4WLxZIpDZmNM2j1Y4CHzXVfirNCRahfNyJiROxV8f
- WmFM1n3lW+neZTXyZrAtxhC6WnEkXoTGc/IStxKDOeY1pvA4lc/zmLzDgL5rTC3pqRS0
- PW9B2WGxRiFvcRw2N0QdNWRrfr3ePBGa9Mm5xGveoQiTRl76HVZ0ITTTNRVhAweQm17n
- ObOw==
-X-Gm-Message-State: AOJu0Yz0ebpFpIKqcCWp0fAw06oorHowFUKrs7Cd/D1R1JJwNAn1DBka
- T3TO2Lh2q3KT4H1g3dskNKlC5zpxGIih+w/priWPT9C1TTzFDutGmo5Wo9UELB7kcTx8Wjj0im2
- 5fAst
-X-Gm-Gg: Acq92OHEaDeOgzyyI+qBdyXKkOysiht/cHwmNk30xERImigKJCyQrOjrqJaLGWE4fIr
- SqdhMAje4IbpmXD1qU2pxDjLSUCZzzZqVGzhqQiCYkGKUwB8NRa3k5w8AcEzsJ+7p+M92/Yq2h5
- FDf5/5lelvv/R7Od6mmT8B8N7h3/DBmvyTslldJgOaO1Uen/KF2FARfKHTOMtzo+KIvdQm352nC
- tF87KBOEofGQsPVBSOsomNBOhgarg2NvDhWYf3WmOFAqm5VGAHQxlaUTbdxRmQ/bg8lyGHfvtpF
- /b0SNeXgu1pKTUgQ3+hjrF30pAokPMAFLKmqz2POAe82EDmLU8vKS5SpeWEJ0wJ17tsvbRnaGbI
- wEcqmbLmvK2E0QjLEF/zDNPQRMpUw6NocA/J4QaM9rmWYLO/hc4H44KRzLv7rSjVXQvnRzBOLV4
- O9laCAOavNdF1NEgKO93xhn1eK85vWQSgEUg==
-X-Received: by 2002:a7b:cb93:0:b0:490:548f:6ca0 with SMTP id
- 5b1f17b1804b1-4909478d48cmr11136075e9.8.1779963395764; 
- Thu, 28 May 2026 03:16:35 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eeb36c40asm1902229f8f.13.2026.05.28.03.16.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 May 2026 03:16:35 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 386A65F886;
- Thu, 28 May 2026 11:16:34 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Pierrick
- Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Richard Henderson
- <richard.henderson@linaro.org>
-Subject: Re: [PATCH 2/3] docs/devel/tcg-ops: List more vector opcodes
-In-Reply-To: <20260504125032.35465-3-philmd@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 4 May 2026 14:50:30
- +0200")
-References: <20260504125032.35465-1-philmd@linaro.org>
- <20260504125032.35465-3-philmd@linaro.org>
-User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Thu, 28 May 2026 11:16:34 +0100
-Message-ID: <87ik87x2il.fsf@draig.linaro.org>
+ d=1e100.net; s=20251104; t=1779963789; x=1780568589;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Ih0tAGC2oD+ODfyMV7mnUd5xBZ1bDG8Oxezd/MEAjeM=;
+ b=STOuGFbe+/bTt2QbHHjvWgFqfyqRk+rgCIEicjkWJgbhia2WsxUjSuir+2zs6mfva/
+ Sw/eFhGhO2/KBG4Vkv3FJ3hwQ0EpHCiA99+YgB9L44tEJkAP2vBo0knL141bApn1GRz0
+ JJ6WZ6pZ4RD6O505m5BcKiEKspCww+FfFH4hLP6XsA9rdzVSS1fBKqC2NA6ekZ+bf0fL
+ FsgXQ9rn7TCbiH85kcNysv24e5lUKlXItpOiOr5aZSM1vM6a4jADxhjA0JI4bEeNV/RN
+ 90HIB1FiK0X+o8pwwTLX2C0wl+5fqSl9PazgOgBo0ls1gJVt+9OKV2a7uvRLF91RMp+z
+ //GA==
+X-Gm-Message-State: AOJu0YwcgKzAHyqTIUXYJt0Oq/oHBi8MWdyCIIxUzIl6KyoZFGhQwnCy
+ agMK5hLhaTiGNB+LjNU7dQrj81FbOQUslFcZJ/ipzjPb/oVTjm426uW5EzZt/F9ZVoT5Iu8Z3q9
+ 2hCI/X4TkUc5AjZGpmy7HrYyZ47aySqt/aYUOjzT4kw==
+X-Gm-Gg: Acq92OF2sy6K2azA5BkslvuS981Ge3PtIXSoMTfZD7FqY7+DI31QDp9ZHwXjZ3Uu2mu
+ h4qHGg0M+51MY/vu3tk92GWL1VruVs+rrm1CoSS27R7whJ+jcTvdBUuOBK7KSHmP0mdJUcmCq83
+ gyFOcuqtdFZIH62jxgihfdvk8ZbZfT6bm9BmPqHq03fQZ3nfdq/1WxPryfbUKPtSmg6rI6uJG1K
+ VYZBn29f+EhtYJCCUXzFTj0ajgqc3vSvpI8WgkTwGFaBwLTmpRBQNN3PCfw/IzTlWe1KBbuL44D
+ Y91YkhgMiRlW2nVChW36bvyZr8yaTxc5PE25En+yiGhYaxSolJSIzYOd0iUAnJIlCI75Qhiu1Dn
+ KKEPTv1bdDTHs
+X-Received: by 2002:a53:ac83:0:b0:65d:6f10:d42a with SMTP id
+ 956f58d0204a3-65ec98a9bbamr25888606d50.39.1779963788854; Thu, 28 May 2026
+ 03:23:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260518-pr-pacbti-v1-0-8932a885b03d@foss.st.com>
+ <20260518-pr-pacbti-v1-1-8932a885b03d@foss.st.com>
+In-Reply-To: <20260518-pr-pacbti-v1-1-8932a885b03d@foss.st.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 28 May 2026 11:22:57 +0100
+X-Gm-Features: AVHnY4LaMlxtA_Q4sNPBjupH8IL1E5jUJirlGtiw_jqw0bNDL6TKUDmhL6jJDXs
+Message-ID: <CAFEAcA_LcEO1J8gC5kpAVeiQ-pNEr2oNsdmx_NeEZhLgbstjNQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] target/arm/tcg: define cortex-m85 cpu
+To: =?UTF-8?Q?Torbj=C3=B6rn_SVENSSON?= <torbjorn.svensson@foss.st.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,59 +117,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
-
-> Few logical and arithmetic vector opcodes are missing, list them.
+On Mon, 18 May 2026 at 17:16, Torbj=C3=B6rn SVENSSON
+<torbjorn.svensson@foss.st.com> wrote:
 >
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Signed-off-by: Torbj=C3=B6rn SVENSSON <torbjorn.svensson@foss.st.com>
 > ---
->  docs/devel/tcg-ops.rst | 8 ++++++++
->  1 file changed, 8 insertions(+)
+>  target/arm/tcg/cpu-v7m.c | 40 ++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 40 insertions(+)
+
+This patch should go last in the series -- first add
+all the new features the CPU needs, and only then add
+the new CPU, so there isn't a window where the user can
+select the new CPU type but it isn't completely implemented yet.
+
+> diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
+> index dc249ce1f1..5cfda232cd 100644
+> --- a/target/arm/tcg/cpu-v7m.c
+> +++ b/target/arm/tcg/cpu-v7m.c
+> @@ -237,6 +237,44 @@ static void cortex_m55_initfn(Object *obj)
+>      cpu->ctr =3D 0x8303c003;
+>  }
 >
-> diff --git a/docs/devel/tcg-ops.rst b/docs/devel/tcg-ops.rst
-> index c417ebe65a8..56c0b0bd3de 100644
-> --- a/docs/devel/tcg-ops.rst
-> +++ b/docs/devel/tcg-ops.rst
-> @@ -816,10 +816,16 @@ specifies the length of the element (if applicable)=
- in log2 8-bit units.
->=20=20
->     * - and_vec *v0*, *v1*, *v2*
->=20=20
-> +       nand_vec *v0*, *v1*, *v2*
+> +static void cortex_m85_initfn(Object *obj)
+> +{
+> +    ARMCPU *cpu =3D ARM_CPU(obj);
+> +    ARMISARegisters *isar =3D &cpu->isar;
 > +
->         or_vec *v0*, *v1*, *v2*
->=20=20
-> +       nor_vec *v0*, *v1*, *v2*
-> +
->         xor_vec *v0*, *v1*, *v2*
->=20=20
-> +       eqv_vec *v0*, *v1*, *v2*
-> +
->         andc_vec *v0*, *v1*, *v2*
->=20=20
->         orc_vec *v0*, *v1*, *v2*
-> @@ -852,6 +858,8 @@ specifies the length of the element (if applicable) i=
-n log2 8-bit units.
->=20=20
->         sars_vec *v0*, *v1*, *s2*
->=20=20
-> +       rotls_vec *v0*, *v1*, *s2*
-> +
->       - | Similarly for logical and arithmetic right shift, and left rota=
-te.
->=20=20
->     * - shlv_vec *v0*, *v1*, *v2*
+> +    set_feature(&cpu->env, ARM_FEATURE_V8);
+> +    set_feature(&cpu->env, ARM_FEATURE_V8_1M);
+> +    set_feature(&cpu->env, ARM_FEATURE_M);
+> +    set_feature(&cpu->env, ARM_FEATURE_M_MAIN);
+> +    set_feature(&cpu->env, ARM_FEATURE_M_SECURITY);
+> +    set_feature(&cpu->env, ARM_FEATURE_THUMB_DSP);
+> +    cpu->midr =3D 0x411fd230; /* r1p0 */
 
-Longer term it would be nice to just auto-generate these from tcg-op.h
-and tcg-op-common.h but I guess we would need to see if kdoc can handle
-grouping of sets of ops rather than having to exhaustively enumerate
-every bitop with comments.=20
+The most recent release is r1p1, so we might as well model that:
+0x411fd231.
 
-Anyway:
-
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+thanks
+-- PMM
 
