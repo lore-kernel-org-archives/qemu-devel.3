@@ -4,106 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBE8FCD4F54
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 20:00:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19485CD5BD5
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 20:01:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSgu3-0003fx-CM; Thu, 28 May 2026 16:00:27 -0400
+	id 1wSgul-0004NA-Cz; Thu, 28 May 2026 16:01:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wSgu0-0003Xq-6J
- for qemu-devel@nongnu.org; Thu, 28 May 2026 16:00:24 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wSgtw-0003gs-2s
- for qemu-devel@nongnu.org; Thu, 28 May 2026 16:00:23 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-368f25ff4c4so7627822a91.2
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 13:00:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wSguj-0004Kb-AF
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 16:01:09 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wSguh-00044M-6I
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 16:01:09 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64SHEKoo1469334
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 20:01:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ MP5VBO+u8jAu0uA/6DL8d2gWmpW1A9XLqRwutN2157k=; b=eMbxqgD7rkoqnLV2
+ Qgw4wn5XF+Fcuv9d760Cy2LwHPcdSC5P3/zpx/tPoTmhMkX49EiTJ2QaGsuXsmIM
+ JGImplZZI8fvZUuyxDnJc5sVlm7ExQG5xlowCt+gfpEAvOMbVAC4tohp2Gs7qXsJ
+ yzUSbz3+jFd4LqfW18JD9vvObi4DxJtdeqMLV9lRI0oVsjAyvE+ub6e32wFK0I7C
+ xGXY1F9/IpD5MNGu1me/gV+PjVjUlvyHHCdwq9ineC1ickWRavHGVoO36CPoGWqn
+ 6wfAMpw+LXTJWuKSQE9Q2nlAxZvvG1U51jDBHxPgEP9MQjV2sGvchR/H+Xj+Uvbi
+ OwrJ5A==
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eesxa8qtk-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 20:01:04 +0000 (GMT)
+Received: by mail-dl1-f72.google.com with SMTP id
+ a92af1059eb24-1353a6f29deso623319c88.1
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 13:01:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779998418; x=1780603218; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1779998464; x=1780603264; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=fZLtWAblyRSu7LvWSy+oeSFyJEExHTciFgWuOWW8KVo=;
- b=TIpe4ZR/WT2oWvZuKsD0IynrosI8L9rNFRR3m/v2OryO4cDCQtjMkXeuDQooVJ38es
- aGDT3XUcvFBLQg8jga6EU33OIv4maGA0Nji/wRu85s7xf4btBIDxTxlP7ABqQdJnITvc
- bFBIN0xyNqmiP5M0kg4a3uvPNLlrMUv6Bzz4FKG+tsJJP30Ii2CcrLUNHDjP8CVvF3WM
- eCBqP8+2rkuJLR7SEAVi9IMpK2ECcDQ9HWMKuFW2QJpp8sI3hF1YqB2axpySx3CDRUDO
- mnvvKgoFM/2DI30UbVrDwh2Y2JyDK2lEG9lh45gsbL/OZQDfgfnbOeavGyTqp0qN+XAl
- piGA==
+ bh=MP5VBO+u8jAu0uA/6DL8d2gWmpW1A9XLqRwutN2157k=;
+ b=kKQNM1rY4wxC2OtdhAb+TOuB3bcnvw/55U+yn97qLQZQ5YnV1TKUz4yOQWn4t5ZQEI
+ MwLgGh+B2pPAadPGQnK7vtJZHeNIxyc6Sc8UPHyVUIDC9aLawi4e70Bw501Got+kQsiy
+ AMvTJMAxtI6FcZwGQFVXX97Gz43yAMzd8uldk6eCOuk8I8udx5Kf0wVSKMOHBsYjX/lN
+ 1Lo08GBI0GXdNHrprN2Czn70lItlsLI+wP6DrnlJQWtwBIlKWPYaEABtTlYZ+Ta/YV06
+ jAg4DuHTR5BtDrA6ATs5AalbzIGaVsfNZMvJKeELSbK8SUA+pnCLYoGksTXg6Gbd0cdM
+ IaHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779998418; x=1780603218;
+ d=1e100.net; s=20251104; t=1779998464; x=1780603264;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=fZLtWAblyRSu7LvWSy+oeSFyJEExHTciFgWuOWW8KVo=;
- b=EOVMKU+GzhBNChchtQLcDlpBxrMyffWEzXh3xQaE/QrwKByBbpAYXYsmF7u/D3vDUi
- KFxit5lzQY9AfSRnj+2mspGW57tzYkeepTFQEogJW/j/nRou6bSVJ/bikPHJ8HxTOKWo
- 2vva9pl04oL6CorsMqf079UTx77JjhaFL+VakRSDiB/Bty5owWGqSYRu/mTYDhonyyFr
- s/PxNEeymiML3xW1ylL4m7cEvhCq5XgFg3+jwG0z/qNQbLIxPCDVJkiQC2ztialgZBfm
- lrkncAlYSJreAkOHf86bcg1GbjIbN/qMrLP1K5iIEQO2k66A/1yEzlt3kcFzYqLItHpI
- w1ZQ==
+ bh=MP5VBO+u8jAu0uA/6DL8d2gWmpW1A9XLqRwutN2157k=;
+ b=Kaq8RJFQjIniMMG3kQvj21BSzlrt0Se0rsXMpJ716ppGtJUKMCmKelkjrDLV/Qfput
+ 0/DJ8H3NVr5xYIroG0AiFTHHSe6Q/KF/cQYUJB+pjSpZ+d5+qKuAgfetDLyWiHyrJN+V
+ 2ZyPB3l2YangecQeyiK1qczIGzLQrjSZ9z1/9bb6KVWCrSnORe0f0+aQ5xbrXrTdOvJu
+ 3RzLybd+k8zmr9HBbRFjCeRHqO7X6ujBAqH6jbLHVcmVboO5TkxSbwF4WejS8b/zrS0W
+ F8wHRpvfxE5XGq2FfOPItLkqQBEODeQ/5j4nB45wbSU13n9Zvm8vP6cD7+gi+M2ggC0B
+ 2XQg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+zSTrYrEf5W6d4/kFntYyZsB9079l6gOzsSk47Ge8Dejnhhpr46U0zQvpHh/mVmPVBkLjxlo8bV/DT@nongnu.org
-X-Gm-Message-State: AOJu0Yx5egcJTfu4E6325s3Wi1lT4vBBAuBJEpwyw6RSixrTN3Grlahm
- EPB+hGfg9k43Ipm8lFQmuRYHSeqW4a2uzTF1B6Gn6WeaKgJwE/Se76dMN7NDagLNMi4=
-X-Gm-Gg: Acq92OE9F8X94vDt1F3MDk8TU8He0cgI7wqFsgUi0x5QDUVfhGoZ05tq722iYPbPmeN
- K/mYN5dKcRmAJ5AgIiINvFYCmExu1aPPyo0LxchKgAApf+UEvY7FgdI6fTwIzeURItj5YBnyQZ/
- KEWErfP6sUWh1AxwGHSzmVCnYEzz5ptTY1xKLu8gV8XUXOwbW79/CfSDQtIlUTz6RwXy3K/QBfE
- JxKxFX7O+EW7q23sw2qPBPUfK3pnCUMoPeUsiMhz8xwggrjQJuqYpzxT/uUqBEdMu9DB0BI04uI
- T+N78r6ZSSGaT6B7ORboYD4fhMp4hpaYMLKGi81rREyoIX0DW3xQob/P1y02OWmLIy+9WZIDeH/
- MQP3TWLh5Y2qWkVieyHFZ05BJ4xZ4mO/QlXQOKG3tcfmyFuyumZxPKCzepKd7GjFZQVjzYHcDGW
- zrPa729lfWZihfKREv2feSOcUKbDX+anFBa7l9d8b2I0QPjBs=
-X-Received: by 2002:a17:90b:3a50:b0:36b:769c:e5bb with SMTP id
- 98e67ed59e1d1-36bbcc145cfmr53578a91.5.1779998413045; 
- Thu, 28 May 2026 13:00:13 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-36b9092ff50sm2189180a91.10.2026.05.28.13.00.12
+ AFNElJ9CDPKSMYH5n83B60RQUaSGlF+pREOmhm54VXxj/azol6gqLk6DHhw/O8fZqs8rI1KgSAs/fjOgyjS1@nongnu.org
+X-Gm-Message-State: AOJu0YzasdCDdb//zvDVzol5F86Vb91uDQwRGgxbtctLaQYBllE7Dlhp
+ BFjfMN2+okZpJBN71B27YLnRoHFduB5YF0QB0ch+sIMX7mlQYYkxx5iN/uU1ridgtvUHuIjY3FU
+ kfBezPPT0Pk/PRO7M0YgW9Ku5gXgd9UazwfXvi8ZtPPfq/qMcGyCZIlf9dA==
+X-Gm-Gg: Acq92OHXb4k0FERVY8fJv1kL0GeilBd9xVroHpniW9ZAt6qdSYq8WfgcgX5b3zSOAsy
+ D0SpxWtlDxanz/qCHR23VKc37L81IRRlrkxXHjXCNwgxmGpkt3V7pxkm63p8aQ7Ogtq+Bfr9LFO
+ AwtZWkHpdh9anB86bNG4vwLKEFwdI30iel21xvbIZzkukeFJAxzGykm3IaR2NKb70+DmAcholF0
+ IFFcj0zA++Tohf/BVlHV5TBeOqLVmwaBwNEOKBPH/Q2THsF84wyjMKq2yskX+J2BIvG61ZNvvkR
+ yKp5QGrle4Zx5KY+bbOPIE4eHq7ltHD1apatFu2NVq1psF5WMYYDGSvfNpZQk1CyZcExa2GEYOb
+ iJefW86VzMzPIZVVgbaw5HC8L3BLn/4HoMX7URVCSXGtLWqN30CkLaheM96Cj5OZ3MNOTwELXQ3
+ vSpuRvQmhPLPvFh7uIM5qyk+4n
+X-Received: by 2002:a05:7022:45:b0:11a:e426:911a with SMTP id
+ a92af1059eb24-137a8372614mr271147c88.15.1779998463934; 
+ Thu, 28 May 2026 13:01:03 -0700 (PDT)
+X-Received: by 2002:a05:7022:45:b0:11a:e426:911a with SMTP id
+ a92af1059eb24-137a8372614mr271123c88.15.1779998463317; 
+ Thu, 28 May 2026 13:01:03 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-137a9594ea6sm174050c88.8.2026.05.28.13.01.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 May 2026 13:00:12 -0700 (PDT)
-Message-ID: <cf5b2f6d-fbb8-4c9e-8ce6-94fecf2b6d9c@linaro.org>
-Date: Thu, 28 May 2026 13:00:10 -0700
+ Thu, 28 May 2026 13:01:02 -0700 (PDT)
+Message-ID: <595550a6-7efa-4e6b-b025-ae1253a029ed@oss.qualcomm.com>
+Date: Thu, 28 May 2026 13:01:01 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 04/14] accel/tcg: move jit thread manipulation into
- do_tb_phys_invalidate
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Subject: Re: [PATCH v11 08/12] hw/riscv/boot: Replace cpu_to_le32() ->
+ const_le32()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Brad Smith <brad@comstyle.com>, Thomas Huth <thuth@redhat.com>,
- Cleber Rosa <crosa@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Kyle Evans <kevans@freebsd.org>,
- Thomas Huth <th.huth+qemu@posteo.eu>, John Snow <jsnow@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Max Filippov <jcmvbkbc@gmail.com>, Peter Xu <peterx@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Brian Cain
- <brian.cain@oss.qualcomm.com>, Song Gao <gaosong@loongson.cn>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org,
- Warner Losh <imp@bsdimp.com>
-References: <20260526110243.470002-1-alex.bennee@linaro.org>
- <20260526110243.470002-5-alex.bennee@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-riscv@nongnu.org, Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ Anton Johansson <anjo@rev.ng>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Christoph Muellner <christoph.muellner@vrull.eu>
+References: <20260527201348.29511-1-philmd@linaro.org>
+ <20260527201348.29511-9-philmd@linaro.org>
+ <9d0853dd-5c22-4c46-9c42-a76d18230271@oss.qualcomm.com>
+ <e636c43a-a613-4819-a272-61fef832627c@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20260526110243.470002-5-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <e636c43a-a613-4819-a272-61fef832627c@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-GUID: ylAQKH5OB4rzHojWNoZYm_ZHpajV3Kem
+X-Proofpoint-ORIG-GUID: ylAQKH5OB4rzHojWNoZYm_ZHpajV3Kem
+X-Authority-Analysis: v=2.4 cv=ZdIt8MVA c=1 sm=1 tr=0 ts=6a189f00 cx=c_pps
+ a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=Nh7W5AI8wlZR7lFJBwMA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=vBUdepa8ALXHeOFLBtFW:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI4MDIwMSBTYWx0ZWRfX5rk+7vdQigjx
+ HDuPxEeGBYrg2QEx8a/W4HwLX4lmfSr75q/8TUMWDhPsugZoYm1xylcM2tyPNsVWNhCKUfW4DNl
+ 3JrRIjJDOQZHIkFZQjfl8tNsl44FzBRBq10UEt5EH4NGrzH9OjMJrKruZhf8QK+RmL/8apUmYrh
+ FRHqvxmb00W08dR3pMaVxuQRMdrYfqLKdpAU/e/Nth6caJnUZxFadeEFiwg57X8IHZ9kSDB1vYP
+ dvZTBK49etGQOW8poDRoVIisDxr7hV4vFI0NEb8StzznfsKlTZCfiFsdBoZWyrXqoiMuscr0Hez
+ XNm/1ivXZ5xvnMPI8Oh3dXbR1DuOUW6/byF5B7Pn1SSjFrBwP8z1Vjj60k067INFwwOF4rOurZm
+ Wuk9G2sX3cxDqPImJ+3vmbJzUu4UQCHey23llVpvWHmMKhAGW1hTjOa5nNifQIpp0IRQdnuVl7m
+ BygiCFFs1UvDDKACsCg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-05-28_05,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 impostorscore=0 bulkscore=0 clxscore=1015
+ priorityscore=1501 suspectscore=0 lowpriorityscore=0 adultscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605280201
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,29 +163,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/26/26 04:02, Alex Bennée wrote:
-> To invalidate a TB on MacOS we need to enable write access to the JIT
-> buffer. We were doing this for tb_phys_invalidate__locked but that is
-> not the only path into do_tb_phys_invalidate. Move the manipulation
-> into the shared function that does the work.
+On 5/28/2026 12:56 PM, Philippe Mathieu-Daudé wrote:
+> On 28/5/26 21:40, Pierrick Bouvier wrote:
+>> On 5/27/2026 1:13 PM, Philippe Mathieu-Daudé wrote:
+>>> Rather than adapting the array endianness when it it
+>>> filled, directly initialize the CODE words with the
+>>> correct endianness.
+>>>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>>   hw/riscv/boot.c | 30 +++++++++++++-----------------
+>>>   1 file changed, 13 insertions(+), 17 deletions(-)
+>>>
+>>
+>> One could argue original version is more readable.
+>> Any specific reason for rewriting things this way (performance, personal
+>> preference, other)?
+>> Not a blocker, just want to understand the original motivation.
 > 
-> As a result we can drop the tb_phys_invalidate__locked function and
-> update the calls directly.
-> 
-> This enables watchpoints to work in MacOS TCG guests.
-> 
-> Resolves:https://gitlab.com/qemu-project/qemu/-/work_items/3444
-> Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
-> 
-> ---
-> v2
->    - make everyone call do_tb_phys_invalidate
->    - tweak the if statement so we don't miss unlocking on an early return
-> ---
->   accel/tcg/tb-maint.c | 43 +++++++++++++++++++------------------------
->   1 file changed, 19 insertions(+), 24 deletions(-)
+> Looking at the following changes, I think it makes more sense to
+> have the CODE section const little-endian, while the DATA section
+> is swapped. Otherwise we'd need 2 distinct loops.
+>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+In this case, having two distinct arrays, and two distinct loops might
+be more clear IMHO.
+The function is called only once, we can afford this.
 
-r~
+>>
+>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>
+>> Regards,
+>> Pierrick
+> 
+
 
