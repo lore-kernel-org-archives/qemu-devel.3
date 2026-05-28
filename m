@@ -4,115 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85592CD4F54
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 18:53:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB6A9CD5BD5
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 18:53:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSfqI-0005iK-Pc; Thu, 28 May 2026 14:52:30 -0400
+	id 1wSfqH-0005i2-3I; Thu, 28 May 2026 14:52:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1wSfph-0005VX-4O; Thu, 28 May 2026 14:51:57 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1wSfpd-0003yq-1G; Thu, 28 May 2026 14:51:51 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64SCA3bL2692375; Thu, 28 May 2026 18:51:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=hqH3Th
- xfaAIDgyOqWkc/8895pavzJdRsMxDWv1HwpxY=; b=CihJdhQ6DNwMRv/soUdodc
- 8vZ0gF4PJe6dMro1pCR1/SfvWs0jbcCU/3teRtYMfxkAlZzvUDNr6Rv+w+ALbYo1
- HWoAvbip/J2kTnz1k6rEVLqAPRnAlpoP/5bNLhD7VuvVRaKxdK1nl54SlbztYP8M
- oulFnB2c1Pb7qLlbMwadUUhh8sBVD5XJxFQZQ/1+F7f87EuvlLUkDg4a4BL8FCbG
- I1O7008uWhoaO8PaB2qswOxpCFU9Ar7xEahhN9zsSjcXLRRV0PhICiyV3hpQNQBK
- qWfJew+M8eWpGu6PKNC+vpLfkzf347AMCBvGQYmOi5i6IfWoFHHtT2SedKoqIL7A
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ee884cq64-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 28 May 2026 18:51:42 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64SId54D012675;
- Thu, 28 May 2026 18:51:41 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4edjrb9juk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 28 May 2026 18:51:41 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64SIpdpZ2884482
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 28 May 2026 18:51:39 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8E5CB58059;
- Thu, 28 May 2026 18:51:39 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8499E58057;
- Thu, 28 May 2026 18:51:38 +0000 (GMT)
-Received: from [9.12.68.85] (unknown [9.12.68.85])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Thu, 28 May 2026 18:51:38 +0000 (GMT)
-Message-ID: <b288fe32-664b-420e-a011-b6a1df6ae9b4@linux.ibm.com>
-Date: Thu, 28 May 2026 14:51:37 -0400
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wSfq5-0005dl-94
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 14:52:19 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wSfq2-0004Jx-Rk
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 14:52:17 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2ba6485d219so101587345ad.3
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 11:52:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779994332; x=1780599132; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=NYsYQPPzASPlduWBTHd7CgXIQYjUbRELd2rXX6l4MtU=;
+ b=KqXxdchE2wELlrQ1nPIhUv4MAqBQ/ZILDw0A2sTmFJ5fGrOHpLwwJLRxKvSIaESRUY
+ 2pmsP3CQyxbH8PAO7SwGnqaFCQ4luAlhm0ERktf4PWcQzWUlgzPhggcpXq5cnPSw+vd6
+ DwFcXFdS+AUGaTjjyjZDMMwhy5RoDeZ0Miqqun5O+ZACxmq6j0cDyZoqYjCDMUR+4ReX
+ CD8nKdJgBxSgr0BNlAVSRIaJA8Fwy4L3QI2zIV82eB2sRk54AS/Njy6y/qiCMfL7rDmy
+ 4VlJRh0h7ox/q/trIkWYdTB5loizY/lXryvFL3z6QeoBnzf25Y5QWKxS60YPxyOhWJB5
+ 6/kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779994332; x=1780599132;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NYsYQPPzASPlduWBTHd7CgXIQYjUbRELd2rXX6l4MtU=;
+ b=qxjdwmzKwqTLP8zgcWjCBV7NGGotla5awF05mDJ8UjysrQmqsx3vmel+qrBrq77T32
+ TJWsrU3QP5ERI39bc5XNrqmcy4/0R+zgw2JYXM4ATZsn20UbgJt9cJONxaZVg7MdaH0/
+ s6C1iYOuChacKfES7rbyd46f2/5XRN0Zfbg8N5aZkZ3tAZ9NEspUFnCiE+bIhpOXra1e
+ afHgXkkGUAyiulwr393nbE4s54QTgLJnjAbVqHc3VcP6gWu3IwbHO35J1FjCwfjv3TrE
+ ttk/E4RaNUp1kKv6vmd7E4I9Zn92cDCurOLh/lQ7k7YXfP1Fzpg6m7YxcyeQjDN9vXEm
+ 8+fA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9WYzIXPyJZ41M7DX5UgQGp3/g7T4pqNjLLHzVruf1AXT0b/2iPJNLc/2vweWAF/ddFlStolBN4L48Y@nongnu.org
+X-Gm-Message-State: AOJu0YxxDthiav4xxvpM6geWrl7s+boY8zDlWR5Orlf/LoQdO8V/Qrt3
+ m5AAb897K0bIPdxSJzw9xEyEI+F7mttfEkh7yt0MwsbrdXF8Zr3jhduJuPJPlMWBRTw=
+X-Gm-Gg: Acq92OFNaqOg43a0j7bVQLDRVVu8HvPD4OHu/nkKcumf4ihts6XaC4+QZYdkA1TfGyg
+ 7e+V1C3G7iLp6nCEjsSmx1ERu1BFOduIAzwq5dp85RgKLBPMXl5JGRdn1BeXvuCxe6R7wx189e2
+ 2VGBFMneUmvOlBFpBS9p5HdLvX6X84FFCaMlyiK690oIogaV5JYUVLPL0JnOHOFQHe/VcjCAm+Y
+ FyfFgx2cqu1FtY//YRORilco+YVFbAw8tsfLGSe9BdAK25JxpwyW3HKLlA8FCii6Q+zpQ5egL4b
+ 4/g1kf/5qIhiFR63SIZ1Q5iY/ICcH6oHNiH9yVvcinCkwm4ls60bqjqnhHXGVw/C8U/E9FsIhIG
+ YtIOiEAc/oPR4ozMFLNIlj9a5enf8FlZ7wksYV/y3nTJ4crcKfAFSn+P3We4sE28xl4/ydpqpgV
+ wl7Z8qGz66IKDiYhl5rIIejglqfiZ/Lz5ZtXcLUUSQCB34e3U=
+X-Received: by 2002:a17:902:f544:b0:2bf:1748:aa8c with SMTP id
+ d9443c01a7336-2bf1ebf512dmr377265ad.26.1779994331936; 
+ Thu, 28 May 2026 11:52:11 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2bf1e821447sm251235ad.80.2026.05.28.11.52.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 28 May 2026 11:52:11 -0700 (PDT)
+Message-ID: <c5e98ece-ecad-42cc-9b83-154453f535a5@linaro.org>
+Date: Thu, 28 May 2026 11:52:09 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 22/32] pc-bios/s390-ccw: Add signed component address
- overlap checks
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
- richard.henderson@linaro.org, david@kernel.org, jjherne@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
- pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-References: <20260505201905.997996-1-zycai@linux.ibm.com>
- <20260505201905.997996-23-zycai@linux.ibm.com>
+Subject: Re: [PATCH 3/5] target/arm/ptw.c: Add Granule Bypass Windows
+To: Jim MacArthur <jim.macarthur@linaro.org>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+References: <20260528-jmac-gpc3b-v1-0-d34c46c5069f@linaro.org>
+ <20260528-jmac-gpc3b-v1-3-d34c46c5069f@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Collin Walling <walling@linux.ibm.com>
-In-Reply-To: <20260505201905.997996-23-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20260528-jmac-gpc3b-v1-3-d34c46c5069f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=fIYJG5ae c=1 sm=1 tr=0 ts=6a188ebe cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=MQLUL_whLfvqxDHUHTUA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: We9okNLh8qO-B1uqjb7rZeQHED14nW8K
-X-Proofpoint-GUID: We9okNLh8qO-B1uqjb7rZeQHED14nW8K
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI4MDE4OCBTYWx0ZWRfXweXgnfziesGl
- jbC8kSW6NzMrFrUUowDXYpLmv+a3tPGiJgppWzy8ly8XILFWUQQD9mKaiLvwbtu4ZSMtcHr5tb6
- b1+Di6sC2vFs78BRBU+fnDMCRh05u+UGhur25meKJFPRVXfEhDYZd3imTr1/kD3MjXm/gCVb1fY
- qQI+SjTbYJzwLN/seWkrHB+LhyLoASUzUrv9Rv7TOLauf/n5oQxgoOmhqwDb/01Kc8rd7NGN+4H
- ARPS+Z96MqzLdfRrbcdNi12RG0Z9KNjAGgVaxEzGWKc7DLEhJmU/Cft3rS7yBAbBhPOqV/1L65G
- 38AIojdzNNh/2e4MEnVUBHKCEiN/F61BoWe2OQHUSPivKhsC3Gw1haxLdYhZCSl2B6jmhBN4KvF
- gcKvl9sGX7KyOsii3SJHZw4TjRJDpr0+PxVOr5p85pUNVakJo/cf/iVY83BawcI4+NoqzdxtcGk
- RQB/sBt9vSxfK16q4Kw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-05-28_04,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0
- priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0 spamscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
- definitions=main-2605280188
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=walling@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,36 +105,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/5/26 16:18, Zhuoying Cai wrote:
-
-[...]
-
-> +typedef struct SecureIplCompAddrRange {
-> +    bool is_signed;
-> +    uint64_t start_addr;
-> +    uint64_t end_addr;
-> +} SecureIplCompAddrRange;
+On 5/28/26 08:34, Jim MacArthur wrote:
+> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+> ---
+>   target/arm/ptw.c | 50 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 50 insertions(+)
+> 
+> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+> index 0a5201763a..46568cc5cb 100644
+> --- a/target/arm/ptw.c
+> +++ b/target/arm/ptw.c
+> @@ -341,11 +341,21 @@ bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
+>           .space = ARMSS_Root,
+>       };
+>       const uint64_t gpccr = config.gpccr;
+> +    const uint64_t gpcbw = config.gpcbw;
+>       unsigned pps, pgs, l0gptsz, level = 0;
+>       uint64_t tableaddr, pps_mask, align, entry, index;
+>       MemTxResult result;
+>       int gpi;
+>   
+> +    const uint64_t BW_ADDR_SHIFT = 30;
+> +    const uint64_t BW_SIZE_SHIFT = 30;
+> +    const uint64_t BW_STRIDE_SHIFT = 40;
 > +
-> +/*
-> + * Custom struct for managing a list of secure IPL component address ranges.
-> + * Tracks up to MAX_COMP_ENTRIES address ranges with an num counter.
-> + */
-> +typedef struct SecureIplCompAddrRangeList {
-> +    SecureIplCompAddrRange comp_addr_range[MAX_COMP_ENTRIES];
+> +    uint64_t bw_start = FIELD_EX64(gpcbw, GPCBW, BWADDR) << BW_ADDR_SHIFT;
+> +    uint64_t bw_size_field = FIELD_EX64(gpcbw, GPCBW, BWSIZE);
+> +    uint64_t bw_stride_mask = -1L << (FIELD_EX64(gpcbw, GPCBW, BWSTRIDE) +
+> +                                      BW_STRIDE_SHIFT + 1);
 
-What about using a IplDeviceComponentEntry here?  It has an addr (same
-as start_addr), length (same as end_addr = start + length), and flags
-(can be checked if it's signed).
+This appears to be the inverse of what you wanted, setting high bits instead of setting 
+low bits.
 
-In fact, couldn't the existing IplDeviceComponentEntry array inside the
-IplDeviceComponentList be used?  Then these two data structures aren't
-needed.
+Never "L", always LL or ULL; but here you certainly want MAKE_64BIT_MASK.
 
-> +    int num;
-> +} SecureIplCompAddrRangeList;
 > +
+>       /*
+>        * We assume Granule Protection Check is enabled when
+>        * calling this function (GPCCR.GPC == 1).
+> @@ -383,6 +393,28 @@ bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
+>           goto fault_walk;
+>       }
+>   
+> +    /* At this point, GPCCR_EL3 is valid */
 
--- 
-Regards,
-  Collin
+Not true, because you added the new block before validating PGS...
+
+> +
+> +    /*
+> +     * GPC Priority 1 (R_GMGRR):
+> +     * If GPCCR_EL3.GPCBW is 1 and the configuration GPCBW
+> +     * is invalid, the access fails as GPT walk fault at level 0.
+> +     */
+> +    if (FIELD_EX64(gpccr, GPCCR, GPCBW)) {
+> +        /*
+> +         * GPCBW is invalid if the base address is:
+> +         * not aligned to the size programmed in BWSIZE, or
+> +         * greater than or equal to the stride value configured by BWSTRIDE.
+> +         */
+> +        uint64_t bw_size_mask = -1L << (bw_size_field + 31);
+> +        if (bw_start & bw_size_mask) {
+> +            goto fault_walk;
+> +        }
+> +        if (bw_start & bw_stride_mask) {
+> +            goto fault_walk;
+> +        }
+> +    }
+> +
+>       switch (FIELD_EX64(gpccr, GPCCR, PGS)) {
+
+... here.
+
+None of the checks you're adding are correct:
+  - Missing size and stride validation,
+  - Alignment check vs size is incorrect; you wanted
+
+     bw_start & MAKE_64BIT_MASK(0, bw_size + BW_ADDR_SHIFT)
+
+  - Check vs stride is incorrect; you wanted bw_stride <= bw_addr.
+
+See GPCRegistersConsistent().
+
+> @@ -431,6 +463,23 @@ bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
+>           goto fault_fail;
+>       }
+>   
+> +    /*
+> +     * Bypass window check.
+> +     * I_JJLRM: Granule Protection Table (GPT) lookups can be skipped
+> +     * in portions of the memory map by using GPC bypass windows.
+> +     * I_XNHTX: The GPC bypass window check (...) is performed
+> +     * immediately after priority 3.
+> +     */
+> +    if (FIELD_EX64(gpccr, GPCCR, GPCBW)) {
+> +        uint64_t bw_size = 1 << (bw_size_field + BW_SIZE_SHIFT);
+> +        uint64_t effective_address = paddress & bw_stride_mask;
+> +
+> +        if (effective_address >= bw_start &&
+> +            effective_address < (bw_start + bw_size)) {
+
+No need for extra ().
+
+
+r~
 
