@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A103ECD5BD5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA422CD6E45
 	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 20:24:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wShGN-0005Ty-Ow; Thu, 28 May 2026 16:23:37 -0400
+	id 1wShGV-0005ZF-UB; Thu, 28 May 2026 16:23:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShGD-0005Pq-8c
- for qemu-devel@nongnu.org; Thu, 28 May 2026 16:23:22 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShGN-0005UO-Vx
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 16:23:37 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShGB-0004NI-P7
- for qemu-devel@nongnu.org; Thu, 28 May 2026 16:23:21 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4891e5b9c1fso115039895e9.2
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 13:23:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShGJ-0004Se-Su
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 16:23:30 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4891e86fabeso40827355e9.1
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 13:23:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779999798; x=1780604598; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779999805; x=1780604605; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=NCrNsYdpQ4POaRbQCB6mOx3g/coWeirmwIs30Ac2Ibg=;
- b=vj8zBRtU/5kS8MxEdVRjGZZfZJT5mLgIdWluqbN2PfPrUrit5C2is5F20FX+qEUkhC
- i+4/bhI/RFF/XOrI8ghSmwOay+dk/LY0JQ2AQgam1CAR1CVxgZECdBR0Qhe5bu/0FzOg
- Ckv9vwVKLG3x0wfy6V6WKgo4Qk32x+AZ/WELJ0Wl8rWQo2BbtRM1B5nbUG+/BsGhO1B0
- 720qVC5r4yCuRM1oVpisa2T8Cw1rTV1r6r7zFmO3JBSd9rC5jFumOrn+OHYv62eaP8dY
- 4rUTwo+INTTAYd8lvVDuN2MeissVVZrLOXZ5CJ1u7avFMynmYPcsY1/hSloJn1P4jKna
- zBUA==
+ :reply-to; bh=nvErN0bH3sh4BO43KLmMySscIIcKgO6HqL3/2HV3OAw=;
+ b=d2HJwgCGezQ3G2FGYWNqh7f0XtCTy4Jr05mFwfCCYI4JUBBfYl3trcX4hg3vmYtQtU
+ zS5cY4GdV3MOj2mRkYA8yuz3yCLjV20Hfj5P9OAUbneaBoPba11VPsBUoDcpop1PSgUu
+ LnYjpOQz7BgaO5dxcbQ9WfrpLaVKcaCRfjIXyrrdEDjzLxpv7ir2N3cY3bDpr2zYUxsO
+ BoPuhDr6XfiV+Ygb1+HrfDAZcDSlgyD2y0tLGOynKE4n6ve2nG9bBKiHCi2rThW+wnDb
+ hFPnmDAhNybr/0TZPzEpKcxePJOUf2tHwYGb91vapR+ZWLouO+4Sty0cp1s5NqhVt4+3
+ hKZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779999798; x=1780604598;
+ d=1e100.net; s=20251104; t=1779999805; x=1780604605;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=NCrNsYdpQ4POaRbQCB6mOx3g/coWeirmwIs30Ac2Ibg=;
- b=gILUybpVD4UR4EUMF7bKTThf3PUz9/ANZba15qcMJNt/wg/lOPTUNv9uX0WtVvXn3p
- ZYOwjKA7xXP53sugmsMcgFraBUl1s/bH98V4PSNod8R1yL4B6xowFS9brVdH5fQ/zkKN
- mlGaWcI2XFjS173gSFl0pC088mnwuIPB9DAmjfPwW9S4y3jCf3+aEK10awoWG+QNS+FA
- OiPWV0xj+md7JcDD1TxYuO49AONvCrG/ff92Jm+4TxFjaUHmMzTc08XlklU+VGtwUfNS
- i+AsjGbf/h1M0pHlgRD0RnBE0vqFxATq67qLQjZVt/19FFJp/NvsLJ7A6WmFfJezXqi2
- 1zwA==
-X-Gm-Message-State: AOJu0Yx/2v3mGtUremxdec9Y6eZQkotpRyEj2lYLbrlQtdtgIeSirybe
- UagabG15rGiSsT9L86NiRsWwCEQdfZdTgWXMCFfiORy53ZwvGfnYCQ+FZ9/8CNDrTPN9M4iekok
- EnswezNy9LQ==
-X-Gm-Gg: Acq92OE5rq0yFMeiLwmIfKqy5ms3hIIQT1v4+SM0Z+DmOxlCSWXGdj5sd+dXjt3xoMx
- 4vb/ODyHl1YGbZCLKM3IbWdu8nQPgCkLsc379Zf+J0brjsDR2dgXqP4TlJjON8cAcyX80Ekjeuz
- ov3/AKeH5A7AMXX7s4sPO6RUynnUhliN82uOOyDBWOjhoPt0fShefyHKEIcSHmEKHc5nv+iRLqg
- vUULs3P9K+7GlM+YIWzlobq6aCKPAbgT4PMN0Yj8uNNrWmDP+QcIF14f+1w0oQkkz7WDWALjTlt
- 65E3b97tOE9bXaATzO4usL+k8zZgHxOv3myVdEPKj9WRGwbNHldi3+m4mTg/PKTqctGGQIm045v
- dXlklzhNzduDyNQ7YMUrZzxHgljpvNNYpSH25ausM81/3w4mcz3bw98EKwhUPgZzO9cQDfoM0s2
- /pW+MZO+d3h7RT+efCCMWCeZGNGbc7bluZi27meQTv4Q+5OS0PRUzpjBWtyDYeUP4ISA==
-X-Received: by 2002:a05:600c:630f:b0:490:3c94:a3c6 with SMTP id
- 5b1f17b1804b1-4909c0b6cc2mr487085e9.26.1779999797965; 
- Thu, 28 May 2026 13:23:17 -0700 (PDT)
+ bh=nvErN0bH3sh4BO43KLmMySscIIcKgO6HqL3/2HV3OAw=;
+ b=Oee+WGqpauuu+Id90KUODBOIo5xRWufn98xwEYbMbLKeS18rJwSrmLB6AFoRkAjmr/
+ 5DJoJ1w8VkSz/FVEIiHwXcv2H59prF7QIjVja20Z5yhfUJyXLx5SOvLENxb9K5jRIIRA
+ 9hW8Dds0gyTRSECFSJ3Wlz+9sr+2xWBcC9dallWOv4++QPRJFPWdHOTcVd/D3ukwgOZ8
+ eA0+1Q041ZH5UVpV+hQsryvFVEMrGy14BpvP8Tc5ZB7OpDN3Jylhm3VJBhLOUCzWODQb
+ TA8xhc310nciojaZ6Dt2mVpoN50nI2v8pMweQLZXohzFKd4RyFGARQmB+xrzWTrH0MvH
+ s/LA==
+X-Gm-Message-State: AOJu0YxDrqybYjwicDqC7kG94Wm4qgVLA9PCesmuR62ZSu4xcV4AZIef
+ 3MFIuzXOq6gW5S69Z+aWMXnLFCypK7hrZS9mh7iMXXiazey0AL9DsEolvE5iRUvVBRjsEkLCko2
+ kipqSiWyhng==
+X-Gm-Gg: Acq92OFk1L8tX7NDupBqM2mczZO2tV6bH8vTUZ3IBownwqke2BhjML9awPElSZQx2QS
+ TYNE6nKV7lXIH4QAe1N6WDnAFZlGG52bRui3YuqBoqVY2fyC9b0cSGfJn2OJxRRw98v31Wor7oM
+ dXN/S2Vx+H9k2EQ4X3u7pYsXN3qdhHNWnCIKhEIooxb8Oeyj5eNbUYXMNLFB9dM0lICbYnTKxhi
+ JOqfSS7TxUuN14POLjo3CwGV7dSPZj4jAMNYCLe/2fbGeHOxKm+D1Ouq27r5ZxTcWbSG2uV+MXr
+ bv0vIpKvorrEMjucmAkleSYeB4U7Y3UWGIqJYVWhdU6CRjgb1US1mjXGioYfoQfH5CBIjK7SIA9
+ NTj67Sqa12/1El9ZzlMlgbZnNqB0RkTJhTiP3HpUUuwVcTOyFm3+C6zeGt+kPKDu9/SoKklFuno
+ esnuhBCiKrP4IzUAb+ewmMcJU2CECzP1qRWjMxjLRyE8NlLaYk1fvDHzOERgA2rqMxqO0gYEFgT
+ o8S
+X-Received: by 2002:a05:600c:4f83:b0:48a:563c:c8c5 with SMTP id
+ 5b1f17b1804b1-4909c08253bmr807565e9.8.1779999805280; 
+ Thu, 28 May 2026 13:23:25 -0700 (PDT)
 Received: from m15.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4909c09adedsm140105e9.2.2026.05.28.13.23.15
+ 5b1f17b1804b1-4909284a8efsm72506135e9.9.2026.05.28.13.23.24
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 28 May 2026 13:23:16 -0700 (PDT)
+ Thu, 28 May 2026 13:23:24 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/22] monitor: fix missing spaces in screendump help text
-Date: Thu, 28 May 2026 22:22:33 +0200
-Message-ID: <20260528202253.49122-4-philmd@linaro.org>
+Subject: [PULL 04/22] docs/devel/tcg-ops: Stop listing dup2_vec()
+Date: Thu, 28 May 2026 22:22:34 +0200
+Message-ID: <20260528202253.49122-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260528202253.49122-1-philmd@linaro.org>
 References: <20260528202253.49122-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,32 +99,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Knutsson Development <development@knutsson.it>
+dup2_vec() opcode was removed in commit 6e7b13936d4
+("tcg: Remove INDEX_op_dup2_vec").
 
-Signed-off-by: Knutsson Development <development@knutsson.it>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260410151818.817298-1-development@knutsson.it>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-Id: <20260504125032.35465-2-philmd@linaro.org>
 ---
- hmp-commands.hx | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ docs/devel/tcg-ops.rst | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/hmp-commands.hx b/hmp-commands.hx
-index c3a1a95c5fb..0d780e6da30 100644
---- a/hmp-commands.hx
-+++ b/hmp-commands.hx
-@@ -271,8 +271,8 @@ ERST
-         .name       = "screendump",
-         .args_type  = "filename:F,format:-fs,device:s?,head:i?",
-         .params     = "filename [-f format] [device [head]]",
--        .help       = "save screen from head 'head' of display device 'device'"
--                      "in specified format 'format' as image 'filename'."
-+        .help       = "save screen from head 'head' of display device 'device' "
-+                      "in specified format 'format' as image 'filename'. "
-                       "Currently only 'png' and 'ppm' formats are supported.",
-          .cmd        = hmp_screendump,
-         .coroutine  = true,
+diff --git a/docs/devel/tcg-ops.rst b/docs/devel/tcg-ops.rst
+index fd3a50bf4c4..c417ebe65a8 100644
+--- a/docs/devel/tcg-ops.rst
++++ b/docs/devel/tcg-ops.rst
+@@ -769,11 +769,6 @@ specifies the length of the element (if applicable) in log2 8-bit units.
+      - | Similarly, for a constant.
+        | Smaller values will be replicated to host register size by the expanders.
+ 
+-   * - dup2_vec *v0*, *r1*, *r2*
+-
+-     - | Duplicate *r2*:*r1* into TYPE/64 copies across *v0*. This opcode is
+-         only present for 32-bit hosts.
+-
+    * - add_vec *v0*, *v1*, *v2*
+ 
+      - | *v0* = *v1* + *v2*, in elements across the vector.
 -- 
 2.53.0
 
