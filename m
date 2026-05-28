@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7DA1CD6E44
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 15:03:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C690ECD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 15:03:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wScFy-0005NG-Ii; Thu, 28 May 2026 11:02:46 -0400
+	id 1wScFz-0005Qw-HW; Thu, 28 May 2026 11:02:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <314abh@gmail.com>) id 1wSbyz-0001LO-MR
- for qemu-devel@nongnu.org; Thu, 28 May 2026 10:45:13 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ (Exim 4.90_1) (envelope-from <314abh@gmail.com>) id 1wSbyG-00018b-NT
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 10:44:28 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <314abh@gmail.com>) id 1wSbyt-0007kc-Ig
- for qemu-devel@nongnu.org; Thu, 28 May 2026 10:45:09 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-837b39eb078so8959684b3a.2
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 07:45:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <314abh@gmail.com>) id 1wSbyE-0007NC-9O
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 10:44:28 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-8379e010b01so5571450b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 07:44:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779979506; x=1780584306; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779979465; x=1780584265; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=GRFZxMW1/uepakyjETGNiaM+FXY8gaKdWbloOt0XkX8=;
- b=cSpOAdt+gYuY3SuN3BP2wK/k91EjyrMsozFbnUfI6CbjwlCaecd20XWJa2+lEO+6Yi
- bYDyGvkSHuFSwLLPK4pQxblauHpMyjfUH9uaoNkffbUHYduj/ApIRBmFJsnPFeKk6KsF
- YZXxfmUGT92A0WxFXGJQSNOmmp5TcgskJwoRnSh3P8Blf5SoksSeui5UgG3Lpeevm7fF
- lMx5/Qve+nhJC9W1zkgS4eXa3QjXkyAiO9/VwW+YXYUeP81oat/QzGAOa/fNIT3Ldnck
- CMBdBxytSSk81vuS2foV4hph2Pj6Gw2ErmyNdUBXBjbV6KbL0UaHeOCcP9SvX54hY4ms
- dKZw==
+ bh=s3OGZYfXnteRuvNA+6MIt19Oh5drbLD/0Yb8FeJHQwI=;
+ b=OMTstlbQAa+Gv20CjWbNP6nryJ9cIU+6VAhXBt68AwPQ50hrFPe9xueC44USSIw3+/
+ pwEMGqKfDtqdEyjH/XWkP3WHoNnMCeWNuAqQmMz1/O+riCHVZH3v2d7YiKkgbppUR03d
+ kl5Z4U6gPwP8EBfJrdAMIpQvmXE0VAa6Slf0+sKStXV+Up0R6d0x/VhqNu4YcLWLWjCs
+ STfXqq86PgzSaUM0hc8HC55idGdgMXMlLSyMCa7TQtTxteA3nV+5M4yuEG2XVq2chucy
+ LJ42jAvnJpbTUCPujUii3O77Kv7IHWh+a9brkfWrZZ9AXkK4A6kCBJvfBczq0okDz8q8
+ eSrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779979506; x=1780584306;
+ d=1e100.net; s=20251104; t=1779979465; x=1780584265;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GRFZxMW1/uepakyjETGNiaM+FXY8gaKdWbloOt0XkX8=;
- b=Ki09keaFBGmGS2BU/PNJzzM1XkkE+61AXYQ22ljwS8u2vZC1byH0NhzkUYoi/0EdNz
- znS9fpiS1+uxbysxQPpOReIOcvjNQeJq/4ydKK7vdJ8UJaFTPuHrpZG4G2rXExEOGS4J
- JlndXJZt9/2Ac+3x9Hff875YFLb1htGhLFg8bGn0J887XycluWEhiV/csmkp14RymK4I
- pI+aaug6kcCObzBvIE5S14SyRXAo5/42llUUw2+TIFIAVQltCuaaUe6aSoHZ2adIlg0T
- 9/NJlXFc65ogUGsEXbrDdT4KgsSAVvmQPK7rlmF0H+vI+ZVY652fugE6wr+5UczFIaNg
- R4DA==
-X-Gm-Message-State: AOJu0YwfukA5TSevljp8TymdNgifO4fzrGBYjMvFcXM3F4Zpxc5cCEB/
- 0e3zqO+N+IDvvtLAOvmEsWH1stZC7zleYJ1Du1OxkInAJNQKUKmXspCshtSlww==
-X-Gm-Gg: Acq92OGWV7HnFxa2cOQevBWPwshnBLwVeQAgZkTtjD9qpzzsMMpLADqZtNrjo5TIatJ
- l655hvx1w6J/mlHJ6qd2DW0lvGCRPtg2OjHnfkOrnPotl3ir2MK1Wi1CDHf6DNJ4U49yyZpei0U
- Rq/IjhDYj4K9h8O1SYTEpwgk2uUg2O/NXNMunE+lCl0Fymnr7S1ZYkxOHTrdL05iZViREYuFQLt
- 06gMPV8bI4GspyJO4yJQvjWyGKkyxusnbuLbEP6LQ6wUiq31l52gC0qzyWEpntlIbvKR2lnVY/3
- KeNR8o5B/wVf5xRhWVQV4H9pWQuk1/iu9d9aphgRh1KBfPnIJ/14j/+1oQL1+yk3mO4GNUpdIP5
- JHGTLIoGRrcMmsnssWbz/kORsxxuJVBpXbcxrfzSkUKYZW4VVBcDlhenXRIiRP4Vu/x21AX+B5h
- Och8EJAlrL0ZCPj6wRz/Lh
-X-Received: by 2002:a05:6a00:1ac8:b0:82a:65fa:cecf with SMTP id
- d2e1a72fcca58-8415f3b0abfmr25911526b3a.4.1779979505838; 
- Thu, 28 May 2026 07:45:05 -0700 (PDT)
-Received: from arch ([112.133.246.27]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-841e403bb3csm4024715b3a.32.2026.05.28.07.45.03
+ bh=s3OGZYfXnteRuvNA+6MIt19Oh5drbLD/0Yb8FeJHQwI=;
+ b=sCaVoUybJFgPsfIc9p0cOHFj/ciNtxYQy48hBIDJ0CVqQT/AoRABkP1JC9HLS3bg7S
+ +G3OS5tN81vqI4ynzx0y8Mu+k8QCStfRr1yfJ4N/Zf9FU42o7fETYiYfcYCerInbcroA
+ xXJQLQMmfK8AkbTbNSwi9bVY+ZjgASaXed8MSurM5pgDvbrOOj5LXNUZwBzxefumPmWL
+ jEjDbImwDLyzBFI9SCtdC1gxZMxexPAqRBgYnSzPhSlSNAKe0U2Gj2NcUt3FJrBZUEhp
+ sIyj6jrRHZ2j1HE65ptVZ/B1GGbi+XILjruD4gLKSZu7KT498aGLDdHoVepOygJXZaey
+ UArw==
+X-Gm-Message-State: AOJu0Yz/P47ue6ptorwWl1b3XbvckzBjFwFJMuPJKPEwjhpqhW7hGsRy
+ HNaoJp2ZZ3tqaNm5EUq4HW2EjVL4pLGhn+d8vRzFy46LjP9gJ2yGeX/5XopqmA==
+X-Gm-Gg: Acq92OHqwYOwxspj7qSfTaLn1fW8odQ+lqCEp5lazgcOYRrHxKtGTFppPful1DuayBj
+ OBeGfnSWW+zvVAJnHOyYTh36FiTQ5l5n54IcRbnduCytzYaQUOgrGU2Lr0FDLd5wK0VEgByitBZ
+ euyOty2aKRebDizgvPI5jourp58vjUm43Kee59yuQY9snxjWSDmXo/HokObF5pU9M1wjXqIs2zD
+ 7BtlFhT4gpGNCfs3e5jzKBlOR+Cs/Cmiy3Urp6g7dy1zS7F3yI/aDdnP4kRE5au5XPyRUoFnHB0
+ 1FpxK2paFkvin6WxiXzjfGMbR+xO3m6UDQ4d+6ZCkik7XQfHc6Ec8dlOuAkVSbgoQu806JE4C3f
+ UmJwYe3SVn9/kGbMJiKTwRlS/5OibgCxgxWCb87BQofeAge4Kd+lbWh4lsfA1LDye+UJirbaskG
+ dcMu7wPiouiRVVVNxt1egBQWgn5jiumOs=
+X-Received: by 2002:a05:6a00:6f61:b0:841:dc7e:5891 with SMTP id
+ d2e1a72fcca58-841dc7e5b91mr6104211b3a.0.1779979464660; 
+ Thu, 28 May 2026 07:44:24 -0700 (PDT)
+Received: from arch ([112.133.246.11]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-841d6e80c2asm6080524b3a.6.2026.05.28.07.44.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 May 2026 07:45:05 -0700 (PDT)
+ Thu, 28 May 2026 07:44:24 -0700 (PDT)
 From: Abhigyan Kumar <314abh@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -67,13 +67,13 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Abhigyan Kumar <314abh@gmail.com>
 Subject: [PATCH] target/i386: Fix incorrect tcg generation for RCR & RCL
  instructions
-Date: Thu, 28 May 2026 20:14:57 +0530
-Message-ID: <20260528144457.682901-1-314abh@gmail.com>
+Date: Thu, 28 May 2026 20:14:14 +0530
+Message-ID: <20260528144414.681987-1-314abh@gmail.com>
 X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=314abh@gmail.com; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=314abh@gmail.com; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -13
 X-Spam_score: -1.4
 X-Spam_bar: -
@@ -104,7 +104,6 @@ we skip the immediate if branch. This causes 0 to underflow into -1 at
 tcg_gen_subi_tl(count, count, 1);
 
 Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3452
-Signed-off-by: Abhigyan Kumar <314abh@gmail.com>
 ---
  target/i386/tcg/emit.c.inc | 2 ++
  1 file changed, 2 insertions(+)
