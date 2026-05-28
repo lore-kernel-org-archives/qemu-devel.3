@@ -4,113 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DB96CD4F54
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 12:56:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D701CD6E44
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 13:09:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSaHY-0008Gy-5Q; Thu, 28 May 2026 08:56:16 -0400
+	id 1wSaTi-0001uK-Ct; Thu, 28 May 2026 09:08:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSaHS-0008Fs-PA
- for qemu-devel@nongnu.org; Thu, 28 May 2026 08:56:10 -0400
-Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSaHO-00080a-VE
- for qemu-devel@nongnu.org; Thu, 28 May 2026 08:56:09 -0400
-Received: by mail-yx1-xb132.google.com with SMTP id
- 956f58d0204a3-660390acd71so943545d50.1
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 05:56:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779972964; cv=none;
- d=google.com; s=arc-20240605;
- b=a7sgAARjYkl56NeTaxqi9UrK9QZHWq4KnbnBXM5hKGruXfNFjeCFLQ3iZnXGc2aoyB
- hHxoVmlGp0JWm/UQJnDgIXlriCzi89gP87byzHhznXK+9VjHMtnvqSB9NhoqaKKkQoJY
- ho7u7nuti8aikTHb4w7XQok7YZQ8buOejVmo5PWq+OM4NE3glq0FsWgOaHiYHka+PYLw
- PB4aihTiTcAxO8jc4W7oz9hHexudlgaVvd9Mbk9i+jYTVKxdy/tla36/nxKQpZFHWekj
- ae5b9uZYUEWzU75kisHSEGebOweDpr12kCViT+WF1W0H5kpZxZ8KXO3xWmIWTptpEEpA
- 5S0w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=+5yjlEgM1kw2CqWiW/w+YsADSYuG4xsPIjdO5G70lcI=;
- fh=uCmUPCW8pkfAYUb2TNqBA1N8JsXLaq44DlF1L+QbvNc=;
- b=OUXWqObOVJ2mydptchDlpujrsLDDSfHI0IGls327FkulndyvEEOQH5/fvdeM7jYqKD
- zhmz5fCvSnE6Wc3QVtEmwp5anrXu1SgAbvh0hB19MZ5YIZXJ4QO95S/StRFKAK8ISmcL
- LbwA7wZ76FmGbC2EPwroP5zDO5t/Ws16qafvbjC1G2yD5KQe5UIqWobnlxJArrPbL9U8
- 5uUFcvqX987xF2zEcaj9Hu1sFF1+S1dz6Onb98ZUy0P/KnriSHNXc9eHWZfoaKM1v4PL
- Qj78/z4wilXZn+l4F1A9+KFM2L6cHwFA+/WcXikN3m7JakCUHQWo7mkjiBhs/NYWrM0Z
- SzCg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779972964; x=1780577764; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+5yjlEgM1kw2CqWiW/w+YsADSYuG4xsPIjdO5G70lcI=;
- b=f7tWuw0vqhS6Y3x0JKll8xttwP0Fneox+nMUbvz/LYbPdbzI1MLVbWB2Cw1YaY0A14
- WzmyRZrqrtMpLYRHXgJ0JT5HepLeVBnOuJJ0NSTnl5A1QlocXEo7gc/yQWCLQKSY1ezM
- T9pW6G/so78RuhRQlIk5dwttb0ZbGwvyN/b50Qv200+s0Q9EoYKD+UyxAYCQTyd1uk11
- QOAV7h2NitqrH52BlJ2tVHbJrSb0TfNqwh8txmLyR2HZ+AtkdVlzzPmmieRFTqlKq/UQ
- ersGodsllx69PZuPqyTI1WYGh9yYoEXZwmZq9HZiGp6R66sM0/PhvhiXQZy9nsbu6K5X
- CCFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779972964; x=1780577764;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+5yjlEgM1kw2CqWiW/w+YsADSYuG4xsPIjdO5G70lcI=;
- b=MvNS3j0m3THp/3btkxF5f2iYjZxKZX+WrYDygXLFajkY4Y64HXU0lpQ9rrSWNcfJOt
- p6IE6A5QzWXZXTDUyhvGyDrFf+KbhJW4KlFC1kN0c1psnwZ43qgCdHOfZIn/jZG/lux5
- ldGBl9aBDzodJbAJWtzz8DUo9RAwjafM3mLjTnQg2YpDyz5ET9sZGpPe0Jfy6lqFddv5
- nJeZ1iLyNPl0fRabh4ntntnPGgesKQipFIEvw+5dWMa8L1fzsclkazTsZJDWTluqEqkW
- QyYxuAz23GNLx9bs1BwbUaeZ8KqtqkRE1fhspzPqyTmZnyQnGBFqrHC2sKCeFyaBRgdU
- rVNA==
-X-Gm-Message-State: AOJu0Yz6e+36MexcoY0bJLMkrOrgugL+UpbwgmshLQQxP486mIIEWWJb
- +1dpw3oBvm/QZaOcXCA6rZHUWM9UP2wI1qm2Ur6m/kgIM0RYiqE+auWWBRCm+RVhHHWy+wu6Sbh
- rTtiSYSJB7Qnz15bR7+kYaKaCaBZDztlmkbD1FhZ2bw==
-X-Gm-Gg: Acq92OEHkz/vF16M1aaV35pAY/lwGueL6cq/X1b0d+AX7U9hb8+n331VrhX26fUSPgr
- i5VXQKG8JpqtsRbmThzC7wvH+S28vHblKzdJoacDY8hub0egvFH41/O2VPp9UGNYNgXY7vSHwnb
- Op7ZtHzeucDNwTI7/QlgkUrB29BseOdEIgTCs11VI/k8F9aKxBz0mRBOWcFwzDkOB9DoDeX+6ng
- mt/WGl8T0RNL2S+003aWEIG9/cqnQDrOEwvpU1mpuXa0wrdlHODczIHU5vtmrrCt3NAz6+E74px
- 65dm8bJvYHXmD9pVM9vNfGHLKgEIScnE8p13t9dcCz+t+5Tz63ENPMM4j9jlSwWtZDoQCdWVAQj
- R+f+QzoxFclT5
-X-Received: by 2002:a05:690e:1905:b0:65e:1cab:c245 with SMTP id
- 956f58d0204a3-66044a2bb05mr838417d50.4.1779972963907; Thu, 28 May 2026
- 05:56:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <david@protonic.nl>) id 1wSUgx-0007la-Ou
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 02:58:07 -0400
+Received: from smtp28.bhosted.nl ([2a02:9e0:8000::40])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@protonic.nl>) id 1wSUgv-0006iV-97
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 02:58:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonic.nl; s=202111;
+ h=content-transfer-encoding:content-type:mime-version:references:in-reply-to:
+ message-id:subject:cc:to:from:date:from;
+ bh=dMkXZt73+dmsCO76lZDfKzhW+pTC9F2GeIZkDN4ijtE=;
+ b=IMd0SWO17mr85B5W7+A4sJ9fI11XaMfxA2Rstx978fUKuskAZYu1VjaCoRkGW89FW27uRL+Af7Wco
+ pxSjYn2j25mabST/5KIwDWwV9lsF6Lp2XoYGWXjolnlb0xnmYCNjWAF+uH/ybhCa0UEgJ+zk9OC9Ox
+ sppu/gCJcGriAfQY51KZg2QOtStoinMd/D5gkVInb6O93KXDwRh+GkEWeiUgogg9rFpKtsXrlqwh2c
+ xF0DIQs2mRGU4/icCwdJ1UC5owf8SCKIsUuBBcC1l0esxQBUiFOy7eq/EeUUsAbu46eemeCNkZZUOd
+ f13lTD88532xJG3FaHqx/4OedIIoQ3w==
+X-MSG-ID: 8e8991c4-5a62-11f1-9d12-0050568164d1
+Date: Thu, 28 May 2026 08:57:56 +0200
+From: David Jander <david@protonic.nl>
+To: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: Andrei VOLKOV <andrey.volkov@munic.io>, Pavel Pisa <pisa@fel.cvut.cz>,
+ Bernhard Beschow <shentey@gmail.com>, =?UTF-8?B?TWF0ecOhxaE=?= Bobek
+ <matyas.bobek@gmail.com>, Matyas Bobek <bobekmat@fel.cvut.cz>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, Oliver Hartkopp
+ <socketcan@hartkopp.net>, Nikita Ostrenkov <n.ostrenkov@gmail.com>, "Daniel
+ P. Berrange" <berrange@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, linux-can@vger.kernel.org, Sascha Hauer
+ <s.hauer@pengutronix.de>
+Subject: Re: [PATCH v3 0/7] hw/arm/sabrelite: Add FlexCAN support
+Message-ID: <20260528085756.322eb221@erd003.prtnl>
+In-Reply-To: <20260527-durable-festive-millipede-f6e2b9-mkl@pengutronix.de>
+References: <cover.1777571962.git.matyas.bobek@gmail.com>
+ <CAFEAcA95RcGhhN8ZqVeOgRyhRqSar23EnJhCjVgKBwoqXBJwjw@mail.gmail.com>
+ <08A7BC6B-7019-45C4-B581-0A26AD3AA554@gmail.com>
+ <202605271738.21722.pisa@fel.cvut.cz>
+ <20260527-fast-unbiased-flamingo-5c5cbe-mkl@pengutronix.de>
+ <07cc057c-61b3-4744-96fa-1d792989cb4c@munic.io>
+ <20260527-durable-festive-millipede-f6e2b9-mkl@pengutronix.de>
+Organization: Protonic Holland
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-References: <20260518073401.11279-1-corvin.koehne@gmail.com>
- <20260518073401.11279-7-corvin.koehne@gmail.com>
-In-Reply-To: <20260518073401.11279-7-corvin.koehne@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 28 May 2026 13:55:52 +0100
-X-Gm-Features: AVHnY4Jkhz-x12OW3l2kTK4Rewu23FBHsdOw3HZOqpuj8D8Xdgj_OJIzavx74Jo
-Message-ID: <CAFEAcA85HGU2zw95oyVL9m1iYnFXs9WwTH-k5hvXX=KLTd9a5g@mail.gmail.com>
-Subject: Re: [PATCH v7 06/16] hw/misc: Add dummy ZYNQ DDR controller
-To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Yannick_Vo=C3=9Fen?= <y.vossen@beckhoff.com>, 
- Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?Q?Corvin_K=C3=B6hne?= <c.koehne@beckhoff.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org, 
- Kevin Wolf <kwolf@redhat.com>, Alistair Francis <alistair@alistair23.me>,
- qemu-block@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:9e0:8000::40; envelope-from=david@protonic.nl;
+ helo=smtp28.bhosted.nl
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 28 May 2026 09:08:48 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -125,24 +78,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 18 May 2026 at 08:34, Corvin K=C3=B6hne <corvin.koehne@gmail.com> w=
-rote:
->
-> From: YannickV <Y.Vossen@beckhoff.com>
->
-> A dummy DDR controller for ZYNQ has been added. While all registers are p=
-resent,
-> not all are functional. Read and write access is validated, and the user =
-mode
-> can be set. This provides a basic DDR controller initialization, preventi=
-ng
-> system hangs due to endless polling or similar issues.
->
-> Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
-> ---
+On Wed, 27 May 2026 20:38:10 +0200
+Marc Kleine-Budde <mkl@pengutronix.de> wrote:
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> On 27.05.2026 18:25:37, Andrei VOLKOV wrote:
+> > As the original author, I have no objection to reusing (my part of) the
+> > header under GPL-2.0-or-later. The reason it was not done that way in
+> > 2005/2006 is simple: only GPLv2 existed at the time.
+> >
+> > All the more so since, as already noted, the code in question is essentially
+> > a direct transcription of offsets and bit-fields from the Freescale/NXP
+> > datasheets, which leaves very little room for a meaningful copyright claim
+> > in the first place.
+> >
+> > Personally, I would prefer that this code not be rewritten and be kept as
+> > is, to avoid introducing subtle bugs in QEMU later on.
+> > That said, @Sascha and @David may have a different opinion.
+> >
+> > PS: andrey.volkov@munic.io is my correct current work address, but I would
+> > prefer to use my personal one for this discussion.  
+> 
+> I've added David on Cc and given them a short overview of this
+> discussion and linked this thread.
+> 
+> I'll agree to re-license the register definitions of the flexcan driver
+> to GPL-2.0-or-later. I'll poke Sasha tomorrow.
 
-thanks
--- PMM
+I have no objections for this part to be used under GPL-2.0-or-later.
+
+Best regards,
+
+-- 
+David Jander
+
 
