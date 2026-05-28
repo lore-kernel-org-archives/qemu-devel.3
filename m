@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDC50CD5BD5
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 20:25:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 045D5CD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 20:25:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wShHx-0000qJ-GO; Thu, 28 May 2026 16:25:09 -0400
+	id 1wShGy-0006U4-V7; Thu, 28 May 2026 16:24:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShHo-0000XY-DJ
- for qemu-devel@nongnu.org; Thu, 28 May 2026 16:25:03 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShGx-0006PT-1t
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 16:24:07 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShHm-00051k-Cu
- for qemu-devel@nongnu.org; Thu, 28 May 2026 16:24:59 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4906869f0cbso52363855e9.1
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 13:24:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShGv-0004lE-4c
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 16:24:06 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-43d77f6092eso7493897f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 13:24:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779999896; x=1780604696; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779999843; x=1780604643; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=YSEQRbn3l0io9yhr3T8YsgNy3yJtdxIGruyK16V/CRo=;
- b=LDVuZte9tKZQwD1Sd0HZOn64upmmVKq/XgGmZzTU7Vdyb0jkRSool7HMAiG3IGx63m
- hTKzkQgpl/uPo2qG+FlcAOfCNts07p9Jgj4lTDXpsNvZx6L7vxCPPliGHZBtfWe6Bgi9
- cpaY/2MY+sl/J/8gpA+zCRYBMecxqRJsyAi6/nPppLHIMt8qvKJjRWzT20vP0k3kX7jC
- w6n50/bK7JXUTgvC4EcLPNf9fDLmbjq1b4R0lr5jHB22LEGsGqJZiCxBQtz0SSK7kS1t
- Iou4MSzqGbl1GxQhCnzXAE94QZ2JYCuPi7a6UQNZBGeE7S6Uzbvkvb/Xmrz986rESVbw
- C40A==
+ :reply-to; bh=RYFINop6p56kZCsuAs8/Iw2R8r5qzUVy0JocaJvYfm0=;
+ b=SQ0U3W/crA0KSJvgfGNI2SqQbxddEJ47iDtSz4XN7BkkdEBmCsJ6FEyh7g/fSPnkVQ
+ geFSCWndluJ3TA4YP9iTOynFyf6TjGaR/fPjWADaAM8Fqt1Y8ihToD9WBvUtuMn+mNOX
+ PLEV2IBXKob8L2fN8lOnu2v4HO1JIt+zW60ldPs1fC4XpWNVcwzMQcB0VCS+/bJFGfpZ
+ SP6DqBdME2CE+jUPuKEXJ21gi9GJuZUpYhOHat27NzuUtgymkT9qmSiHm9862tUwlPWv
+ RrTEyryXnr0JPkxo5WD7FrjeFTZsSsfjwmBO/UEqyyMHndO1lOY+aE2cUajWKb/2TRqA
+ FojA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779999896; x=1780604696;
+ d=1e100.net; s=20251104; t=1779999843; x=1780604643;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=YSEQRbn3l0io9yhr3T8YsgNy3yJtdxIGruyK16V/CRo=;
- b=MrHyK9t2RdX6Yaf3fawBLeB7EmTSCJplGMl9bBLQofxua4HKaj1KGwqacYvdq/1MG2
- +qDHeCu5NzfzU0alYXINxxtQG02FXrl68mldGCgNAtG072qUJ5uPr3HrRUG9rm1178xC
- 83usW93dAY4cxbNEgq+70YgFcQeVh5m12KGF43T8NWwmzt6INympfex6FMqw8do0UgEJ
- 3d+BliqqlUfoaMH8EA8c2QNeasyIPY72l64P4i/KnCwJKgz0SuvcREcOcI2YjgCfy06K
- r7FlTBMu6uT/2Blzrt8wxxkpC+fLRiP6vlmRhaDvpEmNq4qb+FQuHXyDSZzOmqIClKaf
- WNng==
-X-Gm-Message-State: AOJu0YwwwJqo4XRdmh23bt9I3wWDNYva/JV4wfbJmmu44awm8zG0ZzRN
- Fiz+cs85XxA8clr6umwPDpbBs1ddPQD3fPUFSASaAltV9J5JR9sxoEWSo7uU7S20/CMxlwMk3MY
- +K+bpqMNMYw==
-X-Gm-Gg: Acq92OHXcMrn28cLWJJmjSZgVF21MFgACqfyVIMDD1fByCAr5wSlqw8iOeNgDcFjC9y
- Ck9GiSdqY6eU0uGjfFV/iapKADoT4r+dCr7YhkNxrX4AHesbY1cK71Mqy8eQ5M0FxrT8jJasF7c
- XiGwelT9NpQfh2guXX/XNNyw3hYtLCClhVSQnFnVa5tbnziol3P0fHwbZIjN1J3BhDtnPdTZlwE
- J5d3JPIkeDt0kDMbJqCdr6/iPSSqQc+oT3XlBQ4CgUX3TycKiTDlgyNrSaM3EcHnvxgNOMHykT7
- k8FGXvk5UYEfhWDbeqyXLcn3yjVRFzpglCG/F8AG4xYyFwud2zSHR6DYA7pDwR5kb4836STGftl
- IktXERKWHEbJYl10qEz44il+U123bt+MsQ7DblOpJfJrntjsHm6KWHcdTsgsAixY8PBt3AAWl2N
- KP9uinND/7tgCVTCmL573Ra6BsrTnXgFLHCeTRgOhdteFxaJxEXRQmm3yf2h1zF4/Vpw==
-X-Received: by 2002:a05:600c:568a:b0:490:3b84:c106 with SMTP id
- 5b1f17b1804b1-4909c0b6d5bmr216275e9.26.1779999895778; 
- Thu, 28 May 2026 13:24:55 -0700 (PDT)
+ bh=RYFINop6p56kZCsuAs8/Iw2R8r5qzUVy0JocaJvYfm0=;
+ b=lnnvEmS531a54OmpB5jswU7UbVUlrw1V+arHS5u27f0HyD4ktXyrAbTeODCpIr6MwG
+ QQ9TL5r1bqESCm/flri4dvXrhdQzTxmX5X2lSKDcPYNZZmh1WGrskr00Acroe1DZwFxF
+ X0EgjI6+LsVPSPlRmCprLexlmgBCo13qAjbs5xdva5Wlx7zC1v7JT8dQ3hVq8SLueSS3
+ XKqh3hn/yiyybGLwcbCId757GIMMGf2fiuRUbr6vOnIUnewzJUdgjfUpp411vUwHCDdD
+ sy4xGx1dm4CD/T3VStbooYGSubv1I2aLZfTyfkKhiupgPKXR91xrZafF8lLcJhYbGM5J
+ oneA==
+X-Gm-Message-State: AOJu0YyyvYAf/xsItb1jmZLOpU+g19r9e0PtVjdMxX4DOVxRi4Vm8iHM
+ KnppU6XfN2rnjk9+Sy6FmMuMyoJPpvUId8NSdDskwMXqaAVaJS+TNpC4nls2pmDj/z5aGvcJaRo
+ KhwiPMtmpGw==
+X-Gm-Gg: Acq92OEGpVJfX99LIpPVu2az1GYAxLqkORUJeIKjUPkNbCDlsn6CpCg1fEeikr5SUPX
+ GG54dTg1ie92kk2/8SmVrY1+nFtSF0dUq5UuDIa36UKe49D2Xj2EXH/cRfSXxqRSvKIOWyhz+b5
+ pYPbwSzw0XtTH9Pz4XAkLF2a5GVMmebFab+rrzggD6im7O48seWNDabIJQ11MarZtW78xcHjQWK
+ 5JQ/B1ESsrxvg/Kstt2vSAow9hwn1mKpx3XIQMNEC8Y6N4UBwGIvL428OvrgO7ZTdkYIhRzDyaz
+ yUvtp5Jfc/GyAgIDx+YLatywMl2DcDS6LGJn/Bd6ZvqWSjAH5Ah+KRNNWwOL8CxEvQSoMYs8sCu
+ SQ4PV4uNh/A+y4IC8SDk7OZCU7pb1BQLKnmtJNjZ7VblxFHcKNEH2Ogx1Nzdkkrpp10qHWxlHm4
+ zlFMhi5TrcagehtBMhciPY0rwb85w/pcUFUIF7kxxTEuw+FzxfdyEIYz5w5d7nRnt5UA==
+X-Received: by 2002:a05:6000:2b09:b0:45e:ec27:b4c2 with SMTP id
+ ffacd0b85a97d-45ef06162a7mr731870f8f.36.1779999843326; 
+ Thu, 28 May 2026 13:24:03 -0700 (PDT)
 Received: from m15.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49092657a1esm55798975e9.7.2026.05.28.13.24.54
+ ffacd0b85a97d-45edb4bae01sm16053149f8f.0.2026.05.28.13.24.01
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 28 May 2026 13:24:54 -0700 (PDT)
+ Thu, 28 May 2026 13:24:02 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 16/22] mailmap: Update email addresses for Daniel Henrique
- Barboza
-Date: Thu, 28 May 2026 22:22:46 +0200
-Message-ID: <20260528202253.49122-17-philmd@linaro.org>
+Subject: [PULL 09/22] meson.build: move some subdir before system lib creation
+Date: Thu, 28 May 2026 22:22:39 +0200
+Message-ID: <20260528202253.49122-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260528202253.49122-1-philmd@linaro.org>
 References: <20260528202253.49122-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,27 +98,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-Id: <20260528083814.32795-1-philmd@linaro.org>
----
- .mailmap | 3 +++
- 1 file changed, 3 insertions(+)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-diff --git a/.mailmap b/.mailmap
-index 273661c758e..a35de7cfbd4 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -82,6 +82,9 @@ Brian Cain <brian.cain@oss.qualcomm.com> <bcain@quicinc.com>
- Brian Cain <brian.cain@oss.qualcomm.com> <quic_bcain@quicinc.com>
- Christian Borntraeger <borntraeger@linux.ibm.com> <borntraeger@de.ibm.com>
- Damien Hedde <damien.hedde@dahe.fr> <damien.hedde@greensocs.com>
-+Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com> <dbarboza@ventanamicro.com>
-+Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com> <danielhb413@gmail.com>
-+Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com> <danielhb@linux.vnet.ibm.com>
- David Hildenbrand <david@kernel.org> <david@redhat.com>
- Filip Bozuta <filip.bozuta@syrmia.com> <filip.bozuta@rt-rk.com.com>
- Frederic Konrad <konrad.frederic@yahoo.fr> <fred.konrad@greensocs.com>
+Allows to use stub_ss in those sub directories.
+
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260528051642.115721-6-pierrick.bouvier@oss.qualcomm.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ meson.build | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
+
+diff --git a/meson.build b/meson.build
+index e396394f4c1..19e123423b5 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3730,6 +3730,19 @@ subdir('fsdev')
+ subdir('dump')
+ subdir('accel')
+ 
++subdir('backends')
++subdir('configs/targets')
++subdir('disas')
++subdir('migration')
++subdir('monitor')
++subdir('net')
++subdir('replay')
++subdir('stats')
++subdir('tcg')
++subdir('fpu')
++subdir('plugins')
++subdir('ebpf')
++
+ if have_system
+   subdir('hw')
+ else
+@@ -3838,19 +3851,6 @@ system_ss.add(files('page-vary-system.c'))
+ common_ss.add(files('target-info.c'))
+ system_ss.add(files('target-info-qom.c'))
+ 
+-subdir('backends')
+-subdir('configs/targets')
+-subdir('disas')
+-subdir('migration')
+-subdir('monitor')
+-subdir('net')
+-subdir('replay')
+-subdir('stats')
+-subdir('tcg')
+-subdir('fpu')
+-subdir('plugins')
+-subdir('ebpf')
+-
+ if 'CONFIG_TCG' in config_all_accel
+   subdir('contrib/plugins')
+ endif
 -- 
 2.53.0
 
