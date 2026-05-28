@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0419CD5BD5
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 05:26:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 263C6CD5BD1
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 05:27:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSTGT-0003YH-TB; Thu, 28 May 2026 01:26:41 -0400
+	id 1wSTHP-0004ap-Ed; Thu, 28 May 2026 01:27:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wSTGS-0003WQ-Va
- for qemu-devel@nongnu.org; Thu, 28 May 2026 01:26:41 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1wSTH9-0004Vx-2t
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 01:27:23 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wSTGQ-0000xo-2c
- for qemu-devel@nongnu.org; Thu, 28 May 2026 01:26:40 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-44e1ebb3122so7539794f8f.2
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 22:26:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779945996; cv=none;
+ id 1wSTH2-0001De-Mf
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 01:27:18 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-48d146705b4so130845595e9.3
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 22:27:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779946035; cv=none;
  d=google.com; s=arc-20240605;
- b=lI242RkkokMedfuQKI/RF+mOyoquQw1vwiSFqyKE11nToCkozaNGOidIb9hnNYSqAr
- bSsuNho03hIpARH9N7SaeDyCBbZTXoKqN4aYmcKWt2RpSmbHMQa9lWzr9qWFJA+5nbJB
- rxOY3pdSxYpZP2udWtQGb0NIjB2bnai6Q7j6kbE0YF2gLr530UgwryyuGi+GRz1xnsBt
- IxolloMzp/etGcn6SKtPZXmYALlehUwgnH8XCDUwid+Swln+CvRlhNr8lIvXjifIw9im
- lxK/G1Z5/SuBgPn9Gks5UFM60H6VAH7BqVCJ+4jqe5GnO2lAV8LuYvMREIkRrlgLnD6l
- iaCA==
+ b=eptDCk2R9Ujll38ILejVVBqeIpP3Ta61Rc3yVFvBfYFBn+5zU2DWKt2KPkZxwCW/Au
+ nrAjsinbGsn79tRjiaFJsPeWEuQlYxnYPzuOHKvhBL3dPLuNg8vghTXojUcNUL+0XWgt
+ QoaWgwGoY5izY52ZhKf7z4CZUPb1ag+aK/UTHRavxItg7U9f3lWz0vkhiBYzAK80VZKh
+ wjKc7F2x2MrplMTeV2xvJUHO62EKJL5QupmBB+4yYkdaWo4BCeRC/10GNff1wiB45XjN
+ q/uzwbUvVZ6kRPG/dcI2zR0zVAi6fx6txmekti5jfqY9NVKtDJKuGAX/JpiJUevAioDN
+ h0Jg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=vANGD2vKWELwqFShufjM35Wn78nC95DsZ2JfSKglkLA=;
+ bh=dwneZHjulPfYajXGbepu2ogymN8/pZJS3s1cVepwz6w=;
  fh=XBvXNygMbloJp+VR+lP4ESgdVtRHCxc7UtbU1PDcF3s=;
- b=P0Zt3iqtbdS17D5WpVIx0uemctxIGjS/ExHPeKdjbBY6HjU+XxBW/HcNweIvLd6Ooh
- KcZXXT6UcQruQDh+EdExxyp5aS/OwJC00roHmTgCuoJ8lkbPNnRxbvpFVNHfDR47tGWa
- y1zUG05RQGGXF/1GxS/7I8oFlIfUalK8AUTy/MlzI+KQFvJG8sEEgVn9BcPE3YBXs7pX
- axHQeYnB7QQLNAobctluOKvwpH7CynjGYD2ImdojFb3QolvIn/3CHUYDoXdr5t0Qsjo6
- w/kgN7uHoU7qgGm2sVMdZiC7TO8osAxUZZMYUp3hcOoI9fuy95goy4uo7UW1HnqeM2AI
- Ogng==; darn=nongnu.org
+ b=iO8Fk3tK6TJzh8idWY/kFA2CY5NI71P9sRMOElR6OCJCCv32P8ela5DnBm2uAktwbp
+ czwH3xPePXz/kMfGrL6Om8Sd8Mx6w4Bm5Mqc37xMPAq9e4J7RhJ1sTsx7Kcvdunbz6ts
+ tLgm7LgVPH7ZSoFsMPDrx49WmnVw6IobPdpXsaHc9vSLiZdDSQ+XMYSFj3f//8MWM0hP
+ Zd/k6bfIPwNuYpbgF0s/bpwaVqGzlFMneH6or5NHBXHbt0EF0jvjorIBy4JJm9HCIsS1
+ bHp2GkaKjtexU+ExlzOiwAizygDT8us/6/JtdMLAePD5W059fCR3XsW+vXBHMoakl+s1
+ wbCw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779945996; x=1780550796; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779946035; x=1780550835; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vANGD2vKWELwqFShufjM35Wn78nC95DsZ2JfSKglkLA=;
- b=CZn9qSsOL8P1UKhtpIWiUITGVuP9UDHJcoGYm4uZgtsX6l2X8WaTFFd+m7yPHhXU4y
- 7WBA2Y9eKofufAjp5ja5iWzVjnYKSvtVPLeWTXgYQUJ3qk9OMSmrYou1mEzCtWtc0rZV
- YFUwKO/Pa+f6/JTsPRrdaQ1fBT2iauBapBb21CfRLIy7U2mthnPhafNBIkLFWdIi5ER2
- DCC0EH8H7nfB5gExiv58Rx44DkI7r6Y51LR0uxuQ9wxcB4d99RViQWTYmO/9MeZjgj2X
- zNUqrSdonW5trSvw/wj3+jsuHV9GjJ7AHLLWiDYkPEdRPCGCua9WlqeSqegSRfHXrE7T
- fR7Q==
+ bh=dwneZHjulPfYajXGbepu2ogymN8/pZJS3s1cVepwz6w=;
+ b=jyJhg2J+YGp45WJYgWrmwnTrsSP5rrSeulPrO2MjpaZ2Y5A4TsGVHR7CDCSl81o6jR
+ 4bmaZzMhMAdcNtnOKg9huFbx2oc2k1r3dZVZKO67dCGvN8OyT946uGvr2fOq6DBreiaK
+ D9+W8dRscVJfYYTOjnJbF8/a2GTQZZchKRyyWqs9BVIP81jzAl8CfjMvp/6goq9QONB4
+ dg8FGLG14l5alvHppvXATQQNB64AZFd7crr0c18Z2GAwO889Kml3GfOhN45AVq1PlGU0
+ 0cn8bKHZdCitl/QBzqoWPsHqGKx4nuwcsx2XqKA/89wOpjU61wKReatMU9YEm9xC/J7G
+ vMEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779945996; x=1780550796;
+ d=1e100.net; s=20251104; t=1779946035; x=1780550835;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vANGD2vKWELwqFShufjM35Wn78nC95DsZ2JfSKglkLA=;
- b=Q6exBfhyLpnKXsUj4zpHSPBYkZ2+eQhunRe8CCX3q4NMF67oYyYJFdljNL+KkuqbU1
- cNR7c2UDxACaqazCaphFeoVXTuH8ReCgbrrfU/pN4hkGmMgu0f7bsex0R5PEeJIt6Gx0
- 61WXCg+UEYBAIrMXs3Fa+bw71V4QIbX81Q+gfLisekHj8Xg3hPPqvHg4RGsaRVylS1b0
- tG8DIz66SZnU7VmEZU/anEPH1fMAI6hWAS3AAOOWJ9+3QUUXYFICCYi2bin1YJSERnzU
- p3tfhP6l+PGBkmOj2SiavWk/rLgiVBWjR1rMCdjEU9TJeGpGfW25z659OwivYWeKqCSA
- DsKQ==
-X-Gm-Message-State: AOJu0YwqExcV6Mxg3iC19lSh+F99B/kukiy05igGIhP4KYWn/Z2XRavG
- TRbuN+61P8LapWNzyVcLszP4Fu0QA7lfDs6kEssgZ0Jba/UTdN39UYRFB/jY4m1sB44+H+5jYUZ
- zEPCpzIY3N9vBLMaD22jM39Z6dje1yXG8KGvNYf/y3g==
-X-Gm-Gg: Acq92OGZHDVZVt38WCLoqvxjR0da+JrG2rHIxm6LHFyRa7jXtQ4tuCgIhWGLaBSTsEu
- lDyRZZPhbHEuoWIOnqZKk1jBcHC24tUVBJ91tpI28EkdBn54KBbnH88uVuUOeNClnuXbkma4GwP
- ZQcE6xYLBbm2sNFdSVS9mMJ1b9sgqfMTOtcwqddUUBFPamTxCFbm+dPx9Bk1V4ef8LMTXKfJuye
- 7GLauY0wHS9GtC9+lQPQpKvf4kToL/GlfTqAFwb+2Q1icHfGl3kMkNknvBJgvomlzm+LO7l3dHo
- n0pkXJ01WPzPj43/61JIjfvBCzMVxnAven6ASUOEnAlO1+93SdZrFq3EO/9C
-X-Received: by 2002:a05:6000:4013:b0:45e:ea68:523e with SMTP id
- ffacd0b85a97d-45eea6852d2mr838639f8f.21.1779945996132; Wed, 27 May 2026
- 22:26:36 -0700 (PDT)
+ bh=dwneZHjulPfYajXGbepu2ogymN8/pZJS3s1cVepwz6w=;
+ b=XFq3MniktB8RenF/6V2IDUMRmWOoYBVNiLxSbsc7e912m/02CdSu6i7Z5vt0rRIavM
+ ckC143TLPlY8c1Q8drMO6RfHwUjAL5Nn++DDyPbSbLfAw8GYuRCpVYxa9SL9/XsAIGV5
+ AoizTuT3M7AAX/4g7MEi9fQFQXyFxZMWyo9Jf7a/pTcjVsWTb9nGsIzNT1Ir1JS9MAlV
+ MFCUJz0IUHc+L28u5ruWvwsBfbT72D9iBDF6XExWiVahJqRdVc5c7DK1Fn8TiU6wTurk
+ /3cDdIvB+2MHUMrX3TUbB0OWIdtBIRgWBuLig2mJbp9TC4vRp3kxaxqo46LL0aLUGN2T
+ nSiA==
+X-Gm-Message-State: AOJu0YzjkJIzd33VU2caDRn/nFZHO+lcQN2Nr3j2F4GkWaDuSFMyakwo
+ gmbfSKRqRvvfbflmFkmUGCFg1FaO5vbcA6z7SRoX5j50jJgc0kSlHN0OpqOQfjtTULJYcwf4Y28
+ 8PDSWO5mFlCDveNIoGzPskc/lgneJNJ6ix06DxnWX/g==
+X-Gm-Gg: Acq92OGbFnPMie+BJOLJk0KBwjwSiD3PIQhnGET14scBpbAlMqxvpNsJ4GlvXYAu385
+ zC/HXbJ7Kt8Z2wjrtQrEIb5tBMksuYCkyEu6yP8DcHJnGYFmbV8DwEkKc6DltLOZJ9ku3HJXEWG
+ c9gd+Hw3inO5Pr4NFVdUSK9dFoSAqyFNpJzo+K+mwyBB2uFiMwzhD7ztQX2Fmdxsfa76PQDlYLC
+ VfgqJlZAks+KMoa0fH0braDgrP2gzISaE3j27+akPRNqyqdPYVgeeGMsNZBkCibji585L1MClyg
+ 0c+uogfmXGbRpAlNKJBZUm+xR5CfL58ZDKbuthqa38dURJ5vngmPi5gA5qJr
+X-Received: by 2002:a05:600c:a402:b0:488:9bf8:7f17 with SMTP id
+ 5b1f17b1804b1-490425ad10cmr347039265e9.14.1779946035235; Wed, 27 May 2026
+ 22:27:15 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260528051642.115721-1-pierrick.bouvier@oss.qualcomm.com>
- <20260528051642.115721-11-pierrick.bouvier@oss.qualcomm.com>
-In-Reply-To: <20260528051642.115721-11-pierrick.bouvier@oss.qualcomm.com>
+ <20260528051642.115721-9-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260528051642.115721-9-pierrick.bouvier@oss.qualcomm.com>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Thu, 28 May 2026 08:26:10 +0300
-X-Gm-Features: AVHnY4Lnq7uJaaGNAHaSPUgkdNQ4b1KOFG2UyRct1meAgQqJuFhJ4sx-DGrqXdY
-Message-ID: <CAAjaMXZP+VwCvntg=c6tuJg-AkTvsfhH1QtR1-OhJFmE9qAcig@mail.gmail.com>
-Subject: Re: [PATCH 10/10] hw/vfio: use stub_ss for iommufd-stubs.c
+Date: Thu, 28 May 2026 08:26:48 +0300
+X-Gm-Features: AVHnY4K3wXy-wxyBevY4LiAE0-Y_8HPeNuP4r4Hg7PIRx8AmadzRqnCWGRA1DOk
+Message-ID: <CAAjaMXao9QRaHqNPDHt51DPyBVK=JN5B_SStPa4RbqFSw3=P6Q@mail.gmail.com>
+Subject: Re: [PATCH 08/10] net: use stub_ss for vhost-user-stub.c and
+ vhost-vdpa-stub.c
 To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
  Alistair Francis <alistair.francis@wdc.com>,
@@ -125,15 +126,15 @@ Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Fabiano Rosas <farosas@suse.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,31 +153,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Thu, May 28, 2026 at 8:19=E2=80=AFAM Pierrick Bouvier
 <pierrick.bouvier@oss.qualcomm.com> wrote:
 >
-> Solves conflict for vmstate_cpr_vfio_devices.
->
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 > ---
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
->  hw/vfio/meson.build | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  net/meson.build | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 >
-> diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
-> index fa0ea6ecf0e..c7c31b78f68 100644
-> --- a/hw/vfio/meson.build
-> +++ b/hw/vfio/meson.build
-> @@ -34,7 +34,7 @@ system_ss.add(when: ['CONFIG_VFIO', 'CONFIG_IOMMUFD'], =
-if_true: files(
->    'iommufd.c',
->    'cpr-iommufd.c',
->  ))
-> -system_ss.add(when: 'CONFIG_IOMMUFD', if_false: files('iommufd-stubs.c')=
-)
-> +stub_ss.add(files('iommufd-stubs.c'))
->  system_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
->    'display.c',
->  ))
+> diff --git a/net/meson.build b/net/meson.build
+> index da6ea635e95..9c8068b06d1 100644
+> --- a/net/meson.build
+> +++ b/net/meson.build
+> @@ -46,8 +46,9 @@ endif
+>  system_ss.add(when: [libxdp, libbpf], if_true: files('af-xdp.c'))
+>
+>  if have_vhost_net_user
+> -  system_ss.add(when: 'CONFIG_VIRTIO_NET', if_true: files('vhost-user.c'=
+), if_false: files('vhost-user-stub.c'))
+> +  system_ss.add(when: 'CONFIG_VIRTIO_NET', if_true: files('vhost-user.c'=
+))
+>  endif
+> +stub_ss.add(files('vhost-user-stub.c'))
+>
+>  if host_os =3D=3D 'windows'
+>    system_ss.add(files('tap-win32.c'))
+> @@ -61,8 +62,9 @@ else
+>    system_ss.add(files('tap.c', 'tap-stub.c'))
+>  endif
+>  if have_vhost_net_vdpa
+> -  system_ss.add(when: 'CONFIG_VIRTIO_NET', if_true: files('vhost-vdpa.c'=
+), if_false: files('vhost-vdpa-stub.c'))
+> +  system_ss.add(when: 'CONFIG_VIRTIO_NET', if_true: files('vhost-vdpa.c'=
+))
+>  endif
+> +stub_ss.add(files('vhost-vdpa-stub.c'))
+>
+>  vmnet_files =3D files(
+>    'vmnet-common.m',
 > --
 > 2.47.3
 >
