@@ -4,78 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72A8FCD6E44
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 13:27:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EEBBCD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 13:31:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSakt-0001SN-8k; Thu, 28 May 2026 09:26:35 -0400
+	id 1wSapB-00033y-73; Thu, 28 May 2026 09:31:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wSakr-0001SE-K9
- for qemu-devel@nongnu.org; Thu, 28 May 2026 09:26:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wSako-0002J1-3Q
- for qemu-devel@nongnu.org; Thu, 28 May 2026 09:26:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779974789;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=OIv8LbFyJYIxKMq0rQelX5wyI9ncYTP9FeQxT19I+kc=;
- b=dwkapVqWxWrsc88TQjPx1ck2Mtzj5AiqTU1DRz6iumk83trYU/yW6jexMrZpYPORE4zDhJ
- YDq/45SKUJq6Yx4SbfWWLd+/t+T4OTMRTI10VGvLZU5x5ldoJLF8gwiGePWuYjKGFkDO3F
- P45sahLf33PVZ/RpDqiItgOmWFUh7mA=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-335-GhwFZIhJOISIm67oKmApFQ-1; Thu,
- 28 May 2026 09:26:25 -0400
-X-MC-Unique: GhwFZIhJOISIm67oKmApFQ-1
-X-Mimecast-MFC-AGG-ID: GhwFZIhJOISIm67oKmApFQ_1779974784
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0A6BC18005BB; Thu, 28 May 2026 13:26:24 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.62])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3D4FD30001BB; Thu, 28 May 2026 13:26:22 +0000 (UTC)
-Date: Thu, 28 May 2026 09:26:21 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: Stefan Hajnoczi <stefanha@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org, hreitz@redhat.com,
- fam@euphon.net
-Subject: Re: [RFC v2 0/6] block/io: avoid failure caused by misaligned
- BLKZEROOUT ioctl
-Message-ID: <20260528132621.GA40266@fedora>
-References: <20260109120837.2772961-1-f.ebner@proxmox.com>
- <20260202221634.GB429972@fedora>
- <36a69637-d7b9-42cb-b16f-473091efb3ee@proxmox.com>
- <aYS_G-QHlbucVpUd@redhat.com>
- <CAJSP0QX22xxAq7sYChGMq9up3YOAXuxrbe99_8YoLFV0pKj0Zg@mail.gmail.com>
- <800f05f8-e77a-496b-8a25-253ad7cafecb@proxmox.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wSap8-000331-QT
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 09:30:58 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wSap5-0004Qg-LP
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 09:30:58 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-7c58e6eb2c8so129218527b3.1
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 06:30:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779975054; cv=none;
+ d=google.com; s=arc-20240605;
+ b=e0VseUjFN1GVhPz2mfHs7Iq8gdjcMtyZbeEEFZmWrD0a4y48tsVStOVkGyLYcNT8wg
+ I43VTcy7UZTWdkhLlvbWf4HgbHHpgxkWWbDhmlnVcp6FR1zn3huuuxuXZSsu3WwcQLQs
+ VH5J0+sWX8x3giufj835Z15/cffug1wmTMs69aIAesNXHUYVA+rhRI7+UJDPa4KSp0x3
+ m0JxbIfGaUXUMYXWzVU3tdjNMCNEHDOD93HHbmCCRSChCGrjzTwN53cydF3SL+iwwXPs
+ rdPytHVw7SYD69jIMj5G9Yo3A3G+8i5vYd1gy8O7c0Mdk9UzQFK1fj9OITc+pF8jJciZ
+ 9FXA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=ypOqJwt6MG32xNjPn5nD9rwsVdwX4MHa5fFYaSfgigk=;
+ fh=uCmUPCW8pkfAYUb2TNqBA1N8JsXLaq44DlF1L+QbvNc=;
+ b=UyEINLOuS4szK5hVSPpTBkgDtvfZscAVeQcsGKPJvFXKWezAy5iEBpUhjaOPaN9lzP
+ 0zBCKz5x5HwdBjLvSVQPy6N2gKJ0fahX43n6RrwsdlkP1bcMHMuFGuT5mNOOxztFeyN5
+ Om3OXRNXMgLIXyxMROOkUnxQ4nDy4ScdkRGuEpcnjfw9OG1311wGAqm9AzLRqVSA9HCL
+ SGe35NIdvljK7/UsHFjfz9yfxwfjDQytyKgpUJOzKXxQ3EKybIZeiPIcW7oe58N4cY/u
+ /D0dRCPVxX3zkrWOm9OOb17Hp3qxoafZveA1TsBmsZi963wZ1QHjPJcg39T1Id6hDM8K
+ X41Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779975054; x=1780579854; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ypOqJwt6MG32xNjPn5nD9rwsVdwX4MHa5fFYaSfgigk=;
+ b=iu3U1KksYdYy5vDjJwWiHSzo/y9+PIpqZMqVBI7RdUR/RG9sR/u0dYI61kCxLklKTN
+ Z6bwLIeZ9ypIgq3iVDibQ9E19AEDXkPlWOYnW0aYsG25gDTZ4051O6Kdpwx1/9ekos9w
+ 4SVJFsjhCeqS/dfzM3h6X5ZHePK5UFDpXYxifp0Selnkd/aCGX79zI1RX8Jrin4kFyNh
+ Vq4onUiK6ZL0B6joLKAvbq11MrlvNxYd14HbiCrf5yviYXeju+tVbO+Mp/hsBhgBgr0t
+ 44hCgW/ioUHSgWR0bX5wAV4/lB27OlZue/dkHUBEmPY0KRkuQ7J56/ZLpHxUCFsfohtS
+ pOJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779975054; x=1780579854;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ypOqJwt6MG32xNjPn5nD9rwsVdwX4MHa5fFYaSfgigk=;
+ b=E9I3/BisILOvbU6o3iLjHK05cgq1F9XdcGvEZQlmx1z3pisqYdij1Juq8yYIfIhNty
+ W+odmqCFeSoOZNri5F31UmxLb98LRqu/BdvpcGQaky5scXR0tgM0SmfZBr9S+D8ighhx
+ gGCnDpztppRy/Znm4QsgYiIywwuFmhqIMClPv0XtkprCB6V6PnFHo5hsv8TWixr0B1AS
+ y+fLd2V+ZYLDU/uq7m89QOVy5w82gqDluI/udwK2B+SlQW7/3/+BZQcPs0l65GwTBI+q
+ /e3hgbeCOMLnIX2ZFLHInaQtjAzDtXw/ag2uTjWL+/RGtRqC8BHLQiBiteE+lhZbtqWf
+ 3WWg==
+X-Gm-Message-State: AOJu0Yy0HlZwPlI4nClAH/qMvIWqJzJ4XLaC+/o7rHcsxcdX88e8ofOa
+ YrMtWPyo5T9HvaNl0JhxBZXTcVDQlUxLdmf2OZWBVEerPLT4S1qLSplbhvllwG2jTSjNv1C4UYg
+ Hbx+S6/6DVNprxgy3/yMEI/SgN3yrDhp8K0L10gqJ8g==
+X-Gm-Gg: Acq92OEDpB+HQT2yYTBTYa4Mfz7WBkBilE0FS+chliAmgPf8fMWYJkaRccCuACiY7hI
+ ygrWDfmPeyNl45mNUtUZZEbIZ2yJKhqGl0kQPkiEL3ybKh2hiORb231lG4LfPo3E+3VBjOzQavk
+ 2uS1YlhuPpN5TAiFAcUbFeepot6T3pU6lE0L7Fx3XqmzXwDWYKghrk+33cVg2/53FWpRlRK7PNJ
+ PqtyL2coIJStkoNtfgZ6zYUWl1jziFzcWPzWZCaXAGMv3GdLrsRKnKYE0IPaVcsSkFtsPkXS/zS
+ ofF01eYmO3wvuEB6I8sfoAVSeTNshtvR7EiDpkG2Yq5QrMwNW3QOpzkyDMHJXLfHySwIVCkjGNv
+ ozw==
+X-Received: by 2002:a05:690c:6e8d:b0:7cf:d242:d94a with SMTP id
+ 00721157ae682-7d336cb26f5mr294889847b3.25.1779975054261; Thu, 28 May 2026
+ 06:30:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="PwhdZ9iCI6o1vH4Z"
-Content-Disposition: inline
-In-Reply-To: <800f05f8-e77a-496b-8a25-253ad7cafecb@proxmox.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260518073401.11279-1-corvin.koehne@gmail.com>
+In-Reply-To: <20260518073401.11279-1-corvin.koehne@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 28 May 2026 14:30:43 +0100
+X-Gm-Features: AVHnY4ICvIK2kVYst-xM5rCWkEt_5-MtQKgfi0AIxtJX4e3SQiWpvev-OPk8Obo
+Message-ID: <CAFEAcA9eNjS6MLjmub8YRFHiGUvRt47KnNGk8_T03VO-63JcAQ@mail.gmail.com>
+Subject: Re: [PATCH v7 00/16] hw/arm: add Beckhoff CX7200 board
+To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Yannick_Vo=C3=9Fen?= <y.vossen@beckhoff.com>, 
+ Hanna Reitz <hreitz@redhat.com>,
+ =?UTF-8?Q?Corvin_K=C3=B6hne?= <c.koehne@beckhoff.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org, 
+ Kevin Wolf <kwolf@redhat.com>, Alistair Francis <alistair@alistair23.me>,
+ qemu-block@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,119 +124,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
---PwhdZ9iCI6o1vH4Z
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, May 28, 2026 at 10:32:32AM +0200, Fiona Ebner wrote:
-> Am 27.05.26 um 11:06 PM schrieb Stefan Hajnoczi:
-> > On Thu, Feb 5, 2026 at 11:03=E2=80=AFAM Kevin Wolf <kwolf@redhat.com> w=
+On Mon, 18 May 2026 at 08:34, Corvin K=C3=B6hne <corvin.koehne@gmail.com> w=
 rote:
-> >>
-> >> Am 05.02.2026 um 13:13 hat Fiona Ebner geschrieben:
-> >>> Hi Stefan,
-> >>>
-> >>> Am 02.02.26 um 11:15 PM schrieb Stefan Hajnoczi:
-> >>>> On Fri, Jan 09, 2026 at 01:08:27PM +0100, Fiona Ebner wrote:
-> >>>>> Previous discussion here:
-> >>>>> https://lore.kernel.org/qemu-devel/20260105143416.737482-1-f.ebner@=
-proxmox.com/
-> >>>>>
-> >>>>> Commit 5634622bcb ("file-posix: allow BLKZEROOUT with -t writeback")
-> >>>>> enables the BLKZEROOUT ioctl when using 'writeback' cache, regressi=
-ng
-> >>>>> certain 'qemu-img convert' invocations, because of a pre-existing
-> >>>>> issue. Namely, the BLKZEROOUT ioctl might fail with errno EINVAL wh=
-en
-> >>>>> the request is shorter than the block size of the block device.
-> >>>>>
-> >>>>> Stefan suggested prioritizing bl.pwrite_zeroes_alignment in
-> >>>>> bdrv_co_do_zero_pwritev(). This RFC explores that approach and the
-> >>>>> issues with qcow2 I encountered, where
-> >>>>> bl.pwrite_zeroes_alignment =3D s->subcluster_size;
-> >>>>> I would be happy to discuss potential solutions and whether we shou=
-ld
-> >>>>> use this approach after all.
-> >>>>
-> >>>> Hi Fiona,
-> >>>> I wanted to continue this discussion. My thoughts are that making
-> >>>> bdrv_co_do_zero_pwritev() use bl.pwrite_zeroes_alignment is the right
-> >>>> long-term solution to keep all the padding logic in one place.
-> >>>>
-> >>>> On the other hand, your series shows it involves fixing a bunch of t=
-est
-> >>>> failures and that's not fun. The original bug that is being solved h=
-ere
-> >>>> is my doing, so feel free to hand this over to me if you decide you
-> >>>> don't want to work on it.
-> >>>
-> >>> in your other mail, you mentioned you'll ask Kevin for his opinion. So
-> >>> in part, I was waiting for that. But I also was side-tracked by other
-> >>> things, and it will be 1-2 more weeks until I can really focus on this
-> >>> again. If that is too long, please go ahead and pick it up.
-> >>
-> >> I didn't review this thoroughly yet, but I agree that considering the
-> >> alignment from the start is the better solution and also more consiste=
-nt
-> >> with what we're already doing for normal reads and writes.
-> >>
-> >> We just need to make sure that we use the right alignments in the right
-> >> places, which can be a bit confusing with the fallbacks to buffered ze=
-ro
-> >> writes here and there.
-> >>
-> >> I assume that there is enough time left to do this before the 11.0
-> >> release and there is no need to take something like v1 as an
-> >> intermediate solution?
-> >=20
-> > No progress has been made and I'm unable to commit time at the moment.
->=20
-> Me neither unfortunately.
->=20
-> > Is everyone okay with merging Fiona's smaller original patch? While it
-> > would be nice to implement a deeper fix, it's better to have a fix and
-> > I think there is no great risk merging the original patch.
-> >=20
-> > https://lore.kernel.org/qemu-devel/20260105143416.737482-1-f.ebner@prox=
-mox.com/
->=20
-> FWIW, we have been using that patch downstream since mid-February [0]
-> and nobody reported issues with it as far as I'm aware. I suppose it
-> could use a 'TODO' code comment that the proper fix looks different. If
-> you choose to go with that patch, should I send a v2 with such a comment
-> or can that be added when applying?
+>
+> From: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
+>
+> Hi,
+>
+> Beckhoff has build a board, called CX7200, based on the Xilinx Zynq A9
+> platform. This commit series adds the Beckhoff CX7200 as new board varian=
+t to
+> QEMU.
+>
+> The emulation is able to successfully boot an CX7200 image. The image inc=
+ludes
+> some self tests executed on every boot. Only the cache self test fails du=
+e to
+> QEMU emulating the cache as always being coherent. The self tests include=
+ f.e.:
+>
+> * Network
+> * Flash
+> * CCAT DMA + EEPROM [1]
+> * TwinCAT (Beckhoff's automation control software [2])
+>
+> [1] https://github.com/beckhoff/ccat
+> [2] https://www.beckhoff.com/en-us/products/automation/
+>
+> YannickV (16):
+>   hw/dma/zynq-devcfg: Handle bitstream loading via DMA to 0xffffffff
+>   hw/arm/zynq-devcfg: Prevent unintended unlock during initialization
+>   hw/dma/zynq: Ensure PCFG_DONE bit remains set to indicate PL is in
+>     user mode
+>   hw/dma/zynq-devcfg: Simulate dummy PL reset
+>   hw/dma/zynq-devcfg: Indicate power-up status of PL
+>   hw/misc: Add dummy ZYNQ DDR controller
+>   hw/misc/zynq_slcr: Add logic for DCI configuration
 
-I can add the comment when merging the patch. I will merge it on Monday
-so Kevin still has some time to reply in case he has an opinion.
+>   hw/block/m25p80: Add HAS_SR_TB flag for is25lp016d
+>   hw/arm/xilinx_zynq: Split xilinx_zynq into header and implementation
+>    files
 
-Stefan
+I'm taking these patches into target-arm.next, since they've been
+reviewed and most of them are bugfixes to the existing zynq code.
+That should make this patchseries a bit smaller for the next round.
 
->=20
-> Best Regards,
-> Fiona
->=20
-> [0]:
-> https://git.proxmox.com/?p=3Dpve-qemu.git;a=3Dcommitdiff;h=3D6960b5e033fa=
-911f9882751950df28a193255683
->=20
+I've left code review comments on the others.
 
---PwhdZ9iCI6o1vH4Z
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmoYQn0ACgkQnKSrs4Gr
-c8hEqgf9FdgQGLYFgbwxatOXzsfW/H963U88BGbK/9+CO37LzGbF6jWc6+dbwv0B
-e0R9kuz4rNmOUHO+MJNP627MstDtFZ+CrIg8KxCryzSg5HrcT9TIgARrNR+uvity
-Eo4Gf8YB2cQ24FT/kgdtYqesX5ET1MtQeRKks2iv1m3WvY0nW/Ak9HmalEn5eKCn
-IjuEhNUdhPHqIcjfxUX3Pi+X1OsvMbWzzOs1upBwOezSANo5qqAwCUqF+YMTNb72
-9zF4lpDv1Z9el3DdH87YJ8JWhjug5aoNVZ2A1EooOZD9iPKcdn6GXcspaeyppkGw
-Ma8VqTVpF9JHoD3bCYwx2awNLL6dxg==
-=D4mk
------END PGP SIGNATURE-----
-
---PwhdZ9iCI6o1vH4Z--
-
+thanks
+-- PMM
 
