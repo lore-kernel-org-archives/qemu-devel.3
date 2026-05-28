@@ -4,145 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82187CD5BD5
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 20:03:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 671AECD6E45
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 20:05:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSgwe-0005jP-Sa; Thu, 28 May 2026 16:03:08 -0400
+	id 1wSgxy-0006vD-7P; Thu, 28 May 2026 16:04:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wSgwM-0005a0-39
- for qemu-devel@nongnu.org; Thu, 28 May 2026 16:02:54 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wSgwK-0004Yu-3q
- for qemu-devel@nongnu.org; Thu, 28 May 2026 16:02:49 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64SIOhKF1539603
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 20:02:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 4eI9gnPWG9DM41h1xfBXInqv5w4fnSikRn0GV5tjdCg=; b=akYjiOOiUoqFXHtw
- 3BH6I0D2qO5P0Pedz6LxZQTqFQFfZpTLYVX+mXNNbkWoWCi000zUAuaZ/q+0E8Ar
- 8JYv+nQuHx3ksJkmTqF8cYWNtBxnPa25Sqg0PgieZ1QvOf4gIsVPNCNdDzZFQAqE
- PJDC239vqM5uociN1vDulwigmmKLh6S5PjoYZO3/KgULySn6iee0g//+dmDYIYtX
- TsuMu9jxPGAAVAcbME9qG9MVIJ7AAVmKiNjY5l8OuFW6j+GKiCd1lRPqECH1LHbk
- yEMwhkG3ieP/Ke8vGW+afsxdw2ZFqGKGi41adblyaBKkPkOw/4aOuMXvt0XmCcbI
- z4pbwA==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
- [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eety50crb-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 20:02:46 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-304e4636205so133853eec.1
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 13:02:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wSgxw-0006uX-Oq
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 16:04:28 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wSgxu-0004ys-G0
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 16:04:28 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-45eecb8bf67so607565f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 13:04:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1779998566; x=1780603366; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4eI9gnPWG9DM41h1xfBXInqv5w4fnSikRn0GV5tjdCg=;
- b=UvIUWQgc2un5JSL25ST7oELd8qaaFZpFPUPA4tu6FyXPZnnlrgTn8xy8tLmvC6iAhV
- eUJDn86DQd5FBd20pzn6zF5MFCiA84c2nbtad52JzEv5WWDBfFJZYMaTnV/C0/pmALtS
- 5N/2RJmuzwLZ0Sc2GmXeOF4Ns4BRvv5HKJhGvHBdt+IAUN6mQb88CtxS5/1SoBhR9sxL
- NIAmiL7WKGGGkdvigt12H0haQxQJZcUTBGcJeqbV5e5GnDianRJTITZmE4CwDDRfCuEJ
- ElKPly7cRBQCbRrnMUBdoZUvzcDwlWgRUN4EzRz9fUZuvjQ1Q3bWODyeMO+X+ZO92P9d
- XTRA==
+ d=linaro.org; s=google; t=1779998664; x=1780603464; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=v0IR+/7mSU/LAFE/aI6HSEfewT9NbGi67S6N8rWFuUk=;
+ b=W+cLq6bciCar6o+hlr6knEOa8DUqO89Iw6gd8uQZpOzDQYDXn+1j/1ODJJaggOSRLV
+ JIPIOIFwwMtZKBexv3hFMjg0LQp8yIvD38XW46RiyRUWe7pgOU82j2+ICOdnrsrE8duf
+ 40+OQ59ueTBx5hlZoXf43D170yPKFyClLibA/CeoruCtOChp5lOUBzKbJuOuACg6knUK
+ eVbHnunRkIQDls9KUM2rcAwQHBh5wgwzHFpws6fnnBg0b3Zan3k0ZCkHRKOWDOo0JeZI
+ ++EMSgvm35DW8tnIzT8SkHE2qpoAAFJXCNxqDIhMHZvVW8koU8v4a+tebExNr7RsVBm4
+ bo7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779998566; x=1780603366;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4eI9gnPWG9DM41h1xfBXInqv5w4fnSikRn0GV5tjdCg=;
- b=XqXFzG0bpofCki8hqxftOfx4wUKkAQfNFGAbdOBP0w4YmQ7BPlHtGq6BdILUWnbdyP
- v28HlTUU1e//8uDFksZXvjftRYdrxudX4aP1wfnR0/jE4HXeCkEtk8mDoNQxiT6rLhQp
- ZHjmFrK2sAH37zC6Vbi3kjmnMVDmsJhwrriqGVokutCwV+b9eTjBtb8Xxf11cmzOwJSR
- mdKeW+xLeGh9f6vSdODcYJ0Xb7lhZpYWonGS6f5aY7JQ7oMYLpRCLXQtmaCdKJlaE7NG
- JZaS5JrjRmaH1QP6axBVvoPgR6R4QBeGkLWN33i6gwb//MYP4oCgtOI8SoKL38kx4rNV
- YE8Q==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+ZcNMWIK3bBwz5xJNoHDlsN2k1LR+q+KJIPKovOIKZ9MTjkk4L1cB1Ja4Qcx4SB6ddXLlHV+003Oei@nongnu.org
-X-Gm-Message-State: AOJu0Yx1w0T9BhmQloZT70EJUWoXWERN1CTGqBJBp+Pr+obxElMYzixz
- cRT0UlUuE5cZeJw57Q0PesTWA63w3IXaGrxg1Qg5uQbhnAW98GIZR1DXxPJQfb08RWpf2TjZbGy
- Hq4qLMnA5Gnty3TJgWbZaHByEj7/Sop+M4AXCVnYB7HWfUl3pMDtjUDuReA==
-X-Gm-Gg: Acq92OFyG0JZjV7GNGntWa/VX+DDFX9f9bIs11PkMyaz+FlgRvfREXX8AHmYG3mNoBC
- 4P+VvwSFmpZQ/9qatTegCI7Hy6kM6Bo33xhEWsyKKCc6rgKHy9NOigQgfNSTrooYwATHxk6waOt
- rW/iUmFRQhvo/4oJaueJpzJKC2IpPIzHZgGlIdNiVlg1/VALrkRxSkGw3/9d81IFjndjEeQDhiW
- wqivqL4qGv5TpYhK2ZWGC9OPU68gk6EV39n2VDZm2zWkgSdD99c3/ed5O+krdf33N/0W2b8NDTV
- +lxUbOQAo6yeERn79LU8m2J4JqtnsaugM3TbrorCYBPNxaKyjwNjZo/KmQvw3cQk6t6PdZ1LWFP
- cYGtfCOPri080yln8hoZCAoFMQXE1zHu3osxqFxbddWIIHtfngEvoKJCjN6bbq5FXJaf7
-X-Received: by 2002:a05:6214:4a09:b0:8ca:279b:e554 with SMTP id
- 6a1803df08f44-8cce216dacdmr10328506d6.29.1779998539097; 
- Thu, 28 May 2026 13:02:19 -0700 (PDT)
-X-Received: by 2002:a05:6214:4a09:b0:8ca:279b:e554 with SMTP id
- 6a1803df08f44-8cce216dacdmr10278796d6.29.1779998465273; 
- Thu, 28 May 2026 13:01:05 -0700 (PDT)
-Received: from [192.168.68.103] ([177.170.117.62])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8ccdd72f995sm17133146d6.36.2026.05.28.13.01.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 May 2026 13:01:04 -0700 (PDT)
-Message-ID: <200e1664-a690-4fe7-bda3-074da046e311@oss.qualcomm.com>
-Date: Thu, 28 May 2026 17:01:01 -0300
+ d=1e100.net; s=20251104; t=1779998664; x=1780603464;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=v0IR+/7mSU/LAFE/aI6HSEfewT9NbGi67S6N8rWFuUk=;
+ b=D+WtVuEWe3BqwFWgKEPmUGunMyDnVvKzw9YCPBAD+FumbH9A09VT8U8oDwJd+SsIPZ
+ RyXSKwT1og431XtMT1Mh5su4UA2FNF2hdEv127BekHAzwUQ1WCOYnuzzB2atD1pO84sZ
+ AfHueLYuux1JKzHb6VlO/gIr1kwom9PdcKPmIVAbk0Dc/XL/uxE/sW0ZGNWqKTUAY+Zh
+ iNBfb1H0hSbamXYz0a2JIGk0AyL9NSD440MJq7wwJU/PFb7zeejbLU1cF2OcEuM1msrE
+ AedChWJk2p67AnCb7dktdIzAmuVSdc3JGoW4F6Y1wkQI8yOtN5yVDMnmK+kU6NsQQuzE
+ ttNA==
+X-Gm-Message-State: AOJu0YwpEVoTtsogQSKZsgoGHnz8VWKuBwLVrTk092+Yl10Gx2F6gDy2
+ kmzq4/ocop3gHwB6ytlz0g7MAn9su0nQfWSZXGLejZ0vjAjFZZiKJGJNJRVBeL1b4vE=
+X-Gm-Gg: Acq92OHWE9oUJsJ7+qIx0BOdXe7ZpH0POgh96gsM/sJpv4ozDwoU1TR3j4tvezIIHI9
+ U5YjLDC3MMmDaywYFYnDdX1fRWQSled58uqCUG7oTfVP+U4PU+o32MU8/7q4EzFcWBDVNypxTF/
+ HLNfCUcCKgeouqL570QT0Hbp0V8UpelMbYHGJsMsSsRafnAVIX8tDMoLanSdz1FC+haOMJP+F6Y
+ cWOG2PRvRQdswb3aswU/4fnR/wauv5gsUE3nJzl2tpEVN5+OTYYSmBuOdm9BSOhbWCNvUst6AeI
+ WqstiyBcvdiCD7koSumcmJkyX45vfNTl4gYeojzbZicPr4GIiFm0b6nuY2j6B1+aDhBBmpXNiv3
+ SwV+Qz5SZFjAX2RSfmxDIw7uiyP8x9fCTTsTanPeQdn/V2D2BCpbBBqUkM1gAnp6qw/ruve6gxV
+ 9LPGnLz/DUc+FRGAMiV24mkOSM4LqxxiJWSSawa1vSqlfz
+X-Received: by 2002:adf:e58f:0:b0:455:7d77:1d25 with SMTP id
+ ffacd0b85a97d-45ef05d9398mr808255f8f.27.1779998664295; 
+ Thu, 28 May 2026 13:04:24 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45eed496112sm3811175f8f.15.2026.05.28.13.04.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 28 May 2026 13:04:23 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 7BF3A5F92B;
+ Thu, 28 May 2026 21:04:22 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Thomas Huth
+ <th.huth+qemu@posteo.eu>,
+ Song Gao <gaosong@loongson.cn>,  John Snow <jsnow@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Kyle Evans
+ <kevans@freebsd.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,  Cleber Rosa
+ <crosa@redhat.com>,  Warner Losh <imp@bsdimp.com>,  Brad Smith
+ <brad@comstyle.com>,  Thomas Huth <thuth@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Max Filippov <jcmvbkbc@gmail.com>,  Brian Cain
+ <brian.cain@oss.qualcomm.com>,  Fabiano Rosas <farosas@suse.de>,  Peter
+ Maydell <peter.maydell@linaro.org>,  Richard Henderson
+ <richard.henderson@linaro.org>,  qemu-arm@nongnu.org
+Subject: Re: [PATCH v2 03/16] tests/Makefile.include: add binary dependency
+ to run-tcg-tests-% rules
+In-Reply-To: <98156f95-e6bf-4061-8e3e-9e884ebc3e5e@oss.qualcomm.com> (Pierrick
+ Bouvier's message of "Thu, 28 May 2026 11:43:26 -0700")
+References: <20260521131739.540157-1-alex.bennee@linaro.org>
+ <20260521131739.540157-4-alex.bennee@linaro.org>
+ <74e8bc86-cd81-43f9-b5cb-7e3de3bcd3d0@oss.qualcomm.com>
+ <87tsrzl138.fsf@draig.linaro.org>
+ <093614fb-ced1-4b15-b1e1-5da755f87237@oss.qualcomm.com>
+ <87cxymec7b.fsf@draig.linaro.org>
+ <5bd51a1a-4079-4073-bbd8-f0206a1ad458@oss.qualcomm.com>
+ <0f73d717-1621-4c3f-9c5e-9bfdfaffb0b8@oss.qualcomm.com>
+ <877bor9vor.fsf@draig.linaro.org>
+ <7d58926d-a36d-430f-828e-7ebdd9cc4eb5@oss.qualcomm.com>
+ <87qzmyzbut.fsf@draig.linaro.org>
+ <06092208-1b56-4fea-8d92-bf035fbd0fa3@oss.qualcomm.com>
+ <87fr3eyrvp.fsf@draig.linaro.org>
+ <8a878679-733c-451c-8053-663a74f8d4a7@oss.qualcomm.com>
+ <87a4tlz897.fsf@draig.linaro.org>
+ <86385e93-5425-4145-8a9f-0f72ed5de022@oss.qualcomm.com>
+ <87o6hzx2np.fsf@draig.linaro.org>
+ <5a4eedbb-483c-40ea-a4dd-b34a4b7d7b6e@oss.qualcomm.com>
+ <871pevqumz.fsf@draig.linaro.org>
+ <98156f95-e6bf-4061-8e3e-9e884ebc3e5e@oss.qualcomm.com>
+User-Agent: mu4e 1.14.1; emacs 30.1
+Date: Thu, 28 May 2026 21:04:22 +0100
+Message-ID: <87v7c7pagp.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 03/12] target/riscv: Assert PTE.N/PBMT bits are not
- expected on RV32
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-riscv@nongnu.org, Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- Anton Johansson <anjo@rev.ng>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Christoph Muellner <christoph.muellner@vrull.eu>
-References: <20260527201348.29511-1-philmd@linaro.org>
- <20260527201348.29511-4-philmd@linaro.org>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260527201348.29511-4-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI4MDIwMiBTYWx0ZWRfX54E6zF3JkJlv
- 0rP8LQkGpuWyF72HBVzD+5VoSPtlbHpIQ104SDVgi94kkTpJaOkZCWWPgsGy5DjMEuKf7SKTbIV
- IefuvY/rVBROphCSH2wNrPKtN/Bkci1T7wG4pjTKxWVUrJavQ+uVBnvwOkUIpbt/4ClQoEZWa20
- cmFVZ8wELJqW99XHD7rHq+eh77lUPZKTiSvPh0C+2icRkUilepLmemPEeLE+yTDBCmbYEXbb0s7
- tlF9SQNRUybOY1wz7O83waGsNFt5BFv2NzmGQwFX76+KSBLkdyo6l9MPKkPZYQmBCzjDYMxAep7
- oNYZlPU4MTn9TJlLcNE3MM4D5ElyoQFTQ47jfuziSFqoFHSHrcZJ5dLHw8EOOwp3kZNuGdyxPmo
- csjD6h36n12wJZ6SlwpTCAGEInz80xRLKCXlMBgB3+MiwAnER+gwuwH3sJACtWS15RlfZwpfOK5
- ZimzoUBnGsPfdHcl1ZQ==
-X-Proofpoint-GUID: PXpWsUlRr6SUFED10X-0AOYvVU6mOtbE
-X-Authority-Analysis: v=2.4 cv=WaM8rUhX c=1 sm=1 tr=0 ts=6a189f66 cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=KKAkSRfTAAAA:8 a=xx_OMfGYl5v5CrJEQtIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=scEy_gLbYbu1JhEsrz4S:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: PXpWsUlRr6SUFED10X-0AOYvVU6mOtbE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-05-28_05,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
- adultscore=0 suspectscore=0 priorityscore=1501 malwarescore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605280202
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,76 +135,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
+> On 5/28/2026 11:03 AM, Alex Benn=C3=A9e wrote:
+>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>=20
+>>> On 5/28/2026 3:13 AM, Alex Benn=C3=A9e wrote:
+>>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>>>
+>>>>> On 5/26/2026 11:17 PM, Alex Benn=C3=A9e wrote:
+>>>>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>>>>>
+>>>> <snip>
+>>>>>>
+>>>>>> What do you mean? I run check-tcg all the time.
+>>>>>>
+>>>>>> Which containers fail to build for you? The main cross-compiler one
+>>>>>> (debian-all-test-cross) is built all the time.
+>> <snip>
+>>>>> I'm a bit tired of seeing patches in your subsystems get stuck for
+>>>>> weeks, without any proper review, to finally be (re)posted again in a
+>>>>> new series, blocked for more weeks, and finally reach upstream one mo=
+nth
+>>>>> later or worse. It's truly exhausting for everyone contributing in su=
+ch
+>>>>> places.
+>>>>
+>>>> What can I say - reviews are welcome. I always list what patches are
+>>>> still waiting for review in the cover letter. I should also add for
+>>>> testing/next I try to be extra careful that regressions don't slip in
+>>>> because keeping the testing sub-system stable is important to support
+>>>> things like bisection.
+>>>>
+>>>
+>>> The main issue with your personal workflow, which is "reposting existing
+>>> series concatenated in a new single series", is that it adds a lot of
+>>> latency. Basically, if one patch fails, or is not reviewed, the whole
+>>> thing is blocked. And that is a problem. I don't see what it's supposed
+>>> to achieve, since it's halfway between a series, and a PR, without being
+>>> one or the other.
+>>>
+>>> TLDR: the problem is how long things are between receiving reviewed-by,
+>>> and being in a pull request in your subsystems.
+>>>
+>>> For instance, in current series, there are multiple sub series. Some of
+>>> them are fully reviewed and ready to go, they can be sent as PR
+>>> independently.
+>>>
+>>> I remember you mentioned several times that you like to have a "single
+>>> branch". I have the same workflow, and it absolutely does not prevent to
+>>> send multiple PR or series in parallel.
+>>=20
+>> I do split stuff out when it makes sense, but look at testing/next:
+>>=20
+>> e02df7f4810 * testing/next MAINTAINERS: Cover python.docker with Python =
+library section
+>> 4fcb3a8c07a * MAINTAINERS: Cover debian-tricore-cross.docker with TriCor=
+e section
+>> b554638aea6 * MAINTAINERS: Cover debian-xtensa-cross.docker with Xtensa =
+section
+>> 8417a661600 * MAINTAINERS: Cover debian-loongarch-cross.docker with Loon=
+gArch section
+>> 0f57fbac5bc * MAINTAINERS: Fix docker/dockerfiles/debian-hexagon-cross.d=
+ocker path
+>>=20
+>> Maintainers updates aren't critical to get in now.
+>>
+>
+> The more you wait, the more it might create conflicts. That's basic
+> software engineering, and where the term Continuous integration comes
+> from. It does not mean "run a GitLab pipeline", it means integrate
+> often, *continuously*, with low latency.
+>
+> There has been concrete examples of why delaying created an issue in the
+> past. In the current series, "docker: Remove LegacyKeyValueFormat*"
+> basically blocks any other change in concerned files, as soon as it does
+> not land. At least those two could have been sent as soon as possible.
+>
+> If you'd send a PR regularly (at least every week), it would be less a
+> problem. Miss the train? get the next one.
+>
+> If you want a good analogy:
+> Problem is that your train is leaving at random time, and it has several
+> wagons, which increase the risk of a mechanical failure every time. As a
+> result, passengers are stuck waiting.
+>
+>> f80f388a538 * gitlab: update issue template for binary test cases
+>> 4e7de923722 * gitlab: add MacOS 26 job on gitlab runner
+>> e0692ad4b23 * gitlab: add initial MacOS 15 on gitlab runner
+>> 1299b5aec2f * ci: drop cirrus MacOS build
+>>=20
+>> None of these matter without bellow
+>>=20
+>> dd2db9273be * accel/tcg: move jit thread manipulation into do_tb_phys_in=
+validate
+>>=20
+>> b60553095bb * tests/Makefile.include: add binary dependency to run-tcg-t=
+ests-% rules
+>> bcde94b9315 * tests/Makefile.include: fix typo in comment
+>>=20
+>> Why take the chance to break the build when the changes are in service
+>> of the wider patch? The more runs through the CI to shake out anything
+>> the better.
+>>=20
+>>> If tooling is the limitation, please take a look to those (ugly) scripts
+>>> for inspiration. AI can probably rewrite this better than me in 10 min.
+>>> With this, sending a series or a PR is a complete no-op for me, I just
+>>> wait for CI to run, and send it when ready 2h later.
+>>=20
+>> Tooling isn't the issue - but I'm never going to be doing multiple PRs a
+>> week because each one has a degree of latency due to CI coverage.
+>>
+>
+> Sorry, but this sentence doesn't make any sense at all.
+> What is the "degree of latency due to CI coverage"?
+>
+> CI takes less than 2 hours to run, you can run it 4 times within a
+> working day. 5 days a week. That's 20 chances to send a PR.
+> The only latency is human based, and a way to solve it is to automate.
+> Lack of tooling *is* the problem in this situation.
+>
+> You can't take a lot of pride in automating things with AI, and claim
+> it's impossible to automate sending a series of patch and run a CI
+> pipeline from it. Use AI if you want, but please apply it everywhere
+> it's needed.
+>
+>>> Saying "people have to accept my tempo" is not acceptable. Fix the
+>>> tooling instead.
+>>=20
+>> I think it is fundamentally down to the maintainer what tempo they are
+>> happy and able to work at. If you wish to take on responsibility for more
+>> areas of the code base then be my guest.
+>>
+>
+> There is a difference between being really busy and just adding latency
+> artificially because "I said so". We worked together, so I can make the
+> difference between the two.
+>
+> I would be happy to help maintain any part that needs help. Maintaining
+> plugins was a suggestion that came from Richard, and yes, I was open to
+> do it for a long time, especially after experimenting weeks of latency
+> to see patches get merged, and this several times.
+>
+> I stepped in for docs because we identified there was a need for it.
+> I also talked with you in private to help on linux-user and you
+> explicitly asked me to wait, without any specific reason. Now Helge is
+> maintaining it and doing an excellent job, I'm really glad he stepped in.
+>
+> I would be happy to help co-maintain tests/tcg and help this move to
+> meson. Unfortunately, you snipped that part without even trying to
+> answer to my proposal of helping by making a small proof of concept.
+>
+> Coming back to your proposal, do you wanna share maintainership on
+> tests/tcg/multiarch and tests/tcg?
 
-On 5/27/2026 5:13 PM, Philippe Mathieu-Daudé wrote:
-> PTE_N and PTE_PBMT are undefined on RV64, assert we are not
-> under RV32.
-> 
+I'm happy to turn over the maintinership of tests/tcg to you with the
+new meson based system.
 
-I didn't find this info in the RV priv ISA.  Can you please quote the
-except it in the commit msg?
+>
+>>>
+>>> Regards,
+>>> Pierrick
+>>=20
 
-Maybe you meant "undefined on RV32"?
-
-
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/riscv/cpu_helper.c | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 17305e1bb75..f86bfdb32e7 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -1490,6 +1490,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
->           return TRANSLATE_FAIL;
->       }
->       if (!pbmte && (pte & PTE_PBMT)) {
-> +        assert(riscv_cpu_sxl(env) != MXL_RV32);
-
-
-What I understood from the RV priv ISA w.r.t PTE_PMBT is that it doesn't
-have much to do with SXLEN/riscv_cpu_sxl().  PTE_PBMT is a bits 62|61 field
-that determine override mem attributes when we have the 'svpbmt' extension
-enabled.  'svpbmt' is dependent on satp_mode sv39 or greater, which happens
-to be riscv64 only.
-
-I didn't see any restrictions of SXLEN=32 in the 'svpbmt' chapter in the
-RISC-V ISA, e.g. PTE_PMBT set to a non-zero val and SXLEN=32 seems to be
-a valid combo - a riscv64 target running sv39+ can use svpbmt to override
-PTE properties in a SXLEN=32 context.
-
-Now, PTE_PBMT is not writable when MXLEN=32 (i.e. riscv_cpu_mxl() == MXL_RV32),
-and maybe this is what you're trying to do.  In this case the assert might
-be justifiable, although we just landed a recent fix in Alistair's tree
-that disables svpbmt for riscv32 entirely, and this also means that
-PTE_PBMT won't ever be set.  But if the assert (with MXL, not SXL) would give
-some sort of guarantee aside from the bit being set, by all means go ahead.
-
-
->           /* Reserved without Svpbmt. */
->           qemu_log_mask(LOG_GUEST_ERROR, "%s: PBMT bits set in PTE, "
->                         "and Svpbmt extension is disabled: "
-> @@ -1643,6 +1644,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
->       target_ulong vpn = addr >> PGSHIFT;
->   
->       if (riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N)) {
-> +        assert(riscv_cpu_sxl(env) != MXL_RV32);
-
-
-All the stuff I said above happens to be applicable for PTE_N.  This is a bit
-that indicates if the PTE represents a "naturally aligned power-of-2" range,
-or NAPOT range, and this is specified by another extension called 'svnapot'.
-This extension is also sv39+ exclusive, which means riscv64 exclusive, and it
-doesn't seem to have any restrictions with SXLEN=32.
-
-
-Thanks,
-Daniel
-
->           napot_bits = ctzl(ppn) + 1;
->           if ((i != (levels - 1)) || (napot_bits != 4)) {
->               return TRANSLATE_FAIL;
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
