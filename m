@@ -4,133 +4,163 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3F56CD4F54
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 18:48:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCF2FCD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 18:52:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSfm3-00043o-9W; Thu, 28 May 2026 14:48:07 -0400
+	id 1wSfq7-0005df-Ka; Thu, 28 May 2026 14:52:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wSflw-00043Z-2Q
- for qemu-devel@nongnu.org; Thu, 28 May 2026 14:48:01 -0400
+ id 1wSfp9-0005Qu-LS
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 14:51:30 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wSflu-0001GI-60
- for qemu-devel@nongnu.org; Thu, 28 May 2026 14:47:59 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1wSfp1-0003gx-AM
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 14:51:15 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64SGTc6a1562684
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 18:47:57 GMT
+ 64SGwBO42753552
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 18:51:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- fHYyPC5hXcmgadmeMqBIC22DtfW5v1Yz2HiTeZEMcR0=; b=c9hicPcHzVim9c+v
- HAUx703brakiw6fskSjLUtfY/xUsMdba8vGPhJED/DZonq3oTr8ix8Kq7wd3eY1M
- s0TN79Uvp1kjuKO2MHTAlOgbKMaSDqXHjKSb4zJnBz1b8QNDAZTPnUa3QbJZt6wJ
- LI9rsmOa9m4AGJO9OGXQYI6iYPn7g3S2UHMjoCzOdxhD0PVw3AlnCM7M3B0ouAmY
- 1mSwmee5xcNX4GIBKUcZK9hA64psmI9hxwxdsvcpzzNrbIicAV/ZKBa/1a9SdXFr
- DJVduIUdZNlrZeiubkuVBCiONbznapCP9XyYnhPiYpWdBhpAtMtMk3yFsfWPBqb4
- prfzPg==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ee7y2v7w6-1
+ Bqks5si4g3GXmg0Ng2sm0SeHDK9Z61vdMKamg1Dgc2s=; b=PvydP0fysBisCDep
+ M/54YU4/1SC2CpIgvsRNdjxPYIixJ7bHmXbxh6RWYR7+Uut52AYRApmvq8v0/ZWU
+ eiHJDAyG1J0eQC1cuFSz5rnrQkITo2H9RtqbjrLYGubjYBsuFHywZh0740IlUYxQ
+ xQpTQg1J0L993ARL3JmDH+I9U5RmEqoOFFU0jAp9qkY8qRGvCiG4o2p6DNYvADoy
+ lN5RPL50mPvE2d5SODJOWeVBgDGBszAjf5KjzO7JQnR9/FakKT4fXZvivuygGV4T
+ QLLy+uClFq4LS0TxqgglIh/tT4Wzs5XPa90Yf9iz2LBo3foOol9KvdeZ19/97VQR
+ oMR+Gw==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eespn0em0-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 18:47:56 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-304bbf2423cso2492349eec.0
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 11:47:56 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 18:51:07 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-304950e5901so2557366eec.0
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 11:51:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1779994076; x=1780598876; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=fHYyPC5hXcmgadmeMqBIC22DtfW5v1Yz2HiTeZEMcR0=;
- b=gNPi+gGHE8v1rcWewyMFkb2udaj83wWbAXzSCKKvAstdlv6SggTpnD9/IE3tap8idh
- x+Mvk+PNa72mEYPoqD7lVRl6JfkyccOCVO+jaq7kW9sWIlUICy4cet1vyJb74qnn/BvK
- kROssRkJfG2j/OTB/d4ND/NS/QE8+FmRQONjYSVHtPo2LyP1bOMKEpkur4ObeGAAkG2O
- ZR/zxNtZ6nxv4VWX37lAz1UfSpoFQCJFPG47IQJ6yFfQPRkmCX2jcFSmHuOIIKzlHsrN
- yX53PL4KzCNxmPbRt5s6J0mju7oZAP6kRnp8SRVwLMzCvxHMLjsNoyRiu0KjVXsbaapB
- xfHQ==
+ d=oss.qualcomm.com; s=google; t=1779994267; x=1780599067; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Bqks5si4g3GXmg0Ng2sm0SeHDK9Z61vdMKamg1Dgc2s=;
+ b=SvTmhv4sL03nUkXsoArPOhEeAeT2/zEEo+5c8FLQZey4AyzCMCuQf3Z8b2ew2aSLxd
+ PRtkeKiTZYMgNIMAxtdgcCqxExxu9em95aSjfI3rhhpOVulFcB1u2jQ57i+3+LvGBIX+
+ 9w4MlJbi9Fe+L0amajyTRPw83kLmtbOl3XVksi0D00fpNVvfXOOFSM1dxuvCvLPeqPe7
+ g/m6kTS972luswKd2531UezNeL+gCBzE/2ltVMKymyPb2a9Me8eq1CHu/OvseYXF6OT6
+ 5fLm0+/W8d4rL9m1UGbW+7kg1c23YZYXtxf6A0g8Y7agTZB0iC+7RcfHiN7PY7j9s2Ys
+ TDIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779994076; x=1780598876;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fHYyPC5hXcmgadmeMqBIC22DtfW5v1Yz2HiTeZEMcR0=;
- b=GaDcQhDS9F/qmHtkhnOEtRnpV4kDlnJe4jgo0zpST7GX7tbxNX+2TBhjJ8km9S08h7
- 4FK5jcT5QoUnBy0phriSAWCUuMpFxPRNTtxflzK7f09sKLi0MJmS/dUmYSHpBl7gKI7A
- OJRmCBldtP1DlwQhU+2vwi5/kdW6qNGx82Ccpnt/FDfn5SEjmd9wHP0EKmqH6hCv9W+e
- 8LgesJAzc21hSrHfxnbBUQt7uWgxEVCub7FP/mrJRWU8EmyhRrlNZZgGpMVJrTsnJNN0
- ii+vxfH8Nuz0gmqIfdte5qytLYmCNWSCuilkSHbnkylnyq8HmDfgwh5kBBBZUNdJc2Ao
- noJQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+jI5/9ygE0N8QcfMZBKIlQI/GsZ3/PdWEudC6Q7AiNP4A4Qy2/lt8aoTVjO5uKpqq+awDU0ycgs4QS@nongnu.org
-X-Gm-Message-State: AOJu0Yzc2iI5ANdNIMdyTp9G1HMinDSdlOHIu6vlTzHziq/BThIsI1WV
- s7nBQ0kypROfRTFtglnK0IDnbZoyb1sCVbQrgWTRhiGRkbeFABlMEIo/Ua5CB7309gcKLMtMP48
- pr+N4sxyMFg4gvHoCGa1G97Cupqjm6GUVzIxExjSl7u5yuxMUnwbL9nijLw==
-X-Gm-Gg: Acq92OES8ygpOBCi3EEynLaExXQhkGujYK9La3wtAtKEMQFQQBfN6GavAMp4JzC5uVp
- K92ALdiJWi/WoYAg2fwB2rEqqdbwHo4DxIPMU5jSHTqoXXNR2RkrPNAvKVBcQvYRrUi69UMIW23
- 97reWIY7S+LRuNTmfC74+cdy8tLSRg6QL2lEWNo2ZS9skaOU6nEEajJGnRKqNBtZ8Ohpl0xFFed
- D9CRB4l2YME9QYk2I5igUAmC9js2MW/4GkozBOOak/Nmu7OC5hbeN2/GN0s5c0+tRMH7UCFEU2B
- O9Gv2NKHV+kUk2J0u2B0HaMTksTouPZ/jbebv9U2XVVCZy0JR4Umf/DdqPyV3T5q7U72mYQQn67
- NYcY6zY+gfh+t05MVen0NswMIsNptNoKO5SA7zNKdGKxha1FTPsokkCKZnpXgNZTU4CMrjZF8rU
- GFuKC6GnVvP9f5LK8l74mBv0/0
-X-Received: by 2002:a05:7022:419c:b0:136:fac0:84da with SMTP id
- a92af1059eb24-137a8c08239mr83807c88.35.1779994076294; 
- Thu, 28 May 2026 11:47:56 -0700 (PDT)
-X-Received: by 2002:a05:7022:419c:b0:136:fac0:84da with SMTP id
- a92af1059eb24-137a8c08239mr83783c88.35.1779994075631; 
- Thu, 28 May 2026 11:47:55 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779994267; x=1780599067;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Bqks5si4g3GXmg0Ng2sm0SeHDK9Z61vdMKamg1Dgc2s=;
+ b=GOQs/S7dfuJ8XrN2xZNOzJTGinXdOEyMjX+Z8mJtin309qzZPVhBZ6fzZInjjHmNco
+ QmzCvCYmKW2gXEROCjgLr6YfuHIelPKMfAfbS3GTPSrrtnMBNeaUQka3oHs5cP1J759N
+ jIOehG4xM12gB/jIrI5Y64R0Ichx0fSIyHo96BA+Ij2OqUHaNPYoY394ielC6ee24KTi
+ W499AqkAKbRkt448qPcnzL5MMcJvCehf8kDCkKN0g63uAJfywjtcufCTXkbao/IApl10
+ xstzz4DiENTEFDVx1zghl5yiLgv8N3i13v884fh9i1KEramEkh0h1R3TO9+MvB4i6ZWf
+ RGDw==
+X-Gm-Message-State: AOJu0Yyg66woVhyaL42jfdFGEEY4kZG4+YDkGNNJwQxGMMrTksCTALcZ
+ ReFSrjgKpH9t8AbZ8fkL4uHwbCTtiJhS8kIjzAmc06gS3BJttiBQP73hVpIggIq+b1ov3iwSRoU
+ JQFxfscKJo7ucmRWoz/T8TP79ScoFsLqw+ZOZrxcRDgFFXt/mC5gcLapugnWPTCct+1zQ
+X-Gm-Gg: Acq92OGXdgH31LGhuq2OCaZpvsZzW8I5jAaq943/dCq8TmgHQDlWl6Kor9S8bumkqOb
+ DV+9ek2sK+tU26dZUTLmuRrp055xdyx93Bl/dwzrJ3uQnMmltp/AxuKidypnwfSS5G3Y/S0FrQz
+ lofHnBVDQB9ii4V7IMsm7kfHqg0sltxn1tErKgka1UeCpuP4VOMbWM+cJC6K/5eVzpkLBXsWVlD
+ nVfiC5T6dNImgOyncgCcoq5GsEsnRrvtmqtGDxgSFIHGAS4lFYpyNMAUb8GKj1W/omKafI9REYZ
+ bAa7I8LbSZGxo6BNdz/QM791JAn16uz3Nr67NfrmdlkaSTjn2zfxL1KNS/HkKA1YViDWhipfBHi
+ /9cgYGdfT5wvbaxaUkNJaagrMXPAmfBMjckLY/hZIqWIELCtQgJlSkRUu1HSGEBHwbYnBpaSPlI
+ HmXTQ9UTe54i+tQ6g/Tc7PQXFp
+X-Received: by 2002:a05:7300:a888:b0:2ed:e16:6b39 with SMTP id
+ 5a478bee46e88-304dd3b8a1bmr1215563eec.17.1779994267316; 
+ Thu, 28 May 2026 11:51:07 -0700 (PDT)
+X-Received: by 2002:a05:7300:a888:b0:2ed:e16:6b39 with SMTP id
+ 5a478bee46e88-304dd3b8a1bmr1215534eec.17.1779994266745; 
+ Thu, 28 May 2026 11:51:06 -0700 (PDT)
 Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-137a948b649sm87493c88.2.2026.05.28.11.47.54
+ 5a478bee46e88-304e9715fbfsm64895eec.10.2026.05.28.11.51.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 May 2026 11:47:55 -0700 (PDT)
-Message-ID: <5b693f87-2f9a-4564-9efb-83c815bcb20e@oss.qualcomm.com>
-Date: Thu, 28 May 2026 11:47:54 -0700
+ Thu, 28 May 2026 11:51:06 -0700 (PDT)
+Message-ID: <5f55a2b5-d126-4759-93a9-557a97d038af@oss.qualcomm.com>
+Date: Thu, 28 May 2026 11:51:03 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/common: Remove last bit of target-specific code
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Anton Johansson <anjo@rev.ng>,
- Paolo Bonzini <pbonzini@redhat.com>,
+Subject: Re: [PATCH 03/10] accel/accel-target.c: move compilation to every
+ target meson.build
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>,
+ Helge Deller <deller@gmx.de>, Michael Rolnik <mrolnik@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>, Glenn Miles <milesg@linux.ibm.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>, Alex Williamson <alex@shazbot.org>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-ppc@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>, Jason Wang <jasowang@redhat.com>,
+ Stafford Horne <shorne@gmail.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Max Filippov <jcmvbkbc@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Cornelia Huck <cohuck@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Peter Xu <peterx@redhat.com>, Pedro Barbuda <pbarbuda@microsoft.com>,
+ Chinmay Rath <rathc@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, qemu-riscv@nongnu.org,
+ David Hildenbrand <david@kernel.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260528140857.44130-1-philmd@linaro.org>
- <b2a58b62-b061-4bdf-b459-9953b7f373fe@oss.qualcomm.com>
+ Nicholas Piggin <npiggin@gmail.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Fabiano Rosas <farosas@suse.de>
+References: <20260528051642.115721-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260528051642.115721-4-pierrick.bouvier@oss.qualcomm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <b2a58b62-b061-4bdf-b459-9953b7f373fe@oss.qualcomm.com>
+In-Reply-To: <20260528051642.115721-4-pierrick.bouvier@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=VeXH+lp9 c=1 sm=1 tr=0 ts=6a188ddd cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: m3FgEKw_qO4QhLBDVxbK_KC1eNOvjnOk
+X-Proofpoint-ORIG-GUID: m3FgEKw_qO4QhLBDVxbK_KC1eNOvjnOk
+X-Authority-Analysis: v=2.4 cv=auOCzyZV c=1 sm=1 tr=0 ts=6a188e9c cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=QaID0Q7b5USOubk93yUA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI4MDE4OSBTYWx0ZWRfXwkGiduJQjget
- 3z+SWK6o8rK7eS/aspmYR+uv1I/5hO0YQojMH4mXRUlvJ07Bk0ocibGxgjUZ8Z4ZV+IVWy9qZGq
- 1pSKmE6Vgm1haNXxKnLlLgNCYOvnj7Tfv2OEj3c4I1q+GUEwoldi8Xg4sKTbUcrJkHMmtytjiGx
- vMKhT5GE/YdMJS+xIQOMcA1eYulNRtWY3IQo7Xuy5xtgjgy/e+fOnF7vdFfa4NiIyt94764IsiH
- jRWDnei/ngz5G3dljEc2tXUvxiwi3ei1O7EXJylbQJ/R/pGY2NK+OqaBABi+RWsJpKaHcxX+GL6
- Yn4xmFsNEuHXnJQbLbXsDoLti9SYwEbo7oz+As0VgKqzmZrIRV8dnfIu21yuE199SVicpKnoEc/
- 1kE0LdzBuzja5X3ZJaV/UHF/S5bgQw==
-X-Proofpoint-GUID: aJ__HFinuHMUSjm8e1RTMKnFnmaOnytp
-X-Proofpoint-ORIG-GUID: aJ__HFinuHMUSjm8e1RTMKnFnmaOnytp
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=UtqSAlyDIoC1vP3DVQYA:9 a=QEXdDO2ut3YA:10
+ a=scEy_gLbYbu1JhEsrz4S:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI4MDE4OSBTYWx0ZWRfX3PtOA8G8AKGf
+ 4071p8fuiK7453ageNgjsBt7RV6mgQgWdPcOZgyVnAOgcC/N93ragIvRTdHpOd/quEAF34Qvzu3
+ 7ypYMKhcdzkOJvld2+0g6FmrEYGNXlhllBegPiuzQ7g1tvGksRmvLonTTj5XZ25kjqGlCcv3zGJ
+ nSrVqRrDJPmkkVfBjetCP5yLSHiuKTzdpxeAs//Vy6AnONpz2E6Kt+Xv+1fAES8wMLcPb8hJV3e
+ Qr7m2jbvwFiKR16vlWEeZfvcqluatyODbgx8RuK45uqCwcZ3cLmBRICms0be8BiYevrVJxeEIT4
+ GnVN3PIOiT6JxkLNtCulAL8b3++bMBjUE6V3o1NrRkSCC67GCwz5NMmpgJrafamtNjUcrBVYbuV
+ ecraOQYS/Z1dTTG2MKT1OmqgSKBxcyqM44V5JeZxhEMCMpHhedUg3a+7zoHEXWfelo/F3XKLVjb
+ /YsFDVFjTHUa4vAEz+g==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-05-28_05,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 suspectscore=0 adultscore=0 phishscore=0
- lowpriorityscore=0 malwarescore=0 classifier=typeunknown authscore=0 authtc=
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.22.0-2605210000 definitions=main-2605280189
+ priorityscore=1501 malwarescore=0 impostorscore=0 bulkscore=0 spamscore=0
+ lowpriorityscore=0 suspectscore=0 clxscore=1015 phishscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605280189
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0a-0031df01.pphosted.com
@@ -140,7 +170,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,119 +186,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/28/2026 11:47 AM, Pierrick Bouvier wrote:
-> On 5/28/2026 7:08 AM, Philippe Mathieu-Daudé wrote:
->> Initialize the TypeInfo structure at runtime using the TargetInfo
->> API to resolve TYPE_ACCEL_CPU, replacing CPU_RESOLVING_TYPE by
->> target_cpu_type(). Since the code is no more target-specific, move
->> it to accel-common.c, removing the need for accel-target.c.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->> Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->>
->> Pierrick, this is an alternative for both
->> 20260528051642.115721-4-pierrick.bouvier@oss.qualcomm.com
->> and
->> 20260528051642.115721-5-pierrick.bouvier@oss.qualcomm.com
->> for your "single-binary: fix compilation/execution for {arm,
->> aarch32, microblaze}" series. WDYT?
->> ---
->>  accel/accel-common.c | 15 +++++++++++++++
->>  accel/accel-target.c | 41 -----------------------------------------
->>  accel/meson.build    |  1 -
->>  3 files changed, 15 insertions(+), 42 deletions(-)
->>  delete mode 100644 accel/accel-target.c
->>
->> diff --git a/accel/accel-common.c b/accel/accel-common.c
->> index 9c5b4111c8d..62590a7d9a6 100644
->> --- a/accel/accel-common.c
->> +++ b/accel/accel-common.c
->> @@ -134,3 +134,18 @@ static const TypeInfo accel_types[] = {
->>  };
->>  
->>  DEFINE_TYPES(accel_types)
->> +
->> +static void register_accel_target_type(void)
->> +{
->> +    g_autofree char *name = g_strconcat("accel-", target_cpu_type(), NULL);
->> +    const TypeInfo accel_cpu_type = {
->> +        .name = name,
->> +        .parent = TYPE_OBJECT,
->> +        .abstract = true,
->> +        .class_size = sizeof(AccelCPUClass),
->> +    };
->> +
->> +    type_register_static(&accel_cpu_type);
->> +}
->> +
->> +type_init(register_accel_target_type);
->> diff --git a/accel/accel-target.c b/accel/accel-target.c
->> deleted file mode 100644
->> index 7fd392fbc4a..00000000000
->> --- a/accel/accel-target.c
->> +++ /dev/null
->> @@ -1,41 +0,0 @@
->> -/*
->> - * QEMU accel class, components common to system emulation and user mode
->> - *
->> - * Copyright (c) 2003-2008 Fabrice Bellard
->> - * Copyright (c) 2014 Red Hat Inc.
->> - *
->> - * Permission is hereby granted, free of charge, to any person obtaining a copy
->> - * of this software and associated documentation files (the "Software"), to deal
->> - * in the Software without restriction, including without limitation the rights
->> - * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
->> - * copies of the Software, and to permit persons to whom the Software is
->> - * furnished to do so, subject to the following conditions:
->> - *
->> - * The above copyright notice and this permission notice shall be included in
->> - * all copies or substantial portions of the Software.
->> - *
->> - * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
->> - * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
->> - * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
->> - * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
->> - * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
->> - * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
->> - * THE SOFTWARE.
->> - */
->> -
->> -#include "qemu/osdep.h"
->> -#include "accel/accel-cpu-target.h"
->> -
->> -static const TypeInfo accel_cpu_type = {
->> -    .name = TYPE_ACCEL_CPU,
->> -    .parent = TYPE_OBJECT,
->> -    .abstract = true,
->> -    .class_size = sizeof(AccelCPUClass),
->> -};
->> -
->> -static void register_accel_types(void)
->> -{
->> -    type_register_static(&accel_cpu_type);
->> -}
->> -
->> -type_init(register_accel_types);
->> diff --git a/accel/meson.build b/accel/meson.build
->> index 7da12b9741f..1b5b37e3097 100644
->> --- a/accel/meson.build
->> +++ b/accel/meson.build
->> @@ -1,5 +1,4 @@
->>  common_ss.add(files('accel-common.c'))
->> -specific_ss.add(files('accel-target.c'))
->>  system_ss.add(files('accel-system.c', 'accel-blocker.c', 'accel-qmp.c', 'accel-irq.c'))
->>  user_ss.add(files('accel-user.c'))
->>  
+On 5/27/2026 10:16 PM, Pierrick Bouvier wrote:
+> This file defines TYPE_ACCEL_CPU, which is accel-${CPU_RESOLVING_TYPE}.
 > 
-> I'm open to follow this approach first .
-> The only downside is that it limits to a single accelerator parent type,
-> which will be a problem as soon as we have two arch using this framework
-> for tcg. Nothing we can't solve later though.
+> This type is used to define cpu accelerators, and accel/accel-common.c
+> relies on naming convention to find matching cpus to apply a given
+> accelerator.
 > 
-> Regards,
-> Pierrick
+> Since variants of a given architecture share the same base
+> CPU_RESOLVING_TYPE (arm and aarch64 both use TYPE_ARM_CPU), the
+> TYPE_ACCEL_CPU gets registered twice in a single-binary.
+> 
+> Thus, for the single binary, we need to register TYPE_ACCEL_CPU only
+> once per base architecture. As a first step, we simply move compilation
+> to each target/*/meson.build, without solving duplication yet.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>  accel/meson.build             | 3 ++-
+>  target/alpha/meson.build      | 4 +++-
+>  target/arm/meson.build        | 2 ++
+>  target/avr/meson.build        | 4 +++-
+>  target/hexagon/meson.build    | 1 +
+>  target/hppa/meson.build       | 4 +++-
+>  target/i386/meson.build       | 4 +++-
+>  target/loongarch/meson.build  | 4 +++-
+>  target/m68k/meson.build       | 4 +++-
+>  target/microblaze/meson.build | 4 +++-
+>  target/mips/meson.build       | 4 +++-
+>  target/or1k/meson.build       | 4 +++-
+>  target/ppc/meson.build        | 4 +++-
+>  target/riscv/meson.build      | 4 +++-
+>  target/rx/meson.build         | 4 +++-
+>  target/s390x/meson.build      | 4 +++-
+>  target/sh4/meson.build        | 4 +++-
+>  target/sparc/meson.build      | 4 +++-
+>  target/tricore/meson.build    | 4 +++-
+>  target/xtensa/meson.build     | 4 +++-
+>  20 files changed, 56 insertions(+), 18 deletions(-)
+> 
 
-Forgot :)
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+This patch (and 4) will be replaced by:
+https://lore.kernel.org/qemu-devel/5b693f87-2f9a-4564-9efb-83c815bcb20e@oss.qualcomm.com/T/#m5c3e717dcacbbf013c9b4255248a3b5daac5a2ea
+
+Regards,
+Pierrick
 
