@@ -4,97 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BADECD5BD5
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 16:46:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DD70CD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 16:54:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSds4-0008Ch-EQ; Thu, 28 May 2026 12:46:12 -0400
+	id 1wSdzq-0000q7-3T; Thu, 28 May 2026 12:54:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wSds2-0008CR-NX
- for qemu-devel@nongnu.org; Thu, 28 May 2026 12:46:10 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wSdzW-0000nT-HP
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 12:53:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wSdrz-0007Ea-HW
- for qemu-devel@nongnu.org; Thu, 28 May 2026 12:46:10 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wSdzK-0002iT-FI
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 12:53:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779986765;
+ s=mimecast20190719; t=1779987220;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=ysFZsnS/3HXx55MFHw5/NkaBXVjsJ6TrVZh3E89wVdA=;
- b=R6J4xEysxGDEl5xe1J1DbPqtPSQBT+V/PzxG09P8iKTqD9Uo9PV6EHHYM3SNkq5dWQWMPy
- ACCJkaDT7vvi9e58cS8OnlkCjuYi1Xl/Amcytwxm/ydHFry4AeG/iP4TtJlfPkviHoIsCx
- zDmVYtnn9OzL+tw9jT/w0AWfh9/n5uw=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-34-TIsth52SNwuKrh1s5G_vFw-1; Thu, 28 May 2026 12:46:03 -0400
-X-MC-Unique: TIsth52SNwuKrh1s5G_vFw-1
-X-Mimecast-MFC-AGG-ID: TIsth52SNwuKrh1s5G_vFw_1779986763
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-44a71109b94so8660946f8f.3
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 09:46:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779986762; x=1780591562; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ysFZsnS/3HXx55MFHw5/NkaBXVjsJ6TrVZh3E89wVdA=;
- b=lvoXNgoNayh9imAUDpZpDQgYktfsPqoRA6F3vdkf/dAlp8IhATuxDo73alNOIQSIN9
- /hte1PsyD41xX4LCA/b42W2+9u02qJcGMsz4NEp6s9fz8Q5s068adSX7+SzrIc1Do+ui
- ucl1ocdvr0bYb6syFMV3X/6aQrUjQu6BrkSrEJ+Gy2yd1Xisa6a4qy+omzS7kjvQQfmk
- PBAsLX5xLEgh5JzskX3RJ20Xeb/ONv22OPhvR/ySoetWltdjx8Lt4DFz6oYdo4xggFwj
- dCBGt2QGTLu6aBcEtPAKxGfp/7iKM4Dt5WCPTKT8CBMVwajNJ2VU1Rz2POR1DdEy+pen
- EUkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779986762; x=1780591562;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ysFZsnS/3HXx55MFHw5/NkaBXVjsJ6TrVZh3E89wVdA=;
- b=IbX5jcs5CBUiYGM+DCUF+qHWH/pv/P/OadrTvQPEyT3DG8ntGsmbyH4jWxIHWC3fj5
- qTemkapMRGH1qwcbCz690nClvXRQgh9Y5/bBtDRv+JpKbHPKPIZ3dRUihumQCWxgZFZJ
- Rzmwt8JVMQybufHzt+nH29LtSY3WE7YQCfazQwbDXSKB+tiIVdQZ/6bTfDnc1sAVld35
- PxQGzKBviVDNchU0ssKvCCzdy+0Y544Cfc1He7zZcNhjczrFeH0kMoKekOB/chUbdBpp
- tJIZi3MhRHjJO9DuuV5EeABMpZ55Dx5plu+lUHG6/RfVmUhQQZ1x0g0ByIjxg3G1GwX2
- f13Q==
-X-Gm-Message-State: AOJu0YzkmL/UXYuRF3f+XNiwRHaP14+YqBrCZSPg7wQvtSDpUgO0rP6Q
- LRT5f9HRWKJY0vghLaZgiza+kySVlRaUIyqbHt0XQk0jKm8nzez+5n3uRNfbPFcX0X3FR7Nybss
- GhexllGQ1cyDXj5Ta9qGQAeEXOrYK18kBt8iAlpiaLLF/Bv5wbRp7yBz8QzXIiy1BRuZanTuQwf
- b3SCE6IukeGfa2NW42EipeKf2OjtYZ22QD3KlFeswo
-X-Gm-Gg: Acq92OHZDkoy9JLNuQrpR4DzWN8qcfdYyxNpS30hfS6Aqgv/vV6YAPzMmSvI6WW4MlK
- TsHcsbCLdpsIrLsC34soXdFaYCIdnDz9FH/3oi4F6VvqB60g4BRLU48Lqrwvqvt1vQMQMH+3wNM
- 5enhbCAPVE7RVyxs11vYp6pj9vazDe1h1TJcjQB+EWFfhM9JhElj855THYP9HuGFDSDGbuqOHCe
- hI65TzY6eQwSfB+Q1tXkByLDZurReAS/VPwzr54Yj87CO5Rnu40xrujnV3+ful4CFOnjjPmZltG
- 78TKSi5Esvlg3o5fSwQjQZt3hGiOMzuXxgoAxU6DfYZLItdnJ3v7aXe20rgyM9ye64s40UuFa3F
- 2U8lS0T5cA6/8wG3lKhYciu/7esroElPEYK0GDS9uHE/5dUUDsPPXVMRuH4cG4UqQdERDcR5hH5
- oK5zmRRkaA/lLO78V+1FXMbgKgzw7GeT1btud5OA==
-X-Received: by 2002:a05:6000:1844:b0:455:70bc:216d with SMTP id
- ffacd0b85a97d-45eb367f5fcmr50048985f8f.12.1779986762425; 
- Thu, 28 May 2026 09:46:02 -0700 (PDT)
-X-Received: by 2002:a05:6000:1844:b0:455:70bc:216d with SMTP id
- ffacd0b85a97d-45eb367f5fcmr50048928f8f.12.1779986761857; 
- Thu, 28 May 2026 09:46:01 -0700 (PDT)
-Received: from [192.168.10.48] ([151.49.251.208])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45edb54a432sm20658930f8f.3.2026.05.28.09.46.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 May 2026 09:46:01 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Abhigyan Kumar <314abh@gmail.com>, richard.henderson@linaro.org,
- philmd@linaro.org
-Subject: [PATCH] target/i386: apply mod to immediate count of an RCL/RCR
- operation
-Date: Thu, 28 May 2026 18:46:00 +0200
-Message-ID: <20260528164600.868982-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.54.0
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=zma71JTvPz+LWtf+s1HOWF+ZihSDIZwSRw3Pmwk+sjo=;
+ b=YQNiGBQAjQGJ9Fpw7WVJpNk+/w5XyStrj5sWvDDqNEtgIXI5WNOx67bfTySK3Q+t/z9gTc
+ 21ZnLIDidZwN36jPrX8DVRC9j6dhQHRT+d7RRitbPNHqNO78aVi7ZotB50vdDXu4LIWXrM
+ DuqKXoUJcyW0YWZQ6lm03SVBY2YgbfU=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-10-GsIr4cBXOPO_4x3myrXkJw-1; Thu,
+ 28 May 2026 12:53:36 -0400
+X-MC-Unique: GsIr4cBXOPO_4x3myrXkJw-1
+X-Mimecast-MFC-AGG-ID: GsIr4cBXOPO_4x3myrXkJw_1779987215
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 477B4180060F; Thu, 28 May 2026 16:53:35 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.48.81])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3E9C319560A3; Thu, 28 May 2026 16:53:33 +0000 (UTC)
+Date: Thu, 28 May 2026 18:53:30 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com,
+ Stefan Hajnoczi <stefanha@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Subject: Re: [PATCH v1] qed: Don't try to drain during INMIGRATE
+Message-ID: <ahhzCjSY7zrbXFme@redhat.com>
+References: <20260528135507.485-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260528135507.485-1-farosas@suse.de>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -118,176 +81,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RCR and RCL instructions with a count of 9 are the same as if the
-count was 0, but they generated incorrect code because the can_be_zero
-flag is false.  This causes 0 to underflow into -1 at
-tcg_gen_subi_tl(count, count, 1).
+Am 28.05.2026 um 15:55 hat Fabiano Rosas geschrieben:
+> It's not possible to access the image file while there is an incoming
+> migration in progress, the QEMU process doesn't hold any locks to the
+> storage at this point so nodes are inactive. Attempting to drain leads
+> to an assert at bdrv_co_write_req_prepare():
+> 
+>    assert(!(bs->open_flags & BDRV_O_INACTIVE))
+> 
+> The issue is reproducible by running iotest 181 on a host under cpu
+> load. The migration must coincide with the header already containing
+> the QED_F_NEED_CHECK flag.
+> 
+> The sequence of events is as follows, with the respective call stacks
+> referenced below:
+> 
+> During block device init, bdrv_qed_attach_aio_context() starts the
+> 'need_check' timer. The timer will not fire during incoming migration
+> as it uses QEMU_CLOCK_VIRTUAL (to avoid this very issue, as the code
+> comment indicates).                                                   (0)
+> 
+> However, there's still bdrv_qed_drain_begin() which uses the fact that
+> the timer is live to decide whether to start the
+> qed_need_check_timer_entry() directly.                                (1)
+> 
+> The qed_need_check_timer_entry() eventually calls into
+> qed_write_header() -> bdrv_co_pwrite() leading to the assert.         (2)
+> 
+> Since we don't have an API for checking if a timer is enabled, an
+> alternative is to skip this logic whenever the runstate is
+> INMIGRATE. This actually matches the setting of the BDRV_O_INACTIVE
+> flag at blockdev.c.
 
-Fix by absorbind the call to gen_shift_count() into gen_rotc_mod(),
-so that the new function handles both mask and mod.
+I'm not sure what you mean by "checking if a timer is enabled", because
+bdrv_qed_drain_begin() has a timer_pending() check that sounds exactly
+what you say doesn't exist.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3452
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/tcg/emit.c.inc | 85 +++++++++++++++++++++++---------------
- 1 file changed, 52 insertions(+), 33 deletions(-)
+But it's also not clear to me why s->need_check_timer is true on an
+inactive image. I don't think this is supposed to be the case? It looks
+like qed is missing a .bdrv_inactivate implementation that cancels the
+timer after flushing everything (including the header) to disk.
 
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index ce636b6c56c..c6b0be1f60d 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -3244,12 +3244,10 @@ static void gen_PUSHF(DisasContext *s, X86DecodedInsn *decode)
-     assume_cc_op(s, CC_OP_EFLAGS);
- }
- 
--static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
--                             bool *can_be_zero, TCGv *count, int unit)
-+static void gen_shift_count_1(DisasContext *s, X86DecodedInsn *decode,
-+                              bool *can_be_zero, TCGv *count, int unit,
-+                              int mask)
- {
--    MemOp ot = decode->op[0].ot;
--    int mask = (ot <= MO_32 ? 0x1f : 0x3f);
--
-     *can_be_zero = false;
-     switch (unit) {
-     case X86_OP_INT:
-@@ -3259,12 +3257,17 @@ static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
-         break;
- 
-     case X86_OP_IMM:
--        if ((decode->immediate & mask) == 0) {
-+        /*
-+         * The caller applied the mask (this is awkward; unfortunately the
-+         * mask must be applied *before* the modulo operation for RCL/RCR,
-+         * and the modulo operation must be before this check for zero).
-+         */
-+        if (decode->immediate == 0) {
-             *count = NULL;
-             break;
-         }
-         *count = tcg_temp_new();
--        tcg_gen_movi_tl(*count, decode->immediate & mask);
-+        tcg_gen_movi_tl(*count, decode->immediate);
-         break;
- 
-     case X86_OP_SKIP:
-@@ -3275,7 +3278,19 @@ static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
-     default:
-         g_assert_not_reached();
-     }
-+}
- 
-+static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
-+                             bool *can_be_zero, TCGv *count, int unit)
-+{
-+    MemOp ot = decode->op[0].ot;
-+    int mask = (ot <= MO_32 ? 0x1f : 0x3f);
-+
-+    if (unit == X86_OP_IMM) {
-+        decode->immediate &= mask;
-+    }
-+
-+    gen_shift_count_1(s, decode, can_be_zero, count, unit, mask);
-     return ot;
- }
- 
-@@ -3394,32 +3409,38 @@ static void gen_rot_overflow(X86DecodedInsn *decode, TCGv result, TCGv old,
-     }
- }
- 
--/*
-- * RCx operations are invariant modulo 8*operand_size+1.  For 8 and 16-bit operands,
-- * this is less than 0x1f (the mask applied by gen_shift_count) so reduce further.
-- */
--static void gen_rotc_mod(MemOp ot, TCGv count)
-+static MemOp gen_rotc_count(DisasContext *s, X86DecodedInsn *decode,
-+                            bool *can_be_zero, TCGv *count, int unit)
- {
-     TCGv temp;
-+    MemOp ot = decode->op[0].ot;
-+    int mod = (8 << ot) + 1;
-+    int mask = (ot <= MO_32 ? 0x1f : 0x3f);
- 
--    switch (ot) {
--    case MO_8:
--        temp = tcg_temp_new();
--        tcg_gen_subi_tl(temp, count, 18);
--        tcg_gen_movcond_tl(TCG_COND_GE, count, temp, tcg_constant_tl(0), temp, count);
--        tcg_gen_subi_tl(temp, count, 9);
--        tcg_gen_movcond_tl(TCG_COND_GE, count, temp, tcg_constant_tl(0), temp, count);
--        break;
--
--    case MO_16:
--        temp = tcg_temp_new();
--        tcg_gen_subi_tl(temp, count, 17);
--        tcg_gen_movcond_tl(TCG_COND_GE, count, temp, tcg_constant_tl(0), temp, count);
--        break;
--
--    default:
--        break;
-+    /*
-+     * RCx operations are invariant modulo 8*operand_size+1.  For 8 and 16-bit
-+     * operands, this is less than 0x1f (the mask applied by gen_shift_count)
-+     * so reduce further.  Failure to do so results in incorrect shifts
-+     * in gen_RCL/gen_RCR.
-+     */
-+    if (unit == X86_OP_IMM) {
-+        decode->immediate &= mask;
-+        decode->immediate %= mod;
-     }
-+
-+    gen_shift_count_1(s, decode, can_be_zero, count, unit, mask);
-+
-+    if (unit == X86_OP_INT && mod < mask) {
-+        temp = tcg_temp_new();
-+        if (mod * 2 < mask) {
-+            tcg_gen_subi_tl(temp, *count, mod * 2);
-+            tcg_gen_movcond_tl(TCG_COND_GE, *count, temp, tcg_constant_tl(0), temp, *count);
-+        }
-+        tcg_gen_subi_tl(temp, *count, mod);
-+        tcg_gen_movcond_tl(TCG_COND_GE, *count, temp, tcg_constant_tl(0), temp, *count);
-+    }
-+
-+    return ot;
- }
- 
- /*
-@@ -3440,7 +3461,7 @@ static void gen_RCL(DisasContext *s, X86DecodedInsn *decode)
-     bool have_1bit_cin, can_be_zero;
-     TCGv count;
-     TCGLabel *zero_label = NULL;
--    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
-+    MemOp ot = gen_rotc_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
-     TCGv low, high, low_count;
- 
-     if (!count) {
-@@ -3451,7 +3472,6 @@ static void gen_RCL(DisasContext *s, X86DecodedInsn *decode)
-     high = tcg_temp_new();
-     low_count = tcg_temp_new();
- 
--    gen_rotc_mod(ot, count);
-     have_1bit_cin = gen_eflags_adcox(s, decode, true, can_be_zero);
-     if (can_be_zero) {
-         zero_label = gen_new_label();
-@@ -3492,7 +3512,7 @@ static void gen_RCR(DisasContext *s, X86DecodedInsn *decode)
-     bool have_1bit_cin, can_be_zero;
-     TCGv count;
-     TCGLabel *zero_label = NULL;
--    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
-+    MemOp ot = gen_rotc_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
-     TCGv low, high, high_count;
- 
-     if (!count) {
-@@ -3503,7 +3523,6 @@ static void gen_RCR(DisasContext *s, X86DecodedInsn *decode)
-     high = tcg_temp_new();
-     high_count = tcg_temp_new();
- 
--    gen_rotc_mod(ot, count);
-     have_1bit_cin = gen_eflags_adcox(s, decode, true, can_be_zero);
-     if (can_be_zero) {
-         zero_label = gen_new_label();
--- 
-2.54.0
+> 
+> The stacks:
+> 
+> (0) == issues timer_mod ==
+>  #6  in qed_start_need_check_timer       at ../block/qed.c:340
+>  #7  in bdrv_qed_attach_aio_context      at ../block/qed.c:373
+>  #8  in bdrv_qed_do_open                 at ../block/qed.c:556
+>  #9  in bdrv_qed_open_entry              at ../block/qed.c:582
+>  #10 in coroutine_trampoline             at ../util/coroutine-ucontext.c:175
+>  #0  in qemu_coroutine_switch<+120>      at ../util/coroutine-ucontext.c:321
+>  #1  in qemu_aio_coroutine_enter<+356>   at ../util/qemu-coroutine.c:293
+>  #2  in aio_co_enter<+179>               at ../util/async.c:710
+>  #3  in aio_co_wake<+53>                 at ../util/async.c:695
+>  #4  in thread_pool_co_cb<+47>           at ../util/thread-pool.c:283
+>  #5  in thread_pool_completion_bh<+241>  at ../util/thread-pool.c:202
+>  #6  in aio_bh_call<+109>                at ../util/async.c:173
+>  #7  in aio_bh_poll<+299>                at ../util/async.c:220
+>  #8  in aio_poll<+690>                   at ../util/aio-posix.c:745
+>  #9  in bdrv_qed_open<+392>              at ../block/qed.c:607
+>  #10 in bdrv_open_driver<+327>           at ../block.c:1678
+>  #11 in bdrv_open_common<+1619>          at ../block.c:2008
+>  #12 in bdrv_open_inherit<+2556>         at ../block.c:4191
+>  #13 in bdrv_open<+118>                  at ../block.c:4286
+>  #14 in blk_new_open<+199>               at ../block/block-backend.c:458
+>  #15 in blockdev_init<+2011>             at ../blockdev.c:612
+>  #16 in drive_new<+3008>                 at ../blockdev.c:1008
+>  #17 in drive_init_func<+51>             at ../system/vl.c:662
+>  #18 in qemu_opts_foreach<+227>          at ../util/qemu-option.c:1148
+>  #19 in configure_blockdev<+350>         at ../system/vl.c:721
+>  #20 in qemu_create_early_backends<+343> at ../system/vl.c:2076
+>  #21 in qemu_init<+12483>                at ../system/vl.c:3778
+>  #22 in main<+46>                        at ../system/main.c:71
+> 
+> (1) == sees timer_pending ==
+>  #6  in bdrv_qed_drain_begin             at ../block/qed.c:391
+>  #7  in bdrv_do_drained_begin            at ../block/io.c:366
+>  #8  in bdrv_do_drained_begin_quiesce    at ../block/io.c:386
+>  #9  in bdrv_child_cb_drained_begin      at ../block.c:1207
+>  #10 in bdrv_parent_drained_begin_single at ../block/io.c:133
+>  #11 in bdrv_parent_drained_begin        at ../block/io.c:64
+>  #12 in bdrv_do_drained_begin            at ../block/io.c:364
+>  #13 in bdrv_drained_begin               at ../block/io.c:393
+>  #14 in blk_drain                        at ../block/block-backend.c:2101
+>  #15 in blk_unref                        at ../block/block-backend.c:544
+>  #16 in bdrv_open_inherit                at ../block.c:4197
+>  #17 in bdrv_open                        at ../block.c:4286
+>  #18 in blk_new_open                     at ../block/block-backend.c:458
+>  #19 in blockdev_init                    at ../blockdev.c:612
+>  #20 in drive_new                        at ../blockdev.c:1008
+>  #21 in drive_init_func                  at ../system/vl.c:662
+>  #22 in qemu_opts_foreach                at ../util/qemu-option.c:1148
+>  #23 in configure_blockdev               at ../system/vl.c:721
+>  #24 in qemu_create_early_backends       at ../system/vl.c:2076
+>  #25 in qemu_init                        at ../system/vl.c:3778
+>  #26 in main                             at ../system/main.c:71
+> 
+> (2) == crashes ==
+>  #5  in __assert_fail (assertion="!(bs->open_flags & BDRV_O_INACTIVE)", file="../block/io.c", line=1977
+>  #6  in bdrv_co_write_req_prepare  at ../block/io.c:1977
+>  #7  in bdrv_aligned_pwritev       at ../block/io.c:2099
+>  #8  in bdrv_co_pwritev_part       at ../block/io.c:2316
+>  #9  in bdrv_co_pwritev            at ../block/io.c:2233
+>  #10 in bdrv_co_pwrite             at ../include/block/block_int-io.h:77
+>  #11 in qed_write_header           at ../block/qed.c:128
+>  #12 in qed_need_check_timer       at ../block/qed.c:305
+>  #13 in qed_need_check_timer_entry at ../block/qed.c:319
+> 
+> Note that this issue is not exactly the same as what's been reported
+> in Gitlab, but given how easily this reproduces, I imagine it has to
+> be happening in that setup as well.
+> 
+> Link: https://gitlab.com/qemu-project/qemu/-/work_items/3515
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+> CI run: https://gitlab.com/farosas/qemu/-/pipelines/2557314306
+> ---
+>  block/qed.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/block/qed.c b/block/qed.c
+> index da23a83d62..ccf32bb4ae 100644
+> --- a/block/qed.c
+> +++ b/block/qed.c
+> @@ -21,6 +21,7 @@
+>  #include "qemu/module.h"
+>  #include "qemu/option.h"
+>  #include "qemu/memalign.h"
+> +#include "system/runstate.h"
+>  #include "trace.h"
+>  #include "qed.h"
+>  #include "system/block-backend.h"
+> @@ -373,6 +374,11 @@ static void bdrv_qed_drain_begin(BlockDriverState *bs)
+>  {
+>      BDRVQEDState *s = bs->opaque;
+>  
+> +    /* Nodes are inactive while waiting for an incoming migration. */
+> +    if (runstate_check(RUN_STATE_INMIGRATE)) {
+
+If you're interested in whether the node is inactive, this is what you
+should check. RUN_STATE_INMIGRATE is only one of the conditions in which
+it might (but doesn't have to) be true. There is bdrv_is_inactive() to
+check this.
+
+Of course, if we're fixing the root cause (that QED_F_NEED_CHECK and
+s->need_check_timer are set on an inactive image), this hunk might not
+be needed at all.
+
+> +        return;
+> +    }
+> +
+>      /* Fire the timer immediately in order to start doing I/O as soon as the
+>       * header is flushed.
+>       */
+
+Kevin
 
 
