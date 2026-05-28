@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA8DFCD4F54
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 15:25:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16144CD6E49
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 15:29:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wScbX-00064u-9Q; Thu, 28 May 2026 11:25:03 -0400
+	id 1wScfN-0006t2-62; Thu, 28 May 2026 11:29:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wScbV-00064S-Lq
- for qemu-devel@nongnu.org; Thu, 28 May 2026 11:25:01 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wScfL-0006s2-5n
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 11:28:59 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wScbT-0002eh-Uj
- for qemu-devel@nongnu.org; Thu, 28 May 2026 11:25:01 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-452169ae568so8375667f8f.3
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 08:24:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wScfJ-0004SL-JY
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 11:28:58 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4908b92904fso12102645e9.0
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 08:28:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779981898; x=1780586698; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9/Ja37LZtpam2DGtcZQELBh7bImXz1K7m9NzDHBwgpI=;
- b=VIuMeQLTmlIoaVCEmlDxkkVSpcertEQ2T1a8RQZcU01773N8RuOSOadKlse+JO/XAL
- 4qZNxpaw1RYGyk7kCfSvZXuavtaPbgrVjgFoALGr/cXCNYUp9xE4/MhIKY1cDRMRu4gG
- oAyawF0HNei6zJ7MA80sHuAC/OYFwwD9zygl8582hNeGK5Q0rTgfEpvnEqu9ZnoFu7Q6
- aaXH7gfVpQBEuJxnR8CvK6aHGJyB5o/4IhBeU1+mCnuqFGWkSouqp0LPoP909l4tz4ta
- ILYbY15G3O1sxb1rPQrnbjxyNLPdXi5+p6KRvOpjRl2PY3r5eXqHFPBmlHaU5f7xhja7
- P9qg==
+ d=linaro.org; s=google; t=1779982134; x=1780586934; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=TB2juBS3szLYOmffaCpBxbVMqRICIh6lQ8+XUMJHh6c=;
+ b=unE6q8Gf9CiyK+nEYkNK0uDBHiz3F5Mw78M2qIaS7joStcddPUpxAilz2d6Fb5oea8
+ rimb4YzzvQHgRjNcBq5stF2QiSLNPVDDU1AJpyywvQdM8Rdn1QhmxYGZgS5NM1b2QDJx
+ usSNYuDhYH0KVXabejV8f5u25sr1uBWGOd9uV99X+qV/PPpVkg7Bc9ALDGhZAfl0reQp
+ tXa+M8moU8Yyy0xUnbquIFG7tkL0u4+741c0gDBbKUjZGU3QvVTq+UaUQ3YI0G77vrwl
+ HPKAB7UCk9fRW7jaSx2njKsYSxPAerIomLt8e5MZWGhs5ZO8eESSkqZC5gWW3o7PXzMU
+ VawQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779981898; x=1780586698;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20251104; t=1779982134; x=1780586934;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=9/Ja37LZtpam2DGtcZQELBh7bImXz1K7m9NzDHBwgpI=;
- b=ka8CNujt9Y1BxdJcdrbkN2lnDxbdC/wRHbfT1Xo6fhB5lJD/M5U19ginIBoTw+JQ8o
- IRe0lAOv+sAf/63XwIMe9un4b2Slx/Rn294aGXhREWMrWHI+N83lsMhX7wIq2NVcGYbm
- HoSlKUZ/kcCcPK5dsw9aeCHc4UjxMXCh71oy6cfHwhGvnNzW6AOPY6FfGC3SazU62MAr
- 4uSk2TBc4gZMQKfPMJP1miBbAN5QXhhHk2Do7LBvX8SbnZsu2ofRn0WFtzqASsPfKRoB
- 2y7XOXAVQ5X7zmBZfjD9h5zlINebFngdNYcewIiWNVkRsDaaruuWtJC0Pi/BZGbPLTD2
- 3jOQ==
+ bh=TB2juBS3szLYOmffaCpBxbVMqRICIh6lQ8+XUMJHh6c=;
+ b=dT1olmhLGhS0PNS8xAEnVrS1QDgZGfBm2nGr/NI0hhlsL/WpgOYPiMuYpQBjTpwh+0
+ 67jlVYsGF7taVU3bqwzjy1J9lHQDEVQfSNjbUUhfekACJXGdbbcnWJ/HFo8rgdvHK0Om
+ 2tL8BQwu8q52snWTkym5O3mfsHVDtMxfS2nxVQ1rXT0h4qjumZeF7TRI4oMtrLgDWFa3
+ E9zwgayJbj3zjEESKvsWyc8R5o0chhjEnAMZVKRhNF/NrR84UZf8aruRBxitijk9ukcn
+ 3OtQTR5wCHgXBT5ycUOzo6C7Ug6zYSPZsXELM73By4SuAIpH7dWA0Qw/ylUfCHdNbi5C
+ z5+w==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9CGjfedj3uCpC4snrLjlhRWBEehMBipX6FNs0TpYJv+TfNpnZCNNUXvYm+imxFJVkNHdvEhX4vDuby@nongnu.org
-X-Gm-Message-State: AOJu0YwH/vhRx27RJ/4Zfg7XPV2dFUAtxE+FKiL7bIk8rd7cqcUsLmvD
- xoCNrkQvdfBTQOqzejY1MMUWne8D2cxOQO17/1GAkFtxbozgMyVhopjIHwPomUIf/OGgt3/mVDw
- ZfDSNBoA6JA==
-X-Gm-Gg: Acq92OF9FpqR5zW7V6xDvTqjux/wRapvnVz5ilUBZ0Ot6CcAClTbqihdYgGnNR0Fiar
- 0UzOVU3QWMHNLwmGIXPwyChwCRHVhxiUf0CTMhbUsHtizREShQTTkTwD3ZNjAILAFlXCWVgvzzB
- 6n+iL5GmTDWPukdOo/oaLU/cDrFMvOZQBwdFAMm97g7q7F37Im0HY7X0FfvltMjnexAfRhRa5Rg
- I4r+GZp6mm5GoGnmO+6GsrPsx9YG/qXOtspjZ98xYAY+gPoSzzLErLFe8LTgu67qHU7Id0mpayb
- 9m0Wcg88LqqEhkn8GJnFJ5i/EDiONfoci1UbJ8SAdwaHLH9WC1yjGJxeIeOAHXfUMTiknSCGhVe
- e5bGtf3ibK7CS815M6QgqfaYkvTOUOhr8lPbK8kqskSYWRHCOFmiOoGK1x3n75AbaoKQjdSrkGv
- 5K2Rbc95BqGYhk6HsB+NLydxlgfFNotXbtkG+vmX6vJI4NElYVrX3Csyn2Dl1xSVHquAUeU3rXY
- zp/
-X-Received: by 2002:a05:600c:1d22:b0:490:9588:bdae with SMTP id
- 5b1f17b1804b1-4909588bf5emr30730815e9.18.1779981897742; 
- Thu, 28 May 2026 08:24:57 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ee91c34bfsm5529008f8f.2.2026.05.28.08.24.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 May 2026 08:24:57 -0700 (PDT)
-Message-ID: <2e90e85b-a8cb-4f6c-b7d4-f2f6159b6d55@linaro.org>
-Date: Thu, 28 May 2026 17:24:56 +0200
+ AFNElJ+UPKcTmCN2IAdXgquREfZa/000xk6KBqFSupRyXpSbpg3353aOx2xYyZpce3NygFXxFhmevWlpnHAk@nongnu.org
+X-Gm-Message-State: AOJu0Yz3gKeQi/E3Zd2yo3+duAiAVGKlyfx3dYM2hq7iwg/N+ibgiqkZ
+ /xhdIJi2A20rLOwBA11pvQ0TMy4gRa5/thSqz6f+FBQGoM0kqRLTCa9kPkP0lxCAxZk=
+X-Gm-Gg: Acq92OEg1W1Z5uYzIWD9c7YUguvhqWmDtVIYecD3YrfPTUNK6wM4zs0s6bRzEtdnxbk
+ WWBzVh7sMoSd8HnpgC/+KBvx/rAhVcdS0VleXCz9lBg4wg3lA52u+3/K8nZZLf0leTR3nYByF23
+ bqKc4JB9b/gCY3x03g9eMFDtUfVS/mIxeXG98N/IJZf2YuuHQcIy48nmBYxy0j07MRT7W6e5y1P
+ uVvEIgIsfNJwKcUbRYY9ND+bZak2ym10+w62z7jUYAN+LxYBDJihfLut3RbzO+L+GDI/63Wmk05
+ X/lDF6ZBS8OH7XSuRWBa2huRc1HYjaYlWnkIbZVqXnLzM9rZ4mrD1etFFeGx1z3NTbn/K6SbI/y
+ FRNtitStyuMn/frG1ALVXnrg6GCRQwYza3wF1ce4jnRCFTTcdSTym2lDnZn11a0UmPEJAn7hioZ
+ 6pl3H81q9QvXJtk7sla+hmw0bXsYEcLJRR0Zguip6E5xWf2HAbTOX1HCGb0mMb9jWRd7oMoS/wm
+ WgJEN6JaM0Z4VkTUmKeRtFle/jq1Zy9byHrfsRD1Q==
+X-Received: by 2002:a05:600c:c10b:b0:489:e126:b757 with SMTP id
+ 5b1f17b1804b1-490426ddc41mr360084755e9.25.1779982134354; 
+ Thu, 28 May 2026 08:28:54 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4908b7a70b9sm19116605e9.12.2026.05.28.08.28.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 28 May 2026 08:28:53 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH 0/3] hw/dma/omap_dma: Remove dead code, tidy up
+Date: Thu, 28 May 2026 16:28:49 +0100
+Message-ID: <20260528152852.3349928-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386/monitor: Refine `info tlb` command logic
-Content-Language: en-US
-To: AlanoSong@163.com, qemu-devel@nongnu.org
-Cc: dave@treblig.org, pbonzini@redhat.com, zhao1.liu@intel.com
-References: <20260524124129.174254-1-AlanoSong@163.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260524124129.174254-1-AlanoSong@163.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,58 +100,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+This patchset is primarily the "hw/dma/omap_dma: Remove unused
+ifdeffed out code" patch that was originally in my OMAP dead-code
+series from the other week; everything else in that series is now in
+upstream git. The patch itself has been reviewed, but the series does
+the requested followup work of fixing the indent after the removal of
+the ifdefs.
 
-On 24/5/26 14:41, AlanoSong@163.com wrote:
-> When booting an i386 guest, the `info tlb` command
-> may walk the entire page table hierarchy and emit
-> an enormous amount of output (as many as 800+ million
-> entries under my test).
-> It will take dozens of minutes to print all the info,
-> because each monitor print function will holds 'mon_lock'.
-> This effectively hangs the qemu monitor, and even leading
-> to program exit due to timeout.
-> 
-> So it may be better to show only the first 32 entries
-> and the last entry by default.
-> 
-> And if full output is required, the user can redirect
-> the output to a file by specifying a file name, e.g.:
-> `info tlb xxx.txt`.
-> 
-> Signed-off-by: Alano Song <AlanoSong@163.com>
-> ---
->   hmp-commands-info.hx  |  10 +-
->   target/i386/monitor.c | 230 ++++++++++++++++++++++++++++++++++--------
->   2 files changed, 195 insertions(+), 45 deletions(-)
-> 
-> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-> index 82134eb6c2..33b4604d11 100644
-> --- a/hmp-commands-info.hx
-> +++ b/hmp-commands-info.hx
-> @@ -188,17 +188,19 @@ ERST
->   
->       {
->           .name       = "tlb",
-> -        .args_type  = "",
-> -        .params     = "",
-> -        .help       = "show virtual to physical memory mappings",
-> +        .args_type  = "file:s?",
-> +        .params     = "[file]",
-> +        .help       = "show virtual to physical memory mappings (optionally save to file)",
->           .cmd        = hmp_info_tlb,
->           .arch_bitmask = QEMU_ARCH_I386 | QEMU_ARCH_SH4 | QEMU_ARCH_SPARC \
->                           | QEMU_ARCH_PPC | QEMU_ARCH_XTENSA | QEMU_ARCH_M68K,
->       },
->   
->   SRST
-> -  ``info tlb``
-> +  ``info tlb`` [*file*]
->       Show virtual to physical memory mappings.
-> +    If *file* is specified, the output is saved to the given file
-> +    instead of being printed to the monitor.
->   ERST
+Patch 1: remove ifdefs; has been reviewed
+Patch 2: fix coding style so checkpatch doesn't complain about patch 3
+Patch 3: re-indent; whitespace change only
 
-What about passing count or range by argument instead, keeping the
-default behavior?
+thanks
+-- PMM
+
+Peter Maydell (3):
+  hw/dma/omap_dma: Remove unused ifdeffed out code
+  hw/dma/omap_dma: Fix coding style in omap_dma_transfer_setup()
+  hw/dma/omap_dma: Fix indentation after ifdef removal
+
+ hw/dma/omap_dma.c | 247 ++++++++++++++++------------------------------
+ 1 file changed, 84 insertions(+), 163 deletions(-)
+
+-- 
+2.43.0
+
 
