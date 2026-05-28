@@ -4,84 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 007C7CD4F54
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 20:26:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD13BCD6E45
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 20:26:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wShIr-0002Sy-Cd; Thu, 28 May 2026 16:26:05 -0400
+	id 1wShIr-0002Ut-Vi; Thu, 28 May 2026 16:26:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShIb-0001xS-HC
- for qemu-devel@nongnu.org; Thu, 28 May 2026 16:25:52 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShIW-0005aS-Mi
- for qemu-devel@nongnu.org; Thu, 28 May 2026 16:25:47 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-49041e84237so57400045e9.1
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 13:25:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wShIN-0001o2-B6
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 16:25:40 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wShII-0005WA-Tc
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 16:25:33 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64SGUXrT3203841
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 19:07:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ XRT54UXmieZNlZX6C/jf8QwOuveW6vJunnPdm/utGgA=; b=p0Om3F7Nyt0mQZci
+ ZK5OCcEjZrH7WonK2Du2Uc5Di+uKWeFOJh2bjRsyWz3S+C9r+xpR3SURTUXhqrcE
+ K1hNNZdQz1uC6kYerjsW6J8d3Jek5+8hQtS4l2jUSkVuxf/xOysxYeMZO4qfy+bM
+ b9aegqjynvUL5fo/u2UerPzWHZUaqkYsWAuQQnxO4irLu6QFQESnwC5LiO3aB8j0
+ IszDRNkCirsCS3OW0QLeu8YV2Df6qjl31rdp+dD2uhhTEGJxjROxFjppM3/w+dhR
+ Ias7l4PR9VPeuRbTSWLfO1idf04QDwpaYzlIeaBa9bRLhSjYed6lR1RTvf8kxloQ
+ G3JBBg==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ee7ynmc5a-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 19:07:53 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-304e3e3fba5so1357242eec.0
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 12:07:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779999943; x=1780604743; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=WArSSnwpJ3pEKIFTnzyhQvXPduPtSS4giAKXBBATIio=;
- b=B3jRY7w9GsnnSistBecrUBHX+RHXqUtP3iSUxlGMQeRW4aQSVhVPQ6K7GzEqbnkLtF
- YNieDkj1/qkJxTSK+W6+SVcK5DlhzLQav9wYKXLL/JbTm0d3QP+NvP5a+nRB0JY7jx/y
- zJRbEmauYV7/Kr8BOdqrODFN0GI4eAMRZ00AVdq6RdC+2NQk4Uf741PvQmRZ5gcOJReB
- PdwoT1KJPjabNWhfqNItbz4rn/YJaeWYEVa/3j5aoLaGtbzH+qJ4diCW/k8RA0QDiv3I
- gR1tDjqkNqTY1qnTZQC2+kUhmwODS3i9VeKSGZZCaDVfUo1cdJWRSsXY1lVOzVF/wyIh
- 7SFg==
+ d=oss.qualcomm.com; s=google; t=1779995272; x=1780600072; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=XRT54UXmieZNlZX6C/jf8QwOuveW6vJunnPdm/utGgA=;
+ b=fTpN+CBdX9tZU2T0Xc6hKHntSPrfdoqUIZE9TL3KB2dgjw2PzvDBtn4oPo8bdpO+I2
+ HF42qIgBCFwwqxNTDlylKi24tHe/2UlePmOunpyxngF9AmQPDwlvpEYyiEttq7zq1lXj
+ Dloe9zVER5ImEn4TqRj7gSLO3FWxdIOBlu6yQMWNguVD7NvDZk6TUDLF0y/sn3WF3rNa
+ eazEzgHtYE+HGcV+JYe6FqaYrYweO9HD8mxehh6GaZe6ijqGbNSndybm3B1onWeDKyHS
+ 2wHrK+q0J8f9jKXJCwrtebrPITPCMjqXaMxjJJIpdEHVBqPcHZdu+uNuiaSsLxgo1EGe
+ Y+nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779999943; x=1780604743;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=WArSSnwpJ3pEKIFTnzyhQvXPduPtSS4giAKXBBATIio=;
- b=MRGnlUF1D1Evyl+SCjbHX8rGDGAztouBu2XzAResJig2dKioxfripHWtMi9+Xct4f8
- nVBcVKQQW8SC34Mt9iGJF0WEJ6KlJXkfS1JIl0WReZLIxQNa2iX6uEKshJl32dJtI+Vy
- gaO7gwF3C5KIa0amlXLvdFqB7Z1soISyoneV779OcP7Pd8UR1HqJmMVrMQ7aIddMBms5
- /Yt1RyAN+rc2yx/J43avyg8FIMDFwGH8+AUyeyITTCe70svgsovGF1dWFZTp9qIscMfC
- fjRrG898zDlrRAZw8j2Ldsuj1I8j2jRv/w85aLCzM1zTVMAlyRRBN/x2CTfl8AgiX+q/
- ZQGA==
-X-Gm-Message-State: AOJu0YyWR5qYzWeJDY6UzaHFMs20GQLmaaKHAmvFSzTd3JA7NRMYyW0v
- fR2mAWyFOZXEWfPNfUAJGxEPW9lnuUdOki9TWvJbPwG8OUDiIW1irB9eMd91Lzqzs4ZYTPMjihY
- uVEdUlOvH2w==
-X-Gm-Gg: Acq92OEH9W0HhrRzpOOQehiXTMAz+hjzxXyrOvhhAK1RlGsNAzIt8xS8mH4vL6iJ0xU
- HSWdesEC3W6XV8oihzAcStyPlAvIQPqdkOWId+pcDOVLfVLij9/Q9vQio9PTLWTy+OxTLlcX1DW
- tmKoyYVLlHElcD0Dd/oLimOi8OCMivNFjRzW5iZAY4c+aGEx9gDxdkKJ428ljKw3fHV3bEn1ze6
- TtQfK28EGz3BKRH6DKwzsA3sd/KCIQNIp+9pnqz7OyfCmHwZY94Nl+7pCJDPyUxrQiwa1QqNdvB
- 4WOCATJ4ZLv0VR/ZUhvIpPTNu0AWXdQeHiRGuNpt9m/bRr94NzWo74XimIBUL/2kq5FuXK+Ktyh
- +anYoR9NkKaSA33Ll9IdTvgFawKDBSS/6TndNs+famAGrdm4gayifyIn616qZ9kpn3kU+Mo67Sc
- Ob0wn5uiZ8SBww0yU2qBc8nTUqNnSLxCOL7zG6cg0DaENcwwWukZM4RzJX78i+XBcLnw==
-X-Received: by 2002:a05:600c:3215:b0:48a:53cb:8604 with SMTP id
- 5b1f17b1804b1-4909c087552mr390305e9.14.1779999943076; 
- Thu, 28 May 2026 13:25:43 -0700 (PDT)
-Received: from m15.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4909c0b862dsm107005e9.15.2026.05.28.13.25.40
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 28 May 2026 13:25:41 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 22/22] hw/core: Remove SysemuCPUOps::get_phys_addr_attrs_debug
-Date: Thu, 28 May 2026 22:22:52 +0200
-Message-ID: <20260528202253.49122-23-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260528202253.49122-1-philmd@linaro.org>
-References: <20260528202253.49122-1-philmd@linaro.org>
+ d=1e100.net; s=20251104; t=1779995272; x=1780600072;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=XRT54UXmieZNlZX6C/jf8QwOuveW6vJunnPdm/utGgA=;
+ b=LIYO3c0hUbjLl3LIrQaaQODVJyBv79j5zypGDqi/aqYk0akAC9sahUA/a4nitACngL
+ FAJ/Dcll/cza0M1+nTWsBSONdTmPrcLBB+5vngg0kPVrB2SLpi0RvCrCRP3dBNDkxMfe
+ HOshr35XwG4qEoKZ+9hsNTWrVzEWK4F3Y3/yZ8ypzeCMuElE4nnOtBT0Kfqodh+5l4OS
+ 4PkXmsfooQoU1swOpzNiVaQ5nuf0d8hxKKTPxEiNkOPOb2sZZx/Jw6BdXF9lsyiiAMiv
+ vdeh0vIOlDNi7KNulq932VgMkVfKOFqZ4gN3RURYajb4NwTI7bU9SwwIBbwwG13DiccN
+ MQoQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8MtopDP+x7nmUK3EOgy+kR1mUhfFWfZ1iB+mvk9+PcuPR36ad6OKoU3a20ZbxmDcnZo6BJ5B4an3uY@nongnu.org
+X-Gm-Message-State: AOJu0YyCDWyOoOzingo4CVvCePjclt6o9zDABVU+r4jdlL6YNCSToC9E
+ ohnr5EgS1M+cSeOD6BcdEReI0BFNZENO/Z3YMtQoBl1vX1LTLvgSpxuBApC0zrvS+gPjKXD53J2
+ qtF8dFo99Nr42N4VivBaMUyWIVxs/HK7v4S9NXGhJvhN7pEBqdQ/KjX1bJA==
+X-Gm-Gg: Acq92OF3enjDdp9XHG5Bfyeevrm1gq1owjajzD/VuTZGAEPUcaY6rnaSOugubjbYGhC
+ e9rumVvac/iQwV1UpnaDvceNKpPsbFkJXgJyq/cYMJmUNaQ6BxPzC03JE2YwsOLfypD1364MdyH
+ Ko5inqhQDV+Sdfevb2/qKMZx3P0/ZnBI/9QtFXaTTwjoAJ06av0N9Ot7Qy9oLfBjYI8w7sUmr3q
+ 4pMtredtjmp+RKKcIVffqP7AohrMf4aw1/ifbbVu77HfU2uPIoYpgEH+Pe6pT3b1RAc9yy/IWmj
+ X0biNbwsdphjFNDtyHvMV61/n8ADTLp7RFXltanWTDQkZF8Io2Z8y6SRNim+4r7Ai8j4k7DTAWY
+ w8f3IpNVmuzEBAev65thzSglRECILnDlHHqIMO5f0TGQXgantJimg5Tc4Fao849nLhEas3n5D2e
+ XLMExAsGY7LE8mbfTQzODfKQte
+X-Received: by 2002:a05:7300:2307:b0:304:705f:e4e8 with SMTP id
+ 5a478bee46e88-304e8cd4ff4mr157312eec.32.1779995272340; 
+ Thu, 28 May 2026 12:07:52 -0700 (PDT)
+X-Received: by 2002:a05:7300:2307:b0:304:705f:e4e8 with SMTP id
+ 5a478bee46e88-304e8cd4ff4mr157288eec.32.1779995271831; 
+ Thu, 28 May 2026 12:07:51 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-304e990f413sm115280eec.20.2026.05.28.12.07.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 28 May 2026 12:07:51 -0700 (PDT)
+Message-ID: <d502be21-6b89-4231-ac06-8e3989378dbb@oss.qualcomm.com>
+Date: Thu, 28 May 2026 12:07:49 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] linux-user/strace: add fsmount series of syscalls
+To: Xinhui Yang <cyan@cyano.uk>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Mingcong Bai <jeffbai@aosc.io>
+References: <cover.1779876076.git.cyan@cyano.uk>
+ <610babeb23869f75133b3a8c217915aa8781fe7d.1779876076.git.cyan@cyano.uk>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <610babeb23869f75133b3a8c217915aa8781fe7d.1779876076.git.cyan@cyano.uk>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI4MDE5MiBTYWx0ZWRfX3PRATszNZysH
+ pGW5q+pyt42PBqrEl8qePtZtF4PNsjSgXXY/zRyFHMpaEGHWVB5idfwvygqwHXgwTbnAjWd+u3k
+ 6dzpsK1JXwheZMbNTscYEXpedKGOs0Vqh00q/ckKBpmPkZwSGApUFDhZs+hmLxUMnkwtTdjc6HP
+ gK73OYPKxcTyPvgnWVXdNsNuYRZ/cH20kvaPFD7xAlK23ugI6zZDjfR8/OuoP0jGa7JpXB9gYl5
+ O08d34w11hNKCsu/rYwdV5kj7aTe3RVSBcz+ekUcXgicVuvswoo0nRrUOqE6mz+JteKYKG01Xjx
+ H1KPCX4wboq1z6IkozvYI38iiYr/cU+SV388W6n+LMY7gjp8Hoc75L8FvCD45tNqnCj7B/s+f54
+ 8QW8Wvsyd7JBLnXbtVYcxYHtH18bcqYijMw6FwhaMnjvqzKOr6Pe5pj1Q2XyfoeP8oV0/3YAPgY
+ 4+GC5fFy18H8pvl0F5A==
+X-Proofpoint-ORIG-GUID: f49DjyOV1LT1wfKpvGBr_UWSHhIUhvZa
+X-Proofpoint-GUID: f49DjyOV1LT1wfKpvGBr_UWSHhIUhvZa
+X-Authority-Analysis: v=2.4 cv=EdL4hvmC c=1 sm=1 tr=0 ts=6a189289 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=EUspDBNiAAAA:8 a=U4RnUfbE3KfeAGObRfUA:9 a=QEXdDO2ut3YA:10
+ a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-05-28_05,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 priorityscore=1501 phishscore=0 clxscore=1015 bulkscore=0
+ spamscore=0 adultscore=0 malwarescore=0 impostorscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605280192
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,70 +154,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+On 5/27/2026 3:11 AM, Xinhui Yang wrote:
+> Following the addition of fsmount(2) series of syscalls in the syscall
+> handler, strace support is added, with a dedicated function to print the
+> parameters of fsconfig(2), which contains parameters that can be
+> interpreted as multiple types.
+> 
+> Snippet of the strace dump when running `mount -t tmpfs tmpfs /media`:
+> 
+> 18 fsopen(tmpfs,1) = 3
+> 18 read(3,0x407fcf1c,8191) = -1 errno=61 (No data available)
+> 18 fsconfig(3,FSCONFIG_SET_STRING,"source","tmpfs",0) = 0
+> 18 read(3,0x407fce3c,8191) = -1 errno=61 (No data available)
+> 18 fsconfig(3,FSCONFIG_CMD_CREATE,NULL,NULL,0) = 0
+> 18 read(3,0x407fce3c,8191) = -1 errno=61 (No data available)
+> 18 fsmount(3,1,0) = 4
+> 18 read(3,0x407fce3c,8191) = -1 errno=61 (No data available)
+> 18 statx(4,"",AT_EMPTY_PATH|AT_STATX_SYNC_AS_STAT,0x1000,0x407fee98) = 0
+> 18 move_mount(4,,-100,/media,4) = 0
+> 18 read(3,0x407fcfcc,8191) = -1 errno=61 (No data available)
+> 18 close(3) = 0
+> 18 close(4) = 0
+> 
+> Signed-off-by: Xinhui Yang <cyan@cyano.uk>
+> ---
+>  linux-user/strace.c    | 105 +++++++++++++++++++++++++++++++++++++++++
+>  linux-user/strace.list |  15 ++++++
+>  2 files changed, 120 insertions(+)
+> 
 
-No targets use the SysemuCPUOps::get_phys_addr_attrs_debug method
-any more, so we can remove it, together with the handling of it
-in cpu_translate_for_debug().
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260528161450.3564396-4-peter.maydell@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/core/sysemu-cpu-ops.h | 14 --------------
- hw/core/cpu-system.c             | 11 ++---------
- 2 files changed, 2 insertions(+), 23 deletions(-)
-
-diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/sysemu-cpu-ops.h
-index 441901fae8e..8be6a84bd54 100644
---- a/include/hw/core/sysemu-cpu-ops.h
-+++ b/include/hw/core/sysemu-cpu-ops.h
-@@ -39,20 +39,6 @@ typedef struct SysemuCPUOps {
-      * for a complete target page or they use memory attributes).
-      */
-     hwaddr (*get_phys_addr_debug)(CPUState *cpu, vaddr addr);
--    /**
--     * @get_phys_addr_attrs_debug: Callback for obtaining a physical address
--     *       and the associated memory transaction attributes to use for the
--     *       access.
--     *
--     * This must be able to handle a non-page-aligned address, and will
--     * return the physical address corresponding to that address.
--     *
--     * CPUs should prefer to implement translate_for_debug instead of
--     * this (and must do so if their translations are not always valid
--     * for a complete target page).
--     */
--    hwaddr (*get_phys_addr_attrs_debug)(CPUState *cpu, vaddr addr,
--                                        MemTxAttrs *attrs);
-     /**
-      * @translate_for_debug: Callback for translating a virtual address into
-      * a physical address for debug purposes.
-diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
-index 16f048c9565..14eb4ed87f8 100644
---- a/hw/core/cpu-system.c
-+++ b/hw/core/cpu-system.c
-@@ -63,15 +63,8 @@ bool cpu_translate_for_debug(CPUState *cpu, vaddr addr,
-         return cpu->cc->sysemu_ops->translate_for_debug(cpu, addr, result);
-     } else {
-         /* Fallbacks for CPUs which don't implement translate_for_debug */
--        if (cpu->cc->sysemu_ops->get_phys_addr_attrs_debug) {
--            result->physaddr =
--                cpu->cc->sysemu_ops->get_phys_addr_attrs_debug(cpu, addr,
--                                                               &result->attrs);
--        } else {
--            result->physaddr
--                = cpu->cc->sysemu_ops->get_phys_addr_debug(cpu, addr);
--            result->attrs = MEMTXATTRS_UNSPECIFIED;
--        }
-+        result->physaddr = cpu->cc->sysemu_ops->get_phys_addr_debug(cpu, addr);
-+        result->attrs = MEMTXATTRS_UNSPECIFIED;
-         if (result->physaddr == -1) {
-             return false;
-         }
--- 
-2.53.0
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
