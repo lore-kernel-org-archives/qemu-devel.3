@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0E56CD4F54
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 15:47:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 773B7CD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 15:58:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wScwt-0007QO-Au; Thu, 28 May 2026 11:47:07 -0400
+	id 1wSd7X-0001qs-N0; Thu, 28 May 2026 11:58:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wScwn-0007P1-Bl
- for qemu-devel@nongnu.org; Thu, 28 May 2026 11:47:02 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wSd7W-0001qh-DS
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 11:58:06 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wScwi-0005Im-TC
- for qemu-devel@nongnu.org; Thu, 28 May 2026 11:47:01 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-45e6a4d0be0so5853368f8f.1
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 08:46:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wSd7U-0000x1-WB
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 11:58:06 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-c802803ac17so5394805a12.1
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 08:58:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779983215; x=1780588015; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lAN16lgQh9UekUbmg4lCk75hzDgXimz5qVhG2NR2Bl4=;
- b=wrMvITePg5eejNOgpFUUXTa4C9aSZrhMlUcNILHJZi9Te/Fs/ZDrQ7N0gd3qwUCTq3
- tNEJOL3wucgHMNkEX27Ti734WsY7X2mg6LB+xsbyTFvBaXZ/0hA/Wd3YAjDT0/69Zdzw
- JgL8lM1gOHpAgJZULMuyaCDaZwal9xO5gswalM4xxXNdPLqx+xh/88gN5QAz8x7WfIAs
- B4blIo322yPGOD9FTgY21ML6K/VZxmm7syGX7Fi/m2CiYc9xj0KzOzmZOa6hcDMY8dFd
- DW1ZVzGiA6FXLOCexAadOR99Gz/EAkEsOMoEO7/TIsowJ2xwnTqsNWmVn6jUtcAMlge5
- e0mQ==
+ d=linaro.org; s=google; t=1779983882; x=1780588682; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=0YtbVMbJ7/kYaiPiSWo3R9mlA50HhSmnhHNUXfkLNpQ=;
+ b=FZduDwNIg90UZh9CKPj3dZPwFu6Q69g4+Q4WJXWsCjslqR6Q8CUWnOwXfE2jUPxGK/
+ V/XbhffVNLQZYoX9/Cgd12u0c6KtHYqAhW3ApBRg/Mcf4knxdMt9bsDmFEyhWjxX873d
+ VErs4kseMzao3bR+O/PYMgUkAiNDv6Tg0ImDE7q1fJhEz75otCyOVwMFzwFJr67TmmmS
+ kga2zIGS6X7lSBdBjyM+qCz7ICWFzhYI8oKS6MYKr9aCirkkfQXXuuaGRWPAcrfZsqXM
+ 2BPkSvAjSrUuZuRZeiSVZufLJTUP4TF0DnyYWMd+eKj/xKUcwlUsYxOF74iHE16FsS9c
+ zk2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779983215; x=1780588015;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1779983882; x=1780588682;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=lAN16lgQh9UekUbmg4lCk75hzDgXimz5qVhG2NR2Bl4=;
- b=sLVqCpbk49SCw7RFf+cX3+Ms+K+1qluah0INXXplAQHnYkuD+3k7ZvePdPdhb15KpK
- ldM9ClfdPlNQdumm+x3F/vhwHc6MwtqoRGESYPXhJW/EVcZwhU+XEtkTrU42Vj2d1cuc
- n1AvHS5afVRwxJvsGvc9PN8tQM6PXqeNqYPhs7iLVUs26/uMYW0i+rY3O23IvyGCLZ3J
- 52lbeib9cmlZ3RR/5ewThIRwKCZSNP9OlZ1pe31FpT7vQhETdfkG+YUWDAHzlDt1owFl
- hJjcG+wJJNgIJf8pGLus76d0hXDKAdaX6AcOrvJbKLfEb2XSWrki7KeRHuMgnA9gttNB
- 0AKA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9AUEMkqm7gtPyi8sRQbiFe8OXrXEKJLBmZ3rODUg0TmMvh+bjQXllieO2yhQpXDnOjFOYEmDfXy43A@nongnu.org
-X-Gm-Message-State: AOJu0YzuJ9vW5BCWy/eLxTGnayEu+R2NTr7jpRCMZAcMm+8HUQpGSJaS
- wuWdDE5t9iTFdW6Z8wSjuKWoCWAUBfWEFRHgnDTLA8c7QXfXzilCKAGDPsqRhCvGZ0c=
-X-Gm-Gg: Acq92OGu9MA86X4mbS9fPppGBiSHrgEIxHuzhv3rG73D5c/sTe9pV7NG10tuvNthRIJ
- SpC87jWAFD7UimYESG29wDvHpXl4Stpb0BKxPG3mi2aTwtA4EwXhvNTff4NMy8d1YVn5qHHWb+E
- /8myCEjrSHfvwBeNFKQSnSBgb+30pixG/CvOFqKShouCcFTPvuLKq3xprdpMXzzzhRugZNNqjQ7
- kQ7d/+8G30V7LwkzDe7lLfhWDFQNDqYNXRJEUhoDFQquFAIOlMU72kP9Qjtxw9JsTeUCcOmx/dI
- w8DfGLTcXg+ev7t8JupnfjTJrSVwX3jDK81yz4p/jhZXUBucvbKbiue8iIwf1TVI0B58IKHqs+k
- g8207lSKRMiyg21A+Fo/JERTAcpF4CUV0IX2iFjQXTE+xeCc6aYmquYoBOzgJonzWhcP8pfG0Sh
- 2VeKvmIpCVJT1DLY35oP0A5nEIZXqvdpcui/t2vQOeIY8hn8bEH4MUa+IgP8Bmg8l4w30lGSQbV
- OAr
-X-Received: by 2002:a05:6000:26cf:b0:45e:93ac:769e with SMTP id
- ffacd0b85a97d-45eb3688c6amr46107784f8f.6.1779983215331; 
- Thu, 28 May 2026 08:46:55 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eec5eba06sm3116951f8f.22.2026.05.28.08.46.54
+ bh=0YtbVMbJ7/kYaiPiSWo3R9mlA50HhSmnhHNUXfkLNpQ=;
+ b=hI6xRM0KTig83tUcRp7ASfl5ezCbnUQE6tvtu+UBthhI3SOEDCqJlL2O+wfI/XIAGE
+ I46hk+pBmiSonjxZPqLsR2RjxOw6khE12zGrpfDaiQK2/cpGWBEH1UCr8DZw3AlZbTEM
+ 8sT1TZRbnhRWETVSWEjGgel3cp555WLeZSYuMQ+21sLGp0jTlW3CMzDKTz+Ksl2mVgeQ
+ i2bOvmfNPxntRn7QtnDwbmKbRRsKer53CdsXBpXQSswEVVQ6a2wiwQjw/8t0ApCpSWYS
+ CQWQC1Af6BEYJ9sQEgRYUkaQjKtyFBqYnHCSkqiZZFGXh7x9hG3O9IUtayef+bIFCLLt
+ Gj5Q==
+X-Gm-Message-State: AOJu0Yz4WAJJiBQsZwn/wYVr2rkto0JpToCJg6bHd4vAAJfMPSBJmDbx
+ DEQK5H5Wq91tekNuL4xXxo/gnZUeH50REh9EcUMiyBZq4yxHaQEhdXqmYAULIo0b3vSbEUwESrE
+ MO5EWg8E=
+X-Gm-Gg: Acq92OFd4e/IA9c8IMrHQsEOKm59bCv0l171lRZJLDa8zBzdSA/nL7QOv9brWfEXXku
+ Gd6zAcL9TXH9Eilcr3yQZ1XABNrJbLkEsQdn7n0DcD/BYOuV2Yvwo5TFrzJrM0s5GnLoAbOuKAK
+ GeX04+kktde9S2WxrmA/s4tENY7rl3jjmJJLlSy0I7ln3x6oBwREOpEEbiQ1q3UsT79oBEWnVix
+ 8dLeEx31bxIybira/2uRuXJF/ZiYCyoYRG3oD0GufgMbVtsx2C6CovOS4gWJY9cF43xR76A/SCh
+ A2ufJtC5ukuYcex6iXQ2nr2BWtY1lMCj3oxLj1z9YoUhND+SyViZqzFPMZdua5iM0SejmF2uHIY
+ AfbfXjC9S28RrTPJCOxCqucJ0pse4Kp4bYBEjWCMYZfL0FAJxDGLGZpIC/2G/+xB5Otvg/15W8d
+ 7Hh5bN3ax3BW5Uw7Oo8MWb2/FnmozNtVcBMbCV6+TMtfkbl50=
+X-Received: by 2002:a17:903:2f8d:b0:2bf:199d:8a6 with SMTP id
+ d9443c01a7336-2bf199d0a2dmr5492525ad.28.1779983882059; 
+ Thu, 28 May 2026 08:58:02 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2bf0534e4c2sm28328515ad.5.2026.05.28.08.58.01
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 May 2026 08:46:54 -0700 (PDT)
-Message-ID: <5c7b5d01-cf5a-4164-9a92-516770eaaa07@linaro.org>
-Date: Thu, 28 May 2026 17:46:53 +0200
+ Thu, 28 May 2026 08:58:01 -0700 (PDT)
+Message-ID: <8a9e1e2c-2616-4c70-9b81-f56a1b5ee801@linaro.org>
+Date: Thu, 28 May 2026 08:58:00 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] hw/dma/omap_dma: Fix indentation after ifdef removal
+Subject: Re: [PATCH v6 1/8] target/arm: fix WFET typo in syndrome
+To: qemu-devel@nongnu.org
+References: <20260527114320.1581552-1-alex.bennee@linaro.org>
+ <20260527114320.1581552-2-alex.bennee@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260528152852.3349928-1-peter.maydell@linaro.org>
- <20260528152852.3349928-4-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260528152852.3349928-4-peter.maydell@linaro.org>
+In-Reply-To: <20260527114320.1581552-2-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,18 +104,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/5/26 17:28, Peter Maydell wrote:
-> Some of the ifdefs in omap_dma_transfer_setup() which we just
-> removed had if() blocks in them. Now that the code inside them
-> is always unconditional it has an extra unnecessary layer of
-> indentation; fix this, as a whitespace only change.
-
-Confirmed using 'git diff -w' :)
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+On 5/27/26 04:43, Alex Bennée wrote:
+> A stray x slipped in and we didn't notice!
+> 
+> Fixes: 4575da5ecb7 (target/arm: report register in WFIT syndromes)
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   hw/dma/omap_dma.c | 156 +++++++++++++++++++++++-----------------------
->   1 file changed, 78 insertions(+), 78 deletions(-)
+>   target/arm/syndrome.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
+> index 4d1f1c529e2..0eb54c15ce7 100644
+> --- a/target/arm/syndrome.h
+> +++ b/target/arm/syndrome.h
+> @@ -674,7 +674,7 @@ typedef enum {
+>       WFI = 0b00,
+>       WFE = 0b01,
+>       WFIT = 0b10,
+> -    WFET = 0xb11
+> +    WFET = 0b11
+>   } wfx_ti;
+>   
+>   static inline uint32_t syn_wfx(int cv, int cond, int rn, bool rv, wfx_ti ti, bool is_16bit)
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
 
