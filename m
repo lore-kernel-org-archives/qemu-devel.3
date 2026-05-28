@@ -4,97 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B515CD6E44
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 10:43:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75818CD6E44
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 10:44:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSYCr-0000in-Da; Thu, 28 May 2026 06:43:17 -0400
+	id 1wSYEI-0001AI-NV; Thu, 28 May 2026 06:44:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSYCo-0000hw-Mu
- for qemu-devel@nongnu.org; Thu, 28 May 2026 06:43:14 -0400
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSYEF-0001A3-FB
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 06:44:43 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSYCn-0002YZ-7z
- for qemu-devel@nongnu.org; Thu, 28 May 2026 06:43:14 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-660463977b1so217117d50.3
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 03:43:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779964992; cv=none;
- d=google.com; s=arc-20240605;
- b=F4MNCMltPTpjpPNDvLGipg5uiI2/m5AHcnrjKQOb7Az8LUif9pceM0g2yu4GCanN9j
- Hvh8uRup9sbXdh4WcQmulFEQD+U3qdBMZOWYODmd5XLPEDYTk3aqdsTuYf7iGIqqdx9+
- YMfI8V9hC7oTIIpseNyXWaG0M1jLAKDEsR/hm85gRFXMDazVYr0/T/uiPvBiTP9gNrOU
- 3A3kH/mHN7RV11lyLO6bQ4K1SHL8lQpe8tKZK99hgkNSa7tj6JvOhUroPF6g5oh3wQ7I
- KzKw0qiBbvWjdC/hOWXhiUhtETWq60hDauZ1QJsIfui57obM53Al1hTUXAxZy8JtVzCQ
- SniQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=R79pWmIrYPLNpX84U9KNTDN750bg7O0id2R334C+kes=;
- fh=FWtyXIX1K30Gh1JIPWWinn1E8IuOwxOeZI6Shz32Tr4=;
- b=WCFqklzcG8eICSQ5Jj5EdTdBdZttHYSb1wYAxrFXmyZ+s0CbNH8kScqnqH22ITOPHc
- x4TuEE7qXbF+sy4wp9mosxG5eLgDm/4eORDaXwpOFvuQ9UMOB/rmxc2wIBlT8w0Uz599
- n0YQiPDqZyGE+O0s0gfdNVumqcLyryZMXfQAUcLxYF8GJ/Wxu3LE6c5PKwak+JrtXZlh
- DG3mj4SvNiCWaTltsDq6GBpza18BFnHxyu8TsTcBTBaLKQcBlRISlV4r87rxeBrCtQpA
- h+QM44Ra/cffhMM2KiKqXGJbyFjxfouESanD/4btIbtzoME36MNIcp88UerUf4w0OqjY
- Dlig==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSYED-0003M7-Du
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 06:44:43 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4906238c62eso40117065e9.3
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 03:44:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779964992; x=1780569792; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=R79pWmIrYPLNpX84U9KNTDN750bg7O0id2R334C+kes=;
- b=zBtg519Fp96aF+lW/IaZy/Ico6siz5yvu+FAMQ/mO3SjzUQdfmlzaNOtoZIUwX0w9c
- TMq8ywLwjUzJDbw4o8B0gEhS0fPQQ5kENZexoYThu8VDMRqc8aWzxwpm+ZJB8QoWE+Xl
- mEaZTMwtDdC8luEj0Z2U4cHQj1I2S07nICzBqQC4GEEYsfps3hm7j0dvTGWzMP3OnuV3
- dDxT45GYs+rOW8XDKnaoBbBEA4LAzaxstLHY6NefaPixVYiWNTbSJWdTH3RXgiEGp1rh
- C9H9VCAB7kDonoKc8oZwpmg63P9ipqXHCJdUb48thafBLMHrQQtAPEqBkNp7/qgOZh5Q
- UJVw==
+ d=linaro.org; s=google; t=1779965079; x=1780569879; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qyKBTPwowMAI3HLllj++BA5U+ZhI6e1QOQhOQaMSVSI=;
+ b=OsHzaleMLLNJhN2/TINk1SWXEfcbHkbFrSVwWQr7CET6e771vJ406JnBgPfAtjPk+D
+ aKpaLAuW7M7s1uxT3tjnwupn5euwSNJUtzB+JQ4b3fIQMWmRMFmR88yMEHR6QqJOKW0F
+ 8YsDOG7TgTdqY0Yl1bFxMRFuUQiJIBzLioEl78tT31ncDwZ70AqEu4X+c8e9I8E6jTPe
+ 2N5egaac/xbdog00sR4OS0eLeZ0WAP5jqS4RRNFmvTbomSSAngUhD9MkYT8TSV3mmsEF
+ eQNBHhshFHCVGyzU2bEg/aFf5Mvb4znjZTe/r7MoSv/8G9VItfoWu3ZD0SrunRCLAvzy
+ AhCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779964992; x=1780569792;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=R79pWmIrYPLNpX84U9KNTDN750bg7O0id2R334C+kes=;
- b=APTvbMDwC4vfssKk+fPX4jxiuzEIiL+3VgkjMOpfHaYPlGTYOOvwJQuyjWwKQie8Qk
- vNvojqk8DEB4nLtfE88RzPNYS2WwekCm4V0Sn0Vm1JPJHq54S8SMmL9d12mYRqk77nxK
- nzGPEwcG9KxKiC65gLBxZwz44BuWzZYtHsZ5mCeNqjlNknAYIHVCTO05Wobo/QqE8O0A
- Z3us9DXyEQaX0x3CWaamIS/6uKEwA5Fzt5LJ03GhLE6NC/4ZDviflj8rst1LvXHpJhGY
- 8tPYjBblIZyYhDBoYeCeBfcRRMOXOW3fUdsN7S+ND5tZtHorJYgxLIetMDMTHcSbKEvc
- 4adQ==
-X-Gm-Message-State: AOJu0YwWv4FHccE1E4GUYLaAeg8QSb5w+sirZnr2tIl5OZ9oUcQ13rNs
- r8P6jG/WiP3T+7Eo4uqd8Qt18F9Jxls0HnYBD8dOWfL+jQz1Hx9ppBwZ+HXqjeVuBrt0soV7TlB
- 3tqyMsSaY/+Cp3ESRCu00CQC1AOTsttxGyhKKxYj4PpkUPxF595HX
-X-Gm-Gg: Acq92OFLpLyMUDkqnM08R5wOg6+eGkG/q8O9iWiLf7jeY5zy6AJ8fV836WE3coJMM4R
- gtyXTSlAALdgMsfbiIYXq7lznI3Rma41puYHwfIYgR+48H6LuTg0wJC//smkB0c0VO0QYscZWcb
- 2YJhTzBqRM5+4SpuUFgFfeMclNxS0SL7tD3J5RUd7j2C5GtXIeeUTNRtK/e7OijPLgfT3z2a8RL
- 24LPDsaVYJLLsQcbO01+Rg2xo92uapzmzeFbWWgxjV39L7KAxQOB18+XxFblWYU/x0eAnv57K1R
- mh9mbYUDSZ02N5H22k8aT6lDKZc4VfFufkHb9VA+kuFq4OEUtjVJ8PFclBHt0+d4in4+HSWeldc
- v1Q==
-X-Received: by 2002:a05:690e:4850:b0:651:cf77:f7cd with SMTP id
- 956f58d0204a3-65ec963f9ffmr18022336d50.13.1779964991919; Thu, 28 May 2026
- 03:43:11 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779965079; x=1780569879;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qyKBTPwowMAI3HLllj++BA5U+ZhI6e1QOQhOQaMSVSI=;
+ b=NWKWJtvmzYhxpDetLsuP/rgoy/hJPwbOrDmA/WwBS1EqzTA62sKJ4i88Un05tnqaaK
+ TTx9ZfMOjt8hzKVaH4U5+I3Gmg10EVHOKwQkag1ZMMmrKIxn8T4z3Afe1TmkKQQiWTHI
+ 5/RGF559bXr/Z3HHPjBx29Maki64I/aKisjGEFvXBLNwYqwYiKqrXNtl+itFsye+0hpa
+ uIBuPxF044rrzVTHLq4neaFbdz3C5leopPSkuJFEZ0HMcFbSvszeWtoz3uOzG/NPGjIJ
+ 7KJnX0gNS4reePWPli5W6BeYkt2DRCKL8Kt4Qa6voV4iwTzjnJwJnKgH/2S7IXp3tXxT
+ +rDA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+r+plvMIYNl/x7RQW/GtMSX7FLXTr18qfH/Muk2uqq8JOqb8//scXl1OF8EN40as21y0JL1+wYKwMk@nongnu.org
+X-Gm-Message-State: AOJu0Yx4JrHtyCUColE9CSBSuyH5Hzoox62ycQ0MtTUM+394jEIwTRfR
+ 5OZ7NWqKE71tTHKyR3rqtDzyTqOdLClPOvmqHX/H3Nwm1C20CVQZ6ZchTaHGA/TDdgm6i/dOM9w
+ 9/+GLY8rR9Q==
+X-Gm-Gg: Acq92OHW7r+fbzdUtYK9ViWpenpDPOGJlRqqqupQxWDMkUlf45EUfWDFNwxEq9FkQd8
+ jdKKoFzT5PfjfvRu/YcUEBX+KnNL41NrzfM2ocvcBjRPnXy2m04hnKk611/SkM6Cg3C5FIHEv10
+ mj+NPxHuwqBcWy49bfl8ByYvEEteQw6aCpxzMFy3wlqKE+YpSpiCEAdF3pG4GVCf9tNR8GryuLx
+ zCKMUfkEofdPzFWriIrB04bSR/mY7Ka0OAxjLq04+hav6GHqeKl2Lhn7Ur8AdCC867wwV0+aj4U
+ VeXdNk8kR2JYCVJ+7Xq96JZwtw06+b2Fh3xL7kGVw/Q/Wwr44VCWTVs9nCPsfzxJ1RtCoXa0Pt8
+ ftZSLE9ZYwuVmGy+O1DwJZmRRn5vaPlK1cWm7bsihyGxuCwgDKSL3ubGMHwzvxu7unfU2oYyx2i
+ 844aVbyQlH17xPhHNlNjONX34rb2QU5kwU65Oz9CDddoSQmSNVcKHbXZOpNHC6zmM3JJeICRzEy
+ k23fmY5vpGLh6s=
+X-Received: by 2002:a05:600c:35cf:b0:490:3bad:3784 with SMTP id
+ 5b1f17b1804b1-490426bc6demr498721765e9.18.1779965079167; 
+ Thu, 28 May 2026 03:44:39 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4909235d43esm54940215e9.1.2026.05.28.03.44.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 28 May 2026 03:44:38 -0700 (PDT)
+Message-ID: <9bfbda41-6f3d-4bb0-8ee9-14df28165526@linaro.org>
+Date: Thu, 28 May 2026 12:44:37 +0200
 MIME-Version: 1.0
-References: <20260518-pr-pacbti-v1-0-8932a885b03d@foss.st.com>
- <20260518-pr-pacbti-v1-3-8932a885b03d@foss.st.com>
-In-Reply-To: <20260518-pr-pacbti-v1-3-8932a885b03d@foss.st.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 28 May 2026 11:43:00 +0100
-X-Gm-Features: AVHnY4JrApKQM4DjaDe_jXjzmka--d6osEi_jWFFlp8u8paJv5terBco9pn7m3M
-Message-ID: <CAFEAcA-PByvCLEKJGOxi31YCiDqcTRYOG1X1hQWBj8AXNWeTAA@mail.gmail.com>
-Subject: Re: [PATCH 3/3] target/arm: implement v8.1-m PAC support
-To: =?UTF-8?Q?Torbj=C3=B6rn_SVENSSON?= <torbjorn.svensson@foss.st.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] docs/devel/tcg: Expand on multi-threaded TCG
+Content-Language: en-US
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Alistair Francis <Alistair.Francis@wdc.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Anton Johansson <anjo@rev.ng>
+References: <20260528082022.32359-1-philmd@linaro.org>
+ <893dd362-b70c-4c24-bb19-428808ceaa6d@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <893dd362-b70c-4c24-bb19-428808ceaa6d@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,45 +109,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 18 May 2026 at 17:16, Torbj=C3=B6rn SVENSSON
-<torbjorn.svensson@foss.st.com> wrote:
->
-> The algorithm used for hashing is a simple XOR between the pointer
-> and the modifier using the "implementation defined" scheme.
->
-> Signed-off-by: Torbj=C3=B6rn SVENSSON <torbjorn.svensson@foss.st.com>
-> ---
->  target/arm/cpu-features.h  |  6 +++
->  target/arm/internals.h     |  2 +
->  target/arm/tcg/cpu-v7m.c   |  2 +-
->  target/arm/tcg/m_helper.c  | 17 ++++++++
->  target/arm/tcg/translate.c | 98 ++++++++++++++++++++++++++++++++++++++++=
-------
->  5 files changed, 113 insertions(+), 12 deletions(-)
->
+On 28/5/26 11:04, Paolo Bonzini wrote:
+> Before looking at the specifics, I appreciate you bold and experimenting 
+> with how to improve our documentation. I can see that this is largely 
+> unedited LLM output, and honestly, that is actually a good thing for 
+> this experiment.
+> 
+> On the other hand, it exposes where the tool falls short, and highlights 
+> very clearly the risks of accepting AI-generated content too leisurely.
+> 
+> On 5/28/26 10:20, Philippe Mathieu-Daudé wrote:
+>> Significantly expands the TCG documentation to provide more
+>> comprehensive overview of its internal architecture.
+>>
+>> Use more rST anchors to improve cross-referencing across the
+>> documentation.
+>>
+>> Clarify front-end / optimization / back-end phases.
+>>
+>> Detail a bit memory consistency barriers under MTTCG mode.
+>>
+>> Add the following new sections:
+>>
+>>   - Register Allocation and Liveness analysis
+>>   - Overviews of the Vector/SIMD internal strategy
+>>   - Deterministic Execution (icount)
+>>   - TCG Plugins
+>>   - Instruction Decoding with decodetree
+> 
+> This commit message is not really up to the standards.  It is purely a 
+> "what" which can be obtained just by glancing at the section headers.
+> 
+> It should explain the purpose of tcg.rst and why these new sections were 
+> singled out.
+>> +The translation process occurs in several distinct passes:
+>> +
+>> +1. **Front-end**: Guest instructions are parsed (often using the
+>> +   `decodetree <Instruction Decoding (decodetree)_>`_ tool) and 
+>> converted
+>> +   into target-independent TCG Intermediate Representation (IR) opcodes.
+>> +2. **Optimization**: TCG performs passes such as constant folding, 
+>> liveness
+>> +   analysis, and dead code elimination on the IR.
+>> +3. **Back-end**: The optimized IR is converted by a host-specific code
+>> +   generator into native instructions for the host CPU.
+> 
+> The sections below should be sorted according to these sections, when 
+> applicable.
+> 
+> Register allocation also fits somewhere, probably in "back-end".
+> 
+> There should be also another sentence for the TCG run-time (accel/tcg).
+>> +Register Allocation and Liveness
+>> +--------------------------------
+>> +
+>> +During the translation phase, guest instructions are converted into 
+>> TCG IR
+>> +using an **unlimited number of temporaries (TEMPs)**.
+>> +This allows guest translators to express logic without being constrained
+>> +by the finite register set of the host CPU.
+>> +
+>> +To resolve these TEMPs into physical registers, TCG performs two passes:
+>> +
+>> +1. **Liveness Analysis**: This pass determines the "live range" of each
+>> +   temporary within a basic block. By identifying when a variable
+>> +   becomes "dead" (i.e., its value is no longer needed), TCG can 
+>> suppress
+>> +   redundant moves and remove instructions that compute unused results.
+>> +2. **Register Allocation**: The Global Register Allocator maps live 
+>> TEMPs
+>> +   to host physical registers. Fixed globals, such as the pointer
+>> +   to the CPU architecture state (``cpu_env``), are often permanently
+>> +   held in host registers to minimize memory traffic during execution.
+>> +
+>> +Vector/SIMD Internal Strategy
+>> +-----------------------------
+>> +
+>> +TCG supports SIMD operations through a set of generic vector 
+>> instructions
+>> +(e.g., ``add_vec``, ``shli_vec``) parameterized by vector length and 
+>> element
+>> +size. The length is specified as a ``TCGType`` (V64, V128, or V256), 
+>> and the
+>> +element size is given in log2 8-bit units.
+>> +
+>> +The internal strategy relies on the backend mapping these generic 
+>> opcodes
+>> +to native host SIMD instructions, such as x86 AVX or ARM NEON. If the 
+>> host
+>> +backend does not support a specific vector operation  or length, TCG's
+>> +expansion layer automatically decomposes the opcode into smaller 
+>> supported
+>> +vector sizes or standard integer operations.
+>> +
+>> +Deterministic Execution (icount)
+>> +--------------------------------
+>> +
+>> +The :ref:`icount` mechanism provides deterministic execution by ensuring
+>> +that each Translation Block executes a fixed number of instructions.
+> 
+> Hallucination (to put it kindly).  It ensures that QEMU_CLOCK_VIRTUAL is 
+> a multiple of the number of instructions executed.
+> 
+>> This
+>> +is essential for features like record/replay and deterministic 
+>> virtual time,
+>> +where instruction counts serve as the system clock.
+>> +
+>> +Instrumentation and Plugins
+>> +---------------------------
+>> +
+>> +:ref:`TCG Plugins` provide a mechanism for runtime instrumentation. 
+>> Opcodes
+>> +like ``plugin_cb`` and ``plugin_mem_cb`` are inserted during 
+>> translation to
+>> +trigger callbacks in external modules, allowing analysis of instruction
+>> +execution or memory access.
+>> +
+>> +Instruction Decoding (decodetree)
+>> +---------------------------------
+>> +
+>> +The first step of the translation process is converting a raw 
+>> bitstream of
+>> +guest instructions into a structured format that the translator can 
+>> process.
+> 
+> Is this true?  Maybe "extracting operands from the raw bitstream of 
+> guest instructions, for easier processing in the translator"?
+> 
+>> +QEMU simplifies this using the ``decodetree.py`` script, which 
+>> generates C
+>> +code decoders from a domain-specific language defined in ``.decode`` 
+>> files.
+>> +
+>> +The decodetree tool allows developers to define instruction **patterns**
+>> +based on a bitmask and fixed bits. When a match is found, the generated
+>> +decoder automatically  extracts defined **fields** (such as registers or
+>> +immediates) and passes  them to a manually written translation function.
+>> +
+>> +This declarative approach drastically reduces the amount of error-prone
+>> +manual bit-shifting and nested "if-else" logic required in guest 
+>> translators.
+> 
+> I would just say "``decodetree`` simplifies writing and maintaining the 
+> front-end compared to manual decoding".  Maybe it's worth adding 
+> something like "Note however that it is mostly applicable to processors 
+> whose instruction encoding is fixed length, or mostly fixed length.".
+> 
+>> +For detailled implementation see :ref:`decodetree`.
+> 
+> "detailed".
+> 
+> Honestly, I'm not impressed by the quality of the output.  There's no 
+> organization, just a bunch of new sections in no order (decodetree comes 
+> last).  They might be good enough for a glossary, but for developer 
+> documentation it would just add structural debt(*).  At the very least 
+> all the "----"-level sections should be split into front-end, 
+> optimization, back-end and run-time.
+> 
+> Again, this is not about you---I hope you knew that this wasn't going to 
+> be included as is. :)  Submitting this without manual editing shows the 
+> baseline capabilities of the LLM and highlights the importance of human 
+> steering.
 
->  static bool trans_PAC(DisasContext *s, arg_empty *a)
->  {
-> +    arg_rrr arg;
-> +
->      if (!arm_dc_feature(s, ARM_FEATURE_V8_1M)) {
->          return false;
->      }
->
-> -    /* Handle as if PACBTI is disabled. */
-> -    return true;
-> +    arg.rd =3D 0xc; /* R12 */
-> +    arg.rn =3D 0xe; /* LR */
-> +    arg.rm =3D 0xd; /* SP */
+Thanks for the quick feedback. Yeah I wanted to test the water with a
+patch (and ought to post as RFC). Some TCG concepts are hard to grasp,
+and I indeed trusted the LLM too much to be an English fluent and
+technical expert. I told it "You are what best understand QEMU
+internals, and a TCG expert. You don't make mistakes and do not lie.
+You write in a perfectly understandable technical English language."
 
-Generally it's better to do this kind of thing in the decode
-file rather than the trans function, so that this function
-get s passed an arg_rrr with the right values filled in
-rather than having to synthesize them.
+Blame on me for being to confident here <:)
 
-> +    return op_pacg(s, &arg);
->  }
+> 
+> Paolo
+> 
+> (*) I have just made this term up, but I think it should be a thing - we 
+> have a lot of it already in QEMU docs
+> 
 
-thanks
--- PMM
 
