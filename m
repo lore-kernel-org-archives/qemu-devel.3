@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DDB2CD5BD5
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 21:30:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A10FECD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 21:30:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSiIk-0005F9-BU; Thu, 28 May 2026 17:30:02 -0400
+	id 1wSiIm-0005Fe-1k; Thu, 28 May 2026 17:30:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wSiIi-0005Dz-3H
- for qemu-devel@nongnu.org; Thu, 28 May 2026 17:30:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wSiIj-0005Ex-IL
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 17:30:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wSiIg-0003At-1h
- for qemu-devel@nongnu.org; Thu, 28 May 2026 17:29:59 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wSiIh-0003B5-Nj
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 17:30:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780003797;
+ s=mimecast20190719; t=1780003799;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FIDQ2kvQqYtnxLEwqYnl1da/aYo+rT6/BzRSOHGERy0=;
- b=KUDnCitvs1hFMfTHBoniA89EVJwy+qoyGn2QDjKAvfx0j8ULuMEYz0wZIRx9iqehdgYJ6g
- Rxk/mXlRTo4zfz7K6R8D0OwKg4wRstYTY4pss86TG1HKJZrdb1Zm4002tT4Tjtf4hA9POV
- Q9l1b2LByLwUW1Rdz/I7Ud2TUHBmSSk=
+ bh=iK2oU4S+42s+otGAIzHzbA0pHikpDmtjFXz49vQJAUM=;
+ b=F3PBQoQ3uQcJ8XqyirmRwtWor7oqz8JdzZ4yk2CCvIIRGLrqspRJYQA+A14KTziO8/7OM+
+ PnnvMPccxeEO4+Wa3yCSnvv8GLubN5OALYW2GbSBB7M01Ghb/5JNmJ9DRdrrYfqzSMxr/w
+ ef32y0jJ/nctgIqCOoZD3q7wdqrEipM=
 Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
  [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-262-Gk5BmSjEP2u7tR5wRv1_yg-1; Thu, 28 May 2026 17:29:55 -0400
-X-MC-Unique: Gk5BmSjEP2u7tR5wRv1_yg-1
-X-Mimecast-MFC-AGG-ID: Gk5BmSjEP2u7tR5wRv1_yg_1780003795
+ us-mta-159-lZN1ZivuNeegwgJj2sSqQw-1; Thu, 28 May 2026 17:29:57 -0400
+X-MC-Unique: lZN1ZivuNeegwgJj2sSqQw-1
+X-Mimecast-MFC-AGG-ID: lZN1ZivuNeegwgJj2sSqQw_1780003797
 Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-90fd6eeed3cso2873051785a.3
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 14:29:55 -0700 (PDT)
+ af79cd13be357-914d0204c67so1120642985a.0
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 14:29:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780003795; x=1780608595; darn=nongnu.org;
+ d=redhat.com; s=google; t=1780003797; x=1780608597; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FIDQ2kvQqYtnxLEwqYnl1da/aYo+rT6/BzRSOHGERy0=;
- b=jQEu6ule5Rk0+YoeHOPisVOog4OybYJOrTZm73S1qZ5R2ltWiooWyZXXIPsoW61mMo
- 9gow96hs0YEmpccRxGa/XJ/qp9nsWaDSWGupWHji6wqE9GWVxqp1G+OJnOFIfucdLmG0
- 5VTKmQFZzLuOquyd95OTl3qOTqoUoFY6m+LfN7Ms0N4pGeptmlwZylljFmucCPP7x9Au
- Uj4mPl08nMpnwITcEItAjkYGN7bmPeubRNxwM47TzsP9Ktw+C7jBnM2CddRsMqOdQ2W4
- Tjh4Ed2rgGOQQ/Mn+DaXHrE99cEZKxuluZcMbfYLYDxSWuUJdlMhWk77TB39m1fi2W1s
- v7jQ==
+ bh=iK2oU4S+42s+otGAIzHzbA0pHikpDmtjFXz49vQJAUM=;
+ b=bDCddrBbBS20jfyPNo2q9f6j35FL+40Vgxp7fTO3Up3iDNVOhqdY90XQE+zR6Izx1B
+ 7ZcYxBgtJgMU7ZYvHNoB3f3jgpsRU0ES3C2Ry8ZtLY4riSOUJ2y083gHMJMJONmrIMbX
+ h/XELuL42VNumSltlUv660Kgy99qsIvOKn0zB+kOaI+2nzFbdibj+vItAbUUSNxtMR7n
+ MZLKjNh4aBBR3gzNMMvcX9BpAYw+SH4T7B9WRWsvW5GwiGIrr/H37QNS4HY8QFbyjzts
+ eTyB7zzzD4m8T6uzhVIu+/jBhrB/xYbDs+Ju4YcPb9ia/AZ07nBHY56ahwNL0zFLzc0N
+ buBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780003795; x=1780608595;
+ d=1e100.net; s=20251104; t=1780003797; x=1780608597;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=FIDQ2kvQqYtnxLEwqYnl1da/aYo+rT6/BzRSOHGERy0=;
- b=lZm+LGNqx8274aFPKBvWv2sQQW7jEm8otfmRU0hfcKcBEqXPNyFivH8/NxMTRjxiGP
- Hl2cYuBPYUjEVTXPS++p7F6XeRsgjkfPplqLAY66RUwfLQM0BbJGM2MfmPDTq05Co4fk
- QCDuPPK2BD9vgtPftscnk9OF4ngejSQ0qJvHAViUi5pSZ0ZK7dTWxhvW1V+/jyejjFeY
- 2pRieByiAGuxw+I5fBBHOUffkiRc3hYA0u863fnD1LmtY32E5TplJqdFe0L/pJgzj3ou
- YiBRKVFnWGDf7oDqlEGKo+jCVLyileg5MMaCwzvTG6yOX9Z1i1o2Pau7l96r1mnVlFQA
- kG1w==
-X-Gm-Message-State: AOJu0Yzxh4enKaF1WE7rXimZ8Awhmm7sSfdLCTtxkuV2zujxn6srh1Ey
- +74nzrqyS7nnUtNJ9jQ96mjKrjA8uFLsa+KLWdjIbinqBmv7jpn1BFkIvzFwu6wN2u7UY9GKZrH
- cf99AvW203wPp/LK5OlDcCmz8yEaNCFe+eiQ/6cUo3Svs22GTC2WYJr/j9IHr5axYUlwpNU8g2q
- OgFwjP0B2MhYaTLD1+4e9QjoB+d8gLZ5yhiVJblg==
-X-Gm-Gg: Acq92OG2seAe9vzjC/cyvbfH14CnX8uEsZmIvDVj1ki8aPFMaCyp2Ww+nKwu1kxqGKB
- +K1GfyTQNZXuTX8CgqMunGa46CkDU98dhEOQdTVWiLfLrY6KZ/bfVco2uizn5jZsBrRXn8asrob
- cZEB5wTJBEvo3vSXlxqY1OaCogPAgS21OQaQI7MiDXQjhrfKORs2GbFhGZtpJ1mkqWhY8090MoA
- 8xCGP8z+6RlcsT1US5BppNehXjrFosDZyacwhrgQzuCQSsur/8wGMktfzcdDPQlVoDToEz/fqRh
- W4kiYOXc7N7pZnTddWOwxEjRkRUv+U0VsVLOFt2+3lfr+1UMXISDTDRmUchIsQkqSDFiWef5X8W
- 49AiESo5xA6hXY9/Wrzl4p4Vfxepq8+GpRZBTccA/nZ6tEQbDrL4bst0=
-X-Received: by 2002:a05:620a:6603:b0:911:75c8:fab7 with SMTP id
- af79cd13be357-9152ff444f5mr5782985a.54.1780003795139; 
- Thu, 28 May 2026 14:29:55 -0700 (PDT)
-X-Received: by 2002:a05:620a:6603:b0:911:75c8:fab7 with SMTP id
- af79cd13be357-9152ff444f5mr5776385a.54.1780003794552; 
- Thu, 28 May 2026 14:29:54 -0700 (PDT)
+ bh=iK2oU4S+42s+otGAIzHzbA0pHikpDmtjFXz49vQJAUM=;
+ b=dRwetQ7dJpnRa+dpCPetRUa4Dn31D8UuKD1vElPWkchSr4QzjOBor2neqgz+E+zJZ2
+ AVeX1vG4BcflkJMlp8SCwRjCSDBN2MdeCY9cUHGnKzNlnfSzpuJoCfvIYkk2FKa096+x
+ rLsbAZIsrT9LCNnBQV6uGv07i7ediFTFWTAwLOZl2D5nf/bqTmR9sC8xp7860cbIFPUB
+ Tjps2hJ8zhVc0xKO/9cYKaVM1ksgaM6TSGE/DZAHqbx6idpgWWv+bnFeitwicsUHBAHr
+ L8Itq8PnFHZ8DBLfDPJpQj2DfX9wY6Zpz4ZSTHZZLPsqIAdOm3TXMeBHaQ1qMpYuYVvn
+ A0Kg==
+X-Gm-Message-State: AOJu0YwBNLpkz2ObWFPOESfdM83yM284hqALVcKMgkVGdKGTYC0lU/B3
+ Nd7/NAW+eM8xO+9M3HITkGVLujLP9rpNMT738NklZHIhu0+mBHp9XnC3L1wOOIx+m8DirYmMV8L
+ tliSdvzonD9DGdt/71k3b1O2jtrMM9fz+St1her4PQaUIu5UQNcC9wDC/nF+A60aGL6aQDQ0t6B
+ z0FyC7lHI95kL6ayyDYoLcTGXoJhAC9kTgTeL8GA==
+X-Gm-Gg: Acq92OEr54GoRo6RJ1HJxkZUzdFl+pq54QQus+1OPmxeHJPnQoRJLfqINEDkS3KScMs
+ /Yls5HkACDlut/UIxrx6uKBGcDGfObHYC/UboKSeN/j60y0qU3l7gVfNoewWLocP9GZK6wnNwLr
+ INenK866DJcCuadX9865Z7+1Um0xNHgqJcEVs/1Js4HoTuLHWO1wY7o5+pTD14UBLqXeSGZCPEm
+ Ifp9WeCZgsT2GlkvzBnhVlVvusiTU1vsCV0Z+sSV42Euo6q4C7Px4l8D33FSpykDmVa6G/itmTy
+ YE90tJHpG8Iy2BR6rTBBb0PVAgeYu6lmw+vDhojLQ3y/6cWLv8Eb6WgocIfnrw5QdaezLlrtpEM
+ ugIKu82V+8ux4qGrfOeqRYvD7j1PCfGR+iZH4ZrSJhAN9NDs4KJyF+Tw=
+X-Received: by 2002:a05:620a:4726:b0:914:babf:9f54 with SMTP id
+ af79cd13be357-9152fde99d7mr6590185a.34.1780003796609; 
+ Thu, 28 May 2026 14:29:56 -0700 (PDT)
+X-Received: by 2002:a05:620a:4726:b0:914:babf:9f54 with SMTP id
+ af79cd13be357-9152fde99d7mr6584885a.34.1780003796001; 
+ Thu, 28 May 2026 14:29:56 -0700 (PDT)
 Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9153012a673sm1259385a.46.2026.05.28.14.29.52
+ af79cd13be357-9153012a673sm1259385a.46.2026.05.28.14.29.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 May 2026 14:29:53 -0700 (PDT)
+ Thu, 28 May 2026 14:29:55 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
@@ -90,23 +90,23 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  Jason Wang <jasowang@redhat.com>, Ben Chaney <bchaney@akamai.com>,
  Fabiano Rosas <farosas@suse.de>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH RFC 1/2] migration/vl: Allow set parameters with -incoming
- config:*
-Date: Thu, 28 May 2026 17:29:46 -0400
-Message-ID: <20260528212947.368132-2-peterx@redhat.com>
+Subject: [PATCH RFC 2/2] migration/cpr: Opt-in "mode" parameter for early boot
+ access
+Date: Thu, 28 May 2026 17:29:47 -0400
+Message-ID: <20260528212947.368132-3-peterx@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260528212947.368132-1-peterx@redhat.com>
 References: <20260528212947.368132-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,211 +123,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU doesn't yet have a good way to specify migration parameters so that
-they can be available even during early stage of QEMU boots.  It is because
-the migration object (who owns the migration parameters) will only be
-created after PHASE_LATE_BACKENDS_CREATED.  It means anything before it
-reading migration parameters is illegal.
+Make "mode" to be the first parameter to opt-in for early boot access.  CPR
+will start to consume this early boot parameter.  With this, we can remove
+the special "incoming_mode" variable together with cpr_get_incoming_mode().
 
-However, QEMU does have special use cases for such, namely only-migratable
-flag, and cpr-transfer. Recently, we have one more possible user to read a
-to-be-introduced new migration parameters during backend initialization
-phase.  We can introduce yet another global variable (or per-device
-parameter) to bypass this limitation, but we can also seek for a generic
-solution that we can setup migration parameters very early, even during
-backend initializations.
+One thing to mention is, to make cpr_is_incoming() work like before, we
+need to do extra check on INMIGRATE runstate to make sure it only returns
+true while during the incoming migration.  It used to be achieved by a
+pretty hackish "cpr_set_incoming_mode(MIG_MODE_NONE)" when incoming
+migration destroys.  Now we can remove it.
 
-See this discussion for more details on the context of the problem:
-
-  https://lore.kernel.org/r/ahdI7Vl5KraK566D@x1.local
-
-This patch wants to take the latter approach.
-
-As a start, introduce a new way to specify migration parameters in QEMU
-boot commandline, as proposed in the above discussion:
-
-  -incoming config:key1=value1,key2=value2,...
-
-When specified, QEMU will parse a string formatted MigrationParameters and
-keep it.  When migration object is created, it will apply all the settings
-as initial value.
-
-Since the application of boot parameters will be after object_new()
-completes, it means it happens after all machine compat properties or
--global settings (which should be done during instance_post_init()).
-
-So far, it's still only a way to specify parameters.  All parameters are
-not visible before migration object created, like before.  Any parameter
-that needs to be visible during boot will need to opt-in this feature.
-Follow up patches will switch the current users to use this model.
+Another good side effect is, we can finally drop MIG_MODE_NONE: it was
+never a valid value, only used by the temp global variable.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- include/migration/misc.h |  5 ++++
- migration/migration.c    | 54 ++++++++++++++++++++++++++++++++++++++++
- system/vl.c              |  7 ++++++
- qemu-options.hx          | 18 ++++++++++++--
- 4 files changed, 82 insertions(+), 2 deletions(-)
+ include/migration/cpr.h |  3 ---
+ migration/migration.h   |  3 +++
+ migration/cpr.c         | 18 +++++++++---------
+ migration/migration.c   | 37 ++++++++++++++++++++++++++++++++++++-
+ migration/options.c     | 10 +++-------
+ 5 files changed, 51 insertions(+), 20 deletions(-)
 
-diff --git a/include/migration/misc.h b/include/migration/misc.h
-index 3159a5e53c..aff79b1380 100644
---- a/include/migration/misc.h
-+++ b/include/migration/misc.h
-@@ -133,6 +133,11 @@ bool migrate_is_uri(const char *uri);
- /* Parse @uri and return @channel, returning true on success */
- bool migrate_uri_parse(const char *uri, MigrationChannel **channel,
-                        Error **errp);
-+/*
-+ * Parse @config_str in form of "config:key1=value1,..." to initialize
-+ * migration parameters.
-+ */
-+bool migration_parameters_boot_parse(const char *config_str, Error **errp);
+diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+index 56fb67e6b4..27061ad629 100644
+--- a/include/migration/cpr.h
++++ b/include/migration/cpr.h
+@@ -12,8 +12,6 @@
+ #include "io/channel.h"
+ #include "qemu/queue.h"
  
- /* migration/multifd-device-state.c */
- typedef struct SaveCompletePrecopyThreadData {
-diff --git a/migration/migration.c b/migration/migration.c
-index 074d3f2c69..d918be7a44 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -41,6 +41,7 @@
- #include "qapi/qapi-commands-migration.h"
- #include "qapi/qapi-events-migration.h"
- #include "qapi/qmp/qerror.h"
-+#include "qapi/qobject-input-visitor.h"
- #include "qobject/qnull.h"
- #include "qemu/rcu.h"
- #include "postcopy-ram.h"
-@@ -94,6 +95,9 @@ enum mig_rp_message_type {
- static MigrationState *current_migration;
- static MigrationIncomingState *current_incoming;
+-#define MIG_MODE_NONE           -1
+-
+ #define QEMU_CPR_FILE_MAGIC     0x51435052
+ #define QEMU_CPR_FILE_VERSION   0x00000001
+ #define CPR_STATE "CprState"
+@@ -38,7 +36,6 @@ int cpr_open_fd(const char *path, int flags, const char *name, int id,
+ typedef bool (*cpr_walk_fd_cb)(int fd);
+ bool cpr_walk_fd(cpr_walk_fd_cb cb);
  
-+/* Only used during boot, destroyed after migration object initialized */
-+static MigrationParameters *mig_boot_params;
+-MigMode cpr_get_incoming_mode(void);
+ void cpr_set_incoming_mode(MigMode mode);
+ bool cpr_is_incoming(void);
+ 
+diff --git a/migration/migration.h b/migration/migration.h
+index 841f49b215..9fa97f6d9a 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -609,4 +609,7 @@ void migration_bitmap_sync_precopy(bool last_stage);
+ void dirty_bitmap_mig_init(void);
+ bool should_send_vmdesc(void);
+ 
++void migration_parameters_boot_set_mode(MigMode mode);
++MigrationParameters *migration_get_parameters(void);
 +
- static GSList *migration_blockers[MIG_MODE__MAX];
+ #endif
+diff --git a/migration/cpr.c b/migration/cpr.c
+index bca43e9bf3..1f49afe109 100644
+--- a/migration/cpr.c
++++ b/migration/cpr.c
+@@ -16,6 +16,7 @@
+ #include "migration/qemu-file.h"
+ #include "migration/savevm.h"
+ #include "migration/vmstate.h"
++#include "migration/migration.h"
+ #include "monitor/monitor.h"
+ #include "system/runstate.h"
+ #include "trace.h"
+@@ -239,21 +240,20 @@ QIOChannel *cpr_state_ioc(void)
+     return qemu_file_get_ioc(cpr_state_file);
+ }
  
- static bool migration_object_check(MigrationState *ms, Error **errp);
-@@ -102,6 +106,45 @@ static bool stop_return_path_thread_on_source(MigrationState *s);
- static void migration_release_dst_files(MigrationState *ms);
- static void migration_completion_end(MigrationState *s);
+-static MigMode incoming_mode = MIG_MODE_NONE;
+-
+-MigMode cpr_get_incoming_mode(void)
+-{
+-    return incoming_mode;
+-}
+-
+ void cpr_set_incoming_mode(MigMode mode)
+ {
+-    incoming_mode = mode;
++    migration_parameters_boot_set_mode(mode);
+ }
  
-+bool migration_parameters_boot_parse(const char *config_str, Error **errp)
-+{
-+    Visitor *v;
+ bool cpr_is_incoming(void)
+ {
+-    return incoming_mode != MIG_MODE_NONE;
++    MigMode mode = migrate_mode();
 +
-+    if (mig_boot_params) {
-+        error_setg(errp, "Only one -incoming config:* is allowed.");
++    if (!runstate_check(RUN_STATE_INMIGRATE)) {
 +        return false;
 +    }
 +
-+    v = qobject_input_visitor_new_str(config_str, NULL, errp);
-+    if (!v) {
-+        goto fail;
++    return mode == MIG_MODE_CPR_EXEC || mode == MIG_MODE_CPR_TRANSFER;
+ }
+ 
+ bool cpr_state_save(MigrationChannel *channel, Error **errp)
+diff --git a/migration/migration.c b/migration/migration.c
+index d918be7a44..d7591571ed 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -145,6 +145,42 @@ static void migration_parameters_boot_apply(void)
+     }
+ }
+ 
++static void migration_parameters_boot_init(void)
++{
++    if (!mig_boot_params) {
++        mig_boot_params = g_new0(MigrationParameters, 1);
 +    }
-+
-+    if (!visit_type_MigrationParameters(v, NULL, &mig_boot_params, errp)) {
-+        goto fail;
-+    }
-+
-+    visit_free(v);
-+    return true;
-+
-+fail:
-+    visit_free(v);
-+    return false;
 +}
 +
-+static void migration_parameters_boot_apply(void)
++/*
++ * This should only be used during boot by CPR.  NOTE: This is only needed
++ * to be compatible with old CPR use case, if we decide to have users
++ * switch to -incoming config:mode=cpr-* then this can be removed.
++ */
++void migration_parameters_boot_set_mode(MigMode mode)
 +{
-+    if (mig_boot_params) {
-+        /*
-+         * This can fail, because qobject visitor doesn't do sanity check
-+         * on values while parsing.  It's not too late; we're still in boot
-+         * phase.
-+         */
-+        qmp_migrate_set_parameters(mig_boot_params, &error_abort);
-+        g_clear_pointer(&mig_boot_params, qapi_free_MigrationParameters);
-+    }
++    assert(!current_migration);
++    migration_parameters_boot_init();
++    mig_boot_params->has_mode = true;
++    mig_boot_params->mode = mode;
++}
++
++/*
++ * Get the effective migration parameter object.
++ *
++ * Three possibilities:
++ * - Migration object has been initialized, always use it, or,
++ * - Migration boot parameters are initialized, then use it, or,
++ * - return NULL
++ *
++ * Callers should always check non-NULL pointer first before use.
++ */
++MigrationParameters *migration_get_parameters(void)
++{
++    return current_migration ?
++        &current_migration->parameters : mig_boot_params;
 +}
 +
  static void migration_downtime_start(MigrationState *s)
  {
      trace_vmstate_downtime_checkpoint("src-downtime-start");
-@@ -322,6 +365,17 @@ void migration_object_init(void)
+@@ -546,7 +582,6 @@ void migration_incoming_state_destroy(void)
+         mis->postcopy_qemufile_dst = NULL;
+     }
  
-     current_incoming->exit_on_error = INMIGRATE_DEFAULT_EXIT_ON_ERROR;
+-    cpr_set_incoming_mode(MIG_MODE_NONE);
+     yank_unregister_instance(MIGRATION_YANK_INSTANCE);
+ }
  
-+    /*
-+     * Apply boot migration parameters in case the user specified some via
-+     * command line "-incoming config:*". NOTE: this will overwrite machine
-+     * type compat properties and -global settings!
-+     */
-+    migration_parameters_boot_apply();
-+
-+    /*
-+     * The boot parameters should have been verified already, but leave it
-+     * after applying boot parameters to do one check for everything.
-+     */
-     migration_object_check(current_migration, &error_fatal);
+diff --git a/migration/options.c b/migration/options.c
+index 5cbfd29099..c1209cbec3 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -886,16 +886,12 @@ uint64_t migrate_max_postcopy_bandwidth(void)
+     return s->parameters.max_postcopy_bandwidth;
+ }
  
-     ram_mig_init();
-diff --git a/system/vl.c b/system/vl.c
-index da36b2c6e1..49f5fa0c7b 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -1838,6 +1838,13 @@ static void incoming_option_parse(const char *str)
++/* Opt-in "mode" parameter to be available even during boot */
+ MigMode migrate_mode(void)
+ {
+-    MigMode mode = cpr_get_incoming_mode();
++    MigrationParameters *params = migration_get_parameters();
  
-     if (!strcmp(str, "defer")) {
-         channel = NULL;
-+    } else if (!strncmp(str, "config:", 7)) {
-+        /*
-+         * This is not a channel setup, but configuration to incoming
-+         * migration parameters to make them available during early boot.
-+         */
-+        migration_parameters_boot_parse(str + 7, &error_fatal);
-+        return;
-     } else if (migrate_is_uri(str)) {
-         migrate_uri_parse(str, &channel, &error_fatal);
-     } else {
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 96ae41f787..1fc92a409a 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -5366,11 +5366,15 @@ DEF("incoming", HAS_ARG, QEMU_OPTION_incoming, \
-     "-incoming <channel>\n" \
-     "                accept incoming migration on the migration channel\n" \
-     "-incoming defer\n" \
--    "                wait for the URI to be specified via migrate_incoming\n",
-+    "                wait for the URI to be specified via migrate_incoming\n"
-+    "-incoming config:key1=value1,key2=value2,...\n" \
-+    "                specify migration parameters valid even during boot\n",
-     QEMU_ARCH_ALL)
- SRST
-+
- The -incoming option specifies the migration channel for an incoming
--migration.  It may be used multiple times to specify multiple
-+migration, or can also be used to setup migration parameters for the
-+incoming migration.  It may be used multiple times to specify multiple
- migration channel types.  The channel type is specified in <channel>,
- or is 'main' for all other forms of -incoming.  If multiple -incoming
- options are specified for a channel type, the last one takes precedence.
-@@ -5411,6 +5415,16 @@ options are specified for a channel type, the last one takes precedence.
-     Wait for the URI to be specified via migrate\_incoming. The monitor
-     can be used to change settings (such as migration parameters) prior
-     to issuing the migrate\_incoming to allow the migration to begin.
-+
-+``-incoming config:key1=value1[,key2=value2,...]``
-+
-+    Specify migration parameters in QEMU commandlines, so that these
-+    parameters will be available even during very early boot of QEMU.
-+    They will be applied properly after QEMU boots and when the migration
-+    core is initialized.  From that POV, it has similar effect as setting
-+    these parameters using QMP command ``migrate-set-parameters`` or HMP
-+    command ``migrate_set_parameter``.
-+
- ERST
+-    if (mode == MIG_MODE_NONE) {
+-        mode = migrate_get_current()->parameters.mode;
+-    }
+-
+-    assert(mode >= 0 && mode < MIG_MODE__MAX);
+-    return mode;
++    return params ? params->mode : MIG_MODE_NORMAL;
+ }
  
- DEF("only-migratable", 0, QEMU_OPTION_only_migratable, \
+ int migrate_multifd_channels(void)
 -- 
 2.53.0
 
