@@ -4,97 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53068CD5BD5
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 05:53:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09BFFCD5BD1
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 05:56:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSTfG-0005Db-JJ; Thu, 28 May 2026 01:52:18 -0400
+	id 1wSTiy-0006Ki-Pz; Thu, 28 May 2026 01:56:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wSTfC-0005BX-4X; Thu, 28 May 2026 01:52:14 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wSTf9-0002fc-Et; Thu, 28 May 2026 01:52:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779947520; bh=ZO2uaGoELhmmIzoUh8q3mVren9M2iTl8WQKkbW9mxYk=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=xuRFkIPLFOULAbkvWny5qO/TPJ0NBFRhoRLWRnV7b/502zmAo2919U5B27QU0CzYJ
- pINndD67Jr3CtCD4qYOH7gD2TThBq84xZrkRQV8T2Lh/t1fEo6ZDGmzxHEUrkDm/LH
- w+Q5Jt0J2YPFiHbaRW8A3unKFz/tp4uhge2PvoAluMiIIeoALsMk+Dl1XOvDRB7d2o
- 6PDWuo7EHSBZpkMuDRXGN3mnyHF+VoSR0WCRnmkaeRSzDTKU3zFqMPKkXLyhg5Xiwq
- xe3Neo6IA4y7AOsEX2DiRHmOvgnlHUxs7AMLKN/b/KqEu6UrmDnx+A7JJ7PuJpFwEz
- 5/CpFyoSoQyMg==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id E3B691B1F03;
- Thu, 28 May 2026 08:51:59 +0300 (MSK)
-Message-ID: <24f5d375-a32a-44a2-92a5-1fe7d0b9f019@tls.msk.ru>
-Date: Thu, 28 May 2026 08:52:06 +0300
+ (Exim 4.90_1) (envelope-from <physicalmtea@gmail.com>)
+ id 1wSTiw-0006Jw-Ix
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 01:56:06 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <physicalmtea@gmail.com>)
+ id 1wSTiu-0004ff-Nz
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 01:56:06 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-c85067c9ccdso3158619a12.3
+ for <qemu-devel@nongnu.org>; Wed, 27 May 2026 22:56:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1779947761; x=1780552561; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZOnEl6g9CzHOp9himAORSol4KLevjnd3PpxGJzoKEiQ=;
+ b=EcU5gpN4azGvmR1lIeBq4jsK82x8/LgtPSI0D5CBzCLJR3S4fnsxp+Y9Gp6sLeJpIi
+ dnJXoD2mTNn2g72/ajbUuwDvwuMLC2Oe1jeDVt1EG5h47ofJgw01bWwTZWpYrc+H4N8M
+ A8JRnNSHtPD4ogiz3yU3lHTIhsOUFZRditQGoK9OiKHVBMJy5kjIHXRMiI6vR2IOPolz
+ diy3ITFfYRT8quUnhOm0OoE/pdNfHVrEGKt43VJaaZDvtBaf0vgYKaHS21+nHcFr2EBD
+ gl5krDMwuvSlI3Zqc24U8Sj+fkFmpTgY4AyYCIhG9L5IE/nUvzRFb1hDmD4bEW+ZnWiG
+ kIQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779947761; x=1780552561;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ZOnEl6g9CzHOp9himAORSol4KLevjnd3PpxGJzoKEiQ=;
+ b=jrVZ0KOhifI7hoMED6kfydYbaOMe+Y4b/reenZ19KYYKCQAV5O9Ro0U4r/TzEHwTg+
+ mWpKdStABMhPthHHKv9dTesmKhZxFqcahwr+2DKoeUTlW/sIEdVIkY0uxa9LKs2K4jrj
+ uR5N84UKxfmNToBoMuTSED1wbl4VthPsg8q7fob7HlgS4M9fQZkn5EJ2oEo/DoQvPhTy
+ cjUiQOdt6FbX7P3ruzCJ54agjdjS9WBJY1i8AptSfm5hX5SFXJMnOWaZ5m1uOwCjM7tT
+ ut2NG+j/n463q+OJ1/pFCiUEYCU/7aUKzyEe1D/ANzXQv0WsHiDstscZIYHYW1S9Qohb
+ fUmg==
+X-Gm-Message-State: AOJu0YwkbJCK6C3hHkYc0rldI0d3CJLNeqWt6olLe32eqq3THfFnzr9Z
+ Beq4C04UBIDjh8cUySOB7Im+0l2C6JdoeA5cEzPtF57TOssV1ePGI9tI46r70RMY5OI=
+X-Gm-Gg: Acq92OF1AC88h+plvndahHOXlV9J2vg13mld0ZzEMoAwY0cylDK3ngbxhDrZiia9Hy1
+ olNgsur6almh8bMrqzBpPGJQupPGew31t2Fky/a86xmTckOpg9PgEmDY6cKO5DVb6FtZC8AJXkj
+ BJ65EyDwnetqjaDou39yJQXlxe8v938Y2m+XuOoh1Vi1sY3wCrUQ6HPRihuBLHxCDMkJyQmzslU
+ GadsEn5rnWfXWveuXI4nQIkUowI+oJTtaFZ8219wZOyqrCDMddqNZlZfLFAr0Lcom1R4K9VO4vD
+ xP1US1rDXgueAwDn8t0t6d+ZeC48EkwZcYvENZHQUvX1WNIYw5G7+uL2QeXugz02YaQEVZ2O1qg
+ GCbIk2o89vq3651kO+X/yhPtl0Yj4s9cMvYTAG0svCItx+2Kxb4Bk4eGMvav1/irMqyhS/c/lC3
+ kJHmA+zry+ImsYYc7QHdZYJBqOm4l6GRkZMc7/Wu96cD8omA==
+X-Received: by 2002:a05:6a21:7008:b0:398:b178:a53f with SMTP id
+ adf61e73a8af0-3b328ec4d08mr26857031637.40.1779947761546; 
+ Wed, 27 May 2026 22:56:01 -0700 (PDT)
+Received: from gmail.com ([114.249.134.218]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-841f3cbce48sm758068b3a.10.2026.05.27.22.55.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 27 May 2026 22:56:01 -0700 (PDT)
+From: Jia Jia <physicalmtea@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Jonathan Cameron <jic23@kernel.org>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Fan Ni <fan.ni@samsung.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ linux-cxl@vger.kernel.org, qemu-stable@nongnu.org
+Subject: [PATCH v3 2/2] hw/cxl: validate PPR and sparing Set Feature writes
+Date: Thu, 28 May 2026 13:55:25 +0800
+Message-Id: <61025cb5676b04afcfd7c4cc16904c95564c7a48.1779946245.git.physicalmtea@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <cover.1779946245.git.physicalmtea@gmail.com>
+References: <20260429152750.2409174-1-physicalmtea@gmail.com>
+ <cover.1779946245.git.physicalmtea@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] vfio-user: reject zero DMA page size capability
-To: zhaoguohan@kylinos.cn, John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
-References: <20260522081306.4186242-1-zhaoguohan@kylinos.cn>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
- HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
- 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
- /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
- DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
- /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
- 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
- a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
- z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
- y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
- a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
- BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
- /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
- cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
- G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
- b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
- LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
- JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
- 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
- 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
- CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
- k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
- OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
- XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
- tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
- zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
- jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
- xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
- K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
- t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
- +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
- eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
- GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
- Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
- RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
- S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
- wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
- VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
- FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
- YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
- ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
- 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260522081306.4186242-1-zhaoguohan@kylinos.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=physicalmtea@gmail.com; helo=mail-pg1-x532.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,27 +103,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22.05.2026 11:13, zhaoguohan@kylinos.cn wrote:
-> From: GuoHan Zhao <zhaoguohan@kylinos.cn>
-> 
-> check_pgsizes() validates that no page-size bits smaller than
-> VFIO_USER_DEF_PGSIZE are set, but it still accepts pgsizes=0. This lets a
-> malformed server overwrite the default page-size mask with zero.
-> 
-> Later vfio_user_setup() asserts that proxy->dma_pgsizes is non-zero, so device
-> realization aborts instead of reporting a version capability error. Reject a
-> zero DMA page-size mask during version capability parsing.
-> 
-> Fixes: 36227628d824 (vfio-user: implement message send infrastructure)
-> Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+The Post Package Repair and memory sparing Set Feature branches still
+copy mailbox payload data into fixed-size write-attribute objects
+without checking that hdr->offset + bytes_to_copy stays within the
+target buffer.
 
-This smells like a qemu-stable material (11.0.x).
+patrol scrub and ECS already reject oversized writes, but the later PPR
+and sparing feature additions missed the same validation. A full
+mailbox payload can therefore overrun the target write-attribute object,
+for example in the rank sparing branch.
 
-I'm picking this and patch 2/2 for stable-11.0 branch.
-Please let me know if I shouldn't.
+Use cxl_set_feature_copy() there as well and return
+CXL_MBOX_INVALID_PAYLOAD_LENGTH for oversized requests.
 
-Thanks,
+Fixes: 5e5a86bab83 ("hw/cxl: Add support for Maintenance command and Post Package Repair (PPR)")
+Fixes: da5cafdc4dd ("hw/cxl: Add emulation for memory sparing control feature")
+Link: https://gitlab.com/qemu-project/qemu/-/work_items/3458
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+---
+ hw/cxl/cxl-mailbox-utils.c | 54 +++++++++++++++++++++++++++++---------
+ 1 file changed, 42 insertions(+), 12 deletions(-)
 
-/mjt
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 2e4cc5824d..4c7a083e4c 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -1829,8 +1829,13 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+             return CXL_MBOX_UNSUPPORTED;
+         }
+ 
+-        memcpy((uint8_t *)&ct3d->soft_ppr_wr_attrs + hdr->offset,
+-               sppr_write_attrs, bytes_to_copy);
++        ret = cxl_set_feature_copy(&ct3d->soft_ppr_wr_attrs,
++                                   sizeof(ct3d->soft_ppr_wr_attrs),
++                                   hdr->offset, sppr_write_attrs,
++                                   bytes_to_copy);
++        if (ret) {
++            return ret;
++        }
+         set_feat_info->data_size += bytes_to_copy;
+ 
+         if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
+@@ -1848,8 +1853,13 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+             return CXL_MBOX_UNSUPPORTED;
+         }
+ 
+-        memcpy((uint8_t *)&ct3d->hard_ppr_wr_attrs + hdr->offset,
+-               hppr_write_attrs, bytes_to_copy);
++        ret = cxl_set_feature_copy(&ct3d->hard_ppr_wr_attrs,
++                                   sizeof(ct3d->hard_ppr_wr_attrs),
++                                   hdr->offset, hppr_write_attrs,
++                                   bytes_to_copy);
++        if (ret) {
++            return ret;
++        }
+         set_feat_info->data_size += bytes_to_copy;
+ 
+         if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
+@@ -1867,8 +1877,13 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+             return CXL_MBOX_UNSUPPORTED;
+         }
+ 
+-        memcpy((uint8_t *)&ct3d->cacheline_sparing_wr_attrs + hdr->offset,
+-               mem_sparing_write_attrs, bytes_to_copy);
++        ret = cxl_set_feature_copy(&ct3d->cacheline_sparing_wr_attrs,
++                                   sizeof(ct3d->cacheline_sparing_wr_attrs),
++                                   hdr->offset, mem_sparing_write_attrs,
++                                   bytes_to_copy);
++        if (ret) {
++            return ret;
++        }
+         set_feat_info->data_size += bytes_to_copy;
+ 
+         if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
+@@ -1885,8 +1900,13 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+             return CXL_MBOX_UNSUPPORTED;
+         }
+ 
+-        memcpy((uint8_t *)&ct3d->row_sparing_wr_attrs + hdr->offset,
+-               mem_sparing_write_attrs, bytes_to_copy);
++        ret = cxl_set_feature_copy(&ct3d->row_sparing_wr_attrs,
++                                   sizeof(ct3d->row_sparing_wr_attrs),
++                                   hdr->offset, mem_sparing_write_attrs,
++                                   bytes_to_copy);
++        if (ret) {
++            return ret;
++        }
+         set_feat_info->data_size += bytes_to_copy;
+ 
+         if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
+@@ -1903,8 +1923,13 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+             return CXL_MBOX_UNSUPPORTED;
+         }
+ 
+-        memcpy((uint8_t *)&ct3d->bank_sparing_wr_attrs + hdr->offset,
+-               mem_sparing_write_attrs, bytes_to_copy);
++        ret = cxl_set_feature_copy(&ct3d->bank_sparing_wr_attrs,
++                                   sizeof(ct3d->bank_sparing_wr_attrs),
++                                   hdr->offset, mem_sparing_write_attrs,
++                                   bytes_to_copy);
++        if (ret) {
++            return ret;
++        }
+         set_feat_info->data_size += bytes_to_copy;
+ 
+         if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
+@@ -1921,8 +1946,13 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+             return CXL_MBOX_UNSUPPORTED;
+         }
+ 
+-        memcpy((uint8_t *)&ct3d->rank_sparing_wr_attrs + hdr->offset,
+-               mem_sparing_write_attrs, bytes_to_copy);
++        ret = cxl_set_feature_copy(&ct3d->rank_sparing_wr_attrs,
++                                   sizeof(ct3d->rank_sparing_wr_attrs),
++                                   hdr->offset, mem_sparing_write_attrs,
++                                   bytes_to_copy);
++        if (ret) {
++            return ret;
++        }
+         set_feat_info->data_size += bytes_to_copy;
+ 
+         if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
+-- 
+2.34.1
 
 
