@@ -4,111 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EEBBCD4F54
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 13:31:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3937BCD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 13:40:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSapB-00033y-73; Thu, 28 May 2026 09:31:01 -0400
+	id 1wSaxH-0004Kc-Pv; Thu, 28 May 2026 09:39:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSap8-000331-QT
- for qemu-devel@nongnu.org; Thu, 28 May 2026 09:30:58 -0400
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSap5-0004Qg-LP
- for qemu-devel@nongnu.org; Thu, 28 May 2026 09:30:58 -0400
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-7c58e6eb2c8so129218527b3.1
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 06:30:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779975054; cv=none;
- d=google.com; s=arc-20240605;
- b=e0VseUjFN1GVhPz2mfHs7Iq8gdjcMtyZbeEEFZmWrD0a4y48tsVStOVkGyLYcNT8wg
- I43VTcy7UZTWdkhLlvbWf4HgbHHpgxkWWbDhmlnVcp6FR1zn3huuuxuXZSsu3WwcQLQs
- VH5J0+sWX8x3giufj835Z15/cffug1wmTMs69aIAesNXHUYVA+rhRI7+UJDPa4KSp0x3
- m0JxbIfGaUXUMYXWzVU3tdjNMCNEHDOD93HHbmCCRSChCGrjzTwN53cydF3SL+iwwXPs
- rdPytHVw7SYD69jIMj5G9Yo3A3G+8i5vYd1gy8O7c0Mdk9UzQFK1fj9OITc+pF8jJciZ
- 9FXA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=ypOqJwt6MG32xNjPn5nD9rwsVdwX4MHa5fFYaSfgigk=;
- fh=uCmUPCW8pkfAYUb2TNqBA1N8JsXLaq44DlF1L+QbvNc=;
- b=UyEINLOuS4szK5hVSPpTBkgDtvfZscAVeQcsGKPJvFXKWezAy5iEBpUhjaOPaN9lzP
- 0zBCKz5x5HwdBjLvSVQPy6N2gKJ0fahX43n6RrwsdlkP1bcMHMuFGuT5mNOOxztFeyN5
- Om3OXRNXMgLIXyxMROOkUnxQ4nDy4ScdkRGuEpcnjfw9OG1311wGAqm9AzLRqVSA9HCL
- SGe35NIdvljK7/UsHFjfz9yfxwfjDQytyKgpUJOzKXxQ3EKybIZeiPIcW7oe58N4cY/u
- /D0dRCPVxX3zkrWOm9OOb17Hp3qxoafZveA1TsBmsZi963wZ1QHjPJcg39T1Id6hDM8K
- X41Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wSax9-0004K3-UG
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 09:39:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wSax7-0007ap-7S
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 09:39:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779975551;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=s/fWkcUcpNNAUjyW+qmOzo1tDZhLeSbJNrXoWW2G7E0=;
+ b=eqRvy3Rh1BRuOSgAWoqJXnaMFC6NK9LPTbmj2kkzGVjxBthr7Uu59PfvcUqmuU41+9oXvD
+ 2fNB8RSFYgBGflrd6ji2KyoOoJNRSpnks+51/VahNjNSsVhkaLDn009igRgsZJSXGPASXV
+ 3ICKKXAGayTwx03K1CkLHKQBG8ini9U=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-615-AuU2lYIEMoWVFeqVvYZMXQ-1; Thu, 28 May 2026 09:39:10 -0400
+X-MC-Unique: AuU2lYIEMoWVFeqVvYZMXQ-1
+X-Mimecast-MFC-AGG-ID: AuU2lYIEMoWVFeqVvYZMXQ_1779975548
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-90cbd806004so2638356385a.0
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 06:39:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779975054; x=1780579854; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ypOqJwt6MG32xNjPn5nD9rwsVdwX4MHa5fFYaSfgigk=;
- b=iu3U1KksYdYy5vDjJwWiHSzo/y9+PIpqZMqVBI7RdUR/RG9sR/u0dYI61kCxLklKTN
- Z6bwLIeZ9ypIgq3iVDibQ9E19AEDXkPlWOYnW0aYsG25gDTZ4051O6Kdpwx1/9ekos9w
- 4SVJFsjhCeqS/dfzM3h6X5ZHePK5UFDpXYxifp0Selnkd/aCGX79zI1RX8Jrin4kFyNh
- Vq4onUiK6ZL0B6joLKAvbq11MrlvNxYd14HbiCrf5yviYXeju+tVbO+Mp/hsBhgBgr0t
- 44hCgW/ioUHSgWR0bX5wAV4/lB27OlZue/dkHUBEmPY0KRkuQ7J56/ZLpHxUCFsfohtS
- pOJw==
+ d=redhat.com; s=google; t=1779975548; x=1780580348; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=s/fWkcUcpNNAUjyW+qmOzo1tDZhLeSbJNrXoWW2G7E0=;
+ b=mfeUlIqqm06fRZIICat2P34ypM5fuE7wF1nSIxDa6ki5LasXSao/6XmIvpeLeHut+0
+ nHZMthJa+7HOpOamdI8U5hUfFudnWdcAHyr5aW3EiG76l0ndqLVgCTzxJXoSJXse3m1y
+ utv+hHC3oD71Gsa6VybYz+5r/tZrUx0Odp1fzWdNHc0WvOUQaXyAfKNr7tu3SU59bJPn
+ RFJHAI2OBW4HT5VMqz87XkGKJimqIE9cdb7T42W1isTMS4odED1ZkoOY6K7FS8tIIENg
+ fSLmxbtl7vBQrmWJmNE9jEeyb/X17VG2uk3kBx7ltr/EHKSyP1EYkFwaGnc5EuuhMwja
+ eUIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779975054; x=1780579854;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ypOqJwt6MG32xNjPn5nD9rwsVdwX4MHa5fFYaSfgigk=;
- b=E9I3/BisILOvbU6o3iLjHK05cgq1F9XdcGvEZQlmx1z3pisqYdij1Juq8yYIfIhNty
- W+odmqCFeSoOZNri5F31UmxLb98LRqu/BdvpcGQaky5scXR0tgM0SmfZBr9S+D8ighhx
- gGCnDpztppRy/Znm4QsgYiIywwuFmhqIMClPv0XtkprCB6V6PnFHo5hsv8TWixr0B1AS
- y+fLd2V+ZYLDU/uq7m89QOVy5w82gqDluI/udwK2B+SlQW7/3/+BZQcPs0l65GwTBI+q
- /e3hgbeCOMLnIX2ZFLHInaQtjAzDtXw/ag2uTjWL+/RGtRqC8BHLQiBiteE+lhZbtqWf
- 3WWg==
-X-Gm-Message-State: AOJu0Yy0HlZwPlI4nClAH/qMvIWqJzJ4XLaC+/o7rHcsxcdX88e8ofOa
- YrMtWPyo5T9HvaNl0JhxBZXTcVDQlUxLdmf2OZWBVEerPLT4S1qLSplbhvllwG2jTSjNv1C4UYg
- Hbx+S6/6DVNprxgy3/yMEI/SgN3yrDhp8K0L10gqJ8g==
-X-Gm-Gg: Acq92OEDpB+HQT2yYTBTYa4Mfz7WBkBilE0FS+chliAmgPf8fMWYJkaRccCuACiY7hI
- ygrWDfmPeyNl45mNUtUZZEbIZ2yJKhqGl0kQPkiEL3ybKh2hiORb231lG4LfPo3E+3VBjOzQavk
- 2uS1YlhuPpN5TAiFAcUbFeepot6T3pU6lE0L7Fx3XqmzXwDWYKghrk+33cVg2/53FWpRlRK7PNJ
- PqtyL2coIJStkoNtfgZ6zYUWl1jziFzcWPzWZCaXAGMv3GdLrsRKnKYE0IPaVcsSkFtsPkXS/zS
- ofF01eYmO3wvuEB6I8sfoAVSeTNshtvR7EiDpkG2Yq5QrMwNW3QOpzkyDMHJXLfHySwIVCkjGNv
- ozw==
-X-Received: by 2002:a05:690c:6e8d:b0:7cf:d242:d94a with SMTP id
- 00721157ae682-7d336cb26f5mr294889847b3.25.1779975054261; Thu, 28 May 2026
- 06:30:54 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779975548; x=1780580348;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=s/fWkcUcpNNAUjyW+qmOzo1tDZhLeSbJNrXoWW2G7E0=;
+ b=OJfQY7oedLWaChoqArHQgQVeDHN0MYx3BzqP9Epv+Hr6+/yhwpEOmeMgJIlGsD7uqf
+ 8pl1tMzd/oA9UOnizOvc3jbNPTn12B4LcaTzL82KyxmXfbZ5UqPNS2Zc1chS65rzdILe
+ KqcTMITaUi0WhJ49hmt64EEFXKco/r/zb7ScKfd7t+lmsUF9Ih8HqJFij4gQvYaUwRCs
+ 38FhqGdejGdMIzLatE2Sn8DF+gM2tgsFVluNT/LChhNKn1E0HAy2skJTVWHK8IHpelfJ
+ Abh43BEHujKNyhFG68pkOkOlAtMzBPv3C1FbhD8s2pCadUQ0vZpdoAE1HxtdDuQsJ1ew
+ 1fcg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9+agA9JoNUE+2pclrEb7tBRPFAWCgzBNV0cH/REgLKQqS51vtEYuqUfoOfHxLJUrrm9MtfnijWF+ER@nongnu.org
+X-Gm-Message-State: AOJu0Yyira0HWTvbITcZ6noxtAuhpSi+PEluwRqtD8Ybu1KWcKBUIzZK
+ V1tZybpMAuwm0I0KNYN6cWUM3qV/hAYBFCgmM0caFaxuc70WeL2GPrTKEtL4YY1Rl6lfrbSLMhO
+ 7pO4FOQUe51jRlW+fPp7fM7prw/xLMovu3ou+IgwMiWK6c5/yYO9WkEfN
+X-Gm-Gg: Acq92OFeJfsuIFBRK5M6kwF2YixvEMu/PuF095YYv/rp57wugEUZbbWo9bUsn7I13gW
+ OOOFyE1ne4jU29o9sE1EDqEWtTJmtQau2+JmL2o6FthOSnsbvyvp4E8BElmZnbDlg3ASqup+kyb
+ Xih56JR2OIF9+b6yiz58+MSP67NwHb6eJ6HARY4vAzlvi+g89pK2ndvTDiwGawRVaz91yCa4Pqp
+ V3PxE43E8fCQoZ6T63d0kA8V/4OHfApCnCGTrx4+iqxARSuzpfAnWWa0T1HHZIpnu69kyTwYmAu
+ netXhy2FrHBH7jQtde1dR21ciy8O0+i2b6lxK3+ekt5c3gd2uwtJyXzI8h/9E2eYGc/+SJZlNA/
+ 6sA9VmchWG09iztRkrHJ5x3+y9MeqARIzFdYAZoi4XeYjAiRF7Y4KwN9i6Q==
+X-Received: by 2002:a05:620a:6cc5:b0:914:e429:5b42 with SMTP id
+ af79cd13be357-914e4295b91mr2450172785a.51.1779975548479; 
+ Thu, 28 May 2026 06:39:08 -0700 (PDT)
+X-Received: by 2002:a05:620a:6cc5:b0:914:e429:5b42 with SMTP id
+ af79cd13be357-914e4295b91mr2450167285a.51.1779975547923; 
+ Thu, 28 May 2026 06:39:07 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-914f86e9bf5sm814983685a.8.2026.05.28.06.39.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 28 May 2026 06:39:07 -0700 (PDT)
+Date: Thu, 28 May 2026 09:39:06 -0400
+From: Peter Xu <peterx@redhat.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Paolo Bonzini <pbonzini@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v5 1/7] memory: Export memory_region_set_ops()
+Message-ID: <ahhFepYkLT-uXbf7@x1.local>
+References: <cover.1779723483.git.balaton@eik.bme.hu>
+ <d6fff532607b5153094cd6c72f78a2de5672aaec.1779723483.git.balaton@eik.bme.hu>
+ <CAFEAcA9Nh9qZ1k_Pq04ajdP8ObrNpen4aYeu-mPNiYbRc9ho3Q@mail.gmail.com>
+ <ec2a907a-9fab-d56a-83a2-409254146209@eik.bme.hu>
 MIME-Version: 1.0
-References: <20260518073401.11279-1-corvin.koehne@gmail.com>
-In-Reply-To: <20260518073401.11279-1-corvin.koehne@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 28 May 2026 14:30:43 +0100
-X-Gm-Features: AVHnY4ICvIK2kVYst-xM5rCWkEt_5-MtQKgfi0AIxtJX4e3SQiWpvev-OPk8Obo
-Message-ID: <CAFEAcA9eNjS6MLjmub8YRFHiGUvRt47KnNGk8_T03VO-63JcAQ@mail.gmail.com>
-Subject: Re: [PATCH v7 00/16] hw/arm: add Beckhoff CX7200 board
-To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Yannick_Vo=C3=9Fen?= <y.vossen@beckhoff.com>, 
- Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?Q?Corvin_K=C3=B6hne?= <c.koehne@beckhoff.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org, 
- Kevin Wolf <kwolf@redhat.com>, Alistair Francis <alistair@alistair23.me>,
- qemu-block@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ec2a907a-9fab-d56a-83a2-409254146209@eik.bme.hu>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,53 +121,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 18 May 2026 at 08:34, Corvin K=C3=B6hne <corvin.koehne@gmail.com> w=
-rote:
->
-> From: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
->
-> Hi,
->
-> Beckhoff has build a board, called CX7200, based on the Xilinx Zynq A9
-> platform. This commit series adds the Beckhoff CX7200 as new board varian=
-t to
-> QEMU.
->
-> The emulation is able to successfully boot an CX7200 image. The image inc=
-ludes
-> some self tests executed on every boot. Only the cache self test fails du=
-e to
-> QEMU emulating the cache as always being coherent. The self tests include=
- f.e.:
->
-> * Network
-> * Flash
-> * CCAT DMA + EEPROM [1]
-> * TwinCAT (Beckhoff's automation control software [2])
->
-> [1] https://github.com/beckhoff/ccat
-> [2] https://www.beckhoff.com/en-us/products/automation/
->
-> YannickV (16):
->   hw/dma/zynq-devcfg: Handle bitstream loading via DMA to 0xffffffff
->   hw/arm/zynq-devcfg: Prevent unintended unlock during initialization
->   hw/dma/zynq: Ensure PCFG_DONE bit remains set to indicate PL is in
->     user mode
->   hw/dma/zynq-devcfg: Simulate dummy PL reset
->   hw/dma/zynq-devcfg: Indicate power-up status of PL
->   hw/misc: Add dummy ZYNQ DDR controller
->   hw/misc/zynq_slcr: Add logic for DCI configuration
+On Mon, May 25, 2026 at 10:57:39PM +0200, BALATON Zoltan wrote:
+> On Mon, 25 May 2026, Peter Maydell wrote:
+> > On Mon, 25 May 2026 at 16:47, BALATON Zoltan <balaton@eik.bme.hu> wrote:
+> > > 
+> > > Make memory_region_set_ops() function public. In some cases such as
+> > > when devices have configurable endianness or different behaviour based
+> > > on settings it is necessary to change the ops callback after the
+> > > memory region is created. Export memory_region_set_ops() function for
+> > > this.
+> > 
+> > If some other CPU is in the middle of using the old MemoryRegionOps
+> > when the device swaps them out under its feet, what happens?
+> 
+> In my limited test with PPC and ati-vga this seems to work and the switch
+> would happen in device register write so nothing else is expected to run
+> accessing the device at the same time at that point. I can't tell for all
+> possible cases but that would then be a problem in the caller not in this
+> function. Callers are expected to call it when appropriate which I could
+> mention in the doc comment if needed.
+> 
+> > You could also remove the old MR from its container and add a different
+> > one with the different behaviour when the guest changes the config,
+> > or have both of them in the container and toggle which is visible
+> > with memory_region_set_enabled(). That might potentially be more
+> > awkward but it would avoid having to look into the memory region
+> > API internals.
+> 
+> That could also work if I had a container but it's switching the endianness
+> of a PCI BAR which is registered with pci_register_bar() so it's easiest to
+> switch the ops on the region than hacking around it using two more otherwise
+> unneeded memory regions as I also can't swap PCI BARs so it would need a
+> container aditionally to two regions using the same callbacks just with
+> different endianness. Allowing setting the ops of a single region seems
+> simpler.
 
->   hw/block/m25p80: Add HAS_SR_TB flag for is25lp016d
->   hw/arm/xilinx_zynq: Split xilinx_zynq into header and implementation
->    files
+I think PeterM's proposal makes more sense.
 
-I'm taking these patches into target-arm.next, since they've been
-reviewed and most of them are bugfixes to the existing zynq code.
-That should make this patchseries a bit smaller for the next round.
+Having two MRs registered under the same offset of parent and dynamically
+enable/disable seems to be a common way to solve similar problems in QEMU.
+I don't see why it is hacky if we can allow dynamic flip of mr->ops, which
+smells more risky.
 
-I've left code review comments on the others.
+Exporting that API may invite more abuse, which I'm not sure it's good.
 
-thanks
--- PMM
+The other thing I want to mention is having ops flippable relies on "BQL
+serializes everything", but it's already not true with exceptions like
+HPET, see memory_region_enable_lockless_io().  I think this will introduce
+tech debts that we don't necessarily need.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
