@@ -4,117 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D83DCD4F54
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 13:41:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC84ACD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 13:43:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSazO-0005RW-Pd; Thu, 28 May 2026 09:41:34 -0400
+	id 1wSb1M-0005yh-Th; Thu, 28 May 2026 09:43:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wSazN-0005RI-BS
- for qemu-devel@nongnu.org; Thu, 28 May 2026 09:41:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1wSb1H-0005yH-RJ; Thu, 28 May 2026 09:43:32 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wSazL-0000To-Tl
- for qemu-devel@nongnu.org; Thu, 28 May 2026 09:41:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779975691;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/PYY1+tA+DmBKcketrIi+KRx/LYAe4nCRT3MrjpT2aU=;
- b=Pp/inSj45hWg0figQVzD3Bw90TSaRizGFGjqOfJmKaUxYtQ+Fv1+I+TMvStS+KRkdYS1Xv
- aEhRMlr6dzWo+5wqRNV7Ll3mKsgecMuPvmAsiISNITfTVofpDJOQ6SH0m+e6LGDGNGDgJK
- 1AEvxvYWjZdr0f81kSYeUjFNDueJ9aE=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-544-pUpzYhsBN8m2osuks1YycA-1; Thu, 28 May 2026 09:41:29 -0400
-X-MC-Unique: pUpzYhsBN8m2osuks1YycA-1
-X-Mimecast-MFC-AGG-ID: pUpzYhsBN8m2osuks1YycA_1779975689
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-914b5249bf6so1290412885a.3
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 06:41:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779975689; x=1780580489; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=/PYY1+tA+DmBKcketrIi+KRx/LYAe4nCRT3MrjpT2aU=;
- b=dJ9NNyAYqZiO9Z8iCldELJj9dR+hRbL9vDttk7vLKkkmNt3H4X7BYoy7JFytXfS2OF
- IYQGWj/CtpVJE5tTxpBgRZ2a7F5T8IYJ+L7bmUMvlHO8yasluscfYOkeH407/jwRNbUq
- 8hdlCtaaS2QmyIO6aVo0TntuOpjKDweOqF/EjziC1Te/UMX9aNV8LsJc35R2Q36bi2hg
- u4wFVo4J5gH188XfRDoR/iB6t4fJ3rlraiO77UAG0hLZA5KUijKUqLnA1c5MBhEvwbFT
- PZ99KRA9KnV90BXVegm61XJBv/Nis2HoRTeuukq2A3QWfIaVeomF8e4WsBK/5nPpHNb+
- qYbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779975689; x=1780580489;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/PYY1+tA+DmBKcketrIi+KRx/LYAe4nCRT3MrjpT2aU=;
- b=r1PgifpqJK2nqs8GdH81lrDD2+BE1HHcNjAH9Z3kNb5EP2Fzvo8ZAZfuECZtoqVQQA
- R0+PpdMI7oZpqN4vcq0j8tzaJkb8DDmtJKnrw54LMSQiQPoXEW3Vm8WGu76RrBu0Cp8s
- zetO5eO9X1fT9oQgrxHNxZHxlQ5Ido1F0BObX9rsfv2Xr0XJSC+9mlevqGIYMxf+zrtx
- xYOia/E6m18dkw/QjxFblXmN9WRaZDJsl86sIm9EyumwfqiauW2Jaib9pfcG8jDbY6ZW
- kCQKm8qX1N2FG8wYokIB1MIXiPUowIYMAniqma1/jZ9Rp4a6itrtFk+UeYq3IueDfvMV
- O8hw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8SDjCv+AduqyC03r1W1WMyAFau7DSKhZJK6j/r7+15y0RyFinIZSZiPFNKroU1T/bLJGl3GeOM9Plc@nongnu.org
-X-Gm-Message-State: AOJu0YyrlgYMIV5nnAJ3ZFTISa2b2xq5xR0q4cRQ3E2BewYvO76IKDpN
- ac7IQhKm/ktBi6sWKY9fiHUyP0aGkP5KpVd9kkDKfA6OnroHn9Kd1IUIHh0Bb6GC/80qzewmALK
- BCt8yptFvPBjbcrItmripHbx7FIvzXsSxzbCa7HD/zDrr6gZZqppZUuoe
-X-Gm-Gg: Acq92OFjFpfCjJMOWqZkgCnrI/4AqLthkgkwxL/1PHdjsr355J4tx+5w/84flyZltfw
- JiG58kFvvV4QCZh8rT891xGhGTzLY36R1+gIE4nI4hqA+FvBtmqpxdNPWCm62RaYf0/dpvsFb6A
- GkK1vOuoyjs5fYZO/d9E4Ad5xOjP73HjJKzH7hmuSDJ21kjt16DfNQui9/JMiytcHFPqxOO/6ci
- RTM6dz7oYZPKAqWPfO6qneWoudbV0NWh8GL9QPgdFXPVxOBecExytwjiv6yumaziVaiP6o+n7x8
- xFhwHRxVqDZF2oS1k8kBAnMoWyfByYBOq2FcnJQjYL5+osOQ12nJhloRYtmoeMPNNSsTJbM2vFM
- kZmbNLF0/dyX/5oZREy4teb4vNDIAlWZt24yFfBuO+qA6bC9a9EqqdflpKA==
-X-Received: by 2002:a05:620a:179e:b0:914:c48c:4acf with SMTP id
- af79cd13be357-914c48c4d98mr3103722785a.4.1779975688465; 
- Thu, 28 May 2026 06:41:28 -0700 (PDT)
-X-Received: by 2002:a05:620a:179e:b0:914:c48c:4acf with SMTP id
- af79cd13be357-914c48c4d98mr3103716985a.4.1779975687903; 
- Thu, 28 May 2026 06:41:27 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-914f87d1b66sm828433485a.29.2026.05.28.06.41.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 May 2026 06:41:27 -0700 (PDT)
-Date: Thu, 28 May 2026 09:41:26 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, jasowang@redhat.com,
- armbru@redhat.com, farosas@suse.de, raphael.s.norwitz@gmail.com,
- bchaney@akamai.com, qemu-devel@nongnu.org, berrange@redhat.com,
- pbonzini@redhat.com, yc-core@yandex-team.ru,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH v16 5/8] virtio-net: support local migration of backend
-Message-ID: <ahhGBuom-GTfouRA@x1.local>
-References: <20260522120534.77653-1-vsementsov@yandex-team.ru>
- <20260522120534.77653-6-vsementsov@yandex-team.ru>
- <20260524050632-mutt-send-email-mst@kernel.org>
- <c34e9bba-0e98-4694-870f-5f92f34f1076@yandex-team.ru>
- <ahRgbmVKuonjprB2@x1.local>
- <62045016-a892-43b8-87b1-869ef8d8e9d7@yandex-team.ru>
- <a572dadb-6ea6-48f2-a77c-3a4531dbad49@yandex-team.ru>
- <f84de0fe-8c93-4c3f-ad05-de40410b4697@yandex-team.ru>
- <ahdI7Vl5KraK566D@x1.local>
- <fb47888d-ce33-4380-a477-f17491d6c430@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1wSb1E-00010n-MD; Thu, 28 May 2026 09:43:31 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64SCbTWE3782443; Thu, 28 May 2026 13:43:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=qZSksn
+ cUJR1Ea3dBBzGWpIeJwDLIKr5DS9KVeElNYEY=; b=IVXVFp2E9PpL3Kcvdlbojr
+ 9VPgg+M7+8M7aejchlbjdk9OQmoYUAnCeYLJBt/n3em3r+lsaXCHjSR2m17r80ov
+ 4Kf6YqFXVQlknuigUvzrNrJmfxY6sGcMRfgTPB/6zlDeE+dhUmOG0wzDbAyAkCHj
+ qaaz35e+at7DcLTO1Fz/P6ZwX8Iwt3CWTMJjxl9Z/O1NTUzEa4wbZsnk+QuHSeOp
+ X7SCUH8tLdvE5YqqCLhn9vBPErbTNm6nWnMBZKrnYdIW+9hJLV40ihdPaN5skdRv
+ 69dknXZYgV/rI06tcyDFiptJFhzSB+RxHTfiTpxYgeXHQ2jA99mwFD1JKr9JzNOw
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ee889b3e2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 28 May 2026 13:43:21 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64SDgZ7x018156;
+ Thu, 28 May 2026 13:43:21 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4edjrb8aps-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 28 May 2026 13:43:21 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64SDhJmn32047760
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 28 May 2026 13:43:19 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 496435805A;
+ Thu, 28 May 2026 13:43:19 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 012355805C;
+ Thu, 28 May 2026 13:43:18 +0000 (GMT)
+Received: from [9.61.124.159] (unknown [9.61.124.159])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu, 28 May 2026 13:43:17 +0000 (GMT)
+Message-ID: <acd41367-f2e8-4eb1-b691-b2182e24048d@linux.ibm.com>
+Date: Thu, 28 May 2026 09:43:17 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <fb47888d-ce33-4380-a477-f17491d6c430@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 21/32] pc-bios/s390-ccw: Add signature verification
+ for secure IPL in audit mode
+To: Collin Walling <walling@linux.ibm.com>, Zhuoying Cai
+ <zycai@linux.ibm.com>, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: cohuck@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
+ david@kernel.org, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+References: <20260505201905.997996-1-zycai@linux.ibm.com>
+ <20260505201905.997996-22-zycai@linux.ibm.com>
+ <376f419f-764f-48f7-9867-0706ba3f7e62@linux.ibm.com>
+Content-Language: en-US
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <376f419f-764f-48f7-9867-0706ba3f7e62@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: ndukPnJ32tEwEqrAz8LnZPRkNw50fk1V
+X-Proofpoint-GUID: ndukPnJ32tEwEqrAz8LnZPRkNw50fk1V
+X-Authority-Analysis: v=2.4 cv=XqfK/1F9 c=1 sm=1 tr=0 ts=6a18467a cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=NcyW7tLHtu_TpS7YUIQA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI4MDEzOCBTYWx0ZWRfX1rHnfHHHQqyk
+ 7l21vh3p4fHWy9otEgZhIN8YMunsbRLx4RZ+1BNvha1nIppm5z1s+loAsk/215W9wG48zwsTurU
+ fPa6k3r3yEy60tovlbdxaQbvsWss61Y+KG3w5nCxbjwV9LKgdzCmUzU50wt49Jfqb/sjeVZaxdn
+ 2mORvuUsz5mVnIONyBPl5XH3jKbj/rBaiBAiNnDGADbJueL6bJw84lo2Dsc8EBvwM3C1AJdjtdX
+ ziRJWxQ07iBcIvhuMBQ3ZXh9kqAGYE0nVTreayzZ31ShgTjrwflPx0GqvYL5lpqcxm9NPYoDL9Z
+ n+4kzPGkTUDRnZyBE1GGJhtOklAwY0uR2q6X8LKw1c4+217sPgNC2ePjxFRItQlfVwhxi3sHe8t
+ LshSV+ILtm2SZo5+ciSKfENnNTThLeUoK+iOimxz9yXNebWAeeYtH1Ubr4yhUG0uI41ESR+snMm
+ ojPYs9EMSImBtWNK94A==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-05-28_03,2026-05-28_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 impostorscore=0 adultscore=0 phishscore=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 suspectscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
+ definitions=main-2605280138
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,19 +129,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 27, 2026 at 11:38:14PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> On 27.05.26 22:41, Peter Xu wrote:
-> > Personally I liked part of your proposal.. normally I would rather leave it
-> > for later, but then it means we will be stuck with this incoming-fds API.
-> 
-> I am OK to mark "incoming-fds" as unstable, to simplify future rework,
-> if there is a good solution.
 
-Sure, if that's unstable then it's not a concern, I also don't want to
-block this series as late.  I'll see if I can prepare some RFC patches this
-week or next for this as a general problem.
 
--- 
-Peter Xu
+On 5/27/26 7:05 PM, Collin Walling wrote:
+> On 5/5/26 16:18, Zhuoying Cai wrote:
+>> +        } vce;
+>> +    } __attribute__((__aligned__(4096))) vcb = { 0 };
+>> +
+>> +    /* Get Verification Certificate Storage Size block with DIAG320 subcode 1 */
+>> +    if (zipl_secure_get_vcssb() == NULL) {
+>> +        return 0;
+>> +    }
+>> +
+>> +    /*
+>> +     * Request single entry
+>> +     * Fill input fields of single-entry VCB
+>> +     *
+>> +     * First and last index must be equal because only one
+>> +     * VCE per VCB is currently supported
+>> +     */
+> The last sentence is misleading because it seems like the DIAG 320
+> implementation *only* allows for a single VCE to be retrieved, but in
+> reality it allows for a range of entries to be retrieved.
+Yes, but no.  DIAG320 can, potentially, accept a range of indices and 
+return a
+remaining verification certificate count (RVCC) if there is not enough 
+memory to
+store the entire range in one VCB, however the implementation here does not
+provide any logic to handle a non-zero RVCC.  As such, only one VCE is 
+supported
+per VCB in the current implementation.  Either additional logic needs to be
+added to support non-zero RVCC or we need this comment to note that only one
+VCE per VCB is, currently, supported.
 
+>
+>> +    vcb.vcb_hdr.in_len = ROUND_UP(vcssb.max_single_vcb_len, PAGE_SIZE);
+>> +    vcb.vcb_hdr.first_vc_index = index;
+>> +    vcb.vcb_hdr.last_vc_index = index;
+>> +
+>> +    if (_diag320(&vcb, DIAG_320_SUBC_STORE_VC) != DIAG_320_RC_OK) {
+>> +        return 0;
+> Maybe move the puts("Could not get certificate"); to here so it's
+> consistent with the other error cases?
+>
+>> +    }
+>> +
+>> +    if (vcb.vcb_hdr.out_len == sizeof(VCBlockHeader)) {
+>> +        puts("No certificate entry");
+>> +        return 0;
+>> +    }
+>> +
+>> +    if (vcb.vcb_hdr.remain_ct != 0) {
+>> +        panic("Not enough memory to store all requested certificates");
+> Shouldn't this be "to store requested certificate" since this function
+> aims to request only one cert?
+>
+> Also, is there a reason for the panic? Why not just puts and return 0
+> like the rest? The program will still terminate, but a little more
+> gracefully that way.
+I agree that the message itself could be more clear, but the reason this 
+is a
+panic is because it only triggers if the requested certificate is larger 
+than
+the MAX_CERT_SIZE, which should never happen at this point (it would be 
+caught
+earlier in the process when building the cert store I think). There should
+always be enough memory to hold at least one certificate, and only one
+certificate should ever be requested (due to the restriction above), so, if
+DIAG320 returns a non-zero RVCC it would indicate some sort of corruption in
+the cert store, which in my opinion should trigger an immediate panic.
+
+Regards,
+Jared Rossi
 
