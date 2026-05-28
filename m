@@ -4,87 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F4FECD5BD5
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 19:55:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC0BFCD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 19:56:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSgpK-0000gM-Il; Thu, 28 May 2026 15:55:34 -0400
+	id 1wSgqX-0001Ls-82; Thu, 28 May 2026 15:56:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wSgpI-0000dX-HS
- for qemu-devel@nongnu.org; Thu, 28 May 2026 15:55:32 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSgqW-0001LQ-EW
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 15:56:48 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wSgpG-0002GC-Tt
- for qemu-devel@nongnu.org; Thu, 28 May 2026 15:55:32 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-36ba706ab46so367434a91.1
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 12:55:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSgqU-0002YU-S7
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 15:56:48 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-49048e043e5so54706615e9.1
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 12:56:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779998128; x=1780602928; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1779998205; x=1780603005; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=anWJKREvmH0hUUm3u4xrZcH+XRjuoFAKWiLtHBa9ynA=;
- b=AtL/MIU9PhO2TxgagVW1ijIksxg4p1Aj+IcfnAap7wYfT1Md7RjeSvXkTraNS6ys0Z
- 3LT3dJ4AjtPSvJKdzpbePXGyUbLCHv0cEddoMlfMyHE5Mw09DGSQcXLq5/lvUD4EAXSb
- bc3L1oBiNe1Czu9qXs3A+Dru6x56j49UvPzCfsL9rK7TxqYjjw1jth10J3dugOU65eGf
- F76AjbEAiTRuIMSmNvUkPpumUv9KwrDxL/C/0OMuNnPvBu3zOEyPOyhiKsWqsPy7OhqR
- sPJ1Xcztw2502DRonY0RRtYpkcg09hS5G2F4ZlLCb4w92Lqtx+O7XUinnv7CyZiydrEW
- BeMA==
+ bh=nju+bWqiSLv4j414+OVM3LqArzmjjxHIuUcGqQjDJ1M=;
+ b=fc0VJWgOew6BcUyjnsR1oJpJwsyhboD3YO3BqYEOw/Nc7QGKlDENoD879KhuUPZETF
+ 8eqOslGwNdodTaszFXIl31hSoZ9YzbFUruSKZXVF+EYIPKIjui+wIVeT6OKnutHBiQ58
+ XbfezvGiHKlvjG4xsl/w4hDkwBUhq3XTWIQGWA3/iFr2kUX/ksAvGiIvc0GYUZonD43O
+ wFbyhMREFm9EboLtpfUBuOOW9rbsDxGt1nKrtCTW3rKADF6p7TYRqR5uHLSm4BuDk7rQ
+ FXHmINNN2uzNDmkwhVpOE2jclETLMc2+8q4BkY+iUPUczgtz04B+YUnLTZKvUlbiixxb
+ ckiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779998128; x=1780602928;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1779998205; x=1780603005;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=anWJKREvmH0hUUm3u4xrZcH+XRjuoFAKWiLtHBa9ynA=;
- b=IP1Qmn66beY/gUO68SY1bCqyBF/F/bTLU2UEsrTKNN1OCyVP1uTnNDvxENDqTY4LX1
- 1037h4nhlEw69iqSYkrvBAO8mC4H4qbvAROTfbmfUGouscJeb0QirM8gmhMA1e/GZIwg
- TBQEkbuxxVcF8kcnDxufMx/ReSqKSFlddHZvfDkxlKfLqBz7vy59D/h73ysGDElCXMsp
- HqifUMp8JsqK3a2CpzTUOSe71NZUM4IXTgCssHPFOT5gcfdoDD0Dlfh9QhWkXQk1cJJd
- 82dZY9t12uYg64RlI1qM3sqxDy3wSYpj8I8tJ67jxShkzls6+yxdHUG/ExC06zj/lS1h
- /AAw==
+ bh=nju+bWqiSLv4j414+OVM3LqArzmjjxHIuUcGqQjDJ1M=;
+ b=SbeAIN3UfYj7IXfBDEt01G/ZvX0Bd6iVvvS3k3ki43YHKVuef0r/dPOs2Ev4pNNNt9
+ YKVtIKEdt94SoaHc+k4ap/k51Wh4Iju+sh6PoFi5dYybPr32A4j9800ikcZid4euMxPc
+ KbwEJNXxxG/5C5ibSElsYV79s3joZpB3JxEgbQR77SXvGcyPJ0izzQudIziqgpNG91DJ
+ oJ6xqUzK7GdA9I2uxbno5cPmMn37RPJPEUWm9Z1C+LlLq+ICkwnQKs+URMFdSCOLwGbb
+ joCFiyR+RDXspiUzXZfnqzPsg1YnYnstxLjenhvVMDYsoZWXSssEBfeddPTRAKi1M+4j
+ X+0w==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+kbv9CxEyN8ZyKfXSrQqtYQtjSL170xVFSYsyfrdbrLjsgqkrP8bWlOgb2efGKP/znN0ugOnB161N5@nongnu.org
-X-Gm-Message-State: AOJu0YyqhuORKqWk8q2VzuRVxsRDLkJQVn0fBWVvsnb8Tsp635xB2gRL
- GvJ7xM49XpKgLkny6rVfL1rekp/kDycyzhBxoHZr6s247dw3wquW2PQGccmdQp5iCDg=
-X-Gm-Gg: Acq92OGpSSFDVKbVm2lZNdxq/DtuUVsm3eZ8uA6NBAiWNcJZfeC6LlT0OhP508vOesb
- 9X67YcNvSOlOIitqzn4njfBxZVuUnj9oUzRrBoulEqikVSg4KH6wiKRJYpEzBwX7lyB6M2TC387
- cgsrKU923u1pVS+70pNFkY5KEnkypOoygQHSr4D9n/MwCGgYOirNkR9lbYdqJG6U4bzumW8SbdD
- EVhyaqPA0dMImh4WBPud8RI4NNpVkxMKqbI27H82vHTOstIZnJ2vjoqtyAk3BMp9WrveIeL+Ger
- KUmfmQ/BJYMZ8EE0gaMSVpNahFHrdrW8B5LOhXLvNyNN7tnb6/8zenOqhiuB0a5LeCUasPFEh7I
- EJha+rEbxm2BUhqEoFrYQEOPd84c2aBkSj/gjlvG/8ytkkSrOztbGMNeOXOhZqrmL26XkKiM8km
- gbpnMgxF1jadX/r9XNVCgx+uCQZT/JTVkRvMlMNbZqQNb0QrY=
-X-Received: by 2002:a17:90b:5112:b0:367:b8ad:f0e9 with SMTP id
- 98e67ed59e1d1-36bbcd8e1d3mr28996a91.16.1779998127967; 
- Thu, 28 May 2026 12:55:27 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-36b908da728sm2266566a91.3.2026.05.28.12.55.27
+ AFNElJ/kzIFTBFr4zApscK3+B6IrSfHK/6qqWqKrn2mGIKuwwEVYT5tx2oRhD5kt6MHPJ2R32RE2f2FHjB1I@nongnu.org
+X-Gm-Message-State: AOJu0Yy2jxdgeHxPKVNpKs9WxKunvKE3CtBE2lgpWZ6iE7q9YccVMucr
+ /xxq5hgMum/o+g+51w3e/TNvixyNwmfy4tYgFu8YZHnPagTqYkxuIJ7K2fwf+snjHoI=
+X-Gm-Gg: Acq92OFx9NIOUY+aNUsb0EnpzEVs2tP5ELKceogDfpXb/rzIrxKvsSeIx3iqASeB+n6
+ RahLwceKn9rCcnjCH7/zvcQNUsELcQmriBctxHgqH91tVJ9+NbdqvYtarEDpRvNVmdIZVoO1HkE
+ kXFXJ8BJYbqh5cRVGDsHTlvuQUFlsFD8H8c3N6zggaeyAAtReDQbi81Vpc2qhndMAAxYN17iSVz
+ O6hpFzaS7P7MsYQGuYRIkD234tv/iAZgwJb07cmn/2TJWPHyrCB25QuJ8kSCJYa1Im1Qfwe6p0S
+ +/Uw0Qyr2jCCc27lD6V+l7+qXX+62GVAeqDD0mCRXT1/lPrYIimGolTbsH2d5X+yFJEkcsPBWbc
+ +GoeJRWiYDN0M8DCtFp4aStiXg3KuanGiTjw7Y28G/6hbimkYRhCu+vU/Wc19atgz2Pj7Hc0IFj
+ 0RhFdPgRBp3yhn78fzZIEgpxG/ASxLsTA6svgr84NCSvekcL6oxovMv/p49ZAkpVE/KVWmU4rbI
+ E+k
+X-Received: by 2002:a05:600d:60ab:b0:490:59cc:999f with SMTP id
+ 5b1f17b1804b1-4909bf8b18emr927605e9.4.1779998205068; 
+ Thu, 28 May 2026 12:56:45 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4909284a895sm56605965e9.8.2026.05.28.12.56.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 May 2026 12:55:27 -0700 (PDT)
-Message-ID: <a68d14cd-e9c8-4c5f-bf55-560e6955cdd0@linaro.org>
-Date: Thu, 28 May 2026 12:55:26 -0700
+ Thu, 28 May 2026 12:56:43 -0700 (PDT)
+Message-ID: <e636c43a-a613-4819-a272-61fef832627c@linaro.org>
+Date: Thu, 28 May 2026 21:56:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] target/arm: advertise FEAT_RNG_TRAP on cortex-max
-To: Jason Wright <wrigjl@proton.me>, peter.maydell@linaro.org
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-References: <20260519153249.31100-1-wrigjl@proton.me>
- <20260524002617.69593-1-wrigjl@proton.me>
- <20260528181857.92087-1-wrigjl@proton.me>
- <20260528181857.92087-3-wrigjl@proton.me>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v11 08/12] hw/riscv/boot: Replace cpu_to_le32() ->
+ const_le32()
 Content-Language: en-US
-In-Reply-To: <20260528181857.92087-3-wrigjl@proton.me>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Djordje Todorovic
+ <Djordje.Todorovic@htecgroup.com>, Anton Johansson <anjo@rev.ng>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Christoph Muellner <christoph.muellner@vrull.eu>
+References: <20260527201348.29511-1-philmd@linaro.org>
+ <20260527201348.29511-9-philmd@linaro.org>
+ <9d0853dd-5c22-4c46-9c42-a76d18230271@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <9d0853dd-5c22-4c46-9c42-a76d18230271@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,19 +113,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/28/26 11:19, Jason Wright wrote:
-> Set ID_AA64PFR1.RNDR_TRAP=1 on the max CPU model so guests and
-> firmware detect FEAT_RNG_TRAP, per the Arm Architecture Reference
-> Manual for A-profile architecture (DDI 0487), and document the feature
-> as emulated in docs/system/arm/emulation.rst.
+On 28/5/26 21:40, Pierrick Bouvier wrote:
+> On 5/27/2026 1:13 PM, Philippe Mathieu-Daudé wrote:
+>> Rather than adapting the array endianness when it it
+>> filled, directly initialize the CODE words with the
+>> correct endianness.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   hw/riscv/boot.c | 30 +++++++++++++-----------------
+>>   1 file changed, 13 insertions(+), 17 deletions(-)
+>>
 > 
-> Signed-off-by: Jason Wright<wrigjl@proton.me>
-> ---
->   docs/system/arm/emulation.rst | 1 +
->   target/arm/tcg/cpu64.c        | 1 +
->   2 files changed, 2 insertions(+)
+> One could argue original version is more readable.
+> Any specific reason for rewriting things this way (performance, personal
+> preference, other)?
+> Not a blocker, just want to understand the original motivation.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Looking at the following changes, I think it makes more sense to
+have the CODE section const little-endian, while the DATA section
+is swapped. Otherwise we'd need 2 distinct loops.
 
-r~
+> 
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> 
+> Regards,
+> Pierrick
+
 
