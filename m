@@ -4,105 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29EC2CD5BD5
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 09:18:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6BA4CD5BD1
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 09:24:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSWsL-000131-3E; Thu, 28 May 2026 05:18:01 -0400
+	id 1wSWxx-0002mK-9e; Thu, 28 May 2026 05:23:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSWsF-0000rk-Sc
- for qemu-devel@nongnu.org; Thu, 28 May 2026 05:17:56 -0400
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSWsE-0001uz-5P
- for qemu-devel@nongnu.org; Thu, 28 May 2026 05:17:55 -0400
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-660456349d9so145613d50.3
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 02:17:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779959873; cv=none;
- d=google.com; s=arc-20240605;
- b=dD5D4bcKaslWlmNYBb9hR5oV1d4SK5Rc7WEtZd2+e+1/Chc2oLIXDXixkuXMKfhF77
- zkeiQ/H2uEEFvm0WimAxlIIsei3b8HuYSj3tMIEUsAULdrOPMFXoaQfao2t/WZVEseAt
- l3Vf9zaV0bRjyOHNSGo5Q4c/oMxKhqvf5XTWz2vzGLSrj+so+hJ8svnAp9x0+IpWFRfI
- NmWnjnIj3RRoDOOgyGgMAyB6Km1PkozgSzsfVelyvHsSOmtyFtXUOMcHThB+HDrUhAM2
- 99KA1+X9uN5V44DQ68iXocJ/YxXxzd4EPNY9w3RbZavSpxSu8g6kORSsRtRxXSPCdxMz
- ZPtA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=+BZipBpjvnBsXT09usZPYGe5z3DQXqqT8jDo94YrMeE=;
- fh=fD/PYjNhjfxxDV0+uWiNo3knrDuQ4nXVn9VEWNTtgCU=;
- b=fKjJALKRX+zACSB8MK9cpvWq8hrEyp2wuTWppNSxhdrns5DUsZRPW64DIguJuwhGAc
- +fYsfSS6G4uoy8lFXlBgIt+p8JYP+5tcra+IS4wv9kfn87ngRRGJnnrnLQFD+QsPD9LZ
- KSQHVhTKgdo4ekjxN+xVsAhNjshjU2jUjsPkI+WxsHFK8J6DnyhbQu5LZz7SaJsBLbqc
- pI/1doYEjCmg1Ln+m3YQf3OqlTlJdbklg5e6EB7egqXmAFHHM/jkQ28md0Blksm5lU4m
- Fc4TrddEZ46OedRifY2OFLtG4rp6gy6H7E6mxViQaPxs39Mggc9wdCYxfOXgnDYSE0zx
- R07A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wSWxt-0002k6-2m
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 05:23:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wSWxl-0004RX-ER
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 05:23:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779960215;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=1vA6MBKntWhNaACiyqSXQMoBAMp+4vKgu8m3XqpJ7s4=;
+ b=EUJzxPQrlrnUG68Jl5+okx6EVhDh7kzyO4OLndH8mMe2IVPHSu9p7K2AN1b0ajV9QAQJDA
+ 26Vx/KBtyH/OfhWWrozCMPeOvPr5udi1+Xoz+9jtEllCzU2Rwea0wpKobcA7F7Bt19O4G6
+ 1hyl0F/UwgbwNLEapCBKpL8IFWgZfso=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-12-xN29DgWhMJK9DJWxptgcgw-1; Thu, 28 May 2026 05:23:33 -0400
+X-MC-Unique: xN29DgWhMJK9DJWxptgcgw-1
+X-Mimecast-MFC-AGG-ID: xN29DgWhMJK9DJWxptgcgw_1779960213
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-45ed830a0eeso1846639f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 02:23:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779959873; x=1780564673; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+BZipBpjvnBsXT09usZPYGe5z3DQXqqT8jDo94YrMeE=;
- b=lqswIzhAaets/SqmT3USErgfFR4GlKDAUjlU66ciI2ruBq6SzusaZWjriqPHCogyEq
- 7nt/w9r4kV3nrON5m5vF+YEachIFarQYUo+AYFMoXGeOrXGmDhC/qmmM85a81a+khP0t
- hcf9SoYa/8mpIqZjD7VFckxBm1OVppWqmW/+lsCf2IJm5/beZK+odq3F6DV3hiD2rTtB
- TSaCpw5rBdybYPFKvWrwJegm2Rc9jcLn/4bijCpIiauiWdXeAMkn/RxAMvg/+QETr784
- 6+P9/jOrIrSYPyYJ4GMz8E0Oo9JaPl+kbQQNVurx6sNwfKP93K1n3tc4XkAHrYLCTVbm
- hcZQ==
+ d=redhat.com; s=google; t=1779960212; x=1780565012; darn=nongnu.org;
+ h=mime-version:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=1vA6MBKntWhNaACiyqSXQMoBAMp+4vKgu8m3XqpJ7s4=;
+ b=Kzix/vW1SoteYKW7C25QlZ3XGvu/vF7dKIYXiQ58pDrjiaP1QyfIcMp92/Ienpd5a2
+ 9QXYeKmo/H0axHc2lEFlLYFCrJYkXI6/lRWB8neWuD6EKt0v1nQcp26V54R7FsGU3o3o
+ RPwtToo9uaMK9lEVNHQNeEA7rMdwmKbBekmq9fm7WFpDXLH8janSAhCB3MZ8hMJBRzUi
+ /9Z2Ao15bNt1Qqn0ZRHnBgBeTCDhvaPLydNAg8/Sncz2EW9WJIJ7njqA4sT5PRYt1HSF
+ gsOVnKSH9jGzGS5do2ka+asg2c9ybnfOBvJm10ut0tIIcaz6O2xjH0TAui4Hwwi7QxlL
+ i+ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779959873; x=1780564673;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+BZipBpjvnBsXT09usZPYGe5z3DQXqqT8jDo94YrMeE=;
- b=n8I5ej76UhjXbEaU/sACbTV2CwSpVcc+yhVXR/bv1mEn/Hui4fZNKUdJTPf1HvpNtJ
- aqKBXeb1szs5FC8d5mHi8ggdn1enO6Tl7RnTeiMgu3j9EwaLnUqYz+/lRPeYsfMAGgUx
- ZU7g43cGeppaxLyNHHTj8RG4dXl7rKAR4Zg0sVlyCggAff0XTBFkEL4rGkvzXMtTDA43
- pwzWRPRkX3rzrsY2EqLvCeivWNBlMh3jHA6Ei6LUMGDhTnDrSwYRrdKj+I5qpSr+14qT
- YhLsl/i27/oeM959GmV7PCRHW57wyd8KwFY3s4noa0CG6zmfEAlZl2ZbEZL6dFPmKTYx
- 5Tww==
-X-Gm-Message-State: AOJu0YxTvxq9jrSgFihC0wn5sr1vbHddCQNnprLS1Bjt0/fOiJ4IcK5a
- BmEsBNmAd0sNPpCMZgvgBztU6nQrqBnm6h8ii+jX7v/K2H76g1Mrv9f3igAL0mZ1KDAul24TinI
- RNwD+BYnX8kUuWEEOmjWRZe2rE5bBv3Y/ZIgbWbLq5Q==
-X-Gm-Gg: Acq92OGmq7eUs5+9VeFWcFWmqAQ/lHdr0j6OAOIMqU1i00epv28aCOSVp1576CtS+aH
- GoPJYuFpiVpletliePaiWESMha/K0gMi1HL42CkHaGks/2b5NfrL8buHPwjOH6ivh6MOh191YXQ
- s1b8QkoTycwP5zqBEvHTdLQADFlmgipCCgapU3RBmZdE0vnmgZ9E72xn7Vm6qDvjOVj8x0OBCcx
- izunIqrBEqaJxt0cJBPM66uOfaVTSkYz3Iy5cfZK1MkHVt4vxKhGxb6KsuuAAu5uRW76yofFjQU
- 1WokBKACuBrIAjH+SYTA4OR0negVAh1T3ux8gemiNaAcHvhnxf7rKbaBzRXzIuhlSJJ7IJydNZ2
- MqA==
-X-Received: by 2002:a05:690e:1306:b0:657:eeac:6ba2 with SMTP id
- 956f58d0204a3-65f3f48186dmr19463682d50.46.1779959872611; Thu, 28 May 2026
- 02:17:52 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779960212; x=1780565012;
+ h=mime-version:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1vA6MBKntWhNaACiyqSXQMoBAMp+4vKgu8m3XqpJ7s4=;
+ b=bIHBXkBDaOOUCyJhpE5J+dOUPxiXAaXEZocvIgvDBCqRfARaCfe6/kEywKkLVmGeFs
+ hJlObwWLI1A/XuPD1Gm2Rt8OEnjgJpREQHto0ba4UDiIJQluC8koeVotZX/V1F4FtHGp
+ gzRBE9swFYMkb0uGI+xN8/nff5cwF7fzcuxTaZ/GUTnM8e8NlpxprbKvpNo31SFEYPUq
+ smIMDVOmdbQ6rojQHSrW6vxthKi9SRqZNjIQQg4blbIdvgoz1QWiEfu6mVSx6mU/HH/q
+ C145Of/xyCeLk5OnE+sucVp8k6gzpKrwf7dYwDJ6mHci4ZsLuypU3H0Njq9vjG6Xw8PY
+ vxTA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+kuUsh0mWjRGToSSBX+h+apRE20Woxuz0/8eD+yj2b4kvTl1syEozZIZn/L61dNeB11Utcqdne6/tl@nongnu.org
+X-Gm-Message-State: AOJu0Yz7gWKFf0aTQMvXAO1pRSDqqQUjCTVfWT6yb1stICh0jerQgtRr
+ AdsRmYFIcNZjL/wHTk2KCIoWmd6yH1URtT6eS9vZ2IN0DxBM1ir+U9Q7QT9VmPryTFAMdCbfL9f
+ eOujaW5jMR9ZqfkPdpjJ3ZOEF2RwOAh1sJ2xebicgLXgeAOEfVvUsIXbK
+X-Gm-Gg: Acq92OGLg5XtIsUT7H9AGuf86iGeSuWczVfICeWPUKe3ell1Adco+B9apdLpVW/jAym
+ wOmi3z4uKjtrO48FqTS4ElccaoCCel3aG/7Skf2/nxPt3KgbdSv5DRIFCphWyu9QPIlBAIS+/2/
+ i61HlnQjdbB7Qz5km8QWtcnn5cfTSJXrqFiLi2HNlPh/mGCBVIoU+urDuUZ78lPgYDkUEV7l+7i
+ oFEFycfgHJcMCNc/3GQC5ZCKp7h27bDcxs3D3SPZj6mQx+VbLOjcXqPxrlHBZaBT6DOGklosztQ
+ VaoU/pI2FTJy94+YLOeXeLrVPCrj+iDUZMuf94pSL7/CSeN2b9bYoRriuXOKcjrh5QNhXluOzXX
+ GAb0BxtWhWAt6lfwIsDtvyAR873BWMOb5R9daYo28wpF6tmNd3b/hcnYpFLDv6mmje1EZCb9BsP
+ bUWjZYEg==
+X-Received: by 2002:a05:600c:6207:b0:490:538a:9c0b with SMTP id
+ 5b1f17b1804b1-4907dae371fmr130553665e9.2.1779960212668; 
+ Thu, 28 May 2026 02:23:32 -0700 (PDT)
+X-Received: by 2002:a05:600c:6207:b0:490:538a:9c0b with SMTP id
+ 5b1f17b1804b1-4907dae371fmr130553485e9.2.1779960212297; 
+ Thu, 28 May 2026 02:23:32 -0700 (PDT)
+Received: from rh (p200300f6af2a6100f239e076bbd76784.dip0.t-ipconnect.de.
+ [2003:f6:af2a:6100:f239:e076:bbd7:6784])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4908f0afc77sm11447935e9.33.2026.05.28.02.23.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 28 May 2026 02:23:31 -0700 (PDT)
+Date: Thu, 28 May 2026 11:23:30 +0200 (CEST)
+From: Sebastian Ott <sebott@redhat.com>
+To: peter.maydell@linaro.org, mst@redhat.com, Eric Auger <eauger@redhat.com>
+cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH] hw/arm/virt: preserve config for ACPI PCI hotplug
+Message-ID: <0de640a2-8807-69cf-4429-672263e3e759@redhat.com>
 MIME-Version: 1.0
-References: <20260527175705.152301-1-christian.barry@usp.br>
-In-Reply-To: <20260527175705.152301-1-christian.barry@usp.br>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 28 May 2026 10:17:40 +0100
-X-Gm-Features: AVHnY4KWH4MvTMUhzLxy1dB-ftoU7D35r3H2ac72n_hiU4LJCD90u04xoNJ0zIA
-Message-ID: <CAFEAcA_t_Rx1CupetKR=aC1U6skFYmo_2oG-PyVYdwfJmb5X6Q@mail.gmail.com>
-Subject: Re: [PATCH] disas: sparc: Fix integer overflow in compare_opcodes()
- for loop
-To: Christian Barry <christian.barry@usp.br>
-Cc: qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>,
- qemu-trivial@nongnu.org, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Eduardo Augusto Cavalcanti <eduardoaugustoabc@ime.usp.br>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,64 +113,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 27 May 2026 at 20:56, Christian Barry <christian.barry@usp.br> wrote:
->
-> From: Christian Barry <christian.barry@usp.br>
->
-> Replaced left-shift of a literal 1 by i inside of two for loops in compare_opcodes() with a call to BIT(i). This makes it so 1 is interpreted as an unsigned long int, preventing overflows.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2618
->
-> Signed-off-by: Christian Barry <christian.barry@usp.br>
-> Co-developed-by: Eduardo Augusto Cavalcanti <eduardoaugustoabc@ime.usp.br>
-> Signed-off-by: Eduardo Augusto Cavalcanti <eduardoaugustoabc@ime.usp.br>
-> ---
->  disas/sparc.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/disas/sparc.c b/disas/sparc.c
-> index 5689533ce1..6fc057e3a2 100644
-> --- a/disas/sparc.c
-> +++ b/disas/sparc.c
-> @@ -27,6 +27,7 @@
->     see <http://www.gnu.org/licenses/>.  */
->
->  #include "qemu/osdep.h"
-> +#include "qemu/bitops.h"
->  #include "disas/dis-asm.h"
->
->  /* The SPARC opcode table (and other related data) is defined in
-> @@ -2515,7 +2516,7 @@ compare_opcodes (const void * a, const void * b)
->       another, it is important to order the opcodes in the right order.  */
->    for (i = 0; i < 32; ++i)
+ACPI PCI hotplug of a PCI device using a bar > 2M fails on ARM
+with a resource allocation failure in the guest kernel (Linux):
 
-The loop boundary is 32, so i is at most 1.
+qemu-system-aarch64 [..] -device pcie-root-port,id=rp1,bus=pcie.0 \
+ 		    -global acpi-ged.acpi-pci-hotplug-with-bridge-support=on \
+ 		    -pflash /usr/share/edk2/aarch64/QEMU_EFI-silent-pflash.qcow2
 
->      {
-> -      unsigned long int x = 1 << i;
-> +      unsigned long int x = BIT(i);
+(qemu) device_add pci-testdev,bus=rp1,membar=4M
 
-The loop boundary is 32, so i is at most 31. QEMU uses the
--fwrapv compiler option, so "1 << 31" is well defined,
-even though it shifts into the sign bit. It's worth noting
-in the commit message that we are not actually fixing any
-bug here, we are merely placating somebody's static analyzer.
+[   55.106283] pci 0000:01:00.0: [1b36:0005] type 00 class 0x00ff00 conventional PCI endpoint
+[   55.107627] pci 0000:01:00.0: BAR 0 [mem 0x00000000-0x00000fff]
+[   55.107864] pci 0000:01:00.0: BAR 1 [io  0x0000-0x00ff]
+[   55.108015] pci 0000:01:00.0: BAR 2 [mem 0x00000000-0x003fffff 64bit pref]
+[   55.118609] pci 0000:01:00.0: BAR 2 [mem size 0x00400000 64bit pref]: can't assign; no space
+[   55.118653] pci 0000:01:00.0: BAR 2 [mem size 0x00400000 64bit pref]: failed to assign
+[   55.118671] pci 0000:01:00.0: BAR 0 [mem 0x10000000-0x10000fff]: assigned
+[   55.122828] pci 0000:01:00.0: BAR 1 [io  0x1000-0x10ff]: assigned
+[   55.127090] pci 0000:01:00.0: BAR 0 [mem 0x10000000-0x10000fff]: releasing
+[   55.127098] pci 0000:01:00.0: BAR 2 [mem size 0x00400000 64bit pref]: can't assign; no space
+[   55.127102] pci 0000:01:00.0: BAR 2 [mem size 0x00400000 64bit pref]: failed to assign
+[   55.127106] pci 0000:01:00.0: BAR 0 [mem 0x10000000-0x10000fff]: assigned
 
->        int x0 = (match0 & x) != 0;
->        int x1 = (match1 & x) != 0;
->
-> @@ -2525,7 +2526,7 @@ compare_opcodes (const void * a, const void * b)
->
->    for (i = 0; i < 32; ++i)
->      {
-> -      unsigned long int x = 1 << i;
-> +      unsigned long int x = BIT(i);
->        int x0 = (lose0 & x) != 0;
->        int x1 = (lose1 & x) != 0;
+This behavior is exactly the same on x86 - except the busses are created
+with a default window size of 256M there. If the PCI devices being
+hotplugged use a bar > 256M you get the same failure like on ARM.
 
-If we're going to bother to change this not-a-bug, it would
-be  better to do it the way that upstream binutils did it,
-as noted in the gitlab issue: using "1ul".
+The workaround on x86 is to specify "pref64-reserve=" for the PCIe
+root-port. On ARM this is currently ignored.
 
--- PMM
+The following patch changes ACPI DSM #5 to return 0 (only when
+ACPI HP is used) which basically tells the guest kernel to keep
+all PCI resource allocations.
+
+------->8
+From 92cd64b8398f13e51b67ff8baf62f15cac300c94 Mon Sep 17 00:00:00 2001
+From: Sebastian Ott <sebott@redhat.com>
+Date: Wed, 20 May 2026 10:39:26 -0400
+Subject: [PATCH] hw/arm/virt: preserve config for ACPI PCI hotplug
+
+Change ACPI DSM #5 to return 0 when ACPI PCI hotplug is used
+to tell the guest kernel to keep all PCI resource allocations.
+
+This allows to use the pref64-reserve= option for pcie-root-ports
+and thus enables hotplug of PCI devices with a barsize > 2M.
+
+Signed-off-by: Sebastian Ott <sebott@redhat.com>
+---
+  hw/arm/virt.c | 1 +
+  1 file changed, 1 insertion(+)
+
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index b090233893..293a0c2163 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -1094,6 +1094,7 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
+          pcihp_region_index = sysbus_mmio_map_name(sbdev, ACPI_PCIHP_REGION_NAME,
+                                                    vms->memmap[VIRT_ACPI_PCIHP].base);
+          assert(pcihp_region_index >= 0);
++        vms->pci_preserve_config = true;
+      }
+
+      sysbus_connect_irq(sbdev, 0, qdev_get_gpio_in(vms->gic, irq));
+-- 
+2.53.0
+
 
