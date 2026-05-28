@@ -4,148 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6426CD5BD5
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 19:41:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8D76CD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 19:47:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSgb6-0003hN-2E; Thu, 28 May 2026 15:40:52 -0400
+	id 1wSggx-0006Cm-6C; Thu, 28 May 2026 15:46:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wSgb4-0003ga-5Q
- for qemu-devel@nongnu.org; Thu, 28 May 2026 15:40:50 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wSgb2-0006JU-Hn
- for qemu-devel@nongnu.org; Thu, 28 May 2026 15:40:49 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64SGwBT82753552
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 19:40:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- j8ime1biZirUjyeyKkGw9Xx0PStXRebc7H93D37wgRc=; b=HlZ90Zb2GDJhmI10
- O1TTb+1qx7Bk/5a59Q0HfM/Y9wzxfpE2sJyzM3056dQog2mGjdqONHcigQDCXg6P
- /S6huCSgBC0GSVisz+0FgYjt6MVDxNcj33oH30CG4W5fpyFBBZbxAzz4yiZsqm+J
- jC1TT24MiqXkx3J1Qucfz+AdXvFHwD8L6gJmJuZ8EOhpbuRYoYm0rHBPCEyzu96c
- a2IOZdGocKgTlnsmSuoBhY+/JOXlJKMsLoBPP9QLDnEgtLCCSOySQ9kA+32mCWAn
- RQJlCJ5iNyUCN72V32IbgW4r87vp05HYtiD2FjPXntyNtzRNfUopnHAdY4MmK3WN
- IViM5w==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eespn0q96-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 19:40:46 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-304d0d0b28eso388342eec.0
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 12:40:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wSggv-0006Az-5c
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 15:46:53 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wSggt-0008IG-EO
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 15:46:52 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2bea7176c72so61221105ad.0
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 12:46:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1779997246; x=1780602046; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779997608; x=1780602408; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=j8ime1biZirUjyeyKkGw9Xx0PStXRebc7H93D37wgRc=;
- b=S9urOcCobiZ3GiB7EieHKBaY7B45GcvU59sfnwsBNOcrpzrtK8cEZgOL5an8ugNfC9
- G5iDqA/zjwtqGkUqX4PVhmXuVSxH8h8IkNTX8fBQvO4xhTlkHg5I7Wknuybw0jcqYBI2
- 17PCYaVsoerWLKphLZvaPN1XQw/B50BxebrGKa4HT+k03g0VUvEJWvkCXcQksl4KJq6h
- ApJAC+1+XIXUpaocQo6Ta6XKcddTgg7vJYpCOG1LmnCqSlBtru8jpwOvC36vjjM9c/Iz
- tOhaqeU5omYpK5lMHKmNEwGPbY3LZvJjy8f6GK1ibmLreOGBCN4kn019PKRNEIctsOcP
- mLsA==
+ bh=MO6pZLrkwS2T38Jx0ATewcw29OZ9YKJyGY7pFBDNL+U=;
+ b=vNnjLemLHdTvXGt0OCsKn6QxTz9D3IXyFI7Q53XRHgl6n6Zz6WZjvcLvWYHhbczchA
+ EmIhrEh0tEQJgZj206ZwanIeYsScOplCz6LBBVtFVoovo7wCePieyh1prpR/JF1Cuhlq
+ qiZstefGgyFe/0oe1i/fDSc8SUTrnJRcYnTLcuHZgKCjIOTDpGcGnQ44uEkA2fsPuX9P
+ XdV6W+4/JaeLJKaoCbdMNj+a4GQwH+NaYoCEKkaqzVWf6BjTjxD7VHrTQu9TloCrWfam
+ TImmbqjNEvIHYahKo5wjTEPyv7F5kVxa5/uNykXQFnfvRwU9HHf7gUq2eK70XxIn2icq
+ V7Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779997246; x=1780602046;
+ d=1e100.net; s=20251104; t=1779997608; x=1780602408;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=j8ime1biZirUjyeyKkGw9Xx0PStXRebc7H93D37wgRc=;
- b=hjgDniZs5NRW0WEOFHCt49i91RMdMjxZcl0TAWjHEfPm8UIxD8bXYvnSoqQ5Ts8APz
- /6jZWTf2pjuZSJbDKn/5YTVt3gYZbRj2tc9AJwTAYFzFe/5hTad0du2OWLmJuZB3z2xU
- d/lOJuL3y4fXE8DrfwHfOqGDDj7tyMCvNWB/RR7LWO57G56GntZ1h42FU+KtvOb/oc5R
- tHXqZrRntpxwc8KAs9Ug1aTC1KH/0LcYaSn8r1F8Jp3mLqEGMyeWFjq3OyqQHLcXXJe+
- dpHoDeVZVL27+1Fq/vTaPDRyt2qOVMM3UX+oT1d2kGV9mtqV4wHFkRiTCJH4q8RBNv+m
- 1EnA==
+ bh=MO6pZLrkwS2T38Jx0ATewcw29OZ9YKJyGY7pFBDNL+U=;
+ b=CKMn20eQYvcprPk2BapO0FWiFn/bLSqmVzyXdxoIMLgIaiA8dVjgwdaR3igFzV2YVL
+ VsmeAxeghYZdWKFTYUc175yG4cT0LCC/dFFn6BwRL9q3HcFH4WbFswq8Wt/aXwMYpJVM
+ HIaZ7HEcxuuy2ViXKicrsa63E25LlcizbfIo+dihPV7IwDWGe7iOZjx7/ik6znVXJnRP
+ LMziIAySYXwM1KTCEmT9oXyX85/q4Rv2MfMPaQ/AGNt5OMtDTswNPQB3rkDY9BcklJ/k
+ MhJnQEbhMl5gI4pp/tnkwr0qkpOHPA7c4BvEwYBZVstETXHoksruAJW0z6edcmv5pZGn
+ AeLw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/3GqqpVczJaEolbuYgxbIbjuhSNX+uRGc0T7//JyUWtd9EDV7jn0rCFY7ClLBCkryzYSnf+tc+MTm3@nongnu.org
-X-Gm-Message-State: AOJu0YxF2BlUixrTuUDNqf8JJERBn3+hXElKMw/6CbAEglbkTVmOHjG8
- lKQiLxl+5IWN51VuPWxK4okMzD6W3/fdAQrAViqiM/vShwAIcdIH1xO9cKH0e7AJiSnGokqIW/U
- Wl1OFbLAsVdKv+XB9uXKqwCEiKBAbK7zdEPvb/+ztyBIJ3IZMwy7aemEGrg==
-X-Gm-Gg: Acq92OF/v+1grlJQNwqNwAqk0SE0WFlyp8d7PZ1P+ObEsML99c5bufbAcjnluazPP/8
- ulpxVjrBMNTmSaHoq/aQ2KhahUifKLZMWupS9U8BkE2RWekRsgCxzShH1jjqcVXbx6kEHa92Vws
- iCGuSnf204FOlH4kFB92Dn9caBGOo716gyEAwD+049vH+rcC0i5+yEUnmzQi5UAyAbHx1Nu+9MI
- F3KzOtMUhK/pwI5uD7TaarXBh0Aj8TGYWUFXHad2FjxVEMGdqNb10Qevlm+EYIM63ivojU+RU51
- 2l+bE/0XaHxVgkyZeftzmOQdvuiflD7vy5Ca6Ma15D0+dJ0gDf9cuRTxXvtrpdaQU2l5bRYM4pX
- QFdm6G15Xfjiac/WcvdW2K3DNqwmkwUCaq20xKlVOW+MU11mcLO6I/7o1MAJqSpYU3rxLl6AvQt
- lG7f6cfnonbsYdc60g6AIfB0Jf
-X-Received: by 2002:a05:7301:d19:b0:304:6782:d551 with SMTP id
- 5a478bee46e88-304e8d8b277mr182654eec.32.1779997245881; 
- Thu, 28 May 2026 12:40:45 -0700 (PDT)
-X-Received: by 2002:a05:7301:d19:b0:304:6782:d551 with SMTP id
- 5a478bee46e88-304e8d8b277mr182632eec.32.1779997245360; 
- Thu, 28 May 2026 12:40:45 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-304e990f413sm236094eec.20.2026.05.28.12.40.44
+ AFNElJ9BAGsm+PriZJzEqldExZ3m9gxfioNAM2Mb5SdfXWQY8pxTMwGAPxgu8kQ+MWPmlxw1b863Ts1CO4gg@nongnu.org
+X-Gm-Message-State: AOJu0Yzm1j4CXX7JlLg+EL0cySi0S+ETlLD2NVbYhnyua2IrkQLKmHav
+ fkq1FozqPNk89jUcFTyl4IylCP7I7AMY7oBzrL0wIiT3TtORRfjFyjHsHHGzu815EOY=
+X-Gm-Gg: Acq92OERBGwxGXYY5zGuzmNXgZDL137jjjhbrecA6O7gKuHjsH5S1OSBmeIAiinCgR5
+ 2sQ2T0u/vDyLXd8iGdG/PV1jU/IcGCS+QP1RErh99cEfTmLBXeHlBDWZw+i7RgaER70Mv6m0ttF
+ UwzxsNxCb74qvRiQhjNSq95peIDVP9XZShh2Qfcpn8k9EQ2TypEM3H61JVWovjc9jjY9x9ufNse
+ ng0Cg/uIBQ24H1CMTJ4RksH8WkBTTr9Xu7glZUCCTcoBMCJl4IBp3unOFlx/k2MHGX+UwYSlXqD
+ aR7FRSsm3qmyBfF23wTYbndfi+Xreq3WXYxZ4iBChP6FwQAZwLhR0+AF8ykAqkd/c0Xcy+EkaxK
+ xmp768GXT/NfEKhNGdJ+FvlsEHpXw1AdSFHMvSMmDvGP9HZh5fZ/KxzoNi+fm2N40HhCPn4oO5N
+ 7fNCtc04agZvbUHJCvmN1T2bK32tnCOJ4mt8AOky4h6d6sU30=
+X-Received: by 2002:a17:903:2405:b0:2bc:dc0b:ab1a with SMTP id
+ d9443c01a7336-2bf1ed46a14mr2240805ad.35.1779997607649; 
+ Thu, 28 May 2026 12:46:47 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2bf1e7fd976sm1000795ad.59.2026.05.28.12.46.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 May 2026 12:40:44 -0700 (PDT)
-Message-ID: <9d0853dd-5c22-4c46-9c42-a76d18230271@oss.qualcomm.com>
-Date: Thu, 28 May 2026 12:40:43 -0700
+ Thu, 28 May 2026 12:46:47 -0700 (PDT)
+Message-ID: <0857b250-336b-4945-ae5e-6a617216f17b@linaro.org>
+Date: Thu, 28 May 2026 12:46:40 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 08/12] hw/riscv/boot: Replace cpu_to_le32() ->
- const_le32()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- Anton Johansson <anjo@rev.ng>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Christoph Muellner <christoph.muellner@vrull.eu>
-References: <20260527201348.29511-1-philmd@linaro.org>
- <20260527201348.29511-9-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH] target/i386: apply mod to immediate count of an RCL/RCR
+ operation
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Abhigyan Kumar <314abh@gmail.com>, philmd@linaro.org
+References: <20260528164600.868982-1-pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260527201348.29511-9-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 91tLSC9asv_P6yjChRuF5bG8ZzbB1VXb
-X-Proofpoint-ORIG-GUID: 91tLSC9asv_P6yjChRuF5bG8ZzbB1VXb
-X-Authority-Analysis: v=2.4 cv=auOCzyZV c=1 sm=1 tr=0 ts=6a189a3e cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=YlDpDrQhXjdAcolmsdkA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI4MDE5OCBTYWx0ZWRfXzqxc66QNVfgU
- hNjCdMDARrBuoNWaiEX05PCDvkdXw2FVNBl5vtCrSp2j++GrNHd4dDrtLl9WeWqcoyiHzCTcKhf
- DZGiZ7g8/GrcdSMCz50OE5w6XEzwPRNEnugAaafJYYJzWOKoEU3sJekW2SB75hzN0b+uWH2F9Sw
- SAvfAIrNZFjBhakxB3m0CeE8vqDr/lKwMseANVmAuGWuu9nn+VP6HGCeNzxWT0l9YnfjPM+i/Vv
- h5pK3Mhx6nzeVcEAaKgwkh4ivsPlOPPVqeVa+cimRyABkWci0Tw9aasgQSEdP0x4cH1UTO2MOjS
- /+fd0YLNjyqqZG/bcV3fJAnd626fePtV9hJ4HytxjHmEJW8IvT5m1ir3FS8OtU6fOjrB3auYDVz
- ZF6xedx1SPGindecY3KMDGcLDEAC01BqV16Y7hPAgs04AqX4/rEmAOUDJmGVlw9YvyA4wbnAXjz
- FBXxXTRPA1RpH22dV9w==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-05-28_05,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 impostorscore=0 bulkscore=0 spamscore=0
- lowpriorityscore=0 suspectscore=0 clxscore=1015 phishscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605280198
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+In-Reply-To: <20260528164600.868982-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -162,24 +105,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/27/2026 1:13 PM, Philippe Mathieu-Daudé wrote:
-> Rather than adapting the array endianness when it it
-> filled, directly initialize the CODE words with the
-> correct endianness.
+On 5/28/26 09:46, Paolo Bonzini wrote:
+> RCR and RCL instructions with a count of 9 are the same as if the
+> count was 0, but they generated incorrect code because the can_be_zero
+> flag is false.  This causes 0 to underflow into -1 at
+> tcg_gen_subi_tl(count, count, 1).
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Fix by absorbind the call to gen_shift_count() into gen_rotc_mod(),
+> so that the new function handles both mask and mod.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3452
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  hw/riscv/boot.c | 30 +++++++++++++-----------------
->  1 file changed, 13 insertions(+), 17 deletions(-)
+>   target/i386/tcg/emit.c.inc | 85 +++++++++++++++++++++++---------------
+>   1 file changed, 52 insertions(+), 33 deletions(-)
 > 
+> diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+> index ce636b6c56c..c6b0be1f60d 100644
+> --- a/target/i386/tcg/emit.c.inc
+> +++ b/target/i386/tcg/emit.c.inc
+> @@ -3244,12 +3244,10 @@ static void gen_PUSHF(DisasContext *s, X86DecodedInsn *decode)
+>       assume_cc_op(s, CC_OP_EFLAGS);
+>   }
+>   
+> -static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
+> -                             bool *can_be_zero, TCGv *count, int unit)
+> +static void gen_shift_count_1(DisasContext *s, X86DecodedInsn *decode,
+> +                              bool *can_be_zero, TCGv *count, int unit,
+> +                              int mask)
+>   {
+> -    MemOp ot = decode->op[0].ot;
+> -    int mask = (ot <= MO_32 ? 0x1f : 0x3f);
+> -
+>       *can_be_zero = false;
+>       switch (unit) {
+>       case X86_OP_INT:
+> @@ -3259,12 +3257,17 @@ static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
+>           break;
+>   
+>       case X86_OP_IMM:
+> -        if ((decode->immediate & mask) == 0) {
+> +        /*
+> +         * The caller applied the mask (this is awkward; unfortunately the
+> +         * mask must be applied *before* the modulo operation for RCL/RCR,
+> +         * and the modulo operation must be before this check for zero).
+> +         */
+> +        if (decode->immediate == 0) {
 
-One could argue original version is more readable.
-Any specific reason for rewriting things this way (performance, personal
-preference, other)?
-Not a blocker, just want to understand the original motivation.
+Perhaps clearer to pass down mod and perform all of the arithmetic in here.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> +static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
+> +                             bool *can_be_zero, TCGv *count, int unit)
+> +{
+> +    MemOp ot = decode->op[0].ot;
+> +    int mask = (ot <= MO_32 ? 0x1f : 0x3f);
+> +
+> +    if (unit == X86_OP_IMM) {
+> +        decode->immediate &= mask;
+> +    }
+> +
+> +    gen_shift_count_1(s, decode, can_be_zero, count, unit, mask);
 
-Regards,
-Pierrick
+Here you could pass mod = 64, arbitrarily large, so that we could keep the mask 
+computation common within gen_shift_count_1.
+
+> -static void gen_rotc_mod(MemOp ot, TCGv count)
+> +static MemOp gen_rotc_count(DisasContext *s, X86DecodedInsn *decode,
+> +                            bool *can_be_zero, TCGv *count, int unit)
+>   {
+>       TCGv temp;
+> +    MemOp ot = decode->op[0].ot;
+> +    int mod = (8 << ot) + 1;
+> +    int mask = (ot <= MO_32 ? 0x1f : 0x3f);
+>   
+> -    switch (ot) {
+> -    case MO_8:
+> -        temp = tcg_temp_new();
+> -        tcg_gen_subi_tl(temp, count, 18);
+> -        tcg_gen_movcond_tl(TCG_COND_GE, count, temp, tcg_constant_tl(0), temp, count);
+> -        tcg_gen_subi_tl(temp, count, 9);
+> -        tcg_gen_movcond_tl(TCG_COND_GE, count, temp, tcg_constant_tl(0), temp, count);
+> -        break;
+> -
+> -    case MO_16:
+> -        temp = tcg_temp_new();
+> -        tcg_gen_subi_tl(temp, count, 17);
+> -        tcg_gen_movcond_tl(TCG_COND_GE, count, temp, tcg_constant_tl(0), temp, count);
+> -        break;
+> -
+> -    default:
+> -        break;
+> +    /*
+> +     * RCx operations are invariant modulo 8*operand_size+1.  For 8 and 16-bit
+> +     * operands, this is less than 0x1f (the mask applied by gen_shift_count)
+> +     * so reduce further.  Failure to do so results in incorrect shifts
+> +     * in gen_RCL/gen_RCR.
+> +     */
+> +    if (unit == X86_OP_IMM) {
+> +        decode->immediate &= mask;
+> +        decode->immediate %= mod;
+>       }
+> +
+> +    gen_shift_count_1(s, decode, can_be_zero, count, unit, mask);
+> +
+> +    if (unit == X86_OP_INT && mod < mask) {
+
+And it would avoid having to have code split across these two functions in odd ways, and 
+reusing the switch within gen_shift_count_1.
+
+> +        temp = tcg_temp_new();
+> +        if (mod * 2 < mask) {
+> +            tcg_gen_subi_tl(temp, *count, mod * 2);
+> +            tcg_gen_movcond_tl(TCG_COND_GE, *count, temp, tcg_constant_tl(0), temp, *count);
+> +        }
+> +        tcg_gen_subi_tl(temp, *count, mod);
+> +        tcg_gen_movcond_tl(TCG_COND_GE, *count, temp, tcg_constant_tl(0), temp, *count);
+> +    }
+
+Perhaps worth assert(mask < mod * 4), for documentation's sake?
+
+
+r~
 
