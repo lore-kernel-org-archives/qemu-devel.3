@@ -4,95 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C152CD6E44
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 13:57:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1049FCD6E44
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 13:59:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSbEq-0003ac-Rg; Thu, 28 May 2026 09:57:33 -0400
+	id 1wSbG2-00043u-63; Thu, 28 May 2026 09:58:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSbEm-0003aA-SO
- for qemu-devel@nongnu.org; Thu, 28 May 2026 09:57:29 -0400
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSbG0-00043b-JY
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 09:58:44 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSbEl-0006Mh-9K
- for qemu-devel@nongnu.org; Thu, 28 May 2026 09:57:28 -0400
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-7dc78af7371so9387757b3.1
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 06:57:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779976646; cv=none;
- d=google.com; s=arc-20240605;
- b=fLMgTVY1zxAFp+1pZ9U49PDwxTXUsmhMLZVT5oMkT0jXeGwIXNYiaqg+K1N9TwbHIW
- 6XjNLln/9CKUSN0H043W+5tTe2hqHGiQBPGfdN9eQsBYRhq0S0g0zeoaCCk6fpBayibC
- wRT57ybdZYwkunifv7d2CY1RNAqIdSriScp/QhhxdyPiABA8zQC7PMN33KcRbOpm3kMF
- pm8punGXYxKEwzykD8XxCZ6JRpfqI2c0qbcevb4bi2T6sYKDN/09LZvFgY3oZK91bvx8
- 2RwYinEBvyBA4s9diubphLjLnYF3CBVz+WeBwSQ743zI1fDwyW6mz9Ct5RQyUr6a9st/
- Idvg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Liy7Gq0IPri9HWKoliqrhfLW/Zbh8XpFgMCBbrNLYSM=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=W0uNTWjmNWB0+X/OOXsfhsIeyvCuOxphIJJ9C/ItjGtpV2lGkxjrYXUVcz4pZStq4P
- jLw2/WI29i+TQ72IT/Rd9zNowia4eaqOSKY114gANnxM5GuzGSNpH1SpAM54FPybq2qb
- QLR4D0MbxbtLxVfZ5IqI+7f6ZrM6/5jLgfD+OVkNhzSOuj2hoC3/m10+bFHxolKl2Nng
- pMBvm+cnLglBbuDKT9tIITWDkh9W5UBAnTDOkIbusRTHWdF1bAFZGWcufY1EktVAdbaW
- vvczE90n/BInmgqotBHqoQLWCnjBp3VoB0Evpx+NecdE5+e2eLu2nb2MUaSELpBkWSqy
- 4vJQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSbFz-0006kp-0T
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 09:58:44 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-45e7c636e74so6839634f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 06:58:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779976646; x=1780581446; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Liy7Gq0IPri9HWKoliqrhfLW/Zbh8XpFgMCBbrNLYSM=;
- b=NgHgdWpTSgMvBo0v+AmkC5mlk19YCxt0BU/JArCHjZ7Ic1agcYTufcZg+RZV21YTHZ
- LA2MO8QN74PyxZ0nOQxGvuDmWf8vy4nSuXr99U7Dysx4DOEh6f928t9/5Yrb+rzaBNhZ
- taDPj7BC/Ptv24TXBLcnxsard2/LUwu/+10KanWtwIvJcX7N/HiPbe7LAjR23YpGg7Tl
- CmYZ3QVLa0Hfq31YWhQLS/TiRh0SaIVMJwnDrfrdPDTV2+l5fOij6MLLn6BRSWzAEvTi
- 1C6Rn81pNSaYXQuHcyjsci8dzp4hK8EFYoRCDprgt9YKwy007DJZeN0WIyehrRTqlyqr
- az2g==
+ d=linaro.org; s=google; t=1779976721; x=1780581521; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mZ4ofqV8ZgTvRegZrDEGGZ0MxiTuCRPcSGnZ/wlYX2g=;
+ b=GiJLnzRm22MqH67QCy9+prg9A7AEV3ONJz8or7KzX25EveWR+i4tQ0OCd5MByre+OY
+ NPf+HJ8vJCOG4BkU03non/U3TkZa3LU8/HaFIF2K01RTeMwH7mgCyhqvnttM7K2x1UG4
+ AjVB3M2MCBS6anAUv1NBI6RBfIwjN+0x5rp0cL/HgNDCcYh5dxuNLR9TxLTJk3/sZXWs
+ avylWkOxpJEa3IaZ7S65MMsS/cP3cy638dTX4XNb+4kANW2NVQ3kYiqxk5D2uBHIAuLg
+ jXgmlliMICQM0fFE/7XiHElOOVVM0Se+ag4am3gH793FG1wjtYQxbvI5FMnpRZcuacHR
+ 7mvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779976646; x=1780581446;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Liy7Gq0IPri9HWKoliqrhfLW/Zbh8XpFgMCBbrNLYSM=;
- b=UID8MiU0+4podzyDGvA7NaN2HacEyARKT6DsM215tDHw+0VDPBcRorwZw81dfi18qf
- WTJHnAH9PC03HkGjKqPiqM+bFNkrvoNYjFsMSYUWj2PK+mL7P79ChfQqxU97RCC2UHO2
- hxfBBRg3XnlMe/ZGhLoJmJgchMmlXBYCrLoJtSWZPFfE9/T+KonJKMhMrAE4xEX5yDDC
- itElrQC2XEd5G5gws8OaVMVzF2LdtRHnOnrZw7QXk5bmtgIK4QaDcN5leByCwP1jO61o
- KdoKxyWRgF6O5XCWvxTa4TfjJATvIU/ahW0zFFSjrTOMBEVlR83B+hTwcbff6QwgiZxl
- w54Q==
-X-Gm-Message-State: AOJu0YyC07Qq4wRJNpnHLAxkWXERh6Hqzv46HwiwDvlPQ3RWUV+VFVio
- sGLgwn9t/DSXu2NyadFa9zb4JO3Bo5S4qMdpGQoNueqVcygpMwnvhAbL566vYOBZbPCrYfVwkJZ
- y81WTDJ4PhtscwpZYy1G/DA/P4hrJ7GYr0usNEAhmJg==
-X-Gm-Gg: Acq92OE3imtYVuSM+3PneHivXqyzzbPtRolzHcGuC3K4NJlaQM3AVOJFBdkEnbF+6sB
- hUqd5f4KAn5ppY9m25pJw/Ec0rzu3bblBZsms3c+JXsOHXlQAf1vqvNpN7NjqVIf1mWB0steTmG
- hO6pUYZwU9yIM1sIq8JpcZykQandj0IfcWCqTW6bsM53n/ib0sV+s1i5k9n2ogXfBupRGQDC4bv
- CqwfYrxUEG/7Xo/8POh130su66wH35nmg4cKJoiCELVV4xSGV+x+VWfi18lyEZc2UjOtX7AASs3
- q9w+tvPu5W7n3+s/wfo42G7HEhJa7icKyVNry2h3Umy/1wkMroqrc9HgHm6TFzuNgRPlzCyv81g
- xZbVjFnL17lrG
-X-Received: by 2002:a05:690c:6a87:b0:7dd:489:b56a with SMTP id
- 00721157ae682-7dd0489ba22mr13991667b3.25.1779976646016; Thu, 28 May 2026
- 06:57:26 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779976721; x=1780581521;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mZ4ofqV8ZgTvRegZrDEGGZ0MxiTuCRPcSGnZ/wlYX2g=;
+ b=ZNjgRnktzrS3ceiHoYZLwPCBPQcRTKlPN5Omwri5qv+XeWS/hS24sWzsJJOzyEZEiV
+ fn5h0NpQg2bfvwWnT+dDJj9X/GgARO4CUK6R7XVK9IjSB9JAb9tgg+WugW6Q7bfwkkO7
+ cqPe4p4FNE6Ru4lN9/i25oNgElYisikybNXs6CpSZjr+hsf4W/iPlXriY6ZoCR3A26AI
+ qNJ802QOzLdVeic/jKc82z/l/Wi1ljGizSrMaKps4VzPERL+LRMg4rRM+VurIbNqbIkW
+ CIOAq3OivIRrKFNLMrjxapbojYsEvNBU88VdCjniGAt2UxuB02YFaFzR4xxo86njOc7Q
+ ZnbA==
+X-Gm-Message-State: AOJu0YxsUwdQAlhuuqQBIzkPoE950oHo8FbTeWD/jtfKo8clP3ao6itq
+ Avfuj4OqMJEJDt+SIyHpXf+Nx5FaaWEW0nkX8/nJqKI+UAFzfjY5TCAuV2uWaQhX8xsJQHu7lHY
+ BwyvHucjuZA==
+X-Gm-Gg: Acq92OFFvCsJLVSX31dYBLiEChOqESn3sVdfYg8wD7bJ7apC1Zq5QFfejhYVkJneSPo
+ wyyg0L432EWd328LD1Qrx1rU+O1HvXpXUupn8+IRNdDQGGeytzWF58uSNsWqUl1ZwhLbCzA36G6
+ XK4nLrNMrIDqdaZkilY23wnV85vTd0S0q4bOZERtPmbaR4UA/KezH1XTTBtvX8AgXVACww7fp1M
+ OeizLDbkzxZo8Ao1kzIEenggIOTj+6ouJOn+AVh9TfWwvDebhcW1E5rzmwBZHqy/+rhCypUcfKN
+ k8O3M5q1ZVa3LiymFmxhaADLYvruk71XXGjNpWJhKxbYVjxAKjdigrkaTGetDWCbJu9TeejLcS7
+ 3vM8E1Wg2JvC2pRSk+4NL0ZGl2reLJLjicV306EB7NNxDBwgZbnVEp3G//zXne6xlDsXKt8Fz31
+ u38Gn+FwS3r54133pBbny5xpg3ZA/n7X5kuB4t6KBVtsj/GeH3V/A5DdBZK+x1AYWz+iC8fhwK+
+ D58
+X-Received: by 2002:a05:6000:1acb:b0:45e:a225:6dfe with SMTP id
+ ffacd0b85a97d-45eb38a64e2mr52116402f8f.25.1779976721080; 
+ Thu, 28 May 2026 06:58:41 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45edb5b19aasm14945574f8f.25.2026.05.28.06.58.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 28 May 2026 06:58:40 -0700 (PDT)
+Message-ID: <5f1fe018-e3e2-4295-8b0d-1246b580d020@linaro.org>
+Date: Thu, 28 May 2026 15:58:39 +0200
 MIME-Version: 1.0
-References: <20260518174750.660258-1-richard.henderson@linaro.org>
- <20260518174750.660258-3-richard.henderson@linaro.org>
-In-Reply-To: <20260518174750.660258-3-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 28 May 2026 14:57:13 +0100
-X-Gm-Features: AVHnY4IpfWu5Jtxb5GuKOgmGWTtwSeS9Lb1wRdfOEZk7IxnUchMbq_ul5pdAK_o
-Message-ID: <CAFEAcA8DvDt7mt75bF=wTzQETopuvDaY0m3u8RYZy7S=_CrxQQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] target/arm: Implement CB, CBB, CBH
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mailmap: Update email addresses for Andrew Jones
+Content-Language: en-US
+To: Andrew Jones <andrew.jones@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org
+References: <20260528083920.33105-1-philmd@linaro.org>
+ <mojx2suobu4ebtmvof4qzjidemjwa6i6imvu33dqfhcpqj2jhr@md4jdj7fqzl5>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <mojx2suobu4ebtmvof4qzjidemjwa6i6imvu33dqfhcpqj2jhr@md4jdj7fqzl5>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,66 +103,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 18 May 2026 at 18:49, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Compare and branch instructions, with various operand widths.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/tcg/translate-a64.c | 42 ++++++++++++++++++++++++++++++++++
->  target/arm/tcg/a64.decode      |  9 ++++++++
->  2 files changed, 51 insertions(+)
->
-> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-> index 9a27c4c6ec..293aa43cc9 100644
-> --- a/target/arm/tcg/translate-a64.c
-> +++ b/target/arm/tcg/translate-a64.c
-> @@ -1774,6 +1774,48 @@ static bool trans_B_cond(DisasContext *s, arg_B_cond *a)
->      return true;
->  }
->
-> +static bool trans_CB_cond(DisasContext *s, arg_CB_cond *a)
-> +{
-> +    static const TCGCond cb_cond[8] = {
-> +        [0] = TCG_COND_GT,
-> +        [1] = TCG_COND_GE,
-> +        [2] = TCG_COND_GTU,
-> +        [3] = TCG_COND_GEU,
-> +        [4] = TCG_COND_NEVER,  /* reserved */
-> +        [5] = TCG_COND_NEVER,  /* reserved */
-> +        [6] = TCG_COND_EQ,
-> +        [7] = TCG_COND_NE,
-> +    };
-> +    TCGCond cond = cb_cond[a->cc];
-> +    TCGv_i64 t, m;
-> +
-> +    if (!dc_isar_feature(aa64_cmpbr, s) || cond == TCG_COND_NEVER) {
-> +        return false;
-> +    }
-> +
-> +    t = cpu_reg(s, a->rt);
-> +    m = cpu_reg(s, a->rm);
-> +    if (a->esz != MO_64) {
-> +        MemOp mop = a->esz | (is_signed_cond(cond) ? MO_SIGN : 0);
-> +        TCGv_i64 tt = tcg_temp_new_i64();
-> +        TCGv_i64 tm = tcg_temp_new_i64();
-> +
-> +        tcg_gen_ext_i64(tt, t, mop);
-> +        tcg_gen_ext_i64(tm, m, mop);
-> +        t = tt;
-> +        m = tm;
-> +    }
-> +
-> +    reset_btype(s);
-> +    DisasLabel match = gen_disas_label(s);
+On 28/5/26 15:47, Andrew Jones wrote:
+> On Thu, May 28, 2026 at 10:39:20AM +0200, Philippe Mathieu-Daudé wrote:
+>> Cc: Andrew Jones <andrew.jones@oss.qualcomm.com>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   .mailmap | 2 ++
+>>   1 file changed, 2 insertions(+)
+>>
+>> diff --git a/.mailmap b/.mailmap
+>> index 6335fbd6c84..1ce5e6c5a14 100644
+>> --- a/.mailmap
+>> +++ b/.mailmap
+>> @@ -76,6 +76,8 @@ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com> <arikalo@wavecomp.com>
+>>   Aleksandar Rikalo <aleksandar.rikalo@syrmia.com> <aleksandar.rikalo@rt-rk.com>
+>>   Alex Williamson <alex@shazbot.org> <alex.williamson@redhat.com>
+>>   Alexander Graf <agraf@csgraf.de> <agraf@suse.de>
+>> +Andrew Jones <andrew.jones@oss.qualcomm.com> <ajones@ventanamicro.com>
+>> +Andrew Jones <andrew.jones@oss.qualcomm.com> Andrew Jones <drjones@redhat.com>
+>                                                  ^^ is this a name field?
+> 
+> I see the same format below for Anthony, but it appears the format is
+> usually just <name> <email1> <email2>
 
-Variable declaration needs to go at top of function.
+Oops, copy/paste mistake :|
 
-Otherwise
+Fixed and queued, thanks!
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+>>   Ani Sinha <anisinha@redhat.com> <ani@anisinha.ca>
+>>   Anthony Liguori <anthony@codemonkey.ws> Anthony Liguori <aliguori@us.ibm.com>
+>>   Brian Cain <brian.cain@oss.qualcomm.com> <bcain@quicinc.com>
+>> -- 
+>> 2.53.0
+>>
+> 
+> Anyway,
+> 
+> Acked-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
 
-thanks
--- PMM
 
