@@ -4,81 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5925CD6E44
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 15:11:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72DA0CD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 15:11:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wScOD-0000RM-12; Thu, 28 May 2026 11:11:17 -0400
+	id 1wScOY-0000WD-5B; Thu, 28 May 2026 11:11:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wScO9-0000Q9-GX
- for qemu-devel@nongnu.org; Thu, 28 May 2026 11:11:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <yoshinori.sato@nifty.com>)
+ id 1wScON-0000TM-1S
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 11:11:28 -0400
+Received: from mta-snd-w07.mail.nifty.com ([106.153.227.39])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wScO2-0004rr-3N
- for qemu-devel@nongnu.org; Thu, 28 May 2026 11:11:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779981064;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nPDbztg8jcXDhNp+Yg4MMTER/9txcWX/5Dh8mLtVsb0=;
- b=bE7n1rKZA5Rq0SR6oSMqp90DGZt2Ved+4mP2T9TN6UpcGdt/jfN4INDatNxxuq6hUL2fF/
- oP6a3/1qTpXIX6ez7n6LGguV7FEivR1BYxbQBuScQ9olsAyO55zXQYtP2ip8E1f5XymLBM
- bfumYNrZLnW9JDDS8RtazrNWulYw/lQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-542--NHTBqVdMe6KQwrFPJPpeg-1; Thu,
- 28 May 2026 11:11:00 -0400
-X-MC-Unique: -NHTBqVdMe6KQwrFPJPpeg-1
-X-Mimecast-MFC-AGG-ID: -NHTBqVdMe6KQwrFPJPpeg_1779981059
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BF9971956088; Thu, 28 May 2026 15:10:58 +0000 (UTC)
-Received: from localhost (unknown [10.44.49.185])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 654211686; Thu, 28 May 2026 15:10:56 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, zhaoguohan@kylinos.cn,
- qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Alex Williamson <alex@shazbot.org>, Eric Farman
- <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>, Tony
- Krowiak <akrowiak@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>, Jason
- Herne <jjherne@linux.ibm.com>
-Subject: Re: [PATCH v2 0/2] vfio: propagate IRQ notifier registration failure
-In-Reply-To: <db82450e-a3fd-41ba-963b-4e0730ea34cb@redhat.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Avril Crosse O'Flaherty"
-References: <20260510084353.58263-1-zhaoguohan@kylinos.cn>
- <87o6hzmvm2.fsf@redhat.com>
- <db82450e-a3fd-41ba-963b-4e0730ea34cb@redhat.com>
-User-Agent: Notmuch/0.39 (https://notmuchmail.org)
-Date: Thu, 28 May 2026 17:10:54 +0200
-Message-ID: <87ldd3muwx.fsf@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <yoshinori.sato@nifty.com>)
+ id 1wScOH-0004tO-5u
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 11:11:26 -0400
+Received: from sakura.ysato.name by mta-snd-w07.mail.nifty.com with ESMTP
+ id <20260528151109394.KZZG.18412.sakura.ysato.name@nifty.com>;
+ Fri, 29 May 2026 00:11:09 +0900
+Received: from SIOS1075.ysato.ml (ZM005235.ppp.dion.ne.jp [222.8.5.235])
+ by sakura.ysato.name (Postfix) with ESMTPSA id C8BCC1C0079;
+ Fri, 29 May 2026 00:11:08 +0900 (JST)
+Date: Fri, 29 May 2026 00:11:06 +0900
+Message-ID: <87fr3bo9h1.wl-yoshinori.sato@nifty.com>
+From: yoshinori.sato@nifty.com
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Matt Turner <mattst88@gmail.com>, qemu-devel@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH] target/sh4: decode_gusa: recognize add#imm with prior mov
+ Rm, Rn
+In-Reply-To: <5479a7e3-fe6e-4399-8c20-5a8136957030@linaro.org>
+References: <20260525152739.4122267-1-mattst88@gmail.com>
+ <20c744a7-369f-4abf-93f5-c6553c3340fd@linaro.org>
+ <878q95asor.wl-yoshinori.sato@nifty.com>
+ <5479a7e3-fe6e-4399-8c20-5a8136957030@linaro.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
+ Emacs/30.1 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
+ s=default-1th84yt82rvi; t=1779981069; 
+ bh=VH9svumK2ORvGdIOEok96kzweFqu/ij/mY9gqL3nw2w=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References;
+ b=mD2wgX2eD1PyTjnt5oSA1yH+EVb9i0HEZXZJSljoZRt1IQq0CdUT3IktjM+CO2uWOJu41Kz5
+ Tt7Qmd6wy+olMhKhH/hntSWx+3P68CorTMAgNV51ewpgpZd2dNzTNnrbNvQgjJ7b6sTxpKYhG1
+ kmQUIy5QFSk+96rxXMIB0M2/1fJDUqXJmPtmcOBvc47LR6Xk+DZ1ezo+EVihR6VVTx7QcUUygn
+ fHWVQTu5wSSOOe2Q5uUCZKlFNmSy3XbHUWmVipBafDjcFGe+yBD+G+DU7K6A7hLwwkcJUWYrIH
+ 1fljZSGUNXKKbkwEPBnZjJa+0+9GlQDkZELm47Y0hsKuTG4w==
+Received-SPF: pass client-ip=106.153.227.39;
+ envelope-from=yoshinori.sato@nifty.com; helo=mta-snd-w07.mail.nifty.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,43 +78,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 28 2026, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
+On Thu, 28 May 2026 00:26:49 +0900,
+Richard Henderson wrote:
+> 
+> On 5/27/26 06:27, yoshinori.sato@nifty.com wrote:
+> > On Tue, 26 May 2026 09:55:28 +0900,
+> > Richard Henderson wrote:
+> >> 
+> >> On 5/25/26 08:27, Matt Turner wrote:
+> >>> The gUSA pattern matcher rejected `add #imm, Rn` whenever any prior
+> >>> `mov Rm, Rn` appeared (mv_src >= 0), forcing a fallback to
+> >>> cpu_exec_step_atomic for sequences like:
+> >>> 
+> >>>     mov.l  @r2, r3      ; load
+> >>>     mov    r3, r7       ; save old value (mv_src == ld_dst)
+> >>>     add    #1, r7       ; increment copy
+> >>>     mov.l  r7, @r2      ; store
+> >>> 
+> >>> When mv_src == ld_dst the move merely copies the loaded value to
+> >>> preserve it -- exactly the situation already accepted for the
+> >>> `add Rm, Rn` form. The immediate form can be handled identically with
+> >>> tcg_gen_atomic_fetch_add_i32 + tcg_gen_add_i32, so translate it inline
+> >>> instead of taking the slower single-step atomic fallback.
+> >>> ---
+> >>>    target/sh4/translate.c | 2 +-
+> >>>    1 file changed, 1 insertion(+), 1 deletion(-)
+> >>> 
+> >>> diff --git ./target/sh4/translate.c ./target/sh4/translate.c
+> >>> index 5adf650744..d38a6bd352 100644
+> >>> --- ./target/sh4/translate.c
+> >>> +++ ./target/sh4/translate.c
+> >>> @@ -1974,7 +1974,7 @@ static void decode_gusa(DisasContext *ctx, CPUSH4State *env)
+> >>>            break;
+> >>>          case 0x7000 ... 0x700f: /* add #imm,Rn */
+> >>> -        if (op_dst != B11_8 || mv_src >= 0) {
+> >>> +        if (op_dst != B11_8 || (mv_src >= 0 && mv_src != ld_dst)) {
+> >>>                goto fail;
+> >> 
+> >> Hmm, but then you don't further constrain B11_8.
+> >> 
+> >> For the given example, afaics, B11_8 == op_dst, so we're failing only
+> >> because mv_src >= 0.  Do we actually need the mv_src check?  I'm
+> >> guessing not.
+> >> 
+> >> 
+> >> r~
+> > 
+> > This check is necessary because the intention is to cause failure in the
+> > case of an unintended sequence of instructions.
+> 
+> Of course, but what's the unintended sequence prevented by mv_src >= 0?
+> Matt has identified a sequence that *is* possible, which is prevented by that check.
+> 
+> 
+> r~
 
-> On 5/28/26 16:55, Cornelia Huck wrote:
->> On Sun, May 10 2026, zhaoguohan@kylinos.cn wrote:
->>=20
->>> From: GuoHan Zhao <zhaoguohan@kylinos.cn>
->>>
->>> vfio_ap_register_irq_notifier() and vfio_ccw_register_irq_notifier() cl=
-ean
->>> up the fd handler and EventNotifier when vfio_device_irq_set_signaling()
->>> fails, but still return true to their callers.
->>>
->>> Return false after cleanup so callers can handle the failed registration
->>> path instead of treating it as a successful notifier setup.
->>>
->>> Please ignore the previous version.
->>>
->>> GuoHan Zhao (2):
->>>    vfio/ap: Return false when IRQ notifier setup fails
->>>    vfio/ccw: Return false when IRQ notifier setup fails
->>>
->>>   hw/vfio/ap.c  | 1 +
->>>   hw/vfio/ccw.c | 1 +
->>>   2 files changed, 2 insertions(+)
->>>
->>=20
->> ...I guess this should go through the s390 tree (and not the vfio tree?)
->> If yes, I'll pick it up.
->>=20
->
-> I included these patches in my VFIO PR  last week. They are merged.
->
->    https://lore.kernel.org/qemu-devel/20260520162115.1613601-1-clg@redhat=
-.com/
->
-> Hope that's fine ? Sorry if not :/
+Decoding "mov r3, r7" in the example code snippet results in mv_src being 3,
+which causes the current code to fail.
+This is an excessive failure, so it should be made effective.
 
-Completely fine, thx, I just overlooked it :)
-
+-- 
+Yosinori Sato
 
