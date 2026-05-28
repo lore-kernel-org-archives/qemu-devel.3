@@ -4,92 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45117CD6E44
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 10:47:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D350CD6E49
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 10:51:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSYGA-0001rP-UF; Thu, 28 May 2026 06:46:42 -0400
+	id 1wSYK8-0002l9-OV; Thu, 28 May 2026 06:50:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSYG9-0001r3-AR
- for qemu-devel@nongnu.org; Thu, 28 May 2026 06:46:41 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wSYK7-0002kt-Mb
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 06:50:47 -0400
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSYG7-0004Ia-JY
- for qemu-devel@nongnu.org; Thu, 28 May 2026 06:46:41 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-49048e043e5so49512915e9.1
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 03:46:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wSYK6-0005wR-5B
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 06:50:47 -0400
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-65eb226b1ceso7029314d50.0
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 03:50:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779965445; cv=none;
+ d=google.com; s=arc-20240605;
+ b=LzHkBkUzL2voQAI7hUjXIkugvu6fUVaGySM7sqntlUYIr2XcO5j8s5JrlNpV1uPBzu
+ vNi6Hd1fNbGdzM6TGQIqgc2qNnvhUc2cMeD8GvHv9bhUKQ/YXlxC1O8dTvHMXiQdVGGI
+ 5HILNFPcg5DSG/1jxXKMZ6Z1mguLkaGGh5lnNj7+JGK4wHjf7NELDCVTSAMD/fGtHwEQ
+ 5zPPxPRF8foWuhuU6FNLlFXyJGQqM1NjseNfqsCNrkm5O+PMclzhmBZWi2J4soH+ODHl
+ dqBgXIm3UUKnvDN7ArOq9On6PjRnYdPm2GzgcpPOUkwq5Q1rYMXO4Sk+hkNg8tTuJAb9
+ BRug==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=9rkKefH7qkaM7PYGtNz39Smfm7od6r4vxNbFh/5YrUA=;
+ fh=FWtyXIX1K30Gh1JIPWWinn1E8IuOwxOeZI6Shz32Tr4=;
+ b=Adap5bPjcCl58ScUglYUVJ1K3j1Ec1/7cw1+Em4KfHm8jZI60bchQYB2y98e9VYip9
+ PAET46SNt+yzqVEZQRjZONqdd8HaH9hCVVL6HA3pJWsWm6EW/XqrMqYLPWrgZyS7UMoa
+ TfjpZFaXIGLR5DFm64LIPeyCnaU8gONmoSKXAHIExqIdcDV2p351BL1zFtBNXOTUqAy/
+ i5HdfPqsVuZgtWu5zXpUALzg6WnVFWiJTr+jvqDESIJfOrABnr438umY9iX/ebVUJiic
+ Kwx673/eoODLjSzqk1RAeeicPxVWQgpo+WzA9JKxHAQGkEELgpptiDOyVLQDiC9PUAPx
+ Enfw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779965198; x=1780569998; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=eeF0ts7l3YIRkWhAo/1VWjNepW5xyLLyZvF+TU1uk90=;
- b=GmHm6xZBmdJTtUI2CIydg1ruFzF4wo3CYR5ZK/W8yEY/ZnFNDpXa2bH7AQRjBVhqsx
- yRy7m00J/FGHpX3HcREiPdxLEWWRwMsuXijq7ERIh+HVNlF2u5k2tkZg4WWdZce4Bvnu
- cjHhHllk8IOXah7gZnVPG4PRbNaNP+ZPc5MXJeDIdy3aJ5VBvvxNmrZyeF3BHR2x3+Aq
- 70BwPRqZzdz23NhsBDbDazHwHK6LiuqMDhHcqUb6jfyisybUMmbjPiDYHID57MCdU6Wc
- w3gZIAmfNqQsJzMh8FCROSR+uQSv6e3CMpgp8yLtmdVnfFCkviSlPeSHswjdZZorHVPT
- zbjg==
+ d=linaro.org; s=google; t=1779965445; x=1780570245; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9rkKefH7qkaM7PYGtNz39Smfm7od6r4vxNbFh/5YrUA=;
+ b=dWaoRJRJJTpcIaiH0UrdUT2Eexl77wkoHKNrcUEFj1jkm44xTH9NysSzYvi+hz4pHO
+ l9QmhJrRWm81FLRhdsoCVn4fD2Cpms5yZ2c8Fo50wIsLQVBwhbTGyNEMqJU2Hy5sU5q1
+ bKdbO0xLA1KEsRryWVNw9KXRRLhQETT1QCTB1jl6lB9ZHQ4Q1cRKsI65BWY3+v1g+ExX
+ swDU8cS65RxepM+CdzU4Z+p4rIusvNWSxShOY9hZ5kClQxfPyN8fE/bWbOHXio8YMFbD
+ gXr4HznJgerHvzuR3/GOk68E7CLjb9mDfo4nh7AGeFEuGi+PZKNqT5QI9VD44GxhVVZD
+ gqKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779965198; x=1780569998;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=eeF0ts7l3YIRkWhAo/1VWjNepW5xyLLyZvF+TU1uk90=;
- b=h8755/zj2x5O1Q0W9kVj7cJeqH0X/KHrDBvdloX6Y+o336IARahbt86ZPXKh7Cm6xw
- ignKl6nRnD3LElr+v+72nEuRO1LjcJGOER3RN9O3Hm6mrJjv263F1aRAZ8Z1wDj1Y7Qr
- OC0Q7nBDLDbjOlOiMFW3tmoEWEYm3fkzHwx+AdoZ0MNeSpoByfa3g7KG4Yr6ZIjRQy24
- dYpZwa+4DLHa2E19ocKqtcT+3z5yCLSlg1qGP994vcQ0Qd3l185LTBUiKhs6j6RV8w/P
- 1iV3f1YQxbi7xh51zPOVmD9Rl4RXp8S84cUa6sef4Lk46wVNSVItfgAOPm4iBf0lPabE
- nZYQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+yTApo+aJ9Z0CZCQ+acj+m8eFEQzRDYBRyYU0lmPTLd8uWik7BDdV8cJBDtWauGGDY9kdU3AA7C6xc@nongnu.org
-X-Gm-Message-State: AOJu0YzLgKcZb/HY6u6X/PsrUAdfFLZ4+MgYxBs7lrg/I10sd4IQcmEm
- wn4rIkjJ8hcux6E7KuAOEC77GadQyivhpUMwjUEsVe93PGGij0u3bhos2t4ba3C+qsw=
-X-Gm-Gg: Acq92OG/MNN9WoSjs5ebShiQjbIEGftXVEXCbFXdZ6Vy6wb5ZzNABoipPf/nxSwU3oL
- CGpJUQUPZdyk4SFTOA39xMLTS1bcZV/IPkYxI22DRwEqKUTIsjeTpoR7SRBkQ/383+54JNJS77x
- UBBr4WTsAgLhvtLKGNSVBzIcJkYDyxENijeND7mh7CVkF54osphtxEKmbbAFeliWHrArZavpmlA
- QClrQBjJsX8u06QeCnyQJAXnW9PzOhyz5d96hQHfOc3yzT9bUGcbv7UyIW8nm5CaeDQCFTFfRmG
- MAom7ZEwYc/MHSmPk8sv361e5Tv9oz4MNnNz5sPs4+qYPImYsi4OYpqcnVH579c93KkSTAMTS4p
- 1wRYDfJuxED3S2QwqtiYefXywAF6qmBe7qNQhWeFw15AX1Cvx4DFc+jULtA5HCBTJkIrL2Vl+RV
- o9nchvpvLbiLArmFn6hnaJymdBZhTaqpzN5iryUrC7LdSS81st/cr7Dxt6CNwDBFvWMUKYPWC/q
- lAH
-X-Received: by 2002:a05:600c:81c5:b0:48a:75b9:b0bc with SMTP id
- 5b1f17b1804b1-490428e6ab6mr404722335e9.29.1779965197808; 
- Thu, 28 May 2026 03:46:37 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4908b5841a7sm21617105e9.2.2026.05.28.03.46.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 May 2026 03:46:37 -0700 (PDT)
-Message-ID: <6d349d21-bf5a-4d7a-99be-997f205ea2ee@linaro.org>
-Date: Thu, 28 May 2026 12:46:35 +0200
+ d=1e100.net; s=20251104; t=1779965445; x=1780570245;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=9rkKefH7qkaM7PYGtNz39Smfm7od6r4vxNbFh/5YrUA=;
+ b=FJETYC4NEfw5Uzr7Nu8kWzYQQEfn9KuECANUJjApY5cndZxwNvbm0ZcQnZlGTQBirS
+ VI2UNPFuORMlyR8/yyBNGKWF2+fDJSQXFvZjCQvGm01e9DNHy1b9XELJc7GYAbN854jv
+ RfPg382XFxg8KzHdy4BxSJplSmJVqQZGqPlbPmBU0AK+R0YKbzL8sA8G5qbs0nnXYdJf
+ +fsQGbEAcyaeqfRzzgSRNAGl5y0Juss3vCJ6S20gOzXrup4G4bO9gD7B5mtmqM0mlZgs
+ UqNbBceHEcHMNrjgWElHsonp78q1n+3FmtEDjl/99Gmfx5gdnfP8dnN5O52gSwKOJk4v
+ jzyQ==
+X-Gm-Message-State: AOJu0YxLHKDfivo8G0s5ozLnqLzRtRsKrFklNI8JwTIPLIqtBVQIUDzD
+ RwqrYyh5AaXQRFqMYpViBWAu1VGOyWWH0/1+Cae2zkud2Sw5FnKzmK+/VtQZ6oed8YzRET78Veh
+ quse9aM9A6k78ZUAGB7nts9gvnz9hAdM5mHaKYoPPBA==
+X-Gm-Gg: Acq92OEMReifyWHB+u9jp9/I31Gsb2immLliUIwTKR9PFK8HJJCHyaPjX1jLfc1G54l
+ NVuE3xaIsPH+sacv2C13UaD26KxrzSfiRAPsog1WYRKfd14lW6KQoyWFefyJnilDrQ3ebje7CI5
+ bmajJF5U2e7/xMOKM8t8N4TNMUycYC83ZeJS32107lpFvfwsRT1WGXniWVuisKaIJjCdrHuPkCE
+ B3Hpvu8Gh4GTx0dBCbRFu74iqebBikroXUBLrWg/H2DCJGhBQnFrqQ7xQ8K+9JzMDNf5XqX5Qic
+ ssaASync4K+WFEk9PaHI/r/ulWNhhca6zGbmkM1EJEuTlHWUPIAIdWbv0PSUy9e6Sxc1LF69x0m
+ 2zA==
+X-Received: by 2002:a53:acd3:0:20b0:65e:3bde:7c14 with SMTP id
+ 956f58d0204a3-65ec98abf9emr19937828d50.32.1779965444708; Thu, 28 May 2026
+ 03:50:44 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tpm_tis_sysbus: defer resource allocation to realizefn
-Content-Language: en-US
-To: Mohammadfaiz Bawa <mbawa@redhat.com>, qemu-devel@nongnu.org,
- stefanb@linux.vnet.ibm.com, peter.maydell@linaro.org
-Cc: pbonzini@redhat.com, peterx@redhat.com, richard.henderson@linaro.org,
- pierrick.bouvier@linaro.org
-References: <20260528093123.55403-1-mbawa@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260528093123.55403-1-mbawa@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+References: <20260518-pr-pacbti-v1-0-8932a885b03d@foss.st.com>
+In-Reply-To: <20260518-pr-pacbti-v1-0-8932a885b03d@foss.st.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 28 May 2026 11:50:33 +0100
+X-Gm-Features: AVHnY4KJRmcjERNiffgoDdYHdUlGdwxutkidaNwXeY929YG_M0Vlg0VGmaz-2xs
+Message-ID: <CAFEAcA-EVi2K2=LgZ4QZXoX7qQAg8j7mCphWostTmpVtBzTJvw@mail.gmail.com>
+Subject: Re: [PATCH 0/3] target/arm: add support for Cortex-M pointer
+ authentication code
+To: =?UTF-8?Q?Torbj=C3=B6rn_SVENSSON?= <torbjorn.svensson@foss.st.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,40 +117,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/5/26 11:31, Mohammadfaiz Bawa wrote:
-> Calling memory_region_init_ram_device_ptr() and
-> memory_region_init_io() from tpm_tis_sysbus_initfn() crashes
-> when the device is introspected without being realized, because
-> the memory subsystem has not been initialized at that point.
-> 
-> So running:
->    $ qemu-system-aarch64 -device tpm-tis-device,help
-> 
-> triggers qdev_device_help() which creates the device object
-> to list its properties, calling instance_init, but never
-> realizefn. The memory region calls in instance_init then hit
-> uninitialized subsystems:
-> 
-> With CONFIG_DEBUG_TCG:
->    Assertion 'target_page.decided' failed. (physmem.c:2524)
-> 
-> Without CONFIG_DEBUG_TCG:
->    Assertion 'mutex->initialized' failed. (qemu-thread-posix.c:107)
-> 
-> Since realizefn is only called when the device is actually
-> used in a running VM, moving resource allocation there avoids
-> the crash without breaking introspection.
-> 
-> 
-> Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
-> ---
-> Changes in v2:
-> - Also move memory_region_init_io() to realizefn (Philippe)
-> - Make host_page_size const (Philippe)
-> - Reword commit message to cover both crash variants
-> 
->   hw/tpm/tpm_tis_sysbus.c | 18 ++++++++----------
->   1 file changed, 8 insertions(+), 10 deletions(-)
+On Mon, 18 May 2026 at 17:16, Torbj=C3=B6rn SVENSSON
+<torbjorn.svensson@foss.st.com> wrote:
+>
+> Testing an arm-none-eabi GCC toolchain using QEMU gives unpredictable
+> test results for some test cases. In the GCC testsuite function
+> check_effective_target_arm_pacbti_hw, the testsuite tries to identify
+> if the target supports PACBTI instructions. The test consists of:
+>
+>         __attribute__ ((naked)) int
+>         main (void)
+>         {
+>           asm ("pac r12, lr, sp");
+>           asm ("mov r0, #0");
+>           asm ("autg r12, lr, sp");
+>           asm ("bx lr");
+>         }
+>
+> Running the above code in QEMU will cause LR to get corrupted.
+> The reson for the corruption is that AUTG overlaps with the SMMLA
+> instruction, and SMMLA will write the result to Rn, that for
+> `AUTG R12, LR, SP` happens to match `LR`.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+If the test case is expecting to be able to run on any M-profile
+CPU, this is a bug in the test case. The AUTG instruction is
+specified as being UNPREDICTABLE if the DSP extension is implemented
+and the PACBTI extension is not (and to UNDEF if neither extension
+is implemented).
+
+(We could consider making the QEMU behaviour for these
+UNPREDICTABLE cases in SMMLA etc be "UNDEF" rather than
+"write to the PC/LR"; we choose to handle this kind of
+UNPREDICTABLE decode that way for other insns already.)
+
+> The solution to the above problem is to define the following new
+> Cortex-M instructions in QEMU:
+>
+> * AUT
+> * AUTG
+> * BXAUT
+> * PAC
+> * PACBTI
+> * PACG
+>
+> This patch series only implements the pointer authentication code part
+> of PACBTI. The branch target identification part is not implemented.
+
+I think that overall we need the full PACBTI implemented -- we
+can't advertise it in the CPU ID registers but only implement
+part of it, or only implement it for user-mode and not for
+system mode.
+
+thanks
+-- PMM
 
