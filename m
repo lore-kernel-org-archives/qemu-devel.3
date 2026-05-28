@@ -4,94 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ECE6CD6E44
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 13:50:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECD78CD6E44
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 13:55:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSb7s-0001iu-L8; Thu, 28 May 2026 09:50:20 -0400
+	id 1wSbCe-0002lf-Cf; Thu, 28 May 2026 09:55:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSb7o-0001hu-6i
- for qemu-devel@nongnu.org; Thu, 28 May 2026 09:50:16 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wSbCd-0002lN-4J
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 09:55:15 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSb7l-0003lk-EQ
- for qemu-devel@nongnu.org; Thu, 28 May 2026 09:50:15 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-49042aeeb75so82142995e9.1
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 06:50:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779976211; x=1780581011; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NsdN7CeCDhmLk9u6DNv20vpChFhuhsKQXvdM6wjh10I=;
- b=Rr/Icvk290M+TJOtvrtGqZIoSCE/N0C+TVHV3EJvoxlwjgokfYhhuach64T1fN7Z1Q
- x7+9d7wE8chbt9xlVGv7LhHS8bKJyd1ZrJ+dHbvs9GjQIIwdWdw8ecPj4Ok4FFNrvrj/
- 8usL2X9NCgwy1MPzfxRXlWC7jgqgaYXFNNNkKBspUP8Jm/yif9EubHtFmo5VLQOkLt5a
- CBm6vJPyPEcssCrLNTCwzJF7Hr7W5J9+AG1P+TwkdogZFrxVEsFNx7QWNoam2h3AYs3A
- wWbYZPw71Ixv3INmYe34edPEpu6zUlvk1lzF6ZOCXOM1VBbYN3o1JFs8KPYCHx2xzILn
- 4cMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779976211; x=1780581011;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NsdN7CeCDhmLk9u6DNv20vpChFhuhsKQXvdM6wjh10I=;
- b=jJ50t1E8HUx2rkJdH27Amc/V7eUMpBK7w4jNfgfQ5SqcBUApNHS8d8hVwehSgGPbhS
- Mth6tCD9P/0U0h51OK+UkotHsSWvpivqYik6v6f2fyf+XEkbqXhVJPErlcI2rkP+CImj
- gTvVHzMzhAmVGIgCm1xJ3DayV03KoH09b/CnrKHgG4ZguvCcpSUjFf8IO72hZ9SW+nW8
- kpO+/NllwZsY1fSrgKCbuMnCCHjVykX23ojV+E6sv5/bWyziUTLXrpxALF7/mFMNaMv7
- /JETF613NxHsG3Nq5Q81Xyg0SnaHstxr3xj23O6s+WomrlpxQS4KMrHBGKw+QArU3yvL
- TFDQ==
-X-Gm-Message-State: AOJu0YyU4kBpl11r1PW0GBYAV/kXigr6BAU6VE8CxDVq/l4Z3UFaNe8j
- mEywzoY/jOr/Mawoo5KOKtfmKiR4nM1BrACHloTXLozjn7+o0GnuIrQzRTFN4IefWUk=
-X-Gm-Gg: Acq92OFnf49TVVT5A957Xg4UxpkVKmoF9U0eI4JggDAOJf88qwhiKUCvWXTdIPnmWsL
- NhedhrNi6zZAJBszQ3yIGoNAu0Axu755mJjlppOP283BylMlt4h6AY3IOgPsfosgRoKxtgH2/pG
- mJBkd9UTPIV2PWIo+cDi7y8Dmc17NU6IKlqJ1bzJFTTZyGu3DRD5xE9MgglLMVKJ9pP0CGhUV6U
- zfPoyrYEI6tBMp6vDR5V2XkBQFQy1gEiD/8QRVIVQwGTmCmpmdr4XdKwZg1hO1A0yj3dUg0CpBx
- 4Itr2jlpJXgdORoso5rHYVSwaqH6T+qPkZCaE7lh78Ey2wVQ9xFF3/hTXrIklDsXTSIqaatYxx8
- RWTR/wkLKHFOekKeJwkJ6n4SXlSKxsQhy/yPV7T6R2MAua0JEaHhLVEEeEDV8bJEN+oKmIr1Ytn
- 6UnUk7IVuF/kxWkpcpACkfo5Juha/CXI374w==
-X-Received: by 2002:a05:600c:8484:b0:48a:906b:14ca with SMTP id
- 5b1f17b1804b1-490426cd8c4mr475241395e9.20.1779976211243; 
- Thu, 28 May 2026 06:50:11 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49092a82ea2sm73928135e9.9.2026.05.28.06.50.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 May 2026 06:50:10 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 913145F7DC;
- Thu, 28 May 2026 14:50:09 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  Alistair Francis <Alistair.Francis@wdc.com>,
- Peter Maydell <peter.maydell@linaro.org>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Anton Johansson
- <anjo@rev.ng>
-Subject: Re: [PATCH] docs/devel/tcg: Expand on multi-threaded TCG
-In-Reply-To: <20260528082022.32359-1-philmd@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Thu, 28 May 2026 10:20:22
- +0200")
-References: <20260528082022.32359-1-philmd@linaro.org>
-User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Thu, 28 May 2026 14:50:09 +0100
-Message-ID: <87cxyfwsmm.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wSbCb-0005Xa-0I
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 09:55:14 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 1A1516AB08;
+ Thu, 28 May 2026 13:55:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1779976511; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=Mvt8HAbeb+vfwDW+p52H+L0MhfCz/9ML0WXyabvacX4=;
+ b=wFajWEClzRkxvBuJQPDWMSgZiDzyv7Q1ApR2ApeaD0uM2YmuJypckfYN57q8+Lm5AD8gm4
+ 5gLwYBKjJHW5PCDtARtfqKP7zy1cRkZWvh608+DUQnlsKwtYC84EiJrb2YG5mkxqqSrFQU
+ BuS2z5XWO66VoUssqIpr8CFGyyUmcdo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1779976511;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=Mvt8HAbeb+vfwDW+p52H+L0MhfCz/9ML0WXyabvacX4=;
+ b=h1cnSJRR0GxOy1qI86XCEtshcsqjCj8wBZ0EUyDz07GLhQzt0uZk0oLIcpqtsR0NjsiTBk
+ pYiopjtcPj99E8DA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=wFajWECl;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=h1cnSJRR
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1779976511; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=Mvt8HAbeb+vfwDW+p52H+L0MhfCz/9ML0WXyabvacX4=;
+ b=wFajWEClzRkxvBuJQPDWMSgZiDzyv7Q1ApR2ApeaD0uM2YmuJypckfYN57q8+Lm5AD8gm4
+ 5gLwYBKjJHW5PCDtARtfqKP7zy1cRkZWvh608+DUQnlsKwtYC84EiJrb2YG5mkxqqSrFQU
+ BuS2z5XWO66VoUssqIpr8CFGyyUmcdo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1779976511;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=Mvt8HAbeb+vfwDW+p52H+L0MhfCz/9ML0WXyabvacX4=;
+ b=h1cnSJRR0GxOy1qI86XCEtshcsqjCj8wBZ0EUyDz07GLhQzt0uZk0oLIcpqtsR0NjsiTBk
+ pYiopjtcPj99E8DA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C2CA45AE02;
+ Thu, 28 May 2026 13:55:09 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id B+OWJD1JGGq0WgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 28 May 2026 13:55:09 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: berrange@redhat.com, Stefan Hajnoczi <stefanha@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Subject: [PATCH v1] qed: Don't try to drain during INMIGRATE
+Date: Thu, 28 May 2026 10:55:07 -0300
+Message-ID: <20260528135507.485-1-farosas@suse.de>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 1A1516AB08
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url,suse.de:dkim,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,211 +118,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+It's not possible to access the image file while there is an incoming
+migration in progress, the QEMU process doesn't hold any locks to the
+storage at this point so nodes are inactive. Attempting to drain leads
+to an assert at bdrv_co_write_req_prepare():
 
-> Significantly expands the TCG documentation to provide more
-> comprehensive overview of its internal architecture.
->
-> Use more rST anchors to improve cross-referencing across the
-> documentation.
->
-> Clarify front-end / optimization / back-end phases.
->
-> Detail a bit memory consistency barriers under MTTCG mode.
->
-> Add the following new sections:
->
->  - Register Allocation and Liveness analysis
->  - Overviews of the Vector/SIMD internal strategy
->  - Deterministic Execution (icount)
->  - TCG Plugins
->  - Instruction Decoding with decodetree
->
-> AI-used-for: docs
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
-> Based-on: <20260528073412.551117-1-pbonzini@redhat.com>
-> ---
->  docs/devel/multi-thread-tcg.rst |  2 +-
->  docs/devel/tcg-icount.rst       |  1 +
->  docs/devel/tcg.rst              | 89 +++++++++++++++++++++++++++++++++
->  3 files changed, 91 insertions(+), 1 deletion(-)
->
-> diff --git a/docs/devel/multi-thread-tcg.rst b/docs/devel/multi-thread-tc=
-g.rst
-> index da9a1530c9f..aa0b11ab360 100644
-> --- a/docs/devel/multi-thread-tcg.rst
-> +++ b/docs/devel/multi-thread-tcg.rst
-> @@ -4,7 +4,7 @@
->    This work is licensed under the terms of the GNU GPL, version 2 or
->    later. See the COPYING file in the top-level directory.
->=20=20
-> -.. _mttcg:
-> +.. _MTTCG:
->=20=20
->  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->  Multi-threaded TCG
-> diff --git a/docs/devel/tcg-icount.rst b/docs/devel/tcg-icount.rst
-> index a1dcd79e0fd..848c19a746f 100644
-> --- a/docs/devel/tcg-icount.rst
-> +++ b/docs/devel/tcg-icount.rst
-> @@ -2,6 +2,7 @@
->     Copyright (c) 2020, Linaro Limited
->     Written by Alex Benn=C3=A9e
->=20=20
-> +.. _icount:
->=20=20
->  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->  TCG Instruction Counting
-> diff --git a/docs/devel/tcg.rst b/docs/devel/tcg.rst
-> index 2786f2f6791..9af06018f6a 100644
-> --- a/docs/devel/tcg.rst
-> +++ b/docs/devel/tcg.rst
-> @@ -13,6 +13,16 @@ performances.
->  QEMU's dynamic translation backend is called TCG, for "Tiny Code
->  Generator". For more information, please take a look at :ref:`tcg-ops-re=
-f`.
->=20=20
-> +The translation process occurs in several distinct passes:
-> +
-> +1. **Front-end**: Guest instructions are parsed (often using the
-> +   `decodetree <Instruction Decoding (decodetree)_>`_ tool) and converted
-> +   into target-independent TCG Intermediate Representation (IR) opcodes.
-> +2. **Optimization**: TCG performs passes such as constant folding, liven=
-ess
-> +   analysis, and dead code elimination on the IR.
+   assert(!(bs->open_flags & BDRV_O_INACTIVE))
 
-Not all optimisation is done here by the way, some of the front-end ops
-will select operations based on TCG_TARGET_HAS_ before we get to the
-optimisation pass.
+The issue is reproducible by running iotest 181 on a host under cpu
+load. The migration must coincide with the header already containing
+the QED_F_NEED_CHECK flag.
 
-> +3. **Back-end**: The optimized IR is converted by a host-specific code
-> +   generator into native instructions for the host CPU.
-> +
->  The following sections outline some notable features and implementation
->  details of QEMU's dynamic translator.
->=20=20
-> @@ -44,6 +54,12 @@ translating it from the guest architecture if it isn=
-=E2=80=99t already available
->  in memory. Then QEMU proceeds to execute this next TB, starting at the
->  prologue and then moving on to the translated instructions.
->=20=20
-> +In :ref:`MTTCG` mode, each guest CPU is emulated by a separate host thre=
-ad.
-> +TCG ensures memory consistency by inserting memory barrier (``mb``) opco=
-des
-> +for guest instructions with ordering side effects. Direct block chaining
-> +across page boundaries is restricted to ensure that changes to memory
-> +mappings in one thread are correctly handled by others.
-> +
->  Exiting from the TB this way will cause the ``cpu_exec_interrupt()``
->  callback to be re-evaluated before executing additional instructions.
->  It is mandatory to exit this way after any CPU state changes that may
-> @@ -175,6 +191,12 @@ virtual to physical address translation is done at e=
-very memory
->  access.
->=20=20
->  QEMU uses an address translation cache (TLB) to speed up the translation.
-> +The software MMU partitions accesses into a **TLB fast-path** and a
-> +**TLB slow-path**. The fast-path handles RAM and ROM areas, where the TLB
-> +provides the direct offset between guest virtual addresses and host memo=
-ry.
-> +If an access does not match a fast-path entry, it falls through to the
-> +slow-path, which calls C helper functions to handle MMIO device emulatio=
-n.
-> +
->  In order to avoid flushing the translated code each time the MMU
->  mappings change, all caches in QEMU are physically indexed.  This
->  means that each basic block is indexed with its physical address.
-> @@ -190,6 +212,73 @@ memory areas instead calls out to C code for device =
-emulation.
->  Finally, the MMU helps tracking dirty pages and pages pointed to by
->  translation blocks.
->=20=20
-> +Register Allocation and Liveness
-> +--------------------------------
-> +
-> +During the translation phase, guest instructions are converted into TCG =
-IR
-> +using an **unlimited number of temporaries (TEMPs)**.
-> +This allows guest translators to express logic without being constrained
-> +by the finite register set of the host CPU.
-> +
-> +To resolve these TEMPs into physical registers, TCG performs two passes:
-> +
-> +1. **Liveness Analysis**: This pass determines the "live range" of each
-> +   temporary within a basic block. By identifying when a variable
-> +   becomes "dead" (i.e., its value is no longer needed), TCG can suppress
-> +   redundant moves and remove instructions that compute unused results.
-> +2. **Register Allocation**: The Global Register Allocator maps live TEMPs
-> +   to host physical registers. Fixed globals, such as the pointer
-> +   to the CPU architecture state (``cpu_env``), are often permanently
-> +   held in host registers to minimize memory traffic during execution.
-> +
-> +Vector/SIMD Internal Strategy
-> +-----------------------------
-> +
-> +TCG supports SIMD operations through a set of generic vector instructions
-> +(e.g., ``add_vec``, ``shli_vec``) parameterized by vector length and ele=
-ment
-> +size. The length is specified as a ``TCGType`` (V64, V128, or V256), and=
- the
-> +element size is given in log2 8-bit units.
-> +
-> +The internal strategy relies on the backend mapping these generic opcodes
-> +to native host SIMD instructions, such as x86 AVX or ARM NEON. If the ho=
-st
-> +backend does not support a specific vector operation  or length, TCG's
-> +expansion layer automatically decomposes the opcode into smaller support=
-ed
-> +vector sizes or standard integer operations.
-> +
-> +Deterministic Execution (icount)
-> +--------------------------------
-> +
-> +The :ref:`icount` mechanism provides deterministic execution by ensuring
-> +that each Translation Block executes a fixed number of instructions. This
-> +is essential for features like record/replay and deterministic virtual t=
-ime,
-> +where instruction counts serve as the system clock.
-> +
-> +Instrumentation and Plugins
-> +---------------------------
-> +
-> +:ref:`TCG Plugins` provide a mechanism for runtime instrumentation. Opco=
-des
-> +like ``plugin_cb`` and ``plugin_mem_cb`` are inserted during translation=
- to
-> +trigger callbacks in external modules, allowing analysis of instruction
-> +execution or memory access.
-> +
-> +Instruction Decoding (decodetree)
-> +---------------------------------
-> +
-> +The first step of the translation process is converting a raw bitstream =
-of
-> +guest instructions into a structured format that the translator can proc=
-ess.
-> +QEMU simplifies this using the ``decodetree.py`` script, which generates=
- C
-> +code decoders from a domain-specific language defined in ``.decode`` fil=
-es.
-> +
-> +The decodetree tool allows developers to define instruction **patterns**
-> +based on a bitmask and fixed bits. When a match is found, the generated
-> +decoder automatically  extracts defined **fields** (such as registers or
-> +immediates) and passes  them to a manually written translation function.
-> +
-> +This declarative approach drastically reduces the amount of error-prone
-> +manual bit-shifting and nested "if-else" logic required in guest transla=
-tors.
-> +
-> +For detailled implementation see :ref:`decodetree`.
-> +
->  Profiling JITted code
->  ---------------------
+The sequence of events is as follows, with the respective call stacks
+referenced below:
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+During block device init, bdrv_qed_attach_aio_context() starts the
+'need_check' timer. The timer will not fire during incoming migration
+as it uses QEMU_CLOCK_VIRTUAL (to avoid this very issue, as the code
+comment indicates).                                                   (0)
+
+However, there's still bdrv_qed_drain_begin() which uses the fact that
+the timer is live to decide whether to start the
+qed_need_check_timer_entry() directly.                                (1)
+
+The qed_need_check_timer_entry() eventually calls into
+qed_write_header() -> bdrv_co_pwrite() leading to the assert.         (2)
+
+Since we don't have an API for checking if a timer is enabled, an
+alternative is to skip this logic whenever the runstate is
+INMIGRATE. This actually matches the setting of the BDRV_O_INACTIVE
+flag at blockdev.c.
+
+The stacks:
+
+(0) == issues timer_mod ==
+ #6  in qed_start_need_check_timer       at ../block/qed.c:340
+ #7  in bdrv_qed_attach_aio_context      at ../block/qed.c:373
+ #8  in bdrv_qed_do_open                 at ../block/qed.c:556
+ #9  in bdrv_qed_open_entry              at ../block/qed.c:582
+ #10 in coroutine_trampoline             at ../util/coroutine-ucontext.c:175
+ #0  in qemu_coroutine_switch<+120>      at ../util/coroutine-ucontext.c:321
+ #1  in qemu_aio_coroutine_enter<+356>   at ../util/qemu-coroutine.c:293
+ #2  in aio_co_enter<+179>               at ../util/async.c:710
+ #3  in aio_co_wake<+53>                 at ../util/async.c:695
+ #4  in thread_pool_co_cb<+47>           at ../util/thread-pool.c:283
+ #5  in thread_pool_completion_bh<+241>  at ../util/thread-pool.c:202
+ #6  in aio_bh_call<+109>                at ../util/async.c:173
+ #7  in aio_bh_poll<+299>                at ../util/async.c:220
+ #8  in aio_poll<+690>                   at ../util/aio-posix.c:745
+ #9  in bdrv_qed_open<+392>              at ../block/qed.c:607
+ #10 in bdrv_open_driver<+327>           at ../block.c:1678
+ #11 in bdrv_open_common<+1619>          at ../block.c:2008
+ #12 in bdrv_open_inherit<+2556>         at ../block.c:4191
+ #13 in bdrv_open<+118>                  at ../block.c:4286
+ #14 in blk_new_open<+199>               at ../block/block-backend.c:458
+ #15 in blockdev_init<+2011>             at ../blockdev.c:612
+ #16 in drive_new<+3008>                 at ../blockdev.c:1008
+ #17 in drive_init_func<+51>             at ../system/vl.c:662
+ #18 in qemu_opts_foreach<+227>          at ../util/qemu-option.c:1148
+ #19 in configure_blockdev<+350>         at ../system/vl.c:721
+ #20 in qemu_create_early_backends<+343> at ../system/vl.c:2076
+ #21 in qemu_init<+12483>                at ../system/vl.c:3778
+ #22 in main<+46>                        at ../system/main.c:71
+
+(1) == sees timer_pending ==
+ #6  in bdrv_qed_drain_begin             at ../block/qed.c:391
+ #7  in bdrv_do_drained_begin            at ../block/io.c:366
+ #8  in bdrv_do_drained_begin_quiesce    at ../block/io.c:386
+ #9  in bdrv_child_cb_drained_begin      at ../block.c:1207
+ #10 in bdrv_parent_drained_begin_single at ../block/io.c:133
+ #11 in bdrv_parent_drained_begin        at ../block/io.c:64
+ #12 in bdrv_do_drained_begin            at ../block/io.c:364
+ #13 in bdrv_drained_begin               at ../block/io.c:393
+ #14 in blk_drain                        at ../block/block-backend.c:2101
+ #15 in blk_unref                        at ../block/block-backend.c:544
+ #16 in bdrv_open_inherit                at ../block.c:4197
+ #17 in bdrv_open                        at ../block.c:4286
+ #18 in blk_new_open                     at ../block/block-backend.c:458
+ #19 in blockdev_init                    at ../blockdev.c:612
+ #20 in drive_new                        at ../blockdev.c:1008
+ #21 in drive_init_func                  at ../system/vl.c:662
+ #22 in qemu_opts_foreach                at ../util/qemu-option.c:1148
+ #23 in configure_blockdev               at ../system/vl.c:721
+ #24 in qemu_create_early_backends       at ../system/vl.c:2076
+ #25 in qemu_init                        at ../system/vl.c:3778
+ #26 in main                             at ../system/main.c:71
+
+(2) == crashes ==
+ #5  in __assert_fail (assertion="!(bs->open_flags & BDRV_O_INACTIVE)", file="../block/io.c", line=1977
+ #6  in bdrv_co_write_req_prepare  at ../block/io.c:1977
+ #7  in bdrv_aligned_pwritev       at ../block/io.c:2099
+ #8  in bdrv_co_pwritev_part       at ../block/io.c:2316
+ #9  in bdrv_co_pwritev            at ../block/io.c:2233
+ #10 in bdrv_co_pwrite             at ../include/block/block_int-io.h:77
+ #11 in qed_write_header           at ../block/qed.c:128
+ #12 in qed_need_check_timer       at ../block/qed.c:305
+ #13 in qed_need_check_timer_entry at ../block/qed.c:319
+
+Note that this issue is not exactly the same as what's been reported
+in Gitlab, but given how easily this reproduces, I imagine it has to
+be happening in that setup as well.
+
+Link: https://gitlab.com/qemu-project/qemu/-/work_items/3515
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+CI run: https://gitlab.com/farosas/qemu/-/pipelines/2557314306
+---
+ block/qed.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/block/qed.c b/block/qed.c
+index da23a83d62..ccf32bb4ae 100644
+--- a/block/qed.c
++++ b/block/qed.c
+@@ -21,6 +21,7 @@
+ #include "qemu/module.h"
+ #include "qemu/option.h"
+ #include "qemu/memalign.h"
++#include "system/runstate.h"
+ #include "trace.h"
+ #include "qed.h"
+ #include "system/block-backend.h"
+@@ -373,6 +374,11 @@ static void bdrv_qed_drain_begin(BlockDriverState *bs)
+ {
+     BDRVQEDState *s = bs->opaque;
+ 
++    /* Nodes are inactive while waiting for an incoming migration. */
++    if (runstate_check(RUN_STATE_INMIGRATE)) {
++        return;
++    }
++
+     /* Fire the timer immediately in order to start doing I/O as soon as the
+      * header is flushed.
+      */
+-- 
+2.51.0
+
 
