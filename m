@@ -4,107 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3937BCD4F54
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 13:40:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D83DCD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 13:41:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSaxH-0004Kc-Pv; Thu, 28 May 2026 09:39:27 -0400
+	id 1wSazO-0005RW-Pd; Thu, 28 May 2026 09:41:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wSax9-0004K3-UG
- for qemu-devel@nongnu.org; Thu, 28 May 2026 09:39:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wSazN-0005RI-BS
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 09:41:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wSax7-0007ap-7S
- for qemu-devel@nongnu.org; Thu, 28 May 2026 09:39:15 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wSazL-0000To-Tl
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 09:41:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779975551;
+ s=mimecast20190719; t=1779975691;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=s/fWkcUcpNNAUjyW+qmOzo1tDZhLeSbJNrXoWW2G7E0=;
- b=eqRvy3Rh1BRuOSgAWoqJXnaMFC6NK9LPTbmj2kkzGVjxBthr7Uu59PfvcUqmuU41+9oXvD
- 2fNB8RSFYgBGflrd6ji2KyoOoJNRSpnks+51/VahNjNSsVhkaLDn009igRgsZJSXGPASXV
- 3ICKKXAGayTwx03K1CkLHKQBG8ini9U=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/PYY1+tA+DmBKcketrIi+KRx/LYAe4nCRT3MrjpT2aU=;
+ b=Pp/inSj45hWg0figQVzD3Bw90TSaRizGFGjqOfJmKaUxYtQ+Fv1+I+TMvStS+KRkdYS1Xv
+ aEhRMlr6dzWo+5wqRNV7Ll3mKsgecMuPvmAsiISNITfTVofpDJOQ6SH0m+e6LGDGNGDgJK
+ 1AEvxvYWjZdr0f81kSYeUjFNDueJ9aE=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-615-AuU2lYIEMoWVFeqVvYZMXQ-1; Thu, 28 May 2026 09:39:10 -0400
-X-MC-Unique: AuU2lYIEMoWVFeqVvYZMXQ-1
-X-Mimecast-MFC-AGG-ID: AuU2lYIEMoWVFeqVvYZMXQ_1779975548
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-90cbd806004so2638356385a.0
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 06:39:09 -0700 (PDT)
+ us-mta-544-pUpzYhsBN8m2osuks1YycA-1; Thu, 28 May 2026 09:41:29 -0400
+X-MC-Unique: pUpzYhsBN8m2osuks1YycA-1
+X-Mimecast-MFC-AGG-ID: pUpzYhsBN8m2osuks1YycA_1779975689
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-914b5249bf6so1290412885a.3
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 06:41:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779975548; x=1780580348; darn=nongnu.org;
+ d=redhat.com; s=google; t=1779975689; x=1780580489; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=s/fWkcUcpNNAUjyW+qmOzo1tDZhLeSbJNrXoWW2G7E0=;
- b=mfeUlIqqm06fRZIICat2P34ypM5fuE7wF1nSIxDa6ki5LasXSao/6XmIvpeLeHut+0
- nHZMthJa+7HOpOamdI8U5hUfFudnWdcAHyr5aW3EiG76l0ndqLVgCTzxJXoSJXse3m1y
- utv+hHC3oD71Gsa6VybYz+5r/tZrUx0Odp1fzWdNHc0WvOUQaXyAfKNr7tu3SU59bJPn
- RFJHAI2OBW4HT5VMqz87XkGKJimqIE9cdb7T42W1isTMS4odED1ZkoOY6K7FS8tIIENg
- fSLmxbtl7vBQrmWJmNE9jEeyb/X17VG2uk3kBx7ltr/EHKSyP1EYkFwaGnc5EuuhMwja
- eUIA==
+ bh=/PYY1+tA+DmBKcketrIi+KRx/LYAe4nCRT3MrjpT2aU=;
+ b=dJ9NNyAYqZiO9Z8iCldELJj9dR+hRbL9vDttk7vLKkkmNt3H4X7BYoy7JFytXfS2OF
+ IYQGWj/CtpVJE5tTxpBgRZ2a7F5T8IYJ+L7bmUMvlHO8yasluscfYOkeH407/jwRNbUq
+ 8hdlCtaaS2QmyIO6aVo0TntuOpjKDweOqF/EjziC1Te/UMX9aNV8LsJc35R2Q36bi2hg
+ u4wFVo4J5gH188XfRDoR/iB6t4fJ3rlraiO77UAG0hLZA5KUijKUqLnA1c5MBhEvwbFT
+ PZ99KRA9KnV90BXVegm61XJBv/Nis2HoRTeuukq2A3QWfIaVeomF8e4WsBK/5nPpHNb+
+ qYbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779975548; x=1780580348;
+ d=1e100.net; s=20251104; t=1779975689; x=1780580489;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=s/fWkcUcpNNAUjyW+qmOzo1tDZhLeSbJNrXoWW2G7E0=;
- b=OJfQY7oedLWaChoqArHQgQVeDHN0MYx3BzqP9Epv+Hr6+/yhwpEOmeMgJIlGsD7uqf
- 8pl1tMzd/oA9UOnizOvc3jbNPTn12B4LcaTzL82KyxmXfbZ5UqPNS2Zc1chS65rzdILe
- KqcTMITaUi0WhJ49hmt64EEFXKco/r/zb7ScKfd7t+lmsUF9Ih8HqJFij4gQvYaUwRCs
- 38FhqGdejGdMIzLatE2Sn8DF+gM2tgsFVluNT/LChhNKn1E0HAy2skJTVWHK8IHpelfJ
- Abh43BEHujKNyhFG68pkOkOlAtMzBPv3C1FbhD8s2pCadUQ0vZpdoAE1HxtdDuQsJ1ew
- 1fcg==
+ bh=/PYY1+tA+DmBKcketrIi+KRx/LYAe4nCRT3MrjpT2aU=;
+ b=r1PgifpqJK2nqs8GdH81lrDD2+BE1HHcNjAH9Z3kNb5EP2Fzvo8ZAZfuECZtoqVQQA
+ R0+PpdMI7oZpqN4vcq0j8tzaJkb8DDmtJKnrw54LMSQiQPoXEW3Vm8WGu76RrBu0Cp8s
+ zetO5eO9X1fT9oQgrxHNxZHxlQ5Ido1F0BObX9rsfv2Xr0XJSC+9mlevqGIYMxf+zrtx
+ xYOia/E6m18dkw/QjxFblXmN9WRaZDJsl86sIm9EyumwfqiauW2Jaib9pfcG8jDbY6ZW
+ kCQKm8qX1N2FG8wYokIB1MIXiPUowIYMAniqma1/jZ9Rp4a6itrtFk+UeYq3IueDfvMV
+ O8hw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9+agA9JoNUE+2pclrEb7tBRPFAWCgzBNV0cH/REgLKQqS51vtEYuqUfoOfHxLJUrrm9MtfnijWF+ER@nongnu.org
-X-Gm-Message-State: AOJu0Yyira0HWTvbITcZ6noxtAuhpSi+PEluwRqtD8Ybu1KWcKBUIzZK
- V1tZybpMAuwm0I0KNYN6cWUM3qV/hAYBFCgmM0caFaxuc70WeL2GPrTKEtL4YY1Rl6lfrbSLMhO
- 7pO4FOQUe51jRlW+fPp7fM7prw/xLMovu3ou+IgwMiWK6c5/yYO9WkEfN
-X-Gm-Gg: Acq92OFeJfsuIFBRK5M6kwF2YixvEMu/PuF095YYv/rp57wugEUZbbWo9bUsn7I13gW
- OOOFyE1ne4jU29o9sE1EDqEWtTJmtQau2+JmL2o6FthOSnsbvyvp4E8BElmZnbDlg3ASqup+kyb
- Xih56JR2OIF9+b6yiz58+MSP67NwHb6eJ6HARY4vAzlvi+g89pK2ndvTDiwGawRVaz91yCa4Pqp
- V3PxE43E8fCQoZ6T63d0kA8V/4OHfApCnCGTrx4+iqxARSuzpfAnWWa0T1HHZIpnu69kyTwYmAu
- netXhy2FrHBH7jQtde1dR21ciy8O0+i2b6lxK3+ekt5c3gd2uwtJyXzI8h/9E2eYGc/+SJZlNA/
- 6sA9VmchWG09iztRkrHJ5x3+y9MeqARIzFdYAZoi4XeYjAiRF7Y4KwN9i6Q==
-X-Received: by 2002:a05:620a:6cc5:b0:914:e429:5b42 with SMTP id
- af79cd13be357-914e4295b91mr2450172785a.51.1779975548479; 
- Thu, 28 May 2026 06:39:08 -0700 (PDT)
-X-Received: by 2002:a05:620a:6cc5:b0:914:e429:5b42 with SMTP id
- af79cd13be357-914e4295b91mr2450167285a.51.1779975547923; 
- Thu, 28 May 2026 06:39:07 -0700 (PDT)
+ AFNElJ8SDjCv+AduqyC03r1W1WMyAFau7DSKhZJK6j/r7+15y0RyFinIZSZiPFNKroU1T/bLJGl3GeOM9Plc@nongnu.org
+X-Gm-Message-State: AOJu0YyrlgYMIV5nnAJ3ZFTISa2b2xq5xR0q4cRQ3E2BewYvO76IKDpN
+ ac7IQhKm/ktBi6sWKY9fiHUyP0aGkP5KpVd9kkDKfA6OnroHn9Kd1IUIHh0Bb6GC/80qzewmALK
+ BCt8yptFvPBjbcrItmripHbx7FIvzXsSxzbCa7HD/zDrr6gZZqppZUuoe
+X-Gm-Gg: Acq92OFjFpfCjJMOWqZkgCnrI/4AqLthkgkwxL/1PHdjsr355J4tx+5w/84flyZltfw
+ JiG58kFvvV4QCZh8rT891xGhGTzLY36R1+gIE4nI4hqA+FvBtmqpxdNPWCm62RaYf0/dpvsFb6A
+ GkK1vOuoyjs5fYZO/d9E4Ad5xOjP73HjJKzH7hmuSDJ21kjt16DfNQui9/JMiytcHFPqxOO/6ci
+ RTM6dz7oYZPKAqWPfO6qneWoudbV0NWh8GL9QPgdFXPVxOBecExytwjiv6yumaziVaiP6o+n7x8
+ xFhwHRxVqDZF2oS1k8kBAnMoWyfByYBOq2FcnJQjYL5+osOQ12nJhloRYtmoeMPNNSsTJbM2vFM
+ kZmbNLF0/dyX/5oZREy4teb4vNDIAlWZt24yFfBuO+qA6bC9a9EqqdflpKA==
+X-Received: by 2002:a05:620a:179e:b0:914:c48c:4acf with SMTP id
+ af79cd13be357-914c48c4d98mr3103722785a.4.1779975688465; 
+ Thu, 28 May 2026 06:41:28 -0700 (PDT)
+X-Received: by 2002:a05:620a:179e:b0:914:c48c:4acf with SMTP id
+ af79cd13be357-914c48c4d98mr3103716985a.4.1779975687903; 
+ Thu, 28 May 2026 06:41:27 -0700 (PDT)
 Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-914f86e9bf5sm814983685a.8.2026.05.28.06.39.07
+ af79cd13be357-914f87d1b66sm828433485a.29.2026.05.28.06.41.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 May 2026 06:39:07 -0700 (PDT)
-Date: Thu, 28 May 2026 09:39:06 -0400
+ Thu, 28 May 2026 06:41:27 -0700 (PDT)
+Date: Thu, 28 May 2026 09:41:26 -0400
 From: Peter Xu <peterx@redhat.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Paolo Bonzini <pbonzini@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v5 1/7] memory: Export memory_region_set_ops()
-Message-ID: <ahhFepYkLT-uXbf7@x1.local>
-References: <cover.1779723483.git.balaton@eik.bme.hu>
- <d6fff532607b5153094cd6c72f78a2de5672aaec.1779723483.git.balaton@eik.bme.hu>
- <CAFEAcA9Nh9qZ1k_Pq04ajdP8ObrNpen4aYeu-mPNiYbRc9ho3Q@mail.gmail.com>
- <ec2a907a-9fab-d56a-83a2-409254146209@eik.bme.hu>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, jasowang@redhat.com,
+ armbru@redhat.com, farosas@suse.de, raphael.s.norwitz@gmail.com,
+ bchaney@akamai.com, qemu-devel@nongnu.org, berrange@redhat.com,
+ pbonzini@redhat.com, yc-core@yandex-team.ru,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v16 5/8] virtio-net: support local migration of backend
+Message-ID: <ahhGBuom-GTfouRA@x1.local>
+References: <20260522120534.77653-1-vsementsov@yandex-team.ru>
+ <20260522120534.77653-6-vsementsov@yandex-team.ru>
+ <20260524050632-mutt-send-email-mst@kernel.org>
+ <c34e9bba-0e98-4694-870f-5f92f34f1076@yandex-team.ru>
+ <ahRgbmVKuonjprB2@x1.local>
+ <62045016-a892-43b8-87b1-869ef8d8e9d7@yandex-team.ru>
+ <a572dadb-6ea6-48f2-a77c-3a4531dbad49@yandex-team.ru>
+ <f84de0fe-8c93-4c3f-ad05-de40410b4697@yandex-team.ru>
+ <ahdI7Vl5KraK566D@x1.local>
+ <fb47888d-ce33-4380-a477-f17491d6c430@yandex-team.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ec2a907a-9fab-d56a-83a2-409254146209@eik.bme.hu>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <fb47888d-ce33-4380-a477-f17491d6c430@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,56 +130,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 25, 2026 at 10:57:39PM +0200, BALATON Zoltan wrote:
-> On Mon, 25 May 2026, Peter Maydell wrote:
-> > On Mon, 25 May 2026 at 16:47, BALATON Zoltan <balaton@eik.bme.hu> wrote:
-> > > 
-> > > Make memory_region_set_ops() function public. In some cases such as
-> > > when devices have configurable endianness or different behaviour based
-> > > on settings it is necessary to change the ops callback after the
-> > > memory region is created. Export memory_region_set_ops() function for
-> > > this.
-> > 
-> > If some other CPU is in the middle of using the old MemoryRegionOps
-> > when the device swaps them out under its feet, what happens?
+On Wed, May 27, 2026 at 11:38:14PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 27.05.26 22:41, Peter Xu wrote:
+> > Personally I liked part of your proposal.. normally I would rather leave it
+> > for later, but then it means we will be stuck with this incoming-fds API.
 > 
-> In my limited test with PPC and ati-vga this seems to work and the switch
-> would happen in device register write so nothing else is expected to run
-> accessing the device at the same time at that point. I can't tell for all
-> possible cases but that would then be a problem in the caller not in this
-> function. Callers are expected to call it when appropriate which I could
-> mention in the doc comment if needed.
-> 
-> > You could also remove the old MR from its container and add a different
-> > one with the different behaviour when the guest changes the config,
-> > or have both of them in the container and toggle which is visible
-> > with memory_region_set_enabled(). That might potentially be more
-> > awkward but it would avoid having to look into the memory region
-> > API internals.
-> 
-> That could also work if I had a container but it's switching the endianness
-> of a PCI BAR which is registered with pci_register_bar() so it's easiest to
-> switch the ops on the region than hacking around it using two more otherwise
-> unneeded memory regions as I also can't swap PCI BARs so it would need a
-> container aditionally to two regions using the same callbacks just with
-> different endianness. Allowing setting the ops of a single region seems
-> simpler.
+> I am OK to mark "incoming-fds" as unstable, to simplify future rework,
+> if there is a good solution.
 
-I think PeterM's proposal makes more sense.
-
-Having two MRs registered under the same offset of parent and dynamically
-enable/disable seems to be a common way to solve similar problems in QEMU.
-I don't see why it is hacky if we can allow dynamic flip of mr->ops, which
-smells more risky.
-
-Exporting that API may invite more abuse, which I'm not sure it's good.
-
-The other thing I want to mention is having ops flippable relies on "BQL
-serializes everything", but it's already not true with exceptions like
-HPET, see memory_region_enable_lockless_io().  I think this will introduce
-tech debts that we don't necessarily need.
-
-Thanks,
+Sure, if that's unstable then it's not a concern, I also don't want to
+block this series as late.  I'll see if I can prepare some RFC patches this
+week or next for this as a general problem.
 
 -- 
 Peter Xu
