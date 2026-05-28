@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28F9ACD5BD5
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 20:26:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F114CD6E45
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 20:27:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wShJK-0003X8-RR; Thu, 28 May 2026 16:26:35 -0400
+	id 1wShJF-0003CS-2Q; Thu, 28 May 2026 16:26:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShIJ-0001kl-5z
- for qemu-devel@nongnu.org; Thu, 28 May 2026 16:25:40 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShI2-0001Pd-HG
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 16:25:14 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShIG-0005Vz-R9
- for qemu-devel@nongnu.org; Thu, 28 May 2026 16:25:30 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-43d76dd4ee8so8303853f8f.2
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 13:25:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShI0-0005QK-9d
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 16:25:14 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-49042aeeb75so86438685e9.1
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 13:25:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779999927; x=1780604727; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779999910; x=1780604710; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=TquQUdlMRRYHj7XmSbmtpExSYqQiNjBhucGszPwHlX0=;
- b=a94y2Us/I6RN591r8WtGK5DV/bQ0sJYwyH6qAM/wCULltu696WLHItl33jfdCzFl/V
- YYckQ1R4N8u5or5s/lWACkNlDa8H2wpXbadO0hPgpI5s8qVH1jdFuH7+Xn/NhVhiTVWy
- MUzqwvauEWbbGGpfxQSM697l9kiX31QzFoAcatZKQbt6FN0+VJmP7FCCDtB8z+Z3YDBc
- vAXwOWOXLOeonKer1BrHZTImNzU019h68ln+9n92rRux8b+zSQJ6NoyCsdKTFoGMAOzN
- HDu1/xtA3EjwZTh6utofBtaMysZjhj1DC3aN2IP92dZ3OFNR77RoLQCKChC0fMCJn3Tb
- mzcw==
+ :reply-to; bh=U73T0WwDvouI7JUnn7GqDjLuee0qDIQnKq6EjhvcV/g=;
+ b=TLEyuxmmq+LWAhhZTKr/HALnZjyvQNsSodgK1dO0onRHRATDvrXGqhuC0Kh2qphO0P
+ bmin5HylvV8lqBAvllsWJzhsDkcKuYlmoL197JYpxojv5Dk5kXPBMiPzw+TnwcZvIZN8
+ /wQFRKDDVqykfDe+UkWW/rg8RcD0GNuZuqQIzAkTaJPg1DpVFrMndmhcOT4EZnLxBD3M
+ ZweboVNuETsk9daWe9r6zkDKT424d1LBPao0KXmeMGM5S8Q3GZxQoCCoNHdTM60IZYEK
+ QMTbXn6EwWYA83wZbBK3Kdetym4PK6Wux8+jELcF/TiyeBjcqEStgfoUr6SFXgnha2F7
+ 09FA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779999927; x=1780604727;
+ d=1e100.net; s=20251104; t=1779999910; x=1780604710;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=TquQUdlMRRYHj7XmSbmtpExSYqQiNjBhucGszPwHlX0=;
- b=C6JKvP4p3ri/IZDeLcVZAjiDlKVUqXy5aQpS3c0nEzP1Q6wlTUwS39WMEpU8nQu1Ih
- ZwqOjiFSC2yezVLeWFkaBMYP2O7WnihdV9LgNKyjQ5PKRrMclg26RHERp6bqy6jlh/wu
- PxK6Ge52iB2/3ZFpprx+HzWCJCbPejbInIMSrE3FQRlREFztRNOVJrSHbsbdIXKZFvkO
- owrml47gFbmbPyUNf6Kkd/BlRSB5RhwhH4XWZi7Jq33O/cNJirqgWv3+RIxfrqpenYmc
- ZJEBVzx6Kklff3S3M4wQHogCjIOoSDUB0EOD1bBUnremByKfFjn7hgPZAoK7+tgOgwc3
- UwVA==
-X-Gm-Message-State: AOJu0YzgtoUDhxQZirDO7Qk52QVdP/aUdoy1euOh0JT4tF16JYKzz8Dj
- /rVSbUHonDSsQi0nHCdr6Q8yTKgRzcz3TAIIM32sJenNaya1IbK49Kfx2EJSEZiY0iicorwlYU6
- fBvCOoqUu7w==
-X-Gm-Gg: Acq92OF6KGRThEwvnhDH7naAAIllK/WIrWvs+g0Yft5aGDIUP+kIVfv66ya4u0H7QIl
- q4KBsY68L0kRBlkHhc8auiKDLl0uvH5KL/i0yyvmdnj4uKo1jgSP3mUriLi7ThxEVFBqq/3TPuE
- kr48NTXvurssFd6fzy9j7lViTGa9g5A6zPCsc/zgGDD0FmlFb9V8/b31lMijCdJDrhsTm9IynLc
- j4klcJimD8TOV30rcnR6aGbYlsxqrxiSyhxMBJJGN921izCbhkBEZb0AJO83XMZLIXq+UMKb3ht
- 3z4Df/V0QfinxqNJ+EFdHzVR032GOuWm98paPO4KlnFtL1T9zNybCEDtq/8ib7aP+5oQaF2Ac0v
- fkVTjLa8r4CkOKkmItvap5uzsDz96SY2RQngHfJLv0RvOqIkolebavJELbQtpgVz2/p8oAY9jXA
- lGlw5YjMXatCvndbO6iJlMC0JDyzj+Xh5dlAMOHFuRnjC7V7jwVa5oWRR8EaDTOEzXHg==
-X-Received: by 2002:a05:6000:25fa:b0:45e:655d:6f7 with SMTP id
- ffacd0b85a97d-45ef04da07cmr1211633f8f.24.1779999926658; 
- Thu, 28 May 2026 13:25:26 -0700 (PDT)
+ bh=U73T0WwDvouI7JUnn7GqDjLuee0qDIQnKq6EjhvcV/g=;
+ b=lcoedfW/urcw6ao2TmtEMNt9LNsm9TROlkFLqHY5KLv+xxRkbjOm0V3XacV9jPS3yj
+ bbOJUn5wEHcDrkVc1mc1Y5FHDrsKImvaLMX+CBdMQTiPumaLn5bD48brsvB62Z/16CUB
+ BnVi15c7jLoC904QRiW7VoA5cCoa/qyyDD7XbgLiLrntGBm7p3zXfxEn0sd7+5J54e+p
+ N3Di53jFnQL0NlKql4PfnIdZADgHxpdmS4mFjcUXVAspx8SwQ+WVozWWqCBLi03rwkxr
+ BVBYF0JmjuVNgtcdpZSJw8LNZChhTNdO/8qZ877wIa5fierKD9Ljmz2Ksvsrm8tlLvVi
+ Z/1A==
+X-Gm-Message-State: AOJu0YzGQHocKbJH2TMfsfxXx4TX3FpAxoz1pV8b6VsPedGofnzwWjXb
+ ycqVitI0ozWLHt7yRSAJuDVdxmCAc78TqVOPIPw1tbpyPFr9WJQl0Wi/Q43Z5nPGv2qCRqIU576
+ FLr4hsiUx2Q==
+X-Gm-Gg: Acq92OEwoTlY4ZZ+JnSnT32VLa5hfc3HlP6yVeWg0SfKmFx4Qd9jX1Ixg1DvbzBeF72
+ fvpN5jyKbkCY7MmK3S9jbV1+tk76EqXQsIbpUjKyrj+8fw6pGniiXD5CZuk+b06MEcqENSPnNyn
+ b1qhpnNVf6mtq9kVpdIJXO9/WfaquG8/4N/h1D7vkTub5kkrpAJsak5wPgYvXUKhdCd2/fdax1f
+ 2TGOKT973sJNVm7TvPR6WJkhUrHm+cgiQTXLVbb3UkkFlIMP99+y1v/L/h8+TDOygvgpnTjRVbM
+ LtNOXa95nP0j6lMYsodNrLkhViLf/8WENiVAEdBg5nZXcbSoF8lriW129dKmd8ZYcWqrmAy5FKF
+ 9zPPiOfHXH8JVY7Oadg4PQU+NfIGRqpJkBcW/oZ/fYlgO51ms+dtZPfv1KrJT6pVpO8OIgii3XV
+ 2iHwvJwT8g0YfGP+TRkyJgcbu66Us1dw8R9xsv2E+8f8bwlLlDuxksYTxjry0xE4Fy9IZBKV7Fz
+ piY
+X-Received: by 2002:a05:600c:4ba8:b0:48a:563c:c8e2 with SMTP id
+ 5b1f17b1804b1-4909c092130mr446635e9.3.1779999910469; 
+ Thu, 28 May 2026 13:25:10 -0700 (PDT)
 Received: from m15.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45edb5a2c87sm15844126f8f.17.2026.05.28.13.25.25
+ 5b1f17b1804b1-49092a82ea2sm106621905e9.9.2026.05.28.13.25.09
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 28 May 2026 13:25:25 -0700 (PDT)
+ Thu, 28 May 2026 13:25:09 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 20/22] target/microblaze: Convert to translate_for_debug
-Date: Thu, 28 May 2026 22:22:50 +0200
-Message-ID: <20260528202253.49122-21-philmd@linaro.org>
+Subject: [PULL 18/22] hw/tpm/tpm_tis_sysbus: defer resource allocation to
+ realize
+Date: Thu, 28 May 2026 22:22:48 +0200
+Message-ID: <20260528202253.49122-19-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260528202253.49122-1-philmd@linaro.org>
 References: <20260528202253.49122-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,93 +100,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Mohammadfaiz Bawa <mbawa@redhat.com>
 
-The get_phys_addr_attrs_debug method of SysemuCPUOps is used only by
-x86 and microblaze.  Convert microblaze to the newer
-translate_for_debug method, as a step towards being able to remove
-get_phys_addr_attrs_debug.
+Calling memory_region_init_ram_device_ptr() and
+memory_region_init_io() from tpm_tis_sysbus_initfn() crashes
+when the device is introspected without being realized, because
+the memory subsystem has not been initialized at that point.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+So running:
+  $ qemu-system-aarch64 -device tpm-tis-device,help
+
+triggers qdev_device_help() which creates the device object
+to list its properties, calling instance_init, but never
+realizefn. The memory region calls in instance_init then hit
+uninitialized subsystems:
+
+With CONFIG_DEBUG_TCG:
+  Assertion 'target_page.decided' failed. (physmem.c:2524)
+
+Without CONFIG_DEBUG_TCG:
+  Assertion 'mutex->initialized' failed. (qemu-thread-posix.c:107)
+
+Since realizefn is only called when the device is actually
+used in a running VM, moving resource allocation there avoids
+the crash without breaking introspection.
+
+Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260528161450.3564396-2-peter.maydell@linaro.org>
+Message-ID: <20260528093123.55403-1-mbawa@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/microblaze/cpu.h    |  4 ++--
- target/microblaze/cpu.c    |  2 +-
- target/microblaze/helper.c | 16 +++++++++-------
- 3 files changed, 12 insertions(+), 10 deletions(-)
+ hw/tpm/tpm_tis_sysbus.c | 18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
-diff --git a/target/microblaze/cpu.h b/target/microblaze/cpu.h
-index 068da605295..b9602f72b94 100644
---- a/target/microblaze/cpu.h
-+++ b/target/microblaze/cpu.h
-@@ -369,8 +369,8 @@ struct MicroBlazeCPUClass {
- #ifndef CONFIG_USER_ONLY
- void mb_cpu_do_interrupt(CPUState *cs);
- bool mb_cpu_exec_interrupt(CPUState *cs, int int_req);
--hwaddr mb_cpu_get_phys_addr_attrs_debug(CPUState *cpu, vaddr addr,
--                                        MemTxAttrs *attrs);
-+bool mb_cpu_translate_for_debug(CPUState *cs, vaddr addr,
-+                                TranslateForDebugResult *result);
- #endif /* !CONFIG_USER_ONLY */
- G_NORETURN void mb_cpu_do_unaligned_access(CPUState *cs, vaddr vaddr,
-                                            MMUAccessType access_type,
-diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
-index c6a456dd5ec..a97c92a7b68 100644
---- a/target/microblaze/cpu.c
-+++ b/target/microblaze/cpu.c
-@@ -428,7 +428,7 @@ static ObjectClass *mb_cpu_class_by_name(const char *cpu_model)
- 
- static const struct SysemuCPUOps mb_sysemu_ops = {
-     .has_work = mb_cpu_has_work,
--    .get_phys_addr_attrs_debug = mb_cpu_get_phys_addr_attrs_debug,
-+    .translate_for_debug = mb_cpu_translate_for_debug,
- };
- #endif
- 
-diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c
-index 3434ea47e8c..6a982c18c0f 100644
---- a/target/microblaze/helper.c
-+++ b/target/microblaze/helper.c
-@@ -280,8 +280,8 @@ void mb_cpu_do_interrupt(CPUState *cs)
-     }
- }
- 
--hwaddr mb_cpu_get_phys_addr_attrs_debug(CPUState *cs, vaddr addr,
--                                        MemTxAttrs *attrs)
-+bool mb_cpu_translate_for_debug(CPUState *cs, vaddr addr,
-+                                TranslateForDebugResult *result)
+diff --git a/hw/tpm/tpm_tis_sysbus.c b/hw/tpm/tpm_tis_sysbus.c
+index 6bec30c36fc..f9cd1c8b5c6 100644
+--- a/hw/tpm/tpm_tis_sysbus.c
++++ b/hw/tpm/tpm_tis_sysbus.c
+@@ -100,19 +100,9 @@ static void tpm_tis_sysbus_initfn(Object *obj)
  {
-     MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
-     hwaddr paddr = 0;
-@@ -289,10 +289,6 @@ hwaddr mb_cpu_get_phys_addr_attrs_debug(CPUState *cs, vaddr addr,
-     int mmu_idx = cpu_mmu_index(cs, false);
-     unsigned int hit;
- 
--    /* Caller doesn't initialize */
--    *attrs = (MemTxAttrs) {};
--    attrs->secure = mb_cpu_access_is_secure(cpu, MMU_DATA_LOAD);
+     TPMStateSysBus *sbdev = TPM_TIS_SYSBUS(obj);
+     TPMState *s = &sbdev->state;
+-    size_t host_page_size = qemu_real_host_page_size();
 -
-     if (mmu_idx != MMU_NOMMU_IDX) {
-         hit = mmu_translate(cpu, &lu, addr, 0, 0);
-         if (hit) {
-@@ -303,7 +299,13 @@ hwaddr mb_cpu_get_phys_addr_attrs_debug(CPUState *cs, vaddr addr,
-         paddr = addr;
-     }
+-    memory_region_init_io(&s->mmio, obj, &tpm_tis_memory_ops,
+-                          s, "tpm-tis-mmio",
+-                          TPM_TIS_NUM_LOCALITIES << TPM_TIS_LOCALITY_SHIFT);
  
--    return paddr;
-+    *result = (TranslateForDebugResult) {
-+        .physaddr = paddr,
-+        .lg_page_size = TARGET_PAGE_BITS,
-+        .attrs.secure = mb_cpu_access_is_secure(cpu, MMU_DATA_LOAD),
-+        .attrs.debug = 1,
-+    };
-+    return true;
+     sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
+     sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq);
+-
+-    s->ppi.buf = qemu_memalign(host_page_size,
+-                                ROUND_UP(TPM_PPI_ADDR_SIZE, host_page_size));
+-    memory_region_init_ram_device_ptr(&s->ppi.ram, obj, "tpm-ppi",
+-                                      TPM_PPI_ADDR_SIZE, s->ppi.buf);
+     sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->ppi.ram);
  }
  
- bool mb_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+@@ -120,6 +110,7 @@ static void tpm_tis_sysbus_realizefn(DeviceState *dev, Error **errp)
+ {
+     TPMStateSysBus *sbdev = TPM_TIS_SYSBUS(dev);
+     TPMState *s = &sbdev->state;
++    const size_t host_page_size = qemu_real_host_page_size();
+ 
+     if (!tpm_find()) {
+         error_setg(errp, "at most one TPM device is permitted");
+@@ -131,6 +122,13 @@ static void tpm_tis_sysbus_realizefn(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
++    s->ppi.buf = qemu_memalign(host_page_size,
++                               ROUND_UP(TPM_PPI_ADDR_SIZE, host_page_size));
++    memory_region_init_io(&s->mmio, OBJECT(dev), &tpm_tis_memory_ops,
++                          s, "tpm-tis-mmio",
++                          TPM_TIS_NUM_LOCALITIES << TPM_TIS_LOCALITY_SHIFT);
++    memory_region_init_ram_device_ptr(&s->ppi.ram, OBJECT(dev), "tpm-ppi",
++                                      TPM_PPI_ADDR_SIZE, s->ppi.buf);
+     vmstate_register_ram(&s->ppi.ram, dev);
+ }
+ 
 -- 
 2.53.0
 
