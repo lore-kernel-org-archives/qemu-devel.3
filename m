@@ -4,58 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B5DCCD6E44
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 12:16:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D658ECD6E44
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 12:25:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSZec-0005Wf-5n; Thu, 28 May 2026 08:16:02 -0400
+	id 1wSZnI-0006pb-8w; Thu, 28 May 2026 08:25:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alanosong@163.com>) id 1wSZeZ-0005WG-Kj
- for qemu-devel@nongnu.org; Thu, 28 May 2026 08:15:59 -0400
-Received: from m16.mail.163.com ([220.197.31.5])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wSZnE-0006oL-RV; Thu, 28 May 2026 08:24:57 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alanosong@163.com>) id 1wSZeT-0006Kd-4f
- for qemu-devel@nongnu.org; Thu, 28 May 2026 08:15:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
- Message-ID; bh=6pm61MUc6RCE2OPopc+VagxlQGCVQkZJK1tZiGlGxck=; b=p
- 6jGDTMWuF6oLBW6fmpYWRzIsRrPcRaeP41OCKd9pVRIedqbiLBK5WLqKfAW7NKYY
- 6WSe1JwEqFmJ1LLYIPlttfNzwrSO7zZUrOWGbVo6apduE3URZNyjg6W7VJe0P8nW
- AiTMHPNCIH/2oJqp1zwsvsM25CmY0H4yEMEfiIJKUQ=
-Received: from alanosong$163.com ( [59.173.202.83] ) by
- ajax-webmail-wmsvr-40-119 (Coremail) ; Thu, 28 May 2026 20:12:18 +0800
- (CST)
-X-Originating-IP: [59.173.202.83]
-Date: Thu, 28 May 2026 20:12:18 +0800 (CST)
-From: "Alano Song" <alanosong@163.com>
-To: qemu-devel@nongnu.org
-Cc: dave@treblig.org, pbonzini@redhat.com, zhao1.liu@intel.com
-Subject: Re:[PATCH] target/i386/monitor: Refine `info tlb` command logic
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2023.4-cmXT build
- 20260403(27802f6d) Copyright (c) 2002-2026 www.mailtech.cn 163com
-In-Reply-To: <20260524124129.174254-1-AlanoSong@163.com>
-References: <20260524124129.174254-1-AlanoSong@163.com>
-X-NTES-SC: AL_Qu2cC/Wcv0so7iSaZ+kcm0wQgOk5XsCwu/wk3YNec/8EvTj/8QcGeUViF0nawO+XLxiOuiOZQTpUzuhlUq11i9lciS/LujS6me+R18vrmg==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_142023_1803991991.1779970338432"
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wSZnB-000209-GI; Thu, 28 May 2026 08:24:56 -0400
+Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.183]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64SCON9C072008
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 28 May 2026 21:24:39 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=RxZUOf8ni6a8SIg/8EgGkqqYQg3EENoeddI1Vb1aoQQ=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-Id:To:Subject:Date;
+ s=rs20250326; t=1779971079; v=1;
+ b=WjmggZB2RupmxwbrduemVN60aRmub8CdXLmQ7yTD/9SsDUdP6OrH69HMR0ZWFdVR
+ PMAd2jY41XcFzJwHWxOscuNCZShNUtQkvThOSvWsKu+jucUw7eNF9YOucScwg+iG
+ jRKILhxx0dLE6YYAxY5GtD5qntDUwbGZxwx8YkDqUG/z/BBGtZ+RTfdYyjR+4PHK
+ Gu3tfDDCF4f8gaLwQdu4ayonHEVSnbeCrjw3tvk4a2EKK/3kuc3RaCVBr2DzTEYW
+ B0Xm/4qKRxNndKU8Tw9Qgwl5UndZM2HyCaNsM7euY1up+fVJrJWwv10KBSghmHUs
+ P67SM7XtOv94H//iLT+zFg==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 28 May 2026 21:24:05 +0900
+Subject: [PATCH] hw/cxl: Fix cxl_fmws_set_memmap() range check
 MIME-Version: 1.0
-Message-ID: <56debb66.9386.19e6e7fee81.Coremail.alanosong@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: dygvCgD3n9QiMRhqj2KtAA--.19672W
-X-CM-SenderInfo: xdod00pvrqwqqrwthudrp/xtbC9gL0CWoYMSJflgAA3h
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-Received-SPF: pass client-ip=220.197.31.5; envelope-from=alanosong@163.com;
- helo=m16.mail.163.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260528-cxl-v1-1-a470c8255264@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDUyML3eSKHN0U46Q0S8OkxGSDZDMloMqCotS0zAqwKdGxEH5xaVJWanI
+ JSKtSbS0AcnVUiWcAAAA=
+X-Change-ID: 20260528-cxl-d3bf91bac0c6
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Fan Ni <fan.ni@samsung.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-arm@nongnu.org,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.16-dev-16047
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5805;
+ i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
+ bh=AJDH0QO4O1OhWeasipmp1MRUM1hKVFxHeg8QcUDXHsY=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ5aE8U8z3p1PYguNVl2Jnrz33gnXb7dKVr3O/BYeoPhbf
+ 3VhqrBIRykLgxgXg6yYIktK0W5ujejaT4UJ8S0wc1iZQIYwcHEKwESOcjD803LYvXh+dVt5jKbL
+ Rem+kH1s8bdzRQuldmQZvI9uKVjziuGvyK5qFnWbl5ob1E/tkmcvaH5y9TfjrUqDA9tPNke5bn7
+ ODQA=
+X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
+ fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,56 +85,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-------=_Part_142023_1803991991.1779970338432
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+cxl_fmws_set_memmap() leaves the zero-initialized base address of a CXL
+fixed window unchanged when it does not fit in the memory map, which
+results in incorrect mapping. Change the function to report an error
+instead.
 
-CgpBdCAyMDI2LTA1LTI0IDIwOjQxOjI5LCBBbGFub1NvbmdAMTYzLmNvbSB3cm90ZToKPldoZW4g
-Ym9vdGluZyBhbiBpMzg2IGd1ZXN0LCB0aGUgYGluZm8gdGxiYCBjb21tYW5kCj5tYXkgd2FsayB0
-aGUgZW50aXJlIHBhZ2UgdGFibGUgaGllcmFyY2h5IGFuZCBlbWl0Cj5hbiBlbm9ybW91cyBhbW91
-bnQgb2Ygb3V0cHV0IChhcyBtYW55IGFzIDgwMCsgbWlsbGlvbgo+ZW50cmllcyB1bmRlciBteSB0
-ZXN0KS4KPkl0IHdpbGwgdGFrZSBkb3plbnMgb2YgbWludXRlcyB0byBwcmludCBhbGwgdGhlIGlu
-Zm8sCj5iZWNhdXNlIGVhY2ggbW9uaXRvciBwcmludCBmdW5jdGlvbiB3aWxsIGhvbGRzICdtb25f
-bG9jaycuCj5UaGlzIGVmZmVjdGl2ZWx5IGhhbmdzIHRoZSBxZW11IG1vbml0b3IsIGFuZCBldmVu
-IGxlYWRpbmcKPnRvIHByb2dyYW0gZXhpdCBkdWUgdG8gdGltZW91dC4KPgo+U28gaXQgbWF5IGJl
-IGJldHRlciB0byBzaG93IG9ubHkgdGhlIGZpcnN0IDMyIGVudHJpZXMKPmFuZCB0aGUgbGFzdCBl
-bnRyeSBieSBkZWZhdWx0Lgo+Cj5BbmQgaWYgZnVsbCBvdXRwdXQgaXMgcmVxdWlyZWQsIHRoZSB1
-c2VyIGNhbiByZWRpcmVjdAo+dGhlIG91dHB1dCB0byBhIGZpbGUgYnkgc3BlY2lmeWluZyBhIGZp
-bGUgbmFtZSwgZS5nLjoKPmBpbmZvIHRsYiB4eHgudHh0YC4KPgo+U2lnbmVkLW9mZi1ieTogQWxh
-bm8gU29uZyA8QWxhbm9Tb25nQDE2My5jb20+Cj4tLS0KPiBobXAtY29tbWFuZHMtaW5mby5oeCAg
-fCAgMTAgKy0KPiB0YXJnZXQvaTM4Ni9tb25pdG9yLmMgfCAyMzAgKysrKysrKysrKysrKysrKysr
-KysrKysrKysrKysrKysrKy0tLS0tLS0tCj4gMiBmaWxlcyBjaGFuZ2VkLCAxOTUgaW5zZXJ0aW9u
-cygrKSwgNDUgZGVsZXRpb25zKC0pCj4KCgpQaW5nIGZvciBjb2RlIHJldmlldyA6KQoKCkJlc3Qg
-UmVnYXJkcywKQWxhbm8uCgo=
-------=_Part_142023_1803991991.1779970338432
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+The Arm virt machine passes the exclusive end of the memory map while
+the i386 pc machine passes the inclusive end to cxl_fmws_set_memmap().
+Change the i386 pc machine to pass the exclusive end and perform the
+range check accordingly in cxl_fmws_set_memmap().
 
-PGRpdiBkYXRhLW50ZXM9Im50ZXNfbWFpbF9ib2R5X3Jvb3QiIHN0eWxlPSJsaW5lLWhlaWdodDox
-Ljc7Y29sb3I6IzAwMDAwMDtmb250LXNpemU6MTRweDtmb250LWZhbWlseTpBcmlhbCI+PGRpdiBz
-dHlsZT0ibWFyZ2luOiAwOyI+PGJyPjwvZGl2PjxwcmU+QXQgMjAyNi0wNS0yNCAyMDo0MToyOSwg
-QWxhbm9Tb25nQDE2My5jb20gd3JvdGU6CiZndDtXaGVuIGJvb3RpbmcgYW4gaTM4NiBndWVzdCwg
-dGhlIGBpbmZvIHRsYmAgY29tbWFuZAomZ3Q7bWF5IHdhbGsgdGhlIGVudGlyZSBwYWdlIHRhYmxl
-IGhpZXJhcmNoeSBhbmQgZW1pdAomZ3Q7YW4gZW5vcm1vdXMgYW1vdW50IG9mIG91dHB1dCAoYXMg
-bWFueSBhcyA4MDArIG1pbGxpb24KJmd0O2VudHJpZXMgdW5kZXIgbXkgdGVzdCkuCiZndDtJdCB3
-aWxsIHRha2UgZG96ZW5zIG9mIG1pbnV0ZXMgdG8gcHJpbnQgYWxsIHRoZSBpbmZvLAomZ3Q7YmVj
-YXVzZSBlYWNoIG1vbml0b3IgcHJpbnQgZnVuY3Rpb24gd2lsbCBob2xkcyAnbW9uX2xvY2snLgom
-Z3Q7VGhpcyBlZmZlY3RpdmVseSBoYW5ncyB0aGUgcWVtdSBtb25pdG9yLCBhbmQgZXZlbiBsZWFk
-aW5nCiZndDt0byBwcm9ncmFtIGV4aXQgZHVlIHRvIHRpbWVvdXQuCiZndDsKJmd0O1NvIGl0IG1h
-eSBiZSBiZXR0ZXIgdG8gc2hvdyBvbmx5IHRoZSBmaXJzdCAzMiBlbnRyaWVzCiZndDthbmQgdGhl
-IGxhc3QgZW50cnkgYnkgZGVmYXVsdC4KJmd0OwomZ3Q7QW5kIGlmIGZ1bGwgb3V0cHV0IGlzIHJl
-cXVpcmVkLCB0aGUgdXNlciBjYW4gcmVkaXJlY3QKJmd0O3RoZSBvdXRwdXQgdG8gYSBmaWxlIGJ5
-IHNwZWNpZnlpbmcgYSBmaWxlIG5hbWUsIGUuZy46CiZndDtgaW5mbyB0bGIgeHh4LnR4dGAuCiZn
-dDsKJmd0O1NpZ25lZC1vZmYtYnk6IEFsYW5vIFNvbmcgJmx0O0FsYW5vU29uZ0AxNjMuY29tJmd0
-OwomZ3Q7LS0tCiZndDsgaG1wLWNvbW1hbmRzLWluZm8uaHggIHwgIDEwICstCiZndDsgdGFyZ2V0
-L2kzODYvbW9uaXRvci5jIHwgMjMwICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKyst
-LS0tLS0tLQomZ3Q7IDIgZmlsZXMgY2hhbmdlZCwgMTk1IGluc2VydGlvbnMoKyksIDQ1IGRlbGV0
-aW9ucygtKQomZ3Q7PC9wcmU+PGRpdj48YnI+PC9kaXY+PGRpdj48c3BhbiBzdHlsZT0iZm9udC1m
-YW1pbHk6IG1vbm9zcGFjZTsiPlBpbmcgZm9yIGNvZGUgcmV2aWV3IDopPC9zcGFuPjwvZGl2Pjxk
-aXY+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OiBtb25vc3BhY2U7Ij48YnI+PC9zcGFuPjwvZGl2
-PjxkaXY+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OiBtb25vc3BhY2U7Ij5CZXN0IFJlZ2FyZHMs
-PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OiBtb25vc3BhY2U7Ij5B
-bGFuby48L3NwYW4+PC9kaXY+PGRpdj48YnI+PC9kaXY+PC9kaXY+
-------=_Part_142023_1803991991.1779970338432--
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+ include/hw/cxl/cxl_host.h |  2 +-
+ hw/arm/virt.c             |  6 +++---
+ hw/cxl/cxl-host-stubs.c   |  4 ++--
+ hw/cxl/cxl-host.c         | 12 +++++++-----
+ hw/i386/pc.c              | 12 ++++++------
+ 5 files changed, 19 insertions(+), 17 deletions(-)
+
+diff --git a/include/hw/cxl/cxl_host.h b/include/hw/cxl/cxl_host.h
+index 21619bb748ab..ed34c3159f59 100644
+--- a/include/hw/cxl/cxl_host.h
++++ b/include/hw/cxl/cxl_host.h
+@@ -16,7 +16,7 @@
+ void cxl_machine_init(Object *obj, CXLState *state);
+ void cxl_fmws_link_targets(Error **errp);
+ void cxl_hook_up_pxb_registers(PCIBus *bus, CXLState *state, Error **errp);
+-hwaddr cxl_fmws_set_memmap(hwaddr base, hwaddr max_addr);
++bool cxl_fmws_set_memmap(hwaddr *cursor, hwaddr end, Error **errp);
+ void cxl_fmws_update_mmio(void);
+ GSList *cxl_fmws_get_all_sorted(void);
+ 
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index b090233893c5..a22778575cfb 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -2536,9 +2536,9 @@ static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
+     if (device_memory_size > 0) {
+         machine_memory_devices_init(ms, device_memory_base, device_memory_size);
+     }
+-    vms->highest_gpa = cxl_fmws_set_memmap(ROUND_UP(vms->highest_gpa + 1,
+-                                                    256 * MiB),
+-                                           BIT_ULL(pa_bits)) - 1;
++    vms->highest_gpa = ROUND_UP(vms->highest_gpa + 1, 256 * MiB);
++    cxl_fmws_set_memmap(&vms->highest_gpa, BIT_ULL(pa_bits), &error_fatal);
++    vms->highest_gpa--;
+ }
+ 
+ static VirtGICType finalize_gic_version_do(const char *accel_name,
+diff --git a/hw/cxl/cxl-host-stubs.c b/hw/cxl/cxl-host-stubs.c
+index 9b515913ea4d..fa87cea0e8b9 100644
+--- a/hw/cxl/cxl-host-stubs.c
++++ b/hw/cxl/cxl-host-stubs.c
+@@ -11,9 +11,9 @@
+ void cxl_fmws_link_targets(Error **errp) {};
+ void cxl_machine_init(Object *obj, CXLState *state) {};
+ void cxl_hook_up_pxb_registers(PCIBus *bus, CXLState *state, Error **errp) {};
+-hwaddr cxl_fmws_set_memmap(hwaddr base, hwaddr max_addr)
++bool cxl_fmws_set_memmap(hwaddr *base, hwaddr max_addr, Error **errp)
+ {
+-    return base;
++    return true;
+ };
+ void cxl_fmws_update_mmio(void) {};
+ 
+diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+index a94b893e9991..33421b3ca174 100644
+--- a/hw/cxl/cxl-host.c
++++ b/hw/cxl/cxl-host.c
+@@ -429,7 +429,7 @@ void cxl_fmws_update_mmio(void)
+     object_child_foreach_recursive(object_get_root(), cxl_fmws_mmio_map, NULL);
+ }
+ 
+-hwaddr cxl_fmws_set_memmap(hwaddr base, hwaddr max_addr)
++bool cxl_fmws_set_memmap(hwaddr *cursor, hwaddr end, Error **errp)
+ {
+     GSList *cfmws_list, *iter;
+     CXLFixedWindow *fw;
+@@ -437,14 +437,16 @@ hwaddr cxl_fmws_set_memmap(hwaddr base, hwaddr max_addr)
+     cfmws_list = cxl_fmws_get_all_sorted();
+     for (iter = cfmws_list; iter; iter = iter->next) {
+         fw = CXL_FMW(iter->data);
+-        if (base + fw->size <= max_addr) {
+-            fw->base = base;
+-            base += fw->size;
++        if (end - *cursor < fw->size) {
++            error_setg(errp, "A CXL fixed memory window does not fit in the memory map");
++            return false;
+         }
++        fw->base = *cursor;
++        *cursor += fw->size;
+     }
+     g_slist_free(cfmws_list);
+ 
+-    return base;
++    return true;
+ }
+ 
+ static void cxl_fmw_realize(DeviceState *dev, Error **errp)
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 2ecad3c503fb..eadf37096533 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -747,7 +747,7 @@ void pc_memory_init(PCMachineState *pcms,
+     PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+     X86MachineState *x86ms = X86_MACHINE(pcms);
+     hwaddr maxphysaddr, maxusedaddr;
+-    hwaddr cxl_base, cxl_resv_end = 0;
++    hwaddr cxl_cursor = 0;
+     X86CPU *cpu = X86_CPU(first_cpu);
+     uint64_t res_mem_end;
+ 
+@@ -857,11 +857,11 @@ void pc_memory_init(PCMachineState *pcms,
+         MemoryRegion *mr = &pcms->cxl_devices_state.host_mr;
+         hwaddr cxl_size = MiB;
+ 
+-        cxl_base = pc_get_cxl_range_start(pcms);
++        cxl_cursor = pc_get_cxl_range_start(pcms);
+         memory_region_init(mr, OBJECT(machine), "cxl_host_reg", cxl_size);
+-        memory_region_add_subregion(system_memory, cxl_base, mr);
+-        cxl_base = ROUND_UP(cxl_base + cxl_size, 256 * MiB);
+-        cxl_resv_end = cxl_fmws_set_memmap(cxl_base, maxphysaddr);
++        memory_region_add_subregion(system_memory, cxl_cursor, mr);
++        cxl_cursor = ROUND_UP(cxl_cursor + cxl_size, 256 * MiB);
++        cxl_fmws_set_memmap(&cxl_cursor, maxphysaddr + 1, &error_fatal);
+         cxl_fmws_update_mmio();
+     }
+ 
+@@ -892,7 +892,7 @@ void pc_memory_init(PCMachineState *pcms,
+     rom_set_fw(fw_cfg);
+ 
+     if (pcms->cxl_devices_state.is_enabled) {
+-        res_mem_end = cxl_resv_end;
++        res_mem_end = cxl_cursor;
+     } else if (machine->device_memory) {
+         res_mem_end = machine->device_memory->base
+                       + memory_region_size(&machine->device_memory->mr);
+
+---
+base-commit: e89049b3ba5f1f0468bc0d294173345597514a1b
+change-id: 20260528-cxl-d3bf91bac0c6
+
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
 
