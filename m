@@ -4,130 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8CF7CD4F54
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 13:13:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7965CD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 13:15:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSaXE-0004z6-E9; Thu, 28 May 2026 09:12:28 -0400
+	id 1wSaZi-00066a-Om; Thu, 28 May 2026 09:15:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wSaXC-0004yg-DX
- for qemu-devel@nongnu.org; Thu, 28 May 2026 09:12:26 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wSaX8-0005km-VF
- for qemu-devel@nongnu.org; Thu, 28 May 2026 09:12:25 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64S8vqvt124476
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 13:12:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=qcppdkim1; bh=2VD1tzwDa7yMXVs8tT4zzHBWZk5uSTM6cVW
- eQ2acPxs=; b=nwqlmNDGD3EMoSdiQk5kEfocj0mRVV8YiXWQVRN3xuYutbkEaGA
- mDdlm7ElINHRpIL9YoQVTuP8ENK0YWfxcqkPpSSspq7X0kcHFa3jAKusdVXRCPju
- 5Izwx4SqAHIUrAm56MK0UhR59NoUZOXvefYf8LqsscqBw70Rbdx6Oph4d6fkPzfG
- P69xGWZ9qVJFtG554sdDhqwaaflC24KY1GkdMafKJqyAz0fQXknOsILlIQ74tB2Z
- tM/5uO2/9pOvHJLbDibkT13nrwj3gaEpIwa7nkBI7hOrBM1Ud0EZkQjADADqoeMM
- T0rh4jFA7rEqwlZ3gBvv39sVRjb+mxdPgHg==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ee7ycatpy-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 13:12:19 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-8aca29dcd69so162631336d6.1
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 06:12:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSaZg-00065r-8a
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 09:15:00 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSaZd-0006Yn-DC
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 09:14:59 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4904127c32cso41569385e9.2
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 06:14:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1779973939; x=1780578739; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=2VD1tzwDa7yMXVs8tT4zzHBWZk5uSTM6cVWeQ2acPxs=;
- b=LopTXMIguZgkJeTonAoTn/HIS3Qa0UOkwL7/O/Busdh4UTMa54HUd4gYlwrfwQSWV3
- Tpxd9K7Vpm9sSC6F8yhVKw/aQ8CCU/mYE4dJISY4CQQXI/rHQT/OSWM/ARrd16W6tQlH
- Gu38s3CJ4K9zzZeV4er9g3p/pmYCESwtxgxiHcUjpYqHM4r619LbG1ZciyMxGOQSptBT
- 88IlP2H8RND8THQNsUUp2lHFDYCkfCS1mGvGd1GrcYBOEiNk4K42tcwfK/KWQH3Ux9Am
- s1E4uUlGNwjHQXlM75wsDD4msn8Ge7na0NUkCXR3rvYlEeabNB5982b0R6QWkkx4Yd+2
- SNcw==
+ d=linaro.org; s=google; t=1779974094; x=1780578894; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=W1sXnDjBtedl4dlu3qx2UCX04Ft34HYDbeu+lvubeXM=;
+ b=QE6kUVGWQRer6JTdcPhpCG8ctTLKZy+Vptt5QmdxQ6ay/3lcusW8qjT/0TsYQaOLgT
+ GnF3xb+9DFr1P0Jc55BWKjoHQ1lhL9XimUdO53ZaNiC+32DzGw4aoNU4U3oFAMTZDdDl
+ NhCLY1FoAE27tSQuSLrjsP9kQ7zR/GkzNRheaoPrBthnuPBY0mZckv6eQTy3Gn+QmWoL
+ iDOHDiInEZcJQMHioRCcFUx7ssPVoAshrKEeH6LAHdtUxLfzYbhQimamFMudeM+pdgir
+ l58j10dQaQrKbs8Nt/GGaZcYpZ+6uXHhtWvNK4uuDZ3/bc/kaaWP5whcV4K819HtcT00
+ ECww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779973939; x=1780578739;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2VD1tzwDa7yMXVs8tT4zzHBWZk5uSTM6cVWeQ2acPxs=;
- b=S0fXoHoAvYPjeX9g3QwI78VkV7qysqOdEl5jGU4DFVhPTdZ/bi26QDFgOkkdwzNXx9
- lHuaQEGEhwTdD5uoPJmxLrLhV7v7f0ouU4Pm18eyIm9qKtiawI1a2H6T3jkt6+1b5Wky
- wt12z/ddoeI0JGgIXVr8oFSE/K2O2fWTWWBkNRT8JHe0iKog3YbAJ0vh2M23CxuD807O
- RVECz7h446/hJ0reBUXbISnbPWnzxIjsPrhZwX8KaYJfbQ70hR7q5Olfk79zfiICL5Ix
- jxmQX+gf1a1r9Yzq2qfTjW3JMrSVuApRAyqq3PLtA9d74FVcfszkhP3DwmwlIn0zK0rh
- VX0Q==
-X-Gm-Message-State: AOJu0YyGorIicXaZ08YOxueloH3JqWFzzUMakT9FNrR8xSCZo6hmrqPX
- X6Gq1sEtxv+b3yfe+t6rOYv9A+ZPiBcrJytSy88V75ZPDH30FWsT4anxTb4I9xeoovfWv1QG5Az
- LbTGqUBgkiS8GF4mI4abq9HIiDeG3EJx1+vV8bBh8v85U7iivps0RZagZQ0vscQI5XQ==
-X-Gm-Gg: Acq92OEsMJGFCOfG8suExpRBtxPnX3uwTShlkDG7CEMoh6unHRu6ED7XYNxLpZRihTh
- wccwr6YDvd2OBCZrTxbmHPo1mDuLSOgF5Cshdb+H2Umwy4xvm5QAOj7zt49NjQ7sb+kzvv6SZn1
- Xg7oUoSkx33pq7OgPVrbIyjhyipYLrTPN0rqPzETkKVEyNprFSHcfvi1+94GheJNu+tcVaM9mig
- DkZLWyphWREGe+/ex/xquCvWD2DxodCknTqdGwZpnFFxwg35vSWoecQ5aM3MQ5GpGuo/u2W+Flo
- uZSLmbM+GjhZLXM3tzonqPl+CEqT0OwXtcFWZaT7kJpBv3UsJEjqZ3nOfz5qpJHSxq/XYUYq63a
- dnR9v51eZvMrMIvTBXWRe6+GR4OC3hpuGTSwxncovDtMqphMbQgd0f970OsgMybvFvd0dpVQ=
-X-Received: by 2002:a05:6214:2c0a:b0:8cc:c85:8aab with SMTP id
- 6a1803df08f44-8cc7b61c1b2mr436561976d6.15.1779973938828; 
- Thu, 28 May 2026 06:12:18 -0700 (PDT)
-X-Received: by 2002:a05:6214:2c0a:b0:8cc:c85:8aab with SMTP id
- 6a1803df08f44-8cc7b61c1b2mr436561466d6.15.1779973938449; 
- Thu, 28 May 2026 06:12:18 -0700 (PDT)
-Received: from QCOM-UWl2o8bcGT.qualcomm.com ([177.170.193.103])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8cccf5428f0sm25000796d6.39.2026.05.28.06.12.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 May 2026 06:12:18 -0700 (PDT)
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Subject: [PATCH v3 0/1] target/riscv: deprecate 'debug' CPU property and Debug
- 0.13
-Date: Thu, 28 May 2026 10:12:13 -0300
-Message-ID: <20260528131214.2251075-1-daniel.barboza@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20251104; t=1779974094; x=1780578894;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=W1sXnDjBtedl4dlu3qx2UCX04Ft34HYDbeu+lvubeXM=;
+ b=oQjCX+xw2QH+VTW7Om4P7yTuoz8yAmx5wDJGXbxo+TI245krI/6bf1xYas71Ol5jz4
+ Smpg8Wmjq+1Xl3b70fNFUYJFxn0vDCS5Yq0koqsvPqg5zbm+AswE/UXqhIjitSwRL9/Q
+ s0wjf79doazEuVykb+in3oiE+yAu/MBpdWHzwhGUh1kpIhrEkoj6wSQJy+2+C/R3flDq
+ PhtENdhJrCmHDsZwxE/w19Oj69pnEVxNxf0Z8CIZ6gFlnfP3Copx6RHB6yEaI0Ki9A4L
+ wujxvEW4P+dJqqlFA60/ymrXRCH9VAGVoOXktMNaeOqgjU9YaKgtYVYTEpmXLLOhqMNW
+ lu7g==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8fkNAf0rjk/nRe/ZkRXOL8Qbz1IkdDRrZ/fipC8rnbHLpUJQXnuAXz9y79OFsaaaBGOxTu/jla9FrE@nongnu.org
+X-Gm-Message-State: AOJu0YwCsy+2peYrTaLGDnLni1vyLi8xmL+ZzwFkBEUT/Up+yRlXq/jG
+ wj0fbhiZzjOK1aceysi2LDrkF/RMgDIOqCT48iMs89ZO8VHoa0uFq/yb3N0gwpXS8H4=
+X-Gm-Gg: Acq92OE7/ReKW9ySaH4IVT+hnYtWGV9BWj+JedaI0ANUlumUTy60zo2fJVHaEd1jZYO
+ FX2l46IHBQBfncB6tsV2mryjFY3GFus774enoCbg3YcbewtT27/7g4CsHcoTJhKzJ+BYEokY98c
+ IoPMmMY2ctyL+6XMjO7WGCdCjS1vZuHGdcQPGWYt5pFBOrRsShPcXOHlge4m0616lz/ioQqIEHn
+ mZ9CLXwkU5jctHcPhapqc3rRT4jZgar2KV7Ynv3qe53rdt6fkB5PXO6GM1ZWj/tdyjcixFLXROC
+ mLKLFSGKFKGqp6o3fEcTFaoQqvJIshuKkWnzJfg/NSXqBuGafD8dEZ0K+uv37ejPB1k8aUC4jFL
+ eTgK/HJf93YilerT7u2kg9sEGvWQohKizDnVOGslJmhDzhSFG33qP7ajmWXtZX5CYqBWdEStrkg
+ U/K3ey4DP+YR//sGruNgp4OjHmYsnGkCbyIw5vr8oKhZOOSCZm/5X/hFbN5xe9jirknro5/IOEt
+ tiy
+X-Received: by 2002:a05:600d:6413:20b0:488:78f2:6b0 with SMTP id
+ 5b1f17b1804b1-490428ed552mr336011285e9.29.1779974094195; 
+ Thu, 28 May 2026 06:14:54 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4908b57054esm17360705e9.3.2026.05.28.06.14.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 28 May 2026 06:14:53 -0700 (PDT)
+Message-ID: <97305cce-c9d4-462d-994e-69c81798234e@linaro.org>
+Date: Thu, 28 May 2026 15:14:52 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mailmap: Update email addresses for Daniel Henrique
+ Barboza
+Content-Language: en-US
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+References: <20260528083814.32795-1-philmd@linaro.org>
+ <ce9f76c7-7a19-48df-a5f9-675573570b50@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ce9f76c7-7a19-48df-a5f9-675573570b50@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=VOntWdPX c=1 sm=1 tr=0 ts=6a183f33 cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=e/1ukXmujkxnBaF7Br2KEw==:17
- a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=bGfrn8OicFjwyuoRC2gA:9 a=1HOtulTD9v-eNWfpl4qZ:22
-X-Proofpoint-GUID: u8CyqbIwtWhhYM7JJMzMeYXAjusXXxt1
-X-Proofpoint-ORIG-GUID: u8CyqbIwtWhhYM7JJMzMeYXAjusXXxt1
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI4MDEzNCBTYWx0ZWRfX+DjM14ODMaR5
- W85vu5SEyWjO3FNm3KP9YNejNXC6eZR0BUvJIr++7MGDCe8GXzv3W9zWnLSQhJRsZ1WrHsNKXjZ
- nQsuYV2h0IjgbWSGIosTKUXHOXv5dXZMdQ0B32dSuaQt82t14WN4Gn9LMg/P0DuP5dEEyXmEBeB
- ySuNsU7m/y6qrXGBZBnsXFWoASsoQC+hhTw9kNg3fp74IIQiLBYA6C66QZQzpYh4Pn1gii5m5Gu
- jKZBPlRMDQZH2pEdmyqVYToR7uCJZlKOca5sofaMMJgwampaUMf7/llC339zd84YVW1tiR3YQGj
- re5dT8WtIXo8N5g7/rMlqK0o+Ij64Kb0vYIQFV5wjrneNowWqgxf4kLBFIBhMC+lgAm0b6pz3kq
- ln9lIaKrX0FdEVDD3DWLFUyDFoFnZ5jXgNtptN/ZyDdQdlcAiLxSaFnf703irDATXK+Mhy6aDJq
- 552c12+c4hyd3P4l8Yg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-05-28_03,2026-05-28_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 adultscore=0 impostorscore=0 suspectscore=0
- lowpriorityscore=0 bulkscore=0 clxscore=1015 malwarescore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605280134
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,31 +105,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On 28/5/26 13:25, Daniel Henrique Barboza wrote:
+> 
+> 
+> On 5/28/2026 5:38 AM, Philippe Mathieu-Daudé wrote:
+>> Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>> I suppose your gmail one could also go
+> 
+> Yeah, got a handful of patches on that one as well.
+> 
+> If you could add the entry for "danielhb413@gmail.com" in this patch
+> that would be great.
 
-In this new version I rephrased the commit message and the deprecated.rst docs
-to make it clear that we're moving past Debug 0.13 and supporting Debug 1.0 only,
-as suggested by Alistair in v2.
+OK, done and queued, thanks!
 
-No other changes made.
-
-Changes from v2:
-- reworded commit msg and deprecated.rst to mention Debug 0.13
-  deprecation.
-- v2 link: https://lore.kernel.org/qemu-devel/20260527181822.1945644-1-daniel.barboza@oss.qualcomm.com/
-
-Daniel Henrique Barboza (1):
-  target/riscv: deprecate 'debug' CPU property and Debug 0.13
-
- docs/about/deprecated.rst         | 19 ++++++++++++
- target/riscv/cpu.c                | 50 ++++++++++++++++++++++++++++---
- target/riscv/cpu_cfg_fields.h.inc |  2 +-
- target/riscv/csr.c                |  2 +-
- target/riscv/machine.c            | 24 +++++++--------
- target/riscv/tcg/tcg-cpu.c        |  2 +-
- 6 files changed, 80 insertions(+), 19 deletions(-)
-
--- 
-2.43.0
-
+> 
+> 
+> And also slap in a
+> 
+> 
+> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> 
+> 
+> And thanks for doing it!  I completely forgot about .mailmap ....
+> 
+>> ---
+>>   .mailmap | 2 ++
+>>   1 file changed, 2 insertions(+)
 
