@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A67BCD5BD5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ED6ACD6E45
 	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 20:26:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wShJ9-0002v5-4I; Thu, 28 May 2026 16:26:23 -0400
+	id 1wShJB-00033P-P0; Thu, 28 May 2026 16:26:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShID-0001jC-Bo
- for qemu-devel@nongnu.org; Thu, 28 May 2026 16:25:31 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShIU-0001r2-53
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 16:25:42 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShI9-0005VI-BD
- for qemu-devel@nongnu.org; Thu, 28 May 2026 16:25:23 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4903f7a90d1so61625895e9.2
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 13:25:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShIP-0005Xo-3d
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 16:25:40 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4903d730b1fso64875385e9.2
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 13:25:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779999919; x=1780604719; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779999934; x=1780604734; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=vvrrJ6klvGgz/Fo/Urxcb2omaYPI3WwqyE98ZbkO4fI=;
- b=uOj67wNFR+tiTbVD+DLztY/nePejMtUT11m1qy1lUFAZtMy4zjv5K5lA+idwt1tzqU
- ifFwALNZAu2N6dX0nEBcsORNij9F2CUckuAz25Wl1R4hZNqx5ySJ7YeClvjLIvE1RNV8
- A2BqxlAKpJIC7/lgZNXvVdcrmvXocqjHzII8NcJA75VB0rh5ch+NE69DPxQi7+4O5ISi
- BLZnQNbvHjUuoA+i0nrtnwecqYlNruch6H3Ka+Dr2x7679SlNz5ryH6en3JHL0gm1PrZ
- 8SZuz6YVhSjyvKIOXH4zrUozl9lKUE/UkSQNlVWsEvZve4BkyERvk2po5sv+Z7RIFnUS
- ytdA==
+ :reply-to; bh=BDOgqoOGucIqtzn9iaM6xKaLbloEdhZE8KyBivwE2Ug=;
+ b=HkWZpgJ+rJb//25/T7YJ6tfkNbFuqR8b1koadqdhRoNZIznxylLhul7cQ6hVk6tTyf
+ BL1YxIYRPEs/jc20xvjdJegVxcDEPbzYHjg6OAiOtdVRPZ/pjBZWguL97QJzg1AWurYM
+ Ww5AM0etCaxiEg3lxBSqMQ0DpWwD+WgQm2JYy1qMzSc6ZXPV7S4NF3qTYVy1ivRmSxIl
+ 1EOHl9KDQEVu8c4tbM9DARMI+NsW757qIHAZ1O/PsvXsQ/BoszQJ9BGOr46TGE+Z9V93
+ itzVdhW3FnFsrWLhgDCdtZcH83SVhwbSFHqagD7EUwsRMFtf82o2DBszctUmedL3MFWf
+ 5QoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779999919; x=1780604719;
+ d=1e100.net; s=20251104; t=1779999934; x=1780604734;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=vvrrJ6klvGgz/Fo/Urxcb2omaYPI3WwqyE98ZbkO4fI=;
- b=ZPQy5mBZLhsGt4XECyB5YtBqgSxodZM8RSucf4SrKjOg4YIcd+PJ94HUtkFf9pQo2p
- H91OZZsvpdTIILkcmDoRJuEABUQ6bVVbEkZdlxVI5LHKjrbeHE9iBgVVxP8UnOXb8y9A
- at1XJ99o8O+hlUyB/LQrlzIBctz6awwF6t+Eo3ikIzBqS2Rj3WzPpiRK7MrkOpGsRKJZ
- Hr/aQQuitjkHoucWRBJfgG2Te8s8wmqGQmcU+tkeoynXSLodtHdGYTuePI4uBkut9lmh
- JZbO9ewtVB3qur/ZcWSBX8pGJ6XFtQ/ZFZ9MLPYe4/Mp2LmKW8Mrq2CvUwZnyfWl2JUQ
- 5zkA==
-X-Gm-Message-State: AOJu0YzejrLqgWSZkhOw81IpQQ1+qW1xVayaCxLmslrJ3EOVb5syG/BH
- M2m2Ys1Nwpsxg+fvOa04nXrrLV6VumOKucOLdnv8a8dnHUSxyTxWXju4Rtzz5aEaBOURchktmnl
- uNNYLPLHGsg==
-X-Gm-Gg: Acq92OEo6cZ58dKb17nw+D4Bodlw9h2xIuGmq/JhyZgUctEeHmgtvDoizLfe/U9xGKR
- 8SAYpLTitMSZQaawaq0tN6VFK7jIXa0JXA0r1Sa+sbEaYsuTjuDD7jZqDd2eBWQcqxGnB3Fmj4t
- xSIatliqLUBSzQka7zP3zKn/Aszt3J0GsLxCkPDuGFS4fgVXv3jc6QBOM5KgGXgFsGW6KyBWttU
- Co1DXNnYBCjMS2bp9K8x/jLE1noS+rgtYu2Sd/R5h20IkykXWX0ytlEOqOsAIEA6StYfS971DXL
- UW0zHBmLFOeyjMW9jWJaYEMi+zCwWNPSMAIkDDVqZ6Off7uIDiok+5ecERoiaJyjCWtYLof8jn9
- vOYOfd3WiqZrPO0CrA/CrH6lBj/45fbSYzDab7im0k0Ysu0sNwDBvvKQwmYA5N9pYLG0y++hJKY
- t0ketMzP8xlcnlocykBpHgMQpQ9pXJgUSXL08nmcUDtIk7y++1q1SR1lOsTBxKxUKiCw==
-X-Received: by 2002:a05:600c:4694:b0:490:48a0:b87a with SMTP id
- 5b1f17b1804b1-4909c08d1fcmr692425e9.9.1779999918803; 
- Thu, 28 May 2026 13:25:18 -0700 (PDT)
+ bh=BDOgqoOGucIqtzn9iaM6xKaLbloEdhZE8KyBivwE2Ug=;
+ b=Hn5cYoPcCgJ0RdT2tf17HGyp3GxXUEyz75TFwb8CV9HChG7YuAO8Dt9QzMOgcf/hOx
+ QelINQ0GV4isd2EB2dv7zVH/dWS83mK7hGDOqpU5mOYaXANIjNsPBFZDsAL4Ph7UeNXc
+ Foq+zZivaPzjvj3NLKjS4o/KgPdvER+l94j3H1NPUYVKO9wGKiAQKxK2TaeHzyPiEIrk
+ TYCe0Kb//NwYJQkyyA5k/iJR44zZNFT+DxfgbORhOc3rY6piWKGOW5M3BuIq3wiXo0ms
+ KtvPoyLWPiWVGqDHz/o38jeWQjPZDYzEXVBKOiZxPvrhSFoKhTQ/7V5M4hyodtACtazt
+ ygog==
+X-Gm-Message-State: AOJu0Yw05pbTK7fIWuplKUGSWhZbf0hOfjVEEw4rKy9PBVyKE0jTyIfw
+ qSL4Td7k2kpb1gcMIHsg3/6GYxgSpC7OixBgSm2ZatrbCqH0FvGkhwlUXl5w9AEBFSAMQmkXeD2
+ JuyJutzeYaQ==
+X-Gm-Gg: Acq92OGd8Y88IkCuSF31AZ7w/GJ3zscB/3xZYMbfCwV0/MiHvmYBQJTFS5WEzT7bqHx
+ sowpD3uvfN7l2c4pZV/m2820lQdVqST2SN66XYUwLa29m3mKn2uWbLL80zfdvlg195ZaLCLyYr6
+ OJUnDLw0K6+ogk7ug1PsJK1qRP4rHp9RHo1XXOkHKDtcT7jdxUNGM2R4sF4xk/LWwzECXH8e33H
+ QaJEx/lEU0zFlwnjwbTJshDpf55BC15PBnHqd2+kamfxwwKQvcY3QU2I5b2cg/pgPWmGOWUS9Z0
+ Og/ZBwEiQP+m56kiq41fcM/vYlvtT2LFWFMGsGXrnh2kHd2dMtazAnENd1yLd48YzoOvXWutFDP
+ LMQ5boT2ZjIgfeU4of4sH3HS3108CiZOgaxQ/CyCuC6EEa74c9ac0Ys6qq0AejgnZ1MZu1gN4CG
+ 4m7PY9GutIdSEZJ5OZp0Dy6mOzwMr3uwIWUXv/qhkdr4CLEIayb0J0I9v/CcmFK7nQnw==
+X-Received: by 2002:a05:600c:1d28:b0:490:3fa2:1b93 with SMTP id
+ 5b1f17b1804b1-4909c0aa2a7mr713705e9.13.1779999934272; 
+ Thu, 28 May 2026 13:25:34 -0700 (PDT)
 Received: from m15.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eec25e7c4sm4281471f8f.37.2026.05.28.13.25.16
+ ffacd0b85a97d-45eed496112sm3923319f8f.15.2026.05.28.13.25.32
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 28 May 2026 13:25:17 -0700 (PDT)
+ Thu, 28 May 2026 13:25:33 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 19/22] accel/common: Remove last bit of target-specific code
-Date: Thu, 28 May 2026 22:22:49 +0200
-Message-ID: <20260528202253.49122-20-philmd@linaro.org>
+Subject: [PULL 21/22] target/i386: Convert to translate_for_debug
+Date: Thu, 28 May 2026 22:22:51 +0200
+Message-ID: <20260528202253.49122-22-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260528202253.49122-1-philmd@linaro.org>
 References: <20260528202253.49122-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,102 +98,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Initialize the TypeInfo structure at runtime using the TargetInfo
-API to resolve TYPE_ACCEL_CPU, replacing CPU_RESOLVING_TYPE by
-target_cpu_type(). Since the code is no more target-specific, move
-it to accel-common.c, removing the need for accel-target.c.
+From: Peter Maydell <peter.maydell@linaro.org>
 
+The get_phys_addr_attrs_debug method of SysemuCPUOps is used only by
+x86 and microblaze.  Convert x86 to the newer translate_for_debug
+method, as a step towards being able to remove
+get_phys_addr_attrs_debug.
+
+The new API allows us to tell the caller the actual size of the
+mapping via lg_page_size, so we do that, although no caller will care
+since it's always at least TARGET_PAGE_BITS.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260528161450.3564396-3-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-Id: <20260528140857.44130-1-philmd@linaro.org>
 ---
- accel/accel-common.c | 15 +++++++++++++++
- accel/accel-target.c | 41 -----------------------------------------
- accel/meson.build    |  1 -
- 3 files changed, 15 insertions(+), 42 deletions(-)
- delete mode 100644 accel/accel-target.c
+ target/i386/cpu.h           |  4 ++--
+ target/i386/cpu.c           |  2 +-
+ target/i386/helper.c        | 31 +++++++++++++++++--------------
+ target/i386/whpx/whpx-all.c |  2 +-
+ 4 files changed, 21 insertions(+), 18 deletions(-)
 
-diff --git a/accel/accel-common.c b/accel/accel-common.c
-index 9c5b4111c8d..62590a7d9a6 100644
---- a/accel/accel-common.c
-+++ b/accel/accel-common.c
-@@ -134,3 +134,18 @@ static const TypeInfo accel_types[] = {
- };
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index bdd4fff89d6..67e2ecf3251 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2581,8 +2581,8 @@ int cpu_x86_support_mca_broadcast(CPUX86State *env);
+ #ifndef CONFIG_USER_ONLY
+ int x86_cpu_pending_interrupt(CPUState *cs, int interrupt_request);
  
- DEFINE_TYPES(accel_types)
-+
-+static void register_accel_target_type(void)
-+{
-+    g_autofree char *name = g_strconcat("accel-", target_cpu_type(), NULL);
-+    const TypeInfo accel_cpu_type = {
-+        .name = name,
-+        .parent = TYPE_OBJECT,
-+        .abstract = true,
-+        .class_size = sizeof(AccelCPUClass),
-+    };
-+
-+    type_register_static(&accel_cpu_type);
-+}
-+
-+type_init(register_accel_target_type);
-diff --git a/accel/accel-target.c b/accel/accel-target.c
-deleted file mode 100644
-index 7fd392fbc4a..00000000000
---- a/accel/accel-target.c
-+++ /dev/null
-@@ -1,41 +0,0 @@
--/*
-- * QEMU accel class, components common to system emulation and user mode
-- *
-- * Copyright (c) 2003-2008 Fabrice Bellard
-- * Copyright (c) 2014 Red Hat Inc.
-- *
-- * Permission is hereby granted, free of charge, to any person obtaining a copy
-- * of this software and associated documentation files (the "Software"), to deal
-- * in the Software without restriction, including without limitation the rights
-- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-- * copies of the Software, and to permit persons to whom the Software is
-- * furnished to do so, subject to the following conditions:
-- *
-- * The above copyright notice and this permission notice shall be included in
-- * all copies or substantial portions of the Software.
-- *
-- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-- * THE SOFTWARE.
-- */
--
--#include "qemu/osdep.h"
--#include "accel/accel-cpu-target.h"
--
--static const TypeInfo accel_cpu_type = {
--    .name = TYPE_ACCEL_CPU,
--    .parent = TYPE_OBJECT,
--    .abstract = true,
--    .class_size = sizeof(AccelCPUClass),
--};
--
--static void register_accel_types(void)
--{
--    type_register_static(&accel_cpu_type);
--}
--
--type_init(register_accel_types);
-diff --git a/accel/meson.build b/accel/meson.build
-index 7da12b9741f..1b5b37e3097 100644
---- a/accel/meson.build
-+++ b/accel/meson.build
-@@ -1,5 +1,4 @@
- common_ss.add(files('accel-common.c'))
--specific_ss.add(files('accel-target.c'))
- system_ss.add(files('accel-system.c', 'accel-blocker.c', 'accel-qmp.c', 'accel-irq.c'))
- user_ss.add(files('accel-user.c'))
+-hwaddr x86_cpu_get_phys_addr_attrs_debug(CPUState *cpu, vaddr addr,
+-                                         MemTxAttrs *attrs);
++bool x86_cpu_translate_for_debug(CPUState *cpu, vaddr addr,
++                                 TranslateForDebugResult *result);
+ int cpu_get_pic_interrupt(CPUX86State *s);
  
+ /* MS-DOS compatibility mode FPU exception support */
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 7248720a0eb..8929a75c7c9 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -10877,7 +10877,7 @@ static const struct SysemuCPUOps i386_sysemu_ops = {
+     .has_work = x86_cpu_has_work,
+     .get_memory_mapping = x86_cpu_get_memory_mapping,
+     .get_paging_enabled = x86_cpu_get_paging_enabled,
+-    .get_phys_addr_attrs_debug = x86_cpu_get_phys_addr_attrs_debug,
++    .translate_for_debug = x86_cpu_translate_for_debug,
+     .asidx_from_attrs = x86_asidx_from_attrs,
+     .get_crash_info = x86_cpu_get_crash_info,
+     .write_elf32_note = x86_cpu_write_elf32_note,
+diff --git a/target/i386/helper.c b/target/i386/helper.c
+index 8cc73f619a9..30f1fa41b32 100644
+--- a/target/i386/helper.c
++++ b/target/i386/helper.c
+@@ -252,8 +252,8 @@ void cpu_x86_update_cr4(CPUX86State *env, uint32_t new_cr4)
+ }
+ 
+ #if !defined(CONFIG_USER_ONLY)
+-hwaddr x86_cpu_get_phys_addr_attrs_debug(CPUState *cs, vaddr addr,
+-                                         MemTxAttrs *attrs)
++bool x86_cpu_translate_for_debug(CPUState *cs, vaddr addr,
++                                 TranslateForDebugResult *result)
+ {
+     X86CPU *cpu = X86_CPU(cs);
+     CPUX86State *env = &cpu->env;
+@@ -263,8 +263,6 @@ hwaddr x86_cpu_get_phys_addr_attrs_debug(CPUState *cs, vaddr addr,
+     uint32_t page_offset;
+     int page_size;
+ 
+-    *attrs = cpu_get_mem_attrs(env);
+-
+     a20_mask = x86_get_a20_mask(env);
+     if (!(env->cr[0] & CR0_PG_MASK)) {
+         pte = addr & a20_mask;
+@@ -283,7 +281,7 @@ hwaddr x86_cpu_get_phys_addr_attrs_debug(CPUState *cs, vaddr addr,
+             /* test virtual address sign extension */
+             sext = la57 ? (int64_t)addr >> 56 : (int64_t)addr >> 47;
+             if (sext != 0 && sext != -1) {
+-                return -1;
++                return false;
+             }
+ 
+             if (la57) {
+@@ -291,7 +289,7 @@ hwaddr x86_cpu_get_phys_addr_attrs_debug(CPUState *cs, vaddr addr,
+                         (((addr >> 48) & 0x1ff) << 3)) & a20_mask;
+                 pml5e = x86_ldq_phys(cs, pml5e_addr);
+                 if (!(pml5e & PG_PRESENT_MASK)) {
+-                    return -1;
++                    return false;
+                 }
+             } else {
+                 pml5e = env->cr[3];
+@@ -301,13 +299,13 @@ hwaddr x86_cpu_get_phys_addr_attrs_debug(CPUState *cs, vaddr addr,
+                     (((addr >> 39) & 0x1ff) << 3)) & a20_mask;
+             pml4e = x86_ldq_phys(cs, pml4e_addr);
+             if (!(pml4e & PG_PRESENT_MASK)) {
+-                return -1;
++                return false;
+             }
+             pdpe_addr = ((pml4e & PG_ADDRESS_MASK) +
+                          (((addr >> 30) & 0x1ff) << 3)) & a20_mask;
+             pdpe = x86_ldq_phys(cs, pdpe_addr);
+             if (!(pdpe & PG_PRESENT_MASK)) {
+-                return -1;
++                return false;
+             }
+             if (pdpe & PG_PSE_MASK) {
+                 page_size = 1024 * 1024 * 1024;
+@@ -322,14 +320,14 @@ hwaddr x86_cpu_get_phys_addr_attrs_debug(CPUState *cs, vaddr addr,
+                 a20_mask;
+             pdpe = x86_ldq_phys(cs, pdpe_addr);
+             if (!(pdpe & PG_PRESENT_MASK))
+-                return -1;
++                return false;
+         }
+ 
+         pde_addr = ((pdpe & PG_ADDRESS_MASK) +
+                     (((addr >> 21) & 0x1ff) << 3)) & a20_mask;
+         pde = x86_ldq_phys(cs, pde_addr);
+         if (!(pde & PG_PRESENT_MASK)) {
+-            return -1;
++            return false;
+         }
+         if (pde & PG_PSE_MASK) {
+             /* 2 MB page */
+@@ -343,7 +341,7 @@ hwaddr x86_cpu_get_phys_addr_attrs_debug(CPUState *cs, vaddr addr,
+             pte = x86_ldq_phys(cs, pte_addr);
+         }
+         if (!(pte & PG_PRESENT_MASK)) {
+-            return -1;
++            return false;
+         }
+     } else {
+         uint32_t pde;
+@@ -352,7 +350,7 @@ hwaddr x86_cpu_get_phys_addr_attrs_debug(CPUState *cs, vaddr addr,
+         pde_addr = ((env->cr[3] & ~0xfff) + ((addr >> 20) & 0xffc)) & a20_mask;
+         pde = x86_ldl_phys(cs, pde_addr);
+         if (!(pde & PG_PRESENT_MASK))
+-            return -1;
++            return false;
+         if ((pde & PG_PSE_MASK) && (env->cr[4] & CR4_PSE_MASK)) {
+             pte = pde | ((pde & 0x1fe000LL) << (32 - 13));
+             page_size = 4096 * 1024;
+@@ -361,7 +359,7 @@ hwaddr x86_cpu_get_phys_addr_attrs_debug(CPUState *cs, vaddr addr,
+             pte_addr = ((pde & ~0xfff) + ((addr >> 10) & 0xffc)) & a20_mask;
+             pte = x86_ldl_phys(cs, pte_addr);
+             if (!(pte & PG_PRESENT_MASK)) {
+-                return -1;
++                return false;
+             }
+             page_size = 4096;
+         }
+@@ -373,7 +371,12 @@ out:
+ #endif
+     pte &= PG_ADDRESS_MASK & ~(page_size - 1);
+     page_offset = addr & (page_size - 1);
+-    return pte | page_offset;
++
++    result->attrs = cpu_get_mem_attrs(env);
++    result->attrs.debug = 1;
++    result->physaddr = pte | page_offset;
++    result->lg_page_size = ctz64(page_size);
++    return true;
+ }
+ 
+ typedef struct MCEInjectionParams {
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index 7943adb93fe..e626acef2f0 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -247,7 +247,7 @@ struct whpx_register_set {
+  *          e. Let the affected CPU run in the exclusive mode.
+  *          f. Restore the original handler and the exception exit bitmap.
+  *        Note that handling all corner cases related to IDT/GDT is harder
+- *        than it may seem. See x86_cpu_get_phys_addr_attrs_debug() for a
++ *        than it may seem. See x86_cpu_translate_for_debug() for a
+  *        rough idea.
+  *
+  *     3. In order to properly support guest-level debugging in parallel with
 -- 
 2.53.0
 
