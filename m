@@ -4,76 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89055CD5BD5
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 22:33:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CC78CD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 22:33:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSjHh-0000IV-Vc; Thu, 28 May 2026 18:33:04 -0400
+	id 1wSjHi-0000KD-0R; Thu, 28 May 2026 18:33:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wSi1Z-0008Tg-NT
- for qemu-devel@nongnu.org; Thu, 28 May 2026 17:12:17 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wSi1b-0008Vb-KD
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 17:12:19 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wSi1X-00054x-2R
- for qemu-devel@nongnu.org; Thu, 28 May 2026 17:12:17 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-490426d72f7so64708585e9.3
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 14:12:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wSi1X-000550-40
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 17:12:19 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-49041fb8c23so55163775e9.0
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 14:12:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780002732; x=1780607532; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=n/ThAg9pqjl55KzwpdqeCrAjDbuVSrXfGWiDGzPdgS4=;
- b=p2f+xPcqbEbtCN6+7YJAayYbs33sCL161lhHKFbTCmGEbzGQz7Tz7sNX10Ky4/onBZ
- Scyg6r8n78pqfOLudK12uydNvSrUdFytb0RRubH+cGcEWvFK8hXBqY3EHrbIYYsf0LOB
- eGKIFnSr5vN8z+1JpT1PF3ho0/cDYYraTf+Ls+L5ihZNpVZYP68tT3Ne88EVThefjINs
- E4kja7QD8PNG+Dh6iCCBdePRqKe+n7N+E1fWFFm8fY9+d/SfhWeCrsyJvFvDNOEarjsk
- BLsb33OyKZoXI2bakYN72pY91UolIxNUSne3mhEpZgo/SMGfDn6qf8QOKpUhozwfalFv
- T1YQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780002732; x=1780607532;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1780002733; x=1780607533; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=n/ThAg9pqjl55KzwpdqeCrAjDbuVSrXfGWiDGzPdgS4=;
- b=pE1zm+DhVU9Hgeq4QSdmWYoPrD5OCIJE+gtD76PI1Woj5hGpRpFKdHT4xbX9gB3VuM
- 4QUCmk4mDhkyv2D5mydJyB93WrodWkNVvvmMseWOdyooBg9ozC0ViNalPrCgBbZglWfR
- qWDgmD0kVkAIS6OfIwnWgFFJ9IoWvqbiWBs2JGtWpJnzFvFZOrv0jNsOKPhM+zWlnTHf
- JJ1uCiMQbBuV9+1EZzJ3jNGgksOUezDeJ1mMfC8ydLPX2V7nC/yyBVvX3Wg22sN/LK93
- Nh+wrguZ4oHBsi6UBzPh3Qhssp7QNtI4NeXgHd6zkwJMauBufPDX63CMzrgErDy24q+E
- GeZw==
-X-Gm-Message-State: AOJu0YzTM/Xh4u48eto5QptvJv44lKjJgJHIq5yYqDYF6OSBZor7EYn6
- 37a2MNCYzhVyQVriFqyFXibAAraUAqMi187oWWUQlsRovf2S/j720IurduAvpvPA
-X-Gm-Gg: Acq92OHxM91FrSffinU0uJK1eKfmncMttPJeTHQHAFinM7pzKmAkgkrZhFjJJcXkqcn
- LyJwlxIWzRLEADOZCmqwajPVquPdGR/rsHmlMho89hmiYmHXmClmsaOeZDTAJsVWTridTuaUYPK
- 3WgMmHD1fnuu9rKVmjjL9W/XXevtoC1eEUm5xodhGpVbkWtr6pg5kIBFj5VcjB+IWDvhK8Wr73b
- j5xscA6uQoHLNV76tvQtOcM1Qctxnoi7O1n6yvDvylk5AZUPjBo9Z21oZK9SnQYmmPBP51UPGVu
- iZoUM/o+J7TlOPKHbPiBcx/ctjU1wDiBYTuQaTa4mcphqTHoXEeH6UnRtETHsupVSNGJ8dsjqYC
- qMn9TN1NO9EBAEfQSRCdnGipoAjeyca+jeC8D2ajdbHeccovleHYN/Hgn9uFAu0nDAcdTef7ArN
- Q/KIcG4sq4sHIwgsU=
-X-Received: by 2002:a05:600c:4ecc:b0:490:601f:d77b with SMTP id
- 5b1f17b1804b1-4909c03c0cemr3467465e9.0.1780002732236; 
- Thu, 28 May 2026 14:12:12 -0700 (PDT)
+ bh=pVzECgyF01S+q9muu/ENfuD5x4p2aYVjPbQI66GQ+mw=;
+ b=GXTp5Sfng68JHt/rEt6+xJntDK1hbMSr1pwT6/fjqs4xNCUvunI/nZLQGuzNumRoFs
+ QDVysP2DNkrHy11PgTKYvjELh7TzS+V17gtm0eKewC8J8WlCEQkpfW2i8q2xg2vlwbxL
+ u5V7Eo+7FYBlaHYCBFjb0eI8hhjC+NRfsH6GCprs9qaOP/e5hvRpr8mDCobDSXOC1DKQ
+ YTYEHDXsbQss0dImYGQSntovgGQiKkr5R2Ual+wZNQs2bVELw05SYywHCLs/MPD0agbH
+ Ddu2IfprdQK9BtxswH0Hp4pAm5VHqZayNkjGjyD55SBhdbafct7KfWgt2sNRFNKHp+aU
+ E6aA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780002733; x=1780607533;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=pVzECgyF01S+q9muu/ENfuD5x4p2aYVjPbQI66GQ+mw=;
+ b=iRlIvWkKknhChTaSTDn/mOv40P7SqiffxhORd3Zk2K5sXCfocGKQEVpyHFVpC/XDvC
+ MI8Xy3prK6v+97yZRClIcTHReuVa1ij3ini38vaxEyMLgd5O8M7J1RmKTriLtN2qzVQU
+ xRLMl50UgQ2se14D775LcS1Z0qY7UJXH+O/nhMGySb/2ItMjt9jyEKp1+Rxx4wLR/Tjm
+ GyThxe5TUY+I5WklI0XFFaUarWU8nzh2uVKnBCoUmVyx1VI8NY5fDrTIsmR2GiUtFlDf
+ 1uT689uFAGJctPjpHmrCElFQSEspLRm4UFqI4RpBW2cfs6J1nbJ9h+rAjLSwpt8S4P23
+ 8vGg==
+X-Gm-Message-State: AOJu0Yy58NJEuejVrDaPJ4WsJzzNlHDuSN22hVTkeg33ez0YYNCVTRs5
+ yTmrAqI++QbaihOXEGCr7E+I+GRi5AoIq3Xez4ygYipjDEO/gqjlc30X3NHeH2FI
+X-Gm-Gg: Acq92OEuS1ZSuD3l7o2dmoreOxFWJCSUfeKhz/+KBrfrYmTGvZSaMvXR9wIB0qWTsCP
+ RYIUXMjClmTxmS6FGW5k2S7RroMJfXkrgbXlImrUn9hS3IpyJ0KRaFE5Cv4SiVi4bRCilOaK6rA
+ rimXvG53zfR3quwI/5GENAC2SYPpotp3axeMMVCLZjaANmKdMxiCDBLPzwiVyoEqLi9XvJD3DVK
+ z/xovGaDLJQzyqOBjjq4x2llRIowO7dnBifo/U8uc+P83nI4O+sx7YhdrNHSHfPDSGUxkEiKhv1
+ hID3Nnr+Lq8rGUn2EyQ4g1uFrOp+kYWUuvJSVQA9v1JMPtiGmLkDNLf+Q/hCKrXB3wWEaCc5L2S
+ jeOgGp/dumniPH4d6C2zgDPp6tFn/r33VdsRkEiibLZ6wANjEZyM4hBaLJnZcedu1DsvCilU0No
+ T5F1BxULBz3+1Mt4M=
+X-Received: by 2002:a05:600c:e489:20b0:490:688b:f9f8 with SMTP id
+ 5b1f17b1804b1-4909c0ba255mr2069975e9.27.1780002733054; 
+ Thu, 28 May 2026 14:12:13 -0700 (PDT)
 Received: from sefo-laptop ([2a02:8071:50c5:5c0::361b])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4909c609787sm108365e9.6.2026.05.28.14.12.11
+ 5b1f17b1804b1-4909c609787sm108365e9.6.2026.05.28.14.12.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 May 2026 14:12:11 -0700 (PDT)
+ Thu, 28 May 2026 14:12:12 -0700 (PDT)
 From: Wadim Mueller <wafgo01@gmail.com>
 To: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [RFC PATCH v0 0/2] hw/arm: Add initial TI K3 AM64x platform support
-Date: Thu, 28 May 2026 23:12:08 +0200
-Message-ID: <20260528211210.74266-1-wafgo01@gmail.com>
+Subject: [RFC PATCH v0 1/2] hw/arm: Add minimal TI K3 AM64x SoC model
+Date: Thu, 28 May 2026 23:12:09 +0200
+Message-ID: <20260528211210.74266-2-wafgo01@gmail.com>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260528211210.74266-1-wafgo01@gmail.com>
+References: <20260528211210.74266-1-wafgo01@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=wafgo01@gmail.com; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=wafgo01@gmail.com; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -81,9 +84,9 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 28 May 2026 18:32:55 -0400
+X-Mailman-Approved-At: Thu, 28 May 2026 18:32:56 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,338 +101,344 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello QEMU community,
-
-This RFC introduces an initial support for the TI K3 AM64x SoC family
-("Sitara AM64x"). Currently there exists no support for any TI K3 SoC
-in upstream QEMU; the goal of this series is to start that
-conversation, rather than to land a fully-fledged platform in one
-single drop.
-
-The two patches in this series are intentionally minimal:
-
-  1. hw/arm: Add minimal TI K3 AM64x SoC model
-       Cortex-A53 cluster (1-2 cores), GIC-400, two MAIN-domain
-       16550-style UARTs.
-
-  2. hw/arm: Add AM64-virt machine
-       Wraps the SoC and prepares it to boot a Linux kernel on the
-       A53 cluster (-kernel / user-supplied -dtb).
-
-Together: ~350 lines. The intent is to make the *direction*
-reviewable, not to ship the full stack in one go.
-
-
-Why this is being sent as RFC
-=============================
-
-The real motivation behind this work is asymmetric multi-processing
-(AMP) debugging on K3: a Linux kernel running on the A53 cluster, a
-small RTOS running on the Cortex-M4F MCU, and being able to debug
-the M4F firmware from its reset vector while the Linux side is held
-in its rpmsg/remoteproc driver. The TI K3 platform is built around
-exactly this use case in real hardware, but no QEMU model exists.
-
-Already a considerably more complete prototype exists on GitHub:
-
-    https://github.com/wafgo/qemu/tree/wafgo/am64-amp-prototype
-
-That prototype currently:
-
-  * Boots Linux SMP on the A53 cluster.
-  * Brings up the Cortex-M4F core via the standard K3 TISCI protocol
-    issued from the Linux ti-sci driver.
-  * Models enough of the TI Secure Proxy and Mailbox IPs that
-    the in-tree Linux rpmsg/remoteproc drivers come up.
-  * Boots a FreeRTOS / MCU+ SDK image on the M4F and exchanges
-    messages with Linux via the in-tree IPC rpmsg demo.
-  * Allows full reset-vector debugging of the M4F firmware from gdb
-    while the Linux side is held in the rpmsg driver -- the actual
-    use case that motivated all of this.
-
-Note up front: I am not really proud of the prototype's code
-quality. Or rather -- I am proud of what it does, but the code
-itself is more of a "run away while you still can" kind. That is
-exactly why this is an RFC and not a v1: I would like architectural
-feedback now, before I clean the prototype up into upstreamable
-patches in the possibly wrong direction.
-
-The prototype contains a number of design choices I am explicitly
-not sure if they are the right shape for upstream. Instead of
-spending further weeks polishing patches in a direction where the
-community possibly pushes back, I would like to get early feedback
-to those decisions first.
-
-Who would benefit from this in upstream QEMU
---------------------------------------------
-
-  * Linux K3-driver developers who do not own a TI dev board can
-    iterate against a free, mainline emulator.
-  * Firmware developers (M4F / R5F) can debug from the reset vector
-    without a JTAG probe, which is exactly the use case that drove
-    this work.
-  * Anyone running automated CI against K3 platforms gains an
-    option that does not require physical hardware in the loop.
-
-The headline questions are these:
-
-    a) Is there interest in TI K3 / AM64x support in upstream QEMU
-       at all?
-
-    b) Is "DMSC modelled as a firmware-service QOM device behind a
-       real Secure Proxy" (question 1 below) the right architectural
-       shape, or do you want the actual Cortex-M3 + SYSFW blob
-       instead?
-
-In case of yes, the more specific (secondary) design questions
-follow afterwards.
-
-
-Design decisions I'd like feedback on
-=====================================
-
-Two headline questions and four secondary ones. The first two
-shape the whole follow-up plan, the rest can be relitigated later.
-
-Headline
---------
-
-1. DMSC modelled as a "firmware service" QOM device, no MMIO of
-   its own.
-   On real K3 hardware, the DMSC ("Device Management and Security
-   Controller") runs the proprietary TI SYSFW image on a Cortex-M3
-   inside the SoC. The host-facing interface to that firmware is
-   the TI Secure Proxy, which is a separate MMIO IP block.
-
-   The prototype keeps the Secure Proxy as the MMIO entry point
-   (modelled as its own QOM device, see question 2) and replaces
-   only the SYSFW image: instead of modelling the M3 core and
-   running a real SYSFW blob on it, the request-handling logic
-   lives in a separate QOM device with no MMIO of its own. That
-   device is linked to the Secure Proxy via a QOM link and
-   registers callbacks for inbound TISCI threads; the Secure
-   Proxy invokes those callbacks when the guest completes a
-   message in the data window.
-
-   The "service device" route is dramatically simpler, avoids the
-   binary blob, and is enough to drive the upstream Linux ti-sci
-   driver. Is that approach acceptable upstream, or do you want the
-   real M3 + firmware path?
-
-   (Comparable existing approaches I am aware of: Xilinx PMU/PSM-style
-   management firmware in xlnx-versal respectively xlnx-zynqmp.)
-
-Secondary
----------
-
-2. Secure Proxy with a callback registry into DMSC.
-   The Secure Proxy is modelled as MMIO. When the guest writes the
-   last word of a message into the data window, the transport
-   invokes a registered callback so the DMSC service device can
-   react asynchronously (via a QEMUBH). Is that transport-vs-service
-   split sensible, or should Secure Proxy + DMSC collapse into one
-   device?
-
-3. RAT (Region Address Translation) as a MemoryRegion alias
-   container.
-   The M4F's view of address space is reshaped via 16 software-
-   programmable translation windows. The prototype models RAT as a
-   parent container MemoryRegion in the M4 address space, with each
-   entry as a MemoryRegion alias into the system memory. Enable /
-   disable corresponds to add_subregion / del_subregion at runtime.
-   Is that the idiomatic shape, or should this look more like an
-   IOMMU?
-
-4. GIC revision.
-   Real AM64x uses a GIC-500 (GICv3). This v0 and the full prototype
-   use GIC-400 (GICv2), since it is mechanically simpler and already
-   boots Linux. Shall the initial upstream version go directly to
-   GICv3?
-
-5. Cortex-M4F bring-up using arm_set_cpu_on_and_reset().
-   The prototype triggers M4F start/stop by calling
-   arm_set_cpu_on_and_reset() / arm_set_cpu_off() from the DMSC
-   service device, addressed by a CPU-index property. That feels
-   fragile. Is there a more idiomatic way to expose "reset and
-   start CPU X" to a non-power-controller device?
-
-6. "am64-virt" naming and scope.
-   The machine deliberately deviates from any real AM64x board: no
-   flash, no PCIe yet, no built-in device tree. The reason for the
-   "-virt" cut is practical: real AM64x reference boards (SK-AM64,
-   AM64x-EVM) pull in DT references to every sub-IP -- INTC routers,
-   ringacc, BCDMA, SerDes, sysfw, etc. -- and without those devices
-   the K3 driver-probe sequence in mainline Linux fails early. A
-   "-virt" derivative lets us prove the SoC scaffolding without
-   having to model the entire chip on day one.
-
-   That said -- is the "<soc>-virt" pattern acceptable for first
-   upstream landing, or do you want the first machine to model a
-   real reference board, so that mainline Linux device trees can be
-   used directly? The full prototype's "-virt" choice has been
-   driven by the M4F debug use case (which doesn't care about the
-   board details); a real-board variant would be added later in
-   either case.
-
-
-Proposed roadmap (subject to feedback)
-======================================
-
-In case the community is interested and the design above is roughly
-acceptable, follow-up series would bring (in this order):
-
-  * Add VMState / reset / trace events to the SoC model
-    (intentionally deferred for v0 to keep the diff small)
-  * tests/functional/arm/test_am64_virt.py boot-smoketest
-  * docs/system/arm/am64-virt.rst
-  * TI K3 RAT model           (small, self-contained)
-  * TI K3 Mailbox model       (also reusable on AM62x)
-  * TI K3 Secure Proxy model
-  * TI K3 DMSC / TISCI service model
-  * AM64x M4F bring-up wired into the SoC
-  * Dynamic device tree generation for am64-virt
-  * (later) AM64x R5F cluster
-  * (later) Move GIC-400 -> GIC-500 (GICv3)
-  * (later) AM64x reference-board variant (SK-AM64 or AM64x-EVM)
-    using mainline Linux device trees
-
-
-Testing
-=======
-
-Build: `--target-list=aarch64-softmmu`, no warnings. scripts/checkpatch.pl
-is clean on patch 1; patch 2 emits one MAINTAINERS hint that is a
-false positive (the MAINTAINERS coverage for hw/arm/am64-virt.c is
-added by patch 1 already; checkpatch only looks at the current
-patch's diff).
-
-Linux boot: this v0 boots an arm64 Linux 6.6 kernel through full
-SMP bring-up and complete subsystem init to the standard
-"VFS: Unable to mount root fs" panic, using the minimal device
-tree appended at the end of this cover letter (~60 lines, describes
-only what the v0 actually models: A53 SMP, GIC-400, ttyS0 backed
-by MAIN_UART0, DDR @ 0x80000000).
-
-Representative boot log (sysclk = QEMU virtual clock, kernel built
-with arm64 defconfig-style):
-
-    [    0.000000] Booting Linux on physical CPU 0x0000000000
-    [    0.000000] Machine model: QEMU AM64 virt (v0 minimal)
-    [    0.000000] earlycon: ns16550a0 at MMIO32 0x0000000002800000
-    [    0.082815] CPU1: Booted secondary processor 0x0000000001
-    [    0.090939] SMP: Total of 2 processors activated.
-    [    0.267805] VFS: Disk quotas dquot_6.6.0
-    ...
-    [    1.179709] VFS: Cannot open root device "" -- expected, no rootfs supplied
-    [    1.181988] Kernel panic - not syncing: VFS: Unable to mount root fs
-
-Reproduce with:
-
-    qemu-system-aarch64 -M am64-virt -m 1G -smp 2 -nographic \
-        -kernel Image -dtb am64-virt-minimal.dtb
-
-
-Repository
-==========
-
-  RFC v0 branch:
-    https://github.com/wafgo/qemu/tree/upstream/am64-rfc-v0
-  Full AMP prototype (what's described above):
-    https://github.com/wafgo/qemu/tree/wafgo/am64-amp-prototype
-
-
-Appendix: minimal device tree used for the boot test
-====================================================
-
-This DTS describes only what the v0 SoC model exposes. Compile with
-`dtc -I dts -O dtb -o am64-virt-minimal.dtb am64-virt-minimal.dts`.
-
-    /dts-v1/;
-    / {
-        #address-cells = <2>;
-        #size-cells = <2>;
-        interrupt-parent = <&gic>;
-        compatible = "qemu,am64-virt";
-        model = "QEMU AM64 virt (v0 minimal)";
-
-        chosen {
-            bootargs = "earlycon=ns16550a,mmio32,0x02800000,115200n8 console=ttyS0,115200 mem=1024M";
-            stdout-path = "serial0:115200n8";
-        };
-
-        aliases { serial0 = &uart0; };
-
-        psci {
-            compatible = "arm,psci-1.0", "arm,psci-0.2", "arm,psci";
-            method = "smc";
-            cpu_suspend = <0xc4000001>;
-            cpu_off    = <0x84000002>;
-            cpu_on     = <0xc4000003>;
-            migrate    = <0xc4000005>;
-        };
-
-        cpus {
-            #address-cells = <2>;
-            #size-cells = <0>;
-            cpu0: cpu@0 {
-                device_type = "cpu";
-                compatible = "arm,cortex-a53";
-                reg = <0x0 0x0>;
-                enable-method = "psci";
-            };
-            cpu1: cpu@1 {
-                device_type = "cpu";
-                compatible = "arm,cortex-a53";
-                reg = <0x0 0x1>;
-                enable-method = "psci";
-            };
-        };
-
-        timer {
-            compatible = "arm,armv8-timer";
-            interrupts = <1 13 0xf08>, <1 14 0xf08>,
-                         <1 11 0xf08>, <1 10 0xf08>;
-        };
-
-        memory@80000000 {
-            device_type = "memory";
-            reg = <0x0 0x80000000 0x0 0x40000000>;
-        };
-
-        gic: interrupt-controller@1800000 {
-            compatible = "arm,gic-400";
-            #interrupt-cells = <3>;
-            interrupt-controller;
-            reg = <0x0 0x01800000 0x0 0x10000>,
-                  <0x0 0x01810000 0x0 0x10000>;
-        };
-
-        uart0: serial@2800000 {
-            compatible = "ns16550a";
-            reg = <0x0 0x02800000 0x0 0x100>;
-            reg-shift = <2>;
-            reg-io-width = <4>;
-            clock-frequency = <48000000>;
-            interrupts = <0 146 4>;
-        };
-    };
-
-
-Wadim Mueller (2):
-  hw/arm: Add minimal TI K3 AM64x SoC model
-  hw/arm: Add AM64-virt machine
-
+Add an initial model of the TI K3 AM64x SoC family. This first patch
+covers the bare minimum needed to bring up a Linux kernel on the
+Cortex-A53 cluster:
+
+  - Up to two Cortex-A53 CPUs
+  - ARM GIC at the GICSS0 base address
+  - Two MAIN-domain 16550-style UARTs at their real-hardware addresses,
+    backed by the existing TYPE_SERIAL_MM model
+
+The CPU count is read directly from the machine's smp.cpus, matching
+the pattern in hw/arm/fsl-imx8mp.c. EL2/EL3 are only enabled under
+TCG.
+
+Note: real AM64x hardware uses a GIC-500 (GICv3). This initial drop
+uses the GICv2 model (arm_gic, revision 2) to keep the bring-up
+mechanically simple; moving to GICv3 is on the follow-up roadmap.
+Additional SoC blocks (Cortex-M4F MCU, Cortex-R5F cores, mailbox,
+secure proxy, DMSC/TISCI service, RAT) are intentionally not modelled
+here and will be added in subsequent patches.
+
+Signed-off-by: Wadim Mueller <wafgo01@gmail.com>
+---
  MAINTAINERS               |   8 ++
- hw/arm/Kconfig            |  12 +++
- hw/arm/am64-virt.c        |  80 ++++++++++++++
- hw/arm/meson.build        |   2 +
+ hw/arm/Kconfig            |   5 +
+ hw/arm/meson.build        |   1 +
  hw/arm/ti-am64x.c         | 212 ++++++++++++++++++++++++++++++++++++++
  include/hw/arm/ti-am64x.h |  36 +++++++
- 6 files changed, 350 insertions(+)
- create mode 100644 hw/arm/am64-virt.c
+ 5 files changed, 262 insertions(+)
  create mode 100644 hw/arm/ti-am64x.c
  create mode 100644 include/hw/arm/ti-am64x.h
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 63e9ba521b..95cadde5dc 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1186,6 +1186,14 @@ L: qemu-arm@nongnu.org
+ S: Maintained
+ F: hw/arm/olimex-stm32-h405.c
+ 
++TI K3 AM64x
++M: Wadim Mueller <wafgo01@gmail.com>
++L: qemu-arm@nongnu.org
++S: Maintained
++F: hw/arm/am64-virt.c
++F: hw/arm/ti-am64x.c
++F: include/hw/arm/ti-am64x.h
++
+ SmartFusion2
+ M: Subbaraya Sundeep <sundeep.lkml@gmail.com>
+ M: Peter Maydell <peter.maydell@linaro.org>
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 7877506384..96cb0f5185 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -626,6 +626,11 @@ config FSL_IMX8MP_EVK
+     depends on TCG
+     select FSL_IMX8MP
+ 
++config TI_AM64X
++    bool
++    select ARM_GIC
++    select SERIAL_MM
++
+ config ARM_SMMUV3
+     bool
+ 
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index aeaf654790..89fad790f5 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -84,6 +84,7 @@ arm_common_ss.add(when: 'CONFIG_ARMSSE', if_true: files('armsse.c'))
+ arm_common_ss.add(when: 'CONFIG_FSL_IMX7', if_true: files('fsl-imx7.c', 'mcimx7d-sabre.c'))
+ arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP', if_true: files('fsl-imx8mp.c'))
+ arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP_EVK', if_true: files('imx8mp-evk.c'))
++arm_common_ss.add(when: 'CONFIG_TI_AM64X', if_true: files('ti-am64x.c'))
+ arm_common_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
+ arm_common_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true: files('fsl-imx6ul.c', 'mcimx6ul-evk.c'))
+ arm_common_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
+diff --git a/hw/arm/ti-am64x.c b/hw/arm/ti-am64x.c
+new file mode 100644
+index 0000000000..4026fe23e8
+--- /dev/null
++++ b/hw/arm/ti-am64x.c
+@@ -0,0 +1,212 @@
++/*
++ * TI K3 AM64x SoC
++ *
++ * Copyright (c) 2026 CMBlu
++ * Written by Wadim Mueller <wafgo01@gmail.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "qemu/module.h"
++#include "hw/arm/bsa.h"
++#include "hw/arm/ti-am64x.h"
++#include "hw/boards.h"
++#include "hw/qdev-properties.h"
++#include "system/kvm.h"
++#include "system/system.h"
++
++#define TI_AM64X_GIC_DIST_ADDR  0x01800000
++#define TI_AM64X_GIC_CPU_ADDR   0x01810000
++#define TI_AM64X_MAIN_UART0_ADDR 0x02800000
++#define TI_AM64X_MAIN_UART1_ADDR 0x02810000
++#define TI_AM64X_MAIN_UART_SIZE  0x100
++#define TI_AM64X_MAIN_UART_REGSHIFT 2
++
++/* SPI = AM64x TRM GIC INTID - GIC_INTERNAL. */
++#define TI_AM64X_MAIN_UART0_SPI 146  /* MAIN_UART0_USART_IRQ */
++#define TI_AM64X_MAIN_UART1_SPI 147  /* MAIN_UART1_USART_IRQ */
++
++static const struct {
++    hwaddr addr;
++    unsigned int spi;
++} ti_am64x_main_uart_table[TI_AM64X_NUM_MAIN_UARTS] = {
++    { TI_AM64X_MAIN_UART0_ADDR, TI_AM64X_MAIN_UART0_SPI },
++    { TI_AM64X_MAIN_UART1_ADDR, TI_AM64X_MAIN_UART1_SPI },
++};
++
++static void ti_am64x_init(Object *obj)
++{
++    MachineState *ms = MACHINE(qdev_get_machine());
++    TIAM64xState *s = TI_AM64X(obj);
++    unsigned int num_cpus = MIN(ms->smp.cpus, TI_AM64X_NUM_A53_CPUS);
++    unsigned int i;
++
++    for (i = 0; i < num_cpus; i++) {
++        object_initialize_child(obj, "a53[*]", &s->a53[i],
++                                ARM_CPU_TYPE_NAME("cortex-a53"));
++    }
++
++    object_initialize_child(obj, "gic", &s->gic, TYPE_ARM_GIC);
++
++    for (i = 0; i < TI_AM64X_NUM_MAIN_UARTS; i++) {
++        object_initialize_child(obj, "main-uart[*]", &s->main_uart[i],
++                                TYPE_SERIAL_MM);
++    }
++}
++
++static bool ti_am64x_realize_cpus(TIAM64xState *s, unsigned int num_cpus,
++                                  Error **errp)
++{
++    unsigned int i;
++
++    for (i = 0; i < num_cpus; i++) {
++        Object *cpuobj = OBJECT(&s->a53[i]);
++
++        if (!object_property_set_int(cpuobj, "mp-affinity", i, errp)) {
++            return false;
++        }
++
++        if (object_property_find(cpuobj, "has_el3")) {
++            object_property_set_bool(cpuobj, "has_el3", !kvm_enabled(),
++                                     &error_abort);
++        }
++        if (object_property_find(cpuobj, "has_el2")) {
++            object_property_set_bool(cpuobj, "has_el2", !kvm_enabled(),
++                                     &error_abort);
++        }
++        object_property_set_bool(cpuobj, "start-powered-off", i != 0,
++                                 &error_abort);
++
++        if (!qdev_realize(DEVICE(cpuobj), NULL, errp)) {
++            return false;
++        }
++    }
++
++    return true;
++}
++
++static bool ti_am64x_realize_gic(TIAM64xState *s, unsigned int num_cpus,
++                                 Error **errp)
++{
++    DeviceState *gicdev = DEVICE(&s->gic);
++    SysBusDevice *gicsbd = SYS_BUS_DEVICE(&s->gic);
++    unsigned int i;
++
++    qdev_prop_set_uint32(gicdev, "revision", 2);
++    qdev_prop_set_uint32(gicdev, "num-cpu", num_cpus);
++    qdev_prop_set_uint32(gicdev, "num-irq",
++                         TI_AM64X_NUM_SPIS + GIC_INTERNAL);
++
++    if (!sysbus_realize(gicsbd, errp)) {
++        return false;
++    }
++
++    sysbus_mmio_map(gicsbd, 0, TI_AM64X_GIC_DIST_ADDR);
++    sysbus_mmio_map(gicsbd, 1, TI_AM64X_GIC_CPU_ADDR);
++
++    for (i = 0; i < num_cpus; i++) {
++        DeviceState *cpudev = DEVICE(&s->a53[i]);
++        int ppi_base = TI_AM64X_NUM_SPIS + i * GIC_INTERNAL;
++        static const int timer_irqs[] = {
++            [GTIMER_PHYS] = ARCH_TIMER_NS_EL1_IRQ,
++            [GTIMER_VIRT] = ARCH_TIMER_VIRT_IRQ,
++            [GTIMER_HYP]  = ARCH_TIMER_NS_EL2_IRQ,
++            [GTIMER_SEC]  = ARCH_TIMER_S_EL1_IRQ,
++        };
++        int j;
++
++        for (j = 0; j < ARRAY_SIZE(timer_irqs); j++) {
++            qdev_connect_gpio_out(cpudev, j,
++                                  qdev_get_gpio_in(gicdev,
++                                                   ppi_base + timer_irqs[j]));
++        }
++
++        sysbus_connect_irq(gicsbd, i,
++                           qdev_get_gpio_in(cpudev, ARM_CPU_IRQ));
++        sysbus_connect_irq(gicsbd, i + num_cpus,
++                           qdev_get_gpio_in(cpudev, ARM_CPU_FIQ));
++        sysbus_connect_irq(gicsbd, i + 2 * num_cpus,
++                           qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ));
++        sysbus_connect_irq(gicsbd, i + 3 * num_cpus,
++                           qdev_get_gpio_in(cpudev, ARM_CPU_VFIQ));
++    }
++
++    return true;
++}
++
++static bool ti_am64x_realize_uarts(TIAM64xState *s, Error **errp)
++{
++    DeviceState *gicdev = DEVICE(&s->gic);
++    int i;
++
++    for (i = 0; i < TI_AM64X_NUM_MAIN_UARTS; i++) {
++        SysBusDevice *sbd = SYS_BUS_DEVICE(&s->main_uart[i]);
++
++        qdev_prop_set_uint8(DEVICE(sbd), "regshift",
++                            TI_AM64X_MAIN_UART_REGSHIFT);
++        qdev_prop_set_uint32(DEVICE(sbd), "baudbase", 48000000);
++        qdev_prop_set_chr(DEVICE(sbd), "chardev", serial_hd(i));
++
++        if (!sysbus_realize(sbd, errp)) {
++            return false;
++        }
++
++        sysbus_mmio_map(sbd, 0, ti_am64x_main_uart_table[i].addr);
++        sysbus_connect_irq(sbd, 0,
++                           qdev_get_gpio_in(gicdev,
++                                            ti_am64x_main_uart_table[i].spi));
++    }
++
++    return true;
++}
++
++static void ti_am64x_realize(DeviceState *dev, Error **errp)
++{
++    MachineState *ms = MACHINE(qdev_get_machine());
++    TIAM64xState *s = TI_AM64X(dev);
++    unsigned int num_cpus = ms->smp.cpus;
++
++    if (num_cpus < 1 || num_cpus > TI_AM64X_NUM_A53_CPUS) {
++        error_setg(errp,
++                   "%s: only between 1 and %u Cortex-A53 CPUs are supported "
++                   "(%u requested)",
++                   TYPE_TI_AM64X, TI_AM64X_NUM_A53_CPUS, num_cpus);
++        return;
++    }
++
++    if (!ti_am64x_realize_cpus(s, num_cpus, errp)) {
++        return;
++    }
++
++    if (!ti_am64x_realize_gic(s, num_cpus, errp)) {
++        return;
++    }
++
++    if (!ti_am64x_realize_uarts(s, errp)) {
++        return;
++    }
++}
++
++static void ti_am64x_class_init(ObjectClass *oc, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(oc);
++
++    dc->realize = ti_am64x_realize;
++    /* Mapped at fixed locations on the system bus by board code. */
++    dc->user_creatable = false;
++    dc->desc = "TI K3 AM64x SoC";
++}
++
++static const TypeInfo ti_am64x_types[] = {
++    {
++        .name = TYPE_TI_AM64X,
++        .parent = TYPE_SYS_BUS_DEVICE,
++        .instance_size = sizeof(TIAM64xState),
++        .instance_init = ti_am64x_init,
++        .class_init = ti_am64x_class_init,
++    },
++};
++
++DEFINE_TYPES(ti_am64x_types)
+diff --git a/include/hw/arm/ti-am64x.h b/include/hw/arm/ti-am64x.h
+new file mode 100644
+index 0000000000..73f56c3b2a
+--- /dev/null
++++ b/include/hw/arm/ti-am64x.h
+@@ -0,0 +1,36 @@
++/*
++ * TI K3 AM64x SoC
++ *
++ * Copyright (c) 2026 CMBlu
++ * Written by Wadim Mueller <wafgo01@gmail.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_ARM_TI_AM64X_H
++#define HW_ARM_TI_AM64X_H
++
++#include "hw/sysbus.h"
++#include "hw/intc/arm_gic.h"
++#include "hw/char/serial-mm.h"
++#include "qom/object.h"
++#include "target/arm/cpu.h"
++
++#define TYPE_TI_AM64X "ti-am64x"
++OBJECT_DECLARE_SIMPLE_TYPE(TIAM64xState, TI_AM64X)
++
++#define TI_AM64X_NUM_A53_CPUS 2
++#define TI_AM64X_NUM_MAIN_UARTS 2
++#define TI_AM64X_NUM_SPIS 256  /* AM64x GICSS0 supports up to 992 SPIs */
++
++struct TIAM64xState {
++    /*< private >*/
++    SysBusDevice parent_obj;
++
++    /*< public >*/
++    ARMCPU a53[TI_AM64X_NUM_A53_CPUS];
++    GICState gic;
++    SerialMM main_uart[TI_AM64X_NUM_MAIN_UARTS];
++};
++
++#endif /* HW_ARM_TI_AM64X_H */
 -- 
 2.52.0
 
