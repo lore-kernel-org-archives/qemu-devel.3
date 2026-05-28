@@ -4,102 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F446CD6E44
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 13:48:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ECE6CD6E44
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 13:50:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSb5m-0000Re-Gw; Thu, 28 May 2026 09:48:10 -0400
+	id 1wSb7s-0001iu-L8; Thu, 28 May 2026 09:50:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSb5k-0000Mv-RJ
- for qemu-devel@nongnu.org; Thu, 28 May 2026 09:48:08 -0400
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wSb7o-0001hu-6i
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 09:50:16 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSb5j-0002gm-D2
- for qemu-devel@nongnu.org; Thu, 28 May 2026 09:48:08 -0400
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-7d1bcb92072so79292297b3.1
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 06:48:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779976086; cv=none;
- d=google.com; s=arc-20240605;
- b=FSjMYeek6GHuO3yChmEfyK9ZVd4X3WOYf4SvtWrmwt7mKEmSPEqWVbxuogicE9gNpw
- 4WOIbNRW9TjULER12ZRbw2Pq0Cw8p4/oKWahAwXKF59F61Difl+4JqllOLjqzYt0C30B
- JSwt3g6sNb/QxsjeCaFynsvy01WGRtAFyvWPMjj4F1/7kWgj1BU4Y7gAUW2O+7g1+5Kb
- lTApe+Y3HQRS/qGhmi5yAziqszX5MQhNDWfWhqb1HXVOIWGKkqSL5xGIvbUO1Bp7IhDi
- PZRoVmRGkafc7J3xNmHKWRlnzjTOUk4MvIq8tg6CmyrrTfmpB4qjwYv62dGGSK/vBgx0
- RBhQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=25S7mPtTDqCSCc4SGEugjzYunSx5dQSHktsrAHYTncI=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=DlAnf4B9IGQnaDzasOYF0c5xqrPFD41gNoTXH54325fHPtmTaO1QqLRLiwM+Yv6jxg
- kq9t/YHbU8GDtENvzkxJKS+VZHg2mWvMhgbQafcDjel4FKfNAQEh6LWfA8aiHnDD1gAL
- HDpHiGhMWXlfKpies6UPMSX7/jvvnPzxMFt/p9yRLG85DhFmHgpJHSL+PlSy8HISyErm
- FKB8HBU19eN84ltuns7vC/vJq4umiz8t0Ux2HYGKhbrIO8lqZL2Bcnt28NPh4ica4tgc
- B/4lxINPvB20UeCOClaTGOTg9FdNqEUrc3mwIsHD4xEmqAH8JdBdRjiR+AA6zZMAU170
- dyYQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wSb7l-0003lk-EQ
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 09:50:15 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-49042aeeb75so82142995e9.1
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 06:50:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779976086; x=1780580886; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=25S7mPtTDqCSCc4SGEugjzYunSx5dQSHktsrAHYTncI=;
- b=oVHL8uyHkiTv5G9vuQRASPOIiEqnejGgUsTN8/BTfeXJNLMm5uDR0VUmEB19gtf1ZY
- /ia2ns90dVkBNXkuGl9It+u5heZ8vnlxDCrcR2hn1CptXffXDMSQUE0boPu9ITqAjQZv
- Fs3nMhb4xHUzYFbv0QK3njIW5CEUH8mIaYflsdP6FWBOycnCA4xE9sC5r9y8pIv+V5Dt
- wfFPG7sPZnCRfBKf8EtlTWsaQ7eiifbZpnJsFXLe2xddMQzt5Jyz23gEObdooNFRPKZS
- 15FGzRJUXSyOey0tOfgB5xxKBPY+601uF5iErcSCw/XyTp3tL9NoC1V+advwDSJkU8DI
- cKcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779976086; x=1780580886;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1779976211; x=1780581011; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=25S7mPtTDqCSCc4SGEugjzYunSx5dQSHktsrAHYTncI=;
- b=pHL2+JYUVHONKHGMyUDs4uiHX2IUQWJmG2+B5aLAv9pSRmgZJDbHKT28LSb6vaMVve
- frnxpcQMZo8VowlDTV5JulRLFe7CkYpa5SaeNnbgw11CxG07TDqRlhIfvjZYNdnA4H3P
- RepHpqSNRg7tYByIOcswOfLETtlCMs+ZocziUAQp7w07+pqTe45DcL/zsLzuIfK97gsv
- dvh/XPXcVVIYnjUSND6YiaLHpQuq8/8l6Rki+5+LoKGlIBcXLEfTLtyPCSn7mArs4Qqc
- HyA7Vg750cyOeicHJ8aNZS4/unzGvQcr0b2od10t3S2IHIfi6PhH/Eaw1AzRSeH1WlMi
- Z8Ig==
-X-Gm-Message-State: AOJu0YzrWAWuZenrA9+dz09zan5Ep5v4QqksGCAL4psVWW+6cexK7wNz
- 6UVopfwmKhg2uR1jFhbA1uTN4IMrUNVlrCoKKiMcct9w/v+uOnYCH+AJ0XInpG0T9NgYOqwXumY
- x7LWG3hlh4TcbcO0iGI1pH9lMORPjYoFkJXfvpfQncw==
-X-Gm-Gg: Acq92OGzLbyVYz32zf3jxtz3zt+AUdQ4zA1elYeaebiRclbySJlN0F29AK3Lrb1a2kB
- K1c04EX6ieL6H6SnSN3kYos1/1VEJ/6eHSWRZjZmLScGVhfKZA+ndzpiXZcvtwqjd8sStJCqYAh
- geuZmD8HG5N+3u0otiiharwwOXMdJa09o/ITH7GBTQA4O8OFKeYAUlCAJLACTyWp7Ph/G4mScGP
- jS8tWZwEcHhbSDEqFpLMYOnzr2ABkgfkUelA1CGx7oQkrCoHPr8i9QkCaFuEe9XxGlHK9JheWVl
- Bb0dEn7moyTUd/QhxN38mVXo89W+q/AIom9UE07I9S1to3sHcrxZxhqXOFRI4bejeHksLWL85Rf
- SpQgiZIAOqDhu
-X-Received: by 2002:a05:690c:7202:b0:7d0:79f:339f with SMTP id
- 00721157ae682-7d33a665524mr284688497b3.34.1779976085615; Thu, 28 May 2026
- 06:48:05 -0700 (PDT)
+ bh=NsdN7CeCDhmLk9u6DNv20vpChFhuhsKQXvdM6wjh10I=;
+ b=Rr/Icvk290M+TJOtvrtGqZIoSCE/N0C+TVHV3EJvoxlwjgokfYhhuach64T1fN7Z1Q
+ x7+9d7wE8chbt9xlVGv7LhHS8bKJyd1ZrJ+dHbvs9GjQIIwdWdw8ecPj4Ok4FFNrvrj/
+ 8usL2X9NCgwy1MPzfxRXlWC7jgqgaYXFNNNkKBspUP8Jm/yif9EubHtFmo5VLQOkLt5a
+ CBm6vJPyPEcssCrLNTCwzJF7Hr7W5J9+AG1P+TwkdogZFrxVEsFNx7QWNoam2h3AYs3A
+ wWbYZPw71Ixv3INmYe34edPEpu6zUlvk1lzF6ZOCXOM1VBbYN3o1JFs8KPYCHx2xzILn
+ 4cMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779976211; x=1780581011;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=NsdN7CeCDhmLk9u6DNv20vpChFhuhsKQXvdM6wjh10I=;
+ b=jJ50t1E8HUx2rkJdH27Amc/V7eUMpBK7w4jNfgfQ5SqcBUApNHS8d8hVwehSgGPbhS
+ Mth6tCD9P/0U0h51OK+UkotHsSWvpivqYik6v6f2fyf+XEkbqXhVJPErlcI2rkP+CImj
+ gTvVHzMzhAmVGIgCm1xJ3DayV03KoH09b/CnrKHgG4ZguvCcpSUjFf8IO72hZ9SW+nW8
+ kpO+/NllwZsY1fSrgKCbuMnCCHjVykX23ojV+E6sv5/bWyziUTLXrpxALF7/mFMNaMv7
+ /JETF613NxHsG3Nq5Q81Xyg0SnaHstxr3xj23O6s+WomrlpxQS4KMrHBGKw+QArU3yvL
+ TFDQ==
+X-Gm-Message-State: AOJu0YyU4kBpl11r1PW0GBYAV/kXigr6BAU6VE8CxDVq/l4Z3UFaNe8j
+ mEywzoY/jOr/Mawoo5KOKtfmKiR4nM1BrACHloTXLozjn7+o0GnuIrQzRTFN4IefWUk=
+X-Gm-Gg: Acq92OFnf49TVVT5A957Xg4UxpkVKmoF9U0eI4JggDAOJf88qwhiKUCvWXTdIPnmWsL
+ NhedhrNi6zZAJBszQ3yIGoNAu0Axu755mJjlppOP283BylMlt4h6AY3IOgPsfosgRoKxtgH2/pG
+ mJBkd9UTPIV2PWIo+cDi7y8Dmc17NU6IKlqJ1bzJFTTZyGu3DRD5xE9MgglLMVKJ9pP0CGhUV6U
+ zfPoyrYEI6tBMp6vDR5V2XkBQFQy1gEiD/8QRVIVQwGTmCmpmdr4XdKwZg1hO1A0yj3dUg0CpBx
+ 4Itr2jlpJXgdORoso5rHYVSwaqH6T+qPkZCaE7lh78Ey2wVQ9xFF3/hTXrIklDsXTSIqaatYxx8
+ RWTR/wkLKHFOekKeJwkJ6n4SXlSKxsQhy/yPV7T6R2MAua0JEaHhLVEEeEDV8bJEN+oKmIr1Ytn
+ 6UnUk7IVuF/kxWkpcpACkfo5Juha/CXI374w==
+X-Received: by 2002:a05:600c:8484:b0:48a:906b:14ca with SMTP id
+ 5b1f17b1804b1-490426cd8c4mr475241395e9.20.1779976211243; 
+ Thu, 28 May 2026 06:50:11 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49092a82ea2sm73928135e9.9.2026.05.28.06.50.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 28 May 2026 06:50:10 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 913145F7DC;
+ Thu, 28 May 2026 14:50:09 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  Alistair Francis <Alistair.Francis@wdc.com>,
+ Peter Maydell <peter.maydell@linaro.org>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Anton Johansson
+ <anjo@rev.ng>
+Subject: Re: [PATCH] docs/devel/tcg: Expand on multi-threaded TCG
+In-Reply-To: <20260528082022.32359-1-philmd@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Thu, 28 May 2026 10:20:22
+ +0200")
+References: <20260528082022.32359-1-philmd@linaro.org>
+User-Agent: mu4e 1.14.1; emacs 30.1
+Date: Thu, 28 May 2026 14:50:09 +0100
+Message-ID: <87cxyfwsmm.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20260518174750.660258-1-richard.henderson@linaro.org>
- <20260518174750.660258-5-richard.henderson@linaro.org>
-In-Reply-To: <20260518174750.660258-5-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 28 May 2026 14:47:53 +0100
-X-Gm-Features: AVHnY4LnkpkFX-vhsYoBl2Wkixg_Xwuk0eVlTXlL6bTAcU-tiyNvz5LQh3TNCo0
-Message-ID: <CAFEAcA8_drG1oxrPyuzJGuduPvThuZMGSzDNWtZDE8ThXL5ugw@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] target/arm: Enable FEAT_CMPBR for -cpu max
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,19 +108,211 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 18 May 2026 at 18:48, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+
+> Significantly expands the TCG documentation to provide more
+> comprehensive overview of its internal architecture.
 >
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Use more rST anchors to improve cross-referencing across the
+> documentation.
+>
+> Clarify front-end / optimization / back-end phases.
+>
+> Detail a bit memory consistency barriers under MTTCG mode.
+>
+> Add the following new sections:
+>
+>  - Register Allocation and Liveness analysis
+>  - Overviews of the Vector/SIMD internal strategy
+>  - Deterministic Execution (icount)
+>  - TCG Plugins
+>  - Instruction Decoding with decodetree
+>
+> AI-used-for: docs
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
->  linux-user/aarch64/elfload.c  | 1 +
->  target/arm/tcg/cpu64.c        | 2 +-
->  docs/system/arm/emulation.rst | 1 +
->  3 files changed, 3 insertions(+), 1 deletion(-)
+> Based-on: <20260528073412.551117-1-pbonzini@redhat.com>
+> ---
+>  docs/devel/multi-thread-tcg.rst |  2 +-
+>  docs/devel/tcg-icount.rst       |  1 +
+>  docs/devel/tcg.rst              | 89 +++++++++++++++++++++++++++++++++
+>  3 files changed, 91 insertions(+), 1 deletion(-)
+>
+> diff --git a/docs/devel/multi-thread-tcg.rst b/docs/devel/multi-thread-tc=
+g.rst
+> index da9a1530c9f..aa0b11ab360 100644
+> --- a/docs/devel/multi-thread-tcg.rst
+> +++ b/docs/devel/multi-thread-tcg.rst
+> @@ -4,7 +4,7 @@
+>    This work is licensed under the terms of the GNU GPL, version 2 or
+>    later. See the COPYING file in the top-level directory.
+>=20=20
+> -.. _mttcg:
+> +.. _MTTCG:
+>=20=20
+>  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>  Multi-threaded TCG
+> diff --git a/docs/devel/tcg-icount.rst b/docs/devel/tcg-icount.rst
+> index a1dcd79e0fd..848c19a746f 100644
+> --- a/docs/devel/tcg-icount.rst
+> +++ b/docs/devel/tcg-icount.rst
+> @@ -2,6 +2,7 @@
+>     Copyright (c) 2020, Linaro Limited
+>     Written by Alex Benn=C3=A9e
+>=20=20
+> +.. _icount:
+>=20=20
+>  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>  TCG Instruction Counting
+> diff --git a/docs/devel/tcg.rst b/docs/devel/tcg.rst
+> index 2786f2f6791..9af06018f6a 100644
+> --- a/docs/devel/tcg.rst
+> +++ b/docs/devel/tcg.rst
+> @@ -13,6 +13,16 @@ performances.
+>  QEMU's dynamic translation backend is called TCG, for "Tiny Code
+>  Generator". For more information, please take a look at :ref:`tcg-ops-re=
+f`.
+>=20=20
+> +The translation process occurs in several distinct passes:
+> +
+> +1. **Front-end**: Guest instructions are parsed (often using the
+> +   `decodetree <Instruction Decoding (decodetree)_>`_ tool) and converted
+> +   into target-independent TCG Intermediate Representation (IR) opcodes.
+> +2. **Optimization**: TCG performs passes such as constant folding, liven=
+ess
+> +   analysis, and dead code elimination on the IR.
 
+Not all optimisation is done here by the way, some of the front-end ops
+will select operations based on TCG_TARGET_HAS_ before we get to the
+optimisation pass.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> +3. **Back-end**: The optimized IR is converted by a host-specific code
+> +   generator into native instructions for the host CPU.
+> +
+>  The following sections outline some notable features and implementation
+>  details of QEMU's dynamic translator.
+>=20=20
+> @@ -44,6 +54,12 @@ translating it from the guest architecture if it isn=
+=E2=80=99t already available
+>  in memory. Then QEMU proceeds to execute this next TB, starting at the
+>  prologue and then moving on to the translated instructions.
+>=20=20
+> +In :ref:`MTTCG` mode, each guest CPU is emulated by a separate host thre=
+ad.
+> +TCG ensures memory consistency by inserting memory barrier (``mb``) opco=
+des
+> +for guest instructions with ordering side effects. Direct block chaining
+> +across page boundaries is restricted to ensure that changes to memory
+> +mappings in one thread are correctly handled by others.
+> +
+>  Exiting from the TB this way will cause the ``cpu_exec_interrupt()``
+>  callback to be re-evaluated before executing additional instructions.
+>  It is mandatory to exit this way after any CPU state changes that may
+> @@ -175,6 +191,12 @@ virtual to physical address translation is done at e=
+very memory
+>  access.
+>=20=20
+>  QEMU uses an address translation cache (TLB) to speed up the translation.
+> +The software MMU partitions accesses into a **TLB fast-path** and a
+> +**TLB slow-path**. The fast-path handles RAM and ROM areas, where the TLB
+> +provides the direct offset between guest virtual addresses and host memo=
+ry.
+> +If an access does not match a fast-path entry, it falls through to the
+> +slow-path, which calls C helper functions to handle MMIO device emulatio=
+n.
+> +
+>  In order to avoid flushing the translated code each time the MMU
+>  mappings change, all caches in QEMU are physically indexed.  This
+>  means that each basic block is indexed with its physical address.
+> @@ -190,6 +212,73 @@ memory areas instead calls out to C code for device =
+emulation.
+>  Finally, the MMU helps tracking dirty pages and pages pointed to by
+>  translation blocks.
+>=20=20
+> +Register Allocation and Liveness
+> +--------------------------------
+> +
+> +During the translation phase, guest instructions are converted into TCG =
+IR
+> +using an **unlimited number of temporaries (TEMPs)**.
+> +This allows guest translators to express logic without being constrained
+> +by the finite register set of the host CPU.
+> +
+> +To resolve these TEMPs into physical registers, TCG performs two passes:
+> +
+> +1. **Liveness Analysis**: This pass determines the "live range" of each
+> +   temporary within a basic block. By identifying when a variable
+> +   becomes "dead" (i.e., its value is no longer needed), TCG can suppress
+> +   redundant moves and remove instructions that compute unused results.
+> +2. **Register Allocation**: The Global Register Allocator maps live TEMPs
+> +   to host physical registers. Fixed globals, such as the pointer
+> +   to the CPU architecture state (``cpu_env``), are often permanently
+> +   held in host registers to minimize memory traffic during execution.
+> +
+> +Vector/SIMD Internal Strategy
+> +-----------------------------
+> +
+> +TCG supports SIMD operations through a set of generic vector instructions
+> +(e.g., ``add_vec``, ``shli_vec``) parameterized by vector length and ele=
+ment
+> +size. The length is specified as a ``TCGType`` (V64, V128, or V256), and=
+ the
+> +element size is given in log2 8-bit units.
+> +
+> +The internal strategy relies on the backend mapping these generic opcodes
+> +to native host SIMD instructions, such as x86 AVX or ARM NEON. If the ho=
+st
+> +backend does not support a specific vector operation  or length, TCG's
+> +expansion layer automatically decomposes the opcode into smaller support=
+ed
+> +vector sizes or standard integer operations.
+> +
+> +Deterministic Execution (icount)
+> +--------------------------------
+> +
+> +The :ref:`icount` mechanism provides deterministic execution by ensuring
+> +that each Translation Block executes a fixed number of instructions. This
+> +is essential for features like record/replay and deterministic virtual t=
+ime,
+> +where instruction counts serve as the system clock.
+> +
+> +Instrumentation and Plugins
+> +---------------------------
+> +
+> +:ref:`TCG Plugins` provide a mechanism for runtime instrumentation. Opco=
+des
+> +like ``plugin_cb`` and ``plugin_mem_cb`` are inserted during translation=
+ to
+> +trigger callbacks in external modules, allowing analysis of instruction
+> +execution or memory access.
+> +
+> +Instruction Decoding (decodetree)
+> +---------------------------------
+> +
+> +The first step of the translation process is converting a raw bitstream =
+of
+> +guest instructions into a structured format that the translator can proc=
+ess.
+> +QEMU simplifies this using the ``decodetree.py`` script, which generates=
+ C
+> +code decoders from a domain-specific language defined in ``.decode`` fil=
+es.
+> +
+> +The decodetree tool allows developers to define instruction **patterns**
+> +based on a bitmask and fixed bits. When a match is found, the generated
+> +decoder automatically  extracts defined **fields** (such as registers or
+> +immediates) and passes  them to a manually written translation function.
+> +
+> +This declarative approach drastically reduces the amount of error-prone
+> +manual bit-shifting and nested "if-else" logic required in guest transla=
+tors.
+> +
+> +For detailled implementation see :ref:`decodetree`.
+> +
+>  Profiling JITted code
+>  ---------------------
 
-thanks
--- PMM
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
