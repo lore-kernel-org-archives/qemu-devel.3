@@ -4,113 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D1E8CD5BD5
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 15:34:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3A57CD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 15:35:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wScka-0001Wp-VM; Thu, 28 May 2026 11:34:25 -0400
+	id 1wSclH-0002Ii-RA; Thu, 28 May 2026 11:35:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wSckZ-0001WE-J5; Thu, 28 May 2026 11:34:23 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wSckY-0007LZ-19; Thu, 28 May 2026 11:34:23 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64SClOtA3139343; Thu, 28 May 2026 15:34:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=WHD1IH
- WiCL0rXhDsBmRuZSMkNkcWT8cRbV2hC7RkFyk=; b=CLwXCRy3/UN0JthiIoTMmx
- pO/PRluz/zqMsf/gpBfIjyBfoXK/ZMKtq9L1fxGBELh5p89Ejc5E3G+FwUJySrJ+
- FLVt3SgaBUfXsKhOXcYkGFkLxetpxK+y4ifafd63dVFiDw3AfeaKOwlg6f7j6ePY
- z0n+yQz+eQxGJ9CjFbOvh1cQBss7OOqOmMsJywB/bAjKIwf/305nChr6KphElPwn
- UnD1ndmIYjLm7FwEE9DFI3JZwS1rt+2GuMcXxiFvBYitKJFm7o0aPD03Nz5vQOTA
- C7Q7EsSpy2UZff10e4Ki/LS6UXAChx/DWlboNkuTTERjRVPRFI0x3F8fX89hu9wg
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ee887km6a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 28 May 2026 15:34:17 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64SFOS9a023079;
- Thu, 28 May 2026 15:34:17 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4edjrb8rep-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 28 May 2026 15:34:17 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64SFYGUu17302124
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 28 May 2026 15:34:16 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1B58558062;
- Thu, 28 May 2026 15:34:16 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C564B58051;
- Thu, 28 May 2026 15:34:14 +0000 (GMT)
-Received: from [9.61.124.159] (unknown [9.61.124.159])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Thu, 28 May 2026 15:34:14 +0000 (GMT)
-Message-ID: <bbc147c7-0e70-4640-a830-2fa12f18c13c@linux.ibm.com>
-Date: Thu, 28 May 2026 11:34:14 -0400
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1wSclA-0002Go-Hi
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 11:35:04 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1wScl7-0007ZC-IQ
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 11:35:00 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-49068493267so32736115e9.1
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 08:34:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779982496; x=1780587296; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=nhpWidENFAb6JwyuWIKzWAKDnchWz5BOJ0Z4yzFFWl0=;
+ b=SZ58cDc42UPzH9qSzVd0jxb+utorn7AI5WKrYnQfG1ON0KLFFlpJFXqpk2j1WljnOS
+ sy0EtwxXQbb2AZE2f3OOcKd/Bsv55QBM0r11ZLjsk97PvPXUUCKEyJm8677AM+9R8or9
+ ctv6nhbuYhG+PIf5cO+jtXVI+3QLVLnLOj0/xuqcebFDr3yNNryp98BFiHEfcVDFJE4Q
+ lYt5L3svihuniv4M5Hu9SCyKkj+eb02wMlcUTUhEBlHAAmVdX3AJs+CORlYV5wApnEVD
+ Lzu7K+SSqLT6r9CyK1j5AJGvdGP6pc7+Uuy2loNRVUMbESoeAfBcQkw2lS613l8xdztW
+ DV3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779982496; x=1780587296;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=nhpWidENFAb6JwyuWIKzWAKDnchWz5BOJ0Z4yzFFWl0=;
+ b=Lt/vob6sCU6RR7YUHlE0ag349aUlOq1EaLVjV3kbtwQBXzec4mQMsnvgK/+BbeecXz
+ SSGxVU/kq68Rqg5xtEgHKOu8oL29X9Nl9yS55xvNCwR2iuejekez0VrLCyrmYI5KH/zL
+ GnvY9+JPhWfu/i05QqjAWQHPh3Xo1fbiIvAGar+io971MKEtjlwxvydBVHFChCYGcqSh
+ A9aLavhXDNHf/6jatd381rAMIwAZ1gRw2nWnbPSUyMdjwXrIgWUyoAHymLkio7FuN4l6
+ h55DbuUrOL8uEhK/gL3JFSQjWLglgtT5yiIBQqUXKmUi4FCMqJZ/q1PwOTtd9vrNrIIh
+ iDhQ==
+X-Gm-Message-State: AOJu0Yw0XBiDWMO1/C3u/4pEGhxYsO9Ib2XJ6HbkvRV1WXNGDI/DL5l6
+ rpHMoXeV/68ed7S0PBuzTXMz0THJmGxsvik7JS/qanZGGdkKvkNIdSfdU8FbPOZPF/Y=
+X-Gm-Gg: Acq92OFUS8qST4nXnXOgbPEY0MH2/tAJWMwe1jZ3KcDMDo+lkJ1fVOA0WxoBPJKxNeg
+ r23TlUo3jOJFxgbXxHsWzH+cdc17p/AhOF8CCE5Lpf7mdgCVBBe5SWCOQXZ9rfgF4M/8ZT27eSW
+ 0sOYnVk5f97kiztLJdd5WtC7lRV6rA9ii9mPc1ICce/uiIkn40JhK2ZKEr9qajruNE6KqwPzp3/
+ 2sE0S72Pll1bxLk4rBt/3fov+S2KZ59m1iAaSOCLk/CiqyAw4vZSLBVMtRjAoaWdnzU4DbJMFyL
+ h9lFj0SsxbmWiXXcwJGB1IP6UAiNArMfo7OAVCafjmOULP/SUjP/KhmlV3Z4vGJJosIYhvRKV1l
+ yusmK01RIYlt9u6J09Nq58j9canDPnfSLOydq5nhbhH20AnHMtpkyXTdL5h5Ysu7Qap1hJuMmWE
+ bIEbzkIUw0c80CBeYGVjNssz/wQnfMCyI9XMdGWw==
+X-Received: by 2002:a05:600c:45d2:b0:490:6237:521d with SMTP id
+ 5b1f17b1804b1-490623753admr300744025e9.13.1779982496054; 
+ Thu, 28 May 2026 08:34:56 -0700 (PDT)
+Received: from [127.0.1.1] ([2a10:d582:31e:0:f5a7:372a:ab8b:3c01])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4909298d41bsm46514785e9.11.2026.05.28.08.34.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 28 May 2026 08:34:55 -0700 (PDT)
+From: Jim MacArthur <jim.macarthur@linaro.org>
+Date: Thu, 28 May 2026 16:34:37 +0100
+Subject: [PATCH 2/5] target/arm: Setup new registers for GPC3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 00/32] Secure IPL Support for SCSI Scheme of
- virtio-blk/virtio-scsi Devices
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: cohuck@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
- david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
- pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-References: <20260505201905.997996-1-zycai@linux.ibm.com>
-Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <20260505201905.997996-1-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=QLJYgALL c=1 sm=1 tr=0 ts=6a18607a cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=88C1laGa05002lli46UA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: aUr5ySUFYgJ5NyVAU1hleLqIhM3kcTvi
-X-Proofpoint-ORIG-GUID: aUr5ySUFYgJ5NyVAU1hleLqIhM3kcTvi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI4MDE1MyBTYWx0ZWRfX9wqMVzU+9/p5
- nqkxzibHOkZgZvl5J2jHZvX3INYOAChY+CFng1JJVimET1Ec/8ddJp98kpFUT18oHkftkrlvAH9
- zd4XgR7nMJ1JUVCpFOkNS57nWUYftU4KQ4Aqhs8pesnZQ7CUxmgu0KcRpo9TsbL/ho0DCndqI/r
- vy5/I7Tvd3bKE5swE5Ohl6f5e8vriQkZBGp9IZpuc+Cw6genjUzlcwMV0hjZgRMgFUIc1AY/Dh+
- /0hVNzIYK2O6Da43oW1lZ8736blmexVqGyF2BsGVYZOJTqavyhPYT26fL+WGu/7LIOdujFrBp3E
- NqN1Ywjlqccmxu1zPJkladny4NGtXo29J8ttY8mcjFxvOEp86HJlTRUdiU/cLUMMwWSo2/7WHIC
- NRPQpix5D1kfT9OK4CSPZsuZQ4HKgON9ghyYk+B+LjJmWN2dmJYBKgtIzqoMWb20FqtPbcwzxsu
- see1iiGxtBK90QctZWQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-05-28_04,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0 impostorscore=0 malwarescore=0 adultscore=0
- lowpriorityscore=0 phishscore=0 clxscore=1015 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605280153
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260528-jmac-gpc3b-v1-2-d34c46c5069f@linaro.org>
+References: <20260528-jmac-gpc3b-v1-0-d34c46c5069f@linaro.org>
+In-Reply-To: <20260528-jmac-gpc3b-v1-0-d34c46c5069f@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ Jim MacArthur <jim.macarthur@linaro.org>
+X-Mailer: b4 0.13.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,53 +100,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Secure IPL configuration/state does no appear to persist across reboots.
+Adds GPCBW_EL3. A custom write function is necessary to flush TLBs
+when this register is written. Also allows write to the GPCBW bit of
+GPCCR_EL3.
 
-Consider a guest provisioned with two bootable images, one is signed, 
-one is not.
-The stage3.bin is properly signed.
+Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+---
+ target/arm/cpu.h    |  7 +++++++
+ target/arm/helper.c | 19 +++++++++++++++++++
+ 2 files changed, 26 insertions(+)
 
-With secure_boot=on, boot the signed image, then try to load the 
-unsigned image using kexec.
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 85552b573c..9944dc9727 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -546,6 +546,7 @@ typedef struct CPUArchState {
+         /* RME registers */
+         uint64_t gpccr_el3;
+         uint64_t gptbr_el3;
++        uint64_t gpcbw_el3;
+         uint64_t mfar_el3;
+ 
+         /* NV2 register */
+@@ -1228,6 +1229,8 @@ void arm_v7m_cpu_do_interrupt(CPUState *cpu);
+ typedef struct ARMGranuleProtectionConfig {
+     /* GPCCR_EL3 */
+     uint64_t gpccr;
++    /* GPCBW_EL3 */
++    uint64_t gpcbw;
+     /* GPTBR_EL3 */
+     uint64_t gptbr;
+     /* ID_AA64MMFR0_EL1.PARange */
+@@ -2098,6 +2101,10 @@ FIELD(GPCCR, NA6, 27, 1)
+ FIELD(GPCCR, NA7, 28, 1)
+ FIELD(GPCCR, GPCBW, 29, 1)
+ 
++FIELD(GPCBW, BWSIZE, 37, 2)
++FIELD(GPCBW, BWSTRIDE, 32, 5)
++FIELD(GPCBW, BWADDR, 0, 25)
++
+ FIELD(MFAR, FPA, 12, 40)
+ FIELD(MFAR, NSE, 62, 1)
+ FIELD(MFAR, NS, 63, 1)
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 34487eeaa3..12453fe39f 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -4990,6 +4990,10 @@ static void gpccr_write(CPUARMState *env, const ARMCPRegInfo *ri,
+                    R_GPCCR_SPAD_MASK | R_GPCCR_NSPAD_MASK | R_GPCCR_RLPAD_MASK;
+     }
+ 
++    if (cpu_isar_feature(aa64_rme_gpc3 , env_archcpu(env))) {
++        rw_mask |= R_GPCCR_GPCBW_MASK;
++    }
++
+     env->cp15.gpccr_el3 = (value & rw_mask) | (env->cp15.gpccr_el3 & ~rw_mask);
+ }
+ 
+@@ -4999,11 +5003,26 @@ static void gpccr_reset(CPUARMState *env, const ARMCPRegInfo *ri)
+                                      env_archcpu(env)->reset_l0gptsz);
+ }
+ 
++static void gpcbw_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                        uint64_t value)
++{
++    uint64_t rw_mask = R_GPCBW_BWADDR_MASK | R_GPCBW_BWSTRIDE_MASK |
++                       R_GPCBW_BWSIZE_MASK;
++    ARMCPU *cpu = env_archcpu(env);
++    tlb_flush_by_mmuidx(CPU(cpu), alle1_tlbmask(env));
++
++    env->cp15.gpcbw_el3 = (value & rw_mask) | (env->cp15.gpcbw_el3 & ~rw_mask);
++}
++
+ static const ARMCPRegInfo rme_reginfo[] = {
+     { .name = "GPCCR_EL3", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 6, .crn = 2, .crm = 1, .opc2 = 6,
+       .access = PL3_RW, .writefn = gpccr_write, .resetfn = gpccr_reset,
+       .fieldoffset = offsetof(CPUARMState, cp15.gpccr_el3) },
++    { .name = "GPCBW_EL3", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 6, .crn = 2, .crm = 1, .opc2 = 5,
++      .access = PL3_RW, .writefn = gpcbw_write,
++      .fieldoffset = offsetof(CPUARMState, cp15.gpcbw_el3) },
+     { .name = "GPTBR_EL3", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 6, .crn = 2, .crm = 1, .opc2 = 4,
+       .access = PL3_RW, .fieldoffset = offsetof(CPUARMState, cp15.gptbr_el3) },
 
-[root@localhost ~]# kexec -ld unsigned --initrd=fake.img --reuse-cmdline
-Try gzip decompression.
-Try zstd decompression.
-Not zstd compressed
-Try LZMA decompression.
-lzma_decompress_file: read on unsigned of 65536 bytes failed
-[  339.375817] kexec_file: kernel: 000000000915b573 kernel_size: 0xf85130
-[  339.383018] Lockdown: kexec: kexec of unsigned images is restricted; 
-see man kernel_lockdown.7
-kexec_file_load failed: Operation not permitted
+-- 
+2.43.0
 
-Initially kexec correctly rejects loading the unsigned image.
-
-Reboot, then re-try loading the unsigned image.
-
-[root@localhost ~]# kexec -ld unsigned --initrd=fake.img --reuse-cmdline
-Try gzip decompression.
-Try zstd decompression.
-Not zstd compressed
-Try LZMA decompression.
-lzma_decompress_file: read on unsigned of 65536 bytes failed
-[   44.654152] kexec_file: kernel: 000000009fc3b80c kernel_size: 0xf85130
-[   44.774975] kexec_file: nr_segments = 4
-[   44.774978] kexec_file: segment[0]: buf=0x000000009fc3b80c 
-bufsz=0xf85130 mem=0x0 memsz=0xf86000
-[   44.780416] kexec_file: segment[1]: buf=0x00000000f9e1120b 
-bufsz=0x2dd2c52 mem=0xf86000 memsz=0x2dd3000
-[   44.818676] kexec_file: segment[2]: buf=0x000000004f695d01 
-bufsz=0x2f60 mem=0x3d59000 memsz=0x3000
-[   44.818680] kexec_file: segment[3]: buf=0x000000008a75eb84 
-bufsz=0x138 mem=0x3d5c000 memsz=0x1000
-[   44.818682] kexec_file: kexec_file_load: type:0, start:0x0 
-head:0x9c2a002 flags:0x8
-[root@localhost ~]#
-
-After reboot the unsigned image loads, kexec -e can be used to bypass 
-Secure IPL settings.
-
-Regards,
-Jared Rossi
 
