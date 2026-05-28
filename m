@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 339DECD4F54
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 20:23:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8300CD5BD5
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 20:23:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wShG7-0005Lx-Mk; Thu, 28 May 2026 16:23:15 -0400
+	id 1wShFu-0005Ia-7P; Thu, 28 May 2026 16:23:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShG5-0005LB-As
- for qemu-devel@nongnu.org; Thu, 28 May 2026 16:23:13 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShFr-0005Gx-VK
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 16:23:00 -0400
+Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShG3-0004LN-Fk
- for qemu-devel@nongnu.org; Thu, 28 May 2026 16:23:13 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-44dd5cb0f81so9229045f8f.0
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 13:23:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShFp-0004C0-VW
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 16:22:59 -0400
+Received: by mail-wr1-x444.google.com with SMTP id
+ ffacd0b85a97d-44e5624c053so7918492f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 13:22:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779999790; x=1780604590; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=46WbI2djE0UCmBdcudxQk4DPj15qACVaBONwHZoW6vM=;
- b=jiseDnVqpzDWoIZ1vf/E9vwvDNpnlycs+P8irTCX53sMfoZGOMWayTWFFVYGXev+Zh
- 3BtQYhVBDzyBUD367aVtvTBWJbyGzs/p0TpJPGims2aRf3lVFy9SMnrGnEiZCLi40Jx4
- FMH2ZhDQ7Dkjv1LWzcToSdBtjmZUnXQj135CrAhSx3VReN31zi3JUOPEjmjclf62AocW
- h+tB2cbe2JtvTApmzOdspQ2s4O0zHydonrhjUuPEKPkkEzAxKnMgFc9WEwNdXb1hohRs
- ftLkNjnyczv2u63Sc7pjBeziS++CMMYAkKIhWGQm+pFpkVmOR1lsWA+mflzOnTWRBhDG
- DmFQ==
+ d=linaro.org; s=google; t=1779999775; x=1780604575; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=pmymOgY0NPikGWDMTriaQbCuVEkKyMkTPhQBuHxB4qQ=;
+ b=AQUKUEGWVesmh6a+B7iwtkr/xzoR/sh4HIKXZNZfpCtCanfvf85SV5xfhnKZ6mfgGy
+ ZN7a/SFRnsxCCWvHmQ+mfOGs8FO3+dm0NfTnkrxAMHqcYaOKiuUtUEH4kmvHw/X/ZAIw
+ iJoo47GIE01fsaxHvNVudtk9OdQXqkpczUsq2tlBe3aMZHGEuRQfS6fzUQZTShDBc6K4
+ LbP/9m7n/IdExmH+jFuw57ZdQrV0Lf3knYTq1nP3ChBT+21cvPspVupoI12aokaiWXYI
+ ULEfGoSXbqIypHhSuw6lBhgC6s78Y2bcQSHD7tgYkiTWhXjvug+p5hzRtvr+r6G3MtTb
+ y58Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779999790; x=1780604590;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=46WbI2djE0UCmBdcudxQk4DPj15qACVaBONwHZoW6vM=;
- b=MudSVwkZajs3u9gnXqaEI4DJnioImC9H4iKjEQW1UlluNNRowkIKsKOVDdDiFnP/4g
- NECQFqjvuezIyZJorCXDsLc7otP8BH5IGer/CldFFlk3ATWaJpngs/c7em9o3PfvvJf+
- GBfIvgYYQthb20PTzRhXAzS0t0pbzhPMU8la6p3MHcv2guoequA7YBSqjdypPYsnyZGV
- JnlLqjzrBSQxMjnGdFyCC5WMzvVwoWUOXakitszins+GikfLd9/McfDCoAsJEbG5WeJi
- cXaxmk4cgmLzNofusxcGjZO3lCRj8WM3xYBkxEkOxfEmQEbIpe/y/cszHiYPuCAR9CT8
- XZtA==
-X-Gm-Message-State: AOJu0YzBlG0VzqMKlBcr66je2ObbAUfr7ht+adphqyLckigZcP8avKKr
- YZSewmBnoL4PswKp0O1De+IfY0AIuhVSxhFUH/aNG4DauB+QFbyAzqxAiDB/N50SEQC+tnPq91h
- ff4TYPJIocA==
-X-Gm-Gg: Acq92OHRuFMMurvqhkWGw4xKbAcWJQjTB4z9UC72oSRKXu3WI8U61383cR9OVibQXv4
- qFjz/ts4foVxyElcIuc6dEo2lmQLRPx9+fsmWQk+TQ+Dpp/y/SiEUhEoaiNryIOy6yetiUXaZkd
- FO0rltN+5acYdwf0GGpz5g2izot+r65qZZ6jhUMsgnae5ChdcoHozAjZ5b1d5PVrUfH+PhUbIMT
- W63tEh4OexzU2MTWyXptDFWVSM+Jk4+CoaWoD6xbH9MhkRfd5jR33KZLHNKfN2Yw43awzQYP6N8
- 6bLmY6x3+ZnGi9fLKBED7tvlYyjUPOR3yK9PAbZjahImFZRTrF2OzFV8+1y5j7FqhQdQl7MnTCk
- 1fWwTvDc8kmI9iUonozWdrIQy13XtPaSdmfbgQFxK/V4gTObjrKHNOJAPZoVxg0aO5dnsXCH/Oo
- VdTia9ekSw4XqV7O5glCClVhxPeaA+tNBkRgH9WvvF2vvK6zL2IWC8u4Iz7YZzQpsUlw==
-X-Received: by 2002:adf:eb50:0:b0:45e:9304:a4c3 with SMTP id
- ffacd0b85a97d-45ef12b1845mr24577f8f.19.1779999789753; 
- Thu, 28 May 2026 13:23:09 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779999775; x=1780604575;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pmymOgY0NPikGWDMTriaQbCuVEkKyMkTPhQBuHxB4qQ=;
+ b=A2hSHoi9A56r0rrYp+YQHgoxKg69pVrw5VsMP5+7VQyMmpmuhKypEWhUuatPeT6OTG
+ TAZwLusyCekiKxH3Bhy2Lr+zFVms99glZ0vu3bYhQlLjjqkgju+HuhPZ6Ju0YL20LvY1
+ x7J85xHtr9fYfIipEjwQ9zaWX2jVB46Pka406gp1qYWsfvaMYThJa79v5pLE8fO5tKdM
+ OdC7n76XnrpQpckZDyM8HO65otPG++ZX7HvOdEbZVAaiIimZmdYh8cxQPYQwZinUD22z
+ PUw7cMw0MKg7jDiEP4nYHvI/YCY7nX+Dn9ITg5H5jt5HJufseE54i2Yoq+VkBFjgPKvC
+ DbbQ==
+X-Gm-Message-State: AOJu0YyuUikij3JPG/NEgwJUd5f8PfbJ3bTdyxkZMH/JIU/WDkh6nN8L
+ HsV9irG56MlIm1zFc5yulLzua9ACk1DcM3ove2o6aodLCDvNweQ6/57ISQp1o/amQMc8MPrZ7Rh
+ e18XGgPed6y2Q
+X-Gm-Gg: Acq92OFvEKwN7G9usVyZygkf6UP6L5MdwmVjed7l8LYf/TKUcCkVYUWIS5fHHrsBd3S
+ 3p5H8HKf9LVHJ45g/nI5VP97eXBa4ZOcOgNBKekf8d5UcY9Rb9cobTlSKx5o/76EpU38WbFR+oj
+ T+vqmM1Hl8QuszGMxMdPWu7vWrlo5gorXI6TKX/8N2hYUYCY4s2MwYXETt6fTMeIgQtzw6XWurV
+ 06eFMzdPl+Ri4wGPLG1V/VF7b2f8/auTiPz0xq+34RsplfTjajah3Zj1hWgqfbxCu1oEsgrwTX1
+ lYZrjZofDD8ZdpllgH2piTqzOZYleL885zCqO3LVt8efgTPgl1bp7UHqUsNLUDJPkvuz2czsdNO
+ z3Fyx1Sa+m8BjQX7MfqELQJDiS67NMqd+IGVnsdT2rlyqLRx8Y9i5eT+Mn66ALF4kivx69DUtO2
+ u4rJxYwtCT5RQ5NwvTq3lqsx8deoeGk13d8GbPqNVXl9lt4uzq2j3fsGyVK5EXJpvM4Q==
+X-Received: by 2002:a05:600c:6287:b0:490:3f7a:108b with SMTP id
+ 5b1f17b1804b1-4909c0d6780mr337315e9.16.1779999775373; 
+ Thu, 28 May 2026 13:22:55 -0700 (PDT)
 Received: from m15.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45eed496112sm3910241f8f.15.2026.05.28.13.23.08
+ ffacd0b85a97d-45edb5b28absm16331508f8f.27.2026.05.28.13.22.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 28 May 2026 13:23:08 -0700 (PDT)
+ Thu, 28 May 2026 13:22:54 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/22] target/tcg: Rename unaligned_access() helpers
-Date: Thu, 28 May 2026 22:22:32 +0200
-Message-ID: <20260528202253.49122-3-philmd@linaro.org>
+Subject: [PULL 00/22] Single binary patches for 2026-05-28
+Date: Thu, 28 May 2026 22:22:30 +0200
+Message-ID: <20260528202253.49122-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260528202253.49122-1-philmd@linaro.org>
-References: <20260528202253.49122-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::444;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x444.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,106 +96,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to avoid symbol name clash when building
-a single binary, rename TCG helpers prefixing with
-the target name.
+The following changes since commit 2db91528542672cf0db78b3f2cc0e22b36302b38:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-Id: <20260224193028.2370-4-philmd@linaro.org>
----
- target/arm/tcg/helper-a64-defs.h | 2 +-
- target/microblaze/helper.h       | 2 +-
- target/arm/tcg/helper-a64.c      | 4 ++--
- target/arm/tcg/translate-a64.c   | 4 ++--
- target/microblaze/helper.c       | 2 +-
- target/microblaze/translate.c    | 2 +-
- 6 files changed, 8 insertions(+), 8 deletions(-)
+  Merge tag 'pull-vfio-20260527' of https://github.com/legoater/qemu into staging (2026-05-27 14:45:58 -0400)
 
-diff --git a/target/arm/tcg/helper-a64-defs.h b/target/arm/tcg/helper-a64-defs.h
-index b7880f773e7..cae543a7a15 100644
---- a/target/arm/tcg/helper-a64-defs.h
-+++ b/target/arm/tcg/helper-a64-defs.h
-@@ -113,7 +113,7 @@ DEF_HELPER_FLAGS_2(ldgm, TCG_CALL_NO_WG, i64, env, i64)
- DEF_HELPER_FLAGS_3(stgm, TCG_CALL_NO_WG, void, env, i64, i64)
- DEF_HELPER_FLAGS_3(stzgm_tags, TCG_CALL_NO_WG, void, env, i64, i64)
- 
--DEF_HELPER_FLAGS_4(unaligned_access, TCG_CALL_NO_WG,
-+DEF_HELPER_FLAGS_4(arm_unaligned_access, TCG_CALL_NO_WG,
-                    noreturn, env, i64, i32, i32)
- 
- DEF_HELPER_3(setp, void, env, i32, i32)
-diff --git a/target/microblaze/helper.h b/target/microblaze/helper.h
-index 01eba592b26..1429c1727ef 100644
---- a/target/microblaze/helper.h
-+++ b/target/microblaze/helper.h
-@@ -27,7 +27,7 @@ DEF_HELPER_FLAGS_3(put, TCG_CALL_NO_RWG, void, i32, i32, i32)
- #ifndef CONFIG_USER_ONLY
- DEF_HELPER_FLAGS_3(mmu_read, TCG_CALL_NO_RWG, i32, env, i32, i32)
- DEF_HELPER_FLAGS_4(mmu_write, TCG_CALL_NO_RWG, void, env, i32, i32, i32)
--DEF_HELPER_FLAGS_2(unaligned_access, TCG_CALL_NO_WG, noreturn, env, i64)
-+DEF_HELPER_FLAGS_2(microblaze_unaligned_access, TCG_CALL_NO_WG, noreturn, env, i64)
- DEF_HELPER_FLAGS_2(lbuea, TCG_CALL_NO_WG, i32, env, i64)
- DEF_HELPER_FLAGS_2(lhuea_be, TCG_CALL_NO_WG, i32, env, i64)
- DEF_HELPER_FLAGS_2(lhuea_le, TCG_CALL_NO_WG, i32, env, i64)
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index 6505ee3c942..093c697e050 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -835,8 +835,8 @@ void HELPER(dc_zva)(CPUARMState *env, uint64_t vaddr_in)
-     clear_helper_retaddr();
- }
- 
--void HELPER(unaligned_access)(CPUARMState *env, uint64_t addr,
--                              uint32_t access_type, uint32_t mmu_idx)
-+void HELPER(arm_unaligned_access)(CPUARMState *env, uint64_t addr,
-+                                  uint32_t access_type, uint32_t mmu_idx)
- {
-     arm_cpu_do_unaligned_access(env_cpu(env), addr, access_type,
-                                 mmu_idx, GETPC());
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 15b40090c0f..eb533ebc651 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -382,8 +382,8 @@ static void check_lse2_align(DisasContext *s, int rn, int imm,
- 
-     type = is_write ? MMU_DATA_STORE : MMU_DATA_LOAD,
-     mmu_idx = get_mem_index(s);
--    gen_helper_unaligned_access(tcg_env, addr, tcg_constant_i32(type),
--                                tcg_constant_i32(mmu_idx));
-+    gen_helper_arm_unaligned_access(tcg_env, addr, tcg_constant_i32(type),
-+                                    tcg_constant_i32(mmu_idx));
- 
-     gen_set_label(over_label);
- 
-diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c
-index f81c4f625b5..3434ea47e8c 100644
---- a/target/microblaze/helper.c
-+++ b/target/microblaze/helper.c
-@@ -69,7 +69,7 @@ void mb_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
- 
- #ifndef CONFIG_USER_ONLY
- 
--void HELPER(unaligned_access)(CPUMBState *env, uint64_t addr)
-+void HELPER(microblaze_unaligned_access)(CPUMBState *env, uint64_t addr)
- {
-     mb_unaligned_access_internal(env_cpu(env), addr, GETPC());
- }
-diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
-index 74b5420ed24..a93f14d6e09 100644
---- a/target/microblaze/translate.c
-+++ b/target/microblaze/translate.c
-@@ -692,7 +692,7 @@ static void gen_alignment_check_ea(DisasContext *dc, TCGv_i64 ea, int rb,
-         record_unaligned_ess(dc, rd, size, store);
- 
-         tcg_gen_brcondi_i64(TCG_COND_TSTEQ, ea, (1 << size) - 1, over);
--        gen_helper_unaligned_access(tcg_env, ea);
-+        gen_helper_microblaze_unaligned_access(tcg_env, ea);
-         gen_set_label(over);
-     }
- }
+are available in the Git repository at:
+
+  https://github.com/philmd/qemu.git tags/single-binary-20260528
+
+for you to fetch changes up to 603813bfc2aa57410cffdf4bccf4b45a82ea006a:
+
+  hw/core: Remove SysemuCPUOps::get_phys_addr_attrs_debug (2026-05-28 22:18:35 +0200)
+
+Checkpatch warnings ignored:
+
+  WARNING: line over 80 characters
+  #47: FILE: target/microblaze/helper.h:30:
+  +DEF_HELPER_FLAGS_2(microblaze_unaligned_access, TCG_CALL_NO_WG, noreturn, env, i64)
+
+  WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+    accel/accel-target.c
+
+----------------------------------------------------------------
+Various patches loosely related to single binary effort:
+
+- Fix possible stub conflicts in meson.build
+- Remove SysemuCPUOps::get_phys_addr_attrs_debug()
+- Few other fixes and .mailmap updates
+----------------------------------------------------------------
+
+Knutsson Development (1):
+  monitor: fix missing spaces in screendump help text
+
+Mohammadfaiz Bawa (1):
+  hw/tpm/tpm_tis_sysbus: defer resource allocation to realize
+
+Peter Maydell (3):
+  target/microblaze: Convert to translate_for_debug
+  target/i386: Convert to translate_for_debug
+  hw/core: Remove SysemuCPUOps::get_phys_addr_attrs_debug
+
+Philippe Mathieu-Daudé (6):
+  target/tcg: Rename unaligned_access() helpers
+  docs/devel/tcg-ops: Stop listing dup2_vec()
+  docs/devel/tcg-ops: List more vector opcodes
+  mailmap: Update email addresses for Daniel Henrique Barboza
+  mailmap: Update email addresses for Andrew Jones
+  accel/common: Remove last bit of target-specific code
+
+Pierrick Bouvier (7):
+  meson.build: move some subdir before system lib creation
+  target/arm: move kvm-stub to arm_stubs_ss
+  target/arm: move whpx-stub to arm_stubs_ss
+  migration: use stub_ss for vfio-stub.c
+  net: use stub_ss for vhost-user-stub.c and vhost-vdpa-stub.c
+  hw/net: use stub_ss for vhost_net-stub.c
+  hw/vfio: use stub_ss for iommufd-stubs.c
+
+Quan Sun (1):
+  meson: fix close_range detection on older glibc
+
+Richard W.M. Jones (1):
+  system/exit-with-parent: Close the file descriptor before exit
+
+Thomas Huth (2):
+  system/vl: Free allocate memory for pid file name in case realpath()
+    failed
+  system/qtest: Fix length parameter in the b64write code
+
+ docs/devel/tcg-ops.rst           | 13 ++++++----
+ meson.build                      | 28 +++++++++++-----------
+ include/hw/core/sysemu-cpu-ops.h | 14 -----------
+ target/arm/tcg/helper-a64-defs.h |  2 +-
+ target/i386/cpu.h                |  4 ++--
+ target/microblaze/cpu.h          |  4 ++--
+ target/microblaze/helper.h       |  2 +-
+ accel/accel-common.c             | 15 ++++++++++++
+ accel/accel-target.c             | 41 --------------------------------
+ hw/core/cpu-system.c             | 11 ++-------
+ hw/tpm/tpm_tis_sysbus.c          | 18 +++++++-------
+ system/exit-with-parent.c        |  1 +
+ system/qtest.c                   |  2 +-
+ system/vl.c                      |  3 +++
+ target/arm/tcg/helper-a64.c      |  4 ++--
+ target/arm/tcg/translate-a64.c   |  4 ++--
+ target/i386/cpu.c                |  2 +-
+ target/i386/helper.c             | 31 +++++++++++++-----------
+ target/i386/whpx/whpx-all.c      |  2 +-
+ target/microblaze/cpu.c          |  2 +-
+ target/microblaze/helper.c       | 18 +++++++-------
+ target/microblaze/translate.c    |  2 +-
+ .mailmap                         |  5 ++++
+ accel/meson.build                |  1 -
+ hmp-commands.hx                  |  4 ++--
+ hw/net/meson.build               |  5 ++--
+ hw/vfio/meson.build              |  2 +-
+ migration/meson.build            |  4 ++--
+ net/meson.build                  |  6 +++--
+ target/arm/meson.build           |  6 +++--
+ target/arm/whpx/meson.build      |  2 +-
+ 31 files changed, 114 insertions(+), 144 deletions(-)
+ delete mode 100644 accel/accel-target.c
+
 -- 
 2.53.0
 
