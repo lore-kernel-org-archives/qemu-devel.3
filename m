@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE984CD5BD5
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 20:25:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDC50CD5BD5
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 20:25:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wShGr-0006IK-6I; Thu, 28 May 2026 16:24:01 -0400
+	id 1wShHx-0000qJ-GO; Thu, 28 May 2026 16:25:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShGp-0006HQ-5b
- for qemu-devel@nongnu.org; Thu, 28 May 2026 16:23:59 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShHo-0000XY-DJ
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 16:25:03 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShGn-0004fV-J9
- for qemu-devel@nongnu.org; Thu, 28 May 2026 16:23:58 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-49041fb8c23so54917265e9.0
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 13:23:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShHm-00051k-Cu
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 16:24:59 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4906869f0cbso52363855e9.1
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 13:24:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779999836; x=1780604636; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779999896; x=1780604696; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=eaSEEknCZ8n7zZl3zMB/OCXzr1AvPDpeDEajcPfNsZ4=;
- b=Cu0jcDHxMdektfuJ4VIujWxQaFqXejpYKmZjdLav30UoxpOCkQC+XCVpdjlAWdb8TS
- 16elZN0zSmbuxNcoKc1q82ZWXhGKEMrG7M3PvR2/stl82LVtOAXJKVou4C6E+to2yvht
- XhjAHtd77oqTcdg7UUrU+5xLKFhIZ2x7IVxcnepWtaNTTzuu2r3i7herPUsjCdZy/TeN
- gi5E7ayMbgV0G+86CXewZwJ8KlbdyZCK4gQtwZska41hm7O+hdkxGOYIacgpWvB5zrq6
- xEmlIX/AEjNwZGtFd5OqWEEMEJsD62NIa3MwoTtliG7WXosOPD+G66bKj/T8X1SzXdKy
- tKig==
+ :reply-to; bh=YSEQRbn3l0io9yhr3T8YsgNy3yJtdxIGruyK16V/CRo=;
+ b=LDVuZte9tKZQwD1Sd0HZOn64upmmVKq/XgGmZzTU7Vdyb0jkRSool7HMAiG3IGx63m
+ hTKzkQgpl/uPo2qG+FlcAOfCNts07p9Jgj4lTDXpsNvZx6L7vxCPPliGHZBtfWe6Bgi9
+ cpaY/2MY+sl/J/8gpA+zCRYBMecxqRJsyAi6/nPppLHIMt8qvKJjRWzT20vP0k3kX7jC
+ w6n50/bK7JXUTgvC4EcLPNf9fDLmbjq1b4R0lr5jHB22LEGsGqJZiCxBQtz0SSK7kS1t
+ Iou4MSzqGbl1GxQhCnzXAE94QZ2JYCuPi7a6UQNZBGeE7S6Uzbvkvb/Xmrz986rESVbw
+ C40A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779999836; x=1780604636;
+ d=1e100.net; s=20251104; t=1779999896; x=1780604696;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=eaSEEknCZ8n7zZl3zMB/OCXzr1AvPDpeDEajcPfNsZ4=;
- b=L3DPO454gYDuUzfnt9tmjaSIITE4Bs8OXDYPDXTBjFFAIz+4psjyvYMf4XQWECi+lq
- pUTGrhGcudkFG4yc97dVllqPI7l4ogDnox7FCja1pRQBIhoqawWtG7T0ZBP8XmwVDjA7
- Xjreg0+JYCUhX8H7Nu4nGQu/Tp/iae1lGAUCTsWZCNPqA8mABDdQ94lDpT1u7nRT63Jx
- HWQy3GE+XLuGOuyGQc1caKuULARd+rzZ5TZjJ6PLonLGEKP0wWgpwz+i92EQGKOhakvK
- daMlLFDYYKk/CAOm2LeSumMdytVhTpBzRJP/UX27iJE1IBcTZi61F1RShjAlojcqzs2w
- J4Tw==
-X-Gm-Message-State: AOJu0YwGPah4UMa7V62vExa6Q68JevE1hJClc//oliKdekdSMWOKEv5v
- 7wBQsntuFCoO1HViH1+tLdoIXfESRuBCySq2SOlc4wVqrpyd/TZTr3Yvlw4Ur+yn6pF0d/9Hflc
- SqUHU9vrabw==
-X-Gm-Gg: Acq92OEMmHRtqQPvbgXiOZxYxUNSd5YmgNDVRfJgtyYFZXvJN1KaPki8SvJaGcJDYVl
- Zfxe9xQU8Ru8nAsVHtZm+0Pwyr2JZusHxLcVF0hemJHw+2lu9FaSGFLW9Gp/DYM3MSQne45MGwM
- wvqdOf27PriaOninIZM6Vn029jlYeTb9sVmN8wKj5vNzaI8rHBal8AImsFjEzP1IXHciVOq13pA
- N0znnv0vxTNy+zvxZDgkeYqBqYPWmVvNINBui5h7ASKmaHPECsFY8Vb4lS5As4XoH85hfFtnuVC
- puleEd5i5T8a/JUYFxjqnPUrUnozu4QZrQNiwkHGmsj0kdyyiJuTMmHIxOQ6HYn8H0j2DTrBitU
- wuOMfYrszAoDKx6xW5/bw/PDtsW+U+lltGPpwoKdwOR29YKpXhvWHOP8YyS9lWvSxNVzFjLmGqX
- nIdHVohLYdgMdUaPKfjzx8IhgiI7YuoB+sBnKUMTxHQwBhVD1MVHk2Mgx5WUWQJkKAsQ==
-X-Received: by 2002:a05:600c:2113:b0:490:845e:3a6 with SMTP id
- 5b1f17b1804b1-4909c0b706amr224095e9.25.1779999835923; 
- Thu, 28 May 2026 13:23:55 -0700 (PDT)
+ bh=YSEQRbn3l0io9yhr3T8YsgNy3yJtdxIGruyK16V/CRo=;
+ b=MrHyK9t2RdX6Yaf3fawBLeB7EmTSCJplGMl9bBLQofxua4HKaj1KGwqacYvdq/1MG2
+ +qDHeCu5NzfzU0alYXINxxtQG02FXrl68mldGCgNAtG072qUJ5uPr3HrRUG9rm1178xC
+ 83usW93dAY4cxbNEgq+70YgFcQeVh5m12KGF43T8NWwmzt6INympfex6FMqw8do0UgEJ
+ 3d+BliqqlUfoaMH8EA8c2QNeasyIPY72l64P4i/KnCwJKgz0SuvcREcOcI2YjgCfy06K
+ r7FlTBMu6uT/2Blzrt8wxxkpC+fLRiP6vlmRhaDvpEmNq4qb+FQuHXyDSZzOmqIClKaf
+ WNng==
+X-Gm-Message-State: AOJu0YwwwJqo4XRdmh23bt9I3wWDNYva/JV4wfbJmmu44awm8zG0ZzRN
+ Fiz+cs85XxA8clr6umwPDpbBs1ddPQD3fPUFSASaAltV9J5JR9sxoEWSo7uU7S20/CMxlwMk3MY
+ +K+bpqMNMYw==
+X-Gm-Gg: Acq92OHXcMrn28cLWJJmjSZgVF21MFgACqfyVIMDD1fByCAr5wSlqw8iOeNgDcFjC9y
+ Ck9GiSdqY6eU0uGjfFV/iapKADoT4r+dCr7YhkNxrX4AHesbY1cK71Mqy8eQ5M0FxrT8jJasF7c
+ XiGwelT9NpQfh2guXX/XNNyw3hYtLCClhVSQnFnVa5tbnziol3P0fHwbZIjN1J3BhDtnPdTZlwE
+ J5d3JPIkeDt0kDMbJqCdr6/iPSSqQc+oT3XlBQ4CgUX3TycKiTDlgyNrSaM3EcHnvxgNOMHykT7
+ k8FGXvk5UYEfhWDbeqyXLcn3yjVRFzpglCG/F8AG4xYyFwud2zSHR6DYA7pDwR5kb4836STGftl
+ IktXERKWHEbJYl10qEz44il+U123bt+MsQ7DblOpJfJrntjsHm6KWHcdTsgsAixY8PBt3AAWl2N
+ KP9uinND/7tgCVTCmL573Ra6BsrTnXgFLHCeTRgOhdteFxaJxEXRQmm3yf2h1zF4/Vpw==
+X-Received: by 2002:a05:600c:568a:b0:490:3b84:c106 with SMTP id
+ 5b1f17b1804b1-4909c0b6d5bmr216275e9.26.1779999895778; 
+ Thu, 28 May 2026 13:24:55 -0700 (PDT)
 Received: from m15.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49091d55972sm58891435e9.0.2026.05.28.13.23.54
+ 5b1f17b1804b1-49092657a1esm55798975e9.7.2026.05.28.13.24.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 28 May 2026 13:23:55 -0700 (PDT)
+ Thu, 28 May 2026 13:24:54 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/22] meson: fix close_range detection on older glibc
-Date: Thu, 28 May 2026 22:22:38 +0200
-Message-ID: <20260528202253.49122-9-philmd@linaro.org>
+Subject: [PULL 16/22] mailmap: Update email addresses for Daniel Henrique
+ Barboza
+Date: Thu, 28 May 2026 22:22:46 +0200
+Message-ID: <20260528202253.49122-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260528202253.49122-1-philmd@linaro.org>
 References: <20260528202253.49122-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,40 +99,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Quan Sun <Quan.Sun@windriver.com>
-
-The has_function('close_range') check succeeds at link time on hosts
-with kernel >= 5.9 even when glibc does not declare the function
-(glibc < 2.34, e.g. AlmaLinux 8 / CentOS 8 with glibc 2.28). This
-causes CONFIG_CLOSE_RANGE to be set, but compilation then fails with:
-
-  error: implicit declaration of function 'close_range'
-
-Fix by adding a prefix that includes <unistd.h>, so the meson check
-only succeeds when the C library actually declares close_range() in
-its headers.
-
-Signed-off-by: Quan Sun <Quan.Sun@windriver.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260522201850.1342167-1-Quan.Sun@windriver.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-Id: <20260528083814.32795-1-philmd@linaro.org>
 ---
- meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .mailmap | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/meson.build b/meson.build
-index eb074918193..e396394f4c1 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2596,7 +2596,7 @@ if host_os == 'windows'
- endif
- 
- # has_function
--config_host_data.set('CONFIG_CLOSE_RANGE', cc.has_function('close_range'))
-+config_host_data.set('CONFIG_CLOSE_RANGE', cc.has_function('close_range', prefix: '#include <unistd.h>'))
- config_host_data.set('CONFIG_ACCEPT4', cc.has_function('accept4'))
- config_host_data.set('CONFIG_CLOCK_ADJTIME', cc.has_function('clock_adjtime'))
- config_host_data.set('CONFIG_DUP3', cc.has_function('dup3'))
+diff --git a/.mailmap b/.mailmap
+index 273661c758e..a35de7cfbd4 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -82,6 +82,9 @@ Brian Cain <brian.cain@oss.qualcomm.com> <bcain@quicinc.com>
+ Brian Cain <brian.cain@oss.qualcomm.com> <quic_bcain@quicinc.com>
+ Christian Borntraeger <borntraeger@linux.ibm.com> <borntraeger@de.ibm.com>
+ Damien Hedde <damien.hedde@dahe.fr> <damien.hedde@greensocs.com>
++Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com> <dbarboza@ventanamicro.com>
++Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com> <danielhb413@gmail.com>
++Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com> <danielhb@linux.vnet.ibm.com>
+ David Hildenbrand <david@kernel.org> <david@redhat.com>
+ Filip Bozuta <filip.bozuta@syrmia.com> <filip.bozuta@rt-rk.com.com>
+ Frederic Konrad <konrad.frederic@yahoo.fr> <fred.konrad@greensocs.com>
 -- 
 2.53.0
 
