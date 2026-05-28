@@ -4,124 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97A9DCD5BD1
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 07:32:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B0F4CD5BD5
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 07:33:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSVE2-00008j-4q; Thu, 28 May 2026 03:32:18 -0400
+	id 1wSVEl-0000Q2-Py; Thu, 28 May 2026 03:33:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSVDq-0008Lf-N0
- for qemu-devel@nongnu.org; Thu, 28 May 2026 03:32:08 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSVDn-00068A-Ca
- for qemu-devel@nongnu.org; Thu, 28 May 2026 03:32:06 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-459bf19e87bso7483863f8f.1
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 00:32:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779953522; x=1780558322; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9LWPOs2Ju2J8pG8wru04Q+1RDnSE64nD1JGRnbxc5Ks=;
- b=SghT8nm6dTZYLEhndLtBn68lCIEONyuBYVO76h5ZrUn2VUaT6zE6VScjeFv7XkkFgI
- 9yc2I9GdlCh/pwDXrFQussY20Y5Clh+dwKcvtwbeXFcuhNfYyZfvQ2DwBRE4cvruQDtB
- pDlBk9vn4cgIqtgYjiXEyuuAPWFZIotiTYnRCxsfPFWTGIH4rjr+JdHcGr0/ryvPTi1t
- ocoxf1NbhL1SQhCjjGyWyzH11/NPzkRsCtL5cRLczmNAvaHliI1gbM389YRwr3wRgkFq
- Mxto4hSl7y2oOJM3JEN7Yr+SH1w7Cq1l4JNrFcshhwV3PwUmR6rEbESPXAjkaawNzD8s
- mIMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779953522; x=1780558322;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9LWPOs2Ju2J8pG8wru04Q+1RDnSE64nD1JGRnbxc5Ks=;
- b=W4epXdCpgLrMIucEznQ6hnJacxElKJpPb4oqTmggl497bFcgEm7MZo0hclF/FOgUNA
- JQuTXP2na/oW2uZY321zT+2K9vBK7WK31okLAxXWZzztskJzmLTw6l72vZNZkGrk6CnH
- bO/kj8+1WEOxb3dMR93I7ofBl0iUzfUqliLC84UCSJvogwyq4OETNbKHXBKmti+uRyu1
- /lCrn3s67UXDsPsT8ofC5ok0VHIX99EXwA1jvkwua4KOqOD8qUSbyaHQlI4ZNr6oc54o
- i7GnVGWrTaNwiSK4Tomta6VG7NsIzD/65sHEyW+VDEgA/RyIuvbZP23mtxNQFyYG0r+2
- An9w==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/AUovd3URY2Rszlm1hCEcFT9lidRfMEPYOTIhwO2hQbk2PfBOCsI8pX6MlB9WXbyuDhSjOYsF6zq+R@nongnu.org
-X-Gm-Message-State: AOJu0YwKE4GAigmpX9+2PympBdIaVj04031dX9xPhWThHYHdSGTifx3g
- SHypuOCPmAIgrXZzeBy2uHsvxbe/TIDYrteVOev/BqyFLazpSs3LCYnwlMOEpDT/GZo=
-X-Gm-Gg: Acq92OFWan8i08jWEshQsIk9zvih7RvIy1FcaIaVyK5YUDskxQaOQIqIGGuBxRJb0zG
- 3feFViJ91P5hVZCGDtQjeXEqbL0REAEBp4TcDURXciS/s0n1KMJ6DIfnZZvpUnd3sRu0xRVGO7k
- k4R+wDny6RJelr+Ni/RDH4a0MIm7+608vQg7bdwGd7ML6/G+MtLklkFHau4AzKSHLeA9jC+tReC
- TL4Vi90UK3YRBzPfsuV0bU2Wanl1z98MkOfELGiyAeEUfvZ2fXZyClWQe8DrEP3J2UUks++QMcP
- 8oELSGBdwtD1yLS4rvCog+U/LQGEEMnVU9MqycrnKK9FWPYdq26dwTnlew9zxoLrHQxl5qxuFW4
- zg+zNa8ZFr2hB4n2qSxi6XSfO7ecxR44UXoWmL5VU1t9MvQpXAGbcizlu2nU/5PJhqcNHuqmKMK
- mbtIOn6oNdzhDEoLXt7WYdTPb/H/tV2T1Uvo56aAmbRIdr8CpQR9yu6JjFUjHxVyAIoEi/5dTFu
- H5i
-X-Received: by 2002:a05:6000:400d:b0:43d:1cec:4766 with SMTP id
- ffacd0b85a97d-45eb38c52famr42422051f8f.23.1779953521738; 
- Thu, 28 May 2026 00:32:01 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45edb5b1c7bsm11594438f8f.29.2026.05.28.00.31.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 May 2026 00:32:00 -0700 (PDT)
-Message-ID: <6f46ca78-26dd-4de3-85a1-a73a7509dd28@linaro.org>
-Date: Thu, 28 May 2026 09:31:58 +0200
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wSVEA-0000Dh-Na
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 03:32:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wSVE6-00069f-C3
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 03:32:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779953536;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=ugL9KYdatHV7NKZfQFAhfhrl1KnZBbvAb6FA4E8O8Ng=;
+ b=PUU34wtBrbRC3j+w09J8JSYT07FmOBlN6yIPS75lmqVw3MEraD69GlYMFszlz523VilLGm
+ Tq8z2RLI6uVBen19ECmvpfdME5I30wWgT+cdBChjNTEG6q1GTnP52Bs4lktwzVc3PNnoCF
+ OXiZ5XbAYgn2oI4qgWFs6qjbj0tu9ok=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-14-gEQ-Y2SxOaGpUC_noWKHeA-1; Thu,
+ 28 May 2026 03:32:12 -0400
+X-MC-Unique: gEQ-Y2SxOaGpUC_noWKHeA-1
+X-Mimecast-MFC-AGG-ID: gEQ-Y2SxOaGpUC_noWKHeA_1779953531
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9FE2E18002E3; Thu, 28 May 2026 07:32:11 +0000 (UTC)
+Received: from [10.44.32.217] (unknown [10.44.32.217])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6AA44176F; Thu, 28 May 2026 07:32:08 +0000 (UTC)
+Message-ID: <17967e10-4681-466d-a8a6-ad1a3e6f8776@redhat.com>
+Date: Thu, 28 May 2026 09:32:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/10] meson.build: move some subdir before system lib
- creation
+Subject: Re: on ai generated and code provenance
+To: "Michael S. Tsirkin" <mst@redhat.com>,
+ Alistair Francis <alistair23@gmail.com>
+Cc: Warner Losh <imp@bsdimp.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-devel@nongnu.org, stefanha@redhat.com
+References: <ahXbxzB4C_lr6b0N@redhat.com>
+ <20260526140231-mutt-send-email-mst@kernel.org> <ahXtqyuIa4XqkMHb@redhat.com>
+ <20260526152526-mutt-send-email-mst@kernel.org>
+ <CANCZdfonroZmdRRpPdHzTKR_m8qyVdSG14gXB-K3BTuv=Qgw9g@mail.gmail.com>
+ <ahauQKLOU1tzDtbb@redhat.com>
+ <f8791a2d-257b-4233-aafb-ccd45e695542@redhat.com>
+ <CAKmqyKOsdJYbh8SAvzpv3rpF7TUE68sHR34rDy8sc+d=j1L9vw@mail.gmail.com>
+ <CANCZdfp4OQEoOQk5v0B+n8GaOb1a=FiLjLy9jGG9G_AWY79xNA@mail.gmail.com>
+ <CAKmqyKM8yQ7mDRv6anW-7QSjKcgwxj-RoVikJWV0xuT+CgJDFg@mail.gmail.com>
+ <20260528010422-mutt-send-email-mst@kernel.org>
 Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Weiwei Li <liwei1518@gmail.com>, Helge Deller <deller@gmx.de>,
- Michael Rolnik <mrolnik@gmail.com>, Aurelien Jarno <aurelien@aurel32.net>,
- qemu-arm@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, Glenn Miles <milesg@linux.ibm.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-s390x@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Alex Williamson <alex@shazbot.org>, Brian Cain
- <brian.cain@oss.qualcomm.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-ppc@nongnu.org,
- Palmer Dabbelt <palmer@dabbelt.com>, Jason Wang <jasowang@redhat.com>,
- Stafford Horne <shorne@gmail.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Max Filippov <jcmvbkbc@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>, Song Gao <gaosong@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>, Peter Xu <peterx@redhat.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>, Chinmay Rath <rathc@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, qemu-riscv@nongnu.org,
- David Hildenbrand <david@kernel.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Nicholas Piggin <npiggin@gmail.com>, Aleksandar Rikalo <arikalo@gmail.com>,
- Fabiano Rosas <farosas@suse.de>
-References: <20260528051642.115721-1-pierrick.bouvier@oss.qualcomm.com>
- <20260528051642.115721-6-pierrick.bouvier@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260528051642.115721-6-pierrick.bouvier@oss.qualcomm.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20260528010422-mutt-send-email-mst@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,13 +131,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/5/26 07:16, Pierrick Bouvier wrote:
-> Allows to use stub_ss in those sub directories.
+On 5/28/26 07:06, Michael S. Tsirkin wrote:
+>> I could see someone reading the proposed wording and then sending one
+>> 20 line patch, then another, then another, then another, then another,
+>> then another and then more. All while only sending "small patches",
+>> but the ability to generate a large number.
+>>
+>> It's not clear to me at least from the proposed wording that we should
+>> discourage that.
 > 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> ---
->   meson.build | 26 +++++++++++++-------------
->   1 file changed, 13 insertions(+), 13 deletions(-)
+> Maybe we shouldn't? It's far from trivial to split up functionality even
+> in 100 line self contained chunks, let alone 20. And reviewing
+> such small patches is *easy*.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Bugfixes for something like TCG front-ends are usually well within 20 
+lines, or even less:
+
+     target/i386/tcg: fix decoding of MOVBE and CRC32 in 16-bit mode
+  1 file changed, 10 insertions(+), 6 deletions(-)
+
+     target/i386/tcg: fix typo in dpps/dppd instructions
+  2 files changed, 4 insertions(+), 4 deletions(-)
+
+     target/i386/tcg: fix a few instructions that do not support VEX.L=1
+  1 file changed, 4 insertions(+), 4 deletions(-)
+
+     target/i386/tcg: allow VEX in 16-bit protected mode
+  1 file changed, 3 insertions(+), 7 deletions(-)
+
+     target/i386/tcg: do not mark all SSE instructions as unaligned
+  2 files changed, 9 insertions(+), 4 deletions(-)
+
+     target/i386/tcg: do not leave non-arithmetic flags in CC_SRC after 
+PUSHF
+  1 file changed, 1 insertion(+), 2 deletions(-)
+
+     target/i386/tcg: mark more instructions that are invalid in 64-bit mode
+  1 file changed, 4 insertions(+), 4 deletions(-)
+
+     target/i386/tcg: ignore V3 in 32-bit mode
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+     target/i386: Fix #GP error code for INT instructions
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+     target/i386/tcg: validate segment registers
+  1 file changed, 6 insertions(+), 1 deletion(-)
+
+     target/i386: Mark VPERMILPS as not valid with prefix 0
+1 file changed, 1 insertion(+), 1 deletion(-)
+
+     target/x86: Correctly handle invalid 0x0f 0xc7 0xxx insns
+  1 file changed, 2 insertions(+)
+
+     target/i386: fix x86_64 pushw op
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+     target/i386: fix width of third operand of VINSERTx128
+  1 file changed, 2 insertions(+), 2 deletions(-)
+
+     target/i386: fix TB exit logic in gen_movl_seg() when writing to SS
+  1 file changed, 5 insertions(+), 2 deletions(-)
+
+And reviewing them is not necessarily easy if they touch weird corner 
+cases of the architecture.  The code change might match the intention 
+but you still need to check the manual.  Or on the contrary, the error 
+is apparent but the fix may be obscure, as in commit 5a2faa0a0a's 
+single-line change:
+
+-        [0x0e] = X86_OP_ENTRYr(PUSH,    E,f64),
++        [0x0e] = X86_OP_ENTRYr(PUSH,    E,d64),
+
+
+These changes could still be welcome, but I suppose the maintainer would 
+also prefer a heads-up about them.
+
+Paolo
+
 
