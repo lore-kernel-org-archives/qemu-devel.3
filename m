@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75818CD6E44
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 10:44:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45117CD6E44
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 10:47:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSYEI-0001AI-NV; Thu, 28 May 2026 06:44:46 -0400
+	id 1wSYGA-0001rP-UF; Thu, 28 May 2026 06:46:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSYEF-0001A3-FB
- for qemu-devel@nongnu.org; Thu, 28 May 2026 06:44:43 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSYG9-0001r3-AR
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 06:46:41 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSYED-0003M7-Du
- for qemu-devel@nongnu.org; Thu, 28 May 2026 06:44:43 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4906238c62eso40117065e9.3
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 03:44:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSYG7-0004Ia-JY
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 06:46:41 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-49048e043e5so49512915e9.1
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 03:46:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779965079; x=1780569879; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779965198; x=1780569998; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=qyKBTPwowMAI3HLllj++BA5U+ZhI6e1QOQhOQaMSVSI=;
- b=OsHzaleMLLNJhN2/TINk1SWXEfcbHkbFrSVwWQr7CET6e771vJ406JnBgPfAtjPk+D
- aKpaLAuW7M7s1uxT3tjnwupn5euwSNJUtzB+JQ4b3fIQMWmRMFmR88yMEHR6QqJOKW0F
- 8YsDOG7TgTdqY0Yl1bFxMRFuUQiJIBzLioEl78tT31ncDwZ70AqEu4X+c8e9I8E6jTPe
- 2N5egaac/xbdog00sR4OS0eLeZ0WAP5jqS4RRNFmvTbomSSAngUhD9MkYT8TSV3mmsEF
- eQNBHhshFHCVGyzU2bEg/aFf5Mvb4znjZTe/r7MoSv/8G9VItfoWu3ZD0SrunRCLAvzy
- AhCw==
+ bh=eeF0ts7l3YIRkWhAo/1VWjNepW5xyLLyZvF+TU1uk90=;
+ b=GmHm6xZBmdJTtUI2CIydg1ruFzF4wo3CYR5ZK/W8yEY/ZnFNDpXa2bH7AQRjBVhqsx
+ yRy7m00J/FGHpX3HcREiPdxLEWWRwMsuXijq7ERIh+HVNlF2u5k2tkZg4WWdZce4Bvnu
+ cjHhHllk8IOXah7gZnVPG4PRbNaNP+ZPc5MXJeDIdy3aJ5VBvvxNmrZyeF3BHR2x3+Aq
+ 70BwPRqZzdz23NhsBDbDazHwHK6LiuqMDhHcqUb6jfyisybUMmbjPiDYHID57MCdU6Wc
+ w3gZIAmfNqQsJzMh8FCROSR+uQSv6e3CMpgp8yLtmdVnfFCkviSlPeSHswjdZZorHVPT
+ zbjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779965079; x=1780569879;
+ d=1e100.net; s=20251104; t=1779965198; x=1780569998;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=qyKBTPwowMAI3HLllj++BA5U+ZhI6e1QOQhOQaMSVSI=;
- b=NWKWJtvmzYhxpDetLsuP/rgoy/hJPwbOrDmA/WwBS1EqzTA62sKJ4i88Un05tnqaaK
- TTx9ZfMOjt8hzKVaH4U5+I3Gmg10EVHOKwQkag1ZMMmrKIxn8T4z3Afe1TmkKQQiWTHI
- 5/RGF559bXr/Z3HHPjBx29Maki64I/aKisjGEFvXBLNwYqwYiKqrXNtl+itFsye+0hpa
- uIBuPxF044rrzVTHLq4neaFbdz3C5leopPSkuJFEZ0HMcFbSvszeWtoz3uOzG/NPGjIJ
- 7KJnX0gNS4reePWPli5W6BeYkt2DRCKL8Kt4Qa6voV4iwTzjnJwJnKgH/2S7IXp3tXxT
- +rDA==
+ bh=eeF0ts7l3YIRkWhAo/1VWjNepW5xyLLyZvF+TU1uk90=;
+ b=h8755/zj2x5O1Q0W9kVj7cJeqH0X/KHrDBvdloX6Y+o336IARahbt86ZPXKh7Cm6xw
+ ignKl6nRnD3LElr+v+72nEuRO1LjcJGOER3RN9O3Hm6mrJjv263F1aRAZ8Z1wDj1Y7Qr
+ OC0Q7nBDLDbjOlOiMFW3tmoEWEYm3fkzHwx+AdoZ0MNeSpoByfa3g7KG4Yr6ZIjRQy24
+ dYpZwa+4DLHa2E19ocKqtcT+3z5yCLSlg1qGP994vcQ0Qd3l185LTBUiKhs6j6RV8w/P
+ 1iV3f1YQxbi7xh51zPOVmD9Rl4RXp8S84cUa6sef4Lk46wVNSVItfgAOPm4iBf0lPabE
+ nZYQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+r+plvMIYNl/x7RQW/GtMSX7FLXTr18qfH/Muk2uqq8JOqb8//scXl1OF8EN40as21y0JL1+wYKwMk@nongnu.org
-X-Gm-Message-State: AOJu0Yx4JrHtyCUColE9CSBSuyH5Hzoox62ycQ0MtTUM+394jEIwTRfR
- 5OZ7NWqKE71tTHKyR3rqtDzyTqOdLClPOvmqHX/H3Nwm1C20CVQZ6ZchTaHGA/TDdgm6i/dOM9w
- 9/+GLY8rR9Q==
-X-Gm-Gg: Acq92OHW7r+fbzdUtYK9ViWpenpDPOGJlRqqqupQxWDMkUlf45EUfWDFNwxEq9FkQd8
- jdKKoFzT5PfjfvRu/YcUEBX+KnNL41NrzfM2ocvcBjRPnXy2m04hnKk611/SkM6Cg3C5FIHEv10
- mj+NPxHuwqBcWy49bfl8ByYvEEteQw6aCpxzMFy3wlqKE+YpSpiCEAdF3pG4GVCf9tNR8GryuLx
- zCKMUfkEofdPzFWriIrB04bSR/mY7Ka0OAxjLq04+hav6GHqeKl2Lhn7Ur8AdCC867wwV0+aj4U
- VeXdNk8kR2JYCVJ+7Xq96JZwtw06+b2Fh3xL7kGVw/Q/Wwr44VCWTVs9nCPsfzxJ1RtCoXa0Pt8
- ftZSLE9ZYwuVmGy+O1DwJZmRRn5vaPlK1cWm7bsihyGxuCwgDKSL3ubGMHwzvxu7unfU2oYyx2i
- 844aVbyQlH17xPhHNlNjONX34rb2QU5kwU65Oz9CDddoSQmSNVcKHbXZOpNHC6zmM3JJeICRzEy
- k23fmY5vpGLh6s=
-X-Received: by 2002:a05:600c:35cf:b0:490:3bad:3784 with SMTP id
- 5b1f17b1804b1-490426bc6demr498721765e9.18.1779965079167; 
- Thu, 28 May 2026 03:44:39 -0700 (PDT)
+ AFNElJ+yTApo+aJ9Z0CZCQ+acj+m8eFEQzRDYBRyYU0lmPTLd8uWik7BDdV8cJBDtWauGGDY9kdU3AA7C6xc@nongnu.org
+X-Gm-Message-State: AOJu0YzLgKcZb/HY6u6X/PsrUAdfFLZ4+MgYxBs7lrg/I10sd4IQcmEm
+ wn4rIkjJ8hcux6E7KuAOEC77GadQyivhpUMwjUEsVe93PGGij0u3bhos2t4ba3C+qsw=
+X-Gm-Gg: Acq92OG/MNN9WoSjs5ebShiQjbIEGftXVEXCbFXdZ6Vy6wb5ZzNABoipPf/nxSwU3oL
+ CGpJUQUPZdyk4SFTOA39xMLTS1bcZV/IPkYxI22DRwEqKUTIsjeTpoR7SRBkQ/383+54JNJS77x
+ UBBr4WTsAgLhvtLKGNSVBzIcJkYDyxENijeND7mh7CVkF54osphtxEKmbbAFeliWHrArZavpmlA
+ QClrQBjJsX8u06QeCnyQJAXnW9PzOhyz5d96hQHfOc3yzT9bUGcbv7UyIW8nm5CaeDQCFTFfRmG
+ MAom7ZEwYc/MHSmPk8sv361e5Tv9oz4MNnNz5sPs4+qYPImYsi4OYpqcnVH579c93KkSTAMTS4p
+ 1wRYDfJuxED3S2QwqtiYefXywAF6qmBe7qNQhWeFw15AX1Cvx4DFc+jULtA5HCBTJkIrL2Vl+RV
+ o9nchvpvLbiLArmFn6hnaJymdBZhTaqpzN5iryUrC7LdSS81st/cr7Dxt6CNwDBFvWMUKYPWC/q
+ lAH
+X-Received: by 2002:a05:600c:81c5:b0:48a:75b9:b0bc with SMTP id
+ 5b1f17b1804b1-490428e6ab6mr404722335e9.29.1779965197808; 
+ Thu, 28 May 2026 03:46:37 -0700 (PDT)
 Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4909235d43esm54940215e9.1.2026.05.28.03.44.38
+ 5b1f17b1804b1-4908b5841a7sm21617105e9.2.2026.05.28.03.46.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 May 2026 03:44:38 -0700 (PDT)
-Message-ID: <9bfbda41-6f3d-4bb0-8ee9-14df28165526@linaro.org>
-Date: Thu, 28 May 2026 12:44:37 +0200
+ Thu, 28 May 2026 03:46:37 -0700 (PDT)
+Message-ID: <6d349d21-bf5a-4d7a-99be-997f205ea2ee@linaro.org>
+Date: Thu, 28 May 2026 12:46:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs/devel/tcg: Expand on multi-threaded TCG
+Subject: Re: [PATCH v2] tpm_tis_sysbus: defer resource allocation to realizefn
 Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Alistair Francis <Alistair.Francis@wdc.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Anton Johansson <anjo@rev.ng>
-References: <20260528082022.32359-1-philmd@linaro.org>
- <893dd362-b70c-4c24-bb19-428808ceaa6d@redhat.com>
+To: Mohammadfaiz Bawa <mbawa@redhat.com>, qemu-devel@nongnu.org,
+ stefanb@linux.vnet.ibm.com, peter.maydell@linaro.org
+Cc: pbonzini@redhat.com, peterx@redhat.com, richard.henderson@linaro.org,
+ pierrick.bouvier@linaro.org
+References: <20260528093123.55403-1-mbawa@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <893dd362-b70c-4c24-bb19-428808ceaa6d@redhat.com>
+In-Reply-To: <20260528093123.55403-1-mbawa@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,183 +105,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/5/26 11:04, Paolo Bonzini wrote:
-> Before looking at the specifics, I appreciate you bold and experimenting 
-> with how to improve our documentation. I can see that this is largely 
-> unedited LLM output, and honestly, that is actually a good thing for 
-> this experiment.
+On 28/5/26 11:31, Mohammadfaiz Bawa wrote:
+> Calling memory_region_init_ram_device_ptr() and
+> memory_region_init_io() from tpm_tis_sysbus_initfn() crashes
+> when the device is introspected without being realized, because
+> the memory subsystem has not been initialized at that point.
 > 
-> On the other hand, it exposes where the tool falls short, and highlights 
-> very clearly the risks of accepting AI-generated content too leisurely.
+> So running:
+>    $ qemu-system-aarch64 -device tpm-tis-device,help
 > 
-> On 5/28/26 10:20, Philippe Mathieu-Daudé wrote:
->> Significantly expands the TCG documentation to provide more
->> comprehensive overview of its internal architecture.
->>
->> Use more rST anchors to improve cross-referencing across the
->> documentation.
->>
->> Clarify front-end / optimization / back-end phases.
->>
->> Detail a bit memory consistency barriers under MTTCG mode.
->>
->> Add the following new sections:
->>
->>   - Register Allocation and Liveness analysis
->>   - Overviews of the Vector/SIMD internal strategy
->>   - Deterministic Execution (icount)
->>   - TCG Plugins
->>   - Instruction Decoding with decodetree
+> triggers qdev_device_help() which creates the device object
+> to list its properties, calling instance_init, but never
+> realizefn. The memory region calls in instance_init then hit
+> uninitialized subsystems:
 > 
-> This commit message is not really up to the standards.  It is purely a 
-> "what" which can be obtained just by glancing at the section headers.
+> With CONFIG_DEBUG_TCG:
+>    Assertion 'target_page.decided' failed. (physmem.c:2524)
 > 
-> It should explain the purpose of tcg.rst and why these new sections were 
-> singled out.
->> +The translation process occurs in several distinct passes:
->> +
->> +1. **Front-end**: Guest instructions are parsed (often using the
->> +   `decodetree <Instruction Decoding (decodetree)_>`_ tool) and 
->> converted
->> +   into target-independent TCG Intermediate Representation (IR) opcodes.
->> +2. **Optimization**: TCG performs passes such as constant folding, 
->> liveness
->> +   analysis, and dead code elimination on the IR.
->> +3. **Back-end**: The optimized IR is converted by a host-specific code
->> +   generator into native instructions for the host CPU.
+> Without CONFIG_DEBUG_TCG:
+>    Assertion 'mutex->initialized' failed. (qemu-thread-posix.c:107)
 > 
-> The sections below should be sorted according to these sections, when 
-> applicable.
+> Since realizefn is only called when the device is actually
+> used in a running VM, moving resource allocation there avoids
+> the crash without breaking introspection.
 > 
-> Register allocation also fits somewhere, probably in "back-end".
 > 
-> There should be also another sentence for the TCG run-time (accel/tcg).
->> +Register Allocation and Liveness
->> +--------------------------------
->> +
->> +During the translation phase, guest instructions are converted into 
->> TCG IR
->> +using an **unlimited number of temporaries (TEMPs)**.
->> +This allows guest translators to express logic without being constrained
->> +by the finite register set of the host CPU.
->> +
->> +To resolve these TEMPs into physical registers, TCG performs two passes:
->> +
->> +1. **Liveness Analysis**: This pass determines the "live range" of each
->> +   temporary within a basic block. By identifying when a variable
->> +   becomes "dead" (i.e., its value is no longer needed), TCG can 
->> suppress
->> +   redundant moves and remove instructions that compute unused results.
->> +2. **Register Allocation**: The Global Register Allocator maps live 
->> TEMPs
->> +   to host physical registers. Fixed globals, such as the pointer
->> +   to the CPU architecture state (``cpu_env``), are often permanently
->> +   held in host registers to minimize memory traffic during execution.
->> +
->> +Vector/SIMD Internal Strategy
->> +-----------------------------
->> +
->> +TCG supports SIMD operations through a set of generic vector 
->> instructions
->> +(e.g., ``add_vec``, ``shli_vec``) parameterized by vector length and 
->> element
->> +size. The length is specified as a ``TCGType`` (V64, V128, or V256), 
->> and the
->> +element size is given in log2 8-bit units.
->> +
->> +The internal strategy relies on the backend mapping these generic 
->> opcodes
->> +to native host SIMD instructions, such as x86 AVX or ARM NEON. If the 
->> host
->> +backend does not support a specific vector operation  or length, TCG's
->> +expansion layer automatically decomposes the opcode into smaller 
->> supported
->> +vector sizes or standard integer operations.
->> +
->> +Deterministic Execution (icount)
->> +--------------------------------
->> +
->> +The :ref:`icount` mechanism provides deterministic execution by ensuring
->> +that each Translation Block executes a fixed number of instructions.
+> Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
+> ---
+> Changes in v2:
+> - Also move memory_region_init_io() to realizefn (Philippe)
+> - Make host_page_size const (Philippe)
+> - Reword commit message to cover both crash variants
 > 
-> Hallucination (to put it kindly).  It ensures that QEMU_CLOCK_VIRTUAL is 
-> a multiple of the number of instructions executed.
-> 
->> This
->> +is essential for features like record/replay and deterministic 
->> virtual time,
->> +where instruction counts serve as the system clock.
->> +
->> +Instrumentation and Plugins
->> +---------------------------
->> +
->> +:ref:`TCG Plugins` provide a mechanism for runtime instrumentation. 
->> Opcodes
->> +like ``plugin_cb`` and ``plugin_mem_cb`` are inserted during 
->> translation to
->> +trigger callbacks in external modules, allowing analysis of instruction
->> +execution or memory access.
->> +
->> +Instruction Decoding (decodetree)
->> +---------------------------------
->> +
->> +The first step of the translation process is converting a raw 
->> bitstream of
->> +guest instructions into a structured format that the translator can 
->> process.
-> 
-> Is this true?  Maybe "extracting operands from the raw bitstream of 
-> guest instructions, for easier processing in the translator"?
-> 
->> +QEMU simplifies this using the ``decodetree.py`` script, which 
->> generates C
->> +code decoders from a domain-specific language defined in ``.decode`` 
->> files.
->> +
->> +The decodetree tool allows developers to define instruction **patterns**
->> +based on a bitmask and fixed bits. When a match is found, the generated
->> +decoder automatically  extracts defined **fields** (such as registers or
->> +immediates) and passes  them to a manually written translation function.
->> +
->> +This declarative approach drastically reduces the amount of error-prone
->> +manual bit-shifting and nested "if-else" logic required in guest 
->> translators.
-> 
-> I would just say "``decodetree`` simplifies writing and maintaining the 
-> front-end compared to manual decoding".  Maybe it's worth adding 
-> something like "Note however that it is mostly applicable to processors 
-> whose instruction encoding is fixed length, or mostly fixed length.".
-> 
->> +For detailled implementation see :ref:`decodetree`.
-> 
-> "detailed".
-> 
-> Honestly, I'm not impressed by the quality of the output.  There's no 
-> organization, just a bunch of new sections in no order (decodetree comes 
-> last).  They might be good enough for a glossary, but for developer 
-> documentation it would just add structural debt(*).  At the very least 
-> all the "----"-level sections should be split into front-end, 
-> optimization, back-end and run-time.
-> 
-> Again, this is not about you---I hope you knew that this wasn't going to 
-> be included as is. :)  Submitting this without manual editing shows the 
-> baseline capabilities of the LLM and highlights the importance of human 
-> steering.
+>   hw/tpm/tpm_tis_sysbus.c | 18 ++++++++----------
+>   1 file changed, 8 insertions(+), 10 deletions(-)
 
-Thanks for the quick feedback. Yeah I wanted to test the water with a
-patch (and ought to post as RFC). Some TCG concepts are hard to grasp,
-and I indeed trusted the LLM too much to be an English fluent and
-technical expert. I told it "You are what best understand QEMU
-internals, and a TCG expert. You don't make mistakes and do not lie.
-You write in a perfectly understandable technical English language."
-
-Blame on me for being to confident here <:)
-
-> 
-> Paolo
-> 
-> (*) I have just made this term up, but I think it should be a thing - we 
-> have a lot of it already in QEMU docs
-> 
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
