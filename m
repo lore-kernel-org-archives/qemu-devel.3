@@ -4,109 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41F0DCD5BD5
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 16:37:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26DB2CD5BD5
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 16:40:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSdj2-0004qx-8p; Thu, 28 May 2026 12:36:52 -0400
+	id 1wSdmW-0006g4-QB; Thu, 28 May 2026 12:40:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wSdj1-0004qU-1G
- for qemu-devel@nongnu.org; Thu, 28 May 2026 12:36:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wSdiz-0003az-32
- for qemu-devel@nongnu.org; Thu, 28 May 2026 12:36:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779986207;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=Ip2bjAxRJdfvSTi20Veh/QnIAIPxTvQvBFus6YZVrN7ayCiqQqE3M5Lqp+QJTvTGzqYQlb
- OgYNTresxWr8bz42V4VQNDQnMZFvUI3fUIIXV1jH5zzKg9W9Sf1/torpCdz6i3IcSA9/1t
- 6gvKtqegJm+92ATJQ/NFWtbIsmW/ZTo=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-671-bm32JVuSN1enpvR8FH619w-1; Thu, 28 May 2026 12:36:46 -0400
-X-MC-Unique: bm32JVuSN1enpvR8FH619w-1
-X-Mimecast-MFC-AGG-ID: bm32JVuSN1enpvR8FH619w_1779986205
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-44dad1b938fso7583105f8f.1
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 09:36:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSdmV-0006fr-GW
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 12:40:27 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSdmU-0004rk-3R
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 12:40:27 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-49041e84237so55815605e9.1
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 09:40:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779986205; x=1780591005; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=VnWpL5Vik3y3W8+89MjXWlYcjcuZJy909i7SSSDIs804OsGHcrk3yuGL5NUBjb/qXo
- DOq9fom7K13c5a2Soi7FFnKpyZBE2WqCIK8OZmE/iTEcQA7q2Ggq634K5H4z/ntR02Eb
- lPGNLwRm8XANtfFglBpaoGb6yIc2hsm2Rsr3sAAEl/y4YiHo0HqVW1gxytbXlm2+D3FY
- NHSZUGwon74B9IvnQ+c4FMJH4NYXE1qdaVfEN5Va4RiK8JOjvzK6Tb4pdDfxDv0prhF5
- +7eZJTty8l+7PV4+VzCMYkkTofJyI4HZEJfmHZ6ja989hf/HghV9H/+yc2mPNskPh6On
- QDpg==
+ d=linaro.org; s=google; t=1779986424; x=1780591224; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=TJKHFtKMeinB52gHheXhJUVYoO9sjFC5TjnUHTgVnv0=;
+ b=yhj5URCBclkKe1Zuh3RbO/1jdWzlnYeRNHU6ByoJ2ZuzjnQi73DdRf28Btzr56Ub50
+ rTqJg2t1P0kyFg4Gm1YgcYarysU3O9ZjkCldJRTHJAmv3ugl9cyGzRkfpllL6O/8VFwM
+ qvjYS3k04PPnyqVAJVLrJqUcOjgYQKt3eF//rRDmx2GHFsBJLoQoDYMxgTS+XZv1foAK
+ fh+TGk39PV1syaFyP2/4MzsA8ClxtCMwzI9P2zjJXAinu/MCOS3igoyPUiyNQnHzVC0a
+ 5+CcJmQnEWytTWAqIB0MxTGfd2Haozjb3nzQYJs4BOU0m3zgWHQTYYuFAnuv1MQcJrpI
+ ZqNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779986205; x=1780591005;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=T4Q3gEy8UnKh7ZRr7wMmxNHx2POfs89z4gEXxMiOliJlbGzVKF128NBP50rjNtsJUp
- PQoWoze3/CIBQ4o7hkpJpsu42yadr3aCszKLzbFTBBAMIIXUlNvvbDgCXHGn3XTOGVC2
- GgCBg2dY6SXTkF0D4vnUcr/FMXfNZIkoBvie1NkBUzKowpno3KllDvmh8wt/oEOCuEes
- 1Lk6lRvmROqqy++iZbG5OjZQRgNJ+m4v+ZQSbEZzZDnqVdkgSsBv8dfnjf2kREUPledc
- mQV53S/HkU3AhTrmxTnScKT1oiiWJxyBBywtgPnhoZ5l9WhPXuPoal8la7X92UlEme4z
- 3nzQ==
-X-Gm-Message-State: AOJu0YzWI6GeSX9Xo604d/nFICBnw+v3+9Skn3RcRfmscETjNz7/dZBZ
- +7tv3sHyuTHQTAtbbKt5Wo4ztho5upib8Uz36/OtrqdXOfXo6WOLhQPUrAboErHbOViQtleCrtN
- 3x0Yx4KgUZW5H2tWnuTgb7d0xCrraRMNkUdjhQ34QKOegsnNU00JjVuty
-X-Gm-Gg: Acq92OF8UDe2S9oho8+lNAkQHsILMJa98osw9K7rZEkC4JNKj28wzXw5UWmOwjR0V0D
- Q15Sec1sZeKno/uiqSq55FSiL9lB0FIa3F0NycqROegE0rWr/jgNi1gRXNAE9hfE6s5K3bQYgo8
- Y29mR5wFK9NwpsMHikXi4RK4bUM67yJMWzplEcl9LX96sd8iI8kBbGvTchjoceW/dE0sWuzZO/Z
- 7sbxKmhok4W/Zv7ABGehmpgosKUlkHUFs/+UgMla2PgGsJi2jOOxY26VYt8t6ljaIfNIdumKIYO
- 5nph9dqpRnImsjmpfXi+nn8KlveTOnOTUyHZC244TCElCzkfN+RFQP9eJA9f+kgJnFMQhsMLIq2
- BgMCK+oLCOTjWq4osDzOs6CPg2Y1MXahAEYTFpjPHul/OsZPagL2yWn7gkXNLCaEJt0ifryzH5l
- 5ZK+1e0nZSb9zmBFYSeE2hLtcwsWltewQ5eVviXQ==
-X-Received: by 2002:a05:600c:3550:b0:490:97ba:bc61 with SMTP id
- 5b1f17b1804b1-49097babd23mr7951345e9.9.1779986205573; 
- Thu, 28 May 2026 09:36:45 -0700 (PDT)
-X-Received: by 2002:a05:600c:3550:b0:490:97ba:bc61 with SMTP id
- 5b1f17b1804b1-49097babd23mr7950945e9.9.1779986205196; 
- Thu, 28 May 2026 09:36:45 -0700 (PDT)
-Received: from [192.168.10.48] ([151.49.251.208])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4909a23dac8sm81345e9.2.2026.05.28.09.36.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 May 2026 09:36:44 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-stable@nongnu.org,
- "Michael S . Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Feifan Qian <bea1e@proton.me>
-Subject: Re: [PATCH] virtio-blk: add missing VIRTIO_BLK_T_SCSI_CMD size check
- (CVE-2026-48914)
-Date: Thu, 28 May 2026 18:36:42 +0200
-Message-ID: <20260528163642.866534-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260526154957.1741622-1-stefanha@redhat.com>
-References: 
+ d=1e100.net; s=20251104; t=1779986424; x=1780591224;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TJKHFtKMeinB52gHheXhJUVYoO9sjFC5TjnUHTgVnv0=;
+ b=atc5/44OgEqfx4nJrKfKsazKUXpch5zncc7zql9khLubz9Ra6v88zAF1ZyNDR7sHwL
+ mTP1sG8Rgqc5jt35X54pysT6UlqZ+0RfM6mPzZ8I0116Qb95EO0xijYqJ6607pYS7lpT
+ KPtcbINyEVhmwRIfXZMFZJBrx4BKwSOyOS6HV3uoaH14aNKb/uoR3faLIsuzAIDPaj04
+ FKwG3Lb0lSiU++JtrGq9+VlM7xsaeuynrPRAjX81jzddegHOqGzaFXKGb4wBmDYap250
+ /Gcy7Ql+gUYLf+I3CIYAD8oY3zEkx4EBwl5MupXC2X6CwqeBIKxOiuoC4YUQMwOfm1Gs
+ Jq1Q==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9+nraiGhtNYvSkSheqro8FxOljF6595Z+Tgc7mQG3A6MEorVFiJs5UhpJLoQYRpHmuM/49BS+o45Ub@nongnu.org
+X-Gm-Message-State: AOJu0Ywbgw8bn6+NNTaYFPhLikxdNFH+epBtfvCANe1c0yblX8a+I4Ta
+ 7Vu9+tUoMeAcqVSGm0wueWv0zY2k2ZQspz1zYCy9ElkSboopL+WBlyWQI2QGhZbkDB8=
+X-Gm-Gg: Acq92OGBVULNeYD8WnN6bXuERpx7HGmdSdymki0OdpYRRrk20vHIpFReq0C+r23tXad
+ CYOGEBHTZZoWlfkl+teX4AyQ9gLaJI3X/SedIMjwSotVzhYSo0+hwmJEibu/I9Bxc14s2cKIzYJ
+ MKOa0c21NvzVoOp2qnOXKkCgyCoLBJY4iPWmWqfqvqtyJIB2n4dbgJMmpv9W7L1WahkeNcnA7Up
+ M0+AunJf1PJtQfjd73skeR/VlfhQfr+KXGyv7P4rOsGcyQPvpQ3cSTZSSb5LiwUXnlEUG+iqUoR
+ W0y8Iha0SdhWrcsPaFhA+XUgeYHIEda1WAtFtN6WmT05zr88NBVPlJ2nXkdseH0B5b9uZ7+7EJw
+ i8EWqra6K9/Xbj4v20ZUFaB0qx0vCLs2TvicFrgJVJq76rsT+OnMFGA6hDrY92C4fp7+v9kypJj
+ h8dD0ocTw0VrYEAS8c2LJGJSt6eIfDbzja9BV+nw1LkgVg/4gPOaWc85diubJl7x8DjlRscF/gd
+ 8yU
+X-Received: by 2002:a05:600c:6099:b0:47d:52ef:c572 with SMTP id
+ 5b1f17b1804b1-4909477683amr44950055e9.1.1779986424229; 
+ Thu, 28 May 2026 09:40:24 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45eed496112sm2708919f8f.15.2026.05.28.09.40.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 28 May 2026 09:40:23 -0700 (PDT)
+Message-ID: <91ad32de-50e0-46a3-969a-3bb63ee9dabf@linaro.org>
+Date: Thu, 28 May 2026 18:40:22 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] target/microblaze: Convert to translate_for_debug
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+References: <20260528161450.3564396-1-peter.maydell@linaro.org>
+ <20260528161450.3564396-2-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260528161450.3564396-2-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,8 +107,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
+On 28/5/26 18:14, Peter Maydell wrote:
+> The get_phys_addr_attrs_debug method of SysemuCPUOps is used only by
+> x86 and microblaze.  Convert microblaze to the newer
+> translate_for_debug method, as a step towards being able to remove
+> get_phys_addr_attrs_debug.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   target/microblaze/cpu.c    |  2 +-
+>   target/microblaze/cpu.h    |  4 ++--
+>   target/microblaze/helper.c | 16 +++++++++-------
+>   3 files changed, 12 insertions(+), 10 deletions(-)
 
-Paolo
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
