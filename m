@@ -4,98 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43315CD5BD5
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 19:34:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17F0DCD5BD5
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 19:35:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSgV3-00016N-0m; Thu, 28 May 2026 15:34:37 -0400
+	id 1wSgVJ-0001Aj-Qd; Thu, 28 May 2026 15:34:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wSgV0-00015q-OE
- for qemu-devel@nongnu.org; Thu, 28 May 2026 15:34:34 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wSgVI-0001AK-89
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 15:34:52 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wSgUy-00043C-MJ
- for qemu-devel@nongnu.org; Thu, 28 May 2026 15:34:34 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1wSgVG-00048z-Jb
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 15:34:52 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64SHENxQ1469564
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 19:34:30 GMT
+ 64SIOMZ11237069
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 19:34:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ytCBxV/n78Ld1PHl7J1fny/SI4XVuwn/ERnJZNs4QX0=; b=ZDfJp0kmKORggtzX
- Tm9KnlEXQEeGHiPiEJHZkx8DyC7D6F2w+HeKcZCM1eGBlaTtCUZXy3Hteu5tR6Ev
- px+D/wt6Y1l6K6NIgSGLpPBVO5b+JWY9QOocc1oOZyruf1IH6glEs/cpgf2xuDBS
- fe1aCinDg2JLlHmFjnBtiT8Bmc5eLFrwOWYAmkKFU427olsZD5OlOm1VlSAbJ2Ig
- UfNYced4C6KZcrZg4u81KpFbFvIkllMDX2VGP4X+8NQYealRLmC2djm7ECBbIGdZ
- OKlWThe/F92Aw+g/Iu9Ied3mrkmSYLfFupkaipXEDuIP9WNQozbGlSxHY6EHEmG/
- IKDXPg==
+ 1/I4u5xzTdL/Xg8iJLQXX5JeYjnoJH3C01m6gStYZ5c=; b=gvE83P4ZpB1LI+z0
+ bTw+gHsU7c0XPxnN4yIRKpP1tg5hQtq2CzwBixRBc6Ky9KAbIT3nHdHl2orvNxB7
+ ObBXmgZNloiGvV+IsvVbGEHKXo5D2JPIhPfIZ9zWyxG/d3NlMdymwRsGfer/5pI1
+ LN1FfpPJBi4PaV8s469O1hFEYiYJJX9rxHOmYq7byzr0QRgdHKTVbJbw4JtRgirI
+ gOBeTM83UAKSLXIflATkFvNJy9QQIwlo57ebNyHe82dKpsBNRQBG2/m3rNq+YASi
+ AtmbdlYKI7jXR9t6tp9nlrkxFqsPK50vO+51D6iRHeIc4QXl4TmxN/ZItnzgEQBz
+ b5d5Ng==
 Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
  [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eesxa8mmf-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eety4r9f4-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 19:34:30 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 19:34:49 +0000 (GMT)
 Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-304448ab58cso10440255eec.1
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 12:34:30 -0700 (PDT)
+ 5a478bee46e88-304d8e9563eso2758733eec.0
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 12:34:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1779996870; x=1780601670; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1779996888; x=1780601688; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ytCBxV/n78Ld1PHl7J1fny/SI4XVuwn/ERnJZNs4QX0=;
- b=Cw7wC5whNS/0+PdBcLBgM4cpgmHyAXnpZhdLy2NoKEtpOV7MY3oz8ePI72HkTboM0f
- yu89I4t4oBOpyzerrxVRJxCSDryr6CYrj69/qJX4DrUuRLrxTJyGd+aNdnWmMFKCR3Nq
- X7K7+YHOD34tSydveJUx80k5Te9877Gfbh9OZbWMLTMjv3oNJ7NGbMReclyTJ9WmeWzn
- Mr7xA3XOqT6MQhM+UnhCnIL810JXu/wTM5Q3lKvXxyblisRqCwvPRhaQKFKTbgQzKehq
- vNCVoz84Fd795ZWt2obMASGBdIx8MDYlc+DkuwA6welgaF4++PgAjYTGhTB26LEKrTLH
- szfQ==
+ bh=1/I4u5xzTdL/Xg8iJLQXX5JeYjnoJH3C01m6gStYZ5c=;
+ b=GNT5SBaA7c+zcd94xWGJRZUKgeHT+x20JZOMmjbs/fdp4SRXK4srSWyNQx0ROe4Aag
+ W92VrF9CUhMe4rSGHMDDv39D4RrDbzcNPiMMErOnQPq3X5xtgSDKa0St55GRaOXRx37b
+ AEygSygu9DKk0+5JyEx0k53bSFZhprd1nen9kdc1GgoJzpIGh7V63WTz7TuoX/ATNJnE
+ 7lfVYhaYT9+h9BAj4vaUVpABAkEokSdo9xPsYHPlIMLka3j9fEX8ZnIJ2eIxgwUqyQc0
+ IAEF/VYdFOiKesBt+6/7QQYLa77h+fPa4sfCWhJyROtbUbaxrfmh2bdbxaDC7zjQAVii
+ UdUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779996870; x=1780601670;
+ d=1e100.net; s=20251104; t=1779996888; x=1780601688;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ytCBxV/n78Ld1PHl7J1fny/SI4XVuwn/ERnJZNs4QX0=;
- b=JjfAPC4KarC5dLNK+12wvBRT/c4wuhqs5LSuqMTlG2nv17My8actYyMpcHFNnLzKDl
- merzo0tbrxt2JcCdcq73newKt9xTtd0RE4TPvv7amWJHKaNpMzYolVlcbKw0qmCY7lz0
- HonEyOBFzQPeB1t7+S3urTwlOysfuYpw2pSerMpSwmkIrBBNcYEyxGvfloyyH0h2Lafc
- 8NCOVWB+xEChdbkdKBtJ1qhDaac9oENp8RdNftG18it4cRholejRBGBan8S3x6Kav4HD
- Mswp4gD8PNDQiL3Ze7JtBLYSd6QizOk/Huzyyg/kN5/CRJ8dXQrU4UxUlKWjG8bTOw1Z
- mzMw==
+ bh=1/I4u5xzTdL/Xg8iJLQXX5JeYjnoJH3C01m6gStYZ5c=;
+ b=PCn3tkJytn47Oz7ssLF4xVIKlALaZRkgGIduVq6phHlqs3Jf4GC/F1AbeVPjT0Ki/T
+ 7f9I6fXDfzI1AWzLBIh4dTyCeTGAp8Aqdi+mQ4bgvCNuMx/EGvfwQQNtEoq4s4zxLJtD
+ xpV4c7aCZFIIcAsejl5dherixOB+6Q9914NDGXmJOHjkTsF+/N9d7rB69UiF8OQCtacV
+ yRZTRtrJ+mdjHTlYqcPdB+q69Z0Y/mB0koBmX8z1klSBUW+byGjij47A5nDO32k6pvHI
+ 8Gc/nd0er1a+wGFMiUN2Tdara6abc7vGqWd1Yhu6rrWsmvLpHLSE3qorGEkvlR3J51xh
+ WYoA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/FBTESnaoblALyVWgSMKS6sBoBx4/bgoDUFnbfprPLQB+56tCFbTb+k7k3U0bEcofsrs0AI+/R8wVk@nongnu.org
-X-Gm-Message-State: AOJu0Yz1+DXx1Qxd7DlyQpfFM9DdM7Xc0/VwML01g7afJ9XOFfd/OZm6
- eNWFdjlBnDY7OfIJI19JHWrRhbpS3veJ7v9X8h7D0dIy7U4sSAS+As2jNWoB8j1IUg+oAvaqadr
- 4rXdH+m93CG8oDHxkAfK54zWWCkPRFHWhOwNm3Cp3XCbMfA25HOfX6zLyOw==
-X-Gm-Gg: Acq92OF/e+9WYM9O1QV5+3+Kva39o2ugLaZ91Ro8IphEbD6WsDMpFTSPnpwNUydqvFq
- SYMtfIGQZXhKCSIRqMuTxQTK6KUGsW4AzSloHUeKFqC4UxQlDIge0L/9ysD5270oitVXCf57GIy
- 7KC5kFv9p8v4qxWGzVq3cZ37jC5rlC0lwLpDhjX++bJP8tK3wtvyEjLY6sWPtG3Dk49+RZh4bj+
- EEb2rdPS0R29OikbKTgbBSnvMIC222fpTY25CX6shan47um7+jXfRSyz3nxMJq5pEfx7ZzMNQoh
- 0THMyKlqc2WVytJtzhejv4DP7rlEhm+H9XpYXZ9leGtfe4KmMEMVgWja9RYME20tqf7mrdNFP/O
- 5d1QZNK/uipH5hZe1zuG2zuWw8lZJkBysgOVhQX2oAJXxVZ8sTJTBljNukPjrouilLkxeeZOMvP
- hagipoZObsxLvJf12oAAytJ6Ka
-X-Received: by 2002:a05:7300:fd09:b0:2dd:5641:ef2 with SMTP id
- 5a478bee46e88-304e8c66510mr237188eec.25.1779996869752; 
- Thu, 28 May 2026 12:34:29 -0700 (PDT)
-X-Received: by 2002:a05:7300:fd09:b0:2dd:5641:ef2 with SMTP id
- 5a478bee46e88-304e8c66510mr237158eec.25.1779996869221; 
- Thu, 28 May 2026 12:34:29 -0700 (PDT)
+ AFNElJ+DoV2rDJtcIanvMUOerseWoijY7D6E/qDwH8FyMTzEuof8V2GRU3qv4m0deeJGz788Couz4gTi6btl@nongnu.org
+X-Gm-Message-State: AOJu0Yw8QtK4d92XlRGM/7R3RS+HEkM+2X0qC3GL8yquWgf7cy+wTSc1
+ Oq89D/3ZUtO1Rl07TCZc1r1vSoBvuLYuT6irh0OS6zZKUvcCPNOLzlpiuRWZ7tCu6lvBeWeoiRx
+ HAeGl/V6E1z8l+QTaHArA+RUBQS14XW9dWq2PIQztEKZUSlrWkzEafHT9kQ==
+X-Gm-Gg: Acq92OGWASGGknwQuhiO9KVzmPh2H/iC4UH7kWahFI/JCLJIPQyjld1M4S0hVXj/93q
+ rKH5nZBFJHXMmlmk5N/j56nPu+9G8OH/CWG7nZU7OT1flvOvTzM9fgAHOifQZlUjEbaCxCqJdos
+ hJNKkeCS5UG+p8/Z6BZqo60IbkhumiO+jpAL0h31rvgMnwimH6pwVm9udGY02Wz0s0Bg3I7FL6O
+ V8WwYwAfXFznT4oqYXVykweXhXkBRpivrxqA0TJ67RZCja1xl9GEUupnylklFNgrPG7IO9go6Fu
+ C0gYIYggMA4URwUW+wnHs7EQzStp2i3EVFhvY3wUbff2HgTZjiZXIogGZjXTR8yOjEBUZasE4JH
+ Eu6Rekt9aZBri6l2OLDTgCku4sDxGF1nF6+RuPcsM+Hf2irambbBTPjEMCdl0JcPsN3STETYwXb
+ SzW6dQ3FQLkjqJYWUqnnMoprY2
+X-Received: by 2002:a05:7300:fd8a:b0:304:d32e:65e5 with SMTP id
+ 5a478bee46e88-304e8f652c3mr181100eec.8.1779996888423; 
+ Thu, 28 May 2026 12:34:48 -0700 (PDT)
+X-Received: by 2002:a05:7300:fd8a:b0:304:d32e:65e5 with SMTP id
+ 5a478bee46e88-304e8f652c3mr181074eec.8.1779996887894; 
+ Thu, 28 May 2026 12:34:47 -0700 (PDT)
 Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-304e98c7969sm124237eec.14.2026.05.28.12.34.28
+ 5a478bee46e88-304e94e54besm147866eec.4.2026.05.28.12.34.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 May 2026 12:34:28 -0700 (PDT)
-Message-ID: <7fa279b1-d030-4d1b-8615-77dd838eb92b@oss.qualcomm.com>
-Date: Thu, 28 May 2026 12:34:27 -0700
+ Thu, 28 May 2026 12:34:47 -0700 (PDT)
+Message-ID: <aebe9798-232e-4aa9-829b-2b850cdbc818@oss.qualcomm.com>
+Date: Thu, 28 May 2026 12:34:46 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 11/12] target/riscv: Expose and document the CPU
- 'big-endian' property
+Subject: Re: [PATCH v11 12/12] tests/functional: Add RISC-V endianness test
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
@@ -105,42 +104,43 @@ Cc: qemu-riscv@nongnu.org, Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>,
- Christoph Muellner <christoph.muellner@vrull.eu>
+ Christoph Muellner <christoph.muellner@vrull.eu>,
+ Thomas Huth <thuth@redhat.com>
 References: <20260527201348.29511-1-philmd@linaro.org>
- <20260527201348.29511-12-philmd@linaro.org>
+ <20260527201348.29511-13-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20260527201348.29511-12-philmd@linaro.org>
+In-Reply-To: <20260527201348.29511-13-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: iJjEN9gzj3k1ZSvJvjW1MPppQji_xqF0
-X-Proofpoint-ORIG-GUID: iJjEN9gzj3k1ZSvJvjW1MPppQji_xqF0
-X-Authority-Analysis: v=2.4 cv=ZdIt8MVA c=1 sm=1 tr=0 ts=6a1898c6 cx=c_pps
+X-Proofpoint-ORIG-GUID: 08nL6JQCK_z98Je1FikSYy-QsVolPhrS
+X-Proofpoint-GUID: 08nL6JQCK_z98Je1FikSYy-QsVolPhrS
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI4MDE5NyBTYWx0ZWRfX3hKA+ndxIsee
+ LBxh9OuijBZ6P7O/PLkBKq3xSYDv8wDoRS9x3VBdT+DyZmoTpujHnEFtUSXmHxBeD87MdPAmODl
+ b7SBXIuaT13IiqOGagSEZPDcm0mIfxDhFv/AyjOdEUTTOJ4PcFw3Yja0DCqApvL6UhOhhKUOck3
+ 3qVK9aZ7sHgJYcCLbN0gvjcWYTdPlG12gELFiNdMKvyKmkRm9/V/jc/tSDqFAKFQNj8opjRSpoF
+ zsBDEdGzf36cvdh4U6pAQTDnWchN8Ynw0J/tSFZ5wb4TYqbXzqxNp+WSQtln580cIfwx/V24Zhs
+ GssJuJuLClh0OzTpH7Umts6BDmAvMDTx+U9CXa/CvUUpoKGV1Nyodwaz+3T/Rq2JGfoQVniIOLX
+ FvgAd+2eTXNQV7m/6+O3+9htiq0JwfaRv+V0IZQqJD9ZzNkhLrp7XJ2Nu0BMK245u1GtIFRRjHv
+ w+RQvBfQwGAZnhAE1Gg==
+X-Authority-Analysis: v=2.4 cv=S+TpBosP c=1 sm=1 tr=0 ts=6a1898d9 cx=c_pps
  a=cFYjgdjTJScbgFmBucgdfQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=ALku5c8DAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=iDbYgPken6ucnqvU8AIA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=scEy_gLbYbu1JhEsrz4S:22
- a=Skunnq644UPbuD6fT1yj:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI4MDE5NyBTYWx0ZWRfX00PdWehdPzU0
- CP/i3bb40bZ6SB7E6aLbrHmNqmWeP5vGNX1Xiqk82GUmDQ69FCgRIW9CAVLiLF+UOkymoYhOCY/
- uGRaZU8Dejy9g7+Ec8cj+TTMivl4x3ms8VQdzLGLqcz/DfePqvQtPvu758Zm/aG6mdEkB/y5CLZ
- 8hr9DCEHaAE40XXR9JivKxqDzmTuiFgrg/uM0C7yV99P/u1j2izOwnd63l4tmWs1vOGBOn408Az
- F7TQZwETWZyTbIZUhYM9ohb3b9QwfNO9eEwQx1ekBqDAFPOOtgi16/W5gN1wVRY/JuNEeSQ1pLW
- OczwCRtagtJfqsdC0y+JhigCF/Uz31mgpJSBm/yfOhN8miv39pfyqGFk1C8wz8WV07m/s3bDxZO
- UuiIzn9JKY16FEvTcs03GovyD4f7f0baEnp6lfVFPH18sTLqzlZdJEOK7DHuVocw5WkDtcvZSNT
- BPwpZWZJyf6lH9Tlt3w==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=ALku5c8DAAAA:8 a=20KFwNOVAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
+ a=WaUXwePNmJxjUM3X3IgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=scEy_gLbYbu1JhEsrz4S:22 a=Skunnq644UPbuD6fT1yj:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-05-28_05,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 impostorscore=0 bulkscore=0 clxscore=1015
- priorityscore=1501 suspectscore=0 lowpriorityscore=0 adultscore=0 spamscore=0
+ phishscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0 spamscore=0
+ adultscore=0 clxscore=1015 impostorscore=0 priorityscore=1501 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605280197
-Received-SPF: pass client-ip=205.220.168.131;
+Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -166,26 +166,18 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 5/27/2026 1:13 PM, Philippe Mathieu-Daudé wrote:
 > From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 > 
-> Now that the full big-endian data path is in place (runtime MSTATUS
-> bits, boot code, and page-table walks), expose the "big-endian"
-> property to users via DEFINE_PROP_BOOL and document it in
-> docs/system/target-riscv.rst.
-> 
-> Document that the property models fixed-endian hardware: it selects
-> harts whose MBE/SBE/UBE fields are fixed to 1, and it does not model
-> a mixed-endian implementation where software can toggle those bits at
-> runtime.
-> 
-> The property can be enabled from the command line, e.g.:
-> 
->     -cpu <cpu>,big-endian=on
+> Add functional test for the RISC-V 'big-endian' CPU property.
 > 
 > Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  docs/system/target-riscv.rst | 29 +++++++++++++++++++++++++++++
->  target/riscv/cpu.c           |  1 +
->  2 files changed, 30 insertions(+)
+>  tests/functional/riscv64/meson.build        |  1 +
+>  tests/functional/riscv64/test_endianness.py | 57 +++++++++++++++++++++
+>  2 files changed, 58 insertions(+)
+>  create mode 100644 tests/functional/riscv64/test_endianness.py
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
