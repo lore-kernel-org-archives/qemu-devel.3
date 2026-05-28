@@ -4,140 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ADE8CD5BD5
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 07:58:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D185CD5BD5
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 08:00:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSVcp-0002HE-Dp; Thu, 28 May 2026 03:57:55 -0400
+	id 1wSVeq-0003Ol-05; Thu, 28 May 2026 04:00:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wSVco-0002Gg-Fz
- for qemu-devel@nongnu.org; Thu, 28 May 2026 03:57:54 -0400
-Received: from mail-westus2azon11010069.outbound.protection.outlook.com
- ([52.101.46.69] helo=CO1PR03CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wSVep-0003Ob-2H
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 03:59:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wSVcm-0003Yc-9Q
- for qemu-devel@nongnu.org; Thu, 28 May 2026 03:57:54 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=wA9JGZ6GSl2FkjlY2BSvJAUBEecLpoX45Y8ORmHL9zwiwWiHGmW+kfEESqhvsgcZa6y8Br6lxsnMZj1lXZZX8jpopE/pq6xofZs1wrd0ISO8MaFQnP44ShpqXm1kvqzQbhCJJccRWDMW5BEQZ9/TThiLk0H/vvRwMnOB/Uk8dxnbsbdX+83HYPZtg6VlLCzY7OePVghZ40TGbV/xuUtuKKaZe+quk5WHhsPORUsb+1eSo5BumyI2AG1pbmLJkgeDFsBx6RpkncjUINZQEIPGG2K5DV8poOUXzljZEAsLxNkgmLkqrFY13hteqZuZ3Xp+S8GSmi73RWxT9AztZ/4iaw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AYYrfF7qjiApc/xQDCmOkOJkHbPgJpHyn7NZ9lE2QVo=;
- b=IrrZz0Pkwq9T+NsKozdNX2PXqCOA+Cx9lXw3t1QNRaihlyTWD2GeDr+/nEvpTbhXyBwMfe5jNOPk8ZK0GPaCj0DHFY4xho6NOaovPKm3YfitJaNNrhsbWaeKS6XBxi+LuURlxf38Z0PKxAi0ov+2DX3TXy8FkryO4TewwSBrb82rEZzOXa3NC1c6eFIcz68XvGVvSA3PrYv0QQOEYWLhGDZYuLWoXdPl/LL03+o0/fJWQZp2dYUFm7uaF5ITIuoYCSOj9F7aAjdwOdU4KODMol31OXHDSz9Bxu/JsotcM33QK0O81KCToDFqSxZ1X25REJA+X6kVoY8fg+E3BHE+lg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AYYrfF7qjiApc/xQDCmOkOJkHbPgJpHyn7NZ9lE2QVo=;
- b=CsRqk5pg9iS2St+wN2KL6Hu4p5UcGrpJ1Ik1AUSq9Gj8HzI5E/qC6+0U7MQSsqeOS0ZUoQrm+HMS3RV+foQAwMMAI6Ag3lElt219+zQWdyfPbGzJmSaYXaZyJTUCIfbET8k90vo0lKSl5tp9E2xHK21ixyFFwcLlcxOR8fVuQxMh+ANr5e/ek05gVCJ9Cy5XjBPOiLZgLH9Cwm3N3gmmFss851dKRpwzG51FIZxhicPOcRYEGRKMgRmqHNcCpcWbC+/hH1qq5hbw3a+9zS4DTIy4x8dx9yhEeiHD2SXMOz4AIVJMhCorRC7eKl3+MUkn27k8uBRzqsng7A9BVl0kLA==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by DS0PR12MB8414.namprd12.prod.outlook.com (2603:10b6:8:fb::7) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.71.13; Thu, 28 May 2026 07:52:37 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de%6]) with mapi id 15.21.0071.011; Thu, 28 May 2026
- 07:52:37 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>, 
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "mst@redhat.com"
- <mst@redhat.com>, "jasowang@redhat.com" <jasowang@redhat.com>, Jason
- Gunthorpe <jgg@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "clement.mathieu--drif@bull.com" <clement.mathieu--drif@bull.com>,
- "kevin.tian@intel.com" <kevin.tian@intel.com>, "yi.l.liu@intel.com"
- <yi.l.liu@intel.com>, "xudong.hao@intel.com" <xudong.hao@intel.com>
-Subject: RE: [PATCH v6 03/17] vfio/iommufd: Create nesting parent hwpt with
- IOMMU_HWPT_ALLOC_PASID flag
-Thread-Topic: [PATCH v6 03/17] vfio/iommufd: Create nesting parent hwpt with
- IOMMU_HWPT_ALLOC_PASID flag
-Thread-Index: AQHc7ZxaQoBqzCjpZkOQ3JjuYDqTSLYjEkbw
-Date: Thu, 28 May 2026 07:52:37 +0000
-Message-ID: <CH3PR12MB75489EC0BE24F1DE7E5DB35CAB092@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20260527054658.1021096-1-zhenzhong.duan@intel.com>
- <20260527054658.1021096-4-zhenzhong.duan@intel.com>
-In-Reply-To: <20260527054658.1021096-4-zhenzhong.duan@intel.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|DS0PR12MB8414:EE_
-x-ms-office365-filtering-correlation-id: 570ed6c2-16b1-4ce4-d68a-08debc8e1642
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|7416014|366016|1800799024|38070700021|22082099003|18002099003|6133799003|56012099006|5023799004|11063799006|4143699003;
-x-microsoft-antispam-message-info: lf2fV/nzXmojl/LBCMl49ZHyreci4xMSbNDp1bbpOCMQatWyfLHo6czUa2BezkOux4KlmgKdtzPdamo0BKZJF6kyWY7/jexxzfkVxeU9UrHi6WN2vw/6pQ1kRIU5/Xg/ucVUCr4IVtF0Zx7tpFQ724gvJRUHxVmj2396/X0wXOAbLlWe2vZhVa73ouK/hEtrQmv8Lm6LoC1f32w8ex57HQa84u3ahqmnz+5qJDgzbq2HrCWU+h42ChMV3cVCQePARwDvmnchNF6AfB+TRYoSa/p1TfdHBWnY8g2roLTUPaDL2s0xuYMZ2EZIMEtne+wazr2pPiLYYNMoVKpnG9vuVoaxhjYfyRene6vWk5aq9tYKQ9HYdoJyLnFN2xBxhqWgolNMe8MPqRmk8XnOowx4lHVPWjVwZxnfQlORTcam1vWsfG2FUZG8RVu8zmjOmg3CPu+txL1uew8pN1G+iR7EbX8O3DjYxmFwP+hu5sbGldgbRsQ84dh5Bo4vusk0VHYJVizD4Wmn4hNIccgLQ88TI+vCCPSsAledETYSqisW2pFSqq3/h9oWhSsdLybo+CONrZQoICIglqGH5w8n871yVGv2gFOIxpZu58g73uKbg2HSbXXkMWg2koJwXar28V7le9n3hjkVIK/RR6ZIsOWvmciv3dgCUpK8G8mx1hYnsgLcGrnTHH4AQy+31BVDIwCBF092GqmVA+zOzqjfb4hfM85W0RdU5MeJPsYYfG2g054e1dhPP7aIxa8ptz3JKymv
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(366016)(1800799024)(38070700021)(22082099003)(18002099003)(6133799003)(56012099006)(5023799004)(11063799006)(4143699003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?wDcZioKv6oPFkNxeaTScQM4l3rlUwFAvd9bAFnUGklgMZ43pJramPxw+ULKq?=
- =?us-ascii?Q?ZoY531s6Rrts53KQWM4qgX23a6KsO+3e2jMYQJXp8C+Tf/nidf1LC0wMXJUM?=
- =?us-ascii?Q?sAaEnWWKT+8FC5umQSAVDjt9VLU5YHxJqfVv3YiU5esnl3D55GAr1+JsG7q6?=
- =?us-ascii?Q?/JOQ9IRNeqy6pieQObaAY3lB53LU4LG2Lfqq/ZVhjQrw7Y8HN/pzWtSixDrG?=
- =?us-ascii?Q?ZcuP20lIU7ixAOqNquhDmmkma8rYJ5i7nvQFlHOxsyCqqztwZQLlnVYSHG0E?=
- =?us-ascii?Q?WplSWIFhDM0G29xYM0UWPe4wd474zkqgO2jZtpdRxLIri+YjiDrNBA1ANqvQ?=
- =?us-ascii?Q?IC4kSuOpUBdQwhNT2lvEGI6w6ppu9cfTuw97xtuDP0CZzK+Ly5lOL3aicAJJ?=
- =?us-ascii?Q?Yxvj+1YUMDAuwqU+BZXhGgOHnCcwX1oukNZglOJLZkuFCPT/MQESkNXawuOZ?=
- =?us-ascii?Q?Gv1mK7VOYHvnEBSq67Jam5PLI1FPw+InZ1vIOFSLdA5CpQIlEOIYpa31n1Oy?=
- =?us-ascii?Q?26KKdXDd3G5U4KeRnd/BPB/5ZK7I8xSXKUWHybcpdAkVoAnwDmLMPY4nylrH?=
- =?us-ascii?Q?n/TBlMfQpHTCzs7VYEalicJfHztYHhyrlsA/8WnuMkV7zUg2J6auY7lxWXME?=
- =?us-ascii?Q?cXnS3+9r9/m6ekSeu+zzKuzSUUfcIB9cL+NRsTWSrH3rVDpt90fBBltXruDw?=
- =?us-ascii?Q?IpNha9XgWHIa4c1kgwxMisY0y+Yhu5fB+6GVEIRPAGI19UPOLDxlMUh5eN1g?=
- =?us-ascii?Q?hhcyPoFEoweUzeCdv1NN3+HqqWE2hPOTcYYvIyx9fIXKRGPbYxwgNGQYqe08?=
- =?us-ascii?Q?22AxqYR94MNPhbPZP3K9b1T18YVVBag/Aw8WjOnc01B0r/3MQlAveNkUX5Rr?=
- =?us-ascii?Q?4suBUciLldoOXsb4xBBroA/VaFzGAM9FoFfSN1Cv2o030J95nSMOTRdO7BwC?=
- =?us-ascii?Q?Px0VorluxPG/ksoiMuxb7EuGwtmEKVgZN4BoQfimqADJj8sI7UGGFdIXag9F?=
- =?us-ascii?Q?VQ535OZYlUJUZbsZEfhSpE66HHvu5TSJ2ZlSSHNfCxH8CrPmi+9wU1nJQQzX?=
- =?us-ascii?Q?fOxLa4ZmHzWyXp5i5PI8hutJpiexYIntuZ3/aBskUMbdkQzkZXVzURgHymfF?=
- =?us-ascii?Q?xmoIk2ur1FEdk3k7PcK462nrw+Sgg6DYVGmwW76DktYpWPVW++koArt59KRM?=
- =?us-ascii?Q?BwrsQD4gpgOQZx61pX51Vwa7gFBJ88bpKdLfbMlb+PduXZRLgy5SZPprV2po?=
- =?us-ascii?Q?33xp29tVEAr5LekGv4Kc0AP2ePfRTuxm0bHKmqFIEZ3+AMD4B4P2KKbC9+1v?=
- =?us-ascii?Q?d+lHpoNiLnz8XYDqW9CEKzN6GHUeWgzxbPs9TcfXKevnsQ5Bs9xACmBcVY4v?=
- =?us-ascii?Q?p+0ocIVWVRDtpBICv1JaQORCPFzB1e2DouzhrtEl38S/5+Ud7qvf8H8DB4vn?=
- =?us-ascii?Q?xdEjac5J6UUYXuZEGDqARbLjjDvunyM0c8ime//StqPLoKHdtrVGjtArwEha?=
- =?us-ascii?Q?aOKTQzW0Z63Xo/BRuasBAYA/yV83VXzYvAKTfetSKD8YmDEUSJC7h2DcolcW?=
- =?us-ascii?Q?PTDerbFoM9dVM0oS7BTkxfvaelsxicd0p66kBdhJ45QOQb/yoEbp7NxnW4Gc?=
- =?us-ascii?Q?bopQoy9BFLHhr0h9LQ9NwD1gJFP0gCL70olePk69nvQ5fY7SQL1sK2E4AtOP?=
- =?us-ascii?Q?pJkIV/KpqP2/sgN4g7CWmKLCTYOpw3vZ5cZloOd5hndVmJFHq61UXLIFuvIL?=
- =?us-ascii?Q?vvU9uNEvoQ=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wSVee-0004YQ-Kd
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 03:59:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779955186;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OV39SbiNA5cdQboSmfeYAwEeprknfEw1c88lwQYHs8U=;
+ b=K06D6J+UvT9pGmMaSHobSYuhAbcJMQBsY2wTACwFNu17nT4B56K4w9Fb71xS7eneW0iyN5
+ Kf9EJwc3uDHSp/+MRLvFALWhmFKT/CJJ9wKeBzztcOJL2kvgiWi240d60taGXCK2MxCp07
+ T+raqqpaBkaAaNE6rrSFOIF1rQA7sBI=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-637-6mog4aQYPIym8Up5YZ4_jw-1; Thu, 28 May 2026 03:59:43 -0400
+X-MC-Unique: 6mog4aQYPIym8Up5YZ4_jw-1
+X-Mimecast-MFC-AGG-ID: 6mog4aQYPIym8Up5YZ4_jw_1779955183
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4908af8d7f9so5314165e9.1
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 00:59:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1779955183; x=1780559983; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=OV39SbiNA5cdQboSmfeYAwEeprknfEw1c88lwQYHs8U=;
+ b=f4TqgBS+D5sUUX+6Y2DoDXtxb061fNrkFrrsj3keeUf2kS0qPWxeCpWZuW5qzUiVrv
+ HnUWwvbZaRy/mXlrCiuP28Y/a5j6l7fXe6ciOjDGgcIAqSrTBA8Pufpgf2Rf/I/RmGo6
+ btGqupf03rrl8MaZXXGwZDPInbsV60a/vBsGwsgPtGKP9E10xCdRSZTQVR5zng/6Uaod
+ i78prHh8NVJWc0dLcoK9XCWleScf4ydwpqVtpII/LD3fc3xbEWWlNj9wzH4BHlXLPkin
+ 42wzkqGOcbBJ7eDSi+tT3GjLU9rUTZ9HxJ/NEgHU2n4uLMSl08wk0N9pOEBcKprus6Os
+ 9pEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779955183; x=1780559983;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OV39SbiNA5cdQboSmfeYAwEeprknfEw1c88lwQYHs8U=;
+ b=MfqTDh5pePFTT9nUKYSWTPGAkOQfTXpzREg9UvF4APA+cvzWafY7DbFn5Yq+eO9FsH
+ 6uPrvzg5wG1sQd9vzoOpvK+tsOCcg0krMDZP3VuOhhjMDNfBcExPwWEyKdMxFxKGQusg
+ 0DYYAuDPMJImQ9bX0nQRFOrgZP5cUeUuZveZ+BE1ibYK+aSIw0fD8y8QkFDpHYpUfu8J
+ CFB+lPuvq3vlEC5L+sPcGfg8DAqsdDaiu1m3qRsg0Jm5hVMB4hG4VmPvcyUncPm/CAHA
+ CCbh2cGBt6AGZVRHXauRzmOSKUi0K4yzjncilrg1h4k8X+d0lKhq65VPnoaZnbVgql3I
+ +sxw==
+X-Gm-Message-State: AOJu0YzLFXuJTWu/Ve/h4rGxbfvJD9ekz9pExBXem03PRug3BoinbzHP
+ 4Z7jWO2qL8otRTYzgdJ3Y+UsItdaE5bi065g/5OBa9LeSmWFc+7VsuK8lKHSECZPvHiJ+tFP4QO
+ iKDHNQLIL2tb5iABYdWJVth461zjXIiegCesM0G6YI4WHyDOUfztIIJ6A
+X-Gm-Gg: Acq92OFZo/2BzYxMOUIdKpBwX9JviVi89klFhxJB+oMmsS3Vl3v3gsPu9uABijD3D6O
+ /eHmcX/jnB9KhMgXABW+o1DM14jH4jck3Ci/j4rjsqsXkchqTd4/Z/kM+MQqQQNDf1Us8gYvUe0
+ M4bcJsCUNFMvHOw/cNjp+AoF/VbHOqiTRlxwVOSgnWy3sOijGsu/QvRhbiXhHVobpq5QXRgREfn
+ jH9p/fYKmXpoZlITfsE9ijPxheRMyE93wff8ILRJ5NhNyiLHEHekkR2FPOP4RXEI/uwrogTrGgN
+ IPtXnc+VCXBIbeifTDot5G7PqQdOs7qd9gukUzV335c4D9muaN9jeiP6TMdyhnMfVcuuDylfCQR
+ tHdDKZ8wdsR871k0l5SBdWkQ=
+X-Received: by 2002:a05:600c:4ecc:b0:48a:5501:7995 with SMTP id
+ 5b1f17b1804b1-490426d06c0mr438732525e9.18.1779955182496; 
+ Thu, 28 May 2026 00:59:42 -0700 (PDT)
+X-Received: by 2002:a05:600c:4ecc:b0:48a:5501:7995 with SMTP id
+ 5b1f17b1804b1-490426d06c0mr438731995e9.18.1779955181989; 
+ Thu, 28 May 2026 00:59:41 -0700 (PDT)
+Received: from redhat.com ([46.210.234.60]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-490923613d0sm41452335e9.3.2026.05.28.00.59.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 28 May 2026 00:59:41 -0700 (PDT)
+Date: Thu, 28 May 2026 03:59:38 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Warner Losh <imp@bsdimp.com>, Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH] docs/devel: relax policy on AI-generated contributions
+Message-ID: <20260528035815-mutt-send-email-mst@kernel.org>
+References: <20260528073412.551117-1-pbonzini@redhat.com>
+ <20260528034301-mutt-send-email-mst@kernel.org>
+ <CABgObfZwaiu4A2b2EFuFRA4dbWfHrDYEfiq5_-mf+zQpsYfTLQ@mail.gmail.com>
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 570ed6c2-16b1-4ce4-d68a-08debc8e1642
-X-MS-Exchange-CrossTenant-originalarrivaltime: 28 May 2026 07:52:37.7624 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: bnRTH4h3zfEvRWps4COuz+Gz+N0eycuGVV467Rxe42LXtZw7IatOkNOnJUDuuFWsSocn9aGUKkXjoliPXhMDhQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8414
-Received-SPF: permerror client-ip=52.101.46.69;
- envelope-from=skolothumtho@nvidia.com;
- helo=CO1PR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABgObfZwaiu4A2b2EFuFRA4dbWfHrDYEfiq5_-mf+zQpsYfTLQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,48 +123,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, May 28, 2026 at 09:53:12AM +0200, Paolo Bonzini wrote:
+> On Thu, May 28, 2026 at 9:48 AM Michael S. Tsirkin <mst@redhat.com> wrote:
+> > > -How contributors could comply with DCO terms (b) or (c) for the output of AI
+> > > -content generators commonly available today is unclear.  The QEMU project is
+> > > -not willing or able to accept the legal risks of non-compliance.
+> > > +If you wish to send large amounts of AI-generated changes, or any other
+> > > +contribution not in the above categories, please get in touch with the
+> > > +maintainer beforehand.
+> >
+> > To be clear, the implication is that
+> >         These can be accepted at the discretion of the maintainer
+> 
+> Yes.
+> 
+> > Maybe make it explicit.
+> 
+> Ok.
+> 
+> > > +     AI-used-for: tests, docs
+> > > +     AI-used-for: code
+> > > +     AI-used-for: code (refactoring)
+> > > +     AI-used-for: code (prototype)
+> > > +     AI-used-for: research
 
+BTW: commit log ?
 
-> -----Original Message-----
-> From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> Sent: 27 May 2026 06:47
-> To: qemu-devel@nongnu.org
-> Cc: alex@shazbot.org; clg@redhat.com; eric.auger@redhat.com;
-> mst@redhat.com; jasowang@redhat.com; Jason Gunthorpe
-> <jgg@nvidia.com>; Nicolin Chen <nicolinc@nvidia.com>; Shameer Kolothum
-> Thodi <skolothumtho@nvidia.com>; joao.m.martins@oracle.com;
-> clement.mathieu--drif@bull.com; kevin.tian@intel.com; yi.l.liu@intel.com;
-> xudong.hao@intel.com; Zhenzhong Duan <zhenzhong.duan@intel.com>
-> Subject: [PATCH v6 03/17] vfio/iommufd: Create nesting parent hwpt with
-> IOMMU_HWPT_ALLOC_PASID flag
->=20
-> External email: Use caution opening links or attachments
->=20
->=20
-> When both device and vIOMMU have PASID enabled, then guest may setup
-> pasid usages such as SVM.
->=20
-> VFIO needs to be aware of potential pasid usage and should attach the
-> non-pasid part of pasid-capable device to hwpt flagged with
-> IOMMU_HWPT_ALLOC_PASID.
->=20
-> ARM SMMU doesn't support IOMMU_HWPT_ALLOC_PASID, only VTD need it.
-> So
-> we can't check the existing vIOMMU flag VIOMMU_FLAG_PASID_SUPPORTED
-> to
-> determine if set flag IOMMU_HWPT_ALLOC_PASID. Instead, introduce a new
-> flag VIOMMU_FLAG_WANT_PASID_ATTACH which will only be exposed by
-> VTD.
->=20
-> Opportunistically add documentation for VIOMMU_FLAG_PASID_SUPPORTED
-> and explain the difference with VIOMMU_FLAG_WANT_PASID_ATTACH.
->=20
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-> Tested-by: Xudong Hao <xudong.hao@intel.com>
+> > Why include research here when we also explicitly say:
+> >
+> >         > +These boundaries do not apply to other uses of AI, such as researching
+> >         > +APIs or algorithms, static analysis, or debugging, provided the model's
+> >         > +output is not included in contributions.
+> 
+> I suppose it can still be useful for traceability. I copied it from
+> Kevin's proposal but I can remove it.
+> 
+> "Research" may also include using a script written by the LLM, which
+> is encouraged in the first section.
+> 
+> Paolo
 
-Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+but again, if the script is not merged, then the boundaries do not
+apply?
 
-Thanks,
-Shameer
+-- 
+MST
+
 
