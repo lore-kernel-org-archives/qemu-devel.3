@@ -4,157 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17D90CD4F54
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 15:06:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56C11CD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 15:09:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wScJD-0006xq-AB; Thu, 28 May 2026 11:06:07 -0400
+	id 1wScM1-0007Vj-Pn; Thu, 28 May 2026 11:09:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wScJB-0006xZ-Hx
- for qemu-devel@nongnu.org; Thu, 28 May 2026 11:06:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wScJ8-0002rZ-3V
- for qemu-devel@nongnu.org; Thu, 28 May 2026 11:06:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779980760;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=za7VYLJvg8o4dQtlblqfQG+uM5Fo+p83UgejNxGCUcI=;
- b=ijYsseM8eupZt8jC+RrOYDCTGOJb05KOfWJnkrWHeoSq0ieVVIL/PTUqD/P4/gyFhsGqdA
- LqCs4ULNDpJXRBFv+41HrI5wJ/G8zaQoZORM1/bP3G6bTw7cuQfkDFwOFWNidO4ZYomARa
- PSKvLROISSlKK7oKy3P4fD3EjUJNEU8=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-692-pdZqZw3WN2WWnn8azaLx_g-1; Thu, 28 May 2026 11:05:55 -0400
-X-MC-Unique: pdZqZw3WN2WWnn8azaLx_g-1
-X-Mimecast-MFC-AGG-ID: pdZqZw3WN2WWnn8azaLx_g_1779980755
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4908af8d7f9so9601635e9.1
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 08:05:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wScLz-0007VS-LL
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 11:08:59 -0400
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wScLy-0003gF-1J
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 11:08:59 -0400
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-7dc93d02916so7587047b3.3
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 08:08:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779980937; cv=none;
+ d=google.com; s=arc-20240605;
+ b=bUuHmhccu7VdPK50PhKXvJdQuVjhX9WP4nnzxmVR6lGu4vX/7VIe1Wp2jx5bpq2BYs
+ x4VcGy7+cygVzJ84vLs718GIJDo2gbYSzxU/gH/y8Tby/SiHoqJkGYZGhvGQ7JKFTc0K
+ O+7qVSQDKiApSv52PkFWn1KL8Eb9Mkq/JQcS+K/mBFobN0nNxkxbSPFKNzBgfvoRMR+Z
+ vT1jvSar4grvB1U9gZQX2BQknDvdNMf530x+hjBUWUJLpswI0Hd0Gh18TB1wtythls4V
+ SpLJrsMc7EJGqN2Jj3fuiitGG2EtLUIKBgZXJpToNFo9W3uaO2PZyxgktjKO1yK92kGa
+ WH8Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=ZH+Pr2gCxkUA8KclhiyGn3ySabYvxbuLNcuyTXCLJcg=;
+ fh=Q3krpAQIA0wAxp6tS0EmfBAbNCwv1IVxVd0z2YXKEao=;
+ b=aOHIu3eg8kazV3OfMr/03RRH3K97OUEXb2pBkHv2q9igULeaPYW7lB1oITHo+fD9i2
+ eYlvv/G9io4EHEiWsjYjQhluYx55lwDe0xdzxNFVrnYH3xCrv5iBAllsaOnRHEhFHtw6
+ iP3wK8z+81WKPNaZiz2/w2/mm5jKYrCxFntDMZYS6/flGxa26Xe0edgXzW8qnK3uErqE
+ CsfHbpZg5TCLrZQLqlas3TN8Dvo/uiRyo0U8CZ1usa5EHrVsOLNaxOCUeDeIAXoXJlBX
+ RzHQkKGTzDZD0rz+yZKfzFm8a+hpLggB/mgNI0cpB6VzcMQknLLkAbRlPdTe3QH1XipZ
+ FWVA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779980754; x=1780585554; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=za7VYLJvg8o4dQtlblqfQG+uM5Fo+p83UgejNxGCUcI=;
- b=RUxcdBcW4coKe+nMvNW44qmnAS0w3IYv9jEvIMOPgJQ4ZRQDrNlDlslMF1Btzwx+W8
- 1in0WaoG6nS9MesxiLwJQflWVgU4IoH1w2loQhUAUX8L2R+DoGrh9x6e2Mo2nlqwvCXF
- 2kxofi/qAR40NepCetY7kYfnLldN4XVSzi3wVguXAP3/bt/mNKkLOdRRFLyX2NLjzKMd
- 89mKtmOJmC1Ic+dPwme4yPnHvLrrm/KQlidIfm0aEnoVj188G9njPInGK55isNtSiqmB
- 6cpkyj3VoPJtCrEB8WHLFpc9RqPs24yMqQaNETNcrAn5KH3nba6zDtaRxp6uF8ysKjf1
- pssw==
+ d=linaro.org; s=google; t=1779980937; x=1780585737; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZH+Pr2gCxkUA8KclhiyGn3ySabYvxbuLNcuyTXCLJcg=;
+ b=IGAiBfPXaI5TMRTGAxGLTkdWRJXh18VXODX8pH0uew77gvJ8nh6B3js7mv8coLxJH2
+ Mk7LitrAwrruQF8VmjILuQ1ZoQIwsoITzlnXVAUfAYF+fonnKTx8QpEuRIMpz0SxTyjS
+ ert+Nx9Dg6u3UJKppybolOInOymCjI/tg21qRGOHq2b2KXK0+qjf6kIrGf/VQErx0Pxj
+ QazY5pQCUX7pNDpnmOifHyYSi/AxSDUUxpJJl1R+YhyXIOw9hZPtZ2Funh0EJBLJzdef
+ beToslwGlcjjt/34499/vqYIv71C/klwvQVojnvqwW3oe05DdxHH607cWTEOnmOlbnKg
+ crHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779980754; x=1780585554;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1779980937; x=1780585737;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=za7VYLJvg8o4dQtlblqfQG+uM5Fo+p83UgejNxGCUcI=;
- b=V2DgXv8GUlpsO5OvZ6hhvSzNNqZEBsQ2vO7TWCS42tIJdBM1bGibubGXWrwwzCgTLT
- e/UcfcM7bVn2fm7tuIiH4hhP5Qpt5aIJVGmKZhIfMukOgvhToINWk42GzvZ7HhkjDOmY
- BwrY4tib5T7RyfBW0600Ba7uOQ/8wer9ZUfoBNw4HdVbPSFQWJSC71y5G0ck4vdOQILZ
- YEHO4M2WcRNIrsCt7+JSvudEcAgyQqoGHL1qBjYuiZqsCmjx5uv3UABnLtHITzM8bo7Y
- 2WnkOTsinTRS9ExZZcdWslxgMdX/6MqkAh+jsZiqigWTrZh3DP0ipb0XescEKYAr5XfF
- VHoA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8hM76m+MIdRlzvbecd1TXssuXs29nvNLUf0AeGAsG4jcGHM3LJO/rLyr0Ji0I9KDTxrxyJtAv8wn3U@nongnu.org
-X-Gm-Message-State: AOJu0YyJmAJFC/RM68F1RTfUG2qYQ7sk3kjC48RVlalPWPzvwVd3EvBd
- XYH7E5YNWw248pGUvOzet8L6yDyxEFWp9bDY9epG2xeRSKQg+PtUn7AENuxb13sIJr1nC4tAggN
- i+qCkZEBOS2ECG9SPBtGdSN3GUa7TcANNQOrLCXKA9HRlbIb/Jnl6AMeB
-X-Gm-Gg: Acq92OHXj26PlswJcFnuxdHZd+kf4os+XTJJmfxKKaB/pFo0iwtGW4KHBzfXzsVjP3S
- WTbeKDL/2TUkdLPwMhIiBFZB/wJfITqF2OV6DvGLOUfykwaJUKheMCjuMks6XyK/rvH1KO1NvT7
- gsYYovh6eA2A+rmncctzsDauvqUNzQ1sFk7F7pA6pGHqyct8Hw1J4FDSg0v+jRRv2L0lWLNDiX0
- hkuWQ52/+3DoJqT29L+LS4M8CdkqAF/a7q8qEHCHVNwM/m12BAtZAVsSQwjBxO121e9ExSqx1rF
- KEicDyaIUSm4jtRCo2ZNbZQNN6PX5D/D+xmdtkUaJR45jjO+XqGYC4yRUZMy3UVLB8xdV7igvTF
- EV/oxGCFRYAwzOT+ugN5HS8jO2sIrxPzQXWVaiTyNMpMAhZFoxYJ0l+rQz2pMCFHpv59f+Mg=
-X-Received: by 2002:a05:600c:4ecc:b0:485:4388:3492 with SMTP id
- 5b1f17b1804b1-490424b25abmr441847515e9.11.1779980754489; 
- Thu, 28 May 2026 08:05:54 -0700 (PDT)
-X-Received: by 2002:a05:600c:4ecc:b0:485:4388:3492 with SMTP id
- 5b1f17b1804b1-490424b25abmr441845335e9.11.1779980752614; 
- Thu, 28 May 2026 08:05:52 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4909284a895sm42177965e9.8.2026.05.28.08.05.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 May 2026 08:05:52 -0700 (PDT)
-Message-ID: <db82450e-a3fd-41ba-963b-4e0730ea34cb@redhat.com>
-Date: Thu, 28 May 2026 17:05:51 +0200
+ bh=ZH+Pr2gCxkUA8KclhiyGn3ySabYvxbuLNcuyTXCLJcg=;
+ b=NFwnun4Y7AiIRAIPfm0V9eEhn1vdTc32MkQoevxw0fR4HA6cPG0Bwe6nLV9K1WOQe1
+ FZFQTNv1RsfDKENrFZW3h8g3GR+LmbcbWLfIRzTLh5cAtJAz9eom65Oxdixegi0rv3sX
+ AYYkK1x9AuouUBJ+g/VMquPGrrAeQldNASg8sTShmjruKhkaj58+R7GTHlagYB4Pxo+i
+ P/5g15CSXtdwWMT3/cWawLJsMWUI8p7cMhOE38pdNEjUYERLLGhFRM6XE2t1Gv0VEuve
+ fteDo2CCG/3g8Y2jVpleDOflxq+6pPzmq345ZF5tbIZi4ZsLZpxm08RVEMcA3XVJUgfP
+ gvoA==
+X-Gm-Message-State: AOJu0YztQi+rR60yt3uCv0jY9mExg/EZfwAvqDffR/UPoztNOdn2KtnE
+ qolZ8IkGhoFSJNpmHYyqbUL7AjTrL6D7UI5iuZnThWFtMJCDTISvcOBzAund8bOEmAHR/Ta2ES4
+ x3l3dF7bmmgG9kR3NXuF9zKRedzfnsZfwbxWKU4zyDA==
+X-Gm-Gg: Acq92OF5673xYGsMl7RwcYtBjPnm7ZjDXBeHfHKYefp+VxRtvFIW22b17LxEGmZ8omt
+ 48mQ6B/PrJPkkOfO/PgTAjDm0KH3+la2ZhnbcUbWjmXr4C3jgISPEBAD5gNUwMwnPGycjC4lR5x
+ hNBUYFhEcfmklanvN0x3o2kkEJA3u6jIOYBRq+jljvzh1nyp3ulwjxDAJi5fTz6yhimyY3BUYXe
+ KM6owTEifLCLUsgIkuuXYX5DeN2tuB8U0ubfYDgyXgzX5oMJn53X+ExGW1tXKw6rPg7qkrR23NH
+ MEgrFNh15KnvvJuSu5FqNIGacrahzkmiRbJdWhc9co9/D1RfSUMjdQVgMlTRLiKT7kFKVbXP0a3
+ sgQ==
+X-Received: by 2002:a05:690c:6982:b0:79a:daf7:c4fb with SMTP id
+ 00721157ae682-7d33b44d216mr290968997b3.50.1779980936798; Thu, 28 May 2026
+ 08:08:56 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] vfio: propagate IRQ notifier registration failure
-To: Cornelia Huck <cohuck@redhat.com>, zhaoguohan@kylinos.cn,
- qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Alex Williamson <alex@shazbot.org>,
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Tony Krowiak <akrowiak@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>
-References: <20260510084353.58263-1-zhaoguohan@kylinos.cn>
- <87o6hzmvm2.fsf@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <87o6hzmvm2.fsf@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260511-feat-mte4-v6-0-8557cc1313b9@gmail.com>
+In-Reply-To: <20260511-feat-mte4-v6-0-8557cc1313b9@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 28 May 2026 16:08:45 +0100
+X-Gm-Features: AVHnY4IrFnMULkPvEJHqjIRbadQy4hTr57kVoMRxxpQGeVzzBA9-uSHz-ZVWP6A
+Message-ID: <CAFEAcA9J0DVUbgKviEjwEN8K0M2aAJTLaOpkndus6HNCPNRH0w@mail.gmail.com>
+Subject: Re: [PATCH v6 00/15] target/arm: add support for MTE4
+To: Gabriel Brookman <brookmangabriel@gmail.com>
+Cc: qemu-devel@nongnu.org, Gustavo Romero <gustavo.romero@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
+ Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,39 +117,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/28/26 16:55, Cornelia Huck wrote:
-> On Sun, May 10 2026, zhaoguohan@kylinos.cn wrote:
-> 
->> From: GuoHan Zhao <zhaoguohan@kylinos.cn>
->>
->> vfio_ap_register_irq_notifier() and vfio_ccw_register_irq_notifier() clean
->> up the fd handler and EventNotifier when vfio_device_irq_set_signaling()
->> fails, but still return true to their callers.
->>
->> Return false after cleanup so callers can handle the failed registration
->> path instead of treating it as a successful notifier setup.
->>
->> Please ignore the previous version.
->>
->> GuoHan Zhao (2):
->>    vfio/ap: Return false when IRQ notifier setup fails
->>    vfio/ccw: Return false when IRQ notifier setup fails
->>
->>   hw/vfio/ap.c  | 1 +
->>   hw/vfio/ccw.c | 1 +
->>   2 files changed, 2 insertions(+)
->>
-> 
-> ...I guess this should go through the s390 tree (and not the vfio tree?)
-> If yes, I'll pick it up.
-> 
+On Mon, 11 May 2026 at 15:01, Gabriel Brookman
+<brookmangabriel@gmail.com> wrote:
+>
+> This series implements ARM's Enhanced Memory Tagging Extension
+> (MTE4). MTE4 implies the presence of several subfeatures:
+> FEAT_MTE_CANONICAL_TAGS, FEAT_MTE_TAGGED_FAR, FEAT_MTE_STORE_ONLY,
+> FEAT_MTE_NO_ADDRESS_TAGS, and FEAT_MTE_PERM, none of which are
+> currently implemented in QEMU. This patch implements all five.
+>
+> Testing:
+>   - Included for FAR and STORE_ONLY.
+>   - The MTE_CANONICAL/NAT test from v2, modified so MTE_CANONICAL is
+>     enabled in user mode (removed from tree in v3).
+>   - A bare-metal testsuite that sets up page tables for S1 and S2
+>     translation, to test the Tagged NoTagAccess fault.
+>   - The bare-metal testsuite also was used to test LDGM and similar
+>     instructions not permitted in user-mode.
+>   - The bare-metal testsuite also was used to test the mtx related
+>     patches.
+>
+> Thanks,
+> Gabriel Brookman
 
-I included these patches in my VFIO PR  last week. They are merged.
+For me this series causes "make check-tcg" to fail, because the
+"mte-10" test segfaults:
 
-   https://lore.kernel.org/qemu-devel/20260520162115.1613601-1-clg@redhat.com/
+$ ./build/arm-clang/qemu-aarch64
+./build/arm-clang/tests/tcg/aarch64-linux-user/mte-10
+qemu: uncaught target signal 11 (Segmentation fault) - core dumped
 
-Hope that's fine ? Sorry if not :/
-
-C.
-
+thanks
+-- PMM
 
