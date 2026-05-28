@@ -4,89 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 658E3CD4F54
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 15:44:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E47F4CD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 15:46:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wScuK-00065t-6z; Thu, 28 May 2026 11:44:28 -0400
+	id 1wScve-0006oH-UO; Thu, 28 May 2026 11:45:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wScuI-00065d-4p
- for qemu-devel@nongnu.org; Thu, 28 May 2026 11:44:26 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wScva-0006hO-4W
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 11:45:47 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wScuG-00045m-Fq
- for qemu-devel@nongnu.org; Thu, 28 May 2026 11:44:25 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4904fd4f6aeso51999845e9.2
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 08:44:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wScvW-0004pX-V8
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 11:45:45 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-49048e043e5so52477355e9.1
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 08:45:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779983062; x=1780587862; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=uLKsokfzDW4KWcdI2ERTgmE3Ei3RvM52HI2PQd0sdVM=;
- b=jAKv/cf9INGpIa5ZJR1i0r7t8psUjObL61pM2jAS75K6PazH2bIRxGJGDNb0BifiTX
- fYtMSlqStwS7nv7KeafeUHSyj1Yx3Z074HjE5PbebP1lsWuko3T6QHEOq9PXAj9VhBDv
- 7VPcki2+CnWBc21XPPgX3XJDQabQcN2bndTSPx7Q+KnfUYtwAQKJOFAXdvjzCPgTmYAq
- e4Gdr0gUhgijJUKOfBXpziJNUHSGwjzAFnqPHOqf+hoZrI2rc8IMmLvE2kfWBAjkOfDO
- 1ifokPY1QlXNbv6NpszbxOXqrRc4a1/qQasJ8ynnsU9uRF4DcB12vMz31mMCJs8EC0ox
- pIJg==
+ d=linaro.org; s=google; t=1779983125; x=1780587925; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8vCDK+KeyJO3gUt/aA96bfC2TBWjmjbKE5Dg98WGwbA=;
+ b=Z+PnqcfxyHqPuNRgiyR0ohAPIDWuPp/QpXuCQBhe9LQQNc/BltUHrKddoAzF5vHZK4
+ GN7a5ruttYmjosd7/JXd/c+X8GXEPYDFyg+Ws6yZCBZ8wCUrtyb4Klb6inwyoKatK+uU
+ j+LDBbjL3TPL0I9/UCL8n5AGugi+X/fxvJoWDM6rtgZwB44Ss2rxkIWq/68kw9Gep2fr
+ OQDTOAOyeVVRriuzL2+mtaIltK31VT394GdaWAYE1shcLA/7SSYBGVHTFuNwHLE6aR60
+ SKQPbMWfyhNiHkpYWq0OSnf8N4nd2qyUq7DRz6p44KIEVkoYr/EC/qbgvY/bePhWyGFs
+ OzvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779983062; x=1780587862;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1779983125; x=1780587925;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=uLKsokfzDW4KWcdI2ERTgmE3Ei3RvM52HI2PQd0sdVM=;
- b=XLsL+lAi+ZIgtKPCgF+DED2YLNVASxdcwR0cfpv76X0Fzf/gArazAyN4+YiImHDElB
- wCtwZSQ2pUu1tLXkhpw920qbViFO7RKfOcRRca0n7YW9taYiWUt/2zRu/M2woJHZKofO
- 6RPKvaUgShUJhA+7qZPxxjjTmhfjjLJatog+IF8XRmIvDNleiAP/Djr9GqDvvbfshV3Q
- yidrb0HOzsCvY9Q4tADpkcpnFPjqLx/2Ge1GwtEDPPbeBFZCJWN+XjhEp9AmJtLQnVzq
- zgjFr7bF+rUET8RCV0wwfZ112d9IJa0kbqmaUwKFTtNy77qS6LFPwrPXNmgCwP1XNiKR
- izJA==
+ bh=8vCDK+KeyJO3gUt/aA96bfC2TBWjmjbKE5Dg98WGwbA=;
+ b=Igl5BkXpVbrltk7WauihfV9yNnMUF3eciytjZ1lDG/ORnVvad+vpLs7xPLaS98fdop
+ 0gt3cU8ZNiA1m88E7tVRJpL501mjpyDaZSufBe2wMSd2itjAkxeZsIOje/ne7TJt9EhQ
+ G0gnzFtRqCEvAfKMR0RIcy/Cv/4BVta5TX4Lna5Uyp1zVpF2EffbemUw4h7fHB6Pg7tX
+ uKJ9nGU1MagDB5uwIMz/9rq2rx4okv3/nGqOadSaXM3FaPlY0q51mdUvNTF0Ubmkz9I5
+ mhaPAUGbXcHolV9J7Viziz5LwXUzT+Vya0PIR7xSVelCnHU3fJuCYroBYj0BtzQZ0Eki
+ MTRw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9sgwiz8tq63Da7Y6+LXO902RhnD6jBgqQ3Ro4+174RNslY8nW0ThJCNyJsujRnzSkMDvBqmtw5SgbS@nongnu.org
-X-Gm-Message-State: AOJu0YwXzJtezxYYSb5OWeJJV4dfJilPXCf+I8fJHEZVQsrjSq5lwcZW
- ckMkgCNZlUe5Z9Rmro7UVkI2BEPJKcllbWQ7u1wHkNwEPhPAMSSqMJoEcbDTlf6Jk1Q=
-X-Gm-Gg: Acq92OHrZS2sMUdsus4gU4qFpuemOwk733WlccD+3gINs+zgseoEpGU/l/B3hgqPPon
- jwkCYPafSxMDPrfamnjS3f8z3K/d6QEhKrfNOK/AZUQkwUyT0+A7KbAlwIX3oVY4TC04vP2bgNx
- pgySBdinq/vxBRZ6B0lusJJBdvVDuERA+exjew5Hl8nsH1T/fvgyG4+TLoqw+no1fORDEqhh2/5
- acg6ivfCCBL7rG3/PrIdrvCR+MSZYFe578F741ObHVB9eZPuPG7uFZjJXDtISv0/bn4KS4WLWft
- vOIbki9vwkgZoL6WXBbs9L4wq+6ESiNFMbNWOgl9hid3rzthx6AWroKR0j2L7f9dPzI/v3a95QC
- +095zlPFWbqH3hj4krXlaCyCWl3IzDcHTi3nZHn8lt4lVXzFthCYSWhh5oOsMGBaeYrmyUJONRO
- QYcZyznCRmIbuvlo7Ko4W6m0Ksl7cIC3uFCF1zltT8BD06p8sAJqyEwBaXHAt8iuentaLSYPYI5
- lgh
-X-Received: by 2002:a05:600c:4510:b0:48f:d5d7:df63 with SMTP id
- 5b1f17b1804b1-490428dfd36mr443161975e9.27.1779983062240; 
- Thu, 28 May 2026 08:44:22 -0700 (PDT)
+ AFNElJ9Mv2ihMSwW2PgwguueWTeJX0B/EA2LxSM+Is4GuU33EDKIzMzWUuxJtWfjmHkYUFNvI/7Uaq/irTi1@nongnu.org
+X-Gm-Message-State: AOJu0Yy0k2nWeQjzmIvKzpgVY3CARscnH4nOQGyFSxTziDebcTCtYTtf
+ BXg44eg8PHNHm1QKu9r0x7kviBVuFm9hCB59Lxk//IqP1lZmVhz54a18FOs8wdq1FkU5REo4U47
+ fZrpTsPvIkA==
+X-Gm-Gg: Acq92OEYaEhecZPih74WxSRyce13jea+E/W+VBi8ZMhrvsGKrr8MB/CYUchjWXe0Vck
+ yGTQW6b770kFJX9y9pAqnjPBWXM9lkQs+iSRKXY2CcfqyYGxYx/LzliQ7D/UaSEmzeajXjhBR2n
+ comCKCWLYs9cSn/GXJyEFYRCd3wFWBNfBLeuDwYjLRO7r7KWjZQ8DB5fpU2bTB1JiA69SbHZ/UC
+ ojMn/gBY6fd4Sjyy1Evm0Ip2fNV31xda9B4WLc7df/IYHmX/gYgmxt4Z3hErNo1mhBXRmGEAY8l
+ pqUmIAGzKgdWstye1TlWCQLUR5d+exkuhIoECyxvl5UTHk2ZTyvXxsyKV/AbGzjxwFNQQLqvAGZ
+ ozePyX/q37t5e+3arMFPSNRUSik0yq0/x+pZ2lTZcCAKPcjLi8IsIw8jPTQCCTosDYyM/hwgxnU
+ gd9hhRWqhxmKLZwQqZQgotAm+3AFmqMCuSiTkcXUgH/Ho/jiB47hkTpU+FZMNq7N8b0MpyRQM/H
+ YgV
+X-Received: by 2002:a05:600c:a402:b0:486:fd5c:2b35 with SMTP id
+ 5b1f17b1804b1-490426adf66mr379191365e9.13.1779983125221; 
+ Thu, 28 May 2026 08:45:25 -0700 (PDT)
 Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4908ecb9ef9sm16908685e9.26.2026.05.28.08.44.21
+ ffacd0b85a97d-45edb54903csm14606215f8f.6.2026.05.28.08.45.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 May 2026 08:44:21 -0700 (PDT)
-Message-ID: <b8b50493-36e2-4d8e-ae06-cfdd1ce6f013@linaro.org>
-Date: Thu, 28 May 2026 17:44:20 +0200
+ Thu, 28 May 2026 08:45:24 -0700 (PDT)
+Message-ID: <1eeb409a-3319-45b5-9dc3-2b983b291967@linaro.org>
+Date: Thu, 28 May 2026 17:45:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] monitor: fix missing spaces in screendump help text
-To: Brian Knutsson <development@knutsson.it>, qemu-devel@nongnu.org
-References: <20260410151818.817298-1-development@knutsson.it>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH 2/3] hw/dma/omap_dma: Fix coding style in
+ omap_dma_transfer_setup()
 Content-Language: en-US
-In-Reply-To: <20260410151818.817298-1-development@knutsson.it>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260528152852.3349928-1-peter.maydell@linaro.org>
+ <20260528152852.3349928-3-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260528152852.3349928-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,35 +106,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Brian,
-
-On 10/4/26 17:18, Brian Knutsson wrote:
-> From: Knutsson Development <development@knutsson.it>
+On 28/5/26 17:28, Peter Maydell wrote:
+> We're about to fix indent in a section of the
+> omap_dma_transfer_setup() function, which will make checkpatch
+> complain.  Since we're touching the code anyway, fix the uses of if()
+> with no braces and wrongly formatted multiline comments.
 > 
-> Signed-off-by: Knutsson Development <development@knutsson.it>
-
-Did you meant ' Brian F. Knutsson <development@knutsson.it>' here?
-
-Anyhow, patch queued, thanks.
-
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   hmp-commands.hx | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hmp-commands.hx b/hmp-commands.hx
-> index 5cc4788f12..b6f3b8a796 100644
-> --- a/hmp-commands.hx
-> +++ b/hmp-commands.hx
-> @@ -257,8 +257,8 @@ ERST
->           .name       = "screendump",
->           .args_type  = "filename:F,format:-fs,device:s?,head:i?",
->           .params     = "filename [-f format] [device [head]]",
-> -        .help       = "save screen from head 'head' of display device 'device'"
-> -                      "in specified format 'format' as image 'filename'."
-> +        .help       = "save screen from head 'head' of display device 'device' "
-> +                      "in specified format 'format' as image 'filename'. "
->                         "Currently only 'png' and 'ppm' formats are supported.",
->            .cmd        = hmp_screendump,
->           .coroutine  = true,
+>   hw/dma/omap_dma.c | 51 ++++++++++++++++++++++++++++++-----------------
+>   1 file changed, 33 insertions(+), 18 deletions(-)
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
