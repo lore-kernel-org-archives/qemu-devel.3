@@ -4,80 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F114CD6E45
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 20:27:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DCB1CD6E45
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 20:27:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wShJF-0003CS-2Q; Thu, 28 May 2026 16:26:29 -0400
+	id 1wShKC-0004Rk-Rq; Thu, 28 May 2026 16:27:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShI2-0001Pd-HG
- for qemu-devel@nongnu.org; Thu, 28 May 2026 16:25:14 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShJl-00041x-Rl
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 16:27:05 -0400
+Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShI0-0005QK-9d
- for qemu-devel@nongnu.org; Thu, 28 May 2026 16:25:14 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-49042aeeb75so86438685e9.1
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 13:25:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wShJh-0005w9-Ph
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 16:26:59 -0400
+Received: by mail-wm1-x341.google.com with SMTP id
+ 5b1f17b1804b1-49048e043e5so54913195e9.1
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 13:26:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779999910; x=1780604710; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=U73T0WwDvouI7JUnn7GqDjLuee0qDIQnKq6EjhvcV/g=;
- b=TLEyuxmmq+LWAhhZTKr/HALnZjyvQNsSodgK1dO0onRHRATDvrXGqhuC0Kh2qphO0P
- bmin5HylvV8lqBAvllsWJzhsDkcKuYlmoL197JYpxojv5Dk5kXPBMiPzw+TnwcZvIZN8
- /wQFRKDDVqykfDe+UkWW/rg8RcD0GNuZuqQIzAkTaJPg1DpVFrMndmhcOT4EZnLxBD3M
- ZweboVNuETsk9daWe9r6zkDKT424d1LBPao0KXmeMGM5S8Q3GZxQoCCoNHdTM60IZYEK
- QMTbXn6EwWYA83wZbBK3Kdetym4PK6Wux8+jELcF/TiyeBjcqEStgfoUr6SFXgnha2F7
- 09FA==
+ d=linaro.org; s=google; t=1780000014; x=1780604814; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xNTPn+gmQ82SaXvIT20IITc/F5jgqou+vaofjLdxEA0=;
+ b=Xh8DtZkwrgWavwjhquWd8ZAvBe0vuJ2NdKOHnVMTkUNfsH/gvNKLyWg/+ZgmITNHha
+ pd0k62rmzo0PlB9suWV7+bfd6dEhLQyUhh8V2PiOZHT1BjIfIKW1v5EHUqPjT9jjUd48
+ w8ZWf+ltOIMR1zcPwkNlUVGI+b9DvzsZMCrPYjqcOVfcWRxV7DPfrJi5axnpB7WpVSen
+ zUA1SuyK/BTfZ38jHFl5rX/aapaFJkYX1MgxmN8lXhYuAEkyZZtiwymkqaSuaP1Dw5p/
+ k9a8kNiPqBHWreMXsCq8h9KKJpOGL/aJTvI268UcjUDvEzpW1rcnS2SEqaCzTaoGPdeD
+ wCAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779999910; x=1780604710;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=U73T0WwDvouI7JUnn7GqDjLuee0qDIQnKq6EjhvcV/g=;
- b=lcoedfW/urcw6ao2TmtEMNt9LNsm9TROlkFLqHY5KLv+xxRkbjOm0V3XacV9jPS3yj
- bbOJUn5wEHcDrkVc1mc1Y5FHDrsKImvaLMX+CBdMQTiPumaLn5bD48brsvB62Z/16CUB
- BnVi15c7jLoC904QRiW7VoA5cCoa/qyyDD7XbgLiLrntGBm7p3zXfxEn0sd7+5J54e+p
- N3Di53jFnQL0NlKql4PfnIdZADgHxpdmS4mFjcUXVAspx8SwQ+WVozWWqCBLi03rwkxr
- BVBYF0JmjuVNgtcdpZSJw8LNZChhTNdO/8qZ877wIa5fierKD9Ljmz2Ksvsrm8tlLvVi
- Z/1A==
-X-Gm-Message-State: AOJu0YzGQHocKbJH2TMfsfxXx4TX3FpAxoz1pV8b6VsPedGofnzwWjXb
- ycqVitI0ozWLHt7yRSAJuDVdxmCAc78TqVOPIPw1tbpyPFr9WJQl0Wi/Q43Z5nPGv2qCRqIU576
- FLr4hsiUx2Q==
-X-Gm-Gg: Acq92OEwoTlY4ZZ+JnSnT32VLa5hfc3HlP6yVeWg0SfKmFx4Qd9jX1Ixg1DvbzBeF72
- fvpN5jyKbkCY7MmK3S9jbV1+tk76EqXQsIbpUjKyrj+8fw6pGniiXD5CZuk+b06MEcqENSPnNyn
- b1qhpnNVf6mtq9kVpdIJXO9/WfaquG8/4N/h1D7vkTub5kkrpAJsak5wPgYvXUKhdCd2/fdax1f
- 2TGOKT973sJNVm7TvPR6WJkhUrHm+cgiQTXLVbb3UkkFlIMP99+y1v/L/h8+TDOygvgpnTjRVbM
- LtNOXa95nP0j6lMYsodNrLkhViLf/8WENiVAEdBg5nZXcbSoF8lriW129dKmd8ZYcWqrmAy5FKF
- 9zPPiOfHXH8JVY7Oadg4PQU+NfIGRqpJkBcW/oZ/fYlgO51ms+dtZPfv1KrJT6pVpO8OIgii3XV
- 2iHwvJwT8g0YfGP+TRkyJgcbu66Us1dw8R9xsv2E+8f8bwlLlDuxksYTxjry0xE4Fy9IZBKV7Fz
- piY
-X-Received: by 2002:a05:600c:4ba8:b0:48a:563c:c8e2 with SMTP id
- 5b1f17b1804b1-4909c092130mr446635e9.3.1779999910469; 
- Thu, 28 May 2026 13:25:10 -0700 (PDT)
-Received: from m15.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49092a82ea2sm106621905e9.9.2026.05.28.13.25.09
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 28 May 2026 13:25:09 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 18/22] hw/tpm/tpm_tis_sysbus: defer resource allocation to
- realize
-Date: Thu, 28 May 2026 22:22:48 +0200
-Message-ID: <20260528202253.49122-19-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260528202253.49122-1-philmd@linaro.org>
-References: <20260528202253.49122-1-philmd@linaro.org>
+ d=1e100.net; s=20251104; t=1780000014; x=1780604814;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xNTPn+gmQ82SaXvIT20IITc/F5jgqou+vaofjLdxEA0=;
+ b=rwCauwZEiVVPfqMbNCvro3mdOQ3dW3/76RK9+B6lc3tTpi5ZimZvGsX9IyZM1ED44M
+ xXIB4gvgEFOKadC4p9Rw8nT1Ru3/RGtJ7YspAcJ614bi9ONgU/z7fmP5clQLifj9uxaT
+ Oq89mggWavbfgKWCjfA8GrnvZL+3PKlwmiNCbVjDPYBCWqfbhBujmjgiYm+1DcY1YI1/
+ hZrIoXUjGaE3VZSVcYT8DsDpxKSDLkowtKvgkMTaIaJNiSVjC0Z7Y22YvaeEWABEGgfC
+ u0CzglUW/6+HPyc75cXHoh/wMd4PwWTgimPO0jzwVj8jXf5cu3047sV519sFq6S23AAi
+ b2eQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9bzK57G/93Jqm1hZrn9cxSAbI5ZydKbLhnXUi0eAq4R7XB4cL9mGhzHM+L016NBZKqEXbFFTtVIEyg@nongnu.org
+X-Gm-Message-State: AOJu0YzdjUvmMoMiQ7SmPoh9v32wyaqBXVMbTK+x1RT79xyu3f/lzSNu
+ 8kmF9hIBjKhYwhYi9/LkK2Bg814E4V5Kir+In6DVootWWmz3B/xJVO53yHsxzWDXrE4=
+X-Gm-Gg: Acq92OHtk5Dn4XHWwGrTSb+TH+Es+GVE02i05i6S6WyDgRTQ/DE1CNkUjdb1hRbvBgm
+ hdyLYIjV1n8dU3Dag3tCsAUyTnkVUDjlwQA5IBnMdW8EHw1QsNoTK6+8EtVeE8p36s5eklYjDXK
+ CAnb3AQpUrZI5QkcBkVv69j1PY5KDBzzoU8t6QU8mef29MhN4W4MqEtnd5OiER92CypcXI92KST
+ We6TvnMjm1QSYEvG2nXNPXxHk0Dy36+Lv/lSB+O68gJYZOlziPxavUJiPgyZWSyGOWj5iD4A3hY
+ ij8ckcgJm9WaJhK2n2l5Mv8YpCLgAzh08yib4ccmfZPffxq4AM48AloIxbuX92QV4VT3sksTGaY
+ HQ4XNe61dCBVdT3KILylECIxDXclmu4FxENrdgI6oXHrhU/QfjqI58+ywaWlE60aUqsCjA0Rtdr
+ 5/hN+k8Q34YRxmqY6nTEUo5hknOSSSsHqRA/dkVqu1XMm+aIdflZl+mXaHv/zketFs7inEUTbTn
+ QDb
+X-Received: by 2002:a05:600c:4f53:b0:48f:e26a:1744 with SMTP id
+ 5b1f17b1804b1-4909c07e7d7mr877585e9.9.1780000014302; 
+ Thu, 28 May 2026 13:26:54 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4909264fbf2sm65396095e9.5.2026.05.28.13.26.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 28 May 2026 13:26:53 -0700 (PDT)
+Message-ID: <24a46c31-c53f-41f3-a67d-bd1aadd200d9@linaro.org>
+Date: Thu, 28 May 2026 22:26:51 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 00/12] Add RISC-V big-endian target support
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Djordje Todorovic
+ <Djordje.Todorovic@htecgroup.com>, Anton Johansson <anjo@rev.ng>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Christoph Muellner <christoph.muellner@vrull.eu>
+References: <20260527201348.29511-1-philmd@linaro.org>
+ <163e423e-a31b-47a4-a7af-a446a3b89fee@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <163e423e-a31b-47a4-a7af-a446a3b89fee@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::341;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x341.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,86 +111,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mohammadfaiz Bawa <mbawa@redhat.com>
+On 28/5/26 21:36, Pierrick Bouvier wrote:
+> On 5/27/2026 1:13 PM, Philippe Mathieu-Daudé wrote:
+>> v11:
+>> - rewrite some patches while reviewing for mainstream integration
+>>
+>> v10 cover from Djordje:
+>>
+>> Hi all,
+>>
+>> This series adds big-endian data support for RISC-V system emulation.
+>>
+>> Following the discussion on previous versions, this series models
+>> fixed-endian harts, not a mixed-endian implementation where software can
+>> toggle MBE/SBE/UBE at runtime. The reset value of MBE/SBE/UBE is selected
+>> from the CPU configuration. These bits remain outside the
+>> mstatus/mstatush/sstatus writable masks, so they are effectively hardwired
+>> to 0 for the default little-endian CPUs and to 1 when `big-endian=on`.
+>>
+>> The user-visible `big-endian` CPU property is exposed only after the data
+>> path, boot path, and page-table walk support are in place, so the series
+>> remains bisectable.
+>>
+>> Djordje Todorovic (6):
+>>    target/riscv: Implement runtime data endianness via MSTATUS bits
+>>    target/riscv: Fix page table walk endianness for big-endian harts
+>>    target/riscv: Add big-endian CPU configuration field and reset logic
+>>    hw/riscv/boot: Honour data endianness
+>>    target/riscv: Expose and document the CPU 'big-endian' property
+>>    tests/functional: Add RISC-V endianness test
+>>
+>> Philippe Mathieu-Daudé (6):
+>>    target/riscv: Initialize DisasContext::mo_endian once
+>>    target/riscv: Assert PTE.N/PBMT bits are not expected on RV32
+>>    target/riscv: De-indent some code in get_physical_address()
+>>    target/riscv: Remove target_ulong use in get_physical_address()
+>>    hw/riscv/boot: Rewrite setup_rom_reset_vec() using load/store API
+>>    hw/riscv/boot: Replace cpu_to_le32() -> const_le32()
+>>
+>>   docs/system/target-riscv.rst                  | 29 ++++++
+>>   target/riscv/cpu.h                            |  1 +
+>>   target/riscv/internals.h                      | 29 ++++--
+>>   target/riscv/cpu_cfg_fields.h.inc             |  1 +
+>>   hw/riscv/boot.c                               | 93 ++++++++++---------
+>>   target/riscv/cpu.c                            | 15 ++-
+>>   target/riscv/cpu_helper.c                     | 44 +++++----
+>>   target/riscv/tcg/tcg-cpu.c                    |  2 +
+>>   target/riscv/translate.c                      | 22 ++---
+>>   target/riscv/insn_trans/trans_rva.c.inc       |  4 +-
+>>   target/riscv/insn_trans/trans_rvd.c.inc       |  4 +-
+>>   target/riscv/insn_trans/trans_rvf.c.inc       |  4 +-
+>>   target/riscv/insn_trans/trans_rvi.c.inc       |  8 +-
+>>   target/riscv/insn_trans/trans_rvzacas.c.inc   |  4 +-
+>>   target/riscv/insn_trans/trans_rvzalasr.c.inc  |  4 +-
+>>   target/riscv/insn_trans/trans_rvzce.c.inc     |  4 +-
+>>   target/riscv/insn_trans/trans_rvzfh.c.inc     |  4 +-
+>>   target/riscv/insn_trans/trans_rvzicfiss.c.inc |  4 +-
+>>   target/riscv/insn_trans/trans_xmips.c.inc     |  8 +-
+>>   target/riscv/insn_trans/trans_xthead.c.inc    | 16 ++--
+>>   target/riscv/insn_trans/trans_zilsd.c.inc     |  4 +-
+>>   tests/functional/riscv64/meson.build          |  1 +
+>>   tests/functional/riscv64/test_endianness.py   | 57 ++++++++++++
+>>   23 files changed, 240 insertions(+), 122 deletions(-)
+>>   create mode 100644 tests/functional/riscv64/test_endianness.py
+>>
+> 
+> Seems there are some build failures:
+> https://github.com/p-b-o/qemu-ci/actions/runs/26537039673
 
-Calling memory_region_init_ram_device_ptr() and
-memory_region_init_io() from tpm_tis_sysbus_initfn() crashes
-when the device is introspected without being realized, because
-the memory subsystem has not been initialized at that point.
+IIUC this branch was applied /before/ commit c2444a426ec ("Merge
+tag 'single-binary-20260527'). Now it depends on Alistair riscv
+queue so I need to wait before respinning.
 
-So running:
-  $ qemu-system-aarch64 -device tpm-tis-device,help
 
-triggers qdev_device_help() which creates the device object
-to list its properties, calling instance_init, but never
-realizefn. The memory region calls in instance_init then hit
-uninitialized subsystems:
-
-With CONFIG_DEBUG_TCG:
-  Assertion 'target_page.decided' failed. (physmem.c:2524)
-
-Without CONFIG_DEBUG_TCG:
-  Assertion 'mutex->initialized' failed. (qemu-thread-posix.c:107)
-
-Since realizefn is only called when the device is actually
-used in a running VM, moving resource allocation there avoids
-the crash without breaking introspection.
-
-Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260528093123.55403-1-mbawa@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/tpm/tpm_tis_sysbus.c | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
-
-diff --git a/hw/tpm/tpm_tis_sysbus.c b/hw/tpm/tpm_tis_sysbus.c
-index 6bec30c36fc..f9cd1c8b5c6 100644
---- a/hw/tpm/tpm_tis_sysbus.c
-+++ b/hw/tpm/tpm_tis_sysbus.c
-@@ -100,19 +100,9 @@ static void tpm_tis_sysbus_initfn(Object *obj)
- {
-     TPMStateSysBus *sbdev = TPM_TIS_SYSBUS(obj);
-     TPMState *s = &sbdev->state;
--    size_t host_page_size = qemu_real_host_page_size();
--
--    memory_region_init_io(&s->mmio, obj, &tpm_tis_memory_ops,
--                          s, "tpm-tis-mmio",
--                          TPM_TIS_NUM_LOCALITIES << TPM_TIS_LOCALITY_SHIFT);
- 
-     sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
-     sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq);
--
--    s->ppi.buf = qemu_memalign(host_page_size,
--                                ROUND_UP(TPM_PPI_ADDR_SIZE, host_page_size));
--    memory_region_init_ram_device_ptr(&s->ppi.ram, obj, "tpm-ppi",
--                                      TPM_PPI_ADDR_SIZE, s->ppi.buf);
-     sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->ppi.ram);
- }
- 
-@@ -120,6 +110,7 @@ static void tpm_tis_sysbus_realizefn(DeviceState *dev, Error **errp)
- {
-     TPMStateSysBus *sbdev = TPM_TIS_SYSBUS(dev);
-     TPMState *s = &sbdev->state;
-+    const size_t host_page_size = qemu_real_host_page_size();
- 
-     if (!tpm_find()) {
-         error_setg(errp, "at most one TPM device is permitted");
-@@ -131,6 +122,13 @@ static void tpm_tis_sysbus_realizefn(DeviceState *dev, Error **errp)
-         return;
-     }
- 
-+    s->ppi.buf = qemu_memalign(host_page_size,
-+                               ROUND_UP(TPM_PPI_ADDR_SIZE, host_page_size));
-+    memory_region_init_io(&s->mmio, OBJECT(dev), &tpm_tis_memory_ops,
-+                          s, "tpm-tis-mmio",
-+                          TPM_TIS_NUM_LOCALITIES << TPM_TIS_LOCALITY_SHIFT);
-+    memory_region_init_ram_device_ptr(&s->ppi.ram, OBJECT(dev), "tpm-ppi",
-+                                      TPM_PPI_ADDR_SIZE, s->ppi.buf);
-     vmstate_register_ram(&s->ppi.ram, dev);
- }
- 
--- 
-2.53.0
+> 
+> Regards,
+> Pierrick
 
 
