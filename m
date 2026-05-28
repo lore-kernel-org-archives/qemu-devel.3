@@ -4,88 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8D15CD5BD1
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 05:57:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84CB6CD5BD5
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 05:59:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSTix-0006Jy-0T; Thu, 28 May 2026 01:56:07 -0400
+	id 1wSTls-00083Y-RB; Thu, 28 May 2026 01:59:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <physicalmtea@gmail.com>)
- id 1wSTiu-0006JD-ND
- for qemu-devel@nongnu.org; Thu, 28 May 2026 01:56:04 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <physicalmtea@gmail.com>)
- id 1wSTio-0004dt-S6
- for qemu-devel@nongnu.org; Thu, 28 May 2026 01:56:03 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-835c98b659eso9964784b3a.0
- for <qemu-devel@nongnu.org>; Wed, 27 May 2026 22:55:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779947755; x=1780552555; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6+/x1y/Lh0bso6UxK1vW2WZa03KFzqlFGYCtQYm4XYY=;
- b=SLLqOb+sTsi8rAbaHkZu9Z194mzP6JMXfr1AyFwIALBHnZAZ0LXBbEclQfY2aCAtNu
- XMTo+IOf5bygV6xiC7gbMa8cWDqw/65jGo//1LvGeUPN2RJUt+1Ik1aw1esEUL1ubOsE
- US/h4toHYEY9hGiBpZbofX+SvtfdrQFhwUq8/b/LlUQf73Uram3yhhnfmvw2Sy6uXRWr
- Nsfn8bBvk7i85amqxtdeCvepRz+8sMe2uPSk9f+tJv2Jum90Gt4g7rYFNMOnAz3vAirx
- 4GdTQ8zIsvbaccHfABwKvQZKBWJ3wfY8v89L1vh93jzAoyta/RVUroOQDnumWTQ6OxKJ
- D4ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779947755; x=1780552555;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=6+/x1y/Lh0bso6UxK1vW2WZa03KFzqlFGYCtQYm4XYY=;
- b=RDeUwbFpQyGfwlXeavU0WSSbpcMvDf1Vsj8IPlfIFCsSkyuarwPIHZ7uGUfUXTWEUt
- xwXzihcHSQpczRVbkx3GVnhFTou8KAOQnSZQLEDu56o55KqAJJxTe4LHlwbjTGxDiRtz
- Vb3ZuELO61asyyp0PISeCi8wPUlZkw7IE6kjwMLgXUl3gdtHF5IBXqwFp+ofIGaEnGOM
- xDCAdBpxaxQkcS1HLgyU/rS7puuul90yIbko+CWvNMzWzpgjA903UP2uysMGR8+1F6C6
- 8T/W4UPmnahwjs4AnJa6ip349z46DVx4KF3NjTBcs65xqed34+lItOUw8TiIqscgKFop
- Iumg==
-X-Gm-Message-State: AOJu0Ywb7+jLLVHvy/f3hX+AbEo568VzSXCP6Fux3XiSHuDEbA2RQUFG
- z2JGpWmNh5/ENUJaaPK8DKi552dGV/yQeIu2t08rBppw+7oZnJKLYB4iTRYLL2ZdKzw=
-X-Gm-Gg: Acq92OH+uYpHl9rbDorqqJMat45yiySbKG09/prRcVNETRvsaXfmOXdtOrXXeiwhrgx
- U7HjyEZmc+WxnL3QHSOwR2pgbA78mJIj4w6QzSCECQ0bB0VVc/mnUeOJoQr/oLN5qZGAnnFKZWA
- s7w53JdhGU6oUA77iJDg/tyndMHvk90Z2zvDbijxvlVcvtKk2fEUACCMFyR7GYaCayVq8qAuw0i
- GakVZUdzF8DZ/OW5K7/9U2RzNKFoROSi7zB4Y7wN5GAMx9bSFBP1REyOBM8AKFM1mCUnmZt3tfv
- 2jMVbOwQOEr40L8Amme/UMD9noqCstxHx85TJ7sNsrEkVnYHsufCW6Cxxr/0XbbMHONjeDdAOma
- NGXS/GPludl0HjmPGk/qJJZV3/zuIYbUogW1RTedTtTM6GYb/e9RbfYVc8Y16ioABzkRXnYsoLj
- XSdlmbXHs6/xCjmJqZoUJ3xrbmDhjm582aaBk=
-X-Received: by 2002:a05:6a00:1944:b0:82f:5125:a327 with SMTP id
- d2e1a72fcca58-8415f33006amr23596647b3a.27.1779947755078; 
- Wed, 27 May 2026 22:55:55 -0700 (PDT)
-Received: from gmail.com ([114.249.134.218]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-841f3cbce48sm758068b3a.10.2026.05.27.22.55.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 May 2026 22:55:54 -0700 (PDT)
-From: Jia Jia <physicalmtea@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Jonathan Cameron <jic23@kernel.org>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- Fan Ni <fan.ni@samsung.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- linux-cxl@vger.kernel.org
-Subject: [PATCH v3 0/2] hw/cxl: bound Set Feature writes
-Date: Thu, 28 May 2026 13:55:23 +0800
-Message-Id: <cover.1779946245.git.physicalmtea@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260429152750.2409174-1-physicalmtea@gmail.com>
-References: <20260429152750.2409174-1-physicalmtea@gmail.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wSTlp-00083I-C1; Thu, 28 May 2026 01:59:05 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wSTlm-0005aE-Ha; Thu, 28 May 2026 01:59:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1779947932; bh=NSi9RDMRKuOBZ+eyVa5ooxNgE4M0t9i9QW18pnfu9hE=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=BWNTNyxeXngsLRNKi1gdwplS0PB35V3melw9qatErr1zPjPf8wZwwwyrWW8mlsl7W
+ U6v+7ZOw8uZldqPvM4qLWBRy9whuzrT4N37GNGYqgPb1cap3V1TMWopqpXE3tjIvlT
+ 9mMMEIN3FWbgCrohSV5kAXOG1TMc9N3Oqm4WPs1Ytbtx4phm9G3Wr7nwq70cFQzIG9
+ aJVD/+1pqbF1kARkB+6OnjCy2WYjD1Vo5E57YGzA4rrJkChfRFqhCN7gV3eQ/DMhPZ
+ UQzPwJoFv6sqOAcjYBvU2lY0N31a08Idf8HPmfGraH+N5XtO+HLs1YVK8Rh0NdZHmq
+ QHiWMz55CsvoA==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 6C9111B1F11;
+ Thu, 28 May 2026 08:58:52 +0300 (MSK)
+Message-ID: <c03332db-21ef-4d3e-8bc1-e783d178eb36@tls.msk.ru>
+Date: Thu, 28 May 2026 08:58:59 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] vfio/container: Restrict dma_map_file() to shared RAM
+ or RAM devices
+To: Chenyi Qiang <chenyi.qiang@intel.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Farrah Chen <farrah.chen@intel.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20260527101109.71781-1-chenyi.qiang@intel.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260527101109.71781-1-chenyi.qiang@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=physicalmtea@gmail.com; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,35 +112,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jonathan,
+On 27.05.2026 13:11, Chenyi Qiang wrote:
+> vfio_container_dma_map() uses dma_map_file() whenever a RAMBlock has an
+> fd and the VFIO IOMMU backend supports file-based DMA mapping. That is
+> not correct for private file-backed guest RAM.
+> 
+> dma_map_file() resolves PFNs from the backing file, but private guest
+> RAM mappings (MAP_PRIVATE) can run on different PFNs than the file
+> because they are subject to copy-on-write (COW) anomalies. As a result,
+> using dma_map_file() on a privately mapped RAMBlock can program DMA
+> against pages that do not back QEMU's actual guest memory.
+> 
+> Fix this by using dma_map_file() only for shared mapped RAMBlocks
+> (MAP_SHARED) or RAM device regions.
+> 
+> Fixes: fb32965b6dd8 ("vfio/iommufd: use IOMMU_IOAS_MAP_FILE")
+> Reported-by: Farrah Chen <farrah.chen@intel.com>
+> Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220776
+> Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Suggested-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
 
-Thanks for the review.
+This looks like a qemu-stable material to me (10.2.x & 11.0.x).
 
-This v3 splits the helper extraction from the actual bug fix. Patch 1
-is a refactor only: it folds the existing patrol scrub and ECS bounds
-checks into a helper, with no intended functional change.
+I'm picking this up.  Please let me know if I shouldn't.
 
-Patch 2 uses that helper for the remaining Set Feature branches that
-still copy into fixed-size write-attribute buffers without bounds
-validation. That patch carries the Fixes tags.
+Thanks,
 
-I have left the qtest out of this backportable bugfix series for now.
-I can send it separately after addressing the x86-only and magic-value
-comments.
+/mjt
 
-Changes since v2:
-
-- split helper extraction from the bug fix
-- add Fixes tags to the bug-fixing patch
-- leave the qtest for a separate follow-up
-
-Jia Jia (2):
-  hw/cxl: factor Set Feature write bounds helper
-  hw/cxl: validate PPR and sparing Set Feature writes
-
- hw/cxl/cxl-mailbox-utils.c | 94 ++++++++++++++++++++++++++++----------
- 1 file changed, 70 insertions(+), 24 deletions(-)
-
--- 
-2.34.1
 
