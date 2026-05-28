@@ -4,92 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB6A9CD5BD5
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 18:53:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E253ACD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 19:08:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSfqH-0005i2-3I; Thu, 28 May 2026 14:52:29 -0400
+	id 1wSg4v-00014s-UE; Thu, 28 May 2026 15:07:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wSfq5-0005dl-94
- for qemu-devel@nongnu.org; Thu, 28 May 2026 14:52:19 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wSfq2-0004Jx-Rk
- for qemu-devel@nongnu.org; Thu, 28 May 2026 14:52:17 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2ba6485d219so101587345ad.3
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 11:52:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wSg4u-00014e-4u
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 15:07:36 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wSg4s-0002dY-5x
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 15:07:35 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64SI52xA124483
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 19:07:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ q2uYoAEIj2gLazoOOuy/z0BxtNib/RdfgM5ehVCW/Jw=; b=oR00ZpTpPdk8n3vO
+ nymVqHWK+FE31l7kmpNBGBDrFB8dF0qzu6si7Ynun4ptxbmPHtUXZuaZol0gDfWT
+ wpP32lUC7x0QSKMDyoQJfGbK9pOl0gIGc+dv27+jKjKhZedTIZ0cn+k4GoZ6sUoP
+ jNBL8GpjOK/gdDV/NdTsBSWWrhOBridrcrosf0ghXgAOdLqCGOPYmsMrEGaiSJ2p
+ rrH2Q8I/BQ2hymlJ36qkRs/+yrYNB737XmJNvK0XKCJdd/7hyDCAeyfITFZxCUaI
+ wwA9WNx79XBL5cPTGFS49ZBQUIDZu7HvDseKJ+MZmvn0z1MoQOPdqwsnuQPdo9Bh
+ tuTpOA==
+Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ee7yccadk-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 19:07:32 +0000 (GMT)
+Received: by mail-dl1-f70.google.com with SMTP id
+ a92af1059eb24-13536592ebeso414480c88.0
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 12:07:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779994332; x=1780599132; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1779995251; x=1780600051; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=NYsYQPPzASPlduWBTHd7CgXIQYjUbRELd2rXX6l4MtU=;
- b=KqXxdchE2wELlrQ1nPIhUv4MAqBQ/ZILDw0A2sTmFJ5fGrOHpLwwJLRxKvSIaESRUY
- 2pmsP3CQyxbH8PAO7SwGnqaFCQ4luAlhm0ERktf4PWcQzWUlgzPhggcpXq5cnPSw+vd6
- DwFcXFdS+AUGaTjjyjZDMMwhy5RoDeZ0Miqqun5O+ZACxmq6j0cDyZoqYjCDMUR+4ReX
- CD8nKdJgBxSgr0BNlAVSRIaJA8Fwy4L3QI2zIV82eB2sRk54AS/Njy6y/qiCMfL7rDmy
- 4VlJRh0h7ox/q/trIkWYdTB5loizY/lXryvFL3z6QeoBnzf25Y5QWKxS60YPxyOhWJB5
- 6/kg==
+ bh=q2uYoAEIj2gLazoOOuy/z0BxtNib/RdfgM5ehVCW/Jw=;
+ b=YxAPqL3A6HA8kd4POj0f1Di12rfBE1m3sl+y0Vnr6Bpl2p5Nhg0JUnzsdoOoa3j58N
+ 9qhmR3U3kYXPTcqyn5asJ9KFFXhYs2bY/aNvayny5Hkad5zwT6Bq0wdc4GMbmvDNlNFe
+ MixAmzMCmTGA49dtBvFAGTBmR8BXw9CwJuxBK5bkGqKN05QAIJAU4hpuM5VapJ8zuVvx
+ YW9/VXDo3ywXfK+Aw5MBngVz0gFvNPlUdD1THZmvS2eDsxzHDJPG6gGIAZUGP6iSVX0U
+ 5incnm+YKZC9NL/Meeq//psYS3R7f18CKSshDtm2FH0AaGPyNLJda/1DHbugTzEBBbH8
+ gt4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779994332; x=1780599132;
+ d=1e100.net; s=20251104; t=1779995251; x=1780600051;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=NYsYQPPzASPlduWBTHd7CgXIQYjUbRELd2rXX6l4MtU=;
- b=qxjdwmzKwqTLP8zgcWjCBV7NGGotla5awF05mDJ8UjysrQmqsx3vmel+qrBrq77T32
- TJWsrU3QP5ERI39bc5XNrqmcy4/0R+zgw2JYXM4ATZsn20UbgJt9cJONxaZVg7MdaH0/
- s6C1iYOuChacKfES7rbyd46f2/5XRN0Zfbg8N5aZkZ3tAZ9NEspUFnCiE+bIhpOXra1e
- afHgXkkGUAyiulwr393nbE4s54QTgLJnjAbVqHc3VcP6gWu3IwbHO35J1FjCwfjv3TrE
- ttk/E4RaNUp1kKv6vmd7E4I9Zn92cDCurOLh/lQ7k7YXfP1Fzpg6m7YxcyeQjDN9vXEm
- 8+fA==
+ bh=q2uYoAEIj2gLazoOOuy/z0BxtNib/RdfgM5ehVCW/Jw=;
+ b=LQrLO2cB+M627A2BgkJB4D69xvLhUaBnehED1ABk4BGXChm+Ro6OChFuYv2LrOx9u4
+ x3boHf/2QEFphq7ilRLpfLm6LbNTWPBo+7ewdn3gj30uWEayPCyM6G4mhgT2EqaOnRIH
+ nohSTE0Z69rEq9eke+DWIZB3Oy7LaVH3qRYWTthn5LmzWs7KboJVFwGDX1D1Uv6XiF0k
+ qX2ICoHCTgbVydsU99dSBaYsJRNfLpO7lGBsyiA7CjfmEhLga0BCQ/KVtGUf5ABLJXcd
+ 7aQyfoRyqWa4aCRBXUy2BMFQ2j+E8mQiUYAjoGtYwGGswz+HS612cOTzue8ru9DD26e5
+ r2tQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9WYzIXPyJZ41M7DX5UgQGp3/g7T4pqNjLLHzVruf1AXT0b/2iPJNLc/2vweWAF/ddFlStolBN4L48Y@nongnu.org
-X-Gm-Message-State: AOJu0YxxDthiav4xxvpM6geWrl7s+boY8zDlWR5Orlf/LoQdO8V/Qrt3
- m5AAb897K0bIPdxSJzw9xEyEI+F7mttfEkh7yt0MwsbrdXF8Zr3jhduJuPJPlMWBRTw=
-X-Gm-Gg: Acq92OFNaqOg43a0j7bVQLDRVVu8HvPD4OHu/nkKcumf4ihts6XaC4+QZYdkA1TfGyg
- 7e+V1C3G7iLp6nCEjsSmx1ERu1BFOduIAzwq5dp85RgKLBPMXl5JGRdn1BeXvuCxe6R7wx189e2
- 2VGBFMneUmvOlBFpBS9p5HdLvX6X84FFCaMlyiK690oIogaV5JYUVLPL0JnOHOFQHe/VcjCAm+Y
- FyfFgx2cqu1FtY//YRORilco+YVFbAw8tsfLGSe9BdAK25JxpwyW3HKLlA8FCii6Q+zpQ5egL4b
- 4/g1kf/5qIhiFR63SIZ1Q5iY/ICcH6oHNiH9yVvcinCkwm4ls60bqjqnhHXGVw/C8U/E9FsIhIG
- YtIOiEAc/oPR4ozMFLNIlj9a5enf8FlZ7wksYV/y3nTJ4crcKfAFSn+P3We4sE28xl4/ydpqpgV
- wl7Z8qGz66IKDiYhl5rIIejglqfiZ/Lz5ZtXcLUUSQCB34e3U=
-X-Received: by 2002:a17:902:f544:b0:2bf:1748:aa8c with SMTP id
- d9443c01a7336-2bf1ebf512dmr377265ad.26.1779994331936; 
- Thu, 28 May 2026 11:52:11 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2bf1e821447sm251235ad.80.2026.05.28.11.52.11
+ AFNElJ97e7DQkzlAIcJ2UbgEizWomyuwApk5rxyOipC6cgxey8QVC2h1PHcTcspjSPQhisMtMtoHGkExNsf4@nongnu.org
+X-Gm-Message-State: AOJu0YzfqiSqUUgHd4kaTls2zqz9J8zzxxjFB+W+JLwHAbXMFEl2U81G
+ N1hmshNGJG4Jpx0SJYbU+8Qobbi0dE6bCGWH+dIYfmQ4CfnLA65JD6b4rgivt6WrjEzOukPtb52
+ rM/ZQFeI/t+6oqRFsc1dNMUukswMXShrueubAUQDm9VirOPeYJA2dXV6hUQ==
+X-Gm-Gg: Acq92OGiAhHswjMHuOnnmGLqOrziJ6ZMwSLjtyl9U+pyrKr2Ao4UgApKGbP4BoYeRAi
+ 7rQ7XM4n/jV8lA9qZGcL6cJ8tJG8BM2IErUCkR5hrHYfHgmiZZn/IS7FlZT9MsSG45H5IS1V0o4
+ w/P4X4MmR/B45hxvnheglzAnfN3f5qneUWHF5e8GfisD6fJpTQfUpKJnL7Cp9AosZvt+nbaQPOz
+ dQLz350aSFhph6RFzQYxaKci2maaRYlz8JlAqHKoRqoT/K9lz26wVjKbRNy1t5itF42jY8PvdbN
+ 3sQs9Ddp2WAAjsmptWJ2790fH7C5qWU95sv7xFiy7BS5t5olR2fZd2MkiI3J78m97ssvqc2VCRF
+ YsQnxtj+hKVdRedd3BdeRjz4BiyxlOnbycne9su5NPbzdODgrNMbhWEqWaruq7CPx1OijUeczpz
+ ZTr3CfnYjeinH01EJjSqZ1EORH
+X-Received: by 2002:a05:7022:f207:b0:12f:c7c3:f5ab with SMTP id
+ a92af1059eb24-137a8ae9abamr108022c88.2.1779995250984; 
+ Thu, 28 May 2026 12:07:30 -0700 (PDT)
+X-Received: by 2002:a05:7022:f207:b0:12f:c7c3:f5ab with SMTP id
+ a92af1059eb24-137a8ae9abamr108002c88.2.1779995250408; 
+ Thu, 28 May 2026 12:07:30 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-137a9ac8405sm64732c88.12.2026.05.28.12.07.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 May 2026 11:52:11 -0700 (PDT)
-Message-ID: <c5e98ece-ecad-42cc-9b83-154453f535a5@linaro.org>
-Date: Thu, 28 May 2026 11:52:09 -0700
+ Thu, 28 May 2026 12:07:29 -0700 (PDT)
+Message-ID: <77a000e4-04dd-4abe-95ac-0c411e8e0575@oss.qualcomm.com>
+Date: Thu, 28 May 2026 12:07:28 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] target/arm/ptw.c: Add Granule Bypass Windows
-To: Jim MacArthur <jim.macarthur@linaro.org>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-References: <20260528-jmac-gpc3b-v1-0-d34c46c5069f@linaro.org>
- <20260528-jmac-gpc3b-v1-3-d34c46c5069f@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v2 1/2] linux-user: implement fsmount(2) series of syscalls
+To: Xinhui Yang <cyan@cyano.uk>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Mingcong Bai <jeffbai@aosc.io>
+References: <cover.1779876076.git.cyan@cyano.uk>
+ <cec3a2d387f87cd9a8b03d864c7accd804d698ce.1779876076.git.cyan@cyano.uk>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20260528-jmac-gpc3b-v1-3-d34c46c5069f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <cec3a2d387f87cd9a8b03d864c7accd804d698ce.1779876076.git.cyan@cyano.uk>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Authority-Analysis: v=2.4 cv=VOntWdPX c=1 sm=1 tr=0 ts=6a189274 cx=c_pps
+ a=SvEPeNj+VMjHSW//kvnxuw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=H-X7bUBZzkprN-Wk_aMA:9 a=QEXdDO2ut3YA:10 a=Kq8ClHjjuc5pcCNDwlU0:22
+X-Proofpoint-GUID: hZhgnWIZ2fOCv7JRasH8nDs9e-FzEk-1
+X-Proofpoint-ORIG-GUID: hZhgnWIZ2fOCv7JRasH8nDs9e-FzEk-1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI4MDE5MiBTYWx0ZWRfX/NtWl0oco3l9
+ 7JN+/PxrkttgVgKN9nYF34l10Dv1jtfSutWlUR2pQk35QGp7egf9UnbkV3W7uK2Y+LneNCAFtav
+ OxmGYAR2Dd95fO1daP8UmZbRkPiys2hYIpmPb1au4uN+FemE+12iMvNbI64QcONNyz+BquhZeJN
+ PJyWhOwSg1I6ox2IPTc0vgntlDAVCJ7jDbNUktZiIq932bcI5OBzM+Xw2s9Gj/jT7wmzYeeLoIO
+ w1uPFpwEhLBio8O1ySRb2033eolhIpZa8HEx25sr1NuY0Qv7ez6cd9dcUpWfppxtXYsT2xO6Wi5
+ 3zAhQsYvIt4bsq6MvBNDudYBlQnaH737lAMhj14tAfSzH2eCNpvm0ofRR5YJmnpmLkF5g1KKPiJ
+ /4+dd3H2rDaC+6c4YLJNlLqE7Zk+msCJtPT++aCBVk0ml5IBWjZYwkRAaTljSsqkDPisPQV5eGm
+ +CZoQ8P85yFnGmGO0xQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-05-28_05,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 phishscore=0 adultscore=0 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 clxscore=1015 malwarescore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605280192
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,107 +152,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/28/26 08:34, Jim MacArthur wrote:
-> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
-> ---
->   target/arm/ptw.c | 50 ++++++++++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 50 insertions(+)
+On 5/27/2026 3:11 AM, Xinhui Yang wrote:
+> This series of syscalls replaces the old mount(2) syscall with a series
+> of syscalls that operates around a filesystem context. This series of
+> syscalls is available since Linux 5.2 and glibc 2.36+.
 > 
-> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-> index 0a5201763a..46568cc5cb 100644
-> --- a/target/arm/ptw.c
-> +++ b/target/arm/ptw.c
-> @@ -341,11 +341,21 @@ bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
->           .space = ARMSS_Root,
->       };
->       const uint64_t gpccr = config.gpccr;
-> +    const uint64_t gpcbw = config.gpcbw;
->       unsigned pps, pgs, l0gptsz, level = 0;
->       uint64_t tableaddr, pps_mask, align, entry, index;
->       MemTxResult result;
->       int gpi;
->   
-> +    const uint64_t BW_ADDR_SHIFT = 30;
-> +    const uint64_t BW_SIZE_SHIFT = 30;
-> +    const uint64_t BW_STRIDE_SHIFT = 40;
-> +
-> +    uint64_t bw_start = FIELD_EX64(gpcbw, GPCBW, BWADDR) << BW_ADDR_SHIFT;
-> +    uint64_t bw_size_field = FIELD_EX64(gpcbw, GPCBW, BWSIZE);
-> +    uint64_t bw_stride_mask = -1L << (FIELD_EX64(gpcbw, GPCBW, BWSTRIDE) +
-> +                                      BW_STRIDE_SHIFT + 1);
-
-This appears to be the inverse of what you wanted, setting high bits instead of setting 
-low bits.
-
-Never "L", always LL or ULL; but here you certainly want MAKE_64BIT_MASK.
-
-> +
->       /*
->        * We assume Granule Protection Check is enabled when
->        * calling this function (GPCCR.GPC == 1).
-> @@ -383,6 +393,28 @@ bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
->           goto fault_walk;
->       }
->   
-> +    /* At this point, GPCCR_EL3 is valid */
-
-Not true, because you added the new block before validating PGS...
-
-> +
-> +    /*
-> +     * GPC Priority 1 (R_GMGRR):
-> +     * If GPCCR_EL3.GPCBW is 1 and the configuration GPCBW
-> +     * is invalid, the access fails as GPT walk fault at level 0.
-> +     */
-> +    if (FIELD_EX64(gpccr, GPCCR, GPCBW)) {
-> +        /*
-> +         * GPCBW is invalid if the base address is:
-> +         * not aligned to the size programmed in BWSIZE, or
-> +         * greater than or equal to the stride value configured by BWSTRIDE.
-> +         */
-> +        uint64_t bw_size_mask = -1L << (bw_size_field + 31);
-> +        if (bw_start & bw_size_mask) {
-> +            goto fault_walk;
+> Their users include systemd since v259 and libmount from util-linux, and
+> possibly other widely used projects.
+> 
+> Preliminary checks are implemented to ensure the validity of the
+> interface.
+> 
+> Signed-off-by: Xinhui Yang <cyan@cyano.uk>
+> ---
+>  linux-user/syscall.c | 81 ++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 81 insertions(+)
+> 
+> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> index 7d7a7b489c..2ff80f4dfa 100644
+> --- a/linux-user/syscall.c
+> +++ b/linux-user/syscall.c
+> @@ -14412,6 +14412,87 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+>          return do_map_shadow_stack(cpu_env, arg1, arg2, arg3);
+>  #endif
+>  
+> +#if defined(TARGET_NR_fsopen)
+> +    case TARGET_NR_fsopen:
+> +        {
+> +            p = lock_user_string(arg1);
+> +            if (!p) {
+> +                return -TARGET_EFAULT;
+> +            }
+> +            ret = get_errno(fsopen(p, arg2));
+> +            unlock_user(p, arg1, 0);
 > +        }
-> +        if (bw_start & bw_stride_mask) {
-> +            goto fault_walk;
+> +        return ret;
+> +    case TARGET_NR_fsconfig:
+> +        {
+> +            /*
+> +             * fsconfig(int, int, char *, void *, int)
+> +             * NOTE: p4 is nullable and its type might not be a string.
+> +             */
+> +            void *p3, *p4;
+> +            int cmd = (int) arg2;
+> +            switch (cmd) {
+> +            case FSCONFIG_SET_BINARY:
+> +            case FSCONFIG_SET_STRING:
+> +            case FSCONFIG_SET_PATH:
+> +            case FSCONFIG_SET_PATH_EMPTY:
+> +                p3 = lock_user_string(arg3);
+> +                if (cmd != FSCONFIG_SET_BINARY) {
+> +                    /* key and value must be strings. */
+> +                    p4 = lock_user_string(arg4);
+> +                } else {
+> +                    /* Otherise the value must be a raw buffer. */
+> +                    p4 = lock_user(VERIFY_READ, arg4, arg5, 1);
+> +                }
+> +                if (!p3 || !p4) {
+> +                    return -TARGET_EFAULT;
+> +                }
+
+Might leave with locked p3 is p4 fails.
+You can add another early return just after p3 and unlock p3 in this if.
+
+> +                ret = get_errno(fsconfig(arg1, arg2, p3, p4, arg5));
+> +                unlock_user(p3, arg3, 0);
+> +                unlock_user(p4, arg4, 0);
+> +                break;
+> +
+> +            case FSCONFIG_SET_FLAG:
+> +            case FSCONFIG_SET_FD:
+> +                /* value must be NULL. */
+> +                p3 = lock_user_string(arg3);
+> +                if (!p3 || arg4) {
+> +                    return -TARGET_EFAULT;
+> +                }
+> +                ret = get_errno(fsconfig(arg1, arg2, p3, NULL, arg5));
+
+Similar to above (if arg4) { unlock... }
+
+> +                unlock_user(p3, arg3, 0);
+> +                break;
+> +            case FSCONFIG_CMD_CREATE:
+> +            case FSCONFIG_CMD_RECONFIGURE:
+> +#ifdef FSCONFIG_CMD_CREATE_EXCL
+> +            /*
+> +             * FSCONFIG_CMD_CREATE_EXCL is only available since Linux
+> +             * 6.6. Guarding it to allow building with pre-6.6 headers.
+> +             */
+> +            case FSCONFIG_CMD_CREATE_EXCL:
+> +#endif
+> +                /* key and value must be NULL, aux must be 0. */
+> +                if (arg3 || arg4 || arg5) {
+> +                    return -TARGET_EFAULT;
+> +                }
+> +                ret = get_errno(fsconfig(arg1, arg2, NULL, NULL, 0));
+> +                break;
+> +            default:
+> +                return -TARGET_EFAULT;
+> +            }
 > +        }
-> +    }
-> +
->       switch (FIELD_EX64(gpccr, GPCCR, PGS)) {
+> +        return ret;
+> +    case TARGET_NR_fsmount:
+> +        ret = get_errno(fsmount(arg1, arg2, arg3));
+> +        return ret;
+> +    case TARGET_NR_fspick:
+> +        {
+> +            p = lock_user_string(arg2);
+> +            ret = get_errno(fspick(arg1, p, arg3));
+> +            unlock_user(p, arg2, 0);
+> +        }
+> +        return ret;
+> +#endif
+>      default:
+>          qemu_log_mask(LOG_UNIMP, "Unsupported syscall: %d\n", num);
+>          return -TARGET_ENOSYS;
 
-... here.
-
-None of the checks you're adding are correct:
-  - Missing size and stride validation,
-  - Alignment check vs size is incorrect; you wanted
-
-     bw_start & MAKE_64BIT_MASK(0, bw_size + BW_ADDR_SHIFT)
-
-  - Check vs stride is incorrect; you wanted bw_stride <= bw_addr.
-
-See GPCRegistersConsistent().
-
-> @@ -431,6 +463,23 @@ bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
->           goto fault_fail;
->       }
->   
-> +    /*
-> +     * Bypass window check.
-> +     * I_JJLRM: Granule Protection Table (GPT) lookups can be skipped
-> +     * in portions of the memory map by using GPC bypass windows.
-> +     * I_XNHTX: The GPC bypass window check (...) is performed
-> +     * immediately after priority 3.
-> +     */
-> +    if (FIELD_EX64(gpccr, GPCCR, GPCBW)) {
-> +        uint64_t bw_size = 1 << (bw_size_field + BW_SIZE_SHIFT);
-> +        uint64_t effective_address = paddress & bw_stride_mask;
-> +
-> +        if (effective_address >= bw_start &&
-> +            effective_address < (bw_start + bw_size)) {
-
-No need for extra ().
-
-
-r~
 
