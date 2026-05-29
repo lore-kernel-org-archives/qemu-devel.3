@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55020CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 12:44:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1314BCD6E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 12:44:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSwZU-00016o-Qu; Fri, 29 May 2026 08:44:17 -0400
+	id 1wSwZV-0001CR-Et; Fri, 29 May 2026 08:44:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander.hansen@9elements.com>)
- id 1wSwZ9-0000yh-Fx
- for qemu-devel@nongnu.org; Fri, 29 May 2026 08:43:55 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1wSwZF-00010m-Ai
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 08:44:06 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alexander.hansen@9elements.com>)
- id 1wSwYy-0004k2-D7
- for qemu-devel@nongnu.org; Fri, 29 May 2026 08:43:49 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4903d5c67bfso45350575e9.1
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 05:43:43 -0700 (PDT)
+ id 1wSwZ9-0004lM-8p
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 08:44:00 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-45ef56d9b67so195461f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 05:43:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=9elements.com; s=google; t=1780058622; x=1780663422; darn=nongnu.org;
+ d=9elements.com; s=google; t=1780058632; x=1780663432; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kcBlTDpNI56yQQL/dKxDkjW3RIf5KPKY471849aFq/w=;
- b=Rvupf/mo1gBjFTpdyR+66mTR2WCFxHrjBLbiQ20tvdhOIafrh3t877rcul5AcuY+Ha
- w1uxnm3yvqqOSctR4vxQDTy5eun8fFgPhv5xlSeyZrd9TbQBpu73z+/IpzK7OYTx4vUf
- wceB3OrRpv0jrtVJop5Lr2SRGmPbBbwH0yuDlt3Kim6tEhZonRlpYOr8SK8VWp19PIxW
- NY2Oi8AykAZl+zjjXEgJzYhnkE2093LbDm5ywQymC2S+jyxEbaqacJBv/D2QdNbojtK3
- K+Z46qjHyNPCTXbMKUsb6pHeuS5WBLOoWkfo5uzquKkI3CUg9gX9cI/vEjaGmjTNqZu3
- sLYw==
+ bh=C5YfvPix9JRVMLq5pqy0F5KTeMae+z3jj4lvXkKKiEY=;
+ b=YjqsjYwR2XzsfnoRevC4+rf/cNndHk/7f1EruLa8KLtaicG/yhGslA9+/ftrg1oM+D
+ zdE84rXdbDd/e1zLWA3B3RAVO3igVtcQbZjZZ3TgG8MLRi35r3Y2fulmfU6nyWk1TRdK
+ dIQgazleG/2uIrQ8Vwk84eQfQ9w2sFsyCOT+Ut7fkAibJXgqtraHuIi5Io4SkVHH6g42
+ fd/XbIn0n/c708svYvMlQmgvfkk0tORrA6io/ihFmaa8Z2LEZ1p4zv8BqJDfIBZ37dTI
+ 4H1kNY6/UAvZb4WoGb1xVvpCyKT816n0F+cygxU4jJlhN6h517FEADA1j9wquD6ti1Jz
+ kAdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780058622; x=1780663422;
+ d=1e100.net; s=20251104; t=1780058632; x=1780663432;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=kcBlTDpNI56yQQL/dKxDkjW3RIf5KPKY471849aFq/w=;
- b=nelVsTL14+LqofPJN8xiCB18sX7T7YCM/BJ/FrgLxXK1rJVor9ZMH6QiNASCTysdMv
- 1SSgblKJUE7MQz3VW9o+Gli7kvYFqGnjabhlKGjZ5gvr6BBMYKKAyC1WPwK9SvRjyl3r
- u2Y8a+1L9bwR9ITXAAncxP1WQlmyapS1s/su/Mgcsn3Du/nuso2t4XBUMa6tflVAphZF
- CR5ixbvAxU0+95vDQWM5KvaEx4NfqcwtgldjJUTKq/L3lC/Uj/JtPFqg16q1sACajQ38
- E9Dha1rUJiqgC7clr+GCFpwz7uA3nqA759Ad6NkbpteG9Kej0mGODwPdbd7btk5na/UV
- eWBQ==
-X-Gm-Message-State: AOJu0YzRA8w66viUTQdmUZBGQmDPVYtEvVmXe6wvpXmdPXSk0C8l3S2Q
- y+rH8jeZuM5PO9KxUhQ6hYPf+060inf8qKGnxESKgxXC+DiH38qMth6ra5WPEXUhYChHjSA2GRo
- sUbKvtdU=
-X-Gm-Gg: Acq92OExr4QSgMY3aO9DPCA7CvIHHTTQCn3KqAPs3acMDOPsDgivscEHiRzgDcsRw5y
- ONfrd7SAaWwPKC+oNIv3ABbxf10o2vaeQ/47+cy9Tu3AndojE/HLBhqnbg74y76BizIH/oF2huI
- A4hJbdUtppy/M+6g9AD95T9CwWLCQ10CMhxVjoggf0qD39nJSMCdzVpYvV8P6rY+cFodAG6nOPI
- tawjbg0X6Lji15cRWBjH2watuTWJ70DLkIxPqTG5CQdRtyEhntO+W+3LT33uH3pGiv5V1tsQvpN
- 4g19mBotUJ7XwXKeFozI9a071NFMwCJ572IBMm98Fj3z6sLq0ZKYoafKEzSk4tPIOs0ZvX6eFiX
- nz/y18xE2QnwLDCWj363tM2/ZmE138Ic6mtROHkal7rPi+5D2j2u6Kr2rUysB03o1DnXPUGrtiK
- sqVyhAEfBh3n+PcHB44gEDWggKW7tEHiSVPrKhYZadqnX0FDpkUZdQKmg=
-X-Received: by 2002:a05:600c:5247:b0:490:3d62:eb0 with SMTP id
- 5b1f17b1804b1-4909c0c6e4fmr48005985e9.24.1780058622120; 
- Fri, 29 May 2026 05:43:42 -0700 (PDT)
+ bh=C5YfvPix9JRVMLq5pqy0F5KTeMae+z3jj4lvXkKKiEY=;
+ b=CPAmIibkvr8ObEto+j38aPTVWyv5D3eoDKHtKYnqRQVwStfpSru5d0rl5coF7v85RV
+ xH/a0J+uzj23fv9LFMlgQ0j3Ddkz5ZURm/MfcmbEZL2MmwTj64Mb4Kc5UviDNzOsYv5O
+ HyYJgcjB2seTgUKDsReuGpJvsGa0pA9laYYSUFzZFCiaE0CSVpNiuSKqFU1bRrNoW6sv
+ TEXD5z9nUlpLbt8+kUs+9YhCJKJT1lYMlrYealE+vHOU+9ylAMn3zhzjt8BeFfL2bPrR
+ x7Dx2ru0kj5UxEZ8n+6psnRDZXL7P/REwQPLRICqOmCieO1DLvpmvkO9J7e7zrdEGO9w
+ 8FJA==
+X-Gm-Message-State: AOJu0YxIJ4aXFg2dENC0LvT1PwbKoEIGunk7k5FfodsSAOhLMEoQ83T7
+ AZnvW5nHpxFCZeNP7UrBHagS5Nj5Bs5EAKY2Hn+VBdXgxE1YwLMHfc87kXc1LE94GjrERLYT72J
+ mDn8DssE=
+X-Gm-Gg: Acq92OFOwP1QtnxERTA/YoSBEUMKNxazF1+hepBawW+OHf4LrBbwudI0GnJEhYmoxMp
+ ZwJphB3aphR1oQn8WVJFI7K+uXrEKMPGyMm6nhmHxCNZoVjAMZeIruxclRrDzIP3r3t93Ltv3Zi
+ efkUjJey8/VcyhDa5SaoHfOSVKhSwItLxReawzV8+kkYsXTkZn/9WT1r6+63O6eeMDx6mymqv3o
+ pDf3LbsIaqdxkeGhHYxcVojPNRpfcwZ78IYz36xs7UeGQIAEHVsvvIfFb0XxiHr/ZKmQyyMIm/n
+ ZqeeHvMcODcRPvC7xkstrmpOATecwSMegyLL7wBm22fcw2J3IiIAqgcm4fh+OP4Pc0SK2c956I3
+ UtqeqVVSlbwUKfOD0BGQGgdCwmL8YFRHd8+V+C4bERmqsRyDBqg4uFRuNgf8OfdolFZ+yEFvqGe
+ NJgmEQTmZG4/+iXgqKueUTuf4cVldhbEGKcAE+Yz3anyiWF57+RsItUI9HhJbv94QyUw==
+X-Received: by 2002:a05:6000:481c:b0:43f:e934:50ac with SMTP id
+ ffacd0b85a97d-45ef13fd680mr4852362f8f.7.1780058632019; 
+ Fri, 29 May 2026 05:43:52 -0700 (PDT)
 Received: from alexanderarchlinux ([188.111.3.154])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ef35598e5sm3163354f8f.27.2026.05.29.05.43.41
+ ffacd0b85a97d-45ef35598e5sm3163354f8f.27.2026.05.29.05.43.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 May 2026 05:43:41 -0700 (PDT)
+ Fri, 29 May 2026 05:43:51 -0700 (PDT)
 From: Alexander Hansen <alexander.hansen@9elements.com>
 To: qemu-devel@nongnu.org
 Cc: Alexander Hansen <alexander.hansen@9elements.com>,
@@ -78,24 +78,24 @@ Cc: Alexander Hansen <alexander.hansen@9elements.com>,
  Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
  Kane Chen <kane_chen@aspeedtech.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
-Subject: [PATCH v5 3/5] hw/sensor: MAX31790 support
-Date: Fri, 29 May 2026 14:37:32 +0200
-Message-ID: <20260529124237.94087-4-alexander.hansen@9elements.com>
+Subject: [PATCH v5 5/5] hw/sensor: support Texas Instruments ADC128D818
+Date: Fri, 29 May 2026 14:37:34 +0200
+Message-ID: <20260529124237.94087-6-alexander.hansen@9elements.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260529124237.94087-1-alexander.hansen@9elements.com>
 References: <20260529124237.94087-1-alexander.hansen@9elements.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=alexander.hansen@9elements.com; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=alexander.hansen@9elements.com; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,209 +114,252 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Product: [1]
 Datasheet: [2]
 
-MAX31790 Support:
-- fan inputs are reading
-- tach reading propertional to pwm setting from linux driver
-- fans do not show any fault
-- 6 PWM registers influence 6 TACH registers
+ADC128D818 Support:
+- channel readings from pre-set values
+- driver can read and write most configuration registers
 
-There is intentional stub behavior in some places and various functions
-of the device are currently unsupported.
-
-MAX31790 currently unsupported:
+ADC128D818 currently unsupported:
 - slave address restriction
-- fan dynamics
-- spin-up configuration
-- fault state / failure possibility
-- rate-of-change control
-- tach mode
-- mixed layouts where number of fans != number of tachs
-- see Figure 5.9 in [2] for example of mixed layout
+- startup sequence and realistic busy register emulation
+- external VREF
+- conversion rate
+- interrupts
+- deep shutdown mode
+- individual channel shutdown
+- selection between Mode 0,1,2,3
+- pseudo-differential input
 
 Anyone could expand it in the future for more accurate emulation.
 
 The reason for adding this device is to support Yosemite V4 emulation.
 
-Tested: on yosemite 4 qemu
+Tested: on yosemite v4 qemu
 
-root@yosemite4:~# ls /sys/class/hwmon/hwmon2/
-device	    fan2_fault   fan3_target  fan5_fault   fan6_target  pwm2	     pwm5
-fan1_enable  fan2_input   fan4_enable  fan5_input   name	pwm2_enable  pwm5_enable
-fan1_fault   fan2_target  fan4_fault   fan5_target  of_node	pwm3	     pwm6
-fan1_input   fan3_enable  fan4_input   fan6_enable  power	pwm3_enable  pwm6_enable
-fan1_target  fan3_fault   fan4_target  fan6_fault   pwm1	pwm4	     subsystem
-fan2_enable  fan3_input   fan5_enable  fan6_input   pwm1_enable  pwm4_enable  uevent
-root@yosemite4:~# cat /sys/class/hwmon/hwmon2/fan1_input
-4551
-root@yosemite4:~# cat /sys/class/hwmon/hwmon2/fan1_enable
-1
-root@yosemite4:~# cat /sys/class/hwmon/hwmon2/fan1_fault
-0
-root@yosemite4:~# cat /sys/class/hwmon/hwmon2/fan1_target
-2048
-root@yosemite4:~# cat /sys/class/hwmon/hwmon2/pwm1
-178
-root@yosemite4:~# cat /sys/class/hwmon/hwmon2/name
-max31790
+initialize the device:
+// ti,adc128d818 @ 0x1f    (adc)
+// the driver will throw away the last 4 bits, set them 0
+uint16_t adc_values1[8] = {
+    0b011110000000, 0b010100010000,
+    0b001000110000, 0b100000100000,
+    0b011110000000, 0b010100010000,
+    0b001000110000, 0b100000100000};
+adc128d818_init_with_values(bus, 0x1f, adc_values1, 8);
 
-Trace output:
-max31790_realize i2c_addr: 0x20
-max31790_realize i2c_addr: 0x2f
-max31790_realize i2c_addr: 0x20
-max31790_realize i2c_addr: 0x2f
-max31790_event i2c_addr: 0x20, event: 0x01
-max31790_send i2c_addr: 0x20, data: 0x02
-max31790_event i2c_addr: 0x20, event: 0x00
-max31790_recv i2c_addr: 0x20, reg_addr: 0x02
-max31790_recv_return i2c_addr: 0x20, returns: 0x08
+Trace outputs directly after initialization:
+adc128d818_realize i2c_addr: 0x1f
+adc128d818_realize i2c_addr: 0x1f
+adc128d818_event i2c_addr: 0x1f, event: 0x01
+adc128d818_send i2c_addr: 0x1f, data: 0x00
+adc128d818_send i2c_addr: 0x1f, data: 0x80
+adc128d818_write i2c_addr: 0x1f, reg: 0x00 data: 0x80
+adc128d818_event i2c_addr: 0x1f, event: 0x03
+adc128d818_event i2c_addr: 0x1f, event: 0x01
 ...
 
+read the values
+root@yosemite4:/sys/bus/i2c/devices/30-001f# cat hwmon/hwmon0/in0_min
+0
+root@yosemite4:/sys/bus/i2c/devices/30-001f# cat hwmon/hwmon0/in0_max
+0
+root@yosemite4:/sys/bus/i2c/devices/30-001f# cat hwmon/hwmon0/in0_input
+75
+root@yosemite4:/sys/bus/i2c/devices/30-001f# cat hwmon/hwmon0/name
+adc128d818
+
+We initially configured 0b011110000000 for the first channel.
+The driver throws away the last 4 bits and does calculation similar to
+below:
+
+val = DIV_ROUND_CLOSEST(data->in[index][nr] * data->vref, 4095);
+
+We can check that the calculation is as expected given our configured
+value.
+
+((0b011110000000 >> 4) * 2560) / 4095
+75.01831501831502
+
 References:
-[1] https://www.analog.com/en/products/MAX31790.html
-[2] https://www.analog.com/media/en/technical-documentation/data-sheets/MAX31790.pdf
+[1] https://www.ti.com/product/ADC128D818
+[2] https://www.ti.com/lit/gpn/adc128d818
 
 Cc: Titus Rwantare <titusr@google.com>
 Cc: "Cédric Le Goater" <clg@kaod.org> (maintainer:ASPEED BMCs)
 Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org>
-Cc: qemu-arm@nongnu.org
-Cc: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com> (maintainer:Kconfig)
+Cc: Peter Maydell <peter.maydell@linaro.org> (supporter:ARM TCG CPUs)
+Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org> (odd fixer:Overall sensors)
+Cc: qemu-arm@nongnu.org (open list:ARM TCG CPUs)
+Cc: qemu-devel@nongnu.org (open list:All patches CC here)
 Signed-off-by: Alexander Hansen <alexander.hansen@9elements.com>
 ---
  MAINTAINERS                              |   1 +
- hw/arm/aspeed_ast2600_fby4.c             |   4 +-
- hw/sensor/max31790.c                     | 537 +++++++++++++++++++++++
+ include/hw/sensor/adc128d818.h           |  23 ++
+ hw/arm/aspeed_ast2600_fby4.c             |   9 +-
+ hw/sensor/adc128d818.c                   | 433 +++++++++++++++++++++++
  hw/arm/Kconfig                           |   1 +
  hw/sensor/Kconfig                        |   4 +
  hw/sensor/meson.build                    |   1 +
- hw/sensor/trace-events                   |  11 +
- tests/functional/arm/test_aspeed_fby4.py |  26 ++
- 8 files changed, 583 insertions(+), 2 deletions(-)
- create mode 100644 hw/sensor/max31790.c
+ hw/sensor/trace-events                   |   7 +
+ tests/functional/arm/test_aspeed_fby4.py |  10 +
+ 9 files changed, 488 insertions(+), 1 deletion(-)
+ create mode 100644 include/hw/sensor/adc128d818.h
+ create mode 100644 hw/sensor/adc128d818.c
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index cd5c4831e2..2a0dbd1cc4 100644
+index 195e3c7927..470e118f3c 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -3987,6 +3987,7 @@ S: Maintained
+@@ -3985,6 +3985,7 @@ PMBus
+ M: Titus Rwantare <titusr@google.com>
+ S: Maintained
  F: hw/i2c/pmbus_device.c
++F: hw/sensor/adc128d818.c
  F: hw/sensor/adm1272.c
  F: hw/sensor/isl_pmbus_vr.c
-+F: hw/sensor/max31790.c
- F: hw/sensor/max34451.c
- F: include/hw/i2c/pmbus_device.h
- F: include/hw/sensor/isl_pmbus_vr.h
+ F: hw/sensor/max11615.c
+diff --git a/include/hw/sensor/adc128d818.h b/include/hw/sensor/adc128d818.h
+new file mode 100644
+index 0000000000..02d75ca3e1
+--- /dev/null
++++ b/include/hw/sensor/adc128d818.h
+@@ -0,0 +1,23 @@
++/*  Copyright 2026 9elements */
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#ifndef QEMU_ADC128D818_H
++#define QEMU_ADC128D818_H
++
++#include "qemu/osdep.h"
++#include "hw/i2c/i2c.h"
++
++#define TYPE_ADC128D818 "adc128d818"
++
++/*
++ * Create and realize a adc128d818 ADC with constant caller-supplied readings
++ * @bus: I2C bus to put it on
++ * @address: I2C address
++ * @init_values: array of readings for each ADC channel
++ * @init_values_size: Size of @init_values, can be less than the number of
++ * channels
++ */
++I2CSlave *adc128d818_init_with_values(I2CBus *bus, uint8_t address,
++                                      const uint16_t *init_values,
++                                      uint32_t init_values_size);
++
++#endif
 diff --git a/hw/arm/aspeed_ast2600_fby4.c b/hw/arm/aspeed_ast2600_fby4.c
-index 89fb0ac2fd..1f391022a2 100644
+index c55f7ca895..cfcf689723 100644
 --- a/hw/arm/aspeed_ast2600_fby4.c
 +++ b/hw/arm/aspeed_ast2600_fby4.c
-@@ -164,7 +164,7 @@ static void fby4_i2c_init_fanboard(I2CSlave *fan_mux, size_t eepromSize)
-         /* TODO */
+@@ -12,6 +12,7 @@
+ #include "hw/arm/aspeed_soc.h"
+ #include "hw/nvram/eeprom_at24c.h"
+ #include "hw/sensor/max11615.h"
++#include "hw/sensor/adc128d818.h"
+ #include "hw/i2c/i2c_mux_pca954x.h"
+ #include "hw/gpio/pca9552.h"
+ 
+@@ -162,7 +163,13 @@ static void fby4_i2c_init_fanboard(I2CSlave *fan_mux, size_t eepromSize)
+         I2CBus *bus = pca954x_i2c_get_bus(fan_mux, i);
+ 
+         /* ti,adc128d818 @ 0x1f    (adc) */
+-        /* TODO */
++        /* the driver will throw away the last 4 bits, set them 0 */
++        static const uint16_t adc_values1[8] = {
++            0b011110000000, 0b010100010000,
++            0b001000110000, 0b100000100000,
++            0b011110000000, 0b010100010000,
++            0b001000110000, 0b100000100000};
++        adc128d818_init_with_values(bus, 0x1f, adc_values1, 8);
  
          /* maxim,max31790 @ 0x20   (pwm) */
--        /* TODO */
-+        i2c_slave_create_simple(bus, "max31790", 0x20);
- 
-         /*
-          * ti,tca6424 @ 0x22       (gpio)
-@@ -182,7 +182,7 @@ static void fby4_i2c_init_fanboard(I2CSlave *fan_mux, size_t eepromSize)
-          */
- 
-         /* maxim,max31790 @ 0x2f   (pwm) */
--        /* TODO */
-+        i2c_slave_create_simple(bus, "max31790", 0x2f);
- 
-         /* maxim,max11615 @ 0x33   (adc) */
-         /* TODO */
-diff --git a/hw/sensor/max31790.c b/hw/sensor/max31790.c
+         i2c_slave_create_simple(bus, "max31790", 0x20);
+diff --git a/hw/sensor/adc128d818.c b/hw/sensor/adc128d818.c
 new file mode 100644
-index 0000000000..b0430ea094
+index 0000000000..7ad7c935fc
 --- /dev/null
-+++ b/hw/sensor/max31790.c
-@@ -0,0 +1,537 @@
++++ b/hw/sensor/adc128d818.c
+@@ -0,0 +1,433 @@
 +/*
-+ * Maxim MAX31790 PMBus 6-Channel Fan Controller
++ * Texas Instruments ADC128D818 12 bit ADC with temperature sensor
++ * Models ADC128D818
 + *
-+ * Datasheet:
-+ * https://www.analog.com/media/en/technical-documentation/data-sheets/MAX31790.pdf
++ * Product: https://www.ti.com/product/ADC128D818
++ * Datasheet: https://www.ti.com/lit/gpn/adc128d818
 + *
 + * Copyright 2026 9elements
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
++#include "hw/sensor/adc128d818.h"
 +#include "hw/i2c/i2c.h"
++#include "migration/vmstate.h"
 +#include "qapi/error.h"
 +#include "qapi/visitor.h"
-+#include "migration/vmstate.h"
++#include "qemu/log.h"
 +#include "qemu/module.h"
-+#include "qom/object.h"
++#include "qemu/osdep.h"
 +#include "trace.h"
 +
-+#define TYPE_MAX31790 "max31790"
++/* 8 bit, r/w */
++#define REG_CONFIG 0x00
 +
-+#define MAX31790_NUM_FANS 6
-+#define MAX31790_NUM_TACHS 12
++/* 8 bit, readonly */
++#define REG_INTERRUPT_STATUS 0x01
 +
-+#define MAX31790_REG_GLOBAL_CONFIG 0x00
-+#define MAX31790_REG_PWM_FREQ 0x01
++/* 8 bit, r/w */
++#define REG_INTERRUPT_MASK 0x03
 +
-+/* 0x02 to 0x07: N = 0 .. 5 */
-+#define MAX31790_REG_FAN_CONFIG(N) (0x02 + N)
++/* 8 bit, r/w */
++#define REG_CONVERSION_RATE 0x07
 +
-+/* 0x08 to 0x0d: N = 0 .. 5 */
-+#define MAX31790_REG_FAN_DYNAMICS(N) (0x08 + N)
++/* 8 bit, r/w */
++#define REG_CHANNEL_DISABLE 0x08
 +
-+#define MAX31790_REG_FAN_FAULT_STATUS_2 0x10
-+#define MAX31790_REG_FAN_FAULT_STATUS_1 0x11
-+#define MAX31790_REG_FAN_FAULT_MASK_2 0x12
-+#define MAX31790_REG_FAN_FAULT_MASK_1 0x13
-+#define MAX31790_REG_FAILED_FAN_OPT 0x14
++/* 8 bit, write-only */
++#define REG_ONE_SHOT 0x09
 +
-+/* 0x18 to 0x2f: N = 0 .. 11 */
-+#define MAX31790_REG_TACH_COUNT_MSB(N) (0x18 + 2 * N)
-+#define MAX31790_REG_TACH_COUNT_LSB(N) (0x19 + 2 * N)
++/* 8 bit, r/w */
++#define REG_DEEP_SHUTDOWN 0x0a
 +
-+/* 0x30 to 0x3b: N = 0 .. 5 */
-+#define MAX31790_REG_PWM_DUTY_CYCLE_MSB(N) (0x30 + 2 * N)
-+#define MAX31790_REG_PWM_DUTY_CYCLE_LSB(N) (0x31 + 2 * N)
++/* 8 bit, r/w */
++#define REG_ADVANCED_CONFIG 0x0b
 +
-+/* .. reserved registers ... */
++/* 8 bit, readonly */
++#define REG_BUSY_STATUS 0x0c
 +
-+/* 0x40 to 0x4b: N = 0 .. 5 */
-+#define MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(N) (0x40 + 2 * N)
-+#define MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(N) (0x41 + 2 * N)
++/* 16 bit registers, N = 0..7, readonly */
++#define REG_CHANNEL_READING(N) (0x20 + N)
 +
-+/* ... 'User Byte' registers ... */
++/* 8 bit registers N = 0..15, r/w */
++#define REG_LIMIT(N) (0x2a + N)
 +
-+/* 0x50 to 0x5b: N = 0 .. 5 */
-+#define MAX31790_REG_TACH_TARGET_COUNT_MSB(N) (0x50 + 2 * N)
-+#define MAX31790_REG_TACH_TARGET_COUNT_LSB(N) (0x51 + 2 * N)
++/* 8 bit register, readonly */
++#define REG_MANUFACTURER_ID 0x3e
 +
-+struct MAX31790State {
++/* 8 bit register, readonly */
++#define REG_REVISION_ID 0x3f
++
++#define ADC128D818_NUM_CHANNELS 8
++
++struct ADC128D818State {
 +    I2CSlave i2c;
 +
-+    uint8_t fan_config[MAX31790_NUM_FANS];
-+    uint8_t fan_dynamics[MAX31790_NUM_FANS];
++    uint8_t config;
++    uint8_t interrupt_status;
++    uint8_t interrupt_mask;
++    uint8_t conversion_rate;
++    uint8_t channel_disable;
++    bool deep_shutdown;
++    uint8_t advanced_config;
 +
-+    uint16_t pwm[MAX31790_NUM_FANS];
-+    uint16_t tach_target[MAX31790_NUM_FANS];
++    /* channel reading registers, 2 bytes each */
++    uint16_t channels[ADC128D818_NUM_CHANNELS];
 +
-+    /*
-+     * Fan speed is measured by counting the number of internal 8192Hz
-+     * (fTOSC/4) clock cycles that take place during a select-
-+     * able number of tachometer periods. The number of clock
-+     * cycles counted (11-bit value) is stored in the associated
-+     * TACH Count registers and the desired number of cycles
-+     * is stored in the TACH Target Count registers.
-+    */
-+    uint16_t tach_count[MAX31790_NUM_TACHS];
++    /* high and low limit registers 0x2a - 0x39, one byte each */
++    uint8_t limit[ADC128D818_NUM_CHANNELS * 2];
 +
-+    /* command buffer */
++    /* input buffer */
 +    uint8_t len;
 +    uint8_t buf[2];
 +
@@ -324,365 +367,228 @@ index 0000000000..b0430ea094
 +    uint8_t outlen;
 +    uint8_t outbuf[2];
 +
-+    /* selected register for read/write operation */
++    /* selected channel for read/write operation */
 +    uint8_t pointer;
 +};
 +
-+struct MAX31790Class {
++struct ADC128D818Class {
 +    I2CSlaveClass parent_class;
 +};
 +
-+OBJECT_DECLARE_TYPE(MAX31790State, MAX31790Class, MAX31790)
++OBJECT_DECLARE_TYPE(ADC128D818State, ADC128D818Class, ADC128D818)
 +
-+static void max31790_read(MAX31790State *s)
++static void adc128d818_read(ADC128D818State *s)
 +{
-+    size_t index = 0;
-+    uint8_t out0 = 0;
-+    uint8_t out1 = 0;
-+
++    uint8_t ch_num = 0;
 +    switch (s->pointer) {
-+    case MAX31790_REG_FAN_CONFIG(0):
-+    case MAX31790_REG_FAN_CONFIG(1):
-+    case MAX31790_REG_FAN_CONFIG(2):
-+    case MAX31790_REG_FAN_CONFIG(3):
-+    case MAX31790_REG_FAN_CONFIG(4):
-+    case MAX31790_REG_FAN_CONFIG(5):
-+        out0 = s->fan_config[s->pointer - MAX31790_REG_FAN_CONFIG(0)];
++    case REG_CONFIG:
++        s->outbuf[0] = s->config;
 +        break;
-+    case MAX31790_REG_FAN_DYNAMICS(0):
-+    case MAX31790_REG_FAN_DYNAMICS(1):
-+    case MAX31790_REG_FAN_DYNAMICS(2):
-+    case MAX31790_REG_FAN_DYNAMICS(3):
-+    case MAX31790_REG_FAN_DYNAMICS(4):
-+    case MAX31790_REG_FAN_DYNAMICS(5):
-+        out0 = s->fan_dynamics[s->pointer - MAX31790_REG_FAN_DYNAMICS(0)];
++    case REG_INTERRUPT_STATUS:
++        s->outbuf[0] = s->interrupt_status;
 +        break;
-+    case MAX31790_REG_FAN_FAULT_STATUS_1:
-+    case MAX31790_REG_FAN_FAULT_STATUS_2:
-+        /* we do not have any fan fault */
-+        out0 = 0x00;
-+        out1 = 0x00;
++    case REG_INTERRUPT_MASK:
++        s->outbuf[0] = s->interrupt_mask;
 +        break;
-+    case MAX31790_REG_TACH_COUNT_MSB(0):
-+    case MAX31790_REG_TACH_COUNT_MSB(1):
-+    case MAX31790_REG_TACH_COUNT_MSB(2):
-+    case MAX31790_REG_TACH_COUNT_MSB(3):
-+    case MAX31790_REG_TACH_COUNT_MSB(4):
-+    case MAX31790_REG_TACH_COUNT_MSB(5):
-+    case MAX31790_REG_TACH_COUNT_MSB(6):
-+    case MAX31790_REG_TACH_COUNT_MSB(7):
-+    case MAX31790_REG_TACH_COUNT_MSB(8):
-+    case MAX31790_REG_TACH_COUNT_MSB(9):
-+    case MAX31790_REG_TACH_COUNT_MSB(10):
-+    case MAX31790_REG_TACH_COUNT_MSB(11):
-+        index = (s->pointer - MAX31790_REG_TACH_COUNT_MSB(0)) / 2;
-+        out0 = (s->tach_count[index] >> 8) & 0xff;
-+        out1 = s->tach_count[index] & 0xff;
++    case REG_CONVERSION_RATE:
++        s->outbuf[0] = s->conversion_rate;
 +        break;
-+
-+    case MAX31790_REG_TACH_COUNT_LSB(0):
-+    case MAX31790_REG_TACH_COUNT_LSB(1):
-+    case MAX31790_REG_TACH_COUNT_LSB(2):
-+    case MAX31790_REG_TACH_COUNT_LSB(3):
-+    case MAX31790_REG_TACH_COUNT_LSB(4):
-+    case MAX31790_REG_TACH_COUNT_LSB(5):
-+    case MAX31790_REG_TACH_COUNT_LSB(6):
-+    case MAX31790_REG_TACH_COUNT_LSB(7):
-+    case MAX31790_REG_TACH_COUNT_LSB(8):
-+    case MAX31790_REG_TACH_COUNT_LSB(9):
-+    case MAX31790_REG_TACH_COUNT_LSB(10):
-+    case MAX31790_REG_TACH_COUNT_LSB(11):
-+        index = (s->pointer - MAX31790_REG_TACH_COUNT_LSB(0)) / 2;
-+        out0 = s->tach_count[index] & 0xff;
++    case REG_CHANNEL_DISABLE:
++        s->outbuf[0] = s->channel_disable;
 +        break;
-+
-+    case MAX31790_REG_PWM_DUTY_CYCLE_MSB(0):
-+    case MAX31790_REG_PWM_DUTY_CYCLE_MSB(1):
-+    case MAX31790_REG_PWM_DUTY_CYCLE_MSB(2):
-+    case MAX31790_REG_PWM_DUTY_CYCLE_MSB(3):
-+    case MAX31790_REG_PWM_DUTY_CYCLE_MSB(4):
-+    case MAX31790_REG_PWM_DUTY_CYCLE_MSB(5):
-+        index = (s->pointer - MAX31790_REG_PWM_DUTY_CYCLE_MSB(0)) / 2;
-+        out0 = (s->pwm[index] >> 8) & 0xff;
-+        out1 = s->pwm[index] & 0xff;
++    case REG_ONE_SHOT:
++        /* not marked as readable */
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: read of register 0x%02x\n",
++                      __func__, s->pointer);
++        s->outbuf[0] = 0x0;
 +        break;
-+    case MAX31790_REG_PWM_DUTY_CYCLE_LSB(0):
-+    case MAX31790_REG_PWM_DUTY_CYCLE_LSB(1):
-+    case MAX31790_REG_PWM_DUTY_CYCLE_LSB(2):
-+    case MAX31790_REG_PWM_DUTY_CYCLE_LSB(3):
-+    case MAX31790_REG_PWM_DUTY_CYCLE_LSB(4):
-+    case MAX31790_REG_PWM_DUTY_CYCLE_LSB(5):
-+        index = (s->pointer - MAX31790_REG_PWM_DUTY_CYCLE_LSB(0)) / 2;
-+        out0 = s->pwm[index] & 0xff;
++    case REG_DEEP_SHUTDOWN:
++        s->outbuf[0] = s->deep_shutdown ? 0x1 : 0x0;
 +        break;
-+
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(0):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(1):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(2):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(3):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(4):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(5):
-+        index = (s->pointer - MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(0)) / 2;
-+        out0 = (s->pwm[index] >> 8) & 0xff;
-+        out1 = s->pwm[index] & 0xff;
++    case REG_ADVANCED_CONFIG:
++        s->outbuf[0] = s->advanced_config & 0b111;
 +        break;
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(0):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(1):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(2):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(3):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(4):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(5):
-+        index = (s->pointer - MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(0)) / 2;
-+        out0 = s->pwm[index] & 0xff;
++    case REG_BUSY_STATUS:
++        /* not implemented */
++        s->outbuf[0] = 0b00000010; /* POR State */
 +        break;
-+    case MAX31790_REG_TACH_TARGET_COUNT_MSB(0):
-+    case MAX31790_REG_TACH_TARGET_COUNT_MSB(1):
-+    case MAX31790_REG_TACH_TARGET_COUNT_MSB(2):
-+    case MAX31790_REG_TACH_TARGET_COUNT_MSB(3):
-+    case MAX31790_REG_TACH_TARGET_COUNT_MSB(4):
-+    case MAX31790_REG_TACH_TARGET_COUNT_MSB(5):
-+        index = (s->pointer - MAX31790_REG_TACH_TARGET_COUNT_MSB(0)) / 2;
-+        out0 = (s->tach_target[index] >> 8) & 0xff;
-+        out1 = s->tach_target[index] & 0xff;
++    case REG_CHANNEL_READING(0):
++    case REG_CHANNEL_READING(1):
++    case REG_CHANNEL_READING(2):
++    case REG_CHANNEL_READING(3):
++    case REG_CHANNEL_READING(4):
++    case REG_CHANNEL_READING(5):
++    case REG_CHANNEL_READING(6):
++    case REG_CHANNEL_READING(7):
++        ch_num = s->pointer - REG_CHANNEL_READING(0);
++        /* high byte comes first, driver reads swapped */
++        s->outbuf[0] = (s->channels[ch_num] >> 8) & 0xff;
++        s->outbuf[1] = s->channels[ch_num] & 0xff;
 +        break;
-+    case MAX31790_REG_TACH_TARGET_COUNT_LSB(0):
-+    case MAX31790_REG_TACH_TARGET_COUNT_LSB(1):
-+    case MAX31790_REG_TACH_TARGET_COUNT_LSB(2):
-+    case MAX31790_REG_TACH_TARGET_COUNT_LSB(3):
-+    case MAX31790_REG_TACH_TARGET_COUNT_LSB(4):
-+    case MAX31790_REG_TACH_TARGET_COUNT_LSB(5):
-+        index = (s->pointer - MAX31790_REG_TACH_TARGET_COUNT_LSB(0)) / 2;
-+        out0 = s->tach_target[index] & 0xff;
++    case REG_LIMIT(0):
++    case REG_LIMIT(1):
++    case REG_LIMIT(2):
++    case REG_LIMIT(3):
++    case REG_LIMIT(4):
++    case REG_LIMIT(5):
++    case REG_LIMIT(6):
++    case REG_LIMIT(7):
++    case REG_LIMIT(8):
++    case REG_LIMIT(9):
++    case REG_LIMIT(10):
++    case REG_LIMIT(11):
++    case REG_LIMIT(12):
++    case REG_LIMIT(13):
++    case REG_LIMIT(14):
++    case REG_LIMIT(15):
++        s->outbuf[0] = s->limit[s->pointer - REG_LIMIT(0)];
++        break;
++    case REG_MANUFACTURER_ID:
++        s->outbuf[0] = 0x1; /* readonly */
++        break;
++    case REG_REVISION_ID:
++        s->outbuf[0] = 0b00001001; /* readonly */
 +        break;
 +    default:
-+        qemu_log_mask(LOG_UNIMP, "%s: read of register %d\n", __func__,
-+                      s->pointer);
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: read of register 0x%02x\n",
++                      __func__, s->pointer);
 +        break;
 +    }
-+
-+    s->outbuf[0] = out0;
-+    s->outbuf[1] = out1;
 +}
 +
-+static uint8_t max31790_get_speed_range(MAX31790State *s, size_t index)
++static void adc128d818_write_advanced_config(ADC128D818State *s, uint8_t data)
 +{
-+    const uint16_t value = (s->fan_dynamics[index] >> 5);
-+    return (value > 5) ? 32 : 1 << value;
-+}
++    /*
++     * Note: Whenever the Advanced Configuration Register is programmed,
++     * all of the values in the Channel Reading Registers and
++     * Interrupt Status Registers will return to their default values.
++     */
 +
-+static void max31790_set_rpm(MAX31790State *s, size_t index, uint16_t rpm)
-+{
-+    trace_max31790_rpm_write(s->i2c.address, index, rpm);
++    s->advanced_config = (data & 0b111);
++
++    s->interrupt_status = 0x0;
 +
 +    /*
-+     * (see page 11) NP = number of tachometer pulses per revolution.
-+     * Most general-purpose brushless DC fans produce two tachometer
-+     * pulses per revolution.
++     *  The channel reading registers do not have a default value.
++     * See 8.6.1 ADC128D818 Internal Registers
++     * To do something sane, just reset the channels to an arbitrary value
 +     */
-+    const uint64_t sr = max31790_get_speed_range(s, index);
 +
-+    /* page 11: tach_count = 60 * SR * 8192 / (NP * RPM) */
++    /* reset channels to a defined state */
++    for (int i = 0; i < ADC128D818_NUM_CHANNELS; i++) {
 +
-+    /* prevent division by 0 */
-+    rpm = (rpm == 0) ? 1 : rpm;
-+
-+    /* simplified, assuming NP = 2 */
-+    uint64_t tach_count =  (245760ULL * sr) / (uint64_t)rpm;
-+
-+    /* datasheet: lowest 5 bits are 0 */
-+    s->tach_count[index] = tach_count << 5;
-+
-+    trace_max31790_tach_count_reg(s->i2c.address, index, s->tach_count[index]);
++        /* arbitrary value */
++        s->channels[i] = 0b0000101011010010;
++    }
 +}
 +
-+static void max31790_pwm_write(MAX31790State *s, size_t index, uint16_t value)
++static void adc128d818_write(ADC128D818State *s, uint8_t data)
 +{
-+    trace_max31790_pwm_write(s->i2c.address, index, value);
++    trace_adc128d818_write(s->i2c.address, s->pointer, data);
 +
-+    s->pwm[index] = value;
-+
-+    /* last 7 bits in register are 0 , 9 bits remaining */
-+    const uint16_t pwm_real = s->pwm[index] >> 7;
-+
-+    /* maximum value will be 511 */
-+
-+    /*
-+     * This formula has magic values which model the relationship
-+     * of PWM input to a fan. Not derived from datasheet.
-+     */
-+    max31790_set_rpm(s, index, 100 + pwm_real * 20);
-+}
-+
-+static void max31790_write_2_byte(MAX31790State *s)
-+{
-+    size_t index = 0;
-+    const uint8_t value0 = s->buf[0];
-+    const uint8_t value1 = s->buf[1];
++    /* which bits in config register are writable */
++    const uint8_t config_w_mask = 0b10001011;
++    const uint8_t config_ro_mask = (uint8_t)~config_w_mask;
 +
 +    switch (s->pointer) {
-+    case MAX31790_REG_FAN_CONFIG(0):
-+    case MAX31790_REG_FAN_CONFIG(1):
-+    case MAX31790_REG_FAN_CONFIG(2):
-+    case MAX31790_REG_FAN_CONFIG(3):
-+    case MAX31790_REG_FAN_CONFIG(4):
-+    case MAX31790_REG_FAN_CONFIG(5):
-+        break; /* handled by one byte write */
-+    case MAX31790_REG_FAN_DYNAMICS(0):
-+    case MAX31790_REG_FAN_DYNAMICS(1):
-+    case MAX31790_REG_FAN_DYNAMICS(2):
-+    case MAX31790_REG_FAN_DYNAMICS(3):
-+    case MAX31790_REG_FAN_DYNAMICS(4):
-+    case MAX31790_REG_FAN_DYNAMICS(5):
-+        break; /* handled by one byte write */
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(0):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(1):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(2):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(3):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(4):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(5):
-+        index = (s->pointer - MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(0)) / 2;
-+        max31790_pwm_write(s, index, value0 << 8 | value1);
++    case REG_CONFIG:
++        s->config = (s->config & config_ro_mask) | (data & config_w_mask);
 +        break;
-+    case MAX31790_REG_TACH_TARGET_COUNT_MSB(0):
-+    case MAX31790_REG_TACH_TARGET_COUNT_MSB(1):
-+    case MAX31790_REG_TACH_TARGET_COUNT_MSB(2):
-+    case MAX31790_REG_TACH_TARGET_COUNT_MSB(3):
-+    case MAX31790_REG_TACH_TARGET_COUNT_MSB(4):
-+    case MAX31790_REG_TACH_TARGET_COUNT_MSB(5):
-+        index = (s->pointer - MAX31790_REG_TACH_TARGET_COUNT_MSB(0)) / 2;
-+        s->tach_target[index] = (value0 << 8) | value1;
++    case REG_INTERRUPT_MASK:
++        s->interrupt_mask = data;
++        break;
++    case REG_CONVERSION_RATE:
++        s->conversion_rate = data;
++        break;
++    case REG_CHANNEL_DISABLE:
++        s->channel_disable = data;
++        break;
++    case REG_ONE_SHOT:
++        /*
++         * Initiate a single conversion and comparison cycle when
++         * the device is in shutdown mode or deep shutdown mode, after
++         * which the device returns to the respective mode that it was in
++         *
++         */
++        break;
++    case REG_DEEP_SHUTDOWN:
++        s->deep_shutdown = (data & 0x1) != 0;
++        break;
++    case REG_ADVANCED_CONFIG:
++        adc128d818_write_advanced_config(s, data);
++        break;
++    case REG_LIMIT(0):
++    case REG_LIMIT(1):
++    case REG_LIMIT(2):
++    case REG_LIMIT(3):
++    case REG_LIMIT(4):
++    case REG_LIMIT(5):
++    case REG_LIMIT(6):
++    case REG_LIMIT(7):
++    case REG_LIMIT(8):
++    case REG_LIMIT(9):
++    case REG_LIMIT(10):
++    case REG_LIMIT(11):
++    case REG_LIMIT(12):
++    case REG_LIMIT(13):
++    case REG_LIMIT(14):
++    case REG_LIMIT(15):
++        s->limit[s->pointer - REG_LIMIT(0)] = data;
 +        break;
 +    default:
-+        qemu_log_mask(LOG_UNIMP, "%s: write to register %d\n", __func__,
-+                      s->pointer);
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: write of register 0x%02x\n",
++                      __func__, s->pointer);
 +        break;
 +    }
 +}
 +
-+static void max31790_write_1_byte(MAX31790State *s)
++static int adc128d818_send(I2CSlave *i2c, uint8_t data)
 +{
-+    size_t index = 0;
-+    uint16_t pwm = 0;
-+    const uint8_t value = s->buf[0];
++    ADC128D818State *s = ADC128D818(i2c);
++    trace_adc128d818_send(s->i2c.address, data);
 +
-+    switch (s->pointer) {
-+    case MAX31790_REG_FAN_CONFIG(0):
-+    case MAX31790_REG_FAN_CONFIG(1):
-+    case MAX31790_REG_FAN_CONFIG(2):
-+    case MAX31790_REG_FAN_CONFIG(3):
-+    case MAX31790_REG_FAN_CONFIG(4):
-+    case MAX31790_REG_FAN_CONFIG(5):
-+        s->fan_config[s->pointer - MAX31790_REG_FAN_CONFIG(0)] = value;
-+        break;
-+    case MAX31790_REG_FAN_DYNAMICS(0):
-+    case MAX31790_REG_FAN_DYNAMICS(1):
-+    case MAX31790_REG_FAN_DYNAMICS(2):
-+    case MAX31790_REG_FAN_DYNAMICS(3):
-+    case MAX31790_REG_FAN_DYNAMICS(4):
-+    case MAX31790_REG_FAN_DYNAMICS(5):
-+        s->fan_dynamics[s->pointer - MAX31790_REG_FAN_DYNAMICS(0)] = value;
-+        break;
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(0):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(1):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(2):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(3):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(4):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(5):
-+        index = (s->pointer - MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(0)) / 2;
-+        pwm = (value << 8) | (s->pwm[index] & 0x00ff);
-+        max31790_pwm_write(s, index, pwm);
-+        break;
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(0):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(1):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(2):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(3):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(4):
-+    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(5):
-+        index = (s->pointer - MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(0)) / 2;
-+        pwm = (s->pwm[index] & 0xff00) | (value & 0x00ff);
-+        max31790_pwm_write(s, index, pwm);
-+        break;
-+    case MAX31790_REG_TACH_TARGET_COUNT_MSB(0):
-+    case MAX31790_REG_TACH_TARGET_COUNT_MSB(1):
-+    case MAX31790_REG_TACH_TARGET_COUNT_MSB(2):
-+    case MAX31790_REG_TACH_TARGET_COUNT_MSB(3):
-+    case MAX31790_REG_TACH_TARGET_COUNT_MSB(4):
-+    case MAX31790_REG_TACH_TARGET_COUNT_MSB(5):
-+        index = (s->pointer - MAX31790_REG_TACH_TARGET_COUNT_MSB(0)) / 2;
-+        s->tach_target[index] = (s->tach_target[index] & 0x00ff) | (value << 8);
-+        break;
-+    case MAX31790_REG_TACH_TARGET_COUNT_LSB(0):
-+    case MAX31790_REG_TACH_TARGET_COUNT_LSB(1):
-+    case MAX31790_REG_TACH_TARGET_COUNT_LSB(2):
-+    case MAX31790_REG_TACH_TARGET_COUNT_LSB(3):
-+    case MAX31790_REG_TACH_TARGET_COUNT_LSB(4):
-+    case MAX31790_REG_TACH_TARGET_COUNT_LSB(5):
-+        index = (s->pointer - MAX31790_REG_TACH_TARGET_COUNT_LSB(0)) / 2;
-+        s->tach_target[index] = (s->tach_target[index] & 0xff00) | value;
-+        break;
-+    default:
-+        qemu_log_mask(LOG_UNIMP, "%s: write to register %d\n", __func__,
-+                      s->pointer);
-+        break;
++    s->outlen = 0;
++
++    if (s->len >= 2) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: wrote too many bytes\n", __func__);
++        return 1;
 +    }
-+}
 +
-+static int max31790_send(I2CSlave *i2c, uint8_t data)
-+{
-+    MAX31790State *s = MAX31790(i2c);
-+
-+    trace_max31790_send(s->i2c.address, data);
++    s->buf[s->len] = data;
 +
 +    if (s->len == 0) {
-+        /* first byte is the register pointer for a read / write operation */
 +        s->pointer = data;
-+        s->len++;
-+        return 0;
++    } else if (s->len == 1) {
++        adc128d818_write(s, data);
 +    }
 +
-+    if (s->len > 2) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write too many bytes\n", __func__);
-+        return 1; /* NAK */
-+    }
-+
-+    /* second / third byte is the data to write */
-+    s->buf[s->len - 1] = data;
 +    s->len++;
-+
-+    if (s->len == 2) {
-+        max31790_write_1_byte(s);
-+    } else if (s->len == 3) {
-+        max31790_write_2_byte(s);
-+    }
-+
 +    return 0;
 +}
 +
-+static uint8_t max31790_recv(I2CSlave *i2c)
++static uint8_t adc128d818_recv(I2CSlave *i2c)
 +{
-+    MAX31790State *s = MAX31790(i2c);
-+    trace_max31790_recv(s->i2c.address, s->pointer);
++    ADC128D818State *s = ADC128D818(i2c);
++    trace_adc128d818_recv(s->i2c.address, s->pointer);
 +
-+    max31790_read(s);
-+    s->len = 0;
++    adc128d818_read(s);
 +
 +    if (s->outlen >= 2) {
-+        /* error */
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: guest over read\n", __func__);
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: too many bytes read\n", __func__);
 +        s->outlen = 0;
 +    }
 +
 +    const uint8_t data = s->outbuf[s->outlen++];
 +
-+    trace_max31790_recv_return(s->i2c.address, data);
++    trace_adc128d818_recv_return(s->i2c.address, data);
 +    return data;
 +}
 +
-+static int max31790_event(I2CSlave *i2c, enum i2c_event event)
++static int adc128d818_event(I2CSlave *i2c, enum i2c_event event)
 +{
-+    MAX31790State *s = MAX31790(i2c);
++    ADC128D818State *s = ADC128D818(i2c);
 +
-+    trace_max31790_event(s->i2c.address, event);
++    trace_adc128d818_event(s->i2c.address, event);
 +
 +    switch (event) {
 +    case I2C_START_RECV:
@@ -698,173 +604,179 @@ index 0000000000..b0430ea094
 +    return 0;
 +}
 +
-+static const VMStateDescription vmstate_max31790 = {
-+    .name = TYPE_MAX31790,
++static const VMStateDescription vmstate_adc128d818 = {
++    .name = TYPE_ADC128D818,
 +    .version_id = 0,
 +    .minimum_version_id = 0,
 +    .fields =
 +        (const VMStateField[]){
-+            VMSTATE_UINT8(len, MAX31790State),
-+            VMSTATE_UINT8_ARRAY(fan_config, MAX31790State, MAX31790_NUM_FANS),
-+            VMSTATE_UINT8_ARRAY(fan_dynamics, MAX31790State, MAX31790_NUM_FANS),
-+            VMSTATE_UINT16_ARRAY(pwm, MAX31790State, MAX31790_NUM_FANS),
-+            VMSTATE_UINT16_ARRAY(tach_target, MAX31790State, MAX31790_NUM_FANS),
-+            VMSTATE_UINT16_ARRAY(tach_count, MAX31790State, MAX31790_NUM_TACHS),
-+            VMSTATE_UINT8_ARRAY(buf, MAX31790State, 2),
-+            VMSTATE_UINT8(outlen, MAX31790State),
-+            VMSTATE_UINT8_ARRAY(outbuf, MAX31790State, 2),
-+            VMSTATE_UINT8(pointer, MAX31790State),
-+            VMSTATE_I2C_SLAVE(i2c, MAX31790State), VMSTATE_END_OF_LIST() }
++            VMSTATE_UINT8(config, ADC128D818State),
++            VMSTATE_UINT8(interrupt_mask, ADC128D818State),
++            VMSTATE_UINT8(conversion_rate, ADC128D818State),
++            VMSTATE_UINT8(channel_disable, ADC128D818State),
++            VMSTATE_BOOL(deep_shutdown, ADC128D818State),
++            VMSTATE_UINT8(advanced_config, ADC128D818State),
++            VMSTATE_UINT16_ARRAY(channels, ADC128D818State,
++                                 ADC128D818_NUM_CHANNELS),
++            VMSTATE_UINT8_ARRAY(limit, ADC128D818State,
++                                ADC128D818_NUM_CHANNELS * 2),
++            VMSTATE_UINT8(len, ADC128D818State),
++            VMSTATE_UINT8_ARRAY(buf, ADC128D818State, 2),
++            VMSTATE_UINT8(outlen, ADC128D818State),
++            VMSTATE_UINT8_ARRAY(outbuf, ADC128D818State, 2),
++            VMSTATE_UINT8(pointer, ADC128D818State),
++            VMSTATE_I2C_SLAVE(i2c, ADC128D818State), VMSTATE_END_OF_LIST() }
 +};
 +
-+static void max31790_reset(DeviceState *dev)
++I2CSlave *adc128d818_init_with_values(I2CBus *bus, uint8_t address,
++                                      const uint16_t *init_values,
++                                      uint32_t init_values_size)
 +{
-+    MAX31790State *s = MAX31790(dev);
++    ADC128D818State *s;
 +
-+    for (int i = 0; i < MAX31790_NUM_FANS; i++) {
-+        /* POR-State 0b 0XX0 0000 */
-+        s->fan_config[i] = 0b00000000;
++    s = ADC128D818(i2c_slave_new(TYPE_ADC128D818, address));
 +
-+        /* same as POR-State */
-+        s->tach_target[i] = 0b0011110000000000;
++    for (int i = 0; i < ADC128D818_NUM_CHANNELS; i++) {
 +
-+        /* same as POR-State */
-+        s->fan_dynamics[i] = 0b01001100;
++        /* arbitrary value */
++        s->channels[i] =
++            i < init_values_size ? init_values[i] : 0b0000101011010010;
 +    }
 +
-+    /* this will set both pwm and tach count */
-+    for (int i = 0; i < MAX31790_NUM_TACHS; i++) {
-+        max31790_pwm_write(s, i, 0x4444);
++    i2c_slave_realize_and_unref(I2C_SLAVE(s), bus, &error_abort);
++
++    return I2C_SLAVE(s);
++}
++
++static void adc128d818_reset(DeviceState *dev)
++{
++    ADC128D818State *s = ADC128D818(dev);
++
++    s->pointer = 0;
++    s->outlen = 0;
++
++    /* POR-State */
++    s->config = 0b00001000;
++    s->interrupt_status = 0x0;
++    s->interrupt_mask = 0;
++    s->conversion_rate = 0;
++    s->channel_disable = 0;
++    s->deep_shutdown = 0;
++    s->advanced_config = 0;
++
++    /* No POR-State defined in datasheet */
++    for (int i = 0; i < ADC128D818_NUM_CHANNELS * 2; i++) {
++        s->limit[i] = 0;
++    }
++
++    /* reset channels to a defined state */
++    for (int i = 0; i < ADC128D818_NUM_CHANNELS; i++) {
++
++        /* arbitrary value */
++        s->channels[i] = 0b0000101011010010;
 +    }
 +}
 +
-+static void max31790_realize(DeviceState *dev, Error **errp)
++static void adc128d818_realize(DeviceState *dev, Error **errp)
 +{
-+    MAX31790State *s = MAX31790(dev);
++    ADC128D818State *s = ADC128D818(dev);
 +
-+    trace_max31790_realize(s->i2c.address);
++    trace_adc128d818_realize(s->i2c.address);
 +}
 +
-+static void max31790_class_init(ObjectClass *klass, const void *data)
++static void adc128d818_class_init(ObjectClass *klass, const void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
 +    I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
 +
-+    dc->realize = max31790_realize;
-+    dc->desc = "Maxim MAX31790 6-Channel Fan Controller";
-+    dc->vmsd = &vmstate_max31790;
-+    dc->legacy_reset = max31790_reset;
-+    k->event = max31790_event;
-+    k->recv = max31790_recv;
-+    k->send = max31790_send;
++    dc->realize = adc128d818_realize;
++    dc->desc = "Texas Instruments ADC128D818 12-bit ADC with temp sensor";
++    dc->vmsd = &vmstate_adc128d818;
++    dc->legacy_reset = adc128d818_reset;
++    k->event = adc128d818_event;
++    k->recv = adc128d818_recv;
++    k->send = adc128d818_send;
 +}
 +
-+static const TypeInfo max31790_info = {
-+    .name = TYPE_MAX31790,
++static const TypeInfo adc128d818_info = {
++    .name = TYPE_ADC128D818,
 +    .parent = TYPE_I2C_SLAVE,
-+    .instance_size = sizeof(MAX31790State),
-+    .class_size = sizeof(MAX31790Class),
-+    .class_init = max31790_class_init,
++    .instance_size = sizeof(ADC128D818State),
++    .class_size = sizeof(ADC128D818Class),
++    .class_init = adc128d818_class_init,
 +};
 +
-+static void max31790_register_types(void)
++static void adc128d818_register_types(void)
 +{
-+    type_register_static(&max31790_info);
++    type_register_static(&adc128d818_info);
 +}
 +
-+type_init(max31790_register_types)
++type_init(adc128d818_register_types)
 diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 5b198402d5..99864eb878 100644
+index 76a7d327a9..cc89c65e3f 100644
 --- a/hw/arm/Kconfig
 +++ b/hw/arm/Kconfig
-@@ -552,6 +552,7 @@ config ASPEED_SOC
-     select LED
-     select PMBUS
+@@ -554,6 +554,7 @@ config ASPEED_SOC
      select MAX31785
-+    select MAX31790
+     select MAX31790
+     select MAX11615
++    select ADC128D818
      select FSI_APB2OPB_ASPEED
      select AT24C
      select PCI_EXPRESS
 diff --git a/hw/sensor/Kconfig b/hw/sensor/Kconfig
-index bc6331b4ab..767f198e92 100644
+index 441bee7604..a640958257 100644
 --- a/hw/sensor/Kconfig
 +++ b/hw/sensor/Kconfig
-@@ -43,3 +43,7 @@ config ISL_PMBUS_VR
- config MAX31785
+@@ -51,3 +51,7 @@ config MAX31790
+ config MAX11615
      bool
-     depends on PMBUS
+     depends on I2C
 +
-+config MAX31790
++config ADC128D818
 +    bool
 +    depends on I2C
 diff --git a/hw/sensor/meson.build b/hw/sensor/meson.build
-index 420fdc3359..4987c3b253 100644
+index a1e26604fa..defd7647e7 100644
 --- a/hw/sensor/meson.build
 +++ b/hw/sensor/meson.build
-@@ -8,3 +8,4 @@ system_ss.add(when: 'CONFIG_MAX34451', if_true: files('max34451.c'))
- system_ss.add(when: 'CONFIG_LSM303DLHC_MAG', if_true: files('lsm303dlhc_mag.c'))
- system_ss.add(when: 'CONFIG_ISL_PMBUS_VR', if_true: files('isl_pmbus_vr.c'))
+@@ -10,3 +10,4 @@ system_ss.add(when: 'CONFIG_ISL_PMBUS_VR', if_true: files('isl_pmbus_vr.c'))
  system_ss.add(when: 'CONFIG_MAX31785', if_true: files('max31785.c'))
-+system_ss.add(when: 'CONFIG_MAX31790', if_true: files('max31790.c'))
+ system_ss.add(when: 'CONFIG_MAX31790', if_true: files('max31790.c'))
+ system_ss.add(when: 'CONFIG_MAX11615', if_true: files('max11615.c'))
++system_ss.add(when: 'CONFIG_ADC128D818', if_true: files('adc128d818.c'))
 diff --git a/hw/sensor/trace-events b/hw/sensor/trace-events
-index a3fe54fa6d..0bde02e676 100644
+index 23e34d8297..dc6cf26a0b 100644
 --- a/hw/sensor/trace-events
 +++ b/hw/sensor/trace-events
-@@ -4,3 +4,14 @@
- tmp105_read(uint8_t dev, uint8_t addr) "device: 0x%02x, addr: 0x%02x"
- tmp105_write(uint8_t dev, uint8_t addr) "device: 0x%02x, addr 0x%02x"
- tmp105_write_shutdown(uint8_t dev) "device: 0x%02x"
-+
-+# max31790.c
-+max31790_send(uint8_t i2c_addr, uint8_t send) "i2c_addr: 0x%02x, data: 0x%02x"
-+max31790_recv(uint8_t i2c_addr, uint8_t reg_addr) "i2c_addr: 0x%02x, reg_addr: 0x%02x"
-+max31790_recv_return(uint8_t i2c_addr, uint8_t data) "i2c_addr: 0x%02x, returns: 0x%02x"
-+max31790_event(uint8_t i2c_addr, uint8_t event) "i2c_addr: 0x%02x, event: 0x%02x"
-+max31790_realize(uint8_t i2c_addr) "i2c_addr: 0x%02x"
-+max31790_pwm_write(uint8_t i2c_addr, size_t index, uint16_t value) "i2c_addr: 0x%02x, index: %zu, value: 0x%04x"
-+max31790_rpm_write(uint8_t i2c_addr, size_t index, uint16_t value) "i2c_addr: 0x%02x, index: %zu, value: 0x%04x"
-+max31790_tach_count_reg(uint8_t i2c_addr, size_t index, uint16_t value) "i2c_addr: 0x%02x, index: %zu, value: 0x%04x"
-+
+@@ -23,3 +23,10 @@ max11615_recv_return(uint8_t i2c_addr, uint8_t data) "i2c_addr: 0x%02x, returns:
+ max11615_event(uint8_t i2c_addr, uint8_t event) "i2c_addr: 0x%02x, event: 0x%02x"
+ max11615_realize(uint8_t i2c_addr) "i2c_addr: 0x%02x"
+ 
++# adc128d818.c
++adc128d818_send(uint8_t i2c_addr, uint8_t data) "i2c_addr: 0x%02x, data: 0x%02x"
++adc128d818_write(uint8_t i2c_addr, uint8_t reg, uint8_t data) "i2c_addr: 0x%02x, reg: 0x%02x data: 0x%02x"
++adc128d818_recv(uint8_t i2c_addr, uint8_t reg) "i2c_addr: 0x%02x, reg: 0x%02x"
++adc128d818_recv_return(uint8_t i2c_addr, uint8_t data) "i2c_addr: 0x%02x, returns: 0x%02x"
++adc128d818_event(uint8_t i2c_addr, uint8_t event) "i2c_addr: 0x%02x, event: 0x%02x"
++adc128d818_realize(uint8_t i2c_addr) "i2c_addr: 0x%02x"
 diff --git a/tests/functional/arm/test_aspeed_fby4.py b/tests/functional/arm/test_aspeed_fby4.py
-index a521834f79..dc2437a533 100755
+index 4ace4985d2..4957d3d89f 100755
 --- a/tests/functional/arm/test_aspeed_fby4.py
 +++ b/tests/functional/arm/test_aspeed_fby4.py
-@@ -8,6 +8,8 @@
- from qemu_test import wait_for_console_pattern
- from aspeed import AspeedTest
+@@ -68,6 +68,16 @@ def do_test_arm_aspeed_openbmc_no_network(self, machine, image, uboot,
+         exec_command_and_wait_for_pattern(self,
+             "cat /sys/bus/i2c/devices/30-0033/iio:device*/in_voltage_scale", "0.500000000");
  
-+from qemu_test import wait_for_console_pattern
-+from qemu_test import exec_command_and_wait_for_pattern
- 
- class YosemiteV4Machine(AspeedTest):
- 
-@@ -34,6 +36,30 @@ def do_test_arm_aspeed_openbmc_no_network(self, machine, image, uboot,
-         # different from the other machines.
-         self.wait_for_console_pattern('yosemite4 login:')
- 
-+        # perform login
++        # ADC128D818 test
 +        exec_command_and_wait_for_pattern(self,
-+                                          "root", "Password:");
-+
-+        exec_command_and_wait_for_pattern(self, "0penBmc", "#");
-+
-+        # MAX31790 test
++            "cat /sys/bus/i2c/devices/30-001f/hwmon/hwmon0/name", "adc128d818");
 +        exec_command_and_wait_for_pattern(self,
-+            "cat /sys/class/hwmon/hwmon2/name", "max31790");
++            "cat /sys/bus/i2c/devices/30-001f/hwmon/hwmon0/in0_input", "108");
 +        exec_command_and_wait_for_pattern(self,
-+            "cat /sys/class/hwmon/hwmon2/fan1_input", "7447");
++            "cat /sys/bus/i2c/devices/30-001f/hwmon/hwmon0/in0_min", "0");
 +        exec_command_and_wait_for_pattern(self,
-+            "cat /sys/class/hwmon/hwmon2/fan1_enable", "1");
-+        exec_command_and_wait_for_pattern(self,
-+            "cat /sys/class/hwmon/hwmon2/fan1_fault", "0");
-+        exec_command_and_wait_for_pattern(self,
-+            "echo 1 > /sys/class/hwmon/hwmon2/pwm1", "root@yosemite4");
-+        exec_command_and_wait_for_pattern(self,
-+            "cat /sys/class/hwmon/hwmon2/fan1_input", "140");
-+        exec_command_and_wait_for_pattern(self,
-+            "echo 255 > /sys/class/hwmon/hwmon2/pwm1", "root@yosemite4");
-+        exec_command_and_wait_for_pattern(self,
-+            "cat /sys/class/hwmon/hwmon2/fan1_input", "10685");
++            "cat /sys/bus/i2c/devices/30-001f/hwmon/hwmon0/in0_max", "0");
 +
      def test_arm_ast2600_yosemitev4_openbmc(self):
          image_path = self.uncompress(self.ASSET_YOSEMITE_V4_FLASH)
