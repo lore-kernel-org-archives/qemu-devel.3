@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4859ECD6E43
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:48:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A88BCD6E51
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:48:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSvgd-0001UL-BR; Fri, 29 May 2026 07:47:35 -0400
+	id 1wSvgu-0001k7-So; Fri, 29 May 2026 07:47:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSvga-0001RX-3U
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:32 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1wSvgs-0001iH-Dx
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:50 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSvgX-00089W-W5
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:31 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-48e8132c6d0so88203935e9.1
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 04:47:29 -0700 (PDT)
+ id 1wSvgq-0008FJ-Ke
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:50 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-45ef5146b56so177682f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 04:47:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780055248; x=1780660048; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780055267; x=1780660067; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Gu39tWs0RcZyH4C2B3SuMjpIx3n47+25EF5CIC4US8Y=;
- b=iyqDovozJhJeJI8Z8kyc4uyemAvvNiyX0i3+HDD9gJd/AOdIG4DZBQ2LQKc5vril+b
- F0WL4KHFUZRl5ebTba9Q30K/a802f7xdbi30QKRpoW1wNfKmV2sY9kCfSxL74Tu7ro4G
- pBhkTleeNUfyIJKUFoav2XxB2jOYeAyD+seo+zUto7bz6T8nR/qfWaCwYaiLvlaPjcGh
- 5QJj+Qf8pzBSNzcwgkPf4t7Uk5u4InGXucv9l21SGK1bvK901GK6YueboONqxWV/s9sh
- w4TcXm/8+iyQDgNXYvnCVnbN1WMNYAZrvFZUoXmAg7+w4KXkB60QcNATyFqy/l+QzWI+
- Knzw==
+ :reply-to; bh=5EAWUWr4AJq45/iqbCnBFS2ikIkq25zXWdRXk2fFgzs=;
+ b=RHDRfpP5zmqXw7Vslh2ynBJqlFv017JxGcYkSGAqKzDxFTodG8c2plgAc7JGNLmNXs
+ yObk2FEry41B0KrJ3gs5hd6qlX55XjqqJCv3xPFiMPpXeTAw8BU2TJSdc//jc9p8Rjrj
+ HX5p4/2Q/JP0TmN6r/bo5ojDiSQ/O1f0UtGq6f78czhmQPWRMMYcyt1Lr6Yn4lrcSY8o
+ iyymK9Kvdg5DdKwneiRGyMNVkRadno3mrLZ6zKfdtbfx5O69aWog7Zs5Cl9mS7q7b2+M
+ n5U9jb8xpTj9V4ImEWJJEeYgf+qq6/QJ1OgcGhuSKi2C6RFuRCkKlOEQP1y1oO11O7m/
+ Sfxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780055248; x=1780660048;
+ d=1e100.net; s=20251104; t=1780055267; x=1780660067;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Gu39tWs0RcZyH4C2B3SuMjpIx3n47+25EF5CIC4US8Y=;
- b=oxteGiJotIBWjV0q0Z4J+1GWxqDanRH1bTXSDXSgssUFlahrJdy9jvj/SG+WYW1Y3I
- VnmB5rKo7GITbB/bdsydaErHx01UHrKSeNf8L+6YeSrkLG+Zz3FthKlzTrbpDEOoCT/K
- qBz4PR47MYdwpu+pEN1lw/+p/evJLpPOnaYEZcmrIbvkE8pVdbdvlK9YfrU+BDXeL9wB
- nqGY89vhX79iEpzbFaVjMbqz9e8rWAyX1msba4M7nilZgNOpLXJHFJly0u0IvGP8BA2F
- q7peiVICcG0aWh6Bx0zjmg8CIaa1kSTgYITYqA0ulntikjmqOBLUCyAjblJ/YJK/uKl1
- hWXg==
-X-Gm-Message-State: AOJu0YzC/3rG9tRLsAfyAvB3AutEPQ1AoyJyvGBolsLn0E08M/dSmMgY
- Su2gVyh7Ub9lrRrLWFuY+W8uyWRgvBFSB2mO0W+rkAbyl7BJBlvtb813f4PBD6naLTb3wXOPslS
- aKMQg
-X-Gm-Gg: Acq92OG3OwzjCHsHKiSR26HQPWTrsHvaQZjaLRlJdrq52D/FGyb5nKdqPZGzywiuREt
- +N0zsGpyhRGvxgYnnCZqTToTwWFyfoEu6spXQARSLs1lbc1khf51eldO4iq48JLPgE0bksDMS7q
- drfNQUbzJbAq51wDh5x5VbBgN8c/CBiVnQLoQJDW3tpPZ0H28QCfIsdmRx6xfQ/oXXWHlMybVK0
- VEJSi7CXMcvINYUSfZJoNGZLTMR/gOBiqj39Dzz/wq8WwwoJ2kZUMuUccswjwubZrMBAowk4Ggc
- jG0eWCBg2DBN1Jcwka8Qr7zrM/3GZF5Zh2QsRmKs56I3cFbDQvRBBzCSw78YbL5lzym8/QV1jSy
- fqK+G2r/HNBxvYzd0bR/MNN4VeFqm+8oviIdQgkCmjpsXimYkDyZumr+XrriQX+UNkba20D1S7w
- a9p40EoPXgqzOqIVavNJ8s4KOJDk+NVwSAsZnSQ0SNDf/VuEtW9vCPfgJ5zBr76gDA/jnxUBjHb
- h0yryiRP/PRkp3OYlHXIafu1pLerpzukDWueBP6zQ==
-X-Received: by 2002:a05:600c:4fd1:b0:48f:e230:c3fa with SMTP id
- 5b1f17b1804b1-4909c0f9b76mr42357265e9.32.1780055247619; 
- Fri, 29 May 2026 04:47:27 -0700 (PDT)
+ bh=5EAWUWr4AJq45/iqbCnBFS2ikIkq25zXWdRXk2fFgzs=;
+ b=CA9FBcvlBmujbvaXOPHX9AQN1ImEcrUgIYVu74cahaQS56Bh576lUDIkpRtgRbhJn2
+ SO4JVQQPeHIlIc+0VwFquh+06Iklnx/3paumXv2K0Ne9UNSXc4c10gpeNZ786hx0uCx1
+ 1teyNnsXaErwc1dy66WON9kDdPb9ZPhCP+RM2dnvQ9HhIb/5UptUjxcjKGgEATjhoSRx
+ YEPOx7j9cAVzPfnVB9ZbL8lilqd+iIJZsh8NElju9kTWz9ylPZ//EqpFMTgsqudBbcAb
+ 0xDeX2iB2oVnlzgp4Sfu/Ik+o7cHXw/7rXCyt7G/EfVUbhpZc76LvJ3HHoBHs1N13K0x
+ XZkQ==
+X-Gm-Message-State: AOJu0YwgLnmowiK9tNI5f5x2dkHaBpO81kOVIMDSyHtgbRsfvdS3lblp
+ XPt6UgHzs1RdzmtsYqQ/tvWFioZqUqQRwBBQ3YBdZMawX/8FQQfz2r0RFnfj1zjIozSlk7IvNHs
+ DVuMF
+X-Gm-Gg: Acq92OEfNhn4WqJgWhsCzdp+bdWX02GVafyx3M/RMKA+lgU+6st/gGU9Vb4WtZ5xCKI
+ AEXypjPWCYWy8bYt1WYyDkIOW1OdStwQFqHS3sAb4jtobqCy2609oNaTuP5Yo2sgPQ3p4YCh2f0
+ e/plnrr7QWTmRQYQFBXzqVi9C31IjPvr01NQ7EcVdSGv63DgIBBa4YB/Q7F8Q/mIUT0HwfbuTik
+ 14LqIzbdB8BX/4cmK6OidzZLBiFzNgeTMlmn9nlQ2JjDmFbl3o2VuJIcrVU83SFXghy9KmD9AZ6
+ qtf5gsYovZkJIecNweuWNlCJShtyyuSaO+91bpXh3ovWK+TKKop5ja2m8BG/hoi5TSCEdodu4mU
+ tXSvCKKQzyE4kUF1U2UyK5OoACF+FbvNOVtztsSzcPnPNLsj563droo+dq9Rmrty1RcQCoeKg2L
+ 9OBymJf4NWrhs2apQTy977/gh4HkwIPWcPCkUrB6aCgfst13mZeuGikkLyhO0kCXF3CUNPWgqol
+ wRRv1L+xfMJ/RHtCA9boppOj7mfccjVjaP4SsdGkA==
+X-Received: by 2002:a05:600d:8498:10b0:490:3d3d:805a with SMTP id
+ 5b1f17b1804b1-4909c14dcfbmr28883435e9.12.1780055267126; 
+ Fri, 29 May 2026 04:47:47 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ef3563cb9sm3007358f8f.29.2026.05.29.04.47.26
+ ffacd0b85a97d-45ef3563cb9sm3007358f8f.29.2026.05.29.04.47.46
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 May 2026 04:47:26 -0700 (PDT)
+ Fri, 29 May 2026 04:47:46 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/21] hw/dma/zynq-devcfg: Handle bitstream loading via DMA to
- 0xffffffff
-Date: Fri, 29 May 2026 12:47:03 +0100
-Message-ID: <20260529114723.42040-3-peter.maydell@linaro.org>
+Subject: [PULL 20/21] hw/dma/omap_dma: Fix coding style in
+ omap_dma_transfer_setup()
+Date: Fri, 29 May 2026 12:47:21 +0100
+Message-ID: <20260529114723.42040-21-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260529114723.42040-1-peter.maydell@linaro.org>
 References: <20260529114723.42040-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,51 +102,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: YannickV <Y.Vossen@beckhoff.com>
+We're about to fix indent in a section of the
+omap_dma_transfer_setup() function, which will make checkpatch
+complain.  Since we're touching the code anyway, fix the uses of if()
+with no braces and wrongly formatted multiline comments.
 
-A DMA transfer to destination address `0xffffffff` should trigger a
-bitstream load via the PCAP interface. Currently, this case is not
-intercepted, causing loaders to enter an infinite loop when polling
-the status register.
-
-This commit adds a check for `0xffffffff` as the destination address.
-If detected, the relevant status register bits (`DMA_DONE`,
-`DMA_P_DONE`, and `PCFG_DONE`) are set to indicate a successful
-bitstream load. If the address is different, the DMA transfer proceeds
-as usual. A successful load is indicated but nothing is actually
-done. Guests relying on FPGA functions are still known to fail.
-
-This feature is required for the integration of the Beckhoff
-CX7200 model.
-
-Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Message-id: 20260518073401.11279-2-corvin.koehne@gmail.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20260528152852.3349928-3-peter.maydell@linaro.org
 ---
- hw/dma/xlnx-zynq-devcfg.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ hw/dma/omap_dma.c | 51 ++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 33 insertions(+), 18 deletions(-)
 
-diff --git a/hw/dma/xlnx-zynq-devcfg.c b/hw/dma/xlnx-zynq-devcfg.c
-index cf00aa863d..9708200760 100644
---- a/hw/dma/xlnx-zynq-devcfg.c
-+++ b/hw/dma/xlnx-zynq-devcfg.c
-@@ -247,7 +247,14 @@ static uint64_t r_lock_pre_write(RegisterInfo *reg, uint64_t val)
- static void r_dma_dst_len_post_write(RegisterInfo *reg, uint64_t val)
- {
-     XlnxZynqDevcfg *s = XLNX_ZYNQ_DEVCFG(reg->opaque);
--
-+    if ((s->regs[R_DMA_DST_ADDR]) == 0xffffffff) {
-+        DB_PRINT("bitstream loading detected\n");
-+        s->regs[R_INT_STS] |= R_INT_STS_DMA_DONE_MASK |
-+                                R_INT_STS_DMA_P_DONE_MASK |
-+                                R_INT_STS_PCFG_DONE_MASK;
-+        xlnx_zynq_devcfg_update_ixr(s);
-+        return;
-+    }
-     s->dma_cmd_fifo[s->dma_cmd_fifo_num] = (XlnxZynqDevcfgDMACmd) {
-             .src_addr = s->regs[R_DMA_SRC_ADDR] & ~0x3UL,
-             .dest_addr = s->regs[R_DMA_DST_ADDR] & ~0x3UL,
+diff --git a/hw/dma/omap_dma.c b/hw/dma/omap_dma.c
+index a93d9ad196..b8bbb707c4 100644
+--- a/hw/dma/omap_dma.c
++++ b/hw/dma/omap_dma.c
+@@ -471,49 +471,59 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
+ 
+ 
+         /* If the channel is element synchronized, deactivate it */
+-        if (min_elems == elements[omap_dma_intr_element_sync])
++        if (min_elems == elements[omap_dma_intr_element_sync]) {
+             omap_dma_deactivate_channel(s, ch);
++        }
+ 
+         /* If it is the last frame, set the LAST_FRAME interrupt */
+-        if (min_elems == elements[omap_dma_intr_last_frame])
++        if (min_elems == elements[omap_dma_intr_last_frame]) {
+             ch->status |= LAST_FRAME_INTR;
++        }
+ 
+-        /* If exactly half of the frame was reached, set the HALF_FRAME
+-           interrupt */
+-        if (min_elems == elements[omap_dma_intr_half_frame])
++        /*
++         * If exactly half of the frame was reached, set the HALF_FRAME
++         * interrupt
++         */
++        if (min_elems == elements[omap_dma_intr_half_frame]) {
+             ch->status |= HALF_FRAME_INTR;
++        }
+ 
+         /* If a full packet has been transferred, set the END_PKT interrupt */
+-        if (min_elems == elements[omap_dma_intr_packet])
++        if (min_elems == elements[omap_dma_intr_packet]) {
+             ch->status |= END_PKT_INTR;
++        }
+ 
+         /* If the channel is packet-synchronized, deactivate it */
+-        if (min_elems == elements[omap_dma_intr_packet_sync])
++        if (min_elems == elements[omap_dma_intr_packet_sync]) {
+             omap_dma_deactivate_channel(s, ch);
++        }
+ 
+         /* If the channel is frame synchronized, deactivate it */
+-        if (min_elems == elements[omap_dma_intr_frame_sync])
++        if (min_elems == elements[omap_dma_intr_frame_sync]) {
+             omap_dma_deactivate_channel(s, ch);
++        }
+ 
+         /* Set the END_FRAME interrupt */
+-        if (min_elems == elements[omap_dma_intr_frame])
++        if (min_elems == elements[omap_dma_intr_frame]) {
+             ch->status |= END_FRAME_INTR;
++        }
+ 
+         if (min_elems == elements[omap_dma_intr_block]) {
+             /* End of Block */
+             /* Disable the channel */
+ 
+-            if (!ch->auto_init)
++            if (!ch->auto_init) {
+                 omap_dma_disable_channel(s, ch);
+-            else if (ch->repeat || ch->end_prog)
++            } else if (ch->repeat || ch->end_prog) {
+                 omap_dma_channel_load(ch);
+-            else {
++            } else {
+                 ch->waiting_end_prog = 1;
+                 omap_dma_deactivate_channel(s, ch);
+             }
+ 
+-            if (ch->interrupts & END_BLOCK_INTR)
++            if (ch->interrupts & END_BLOCK_INTR) {
+                 ch->status |= END_BLOCK_INTR;
++            }
+         }
+ 
+         /* Update packet number */
+@@ -522,8 +532,10 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
+             a->pck_element %= a->pck_elements;
+         }
+ 
+-        /* TODO: check if we really need to update anything here or perhaps we
+-         * can skip part of this.  */
++        /*
++         * TODO: check if we really need to update anything here or perhaps we
++         * can skip part of this.
++         */
+         if (dma->update) {
+             a->element += min_elems;
+ 
+@@ -534,11 +546,14 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
+             a->dest += min_elems * a->elem_delta[1] + frames * a->frame_delta[1];
+ 
+             /* If the channel is async, update cpc */
+-            if (!ch->sync && frames)
++            if (!ch->sync && frames) {
+                 ch->cpc = a->dest & 0xffff;
++            }
+ 
+-            /* TODO: if the destination port is IMIF or EMIFF, set the dirty
+-             * bits on it.  */
++            /*
++             * TODO: if the destination port is IMIF or EMIFF, set the dirty
++             * bits on it.
++             */
+         }
+ 
+     omap_dma_interrupts_update(s);
 -- 
 2.43.0
 
