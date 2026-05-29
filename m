@@ -4,95 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66966CD5BD2
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 08:35:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6FA6CD5BD2
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 08:45:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSsgi-0005pV-J8; Fri, 29 May 2026 04:35:28 -0400
+	id 1wSspw-0008AC-Pf; Fri, 29 May 2026 04:45:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuelugwu121@gmail.com>)
- id 1wSsgf-0005o8-Sr
- for qemu-devel@nongnu.org; Fri, 29 May 2026 04:35:26 -0400
-Received: from mail-dl1-x122a.google.com ([2607:f8b0:4864:20::122a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wSspu-00089R-Ho
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 04:44:58 -0400
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <emmanuelugwu121@gmail.com>)
- id 1wSsge-0007Gc-B8
- for qemu-devel@nongnu.org; Fri, 29 May 2026 04:35:25 -0400
-Received: by mail-dl1-x122a.google.com with SMTP id
- a92af1059eb24-137335bc3caso5118880c88.0
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 01:35:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780043722; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wSsps-0001I0-F2
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 04:44:58 -0400
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-65e15fb394bso9713350d50.2
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 01:44:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780044295; cv=none;
  d=google.com; s=arc-20240605;
- b=FbZfbBySymfnUUALqDmDzjjIasYWcKDyjX+luHBJ5Xp8mVbkpRvpIrIsuqoVijznse
- 96KOx35ft87T6R0lSZkYdfSL2V0NCmPJz5x4GxVLKdstj89neohR0Y0R4WBppaM+wiBt
- teoZrFQt/2oGi8uUqDPSXd6DHJrJ4dGUTCksgMlHAzGaHU3JyKM4uGrswcJF9dU6UYpb
- mReOWpAKjaxWuh9RkGefV246+KY4KAzviVpuhr9FR0P/IU46bj8miHkmgoKRO5elZrGJ
- 5LQVFoNfx2WSUuIaR3A2KuATUDP8mDodOGZbX9M5hgmNyIARCkCQdBSVFHQ/2TWuQ9Ag
- zh5g==
+ b=Lkbsj/W9untCLb3BKUeOSb73O4s2X3CdKXD6RZNq6ur27oAih1NtaJlDPzTmK/8QCZ
+ +6+itSCbjuxQXZRX44Dfqo7sqXo8PrAKmpqMue4+WQ9A2SFEtKJEyOL7mEHTi6MdmsM+
+ zRwXKxvtByiWMRdeMCttK0RIEW0M9IxsFa+uW30sjDVUG8CNjSvKNjkLgAKsxyrtb1bp
+ i9XXZf9bpQvXbhimveX1Xl07tGfUwqC1MAY0Cb3M6cUYsJftfOl6AaE1JCYnv6D/kdiV
+ J7xK5IQIStOgMTw1qptqV/E3yZIWredrYxGj1ytdyeS3CMZQd7pVrULS+EgvcDoMRSPy
+ Zy0w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=dDnqVnnvFiKus73KBNJZNWyX/dXgRcdK4kwDYVSy+1c=;
- fh=Sh5V2wZoPmZcQTeMKGPa6OgJ9YbA/Nm7TTNJwX99Vxo=;
- b=GvGM6VSRHch4bOxx5RN/UibYgZCAug6kftDpGTadPg8LfT7bNNPJY+GeBwV2d1x8Jr
- 0JCiDfLbBwg8LP7g+0Zso5t04C/IamSXVxLvFd0EChO/FIQ9jViZxCASox+uQOjMfBCh
- RQnYhLqcMwbhVzsPEqSMXtwTzCDVxJHCQYIIGPWMcd9uYKkfOLFzwhpbVoVEsKgx7aTC
- 4D4um+luLGIJrABMh12ga6tV4D4o4URTrMbViBjed7s3RmQ4apzTF9Fc3hi22LIA1qpi
- L4Rwu9BdWOuX5Yf2owX52UmY5UXo5CzGJQk0AMSJb1t38Ila2ZVzjB78aWX7duExxVn0
- gCOg==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=ipZEZnY2uFh45UZO5kuYZhzJoHYpiPS/VC9qdhC/puY=;
+ fh=dsV49Vvr1tHDyBDRldQbgGjKbfoIR7Zf+IuqY0dMFP8=;
+ b=BR6tjPwlmUNoT2sB+yO4UultiyP6UKuWtNxnb70xhS+If7GyMA91YYxN3DBl4gh6iv
+ rIF+9PgrT88g3+p4QLOUzim8KToHHHA7X3vrnix1RhI6Dp11SZl2MqD0MWXnqgw1WZZ6
+ IuNCjDHNOYuflWM5ag6cvoWwTd7koMNbICfBg4iooYXVnGPzbVuNQeKS471ewURDjqY9
+ YvfZlZh5/35KTHE48w7U49RynaXfBsqUMJpsRrlRrnuhmgTmAsvheuNH2L6JvkqDAeR+
+ Y1RJT+RlN+vNtqLh2HTP4ImDZEAy2fMYx/UzAM/MLpp8YqoOpuTILLgMm+WbalikgvMj
+ y5Vw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780043722; x=1780648522; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=dDnqVnnvFiKus73KBNJZNWyX/dXgRcdK4kwDYVSy+1c=;
- b=La8xaGFed1aCtFo2VpQ/rSxOR7ImtS14jAebcJwnvAqOSE6weSZBoKbSzzQbKqix9e
- xDn1nsVC580SoJv0E9tgpxLlhv4lxZHvjxFGhqKyXFzTPgE1mj9huZnIV0EH8omUqWLC
- aqABxdLqhyRb4tPcCCAgXVhJgLWuc1yjWV3BVr/Zg+YT7S6ZSrYnBzRKjv4S2sevs298
- oA76jjctqIwhcRMh2F95DCTc5xCO43aYWdjwZPJXC7XdIIs90V+eqEXCxtqGNn4ul5Ym
- tt8jC8S4Uc01t6I5LhHis6XWr1ZanWa4DQc+iUUit44pZa8iHM0TiR1pn8MDZbqXWbcq
- EB4A==
+ d=linaro.org; s=google; t=1780044295; x=1780649095; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ipZEZnY2uFh45UZO5kuYZhzJoHYpiPS/VC9qdhC/puY=;
+ b=M+/McFIZEU21xAxy1Uv8tioePl6mANfnyOHnkpnrl3AUQKo4lx4AsW9n3smzeT1mYr
+ I3PKpkcUa8twWtLt7MzJsqyAG1IqB/qX/j5iJtxi9dIFTKobLOW0bhMB0h7nJU8VcXyr
+ AWN+CHt7yYFnVYwvoIh4z9zk6/wnMIia+4kxalq44b9wf7lYly3kgiKMno162RBXQcy9
+ IC1VkEZGqJd7nbBzWeGiEJW9T482KrNBHJ3qVYvWJIX2bv5OT30S2JueivQYN8srw59V
+ NqT8dQjyhZITsXRRjdaWu6PFjXI9G93nL+qUwg+Nw1Zeb5aS4YcLAuiWM/sXSK++0aSq
+ c1Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780043722; x=1780648522;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dDnqVnnvFiKus73KBNJZNWyX/dXgRcdK4kwDYVSy+1c=;
- b=LtRdVvq/HoWSO6sJsVahrofsLyIe2AOa15PzmIG8YRdb8ajRF8VRM68Y5AqdamjyHt
- lJ1rlHkEtdLuyPVxoTcbxJrZeJozqXolOew9XooDrevZnA+HQc/SURJW7H8rnqnq54ZR
- 8LGUJjj1yayPu6N8WXdUeuIaG6CEGdGdFwe6WXujxMTiPFp62iM239Jv0b5QhGSScXYr
- Mtj8hh2peMG6PVzGCmpf54dVe3J5ov5fjzlklMQr8fi4A6SAWQwA/NAQmRqzYlhTqxYW
- 7b9A9z2lh9rcqxEeOQ3UZAGUZQ2lu3AB5S/4pGXW2r73fLidsttLI1oTwmcQAT/mmYPp
- ZA9w==
-X-Gm-Message-State: AOJu0YxV4cA4qX+Xk4v7rMzOr1ue8FsIVo132TQXj6ZClsELhWodZayZ
- IGnvqdgiGr5v7V576ISpcRQBwTuK7ZFoO71nmNxCO5jATtaOcTczOTp4tI3jJj9EZzkEgJVzLxn
- DsJV1j02Wmz4kr+1Ep6zRsFjLZeLN0Bg=
-X-Gm-Gg: Acq92OEdc9F0Y0Nmk4oxpwnNDY13bSuD6KF1VfYNb4nBUnEZtE06VW4gnERFcuqByK+
- 2SMBosAYTuleU3R+x0BBt5b3IL2AiIoSBsi3KHf+nElgcV16l7Nh09MVThqpzhaRtdtW5juNbUo
- dLBh9FAzEMd6PzhKD0sa7f0uPykyNkjcRYRZR27FDMQwyxTxWJiJ4tZOrHPf8O/PEpAlvt6MBjL
- ix1E5JZ39pzCLAFgMMlHzFOjeqVTxM7wOiit15/tJHi5O8DZKMIl+QocETb9QVeVuLZTO11GhxY
- YqTngqvl3ig5ZeL8JQ==
-X-Received: by 2002:a05:7022:4585:b0:136:b370:64c5 with SMTP id
- a92af1059eb24-137af1116ddmr763672c88.30.1780043722239; Fri, 29 May 2026
- 01:35:22 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1780044295; x=1780649095;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ipZEZnY2uFh45UZO5kuYZhzJoHYpiPS/VC9qdhC/puY=;
+ b=JNdAxBOp5uqhjNpaph3Uy6Q+uhZyp1mrQkwuHnCjsULhQoft2zGamcC4FDt3n2JKmh
+ Uw+hvV785NfhyKzZTzzFOK1EjdbyYTlQ/iI3tc0uwdFm+a8lqoZp97iv8W1+8eJxLBWg
+ jRf2eBSKwJGhVDMzbhC64Dj/Vbm3bJZKquBtre+foWeMoEgzB9yyEKRRFjrihmTOFlqj
+ O8u3umjwhZab81W44e/VSf4lNsa9PT0v5nE+t1i2bfDkY7bWULikagutFN9alDHhUSN/
+ KSoq2O8fVWwCjUoKzmijUN6qLIoxBYuFxayjZIFCNeZ0UhKzzujuMwA82HiWzMThyyCM
+ waJA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9IX4hdxULOiFAtYhxsmfVAAONwD4V/bnSVIbRjCaXmy4BdbtKkRy+PDkBhmSEC3AN5/ZVOZMLOIaJm@nongnu.org
+X-Gm-Message-State: AOJu0YzjI5EQRG3Shz7FNFu5BjGuYtFmeIdCVyWox78/msGvbnruK/mI
+ LOKkPEMcNhiwpanvvsVwlSXCloMmomCqIawmSHySsvNnbL2y+nfUe80KnuTXTgI6w9Vdc4jefP1
+ 6YvL8kX8Q9Pyx8R1tInA+PugWnREZR+CLCiMTAE6P/g==
+X-Gm-Gg: Acq92OEpXFRBTMp3T3qYADgTCS77ucQGZzIi9rAKWBsda1qurW/Y52j1CDcQTrIESVo
+ nhLJ9EPSdyrBawlUrCNzGGPCc6aCYftnaeLG4DEGVhbQR6ueO93dv0MPBLEBtWScfgXD71pKaxx
+ I1afMApxAza/XD9mA4OfmB0BUduSC1d7xy88S4A2QlCW9nrbtz3wvRN5Lq2WTQPO1Kpy8vt1/J9
+ r2phXEUZbd+vY0E9CyzGpwzKe/N+etzZ+6nEnA7u+v+djNEpEw5cRwSagLwQIM52TnDES5Xn8v6
+ JiMDIMtU6qEH70lobr7OzzkxhttwPzQ8M2p40yzoyEB1QKi+G9Icr3QM8W7JFvAzb3UYCnDIGXG
+ A7RiPXLYyYYQM
+X-Received: by 2002:a05:690e:12ca:b0:660:4563:869d with SMTP id
+ 956f58d0204a3-66052e3f5e5mr1265392d50.28.1780044294725; Fri, 29 May 2026
+ 01:44:54 -0700 (PDT)
 MIME-Version: 1.0
-From: Emmanuel Ugwu <emmanuelugwu121@gmail.com>
-Date: Fri, 29 May 2026 09:35:11 +0100
-X-Gm-Features: AVHnY4J3a_NxxqLGJOs1OIRVg6pqcIVUV2nNuiFs0CUdO7z9A2HB0hZedUkjrd4
-Message-ID: <CALk1091JwDs9SGCydB2Q-4BunCbo=VEa429bmRjmQw4SwZrULg@mail.gmail.com>
-Subject: [QUESTION] - SCSI tape boot
-To: Helge Deller <deller@gmx.de>
-Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000bfb1130652f0b9a0"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::122a;
- envelope-from=emmanuelugwu121@gmail.com; helo=mail-dl1-x122a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260519153249.31100-1-wrigjl@proton.me>
+ <20260524002617.69593-1-wrigjl@proton.me>
+ <20260528181857.92087-1-wrigjl@proton.me>
+In-Reply-To: <20260528181857.92087-1-wrigjl@proton.me>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 29 May 2026 09:44:41 +0100
+X-Gm-Features: AVHnY4LbDlVkKYAAbHqs8VIeawFzR_t1Wbi7pfbdCrdt8ZBMaYpiFbvxH1AVSUs
+Message-ID: <CAFEAcA-qwpS8sMqYfR8WgHxoZvhVW1eMO6C1uXqWvK_5hkL9sw@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] target/arm: implement FEAT_RNG_TRAP
+To: Jason Wright <wrigjl@proton.me>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, richard.henderson@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,43 +118,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000bfb1130652f0b9a0
-Content-Type: text/plain; charset="UTF-8"
+On Thu, 28 May 2026 at 19:19, Jason Wright <wrigjl@proton.me> wrote:
+>
+> Implement FEAT_RNG_TRAP for RNDR/RNDRRS and enable it on cortex-max.
+>
+> v3:
+>   - helper.c: give ID_AA64ISAR0_EL1 a readfn so that ID_AA64ISAR0_EL1.RNDR
+>     reads as 1 whenever SCR_EL3.TRNDR is set, regardless of whether
+>     FEAT_RNG is implemented (Peter Maydell)
+>   - cpu64.c: keep the ID_AA64PFR1 fields in register bit-field order;
+>     RNDR_TRAP now sits after SME and before CSV2_FRAC (Peter Maydell)
+>   - docs: list FEAT_RNG_TRAP in docs/system/arm/emulation.rst (Peter
+>     Maydell)
+>
+> v2:
+>   - access_rndr: return CP_ACCESS_UNDEFINED when FEAT_RNG_TRAP is
+>     present but FEAT_RNG is not and the trap is disabled (Richard
+>     Henderson)
+>   - Register rndr_reginfo when either FEAT_RNG or FEAT_RNG_TRAP is
+>     implemented, not only FEAT_RNG (Richard Henderson)
+>   - Fix document number typo in Patch 1 commit message
+>
+> Jason Wright (2):
+>   target/arm: implement FEAT_RNG_TRAP for RNDR/RNDRRS
+>   target/arm: advertise FEAT_RNG_TRAP on cortex-max
 
-Hi Helge,
-
-I have implemented the INQUIRY and TEST_UNIT_READY in scsi-tape.c and am
-working on READ, REWIND and other SCSI commands next.
-
-I have 2 questions as I already tried booting the MPE/iX:
-
-1. Is there a need to modify the current implementation of the parisc arch
-to support booting a tape device, cause I am trying to boot the file in
-QEMU but it seems hppa/seabios only supports disk and cd-rom boot I think.
-
-2. What is the minimal set of SCSI commands MPE/iX needs before it can be
-booted in QEMU?
 
 
-Emmanuel
+Applied to target-arm.next, thanks.
 
---000000000000bfb1130652f0b9a0
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"auto"><div dir=3D"auto"><div>Hi Helge,=C2=A0</=
-div><div dir=3D"auto"><br></div><div dir=3D"auto">I have implemented the IN=
-QUIRY and TEST_UNIT_READY in scsi-tape.c and am working on READ, REWIND and=
- other SCSI commands next.</div><div dir=3D"auto"><br></div><div><span></sp=
-an><span>I have 2 questions as I already tried booting the MPE/iX:</span></=
-div><div dir=3D"auto"><br></div><div dir=3D"auto">1. Is there a need to mod=
-ify the current implementation of the parisc arch to support booting a tape=
- device, cause I am trying to boot the file in QEMU but it seems hppa/seabi=
-os only supports disk and cd-rom boot I think.=C2=A0</div><div dir=3D"auto"=
-><br></div><div>2. What is the minimal=C2=A0set of SCSI commands MPE/iX nee=
-ds before it can be booted in QEMU?</div></div>
-<br><br><div data-smartmail=3D"gmail_signature">Emmanuel</div></div>
-</div>
-
---000000000000bfb1130652f0b9a0--
+-- PMM
 
