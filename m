@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECEB2CD6E49
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 04:58:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8952FCD6E45
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 04:59:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSpIY-0005ur-Ty; Fri, 29 May 2026 00:58:19 -0400
+	id 1wSpIO-0005hF-Oq; Fri, 29 May 2026 00:58:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1wSpIW-0005tV-M0
- for qemu-devel@nongnu.org; Fri, 29 May 2026 00:58:16 -0400
+ id 1wSpIM-0005h0-Nq
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 00:58:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1wSpIU-00089C-Jd
- for qemu-devel@nongnu.org; Fri, 29 May 2026 00:58:16 -0400
+ id 1wSpIL-00086w-0M
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 00:58:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780030693;
+ s=mimecast20190719; t=1780030684;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lXBpO/M4FGwucGl9YxH11gyjZXTSpbMqtOVX+sjCIEQ=;
- b=XoCWFU0RemxvdUqj0spLXOpaHryXr19w5ngVWhQVtG/3FrfbI6Z9+8WmB7INLS5DjsYhpS
- 6suD6IAZFF7CL426LDiR9KkA8dvloKGoLel2z93FG2YTmEwNnrVuSItASj8v1xNe+w980m
- W1oDxsMEl/WKGrYg4mW9118h+e9K8QM=
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wXgUoz2kDhdvNT3gb2pcIb2zVVrprNZrWtVAiaM5OzM=;
+ b=amt2mN6YC0wTRbWE8iroO51yIXklysFaueGkt+srUAbsaUQxNd1CDFQ66Xbowehaf81tf7
+ nPb6FxH0z8DJ74zqcBjb7JSin7ZPnMyWbnlsWoo+0CmL2xH7K4ZohgiNgZUvgevDm9ickJ
+ Y666SDZWJYErODslbFSJO5KgoT1FJb0=
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-21-Mifx91fzPG-iJVU_ay_mHQ-1; Fri, 29 May 2026 00:58:12 -0400
-X-MC-Unique: Mifx91fzPG-iJVU_ay_mHQ-1
-X-Mimecast-MFC-AGG-ID: Mifx91fzPG-iJVU_ay_mHQ_1780030691
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-304d8613efbso1750970eec.1
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 21:58:12 -0700 (PDT)
+ us-mta-315-fdFzWZ5zN3SdZJnuwhXmbQ-1; Fri, 29 May 2026 00:58:00 -0400
+X-MC-Unique: fdFzWZ5zN3SdZJnuwhXmbQ-1
+X-Mimecast-MFC-AGG-ID: fdFzWZ5zN3SdZJnuwhXmbQ_1780030679
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-2fe1cf409a1so3524656eec.1
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 21:58:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780030691; x=1780635491; darn=nongnu.org;
+ d=redhat.com; s=google; t=1780030679; x=1780635479; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lXBpO/M4FGwucGl9YxH11gyjZXTSpbMqtOVX+sjCIEQ=;
- b=J9iYcEED/PGGvJoHpBshvGWALeqYa2KsKCjmw3sGV9EayLRt52RSzDS57T4T+njoK0
- qJKqOzWJnK0taILKfyqUQN9UQ6sLIrPM37JC8FTuhMbqz3NKBE4rj0bk5xfDrxKGRmlm
- VvD46S24CAqWLus8xWNyUZUxpBxlXYE6MrB2ooVHjXKRh+iayLFenes9Rr6G+qu6LZhd
- UP3s4MLJuUCeD7Vh65KYq0oFbmSQoKQnA56cxdk+FVks98W6gFjSe3diNfhkKHkRrE40
- bUTqQCdzc5mE7EUQvsyY3zkNeMkWrfS1ObGZtDk7surMrWBRDWucgtYVDxyodIwLAvBj
- jANg==
+ bh=wXgUoz2kDhdvNT3gb2pcIb2zVVrprNZrWtVAiaM5OzM=;
+ b=TL1mFPswIlDL+iVtPxk3NWwPZ2omZc+VVptckxZMkuFZAU8UFzGRGIPCbqi7PTEp/f
+ 6apf+JazW0Gqb5suqjVT5vwXo+USrOmHCT+7V2r0COtYPKpGrJzUjIhvdP1d9KsI8lVF
+ SC1pZgWl8OVfeQsYIFgMGB4EygAIo7FtRD3PhCnSjJxhEs9yUcDRyEoHrWzXTO/tiQW0
+ zyqlV+3f06BTntaMG+IMfjIEZSSx6IsZ6vlWgoKnfM5STInh+qc7NyrOcFVuEc2kbOD+
+ GsN5q5jBMc6A5ncAS/ATqsbjjZVoGHSjYptXkb2bEfcRdqyknMbIqCgAH+rmFk0QNWPb
+ uDXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780030691; x=1780635491;
+ d=1e100.net; s=20251104; t=1780030679; x=1780635479;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=lXBpO/M4FGwucGl9YxH11gyjZXTSpbMqtOVX+sjCIEQ=;
- b=aPdM/RWjkfId5SiQTbM/TqRUk0ta7xmM1CLgat7YgGakLeEmkS94YCHoU/vN40a/qu
- ULiAXVuabdAMT61n/C0C1T4FgdLh/WvQa4/41wN92vGnxpdCdwRZLulZG7vJci3Pk2BQ
- UYE1kiogfgJvdNWyn/I/cxjVuCZa3jLWag0r6fc86sKS9tSu+jKvPyEvSXqn71vv3PFm
- 1mbhHBl0CE419ngnGjPAa9MNxs8TRE3sjXhcNyKxWqdARxT1t5QjHnkxse6o3jkcZhbc
- qCut+VsRwVq8VgkWQO5ppOkGjIZ3CV8NEw2O493cN/1q3V5SlWKvQbr10YLeXmThRyra
- 3bsQ==
-X-Gm-Message-State: AOJu0Ywdtem7nSdLUbi4DeNMQ1FX/zxMtLvqdGRw6C82PM0rfSI9u3O4
- NothgLN4EooM3AdJTDmvkc/wJP9hV7WT4WT0egKYxd32emf/tX3s4D2eOg+dt5U1tMbgZBXDYIm
- 9xON/PsqNpuZE2/z7TS22pxLF2VHkzhb55PCXRUJTDZ03g1i/ET+S+MreXSrIZytz822k9OieZ3
- QYOxhv67A8bwf8KbvZ0KTYAOmqsAGyHKv0+spf6MgvDTY=
-X-Gm-Gg: Acq92OHDI8Q9ayDI92po8g46avNkFpuVLgeglr+FR7XALuWsGln3qoVdm2tUM5bbu/Q
- bFxU8V3TTzDrlqJzUi7qTbTTQq0808oaYTis6foWHge2eK+nCsOtmmYqgICaHe5o1qd6VIIi7xm
- Jm9yfAfEXaJ2J07T6JJqa5NVg5rHaeBcE4tmIFnIil6qiJsqGLv86gsMPzbI0FXzS/sL91nXDhF
- epvi/qYXtnd8D8o1mWUhjSvEhBsaPhSzzmu+LXsGlcLw3//qcroQwmHqlPTxJnywFkZ0gid90or
- j8HqCqoSIZn0gSRqaaUUFFiSpij7L8qlL0xkn5qaxgPvf49ocKM42PApJBzi9VFpsH1e22VVb0N
- 2jA3maTb8D0/A73XGhvL1798XMAxXhI/lYyy+6BtfaYOJ8POK76mhh7wHmoILcswBtH7/9gJ8
-X-Received: by 2002:a05:7300:a286:b0:304:8361:a87e with SMTP id
- 5a478bee46e88-304eb25db22mr597470eec.33.1780030691020; 
- Thu, 28 May 2026 21:58:11 -0700 (PDT)
-X-Received: by 2002:a05:7300:a286:b0:304:8361:a87e with SMTP id
- 5a478bee46e88-304eb25db22mr597447eec.33.1780030690292; 
- Thu, 28 May 2026 21:58:10 -0700 (PDT)
+ bh=wXgUoz2kDhdvNT3gb2pcIb2zVVrprNZrWtVAiaM5OzM=;
+ b=IvkH0SYWu+CQmT/bNgkOBGxDJOqhJgJCYKKkDA0c3PCAb7Tvuhs3vVl3L2nnV7EUqO
+ B1ImB8eCLFBoEZIlEPjcbA1Mq6tqgCD2TgfXXfPHsvHmDFBIEUtodT07wVQ8O5Em4ph1
+ TRLdkRqxgTZsZZE+T+2/Tmls45mKVu2ilh7hl7KDLd8+zgNwRlU+XGzxfnSqiLQlQsei
+ qHaa1/Pp0Zu4xXpiBLKfJVcwbkCSWw1t0HfVjH64yzNng9Hh4EXyBjnHvHAV0G9KUZ/t
+ iGqLsZXroi1/eHaTPTENWEgwhCXvEpVvJ5LNasjutHNk0sGX3Y9id9QtsPPY+8kUVJrk
+ P1gA==
+X-Gm-Message-State: AOJu0Yzr0m5syFY3bhdE80LOFYeqf0Fsu4swtlIHcw09kwy9Yi+asijo
+ 9vnee6Fcih4zkm5YQZg4cMEYAuMFEIPtDNXMzh8ZTaZ0E90FacgFJv/MkoURdr6jioQcIt2AWcz
+ FlfKlAlxVVHGPordri4FI6q191svINPN1MVLJkzRmYKApiKFBBaObCmKQM/GWGH5Pgvp7QB8YSX
+ NTmVqedalBx4rz/t1KJ/G7fy2EJAcEVpI2xQ68aLrUYbw=
+X-Gm-Gg: Acq92OEKup7IvVVH4Gfo1hc2+mU1bBE329a7hFQkgAmUI0E8NYqg9akX6wUgXOeVVam
+ wDOjVRkv8JSlsUjX1uvv7XiqOpbRlmpTDyGqBPXJJNmOrB7kXHziV4uvmDA/pPyRWFZDK1G48wR
+ HtrPD+z5N87H6y0nXq6E17N5z7r4w91kU+DChgxf5+uUFrpA4fUhQRGTmiokyixZ8n6UiCxpZNP
+ S1w6Ur8FQ48jOaTp322oRv2jYq+3jY4ItLWxzPCpUrOL6ehAIOcEdcp34khF6TMJsixORGut0Aa
+ vNHPppRROIVmgVusYup1RT8a6d5o68wMqqCqeKagR3LqOGiYOLZBDjd4ELAtlIp0pFJnXsqDwte
+ dBJVgkEy+RHWWaUkBcbGQ+8mI0ICmivLLgAnYITMofuqVsSMV3TQE/hvN+58EB/Z12slhBdeL
+X-Received: by 2002:a05:7300:6d21:b0:304:cf6c:4cfe with SMTP id
+ 5a478bee46e88-304eb0bcb61mr605314eec.9.1780030679368; 
+ Thu, 28 May 2026 21:57:59 -0700 (PDT)
+X-Received: by 2002:a05:7300:6d21:b0:304:cf6c:4cfe with SMTP id
+ 5a478bee46e88-304eb0bcb61mr605299eec.9.1780030678739; 
+ Thu, 28 May 2026 21:57:58 -0700 (PDT)
 Received: from localhost.localdomain ([107.172.97.67])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-304ed3358b1sm562865eec.13.2026.05.28.21.58.06
+ 5a478bee46e88-304ed3358b1sm562865eec.13.2026.05.28.21.57.54
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 28 May 2026 21:58:09 -0700 (PDT)
+ Thu, 28 May 2026 21:57:57 -0700 (PDT)
 From: Jason Wang <jasowang@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Ben Chaney <bchaney@akamai.com>, Jason Wang <jasowang@redhat.com>
-Subject: [PULL 08/15] net: introduce net_parse_fds()
-Date: Fri, 29 May 2026 12:57:23 +0800
-Message-ID: <20260529045730.90322-9-jasowang@redhat.com>
+Subject: [PULL 05/15] net/tap: net_init_tap(): common fail label
+Date: Fri, 29 May 2026 12:57:20 +0800
+Message-ID: <20260529045730.90322-6-jasowang@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260529045730.90322-1-jasowang@redhat.com>
 References: <20260529045730.90322-1-jasowang@redhat.com>
@@ -123,329 +123,210 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-Add common net_parse_fds() and net_free_fds() helpers and use them
-in tap.c and af-xdp.c.
+Add common failure label. This:
 
-Choose returning queues instead of fds, because we'll have derived
-helper in net/tap, which will be able to return fds=NULL and non-zero
-queues on success. That's also why we move to INT_MAX for queues, to
-support negative return value for net_parse_fds() (for failure paths).
-
-Note that redundant restriction of MAX_TAP_QUEUES is dropped for tap.c
+- simplifies failure paths in the function
+- get rid of unusual free_fail: in the middle of the function
+- simplify further refactoring
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Reviewed-by: Ben Chaney <bchaney@akamai.com>
 Signed-off-by: Jason Wang <jasowang@redhat.com>
 ---
- net/af-xdp.c | 33 ++-----------------
- net/tap.c    | 92 +++++++++++-----------------------------------------
- net/util.c   | 50 ++++++++++++++++++++++++++++
- net/util.h   | 14 ++++++++
- 4 files changed, 85 insertions(+), 104 deletions(-)
+ net/tap.c | 84 ++++++++++++++++++++++++-------------------------------
+ 1 file changed, 37 insertions(+), 47 deletions(-)
 
-diff --git a/net/af-xdp.c b/net/af-xdp.c
-index ff1cb30a98..1ffd6363a8 100644
---- a/net/af-xdp.c
-+++ b/net/af-xdp.c
-@@ -21,6 +21,7 @@
- #include "clients.h"
- #include "monitor/monitor.h"
- #include "net/net.h"
-+#include "net/util.h"
- #include "qapi/error.h"
- #include "qemu/cutils.h"
- #include "qemu/error-report.h"
-@@ -441,35 +442,6 @@ static NetClientInfo net_af_xdp_info = {
-     .cleanup = af_xdp_cleanup,
- };
- 
--static int *parse_socket_fds(const char *sock_fds_str,
--                             int n_expected, Error **errp)
--{
--    gchar **substrings = g_strsplit(sock_fds_str, ":", -1);
--    int i, n_sock_fds = g_strv_length(substrings);
--    int *sock_fds = NULL;
--
--    if (n_sock_fds != n_expected) {
--        error_setg(errp, "expected %d socket fds, got %d",
--                   n_expected, n_sock_fds);
--        goto exit;
--    }
--
--    sock_fds = g_new(int, n_sock_fds);
--
--    for (i = 0; i < n_sock_fds; i++) {
--        sock_fds[i] = monitor_fd_param(monitor_cur(), substrings[i], errp);
--        if (sock_fds[i] < 0) {
--            g_free(sock_fds);
--            sock_fds = NULL;
--            goto exit;
--        }
--    }
--
--exit:
--    g_strfreev(substrings);
--    return sock_fds;
--}
--
- /*
-  * The exported init function.
-  *
-@@ -530,8 +502,7 @@ int net_init_af_xdp(const Netdev *netdev,
-     }
- 
-     if (opts->sock_fds) {
--        sock_fds = parse_socket_fds(opts->sock_fds, queues, errp);
--        if (!sock_fds) {
-+        if (net_parse_fds(opts->sock_fds, &sock_fds, queues, errp) < 0) {
-             return -1;
-         }
-     }
 diff --git a/net/tap.c b/net/tap.c
-index db3fe380a4..2d4630c350 100644
+index 331a779585..2eb8a2caeb 100644
 --- a/net/tap.c
 +++ b/net/tap.c
-@@ -45,6 +45,7 @@
- #include "hw/virtio/vhost.h"
- 
- #include "net/tap.h"
-+#include "net/util.h"
- 
- #include "net/vhost_net.h"
- 
-@@ -701,8 +702,6 @@ static int net_tap_init(const NetdevTapOptions *tap, int *vnet_hdr,
-     return fd;
- }
- 
--#define MAX_TAP_QUEUES 1024
--
- static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
-                              const char *name,
-                              const char *ifname, const char *script,
-@@ -782,32 +781,6 @@ failed:
-     return false;
- }
- 
--static int get_fds(char *str, char *fds[], int max)
--{
--    char *ptr = str, *this;
--    size_t len = strlen(str);
--    int i = 0;
--
--    while (i < max && ptr < str + len) {
--        this = strchr(ptr, ':');
--
--        if (this == NULL) {
--            fds[i] = g_strdup(ptr);
--        } else {
--            fds[i] = g_strndup(ptr, this - ptr);
--        }
--
--        i++;
--        if (this == NULL) {
--            break;
--        } else {
--            ptr = this + 1;
--        }
--    }
--
--    return i;
--}
--
- int net_init_tap(const Netdev *netdev, const char *name,
+@@ -820,10 +820,12 @@ int net_init_tap(const Netdev *netdev, const char *name,
                   NetClientState *peer, Error **errp)
  {
-@@ -815,9 +788,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
-     int fd = -1, vhostfd = -1, vnet_hdr = 0, i = 0, queues;
+     const NetdevTapOptions *tap;
+-    int fd, vnet_hdr = 0, i = 0, queues;
++    int fd = -1, vnet_hdr = 0, i = 0, queues;
      /* for the no-fd, no-helper case */
      char ifname[128];
--    char **fds = NULL, **vhost_fds = NULL;
--    int nfds = 0, nvhosts = 0;
--
-+    int *fds = NULL, *vhost_fds = NULL;
+-    int ret = 0;
++    char **fds = NULL, **vhost_fds = NULL;
++    int nfds = 0, nvhosts = 0;
++
  
      assert(netdev->type == NET_CLIENT_DRIVER_TAP);
      tap = &netdev->u.tap;
-@@ -890,46 +861,31 @@ int net_init_tap(const Netdev *netdev, const char *name,
-             goto fail;
+@@ -867,31 +869,24 @@ int net_init_tap(const Netdev *netdev, const char *name,
+     if (tap->fd) {
+         fd = monitor_fd_param(monitor_cur(), tap->fd, errp);
+         if (fd == -1) {
+-            return -1;
++            goto fail;
+         }
+ 
+         if (!qemu_set_blocking(fd, false, errp)) {
+-            close(fd);
+-            return -1;
++            goto fail;
+         }
+ 
+         vnet_hdr = tap_probe_vnet_hdr(fd, errp);
+         if (vnet_hdr < 0) {
+-            close(fd);
+-            return -1;
++            goto fail;
+         }
+ 
+         if (!net_init_tap_one(tap, peer, "tap", name, NULL,
+                               NULL, NULL,
+                               tap->vhostfd, vnet_hdr, fd, errp)) {
+-            close(fd);
+-            return -1;
++            goto fail;
          }
      } else if (tap->fds) {
--        fds = g_new0(char *, MAX_TAP_QUEUES);
--        vhost_fds = g_new0(char *, MAX_TAP_QUEUES);
+-        char **fds;
+-        char **vhost_fds;
+-        int nfds = 0, nvhosts = 0;
 -
--        nfds = get_fds(tap->fds, fds, MAX_TAP_QUEUES);
--        if (tap->vhostfds) {
--            nvhosts = get_fds(tap->vhostfds, vhost_fds, MAX_TAP_QUEUES);
--            if (nfds != nvhosts) {
--                error_setg(errp, "The number of fds passed does not match "
--                           "the number of vhostfds passed");
--                goto fail;
--            }
-+        queues = net_parse_fds(tap->fds, &fds, 0, errp);
-+        if (queues < 0) {
-+            goto fail;
+         fds = g_new0(char *, MAX_TAP_QUEUES);
+         vhost_fds = g_new0(char *, MAX_TAP_QUEUES);
+ 
+@@ -901,77 +896,58 @@ int net_init_tap(const Netdev *netdev, const char *name,
+             if (nfds != nvhosts) {
+                 error_setg(errp, "The number of fds passed does not match "
+                            "the number of vhostfds passed");
+-                ret = -1;
+-                goto free_fail;
++                goto fail;
+             }
          }
  
--        for (i = 0; i < nfds; i++) {
--            fd = monitor_fd_param(monitor_cur(), fds[i], errp);
--            if (fd == -1) {
--                goto fail;
--            }
-+        if (tap->vhostfds && net_parse_fds(tap->vhostfds, &vhost_fds,
-+                                           queues, errp) < 0) {
-+            goto fail;
-+        }
- 
--            if (!qemu_set_blocking(fd, false, errp)) {
-+        for (i = 0; i < queues; i++) {
-+            if (!qemu_set_blocking(fds[i], false, errp)) {
-                 goto fail;
+         for (i = 0; i < nfds; i++) {
+             fd = monitor_fd_param(monitor_cur(), fds[i], errp);
+             if (fd == -1) {
+-                ret = -1;
+-                goto free_fail;
++                goto fail;
              }
  
--            if (tap->vhostfds) {
--                vhostfd = monitor_fd_param(monitor_cur(), vhost_fds[i], errp);
--                if (vhostfd == -1) {
--                    goto fail;
--                }
--
--                if (!qemu_set_blocking(vhostfd, false, errp)) {
--                    goto fail;
--                }
-+            if (vhost_fds && !qemu_set_blocking(vhost_fds[i], false, errp)) {
+             if (!qemu_set_blocking(fd, false, errp)) {
+-                ret = -1;
+-                goto free_fail;
 +                goto fail;
              }
  
              if (i == 0) {
--                vnet_hdr = tap_probe_vnet_hdr(fd, errp);
-+                vnet_hdr = tap_probe_vnet_hdr(fds[i], errp);
+                 vnet_hdr = tap_probe_vnet_hdr(fd, errp);
                  if (vnet_hdr < 0) {
-                     goto fail;
+-                    ret = -1;
+-                    goto free_fail;
++                    goto fail;
                  }
--            } else if (vnet_hdr != tap_probe_vnet_hdr(fd, NULL)) {
-+            } else if (vnet_hdr != tap_probe_vnet_hdr(fds[i], NULL)) {
+             } else if (vnet_hdr != tap_probe_vnet_hdr(fd, NULL)) {
                  error_setg(errp,
                             "vnet_hdr not consistent across given tap fds");
-                 goto fail;
-@@ -937,8 +893,8 @@ int net_init_tap(const Netdev *netdev, const char *name,
+-                ret = -1;
+-                goto free_fail;
++                goto fail;
+             }
  
-             if (!net_init_tap_one(tap, peer, name, ifname,
+             if (!net_init_tap_one(tap, peer, "tap", name, ifname,
                                    NULL, NULL,
--                                  vhostfd,
--                                  vnet_hdr, fd, errp)) {
-+                                  vhost_fds ? vhost_fds[i] : -1,
-+                                  vnet_hdr, fds[i], errp)) {
-                 goto fail;
+                                   tap->vhostfds ? vhost_fds[i] : NULL,
+                                   vnet_hdr, fd, errp)) {
+-                ret = -1;
+-                goto free_fail;
++                goto fail;
              }
          }
-@@ -1003,18 +959,8 @@ int net_init_tap(const Netdev *netdev, const char *name,
- fail:
-     close(fd);
-     close(vhostfd);
--    if (vhost_fds) {
+-
+-free_fail:
 -        for (i = 0; i < nvhosts; i++) {
 -            g_free(vhost_fds[i]);
 -        }
--        g_free(vhost_fds);
--    }
--    if (fds) {
 -        for (i = 0; i < nfds; i++) {
 -            g_free(fds[i]);
 -        }
 -        g_free(fds);
--    }
-+    net_free_fds(fds, queues);
-+    net_free_fds(vhost_fds, queues);
-     return -1;
- }
+-        g_free(vhost_fds);
+-        return ret;
+     } else if (tap->helper) {
+         fd = net_bridge_run_helper(tap->helper,
+                                    tap->br ?: DEFAULT_BRIDGE_INTERFACE,
+                                    errp);
+         if (fd == -1) {
+-            return -1;
++            goto fail;
+         }
  
-diff --git a/net/util.c b/net/util.c
-index 0b3dbfe5d3..1998a6554e 100644
---- a/net/util.c
-+++ b/net/util.c
-@@ -23,6 +23,8 @@
-  */
+         if (!qemu_set_blocking(fd, false, errp)) {
+-            return -1;
++            goto fail;
+         }
+         vnet_hdr = tap_probe_vnet_hdr(fd, errp);
+         if (vnet_hdr < 0) {
+-            close(fd);
+-            return -1;
++            goto fail;
+         }
  
- #include "qemu/osdep.h"
-+#include "monitor/monitor.h"
-+#include "qapi/error.h"
- #include "util.h"
+         if (!net_init_tap_one(tap, peer, "bridge", name, ifname,
+                               NULL, NULL, tap->vhostfd,
+                               vnet_hdr, fd, errp)) {
+-            close(fd);
+-            return -1;
++            goto fail;
+         }
+     } else {
+         g_autofree char *script =
+@@ -989,14 +965,13 @@ free_fail:
+             fd = net_tap_init(tap, &vnet_hdr, i >= 1 ? NULL : script,
+                               ifname, sizeof ifname, queues > 1, errp);
+             if (fd == -1) {
+-                return -1;
++                goto fail;
+             }
  
- int net_parse_macaddr(uint8_t *macaddr, const char *p)
-@@ -57,3 +59,51 @@ int net_parse_macaddr(uint8_t *macaddr, const char *p)
+             if (queues > 1 && i == 0 && !tap->ifname) {
+                 if (tap_fd_get_ifname(fd, ifname)) {
+                     error_setg(errp, "Fail to get ifname");
+-                    close(fd);
+-                    return -1;
++                    goto fail;
+                 }
+             }
+ 
+@@ -1004,13 +979,28 @@ free_fail:
+                                   i >= 1 ? NULL : script,
+                                   i >= 1 ? NULL : downscript,
+                                   tap->vhostfd, vnet_hdr, fd, errp)) {
+-                close(fd);
+-                return -1;
++                goto fail;
+             }
+         }
+     }
  
      return 0;
++
++fail:
++    close(fd);
++    if (vhost_fds) {
++        for (i = 0; i < nvhosts; i++) {
++            g_free(vhost_fds[i]);
++        }
++        g_free(vhost_fds);
++    }
++    if (fds) {
++        for (i = 0; i < nfds; i++) {
++            g_free(fds[i]);
++        }
++        g_free(fds);
++    }
++    return -1;
  }
-+
-+void net_free_fds(int *fds, int nfds)
-+{
-+    int i;
-+
-+    if (!fds || nfds <= 0) {
-+        return;
-+    }
-+
-+    for (i = 0; i < nfds; i++) {
-+        if (fds[i] != -1) {
-+            close(fds[i]);
-+        }
-+    }
-+
-+    g_free(fds);
-+}
-+
-+int net_parse_fds(const char *fds_param, int **fds, int expected_nfds,
-+                  Error **errp)
-+{
-+    g_auto(GStrv) fdnames = g_strsplit(fds_param, ":", -1);
-+    unsigned nfds = g_strv_length(fdnames);
-+    int i;
-+
-+    if (nfds > INT_MAX) {
-+        error_setg(errp, "fds parameter exceeds maximum of %d", INT_MAX);
-+        return -1;
-+    }
-+
-+    if (expected_nfds && nfds != expected_nfds) {
-+        error_setg(errp, "expected %u socket fds, got %u", expected_nfds, nfds);
-+        return -1;
-+    }
-+
-+    *fds = g_new(int, nfds);
-+
-+    for (i = 0; i < nfds; i++) {
-+        (*fds)[i] = monitor_fd_param(monitor_cur(), fdnames[i], errp);
-+        if ((*fds)[i] == -1) {
-+            net_free_fds(*fds, i);
-+            *fds = NULL;
-+            return -1;
-+        }
-+    }
-+
-+    return nfds;
-+}
-diff --git a/net/util.h b/net/util.h
-index 288312979f..4dbc5d416d 100644
---- a/net/util.h
-+++ b/net/util.h
-@@ -83,4 +83,18 @@ static inline bool in6_equal_net(const struct in6_addr *a,
  
- int net_parse_macaddr(uint8_t *macaddr, const char *p);
- 
-+/*
-+ * Close all @fds and free @fds itself
-+ */
-+void net_free_fds(int *fds, int nfds);
-+
-+/*
-+ * Parse @fds_param, where monitor fds are separated by a colon.
-+ * @nfds must be non-NULL. If *@nfds is zero - set it accordingly.
-+ * If *@nfds is non-zero - check that we have exactly *@nfds fds
-+ * and fail otherwise.
-+ */
-+int net_parse_fds(const char *fds_param, int **fds, int expected_nfds,
-+                  Error **errp);
-+
- #endif /* QEMU_NET_UTIL_H */
+ int tap_enable(NetClientState *nc)
 -- 
 2.54.0
 
