@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 557E0CD5BD2
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 07:20:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 718D4CD5BD2
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 07:27:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSrVE-0003t5-OT; Fri, 29 May 2026 03:19:32 -0400
+	id 1wSrcC-0005Q5-KE; Fri, 29 May 2026 03:26:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wSrVD-0003sM-D0
- for qemu-devel@nongnu.org; Fri, 29 May 2026 03:19:31 -0400
+ id 1wSrc6-0005Pa-MG
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 03:26:39 -0400
 Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wSrV9-0004TL-Vr
- for qemu-devel@nongnu.org; Fri, 29 May 2026 03:19:31 -0400
+ id 1wSrc0-000648-CE
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 03:26:35 -0400
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:2925:0:640:1f39:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 98F24C01EB;
- Fri, 29 May 2026 10:19:23 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id C0AC0C046A;
+ Fri, 29 May 2026 10:26:27 +0300 (MSK)
 Received: from [IPV6:2a02:6bf:8080:42a::1:0] (unknown [2a02:6bf:8080:42a::1:0])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id MJVx9i0XduQ0-sZk2Han5; Fri, 29 May 2026 10:19:22 +0300
+ id QQVHHi0XfSw0-38Mtdy7S; Fri, 29 May 2026 10:26:27 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1780039162;
- bh=vMAkBig7buka1b72YTDQLWvUsaJVfTMQ9SIBANMYKLI=;
+ s=default; t=1780039587;
+ bh=7xbxf3sM9AssedzUrISWDxV+1SwbkzUc8AH6eQDjt7c=;
  h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=r0AfO0H7YQJ4AGsHo3XSGFSZHqkUvRF82SjbMQwEtAU7l5dSEOWzxtM8qe4R6SSto
- MpvzSB7eCFyD1vYRWGr1vtusXzUf667Qajmqw1Pfwu2ofaLzzp/pmlpDr4BQaOBlGH
- 5FS9vlOroEv45O2oJ0HXM5D2ePrvTLLXnDeUMWT0=
+ b=Eq6pFkP8zzJJPLZ9H3SkcTjau7oCRML7LQL62y0ujvaBPhFy7aswUsJcu1Aoy5xxO
+ NU1U6Q3M9DlNqy8TvZ6/hMD5RNM6X65Fb6N8EIbrf3avDQ16+Eux0ucMxr5PaTFT/l
+ +mql1WvVvIKueLCb2CHq6G1mlUzYen+jvdHcFobg=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <4f0f12ec-504e-45c6-b53f-e7567bb46b34@yandex-team.ru>
-Date: Fri, 29 May 2026 10:19:22 +0300
+Message-ID: <0166334e-6a34-4fb4-b7c3-300ec2b8b07f@yandex-team.ru>
+Date: Fri, 29 May 2026 10:26:26 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH RFC 1/2] migration/vl: Allow set parameters with -incoming
@@ -87,64 +87,14 @@ On 29.05.26 00:29, Peter Xu wrote:
 > the migration object (who owns the migration parameters) will only be
 > created after PHASE_LATE_BACKENDS_CREATED.  It means anything before it
 > reading migration parameters is illegal.
-> 
-> However, QEMU does have special use cases for such, namely only-migratable
-> flag, and cpr-transfer. Recently, we have one more possible user to read a
-> to-be-introduced new migration parameters during backend initialization
-> phase.  We can introduce yet another global variable (or per-device
-> parameter) to bypass this limitation, but we can also seek for a generic
-> solution that we can setup migration parameters very early, even during
-> backend initializations.
-> 
-> See this discussion for more details on the context of the problem:
-> 
->    https://lore.kernel.org/r/ahdI7Vl5KraK566D@x1.local
-> 
-> This patch wants to take the latter approach.
-> 
-> As a start, introduce a new way to specify migration parameters in QEMU
-> boot commandline, as proposed in the above discussion:
-> 
->    -incoming config:key1=value1,key2=value2,...
 
-Do I understand correctly, that with qobject_input_visitor_new_str(),
-it automatically suuport also json-like syntax
+But with this series, we actually do create a part of this migration object,
+which is created earlier.
 
-      -incoming config:'{"key1": "value1", "key2": {some more complex structure}}'
-
-?
-
-> 
-> When specified, QEMU will parse a string formatted MigrationParameters and
-> keep it.  When migration object is created, it will apply all the settings
-> as initial value.
-> 
-> Since the application of boot parameters will be after object_new()
-> completes, it means it happens after all machine compat properties or
-> -global settings (which should be done during instance_post_init()).
-
-[..]
-
->       to issuing the migrate\_incoming to allow the migration to begin.
-> +
-> +``-incoming config:key1=value1[,key2=value2,...]``
-> +
-> +    Specify migration parameters in QEMU commandlines, so that these
-> +    parameters will be available even during very early boot of QEMU.
-> +    They will be applied properly after QEMU boots and when the migration
-> +    core is initialized.  From that POV, it has similar effect as setting
-> +    these parameters using QMP command ``migrate-set-parameters`` or HMP
-> +    command ``migrate_set_parameter``.
-> +
->   ERST
->   
->   DEF("only-migratable", 0, QEMU_OPTION_only_migratable, \
-
-So, to have a "defer" migration with preset parameter, I need two options
-
-     -incoming defer -incoming config:key=val
-
-right?
+Is it possible instead to initialize the whole migration object earlier?
+Or maybe, somehow "partly" initialize it (if full initialization is not
+possible for some reasons), but still keep one object, without external
+part, stored in separate global variable?
 
 -- 
 Best regards,
