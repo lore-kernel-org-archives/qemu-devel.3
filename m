@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85752CD6E52
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:17:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CB94CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:17:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSvCw-00017o-9e; Fri, 29 May 2026 07:16:54 -0400
+	id 1wSvDU-0001I6-SZ; Fri, 29 May 2026 07:17:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wSvCs-00017a-ND
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:16:50 -0400
+ id 1wSvDS-0001HV-LB
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:17:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wSvCq-0008A4-8z
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:16:49 -0400
+ id 1wSvDR-0008Gi-8o
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:17:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780053406;
+ s=mimecast20190719; t=1780053444;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=2kqfhySzL7LO70bYJPfcneVehcDFw6u4UA/X1U+Mq9w=;
- b=S9bwDX5q2diwBgkErLnZtPrGg2poqB513fmQR0Z+/ayua1mQn3VtLbSFRoiqrXYLrJBa+i
- 36D8ohHBj1e36E6lp8tmIueuH0Nz3U7Qp9VD+k5fXqtO4OwGh/Pp6uY/QJv+aiWv/eMq9f
- ov7yFC5OncAq3kE+/MVywyj4Rr4xLqA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=NiPRbgAGG9+H5A2Rhy9bpK7HQJj7Pl9u84rDJDqgsuw=;
+ b=LsO13kWoytQUAAf94CE82JTszqUIk4xNdG0eE0jwfxaU3cDQl9OkP7ue9ol98yTtDk4S1r
+ ybwwxMablDfBZ3wMuKo/IsDF/uMicIYrw8hgsc+NfKXeZuYW6SldeptTmtK+05DkmfHwFQ
+ VN7T3mw5juU59QazOYKu9kZDYGihf3Y=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-392-8tv5FLv6NSqJuf2Edhe2aA-1; Fri,
- 29 May 2026 07:16:43 -0400
-X-MC-Unique: 8tv5FLv6NSqJuf2Edhe2aA-1
-X-Mimecast-MFC-AGG-ID: 8tv5FLv6NSqJuf2Edhe2aA_1780053402
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-ZaDMdiGoOg6FZD66XPSgdA-1; Fri,
+ 29 May 2026 07:17:21 -0400
+X-MC-Unique: ZaDMdiGoOg6FZD66XPSgdA-1
+X-Mimecast-MFC-AGG-ID: ZaDMdiGoOg6FZD66XPSgdA_1780053439
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 13F401800367; Fri, 29 May 2026 11:16:41 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5E678195609D; Fri, 29 May 2026 11:17:19 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C592D1686; Fri, 29 May 2026 11:16:38 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 903B019560A3; Fri, 29 May 2026 11:17:17 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 00/32] ui: better console hotplug support
-Date: Fri, 29 May 2026 15:16:21 +0400
-Message-Id: <20260529-b4-ui-v1-0-8db3068421ef@redhat.com>
+Date: Fri, 29 May 2026 15:16:27 +0400
+Subject: [PATCH 06/32] glib-compat: add fallback for g_clear_fd/g_autofd
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDUyNL3SQT3dJMXUsDy6S0RDNLU3NjUyWg2oKi1LTMCrA50bEQfnFpUlZ
- qcglIs1JtLQDOQ7WFaQAAAA==
-X-Change-ID: 20260529-b4-ui-909bfa695735
+Message-Id: <20260529-b4-ui-v1-6-8db3068421ef@redhat.com>
+References: <20260529-b4-ui-v1-0-8db3068421ef@redhat.com>
+In-Reply-To: <20260529-b4-ui-v1-0-8db3068421ef@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
@@ -68,34 +67,35 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4440;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1408;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=YxuoBdLfbhz9GcFijxPVq5OYQbzmFyvLio5KDk7MkpU=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqGXWOjWGXvD4nSWJPpN0DsOVuB2yJ0AI0F3/OH
- Z5qht++5uKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCahl1jgAKCRDa6OEJdZac
- 5QYnD/46g5c6kZRlxOhkA3+6WTfmg9EijcKt+rmQ8h/AVrqyg20m6FB0ynaWMFUShRYgJPvUFME
- FXqjILIGK4Ck2uOuqXGktxFLG8j6s+5IRXnNE5a0Rco0ulVl3numCZTYYkkxZgd+ZnAqX5vjlDL
- SPqMk0jo7y52cSDqpEwDV62UPb95Jo9t+sxncXtXfXoXmhy+4/GPn13ushVUmzsigv7xS09RUDj
- GGXV8kWVQOFJeKbJEFqw8mH3n9q1/MRMO2VN42NQwp2oZ/238ELMUYrinCi3UXzgCVI9GcC06Df
- p6KZbQHLMTvw0lqnLBsgAHVreOwqcmX6boBUpG/qp7GyNprG0Jol5cWKSawoueG5zZekNVoO+Rb
- UyJTmUBHlhp5z/51PQ9jNbn2A5KCHSgofdb7AWbBsOOZUtsOOC35w4yf7x0n2jdsoX8a1ig3m+c
- cG0BOzO9r0eGMuh30upDtrCgedb5sd7U/GvrN2J9kljJL1BEaqCFc2tvP1eghEVKAwVkiLNRNum
- avndfFkVGDMtS/levwAquuj3Nl3IPpBrkUaOZEjA8cN1uHqwhtlMqAA8edkZkJzW261bmWpbeK8
- YxZ2bWiYc93oE/QsL4ECtWeEFi/1tE51Q77lul9gGOFBUpDztyILNKUgj9nh7umCytlqHjQTRsK
- 9+cB9oUxgtn+woQ==
+ bh=yIivtAt+njPmx4qztb8O8h6ia85KP5LqwxILrMj9U00=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqGXWPc0bZf1mgaQzXersmWjueBos/qYBP4Igar
+ Kk2OIkoe5OJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCahl1jwAKCRDa6OEJdZac
+ 5ew2EACKAy0oxj/D2Sd0sficzqdvFMRXmBTGNG5Y50blEq6Mx8Nt9Of/tNFZVTTVoMCaSJf9+X/
+ c3RGwNiqN+hYUrDPdpXV3jom3xfSJI58W1hvPhxHTMhPoz3jm0N+Q89TSNpvOBtAO0nQ2687m5S
+ aEgVTVHPe1vMczG8wcXo9qSKiweWBKyeRz5bqaz5RhNPRfRdnIm0Qc2gbsya0x7iUtvSQa56alX
+ 5fkEu0ShLnC955aCWVbRdPokNWS4oninU7CW0RHtBXgxaqvpSWMF1iaZBTJ5tI7fc6eVDMzT+bn
+ gMWqv2ef68Rr1P1TjkgGfjqEYW3WrESOOJwsYjE6q8kn+F4wwo5fSg6L5wpxfsCcQrbCHlDTRgM
+ +1yX0IgzCDHFT9P6rqlctdXpvxtgGZNEj51OQbTRt33ejOUrOd5s/ITfGtfKSFsJalhjgmMUi9C
+ WWTGdYkexvxoWKPObiOmQMGlHohynLJYR0cujsLg3MRoDW61ZUtws84tc5imT/kANJStLzEJUx+
+ taadarXlZEb7Ved/kN6ydT+2oXH9sIj+MhJkpDDDp9acggDWftl/YDx8rDWi9APgf/227whGoIX
+ XS73rd8FEUtwoL8yJ/0P2cCBf0VUpZibvIrUT3nUuZAhKtHODgSh1g1sDTO4AKHt0PxnkM9fbyT
+ y18zN54N1gsPUIQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,104 +111,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-This series improves handling of dynamic consoles in ui/ (commit
-9588d67e72 "console: minimal hotplug suport" added basic unplug &
-replug).  It allows for better hotplug of vfio-pci display devices or
-bochs-display (the other device supporting hotplug today), with GTK and
-D-Bus backends.
-
-As usual, the first patches are various preliminary cleanups and fixes I
-hit while developping the rest, they could be merged earlier. I improved
-the display cleanup to replace the scattered atexit() handler, making
-leaks more visible to sanitizers.
-
-Then console ADDED/REMOVED notifications are added, so display backends
-can react to hotplug. The GTK code is rework a bit to allow easier
-hotplug events handling. Finally, D-Bus supports is implemented with a
-qtest to exercise it.
-
-thanks
+Those helpers were added in glib 2.76.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
-Marc-André Lureau (32):
-      ui/gtk: fix bad widget realize on non-GFX VC
-      build-sys: build with -fno-omit-frame-pointer with ASAN
-      irq: add per-IRQ observer to fix qemu_irq_intercept_in leak
-      scripts/lsan_suppressions: suppress fontconfig leaks
-      vfio/pci: close display console during unrealize, not finalize
-      glib-compat: add fallback for g_clear_fd/g_autofd
-      ui/dbus: remove mouse handler on dispose
-      ui/qmp: keep a reference of console across yield
-      ui: stop ui timer when closing
-      ui/console: init gl_unblock_timer in qemu_console_init
-      ui/spice: remove dead spice_displays
-      ui/spice: add cleanup on shutdown
-      ui: add display cleanup infrastructure
-      ui/curses: implement display cleanup
-      ui/sdl2: implement display cleanup
-      ui/spice-app: implement display cleanup
-      ui/egl: implement display and EGL cleanup
-      ui/cocoa: implement display cleanup
-      ui/dbus: implement display cleanup
-      ui/gtk: implement display cleanup
-      ui/console: add console event notifier infrastructure
-      ui/console: fire console ADDED/REMOVED notifications
-      ui/console-vc: fire ADDED/REMOVED notifications
-      ui/gtk: convert VirtualConsole storage from fixed array to GPtrArray
-      ui/gtk: move global display settings out of per-console init
-      ui/gtk: fix tab re-insertion order on window close
-      ui/gtk: centralize console menu and shortcut management
-      ui/gtk: handle console hotplug/unplug events
-      ui/console: register console in QOM tree dynamically
-      ui/console: unregister console from QOM tree on close
-      ui/dbus: handle console hotplug/unplug events
-      tests/qtest: add D-Bus display hotplug test
+ include/glib-compat.h | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
- meson.build                     |   2 +
- hw/vfio/pci.h                   |   1 +
- include/glib-compat.h           |  29 ++++
- include/hw/core/irq.h           |   1 +
- include/ui/console.h            |  20 +++
- include/ui/egl-helpers.h        |   1 +
- include/ui/gtk.h                |   6 +-
- include/ui/qemu-spice-module.h  |   1 +
- include/ui/qemu-spice.h         |   9 +-
- ui/dbus.h                       |   3 +
- hw/core/irq.c                   |  10 +-
- hw/vfio/display.c               |  30 ++--
- hw/vfio/pci.c                   |   1 +
- system/qtest.c                  |   3 -
- system/runstate.c               |   4 +-
- tests/qtest/dbus-display-test.c | 101 ++++++++++-
- ui/console-vc.c                 |  13 ++
- ui/console.c                    |  71 +++++++-
- ui/curses.c                     |  17 +-
- ui/dbus-console.c               |   9 +
- ui/dbus.c                       | 106 ++++++++++--
- ui/egl-headless.c               |  31 ++++
- ui/egl-helpers.c                |  19 +++
- ui/gtk-clipboard.c              |  15 ++
- ui/gtk.c                        | 369 +++++++++++++++++++++++++++++++---------
- ui/sdl2.c                       |  23 ++-
- ui/spice-app.c                  |  10 +-
- ui/spice-core.c                 |  25 ++-
- ui/spice-display.c              |  52 ++++++
- ui/spice-input.c                |  52 ++++--
- ui/spice-module.c               |   5 +
- ui/ui-qmp-cmds.c                |   3 +
- scripts/lsan_suppressions.txt   |  15 +-
- ui/cocoa.m                      |  19 ++-
- ui/meson.build                  |   4 +-
- 35 files changed, 901 insertions(+), 179 deletions(-)
----
-base-commit: 2db91528542672cf0db78b3f2cc0e22b36302b38
-change-id: 20260529-b4-ui-909bfa695735
+diff --git a/include/glib-compat.h b/include/glib-compat.h
+index 2e32b90f051..32ee2afdcdf 100644
+--- a/include/glib-compat.h
++++ b/include/glib-compat.h
+@@ -30,6 +30,7 @@
+ #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+ 
+ #include <glib.h>
++#include <glib/gstdio.h>
+ #if defined(G_OS_UNIX)
+ #include <glib-unix.h>
+ #include <sys/types.h>
+@@ -129,6 +130,34 @@ qemu_g_test_slow(void)
+ #define g_test_thorough() qemu_g_test_slow()
+ #define g_test_quick() (!qemu_g_test_slow())
+ 
++static inline gboolean g_clear_fd_qemu(int *fd_ptr, GError **error)
++{
++#if GLIB_CHECK_VERSION(2, 76, 0)
++    return g_clear_fd(fd_ptr, error);
++#else
++    int fd = *fd_ptr;
++
++    *fd_ptr = -1;
++
++    if (fd < 0) {
++        return TRUE;
++    }
++
++    return g_close(fd, error);
++#endif
++}
++#define g_clear_fd(fd, err) g_clear_fd_qemu(fd, err)
++
++#if !GLIB_CHECK_VERSION(2, 76, 0)
++static inline void _g_clear_fd_ignore_error(int *fd_ptr)
++{
++    int errsv = errno;
++    g_clear_fd(fd_ptr, NULL);
++    errno = errsv;
++}
++#define g_autofd __attribute__((cleanup(_g_clear_fd_ignore_error)))
++#endif
++
+ #pragma GCC diagnostic pop
+ 
+ #ifndef G_NORETURN
 
-Best regards,
---  
-Marc-André Lureau <marcandre.lureau@redhat.com>
+-- 
+2.54.0
 
 
