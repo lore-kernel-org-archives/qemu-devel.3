@@ -4,49 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9958ECD5BD2
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 07:05:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 557E0CD5BD2
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 07:20:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSrHh-0000sF-5C; Fri, 29 May 2026 03:05:33 -0400
+	id 1wSrVE-0003t5-OT; Fri, 29 May 2026 03:19:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1wSrHc-0000oB-6v
- for qemu-devel@nongnu.org; Fri, 29 May 2026 03:05:28 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1wSrHW-0008Tp-Hp
- for qemu-devel@nongnu.org; Fri, 29 May 2026 03:05:25 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxRXilOhlqL3UOAA--.16579S3;
- Fri, 29 May 2026 15:05:09 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJDxTMKkOhlqMLyUAA--.17345S2;
- Fri, 29 May 2026 15:05:08 +0800 (CST)
-From: Xianglai Li <lixianglai@loongson.cn>
-To: qemu-devel@nongnu.org,
-	lixianglai@loongson.cn
-Cc: Bibo Mao <maobibo@loongson.cn>,
-	Song Gao <gaosong@loongson.cn>
-Subject: [PATCH] target/loongarch: clear the registers when cpu is reset
-Date: Fri, 29 May 2026 14:38:58 +0800
-Message-Id: <20260529063858.3437928-1-lixianglai@loongson.cn>
-X-Mailer: git-send-email 2.39.1
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wSrVD-0003sM-D0
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 03:19:31 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wSrV9-0004TL-Vr
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 03:19:31 -0400
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:2925:0:640:1f39:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 98F24C01EB;
+ Fri, 29 May 2026 10:19:23 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:42a::1:0] (unknown [2a02:6bf:8080:42a::1:0])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id MJVx9i0XduQ0-sZk2Han5; Fri, 29 May 2026 10:19:22 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1780039162;
+ bh=vMAkBig7buka1b72YTDQLWvUsaJVfTMQ9SIBANMYKLI=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=r0AfO0H7YQJ4AGsHo3XSGFSZHqkUvRF82SjbMQwEtAU7l5dSEOWzxtM8qe4R6SSto
+ MpvzSB7eCFyD1vYRWGr1vtusXzUf667Qajmqw1Pfwu2ofaLzzp/pmlpDr4BQaOBlGH
+ 5FS9vlOroEv45O2oJ0HXM5D2ePrvTLLXnDeUMWT0=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <4f0f12ec-504e-45c6-b53f-e7567bb46b34@yandex-team.ru>
+Date: Fri, 29 May 2026 10:19:22 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxTMKkOhlqMLyUAA--.17345S2
-X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163;
- envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 1/2] migration/vl: Allow set parameters with -incoming
+ config:*
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Mark Kanda <mark.kanda@oracle.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Jason Wang <jasowang@redhat.com>, Ben Chaney <bchaney@akamai.com>,
+ Fabiano Rosas <farosas@suse.de>
+References: <20260528212947.368132-1-peterx@redhat.com>
+ <20260528212947.368132-2-peterx@redhat.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20260528212947.368132-2-peterx@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -63,81 +81,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set the CSR_CRMD, CSR_ESTAT, CSR_MSGIS and CSR_PERFCTRL registers to the
-reset state when the CPU is reset.
+On 29.05.26 00:29, Peter Xu wrote:
+> QEMU doesn't yet have a good way to specify migration parameters so that
+> they can be available even during early stage of QEMU boots.  It is because
+> the migration object (who owns the migration parameters) will only be
+> created after PHASE_LATE_BACKENDS_CREATED.  It means anything before it
+> reading migration parameters is illegal.
+> 
+> However, QEMU does have special use cases for such, namely only-migratable
+> flag, and cpr-transfer. Recently, we have one more possible user to read a
+> to-be-introduced new migration parameters during backend initialization
+> phase.  We can introduce yet another global variable (or per-device
+> parameter) to bypass this limitation, but we can also seek for a generic
+> solution that we can setup migration parameters very early, even during
+> backend initializations.
+> 
+> See this discussion for more details on the context of the problem:
+> 
+>    https://lore.kernel.org/r/ahdI7Vl5KraK566D@x1.local
+> 
+> This patch wants to take the latter approach.
+> 
+> As a start, introduce a new way to specify migration parameters in QEMU
+> boot commandline, as proposed in the above discussion:
+> 
+>    -incoming config:key1=value1,key2=value2,...
 
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
----
-Cc: Bibo Mao <maobibo@loongson.cn>
-Cc: Song Gao <gaosong@loongson.cn>
+Do I understand correctly, that with qobject_input_visitor_new_str(),
+it automatically suuport also json-like syntax
 
- target/loongarch/cpu-csr.h |  7 +++++++
- target/loongarch/cpu.c     | 19 ++++++++++++++++++-
- 2 files changed, 25 insertions(+), 1 deletion(-)
+      -incoming config:'{"key1": "value1", "key2": {some more complex structure}}'
 
-diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
-index d860417af2..d936af8e57 100644
---- a/target/loongarch/cpu-csr.h
-+++ b/target/loongarch/cpu-csr.h
-@@ -211,6 +211,13 @@ FIELD(CSR_DMW_64, VSEG, 60, 4)
- #define LOONGARCH_CSR_PERFCTRL(N)    (0x200 + 2 * N)
- #define LOONGARCH_CSR_PERFCNTR(N)    (0x201 + 2 * N)
- 
-+FIELD(CSR_PERFCTRL, EV, 0, 10)
-+FIELD(CSR_PERFCTRL, PLV0, 16, 1)
-+FIELD(CSR_PERFCTRL, PLV1, 17, 1)
-+FIELD(CSR_PERFCTRL, PLV2, 18, 1)
-+FIELD(CSR_PERFCTRL, PLV3, 19, 1)
-+FIELD(CSR_PERFCTRL, PMIE, 20, 1)
-+
- /* Debug CSRs */
- #define LOONGARCH_CSR_DBG            0x500 /* debug config */
- FIELD(CSR_DBG, DST, 0, 1)
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 8f277f7696..7f82c4c46c 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -622,6 +622,7 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
-     env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, PG, 0);
-     env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, DATF, 0);
-     env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, DATM, 0);
-+    env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, WE, 0);
- 
-     env->CSR_EUEN = FIELD_DP64(env->CSR_EUEN, CSR_EUEN, FPE, 0);
-     env->CSR_EUEN = FIELD_DP64(env->CSR_EUEN, CSR_EUEN, SXE, 0);
-@@ -633,7 +634,7 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
-     env->CSR_ECFG = FIELD_DP64(env->CSR_ECFG, CSR_ECFG, VS, 0);
-     env->CSR_ECFG = FIELD_DP64(env->CSR_ECFG, CSR_ECFG, LIE, 0);
- 
--    env->CSR_ESTAT = env->CSR_ESTAT & (~MAKE_64BIT_MASK(0, 2));
-+    env->CSR_ESTAT = 0;
-     env->CSR_RVACFG = FIELD_DP64(env->CSR_RVACFG, CSR_RVACFG, RBITS, 0);
-     env->CSR_CPUID = cs->cpu_index;
-     env->CSR_TCFG = FIELD_DP64(env->CSR_TCFG, CSR_TCFG, EN, 0);
-@@ -641,6 +642,22 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
-     env->CSR_TLBRERA = FIELD_DP64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 0);
-     env->CSR_MERRCTL = FIELD_DP64(env->CSR_MERRCTL, CSR_MERRCTL, ISMERR, 0);
-     env->CSR_TID = cs->cpu_index;
-+
-+    memset(env->CSR_MSGIS, 0, sizeof(env->CSR_MSGIS));
-+    env->CSR_DBG = FIELD_DP64(env->CSR_DBG, CSR_DBG, DST, 0);
-+    for (n = 0; n < MAX_PERF_EVENTS; n++) {
-+        env->CSR_PERFCTRL[n] = FIELD_DP64(env->CSR_PERFCTRL[n], CSR_PERFCTRL,
-+                                          PLV0, 0);
-+        env->CSR_PERFCTRL[n] = FIELD_DP64(env->CSR_PERFCTRL[n], CSR_PERFCTRL,
-+                                          PLV1, 0);
-+        env->CSR_PERFCTRL[n] = FIELD_DP64(env->CSR_PERFCTRL[n], CSR_PERFCTRL,
-+                                          PLV2, 0);
-+        env->CSR_PERFCTRL[n] = FIELD_DP64(env->CSR_PERFCTRL[n], CSR_PERFCTRL,
-+                                          PLV3, 0);
-+        env->CSR_PERFCTRL[n] = FIELD_DP64(env->CSR_PERFCTRL[n], CSR_PERFCTRL,
-+                                          PMIE, 0);
-+    }
-+
-     /*
-      * Workaround for edk2-stable202408, CSR PGD register is set only if
-      * its value is equal to zero for boot cpu, it causes reboot issue.
+?
+
+> 
+> When specified, QEMU will parse a string formatted MigrationParameters and
+> keep it.  When migration object is created, it will apply all the settings
+> as initial value.
+> 
+> Since the application of boot parameters will be after object_new()
+> completes, it means it happens after all machine compat properties or
+> -global settings (which should be done during instance_post_init()).
+
+[..]
+
+>       to issuing the migrate\_incoming to allow the migration to begin.
+> +
+> +``-incoming config:key1=value1[,key2=value2,...]``
+> +
+> +    Specify migration parameters in QEMU commandlines, so that these
+> +    parameters will be available even during very early boot of QEMU.
+> +    They will be applied properly after QEMU boots and when the migration
+> +    core is initialized.  From that POV, it has similar effect as setting
+> +    these parameters using QMP command ``migrate-set-parameters`` or HMP
+> +    command ``migrate_set_parameter``.
+> +
+>   ERST
+>   
+>   DEF("only-migratable", 0, QEMU_OPTION_only_migratable, \
+
+So, to have a "defer" migration with preset parameter, I need two options
+
+     -incoming defer -incoming config:key=val
+
+right?
+
 -- 
-2.39.1
-
+Best regards,
+Vladimir
 
