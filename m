@@ -4,140 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF746CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 13:40:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E6B5CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 13:40:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSxQn-0006vF-6R; Fri, 29 May 2026 09:39:21 -0400
+	id 1wSxQv-0006wk-17; Fri, 29 May 2026 09:39:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wSxQj-0006uZ-3i
- for qemu-devel@nongnu.org; Fri, 29 May 2026 09:39:17 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wSxQn-0006vV-Ju; Fri, 29 May 2026 09:39:22 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wSxQh-0004OY-I9
- for qemu-devel@nongnu.org; Fri, 29 May 2026 09:39:16 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64TDLDWU154458
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 13:39:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- eqLKTMoRsKLQgoSRd5utjONT413qeJGEMK1P59WVr6c=; b=MxJsuI/kvso9dTZo
- c1L9/JQvoesZ090SnsYzN1Scb68wt80edV1HNVp84HL1MuqkywbZhmywrQ3bHFfY
- kHL/jYqgbrlLls1Fru7ZOjKPBWTEqlPaVtVJB71DqD1PS+oOhFiL5jwKLfcTW1de
- b9HAK9rgvuOFQg7Y8xOadnex8l/TTDIa0CFEMFgAOwpM4YYqWUiijQATF/DI/+C8
- oqgJPEtDZnCsnPLHm022JLKGEquIWSm4gHya5VuiA4HCSwNlwP+Ywnt/YBsmkFzs
- WYgiyFVAktHXgJiRqS6YGz7G4s/vjOSyzpsL9T4Y9BQv9BiDuTZRSNOjnerKWqxq
- SbM0vA==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eeuy5by4k-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 13:39:10 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-8cce42a4e75so18683276d6.3
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 06:39:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1780061950; x=1780666750; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=eqLKTMoRsKLQgoSRd5utjONT413qeJGEMK1P59WVr6c=;
- b=VKRUi1SZGSFaDTiA2U077VyOiLNAhah14EoO8Iyb0PgjoHLVQR3zGCWpwuACC3X7OU
- KAzUhHGXCcupWbFxxdIsvYuV7ybTAWqg1E3upZfrn+cLwCAykTOetS3EvjoTa6T5wYC3
- a8Ed40xxwBVfnSivbYxsSTlelhRs5eGxKHq8IyjAsJHFVAkVuh3L9lJcK2MP8yOyqsH1
- ML+h0t1dVxWeCS5OuGj/gtgb87Jy7K4ceQn5iRWeUrnh+P/FifD2cdcvLLz0VHXXIdT0
- t0SFH8ImPw2CQBSznUPTDqs9oghoMFt03iXt9SH/HRgRG2PjRKeHqnVEcSL00TGD984d
- 5EaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780061950; x=1780666750;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=eqLKTMoRsKLQgoSRd5utjONT413qeJGEMK1P59WVr6c=;
- b=Qwb1G2p90K92Aof2LT1eNopPm8S4YdiKNHnWmBF+3IUa/Gs6/F7t04Y7ap0Ms2UTQ2
- hlTew8deDkdSHPM1GllA2y1du4VRfE1FMWs4ID92JZbGBN5PVLjoSFnOxiCqEZMkiNcn
- EIKKv2Z8XTRMic/wQW+qP5Xo4KNzQ9RchWHXY6hH5wV1HvHmqHP8KTaaMpErVtF8rLgb
- VCYW4Qdi7+hH8M4Ffux80z2INVcI24HkP73bQstnlCZ7l9xCpfwxEYCWNwVqzlPu0PDn
- orbz5Etaj7k/4TwsTIYZzl5se+Y7L/+ms9HehJ6AKg92W473U9NiRoDBbSa0FcsRQUzY
- AAtQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8Ht7XFi8LmmLQ+pp+VDjA8C4msrm6X8qkjCEdGxAl20xZYXL6aVbB6BjJCPpsjlLKFaDAkP+C+qgzE@nongnu.org
-X-Gm-Message-State: AOJu0Yzyzv6VVBYY+u5j3yM7eapy/cvekUc72jguDUhQnKXmN8LBDBmf
- FgHwT4wKaDaWKn6FPiUD5UugBs9yIRqYWe19gAkQwmzSX1X1aCw2G5U7qbW0p+GO13/MJAPHmNT
- BmW12vsgRKJT0eVrwbzanHyIWuZp8uoy6h0aFiOjyWn5j30Y1FTE6YsBfgA==
-X-Gm-Gg: Acq92OEaoqFwguuy2MFCY0i2T0kDBPjhIMCyxBnYKFz5gDZXTUXbo8BNngcELtLsVUN
- DfaBtbAVjbNky9tRDWs29xUS85iWZUitk+3RhaYcRqzJfmrH8eXdSv7wYp80m2EcAzboOJ0x6RB
- rmaFymsqNjBa7AxbxJ9nxudWyA/lYyxLzikUf4eigbrvQKxHPeVdWzj2UpJ9KdtjwYQ9PE8Mi6Z
- iEN5cSZ6cAKTMvnjU8VYURi9tKl7fQS92mpDrtidCg6g4kH+qzzl8D0jLwyX5QoUbIrDMCqVIKS
- uL7YU8Rk8kkbckLrgzZpFgzZBDD7LP0vpB5Yefd2M/NeG73hFf39AHW2LfzxknN7X239YGVEB8H
- 7LuXxztGk//FJ7A2BKPjTdZd1wdb+BIFl/KPpoyVj32mgCHb+c6oShcYnnpkUu69HPbeg
-X-Received: by 2002:a05:620a:40d2:b0:912:1206:ddd1 with SMTP id
- af79cd13be357-9152fd1e304mr370048685a.1.1780061949851; 
- Fri, 29 May 2026 06:39:09 -0700 (PDT)
-X-Received: by 2002:a05:620a:40d2:b0:912:1206:ddd1 with SMTP id
- af79cd13be357-9152fd1e304mr370042885a.1.1780061949258; 
- Fri, 29 May 2026 06:39:09 -0700 (PDT)
-Received: from [192.168.68.106] ([177.170.117.62])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9153244e114sm203883385a.5.2026.05.29.06.39.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 May 2026 06:39:08 -0700 (PDT)
-Message-ID: <599f551b-0ca4-465d-8c78-d7612f3191a5@oss.qualcomm.com>
-Date: Fri, 29 May 2026 10:39:03 -0300
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wSxQk-0004PC-Fr; Fri, 29 May 2026 09:39:21 -0400
+Received: from [192.168.10.145] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64TDd2YZ057184
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 29 May 2026 22:39:03 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=ARPVCavVU5+6sb54n8Daa5m5t7+of2b1Asseo7o7Q3U=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1780061943; v=1;
+ b=dpk8dmvFc3zoeQfwo1geyHXDpSxC9t7mBit4v9GlrXNUOC5SLEyuaKexdwCTt/Ze
+ JvThuJxWnZmKdhZIaXUGd6wh9tqfBrTzdajMrEbCIAuRKe2Y/Y5ZtZ2lwqDPpVOS
+ KaQzK/biZtTBSIH1QiD9xHi9gEcEUiA3W4TkpYZkhAdWc2hWbDgxmttM6xHQlq+t
+ /undmNDxmayuHhfOmel5nkmEhmh1v6HXdfDHg6EgYL6H8W4sUmlimckug89faQc7
+ Dc+xR7Uvw1sLa/1sGeJuLpY7QyOQjt38oNuls/dEeFbCBnwOqUu1BWL6t30B/M/X
+ ZdXMkQ1YNqFvlWdtq5BV6A==
+Message-ID: <7b025488-0517-42ae-9f2b-fce720312163@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 29 May 2026 22:39:02 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/riscv/numa.c: Supplement cpu topology arguments
-To: liu.xuemei1@zte.com.cn, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- chao.liu.zevorn@gmail.com
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-References: <20260529181848378wiq8pXCmbwAZR5_-wZFJd@zte.com.cn>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: Re: [PATCH] hw/cxl: Fix cxl_fmws_set_memmap() range check
+To: Jonathan Cameron <jic23@kernel.org>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Fan Ni <fan.ni@samsung.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-arm@nongnu.org,
+ linux-cxl@vger.kernel.org
+References: <20260528-cxl-v1-1-a470c8255264@rsg.ci.i.u-tokyo.ac.jp>
+ <20260529140001.435eaebd@jic23-huawei>
 Content-Language: en-US
-In-Reply-To: <20260529181848378wiq8pXCmbwAZR5_-wZFJd@zte.com.cn>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260529140001.435eaebd@jic23-huawei>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=SPtykuvH c=1 sm=1 tr=0 ts=6a1996fe cx=c_pps
- a=wEM5vcRIz55oU/E2lInRtA==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=1RTuLK3dAAAA:8 a=EUspDBNiAAAA:8 a=2M_qXnMZ40JJAAL4XIsA:9 a=QEXdDO2ut3YA:10
- a=OIgjcC2v60KrkQgK7BGD:22 a=kRpfLKi8w9umh8uBmg1i:22
-X-Proofpoint-GUID: Vlp5CUSYfwAzk-Os7PgqfaNTdNhtQ6dL
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI5MDEzNiBTYWx0ZWRfXy3Kp7BHZJajF
- N3ohMSJqsy11RJkLFoy9RBRo7C333Xexl8Q/l+tN6t2SP3vUEkFEi8eVi+9e9X1DJJrMZTjDI+a
- cnTNJw1ZkCdWCkJ3Txmvyk/Xai0tSy0RSPC+S41yFO3/HgXf0525a2uwBxZeHvkhbofPfhThG5C
- vnzpX4FmlhQz5Uqqou16mrL3cgs6uu6cCXe4mLM3U+DDMQp+Ts2pr1n13MSlt1+gA6JofSD5iGZ
- 8LAdDAxuizeX44UCLb2ERopTx5Y9VOOdeUK9RBf26aOZEjX78FDunOPJZwu78r1fgqcyIU6xYcz
- ODWl+pc/YRfzmmYWqgxbDuGdwr5eAWDSEBVtlaW/61sp9N5jIO4aUlYDsz4BFjoSRLQugGQtves
- Wib/0iz1+n7fju3aJHjoQIr+ezBPZ5lykdIISHGz7ypraQATECnZaK9etQCdqB8rzHBkDsjcxaX
- oJlnoSjDsK2vioubBwA==
-X-Proofpoint-ORIG-GUID: Vlp5CUSYfwAzk-Os7PgqfaNTdNhtQ6dL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-05-29_03,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
- suspectscore=0 malwarescore=0 clxscore=1015 phishscore=0 bulkscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
- definitions=main-2605290136
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,57 +75,222 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 5/29/2026 7:18 AM, liu.xuemei1@zte.com.cn wrote:
-> From: Xuemei Liu <liu.xuemei1@zte.com.cn>
+On 2026/05/29 22:00, Jonathan Cameron wrote:
+> On Thu, 28 May 2026 21:24:05 +0900
+> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
 > 
-> Supplement RISC-V cpu topology arguments, including support socket
-> cluster and threads per core.
+>> cxl_fmws_set_memmap() leaves the zero-initialized base address of a CXL
+>> fixed window unchanged when it does not fit in the memory map, which
+>> results in incorrect mapping. Change the function to report an error
+>> instead.
+>>
+>> The Arm virt machine passes the exclusive end of the memory map while
+>> the i386 pc machine passes the inclusive end to cxl_fmws_set_memmap().
+>> Change the i386 pc machine to pass the exclusive end and perform the
+>> range check accordingly in cxl_fmws_set_memmap().
+> Hi,
 > 
-> Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
-> ---
-
-Seems like we can't set clusters/cores/threads as 0 from the command line:
-
-u$ ./build/qemu-system-riscv64 -M virt -smp cores=0
-qemu-system-riscv64: Invalid CPU topology: CPU topology parameters must be greater than zero
-
-And any missing SMP values from the cmd line is filled with '1' during
-machine_parse_smp_config().  So we're not generating div by zero with
-this patch.
-
-
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-
-
-
->   hw/riscv/numa.c | 12 +++++++++++-
->   1 file changed, 11 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/riscv/numa.c b/hw/riscv/numa.c
-> index 24a803f7fa..8a144925c1 100644
-> --- a/hw/riscv/numa.c
-> +++ b/hw/riscv/numa.c
-> @@ -239,8 +239,18 @@ const CPUArchIdList *riscv_numa_possible_cpu_arch_ids(MachineState *ms)
->       for (n = 0; n < ms->possible_cpus->len; n++) {
->           ms->possible_cpus->cpus[n].type = ms->cpu_type;
->           ms->possible_cpus->cpus[n].arch_id = n;
-> +        ms->possible_cpus->cpus[n].props.has_socket_id = true;
-> +        ms->possible_cpus->cpus[n].props.socket_id =
-> +            n / (ms->smp.clusters * ms->smp.cores * ms->smp.threads);
-> +        ms->possible_cpus->cpus[n].props.has_cluster_id = true;
-> +        ms->possible_cpus->cpus[n].props.cluster_id =
-> +            (n / (ms->smp.cores * ms->smp.threads)) % ms->smp.clusters;
->           ms->possible_cpus->cpus[n].props.has_core_id = true;
-> -        ms->possible_cpus->cpus[n].props.core_id = n;
-> +        ms->possible_cpus->cpus[n].props.core_id =
-> +            (n / ms->smp.threads) % ms->smp.cores;
-> +        ms->possible_cpus->cpus[n].props.has_thread_id = true;
-> +        ms->possible_cpus->cpus[n].props.thread_id =
-> +            n % ms->smp.threads;
->       }
+> +CC linux-cxl as more folk there who might take a look at this.
+> (also my remove my dead huawei address)
 > 
->       return ms->possible_cpus;
+> What are the results of this on users?  Obviously the CFMWS doesn't
+> work, but how do they observe that.
+> 
+> Also seems like this is a fix and it can be a lot more minimal
+> (just one error_fatal use).
+> 
+> Jonathan
+> 
+> 
+>>
+>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>> ---
+>>   include/hw/cxl/cxl_host.h |  2 +-
+>>   hw/arm/virt.c             |  6 +++---
+>>   hw/cxl/cxl-host-stubs.c   |  4 ++--
+>>   hw/cxl/cxl-host.c         | 12 +++++++-----
+>>   hw/i386/pc.c              | 12 ++++++------
+>>   5 files changed, 19 insertions(+), 17 deletions(-)
+>>
+>> diff --git a/include/hw/cxl/cxl_host.h b/include/hw/cxl/cxl_host.h
+>> index 21619bb748ab..ed34c3159f59 100644
+>> --- a/include/hw/cxl/cxl_host.h
+>> +++ b/include/hw/cxl/cxl_host.h
+>> @@ -16,7 +16,7 @@
+>>   void cxl_machine_init(Object *obj, CXLState *state);
+>>   void cxl_fmws_link_targets(Error **errp);
+>>   void cxl_hook_up_pxb_registers(PCIBus *bus, CXLState *state, Error **errp);
+>> -hwaddr cxl_fmws_set_memmap(hwaddr base, hwaddr max_addr);
+>> +bool cxl_fmws_set_memmap(hwaddr *cursor, hwaddr end, Error **errp);
+>>   void cxl_fmws_update_mmio(void);
+>>   GSList *cxl_fmws_get_all_sorted(void);
+>>   
+>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+>> index b090233893c5..a22778575cfb 100644
+>> --- a/hw/arm/virt.c
+>> +++ b/hw/arm/virt.c
+>> @@ -2536,9 +2536,9 @@ static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
+>>       if (device_memory_size > 0) {
+>>           machine_memory_devices_init(ms, device_memory_base, device_memory_size);
+>>       }
+>> -    vms->highest_gpa = cxl_fmws_set_memmap(ROUND_UP(vms->highest_gpa + 1,
+>> -                                                    256 * MiB),
+>> -                                           BIT_ULL(pa_bits)) - 1;
+>> +    vms->highest_gpa = ROUND_UP(vms->highest_gpa + 1, 256 * MiB);
+>> +    cxl_fmws_set_memmap(&vms->highest_gpa, BIT_ULL(pa_bits), &error_fatal);
+>> +    vms->highest_gpa--;
+> 
+> Hmm. The previous code kept the tight coupling of cxl_fmws_set_memmap()
+> returning an address that we then decremented as the value is inclusive.
+> This loses that clarity to my eyes.
+> 
+> Perhaps we now need a comment.
+> 
+>>   }
+>>   
+>>   static VirtGICType finalize_gic_version_do(const char *accel_name,
+>> diff --git a/hw/cxl/cxl-host-stubs.c b/hw/cxl/cxl-host-stubs.c
+>> index 9b515913ea4d..fa87cea0e8b9 100644
+>> --- a/hw/cxl/cxl-host-stubs.c
+>> +++ b/hw/cxl/cxl-host-stubs.c
+>> @@ -11,9 +11,9 @@
+>>   void cxl_fmws_link_targets(Error **errp) {};
+>>   void cxl_machine_init(Object *obj, CXLState *state) {};
+>>   void cxl_hook_up_pxb_registers(PCIBus *bus, CXLState *state, Error **errp) {};
+>> -hwaddr cxl_fmws_set_memmap(hwaddr base, hwaddr max_addr)
+>> +bool cxl_fmws_set_memmap(hwaddr *base, hwaddr max_addr, Error **errp)
+> 
+> Feels like a more minimal solution is to just use error_fatal() internally and
+> keep the original return of value.
+
+I followed what other functions (cxl_fmws_link_targets() and 
+cxl_hook_up_pxb_registers()) do.
+
+> 
+>>   {
+>> -    return base;
+>> +    return true;
+>>   };
+>>   void cxl_fmws_update_mmio(void) {};
+>>   
+>> diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+>> index a94b893e9991..33421b3ca174 100644
+>> --- a/hw/cxl/cxl-host.c
+>> +++ b/hw/cxl/cxl-host.c
+>> @@ -429,7 +429,7 @@ void cxl_fmws_update_mmio(void)
+>>       object_child_foreach_recursive(object_get_root(), cxl_fmws_mmio_map, NULL);
+>>   }
+>>   
+>> -hwaddr cxl_fmws_set_memmap(hwaddr base, hwaddr max_addr)
+>> +bool cxl_fmws_set_memmap(hwaddr *cursor, hwaddr end, Error **errp)
+> 
+> The cursor naming makes little sense to me. It is an address.
+
+It is not really "base" though and it's moving during execution; please 
+see how the resulting value is used in cxl_fmws_set_memmap(). The naming 
+represents the moving nature and has no implication on being an address.
+
+> Also the rename to end doesn't seem to bring any more clarity over max_addr.
+> I guess maybe you did this because it's an exclusive value? I'm not sure end
+> conveys that any more than max_addr.
+
+Indeed the rename was done because it's exclusive. max_addr is 
+misleading as it implies inclusive and "end" is not at least, though it 
+still doesn't tell it is the exclusive end.
+
+> 
+> 
+>>   {
+>>       GSList *cfmws_list, *iter;
+>>       CXLFixedWindow *fw;
+>> @@ -437,14 +437,16 @@ hwaddr cxl_fmws_set_memmap(hwaddr base, hwaddr max_addr)
+>>       cfmws_list = cxl_fmws_get_all_sorted();
+>>       for (iter = cfmws_list; iter; iter = iter->next) {
+>>           fw = CXL_FMW(iter->data);
+>> -        if (base + fw->size <= max_addr) {
+>> -            fw->base = base;
+>> -            base += fw->size;
+>> +        if (end - *cursor < fw->size) {
+> I'm not seeing why this form is an improvement on the original test.
+
+The original form overflows when fw->size is too big and I'm just being 
+careful here.
+
+Regards,
+Akihiko Odaki
+
+> 
+>> +            error_setg(errp, "A CXL fixed memory window does not fit in the memory map");
+> 
+> This bit I'm fine with!  Makes sense to error out as otherwise we get a rather
+> confusing result.
+> 
+>> +            return false;
+>>           }
+>> +        fw->base = *cursor;
+>> +        *cursor += fw->size;
+>>       }
+>>       g_slist_free(cfmws_list);
+>>   
+>> -    return base;
+>> +    return true;
+>>   }
+>>   
+>>   static void cxl_fmw_realize(DeviceState *dev, Error **errp)
+>> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+>> index 2ecad3c503fb..eadf37096533 100644
+>> --- a/hw/i386/pc.c
+>> +++ b/hw/i386/pc.c
+>> @@ -747,7 +747,7 @@ void pc_memory_init(PCMachineState *pcms,
+>>       PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+>>       X86MachineState *x86ms = X86_MACHINE(pcms);
+>>       hwaddr maxphysaddr, maxusedaddr;
+>> -    hwaddr cxl_base, cxl_resv_end = 0;
+>> +    hwaddr cxl_cursor = 0;
+> As above, I'm not sure how the cursor naming is useful. Its
+> an address so I'd expect naming to reflect that. To me base does
+> and cursor (which to me is typically the current position of an
+> iterator) does not.
+> 
+>>       X86CPU *cpu = X86_CPU(first_cpu);
+>>       uint64_t res_mem_end;
+>>   
+>> @@ -857,11 +857,11 @@ void pc_memory_init(PCMachineState *pcms,
+>>           MemoryRegion *mr = &pcms->cxl_devices_state.host_mr;
+>>           hwaddr cxl_size = MiB;
+>>   
+>> -        cxl_base = pc_get_cxl_range_start(pcms);
+>> +        cxl_cursor = pc_get_cxl_range_start(pcms);
+>>           memory_region_init(mr, OBJECT(machine), "cxl_host_reg", cxl_size);
+>> -        memory_region_add_subregion(system_memory, cxl_base, mr);
+>> -        cxl_base = ROUND_UP(cxl_base + cxl_size, 256 * MiB);
+>> -        cxl_resv_end = cxl_fmws_set_memmap(cxl_base, maxphysaddr);
+>> +        memory_region_add_subregion(system_memory, cxl_cursor, mr);
+>> +        cxl_cursor = ROUND_UP(cxl_cursor + cxl_size, 256 * MiB);
+>> +        cxl_fmws_set_memmap(&cxl_cursor, maxphysaddr + 1, &error_fatal);
+>>           cxl_fmws_update_mmio();
+>>       }
+>>   
+>> @@ -892,7 +892,7 @@ void pc_memory_init(PCMachineState *pcms,
+>>       rom_set_fw(fw_cfg);
+>>   
+>>       if (pcms->cxl_devices_state.is_enabled) {
+>> -        res_mem_end = cxl_resv_end;
+>> +        res_mem_end = cxl_cursor;
+>>       } else if (machine->device_memory) {
+>>           res_mem_end = machine->device_memory->base
+>>                         + memory_region_size(&machine->device_memory->mr);
+>>
+>> ---
+>> base-commit: e89049b3ba5f1f0468bc0d294173345597514a1b
+>> change-id: 20260528-cxl-d3bf91bac0c6
+>>
+>> Best regards,
+>> --
+>> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>
+>>
+> 
 
 
