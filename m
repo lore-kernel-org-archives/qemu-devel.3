@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0043CD6E51
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 14:37:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20978CD6E50
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 14:37:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSyKJ-0006M3-2v; Fri, 29 May 2026 10:36:43 -0400
+	id 1wSyKK-0006Nl-If; Fri, 29 May 2026 10:36:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSyK8-0006Hk-7x
- for qemu-devel@nongnu.org; Fri, 29 May 2026 10:36:33 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1wSyK9-0006Hp-Se
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 10:36:35 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSyK5-0007SO-Rt
- for qemu-devel@nongnu.org; Fri, 29 May 2026 10:36:31 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4891e5b9c1fso121579125e9.2
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 07:36:29 -0700 (PDT)
+ id 1wSyK8-0007T3-88
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 10:36:33 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-45ee5cdbd28so1210338f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 07:36:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780065388; x=1780670188; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780065391; x=1780670191; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=j9by9Ed5YpVI05gWl9P8GGtmpfCFymKnhYv6jHWkLsQ=;
- b=pfim/YkC0aI9HNSc4CTA9giGsE5YlmIFhQeZ2HrPVfQAi3/nPImLsWFm7RA+jhBCTi
- jdqhRTgx3UTVGnbLQuW5w3r7j6p54LtAvN0UrjfllKtTeKHrDMXp/C5ww6lfT+WS8w9S
- N/dC9fnns2GhBuv3FGTH4I/mvW5JUpvg68CFUl5wLd/1gG2cvDO3emCMDCYlC0NhZAPl
- HcJ+IFeVaCUGHBSbGIKY9ZEmXhHCkxRs4u3H4DYtRHkusJOJnoT5r0sMxueK4zsAFL0Z
- tIU+BKyq/Cq4vdZJyD4xVBvr36jDu/NOzUJ0GUieDn7lyCxn1uacrWc5g0ncU50fRG3O
- Ruxw==
+ :reply-to; bh=v8hnt8QTR0m3dsrSXtppaehwSCPzuZgau1gE20XoQoc=;
+ b=cdMcGbEpkeRoZEx+3Vb+1T5vVs4at9j88fabbENveiakmSiJxioqpK7QxAjCmrSbHU
+ USn94MjZVbvKhKGiSHS8eoXluwnJixTVfRfYH46yGibasaVmjyPhdAbIm596VjKec28z
+ uvLx7++CgpM8PlIFdyze79oEZ1Opz9Q9jvisrioCXgeueMegkdjWMzL7s45MZx7d7Muj
+ h4TyiCIAOJ+hu8jg1d+P5Bn32z1Jh5WZJTmsauAZxYXjOwCFt1ZPE0QV5gDTw7KIR900
+ 6TPbWeaksWw1XCynlBVJ0VgPOJfxTsj3osPqp/6oa+DOZ3mwg65yU+4nkbpi5zDfZqht
+ ZpDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780065388; x=1780670188;
+ d=1e100.net; s=20251104; t=1780065391; x=1780670191;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=j9by9Ed5YpVI05gWl9P8GGtmpfCFymKnhYv6jHWkLsQ=;
- b=hkyrps1qV5etC1ghlOD6vYDagToFXkpIFiFbRRSfRG6SxFmkYKHCFCcu5P68W/SeLH
- D0DkiTJaxVwNgUzloMIcbax26EFUwQkvQbl8qlO7exQOiR3MHBzB05k06ERTrmQYBUSJ
- sYplClYMVJUTLfpk0+vOWNDVfCINK+DVcdLL67JuyVoHClKcMDXRP8ZMY/Mv8Pyw4Yje
- zLeLdz9U/TF4Ov3gVKUwW3DNAM05Lad7D7oKTHLT1ktj/kjPf33R+kcr6cQ0jDwz2DFE
- 22bw4B+U8Lfz6ur7mrHco4sXLEv0D1h+9BYxINElnt2KtpcBXA9cKeMe3ULA1Bhh9m4K
- pv3Q==
+ bh=v8hnt8QTR0m3dsrSXtppaehwSCPzuZgau1gE20XoQoc=;
+ b=oTOTY3UuV5qIPWUGD5q3hKgCFrRokDpL/OMurvP7xYdFxrkE+cakXWDHzcwiNcPB1o
+ YPgSd/gJmR+0hSdjSKBmq+cAv1SAwa65dj5weGE1s2HSs090Mi+o/pLHOEfXLLOGvAqI
+ 9ZoeXkFqQKHdD1V7trOGZ2b9TYs/ZyX/B9WB9JUmBYcbDRy+2wgrKkNwr0I69IoXCyXz
+ 18L9KiHUIWw9vM1f/v1rJZsNoWwO0Xchwfm2aqnh3D5nQj4blMlE6mmHcmm5s1rYi5yF
+ 0wY4fhGGUoeOtWCryJBCVstpjKQhgdDbzJwEmNUmmgm3lmQ0ygux3dUzP8xkI3dApWko
+ MKdA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+uQrsJQirJMbtW83vdQtjO3b0u+Sk2XxfGzDNdPltNcGQppUUqzHZQNEDvGOx1U35wVy7Z37T5hEKl@nongnu.org
-X-Gm-Message-State: AOJu0YyaHEPOx3Sk7RYZBoBQNACi8lA5kY4j/6iG1NlDrNBWsX8PaDg9
- tiAm6o4UZtDEkTDMGEE9IT2wP4ov++8L6UU15Tsv3/VN9d/QOIfypErTjIaxQNKU/QM=
-X-Gm-Gg: Acq92OG29RWvo8pqelLFWBBbPITyLyw4wcenqiAtmZyqZwSzzrkdWy9lFOJ+n15k6j7
- zUkrj3CDIKcOjBO4vMvPu+PT1SSUWCiuTsIIPvCgD/uD/Pr47gQAgAVswSk+hdimJRRbWqxw/QO
- 9zoKg4yq6L5DKYp8qJwTJBggt6qsh+lRF2Oyr+HX6oPjqBX3aRAcmIgqdpllf1+6N3/owmBf57u
- z9YE335pn7QeCpA7twCgK0wdnjJn+EZpEzYDRwCG9fRwnEGFYUhUVBciOjUu+1BzYBOenzzRIJT
- 9hU9rACrVjn9J9TVsWhLm8gDjSz7Io4J8ov+0tHm8p+vw4UbkKrYPBkkJItneLjnwmdTOqo/OCq
- mnDrRc9J+tvomfaqqfDP/9DlJqJweohP6Dp0x7VGTZdSYKG7S2QSctPLxnUCe5PEoAV/MjuHmeS
- FHDiKFjp/fia4bl+DLSYJT3gAq/5VHRxyNjfZYkFw58Qu5jBnEgCcZJKmPWlNxZ7tLxM+AazfqG
- 4QVXIwiSbHxXGKngacCrT6EDNaTxvPz+TVHtAcWgsM=
-X-Received: by 2002:a05:600c:3587:b0:48e:635a:18d2 with SMTP id
- 5b1f17b1804b1-4909c07258cmr59660925e9.2.1780065388120; 
- Fri, 29 May 2026 07:36:28 -0700 (PDT)
+ AFNElJ8EeEvI9JM9Mx8kPktfAGQAc42XCuVFfxewM81Pc/pgZIzKc/lZmDBrJZdsXl7G95pkXEk0AqGLrIR0@nongnu.org
+X-Gm-Message-State: AOJu0YysF5uX/pjwMeaW5OIvJTGfMW/CffpS55dmmE7OpEodVpC4WYJS
+ zTRuGay/f3BUy6OnXEuLfgK/lOkCnnViSxXRdYmMELwuCJA21xnJOz5I9lGX171esNg=
+X-Gm-Gg: Acq92OE8tpPVggIcRvWx8c+2wpTmHUDWWHgff8jjc0Yqvwn9nY7zo5u0Cxljwrd1Far
+ 3ShtsEXvTtcSh+KYkJ8YzD4S7ZgjcAEwsoMRZlbdTx55d8tQ6rjsFU/+HPTIn/tqyKni4gUobv/
+ RV2micmqyKQBcGkFYYQoUBRpPfG9O/epzez8okGp5pY7Xp8NFs/9fmlRy8QRnt2ThFZbMtSu83m
+ AdMWJ1FLzdTlqoXMh17gEuG49DS0vu4uJqUXadGm9PpjsUiwjLHQvxCW5YVcI7VeQHy1XxnBGrm
+ 7pEuE/sArBd5nYotWqVlgikaOAsO+Xk21i68wmRHr28Wa86PXSER9BY4jjdKdJC9mM8lAMlOcl2
+ oC7LrCvoX4FrMIehO3Zven8vwscAvya43EP85L++awVpzGcztCYgNXzyi/9JlBg0FKEYe/q8ZPL
+ U/KQ75yiytSN1m0pjR4h/RxMKkOVJx2W6o/D/aGxsmA517tCxl3hrBmhtfpYN5L5koK3+Olrnrw
+ pCTJItGZxJkGcE//bezOPZblRvM5CUygqEQHOZM39Y=
+X-Received: by 2002:a5d:6684:0:b0:45e:739b:2750 with SMTP id
+ ffacd0b85a97d-45ef1447483mr3640431f8f.9.1780065390603; 
+ Fri, 29 May 2026 07:36:30 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ef356a4c4sm4180675f8f.31.2026.05.29.07.36.26
+ ffacd0b85a97d-45ef356a4c4sm4180675f8f.31.2026.05.29.07.36.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 May 2026 07:36:26 -0700 (PDT)
+ Fri, 29 May 2026 07:36:28 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 1/2] hw/intc/exynos4210_combiner: Avoid hw_error for guest
- errors
-Date: Fri, 29 May 2026 15:36:23 +0100
-Message-ID: <20260529143624.158935-2-peter.maydell@linaro.org>
+Subject: [PATCH 2/2] hw/dma/pl080: Don't use hw_error() for unimplemented
+ features
+Date: Fri, 29 May 2026 15:36:24 +0100
+Message-ID: <20260529143624.158935-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260529143624.158935-1-peter.maydell@linaro.org>
 References: <20260529143624.158935-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,94 +102,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the exynos4210_combiner device, several cases of bad register
-offsets passed by the guest are handled by calling hw_error().  This
-causes QEMU to abort with a guest register dump.  These days we
-prefer to handle "guest does something wrong" by logging it and
-continuing.
+In the pl080 device, we don't implement "peripheral flow control",
+which is where the DMA engine can be programmed to transfer data
+until a source or destination peripheral tells it to stop.  We
+currently call hw_error() if the guest tries to use this missing
+feature, which prints a register dump and aborts QEMU.
 
-Update the hw_error() calls to qemu_log_mask(LOG_GUEST_ERROR).
+Change the hw_error() call to the LOG_UNIMP log-and-continue,
+which is how we prefer to report guest attempts to use
+unimplemented features these days.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3396
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3409
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/intc/exynos4210_combiner.c | 29 ++++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 11 deletions(-)
+ hw/dma/pl080.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/intc/exynos4210_combiner.c b/hw/intc/exynos4210_combiner.c
-index e8cac331e4..dbbdee4d31 100644
---- a/hw/intc/exynos4210_combiner.c
-+++ b/hw/intc/exynos4210_combiner.c
-@@ -28,12 +28,12 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/log.h"
- #include "hw/core/sysbus.h"
- #include "migration/vmstate.h"
+diff --git a/hw/dma/pl080.c b/hw/dma/pl080.c
+index 4a90c7bb27..f9f1e3e931 100644
+--- a/hw/dma/pl080.c
++++ b/hw/dma/pl080.c
+@@ -13,7 +13,6 @@
+ #include "qemu/log.h"
  #include "qemu/module.h"
- #include "hw/intc/exynos4210_combiner.h"
- #include "hw/arm/exynos4210.h"
+ #include "hw/dma/pl080.h"
 -#include "hw/core/hw-error.h"
  #include "hw/core/irq.h"
  #include "hw/core/qdev-properties.h"
- #include "qom/object.h"
-@@ -119,8 +119,10 @@ exynos4210_combiner_read(void *opaque, hwaddr offset, unsigned size)
-         break;
-     default:
-         if (offset >> 2 >= IIC_REGSET_SIZE) {
--            hw_error("exynos4210.combiner: overflow of reg_set by 0x"
--                    HWADDR_FMT_plx "offset\n", offset);
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "exynos4210.combiner: overflow of reg_set by 0x"
-+                          HWADDR_FMT_plx "offset\n", offset);
-+            return 0;
-         }
-         val = s->reg_set[offset >> 2];
-     }
-@@ -183,20 +185,24 @@ static void exynos4210_combiner_write(void *opaque, hwaddr offset,
-     reg_n = (offset - (req_quad_base_n << 4)) >> 2;
- 
-     if (req_quad_base_n >= IIC_NGRP) {
--        hw_error("exynos4210.combiner: unallowed write access at offset 0x"
--                HWADDR_FMT_plx "\n", offset);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "exynos4210.combiner: unallowed write access at offset 0x"
-+                      HWADDR_FMT_plx "\n", offset);
-         return;
-     }
- 
-     if (reg_n > 1) {
--        hw_error("exynos4210.combiner: unallowed write access at offset 0x"
--                HWADDR_FMT_plx "\n", offset);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "exynos4210.combiner: unallowed write access at offset 0x"
-+                      HWADDR_FMT_plx "\n", offset);
-         return;
-     }
- 
-     if (offset >> 2 >= IIC_REGSET_SIZE) {
--        hw_error("exynos4210.combiner: overflow of reg_set by 0x"
--                HWADDR_FMT_plx "offset\n", offset);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "exynos4210.combiner: overflow of reg_set by 0x"
-+                      HWADDR_FMT_plx "offset\n", offset);
-+        return;
-     }
-     s->reg_set[offset >> 2] = val;
- 
-@@ -245,8 +251,9 @@ static void exynos4210_combiner_write(void *opaque, hwaddr offset,
-         exynos4210_combiner_update(s, grp_quad_base_n + 3);
-         break;
-     default:
--        hw_error("exynos4210.combiner: unallowed write access at offset 0x"
--                HWADDR_FMT_plx "\n", offset);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "exynos4210.combiner: unallowed write access at offset 0x"
-+                      HWADDR_FMT_plx "\n", offset);
-         break;
-     }
- }
+ #include "qapi/error.h"
+@@ -132,8 +131,9 @@ again:
+                 continue;
+             flow = (ch->conf >> 11) & 7;
+             if (flow >= 4) {
+-                hw_error(
+-                    "pl080_run: Peripheral flow control not implemented\n");
++                qemu_log_mask(LOG_UNIMP,
++                              "pl080_run: Peripheral flow control not implemented\n");
++                continue;
+             }
+             src_id = (ch->conf >> 1) & 0x1f;
+             dest_id = (ch->conf >> 6) & 0x1f;
 -- 
 2.43.0
 
