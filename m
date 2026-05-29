@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1314BCD6E4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 12:44:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80EF4CD4F54
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 12:44:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSwZV-0001CR-Et; Fri, 29 May 2026 08:44:17 -0400
+	id 1wSwZW-0001Eo-9l; Fri, 29 May 2026 08:44:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander.hansen@9elements.com>)
- id 1wSwZF-00010m-Ai
- for qemu-devel@nongnu.org; Fri, 29 May 2026 08:44:06 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1wSwZC-00010S-BD
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 08:44:04 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alexander.hansen@9elements.com>)
- id 1wSwZ9-0004lM-8p
- for qemu-devel@nongnu.org; Fri, 29 May 2026 08:44:00 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-45ef56d9b67so195461f8f.2
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 05:43:53 -0700 (PDT)
+ id 1wSwZ5-0004kb-8B
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 08:43:57 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-441209fb77eso8576297f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 05:43:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=9elements.com; s=google; t=1780058632; x=1780663432; darn=nongnu.org;
+ d=9elements.com; s=google; t=1780058627; x=1780663427; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=C5YfvPix9JRVMLq5pqy0F5KTeMae+z3jj4lvXkKKiEY=;
- b=YjqsjYwR2XzsfnoRevC4+rf/cNndHk/7f1EruLa8KLtaicG/yhGslA9+/ftrg1oM+D
- zdE84rXdbDd/e1zLWA3B3RAVO3igVtcQbZjZZ3TgG8MLRi35r3Y2fulmfU6nyWk1TRdK
- dIQgazleG/2uIrQ8Vwk84eQfQ9w2sFsyCOT+Ut7fkAibJXgqtraHuIi5Io4SkVHH6g42
- fd/XbIn0n/c708svYvMlQmgvfkk0tORrA6io/ihFmaa8Z2LEZ1p4zv8BqJDfIBZ37dTI
- 4H1kNY6/UAvZb4WoGb1xVvpCyKT816n0F+cygxU4jJlhN6h517FEADA1j9wquD6ti1Jz
- kAdw==
+ bh=1PBygEponuULoC+Eq4LpbLAWoLdlDY8mXLzWm6nlfFo=;
+ b=WLEq0eYKMlg9QAlGw0HSwyiHGqGwkJFqnms+Wc+uqyXywQn5HD/rY4hbtfk+8Afnm3
+ bvBOE+t3+h3+jUP71esQFU2d4DjCvg1FhbFitbjaWUfqmybrp1qmBHSHXs/1UU0V5ntw
+ UmbEa33TXgJsxl5gr7DZLaW/tY6ZmNe4s1ESsugrnXBqG3lRlRNmf3Or7rZuJvZvU+w4
+ ZR3V1TXXXa80qAFCjCOkfkADnc193VvJUyGOXqIJSoIw3810cscjIkzoGsVN5Fr7CrqK
+ 8b9rd2hKw7EzWj6Dqi305XdOwsqNeui85gPvwGaWZ5CZEwY9ZtGXr6Ix21CcXdDOVPS4
+ BIpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780058632; x=1780663432;
+ d=1e100.net; s=20251104; t=1780058627; x=1780663427;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=C5YfvPix9JRVMLq5pqy0F5KTeMae+z3jj4lvXkKKiEY=;
- b=CPAmIibkvr8ObEto+j38aPTVWyv5D3eoDKHtKYnqRQVwStfpSru5d0rl5coF7v85RV
- xH/a0J+uzj23fv9LFMlgQ0j3Ddkz5ZURm/MfcmbEZL2MmwTj64Mb4Kc5UviDNzOsYv5O
- HyYJgcjB2seTgUKDsReuGpJvsGa0pA9laYYSUFzZFCiaE0CSVpNiuSKqFU1bRrNoW6sv
- TEXD5z9nUlpLbt8+kUs+9YhCJKJT1lYMlrYealE+vHOU+9ylAMn3zhzjt8BeFfL2bPrR
- x7Dx2ru0kj5UxEZ8n+6psnRDZXL7P/REwQPLRICqOmCieO1DLvpmvkO9J7e7zrdEGO9w
- 8FJA==
-X-Gm-Message-State: AOJu0YxIJ4aXFg2dENC0LvT1PwbKoEIGunk7k5FfodsSAOhLMEoQ83T7
- AZnvW5nHpxFCZeNP7UrBHagS5Nj5Bs5EAKY2Hn+VBdXgxE1YwLMHfc87kXc1LE94GjrERLYT72J
- mDn8DssE=
-X-Gm-Gg: Acq92OFOwP1QtnxERTA/YoSBEUMKNxazF1+hepBawW+OHf4LrBbwudI0GnJEhYmoxMp
- ZwJphB3aphR1oQn8WVJFI7K+uXrEKMPGyMm6nhmHxCNZoVjAMZeIruxclRrDzIP3r3t93Ltv3Zi
- efkUjJey8/VcyhDa5SaoHfOSVKhSwItLxReawzV8+kkYsXTkZn/9WT1r6+63O6eeMDx6mymqv3o
- pDf3LbsIaqdxkeGhHYxcVojPNRpfcwZ78IYz36xs7UeGQIAEHVsvvIfFb0XxiHr/ZKmQyyMIm/n
- ZqeeHvMcODcRPvC7xkstrmpOATecwSMegyLL7wBm22fcw2J3IiIAqgcm4fh+OP4Pc0SK2c956I3
- UtqeqVVSlbwUKfOD0BGQGgdCwmL8YFRHd8+V+C4bERmqsRyDBqg4uFRuNgf8OfdolFZ+yEFvqGe
- NJgmEQTmZG4/+iXgqKueUTuf4cVldhbEGKcAE+Yz3anyiWF57+RsItUI9HhJbv94QyUw==
-X-Received: by 2002:a05:6000:481c:b0:43f:e934:50ac with SMTP id
- ffacd0b85a97d-45ef13fd680mr4852362f8f.7.1780058632019; 
- Fri, 29 May 2026 05:43:52 -0700 (PDT)
+ bh=1PBygEponuULoC+Eq4LpbLAWoLdlDY8mXLzWm6nlfFo=;
+ b=QId1EAGy7ayE6FYpuCssntgnFUcHBU/tCCPkdYKH/fD5vIQ6iqAMvagr2WpbW5Qtpy
+ kcCuZTVyDyUH6YFjKzkryGIHqmDpsHOs0x2QBuGwCZHSw6UEFLQ+p/Th4fM2nRkKmrFu
+ /nog7XEHRVqpd30gxnDu8JJcPMD876WYgVsTXjWYsF6KpP+bbW2gG3qydyquCfEdDCIq
+ f/2wrU0bGGFKRxLJ+0b46oXvhHdRNaMghbCQLcjsWSJ5Sn29wXnYJZ4aC2NLCVfIR7CC
+ Oux2lh9ztDt6F0vW4vt1HBfO6ckGUH4bGOLqE02NTxPqwSuY3iyHLDZUzgsgq0B17Zl0
+ ISDA==
+X-Gm-Message-State: AOJu0Yxt1VnBel6B9zKEeRn/mqXhfa6q1GIFzTFnQQ4ysc1926V3SYUg
+ choxrCcxF7zzlIAxliw+7QYG35W1dPLPPJXLhlcR0Aa3UUQKyDRF2realsJFsq25VG9z18JwQHq
+ +3o8LD2U=
+X-Gm-Gg: Acq92OEAEWeH9X5Xhwe7qaF3WYEv3y0mItg3+oyqA9ApEJBe79e558zGKjeZv3R77w1
+ Mqwq1GGZ8WH1ouslGQ1Gg37afY5IyXPHKXGR/Qi/k6yWg+0NuwBghGVCUqGmt9xQzw/NvTAa6Va
+ 1dMuh0wJA8BjlM5aMH/oP479RXZUbTbMQCmvLdK+gZiqZfw/thWvKjnuhC9I3xuD3wFT13vAynh
+ zp19jYgsTEqPeQyJUjsTrbBiVaE8VUQZP+m1o6YUod3OaMQguQrFalkJcLQN0jUhHnmSiUvrL0+
+ 4GLYdy9S+pRPFQ7jsxvxV8ERnDTXcGNQqIVBh1oHc0LnOJ2D1nbPb5mh2WNTXt7JGbA+IAqPUYX
+ SH1SyQaZ5oki+HlKVEjsyOwaSQxVvLTt/RyZCPXt5Ac4JfB+B/+ZE9fnMhBnw65bp+aqX+asNiM
+ gjLUB9B2Sz4oMBk3GDb5JxvJCsa6kEZT/evybe/gf0sah7XwzeKsCV7so=
+X-Received: by 2002:a05:6000:25ee:b0:44f:69f4:39b5 with SMTP id
+ ffacd0b85a97d-45ef139b5camr4114051f8f.29.1780058627205; 
+ Fri, 29 May 2026 05:43:47 -0700 (PDT)
 Received: from alexanderarchlinux ([188.111.3.154])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ef35598e5sm3163354f8f.27.2026.05.29.05.43.50
+ ffacd0b85a97d-45ef35598e5sm3163354f8f.27.2026.05.29.05.43.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 May 2026 05:43:51 -0700 (PDT)
+ Fri, 29 May 2026 05:43:46 -0700 (PDT)
 From: Alexander Hansen <alexander.hansen@9elements.com>
 To: qemu-devel@nongnu.org
 Cc: Alexander Hansen <alexander.hansen@9elements.com>,
  Titus Rwantare <titusr@google.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  Jonathan Cameron <jonathan.cameron@huawei.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Steven Lee <steven_lee@aspeedtech.com>,
- Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
-Subject: [PATCH v5 5/5] hw/sensor: support Texas Instruments ADC128D818
-Date: Fri, 29 May 2026 14:37:34 +0200
-Message-ID: <20260529124237.94087-6-alexander.hansen@9elements.com>
+Subject: [PATCH v5 4/5] hw/sensor: support MAX11615
+Date: Fri, 29 May 2026 14:37:33 +0200
+Message-ID: <20260529124237.94087-5-alexander.hansen@9elements.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260529124237.94087-1-alexander.hansen@9elements.com>
 References: <20260529124237.94087-1-alexander.hansen@9elements.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=alexander.hansen@9elements.com; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=alexander.hansen@9elements.com; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,184 +113,150 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Product: [1]
 Datasheet: [2]
 
-ADC128D818 Support:
-- channel readings from pre-set values
-- driver can read and write most configuration registers
+Sensor readings can be provided upon creation of the device. In case no
+readings are provided the ADC reads a pre-defined arbitrary value.
 
-ADC128D818 currently unsupported:
-- slave address restriction
-- startup sequence and realistic busy register emulation
-- external VREF
-- conversion rate
-- interrupts
-- deep shutdown mode
-- individual channel shutdown
-- selection between Mode 0,1,2,3
-- pseudo-differential input
+root@yosemite4:~# cat /sys/bus/iio/devices/iio:device2/name
+max11615
+root@yosemite4:~# cat /sys/bus/iio/devices/iio:device2/in_voltage0_raw
+1922
+root@yosemite4:~# cat /sys/bus/iio/devices/iio:device2/in_voltage_scale
+0.500000000
 
-Anyone could expand it in the future for more accurate emulation.
-
-The reason for adding this device is to support Yosemite V4 emulation.
-
-Tested: on yosemite v4 qemu
-
-initialize the device:
-// ti,adc128d818 @ 0x1f    (adc)
-// the driver will throw away the last 4 bits, set them 0
-uint16_t adc_values1[8] = {
-    0b011110000000, 0b010100010000,
-    0b001000110000, 0b100000100000,
-    0b011110000000, 0b010100010000,
-    0b001000110000, 0b100000100000};
-adc128d818_init_with_values(bus, 0x1f, adc_values1, 8);
-
-Trace outputs directly after initialization:
-adc128d818_realize i2c_addr: 0x1f
-adc128d818_realize i2c_addr: 0x1f
-adc128d818_event i2c_addr: 0x1f, event: 0x01
-adc128d818_send i2c_addr: 0x1f, data: 0x00
-adc128d818_send i2c_addr: 0x1f, data: 0x80
-adc128d818_write i2c_addr: 0x1f, reg: 0x00 data: 0x80
-adc128d818_event i2c_addr: 0x1f, event: 0x03
-adc128d818_event i2c_addr: 0x1f, event: 0x01
-...
-
-read the values
-root@yosemite4:/sys/bus/i2c/devices/30-001f# cat hwmon/hwmon0/in0_min
-0
-root@yosemite4:/sys/bus/i2c/devices/30-001f# cat hwmon/hwmon0/in0_max
-0
-root@yosemite4:/sys/bus/i2c/devices/30-001f# cat hwmon/hwmon0/in0_input
-75
-root@yosemite4:/sys/bus/i2c/devices/30-001f# cat hwmon/hwmon0/name
-adc128d818
-
-We initially configured 0b011110000000 for the first channel.
-The driver throws away the last 4 bits and does calculation similar to
-below:
-
-val = DIV_ROUND_CLOSEST(data->in[index][nr] * data->vref, 4095);
-
-We can check that the calculation is as expected given our configured
-value.
-
-((0b011110000000 >> 4) * 2560) / 4095
-75.01831501831502
+trace:
+less /tmp/qemu-trace.log | grep -i max116
+max11615_realize i2c_addr: 0x33
+max11615_realize i2c_addr: 0x33
+max11615_event i2c_addr: 0x33, event: 0x01
+max11615_write_setup i2c_addr: 0x33, data: 0xd2
+max11615_write_config i2c_addr: 0x33, data: 0x0f
+max11615_event i2c_addr: 0x33, event: 0x03
+max11615_event i2c_addr: 0x33, event: 0x01
+max11615_write_setup i2c_addr: 0x33, data: 0xd2
+max11615_write_config i2c_addr: 0x33, data: 0x0f
+max11615_event i2c_addr: 0x33, event: 0x03
+max11615_event i2c_addr: 0x33, event: 0x01
+max11615_write_setup i2c_addr: 0x33, data: 0xd2
+max11615_write_config i2c_addr: 0x33, data: 0x61
+max11615_event i2c_addr: 0x33, event: 0x03
+max11615_event i2c_addr: 0x33, event: 0x00
+max11615_recv i2c_addr: 0x33, reg_addr: 0x00
+max11615_recv_return i2c_addr: 0x33, returns: 0xfa
+max11615_recv i2c_addr: 0x33, reg_addr: 0x00
+max11615_recv_return i2c_addr: 0x33, returns: 0xd2
+max11615_event i2c_addr: 0x33, event: 0x04
+max11615_event i2c_addr: 0x33, event: 0x03
 
 References:
-[1] https://www.ti.com/product/ADC128D818
-[2] https://www.ti.com/lit/gpn/adc128d818
+[1] https://www.analog.com/en/products/MAX11615.html
+[2] https://www.analog.com/media/en/technical-documentation/data-sheets/MAX11612-MAX11617.pdf
 
 Cc: Titus Rwantare <titusr@google.com>
 Cc: "Cédric Le Goater" <clg@kaod.org> (maintainer:ASPEED BMCs)
 Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
+Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org> (odd fixer:Overall sensors)
 Cc: Paolo Bonzini <pbonzini@redhat.com> (maintainer:Kconfig)
 Cc: Peter Maydell <peter.maydell@linaro.org> (supporter:ARM TCG CPUs)
-Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org> (odd fixer:Overall sensors)
-Cc: qemu-arm@nongnu.org (open list:ARM TCG CPUs)
 Cc: qemu-devel@nongnu.org (open list:All patches CC here)
+Cc: qemu-arm@nongnu.org (open list:ARM TCG CPUs)
 Signed-off-by: Alexander Hansen <alexander.hansen@9elements.com>
 ---
  MAINTAINERS                              |   1 +
- include/hw/sensor/adc128d818.h           |  23 ++
- hw/arm/aspeed_ast2600_fby4.c             |   9 +-
- hw/sensor/adc128d818.c                   | 433 +++++++++++++++++++++++
+ include/hw/sensor/max11615.h             |  20 ++
+ hw/arm/aspeed_ast2600_fby4.c             |   8 +-
+ hw/sensor/max11615.c                     | 312 +++++++++++++++++++++++
  hw/arm/Kconfig                           |   1 +
  hw/sensor/Kconfig                        |   4 +
  hw/sensor/meson.build                    |   1 +
- hw/sensor/trace-events                   |   7 +
- tests/functional/arm/test_aspeed_fby4.py |  10 +
- 9 files changed, 488 insertions(+), 1 deletion(-)
- create mode 100644 include/hw/sensor/adc128d818.h
- create mode 100644 hw/sensor/adc128d818.c
+ hw/sensor/trace-events                   |   8 +
+ tests/functional/arm/test_aspeed_fby4.py |   8 +
+ 9 files changed, 362 insertions(+), 1 deletion(-)
+ create mode 100644 include/hw/sensor/max11615.h
+ create mode 100644 hw/sensor/max11615.c
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 195e3c7927..470e118f3c 100644
+index 2a0dbd1cc4..195e3c7927 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -3985,6 +3985,7 @@ PMBus
- M: Titus Rwantare <titusr@google.com>
- S: Maintained
+@@ -3987,6 +3987,7 @@ S: Maintained
  F: hw/i2c/pmbus_device.c
-+F: hw/sensor/adc128d818.c
  F: hw/sensor/adm1272.c
  F: hw/sensor/isl_pmbus_vr.c
- F: hw/sensor/max11615.c
-diff --git a/include/hw/sensor/adc128d818.h b/include/hw/sensor/adc128d818.h
++F: hw/sensor/max11615.c
+ F: hw/sensor/max31790.c
+ F: hw/sensor/max34451.c
+ F: include/hw/i2c/pmbus_device.h
+diff --git a/include/hw/sensor/max11615.h b/include/hw/sensor/max11615.h
 new file mode 100644
-index 0000000000..02d75ca3e1
+index 0000000000..0460ee5963
 --- /dev/null
-+++ b/include/hw/sensor/adc128d818.h
-@@ -0,0 +1,23 @@
-+/*  Copyright 2026 9elements */
++++ b/include/hw/sensor/max11615.h
+@@ -0,0 +1,20 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#ifndef QEMU_ADC128D818_H
-+#define QEMU_ADC128D818_H
++#ifndef QEMU_MAX11615_H
++#define QEMU_MAX11615_H
 +
 +#include "qemu/osdep.h"
 +#include "hw/i2c/i2c.h"
 +
-+#define TYPE_ADC128D818 "adc128d818"
++#define TYPE_MAX11615 "max11615"
 +
 +/*
-+ * Create and realize a adc128d818 ADC with constant caller-supplied readings
++ * Create and realize a MAX11615 ADC with constant caller-supplied readings
 + * @bus: I2C bus to put it on
 + * @address: I2C address
 + * @init_values: array of readings for each ADC channel
-+ * @init_values_size: Size of @init_values, can be less than the number of
-+ * channels
++ * @init_values_size: Size of @init_values, can be less than the number of channels
 + */
-+I2CSlave *adc128d818_init_with_values(I2CBus *bus, uint8_t address,
-+                                      const uint16_t *init_values,
-+                                      uint32_t init_values_size);
++I2CSlave *max11615_init_with_values(I2CBus *bus, uint8_t address,
++                                    const uint16_t *init_values, uint32_t init_values_size);
 +
 +#endif
 diff --git a/hw/arm/aspeed_ast2600_fby4.c b/hw/arm/aspeed_ast2600_fby4.c
-index c55f7ca895..cfcf689723 100644
+index 1f391022a2..c55f7ca895 100644
 --- a/hw/arm/aspeed_ast2600_fby4.c
 +++ b/hw/arm/aspeed_ast2600_fby4.c
-@@ -12,6 +12,7 @@
+@@ -11,6 +11,7 @@
+ #include "hw/arm/aspeed.h"
  #include "hw/arm/aspeed_soc.h"
  #include "hw/nvram/eeprom_at24c.h"
- #include "hw/sensor/max11615.h"
-+#include "hw/sensor/adc128d818.h"
++#include "hw/sensor/max11615.h"
  #include "hw/i2c/i2c_mux_pca954x.h"
  #include "hw/gpio/pca9552.h"
  
-@@ -162,7 +163,13 @@ static void fby4_i2c_init_fanboard(I2CSlave *fan_mux, size_t eepromSize)
-         I2CBus *bus = pca954x_i2c_get_bus(fan_mux, i);
+@@ -185,7 +186,12 @@ static void fby4_i2c_init_fanboard(I2CSlave *fan_mux, size_t eepromSize)
+         i2c_slave_create_simple(bus, "max31790", 0x2f);
  
-         /* ti,adc128d818 @ 0x1f    (adc) */
+         /* maxim,max11615 @ 0x33   (adc) */
 -        /* TODO */
-+        /* the driver will throw away the last 4 bits, set them 0 */
-+        static const uint16_t adc_values1[8] = {
-+            0b011110000000, 0b010100010000,
-+            0b001000110000, 0b100000100000,
-+            0b011110000000, 0b010100010000,
-+            0b001000110000, 0b100000100000};
-+        adc128d818_init_with_values(bus, 0x1f, adc_values1, 8);
++        static const uint16_t adc_values[8] = {
++            1922, 1000,
++            1922, 1000,
++            1922, 1000,
++            1922, 1000};
++        max11615_init_with_values(bus, 0x33, adc_values, 8);
  
-         /* maxim,max31790 @ 0x20   (pwm) */
-         i2c_slave_create_simple(bus, "max31790", 0x20);
-diff --git a/hw/sensor/adc128d818.c b/hw/sensor/adc128d818.c
+         at24c_eeprom_init_rom(
+             bus, 0x52, eepromSize,
+diff --git a/hw/sensor/max11615.c b/hw/sensor/max11615.c
 new file mode 100644
-index 0000000000..7ad7c935fc
+index 0000000000..594bc3d290
 --- /dev/null
-+++ b/hw/sensor/adc128d818.c
-@@ -0,0 +1,433 @@
++++ b/hw/sensor/max11615.c
+@@ -0,0 +1,312 @@
 +/*
-+ * Texas Instruments ADC128D818 12 bit ADC with temperature sensor
-+ * Models ADC128D818
++ * Maxim MAX11615 Low-Power 12 bit ADC
++ * Models MAX11612,MAX11613,MAX11614,MAX11615,MAX11616,MAX11617
 + *
-+ * Product: https://www.ti.com/product/ADC128D818
-+ * Datasheet: https://www.ti.com/lit/gpn/adc128d818
++ * Datasheet:
++ * https://www.analog.com/media/en/technical-documentation/data-sheets/MAX11612-MAX11617.pdf
 + *
 + * Copyright 2026 9elements
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#include "hw/sensor/adc128d818.h"
++#include "hw/sensor/max11615.h"
 +#include "hw/i2c/i2c.h"
 +#include "migration/vmstate.h"
 +#include "qapi/error.h"
@@ -301,67 +266,24 @@ index 0000000000..7ad7c935fc
 +#include "qemu/osdep.h"
 +#include "trace.h"
 +
-+/* 8 bit, r/w */
-+#define REG_CONFIG 0x00
++#define MAX11615_NUM_CHANNELS 8
 +
-+/* 8 bit, readonly */
-+#define REG_INTERRUPT_STATUS 0x01
-+
-+/* 8 bit, r/w */
-+#define REG_INTERRUPT_MASK 0x03
-+
-+/* 8 bit, r/w */
-+#define REG_CONVERSION_RATE 0x07
-+
-+/* 8 bit, r/w */
-+#define REG_CHANNEL_DISABLE 0x08
-+
-+/* 8 bit, write-only */
-+#define REG_ONE_SHOT 0x09
-+
-+/* 8 bit, r/w */
-+#define REG_DEEP_SHUTDOWN 0x0a
-+
-+/* 8 bit, r/w */
-+#define REG_ADVANCED_CONFIG 0x0b
-+
-+/* 8 bit, readonly */
-+#define REG_BUSY_STATUS 0x0c
-+
-+/* 16 bit registers, N = 0..7, readonly */
-+#define REG_CHANNEL_READING(N) (0x20 + N)
-+
-+/* 8 bit registers N = 0..15, r/w */
-+#define REG_LIMIT(N) (0x2a + N)
-+
-+/* 8 bit register, readonly */
-+#define REG_MANUFACTURER_ID 0x3e
-+
-+/* 8 bit register, readonly */
-+#define REG_REVISION_ID 0x3f
-+
-+#define ADC128D818_NUM_CHANNELS 8
-+
-+struct ADC128D818State {
++struct MAX11615State {
 +    I2CSlave i2c;
 +
-+    uint8_t config;
-+    uint8_t interrupt_status;
-+    uint8_t interrupt_mask;
-+    uint8_t conversion_rate;
-+    uint8_t channel_disable;
-+    bool deep_shutdown;
-+    uint8_t advanced_config;
++    /* true: single-ended mode, false: differential mode */
++    bool single_ended;
 +
-+    /* channel reading registers, 2 bytes each */
-+    uint16_t channels[ADC128D818_NUM_CHANNELS];
++    /*
++     * Output data coding for the MAX11612–MAX11617 is
++     * binary in unipolar mode and two’s complement in bipolar mode
++     */
++    bool bipolar;
 +
-+    /* high and low limit registers 0x2a - 0x39, one byte each */
-+    uint8_t limit[ADC128D818_NUM_CHANNELS * 2];
++    /* The MAX11613/MAX11615/MAX11617 feature a 2.048V internal reference */
++    uint16_t vref;
 +
-+    /* input buffer */
-+    uint8_t len;
-+    uint8_t buf[2];
++    uint16_t channels[MAX11615_NUM_CHANNELS];
 +
 +    /* output buffer */
 +    uint8_t outlen;
@@ -371,232 +293,176 @@ index 0000000000..7ad7c935fc
 +    uint8_t pointer;
 +};
 +
-+struct ADC128D818Class {
++struct MAX11615Class {
 +    I2CSlaveClass parent_class;
 +};
 +
-+OBJECT_DECLARE_TYPE(ADC128D818State, ADC128D818Class, ADC128D818)
++OBJECT_DECLARE_TYPE(MAX11615State, MAX11615Class, MAX11615)
 +
-+static void adc128d818_read(ADC128D818State *s)
++static void max11615_set_outbuf(MAX11615State *s, uint16_t value)
 +{
-+    uint8_t ch_num = 0;
-+    switch (s->pointer) {
-+    case REG_CONFIG:
-+        s->outbuf[0] = s->config;
-+        break;
-+    case REG_INTERRUPT_STATUS:
-+        s->outbuf[0] = s->interrupt_status;
-+        break;
-+    case REG_INTERRUPT_MASK:
-+        s->outbuf[0] = s->interrupt_mask;
-+        break;
-+    case REG_CONVERSION_RATE:
-+        s->outbuf[0] = s->conversion_rate;
-+        break;
-+    case REG_CHANNEL_DISABLE:
-+        s->outbuf[0] = s->channel_disable;
-+        break;
-+    case REG_ONE_SHOT:
-+        /* not marked as readable */
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: read of register 0x%02x\n",
-+                      __func__, s->pointer);
-+        s->outbuf[0] = 0x0;
-+        break;
-+    case REG_DEEP_SHUTDOWN:
-+        s->outbuf[0] = s->deep_shutdown ? 0x1 : 0x0;
-+        break;
-+    case REG_ADVANCED_CONFIG:
-+        s->outbuf[0] = s->advanced_config & 0b111;
-+        break;
-+    case REG_BUSY_STATUS:
-+        /* not implemented */
-+        s->outbuf[0] = 0b00000010; /* POR State */
-+        break;
-+    case REG_CHANNEL_READING(0):
-+    case REG_CHANNEL_READING(1):
-+    case REG_CHANNEL_READING(2):
-+    case REG_CHANNEL_READING(3):
-+    case REG_CHANNEL_READING(4):
-+    case REG_CHANNEL_READING(5):
-+    case REG_CHANNEL_READING(6):
-+    case REG_CHANNEL_READING(7):
-+        ch_num = s->pointer - REG_CHANNEL_READING(0);
-+        /* high byte comes first, driver reads swapped */
-+        s->outbuf[0] = (s->channels[ch_num] >> 8) & 0xff;
-+        s->outbuf[1] = s->channels[ch_num] & 0xff;
-+        break;
-+    case REG_LIMIT(0):
-+    case REG_LIMIT(1):
-+    case REG_LIMIT(2):
-+    case REG_LIMIT(3):
-+    case REG_LIMIT(4):
-+    case REG_LIMIT(5):
-+    case REG_LIMIT(6):
-+    case REG_LIMIT(7):
-+    case REG_LIMIT(8):
-+    case REG_LIMIT(9):
-+    case REG_LIMIT(10):
-+    case REG_LIMIT(11):
-+    case REG_LIMIT(12):
-+    case REG_LIMIT(13):
-+    case REG_LIMIT(14):
-+    case REG_LIMIT(15):
-+        s->outbuf[0] = s->limit[s->pointer - REG_LIMIT(0)];
-+        break;
-+    case REG_MANUFACTURER_ID:
-+        s->outbuf[0] = 0x1; /* readonly */
-+        break;
-+    case REG_REVISION_ID:
-+        s->outbuf[0] = 0b00001001; /* readonly */
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: read of register 0x%02x\n",
-+                      __func__, s->pointer);
-+        break;
-+    }
++    uint8_t msb = value >> 8;
++    uint8_t lsb = value & 0xff;
++    s->outbuf[0] = 0b11110000 | (msb & 0b00001111);
++    s->outbuf[1] = lsb;
 +}
 +
-+static void adc128d818_write_advanced_config(ADC128D818State *s, uint8_t data)
++static void max11615_read_single_ended(MAX11615State *s)
 +{
++    /* Table 3. Channel Selection in Single-Ended Mode */
++    /* read an ADC channel, first 4 bits must be high */
++    uint16_t value = s->channels[s->pointer];
 +    /*
-+     * Note: Whenever the Advanced Configuration Register is programmed,
-+     * all of the values in the Channel Reading Registers and
-+     * Interrupt Status Registers will return to their default values.
++     * In single-ended mode, the MAX11612–MAX11617 always
++     * operates in unipolar mode irrespective of BIP/UNI.
 +     */
-+
-+    s->advanced_config = (data & 0b111);
-+
-+    s->interrupt_status = 0x0;
-+
-+    /*
-+     *  The channel reading registers do not have a default value.
-+     * See 8.6.1 ADC128D818 Internal Registers
-+     * To do something sane, just reset the channels to an arbitrary value
-+     */
-+
-+    /* reset channels to a defined state */
-+    for (int i = 0; i < ADC128D818_NUM_CHANNELS; i++) {
-+
-+        /* arbitrary value */
-+        s->channels[i] = 0b0000101011010010;
++    if (value > s->vref) {
++        value = 0xfff;
 +    }
++    max11615_set_outbuf(s, value);
 +}
 +
-+static void adc128d818_write(ADC128D818State *s, uint8_t data)
++static int16_t max11615_differential_value(MAX11615State *s)
 +{
-+    trace_adc128d818_write(s->i2c.address, s->pointer, data);
++    /* Table 4. Channel Selection in Differential Mode */
++    size_t i1 = s->pointer;
++    size_t i2 = (s->pointer % 2 == 0) ? s->pointer + 1 : s->pointer - 1;
 +
-+    /* which bits in config register are writable */
-+    const uint8_t config_w_mask = 0b10001011;
-+    const uint8_t config_ro_mask = (uint8_t)~config_w_mask;
++    const int16_t ch1 = s->channels[i1];
++    const int16_t ch2 = s->channels[i2];
++    return ch1 - ch2;
++}
 +
-+    switch (s->pointer) {
-+    case REG_CONFIG:
-+        s->config = (s->config & config_ro_mask) | (data & config_w_mask);
-+        break;
-+    case REG_INTERRUPT_MASK:
-+        s->interrupt_mask = data;
-+        break;
-+    case REG_CONVERSION_RATE:
-+        s->conversion_rate = data;
-+        break;
-+    case REG_CHANNEL_DISABLE:
-+        s->channel_disable = data;
-+        break;
-+    case REG_ONE_SHOT:
++static void max11615_read_differential(MAX11615State *s)
++{
++    const int16_t value = max11615_differential_value(s);
++    uint16_t vu = value;
++
++    /* full-scale transition: Figure 12, Figure 13 */
++    if (s->bipolar) {
++        const uint16_t fs = s->vref / 2;
++        if (value < -fs) {
++            vu = 0b100000000000;
++        }
++        if (value > fs) {
++            vu = 0b011111111111;
++        }
++    } else {
 +        /*
-+         * Initiate a single conversion and comparison cycle when
-+         * the device is in shutdown mode or deep shutdown mode, after
-+         * which the device returns to the respective mode that it was in
-+         *
++         * A negative differential analog input in unipolar mode causes the
++         * digital output code to be zero
 +         */
-+        break;
-+    case REG_DEEP_SHUTDOWN:
-+        s->deep_shutdown = (data & 0x1) != 0;
-+        break;
-+    case REG_ADVANCED_CONFIG:
-+        adc128d818_write_advanced_config(s, data);
-+        break;
-+    case REG_LIMIT(0):
-+    case REG_LIMIT(1):
-+    case REG_LIMIT(2):
-+    case REG_LIMIT(3):
-+    case REG_LIMIT(4):
-+    case REG_LIMIT(5):
-+    case REG_LIMIT(6):
-+    case REG_LIMIT(7):
-+    case REG_LIMIT(8):
-+    case REG_LIMIT(9):
-+    case REG_LIMIT(10):
-+    case REG_LIMIT(11):
-+    case REG_LIMIT(12):
-+    case REG_LIMIT(13):
-+    case REG_LIMIT(14):
-+    case REG_LIMIT(15):
-+        s->limit[s->pointer - REG_LIMIT(0)] = data;
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write of register 0x%02x\n",
-+                      __func__, s->pointer);
-+        break;
++        if (value < 0) {
++            vu = 0;
++        }
++    }
++
++    max11615_set_outbuf(s, vu);
++}
++
++static void max11615_read(MAX11615State *s)
++{
++    if (s->single_ended) {
++        max11615_read_single_ended(s);
++    } else {
++        max11615_read_differential(s);
 +    }
 +}
 +
-+static int adc128d818_send(I2CSlave *i2c, uint8_t data)
++static void max11615_write_config_byte(MAX11615State *s, uint8_t data)
 +{
-+    ADC128D818State *s = ADC128D818(i2c);
-+    trace_adc128d818_send(s->i2c.address, data);
++    trace_max11615_write_config(s->i2c.address, data);
++
++    uint8_t scan_select = (data >> 5) & 0b11;
++
++    if (scan_select != 0b11) {
++        qemu_log_mask(LOG_UNIMP, "%s: unimplemented scan select\n", __func__);
++    }
++
++    uint8_t channel_select = (data >> 1) & 0b1111;
++
++    /* Table 3. Channel Selection */
++    if (channel_select >= MAX11615_NUM_CHANNELS) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid channel select", __func__);
++        channel_select = MAX11615_NUM_CHANNELS - 1;
++    }
++    s->pointer = channel_select;
++    s->single_ended = data & 0x1;
++}
++
++static void max11615_write_setup_byte(MAX11615State *s, uint8_t data)
++{
++    trace_max11615_write_setup(s->i2c.address, data);
++    /* we ignore the setup byte, not implemented */
++
++    /* 1 = no action, 0 = resets the configuration register to default */
++    const bool rst = ((data >> 1) & 0b1) == 0b0;
++
++    if (rst) {
++        s->single_ended = true;
++        s->pointer = 0;
++    }
++
++    s->bipolar = ((data >> 2) & 0b1) == 0b1;
++
++    /* Table 6. Reference Voltage */
++    const uint8_t sel = (data >> 4) & 0b111;
++
++    if (sel == 0b10 || sel == 0b11) {
++        qemu_log_mask(LOG_UNIMP, "%s: unsupported: external vref\n", __func__);
++    }
++}
++
++static int max11615_send(I2CSlave *i2c, uint8_t data)
++{
++    MAX11615State *s = MAX11615(i2c);
++    const uint8_t msb = (data >> 7) & 0b1;
++
++    if (msb) {
++        max11615_write_setup_byte(s, data);
++    } else {
++        max11615_write_config_byte(s, data);
++    }
 +
 +    s->outlen = 0;
-+
-+    if (s->len >= 2) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: wrote too many bytes\n", __func__);
-+        return 1;
-+    }
-+
-+    s->buf[s->len] = data;
-+
-+    if (s->len == 0) {
-+        s->pointer = data;
-+    } else if (s->len == 1) {
-+        adc128d818_write(s, data);
-+    }
-+
-+    s->len++;
 +    return 0;
 +}
 +
-+static uint8_t adc128d818_recv(I2CSlave *i2c)
++static uint8_t max11615_recv(I2CSlave *i2c)
 +{
-+    ADC128D818State *s = ADC128D818(i2c);
-+    trace_adc128d818_recv(s->i2c.address, s->pointer);
-+
-+    adc128d818_read(s);
++    MAX11615State *s = MAX11615(i2c);
++    trace_max11615_recv(s->i2c.address, s->pointer);
 +
 +    if (s->outlen >= 2) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: too many bytes read\n", __func__);
++        /* MAX11615 supports multichannel scan with wraparound */
++        /* see datasheet page 17 */
++
 +        s->outlen = 0;
++
++        s->pointer++;
++        if (s->pointer >= MAX11615_NUM_CHANNELS) {
++            s->pointer = 0;
++        }
 +    }
++
++    max11615_read(s);
 +
 +    const uint8_t data = s->outbuf[s->outlen++];
 +
-+    trace_adc128d818_recv_return(s->i2c.address, data);
++    trace_max11615_recv_return(s->i2c.address, data);
 +    return data;
 +}
 +
-+static int adc128d818_event(I2CSlave *i2c, enum i2c_event event)
++static int max11615_event(I2CSlave *i2c, enum i2c_event event)
 +{
-+    ADC128D818State *s = ADC128D818(i2c);
++    MAX11615State *s = MAX11615(i2c);
 +
-+    trace_adc128d818_event(s->i2c.address, event);
++    trace_max11615_event(s->i2c.address, event);
 +
 +    switch (event) {
 +    case I2C_START_RECV:
 +        s->outlen = 0;
 +        break;
-+    case I2C_START_SEND:
-+        s->len = 0;
-+        break;
 +    default:
 +        break;
 +    }
@@ -604,41 +470,33 @@ index 0000000000..7ad7c935fc
 +    return 0;
 +}
 +
-+static const VMStateDescription vmstate_adc128d818 = {
-+    .name = TYPE_ADC128D818,
++static const VMStateDescription vmstate_max11615 = {
++    .name = TYPE_MAX11615,
 +    .version_id = 0,
 +    .minimum_version_id = 0,
 +    .fields =
-+        (const VMStateField[]){
-+            VMSTATE_UINT8(config, ADC128D818State),
-+            VMSTATE_UINT8(interrupt_mask, ADC128D818State),
-+            VMSTATE_UINT8(conversion_rate, ADC128D818State),
-+            VMSTATE_UINT8(channel_disable, ADC128D818State),
-+            VMSTATE_BOOL(deep_shutdown, ADC128D818State),
-+            VMSTATE_UINT8(advanced_config, ADC128D818State),
-+            VMSTATE_UINT16_ARRAY(channels, ADC128D818State,
-+                                 ADC128D818_NUM_CHANNELS),
-+            VMSTATE_UINT8_ARRAY(limit, ADC128D818State,
-+                                ADC128D818_NUM_CHANNELS * 2),
-+            VMSTATE_UINT8(len, ADC128D818State),
-+            VMSTATE_UINT8_ARRAY(buf, ADC128D818State, 2),
-+            VMSTATE_UINT8(outlen, ADC128D818State),
-+            VMSTATE_UINT8_ARRAY(outbuf, ADC128D818State, 2),
-+            VMSTATE_UINT8(pointer, ADC128D818State),
-+            VMSTATE_I2C_SLAVE(i2c, ADC128D818State), VMSTATE_END_OF_LIST() }
++        (const VMStateField[]){ VMSTATE_BOOL(single_ended, MAX11615State),
++                                VMSTATE_BOOL(bipolar, MAX11615State),
++                                VMSTATE_UINT16(vref, MAX11615State),
++                                VMSTATE_UINT16_ARRAY(channels, MAX11615State,
++                                                     MAX11615_NUM_CHANNELS),
++                                VMSTATE_UINT8(outlen, MAX11615State),
++                                VMSTATE_UINT8_ARRAY(outbuf, MAX11615State, 2),
++                                VMSTATE_UINT8(pointer, MAX11615State),
++                                VMSTATE_I2C_SLAVE(i2c, MAX11615State),
++                                VMSTATE_END_OF_LIST() }
 +};
 +
-+I2CSlave *adc128d818_init_with_values(I2CBus *bus, uint8_t address,
-+                                      const uint16_t *init_values,
-+                                      uint32_t init_values_size)
++I2CSlave *max11615_init_with_values(I2CBus *bus, uint8_t address,
++                                    const uint16_t *init_values,
++                                    uint32_t init_values_size)
 +{
-+    ADC128D818State *s;
++    MAX11615State *s;
 +
-+    s = ADC128D818(i2c_slave_new(TYPE_ADC128D818, address));
++    s = MAX11615(i2c_slave_new(TYPE_MAX11615, address));
 +
-+    for (int i = 0; i < ADC128D818_NUM_CHANNELS; i++) {
-+
-+        /* arbitrary value */
++    for (int i = 0; i < MAX11615_NUM_CHANNELS; i++) {
++        /* arbitrary value if there is no data*/
 +        s->channels[i] =
 +            i < init_values_size ? init_values[i] : 0b0000101011010010;
 +    }
@@ -648,135 +506,120 @@ index 0000000000..7ad7c935fc
 +    return I2C_SLAVE(s);
 +}
 +
-+static void adc128d818_reset(DeviceState *dev)
++static void max11615_reset(DeviceState *dev)
 +{
-+    ADC128D818State *s = ADC128D818(dev);
++    MAX11615State *s = MAX11615(dev);
 +
++    s->single_ended = true;
++    s->bipolar = false;
++    s->vref = 2048;
 +    s->pointer = 0;
 +    s->outlen = 0;
 +
-+    /* POR-State */
-+    s->config = 0b00001000;
-+    s->interrupt_status = 0x0;
-+    s->interrupt_mask = 0;
-+    s->conversion_rate = 0;
-+    s->channel_disable = 0;
-+    s->deep_shutdown = 0;
-+    s->advanced_config = 0;
-+
-+    /* No POR-State defined in datasheet */
-+    for (int i = 0; i < ADC128D818_NUM_CHANNELS * 2; i++) {
-+        s->limit[i] = 0;
-+    }
-+
-+    /* reset channels to a defined state */
-+    for (int i = 0; i < ADC128D818_NUM_CHANNELS; i++) {
-+
-+        /* arbitrary value */
++    for (int i = 0; i < MAX11615_NUM_CHANNELS; i++) {
 +        s->channels[i] = 0b0000101011010010;
 +    }
 +}
 +
-+static void adc128d818_realize(DeviceState *dev, Error **errp)
++static void max11615_realize(DeviceState *dev, Error **errp)
 +{
-+    ADC128D818State *s = ADC128D818(dev);
++    MAX11615State *s = MAX11615(dev);
 +
-+    trace_adc128d818_realize(s->i2c.address);
++    trace_max11615_realize(s->i2c.address);
 +}
 +
-+static void adc128d818_class_init(ObjectClass *klass, const void *data)
++static void max11615_class_init(ObjectClass *klass, const void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
 +    I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
 +
-+    dc->realize = adc128d818_realize;
-+    dc->desc = "Texas Instruments ADC128D818 12-bit ADC with temp sensor";
-+    dc->vmsd = &vmstate_adc128d818;
-+    dc->legacy_reset = adc128d818_reset;
-+    k->event = adc128d818_event;
-+    k->recv = adc128d818_recv;
-+    k->send = adc128d818_send;
++    dc->realize = max11615_realize;
++    dc->desc = "Maxim MAX11615 12-bit ADC";
++    dc->vmsd = &vmstate_max11615;
++    dc->legacy_reset = max11615_reset;
++    k->event = max11615_event;
++    k->recv = max11615_recv;
++    k->send = max11615_send;
 +}
 +
-+static const TypeInfo adc128d818_info = {
-+    .name = TYPE_ADC128D818,
++static const TypeInfo max11615_info = {
++    .name = TYPE_MAX11615,
 +    .parent = TYPE_I2C_SLAVE,
-+    .instance_size = sizeof(ADC128D818State),
-+    .class_size = sizeof(ADC128D818Class),
-+    .class_init = adc128d818_class_init,
++    .instance_size = sizeof(MAX11615State),
++    .class_size = sizeof(MAX11615Class),
++    .class_init = max11615_class_init,
 +};
 +
-+static void adc128d818_register_types(void)
++static void max11615_register_types(void)
 +{
-+    type_register_static(&adc128d818_info);
++    type_register_static(&max11615_info);
 +}
 +
-+type_init(adc128d818_register_types)
++type_init(max11615_register_types)
 diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 76a7d327a9..cc89c65e3f 100644
+index 99864eb878..76a7d327a9 100644
 --- a/hw/arm/Kconfig
 +++ b/hw/arm/Kconfig
-@@ -554,6 +554,7 @@ config ASPEED_SOC
+@@ -553,6 +553,7 @@ config ASPEED_SOC
+     select PMBUS
      select MAX31785
      select MAX31790
-     select MAX11615
-+    select ADC128D818
++    select MAX11615
      select FSI_APB2OPB_ASPEED
      select AT24C
      select PCI_EXPRESS
 diff --git a/hw/sensor/Kconfig b/hw/sensor/Kconfig
-index 441bee7604..a640958257 100644
+index 767f198e92..441bee7604 100644
 --- a/hw/sensor/Kconfig
 +++ b/hw/sensor/Kconfig
-@@ -51,3 +51,7 @@ config MAX31790
- config MAX11615
+@@ -47,3 +47,7 @@ config MAX31785
+ config MAX31790
      bool
      depends on I2C
 +
-+config ADC128D818
++config MAX11615
 +    bool
 +    depends on I2C
 diff --git a/hw/sensor/meson.build b/hw/sensor/meson.build
-index a1e26604fa..defd7647e7 100644
+index 4987c3b253..a1e26604fa 100644
 --- a/hw/sensor/meson.build
 +++ b/hw/sensor/meson.build
-@@ -10,3 +10,4 @@ system_ss.add(when: 'CONFIG_ISL_PMBUS_VR', if_true: files('isl_pmbus_vr.c'))
+@@ -9,3 +9,4 @@ system_ss.add(when: 'CONFIG_LSM303DLHC_MAG', if_true: files('lsm303dlhc_mag.c'))
+ system_ss.add(when: 'CONFIG_ISL_PMBUS_VR', if_true: files('isl_pmbus_vr.c'))
  system_ss.add(when: 'CONFIG_MAX31785', if_true: files('max31785.c'))
  system_ss.add(when: 'CONFIG_MAX31790', if_true: files('max31790.c'))
- system_ss.add(when: 'CONFIG_MAX11615', if_true: files('max11615.c'))
-+system_ss.add(when: 'CONFIG_ADC128D818', if_true: files('adc128d818.c'))
++system_ss.add(when: 'CONFIG_MAX11615', if_true: files('max11615.c'))
 diff --git a/hw/sensor/trace-events b/hw/sensor/trace-events
-index 23e34d8297..dc6cf26a0b 100644
+index 0bde02e676..23e34d8297 100644
 --- a/hw/sensor/trace-events
 +++ b/hw/sensor/trace-events
-@@ -23,3 +23,10 @@ max11615_recv_return(uint8_t i2c_addr, uint8_t data) "i2c_addr: 0x%02x, returns:
- max11615_event(uint8_t i2c_addr, uint8_t event) "i2c_addr: 0x%02x, event: 0x%02x"
- max11615_realize(uint8_t i2c_addr) "i2c_addr: 0x%02x"
+@@ -15,3 +15,11 @@ max31790_pwm_write(uint8_t i2c_addr, size_t index, uint16_t value) "i2c_addr: 0x
+ max31790_rpm_write(uint8_t i2c_addr, size_t index, uint16_t value) "i2c_addr: 0x%02x, index: %zu, value: 0x%04x"
+ max31790_tach_count_reg(uint8_t i2c_addr, size_t index, uint16_t value) "i2c_addr: 0x%02x, index: %zu, value: 0x%04x"
  
-+# adc128d818.c
-+adc128d818_send(uint8_t i2c_addr, uint8_t data) "i2c_addr: 0x%02x, data: 0x%02x"
-+adc128d818_write(uint8_t i2c_addr, uint8_t reg, uint8_t data) "i2c_addr: 0x%02x, reg: 0x%02x data: 0x%02x"
-+adc128d818_recv(uint8_t i2c_addr, uint8_t reg) "i2c_addr: 0x%02x, reg: 0x%02x"
-+adc128d818_recv_return(uint8_t i2c_addr, uint8_t data) "i2c_addr: 0x%02x, returns: 0x%02x"
-+adc128d818_event(uint8_t i2c_addr, uint8_t event) "i2c_addr: 0x%02x, event: 0x%02x"
-+adc128d818_realize(uint8_t i2c_addr) "i2c_addr: 0x%02x"
++# max11615.c
++max11615_write_setup(uint8_t i2c_addr, uint8_t send) "i2c_addr: 0x%02x, data: 0x%02x"
++max11615_write_config(uint8_t i2c_addr, uint8_t send) "i2c_addr: 0x%02x, data: 0x%02x"
++max11615_recv(uint8_t i2c_addr, uint8_t reg_addr) "i2c_addr: 0x%02x, reg_addr: 0x%02x"
++max11615_recv_return(uint8_t i2c_addr, uint8_t data) "i2c_addr: 0x%02x, returns: 0x%02x"
++max11615_event(uint8_t i2c_addr, uint8_t event) "i2c_addr: 0x%02x, event: 0x%02x"
++max11615_realize(uint8_t i2c_addr) "i2c_addr: 0x%02x"
++
 diff --git a/tests/functional/arm/test_aspeed_fby4.py b/tests/functional/arm/test_aspeed_fby4.py
-index 4ace4985d2..4957d3d89f 100755
+index dc2437a533..4ace4985d2 100755
 --- a/tests/functional/arm/test_aspeed_fby4.py
 +++ b/tests/functional/arm/test_aspeed_fby4.py
-@@ -68,6 +68,16 @@ def do_test_arm_aspeed_openbmc_no_network(self, machine, image, uboot,
+@@ -60,6 +60,14 @@ def do_test_arm_aspeed_openbmc_no_network(self, machine, image, uboot,
          exec_command_and_wait_for_pattern(self,
-             "cat /sys/bus/i2c/devices/30-0033/iio:device*/in_voltage_scale", "0.500000000");
+             "cat /sys/class/hwmon/hwmon2/fan1_input", "10685");
  
-+        # ADC128D818 test
++        # MAX11615 test
 +        exec_command_and_wait_for_pattern(self,
-+            "cat /sys/bus/i2c/devices/30-001f/hwmon/hwmon0/name", "adc128d818");
++            "cat /sys/bus/i2c/devices/30-0033/iio:device*/name", "max11615");
 +        exec_command_and_wait_for_pattern(self,
-+            "cat /sys/bus/i2c/devices/30-001f/hwmon/hwmon0/in0_input", "108");
++            "cat /sys/bus/i2c/devices/30-0033/iio:device*/in_voltage0_raw", "4095");
 +        exec_command_and_wait_for_pattern(self,
-+            "cat /sys/bus/i2c/devices/30-001f/hwmon/hwmon0/in0_min", "0");
-+        exec_command_and_wait_for_pattern(self,
-+            "cat /sys/bus/i2c/devices/30-001f/hwmon/hwmon0/in0_max", "0");
++            "cat /sys/bus/i2c/devices/30-0033/iio:device*/in_voltage_scale", "0.500000000");
 +
      def test_arm_ast2600_yosemitev4_openbmc(self):
          image_path = self.uncompress(self.ASSET_YOSEMITE_V4_FLASH)
