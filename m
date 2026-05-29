@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7A2FCD4F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 12:51:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53A21CD4F54
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 12:52:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSwgX-0005Dr-5H; Fri, 29 May 2026 08:51:33 -0400
+	id 1wSwgR-00054T-RT; Fri, 29 May 2026 08:51:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wSwgV-0005C2-Bu
- for qemu-devel@nongnu.org; Fri, 29 May 2026 08:51:31 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wSwgP-00051m-II
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 08:51:25 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wSwgT-0006Oi-LF
- for qemu-devel@nongnu.org; Fri, 29 May 2026 08:51:31 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2bf2247e38eso5740395ad.3
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 05:51:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wSwgL-0006NS-Fq
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 08:51:25 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-36ba706ab46so813055a91.1
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 05:51:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780059088; x=1780663888; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1780059080; x=1780663880; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=j2zfqS8MXtuTTKrwyVtoNZLOJDJV7lQ5nawu6+oWpRg=;
- b=Cn3f3t2uTd0mgQd+cB49g9xmARd5ovjRXTCWNw2MxEoHdxQ9Wh7lkigHzLpA2Jy9v/
- LL3zQ9yywGzkjmAJ6BqtGZYrGLcHkqH8VnqiLtpZ0ybZoFeWMoxkbIGmCRU1PHlBbMNU
- VlMWom7Ci8MbDi7IkuASaauxM+90XsQDwICQe9U0cgKNoPJZO0urG1eJEDHyiIvUN2rY
- d26qUNXtBXIaPZ/pJM4FIBGcA8AGUDizgan2dJXjpdhhHhrmU250IdoCFI461BN7Ab0d
- 6puMYRrgIFvyglGhsYOv9B2yLq9hRgaliXCOOMrR7AwG4FCwJrQb4FIK3PSWbLE0kWQR
- tF2A==
+ bh=AjvCezPJtbLfSdEOZNKNu95OOn66pglPC9wgYUdr1OI=;
+ b=NqQiwefl9Sv5hKsECYKSob6vmAF4c7vjs9njOvXguyLXa9NFr6LeVOsl0yw903sFkp
+ GDTzwbqFc9gjNaUrrPddYfiXAQCLc6s0gcY1dhmlp1VNU96KYvJli2furwr0EwAL9vP9
+ BKIoAID0zrzeaN3+amTifH44ikrDHmYjPo12xq3U1quNYtmRxzJwkUqCJxA+W7Xik4RW
+ xbQTjZkO96nOgtLQg0WwaWPMQj/K9y4tLl7wKtdg/EbpxGh/S3RlXFAoGsNBF+20ItGh
+ u6hsCyX6rkJpXlzwQULC4N4u9FsEE1VKdlbqCwCdW1V+u8dMm1bGkhOmvmrtlcRUdVlD
+ knZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780059088; x=1780663888;
+ d=1e100.net; s=20251104; t=1780059080; x=1780663880;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=j2zfqS8MXtuTTKrwyVtoNZLOJDJV7lQ5nawu6+oWpRg=;
- b=VLXht+T+NcxclgpEsEoXbf/iG0m+Y2oMLS7s15cv85GeP3XacHIFHjWnu3caH3gmuc
- FWNRNG1xG2UDiANGxNe0mklEDhOBzO5o0XmleUmBAHAb97+llIYudTup/cHnhS4Z5TGU
- JGKRuFgOnN3X+YKGHhxMXrC53wdJVSsizT0hX5xeI8aS6DTs2P058lOz+9qJvQs8N04a
- yswaUZxGCcyyK1GSn+GQ2NhTIhvTVkOyoE5Mx8L74+pO+a9yiNkiEMbyPw9eZdxnASSp
- F4oeAUuLzaUQOjPT+Xqk0S5NcbsVHEJfemhTQ+9uhwiSTtT27+G+uOpIkF+89kJDf9aM
- GwLA==
+ bh=AjvCezPJtbLfSdEOZNKNu95OOn66pglPC9wgYUdr1OI=;
+ b=QJahAME2UTecOIlV8WL0og+N9ymsfzQ32Y0Y7eJ36F8O7WxZDUj/qG0ItlmJi4QtnD
+ FqXNHEwLb9XuDNPAcx7+dnzgxWcjRkoloT1+jP/16nuNRc5zIRl/dOpyyuEf+q8q/EXS
+ DdhRUsdn39VZ1zObGGYzG32Wep4fKG+hTrJgmkmig2UjrocTRuFhklTgzSOp2xkCCYLM
+ 2baGoyINBHDsrKsn9BzGwSxp/Nd6FoN4djvjqNu9zhmE+rg76hceD0lZ/6FIZd/0SUcA
+ PuTTJe2Lb1fZftVRQLU11BKfYPEaX5UeqZ5LKgtqqjtUefrQRDql648VrLH6dH12dc81
+ jxvA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8UHi0BcygK8i3iaC1YTxymnSbelhpebUXYbC+TiCx0Bj+CqGDxcul9iFp8Z2UGNkkdRHYMpgdLcupR@nongnu.org
-X-Gm-Message-State: AOJu0Yy7RDp0NmtNw3BpDZhuWNg7bHt4pYiagKc7rz18B1JDXNAvvIDE
- s2CUfb8eZYfFOVmc/10Ck+/Amx6vPDCy0F41w9wvD+cHv+yO+tY7LXlO
-X-Gm-Gg: Acq92OHXd+cRHR9qWLNvNyGx2hlRdQzfB4vyLSdm4WukDBKCAAGtYHfm9Feel9IORNX
- lNsoki4e8sRFH1jTiu/3uxfh9caEDAKdiW1CYir7npCqH7E1IaZdGO2DeFg0evzPuyjt/RNijdg
- 63UcVRAX3EmIXKxNhKad3XO+nZ3ZvmaIigjWQeaP3MVP9v1tUilWama+MmYwjyGsdQApahU/7RP
- u+5V7OF1Bq2wLDv97cKkXqWu9bZEmeNLmkBkQkyBCulnVdx7VQ+PGcRW0/PmJumoUVa1BTDYpp/
- +f9YEM4Z3ZtwCzX7fGZtbq2lcHoIQw37W9BN8aLwig1gjdR47Jqd9ZcAPApg8dVLQatGF56jNoV
- XFiBu9e/8wJMrjHQNCE+fJuTvRoc/PoUhljbkWkhnktyClpAulmVyAdTsXPkFbZQAwcBjhQhYxE
- ZC6NxsGMNdSFhazLCo5fpbyHAvDcTDWTikCAh0eeHEn4GabwV2+5kx2Y/bZ4cDssTLIBf9EfKHD
- /WXeei2
-X-Received: by 2002:a17:902:fc8f:b0:2b0:4fb6:85ce with SMTP id
- d9443c01a7336-2bf20977e87mr33743095ad.21.1780059088203; 
- Fri, 29 May 2026 05:51:28 -0700 (PDT)
+ AFNElJ9A/dFn0v/NWVyI/7etWCTfQtNzw5RXWGxNHr4dyW7h7yexO4b/EjAzUCGNRLNrtUqShxmLS2j4ozzF@nongnu.org
+X-Gm-Message-State: AOJu0YzoeChRqwa0ZedGBSgOdy2L/fMRF2qBA9SxDNWcs8v5LkFSiJt6
+ 1f+xwDGuRIFl0yoJEG7uF81G5ROoGxXLWkRpXsiGp24d7VwV/4pYX5/n
+X-Gm-Gg: Acq92OFtgGB5SFIWRXpq2gTEyEsGzsv0to0s3sUTgY4upI7M11w6PFzyg3x4UmHH1yr
+ DTEY2NGyxNsCBQfjRqtl0lEvY6euy6Er8q5tE/D8X1nGOFsEHSUOirt7L9CP8+NP5E25GPs8AMV
+ xFQQJFhdq94Q8cjpzpqU64ZD3EKyFVUvFbFMFXtJnwZjUaC53N1NU+TJgFXKXFAdLGJjZ7D0vnf
+ OWdwWLaCe0z5xn+lfPevJEI0mkxORGa7dl0gI83wLgjAbxYGXRxHg5PSfj5xwgy+wEjG3UwFkHS
+ NaZHDz+39J40172VcjTXOxjFwvevkrjtB+YcN2GTZa81k+GVvFOU8INaSjAkbIc1Xn0jusNX8tL
+ n+YptW6rAZBbDdcseL5leRp7Wh8yyBVBgGxvhDiYiLkAGPwCm/qrInV8E0NNvdmJfKnbkQN1cv/
+ ksxAfdwzqLXDunx6lZaoFT/qu3wPEW2PO4HVaXVakcBw2mL9bc6KEya37IAnevoKaJOp3pRmCqG
+ UOnWHVC
+X-Received: by 2002:a17:90b:3c8c:b0:369:e4d4:79c6 with SMTP id
+ 98e67ed59e1d1-36bbceab65cmr3482264a91.20.1780059079585; 
+ Fri, 29 May 2026 05:51:19 -0700 (PDT)
 Received: from localhost (124.158.97.178.qld.leaptel.network. [124.158.97.178])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2bf23b00ebcsm19248475ad.51.2026.05.29.05.51.27
+ 98e67ed59e1d1-36bbe19dc07sm1218727a91.5.2026.05.29.05.51.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 May 2026 05:51:27 -0700 (PDT)
+ Fri, 29 May 2026 05:51:18 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: Alistair Francis <alistair.francis@wdc.com>
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -75,18 +75,20 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
  Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
  qemu-devel@nongnu.org, Joel Stanley <joel@jms.id.au>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v7 10/10] hw/riscv/atlantis: Add some i2c peripherals
-Date: Fri, 29 May 2026 05:50:35 -0700
-Message-ID: <20260529125036.728206-11-npiggin@gmail.com>
+ Chris Rauer <crauer@google.com>, Hao Wu <wuhaotsh@google.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Corey Minyard <cminyard@mvista.com>, Alano Song <AlanoSong@163.com>
+Subject: [PATCH v7 08/10] hw/i2c: Add DesignWare I2C Controller
+Date: Fri, 29 May 2026 05:50:33 -0700
+Message-ID: <20260529125036.728206-9-npiggin@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260529125036.728206-1-npiggin@gmail.com>
 References: <20260529125036.728206-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,97 +111,912 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joel Stanley <joel@jms.id.au>
+From: Chris Rauer <crauer@google.com>
 
-Add an I2C RTC device and a temperature sensor. These are not present
-on the board but help for testing.
+Add a model for the Synopsys DesignWare Advanced I2C/SMBus Controller
+with sufficient functionality to be used by the Linux Designware I2C
+platform driver.
 
-The tmp105 is a lm75 compatible temperature sensor used by the
-SENSORS_LM75 Linux kernel driver.
+This IP is used in the Tenstorrent Atlantis RISC-V SoC and will be
+added to the QEMU tt-atlantis machine.
 
-The ds1338 is a RTC device that is used by the RTC_DRV_DS1307 Linux
-kernel driver.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Hao Wu <wuhaotsh@google.com>
+Signed-off-by: Chris Rauer <crauer@google.com>
+Link: https://lore.kernel.org/qemu-devel/20220110214755.810343-2-venture@google.com
+[jms: rebase and minor build fixes for class_init and reset callback]
+[npiggin: changelog, code cleanups and fixes as-per below link]
+Link: https://lore.kernel.org/qemu-devel/20260507120524.111056-1-npiggin@gmail.com
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Corey Minyard <cminyard@mvista.com>
+Tested-by: Alano Song <AlanoSong@163.com>
 ---
- hw/riscv/Kconfig       |  2 ++
- hw/riscv/tt_atlantis.c | 27 +++++++++++++++++++++++++++
- 2 files changed, 29 insertions(+)
+This is a re-submission of the model with Chris' permission, with
+changes to rebase, update to QEMU register API, several other
+code improvements, fixes, and cleanups from reviews from Alistair,
+Phil, and others.
 
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index 38180a903f..ff2d250ee4 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -130,6 +130,8 @@ config TENSTORRENT
-     select SERIAL_MM
-     select DEVICE_TREE
-     select DESIGNWARE_I2C
-+    select DS1338
-+    select TMP105
+Thanks,
+Nick
+---
+ MAINTAINERS                     |   8 +
+ hw/i2c/Kconfig                  |   5 +
+ hw/i2c/designware_i2c.c         | 739 ++++++++++++++++++++++++++++++++
+ hw/i2c/meson.build              |   1 +
+ hw/i2c/trace-events             |   4 +
+ include/hw/i2c/designware_i2c.h |  56 +++
+ 6 files changed, 813 insertions(+)
+ create mode 100644 hw/i2c/designware_i2c.c
+ create mode 100644 include/hw/i2c/designware_i2c.h
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index e14d7a9c28..40cc4c4801 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2737,6 +2737,14 @@ S: Orphan
+ F: hw/gpio/pcf8574.c
+ F: include/gpio/pcf8574.h
  
- config XIANGSHAN_KUNMINGHU
++DesignWare I2C
++M: Chris Rauer <crauer@google.com>
++R: Alano Song <alanosong@163.com>
++R: Joel Stanley <joel@jms.id.au>
++S: Maintained
++F: hw/i2c/designware_i2c.c
++F: include/hw/i2c/designware_i2c.h
++
+ Generic Loader
+ M: Alistair Francis <alistair@alistair23.me>
+ S: Maintained
+diff --git a/hw/i2c/Kconfig b/hw/i2c/Kconfig
+index 596a7a3165..0766130b59 100644
+--- a/hw/i2c/Kconfig
++++ b/hw/i2c/Kconfig
+@@ -18,6 +18,11 @@ config ARM_SBCON_I2C
      bool
-diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-index 39979c662b..e43b58826a 100644
---- a/hw/riscv/tt_atlantis.c
-+++ b/hw/riscv/tt_atlantis.c
-@@ -69,6 +69,13 @@ static const MemMapEntry tt_atlantis_memmap[] = {
-     [TT_ATL_DDR_HI] =          { 0x100000000,  0x1000000000 },
- };
+     select BITBANG_I2C
  
-+static I2CBus *i2c_get_bus(TTAtlantisState *s, unsigned busnr)
-+{
-+    assert(busnr < TT_ATL_NUM_I2C);
++config DESIGNWARE_I2C
++    bool
++    select REGISTER
++    select I2C
 +
-+    return s->i2c[busnr].bus;
+ config ACPI_SMBUS
+     bool
+     select SMBUS
+diff --git a/hw/i2c/designware_i2c.c b/hw/i2c/designware_i2c.c
+new file mode 100644
+index 0000000000..67302979e6
+--- /dev/null
++++ b/hw/i2c/designware_i2c.c
+@@ -0,0 +1,739 @@
++/*
++ * DesignWare I2C Module.
++ *
++ * Copyright 2021 Google LLC
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++
++#include "hw/i2c/designware_i2c.h"
++#include "migration/vmstate.h"
++#include "qemu/bitops.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "qemu/units.h"
++#include "trace.h"
++
++#ifndef DESIGNWARE_I2C_ERR_DEBUG
++#define DESIGNWARE_I2C_ERR_DEBUG 0
++#endif
++
++REG32(DW_IC_CON,                0x00) /* I2C control */
++    FIELD(DW_IC_CON, STOP_DET_IF_MASTER_ACTIV, 10, 1)
++    FIELD(DW_IC_CON, RX_FIFO_FULL_HLD_CTRL,     9, 1)
++    FIELD(DW_IC_CON, TX_EMPTY_CTRL,             8, 1)
++    FIELD(DW_IC_CON, STOP_IF_ADDRESSED,         7, 1)
++    FIELD(DW_IC_CON, SLAVE_DISABLE,             6, 1)
++    FIELD(DW_IC_CON, IC_RESTART_EN,             5, 1)
++    FIELD(DW_IC_CON, 10BITADDR_MASTER,          4, 1)
++    FIELD(DW_IC_CON, 10BITADDR_SLAVE,           3, 1)
++    FIELD(DW_IC_CON, SPEED,                     1, 2)
++    FIELD(DW_IC_CON, MASTER_MODE,               0, 1)
++REG32(DW_IC_TAR,                0x04) /* I2C target address */
++    FIELD(DW_IC_TAR, IC_10BITADDR_MASTER, 12,  1)
++    FIELD(DW_IC_TAR, SPECIAL,             11,  1)
++    FIELD(DW_IC_TAR, GC_OR_START,         10,  1)
++    FIELD(DW_IC_TAR, ADDRESS,              0, 10)
++REG32(DW_IC_SAR,                0x08) /* I2C slave address */
++REG32(DW_IC_DATA_CMD,           0x10)
++    FIELD(DW_IC_DATA_CMD, RESTART, 10, 1)
++    FIELD(DW_IC_DATA_CMD, STOP,     9, 1)
++    FIELD(DW_IC_DATA_CMD, CMD,      8, 1)
++    FIELD(DW_IC_DATA_CMD, DAT,      0, 8)
++REG32(DW_IC_SS_SCL_HCNT,        0x14) /* Standard speed i2c clock scl high count */
++REG32(DW_IC_SS_SCL_LCNT,        0x18) /* Standard speed i2c clock scl low count */
++REG32(DW_IC_FS_SCL_HCNT,        0x1c) /* Fast or fast plus i2c clock scl high count */
++REG32(DW_IC_FS_SCL_LCNT,        0x20) /* Fast or fast plus i2c clock scl low count */
++REG32(DW_IC_INTR_STAT,          0x2c)
++REG32(DW_IC_INTR_MASK,          0x30) /* I2C Interrupt Mask */
++REG32(DW_IC_RAW_INTR_STAT,      0x34) /* I2C raw interrupt status */
++    /* DW_IC_INTR_STAT/INTR_MASK/RAW_INTR_STAT fields */
++    SHARED_FIELD(DW_IC_INTR_RESTART_DET, 12, 1)
++    SHARED_FIELD(DW_IC_INTR_GEN_CALL,    11, 1)
++    SHARED_FIELD(DW_IC_INTR_START_DET,   10, 1)
++    SHARED_FIELD(DW_IC_INTR_STOP_DET,    9, 1)
++    SHARED_FIELD(DW_IC_INTR_ACTIVITY,    8, 1)
++    SHARED_FIELD(DW_IC_INTR_RX_DONE,     7, 1)
++    SHARED_FIELD(DW_IC_INTR_TX_ABRT,     6, 1)
++    SHARED_FIELD(DW_IC_INTR_RD_REQ,      5, 1)
++    SHARED_FIELD(DW_IC_INTR_TX_EMPTY,    4, 1) /* Hardware clear only. */
++    SHARED_FIELD(DW_IC_INTR_TX_OVER,     3, 1)
++    SHARED_FIELD(DW_IC_INTR_RX_FULL,     2, 1) /* Hardware clear only. */
++    SHARED_FIELD(DW_IC_INTR_RX_OVER,     1, 1)
++    SHARED_FIELD(DW_IC_INTR_RX_UNDER,    0, 1)
++
++#define DW_IC_INTR_ANY_MASK                \
++            (DW_IC_INTR_RESTART_DET_MASK | \
++             DW_IC_INTR_GEN_CALL_MASK    | \
++             DW_IC_INTR_START_DET_MASK   | \
++             DW_IC_INTR_STOP_DET_MASK    | \
++             DW_IC_INTR_ACTIVITY_MASK    | \
++             DW_IC_INTR_RX_DONE_MASK     | \
++             DW_IC_INTR_TX_ABRT_MASK     | \
++             DW_IC_INTR_RD_REQ_MASK      | \
++             DW_IC_INTR_TX_EMPTY_MASK    | \
++             DW_IC_INTR_TX_OVER_MASK     | \
++             DW_IC_INTR_RX_FULL_MASK     | \
++             DW_IC_INTR_RX_OVER_MASK     | \
++             DW_IC_INTR_RX_UNDER_MASK)
++
++#define DW_IC_INTR_ANY_SW_CLEAR_MASK       \
++            (DW_IC_INTR_ANY_MASK         & \
++            ~(DW_IC_INTR_TX_EMPTY_MASK   | \
++              DW_IC_INTR_RX_FULL_MASK))
++
++REG32(DW_IC_RX_TL,              0x38) /* I2C receive FIFO threshold */
++REG32(DW_IC_TX_TL,              0x3c) /* I2C transmit FIFO threshold */
++REG32(DW_IC_CLR_INTR,           0x40)
++REG32(DW_IC_CLR_RX_UNDER,       0x44)
++REG32(DW_IC_CLR_RX_OVER,        0x48)
++REG32(DW_IC_CLR_TX_OVER,        0x4c)
++REG32(DW_IC_CLR_RD_REQ,         0x50)
++REG32(DW_IC_CLR_TX_ABRT,        0x54)
++REG32(DW_IC_CLR_RX_DONE,        0x58)
++REG32(DW_IC_CLR_ACTIVITY,       0x5c)
++REG32(DW_IC_CLR_STOP_DET,       0x60)
++REG32(DW_IC_CLR_START_DET,      0x64)
++REG32(DW_IC_CLR_GEN_CALL,       0x68)
++REG32(DW_IC_ENABLE,             0x6c) /* I2C enable */
++    FIELD(DW_IC_ENABLE, TX_CMD_BLOCK, 2, 1)
++    FIELD(DW_IC_ENABLE, ABORT,        1, 1)
++    FIELD(DW_IC_ENABLE, ENABLE,       0, 1)
++REG32(DW_IC_STATUS,             0x70) /* I2C status */
++    FIELD(DW_IC_STATUS, SLV_ACTIVITY, 6, 1)
++    FIELD(DW_IC_STATUS, MST_ACTIVITY, 5, 1)
++    FIELD(DW_IC_STATUS, RFF,          4, 1)
++    FIELD(DW_IC_STATUS, RFNE,         3, 1)
++    FIELD(DW_IC_STATUS, TFE,          2, 1)
++    FIELD(DW_IC_STATUS, TFNF,         1, 1)
++    FIELD(DW_IC_STATUS, ACTIVITY,     0, 1)
++REG32(DW_IC_TXFLR,              0x74) /* I2C transmit fifo level */
++REG32(DW_IC_RXFLR,              0x78) /* I2C receive fifo level */
++REG32(DW_IC_SDA_HOLD,           0x7c) /* I2C SDA hold time length */
++REG32(DW_IC_TX_ABRT_SOURCE,     0x80) /* The I2C transmit abort source */
++    FIELD(DW_IC_TX_ABRT_SOURCE, USER_ABRT,       16, 1)
++    FIELD(DW_IC_TX_ABRT_SOURCE, SLVRD_INTX,      15, 1)
++    FIELD(DW_IC_TX_ABRT_SOURCE, SLV_ARBLOST,     14, 1)
++    FIELD(DW_IC_TX_ABRT_SOURCE, SLVFLUSH_TXFIFO, 13, 1)
++    FIELD(DW_IC_TX_ABRT_SOURCE, ARB_LOST,        12, 1)
++    FIELD(DW_IC_TX_ABRT_SOURCE, MASTER_DIS,      11, 1)
++    FIELD(DW_IC_TX_ABRT_SOURCE, 10B_RD_NORSTRT,  10, 1)
++    FIELD(DW_IC_TX_ABRT_SOURCE, SBYTE_NORSTRT,   9, 1)
++    FIELD(DW_IC_TX_ABRT_SOURCE, HS_NORSTRT,      8, 1)
++    FIELD(DW_IC_TX_ABRT_SOURCE, SBYTE_ACKDET,    7, 1)
++    FIELD(DW_IC_TX_ABRT_SOURCE, HS_ACKDET,       6, 1)
++    FIELD(DW_IC_TX_ABRT_SOURCE, GCALL_READ,      5, 1)
++    FIELD(DW_IC_TX_ABRT_SOURCE, GCALL_NOACK,     4, 1)
++    FIELD(DW_IC_TX_ABRT_SOURCE, TXDATA_NOACK,    3, 1)
++    FIELD(DW_IC_TX_ABRT_SOURCE, 10ADDR2_NOACK,   2, 1)
++    FIELD(DW_IC_TX_ABRT_SOURCE, 10ADDR1_NOACK,   1, 1)
++    FIELD(DW_IC_TX_ABRT_SOURCE, 7B_ADDR_NOACK,   0, 1)
++REG32(DW_IC_SLV_DATA_NACK_ONLY, 0x84)
++REG32(DW_IC_DMA_CR,             0x88)
++REG32(DW_IC_DMA_TDLR,           0x8c)
++REG32(DW_IC_DMA_RDLR,           0x90)
++REG32(DW_IC_SDA_SETUP,          0x94) /* I2C SDA setup */
++REG32(DW_IC_ACK_GENERAL_CALL,   0x98)
++REG32(DW_IC_ENABLE_STATUS,      0x9c) /* I2C enable status */
++    FIELD(DW_IC_ENABLE_STATUS, SLV_RX_DATA_LOST,        2, 1)
++    FIELD(DW_IC_ENABLE_STATUS, SLV_DISABLED_WHILE_BUSY, 1, 1)
++    FIELD(DW_IC_ENABLE_STATUS, IC_EN,                   0, 1)
++REG32(DW_IC_FS_SPKLEN,          0xa0) /* I2C SS, FS or FM+ spike suppression limit */
++REG32(DW_IC_CLR_RESTART_DET,    0xa8)
++REG32(DW_IC_SMBUS_INTR_MASK,    0xcc) /* SMBus Interrupt Mask */
++REG32(DW_IC_COMP_PARAM_1,       0xf4) /* Component parameter */
++    FIELD(DW_IC_COMP_PARAM_1, TX_FIFO_SIZE,       16, 8)
++    FIELD(DW_IC_COMP_PARAM_1, RX_FIFO_SIZE,        8, 8)
++    FIELD(DW_IC_COMP_PARAM_1, HAS_ENCODED_PARAMS,  7, 1)
++    FIELD(DW_IC_COMP_PARAM_1, HAS_DMA,             6, 1)
++    FIELD(DW_IC_COMP_PARAM_1, INTR_IO,             5, 1)
++    FIELD(DW_IC_COMP_PARAM_1, HC_COUNT_VAL,        4, 1)
++    FIELD(DW_IC_COMP_PARAM_1, HIGH_SPEED_MODE,     2, 2)
++    FIELD(DW_IC_COMP_PARAM_1, APB_DATA_WIDTH_32,   0, 2)
++REG32(DW_IC_COMP_VERSION,       0xf8) /* I2C component version */
++REG32(DW_IC_COMP_TYPE,          0xfc) /* I2C component type */
++
++static void dw_i2c_update_irq(DesignWareI2CState *s)
++{
++    uint32_t intr = s->regs[R_DW_IC_RAW_INTR_STAT] & s->regs[R_DW_IC_INTR_MASK];
++
++    qemu_set_irq(s->irq, !!(intr & DW_IC_INTR_ANY_MASK));
 +}
 +
- static uint32_t next_phandle(void)
- {
-     static uint32_t phandle = 1;
-@@ -359,6 +366,19 @@ static void create_fdt_i2c(void *fdt, const MemMapEntry *mem, uint32_t irq,
-     qemu_fdt_setprop_cell(fdt, name, "#size-cells", 0);
- }
- 
-+static void create_fdt_i2c_device(TTAtlantisState *s, int bus,
-+                                  const char *compat, int addr)
++static uint64_t dw_ic_data_cmd_reg_post_read(RegisterInfo *reg, uint64_t value)
 +{
-+    void *fdt = MACHINE(s)->fdt;
-+    hwaddr base = s->memmap[TT_ATL_I2C0 + bus].base;
-+    g_autofree char *name = g_strdup_printf("/soc/i2c@%"HWADDR_PRIX"/sensor@%x",
-+                                            base, addr);
++    DesignWareI2CState *s = DESIGNWARE_I2C(reg->opaque);
 +
-+    qemu_fdt_add_subnode(fdt, name);
-+    qemu_fdt_setprop_string(fdt, name, "compatible", compat);
-+    qemu_fdt_setprop_cell(fdt, name, "reg", addr);
++    g_assert(value == 0);
++
++    if (s->status != DW_I2C_STATUS_RECEIVING) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Attempted to read from RX fifo when not in receive "
++                      "state.\n", DEVICE(s)->canonical_path);
++        if (s->status != DW_I2C_STATUS_IDLE) {
++            SHARED_ARRAY_FIELD_DP32(s->regs, R_DW_IC_RAW_INTR_STAT,
++                                    DW_IC_INTR_RX_UNDER, 1);
++            dw_i2c_update_irq(s);
++        }
++        return 0;
++    }
++
++    g_assert(s->regs[R_DW_IC_RXFLR] == fifo8_num_used(&s->rx_fifo));
++
++    if (fifo8_is_empty(&s->rx_fifo)) {
++        SHARED_ARRAY_FIELD_DP32(s->regs, R_DW_IC_RAW_INTR_STAT, DW_IC_INTR_RX_UNDER, 1);
++        dw_i2c_update_irq(s);
++        return 0;
++    }
++
++    s->regs[R_DW_IC_RXFLR]--;
++    if (s->regs[R_DW_IC_RXFLR] <= s->regs[R_DW_IC_RX_TL]) {
++        SHARED_ARRAY_FIELD_DP32(s->regs, R_DW_IC_RAW_INTR_STAT, DW_IC_INTR_RX_FULL, 0);
++        dw_i2c_update_irq(s);
++    }
++
++    return fifo8_pop(&s->rx_fifo);
 +}
 +
- static void finalize_fdt(TTAtlantisState *s)
- {
-     uint32_t aplic_s_phandle = next_phandle();
-@@ -386,6 +406,9 @@ static void finalize_fdt(TTAtlantisState *s)
-                        TT_ATL_I2C0_IRQ + i,
-                        aplic_s_phandle, periph_clk_phandle);
-     }
++static uint64_t dw_ic_clr_intr_reg_post_read(RegisterInfo *reg, uint64_t value)
++{
++    DesignWareI2CState *s = DESIGNWARE_I2C(reg->opaque);
 +
-+    create_fdt_i2c_device(s, 0, "dallas,ds1338", 0x6f);
-+    create_fdt_i2c_device(s, 4, "ti,tmp105", 0x48);
- }
- 
- static void create_fdt(TTAtlantisState *s)
-@@ -595,6 +618,10 @@ static void tt_atlantis_machine_init(MachineState *machine)
-                            qdev_get_gpio_in(s->irqchip, TT_ATL_I2C0_IRQ + i));
-     }
- 
-+    /* I2C peripherals: qemu specific */
-+    i2c_slave_create_simple(i2c_get_bus(s, 0), "ds1338", 0x6f);
-+    i2c_slave_create_simple(i2c_get_bus(s, 4), "tmp105", 0x48);
++    g_assert(value == 0);
 +
-     /* Load or create device tree */
-     if (machine->dtb) {
-         machine->fdt = load_device_tree(machine->dtb, &s->fdt_size);
++    switch (reg->access->addr) {
++    case A_DW_IC_CLR_INTR:
++        s->regs[R_DW_IC_RAW_INTR_STAT] &= ~DW_IC_INTR_ANY_SW_CLEAR_MASK;
++        break;
++    case A_DW_IC_CLR_RX_UNDER:
++        s->regs[R_DW_IC_RAW_INTR_STAT] &= ~DW_IC_INTR_RX_UNDER_MASK;
++        break;
++    case A_DW_IC_CLR_RX_OVER:
++        s->regs[R_DW_IC_RAW_INTR_STAT] &= ~DW_IC_INTR_RX_OVER_MASK;
++        break;
++    case A_DW_IC_CLR_TX_OVER:
++        s->regs[R_DW_IC_RAW_INTR_STAT] &= ~DW_IC_INTR_TX_OVER_MASK;
++        break;
++    case A_DW_IC_CLR_RD_REQ:
++        s->regs[R_DW_IC_RAW_INTR_STAT] &= ~DW_IC_INTR_RD_REQ_MASK;
++        break;
++    case A_DW_IC_CLR_TX_ABRT:
++        s->regs[R_DW_IC_RAW_INTR_STAT] &= ~DW_IC_INTR_TX_ABRT_MASK;
++        break;
++    case A_DW_IC_CLR_RX_DONE:
++        s->regs[R_DW_IC_RAW_INTR_STAT] &= ~DW_IC_INTR_RX_DONE_MASK;
++        break;
++    case A_DW_IC_CLR_ACTIVITY:
++        s->regs[R_DW_IC_RAW_INTR_STAT] &= ~DW_IC_INTR_ACTIVITY_MASK;
++        break;
++    case A_DW_IC_CLR_STOP_DET:
++        s->regs[R_DW_IC_RAW_INTR_STAT] &= ~DW_IC_INTR_STOP_DET_MASK;
++        break;
++    case A_DW_IC_CLR_START_DET:
++        s->regs[R_DW_IC_RAW_INTR_STAT] &= ~DW_IC_INTR_START_DET_MASK;
++        break;
++    case A_DW_IC_CLR_GEN_CALL:
++        s->regs[R_DW_IC_RAW_INTR_STAT] &= ~DW_IC_INTR_GEN_CALL_MASK;
++        break;
++    case A_DW_IC_CLR_RESTART_DET:
++        s->regs[R_DW_IC_RAW_INTR_STAT] &= ~DW_IC_INTR_RESTART_DET_MASK;
++        break;
++    default:
++        g_assert_not_reached();
++    }
++
++    dw_i2c_update_irq(s);
++
++    return 0;
++}
++
++static uint64_t dw_ic_intr_stat_reg_post_read(RegisterInfo *reg, uint64_t value)
++{
++    DesignWareI2CState *s = DESIGNWARE_I2C(reg->opaque);
++
++    g_assert(value == 0);
++
++    return s->regs[R_DW_IC_RAW_INTR_STAT] & s->regs[R_DW_IC_INTR_MASK];
++}
++
++static uint64_t dw_ic_unsupported_reg_post_read(RegisterInfo *reg, uint64_t value)
++{
++    DesignWareI2CState *s = DESIGNWARE_I2C(reg->opaque);
++
++    qemu_log_mask(LOG_UNIMP, "%s: unsupported read - %s\n",
++                  DEVICE(s)->canonical_path, reg->access->name);
++
++    return 0;
++}
++
++static uint64_t dw_ic_unsupported_reg_pre_write(RegisterInfo *reg, uint64_t value)
++{
++    DesignWareI2CState *s = DESIGNWARE_I2C(reg->opaque);
++
++    qemu_log_mask(LOG_UNIMP, "%s: unsupported write - %s\n",
++                  DEVICE(s)->canonical_path, reg->access->name);
++
++    return 0;
++}
++
++static uint64_t dw_ic_con_reg_pre_write(RegisterInfo *reg, uint64_t value)
++{
++    DesignWareI2CState *s = DESIGNWARE_I2C(reg->opaque);
++
++    if (s->regs[R_DW_IC_ENABLE] & R_DW_IC_ENABLE_ENABLE_MASK) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: invalid setting to ic_con %d when ic_enable[0]==1\n",
++                      DEVICE(s)->canonical_path, (int)value);
++        return s->regs[R_DW_IC_CON]; /* keep old value */
++    }
++
++    return value;
++}
++
++static void dw_i2c_reset_to_idle(DesignWareI2CState *s)
++{
++        s->regs[R_DW_IC_ENABLE_STATUS] &= ~R_DW_IC_ENABLE_STATUS_IC_EN_MASK;
++        s->regs[R_DW_IC_RAW_INTR_STAT] &= ~DW_IC_INTR_TX_EMPTY_MASK;
++        s->regs[R_DW_IC_RAW_INTR_STAT] &= ~DW_IC_INTR_RX_FULL_MASK;
++        s->regs[R_DW_IC_RAW_INTR_STAT] &= ~DW_IC_INTR_RX_UNDER_MASK;
++        s->regs[R_DW_IC_RAW_INTR_STAT] &= ~DW_IC_INTR_RX_OVER_MASK;
++        s->regs[R_DW_IC_RXFLR] = 0;
++        fifo8_reset(&s->rx_fifo);
++        s->regs[R_DW_IC_STATUS] &= ~R_DW_IC_STATUS_ACTIVITY_MASK;
++        s->status = DW_I2C_STATUS_IDLE;
++        dw_i2c_update_irq(s);
++}
++
++static void dw_ic_tx_abort(DesignWareI2CState *s, uint32_t src)
++{
++    s->regs[R_DW_IC_TX_ABRT_SOURCE] |= src;
++    s->regs[R_DW_IC_RAW_INTR_STAT] |= DW_IC_INTR_TX_ABRT_MASK;
++    dw_i2c_reset_to_idle(s);
++    dw_i2c_update_irq(s);
++}
++
++static void dw_ic_data_cmd_reg_post_write(RegisterInfo *reg, uint64_t value)
++{
++    DesignWareI2CState *s = DESIGNWARE_I2C(reg->opaque);
++    int recv = !!(value & R_DW_IC_DATA_CMD_CMD_MASK);
++
++    s->regs[R_DW_IC_DATA_CMD] = 0; /* Register has no storage */
++
++    if (s->status == DW_I2C_STATUS_IDLE ||
++        s->regs[R_DW_IC_RAW_INTR_STAT] & DW_IC_INTR_TX_ABRT_MASK) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Attempted to write to TX fifo when it is held in "
++                      "reset.\n", DEVICE(s)->canonical_path);
++        return;
++    }
++
++    /* Send the address if it hasn't been sent yet. */
++    if (s->status == DW_I2C_STATUS_SENDING_ADDRESS) {
++        int rv = i2c_start_transfer(s->bus,
++                     ARRAY_FIELD_EX32(s->regs, DW_IC_TAR, ADDRESS), recv);
++        if (rv) {
++            dw_ic_tx_abort(s, R_DW_IC_TX_ABRT_SOURCE_7B_ADDR_NOACK_MASK);
++            return;
++        }
++        s->status = recv ? DW_I2C_STATUS_RECEIVING : DW_I2C_STATUS_SENDING;
++    }
++
++    /* Send data */
++    if (!recv) {
++        int rv = i2c_send(s->bus, FIELD_EX32(value, DW_IC_DATA_CMD, DAT));
++        if (rv) {
++            i2c_end_transfer(s->bus);
++            dw_ic_tx_abort(s, R_DW_IC_TX_ABRT_SOURCE_TXDATA_NOACK_MASK);
++            return;
++        }
++        dw_i2c_update_irq(s);
++    }
++
++    /* Restart command */
++    if (value & R_DW_IC_DATA_CMD_RESTART_MASK &&
++            s->regs[R_DW_IC_CON] & R_DW_IC_CON_IC_RESTART_EN_MASK) {
++        s->regs[R_DW_IC_RAW_INTR_STAT] |= DW_IC_INTR_RESTART_DET_MASK |
++                                          DW_IC_INTR_START_DET_MASK |
++                                          DW_IC_INTR_ACTIVITY_MASK;
++        s->regs[R_DW_IC_STATUS] |= R_DW_IC_STATUS_ACTIVITY_MASK;
++        dw_i2c_update_irq(s);
++
++        if (i2c_start_transfer(s->bus,
++                    ARRAY_FIELD_EX32(s->regs, DW_IC_TAR, ADDRESS), recv)) {
++            dw_ic_tx_abort(s, R_DW_IC_TX_ABRT_SOURCE_7B_ADDR_NOACK_MASK);
++            return;
++        }
++
++        s->status = recv ? DW_I2C_STATUS_RECEIVING : DW_I2C_STATUS_SENDING;
++    }
++
++    /* Receive data */
++    if (recv) {
++        g_assert(s->regs[R_DW_IC_RXFLR] == fifo8_num_used(&s->rx_fifo));
++
++        if (!fifo8_is_full(&s->rx_fifo)) {
++            fifo8_push(&s->rx_fifo, i2c_recv(s->bus));
++            s->regs[R_DW_IC_RXFLR]++;
++        } else {
++            s->regs[R_DW_IC_RAW_INTR_STAT] |= DW_IC_INTR_RX_OVER_MASK;
++            dw_i2c_update_irq(s);
++        }
++
++        if (s->regs[R_DW_IC_RXFLR] > s->regs[R_DW_IC_RX_TL]) {
++            s->regs[R_DW_IC_RAW_INTR_STAT] |= DW_IC_INTR_RX_FULL_MASK;
++            dw_i2c_update_irq(s);
++        }
++        if (value & R_DW_IC_DATA_CMD_STOP_MASK) {
++            i2c_nack(s->bus);
++        }
++    }
++
++    /* Stop command */
++    if (value & R_DW_IC_DATA_CMD_STOP_MASK) {
++        s->regs[R_DW_IC_RAW_INTR_STAT] |= DW_IC_INTR_STOP_DET_MASK;
++        s->regs[R_DW_IC_STATUS] &= ~R_DW_IC_STATUS_ACTIVITY_MASK;
++        s->regs[R_DW_IC_RAW_INTR_STAT] &= ~DW_IC_INTR_TX_EMPTY_MASK;
++        i2c_end_transfer(s->bus);
++        dw_i2c_update_irq(s);
++    }
++}
++
++static void dw_ic_intr_mask_reg_post_write(RegisterInfo *reg, uint64_t value)
++{
++    DesignWareI2CState *s = DESIGNWARE_I2C(reg->opaque);
++
++    dw_i2c_update_irq(s);
++}
++
++static uint64_t dw_ic_enable_reg_pre_write(RegisterInfo *reg, uint64_t value)
++{
++    DesignWareI2CState *s = DESIGNWARE_I2C(reg->opaque);
++
++    if (value & R_DW_IC_ENABLE_ENABLE_MASK &&
++            !(s->regs[R_DW_IC_CON] & R_DW_IC_CON_SLAVE_DISABLE_MASK)) {
++        qemu_log_mask(LOG_UNIMP,
++                      "%s: Designware I2C slave mode is not supported.\n",
++                      DEVICE(s)->canonical_path);
++        return s->regs[R_DW_IC_ENABLE]; /* keep old value */
++    }
++
++    return value;
++}
++
++static void dw_ic_enable_reg_post_write(RegisterInfo *reg, uint64_t value)
++{
++    DesignWareI2CState *s = DESIGNWARE_I2C(reg->opaque);
++
++    s->regs[R_DW_IC_ENABLE] = value & R_DW_IC_ENABLE_ENABLE_MASK;
++
++    if (value & R_DW_IC_ENABLE_ABORT_MASK || value & R_DW_IC_ENABLE_TX_CMD_BLOCK_MASK) {
++        dw_ic_tx_abort(s, R_DW_IC_TX_ABRT_SOURCE_USER_ABRT_MASK);
++        return;
++    }
++
++    if (value & R_DW_IC_ENABLE_ENABLE_MASK) {
++        s->regs[R_DW_IC_ENABLE_STATUS] |= R_DW_IC_ENABLE_STATUS_IC_EN_MASK;
++        s->regs[R_DW_IC_STATUS] |= R_DW_IC_STATUS_ACTIVITY_MASK;
++        s->regs[R_DW_IC_RAW_INTR_STAT] |= DW_IC_INTR_ACTIVITY_MASK |
++                                          DW_IC_INTR_START_DET_MASK |
++                                          DW_IC_INTR_TX_EMPTY_MASK;
++        s->status = DW_I2C_STATUS_SENDING_ADDRESS;
++        dw_i2c_update_irq(s);
++    } else if ((value & R_DW_IC_ENABLE_ENABLE_MASK) == 0) {
++        dw_i2c_reset_to_idle(s);
++    }
++}
++
++static uint64_t dw_ic_rx_tl_reg_pre_write(RegisterInfo *reg, uint64_t value)
++{
++    DesignWareI2CState *s = DESIGNWARE_I2C(reg->opaque);
++
++    /* Note that a value of 0 for ic_rx_tl indicates a threashold of 1. */
++    if (value > DESIGNWARE_I2C_RX_FIFO_SIZE - 1) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: invalid setting to ic_rx_tl %d\n",
++                      DEVICE(s)->canonical_path, (int)value);
++        return DESIGNWARE_I2C_RX_FIFO_SIZE - 1;
++    }
++
++    return value;
++}
++
++static void dw_ic_rx_tl_reg_post_write(RegisterInfo *reg, uint64_t value)
++{
++    DesignWareI2CState *s = DESIGNWARE_I2C(reg->opaque);
++
++    if (s->regs[R_DW_IC_RXFLR] > s->regs[R_DW_IC_RX_TL] &&
++            s->regs[R_DW_IC_ENABLE] & R_DW_IC_ENABLE_ENABLE_MASK) {
++        s->regs[R_DW_IC_RAW_INTR_STAT] |= DW_IC_INTR_RX_FULL_MASK;
++    } else {
++        s->regs[R_DW_IC_RAW_INTR_STAT] &= ~DW_IC_INTR_RX_FULL_MASK;
++    }
++    dw_i2c_update_irq(s);
++}
++
++static uint64_t dw_ic_tx_tl_reg_pre_write(RegisterInfo *reg, uint64_t value)
++{
++    DesignWareI2CState *s = DESIGNWARE_I2C(reg->opaque);
++
++    /*
++     * Note that a value of 0 for ic_tx_tl indicates a threashold of 1.
++     * However, the tx threshold is not used in the model because commands are
++     * always sent out as soon as they are written.
++     */
++    if (value > DESIGNWARE_I2C_TX_FIFO_SIZE - 1) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: invalid setting to ic_tx_tl %d\n",
++                      DEVICE(s)->canonical_path, (int)value);
++        return DESIGNWARE_I2C_TX_FIFO_SIZE - 1;
++    }
++
++    return value;
++}
++
++static const RegisterAccessInfo designware_i2c_regs_info[] = {
++    {   .name  = "DW_IC_CON", .addr = A_DW_IC_CON,
++        .reset =       0x7d,
++        .unimp = 0xfffffc00,
++        .unimp = R_DW_IC_CON_RX_FIFO_FULL_HLD_CTRL_MASK,
++        .pre_write = dw_ic_con_reg_pre_write,
++    },{ .name  = "DW_IC_TAR", .addr = A_DW_IC_TAR,
++        .reset =     0x1055,
++        .unimp = 0xfffff000,
++    },{ .name  = "DW_IC_SAR", .addr = A_DW_IC_SAR,
++        .reset =       0x55,
++        .unimp = 0xfffffc00,
++        .post_read = dw_ic_unsupported_reg_post_read,
++        .pre_write = dw_ic_unsupported_reg_pre_write,
++    },{ .name  = "DW_IC_DATA_CMD", .addr = A_DW_IC_DATA_CMD,
++        .post_read = dw_ic_data_cmd_reg_post_read,
++        .post_write = dw_ic_data_cmd_reg_post_write,
++    },{ .name  = "DW_IC_SS_SCL_HCNT", .addr = A_DW_IC_SS_SCL_HCNT,
++        .reset =      0x190,
++        .unimp = 0xffff0000,
++    },{ .name  = "DW_IC_SS_SCL_LCNT", .addr = A_DW_IC_SS_SCL_LCNT,
++        .reset =      0x1d6,
++        .unimp = 0xffff0000,
++    },{ .name  = "DW_IC_FS_SCL_HCNT", .addr = A_DW_IC_FS_SCL_HCNT,
++        .reset =       0x3c,
++        .unimp = 0xffff0000,
++    },{ .name  = "DW_IC_FS_SCL_LCNT", .addr = A_DW_IC_FS_SCL_LCNT,
++        .reset =       0x82,
++        .unimp = 0xffff0000,
++    },{ .name  = "DW_IC_INTR_STAT", .addr = A_DW_IC_INTR_STAT,
++        .ro    = 0xffffffff,
++        .post_read = dw_ic_intr_stat_reg_post_read,
++    },{ .name  = "DW_IC_INTR_MASK", .addr = A_DW_IC_INTR_MASK,
++        .reset =      0x8ff,
++        .unimp = 0xffff8000,
++        .post_write = dw_ic_intr_mask_reg_post_write,
++    },{ .name  = "DW_IC_RAW_INTR_STAT", .addr = A_DW_IC_RAW_INTR_STAT,
++        .ro    = 0xffffffff,
++    },{ .name  = "DW_IC_RX_TL", .addr = A_DW_IC_RX_TL,
++        .pre_write = dw_ic_rx_tl_reg_pre_write,
++        .post_write = dw_ic_rx_tl_reg_post_write,
++    },{ .name  = "DW_IC_TX_TL", .addr = A_DW_IC_TX_TL,
++        .pre_write = dw_ic_tx_tl_reg_pre_write,
++    },{ .name  = "DW_IC_CLR_INTR", .addr = A_DW_IC_CLR_INTR,
++        .ro    = 0xffffffff,
++        .post_read = dw_ic_clr_intr_reg_post_read,
++    },{ .name  = "DW_IC_CLR_RX_UNDER", .addr = A_DW_IC_CLR_RX_UNDER,
++        .ro    = 0xffffffff,
++        .post_read = dw_ic_clr_intr_reg_post_read,
++    },{ .name  = "DW_IC_CLR_RX_OVER", .addr = A_DW_IC_CLR_RX_OVER,
++        .ro    = 0xffffffff,
++        .post_read = dw_ic_clr_intr_reg_post_read,
++    },{ .name  = "DW_IC_CLR_TX_OVER", .addr = A_DW_IC_CLR_TX_OVER,
++        .ro    = 0xffffffff,
++        .post_read = dw_ic_clr_intr_reg_post_read,
++    },{ .name  = "DW_IC_CLR_RD_REQ", .addr = A_DW_IC_CLR_RD_REQ,
++        .ro    = 0xffffffff,
++        .post_read = dw_ic_clr_intr_reg_post_read,
++    },{ .name  = "DW_IC_CLR_TX_ABRT", .addr = A_DW_IC_CLR_TX_ABRT,
++        .ro    = 0xffffffff,
++        .post_read = dw_ic_clr_intr_reg_post_read,
++    },{ .name  = "DW_IC_CLR_RX_DONE", .addr = A_DW_IC_CLR_RX_DONE,
++        .ro    = 0xffffffff,
++        .post_read = dw_ic_clr_intr_reg_post_read,
++    },{ .name  = "DW_IC_CLR_ACTIVITY", .addr = A_DW_IC_CLR_ACTIVITY,
++        .ro    = 0xffffffff,
++        .post_read = dw_ic_clr_intr_reg_post_read,
++    },{ .name  = "DW_IC_CLR_STOP_DET", .addr = A_DW_IC_CLR_STOP_DET,
++        .ro    = 0xffffffff,
++        .post_read = dw_ic_clr_intr_reg_post_read,
++    },{ .name  = "DW_IC_CLR_START_DET", .addr = A_DW_IC_CLR_START_DET,
++        .ro    = 0xffffffff,
++        .post_read = dw_ic_clr_intr_reg_post_read,
++    },{ .name  = "DW_IC_CLR_GEN_CALL", .addr = A_DW_IC_CLR_GEN_CALL,
++        .ro    = 0xffffffff,
++        .post_read = dw_ic_clr_intr_reg_post_read,
++    },{ .name  = "DW_IC_ENABLE", .addr = A_DW_IC_ENABLE,
++        .unimp = 0xfffffff8,
++        .pre_write = dw_ic_enable_reg_pre_write,
++        .post_write = dw_ic_enable_reg_post_write,
++    },{ .name  = "DW_IC_STATUS", .addr = A_DW_IC_STATUS,
++        .reset =        0x6,
++        .ro    = 0xffffffff,
++    },{ .name  = "DW_IC_TXFLR", .addr = A_DW_IC_TXFLR,
++        .ro    = 0xffffffff,
++    },{ .name  = "DW_IC_RXFLR", .addr = A_DW_IC_RXFLR,
++        .ro    = 0xffffffff,
++    },{ .name  = "DW_IC_SDA_HOLD", .addr = A_DW_IC_SDA_HOLD,
++        .reset =        0x1,
++        .unimp = 0xff000000,
++    },{ .name  = "DW_IC_TX_ABRT_SOURCE", .addr = A_DW_IC_TX_ABRT_SOURCE,
++        .ro    = 0xffffffff,
++    },{ .name  = "DW_IC_SLV_DATA_NACK_ONLY", .addr = A_DW_IC_SLV_DATA_NACK_ONLY,
++        .post_read = dw_ic_unsupported_reg_post_read,
++        .pre_write = dw_ic_unsupported_reg_pre_write,
++    },{ .name  = "DW_IC_DMA_CR", .addr = A_DW_IC_DMA_CR,
++        .post_read = dw_ic_unsupported_reg_post_read,
++        .pre_write = dw_ic_unsupported_reg_pre_write,
++    },{ .name  = "DW_IC_DMA_TDLR", .addr = A_DW_IC_DMA_TDLR,
++        .post_read = dw_ic_unsupported_reg_post_read,
++        .pre_write = dw_ic_unsupported_reg_pre_write,
++    },{ .name  = "DW_IC_DMA_RDLR", .addr = A_DW_IC_DMA_RDLR,
++        .post_read = dw_ic_unsupported_reg_post_read,
++        .pre_write = dw_ic_unsupported_reg_pre_write,
++    },{ .name  = "DW_IC_SDA_SETUP", .addr = A_DW_IC_SDA_SETUP,
++        .reset =       0x64,
++        .unimp = 0xffffff00,
++    },{ .name  = "DW_IC_ACK_GENERAL_CALL", .addr = A_DW_IC_ACK_GENERAL_CALL,
++        .post_read = dw_ic_unsupported_reg_post_read,
++        .pre_write = dw_ic_unsupported_reg_pre_write,
++    },{ .name  = "DW_IC_ENABLE_STATUS", .addr = A_DW_IC_ENABLE_STATUS,
++        .ro    = 0xffffffff,
++    },{ .name  = "DW_IC_FS_SPKLEN", .addr = A_DW_IC_FS_SPKLEN,
++        .reset =        0x2,
++        .ro    = 0xffffff00,
++    },{ .name  = "DW_IC_CLR_RESTART_DET", .addr = A_DW_IC_CLR_RESTART_DET,
++        .ro    = 0xffffffff,
++        .post_read = dw_ic_clr_intr_reg_post_read,
++    },{ .name  = "DW_IC_SMBUS_INTR_MASK", .addr = A_DW_IC_SMBUS_INTR_MASK,
++        /* No SMBus interrupts are implemented, Linux updates the mask */
++        .reset =      0x7ff,
++        .unimp = 0xfffff800,
++    },{ .name  = "DW_IC_COMP_PARAM_1", .addr = A_DW_IC_COMP_PARAM_1,
++        .reset = /* HAS_DMA and HC_COUNT_VAL are disabled */
++            ((2 << R_DW_IC_COMP_PARAM_1_APB_DATA_WIDTH_32_SHIFT) |
++             R_DW_IC_COMP_PARAM_1_HIGH_SPEED_MODE_MASK           |
++             R_DW_IC_COMP_PARAM_1_INTR_IO_MASK                   |
++             R_DW_IC_COMP_PARAM_1_HAS_ENCODED_PARAMS_MASK        |
++             ((DESIGNWARE_I2C_RX_FIFO_SIZE - 1)
++                  << R_DW_IC_COMP_PARAM_1_RX_FIFO_SIZE_SHIFT)    |
++             ((DESIGNWARE_I2C_TX_FIFO_SIZE - 1)
++                  << R_DW_IC_COMP_PARAM_1_TX_FIFO_SIZE_SHIFT)),
++        .ro    = 0xffffffff,
++    },{ .name  = "DW_IC_COMP_VERSION", .addr = A_DW_IC_COMP_VERSION,
++        .reset = 0x3132302a,
++        .ro    = 0xffffffff,
++    },{ .name  = "DW_IC_COMP_TYPE", .addr = A_DW_IC_COMP_TYPE,
++        .reset = 0x44570140,
++        .ro    = 0xffffffff,
++    }
++};
++
++static const MemoryRegionOps designware_i2c_ops = {
++    .read = register_read_memory,
++    .write = register_write_memory,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .impl = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    },
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++        .unaligned = false,
++    },
++};
++
++static void designware_i2c_enter_reset(Object *obj, ResetType type)
++{
++    DesignWareI2CState *s = DESIGNWARE_I2C(obj);
++    unsigned int i;
++
++    for (i = 0; i < ARRAY_SIZE(s->regs); ++i) {
++        register_reset(&s->regs_info[i]);
++    }
++
++    fifo8_reset(&s->rx_fifo);
++
++    s->status = DW_I2C_STATUS_IDLE;
++}
++
++static void designware_i2c_hold_reset(Object *obj, ResetType type)
++{
++    DesignWareI2CState *s = DESIGNWARE_I2C(obj);
++
++    qemu_irq_lower(s->irq);
++}
++
++static const VMStateDescription vmstate_designware_i2c = {
++    .name = TYPE_DESIGNWARE_I2C,
++    .version_id = 0,
++    .minimum_version_id = 0,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32_ARRAY(regs, DesignWareI2CState, DESIGNWARE_I2C_R_MAX),
++        VMSTATE_FIFO8(rx_fifo, DesignWareI2CState),
++        VMSTATE_UINT32(status, DesignWareI2CState),
++        VMSTATE_END_OF_LIST(),
++    },
++};
++
++static void designware_i2c_smbus_init(Object *obj)
++{
++    DesignWareI2CState *s = DESIGNWARE_I2C(obj);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
++    RegisterInfoArray *reg_array;
++
++    fifo8_create(&s->rx_fifo, DESIGNWARE_I2C_RX_FIFO_SIZE);
++
++    s->bus = i2c_init_bus(DEVICE(s), "i2c-bus");
++
++    memory_region_init(&s->iomem, obj, TYPE_DESIGNWARE_I2C, 4 * KiB);
++    reg_array = register_init_block32(DEVICE(obj), designware_i2c_regs_info,
++                                      ARRAY_SIZE(designware_i2c_regs_info),
++                                      s->regs_info, s->regs,
++                                      &designware_i2c_ops,
++                                      DESIGNWARE_I2C_ERR_DEBUG,
++                                      DESIGNWARE_I2C_R_MAX * 4);
++    memory_region_add_subregion(&s->iomem, 0, &reg_array->mem);
++
++    sysbus_init_mmio(sbd, &s->iomem);
++    sysbus_init_irq(sbd, &s->irq);
++}
++
++static void designware_i2c_finalize(Object *obj)
++{
++    DesignWareI2CState *s = DESIGNWARE_I2C(obj);
++
++    fifo8_destroy(&s->rx_fifo);
++}
++
++static void designware_i2c_class_init(ObjectClass *klass, const void *data)
++{
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->desc = "Designware I2C";
++    dc->vmsd = &vmstate_designware_i2c;
++    rc->phases.enter = designware_i2c_enter_reset;
++    rc->phases.hold = designware_i2c_hold_reset;
++
++    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
++}
++
++static const TypeInfo designware_i2c_types[] = {
++    {
++        .name = TYPE_DESIGNWARE_I2C,
++        .parent = TYPE_SYS_BUS_DEVICE,
++        .instance_size = sizeof(DesignWareI2CState),
++        .class_init = designware_i2c_class_init,
++        .instance_init = designware_i2c_smbus_init,
++        .instance_finalize = designware_i2c_finalize,
++    },
++};
++DEFINE_TYPES(designware_i2c_types);
+diff --git a/hw/i2c/meson.build b/hw/i2c/meson.build
+index c459adcb59..88aea35662 100644
+--- a/hw/i2c/meson.build
++++ b/hw/i2c/meson.build
+@@ -11,6 +11,7 @@ i2c_ss.add(when: 'CONFIG_MPC_I2C', if_true: files('mpc_i2c.c'))
+ i2c_ss.add(when: 'CONFIG_ALLWINNER_I2C', if_true: files('allwinner-i2c.c'))
+ i2c_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('microbit_i2c.c'))
+ i2c_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_smbus.c'))
++i2c_ss.add(when: 'CONFIG_DESIGNWARE_I2C', if_true: files('designware_i2c.c'))
+ i2c_ss.add(when: 'CONFIG_SMBUS_EEPROM', if_true: files('smbus_eeprom.c'))
+ i2c_ss.add(when: 'CONFIG_ARM_SBCON_I2C', if_true: files('arm_sbcon_i2c.c'))
+ i2c_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_i2c.c'))
+diff --git a/hw/i2c/trace-events b/hw/i2c/trace-events
+index 1ad0e95c0e..8a78d2d3c8 100644
+--- a/hw/i2c/trace-events
++++ b/hw/i2c/trace-events
+@@ -61,3 +61,7 @@ pca954x_read_data(uint8_t value) "PCA954X read data: 0x%02x"
+ 
+ imx_i2c_read(const char *id, const char *reg, uint64_t ofs, uint64_t value) "%s:[%s (0x%" PRIx64 ")] -> 0x%02" PRIx64
+ imx_i2c_write(const char *id, const char *reg, uint64_t ofs, uint64_t value) "%s:[%s (0x%" PRIx64 ")] <- 0x%02" PRIx64
++
++# designware_i2c.c
++dw_i2c_read(const char *id, uint64_t ofs, uint64_t value) "%s: offset 0x%02" PRIx64 " -> value: 0x%02" PRIx64
++dw_i2c_write(const char *id, uint64_t ofs, uint64_t value) "%s: offset: 0x%02" PRIx64 " <- value: 0x%02" PRIx64
+diff --git a/include/hw/i2c/designware_i2c.h b/include/hw/i2c/designware_i2c.h
+new file mode 100644
+index 0000000000..54112c38e7
+--- /dev/null
++++ b/include/hw/i2c/designware_i2c.h
+@@ -0,0 +1,56 @@
++/*
++ * DesignWare I2C Module.
++ *
++ * Copyright 2021 Google LLC
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef DESIGNWARE_I2C_H
++#define DESIGNWARE_I2C_H
++
++#include "qemu/fifo8.h"
++#include "hw/i2c/i2c.h"
++#include "hw/core/irq.h"
++#include "hw/core/register.h"
++#include "hw/core/sysbus.h"
++
++#define DESIGNWARE_I2C_R_MAX (0x100 / 4)
++
++#define DESIGNWARE_I2C_RX_FIFO_SIZE 16
++#define DESIGNWARE_I2C_TX_FIFO_SIZE 16
++
++typedef enum DesignWareI2CStatus {
++    DW_I2C_STATUS_IDLE,
++    DW_I2C_STATUS_SENDING_ADDRESS,
++    DW_I2C_STATUS_SENDING,
++    DW_I2C_STATUS_RECEIVING,
++} DesignWareI2CStatus;
++
++/*
++ * struct DesignWareI2CState - DesignWare I2C device state.
++ * @bus: The underlying I2C Bus
++ * @irq: GIC interrupt line to fire on events
++ * @rx_fifo: The FIFO buffer for receiving in FIFO mode.
++ */
++typedef struct DesignWareI2CState {
++    SysBusDevice parent_obj;
++
++    MemoryRegion iomem;
++
++    I2CBus      *bus;
++    qemu_irq     irq;
++
++    uint32_t regs[DESIGNWARE_I2C_R_MAX];
++    RegisterInfo regs_info[DESIGNWARE_I2C_R_MAX];
++
++    /* fifo8_num_used(rx_fifo) should always equal DW_IC_RXFLR */
++    Fifo8    rx_fifo;
++
++    DesignWareI2CStatus status;
++} DesignWareI2CState;
++
++#define TYPE_DESIGNWARE_I2C "designware-i2c"
++#define DESIGNWARE_I2C(obj) OBJECT_CHECK(DesignWareI2CState, (obj), \
++                                        TYPE_DESIGNWARE_I2C)
++
++#endif /* DESIGNWARE_I2C_H */
 -- 
 2.53.0
 
