@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71B84CD6E51
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:17:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBA7FCD6E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:17:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSvDC-00019z-Mw; Fri, 29 May 2026 07:17:10 -0400
+	id 1wSvDg-0001Qp-Pk; Fri, 29 May 2026 07:17:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wSvDA-00019k-E5
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:17:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wSvDf-0001QE-Cp
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:17:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wSvD8-0008Ce-Ol
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:17:08 -0400
+ id 1wSvDd-0008L8-W6
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:17:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780053425;
+ s=mimecast20190719; t=1780053457;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wY3DqdzotWKSNT8RMduN5EZCcx+3OdHIWy49nisB+mE=;
- b=Whuj2Ra9XyImm4jm4CzuXi4TSFAZJIBcWu9n8C+oVpkLiqjucT1UQV5ubgWZgs+ELwQk8k
- vaCCR7jYzBoZOZdpXHgcpMCuACXQawg4+HlScsKyC9EvTOthU12mSBDPhPHIfS6SW87ldt
- w+bxRjCBa/ziDo6JUziYKSOedykLoU8=
+ bh=CcFD3eGKhNYPPn3etCR+FB+6qCGmANbtAookYVP4Y8w=;
+ b=EXK5Huep0RV66X8hnJ6zrm9SOXOLL29XgYyk86MBmvxhql87vLsiIGyQn/7v71/vxvsXN4
+ ROz8XlCe4zWofrVl2YL4lT7zYXjDdDSMRdBeI3pBUiZ0iSP0q4//4rddp0MaR9L/DBN/dJ
+ tL449YqW9Tddkweh1yjZKP1iN8CpPVA=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-220-zG8795jPMD6m_MPWQ4NC6A-1; Fri,
- 29 May 2026 07:17:02 -0400
-X-MC-Unique: zG8795jPMD6m_MPWQ4NC6A-1
-X-Mimecast-MFC-AGG-ID: zG8795jPMD6m_MPWQ4NC6A_1780053421
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-207-3ILKgsvnPqiez2vz-DrG9Q-1; Fri,
+ 29 May 2026 07:17:32 -0400
+X-MC-Unique: 3ILKgsvnPqiez2vz-DrG9Q-1
+X-Mimecast-MFC-AGG-ID: 3ILKgsvnPqiez2vz-DrG9Q_1780053451
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E8E571956094; Fri, 29 May 2026 11:17:00 +0000 (UTC)
+ id 2B8551956080; Fri, 29 May 2026 11:17:31 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 524D1180034E; Fri, 29 May 2026 11:16:58 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1776C30001BB; Fri, 29 May 2026 11:17:29 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 29 May 2026 15:16:24 +0400
-Subject: [PATCH 03/32] irq: add per-IRQ observer to fix
- qemu_irq_intercept_in leak
+Date: Fri, 29 May 2026 15:16:29 +0400
+Subject: [PATCH 08/32] ui/qmp: keep a reference of console across yield
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260529-b4-ui-v1-3-8db3068421ef@redhat.com>
+Message-Id: <20260529-b4-ui-v1-8-8db3068421ef@redhat.com>
 References: <20260529-b4-ui-v1-0-8db3068421ef@redhat.com>
 In-Reply-To: <20260529-b4-ui-v1-0-8db3068421ef@redhat.com>
 To: qemu-devel@nongnu.org
@@ -68,25 +67,25 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3581;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=979;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=8BV9XKCCJHZtxTMIxPScYaA1rInwrGcYDZ1yr66/tJo=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqGXWOFMQhK4a1tths1eevg0SnUN23BHppedz8r
- up91MnUqN6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCahl1jgAKCRDa6OEJdZac
- 5TlND/9fVyASCBAIODtrOAsaeylTqbQeS0HsPlaRP9/xS6cxH0ivye0Qpj6veEs0OmzuTbIMvoZ
- pvRzxevsXZs4M+lo0R37H7OSd+y85SnnLlApsU9pOyiCTLcUHhvW8TnwEEb+Zri1+lklhvtcqNe
- NnDE6p0j8+7BwG70tm5DIlBOUN9AFWGEG9U3uar2OUUvjojSm1hhgaVRaoN26+jYGVripc8jrYg
- ExFJF42kxU+s1H5PFuvkkahgu7qk+IXZohQZZtmr9aX0Uw92UiBybT2Qe3ipPZvhKQGd2euvQkB
- 2gkWMRpvkc9jKw9Ry42Z67bgcIezRW3kQoUeDaj2sx5viBMXBarrx0TrmbaMaZsN4uyo6YYJd5O
- 8w3ix245/L+KWOvzGKE8FJ/lVz6FL73bN2t+Z5SRAZTww5oKEcqXwJFrmBSdGc6z9jiZGGKyrAP
- EVE5kQ27TY4n9Lc7FIub/vVgkv2rOJG1la38d0EGZS77rcTGJJHfcpsjZNPxQLkpZKACsl+K5NQ
- y0t/OanjCXTBcDCQCXYVm8q2asBNF9DEUrDxREIzwCjWzAiz5XKHs0fqZPfw86cOJCIWUBcwMI+
- N/a7DbalUHDXHObtIcHTFRU101HGrC+Wld5dguvk17kmWw3RZk7ICHbBkT0ygdZb+R16jA6xGGM
- 0h+JLtxD4Cx2G5w==
+ bh=0olnm0BeIdXkJ0+wwoqLifsBYBl2XPr7D4I8xkjuhkU=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqGXWPVLLCzPc3rqkr/xqAtSmVT+mB1jI7R+sy3
+ ZN0dMIE2OeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCahl1jwAKCRDa6OEJdZac
+ 5U/GD/98/ZclwQMV2LAQY3RXlGIe2jXdZ+7fu8CEEANVEBx3fTQQjrO7676ZKeuSGIZQuOZsvbt
+ shXH7W7MMr5RBxCxmlcSE+8GGKU8PuAzKAUFRU5FHe3HRNG0TPaeMX8imcNxa6r2AtP9KwiWGjy
+ KpuOqBF1HI3yMyEf6qeoDDLjzEFXi1/TPtcWl8HjmGbeYPw7OrztLDICCBs93nYP3Fuu2P2arwm
+ WToJoWmT1WUUsmxbVcV2kAA5keJAI9e7yC70A+rjmyLc0SZ9c8ExQ6o5i9gDX/Lh1hIBme7IWLU
+ ab0jIj0PmfVL/WqZPktEZugYhmMsI0aCUMBl/QggaVI0Tc6bHLBiJzNeSTJwCO1lp6WVOhHd2Kf
+ 4TlqEV0gDwSXP/NmdnxsGwWDXQRquv1kmRdFTyt88C4ngc1KK2ToeGYG/+qOXjH76t+Y5W/9Ukn
+ Um/Erkoxi5LVju2oE4M3DHzIokRPO8S5XWyfA48Z1cCtsnFMv6f1BfSgU56HAnbqA/cjRBWO/fL
+ ypYfsEbWYcJrbCHO/kLBSi9u1xaeFgh41+k992E5e6yOBS0k4rRumA8Q5tcnFmqTWcQXLa2d4xy
+ mw13YOUzeFf+qdeoWZV/Fr6SM95hgCkUMiOMv+0O1PfOCCC0v6LCrDoK7YatkEra7mwmV0imL74
+ dHk5/x6WZGEnsig==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -94,7 +93,7 @@ X-Spam_score: 0.8
 X-Spam_bar: /
 X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -112,104 +111,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu_irq_intercept_in() saves original IRQ handlers by allocating
-new QOM objects, which are never freed. On a PC machine, this leaks
-IRQ objects (one per IOAPIC pin) on every qtest run.
-
-Rather than tracking allocations to free later, avoid them: add an
-"observer" field to IRQState, called by qemu_set_irq() after the
-real handler. Interception sets the observer instead of rewriting
-handlers, so there's nothing to save and nothing to leak.
-
-Fix qemu_notirq() to route through qemu_set_irq() so inverted IRQs
-trigger observers too. Drop the LSan suppression.
+While the coroutine is waiting, the console could be finalized. Keep a
+reference to prevent this.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/hw/core/irq.h         |  1 +
- hw/core/irq.c                 | 10 +++++-----
- system/qtest.c                |  3 ---
- scripts/lsan_suppressions.txt |  8 --------
- 4 files changed, 6 insertions(+), 16 deletions(-)
+ ui/ui-qmp-cmds.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/hw/core/irq.h b/include/hw/core/irq.h
-index 291fdd67df4..93d5710a73e 100644
---- a/include/hw/core/irq.h
-+++ b/include/hw/core/irq.h
-@@ -14,6 +14,7 @@ struct IRQState {
-     qemu_irq_handler handler;
-     void *opaque;
-     int n;
-+    qemu_irq_handler observer;
- };
- 
- void qemu_set_irq(qemu_irq irq, int level);
-diff --git a/hw/core/irq.c b/hw/core/irq.c
-index 106805e2417..fa11e9bc0aa 100644
---- a/hw/core/irq.c
-+++ b/hw/core/irq.c
-@@ -32,6 +32,9 @@ void qemu_set_irq(qemu_irq irq, int level)
-         return;
- 
-     irq->handler(irq->opaque, irq->n, level);
-+    if (unlikely(irq->observer)) {
-+        irq->observer(irq->opaque, irq->n, level);
-+    }
- }
- 
- static void init_irq_fields(IRQState *irq, qemu_irq_handler handler,
-@@ -111,7 +114,7 @@ static void qemu_notirq(void *opaque, int line, int level)
- {
-     IRQState *irq = opaque;
- 
--    irq->handler(irq->opaque, irq->n, !level);
-+    qemu_set_irq(irq, !level);
- }
- 
- qemu_irq qemu_irq_invert(qemu_irq irq)
-@@ -124,11 +127,8 @@ qemu_irq qemu_irq_invert(qemu_irq irq)
- void qemu_irq_intercept_in(qemu_irq *gpio_in, qemu_irq_handler handler, int n)
- {
-     int i;
--    qemu_irq *old_irqs = qemu_allocate_irqs(NULL, NULL, n);
-     for (i = 0; i < n; i++) {
--        *old_irqs[i] = *gpio_in[i];
--        gpio_in[i]->handler = handler;
--        gpio_in[i]->opaque = &old_irqs[i];
-+        gpio_in[i]->observer = handler;
+diff --git a/ui/ui-qmp-cmds.c b/ui/ui-qmp-cmds.c
+index 1173c82cf7f..753cc2bf522 100644
+--- a/ui/ui-qmp-cmds.c
++++ b/ui/ui-qmp-cmds.c
+@@ -348,6 +348,7 @@ qmp_screendump(const char *filename, const char *device,
+         }
      }
- }
  
-diff --git a/system/qtest.c b/system/qtest.c
-index a79d10d1361..b359a3e1c84 100644
---- a/system/qtest.c
-+++ b/system/qtest.c
-@@ -324,9 +324,6 @@ void qtest_sendf(CharFrontend *chr, const char *fmt, ...)
++    object_ref(con);
+     qemu_console_co_wait_update(con);
  
- static void qtest_irq_handler(void *opaque, int n, int level)
- {
--    qemu_irq old_irq = *(qemu_irq *)opaque;
--    qemu_set_irq(old_irq, level);
--
-     if (irq_levels[n] != level) {
-         CharFrontend *chr = &qtest->qtest_chr;
-         irq_levels[n] = level;
-diff --git a/scripts/lsan_suppressions.txt b/scripts/lsan_suppressions.txt
-index f88bbab18b8..30256bc6d01 100644
---- a/scripts/lsan_suppressions.txt
-+++ b/scripts/lsan_suppressions.txt
-@@ -16,11 +16,3 @@ leak:/lib64/libxkbcommon.so.0
- # https://github.com/GNOME/glib/blob/main/tools/glib.supp
- # This avoids false positive leak reports for the qga-ssh-test.
- leak:g_set_user_dirs
--
--# qemu_irq_intercept_in is only used by the qtest harness, and
--# its API inherently involves a leak.
--# While we could keep track of the old IRQ data structure
--# in order to free it, it doesn't seem very important to fix
--# since it is only used by the qtest test harness.
--# Just ignore the leak, at least for the moment.
--leak:qemu_irq_intercept_in
+     /*
+@@ -358,9 +359,11 @@ qmp_screendump(const char *filename, const char *device,
+     surface = qemu_console_surface(con);
+     if (!surface) {
+         error_setg(errp, "no surface");
++        object_unref(con);
+         return;
+     }
+     image = pixman_image_ref(surface->image);
++    object_unref(con);
+ 
+     fd = qemu_create(filename, O_WRONLY | O_TRUNC | O_BINARY, 0666, errp);
+     if (fd == -1) {
 
 -- 
 2.54.0
