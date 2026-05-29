@@ -4,68 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59927CD4F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 14:17:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36FAECD4F54
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 14:19:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSy1I-0000dR-EE; Fri, 29 May 2026 10:17:04 -0400
+	id 1wSy2d-000164-VM; Fri, 29 May 2026 10:18:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wSy1G-0000d1-Hu
- for qemu-devel@nongnu.org; Fri, 29 May 2026 10:17:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wSy1E-0005ac-R3
- for qemu-devel@nongnu.org; Fri, 29 May 2026 10:17:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780064219;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vaOsw2yPCM+YUSoF5bwX/fshlOBNdq2pweasnBN4ECI=;
- b=feVO2gbIEltLdghaTZHqUefpuPAJLyGJoB9s+s3GxXi4UOJ8mlDbJgMrOS1kQomH8e1MqH
- IIR0YolRfHRqzkylDPHpCSvusEj9f91YM1g+6JsOWebq3Q3TzqeQQRhPSAe9mSnsk5iLxb
- LMErYZeiRtEwg+jXcdjLBud0O5+0Qmw=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-270-Oh8L9X5GNP-fFIBnmyHQww-1; Fri,
- 29 May 2026 10:16:57 -0400
-X-MC-Unique: Oh8L9X5GNP-fFIBnmyHQww-1
-X-Mimecast-MFC-AGG-ID: Oh8L9X5GNP-fFIBnmyHQww_1780064216
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6BE9A1800BE1; Fri, 29 May 2026 14:16:52 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.95])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 33D621955F22; Fri, 29 May 2026 14:16:50 +0000 (UTC)
-Date: Fri, 29 May 2026 16:16:48 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: "Denis V. Lunev" <den@openvz.org>
-Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH v4 1/1] qemu-img: add sub-command --remove-all to
- 'qemu-img bitmap'
-Message-ID: <ahmf0NMXECP6_6sc@redhat.com>
-References: <20260520235952.500250-1-den@openvz.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wSy2c-00014n-4N
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 10:18:26 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wSy2a-0006ZV-19
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 10:18:25 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-bce386d5b85so2101854866b.1
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 07:18:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780064301; cv=none;
+ d=google.com; s=arc-20240605;
+ b=gvY/u4syRt7xOKP+iU7Pu7BeH1sXNui7p/JgM1kVY1PjgA6uL6n+ATYjtE++ToGaGW
+ oIskMsBTZ1sWRvTvaOBzyZHii620x8RxLDBjq7C81XcI2N8KGMLLUDoiznj+4sa0rCVu
+ U5k3zzWydQ7oUex7EmXxUWcpx0JogSEgXYRDJ/9su0uMrpugZOAeN0O+7r/qgfoSc94I
+ NXaeFuKdD9rC9attH0kXfzqtF78a0zeW4WnMUgxHPTfk+3yet0HHUO14/AiAa3/6jzJj
+ FBAWVHoHBAJF5P5cnD1jF8YnEVIdSaSRLcHc+Q3nxqAg3mmX3XKhj+iilFvmflFhbYOe
+ +HSA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=L034eyAS3knVaCPHojkItpR8TRjlkNLEyF5wzuzwJkE=;
+ fh=xXUECa7x/m9222uVR6doJyAafWA+wMRf05AlemDJ3Gc=;
+ b=hmvNq6EDn/51upPo5NjAgFqJ3DxbAT0szX8KdbfXLuIYOKJSgD9jG24ykk1FTafA4D
+ Nez3zPhaY+rMxirUKoSS9J23PHK9VHX0LPVpRNwZeKqeTxCKOtSEzhjmeWD/xYllpmKp
+ KSEgr+IAzYNrwiqtmky76KdasA20qqyabuHs1iSAzhicRZS2A59qmL35VNlWtg2BTcwK
+ Qy9W7Kb781jnFKhV1yDJTidXjrsevrZtqxwAQABW8KxtYr2/fjtPoqprhQijzUqaqhn3
+ 8CXIdUz27GzJ/IS7yPRk9HxT2F42hBlfAM60FuihZGiJsBXFuDhPgitvK+WI1ulj5LMm
+ W/3w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1780064301; x=1780669101; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=L034eyAS3knVaCPHojkItpR8TRjlkNLEyF5wzuzwJkE=;
+ b=kdZK4yja4FxYPeVx7jHPBNIDzXBbaweatVL/3sGSF+e8tYYOhfOMqmFS4jYMKW65vz
+ 11Y6pR5fD+iT5qN//V7dPsxXdpPqjuWeu134W8kMhCRGLD6jQZwNnVyRvfZw+9HyVb8M
+ AK4imiV+BKtiqkHvy3j5t0oODA4wfu6LY/OxQXVoVYRInjGqkjk9Bh3c9YxQscXAg1FI
+ sTx0+dGbu5KULZD99KmkavFKKzOOVNY1s39Sx9wyk3gVPGjqnk5Dq6d+xy4AbCehvpKU
+ GiQVwPPh/GKJmcHPymkx7kDktmNmxE6vKsKT+bQHPdI4iSBMfoofEiCfYFfEW5eY1rsG
+ zhWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780064301; x=1780669101;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=L034eyAS3knVaCPHojkItpR8TRjlkNLEyF5wzuzwJkE=;
+ b=oebHQIZ/l0SkCcOoZuOF4Smb2Xsar1O/H3/ryFdIOO3c2eGJBi1ayC9+PDC3ZyWzqZ
+ tYg3EqjANQHwZ9xUUxPHGsSGIvqFL62yJf8WK9y+6BSXGPxMeHSNm5v2cdUiOvsoCGlU
+ 9Pn339cd6la1iBtXmNkfIThAcMeIcQWZ+DF1dj62vq2aE5kAvwBz+D5zJ0RVg4ZEnAD4
+ jijLmiKIENPFkHUSNjdyXt+54jAOtmmv4bXnz1ROeHDS7+0FE1o4ofGRe27NxPR8aqUG
+ 6/yvDjbOjcEMEiy2bh9+ZCe8V0tLMWIlmpIUbl/spUnp6VAFwBWeuV1KvEBnuEw2Ahdg
+ HCPg==
+X-Gm-Message-State: AOJu0YxP8qjbnUddTjofwDxL3rmhr1fzrOBZ3ibUS8L/0rHx8ITgAM36
+ Wri/3qmD48qoUJizOkJcXR+i0X8wmo3xY9ugmdsIK1Id4tO5xgsuw7LwM3nz1w90bjoPDE9jPKX
+ Pf7B/zNQGZUAvpkcrgqTvmzZQKDOJfjxHISY1iCH0qA==
+X-Gm-Gg: Acq92OHL/16MfxjboxlEG0YDbdLVXNdfIsbMGxywfGHcOQIzrxTZnxfGE4JnXuNTfFj
+ zcC5xz5kG1IweyzAP2d6+bYvI2mMzSyR/yQGauVT5TJ+BEw4m1amy9Bv5EUnURuhawt31P9aQGh
+ rduf7halRz4w7ymS6bsXv5MwX3GYe878aEJs5b6t/AsX+ULpbArWSVtLtdjzZY/P2ye5gS5IIV9
+ RwT/EYRLCYIcH/QOCV/hDK+uz5jhmZL1cuI4KRrGI8K+4eUt8mw+Y/eFeQtZqYBeq8yVkXuwumP
+ iLE3DATDF57TxeBWQdS2TJa/3iEPyxHesa5RJYseFkjAoYjTWqb4GqQqpgoS27lOWYgJhobbrVs
+ vukV8stZxmWGT
+X-Received: by 2002:a17:907:7b9d:b0:bd5:bfb:397e with SMTP id
+ a640c23a62f3a-be9cce776c8mr198046466b.9.1780064301369; Fri, 29 May 2026
+ 07:18:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260520235952.500250-1-den@openvz.org>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <rxuL-6ZdTjc0-X6Ez2rU4TPEObWUUb4HjRf6X2__bLs3i-9N2d5NX3HbQK2Zyrh5V2c1szltCX91cL-s-WHxX1XoBDSyx5_m6FCvmBmblIY=@proton.me>
+ <ad4b1u-MEfso3miW@redhat.com>
+ <0NssTF_XyAbzwx4DB1ecmeaWsoqoRMwGSrf6SCVUaBsAR3aN_FinUY8ucoU3PrTya2Jdf09HrEMWR9mwdFI0HW_ZF6SBe6gi6aIgrVpZd3g=@proton.me>
+In-Reply-To: <0NssTF_XyAbzwx4DB1ecmeaWsoqoRMwGSrf6SCVUaBsAR3aN_FinUY8ucoU3PrTya2Jdf09HrEMWR9mwdFI0HW_ZF6SBe6gi6aIgrVpZd3g=@proton.me>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 29 May 2026 15:18:08 +0100
+X-Gm-Features: AVHnY4Iqi6rXWFqKxoI84ChWny4UZKG1WulfKtzPU8frabwWsagKFVfLT7n1bPQ
+Message-ID: <CAFEAcA-BW-W0tD=_Cy6AR-E637h_Ryo0JBTHTzXqB3o3f71Rxg@mail.gmail.com>
+Subject: Re: [PATCH] hw/net/fsl_etsec: validate FCB offsets in process_tx_fcb()
+To: Feifan Qian <bea1e@proton.me>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Bernhard Beschow <shentey@gmail.com>, 
+ Jason Wang <jasowang@redhat.com>, "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>, 
+ "qemu-stable@nongnu.org" <qemu-stable@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x629.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,30 +119,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 21.05.2026 um 01:59 hat Denis V. Lunev geschrieben:
-> From time to time it is needed to remove all bitmaps from the image.
-> Before this patch the process is not very convenient. One should
-> perform
->     qemu-img info
-> and parse the output to obtain all names. After that one should
-> sequentially call
->     qemu-img bitmap --remove
-> for each present bitmap.
-> 
-> The patch adds --remove-all sub-command to 'qemu-img bitmap'. The
-> new sub-command also composes with other bitmap actions in the same
-> invocation, so a common "wipe and recreate" workflow can be expressed
-> as
->     qemu-img bitmap --remove-all --add NEW FILE
-> instead of enumerating existing bitmaps, removing them one by one,
-> and only then adding the fresh one.
-> 
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> CC: Kevin Wolf <kwolf@redhat.com>
-> CC: Hanna Reitz <hreitz@redhat.com>
+On Wed, 15 Apr 2026 at 05:08, Feifan Qian <bea1e@proton.me> wrote:
+>
+> The TX Frame Control Block (FCB) is prepended to a TX frame when
+> BD_TX_TOEUN is set. It contains two guest-controlled u8 offset
+> fields that process_tx_fcb() uses to locate L3/L4 headers within
+> the frame buffer:
+>
+>   l3_header_offset = FCB byte 3 (0..255)
+>   l4_header_offset = FCB byte 2 (0..255)
+>
+> These offsets are applied without any bounds check. When the
+> UDP-no-CTU branch is taken, the function writes zero to
+> l4_header[6] and l4_header[7]. With both offsets set to 0xFF the
+> write target is:
+>
+>   tx_buffer + 8 + 255 + 255 + 6/7 = tx_buffer + 525
+>
+> A malicious guest can therefore corrupt up to 509 bytes of heap
+> memory beyond a minimally-sized (16 B) TX frame.
+>
+> Fix: reject the frame and log a guest error when the minimum
+> required buffer length
+>
+>   8 (FCB) + l3_header_offset + l4_header_offset + 8
+>
+> exceeds tx_buffer_len. Move the l3_header and l4_header pointer
+> declarations past the new guard so that out-of-bounds pointers
+> are never materialised.
+>
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Feifan Qian <bea1e@proton.me>
 
-Thanks, applied to the block branch.
+This bug just got re-found by somebody recently, so:
 
-Kevin
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3517
 
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+Jason, are you going to pick this one up, or one of the PPC
+folks? (I found it didn't quite apply cleanly for some reason,
+but I don't know why as that file hasn't changed in ages.)
+
+thanks
+-- PMM
 
