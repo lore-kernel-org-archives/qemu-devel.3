@@ -4,98 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8E8ACD6E45
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 06:05:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10131CD6E49
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 06:05:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSqKW-0004Uc-E6; Fri, 29 May 2026 02:04:24 -0400
+	id 1wSqKZ-0004V3-Av; Fri, 29 May 2026 02:04:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
- id 1wSqKU-0004UC-TP
- for qemu-devel@nongnu.org; Fri, 29 May 2026 02:04:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wSqKX-0004Us-Lc
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 02:04:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
- id 1wSqKR-0000B7-Nq
- for qemu-devel@nongnu.org; Fri, 29 May 2026 02:04:22 -0400
+ id 1wSqKV-0000DV-AP
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 02:04:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780034658;
+ s=mimecast20190719; t=1780034662;
  h=from:from:sender:sender:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:mime-version:mime-version:
- content-type:content-type; bh=ltbXK9dRUT6cj//B1lvrtugo4K+OFpldWrsrSTpE4uc=;
- b=ZZc3VHbh7r5bVMnb36WI6BOjRl5omSzBgdC3PfuHDLlHowvFU919iB2tTj6JFqrCgB+mh7
- ouIuuf3S4f4S7niPSKawfpV0dndlyvCkLEQa9ohmcTkG5FieaKG06pa0/F4qRXFMT2juIw
- rRz0VEvtiuIY//XTlx1vq0+/Aw1Vyek=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-type:content-type; bh=6xaQULA9kfRVamMxxhK6wxaMVAGVoPQVQ1v0fUv+Yd4=;
+ b=YWn2UnFW5odAaAm4B7JJzL1/1yFnVaEc/iUQagj0MDG3GFBo1sD4qP3LD4n65JB/cIq3Xd
+ MzfYXB/zBqfMPeqXRGoG2Tvepus3tWI41OcdVM8xZ7h+J1qlmUlpmdYQ3wZ1VPI5lN97JK
+ SsY5ARuFkeluPSXI7NRjBoGh5UYtQIg=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-74-xoZvy7omPDqA35npaEWsbA-1; Fri, 29 May 2026 02:03:09 -0400
-X-MC-Unique: xoZvy7omPDqA35npaEWsbA-1
-X-Mimecast-MFC-AGG-ID: xoZvy7omPDqA35npaEWsbA_1780034588
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-45eeee26201so380974f8f.0
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 23:03:08 -0700 (PDT)
+ us-mta-226-OfXrnwgWOGy3SI3Ym321pg-1; Fri, 29 May 2026 02:03:10 -0400
+X-MC-Unique: OfXrnwgWOGy3SI3Ym321pg-1
+X-Mimecast-MFC-AGG-ID: OfXrnwgWOGy3SI3Ym321pg_1780034589
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-48ff0eb77b5so38596045e9.0
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 23:03:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1780034588; x=1780639388; darn=nongnu.org;
+ d=google.com; s=20251104; t=1780034589; x=1780639389; darn=nongnu.org;
  h=to:from:subject:date:message-id:auto-submitted:sender:reply-to
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ltbXK9dRUT6cj//B1lvrtugo4K+OFpldWrsrSTpE4uc=;
- b=uXrHmXUhoF0byAMhziFsoTfFiaQWEE5hPKaIx8wEOHKTpcYNPCGChFDtcH5LleC8YS
- 2jbDkqbhmdgR3rKxN5gD0NVUsYtjgQbQjl2C2Sd+GtNE0nOAD4+7hS+ehSjffQybChe0
- 6QAtbfXVf3+k1ORFFCPz4g2Cg9fvWSdX8BGNsNe8pw+AkgsYj1yiaTeeLf1EPfsFNd+2
- 7E/buRdmRc1r5KvKQEFBhxmzkJTCmnEfWPIbbcFx7rzjKj2Wnh27dW9sswW2bGWoZrY3
- aDHCZVZCBaHSEbUCqOOC69VHoOLTGrM3Ydw8v0IzeN8zHjmeQ1u99UWp5FCZwrFoOruC
- SkIw==
+ bh=6xaQULA9kfRVamMxxhK6wxaMVAGVoPQVQ1v0fUv+Yd4=;
+ b=HJ4CR6xzwk1TFrY5N1vLTn7lC2KLEzVnKGx2Z9sxeqsP+yKecvtBtWk1H/3Eu9EuZK
+ FNMx/+2Fza9ewbTt3hMKcAEb640W5MKf1i4z8cFjOyfBJEhTpgtcC3TGqIpmaLoBC169
+ XRDTjJlkqo571EXcxgY0ZbAvTK3kZT4J5eHIgwXfJvt26I2dv4dfN0dH790bkh8o8Hl+
+ l9xMHq5EYb6/xkMdC46R1j6M7U60O2z/y03RrLIzjekqy28T48NKGhbsqdFppCoZc4+o
+ ExvIAMisr4hy6Rgc77LKVcTc+kRJTwHJh+XC2exLR5DoAUPl2cPMkbyES7j4if7Dk3fV
+ jigA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780034588; x=1780639388; darn=nongnu.org;
+ d=redhat.com; s=google; t=1780034589; x=1780639389; darn=nongnu.org;
  h=to:from:subject:date:message-id:auto-submitted:sender:reply-to
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ltbXK9dRUT6cj//B1lvrtugo4K+OFpldWrsrSTpE4uc=;
- b=RBZnC905s+rHZyjZB2WrXdupAI/9H3dJDo03EAfoop5d4wzSG2OEgwFEAUhXaP4Zym
- lMmihikgQCcmZE48DwN4/+IR5LPTgripmM/26luN8uZMTnfiU3p9QjS+MCJsivJ/ts6v
- 4IMSGd28bIr0ZHiGQJXre2j3YjkI3urfiTdVTxkqBlvK8vyKx/WsAjEAuc8rDJTZT/iF
- g6LLCv3eeKpngI6vfEAWAvrnhnWcxGydFhrjJbA/dSxPcn6GAgQVhf3YI5mCDkqKasfC
- fSa3juL+LvNP7XQCrvMS91jtMEyzXp5SG6efSm0D4uq5RUDLAXB5SZ7atl8VSo9eimBB
- QaSw==
+ bh=6xaQULA9kfRVamMxxhK6wxaMVAGVoPQVQ1v0fUv+Yd4=;
+ b=l6RrGxLzQn95MlS85kxxIB6IxpuhUK7JzJuFMo1WFcbEhuqQmjhECjz/PxZgNrI4kc
+ IZEcOxOU8yXsjRTon6/uBmQlSCaD4JUT2ku3tkfu4IXHWArX2GAph/LylKqK1oV3phk8
+ bZhL2Gj/qKuCfblMbtkKjer1EoRF61iyRCMmCSrPU8o7AdRX+qP1WhyX1uSrOAvGwhaN
+ i/wz+fQ3UkTQCcW6sT0X0x4BrnNcVrTnwFEOfi2HT1zqRmryC1q02Tx2xQxE3EspPDG6
+ KbQEG4HU5o43KkEoE0ub8toFCm9YDGQQPE9C8JE173ODxQauViwAh2Xf5MFmKkl6OSP4
+ jvGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780034588; x=1780639388;
+ d=1e100.net; s=20251104; t=1780034589; x=1780639389;
  h=to:from:subject:date:message-id:auto-submitted:sender:reply-to
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ltbXK9dRUT6cj//B1lvrtugo4K+OFpldWrsrSTpE4uc=;
- b=sj1qG9JRvK5gibO5q1zALKlhXcxm7jlMsGq49u/fA5SVrfd73mOHF3L3FfqvUAA+p+
- rDa6zCbaHIgvLNokvfrLAYBJ4StBc/OhqgSlBlH3yJOaEI3fvbS8NRc2XyZv/Ex1dNA4
- 78NWsuEV4yJMJFIMMu/9ZKIpQJJQziOM+woXslKQ+VBtZ3+1702TZ0+XeL6a0iK3MYSN
- ur9mYGH8vlw51yllKa9+A9DZ6AkYekntpL6tv9zzbaWRKkvGAlhZO82fr10PJ36jFgid
- qmIWg7donzrdf8DpFtdPHN/pu+6EmUMqaDFLr/dxzk7Ct3iMLvcMU/RqShpJmNpbAcMQ
- sY0Q==
-X-Gm-Message-State: AOJu0YyYEHFNiKUABnQblL8If8z7UolLXeoIJeg6USNiSX8mROEusym9
- l0lpww5pXq9crPqhBubyV38ZbYp7MgNUuvC/u/5ArZKnAXrOOW9pWt345eCuHFKd0g1bTXXUQjH
- K4XVLsfX7M189LcjHaa3TKIp56FkiKwpjm8IVP/UA81IuT3i8f86BfRHeiQSnGTW9LYZqB4xinl
- ChPfuq28tsXsE7bKp/B38/s4BsogDD1QWCOP3u/NbTsBF72ZJENmMA6eZld21U2zCE8nFdTl5vn
- 7hXuNt1VTmogYBNDFQ8P1c=
-X-Gm-Gg: Acq92OEPfQjRrOtWztNcrjkyzVBT0vZ60ORw6b4Q46LSIm1qfI4upY1Zz355Y61PGeL
- jjw2jHCwsPUKlWQdiXLxaHM/nzeTAiyyERZ+IUIaj2TGw9lU4I2nQ07Zehd4992pZKD9pb8kEqJ
- 2/2KA16pR0CQlGN/G9ss+InpaREUzE02vnSwg5LT1hOEQQl869v47ohH2zv9XCgUtnxUoj4CRBW
- Bp146nfgEaHHc/beNjrDHtYntXbTAqpQSM7qzm4G5kxlGsJ
-X-Received: by 2002:a05:600c:4694:b0:490:48a0:b87a with SMTP id
- 5b1f17b1804b1-4909c08d1fcmr26311725e9.9.1780034587780; 
- Thu, 28 May 2026 23:03:07 -0700 (PDT)
+ bh=6xaQULA9kfRVamMxxhK6wxaMVAGVoPQVQ1v0fUv+Yd4=;
+ b=rUaM+MRlVLe78icAGUJaVMA3sAAtuuMlkOc/p4kSDy9mWsY5pj+Sa0TFruGfGXZ4rt
+ 0VzVUklUVSxFadZz8+OjLYxogqpPLyuTCfF/g0tV5rg9Bgf0ywoPwe6ctffq/+VkynuH
+ 8gNA7AM6b7/gef12tFL4nRGiQzl/FD4tdjpkr4UG+vWDI0LpWW5RT27/h8eO/TXcxyQt
+ 42u+FsrVnYFtoV8p8yyttCbkep0M4Mw4dOaTeqrNkkLI7UhKmuLIV1iJxc5sKM8O6gi/
+ DDDo/mta2ruXpGo8EatfQzt4/WibA5jmY34SO5Ul8o5El1ZkppZ31W5ox2FYyiNWoOda
+ vvNw==
+X-Gm-Message-State: AOJu0YwHjfbQMidSID/HZcbJlnvoI5JAe4qFvlXBiWp4ehL21qrBDkFv
+ bMOKV/8Pky+iXra3sg66vM7gRSLsRFLMcxIPnV2M4EC73Gbfn/f/xWP46yoQaSXO8hAbMK2+2cJ
+ QCi+a+0a8G7MupHW3d21luWqbkHhK+up9nP6Ie039WXQA+59brDWqBZXCnIjBVxO6rMv7uio9vw
+ JTi5TrTcNtoElzjvf47GH4VMdmrhGxpYIqTJEW8trCc0A20Q+gPLdmqfyD5cfLPL7X3Qwx2dZ10
+ EViq7971NTStf83n9RRoS4=
+X-Gm-Gg: Acq92OFjEnIP0LUyRypD3xEMIoGeDvzRuUjGYCo+8IJmCSIxANmRwos9s5jlPIG5Rjo
+ CtfkJSVeQZmVR/ZRvvA1OqvnnAibpm4F/GN8GNZPNubCJ56xqiyERvI4e+MUSJfsxg/LYzyuYuM
+ ncmuvUhvYlCDQoYkbSUmdIIPcWlgyThoBSqr60PYaixXB/NkewndMeWdEcLfwgDbxzrMQHybUA8
+ dmNwQPEjb0phAUdSNg7kphN9bNj6lZeMu6tt83L/LpZgR9W
+X-Received: by 2002:a05:600c:3542:b0:48a:5c23:cab with SMTP id
+ 5b1f17b1804b1-4909c0a7df8mr22359485e9.19.1780034589255; 
+ Thu, 28 May 2026 23:03:09 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 2002:a05:600c:4694:b0:490:48a0:b87a with SMTP id
- 5b1f17b1804b1-4909c08d1fcmr26310365e9.9.1780034587094; Thu, 28 May 2026
- 23:03:07 -0700 (PDT)
+X-Received: by 2002:a05:600c:3542:b0:48a:5c23:cab with SMTP id
+ 5b1f17b1804b1-4909c0a7df8mr22358455e9.19.1780034588622; Thu, 28 May 2026
+ 23:03:08 -0700 (PDT)
 Auto-Submitted: auto-generated
-Message-ID: <calendar-ff97bc65-6b81-47a3-a1ed-bf225210153f@google.com>
-Date: Fri, 29 May 2026 06:03:07 +0000
+Message-ID: <calendar-5ad480e4-95f2-4f15-9f0d-4dd955e92f1d@google.com>
+Date: Fri, 29 May 2026 06:03:08 +0000
 Subject: Synced invitation: QEMU/KVM developers conference call @ Every 2
- weeks from 16:00 to 17:00 on Tuesday from Tue May 12 to Tue Jun 9 (CEST)
- (qemu-devel@nongnu.org)
+ weeks from 16:00 to 17:00 on Tuesday (CEST) (qemu-devel@nongnu.org)
 To: qemu-devel@nongnu.org
-Content-Type: multipart/mixed; boundary="00000000000040aef70652ee99d1"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clegoate@redhat.com;
+Content-Type: multipart/mixed; boundary="00000000000057cdae0652ee99f5"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clegoate@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -103,7 +102,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIMWL_WL_MED=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
  DKIM_VALID_EF=-0.1, HTML_FONT_LOW_CONTRAST=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_KAM_HTML_FONT_INVALID=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -124,53 +123,52 @@ From:  Cedric Le Goater via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000040aef70652ee99d1
-Content-Type: multipart/alternative; boundary="00000000000040aef60652ee99cf"
+--00000000000057cdae0652ee99f5
+Content-Type: multipart/alternative; boundary="00000000000057cdad0652ee99f3"
 
---00000000000040aef60652ee99cf
+--00000000000057cdad0652ee99f3
 Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
 Content-Transfer-Encoding: base64
 
 VGhpcyBlbWFpbCBrZWVwcyB0aGUgZXZlbnQgdXAgdG8gZGF0ZSBpbiB5b3VyIGNhbGVuZGFyLg0K
 DQpRRU1VL0tWTSBkZXZlbG9wZXJzIGNvbmZlcmVuY2UgY2FsbA0KRXZlcnkgMiB3ZWVrcyBmcm9t
-IDE2OjAwIHRvIDE3OjAwIG9uIFR1ZXNkYXkgZnJvbSBUdWVzZGF5IE1heSAxMiB0byBUdWVzZGF5
-ICANCkp1biA5DQpDZW50cmFsIEV1cm9wZWFuIFRpbWUgLSBQYXJpcw0KDQpMb2NhdGlvbg0KaHR0
-cHM6Ly9tZWV0LmppdC5zaS9rdm1jYWxsbWVldGluZwkNCmh0dHBzOi8vd3d3Lmdvb2dsZS5jb20v
-dXJsP3E9aHR0cHMlM0ElMkYlMkZtZWV0LmppdC5zaSUyRmt2bWNhbGxtZWV0aW5nJnNhPUQmc291
-cmNlPWNhbGVuZGFyJnVzdD0xNzgwNDY2NTgwMDAwMDAwJnVzZz1BT3ZWYXcwYl9yU1c3bGVFR09E
-Mk1FQ2FBTTVCDQoNCg0KDQpBdHRhY2htZW50cw0KTm90ZXMg4oCTIFFFTVUvS1ZNIGRldmVsb3Bl
-cnMgY29uZmVyZW5jZSBjYWxsICANCmh0dHBzOi8vZG9jcy5nb29nbGUuY29tL2RvY3VtZW50L2Qv
-MS1MdHExMUxMenhDY2NmcWZOTktjTUc3NEhNVUpmNkRVUm1TSkJHUVpyZWsvZWRpdA0KDQpJZiB5
-b3UgbmVlZCBjYWxsIGRldGFpbHMsIHBsZWFzZSBjb250YWN0IG1lOiBhbGV4LmJlbm5lZUBsaW5h
-cm8ub3JnDQoNCkd1ZXN0cw0KYWxleC5iZW5uZWVAbGluYXJvLm9yZyAtIGNyZWF0b3INCk1hcmt1
-cyBBcm1icnVzdGVyDQpiY2FpbkBxdWljaW5jLmNvbQ0KRGFuaWVsIEJlcnJhbmfDqQ0KY2ppYUBu
-dmlkaWEuY29tDQpjd0BmMDBmLm9yZw0KRXJpYyBCbGFrZQ0KZWRnYXIuaWdsZXNpYXNAZ21haWwu
-Y29tDQplZHVhcmRvQGhhYmtvc3QubmV0DQpmZWxpcGVAbnV0YW5peC5jb20NCmlnZ3lAdGhlaWdn
-eS5jb20NCmltcEBic2RpbXAuY29tDQpqZ2dAbnZpZGlhLmNvbQ0Kamlkb25nLnhpYW9AZ21haWwu
-Y29tDQpqaW0uc2h1QHNpZml2ZS5jb20NCm1idXJ0b25AcXRpLnF1YWxjb21tLmNvbQ0KcGF1bC53
-YWxtc2xleUBzaWZpdmUuY29tDQpQYW9sbyBCb256aW5pDQpwZXRlci5tYXlkZWxsQGxpbmFyby5v
-cmcNCnJpY2hhcmQuaGVuZGVyc29uQGxpbmFyby5vcmcNCnNoZW50ZXlAZ21haWwuY29tDQpzdGVm
-YW5oYUBnbWFpbC5jb20NCndlaS53LndhbmdAaW50ZWwuY29tDQp6d3Uua2VybmVsQGdtYWlsLmNv
-bQ0KcGhpbG1kQGxpbmFyby5vcmcNCmVibG90QHJpdm9zaW5jLmNvbQ0KbWF4LmNob3VAc2lmaXZl
-LmNvbQ0KbWFub3MucGl0c2lkaWFuYWtpc0BsaW5hcm8ub3JnDQpUaG9tYXMgSHV0aA0KcmJjQG1l
-dGEuY29tDQpkZW1pb2Jlbm91ckBnbWFpbC5jb20NCmhpQGFseXNzYS5pcw0KZGhlZGRlQGthbHJh
-eWluYy5jb20NCkFsYmVydG8gRmFyaWENCkFsYmVydCBFc3RldmUNCm1hcmNhbmRyZS5sdXJlYXVA
-Z21haWwuY29tDQptYXR0aGlldUBtaW5pby5pbw0KamFjb2Iub3Vyc2xhbmRAZ21haWwuY29tDQpo
-ZWxnZS5kZWxsZXJAZ29vZ2xlbWFpbC5jb20NCkNlZHJpYyBMZSBHb2F0ZXINCkFsaXN0YWlyIEZy
-YW5jaXMNCmtvbnJhZC53aWxrQG9yYWNsZS5jb20NCkFsZXNzYW5kcm8gRGkgRmVkZXJpY28NCkFu
-dG9uIEpvaGFuc3Nvbg0KQ2hhbyBQZW5nDQpFbGVuYSBVZmltdHNldmENCmVyaWMuYXVnZXJAcmVk
-aGF0LmNvbQ0KamFuLmtpc3prYUB3ZWIuZGUNCkpvYW8gTWFydGlucw0KTHVjIE1pY2hlbA0KU2hh
-bWVlcmFsaSBLb2xvdGh1bSBUaG9kaQ0Kei5odW9AMTM5LmNvbQ0KTElVIFpoaXdlaQ0KcWVtdS1k
-ZXZlbEBub25nbnUub3JnDQpuZWxzb24uaG9Ad2luZHJpdmVyLmNvbQ0KDQoNCn5+Ly9+fg0KSW52
-aXRhdGlvbiBmcm9tIEdvb2dsZSBDYWxlbmRhcjogaHR0cHM6Ly9jYWxlbmRhci5nb29nbGUuY29t
-L2NhbGVuZGFyLw0KDQpZb3UgYXJlIHJlY2VpdmluZyB0aGlzIGVtYWlsIGJlY2F1c2UgeW91IGFy
-ZSBhbiBhdHRlbmRlZSBvbiB0aGUgZXZlbnQuDQoNCkZvcndhcmRpbmcgdGhpcyBpbnZpdGF0aW9u
-IGNvdWxkIGFsbG93IGFueSByZWNpcGllbnQgdG8gc2VuZCBhIHJlc3BvbnNlIHRvICANCnRoZSBv
-cmdhbml6ZXIsIGJlIGFkZGVkIHRvIHRoZSBndWVzdCBsaXN0LCBpbnZpdGUgb3RoZXJzIHJlZ2Fy
-ZGxlc3Mgb2YgIA0KdGhlaXIgb3duIGludml0YXRpb24gc3RhdHVzLCBvciBtb2RpZnkgeW91ciBS
-U1ZQLg0KDQpMZWFybiBtb3JlIGh0dHBzOi8vc3VwcG9ydC5nb29nbGUuY29tL2NhbGVuZGFyL2Fu
-c3dlci8zNzEzNSNmb3J3YXJkaW5nDQo=
---00000000000040aef60652ee99cf
+IDE2OjAwIHRvIDE3OjAwIG9uIFR1ZXNkYXkNCkNlbnRyYWwgRXVyb3BlYW4gVGltZSAtIFBhcmlz
+DQoNCkxvY2F0aW9uDQpodHRwczovL21lZXQuaml0LnNpL2t2bWNhbGxtZWV0aW5nCQ0KaHR0cHM6
+Ly93d3cuZ29vZ2xlLmNvbS91cmw/cT1odHRwcyUzQSUyRiUyRm1lZXQuaml0LnNpJTJGa3ZtY2Fs
+bG1lZXRpbmcmc2E9RCZzb3VyY2U9Y2FsZW5kYXImdXN0PTE3ODA0NjY1ODAwMDAwMDAmdXNnPUFP
+dlZhdzBiX3JTVzdsZUVHT0QyTUVDYUFNNUINCg0KDQoNCkF0dGFjaG1lbnRzDQpOb3RlcyDigJMg
+UUVNVS9LVk0gZGV2ZWxvcGVycyBjb25mZXJlbmNlIGNhbGwgIA0KaHR0cHM6Ly9kb2NzLmdvb2ds
+ZS5jb20vZG9jdW1lbnQvZC8xLUx0cTExTEx6eENjY2ZxZk5OS2NNRzc0SE1VSmY2RFVSbVNKQkdR
+WnJlay9lZGl0DQoNCklmIHlvdSBuZWVkIGNhbGwgZGV0YWlscywgcGxlYXNlIGNvbnRhY3QgbWU6
+IGFsZXguYmVubmVlQGxpbmFyby5vcmcNCg0KR3Vlc3RzDQphbGV4LmJlbm5lZUBsaW5hcm8ub3Jn
+IC0gY3JlYXRvcg0KTWFya3VzIEFybWJydXN0ZXINCmJjYWluQHF1aWNpbmMuY29tDQpEYW5pZWwg
+QmVycmFuZ8OpDQpjamlhQG52aWRpYS5jb20NCmN3QGYwMGYub3JnDQpFcmljIEJsYWtlDQplZGdh
+ci5pZ2xlc2lhc0BnbWFpbC5jb20NCmVkdWFyZG9AaGFia29zdC5uZXQNCmZlbGlwZUBudXRhbml4
+LmNvbQ0KaWdneUB0aGVpZ2d5LmNvbQ0KaW1wQGJzZGltcC5jb20NCmpnZ0BudmlkaWEuY29tDQpq
+aWRvbmcueGlhb0BnbWFpbC5jb20NCmppbS5zaHVAc2lmaXZlLmNvbQ0KbWJ1cnRvbkBxdGkucXVh
+bGNvbW0uY29tDQpwYXVsLndhbG1zbGV5QHNpZml2ZS5jb20NClBhb2xvIEJvbnppbmkNCnBldGVy
+Lm1heWRlbGxAbGluYXJvLm9yZw0KcmljaGFyZC5oZW5kZXJzb25AbGluYXJvLm9yZw0Kc2hlbnRl
+eUBnbWFpbC5jb20NCnN0ZWZhbmhhQGdtYWlsLmNvbQ0Kd2VpLncud2FuZ0BpbnRlbC5jb20NCnp3
+dS5rZXJuZWxAZ21haWwuY29tDQpwaGlsbWRAbGluYXJvLm9yZw0KZWJsb3RAcml2b3NpbmMuY29t
+DQptYXguY2hvdUBzaWZpdmUuY29tDQptYW5vcy5waXRzaWRpYW5ha2lzQGxpbmFyby5vcmcNClRo
+b21hcyBIdXRoDQpyYmNAbWV0YS5jb20NCmRlbWlvYmVub3VyQGdtYWlsLmNvbQ0KaGlAYWx5c3Nh
+LmlzDQpkaGVkZGVAa2FscmF5aW5jLmNvbQ0KQWxiZXJ0byBGYXJpYQ0KQWxiZXJ0IEVzdGV2ZQ0K
+bWFyY2FuZHJlLmx1cmVhdUBnbWFpbC5jb20NCm1hdHRoaWV1QG1pbmlvLmlvDQpqYWNvYi5vdXJz
+bGFuZEBnbWFpbC5jb20NCmhlbGdlLmRlbGxlckBnb29nbGVtYWlsLmNvbQ0KQ2VkcmljIExlIEdv
+YXRlcg0KQWxpc3RhaXIgRnJhbmNpcw0Ka29ucmFkLndpbGtAb3JhY2xlLmNvbQ0KQWxlc3NhbmRy
+byBEaSBGZWRlcmljbw0KQW50b24gSm9oYW5zc29uDQpDaGFvIFBlbmcNCkVsZW5hIFVmaW10c2V2
+YQ0KZXJpYy5hdWdlckByZWRoYXQuY29tDQpqYW4ua2lzemthQHdlYi5kZQ0KSm9hbyBNYXJ0aW5z
+DQpMdWMgTWljaGVsDQpTaGFtZWVyYWxpIEtvbG90aHVtIFRob2RpDQp6Lmh1b0AxMzkuY29tDQpM
+SVUgWmhpd2VpDQpxZW11LWRldmVsQG5vbmdudS5vcmcNCm5lbHNvbi5ob0B3aW5kcml2ZXIuY29t
+DQoNCg0Kfn4vL35+DQpJbnZpdGF0aW9uIGZyb20gR29vZ2xlIENhbGVuZGFyOiBodHRwczovL2Nh
+bGVuZGFyLmdvb2dsZS5jb20vY2FsZW5kYXIvDQoNCllvdSBhcmUgcmVjZWl2aW5nIHRoaXMgZW1h
+aWwgYmVjYXVzZSB5b3UgYXJlIGFuIGF0dGVuZGVlIG9uIHRoZSBldmVudC4NCg0KRm9yd2FyZGlu
+ZyB0aGlzIGludml0YXRpb24gY291bGQgYWxsb3cgYW55IHJlY2lwaWVudCB0byBzZW5kIGEgcmVz
+cG9uc2UgdG8gIA0KdGhlIG9yZ2FuaXplciwgYmUgYWRkZWQgdG8gdGhlIGd1ZXN0IGxpc3QsIGlu
+dml0ZSBvdGhlcnMgcmVnYXJkbGVzcyBvZiAgDQp0aGVpciBvd24gaW52aXRhdGlvbiBzdGF0dXMs
+IG9yIG1vZGlmeSB5b3VyIFJTVlAuDQoNCkxlYXJuIG1vcmUgaHR0cHM6Ly9zdXBwb3J0Lmdvb2ds
+ZS5jb20vY2FsZW5kYXIvYW5zd2VyLzM3MTM1I2ZvcndhcmRpbmcNCg==
+--00000000000057cdad0652ee99f3
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -583,12 +581,12 @@ a.org/Event"><meta itemprop=3D"eventStatus" content=3D"http://schema.org/Ev=
 entScheduled"/><span itemprop=3D"publisher" itemscope itemtype=3D"http://sc=
 hema.org/Organization"><meta itemprop=3D"name" content=3D"Google Calendar"/=
 ></span><meta itemprop=3D"eventId/googleCalendar" content=3D"3tmn51v3ap1pkb=
-eqj4divuh46c_R20260512T140000"/><span style=3D"display: none; font-size: 1p=
+eqj4divuh46c_R20260609T140000"/><span style=3D"display: none; font-size: 1p=
 x; color: #fff; line-height: 1px; height: 0; max-height: 0; width: 0; max-w=
 idth: 0; opacity: 0; overflow: hidden;" itemprop=3D"name">QEMU/KVM develope=
 rs conference call</span><span aria-hidden=3D"true"><time itemprop=3D"start=
-Date" datetime=3D"20260512T140000Z"></time><time itemprop=3D"endDate" datet=
-ime=3D"20260512T150000Z"></time></span><table border=3D"0" cellpadding=3D"0=
+Date" datetime=3D"20260609T140000Z"></time><time itemprop=3D"endDate" datet=
+ime=3D"20260609T150000Z"></time></span><table border=3D"0" cellpadding=3D"0=
 " cellspacing=3D"0" role=3D"presentation" align=3D"center" style=3D"width:1=
 00%;" class=3D"body-container"><tbody><tr><td style=3D"" class=3D"" align=
 =3D"left"><!--[if mso | IE]><table border=3D"0" cellpadding=3D"0" cellspaci=
@@ -673,409 +671,408 @@ ng: 0; text-align: left; word-break: break-word;;padding-bottom:24px;"><div=
  style=3D"font-family: Roboto, sans-serif;font-style: normal; font-weight: =
 400; font-size: 14px; line-height: 20px; letter-spacing: 0.2px;color: #3c40=
 43; text-decoration: none;" class=3D"primary-text" role=3D"presentation"><s=
-pan aria-hidden=3D"true"><time itemprop=3D"startDate" datetime=3D"20260512T=
-140000Z"></time><time itemprop=3D"endDate" datetime=3D"20260512T150000Z"></=
+pan aria-hidden=3D"true"><time itemprop=3D"startDate" datetime=3D"20260609T=
+140000Z"></time><time itemprop=3D"endDate" datetime=3D"20260609T150000Z"></=
 time></span><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
 "presentation" style=3D"padding-bottom: 4px;"><tr><td><h2 class=3D"primary-=
 text" style=3D"font-size: 14px;color: #3c4043; text-decoration: none;font-w=
 eight: 700;-webkit-font-smoothing: antialiased;margin: 0; padding: 0;">When=
-</h2></td></tr></table><span>Every 2 weeks from 16:00 to 17:00 on Tuesday f=
-rom Tuesday May 12 to Tuesday Jun 9 (Central European Time - Paris)</span><=
-/div></td></tr><tr><td style=3D"font-size: 0; padding: 0; text-align: left;=
- word-break: break-word;;padding-bottom:24px;"><div style=3D"font-family: R=
-oboto, sans-serif;font-style: normal; font-weight: 400; font-size: 14px; li=
-ne-height: 20px; letter-spacing: 0.2px;color: #3c4043; text-decoration: non=
-e;" class=3D"primary-text" role=3D"presentation"><table border=3D"0" cellpa=
-dding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"padding-bottom=
-: 4px;"><tr><td><h2 class=3D"primary-text" style=3D"font-size: 14px;color: =
-#3c4043; text-decoration: none;font-weight: 700;-webkit-font-smoothing: ant=
-ialiased;margin: 0; padding: 0;">Location</h2></td></tr></table><span itemp=
-rop=3D"location" itemscope itemtype=3D"http://schema.org/Place"><span itemp=
-rop=3D"name" class=3D"primary-text notranslate" style=3D"font-family: Robot=
-o, sans-serif;font-style: normal; font-weight: 400; font-size: 14px; line-h=
-eight: 20px; letter-spacing: 0.2px;color: #3c4043; text-decoration: none;">=
-https://meet.jit.si/kvmcallmeeting</span><br/><a href=3D"https://www.google=
-.com/url?q=3Dhttps%3A%2F%2Fmeet.jit.si%2Fkvmcallmeeting&amp;sa=3DD&amp;sour=
-ce=3Dcalendar&amp;ust=3D1780466580000000&amp;usg=3DAOvVaw0b_rSW7leEGOD2MECa=
-AM5B" class=3D"accent-text underline-on-hover" style=3D"display: inline-blo=
-ck;;color: #1a73e8; text-decoration: none;font-weight: 700;" target=3D"_bla=
-nk" itemprop=3D"map">View map</a></span></div></td></tr><tr><td style=3D"fo=
-nt-size: 0; padding: 0; text-align: left; word-break: break-word;;padding-b=
-ottom:24px;"><div style=3D"font-family: Roboto, sans-serif;font-style: norm=
-al; font-weight: 400; font-size: 14px; line-height: 20px; letter-spacing: 0=
-.2px;color: #3c4043; text-decoration: none;" class=3D"primary-text" role=3D=
-"presentation"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
-=3D"presentation" style=3D"padding-bottom: 4px;"><tr><td><h2 class=3D"prima=
-ry-text" style=3D"font-size: 14px;color: #3c4043; text-decoration: none;fon=
-t-weight: 700;-webkit-font-smoothing: antialiased;margin: 0; padding: 0;">G=
-uests</h2></td></tr></table><div style=3D"padding-bottom: 4px; text-align: =
-left;;color: #3c4042;"><div><span itemprop=3D"attendee" itemscope itemtype=
-=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"notranslate"=
-><a class=3D"primary-text underline-on-hover" style=3D"display: inline-bloc=
-k;;color: #3c4043; text-decoration: none;" href=3D"mailto:alex.bennee@linar=
-o.org">alex.bennee@linaro.org</a></span><meta itemprop=3D"email" content=3D=
-"alex.bennee@linaro.org"/></span><span class=3D"secondary-text" style=3D"co=
-lor: #70757a; text-decoration: none;"> - creator</span></div><div><span ite=
-mprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"><span it=
-emprop=3D"name" class=3D"notranslate"><a class=3D"primary-text underline-on=
--hover" style=3D"display: inline-block;;color: #3c4043; text-decoration: no=
-ne;" href=3D"mailto:armbru@redhat.com">Markus Armbruster</a></span><meta it=
-emprop=3D"email" content=3D"armbru@redhat.com"/></span><span class=3D"secon=
-dary-text" style=3D"color: #70757a; text-decoration: none;"></span></div><d=
-iv><span itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Pers=
-on"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-text =
-underline-on-hover" style=3D"display: inline-block;;color: #3c4043; text-de=
-coration: none;" href=3D"mailto:bcain@quicinc.com">bcain@quicinc.com</a></s=
-pan><meta itemprop=3D"email" content=3D"bcain@quicinc.com"/></span><span cl=
-ass=3D"secondary-text" style=3D"color: #70757a; text-decoration: none;"></s=
-pan></div><div><span itemprop=3D"attendee" itemscope itemtype=3D"http://sch=
-ema.org/Person"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"p=
-rimary-text underline-on-hover" style=3D"display: inline-block;;color: #3c4=
-043; text-decoration: none;" href=3D"mailto:berrange@redhat.com">Daniel Ber=
-rang=C3=A9</a></span><meta itemprop=3D"email" content=3D"berrange@redhat.co=
-m"/></span><span class=3D"secondary-text" style=3D"color: #70757a; text-dec=
-oration: none;"></span></div><div><span itemprop=3D"attendee" itemscope ite=
-mtype=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"notrans=
-late"><a class=3D"primary-text underline-on-hover" style=3D"display: inline=
--block;;color: #3c4043; text-decoration: none;" href=3D"mailto:cjia@nvidia.=
-com">cjia@nvidia.com</a></span><meta itemprop=3D"email" content=3D"cjia@nvi=
-dia.com"/></span><span class=3D"secondary-text" style=3D"color: #70757a; te=
-xt-decoration: none;"></span></div><div><span itemprop=3D"attendee" itemsco=
-pe itemtype=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"n=
-otranslate"><a class=3D"primary-text underline-on-hover" style=3D"display: =
-inline-block;;color: #3c4043; text-decoration: none;" href=3D"mailto:cw@f00=
-f.org">cw@f00f.org</a></span><meta itemprop=3D"email" content=3D"cw@f00f.or=
-g"/></span><span class=3D"secondary-text" style=3D"color: #70757a; text-dec=
-oration: none;"></span></div><div><span itemprop=3D"attendee" itemscope ite=
-mtype=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"notrans=
-late"><a class=3D"primary-text underline-on-hover" style=3D"display: inline=
--block;;color: #3c4043; text-decoration: none;" href=3D"mailto:eblake@redha=
-t.com">Eric Blake</a></span><meta itemprop=3D"email" content=3D"eblake@redh=
-at.com"/></span><span class=3D"secondary-text" style=3D"color: #70757a; tex=
-t-decoration: none;"></span></div><div><span itemprop=3D"attendee" itemscop=
-e itemtype=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"no=
-translate"><a class=3D"primary-text underline-on-hover" style=3D"display: i=
-nline-block;;color: #3c4043; text-decoration: none;" href=3D"mailto:edgar.i=
-glesias@gmail.com">edgar.iglesias@gmail.com</a></span><meta itemprop=3D"ema=
-il" content=3D"edgar.iglesias@gmail.com"/></span><span class=3D"secondary-t=
-ext" style=3D"color: #70757a; text-decoration: none;"></span></div><div><sp=
-an itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"><s=
-pan itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-text underl=
-ine-on-hover" style=3D"display: inline-block;;color: #3c4043; text-decorati=
-on: none;" href=3D"mailto:eduardo@habkost.net">eduardo@habkost.net</a></spa=
-n><meta itemprop=3D"email" content=3D"eduardo@habkost.net"/></span><span cl=
-ass=3D"secondary-text" style=3D"color: #70757a; text-decoration: none;"></s=
-pan></div><div><span itemprop=3D"attendee" itemscope itemtype=3D"http://sch=
-ema.org/Person"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"p=
-rimary-text underline-on-hover" style=3D"display: inline-block;;color: #3c4=
-043; text-decoration: none;" href=3D"mailto:felipe@nutanix.com">felipe@nuta=
-nix.com</a></span><meta itemprop=3D"email" content=3D"felipe@nutanix.com"/>=
-</span><span class=3D"secondary-text" style=3D"color: #70757a; text-decorat=
-ion: none;"></span></div><div><span itemprop=3D"attendee" itemscope itemtyp=
+</h2></td></tr></table><span>Every 2 weeks from 16:00 to 17:00 on Tuesday (=
+Central European Time - Paris)</span></div></td></tr><tr><td style=3D"font-=
+size: 0; padding: 0; text-align: left; word-break: break-word;;padding-bott=
+om:24px;"><div style=3D"font-family: Roboto, sans-serif;font-style: normal;=
+ font-weight: 400; font-size: 14px; line-height: 20px; letter-spacing: 0.2p=
+x;color: #3c4043; text-decoration: none;" class=3D"primary-text" role=3D"pr=
+esentation"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"padding-bottom: 4px;"><tr><td><h2 class=3D"primary-=
+text" style=3D"font-size: 14px;color: #3c4043; text-decoration: none;font-w=
+eight: 700;-webkit-font-smoothing: antialiased;margin: 0; padding: 0;">Loca=
+tion</h2></td></tr></table><span itemprop=3D"location" itemscope itemtype=
+=3D"http://schema.org/Place"><span itemprop=3D"name" class=3D"primary-text =
+notranslate" style=3D"font-family: Roboto, sans-serif;font-style: normal; f=
+ont-weight: 400; font-size: 14px; line-height: 20px; letter-spacing: 0.2px;=
+color: #3c4043; text-decoration: none;">https://meet.jit.si/kvmcallmeeting<=
+/span><br/><a href=3D"https://www.google.com/url?q=3Dhttps%3A%2F%2Fmeet.jit=
+.si%2Fkvmcallmeeting&amp;sa=3DD&amp;source=3Dcalendar&amp;ust=3D17804665800=
+00000&amp;usg=3DAOvVaw0b_rSW7leEGOD2MECaAM5B" class=3D"accent-text underlin=
+e-on-hover" style=3D"display: inline-block;;color: #1a73e8; text-decoration=
+: none;font-weight: 700;" target=3D"_blank" itemprop=3D"map">View map</a></=
+span></div></td></tr><tr><td style=3D"font-size: 0; padding: 0; text-align:=
+ left; word-break: break-word;;padding-bottom:24px;"><div style=3D"font-fam=
+ily: Roboto, sans-serif;font-style: normal; font-weight: 400; font-size: 14=
+px; line-height: 20px; letter-spacing: 0.2px;color: #3c4043; text-decoratio=
+n: none;" class=3D"primary-text" role=3D"presentation"><table border=3D"0" =
+cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"padding-=
+bottom: 4px;"><tr><td><h2 class=3D"primary-text" style=3D"font-size: 14px;c=
+olor: #3c4043; text-decoration: none;font-weight: 700;-webkit-font-smoothin=
+g: antialiased;margin: 0; padding: 0;">Guests</h2></td></tr></table><div st=
+yle=3D"padding-bottom: 4px; text-align: left;;color: #3c4042;"><div><span i=
+temprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"><span =
+itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-text underline-=
+on-hover" style=3D"display: inline-block;;color: #3c4043; text-decoration: =
+none;" href=3D"mailto:alex.bennee@linaro.org">alex.bennee@linaro.org</a></s=
+pan><meta itemprop=3D"email" content=3D"alex.bennee@linaro.org"/></span><sp=
+an class=3D"secondary-text" style=3D"color: #70757a; text-decoration: none;=
+"> - creator</span></div><div><span itemprop=3D"attendee" itemscope itemtyp=
 e=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"notranslate=
 "><a class=3D"primary-text underline-on-hover" style=3D"display: inline-blo=
-ck;;color: #3c4043; text-decoration: none;" href=3D"mailto:iggy@theiggy.com=
-">iggy@theiggy.com</a></span><meta itemprop=3D"email" content=3D"iggy@theig=
-gy.com"/></span><span class=3D"secondary-text" style=3D"color: #70757a; tex=
-t-decoration: none;"></span></div><div><span itemprop=3D"attendee" itemscop=
-e itemtype=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"no=
-translate"><a class=3D"primary-text underline-on-hover" style=3D"display: i=
-nline-block;;color: #3c4043; text-decoration: none;" href=3D"mailto:imp@bsd=
-imp.com">imp@bsdimp.com</a></span><meta itemprop=3D"email" content=3D"imp@b=
-sdimp.com"/></span><span class=3D"secondary-text" style=3D"color: #70757a; =
+ck;;color: #3c4043; text-decoration: none;" href=3D"mailto:armbru@redhat.co=
+m">Markus Armbruster</a></span><meta itemprop=3D"email" content=3D"armbru@r=
+edhat.com"/></span><span class=3D"secondary-text" style=3D"color: #70757a; =
 text-decoration: none;"></span></div><div><span itemprop=3D"attendee" items=
 cope itemtype=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D=
 "notranslate"><a class=3D"primary-text underline-on-hover" style=3D"display=
-: inline-block;;color: #3c4043; text-decoration: none;" href=3D"mailto:jgg@=
-nvidia.com">jgg@nvidia.com</a></span><meta itemprop=3D"email" content=3D"jg=
-g@nvidia.com"/></span><span class=3D"secondary-text" style=3D"color: #70757=
-a; text-decoration: none;"></span></div><div><span itemprop=3D"attendee" it=
-emscope itemtype=3D"http://schema.org/Person"><span itemprop=3D"name" class=
-=3D"notranslate"><a class=3D"primary-text underline-on-hover" style=3D"disp=
-lay: inline-block;;color: #3c4043; text-decoration: none;" href=3D"mailto:j=
-idong.xiao@gmail.com">jidong.xiao@gmail.com</a></span><meta itemprop=3D"ema=
-il" content=3D"jidong.xiao@gmail.com"/></span><span class=3D"secondary-text=
-" style=3D"color: #70757a; text-decoration: none;"></span></div><div><span =
-itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"><span=
- itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-text underline=
--on-hover" style=3D"display: inline-block;;color: #3c4043; text-decoration:=
- none;" href=3D"mailto:jim.shu@sifive.com">jim.shu@sifive.com</a></span><me=
-ta itemprop=3D"email" content=3D"jim.shu@sifive.com"/></span><span class=3D=
-"secondary-text" style=3D"color: #70757a; text-decoration: none;"></span></=
-div><div><span itemprop=3D"attendee" itemscope itemtype=3D"http://schema.or=
-g/Person"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary=
--text underline-on-hover" style=3D"display: inline-block;;color: #3c4043; t=
-ext-decoration: none;" href=3D"mailto:mburton@qti.qualcomm.com">mburton@qti=
-.qualcomm.com</a></span><meta itemprop=3D"email" content=3D"mburton@qti.qua=
-lcomm.com"/></span><span class=3D"secondary-text" style=3D"color: #70757a; =
-text-decoration: none;"></span></div><div><span itemprop=3D"attendee" items=
-cope itemtype=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D=
-"notranslate"><a class=3D"primary-text underline-on-hover" style=3D"display=
-: inline-block;;color: #3c4043; text-decoration: none;" href=3D"mailto:paul=
-.walmsley@sifive.com">paul.walmsley@sifive.com</a></span><meta itemprop=3D"=
-email" content=3D"paul.walmsley@sifive.com"/></span><span class=3D"secondar=
-y-text" style=3D"color: #70757a; text-decoration: none;"></span></div><div>=
-<span itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"=
-><span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-text und=
-erline-on-hover" style=3D"display: inline-block;;color: #3c4043; text-decor=
-ation: none;" href=3D"mailto:pbonzini@redhat.com">Paolo Bonzini</a></span><=
-meta itemprop=3D"email" content=3D"pbonzini@redhat.com"/></span><span class=
-=3D"secondary-text" style=3D"color: #70757a; text-decoration: none;"></span=
-></div><div><span itemprop=3D"attendee" itemscope itemtype=3D"http://schema=
-.org/Person"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"prim=
-ary-text underline-on-hover" style=3D"display: inline-block;;color: #3c4043=
-; text-decoration: none;" href=3D"mailto:peter.maydell@linaro.org">peter.ma=
-ydell@linaro.org</a></span><meta itemprop=3D"email" content=3D"peter.maydel=
-l@linaro.org"/></span><span class=3D"secondary-text" style=3D"color: #70757=
-a; text-decoration: none;"></span></div><div><span itemprop=3D"attendee" it=
-emscope itemtype=3D"http://schema.org/Person"><span itemprop=3D"name" class=
-=3D"notranslate"><a class=3D"primary-text underline-on-hover" style=3D"disp=
-lay: inline-block;;color: #3c4043; text-decoration: none;" href=3D"mailto:r=
-ichard.henderson@linaro.org">richard.henderson@linaro.org</a></span><meta i=
-temprop=3D"email" content=3D"richard.henderson@linaro.org"/></span><span cl=
-ass=3D"secondary-text" style=3D"color: #70757a; text-decoration: none;"></s=
-pan></div><div><span itemprop=3D"attendee" itemscope itemtype=3D"http://sch=
-ema.org/Person"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"p=
-rimary-text underline-on-hover" style=3D"display: inline-block;;color: #3c4=
-043; text-decoration: none;" href=3D"mailto:shentey@gmail.com">shentey@gmai=
-l.com</a></span><meta itemprop=3D"email" content=3D"shentey@gmail.com"/></s=
-pan><span class=3D"secondary-text" style=3D"color: #70757a; text-decoration=
-: none;"></span></div><div><span itemprop=3D"attendee" itemscope itemtype=
-=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"notranslate"=
-><a class=3D"primary-text underline-on-hover" style=3D"display: inline-bloc=
-k;;color: #3c4043; text-decoration: none;" href=3D"mailto:stefanha@gmail.co=
-m">stefanha@gmail.com</a></span><meta itemprop=3D"email" content=3D"stefanh=
-a@gmail.com"/></span><span class=3D"secondary-text" style=3D"color: #70757a=
-; text-decoration: none;"></span></div><div><span itemprop=3D"attendee" ite=
-mscope itemtype=3D"http://schema.org/Person"><span itemprop=3D"name" class=
-=3D"notranslate"><a class=3D"primary-text underline-on-hover" style=3D"disp=
-lay: inline-block;;color: #3c4043; text-decoration: none;" href=3D"mailto:w=
-ei.w.wang@intel.com">wei.w.wang@intel.com</a></span><meta itemprop=3D"email=
-" content=3D"wei.w.wang@intel.com"/></span><span class=3D"secondary-text" s=
-tyle=3D"color: #70757a; text-decoration: none;"></span></div><div><span ite=
-mprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"><span it=
-emprop=3D"name" class=3D"notranslate"><a class=3D"primary-text underline-on=
--hover" style=3D"display: inline-block;;color: #3c4043; text-decoration: no=
-ne;" href=3D"mailto:zwu.kernel@gmail.com">zwu.kernel@gmail.com</a></span><m=
-eta itemprop=3D"email" content=3D"zwu.kernel@gmail.com"/></span><span class=
-=3D"secondary-text" style=3D"color: #70757a; text-decoration: none;"></span=
-></div><div><span itemprop=3D"attendee" itemscope itemtype=3D"http://schema=
-.org/Person"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"prim=
-ary-text underline-on-hover" style=3D"display: inline-block;;color: #3c4043=
-; text-decoration: none;" href=3D"mailto:philmd@linaro.org">philmd@linaro.o=
-rg</a></span><meta itemprop=3D"email" content=3D"philmd@linaro.org"/></span=
-><span class=3D"secondary-text" style=3D"color: #70757a; text-decoration: n=
-one;"></span></div><div><span itemprop=3D"attendee" itemscope itemtype=3D"h=
-ttp://schema.org/Person"><span itemprop=3D"name" class=3D"notranslate"><a c=
-lass=3D"primary-text underline-on-hover" style=3D"display: inline-block;;co=
-lor: #3c4043; text-decoration: none;" href=3D"mailto:eblot@rivosinc.com">eb=
-lot@rivosinc.com</a></span><meta itemprop=3D"email" content=3D"eblot@rivosi=
-nc.com"/></span><span class=3D"secondary-text" style=3D"color: #70757a; tex=
-t-decoration: none;"></span></div><div><span itemprop=3D"attendee" itemscop=
-e itemtype=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"no=
-translate"><a class=3D"primary-text underline-on-hover" style=3D"display: i=
-nline-block;;color: #3c4043; text-decoration: none;" href=3D"mailto:max.cho=
-u@sifive.com">max.chou@sifive.com</a></span><meta itemprop=3D"email" conten=
-t=3D"max.chou@sifive.com"/></span><span class=3D"secondary-text" style=3D"c=
-olor: #70757a; text-decoration: none;"></span></div><div><span itemprop=3D"=
-attendee" itemscope itemtype=3D"http://schema.org/Person"><span itemprop=3D=
-"name" class=3D"notranslate"><a class=3D"primary-text underline-on-hover" s=
-tyle=3D"display: inline-block;;color: #3c4043; text-decoration: none;" href=
-=3D"mailto:manos.pitsidianakis@linaro.org">manos.pitsidianakis@linaro.org</=
-a></span><meta itemprop=3D"email" content=3D"manos.pitsidianakis@linaro.org=
-"/></span><span class=3D"secondary-text" style=3D"color: #70757a; text-deco=
-ration: none;"></span></div><div><span itemprop=3D"attendee" itemscope item=
-type=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"notransl=
-ate"><a class=3D"primary-text underline-on-hover" style=3D"display: inline-=
-block;;color: #3c4043; text-decoration: none;" href=3D"mailto:thuth@redhat.=
-com">Thomas Huth</a></span><meta itemprop=3D"email" content=3D"thuth@redhat=
-.com"/></span><span class=3D"secondary-text" style=3D"color: #70757a; text-=
-decoration: none;"></span></div><div><span itemprop=3D"attendee" itemscope =
-itemtype=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"notr=
-anslate"><a class=3D"primary-text underline-on-hover" style=3D"display: inl=
-ine-block;;color: #3c4043; text-decoration: none;" href=3D"mailto:rbc@meta.=
-com">rbc@meta.com</a></span><meta itemprop=3D"email" content=3D"rbc@meta.co=
-m"/></span><span class=3D"secondary-text" style=3D"color: #70757a; text-dec=
-oration: none;"></span></div><div><span itemprop=3D"attendee" itemscope ite=
-mtype=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"notrans=
-late"><a class=3D"primary-text underline-on-hover" style=3D"display: inline=
--block;;color: #3c4043; text-decoration: none;" href=3D"mailto:demiobenour@=
-gmail.com">demiobenour@gmail.com</a></span><meta itemprop=3D"email" content=
-=3D"demiobenour@gmail.com"/></span><span class=3D"secondary-text" style=3D"=
-color: #70757a; text-decoration: none;"></span></div><div><span itemprop=3D=
-"attendee" itemscope itemtype=3D"http://schema.org/Person"><span itemprop=
-=3D"name" class=3D"notranslate"><a class=3D"primary-text underline-on-hover=
-" style=3D"display: inline-block;;color: #3c4043; text-decoration: none;" h=
-ref=3D"mailto:hi@alyssa.is">hi@alyssa.is</a></span><meta itemprop=3D"email"=
- content=3D"hi@alyssa.is"/></span><span class=3D"secondary-text" style=3D"c=
-olor: #70757a; text-decoration: none;"></span></div><div><span itemprop=3D"=
-attendee" itemscope itemtype=3D"http://schema.org/Person"><span itemprop=3D=
-"name" class=3D"notranslate"><a class=3D"primary-text underline-on-hover" s=
-tyle=3D"display: inline-block;;color: #3c4043; text-decoration: none;" href=
-=3D"mailto:dhedde@kalrayinc.com">dhedde@kalrayinc.com</a></span><meta itemp=
-rop=3D"email" content=3D"dhedde@kalrayinc.com"/></span><span class=3D"secon=
-dary-text" style=3D"color: #70757a; text-decoration: none;"></span></div><d=
-iv><span itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Pers=
-on"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-text =
-underline-on-hover" style=3D"display: inline-block;;color: #3c4043; text-de=
-coration: none;" href=3D"mailto:afaria@redhat.com">Alberto Faria</a></span>=
-<meta itemprop=3D"email" content=3D"afaria@redhat.com"/></span><span class=
-=3D"secondary-text" style=3D"color: #70757a; text-decoration: none;"></span=
-></div><div><span itemprop=3D"attendee" itemscope itemtype=3D"http://schema=
-.org/Person"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"prim=
-ary-text underline-on-hover" style=3D"display: inline-block;;color: #3c4043=
-; text-decoration: none;" href=3D"mailto:aesteve@redhat.com">Albert Esteve<=
-/a></span><meta itemprop=3D"email" content=3D"aesteve@redhat.com"/></span><=
-span class=3D"secondary-text" style=3D"color: #70757a; text-decoration: non=
-e;"></span></div><div><span itemprop=3D"attendee" itemscope itemtype=3D"htt=
-p://schema.org/Person"><span itemprop=3D"name" class=3D"notranslate"><a cla=
-ss=3D"primary-text underline-on-hover" style=3D"display: inline-block;;colo=
-r: #3c4043; text-decoration: none;" href=3D"mailto:marcandre.lureau@gmail.c=
-om">marcandre.lureau@gmail.com</a></span><meta itemprop=3D"email" content=
-=3D"marcandre.lureau@gmail.com"/></span><span class=3D"secondary-text" styl=
-e=3D"color: #70757a; text-decoration: none;"></span></div><div><span itempr=
-op=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"><span itemp=
-rop=3D"name" class=3D"notranslate"><a class=3D"primary-text underline-on-ho=
-ver" style=3D"display: inline-block;;color: #3c4043; text-decoration: none;=
-" href=3D"mailto:matthieu@minio.io">matthieu@minio.io</a></span><meta itemp=
-rop=3D"email" content=3D"matthieu@minio.io"/></span><span class=3D"secondar=
-y-text" style=3D"color: #70757a; text-decoration: none;"></span></div><div>=
-<span itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"=
-><span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-text und=
-erline-on-hover" style=3D"display: inline-block;;color: #3c4043; text-decor=
-ation: none;" href=3D"mailto:jacob.oursland@gmail.com">jacob.oursland@gmail=
-.com</a></span><meta itemprop=3D"email" content=3D"jacob.oursland@gmail.com=
-"/></span><span class=3D"secondary-text" style=3D"color: #70757a; text-deco=
-ration: none;"></span></div><div><span itemprop=3D"attendee" itemscope item=
-type=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"notransl=
-ate"><a class=3D"primary-text underline-on-hover" style=3D"display: inline-=
-block;;color: #3c4043; text-decoration: none;" href=3D"mailto:helge.deller@=
-googlemail.com">helge.deller@googlemail.com</a></span><meta itemprop=3D"ema=
-il" content=3D"helge.deller@googlemail.com"/></span><span class=3D"secondar=
-y-text" style=3D"color: #70757a; text-decoration: none;"></span></div><div>=
-<span itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"=
-><span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-text und=
-erline-on-hover" style=3D"display: inline-block;;color: #3c4043; text-decor=
-ation: none;" href=3D"mailto:clg@redhat.com">Cedric Le Goater</a></span><me=
-ta itemprop=3D"email" content=3D"clg@redhat.com"/></span><span class=3D"sec=
+: inline-block;;color: #3c4043; text-decoration: none;" href=3D"mailto:bcai=
+n@quicinc.com">bcain@quicinc.com</a></span><meta itemprop=3D"email" content=
+=3D"bcain@quicinc.com"/></span><span class=3D"secondary-text" style=3D"colo=
+r: #70757a; text-decoration: none;"></span></div><div><span itemprop=3D"att=
+endee" itemscope itemtype=3D"http://schema.org/Person"><span itemprop=3D"na=
+me" class=3D"notranslate"><a class=3D"primary-text underline-on-hover" styl=
+e=3D"display: inline-block;;color: #3c4043; text-decoration: none;" href=3D=
+"mailto:berrange@redhat.com">Daniel Berrang=C3=A9</a></span><meta itemprop=
+=3D"email" content=3D"berrange@redhat.com"/></span><span class=3D"secondary=
+-text" style=3D"color: #70757a; text-decoration: none;"></span></div><div><=
+span itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Person">=
+<span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-text unde=
+rline-on-hover" style=3D"display: inline-block;;color: #3c4043; text-decora=
+tion: none;" href=3D"mailto:cjia@nvidia.com">cjia@nvidia.com</a></span><met=
+a itemprop=3D"email" content=3D"cjia@nvidia.com"/></span><span class=3D"sec=
 ondary-text" style=3D"color: #70757a; text-decoration: none;"></span></div>=
 <div><span itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Pe=
 rson"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-tex=
 t underline-on-hover" style=3D"display: inline-block;;color: #3c4043; text-=
-decoration: none;" href=3D"mailto:alistair.francis@wdc.com">Alistair Franci=
-s</a></span><meta itemprop=3D"email" content=3D"alistair.francis@wdc.com"/>=
-</span><span class=3D"secondary-text" style=3D"color: #70757a; text-decorat=
-ion: none;"></span></div><div><span itemprop=3D"attendee" itemscope itemtyp=
-e=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"notranslate=
-"><a class=3D"primary-text underline-on-hover" style=3D"display: inline-blo=
-ck;;color: #3c4043; text-decoration: none;" href=3D"mailto:konrad.wilk@orac=
-le.com">konrad.wilk@oracle.com</a></span><meta itemprop=3D"email" content=
-=3D"konrad.wilk@oracle.com"/></span><span class=3D"secondary-text" style=3D=
-"color: #70757a; text-decoration: none;"></span></div><div><span itemprop=
-=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"><span itempro=
-p=3D"name" class=3D"notranslate"><a class=3D"primary-text underline-on-hove=
-r" style=3D"display: inline-block;;color: #3c4043; text-decoration: none;" =
-href=3D"mailto:ale@rev.ng">Alessandro Di Federico</a></span><meta itemprop=
-=3D"email" content=3D"ale@rev.ng"/></span><span class=3D"secondary-text" st=
-yle=3D"color: #70757a; text-decoration: none;"></span></div><div><span item=
-prop=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"><span ite=
-mprop=3D"name" class=3D"notranslate"><a class=3D"primary-text underline-on-=
-hover" style=3D"display: inline-block;;color: #3c4043; text-decoration: non=
-e;" href=3D"mailto:anjo@rev.ng">Anton Johansson</a></span><meta itemprop=3D=
-"email" content=3D"anjo@rev.ng"/></span><span class=3D"secondary-text" styl=
-e=3D"color: #70757a; text-decoration: none;"></span></div><div><span itempr=
-op=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"><span itemp=
-rop=3D"name" class=3D"notranslate"><a class=3D"primary-text underline-on-ho=
-ver" style=3D"display: inline-block;;color: #3c4043; text-decoration: none;=
-" href=3D"mailto:chao.p.peng@linux.intel.com">Chao Peng</a></span><meta ite=
-mprop=3D"email" content=3D"chao.p.peng@linux.intel.com"/></span><span class=
+decoration: none;" href=3D"mailto:cw@f00f.org">cw@f00f.org</a></span><meta =
+itemprop=3D"email" content=3D"cw@f00f.org"/></span><span class=3D"secondary=
+-text" style=3D"color: #70757a; text-decoration: none;"></span></div><div><=
+span itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Person">=
+<span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-text unde=
+rline-on-hover" style=3D"display: inline-block;;color: #3c4043; text-decora=
+tion: none;" href=3D"mailto:eblake@redhat.com">Eric Blake</a></span><meta i=
+temprop=3D"email" content=3D"eblake@redhat.com"/></span><span class=3D"seco=
+ndary-text" style=3D"color: #70757a; text-decoration: none;"></span></div><=
+div><span itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Per=
+son"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-text=
+ underline-on-hover" style=3D"display: inline-block;;color: #3c4043; text-d=
+ecoration: none;" href=3D"mailto:edgar.iglesias@gmail.com">edgar.iglesias@g=
+mail.com</a></span><meta itemprop=3D"email" content=3D"edgar.iglesias@gmail=
+.com"/></span><span class=3D"secondary-text" style=3D"color: #70757a; text-=
+decoration: none;"></span></div><div><span itemprop=3D"attendee" itemscope =
+itemtype=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"notr=
+anslate"><a class=3D"primary-text underline-on-hover" style=3D"display: inl=
+ine-block;;color: #3c4043; text-decoration: none;" href=3D"mailto:eduardo@h=
+abkost.net">eduardo@habkost.net</a></span><meta itemprop=3D"email" content=
+=3D"eduardo@habkost.net"/></span><span class=3D"secondary-text" style=3D"co=
+lor: #70757a; text-decoration: none;"></span></div><div><span itemprop=3D"a=
+ttendee" itemscope itemtype=3D"http://schema.org/Person"><span itemprop=3D"=
+name" class=3D"notranslate"><a class=3D"primary-text underline-on-hover" st=
+yle=3D"display: inline-block;;color: #3c4043; text-decoration: none;" href=
+=3D"mailto:felipe@nutanix.com">felipe@nutanix.com</a></span><meta itemprop=
+=3D"email" content=3D"felipe@nutanix.com"/></span><span class=3D"secondary-=
+text" style=3D"color: #70757a; text-decoration: none;"></span></div><div><s=
+pan itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"><=
+span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-text under=
+line-on-hover" style=3D"display: inline-block;;color: #3c4043; text-decorat=
+ion: none;" href=3D"mailto:iggy@theiggy.com">iggy@theiggy.com</a></span><me=
+ta itemprop=3D"email" content=3D"iggy@theiggy.com"/></span><span class=3D"s=
+econdary-text" style=3D"color: #70757a; text-decoration: none;"></span></di=
+v><div><span itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/=
+Person"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-t=
+ext underline-on-hover" style=3D"display: inline-block;;color: #3c4043; tex=
+t-decoration: none;" href=3D"mailto:imp@bsdimp.com">imp@bsdimp.com</a></spa=
+n><meta itemprop=3D"email" content=3D"imp@bsdimp.com"/></span><span class=
 =3D"secondary-text" style=3D"color: #70757a; text-decoration: none;"></span=
 ></div><div><span itemprop=3D"attendee" itemscope itemtype=3D"http://schema=
 .org/Person"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"prim=
 ary-text underline-on-hover" style=3D"display: inline-block;;color: #3c4043=
-; text-decoration: none;" href=3D"mailto:elena.ufimtseva@oracle.com">Elena =
-Ufimtseva</a></span><meta itemprop=3D"email" content=3D"elena.ufimtseva@ora=
-cle.com"/></span><span class=3D"secondary-text" style=3D"color: #70757a; te=
-xt-decoration: none;"></span></div><div><span itemprop=3D"attendee" itemsco=
-pe itemtype=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"n=
-otranslate"><a class=3D"primary-text underline-on-hover" style=3D"display: =
-inline-block;;color: #3c4043; text-decoration: none;" href=3D"mailto:eric.a=
-uger@redhat.com">eric.auger@redhat.com</a></span><meta itemprop=3D"email" c=
-ontent=3D"eric.auger@redhat.com"/></span><span class=3D"secondary-text" sty=
-le=3D"color: #70757a; text-decoration: none;"></span></div><div><span itemp=
-rop=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"><span item=
-prop=3D"name" class=3D"notranslate"><a class=3D"primary-text underline-on-h=
-over" style=3D"display: inline-block;;color: #3c4043; text-decoration: none=
-;" href=3D"mailto:jan.kiszka@web.de">jan.kiszka@web.de</a></span><meta item=
-prop=3D"email" content=3D"jan.kiszka@web.de"/></span><span class=3D"seconda=
-ry-text" style=3D"color: #70757a; text-decoration: none;"></span></div><div=
-><span itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Person=
-"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-text un=
-derline-on-hover" style=3D"display: inline-block;;color: #3c4043; text-deco=
-ration: none;" href=3D"mailto:joao.m.martins@oracle.com">Joao Martins</a></=
-span><meta itemprop=3D"email" content=3D"joao.m.martins@oracle.com"/></span=
-><span class=3D"secondary-text" style=3D"color: #70757a; text-decoration: n=
-one;"></span></div><div><span itemprop=3D"attendee" itemscope itemtype=3D"h=
-ttp://schema.org/Person"><span itemprop=3D"name" class=3D"notranslate"><a c=
-lass=3D"primary-text underline-on-hover" style=3D"display: inline-block;;co=
-lor: #3c4043; text-decoration: none;" href=3D"mailto:luc@lmichel.fr">Luc Mi=
-chel</a></span><meta itemprop=3D"email" content=3D"luc@lmichel.fr"/></span>=
-<span class=3D"secondary-text" style=3D"color: #70757a; text-decoration: no=
-ne;"></span></div><div><span itemprop=3D"attendee" itemscope itemtype=3D"ht=
-tp://schema.org/Person"><span itemprop=3D"name" class=3D"notranslate"><a cl=
-ass=3D"primary-text underline-on-hover" style=3D"display: inline-block;;col=
-or: #3c4043; text-decoration: none;" href=3D"mailto:shameerali.kolothum.tho=
-di@huawei.com">Shameerali Kolothum Thodi</a></span><meta itemprop=3D"email"=
- content=3D"shameerali.kolothum.thodi@huawei.com"/></span><span class=3D"se=
-condary-text" style=3D"color: #70757a; text-decoration: none;"></span></div=
-><div><span itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/P=
-erson"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-te=
-xt underline-on-hover" style=3D"display: inline-block;;color: #3c4043; text=
--decoration: none;" href=3D"mailto:z.huo@139.com">z.huo@139.com</a></span><=
-meta itemprop=3D"email" content=3D"z.huo@139.com"/></span><span class=3D"se=
-condary-text" style=3D"color: #70757a; text-decoration: none;"></span></div=
-><div><span itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/P=
-erson"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-te=
-xt underline-on-hover" style=3D"display: inline-block;;color: #3c4043; text=
--decoration: none;" href=3D"mailto:zhiwei_liu@linux.alibaba.com">LIU Zhiwei=
-</a></span><meta itemprop=3D"email" content=3D"zhiwei_liu@linux.alibaba.com=
+; text-decoration: none;" href=3D"mailto:jgg@nvidia.com">jgg@nvidia.com</a>=
+</span><meta itemprop=3D"email" content=3D"jgg@nvidia.com"/></span><span cl=
+ass=3D"secondary-text" style=3D"color: #70757a; text-decoration: none;"></s=
+pan></div><div><span itemprop=3D"attendee" itemscope itemtype=3D"http://sch=
+ema.org/Person"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"p=
+rimary-text underline-on-hover" style=3D"display: inline-block;;color: #3c4=
+043; text-decoration: none;" href=3D"mailto:jidong.xiao@gmail.com">jidong.x=
+iao@gmail.com</a></span><meta itemprop=3D"email" content=3D"jidong.xiao@gma=
+il.com"/></span><span class=3D"secondary-text" style=3D"color: #70757a; tex=
+t-decoration: none;"></span></div><div><span itemprop=3D"attendee" itemscop=
+e itemtype=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"no=
+translate"><a class=3D"primary-text underline-on-hover" style=3D"display: i=
+nline-block;;color: #3c4043; text-decoration: none;" href=3D"mailto:jim.shu=
+@sifive.com">jim.shu@sifive.com</a></span><meta itemprop=3D"email" content=
+=3D"jim.shu@sifive.com"/></span><span class=3D"secondary-text" style=3D"col=
+or: #70757a; text-decoration: none;"></span></div><div><span itemprop=3D"at=
+tendee" itemscope itemtype=3D"http://schema.org/Person"><span itemprop=3D"n=
+ame" class=3D"notranslate"><a class=3D"primary-text underline-on-hover" sty=
+le=3D"display: inline-block;;color: #3c4043; text-decoration: none;" href=
+=3D"mailto:mburton@qti.qualcomm.com">mburton@qti.qualcomm.com</a></span><me=
+ta itemprop=3D"email" content=3D"mburton@qti.qualcomm.com"/></span><span cl=
+ass=3D"secondary-text" style=3D"color: #70757a; text-decoration: none;"></s=
+pan></div><div><span itemprop=3D"attendee" itemscope itemtype=3D"http://sch=
+ema.org/Person"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"p=
+rimary-text underline-on-hover" style=3D"display: inline-block;;color: #3c4=
+043; text-decoration: none;" href=3D"mailto:paul.walmsley@sifive.com">paul.=
+walmsley@sifive.com</a></span><meta itemprop=3D"email" content=3D"paul.walm=
+sley@sifive.com"/></span><span class=3D"secondary-text" style=3D"color: #70=
+757a; text-decoration: none;"></span></div><div><span itemprop=3D"attendee"=
+ itemscope itemtype=3D"http://schema.org/Person"><span itemprop=3D"name" cl=
+ass=3D"notranslate"><a class=3D"primary-text underline-on-hover" style=3D"d=
+isplay: inline-block;;color: #3c4043; text-decoration: none;" href=3D"mailt=
+o:pbonzini@redhat.com">Paolo Bonzini</a></span><meta itemprop=3D"email" con=
+tent=3D"pbonzini@redhat.com"/></span><span class=3D"secondary-text" style=
+=3D"color: #70757a; text-decoration: none;"></span></div><div><span itempro=
+p=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"><span itempr=
+op=3D"name" class=3D"notranslate"><a class=3D"primary-text underline-on-hov=
+er" style=3D"display: inline-block;;color: #3c4043; text-decoration: none;"=
+ href=3D"mailto:peter.maydell@linaro.org">peter.maydell@linaro.org</a></spa=
+n><meta itemprop=3D"email" content=3D"peter.maydell@linaro.org"/></span><sp=
+an class=3D"secondary-text" style=3D"color: #70757a; text-decoration: none;=
+"></span></div><div><span itemprop=3D"attendee" itemscope itemtype=3D"http:=
+//schema.org/Person"><span itemprop=3D"name" class=3D"notranslate"><a class=
+=3D"primary-text underline-on-hover" style=3D"display: inline-block;;color:=
+ #3c4043; text-decoration: none;" href=3D"mailto:richard.henderson@linaro.o=
+rg">richard.henderson@linaro.org</a></span><meta itemprop=3D"email" content=
+=3D"richard.henderson@linaro.org"/></span><span class=3D"secondary-text" st=
+yle=3D"color: #70757a; text-decoration: none;"></span></div><div><span item=
+prop=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"><span ite=
+mprop=3D"name" class=3D"notranslate"><a class=3D"primary-text underline-on-=
+hover" style=3D"display: inline-block;;color: #3c4043; text-decoration: non=
+e;" href=3D"mailto:shentey@gmail.com">shentey@gmail.com</a></span><meta ite=
+mprop=3D"email" content=3D"shentey@gmail.com"/></span><span class=3D"second=
+ary-text" style=3D"color: #70757a; text-decoration: none;"></span></div><di=
+v><span itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Perso=
+n"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-text u=
+nderline-on-hover" style=3D"display: inline-block;;color: #3c4043; text-dec=
+oration: none;" href=3D"mailto:stefanha@gmail.com">stefanha@gmail.com</a></=
+span><meta itemprop=3D"email" content=3D"stefanha@gmail.com"/></span><span =
+class=3D"secondary-text" style=3D"color: #70757a; text-decoration: none;"><=
+/span></div><div><span itemprop=3D"attendee" itemscope itemtype=3D"http://s=
+chema.org/Person"><span itemprop=3D"name" class=3D"notranslate"><a class=3D=
+"primary-text underline-on-hover" style=3D"display: inline-block;;color: #3=
+c4043; text-decoration: none;" href=3D"mailto:wei.w.wang@intel.com">wei.w.w=
+ang@intel.com</a></span><meta itemprop=3D"email" content=3D"wei.w.wang@inte=
+l.com"/></span><span class=3D"secondary-text" style=3D"color: #70757a; text=
+-decoration: none;"></span></div><div><span itemprop=3D"attendee" itemscope=
+ itemtype=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"not=
+ranslate"><a class=3D"primary-text underline-on-hover" style=3D"display: in=
+line-block;;color: #3c4043; text-decoration: none;" href=3D"mailto:zwu.kern=
+el@gmail.com">zwu.kernel@gmail.com</a></span><meta itemprop=3D"email" conte=
+nt=3D"zwu.kernel@gmail.com"/></span><span class=3D"secondary-text" style=3D=
+"color: #70757a; text-decoration: none;"></span></div><div><span itemprop=
+=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"><span itempro=
+p=3D"name" class=3D"notranslate"><a class=3D"primary-text underline-on-hove=
+r" style=3D"display: inline-block;;color: #3c4043; text-decoration: none;" =
+href=3D"mailto:philmd@linaro.org">philmd@linaro.org</a></span><meta itempro=
+p=3D"email" content=3D"philmd@linaro.org"/></span><span class=3D"secondary-=
+text" style=3D"color: #70757a; text-decoration: none;"></span></div><div><s=
+pan itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"><=
+span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-text under=
+line-on-hover" style=3D"display: inline-block;;color: #3c4043; text-decorat=
+ion: none;" href=3D"mailto:eblot@rivosinc.com">eblot@rivosinc.com</a></span=
+><meta itemprop=3D"email" content=3D"eblot@rivosinc.com"/></span><span clas=
+s=3D"secondary-text" style=3D"color: #70757a; text-decoration: none;"></spa=
+n></div><div><span itemprop=3D"attendee" itemscope itemtype=3D"http://schem=
+a.org/Person"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"pri=
+mary-text underline-on-hover" style=3D"display: inline-block;;color: #3c404=
+3; text-decoration: none;" href=3D"mailto:max.chou@sifive.com">max.chou@sif=
+ive.com</a></span><meta itemprop=3D"email" content=3D"max.chou@sifive.com"/=
+></span><span class=3D"secondary-text" style=3D"color: #70757a; text-decora=
+tion: none;"></span></div><div><span itemprop=3D"attendee" itemscope itemty=
+pe=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"notranslat=
+e"><a class=3D"primary-text underline-on-hover" style=3D"display: inline-bl=
+ock;;color: #3c4043; text-decoration: none;" href=3D"mailto:manos.pitsidian=
+akis@linaro.org">manos.pitsidianakis@linaro.org</a></span><meta itemprop=3D=
+"email" content=3D"manos.pitsidianakis@linaro.org"/></span><span class=3D"s=
+econdary-text" style=3D"color: #70757a; text-decoration: none;"></span></di=
+v><div><span itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/=
+Person"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-t=
+ext underline-on-hover" style=3D"display: inline-block;;color: #3c4043; tex=
+t-decoration: none;" href=3D"mailto:thuth@redhat.com">Thomas Huth</a></span=
+><meta itemprop=3D"email" content=3D"thuth@redhat.com"/></span><span class=
+=3D"secondary-text" style=3D"color: #70757a; text-decoration: none;"></span=
+></div><div><span itemprop=3D"attendee" itemscope itemtype=3D"http://schema=
+.org/Person"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"prim=
+ary-text underline-on-hover" style=3D"display: inline-block;;color: #3c4043=
+; text-decoration: none;" href=3D"mailto:rbc@meta.com">rbc@meta.com</a></sp=
+an><meta itemprop=3D"email" content=3D"rbc@meta.com"/></span><span class=3D=
+"secondary-text" style=3D"color: #70757a; text-decoration: none;"></span></=
+div><div><span itemprop=3D"attendee" itemscope itemtype=3D"http://schema.or=
+g/Person"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary=
+-text underline-on-hover" style=3D"display: inline-block;;color: #3c4043; t=
+ext-decoration: none;" href=3D"mailto:demiobenour@gmail.com">demiobenour@gm=
+ail.com</a></span><meta itemprop=3D"email" content=3D"demiobenour@gmail.com=
 "/></span><span class=3D"secondary-text" style=3D"color: #70757a; text-deco=
 ration: none;"></span></div><div><span itemprop=3D"attendee" itemscope item=
 type=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"notransl=
 ate"><a class=3D"primary-text underline-on-hover" style=3D"display: inline-=
-block;;color: #3c4043; text-decoration: none;" href=3D"mailto:qemu-devel@no=
-ngnu.org">qemu-devel@nongnu.org</a></span><meta itemprop=3D"email" content=
-=3D"qemu-devel@nongnu.org"/></span><span class=3D"secondary-text" style=3D"=
-color: #70757a; text-decoration: none;"></span></div><div><span itemprop=3D=
-"attendee" itemscope itemtype=3D"http://schema.org/Person"><span itemprop=
-=3D"name" class=3D"notranslate"><a class=3D"primary-text underline-on-hover=
-" style=3D"display: inline-block;;color: #3c4043; text-decoration: none;" h=
-ref=3D"mailto:nelson.ho@windriver.com">nelson.ho@windriver.com</a></span><m=
-eta itemprop=3D"email" content=3D"nelson.ho@windriver.com"/></span><span cl=
-ass=3D"secondary-text" style=3D"color: #70757a; text-decoration: none;"></s=
-pan></div></div></div></td></tr></table></td></tr></tbody></table></div><!-=
--[if mso | IE]></td><![endif]--><!--[if mso | IE]></tr></table><![endif]-->=
-</td></tr></tbody></table><table border=3D"0" cellpadding=3D"0" cellspacing=
-=3D"0" role=3D"presentation" align=3D"center" style=3D"width:100%;" class=
-=3D""><tbody><tr><td style=3D"font-size: 0; padding: 0; text-align: left; w=
-ord-break: break-word;;padding:4px 12px;" class=3D"" align=3D"left"><div cl=
-ass=3D"secondary-text" style=3D"color: #70757a; text-decoration: none;font-=
-family: Roboto, sans-serif;font-size: 12px; line-height: 16px; mso-line-hei=
-ght-rule: exactly; text-align: left;"><p>Invitation from <a href=3D"https:/=
-/calendar.google.com/calendar/" class=3D"accent-text underline-on-hover" st=
-yle=3D"font-family: Roboto, sans-serif;font-size: 12px; line-height: 16px; =
-mso-line-height-rule: exactly;;color: #1a73e8; text-decoration: none;" targ=
-et=3D"_blank">Google Calendar</a></p><p>You are receiving this email becaus=
-e you are an attendee on the event.</p><p>Forwarding this invitation could =
-allow any recipient to send a response to the organizer, be added to the gu=
-est list, invite others regardless of their own invitation status, or modif=
-y your RSVP. <a class=3D"accent-text underline-on-hover" style=3D"font-fami=
-ly: Roboto, sans-serif;font-size: 12px; line-height: 16px; mso-line-height-=
-rule: exactly;;color: #1a73e8; text-decoration: none;" href=3D"https://supp=
-ort.google.com/calendar/answer/37135#forwarding">Learn more</a></p></div></=
-td></tr></tbody></table></td></tr></tbody></table></span></span></body></ht=
-ml>
---00000000000040aef60652ee99cf
+block;;color: #3c4043; text-decoration: none;" href=3D"mailto:hi@alyssa.is"=
+>hi@alyssa.is</a></span><meta itemprop=3D"email" content=3D"hi@alyssa.is"/>=
+</span><span class=3D"secondary-text" style=3D"color: #70757a; text-decorat=
+ion: none;"></span></div><div><span itemprop=3D"attendee" itemscope itemtyp=
+e=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"notranslate=
+"><a class=3D"primary-text underline-on-hover" style=3D"display: inline-blo=
+ck;;color: #3c4043; text-decoration: none;" href=3D"mailto:dhedde@kalrayinc=
+.com">dhedde@kalrayinc.com</a></span><meta itemprop=3D"email" content=3D"dh=
+edde@kalrayinc.com"/></span><span class=3D"secondary-text" style=3D"color: =
+#70757a; text-decoration: none;"></span></div><div><span itemprop=3D"attend=
+ee" itemscope itemtype=3D"http://schema.org/Person"><span itemprop=3D"name"=
+ class=3D"notranslate"><a class=3D"primary-text underline-on-hover" style=
+=3D"display: inline-block;;color: #3c4043; text-decoration: none;" href=3D"=
+mailto:afaria@redhat.com">Alberto Faria</a></span><meta itemprop=3D"email" =
+content=3D"afaria@redhat.com"/></span><span class=3D"secondary-text" style=
+=3D"color: #70757a; text-decoration: none;"></span></div><div><span itempro=
+p=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"><span itempr=
+op=3D"name" class=3D"notranslate"><a class=3D"primary-text underline-on-hov=
+er" style=3D"display: inline-block;;color: #3c4043; text-decoration: none;"=
+ href=3D"mailto:aesteve@redhat.com">Albert Esteve</a></span><meta itemprop=
+=3D"email" content=3D"aesteve@redhat.com"/></span><span class=3D"secondary-=
+text" style=3D"color: #70757a; text-decoration: none;"></span></div><div><s=
+pan itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"><=
+span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-text under=
+line-on-hover" style=3D"display: inline-block;;color: #3c4043; text-decorat=
+ion: none;" href=3D"mailto:marcandre.lureau@gmail.com">marcandre.lureau@gma=
+il.com</a></span><meta itemprop=3D"email" content=3D"marcandre.lureau@gmail=
+.com"/></span><span class=3D"secondary-text" style=3D"color: #70757a; text-=
+decoration: none;"></span></div><div><span itemprop=3D"attendee" itemscope =
+itemtype=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"notr=
+anslate"><a class=3D"primary-text underline-on-hover" style=3D"display: inl=
+ine-block;;color: #3c4043; text-decoration: none;" href=3D"mailto:matthieu@=
+minio.io">matthieu@minio.io</a></span><meta itemprop=3D"email" content=3D"m=
+atthieu@minio.io"/></span><span class=3D"secondary-text" style=3D"color: #7=
+0757a; text-decoration: none;"></span></div><div><span itemprop=3D"attendee=
+" itemscope itemtype=3D"http://schema.org/Person"><span itemprop=3D"name" c=
+lass=3D"notranslate"><a class=3D"primary-text underline-on-hover" style=3D"=
+display: inline-block;;color: #3c4043; text-decoration: none;" href=3D"mail=
+to:jacob.oursland@gmail.com">jacob.oursland@gmail.com</a></span><meta itemp=
+rop=3D"email" content=3D"jacob.oursland@gmail.com"/></span><span class=3D"s=
+econdary-text" style=3D"color: #70757a; text-decoration: none;"></span></di=
+v><div><span itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/=
+Person"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-t=
+ext underline-on-hover" style=3D"display: inline-block;;color: #3c4043; tex=
+t-decoration: none;" href=3D"mailto:helge.deller@googlemail.com">helge.dell=
+er@googlemail.com</a></span><meta itemprop=3D"email" content=3D"helge.delle=
+r@googlemail.com"/></span><span class=3D"secondary-text" style=3D"color: #7=
+0757a; text-decoration: none;"></span></div><div><span itemprop=3D"attendee=
+" itemscope itemtype=3D"http://schema.org/Person"><span itemprop=3D"name" c=
+lass=3D"notranslate"><a class=3D"primary-text underline-on-hover" style=3D"=
+display: inline-block;;color: #3c4043; text-decoration: none;" href=3D"mail=
+to:clg@redhat.com">Cedric Le Goater</a></span><meta itemprop=3D"email" cont=
+ent=3D"clg@redhat.com"/></span><span class=3D"secondary-text" style=3D"colo=
+r: #70757a; text-decoration: none;"></span></div><div><span itemprop=3D"att=
+endee" itemscope itemtype=3D"http://schema.org/Person"><span itemprop=3D"na=
+me" class=3D"notranslate"><a class=3D"primary-text underline-on-hover" styl=
+e=3D"display: inline-block;;color: #3c4043; text-decoration: none;" href=3D=
+"mailto:alistair.francis@wdc.com">Alistair Francis</a></span><meta itemprop=
+=3D"email" content=3D"alistair.francis@wdc.com"/></span><span class=3D"seco=
+ndary-text" style=3D"color: #70757a; text-decoration: none;"></span></div><=
+div><span itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Per=
+son"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-text=
+ underline-on-hover" style=3D"display: inline-block;;color: #3c4043; text-d=
+ecoration: none;" href=3D"mailto:konrad.wilk@oracle.com">konrad.wilk@oracle=
+.com</a></span><meta itemprop=3D"email" content=3D"konrad.wilk@oracle.com"/=
+></span><span class=3D"secondary-text" style=3D"color: #70757a; text-decora=
+tion: none;"></span></div><div><span itemprop=3D"attendee" itemscope itemty=
+pe=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"notranslat=
+e"><a class=3D"primary-text underline-on-hover" style=3D"display: inline-bl=
+ock;;color: #3c4043; text-decoration: none;" href=3D"mailto:ale@rev.ng">Ale=
+ssandro Di Federico</a></span><meta itemprop=3D"email" content=3D"ale@rev.n=
+g"/></span><span class=3D"secondary-text" style=3D"color: #70757a; text-dec=
+oration: none;"></span></div><div><span itemprop=3D"attendee" itemscope ite=
+mtype=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"notrans=
+late"><a class=3D"primary-text underline-on-hover" style=3D"display: inline=
+-block;;color: #3c4043; text-decoration: none;" href=3D"mailto:anjo@rev.ng"=
+>Anton Johansson</a></span><meta itemprop=3D"email" content=3D"anjo@rev.ng"=
+/></span><span class=3D"secondary-text" style=3D"color: #70757a; text-decor=
+ation: none;"></span></div><div><span itemprop=3D"attendee" itemscope itemt=
+ype=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"notransla=
+te"><a class=3D"primary-text underline-on-hover" style=3D"display: inline-b=
+lock;;color: #3c4043; text-decoration: none;" href=3D"mailto:chao.p.peng@li=
+nux.intel.com">Chao Peng</a></span><meta itemprop=3D"email" content=3D"chao=
+.p.peng@linux.intel.com"/></span><span class=3D"secondary-text" style=3D"co=
+lor: #70757a; text-decoration: none;"></span></div><div><span itemprop=3D"a=
+ttendee" itemscope itemtype=3D"http://schema.org/Person"><span itemprop=3D"=
+name" class=3D"notranslate"><a class=3D"primary-text underline-on-hover" st=
+yle=3D"display: inline-block;;color: #3c4043; text-decoration: none;" href=
+=3D"mailto:elena.ufimtseva@oracle.com">Elena Ufimtseva</a></span><meta item=
+prop=3D"email" content=3D"elena.ufimtseva@oracle.com"/></span><span class=
+=3D"secondary-text" style=3D"color: #70757a; text-decoration: none;"></span=
+></div><div><span itemprop=3D"attendee" itemscope itemtype=3D"http://schema=
+.org/Person"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"prim=
+ary-text underline-on-hover" style=3D"display: inline-block;;color: #3c4043=
+; text-decoration: none;" href=3D"mailto:eric.auger@redhat.com">eric.auger@=
+redhat.com</a></span><meta itemprop=3D"email" content=3D"eric.auger@redhat.=
+com"/></span><span class=3D"secondary-text" style=3D"color: #70757a; text-d=
+ecoration: none;"></span></div><div><span itemprop=3D"attendee" itemscope i=
+temtype=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"notra=
+nslate"><a class=3D"primary-text underline-on-hover" style=3D"display: inli=
+ne-block;;color: #3c4043; text-decoration: none;" href=3D"mailto:jan.kiszka=
+@web.de">jan.kiszka@web.de</a></span><meta itemprop=3D"email" content=3D"ja=
+n.kiszka@web.de"/></span><span class=3D"secondary-text" style=3D"color: #70=
+757a; text-decoration: none;"></span></div><div><span itemprop=3D"attendee"=
+ itemscope itemtype=3D"http://schema.org/Person"><span itemprop=3D"name" cl=
+ass=3D"notranslate"><a class=3D"primary-text underline-on-hover" style=3D"d=
+isplay: inline-block;;color: #3c4043; text-decoration: none;" href=3D"mailt=
+o:joao.m.martins@oracle.com">Joao Martins</a></span><meta itemprop=3D"email=
+" content=3D"joao.m.martins@oracle.com"/></span><span class=3D"secondary-te=
+xt" style=3D"color: #70757a; text-decoration: none;"></span></div><div><spa=
+n itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"><sp=
+an itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-text underli=
+ne-on-hover" style=3D"display: inline-block;;color: #3c4043; text-decoratio=
+n: none;" href=3D"mailto:luc@lmichel.fr">Luc Michel</a></span><meta itempro=
+p=3D"email" content=3D"luc@lmichel.fr"/></span><span class=3D"secondary-tex=
+t" style=3D"color: #70757a; text-decoration: none;"></span></div><div><span=
+ itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"><spa=
+n itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-text underlin=
+e-on-hover" style=3D"display: inline-block;;color: #3c4043; text-decoration=
+: none;" href=3D"mailto:shameerali.kolothum.thodi@huawei.com">Shameerali Ko=
+lothum Thodi</a></span><meta itemprop=3D"email" content=3D"shameerali.kolot=
+hum.thodi@huawei.com"/></span><span class=3D"secondary-text" style=3D"color=
+: #70757a; text-decoration: none;"></span></div><div><span itemprop=3D"atte=
+ndee" itemscope itemtype=3D"http://schema.org/Person"><span itemprop=3D"nam=
+e" class=3D"notranslate"><a class=3D"primary-text underline-on-hover" style=
+=3D"display: inline-block;;color: #3c4043; text-decoration: none;" href=3D"=
+mailto:z.huo@139.com">z.huo@139.com</a></span><meta itemprop=3D"email" cont=
+ent=3D"z.huo@139.com"/></span><span class=3D"secondary-text" style=3D"color=
+: #70757a; text-decoration: none;"></span></div><div><span itemprop=3D"atte=
+ndee" itemscope itemtype=3D"http://schema.org/Person"><span itemprop=3D"nam=
+e" class=3D"notranslate"><a class=3D"primary-text underline-on-hover" style=
+=3D"display: inline-block;;color: #3c4043; text-decoration: none;" href=3D"=
+mailto:zhiwei_liu@linux.alibaba.com">LIU Zhiwei</a></span><meta itemprop=3D=
+"email" content=3D"zhiwei_liu@linux.alibaba.com"/></span><span class=3D"sec=
+ondary-text" style=3D"color: #70757a; text-decoration: none;"></span></div>=
+<div><span itemprop=3D"attendee" itemscope itemtype=3D"http://schema.org/Pe=
+rson"><span itemprop=3D"name" class=3D"notranslate"><a class=3D"primary-tex=
+t underline-on-hover" style=3D"display: inline-block;;color: #3c4043; text-=
+decoration: none;" href=3D"mailto:qemu-devel@nongnu.org">qemu-devel@nongnu.=
+org</a></span><meta itemprop=3D"email" content=3D"qemu-devel@nongnu.org"/><=
+/span><span class=3D"secondary-text" style=3D"color: #70757a; text-decorati=
+on: none;"></span></div><div><span itemprop=3D"attendee" itemscope itemtype=
+=3D"http://schema.org/Person"><span itemprop=3D"name" class=3D"notranslate"=
+><a class=3D"primary-text underline-on-hover" style=3D"display: inline-bloc=
+k;;color: #3c4043; text-decoration: none;" href=3D"mailto:nelson.ho@windriv=
+er.com">nelson.ho@windriver.com</a></span><meta itemprop=3D"email" content=
+=3D"nelson.ho@windriver.com"/></span><span class=3D"secondary-text" style=
+=3D"color: #70757a; text-decoration: none;"></span></div></div></div></td><=
+/tr></table></td></tr></tbody></table></div><!--[if mso | IE]></td><![endif=
+]--><!--[if mso | IE]></tr></table><![endif]--></td></tr></tbody></table><t=
+able border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation"=
+ align=3D"center" style=3D"width:100%;" class=3D""><tbody><tr><td style=3D"=
+font-size: 0; padding: 0; text-align: left; word-break: break-word;;padding=
+:4px 12px;" class=3D"" align=3D"left"><div class=3D"secondary-text" style=
+=3D"color: #70757a; text-decoration: none;font-family: Roboto, sans-serif;f=
+ont-size: 12px; line-height: 16px; mso-line-height-rule: exactly; text-alig=
+n: left;"><p>Invitation from <a href=3D"https://calendar.google.com/calenda=
+r/" class=3D"accent-text underline-on-hover" style=3D"font-family: Roboto, =
+sans-serif;font-size: 12px; line-height: 16px; mso-line-height-rule: exactl=
+y;;color: #1a73e8; text-decoration: none;" target=3D"_blank">Google Calenda=
+r</a></p><p>You are receiving this email because you are an attendee on the=
+ event.</p><p>Forwarding this invitation could allow any recipient to send =
+a response to the organizer, be added to the guest list, invite others rega=
+rdless of their own invitation status, or modify your RSVP. <a class=3D"acc=
+ent-text underline-on-hover" style=3D"font-family: Roboto, sans-serif;font-=
+size: 12px; line-height: 16px; mso-line-height-rule: exactly;;color: #1a73e=
+8; text-decoration: none;" href=3D"https://support.google.com/calendar/answ=
+er/37135#forwarding">Learn more</a></p></div></td></tr></tbody></table></td=
+></tr></tbody></table></span></span></body></html>
+--00000000000057cdad0652ee99f3
 Content-Type: text/calendar; charset="UTF-8"; method=REQUEST
 Content-Transfer-Encoding: quoted-printable
 
@@ -1085,15 +1082,14 @@ VERSION:2.0
 CALSCALE:GREGORIAN
 METHOD:REQUEST
 BEGIN:VEVENT
-DTSTART:20260512T140000Z
-DTEND:20260512T150000Z
-RRULE:FREQ=3DWEEKLY;WKST=3DMO;UNTIL=3D20260608T235959Z;INTERVAL=3D2;BYDAY=
-=3DTU
-DTSTAMP:20260529T060306Z
+DTSTART:20260609T140000Z
+DTEND:20260609T150000Z
+RRULE:FREQ=3DWEEKLY;WKST=3DMO;INTERVAL=3D2;BYDAY=3DTU
+DTSTAMP:20260529T060308Z
 ORGANIZER;CN=3DQEMU Project Calendar:mailto:c_k5p2lpgvbptdirku5si01blmnk@gr=
 ou
  p.calendar.google.com
-UID:3tmn51v3ap1pkbeqj4divuh46c_R20260512T140000@google.com
+UID:3tmn51v3ap1pkbeqj4divuh46c_R20260609T140000@google.com
 ATTENDEE;CUTYPE=3DINDIVIDUAL;ROLE=3DREQ-PARTICIPANT;PARTSTAT=3DACCEPTED;RSV=
 P=3DTRUE
  ;CN=3Dalex.bennee@linaro.org;X-NUM-GUESTS=3D0:mailto:alex.bennee@linaro.or=
@@ -1233,9 +1229,9 @@ VP=3DTRU
  E;CN=3Dhelge.deller@googlemail.com;X-NUM-GUESTS=3D0:mailto:helge.deller@go=
 oglem
  ail.com
-ATTENDEE;CUTYPE=3DINDIVIDUAL;ROLE=3DREQ-PARTICIPANT;PARTSTAT=3DNEEDS-ACTION=
-;RSVP=3D
- TRUE;CN=3DCedric Le Goater;X-NUM-GUESTS=3D0:mailto:clg@redhat.com
+ATTENDEE;CUTYPE=3DINDIVIDUAL;ROLE=3DREQ-PARTICIPANT;PARTSTAT=3DACCEPTED;RSV=
+P=3DTRUE
+ ;CN=3DCedric Le Goater;X-NUM-GUESTS=3D0:mailto:clg@redhat.com
 ATTENDEE;CUTYPE=3DINDIVIDUAL;ROLE=3DREQ-PARTICIPANT;PARTSTAT=3DNEEDS-ACTION=
 ;RSVP=3D
  TRUE;CN=3DAlistair Francis;X-NUM-GUESTS=3D0:mailto:alistair.francis@wdc.co=
@@ -1290,7 +1286,7 @@ ATTENDEE;CUTYPE=3DINDIVIDUAL;ROLE=3DREQ-PARTICIPANT;PARTSTAT=3DNEEDS-ACTION=
  TRUE;CN=3Dnelson.ho@windriver.com;X-NUM-GUESTS=3D0:mailto:nelson.ho@windri=
 ver.c
  om
-X-MICROSOFT-CDO-OWNERAPPTID:110589334
+X-MICROSOFT-CDO-OWNERAPPTID:-930738713
 CREATED:20230221T153950Z
 DESCRIPTION:If you need call details\, please contact me: <a href=3D"mailto=
 :q
@@ -1309,175 +1305,174 @@ z
 END:VEVENT
 END:VCALENDAR
 
---00000000000040aef60652ee99cf--
+--00000000000057cdad0652ee99f3--
 
---00000000000040aef70652ee99d1
+--00000000000057cdae0652ee99f5
 Content-Type: application/ics; name="invite.ics"
 Content-Disposition: attachment; filename="invite.ics"
 Content-Transfer-Encoding: base64
 
 QkVHSU46VkNBTEVOREFSDQpQUk9ESUQ6LS8vR29vZ2xlIEluYy8vR29vZ2xlIENhbGVuZGFyIDcw
 LjkwNTQvL0VODQpWRVJTSU9OOjIuMA0KQ0FMU0NBTEU6R1JFR09SSUFODQpNRVRIT0Q6UkVRVUVT
-VA0KQkVHSU46VkVWRU5UDQpEVFNUQVJUOjIwMjYwNTEyVDE0MDAwMFoNCkRURU5EOjIwMjYwNTEy
-VDE1MDAwMFoNClJSVUxFOkZSRVE9V0VFS0xZO1dLU1Q9TU87VU5USUw9MjAyNjA2MDhUMjM1OTU5
-WjtJTlRFUlZBTD0yO0JZREFZPVRVDQpEVFNUQU1QOjIwMjYwNTI5VDA2MDMwNloNCk9SR0FOSVpF
-UjtDTj1RRU1VIFByb2plY3QgQ2FsZW5kYXI6bWFpbHRvOmNfazVwMmxwZ3ZicHRkaXJrdTVzaTAx
-YmxtbmtAZ3JvdQ0KIHAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ0KVUlEOjN0bW41MXYzYXAxcGtiZXFq
-NGRpdnVoNDZjX1IyMDI2MDUxMlQxNDAwMDBAZ29vZ2xlLmNvbQ0KQVRURU5ERUU7Q1VUWVBFPUlO
-RElWSURVQUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9QUNDRVBURUQ7UlNWUD1UUlVF
-DQogO0NOPWFsZXguYmVubmVlQGxpbmFyby5vcmc7WC1OVU0tR1VFU1RTPTA6bWFpbHRvOmFsZXgu
-YmVubmVlQGxpbmFyby5vcmcNCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBB
-UlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049TWFya3VzIEFy
-bWJydXN0ZXI7WC1OVU0tR1VFU1RTPTA6bWFpbHRvOmFybWJydUByZWRoYXQuY29tDQpBVFRFTkRF
-RTtDVVRZUEU9SU5ESVZJRFVBTDtST0xFPVJFUS1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVEUy1B
-Q1RJT047UlNWUD0NCiBUUlVFO0NOPWJjYWluQHF1aWNpbmMuY29tO1gtTlVNLUdVRVNUUz0wOm1h
-aWx0bzpiY2FpbkBxdWljaW5jLmNvbQ0KQVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7Uk9MRT1S
-RVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJVRTtYLU5VTS1H
-VUVTVFM9MDptYWlsdG86YmVycmFuZ2VAcmVkaGF0LmNvbQ0KQVRURU5ERUU7Q1VUWVBFPUlORElW
-SURVQUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9DQog
-VFJVRTtDTj1jamlhQG52aWRpYS5jb207WC1OVU0tR1VFU1RTPTA6bWFpbHRvOmNqaWFAbnZpZGlh
-LmNvbQ0KQVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFS
-VFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJVRTtDTj1jd0BmMDBmLm9yZztYLU5VTS1HVUVT
-VFM9MDptYWlsdG86Y3dAZjAwZi5vcmcNCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9
-UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049RXJp
-YyBCbGFrZTtYLU5VTS1HVUVTVFM9MDptYWlsdG86ZWJsYWtlQHJlZGhhdC5jb20NCkFUVEVOREVF
-O0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFD
-VElPTjtSU1ZQPQ0KIFRSVUU7Q049ZWRnYXIuaWdsZXNpYXNAZ21haWwuY29tO1gtTlVNLUdVRVNU
-Uz0wOm1haWx0bzplZGdhci5pZ2xlc2lhc0BnbWFpbA0KIC5jb20NCkFUVEVOREVFO0NVVFlQRT1J
+VA0KQkVHSU46VkVWRU5UDQpEVFNUQVJUOjIwMjYwNjA5VDE0MDAwMFoNCkRURU5EOjIwMjYwNjA5
+VDE1MDAwMFoNClJSVUxFOkZSRVE9V0VFS0xZO1dLU1Q9TU87SU5URVJWQUw9MjtCWURBWT1UVQ0K
+RFRTVEFNUDoyMDI2MDUyOVQwNjAzMDhaDQpPUkdBTklaRVI7Q049UUVNVSBQcm9qZWN0IENhbGVu
+ZGFyOm1haWx0bzpjX2s1cDJscGd2YnB0ZGlya3U1c2kwMWJsbW5rQGdyb3UNCiBwLmNhbGVuZGFy
+Lmdvb2dsZS5jb20NClVJRDozdG1uNTF2M2FwMXBrYmVxajRkaXZ1aDQ2Y19SMjAyNjA2MDlUMTQw
+MDAwQGdvb2dsZS5jb20NCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJ
+Q0lQQU5UO1BBUlRTVEFUPUFDQ0VQVEVEO1JTVlA9VFJVRQ0KIDtDTj1hbGV4LmJlbm5lZUBsaW5h
+cm8ub3JnO1gtTlVNLUdVRVNUUz0wOm1haWx0bzphbGV4LmJlbm5lZUBsaW5hcm8ub3JnDQpBVFRF
+TkRFRTtDVVRZUEU9SU5ESVZJRFVBTDtST0xFPVJFUS1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVE
+Uy1BQ1RJT047UlNWUD0NCiBUUlVFO0NOPU1hcmt1cyBBcm1icnVzdGVyO1gtTlVNLUdVRVNUUz0w
+Om1haWx0bzphcm1icnVAcmVkaGF0LmNvbQ0KQVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7Uk9M
+RT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJVRTtDTj1i
+Y2FpbkBxdWljaW5jLmNvbTtYLU5VTS1HVUVTVFM9MDptYWlsdG86YmNhaW5AcXVpY2luYy5jb20N
+CkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFU
+PU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7WC1OVU0tR1VFU1RTPTA6bWFpbHRvOmJlcnJhbmdl
+QHJlZGhhdC5jb20NCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQ
+QU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049Y2ppYUBudmlkaWEuY29t
+O1gtTlVNLUdVRVNUUz0wOm1haWx0bzpjamlhQG52aWRpYS5jb20NCkFUVEVOREVFO0NVVFlQRT1J
 TkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQ
-PQ0KIFRSVUU7Q049ZWR1YXJkb0BoYWJrb3N0Lm5ldDtYLU5VTS1HVUVTVFM9MDptYWlsdG86ZWR1
-YXJkb0BoYWJrb3N0Lm5ldA0KQVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7Uk9MRT1SRVEtUEFS
-VElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJVRTtDTj1mZWxpcGVAbnV0
-YW5peC5jb207WC1OVU0tR1VFU1RTPTA6bWFpbHRvOmZlbGlwZUBudXRhbml4LmNvbQ0KQVRURU5E
-RUU7Q1VUWVBFPUlORElWSURVQUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMt
-QUNUSU9OO1JTVlA9DQogVFJVRTtDTj1pZ2d5QHRoZWlnZ3kuY29tO1gtTlVNLUdVRVNUUz0wOm1h
-aWx0bzppZ2d5QHRoZWlnZ3kuY29tDQpBVFRFTkRFRTtDVVRZUEU9SU5ESVZJRFVBTDtST0xFPVJF
-US1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVEUy1BQ1RJT047UlNWUD0NCiBUUlVFO0NOPWltcEBi
-c2RpbXAuY29tO1gtTlVNLUdVRVNUUz0wOm1haWx0bzppbXBAYnNkaW1wLmNvbQ0KQVRURU5ERUU7
-Q1VUWVBFPUlORElWSURVQUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNU
-SU9OO1JTVlA9DQogVFJVRTtDTj1qZ2dAbnZpZGlhLmNvbTtYLU5VTS1HVUVTVFM9MDptYWlsdG86
-amdnQG52aWRpYS5jb20NCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJ
-Q0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049amlkb25nLnhpYW9A
-Z21haWwuY29tO1gtTlVNLUdVRVNUUz0wOm1haWx0bzpqaWRvbmcueGlhb0BnbWFpbC5jb20NCkFU
-VEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5F
-RURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049amltLnNodUBzaWZpdmUuY29tO1gtTlVNLUdVRVNU
-Uz0wOm1haWx0bzpqaW0uc2h1QHNpZml2ZS5jb20NCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFM
-O1JPTEU9UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7
-Q049bWJ1cnRvbkBxdGkucXVhbGNvbW0uY29tO1gtTlVNLUdVRVNUUz0wOm1haWx0bzptYnVydG9u
-QHF0aS5xdWFsY29tbQ0KIC5jb20NCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVR
-LVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049cGF1bC53
-YWxtc2xleUBzaWZpdmUuY29tO1gtTlVNLUdVRVNUUz0wOm1haWx0bzpwYXVsLndhbG1zbGV5QHNp
-Zml2ZQ0KIC5jb20NCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQ
-QU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049UGFvbG8gQm9uemluaTtY
-LU5VTS1HVUVTVFM9MDptYWlsdG86cGJvbnppbmlAcmVkaGF0LmNvbQ0KQVRURU5ERUU7Q1VUWVBF
-PUlORElWSURVQUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JT
-VlA9DQogVFJVRTtDTj1wZXRlci5tYXlkZWxsQGxpbmFyby5vcmc7WC1OVU0tR1VFU1RTPTA6bWFp
-bHRvOnBldGVyLm1heWRlbGxAbGluYXJvDQogLm9yZw0KQVRURU5ERUU7Q1VUWVBFPUlORElWSURV
-QUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJV
-RTtDTj1yaWNoYXJkLmhlbmRlcnNvbkBsaW5hcm8ub3JnO1gtTlVNLUdVRVNUUz0wOm1haWx0bzpy
-aWNoYXJkLmhlbmRlcnNvDQogbkBsaW5hcm8ub3JnDQpBVFRFTkRFRTtDVVRZUEU9SU5ESVZJRFVB
+PQ0KIFRSVUU7Q049Y3dAZjAwZi5vcmc7WC1OVU0tR1VFU1RTPTA6bWFpbHRvOmN3QGYwMGYub3Jn
+DQpBVFRFTkRFRTtDVVRZUEU9SU5ESVZJRFVBTDtST0xFPVJFUS1QQVJUSUNJUEFOVDtQQVJUU1RB
+VD1ORUVEUy1BQ1RJT047UlNWUD0NCiBUUlVFO0NOPUVyaWMgQmxha2U7WC1OVU0tR1VFU1RTPTA6
+bWFpbHRvOmVibGFrZUByZWRoYXQuY29tDQpBVFRFTkRFRTtDVVRZUEU9SU5ESVZJRFVBTDtST0xF
+PVJFUS1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVEUy1BQ1RJT047UlNWUD0NCiBUUlVFO0NOPWVk
+Z2FyLmlnbGVzaWFzQGdtYWlsLmNvbTtYLU5VTS1HVUVTVFM9MDptYWlsdG86ZWRnYXIuaWdsZXNp
+YXNAZ21haWwNCiAuY29tDQpBVFRFTkRFRTtDVVRZUEU9SU5ESVZJRFVBTDtST0xFPVJFUS1QQVJU
+SUNJUEFOVDtQQVJUU1RBVD1ORUVEUy1BQ1RJT047UlNWUD0NCiBUUlVFO0NOPWVkdWFyZG9AaGFi
+a29zdC5uZXQ7WC1OVU0tR1VFU1RTPTA6bWFpbHRvOmVkdWFyZG9AaGFia29zdC5uZXQNCkFUVEVO
+REVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURT
+LUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049ZmVsaXBlQG51dGFuaXguY29tO1gtTlVNLUdVRVNUUz0w
+Om1haWx0bzpmZWxpcGVAbnV0YW5peC5jb20NCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JP
+TEU9UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049
+aWdneUB0aGVpZ2d5LmNvbTtYLU5VTS1HVUVTVFM9MDptYWlsdG86aWdneUB0aGVpZ2d5LmNvbQ0K
+QVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9
+TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJVRTtDTj1pbXBAYnNkaW1wLmNvbTtYLU5VTS1HVUVTVFM9
+MDptYWlsdG86aW1wQGJzZGltcC5jb20NCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9
+UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049amdn
+QG52aWRpYS5jb207WC1OVU0tR1VFU1RTPTA6bWFpbHRvOmpnZ0BudmlkaWEuY29tDQpBVFRFTkRF
+RTtDVVRZUEU9SU5ESVZJRFVBTDtST0xFPVJFUS1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVEUy1B
+Q1RJT047UlNWUD0NCiBUUlVFO0NOPWppZG9uZy54aWFvQGdtYWlsLmNvbTtYLU5VTS1HVUVTVFM9
+MDptYWlsdG86amlkb25nLnhpYW9AZ21haWwuY29tDQpBVFRFTkRFRTtDVVRZUEU9SU5ESVZJRFVB
 TDtST0xFPVJFUS1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVEUy1BQ1RJT047UlNWUD0NCiBUUlVF
-O0NOPXNoZW50ZXlAZ21haWwuY29tO1gtTlVNLUdVRVNUUz0wOm1haWx0bzpzaGVudGV5QGdtYWls
-LmNvbQ0KQVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFS
-VFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJVRTtDTj1zdGVmYW5oYUBnbWFpbC5jb207WC1O
-VU0tR1VFU1RTPTA6bWFpbHRvOnN0ZWZhbmhhQGdtYWlsLmNvbQ0KQVRURU5ERUU7Q1VUWVBFPUlO
-RElWSURVQUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9
-DQogVFJVRTtDTj13ZWkudy53YW5nQGludGVsLmNvbTtYLU5VTS1HVUVTVFM9MDptYWlsdG86d2Vp
-Lncud2FuZ0BpbnRlbC5jb20NCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBB
-UlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049end1Lmtlcm5l
-bEBnbWFpbC5jb207WC1OVU0tR1VFU1RTPTA6bWFpbHRvOnp3dS5rZXJuZWxAZ21haWwuY29tDQpB
+O0NOPWppbS5zaHVAc2lmaXZlLmNvbTtYLU5VTS1HVUVTVFM9MDptYWlsdG86amltLnNodUBzaWZp
+dmUuY29tDQpBVFRFTkRFRTtDVVRZUEU9SU5ESVZJRFVBTDtST0xFPVJFUS1QQVJUSUNJUEFOVDtQ
+QVJUU1RBVD1ORUVEUy1BQ1RJT047UlNWUD0NCiBUUlVFO0NOPW1idXJ0b25AcXRpLnF1YWxjb21t
+LmNvbTtYLU5VTS1HVUVTVFM9MDptYWlsdG86bWJ1cnRvbkBxdGkucXVhbGNvbW0NCiAuY29tDQpB
 VFRFTkRFRTtDVVRZUEU9SU5ESVZJRFVBTDtST0xFPVJFUS1QQVJUSUNJUEFOVDtQQVJUU1RBVD1O
-RUVEUy1BQ1RJT047UlNWUD0NCiBUUlVFO0NOPXBoaWxtZEBsaW5hcm8ub3JnO1gtTlVNLUdVRVNU
-Uz0wOm1haWx0bzpwaGlsbWRAbGluYXJvLm9yZw0KQVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7
-Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJVRTtD
-Tj1lYmxvdEByaXZvc2luYy5jb207WC1OVU0tR1VFU1RTPTA6bWFpbHRvOmVibG90QHJpdm9zaW5j
-LmNvbQ0KQVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFS
-VFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJVRTtDTj1tYXguY2hvdUBzaWZpdmUuY29tO1gt
-TlVNLUdVRVNUUz0wOm1haWx0bzptYXguY2hvdUBzaWZpdmUuY29tDQpBVFRFTkRFRTtDVVRZUEU9
-SU5ESVZJRFVBTDtST0xFPVJFUS1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVEUy1BQ1RJT047UlNW
-UD0NCiBUUlVFO0NOPW1hbm9zLnBpdHNpZGlhbmFraXNAbGluYXJvLm9yZztYLU5VTS1HVUVTVFM9
-MDptYWlsdG86bWFub3MucGl0c2lkaWENCiBuYWtpc0BsaW5hcm8ub3JnDQpBVFRFTkRFRTtDVVRZ
-UEU9SU5ESVZJRFVBTDtST0xFPVJFUS1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVEUy1BQ1RJT047
-UlNWUD0NCiBUUlVFO0NOPVRob21hcyBIdXRoO1gtTlVNLUdVRVNUUz0wOm1haWx0bzp0aHV0aEBy
-ZWRoYXQuY29tDQpBVFRFTkRFRTtDVVRZUEU9SU5ESVZJRFVBTDtST0xFPVJFUS1QQVJUSUNJUEFO
-VDtQQVJUU1RBVD1ORUVEUy1BQ1RJT047UlNWUD0NCiBUUlVFO0NOPXJiY0BtZXRhLmNvbTtYLU5V
-TS1HVUVTVFM9MDptYWlsdG86cmJjQG1ldGEuY29tDQpBVFRFTkRFRTtDVVRZUEU9SU5ESVZJRFVB
-TDtST0xFPVJFUS1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ERUxFVEVEO1JTVlA9VFJVRTsNCiBDTj1k
-ZW1pb2Jlbm91ckBnbWFpbC5jb207WC1OVU0tR1VFU1RTPTA6bWFpbHRvOmRlbWlvYmVub3VyQGdt
-YWlsLmNvbQ0KQVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7
-UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJVRTtDTj1oaUBhbHlzc2EuaXM7WC1OVU0t
-R1VFU1RTPTA6bWFpbHRvOmhpQGFseXNzYS5pcw0KQVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7
-Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJVRTtD
-Tj1kaGVkZGVAa2FscmF5aW5jLmNvbTtYLU5VTS1HVUVTVFM9MDptYWlsdG86ZGhlZGRlQGthbHJh
-eWluYy5jb20NCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5U
-O1BBUlRTVEFUPURFQ0xJTkVEO1JTVlA9VFJVRQ0KIDtDTj1BbGJlcnRvIEZhcmlhO1gtTlVNLUdV
-RVNUUz0wOm1haWx0bzphZmFyaWFAcmVkaGF0LmNvbQ0KQVRURU5ERUU7Q1VUWVBFPUlORElWSURV
-QUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJV
-RTtDTj1BbGJlcnQgRXN0ZXZlO1gtTlVNLUdVRVNUUz0wOm1haWx0bzphZXN0ZXZlQHJlZGhhdC5j
-b20NCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5UO1BBUlRT
-VEFUPUFDQ0VQVEVEO1JTVlA9VFJVRQ0KIDtDTj1tYXJjYW5kcmUubHVyZWF1QGdtYWlsLmNvbTtY
-LU5VTS1HVUVTVFM9MDptYWlsdG86bWFyY2FuZHJlLmx1cmVhdUBnbWFpbA0KIC5jb20NCkFUVEVO
-REVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFUPUFDQ0VQ
-VEVEO1JTVlA9VFJVRQ0KIDtDTj1tYXR0aGlldUBtaW5pby5pbztYLU5VTS1HVUVTVFM9MDptYWls
-dG86bWF0dGhpZXVAbWluaW8uaW8NCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVR
-LVBBUlRJQ0lQQU5UO1BBUlRTVEFUPUFDQ0VQVEVEO1JTVlA9VFJVRQ0KIDtDTj1qYWNvYi5vdXJz
-bGFuZEBnbWFpbC5jb207WC1OVU0tR1VFU1RTPTA6bWFpbHRvOmphY29iLm91cnNsYW5kQGdtYWls
-LmNvbQ0KQVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFS
-VFNUQVQ9VEVOVEFUSVZFO1JTVlA9VFJVDQogRTtDTj1oZWxnZS5kZWxsZXJAZ29vZ2xlbWFpbC5j
-b207WC1OVU0tR1VFU1RTPTA6bWFpbHRvOmhlbGdlLmRlbGxlckBnb29nbGVtDQogYWlsLmNvbQ0K
-QVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9
-TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJVRTtDTj1DZWRyaWMgTGUgR29hdGVyO1gtTlVNLUdVRVNU
-Uz0wOm1haWx0bzpjbGdAcmVkaGF0LmNvbQ0KQVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7Uk9M
-RT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJVRTtDTj1B
-bGlzdGFpciBGcmFuY2lzO1gtTlVNLUdVRVNUUz0wOm1haWx0bzphbGlzdGFpci5mcmFuY2lzQHdk
-Yy5jb20NCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5UO1BB
-UlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049a29ucmFkLndpbGtAb3JhY2xlLmNv
-bTtYLU5VTS1HVUVTVFM9MDptYWlsdG86a29ucmFkLndpbGtAb3JhY2xlLmNvbQ0KQVRURU5ERUU7
-Q1VUWVBFPUlORElWSURVQUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNU
-SU9OO1JTVlA9DQogVFJVRTtDTj1BbGVzc2FuZHJvIERpIEZlZGVyaWNvO1gtTlVNLUdVRVNUUz0w
-Om1haWx0bzphbGVAcmV2Lm5nDQpBVFRFTkRFRTtDVVRZUEU9SU5ESVZJRFVBTDtST0xFPVJFUS1Q
-QVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVEUy1BQ1RJT047UlNWUD0NCiBUUlVFO0NOPUFudG9uIEpv
-aGFuc3NvbjtYLU5VTS1HVUVTVFM9MDptYWlsdG86YW5qb0ByZXYubmcNCkFUVEVOREVFO0NVVFlQ
-RT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtS
-U1ZQPQ0KIFRSVUU7Q049Q2hhbyBQZW5nO1gtTlVNLUdVRVNUUz0wOm1haWx0bzpjaGFvLnAucGVu
-Z0BsaW51eC5pbnRlbC5jb20NCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBB
-UlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049RWxlbmEgVWZp
-bXRzZXZhO1gtTlVNLUdVRVNUUz0wOm1haWx0bzplbGVuYS51ZmltdHNldmFAb3JhY2xlLmNvbQ0K
-QVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9
-TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJVRTtDTj1lcmljLmF1Z2VyQHJlZGhhdC5jb207WC1OVU0t
-R1VFU1RTPTA6bWFpbHRvOmVyaWMuYXVnZXJAcmVkaGF0LmNvbQ0KQVRURU5ERUU7Q1VUWVBFPUlO
-RElWSURVQUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9
-DQogVFJVRTtDTj1qYW4ua2lzemthQHdlYi5kZTtYLU5VTS1HVUVTVFM9MDptYWlsdG86amFuLmtp
-c3prYUB3ZWIuZGUNCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQ
-QU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049Sm9hbyBNYXJ0aW5zO1gt
-TlVNLUdVRVNUUz0wOm1haWx0bzpqb2FvLm0ubWFydGluc0BvcmFjbGUuY29tDQpBVFRFTkRFRTtD
+RUVEUy1BQ1RJT047UlNWUD0NCiBUUlVFO0NOPXBhdWwud2FsbXNsZXlAc2lmaXZlLmNvbTtYLU5V
+TS1HVUVTVFM9MDptYWlsdG86cGF1bC53YWxtc2xleUBzaWZpdmUNCiAuY29tDQpBVFRFTkRFRTtD
 VVRZUEU9SU5ESVZJRFVBTDtST0xFPVJFUS1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVEUy1BQ1RJ
-T047UlNWUD0NCiBUUlVFO0NOPUx1YyBNaWNoZWw7WC1OVU0tR1VFU1RTPTA6bWFpbHRvOmx1Y0Bs
-bWljaGVsLmZyDQpBVFRFTkRFRTtDVVRZUEU9SU5ESVZJRFVBTDtST0xFPVJFUS1QQVJUSUNJUEFO
-VDtQQVJUU1RBVD1ORUVEUy1BQ1RJT047UlNWUD0NCiBUUlVFO0NOPVNoYW1lZXJhbGkgS29sb3Ro
-dW0gVGhvZGk7WC1OVU0tR1VFU1RTPTA6bWFpbHRvOnNoYW1lZXJhbGkua29sb3RodW0NCiAudGhv
-ZGlAaHVhd2VpLmNvbQ0KQVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7Uk9MRT1SRVEtUEFSVElD
-SVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJVRTtDTj16Lmh1b0AxMzkuY29t
-O1gtTlVNLUdVRVNUUz0wOm1haWx0bzp6Lmh1b0AxMzkuY29tDQpBVFRFTkRFRTtDVVRZUEU9SU5E
-SVZJRFVBTDtST0xFPVJFUS1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVEUy1BQ1RJT047UlNWUD0N
-CiBUUlVFO0NOPUxJVSBaaGl3ZWk7WC1OVU0tR1VFU1RTPTA6bWFpbHRvOnpoaXdlaV9saXVAbGlu
-dXguYWxpYmFiYS5jb20NCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJ
-Q0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049cWVtdS1kZXZlbEBu
-b25nbnUub3JnO1gtTlVNLUdVRVNUUz0wOm1haWx0bzpxZW11LWRldmVsQG5vbmdudS5vcmcNCkFU
-VEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5F
-RURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049bmVsc29uLmhvQHdpbmRyaXZlci5jb207WC1OVU0t
-R1VFU1RTPTA6bWFpbHRvOm5lbHNvbi5ob0B3aW5kcml2ZXIuYw0KIG9tDQpYLU1JQ1JPU09GVC1D
-RE8tT1dORVJBUFBUSUQ6MTEwNTg5MzM0DQpDUkVBVEVEOjIwMjMwMjIxVDE1Mzk1MFoNCkRFU0NS
-SVBUSU9OOklmIHlvdSBuZWVkIGNhbGwgZGV0YWlsc1wsIHBsZWFzZSBjb250YWN0IG1lOiA8YSBo
-cmVmPSJtYWlsdG86cQ0KIHVpbnRlbGFAcmVkaGF0LmNvbSI+YWxleC5iZW5uZWVAbGluYXJvLm9y
-ZzwvYT4NCkxBU1QtTU9ESUZJRUQ6MjAyNjA1MjlUMDYwMjU3Wg0KTE9DQVRJT046aHR0cHM6Ly9t
-ZWV0LmppdC5zaS9rdm1jYWxsbWVldGluZw0KU0VRVUVOQ0U6Mg0KU1RBVFVTOkNPTkZJUk1FRA0K
-U1VNTUFSWTpRRU1VL0tWTSBkZXZlbG9wZXJzIGNvbmZlcmVuY2UgY2FsbA0KVFJBTlNQOk9QQVFV
-RQ0KQVRUQUNIO0ZJTEVOQU1FPU5vdGVzIOKAkyBRRU1VL0tWTSBkZXZlbG9wZXJzIGNvbmZlcmVu
-Y2UgY2FsbDtGTVRUWVBFPWFwcGxpY2ENCiB0aW9uL3ZuZC5nb29nbGUtYXBwcy5kb2N1bWVudDpo
-dHRwczovL2RvY3MuZ29vZ2xlLmNvbS9kb2N1bWVudC9kLzEtTHRxMTFMTHoNCiB4Q2NjZnFmTk5L
-Y01HNzRITVVKZjZEVVJtU0pCR1FacmVrL2VkaXQNCkVORDpWRVZFTlQNCkVORDpWQ0FMRU5EQVIN
-Cg==
---00000000000040aef70652ee99d1--
+T047UlNWUD0NCiBUUlVFO0NOPVBhb2xvIEJvbnppbmk7WC1OVU0tR1VFU1RTPTA6bWFpbHRvOnBi
+b256aW5pQHJlZGhhdC5jb20NCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBB
+UlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049cGV0ZXIubWF5
+ZGVsbEBsaW5hcm8ub3JnO1gtTlVNLUdVRVNUUz0wOm1haWx0bzpwZXRlci5tYXlkZWxsQGxpbmFy
+bw0KIC5vcmcNCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5U
+O1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049cmljaGFyZC5oZW5kZXJzb25A
+bGluYXJvLm9yZztYLU5VTS1HVUVTVFM9MDptYWlsdG86cmljaGFyZC5oZW5kZXJzbw0KIG5AbGlu
+YXJvLm9yZw0KQVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7
+UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJVRTtDTj1zaGVudGV5QGdtYWlsLmNvbTtY
+LU5VTS1HVUVTVFM9MDptYWlsdG86c2hlbnRleUBnbWFpbC5jb20NCkFUVEVOREVFO0NVVFlQRT1J
+TkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQ
+PQ0KIFRSVUU7Q049c3RlZmFuaGFAZ21haWwuY29tO1gtTlVNLUdVRVNUUz0wOm1haWx0bzpzdGVm
+YW5oYUBnbWFpbC5jb20NCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJ
+Q0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049d2VpLncud2FuZ0Bp
+bnRlbC5jb207WC1OVU0tR1VFU1RTPTA6bWFpbHRvOndlaS53LndhbmdAaW50ZWwuY29tDQpBVFRF
+TkRFRTtDVVRZUEU9SU5ESVZJRFVBTDtST0xFPVJFUS1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVE
+Uy1BQ1RJT047UlNWUD0NCiBUUlVFO0NOPXp3dS5rZXJuZWxAZ21haWwuY29tO1gtTlVNLUdVRVNU
+Uz0wOm1haWx0bzp6d3Uua2VybmVsQGdtYWlsLmNvbQ0KQVRURU5ERUU7Q1VUWVBFPUlORElWSURV
+QUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJV
+RTtDTj1waGlsbWRAbGluYXJvLm9yZztYLU5VTS1HVUVTVFM9MDptYWlsdG86cGhpbG1kQGxpbmFy
+by5vcmcNCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5UO1BB
+UlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049ZWJsb3RAcml2b3NpbmMuY29tO1gt
+TlVNLUdVRVNUUz0wOm1haWx0bzplYmxvdEByaXZvc2luYy5jb20NCkFUVEVOREVFO0NVVFlQRT1J
+TkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQ
+PQ0KIFRSVUU7Q049bWF4LmNob3VAc2lmaXZlLmNvbTtYLU5VTS1HVUVTVFM9MDptYWlsdG86bWF4
+LmNob3VAc2lmaXZlLmNvbQ0KQVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7Uk9MRT1SRVEtUEFS
+VElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJVRTtDTj1tYW5vcy5waXRz
+aWRpYW5ha2lzQGxpbmFyby5vcmc7WC1OVU0tR1VFU1RTPTA6bWFpbHRvOm1hbm9zLnBpdHNpZGlh
+DQogbmFraXNAbGluYXJvLm9yZw0KQVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7Uk9MRT1SRVEt
+UEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJVRTtDTj1UaG9tYXMg
+SHV0aDtYLU5VTS1HVUVTVFM9MDptYWlsdG86dGh1dGhAcmVkaGF0LmNvbQ0KQVRURU5ERUU7Q1VU
+WVBFPUlORElWSURVQUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9O
+O1JTVlA9DQogVFJVRTtDTj1yYmNAbWV0YS5jb207WC1OVU0tR1VFU1RTPTA6bWFpbHRvOnJiY0Bt
+ZXRhLmNvbQ0KQVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7
+UEFSVFNUQVQ9REVMRVRFRDtSU1ZQPVRSVUU7DQogQ049ZGVtaW9iZW5vdXJAZ21haWwuY29tO1gt
+TlVNLUdVRVNUUz0wOm1haWx0bzpkZW1pb2Jlbm91ckBnbWFpbC5jb20NCkFUVEVOREVFO0NVVFlQ
+RT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtS
+U1ZQPQ0KIFRSVUU7Q049aGlAYWx5c3NhLmlzO1gtTlVNLUdVRVNUUz0wOm1haWx0bzpoaUBhbHlz
+c2EuaXMNCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5UO1BB
+UlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049ZGhlZGRlQGthbHJheWluYy5jb207
+WC1OVU0tR1VFU1RTPTA6bWFpbHRvOmRoZWRkZUBrYWxyYXlpbmMuY29tDQpBVFRFTkRFRTtDVVRZ
+UEU9SU5ESVZJRFVBTDtST0xFPVJFUS1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ERUNMSU5FRDtSU1ZQ
+PVRSVUUNCiA7Q049QWxiZXJ0byBGYXJpYTtYLU5VTS1HVUVTVFM9MDptYWlsdG86YWZhcmlhQHJl
+ZGhhdC5jb20NCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5U
+O1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049QWxiZXJ0IEVzdGV2ZTtYLU5V
+TS1HVUVTVFM9MDptYWlsdG86YWVzdGV2ZUByZWRoYXQuY29tDQpBVFRFTkRFRTtDVVRZUEU9SU5E
+SVZJRFVBTDtST0xFPVJFUS1QQVJUSUNJUEFOVDtQQVJUU1RBVD1BQ0NFUFRFRDtSU1ZQPVRSVUUN
+CiA7Q049bWFyY2FuZHJlLmx1cmVhdUBnbWFpbC5jb207WC1OVU0tR1VFU1RTPTA6bWFpbHRvOm1h
+cmNhbmRyZS5sdXJlYXVAZ21haWwNCiAuY29tDQpBVFRFTkRFRTtDVVRZUEU9SU5ESVZJRFVBTDtS
+T0xFPVJFUS1QQVJUSUNJUEFOVDtQQVJUU1RBVD1BQ0NFUFRFRDtSU1ZQPVRSVUUNCiA7Q049bWF0
+dGhpZXVAbWluaW8uaW87WC1OVU0tR1VFU1RTPTA6bWFpbHRvOm1hdHRoaWV1QG1pbmlvLmlvDQpB
+VFRFTkRFRTtDVVRZUEU9SU5ESVZJRFVBTDtST0xFPVJFUS1QQVJUSUNJUEFOVDtQQVJUU1RBVD1B
+Q0NFUFRFRDtSU1ZQPVRSVUUNCiA7Q049amFjb2Iub3Vyc2xhbmRAZ21haWwuY29tO1gtTlVNLUdV
+RVNUUz0wOm1haWx0bzpqYWNvYi5vdXJzbGFuZEBnbWFpbC5jb20NCkFUVEVOREVFO0NVVFlQRT1J
+TkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFUPVRFTlRBVElWRTtSU1ZQPVRS
+VQ0KIEU7Q049aGVsZ2UuZGVsbGVyQGdvb2dsZW1haWwuY29tO1gtTlVNLUdVRVNUUz0wOm1haWx0
+bzpoZWxnZS5kZWxsZXJAZ29vZ2xlbQ0KIGFpbC5jb20NCkFUVEVOREVFO0NVVFlQRT1JTkRJVklE
+VUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFUPUFDQ0VQVEVEO1JTVlA9VFJVRQ0KIDtD
+Tj1DZWRyaWMgTGUgR29hdGVyO1gtTlVNLUdVRVNUUz0wOm1haWx0bzpjbGdAcmVkaGF0LmNvbQ0K
+QVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9
+TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJVRTtDTj1BbGlzdGFpciBGcmFuY2lzO1gtTlVNLUdVRVNU
+Uz0wOm1haWx0bzphbGlzdGFpci5mcmFuY2lzQHdkYy5jb20NCkFUVEVOREVFO0NVVFlQRT1JTkRJ
+VklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0K
+IFRSVUU7Q049a29ucmFkLndpbGtAb3JhY2xlLmNvbTtYLU5VTS1HVUVTVFM9MDptYWlsdG86a29u
+cmFkLndpbGtAb3JhY2xlLmNvbQ0KQVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7Uk9MRT1SRVEt
+UEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJVRTtDTj1BbGVzc2Fu
+ZHJvIERpIEZlZGVyaWNvO1gtTlVNLUdVRVNUUz0wOm1haWx0bzphbGVAcmV2Lm5nDQpBVFRFTkRF
+RTtDVVRZUEU9SU5ESVZJRFVBTDtST0xFPVJFUS1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVEUy1B
+Q1RJT047UlNWUD0NCiBUUlVFO0NOPUFudG9uIEpvaGFuc3NvbjtYLU5VTS1HVUVTVFM9MDptYWls
+dG86YW5qb0ByZXYubmcNCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJ
+Q0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049Q2hhbyBQZW5nO1gt
+TlVNLUdVRVNUUz0wOm1haWx0bzpjaGFvLnAucGVuZ0BsaW51eC5pbnRlbC5jb20NCkFUVEVOREVF
+O0NVVFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFD
+VElPTjtSU1ZQPQ0KIFRSVUU7Q049RWxlbmEgVWZpbXRzZXZhO1gtTlVNLUdVRVNUUz0wOm1haWx0
+bzplbGVuYS51ZmltdHNldmFAb3JhY2xlLmNvbQ0KQVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7
+Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJVRTtD
+Tj1lcmljLmF1Z2VyQHJlZGhhdC5jb207WC1OVU0tR1VFU1RTPTA6bWFpbHRvOmVyaWMuYXVnZXJA
+cmVkaGF0LmNvbQ0KQVRURU5ERUU7Q1VUWVBFPUlORElWSURVQUw7Uk9MRT1SRVEtUEFSVElDSVBB
+TlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9DQogVFJVRTtDTj1qYW4ua2lzemthQHdlYi5k
+ZTtYLU5VTS1HVUVTVFM9MDptYWlsdG86amFuLmtpc3prYUB3ZWIuZGUNCkFUVEVOREVFO0NVVFlQ
+RT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtS
+U1ZQPQ0KIFRSVUU7Q049Sm9hbyBNYXJ0aW5zO1gtTlVNLUdVRVNUUz0wOm1haWx0bzpqb2FvLm0u
+bWFydGluc0BvcmFjbGUuY29tDQpBVFRFTkRFRTtDVVRZUEU9SU5ESVZJRFVBTDtST0xFPVJFUS1Q
+QVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVEUy1BQ1RJT047UlNWUD0NCiBUUlVFO0NOPUx1YyBNaWNo
+ZWw7WC1OVU0tR1VFU1RTPTA6bWFpbHRvOmx1Y0BsbWljaGVsLmZyDQpBVFRFTkRFRTtDVVRZUEU9
+SU5ESVZJRFVBTDtST0xFPVJFUS1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVEUy1BQ1RJT047UlNW
+UD0NCiBUUlVFO0NOPVNoYW1lZXJhbGkgS29sb3RodW0gVGhvZGk7WC1OVU0tR1VFU1RTPTA6bWFp
+bHRvOnNoYW1lZXJhbGkua29sb3RodW0NCiAudGhvZGlAaHVhd2VpLmNvbQ0KQVRURU5ERUU7Q1VU
+WVBFPUlORElWSURVQUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9O
+O1JTVlA9DQogVFJVRTtDTj16Lmh1b0AxMzkuY29tO1gtTlVNLUdVRVNUUz0wOm1haWx0bzp6Lmh1
+b0AxMzkuY29tDQpBVFRFTkRFRTtDVVRZUEU9SU5ESVZJRFVBTDtST0xFPVJFUS1QQVJUSUNJUEFO
+VDtQQVJUU1RBVD1ORUVEUy1BQ1RJT047UlNWUD0NCiBUUlVFO0NOPUxJVSBaaGl3ZWk7WC1OVU0t
+R1VFU1RTPTA6bWFpbHRvOnpoaXdlaV9saXVAbGludXguYWxpYmFiYS5jb20NCkFUVEVOREVFO0NV
+VFlQRT1JTkRJVklEVUFMO1JPTEU9UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElP
+TjtSU1ZQPQ0KIFRSVUU7Q049cWVtdS1kZXZlbEBub25nbnUub3JnO1gtTlVNLUdVRVNUUz0wOm1h
+aWx0bzpxZW11LWRldmVsQG5vbmdudS5vcmcNCkFUVEVOREVFO0NVVFlQRT1JTkRJVklEVUFMO1JP
+TEU9UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPQ0KIFRSVUU7Q049
+bmVsc29uLmhvQHdpbmRyaXZlci5jb207WC1OVU0tR1VFU1RTPTA6bWFpbHRvOm5lbHNvbi5ob0B3
+aW5kcml2ZXIuYw0KIG9tDQpYLU1JQ1JPU09GVC1DRE8tT1dORVJBUFBUSUQ6LTkzMDczODcxMw0K
+Q1JFQVRFRDoyMDIzMDIyMVQxNTM5NTBaDQpERVNDUklQVElPTjpJZiB5b3UgbmVlZCBjYWxsIGRl
+dGFpbHNcLCBwbGVhc2UgY29udGFjdCBtZTogPGEgaHJlZj0ibWFpbHRvOnENCiB1aW50ZWxhQHJl
+ZGhhdC5jb20iPmFsZXguYmVubmVlQGxpbmFyby5vcmc8L2E+DQpMQVNULU1PRElGSUVEOjIwMjYw
+NTI5VDA2MDI1N1oNCkxPQ0FUSU9OOmh0dHBzOi8vbWVldC5qaXQuc2kva3ZtY2FsbG1lZXRpbmcN
+ClNFUVVFTkNFOjINClNUQVRVUzpDT05GSVJNRUQNClNVTU1BUlk6UUVNVS9LVk0gZGV2ZWxvcGVy
+cyBjb25mZXJlbmNlIGNhbGwNClRSQU5TUDpPUEFRVUUNCkFUVEFDSDtGSUxFTkFNRT1Ob3RlcyDi
+gJMgUUVNVS9LVk0gZGV2ZWxvcGVycyBjb25mZXJlbmNlIGNhbGw7Rk1UVFlQRT1hcHBsaWNhDQog
+dGlvbi92bmQuZ29vZ2xlLWFwcHMuZG9jdW1lbnQ6aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vZG9j
+dW1lbnQvZC8xLUx0cTExTEx6DQogeENjY2ZxZk5OS2NNRzc0SE1VSmY2RFVSbVNKQkdRWnJlay9l
+ZGl0DQpFTkQ6VkVWRU5UDQpFTkQ6VkNBTEVOREFSDQo=
+--00000000000057cdae0652ee99f5--
 
 
