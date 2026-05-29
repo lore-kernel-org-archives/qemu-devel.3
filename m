@@ -4,61 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAD25CD4F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 13:59:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C511CCD6E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 13:59:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSxjb-0002ha-6C; Fri, 29 May 2026 09:58:47 -0400
+	id 1wSxk0-0002mG-5Q; Fri, 29 May 2026 09:59:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wSxjW-0002go-Ja
- for qemu-devel@nongnu.org; Fri, 29 May 2026 09:58:42 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wSxjz-0002ly-Ah
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 09:59:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wSxjS-0005n2-Gd
- for qemu-devel@nongnu.org; Fri, 29 May 2026 09:58:40 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wSxjx-00063z-UB
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 09:59:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780063116;
+ s=mimecast20190719; t=1780063148;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Jybq5PqfkAkVsAuo/kEZFJVGNKVFlXSHOtKxIqagVJ0=;
- b=YCs0kU1SZ5/YydGbpUKNctS2xEt5F7wOsLNM19prZY8ZbKz/zxkNToEmUMWPVWiDxTBayo
- 44hjKh08luFXoAmuALU4hziXServuG/8N+AW8qbEmGknfBJNr8B7wTQmmAOSVR4VPm1RYR
- Xi/sQb1BbOMRulYNvSESnEQiMVfa4M4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=UiS8bcIb+BqCkMAohiQczjMC6mlOMAvSJWOqIYJXCBA=;
+ b=BeY9rfVY1lIcskDumL9n6LCrA/V8QaT+y7qYnlCcjDJCDRfVdDu3QBsjtLwi+qQdeN2j8n
+ uWLJt0hIcKzqKtNI1ZeZfuh7emK3mZeX059MFa7Hx62dAayKUeOaufzBEqtWnaEjopgNYp
+ HY4//mz7joY8POvoweTxl03pE7ZZKRs=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-136-sN-HO3zOMsC3UtPPMLcUjQ-1; Fri,
- 29 May 2026 09:58:34 -0400
-X-MC-Unique: sN-HO3zOMsC3UtPPMLcUjQ-1
-X-Mimecast-MFC-AGG-ID: sN-HO3zOMsC3UtPPMLcUjQ_1780063113
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-202-e-3itRP4OHWv1IcIJMan7Q-1; Fri,
+ 29 May 2026 09:59:04 -0400
+X-MC-Unique: e-3itRP4OHWv1IcIJMan7Q-1
+X-Mimecast-MFC-AGG-ID: e-3itRP4OHWv1IcIJMan7Q_1780063142
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 73D9E1800367; Fri, 29 May 2026 13:58:32 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.95])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0A29C180034E; Fri, 29 May 2026 13:58:29 +0000 (UTC)
-Date: Fri, 29 May 2026 15:58:27 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Bin Guo <guobin@linux.alibaba.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, stefanha@redhat.com,
- fam@euphon.net, hreitz@redhat.com
-Subject: Re: [PATCH] block/io: skip conflict scan when no serialising
- requests exist
-Message-ID: <ahmbg7HxmLV7GMvF@redhat.com>
-References: <20260529031215.59494-1-guobin@linux.alibaba.com>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 90D32180061A; Fri, 29 May 2026 13:59:02 +0000 (UTC)
+Received: from localhost (unknown [10.67.32.9])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F27D619560A3; Fri, 29 May 2026 13:59:00 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org, Matthew Rosato
+ <mjrosato@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>, Halil Pasic
+ <pasic@linux.ibm.com>
+Subject: Re: [PATCH v2] hw/s390x: Fix memory leaks after removing elements
+ with QTAILQ_REMOVE
+In-Reply-To: <20260511063825.53633-1-thuth@redhat.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Avril Crosse O'Flaherty"
+References: <20260511063825.53633-1-thuth@redhat.com>
+User-Agent: Notmuch/0.39 (https://notmuchmail.org)
+Date: Fri, 29 May 2026 15:58:55 +0200
+Message-ID: <87cxyemi5c.fsf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260529031215.59494-1-guobin@linux.alibaba.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -66,7 +72,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,56 +88,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 29.05.2026 um 05:12 hat Bin Guo geschrieben:
-> bdrv_find_conflicting_request() always linearly scans the
-> tracked_requests list looking for overlapping serialising requests.
-> However, BlockDriverState already maintains a serialising_in_flight
-> atomic counter that is incremented/decremented as serialising
-> requests are created/destroyed.
-> 
-> When the counter is zero there are no serialising requests in the
-> list and the scan is guaranteed to find nothing, so return NULL
-> immediately.  This complements the existing fast path in
-> bdrv_wait_serialising_requests() which checks the same counter
-> before acquiring reqs_lock.
-> 
-> No functional change.
-> 
-> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+On Mon, May 11 2026, Thomas Huth <thuth@redhat.com> wrote:
+
+> From: Thomas Huth <thuth@redhat.com>
+>
+> The elements that get removed with QTAILQ_REMOVE are never referenced
+> afterwards anymore, so the corresponding memory should get freed.
+>
+> Fixes: 37fa32de70 ("s390x/pci: Honor DMA limits set by vfio")
+> Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->  block/io.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/block/io.c b/block/io.c
-> index e8fb4ede4d..eb7ba59a90 100644
-> --- a/block/io.c
-> +++ b/block/io.c
-> @@ -649,6 +649,15 @@ bdrv_find_conflicting_request(BdrvTrackedRequest *self)
->  {
->      BdrvTrackedRequest *req;
+>  v2: Drop change to hw/s390x/s390-pci-bus.c (since it needs other rework)
+>
+>  hw/s390x/s390-pci-vfio.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
+> index 7c754b656da..db6de00bd28 100644
+> --- a/hw/s390x/s390-pci-vfio.c
+> +++ b/hw/s390x/s390-pci-vfio.c
+> @@ -101,6 +101,7 @@ void s390_pci_end_dma_count(S390pciState *s, S390PCIDMACount *cnt)
+>      cnt->users--;
+>      if (cnt->users == 0) {
+>          QTAILQ_REMOVE(&s->zpci_dma_limit, cnt, link);
+> +        g_free(cnt);
+>      }
+>  }
 >  
-> +    /*
-> +     * Fast path: if there are no serialising requests in flight, there
-> +     * can be no conflicts.  This mirrors the check in
-> +     * bdrv_wait_serialising_requests().
-> +     */
-> +    if (!qatomic_read(&self->bs->serialising_in_flight)) {
-> +        return NULL;
-> +    }
 
-Isn't this dead code? You get the following callers:
-
-- bdrv_wait_serialising_requests_locked
-  - bdrv_wait_serialising_requests: Already has the check, as you
-    mention in the commit message
-  - bdrv_make_request_serialising: tracked_request_set_serialising()
-    increases bs->serialising_in_flight
-- bdrv_co_write_req_prepare: tracked_request_set_serialising() again
-
-I think the only way this could trigger if you hit the minimal race
-window in bdrv_wait_serialising_requests() between the identical check
-and taking the lock.
-
-Kevin
+Thanks, queued to s390-next.
 
 
