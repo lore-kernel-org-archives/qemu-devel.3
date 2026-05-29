@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B8ACCD5BD2
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 05:41:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62C4ACD5BD2
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 05:41:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSpxA-00022d-P5; Fri, 29 May 2026 01:40:16 -0400
+	id 1wSpxA-00022b-HY; Fri, 29 May 2026 01:40:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSpwf-0001rB-AV
- for qemu-devel@nongnu.org; Fri, 29 May 2026 01:39:52 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1wSpwZ-0001qY-Ey
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 01:39:41 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSpwd-00025k-F3
- for qemu-devel@nongnu.org; Fri, 29 May 2026 01:39:44 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-49048e043e5so57060165e9.1
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 22:39:43 -0700 (PDT)
+ id 1wSpwX-00024c-Ln
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 01:39:39 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4891c00e7aeso91362875e9.2
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 22:39:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780033182; x=1780637982; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780033176; x=1780637976; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6oNbzeuHYqzJqPXTvToeml5tO5atWiLWRWSbBqwaggo=;
- b=KfLh/HJWt+oSNJfX4ACa0wG9t5CGaZe7FHyhB+df0EGMdCCA57uu1hjd3Xa66FEyn3
- 8mT3Mlbxr1/UOnYhMi0xs3zsbCkD6aQfBejX2WkuIxjr0etRjng7ny5+8ksK70nm+39w
- XK+N6fqKV0tfzjqeCwduHvX5WCA4lUC4W/ENg4dhNk3pDTYww1fadaarRrib4eREfW03
- 2+9s+dyCddy7BT9bZdYbiGwXHLbSqn9jxtdpHXQi4M/s5rIrxssXyJxo3oKUojGHrxa3
- t6eLC+Sbd9yrKWVoET7oqxjQ3iF5cA1la4aDcQaDaEVy+O+Wbn+q0b467rtRkCwcX20H
- naNw==
+ bh=PRA9+wsZYNyXrpSi/wutg8agv+vYe+z7EAFvCTrftdc=;
+ b=fC5wYY+L7e4lHZKFM6rh+n1I3eAut+N/E2s2/VWGp7IIsR9YprudaZsHhXAmuUFELt
+ KWsdQqIjkiDLa3/eDt3LRi6LDbGizij3Ye72JzNITiu6LakNYoieXaP9eHNQWQ7rSsJ4
+ nfr0sPZD8WpfxvLjmj8B9pdq7CG3iEM3Y63JflX54VieONusH2eSxWNQr0sSaNIQE448
+ 8Ya0pu8hG1OzXQ+nptE86QYWa1Q5VSEPtF+Er/AskX9/TJupEaw3iaJKSsCtHhsAQLgJ
+ Wsq6meNA/sjX+NA9qXl85j3XYo7oqw8VHZWdIVaVede5TucTnoecC5BtXYzd6ISmootW
+ Pj5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780033182; x=1780637982;
+ d=1e100.net; s=20251104; t=1780033176; x=1780637976;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=6oNbzeuHYqzJqPXTvToeml5tO5atWiLWRWSbBqwaggo=;
- b=hkDsJqMIG60YRGbgnPd/8LopXCn85PIUDolgpEb+RjzvNuHri8de1sBvG0CzXXCt0w
- 4+cfZX5h3ZtfLBuFRVh1H5FfzDEK0wyCT/b2oWpUkJVnyeoy0ESfsOXcJ08dS4HSrwoC
- 9uAf9FfCk+1Rx/XaNOL97Fm3rtdP97R/quYCaU0vptEsM4TptCy7bGCHGgXSlZehQDTn
- Oh1EnFRD9rTvoRGacTgePXvT0MlYF9SrecpAb0cQcogChi0HNOto2C87/HNvCsQWPzJI
- ObNLyn7QG7r45R/rLrTNlwAFiGkqzdIy6vpUMLKZUGicNmANRhUzFp381s9HxGz9dHQz
- lFQA==
-X-Gm-Message-State: AOJu0YzvJGuK85SlkNJo5FS7gyIADYBYcVMxiAKJo4P9pTbYoc3WYHyk
- a6CCKZvhdaI1i0baiO/EGzheA346jRut4sumU4n4MC7/POuzyo3bB43oySG/Zui4lvI=
-X-Gm-Gg: Acq92OHZQ/lL3QnqRCRNcFsSoyK17OfyFFqhDI7wdYm6Vy27cwIcPoZ8ig8HGer9Nx2
- vchhlQ/AYrFC8wVfZIt9uybMQd1rnB7PxCpNNjAhcefNhrZsxh9EsO0K/u2dndKbKhZt0LiUNhv
- qQU1HuLQohmkpzct4sGkIw3TQKpyuKtCRHu3kuqHmZRQy0gBNqPMu4rRaPWYtBllG275z110cLi
- 9IYaWFdKP33Acg0UctxO293by5TwsIFr583eWlanaXDcsY4LdnY4bl3jECJB6DcTulXGa4yPVKX
- MwldH4LTqPOdOHhx2FWHyxcPAzdTyN8g1DuMcrVFPTSTChITQ+hMdfRj0GPnOwjLelDn9Pfka2s
- zHRo72E8u0hhtXoDgeAZ+u/a4aQ8Kmz8CmhZOCnVQnyZM+ukfh2tZvlsTptwDswtDpIIuIwYY5/
- jQqmx5h8tOMS+t/VvAM+lRQAo1Pp0FI0YwYg==
-X-Received: by 2002:a05:600c:c0d2:10b0:48e:7854:1608 with SMTP id
- 5b1f17b1804b1-4909c0b34e3mr15162905e9.25.1780033181971; 
- Thu, 28 May 2026 22:39:41 -0700 (PDT)
+ bh=PRA9+wsZYNyXrpSi/wutg8agv+vYe+z7EAFvCTrftdc=;
+ b=ZPVXxpjvRTVz2NdYDOqzg2OBE1tEKwfo7pVDqEvcKahAI5uQW8mRq1Zw+iiC2s727l
+ UMklA/mjm7aHnqgu/CzbaiaNBaoLUexjQTqXUCJ6KlsFcggrT/rmrXnEbXyx/bZWplCW
+ XZZQcpvuG0R0LdDzG4acCQGy1gwPP7T5B59FZeKY+Wijf51q36Fvr03yPwOJhB2TuXTt
+ Dvo1LesNRGTncQ18PiZ552zJyO4D5hUUmzuVRBaf3Ce7xkuUMXWc6cSuar0XyFW2r4IM
+ e4Pnv1oshyB3kRmcVtbWZb0vWcA20WqTd0iZGA0ASP+N/6SsQi3IgowbozTK9DDmefNV
+ tvXQ==
+X-Gm-Message-State: AOJu0YzWt4x9Qar05E28RwRkNIwUCybm1wLAw0ElKrDqh/paaYfw0KvX
+ lv/SAnQFv4MFJJ4xfPCknl9DLzfJeatvDrmySqR8+x9ruxXGKdj9HtI9gEzJqlCWIFo=
+X-Gm-Gg: Acq92OFeV9WTkAKe0U53IW38uksjl7uhQ9DvQasEMrtl9+IKQ4hadBQbPPfZ4+xs75l
+ uXvltG43kbXyqpwKbgLZ4IMYdVHoaTeQTndaLsDYt8yRHaUues4+Tlyonx+nPAikFcRHSvvPuPj
+ oiVqxdaHpTflNpQvo3I+AtFGoYAUvyuyoyMNzUhGF7BqEiaIE0btBUjvFaQ3jHJmvUF23YMxJby
+ BxtJR9wPkgDRt3fBlLolaHvtbzUd+MYymVq8iFdn0QBtn/uZ6am7vowbrwpX6MI9NRddZwFVRGd
+ nKWvdSxOvy7xrSPOr0n3fFDGVFTR9dxGa9BNAAM+YMGnWbHbGlYujut83IhIGLHDaIPuPgbza2k
+ dFAr/eShyZsaIlGCV5vL/sUk5kcVkaqri8QOaRQzEAgXiNYqMicNCyUCpLa3KI7ZIXgvwKXQt7Y
+ B7hhMaDTBClWINiSL66hNl7D8Lt3V6Yw9PJg==
+X-Received: by 2002:a05:600c:a08c:b0:490:9d1b:2033 with SMTP id
+ 5b1f17b1804b1-4909d1b228fmr18859095e9.9.1780033176095; 
+ Thu, 28 May 2026 22:39:36 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4909d696f25sm20156885e9.5.2026.05.28.22.39.35
+ 5b1f17b1804b1-4909cab0e79sm38207335e9.13.2026.05.28.22.39.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 May 2026 22:39:38 -0700 (PDT)
+ Thu, 28 May 2026 22:39:33 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 94902604BD;
+ by draig.lan (Postfix) with ESMTP id 1F5515FA5C;
  Fri, 29 May 2026 06:39:32 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 07/13] gitlab: add MacOS 26 job on gitlab runner
-Date: Fri, 29 May 2026 06:39:25 +0100
-Message-ID: <20260529053931.283970-8-alex.bennee@linaro.org>
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 02/13] tests/Makefile.include: fix typo in comment
+Date: Fri, 29 May 2026 06:39:20 +0100
+Message-ID: <20260529053931.283970-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260529053931.283970-1-alex.bennee@linaro.org>
 References: <20260529053931.283970-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,41 +104,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-gitlab supports 3 MacOS images with 15 and 26 being the current
-supported ones. To get ahead of the curve lets enable 26 as well.
-
-It re-uses the same brew list but also attempts to work around python
-configure failure by setting DYLD_LIBRARY_PATH:
-/opt/homebrew/opt/expat/lib/
-
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260526110243.470002-8-alex.bennee@linaro.org>
+Message-ID: <20260526110243.470002-3-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/.gitlab-ci.d/macos.yml b/.gitlab-ci.d/macos.yml
-index c93bf12a294..f61750a3f4a 100644
---- a/.gitlab-ci.d/macos.yml
-+++ b/.gitlab-ci.d/macos.yml
-@@ -45,3 +45,19 @@ aarch64-macos-15-build:
-         --cross-prefix-x86_64=x86_64-elf-
-         --disable-plugins
-     TEST_TARGETS: check-unit run-tcg-tests-aarch64-softmmu run-tcg-tests-i386-softmmu run-tcg-tests-x86_64-softmmu
-+
-+aarch64-macos-26-build:
-+  extends: .macos_job_template
-+  image: macos-26-xcode-26
-+  variables:
-+    NAME: macos-26
-+    DYLD_LIBRARY_PATH: /opt/homebrew/opt/expat/lib/
-+    PATH_EXTRA: /opt/homebrew/gettext/bin
-+    PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
-+    CONFIGURE_ARGS:
-+        --target-list=aarch64-softmmu,i386-softmmu,x86_64-softmmu
-+        --cross-prefix-aarch64=aarch64-elf-
-+        --cross-prefix-i386=i686-elf-
-+        --cross-prefix-x86_64=x86_64-elf-
-+        --disable-plugins
-+    TEST_TARGETS: check-unit run-tcg-tests-aarch64-softmmu run-tcg-tests-i386-softmmu run-tcg-tests-x86_64-softmmu
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index a063a1d60fe..3b1af78ca1e 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -42,7 +42,7 @@ SPEED = quick
+ 
+ 
+ # TCG_TESTS_WITH_COMPILERS represents the test targets we have cross compiler
+-# support for, CONFIGURED_TEST_TARGETS it what meson has finally
++# support for, CONFIGURED_TCG_TARGETS it what meson has finally
+ # configured having rejected stuff we can't build.
+ CONFIGURED_TCG_TARGETS=$(patsubst %-config-target.h, %, $(wildcard *-config-target.h))
+ 
 -- 
 2.47.3
 
