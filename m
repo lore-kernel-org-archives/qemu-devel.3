@@ -4,49 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F305CD5BD2
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 07:29:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8808FCD6E45
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 07:39:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSrdy-00065h-7X; Fri, 29 May 2026 03:28:34 -0400
+	id 1wSro0-00084j-MP; Fri, 29 May 2026 03:38:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wSrdu-00065E-Po
- for qemu-devel@nongnu.org; Fri, 29 May 2026 03:28:30 -0400
-Received: from [115.124.30.124] (helo=out30-124.freemail.mail.aliyun.com)
+ id 1wSrny-00084H-MK
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 03:38:54 -0400
+Received: from [115.124.30.97] (helo=out30-97.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wSrdq-0006No-Bj
- for qemu-devel@nongnu.org; Fri, 29 May 2026 03:28:30 -0400
+ id 1wSrns-0000U8-NN
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 03:38:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1780039686; h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
- bh=ZqdxVbZW6CeWlAgMhY3W1SPLXqzeacXw4q7zWAMzo7I=;
- b=vvLqsKX0k2DGb6KgC0v8gp73GmItoVbul8H31Ii1lmYJj2dV3G3DiTOqTbDQBSJKvwkqjoMBeO7jhehFlWP8/G77scshdAWXt2rz4M1VwF/mnsks9fGsX2HY2ipXkL0nvQ4HhyoMUvF8Dp8nJoQdV+AIf3sSiek8WxySXj2sezg=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R171e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037033178;
+ t=1780040310; h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
+ bh=ul56GuKO7JZrLOsJWwf+SoRLqQLRwdyI33LvH/YSfOI=;
+ b=W1BdqR6RwgxbzpLaoMr+dPl+HBzrh/UEsxgUehpRJbU/7ljPmn2T9Su4QqvtuU+CCYWfE8o2gJDQ7uUNh/kU+OA3R0caOgVlkbG5j7zT8TqI3m2UJCuGXiIuc23bIMCZt90yaTKXejYmVWswxAZEenqYjP+dIRwpmUfjQqbtNp0=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R131e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
  MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=7; SR=0;
- TI=SMTPD_---0X3oeNs-_1780039684; 
+ TI=SMTPD_---0X3oeRjm_1780040309; 
 Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0X3oeNs-_1780039684 cluster:ay36) by smtp.aliyun-inc.com;
- Fri, 29 May 2026 15:28:05 +0800
+ fp:SMTPD_---0X3oeRjm_1780040309 cluster:ay36) by smtp.aliyun-inc.com;
+ Fri, 29 May 2026 15:38:29 +0800
 From: Bin Guo <guobin@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: imp@bsdimp.com, kevans@freebsd.org, laurent@vivier.eu, deller@gmx.de,
- pierrick.bouvier@oss.qualcomm.com, philmd@linaro.org
-Subject: [PATCH] util/cutils: drop qemu_strnlen() in favor of strnlen()
-Date: Fri, 29 May 2026 15:28:03 +0800
-Message-ID: <20260529072803.99475-1-guobin@linux.alibaba.com>
+To: philmd@linaro.org
+Cc: qemu-devel@nongnu.org, imp@bsdimp.com, kevans@freebsd.org,
+ laurent@vivier.eu, deller@gmx.de, pierrick.bouvier@oss.qualcomm.com
+Subject: Re: [PATCH] util/cutils: replace hand-rolled qemu_strnlen() with
+ strnlen()
+Date: Fri, 29 May 2026 15:38:28 +0800
+Message-ID: <20260529073828.2025-1-guobin@linux.alibaba.com>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <43cecf30-0d35-43e3-872f-d472ed2b795a@linaro.org>
+References: <43cecf30-0d35-43e3-872f-d472ed2b795a@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.124 (deferred)
-Received-SPF: pass client-ip=115.124.30.124;
- envelope-from=guobin@linux.alibaba.com;
- helo=out30-124.freemail.mail.aliyun.com
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.97 (deferred)
+Received-SPF: pass client-ip=115.124.30.97;
+ envelope-from=guobin@linux.alibaba.com; helo=out30-97.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -70,118 +72,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are only three call sites, and strnlen() is available on all
-supported platforms (POSIX.1-2008, Windows via UCRT, MinGW).  Remove
-the hand-rolled wrapper and use the standard function directly.
+On Fri, 29 May 2026 08:02:41 +0200, Philippe Mathieu-Daude wrote:
+> there are only 3 uses in the code base. Maybe drop qemu_strnlen()
+> altogether, using size_t in the callers?
 
-While here, align bsd-user/uaccess.c to use size_t for max_len/len,
-matching linux-user/uaccess.c and eliminating a signed/unsigned mismatch.
+Good suggestion. I've sent a v2 that drops qemu_strnlen() entirely and
+switches all callers to strnlen() directly. I also aligned bsd-user/uaccess.c
+to use size_t for max_len/len, matching linux-user/uaccess.c.
 
-Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
----
- bsd-user/uaccess.c    |  4 ++--
- include/qemu/cutils.h | 16 ----------------
- linux-user/uaccess.c  |  2 +-
- util/cutils.c         | 15 +--------------
- 4 files changed, 4 insertions(+), 33 deletions(-)
+New patch:
+https://lore.kernel.org/qemu-devel/20260529072803.99475-1-guobin@linux.alibaba.com/
 
-diff --git a/bsd-user/uaccess.c b/bsd-user/uaccess.c
-index 89163257f4..7ad4b580f4 100644
---- a/bsd-user/uaccess.c
-+++ b/bsd-user/uaccess.c
-@@ -43,7 +43,7 @@ abi_long target_strlen(abi_ulong guest_addr1)
- {
-     uint8_t *ptr;
-     abi_ulong guest_addr;
--    int max_len, len;
-+    size_t max_len, len;
- 
-     guest_addr = guest_addr1;
-     for (;;) {
-@@ -51,7 +51,7 @@ abi_long target_strlen(abi_ulong guest_addr1)
-         ptr = lock_user(VERIFY_READ, guest_addr, max_len, 1);
-         if (!ptr)
-             return -TARGET_EFAULT;
--        len = qemu_strnlen((const char *)ptr, max_len);
-+        len = strnlen((const char *)ptr, max_len);
-         unlock_user(ptr, guest_addr, 0);
-         guest_addr += len;
-         /* we don't allow wrapping or integer overflow */
-diff --git a/include/qemu/cutils.h b/include/qemu/cutils.h
-index 36c68ce86c..025b7f24dd 100644
---- a/include/qemu/cutils.h
-+++ b/include/qemu/cutils.h
-@@ -101,22 +101,6 @@ int strstart(const char *str, const char *val, const char **ptr);
-  *          false otherwise.
-  */
- int stristart(const char *str, const char *val, const char **ptr);
--/**
-- * qemu_strnlen:
-- * @s: string
-- * @max_len: maximum number of bytes in @s to scan
-- *
-- * Return the length of the string @s, like strlen(), but do not
-- * examine more than @max_len bytes of the memory pointed to by @s.
-- * If no NUL terminator is found within @max_len bytes, then return
-- * @max_len instead.
-- *
-- * This function has the same behaviour as the POSIX strnlen()
-- * function.
-- *
-- * Returns: length of @s in bytes, or @max_len, whichever is smaller.
-- */
--int qemu_strnlen(const char *s, int max_len);
- /**
-  * qemu_strsep:
-  * @input: pointer to string to parse
-diff --git a/linux-user/uaccess.c b/linux-user/uaccess.c
-index 27e841e651..f9bd713edd 100644
---- a/linux-user/uaccess.c
-+++ b/linux-user/uaccess.c
-@@ -99,7 +99,7 @@ ssize_t target_strlen(abi_ulong guest_addr1)
-         ptr = lock_user(VERIFY_READ, guest_addr, max_len, 1);
-         if (!ptr)
-             return -TARGET_EFAULT;
--        len = qemu_strnlen((const char *)ptr, max_len);
-+        len = strnlen((const char *)ptr, max_len);
-         unlock_user(ptr, guest_addr, 0);
-         guest_addr += len;
-         /* we don't allow wrapping or integer overflow */
-diff --git a/util/cutils.c b/util/cutils.c
-index 76a9442085..a89213966e 100644
---- a/util/cutils.c
-+++ b/util/cutils.c
-@@ -54,7 +54,7 @@
- 
- void strpadcpy(char *buf, int buf_size, const char *str, char pad)
- {
--    int len = qemu_strnlen(str, buf_size);
-+    int len = strnlen(str, buf_size);
-     memcpy(buf, str, len);
-     memset(buf + len, pad, buf_size - len);
- }
-@@ -118,19 +118,6 @@ int stristart(const char *str, const char *val, const char **ptr)
-     return 1;
- }
- 
--/* XXX: use host strnlen if available ? */
--int qemu_strnlen(const char *s, int max_len)
--{
--    int i;
--
--    for(i = 0; i < max_len; i++) {
--        if (s[i] == '\0') {
--            break;
--        }
--    }
--    return i;
--}
--
- char *qemu_strsep(char **input, const char *delim)
- {
-     char *result = *input;
--- 
-2.50.1 (Apple Git-155)
-
+Thanks,
+Bin Guo
 
