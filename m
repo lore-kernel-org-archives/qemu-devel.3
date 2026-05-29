@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC93ACD6E4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:48:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A60DCD6E43
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:48:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSvgg-0001Y7-JG; Fri, 29 May 2026 07:47:38 -0400
+	id 1wSvgn-0001dr-1x; Fri, 29 May 2026 07:47:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSvgf-0001WG-1x
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:37 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1wSvgl-0001cb-GQ
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:43 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSvgd-0008C8-2V
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:36 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-44a74032ff8so10351917f8f.1
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 04:47:34 -0700 (PDT)
+ id 1wSvgj-0008DU-KY
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:43 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-44a74032ff8so10352004f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 04:47:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780055253; x=1780660053; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780055260; x=1780660060; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=qB7fQp4x+McFQYtKQptrI3Tcb3Zfy5XaCtc15S7Ao0g=;
- b=ulIICacvKhG/fcQunQ5clnK4ZuPk5e2Qs+/S8qa8L95h7LILZxg+/7BLqU/EHKh98B
- goejqjyyOWHsrlcZaXh8EAnlHnsju4L5Qtf+5TQ0aWM5piEsADLpJju4hPsffh8SBp9u
- iO8LIl/MxeNePG2L4fHF1pUKhDUHmU3K8Iquf++ecid31GmMHQ5wyxY8Kf7rBjmpSXV2
- V5ktoRv18zdHYOGXGvRyszvLl/ZALFL5GJuRdTT4CmFcZEk2Sh1dAYDZvnfMBq/CRj93
- hbA/2RMoGIDIN47v8DAX2dl9CCZO4i4ankGH0Y/pLFGvW0ccU3hk8L8DPYwSBINIWeve
- GigA==
+ :reply-to; bh=8wRv/E3k2nzF756LIvjiKBw9+SXmuBb0NqpGmE3Ip94=;
+ b=qRqCOAivZ12G9ao6sKZTAP4rfUQ/gOYIxrt4MK1ui2dbM1xm8KuGbatmWPsNUBUruv
+ /p44BQfPxFetrQ/Riqv66iqZDqgMQiboL2JTucjsKS6mjngQyCnI+72Fv0hlpStIhXSq
+ rMydwRKpo0t4xU4D1+xh3cfr9C9zg8OtLaw2o6uDORQyqqQat1m5NLwQmJdwAbJEoSkc
+ cQT3Lpb+4AcWzjhaV6o8QQ+/s7LwaLX/CyHbXbiqmOvhLQlOzS3gNzSZMSY9J8VBcuFB
+ mz/lvnAAl09v5Wkh2xYkhK4MsYRFicIAkEoAFIVsiQh0QNDsU+Q4/ZBOHZfSY3st27bD
+ 4GyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780055253; x=1780660053;
+ d=1e100.net; s=20251104; t=1780055260; x=1780660060;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=qB7fQp4x+McFQYtKQptrI3Tcb3Zfy5XaCtc15S7Ao0g=;
- b=H6z5VCClmdimApX1joxxjzM94bVcpQ3Vq472K2XCGjQuD59TRvbLvMGQ3YhRNfVcUX
- AIJFnliRPu0wDmxnEWKC4yLgcSmurQYuC9UpMn8aipNkUW0S1K5UBedraeLIDTv/o0o/
- fZlvmAaiujDwoJhPMNs2k6ZihG6q0YU/UGL/wC5ww0krtJNZYkVAkymU27tVu6NoGide
- oPtYWS4QvupiUy24Gkx7MxWu6QT2gJfe31tf/wJ1SpEV/Hl/TX172gZKuVw1d2Kwbw8M
- 8qr5d+yhKlCWKVSSW67ieRRDepgM236OIVR+V1egG8LKG6Jw9Qj9sAciiV2I30Jd0kLD
- 3tcw==
-X-Gm-Message-State: AOJu0Yyb5fST2s+SfkJZ4LfVEms566lv2MuD+pa+7r4M2A4s27leRIGv
- 1U1eojW4iX/6n1YIlVaqVZo23jEPU3Fwa/eldYTlpjNtgzBd4xSBnAv5FCB4QzomffcmKtS7yOB
- kJGr5
-X-Gm-Gg: Acq92OH4VrxIgPFg6RHy1w0tNafJGAAmEc5aGTMpRjDWSF61N3OMXL/cU3yX3dQ2lL3
- Ko8I84z0X0iItEW6zXx04Wg603JYUbD90VDxIAnrtzRv3LtBF2bWyJE0s9+ixANgalA8uFczZVp
- uqBcwqg7i6PpzBLiHCyU7EBB0PIlg8jIB/KzA4vN2X1b7v6YqVcTWaOKpNgrR8AEUjieOexSMr7
- NvvPMCX7WI8bNrpooLZTPbmols2SVlKD3MxNXvzWC+dk6hj4QG0yF9uu0hNyYm64LbxnnGuTtoC
- rXAPtgUkQn1jIu01LbKEDEupYfhvApauiGXJElSvZDPuMy3Wv2tEQETv+xWsuG913FTjryBNG4C
- YCdBa+zPtrICISkgbGBRNqoVli2WaeVDIIL7HOGpMy+9w6xfu+6Wh613lDEM/+d1ZF61eiYpOxk
- OFBe4gbiht/P+nfCHSL23iyIS/aA0XBi317ly2PJdi9FLpkOXymJZ6hbc3O6O64xsiGdMkmVZ0T
- U2aVXPX3GickQcWsZOAA6OSgvZ+Mky6D59u44PVRw==
-X-Received: by 2002:a05:6000:4615:b0:455:70bc:216d with SMTP id
- ffacd0b85a97d-45ef13f7a47mr4846772f8f.12.1780055253406; 
- Fri, 29 May 2026 04:47:33 -0700 (PDT)
+ bh=8wRv/E3k2nzF756LIvjiKBw9+SXmuBb0NqpGmE3Ip94=;
+ b=YiivilyDhKqmSpTIa9d2yC3lvDsAoKaIkwoiHLPLDd7GNP5hm7MJf1NgwmFYV1gBPe
+ 6ywclKSUcqlWKFq2kU8n77B8sf80ehb/Rrix0RUHX0c3gRMj8zEOlda8hbt5E2ibDxxX
+ P2Fx7EOYRMB5A53NLb3090Y5zCEO6rLeWOO/jBUvLLZvPyaiLxYdsv3zofEyxFjqNAFX
+ L54wxBmP58WUFaun0/TgPyHc1mrwMsQ+E4OTnESlfGgIPs1pPF/itLQalwnaZZur01fw
+ e3QZ2sJswfd0UopwdJVQm9+UhYYq7oKsTTfQIg9McLrObSEnIMn6Ybfwdl9WTxpj65E8
+ KKfQ==
+X-Gm-Message-State: AOJu0Ywg2Y6/RA4vkTSTrHE8p+HfQvbmXZol+Ox6LhaZp2XDAVtJUZyz
+ xZ47NP9TlDfpDndkNPz/XPEPDei9m0XhCMBQ3FG0vuyT7HNUjS6TZhJLHu6t/1cfYgYnIjhQs3P
+ n/5gS
+X-Gm-Gg: Acq92OEql2Ro4y3TiBXIK/y2VhBu/arWPSxkzuZNxNgTcXxkgL/419/x3CYGfz4FqPr
+ tXl3AmiZ6vM7mRaDZ3/F4Ml6hcuG5gl5fIojaJxb+Kwkp7jj1rpvVWgHZNrnWDYbWv0cR3nYgnq
+ pw7lhoUolxscj4P4Lt3yUF+banPIHXF26i2ENGNQssucxzVwd+wHDbcx5yGiOCICS03f0UKhRcr
+ T3XdLojYGlWkcar6N1r5Hx0RB1LNO5cQjroRsdiOMdX2kx9lH0w85yZxnE4+DpKJmOWJ5gYayEe
+ Yn3k+x2vtIkSR/jXaGeujVfxQ1DUF1s1QebXPifCIh866oWsIfWddsbZnF1DrAO9+AGR2UIleZs
+ CHcEvhNwvAJ0e5TU80P4u4Q3PAWYQB/IWiIABbmTUdBuuUZ4iUB5kczhyg4XCqMbRjbJEp1B/NS
+ UT55sLexscZVeSMTLdyCjwSoIj9/Kj1u7w+A1FEw0N0SkD21Kipv43B2ojDPIuv9IXai6NSwsWR
+ 3sP2wCh11jKlXWUsksnLmxhFS7rvOkW55JEHFf/1g==
+X-Received: by 2002:a05:600c:3b10:b0:48f:e230:2a21 with SMTP id
+ 5b1f17b1804b1-4909c0d0f1bmr48824385e9.32.1780055260148; 
+ Fri, 29 May 2026 04:47:40 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ef3563cb9sm3007358f8f.29.2026.05.29.04.47.32
+ ffacd0b85a97d-45ef3563cb9sm3007358f8f.29.2026.05.29.04.47.39
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 May 2026 04:47:32 -0700 (PDT)
+ Fri, 29 May 2026 04:47:39 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/21] hw/misc/zynq_slcr: Add logic for DCI configuration
-Date: Fri, 29 May 2026 12:47:09 +0100
-Message-ID: <20260529114723.42040-9-peter.maydell@linaro.org>
+Subject: [PULL 14/21] target/arm: Enable FEAT_CMPBR for -cpu max
+Date: Fri, 29 May 2026 12:47:15 +0100
+Message-ID: <20260529114723.42040-15-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260529114723.42040-1-peter.maydell@linaro.org>
 References: <20260529114723.42040-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,98 +100,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: YannickV <Y.Vossen@beckhoff.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The registers for the digitally controlled impedance (DCI) clock are
-part of the system level control registers (SLCR). The DONE bit in
-the status register indicates a successfull DCI calibration. An
-description of the calibration process can be found here:
-https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/DDR-IOB-Impedance-Calibration
-
-The DCI control register and status register have been added. As soon
-as the ENABLE and RESET bit are set, the RESET bit has also been toggled
-to 0 before and the UPDATE_CONTROL is not set, the DONE bit in the status
-register is set. If these bits change the DONE bit is reset. Note that the
-option bits are not taken into consideration.
-
-Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Message-id: 20260518073401.11279-8-corvin.koehne@gmail.com
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260518174750.660258-5-richard.henderson@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/misc/zynq_slcr.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ docs/system/arm/emulation.rst | 1 +
+ linux-user/aarch64/elfload.c  | 1 +
+ target/arm/tcg/cpu64.c        | 2 +-
+ 3 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/hw/misc/zynq_slcr.c b/hw/misc/zynq_slcr.c
-index faae98fa02..0ae5d607be 100644
---- a/hw/misc/zynq_slcr.c
-+++ b/hw/misc/zynq_slcr.c
-@@ -180,6 +180,12 @@ REG32(GPIOB_CFG_HSTL, 0xb14)
- REG32(GPIOB_DRVR_BIAS_CTRL, 0xb18)
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index e44b3016be..37ca4e47b8 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -35,6 +35,7 @@ the following architecture extensions:
+ - FEAT_CCIDX (Extended cache index)
+ - FEAT_CHK (Check Feature Status)
+ - FEAT_CMOW (Control for cache maintenance permission)
++- FEAT_CMPBR (Compare and Branch instructions)
+ - FEAT_CRC32 (CRC32 instructions)
+ - FEAT_Crypto (Cryptographic Extension)
+ - FEAT_CSSC (Common Short Sequence Compression instructions)
+diff --git a/linux-user/aarch64/elfload.c b/linux-user/aarch64/elfload.c
+index ceeeee5315..228b593316 100644
+--- a/linux-user/aarch64/elfload.c
++++ b/linux-user/aarch64/elfload.c
+@@ -170,6 +170,7 @@ abi_ulong get_elf_hwcap(CPUState *cs)
+     GET_FEATURE_ID(aa64_rcpc_8_3, ARM_HWCAP_A64_LRCPC);
+     GET_FEATURE_ID(aa64_rcpc_8_4, ARM_HWCAP_A64_ILRCPC);
+     GET_FEATURE_ID(aa64_gcs, ARM_HWCAP_A64_GCS);
++    GET_FEATURE_ID(aa64_cmpbr, ARM_HWCAP_A64_CMPBR);
  
- REG32(DDRIOB, 0xb40)
-+REG32(DDRIOB_DCI_CTRL, 0xb70)
-+    FIELD(DDRIOB_DCI_CTRL, RESET, 0, 1)
-+    FIELD(DDRIOB_DCI_CTRL, ENABLE, 1, 1)
-+    FIELD(DDRIOB_DCI_CTRL, UPDATE_CONTROL, 20, 1)
-+REG32(DDRIOB_DCI_STATUS, 0xb74)
-+    FIELD(DDRIOB_DCI_STATUS, DONE, 13, 1)
- #define DDRIOB_LENGTH 14
- 
- #define ZYNQ_SLCR_MMIO_SIZE     0x1000
-@@ -193,6 +199,8 @@ struct ZynqSLCRState {
- 
-     MemoryRegion iomem;
- 
-+    bool ddriob_dci_ctrl_reset_toggled;
-+
-     uint32_t regs[ZYNQ_SLCR_NUM_REGS];
- 
-     Clock *ps_clk;
-@@ -331,6 +339,8 @@ static void zynq_slcr_reset_init(Object *obj, ResetType type)
- 
-     DB_PRINT("RESET\n");
- 
-+    s->ddriob_dci_ctrl_reset_toggled = false;
-+
-     s->regs[R_LOCKSTA] = 1;
-     /* 0x100 - 0x11C */
-     s->regs[R_ARM_PLL_CTRL]   = 0x0001A008;
-@@ -418,6 +428,8 @@ static void zynq_slcr_reset_init(Object *obj, ResetType type)
-     s->regs[R_DDRIOB + 4] = s->regs[R_DDRIOB + 5] = s->regs[R_DDRIOB + 6]
-                           = 0x00000e00;
-     s->regs[R_DDRIOB + 12] = 0x00000021;
-+
-+    s->regs[R_DDRIOB_DCI_CTRL] = 0x00000020;
+     return hwcaps;
  }
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index a377f67b9c..ce76e09d52 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1262,7 +1262,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+     t = FIELD_DP64(t, ID_AA64ISAR2, MOPS, 1);     /* FEAT_MOPS */
+     t = FIELD_DP64(t, ID_AA64ISAR2, BC, 1);       /* FEAT_HBC */
+     t = FIELD_DP64(t, ID_AA64ISAR2, WFXT, 2);     /* FEAT_WFxT */
+-    t = FIELD_DP64(t, ID_AA64ISAR2, CSSC, 1);     /* FEAT_CSSC */
++    t = FIELD_DP64(t, ID_AA64ISAR2, CSSC, 2);     /* FEAT_CSSC, FEAT_CMPBR */
+     t = FIELD_DP64(t, ID_AA64ISAR2, ATS1A, 1);    /* FEAT_ATS1A */
+     SET_IDREG(isar, ID_AA64ISAR2, t);
  
- static void zynq_slcr_reset_hold(Object *obj, ResetType type)
-@@ -554,6 +566,25 @@ static void zynq_slcr_write(void *opaque, hwaddr offset,
-                 (int)offset, (unsigned)val & 0xFFFF);
-         }
-         return;
-+
-+    case R_DDRIOB_DCI_CTRL:
-+        if (!FIELD_EX32(val, DDRIOB_DCI_CTRL, RESET) &&
-+            FIELD_EX32(s->regs[R_DDRIOB_DCI_CTRL], DDRIOB_DCI_CTRL, RESET)) {
-+
-+            s->ddriob_dci_ctrl_reset_toggled = true;
-+            DB_PRINT("DDRIOB DCI CTRL RESET was toggled\n");
-+        }
-+
-+        if (FIELD_EX32(val, DDRIOB_DCI_CTRL, ENABLE) &&
-+            FIELD_EX32(val, DDRIOB_DCI_CTRL, RESET) &&
-+            !FIELD_EX32(val, DDRIOB_DCI_CTRL, UPDATE_CONTROL) &&
-+            s->ddriob_dci_ctrl_reset_toggled) {
-+
-+            s->regs[R_DDRIOB_DCI_STATUS] |= R_DDRIOB_DCI_STATUS_DONE_MASK;
-+        } else {
-+            s->regs[R_DDRIOB_DCI_STATUS] &= ~R_DDRIOB_DCI_STATUS_DONE_MASK;
-+        }
-+        break;
-     }
- 
-     if (s->regs[R_LOCKSTA]) {
 -- 
 2.43.0
 
