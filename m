@@ -4,58 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 746C9CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 14:13:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43F06CD4F54
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 14:16:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSxxC-0007vV-Vd; Fri, 29 May 2026 10:12:51 -0400
+	id 1wSy0D-0000DZ-Vi; Fri, 29 May 2026 10:15:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexandru.elisei@arm.com>)
- id 1wSxxB-0007vG-Jd
- for qemu-devel@nongnu.org; Fri, 29 May 2026 10:12:49 -0400
-Received: from foss.arm.com ([217.140.110.172])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <alexandru.elisei@arm.com>) id 1wSxx8-0004Hp-OZ
- for qemu-devel@nongnu.org; Fri, 29 May 2026 10:12:49 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 835901516;
- Fri, 29 May 2026 07:12:39 -0700 (PDT)
-Received: from raptor (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 768473F905;
- Fri, 29 May 2026 07:12:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
- t=1780063964; bh=MVV/jLs3MIsHo/5E7w96SpLAX/S4NGPHkgxwR2bR/Ko=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=OQrVUh8oeIs8LKDtlpTqC8vWm9+PI5fa26ZL4T0qm/YwZI1PkOva6d8HKXGfmRkTX
- wIxnvnZD7tNzUHNAX6GHaALvEuz115URctUT+OMHZSoSNNbzIBh6REmwYDsoicxPuw
- wpvOzsb3ZYS50kmb6+zwbST6yNd4JU6XYruApTEA=
-Date: Fri, 29 May 2026 15:12:32 +0100
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Andrew Jones <andrew.jones@linux.dev>,
- Eric Auger <eric.auger@redhat.com>,
- "open list:ARM" <kvmarm@lists.linux.dev>,
- "open list:Default mailing list" <kvm@vger.kernel.org>
-Subject: Re: [kvm-unit-tests PATCH v2] arm: add wfx test case
-Message-ID: <ahme0HOEcQW9Sok-@raptor>
-References: <20260527111822.1563679-1-alex.bennee@linaro.org>
- <ahmdci3dLMyaaZn8@raptor>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wSy02-0000Bu-A9
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 10:15:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wSy00-0005E7-9o
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 10:15:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780064142;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=PCDGMmoAOu1cSPgOMNHwPu/bQbjKUUr2C9v5br3qW7E=;
+ b=RaI/SSPhlOD0QhXR/QCapxuMI2xJO1A5AXlCtUpP8MAvplwfGUD1kQEEU/xw25jDjyFGFG
+ oFiHo9lbvywsxRp20/gPBAuzvvq7lpgWzVauzgzqz58tvJZ3F8dhO0wuk6YxjHtRwXsQmj
+ fM+LrYEByjWRh21hTVArqfi1WbniGDE=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-589-_eH16Ht-O0S_sHR3FUaOfg-1; Fri, 29 May 2026 10:15:41 -0400
+X-MC-Unique: _eH16Ht-O0S_sHR3FUaOfg-1
+X-Mimecast-MFC-AGG-ID: _eH16Ht-O0S_sHR3FUaOfg_1780064140
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-91382222f94so2630049385a.1
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 07:15:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1780064140; x=1780668940; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=PCDGMmoAOu1cSPgOMNHwPu/bQbjKUUr2C9v5br3qW7E=;
+ b=hkyHcXUIPah68tdU9W3bzMgQueDjBbu1wnAH/gfB/w1RfSQC4nSe4x21uFX0mgtlA4
+ jBKe7NNO+buoMuV3KXF/PGC86+y2JTPtzxOGk/dkmNOSEKMZROiUVUYrn3k+0lrAEox4
+ X5lr23tIHg2gQHXxwD5dcuBEULRdl62zQ2QLcowKdjBJ5V9cErehX827CD3WAwA9g1Ml
+ ZPDrpx1VXhJNOvPkcPAxuqpX13vg/g05LV1dDO2qx3DJngfLGC6OawKAxJ8IA5LGB4s3
+ J7NMrqe8X4soA+ei1/LENGG82IyWurjpliOqS7cUnKwRC9ug18b1gJJm4fYVrharvPBC
+ mBYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780064140; x=1780668940;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PCDGMmoAOu1cSPgOMNHwPu/bQbjKUUr2C9v5br3qW7E=;
+ b=SbmVC8L9oqiRYyo4AnwEvdIeI6W8gQBuOFj4aKDl21Xu/vzs99rpMHJoX7gg6pCe5x
+ kh/DwESFii08BG+5iztw19DJgzmkR2v2As4Mju1ZSQJ+PM+JANjfuZ4A7/Aejq8084K5
+ 7CWBnMPE5IXDvmKZ4fsDlvZFioWZuRqdUXzOc8S+4IKTzwv5VafdlGyKcHftbYa+zT9n
+ 4g5cyzWdIOlYUqNDEItPhJfoQ/Q8lyLlNbNnVdxynXFf3zF/19tAlJoIHJRhOqa1e4f0
+ 627U5sMiKBoJppYAdE73qd+QuMvEUh68oGjkO6qrJ+9iopqzdiFsQO5zSyIPqsmr++lf
+ pxZQ==
+X-Gm-Message-State: AOJu0Yz7hIDV8+kRE84r2n/czA1xxL1EJUMIlBHh0ligeInNFLjdlTYG
+ 1zRtBCTYWxDfpk+OCGSYybXAO5g8eU99MOMnHiC6uSR1483G9te3VKgeJq6EdH3oQsDeQV1M1eP
+ VLXpZk4r52zOP+tztRIv134icv5W7/mf/t3mEae8r9idI6PPmfzj9BuQY
+X-Gm-Gg: Acq92OFhaFd18wfFMU1yyGybcnLneEHRNH5Gtwv3Gh9Nr3hYI/NEo8oF3egUmsyVZh7
+ Q94z9x2P0DlzzIlY537KgpDEHpDOiK2ACadSH02+FrY4/DCmMRq0eEuDoPgiJGqaPAlrvlU7SEe
+ h39gQjVVWVev7I53W1B+hutNo3AoFKIOmsXFqe75O1mY3YnVQjDckg0w7LuVwco6YukM2vHJzhb
+ cKR1T862q+eiJByovqbdOZzB2bOG/ywt3FPDunFQlHEHxS8F4fDLDXonMYpNvJsX7K+qnf/G2qF
+ rUIbzBD+ejkOW6rkVlc07FDruKvsg2I3c0dVW3EqMpspDeNBP3s3nzby/pq4dwwnN0lQuELfpGL
+ GPGoIxHJkHA3nM2tc2/+yu7bCq6MmATk9ERvZm0tEpY0f2U1wCC/40f+mkQ==
+X-Received: by 2002:a05:620a:3910:b0:911:bade:b51b with SMTP id
+ af79cd13be357-9152fcd2fe8mr440526985a.7.1780064138730; 
+ Fri, 29 May 2026 07:15:38 -0700 (PDT)
+X-Received: by 2002:a05:620a:3910:b0:911:bade:b51b with SMTP id
+ af79cd13be357-9152fcd2fe8mr440500785a.7.1780064137078; 
+ Fri, 29 May 2026 07:15:37 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-915325feedasm197534685a.29.2026.05.29.07.15.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 May 2026 07:15:36 -0700 (PDT)
+Date: Fri, 29 May 2026 10:15:35 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Mark Kanda <mark.kanda@oracle.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Jason Wang <jasowang@redhat.com>, Ben Chaney <bchaney@akamai.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: Re: [PATCH RFC 0/2] migration/vl: new -incoming config:* for early
+ migration parameters
+Message-ID: <ahmfh2s7CLFLoZKN@x1.local>
+References: <20260528212947.368132-1-peterx@redhat.com>
+ <87se7btcq9.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ahmdci3dLMyaaZn8@raptor>
-Received-SPF: pass client-ip=217.140.110.172;
- envelope-from=alexandru.elisei@arm.com; helo=foss.arm.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <87se7btcq9.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,369 +120,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex,
+On Thu, May 28, 2026 at 07:01:50PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > CI: https://gitlab.com/peterx/qemu/-/pipelines/2560168907
+> >
+> > This series introduces a generic way to specify migration parameters that
+> > can be used even during the early boot phase of QEMU.
+> >
+> > One example use case that already existed is CPR-transfer / CPR-exec.
+> > currently QEMU has a temporary global variable (incoming_mode) to achieve
+> > this, but it's hard to understand and this hack bleeded into quite a few
+> > places that we could have avoided.  The lines in patch 2 touched may
+> > provide some idea.
+> >
+> > With a generic approach of setting migration parameters with cmdlines, we
+> > can remove this hack meanwhile QEMU should be able to keep the CPR behavior
+> > as before.  To CPR maintainers and reviewers: please have a closer look,
+> > even better if it can be smoke tested, to see if this works for Oracle's
+> > environment, TIA.
+> >
+> > The 1st patch implemented that new semantics.  It is straightforward: now
+> > we can setup any migration parameter using an extra line of:
+> >
+> >   -incoming config:key1=value1,key2=value2,...
+> 
+> Just merge my code mate.
+> https://lore.kernel.org/r/20251215220041.12657-25-farosas@suse.de
 
-On Fri, May 29, 2026 at 03:06:42PM +0100, Alexandru Elisei wrote:
-> Hi Alex,
-> 
-> When I tried to run the test this is what I got:
-> 
-> $ ./run_tests.sh wfx
-> FAIL wfx (5 tests, 1 unexpected failures)
-> $ cat logs/wfx.log
-> timeout -k 1s --foreground 90s /usr/bin/qemu-system-aarch64 -nodefaults -machine virt -accel tcg -cpu max -device virtio-serial-device -device virtconsole,chardev=ctd -chardev testdev,id=ctd -device pci-testdev -display none -serial stdio -kernel arm/wfx.flat -smp 1 # -initrd /tmp/tmp.s0dfiRPbNO
-> INFO: WFx: Testing WFI...
-> PASS: WFx: WFI (10441943 ticks / 10441 ns)
-> INFO: WFx: Testing WFE/SEV...
-> PASS: WFx: WFE/SEV (8636 ticks / 8 ns)
-> INFO: WFx: Testing WFE/SEVL...
-> PASS: WFx: WFE/SEVL (5461 ticks / 5 ns)
-> INFO: WFxT: Testing WFIT...
-> PASS: WFxT: WFIT (10135025 ticks / 10135 ns)
-> INFO: WFxT: Testing WFET...
-> FAIL: WFxT: WFET (19391 ticks / 19 ns)
-> INFO: WFxT: WFET woke too early
-> SUMMARY: 5 tests, 1 unexpected failures
-> 
-> EXIT: STATUS=3
-> 
-> $ /usr/bin/qemu-system-aarch64 --version
-> QEMU emulator version 11.0.0
-> Copyright (c) 2003-2026 Fabrice Bellard and the QEMU Project developers
-> 
-> Any idea what I might be doing wrong?
-> 
-> On Wed, May 27, 2026 at 12:18:21PM +0100, Alex Bennée wrote:
-> > This is based on a similar test case I wrote for QEMU's tcg tests although
-> > obviously able to take advantage of kvm-unit-tests additional plumbing for
-> > dealing with the GIC and IRQs.
-> > 
-> > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> > 
-> > ---
-> > v2
-> >   - drop TIMEOUT in favour of computed 10ms timeout
-> >   - add comments for each test
-> >   - use sevl for local clearing
-> >   - set gic irc depending on CurrentEL
-> >   - EOI the GIC
-> >   - display elapsed ns (no float to do ms ;-)
-> >   - fix some style issues
-> >   - make test TCG only
-> > ---
-> >  arm/Makefile.arm64        |   1 +
-> >  lib/arm64/asm/processor.h |   7 ++
-> >  lib/arm64/asm/sysreg.h    |   3 +
-> >  arm/wfx.c                 | 187 ++++++++++++++++++++++++++++++++++++++
-> >  arm/unittests.cfg         |   7 ++
-> >  5 files changed, 205 insertions(+)
-> >  create mode 100644 arm/wfx.c
-> > 
-> > diff --git a/arm/Makefile.arm64 b/arm/Makefile.arm64
-> > index a40c830d..52b3f35d 100644
-> > --- a/arm/Makefile.arm64
-> > +++ b/arm/Makefile.arm64
-> > @@ -64,6 +64,7 @@ tests += $(TEST_DIR)/cache.$(exe)
-> >  tests += $(TEST_DIR)/debug.$(exe)
-> >  tests += $(TEST_DIR)/fpu.$(exe)
-> >  tests += $(TEST_DIR)/mte.$(exe)
-> > +tests += $(TEST_DIR)/wfx.$(exe)
-> >  
-> >  include $(SRCDIR)/$(TEST_DIR)/Makefile.common
-> >  
-> > diff --git a/lib/arm64/asm/processor.h b/lib/arm64/asm/processor.h
-> > index 32ddc1b3..2104036d 100644
-> > --- a/lib/arm64/asm/processor.h
-> > +++ b/lib/arm64/asm/processor.h
-> > @@ -173,5 +173,12 @@ static inline bool system_supports_rndr(void)
-> >  	return ((id_aa64isar0_el1 >> ID_AA64ISAR0_EL1_RNDR_SHIFT) & 0xf) != 0;
-> >  }
-> >  
-> > +static inline bool system_supports_wfxt(void)
-> > +{
-> > +	u64 id_aa64isar2_el1 = read_sysreg_s(ID_AA64ISAR2_EL1);
-> > +
-> > +	return ((id_aa64isar2_el1 >> ID_AA64ISAR2_EL1_WFxT_SHIFT) & 0xf) != 0;
-> > +}
-> > +
-> >  #endif /* !__ASSEMBLER__ */
-> >  #endif /* _ASMARM64_PROCESSOR_H_ */
-> > diff --git a/lib/arm64/asm/sysreg.h b/lib/arm64/asm/sysreg.h
-> > index f2d05018..cb96a649 100644
-> > --- a/lib/arm64/asm/sysreg.h
-> > +++ b/lib/arm64/asm/sysreg.h
-> > @@ -77,6 +77,9 @@ asm(
-> >  #define ID_AA64ISAR0_EL1_RNDR_SHIFT	60
-> >  #define ID_AA64PFR1_EL1_MTE_SHIFT	8
-> >  
-> > +#define ID_AA64ISAR2_EL1		sys_reg(3, 0, 0, 6, 2)
-> > +#define ID_AA64ISAR2_EL1_WFxT_SHIFT	0
-> > +
-> >  #define ID_AA64MMFR0_EL1_FGT_SHIFT	56
-> >  #define ID_AA64MMFR0_EL1_FGT_FGT2	0x2
-> >  
-> > diff --git a/arm/wfx.c b/arm/wfx.c
-> > new file mode 100644
-> > index 00000000..0825c5cb
-> > --- /dev/null
-> > +++ b/arm/wfx.c
-> > @@ -0,0 +1,187 @@
-> > +/*
-> > + * WFX Instructions Test (WFI, WFE, WFIT, WFET)
-> > + *
-> > + * Copyright (c) 2026 Linaro Ltd
-> > + *
-> > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > + */
-> > +
-> > +#include <libcflat.h>
-> > +#include <asm/processor.h>
-> > +#include <asm/gic.h>
-> > +#include <asm/timer.h>
-> > +#include <asm/io.h>
-> > +
-> > +#define sev() asm volatile("sev" : : : "memory")
-> > +#define sevl() asm volatile("sevl" : : : "memory")
-> > +#define wfi() asm volatile("wfi" : : : "memory")
-> > +#define wfe() asm volatile("wfe" : : : "memory")
-> > +
-> > +#define wfit(reg) \
-> > +	asm volatile(".arch armv8.7-a\n\twfit %0" : : "r" (reg) : "memory")
-> > +#define wfet(reg) \
-> > +	asm volatile(".arch armv8.7-a\n\twfet %0" : : "r" (reg) : "memory")
-> > +
-> > +uint64_t time_hz;
-> > +uint64_t time_10ms;
-> > +
-> > +static void timer_handler(struct pt_regs *regs)
-> > +{
-> > +	u32 irqstat = gic_read_iar();
-> > +	u32 irqnr = gic_iar_irqnr(irqstat);
-> > +
-> > +	/* Disable timer to stop IRQ from re-firing */
-> > +	if (irqnr == TIMER_VTIMER_IRQ || irqnr == TIMER_HVTIMER_IRQ) {
-> > +		write_sysreg(0, cntv_ctl_el0);
-> > +		isb();
-> > +	} else {
-> > +		if (irqnr != GICC_INT_SPURIOUS)
-> > +			gic_write_eoir(irqstat);
-> > +		report_info("Unexpected interrupt: %d\n", irqnr);
-> > +		return;
-> > +	}
-> > +
-> > +	/* Also acknowledge EOI for the GIC */
-> > +	gic_write_eoir(irqstat);
-> > +}
-> > +
-> > +static bool check_elapsed(uint64_t start, uint64_t threshold, const char *test, bool more)
-> > +{
-> > +	uint64_t end = read_sysreg(cntvct_el0);
-> > +	uint64_t elapsed = end - start;
-> > +	bool pass = more ? elapsed >= threshold : elapsed <= threshold;
-> > +
-> > +	report(pass, "%s (%ld ticks / %ld ns)",
-> > +	       test, elapsed, elapsed / (time_hz / 1000000));
-> > +
-> > +	if (!pass)
-> > +		report_info("%s %s", test, more ? "woke too early" : "slept despite SEV");
-> > +
-> > +	return pass;
-> > +}
-> > +
-> > +/*
-> > + * Test WFI with timer interrupt
-> > + *
-> > + * WFI should wake up when the interrupt is pending. We unmask
-> > + * interrupts here so they are taken and then check WFI actually
-> > + * did sleep rather than return straight away.
-> > + */
-> > +static void test_wfi(void)
-> > +{
-> > +	uint64_t start;
-> > +
-> > +	report_info("Testing WFI...");
-> > +
-> > +	start = read_sysreg(cntvct_el0);
-> > +	write_sysreg(time_10ms, cntv_tval_el0);
-> > +	write_sysreg(1, cntv_ctl_el0); /* Enable timer, no mask */
-> > +	isb();
-> > +
-> > +	local_irq_enable();
-> 
-> There's nothing to guarantee that the CPU won't handle the interrupt between
-> local_irq_enable() above and the wfi() below, thus guaranteeing that the WFI
-> will never complete.
-> 
-> The Arm ARM says that WFI will complete if there is a pending interrupt even if
-> interrupts are **disabled** for the PE; this is also how Linux implements idle
-> (it disables interrupt on the PE before doing WFI).
-> 
-> > +	wfi();
-> > +	local_irq_disable();
-> 
-> So this code should probably be (untested):
-> 
-> diff --git a/arm/wfx.c b/arm/wfx.c
-> index 0825c5cbfcec..522edd36af38 100644
-> --- a/arm/wfx.c
-> +++ b/arm/wfx.c
-> @@ -78,8 +78,8 @@ static void test_wfi(void)
->         write_sysreg(1, cntv_ctl_el0); /* Enable timer, no mask */
->         isb();
-> 
-> -       local_irq_enable();
->         wfi();
-> +       local_irq_enable();
->         local_irq_disable();
-> 
->         check_elapsed(start, time_10ms, "WFI", true);
-> 
-> That is assuming that you want the timer interrupt handler to run, though it
-> doesn't look to me like the interrupt handler is very useful from a testing
-> perspective (i.e, the tests never check that the correct timer interrupt was
-> asserted, or even that the timer interrupt fired at all).
-> 
-> If you don't care about the timer interrupt handler running, you can skip
-> enabling the interrupt altogether, like the wfit test does; you know better than
+Heh, I apologize. I totally forgot it even if I seem to have read it..
 
-Sorry, this was sloppy wording from my part, what I mean is that '[..] you
-can skip enabling local interrupts (local_irq_enable()) altogether.'
+The goal is differnent, though, which is to make it available before
+migration object initialization.  Say, I wished -global would work too but
+it doesn't, and it just can't.  So it's not "something good to have"
+anymore, but functionally required for either CPR and TAP in the future if
+we adopt this, they'll all read them early.
 
-Thanks,
-Alex
+> 
+> A couple of differences from my patch:
+> 
+> - old-style keyval vs. json;
+> 
+> Isn't json preferred nowadays?
 
-> me what would be better.
+I didn't mention it in doc, but yeah this series also supports JSON due to
+the same qapi helper used.  I don't suggest json though for this entry (and
+that's also why I didn't mention it..) because 99% of migration parameters
+are scalars and I don't see why we should use JSON here.. the only one not
+scalar is block-bitmap-mapping but it's not intended to be used in
+-incoming at all (even if it'll work..).
+
 > 
-> > +
-> > +	check_elapsed(start, time_10ms, "WFI", true);
-> > +}
-> > +
-> > +/*
-> > + * Test WFE and SEV[L]
-> > + *
-> > + * There are two SEV instructions, the normal one is a broadcast
-> > + * from any PE on the system, the other is local only.
-> > + * Functionally they have the same effect (setting the event
-> > + * register) and should be immediately consumed by the WFE.
-> > + *
-> > + * As we want to detect an early exit the sense of the timeout
-> > + * check is reversed.
-> > + */
-> > +static void test_wfe(void)
-> > +{
-> > +	uint64_t start;
-> > +
-> > +	report_info("Testing WFE/SEV...");
-> > +	sev();
-> > +	start = read_sysreg(cntvct_el0);
-> > +	wfe();
-> > +	check_elapsed(start, time_10ms, "WFE/SEV", false);
-> > +
-> > +	report_info("Testing WFE/SEVL...");
-> > +	sevl();
-> > +	start = read_sysreg(cntvct_el0);
-> > +	wfe();
-> > +	check_elapsed(start, time_10ms, "WFE/SEVL", false);
-> > +}
-> > +
-> > +/*
-> > + * Test WFIT
-> > + *
-> > + * With the timer disabled and no other IRQ sources firing the
-> > + * WFIT instruction should timeout.
-> > + */
-> > +static void test_wfit(void)
-> > +{
-> > +	uint64_t start, timeout;
-> > +
-> > +	report_info("Testing WFIT...");
-> > +	start = read_sysreg(cntvct_el0);
-> > +	timeout = start + time_10ms;
-> > +	wfit(timeout);
-> > +	check_elapsed(start, time_10ms, "WFIT", true);
-> > +}
-> > +
-> > +/*
-> > + * Test WFET
-> > + *
-> > + * Much like WFIT there are no IRQs to wake us up. However the
-> > + * event_register is a latch so we must first consume the event
-> > + * register with a normal WFE before we do the timeout version.
-> > + */
-> > +static void test_wfet(void)
-> > +{
-> > +	uint64_t start, timeout;
-> > +
-> > +	report_info("Testing WFET...");
-> > +	/* Ensure no pending events */
-> > +	sevl();
-> > +	wfe();
-> > +
-> > +	start = read_sysreg(cntvct_el0);
-> > +	timeout = start + time_10ms;
-> > +	wfet(timeout);
-> > +	check_elapsed(start, time_10ms, "WFET", true);
-> > +}
-> > +
-> > +int main(void)
-> > +{
-> > +	uint32_t irq = current_level() == CurrentEL_EL1 ? TIMER_VTIMER_IRQ : TIMER_HVTIMER_IRQ;
-> > +
-> > +	if (gic_init() < 0) {
-> > +		report_abort("GIC init failed");
-> > +		return 1;
-> > +	}
-> > +
-> > +	/* Install timer handler for WFI wake-up */
-> > +	install_irq_handler(EL1H_IRQ, timer_handler);
-> > +	gic_enable_defaults();
-> > +	time_hz = read_sysreg(cntfrq_el0);
-> > +	time_10ms = time_hz / 100;
-> > +
-> > +	/* Enable Virtual Timer PPI */
-> > +	gic_irq_set_clr_enable(irq, true);
-> > +
-> > +	report_prefix_push("WFx");
-> > +	test_wfi();
-> > +	test_wfe();
-> > +	report_prefix_pop();
-> > +
-> > +	if (system_supports_wfxt()) {
-> > +		report_prefix_push("WFxT");
-> > +		test_wfit();
-> > +		test_wfet();
-> > +	} else {
-> > +		report_skip("WFxT instructions not supported");
-> > +	}
+> - using "config:"
 > 
-> I think I'm nitpicking here, and I didn't test it. If the system supports WFxT
-> the SUMMARY line shows 4 tests, but if the system doesn't have WFxT, the SUMMARY
-> line shows 2 tests, and 1 skipped test, in total 3 tests, not 4. Might be
-> confusing to users.
+> This makes it non-uniform with uri and channels which don't have a
+> keyword in front of them. I guess I could live with it, but it seems
+> odd. I see that it makes parsing way easier.
+
+Yeah, having some identifier would be nice.  I wished channels also have
+identifiers if we don't need to keep compatibility.
+
 > 
-> Thanks,
-> Alex
+> >
+> > So far only one such instance is allowed for simplicity, but it should be
+> > enough.  We still allow multiple -incoming for specifying channels, used
+> > together with one "-incoming config:*".
+> >
+> > Then parameters set this way will be visible almost anytime for QEMU, for
+> > example, during initialization of device backends (which is before
+> > migration object created).
+> >
+> > I posted this series majorly because I want to see if this will make a
+> > possible new user for the new "local" migration parameter proposed in
+> > Vladimir's series:
+> >
+> >   https://lore.kernel.org/r/20260522120534.77653-1-vsementsov@yandex-team.ru
+> >
+> > Especially, there're some context on this idea too in this email:
+> >
+> >   https://lore.kernel.org/all/ahdI7Vl5KraK566D@x1.local/
+> >
 > 
-> > +
-> > +	return report_summary();
-> > +}
-> > diff --git a/arm/unittests.cfg b/arm/unittests.cfg
-> > index 12fc4468..ae8b5534 100644
-> > --- a/arm/unittests.cfg
-> > +++ b/arm/unittests.cfg
-> > @@ -339,3 +339,10 @@ groups = mte
-> >  test_args = asymm
-> >  qemu_params = -machine mte=on
-> >  arch = arm64
-> > +
-> > +[wfx]
-> > +file = wfx.flat
-> > +groups = wfx
-> > +arch = arm64
-> > +# This test exercise CPU emulation so limit to TCG to avoid confusion
-> > +accel = tcg
-> > -- 
-> > 2.47.3
-> > 
+> I like the idea overall.
 > 
+> > With this series, we should be able to drop "incoming-fds" TAP property
+> > from the other series, instead relying on the existing "local" parameters
+> > both in migration core and in TAP's property should suffice.
+> >
+> > One thing to mention is I didn't further make only-migratable into a
+> > migration parameter.  Logically it will also work now with only-migratable,
+> > but it then also means I'll need to convert it to a parameter, which will
+> > be mutable even after VM started.  It will change how only-migratable used
+> > to work, hence I skipped.
+> >
+> > After this, we also almost have no reason to use -global for migration
+> > parameters.  Capabilities are still not supported in -incoming cmdline,
+> > though.
+> >
+> 
+> Will we still merge capabilities and parameters? Then it would be a free
+> upgrade.
+
+Yes!  /me waiting for your patches.
+
+-- 
+Peter Xu
+
 
