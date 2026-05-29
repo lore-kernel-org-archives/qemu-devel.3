@@ -4,114 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 228B4CD4F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 21:45:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A78CCD6E49
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 21:52:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wT50s-0002hC-39; Fri, 29 May 2026 17:45:06 -0400
+	id 1wT57k-0006Cy-Ep; Fri, 29 May 2026 17:52:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1wT50p-0002gh-WC; Fri, 29 May 2026 17:45:04 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>)
+ id 1wT57d-00068x-NZ; Fri, 29 May 2026 17:52:05 -0400
+Received: from mout.gmx.net ([212.227.17.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1wT50o-0005mc-BF; Fri, 29 May 2026 17:45:03 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64TIjPZ31672541; Fri, 29 May 2026 21:44:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=AAYWdj
- nt7IpHHiApOW081dYizbpUFLtxLnIaxv7D980=; b=fEpeYPWxQ320Qn6qNq6q4Z
- 3JOPFjPK+EBrig0LsEb9ZG+u/sl96egAyd2MsTjUH+x2ziQa3AwUPauDzCJiIV+W
- z4l0+lk+ScSrw5mgXR4qsbmEKl37PVwWq7FrI/aYBmKXtUHpLtTrPUo/JDZxfyAW
- x32qSGTUAS56TOakVrxi4RW0HkrZd25I/O92qVEjDtpCX4xDGdsfELU9DJt47v61
- rMrtDBTYkMzjydL0iMZy786XGZkiQYVb/qBihuKZ8Mcwny4XpGlDx3mh4DAHi8Y2
- eeHHN6y/LGNPtakyFD68L5EWKd7ceKOlmFd9hvhCwBHBygnjyiSZMO93zPLgLSuA
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ee886rqas-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 29 May 2026 21:44:57 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64TLd8gX014600;
- Fri, 29 May 2026 21:44:57 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4edjrbjnf5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 29 May 2026 21:44:57 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64TLitQq32965216
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 29 May 2026 21:44:55 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 386185805A;
- Fri, 29 May 2026 21:44:55 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2A8A658051;
- Fri, 29 May 2026 21:44:53 +0000 (GMT)
-Received: from [9.67.138.50] (unknown [9.67.138.50])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Fri, 29 May 2026 21:44:53 +0000 (GMT)
-Message-ID: <86c66ee1-37a3-466b-bc34-ea32803d9fa6@linux.ibm.com>
-Date: Fri, 29 May 2026 17:44:52 -0400
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>)
+ id 1wT57b-0007aA-VB; Fri, 29 May 2026 17:52:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1780091504; x=1780696304; i=deller@gmx.de;
+ bh=gODMNuhvgHlBYZzBASbq0dpAQ0bio20BLo7tEclCz6Y=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
+ References:MIME-Version:Content-Transfer-Encoding:cc:
+ content-transfer-encoding:content-type:date:from:message-id:
+ mime-version:reply-to:subject:to;
+ b=bLRm6qvco883xx8kmePPhAFZI1QGXKlEE+yJtMzZVSyI80gZjhOd8y57o2JAC+1J
+ 90ehxj62wQ2X9F/GINLHaI8SPFerXemAeawH8L0yjUA4Ah2RckyRfFfn/lyhkwRfG
+ 7H8E+n2rz46/A+1NmxeB4F9JTvrtC7kxyY7b4yP8LDQwSZV7t3bh7OL0gKrvr5oGk
+ jEQnEqKmk/MfDXeF/45mtIXBAiYNMcH+RBoxlOe3ZuogFPPnt/thxA7KUIeC7/Lml
+ RSvOn1wJQL4ivqI8ud9Ps4+zWnTtIVJ1KK6BRd9s5KBYnbxr0I0v1wVyeeSCMUqVq
+ E0Pn+Y/gTVOHzEY3CA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mn2WF-1xC4y02EER-00qHGm; Fri, 29
+ May 2026 23:51:43 +0200
+From: Helge Deller <deller@gmx.de>
+To: qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Cornelia Huck <cohuck@redhat.com>, David Hildenbrand <david@kernel.org>,
+ qemu-s390x@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Helge Deller <deller@gmx.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Matt Turner <mattst88@gmail.com>,
+ qemu-stable@nongnu.org
+Subject: [PULL v3 05/10] target/sh4: sync fp_status when gdb writes FPSCR
+Date: Fri, 29 May 2026 23:51:14 +0200
+Message-ID: <20260529215119.73244-6-deller@gmx.de>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260529215119.73244-1-deller@gmx.de>
+References: <20260529215119.73244-1-deller@gmx.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 25/32] Add secure-boot to s390-ccw-virtio machine type
- option
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
- richard.henderson@linaro.org, david@kernel.org, jjherne@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
- pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-References: <20260505201905.997996-1-zycai@linux.ibm.com>
- <20260505201905.997996-26-zycai@linux.ibm.com>
-Content-Language: en-US
-From: Collin Walling <walling@linux.ibm.com>
-In-Reply-To: <20260505201905.997996-26-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: aqIhnClJ5m4HeK8jHfWYupLFtx2aI2LQ
-X-Authority-Analysis: v=2.4 cv=Z8Dc2nRA c=1 sm=1 tr=0 ts=6a1a08da cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=7Z7TNXnwCHPPKsl8XtEA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI5MDIxNSBTYWx0ZWRfXyDKHSJsBzGTL
- jzEEO7s7zdT7FHuogsDZtsGl/vytXXUfsl/dbaTBYW1aAZQ3KenVaJ7i89nFT5K3NGI9njkwyJt
- vwF/PetLfvjtgjg+VrAhL7lcxNHRdF/ssBiiLfcaeW+2miMvpprfbvsYoUGELfOToZ8Cy0b/Rxz
- 3FRvbge4IychrQuCisMvWBYDJI8yTiiC4DeI8qWfUF1GaQVVxgX3UxIo6NKTYIgNBMTgjbJAUt8
- MzzRA12yRmqJCTE00hKFwsTHy4XLOHRDxTG8+WKidSK5O9HSKwW8Cjs2IzQFuSBMqcPwS3FrSnj
- OB/VPJNKAddWvP64QZQLLioYXMEMvWhJt5gfoK4rWCskKcbjj3Dl8ZES4es1fWhI8fINelmaSaB
- PNyz0wG7Yawm+jOetfNoBWgQZVdXiEqZ7mpXNPnyA7cbOZvfEo2X8MyT1o+/M+CiGfHjcXN7asT
- Pi8mCMMEY43lcX/zlyQ==
-X-Proofpoint-ORIG-GUID: aqIhnClJ5m4HeK8jHfWYupLFtx2aI2LQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-05-29_06,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 bulkscore=0 impostorscore=0 priorityscore=1501
- malwarescore=0 phishscore=0 suspectscore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605290215
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=walling@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:V6YLi6Ub9WQBpXA/QK0CbcAyO6zuNEktATsXrJgrm72llwa0fxr
+ 0eZ0KBqB4PTOGzQO7AGpzzvoWHL3xPnYquX3ZAaIXO7XqrmUh11yAqcDfzmKC/QjloHIK31
+ ofwuuw9vtAOHesMQbDsRq/Cn8uRZlF0rNfjs9ORSS7rh8jUyaFngzVqhZH4e/HFa8R/MEd1
+ kZ4joBU0abVUeQ4gZyIAA==
+UI-OutboundReport: notjunk:1;M01:P0:AR6l39y6T+s=;sG3cdeX8p5nksV8KnpqBmOFcmxB
+ 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
+Received-SPF: pass client-ip=212.227.17.20; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,5 +164,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Collin Walling <walling@linux.ibm.com>
+From: Matt Turner <mattst88@gmail.com>
+
+sh4_cpu_gdb_write_register() wrote the incoming FPSCR value straight
+into env->fpscr, leaving the derived env->fp_status (rounding mode and
+flush-to-zero) stale, so a gdb-initiated FPSCR change did not take
+effect for subsequent FP operations. Use cpu_load_fpscr() instead, the
+same way the adjacent case already uses cpu_write_sr() for SR.
+
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+=2D--
+ target/sh4/gdbstub.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/target/sh4/gdbstub.c b/target/sh4/gdbstub.c
+index 4f36e800d2..bdc8c1d164 100644
+=2D-- a/target/sh4/gdbstub.c
++++ b/target/sh4/gdbstub.c
+@@ -113,7 +113,7 @@ int superh_cpu_gdb_write_register(CPUState *cs, uint8_=
+t *mem_buf, int n)
+         env->fpul =3D ldl_p(mem_buf);
+         break;
+     case 24:
+-        env->fpscr =3D ldl_p(mem_buf);
++        cpu_load_fpscr(env, ldl_p(mem_buf));
+         break;
+     case 25 ... 40:
+         if (env->fpscr & FPSCR_FR) {
+=2D-=20
+2.54.0
+
 
