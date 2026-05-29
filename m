@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26FA7CD4F54
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 22:31:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6E85CD4F54
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 22:31:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSjDl-0002s4-Lt; Thu, 28 May 2026 18:28:57 -0400
+	id 1wSjDn-0002t6-A3; Thu, 28 May 2026 18:28:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1wSjDj-0002qF-Bv; Thu, 28 May 2026 18:28:55 -0400
-Received: from mout.gmx.net ([212.227.17.21])
+ id 1wSjDl-0002s0-II; Thu, 28 May 2026 18:28:57 -0400
+Received: from mout.gmx.net ([212.227.17.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1wSjDh-0006uL-Ew; Thu, 28 May 2026 18:28:55 -0400
+ id 1wSjDj-0006vK-Pp; Thu, 28 May 2026 18:28:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1780007331; x=1780612131; i=deller@gmx.de;
- bh=SSCUOdK3kHnYCbYGr73WYWLZgnAlsZTFEaClNXCa5XE=;
+ s=s31663417; t=1780007324; x=1780612124; i=deller@gmx.de;
+ bh=PVa3lEqa3sR5wLAKVwNAtEMeTXZdD91sxqfReCXvHL0=;
  h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
  References:MIME-Version:Content-Transfer-Encoding:cc:
  content-transfer-encoding:content-type:date:from:message-id:
  mime-version:reply-to:subject:to;
- b=towmhOtvrjO0uQQ8QNb3ZUmXYw4FfAoX3lMPulF1Gg0DOWgpHzrZjogTi5ZP+xtk
- nwA+VBJbToos1zIcR8WPHpPghjDlFJ/SdtaOU1U/98iP9t1tJgLNo48nxweJeeTmE
- 7Wbpt/wpDiY2T7ssIRo5v4s/QTmCz9Joxe/b30bZrOaYeOEpX32/URJrX67JZB4xM
- 2XkC5jkSn3Gwm7oS+p3A+g8+yelkaphqGZukwdw7yjBEsZ/4FIdmJrJJR7sOotYxd
- AwfhKbX9p9FH2LvgIi7CeLbeV0ZhGyl69nYuBxpTFgzb44M8lx0Bo5XC3w+vvb5DT
- AIoxbDOM+R3v38xa8Q==
+ b=sp3SmvmnbBUcsGiRV48LtJSxNIDpP845putWL9gx1cWT34G/N98Bl11PUiWMWX5q
+ 4SJIdpniQLavNH+Wn1N6cailLDpuqe2PnZEGVWiZaHy07yyciHVipL293F9hzlaxm
+ fSQkkDqDzBqABm0v1mT1o9p643UxHUYA9DT75tXxplICL9tjaJO1UshLq5sdw9aSA
+ JB0gYx+rEGpDN2QHH+RWwd2HgnJli67dgsgW9zUnQYyjwji0Ztwud/0RRcODvI6Rh
+ TJn8KLG9wEpqfbsSCTPtDX+ShFICqfxdnB1TQLr1il06wak88BcC78+8Xa0Nb3z+B
+ V+Qiiu95d++3xaXKNw==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from client.hidden.invalid by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MgvrB-1wwanX47Ez-00aKwd; Fri, 29
- May 2026 00:28:51 +0200
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MgesG-1wwJnj2Pwy-00abvW; Fri, 29
+ May 2026 00:28:43 +0200
 From: Helge Deller <deller@gmx.de>
 To: qemu-devel@nongnu.org
 Cc: Yoshinori Sato <yoshinori.sato@nifty.com>,
@@ -50,107 +50,108 @@ Cc: Yoshinori Sato <yoshinori.sato@nifty.com>,
  Cornelia Huck <cohuck@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Matt Turner <mattst88@gmail.com>,
  qemu-stable@nongnu.org
-Subject: [PULL v2 06/10] linux-user/s390x: restore fpu_status rounding mode
- from FPC on sigreturn
-Date: Fri, 29 May 2026 02:25:43 +0200
-Message-ID: <20260529002548.19293-7-deller@gmx.de>
+Subject: [PULL v2 02/10] linux-user/mips: save/restore FCSR across signal
+ delivery
+Date: Fri, 29 May 2026 02:25:39 +0200
+Message-ID: <20260529002548.19293-3-deller@gmx.de>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260529002548.19293-1-deller@gmx.de>
 References: <20260529002548.19293-1-deller@gmx.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:lI13H5Beg9AzgyXznX56EtqeKo4+egXVi0CcB6zsEBuhjLYX41P
- ZzgN0Vj51/p1QhPIZlSipnUiHgmw4JcAzGJ506seNNqOuJ23ONgXcWXJm/L+4C3Oh6U15Lz
- +wU/4hR2ZqCuLA4eCv0xU6pnPzAj9dz8m3fWIjRGe/hmxvKFulTELObRpr3uARjFTuAWTsN
- mM8h1WBN8pWwE1f0Our2w==
-UI-OutboundReport: notjunk:1;M01:P0:KK/t2R23oTs=;Wum7zW3XB7f8dGD9+LKUgrIpFTb
- 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
-Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
+X-Provags-ID: V03:K1:JaZZdhiIy+0iMci+QaqZSXLpVZqEOExxItq2RgXB5T8/6/F2PeR
+ ra4PlsNwQy961gOUTz0a+vZElL/LaHI7pJ3C4MZMCN2MiPE8Hgag11dKcIhRE0LF652invv
+ JXfLblUjCS1MxrTGwoHaJiW88snyCAFfnxZ+IcNHVo8VuD1z9YjoV3jJzoAF6xGgml7+BVi
+ SRZarpGC07FIk58vnjCwQ==
+UI-OutboundReport: notjunk:1;M01:P0:7wJNohgIzao=;+BBqqhAeG7TCpkMsYbUrGAj39HU
+ kIqu/CmHfZ0K9i0C1gNvdBYelCRnkW65wwjqAQ7HhD5f1THBDi98L6LzT5/gikzPkn8nPdUyP
+ K1lJTsdVToXbQzqqhSoMqhLcho6kynoNXPV1CHaS2v0WSNAaMs0QNCbPW/CBA0gFBlfc4nk5F
+ hQVSqeB8SOuNAXrbfB3L+xSXho/re/fFQn91aNGRK38fhsZFp90T24j/cX2zQDDKvUUPXzsEG
+ ZAn92iAX3azh3D228wR9QgoyboQMl4bNVOl4MAdz7woy/1Hfhir0rpWfpDcb2ktc8QgQm5cKM
+ 265LaNmpR6qqLCq3PPznc3MmhExwwWqlKYb6GAczE2WMpjWAvy8lKL43J8dRv4vMUAJnDIp1i
+ LMpoz7A6Wih8d07E5D+nFxHu5/D2d0kK1UxpfFI4t11Pp1vnOM8Gv+dtql18s00V+5ZebOpDt
+ ZefeR5LHHAKOZx7Gxh1aoUPm6dWg3nClI+HkeHDZ8o1yZ8IVq+wSlYj/FBB9+oZgkZkPnywS8
+ ja9U9YMNYhZTrKmxCLy7iaQuphpYfNUCX7NNDorPA/StbxkP5nkvmSzaUb0iLlgTwsh1S1y1q
+ vTiJYNLTkQ0F3Mzno1Ej0p8044hG68W7rraBfLMDIUDLdYq9RRen1MpYbI9SDlOwRLi+mGCxI
+ foWAllg4PaqQQtWwYvgnrNhayLkEqnJTlbRb4YHcIxofnsKh3xKrBApFpMFHUW/+Ynq340kOH
+ JroZQaatO0wsO7fafgkp1osO+lhhNXjkOhLesBrBm/j/J3ccNANhaQB/KBoDtD69pRzSiWRb0
+ k59S6B2s0tpDTz0KE6hgWyUpGIXU84BhLXQ+Cqs/TDJW+da+0vu6c4MaDgJTlX4tBZ0gzyEJM
+ AMIn8G66IzdP9tO3Ep4veLBNq4tyVbS3dG8z+GQrd882i6VCZ+hPSVg2bG1ExdmSvS05X8jYJ
+ TVkr2vhJbCRyCWvZ4dpzoepMbT6HmBherCC4ytIWsBK8aT17FTbvdt5M//xl/NAoeC9jWbOAT
+ AHfVl6fKuAYyhK6vziiO0sNmctP9iArM5CP0ncT1vVJk4OmbQ+NNwsih2NaCk6tBsccyKCsvD
+ mTUigPFPZzfObIJEAyCnOpVgO2k3Wq//nU/cJjL3jZPwrrYxouL5KtsauY2ryMcyGm90u6J73
+ /rSBCHN65Hw4w3/a+hr1j3rhyIZGQQB5YzaVlG4xPsYSsnopkBkee9FFRoGkXH48uyQWpe3ST
+ xj9t5GAqj16rbzfgLh4Fu3/v53s5hlg9TxmcIu1GSPmrAr7141+0WJI5Bdq2GJIYLnBGHF2j/
+ zzi2MKF0V6dA5y3nHUAOd3d6HCZKAd5+PtkVJ+qON03fFM8iPHjwT4Qk7xAl24exAsZsNMXoD
+ Bu7oDhx10Sk7l2rDPv1UbDpcfL/fu+AQYNNBDDK9kyiEkZ6OIcZ+Z3r+tjVK3L/qPyi+j28IQ
+ wY62Et7JABKo92L80MfxrvCEDtKCVme51frH+nBiw6B2on9XSJOfl8ZiWdwauyi0TwyaZxqF4
+ /+2HOgMXHLDdC9RQ26RBrdQ9UBDj++0TatqXjwwLwSUUrh6vr+8BADfFfHDZsYXWZjSlS1r6n
+ 432M9gv5n95Xgq+lhpWDsNiZxPXHLOOTWVipiA9lhpH58QNQkMpFCcJZEvLui9vCMua/w++MR
+ iND8gkIRcGmg/3JhE1jw09BdarQIBaNEFvZqgq7k/y0zb31GXHdFdu/XjwqSSZYqNB897+vHe
+ YGCl7d08/daIhqT0kh+sB8DQ0UJLO+7aAa5u+OM1OUz9rUJmS6RWMX5fGMgDlf6m3TplA+LlV
+ mc8dSoOMRAVekHJ+RJyVvBZnymeFnr+KbRB/odCXiD6Xc21orVVrrRtAR9YokSvy8hB6lH+kc
+ i7/LLwKU1YPlvvR2RFqs8yrlznarTxnWO6yBEzXGVONqLy4vm9MlCeNdlp6qHH8KS9KU8ko7C
+ mkb49ZVilHsPgymUGxgJ+a4wU1XGAoTNjgwNAlN3qVA7zMDtFBJ3dcOUFUOX7Dh7AogG6Bkby
+ DRVRHNa/JZXNsy3l2oy9AZfKJyMLZpEA8T48LeEwIobothBbLz3+4UfV+eHbq7Xkn32e/6yen
+ zT8CqBWKQdvAreBqxvNWNTdyACYE2mp0Pwz4ZXjGqs+sFnoRGuTa9HQYvT0ZjPSQ0HT6Sg0hN
+ 3xLfz6kgiPkW6RceYSy9w7PcBJi3dyhcX4rLEq9hSj94Q+ahT3FDao/m6b8bJm42pwa4cqbap
+ V9cJjamBqomovnBDAVvjeKlqaewzMGycGFzi2w7aTGf07HiY6ztqaJXSgA8VdFQ7ez7l9suNa
+ u5YyQ21l0baG8m4jYQXjr0I1WbaZqzoBgBG3z436I+yUgoNZFkmz5/B+v20vWuaw5XhAgnZPL
+ 0PUA79jHz1jcIjnV7ZI8DBt71ohEK7BQQrfL5As+qiB6qZnp/EMJIH7TqrWJkzdhjs6eAy4ay
+ mpIqVeOSF8nCmtLZxTCVCbZnWA69KozDTQ3qifhWKwkDyLqvY9Ko+QSdPCOGO2sAntRBRbTk+
+ hLiDqqIDRSJQMImPOHYriE0LFJ8SnSThsWJVWBsef+gkQnlqNbXBKf+uz7VQqT21o0KdmR+kT
+ i5ylQSHVDBXs1ANBuLesPP/nekCzbE9UbKRmqsxh/sMsriO4hcvLDitaUL5Ubnhj8+DNE5AIw
+ 0cwgeHVLEJjQvphbXr6m40fG4zTCBHVIY6er54je7/pccUmG1cxgWnF2l+UlZTztZSCplXUb8
+ +o9sLUO0b0sq4h2XeOGfezEC+EVx/YkZGC2dBAF855LkhJvr5iGn5r1+L+cw1I8fVIp49B5i5
+ n9WNVZ8A7p58yg5wAI4WjZWqu4zDAFRTx3co60suSkAsMxB5jlKWBy1HwUxbvzgld4z00c3L1
+ j+4W0JIGSuL1mDXp89/QjBpVJZ4vnYLtwzBt/Qw6L8mVJ5A5buM/k62chYRM+uA+1mgzbovol
+ D9jTpZGHP713zx+gxXuiCd2WIKrLxicUHdkJqAQrZdAR8FywwZ3VJggwx1hcVTK0KruadVcL/
+ Mn5dejVZFgxSmnIezCTunG7lW0zdPENYGefVp5RCcfdrgsiezfF1Asubl8u4qrxmvdsi1Vqjx
+ +AlOnsrFC9ijg1LGHgQTeSCoj5Sk6tOXJ2/ZvXKgBXgAV5K0Y2hQuteTvVEnu3kBV5l/oNoCC
+ P+2izdAs6jsRUNjnj9mgH7yszlvqktbZe/oZGV1lI8CvbHPh031xI+uXjHJrGHSlTidUTM3SC
+ 8X9+8B/srDPbfzQDR2qou1bmzqqUxLL/AZHaRF+hrj6D0x4GK/+YnnWGkGbCxD3GiyfMnBVYj
+ sGLO7qn5Z9yvY4lHvjyOg9HsCGJ54fme7lbv1gaxrZ4fNoXgCvuoorhijoOB6Yfpm9YkJmpCZ
+ FtoiLu7JmdUtskI9SoY6fukw4ojJUKBVX7V30bRtqJfZoFxiAF+/H/JMzS3Sg1tU9+GYCJhpt
+ LFjJuCDEsEhugNOg/gllFcQtam/qulETQDJkLzleNk/mEB1AZOsbPrxcHC1MDM1BjC1eO3xsY
+ zs7hCHEKqYfmCceMufQX/NwaLWT02m2folghqc8glzj371/G69tgdcBJIVZwutJTCu97C0eoU
+ EvFvAgC7bK96BUCH9YDwnoXRxK9HZ/+l74CEjDQRurQVSmyEL5HmXFPbx1mAoRsZGqYqcTrt2
+ 3aop9S+OOYtJW8h/GbUJ60FPBNKeiWj/D+SRaA7H88FMQgTkpjdHDzPsWF+TwjvRXlPrSOCE2
+ iy1XzzZjSsQWfbx6DanwyuP+O0CSDGOVdtKS/5oGJ+Re2INZEzILniuKR7UTevqy3peTLYwof
+ Sr9nPn1PrSArHfH0jIz7nP1ElNt+SfG9PPS0reu0zg9tZx312ku8ulzS/sIJthNVNK72TdnFm
+ Hp/0Z/skjpgZYrUtPUDrU45NAQs+mxTnzMIekbB2Nyd+lJztlWmFI5ZkNXOkX4zGiBu73Gy3D
+ Udy4L7u8z49IjNmaBfolmz3reKQHPDnBl6gOLm2bXX+cnUUI8+5fGufyks2L+qePqFHqrdgQO
+ ZfbASPokuREtblOBHfVST12qu6w2gNT2cssiBtwi/f5oXmpSVeVdmvqfmfi7l1sqCzdRURB+l
+ T7CLKYxY4AOMEaIXf2vLh2p0wtZi/B18tZzxspVF6rMx8mWoOjwhkbUxLH5h2FXCx2GmgbeKR
+ IiiDHFLdZgC33KEWBTvmzxlGtB+0Z/mqzkwy/5JLe8mxv5mMYPwjH0bvxqw/OVvJO7zkw2vEq
+ 3KYAE2de71k3/wKuiLWEc+oHXkv0TN1eagyO3pm/PtaaUM1SrxBmPPZQt32SH4oB8badWk+7p
+ Om/aYRJeHQGWvk7vnh5RHOAPbBHSglgbv0o83Q9rN7kUba0AIIA31+2WUi85EUIW2j9Us7ecY
+ sxoN5uwycaSs9/cMsKh25aZ8a/DAx4qL+OJL8f5WMXaLcpaCBITG0t39le+rWODGYW9u+RVfQ
+ L94goFW8VftSkl9KfjrO4VKGKz9TBeFfkFFn5yZtIw/boyC6T+WiKbAknduheQnCQfTlQSveN
+ VwqVxgZldl/Sfzi/D6U1qj7d9lyVBAQVwZOAkrekXwxA0qQOLaLtDtJesWQQvCTR1PIeXq0fz
+ wbJJQX1a4IJy0fDSKnczk6mzhvgXWWqSq2aQGH1OyzaYYLw399tSVbLERe0BzwYPzqtE0aZa3
+ XL62SiEYkleZjSQGr5UeHyvcMqx5Fq8CaL/TxVOOiIOLe/YB0T2owpmPXHU2ANdz8URmG0g7d
+ 6c1MWvNyN846BT958l+eIJIEo+O03EOgxDbzVaXHiDa7ggQBJFRFyyVr1Gow3Imy1bOln+3UL
+ 7FxUCpLYBFXSU0feFg/3l0QiHQiw+k6F03akVVtfKlDEOCGIq6iZGX9TK9uRnoOyGq9cX6o6o
+ 4mUBcOpULq1wwXLFBkxV8a2lZrb5Csf3vEW4I1gqXTt+1cS1/o9rYQpfjEUj0R80dKwZ2WcCP
+ 29zAiW7t+WzsvSVzBKbnCqJNaHBTzfDVxn/8ltAe4vlepSRXsPfXFTEFuVDu2PL7yIf0gUk+K
+ 1c5g17RHcWNB87t6gqzlcXvcFLOQ9jaHYXegxa0C6lpWyk4I5KqVQGLBhntj4rPpWDwNnrKwO
+ Zq5OTUeHcNSqlbneLIAI+sPX7QWStKSfbDQ1Mf93tXSyZPbZ36zx0XAxOo3U7NfDL9hdvMf3/
+ dFb4QL6QAuZP8GfeNblcsrDWhptZSgZXiMPnblSn9LIlB2P8Uo4OySqqKjQL0LO+Lunl35YF1
+ NP8CeQvau7/yL3WGz0LVesHJ/UMSEjfocHYYg7jZh460liUPUfJthPqkLNEL7D43DycKcInbm
+ ai6H+kkJfKNocvChqnx44B24Xx8otK7BmO7FRDhkLLwbMIrZSKsW9m7M9sj/srgXyhWLUFlKG
+ 2tfRpqM/79Qdz3Uya2rsA0DOHyrB7fSg2ks4pwx5P0dpygVqij3dhYhNuzQGGZvMGpvAg31fq
+ Gc6GPfK+RyOrg256kuXct+xT6bmXgXsjK7ArAElND4gJYgsLo8hZvPn7bFmT7SV9tPSeQek7A
+ uvVAXnUUn/VbQxmKV24oJ1wxroHXUFKHw+JEOnXj7B1dNH9MhrVi30Jd+oikGx2eOg8XlwiYc
+ hCp0DOGG9JiBLASYTF9NmVLqFF328CgM6cxrmrL
+Received-SPF: pass client-ip=212.227.17.20; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,114 +169,103 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Matt Turner <mattst88@gmail.com>
 
-QEMU keeps the s390x floating-point control register (FPC) in env->fpc.
-The rounding mode bits [2:0] of FPC are reflected into the derived
-env->fpu_status via set_float_rounding_mode(); every architectural
-write to FPC goes through HELPER(sfpc) which keeps the two in sync.
+QEMU keeps the MIPS FPU control/status register (FCSR, fcr31) in
+env->active_fpu.fcr31.  The rounding mode, flush-to-zero (FS), and
+NaN-2008 mode bits in fcr31 are reflected into the derived
+env->active_fpu.fp_status via set_float_rounding_mode() and friends;
+every architectural write to FCSR goes through helper_ctc1() which
+calls restore_fp_status() to keep the two in sync.
 
-restore_sigregs() restored FPC with a direct assignment:
+Both target_sigcontext variants (O32 and N32/N64) have an sc_fpc_csr
+field that holds FCSR, but setup_sigcontext() never wrote it and
+restore_sigcontext() never read it.  As a result:
 
-    __get_user(env->fpc, &sc->fpregs.fpc);
+  - The signal frame always delivered sc_fpc_csr =3D=3D 0 to the handler,
+    so sigaction(SA_SIGINFO) handlers that inspect the interrupted
+    context see the wrong FCSR.
 
-This wrote env->fpc correctly but never updated env->fpu_status, so on
-sigreturn the interrupted code resumed with whatever rounding mode the
-signal handler last installed in fpu_status.
+  - On sigreturn, active_fpu.fcr31 retained whatever value the signal
+    handler last installed (if any), and active_fpu.fp_status was
+    never resynced.  Interrupted code resumed with the wrong rounding
+    mode, FS flag, and NaN-2008 semantics.
 
-Factor the two-step "write fpc + sync fpu_status" logic out of
-HELPER(sfpc) into cpu_s390x_load_fpc(), declare it in cpu.h, and call
-it from restore_sigregs() in place of the direct assignment.
+Fix setup_sigcontext() to save fcr31 into sc_fpc_csr.  Fix
+restore_sigcontext() to read it back (masked to fcr31_rw_bitmask as
+the kernel does) and call cpu_mips_restore_fp_status() to resync
+fp_status from the restored fcr31.
 
-cpu_s390x_load_fpc() partially reuses the sanity check from
-HELPER(sfpc): if the FPC value has an invalid rounding mode or reserved
-bits set, it falls back to 0, matching the kernel's fpu_lfpc_safe()
-behavior where a corrupt signal frame value causes a specification
-exception and 0 is used instead.
+Add cpu_mips_restore_fp_status() in target/mips/fpu.c (which already
+defines ieee_rm and includes fpu_helper.h), and declare it in cpu.h.
 
-HELPER(sfpc) now calls cpu_s390x_load_fpc() after its full
-specification-exception check, including the FEAT_FLOATING_POINT_EXT
-test that is not needed for the signal restore path.
-
-Fixes: 2941e0fa05 ("linux-user/s390x: Save/restore fpc when handling a sig=
-nal")
+Fixes: 084d0497a0 ("mips-linux-user: Save and restore fpu and dsp from sig=
+context")
 Cc: qemu-stable@nongnu.org
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 =2D--
- linux-user/s390x/signal.c     |  6 +++++-
- target/s390x/cpu.h            |  1 +
- target/s390x/tcg/fpu_helper.c | 20 ++++++++++++++------
- 3 files changed, 20 insertions(+), 7 deletions(-)
+ linux-user/mips/signal.c | 7 +++++++
+ target/mips/cpu.h        | 3 +++
+ target/mips/fpu.c        | 5 +++++
+ 3 files changed, 15 insertions(+)
 
-diff --git a/linux-user/s390x/signal.c b/linux-user/s390x/signal.c
-index 96d1c8d11c..28ad80bde4 100644
-=2D-- a/linux-user/s390x/signal.c
-+++ b/linux-user/s390x/signal.c
-@@ -332,7 +332,11 @@ static void restore_sigregs(CPUS390XState *env, targe=
-t_sigregs *sc)
-     for (i =3D 0; i < 16; i++) {
-         __get_user(env->aregs[i], &sc->regs.acrs[i]);
+diff --git a/linux-user/mips/signal.c b/linux-user/mips/signal.c
+index d69a5d73dd..1b10012726 100644
+=2D-- a/linux-user/mips/signal.c
++++ b/linux-user/mips/signal.c
+@@ -134,6 +134,7 @@ static inline void setup_sigcontext(CPUMIPSState *regs=
+,
+     for (i =3D 0; i < 32; ++i) {
+         __put_user(regs->active_fpu.fpr[i].d, &sc->sc_fpregs[i]);
      }
--    __get_user(env->fpc, &sc->fpregs.fpc);
-+    {
-+        uint32_t fpc;
-+        __get_user(fpc, &sc->fpregs.fpc);
-+        cpu_s390x_load_fpc(env, fpc);
-+    }
-     for (i =3D 0; i < 16; i++) {
-         __get_user(*get_freg(env, i), &sc->fpregs.fprs[i]);
-     }
-diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
-index 3acbe83f0f..f55b79ef8a 100644
-=2D-- a/target/s390x/cpu.h
-+++ b/target/s390x/cpu.h
-@@ -895,6 +895,7 @@ void s390_init_sigp(void);
- /* helper.c */
- void s390_cpu_set_psw(CPUS390XState *env, uint64_t mask, uint64_t addr);
- uint64_t s390_cpu_get_psw_mask(CPUS390XState *env);
-+void cpu_s390x_load_fpc(CPUS390XState *env, uint32_t fpc);
-=20
- /* outside of target/s390x/ */
- S390CPU *s390_cpu_addr2state(uint16_t cpu_addr);
-diff --git a/target/s390x/tcg/fpu_helper.c b/target/s390x/tcg/fpu_helper.c
-index 6ca0b7162b..107025e675 100644
-=2D-- a/target/s390x/tcg/fpu_helper.c
-+++ b/target/s390x/tcg/fpu_helper.c
-@@ -1087,6 +1087,19 @@ static const int fpc_to_rnd[8] =3D {
-     float_round_to_odd,
- };
-=20
-+void cpu_s390x_load_fpc(CPUS390XState *env, uint32_t fpc)
-+{
-+    /*
-+     * Mimic kernel fpu_lfpc_safe(): a corrupt signal frame value that wo=
-uld
-+     * trigger a specification exception instead results in FPC being set=
- to 0.
-+     */
-+    if (fpc_to_rnd[fpc & 0x7] =3D=3D -1 || fpc & 0x03030088u) {
-+        fpc =3D 0;
-+    }
-+    env->fpc =3D fpc;
-+    set_float_rounding_mode(fpc_to_rnd[fpc & 0x7], &env->fpu_status);
-+}
-+
- /* set fpc */
- void HELPER(sfpc)(CPUS390XState *env, uint64_t fpc)
- {
-@@ -1094,12 +1107,7 @@ void HELPER(sfpc)(CPUS390XState *env, uint64_t fpc)
-         (!s390_has_feat(S390_FEAT_FLOATING_POINT_EXT) && fpc & 0x4)) {
-         tcg_s390_program_interrupt(env, PGM_SPECIFICATION, GETPC());
-     }
--
--    /* Install everything in the main FPC.  */
--    env->fpc =3D fpc;
--
--    /* Install the rounding mode in the shadow fpu_status.  */
--    set_float_rounding_mode(fpc_to_rnd[fpc & 0x7], &env->fpu_status);
-+    cpu_s390x_load_fpc(env, fpc);
++    __put_user(regs->active_fpu.fcr31, &sc->sc_fpc_csr);
  }
 =20
- /* set fpc and signal */
+ static inline void
+@@ -165,6 +166,12 @@ restore_sigcontext(CPUMIPSState *regs, struct target_=
+sigcontext *sc)
+     for (i =3D 0; i < 32; ++i) {
+         __get_user(regs->active_fpu.fpr[i].d, &sc->sc_fpregs[i]);
+     }
++    {
++        uint32_t fcr31;
++        __get_user(fcr31, &sc->sc_fpc_csr);
++        regs->active_fpu.fcr31 =3D fcr31 & regs->active_fpu.fcr31_rw_bitm=
+ask;
++        cpu_mips_restore_fp_status(regs);
++    }
+ }
+=20
+ /*
+diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+index 346713705a..392406aff8 100644
+=2D-- a/target/mips/cpu.h
++++ b/target/mips/cpu.h
+@@ -1384,6 +1384,9 @@ void cpu_mips_clock_init(MIPSCPU *cpu);
+ /* helper.c */
+ target_ulong exception_resume_pc(CPUMIPSState *env);
+=20
++/* fpu.c */
++void cpu_mips_restore_fp_status(CPUMIPSState *env);
++
+ /**
+  * mips_cpu_create_with_clock:
+  * @typename: a MIPS CPU type.
+diff --git a/target/mips/fpu.c b/target/mips/fpu.c
+index c7c487c1f9..8b661865ca 100644
+=2D-- a/target/mips/fpu.c
++++ b/target/mips/fpu.c
+@@ -17,6 +17,11 @@ const FloatRoundMode ieee_rm[4] =3D {
+     float_round_down
+ };
+=20
++void cpu_mips_restore_fp_status(CPUMIPSState *env)
++{
++    restore_fp_status(env);
++}
++
+ const char fregnames[32][4] =3D {
+     "f0",  "f1",  "f2",  "f3",  "f4",  "f5",  "f6",  "f7",
+     "f8",  "f9",  "f10", "f11", "f12", "f13", "f14", "f15",
 =2D-=20
 2.54.0
 
