@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73C86CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:18:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F3DECD6E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:18:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSvD8-00019X-QR; Fri, 29 May 2026 07:17:06 -0400
+	id 1wSvEZ-0004bx-6F; Fri, 29 May 2026 07:18:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wSvD5-000197-F3
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:17:04 -0400
+ id 1wSvER-0004Sk-9O
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:18:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wSvD3-0008Bk-St
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:17:03 -0400
+ id 1wSvEP-0008PT-Km
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:18:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780053420;
+ s=mimecast20190719; t=1780053505;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lM1V8XjBrCxs1yBLSZROpXvQPyHauxhZXHX7W4Xzbho=;
- b=RCD5t2OPYSSFkbZO4d4fMvci1hwtGxMolVLKTkIvNAPrMSkV/Onnfe0mJJXBNhGjOl5APK
- APWCFdS9HbjW0U7hNIoGIFrgEJ4MCUGYQOyJkpQnYfeMq82/qiSK1Avf73LP1EoWMMRjQq
- ahka+AtJtlwH5dywMZmxMoJrbNvIYmY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=h0vBgMB+JfoVtADoFb3UEwzuxSvcYgxQQ4fbzcKMdy0=;
+ b=J8yuaONezn5tjaWNZ2itKjEqoVgCPJm7+sQ1WxOwjzOmogIYEv6E7B35p4nwFEQ5vbXMhA
+ OP5gaGjLifa7rkWsJdA5hKKSpzIwzV5i1iJdU48BYV0kr6oGj+VAqPvKgqiRZEEYNsImr8
+ xKwRVD1cF1WI6JBfMRw4WbIy09XBwoQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-605-qe3RjKEJOCiL3SHMXl1Bzg-1; Fri,
- 29 May 2026 07:16:56 -0400
-X-MC-Unique: qe3RjKEJOCiL3SHMXl1Bzg-1
-X-Mimecast-MFC-AGG-ID: qe3RjKEJOCiL3SHMXl1Bzg_1780053415
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-PMp3dL_xODGFgMmKnlAs7g-1; Fri,
+ 29 May 2026 07:18:20 -0400
+X-MC-Unique: PMp3dL_xODGFgMmKnlAs7g-1
+X-Mimecast-MFC-AGG-ID: PMp3dL_xODGFgMmKnlAs7g_1780053499
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B9C9319560AA; Fri, 29 May 2026 11:16:54 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2A9A2195608B; Fri, 29 May 2026 11:18:19 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7760A19560A3; Fri, 29 May 2026 11:16:51 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 98F101800357; Fri, 29 May 2026 11:18:17 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 29 May 2026 15:16:23 +0400
-Subject: [PATCH 02/32] build-sys: build with -fno-omit-frame-pointer with ASAN
+Date: Fri, 29 May 2026 15:16:37 +0400
+Subject: [PATCH 16/32] ui/spice-app: implement display cleanup
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260529-b4-ui-v1-2-8db3068421ef@redhat.com>
+Message-Id: <20260529-b4-ui-v1-16-8db3068421ef@redhat.com>
 References: <20260529-b4-ui-v1-0-8db3068421ef@redhat.com>
 In-Reply-To: <20260529-b4-ui-v1-0-8db3068421ef@redhat.com>
 To: qemu-devel@nongnu.org
@@ -67,24 +67,24 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=780;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1540;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=eP9coWA13E2Og6kJdJyotHqJ3qp6iuOYSQNlNUaMVew=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqGXWOveEOldIwc/Dflxc4f5XST2qLMCuYKHM+b
- DNkE5KuBESJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCahl1jgAKCRDa6OEJdZac
- 5VRkD/0VsVax7bLNkDPzmbpq4YZcI0zpq1Oc84qOiQnwOHI0Bfc9AJWibwdxKun2u3w3yHFexBz
- L1do93SIcZEv1SobwhfDNLSdrGomOFReMDTxwLH26mvyJ1PN6udDAOiR/Xx/4ssgNWDA/ju4idZ
- FjfaQnkTv/Ch9Trx2N/ts9HZ2gIJDcIom5qQKUXlJc98eerLxYWgLNihUz0TRoSrbIzxHFAFLic
- MUaZOvtR20O4Vve144cCFkoZsoMvo5CzPx3mR/hyzm5EQCETEarw6WAlC96ZXu9/qWHx4X9AnCz
- RcPMpJhOguO/UGEfYd7ywo7WDZuYB/0YqObWnB5EUOhjLa2S2kLre+1aRXBQOjSMkxaJkLiyBK7
- Gz3TqNe8qGNxLslX2baN18qcUYOQuYniJq51ZmbIvZ/c4SWHY0r+UJCKTG/hQL6AIEr6A1IIvlQ
- YiAbLJ+hQkIljZguWQF5Fm/T107SfVNvnM70UADFwM1V1NbjhJEXRnMKetZHi6kI1Hs5GsgZKtP
- zBIMsMdOO1lbJYJZnG6HupRzhl23UiF3Fxd12N7a4YSs6ie+VemHdZrcCAxPDRYRwamcYygqeEl
- 5BIegkCc6fizNOXPU2ywAELKzdSB+VpDsjWS4RTLvyrBv/z8Bf295q4LBfPO9F+Oy0yTGbeyYZ8
- gBVUts7u0w6+hgA==
+ bh=cpTjZniLMqEA6rNMksDOJAEvoDe9Yx6APfWnAl9Mp3Q=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqGXWPxhqOpiI3mSnM18GPWh7GQCv7XNx9RFo/g
+ DYnif9OfsOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCahl1jwAKCRDa6OEJdZac
+ 5eY9D/9EjtNl6u8rN/TKT8f4gB0sqwvR4qugTHOMjD8CUUtG+ii5/raGCRx8HDDvDGMHnJlc5Pu
+ ZVTZCDN0I14wmDTyoqiNj3+fwS6T7jiIiVTwfeHPYpvNIT1iZQbxF7ytFXgcKtzYlv/Jrhr/TCu
+ PaMLQdkt2dP9CJmFSKun636Ha/tPBN2GmVxqorl2IGa5BAA4WK6BIBygswlJKMTEG+f3ponuqoy
+ pRiANbC0nA5c4hKDdx3iqagLr7fOWN5q8/J3Ke7x0D7HxJjl7ZxZWSBkl9EU0VMy8bV1d/7RfFf
+ EZoPIShHNcAaZgPy5Jovg4AzKeKmouJHCQeLydZaAI0V+CRbKGVg0rI0sJlI+t+hdYQReC0k857
+ FYcmNbpV6XkiaXXuFJJrrO2LO23FEpf+XaqPJ3Qe3hItLzDj0K+OMppwyVl1IqB7a+si0SEtoDQ
+ 8S5lcEYOvJSOC21Gx9ywKvmeS4gcStTtNG4EL1h6WsNpLdpE7SusCyCIZQynDXcqScYM+DhRRng
+ Gn03QjrJBnuHEZUEvGT0oeDDnd8XkZrUedWJWGbFozOb1JTmkE3mkPbs76amakT3yblpqdQ0to4
+ oI40QrNJnXSqIVzrrG9tv2mNLZwSwAwsOgqGCecJ8zHvpaaVx3uMvHolEmAGZDbxVQcz/GYfyB1
+ r03sYNpBvDwfLZA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -111,27 +111,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On fc44, LSan fails to suppress leak:qemu_irq_intercept_in, because
-the backtrace isn't deep enough.
+Replace the atexit() handler with the display cleanup callback,
+reusing the existing spice_app_atexit() function.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- meson.build | 2 ++
- 1 file changed, 2 insertions(+)
+ ui/spice-app.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index eb074918193..224534ac351 100644
---- a/meson.build
-+++ b/meson.build
-@@ -545,6 +545,8 @@ if get_option('asan')
-   if cc.has_argument('-fsanitize=address')
-     qemu_cflags = ['-fsanitize=address'] + qemu_cflags
-     qemu_ldflags = ['-fsanitize=address'] + qemu_ldflags
-+    # Ensure complete stack traces for LSan suppressions to match correctly.
-+    qemu_cflags += ['-fno-omit-frame-pointer']
-   else
-     error('Your compiler does not support -fsanitize=address')
-   endif
+diff --git a/ui/spice-app.c b/ui/spice-app.c
+index 0df7325e679..fe3df62bfa5 100644
+--- a/ui/spice-app.c
++++ b/ui/spice-app.c
+@@ -119,16 +119,17 @@ static const TypeInfo char_vc_type_info = {
+     .class_size = sizeof(VCChardevClass),
+ };
+ 
+-static void spice_app_atexit(void)
++static void spice_app_cleanup(void)
+ {
+     if (sock_path) {
+         unlink(sock_path);
++        g_clear_pointer(&sock_path, g_free);
+     }
+     if (tmp_dir) {
+         rmdir(tmp_dir);
++        tmp_dir = NULL;
+     }
+-    g_free(sock_path);
+-    g_free(app_dir);
++    g_clear_pointer(&app_dir, g_free);
+ }
+ 
+ static void spice_app_display_early_init(DisplayOptions *opts)
+@@ -146,8 +147,6 @@ static void spice_app_display_early_init(DisplayOptions *opts)
+         exit(1);
+     }
+ 
+-    atexit(spice_app_atexit);
+-
+     if (qemu_name) {
+         app_dir = g_build_filename(g_get_user_runtime_dir(),
+                                    "qemu", qemu_name, NULL);
+@@ -218,6 +217,7 @@ static QemuDisplay qemu_display_spice_app = {
+     .type       = DISPLAY_TYPE_SPICE_APP,
+     .early_init = spice_app_display_early_init,
+     .init       = spice_app_display_init,
++    .cleanup    = spice_app_cleanup,
+     .vc         = "vc",
+ };
+ 
 
 -- 
 2.54.0
