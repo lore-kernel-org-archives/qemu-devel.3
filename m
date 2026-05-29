@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55447CD6E43
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1395CD6E51
 	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:20:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSvFt-0000SQ-Iz; Fri, 29 May 2026 07:19:59 -0400
+	id 1wSvFi-0007Wl-RW; Fri, 29 May 2026 07:19:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wSvFq-0000Fq-7U
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:19:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wSvFE-0005kZ-0z
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:19:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wSvFo-0000IW-EK
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:19:53 -0400
+ id 1wSvFC-00008e-EC
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:19:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780053591;
+ s=mimecast20190719; t=1780053553;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9Lf+lV7wA99D272f4ktkEQzX6sQbXEx5sph6D3pXdN4=;
- b=i0Ugxe4z/XNgqvjv+ziIFuvTAusIysd2wk+OS1FvJRX7O1TdVyOq8eO0741fB71gwGFmq6
- oOYgXBOE5EB0g34sNMhYVFmltDq/VYhVLmN65bNRxUNV5mLXSaOhNZE4hl5q7IVOzM3er4
- lvsb0SNiKx88PcnlPfVxsxsZN0VX+ic=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=P24QCtBOPZAeXQrOeIzkI8XwMxEGYxQbOqY5zX/qu3E=;
+ b=R7S5OLSf942I92NpWkiew+PNQF3QsK1yRUOs1KXaJfUYfs74kAqz5ogyaFR+QGKCrwqmwk
+ w+aVup1UGGhnGPYZj+ItvrSqPTt2poW89NPeIWDpFmsflrieO55QwHFoWxY5n9PUB81tMT
+ SZP9WSJkm+2XSwhLgnTVZkvSHVfv+Ho=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-673-ARvwI3mtNm2858f9ZVfT6g-1; Fri,
- 29 May 2026 07:19:48 -0400
-X-MC-Unique: ARvwI3mtNm2858f9ZVfT6g-1
-X-Mimecast-MFC-AGG-ID: ARvwI3mtNm2858f9ZVfT6g_1780053586
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-380-mCtGLnbXM3KIU718ehGerA-1; Fri,
+ 29 May 2026 07:19:12 -0400
+X-MC-Unique: mCtGLnbXM3KIU718ehGerA-1
+X-Mimecast-MFC-AGG-ID: mCtGLnbXM3KIU718ehGerA_1780053551
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BFC8B19560B8; Fri, 29 May 2026 11:19:46 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 485AB195608F; Fri, 29 May 2026 11:19:11 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4FF9418004A3; Fri, 29 May 2026 11:19:44 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C2E7430001BB; Fri, 29 May 2026 11:19:09 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 29 May 2026 15:16:52 +0400
-Subject: [PATCH 31/32] ui/dbus: handle console hotplug/unplug events
+Date: Fri, 29 May 2026 15:16:46 +0400
+Subject: [PATCH 25/32] ui/gtk: move global display settings out of
+ per-console init
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260529-b4-ui-v1-31-8db3068421ef@redhat.com>
+Message-Id: <20260529-b4-ui-v1-25-8db3068421ef@redhat.com>
 References: <20260529-b4-ui-v1-0-8db3068421ef@redhat.com>
 In-Reply-To: <20260529-b4-ui-v1-0-8db3068421ef@redhat.com>
 To: qemu-devel@nongnu.org
@@ -67,25 +68,25 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6566;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3093;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=xtlW5zQJr12JrzZrwGVqT4yOQ6lA2QBns/ITM0E2nrE=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqGXWQt4hfAIAZOSV1qow/MjAWhNnpMElC0Ns4E
- qkfi2OHC2WJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCahl1kAAKCRDa6OEJdZac
- 5USkD/4yyvN+UlO0HKccJgHZ3Cer5jijZRvoVGLE/acRhl+Pl3wenkYBNfnjKbAKt614lQbq739
- EYM2iZZKbQE+wCPCtEhVyx41u/DZODAQ0bb3ow5Ib1LS4Fp0l/dUHKSw2mT0T4L8zeozYCO6xri
- zkpMPWgeKNkHE8rvzj/VtIj6Mth1FB9yU/NvK3pV+JJjJEoxCyXVFom+1DpANpPAIBHfID+HBjy
- xTDny0JRk96ad+XrazfsD0ZvxGz3WhCOn0zEgtjy5cX8CBHMaUnwOudW29X9qCJRZy3Ag09LwIb
- B239LjvuIm+CsZIys/52oGd/yGonTRZMGPXmj0if0kpe7GQ8M84kA2L1FbqQsixu4DIdEgb3/2Y
- g79r+rGVSkkFdfpU4FUH5EMnKPxQTYvvLNhsXBpiCgWhYL7UJuW63GPnRlOfWWQ/ZV8IEKex+ig
- uEQXs1HglffdmX9tMT7mmOP/wmJ0BlrM+qSt9Cem7F9FtOe2dpqdRnXSXdX5+kHNdfbZgJqmOBv
- /PqssNgDO0oOe68baWqAX4rN3jKa+oU2X3mo/oGvZqd27AxAIulSzYV33Fa14HqE3ZBSs0O6rWY
- oJ2ObPdSgwHAV4QwCSSREJhcp/KnWz3vmz10OacHUvAYVOsEVKo+UHBhVvI7tmUQgGkG7SWP9Qh
- LtLhd0dQmoLmPoA==
+ bh=oLtNKsYquzH+c0KmFeoUQjI9K4WgPxTZf34uK0eOhmk=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqGXWQ0PYqNtxwLiCeGTcdkRi5qBQqD5GvoSFdR
+ X0MeWN6BRaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCahl1kAAKCRDa6OEJdZac
+ 5Q1iD/99Pkc88COzYZxAegOJMhjkdur+MvXyScL1ZgBC3Jxeb3pH9jeN9O6NOlRuW63uGlYkwbe
+ T7sXXAALv9wT1EOiPmUF/kEUM4Mf+iLCJnQST1ZtqCaA16UAaQugtFCSX3BjEnIzU+p2xUD6pXN
+ QdpXRuSxuc6BF6nzDBum0sWpTObvaLIAat52IR4FHVg4U4vuC/2jF7TH316VH4drNLsKw1m0XkI
+ 010aJ1s3NTJud4J2doBUymMi+eXL1vcDmy6rd/lLssM/6UVLEN3hKMr2PXg4vMgImf+cDBUq9Uu
+ qZU3Q5ZZNgN/bCN1Som+BOuxYuLhg6jzi9PF6T8s57U3l0358T7ZKk5S9lYJGS6U4KrVjqN+uOS
+ fZqlm0GCYVw0BbBhmzZ80nV5UTYcVmPcxzIWrWZKLsh6FQMRy3FkQLhiEQOpz98RTfEvKqscrkN
+ Dw8O5CBygNbFXlJYnTjcthbaC/9dVca1GvDZrQcDCn8hvx7W+SNgjbiGMwgPtIfO8iLvb2yBGM+
+ TdXDYbkdkEb4VnT75tz4IqDlH7IvplrWqz36Y+y37ENevmrdnBtVfx7dYx79/7lF5yWBQ6Ut1MT
+ qrUHPY44P3bx6Wii1o0IV2trfhpoYkgaEdicBMuwt1+6Y4L38FF7dNnpE3LJZ4jcOoUmZ1sJoDX
+ Kbx5Hn5DgIf+KAA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -93,7 +94,7 @@ X-Spam_score: 0.8
 X-Spam_bar: /
 X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -111,205 +112,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Subscribe to QemuConsoleEvent notifications to dynamically add and
-remove D-Bus display consoles. This mirrors the GTK backend's
-handling added in the previous commits.
+Move zoom_to_fit, keep_aspect_ratio and touch_slots initialisation
+from gd_vc_gfx_init() to gd_create_menu_view(). These are global
+display settings that should be set once after all consoles are
+created, not repeated on every per-console init (where the last
+iteration's values silently win).
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/dbus.h         |  3 ++
- ui/dbus-console.c |  5 +++
- ui/dbus.c         | 93 +++++++++++++++++++++++++++++++++++++++++++++----------
- 3 files changed, 84 insertions(+), 17 deletions(-)
+ ui/gtk.c | 46 +++++++++++++++++++++++-----------------------
+ 1 file changed, 23 insertions(+), 23 deletions(-)
 
-diff --git a/ui/dbus.h b/ui/dbus.h
-index e4e78590b49..d2cc176648a 100644
---- a/ui/dbus.h
-+++ b/ui/dbus.h
-@@ -60,6 +60,7 @@ struct DBusDisplay {
-     DBusClipboardRequest clipboard_request[QEMU_CLIPBOARD_SELECTION__COUNT];
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 141cb69d494..1b9523739f6 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -2269,8 +2269,6 @@ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
+                               GSList *group, GtkWidget *view_menu)
+ {
+     const DisplayChangeListenerOps *ops = &dcl_ops;
+-    bool zoom_to_fit = false;
+-    int i;
  
-     Notifier notifier;
-+    Notifier console_notifier;
- };
+     vc->label = qemu_console_get_label(con);
+     vc->s = s;
+@@ -2350,26 +2348,6 @@ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
+     gd_connect_vc_gfx_signals(vc);
+     group = gd_vc_menu_init(s, vc, idx, group, view_menu);
  
- #ifdef WIN32
-@@ -86,6 +87,8 @@ dbus_display_console_new(DBusDisplay *display, QemuConsole *con);
- int
- dbus_display_console_get_index(DBusDisplayConsole *ddc);
- 
-+QemuConsole *
-+dbus_display_console_get_qemu_console(DBusDisplayConsole *ddc);
- 
- extern const DisplayChangeListenerOps dbus_console_dcl_ops;
- 
-diff --git a/ui/dbus-console.c b/ui/dbus-console.c
-index 0048951a7ab..dd1a18c7460 100644
---- a/ui/dbus-console.c
-+++ b/ui/dbus-console.c
-@@ -531,6 +531,11 @@ int dbus_display_console_get_index(DBusDisplayConsole *ddc)
-     return qemu_console_get_index(ddc->dcl.con);
+-    if (qemu_console_ui_info_supported(vc->gfx.dcl.con)) {
+-        zoom_to_fit = true;
+-    }
+-    if (s->opts->u.gtk.has_zoom_to_fit) {
+-        zoom_to_fit = s->opts->u.gtk.zoom_to_fit;
+-    }
+-    if (zoom_to_fit) {
+-        gtk_menu_item_activate(GTK_MENU_ITEM(s->zoom_fit_item));
+-        s->free_scale = true;
+-    }
+-
+-    s->keep_aspect_ratio = true;
+-    if (s->opts->u.gtk.has_keep_aspect_ratio)
+-        s->keep_aspect_ratio = s->opts->u.gtk.keep_aspect_ratio;
+-
+-    for (i = 0; i < INPUT_EVENT_SLOTS_MAX; i++) {
+-        struct touch_slot *slot = &touch_slots[i];
+-        slot->tracking_id = -1;
+-    }
+-
+     return group;
  }
  
-+QemuConsole *dbus_display_console_get_qemu_console(DBusDisplayConsole *ddc)
-+{
-+    return ddc->dcl.con;
-+}
-+
- DBusDisplayConsole *
- dbus_display_console_new(DBusDisplay *display, QemuConsole *con)
- {
-diff --git a/ui/dbus.c b/ui/dbus.c
-index b23cb44c535..7be0f8e2611 100644
---- a/ui/dbus.c
-+++ b/ui/dbus.c
-@@ -142,6 +142,9 @@ dbus_display_finalize(Object *o)
- {
-     DBusDisplay *dd = DBUS_DISPLAY(o);
+@@ -2379,7 +2357,8 @@ static GtkWidget *gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
+     GtkWidget *view_menu;
+     GtkWidget *separator;
+     QemuConsole *con;
+-    int vc;
++    bool zoom_to_fit = false;
++    int vc, i;
  
-+    if (dd->console_notifier.notify) {
-+        qemu_console_remove_notifier(&dd->console_notifier);
-+    }
-     if (dd->notifier.notify) {
-         dbus_display_notifier_remove(&dd->notifier);
-     }
-@@ -164,14 +167,35 @@ dbus_display_finalize(Object *o)
-     dbus_display = NULL;
- }
- 
-+static void
-+dbus_update_console_ids(DBusDisplay *dd)
-+{
-+    g_autoptr(GArray) arr = g_array_new(FALSE, FALSE, sizeof(guint32));
-+
-+    for (guint i = 0; i < dd->consoles->len; i++) {
-+        DBusDisplayConsole *ddc = g_ptr_array_index(dd->consoles, i);
-+        guint32 idx = dbus_display_console_get_index(ddc);
-+        g_array_append_val(arr, idx);
-+    }
-+
-+    g_object_set(dd->iface, "console-ids",
-+        g_variant_new_fixed_array(G_VARIANT_TYPE("u"),
-+            arr->data, arr->len,
-+            sizeof(guint32)),
-+        NULL);
-+}
-+
- static bool
--dbus_display_add_console(DBusDisplay *dd, int idx, Error **errp)
-+dbus_display_add_console(DBusDisplay *dd, QemuConsole *con, Error **errp)
- {
--    QemuConsole *con;
-     DBusDisplayConsole *dbus_console;
- 
--    con = qemu_console_lookup_by_index(idx);
--    assert(con);
-+    for (guint i = 0; i < dd->consoles->len; i++) {
-+        DBusDisplayConsole *ddc = g_ptr_array_index(dd->consoles, i);
-+        if (dbus_display_console_get_qemu_console(ddc) == con) {
-+            return true;
+     view_menu = gtk_menu_new();
+     gtk_menu_set_accel_group(GTK_MENU(view_menu), s->accel_group);
+@@ -2453,6 +2432,27 @@ static GtkWidget *gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
+         v = g_new0(VirtualConsole, 1);
+         g_ptr_array_add(s->vcs, v);
+         group = gd_vc_gfx_init(s, v, con, vc, group, view_menu);
++        if (qemu_console_ui_info_supported(con)) {
++            zoom_to_fit = true;
 +        }
 +    }
- 
-     if (qemu_console_is_graphic(con) &&
-         dd->gl_mode != DISPLAY_GL_MODE_OFF) {
-@@ -179,20 +203,58 @@ dbus_display_add_console(DBusDisplay *dd, int idx, Error **errp)
++
++    if (s->opts->u.gtk.has_zoom_to_fit) {
++        zoom_to_fit = s->opts->u.gtk.zoom_to_fit;
++    }
++    if (zoom_to_fit) {
++        gtk_menu_item_activate(GTK_MENU_ITEM(s->zoom_fit_item));
++        s->free_scale = true;
++    }
++
++    s->keep_aspect_ratio = true;
++    if (s->opts->u.gtk.has_keep_aspect_ratio) {
++        s->keep_aspect_ratio = s->opts->u.gtk.keep_aspect_ratio;
++    }
++
++    for (i = 0; i < INPUT_EVENT_SLOTS_MAX; i++) {
++        struct touch_slot *slot = &touch_slots[i];
++        slot->tracking_id = -1;
      }
  
-     dbus_console = dbus_display_console_new(dd, con);
--    g_ptr_array_insert(dd->consoles, idx, dbus_console);
-+    g_ptr_array_add(dd->consoles, dbus_console);
-     g_dbus_object_manager_server_export(dd->server,
-                                         G_DBUS_OBJECT_SKELETON(dbus_console));
-+    dbus_update_console_ids(dd);
-     return true;
- }
- 
-+static void
-+dbus_display_remove_console(DBusDisplay *dd, QemuConsole *con)
-+{
-+    for (guint i = 0; i < dd->consoles->len; i++) {
-+        DBusDisplayConsole *ddc = g_ptr_array_index(dd->consoles, i);
-+        if (dbus_display_console_get_qemu_console(ddc) == con) {
-+            if (display_opengl) {
-+                qemu_console_set_display_gl_ctx(con, NULL);
-+            }
-+            g_dbus_object_manager_server_unexport(
-+                dd->server,
-+                g_dbus_object_get_object_path(G_DBUS_OBJECT(ddc)));
-+            g_ptr_array_remove_index(dd->consoles, i);
-+            dbus_update_console_ids(dd);
-+            break;
-+        }
-+    }
-+}
-+
-+static void
-+dbus_console_notify(Notifier *n, void *data)
-+{
-+    DBusDisplay *dd = container_of(n, DBusDisplay, console_notifier);
-+    QemuConsoleEvent *event = data;
-+
-+    switch (event->type) {
-+    case QEMU_CONSOLE_ADDED: {
-+        Error *err = NULL;
-+        if (!dbus_display_add_console(dd, event->con, &err)) {
-+            error_report_err(err);
-+        }
-+        break;
-+    }
-+    case QEMU_CONSOLE_REMOVED:
-+        dbus_display_remove_console(dd, event->con);
-+        break;
-+    }
-+}
-+
- static void
- dbus_display_complete(UserCreatable *uc, Error **errp)
- {
-     DBusDisplay *dd = DBUS_DISPLAY(uc);
-     g_autoptr(GError) err = NULL;
-     g_autofree char *uuid = qemu_uuid_unparse_strdup(&qemu_uuid);
--    g_autoptr(GArray) consoles = NULL;
--    GVariant *console_ids;
-     int idx;
- 
-     if (!object_resolve_path_type("", TYPE_DBUS_DISPLAY, NULL)) {
-@@ -233,27 +295,24 @@ dbus_display_complete(UserCreatable *uc, Error **errp)
-         }
-     }
- 
--    consoles = g_array_new(FALSE, FALSE, sizeof(guint32));
-     for (idx = 0;; idx++) {
--        if (!qemu_console_lookup_by_index(idx)) {
-+        QemuConsole *con = qemu_console_lookup_by_index(idx);
-+        if (!con) {
-             break;
-         }
--        if (!dbus_display_add_console(dd, idx, errp)) {
-+        if (!dbus_display_add_console(dd, con, errp)) {
-             return;
-         }
--        g_array_append_val(consoles, idx);
-     }
- 
--    console_ids = g_variant_new_from_data(
--        G_VARIANT_TYPE("au"),
--        consoles->data, consoles->len * sizeof(guint32), TRUE,
--        (GDestroyNotify)g_array_unref, consoles);
--    g_steal_pointer(&consoles);
-     g_object_set(dd->iface,
-                  "name", qemu_name ?: "QEMU " QEMU_VERSION,
-                  "uuid", uuid,
--                 "console-ids", console_ids,
-                  NULL);
-+    dbus_update_console_ids(dd);
-+
-+    dd->console_notifier.notify = dbus_console_notify;
-+    qemu_console_add_notifier(&dd->console_notifier);
- 
-     if (dd->bus) {
-         g_dbus_object_manager_server_set_connection(dd->server, dd->bus);
+ #if defined(CONFIG_VTE)
 
 -- 
 2.54.0
