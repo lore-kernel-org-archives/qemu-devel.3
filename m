@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 915DFCD6E50
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 14:30:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE3E1CD6E50
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 14:31:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSyAt-0007LZ-7O; Fri, 29 May 2026 10:26:59 -0400
+	id 1wSyAm-0007AK-4B; Fri, 29 May 2026 10:26:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSyAr-0007It-Hb
- for qemu-devel@nongnu.org; Fri, 29 May 2026 10:26:57 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSyAk-00077u-DO
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 10:26:50 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSyAp-0003QA-M2
- for qemu-devel@nongnu.org; Fri, 29 May 2026 10:26:57 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-490686877a1so40937385e9.0
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 07:26:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSyAh-0003OA-MP
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 10:26:50 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4903997fcb5so82668275e9.2
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 07:26:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780064814; x=1780669614; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780064806; x=1780669606; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JIu8PCygzL9wHkP8hkt7uxJi7hvxrUL4lU7Ro6etspM=;
- b=P9X7BxTigXRmmyO29DHvdv6+AVDN8Sd93paUAsNqp8ud5/u36SIdG9rz3N4BUEd+ok
- AyPP3d2vgtaXvj5EW6YVYfvXZTDwh25/Uhe+SvGOwXh7GdzGPr5pluGFhnBXuOXY6ssO
- ny8FoQHZuFtADMpc3jV58y9eR/9LU1sBclHjUBMts4Czoha6rAC3ohfZy4H5I3nTPKEQ
- 7m1sVrq/tPDEHx0vmtcjcf+UIHdc7GVtApV5SDx+SwI8Aym43NEwBUSU4MDXZKy9vXGe
- 1MFLPGNgzkQIt2IsfOpPn4NhcS9Ji1CG/0K3P04HA+AqOtOy+JxlNXx2GdKwMZQTR/7i
- rgCg==
+ bh=Z5ag1C+2SG1c3WsflC/6w87NYFOhc1Xx+nqXj9RTveg=;
+ b=NStu9ErOgmmuYI5JKfGo+t8xhW6yWsgzQt0znAtRSF3/XjB5aN3TcJMEIC2rG4RFtt
+ lf5MoTBXamNUQBvs6B/PU4j5pojEhVuGdYGw+4bapZvTB4gFsCrNqi39osZhUcOAmtx+
+ y90ull9GKnqZZfG6OSKkVSPjYN2N7WpfFk74qsjuBVK7GXQSXNUaYXhgZC9Latr7M2/4
+ FBlrf9u5xLc/WR5KWEP4+DLZ0tgXyDcdfc19AcwHUxZA1DeUraKw4LQd9sysbad4jXAa
+ PuL4aZzg14NOZIEtT6XNjwtf9+ia3PTBjFFo1hqfmdF1HYR6m0/XOhjOrwTVxV20CTT+
+ 8Usw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780064814; x=1780669614;
+ d=1e100.net; s=20251104; t=1780064806; x=1780669606;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=JIu8PCygzL9wHkP8hkt7uxJi7hvxrUL4lU7Ro6etspM=;
- b=JxufRzUSK2ktBfIxJtSYVggG8Nt5HKJn7Mm2xBWAVh47N2Yqa5QZaPJ66XwAvOCPpL
- YW3DQ1t5rCo6eSGgXi2GM5j+jOot9YEQiAp66PQB7n3jnecwBtSxYuAgRWGc+fuWAwm0
- 7ex2GXBs/HIK+lCawbwdApV4WCUeIzf+eJye1SvdVoTUvwYP6uYIGXWqJ2O5hzNmbLs2
- MGaPNcsxTWGZVBies2nj7c8Td3vmB2NFNtym0rhaKa76XeYwWe/b3f+F1UigcjfwNFUX
- SXXpC+hfSwq5/lXK483NOrd3G+St9hPyrun+mlmZeMIzr6emLinMzI56ESo7gol8ILHc
- Dd6Q==
-X-Gm-Message-State: AOJu0Yxat0LlEOAFAIv9NrFa27WcRkBbTSZxxdbmIQ9WYvVtafrQue+F
- 5NWsm3CbzozF73TJlAtntwBRjfUpenV3t12T32CikaSU8cO0Fzt/U23MqUu3CHdh41/vmEOUPf1
- WK4PIsyUflQ==
-X-Gm-Gg: Acq92OG7hTl5ao3VvmTDAoFK6RXdzqMRj3nQ3IiMx4GzB2LKugAXeMbjrgGUPKsM6tr
- 6dENFOk93c8MDICMgDABM1UAjI/j34mmgSCR5ML8JKeQRkPGdn49COj6ZbnN/T3j0vIlHOG4NZ+
- gTcNaDdbVMlnh7B5cPuN6qlvH/MQT2TX5h4pKE3mzEJKZU/izzj6Gj6RjivZHioZZARzWe3CkO2
- F8xxjffeKCtLahhOae7+yCSeBwLXsZzpGzyFXDKbD3hvOLvxYgKJz7KlKc7MYsTb8jYDT0Cbgev
- rEkWdVrBo6ItKX4PD5b6oSQEruuCARKf6nzj8n34R86gsUWBrsehRWJV9Sb1aKiAIfkdlOf0l75
- iYlAuO35f8KVU4CQdi4XmDi3//PIdK6hnJlA2WucbXpW/I0kia4em4VWPAf3bo4ct5AEeqJ33fS
- N8q0pSGDQ8aVuYOxGeoL5sfTiWCL3Bv0i8VxWPBXqLHO88Yx5Oz1/ix0DihtroIwxxj17Vm7wEQ
- Pem
-X-Received: by 2002:a05:600c:a30f:b0:490:4b89:5372 with SMTP id
- 5b1f17b1804b1-4909c62603cmr36489245e9.11.1780064814109; 
- Fri, 29 May 2026 07:26:54 -0700 (PDT)
+ bh=Z5ag1C+2SG1c3WsflC/6w87NYFOhc1Xx+nqXj9RTveg=;
+ b=c5z0Zp0QRE1rfK8iPKrHo4fWo1m2kVjoCjqIfi1ETvcUIKvvhKAlnZIkFElSyiQJ3f
+ MEojxc6haLSjXFoLge5RiecfFEJfZffaaupTg8PKMU3RM62Mgl0CCPqphkmFhMHyhAhO
+ KHrghXDEDibPeUH6avWgi07HMj2fbb/s1ypLQJL9pUaXxfCxPZQPgywyZyclp+H6BlzQ
+ psSEJd8DNkR8fX7AXve2isqWW0g2sJA+OMcB3ZhD4BUl/ljkMBSWApG/2LLITYSZYfSl
+ jeI+n/6dFXxoRpRkrkXQhaZREZKJmz7OCD8uowlonwxpLBrcfb+K6iTrWPN4TUk2pHHs
+ xzqA==
+X-Gm-Message-State: AOJu0YxyOuX6SXGUrYSZjoqAo/n4cccvrZTmcArNq87ooqYJVbl/Jt/x
+ pQB6/WKRlOt3LGpFwPht2n0jekhyTUtIdrP/zV5vN5h6Ymj+S4YbRSqqGF6zu0iInj5kdFqgtbU
+ Ck1kV5P2thg==
+X-Gm-Gg: Acq92OFGFUbiBTN4b6+OjLxy0ks5Q7imNaHG2vKNUuhm7iSX5MgKBzPHbSQrPRYJHA8
+ ucOshNgyLWaR5dCZjduN6AB4RDmHE0I0T1HLhBvginm3Z2HokYOPjq+Dq/u5j5jnAqGo8smvzDU
+ GM7z+Yz28LNj1dSFOgiRQ1v4eBrz9swIcnQPKtv1RgoJByWqgBAWK2t2yhggzum/qPIHUTP1tkO
+ kalCEky7KvZL66m8TBBAsbmie8UQIq6rmeP8dadiIaKt2cdxruRPbf2HS8dXeiQRpD54k4vHuTv
+ A8+09ZSunzr8heyp1DIa1GPSrG2Uv664LfJGDi7wZtSatOAK978DzcpjU+ZXwTTe956b8hp4HAx
+ KWLpGGGwoo2qfpwj1WSUIv0k+1T3ncuTvaEioDA/ZEih4BRKC4B0CopbmjeJQu3aV5C0i+H7zB8
+ fAcHeksGDf9mD5TlhD5Vr34JaLEOo39y3uzPLoed0r9MkovcU1yNlnHFJNMIGCtQGvGA==
+X-Received: by 2002:a05:600c:a105:b0:490:6e12:542c with SMTP id
+ 5b1f17b1804b1-4909c0e4476mr45336475e9.23.1780064806113; 
+ Fri, 29 May 2026 07:26:46 -0700 (PDT)
 Received: from m15.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4909d6a0e42sm43781075e9.8.2026.05.29.07.26.52
+ 5b1f17b1804b1-4909c103b98sm14989405e9.19.2026.05.29.07.26.44
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 29 May 2026 07:26:53 -0700 (PDT)
+ Fri, 29 May 2026 07:26:45 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Reinoud Zandijk <reinoud@netbsd.org>,
@@ -87,25 +86,24 @@ Cc: Reinoud Zandijk <reinoud@netbsd.org>,
  Chinmay Rath <rathc@linux.ibm.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 17/17] accel: Remove AccelCPUClass and
- 'accel/accel-cpu-target.h'
-Date: Fri, 29 May 2026 16:24:33 +0200
-Message-ID: <20260529142434.87880-18-philmd@linaro.org>
+Subject: [PATCH 16/17] accel: Remove AccelCPUClass::cpu_target_realize()
+Date: Fri, 29 May 2026 16:24:32 +0200
+Message-ID: <20260529142434.87880-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260529142434.87880-1-philmd@linaro.org>
 References: <20260529142434.87880-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,112 +119,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AccelCPUClass is now an empty class. We removed all uses of
-the TYPE_ACCEL_CPU definition. Remove as dead code, along with
-register_accel_target_type().
+We removed all implementations of AccelCPUClass::cpu_target_realize,
+remove the calls in accel_cpu_common_realize().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/accel/accel-cpu-target.h | 31 -------------------------------
- include/accel/accel-cpu.h        | 19 -------------------
- accel/accel-common.c             | 16 ----------------
- 3 files changed, 66 deletions(-)
- delete mode 100644 include/accel/accel-cpu-target.h
- delete mode 100644 include/accel/accel-cpu.h
+ include/accel/accel-cpu.h | 2 --
+ accel/accel-common.c      | 7 -------
+ 2 files changed, 9 deletions(-)
 
-diff --git a/include/accel/accel-cpu-target.h b/include/accel/accel-cpu-target.h
-deleted file mode 100644
-index 6feb344e29b..00000000000
---- a/include/accel/accel-cpu-target.h
-+++ /dev/null
-@@ -1,31 +0,0 @@
--/*
-- * Accelerator interface, specializes CPUClass
-- * This header is used only by target-specific code.
-- *
-- * Copyright 2021 SUSE LLC
-- *
-- * This work is licensed under the terms of the GNU GPL, version 2 or later.
-- * See the COPYING file in the top-level directory.
-- */
--
--#ifndef ACCEL_CPU_TARGET_H
--#define ACCEL_CPU_TARGET_H
--
--/*
-- * This header is used to define new accelerator-specific target-specific
-- * accelerator cpu subclasses.
-- * It uses CPU_RESOLVING_TYPE, so this is clearly target-specific.
-- *
-- * Do not try to use for any other purpose than the implementation of new
-- * subclasses in target/, or the accel implementation itself in accel/
-- */
--
--#include "qom/object.h"
--#include "accel/accel-cpu.h"
--#include "cpu.h"
--
--#define TYPE_ACCEL_CPU "accel-" CPU_RESOLVING_TYPE
--#define ACCEL_CPU_NAME(name) (name "-" TYPE_ACCEL_CPU)
--DECLARE_CLASS_CHECKERS(AccelCPUClass, ACCEL_CPU, TYPE_ACCEL_CPU)
--
--#endif /* ACCEL_CPU_H */
 diff --git a/include/accel/accel-cpu.h b/include/accel/accel-cpu.h
-deleted file mode 100644
-index d7ea45ada2e..00000000000
+index c42221f96cf..d7ea45ada2e 100644
 --- a/include/accel/accel-cpu.h
-+++ /dev/null
-@@ -1,19 +0,0 @@
--/*
-- * Accelerator interface, specializes CPUClass
-- *
-- * Copyright 2021 SUSE LLC
-- *
-- * SPDX-License-Identifier: GPL-2.0-or-later
-- */
++++ b/include/accel/accel-cpu.h
+@@ -14,8 +14,6 @@
+ 
+ typedef struct AccelCPUClass {
+     ObjectClass parent_class;
 -
--#ifndef ACCEL_CPU_H
--#define ACCEL_CPU_H
--
--#include "qom/object.h"
--#include "hw/core/cpu.h"
--
--typedef struct AccelCPUClass {
--    ObjectClass parent_class;
--} AccelCPUClass;
--
--#endif /* ACCEL_CPU_H */
+-    bool (*cpu_target_realize)(CPUState *cpu, Error **errp);
+ } AccelCPUClass;
+ 
+ #endif /* ACCEL_CPU_H */
 diff --git a/accel/accel-common.c b/accel/accel-common.c
-index d8ee6d62667..4fe15349012 100644
+index 04482b6b57e..d8ee6d62667 100644
 --- a/accel/accel-common.c
 +++ b/accel/accel-common.c
-@@ -11,7 +11,6 @@
- #include "qemu/accel.h"
- #include "qemu/target-info.h"
- #include "accel/accel-ops.h"
--#include "accel/accel-cpu.h"
- #include "accel/accel-cpu-ops.h"
- #include "accel-internal.h"
+@@ -52,13 +52,6 @@ bool accel_cpu_common_realize(CPUState *cpu, Error **errp)
+     AccelState *accel = current_accel();
+     AccelClass *acc = ACCEL_GET_CLASS(accel);
  
-@@ -98,18 +97,3 @@ static const TypeInfo accel_types[] = {
- };
- 
- DEFINE_TYPES(accel_types)
+-    /* target specific realization */
+-    if (cpu->cc->accel_cpu
+-        && cpu->cc->accel_cpu->cpu_target_realize
+-        && !cpu->cc->accel_cpu->cpu_target_realize(cpu, errp)) {
+-        return false;
+-    }
 -
--static void register_accel_target_type(void)
--{
--    g_autofree char *name = g_strconcat("accel-", target_cpu_type(), NULL);
--    const TypeInfo accel_cpu_type = {
--        .name = name,
--        .parent = TYPE_OBJECT,
--        .abstract = true,
--        .class_size = sizeof(AccelCPUClass),
--    };
--
--    type_register_static(&accel_cpu_type);
--}
--
--type_init(register_accel_target_type);
+     /* generic realization */
+     if (acc->cpu_common_realize && !acc->cpu_common_realize(cpu, errp)) {
+         return false;
 -- 
 2.53.0
 
