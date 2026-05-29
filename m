@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79853CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:49:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08C9FCD6E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:49:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSvgv-0001kD-7n; Fri, 29 May 2026 07:47:53 -0400
+	id 1wSvgt-0001iq-58; Fri, 29 May 2026 07:47:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSvgt-0001jW-Np
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:51 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1wSvgr-0001hz-9n
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:49 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSvgr-0008FS-Me
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:51 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-45ef189aa1cso506791f8f.0
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 04:47:49 -0700 (PDT)
+ id 1wSvgp-0008F9-FV
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:49 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-45ef189aa1cso506761f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 04:47:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780055268; x=1780660068; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780055266; x=1780660066; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=6NWO6d9ExJHQj9pOcS0mvnOh3Ls1e0Xs5nWSzTsKqPM=;
- b=FvujYUbo+lyBESsILMGHfgJDII7aucXpoLBrqJnoaPoHnKnybHKsGWrzUi+t8wduhi
- IRlBbWwcE0JTXTU/ldJq4eSMHqxLSYHA6lqcA75ubuZwINrsj0xDV5nc9nmLi5KTG/yl
- iqbngsOZrwYP1UFqzKJuZf4XjlLsOUvEpGgyh0fKFjboRn3tHWDIQ1/TPttnf5WUWzw8
- nskxPIYHrMmLwap585h+X1qouQVDG/jjobMb4vyKfwuP5Dsd1uy2XmgYK0hKlpLg46Xe
- LWA3mz9FcjxQD7scY5gAQ4ErKQ2hwEl7sBaByglGo0oZRZxODQSiRYrvFKQOzVxHQML4
- 8tEQ==
+ :reply-to; bh=ramOWrlR3t8XVUyFSiGNcrPRaqjo7C5Q2fq7bwfvjM8=;
+ b=MySFhFE4a8qH1YUWSEJmrp486+hLm8zksHSL2p61ilQ+1Kti7NOoAsoyO86/LPWPKq
+ 61y6aKtYq7yPihr0R9tZlsq4ZOwTUIYmttpgfCQ2qKVbjiU/rbmfEDSJSkV2+d9TFLQm
+ Wv+w8IdeeJS1aVpUIknlWtoPr40NllUnpquOVqndf1Or8AMrKZNCiOPRiOK5TWLrUQA6
+ bV7asEX1ed3YnM3z512F8h5S4n7qOiNf8n6914ll+Lmne5+X+nNsCCEfQrYFO1vkihCe
+ znrNYanck5bbp7AW/fa8xJKNQuGlhUtXWUNw9OnsemqgNsJiH1H0tBxnuNB//ou3b4NH
+ sNaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780055268; x=1780660068;
+ d=1e100.net; s=20251104; t=1780055266; x=1780660066;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=6NWO6d9ExJHQj9pOcS0mvnOh3Ls1e0Xs5nWSzTsKqPM=;
- b=SGttoPNQkUbkBbeAs++JQ/pFrxEPNT8Erokuq/VuTBE43bLuJmHDtmBog4xUBGBw+A
- hENGJq239SyH9UGcC06BdCljgxtz01zCps5itCUMkzNpmEEbo3p3lbPk6OV2sNHiGxwq
- XorKXcm3jNt8p/yZkPbickGSRp0UTPimErOXGXR+qHZezrcRFIEmXQiStBbaW7eSjInN
- IAlxtKG/9IA3WTCxeA5X7rSGJkUioNeaIUzBKUon/qcqhwMD490duRoahicQ0cgTkPTm
- QeiuFcgdSm1sEs91kLrDsMDf370q3SbsU2O9NfYsDpE68OajghAZiz9eZecBUSX1q+Ba
- 7u1w==
-X-Gm-Message-State: AOJu0YwHG2aTQhYRJjcrlEbGUx3PJlRpZhDm9k9Yyliix0HsLgtHBJFL
- ymFYuzlZK1IPJcfoYSc7WX/UeUxUmQ6U4BP7lP9CGYWOiWlTwxn7nibBoq3kGhQ2ugu7r6WoUDV
- BJsLT
-X-Gm-Gg: Acq92OGgAey5qAL/SSRmcXrBbIgN2KDXmJEHoccZUUAYCyhxuZl76MlOTthG7FzhInd
- zVq+J9PCmlj7TkDlc9rlN+9n5+KuV7cpbOg8zZ9o7qCV8X16sNN7fjOZF0OxlHgO8a0AOTTqFuE
- mz7/6bZmbjEGZGrYMTRsfucyyloSVy6he51cBS78VYnawZkDc9cXl48ZJnwF1iAQZACBuebtCNE
- 4XaVgPoUQ/0/q+LOwROaoOW5Rk0WeCb4KJK8xwWwudZDQSu8rOYYWeQx5JrrZgsml7nXMZHCVrW
- 2e9BESfXcWjTZQ9iwiqfALJohFHTAMWiPRTkQw8vFIKGjmQfFONzIEX608nj+HexOymRqxxmkSA
- btvDoh6gD4yCex+cPs/Tw+6rr9h8Uci5ZKXlX7qocotdGN+c2s7p3ucMDIT916Wl6+nwub/2bNF
- 9q9KXp4vc+A+xz/VhgarGfJYgB71X6Hl9QpE/TGk3ZdAroTGyrw+xSZ6LhyeOfPVxnHRwxr5iXO
- YHuUJL7pWNbewAJGT8uLWFWMi6iDU/7IvhjHugm8A==
-X-Received: by 2002:adf:e001:0:20b0:441:36b7:725f with SMTP id
- ffacd0b85a97d-45ef13ed5cbmr3414686f8f.5.1780055268201; 
- Fri, 29 May 2026 04:47:48 -0700 (PDT)
+ bh=ramOWrlR3t8XVUyFSiGNcrPRaqjo7C5Q2fq7bwfvjM8=;
+ b=CoTQpEEJU05p+Lw19rXNKYurBKweQHYsghbSbfFcCiFeLqx6mttTSaDEXeLOAT+jzY
+ TGAefEGKYkL/7v3mxzO7/tquYT0Vlhi5rn7T0OPlv77zKqTPnGwZmh6xk9NF/V1NFRUZ
+ DypJiB4FirCtRIaRYeBMkBj+i54t1X4X1IyXqUJns0Hij7Y7aoyw+79RQq1ZOqekWwrc
+ j1J3BQ+eAT3QqSLLuot/TjT9q5SW0eFVtt/wp3g1s2g7tXTGJdvkIzeu9vfkXsD9Ji/J
+ WgSquZYvY1eHueCvVbAfDnyDg+j/3zgBmo3NZ7uPCiBUbiM5B+KZmAxE6ujlfGgEjXmw
+ bfLQ==
+X-Gm-Message-State: AOJu0Yzkcm8wYZ0k9giDCvDqq5ZGoHwprumCP4h9/gfZmWdRKYXVRlJf
+ FdGT7FCBblXzRq6VROjOHRsfRcWzje5s4H27w99FaKvI7uiSG1xbab5nw8lslsBCvkJIWYdyssm
+ 2gMON
+X-Gm-Gg: Acq92OH7ZJFq/1+cn3YVwGeLV0gP2aLBaI5ZUyU5BgHxxL90hP1sakjzuOVyEvk6Fa9
+ OyHTVzHQ5WzOFFI/mbsb88CBvEFRhV2oaAXHszHEtrtf5SD1CV5WYVC2UFounN/lB8QK9iBfR2t
+ 7JwGJ34gDUC5ndL2lU3VTKn5uofbxhTnXHOvdoHf2T4IB4XCGgmaeZyduI+nUk0Q2OvX0qs3CGo
+ PyRJzToXEa/0pqlwYUf90evw/8p5APnbXmuDnqYUDNdDkTbFTh9DJ6UjgLcfl8bHqZuwFyHSDFo
+ wsH9IA/me1CKqGdsRm9SflIoW9NRZK9MNXTfgyR2xE7eR2hApKMa951ef5z/S/fVxrhiojtVn+Z
+ fXrilcNuueX5FxjghkiqPCPmdtbAUWnj6yF73qwaPlNDSQKOWkwq2etDV9znyp9wDjjvnsyQRGd
+ PQCDH1ajnKWyDwgRdlY8jwne8xZKj02LFW2j87RERkCt1oHq+X6l7jVQL5MCxZu5ke6vkFH4HiX
+ jSrtnW5quyx4Q4tWh885qKMG4IiZ+fFNlEWkpdvjA==
+X-Received: by 2002:a05:6000:41e2:b0:45e:ea46:ce11 with SMTP id
+ ffacd0b85a97d-45ef13f8ef9mr4418780f8f.14.1780055265950; 
+ Fri, 29 May 2026 04:47:45 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ef3563cb9sm3007358f8f.29.2026.05.29.04.47.47
+ ffacd0b85a97d-45ef3563cb9sm3007358f8f.29.2026.05.29.04.47.44
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 May 2026 04:47:47 -0700 (PDT)
+ Fri, 29 May 2026 04:47:45 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 21/21] hw/dma/omap_dma: Fix indentation after ifdef removal
-Date: Fri, 29 May 2026 12:47:22 +0100
-Message-ID: <20260529114723.42040-22-peter.maydell@linaro.org>
+Subject: [PULL 19/21] hw/dma/omap_dma: Remove unused ifdeffed out code
+Date: Fri, 29 May 2026 12:47:20 +0100
+Message-ID: <20260529114723.42040-20-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260529114723.42040-1-peter.maydell@linaro.org>
 References: <20260529114723.42040-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,189 +101,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some of the ifdefs in omap_dma_transfer_setup() which we just
-removed had if() blocks in them. Now that the code inside them
-is always unconditional it has an extra unnecessary layer of
-indentation; fix this, as a whitespace only change.
+The OMAP DMA device includes a lot of code which has been disabled
+via ifdefs for over a decade. Whatever this unfinished development
+work was, all knowledge of it is long gone, and we're unlikely to
+be doing any serious work on this device model in future. If we
+did, we'd likely have to start from scratch.
+
+Remove all the ifdeffed out code. We will fix up the indentation
+in a followup commit that has only whitespace changes.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260528152852.3349928-4-peter.maydell@linaro.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260528152852.3349928-2-peter.maydell@linaro.org
 ---
- hw/dma/omap_dma.c | 156 +++++++++++++++++++++++-----------------------
- 1 file changed, 78 insertions(+), 78 deletions(-)
+ hw/dma/omap_dma.c | 94 -----------------------------------------------
+ 1 file changed, 94 deletions(-)
 
 diff --git a/hw/dma/omap_dma.c b/hw/dma/omap_dma.c
-index b8bbb707c4..668fc49054 100644
+index b042e7c59c..a93d9ad196 100644
 --- a/hw/dma/omap_dma.c
 +++ b/hw/dma/omap_dma.c
-@@ -470,91 +470,91 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
-     /* Set appropriate interrupts and/or deactivate channels */
+@@ -343,9 +343,6 @@ static void omap_dma_transfer_generic(struct soc_dma_ch_s *dma)
+     struct omap_dma_channel_s *ch = dma->opaque;
+     struct omap_dma_reg_set_s *a = &ch->active_set;
+     int bytes = dma->bytes;
+-#ifdef MULTI_REQ
+-    uint16_t status = ch->status;
+-#endif
  
+     do {
+         /* Transfer a single element */
+@@ -362,7 +359,6 @@ static void omap_dma_transfer_generic(struct soc_dma_ch_s *dma)
+         a->dest += a->elem_delta[1];
+         a->element ++;
  
+-#ifndef MULTI_REQ
+         if (a->element == a->elements) {
+             /* End of Frame */
+             a->element = 0;
+@@ -375,78 +371,6 @@ static void omap_dma_transfer_generic(struct soc_dma_ch_s *dma)
+                 ch->cpc = a->dest & 0xffff;
+         }
+     } while ((bytes -= ch->data_type));
+-#else
 -        /* If the channel is element synchronized, deactivate it */
--        if (min_elems == elements[omap_dma_intr_element_sync]) {
-+    /* If the channel is element synchronized, deactivate it */
-+    if (min_elems == elements[omap_dma_intr_element_sync]) {
-+        omap_dma_deactivate_channel(s, ch);
-+    }
-+
-+    /* If it is the last frame, set the LAST_FRAME interrupt */
-+    if (min_elems == elements[omap_dma_intr_last_frame]) {
-+        ch->status |= LAST_FRAME_INTR;
-+    }
-+
-+    /*
-+     * If exactly half of the frame was reached, set the HALF_FRAME
-+     * interrupt
-+     */
-+    if (min_elems == elements[omap_dma_intr_half_frame]) {
-+        ch->status |= HALF_FRAME_INTR;
-+    }
-+
-+    /* If a full packet has been transferred, set the END_PKT interrupt */
-+    if (min_elems == elements[omap_dma_intr_packet]) {
-+        ch->status |= END_PKT_INTR;
-+    }
-+
-+    /* If the channel is packet-synchronized, deactivate it */
-+    if (min_elems == elements[omap_dma_intr_packet_sync]) {
-+        omap_dma_deactivate_channel(s, ch);
-+    }
-+
-+    /* If the channel is frame synchronized, deactivate it */
-+    if (min_elems == elements[omap_dma_intr_frame_sync]) {
-+        omap_dma_deactivate_channel(s, ch);
-+    }
-+
-+    /* Set the END_FRAME interrupt */
-+    if (min_elems == elements[omap_dma_intr_frame]) {
-+        ch->status |= END_FRAME_INTR;
-+    }
-+
-+    if (min_elems == elements[omap_dma_intr_block]) {
-+        /* End of Block */
-+        /* Disable the channel */
-+
-+        if (!ch->auto_init) {
-+            omap_dma_disable_channel(s, ch);
-+        } else if (ch->repeat || ch->end_prog) {
-+            omap_dma_channel_load(ch);
-+        } else {
-+            ch->waiting_end_prog = 1;
-             omap_dma_deactivate_channel(s, ch);
-         }
- 
+-        if (ch->sync && !ch->fs && !ch->bs)
+-            omap_dma_deactivate_channel(s, ch);
+-
 -        /* If it is the last frame, set the LAST_FRAME interrupt */
--        if (min_elems == elements[omap_dma_intr_last_frame]) {
--            ch->status |= LAST_FRAME_INTR;
-+        if (ch->interrupts & END_BLOCK_INTR) {
-+            ch->status |= END_BLOCK_INTR;
-+        }
-+    }
-+
-+    /* Update packet number */
-+    if (ch->fs && ch->bs) {
-+        a->pck_element += min_elems;
-+        a->pck_element %= a->pck_elements;
-+    }
-+
-+    /*
-+     * TODO: check if we really need to update anything here or perhaps we
-+     * can skip part of this.
-+     */
-+    if (dma->update) {
-+        a->element += min_elems;
-+
-+        frames = a->element / a->elements;
-+        a->element = a->element % a->elements;
-+        a->frame += frames;
-+        a->src += min_elems * a->elem_delta[0] + frames * a->frame_delta[0];
-+        a->dest += min_elems * a->elem_delta[1] + frames * a->frame_delta[1];
-+
-+        /* If the channel is async, update cpc */
-+        if (!ch->sync && frames) {
-+            ch->cpc = a->dest & 0xffff;
-         }
- 
-         /*
--         * If exactly half of the frame was reached, set the HALF_FRAME
--         * interrupt
-+         * TODO: if the destination port is IMIF or EMIFF, set the dirty
-+         * bits on it.
-          */
--        if (min_elems == elements[omap_dma_intr_half_frame]) {
--            ch->status |= HALF_FRAME_INTR;
--        }
+-        if (a->element == 1 && a->frame == a->frames - 1)
+-            if (ch->interrupts & LAST_FRAME_INTR)
+-                ch->status |= LAST_FRAME_INTR;
 -
--        /* If a full packet has been transferred, set the END_PKT interrupt */
--        if (min_elems == elements[omap_dma_intr_packet]) {
--            ch->status |= END_PKT_INTR;
--        }
+-        /* If the half of the frame was reached, set the HALF_FRAME
+-           interrupt */
+-        if (a->element == (a->elements >> 1))
+-            if (ch->interrupts & HALF_FRAME_INTR)
+-                ch->status |= HALF_FRAME_INTR;
 -
--        /* If the channel is packet-synchronized, deactivate it */
--        if (min_elems == elements[omap_dma_intr_packet_sync]) {
--            omap_dma_deactivate_channel(s, ch);
--        }
--
--        /* If the channel is frame synchronized, deactivate it */
--        if (min_elems == elements[omap_dma_intr_frame_sync]) {
--            omap_dma_deactivate_channel(s, ch);
--        }
--
--        /* Set the END_FRAME interrupt */
--        if (min_elems == elements[omap_dma_intr_frame]) {
--            ch->status |= END_FRAME_INTR;
--        }
--
--        if (min_elems == elements[omap_dma_intr_block]) {
--            /* End of Block */
--            /* Disable the channel */
--
--            if (!ch->auto_init) {
--                omap_dma_disable_channel(s, ch);
--            } else if (ch->repeat || ch->end_prog) {
--                omap_dma_channel_load(ch);
--            } else {
--                ch->waiting_end_prog = 1;
--                omap_dma_deactivate_channel(s, ch);
--            }
--
--            if (ch->interrupts & END_BLOCK_INTR) {
--                ch->status |= END_BLOCK_INTR;
--            }
--        }
--
--        /* Update packet number */
 -        if (ch->fs && ch->bs) {
--            a->pck_element += min_elems;
--            a->pck_element %= a->pck_elements;
+-            a->pck_element ++;
+-            /* Check if a full packet has been transferred.  */
+-            if (a->pck_element == a->pck_elements) {
+-                a->pck_element = 0;
+-
+-                /* Set the END_PKT interrupt */
+-                if ((ch->interrupts & END_PKT_INTR) && !ch->src_sync)
+-                    ch->status |= END_PKT_INTR;
+-
+-                /* If the channel is packet-synchronized, deactivate it */
+-                if (ch->sync)
+-                    omap_dma_deactivate_channel(s, ch);
+-            }
 -        }
 -
--        /*
--         * TODO: check if we really need to update anything here or perhaps we
--         * can skip part of this.
--         */
--        if (dma->update) {
--            a->element += min_elems;
+-        if (a->element == a->elements) {
+-            /* End of Frame */
+-            a->element = 0;
+-            a->src += a->frame_delta[0];
+-            a->dest += a->frame_delta[1];
+-            a->frame ++;
 -
--            frames = a->element / a->elements;
--            a->element = a->element % a->elements;
--            a->frame += frames;
--            a->src += min_elems * a->elem_delta[0] + frames * a->frame_delta[0];
--            a->dest += min_elems * a->elem_delta[1] + frames * a->frame_delta[1];
+-            /* If the channel is frame synchronized, deactivate it */
+-            if (ch->sync && ch->fs && !ch->bs)
+-                omap_dma_deactivate_channel(s, ch);
 -
 -            /* If the channel is async, update cpc */
--            if (!ch->sync && frames) {
+-            if (!ch->sync)
 -                ch->cpc = a->dest & 0xffff;
--            }
 -
--            /*
--             * TODO: if the destination port is IMIF or EMIFF, set the dirty
--             * bits on it.
--             */
+-            /* Set the END_FRAME interrupt */
+-            if (ch->interrupts & END_FRAME_INTR)
+-                ch->status |= END_FRAME_INTR;
+-
+-            if (a->frame == a->frames) {
+-                /* End of Block */
+-                /* Disable the channel */
+-
+-                if (!ch->auto_init)
+-                    omap_dma_disable_channel(s, ch);
+-                else if (ch->repeat || ch->end_prog)
+-                    omap_dma_channel_load(ch);
+-                else {
+-                    ch->waiting_end_prog = 1;
+-                    omap_dma_deactivate_channel(s, ch);
+-                }
+-
+-                if (ch->interrupts & END_BLOCK_INTR)
+-                    ch->status |= END_BLOCK_INTR;
+-            }
 -        }
-+    }
+-    } while (status == ch->status && ch->active);
+-
+-    omap_dma_interrupts_update(s);
+-#endif
+ }
+ 
+ enum {
+@@ -475,13 +399,6 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
+     dest_p = &s->mpu->port[ch->port[1]];
+     if ((!ch->constant_fill && !src_p->addr_valid(s->mpu, a->src)) ||
+                     (!dest_p->addr_valid(s->mpu, a->dest))) {
+-#if 0
+-        /* Bus time-out */
+-        if (ch->interrupts & TIMEOUT_INTR)
+-            ch->status |= TIMEOUT_INTR;
+-        omap_dma_deactivate_channel(s, ch);
+-        continue;
+-#endif
+         printf("%s: Bus time-out in DMA%i operation\n",
+                         __func__, dma->num);
+     }
+@@ -552,11 +469,6 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
+ 
+     /* Set appropriate interrupts and/or deactivate channels */
+ 
+-#ifdef MULTI_REQ
+-    /* TODO: should all of this only be done if dma->update, and otherwise
+-     * inside omap_dma_transfer_generic below - check what's faster.  */
+-    if (dma->update) {
+-#endif
+ 
+         /* If the channel is element synchronized, deactivate it */
+         if (min_elems == elements[omap_dma_intr_element_sync])
+@@ -612,9 +524,7 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
+ 
+         /* TODO: check if we really need to update anything here or perhaps we
+          * can skip part of this.  */
+-#ifndef MULTI_REQ
+         if (dma->update) {
+-#endif
+             a->element += min_elems;
+ 
+             frames = a->element / a->elements;
+@@ -629,11 +539,7 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
+ 
+             /* TODO: if the destination port is IMIF or EMIFF, set the dirty
+              * bits on it.  */
+-#ifndef MULTI_REQ
+         }
+-#else
+-    }
+-#endif
  
      omap_dma_interrupts_update(s);
  }
