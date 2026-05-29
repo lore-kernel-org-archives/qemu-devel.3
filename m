@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41521CD6E45
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 06:14:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7818DCD5BD2
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 06:17:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSqTG-0006qg-OM; Fri, 29 May 2026 02:13:26 -0400
+	id 1wSqWv-0000Js-3U; Fri, 29 May 2026 02:17:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSqTE-0006q1-Ks
- for qemu-devel@nongnu.org; Fri, 29 May 2026 02:13:25 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSqWs-0000Iu-K8
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 02:17:11 -0400
+Received: from mail-wm1-x342.google.com ([2a00:1450:4864:20::342])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSqTC-0002UP-RJ
- for qemu-devel@nongnu.org; Fri, 29 May 2026 02:13:24 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-45e9f4a3510so4481346f8f.1
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 23:13:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSqWq-0003dL-Gj
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 02:17:10 -0400
+Received: by mail-wm1-x342.google.com with SMTP id
+ 5b1f17b1804b1-4891e86fabeso44781145e9.1
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 23:17:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780035200; x=1780640000; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780035427; x=1780640227; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ssUPyBd3usjcl8XTK0Fh5dUFXJll6uI+lXkI/PYXkCE=;
- b=w7jE7ScjErDmZrASvpANaUnw7+CleDc105A5F9+svfymtJULbuzu2hJpKZrIYAvzcO
- qzbJ0T0LZLKN/dhcMyws3yTr48XRPqiw0a1j6ZroJl0XHU88xDX1dyWJ1a3Xrc9nFLFz
- T8L79n/1evuURIwpSHZCTdBC5pFupLICct0oey/yuDeM1pkgEKKWeADlTs/MjCmTrftS
- 8ePEc5ly7bGtfQw3+RAR4NvxJf3lb6AstxkcPPlecnHXXiliSjCT12DA7j4QMRZ6XLlR
- DaMH8jWB7dAIfa4r1iBGu+ZiS6tnxtDsWeD7gRwZGo4myu06+YC8YL8zKrtDCdU/K0FO
- HO6Q==
+ bh=Pjk8Lw2E5d3TU/t5HrOgXETIz7oSMHwYPw4UMXmpoqs=;
+ b=KKGE9AEi34a5u7b35lG2xXjkpy1ljsdoBlBXHx7oxyKsdUNEWsNLV/zMQBclXoqNJG
+ nBxMAyKWFavsnn/VHaadD3gqFCPWil1N05ZpVPGjF51xsMvdogmUaBvF3gJb72QtSYOQ
+ Zwn0MRwr3uCMWVthqxBH76oO1QCeBLytn4pJnL2haQXbOMnIh/OiF9DAc7uNl/WBLsy6
+ AhuXB1EB6PZ3YnSqe+2MXcfafIwjBqztAiMQ9lldacngFyDxtQA3hg18hLKAIq6x3Cxe
+ 8x3jrblEXFuQ9LS5RPUXicJ53+rGlABF5ZUnqLvma19WsoX43WHXd66M4H/BVm4boQLe
+ g5cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780035200; x=1780640000;
+ d=1e100.net; s=20251104; t=1780035427; x=1780640227;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ssUPyBd3usjcl8XTK0Fh5dUFXJll6uI+lXkI/PYXkCE=;
- b=lfUzsq/Q1MgsWA6CO9KzkAY/Xmuk0/xLrWq5t7xmyVNTXa+ohN23FsNSMGo7Yh196w
- rDIPhwYkDQC8FbbNsLtOB3OKXhAF9OKev3ELDryqq92pLheyB7MYyPKbsORGsgi7w1p+
- lwJ6A1YhPXRn8oErTh01khDtFt8WhTWx7/ZALxxqznu2FzBDF0CpLwPvTnYRk/d2UFtX
- Rt/566KlcPIY6aPspimGxU6jVPMLXzeO8yXGSKtr+4GRkvGMMZoyD6nKsJ3XX4irNBwB
- gSo/TimAHGhkpWTpyZzbmOy3Qnie4gSrZ94dPNvej+rnQsrUMGgMQu6qUkdyqwQmnPh/
- u82w==
+ bh=Pjk8Lw2E5d3TU/t5HrOgXETIz7oSMHwYPw4UMXmpoqs=;
+ b=RVEMaJbCCG8uNZruIqVOUe2W9MXkcV1uGUEMOhenXgkzwn0yeoATtANi2dcX/nYbS0
+ n3121RdXFs4E/QRpies/YeD0LsDimLsvuEeGtLrnrJ6grqLXQ3w21W8R0Cr7lnIJBF7j
+ iiSGk+ZJKXjD6oXUb83Ha9SirkwY0ViXgX7zwvYBufAeOmZ68EgorLrXKFaeFA4CXsoS
+ a7t35kT8zux1twNIolgu+fNoo8t+LuHqRkD6UglfEEaIuI8V/PPdeIOYboOcRvTF5bZs
+ e6lvAtOQHlBqJhu5d7kH3jAVzto70kOPAUT+hG5MEpMO9b2nDGT/3lA4NcQETflFdUQv
+ fKFg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9QKaCsyNF/B5tcXS8nFt4iV/R9jKTtaRxEQNSxJtD/habLCUWyilx4zNlL7/DvjfcuZN1eQ9Te2xcs@nongnu.org
-X-Gm-Message-State: AOJu0Yy3KMPwp5VySPz+RQUkI89pzgfcvtCzCdQOsyp45iLqZ8Fsr0qm
- 0XtA4wAVcYbMPAAWl8Ouo5kE6WO93KP3Hm/cT6rbP84vwlm0CdEx/LXBrbgwzxl4Md3kY/yUtvF
- tzX2pXK0WfQ==
-X-Gm-Gg: Acq92OGd7ARVSmno8VwZcs1JBM4TXN9Pf8H8E6zmGZeCRUhaBY2Q7s7rL62FGPvIVvT
- 0BdQNFEUhhCsyL2FL4zrdXB6jPBjXGfluVOW+aPurR+gj/48bggf5MLse3ZWyii7kg8Z7WJvCFe
- wrMN9iVTioVzWfZyv+RmontiB3OLGA/ohr8ODqStcwvXXK+6PC9TY//xakW4X2oDkvcq/JJJS3j
- C7f7WN9tIO5xNSTpDb7qy2VdsUlZLC/hNR8aPrchfVHPklHK/fJlX6aTjuy3y/f/pUhW1irGmex
- yfBgWvlseK7c71+UublvEdWq1plCeRVryPsJ7HC7hzXQtJvtiFm4YzSU2CUpOKEMv93qzhU7Zhb
- YXMGfdmatHiMKeo1sitTWqq0c1hd5cpo+Plnj7/YgJpE5Qub43oB+BXhOdFTCQgOiK4l6mpqRvk
- Ovc1QfP4RhxK0BmzHhd8+c8QOBbE8IJAbpdE1iuXDlzosNfgURjw92VQxL2Bo4KNfjmGtszzUZP
- 15TMQyY4JBqnow=
-X-Received: by 2002:a05:6000:481c:b0:43d:733f:aee6 with SMTP id
- ffacd0b85a97d-45ef13f840fmr2337854f8f.10.1780035200534; 
- Thu, 28 May 2026 23:13:20 -0700 (PDT)
+ AFNElJ8/wR9WaaQdbzI30E6DDEDrPyyj213FWhBryRXwLhW0UmAThsgPTBAYcSN2qTI+Zdx3bUNHqw8tDOAk@nongnu.org
+X-Gm-Message-State: AOJu0YziLQqy7v9Zdld6nfwVxC0KpAcuA8wn6kmTb8vwAPo8r2hTfM0Z
+ pdr6L61K6t872O7MKMk1tR6AXwy0vrW00Hl5EZVv1leSGhQuurgxzlxUIBHNPLkA+2o=
+X-Gm-Gg: Acq92OHQErMimL8SCZuaENOv3XuFtZEQ/Vl8iMkoiiaRMs0vLpnPFxkwRJ3wJVuKkcx
+ EWt9Jug4iGC/4Wym7hxRhQ40vsNHZdhkeZB1jxitY1CEjYLuLhN7mBwRHAV0j92b5/OiiY3sPrx
+ qU2/b7dshCjs0BiJsaq4EnIJoklqi581qPbk9peVzJIo/0Afc3+2jdo6zDi6e2/DLBnoO1PgOA9
+ yl02h/3jqMMkMghFxU0AUstyj37+HbvYOVMc3SJioPInWhoOD15OaFhAtUq782+fIrij0uFF9CU
+ +NLCQuRwRdy7zGipyRRTtC7H12etshYFVVMQXWtm0/eBQ5EtN3HZ4Hm2y75pHU/Vjk6V0EVTA2R
+ Bs1h1SkKaj+F1nQntGBgwKUNNQLw7MkBsMc7WWwuYnZJ3l/zAazvM1wgIiLqvvPyjdM9UqWYpUJ
+ E6O3gZ/R/GroZjR3P8O/KGZfK+rIAYAltGNo2NivrlKzbAHhlt9x4lHV1Mq0+a4cJJBsTOq826F
+ ie8
+X-Received: by 2002:a05:600c:41c5:b0:490:482c:437e with SMTP id
+ 5b1f17b1804b1-4909c0beb44mr13638155e9.23.1780035426509; 
+ Thu, 28 May 2026 23:17:06 -0700 (PDT)
 Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ef34c3081sm1280877f8f.15.2026.05.28.23.13.19
+ 5b1f17b1804b1-4909c0e8c1bsm9276675e9.3.2026.05.28.23.17.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 May 2026 23:13:19 -0700 (PDT)
-Message-ID: <7d60a11f-c82d-4557-907c-ae6b6907761b@linaro.org>
-Date: Fri, 29 May 2026 08:13:19 +0200
+ Thu, 28 May 2026 23:17:05 -0700 (PDT)
+Message-ID: <4b1e3557-246f-4218-b14c-b4191f899aff@linaro.org>
+Date: Fri, 29 May 2026 08:17:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qobject/json-writer: preallocate output buffer
+Subject: Re: [PATCH 2/2] hw/i3c: rename DW-I3C queue capacity fields from
+ _bytes to _words
 Content-Language: en-US
-To: Bin Guo <guobin@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: armbru@redhat.com
-References: <20260529023426.54680-1-guobin@linux.alibaba.com>
+To: Jithu Joseph <jithu.joseph@oss.qualcomm.com>, clg@kaod.org,
+ jamin_lin@aspeedtech.com, komlodi@google.com
+Cc: nabihestefan@google.com, qemu-devel@nongnu.org
+References: <20260529014034.864722-1-jithu.joseph@oss.qualcomm.com>
+ <20260529014034.864722-3-jithu.joseph@oss.qualcomm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260529023426.54680-1-guobin@linux.alibaba.com>
+In-Reply-To: <20260529014034.864722-3-jithu.joseph@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::342;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x342.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,50 +106,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/5/26 04:34, Bin Guo wrote:
-> json_writer_new() creates the output GString with g_string_new(NULL),
-> which starts at the GLib default of 64 bytes.  Serializing typical
-> QMP responses then requires multiple reallocations as the buffer
-> grows -- for query-qmp-schema the GString is reallocated 12+ times.
+Hi,
+
+On 29/5/26 03:40, Jithu Joseph wrote:
+> The cmd/resp, tx/rx, and IBI queue capacity values are passed straight
+> to fifo32_create(), which interprets its capacity argument as a 32-bit
+> word count.  The fields and device properties were therefore misnamed.
 > 
-> Preallocate JSON_WRITER_INITIAL_SIZE (4096) bytes.  This covers
-> most QMP responses without any reallocation.  4096 is one page on
-> most systems, which is efficient for the allocator.
-
-Why not use qemu_real_host_page_size()?
-
-Anyhow,
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
->  The JSONWriter
-> is a short-lived object so the preallocation does not accumulate.
+> Rename the three struct fields and matching device-property strings:
 > 
-> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+>    cmd_resp_queue_capacity_bytes  -> cmd_resp_queue_capacity_words
+>    tx_rx_queue_capacity_bytes     -> tx_rx_queue_capacity_words
+>    ibi_queue_capacity_bytes       -> ibi_queue_capacity_words
+> 
+> Defaults are unchanged (0x10 / 0x40 / 0x10) -- they were being
+> interpreted correctly by fifo32_create all along, just under a
+> misleading label.  No behavioral change.
+> 
+> aspeed_i3c.c only sets "device-id" on its child DWI3C objects and
+> nothing else references these properties in the tree, so no external
+> callers need updating.  vmstate_dw_i3c migrates only the regs[] array,
+> not cfg.*, so there are no migration-compat concerns either.
+> 
+> Signed-off-by: Jithu Joseph <jithu.joseph@oss.qualcomm.com>
 > ---
->   qobject/json-writer.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
+>   include/hw/i3c/dw-i3c.h |  6 +++---
+>   hw/i3c/dw-i3c.c         | 24 ++++++++++++------------
+>   2 files changed, 15 insertions(+), 15 deletions(-)
 > 
-> diff --git a/qobject/json-writer.c b/qobject/json-writer.c
-> index aac2c6ab71..fb3f3f3e3c 100644
-> --- a/qobject/json-writer.c
-> +++ b/qobject/json-writer.c
-> @@ -24,13 +24,16 @@ struct JSONWriter {
->       GByteArray *container_is_array;
->   };
+> diff --git a/include/hw/i3c/dw-i3c.h b/include/hw/i3c/dw-i3c.h
+> index d26f60580f02..391470207c43 100644
+> --- a/include/hw/i3c/dw-i3c.h
+> +++ b/include/hw/i3c/dw-i3c.h
+> @@ -181,9 +181,9 @@ struct DWI3C {
 >   
-> +/* Covers most QMP responses without reallocation (one page) */
-> +#define JSON_WRITER_INITIAL_SIZE  4096
-> +
->   JSONWriter *json_writer_new(bool pretty)
->   {
->       JSONWriter *writer = g_new(JSONWriter, 1);
+>       struct {
+>           uint8_t id;
+> -        uint8_t cmd_resp_queue_capacity_bytes;
+> -        uint16_t tx_rx_queue_capacity_bytes;
+> -        uint8_t ibi_queue_capacity_bytes;
+> +        uint8_t cmd_resp_queue_capacity_words;
+> +        uint16_t tx_rx_queue_capacity_words;
+> +        uint8_t ibi_queue_capacity_words;
+>           uint8_t num_addressable_devices;
+>           uint16_t dev_addr_table_pointer;
+>           uint16_t dev_addr_table_depth;
+> diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c
+> index e1bcf083210b..4ea80e8352c6 100644
+> --- a/hw/i3c/dw-i3c.c
+> +++ b/hw/i3c/dw-i3c.c
+> @@ -1806,14 +1806,14 @@ static void dw_i3c_realize(DeviceState *dev, Error **errp)
+>                             DW_I3C_NR_REGS << 2);
+>       sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);
 >   
->       writer->pretty = pretty;
->       writer->need_comma = false;
-> -    writer->contents = g_string_new(NULL);
-> +    writer->contents = g_string_sized_new(JSON_WRITER_INITIAL_SIZE);
->       writer->container_is_array = g_byte_array_new();
->       return writer;
->   }
+> -    fifo32_create(&s->cmd_queue, s->cfg.cmd_resp_queue_capacity_bytes);
+> -    fifo32_create(&s->resp_queue, s->cfg.cmd_resp_queue_capacity_bytes);
+> -    fifo32_create(&s->tx_queue, s->cfg.tx_rx_queue_capacity_bytes);
+> -    fifo32_create(&s->rx_queue, s->cfg.tx_rx_queue_capacity_bytes);
+> -    fifo32_create(&s->ibi_queue, s->cfg.ibi_queue_capacity_bytes);
+> +    fifo32_create(&s->cmd_queue, s->cfg.cmd_resp_queue_capacity_words);
+> +    fifo32_create(&s->resp_queue, s->cfg.cmd_resp_queue_capacity_words);
+> +    fifo32_create(&s->tx_queue, s->cfg.tx_rx_queue_capacity_words);
+> +    fifo32_create(&s->rx_queue, s->cfg.tx_rx_queue_capacity_words);
+> +    fifo32_create(&s->ibi_queue, s->cfg.ibi_queue_capacity_words);
+>       /* Arbitrarily large enough to not be an issue. */
+>       fifo8_create(&s->ibi_data.ibi_intermediate_queue,
+> -                 s->cfg.ibi_queue_capacity_bytes * 8);
+> +                 s->cfg.ibi_queue_capacity_words * 8);
+>   
+>       s->bus = i3c_init_bus(DEVICE(s), name);
+>       I3CBusClass *bc = I3C_BUS_GET_CLASS(s->bus);
+> @@ -1824,12 +1824,12 @@ static void dw_i3c_realize(DeviceState *dev, Error **errp)
+>   
+>   static const Property dw_i3c_properties[] = {
+>       DEFINE_PROP_UINT8("device-id", DWI3C, cfg.id, 0),
+> -    DEFINE_PROP_UINT8("command-response-queue-capacity-bytes", DWI3C,
+> -                      cfg.cmd_resp_queue_capacity_bytes, 0x10),
+> -    DEFINE_PROP_UINT16("tx-rx-queue-capacity-bytes", DWI3C,
+> -                      cfg.tx_rx_queue_capacity_bytes, 0x40),
+> -    DEFINE_PROP_UINT8("ibi-queue-capacity-bytes", DWI3C,
+> -                      cfg.ibi_queue_capacity_bytes, 0x10),
+> +    DEFINE_PROP_UINT8("command-response-queue-capacity-words", DWI3C,
+> +                      cfg.cmd_resp_queue_capacity_words, 0x10),
+> +    DEFINE_PROP_UINT16("tx-rx-queue-capacity-words", DWI3C,
+> +                      cfg.tx_rx_queue_capacity_words, 0x40),
+> +    DEFINE_PROP_UINT8("ibi-queue-capacity-words", DWI3C,
+> +                      cfg.ibi_queue_capacity_words, 0x10),
+
+Properties are user exposed, should we keep deprecated aliases?
+
+>       DEFINE_PROP_UINT8("num-addressable-devices", DWI3C,
+>                         cfg.num_addressable_devices, 8),
+>       DEFINE_PROP_UINT16("dev-addr-table-pointer", DWI3C,
 
 
