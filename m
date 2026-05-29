@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12095CD5BD2
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 06:54:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DF66CD6E49
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 06:54:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSr6Q-0006e0-K8; Fri, 29 May 2026 02:53:54 -0400
+	id 1wSr6L-0006d2-7l; Fri, 29 May 2026 02:53:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cyan@cyano.uk>) id 1wSr6O-0006dX-Ab
- for qemu-devel@nongnu.org; Fri, 29 May 2026 02:53:52 -0400
+ (Exim 4.90_1) (envelope-from <cyan@cyano.uk>) id 1wSr6J-0006ci-B6
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 02:53:47 -0400
 Received: from jupiter.guys.cyano.uk ([45.63.120.176])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cyan@cyano.uk>) id 1wSr6M-0005Mo-BY
- for qemu-devel@nongnu.org; Fri, 29 May 2026 02:53:51 -0400
+ (Exim 4.90_1) (envelope-from <cyan@cyano.uk>) id 1wSr6H-0005MJ-JV
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 02:53:47 -0400
 From: Xinhui Yang <cyan@cyano.uk>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cyano.uk; s=dkim;
- t=1780037627;
+ t=1780037622;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=m6jV25Ug5h7ljt+EAAlQsjavXhHvXlFYCOfQhYtHD6g=;
- b=srvXLxB6AOAS5kKGDav+dy5IfsN7UJTi6FAs14bo9T+AvqRmjk5rpnozCUx6+V4kVIAmvh
- gekb3SCRxAthyBUzPFI8rlQl1ATap3qK2eOBoeNc/CVF2bqDY0T9kydQIBr13FOaX3n9RQ
- VsVnZwYXwa0eVsTLGB0SVKw997oK55B+s2OKCzlZTX8W0Lb3FWoy2nEPGklo8Hzx+j40Jl
- ulxfaDjMWaxPwl+pymI+qTpUVeuVLGY/cAYIMBTPskFiUFJyrbDzvT+2FaAZE1WKRzw7ho
- wfwD+7btkrTH7KgLgpzuJq60Ikveix65w6otb7UXSoUphl7rxUCjuPBu77uLRQ==
+ bh=cBFZXZ5VBBd96EmFFpngfIH0I1YowUTAx0q99subMTA=;
+ b=Xy+cf3OOO9dIPb8ZIqOo3+SZ062u1KUR9vgiaXNEg9ntfzZkBtrvwGYwsB3NWAvWlTyajV
+ r+KRar6eBxug05yAIipLSxLWkm5rLjzyfMO9qfEtZuSWFlXTIads6bK4C3UFHY6d9+qTSl
+ Jv6lTD0kK94ppBxkhBkAtGou6ETkfZqPEvYfHKI2f6VfdIDH93hO1wYviHUlIFsM/W5hf5
+ rrHzIFstdi9g++RZi11w+bACPgUHtM8eW8gVVPhB0ayRULt5TUhmtOJX5ub7hy/mqw2yVc
+ k4CGwxv61Jk/7Oj8RBtEKefdgKGuFlFo4ilto3wiPy9XdL6d/JVL3hhD0xmY+w==
 Authentication-Results: jupiter.guys.cyano.uk;
  auth=pass smtp.mailfrom=cyan@cyano.uk
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Mingcong Bai <jeffbai@aosc.io>, Xinhui Yang <cyan@cyano.uk>
-Subject: [PATCH v3 2/2] linux-user/strace: add fsmount series of syscalls
-Date: Fri, 29 May 2026 14:53:21 +0800
-Message-ID: <6fdae25aea6001375bcf78a80c3a6369a9a587ca.1780036891.git.cyan@cyano.uk>
+Subject: [PATCH v3 1/2] linux-user: implement fsmount(2) series of syscalls
+Date: Fri, 29 May 2026 14:53:20 +0800
+Message-ID: <193e73f7745a086b99ba68e28b665f9f22444b06.1780036891.git.cyan@cyano.uk>
 In-Reply-To: <cover.1780036891.git.cyan@cyano.uk>
 References: <cover.1780036891.git.cyan@cyano.uk>
 MIME-Version: 1.0
@@ -68,173 +68,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Following the addition of fsmount(2) series of syscalls in the syscall
-handler, strace support is added, with a dedicated function to print the
-parameters of fsconfig(2), which contains parameters that can be
-interpreted as multiple types.
+This series of syscalls replaces the old mount(2) syscall with a series
+of syscalls that operates around a filesystem context. This series of
+syscalls is available since Linux 5.2 and glibc 2.36+.
 
-Snippet of the strace dump when running `mount -t tmpfs tmpfs /media`:
+Their users include systemd since v259 and libmount from util-linux, and
+possibly other widely used projects.
 
-18 fsopen(tmpfs,1) = 3
-18 read(3,0x407fcf1c,8191) = -1 errno=61 (No data available)
-18 fsconfig(3,FSCONFIG_SET_STRING,"source","tmpfs",0) = 0
-18 read(3,0x407fce3c,8191) = -1 errno=61 (No data available)
-18 fsconfig(3,FSCONFIG_CMD_CREATE,NULL,NULL,0) = 0
-18 read(3,0x407fce3c,8191) = -1 errno=61 (No data available)
-18 fsmount(3,1,0) = 4
-18 read(3,0x407fce3c,8191) = -1 errno=61 (No data available)
-18 statx(4,"",AT_EMPTY_PATH|AT_STATX_SYNC_AS_STAT,0x1000,0x407fee98) = 0
-18 move_mount(4,,-100,/media,4) = 0
-18 read(3,0x407fcfcc,8191) = -1 errno=61 (No data available)
-18 close(3) = 0
-18 close(4) = 0
+Preliminary checks are implemented to ensure the validity of the
+interface.
 
 Signed-off-by: Xinhui Yang <cyan@cyano.uk>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- linux-user/strace.c    | 105 +++++++++++++++++++++++++++++++++++++++++
- linux-user/strace.list |  15 ++++++
- 2 files changed, 120 insertions(+)
+ linux-user/syscall.c | 91 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 91 insertions(+)
 
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index 2cbaf94c89..d861f311f6 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -4344,6 +4344,111 @@ print_statx(CPUArchState *cpu_env, const struct syscallname *name,
- }
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 7d7a7b489c..c5c2aa80ec 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -14412,6 +14412,97 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+         return do_map_shadow_stack(cpu_env, arg1, arg2, arg3);
  #endif
  
-+#ifdef TARGET_NR_fsconfig
-+static void
-+print_fsconfig_cmd_name(int cmd)
-+{
-+    switch (cmd) {
-+    case FSCONFIG_SET_FLAG:
-+        qemu_log("%s%s", "FSCONFIG_SET_FLAG", get_comma(0));
-+        break;
-+    case FSCONFIG_SET_STRING:
-+        qemu_log("%s%s", "FSCONFIG_SET_STRING", get_comma(0));
-+        break;
-+    case FSCONFIG_SET_BINARY:
-+        qemu_log("%s%s", "FSCONFIG_SET_BINARY", get_comma(0));
-+        break;
-+    case FSCONFIG_SET_PATH:
-+        qemu_log("%s%s", "FSCONFIG_SET_PATH", get_comma(0));
-+        break;
-+    case FSCONFIG_SET_PATH_EMPTY:
-+        qemu_log("%s%s", "FSCONFIG_SET_PATH_EMPTY", get_comma(0));
-+        break;
-+    case FSCONFIG_SET_FD:
-+        qemu_log("%s%s", "FSCONFIG_SET_FD", get_comma(0));
-+        break;
-+    case FSCONFIG_CMD_CREATE:
-+        qemu_log("%s%s", "FSCONFIG_CMD_CREATE", get_comma(0));
-+        break;
-+    case FSCONFIG_CMD_RECONFIGURE:
-+        qemu_log("%s%s", "FSCONFIG_CMD_RECONFIGURE", get_comma(0));
-+        break;
++#if defined(TARGET_NR_fsopen)
++    case TARGET_NR_fsopen:
++        {
++            p = lock_user_string(arg1);
++            if (!p) {
++                return -TARGET_EFAULT;
++            }
++            ret = get_errno(fsopen(p, arg2));
++            unlock_user(p, arg1, 0);
++        }
++        return ret;
++    case TARGET_NR_fsconfig:
++        {
++            /*
++             * fsconfig(int, int, char *, void *, int)
++             * NOTE: p4 is nullable and its type might not be a string.
++             */
++            void *p3, *p4;
++            int cmd = (int) arg2;
++            switch (cmd) {
++            case FSCONFIG_SET_BINARY:
++            case FSCONFIG_SET_STRING:
++            case FSCONFIG_SET_PATH:
++            case FSCONFIG_SET_PATH_EMPTY:
++                p3 = lock_user_string(arg3);
++                if (!p3) {
++                    return -TARGET_EFAULT;
++                }
++                if (cmd != FSCONFIG_SET_BINARY) {
++                    /* key and value must be strings. */
++                    p4 = lock_user_string(arg4);
++                } else {
++                    /*
++                     * Otherwise the value must be a raw buffer with its
++                     * length specified in arg5 (aux).
++                     */
++                    p4 = lock_user(VERIFY_READ, arg4, arg5, 1);
++                }
++                if (!p4) {
++                    unlock_user(p3, arg3, 0);
++                    return -TARGET_EFAULT;
++                }
++                ret = get_errno(fsconfig(arg1, arg2, p3, p4, arg5));
++                unlock_user(p3, arg3, 0);
++                unlock_user(p4, arg4, 0);
++                break;
++
++            case FSCONFIG_SET_FLAG:
++            case FSCONFIG_SET_FD:
++                /* arg4 (value) must be NULL. */
++                if (arg4) {
++                    return -TARGET_EFAULT;
++                }
++                p3 = lock_user_string(arg3);
++                if (!p3) {
++                    return -TARGET_EFAULT;
++                }
++                ret = get_errno(fsconfig(arg1, arg2, p3, NULL, arg5));
++                unlock_user(p3, arg3, 0);
++                break;
++            case FSCONFIG_CMD_CREATE:
++            case FSCONFIG_CMD_RECONFIGURE:
 +#ifdef FSCONFIG_CMD_CREATE_EXCL
-+    case FSCONFIG_CMD_CREATE_EXCL:
-+        /* Only available since Linux 6.6. */
-+        qemu_log("%s%s", "FSCONFIG_CMD_CREATE_EXCL", get_comma(0));
-+        break;
++            /*
++             * FSCONFIG_CMD_CREATE_EXCL is only available since Linux
++             * 6.6. Guarding it to allow building with pre-6.6 headers.
++             */
++            case FSCONFIG_CMD_CREATE_EXCL:
 +#endif
-+    default:
-+        qemu_log("%s (%d)%s", "UNKNOWN_CMD", cmd, get_comma(0));
-+        break;
-+    }
-+}
-+
-+static void
-+print_fsconfig(CPUArchState *cpu_env, const struct syscallname *name,
-+            abi_long arg0, abi_long arg1, abi_long arg2,
-+            abi_long arg3, abi_long arg4, abi_long arg5)
-+{
-+    /*
-+     * fsconfig(int fd, int cmd, char* key, void* value, int aux)
-+     * Where:
-+     * fd: file descriptor returned by fsopen().
-+     * cmd: integer constant specifying a command.
-+     * key: a string, can be NULL on certain commands.
-+     * value: any data in a buffer, can be NULL, raw buffer or a string.
-+     * aux: axillary values such as flags for FSCONFIG_SET_PATH.
-+     */
-+    int cmd = (int) arg1;
-+    print_syscall_prologue(name);
-+    print_raw_param("%d", arg0, 0);
-+    print_fsconfig_cmd_name(cmd);
-+    /* Process arg2 (key). */
-+    switch (cmd) {
-+    case FSCONFIG_SET_FLAG:
-+    case FSCONFIG_SET_STRING:
-+    case FSCONFIG_SET_BINARY:
-+    case FSCONFIG_SET_PATH:
-+    case FSCONFIG_SET_PATH_EMPTY:
-+    case FSCONFIG_SET_FD:
-+        print_string(arg2, 0);
-+        break;
-+    default:
-+        print_pointer(arg2, 0);
-+        break;
-+    }
-+    /* Process arg3 (value). */
-+    switch (cmd) {
-+    case FSCONFIG_SET_STRING:
-+    case FSCONFIG_SET_PATH:
-+    case FSCONFIG_SET_PATH_EMPTY:
-+        print_string(arg3, 0);
-+        break;
-+    default:
-+        print_pointer(arg3, 0);
-+        break;
-+    }
-+    /*
-+     * Process arg4 (aux).
-+     * On FSCONFIG_SET_PATH and FSCONFIG_SET_PATH_EMPTY, aux can
-+     * be either 0 or AT_FDCWD.
-+     * On FSCONFIG_SET_BINARY, aux is an integer to state the length
-+     * of the buffer pointed by arg3.
-+     * Otherwise, it must be 0.
-+     */
-+    switch (cmd) {
-+    case FSCONFIG_SET_PATH:
-+    case FSCONFIG_SET_PATH_EMPTY:
-+        print_at_dirfd(arg4, 1);
-+        break;
-+    default:
-+        print_raw_param("%d", arg4, 1);
-+        break;
-+    }
-+    print_syscall_epilogue(name);
-+}
++                /* key and value must be NULL, aux must be 0. */
++                if (arg3 || arg4 || arg5) {
++                    return -TARGET_EFAULT;
++                }
++                ret = get_errno(fsconfig(arg1, arg2, NULL, NULL, 0));
++                break;
++            default:
++                return -TARGET_EFAULT;
++            }
++        }
++        return ret;
++    case TARGET_NR_fsmount:
++        ret = get_errno(fsmount(arg1, arg2, arg3));
++        return ret;
++    case TARGET_NR_fspick:
++        {
++            p = lock_user_string(arg2);
++            ret = get_errno(fspick(arg1, p, arg3));
++            unlock_user(p, arg2, 0);
++        }
++        return ret;
 +#endif
-+
- #ifdef TARGET_NR_ioctl
- static void
- print_ioctl(CPUArchState *cpu_env, const struct syscallname *name,
-diff --git a/linux-user/strace.list b/linux-user/strace.list
-index 6162a407f9..3a366b8cac 100644
---- a/linux-user/strace.list
-+++ b/linux-user/strace.list
-@@ -1722,3 +1722,18 @@
- #ifdef TARGET_NR_rseq
- { TARGET_NR_rseq, "rseq" , "%s(%p,%u,%d,%#x)", NULL, NULL },
- #endif
-+#ifdef TARGET_NR_fsopen
-+{ TARGET_NR_fsopen, "fsopen", "%s(%s,%d)", NULL, NULL },
-+#endif
-+#ifdef TARGET_NR_fsconfig
-+{ TARGET_NR_fsconfig, "fsconfig", NULL, print_fsconfig, NULL },
-+#endif
-+#ifdef TARGET_NR_fsmount
-+{ TARGET_NR_fsmount, "fsmount", "%s(%d,%d,%d)", NULL, NULL },
-+#endif
-+#ifdef TARGET_NR_move_mount
-+{ TARGET_NR_move_mount, "move_mount", "%s(%d,%s,%d,%s,%d)", NULL, NULL },
-+#endif
-+#ifdef TARGET_NR_fspick
-+{ TARGET_NR_fspick, "fspick", "%s(%d,%s,%d)", NULL, NULL },
-+#endif
+     default:
+         qemu_log_mask(LOG_UNIMP, "Unsupported syscall: %d\n", num);
+         return -TARGET_ENOSYS;
 -- 
 2.52.0
 
