@@ -4,96 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AAC8CD4F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 12:53:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 194B7CD4F54
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 13:01:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSwgT-00056S-GA; Fri, 29 May 2026 08:51:29 -0400
+	id 1wSwpC-0003oY-46; Fri, 29 May 2026 09:00:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wSwgR-00052c-A1
- for qemu-devel@nongnu.org; Fri, 29 May 2026 08:51:27 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wSwgP-0006O7-Gp
- for qemu-devel@nongnu.org; Fri, 29 May 2026 08:51:27 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-c857d04cc99so82887a12.0
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 05:51:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780059084; x=1780663884; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BsNa9aCVyTTB2LpanIeTZACYZwi0hW4ugdss0KkHJ5Y=;
- b=oVraCmandQ2l89EHbnO9v1lcr+GfmGz8dvEFs0J/7MQVMeaMFjPc9mzySXMsfho8wm
- VbziFB6ufXEObU1e0T0H2b9MZxD5IJGyGYbimnwuuenGbTlD1StH29l31d4U87JojqZ1
- jQ46wrOXjqYsTn10rXuX2+VnWfkRaDUNnhJZ0ZitCmXsueR0/j8eq4PmWFJ40BN2uiu8
- kgx898QJd4m28TDuuBK4ejQRml6XThpO+poBkZqU7XW1vHjUp3jW6f1tDc9/mNL6ejWr
- ww5d+2qK4nXJkP0ipof7WCErICGhuQ+LRhZ3zEUDap5Q2mlUfQwas5W3VXX8a9RqSGJx
- Hvew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780059084; x=1780663884;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=BsNa9aCVyTTB2LpanIeTZACYZwi0hW4ugdss0KkHJ5Y=;
- b=dZuwbL8LkZJ65POtWgPI92BqaEYO7j2J5P+nHby2nOxmT3Ls1UOVv1K1ZnQJhT8baI
- CsKGxIK8lfW2k185eIY+7S/+YN0jKjKVsP/EGwQJXlBG9bUDQ+fb6QPKbCZthx31lvSi
- wbEbLDOT3a2gOsoWYZflXhxdIMV2rcp5u/uxJaqperjs/mws6D3jYAJW/LnkaRQEdP0/
- ATDzUoNWXobdytoQ6OVqJ2U8dHsWoSMeB9J3y6k4jBYlq+vVBJ5W9OFL1ihHRMEVFeSf
- xOqyHz+QWgpX+djPozrBSm0oghsQkAnyDNdMSKuoCbFCkbZ6CFkN7dEHZkZCut/X+Js3
- 06QA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9emTaO2aoor6EgrGwANfakOM0LmYBhu8zFbZw8vJwq4RQRA0PwD1qBE0z7vEZZNP3DE3/MUXCEBMjv@nongnu.org
-X-Gm-Message-State: AOJu0YxgadzEywVEfiNWHOJ6urCN3s5EoRj0CPjhWue7J2UAyrA/uJJX
- XrTm4PHuKLNHxd14LA7IsmLUFwypVJ1fi7p2oYpoHNeSlN+7HVBDsW8P
-X-Gm-Gg: Acq92OFYsaoaK9IKfXfDG+Ga9VRqye6W08is+PAIU/ba3xkqmDDFMLr4+pJr55waGai
- ErUepgs9pyYOyWKT9fJA1Vp6SR/mJeyxMwOTsW1L+T7VjnSf3ez1JfYF3rXPSTJlSn51w5cjjRx
- FBVxKPsHcBMAfN/dbzr42VaPHPJ2VqrlWkWCmLqds4TFnrePgzLEDGSHUNEHpM2n8aHfw2ixoIs
- PJtMCR+7KhFuNPpvzn+RLb/U1rFdPD2HV2YouNs99Vr3Fg92wXOgyxQ5Wi7cPLI6haWYFNNwI0N
- zBGGOpFVor7h68mAN8mpN9jyZXjareh03rtg3Vg11lCId74g7EwYL428xzf2noO0k+7w4MUfd7x
- 9R/myeENo5J8qufqLT6/AawryI23CpSRGwFP3VKn5EstFE1UQkWOEVWTGxAqWAtfOssa06pY4u6
- GLVoaUwPrUodvMeCw1MRb8bszv4NKrzTFFXgo5oHkDlaYrMd3MNESQTxHBzgyc8mbdUabn0DutU
- iJ72D3CmbmtbSBP8qU=
-X-Received: by 2002:a05:6a20:1588:b0:3b3:3852:6663 with SMTP id
- adf61e73a8af0-3b40fcdcdfemr2963580637.24.1780059084030; 
- Fri, 29 May 2026 05:51:24 -0700 (PDT)
-Received: from localhost (124.158.97.178.qld.leaptel.network. [124.158.97.178])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c85772baab6sm2145420a12.24.2026.05.29.05.51.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 May 2026 05:51:23 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: Alistair Francis <alistair.francis@wdc.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Andrew Jones <andrew.jones@oss.qualcomm.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Michael Ellerman <mpe@kernel.org>,
- Joel Stanley <jms@oss.tenstorrent.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
- Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, Joel Stanley <joel@jms.id.au>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v7 09/10] hw/riscv/atlantis: Integrate i2c controllers
-Date: Fri, 29 May 2026 05:50:34 -0700
-Message-ID: <20260529125036.728206-10-npiggin@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260529125036.728206-1-npiggin@gmail.com>
-References: <20260529125036.728206-1-npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
+ id 1wSwow-0003la-Nk; Fri, 29 May 2026 09:00:21 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
+ id 1wSwou-0000N7-5R; Fri, 29 May 2026 09:00:14 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by sea.source.kernel.org (Postfix) with ESMTP id AE884444F7;
+ Fri, 29 May 2026 13:00:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB1C71F00893;
+ Fri, 29 May 2026 13:00:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1780059609;
+ bh=ig5z6GvTcvtiouWzhZB2hwdFrrm6k/U19rfC10wc4is=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References;
+ b=b8vw+y4SdFWT8VnoECDZiWcxjHj9FtvQ4lDmgvbez6matOoW0ITHwMGLy0luh9oc1
+ DM59iByfXQ2mxTt7x2/nrhM4zHgdIMOEwxH81gSrC9LFn/9cPqpCQBXygAzfxO3EkY
+ 5mD6+gVK0l+ZOJTXUmhz5zm67g5FrImeF73JFY/cJ83OzMplN6yqg+h8qY6HiQzdlm
+ adKjB+4RIBZzqYbAj6gF0amwX89/f9feMJK4DgGrSrYL3zdpfrfKtu7yDFSA5WwPXK
+ W0/XMcDor3xlVWiD/OUkfloRptM2+QCQfGk03IDYInneR0CehlkIJya8Vmpum73EA7
+ rbsNLy3LcxycQ==
+Date: Fri, 29 May 2026 14:00:01 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, Fan Ni
+ <fan.ni@samsung.com>, Paolo Bonzini <pbonzini@redhat.com>, Richard
+ Henderson <richard.henderson@linaro.org>, "Michael S. Tsirkin"
+ <mst@redhat.com>, qemu-arm@nongnu.org, linux-cxl@vger.kernel.org
+Subject: Re: [PATCH] hw/cxl: Fix cxl_fmws_set_memmap() range check
+Message-ID: <20260529140001.435eaebd@jic23-huawei>
+In-Reply-To: <20260528-cxl-v1-1-a470c8255264@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260528-cxl-v1-1-a470c8255264@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=jic23@kernel.org; helo=sea.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,174 +71,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joel Stanley <joel@jms.id.au>
+On Thu, 28 May 2026 21:24:05 +0900
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
 
-Add DesignWare I2C controllers to the tt-atlantis machine.
+> cxl_fmws_set_memmap() leaves the zero-initialized base address of a CXL
+> fixed window unchanged when it does not fit in the memory map, which
+> results in incorrect mapping. Change the function to report an error
+> instead.
+> 
+> The Arm virt machine passes the exclusive end of the memory map while
+> the i386 pc machine passes the inclusive end to cxl_fmws_set_memmap().
+> Change the i386 pc machine to pass the exclusive end and perform the
+> range check accordingly in cxl_fmws_set_memmap().
+Hi,
 
-Provide a fixed clock in the device tree so that the Linux driver probes
-without WARNing.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Joel Stanley <joel@jms.id.au>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- hw/riscv/Kconfig               |  1 +
- hw/riscv/tt_atlantis.c         | 53 ++++++++++++++++++++++++++++++++++
- include/hw/riscv/tt_atlantis.h | 14 +++++++++
- 3 files changed, 68 insertions(+)
++CC linux-cxl as more folk there who might take a look at this.
+(also my remove my dead huawei address)
 
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index aaf029c9ed..38180a903f 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -129,6 +129,7 @@ config TENSTORRENT
-     select RISCV_IMSIC
-     select SERIAL_MM
-     select DEVICE_TREE
-+    select DESIGNWARE_I2C
- 
- config XIANGSHAN_KUNMINGHU
-     bool
-diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-index 20db26f982..39979c662b 100644
---- a/hw/riscv/tt_atlantis.c
-+++ b/hw/riscv/tt_atlantis.c
-@@ -59,6 +59,11 @@ static const MemMapEntry tt_atlantis_memmap[] = {
-     [TT_ATL_SIMSIC] =           { 0xa4000000,      0x200000 },
-     [TT_ATL_TIMER] =            { 0xa8020000,       0x10000 },
-     [TT_ATL_UART0] =            { 0xb0100000,       0x10000 },
-+    [TT_ATL_I2C0] =             { 0xb0400000,       0x10000 },
-+    [TT_ATL_I2C1] =             { 0xb0500000,       0x10000 },
-+    [TT_ATL_I2C2] =             { 0xb0600000,       0x10000 },
-+    [TT_ATL_I2C3] =             { 0xb0700000,       0x10000 },
-+    [TT_ATL_I2C4] =             { 0xb0800000,       0x10000 },
-     [TT_ATL_MAPLIC] =           { 0xcc000000,     0x4000000 },
-     [TT_ATL_SAPLIC] =           { 0xe8000000,     0x4000000 },
-     [TT_ATL_DDR_HI] =          { 0x100000000,  0x1000000000 },
-@@ -329,10 +334,36 @@ static void create_fdt_uart(void *fdt, const MemMapEntry *mem, int irq,
-     qemu_fdt_setprop_string(fdt, "/aliases", "serial0", name);
- }
- 
-+static void create_fdt_clk(void *fdt, const char *name, uint32_t clk_phandle)
-+{
-+    qemu_fdt_add_subnode(fdt, name);
-+    qemu_fdt_setprop_string(fdt, name, "compatible", "fixed-clock");
-+    qemu_fdt_setprop_cell(fdt, name, "#clock-cells", 0);
-+    qemu_fdt_setprop_cell(fdt, name, "clock-frequency", 100000000);
-+    qemu_fdt_setprop_cell(fdt, name, "phandle", clk_phandle);
-+}
-+
-+static void create_fdt_i2c(void *fdt, const MemMapEntry *mem, uint32_t irq,
-+                           uint32_t irqchip_phandle, uint32_t clk_phandle)
-+{
-+    g_autofree char *name = g_strdup_printf("/soc/i2c@%"HWADDR_PRIX, mem->base);
-+
-+    qemu_fdt_add_subnode(fdt, name);
-+    qemu_fdt_setprop_string(fdt, name, "compatible", "snps,designware-i2c");
-+    qemu_fdt_setprop_sized_cells(fdt, name, "reg", 2, mem->base, 2, mem->size);
-+    qemu_fdt_setprop_cell(fdt, name, "interrupt-parent", irqchip_phandle);
-+    qemu_fdt_setprop_cells(fdt, name, "interrupts", irq, 0x4);
-+    qemu_fdt_setprop_cell(fdt, name, "clocks", clk_phandle);
-+    qemu_fdt_setprop_cell(fdt, name, "clock-frequency", 100000);
-+    qemu_fdt_setprop_cell(fdt, name, "#address-cells", 1);
-+    qemu_fdt_setprop_cell(fdt, name, "#size-cells", 0);
-+}
-+
- static void finalize_fdt(TTAtlantisState *s)
- {
-     uint32_t aplic_s_phandle = next_phandle();
-     uint32_t imsic_s_phandle = next_phandle();
-+    uint32_t periph_clk_phandle = next_phandle();
-     void *fdt = MACHINE(s)->fdt;
- 
-     create_fdt_cpu(s, s->memmap, aplic_s_phandle, imsic_s_phandle);
-@@ -346,6 +377,15 @@ static void finalize_fdt(TTAtlantisState *s)
- 
-     create_fdt_uart(fdt, &s->memmap[TT_ATL_UART0], TT_ATL_UART0_IRQ,
-                     aplic_s_phandle);
-+
-+    create_fdt_clk(fdt, "/periph-clk", periph_clk_phandle);
-+
-+    for (int i = 0; i < TT_ATL_NUM_I2C; i++) {
-+        create_fdt_i2c(fdt,
-+                       &s->memmap[TT_ATL_I2C0 + i],
-+                       TT_ATL_I2C0_IRQ + i,
-+                       aplic_s_phandle, periph_clk_phandle);
-+    }
- }
- 
- static void create_fdt(TTAtlantisState *s)
-@@ -542,6 +582,19 @@ static void tt_atlantis_machine_init(MachineState *machine)
-                    qdev_get_gpio_in(s->irqchip, TT_ATL_UART0_IRQ),
-                    115200, serial_hd(0), DEVICE_LITTLE_ENDIAN);
- 
-+    /* I2C */
-+    for (int i = 0; i < TT_ATL_NUM_I2C; i++) {
-+        object_initialize_child(OBJECT(s), "i2c[*]", &s->i2c[i],
-+                                TYPE_DESIGNWARE_I2C);
-+        sysbus_realize(SYS_BUS_DEVICE(&s->i2c[i]), &error_fatal);
-+        SysBusDevice *sbd = SYS_BUS_DEVICE(&s->i2c[i]);
-+        memory_region_add_subregion(system_memory,
-+                                    s->memmap[TT_ATL_I2C0 + i].base,
-+                                    sysbus_mmio_get_region(sbd, 0));
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c[i]), 0,
-+                           qdev_get_gpio_in(s->irqchip, TT_ATL_I2C0_IRQ + i));
-+    }
-+
-     /* Load or create device tree */
-     if (machine->dtb) {
-         machine->fdt = load_device_tree(machine->dtb, &s->fdt_size);
-diff --git a/include/hw/riscv/tt_atlantis.h b/include/hw/riscv/tt_atlantis.h
-index 960dc07841..ddea317409 100644
---- a/include/hw/riscv/tt_atlantis.h
-+++ b/include/hw/riscv/tt_atlantis.h
-@@ -11,12 +11,15 @@
- 
- #include "hw/core/boards.h"
- #include "hw/core/sysbus.h"
-+#include "hw/i2c/designware_i2c.h"
- #include "hw/intc/riscv_imsic.h"
- #include "hw/riscv/riscv_hart.h"
- 
- #define TYPE_TT_ATLANTIS_MACHINE MACHINE_TYPE_NAME("tt-atlantis")
- OBJECT_DECLARE_SIMPLE_TYPE(TTAtlantisState, TT_ATLANTIS_MACHINE)
- 
-+#define TT_ATL_NUM_I2C 5
-+
- struct TTAtlantisState {
-     /*< private >*/
-     MachineState parent;
-@@ -27,11 +30,17 @@ struct TTAtlantisState {
- 
-     RISCVHartArrayState soc;
-     DeviceState *irqchip;
-+    DesignWareI2CState i2c[TT_ATL_NUM_I2C];
- 
-     int fdt_size;
- };
- 
- enum {
-+    TT_ATL_I2C0_IRQ = 33,
-+    TT_ATL_I2C1_IRQ = 34,
-+    TT_ATL_I2C2_IRQ = 35,
-+    TT_ATL_I2C3_IRQ = 36,
-+    TT_ATL_I2C4_IRQ = 37,
-     TT_ATL_UART0_IRQ = 38,
- };
- 
-@@ -40,6 +49,11 @@ enum {
-     TT_ATL_BOOTROM,
-     TT_ATL_DDR_LO,
-     TT_ATL_DDR_HI,
-+    TT_ATL_I2C0,
-+    TT_ATL_I2C1,
-+    TT_ATL_I2C2,
-+    TT_ATL_I2C3,
-+    TT_ATL_I2C4,
-     TT_ATL_MAPLIC,
-     TT_ATL_MIMSIC,
-     TT_ATL_SAPLIC,
--- 
-2.53.0
+What are the results of this on users?  Obviously the CFMWS doesn't
+work, but how do they observe that.
+
+Also seems like this is a fix and it can be a lot more minimal
+(just one error_fatal use).
+
+Jonathan
+
+
+> 
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> ---
+>  include/hw/cxl/cxl_host.h |  2 +-
+>  hw/arm/virt.c             |  6 +++---
+>  hw/cxl/cxl-host-stubs.c   |  4 ++--
+>  hw/cxl/cxl-host.c         | 12 +++++++-----
+>  hw/i386/pc.c              | 12 ++++++------
+>  5 files changed, 19 insertions(+), 17 deletions(-)
+> 
+> diff --git a/include/hw/cxl/cxl_host.h b/include/hw/cxl/cxl_host.h
+> index 21619bb748ab..ed34c3159f59 100644
+> --- a/include/hw/cxl/cxl_host.h
+> +++ b/include/hw/cxl/cxl_host.h
+> @@ -16,7 +16,7 @@
+>  void cxl_machine_init(Object *obj, CXLState *state);
+>  void cxl_fmws_link_targets(Error **errp);
+>  void cxl_hook_up_pxb_registers(PCIBus *bus, CXLState *state, Error **errp);
+> -hwaddr cxl_fmws_set_memmap(hwaddr base, hwaddr max_addr);
+> +bool cxl_fmws_set_memmap(hwaddr *cursor, hwaddr end, Error **errp);
+>  void cxl_fmws_update_mmio(void);
+>  GSList *cxl_fmws_get_all_sorted(void);
+>  
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index b090233893c5..a22778575cfb 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -2536,9 +2536,9 @@ static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
+>      if (device_memory_size > 0) {
+>          machine_memory_devices_init(ms, device_memory_base, device_memory_size);
+>      }
+> -    vms->highest_gpa = cxl_fmws_set_memmap(ROUND_UP(vms->highest_gpa + 1,
+> -                                                    256 * MiB),
+> -                                           BIT_ULL(pa_bits)) - 1;
+> +    vms->highest_gpa = ROUND_UP(vms->highest_gpa + 1, 256 * MiB);
+> +    cxl_fmws_set_memmap(&vms->highest_gpa, BIT_ULL(pa_bits), &error_fatal);
+> +    vms->highest_gpa--;
+
+Hmm. The previous code kept the tight coupling of cxl_fmws_set_memmap()
+returning an address that we then decremented as the value is inclusive.
+This loses that clarity to my eyes.
+
+Perhaps we now need a comment.
+
+>  }
+>  
+>  static VirtGICType finalize_gic_version_do(const char *accel_name,
+> diff --git a/hw/cxl/cxl-host-stubs.c b/hw/cxl/cxl-host-stubs.c
+> index 9b515913ea4d..fa87cea0e8b9 100644
+> --- a/hw/cxl/cxl-host-stubs.c
+> +++ b/hw/cxl/cxl-host-stubs.c
+> @@ -11,9 +11,9 @@
+>  void cxl_fmws_link_targets(Error **errp) {};
+>  void cxl_machine_init(Object *obj, CXLState *state) {};
+>  void cxl_hook_up_pxb_registers(PCIBus *bus, CXLState *state, Error **errp) {};
+> -hwaddr cxl_fmws_set_memmap(hwaddr base, hwaddr max_addr)
+> +bool cxl_fmws_set_memmap(hwaddr *base, hwaddr max_addr, Error **errp)
+
+Feels like a more minimal solution is to just use error_fatal() internally and
+keep the original return of value.
+
+>  {
+> -    return base;
+> +    return true;
+>  };
+>  void cxl_fmws_update_mmio(void) {};
+>  
+> diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+> index a94b893e9991..33421b3ca174 100644
+> --- a/hw/cxl/cxl-host.c
+> +++ b/hw/cxl/cxl-host.c
+> @@ -429,7 +429,7 @@ void cxl_fmws_update_mmio(void)
+>      object_child_foreach_recursive(object_get_root(), cxl_fmws_mmio_map, NULL);
+>  }
+>  
+> -hwaddr cxl_fmws_set_memmap(hwaddr base, hwaddr max_addr)
+> +bool cxl_fmws_set_memmap(hwaddr *cursor, hwaddr end, Error **errp)
+
+The cursor naming makes little sense to me. It is an address.
+Also the rename to end doesn't seem to bring any more clarity over max_addr.
+I guess maybe you did this because it's an exclusive value? I'm not sure end
+conveys that any more than max_addr.
+
+
+>  {
+>      GSList *cfmws_list, *iter;
+>      CXLFixedWindow *fw;
+> @@ -437,14 +437,16 @@ hwaddr cxl_fmws_set_memmap(hwaddr base, hwaddr max_addr)
+>      cfmws_list = cxl_fmws_get_all_sorted();
+>      for (iter = cfmws_list; iter; iter = iter->next) {
+>          fw = CXL_FMW(iter->data);
+> -        if (base + fw->size <= max_addr) {
+> -            fw->base = base;
+> -            base += fw->size;
+> +        if (end - *cursor < fw->size) {
+I'm not seeing why this form is an improvement on the original test.
+
+> +            error_setg(errp, "A CXL fixed memory window does not fit in the memory map");
+
+This bit I'm fine with!  Makes sense to error out as otherwise we get a rather
+confusing result.
+
+> +            return false;
+>          }
+> +        fw->base = *cursor;
+> +        *cursor += fw->size;
+>      }
+>      g_slist_free(cfmws_list);
+>  
+> -    return base;
+> +    return true;
+>  }
+>  
+>  static void cxl_fmw_realize(DeviceState *dev, Error **errp)
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index 2ecad3c503fb..eadf37096533 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -747,7 +747,7 @@ void pc_memory_init(PCMachineState *pcms,
+>      PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+>      X86MachineState *x86ms = X86_MACHINE(pcms);
+>      hwaddr maxphysaddr, maxusedaddr;
+> -    hwaddr cxl_base, cxl_resv_end = 0;
+> +    hwaddr cxl_cursor = 0;
+As above, I'm not sure how the cursor naming is useful. Its
+an address so I'd expect naming to reflect that. To me base does
+and cursor (which to me is typically the current position of an
+iterator) does not.
+
+>      X86CPU *cpu = X86_CPU(first_cpu);
+>      uint64_t res_mem_end;
+>  
+> @@ -857,11 +857,11 @@ void pc_memory_init(PCMachineState *pcms,
+>          MemoryRegion *mr = &pcms->cxl_devices_state.host_mr;
+>          hwaddr cxl_size = MiB;
+>  
+> -        cxl_base = pc_get_cxl_range_start(pcms);
+> +        cxl_cursor = pc_get_cxl_range_start(pcms);
+>          memory_region_init(mr, OBJECT(machine), "cxl_host_reg", cxl_size);
+> -        memory_region_add_subregion(system_memory, cxl_base, mr);
+> -        cxl_base = ROUND_UP(cxl_base + cxl_size, 256 * MiB);
+> -        cxl_resv_end = cxl_fmws_set_memmap(cxl_base, maxphysaddr);
+> +        memory_region_add_subregion(system_memory, cxl_cursor, mr);
+> +        cxl_cursor = ROUND_UP(cxl_cursor + cxl_size, 256 * MiB);
+> +        cxl_fmws_set_memmap(&cxl_cursor, maxphysaddr + 1, &error_fatal);
+>          cxl_fmws_update_mmio();
+>      }
+>  
+> @@ -892,7 +892,7 @@ void pc_memory_init(PCMachineState *pcms,
+>      rom_set_fw(fw_cfg);
+>  
+>      if (pcms->cxl_devices_state.is_enabled) {
+> -        res_mem_end = cxl_resv_end;
+> +        res_mem_end = cxl_cursor;
+>      } else if (machine->device_memory) {
+>          res_mem_end = machine->device_memory->base
+>                        + memory_region_size(&machine->device_memory->mr);
+> 
+> ---
+> base-commit: e89049b3ba5f1f0468bc0d294173345597514a1b
+> change-id: 20260528-cxl-d3bf91bac0c6
+> 
+> Best regards,
+> --  
+> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> 
+> 
 
 
