@@ -4,63 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D316CD4F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 12:37:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24E3DCD4F54
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 12:39:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSwSI-0006Rl-3U; Fri, 29 May 2026 08:36:50 -0400
+	id 1wSwUw-00089u-Jc; Fri, 29 May 2026 08:39:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
- id 1wSwSF-0006RN-TN; Fri, 29 May 2026 08:36:47 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
+ id 1wSwUu-00089Q-O0; Fri, 29 May 2026 08:39:32 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
- id 1wSwSE-0002ss-43; Fri, 29 May 2026 08:36:47 -0400
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
+ id 1wSwUt-0003jQ-6Q; Fri, 29 May 2026 08:39:32 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 42F386059A;
- Fri, 29 May 2026 12:36:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA01B1F00893;
- Fri, 29 May 2026 12:36:39 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 38D0460598;
+ Fri, 29 May 2026 12:39:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6861F00893;
+ Fri, 29 May 2026 12:39:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1780058202;
- bh=23RJfZVgVB0pedU3NEIWH1sI8sC9rSX3P67UaCsmimU=;
- h=From:Subject:Date:To:Cc;
- b=QSpXHeKVnTChALPRfRKQ1Pqu52u1AIwx0d0f43bOQkAU8eCYl+tCoA0qCiFK5ZviQ
- Hxt0XPyDyi8BcIMo4eksLY4XvbQz/maCkcPWlgLSZu0NbuWVtXEskma+Qo4tz0dSHq
- 3qUiJbQVjE8iiqIMJz3sKdrly48rM0otuQYFzPCgv5tbQ5fiasxJShvR6ytNxLmd/l
- 8/S/j+cfp2AG9oKbAF0RBDZA1ednBcAI79wQSKiyOtREYpksglty2ja1JEbrAekLSE
- eIG2gNSx4XvOTTkJ0ED27YtRRUFihbYh33VM8TFm2LiLxRJzArtMAy5hgJ6nYB5c7s
- bjJnYAbutU7iQ==
-From: Daniel Gomez <da.gomez@kernel.org>
-Subject: [PATCH 0/3] hw/nvme: lift IOV_MAX limit in DMA path
-Date: Fri, 29 May 2026 14:36:12 +0200
-Message-Id: <20260529-align-nvme-mdts-with-linux-v1-0-221d4d21ab43@samsung.com>
+ s=k20260515; t=1780058369;
+ bh=IQn9hbomT2+VOq3l81AfM2P8zSEc9/5kIp4YlnBQCBw=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References;
+ b=jq+JeRr0Qu89IoAOxpNiMelhlh5BsXXHJg6jB0Rd6Jp7GoILx9yhqLn+I/9D/62EW
+ fjB4MPnY/L45prEolrsb9d7B88P7cISSn2REXlkE+macLNw9jwhv8bkD9KQUoyOje4
+ aKyJq1HnDuOi+T8+uSTIBQk+ItPl2e/rryq2go3KH+SVIv9Q+JeIxDpVZkTCiX8D/Q
+ SGIeO8H8vJdj+/s7ieLXf8MKVpC21Hl/w9/puhPSKKsCgKSO6rNyYoCrnFR4MftWP3
+ W+5NVvPgdirk1p9YqCz5GK2Rvn/RHCJcZ+15TEihueIVK6RADu0MjZn4idKmtSDgVO
+ 81kZlt9fFE9+g==
+Date: Fri, 29 May 2026 13:39:19 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: Alexander Hansen <alexander.hansen@9elements.com>
+Cc: qemu-devel@nongnu.org, Titus Rwantare <titusr@google.com>,
+ =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@kaod.org>, Philippe
+ =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen
+ <kane_chen@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>
+Subject: Re: [PATCH v4 4/5] hw/sensor: support MAX11615
+Message-ID: <20260529133919.3194636b@jic23-huawei>
+In-Reply-To: <20260515150610.381066-5-alexander.hansen@9elements.com>
+References: <20260515150610.381066-1-alexander.hansen@9elements.com>
+ <20260515150610.381066-5-alexander.hansen@9elements.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MSw5AMBAA0KvIrE1SFSWuIhalg0kY0vol4u4ay
- 7d5DwTyTAHq5AFPJwdeJSJLE+gnKyMhu2jQShtV6ArtzKOgnAvh4vaAF+8TzizHjaZ0JqsGU+a
- qgxhsnga+/7xp3/cDM78XBmwAAAA=
-X-Change-ID: 20260528-align-nvme-mdts-with-linux-67d618f6730b
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, 
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org, 
- Daniel Gomez <da.gomez@kernel.org>, Daniel Gomez <da.gomez@samsung.com>, 
- GOST <gost.dev@samsung.com>, Klaus Jensen <k.jensen@samsung.com>
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1780058199; l=6078;
- i=da.gomez@samsung.com; s=20240621; h=from:subject:message-id;
- bh=ShEd9SP0MkzMuhcrfLpwslikd7ntVj55Xcmors1nQvI=;
- b=FsBc458V220LggO5CWREv/pUwHm0p79KBX6b2t97EgDBVmhWwL2pElCWoW5GKCQXlTltn1EL8
- evsajXxxA1xDpxtfKEFiS+ewIT8EJk4glKYo79FfIuaVSmv7tN4FrmA
-X-Developer-Key: i=da.gomez@samsung.com; a=ed25519;
- pk=BqYk31UHkmv0WZShES6pIZcdmPPGay5LbzifAdZ2Ia4=
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=da.gomez@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=jic23@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -82,134 +76,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Raise the QEMU NVMe controller's MDTS limit from 9 (2 MiB) to 11 (8 MiB)
-to match the Linux host driver's NVME_MAX_BYTES.
+On Fri, 15 May 2026 16:58:01 +0200
+Alexander Hansen <alexander.hansen@9elements.com> wrote:
 
-Commit 53493c1f83 ("hw/nvme: cap MDTS value for internal limitation")
-needed the 2 MiB cap because dma_blk_io() submitted the full sglist
-in one preadv()/pwritev() call, which the host kernel rejects when the
-iovec count exceeds IOV_MAX. This series moves the IOV_MAX bound down to
-dma_blk_cb(), where we batch in IOV_MAX chunks when necessary.
+> Product: [1]
+> Datasheet: [2]
+> 
+> Sensor readings can be provided upon creation of the device. In case no
+> readings are provided the ADC reads a pre-defined arbitrary value.
+> 
+> root@yosemite4:~# cat /sys/bus/iio/devices/iio:device2/name
+> max11615
+> root@yosemite4:~# cat /sys/bus/iio/devices/iio:device2/in_voltage0_raw
+> 1922
+> root@yosemite4:~# cat /sys/bus/iio/devices/iio:device2/in_voltage_scale
+> 0.500000000
 
-dma_blk_cb() now breaks its accumulation at IOV_MAX and submits the
-next chunk via the existing re-entry path. With that the DMA-path
-nvme_map_addr() guard is removed, MDTS moves to 11 via a new
-NVME_MDTS_MAX, and mdts=0 is coerced to the same limit: Linux's host
-driver clamps at NVME_MAX_BYTES = 8 MiB regardless of MDTS, so honoring
-"unlimited" buys nothing.
+As I mentioned on v1 a lot of the standard linux driver operations with this
+device will not work. The emulation doesn't deal with multi channel
+scans for example.
 
-Verification with blkalgn and fio:
+So what is the purpose of limited emulation vs just not emulating it at all.
+(which will fail a couple more things obviously!)
 
-fio \
-    --name=mdts-stress \
-    --filename=/mnt/mdts/stress.fio \
-    --rw=randwrite \
-    --bs=8M \
-    --ioengine=psync \
-    --direct=0 \
-    --numjobs=8 \
-    --time_based \
-    --runtime=600 \
-    --fsync=8 \
-    --end_fsync=1 \
-    --group_reporting \
-    --refill_buffers \
-    --norandommap \
-    --offset_align=32k
+I'm not sure what the standard expectations are for this when the
+features that aren't emulated are not discoverable (i.e. the driver can't
+tell it should not use them).
 
-blkalgn-libbpf --disk=nvme3n1 --trace
+Jonathan
 
-I/O Granularity Histogram for Device nvme3n1 (lbads: 12 - 4096 bytes)
-Total I/Os: 134993
-     Bytes         : count    distribution
-        0          : 12378    |****                                    |
-        32768      : 3622     |*                                       |
-        65536      : 2        |                                        |
-        1048576    : 71       |                                        |
-        2097152    : 827      |                                        |
-        2588672    : 50       |                                        |
-        3670016    : 62       |                                        |
-        4194304    : 357      |                                        |
-        4718592    : 62       |                                        |
-        5799936    : 50       |                                        |
-        6291456    : 644      |                                        |
-        7340032    : 71       |                                        |
-        8388608    : 116797   |****************************************|
-
-I/O Alignment Histogram for Device nvme3n1
-     Bytes               : count    distribution
-         0 -> 1          : 0        |                                        |
-         2 -> 3          : 0        |                                        |
-         4 -> 7          : 0        |                                        |
-         8 -> 15         : 0        |                                        |
-        16 -> 31         : 0        |                                        |
-        32 -> 63         : 0        |                                        |
-        64 -> 127        : 0        |                                        |
-       128 -> 255        : 0        |                                        |
-       256 -> 511        : 0        |                                        |
-       512 -> 1023       : 12378    |**********                              |
-      1024 -> 2047       : 0        |                                        |
-      2048 -> 4095       : 0        |                                        |
-      4096 -> 8191       : 0        |                                        |
-      8192 -> 16383      : 0        |                                        |
-     16384 -> 32767      : 0        |                                        |
-     32768 -> 65535      : 49360    |****************************************|
-     65536 -> 131071     : 2        |                                        |
-    131072 -> 262143     : 0        |                                        |
-    262144 -> 524287     : 0        |                                        |
-    524288 -> 1048575    : 36747    |*****************************           |
-   1048576 -> 2097151    : 36506    |*****************************           |
-
-/sys/block/nvme3n1/queue/
-max_segments           = 256
-max_segment_size       = 4294967295
-max_hw_sectors_kb      = 8192
-max_sectors_kb         = 8192
-virt_boundary_mask     = 0
-logical_block_size     = 4096
-physical_block_size    = 4096
-minimum_io_size        = 4096
-optimal_io_size        = 0
-dma_alignment          = 3
-chunk_sectors          = 0
-nr_requests            = 1023
-
-nvme id-ctrl /dev/nvme3n1
-mdts      : 11
-cntrltype : 1
-sgls      : 0x80001
-
-xfs_info /mnt/mdts
-meta-data=/dev/nvme3n1           isize=512    agcount=4, agsize=163840 blks
-         =                       sectsz=32768 attr=2, projid32bit=1
-         =                       crc=1        finobt=1, sparse=1, rmapbt=1
-         =                       reflink=1    bigtime=1 inobtcount=1 nrext64=1
-         =                       exchange=0   metadir=0
-data     =                       bsize=32768  blocks=655360, imaxpct=25
-         =                       sunit=0      swidth=0 blks
-naming   =version 2              bsize=32768  ascii-ci=0, ftype=1, parent=0
-log      =internal log           bsize=32768  blocks=5446, version=2
-         =                       sectsz=32768 sunit=1 blks, lazy-count=1
-realtime =none                   extsz=32768  blocks=0, rtextents=0
-         =                       rgcount=0    rgsize=0 extents
-         =                       zoned=0      start=0 reserved=0
-
-Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
----
-Daniel Gomez (3):
-      dma-helpers: chunk dma_blk_cb at IOV_MAX
-      hw/nvme: drop DMA-path IOV_MAX guard
-      hw/nvme: allow mdts up to 8192 KiB
-
- hw/nvme/ctrl.c       | 15 +++++++++------
- system/dma-helpers.c |  3 ++-
- 2 files changed, 11 insertions(+), 7 deletions(-)
----
-base-commit: 98b060da3a4f92b2a994ead5b16a87e783baf77c
-change-id: 20260528-align-nvme-mdts-with-linux-67d618f6730b
-
-Best regards,
---  
-Daniel Gomez <da.gomez@samsung.com>
-
+> 
+> trace:
+> less /tmp/qemu-trace.log | grep -i max116
+> max11615_realize i2c_addr: 0x33
+> max11615_realize i2c_addr: 0x33
+> max11615_event i2c_addr: 0x33, event: 0x01
+> max11615_write_setup i2c_addr: 0x33, data: 0xd2
+> max11615_write_config i2c_addr: 0x33, data: 0x0f
+> max11615_event i2c_addr: 0x33, event: 0x03
+> max11615_event i2c_addr: 0x33, event: 0x01
+> max11615_write_setup i2c_addr: 0x33, data: 0xd2
+> max11615_write_config i2c_addr: 0x33, data: 0x0f
+> max11615_event i2c_addr: 0x33, event: 0x03
+> max11615_event i2c_addr: 0x33, event: 0x01
+> max11615_write_setup i2c_addr: 0x33, data: 0xd2
+> max11615_write_config i2c_addr: 0x33, data: 0x61
+> max11615_event i2c_addr: 0x33, event: 0x03
+> max11615_event i2c_addr: 0x33, event: 0x00
+> max11615_recv i2c_addr: 0x33, reg_addr: 0x00
+> max11615_recv_return i2c_addr: 0x33, returns: 0xfa
+> max11615_recv i2c_addr: 0x33, reg_addr: 0x00
+> max11615_recv_return i2c_addr: 0x33, returns: 0xd2
+> max11615_event i2c_addr: 0x33, event: 0x04
+> max11615_event i2c_addr: 0x33, event: 0x03
 
