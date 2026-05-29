@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 605E7CD4F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 21:35:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED1C1CD6E49
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 21:35:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wT4r1-0003Vc-Dg; Fri, 29 May 2026 17:35:01 -0400
+	id 1wT4q6-0003HO-5X; Fri, 29 May 2026 17:33:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wT4qN-0003Kj-Uo
- for qemu-devel@nongnu.org; Fri, 29 May 2026 17:34:23 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1wT4q4-0003H8-K3
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 17:33:56 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wT4qK-0002ua-Qy
- for qemu-devel@nongnu.org; Fri, 29 May 2026 17:34:14 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-835386ff122so14141223b3a.3
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 14:34:12 -0700 (PDT)
+ id 1wT4q3-0002n4-1G
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 17:33:56 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-82f8893bff3so6707714b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 14:33:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780090451; x=1780695251; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1780090432; x=1780695232; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nS1LvrZ7n9H4oE7uk6w8jMnvHpLvuOluAYzP0hc31/8=;
- b=eYUGgB7oJ/iTqEzJrgIsqV4n5J8ACrUnM0y4CaJaEkUQnQ4FRZcyY68s0XO7oPpyvR
- MdzCEPsSVRGfdi0euebdLG+mKnmViIFKm1u0dv1hkDzMiQl0wAPdf8RSNl22SDMgcvAo
- 4OxnUj8P3EGq1O+4xX2peybZgrpSnZc47gMTCe46kDhKYhQrRUUpP8bBkxleI9qYEszW
- eEluJXjfdVWMMonrEg9EcKoDfDAFBT+9QUrZcR5Nos/iwBlXc3snhgo/RYNsOZrfne73
- TyIrkKmAjv/820aoKCWYi5Kj/ZXbLQah8OFwqHFr9UrOr2QDh0Aw6f4RNj8xm+evCczx
- OQ+Q==
+ bh=iQp4e741RWeqANR+AnBnweSrNx7Xk2H8EAfqd4DwHpY=;
+ b=CpshXBPZyOA5xjJpKTVoq5E7A1o+fKvXRmCl/5ghqAjNY3FbBbCqremTsCoaf156E0
+ i/QwmOSTyhkiJohcHwiDQ6kwkx/wwAqYRcI9d6xnnG66Abe2X7ZRKZiwG4XWNqebZCcN
+ cd15yikpP+wQU7Gsi06SkRs6HYz9+Xdu4lcbzmhrZGkqJVVP/u4dsHVa21m3D1/M6/6X
+ oGawVs4+I7DS7oykjsYNPHYRP4YWeQwQs29/Te2VPXz+p3/wfwG40/+DToPai7of9V0U
+ quqGYtvbwRMGYrrsDXHXa2GjcZ1k1Cc1J7KFs8wI2aWOc7YttbUjUoYFcL1IEcofVA5O
+ eVoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780090451; x=1780695251;
+ d=1e100.net; s=20251104; t=1780090432; x=1780695232;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=nS1LvrZ7n9H4oE7uk6w8jMnvHpLvuOluAYzP0hc31/8=;
- b=U/frzoLDmrWo4XtZ1mRCudN2W4wn5IIXD6g1dgywBfohLRqvCh/UDk/cxxbFGquoAc
- s13QB11gAg6p4c96ubwrKu/+jcN/0rop04HxtMjWbi8Una4IMSg+0lfGe4qwMRda26sU
- KBfoXPfGAVFo96cm9WY2Qd49dbE8bHM6pGl+OBM37j6HH5IXimFOB4xOuCHfAafPwhtv
- gd9V50fg29OFYDR2fYkrcgS9VO4Cq2CTzCp2B0BIWhtL2NGfxIXowS7i+iLHbd/zSgXL
- n1Gv0o636VbzqB4wa75OaMOUrVFYrQgIbJdo6yL08rmL2tjeygyic94fmB5QS1ZRCjsq
- mgnw==
-X-Gm-Message-State: AOJu0YyRrnN9NwO5JXVn6jgWdVVfPQdSj2s2yjXXhpkqFAj3suALY8tm
- CxwR59p2e6rE7K51PQhMSL/OloMZq9tzGehQRPg0bOfWTbX7RmY3o0vSEODjjdcup/Y=
-X-Gm-Gg: Acq92OFTmnU7okrg4Mkc9/bLHWyg5tbz3HxEjMe/jofLKmHP+Fcf7Sqvik8Q671jpQk
- 3VifCfVTMlHMBfmL3591N3i/5OrGYOe2aTIOYR6URW6OkXsrb0zXPbS4UTWTCvg3XxkJ743FFZ4
- P9hu0HGoAShTAAUZsjesBCmlIhTJHs6wM1fejeOoMJoozkAKIfDCga1Htv3Rox4Bzm3zcf9x7Pw
- iVL9T6vWR5R1GMqQ3tH1ziJGAxWE474Wh3RJPeFOznXjaJ9yg+nQ0ifTnF6BfQ9b003Z/X2kdyg
- +4GOi0OLW+9cQq/vUtp109WSj9i+MttVIqlxB24DC4kIn93tg7welvuKZOYyRK31mnNFTJpcR7i
- rZBu7YWDFTGJeezDlDLFoaxf8PodIn0GLRoMUEZnpLRxSc1CHuNVumgDQ7g5hm6xm0An6M8gB+P
- AcPZuJJIyTQP6Ey557cjPtlC+9ERWvKe9XNYa1y9Vqs+qEXS0CRDHxpYLaA/12ec4=
-X-Received: by 2002:a05:6a00:8e09:b0:841:a0c8:71af with SMTP id
- d2e1a72fcca58-8422543d739mr1156867b3a.30.1780090451554; 
- Fri, 29 May 2026 14:34:11 -0700 (PDT)
+ bh=iQp4e741RWeqANR+AnBnweSrNx7Xk2H8EAfqd4DwHpY=;
+ b=KxSiXeCTtWshTQ9ogNEGXoXDUX6BkAQB2mtUl0QND3H2WmV21wIXuvvAKpSJFVDutO
+ HIG9i87cT78xC74M2aPqWlqFpHqJ99zsvLMDE0QWJru9PN7sEPVZOcHdoU/2FVqdOqBx
+ 1f2dV/ZZtlzbNwCgmgUmTxBGl0TwgbcOrpyofgU5TTdojkCzEBGTwbiiA563BPjipdud
+ FYjEw0DXrrFmcswv5irvW8hHA6PF2FxP2hzdqsKjNXOJSM1MAzlxI8PHswtUWgwrH3uw
+ uuyKtidxkB7jGY7qXZ+9KiJH5dSJXSuyXD46G72APQ8eKRpjQ5JEZx5gFui//hLFWnZS
+ Qo3w==
+X-Gm-Message-State: AOJu0Yzu2PziA2uxJZs3UHTPbHJ+52qFy2kaqUQHDALMBPVv6OxmycvT
+ zRcgeWwmA+Kar1lirM+22d9h2cGeTI2R9kDyDQajW0tBSYO8C9pVip6DbSnuvvUESpM=
+X-Gm-Gg: Acq92OHgnhrFEgNQiyz58j1J5ExrmfjWqcRlB3vSq+CBflYF+g9frtCfgNOie+F4cHm
+ 38hrsp5RLsNQBCe/9ikdVvyJe4B2my73a3p8JdAfUHhOXmgP0RAhCouA2paRLRwNj+wKtiJE+fM
+ d4aXM3Po+qiN93U2k4BB0CtKBcaBgB7jl5n8APwMA+S/eu+YrT9C8LwEIDrUSdF9QtMD5+Zh0sj
+ ImNom7+v7vi+hcbO95Driyo2CneimyxMFpFOTzfzcv/6aPTh0LJHmolk70Ns7l2myJvD92Il8Ey
+ Gl6n/JiSulUAFXHLtxeQSg9XAI14gM8O/+STTTCFLf96RvlNuHGZTd5TesKgR/Vca7ts8q3BmyA
+ qjTlBYd6WrAt/L2vvE4BxwRbbaI9SZG17OICNiLTeTMXYMERZ9x7QLjsfJGlZ2lzIvZ1EnBMm3w
+ HXmno6SDuJ6L7L8kCWoor/go1lQt7l2dwXkYnMmOszz54W9+W4zXALzFWuya0gu84=
+X-Received: by 2002:a05:6a00:288b:b0:83e:ccd6:2dc8 with SMTP id
+ d2e1a72fcca58-842255cf64fmr1164964b3a.27.1780090432514; 
+ Fri, 29 May 2026 14:33:52 -0700 (PDT)
 Received: from ZBMac-LWN10QXKQ0.taila0cd24.ts.net ([104.168.88.121])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-84214affe29sm2779564b3a.3.2026.05.29.14.34.09
+ d2e1a72fcca58-84214affe29sm2779564b3a.3.2026.05.29.14.33.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 29 May 2026 14:34:11 -0700 (PDT)
+ Fri, 29 May 2026 14:33:52 -0700 (PDT)
 From: Zhang Chen <zhangckid@gmail.com>
 To: qemu-devel <qemu-devel@nongnu.org>,
  "Dr . David Alan Gilbert" <dave@treblig.org>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH V8 07/15] monitor: Update tracking iothread users with holder
-Date: Sat, 30 May 2026 05:33:13 +0800
-Message-ID: <20260529213321.96271-8-zhangckid@gmail.com>
+Cc: Zhang Chen <zhangckid@gmail.com>,
+	qemu-stable@nongnu.org
+Subject: [PATCH V8 01/15] qapi/misc: Fix missed query-iothreads items
+Date: Sat, 30 May 2026 05:33:07 +0800
+Message-ID: <20260529213321.96271-2-zhangckid@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20260529213321.96271-1-zhangckid@gmail.com>
 References: <20260529213321.96271-1-zhangckid@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=zhangckid@gmail.com; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=zhangckid@gmail.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,98 +104,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Based on monitor ID tracking iothread users with holder.
-Introduce the AioContext in the Monitor struct to avoid repeated calls to
-iothread_get_aio_context() and ensure symmetrical ref/unref during
-monitor lifecycle.
+The example is incomplete: it misses members @poll-max-ns, @poll-grow,
+@poll-shrink, @aio-max-batch.  Messed up in commit 5fc00480ab1
+(monitor: add poll-* properties into query-iothreads result) and
+commit 1793ad0247c (iothread: add aio-max-batch parameter).
 
+cc: qemu-stable@nongnu.org
+
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 ---
- monitor/monitor-internal.h |  3 +++
- monitor/monitor.c          | 20 ++++++++++++++++++--
- monitor/qmp.c              |  3 ++-
- 3 files changed, 23 insertions(+), 3 deletions(-)
+ qapi/misc.json | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-index 2060311b03..92d7630921 100644
---- a/monitor/monitor-internal.h
-+++ b/monitor/monitor-internal.h
-@@ -127,6 +127,9 @@ struct Monitor {
-     guint out_watch;
-     int mux_out;
-     int reset_seen;
-+
-+    /* iothread context */
-+    AioContext *ctx;
- };
- 
- struct MonitorHMP {
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index dafb4ad8b0..7eec6f967d 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -529,7 +529,7 @@ int monitor_suspend(Monitor *mon)
-          * Kick I/O thread to make sure this takes effect.  It'll be
-          * evaluated again in prepare() of the watch object.
-          */
--        aio_notify(iothread_get_aio_context(mon_iothread));
-+        aio_notify(mon->ctx);
-     }
- 
-     trace_monitor_suspend(mon, 1);
-@@ -564,7 +564,7 @@ void monitor_resume(Monitor *mon)
-         AioContext *ctx;
- 
-         if (mon->use_io_thread) {
--            ctx = iothread_get_aio_context(mon_iothread);
-+            ctx = mon->ctx;
-         } else {
-             ctx = qemu_get_aio_context();
-         }
-@@ -612,6 +612,12 @@ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
- {
-     if (use_io_thread && !mon_iothread) {
-         monitor_iothread_init();
-+
-+        IOThreadHolder holder = {
-+            .type = IO_THREAD_HOLDER_KIND_MONITOR_NAME,
-+            .u.monitor_name.monitor_name = (char *)mon->id,
-+        };
-+        mon->ctx = iothread_ref_and_get_aio_context(mon_iothread, &holder);
-     }
-     qemu_mutex_init(&mon->mon_lock);
-     mon->is_qmp = is_qmp;
-@@ -631,6 +637,16 @@ void monitor_data_destroy(Monitor *mon)
-     }
-     g_string_free(mon->outbuf, true);
-     qemu_mutex_destroy(&mon->mon_lock);
-+
-+    if (mon->ctx && mon_iothread) {
-+        IOThreadHolder holder = {
-+            .type = IO_THREAD_HOLDER_KIND_MONITOR_NAME,
-+            .u.monitor_name.monitor_name = (char *)mon->id,
-+        };
-+
-+        iothread_put_aio_context(mon_iothread, &holder);
-+        mon->ctx = NULL;
-+    }
- }
- 
- void monitor_cleanup(void)
-diff --git a/monitor/qmp.c b/monitor/qmp.c
-index b210850a15..b67674aef3 100644
---- a/monitor/qmp.c
-+++ b/monitor/qmp.c
-@@ -565,7 +565,8 @@ void monitor_init_qmp(Chardev *chr, bool pretty, const char *id, Error **errp)
-          * since chardev might be running in the monitor I/O
-          * thread.  Schedule a bottom half.
-          */
--        aio_bh_schedule_oneshot(iothread_get_aio_context(mon_iothread),
-+        Monitor *mon_p = &mon->common;
-+        aio_bh_schedule_oneshot(mon_p->ctx,
-                                 monitor_qmp_setup_handlers_bh, mon);
-         /* The bottom half will add @mon to @mon_list */
-     } else {
+diff --git a/qapi/misc.json b/qapi/misc.json
+index 22b7afed9f..c71a5fe657 100644
+--- a/qapi/misc.json
++++ b/qapi/misc.json
+@@ -123,11 +123,19 @@
+ #     <- { "return": [
+ #              {
+ #                 "id":"iothread0",
+-#                 "thread-id":3134
++#                 "thread-id":3134,
++#                 "poll-max-ns":32768,
++#                 "poll-grow":0,
++#                 "poll-shrink":0,
++#                 "aio-max-batch":0
+ #              },
+ #              {
+ #                 "id":"iothread1",
+-#                 "thread-id":3135
++#                 "thread-id":3135,
++#                 "poll-max-ns":32768,
++#                 "poll-grow":0,
++#                 "poll-shrink":0,
++#                 "aio-max-batch":0
+ #              }
+ #           ]
+ #        }
 -- 
 2.49.0
 
