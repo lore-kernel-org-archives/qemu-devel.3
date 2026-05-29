@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1AC5CD4F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 19:51:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E647CD6E4C
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 19:52:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wT3EK-0006lw-7B; Fri, 29 May 2026 15:50:52 -0400
+	id 1wT3Er-0008Jy-4Z; Fri, 29 May 2026 15:51:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wT3EF-0006bj-HG
- for qemu-devel@nongnu.org; Fri, 29 May 2026 15:50:47 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wT3En-0007u4-L3
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 15:51:21 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wT3ED-0004oO-Kr
- for qemu-devel@nongnu.org; Fri, 29 May 2026 15:50:47 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4905529b933so58987605e9.0
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 12:50:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wT3El-0004xQ-CD
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 15:51:21 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-45eedcdaeaaso1374853f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 12:51:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780084244; x=1780689044; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780084277; x=1780689077; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HTEurkffFP4f5HtctBBlTf0KhJxPmE6GCKl/0QMxQlY=;
- b=HAg+PpUhSMYfNICGU33w73iTKZHZvHn0TEl8k9cMKjJKIjyb8+cFwk+SvfrpdcaTF9
- GBdqU2fCpWj/5g/0eph98ck9u4vmfLzFnrA2OBS8LqKrIyJWlXAuo9fTZ45mv9IQOkLh
- wsF0kcYpWiO/TqQqZKfJa3On4hZshQxKVDHnHhnmMDpXRAgZMPHWlJzQMRC4/ymqeV97
- Oku/ibGyjtEPxvPVPb3vJ3uPtw684f+8MnTgJa4rONaOMs1VyIph4GmWMcsja1FOaPmB
- e5OW7Lyr1Wx9Mi6hFjPl4HtfhYFMYOiDJM7U+ZjPu/40q2bbZ5hjsW7efV1C4dqF/Zg0
- cVhQ==
+ bh=xN08zAfKjwU0dgbBSed5OKjgOJn32PYWdXU4H33xVTk=;
+ b=Twx78MLvbHTNBgn+nVgvrdi0XaxIPzijUJdFqzfLIowrtbO0VxwLS2bqFsCX4J27gn
+ 1Tcj5GM6bX//b2Vyy5AG+M88jAzfzlXPwGnQPINFjlC150sMZxpa4PPjaTT9OkQTrqnc
+ PZ73BH9X4IErGp2CFjHEuId8B/ZmARRq/5yRxEGtsF7cV+C3CIdyFJf6MjeNRddP5kgD
+ Tn/bHD9pNq/XAkG9twpBFMEcrgoGyAv2CZlL+4TIrZFph3kkXSk4aj3rMzLhOoh7ecve
+ +9aAwu96L0HBX2xpTiIG41lw3rECCCTzqpIU/qhAsnpYQZyehWYYiKPNuY7ar+5bdeeO
+ hUGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780084244; x=1780689044;
+ d=1e100.net; s=20251104; t=1780084277; x=1780689077;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=HTEurkffFP4f5HtctBBlTf0KhJxPmE6GCKl/0QMxQlY=;
- b=Px2tWwRV3NZmrQlAMi8/Pz0AzE5Dm+R2no8ToV0FuC/tHdA8Qvp+PcjG+4mKPEWg5I
- 6uUzgANHWWhuQJ9fIP4p3hysdFwH39jW2ldodbyhCVV9qzgLFAa7uF4Qw9OH45j2i5Wz
- OPVF3lquhUfFZELoGyVruHZc8gegVmpB+C9Pj93TkuczJDbHHHEllMI6FWg829/P0shX
- gmD3JlUobMEMpbPOdSGivMAzCNF9lZRNBB1wJSLiUFpXFCEPW/a+hzC3KaPi5U9BcY6J
- JhUsllfPIYJF1tki9vZk+fW4d5u//Smfnnflre9gW/e2xJqd4z4B3I9mbgVEgmR+ZSQt
- SatQ==
-X-Gm-Message-State: AOJu0YyjmNGK0hiCeNl/VApGUV0ndKQbHG+VQWy11lqBrB1En0pP/jL4
- f8qdNTLLRNUrX7hK6ynpDt3BZ2naVvfWR4YAkIUiU2tipiQoS1P9tePdYnpSBhUo77HT8Ipycd1
- RTJOx4viyLw==
-X-Gm-Gg: Acq92OEPMaCi+BPpOKrWhyWqt7BwdLRGsoyTdHekVpurbNRhNyII+mmfArOitAj1kcM
- lpfdjehAsGTqF/jwVaN0Rb5TLm/r6EYVlL5XKPWptGXqtQkr+DG+eQswRJm9vE38MOzGMnflBNE
- mlSBNwZx2IF/dd0aGMi4shL9M2IrAh+wZVmMIRZolgmFi0jDnitD8pfq6aGA7G751GINBMBRsr1
- y2PoAs51c13FYHSOdJUmocnFZ0qZdOt7baK4hDYkcswvx6Cr77xwVjjwpsmOk4ddEt2Lky7hoRH
- PcsAtbtQxLXgrohbH9nK+++LwkLjuJn+s4d8FsIkZ0mgKDA/0KEpdFsWlJhHizm4vwXAZUUckf3
- HuTeq7FGXzeIaG+O1wvc5UeYBD1fJW77VtTnxs0J+pE7Y5T6CXwhZYg0LREhVP5hAgcPQxyHUDy
- 2yaPTgWAyj0GsBXZUHzMIuplrMkl3iI4s534qFNKgrCCjemv5eYltgC+tMsHqfGvDF1g==
-X-Received: by 2002:a05:600c:818c:b0:490:81cb:d7a with SMTP id
- 5b1f17b1804b1-490a297085emr16599145e9.29.1780084244117; 
- Fri, 29 May 2026 12:50:44 -0700 (PDT)
+ bh=xN08zAfKjwU0dgbBSed5OKjgOJn32PYWdXU4H33xVTk=;
+ b=cXBd7082uViA/QvwYen8Vhr8pOmW+N17ZyfYh0Bp2TU5PBg28+j6Z9oi1sS2MXkcYP
+ Iph+qyFKYbY1XBy9gq1wajmG17LTmwWCZI+uthWnKcjmp6ITxce+/vzHdYhmwMTcoLEr
+ DLtfoshUg6mPDYvZ3P3RspeIQk/y65pr1VXxa5l9Oj7UBMwWhK9O27M9B5s3448j5P2x
+ xhcjGcgOOP1eIxflqGdzb/tNg19fPexJ381n6jj3mT3I1TAdIrTlrrEQRoh/QJjZwG/b
+ tU0T3EbBIWmUOskRs2UL5kOFcEiI7MS3Y3Nl51XSpNHNiYN772wnMVw4IHEgaX056Xex
+ /fWQ==
+X-Gm-Message-State: AOJu0YwupGgF6k9rQar1EqoJQ8gh6r7KTYes25KndPEDo6ipQ1/5YvDf
+ +NWiETnvUIiQT89ikrNlFqobejlftARyD1WVs3FiBitv4w1FSuOZe1GXjEF6dpDUh18WFlkMpeh
+ kHjRqm4p4uQ==
+X-Gm-Gg: Acq92OHxhIemsHk2CNoT4qLsgdv4BAfvnqMq9TkdvJcLIK7G7yctEmU2BNllvUNKCDh
+ 6expBrKkaGFE0GxDFad21fNmh8NIiJY95dZok2eHVKxB6Nt3icI3aazwIQBJzQp72ZvEmlmVEur
+ ZR1Wg8bmgIyctXfZoYKjc640H5jKBhnSdQq+UlTh7sUqYQ1D9glWbysoG/Nz+5McP+VtOHjaswk
+ UCeu5MVGTFnAo/VISbSP8uaJ27U3GRQ19f8VehV4hm1V3F1P2VKsaXeGmoCM+R3i9fQCTVUzYfU
+ fxtliNgiKSFaGSaKGQC6NMvRBfUbWp3wjeGCMuEy+bBEOdTrFQ9BdczmRBw3An2i0qa6SYqU41d
+ BtACuG6P+os59dskcVwrY9Angtx7gFQscF3agOoaMuUqtMBAKtXa5xnQMtsxFbQnLho9qPog0Y0
+ nvlBSlj/+z1AI1gmLw39lcbwaIfKrHaqvAiuZKjpttgvHoTut97Ie3uLIx9NpeCcYOkPzUGJt5Y
+ Nl5
+X-Received: by 2002:adf:ed43:0:b0:43d:7dcf:ae26 with SMTP id
+ ffacd0b85a97d-45ef6b78552mr1840866f8f.34.1780084277341; 
+ Fri, 29 May 2026 12:51:17 -0700 (PDT)
 Received: from m15.home (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4909d6f35f8sm52943695e9.13.2026.05.29.12.50.41
+ ffacd0b85a97d-45ef34bcc30sm5738817f8f.12.2026.05.29.12.51.15
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 29 May 2026 12:50:43 -0700 (PDT)
+ Fri, 29 May 2026 12:51:16 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>,
@@ -91,18 +92,18 @@ Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>,
  Phil Dennis-Jordan <phil@philjordan.eu>,
  Reinoud Zandijk <reinoud@netbsd.org>, Halil Pasic <pasic@linux.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 07/17] accel/whpx: Convert AccelCPUClass ->
- AccelOpsClass::cpu_instance_init
-Date: Fri, 29 May 2026 21:49:29 +0200
-Message-ID: <20260529194940.97143-8-philmd@linaro.org>
+Subject: [PATCH v2 11/17] accel/tcg: Convert AccelCPUClass -> new
+ TCGCPUOps::cpu_instance_init
+Date: Fri, 29 May 2026 21:49:33 +0200
+Message-ID: <20260529194940.97143-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260529194940.97143-1-philmd@linaro.org>
 References: <20260529194940.97143-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -125,99 +126,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Register the new AccelOpsClass::cpu_instance_init hook.
+Introduce a TCGCPUOps::cpu_instance_init hook and call it with
+tcg_cpu_instance_init(). Register tcg_cpu_instance_init() as
+AccelOpsClass::cpu_instance_init.
 
-ACCEL_CPU_NAME("whpx") TypeInfo is now empty, remove it.
+At the same time, convert X86 and RISCV AccelCPUClass hooks,
+after forward-declaring each target method (to avoid moving
+code around).
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- accel/whpx/whpx-accel-ops.c |  2 ++
- accel/whpx/whpx-common.c    | 17 -----------------
- target/arm/whpx/whpx-all.c  |  1 -
- target/i386/whpx/whpx-all.c |  1 -
- 4 files changed, 2 insertions(+), 19 deletions(-)
+ accel/tcg/tcg-accel-ops.h   | 1 +
+ include/accel/tcg/cpu-ops.h | 1 +
+ accel/tcg/cpu-exec.c        | 9 +++++++++
+ accel/tcg/tcg-accel-ops.c   | 1 +
+ target/i386/tcg/tcg-cpu.c   | 5 +++--
+ target/riscv/tcg/tcg-cpu.c  | 4 +++-
+ 6 files changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/accel/whpx/whpx-accel-ops.c b/accel/whpx/whpx-accel-ops.c
-index b8f41544cbe..099e8ef6da3 100644
---- a/accel/whpx/whpx-accel-ops.c
-+++ b/accel/whpx/whpx-accel-ops.c
-@@ -98,6 +98,8 @@ static void whpx_accel_ops_class_init(ObjectClass *oc, const void *data)
-     ops->handle_interrupt = generic_handle_interrupt;
-     ops->supports_guest_debug = whpx_supports_guest_debug;
+diff --git a/accel/tcg/tcg-accel-ops.h b/accel/tcg/tcg-accel-ops.h
+index aecce605d7b..be712c02efd 100644
+--- a/accel/tcg/tcg-accel-ops.h
++++ b/accel/tcg/tcg-accel-ops.h
+@@ -14,6 +14,7 @@
  
-+    ops->cpu_instance_init = whpx_cpu_instance_init;
+ #include "system/cpus.h"
+ 
++void tcg_cpu_instance_init(CPUState *cpu);
+ void tcg_cpu_destroy(CPUState *cpu);
+ int tcg_cpu_exec(CPUState *cpu);
+ void tcg_handle_interrupt(CPUState *cpu, int mask);
+diff --git a/include/accel/tcg/cpu-ops.h b/include/accel/tcg/cpu-ops.h
+index 5950cdcaab1..d7d329e419d 100644
+--- a/include/accel/tcg/cpu-ops.h
++++ b/include/accel/tcg/cpu-ops.h
+@@ -48,6 +48,7 @@ struct TCGCPUOps {
+      * Called when the first CPU is realized.
+      */
+     void (*initialize)(void);
++    void (*cpu_instance_init)(CPUState *cpu);
+     /**
+      * @translate_code: Translate guest instructions to TCGOps
+      * @cpu: cpu context
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index ad94f96b252..ef44c12b601 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -1045,6 +1045,15 @@ int cpu_exec(CPUState *cpu)
+     return ret;
+ }
+ 
++void tcg_cpu_instance_init(CPUState *cpu)
++{
++    const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
 +
-     ops->synchronize_post_reset = whpx_cpu_synchronize_post_reset;
-     ops->synchronize_post_init = whpx_cpu_synchronize_post_init;
-     ops->synchronize_state = whpx_cpu_synchronize_state;
-diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
-index 247e12db812..25c5d84fd30 100644
---- a/accel/whpx/whpx-common.c
-+++ b/accel/whpx/whpx-common.c
-@@ -24,7 +24,6 @@
- #include "qapi/qapi-types-common.h"
- #include "qapi/qapi-visit-common.h"
- #include "migration/blocker.h"
--#include "accel/accel-cpu-target.h"
- #include <winerror.h>
- 
- #include "system/whpx-internal.h"
-@@ -505,21 +504,6 @@ static void whpx_set_hyperv(Object *obj, Visitor *v,
++    if (tcg_ops->cpu_instance_init) {
++        tcg_ops->cpu_instance_init(cpu);
++    }
++}
++
+ bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
+ {
+     static bool tcg_target_initialized;
+diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
+index 3bd98005042..381f1614923 100644
+--- a/accel/tcg/tcg-accel-ops.c
++++ b/accel/tcg/tcg-accel-ops.c
+@@ -219,6 +219,7 @@ static void tcg_accel_ops_init(AccelClass *ac)
+         }
      }
+ 
++    ops->cpu_instance_init = tcg_cpu_instance_init;
+     ops->cpu_reset_hold = tcg_cpu_reset_hold;
+     ops->supports_guest_debug = tcg_supports_guest_debug;
+     ops->insert_breakpoint = tcg_insert_breakpoint;
+diff --git a/target/i386/tcg/tcg-cpu.c b/target/i386/tcg/tcg-cpu.c
+index 6f5dc06b3b9..04bb9787575 100644
+--- a/target/i386/tcg/tcg-cpu.c
++++ b/target/i386/tcg/tcg-cpu.c
+@@ -157,6 +157,8 @@ static vaddr x86_pointer_wrap(CPUState *cs, int mmu_idx,
+ }
+ #endif
+ 
++static void x86_tcg_cpu_instance_init(CPUState *cs);
++
+ const TCGCPUOps x86_tcg_ops = {
+     .mttcg_supported = true,
+     .precise_smc = true,
+@@ -165,6 +167,7 @@ const TCGCPUOps x86_tcg_ops = {
+      */
+     .guest_default_memory_order = TCG_MO_ALL & ~TCG_MO_ST_LD,
+     .initialize = tcg_x86_init,
++    .cpu_instance_init = x86_tcg_cpu_instance_init,
+     .translate_code = x86_translate_code,
+     .get_tb_cpu_state = x86_get_tb_cpu_state,
+     .synchronize_from_tb = x86_cpu_synchronize_from_tb,
+@@ -237,8 +240,6 @@ static void x86_tcg_cpu_accel_class_init(ObjectClass *oc, const void *data)
+ #ifndef CONFIG_USER_ONLY
+     acc->cpu_target_realize = tcg_cpu_realizefn;
+ #endif /* CONFIG_USER_ONLY */
+-
+-    acc->cpu_instance_init = x86_tcg_cpu_instance_init;
+ }
+ static const TypeInfo x86_tcg_cpu_accel_type_info = {
+     .name = ACCEL_CPU_NAME("tcg"),
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 3e22e7ed53d..703c2d9bd0a 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -268,11 +268,14 @@ static vaddr riscv_pointer_wrap(CPUState *cs, int mmu_idx,
+ }
+ #endif
+ 
++static void riscv_tcg_cpu_instance_init(CPUState *cs);
++
+ const TCGCPUOps riscv_tcg_ops = {
+     .mttcg_supported = true,
+     .guest_default_memory_order = 0,
+ 
+     .initialize = riscv_translate_init,
++    .cpu_instance_init = riscv_tcg_cpu_instance_init,
+     .translate_code = riscv_translate_code,
+     .get_tb_cpu_state = riscv_get_tb_cpu_state,
+     .synchronize_from_tb = riscv_cpu_synchronize_from_tb,
+@@ -1678,7 +1681,6 @@ static void riscv_tcg_cpu_accel_class_init(ObjectClass *oc, const void *data)
+ {
+     AccelCPUClass *acc = ACCEL_CPU_CLASS(oc);
+ 
+-    acc->cpu_instance_init = riscv_tcg_cpu_instance_init;
+     acc->cpu_target_realize = riscv_tcg_cpu_realize;
  }
  
--static void whpx_cpu_accel_class_init(ObjectClass *oc, const void *data)
--{
--    AccelCPUClass *acc = ACCEL_CPU_CLASS(oc);
--
--    acc->cpu_instance_init = whpx_cpu_instance_init;
--}
--
--static const TypeInfo whpx_cpu_accel_type = {
--    .name = ACCEL_CPU_NAME("whpx"),
--
--    .parent = TYPE_ACCEL_CPU,
--    .class_init = whpx_cpu_accel_class_init,
--    .abstract = true,
--};
--
- static void whpx_accel_class_init(ObjectClass *oc, const void *data)
- {
-     AccelClass *ac = ACCEL_CLASS(oc);
-@@ -569,7 +553,6 @@ static const TypeInfo whpx_accel_type = {
- static void whpx_type_init(void)
- {
-     type_register_static(&whpx_accel_type);
--    type_register_static(&whpx_cpu_accel_type);
- }
- 
- bool init_whp_dispatch(void)
-diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-index 3079c6293c8..16040f102a3 100644
---- a/target/arm/whpx/whpx-all.c
-+++ b/target/arm/whpx/whpx-all.c
-@@ -23,7 +23,6 @@
- #include "qapi/qapi-types-common.h"
- #include "qapi/qapi-visit-common.h"
- #include "migration/blocker.h"
--#include "accel/accel-cpu-target.h"
- #include <winerror.h>
- 
- #include "syndrome.h"
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index e626acef2f0..1b68f13a7dd 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -33,7 +33,6 @@
- #include "qapi/qapi-visit-common.h"
- #include "migration/blocker.h"
- #include "host-cpu.h"
--#include "accel/accel-cpu-target.h"
- #include <winerror.h>
- 
- #include "system/whpx-internal.h"
 -- 
 2.53.0
 
