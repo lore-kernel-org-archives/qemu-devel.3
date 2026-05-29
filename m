@@ -4,47 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DF66CD6E49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 658EDCD6E45
 	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 06:54:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSr6L-0006d2-7l; Fri, 29 May 2026 02:53:49 -0400
+	id 1wSr6H-0006cU-0T; Fri, 29 May 2026 02:53:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cyan@cyano.uk>) id 1wSr6J-0006ci-B6
- for qemu-devel@nongnu.org; Fri, 29 May 2026 02:53:47 -0400
+ (Exim 4.90_1) (envelope-from <cyan@cyano.uk>) id 1wSr6F-0006c5-Dc
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 02:53:43 -0400
 Received: from jupiter.guys.cyano.uk ([45.63.120.176])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cyan@cyano.uk>) id 1wSr6H-0005MJ-JV
- for qemu-devel@nongnu.org; Fri, 29 May 2026 02:53:47 -0400
+ (Exim 4.90_1) (envelope-from <cyan@cyano.uk>) id 1wSr6D-0005LZ-KS
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 02:53:43 -0400
 From: Xinhui Yang <cyan@cyano.uk>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cyano.uk; s=dkim;
- t=1780037622;
+ t=1780037616;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cBFZXZ5VBBd96EmFFpngfIH0I1YowUTAx0q99subMTA=;
- b=Xy+cf3OOO9dIPb8ZIqOo3+SZ062u1KUR9vgiaXNEg9ntfzZkBtrvwGYwsB3NWAvWlTyajV
- r+KRar6eBxug05yAIipLSxLWkm5rLjzyfMO9qfEtZuSWFlXTIads6bK4C3UFHY6d9+qTSl
- Jv6lTD0kK94ppBxkhBkAtGou6ETkfZqPEvYfHKI2f6VfdIDH93hO1wYviHUlIFsM/W5hf5
- rrHzIFstdi9g++RZi11w+bACPgUHtM8eW8gVVPhB0ayRULt5TUhmtOJX5ub7hy/mqw2yVc
- k4CGwxv61Jk/7Oj8RBtEKefdgKGuFlFo4ilto3wiPy9XdL6d/JVL3hhD0xmY+w==
+ content-transfer-encoding:content-transfer-encoding;
+ bh=oqWAzJ+LaDcWgrSzT3g0KnrahAMaamZaFE775dWfvQM=;
+ b=Y78cbS3ABO3s0+qoYIuIWPFG9jwQEquzMbJRj8SmTHKJKhRsJh1IINwmIEZ1vZnMhY2MNI
+ sLP7Htbe1qB1V0399yFhIwPF8xDJNLRx7ORYpaEcZ/Ao2rXJW5ltMBDvdSzTYeW89SqCY+
+ tUK6//dvjkOQmM9mwDaWIipLuRockFNgQRhltCtnZ/dMk2a0Uyu+ewmMTdLh4LhdjJkNjn
+ LC2N6X0igvbRMf5+u9hUpDixxIXI388LEsx7fsOhEhyZC3P68ELTiUa4TPQvdR3mWUM5xc
+ BYRczSBPa/j1QUhg9mbfL5PdjzwVFuDa88wJkSiBVTdGxOKey8iQ1jy+ymfPkg==
 Authentication-Results: jupiter.guys.cyano.uk;
  auth=pass smtp.mailfrom=cyan@cyano.uk
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Mingcong Bai <jeffbai@aosc.io>, Xinhui Yang <cyan@cyano.uk>
-Subject: [PATCH v3 1/2] linux-user: implement fsmount(2) series of syscalls
-Date: Fri, 29 May 2026 14:53:20 +0800
-Message-ID: <193e73f7745a086b99ba68e28b665f9f22444b06.1780036891.git.cyan@cyano.uk>
-In-Reply-To: <cover.1780036891.git.cyan@cyano.uk>
-References: <cover.1780036891.git.cyan@cyano.uk>
+Subject: [PATCH v3 0/2] linux-user: implement fsmount(2) series of syscalls
+Date: Fri, 29 May 2026 14:53:19 +0800
+Message-ID: <cover.1780036891.git.cyan@cyano.uk>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: --
+X-Spamd-Bar: +
 Received-SPF: pass client-ip=45.63.120.176; envelope-from=cyan@cyano.uk;
  helo=jupiter.guys.cyano.uk
 X-Spam_score_int: -20
@@ -68,123 +65,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series of syscalls replaces the old mount(2) syscall with a series
-of syscalls that operates around a filesystem context. This series of
-syscalls is available since Linux 5.2 and glibc 2.36+.
+The motivation of the implementation is to allow any foreign guest OSes
+with systemd v259+ to boot using systemd-nspawn(1), otherwise any
+systemd service requiring importing credentials will fail, including
+journald, D-Bus service and getty. We used to work around this issue by
+patching systemd to retry the clone() without CLONE_NEWNS, which is not
+and can not be implemented in QEMU user emulation.
 
-Their users include systemd since v259 and libmount from util-linux, and
-possibly other widely used projects.
+mount(8) from util-linux worked prior to this patch because it will
+fallback to the old mount(2) syscall if fsmount(8) series of syscalls
+is not available.
 
-Preliminary checks are implemented to ensure the validity of the
-interface.
+Tested good on an x86-64 host, with:
 
-Signed-off-by: Xinhui Yang <cyan@cyano.uk>
----
- linux-user/syscall.c | 91 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 91 insertions(+)
+- an AOSC OS mips64r6el guest, which boots successfully with full systemd
+  support using systemd-nspawn(1).
+- a Gentoo ppc (big endian) guest, which boots successfully with full
+  systemd support, using systemd-nspawn(1).
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 7d7a7b489c..c5c2aa80ec 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -14412,6 +14412,97 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         return do_map_shadow_stack(cpu_env, arg1, arg2, arg3);
- #endif
- 
-+#if defined(TARGET_NR_fsopen)
-+    case TARGET_NR_fsopen:
-+        {
-+            p = lock_user_string(arg1);
-+            if (!p) {
-+                return -TARGET_EFAULT;
-+            }
-+            ret = get_errno(fsopen(p, arg2));
-+            unlock_user(p, arg1, 0);
-+        }
-+        return ret;
-+    case TARGET_NR_fsconfig:
-+        {
-+            /*
-+             * fsconfig(int, int, char *, void *, int)
-+             * NOTE: p4 is nullable and its type might not be a string.
-+             */
-+            void *p3, *p4;
-+            int cmd = (int) arg2;
-+            switch (cmd) {
-+            case FSCONFIG_SET_BINARY:
-+            case FSCONFIG_SET_STRING:
-+            case FSCONFIG_SET_PATH:
-+            case FSCONFIG_SET_PATH_EMPTY:
-+                p3 = lock_user_string(arg3);
-+                if (!p3) {
-+                    return -TARGET_EFAULT;
-+                }
-+                if (cmd != FSCONFIG_SET_BINARY) {
-+                    /* key and value must be strings. */
-+                    p4 = lock_user_string(arg4);
-+                } else {
-+                    /*
-+                     * Otherwise the value must be a raw buffer with its
-+                     * length specified in arg5 (aux).
-+                     */
-+                    p4 = lock_user(VERIFY_READ, arg4, arg5, 1);
-+                }
-+                if (!p4) {
-+                    unlock_user(p3, arg3, 0);
-+                    return -TARGET_EFAULT;
-+                }
-+                ret = get_errno(fsconfig(arg1, arg2, p3, p4, arg5));
-+                unlock_user(p3, arg3, 0);
-+                unlock_user(p4, arg4, 0);
-+                break;
-+
-+            case FSCONFIG_SET_FLAG:
-+            case FSCONFIG_SET_FD:
-+                /* arg4 (value) must be NULL. */
-+                if (arg4) {
-+                    return -TARGET_EFAULT;
-+                }
-+                p3 = lock_user_string(arg3);
-+                if (!p3) {
-+                    return -TARGET_EFAULT;
-+                }
-+                ret = get_errno(fsconfig(arg1, arg2, p3, NULL, arg5));
-+                unlock_user(p3, arg3, 0);
-+                break;
-+            case FSCONFIG_CMD_CREATE:
-+            case FSCONFIG_CMD_RECONFIGURE:
-+#ifdef FSCONFIG_CMD_CREATE_EXCL
-+            /*
-+             * FSCONFIG_CMD_CREATE_EXCL is only available since Linux
-+             * 6.6. Guarding it to allow building with pre-6.6 headers.
-+             */
-+            case FSCONFIG_CMD_CREATE_EXCL:
-+#endif
-+                /* key and value must be NULL, aux must be 0. */
-+                if (arg3 || arg4 || arg5) {
-+                    return -TARGET_EFAULT;
-+                }
-+                ret = get_errno(fsconfig(arg1, arg2, NULL, NULL, 0));
-+                break;
-+            default:
-+                return -TARGET_EFAULT;
-+            }
-+        }
-+        return ret;
-+    case TARGET_NR_fsmount:
-+        ret = get_errno(fsmount(arg1, arg2, arg3));
-+        return ret;
-+    case TARGET_NR_fspick:
-+        {
-+            p = lock_user_string(arg2);
-+            ret = get_errno(fspick(arg1, p, arg3));
-+            unlock_user(p, arg2, 0);
-+        }
-+        return ret;
-+#endif
-     default:
-         qemu_log_mask(LOG_UNIMP, "Unsupported syscall: %d\n", num);
-         return -TARGET_ENOSYS;
+Changes from v2:
+
+* Apply the review from Pierrick Bouvier[1], making sure that the buffer
+  is unlocked before returning error in the fsconfig handler.
+* Clearify some comments in syscall.c.
+
+Changes from v1:
+
+* Add missing guard for FSCONFIG_CMD_CREATE_EXCL in strace.c, since it is
+  only available since 6.6.
+* Fix some wording issues in the cover letter.
+
+[1]: https://lists.nongnu.org/archive/html/qemu-devel/2026-05/msg07794.html
+
+Xinhui Yang (2):
+  linux-user: implement fsmount(2) series of syscalls
+  linux-user/strace: add fsmount series of syscalls
+
+ linux-user/strace.c    | 105 +++++++++++++++++++++++++++++++++++++++++
+ linux-user/strace.list |  15 ++++++
+ linux-user/syscall.c   |  91 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 211 insertions(+)
+
 -- 
 2.52.0
 
