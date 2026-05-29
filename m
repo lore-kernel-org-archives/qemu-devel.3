@@ -4,59 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44636CD6E43
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 12:04:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC7E2CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 12:16:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSvw5-0006QM-9f; Fri, 29 May 2026 08:03:33 -0400
+	id 1wSw8K-0001L2-Ql; Fri, 29 May 2026 08:16:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wSvw3-0006PV-R3
- for qemu-devel@nongnu.org; Fri, 29 May 2026 08:03:31 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wSvw2-0003MJ-6K
- for qemu-devel@nongnu.org; Fri, 29 May 2026 08:03:31 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 3F917414FD;
- Fri, 29 May 2026 12:03:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82D751F00893;
- Fri, 29 May 2026 12:03:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1780056208;
- bh=t32l5At9tpBuTtAd7B3nWvvcLnzUCU5BudMLxyBzFe0=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References;
- b=EuHLns4s4FHNz/YzwI1iSQY2nVUBvttbJPduGPhuo+/LasdM/UVlEc3ImbB1dyCu6
- 68tASs0tMCpqabpA9BIHqHylvUOcyRiuaN3LbGtHq0NJ0Ij/Ehp6tusiie19hQ7k8h
- DCW6QxQq49pcug1JuWmeVd7pCjMyda0QpPXJfAAPgmzPSQybzn+ierg7Q7hXkhOo7j
- z/ArOkmDz0CCngW3BM1rj4ANACxluCzS9d83+fbju3kontI1mubtRTzX8yEp9pkI80
- ZHud61xQw8rqrjck9zGe291HP2rpUhEqaM9C7yxaL08wmp+SExvHSQl3i6YSmdC6Ez
- HhmreJUwCd86w==
-Date: Fri, 29 May 2026 13:03:19 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, Tao Tang
- <tangtao1634@phytium.com.cn>, Gustavo Romero <gustavo.romero@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>, Jonathan Cameron
- <Jonathan.Cameron@huawei.com>
-Subject: Re: [PATCH 3/7] MAINTAINERS: Merge PCIe DOE section within SPDM
-Message-ID: <20260529130319.1e9b2144@jic23-huawei>
-In-Reply-To: <20260417110550.70068-4-philmd@linaro.org>
-References: <20260417110550.70068-1-philmd@linaro.org>
- <20260417110550.70068-4-philmd@linaro.org>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wSw7u-0001K5-2X
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 08:15:47 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wSw7s-000615-Aq
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 08:15:45 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-7dc6fbf3e86so23479797b3.3
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 05:15:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780056943; cv=none;
+ d=google.com; s=arc-20240605;
+ b=K5R47qw9NEZdHzwomZ9J/+sscMGZ+upL2J016DXmUyU72GMm/CGyuU6tzfJ5ywDK4R
+ W+exUTPJbyZ4Cl8tazyy2XA6MI2gCORf/95NZUZJAI1yqdGICMQM3/qSOVlu0agkcr+N
+ 4BLVh6qXEHq2rD+xM8BTcjGF2GoCKNN8oBieYl/Yf9VsjTrVizQfVJkk83lMRpi4fCmT
+ PokW+Vs4AtEPc2g7VLzGdbTI8nLQxgyOD7QmfPcVX6l8eYnQR7V8Cy/GYbViLWrizXw5
+ Pnkyzl/+sAFoKYHXzmUiNPLbooJmmatY72x/k5E4IijeiGb26TiY4vm2OXDSsrWl29bA
+ cTig==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=yjKGj59EYdEVZMYoNn1QX72MKnSy7HepRRbi+EYklHg=;
+ fh=7lHgdMIT5YCk1xvM5iVbYsjQ0xRSKG1j4imI2iHioW0=;
+ b=LU4doEGc3UaR7xgkxwu+bA7ZH2g4kwxzRve5xyXBELso0NpwVuHpcMtBqowKUdbfs0
+ p9N7C+/qo55BAyHisu8jaKESnEkIcEOl+5tTDkGW4/KWIw2fGBQIcZF7ubVIgRcdK8Fj
+ 70ZW2vcYgo93JS7RZMrMeexolqOCyGcii3uWMZIHb3Xs5Shri/Ap5DmLVHFIQ01KcMD6
+ SoKx0MyMgLB6AaIay8zU3Ai5j95gmI1vZ1XO350tNJ2xQPZbfbnmg1GbFVnA7ZfNkco9
+ oULdaZxiJWLuI4dv+NTUw3G/D3YD/Tf8kdmCeYGCE0/1ZMTH+9OE5bwEi4SKlN7QZQrs
+ WgBA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1780056943; x=1780661743; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=yjKGj59EYdEVZMYoNn1QX72MKnSy7HepRRbi+EYklHg=;
+ b=RK8rWFj7GEUi/ORyu5q+HzUwLVeCG+6PjSphBm/GkLTiwF62ofpgckRspgOC7t2D0j
+ 1ZmGKPPfMiqQl4dUJspLStD5ldG6amo0QP+gLtPc2yGXnXftFM8c3ExwFdWNIS0Ik6zb
+ CSQQNlGVp51VABORsOj1JhtqwF2c0dO7yV/RHEIKsWyUjIHvwxVZGdH/6MbI05882SpY
+ bRG5N2lXev7qqRU/B1kq8R+l1ZJEq6lPXaf4+uOiq2W9WGfzjNm4R0oCYF2muU27Dm9r
+ sCZMXEmXIx9jy0mXrgRktg7wxMfEC/Av9zzF7Pac30SIDhwxaKy9f3EiLdZxr+Dxdnoz
+ CF5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780056943; x=1780661743;
+ h=to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=yjKGj59EYdEVZMYoNn1QX72MKnSy7HepRRbi+EYklHg=;
+ b=qD0plXkoF0vnNc2scbRHrvMVB+gcleL2OtxO6UkDZ1Inin+FxswSv+kAsaz81xGSe2
+ JcVgOjAOF5aXmbvPvfDdw3fW24cZD6mp/bZtQzFXKcryE6hp8M19oA+w8kzvgO7JybBB
+ hrB+Fsp123GLSbUsM1HouUSBrz+pS4EpzkTYFfpsL7L7OTNgMrU3JezpWGeUUEnvyuNU
+ rpPQF4olE3FRkAK6gdPyxTRK9F4qZZnvuNplPK/VcpZi2UqxY7h/dvVDzv/2GIngvfIE
+ 5Zix/DB2uRpIpm8ga4ANY5bPabcghz1b11lvG3UHQOY6/MRI4lPb7V848c3Ugn0zag1v
+ KbMQ==
+X-Gm-Message-State: AOJu0YwdVLSwcSYs6eJ0MUmFNxFlbFeXxY9Frw7crVizpnMaMJrUqGHR
+ +s4ZWFXf4i4RufWYKMJVoJfZsfHwyh9RiBxZooJZkSj5Ad8Yznie3uiAWtmhdFruLJ6N6injqE5
+ le1lO5Qc3LVW/24Zi8hbF2R9gBYfHot7xBUwi3IvN1HfDg5hWA5TZ
+X-Gm-Gg: Acq92OFP7GGFecLth2NFWv3I3GQqsfnuQRdRE0uS9SlcIQzOIHWwm9/NKRRtmDNQm4G
+ u19dkaerSg5E5FH2h5RMlrUXtQ85TIGrca0kABZQ/LFNs912IFjnzKpzdpxcwguOVx3EmFejxfa
+ UsMklX6Z7EP3y2JXlAXBBmRa4KBmvbVTpjBcHFFsHQTeXJ8QmgVnkx/wA+FzS2trwREcbBQqPEL
+ Ru0hTD4rf8HyzHaxM9+paZzlTGYa65ER75PTxpMG03ppujK3yRwulaUcpYMRvmWLgTWZH0wcQpy
+ 2kl78YOB/Jq+psI7Icsp7g5+L/93oH9PP3X1WGlMv7w8V61/XKJ0e5IcdYhf8V2tN8RWYozjuy8
+ y3A==
+X-Received: by 2002:a05:690c:600c:b0:7d1:c256:b5c2 with SMTP id
+ 00721157ae682-7de49c3369bmr20746167b3.33.1780056942332; Fri, 29 May 2026
+ 05:15:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=jic23@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 29 May 2026 13:15:31 +0100
+X-Gm-Features: AVHnY4JLeR9AeYFBA5aawGm6vGHoYnsK642CUtkYU-vZUDUKpXBaG742LlgMaNQ
+Message-ID: <CAFEAcA-H-bsjnvCPg71BMre7=6ZQ9f-tSU_XZcPPSgXkK+dDXA@mail.gmail.com>
+Subject: KVM Forum 2026: Call For Presentations
+To: QEMU Developers <qemu-devel@nongnu.org>, rust-vmm@lists.opendev.org, 
+ kubevirt-dev@googlegroups.com, kvm-devel <kvm@vger.kernel.org>, 
+ coconut-svsm@lists.linux.dev, libvirt-devel <devel@lists.libvirt.org>, 
+ edk2-devel-groups-io <devel@edk2.groups.io>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,69 +112,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 17 Apr 2026 13:05:45 +0200
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
+####################
+KVM Forum 2026
+November 12-13, 2026
+Vancouver, Canada
+####################
 
-> SPDM depends on PCIe DOE, so it makes sense to cover
-> these files there. Cover the spdm.rst document. Add
-> Tao Tang who volunteered to be designated reviewer:
-> https://lore.kernel.org/qemu-devel/44abaece-6a6f-43c6-b29a-53d6eb08033c@p=
-hytium.com.cn/
+On behalf of the program committee for the KVM Forum, I am pleased to
+announce the KVM Forum 2026 Call for Presentations.
 
-Other things depend on PCIe DOE - for instance the table
-access stuff in CXL (that basically retrieves ACPI like tables from
-devices) and they have no connection to the security use cases.
-So from a logical structure point of view I'm not sure this makes
-sense.
+CALL FOR PRESENTATIONS
+======================
 
-Mind you I'm fine with be being Alistair and Tao's problem!
+We encourage you to submit presentations via Pretalx at
 
-Jonathan
+     https://kvm-forum.qemu.org/2026/cfp/
 
+All presentation slots will be 25 minutes + 5 minutes for questions.
 
+Suggested topics:
+- Scalability and Optimization
+- Hardening and security
+- Confidential computing
 
->=20
-> Cc: Tao Tang <tangtao1634@phytium.com.cn>
-> Cc: Gustavo Romero <gustavo.romero@linaro.org>
-> Cc: Alistair Francis <alistair.francis@wdc.com>
-> Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  MAINTAINERS | 11 +++++------
->  1 file changed, 5 insertions(+), 6 deletions(-)
->=20
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 11bf50a9ecf..eccc0d64331 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2150,11 +2150,6 @@ F: docs/pci*
->  F: docs/specs/*pci*
->  F: docs/system/sriov.rst
-> =20
-> -PCIE DOE
-> -S: Orphan
-> -F: include/hw/pci/pcie_doe.h
-> -F: hw/pci/pcie_doe.c
-> -
->  ARM PCI Hotplug
->  M: Gustavo Romero <gustavo.romero@linaro.org>
->  L: qemu-arm@nongnu.org
-> @@ -3693,11 +3688,15 @@ F: tests/qtest/*tpm*
->  F: docs/specs/tpm.rst
->  T: git https://github.com/stefanberger/qemu-tpm.git tpm-next
-> =20
-> -SPDM
-> +SPDM, PCIe DOE
->  M: Alistair Francis <alistair.francis@wdc.com>
-> +R: Tao Tang <tangtao1634@phytium.com.cn>
->  S: Maintained
->  F: backends/spdm-socket.c
->  F: include/system/spdm-socket.h
-> +F: include/hw/pci/pcie_doe.h
-> +F: hw/pci/pcie_doe.c
-> +F: docs/specs/spdm.rst
-> =20
->  Checkpatch
->  S: Odd Fixes
+KVM and the Linux Kernel
+- New Features and Architecture Ports
+- Device Passthrough: VFIO, mdev, vDPA
+- Network Virtualization
+- Virtio and vhost
 
+Virtual Machine Monitors and Management
+- VMM Implementation: APIs, Live Migration, Performance Tuning, etc.
+- Multi-process VMMs: vhost-user, vfio-user, QEMU Storage Daemon
+- QEMU without KVM: Hypervisor.framework, Hyper-V, etc.
+- Managing KVM: Libvirt, KubeVirt, Kata Containers
+
+Emulation
+- New Devices, Boards and Architectures
+- CPU Emulation and Binary Translation
+
+Developer-focused content
+- Tooling improvements
+- Enabling Rust
+- Testing frameworks and strategies
+
+Speakers are expected to attend in person.
+
+IMPORTANT DATES
+===============
+
+The deadline for submitting presentations is:
+   2026-08-01 00:00 (Canada/Pacific)
+
+Accepted speakers will be notified on August 21, 2026.
+
+ATTENDING KVM FORUM
+===================
+
+The cost of admission to KVM Forum 2026 is $75. You can get your ticket at
+
+     https://kvm-forum.qemu.org/2026/register/
+
+Admission is free for accepted speakers.
+
+The conference will be held at Coast Coal Harbour Hotel Vancouver by APA
+in Vancouver, Canada. More details about the location, and about the
+reduced price rooms available for attendees at the conference hotel,
+can be found at:
+
+     https://kvm-forum.qemu.org/location/
+
+If you need a visa invitation letter in order to attend, please reach out
+to the organizers at kvm-forum-pc@redhat.com.
+
+We are committed to fostering an open and welcoming environment at our
+conference. Participants are expected to abide by our code of conduct
+and media policy:
+
+      https://kvm-forum.qemu.org/coc/
+      https://kvm-forum.qemu.org/media-policy/
+
+CONTACTS
+========
+
+Reach out to us should you have any questions. The program committee may
+be contacted as a group via email: kvm-forum-pc@redhat.com.
+
+--
+Peter Maydell
 
