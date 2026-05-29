@@ -4,97 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C7B1CD4F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 20:26:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D154FCD4F54
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 20:26:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wT3mO-0003zk-0U; Fri, 29 May 2026 16:26:04 -0400
+	id 1wT3mp-000457-O2; Fri, 29 May 2026 16:26:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1wT3m8-0003wy-IM
- for qemu-devel@nongnu.org; Fri, 29 May 2026 16:25:48 -0400
-Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1wT3lz-0005hJ-6f
- for qemu-devel@nongnu.org; Fri, 29 May 2026 16:25:48 -0400
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 9B6BE47188
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 20:25:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1780086329;
- bh=iGHX3m9UueyEO/wXYYnL5CzPc1OHg9EUZdW0EyGXLvs=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=Nh402fRWBKKUAi4IQeiW93BTtFJgJK3uFq41y9DurgsoQevZFU56YhWLcoj6oV4mo
- 4+JKNzIC1DT6CgLY6Zg4B+4dJN6T/GszgqbM/jLDMJvXgR54LeB+l3Fcn0ioz00agm
- N8C8/+a0XCBG8Ky0fid7Xxqli/KcjBBBAbXYHpwkD7Wu1g8UWHuGLmqpeeJaZLr0eQ
- UeEhWUVILwrDXcxJWHNNdiZjOX1XNhVQsOHNnNuTDEUUthNvlv46uEtArdB0RKx59U
- MyBmj1cpZDJ6dmk9IDbIEh2sP2JW1BFGv8+kaZ3FN8nbfuGYbsXIAjwFId+knGRoTV
- yduCey3m3vG8Q==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 919737F2DD
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 20:25:29 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wT3mn-00044m-DW
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 16:26:29 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wT3ml-0005yZ-UR
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 16:26:29 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-36bd175fdbaso503582a91.0
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 13:26:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1780086386; x=1780691186; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ML1LIOLIlJ4iZvJ1NqUwx+/NKaZnVmux45V5//Y2gA4=;
+ b=Yb2lcxjH2ckwRPJU0odP5iZwd/KSjdc7K0dmCpRWKB5CIXcJ0bvO9agPB144kz7XrO
+ NeHRA4qNWmpFzmhMJj/ehJWXjOi1gKDVlg9KW69eSJ6pjqVXjsGhO41YAuqvoo6GQMv1
+ UjPO2Py1neaSPygPImJG9+jrTcNaemGKvDCkP4e4jbcAhQdU5ikF2La2WH5z5X8GA7uh
+ tQrX1YPx8GN5KIqieNd/l7xofyu8Be+U4YbulYV6p5c3JKFqsm7JZxm7GxPACmU0inKB
+ 9NHYH/YeJpKYCzG6P1OFqJb9PCSfC0uXdIVVkmHFiqE36dbeyBhwWtJ8Ue+XYloZuOk0
+ IbUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780086386; x=1780691186;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ML1LIOLIlJ4iZvJ1NqUwx+/NKaZnVmux45V5//Y2gA4=;
+ b=iBtapWt2BO1/gF275mX4S/VfJHuFBuuDMaswo/Ysyz8/qpoP5TrCAohO4pHNCl3BUn
+ KY54WUsUyzTgK4sxAO5D8zRfBdAe/9IdgR1QhbTZJ6ooLX0acWUFV/fFxAuOi0FV1SuG
+ 7nsQORRH7q+rJTYQJIW4sMNHhUqyFct2bfa6rDskpQ9acxHiM8MPmZpOhHN0cLPY8qpK
+ WCj66bs2IaW61DSvIIWa6r5PmASfZZKyOqGdGYQl6fXmprT3T44u9cIUsTW44PUw3GY7
+ M+3OLfmy9vgsNSYXLLJ4bVmTDbtsrCabTXs/pHfn0OXnZIO3AR7TIlAnqNJgG16lorWC
+ 5GMw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8SvQuB1YkFjcVQPiAArpMq9p5kZrBijxK4bvakcLdV088WF7pH5sJ0b/sM6iug1NccL7odgmSFqT+u@nongnu.org
+X-Gm-Message-State: AOJu0Yxd4rxSKckAPzDfzzmfe8ZGHcIZsozVd88kVrz6xekqpYXTXRQB
+ bpLwvPPQeYlnadpfQyfdzbM4ikBIDKULZ5I1MpZO/Shtv3NsLtHsTgudjQZZP7Nx1Bo=
+X-Gm-Gg: Acq92OG5SRQbh7BnqDWKkHHR2ZsYIaf5qmu76IKqjS3lEAf6/i2lfdWcr1TEWHItCRX
+ grYSGlCcekqpmjVAks1V2+4UgXgWUG/Cq+WeNIAq4Ra2qZSNkxf12lEfws7oqQWQv8OxnX0KtMC
+ r+5PXhadTv7wo92sXFl5M0CkURmBwlEFOgW+o6LwkKLG5cvGxjdzo7tAnUngEAkk8NV5mfnj1HV
+ ZbPS2JIdsQSlFIxzDfaSxv/a4FrNBAxbkkVnXiQeS1G+XBzD71oPsjPIy8PdQ99Botx7xtyqqpG
+ U1YIozenfSjUrSBl/QI9jnrfQXnghXtunhq+4izDOZEDZdAbrku+8eAkgEcvW+Fpy2GqRffdP4h
+ jgMJsMQgKghtTrhk1/EKIGjEvvJQeZxxbrISBATplgmq4p3CwxGlt/lDii1NZvHTj7lamTtSsI/
+ mRybSY41dBEQ+/zTOnWZQexT9no+ROgQ6xUjmZtQ1jgRI66UQ=
+X-Received: by 2002:a17:90a:fc4c:b0:36b:e109:1e63 with SMTP id
+ 98e67ed59e1d1-36c685a8f89mr714711a91.27.1780086385915; 
+ Fri, 29 May 2026 13:26:25 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-36bbd667fa4sm2208732a91.0.2026.05.29.13.26.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 29 May 2026 13:26:25 -0700 (PDT)
+Message-ID: <487552e9-b75d-46b0-b9d3-50272f5255a3@linaro.org>
+Date: Fri, 29 May 2026 13:26:23 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 29 May 2026 20:17:22 -0000
-From: Andreas Hasenack <2133804@bugs.launchpad.net>
-To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- milestone=ubuntu-26.04; status=Fix Released; importance=High;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
- component=main; status=Confirmed; importance=Medium;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
- component=main; milestone=ubuntu-24.04.4; status=Incomplete; importance=Medium;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
- component=main; status=Won't Fix; importance=Medium; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
- component=main; status=Fix Committed; importance=Medium;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
- component=main; milestone=ubuntu-26.04; status=Fix Released; importance=High;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug-Tags: server-todo verification-needed-questing
-X-Launchpad-Bug-Information-Type: Public
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: ahasenack hectorcao janitor mjt+launchpad-tls
- paelzer utkarsh xypron
-X-Launchpad-Bug-Reporter: Heinrich Schuchardt (xypron)
-X-Launchpad-Bug-Modifier: Andreas Hasenack (ahasenack)
-References: <176477927666.3767208.4954653462090539439.malonedeb@juju-98d295-prod-launchpad-3>
-Message-Id: <178008584253.3915221.9352376650762367440.malone@juju-98d295-prod-launchpad-7>
-Subject: [Bug 2133804] Re: QEMU does not emulate IOCTL TCGETS2
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
-Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="e655887187b0b1e1a70625cd2d210bb3cf47cd14";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: 6f3985c256aef9ff73256cd7a38ae6d7f295c4e5
-Received-SPF: pass client-ip=185.125.188.251;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] hw/nvram/fw_cfg: Document and tighten up register
+ layouts
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Sergio Lopez <slp@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ Bibo Mao <maobibo@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>
+References: <20260529174639.451353-1-peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260529174639.451353-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -103,158 +112,18 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2133804 <2133804@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the noble upload, why was python3-venv moved from Build-Depends-Arch
-to Build-Depends? This is not documented in d/changelog:
+On 5/29/26 10:46, Peter Maydell wrote:
+> Peter Maydell (5):
+>    docs/specs/fw_cfg: Document all architecture register layouts
+>    hw/nvram/fw_cfg: Enforce standard layout for fw_cfg_init_mem_dma()
+>    hw/nvram/fw_cfg: Enforce standard layout for x86 fw_cfg I/O ports
+>    hw/nvram/fw_cfg: Remove support for I/O port fw_cfg without DMA
+>    hw/nvram/fw_cfg: Document fw_cfg_init_mem_nodma()
 
---- a/debian/control
-+++ b/debian/control
-@@ -7,13 +7,13 @@ XSBC-Original-Maintainer: Debian QEMU Team <pkg-qemu-deve=
-l@lists.alioth.debian.o
- Uploaders: Michael Tokarev <mjt@tls.msk.ru>
- Build-Depends: debhelper-compat (=3D 13),
-  python3:any,
-+ python3-venv,
-  meson (>> 0.63.0~), ninja-build,
-  flex, bison,
- Build-Depends-Arch:
- # In comments below we also specify (system-specific) arguments
- # to qemu's configure script, -- optional features which depend
- # on build-dependencies.
-- python3-venv,
- # --enable-docs
- # for python3-sphinx:native see #995622
-  texinfo, python3-sphinx:native, python3-sphinx-rtd-theme,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-
-** Changed in: qemu (Ubuntu Noble)
-       Status: In Progress =3D> Incomplete
-
---=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2133804
-
-Title:
-  QEMU does not emulate IOCTL TCGETS2
-
-Status in QEMU:
-  Fix Released
-Status in qemu package in Ubuntu:
-  Fix Released
-Status in qemu source package in Jammy:
-  Confirmed
-Status in qemu source package in Noble:
-  Incomplete
-Status in qemu source package in Plucky:
-  Won't Fix
-Status in qemu source package in Questing:
-  Fix Committed
-Status in qemu source package in Resolute:
-  Fix Released
-
-Bug description:
-  [ Impact ]
-
-  - Terminal prompt is missing for multiarch containers with qemu-user
-
-  - Users cannot see the prompt but still can type the commands
-  =C2=A0=C2=A0However the absence of the prompt can be misleading and make =
-users think that the container hangs.
-
-  - this fix implements the missing ioctl TERMIOS2
-
-  [ Test Plan ]
-
-  On an amd64 host
-
-  $ sudo apt install -y docker.io qemu-user-static
-  $ sudo usermod -aG docker ubuntu
-  $ newgrp docker
-  $ docker run --platform=3Dlinux/arm64 -it ubuntu:26.04 bash
-  =C2=A0(this runs on AMD64 host, if you are runnig on ARM64, use -platform=
-=3Dlinux/riscv64 instead)
-
-  After docker pulls the image and run the container, you cannot see the
-  prompt
-
-  ...
-  Status: Downloaded newer image for ubuntu:26.04
-  ...
-
-  $ docker run --platform=3Dlinux/arm64 -it ubuntu:24.04 bash
-
-  Doing the same for Ubuntu Noble image works.
-
-  $ docker run --platform=3Dlinux/arm64 -it ubuntu:24.04 bash
-  Unable to find image 'ubuntu:24.04' locally
-  24.04: Pulling from library/ubuntu
-  818154cda96d: Pull complete
-  352b2c3faa58: Download complete
-  Digest: sha256:c4a8d5503dfb2a3eb8ab5f807da5bc69a85730fb49b5cfca2330194ebc=
-c41c7b
-  Status: Downloaded newer image for ubuntu:24.04
-  root@bf8124075385:/#
-
-  With this fix, the users should see the prompt when they run bash
-  interactively in the container:
-
-  $ docker run --platform=3Dlinux/arm64 -it ubuntu:26.04 bash
-  root@bf8124075385:/#
-
-  [ Where problems could occur ]
-
-  The fix is around the termios managament so regressions can happen there.
-  There might be regressions on the prompt display.
-
-  The prompt display is widely used so potential regressions should be
-  visible quickly.
-
-  [ Other Info ]
-
-  None
-
-  -- Original bug report ---
-
-  In Ubuntu 25.10 we moved to glibc 2.42. Here glibc has changed the
-  implementation of isatty(). It now uses IOCTL TCGETS2 instead of
-  TCGETS. TCGETS2 is not emulated by static QEMU (qemu-riscv64, qemu-
-  arm64, ...).
-
-  This leads to failures in containers for foreign architectures. E.g. no c=
-onsole prompt is displayed.
-  A detailed analysis is contained in LP #2133188.
-
-  A proper implementation of the missing IOCTLs will include:
-
-  Functions:
-
-  in linux-user/syscall.c:
-  host_to_target_termios2()
-  target_to_host_termios2()
-  print_termios2()
-
-  Definitions:
-
-  in linux-user/syscall.c
-  #define termios2 host_termios2
-
-  in linux-user/syscall_types.h
-  STRUCT_SPECIAL(termios2)
-
-  in linux-user/ioctls.h:
-  IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-
-  in linux-user/user-internals.h:
-  void print_termios2(void *arg);
-
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2133804/+subscriptions
-
+r~
 
