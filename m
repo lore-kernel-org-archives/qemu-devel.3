@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCE3BCD6E51
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:48:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC93ACD6E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:48:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSvgo-0001ep-P1; Fri, 29 May 2026 07:47:46 -0400
+	id 1wSvgg-0001Y7-JG; Fri, 29 May 2026 07:47:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSvgm-0001dR-H8
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:44 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1wSvgf-0001WG-1x
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:37 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSvgk-0008Do-Rt
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:44 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-45ed18d8a1bso2686407f8f.0
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 04:47:42 -0700 (PDT)
+ id 1wSvgd-0008C8-2V
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:36 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-44a74032ff8so10351917f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 04:47:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780055261; x=1780660061; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780055253; x=1780660053; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=5epfWRhDxaC8XI13YVukA2ByRaHS+EVk7OK1nsBBQug=;
- b=YhnCOGiXBYQOlyeYpfLEcHBfYgxY6GLTLFqH+5QCRTrCcRU7Ri71L6jbSiieP6LGgy
- qM97tjzerJKxLP7SA8lT9IGYEVrbTxlGmmCEPN7y4tnkV4hM6CTg4PlilgTIwiqCQME7
- nra7rwX2bd58/+CG917qVFgLxXw3ud48dmc7DbSXcE9KOYeGyyYXZDqyXeFAxHvL9f3f
- iIVOBwT8zSJcZcl8x0wnHCuiiCIfZG2STXAmHlRRhqCUz127iTkTpJaWxhYaPRIz4ZLa
- pCkyLZg8npap8R9Bb8AUl5w6QgQlZ22C3oUZpCWG8yRMJM1pKLgGMacT1vbUqVKImc5v
- v8lA==
+ :reply-to; bh=qB7fQp4x+McFQYtKQptrI3Tcb3Zfy5XaCtc15S7Ao0g=;
+ b=ulIICacvKhG/fcQunQ5clnK4ZuPk5e2Qs+/S8qa8L95h7LILZxg+/7BLqU/EHKh98B
+ goejqjyyOWHsrlcZaXh8EAnlHnsju4L5Qtf+5TQ0aWM5piEsADLpJju4hPsffh8SBp9u
+ iO8LIl/MxeNePG2L4fHF1pUKhDUHmU3K8Iquf++ecid31GmMHQ5wyxY8Kf7rBjmpSXV2
+ V5ktoRv18zdHYOGXGvRyszvLl/ZALFL5GJuRdTT4CmFcZEk2Sh1dAYDZvnfMBq/CRj93
+ hbA/2RMoGIDIN47v8DAX2dl9CCZO4i4ankGH0Y/pLFGvW0ccU3hk8L8DPYwSBINIWeve
+ GigA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780055261; x=1780660061;
+ d=1e100.net; s=20251104; t=1780055253; x=1780660053;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=5epfWRhDxaC8XI13YVukA2ByRaHS+EVk7OK1nsBBQug=;
- b=iJWO9NsGDQUcsksEuQ1WbB+QzuOQ3RS+obXagUn6rHDsjwWI3lR539CFdDby2uGGNk
- YK46G02iJEvN6KRCXxN/SBDwfJeHQPzrW8fFEDt8DZtJcnpcpUdNqXLmtPs7gNtGaBmD
- yTuDftZBVysq7sVjsPN6i+yssAcKkXZNzu6AGM07NjSloAe8QB113JJbQAMe/ZnvlF9X
- z7pCz3oDT5qmXGs7H0WUo9ljgWv/FsMVO68ooI8mqFOL4KU7cIKH8gxwqSnK4kCqnRKO
- 73iU/1rChdwWkVVKuaEdPvOObJQ/RDd14KyYkjq+4kIFNEalQGPS3uR1/tBAIDi8MKT5
- kteQ==
-X-Gm-Message-State: AOJu0Yy0io7k2fRVogwF5FMjCcXvP1ajudH+OTr4xu+B9GosltHPOmEx
- yK/j2aJWEkgF7M0JuwPjHzRB/1IFSinU+BvcPysJd3yM/10j5OwOncaF7qGjXwXb1j2sVhR0aS7
- xEnMA
-X-Gm-Gg: Acq92OFUBa/KNx8eRr16gDsomwcZyJI1IIS4fh8BHQYYtXHpdzTuEUfQw6usgliPbCl
- 3VSJ+NIRhQGYhueprA8dyWo0c3FCo8c5B8Q29eQswblnof/dT302KScgha8P4HM5CqedADyJA6A
- tNfm50xk3j5iPC+Pem1X0df65kXtI3JUn5bmXehrzHZEsMCCmvTiCYC6xKYlM0cxiMbjRD5Hpy3
- /dwHZjKepcua9ZNkG+xiEwX/0HMxPgFU7tH9y7fZXP4fez0/hAfuuLs65tvHoOmf1zhD+/+TVMT
- Z+GEVPEczF2wQVUZ/xFzLseIQds9tEgnvz2ElsQY9iquYzUHehJIlLWvnLg1FCJm961hLcPqEea
- 9ozffRiSUZyn93c6O3RkbVawEWVLiOm7WQpE7scRE6KkZsNRZkVDMJJ8ETD8nLv6RyAzbIPa5/k
- L4LSplo22Ryvndph/XAn7AuLZ+GH8+ECAakpkrN5pR7RtmmWenHjD0u29HUYd2rjv7i88+J1mX8
- vOA11KF2D6u/VKZydCoXqIMMPEzUgX1wHlKxJUf9T4OXotzcwl7
-X-Received: by 2002:a05:6000:2988:20b0:45e:8547:f21e with SMTP id
- ffacd0b85a97d-45ef147c77amr3539107f8f.36.1780055261361; 
- Fri, 29 May 2026 04:47:41 -0700 (PDT)
+ bh=qB7fQp4x+McFQYtKQptrI3Tcb3Zfy5XaCtc15S7Ao0g=;
+ b=H6z5VCClmdimApX1joxxjzM94bVcpQ3Vq472K2XCGjQuD59TRvbLvMGQ3YhRNfVcUX
+ AIJFnliRPu0wDmxnEWKC4yLgcSmurQYuC9UpMn8aipNkUW0S1K5UBedraeLIDTv/o0o/
+ fZlvmAaiujDwoJhPMNs2k6ZihG6q0YU/UGL/wC5ww0krtJNZYkVAkymU27tVu6NoGide
+ oPtYWS4QvupiUy24Gkx7MxWu6QT2gJfe31tf/wJ1SpEV/Hl/TX172gZKuVw1d2Kwbw8M
+ 8qr5d+yhKlCWKVSSW67ieRRDepgM236OIVR+V1egG8LKG6Jw9Qj9sAciiV2I30Jd0kLD
+ 3tcw==
+X-Gm-Message-State: AOJu0Yyb5fST2s+SfkJZ4LfVEms566lv2MuD+pa+7r4M2A4s27leRIGv
+ 1U1eojW4iX/6n1YIlVaqVZo23jEPU3Fwa/eldYTlpjNtgzBd4xSBnAv5FCB4QzomffcmKtS7yOB
+ kJGr5
+X-Gm-Gg: Acq92OH4VrxIgPFg6RHy1w0tNafJGAAmEc5aGTMpRjDWSF61N3OMXL/cU3yX3dQ2lL3
+ Ko8I84z0X0iItEW6zXx04Wg603JYUbD90VDxIAnrtzRv3LtBF2bWyJE0s9+ixANgalA8uFczZVp
+ uqBcwqg7i6PpzBLiHCyU7EBB0PIlg8jIB/KzA4vN2X1b7v6YqVcTWaOKpNgrR8AEUjieOexSMr7
+ NvvPMCX7WI8bNrpooLZTPbmols2SVlKD3MxNXvzWC+dk6hj4QG0yF9uu0hNyYm64LbxnnGuTtoC
+ rXAPtgUkQn1jIu01LbKEDEupYfhvApauiGXJElSvZDPuMy3Wv2tEQETv+xWsuG913FTjryBNG4C
+ YCdBa+zPtrICISkgbGBRNqoVli2WaeVDIIL7HOGpMy+9w6xfu+6Wh613lDEM/+d1ZF61eiYpOxk
+ OFBe4gbiht/P+nfCHSL23iyIS/aA0XBi317ly2PJdi9FLpkOXymJZ6hbc3O6O64xsiGdMkmVZ0T
+ U2aVXPX3GickQcWsZOAA6OSgvZ+Mky6D59u44PVRw==
+X-Received: by 2002:a05:6000:4615:b0:455:70bc:216d with SMTP id
+ ffacd0b85a97d-45ef13f7a47mr4846772f8f.12.1780055253406; 
+ Fri, 29 May 2026 04:47:33 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ef3563cb9sm3007358f8f.29.2026.05.29.04.47.40
+ ffacd0b85a97d-45ef3563cb9sm3007358f8f.29.2026.05.29.04.47.32
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 May 2026 04:47:40 -0700 (PDT)
+ Fri, 29 May 2026 04:47:32 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 15/21] target/arm: Don't assert if 64-bit EL2 AT insn sees a
- Domain fault
-Date: Fri, 29 May 2026 12:47:16 +0100
-Message-ID: <20260529114723.42040-16-peter.maydell@linaro.org>
+Subject: [PULL 08/21] hw/misc/zynq_slcr: Add logic for DCI configuration
+Date: Fri, 29 May 2026 12:47:09 +0100
+Message-ID: <20260529114723.42040-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260529114723.42040-1-peter.maydell@linaro.org>
 References: <20260529114723.42040-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,53 +100,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Domain fault type can only happen for 32-bit short-format
-descriptors.  This means that it almost never needs to be encoded in
-a long-format fault status code.  However, there is one corner case
-where we do need to report it as a long-format FSC: if a 64-bit EL2
-does an AT insn on an AArch32 EL1&0 translation regime that is using
-short-descriptors and that translation operation hits a Domain fault,
-then this is reported in the PAR_EL1 in long-format.
+From: YannickV <Y.Vossen@beckhoff.com>
 
-The PAR_EL1 register description defines that this should be reported
-as 0b111101 for a level 1 Domain fault or 0b111110 for a level 2
-Domain fault.
+The registers for the digitally controlled impedance (DCI) clock are
+part of the system level control registers (SLCR). The DONE bit in
+the status register indicates a successfull DCI calibration. An
+description of the calibration process can be found here:
+https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/DDR-IOB-Impedance-Calibration
 
-The Arm ARM pseudocode special cases this in the function
-AArch64_PARFaultStatus() (because no other "fault to LFSC" code path
-can be a Domain fault).  For QEMU, implement it in arm_fi_to_lfsc().
+The DCI control register and status register have been added. As soon
+as the ENABLE and RESET bit are set, the RESET bit has also been toggled
+to 0 before and the UPDATE_CONTROL is not set, the DONE bit in the status
+register is set. If these bits change the DONE bit is reset. Note that the
+option bits are not taken into consideration.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 1fa498fe0de97 ("target/arm: Provide fault type enum and FSR conversion functions")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3512
+Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Message-id: 20260518073401.11279-8-corvin.koehne@gmail.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260526174155.2491217-1-peter.maydell@linaro.org
 ---
- target/arm/internals.h | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ hw/misc/zynq_slcr.c | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index ae5afc5362..f39a992012 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -893,6 +893,16 @@ static inline uint32_t arm_fi_to_lfsc(ARMMMUFaultInfo *fi)
-         assert(fi->level >= 0 && fi->level <= 3);
-         fsc = 0b001100 | fi->level;
-         break;
-+    case ARMFault_Domain:
-+        /*
-+         * This can only happen when doing an AT insn at EL2 for an AArch32
-+         * stage 1 EL1&0 translation regime using short-descriptors, and
-+         * the translation hits a Domain fault. This needs to be reported in
-+         * the long-format PAR. Compare pseudocode AArch64_PARFaultStatus().
-+         */
-+        assert(fi->level == 1 || fi->level == 2);
-+        fsc = 0b111100 | fi->level;
+diff --git a/hw/misc/zynq_slcr.c b/hw/misc/zynq_slcr.c
+index faae98fa02..0ae5d607be 100644
+--- a/hw/misc/zynq_slcr.c
++++ b/hw/misc/zynq_slcr.c
+@@ -180,6 +180,12 @@ REG32(GPIOB_CFG_HSTL, 0xb14)
+ REG32(GPIOB_DRVR_BIAS_CTRL, 0xb18)
+ 
+ REG32(DDRIOB, 0xb40)
++REG32(DDRIOB_DCI_CTRL, 0xb70)
++    FIELD(DDRIOB_DCI_CTRL, RESET, 0, 1)
++    FIELD(DDRIOB_DCI_CTRL, ENABLE, 1, 1)
++    FIELD(DDRIOB_DCI_CTRL, UPDATE_CONTROL, 20, 1)
++REG32(DDRIOB_DCI_STATUS, 0xb74)
++    FIELD(DDRIOB_DCI_STATUS, DONE, 13, 1)
+ #define DDRIOB_LENGTH 14
+ 
+ #define ZYNQ_SLCR_MMIO_SIZE     0x1000
+@@ -193,6 +199,8 @@ struct ZynqSLCRState {
+ 
+     MemoryRegion iomem;
+ 
++    bool ddriob_dci_ctrl_reset_toggled;
++
+     uint32_t regs[ZYNQ_SLCR_NUM_REGS];
+ 
+     Clock *ps_clk;
+@@ -331,6 +339,8 @@ static void zynq_slcr_reset_init(Object *obj, ResetType type)
+ 
+     DB_PRINT("RESET\n");
+ 
++    s->ddriob_dci_ctrl_reset_toggled = false;
++
+     s->regs[R_LOCKSTA] = 1;
+     /* 0x100 - 0x11C */
+     s->regs[R_ARM_PLL_CTRL]   = 0x0001A008;
+@@ -418,6 +428,8 @@ static void zynq_slcr_reset_init(Object *obj, ResetType type)
+     s->regs[R_DDRIOB + 4] = s->regs[R_DDRIOB + 5] = s->regs[R_DDRIOB + 6]
+                           = 0x00000e00;
+     s->regs[R_DDRIOB + 12] = 0x00000021;
++
++    s->regs[R_DDRIOB_DCI_CTRL] = 0x00000020;
+ }
+ 
+ static void zynq_slcr_reset_hold(Object *obj, ResetType type)
+@@ -554,6 +566,25 @@ static void zynq_slcr_write(void *opaque, hwaddr offset,
+                 (int)offset, (unsigned)val & 0xFFFF);
+         }
+         return;
++
++    case R_DDRIOB_DCI_CTRL:
++        if (!FIELD_EX32(val, DDRIOB_DCI_CTRL, RESET) &&
++            FIELD_EX32(s->regs[R_DDRIOB_DCI_CTRL], DDRIOB_DCI_CTRL, RESET)) {
++
++            s->ddriob_dci_ctrl_reset_toggled = true;
++            DB_PRINT("DDRIOB DCI CTRL RESET was toggled\n");
++        }
++
++        if (FIELD_EX32(val, DDRIOB_DCI_CTRL, ENABLE) &&
++            FIELD_EX32(val, DDRIOB_DCI_CTRL, RESET) &&
++            !FIELD_EX32(val, DDRIOB_DCI_CTRL, UPDATE_CONTROL) &&
++            s->ddriob_dci_ctrl_reset_toggled) {
++
++            s->regs[R_DDRIOB_DCI_STATUS] |= R_DDRIOB_DCI_STATUS_DONE_MASK;
++        } else {
++            s->regs[R_DDRIOB_DCI_STATUS] &= ~R_DDRIOB_DCI_STATUS_DONE_MASK;
++        }
 +        break;
-     case ARMFault_Translation:
-         assert(fi->level >= -1 && fi->level <= 3);
-         if (fi->level < 0) {
+     }
+ 
+     if (s->regs[R_LOCKSTA]) {
 -- 
 2.43.0
 
