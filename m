@@ -4,96 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B50CD5BD2
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 09:16:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DCFACD5BD2
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 09:17:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wStK5-0007aE-Hm; Fri, 29 May 2026 05:16:09 -0400
+	id 1wStLK-0007zA-HJ; Fri, 29 May 2026 05:17:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wStK2-0007Zt-1g
- for qemu-devel@nongnu.org; Fri, 29 May 2026 05:16:06 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ id 1wStLC-0007z2-Ge
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 05:17:18 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wStK0-0002L1-Gt
- for qemu-devel@nongnu.org; Fri, 29 May 2026 05:16:05 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-bd8d0e4e341so1972054066b.0
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 02:16:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780046163; cv=none;
+ id 1wStLA-0002SW-PJ
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 05:17:18 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-bd5047a2a4cso2058867066b.3
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 02:17:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780046235; cv=none;
  d=google.com; s=arc-20240605;
- b=RfchcF39KZBgUhWeVy1ShfQQvjj1LbRYGIkWRkkrpTR2J2WcyykYXy6k91/GImLUfw
- 9YSmtbEv/3A3xwfpKdmyn0x3bL0kyyEYyAWU/oGCBM+WQTSw6VklGjI4NXQHyXzYFEHE
- dEwFZxaeYPFGsGsipegqVRD12kKdEqKo9HfT0PZv4J8Bvp0HKcT95EsGRhGE+lZYhdw5
- GHFWrUzlXjixUK8CA2Fd5BqqCroljU0ogphgqlJSXElgFz9F6ngvGS/0xGwJCUD+M7ba
- /fCegSNuaYt1scRC3jZbcIRzoLEYkzKG7j6P8JbJmgUrMEf2vcZ7jvYMJRPie4S6VOE0
- qsCw==
+ b=Nm/xwOolZxkZCS+3jNvSoVqf7sXJqxLsOwykPog+IWhpDyIq5ucKOiUd5WgYjT+Wp4
+ xyHy3b7/PuQJbnRLb7zxINQ1/xbyRPdUbYHzpUWi/1umDa9dcpQ0JVu4RyYeuouFQEDt
+ hlxR5so7hgfWylrZ8C9ikwDw0BXu450HGQh9GC2mCZQknX70TkFwfzdABSb4VoGy699Y
+ 7VWLYaclL3t/6tEZuK117dpS39tEiwDk5/UI2XolKYz5EKlU+VBvCKGu6tiTrLOg3z1G
+ dWhOLUozu169ad1Il/cVmqJSnoysi5Xr4odlpMRPiXPLv+A56aNR5gZiULopdF0XBbEj
+ yMzg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=54F9QYUuejtz736fptjfaoI6erWLGJPXgsBAbg7eexM=;
- fh=JcRhxFyFrmTN6Obc6GQAPgoT9DxjCHw1HTt2ZdOw5iU=;
- b=B58Y2UTRgY/Qf9yhAZdjO28TUhHyj+yo5F5ZOnE+2FHwwMcqP+dWjx9ZCDnkqqJ6w0
- m26S7i0BFf/Bqg6LNI41fCnVXRX3U1/bz0/YAObtcJNf7jhp7ht6fcprAvhXTNVRlAJU
- NCMWJF4TM0cBSrDThDNCIrkOUk/Wh/Z4BJo4C4jfVby0IZWWndGu9dU5E7XP9u7uMWjR
- 2Ad8iDXZktTOmHkcT179RYwNLlQq8SzH75lqqxPjJa3k2Y+eLe5TuqfRjUkwtfbbsk4G
- DgIoGcnLYZIsCHb4Gt7qNCMOZwMaWEaG+JtRtdTPNqYvWpQZ9d86QS9jWZPJYYc6pkFD
- mesw==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=0GnaGjaG4RESDcoGYwaf8vFzTvOeNPzGpDXrIz7ydWw=;
+ fh=+1firF9KONN4Yc1L4UE+f7hjZIqv5yKMPW+CbJoXUyw=;
+ b=XrVF5NpeOvgXKKcHmD+DMMsxPHMycpN6efKLahv0Zwroez/DVVRBvz0TUb7ZPIX0Rr
+ 6RXy2Ot7Fm2XhZgs4AreoRY4qeV3h33eNlC5wspCEMWeNPS/wAXvLJD24JjQw0tbwOWC
+ Bc7DswM1PJEH+xx5pIIGUJcY4Cd+FWw9ety8eAkdpnf83eLJ6/8pN6oWeL/S++AiyTPz
+ TUeObl3b4pYnYf8K5Hz13TriGA/Ju2p9vEhQ+7D9X2yH0yGwDIG8dg3Z6PEgJX03ZkoR
+ FmvewRkQk2CUWMjulvPUMlfUyM1/UB+3lt6ZCGfRxrSUUntNhOEro0iR43X0XWGlwuTT
+ xI1Q==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780046163; x=1780650963; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=54F9QYUuejtz736fptjfaoI6erWLGJPXgsBAbg7eexM=;
- b=FGe6Ora0NEBbvYTCvi0W7bsyGLFY5CqbugHMZupsgWgRq8X0ayIJHSzgMlWjwEo5oR
- yhPZbwJpYuIDvftsazlSx95e8uRuWiif//Z/uxhM8Hl/ymWeDPbroNuAIxprvF1ZVymT
- GDUASSMdNJyXsxPfJbIijC/SJQtAw7l3KPVPZ63YGlWUvv+SuoH4G3atqdUVMAGRPpyA
- CBvfMUuK4uFc2aPbfZhm5e4Qb+A1D/CsjzoqPO8mXE1zp1eIhljBRDsCXU6sk/JdPeeY
- 500iNo9X/pwtL+ileYcAuGIWgIPOI3HMR+C5uKrBcAeeI8OUmAcGQnR4wHAnkaJVNHeP
- pBRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780046163; x=1780650963;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1780046235; x=1780651035; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=54F9QYUuejtz736fptjfaoI6erWLGJPXgsBAbg7eexM=;
- b=Esz+8A+ptXYkCa1HwdcXyjxF2vzd8L+U4jryFZ7X8Bk5yyFnXk+x3/ADXs9qLweXi4
- eaYolrShwtHFhWfutbz1T3LT0ulYmQfz3+NePrc1VgoZWj684S8mepzJj27PslaDK7FU
- PUsuk+Yde+tT+FNM9Gff9DrPVVmeT7ArSrJufMtHsBr0B7nyaaa13kyHpH4RixIWH+Ll
- 0G4RTVFMlBxMlXOkUQCF3EBLN6PRRdPI7+ttT9jh0iyI2KIqVxxiQLz3hzW3/gxxG/EO
- svWXPKkX17cai/kuel00y4YcQkmDAGb8GYb+l0Ca5cIVyEPbvVBT2UvcE8gwUf2VxUFF
- vpeA==
-X-Gm-Message-State: AOJu0YwrhvXmiT3dcIPmXmDCf47VE6WHeic7Fce7/jgvOUqusENfQORk
- qM20GCLrRVUXqjAuPL2JI5Za0EVGmD83Rb3tpfZ10a5zBGIF1QOfGCjE0NAGgVbZhodc4REht80
- 7bTKvCUAR8MhOyqCrm+iq8HNl0sPI42CurMJ84kgIIQ==
-X-Gm-Gg: Acq92OHU/imTu55oGuFY4i3XakvNE0AZNWWQErcIWpvfKJzGk3joBQJmRGavxvPL08j
- +dtDhN6uOEVBmVijrjeWymCUm3ZdEDV0uVjpLaRVibx1YoeYiTjcKTPey44Qqv0X9YNG2M1Nalb
- AyP01J0md4LJCxXtJQSUWbqktFJ0D2sI+wvVVzHo8fYqHb2K6WzTx3J3q61P2iCg0Z7xXAgHjkb
- QgUV92bU8rfpbbLU4mX7dpqUZPMCQ8HG8rtc6Aq8XH/I8EfS1X295iTpgOLk8BcW7EvTwB2tWZO
- PFudlMi/CHHi0gsNd1w4KAMJtzE9oB4TqaSJd5m0LhI9gXgE6KdvmRcsqUFQSyckOpkC4ZC23zW
- 4ww==
-X-Received: by 2002:a17:907:a07:b0:bd5:2e64:aef0 with SMTP id
- a640c23a62f3a-be9cbdc6f6fmr94853866b.24.1780046162875; Fri, 29 May 2026
- 02:16:02 -0700 (PDT)
+ bh=0GnaGjaG4RESDcoGYwaf8vFzTvOeNPzGpDXrIz7ydWw=;
+ b=lYdcJriD94ehuoCndVqScFMqeXnWI7mzB2PH4u6DZVlptK9ZBd1vUvmAXTaDUTE7k7
+ ZZ1xKOPT+aynb+ACLAkn7DC1jrKutEzwngpOhctKBM+/xqNBqsRUEBLabzP0FsZFNU2u
+ vApkhqMICBJlosxvP4PjXzmDLlMvyRqbNGWvoW7UvDua434sRDXp/7uRrPBmMBv3C7px
+ vfQb8S7KNPtWaclY/E8b3HgLZGAoo0IXQ85ZnBSMiJ7TzkoLmifGlIlbi81mQMQwOHVS
+ HF2kA/tKZYXTdGVuNFF87paSLT22mRYyg8T39+cJAx+b0sIXPU5yn7jaiPsN/4efrpqP
+ OcvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780046235; x=1780651035;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=0GnaGjaG4RESDcoGYwaf8vFzTvOeNPzGpDXrIz7ydWw=;
+ b=l7NpwNE+Mw/jNYMvSB+Nyq6ykYsYSCgFpD0OVOJgQRtevDBNfiORj8aTRNEb+EHvi8
+ f8xCPS4y35FZSJ1k3zC6ZI+1BDeySNHpoh9Wv8wlRgz62zlHz/NHZoNksSs3lEo+03C9
+ P8ai47CnAbtD4anY6ULJDfG4zTVB3xFA51hv+nYb82G2nEIl9taKYmybU/73DyWoRTy+
+ 8Fyf38+o+KRwD00m4Tk8zVpiL1sgk4mNB3XTBjCe5ZWyaXAKshunaLqU+0IDXMPXFxvX
+ OtADH/cjh70EtZjhvSqzu8IQvgN+j74Mivyz5b47QM20BhcUd8RCnElPkTpaWO8ac+JE
+ spsw==
+X-Gm-Message-State: AOJu0Yw0RQIJ488qgOL/9K3kHbdAeL+3q+mbRoJGTKxRpeFKmxB+1S1f
+ 9F9Sfo2DpiK9jMBsNXnW8l62x7rfqw5ESwX7k46wQtrymxA0MumLmuDHvA0Tjm1l9LluIrs3ofV
+ J7UCTgvzZyoOOOsr6jncGYWKzTDnnQ1LY/USHVmmkPvdD3ZEtkS9AEeU=
+X-Gm-Gg: Acq92OGk0xae5p8fYsaq2PoZhQfv5mQQ1HFc5FKI+WsDlYIkl7RIuDK8wyeVcvPsqDU
+ NR1irgOzceH9qQFgSR1M/XnHeS4CFpp/ZYiS85agGgIM1ILHX1v4ic/YW/cUOBj27cbPujuaOro
+ ji5MDRKNfeCkNZOYm9vg95NHFGD6iRtWzyqvAJ+LqkNkXQ/tEU6YEFgkx8UYnc4h7ANGkPQ/5y8
+ 5BFKO4bF2X0g0N3QJW89ggv2DIWeZMm23lvAfpjYup2V348j/cc225u09nr1o/pA+n1oYsSsPdj
+ w17UwrFVL5ug1djdM+z6rosBsA/9O59RCDNsTwticz4YT8Zu9hFSjJqBSIuPARkG5YCR2D/FX7J
+ CNw==
+X-Received: by 2002:a17:907:a46:b0:bc6:7238:bd57 with SMTP id
+ a640c23a62f3a-be9c86942b9mr113537266b.7.1780046234877; Fri, 29 May 2026
+ 02:17:14 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260528093123.55403-1-mbawa@redhat.com>
-In-Reply-To: <20260528093123.55403-1-mbawa@redhat.com>
+References: <20260516-qom-tests-v3-0-3f20c3a029a7@redhat.com>
+ <20260516-qom-tests-v3-18-3f20c3a029a7@redhat.com>
+In-Reply-To: <20260516-qom-tests-v3-18-3f20c3a029a7@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 29 May 2026 10:15:48 +0100
-X-Gm-Features: AVHnY4I6aPZ30g0OzQFo0WAdPWe1cMu90OpDQjc_eoZRkbCpmD5mGiZxJaWzadQ
-Message-ID: <CAFEAcA8fEYODmPhbh1W=oPGvju-P=qWvN_dyWrPqAr-E9FK7UA@mail.gmail.com>
-Subject: Re: [PATCH v2] tpm_tis_sysbus: defer resource allocation to realizefn
-To: Mohammadfaiz Bawa <mbawa@redhat.com>
-Cc: qemu-devel@nongnu.org, stefanb@linux.vnet.ibm.com, philmd@linaro.org, 
- pbonzini@redhat.com, peterx@redhat.com, richard.henderson@linaro.org, 
- pierrick.bouvier@linaro.org
+Date: Fri, 29 May 2026 10:17:02 +0100
+X-Gm-Features: AVHnY4I2Qeph73-94YDvG9VaCBTCjfj6IXl6EvSyHazMym0aQYJ0VsiUvAxo0zQ
+Message-ID: <CAFEAcA-F0m3qUyoURsax-vC+MbasgcMN_wSVSGJCo2KRES=+uw@mail.gmail.com>
+Subject: Re: [PATCH v3 18/24] hw/tpm: free PPI buffer on finalization
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x634.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,42 +117,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 28 May 2026 at 10:31, Mohammadfaiz Bawa <mbawa@redhat.com> wrote:
+On Sat, 16 May 2026 at 09:03, Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@redhat.com> wrote:
 >
-> Calling memory_region_init_ram_device_ptr() and
-> memory_region_init_io() from tpm_tis_sysbus_initfn() crashes
-> when the device is introspected without being realized, because
-> the memory subsystem has not been initialized at that point.
+> The PPI buffer is allocated with qemu_memalign() in instance_init but
+> never freed when the device is destroyed.
 >
-> So running:
->   $ qemu-system-aarch64 -device tpm-tis-device,help
+> Fixes: 46cd2c1050f0 ("hw/tpm: add PPI support to tpm-tis-device for ARM64=
+ virt")
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> ---
+>  hw/tpm/tpm_tis_sysbus.c | 9 +++++++++
+>  1 file changed, 9 insertions(+)
 >
-> triggers qdev_device_help() which creates the device object
-> to list its properties, calling instance_init, but never
-> realizefn. The memory region calls in instance_init then hit
-> uninitialized subsystems:
+> diff --git a/hw/tpm/tpm_tis_sysbus.c b/hw/tpm/tpm_tis_sysbus.c
+> index 6bec30c36fc..3984228c42f 100644
+> --- a/hw/tpm/tpm_tis_sysbus.c
+> +++ b/hw/tpm/tpm_tis_sysbus.c
+> @@ -150,11 +150,20 @@ static void tpm_tis_sysbus_class_init(ObjectClass *=
+klass, const void *data)
+>      set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+>  }
 >
-> With CONFIG_DEBUG_TCG:
->   Assertion 'target_page.decided' failed. (physmem.c:2524)
->
-> Without CONFIG_DEBUG_TCG:
->   Assertion 'mutex->initialized' failed. (qemu-thread-posix.c:107)
->
-> Since realizefn is only called when the device is actually
-> used in a running VM, moving resource allocation there avoids
-> the crash without breaking introspection.
->
->
-> Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
+> +static void tpm_tis_sysbus_finalize(Object *obj)
+> +{
+> +    TPMStateSysBus *sbdev =3D TPM_TIS_SYSBUS(obj);
+> +    TPMState *s =3D &sbdev->state;
+> +
+> +    qemu_vfree(s->ppi.buf);
+> +}
 
-This also fixes a memory leak that is reported by the address
-sanitizer during 'make check', because we currently allocate
-ppi.buf during instance_init and never free it. "Allocate in
-realize and never free" is less bad, because we don't currently
-support "unrealize and destroy a sysbus device".
+https://patchew.org/QEMU/20260528093123.55403-1-mbawa@redhat.com/
+(likely to land upstream shortly) moves the allocation to
+the realize function, so maybe this free should also be moved to
+unrealize ?
 
-Fixes: 46cd2c1050f ("hw/tpm: add PPI support to tpm-tis-device for ARM64 virt")
-
-thanks
 -- PMM
 
