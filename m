@@ -4,105 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86999CD6E49
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 15:53:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1306CD6E49
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 15:53:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSzWD-0003RL-AB; Fri, 29 May 2026 11:53:05 -0400
+	id 1wSzWR-0003ZN-Mv; Fri, 29 May 2026 11:53:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSzWA-0003QE-V3
- for qemu-devel@nongnu.org; Fri, 29 May 2026 11:53:03 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSzW9-0000bs-CV
- for qemu-devel@nongnu.org; Fri, 29 May 2026 11:53:02 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-7ddd3d67084so12518717b3.3
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 08:53:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780069980; cv=none;
- d=google.com; s=arc-20240605;
- b=OwOcjpWzprtA12lz21atNymoy+xXcbH0o/LZ9caRCvb6YwaJgPStdU1ArKlgQ/9F30
- H+UPOJFHop6Y93Oc0IQLBYUgxILKFFX1JIpwU0i8GKc11DL4rtUPFKXgDM4wuWny2Foo
- zpK344TU+MY5wwFnxccQ85Z7eqHNBux9iSOhdFSR7ODiFyi8EckzSRn/tWD8QWFi1g+X
- jUYd38RM9rwuxBTVnzDcCYwgZg80bHhZ4CEa7TyCd+OoPYsnGIu+kzv3Ob+kPY69TUkx
- dv0jFvgZhUd/t+CZpYnqnWHq46v2URIszBiTzjk7uwEXIPtDBkchJRvdppyUYgK6CCbz
- /fBA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=57StnsCKBoSeLVKaEyop0wRsybMM1RQpT6t9R/ontsM=;
- fh=ZyoILRHiPr4hqTxE3AF2idGuSMcNkhskJBR81qg8LQM=;
- b=P2EgCBNT6wa0VJTohry9bFS9trBgSz68h/ULi8MHjmjurtp3V6zbYsOo0MR+HwgnFc
- Cdtgs9R3fUXLRFV7K4di4MPKyDWJOTL2MNi4LBrEjey+Ps9uSF7AXF4QNvwXgCnJNLYY
- RK6w2xeIA4lRa1nMHJD8zRyBjX2PK5HYoGZ6n1k/WZSut+U6C2lkDlTPvGwrfvdyYUQv
- lmdoTGV0xMdcqpG+L978LgQ5Ezb8Gav0kamJiS0WyflBr2+v7i/d1If4uoKWbBqdaYAm
- uOcJ9/8blavStghMKKRIEuLBip0rlJ04jbdbTX7gVf1pXZI3645xVvzBrWGzHVZgPqJQ
- Ipjg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wSzWR-0003YL-00
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 11:53:19 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wSzWP-0000iV-DL
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 11:53:18 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64TDM7d02748754
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 15:53:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 5hAo87tnQLW/J8zNFYEnLpSZRQipeuS5v5t4WmZQFE8=; b=ddJBHCM39f8QXsG5
+ 7TGqe2BPSmzpy2rwFFD9UAkNVMIwxmJ+AKFO7KVWCad4v3E2D0CIC2u9TReMg4N5
+ oYqTl2LWgRTMLKjGtgClgLdvm83KiKNET/ZXwEEx4YI1aK4VAKTcvCey5YX9vW2m
+ ZHMpJzqvobznT/UbwtDITIAHPvTDPSwd53797Pi3FvbufSmbcHDC0G+DPIuJFtwQ
+ HlYbNhANBZUcTV+DFVkyZ7PMuUQGgf106iJKsWa83kisFk9wQoydJS3h4DWzWlwi
+ Q5vyctLJ8iwzkJXVTRMConZuaKHoNij/DRJDlrQhiu/v09qsrwOvFEvH50m9yEjY
+ iSsYgg==
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eevug4fud-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 15:53:15 +0000 (GMT)
+Received: by mail-dl1-f72.google.com with SMTP id
+ a92af1059eb24-135f2aa4742so4687471c88.1
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 08:53:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780069980; x=1780674780; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=57StnsCKBoSeLVKaEyop0wRsybMM1RQpT6t9R/ontsM=;
- b=IFemQnGwRb5XjhNz5mK9+nXiS6EnXBnKXeztc76YdBfUqH0vFdXGCdG2oNFjwSuv/l
- DcpTGNyzs8UJBXWHNvourPkyqF93BCb97Lu3b+ay4Bkg4EJznUQLt0daE/HBKgUaEY6Y
- 5wzcsw8zYKVEMbDGZ1HtnnFg6MHka9rA9o8YUxONUa/FtMlIocyIGse5RIQbTg1bGZG+
- +IQpU6aVnq5z4JsSwtIFcQznCDUgzysie4Mvt5fzv956XUOwESIR8Z0CfHGXFb0BVTjJ
- LrW61vGby6m9xCBvkrKsNAw0cGbev7AmNfQV740HFpDJ3NQEQ/6q/x64zEu4pxtvCYLC
- g2zA==
+ d=oss.qualcomm.com; s=google; t=1780069995; x=1780674795; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5hAo87tnQLW/J8zNFYEnLpSZRQipeuS5v5t4WmZQFE8=;
+ b=i6EGlBCZ53YTWVeyUVfj4R7oO2vBx1OLYjbjhCGIoKm4mSNg8OTEv4gqo2VBmVY5FZ
+ /1O6vOWzlASo4MSMApdfVQbnOnCFKqzrAZ0rDEbUatuoCsXMTZsFaOWwgsmy66MiBkRq
+ Khh4x6s8m3ZggD6t99zmG7lLWWFgzLNvNsHyU90mJ2FOLFiS7+paRsGBFFhK3F3F8DfA
+ 1+xu76bR+Kpbv6m17vIc20Dtp5JKox7Ws9K/OOqAUM0SQnCiWximhtSiCeMCGB3MMlfT
+ aCOYuSFFYlGGwOacZxdWN8+ZKmpHHaEpqVUxX/eA/TrkToJ4V+78/qshdOKrALqtC55/
+ fFKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780069980; x=1780674780;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=57StnsCKBoSeLVKaEyop0wRsybMM1RQpT6t9R/ontsM=;
- b=l0vgIqlfdOvp2UKxbzrL2ndizZYCdOqgrCfDK9ujdbuYQUxzN3m2F8EQRsR8MnG6mK
- Tuy3qatb09aPlmlM9lhIbDobRmhBltArShMnS7UbvqRO39iY7NmTzI/oXDH761YEB0oI
- 0MW7Kni9/xoPqC/XOgk/+FtdNcBscQ8+aqezQDhvCUAv5Tmq1R0kp56nogJucH8KVS32
- m6kSVXKA6iIzv1xnyfH4RTmJgbJY+py20wahi/f2IXqvX8tEb38MfL6Jx3eUiZ5xqZmA
- sxsCygR6xT+x5zz5PfMSzCBWkzEN7VCUpHOtb+PR8X80wrwTMZKLzIrdDR9cz8CJC9Qp
- REOw==
+ d=1e100.net; s=20251104; t=1780069995; x=1780674795;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5hAo87tnQLW/J8zNFYEnLpSZRQipeuS5v5t4WmZQFE8=;
+ b=Xu6zTDIBhO7EQr5FdlW0+vGnXULnvVJ1j3UMEeqGwLfik2YDMZrJna1YXWAy4/h+QI
+ ekijE7Wd6ldp7nHq8ScCePQlaJImvEwT2JXmHGNBaq0758UlQqPZwWIbRyGD/Kcvyfmw
+ grXtkpZ/nDzqC9NxlJtjHUd8G+yuWoCiCz09/Og9LLofWBcnL4XzNMWMUSzLQVFzLxSo
+ Xke+xBFSM68h9gGkgoel8V7xgKKGUql1IJKlpw3Pi9xp2dSk0y/RCG+814FUnPrw8X1J
+ rgByU/wV1KrK+LeRmBd1T3YN4QOn+S0rZ6quEOSZnFHaSSHVVZ8zWpt/PuCF/ynOUQAH
+ QBBw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+Tzv4P5hgiZFNRtWi9NLro/zewNWHDqI52/YrONik60+UNWga//78/g3sRPWYt3xjNgbMmI5ZHzDRl@nongnu.org
-X-Gm-Message-State: AOJu0YxyKTmLP2SYzZfqS8qgK9hlpnwl9aRYncwngpR30eVst4sjy9KS
- KVlwb53jyGuXAyGyamfTItpA78JSBf0IbDAAdzoZzHQpub0SeXI/OMIJFed8XGEDqzd65CVL0Sf
- mRv4QAc4KhztwlyzwcHBETd8XsVUFXr8FLnfcWjaJgw==
-X-Gm-Gg: Acq92OECtDmUY3EyfepxQO1kk132Jzt03lSZkyGmAuIDE9GNIwmwNSJ4V54m0DSKcI6
- UQlUoOFtVkhY14fxRuRkbipy6dFXh61YW2m4WgufThidq/aUV30Fc010iRBIQ7awo8h60T+1ibY
- dY1f4rDgR1iaBlzPKGcjL8SF1I8sVvJ3E1OacUkZpNk0gsZrG47arhYa6nUnCxF37VypqrcO/Kz
- lcAjnf/sVyysXUVEWsPxywUljwjNlW7RWyFRLE7DPuOtJM1hXQFfe3+9Jn+3raVMDbg7ts1SUW0
- zltiz1rzJlwWP8IttTPVvUb7eDBqrdH07KsVr3KQA8UmFjDttmrnKC+EqwrS4/WEkrZfjpUMo4e
- TiQ==
-X-Received: by 2002:a05:690c:660d:b0:7bf:ff7:ea6e with SMTP id
- 00721157ae682-7de47281fa1mr30969627b3.4.1780069979857; Fri, 29 May 2026
- 08:52:59 -0700 (PDT)
+ AFNElJ/dVP+pyRG/pkE+WT6P7i6VDtihMecsEcp5iXLqHuEsGgQ33loCpH7MvzjhCApl3I9o73YWCKseF+5Q@nongnu.org
+X-Gm-Message-State: AOJu0Yy4lQSaDtC+JscmUMFLrmGNn7kaiDJ9sKTLnS8OgdwpjwTH7PMs
+ kyG6kAk3MbHLJDgALff3prW3zaFCpLlpFdDVWOHVMpXNzriSmRAuQyY1ZmZ3ZfYZUKG+1w52TxA
+ buHvvCEtAyP28ESuo8VsA/VeNz+ZJSkJkPTbi4M+zqjuFE8AQpE6G84cPww==
+X-Gm-Gg: Acq92OHp/ScU0AB8HvS4jaG9niYPlR1VuQTw2gyG3T/abuCnL19ryNLsGnqzpGhY/An
+ +XkkvW3d2edCC0IthhBla7gIIQ1u74jAWSBhJod71mkzRkah3f2RJqXov1KMd/SmEye63BIJhip
+ Bgz6YRRvPIVhc8RqQKeE1LDpYziXG6bKm5PoRxP0f8/0TuKMes1jti0KeibLTgFgJNk+Kh1RxZy
+ 1ply4+LOJ4UTEJzlE7UPZolav5ZCTbLCOKGuKOPQPFm4JbxlvCPDqVWVAsF6AE0+5AFHQXtey86
+ CmucCB2wi/wCGJbJZFw9gvJNi2Y7DBB9/2CWfHEePu7YQp8wX9xcQ+Ccddf3kWc5V60mvrrW2WU
+ QsseQK2IiX+RpdvD47xyZC6BS1gPh9GArY1SZJxUZErQNZabWslBGNA7dH+M1oxr2l0OUCbDaHw
+ GMBy8yMf/gznCP+hT7mE1t2E1s
+X-Received: by 2002:a05:7022:458b:b0:135:d7ab:7ebb with SMTP id
+ a92af1059eb24-137d426c048mr74800c88.29.1780069994549; 
+ Fri, 29 May 2026 08:53:14 -0700 (PDT)
+X-Received: by 2002:a05:7022:458b:b0:135:d7ab:7ebb with SMTP id
+ a92af1059eb24-137d426c048mr74777c88.29.1780069993844; 
+ Fri, 29 May 2026 08:53:13 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-137b3d8f839sm1248684c88.15.2026.05.29.08.53.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 29 May 2026 08:53:13 -0700 (PDT)
+Message-ID: <0b037d9c-90f8-4883-914c-a7837a5b8690@oss.qualcomm.com>
+Date: Fri, 29 May 2026 08:53:12 -0700
 MIME-Version: 1.0
-References: <20260529140559.1775511-1-chenhuacai@loongson.cn>
-In-Reply-To: <20260529140559.1775511-1-chenhuacai@loongson.cn>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 29 May 2026 16:52:47 +0100
-X-Gm-Features: AVHnY4LSrZZZJMFoZaqPSIwMqmLiHzbsxYoMg4uqG_L5elx4hfTYE6ALISWkCME
-Message-ID: <CAFEAcA_Li+07XNfE+GpvZOzwJReqbG=x8nz=kMrQy5vqkReEUQ@mail.gmail.com>
-Subject: Re: [PATCH] fw_cfg: Add support for LoongArch architecture
-To: Huacai Chen <chenhuacai@loongson.cn>
-Cc: Gabriel Somlo <somlo@cmu.edu>, "Michael S . Tsirkin" <mst@redhat.com>,
- Huacai Chen <chenhuacai@kernel.org>, 
- qemu-devel@nongnu.org, loongarch@lists.linux.dev, 
- Xuerui Wang <kernel@xen0n.name>, Jiaxun Yang <jiaxun.yang@flygoat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/2] linux-user: implement fsmount(2) series of syscalls
+To: Xinhui Yang <cyan@cyano.uk>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Mingcong Bai <jeffbai@aosc.io>
+References: <cover.1780036891.git.cyan@cyano.uk>
+ <193e73f7745a086b99ba68e28b665f9f22444b06.1780036891.git.cyan@cyano.uk>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <193e73f7745a086b99ba68e28b665f9f22444b06.1780036891.git.cyan@cyano.uk>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI5MDE1OSBTYWx0ZWRfX8KaD9Y5T0FaQ
+ Cb64ehFMyWr9GAiWSCCZpPRrrUtrwrkEZlhc3KYD4GBPeXHHVwJ+8utgCoQH4NeQ+E1YOZgKsaE
+ RzTojAGNjDQubBMbMfeI2G2DHrazlNgYz1veqi1RGNcmSamraUZBFZEE06AuavOnXH0IdDVz6+F
+ Kvf7tTeQou0pJhPX/SA/5HC2frCT3a96JYbYmQi30UKT2SXRpUI7CAKz7knKBcwyR5URJ/8Qw8j
+ 3UKriT/q9WecawLq4/M0YVJKZHsfDG0CA7hU6V9R+6ZGE8Fi/v44Ji2mJAoLWPnCJRMC2iSCoVc
+ GBBUvEEOoXY4odsWH7zAOP2S9Md5aJHmd4UdtHTHjvDhODtsNr+LHIxvtX3wj49BGyxKSwLt7Gl
+ 8uFj69Lop2DmWu6ObiWV8Z1DQ9c8CcV4wvkyw08OIiFl7wRqdP0B0XnIwWvCAXg5PkNciU34H76
+ lhkW9wkBjjcogP/E2Gg==
+X-Authority-Analysis: v=2.4 cv=SNBykuvH c=1 sm=1 tr=0 ts=6a19b66b cx=c_pps
+ a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=EUspDBNiAAAA:8 a=94FhayaHJYdwx2da-gIA:9 a=QEXdDO2ut3YA:10
+ a=vBUdepa8ALXHeOFLBtFW:22
+X-Proofpoint-ORIG-GUID: pXL4udmmVW_Wfmp_v_VdsRuTr9aWWPOZ
+X-Proofpoint-GUID: pXL4udmmVW_Wfmp_v_VdsRuTr9aWWPOZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-05-29_04,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 priorityscore=1501 malwarescore=0 spamscore=0 adultscore=0
+ lowpriorityscore=0 phishscore=0 impostorscore=0 clxscore=1015 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605290159
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,50 +153,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 29 May 2026 at 15:42, Huacai Chen <chenhuacai@loongson.cn> wrote:
->
-> Qemu fw_cfg support was missing for LoongArch, which made some functions
-> unusable in virtual machines. So add the missing LoongArch defines.
->
-> Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+On 5/28/2026 11:53 PM, Xinhui Yang wrote:
+> This series of syscalls replaces the old mount(2) syscall with a series
+> of syscalls that operates around a filesystem context. This series of
+> syscalls is available since Linux 5.2 and glibc 2.36+.
+> 
+> Their users include systemd since v259 and libmount from util-linux, and
+> possibly other widely used projects.
+> 
+> Preliminary checks are implemented to ensure the validity of the
+> interface.
+> 
+> Signed-off-by: Xinhui Yang <cyan@cyano.uk>
 > ---
->  drivers/firmware/Kconfig       | 2 +-
->  drivers/firmware/qemu_fw_cfg.c | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
-> index bbd2155d8483..9ec747716389 100644
-> --- a/drivers/firmware/Kconfig
-> +++ b/drivers/firmware/Kconfig
-> @@ -121,7 +121,7 @@ config RASPBERRYPI_FIRMWARE
->
->  config FW_CFG_SYSFS
->         tristate "QEMU fw_cfg device support in sysfs"
-> -       depends on SYSFS && (ARM || ARM64 || PARISC || PPC_PMAC || RISCV || SPARC || X86)
-> +       depends on SYSFS && (ARM || ARM64 || LOONGARCH || PARISC || PPC_PMAC || RISCV || SPARC || X86)
->         depends on HAS_IOPORT_MAP
->         default n
->         help
-> diff --git a/drivers/firmware/qemu_fw_cfg.c b/drivers/firmware/qemu_fw_cfg.c
-> index 87a5421bc7d5..0c51a9df589f 100644
-> --- a/drivers/firmware/qemu_fw_cfg.c
-> +++ b/drivers/firmware/qemu_fw_cfg.c
-> @@ -211,7 +211,7 @@ static void fw_cfg_io_cleanup(void)
->
->  /* arch-specific ctrl & data register offsets are not available in ACPI, DT */
->  #if !(defined(FW_CFG_CTRL_OFF) && defined(FW_CFG_DATA_OFF))
-> -# if (defined(CONFIG_ARM) || defined(CONFIG_ARM64) || defined(CONFIG_RISCV))
-> +# if (defined(CONFIG_ARM) || defined(CONFIG_ARM64) || defined(CONFIG_LOONGARCH) || defined(CONFIG_RISCV))
->  #  define FW_CFG_CTRL_OFF 0x08
->  #  define FW_CFG_DATA_OFF 0x00
->  #  define FW_CFG_DMA_OFF 0x10
+>  linux-user/syscall.c | 91 ++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 91 insertions(+)
+> 
 
-On the QEMU specification side we could probably nail this down
-to "x86, sun, ppc, parisc have funny register layouts for
-legacy reasons and all others have the 8-bytes-apart layout",
-which might help to avoid having all this architecture-specific
-ifdeffery changing for each new architecture, if that's
-something people care about.
-
--- PMM
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
