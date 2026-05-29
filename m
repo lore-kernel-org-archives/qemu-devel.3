@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 882DACD6E4A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A67D1CD6E4C
 	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 17:07:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wT0g0-0006C0-W1; Fri, 29 May 2026 13:07:17 -0400
+	id 1wT0fg-00069A-4A; Fri, 29 May 2026 13:06:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <662333331d371c6c343c8091161de8eaa121880e@kylie.crudebyte.com>)
- id 1wT0fk-0006A6-Q3; Fri, 29 May 2026 13:07:03 -0400
+ (envelope-from <0573103880129eb543f07b68c77e86f2f572f6bf@kylie.crudebyte.com>)
+ id 1wT0fZ-00068X-JD
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 13:06:50 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <662333331d371c6c343c8091161de8eaa121880e@kylie.crudebyte.com>)
- id 1wT0fi-0005yP-A3; Fri, 29 May 2026 13:07:00 -0400
+ (envelope-from <0573103880129eb543f07b68c77e86f2f572f6bf@kylie.crudebyte.com>)
+ id 1wT0fW-0005uz-L0
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 13:06:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=VI1Vr5pQLC5ZGMOmjMtI/rZPEM24szP1EeBghlRj3pc=; b=IO5yo
- izLto9gTDhetfii8fgsPvvbkd7twDbXxBQHh3UqGSxlRbstFDruWpMWsn/fiRxHj6yDDJY4fRLULF
- o7szGtBNSWXcKnaefKi0gXc9/Q8bnxtw0PRLLpLuMT0t0+31HDlsRJfiKyJ+zXjc27Ey5gRnLvD9h
- rsYcmiJpfOvpz9j4WvPSfU9elKY9OzJJk//a/Xqfn9Z/TRrc1Bnaf2RYd0oD/ob7Q3qKOl6xPIXnB
- 6wLGMza5A7fOkDJitvS6iCb3JxFDIwzXOETAOkEwsZshNfAty3reDmglzUqpDhMcHrduME5mC5EwP
- 9CYjAMrHRVRIE1OJaWvUDORPLUajlwKZEFsAlDgej4bZNGvr/21hdm0eV+4vslf0qR4Xm2Os01FUg
- CCrOfMM3DmXjAcaij1VtD6IJmsBzKQxUQYK9QTpkmE+f8BqUkH7fLxPv1Ct0fkVYK1Cfd8PB0Cz5N
- I0peRdEDmqx5Zzc6Fm/ufSmqbK8kREsYYbfMQ9NYeFgYjdqWwf9gpeXIReRX6aS2EthvuuHH88wPx
- ZNPolzitbX4qA8357L0cB64npFrOQkUwo74xI/4CTm5M9cQwp9XFsdeFFEaOoti56jskw/6Hfb3Rs
- VoT7ym55L6g2mbx2spOwo63vPQuO+gPZWMAhlvv7nx4XzhX/kyrrtjXK4gOiYs=;
-Message-ID: <662333331d371c6c343c8091161de8eaa121880e.1780072238.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=gvgoP/DgFItr+dDpBQNnzHxIlewLZzV9f9f39ccdEQY=; b=v76Kb
+ LyynOByhW1PDlIU8cW+Q+zZwerfyd5+vu6BH4//bszPTcTDzM6WpDROchSQXtaRi/SBfY+yLTnco0
+ hnxAkrHqbipe82SD9D3mNcLgaYVeJXGoAc8qQKJSHpHG26eZ/ynDS29CwxxSQLdgz+YFo4fgSAljD
+ 8j5HvUTcYUGAcIEjKy4fRUhMwhEBo3AJRijeuEhcZzYhqgXEEYrCdEV1ErdjTgUFZCrTVlVJhymbK
+ l7Sdrt9/D9ZmH4zqSAnASMn0B2ZRbzUycgT/B4ApE/V6j8pxngyfbgEKGexGM6ewxMascTAORRPW3
+ dq6FPASdwC04Oudq274d0rP1f5bV9+sKYPGxZjh/DjgjMkAo6L3MTwD75U6s0gQ2LNreNUPMiFdtH
+ uADgdqZ2nMUjyaSjSBcuIpSGx28NncLq1cpkES06UTdE5glIlEW3zL9+muqTbjvoXTqCkjdAqQwcs
+ gb9jzfE3ucuYnYlv6CrtwzHcdj+NzWfhYk+ukDJWlFRveEVx+d8lH3Jtizspjz+WlmiXVY6JjY+Td
+ 8QWb44kPmDR2BR+gOrawHllJKvvXXgjEYHaGyCNgP842ZTFKEOyE6CSeCG7rj9ylQUdCRSX8YbzA7
+ QqwDM9SvPeWThlkSAlFhA9f/jvSg9H/8Pdb94n4E60Eri4xdBR90MlJHynFsPM=;
+Message-ID: <0573103880129eb543f07b68c77e86f2f572f6bf.1780072238.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1780072238.git.qemu_oss@crudebyte.com>
 References: <cover.1780072238.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Fri, 29 May 2026 18:29:40 +0200
-Subject: [PATCH 2/3] hw/9pfs: reject . and .. in Twstat rename
-To: qemu-devel@nongnu.org,
-    qemu-stable@nongnu.org
+Date: Fri, 29 May 2026 18:29:44 +0200
+Subject: [PATCH 3/3] hw/9pfs: consolidate name validation with check_name()
+To: qemu-devel@nongnu.org
 Cc: Greg Kurz <groug@kaod.org>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=662333331d371c6c343c8091161de8eaa121880e@kylie.crudebyte.com;
+ envelope-from=0573103880129eb543f07b68c77e86f2f572f6bf@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -66,39 +67,213 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The other Trename and Trenameat handlers already reject "." and ".."
-as new name on rename requests by returning -EISDIR in this case.
+Add a new, shared helper function check_name() that consolidates the name
+validation logic (illegal name check and "." / ".." rejection) currently
+spread over multiple 9p handlers, unnecessarily duplicating code.
 
-The legacy Twstat rename handler is missing this validation. While passing
-"." or ".." does not trigger a crash as fixed by the previous patch (since
-the fs backend driver's system calls handle these gracefully), it creates
-a behavioral inconsistency, as it is semantically meaningless to rename a
-file to a directory reference in the first place.
+This is pure refactoring with no behavior change. The existing error code
+semantics are preserved: rename operations return -EISDIR, create
+operations return -EEXIST.
 
-Fix this by rejecting "." and ".." in Twstat rename handler with -EISDIR
-to match behavior of Trename and Trenameat handlers.
+Note: These current error codes actually differ from native Linux system
+calls (e.g. rename() returns -EBUSY, open(O_CREAT) returns -EISDIR). The 9P
+protocol does not mandate specific error codes for these validation errors.
+Hence consolidating to a single error code (e.g., -EINVAL) for all cases
+could be considered in the future for simplicity reason.
 
-Fixes: 8cf89e007a ("virtio-9p: Add P9_TWSTAT support")
+This change reduces code duplication across 9 functions:
+
+- v9fs_lcreate
+- v9fs_create
+- v9fs_symlink
+- v9fs_link
+- v9fs_rename
+- v9fs_renameat
+- v9fs_wstat
+- v9fs_mknod
+- v9fs_mkdir
+
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- hw/9pfs/9p.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/9pfs/9p.c | 100 ++++++++++++++++++++-------------------------------
+ 1 file changed, 39 insertions(+), 61 deletions(-)
 
 diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 88fb28b318..a09f99537d 100644
+index a09f99537d..9b46b33ba8 100644
 --- a/hw/9pfs/9p.c
 +++ b/hw/9pfs/9p.c
-@@ -3621,6 +3621,10 @@ static void coroutine_fn v9fs_wstat(void *opaque)
-             err = -ENOENT;
+@@ -1810,6 +1810,25 @@ static bool name_is_illegal(const char *name)
+     return !*name || strchr(name, '/') != NULL;
+ }
+ 
++static int check_name(const char *name, V9fsPDU *pdu)
++{
++    int request_type = pdu->id;
++
++    if (name_is_illegal(name)) {
++        return -ENOENT;
++    }
++    if (!strcmp(name, ".") || !strcmp(name, "..")) {
++        /*
++         * TODO: The different error codes here are just there to preserve
++         * pre-existing behaviour of 9p server. In future it might make sense to
++         * consolidate this and e.g. just return -EINVAL for everyone.
++         */
++        return (request_type == P9_TRENAME || request_type == P9_TRENAMEAT ||
++                request_type == P9_TWSTAT) ? -EISDIR : -EEXIST;
++    }
++    return 0;
++}
++
+ static bool same_stat_id(const struct stat *a, const struct stat *b)
+ {
+     return a->st_dev == b->st_dev && a->st_ino == b->st_ino;
+@@ -2160,13 +2179,8 @@ static void coroutine_fn v9fs_lcreate(void *opaque)
+     }
+     trace_v9fs_lcreate(pdu->tag, pdu->id, dfid, flags, mode, gid);
+ 
+-    if (name_is_illegal(name.data)) {
+-        err = -ENOENT;
+-        goto out_nofid;
+-    }
+-
+-    if (!strcmp(".", name.data) || !strcmp("..", name.data)) {
+-        err = -EEXIST;
++    err = check_name(name.data, pdu);
++    if (err < 0) {
+         goto out_nofid;
+     }
+ 
+@@ -2848,13 +2862,8 @@ static void coroutine_fn v9fs_create(void *opaque)
+     }
+     trace_v9fs_create(pdu->tag, pdu->id, fid, name.data, perm, mode);
+ 
+-    if (name_is_illegal(name.data)) {
+-        err = -ENOENT;
+-        goto out_nofid;
+-    }
+-
+-    if (!strcmp(".", name.data) || !strcmp("..", name.data)) {
+-        err = -EEXIST;
++    err = check_name(name.data, pdu);
++    if (err < 0) {
+         goto out_nofid;
+     }
+ 
+@@ -3042,13 +3051,8 @@ static void coroutine_fn v9fs_symlink(void *opaque)
+     }
+     trace_v9fs_symlink(pdu->tag, pdu->id, dfid, name.data, symname.data, gid);
+ 
+-    if (name_is_illegal(name.data)) {
+-        err = -ENOENT;
+-        goto out_nofid;
+-    }
+-
+-    if (!strcmp(".", name.data) || !strcmp("..", name.data)) {
+-        err = -EEXIST;
++    err = check_name(name.data, pdu);
++    if (err < 0) {
+         goto out_nofid;
+     }
+ 
+@@ -3135,13 +3139,8 @@ static void coroutine_fn v9fs_link(void *opaque)
+     }
+     trace_v9fs_link(pdu->tag, pdu->id, dfid, oldfid, name.data);
+ 
+-    if (name_is_illegal(name.data)) {
+-        err = -ENOENT;
+-        goto out_nofid;
+-    }
+-
+-    if (!strcmp(".", name.data) || !strcmp("..", name.data)) {
+-        err = -EEXIST;
++    err = check_name(name.data, pdu);
++    if (err < 0) {
+         goto out_nofid;
+     }
+ 
+@@ -3367,13 +3366,8 @@ static void coroutine_fn v9fs_rename(void *opaque)
+         goto out_nofid;
+     }
+ 
+-    if (name_is_illegal(name.data)) {
+-        err = -ENOENT;
+-        goto out_nofid;
+-    }
+-
+-    if (!strcmp(".", name.data) || !strcmp("..", name.data)) {
+-        err = -EISDIR;
++    err = check_name(name.data, pdu);
++    if (err < 0) {
+         goto out_nofid;
+     }
+ 
+@@ -3505,14 +3499,12 @@ static void coroutine_fn v9fs_renameat(void *opaque)
+         goto out_err;
+     }
+ 
+-    if (name_is_illegal(old_name.data) || name_is_illegal(new_name.data)) {
+-        err = -ENOENT;
++    err = check_name(old_name.data, pdu);
++    if (err < 0) {
+         goto out_err;
+     }
+-
+-    if (!strcmp(".", old_name.data) || !strcmp("..", old_name.data) ||
+-        !strcmp(".", new_name.data) || !strcmp("..", new_name.data)) {
+-        err = -EISDIR;
++    err = check_name(new_name.data, pdu);
++    if (err < 0) {
+         goto out_err;
+     }
+ 
+@@ -3617,12 +3609,8 @@ static void coroutine_fn v9fs_wstat(void *opaque)
+             err = -EOPNOTSUPP;
              goto out;
          }
-+        if (!strcmp(".", v9stat.name.data) || !strcmp("..", v9stat.name.data)) {
-+            err = -EISDIR;
-+            goto out;
-+        }
+-        if (name_is_illegal(v9stat.name.data)) {
+-            err = -ENOENT;
+-            goto out;
+-        }
+-        if (!strcmp(".", v9stat.name.data) || !strcmp("..", v9stat.name.data)) {
+-            err = -EISDIR;
++        err = check_name(v9stat.name.data, pdu);
++        if (err < 0) {
+             goto out;
+         }
  
-         v9fs_path_write_lock(s);
-         err = v9fs_complete_rename(pdu, fidp, -1, &v9stat.name);
+@@ -3755,13 +3743,8 @@ static void coroutine_fn v9fs_mknod(void *opaque)
+     }
+     trace_v9fs_mknod(pdu->tag, pdu->id, fid, mode, major, minor);
+ 
+-    if (name_is_illegal(name.data)) {
+-        err = -ENOENT;
+-        goto out_nofid;
+-    }
+-
+-    if (!strcmp(".", name.data) || !strcmp("..", name.data)) {
+-        err = -EEXIST;
++    err = check_name(name.data, pdu);
++    if (err < 0) {
+         goto out_nofid;
+     }
+ 
+@@ -3917,13 +3900,8 @@ static void coroutine_fn v9fs_mkdir(void *opaque)
+     }
+     trace_v9fs_mkdir(pdu->tag, pdu->id, fid, name.data, mode, gid);
+ 
+-    if (name_is_illegal(name.data)) {
+-        err = -ENOENT;
+-        goto out_nofid;
+-    }
+-
+-    if (!strcmp(".", name.data) || !strcmp("..", name.data)) {
+-        err = -EEXIST;
++    err = check_name(name.data, pdu);
++    if (err < 0) {
+         goto out_nofid;
+     }
+ 
 -- 
 2.47.3
 
