@@ -4,82 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20978CD6E50
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 14:37:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB6F9CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 14:37:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSyKK-0006Nl-If; Fri, 29 May 2026 10:36:44 -0400
+	id 1wSyLJ-0007FI-HZ; Fri, 29 May 2026 10:37:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSyK9-0006Hp-Se
- for qemu-devel@nongnu.org; Fri, 29 May 2026 10:36:35 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSyLB-00075j-9Z
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 10:37:38 -0400
+Received: from mail-wr1-x443.google.com ([2a00:1450:4864:20::443])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSyK8-0007T3-88
- for qemu-devel@nongnu.org; Fri, 29 May 2026 10:36:33 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-45ee5cdbd28so1210338f8f.1
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 07:36:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSyL9-0007hJ-F0
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 10:37:36 -0400
+Received: by mail-wr1-x443.google.com with SMTP id
+ ffacd0b85a97d-45ef372c58aso385508f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 07:37:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780065391; x=1780670191; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=v8hnt8QTR0m3dsrSXtppaehwSCPzuZgau1gE20XoQoc=;
- b=cdMcGbEpkeRoZEx+3Vb+1T5vVs4at9j88fabbENveiakmSiJxioqpK7QxAjCmrSbHU
- USn94MjZVbvKhKGiSHS8eoXluwnJixTVfRfYH46yGibasaVmjyPhdAbIm596VjKec28z
- uvLx7++CgpM8PlIFdyze79oEZ1Opz9Q9jvisrioCXgeueMegkdjWMzL7s45MZx7d7Muj
- h4TyiCIAOJ+hu8jg1d+P5Bn32z1Jh5WZJTmsauAZxYXjOwCFt1ZPE0QV5gDTw7KIR900
- 6TPbWeaksWw1XCynlBVJ0VgPOJfxTsj3osPqp/6oa+DOZ3mwg65yU+4nkbpi5zDfZqht
- ZpDA==
+ d=linaro.org; s=google; t=1780065454; x=1780670254; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=t+D0Q/aqLAwBDuCvlNp0ak5Yi1mV0wkY+x8QEgNjGRg=;
+ b=xh5ixn+7Q8sOGzCHbr2dPNVVNuo3pDPV9gBvyPy6tVpr0uGqgzp/e1q5N402vnuXYK
+ WrBCfPchTBYNELraPgA0Twieij2bRwVAYQePmJLTBvZ4Ol1DpKwa+0l3zA3DD4qwJftn
+ +L93QxhYGvXn4lrQ0/5h8VDEtj/hRB5gUGUnFtZ7BRiFzj5o//z3B8I9kcJ6niMpJlFf
+ 8azwWL9YnEHzKoeqCluJrZM+Jb9GYAya0nmDoVLhhbJUhfu2t6jHFB1Xv0G+msbhpHNl
+ L5qQa8PTN/dmIAnAQEOUlSojDfrbEDP8R92lTTaHZcCYEgEQdZK0HeywXJ9eV5v+izTY
+ HwMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780065391; x=1780670191;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=v8hnt8QTR0m3dsrSXtppaehwSCPzuZgau1gE20XoQoc=;
- b=oTOTY3UuV5qIPWUGD5q3hKgCFrRokDpL/OMurvP7xYdFxrkE+cakXWDHzcwiNcPB1o
- YPgSd/gJmR+0hSdjSKBmq+cAv1SAwa65dj5weGE1s2HSs090Mi+o/pLHOEfXLLOGvAqI
- 9ZoeXkFqQKHdD1V7trOGZ2b9TYs/ZyX/B9WB9JUmBYcbDRy+2wgrKkNwr0I69IoXCyXz
- 18L9KiHUIWw9vM1f/v1rJZsNoWwO0Xchwfm2aqnh3D5nQj4blMlE6mmHcmm5s1rYi5yF
- 0wY4fhGGUoeOtWCryJBCVstpjKQhgdDbzJwEmNUmmgm3lmQ0ygux3dUzP8xkI3dApWko
- MKdA==
+ d=1e100.net; s=20251104; t=1780065454; x=1780670254;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=t+D0Q/aqLAwBDuCvlNp0ak5Yi1mV0wkY+x8QEgNjGRg=;
+ b=gQFsXoOjJWIOzQ2b7rpt/ZtM/Qn23Y85d0MI8evuUcjtnacyo7fbUKh4F0/4fKLFv8
+ L6g4brlH03eBp8/FEBf4nPJ5kVbodH3rHSkhS9LABNJRDBCoImm27nCRTl/v5mMamdVe
+ Gr0+/QAc8/MBNR0nKSJ7ENT7awU4FboILWyJv1hxugq+ryYnCyIm/aIXEcdF+z9dVnLK
+ SLNM/ZgWLp0rV/SFAhjOu50bEtBR38n5Dc/ujyVSgi+XDRL4FZ6jOzOQAHvGitA2sUEn
+ 4VOFqYo06/NNp3NDqT2u/B7Tj2czVUVQpa2764e2p5Ql2U7UDL9ByaIXZ1UuCpYXYOfI
+ 0SAQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8EeEvI9JM9Mx8kPktfAGQAc42XCuVFfxewM81Pc/pgZIzKc/lZmDBrJZdsXl7G95pkXEk0AqGLrIR0@nongnu.org
-X-Gm-Message-State: AOJu0YysF5uX/pjwMeaW5OIvJTGfMW/CffpS55dmmE7OpEodVpC4WYJS
- zTRuGay/f3BUy6OnXEuLfgK/lOkCnnViSxXRdYmMELwuCJA21xnJOz5I9lGX171esNg=
-X-Gm-Gg: Acq92OE8tpPVggIcRvWx8c+2wpTmHUDWWHgff8jjc0Yqvwn9nY7zo5u0Cxljwrd1Far
- 3ShtsEXvTtcSh+KYkJ8YzD4S7ZgjcAEwsoMRZlbdTx55d8tQ6rjsFU/+HPTIn/tqyKni4gUobv/
- RV2micmqyKQBcGkFYYQoUBRpPfG9O/epzez8okGp5pY7Xp8NFs/9fmlRy8QRnt2ThFZbMtSu83m
- AdMWJ1FLzdTlqoXMh17gEuG49DS0vu4uJqUXadGm9PpjsUiwjLHQvxCW5YVcI7VeQHy1XxnBGrm
- 7pEuE/sArBd5nYotWqVlgikaOAsO+Xk21i68wmRHr28Wa86PXSER9BY4jjdKdJC9mM8lAMlOcl2
- oC7LrCvoX4FrMIehO3Zven8vwscAvya43EP85L++awVpzGcztCYgNXzyi/9JlBg0FKEYe/q8ZPL
- U/KQ75yiytSN1m0pjR4h/RxMKkOVJx2W6o/D/aGxsmA517tCxl3hrBmhtfpYN5L5koK3+Olrnrw
- pCTJItGZxJkGcE//bezOPZblRvM5CUygqEQHOZM39Y=
-X-Received: by 2002:a5d:6684:0:b0:45e:739b:2750 with SMTP id
- ffacd0b85a97d-45ef1447483mr3640431f8f.9.1780065390603; 
- Fri, 29 May 2026 07:36:30 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ef356a4c4sm4180675f8f.31.2026.05.29.07.36.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 May 2026 07:36:28 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH 2/2] hw/dma/pl080: Don't use hw_error() for unimplemented
- features
-Date: Fri, 29 May 2026 15:36:24 +0100
-Message-ID: <20260529143624.158935-3-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260529143624.158935-1-peter.maydell@linaro.org>
-References: <20260529143624.158935-1-peter.maydell@linaro.org>
+ AFNElJ84EoQIrV2MJsAQCr9Tttm1OEzLJA5MNaKRAgeMRrCQZEHZj5XlEA9FfsSO2RzvfffDhUkEI1f8cqcr@nongnu.org
+X-Gm-Message-State: AOJu0Yx150gIBnmBT6s/yGAC9aZraJGZiLqZ0SonJ+Z7nIr1BMDNnuqQ
+ qAgEDQS1XbwuIPny17YYb2GRC93SBO3YYAeqD8InXh9ABsqCKWY1xMejOXXuf4pCsg4=
+X-Gm-Gg: Acq92OHv1ocP917S6zcJ14CWypXnSfDy2uufrpkwPI3/K9CWU/X7sHUF1xiF08hK6/f
+ Rr2esd3ck+UYPzYCbTwrJsYD+0ebUXGBfTGrd9pMRVILL3jEEfX19GovKJ1GWaPmVVqWxWNmeVD
+ ZAmdLwTebPJTe5RpS89Ygk5huvaunB8hA67H4f9HQlxTXmflWOzbwLnyaudrjYx0t3xem17+haN
+ ChmZ2EQBmkxNP3nbVtmWyqLESZhzmbzTXmdFZIh/EGBH7EYau3RCdpZ/kgeYDHpAyfawenzTRit
+ LZJcpAPNsHuHJPCMl5J2xAJInjOnkkcSoQOq/EpunxQTaMZeiSPY0bs8tve1CGDtZvRs1XOFTC0
+ ENCJ69rSRVCkuxcjLTQhvGHamNqWeBxaxyLtTtUWleK0MfS8UYP8zW3CwlZfoc5OMRWXCeJ/T1Z
+ m/lKCg7jKjZCUEk8Hru1CjCyVHNUx8D07xO0oa2yXrs+jBhc568nhgc/rbxpuVMNXb1srJHn0Ki
+ SGVeo1WhbJBe0U=
+X-Received: by 2002:a05:6000:2892:b0:45e:73eb:5119 with SMTP id
+ ffacd0b85a97d-45ef6b5ffb8mr163554f8f.22.1780065453693; 
+ Fri, 29 May 2026 07:37:33 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45ef358c07bsm4077507f8f.36.2026.05.29.07.37.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 29 May 2026 07:37:33 -0700 (PDT)
+Message-ID: <ee503de0-85fb-4220-8069-6a084f164339@linaro.org>
+Date: Fri, 29 May 2026 16:37:32 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] accel/common: Remove last bit of target-specific code
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Anton Johansson <anjo@rev.ng>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260528140857.44130-1-philmd@linaro.org>
+ <b2a58b62-b061-4bdf-b459-9953b7f373fe@oss.qualcomm.com>
+ <5b693f87-2f9a-4564-9efb-83c815bcb20e@oss.qualcomm.com>
+ <dc1b9965-4ac3-4157-91e3-edb9d93556cf@linaro.org>
+ <39ce331b-e361-49ae-9954-47e3aaa88948@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <39ce331b-e361-49ae-9954-47e3aaa88948@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::443;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x443.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,47 +111,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the pl080 device, we don't implement "peripheral flow control",
-which is where the DMA engine can be programmed to transfer data
-until a source or destination peripheral tells it to stop.  We
-currently call hw_error() if the guest tries to use this missing
-feature, which prints a register dump and aborts QEMU.
+On 28/5/26 22:02, Pierrick Bouvier wrote:
+> On 5/28/2026 12:59 PM, Philippe Mathieu-Daudé wrote:
+>> On 28/5/26 20:47, Pierrick Bouvier wrote:
+>>> On 5/28/2026 11:47 AM, Pierrick Bouvier wrote:
+>>>> On 5/28/2026 7:08 AM, Philippe Mathieu-Daudé wrote:
+>>>>> Initialize the TypeInfo structure at runtime using the TargetInfo
+>>>>> API to resolve TYPE_ACCEL_CPU, replacing CPU_RESOLVING_TYPE by
+>>>>> target_cpu_type(). Since the code is no more target-specific, move
+>>>>> it to accel-common.c, removing the need for accel-target.c.
+>>>>>
+>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>> ---
+>>>>> Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>>>>
+>>>>> Pierrick, this is an alternative for both
+>>>>> 20260528051642.115721-4-pierrick.bouvier@oss.qualcomm.com
+>>>>> and
+>>>>> 20260528051642.115721-5-pierrick.bouvier@oss.qualcomm.com
+>>>>> for your "single-binary: fix compilation/execution for {arm,
+>>>>> aarch32, microblaze}" series. WDYT?
+>>>>> ---
+>>>>>    accel/accel-common.c | 15 +++++++++++++++
+>>>>>    accel/accel-target.c | 41 -----------------------------------------
+>>>>>    accel/meson.build    |  1 -
+>>>>>    3 files changed, 15 insertions(+), 42 deletions(-)
+>>>>>    delete mode 100644 accel/accel-target.c
 
-Change the hw_error() call to the LOG_UNIMP log-and-continue,
-which is how we prefer to report guest attempts to use
-unimplemented features these days.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3409
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/dma/pl080.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+>>>>> diff --git a/accel/meson.build b/accel/meson.build
+>>>>> index 7da12b9741f..1b5b37e3097 100644
+>>>>> --- a/accel/meson.build
+>>>>> +++ b/accel/meson.build
+>>>>> @@ -1,5 +1,4 @@
+>>>>>    common_ss.add(files('accel-common.c'))
+>>>>> -specific_ss.add(files('accel-target.c'))
+>>>>>    system_ss.add(files('accel-system.c', 'accel-blocker.c', 'accel-
+>>>>> qmp.c', 'accel-irq.c'))
+>>>>>    user_ss.add(files('accel-user.c'))
+>>>>>    
+>>>>
+>>>> I'm open to follow this approach first .
+>>>> The only downside is that it limits to a single accelerator parent type,
+>>>> which will be a problem as soon as we have two arch using this framework
+>>>> for tcg. Nothing we can't solve later though.
+>>
+>> Good point. I'll see how to handle that (as a following up patch).
+>>
+> 
+> Maybe we need to duplicate this struct for each base architecture? :)
 
-diff --git a/hw/dma/pl080.c b/hw/dma/pl080.c
-index 4a90c7bb27..f9f1e3e931 100644
---- a/hw/dma/pl080.c
-+++ b/hw/dma/pl080.c
-@@ -13,7 +13,6 @@
- #include "qemu/log.h"
- #include "qemu/module.h"
- #include "hw/dma/pl080.h"
--#include "hw/core/hw-error.h"
- #include "hw/core/irq.h"
- #include "hw/core/qdev-properties.h"
- #include "qapi/error.h"
-@@ -132,8 +131,9 @@ again:
-                 continue;
-             flow = (ch->conf >> 11) & 7;
-             if (flow >= 4) {
--                hw_error(
--                    "pl080_run: Peripheral flow control not implemented\n");
-+                qemu_log_mask(LOG_UNIMP,
-+                              "pl080_run: Peripheral flow control not implemented\n");
-+                continue;
-             }
-             src_id = (ch->conf >> 1) & 0x1f;
-             dest_id = (ch->conf >> 6) & 0x1f;
--- 
-2.43.0
+Back to your patch? I was never fond of AccelCPUClass and its QOM use,
+ended to ditch it completly:
+https://lore.kernel.org/qemu-devel/20260529142434.87880-1-philmd@linaro.org/
+
+> 
+>>>>
+>>>> Regards,
+>>>> Pierrick
+>>>
+>>> Forgot :)
+>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>
+> 
 
 
