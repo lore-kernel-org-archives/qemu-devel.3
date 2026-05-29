@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EBDFCD6E4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:49:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75EAFCD6E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:49:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSvgs-0001i9-6B; Fri, 29 May 2026 07:47:50 -0400
+	id 1wSvgj-0001ar-FJ; Fri, 29 May 2026 07:47:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSvgp-0001er-42
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:47 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1wSvgh-0001Yp-0V
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:39 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSvgn-0008E8-56
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:46 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-45ef56d9b67so149095f8f.2
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 04:47:44 -0700 (PDT)
+ id 1wSvgf-0008CR-6b
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:38 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-45eecb8bf67so1139129f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 04:47:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780055264; x=1780660064; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780055256; x=1780660056; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=vwSDr23/yqJtm1sOj694gpdNPiF/wTTGWdWIzGDRjgQ=;
- b=mpABK/zN0Aa/LHj6J64W/kYRkO3sYBUpYNh3SqPbplEOX5q4z2GR5hTt7UeU2/0Q55
- tGaVmoUAPUAbIJJyZjQONjsf0w/pxW/RSHT+I5eKm2mlhyczUtDz17IIs6yKM+GTgufN
- ib/hmWj46xkc/kyGxUZwUk3DqvUss/jaSNHyro+QyrDDEA+K/IyAiCfZhRRz+Ypit9T4
- SMRooCHOIMMrlPFKa+deG6KXVl1gsoNkHMMjEb3tJ6sFqozc4tfCoFx1DZmhmQy7S1WR
- pl7VrgvB43Pqjcycicap9VsPrXvB4uKJAL6SvAhrpA1uUO8QZyUMUerSKdfQnbNqf3PY
- ghdQ==
+ :reply-to; bh=GFBRenfOuA37ru0m45qaD8VsAzhwbebsBqKnduTUijI=;
+ b=nNuc7rZ2PBRfXcayadLdT129Xqj5jJlcUcj77Da6ytcllx6PAia0gQpXRwduI0+ujM
+ 0wtqYfmGQb6+tqeFCAxLCgd6uem8orYoJGFPVIyJNs1RraDgT5eCwaPZCK+Hnq4Zjtj4
+ 1b0W208JAX3klaz+Hw8eP7953OStQDf8ufQK2KIUyF4OF/SvaEcXbJ4vVcCxxlAZY+F8
+ q60INkahyg5xYC/l3ciEqdh2w3DSE3DporXkL1eDi2ay90VdbC1kmRhCMa/w1aEBrHK2
+ CLHxKoGmI/yw/qy/5cswr26PTEnxprA5vwnnBxdDIfGpGtL+SOc8Ju6lcf96faajS4C1
+ TCPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780055264; x=1780660064;
+ d=1e100.net; s=20251104; t=1780055256; x=1780660056;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=vwSDr23/yqJtm1sOj694gpdNPiF/wTTGWdWIzGDRjgQ=;
- b=Ndw1McrON8x0gmACtaMkhAvOjauNe6KPll1eQLwuOCP+r2vIjX9IFOhVfuF/1H9a9M
- 0tJPdoWF6E1EdQOmHZjLSqkdLJly0Liao+L9r6JkyCsu4VhkbfCwwdDKyJukrXHcxBYc
- 19Z2q4hGXh7UZrOjxKjHX4eS7umt87ApwSZpmKZrFmlUSh18ycKv8aAqVnrypE7IukFI
- GEVh+L0IY+fUsULR2NeDRAYL0lJOr/JtV0bTvGhp6Gn5mAsVKZoNvL4AjSVjciuLkgU6
- cWUJAEx9z2Q5F/z7lzfzwBL0/KXkr7bTwqWYk6Fz6OVMit/7lu4LB0M7ZwHbKd0tw0hp
- RDqA==
-X-Gm-Message-State: AOJu0YxmqXR5nySrwOSVORzrkwi3bKGKqdNov1lZw4RmrlqWNFOOmn6q
- QLPXczBvGNSVxKbw3pWyg8d4J5dxGY73VWd5vtFbuao7oXNTs1AiePtSHEALkgH9YHRYqn7eBD9
- uQxsL
-X-Gm-Gg: Acq92OEbWvewdCNzYaOkBd6jHpBtbmOUc6yP+FyZ5+NlyTl2uaoAd/VZMT6eNd71xGE
- woS+bpbiDfhxevwD4EE8H64ifhvsUVpQ3d5x5JzjvqUxDqfUejOlkZ3ilsXsGaCV4ZEImuo4E4q
- tLCeglNKQ4vk25FUIu90quGZ6SyOEcfBEcUz7aVUrMwEruSE6YT9b/EKSaWDLQwPhBBTIelJm4W
- 3sNfhayT7fzzHBJ9J0z7+dMhArgErl/dSRoIjiSuZvEkYVteyeOb5hJ46fJfXCSTnMdMTB2XVG5
- 3GCPUAPMdfO4kZWG8zi47x+kJK7hYFjw1JDYU/iyO+Ag3GVLpcczNQ8bBJTIepp+JdCH5WhMMEP
- L58hVa3p6iuSpGD1L5mTzSCCF7xf1nuuKrSkzX0QEVfszdOoHczfA/Sk+PdYSMEuwUtaaKDhjRR
- 0tke0z3OIMdVJ2iJnVQWpNIs0gYoTWEGikt06+gcY+ZjEWgiDrXVk8ybKq7m55bqBefWjgaC/vt
- JTY6tSZPZYh0l89Q+vmNnleKWkDB6DH0Govs1Q5pg==
-X-Received: by 2002:a05:6000:41e2:b0:45e:6518:21ad with SMTP id
- ffacd0b85a97d-45ef13fdceamr4169274f8f.3.1780055263605; 
- Fri, 29 May 2026 04:47:43 -0700 (PDT)
+ bh=GFBRenfOuA37ru0m45qaD8VsAzhwbebsBqKnduTUijI=;
+ b=PM64b5C0yssMM3KbW3ZX+vksF+mXTB0E1TJbZKCVr6o1xCFmXSZ1LAV71Z4p9ZmyU0
+ Ix6xE+4NDg+xfIix6aozIMZgdn4i6khsbVrJCSg2ITy+c/JiRiWqdwMB7gtOZXeGCttM
+ tnsNQ8SAN0lii3j00Y5yIO08nYVAEkq2SaXkqZAg/OWoQwNTwj1+Zt/LV9WI4Ibz7GZy
+ ep3xNFc9HwV0lHDmaZnDFgTX9yDaGuAsy+gKB39HA/NTxJIJNJjBG67A4CcFYb1mwb/o
+ FDkO1zIMQIwATGfeBy/Kr2V8YlAkXoo40UOUq8qe5lM7qmqh5C8CSXA8DTE2/qEhgINv
+ w1lg==
+X-Gm-Message-State: AOJu0YwUk1OXz7AOX9nX//oEMBhzcHNwouVo5Hqf9KgmKxo/TLaxwp6a
+ So8njBLsvAQRt2cUMZVjm0NcaUusoSWytZIov4EJoZ4g/PUfkcYQOIGl8Nyr5vxoktuMjJggUiN
+ qNwiz
+X-Gm-Gg: Acq92OFbU9uD2urjL5D9Fe1Kr3zTyD3Hb7Qt2GALlOpOwbGgd9YhTieA7hepsrQDUyj
+ 58pLbcgctuy0IX85tRWyupchgCh9fEhxPkYZP/Ka35eNwy3uop/+b3pxAadqTIc0aZosFdAlGcI
+ wMthDWdY/pkldJoDMJfaRm9RlD95jrnII4DRBFXccCwgqtZ+XDUaf3nJWSS9cS3Plw0LtqPPTPQ
+ GO6lkmG8cnRHIM/L64rLxkamGx7kXxn/KNFkVR0fHspVS5fUk5fPntmk6FYI5awgUDH725xITgd
+ B1x8MnZvq17oNBFdK5YEdR+ALJdLtWDaX8OBdjHHFnp78B2PYtSuvAdBWQis2nEFSn913OKEfhR
+ 0hoHnoLjlwxkoX6uNf0rw5ZgbOnB4otixHdSrcQmfWW2z7pWOMSlMJyMeRoJ9r+R3pnAEq/cwUo
+ /rgg67Iz+EJvm7/u/dsmeso7VE+iEIRM6MERsHFOJ0EschngIWhzk4Y9e1SDsAnjVSiQATeRaak
+ 5/Q80KVMJ7G4Aaeza8XL+UJlY3p+OhfHtbpH3/PZWlUKsSzUtcX
+X-Received: by 2002:adf:e5cc:0:b0:45e:742c:f195 with SMTP id
+ ffacd0b85a97d-45ef140c1e1mr3176707f8f.12.1780055255654; 
+ Fri, 29 May 2026 04:47:35 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ef3563cb9sm3007358f8f.29.2026.05.29.04.47.42
+ ffacd0b85a97d-45ef3563cb9sm3007358f8f.29.2026.05.29.04.47.34
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 May 2026 04:47:42 -0700 (PDT)
+ Fri, 29 May 2026 04:47:34 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 17/21] target/arm: implement FEAT_RNG_TRAP for RNDR/RNDRRS
-Date: Fri, 29 May 2026 12:47:18 +0100
-Message-ID: <20260529114723.42040-18-peter.maydell@linaro.org>
+Subject: [PULL 10/21] hw/arm/xilinx_zynq: Split xilinx_zynq into header and
+ implementation files
+Date: Fri, 29 May 2026 12:47:11 +0100
+Message-ID: <20260529114723.42040-11-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260529114723.42040-1-peter.maydell@linaro.org>
 References: <20260529114723.42040-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,161 +101,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jason Wright <wrigjl@proton.me>
+From: YannickV <Y.Vossen@beckhoff.com>
 
-Add an .accessfn to the RNDR and RNDRRS system registers that traps
-reads to EL3 when SCR_EL3.TRNDR is set, as required by FEAT_RNG_TRAP.
-Mark SCR_EL3.TRNDR (bit 40) as a writable field in scr_write() when
-the CPU advertises the feature. The pseudocode in DDI0487 revision M.b
-shows the trap firing from EL0, EL1, EL2, and EL3, so there is no
-check of arm_current_el().
+Create xilinx_zynq.h header file to expose ZynqMachineState and
+related definitions for machine inheritance. This enables creation
+of derived machines based on the Zynq platform.
 
-When FEAT_RNG_TRAP is implemented without FEAT_RNG, an RNDR/RNDRRS read
-with SCR_EL3.TRNDR=0 should UNDEF rather than succeed; handle that case
-in access_rndr(). Register the rndr_reginfo CP reg entries whenever either
-FEAT_RNG or FEAT_RNG_TRAP is implemented, so the accessfn fires even on a
-FEAT_RNG_TRAP-only CPU.
-
-When SCR_EL3.TRNDR is set, ID_AA64ISAR0_EL1.RNDR reads as 1 regardless
-of whether FEAT_RNG is implemented; give ID_AA64ISAR0_EL1 a readfn so it
-reports this at runtime, as we already do for ID_AA64PFR0_EL1.
-
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Jason Wright <wrigjl@proton.me>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260518073401.11279-11-corvin.koehne@gmail.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu-features.h |  5 ++++
- target/arm/helper.c       | 58 +++++++++++++++++++++++++++++++++++----
- 2 files changed, 58 insertions(+), 5 deletions(-)
+ hw/arm/xilinx_zynq.c         | 13 +------------
+ include/hw/arm/xilinx_zynq.h | 30 ++++++++++++++++++++++++++++++
+ 2 files changed, 31 insertions(+), 12 deletions(-)
+ create mode 100644 include/hw/arm/xilinx_zynq.h
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 4e8d844fea..38a695ded7 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -908,6 +908,11 @@ static inline bool isar_feature_aa64_rndr(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64ISAR0, RNDR) != 0;
- }
+diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
+index 66a4480cc8..6c83439017 100644
+--- a/hw/arm/xilinx_zynq.c
++++ b/hw/arm/xilinx_zynq.c
+@@ -41,9 +41,7 @@
+ #include "exec/tswap.h"
+ #include "target/arm/cpu-qom.h"
+ #include "qapi/visitor.h"
+-
+-#define TYPE_ZYNQ_MACHINE MACHINE_TYPE_NAME("xilinx-zynq-a9")
+-OBJECT_DECLARE_SIMPLE_TYPE(ZynqMachineState, ZYNQ_MACHINE)
++#include "hw/arm/xilinx_zynq.h"
  
-+static inline bool isar_feature_aa64_rng_trap(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR1, RNDR_TRAP) != 0;
-+}
-+
- static inline bool isar_feature_aa64_tlbirange(const ARMISARegisters *id)
+ /* board base frequency: 33.333333 MHz */
+ #define PS_CLK_FREQUENCY (100 * 1000 * 1000 / 3)
+@@ -87,15 +85,6 @@ static const int dma_irqs[8] = {
+     0xe3401000 + ARMV7_IMM16(extract32((val), 16, 16)), /* movt r1 ... */ \
+     0xe5801000 + (addr)
+ 
+-#define ZYNQ_MAX_CPUS 2
+-
+-struct ZynqMachineState {
+-    MachineState parent;
+-    Clock *ps_clk;
+-    ARMCPU *cpu[ZYNQ_MAX_CPUS];
+-    uint8_t boot_mode;
+-};
+-
+ static void zynq_write_board_setup(ARMCPU *cpu,
+                                    const struct arm_boot_info *info)
  {
-     return FIELD_EX64_IDREG(id, ID_AA64ISAR0, TLB) == 2;
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 34487eeaa3..9dd8fdfa41 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -790,6 +790,9 @@ static void scr_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
-         if (cpu_isar_feature(aa64_fpmr, cpu)) {
-             valid_mask |= SCR_ENFPM;
-         }
-+        if (cpu_isar_feature(aa64_rng_trap, cpu)) {
-+            valid_mask |= SCR_TRNDR;
-+        }
-     } else {
-         valid_mask &= ~(SCR_RW | SCR_ST);
-         if (cpu_isar_feature(aa32_ras, cpu)) {
-@@ -5170,6 +5173,21 @@ static uint64_t id_aa64pfr0_read(CPUARMState *env, const ARMCPRegInfo *ri)
-     }
-     return pfr0;
- }
+diff --git a/include/hw/arm/xilinx_zynq.h b/include/hw/arm/xilinx_zynq.h
+new file mode 100644
+index 0000000000..cefb7789ff
+--- /dev/null
++++ b/include/hw/arm/xilinx_zynq.h
+@@ -0,0 +1,30 @@
++/*
++ * Xilinx Zynq Baseboard System emulation.
++ *
++ * Copyright (c) 2010 Xilinx.
++ * Copyright (c) 2012 Peter A.G. Crosthwaite (peter.croshtwaite@petalogix.com)
++ * Copyright (c) 2012 Petalogix Pty Ltd.
++ * Written by Haibing Ma
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+static uint64_t id_aa64isar0_read(CPUARMState *env, const ARMCPRegInfo *ri)
-+{
-+    ARMCPU *cpu = env_archcpu(env);
-+    uint64_t isar0 = GET_IDREG(&cpu->isar, ID_AA64ISAR0);
++#ifndef QEMU_ARM_ZYNQ_H
++#define QEMU_ARM_ZYNQ_H
 +
-+    /*
-+     * When FEAT_RNG_TRAP is active (SCR_EL3.TRNDR set), ID_AA64ISAR0_EL1.RNDR
-+     * reads as 1 regardless of whether FEAT_RNG is implemented.
-+     */
-+    if (env->cp15.scr_el3 & SCR_TRNDR) {
-+        isar0 = FIELD_DP64(isar0, ID_AA64ISAR0, RNDR, 1);
-+    }
-+    return isar0;
-+}
- #endif
- 
- /*
-@@ -5304,6 +5322,22 @@ static const ARMCPRegInfo pauth_reginfo[] = {
-       .fieldoffset = offsetof(CPUARMState, keys.apib.hi) },
- };
- 
-+static CPAccessResult access_rndr(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                  bool isread)
-+{
-+    if (env->cp15.scr_el3 & SCR_TRNDR) {
-+        return CP_ACCESS_TRAP_EL3;
-+    }
-+    /*
-+     * Note that FEAT_RNG_TRAP may be implemented without FEAT_RNG.
-+     * In that case, if the trap is not enabled, the read undefs.
-+     */
-+    if (!cpu_isar_feature(aa64_rndr, env_archcpu(env))) {
-+        return CP_ACCESS_UNDEFINED;
-+    }
-+    return CP_ACCESS_OK;
-+}
++#include "target/arm/cpu-qom.h"
++#include "hw/core/qdev-clock.h"
 +
- static uint64_t rndr_readfn(CPUARMState *env, const ARMCPRegInfo *ri)
- {
-     Error *err = NULL;
-@@ -5335,11 +5369,11 @@ static const ARMCPRegInfo rndr_reginfo[] = {
-     { .name = "RNDR", .state = ARM_CP_STATE_AA64,
-       .type = ARM_CP_NO_RAW | ARM_CP_SUPPRESS_TB_END | ARM_CP_IO,
-       .opc0 = 3, .opc1 = 3, .crn = 2, .crm = 4, .opc2 = 0,
--      .access = PL0_R, .readfn = rndr_readfn },
-+      .access = PL0_R, .accessfn = access_rndr, .readfn = rndr_readfn },
-     { .name = "RNDRRS", .state = ARM_CP_STATE_AA64,
-       .type = ARM_CP_NO_RAW | ARM_CP_SUPPRESS_TB_END | ARM_CP_IO,
-       .opc0 = 3, .opc1 = 3, .crn = 2, .crm = 4, .opc2 = 1,
--      .access = PL0_R, .readfn = rndr_readfn },
-+      .access = PL0_R, .accessfn = access_rndr, .readfn = rndr_readfn },
- };
- 
- static void dccvap_writefn(CPUARMState *env, const ARMCPRegInfo *ri,
-@@ -6522,11 +6556,24 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-               .access = PL1_R, .type = ARM_CP_CONST,
-               .accessfn = access_tid3,
-               .resetvalue = 0 },
-+            /*
-+             * ID_AA64ISAR0_EL1 is not a plain ARM_CP_CONST in system
-+             * emulation because the RNDR field depends on SCR_EL3.TRNDR
-+             * at read time when FEAT_RNG_TRAP is implemented.
-+             */
-             { .name = "ID_AA64ISAR0_EL1", .state = ARM_CP_STATE_AA64,
-               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 6, .opc2 = 0,
--              .access = PL1_R, .type = ARM_CP_CONST,
-+              .access = PL1_R,
-+#ifdef CONFIG_USER_ONLY
-+              .type = ARM_CP_CONST,
-+              .resetvalue = GET_IDREG(isar, ID_AA64ISAR0)
-+#else
-+              .type = ARM_CP_NO_RAW,
-               .accessfn = access_tid3,
--              .resetvalue = GET_IDREG(isar, ID_AA64ISAR0)},
-+              .readfn = id_aa64isar0_read,
-+              .writefn = arm_cp_write_ignore
-+#endif
-+            },
-             { .name = "ID_AA64ISAR1_EL1", .state = ARM_CP_STATE_AA64,
-               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 6, .opc2 = 1,
-               .access = PL1_R, .type = ARM_CP_CONST,
-@@ -7454,7 +7501,8 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-     if (cpu_isar_feature(aa64_pauth, cpu)) {
-         define_arm_cp_regs(cpu, pauth_reginfo);
-     }
--    if (cpu_isar_feature(aa64_rndr, cpu)) {
-+    if (cpu_isar_feature(aa64_rndr, cpu) ||
-+        cpu_isar_feature(aa64_rng_trap, cpu)) {
-         define_arm_cp_regs(cpu, rndr_reginfo);
-     }
-     /* Data Cache clean instructions up to PoP */
++#define TYPE_ZYNQ_MACHINE MACHINE_TYPE_NAME("xilinx-zynq-a9")
++OBJECT_DECLARE_SIMPLE_TYPE(ZynqMachineState, ZYNQ_MACHINE)
++
++#define ZYNQ_MAX_CPUS 2
++
++struct ZynqMachineState {
++    MachineState parent;
++    Clock *ps_clk;
++    ARMCPU *cpu[ZYNQ_MAX_CPUS];
++    uint8_t boot_mode;
++};
++
++#endif /* QEMU_ARM_ZYNQ_H */
 -- 
 2.43.0
 
