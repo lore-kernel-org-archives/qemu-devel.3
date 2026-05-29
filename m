@@ -4,141 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 900B5CD6E49
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 22:05:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E7E8CD4F54
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 22:08:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wT5KJ-0005ng-Oy; Fri, 29 May 2026 18:05:11 -0400
+	id 1wT5NF-0006p6-N0; Fri, 29 May 2026 18:08:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jithu.joseph@oss.qualcomm.com>)
- id 1wT5KI-0005nK-2n
- for qemu-devel@nongnu.org; Fri, 29 May 2026 18:05:10 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jithu.joseph@oss.qualcomm.com>)
- id 1wT5KF-0002cq-Uq
- for qemu-devel@nongnu.org; Fri, 29 May 2026 18:05:09 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64TIswZa3526592
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 22:05:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- jQfdheRL0RPUsLGZS1FZFYexOt5gXwrMh44T2dQJ7Zw=; b=Pst840PBsqju3p0t
- Cmu/egcAY4LFSc6exI5dzIhVPesUxjn87TtPJXLdLmUC52wzIKB6WstXuUyfb/c3
- m6T1KIZoLlmDdUvXqVMj+Bi6HGWNI8/ZYlslko8YUC6KhY0gsWN4ooEaceLSYd9t
- bDAhq4EPx+oiFFJvGqcP1GRDbGH0134BYPtdCH/CCcpnZXbPZ1ikV9yE3tywacgb
- eo6dUCrByKeRmCl/l5Am2rFprJxiqI1PRHrf6Hu3XMEtOmttPTe4rNKl2M2xPYjA
- pBhMG97qFWEKyRkl6pXHD8t82soI7dCzKWkoXBxG+6m5Ie+AJvluEEJOK5OXPCQl
- KsUpmw==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
- [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4efgge8q2v-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 22:05:06 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-304f23c55b2so1043769eec.0
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 15:05:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wT5NB-0006oQ-Ev
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 18:08:09 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wT5N7-000392-9i
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 18:08:09 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-bd8faef2e18so1857893566b.3
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 15:07:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780092478; cv=none;
+ d=google.com; s=arc-20240605;
+ b=h5QoggOM1FfUzdfqsaU0bSQrY2gqYysrJ3d4RzKW0nm5H3y/HoVPl3pHPUxHN/Zz9t
+ KkbvHIrOThPO62F5ILYt8MZQcbaQI5OhZ6IFggK7IDysqSAXBqtDZGTBx9bCOqphaGgf
+ C5a5Lvx0wLr5zC/+HppHzq2tRR5NlcTwYFAiSslJMBoqIDyucUQ2P3OqL/40sePysdA6
+ A4DTmPG/s67BNeXR6mvpCZi+ZCI+wLP3XEzJB6zHVqUrtyiI0qkVqNKvnjuGHeoh8I54
+ yByGLyNubXqrnjhMCdBYTHCAOyX1diXxlQ8mp3p8vqUqqyxHhkLlf1upFHbmaSmKsd0R
+ sNLA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=l18mT7LR95e73mJamQUXBSzkqFI7yD1r7XIpEbzT32A=;
+ fh=owoGgXqdEjuXIF8XOa7JOHtGBeY8D0b8TGVbTfsLIuw=;
+ b=GZZM7laE00hANkThR9J2zc/K61iok5uNx5K4XA/pB7pSWoJxupOdM81ZtGZVpJk2lr
+ QUS/cK06aeYokk4nDEfUKYuKWXO3j5xazeWoKMgsQPdATHZegXEU9QUIYYegCS8eXlGh
+ hE4fJVfotCFR6Ey9kf5kh9jOevDSl8w4qrBJ3mHmVx7rEP+d/tneXIn98E1OwRAOZDhE
+ LAmmQN0czh9DeYj6bdy4G8zQ/lVD7ngPc3uHQSFTW4a/6BBgAbRIGmxQQ6VDN1xKnbSB
+ zupf1QsE87yj6xfKH4Uj82u9WylEMeXpOqpWUMP18RxeB2oFYTfOLWJIO+EuagITJmjO
+ ymVQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1780092305; x=1780697105; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jQfdheRL0RPUsLGZS1FZFYexOt5gXwrMh44T2dQJ7Zw=;
- b=j9a4ZfMcSv4V+qjRN2vkVlL4wvOQcdyYnumrvcoZvGv/6eRAR/B1zT2yj2qkAza6WU
- IhgBGkl8TwAIhAzGFCWHTju1/L2yZuPPFqgcnqYliumUtIp6JOrL7d9QudTm7tRt8aTr
- 6MA7PyYbARTfmSxZYTRzNHeTKCjAZCeyJ87DEZkRCz3c5qr32WELDvjnBrxcZlYU2Bdu
- /2JxuKCOIER8I0DVZOGtyvjyD1fiaJg8tl8vGusNFgVr9C4as46e5oXfF4sxkQHbJrYH
- z7HrGhqA0cvy+3fIEBmtvRTogMLSlnJ5BzqxDUw01l5UoUz8dVeXOmpqkxQnqScyUYK/
- 3Czg==
+ d=gmail.com; s=20251104; t=1780092478; x=1780697278; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=l18mT7LR95e73mJamQUXBSzkqFI7yD1r7XIpEbzT32A=;
+ b=hHt5eVvxYwQmtHPKi7OvVLrYgcD1bcapjnTnXqMgHs7ClNxwonorUb8TyHm4g3BRLd
+ Sdiro4zHqOWc9JkYcPBHvbNWf+szu8i5PAhLugYDTHq7C8EfwjOT0ggf9syd37R0aKc1
+ U9al59xMwbPJye/CAAN9SuV084RKMAOGCmEG7iyVeLwroGDRbZdxHVn1Gy7ZuDB6UNkc
+ +8RJ8ZyNNRrdxlh58WV5NRL5fvk0fw1Ks58YfO4VS088XDK9RkoMJzR8wBHodXZO9T+y
+ SV3B8k1HIxIxLhnR6nV1oSLDpcujEEaK+K96A515G5hQh1qRLwatOdtVBfeVIdrvU8iL
+ 9P1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780092305; x=1780697105;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jQfdheRL0RPUsLGZS1FZFYexOt5gXwrMh44T2dQJ7Zw=;
- b=aVOq4deaampZ3ycq/L86VZUgUbqdHzDMSro5PBA1VhLBc9feltOSxTS+RNB8mYHLfT
- jSGC0a6bRP8mcYpljP+CKBMOSQ00qn1dCqchSyNNhtfD3njTFQIQX2PQww+QDsdIQd/S
- zCneluTONjaxG5yrAqgX92AUY80GE4ruU/8/0jSCUrcEQyWTvIVMw751tUmKw0yDkzFJ
- 7I5igrktt/vyjRtEd9ybL8eL/LTSVwlLeJ4P7ARZWh7SbEc19O1Oq6W3CHwAwbW18Nqq
- t8nXLC3peprIJNle32iEjKTXyJ6PBF4KQXuCk9CVwCtsel12WC6KBkxsfiM9Cnda2nhf
- RiBg==
+ d=1e100.net; s=20251104; t=1780092478; x=1780697278;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=l18mT7LR95e73mJamQUXBSzkqFI7yD1r7XIpEbzT32A=;
+ b=b7yH2NFlYVZ9hqVn6aAA1Ks9sS2kGtv6vpOaXdYTiNgq9Wbw+Tbt+KUjreifQ/TAgn
+ b5O48JARuWlIABhikGWCNF5ZgwNLhv+fQg56NHVZ4KLwGRtXfyhsTWK0DgBZZzQ1CjCI
+ G+WoUuyREj3jkp6RoYtRaYgnMwg+3SU2lj0NG9xA01ci0Uq+LTz1/zXrrtBy1UaBV24I
+ LNgeUlS7dt/fCNTdsAe5SLRCY3/pY8qWbwFenNvXigowodAGk7K/3TMjpJf21bNpJmL6
+ bxbHDL0jWF5+GzswXQa/f+IL5B+o6Xlu7fv8Ijyh0JlnwY8OB4Uzt9CCfnSHNOxT8HT1
+ cLIQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ80JpJFmZcOnDaEoNaFf4RScAibV3d4/J3ZIoJo8rsbC2nLUL8AkNnC8YljPMI08Z/PZYCGsWM6iWHA@nongnu.org
-X-Gm-Message-State: AOJu0YyWcvAypNXc9Q2Eh4tLaD/CvDtXLLEtVd1QDvu+O++MQeAVmta6
- +G8FCyKlGqCJr9CofEmQ+O/ULYTT+4oBrcV2G8/B6O2TCEDkmiTD9UuaJw4McSx348YrTe7Ybyj
- rAaIQVAnBdpzQFJVUTWN68QQrVdu/RaFU+4JXDB1XrB5qKP/f2FI5GikChw==
-X-Gm-Gg: Acq92OHeGDjDj+54aRU8HG53Zz/5hffGH1QQa5DNbZd8sgiH77+rZ0fD296iHxIIQHe
- rkcxDG5jtO/01dujPxXvYbdBdHk72wRIBgnhmgv3sxWkaV1/kbpIWhPPPZGyyyuxk4uho8Fq0x8
- NSuya+SelLSo0VEMR7kyxKoLsb3YFF9mJOWjTABaFfrQSmiZcElPZRLyns456diifw8R8B2i/P1
- GLIJHppM1Fd6UMdgycImr130j9tcrJTRGTS1yw1VrtefuJoLMMfcF/Kw7UYD6nszc6zt5G+FSg0
- GwxIfOxuasRE7f/fTWlJ9TwXruY5O2VE6XO4qCCVnFHE2PsKbHBTSqmav/9xvdq8WXi/eAuC3ju
- ZxjDZhhmQrYWIEHLBY9GmjTbPjAUWZjPXNdIqCxlvCfUDGCdPy0pBn9JDBL5cuuDGcixmIp9KAi
- sQ+pmiu6Bd9M7zkQ==
-X-Received: by 2002:a05:7300:a44c:b0:304:562c:2338 with SMTP id
- 5a478bee46e88-304fa5812ddmr794408eec.14.1780092305068; 
- Fri, 29 May 2026 15:05:05 -0700 (PDT)
-X-Received: by 2002:a05:7300:a44c:b0:304:562c:2338 with SMTP id
- 5a478bee46e88-304fa5812ddmr794390eec.14.1780092304482; 
- Fri, 29 May 2026 15:05:04 -0700 (PDT)
-Received: from [10.110.86.149] (i-global254.qualcomm.com. [199.106.103.254])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-304ee0dd6fdsm2158255eec.23.2026.05.29.15.05.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 May 2026 15:05:03 -0700 (PDT)
-Message-ID: <a724d148-57d6-4269-8913-68e9f29b9ec3@oss.qualcomm.com>
-Date: Fri, 29 May 2026 15:05:02 -0700
+ AFNElJ+v2hRQKvABPd1cta3RnAehzTnspQZr0B+giLocrxJ0P9OiYnoMhNgnFDOsSQ7OwwVOI82OzhS+g6e5@nongnu.org
+X-Gm-Message-State: AOJu0YxUDsLSFW+zfTCkj6a4nqkWkG5qzbOV78lQzPlLsPbXL6LedCEP
+ fTcjY0LCuAtpJzYzGyLPg3cRneeN7VPPX0eHYoFkZbMYpWUhmB7vjaWU3zZyCGmEgkyCbpjAWAY
+ HVwusk8N3uqBXS8vNtejGrFAqAyOn4PA=
+X-Gm-Gg: Acq92OHVGaLh6App94lNR2Nek59lGjibQSsRlCWDgf0vzKh6H38o/iU24VRe54qEr/A
+ j50tIRVJqjpLaV7oyIIc6UwLRKWRDNyNuxAjKl7tkD1lkFM0AmDBgxUB/TA/u+AR75giRULSmKE
+ ix9wdCE+prP/b+O6dpcorNW43cE+MS43K82IAAAEeJKLJPD6kxZL6MCndskDlgFcuT1Q1BEs21i
+ VleuMnceWzuDMfRhsFaCGpbk7Q5y6SD7ErF1JIlMvjLT96K+X1PrVTYklg9YcaXsCpDC9W6I18Y
+ Pa13Zy8ioxOFa6+phC5yJL979DDQ6hXjVN3qCh3/tG8Kpv2HIQ==
+X-Received: by 2002:a17:907:b593:b0:bda:24df:232 with SMTP id
+ a640c23a62f3a-beab227a543mr63532366b.48.1780092478391; Fri, 29 May 2026
+ 15:07:58 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] hw/i3c: fix CMD/data FIFO depth reset values to match
- real silicon
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, clg@kaod.org, 
- jamin_lin@aspeedtech.com, komlodi@google.com
-Cc: nabihestefan@google.com, qemu-devel@nongnu.org
-References: <20260529014034.864722-1-jithu.joseph@oss.qualcomm.com>
- <20260529014034.864722-2-jithu.joseph@oss.qualcomm.com>
- <71168e41-ad83-4a80-aa3d-3a40f042a8ad@linaro.org>
-Content-Language: en-US
-From: Jithu Joseph <jithu.joseph@oss.qualcomm.com>
-In-Reply-To: <71168e41-ad83-4a80-aa3d-3a40f042a8ad@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: IjSoDzAhImLwv3LnxckG4g51hSYqpqhD
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI5MDIxOSBTYWx0ZWRfX2lVWPX42Rdv0
- ffQfsJwOd6nbnRP0De3q5mrL89zY1X9EQv4zmP86JyFnuG5hWUwxvApGK9fSZd8JVt5hz0NV2jh
- NPB3CeXVAHwlcFSkMvwBZ66d+TZKs6zWER5dGT0rTQOFlLodXCl/8H23JcFMyKhaBhndT3owAKt
- 2w/E2SmJSwJXNmhXvDZPRwIwTUz0ucLyoYgOXlYbB4JhzRiJ41OLtgOUEczGUfQCe8pa6tc/FGx
- v4s8QBW07sWfUWW4FD8I+82ZucWipkjQIHdsqZkOk36l/gThNp7Lf9q5+k+8JLiIVJap8YS+oDV
- Vx36D0c7aKTm0rAbHFlGq5DcjScv9hlpGmOyFA4qxhNW1NCHhb94qbZKMZsaXubRc/grnTpQREi
- tkEeurYcy7pfOvJ7Ig7A1YFsGtXNyk8/vFhi5seesLR7H7VEzWbi8l/oqr6izPtZn3JbWEw18nO
- hBe9tDmnXpBe2CeeBfQ==
-X-Proofpoint-GUID: IjSoDzAhImLwv3LnxckG4g51hSYqpqhD
-X-Authority-Analysis: v=2.4 cv=Z4zc2nRA c=1 sm=1 tr=0 ts=6a1a0d92 cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=J0xTLNSRAI11-Z3c0b4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=scEy_gLbYbu1JhEsrz4S:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-05-29_06,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0 suspectscore=0 priorityscore=1501 bulkscore=0
- lowpriorityscore=0 phishscore=0 malwarescore=0 impostorscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605290219
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=jithu.joseph@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <CAJSP0QULyy5C0YEaxz2ChNy3_zfc5VwaMhB18R=yHDgnhBYo9w@mail.gmail.com>
+ <CAJSP0QWt8Q5+yY1F6--XyvcAV3afg3msAcO6vaNDeWS=B9Oqag@mail.gmail.com>
+ <CANCZdfpbDU+jCr6+Lj-ZV7h5H_ByHf=VJordfQ8OcH3+JsmJ4Q@mail.gmail.com>
+ <CAJSP0QX=Uu0cy6z8oCsQK_EKJ8LUW1v3Tsd09JoAU=Py4MkRrw@mail.gmail.com>
+ <CANCZdfrfiVp=BiCEUzYRFFeZBpUoODBwL5b-QQgbA21Ev76noA@mail.gmail.com>
+ <CAJSP0QWrNzf_NS1hx4c2TFRLp0Son=_kAx7qq_CeMBinEV=CNw@mail.gmail.com>
+ <CAJSP0QUMZ76ioyGNLemN0qROCFxh_yAZGUkwFReFxgFiMJx70Q@mail.gmail.com>
+ <CANCZdfpQA=90x-dS=d4-Vtt43zdSWYg==rcx326wrCfWAbuP_w@mail.gmail.com>
+In-Reply-To: <CANCZdfpQA=90x-dS=d4-Vtt43zdSWYg==rcx326wrCfWAbuP_w@mail.gmail.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Fri, 29 May 2026 18:07:46 -0400
+X-Gm-Features: AVHnY4LimzaFNXFR-J93j04nN1dEjB9tPPc4JVwBJr5CkN4AhR7o1yXJgVr-2LU
+Message-ID: <CAJSP0QU27JHhDq0k9+pgu3PVzAwfppReWRzdi-UCrT9CdbRG0g@mail.gmail.com>
+Subject: Re: FreeBSD CI after Cirrus shuts down?
+To: Warner Losh <imp@bsdimp.com>
+Cc: Li-Wen Hsu <lwhsu@freebsd.org>, Alex Bennee <alex.bennee@linaro.org>, 
+ qemu-devel <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000d788970652fc13b5"
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=stefanha@gmail.com; helo=mail-ej1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,69 +123,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/28/2026 11:24 PM, Philippe Mathieu-Daudé wrote:
+--000000000000d788970652fc13b5
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks Philippe for the review
+On Fri, May 29, 2026, 16:56 Warner Losh <imp@bsdimp.com> wrote:
 
-> On 29/5/26 03:40, Jithu Joseph wrote:
->> The Linux DW-I3C master driver infers controller queue depths at probe
->> by reading two status registers that report free queue slots, which at
->> probe (queues empty) equals the full depth.  It then uses those values
->> to gate every I3C transfer -- any batch whose word count exceeds the
->> advertised depth is rejected with -EOPNOTSUPP.
+>
+>
+> On Fri, May 29, 2026 at 7:18=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.c=
+om>
+> wrote:
+>
+>> Hi Warner,
+>> How are things going? A few options if you're willing to take on the
+>> maintenance of a FreeBSD gitlab-runner VM hosted at OSUOSL:
 >>
->>    QUEUE_STATUS_LEVEL        (0x4c) [7:0] -> cmdfifodepth  (cmd slots)
->>    DATA_BUFFER_STATUS_LEVEL  (0x50) [7:0] -> datafifodepth (32-bit words)
+>
+> They are going well...
+>
+>
+>> 1. A FreeBSD 14.1 (zfs) VM as a temporary solution until a more recent
+>> FreeBSD guest can be deployed.
 >>
->> Per the AST2600 datasheet the reset values are 0x10 and 0x40 (16 cmd
->> slots, 64 words = 256 B).  QEMU was advertising 0x02 and 0x10, making
->> the kernel believe the controller can only do 64-byte transfers.  The
->> visible symptom was -EOPNOTSUPP on any I3C transfer whose payload
->> exceeded 64 B (datafifodepth = 0x10 = 16 words = 64 B).
+>
+> Yea, let's start here, though see below.
+>
+
+Great, I will send you the login details tomorrow.
+
+
+>
+>> 2. A FreeBSD 13.1 (zfs) or Linux VM for the purposes of a live system
+>> installation (e.g. dd and reboot or some other trick to overwrite the
+>> live system). We can screen share and you tell me what to type if
+>> remote console access is needed.
+>> 3. You provide a recent FreeBSD disk image, I upload it to OSUOSL's
+>> OpenStack, and I create a new VM from your image.
 >>
->> The underlying FIFOs in QEMU were already allocated at the right size
->> (fifo32_create takes word counts; the existing defaults give 16 cmd
->> slots and 64 data words).  Only the advertised reset values were
->> wrong.  With this fix the guest sees datafifodepth=64 words and
->> accepts transfers up to 256 B.
->>
->> Fixes: e974c6957576 ("hw/i3c/dw-i3c: Add more reset values")
->> Signed-off-by: Jithu Joseph <jithu.joseph@oss.qualcomm.com>
->> ---
->>   hw/i3c/dw-i3c.c | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c
->> index 17ff484c5df1..e1bcf083210b 100644
->> --- a/hw/i3c/dw-i3c.c
->> +++ b/hw/i3c/dw-i3c.c
->> @@ -282,8 +282,8 @@ static const uint32_t dw_i3c_resets[DW_I3C_NR_REGS] = {
->>       [R_QUEUE_THLD_CTRL]             = 0x01000101,
->>       [R_DATA_BUFFER_THLD_CTRL]       = 0x01010100,
->>       [R_SLV_EVENT_CTRL]              = 0x0000000b,
->> -    [R_QUEUE_STATUS_LEVEL]          = 0x00000002,
->> -    [R_DATA_BUFFER_STATUS_LEVEL]    = 0x00000010,
->> +    [R_QUEUE_STATUS_LEVEL]          = 0x00000010,
->> +    [R_DATA_BUFFER_STATUS_LEVEL]    = 0x00000040,
-> 
-> [R_QUEUE_STATUS_LEVEL] = s->cfg.cmd_resp_queue_capacity_words;
-> [R_DATA_BUFFER_STATUS_LEVEL] = s->cfg.tx_rx_queue_capacity_words;
-> 
-> ?
+>
+> What format is this VM in?
+>
 
-You're right — hardcoding 0x10/0x40 in dw_i3c_resets[] ignores the configured values
-and would silently advertise wrong depths if these properties are ever overridden
+The image should be a raw image for x86_64 guests with virtio drivers. My
+understanding is that you can use EFI if you want, but the default is BIOS.
 
-Since literally initializing here would give compile errors, I can try overriding
-it in reset functions (dw_i3c_reset() / dw_i3c_reset_enter()) after memcpying from
-this array  (similar to what is done for R_DEV_CHAR_TABLE_POINTER / R_DEVICE_ADDR_TABLE_POINTER)
+You can find details on the OSUOSL OpenStack setup and how to create images
+here:
+https://wiki.osuosl.org/openstack/guests.html#manual-guest-installation
 
-> 
->>       [R_PRESENT_STATE]               = 0x00000003,
->>       [R_I3C_VER_ID]                  = 0x3130302a,
->>       [R_I3C_VER_TYPE]                = 0x6c633033,
-> 
+Stefan
 
-Thanks
-Jithu
+--000000000000d788970652fc13b5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><div class=3D"gmail_quote gmail_quote_container"><di=
+v dir=3D"ltr" class=3D"gmail_attr">On Fri, May 29, 2026, 16:56 Warner Losh =
+&lt;<a href=3D"mailto:imp@bsdimp.com">imp@bsdimp.com</a>&gt; wrote:<br></di=
+v><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
+r-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div d=
+ir=3D"ltr"><br></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
+=3D"gmail_attr">On Fri, May 29, 2026 at 7:18=E2=80=AFAM Stefan Hajnoczi &lt=
+;<a href=3D"mailto:stefanha@gmail.com" target=3D"_blank" rel=3D"noreferrer"=
+>stefanha@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quot=
+e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
+;padding-left:1ex">Hi Warner,<br>
+How are things going? A few options if you&#39;re willing to take on the<br=
+>
+maintenance of a FreeBSD gitlab-runner VM hosted at OSUOSL:<br></blockquote=
+><div><br></div><div>They are going well...</div><div>=C2=A0</div><blockquo=
+te class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px =
+solid rgb(204,204,204);padding-left:1ex">
+1. A FreeBSD 14.1 (zfs) VM as a temporary solution until a more recent<br>
+FreeBSD guest can be deployed.<br></blockquote><div><br></div><div>Yea, let=
+&#39;s start here, though see below.</div></div></div></blockquote></div></=
+div><div dir=3D"auto"><br></div><div dir=3D"auto">Great, I will send you th=
+e login details tomorrow.=C2=A0</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquote clas=
+s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
+gb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div class=3D"gmail_quot=
+e"><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0=
+px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+2. A FreeBSD 13.1 (zfs) or Linux VM for the purposes of a live system<br>
+installation (e.g. dd and reboot or some other trick to overwrite the<br>
+live system). We can screen share and you tell me what to type if<br>
+remote console access is needed.<br>
+3. You provide a recent FreeBSD disk image, I upload it to OSUOSL&#39;s<br>
+OpenStack, and I create a new VM from your image.<br></blockquote><div><br>=
+</div><div>What format is this VM in?</div></div></div></blockquote></div><=
+/div><div dir=3D"auto"><br></div><div dir=3D"auto">The image should be a ra=
+w image for x86_64 guests with virtio drivers. My understanding is that you=
+ can use EFI if you want, but the default is BIOS.</div><div dir=3D"auto"><=
+br></div><div dir=3D"auto">You can find details on the OSUOSL OpenStack set=
+up and how to create images here:</div><div dir=3D"auto"><a href=3D"https:/=
+/wiki.osuosl.org/openstack/guests.html#manual-guest-installation">https://w=
+iki.osuosl.org/openstack/guests.html#manual-guest-installation</a></div><di=
+v dir=3D"auto"><br></div><div dir=3D"auto">Stefan</div></div>
+
+--000000000000d788970652fc13b5--
 
