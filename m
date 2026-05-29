@@ -4,91 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0279CD6E4C
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 10:15:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6ACBCD6E43
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 10:15:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSuEq-0002z4-Ap; Fri, 29 May 2026 06:14:48 -0400
+	id 1wSuEo-0002xx-2S; Fri, 29 May 2026 06:14:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSuEo-0002yU-T5
- for qemu-devel@nongnu.org; Fri, 29 May 2026 06:14:46 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1wSuEm-0002xh-Gg
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 06:14:44 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSuEj-00014C-R5
- for qemu-devel@nongnu.org; Fri, 29 May 2026 06:14:46 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4904c1ce4c1so78948355e9.3
+ id 1wSuEj-00014A-Qg
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 06:14:44 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-45eee266c6cso861407f8f.1
  for <qemu-devel@nongnu.org>; Fri, 29 May 2026 03:14:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780049680; x=1780654480; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/VIw3YmXx5HJytkVxeDA1OLVA6u9Y15TcNLpyHWAKcQ=;
- b=dhFeoCynVr4wAVynU0BPTh3lI7AVhmqMMNS2aehYHPj99D7GGAhOETD2opEpdkwq9V
- dUz6dHye8X3xiT92eXby+SeQ5s7a0UIl8BXBNxEq/mmlTCTuSsxLiqDcUZBeKFcEjx/V
- HlWbuXUGfpg3dGINUIBYAWG1BPunmZpJmO8ViGfZwn3JK22Dp1GW9W1MjIksenNB9NHI
- 46ZLEMCC2jARzf7U4G3uhZgQ+/DY0P4h3TRRtyg9VDIZYdpQebYt35uExH6EuNiF4Hrf
- 75IoqcZuoVkoO/O0WnPG+14sbgDorxwidN0BjqHOHbBaVbgAAuYWk1fBb1agG1l8EvGA
- om9w==
+ d=linaro.org; s=google; t=1780049679; x=1780654479; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=3cXWUnj7JhVm9duGkIifA16vq3wjJzT16qdkdkaEIjM=;
+ b=grAG5DFTLRJJTioW4jvJvyDQKyrWCxD46kxx+g/o/SywUIuY0Jd7YGuHULlOKglJOq
+ xlE45bbJNLUBsj4IGexl6qcyS5NuwIz3t9CBiNyvghFFejzCEhi7t1vuBGvqZbguusTr
+ LzYVORaA9CRcYJZ3BJd2kMlylrOIDIw1EXWP4TUW7780aQBG7AoyvoU27f1rsLylPesM
+ iBonucznA/xlS+aNnkWhWGxUCKlTEYEF9bPovB5l176rMJYw2WhGCbLv8xeTJcEMqmqY
+ uaa4Cut82eopZOAS5hljlu72aV0ycRPrJXQjrWaT9lOmkhmBmR9xBxy+RzDwARBd34d2
+ D8+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780049680; x=1780654480;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=/VIw3YmXx5HJytkVxeDA1OLVA6u9Y15TcNLpyHWAKcQ=;
- b=AWVZ/2nXdxBpoSwHFFbGvcZEXeyAMg//yaSMb1jsjAbE+Ngl3odKknxRd6gu7qqLeM
- T+vMVubxcXV8g9tCT7/xRDJ1Xm2aYor31NguJmefLUWHdwqoilPwlBqr68/OQEDmeKQt
- X9xPiL2lkoY2jJIuOdILQ+vvtpO17XWRzkjaslctA1jgwVIa1q8OGtgkD0X4SvzvY/H/
- a5Oy/kKCZ84S5ovqF3CUslKxmiPddzZspZLlM6EJSHme7KcvN3wmrXi9FkXaUsPVPnXT
- trMgTbYpp2I9K4d/71+z3CXN9Dsi/hADDWs6NuE2vNO40s77cPJu86Yjvp87EM2NUrgD
- igbg==
-X-Gm-Message-State: AOJu0YzyrASBzb9ZhAMn5INfDdXch2rB9/WHjZOP0sTLjH+7cmSr3lT7
- aGxpKqwqA5CASi9zP4CIvbaXPmyXnP9eljXX1ykFiFXQMFX6ouUGOmWhQ2FkMCJ5Eqg=
-X-Gm-Gg: Acq92OHXAIaRZTcOGzvD2OjeWIYej2Lp3Nx5LFzC2ARTrBrbhjoE7EHzMKIYzUjmYoR
- lS5RaeaYZ+948uZj13uiZ4oePPOzPMiJJgVUBtp/Rmam5+Pprr8dSIfhY98pjQtWaNPHtC5ubDh
- 9/OzOMKTlIzIYLLU4i+pNmwu5hecfswwM4e9JyatBdcd+W0IiL0EegZLgQaZmGbRXmsGor8BIBs
- rZCEVn2kmHlPQ0kkwsO4kIbU9GqI3ov3KP4laELno66Zh1gFR/b1RJcqAc41hL6ZSpQpurpbwIR
- cC3dsBx7AAz0JXa+eNmpGCqHzeHXaYtNW8t5vdRpCaqEiEJm1D9Efijpjaozw8IjBl9nyUbQGvn
- +Vs+M9Kd6MHngbRseEZJEcJ7TwZO3JIkhkRhciI8NSyaON9MrSG3Y9bLzc+C00eRdNP+E4H0Nuj
- sQGgpnGrwon73f3WT+XpOLu5LUpFeBKENrlQ==
-X-Received: by 2002:a05:600c:3f14:b0:490:9699:4428 with SMTP id
- 5b1f17b1804b1-4909c0c2d66mr42709545e9.26.1780049679835; 
+ d=1e100.net; s=20251104; t=1780049679; x=1780654479;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3cXWUnj7JhVm9duGkIifA16vq3wjJzT16qdkdkaEIjM=;
+ b=g1yimYkyXJDHNeArR/K8AJZcXNdsGlt97/n+YiuwA/n1le2oViCU3LaXWhP+BsHwMw
+ 0lSZCFTvSRZvZgZ3lAB/QBG6bl0IA+Xex8orXwi0wkJFQunuob4ojIhT0nUnH0IQAbm+
+ 4ZaH6BEuFh72jFiTpGltSkXXZBBjxq+fVetKnDBEsSI7kMuzsfNuk1gPGxexmlst3o67
+ HeH3v+23TR3rnHwgFoJkHWOc+uPJoayWUktVQIbuat3XGeFh4WFiEmtVYSkxiXQMbEZj
+ KQzhJtsRj5TxZrxRBo3GMoZjh4hSsqRPJaxKg+sCYb8K126M6LVL0FBae5YH3jv+Tjzp
+ yeiQ==
+X-Gm-Message-State: AOJu0YxE8NdmjyThz5hXIDQVb5S1rjcAsGksKMgoBjxEYcY3lXqYauja
+ sX9v5fJn515PjQPU5AU/2oZE/M1pANnI95Fbi2zxZTsNdCEP40H0rEhBcXCf7hyn5w4=
+X-Gm-Gg: Acq92OFwEfRCFi9PxKAJKtJEdlIyrvg60JkY8shXTcUojsxmdj0xJx8XHIotCc3s2Ay
+ 3xd6vPO5P15klnvc0+syPV4/RSsleHViak7sKfgzR3we4IIryHm4K6q2kJIImNmcrzGRHQY9lRa
+ JEmMRQGSZ8AX+gUyuPYKVCQBf3T41KyQbAQ2MvCPzhnzGpygIK1HI04wy2Xk0WlF4ni6arHy+aW
+ g1Mw5uHj/pwgBQKg+9wn5nQpcqVuClYRrlcJmbZAJ5mxnyzfs7jEEhy/1shUXMcUirYxAIe5kGa
+ pLcW6oQ6A6GaGnlAUUrtJ362QAzX/aDOl0+eC1dPRlhZlo7jXOIqwSlXnJhbWoSFOZ90IwhFWAg
+ +mb8QTynNQCf5AYcbg/qKgA1kmyI5AF47Cc+8waXrZBa/plwMh6Z7au8547CGmT+pGgiCdgwIdC
+ HFavHx1R9kZLt9ifwS+CxiNc/2cfpBgZk4xQ==
+X-Received: by 2002:a05:6000:4604:b0:45e:f381:cd8c with SMTP id
+ ffacd0b85a97d-45ef381cf66mr2577214f8f.30.1780049679380; 
  Fri, 29 May 2026 03:14:39 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4909cab0e79sm63839815e9.13.2026.05.29.03.14.38
+ ffacd0b85a97d-45ef35874b7sm2366247f8f.35.2026.05.29.03.14.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 29 May 2026 03:14:38 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C0F8C5FA5C;
+ by draig.lan (Postfix) with ESMTP id AB5555FA53;
  Fri, 29 May 2026 11:14:37 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>,
- Paolo Bonzini <bonzini@gnu.org>
-Subject: [PATCH v4 01/12] docs/devel: relax policy on AI-generated
- contributions
-Date: Fri, 29 May 2026 11:14:26 +0100
-Message-ID: <20260529101437.410181-2-alex.bennee@linaro.org>
+ Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>
+Subject: [PATCH v4 00/12] AI policy update, AGENTS.md and associated skills
+Date: Fri, 29 May 2026 11:14:25 +0100
+Message-ID: <20260529101437.410181-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260529101437.410181-1-alex.bennee@linaro.org>
-References: <20260529101437.410181-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,271 +101,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+As we are discussing updating QEMU's AI policy I took the opportunity
+to grab Paolo's RFC from:
 
-Until now QEMU's code provenance policy declined any contribution
-believed to include or derive from AI-generated content.  A blanket ban
-was easy to maintain while LLM output was rarely usable on its own, but
-as the tools improved an absolute prohibition has become harder to
-justify.
+  Message-ID: <20260528073412.551117-1-pbonzini@redhat.com>
+  Date: Thu, 28 May 2026 09:34:12 +0200
+  Subject: [PATCH] docs/devel: relax policy on AI-generated contributions
+  From: Paolo Bonzini <pbonzini@redhat.com>
 
-The concern that motivated the policy is unchanged, and it is worth
-stating precisely: the DCO is about whether the submitter has the legal
-right to contribute the code, not about "creative expression".  The
-copyright and license status of LLM output remains unsettled, so that
-question is still open.  What has shifted is the balance of risk:
+And make some updates from the initial review. You can also read the
+original (long) thread:
 
-- projects accepting AI-assisted content have not run into serious
-  legal trouble so far, which suggests the probability of the risk
-  materializing is not high;
+  Message-ID: <20260524083329-mutt-send-email-mst@kernel.org>
+  Subject: on ai generated and code provenance
+  From: "Michael S. Tsirkin" <mst@redhat.com>
+  Date: Sun, 24 May 2026 08:42:39 -0400
 
-- other organizations, such as Red Hat[1], have assessed the risk as
-  acceptable -- though a community of individual developers does not
-  have the legal backing of a company, and even an unfounded dispute
-  would be a long-lasting distraction from work on QEMU.
+for more background on the discussion.
 
-Revise the policy to permit AI assistance where the ramifications of
-copyright violations are at least easy to revert and unlikely to spread:
-tests, documentation, mechanical changes, and small bug fixes.  Core code
-that other things depend on, and that cannot simply be thrown away once
-a problem is noticed long after the fact, stays off-limits without prior
-agreement from a maintainer.
+The AGENTS.md is now updated to reflect the proposed policy changes
+although it still refers to the current but likely soon to be changed
+security policy.
 
-Related to this, and already visible in the incredible uptick in
-security requirements, is the question of maintainer burnout and the
-shift in effort from the author to the reviewer of the code.  AI lowers
-the cost of producing a patch but does nothing to lower the cost of
-understanding and reviewing one; if anything it raises it, since a
-reviewer can no longer assume that the submitter has reasoned through
-every line.  The limits above work just as much to keep the volume of
-review work sustainable.
+The skills have had the "caveman" treatment:
 
-Furthermore, introduce "AI-used-for:" as a trailer to record where AI
-was used, and include other suggestions that help reviewers judge
-the result.  The standard is slightly different from the more usual
-"Assisted-by", which doubles as a check that the author has read the
-policy.
+  https://github.com/juliusbrussee/caveman
 
-In any case, use of AI does not relax any other contribution requirement:
-authors still comply with the DCO and take responsibility for the whole
-patch via Signed-off-by.
+in an effort to reduce the overall token cost of the skills. This is
+becoming more relevant as the true cost of inference is starting to be
+felt. The recent update to Gemini Flash saw a big increase in
+capabilities but I also saw a big jump in API costs to go with it.
 
-[Commit message largely based on
- https://lore.kernel.org/qemu-devel/ahXbxzB4C_lr6b0N@redhat.com/, by
- Kevin Wolf. - Paolo]
+I still have the original skills but so far the caveman versions seem
+just as capable. I've made a few updates to the triage skill but
+otherwise they are just terser versions of the last set of skills I
+posted.
 
-[1] https://www.redhat.com/en/blog/ai-assisted-development-and-open-source-navigating-legal-issues
+Previous discussions suggested that maybe the base AGENTS.md and the
+triage skill could be up-streamed but if we are proposing the relax
+the policy maybe including the rest of the skills is now useful?
 
-Cc: Alistair Francis <alistair.francis@wdc.com>
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>
-Cc: Michael S. Tsirkin <mst@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Cc: Warner Losh <imp@bsdimp.com>
-Link: https://lore.kernel.org/qemu-devel/20260524083329-mutt-send-email-mst@kernel.org/T/
-Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260528073412.551117-1-pbonzini@redhat.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Depending on the response we can split off patches for pull requests
+as needed.
 
----
-v2
- - add warning emphasis to policy
- - add Documentation to list of acceptable uses
- - make clear maintainers have discretion to accept/reject large AI changes
- - make it clear a human should write the commit message
- - rephrase "presence" to "usage"
- - make helpful/unhelpful prompts clearer
----
- docs/devel/code-provenance.rst | 172 +++++++++++++++++++++------------
- 1 file changed, 111 insertions(+), 61 deletions(-)
+Changes since v3:
 
-diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
-index 65b8f232a08..3085c2e99dc 100644
---- a/docs/devel/code-provenance.rst
-+++ b/docs/devel/code-provenance.rst
-@@ -1,7 +1,7 @@
- .. _code-provenance:
- 
--Code provenance
--===============
-+Code provenance and AI usage
-+============================
- 
- Certifying patch submissions
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-@@ -288,62 +288,112 @@ content generators below.
- Use of AI-generated content
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
--TL;DR:
--
--  **Current QEMU project policy is to DECLINE any contributions which are
--  believed to include or derive from AI generated content. This includes
--  ChatGPT, Claude, Copilot, Llama and similar tools.**
--
--  **This policy does not apply to other uses of AI, such as researching APIs
--  or algorithms, static analysis, or debugging, provided their output is not
--  included in contributions.**
--
--The increasing prevalence of AI-assisted software development results in a
--number of difficult legal questions and risks for software projects, including
--QEMU.  Of particular concern is content generated by `Large Language Models
--<https://en.wikipedia.org/wiki/Large_language_model>`__ (LLMs).
--
--The QEMU community requires that contributors certify their patch submissions
--are made in accordance with the rules of the `Developer's Certificate of
--Origin (DCO) <dco>`.
--
--To satisfy the DCO, the patch contributor has to fully understand the
--copyright and license status of content they are contributing to QEMU. With AI
--content generators, the copyright and license status of the output is
--ill-defined with no generally accepted, settled legal foundation.
--
--Where the training material is known, it is common for it to include large
--volumes of material under restrictive licensing/copyright terms. Even where
--the training material is all known to be under open source licenses, it is
--likely to be under a variety of terms, not all of which will be compatible
--with QEMU's licensing requirements.
--
--How contributors could comply with DCO terms (b) or (c) for the output of AI
--content generators commonly available today is unclear.  The QEMU project is
--not willing or able to accept the legal risks of non-compliance.
--
--The QEMU project thus requires that contributors refrain from using AI content
--generators on patches intended to be submitted to the project, and will
--decline any contribution if use of AI is either known or suspected.
--
--Examples of tools impacted by this policy includes GitHub's CoPilot, OpenAI's
--ChatGPT, Anthropic's Claude, and Meta's Code Llama, and code/content
--generation agents which are built on top of such tools.
--
--This policy may evolve as AI tools mature and the legal situation is
--clarified.
--
--Exceptions
--^^^^^^^^^^
--
--The QEMU project welcomes discussion on any exceptions to this policy,
--or more general revisions. This can be done by contacting the qemu-devel
--mailing list with details of a proposed tool, model, usage scenario, etc.
--that is beneficial to QEMU, while still mitigating issues around compliance
--with the DCO.  After discussion, any exception will be listed below.
--
--Exceptions do not remove the need for authors to comply with all other
--requirements for contribution.  In particular, the "Signed-off-by"
--label in a patch submission is a statement that the author takes
--responsibility for the entire contents of the patch, including any parts
--that were generated or assisted by AI tools or other tools.
-+.. warning::
-+
-+   Please read the below policy before using AI to contribute code or
-+   documentation to QEMU. This applies to ChatGPT, Claude, Copilot,
-+   Llama, and similar tools.
-+
-+The increasing prevalence of AI-assisted software development,
-+and especially the use of content generated by `Large Language Models
-+<https://en.wikipedia.org/wiki/Large_language_model>`__ (LLMs),
-+poses a number of difficult questions.
-+
-+Risks to open source projects include maintainer burnout from an
-+increased number of contributions, as well as the risk to the project
-+from unintentional inclusion of copyrighted material in the LLM's output.
-+In order to mitigate these risks, the QEMU project currently allows
-+using AI/LLM tools to produce patches in a limited set of scenarios:
-+
-+**Mechanical changes**
-+  If you can use a deterministic tool or a script, it is preferred
-+  that you use it and not replace it with AI. If you don't know how
-+  to do the change deterministically, you can ask the AI for help.
-+
-+**Small bug fixes**
-+  These should be limited to 20 lines of code or less, not including
-+  tests. You are still expected to understand and explain your changes
-+  and the rationale behind them.
-+
-+**Tests**
-+  Note that you must still confirm that each test actually exercises
-+  the intended behavior including, for regression tests, that it
-+  fails without the code under test and passes for the right reason.
-+
-+**Documentation**
-+  Updates to documentation can be driven by an AI tool. However it is
-+  essential the result is carefully reviewed before submission. LLMs
-+  can write nicely worded and plausible prose that is still incorrect.
-+
-+These boundaries do not apply to other uses of AI, such as researching
-+APIs or algorithms, static analysis, or debugging, provided the model's
-+output is not included in contributions.
-+
-+If you wish to send large amounts of AI-generated changes, or any other
-+contribution not in the above categories, please get in touch with the
-+maintainer beforehand. It is at the discretion of the relevant
-+maintainers if they would review and accept such contributions.
-+
-+**Use of AI does not remove the need for authors to comply with all
-+other requirements for contribution.**  In particular, the
-+``Signed-off-by`` label in a patch submission is a statement that
-+the author takes responsibility for the entire contents of the patch,
-+certifying that their patch submission is made in accordance with the
-+rules of the `Developer's Certificate of Origin (DCO) <dco>`.
-+
-+Commit messages for AI-assisted changes
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+AI tools **should not be used to write commit messages**. The act of
-+summarising and explaining the reasoning for the changes is an
-+important demonstration of the human authors understanding of the
-+commit.
-+
-+When AI/LLM tools produce or substantively shape your patch, add an
-+``AI-used-for:`` trailer along with the sign-offs and other metadata
-+at the bottom of the commit message. The text of the trailer could be
-+one or more of ``code``, ``tests``, ``docs``, ``research``, possibly
-+followed by an explanation in parentheses:
-+
-+.. code-block:: none
-+
-+     AI-used-for: tests, docs
-+     AI-used-for: code
-+     AI-used-for: code (refactoring)
-+     AI-used-for: code (prototype)
-+     AI-used-for: research
-+
-+The trailer is intended as a clarification of your DCO obligations as
-+well as to guide reviewers. It is not intended for minimal usage such
-+as autocomplete or asking for a pre-review of the patch, and it does
-+not remove your responsibility to understand the changes that you are
-+submitting.
-+
-+There is no requirement to include your prompts or summarize the
-+conversation in the commit message or cover letter, but you may do so
-+if you think it helps a reviewer judge the result. For example:
-+
-+**Helpful prompts**
-+  These describe concrete constraints or instructions, making it easy for a
-+  reviewer to see how the tool's output was guided:
-+
-+  * "move field ``foo`` from ``struct aa`` to ``struct bb``.  If a
-+    function already has a local variable or parameter of type ``struct
-+    bb``, use it instead of accessing ``aa.bb``"
-+
-+  * "add an implementation of the trait for ``Mutex<T: MyTrait>``; for
-+    the implementation, take the lock around the calls and forward to ``T``"
-+
-+**Unhelpful prompts**
-+  These are too generic to provide meaningful context:
-+
-+  * "write user-facing documentation for the new tool"
-+
-+  * "write testcases for the new functions"
-+
-+QEMU does *not* use ``Assisted-by`` or ``Generated-by`` trailers.  In
-+particular, it is not necessary to specify the exact AI model or tool
-+used to create the commit.
-+
-+Deterministic tooling (sed, coccinelle, formatters) is out of scope for
-+the trailer, but should be mentioned in the commit message.
+  - roll-up policy update patch with review feedback
+  - caveman all the skills
+  - teach triage about versions
+  - various tags
+
+Alex.
+
+Alex Bennée (11):
+  AGENTS.md: introduce a very basic guide for AI agents
+  AGENTS.md: expand with information on skills, layout and style
+  scripts/expand-macro.py: helper script exploding macros
+  .agents/skills: add qemu-code-explorer skill (caveman)
+  .agents/skills: add qemu-build skill (caveman)
+  .agents/skills: add qemu-testing skill (caveman)
+  .agents/skills: add qemu-code-reviewer skill (caveman)
+  .agents/skills: add qemu-mail-thread skill (caveman)
+  .agents/skills: add qemu-issue-helper skill (caveman)
+  .agents/skills: add qemu-issue-triage agent skill (caveman)
+  MAINTAINERS: add a section for AI agents
+
+Paolo Bonzini (1):
+  docs/devel: relax policy on AI-generated contributions
+
+ MAINTAINERS                                   |   6 +
+ docs/devel/code-provenance.rst                | 172 +++++++----
+ .agents/skills/qemu-build/SKILL.md            |  49 ++++
+ .agents/skills/qemu-code-explorer/SKILL.md    |  84 ++++++
+ .../qemu-code-explorer/evals/evals.json       |  26 ++
+ .agents/skills/qemu-code-reviewer/SKILL.md    |  98 +++++++
+ .agents/skills/qemu-issue-helper/SKILL.md     |  47 +++
+ .agents/skills/qemu-issue-triage/SKILL.md     | 100 +++++++
+ .../qemu-issue-triage/assets/labels.txt       | 133 +++++++++
+ .../skills/qemu-issue-triage/evals/evals.json |  18 ++
+ .../scripts/update_labels.sh                  |  16 +
+ .agents/skills/qemu-mail-thread/SKILL.md      |  37 +++
+ .../scripts/qemu_mail_parser.py               |  98 +++++++
+ .agents/skills/qemu-testing/SKILL.md          |  70 +++++
+ .gitignore                                    |   2 +
+ AGENTS.md                                     | 107 +++++++
+ GEMINI.md                                     |   1 +
+ scripts/expand-macro.py                       | 274 ++++++++++++++++++
+ 18 files changed, 1277 insertions(+), 61 deletions(-)
+ create mode 100644 .agents/skills/qemu-build/SKILL.md
+ create mode 100644 .agents/skills/qemu-code-explorer/SKILL.md
+ create mode 100644 .agents/skills/qemu-code-explorer/evals/evals.json
+ create mode 100644 .agents/skills/qemu-code-reviewer/SKILL.md
+ create mode 100644 .agents/skills/qemu-issue-helper/SKILL.md
+ create mode 100644 .agents/skills/qemu-issue-triage/SKILL.md
+ create mode 100644 .agents/skills/qemu-issue-triage/assets/labels.txt
+ create mode 100644 .agents/skills/qemu-issue-triage/evals/evals.json
+ create mode 100755 .agents/skills/qemu-issue-triage/scripts/update_labels.sh
+ create mode 100644 .agents/skills/qemu-mail-thread/SKILL.md
+ create mode 100644 .agents/skills/qemu-mail-thread/scripts/qemu_mail_parser.py
+ create mode 100644 .agents/skills/qemu-testing/SKILL.md
+ create mode 100644 AGENTS.md
+ create mode 120000 GEMINI.md
+ create mode 100755 scripts/expand-macro.py
+
 -- 
 2.47.3
 
