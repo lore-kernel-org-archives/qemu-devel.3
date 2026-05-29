@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC629CD6E43
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:18:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03E07CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:18:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSvDQ-0001CH-4d; Fri, 29 May 2026 07:17:24 -0400
+	id 1wSvDl-0001ZS-Mt; Fri, 29 May 2026 07:17:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wSvDO-0001Bk-6l
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:17:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wSvDj-0001Sx-EV
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:17:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wSvDM-0008G9-LS
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:17:21 -0400
+ id 1wSvDi-0008LT-4N
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:17:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780053439;
+ s=mimecast20190719; t=1780053461;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aUnppt3zZ6J4KL/3jUgG//BerI9sXfCD2NeAfiGYx0E=;
- b=eMz0RbIkUn9T9hmHektU02go7onX6aPCqYQ9i2+gCFbwbUY9hQvox2rE1wg6CbMcGi+zux
- EjwYETV+gHKGkXTLFGtQdexWWrnPCEBDGAWLcT1ubeHT66vEqzIrdsH7TpQv/PZWIEeFdm
- 1hvmkwUnIJLpTuGj4e9DSozvlCqoHo0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=6K3XQqYyaBJEyhYGRQWW9UcrsUENmBwDbMiigmHod70=;
+ b=BTGte6UGs5GIIFfp1dBsFJM57tz7yh0l4UjoOl4446MfLyPP2ZKLBt6bpBO6Hib2MwzUFg
+ QFK8KvqN+EKH65ZoQ/hlKDAdIAgZPsU4mokKCdXAys299Vyy0LWC0pNToIb1j75OYGb3pO
+ mhN52vuWtZinuDiQRqI8UoKlMlH+/1U=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-7-H9WSfipQM8yVYJYaxJ8CFg-1; Fri,
- 29 May 2026 07:17:14 -0400
-X-MC-Unique: H9WSfipQM8yVYJYaxJ8CFg-1
-X-Mimecast-MFC-AGG-ID: H9WSfipQM8yVYJYaxJ8CFg_1780053433
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-652-5A4RuWDUOn6Eit6yA7ba1w-1; Fri,
+ 29 May 2026 07:17:38 -0400
+X-MC-Unique: 5A4RuWDUOn6Eit6yA7ba1w-1
+X-Mimecast-MFC-AGG-ID: 5A4RuWDUOn6Eit6yA7ba1w_1780053457
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EC68A180060F; Fri, 29 May 2026 11:17:12 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EC9491956056; Fri, 29 May 2026 11:17:36 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8DBA11800465; Fri, 29 May 2026 11:17:11 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DA91A30001BB; Fri, 29 May 2026 11:17:35 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 29 May 2026 15:16:26 +0400
-Subject: [PATCH 05/32] vfio/pci: close display console during unrealize,
- not finalize
+Date: Fri, 29 May 2026 15:16:30 +0400
+Subject: [PATCH 09/32] ui: stop ui timer when closing
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260529-b4-ui-v1-5-8db3068421ef@redhat.com>
+Message-Id: <20260529-b4-ui-v1-9-8db3068421ef@redhat.com>
 References: <20260529-b4-ui-v1-0-8db3068421ef@redhat.com>
 In-Reply-To: <20260529-b4-ui-v1-0-8db3068421ef@redhat.com>
 To: qemu-devel@nongnu.org
@@ -68,34 +67,35 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3665;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=738;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=ttKR1/sfL9cktoq6rbHU+J5rJDaU7RMjgOqYO6e1mjM=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqGXWPltb3cKVepBIG91NiEmrOif4orMn8xGCNw
- qk0xFDpKuWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCahl1jwAKCRDa6OEJdZac
- 5WE7D/4rQ0y1hitU6hAzaioqr5HrgIIXkEe49k1LzynlsCAT5RaQqQJVw0AWt4u63wPhjSGQVKe
- 7kwwM042PTLsLC4c/r3LcJjqDSZf2lcllJZqTRkBU0rzC8xHFirL4ewgaRjDLxAPqIdxhI6Tov6
- khCxZYw3FYvb7SKj4cIrPOgcIA6HJcS+HTxPgBZ5COpqJOk3y/4zGpryUpRriLf5h2o6zmOaQhJ
- g+QcFflItBt6/PQvIRZWSDQR+K+jz+XWv37Vd7spYqxOFEHlxdHYdWBZ4dQz9zw07Zz+Kdp7kur
- TXocn7CbERf1Ay89wNGDgWgGzcMv+tPY7WBwXFXWhY0rJY9jQUAU+pQTBCyn1MP0vHtrDJdc/1V
- s2PLqHTFaMT3G3QGTQoxAHfEDcEzEWIxNLhkRGFrR5ymwTDsXgjSePyW9VbYaGobdMoG2VxssNE
- 71Vt1HcYoQuhnHH8LmUyYRwfOv2hzEaiS51wDlBD3nYAmb1mRSrEMHEYVjhGzUpTYTlvTqwOTLZ
- 3kY9QkN6n0fE68q2sLJ9l15jbqciAa6CFftDrDjEqoepYladWxJ5YtXClrD/9eE6bpgg0t1HFK+
- LNUPxzWg+t3NzeuchJieMYp/9Qbfh+pukqr4sRdLkdY2IloX51XOfSwInJBXy3Or6IRjwShhySy
- nPEgOV56DusQV9g==
+ bh=YUzpFgJn1xd0cDCfwxua7PPmtRu9gxO8rB3nqbkqdZI=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqGXWPGqDqVgIA7MJNrgWiIzpODVWrg/A9meuyf
+ 2c5FVMWJpCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCahl1jwAKCRDa6OEJdZac
+ 5XpjEACIGnxqyJqedzsgfRwo4Uh1+tYMzzei+CFirlKCbSIgrf1YXGvrJcMDXZwI/V/a3XbDqgf
+ Z8bLR+NEtOE4ca1WXmOJWYeJjh3Sfv89RBzu5wdh3iNlR6PJQPxI/fnFrIoDpb3pzDDQby4p+/N
+ hvsU85qFS/eytYmaGDAFyulGamVKxw9LcimJECMjR/Ym3RnMwn3AGFB+IGrjWyHObEMI7bSwXRd
+ bCsfHfVbrMI5/6sz97pRlUutO1F+2PRnuYQvFe/YfUxuzwdbne8SlpYLLf8k99OTa1/X8NxkwLd
+ b/NjQHK0IsRLxrMnCH/NahWyDgfrXh8ZEk/Wb9x8c0i0Rnax48Dime8pTJem6x86vBH4OUM4EzY
+ 8d1IYGhhxhe8G7k3HMJnKqHBCl4uAns9VNMW/gLL2WsH8k/5JQvj0a3WKAjpdHyY2bpgnFW37+G
+ 0/xAg78PCG/4PUQ2NN9f5HHFgMANv3kamFC47s8DvAohr98/TA6xnkJ4hifeeOMyjtN6seH42dT
+ Ey7B9o7py3Cs/FLy6ZczQ9O1A7wIEjGo4KkBvtciD4GfMlrY6f0/F3agCTyE20FeYj0pT9E5aeV
+ B2hxyStj7wcIlKl9fTysHvNYYVOl2vp3qwMBG4DY7xdHVdBMS+zsUjhTqFKbpmrjIVDEhVoTTDo
+ dc9DqYXRvp+gH+g==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,110 +111,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The QemuGraphicConsole holds a strong QOM link back to the device via
-its "device" property (OBJ_PROP_LINK_STRONG). When graphic_console_close()
-is only called from vfio_display_finalize() during object finalize, this
-creates a ref-cycle deadlock: the device can't reach refcount 0 because
-the console holds a strong ref, but the console's ref is only dropped by
-graphic_console_close() which runs inside finalize.
+hwops is reset, so if the UI timer is pending it will crash.
 
-Split the display teardown into two phases:
-- vfio_display_exit(): called during unrealize (vfio_exitfn), closes
-  the graphic console to break the ref cycle, and removes display
-  region subregions while the parent memory regions are still alive.
-- vfio_display_finalize(): remains in finalize (vfio_pci_put_device),
-  frees display region memory, dmabuf, and edid resources. The region
-  memory contains QOM child objects (MemoryRegions) that must stay
-  alive until QOM finalization has processed them.
-
+Fixes: 9588d67e72 ("console: minimal hotplug suport")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/vfio/pci.h     |  1 +
- hw/vfio/display.c | 30 +++++++++++++++++++-----------
- hw/vfio/pci.c     |  1 +
- 3 files changed, 21 insertions(+), 11 deletions(-)
+ ui/console.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index c3a1f53d350..cf567115870 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -270,6 +270,7 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp);
+diff --git a/ui/console.c b/ui/console.c
+index a7c977d0c44..436444723a5 100644
+--- a/ui/console.c
++++ b/ui/console.c
+@@ -1136,6 +1136,7 @@ void qemu_graphic_console_close(QemuConsole *con)
+     trace_console_gfx_close(con->index);
+     object_property_set_link(OBJECT(con), "device", NULL, &error_abort);
+     qemu_graphic_console_set_hwops(con, &unused_ops, NULL);
++    timer_del(con->ui_timer);
  
- void vfio_display_reset(VFIOPCIDevice *vdev);
- bool vfio_display_probe(VFIOPCIDevice *vdev, Error **errp);
-+void vfio_display_exit(VFIOPCIDevice *vdev);
- void vfio_display_finalize(VFIOPCIDevice *vdev);
- 
- extern const VMStateDescription vfio_display_vmstate;
-diff --git a/hw/vfio/display.c b/hw/vfio/display.c
-index 8f91e83da88..34cc25ee0e0 100644
---- a/hw/vfio/display.c
-+++ b/hw/vfio/display.c
-@@ -505,15 +505,6 @@ static bool vfio_display_region_init(VFIOPCIDevice *vdev, Error **errp)
-     return true;
- }
- 
--static void vfio_display_region_exit(VFIODisplay *dpy)
--{
--    if (!dpy->region.buffer.size) {
--        return;
--    }
--
--    vfio_region_exit(&dpy->region.buffer);
--    vfio_region_finalize(&dpy->region.buffer);
--}
- 
- /* ---------------------------------------------------------------------- */
- 
-@@ -547,17 +538,34 @@ bool vfio_display_probe(VFIOPCIDevice *vdev, Error **errp)
-     return false;
- }
- 
--void vfio_display_finalize(VFIOPCIDevice *vdev)
-+void vfio_display_exit(VFIOPCIDevice *vdev)
- {
-     if (!vdev->dpy) {
-         return;
-     }
- 
-+    if (display_opengl) {
-+        qemu_console_set_display_gl_ctx(vdev->dpy->con, NULL);
-+    }
-     qemu_graphic_console_close(vdev->dpy->con);
-+    if (vdev->dpy->region.buffer.size) {
-+        vfio_region_exit(&vdev->dpy->region.buffer);
-+    }
-+}
-+
-+void vfio_display_finalize(VFIOPCIDevice *vdev)
-+{
-+    if (!vdev->dpy) {
-+        return;
-+    }
-+
-     vfio_display_dmabuf_exit(vdev->dpy);
--    vfio_display_region_exit(vdev->dpy);
-+    if (vdev->dpy->region.buffer.size) {
-+        vfio_region_finalize(&vdev->dpy->region.buffer);
-+    }
-     vfio_display_edid_exit(vdev->dpy);
-     g_free(vdev->dpy);
-+    vdev->dpy = NULL;
- }
- 
- static bool migrate_needed(void *opaque)
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 9c06b25e637..78beacd24e1 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3624,6 +3624,7 @@ static void vfio_exitfn(PCIDevice *pdev)
-     VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(pdev);
-     VFIODevice *vbasedev = &vdev->vbasedev;
- 
-+    vfio_display_exit(vdev);
-     vfio_unregister_req_notifier(vdev);
-     vfio_unregister_err_notifier(vdev);
-     pci_device_set_intx_routing_notifier(pdev, NULL);
+     if (con->gl) {
+         qemu_console_gl_scanout_disable(con);
 
 -- 
 2.54.0
