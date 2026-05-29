@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9067DCD5BD1
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 02:31:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 150EFCD6E4C
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 02:31:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSmzu-0000g1-Cp; Thu, 28 May 2026 22:30:54 -0400
+	id 1wSmzu-0000gI-RG; Thu, 28 May 2026 22:30:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wangxiang@iscas.ac.cn>)
- id 1wSmzs-0000fU-5W
- for qemu-devel@nongnu.org; Thu, 28 May 2026 22:30:52 -0400
+ id 1wSmzt-0000fe-18
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 22:30:53 -0400
 Received: from smtp81.cstnet.cn ([159.226.251.81] helo=cstnet.cn)
  by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
  (Exim 4.90_1) (envelope-from <wangxiang@iscas.ac.cn>)
- id 1wSmzp-0007N0-8o
- for qemu-devel@nongnu.org; Thu, 28 May 2026 22:30:51 -0400
+ id 1wSmzp-0007My-8y
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 22:30:52 -0400
 Received: from localhost (unknown [122.194.100.152])
- by APP-03 (Coremail) with SMTP id rQCowAAHI9pS+hhq7ULNEg--.64S2;
- Fri, 29 May 2026 10:30:42 +0800 (CST)
+ by APP-03 (Coremail) with SMTP id rQCowACXt95R+hhqxULNEg--.10253S2;
+ Fri, 29 May 2026 10:30:41 +0800 (CST)
 From: Xiang W <wangxiang@iscas.ac.cn>
 To: qemu-devel@nongnu.org
 Cc: Xiang W <wangxiang@iscas.ac.cn>, mst@redhat.com, imammedo@redhat.com,
  anisinha@redhat.com, peter.maydell@linaro.org
-Subject: [PATCH v2 2/3] hw/acpi: Fix Terminal Type and Language field order in
+Subject: [PATCH v2 0/3] acpi: Fix Terminal Type and Language field order in
  SPCR table
-Date: Fri, 29 May 2026 10:30:59 +0800
-Message-ID: <20260529023100.42508-3-wangxiang@iscas.ac.cn>
+Date: Fri, 29 May 2026 10:30:57 +0800
+Message-ID: <20260529023100.42508-1-wangxiang@iscas.ac.cn>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260529023100.42508-1-wangxiang@iscas.ac.cn>
-References: <20260529023100.42508-1-wangxiang@iscas.ac.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: rQCowAAHI9pS+hhq7ULNEg--.64S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7XF48CFWxJr4xAw4kJw17trb_yoW8JF1UpF
- s0qrW3KrsrJ34fCa1UAF9rCF1rWaykJ3yxCayqkwn8ua4Ig348tFy5Kw4fX3W7K348Wayk
- Cr4jq3W8Wr4IyFJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUvl14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
- 1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
- 6r4UJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Cr
- 1j6rxdM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj
- 6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr
- 0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkF7I0En4kS14v2
- 6r1q6r43MxkIecxEwVAFwVW8JwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJV
- W8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF
- 1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUCVW8JwCI42IY6x
- IIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvE
- x4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvj
- DU0xZFpf9x0JUyGQDUUUUU=
+X-CM-TRANSID: rQCowACXt95R+hhqxULNEg--.10253S2
+X-Coremail-Antispam: 1UD129KBjvdXoW7XF48CFWxJr4xCr13ur1DAwb_yoW3Wrg_uw
+ n7KFykJwnrZ3WkZr1xA3ZrA3s09a17CF1fCrnxtrZYkr1xZFsrAFs2qasYvF1xAa1fGr4x
+ twnYvrW3Grs3WjkaLaAFLSUrUUUUbb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+ 9fnUUIcSsGvfJTRUUUbsAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2IYs7xG
+ 6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
+ A2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr0_
+ Gr1UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x0267AKxVWxJr
+ 0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E
+ 2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJV
+ W8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lc7CjxVAaw2AFwI0_
+ Jw0_GFylc2xSY4AK67AK6r4UMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r
+ 4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF
+ 67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2I
+ x0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2
+ z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnU
+ UI43ZEXa7VUbznQUUUUUU==
 X-Originating-IP: [122.194.100.152]
 X-CM-SenderInfo: pzdqw5pldqwq5lvft2wodfhubq/
 Received-SPF: pass client-ip=159.226.251.81;
  envelope-from=wangxiang@iscas.ac.cn; helo=cstnet.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ URI_TRY_3LD=0.645 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,37 +79,25 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 According to the ACPI Serial Port Console Redirection Table (SPCR)
 specification, the field order after Flow Control is:
 
- - Terminal Type (offset 62, 1 byte)
- - Language (offset 63, 1 byte)
-
-This fixes:
-  - hw/acpi/aml-build.c
+  - Terminal Type (offset 62, 1 byte)
+  - Language (offset 63, 1 byte)
 
 Reference:
 https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/serial-port-console-redirection-table
 
-Signed-off-by: Xiang W <wangxiang@iscas.ac.cn>
----
- hw/acpi/aml-build.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Sia Jee Heng (1):
+  qtest: allow SPCR acpi table changes
 
-diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-index 7edc8aed42..2adf2810c3 100644
---- a/hw/acpi/aml-build.c
-+++ b/hw/acpi/aml-build.c
-@@ -2116,10 +2116,10 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
-     build_append_int_noprefix(table_data, f->stop_bits, 1);
-     /* Flow Control */
-     build_append_int_noprefix(table_data, f->flow_control, 1);
--    /* Language */
--    build_append_int_noprefix(table_data, f->language, 1);
-     /* Terminal Type */
-     build_append_int_noprefix(table_data, f->terminal_type, 1);
-+    /* Language */
-+    build_append_int_noprefix(table_data, f->language, 1);
-     /* PCI Device ID  */
-     build_append_int_noprefix(table_data, f->pci_device_id, 2);
-     /* PCI Vendor ID */
+Xiang W (2):
+  hw/acpi: Fix Terminal Type and Language field order in SPCR table
+  tests/qtest/bios-tables-test: Fix Terminal Type and Language field
+    order in SPCR table
+
+ hw/acpi/aml-build.c                   |   4 ++--
+ tests/data/acpi/loongarch64/virt/SPCR | Bin 80 -> 80 bytes
+ tests/data/acpi/riscv64/virt/SPCR     | Bin 90 -> 90 bytes
+ 3 files changed, 2 insertions(+), 2 deletions(-)
+
 -- 
 2.47.3
 
