@@ -4,124 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BDA2CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 13:34:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF746CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 13:40:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSxLm-0005Xm-S5; Fri, 29 May 2026 09:34:10 -0400
+	id 1wSxQn-0006vF-6R; Fri, 29 May 2026 09:39:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wSxLl-0005Xb-Lh
- for qemu-devel@nongnu.org; Fri, 29 May 2026 09:34:09 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wSxLj-0002s1-NU
- for qemu-devel@nongnu.org; Fri, 29 May 2026 09:34:09 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id ABB6666E3A;
- Fri, 29 May 2026 13:34:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1780061645; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=u64qVmyX8GlwlEOVOKDclvw6jIlj3W/TL/bkp6NNLJw=;
- b=TMzppqsPUOuB+QU80ZdX3qwy0xBzqYSRkzK0DQY+oKLoYgkba06VSgd2oikTFs3EAOyF4W
- 4PH5hnwPeGlaKB3VZc5hWTZTSEXRzXpbSMzOTkihYauNfMpbkqdCyjgvhgHxMvcNHkbF5e
- QS9SOqjtepp3gmHysKnKv8vtLOPEAAw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1780061645;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=u64qVmyX8GlwlEOVOKDclvw6jIlj3W/TL/bkp6NNLJw=;
- b=CAVR67bxo9jUUUFdD1w2T7Asfi8C+H2L6dvK7SW6SZdR9sLkPpmWUufVeOt/J7Z1XC1vSA
- 4TRSYmt/180nthDw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=TMzppqsP;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=CAVR67bx
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1780061645; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=u64qVmyX8GlwlEOVOKDclvw6jIlj3W/TL/bkp6NNLJw=;
- b=TMzppqsPUOuB+QU80ZdX3qwy0xBzqYSRkzK0DQY+oKLoYgkba06VSgd2oikTFs3EAOyF4W
- 4PH5hnwPeGlaKB3VZc5hWTZTSEXRzXpbSMzOTkihYauNfMpbkqdCyjgvhgHxMvcNHkbF5e
- QS9SOqjtepp3gmHysKnKv8vtLOPEAAw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1780061645;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=u64qVmyX8GlwlEOVOKDclvw6jIlj3W/TL/bkp6NNLJw=;
- b=CAVR67bxo9jUUUFdD1w2T7Asfi8C+H2L6dvK7SW6SZdR9sLkPpmWUufVeOt/J7Z1XC1vSA
- 4TRSYmt/180nthDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 40F07779A7;
- Fri, 29 May 2026 13:34:05 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id Byr5BM2VGWrWSgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 29 May 2026 13:34:05 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, =?utf-8?Q?Daniel_P=2E_Berrang?=
- =?utf-8?Q?=C3=A9?=
- <berrange@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>, Pierrick
- Bouvier <pierrick.bouvier@oss.qualcomm.com>, Laurent Vivier
- <lvivier@redhat.com>, Alex Williamson <alex@shazbot.org>, =?utf-8?Q?C?=
- =?utf-8?Q?=C3=A9dric?= Le Goater
- <clg@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, Akihiko Odaki
- <odaki@rsg.ci.i.u-tokyo.ac.jp>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH 32/32] tests/qtest: add D-Bus display hotplug test
-In-Reply-To: <20260529-b4-ui-v1-32-8db3068421ef@redhat.com>
-References: <20260529-b4-ui-v1-0-8db3068421ef@redhat.com>
- <20260529-b4-ui-v1-32-8db3068421ef@redhat.com>
-Date: Fri, 29 May 2026 10:34:02 -0300
-Message-ID: <87fr3atk51.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wSxQj-0006uZ-3i
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 09:39:17 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wSxQh-0004OY-I9
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 09:39:16 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64TDLDWU154458
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 13:39:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ eqLKTMoRsKLQgoSRd5utjONT413qeJGEMK1P59WVr6c=; b=MxJsuI/kvso9dTZo
+ c1L9/JQvoesZ090SnsYzN1Scb68wt80edV1HNVp84HL1MuqkywbZhmywrQ3bHFfY
+ kHL/jYqgbrlLls1Fru7ZOjKPBWTEqlPaVtVJB71DqD1PS+oOhFiL5jwKLfcTW1de
+ b9HAK9rgvuOFQg7Y8xOadnex8l/TTDIa0CFEMFgAOwpM4YYqWUiijQATF/DI/+C8
+ oqgJPEtDZnCsnPLHm022JLKGEquIWSm4gHya5VuiA4HCSwNlwP+Ywnt/YBsmkFzs
+ WYgiyFVAktHXgJiRqS6YGz7G4s/vjOSyzpsL9T4Y9BQv9BiDuTZRSNOjnerKWqxq
+ SbM0vA==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eeuy5by4k-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 13:39:10 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-8cce42a4e75so18683276d6.3
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 06:39:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1780061950; x=1780666750; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=eqLKTMoRsKLQgoSRd5utjONT413qeJGEMK1P59WVr6c=;
+ b=VKRUi1SZGSFaDTiA2U077VyOiLNAhah14EoO8Iyb0PgjoHLVQR3zGCWpwuACC3X7OU
+ KAzUhHGXCcupWbFxxdIsvYuV7ybTAWqg1E3upZfrn+cLwCAykTOetS3EvjoTa6T5wYC3
+ a8Ed40xxwBVfnSivbYxsSTlelhRs5eGxKHq8IyjAsJHFVAkVuh3L9lJcK2MP8yOyqsH1
+ ML+h0t1dVxWeCS5OuGj/gtgb87Jy7K4ceQn5iRWeUrnh+P/FifD2cdcvLLz0VHXXIdT0
+ t0SFH8ImPw2CQBSznUPTDqs9oghoMFt03iXt9SH/HRgRG2PjRKeHqnVEcSL00TGD984d
+ 5EaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780061950; x=1780666750;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=eqLKTMoRsKLQgoSRd5utjONT413qeJGEMK1P59WVr6c=;
+ b=Qwb1G2p90K92Aof2LT1eNopPm8S4YdiKNHnWmBF+3IUa/Gs6/F7t04Y7ap0Ms2UTQ2
+ hlTew8deDkdSHPM1GllA2y1du4VRfE1FMWs4ID92JZbGBN5PVLjoSFnOxiCqEZMkiNcn
+ EIKKv2Z8XTRMic/wQW+qP5Xo4KNzQ9RchWHXY6hH5wV1HvHmqHP8KTaaMpErVtF8rLgb
+ VCYW4Qdi7+hH8M4Ffux80z2INVcI24HkP73bQstnlCZ7l9xCpfwxEYCWNwVqzlPu0PDn
+ orbz5Etaj7k/4TwsTIYZzl5se+Y7L/+ms9HehJ6AKg92W473U9NiRoDBbSa0FcsRQUzY
+ AAtQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8Ht7XFi8LmmLQ+pp+VDjA8C4msrm6X8qkjCEdGxAl20xZYXL6aVbB6BjJCPpsjlLKFaDAkP+C+qgzE@nongnu.org
+X-Gm-Message-State: AOJu0Yzyzv6VVBYY+u5j3yM7eapy/cvekUc72jguDUhQnKXmN8LBDBmf
+ FgHwT4wKaDaWKn6FPiUD5UugBs9yIRqYWe19gAkQwmzSX1X1aCw2G5U7qbW0p+GO13/MJAPHmNT
+ BmW12vsgRKJT0eVrwbzanHyIWuZp8uoy6h0aFiOjyWn5j30Y1FTE6YsBfgA==
+X-Gm-Gg: Acq92OEaoqFwguuy2MFCY0i2T0kDBPjhIMCyxBnYKFz5gDZXTUXbo8BNngcELtLsVUN
+ DfaBtbAVjbNky9tRDWs29xUS85iWZUitk+3RhaYcRqzJfmrH8eXdSv7wYp80m2EcAzboOJ0x6RB
+ rmaFymsqNjBa7AxbxJ9nxudWyA/lYyxLzikUf4eigbrvQKxHPeVdWzj2UpJ9KdtjwYQ9PE8Mi6Z
+ iEN5cSZ6cAKTMvnjU8VYURi9tKl7fQS92mpDrtidCg6g4kH+qzzl8D0jLwyX5QoUbIrDMCqVIKS
+ uL7YU8Rk8kkbckLrgzZpFgzZBDD7LP0vpB5Yefd2M/NeG73hFf39AHW2LfzxknN7X239YGVEB8H
+ 7LuXxztGk//FJ7A2BKPjTdZd1wdb+BIFl/KPpoyVj32mgCHb+c6oShcYnnpkUu69HPbeg
+X-Received: by 2002:a05:620a:40d2:b0:912:1206:ddd1 with SMTP id
+ af79cd13be357-9152fd1e304mr370048685a.1.1780061949851; 
+ Fri, 29 May 2026 06:39:09 -0700 (PDT)
+X-Received: by 2002:a05:620a:40d2:b0:912:1206:ddd1 with SMTP id
+ af79cd13be357-9152fd1e304mr370042885a.1.1780061949258; 
+ Fri, 29 May 2026 06:39:09 -0700 (PDT)
+Received: from [192.168.68.106] ([177.170.117.62])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-9153244e114sm203883385a.5.2026.05.29.06.39.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 29 May 2026 06:39:08 -0700 (PDT)
+Message-ID: <599f551b-0ca4-465d-8c78-d7612f3191a5@oss.qualcomm.com>
+Date: Fri, 29 May 2026 10:39:03 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: ABB6666E3A
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[12]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,suse.de:mid];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/riscv/numa.c: Supplement cpu topology arguments
+To: liu.xuemei1@zte.com.cn, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu.zevorn@gmail.com
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+References: <20260529181848378wiq8pXCmbwAZR5_-wZFJd@zte.com.cn>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260529181848378wiq8pXCmbwAZR5_-wZFJd@zte.com.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=SPtykuvH c=1 sm=1 tr=0 ts=6a1996fe cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=1RTuLK3dAAAA:8 a=EUspDBNiAAAA:8 a=2M_qXnMZ40JJAAL4XIsA:9 a=QEXdDO2ut3YA:10
+ a=OIgjcC2v60KrkQgK7BGD:22 a=kRpfLKi8w9umh8uBmg1i:22
+X-Proofpoint-GUID: Vlp5CUSYfwAzk-Os7PgqfaNTdNhtQ6dL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI5MDEzNiBTYWx0ZWRfXy3Kp7BHZJajF
+ N3ohMSJqsy11RJkLFoy9RBRo7C333Xexl8Q/l+tN6t2SP3vUEkFEi8eVi+9e9X1DJJrMZTjDI+a
+ cnTNJw1ZkCdWCkJ3Txmvyk/Xai0tSy0RSPC+S41yFO3/HgXf0525a2uwBxZeHvkhbofPfhThG5C
+ vnzpX4FmlhQz5Uqqou16mrL3cgs6uu6cCXe4mLM3U+DDMQp+Ts2pr1n13MSlt1+gA6JofSD5iGZ
+ 8LAdDAxuizeX44UCLb2ERopTx5Y9VOOdeUK9RBf26aOZEjX78FDunOPJZwu78r1fgqcyIU6xYcz
+ ODWl+pc/YRfzmmYWqgxbDuGdwr5eAWDSEBVtlaW/61sp9N5jIO4aUlYDsz4BFjoSRLQugGQtves
+ Wib/0iz1+n7fju3aJHjoQIr+ezBPZ5lykdIISHGz7ypraQATECnZaK9etQCdqB8rzHBkDsjcxaX
+ oJlnoSjDsK2vioubBwA==
+X-Proofpoint-ORIG-GUID: Vlp5CUSYfwAzk-Os7PgqfaNTdNhtQ6dL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-05-29_03,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
+ suspectscore=0 malwarescore=0 clxscore=1015 phishscore=0 bulkscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
+ definitions=main-2605290136
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,175 +153,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
 
-> Add a qtest that verifies display consoles are dynamically added and
-> removed over D-Bus when a bochs-display device is hotplugged and
-> unplugged on a q35 machine.
->
-> The test plugs device_add a bochs-display, waits for the DEVICE_ADDED
-> QMP event, and checks that the D-Bus VM interface reports a second
-> console. It then device_del it, forces a system reset
-> (q35 removal is ACPI-based and needs guest cooperation qtest cannot
-> provide), waits for DEVICE_DELETED, and checks the console count again.
->
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+On 5/29/2026 7:18 AM, liu.xuemei1@zte.com.cn wrote:
+> From: Xuemei Liu <liu.xuemei1@zte.com.cn>
+> 
+> Supplement RISC-V cpu topology arguments, including support socket
+> cluster and threads per core.
+> 
+> Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
 > ---
->  tests/qtest/dbus-display-test.c | 101 ++++++++++++++++++++++++++++++++++=
-+++++-
->  1 file changed, 99 insertions(+), 2 deletions(-)
->
-> diff --git a/tests/qtest/dbus-display-test.c b/tests/qtest/dbus-display-t=
-est.c
-> index 5773776cad5..7838ce7323f 100644
-> --- a/tests/qtest/dbus-display-test.c
-> +++ b/tests/qtest/dbus-display-test.c
-> @@ -7,6 +7,8 @@
->  #include <gio/gio.h>
->  #include <gio/gunixfdlist.h>
->  #include "libqtest.h"
-> +#include "qobject/qdict.h"
-> +#include "qobject/qstring.h"
->  #include "ui/dbus-display1.h"
->=20=20
->  static GDBusConnection*
-> @@ -38,11 +40,11 @@ test_dbus_p2p_from_fd(int fd)
->  }
->=20=20
->  static void
-> -test_setup(QTestState **qts, GDBusConnection **conn)
-> +test_setup_args(QTestState **qts, GDBusConnection **conn, const char *ar=
-gs)
->  {
->      int pair[2];
->=20=20
-> -    *qts =3D qtest_init("-display dbus,p2p=3Dyes -name dbus-test");
-> +    *qts =3D qtest_init(args);
->=20=20
->      g_assert_cmpint(qemu_socketpair(AF_UNIX, SOCK_STREAM, 0, pair), =3D=
-=3D, 0);
->=20=20
-> @@ -52,6 +54,12 @@ test_setup(QTestState **qts, GDBusConnection **conn)
->      g_dbus_connection_start_message_processing(*conn);
->  }
->=20=20
-> +static void
-> +test_setup(QTestState **qts, GDBusConnection **conn)
-> +{
-> +    test_setup_args(qts, conn, "-display dbus,p2p=3Dyes -name dbus-test"=
-);
-> +}
-> +
->  static void
->  test_dbus_display_vm(void)
->  {
-> @@ -360,6 +368,92 @@ test_dbus_display_keyboard(void)
->      qtest_quit(qts);
->  }
->=20=20
-> +static gsize
-> +get_console_ids_count(GDBusConnection *conn)
-> +{
-> +    g_autoptr(GError) err =3D NULL;
-> +    g_autoptr(QemuDBusDisplay1VMProxy) vm =3D NULL;
-> +    GVariant *console_ids;
-> +    gsize n_ids =3D 0;
-> +
-> +    vm =3D QEMU_DBUS_DISPLAY1_VM_PROXY(
-> +        qemu_dbus_display1_vm_proxy_new_sync(
-> +            conn,
-> +            G_DBUS_PROXY_FLAGS_NONE,
-> +            NULL,
-> +            DBUS_DISPLAY1_ROOT "/VM",
-> +            NULL,
-> +            &err));
-> +    g_assert_no_error(err);
-> +
-> +    console_ids =3D qemu_dbus_display1_vm_get_console_ids(
-> +        QEMU_DBUS_DISPLAY1_VM(vm));
-> +    if (console_ids) {
-> +        n_ids =3D g_variant_n_children(console_ids);
-> +    }
-> +    return n_ids;
-> +}
-> +
-> +static void
-> +wait_device_event(QTestState *qts, const char *event_name, const char *i=
-d)
-> +{
-> +    QDict *resp, *data;
-> +    QString *qstr;
-> +
-> +    for (;;) {
-> +        resp =3D qtest_qmp_eventwait_ref(qts, event_name);
-> +        data =3D qdict_get_qdict(resp, "data");
-> +        if (!data || !qdict_get(data, "device")) {
-> +            qobject_unref(resp);
-> +            continue;
-> +        }
-> +        qstr =3D qobject_to(QString, qdict_get(data, "device"));
-> +        if (!strcmp(qstring_get_str(qstr), id)) {
-> +            qobject_unref(resp);
-> +            break;
-> +        }
-> +        qobject_unref(resp);
-> +    }
-> +}
-> +
-> +static void
-> +test_dbus_display_hotplug(void)
-> +{
-> +    g_autoptr(GDBusConnection) conn =3D NULL;
-> +    QTestState *qts =3D NULL;
-> +    gsize n;
-> +
-> +    test_setup_args(&qts, &conn,
-> +        "-machine q35"
-> +        " -device pcie-root-port,id=3Drp0"
-> +        " -display dbus,p2p=3Dyes"
-> +        " -name dbus-test");
-> +
-> +    n =3D get_console_ids_count(conn);
-> +    g_assert_cmpuint(n, =3D=3D, 1);
-> +
-> +    qtest_qmp_device_add(qts, "bochs-display", "bochs0",
-> +                         "{'bus': 'rp0'}");
-> +
-> +    n =3D get_console_ids_count(conn);
-> +    g_assert_cmpuint(n, =3D=3D, 2);
-> +
-> +    /*
-> +     * On q35, PCI device removal is ACPI-based and requires guest
-> +     * acknowledgement. Since qtest has no guest OS, issue the delete
-> +     * request and force removal via system reset.
-> +     */
-> +    qtest_qmp_device_del_send(qts, "bochs0");
-> +    qtest_system_reset_nowait(qts);
-> +    wait_device_event(qts, "DEVICE_DELETED", "bochs0");
-> +
-> +    n =3D get_console_ids_count(conn);
-> +    g_assert_cmpuint(n, =3D=3D, 1);
-> +
-> +    g_clear_object(&conn);
-> +    qtest_quit(qts);
-> +}
-> +
->  int
->  main(int argc, char **argv)
->  {
-> @@ -369,6 +463,9 @@ main(int argc, char **argv)
->      qtest_add_data_func("/dbus-display/console", GINT_TO_POINTER(false),=
- test_dbus_display_console);
->      qtest_add_data_func("/dbus-display/console/map", GINT_TO_POINTER(tru=
-e), test_dbus_display_console);
->      qtest_add_func("/dbus-display/keyboard", test_dbus_display_keyboard);
-> +    if (qtest_has_machine("q35") && qtest_has_device("bochs-display")) {
-> +        qtest_add_func("/dbus-display/hotplug", test_dbus_display_hotplu=
-g);
-> +    }
->=20=20
->      return g_test_run();
->  }
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Seems like we can't set clusters/cores/threads as 0 from the command line:
+
+u$ ./build/qemu-system-riscv64 -M virt -smp cores=0
+qemu-system-riscv64: Invalid CPU topology: CPU topology parameters must be greater than zero
+
+And any missing SMP values from the cmd line is filled with '1' during
+machine_parse_smp_config().  So we're not generating div by zero with
+this patch.
+
+
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+
+
+
+>   hw/riscv/numa.c | 12 +++++++++++-
+>   1 file changed, 11 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/riscv/numa.c b/hw/riscv/numa.c
+> index 24a803f7fa..8a144925c1 100644
+> --- a/hw/riscv/numa.c
+> +++ b/hw/riscv/numa.c
+> @@ -239,8 +239,18 @@ const CPUArchIdList *riscv_numa_possible_cpu_arch_ids(MachineState *ms)
+>       for (n = 0; n < ms->possible_cpus->len; n++) {
+>           ms->possible_cpus->cpus[n].type = ms->cpu_type;
+>           ms->possible_cpus->cpus[n].arch_id = n;
+> +        ms->possible_cpus->cpus[n].props.has_socket_id = true;
+> +        ms->possible_cpus->cpus[n].props.socket_id =
+> +            n / (ms->smp.clusters * ms->smp.cores * ms->smp.threads);
+> +        ms->possible_cpus->cpus[n].props.has_cluster_id = true;
+> +        ms->possible_cpus->cpus[n].props.cluster_id =
+> +            (n / (ms->smp.cores * ms->smp.threads)) % ms->smp.clusters;
+>           ms->possible_cpus->cpus[n].props.has_core_id = true;
+> -        ms->possible_cpus->cpus[n].props.core_id = n;
+> +        ms->possible_cpus->cpus[n].props.core_id =
+> +            (n / ms->smp.threads) % ms->smp.cores;
+> +        ms->possible_cpus->cpus[n].props.has_thread_id = true;
+> +        ms->possible_cpus->cpus[n].props.thread_id =
+> +            n % ms->smp.threads;
+>       }
+> 
+>       return ms->possible_cpus;
+
 
