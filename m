@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43B53CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:20:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34865CD6E43
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:20:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSvFo-00005n-Py; Fri, 29 May 2026 07:19:52 -0400
+	id 1wSvFf-00070o-SQ; Fri, 29 May 2026 07:19:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wSvFm-0008BB-0t
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:19:50 -0400
+ id 1wSvFZ-0006Tu-TG
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:19:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wSvFk-0000GR-9B
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:19:49 -0400
+ id 1wSvFW-0000C0-8F
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:19:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780053587;
+ s=mimecast20190719; t=1780053573;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jE+/q4F6W7Ekdb2sIMCJWMNTaDYcoal5/NVcetnDHis=;
- b=ElfM8JUmQLmnWYl/mfRubRPRMkaoKrOXICnKv23/KBXoRHOPsypSmD9XB8SBFH5SXm3VnV
- w8kYYLLMdB0GjA22OZOzejwqzagJcqQdqACzqrU9qNKQ0Qn+++DpbPuCRsaSqgoSu3IT6L
- FoKXgekFjR8mcV2IikbdJd6AB5CCwTA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=CHOkvGWufjp/y099x56FTlR/PeGGvWsdoJQUNIOsnLM=;
+ b=LjuUSJdbul7ua2IxTZA3VA7xkZxbVf0xNQVE5i97EyjlJDEHfjvajLghKsLX3O4iPhkxWa
+ YK8dqP+1+AyNlZzyX5NneXJmLwEM8hPnLlqkmTFRV9e93WSZ7ZBhlw5aFVPDU54gSMhz5z
+ Rb1uNV8hAUhquY0B1q0sRB/W+5/kmMc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-48-9Rje3joMOs2Td9KHjTn3GA-1; Fri,
- 29 May 2026 07:19:42 -0400
-X-MC-Unique: 9Rje3joMOs2Td9KHjTn3GA-1
-X-Mimecast-MFC-AGG-ID: 9Rje3joMOs2Td9KHjTn3GA_1780053581
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-590-hgRJm8o1P9yHLFSSYqHq3g-1; Fri,
+ 29 May 2026 07:19:30 -0400
+X-MC-Unique: hgRJm8o1P9yHLFSSYqHq3g-1
+X-Mimecast-MFC-AGG-ID: hgRJm8o1P9yHLFSSYqHq3g_1780053569
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EAFED19560A7; Fri, 29 May 2026 11:19:40 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D8501195609F; Fri, 29 May 2026 11:19:28 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 17AB83002D30; Fri, 29 May 2026 11:19:38 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 82B7C1955D86; Fri, 29 May 2026 11:19:27 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 29 May 2026 15:16:51 +0400
-Subject: [PATCH 30/32] ui/console: unregister console from QOM tree on
- close
+Date: Fri, 29 May 2026 15:16:49 +0400
+Subject: [PATCH 28/32] ui/gtk: handle console hotplug/unplug events
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260529-b4-ui-v1-30-8db3068421ef@redhat.com>
+Message-Id: <20260529-b4-ui-v1-28-8db3068421ef@redhat.com>
 References: <20260529-b4-ui-v1-0-8db3068421ef@redhat.com>
 In-Reply-To: <20260529-b4-ui-v1-0-8db3068421ef@redhat.com>
 To: qemu-devel@nongnu.org
@@ -68,24 +67,24 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1336;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4053;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=G5ETinkAlSD3wMtGo4G48qKqH8z6lNeiiIdxzS1jppM=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqGXWQJ4ZUDvNDDtY17l7xa4LINjoo6bb7czrm6
- 2Xy5mmmaGqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCahl1kAAKCRDa6OEJdZac
- 5WXJEACbLG7Qy9pebk1Ghx2Avez76l4u6c2FsGBdzFY1iJ0fq59G0p/D53+1awqZFcrG49mIZ7I
- nm3mpMt48Cc+VKjYX2/hqJFzWNJUUYbaKDA23ng5fan2VQxgJSTCeysRHrXY0OaMIeI7HLxv3TI
- 2kkdsbYAZQdbpiUIKdCJV27WD/XaRFpZbnvkV3kC/vz0AI3oC+Aa8kDQD+ByBGH56cHW5uNrOdu
- Nxx7PRMuiO+c4G0sOOw7iQW8OZTkhWmDVuihyLCH/wOeL0l7WYKX1FTcP7dz5RlF4qc/RYiKQDR
- 3wSXEsxiANClXeREsAyvlSROKRfaGeODpD8/1GJfekQ1UU+9+T3DKgc8fFbGFLhdpVC9G9lCBzE
- g8Njo3N1cFo0vGy7PyFogs7Oljqg1IfSYXz8SXI7hyN9CbLO7xfpxU/IzF9lbiHTK4t7AhA6+z8
- fGO4yUKJmh6wy6/ZocCh3op0WRC9hMUM44c+RYk7VOiJ5dg46W6gTshf96U8ExiIkDkyD89/5+P
- fa01v3K/HsrhLfX9bW3pNTbKKV5ZXjXWoAwFu4qvCuRYM/0su8YNk116ZKTk9WmfFWgQ2JZyHJg
- YJ5GVZJLCHEYAMK+O78iYdXHoQzGs1/pruk6ZrmwAhq+hy5AMu4cxgTS6jYrdfw1mmRp/tbFAGl
- Gn8eyWUi2ngAiTQ==
+ bh=GbainaUhJrfWlWtuOMb6jyKWhk+MosM9wh23qdWFcGI=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqGXWQ4w8jfcvCbVYySo0SJaVc04p4T9QjJAbLk
+ WAcq2bToiKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCahl1kAAKCRDa6OEJdZac
+ 5YDED/9G4ZExyzTbGBkqe4qXooN1wWqfd4fh/cgsBJxNk2qDLhilXe8PaTNLtP9/+PNqF9wHMqT
+ NFKapPkVdilNwb44IttxqgYmRgS5Zi2gvG2vagkHKb7x1l4VZ26+StJVl6L+/+s85doJGSR2mak
+ GMpbJNXkJxV7Hs7gc7DtHCWGA2jRq1FON5+5TRDbsQjbxTuOq5W6JjCSDaSZzotUWRTJIDts/9L
+ O7fdJfRyP0BlfzmreeYLPACG6NXqfU6KcxEOoIv6dKCC7xf3VjVUpNspVR/ZqesNaFMUb/+EuCB
+ XODAEOlbWCP0jJA4ycphb4zBc5Li12K3m7h/4Z2txYVlLjFqx9gzwhfbusuIpUJPRgBAnloIUnF
+ NLn0ZERJ62j1F+tIJnwtPSCnLwnFI+edvmF9E9jeaVCR0AgQwpejdxmVIYOvuXMorDLYliLaXJ7
+ XTpVUpXmNNdNgy6jwOEKlpEr6GKhiKywzNAPWBQGP6z9L9Qtt/hdQfBw1kxRQvKYMRL1vw/czdN
+ FYl18MjQfPo9rksj/wNdL+ej7foHSTcEhQyr66w/Jqzj2/+RYPb6dMMvSkk2mLGIqI+w7l7A2yK
+ i4dt/E3fvyrdN4F4ShmCMTHrR1OoHerrp6FlVHbVAhBH2KeLXp2tL82HqvbBoJ6ChiX6919jeZK
+ xG3rm7eM626P5uw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -112,41 +111,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Call object_unparent() in graphic_console_close() to remove the
-console from /backend/console[N]. This drops the QOM tree
-reference, while the initial object_new() reference keeps the
-console alive for potential reuse.
+Register a console notifier so the GTK display dynamically creates and
+destroys VirtualConsole tabs when graphic consoles are added or removed
+at runtime (e.g. vfio-pci with display=on hotplug).
 
-When graphic_console_init() reuses a closed console, re-register
-it in the QOM tree.
+Add skips consoles that already have a VC binding, remove skips unknown
+consoles.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/console.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/ui/gtk.h |  1 +
+ ui/gtk.c         | 77 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 77 insertions(+), 1 deletion(-)
 
-diff --git a/ui/console.c b/ui/console.c
-index e01d893df4b..4d10884dc11 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -1136,6 +1136,9 @@ QemuConsole *qemu_graphic_console_create(DeviceState *dev, uint32_t head,
-         trace_console_gfx_reuse(s->index);
-         width = qemu_console_get_width(s, 0);
-         height = qemu_console_get_height(s, 0);
-+        if (phase_check(PHASE_MACHINE_READY)) {
-+            qemu_console_add_to_qom(s);
-+        }
-     } else {
-         trace_console_gfx_new();
-         s = (QemuConsole *)object_new(TYPE_QEMU_GRAPHIC_CONSOLE);
-@@ -1176,6 +1179,7 @@ void qemu_graphic_console_close(QemuConsole *con)
-     }
-     surface = qemu_create_placeholder_surface(width, height, unplugged);
-     qemu_console_set_surface(con, surface);
-+    object_unparent(OBJECT(con));
+diff --git a/include/ui/gtk.h b/include/ui/gtk.h
+index b0be5070795..6cb611ce474 100644
+--- a/include/ui/gtk.h
++++ b/include/ui/gtk.h
+@@ -140,6 +140,7 @@ struct GtkDisplayState {
+ 
+     GdkCursor *null_cursor;
+     Notifier mouse_mode_notifier;
++    Notifier console_notifier;
+     gboolean free_scale;
+     gboolean keep_aspect_ratio;
+ 
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 621bd269b3a..484dd9159c2 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -2332,7 +2332,8 @@ static bool gd_scale_valid(double scale)
+     return scale >= VC_SCALE_MIN && scale <= VC_SCALE_MAX;
  }
  
- QemuConsole *qemu_console_lookup_default(void)
+-static void add_gfx_console(GtkDisplayState *s, QemuConsole *con)
++static VirtualConsole *
++add_gfx_console(GtkDisplayState *s, QemuConsole *con)
+ {
+     VirtualConsole *vc = g_new0(VirtualConsole, 1);
+     const DisplayChangeListenerOps *ops = &dcl_ops;
+@@ -2414,6 +2415,76 @@ static void add_gfx_console(GtkDisplayState *s, QemuConsole *con)
+     qemu_console_register_listener(con, &vc->gfx.dcl, ops);
+ 
+     gd_connect_vc_gfx_signals(vc);
++    return vc;
++}
++
++static void gd_vc_add_gfx(GtkDisplayState *s, QemuConsole *con)
++{
++    VirtualConsole *vc;
++    int i;
++
++    for (i = 0; i < (int)s->vcs->len; i++) {
++        VirtualConsole *v = g_ptr_array_index(s->vcs, i);
++        if (v->type == GD_VC_GFX && v->gfx.dcl.con == con) {
++            return;
++        }
++    }
++
++    vc = add_gfx_console(s, con);
++    gtk_widget_show_all(vc->tab_item);
++    gtk_widget_realize(vc->gfx.drawing_area);
++
++    if (s->free_scale) {
++        gd_update_windowsize(vc);
++    }
++
++    gd_update_caption(s);
++    gd_rebuild_vc_menu(s);
++
++    gtk_notebook_set_show_tabs(GTK_NOTEBOOK(s->notebook), true);
++}
++
++static void gd_vc_remove_gfx(GtkDisplayState *s, QemuConsole *con)
++{
++    VirtualConsole *vc = NULL;
++    guint idx;
++
++    for (idx = 0; idx < s->vcs->len; idx++) {
++        VirtualConsole *v = g_ptr_array_index(s->vcs, idx);
++        if (v->type == GD_VC_GFX && v->gfx.dcl.con == con) {
++            vc = v;
++            break;
++        }
++    }
++    if (!vc) {
++        return;
++    }
++
++    if (s->kbd_owner == vc) {
++        gd_ungrab_keyboard(s);
++    }
++    if (s->ptr_owner == vc) {
++        gd_ungrab_pointer(s);
++    }
++
++    g_ptr_array_remove_index(s->vcs, idx);
++    gd_rebuild_vc_menu(s);
++    gd_update_caption(s);
++}
++
++static void gd_console_notify(Notifier *n, void *data)
++{
++    GtkDisplayState *s = container_of(n, GtkDisplayState, console_notifier);
++    QemuConsoleEvent *event = data;
++
++    switch (event->type) {
++    case QEMU_CONSOLE_ADDED:
++        gd_vc_add_gfx(s, event->con);
++        break;
++    case QEMU_CONSOLE_REMOVED:
++        gd_vc_remove_gfx(s, event->con);
++        break;
++    }
+ }
+ 
+ static void gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
+@@ -2688,6 +2759,9 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
+ 
+     gd_create_menus(s, opts);
+ 
++    s->console_notifier.notify = gd_console_notify;
++    qemu_console_add_notifier(&s->console_notifier);
++
+     gd_connect_signals(s);
+ 
+     gtk_notebook_set_show_tabs(GTK_NOTEBOOK(s->notebook), FALSE);
+@@ -2808,6 +2882,7 @@ static void gtk_display_cleanup(void)
+         return;
+     }
+ 
++    qemu_console_remove_notifier(&s->console_notifier);
+     qemu_remove_mouse_mode_change_notifier(&s->mouse_mode_notifier);
+     gd_clipboard_cleanup(s);
+     g_signal_handlers_disconnect_by_func(s->notebook,
 
 -- 
 2.54.0
