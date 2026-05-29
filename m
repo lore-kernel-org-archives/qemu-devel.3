@@ -4,112 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5978CD4F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 15:47:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70FEDCD4F54
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 15:53:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSzQM-00077h-Mt; Fri, 29 May 2026 11:47:02 -0400
+	id 1wSzW1-0003L3-Tq; Fri, 29 May 2026 11:52:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wSzQI-00077M-F7
- for qemu-devel@nongnu.org; Fri, 29 May 2026 11:46:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wSzVw-0003Jy-Ph
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 11:52:49 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wSzQG-0006z5-L5
- for qemu-devel@nongnu.org; Fri, 29 May 2026 11:46:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780069614;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=cE1G+lxP4MYP+1ekTRbdVk4ftIVspH4RelFmqNYcIyM=;
- b=TxfcoeiEWnH2zvAuiozPo4eNBBpKjuaAWKZdiabs6XZ0xPVG1V8TyiDd+0KBve3AnTlimp
- NVXS7eZH++wfUjaIobxAeanBfWoI/MGEeBFs+Gw8P3J6yBvruJtrtTSGro4MqIoEdI3VYS
- 6EFjyfHRLtLYLapCn8MhyNmvenHbgMc=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-244-rapyiADLNpqJ-6z72i47SA-1; Fri, 29 May 2026 11:46:53 -0400
-X-MC-Unique: rapyiADLNpqJ-6z72i47SA-1
-X-Mimecast-MFC-AGG-ID: rapyiADLNpqJ-6z72i47SA_1780069612
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-45ef5e38a18so204481f8f.1
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 08:46:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wSzVs-0000Oq-BR
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 11:52:48 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64TDL0nT3568485
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 15:52:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ pVWCoTn53j4cnuaZ6yMVHAvOdUN+nx9XS60hf4WxTOQ=; b=K6ySQ9yxGkMgOMGI
+ dnQy8hnxoL5aWg1ZGrxct6o4Ndj7lTilkDstvfe2igtZvA+ZLrO9f42AMJXpuAu9
+ 1tNjbCXYwk1af/ZoByCnuU2sUsUbIxxua4pmJLbOnRIO8YPYUeCQ0mLYjMtg2DR/
+ K4eAIMj6O6ewHYnUrt7U7w1YqNNTfONaqVJffeW3XJlpMEJUOp4NdZpH3IlkyIt2
+ WA84NgTSxkJwylNd+gE9kjR8jZH0agjZJQlAum5Bgnj+ZaNH+TiNFhRhwLvZViu8
+ rNXdmzqRQAT7nTSRAtYcrXDXfyBddisvknD+qox+1ViJQobRaFNYuTcLXcPgTGwF
+ TzgBPQ==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
+ [74.125.82.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eevumvbku-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 15:52:26 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id
+ 5a478bee46e88-3041ab826ddso14657846eec.0
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 08:52:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780069612; x=1780674412; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=cE1G+lxP4MYP+1ekTRbdVk4ftIVspH4RelFmqNYcIyM=;
- b=h3hs14cuq+2m4FCzDdH7os3kRMk0fbF1RPZ2okSoHLG6r4FhwqYro9sFLlB1q3g7fS
- EZs9jg4C831l92MelrW5i3uQx1r0MsOk0UoChFdTRy+suCD2Cs+f9Oqe83e619QPdMD+
- FHxKCIguz8itV9wvE5ojHJ+ZXxTG535d9Lpk/cqSVYH2EbqeE8FDAqT1hFR4LiRBJzgc
- pjbLik/aTvOdNLZGJGalE/mIRk7ywsiqH/05mpGrPS1YFR1O5yfZ+zLCM1yQJS3LjbFb
- jBLtB7/ydwVNoZgidYP7XL00Uvs3gsYk3KswtzVHfaxCrMPINro2J8HZzTk6iCVZR1JL
- 4wTQ==
+ d=oss.qualcomm.com; s=google; t=1780069945; x=1780674745; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=pVWCoTn53j4cnuaZ6yMVHAvOdUN+nx9XS60hf4WxTOQ=;
+ b=XKXNaMuwozeQQuJDFYkXmC79BkXuQXgseBQc2HOMrsCxfhqWwOJxy1p7ADS1Fsz4X6
+ c6peNnbbg89zxK3EiBunfl3mc2Ia7xe/z6RRMzgpANs9VgcH9olI94332wsiF9lu5N/P
+ nkQ+ryqtSAJGmeJAZ0GOuvqkvnF08ny47m8cFDgpIMl1O5No9qBqHzCEG63UrzRlSEaP
+ 7b8++ozadU6M8IL5CEn+ew7ovkQ4+dbJRD+uIh44mS8LSdGcHnAJFszC4xphR08ecCwy
+ 9cBPFjEGf8Bg0Tto/I8Ml1nBUAjlWu/Djs1hDLRMKsSZaLC0BW28fJ/bCIqaJSWkstE+
+ nwCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780069612; x=1780674412;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cE1G+lxP4MYP+1ekTRbdVk4ftIVspH4RelFmqNYcIyM=;
- b=HffJmL9jIexvxMHWgzV3Mo7XIUNnURQHnxUBbKgm2l1bl2pOW+FhYZ+fv01GvgzdGI
- x1rlAnpA9U5aQA159bsnSGJqELOsfqAMbAT/Mgl69BSTYpDtdWzz+nrK32CigQy4F16z
- DtyO6qQWcgL1emYifWcE1nrIzQYclrLOMsQXGa2NKmSRpB6LkUNrq8EiGVVHuIP/KLzK
- 47Nu8nN6FxVQ4Y8hGdWK8FrZbmHuvzdxKmnvDgWYh5ERPaRu4GxPT3gnCkRd7FVGBUWz
- XjJNYOEL4bN1m5oklaMCUVK2gqbnq0LIL+E/HvP9nUoO/ht7xjAPnrjwDjjvRpZgH3pd
- 4mtQ==
+ d=1e100.net; s=20251104; t=1780069945; x=1780674745;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pVWCoTn53j4cnuaZ6yMVHAvOdUN+nx9XS60hf4WxTOQ=;
+ b=dJz4XuntOS96H43hpi71TR4GZXPbhIsZ0Hsq1Mwt9Fxy0KwvKmS0TjXKBj3I9NuVJ5
+ oeSGJos8QBuAbcXsvz/N2SLM7GRHuC3Qw2aCpS9SftR5gW/lIfgVYs18dydlwZtEGXWa
+ JkZwGMSldG/tQDADHcoXuUsWB6lf4jFUUUabFHubjCC6L7r0gt2EO4XK/h/zk65H45J1
+ pMsp4I8dnedNPgUttl8s4l1G5i5QvaJ/ubWatLwdguvDRy6ZUmq6vlHpwFP2Pvn07+gW
+ C38CJR8+psQxNJQyNFh+cf63fa0VbmZ3FiAbBqbwD5mqwKJtyYFzxoC8xqVwW8hbYHnZ
+ UH/w==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+eQ+UyLt8hSG6AsHTszygY2iJ8iJ4+6FTh1XYDFsCqg/ijn6Z8xvmgkaZZVnM3oUpwiSr2ykD0W4kl@nongnu.org
-X-Gm-Message-State: AOJu0YxoRT03mwmStgry1ldAORqI9oVHcSRNj1ggl8EDQ0nwYzt5a9jg
- H8D9KZ9zE7CjQXcfothrvCLkp4TV70gZrdRy6/YuHZrCVRVhn4lUEqUFQ9qekincItlPAOyC+O6
- x+sjXPqlRExfW/G2EDTNKYki0jtrzehv3eXS+ggbQAScr3PW8xVjUBMqE
-X-Gm-Gg: Acq92OFAopYNBNtPADiWka67aMkIJ1OKOGaqvyVFemrHUCGdc5gYE1QUNuTcIyyxf61
- uJy29b4k9uaShT4YgnQ0qC8VK9Q+mddVo+Rdg2Q5Cz6iK7+TVIkYuU8fHwmJFrxs3SHAoD5nafB
- zl7z9mv7kYF7YYISPfYOBPkZTP+ftP//euHoBx2je9z7YG+/iVzL6oYJ6BZhUc1KFf5aXzBCw+/
- bcXwdC45tWeETMBEDmOhV2M8N2RbAUmcEIa+7RzzSMYhapSEapKrNk8m+LfsVwN6WeHjvRBkdFm
- seCtH23SH/HYup1ihJXNo1jzdaAQPuLAAVjSO+z2t++RReoCVPvgfW42rOpcm0SxgUUXE/qoSGP
- pvN/5LH/fyRZ7FtJ0z6O2mZzj1bFZmecP7KGo1ziE1hcIWcc/G9K8wA==
-X-Received: by 2002:a5d:534f:0:b0:45a:dd7a:e33c with SMTP id
- ffacd0b85a97d-45ef6b94446mr536985f8f.33.1780069611609; 
- Fri, 29 May 2026 08:46:51 -0700 (PDT)
-X-Received: by 2002:a5d:534f:0:b0:45a:dd7a:e33c with SMTP id
- ffacd0b85a97d-45ef6b94446mr536937f8f.33.1780069611082; 
- Fri, 29 May 2026 08:46:51 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-25-45.inter.net.il. [80.230.25.45])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ef34a0674sm4075341f8f.8.2026.05.29.08.46.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 May 2026 08:46:50 -0700 (PDT)
-Date: Fri, 29 May 2026 11:46:47 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
- Warner Losh <imp@bsdimp.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH v2] docs/devel: relax policy on AI-generated contributions
-Message-ID: <20260529114114-mutt-send-email-mst@kernel.org>
-References: <20260529094619.1034458-1-pbonzini@redhat.com>
- <CAFEAcA_EWR_MjH1arCdi2y0saZ-Hc7zRAK97YTeEcesVRb9Rtg@mail.gmail.com>
+ AFNElJ+eJ7b/wEG+r3MRf/6Z+cs0aRZCnXKNs30TqDSCqWRPsmI2Y6ftkglCKvfb1p/Tnon1PslZVQQqJqNh@nongnu.org
+X-Gm-Message-State: AOJu0YyUuxYA9K/7Zf3w0Ea5iqF64UPBSmJSEEZvtrWZthVtbvcPlWf4
+ 05pAAuImjIvNCdFXfDGj3NtkhbcMJ2wfYvtDk6kZAf4bLWpkBygRoO1Q3WHfUuymPNvdIc9hhXh
+ nl/2yYHo4NdNaTLviokBPFhAmhlTHxehkEGwp0MaseFHqlKZbHZqqPIaXHg==
+X-Gm-Gg: Acq92OHV+z3sy4gOJpRigk0bxCs4VVFjo0JyZ3IoMKPXMM8i4K/6uwfE74kgK1glhQj
+ dNnw03wvzub10pkOFrQK1QtuATbUg95DHaTByBRLhtbWdteY1xuITAk+qfeQFkSE9WiWiJIzqWe
+ QcuX/db9wCDw2LO4JD43+luKgwJBhSi8O4gcJGaOnsnv1RUrP7Q+OtK0kJ39hw/I1aESYVU6NFh
+ gHZqkTTBA4HyTLlEchM2nVuXkqhgzKNC+LH6hVVbEtiNR+3r9/eL8nyjViaol8bRdeHnuYlxb86
+ lzMOAVQNRRWkKPJTSDRBWlhDn3lkmA5zR7K9c0cNgQMtwTArtWTNVlN8qGLPvtRVX0AZArNFGQY
+ Jm792/Kx/dxVH/1CC++wOWq8F7fiu8jJU6hCEu1d69v/7L+YwBbH3PKC1SkwPfUDm+JLXJgR4OI
+ SVmtVR7jjjSqqPVKblVV4M+U5W
+X-Received: by 2002:a05:7022:307:b0:136:959a:abe9 with SMTP id
+ a92af1059eb24-137d3f1850amr115484c88.5.1780069945101; 
+ Fri, 29 May 2026 08:52:25 -0700 (PDT)
+X-Received: by 2002:a05:7022:307:b0:136:959a:abe9 with SMTP id
+ a92af1059eb24-137d3f1850amr115469c88.5.1780069944489; 
+ Fri, 29 May 2026 08:52:24 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-137b2d04287sm1869243c88.0.2026.05.29.08.52.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 29 May 2026 08:52:23 -0700 (PDT)
+Message-ID: <61a6166a-8950-487d-a4d7-92f92bfc02a9@oss.qualcomm.com>
+Date: Fri, 29 May 2026 08:52:22 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA_EWR_MjH1arCdi2y0saZ-Hc7zRAK97YTeEcesVRb9Rtg@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] accel/common: Remove last bit of target-specific code
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Anton Johansson <anjo@rev.ng>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260528140857.44130-1-philmd@linaro.org>
+ <b2a58b62-b061-4bdf-b459-9953b7f373fe@oss.qualcomm.com>
+ <5b693f87-2f9a-4564-9efb-83c815bcb20e@oss.qualcomm.com>
+ <dc1b9965-4ac3-4157-91e3-edb9d93556cf@linaro.org>
+ <39ce331b-e361-49ae-9954-47e3aaa88948@oss.qualcomm.com>
+ <ee503de0-85fb-4220-8069-6a084f164339@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <ee503de0-85fb-4220-8069-6a084f164339@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: 0_HbG8_LIbSc6C9CZFwz6UgZhCRcgq0q
+X-Proofpoint-ORIG-GUID: 0_HbG8_LIbSc6C9CZFwz6UgZhCRcgq0q
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI5MDE1OSBTYWx0ZWRfX7n5ZEt7woiJW
+ fvc6MfkxVZD5tsrYtxSgwFYGaqEASC1DoiQkcp0ETInqj/kRep6wlt5wMOO9uV/gSsLr/tU0kCd
+ eZdu8BQ/BNWVEB2vX3WzZAXnYGKIpvlzo9JBWZkJtWsMPTOY29vRcjhZzS3Zy5nRLIDzQsEZe1e
+ zUIDU+YRdDF1vzex0l27L1R3npUpiPB9/qKkX2RpJyce3w3vMqESEgltY1sZd/7haoDEbrxFXdg
+ gEojb/h+45n0RNTYBeHjsUIztTtHuHK1x9hF6Z70vgAgZaRYxStiWtnAWcIpHDXM1r4prBh9JxR
+ 1l/hwoV4aQykXC+39MeUcrbS1vr3yNH7XQPRnrMPTnOVksmnxWw9ciJAzZbXlJ4ES7Ok8lgmKZm
+ hXvtfB6SogvLIwYDJRfYh8rfLyN4EZnmesHZvfm19EtNhCgMqOx+tYbtvVIKVSYhIc6svMJOtyy
+ vpdH29oDr68U7tgKwzQ==
+X-Authority-Analysis: v=2.4 cv=cObQdFeN c=1 sm=1 tr=0 ts=6a19b63a cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=QuRxvGadYWfA6dF6RbMA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-05-29_04,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0 clxscore=1015 spamscore=0 malwarescore=0
+ phishscore=0 suspectscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605290159
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,102 +163,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 29, 2026 at 04:34:45PM +0100, Peter Maydell wrote:
-> On Fri, 29 May 2026 at 10:46, Paolo Bonzini <pbonzini@redhat.com> wrote:
-> >
-> > Until now QEMU's code provenance policy declined any contribution
-> > believed to include or derive from AI-generated content.  A blanket ban
-> > was easy to maintain while LLM output was rarely usable on its own, but
-> > as the tools improved an absolute prohibition has become harder to
-> > justify.
-> >
-> > The concern that motivated the policy is unchanged, and it is worth stating
-> > precisely: the DCO is about whether the submitter has the legal right to
-> > contribute the code, not about "creative expression".  While the status of
-> > LLM output seems to be converging towards non-copyrightability, questions
-> > around unintentional reproduction of copyrighted code are still open.
-> > What has shifted is the balance of risk:
-> >
-> > - projects accepting AI-assisted content have not run into serious
-> >   legal trouble so far, which suggests the probability of the risk
-> >   materializing is not high;
-> >
-> > - other organizations, such as Red Hat[1], have assessed the risk as
-> >   acceptable -- though a community of individual developers does not
-> >   have the legal backing of a company, and even an unfounded dispute
-> >   would be a long-lasting distraction from work on QEMU.
-> >
-> > Nevertheless, even Red Hat mentions that "the possibility of occasional
-> > replication cannot be ignored".  In QEMU's view, attentiveness and
-> > oversight are not a practical way to address this; yet as a copyleft
-> > project, copyright and code provenance are of utmost importance to us.
-> > Therefore, it remains prudent to only permit AI assistance where the
-> > ramifications of copyright violations are at least easy to revert and
-> > unlikely to spread: tests, documentation, mechanical changes, and small
-> > bug fixes.  Core code that other things depend on, and that cannot
-> > simply be thrown away once a problem is noticed long after the fact,
-> > stays off-limits without prior agreement from a maintainer.
+On 5/29/2026 7:37 AM, Philippe Mathieu-Daudé wrote:
+> On 28/5/26 22:02, Pierrick Bouvier wrote:
+>> On 5/28/2026 12:59 PM, Philippe Mathieu-Daudé wrote:
+>>> On 28/5/26 20:47, Pierrick Bouvier wrote:
+>>>> On 5/28/2026 11:47 AM, Pierrick Bouvier wrote:
+>>>>> On 5/28/2026 7:08 AM, Philippe Mathieu-Daudé wrote:
+>>>>>> Initialize the TypeInfo structure at runtime using the TargetInfo
+>>>>>> API to resolve TYPE_ACCEL_CPU, replacing CPU_RESOLVING_TYPE by
+>>>>>> target_cpu_type(). Since the code is no more target-specific, move
+>>>>>> it to accel-common.c, removing the need for accel-target.c.
+>>>>>>
+>>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>>> ---
+>>>>>> Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>>>>>
+>>>>>> Pierrick, this is an alternative for both
+>>>>>> 20260528051642.115721-4-pierrick.bouvier@oss.qualcomm.com
+>>>>>> and
+>>>>>> 20260528051642.115721-5-pierrick.bouvier@oss.qualcomm.com
+>>>>>> for your "single-binary: fix compilation/execution for {arm,
+>>>>>> aarch32, microblaze}" series. WDYT?
+>>>>>> ---
+>>>>>>    accel/accel-common.c | 15 +++++++++++++++
+>>>>>>    accel/accel-target.c | 41
+>>>>>> -----------------------------------------
+>>>>>>    accel/meson.build    |  1 -
+>>>>>>    3 files changed, 15 insertions(+), 42 deletions(-)
+>>>>>>    delete mode 100644 accel/accel-target.c
 > 
-> This all makes sense to me, except for the part where we allow
-> a maintainer to say "actually it's OK". Where our justification
-> for not wanting AI contributions rests on "it's too much burden
-> on maintainers to have to deal with and review it", allowing an
-> individual maintainer to say "I'm OK with that burden in this case
-> or for this particular contribution" logically follows as a
-> possible relaxation. But if as a project we want to limit the
-> blast-radius if we find we have to rip out a hypothetical tainted
-> contribution, shouldn't that mean that we hold that as a project-wide
-> line, rather than leaving it up to the opinion of the individual
-> maintainer ?
-
-I guess, the maintainer can judge that the code is unique and qemu
-specific enough, and follows from what it is doing automatically enough,
-that the chances it is accidentally copying something are nil?
-
-
-> > Related to this, and already visible in the incredible uptick in
-> > security reports, is the question of maintainer burnout and the shift in
-> > effort from the author to the reviewer of the code.  AI lowers the cost of
-> > producing a patch but does nothing to lower the cost of understanding and
-> > reviewing one; if anything it raises it, since a reviewer can no longer
-> > assume that the submitter has reasoned through every line.  The limits
-> > above work just as much to keep the volume of review work sustainable.
-> >
-> > Revise the policy according to the above considerations, and introduce the
-> > "AI-used-for:" trailer as a record of where AI was used.  The standard is
-> > slightly different from the more usual "Assisted-by"; the intention is for
-> > the metadata to provide more information for reviewers to judge the result.
-> >
-> > In any case, use of AI does not relax any other contribution requirement:
-> > authors still comply with the DCO and take responsibility for the whole
-> > patch via Signed-off-by.
-> >
-> > [Commit message largely based on
-> >  https://lore.kernel.org/qemu-devel/ahXbxzB4C_lr6b0N@redhat.com/, by
-> >  Kevin Wolf. - Paolo]
 > 
-> > +**Documentation and code comments**
-> > +  While AI can help draft text, it still requires significant human
-> > +  oversight.  Pay attention to the organization and flow of the generated
-> > +  text, and strictly fact-check all technical details as LLMs are prone
-> > +  to being confidently wrong.
+>>>>>> diff --git a/accel/meson.build b/accel/meson.build
+>>>>>> index 7da12b9741f..1b5b37e3097 100644
+>>>>>> --- a/accel/meson.build
+>>>>>> +++ b/accel/meson.build
+>>>>>> @@ -1,5 +1,4 @@
+>>>>>>    common_ss.add(files('accel-common.c'))
+>>>>>> -specific_ss.add(files('accel-target.c'))
+>>>>>>    system_ss.add(files('accel-system.c', 'accel-blocker.c', 'accel-
+>>>>>> qmp.c', 'accel-irq.c'))
+>>>>>>    user_ss.add(files('accel-user.c'))
+>>>>>>    
+>>>>>
+>>>>> I'm open to follow this approach first .
+>>>>> The only downside is that it limits to a single accelerator parent
+>>>>> type,
+>>>>> which will be a problem as soon as we have two arch using this
+>>>>> framework
+>>>>> for tcg. Nothing we can't solve later though.
+>>>
+>>> Good point. I'll see how to handle that (as a following up patch).
+>>>
+>>
+>> Maybe we need to duplicate this struct for each base architecture? :)
 > 
-> I think the application to documentation and comments is the part
-> I'm least enthusiastic about here.
+> Back to your patch? I was never fond of AccelCPUClass and its QOM use,
+> ended to ditch it completly:
+> https://lore.kernel.org/qemu-devel/20260529142434.87880-1-
+> philmd@linaro.org/
+> 
 
-But I am very enthusiastic about less agrammatical english in both.
-AI is super helpful for non native speakers.
+Great! I'll take a look.
 
-> For changes to code, we have at
-> least some guardrails on the AI output, in the fact that it has to
-> compile and to pass tests. For changes to documentation, the
-> only guardrails are human eyeballs.
+>>
+>>>>>
+>>>>> Regards,
+>>>>> Pierrick
+>>>>
+>>>> Forgot :)
+>>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>>
+>>
 > 
-> Also both comments and documentation ideally are a record of
-> what we intended the behaviour to be. If an LLM is effectively
-> autogenerating something documentation-shaped from the code we
-> lose that.
-> 
-> -- PMM
 
 
