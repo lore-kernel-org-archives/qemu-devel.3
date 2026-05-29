@@ -4,66 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27988CD6E4E
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 02:31:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D00DCCD6E43
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 02:35:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSmzu-0000fq-BT; Thu, 28 May 2026 22:30:54 -0400
+	id 1wSn3t-0002ZX-Md; Thu, 28 May 2026 22:35:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangxiang@iscas.ac.cn>)
- id 1wSmzr-0000fN-RZ
- for qemu-devel@nongnu.org; Thu, 28 May 2026 22:30:51 -0400
-Received: from smtp81.cstnet.cn ([159.226.251.81] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <wangxiang@iscas.ac.cn>)
- id 1wSmzp-0007Mz-90
- for qemu-devel@nongnu.org; Thu, 28 May 2026 22:30:51 -0400
-Received: from localhost (unknown [122.194.100.152])
- by APP-03 (Coremail) with SMTP id rQCowAB3W+JR+hhq1ULNEg--.17008S2;
- Fri, 29 May 2026 10:30:41 +0800 (CST)
-From: Xiang W <wangxiang@iscas.ac.cn>
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1wSn3o-0002Z3-RA
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 22:34:56 -0400
+Received: from [115.124.30.130] (helo=out30-130.freemail.mail.aliyun.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1wSn3i-0008Mj-Ad
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 22:34:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1780022069; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=pjtaOls1ii9JKGuurRt5ksb8LEZDgW05wpiuRF7AcZw=;
+ b=VaDc8Hn1xNgkdyBehf6GKqJdJ+XGIl7I+g5Ti1HT1JTaNqMFgLVEi24cTyKcGQpODPJhXXrkyqqzjIT7vlRlTExKleA2J6+hWQACx/PZOZPStpjV4nDpSv1BVcOmZgrBAUeHv8NqdPXQZvPWwLVv+v2vEHGe1YQm+Qv8cyF03PM=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R121e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
+ MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=2; SR=0;
+ TI=SMTPD_---0X3o2.Fu_1780022067; 
+Received: from localhost(mailfrom:guobin@linux.alibaba.com
+ fp:SMTPD_---0X3o2.Fu_1780022067 cluster:ay36) by smtp.aliyun-inc.com;
+ Fri, 29 May 2026 10:34:27 +0800
+From: Bin Guo <guobin@linux.alibaba.com>
 To: qemu-devel@nongnu.org
-Cc: Xiang W <wangxiang@iscas.ac.cn>, mst@redhat.com, imammedo@redhat.com,
- anisinha@redhat.com, peter.maydell@linaro.org,
- Sia Jee Heng <jeeheng.sia@starfivetech.com>,
- Sunil V L <sunilvl@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v2 1/3] qtest: allow SPCR acpi table changes
-Date: Fri, 29 May 2026 10:30:58 +0800
-Message-ID: <20260529023100.42508-2-wangxiang@iscas.ac.cn>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260529023100.42508-1-wangxiang@iscas.ac.cn>
-References: <20260529023100.42508-1-wangxiang@iscas.ac.cn>
+Cc: armbru@redhat.com
+Subject: [PATCH] qobject/json-writer: preallocate output buffer
+Date: Fri, 29 May 2026 10:34:26 +0800
+Message-ID: <20260529023426.54680-1-guobin@linux.alibaba.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: rQCowAB3W+JR+hhq1ULNEg--.17008S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7Jr4DCF4fGr1xXFy7Gw17Wrg_yoWftrgEgF
- WIqFn7W3W3Ja95ArW8Ja1kuryrC3W7Aw48ur13Ars3W3W7C34rAa4vqFn5Aa47ur13WrW2
- q3s5urW2kFWUCjkaLaAFLSUrUUUUbb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
- 9fnUUIcSsGvfJTRUUUbsAFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
- 6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
- A2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr0_
- Gr1UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x0267AKxVWxJr
- 0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E
- 2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJV
- W8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lc7CjxVAaw2AFwI0_
- GFv_Wrylc2xSY4AK67AK6r4UMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r
- 4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF
- 67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1I6r4UMIIF0xvE2I
- x0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2
- z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnU
- UI43ZEXa7sRR189tUUUUU==
-X-Originating-IP: [122.194.100.152]
-X-CM-SenderInfo: pzdqw5pldqwq5lvft2wodfhubq/
-Received-SPF: pass client-ip=159.226.251.81;
- envelope-from=wangxiang@iscas.ac.cn; helo=cstnet.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.130 (deferred)
+Received-SPF: pass client-ip=115.124.30.130;
+ envelope-from=guobin@linux.alibaba.com;
+ helo=out30-130.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,25 +68,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
-Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20241028015744.624943-2-jeeheng.sia@starfivetech.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit a205d0bcc89c887efcb636924b98e9f77d637369)
-Signed-off-by: Xiang W <wangxiang@iscas.ac.cn>
----
- tests/qtest/bios-tables-test-allowed-diff.h | 1 +
- 1 file changed, 1 insertion(+)
+json_writer_new() creates the output GString with g_string_new(NULL),
+which starts at the GLib default of 64 bytes.  Serializing typical
+QMP responses then requires multiple reallocations as the buffer
+grows -- for query-qmp-schema the GString is reallocated 12+ times.
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..aae973048a 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,2 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/riscv64/virt/SPCR",
+Preallocate JSON_WRITER_INITIAL_SIZE (4096) bytes.  This covers
+most QMP responses without any reallocation.  4096 is one page on
+most systems, which is efficient for the allocator.  The JSONWriter
+is a short-lived object so the preallocation does not accumulate.
+
+Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+---
+ qobject/json-writer.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/qobject/json-writer.c b/qobject/json-writer.c
+index aac2c6ab71..fb3f3f3e3c 100644
+--- a/qobject/json-writer.c
++++ b/qobject/json-writer.c
+@@ -24,13 +24,16 @@ struct JSONWriter {
+     GByteArray *container_is_array;
+ };
+ 
++/* Covers most QMP responses without reallocation (one page) */
++#define JSON_WRITER_INITIAL_SIZE  4096
++
+ JSONWriter *json_writer_new(bool pretty)
+ {
+     JSONWriter *writer = g_new(JSONWriter, 1);
+ 
+     writer->pretty = pretty;
+     writer->need_comma = false;
+-    writer->contents = g_string_new(NULL);
++    writer->contents = g_string_sized_new(JSON_WRITER_INITIAL_SIZE);
+     writer->container_is_array = g_byte_array_new();
+     return writer;
+ }
 -- 
-2.47.3
+2.50.1 (Apple Git-155)
 
 
