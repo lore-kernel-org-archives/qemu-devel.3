@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37AD4CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 20:11:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C7B1CD4F54
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 20:26:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wT3Xi-0000ON-FL; Fri, 29 May 2026 16:10:54 -0400
+	id 1wT3mO-0003zk-0U; Fri, 29 May 2026 16:26:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1wT3Xg-0000O1-Nd
- for qemu-devel@nongnu.org; Fri, 29 May 2026 16:10:52 -0400
-Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
+ id 1wT3m8-0003wy-IM
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 16:25:48 -0400
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1wT3Xd-0001a2-QV
- for qemu-devel@nongnu.org; Fri, 29 May 2026 16:10:52 -0400
+ id 1wT3lz-0005hJ-6f
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 16:25:48 -0400
 Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id F188345B06
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 20:10:45 +0000 (UTC)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 9B6BE47188
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 20:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1780085446;
- bh=VIYlxxEJg4g96VErnKoUGhctw5MkVu7BmSa25aNORYY=;
+ s=20210803; t=1780086329;
+ bh=iGHX3m9UueyEO/wXYYnL5CzPc1OHg9EUZdW0EyGXLvs=;
  h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
  Message-Id:Subject;
- b=PblrnhVhMqXyUPCXbK3oGA8OAI2LiuAzlNLr9MCe4aZsA/II77yVqni8qDQmk/0YQ
- VkY4cswQ27m3Uhe45fzbcU6KBXjScCTaZ/2fdZljV3Zsu9StrsYl73uagiZNIrxr2z
- CumDmizM/FG3IebMVXRygAoEXf3fVnGOoXDyhUgcffCNnBdnaT3h5q2Y23Hyfe+/c6
- fwAasaV+G3fIDFEP9JWXxLxvNWvq0nEUrhFpFfqH7ignP4XKpROLetNSvAgA7Q4HYX
- J/oSHd9jmUZ0lBx4YCVKlqdnn0EkU/5BsMybbvBmOWN9pQv0WgUf8J2aN8Ncqv0tgw
- HbRFk6aEj2KGw==
+ b=Nh402fRWBKKUAi4IQeiW93BTtFJgJK3uFq41y9DurgsoQevZFU56YhWLcoj6oV4mo
+ 4+JKNzIC1DT6CgLY6Zg4B+4dJN6T/GszgqbM/jLDMJvXgR54LeB+l3Fcn0ioz00agm
+ N8C8/+a0XCBG8Ky0fid7Xxqli/KcjBBBAbXYHpwkD7Wu1g8UWHuGLmqpeeJaZLr0eQ
+ UeEhWUVILwrDXcxJWHNNdiZjOX1XNhVQsOHNnNuTDEUUthNvlv46uEtArdB0RKx59U
+ MyBmj1cpZDJ6dmk9IDbIEh2sP2JW1BFGv8+kaZ3FN8nbfuGYbsXIAjwFId+knGRoTV
+ yduCey3m3vG8Q==
 Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id B27B17F330
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 20:10:45 +0000 (UTC)
+ by scripts.lp.internal (Postfix) with ESMTP id 919737F2DD
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 20:25:29 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 29 May 2026 20:03:36 -0000
+Date: Fri, 29 May 2026 20:17:22 -0000
 From: Andreas Hasenack <2133804@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
 X-Launchpad-Notification-Type: bug
@@ -56,8 +56,8 @@ X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
  component=main; status=Confirmed; importance=Medium;
  assignee=hector.cao@canonical.com; 
 X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
- component=main; milestone=ubuntu-24.04.4; status=In Progress;
- importance=Medium; assignee=hector.cao@canonical.com; 
+ component=main; milestone=ubuntu-24.04.4; status=Incomplete; importance=Medium;
+ assignee=hector.cao@canonical.com; 
 X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
  component=main; status=Won't Fix; importance=Medium; assignee=None; 
 X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
@@ -75,7 +75,7 @@ X-Launchpad-Bug-Commenters: ahasenack hectorcao janitor mjt+launchpad-tls
 X-Launchpad-Bug-Reporter: Heinrich Schuchardt (xypron)
 X-Launchpad-Bug-Modifier: Andreas Hasenack (ahasenack)
 References: <176477927666.3767208.4954653462090539439.malonedeb@juju-98d295-prod-launchpad-3>
-Message-Id: <178008501677.4187017.11028219926589979829.malone@juju-98d295-prod-launchpad-56>
+Message-Id: <178008584253.3915221.9352376650762367440.malone@juju-98d295-prod-launchpad-7>
 Subject: [Bug 2133804] Re: QEMU does not emulate IOCTL TCGETS2
 X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
 X-Launchpad-Message-For: qemu-devel-ml
@@ -83,9 +83,9 @@ Precedence: bulk
 X-Generated-By: Launchpad (canonical.com);
  Revision="e655887187b0b1e1a70625cd2d210bb3cf47cd14";
  Instance="launchpad-scripts"
-X-Launchpad-Hash: 44ec8a01a36b050baf6955f52a340439d47dade8
-Received-SPF: pass client-ip=185.125.188.250;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+X-Launchpad-Hash: 6f3985c256aef9ff73256cd7a38ae6d7f295c4e5
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
 X-Spam_score_int: -42
 X-Spam_score: -4.3
 X-Spam_bar: ----
@@ -107,38 +107,31 @@ Reply-To: Bug 2133804 <2133804@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Heinrich, or anyone else affected,
+In the noble upload, why was python3-venv moved from Build-Depends-Arch
+to Build-Depends? This is not documented in d/changelog:
 
-Accepted qemu into questing-proposed. The package will build now and be
-available at
-https://launchpad.net/ubuntu/+source/qemu/1:10.1.0+ds-5ubuntu2.7 in a
-few hours, and then in the -proposed repository.
+--- a/debian/control
++++ b/debian/control
+@@ -7,13 +7,13 @@ XSBC-Original-Maintainer: Debian QEMU Team <pkg-qemu-deve=
+l@lists.alioth.debian.o
+ Uploaders: Michael Tokarev <mjt@tls.msk.ru>
+ Build-Depends: debhelper-compat (=3D 13),
+  python3:any,
++ python3-venv,
+  meson (>> 0.63.0~), ninja-build,
+  flex, bison,
+ Build-Depends-Arch:
+ # In comments below we also specify (system-specific) arguments
+ # to qemu's configure script, -- optional features which depend
+ # on build-dependencies.
+- python3-venv,
+ # --enable-docs
+ # for python3-sphinx:native see #995622
+  texinfo, python3-sphinx:native, python3-sphinx-rtd-theme,
 
-Please help us by testing this new package.  See
-https://wiki.ubuntu.com/Testing/EnableProposed for documentation on how
-to enable and use -proposed.  Your feedback will aid us getting this
-update out to other Ubuntu users.
 
-If this package fixes the bug for you, please add a comment to this bug,
-mentioning the version of the package you tested, what testing has been
-performed on the package and change the tag from verification-needed-
-questing to verification-done-questing. If it does not fix the bug for
-you, please add a comment stating that, and change the tag to
-verification-failed-questing. In either case, without details of your
-testing we will not be able to proceed.
-
-Further information regarding the verification process can be found at
-https://wiki.ubuntu.com/QATeam/PerformingSRUVerification .  Thank you in
-advance for helping!
-
-N.B. The updated package will be released to -updates after the bug(s)
-fixed by this package have been verified and the package has been in
--proposed for a minimum of 7 days.
-
-** Changed in: qemu (Ubuntu Questing)
-       Status: In Progress =3D> Fix Committed
-
-** Tags added: verification-needed-questing
+** Changed in: qemu (Ubuntu Noble)
+       Status: In Progress =3D> Incomplete
 
 --=20
 You received this bug notification because you are a member of qemu-
@@ -155,7 +148,7 @@ Status in qemu package in Ubuntu:
 Status in qemu source package in Jammy:
   Confirmed
 Status in qemu source package in Noble:
-  In Progress
+  Incomplete
 Status in qemu source package in Plucky:
   Won't Fix
 Status in qemu source package in Questing:
