@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D00DCCD6E43
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 02:35:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00086CD5BD1
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 02:39:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSn3t-0002ZX-Md; Thu, 28 May 2026 22:35:01 -0400
+	id 1wSn7e-0003LQ-4Q; Thu, 28 May 2026 22:38:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wSn3o-0002Z3-RA
- for qemu-devel@nongnu.org; Thu, 28 May 2026 22:34:56 -0400
-Received: from [115.124.30.130] (helo=out30-130.freemail.mail.aliyun.com)
+ id 1wSn7c-0003LB-Nc
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 22:38:52 -0400
+Received: from [115.124.30.112] (helo=out30-112.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wSn3i-0008Mj-Ad
- for qemu-devel@nongnu.org; Thu, 28 May 2026 22:34:56 -0400
+ id 1wSn7Z-0001S7-6k
+ for qemu-devel@nongnu.org; Thu, 28 May 2026 22:38:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1780022069; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=pjtaOls1ii9JKGuurRt5ksb8LEZDgW05wpiuRF7AcZw=;
- b=VaDc8Hn1xNgkdyBehf6GKqJdJ+XGIl7I+g5Ti1HT1JTaNqMFgLVEi24cTyKcGQpODPJhXXrkyqqzjIT7vlRlTExKleA2J6+hWQACx/PZOZPStpjV4nDpSv1BVcOmZgrBAUeHv8NqdPXQZvPWwLVv+v2vEHGe1YQm+Qv8cyF03PM=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R121e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
+ t=1780022322; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=PHHeFKMfCQ5OHJlZXywHn78de5gqxKcIKm3aEM9ZinU=;
+ b=rIM3dB00MGVVffAqbrU7nF8FwGsKa4oiPknQoRmJKTBx2U9rA4xbc5lIpLuUo7kIcdTw6pQAFfMevXa5Kg0xKJGIdiR10JuD1klkF1Mi2gH1VBh8+wYRpxWhYWo9oPSJJEAAJnH/8j/8OUHl0Q6hQD+28+fhN+L6H3XW8QP/pg8=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R801e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032089153;
  MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=2; SR=0;
- TI=SMTPD_---0X3o2.Fu_1780022067; 
+ TI=SMTPD_---0X3nv9nB_1780022319; 
 Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0X3o2.Fu_1780022067 cluster:ay36) by smtp.aliyun-inc.com;
- Fri, 29 May 2026 10:34:27 +0800
+ fp:SMTPD_---0X3nv9nB_1780022319 cluster:ay36) by smtp.aliyun-inc.com;
+ Fri, 29 May 2026 10:38:40 +0800
 From: Bin Guo <guobin@linux.alibaba.com>
 To: qemu-devel@nongnu.org
-Cc: armbru@redhat.com
-Subject: [PATCH] qobject/json-writer: preallocate output buffer
-Date: Fri, 29 May 2026 10:34:26 +0800
-Message-ID: <20260529023426.54680-1-guobin@linux.alibaba.com>
+Cc: philmd@linaro.org
+Subject: [PATCH] util/cutils: replace hand-rolled qemu_strnlen() with strnlen()
+Date: Fri, 29 May 2026 10:38:39 +0800
+Message-ID: <20260529023839.55302-1-guobin@linux.alibaba.com>
 X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.130 (deferred)
-Received-SPF: pass client-ip=115.124.30.130;
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.112 (deferred)
+Received-SPF: pass client-ip=115.124.30.112;
  envelope-from=guobin@linux.alibaba.com;
- helo=out30-130.freemail.mail.aliyun.com
+ helo=out30-112.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -68,43 +68,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-json_writer_new() creates the output GString with g_string_new(NULL),
-which starts at the GLib default of 64 bytes.  Serializing typical
-QMP responses then requires multiple reallocations as the buffer
-grows -- for query-qmp-schema the GString is reallocated 12+ times.
+qemu_strnlen() uses a byte-at-a-time loop with an XXX TODO
+comment noting that the host strnlen() could be used instead.
 
-Preallocate JSON_WRITER_INITIAL_SIZE (4096) bytes.  This covers
-most QMP responses without any reallocation.  4096 is one page on
-most systems, which is efficient for the allocator.  The JSONWriter
-is a short-lived object so the preallocation does not accumulate.
+strnlen() is POSIX.1-2008 and is available on all platforms QEMU
+supports (guaranteed by qemu/osdep.h).  The host C library
+implementation typically uses word-at-a-time or SIMD scanning,
+which is significantly faster for long strings.
+
+Replace the loop with a direct call to strnlen().  Add an explicit
+cast from size_t to int since qemu_strnlen() returns int while
+strnlen() returns size_t; the cast is safe because max_len (the
+upper bound on the return value) is already int.
 
 Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 ---
- qobject/json-writer.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ util/cutils.c | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/qobject/json-writer.c b/qobject/json-writer.c
-index aac2c6ab71..fb3f3f3e3c 100644
---- a/qobject/json-writer.c
-+++ b/qobject/json-writer.c
-@@ -24,13 +24,16 @@ struct JSONWriter {
-     GByteArray *container_is_array;
- };
- 
-+/* Covers most QMP responses without reallocation (one page) */
-+#define JSON_WRITER_INITIAL_SIZE  4096
-+
- JSONWriter *json_writer_new(bool pretty)
- {
-     JSONWriter *writer = g_new(JSONWriter, 1);
- 
-     writer->pretty = pretty;
-     writer->need_comma = false;
--    writer->contents = g_string_new(NULL);
-+    writer->contents = g_string_sized_new(JSON_WRITER_INITIAL_SIZE);
-     writer->container_is_array = g_byte_array_new();
-     return writer;
+diff --git a/util/cutils.c b/util/cutils.c
+index 76a9442085..9869d8842d 100644
+--- a/util/cutils.c
++++ b/util/cutils.c
+@@ -118,17 +118,9 @@ int stristart(const char *str, const char *val, const char **ptr)
+     return 1;
  }
+ 
+-/* XXX: use host strnlen if available ? */
+ int qemu_strnlen(const char *s, int max_len)
+ {
+-    int i;
+-
+-    for(i = 0; i < max_len; i++) {
+-        if (s[i] == '\0') {
+-            break;
+-        }
+-    }
+-    return i;
++    return (int)strnlen(s, max_len);
+ }
+ 
+ char *qemu_strsep(char **input, const char *delim)
 -- 
 2.50.1 (Apple Git-155)
 
