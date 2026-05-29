@@ -4,140 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD0E8CD4F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 13:04:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEF19CD6E51
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 13:07:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSwt0-0006y4-Sd; Fri, 29 May 2026 09:04:26 -0400
+	id 1wSwvg-0008Gi-7k; Fri, 29 May 2026 09:07:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wSwsx-0006wO-PB
- for qemu-devel@nongnu.org; Fri, 29 May 2026 09:04:23 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wSwve-0008GH-On
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 09:07:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wSwsw-0001SE-A7
- for qemu-devel@nongnu.org; Fri, 29 May 2026 09:04:23 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64T7G7l71829461
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 13:04:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- sOJN/2ghV06s4eA2fKXwh+hFAUNvo7YOjP82Ff9YpYo=; b=bB/kTwd3fjlZaiG9
- Jsts5l8BRMP3i9EQ9O8K4XyiUgiYl4LvrljwuZtFfBX1Oz+wREh1a3CNiDH0Fy5l
- QPxqfhxZKmE5Z7ZiBnqqq5K9j3tfiCUgmgKhw0fnzdFaRvhb0UK7o7oL/s1aI0l3
- Up0ZPKnXclSAY9yNQv49pEXPM7z1oaTjRMLXoVbbJ2PdMjO2kyvSO4gqIIeZeng4
- olysJuh5kmmjh1uRrVZTFMru3cdH35d7aPg8K9S1YSOrukWo+wD18mgiXBeUhDWh
- ZYyuG/josCaEtf3hdiendFo8lACd2ISH4koh+R5MArWBGp45BfFGBZ33fdUFLt15
- nowBNA==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eex6m3c9b-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 13:04:20 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-304ea1eea05so2071058eec.0
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 06:04:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1780059859; x=1780664659; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=sOJN/2ghV06s4eA2fKXwh+hFAUNvo7YOjP82Ff9YpYo=;
- b=NvF14KcGLl4uEpTNSFN68CW+o1/vTrBQSxc+BOlbNC3DaPDcAfzS3NzYge9Tqqe2Li
- uJhMhZv5/v/4lJFE1IyFxcQnsu3uvd8tuUlyzmxGO0iZa30k5epd2aCw+vaVr8txUzqW
- tiMFtndA53a7cN3KsXsas1VATh/zO/rgo3jFJ3CCqNK9sJsHqgrwFHoNm6xHbpnrYoow
- Kil5qd5riO8JaTByeYGAy0X5BrUlXG0xxEGA16K4VFoJiQifi3ttL1qW4UhP1Wgzv4ld
- d7IQ4X7Zhqoiz3c6Ew0nT4IxJ04cy3TzcUbfuSIk+9u6APupmWK4mk6k6x3AHMFBhVRR
- RZgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780059859; x=1780664659;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=sOJN/2ghV06s4eA2fKXwh+hFAUNvo7YOjP82Ff9YpYo=;
- b=msGAZmPfxzvsCPQ0yJRlUrMWMmjwzxq4vYLnNCCtRpbuF0ykUp6KqjjdojxCV8wQwy
- Y+4DIFNpNsP4T1DmwM/orM2MZd6hP4LGM9V22pXSA90GyaD06FCCsShnBa9OTp9w0C4e
- Ki5PAVTytZS1aFcbJcPVtmxrTMXesDkNHSpUCW6WZ7HX/YSFRwva6wy6F8hIabN4A9kp
- LQ6H+Gm37fPhC+zGUbeXfFBXJNzcQ34Fxc29IUgFjpSmuwMOfDH6oLGWomN5UD6C6r04
- q+OodQSRGM8jj5T+FXQQmE+BTG/EMPXuKFJ/HT2ZBi4JLgSthxbpl9ex6NIHrsiBZHtM
- dhlQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9etL3WF7Lw1O0ryzwllcntdoIgqbmxn0WdNUbkMXOBBRR3TYd19kXdaHuFKTwtoROVs5GRaROWPpfL@nongnu.org
-X-Gm-Message-State: AOJu0YxMmMbOdlQWYWcoGUvzn8ids6a3QNCQVC8eybQ3rPYJU4KPklAa
- Hb5COrLH3A6Yk/AWQfQ9Y2+FHslIAM2AWmGDaG3C3A+BGePoTf9UZvPOjvgsQmqnmFhcyMUvq9l
- 4qOFtxBE1Y8Tz41hdtD6NP6m+g/YkigmPcIjfGT6kpiXdTSWTzgj4r5YrMQ==
-X-Gm-Gg: Acq92OF5GweVQPQIx2qLeUlvWFrpdKUehODYC3Lx5VGWrhzGXzTKNH7glRfWbe5lzHv
- J6LSD8GdOAK484oJ+k32BvHOgk/mawhcMJrsACl+baPn4UVYUWieG2tYHBprAZ6yrrKw6SETj3T
- amQ0F7I2eoZCQxd8RhxHBNLGru5d6qovyXK+TX5MNOdjzEov6VNZFr4rnWItsRTck3elV7ZuAcV
- eImYSFQowLSGQYKsQu1DwOBtkebVDAzktMBug74zfpg7jS4EuuFr28K4OVutvsBtGF3QPvflUU9
- MY7IhcrCthrffUzhy+zPzOzZXFQNmPt2fXU4BtK21iyqVL5Ue3snArTCc0G7pQ8uY/bUhvP0Nst
- UD7KpBb6fwaxiyLDBv246VhYsafEqiLeQ+RI1UXYn23rRY8XVR9ehVMPWZvAj/kp6wnAY
-X-Received: by 2002:a05:7300:cb11:b0:2de:c5ca:c1f3 with SMTP id
- 5a478bee46e88-304eb105720mr1285060eec.4.1780059858790; 
- Fri, 29 May 2026 06:04:18 -0700 (PDT)
-X-Received: by 2002:a05:7300:cb11:b0:2de:c5ca:c1f3 with SMTP id
- 5a478bee46e88-304eb105720mr1284999eec.4.1780059858087; 
- Fri, 29 May 2026 06:04:18 -0700 (PDT)
-Received: from [192.168.68.106] ([177.170.117.62])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-304ed5f6426sm1306978eec.31.2026.05.29.06.04.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 May 2026 06:04:17 -0700 (PDT)
-Message-ID: <346d051e-5cb4-4238-b32c-1d2b85e02e08@oss.qualcomm.com>
-Date: Fri, 29 May 2026 10:04:11 -0300
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wSwvd-0002G9-1w
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 09:07:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780060027;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=oDz8d0Iz2nZ2FcatlqAJuxp2ckYH3jXpDHuge3DRWvk=;
+ b=RMBv3qC9toHoBebQxuSIkZ/owrb3Zjl/YNi4ik+GvITkEfZFLiGqcU+Sk8KNY+Nk7vprEJ
+ hgeGcZZk7OC7QzhlRP0rPyOR2t2QAaimK5LokpdRKLGHbye7rRRnRq2QRuzKGc+IJiP281
+ VWGWJHpCn/r7ADNlipFYGrYFN4FSlKo=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-SUp51x_KNc-0zs4IX_EKtA-1; Fri,
+ 29 May 2026 09:07:03 -0400
+X-MC-Unique: SUp51x_KNc-0zs4IX_EKtA-1
+X-Mimecast-MFC-AGG-ID: SUp51x_KNc-0zs4IX_EKtA_1780060022
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2C1931956059; Fri, 29 May 2026 13:07:01 +0000 (UTC)
+Received: from [10.44.33.19] (unknown [10.44.33.19])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A6CEC176F; Fri, 29 May 2026 13:06:56 +0000 (UTC)
+Message-ID: <224a940c-2f6e-4d5f-8c91-0107d19b82b2@redhat.com>
+Date: Fri, 29 May 2026 15:06:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/riscv: Print privilege level and ELP in
- riscv_cpu_dump_state
-To: Anton Blanchard <antonb@tenstorrent.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: alistair.francis@wdc.com, palmer@dabbelt.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com
-References: <20260529053519.1224019-1-antonb@tenstorrent.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: Re: [PATCH v2] docs/devel: relax policy on AI-generated contributions
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Kevin Wolf <kwolf@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Warner Losh <imp@bsdimp.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Paolo Bonzini <bonzini@gnu.org>
+References: <20260529094619.1034458-1-pbonzini@redhat.com>
+ <87eciuph5o.fsf@draig.linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260529053519.1224019-1-antonb@tenstorrent.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
+ CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
+ hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
+ DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
+ P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
+ Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
+ UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
+ tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
+ wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
+ UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
+ CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
+ 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
+ jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
+ VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
+ CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
+ SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
+ AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
+ AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
+ nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
+ bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
+ KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
+ m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
+ tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
+ dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
+ JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
+ sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
+ OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
+ GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
+ Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
+ usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
+ xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
+ JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
+ dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
+ b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
+In-Reply-To: <87eciuph5o.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI5MDEzMCBTYWx0ZWRfX9DYqSCIbYaA0
- kIAl6uPdM5GzZGGpLg+//Q4vDNR6csHTAW46bZ6m1Ee8ppPojlEY8xrS7w/ozeLo090tAaXStd1
- LjzDL3nrsxl6WIziJoucnskB2aUBni/CEm+hMpN9ucFQw7/1r3j95Gz/m19kqXFo8kBERM7yPfe
- dlr9l4pARAa+7WxtVHI2R+CRtexr3ngxN+98Z7V/dSlMecTkGcOq2K79A7bgqjJoSZXKGXL6bfq
- 0rk3uCABoZGdqG8VdSwpHV0ps4A5C2CPtTL6EwLtEPUMCaw3ThY7kNcjo58zSZHET7yoiO/eJ9I
- oLzZkPEYIMNRa7HTiY41n8sMjUjMJMDw2wfEGHvt65oGJ4ti/rMxAzfN42yW6TJLx6KuYB8JM3e
- IuaKWiqAdEsnl37eN1nV71j3JH/WIvMd5rZNVj9lmz8qa1sK3F4FaLiWWDWG+kyYf06fNll0DgL
- PWCvOMOWNcdYQ+kFnvQ==
-X-Authority-Analysis: v=2.4 cv=frnsol4f c=1 sm=1 tr=0 ts=6a198ed4 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=t9496tuAAAAA:8 a=EUspDBNiAAAA:8 a=NBj_7myW6Vghhd7hPxYA:9 a=QEXdDO2ut3YA:10
- a=6Ab_bkdmUrQuMsNx7PHu:22 a=4wQ91nGE5lQcD7eh5OX0:22
-X-Proofpoint-GUID: ed8u6Zr1oqyeHlLKqfP2TVUhI_0ocsp5
-X-Proofpoint-ORIG-GUID: ed8u6Zr1oqyeHlLKqfP2TVUhI_0ocsp5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-05-29_03,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0 clxscore=1015
- malwarescore=0 impostorscore=0 phishscore=0 bulkscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605290130
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,62 +128,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 5/29/2026 2:35 AM, Anton Blanchard wrote:
-> The privilege level and ELP are implicit state (like virt), so print them
-> out.
+On 5/29/26 13:52, Alex Bennée wrote:
+>> -  **Current QEMU project policy is to DECLINE any contributions which are
+>> -  believed to include or derive from AI generated content. This includes
+>> -  ChatGPT, Claude, Copilot, Llama and similar tools.**
+>> +   Please read the below policy before using AI to contribute code or
+>> +   documentation to QEMU.  This applies to ChatGPT, Claude, Copilot,
+>> +   Llama, and similar tools.**
 > 
-> Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
-> ---
+> Stray **, also extra space after QEMU.
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Will fix the stars (extra space is intentional, though it shows my age. 
+I still find that it reads better on monospace fonts to have two spaces 
+at the end of the sentence).
 
->   target/riscv/cpu.c | 22 ++++++++++++++++++++++
->   1 file changed, 22 insertions(+)
+>> +**Mechanical changes**
+>> +  If you can use a deterministic tool, it is preferred that you use
 > 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 952e34fdf5..b38ddc39ea 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -580,6 +580,22 @@ static void riscv_dump_csr(CPURISCVState *env, int csrno, FILE *f)
->       }
->   }
->   
-> +#if !defined(CONFIG_USER_ONLY)
-> +static const char *riscv_priv_str(uint32_t priv)
-> +{
-> +    switch (priv) {
-> +    case PRV_M:
-> +        return "M";
-> +    case PRV_S:
-> +        return "S";
-> +    case PRV_U:
-> +        return "U";
-> +    }
-> +
-> +    return "?";
-> +}
-> +#endif
-> +
->   static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
->   {
->       RISCVCPU *cpu = RISCV_CPU(cs);
-> @@ -588,9 +604,15 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
->       uint8_t *p;
->   
->   #if !defined(CONFIG_USER_ONLY)
-> +    qemu_fprintf(f, " %s %s\n", "priv   =  ", riscv_priv_str(env->priv));
-> +
->       if (riscv_has_ext(env, RVH)) {
->           qemu_fprintf(f, " %s %d\n", "V      =  ", env->virt_enabled);
->       }
-> +
-> +    if (cpu->cfg.ext_zicfilp) {
-> +        qemu_fprintf(f, " %s %d\n", "elp    =  ", env->elp);
-> +    }
->   #endif
->       qemu_fprintf(f, " %s %" PRIx64 "\n", "pc      ", env->pc);
->   #ifndef CONFIG_USER_ONLY
+> deterministic tool or script,?
+
+Sure.
+
+> In my v2 I added:
+> 
+>    AI tools **should not be used to write commit messages**. The act of
+>    summarising and explaining the reasoning for the changes is an
+>    important demonstration of the human authors understanding of the
+>    commit.
+
+While I didn't include this, v2 links to the "how to write a commit 
+message" paragraph elsewhere in the documentation.  I don't want it to 
+look like people can't even ask for copy-editing of commit messages.
+Paolo
 
 
