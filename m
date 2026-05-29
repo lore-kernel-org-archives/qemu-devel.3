@@ -4,95 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44044CD5BD2
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 08:32:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C0C3CD6E45
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 08:35:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSsbZ-0001Vy-Mj; Fri, 29 May 2026 04:30:09 -0400
+	id 1wSsgT-0005hT-0X; Fri, 29 May 2026 04:35:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSsbM-0001PM-3r
- for qemu-devel@nongnu.org; Fri, 29 May 2026 04:29:57 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSsbJ-0005Qo-1u
- for qemu-devel@nongnu.org; Fri, 29 May 2026 04:29:55 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4905529b933so52910145e9.0
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 01:29:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780043391; x=1780648191; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=az9S1vGVboCrXLR85YpBzY90OGFAcAq/GvXnwLVzHvg=;
- b=GJp2m1XrBNZ5Iv23uv1slfZRTsot06xHYSUraSIuaYUeNPwDw6HqmcyC00dLiVCWwq
- sDgwRZj3c1aWgjrKogwN2RCa5PRUb+URfr9FyaO0Rcqm68EPZtUHwSdwcpWcpJ3tRG1K
- n+mQ9M0IelEwTzduV/LjY1rp4KgtZ3F0MduXPCkz+9j/n1lSCF7aAcQHQFNutMcWQxZ6
- mEXQPhdUf765hPglLAmmWU1OI30JJV1d8zKSEXbttFzHh0TlBgGLh8eaETZeUMeWURgM
- itvnnsco5xE/fQO+co6ppqhxIvqEzh3v0GybopZ5gsHYIWy7Y/5w64UpTnsOFt/F0Fwf
- CN6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780043391; x=1780648191;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=az9S1vGVboCrXLR85YpBzY90OGFAcAq/GvXnwLVzHvg=;
- b=smQyAlxWZ1V7/b4n2CVStL4DDn+uUpwzA8xcSGCZQ8Yri7GYrtm5rYwPPdqx0wCjpb
- pCBCYFH6LqwwYnx1Dr1+eFERxbdPeI9jzySgTdNfGPQSNxG5omblRCpQKiJVfewW0230
- /KjctZ66N/UDqLZ5tvMP/tqdK6o9QP4E+aFANyo00uHTTw8YS4zcu+/UyY70J7/uC8Jo
- ejgf/ug3UO4iXq3CMOvIKSzA7oB3WV85xE0OmDsFTEGLJ81bvvG1Ex2K74wYU1c9ZZkk
- VQd8dqkADS99euAZ6x+MEDKWZuEyjMDasUbJW4wQcVUQJ2aKypAxWesVwG/8V85h9r61
- xoKA==
-X-Gm-Message-State: AOJu0YyQ6MvyDCsUyhGCcA591pEMnhgeloDDBTEdiHq6Pq0wZ7QHGL+t
- OMyOTfGKKLHonFsCWHDLNzLhoTUhwwa8VMQIbWws7CAu4/bmeSTl+AdOKBEbeJ395qY=
-X-Gm-Gg: Acq92OGSZ6NxX+BjgwrwPtEofK6Y8t5mEfkcGt5FPszWwmRpTT7dLH+9T3HVyWyABuO
- SAEdHn81m1UO+4y0c8e3xEjJ396EqL+ICjrCokfmTws2V/OkjC5szIWUIEKR1mnt8a+WmaJYhkJ
- FT7wADRYgRhr+OcFF2DT3wXikc6n0Wdxkmpc2Y3jkOmqvUdHwfQdd5YPDoNwqTnyZATFejsXsPK
- fdv1j2q200+LuzoEI62XbIpZNByzJf61/1vhC+Sc4SgwdyBf8oBdE4phvx0IJFdOAvTDk3rapOK
- WdTmoN1zag3sGrKZyembjYZL250Vmp6JDmMz8+t0UBciEqAK5oFWUCG2yENQm0UVfLdxcZ70NBw
- IDrm7lyTYP3iIpgW427Zt22J2NzngVPKA19Q7WZ9bs9gXKQQIq3wxGNpgjf9cVaWvJdGgElUscD
- sHCWW6jotdmW6/NSk+v0D/PmfceQc3oaxbpg==
-X-Received: by 2002:a7b:cc1a:0:b0:490:845c:a1ea with SMTP id
- 5b1f17b1804b1-4909c0b0c32mr25010795e9.21.1780043391324; 
- Fri, 29 May 2026 01:29:51 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4909d6a0e42sm23561455e9.8.2026.05.29.01.29.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 May 2026 01:29:49 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 71AFC602E1;
- Fri, 29 May 2026 09:29:48 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Peter Maydell <peter.maydell@linaro.org>,
- Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org,
- kvm@vger.kernel.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v7 3/8] target/arm: redefine event stream fields
-Date: Fri, 29 May 2026 09:29:42 +0100
-Message-ID: <20260529082948.363931-4-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260529082948.363931-1-alex.bennee@linaro.org>
-References: <20260529082948.363931-1-alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wSsgQ-0005gv-IA
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 04:35:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wSsgO-00072t-Bb
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 04:35:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780043706;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=070RPUhyWLqvipH/OTso2e8IK0uPKvRdM4Jx8OxXZdo=;
+ b=YLOkZzwca+p8PgG6V9IqHJU5NndOrSrWDYAYhI+XP0UifPR5Ztl8XrlLMUiNesW9ZrHwyy
+ Y6Ymn76AaExwbAtYnI/67Yj7FnCuarvkRQFEUUnCISPHd2St/kkPWn4oVKEgu3qZOXNwRq
+ TKlBav3Z2pozrS/TbJ0vVG3K1gOGGEs=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-73-H-O6jF1mMxqN0UZa9aWVoQ-1; Fri,
+ 29 May 2026 04:35:02 -0400
+X-MC-Unique: H-O6jF1mMxqN0UZa9aWVoQ-1
+X-Mimecast-MFC-AGG-ID: H-O6jF1mMxqN0UZa9aWVoQ_1780043701
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C2A961956046; Fri, 29 May 2026 08:35:00 +0000 (UTC)
+Received: from [10.44.50.28] (unknown [10.44.50.28])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2F05F30001BB; Fri, 29 May 2026 08:34:58 +0000 (UTC)
+Message-ID: <ed42a617-e7b9-4253-b02b-459c44841c88@redhat.com>
+Date: Fri, 29 May 2026 10:34:57 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] util/qemu-coroutine: skip global pool lock when pool is
+ empty
+To: Bin Guo <guobin@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: stefanha@redhat.com, kwolf@redhat.com
+References: <20260529015423.49688-1-guobin@linux.alibaba.com>
+Content-Language: en-US
+From: Paolo Bonzini <pbonzini@redhat.com>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20260529015423.49688-1-guobin@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,81 +122,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The event stream control bits are the same for both CNTHCTL and
-CNTKCTL so rather than duplicating the definitions rename them to be
-useful in both cases.
+On 5/29/26 03:54, Bin Guo wrote:
+> coroutine_pool_refill_local() acquires global_pool_lock on every
+> call even when the global pool is empty (global_pool_size == 0).
+> Under high I/O concurrency many threads simultaneously attempt to
+> refill from an empty global pool, causing unnecessary mutex
+> contention.
+> 
+> Add a fast-path check: read global_pool_size with qatomic_read()
+> before acquiring the mutex.  If zero, the global pool is empty and
+> we return immediately.  This is a racy read but correctness is
+> preserved: the only consequence of a stale read is a missed refill
+> opportunity, which will be retried on the next coroutine allocation.
+> 
+> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+> ---
+>   util/qemu-coroutine.c | 9 +++++++++
+>   1 file changed, 9 insertions(+)
+> 
+> diff --git a/util/qemu-coroutine.c b/util/qemu-coroutine.c
+> index d17135f585..0f8c3a23eb 100644
+> --- a/util/qemu-coroutine.c
+> +++ b/util/qemu-coroutine.c
+> @@ -138,6 +138,15 @@ static void coroutine_pool_refill_local(void)
+>       CoroutinePool *local_pool = get_ptr_local_pool();
+>       CoroutinePoolBatch *batch = NULL;
+>   
+> +    /*
+> +     * Fast path: skip the lock when the global pool is obviously empty.
+> +     * The read is racy but harmless -- worst case we miss a concurrent
+> +     * put and retry on the next allocation.
+> +     */
+> +    if (qatomic_read(&global_pool_size) == 0) {
+> +        return;
+> +    }
 
-We will need these in a later commit when we start implementing event
-streams.
+Reads are fine within the lock, but you still need to use qatomic_set 
+for writes now, i.e.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- target/arm/internals.h | 11 +++++++----
- target/arm/helper.c    |  8 ++++----
- 2 files changed, 11 insertions(+), 8 deletions(-)
+-            global_pool_size -= batch->size;
++            qatomic_set(&global_pool_size,
++                        global_pool_size - batch->size);
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index fb9df50da29..93f5bd0e830 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -272,14 +272,17 @@ FIELD(VSTCR, SA, 30, 1)
-  * have different bit definitions, and EL1PCTEN might be
-  * bit 0 or bit 10. We use _E2H1 and _E2H0 suffixes to
-  * disambiguate if necessary.
-+ *
-+ * The event stream bits (EVN*) are in the same position for
-+ * CNTKCTL_EL1/CTNKCTL.
-  */
- FIELD(CNTHCTL, EL0PCTEN_E2H1, 0, 1)
- FIELD(CNTHCTL, EL0VCTEN_E2H1, 1, 1)
- FIELD(CNTHCTL, EL1PCTEN_E2H0, 0, 1)
- FIELD(CNTHCTL, EL1PCEN_E2H0, 1, 1)
--FIELD(CNTHCTL, EVNTEN, 2, 1)
--FIELD(CNTHCTL, EVNTDIR, 3, 1)
--FIELD(CNTHCTL, EVNTI, 4, 4)
-+FIELD(CNTxCTL, EVNTEN, 2, 1)
-+FIELD(CNTxCTL, EVNTDIR, 3, 1)
-+FIELD(CNTxCTL, EVNTI, 4, 4)
- FIELD(CNTHCTL, EL0VTEN, 8, 1)
- FIELD(CNTHCTL, EL0PTEN, 9, 1)
- FIELD(CNTHCTL, EL1PCTEN_E2H1, 10, 1)
-@@ -289,7 +292,7 @@ FIELD(CNTHCTL, EL1TVT, 13, 1)
- FIELD(CNTHCTL, EL1TVCT, 14, 1)
- FIELD(CNTHCTL, EL1NVPCT, 15, 1)
- FIELD(CNTHCTL, EL1NVVCT, 16, 1)
--FIELD(CNTHCTL, EVNTIS, 17, 1)
-+FIELD(CNTxCTL, EVNTIS, 17, 1)
- FIELD(CNTHCTL, CNTVMASK, 18, 1)
- FIELD(CNTHCTL, CNTPMASK, 19, 1)
- 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 34487eeaa36..bed58e65b4d 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -1769,9 +1769,9 @@ static void gt_cnthctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     uint32_t valid_mask =
-         R_CNTHCTL_EL0PCTEN_E2H1_MASK |
-         R_CNTHCTL_EL0VCTEN_E2H1_MASK |
--        R_CNTHCTL_EVNTEN_MASK |
--        R_CNTHCTL_EVNTDIR_MASK |
--        R_CNTHCTL_EVNTI_MASK |
-+        R_CNTxCTL_EVNTEN_MASK |
-+        R_CNTxCTL_EVNTDIR_MASK |
-+        R_CNTxCTL_EVNTI_MASK |
-         R_CNTHCTL_EL0VTEN_MASK |
-         R_CNTHCTL_EL0PTEN_MASK |
-         R_CNTHCTL_EL1PCTEN_E2H1_MASK |
-@@ -1786,7 +1786,7 @@ static void gt_cnthctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
-             R_CNTHCTL_EL1TVCT_MASK |
-             R_CNTHCTL_EL1NVPCT_MASK |
-             R_CNTHCTL_EL1NVVCT_MASK |
--            R_CNTHCTL_EVNTIS_MASK;
-+            R_CNTxCTL_EVNTIS_MASK;
-     }
-     if (cpu_isar_feature(aa64_ecv, cpu)) {
-         valid_mask |= R_CNTHCTL_ECV_MASK;
--- 
-2.47.3
+-            global_pool_size += batch->size;
++            qatomic_set(&global_pool_size,
++                        global_pool_size + batch->size);
+
+Thanks,
+
+Paolo
+
+> +
+>       WITH_QEMU_LOCK_GUARD(&global_pool_lock) {
+>           batch = QSLIST_FIRST(&global_pool);
+>   
 
 
