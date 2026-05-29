@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92CC6CD6E45
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 08:31:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 956A2CD5BD2
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 08:31:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSsba-0001Zv-MB; Fri, 29 May 2026 04:30:10 -0400
+	id 1wSsbV-0001Sl-O9; Fri, 29 May 2026 04:30:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSsbN-0001Pl-SI
- for qemu-devel@nongnu.org; Fri, 29 May 2026 04:29:59 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1wSsbL-0001Oe-1d
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 04:29:55 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSsbL-0005Re-2x
- for qemu-devel@nongnu.org; Fri, 29 May 2026 04:29:57 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-48e8132c6d0so86626815e9.1
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 01:29:54 -0700 (PDT)
+ id 1wSsbI-0005QS-12
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 04:29:54 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4891e5b9c1fso118462565e9.2
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 01:29:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780043394; x=1780648194; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780043390; x=1780648190; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dt2pVSNtYi5awIMi0tBurROv0xQ5d0//K+fOntt40rM=;
- b=LRPZKuysFUSybP5HslVe4X/AoelSGUq/12oFGhH5L2a8RBq39FzsC8o62dSgDxYY2k
- 2MgSXT2n4QMkbuWNMzOsuHaKGakh0dUTCEB+XorOY2fGCM3a7Xhoveec0Qopr3NFUNzw
- 0/TT5FCjXPtvRtShlB/IGTF5MpDxCJlQlerejn6jKkwtAeCzpvZfMKgSQu+IyxFuPGQA
- ZsQS2hqXHeAj0H3OUEjJz7tdmT4g9nxUr6QKoAUtpmzUA+X9VlimikJ9u8yiMwMLsJjT
- E+KZ0+a6pPkvzgwCX/D0IdW6eL7yk5Eyj9kmTRAIDDRyFQq/d8KSXO6VVdU6WLSdNDM3
- sVaQ==
+ bh=TZKUB+wKUb0aYLSeMPcEAHuuX6sOf6z7ImGaMMZVjj8=;
+ b=n/Rx7lXh45UI+0KJ/CmKUwg6XQ2uw3b+cZN73QloIYtA63fxgId6aIPjS99qjZtQhu
+ DcJL7gbVthi5kfGPbResCR69tMfRh+zRmbWAnRp97dl4LpCJ/csFnFFlwaDKlUs4akqc
+ AXm0wZPrBfrSLXWKzon9stXbVB1l7axXw1gA/nVttDFnryJifb56DTA/hwVIkyqZ/7z+
+ vwAL6SWAlt8iJ0m5wUPR4KVfi/UNxVr0yXeMB8x3HQCVSsqPSRRgNguYuT1n6WuhRHLg
+ jc67DGP3vNkmn8lwr2sMlDRCXrxmwABwEUOqhVxb0Tyht9IhUwM95u2LynNQ6OT3zIdm
+ 1fdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780043394; x=1780648194;
+ d=1e100.net; s=20251104; t=1780043390; x=1780648190;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dt2pVSNtYi5awIMi0tBurROv0xQ5d0//K+fOntt40rM=;
- b=ojdpIE2HLN5d0pKHm4aFXwdA1uzZ2IlxmIqhe+71P49yOpe6XoDHUZikBy9JXhSJ1I
- LhlkcfHFe4EZhR1JeZ8IsGw4GZHirdEiJ54gk6AXUbest8yOl2pgQ+KFyH/GkmFmy5dt
- lPGiKKZJWQw5Iyy2d3QYN7q4C8WOn0xESkn8GB59juebSWGtCD8eJXnymymV7EYmMxtk
- jFAF6JSfOP2mcS4KHI8ERdHZNosb0VgBG67lJunmghbk7LFrprOLQzgtatQ35yaQz8aZ
- hT/gSTngce//Hc7+ai/mVUVPaypBcC/tzyx/FBBBb3ZVh5rFcOMGyzVGQHxTRIJE9pKa
- 5LLw==
-X-Gm-Message-State: AOJu0YzSWkK6U2ba8UIZE/89khBRMA2FdZTNBWgqF9j/V6vuBHG77vWz
- ZLZAZe7TnTuYkjivrCAuywWTwfAYMjMzaCPxSF5zrfTHCH6/nBe4Y8BRz+XnX6nAHUk=
-X-Gm-Gg: Acq92OG0gHsEuzR+NPbld95XdcgJqC81A43wloPSMxQAmppEWDuV2bPrdBumuvpqwff
- 4LEjFo0j+6AMZ5a2YYktr8dR8GoH/m5de7X4ewwvSSx9mQ2mlOB2dpRSWXsqG7brzUuYLXQpfnq
- 6m8uBNIl5uYeTRhQdKSlcPjMnirzizQO/VGi8ZKEGdpfk3P9Ig4IorUEtgD7meYZnESal7BIVXm
- gNr2xMk4Q+LCkeRi92T35G+UCrZ0dgl1R5sZmuNsLGLKuaPqILHAmwIqz1O26GeM0XKLrkQDv3s
- sWe42TItaC0wcEAiydH/qlLA/TzNQM3CVQAZxZRay3Wo1u6dZMQpyHMCkkdksROVZLHRQZtkLiE
- KSUaBDKRrjHjinJi8ggfSFZtPvGLdXJiUfai6lUrD9WtMH1KdEhgtjG2uMPB96VRaRmVGslVF3X
- tzgby7+0tg1QcZbKmm/j2E4skNfLkDqmeqrw==
-X-Received: by 2002:a05:600c:4504:b0:490:51e2:d992 with SMTP id
- 5b1f17b1804b1-4909c0b3349mr32182745e9.13.1780043393357; 
- Fri, 29 May 2026 01:29:53 -0700 (PDT)
+ bh=TZKUB+wKUb0aYLSeMPcEAHuuX6sOf6z7ImGaMMZVjj8=;
+ b=ZsGOaEuhMjlvL8N7DKiwXbRcYoBznmx4UVqZ/Nc6nllY8vU1fbiNU1Nt3b4iD3aOg0
+ C2d1h651WV1rWCNq5NZIL82BpJ1dqrc+QAq0/RNadmgSGPXKvSLjdH+5JoTxEpmsFnCI
+ SbQ6Bn5vWqEoBA2oToyT0oqw5jEtwILRk8q7CQhCu3KNQ/cvfSw8I9FEs04g7slNO8bB
+ /qRkcnQFHYbwJ1TpNEE7I177LyfMfg4DMj7pxYYgJDKcQrdhUvPYf6+EkNEhrHE9IluA
+ tT+GgDAL0SY4LY5Lkqxzh2fWJNGo5z0GQHiZ2A3oECRp0KfQ///cMQXSLbk2LFG3AXYM
+ kF3g==
+X-Gm-Message-State: AOJu0YxiKYf/HitJ1sOUVmbmXMfVWItpX0WLX1vEKRtmJMI8vuqW/lGn
+ uWsvb7BDARTIXL//9ZtaQe6Yt9gcfBoutomRpHzYMSkWQKQLaypy+4+4bgxxtIp8Hnc=
+X-Gm-Gg: Acq92OEaeaLK/aPlryBqXUjnX6Tw4HMvfAzqtsiVMwwLlWS4QLa5vlwY1a4PDlJcxPO
+ dTpZuxPVyXfVaSzQPsJ7wXyGCMCal2Igh8yW/JP5TUX7PpbKX7+nxufApL2ogoepyHTDlmCkoQW
+ k4vWHMb/1GeW5fSX0nlex29cUE4FDisFUkzXgbrH17G87nZEJs0JH1woY09h7skNNgUvsgKh2UC
+ 6tfERv+x+5bjk78mnyc1WY7C42g9kgo/8YiLqMkvcOGmP7dmXxrvMal4uWmAujtWvQUmcgh+I9G
+ iqWSSMiuUcXZ5QoqpV78DI68ySRWCabJwxHMfxrX35V9QqmGfHlhyRy3zlQLO8M5NZqv7+VUKBS
+ BgaTu8QUHbVxlgIyymdRfKgngYaLxBSyARKe0vEeFij62P7YLkdwgRPNDZcsEFiQsCk9i0E3VIe
+ xdrW1fFVI7ELcS5sVks2hneo+lDMxM0rkF9g==
+X-Received: by 2002:a05:600d:848a:b0:490:60cb:55f0 with SMTP id
+ 5b1f17b1804b1-4909c0aa2c7mr22086495e9.21.1780043390221; 
+ Fri, 29 May 2026 01:29:50 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ef34a0374sm1669634f8f.2.2026.05.29.01.29.50
+ 5b1f17b1804b1-4909d68a925sm37842375e9.2.2026.05.29.01.29.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 May 2026 01:29:51 -0700 (PDT)
+ Fri, 29 May 2026 01:29:49 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A9E146036E;
+ by draig.lan (Postfix) with ESMTP id 562B8602BD;
  Fri, 29 May 2026 09:29:48 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -75,24 +75,25 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Alexander Graf <agraf@csgraf.de>,
  kvm@vger.kernel.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v7 5/8] target/arm: implements SEV/SEVL for all modes
-Date: Fri, 29 May 2026 09:29:44 +0100
-Message-ID: <20260529082948.363931-6-alex.bennee@linaro.org>
+Subject: [PATCH v7 2/8] target/arm: teach arm_cpu_has_work about halting
+ reasons
+Date: Fri, 29 May 2026 09:29:41 +0100
+Message-ID: <20260529082948.363931-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260529082948.363931-1-alex.bennee@linaro.org>
 References: <20260529082948.363931-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,195 +109,241 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the restrictions that make this a M-profile only operation and
-enable the instructions for all Arm profiles.
+With the advent of WFE and WFI we need to pay closer attention to the
+reason why the vCPU may be sleeping to figure out if we should wake
+it up.
+
+Create env->halt_reason to track this and then re-order the tests so
+we:
+
+  - ignore everything is the vCPU is powered off
+  - wake up if the event_register is set and we were in a WFE
+  - otherwise any IRQ event does wake the vCPU up.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
 ---
-v2
-  - fix alignment in a32.decode
-  - set bool directly, defend with QEMU_BUILD_BUG_ON
-  - s/instructions/profiles/
-  - share get_event_reg between translate/translate-a64
+v3
+  - move arm_set_cpu_power_state to internals.h
+  - drop excess brackets
+v5
+  - more arm_set_cpu_power_state cases
 ---
- target/arm/tcg/translate.h     | 18 ++++++++++++++++++
- target/arm/tcg/a32.decode      |  5 ++---
- target/arm/tcg/a64.decode      |  5 ++---
- target/arm/tcg/t16.decode      |  4 +---
- target/arm/tcg/t32.decode      |  4 +---
- target/arm/tcg/op_helper.c     |  4 +---
- target/arm/tcg/translate-a64.c | 17 +++++++++++++++++
- target/arm/tcg/translate.c     | 13 ++++++++-----
- 8 files changed, 50 insertions(+), 20 deletions(-)
+ target/arm/cpu.h           | 16 +++++++++++++++
+ target/arm/internals.h     | 11 +++++++++++
+ target/arm/arm-powerctl.c  |  6 +++---
+ target/arm/cpu.c           | 40 +++++++++++++++++++++++++++-----------
+ target/arm/kvm.c           |  5 +++--
+ target/arm/machine.c       |  2 +-
+ target/arm/tcg/op_helper.c |  3 +++
+ 7 files changed, 66 insertions(+), 17 deletions(-)
 
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index d4bcc5bad4c..b71b1d5be66 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -856,6 +856,24 @@ static inline void gen_restore_rmode(TCGv_i32 old, TCGv_ptr fpst)
-     gen_helper_set_rmode(old, old, fpst);
- }
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 85552b573c4..dfc369b5844 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -224,6 +224,19 @@ typedef enum ARMFPStatusFlavour {
+ /* Architecturally there are 128 PPIs in a GICv5 */
+ #define GICV5_NUM_PPIS 128
  
-+/*
-+ * Event Register signalling.
++/**
++ * ARMHaltReason - the reason we have entered halt state
 + *
-+ * A bunch of activities trigger events, we just need to latch on to
-+ * true. The event eventually gets consumed by WFE/WFET.
-+ *
-+ * user-mode treats these as NOPs.
++ * To be able to correctly wake up via arm_cpu_has_work() we need to
++ * track the reason we went to sleep.
 + */
++typedef enum {
++    NOT_HALTED = 0,
++    HALT_PSCI,
++    HALT_WFI,
++    HALT_WFE
++} ARMHaltReason;
 +
-+static inline void gen_event_reg(void)
+ typedef struct CPUArchState {
+     /* Regs for current mode.  */
+     uint32_t regs[16];
+@@ -746,6 +759,9 @@ typedef struct CPUArchState {
+     /* Optional fault info across tlb lookup. */
+     ARMMMUFaultInfo *tlb_fi;
+ 
++    /* Reason the CPU is halted */
++    ARMHaltReason halt_reason;
++
+     /*
+      * The event register is shared by all ARM profiles (A/R/M),
+      * so it is stored in the top-level CPU state.
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index ae5afc5362e..fb9df50da29 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -2027,4 +2027,15 @@ bool arm_cpu_match_cpreg_mig_tolerance(ARMCPU *cpu, uint64_t kvmidx,
+                                        ARMCPRegMigToleranceType type);
+ 
+ 
++/**
++ * arm_set_cpu_power_state() - set power state synced with halt_reason
++ */
++static inline void arm_set_cpu_power_state(ARMCPU *cpu, ARMPSCIState state)
 +{
-+#ifndef CONFIG_USER_ONLY
-+    TCGv_i32 set_event = tcg_constant_i32(1);
-+    QEMU_BUILD_BUG_ON(sizeof_field(CPUARMState, event_register) != 1);
-+    tcg_gen_st8_i32(set_event, tcg_env, offsetof(CPUARMState, event_register));
-+#endif
++    CPUARMState *env = &cpu->env;
++
++    cpu->power_state = state;
++    env->halt_reason = state == PSCI_OFF ? HALT_PSCI : NOT_HALTED;
 +}
 +
- /*
-  * Helpers for implementing sets of trans_* functions.
-  * Defer the implementation of NAME to FUNC, with optional extra arguments.
-diff --git a/target/arm/tcg/a32.decode b/target/arm/tcg/a32.decode
-index f2ca4809495..547aa2b1490 100644
---- a/target/arm/tcg/a32.decode
-+++ b/target/arm/tcg/a32.decode
-@@ -192,9 +192,8 @@ SMULTT           .... 0001 0110 .... 0000 .... 1110 ....      @rd0mn
-       WFE        ---- 0011 0010 0000 1111 ---- 0000 0010
-       WFI        ---- 0011 0010 0000 1111 ---- 0000 0011
+ #endif
+diff --git a/target/arm/arm-powerctl.c b/target/arm/arm-powerctl.c
+index a788376d1d3..a06be5cc997 100644
+--- a/target/arm/arm-powerctl.c
++++ b/target/arm/arm-powerctl.c
+@@ -78,7 +78,7 @@ static void arm_set_cpu_on_async_work(CPUState *target_cpu_state,
  
--      # TODO: Implement SEV, SEVL; may help SMP performance.
--      # SEV      ---- 0011 0010 0000 1111 ---- 0000 0100
--      # SEVL     ---- 0011 0010 0000 1111 ---- 0000 0101
-+      SEV        ---- 0011 0010 0000 1111 ---- 0000 0100
-+      SEVL       ---- 0011 0010 0000 1111 ---- 0000 0101
+     /* Finally set the power status */
+     assert(bql_locked());
+-    target_cpu->power_state = PSCI_ON;
++    arm_set_cpu_power_state(target_cpu, PSCI_ON);
+ }
  
-       ESB        ---- 0011 0010 0000 1111 ---- 0001 0000
-     ]
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 02c7264cb99..7ea52ac23b9 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -237,9 +237,8 @@ ERETA           1101011 0100 11111 00001 m:1 11111 11111 &reta  # ERETAA, ERETAB
-     YIELD       1101 0101 0000 0011 0010 0000 001 11111
-     WFE         1101 0101 0000 0011 0010 0000 010 11111
-     WFI         1101 0101 0000 0011 0010 0000 011 11111
--    # We implement WFE to never block, so our SEV/SEVL are NOPs
--    # SEV       1101 0101 0000 0011 0010 0000 100 11111
--    # SEVL      1101 0101 0000 0011 0010 0000 101 11111
-+    SEV         1101 0101 0000 0011 0010 0000 100 11111
-+    SEVL        1101 0101 0000 0011 0010 0000 101 11111
-     # Our DGL is a NOP because we don't merge memory accesses anyway.
-     # DGL       1101 0101 0000 0011 0010 0000 110 11111
-     XPACLRI     1101 0101 0000 0011 0010 0000 111 11111
-diff --git a/target/arm/tcg/t16.decode b/target/arm/tcg/t16.decode
-index 778fbf16275..9a8f89538ac 100644
---- a/target/arm/tcg/t16.decode
-+++ b/target/arm/tcg/t16.decode
-@@ -228,10 +228,8 @@ REVSH           1011 1010 11 ... ...            @rdm
-     WFE         1011 1111 0010 0000
-     WFI         1011 1111 0011 0000
+ int arm_set_cpu_on(uint64_t cpuid, uint64_t entry, uint64_t context_id,
+@@ -186,7 +186,7 @@ static void arm_set_cpu_on_and_reset_async_work(CPUState *target_cpu_state,
  
--    # M-profile SEV is implemented.
--    # TODO: Implement SEV for other profiles, and SEVL for all profiles; may help SMP performance.
-     SEV         1011 1111 0100 0000
--    # SEVL      1011 1111 0101 0000
-+    SEVL        1011 1111 0101 0000
+     /* Finally set the power status */
+     assert(bql_locked());
+-    target_cpu->power_state = PSCI_ON;
++    arm_set_cpu_power_state(target_cpu, PSCI_ON);
+ }
  
-     # The canonical nop has the second nibble as 0000, but the whole of the
-     # rest of the space is a reserved hint, behaves as nop.
-diff --git a/target/arm/tcg/t32.decode b/target/arm/tcg/t32.decode
-index 49b8d0037ec..8ae277fe112 100644
---- a/target/arm/tcg/t32.decode
-+++ b/target/arm/tcg/t32.decode
-@@ -369,10 +369,8 @@ CLZ              1111 1010 1011 ---- 1111 .... 1000 ....      @rdm
-         WFE      1111 0011 1010 1111 1000 0000 0000 0010
-         WFI      1111 0011 1010 1111 1000 0000 0000 0011
+ int arm_set_cpu_on_and_reset(uint64_t cpuid)
+@@ -239,7 +239,7 @@ static void arm_set_cpu_off_async_work(CPUState *target_cpu_state,
+     ARMCPU *target_cpu = ARM_CPU(target_cpu_state);
  
--        # M-profile SEV is implemented.
--        # TODO: Implement SEV for other profiles, and SEVL for all profiles; may help SMP performance.
-         SEV      1111 0011 1010 1111 1000 0000 0000 0100
--        # SEVL   1111 0011 1010 1111 1000 0000 0000 0101
-+        SEVL     1111 0011 1010 1111 1000 0000 0000 0101
+     assert(bql_locked());
+-    target_cpu->power_state = PSCI_OFF;
++    arm_set_cpu_power_state(target_cpu, PSCI_OFF);
+     target_cpu_state->halted = 1;
+     target_cpu_state->exception_index = EXCP_HLT;
+ }
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index a13e6dae2a2..8771b695d9d 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -145,18 +145,36 @@ static bool arm_cpu_has_work(CPUState *cs)
+ {
+     ARMCPU *cpu = ARM_CPU(cs);
  
-         ESB      1111 0011 1010 1111 1000 0000 0001 0000
-       ]
+-    if (arm_feature(&cpu->env, ARM_FEATURE_M)) {
+-        if (cpu->env.event_register) {
+-            return true;
+-        }
++    /*
++     * Only another PSCI call can wake the CPU up in which case the
++     * power_state would be set by arm_set_cpu_on_and_reset_async_work()
++     */
++    if (cpu->power_state == PSCI_OFF) {
++        g_assert(cpu->env.halt_reason == HALT_PSCI);
++        return false;
++    }
++
++    /*
++     * A wake-up event should only wake us if we are halted on a WFE
++     */
++    if (cpu->env.halt_reason == HALT_WFE && cpu->env.event_register) {
++        cpu->env.halt_reason = NOT_HALTED;
++        return true;
++    }
++
++    /*
++     * Otherwise pretty much any IRQ would wake us up
++     */
++    if (cpu_test_interrupt(cs,
++                           CPU_INTERRUPT_FIQ | CPU_INTERRUPT_HARD
++                           | CPU_INTERRUPT_NMI | CPU_INTERRUPT_VINMI | CPU_INTERRUPT_VFNMI
++                           | CPU_INTERRUPT_VFIQ | CPU_INTERRUPT_VIRQ | CPU_INTERRUPT_VSERR
++                           | CPU_INTERRUPT_EXITTB)) {
++        cpu->env.halt_reason = NOT_HALTED;
++        return true;
+     }
+ 
+-    return (cpu->power_state != PSCI_OFF)
+-        && cpu_test_interrupt(cs,
+-               CPU_INTERRUPT_FIQ | CPU_INTERRUPT_HARD
+-               | CPU_INTERRUPT_NMI | CPU_INTERRUPT_VINMI | CPU_INTERRUPT_VFNMI
+-               | CPU_INTERRUPT_VFIQ | CPU_INTERRUPT_VIRQ | CPU_INTERRUPT_VSERR
+-               | CPU_INTERRUPT_EXITTB);
++    return false;
+ }
+ #endif /* !CONFIG_USER_ONLY */
+ 
+@@ -327,7 +345,7 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
+     env->vfp.xregs[ARM_VFP_MVFR1] = cpu->isar.mvfr1;
+     env->vfp.xregs[ARM_VFP_MVFR2] = cpu->isar.mvfr2;
+ 
+-    cpu->power_state = cs->start_powered_off ? PSCI_OFF : PSCI_ON;
++    arm_set_cpu_power_state(cpu, cs->start_powered_off ? PSCI_OFF : PSCI_ON);
+ 
+     if (arm_feature(env, ARM_FEATURE_AARCH64)) {
+         /* 64 bit CPUs always start in 64 bit mode */
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 7d194ea112b..a54ef51ec2a 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -1149,11 +1149,12 @@ static int kvm_arm_sync_mpstate_to_qemu(ARMCPU *cpu)
+     if (cap_has_mp_state) {
+         struct kvm_mp_state mp_state;
+         int ret = kvm_vcpu_ioctl(CPU(cpu), KVM_GET_MP_STATE, &mp_state);
++        ARMPSCIState state;
+         if (ret) {
+             return ret;
+         }
+-        cpu->power_state = (mp_state.mp_state == KVM_MP_STATE_STOPPED) ?
+-            PSCI_OFF : PSCI_ON;
++        state = (mp_state.mp_state == KVM_MP_STATE_STOPPED) ? PSCI_OFF : PSCI_ON;
++        arm_set_cpu_power_state(cpu, state);
+     }
+     return 0;
+ }
+diff --git a/target/arm/machine.c b/target/arm/machine.c
+index 58f8dfd53c8..fde3b3e8d75 100644
+--- a/target/arm/machine.c
++++ b/target/arm/machine.c
+@@ -916,7 +916,7 @@ static int get_power(QEMUFile *f, void *opaque, size_t size,
+ {
+     ARMCPU *cpu = opaque;
+     bool powered_off = qemu_get_byte(f);
+-    cpu->power_state = powered_off ? PSCI_OFF : PSCI_ON;
++    arm_set_cpu_power_state(cpu, powered_off ? PSCI_OFF : PSCI_ON);
+     return 0;
+ }
+ 
 diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 504526153a6..2b1fb1e059d 100644
+index e8f0996ed39..504526153a6 100644
 --- a/target/arm/tcg/op_helper.c
 +++ b/target/arm/tcg/op_helper.c
-@@ -476,9 +476,7 @@ void HELPER(sev)(CPUARMState *env)
-     CPUState *cs = env_cpu(env);
-     CPU_FOREACH(cs) {
-         ARMCPU *target_cpu = ARM_CPU(cs);
--        if (arm_feature(&target_cpu->env, ARM_FEATURE_M)) {
--            target_cpu->env.event_register = true;
--        }
-+        target_cpu->env.event_register = true;
-         if (!qemu_cpu_is_self(cs)) {
-             qemu_cpu_kick(cs);
+@@ -402,6 +402,7 @@ void HELPER(wfi)(CPUARMState *env, uint32_t insn_len)
+                         target_el);
+     }
+ 
++    env->halt_reason = HALT_WFI;
+     cs->exception_index = EXCP_HLT;
+     cs->halted = 1;
+     cpu_loop_exit(cs);
+@@ -463,6 +464,7 @@ void HELPER(wfit)(CPUARMState *env, uint32_t rd)
+     } else {
+         timer_mod(cpu->wfxt_timer, nexttick);
+     }
++    env->halt_reason = HALT_WFI;
+     cs->exception_index = EXCP_HLT;
+     cs->halted = 1;
+     cpu_loop_exit(cs);
+@@ -507,6 +509,7 @@ void HELPER(wfe)(CPUARMState *env)
+             return;
          }
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index c20269b1501..4b978c8b958 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -2033,6 +2033,23 @@ static bool trans_WFI(DisasContext *s, arg_WFI *a)
-     return true;
- }
  
-+static bool trans_SEV(DisasContext *s, arg_SEV *a)
-+{
-+    /*
-+     * SEV is a NOP for user-mode emulation.
-+     */
-+#ifndef CONFIG_USER_ONLY
-+    gen_helper_sev(tcg_env);
-+#endif
-+    return true;
-+}
-+
-+static bool trans_SEVL(DisasContext *s, arg_SEV *a)
-+{
-+    gen_event_reg();
-+    return true;
-+}
-+
- static bool trans_WFE(DisasContext *s, arg_WFI *a)
- {
-     /*
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index c744b163453..e1e5539f571 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -3246,17 +3246,20 @@ static bool trans_YIELD(DisasContext *s, arg_YIELD *a)
- static bool trans_SEV(DisasContext *s, arg_SEV *a)
- {
-     /*
--     * Currently SEV is a NOP for non-M-profile and in user-mode emulation.
--     * For system-mode M-profile, it sets the event register.
-+     * SEV is a NOP for user-mode emulation.
-      */
- #ifndef CONFIG_USER_ONLY
--    if (arm_dc_feature(s, ARM_FEATURE_M)) {
--        gen_helper_sev(tcg_env);
--    }
-+    gen_helper_sev(tcg_env);
- #endif
-     return true;
- }
- 
-+static bool trans_SEVL(DisasContext *s, arg_SEV *a)
-+{
-+    gen_event_reg();
-+    return true;
-+}
-+
- static bool trans_WFE(DisasContext *s, arg_WFE *a)
- {
-     /*
++        env->halt_reason = HALT_WFE;
+         cs->exception_index = EXCP_HLT;
+         cs->halted = 1;
+         cpu_loop_exit(cs);
 -- 
 2.47.3
 
