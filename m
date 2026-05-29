@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 339DECD4F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 12:52:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 913C2CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 12:53:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSwgK-0004wv-GT; Fri, 29 May 2026 08:51:20 -0400
+	id 1wSwg7-0004qT-CE; Fri, 29 May 2026 08:51:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wSwgI-0004vt-Kj
- for qemu-devel@nongnu.org; Fri, 29 May 2026 08:51:18 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wSwg5-0004oL-H0
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 08:51:05 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wSwgG-0006LE-LN
- for qemu-devel@nongnu.org; Fri, 29 May 2026 08:51:18 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2bf125989f2so10416855ad.3
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 05:51:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wSwg3-0006Ht-H1
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 08:51:05 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-36b9ec98144so918645a91.1
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 05:51:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780059075; x=1780663875; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1780059062; x=1780663862; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Na64UqTsRKpXXVv1acvxDBdZdoKT8LTF8TPzURCFSpY=;
- b=p3EhO7z/wQQ4OgaKmJkpCYNqsBHhi0l51dfiJ9zQ4xsPXWLgN9j6nKNOD0TE4q5DvL
- KmA1bXOSi3T/Br4hAWSnlF7KUooVx0EjG/WeZzmWYxy5HF2uB53sD+KPCh0sF7jzJYtR
- 0DUfOnKVvDFs/x9TzZjcFtFPVX7Hn9o9m0dHh+e+ChaOAF3AKwyAHf/Hj5Hcs9QJ+Yrg
- +xCvrRC1iozdUgAYuzxa79Uw0mRYA7j/ZxxVSUsN4MWflYCfH65bRVktamjS6Euxru8r
- ndUukH1jpNwMp+67J4p4pG0PLWKlMIFpBGRcKHq+HbFtG21I9ucam92aZQthZLZfcgjB
- N30Q==
+ bh=s0L4tLl7I6tkMcpsKUvTPNAYZl4B+x0G3/28gkcjtDM=;
+ b=kFc/YFMq6bZ7Gaw6JGpdxJGMk+Od+6lT06RyzU5rgbxm4MIgNoDlPmOPvc5/DoPKFz
+ 2jCQyowbDgH9EVaovjRHhy2Q6EdvgwkBNpheXhYhou97zhylG+idhPLh9MpaEyxgEGf2
+ 73jd5YBYdQOxe8Ub9kkcvY5/jvp2R1371XmS/+7UjWCxuhA9XY9DmVp5dK71yJXsFRmD
+ bkSaqqdm0vgEpvm/THiz4QqD7oZGMCs+Is4dLK6+NEhhvLoJXN0irE3YmsV3GkKwtD21
+ xE5Rxf6LXH98H+VRuUn5Qyi3jezEqqRqtlLxpSx8l1Rvi57Ti2iEsXTq30luryq8JPap
+ AnIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780059075; x=1780663875;
+ d=1e100.net; s=20251104; t=1780059062; x=1780663862;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Na64UqTsRKpXXVv1acvxDBdZdoKT8LTF8TPzURCFSpY=;
- b=smn6IvodlHlm/BpWcImF5Ufzv3D5YaXRtaIWbiXm/o5adSV6L2Ql1lIapjsy3AokV6
- 0Vz0VwxvrLHffsZWu+Ln37nnp9Tj7DAKcsfpsUgBrH3coAsgkpkVJaruE8s60VjAcneP
- DMizc+xmWa+N6uIi7UtBLCbbiSDAjuLQpUcIIossv3FC4U9ZY7iS+hiBcVW1TZPaOCK/
- KmvoPPHUt+HtgecCLAGMLSpIJzvTp/j6R7INlyGYzUh/hWPiw/tXdsdNVe+47QstINpz
- 4G3d9yRx/XCNMh+UKzdg1yZpycFYEchQs01tss/lo9IAqqd2m0j308r0HJngSEkujYuN
- Du2A==
+ bh=s0L4tLl7I6tkMcpsKUvTPNAYZl4B+x0G3/28gkcjtDM=;
+ b=gnA9XQTfHHGcQvAZAMxroG4ysWcdZ7G3x/3W8uvmohkLIaSqrrETt9/B2PtZP8RsrA
+ KXtRJJIHsMTyn2iZdeurz2flD+1ixX6LlpG8yBZCr1hLowLgx9h4F60eNqChl4/DNW9Z
+ PaI+V9mytfB+sHOk+3c4pA28Nrj227Q3d+8v/9QWCyCWJEn9YOaMIZz6oaBCOCXW3VCG
+ 1kTCl2Gnv/HEssUtPIewFNBbpyMzgr+UxrEu/dYm6newEciyaJWGEM9ettQ5rFR/aeVw
+ OCkdo3LQ2r7+J7zVTzRPb/YeYTwWurzQgesiW/7gJ0ZypXIfd0ElQo95uxL7TUM9VNae
+ QaJQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+eIVqu6wEnkfOS/VwGh+TVufbNZZLC5+2lUGw2k6NQJptXEBRGMH/Nc69ih4wVQ+SW9W5tgA8bNOg5@nongnu.org
-X-Gm-Message-State: AOJu0YxWXGXMoYoVuDQMXzwh+dxhFQTmCuC4t/EhSVqrqTwI46Nv/HqO
- K4QlSn2wxRNlGd/rn/cq7O70ioL/sqHtO37pjbZ87eVyOTTNFci8uUDh
-X-Gm-Gg: Acq92OG+0IkFM96jDrsu2k4Do+wfXpJw4isrDSV8S0PfroawrJuOCPl3D2ZJ+/7X5U1
- +nohuyQsGAMdB6K1Y7iQAT7PxglGZSeflXfXE8/y2h4vZnhi5FJ+fGazO+9GDrefN7JYS+RWAx/
- 4iq0JcTaJM2sFiI/iW4hx/JRGkDtPxEWfeSn0s85AANU8IjvBkBiOwKYAAxgkUOTSn2pkDb/96I
- 03KxoB6uko+GEoFZkTQrgyWa4rZ5XH+eBkx2MvR9ZlE6nMoe1QUD6zKbcN9G1TSiavDLp/TO08r
- atUegutemvIwOoYmEn0LHxD7vz82na/Q8MfAAfazcLSLCBd/zHmBUleeTI7Qg2AFWpl16NeXUI3
- GnFqQlewv0exsuV3VNTLD2g/lcl6yE7mSlK/k787sAl/LDWW50j8LrbTjEYANcS7BldSzJNknRH
- gfVAVDfteBp4z+39YTd+8eP9OlnNUMj1RBwk3rp+uTGVUq4CeotbGJQ3M9zcoyKFUxiExBo8M1B
- b8fqyIpC4BRHyz96z4=
-X-Received: by 2002:a17:902:f60c:b0:2b4:5f96:184d with SMTP id
- d9443c01a7336-2bf204e2c80mr37498025ad.5.1780059075207; 
- Fri, 29 May 2026 05:51:15 -0700 (PDT)
+ AFNElJ9bpDh6DuoVTRiQ7TCtLg2k99Yf9cn8diBfV1ExELKnC/lIOWAIc1SONSLS9qDFdd9iTywqhKmHl1db@nongnu.org
+X-Gm-Message-State: AOJu0YwINEkak2iUJtmTgSnaxrx8nYS867QG5ovZF5ukjZcr+DvdcS0T
+ 5lRuI+2otV5jdYyIdqgi9pTtxIaw3mq8aIwWO3Goa3deRCNfDXVxgajh
+X-Gm-Gg: Acq92OHAH1NVO2zFe4b4hNKuvi2EyeEEyhHT3I6W1O85JRd0VTx70UZ6IpaRCD3ki1e
+ qE7qg/4tQTuc2Fg55qa64Q3rNEXzWfHqr+EIQolcwAJm5DNVVwIDpE2fEeyMkazznPgOi8HqVBK
+ +kNUHfEIr+JAQuQhI5ymX22JWZLOu5wJEn8bVNY6nHZxjFJnrZkn/ofeFRrMKB3vcBzywrwIzbV
+ t0P1c2SN0dOavb3oLEsZqn/T4Z7NVPKMMnZ95Zu9F20ezwZUNf4I5RDQBZn96cmf1n3k5Q9kUKZ
+ tuMHHtrARyn1lZitDfre+7TDb1YTscedp3IGBGSgh0NlA0/2CZ6Kj82Y/UQMTK+WMMfgzFDglmQ
+ 36i0TMHr8uLf8OiaXlF2U49NfQfGBdMRG/tPoB6IdbPW6d2L4iSOr72UA/j3MEDaCcYGS6tyA5r
+ +k6IisoAooprkviIdxVgYRDpYJ4B9DQ7Ja30ArtD5vuMspDXdVecFLl3j3Bt7exR1dJQkGDyzMY
+ 5mZTp0qWOonfOfNjxk=
+X-Received: by 2002:a17:90b:184b:b0:366:479e:63a5 with SMTP id
+ 98e67ed59e1d1-36bbcc160f0mr3504077a91.2.1780059062043; 
+ Fri, 29 May 2026 05:51:02 -0700 (PDT)
 Received: from localhost (124.158.97.178.qld.leaptel.network. [124.158.97.178])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2bf23b00ea6sm28679005ad.42.2026.05.29.05.51.13
+ 98e67ed59e1d1-36bc6a34ca9sm1823751a91.9.2026.05.29.05.51.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 May 2026 05:51:14 -0700 (PDT)
+ Fri, 29 May 2026 05:51:01 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: Alistair Francis <alistair.francis@wdc.com>
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -75,18 +75,19 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
  Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
  qemu-devel@nongnu.org, Joel Stanley <joel@jms.id.au>,
+ Nutty Liu <nutty.liu@hotmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v7 07/10] tests/functional/riscv64: Add tt-atlantis tests
-Date: Fri, 29 May 2026 05:50:32 -0700
-Message-ID: <20260529125036.728206-8-npiggin@gmail.com>
+Subject: [PATCH v7 04/10] hw/riscv/aia: Provide number of irq sources
+Date: Fri, 29 May 2026 05:50:29 -0700
+Message-ID: <20260529125036.728206-5-npiggin@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260529125036.728206-1-npiggin@gmail.com>
 References: <20260529125036.728206-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,121 +110,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add OpenSBI and Linux boot tests for the tt-atlantis machine. Based on
-tests/functional/riscv64/test_sifive_u.py.
+From: Joel Stanley <joel@jms.id.au>
 
+Instead of hard coding the number of IRQ sources used by the APLIC pass
+it in as a parameter. This allows other machines to configure this as
+required.
+
+The maximum number of sources is 1023.
+
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- MAINTAINERS                                  |  1 +
- tests/functional/riscv64/meson.build         |  1 +
- tests/functional/riscv64/test_opensbi.py     |  4 ++
- tests/functional/riscv64/test_tt_atlantis.py | 57 ++++++++++++++++++++
- 4 files changed, 63 insertions(+)
- create mode 100755 tests/functional/riscv64/test_tt_atlantis.py
+ hw/riscv/aia.c             |  8 ++++++--
+ hw/riscv/aia.h             |  3 +--
+ hw/riscv/virt-acpi-build.c | 25 ++++++++++++++++---------
+ hw/riscv/virt.c            |  2 ++
+ include/hw/riscv/virt.h    |  1 +
+ 5 files changed, 26 insertions(+), 13 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index c5f7a8a6e4..e14d7a9c28 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1788,6 +1788,7 @@ S: Supported
- F: docs/system/riscv/tt_*.rst
- F: hw/riscv/tt_*.c
- F: include/hw/riscv/tt_*.h
-+F: tests/functional/riscv64/test_tt_*.py
+diff --git a/hw/riscv/aia.c b/hw/riscv/aia.c
+index c724612a50..82ea9d48ea 100644
+--- a/hw/riscv/aia.c
++++ b/hw/riscv/aia.c
+@@ -25,6 +25,7 @@ uint32_t imsic_num_bits(uint32_t count)
+ }
  
- AMD Microblaze-V Generic Board
- M: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
-index b996c89d7d..c4456fabd7 100644
---- a/tests/functional/riscv64/meson.build
-+++ b/tests/functional/riscv64/meson.build
-@@ -13,5 +13,6 @@ tests_riscv64_system_quick = [
- tests_riscv64_system_thorough = [
-   'boston',
-   'sifive_u',
-+  'tt_atlantis',
-   'tuxrun',
- ]
-diff --git a/tests/functional/riscv64/test_opensbi.py b/tests/functional/riscv64/test_opensbi.py
-index d077e40f42..0f8beb7e7a 100755
---- a/tests/functional/riscv64/test_opensbi.py
-+++ b/tests/functional/riscv64/test_opensbi.py
-@@ -28,6 +28,10 @@ def test_riscv_sifive_u(self):
-         self.set_machine('sifive_u')
-         self.boot_opensbi()
+ DeviceState *riscv_create_aia(bool msimode, int aia_guests,
++                             uint16_t num_sources,
+                              const MemMapEntry *aplic_m,
+                              const MemMapEntry *aplic_s,
+                              const MemMapEntry *imsic_m,
+@@ -38,6 +39,9 @@ DeviceState *riscv_create_aia(bool msimode, int aia_guests,
+     DeviceState *aplic_s_dev = NULL;
+     DeviceState *aplic_m_dev = NULL;
  
-+    def test_riscv_tt_atlantis(self):
-+        self.set_machine('tt-atlantis')
-+        self.boot_opensbi()
++    /* The RISC-V Advanced Interrupt Architecture, Chapter 1.2. Limits */
++    g_assert(num_sources <= 1023);
 +
-     def test_riscv_virt(self):
-         self.set_machine('virt')
-         self.boot_opensbi()
-diff --git a/tests/functional/riscv64/test_tt_atlantis.py b/tests/functional/riscv64/test_tt_atlantis.py
-new file mode 100755
-index 0000000000..48abd5cd27
---- /dev/null
-+++ b/tests/functional/riscv64/test_tt_atlantis.py
-@@ -0,0 +1,57 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots a Linux kernel on a Tenstorrent Atlantis machine
-+# and checks the console
-+#
-+# Copyright (c) Linaro Ltd.
-+# Copyright 2026 Tenstorrent
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
+     if (msimode) {
+         if (!kvm_enabled()) {
+             /* Per-socket M-level IMSICs */
+@@ -66,7 +70,7 @@ DeviceState *riscv_create_aia(bool msimode, int aia_guests,
+                                      aplic_m->size,
+                                      (msimode) ? 0 : base_hartid,
+                                      (msimode) ? 0 : hart_count,
+-                                     VIRT_IRQCHIP_NUM_SOURCES,
++                                     num_sources,
+                                      num_prio_bits,
+                                      msimode, true, NULL);
+     }
+@@ -77,7 +81,7 @@ DeviceState *riscv_create_aia(bool msimode, int aia_guests,
+                                  aplic_s->size,
+                                  (msimode) ? 0 : base_hartid,
+                                  (msimode) ? 0 : hart_count,
+-                                 VIRT_IRQCHIP_NUM_SOURCES,
++                                 num_sources,
+                                  num_prio_bits,
+                                  msimode, false, aplic_m_dev);
+ 
+diff --git a/hw/riscv/aia.h b/hw/riscv/aia.h
+index dbb8333402..5ad0a902be 100644
+--- a/hw/riscv/aia.h
++++ b/hw/riscv/aia.h
+@@ -11,11 +11,10 @@
+ 
+ #include "exec/hwaddr.h"
+ 
+-#define VIRT_IRQCHIP_NUM_SOURCES 96
+-
+ uint32_t imsic_num_bits(uint32_t count);
+ 
+ DeviceState *riscv_create_aia(bool msimode, int aia_guests,
++                             uint16_t num_sources,
+                              const MemMapEntry *aplic_m,
+                              const MemMapEntry *aplic_s,
+                              const MemMapEntry *imsic_m,
+diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+index e3da874924..db3ea4f03a 100644
+--- a/hw/riscv/virt-acpi-build.c
++++ b/hw/riscv/virt-acpi-build.c
+@@ -146,6 +146,7 @@ static void acpi_dsdt_add_cpus(Aml *scope, RISCVVirtState *s)
+ }
+ 
+ static void acpi_dsdt_add_plic_aplic(Aml *scope, uint8_t socket_count,
++                                     uint16_t num_sources,
+                                      uint64_t mmio_base, uint64_t mmio_size,
+                                      const char *hid)
+ {
+@@ -153,9 +154,12 @@ static void acpi_dsdt_add_plic_aplic(Aml *scope, uint8_t socket_count,
+     uint32_t gsi_base;
+     uint8_t  socket;
+ 
++    /* The RISC-V Advanced Interrupt Architecture, Chapter 1.2. Limits */
++    g_assert(num_sources <= 1023);
 +
-+from qemu_test import Asset, LinuxKernelTest
-+
-+
-+class TTAtlantis(LinuxKernelTest):
-+
-+    ASSET_KERNEL = Asset(
-+        'https://storage.tuxboot.com/kernels/6.11.9/riscv64/Image',
-+        '174f8bb87f08961e54fa3fcd954a8e31f4645f6d6af4dd43983d5e9841490fb0')
-+    ASSET_ROOTFS = Asset(
-+        ('https://github.com/groeck/linux-build-test/raw/'
-+         '9819da19e6eef291686fdd7b029ea00e764dc62f/rootfs/riscv64/'
-+         'rootfs.ext2.gz'),
-+        'b6ed95610310b7956f9bf20c4c9c0c05fea647900df441da9dfe767d24e8b28b')
-+
-+    def do_test_riscv64_tt_atlantis(self, connect_disk):
-+        self.set_machine('tt-atlantis')
-+        kernel_path = self.ASSET_KERNEL.fetch()
-+        rootfs_path = self.uncompress(self.ASSET_ROOTFS)
-+
-+        self.vm.set_console()
-+        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'earlycon=sbi '
-+
-+        if connect_disk:
-+            kernel_command_line += 'root=/dev/vda panic=-1 noreboot rootwait '
-+            self.vm.add_args('-device',
-+                             'virtio-blk,drive=drive0,serial=0x1234,bus=pcie.0')
-+            self.vm.add_args('-drive',
-+                             f'file={rootfs_path},if=none,id=drive0,format=raw')
-+            pattern = 'Boot successful.'
-+        else:
-+            kernel_command_line += 'panic=0 noreboot '
-+            pattern = 'Cannot open root device'
-+
-+        self.vm.add_args('-kernel', kernel_path,
-+                         '-append', kernel_command_line,
-+                         '-no-reboot')
-+
-+        self.vm.launch()
-+        self.wait_for_console_pattern(pattern)
-+
-+    def test_riscv64_tt_atlantis(self):
-+        # tt-atlantis machine has no PCI host yet, so no disk
-+        self.do_test_riscv64_tt_atlantis(False)
-+
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
+     for (socket = 0; socket < socket_count; socket++) {
+         plic_aplic_addr = mmio_base + mmio_size * socket;
+-        gsi_base = VIRT_IRQCHIP_NUM_SOURCES * socket;
++        gsi_base = num_sources * socket;
+         Aml *dev = aml_device("IC%.02X", socket);
+         aml_append(dev, aml_name_decl("_HID", aml_string("%s", hid)));
+         aml_append(dev, aml_name_decl("_UID", aml_int(socket)));
+@@ -474,10 +478,13 @@ static void build_dsdt(GArray *table_data,
+     socket_count = riscv_socket_count(ms);
+ 
+     if (s->aia_type == VIRT_AIA_TYPE_NONE) {
+-        acpi_dsdt_add_plic_aplic(scope, socket_count, memmap[VIRT_PLIC].base,
+-                                 memmap[VIRT_PLIC].size, "RSCV0001");
++        acpi_dsdt_add_plic_aplic(scope, socket_count, s->num_sources,
++                                 memmap[VIRT_PLIC].base,
++                                 memmap[VIRT_PLIC].size,
++                                 "RSCV0001");
+     } else {
+-        acpi_dsdt_add_plic_aplic(scope, socket_count, memmap[VIRT_APLIC_S].base,
++        acpi_dsdt_add_plic_aplic(scope, socket_count, s->num_sources,
++                                 memmap[VIRT_APLIC_S].base,
+                                  memmap[VIRT_APLIC_S].size, "RSCV0002");
+     }
+ 
+@@ -494,15 +501,15 @@ static void build_dsdt(GArray *table_data,
+     } else if (socket_count == 2) {
+         virtio_acpi_dsdt_add(scope, memmap[VIRT_VIRTIO].base,
+                              memmap[VIRT_VIRTIO].size,
+-                             VIRTIO_IRQ + VIRT_IRQCHIP_NUM_SOURCES, 0,
++                             VIRTIO_IRQ + s->num_sources, 0,
+                              VIRTIO_COUNT);
+-        acpi_dsdt_add_gpex_host(scope, PCIE_IRQ + VIRT_IRQCHIP_NUM_SOURCES);
++        acpi_dsdt_add_gpex_host(scope, PCIE_IRQ + s->num_sources);
+     } else {
+         virtio_acpi_dsdt_add(scope, memmap[VIRT_VIRTIO].base,
+                              memmap[VIRT_VIRTIO].size,
+-                             VIRTIO_IRQ + VIRT_IRQCHIP_NUM_SOURCES, 0,
++                             VIRTIO_IRQ + s->num_sources, 0,
+                              VIRTIO_COUNT);
+-        acpi_dsdt_add_gpex_host(scope, PCIE_IRQ + VIRT_IRQCHIP_NUM_SOURCES * 2);
++        acpi_dsdt_add_gpex_host(scope, PCIE_IRQ + s->num_sources * 2);
+     }
+ 
+     aml_append(dsdt, scope);
+@@ -581,7 +588,7 @@ static void build_madt(GArray *table_data,
+         for (socket = 0; socket < riscv_socket_count(ms); socket++) {
+             aplic_addr = s->memmap[VIRT_APLIC_S].base +
+                              s->memmap[VIRT_APLIC_S].size * socket;
+-            gsi_base = VIRT_IRQCHIP_NUM_SOURCES * socket;
++            gsi_base = s->num_sources * socket;
+             build_append_int_noprefix(table_data, 0x1A, 1);    /* Type */
+             build_append_int_noprefix(table_data, 36, 1);      /* Length */
+             build_append_int_noprefix(table_data, 1, 1);       /* Version */
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 614220a0ce..4cd941a6aa 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -1549,6 +1549,7 @@ static void virt_machine_init(MachineState *machine)
+         } else {
+             s->irqchip[i] = riscv_create_aia(s->aia_type == VIRT_AIA_TYPE_APLIC_IMSIC,
+                                              s->aia_guests,
++                                             s->num_sources,
+                                              &s->memmap[VIRT_APLIC_M],
+                                              &s->memmap[VIRT_APLIC_S],
+                                              &s->memmap[VIRT_IMSIC_M],
+@@ -1705,6 +1706,7 @@ static void virt_machine_instance_init(Object *obj)
+     s->oem_table_id = g_strndup(ACPI_BUILD_APPNAME8, 8);
+     s->acpi = ON_OFF_AUTO_AUTO;
+     s->iommu_sys = ON_OFF_AUTO_AUTO;
++    s->num_sources = VIRT_IRQCHIP_NUM_SOURCES;
+ }
+ 
+ static char *virt_get_aia_guests(Object *obj, Error **errp)
+diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
+index ad858deb76..36a2def410 100644
+--- a/include/hw/riscv/virt.h
++++ b/include/hw/riscv/virt.h
+@@ -64,6 +64,7 @@ struct RISCVVirtState {
+     struct GPEXHost *gpex_host;
+     OnOffAuto iommu_sys;
+     uint16_t pci_iommu_bdf;
++    uint16_t num_sources;
+ };
+ 
+ enum {
 -- 
 2.53.0
 
