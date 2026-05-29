@@ -4,125 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3022CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 13:28:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CF1FCD6E51
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 13:34:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSxFL-0004nR-QT; Fri, 29 May 2026 09:27:33 -0400
+	id 1wSxM2-0005ZR-LV; Fri, 29 May 2026 09:34:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wSxFE-0004mx-6d
- for qemu-devel@nongnu.org; Fri, 29 May 2026 09:27:25 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wSxLz-0005Yq-Sl
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 09:34:23 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wSxFA-0000QO-8U
- for qemu-devel@nongnu.org; Fri, 29 May 2026 09:27:23 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 5F34C6A86F;
- Fri, 29 May 2026 13:27:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1780061235; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=f9kHCnKg4iX3CQpptD5bQ3DzjAJoDA8iMhJDQvpVvLI=;
- b=Gj3ncgtMAwmCyWE2Vq2O9LKobY2EGFCuXCjJo5mxwctWHAtpOE+ZyNdEW2WMbBIx5PYvog
- XZFvSzcM/QOpMVETofSSDFefIn/4+p2OlsGAyztzvL3mdTLS/VsQKoCidpqXqlX0rJhav+
- N1JpR2TLANRwgYfyvxrRk+gZKzTK3ps=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1780061235;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=f9kHCnKg4iX3CQpptD5bQ3DzjAJoDA8iMhJDQvpVvLI=;
- b=azovT6or/YcqB/w2P151nwpijV7m2wKxeBhCs6s3/93z0lKT7x3IJy5iDdu0mgUHHQuNCq
- joLsgMYCa0Cq+iAA==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Fo15qovv;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="77/Ts5aK"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1780061234; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=f9kHCnKg4iX3CQpptD5bQ3DzjAJoDA8iMhJDQvpVvLI=;
- b=Fo15qovv4W7Z/Liunst4PXXUsljNkI/w4TrjM97s18Xs6DH9UKc2PBGblMh43tkfCoT9sy
- PyvjpO3cQ7hRDg2RCY4RhiL3ksviSkY4BXVtkaSTT9/y0TyFNBU+5fu8/nKFW3E8YI3r5B
- eXjtfbAJbgW8EBtZ79l/wPVYuHa0ZT0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1780061234;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=f9kHCnKg4iX3CQpptD5bQ3DzjAJoDA8iMhJDQvpVvLI=;
- b=77/Ts5aKDOrYnaq+rhC5gNO7bm068o4avXi9+Kcr/cg2C7kMZLzvssFIfPo3wIkmzfAvwC
- XkaAmFoe40ZHp4AA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 30C54779A7;
- Fri, 29 May 2026 13:27:13 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id YbLiCzGUGWqmQwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 29 May 2026 13:27:13 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, =?utf-8?Q?Daniel_P=2E_Berrang?=
- =?utf-8?Q?=C3=A9?=
- <berrange@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>, Pierrick
- Bouvier <pierrick.bouvier@oss.qualcomm.com>, Laurent Vivier
- <lvivier@redhat.com>, Alex Williamson <alex@shazbot.org>, =?utf-8?Q?C?=
- =?utf-8?Q?=C3=A9dric?= Le Goater
- <clg@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, Akihiko Odaki
- <odaki@rsg.ci.i.u-tokyo.ac.jp>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH 03/32] irq: add per-IRQ observer to fix
- qemu_irq_intercept_in leak
-In-Reply-To: <20260529-b4-ui-v1-3-8db3068421ef@redhat.com>
-References: <20260529-b4-ui-v1-0-8db3068421ef@redhat.com>
- <20260529-b4-ui-v1-3-8db3068421ef@redhat.com>
-Date: Fri, 29 May 2026 10:27:01 -0300
-Message-ID: <87ik86tkgq.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wSxLy-0002x2-2L
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 09:34:23 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-68c3421b009so596662a12.1
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 06:34:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780061660; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Co/Z2pZpXmz7TOVBOGIFM8CMTFm/NrhkNchbfta1L+GTzfmWRHUOXFs8WtfmwNVY+I
+ lRpsRIES+e3jp9uYcf+4ZftWBhdSMlp4vkxIjubtgmPnp/rBHzZhQTFQRK+ndEw6EHFc
+ LzrjPUbbUsfldpe3yNhekRYzgALPy7JJjGZy4Wz2SMsLJEhz8gmcAdBZgrkQwP6syNaV
+ 9mAmt6+QYQt+ZRXgM8YBjv8i0vtiuY6s0fmfOytuHyH6kD2eC/nbhLGs4x/1AkTrex7J
+ u2EOedlHremu83JZn7yRDovdKx2KtYeZHbRbMEQ9nA1E1q08vVYWMFBBjHca98XHakMv
+ RRDg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=RCP3boqmL1CksTuFPZhWSiyCMF7pbsCfQ64nyoU1SZA=;
+ fh=TpNiJu7eWjoj/sj8B9ppLGSr7HqVokMiQY3poZNBRDg=;
+ b=LEKHMCbKoHCMAyrzFDGe2Vwfbf080Ee8p1v2sR/IMiqJ9kk3A9ltHpDAc4uG58z2S0
+ /trrrWRZFqOtZRJL8iyK1W8NCGscKldh0y8y+MeBrHl3wbzxUcbe2FsEXgdOA7c66ON5
+ RmxeZQHlOiPX3rSC/0GpnJIVWacTXkaAVktKlrJeRYPCUz5g2F67pAhdTR4a2jPCtdWV
+ Pm7cB+FOzU3NglB7V0hoySgC9GToGPGqEywSYhThxZ544xDahjbgTFq0ulKMXsgwSDtL
+ N4StXaWUHPBe/J+AxUlcMpNu4j/bBbsz5AC1ZiDEGn/itVVBoIr3OHH1pH953MyZljGi
+ zaKQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1780061660; x=1780666460; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RCP3boqmL1CksTuFPZhWSiyCMF7pbsCfQ64nyoU1SZA=;
+ b=JFQDSluTsrcjT5SgnUhGhXacwQSt58GwKSjaGBwN/8NnkgoXJELO2nK4CougrqFXXT
+ YrWOnbcZgogcS6swdU+LIpVBP8mu/LhlMwLKXRuI2eIUPwK0WW+FcdZCMXn5UCCKPGXm
+ MCdk1cVHC3mluAPC80wfwoJ+dh7CbUiOTZLxFk6PUis7jqaY+NMhg2EVBJIMk+YBYM0q
+ QkrOx7ujWB/Gl+NNqTmVU3FJA+EJK0rUuOE8Ww5KreNOf+YHcGJAN0TDQ7v/c5ZwIKzj
+ p2/H2Fpdyn/UfLcGltMN7KN/A1166RVe92C+AxhnXCOSfL5ln+JkilGNXSURpaYp6dLL
+ wW7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780061660; x=1780666460;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=RCP3boqmL1CksTuFPZhWSiyCMF7pbsCfQ64nyoU1SZA=;
+ b=DfrgtLXM4xA3+F2QzExztss2kMt1z1amt1qP7f/ONRkiaqzTNecNt4C2XguyTa/lQX
+ glRdBza9flVzFa8Vybi+7F0Vm8oRV2cljpi1guM1lO1E+5427ub2boQMeOqEysSOq9Q6
+ +OBQxdztgv+vg0NiZ8RT0Qj7h5kERKRXbA6z/YY1rmoViFayavR0IFjls6LjTudgHpOK
+ VvQfYCTwIF5KsuBdtcoaqe0f2VX/rSzBdxF5c2S2az1/CafKTFCzKZq1MLl3Ud1ZiWKB
+ 2OTk8hM2yiRdV8EELoik7MUOqMfRLPeaEVpdzsXSCofVpexdZGwmIfGNTHZNrff6mgaS
+ m8sQ==
+X-Gm-Message-State: AOJu0Yxv9B8aCX+k3OtDzI7Q84aNOg8iLqOyk+c8es3qkfRTviCL7JO8
+ 1fuqlEd8aFYXMAaQFbUZzqEXaS9BEbb44R4y/5ZkiSBf+fxCVdHXgB4Zt5qDPD/GpacAgL3+cw+
+ gwfN7NxDRN+roI1dgN4Gd+PwKm5rg1lzaWAnSgwXDU1gn+xzEwWfHw4U=
+X-Gm-Gg: Acq92OHOXqh6FqsIRRLWJ6+AkYw2kWxj7M5HS3ptWvtIxFy+BhJzbU4joQNzWvbvOP7
+ gZmatdwAtp9r3UDQuJeQ2VQssyjwR25v5YmAE8qRaShWbeUg3RHK2dJJX6QtktiJkk49S+Ko3UR
+ cNrxfeFWYSZEYbW67xqjJGlyN1znrvgnAFpzg+qdDaccTv99du8sRZF79cHVPpvbjGUvBNMZGRg
+ XAxhH8Zn41VXP+cfqcXrdCRoQk1uaLjOLBSr93+WTeS1t0k6iOQSk04hxrQmkiaOWRS7rhhJS1A
+ G0UWPTE0zizUfyCChqy7cXd8YOEu3xzoBGU+fJIOfhcUq7m6fUZ2e/dH/OvQGAv6PF4ri4mv5Qj
+ HKw==
+X-Received: by 2002:a17:907:b80a:b0:bd5:1605:e1c3 with SMTP id
+ a640c23a62f3a-be9ab50fffemr127126466b.1.1780061660106; Fri, 29 May 2026
+ 06:34:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20241014133935.470709-1-marcandre.lureau@redhat.com>
+ <20241014133935.470709-19-marcandre.lureau@redhat.com>
+In-Reply-To: <20241014133935.470709-19-marcandre.lureau@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 29 May 2026 14:34:05 +0100
+X-Gm-Features: AVHnY4KgYSU0LKlszf5LKKjEh9FpBdxkmhPlASDS13IURAl0JBdqBMTLQgJqv5Y
+Message-ID: <CAFEAcA9kBAUESA+ATfYLM8bPuNJ6xB_HLPAp9SrsuQ4LP4m_dA@mail.gmail.com>
+Subject: Re: [PULL 18/20] ui: refactor using a common qemu_pixman_shareable
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Alistair Francis <alistair@alistair23.me>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 5F34C6A86F
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MISSING_XM_UA(0.00)[];
- ARC_NA(0.00)[]; RCPT_COUNT_TWELVE(0.00)[12];
- MIME_TRACE(0.00)[0:+]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:dkim,suse.de:mid];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -139,109 +120,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
-
-> qemu_irq_intercept_in() saves original IRQ handlers by allocating
-> new QOM objects, which are never freed. On a PC machine, this leaks
-> IRQ objects (one per IOAPIC pin) on every qtest run.
+On Mon, 14 Oct 2024 at 14:41, <marcandre.lureau@redhat.com> wrote:
 >
-> Rather than tracking allocations to free later, avoid them: add an
-> "observer" field to IRQState, called by qemu_set_irq() after the
-> real handler. Interception sets the observer instead of rewriting
-> handlers, so there's nothing to save and nothing to leak.
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 >
-> Fix qemu_notirq() to route through qemu_set_irq() so inverted IRQs
-> trigger observers too. Drop the LSan suppression.
+> Use a common shareable type for win32 & unix, and helper functions.
+> This simplify the code as it avoids a lot of #ifdef'ery.
 >
+> Note: if it helps review, commits could be reordered to introduce the
+> common type before introducing shareable memory for unix.
+>
+> Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> ---
->  include/hw/core/irq.h         |  1 +
->  hw/core/irq.c                 | 10 +++++-----
->  system/qtest.c                |  3 ---
->  scripts/lsan_suppressions.txt |  8 --------
->  4 files changed, 6 insertions(+), 16 deletions(-)
->
-> diff --git a/include/hw/core/irq.h b/include/hw/core/irq.h
-> index 291fdd67df4..93d5710a73e 100644
-> --- a/include/hw/core/irq.h
-> +++ b/include/hw/core/irq.h
-> @@ -14,6 +14,7 @@ struct IRQState {
->      qemu_irq_handler handler;
->      void *opaque;
->      int n;
-> +    qemu_irq_handler observer;
->  };
->=20=20
->  void qemu_set_irq(qemu_irq irq, int level);
-> diff --git a/hw/core/irq.c b/hw/core/irq.c
-> index 106805e2417..fa11e9bc0aa 100644
-> --- a/hw/core/irq.c
-> +++ b/hw/core/irq.c
-> @@ -32,6 +32,9 @@ void qemu_set_irq(qemu_irq irq, int level)
->          return;
->=20=20
->      irq->handler(irq->opaque, irq->n, level);
-> +    if (unlikely(irq->observer)) {
-> +        irq->observer(irq->opaque, irq->n, level);
-> +    }
->  }
->=20=20
->  static void init_irq_fields(IRQState *irq, qemu_irq_handler handler,
-> @@ -111,7 +114,7 @@ static void qemu_notirq(void *opaque, int line, int l=
-evel)
->  {
->      IRQState *irq =3D opaque;
->=20=20
-> -    irq->handler(irq->opaque, irq->n, !level);
-> +    qemu_set_irq(irq, !level);
->  }
->=20=20
->  qemu_irq qemu_irq_invert(qemu_irq irq)
-> @@ -124,11 +127,8 @@ qemu_irq qemu_irq_invert(qemu_irq irq)
->  void qemu_irq_intercept_in(qemu_irq *gpio_in, qemu_irq_handler handler, =
-int n)
->  {
->      int i;
-> -    qemu_irq *old_irqs =3D qemu_allocate_irqs(NULL, NULL, n);
->      for (i =3D 0; i < n; i++) {
-> -        *old_irqs[i] =3D *gpio_in[i];
-> -        gpio_in[i]->handler =3D handler;
-> -        gpio_in[i]->opaque =3D &old_irqs[i];
-> +        gpio_in[i]->observer =3D handler;
->      }
->  }
->=20=20
-> diff --git a/system/qtest.c b/system/qtest.c
-> index a79d10d1361..b359a3e1c84 100644
-> --- a/system/qtest.c
-> +++ b/system/qtest.c
-> @@ -324,9 +324,6 @@ void qtest_sendf(CharFrontend *chr, const char *fmt, =
-...)
->=20=20
->  static void qtest_irq_handler(void *opaque, int n, int level)
->  {
-> -    qemu_irq old_irq =3D *(qemu_irq *)opaque;
-> -    qemu_set_irq(old_irq, level);
-> -
->      if (irq_levels[n] !=3D level) {
->          CharFrontend *chr =3D &qtest->qtest_chr;
->          irq_levels[n] =3D level;
-> diff --git a/scripts/lsan_suppressions.txt b/scripts/lsan_suppressions.txt
-> index f88bbab18b8..30256bc6d01 100644
-> --- a/scripts/lsan_suppressions.txt
-> +++ b/scripts/lsan_suppressions.txt
-> @@ -16,11 +16,3 @@ leak:/lib64/libxkbcommon.so.0
->  # https://github.com/GNOME/glib/blob/main/tools/glib.supp
->  # This avoids false positive leak reports for the qga-ssh-test.
->  leak:g_set_user_dirs
-> -
-> -# qemu_irq_intercept_in is only used by the qtest harness, and
-> -# its API inherently involves a leak.
-> -# While we could keep track of the old IRQ data structure
-> -# in order to free it, it doesn't seem very important to fix
-> -# since it is only used by the qtest test harness.
-> -# Just ignore the leak, at least for the moment.
-> -leak:qemu_irq_intercept_in
+> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Message-ID: <20241008125028.1177932-19-marcandre.lureau@redhat.com>
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Hi; this is a rather old commit (now 1ff788db9781615b in git),
+but I have just noticed that it seems to break the usage of
+qemu_create_displaysurface_from() by hw/display/xlnx_dp.c.
+
+
+> @@ -517,14 +482,25 @@ DisplaySurface *qemu_create_displaysurface_from(int=
+ width, int height,
+>      DisplaySurface *surface =3D g_new0(DisplaySurface, 1);
+>
+>      trace_displaysurface_create_from(surface, width, height, format);
+> -#ifndef WIN32
+> -    surface->shmfd =3D -1;
+> -#endif
+> -    surface->image =3D pixman_image_create_bits(format,
+> -                                              width, height,
+> -                                              (void *)data, linesize);
+
+Before this refactoring, qemu_create_displaysurface_from() always
+calls pixman_image_create_bits(). That pixman function allows
+you to pass NULL to mean "allocate me the memory for the data".
+If you do that, pixman will always compute the stride for the
+data (by looking at the pixel format and the width), so the
+input linesize here is ignored. The xlnx_dp.c code takes
+advantage of this in calls like:
+
+        s->g_plane.surface
+                =3D qemu_create_displaysurface_from(width, height,
+                                                  s->g_plane.format, 0, NUL=
+L);
+
+> -    assert(surface->image !=3D NULL);
+> +    surface->share_handle =3D SHAREABLE_NONE;
+>
+> +    if (data) {
+> +        surface->image =3D pixman_image_create_bits(format,
+> +                                                  width, height,
+> +                                                  (void *)data, linesize=
+);
+> +    } else {
+> +        qemu_pixman_image_new_shareable(&surface->image,
+> +                                        &surface->share_handle,
+> +                                        "displaysurface",
+> +                                        format,
+> +                                        width,
+> +                                        height,
+> +                                        linesize,
+> +                                        &error_abort);
+> +        surface->flags =3D QEMU_ALLOCATED_FLAG;
+> +    }
+
+In the refactored version, although non-NULL data still
+results in a call to pixman_image_create_bits(), now a NULL
+data pointer means we call qemu_pixman_image_new_shareable().
+
+> +bool
+> +qemu_pixman_image_new_shareable(pixman_image_t **image,
+> +                                qemu_pixman_shareable *handle,
+> +                                const char *name,
+> +                                pixman_format_code_t format,
+> +                                int width,
+> +                                int height,
+> +                                int rowstride_bytes,
+> +                                Error **errp)
+> +{
+> +    ERRP_GUARD();
+> +    size_t size =3D height * rowstride_bytes;
+
+This function assumes that rowstride_bytes is not zero,
+so the previously-working "pass 0, NULL" now results in
+a size value of 0 here and an attempt to allocate 0 bytes
+in qemu_pixman_shareable_alloc(), which winds up triggering
+an abort in qemu_memfd_alloc().
+
+Presumably:
+(1) qemu_pixman_image_new_shareable() should calculate the
+rowstride_bytes as pixman does, rather than requiring it
+to be passed in
+(2) qemu_memfd_alloc() ought not to abort on zero size
+
+
+For a repro case:
+
+$ cat /tmp/xlnx-dp.txt
+writel 0xfd4a0194 0x00000780
+writel 0xfd4a0198 0x00000438
+$ ./build/arm/qemu-system-aarch64 -accel qtest -M xlnx-zcu102
+-display none -chardev
+file,id=3Drepro,path=3D/dev/null,input-path=3D/tmp/xlnx-dp.txt -qtest
+chardev:repro
+[I 0.000000] OPENED
+pulseaudio: set_sink_input_volume() failed Reason: Invalid argument
+pulseaudio: set_sink_input_mute() failed Reason: Invalid argument
+[R +0.121066] writel 0xfd4a0194 0x00000780
+[S +0.121092] OK
+[R +0.121096] writel 0xfd4a0198 0x00000438
+Unexpected error in qemu_memfd_alloc() at ../../util/memfd.c:143:
+qemu-system-aarch64: failed to allocate shared memory: Invalid argument
+Aborted (core dumped)
+
+thanks
+-- PMM
 
