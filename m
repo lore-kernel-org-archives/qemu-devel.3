@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6ADACD6E43
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCE3BCD6E51
 	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:48:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSvgr-0001i0-HO; Fri, 29 May 2026 07:47:49 -0400
+	id 1wSvgo-0001ep-P1; Fri, 29 May 2026 07:47:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSvgn-0001eP-Jm
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:45 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1wSvgm-0001dR-H8
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:44 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wSvgl-0008Dy-V0
- for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:45 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-49050ff7cbdso64161275e9.2
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 04:47:43 -0700 (PDT)
+ id 1wSvgk-0008Do-Rt
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:44 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-45ed18d8a1bso2686407f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 04:47:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780055262; x=1780660062; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780055261; x=1780660061; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=t/OUB1GP9tck40luMQUBOFZYpEMh4lTb6rVQxTXavNo=;
- b=fYMpal0FLEje7gHCEWK0Xm5p7bD9XtyFc6zDEHM4FxoDfmchaLdXGR4tR6iet3zO61
- EzQQr4ng8uHlUOoKZjANg4atsuocTRPyBBPEHMQlBrICFTjOltOn39eRoU7e9XfiMAxL
- Ap30UhoL2IneHVsT0LD2KHW/j0PQO+vkeUY+M84NqaoKwCxdXWDcnIMrmLc+J6kdk8AS
- lpm9/tkZ8e/GT3hs+AIEkF7L4IM7sZCede2LfxU0S6L/UydY+U5cXWR3EejugVT2zdAN
- F/cCNvVWjq2xYQ3e7uwf5sWAEfslKEGaoxJh0lR/uQAXpYhi0OQjKJ92cwuxhLWjKcBJ
- rQIw==
+ :reply-to; bh=5epfWRhDxaC8XI13YVukA2ByRaHS+EVk7OK1nsBBQug=;
+ b=YhnCOGiXBYQOlyeYpfLEcHBfYgxY6GLTLFqH+5QCRTrCcRU7Ri71L6jbSiieP6LGgy
+ qM97tjzerJKxLP7SA8lT9IGYEVrbTxlGmmCEPN7y4tnkV4hM6CTg4PlilgTIwiqCQME7
+ nra7rwX2bd58/+CG917qVFgLxXw3ud48dmc7DbSXcE9KOYeGyyYXZDqyXeFAxHvL9f3f
+ iIVOBwT8zSJcZcl8x0wnHCuiiCIfZG2STXAmHlRRhqCUz127iTkTpJaWxhYaPRIz4ZLa
+ pCkyLZg8npap8R9Bb8AUl5w6QgQlZ22C3oUZpCWG8yRMJM1pKLgGMacT1vbUqVKImc5v
+ v8lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780055262; x=1780660062;
+ d=1e100.net; s=20251104; t=1780055261; x=1780660061;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=t/OUB1GP9tck40luMQUBOFZYpEMh4lTb6rVQxTXavNo=;
- b=NdhYKsVOlzJx5vukT42JjRS4QMUVu0+IhI7l5HCc+++TfXeGNaXF5aLOp2oh7ajsIY
- JmkP6t1POUwgN08X1KbgIi9qmG11vXfQOYsTGEtMG8Rl2A0aLCR79thHwMoRO3ulThCf
- 7/yHn8bB/cEGLykga14Ljm0JwLSFxC/UkN8ewZVZJyNd3yZJd1rS9QmrRQmEfI/PPOVe
- 5DUKR1QJ/ITHlKXRmDMdDFEUBf2+yGFxSHq7v/mKWzra6cHNe1Cy9utfAfnEuM72WwlX
- JzpuKNbMxaRC4L/g5z5fNr41/wdd5GDpBhM85Bza9ZazGyDEct+jGGn2DBNRFTipirZW
- xkow==
-X-Gm-Message-State: AOJu0YwszO3IUIR9uRAcsERtE7oKUECYFmGcgTMye86ZaAbIg1vnC0/S
- /tBJyafZZPHG9QuMsyKykQJShQy/1gqD4u112ikfGFAP28pms0R/DBGXIdIGxF5gFz0N3ZXQCLY
- CNqim
-X-Gm-Gg: Acq92OGSM7wdHxUcXr8ZagyHkAf33hFRIoN8B3t5dJcykAHhE3K7RTeXatao3SiscKO
- Vzcbg9jsXC7mmWbauVGdVeRv7yTeNS9onbUIlP4A3X3VpowYHRNsB8UHyC+t9BUdbFiE7zThvgg
- sq77vXvrPKpqGmKbTKClBzOnlgK778AIESVH4u7wY8MLSTGglhYgkOCLq/+Ftvh/a0dwAYVaeFu
- CXmemX1L81gvjTmh7vrKARHhFBG6FTU/BFTHgK1GEUfjVBXJQt2YPGy0aYsE7SsNG5LOf0fQ0g/
- MA7AR+e+lnZHOUn6lXPQb0u7Er0nqqPOR3vhiWnLoVVaMntij6G+Bi3bo02ni+NE+uPGYQltPtM
- KkDTznTcZDxTnQkQ5rDY2gZs7t0UqcyS3+ho+rEg8nBwiDudTAWJU+HhfzyS6TZCKEHlNSmsV8G
- hNWhDSo0EC4myFkSAG4QefyYghkACkF/uCkEPB5ATOg7RxqY0VpeY4HanMv6Undu8a9bsV0qr99
- L+csEiGmsjvIgrY4hi6dBMR9rjiIM0crcMKFQSDeQ==
-X-Received: by 2002:a05:600c:3b9f:b0:490:59cc:998e with SMTP id
- 5b1f17b1804b1-4909d2e9009mr45635455e9.3.1780055262405; 
- Fri, 29 May 2026 04:47:42 -0700 (PDT)
+ bh=5epfWRhDxaC8XI13YVukA2ByRaHS+EVk7OK1nsBBQug=;
+ b=iJWO9NsGDQUcsksEuQ1WbB+QzuOQ3RS+obXagUn6rHDsjwWI3lR539CFdDby2uGGNk
+ YK46G02iJEvN6KRCXxN/SBDwfJeHQPzrW8fFEDt8DZtJcnpcpUdNqXLmtPs7gNtGaBmD
+ yTuDftZBVysq7sVjsPN6i+yssAcKkXZNzu6AGM07NjSloAe8QB113JJbQAMe/ZnvlF9X
+ z7pCz3oDT5qmXGs7H0WUo9ljgWv/FsMVO68ooI8mqFOL4KU7cIKH8gxwqSnK4kCqnRKO
+ 73iU/1rChdwWkVVKuaEdPvOObJQ/RDd14KyYkjq+4kIFNEalQGPS3uR1/tBAIDi8MKT5
+ kteQ==
+X-Gm-Message-State: AOJu0Yy0io7k2fRVogwF5FMjCcXvP1ajudH+OTr4xu+B9GosltHPOmEx
+ yK/j2aJWEkgF7M0JuwPjHzRB/1IFSinU+BvcPysJd3yM/10j5OwOncaF7qGjXwXb1j2sVhR0aS7
+ xEnMA
+X-Gm-Gg: Acq92OFUBa/KNx8eRr16gDsomwcZyJI1IIS4fh8BHQYYtXHpdzTuEUfQw6usgliPbCl
+ 3VSJ+NIRhQGYhueprA8dyWo0c3FCo8c5B8Q29eQswblnof/dT302KScgha8P4HM5CqedADyJA6A
+ tNfm50xk3j5iPC+Pem1X0df65kXtI3JUn5bmXehrzHZEsMCCmvTiCYC6xKYlM0cxiMbjRD5Hpy3
+ /dwHZjKepcua9ZNkG+xiEwX/0HMxPgFU7tH9y7fZXP4fez0/hAfuuLs65tvHoOmf1zhD+/+TVMT
+ Z+GEVPEczF2wQVUZ/xFzLseIQds9tEgnvz2ElsQY9iquYzUHehJIlLWvnLg1FCJm961hLcPqEea
+ 9ozffRiSUZyn93c6O3RkbVawEWVLiOm7WQpE7scRE6KkZsNRZkVDMJJ8ETD8nLv6RyAzbIPa5/k
+ L4LSplo22Ryvndph/XAn7AuLZ+GH8+ECAakpkrN5pR7RtmmWenHjD0u29HUYd2rjv7i88+J1mX8
+ vOA11KF2D6u/VKZydCoXqIMMPEzUgX1wHlKxJUf9T4OXotzcwl7
+X-Received: by 2002:a05:6000:2988:20b0:45e:8547:f21e with SMTP id
+ ffacd0b85a97d-45ef147c77amr3539107f8f.36.1780055261361; 
+ Fri, 29 May 2026 04:47:41 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ef3563cb9sm3007358f8f.29.2026.05.29.04.47.41
+ ffacd0b85a97d-45ef3563cb9sm3007358f8f.29.2026.05.29.04.47.40
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 May 2026 04:47:41 -0700 (PDT)
+ Fri, 29 May 2026 04:47:40 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 16/21] target/arm: SME BFCVT,
- BFCVTN have "Alternate BFloat16 behaviors"
-Date: Fri, 29 May 2026 12:47:17 +0100
-Message-ID: <20260529114723.42040-17-peter.maydell@linaro.org>
+Subject: [PULL 15/21] target/arm: Don't assert if 64-bit EL2 AT insn sees a
+ Domain fault
+Date: Fri, 29 May 2026 12:47:16 +0100
+Message-ID: <20260529114723.42040-16-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260529114723.42040-1-peter.maydell@linaro.org>
 References: <20260529114723.42040-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,40 +101,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Arm ARM A1.5.10 notes that some instructions have "Alternate
-Bfloat16 behaviors" when FPCR.AH == 1.  We implement these using the
-FPST_AH and FPST_AH_F16 fp_status words.  The list includes the SME
-BFVCT (single-precision to BFloat16) and BFCVTN, but we forgot to
-make those use FPST_AH_F16 when we implemented them. (We get the
-ASIMD and SVE insns on the list right.)
+The Domain fault type can only happen for 32-bit short-format
+descriptors.  This means that it almost never needs to be encoded in
+a long-format fault status code.  However, there is one corner case
+where we do need to report it as a long-format FSC: if a 64-bit EL2
+does an AT insn on an AArch32 EL1&0 translation regime that is using
+short-descriptors and that translation operation hits a Domain fault,
+then this is reported in the PAR_EL1 in long-format.
 
-Add the missing logic to select the right FPST.
+The PAR_EL1 register description defines that this should be reported
+as 0b111101 for a level 1 Domain fault or 0b111110 for a level 2
+Domain fault.
+
+The Arm ARM pseudocode special cases this in the function
+AArch64_PARFaultStatus() (because no other "fault to LFSC" code path
+can be a Domain fault).  For QEMU, implement it in arm_fi_to_lfsc().
 
 Cc: qemu-stable@nongnu.org
-Fixes: 465d36db0e1 ("target/arm: Implement SME2 BFCVT, BFCVTN, FCVT, FCVTN")
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Fixes: 1fa498fe0de97 ("target/arm: Provide fault type enum and FSR conversion functions")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3512
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260521180854.1744788-1-peter.maydell@linaro.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260526174155.2491217-1-peter.maydell@linaro.org
 ---
- target/arm/tcg/translate-sme.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/arm/internals.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index e2d17de165..82aa14131b 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -1449,9 +1449,9 @@ static bool do_zz_fpst(DisasContext *s, arg_zz_n *a, int data,
- }
- 
- TRANS_FEAT(BFCVT, aa64_sme2, do_zz_fpst, a, 0,
--           FPST_A64, gen_helper_sme2_bfcvt)
-+           s->fpcr_ah ? FPST_AH : FPST_A64, gen_helper_sme2_bfcvt)
- TRANS_FEAT(BFCVTN, aa64_sme2, do_zz_fpst, a, 0,
--           FPST_A64, gen_helper_sme2_bfcvtn)
-+           s->fpcr_ah ? FPST_AH : FPST_A64, gen_helper_sme2_bfcvtn)
- TRANS_FEAT(FCVT_n, aa64_sme2, do_zz_fpst, a, 0,
-            FPST_A64, gen_helper_sme2_fcvt_n)
- TRANS_FEAT(FCVTN, aa64_sme2, do_zz_fpst, a, 0,
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index ae5afc5362..f39a992012 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -893,6 +893,16 @@ static inline uint32_t arm_fi_to_lfsc(ARMMMUFaultInfo *fi)
+         assert(fi->level >= 0 && fi->level <= 3);
+         fsc = 0b001100 | fi->level;
+         break;
++    case ARMFault_Domain:
++        /*
++         * This can only happen when doing an AT insn at EL2 for an AArch32
++         * stage 1 EL1&0 translation regime using short-descriptors, and
++         * the translation hits a Domain fault. This needs to be reported in
++         * the long-format PAR. Compare pseudocode AArch64_PARFaultStatus().
++         */
++        assert(fi->level == 1 || fi->level == 2);
++        fsc = 0b111100 | fi->level;
++        break;
+     case ARMFault_Translation:
+         assert(fi->level >= -1 && fi->level <= 3);
+         if (fi->level < 0) {
 -- 
 2.43.0
 
