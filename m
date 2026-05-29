@@ -4,81 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6ACBCD6E43
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 10:15:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C7B3CD6E4C
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 10:15:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSuEo-0002xx-2S; Fri, 29 May 2026 06:14:46 -0400
+	id 1wSuEp-0002yr-RO; Fri, 29 May 2026 06:14:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSuEm-0002xh-Gg
- for qemu-devel@nongnu.org; Fri, 29 May 2026 06:14:44 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1wSuEo-0002xz-8N
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 06:14:46 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSuEj-00014A-Qg
- for qemu-devel@nongnu.org; Fri, 29 May 2026 06:14:44 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-45eee266c6cso861407f8f.1
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 03:14:40 -0700 (PDT)
+ id 1wSuEl-00014Z-BT
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 06:14:45 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-45e9f4a3510so4612464f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 03:14:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780049679; x=1780654479; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=3cXWUnj7JhVm9duGkIifA16vq3wjJzT16qdkdkaEIjM=;
- b=grAG5DFTLRJJTioW4jvJvyDQKyrWCxD46kxx+g/o/SywUIuY0Jd7YGuHULlOKglJOq
- xlE45bbJNLUBsj4IGexl6qcyS5NuwIz3t9CBiNyvghFFejzCEhi7t1vuBGvqZbguusTr
- LzYVORaA9CRcYJZ3BJd2kMlylrOIDIw1EXWP4TUW7780aQBG7AoyvoU27f1rsLylPesM
- iBonucznA/xlS+aNnkWhWGxUCKlTEYEF9bPovB5l176rMJYw2WhGCbLv8xeTJcEMqmqY
- uaa4Cut82eopZOAS5hljlu72aV0ycRPrJXQjrWaT9lOmkhmBmR9xBxy+RzDwARBd34d2
- D8+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780049679; x=1780654479;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1780049681; x=1780654481; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3cXWUnj7JhVm9duGkIifA16vq3wjJzT16qdkdkaEIjM=;
- b=g1yimYkyXJDHNeArR/K8AJZcXNdsGlt97/n+YiuwA/n1le2oViCU3LaXWhP+BsHwMw
- 0lSZCFTvSRZvZgZ3lAB/QBG6bl0IA+Xex8orXwi0wkJFQunuob4ojIhT0nUnH0IQAbm+
- 4ZaH6BEuFh72jFiTpGltSkXXZBBjxq+fVetKnDBEsSI7kMuzsfNuk1gPGxexmlst3o67
- HeH3v+23TR3rnHwgFoJkHWOc+uPJoayWUktVQIbuat3XGeFh4WFiEmtVYSkxiXQMbEZj
- KQzhJtsRj5TxZrxRBo3GMoZjh4hSsqRPJaxKg+sCYb8K126M6LVL0FBae5YH3jv+Tjzp
- yeiQ==
-X-Gm-Message-State: AOJu0YxE8NdmjyThz5hXIDQVb5S1rjcAsGksKMgoBjxEYcY3lXqYauja
- sX9v5fJn515PjQPU5AU/2oZE/M1pANnI95Fbi2zxZTsNdCEP40H0rEhBcXCf7hyn5w4=
-X-Gm-Gg: Acq92OFwEfRCFi9PxKAJKtJEdlIyrvg60JkY8shXTcUojsxmdj0xJx8XHIotCc3s2Ay
- 3xd6vPO5P15klnvc0+syPV4/RSsleHViak7sKfgzR3we4IIryHm4K6q2kJIImNmcrzGRHQY9lRa
- JEmMRQGSZ8AX+gUyuPYKVCQBf3T41KyQbAQ2MvCPzhnzGpygIK1HI04wy2Xk0WlF4ni6arHy+aW
- g1Mw5uHj/pwgBQKg+9wn5nQpcqVuClYRrlcJmbZAJ5mxnyzfs7jEEhy/1shUXMcUirYxAIe5kGa
- pLcW6oQ6A6GaGnlAUUrtJ362QAzX/aDOl0+eC1dPRlhZlo7jXOIqwSlXnJhbWoSFOZ90IwhFWAg
- +mb8QTynNQCf5AYcbg/qKgA1kmyI5AF47Cc+8waXrZBa/plwMh6Z7au8547CGmT+pGgiCdgwIdC
- HFavHx1R9kZLt9ifwS+CxiNc/2cfpBgZk4xQ==
-X-Received: by 2002:a05:6000:4604:b0:45e:f381:cd8c with SMTP id
- ffacd0b85a97d-45ef381cf66mr2577214f8f.30.1780049679380; 
- Fri, 29 May 2026 03:14:39 -0700 (PDT)
+ bh=eMMFe0yvVmEzgfmkcxW/z0D7RgLYHXLz9oPQn8R7iKk=;
+ b=F9+Iur/4bnwGGtaAviTbJFPoWs1/3ds0bfS+GWoQZNR/bVEo7EJfD3tdLtsS8lNzs9
+ Yt+6j/AG8hDde4uVn5CNIQ0SCm+7jeac5WiQ7xOZaKt4efXdhQKBD/ITOhCBfrFqiu6v
+ 2Z6il0pDFn35HROyFz/OTrsLvCiBkFkqJn2hzYDPuGP5C+dR7KRJOn0vapDPOhCBVdus
+ 60gMaZh/tP7t5mgvwrs6GTjVrtXmlTwlHJfG1GMj5SMjEYl6whZ1EOIe98AU6vXxCooS
+ fUMBp8XYgCqFdZeKonQMgwxGtJxqlfwxHTqayJwdOeIX3xoAzYn9g/hAYvvcz+nCwtsJ
+ 2cNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780049681; x=1780654481;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=eMMFe0yvVmEzgfmkcxW/z0D7RgLYHXLz9oPQn8R7iKk=;
+ b=o8iBlgWCRvAqGrgq72NtM2gBtv53WuHWW/gMFf9q1/HaKm4GkCAuNrLGIbiKvknAQg
+ X+HMnwDEx9YK6QT+z0fG0xU+NBZJJzC1ZYTIbiy3C8OFY7Go5jdgr6o0OZ18FS+7Kh2s
+ b048S6jA/yNB5ldkeIyeBEp9UvgO06j53tXR7NSQUr3AN9c+IuC5NbmfzMA1MYn1dpvt
+ XkZi5E5JQy06KEZx+zylE0iyJRKg7sgapHeMrzdc4k4EQwC2bMpuBxilFiDSyCBNIw0y
+ X7Xq7RQM2jw7WrGs3DLgQQQfyswxgGDt3XJb3RJVq4zqWzhBC2iRBBMyyQWdZC6fHwpP
+ WNfg==
+X-Gm-Message-State: AOJu0YyIoTbxZnYCbTWY7mKVZ0D1OSwxILVpfkWqy7mePCDsaHGyGB2O
+ FD1WYdW2bqtS2ES74JWSkP6vN4IP/+wFbYpJVn0mkv5fr5560gQDmaRVvYI8Gd5iE8E=
+X-Gm-Gg: Acq92OEI4leDMtyj49IwOSBWQdIqA3euUkuPR9ZgZNE965GOxb/na3ygFNPX3+KHffe
+ oFkyFBlTVpV9L8LtV0N7aqsw0ZONiplncrTeCJg+lyvbdvVxQZSGihcVrkvrBcWdo3Oh9pruyT7
+ f5ddl3JGakXrTZiN48QfOg4672Voj+2ykUUPPsA9XHgq3VfQgCgExPWF6O7ZxpKJIibdZM/Z/PT
+ laBLpyHushYaMh2TQoFGZjGwu7dGiHP+AmwPgYbyBaXKvoexwXDgJcmyJo4DkmFvquO/HKLOuHa
+ n9Cbc8Ccje04qaIRPtt+CUgZARUfp5EVmht1b1J8ggGDBkoWbMGo0sM3d1u9zBN/OOx2pLb4qVu
+ GC9RdEdrY1lR1kTT3qs2UUEZs/dCLQ64G5YCBF6dXLp9KS5XXZ/YBt2RBw7xomVCqCKi3If+6aN
+ CJAEwKfwBhjLrkny61h15sDt9ACVVpLFhOcA==
+X-Received: by 2002:a05:6000:481c:b0:43d:733f:aee6 with SMTP id
+ ffacd0b85a97d-45ef13f840fmr3855159f8f.10.1780049681293; 
+ Fri, 29 May 2026 03:14:41 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ef35874b7sm2366247f8f.35.2026.05.29.03.14.38
+ ffacd0b85a97d-45ef358c07bsm2447017f8f.36.2026.05.29.03.14.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 May 2026 03:14:38 -0700 (PDT)
+ Fri, 29 May 2026 03:14:39 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AB5555FA53;
+ by draig.lan (Postfix) with ESMTP id F2EE3602E1;
  Fri, 29 May 2026 11:14:37 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v4 00/12] AI policy update, AGENTS.md and associated skills
-Date: Fri, 29 May 2026 11:14:25 +0100
-Message-ID: <20260529101437.410181-1-alex.bennee@linaro.org>
+Subject: [PATCH v4 03/12] AGENTS.md: expand with information on skills,
+ layout and style
+Date: Fri, 29 May 2026 11:14:28 +0100
+Message-ID: <20260529101437.410181-4-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260529101437.410181-1-alex.bennee@linaro.org>
+References: <20260529101437.410181-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,109 +105,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As we are discussing updating QEMU's AI policy I took the opportunity
-to grab Paolo's RFC from:
+To be efficient in navigating the code base inform the agents of the
+basics of the repo layout, where skills can be found and a very quick
+overview of the source code, coding and commit styles.
 
-  Message-ID: <20260528073412.551117-1-pbonzini@redhat.com>
-  Date: Thu, 28 May 2026 09:34:12 +0200
-  Subject: [PATCH] docs/devel: relax policy on AI-generated contributions
-  From: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-And make some updates from the initial review. You can also read the
-original (long) thread:
+---
+v3
+  - split AGENTS.md into two commits
+---
+ .gitignore |  1 +
+ AGENTS.md  | 61 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 62 insertions(+)
 
-  Message-ID: <20260524083329-mutt-send-email-mst@kernel.org>
-  Subject: on ai generated and code provenance
-  From: "Michael S. Tsirkin" <mst@redhat.com>
-  Date: Sun, 24 May 2026 08:42:39 -0400
-
-for more background on the discussion.
-
-The AGENTS.md is now updated to reflect the proposed policy changes
-although it still refers to the current but likely soon to be changed
-security policy.
-
-The skills have had the "caveman" treatment:
-
-  https://github.com/juliusbrussee/caveman
-
-in an effort to reduce the overall token cost of the skills. This is
-becoming more relevant as the true cost of inference is starting to be
-felt. The recent update to Gemini Flash saw a big increase in
-capabilities but I also saw a big jump in API costs to go with it.
-
-I still have the original skills but so far the caveman versions seem
-just as capable. I've made a few updates to the triage skill but
-otherwise they are just terser versions of the last set of skills I
-posted.
-
-Previous discussions suggested that maybe the base AGENTS.md and the
-triage skill could be up-streamed but if we are proposing the relax
-the policy maybe including the rest of the skills is now useful?
-
-Depending on the response we can split off patches for pull requests
-as needed.
-
-Changes since v3:
-
-  - roll-up policy update patch with review feedback
-  - caveman all the skills
-  - teach triage about versions
-  - various tags
-
-Alex.
-
-Alex Bennée (11):
-  AGENTS.md: introduce a very basic guide for AI agents
-  AGENTS.md: expand with information on skills, layout and style
-  scripts/expand-macro.py: helper script exploding macros
-  .agents/skills: add qemu-code-explorer skill (caveman)
-  .agents/skills: add qemu-build skill (caveman)
-  .agents/skills: add qemu-testing skill (caveman)
-  .agents/skills: add qemu-code-reviewer skill (caveman)
-  .agents/skills: add qemu-mail-thread skill (caveman)
-  .agents/skills: add qemu-issue-helper skill (caveman)
-  .agents/skills: add qemu-issue-triage agent skill (caveman)
-  MAINTAINERS: add a section for AI agents
-
-Paolo Bonzini (1):
-  docs/devel: relax policy on AI-generated contributions
-
- MAINTAINERS                                   |   6 +
- docs/devel/code-provenance.rst                | 172 +++++++----
- .agents/skills/qemu-build/SKILL.md            |  49 ++++
- .agents/skills/qemu-code-explorer/SKILL.md    |  84 ++++++
- .../qemu-code-explorer/evals/evals.json       |  26 ++
- .agents/skills/qemu-code-reviewer/SKILL.md    |  98 +++++++
- .agents/skills/qemu-issue-helper/SKILL.md     |  47 +++
- .agents/skills/qemu-issue-triage/SKILL.md     | 100 +++++++
- .../qemu-issue-triage/assets/labels.txt       | 133 +++++++++
- .../skills/qemu-issue-triage/evals/evals.json |  18 ++
- .../scripts/update_labels.sh                  |  16 +
- .agents/skills/qemu-mail-thread/SKILL.md      |  37 +++
- .../scripts/qemu_mail_parser.py               |  98 +++++++
- .agents/skills/qemu-testing/SKILL.md          |  70 +++++
- .gitignore                                    |   2 +
- AGENTS.md                                     | 107 +++++++
- GEMINI.md                                     |   1 +
- scripts/expand-macro.py                       | 274 ++++++++++++++++++
- 18 files changed, 1277 insertions(+), 61 deletions(-)
- create mode 100644 .agents/skills/qemu-build/SKILL.md
- create mode 100644 .agents/skills/qemu-code-explorer/SKILL.md
- create mode 100644 .agents/skills/qemu-code-explorer/evals/evals.json
- create mode 100644 .agents/skills/qemu-code-reviewer/SKILL.md
- create mode 100644 .agents/skills/qemu-issue-helper/SKILL.md
- create mode 100644 .agents/skills/qemu-issue-triage/SKILL.md
- create mode 100644 .agents/skills/qemu-issue-triage/assets/labels.txt
- create mode 100644 .agents/skills/qemu-issue-triage/evals/evals.json
- create mode 100755 .agents/skills/qemu-issue-triage/scripts/update_labels.sh
- create mode 100644 .agents/skills/qemu-mail-thread/SKILL.md
- create mode 100644 .agents/skills/qemu-mail-thread/scripts/qemu_mail_parser.py
- create mode 100644 .agents/skills/qemu-testing/SKILL.md
- create mode 100644 AGENTS.md
- create mode 120000 GEMINI.md
- create mode 100755 scripts/expand-macro.py
-
+diff --git a/.gitignore b/.gitignore
+index 61fa39967b5..4ccba871d16 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -8,6 +8,7 @@
+ .git-submodule-status
+ .clang-format
+ .gdb_history
++.plan
+ cscope.*
+ tags
+ TAGS
+diff --git a/AGENTS.md b/AGENTS.md
+index bd18ddfd8dc..8ceffde4ebb 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -37,3 +37,64 @@ are treated as security vulnerabilities. In brief these are:
+ - **Common devices for Virtualization**: e.g. VirtIO and platform devices
+ 
+ If unsure read the linked `security.rst` document for further guidance.
++
++## Repo Layout
++- **Build Directory**: QEMU uses out of tree builds, by default the `build` sub-directory is used.
++- **Multiple Builds**: Developers might create a `builds` directory with different configurations in subdirs (e.g. `builds/debug`, `builds/asan`).
++- **Documentation**: Developer docs live in `docs/devel`.
++- **Plan Files**: Plan files should be placed in `.plan`, they are not included in commits. Use them to track complex multi-step tasks.
++
++## Agent Skills (see `.agents/skills`)
++You should use the following specialized skills for common tasks:
++
++## Source Code Layout (see `docs/devel/codebase.rst`)
++- **`accel/`**: Hardware accelerators (KVM, TCG, HVF, Xen, etc.) and architecture-agnostic acceleration code.
++- **`audio/`**: Host audio backends.
++- **`authz/`**: QEMU Authorization framework.
++- **`backends/`**: Host resource backends (RNG, memory, crypto).
++- **`block/`**: Block layer, image formats (qcow2, raw), and protocol drivers.
++- **`chardev/`**: Character device backends (TCP, serial, mux, etc.).
++- **`crypto/`**: Cryptographic algorithms and framework.
++- **`disas/`**: Disassembler support for various architectures.
++- **`dump/`**: Guest memory dump implementation.
++- **`ebpf/`**: eBPF program support (e.g. for virtio-net RSS).
++- **`fpu/`**: Software floating-point emulation.
++- **`gdbstub/`**: Remote GDB protocol support.
++- **`hw/`**: Hardware device emulation, organized by type (e.g., `hw/net`, `hw/pci`) or architecture.
++- **`include/`**: Global header files, mirroring the source tree layout.
++- **`io/`**: I/O channels framework.
++- **`linux-user/` & `bsd-user/`**: User-space process emulation.
++- **`migration/`**: VM migration framework.
++- **`monitor/`**: HMP and QMP monitor implementations.
++- **`nbd/`**: Network Block Device server and client code.
++- **`net/`**: Networking stack and host backends.
++- **`plugins/`**: TCG introspection plugins core.
++- **`qapi/`**: QAPI schema and code generation infrastructure.
++- **`qga/`**: QEMU Guest Agent.
++- **`qom/`**: QEMU Object Model implementation.
++- **`replay/`**: Deterministic record/replay support.
++- **`rust/`**: Rust integration and Rust-based device models.
++- **`scripts/`**: Build system helpers, `checkpatch.pl`, `tracetool`, etc.
++- **`system/`**: Core system-level emulation logic (replaces `softmmu`).
++- **`target/`**: CPU-specific emulation (ISA translation, CPU state).
++- **`tcg/`**: The Tiny Code Generator (JIT) backends.
++- **`tests/`**: Test suites (qtest, unit, functional, tcg).
++- **`ui/`**: User interface backends (GTK, SDL, VNC, Spice).
++- **`util/`**: Low-level utility functions and data structures.
++
++## Code Style (see `docs/devel/style.rst`)
++- **Formatting**: 4-space indents, NO tabs, 80-char line limit (max 100).
++- **C Braces**: Mandatory for all blocks (if/while/for). Open brace on same line (except functions).
++- **C Includes**: `#include "qemu/osdep.h"` MUST be the first include in every `.c` file.
++- **C Comments**: Use `/* ... */` only. No `//` comments.
++- **Naming**: `snake_case` for variables/functions; `CamelCase` for types/enums.
++- **Memory**: Use GLib (`g_malloc`, `g_free`, `g_autofree`) or QEMU (`qemu_memalign`). No `malloc`.
++- **Errors**: Use `error_report()` or `error_setg()`. Avoid `printf` for errors.
++- **Lints**: Run `./scripts/checkpatch.pl` on C patches. Use `make clippy` for Rust.
++
++## Commit Style
++- **Small Commits**: Favour small discreet commits changing one thing.
++- **Maintain Bisectability**: Each commit must compile and pass basic tests.
++- **Separate Refactoring**: Split code movement or style fixes from functional changes.
++- **Commit Messages**: Use a concise subject line, followed by a body explaining "why" (not just "what").
++- **Signed-off-by**: Every commit must have a `Signed-off-by` line.
 -- 
 2.47.3
 
