@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 649E9CD4F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 21:36:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD128CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 21:36:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wT4rx-0004vj-2E; Fri, 29 May 2026 17:35:53 -0400
+	id 1wT4rs-0004nc-S6; Fri, 29 May 2026 17:35:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wT4qt-0003XB-Qw
- for qemu-devel@nongnu.org; Fri, 29 May 2026 17:34:57 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1wT4r2-0003cW-5L
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 17:35:01 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wT4qp-000330-E0
- for qemu-devel@nongnu.org; Fri, 29 May 2026 17:34:46 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-36c68964315so114378a91.2
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 14:34:36 -0700 (PDT)
+ id 1wT4qw-00032R-0z
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 17:34:51 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-8421f91c07eso227769b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 14:34:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780090475; x=1780695275; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1780090472; x=1780695272; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jEcYVF/Udwni2eBZbL7aCWlWBBoaU7ySIMUFrl8fTXY=;
- b=EjQSpE7ZgS51BmMlSGUpqHs3rNyj7UhKrDGNQeurdTQe1QX7+Wcz8eCtnt4tmS81Uk
- g7gwuyAcyzz/YiDPju7ZSIPSdh/8ADK388ylqhpNeXAr2tNw3JYhtx9SpFaL1p9uipek
- B9DSEGMRyA7gmJgre3iS2YbHrtGew+gBpKHOV1/ipgSPpxXqyRSI/+cH7d+XlIIT73Aq
- 0iicivQHHGrsPIFB9MdJBn6HC4tNItCzknxRopFMx+E9LG+pS5GxkNy8KY0K6Pz/jMiz
- W1P44uOh5HNH4DekkBmX+bWTirWo31Wq/zkQwUZjIsZKXxT/WL80JDyDUH8rDl58B8OA
- 6pSg==
+ bh=O/uEq0X68vqqCBKpIngN3jhiubOyQKw/LOIJ7bmC9HA=;
+ b=sqDu+aG7hfLXqxEpYEFSakdadrAGevwWBvXw/s2ODGb+4qhhmaS1/3JO/HP+OYAKzj
+ XZfv63RQcSsMx7wGQJgS6XmSkZ12MGsfIurDBcmkQPl0HJNDdRn0O6xkZY+oJ2/iRESs
+ qxr6QumtA123wMsurcRcxTnf27SVn+jl3N5yhr7vgZzvXGIiD1/QCg4iVYKZdQg0Ha7D
+ ooO/O7zUNmOv8f/Ap+Rp2S3BlH6SZEeBT787T+i4d50Vt4Y4y/qUN1xYX9jePYQ9+4La
+ GNI7j3XjxpHkPCL+k0Viqr/T0A8Y+a7i/h/eJxto5r7IW+pBqnEBduc1CaZMZleTVJZe
+ ti5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780090475; x=1780695275;
+ d=1e100.net; s=20251104; t=1780090472; x=1780695272;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=jEcYVF/Udwni2eBZbL7aCWlWBBoaU7ySIMUFrl8fTXY=;
- b=EBIHciYYILzSuztfeRLss/51pBLHq6thxZZROrBuz8j4Xgus3ZAAE88FoZMnDXHBra
- t1fx4u5xmjRjYWsH3+XaTTpYPejafF6B8HlE5fTUbiebrTuOcDDPS2CsyLZ8OAqGze9G
- ++QW8Bo5cKqr7OZ/k8twAeI+emUTyep9jyTwi+7l0zX0N4t7Y1JelvpnwQsw4Ixw4iZe
- 82EcUXmyFGp/oQEKGiexoFQb73n7afs9mRG0Q0Vnw2/DfizoOclXrZIsx+h/xBzPB3xt
- xmqoX8FG79M6/uBaesKq+t9+I3+OBQt4PS/e70FnBalWr175pM6Y35XCtX+iRP2OI0w3
- tBIg==
-X-Gm-Message-State: AOJu0Yy281+8hwt5uNEI3m0khsePXX3ryFq0KDzS472UsB9UpXkr2ssx
- XlX1hse13aoJk20JIewLDhrLrr4FbJ5rZp9QhCgXcQLvmKta+asU6PctYl7dRqfyz50=
-X-Gm-Gg: Acq92OFbGEIXYxxYis37my3STOwvu0dMmHPOZ85gJSdXxInNu0eoZ/c61EgE8p3wjbQ
- P82NS/p5786CpektyDXmYoUQHkXavyb1bWJStKR/VmR4KWjZmD01LQ9apmZxaSIewztUGYfLusM
- 4kXqtDHARjeh2ZOCTnoeVaVsWgbcWXLkw7HuyEVYpjqTmqjrHKTvOTpQ5mbl/r8a3wKzsiVjwJc
- nrgohx1FxDq5QpiiT4grO6hzEKDl0FaR3qX2UVzsQNM3c3KHULVClxEWiYKBqBRJOFLnZI2SXOh
- 38+TAZXD2q2wiATS9MChak8EOVZlZXDK+7tKA6xsZi8V1j4JRgdgfdg1nb39Y1oVnYW0VtVUVl4
- OwKYw6fZdkVkEBx3oY6CSNHRRq4KMUtuwUJCF9tZJoaXkU5SuPmxO0Ba5HZ9Pwbqtxx7XUmLP3F
- cdm9clDxRmd8f39bQXniit0nVcnudHQR9rSFcYN8BPDyT5l6q6zxa8Hea8cdXrtXksiyejXSxmH
- g==
-X-Received: by 2002:a05:6a20:9f0b:b0:3a2:dbaa:82ee with SMTP id
- adf61e73a8af0-3b427bc4170mr1196675637.9.1780090474660; 
- Fri, 29 May 2026 14:34:34 -0700 (PDT)
+ bh=O/uEq0X68vqqCBKpIngN3jhiubOyQKw/LOIJ7bmC9HA=;
+ b=O4Gul8Gu4nttVo1Tb0malrcHQbblKCDdzDqntkCi5qAqp5nNDUzQUZuynw68Qj3YCN
+ 84Doz7gK0QX4dGaWJYwz7C/Kr0sSDYKIvdBSuby2iHpZwVJMtq1wf+AAyceiiPUMacq9
+ Fg1exyvSfebQNHHtqGi3fF/LY75qBHHyYHsVc/6LYbwNtXIDDfiukflFhs76h3CNP3gS
+ KAPaHCL4UP2pJsNMpGIQriC/HDdbfio71ApfcqK19jpMNbvzt7iEldyxcK14X3SfRmZC
+ 3WqlNTlOmwV/dHCvAzE7mfyaQ6xpjddgXaF0jWY3fQomb7RjaRHoh9tmJzVpJW5Tzflr
+ vYzQ==
+X-Gm-Message-State: AOJu0Yy2r3JYgX74n0eEeDjQOWSINbG2Ybc20cLqH6GeMIxmeAn5byOT
+ NI8JvVQX/a6NByuyHgxXdHq58JebjKDHBJZESQiKPSobIRdfWJer661f55rL9CfS2B4=
+X-Gm-Gg: Acq92OF7MR/fVdRmtd90BNKZwJ8akWxZbExfTWXxs0Xvx6y4H9sww0d273FF4qN3heJ
+ MrkF+BvyPAmSFyy43agNPbs2BRND8n5eIy6uMH8KVo+uyxpA6DfeisPZZvkYx2ZafZZ14l3bzqH
+ tki2KBaNtf2OiT4zzA/Vl+7k34Wpab4Le3sMkB9cfdfsJR/IS5duK9rpjxy6hKq71XtX+i10rbr
+ EZ5gh230N3Z7ELIu2KcxZyORxztBu2SzHY+HJjh2LlybIrPWfXgDKYBPoHtIeuxpZQ/S6O3Wcp1
+ CoIeP5psNGVS+tpLUirTAPrkXH5usSUfhm80sdoH76iUBHjR+PU17eNS+mQAYfUCyRlYcks+KOi
+ OSw+LdRlD26lAyXwU5VyM5p7CyRCFsA3QEwPnKTXX8NlxUumSRtzq+K9Hxon33wVYrZDG2w4z/6
+ fEfEJ/njWP7CdnTQeGfCiOxqDOUCti7LSaOAuSs6XV65g7h63AcP1IHadPPSjnDOE=
+X-Received: by 2002:a05:6a00:4f93:b0:83d:6c12:a632 with SMTP id
+ d2e1a72fcca58-842257583d4mr1098649b3a.50.1780090471786; 
+ Fri, 29 May 2026 14:34:31 -0700 (PDT)
 Received: from ZBMac-LWN10QXKQ0.taila0cd24.ts.net ([104.168.88.121])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-84214affe29sm2779564b3a.3.2026.05.29.14.34.32
+ d2e1a72fcca58-84214affe29sm2779564b3a.3.2026.05.29.14.34.29
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 29 May 2026 14:34:34 -0700 (PDT)
+ Fri, 29 May 2026 14:34:31 -0700 (PDT)
 From: Zhang Chen <zhangckid@gmail.com>
 To: qemu-devel <qemu-devel@nongnu.org>,
  "Dr . David Alan Gilbert" <dave@treblig.org>,
@@ -72,17 +71,17 @@ To: qemu-devel <qemu-devel@nongnu.org>,
  "Michael S . Tsirkin" <mst@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>
 Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH V8 15/15] iothread: simplify API by merging
- iothread_get_aio_context variants
-Date: Sat, 30 May 2026 05:33:21 +0800
-Message-ID: <20260529213321.96271-16-zhangckid@gmail.com>
+Subject: [PATCH V8 14/15] qapi: examine IOThread attachment status via
+ query-iothreads
+Date: Sat, 30 May 2026 05:33:20 +0800
+Message-ID: <20260529213321.96271-15-zhangckid@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20260529213321.96271-1-zhangckid@gmail.com>
 References: <20260529213321.96271-1-zhangckid@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=zhangckid@gmail.com; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=zhangckid@gmail.com; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,208 +104,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Simplify the interface by merging iothread_ref_and_get_aio_context()
-into iothread_get_aio_context(). The updated function now requires a
-'holder' parameter, ensuring that every retrieval of an AioContext for
-long-term use is automatically registered in the IOThread's holder list.
+Extend the 'IOThreadInfo' structure to include attachment metrics.
+This allows users to monitor the associated devices by identify them
+by their QOM paths.
 
-Update all callers across block, virtio, scsi, net, and monitor
-subsystems to match the new signature. This cleanup reduces code
-redundancy and improves the reliability of IOThread introspection.
+New fields added to IOThreadInfo:
+ @holders: IOThreadHolder of the devices currently associated with
+     this iothread.  Users can pre-allocate multiple iothread objects
+     to serve as a persistent thread pool.  When a device is hot-unplugged,
+     it is detached from its iothread, but the iothread remains available,
+     allowing future hot-plugged devices to attach to it.  (Since 11.1)
+
+These fields are also exposed via the Human Monitor Interface (HMP)
+command 'info iothreads' to assist with manual debugging and
+performance tuning.
 
 Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 ---
- block/export/export.c           | 5 ++---
- hw/block/dataplane/xen-block.c  | 4 ++--
- hw/block/virtio-blk.c           | 4 ++--
- hw/scsi/virtio-scsi-dataplane.c | 4 ++--
- hw/vfio-user/proxy.c            | 3 +--
- hw/virtio/iothread-vq-mapping.c | 3 +--
- hw/virtio/virtio-balloon.c      | 2 +-
- include/system/iothread.h       | 6 +++---
- iothread.c                      | 9 ++-------
- monitor/monitor.c               | 2 +-
- net/colo-compare.c              | 2 +-
- 11 files changed, 18 insertions(+), 26 deletions(-)
+ iothread.c         | 22 ++++++++++++++++++++++
+ monitor/hmp-cmds.c | 26 ++++++++++++++++++++++++++
+ qapi/misc.json     | 11 +++++++++++
+ 3 files changed, 59 insertions(+)
 
-diff --git a/block/export/export.c b/block/export/export.c
-index b6c07f69b5..acd061e86e 100644
---- a/block/export/export.c
-+++ b/block/export/export.c
-@@ -146,7 +146,7 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
-             .u.block_node.node_name = (char *)holder_name,
-         };
- 
--        new_ctx = iothread_ref_and_get_aio_context(iothread, &holder);
-+        new_ctx = iothread_get_aio_context(iothread, &holder);
-         multithread_count = 1;
-         local_iothreads = g_new0(IOThread *, 1);
-         local_iothreads[0] = iothread;
-@@ -190,8 +190,7 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
-                 goto fail;
-             }
-             local_iothreads[i] = iothread;
--            multithread_ctxs[i++] = iothread_ref_and_get_aio_context(iothread,
--                                                                     &holder);
-+            multithread_ctxs[i++] = iothread_get_aio_context(iothread, &holder);
-         }
-         assert(i == multithread_count);
-     }
-diff --git a/hw/block/dataplane/xen-block.c b/hw/block/dataplane/xen-block.c
-index b5bf8d359f..46bfd62f5a 100644
---- a/hw/block/dataplane/xen-block.c
-+++ b/hw/block/dataplane/xen-block.c
-@@ -628,8 +628,8 @@ XenBlockDataPlane *xen_block_dataplane_create(XenDevice *xendev,
-         };
- 
-         dataplane->iothread = iothread;
--        dataplane->ctx = iothread_ref_and_get_aio_context(dataplane->iothread,
--                                                          &io_holder);
-+        dataplane->ctx = iothread_get_aio_context(dataplane->iothread,
-+                                                  &io_holder);
-     } else {
-         dataplane->ctx = qemu_get_aio_context();
-     }
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index d8dc1dd136..d1d2bd7025 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -1502,8 +1502,8 @@ static bool virtio_blk_vq_aio_context_init(VirtIOBlock *s, Error **errp)
-             .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
-             .u.qom_object.qom_path = (char *)path,
-         };
--        AioContext *ctx = iothread_ref_and_get_aio_context(conf->iothread,
--                                                           &io_holder);
-+        AioContext *ctx = iothread_get_aio_context(conf->iothread,
-+                                                   &io_holder);
-         for (unsigned i = 0; i < conf->num_queues; i++) {
-             s->vq_aio_context[i] = ctx;
-         }
-diff --git a/hw/scsi/virtio-scsi-dataplane.c b/hw/scsi/virtio-scsi-dataplane.c
-index c71f33b41e..76ab22610f 100644
---- a/hw/scsi/virtio-scsi-dataplane.c
-+++ b/hw/scsi/virtio-scsi-dataplane.c
-@@ -78,8 +78,8 @@ void virtio_scsi_dataplane_setup(VirtIOSCSI *s, Error **errp)
-             .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
-             .u.qom_object.qom_path = (char *)path,
-         };
--        AioContext *ctx = iothread_ref_and_get_aio_context(vs->conf.iothread,
--                                                           &io_holder);
-+        AioContext *ctx = iothread_get_aio_context(vs->conf.iothread,
-+                                                   &io_holder);
-         for (uint16_t i = 0; i < vs->conf.num_queues; i++) {
-             s->vq_aio_context[VIRTIO_SCSI_VQ_NUM_FIXED + i] = ctx;
-         }
-diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
-index 756f368849..24af3c791b 100644
---- a/hw/vfio-user/proxy.c
-+++ b/hw/vfio-user/proxy.c
-@@ -942,8 +942,7 @@ VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp)
-         vfio_user_iothread = iothread_create("VFIO user", errp);
-     }
- 
--    proxy->ctx = iothread_ref_and_get_aio_context(vfio_user_iothread,
--                                                  &io_holder);
-+    proxy->ctx = iothread_get_aio_context(vfio_user_iothread, &io_holder);
-     proxy->req_bh = qemu_bh_new(vfio_user_request, proxy);
- 
-     QTAILQ_INIT(&proxy->outgoing);
-diff --git a/hw/virtio/iothread-vq-mapping.c b/hw/virtio/iothread-vq-mapping.c
-index 2cb48dd387..727358a483 100644
---- a/hw/virtio/iothread-vq-mapping.c
-+++ b/hw/virtio/iothread-vq-mapping.c
-@@ -99,8 +99,7 @@ bool iothread_vq_mapping_apply(
-             .u.qom_object.qom_path = (char *)holder,
-         };
- 
--        AioContext *ctx = iothread_ref_and_get_aio_context(iothread,
--                                                           &io_holder);
-+        AioContext *ctx = iothread_get_aio_context(iothread, &io_holder);
- 
-         if (node->value->vqs) {
-             uint16List *vq;
-diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
-index e9d023b4ec..4405a87ed0 100644
---- a/hw/virtio/virtio-balloon.c
-+++ b/hw/virtio/virtio-balloon.c
-@@ -903,7 +903,7 @@ static void virtio_balloon_device_realize(DeviceState *dev, Error **errp)
-         precopy_add_notifier(&s->free_page_hint_notify);
- 
-         s->free_page_bh = aio_bh_new_guarded(
--                      iothread_ref_and_get_aio_context(s->iothread, &io_holder),
-+                      iothread_get_aio_context(s->iothread, &io_holder),
-                       virtio_ballloon_get_free_page_hints, s,
-                       &dev->mem_reentrancy_guard);
-     }
-diff --git a/include/system/iothread.h b/include/system/iothread.h
-index 064c05e78d..e5db215954 100644
---- a/include/system/iothread.h
-+++ b/include/system/iothread.h
-@@ -70,15 +70,15 @@ DECLARE_INSTANCE_CHECKER(IOThread, IOTHREAD,
- 
- char *iothread_get_id(IOThread *iothread);
- IOThread *iothread_by_id(const char *id);
--AioContext *iothread_get_aio_context(IOThread *iothread);
-+
- /*
-  * The iothread_unsafe_get_aio_context() is a low-level unsafe way of getting
-  * the AioContext, recommend migrating to the new API with IOThreadHolder
-  * as much as possible.
-  */
- AioContext *iothread_unsafe_get_aio_context(IOThread *iothread);
--AioContext *iothread_ref_and_get_aio_context(IOThread *iothread,
--                                             const IOThreadHolder *holder);
-+AioContext *iothread_get_aio_context(IOThread *iothread,
-+                                     const IOThreadHolder *holder);
- void iothread_put_aio_context(IOThread *iothread, const IOThreadHolder *holder);
- GMainContext *iothread_get_g_main_context(IOThread *iothread);
- 
 diff --git a/iothread.c b/iothread.c
-index 5949785b32..9bc8e359c1 100644
+index a85e960e45..5949785b32 100644
 --- a/iothread.c
 +++ b/iothread.c
-@@ -469,13 +469,8 @@ char *iothread_get_id(IOThread *iothread)
-     return g_strdup(object_get_canonical_path_component(OBJECT(iothread)));
+@@ -24,6 +24,8 @@
+ #include "qemu/error-report.h"
+ #include "qemu/rcu.h"
+ #include "qemu/main-loop.h"
++#include "qapi/clone-visitor.h"
++#include "qapi/qapi-visit-misc.h"
+ 
+ /*
+  * iothread_ref:
+@@ -119,6 +121,25 @@ static void iothread_unref(IOThread *iothread, const IOThreadHolder *holder)
+     object_unref(OBJECT(iothread));
  }
  
--AioContext *iothread_get_aio_context(IOThread *iothread)
--{
--    return iothread->ctx;
--}
--
--AioContext *iothread_ref_and_get_aio_context(IOThread *iothread,
--                                             const IOThreadHolder *holder)
-+AioContext *iothread_get_aio_context(IOThread *iothread,
-+                                     const IOThreadHolder *holder)
++static IOThreadHolderList *iothread_get_holders_list(IOThread *iothread)
++{
++    IOThreadHolderList *head = NULL;
++    IOThreadHolderList **prev = &head;
++    GList *l;
++
++    for (l = iothread->holders; l; l = l->next) {
++        IOThreadHolder *src = l->data;
++        IOThreadHolderList *entry = g_new0(IOThreadHolderList, 1);
++
++        entry->value = QAPI_CLONE(IOThreadHolder, src);
++
++        *prev = entry;
++        prev = &entry->next;
++    }
++
++    return head;
++}
++
+ static void *iothread_run(void *opaque)
  {
-     /* Add IOThreadHolder to the list */
-     iothread_ref(iothread, holder);
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index 7eec6f967d..4d00cf499c 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -617,7 +617,7 @@ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
-             .type = IO_THREAD_HOLDER_KIND_MONITOR_NAME,
-             .u.monitor_name.monitor_name = (char *)mon->id,
-         };
--        mon->ctx = iothread_ref_and_get_aio_context(mon_iothread, &holder);
-+        mon->ctx = iothread_get_aio_context(mon_iothread, &holder);
-     }
-     qemu_mutex_init(&mon->mon_lock);
-     mon->is_qmp = is_qmp;
-diff --git a/net/colo-compare.c b/net/colo-compare.c
-index 4f180936e3..820ea4d824 100644
---- a/net/colo-compare.c
-+++ b/net/colo-compare.c
-@@ -973,7 +973,7 @@ static void colo_compare_iothread(CompareState *s)
-         .u.qom_object.qom_path = (char *)path,
-     };
+     IOThread *iothread = opaque;
+@@ -488,6 +509,7 @@ static int query_one_iothread(Object *object, void *opaque)
+     info = g_new0(IOThreadInfo, 1);
+     info->id = iothread_get_id(iothread);
+     info->thread_id = iothread->thread_id;
++    info->holders = iothread_get_holders_list(iothread);
+     info->poll_max_ns = iothread->poll_max_ns;
+     info->poll_grow = iothread->poll_grow;
+     info->poll_shrink = iothread->poll_shrink;
+diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+index 443b8c785d..1b5883147b 100644
+--- a/monitor/hmp-cmds.c
++++ b/monitor/hmp-cmds.c
+@@ -237,11 +237,37 @@ void hmp_info_iothreads(Monitor *mon, const QDict *qdict)
+     IOThreadInfoList *info_list = qmp_query_iothreads(NULL);
+     IOThreadInfoList *info;
+     IOThreadInfo *value;
++    IOThreadHolderList *h;
  
--    AioContext *ctx = iothread_ref_and_get_aio_context(s->iothread, &io_holder);
-+    AioContext *ctx = iothread_get_aio_context(s->iothread, &io_holder);
- 
-     s->iothread_ctx = ctx;
-     s->worker_context = iothread_get_g_main_context(s->iothread);
+     for (info = info_list; info; info = info->next) {
+         value = info->value;
+         monitor_printf(mon, "%s:\n", value->id);
+         monitor_printf(mon, "  thread_id=%" PRId64 "\n", value->thread_id);
++        monitor_printf(mon, "  holders=");
++        if (value->holders) {
++            for (h = value->holders; h; h = h->next) {
++                IOThreadHolder *holder = h->value;
++
++                switch (holder->type) {
++                case IO_THREAD_HOLDER_KIND_BLOCK_NODE:
++                    monitor_printf(mon, "[block-node: %s]",
++                                   holder->u.block_node.node_name);
++                    break;
++                case IO_THREAD_HOLDER_KIND_QOM_OBJECT:
++                    monitor_printf(mon, "[qom-path: %s]",
++                                   holder->u.qom_object.qom_path);
++                    break;
++                case IO_THREAD_HOLDER_KIND_MONITOR_NAME:
++                    monitor_printf(mon, "[monitor-name: %s]",
++                                   holder->u.monitor_name.monitor_name);
++                    break;
++                default:
++                    monitor_printf(mon, "[unknown]");
++                    break;
++                }
++            }
++            monitor_printf(mon, "\n");
++        }
+         monitor_printf(mon, "  poll-max-ns=%" PRId64 "\n", value->poll_max_ns);
+         monitor_printf(mon, "  poll-grow=%" PRId64 "\n", value->poll_grow);
+         monitor_printf(mon, "  poll-shrink=%" PRId64 "\n", value->poll_shrink);
+diff --git a/qapi/misc.json b/qapi/misc.json
+index d9f82f0922..4c16be3fd4 100644
+--- a/qapi/misc.json
++++ b/qapi/misc.json
+@@ -137,6 +137,13 @@
+ #
+ # @thread-id: ID of the underlying host thread
+ #
++# @holders: IOThreadHolder of the devices currently associated with
++#     this iothread.  Users can pre-allocate multiple iothread objects
++#     to serve as a persistent thread pool.  When a device is
++#     hot-unplugged, it is detached from its iothread, but the
++#     iothread remains available, allowing future hot-plugged devices
++#     to attach to it.  (Since 11.1)
++#
+ # @poll-max-ns: maximum polling time in ns, 0 means polling is
+ #     disabled (since 2.9)
+ #
+@@ -159,6 +166,7 @@
+ { 'struct': 'IOThreadInfo',
+   'data': {'id': 'str',
+            'thread-id': 'int',
++           'holders': ['IOThreadHolder'],
+            'poll-max-ns': 'int',
+            'poll-grow': 'int',
+            'poll-shrink': 'int',
+@@ -185,6 +193,8 @@
+ #              {
+ #                 "id":"iothread0",
+ #                 "thread-id":3134,
++#                 "holders":[{"qom-path": "/machine/peripheral/blk1/virtio-backend", "type": "qom-object"},
++#                            {"qom-path": "/machine/peripheral/blk0/virtio-backend", "type": "qom-object"}],
+ #                 "poll-max-ns":32768,
+ #                 "poll-grow":0,
+ #                 "poll-shrink":0,
+@@ -193,6 +203,7 @@
+ #              {
+ #                 "id":"iothread1",
+ #                 "thread-id":3135,
++#                 "holders":[{"qom-path": "/machine/peripheral/blk2/virtio-backend", "type": "qom-object"}],
+ #                 "poll-max-ns":32768,
+ #                 "poll-grow":0,
+ #                 "poll-shrink":0,
 -- 
 2.49.0
 
