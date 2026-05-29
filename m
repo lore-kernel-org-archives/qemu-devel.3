@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1510ACD6E45
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 05:41:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98F7ECD5BD2
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 05:41:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSpxD-00023o-Bb; Fri, 29 May 2026 01:40:19 -0400
+	id 1wSpx7-00022D-3U; Fri, 29 May 2026 01:40:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSpwa-0001qZ-Dy
- for qemu-devel@nongnu.org; Fri, 29 May 2026 01:39:43 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1wSpwc-0001qg-6U
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 01:39:46 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSpwY-00024g-K5
- for qemu-devel@nongnu.org; Fri, 29 May 2026 01:39:39 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-48e8132c6d0so85497765e9.1
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 22:39:38 -0700 (PDT)
+ id 1wSpwa-000256-BJ
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 01:39:41 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4893940bb5eso72726655e9.3
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 22:39:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780033177; x=1780637977; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780033179; x=1780637979; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nFmtvDiQiB2D//EgcSN2N6h31MpGS3T5lK6oKAQ8KTE=;
- b=kIuV/s7Xw8QpWrH2n6muI7Efc8Ot6Ab3HM1azVsVLh3GtIPxgOAr3zeEohYLNoZzVX
- pdx2cLgapSxX8XGhSVPJZ9+foHwXNQhQO2fP0lYnSLIxK/zIZmJOYfkPCirVZKYvjNBJ
- rrNsTYAICpFrairAySdTl/6l4r6+ZQxmIflIC2w7Cq9Cj6RpRLg39pIw3cHFn4yvB46l
- 8LGksM9BWriAhiwwGOoebslSwcCZ7xShSSmuZt7VE2rfSY77ZvpEIwSfvucwQ7/kSWwE
- 8ymTM0U4F8vnJPMigfVCGbhAUIXv1ER6FfoOcVrgKmSiXRVyql1NScwbHiZL/5sUC6RZ
- fvaA==
+ bh=79P13JhrVnu+uI6HWVYMbcoYr8sDIQXmGwPixsdUhYs=;
+ b=AuAXggYJTNFnoeQbUWMGz+L+YDG9kaI/ujyotUUM9wztUQt/sdRLEKMcSqQYqYrSW9
+ o5wXJvC2TSZFF4QeTXXom2EwgTDjuIHLsPfU9Eflsmm6CE6GpBcH6MYw/6LeDR73HyfP
+ /jnTCbMqHcVRuatjHpcc7d715ppjD77G/+fJouYEqU0wHssu6hNmgQm3uhHfdta/QRn9
+ W/LiGYLDAlz5MxaOmFbgoLCLD0Jl/ijrmxbg/Qu72J0QtFeKbtp0xwr05NZEAQZv/wZ5
+ hP8fKZY0bu9Nc8K5foKsacTTJmn79KwsmtRwPCeWnvVp9wrdNIB2H0QEzKioDpGlrpfj
+ 8/WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780033177; x=1780637977;
+ d=1e100.net; s=20251104; t=1780033179; x=1780637979;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=nFmtvDiQiB2D//EgcSN2N6h31MpGS3T5lK6oKAQ8KTE=;
- b=W3W+vCQHdWmM/d+fsxlB5xJT87CMHmW4jpcdwUAd6d6kIqz+xz+jqOEXwoLhaklbis
- z8pHSHlLPtkBy01cSp886RHrHSyQBBkcpLEoZtEAGaYHC3IZ/bLrmff9kKNhHMuoltmf
- 7r1++Y5JjXlYr56Jbh5OfwQJkz+z9ddWVDN+bDr5lm5tFWjM4q/qEKNffDZcxIbmCwgQ
- P2DaEuq41sTC/YaqNQVNBtgu3Ax1MHEWPZEyZgtKXpS1Zmi0d1QYnPgVTz9zZNSihVUb
- rW3av7KsuQ6RvftbwRusAfxtcfveqZzIEOCZtEd4GRIYNTks4Qg80EyWYB1Ba+Y/thuC
- GXJA==
-X-Gm-Message-State: AOJu0YxAww2eSbbL8amxLr27P1EMc/9wBWoyRt6uTUd//iALVmeN7et3
- n2HvSJA9AyL12aOwdsWiVJPyPWJdFisWrG/4dS9VppIOJn5RBJ1a0TtidsYMNLebNqk=
-X-Gm-Gg: Acq92OFYLdRPHiFQvIb42erpN/gYl5GoL4aTzkRZyRn71yrGWXDAYES6PeMGEYTKesZ
- R9xuEmCTZo6cKobzo7/pIy75wIFXjSAha94VGW/DtuJLfLfvQGKSFFFnVDgPTKvMZlk9u/FIqX2
- /JNS+y39jwAZQGAO7IOIPvJa14LdR0RSuxj1+AwfZMduMA0ZVrVKP7QjVvbRbYvyhAz20XaZs4s
- K8SNRgfqeS8UkSPPNslViCKkq52GqaIljPVhOSyc3VPoV/NTcvyiiABb7EV7gKR2KpMhQz/sjNn
- qHGlTqLO8cFM6+Nh30WdlpSBg627K5XvULqCbRaKLKAjv2x5p6sQPAMJb03aS26YdaYfM11i/wm
- 4f7YUnTEblk/Gj41bQm/fBOX46jizMB2gFxdUtYNKPWWg+7wP5/DOSXEpPezjYA9UKZss+80qWZ
- LwPgAacPZR+IZVOcpJcx+UgNyazku0N+3luQ==
-X-Received: by 2002:a05:600c:45c4:b0:490:4f91:5519 with SMTP id
- 5b1f17b1804b1-4909c0d673amr22339475e9.18.1780033176894; 
- Thu, 28 May 2026 22:39:36 -0700 (PDT)
+ bh=79P13JhrVnu+uI6HWVYMbcoYr8sDIQXmGwPixsdUhYs=;
+ b=QnivHNoYzNLWo988rzAwCYb98alyDUO03xU3yOrVyChAleQfWZWUjeiOExaUtqLulv
+ Zd17mh+WsobKPvUnROK0v/qQTtf+sSNU+2C1TeFZlw47D0AQJdZNbtBK/cio7o+M1ydO
+ Z6UEqqRawYFlJd6cDqh/rWISEhary4fAdfXB4fBGyC1uN8/bu55gtT4a/byFjMS/loyl
+ T7h/UTdhBcxB30klafxMha3IXHrroSGaFwfLYrnDDmak7JRI+BU+sGPEVxbWb1uBFD08
+ de1ONOvQT1EI3/IebSCq1Lh/mQpWkGTdKQs8bNqOND7WATreNFZBj2dln2e0XILPuNbC
+ qShg==
+X-Gm-Message-State: AOJu0YztI/fvB7fGr6aLJAoQ0I4p4Lz+I5eIozMEACXjtwr0R+hDjkxl
+ FGawOymx/QoIcQxYtJ8po48eugTnQ8aajmFUbJvH7AjV6raIUj8j9soc+uExZMwJNMQ=
+X-Gm-Gg: Acq92OFzz7IEpSnyoEkiWNuuRpAQ7lnvTFgfvTtIqtw1apAsm+tr6sTZ+LaXKbrS4ck
+ 6kLHvp7dkgIT6C1hVCKZyLLEtdfG3BuooJLL0ialXF0eWEFryiVkjw953gDZOLhALNaqnTO5qas
+ hEk4EdJQexkvIHaglBsLrn/V1x7C3zlPfQezV3egvFSYXopGAI+1UeRB9WIIRvG050QNw5HAcsF
+ w6PHrSVL7qW+LxZzVQk/vLxbQA1mq/uqTQvjtNYg02Cn/8DJ4H+2YBzN78S0/rtkEIqBlWLY0zm
+ fged40CFHkoMxQi3ODfDxuB3iGTrcUHOQWhVxY8uqNcnmg3tIdK4S7hqKJEo3bt/RNNqawI2cGm
+ 4lwrsp04ekH24GYlWjJyws7bSm1SkHUQukObW6bPqVpSrJX7QJQiZr1BihuDeYGNLGayAwJ9Qqv
+ JBBY/RI5fJOYXBCyKBjKJ6EHYYrSauim5Qgg==
+X-Received: by 2002:a05:600c:643:b0:490:53d3:4767 with SMTP id
+ 5b1f17b1804b1-4909c0787b1mr14472665e9.7.1780033178850; 
+ Thu, 28 May 2026 22:39:38 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4909cabfd6esm21161595e9.15.2026.05.28.22.39.32
+ 5b1f17b1804b1-4909ca65f54sm20695955e9.5.2026.05.28.22.39.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 May 2026 22:39:32 -0700 (PDT)
+ Thu, 28 May 2026 22:39:34 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3398D602BD;
+ by draig.lan (Postfix) with ESMTP id 493FD602E1;
  Fri, 29 May 2026 06:39:32 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 03/13] tests/Makefile.include: add binary dependency to
- run-tcg-tests-% rules
-Date: Fri, 29 May 2026 06:39:21 +0100
-Message-ID: <20260529053931.283970-4-alex.bennee@linaro.org>
+Subject: [PULL 04/13] accel/tcg: move jit thread manipulation into
+ do_tb_phys_invalidate
+Date: Fri, 29 May 2026 06:39:22 +0100
+Message-ID: <20260529053931.283970-5-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260529053931.283970-1-alex.bennee@linaro.org>
 References: <20260529053931.283970-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,32 +105,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Explicitly set the appropriate QEMU binary as a dependency so we can
-ensure they get built. This is especially important for MacOS which
-otherwise only builds the unsigned binaries on a normal "make all"
-run.
+To invalidate a TB on MacOS we need to enable write access to the JIT
+buffer. We were doing this for tb_phys_invalidate__locked but that is
+not the only path into do_tb_phys_invalidate. Move the manipulation
+into the shared function that does the work.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260526110243.470002-4-alex.bennee@linaro.org>
+As a result we can drop the tb_phys_invalidate__locked function and
+update the calls directly.
+
+This enables watchpoints to work in MacOS TCG guests.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3444
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260526110243.470002-5-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/tests/Makefile.include b/tests/Makefile.include
-index 3b1af78ca1e..494d0109f26 100644
---- a/tests/Makefile.include
-+++ b/tests/Makefile.include
-@@ -58,6 +58,12 @@ RUN_TCG_TARGET_RULES=$(patsubst %,run-tcg-tests-%, $(TCG_TESTS_TARGETS))
- $(foreach TARGET,$(TCG_TESTS_TARGETS), \
-         $(eval $(BUILD_DIR)/tests/tcg/config-$(TARGET).mak: config-host.mak))
+diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
+index cd7c32361bb..0c7ac5a72c0 100644
+--- a/accel/tcg/tb-maint.c
++++ b/accel/tcg/tb-maint.c
+@@ -925,6 +925,7 @@ static void do_tb_phys_invalidate(TranslationBlock *tb, bool rm_from_page_list)
+     uint32_t orig_cflags = tb_cflags(tb);
  
-+# $1 = the stem (e.g., arm-softmmu or x86_64-linux-user)
-+get-qemu-bin = $(if $(findstring softmmu,$1),qemu-system-$(subst -softmmu,,$1),qemu-$(subst -linux-user,,$1))
-+
-+$(foreach TARGET,$(TCG_TESTS_TARGETS), \
-+        $(eval .ninja-goals.run-tcg-tests-$(TARGET) += $(call get-qemu-bin,$(TARGET))))
-+
- .PHONY: $(TCG_TESTS_TARGETS:%=build-tcg-tests-%)
- $(TCG_TESTS_TARGETS:%=build-tcg-tests-%): build-tcg-tests-%: $(BUILD_DIR)/tests/tcg/config-%.mak
- 	$(call quiet-command, \
+     assert_memory_lock();
++    qemu_thread_jit_write();
+ 
+     /* make sure no further incoming jumps will be chained to this TB */
+     qemu_spin_lock(&tb->jmp_lock);
+@@ -935,33 +936,27 @@ static void do_tb_phys_invalidate(TranslationBlock *tb, bool rm_from_page_list)
+     phys_pc = tb_page_addr0(tb);
+     h = tb_hash_func(phys_pc, (orig_cflags & CF_PCREL ? 0 : tb->pc),
+                      tb->flags, tb->cs_base, orig_cflags);
+-    if (!qht_remove(&tb_ctx.htable, tb, h)) {
+-        return;
+-    }
++    if (qht_remove(&tb_ctx.htable, tb, h)) {
+ 
+-    /* remove the TB from the page list */
+-    if (rm_from_page_list) {
+-        tb_remove(tb);
+-    }
++        /* remove the TB from the page list */
++        if (rm_from_page_list) {
++            tb_remove(tb);
++        }
+ 
+-    /* remove the TB from the hash list */
+-    tb_jmp_cache_inval_tb(tb);
++        /* remove the TB from the hash list */
++        tb_jmp_cache_inval_tb(tb);
+ 
+-    /* suppress this TB from the two jump lists */
+-    tb_remove_from_jmp_list(tb, 0);
+-    tb_remove_from_jmp_list(tb, 1);
++        /* suppress this TB from the two jump lists */
++        tb_remove_from_jmp_list(tb, 0);
++        tb_remove_from_jmp_list(tb, 1);
+ 
+-    /* suppress any remaining jumps to this TB */
+-    tb_jmp_unlink(tb);
++        /* suppress any remaining jumps to this TB */
++        tb_jmp_unlink(tb);
+ 
+-    qatomic_set(&tb_ctx.tb_phys_invalidate_count,
+-                tb_ctx.tb_phys_invalidate_count + 1);
+-}
++        qatomic_set(&tb_ctx.tb_phys_invalidate_count,
++                    tb_ctx.tb_phys_invalidate_count + 1);
++    }
+ 
+-static void tb_phys_invalidate__locked(TranslationBlock *tb)
+-{
+-    qemu_thread_jit_write();
+-    do_tb_phys_invalidate(tb, true);
+     qemu_thread_jit_execute();
+ }
+ 
+@@ -1030,7 +1025,7 @@ void tb_invalidate_phys_range(CPUState *cpu, tb_page_addr_t start,
+     assert_memory_lock();
+ 
+     PAGE_FOR_EACH_TB(start, last, unused, tb, n) {
+-        tb_phys_invalidate__locked(tb);
++        do_tb_phys_invalidate(tb, true);
+     }
+ }
+ 
+@@ -1091,7 +1086,7 @@ bool tb_invalidate_phys_page_unwind(CPUState *cpu, tb_page_addr_t addr,
+             current_tb_modified = true;
+             cpu_restore_state_from_tb(cpu, current_tb, pc);
+         }
+-        tb_phys_invalidate__locked(tb);
++        do_tb_phys_invalidate(tb, true);
+     }
+ 
+     if (current_tb_modified) {
+@@ -1156,7 +1151,7 @@ tb_invalidate_phys_page_range__locked(CPUState *cpu,
+                 current_tb_modified = true;
+                 cpu_restore_state_from_tb(cpu, current_tb, retaddr);
+             }
+-            tb_phys_invalidate__locked(tb);
++            do_tb_phys_invalidate(tb, true);
+         }
+     }
+ 
 -- 
 2.47.3
 
