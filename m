@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CA1CCD5BD5
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 22:29:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D241BCD6E43
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 May 2026 22:29:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSjDm-0002sp-FR; Thu, 28 May 2026 18:28:58 -0400
+	id 1wSjDu-0002x8-21; Thu, 28 May 2026 18:29:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1wSjDk-0002rB-TL; Thu, 28 May 2026 18:28:56 -0400
+ id 1wSjDs-0002wZ-5B; Thu, 28 May 2026 18:29:04 -0400
 Received: from mout.gmx.net ([212.227.17.22])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1wSjDj-0006uu-2W; Thu, 28 May 2026 18:28:56 -0400
+ id 1wSjDq-0006wu-EZ; Thu, 28 May 2026 18:29:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1780007327; x=1780612127; i=deller@gmx.de;
- bh=yWj4xfI21hAF7hx/PxKNj42DxCD1V6gQuobYl06oyYI=;
+ s=s31663417; t=1780007336; x=1780612136; i=deller@gmx.de;
+ bh=zkCvQGV0S+k8vtMtYQ+DXgjKjWV6ngUHcnFo0H+GlXk=;
  h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
  References:MIME-Version:Content-Transfer-Encoding:cc:
  content-transfer-encoding:content-type:date:from:message-id:
  mime-version:reply-to:subject:to;
- b=hOGvbiNkBVFeiBssnZ+FL9VcplfU6g3wGWBfyIGT0Ef5zvkGImXR5PYUBhOCg5Zf
- TJ6WclqbFMjKV/CW5MNzIGYwu7+WuOhROZvVdubaZ7NPgfIT5ywBXMaB9Vuvl0r2Z
- m/XfGnswjVj31O1UeXD/72PwVS1cnLiR04FgldbmJMJ0aizuF6n4UXisXZpuUjtyq
- 94zilRIOwu7vQuQC2LqUnwpwDPHglUZ+9ZmO7x+Jy3anTuS/uzh7sxc4iexhlfMu/
- kBxIFf54IvfNLDa0Dys/3RC0wzcriTxzZWohRIzenA/BW/OHwF2dYxVSkKhuwojWi
- eTk4iQWKsJ3Fm3Kr8w==
+ b=je+F85xnuB7yzKihEN0YsRq3kQZI/2ZPRgMf7oQWcJZ1AD4QwZDSfA6Api/12eBp
+ DvN4KlBGetoUNpnlutOWby1WJARcdHLIKYlqGEUf8p7zT7kZTzrH7kj+TLt8YOcpE
+ Olxhrf2LdsaGvl/gE5ABsOW3UeQ3Cf+6n0DmZdDnjC2BRIBFh29fSO3fdcw4/9mpJ
+ Rud8xU/PPTfyaKIZcE0e/RUYEm29yxdA8+HObOjrQjQ6y88rvsQMi6D5fGRRmrKux
+ yJ7b3Ve7lE2Cd45qlCac1ZUYfHl+6HWudTDFLRbsHgcRQZBBSarjNOwtkpmvUmfiu
+ mqXxMF5kn1gaJ1G3LA==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from client.hidden.invalid by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MTiPl-1wsHOE0Nw5-00W7tb; Fri, 29
- May 2026 00:28:47 +0200
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MxUnp-1xD1DV0esb-00qtrL; Fri, 29
+ May 2026 00:28:56 +0200
 From: Helge Deller <deller@gmx.de>
 To: qemu-devel@nongnu.org
 Cc: Yoshinori Sato <yoshinori.sato@nifty.com>,
@@ -48,99 +48,101 @@ Cc: Yoshinori Sato <yoshinori.sato@nifty.com>,
  David Hildenbrand <david@kernel.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Cornelia Huck <cohuck@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Matt Turner <mattst88@gmail.com>,
- qemu-stable@nongnu.org
-Subject: [PULL v2 04/10] linux-user/sh4: restore FP rounding mode on sigreturn
-Date: Fri, 29 May 2026 02:25:41 +0200
-Message-ID: <20260529002548.19293-5-deller@gmx.de>
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL v2 09/10] linux-user: Move init_main_thread() prototype to
+ user-internals.h
+Date: Fri, 29 May 2026 02:25:46 +0200
+Message-ID: <20260529002548.19293-10-deller@gmx.de>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260529002548.19293-1-deller@gmx.de>
 References: <20260529002548.19293-1-deller@gmx.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:g3OHMdlONlWuxlRATav7FiOQGpaHyx9U/ZQh+ssgp2GZyXjyCsX
- YKXTSn3UBTPrYwVFIXUlX1oob64TLsYuFjoEVkLIfypgx6Dh5CSWdPateUMGAkvolx093KX
- lR+lE6wxiis9WuCg40Uwb9MNEiwP9eEHWcTSWgkP+/vXtgBbV/xJglEn6iTTtnTW+D5nqKN
- ACBZHM5iXXpH0Vgjazpfg==
-UI-OutboundReport: notjunk:1;M01:P0:WCRdGhsEtgg=;I7t5nZDfUz85LaalPBhEVB4s4oe
- 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
+X-Provags-ID: V03:K1:njAO7l9LNvby1qfdw44xRGcbpIkIU6hc1I7+W59hz2rI0ianjuU
+ snGoR4R5nXetVH378T6BbSCK0WnuSonEYEneJ4oPqJ+OcxO/m1fTg+qTxVZpxFGf2LS7v2A
+ vbtfqJq/YlnRtM0Xw0bHgbMvvTgxq/HI5+OWZntSuCNaGETkwWlffcyxseidHnAKh+0hzjj
+ aoxUqqzTUQ3rbzL+iU/zA==
+UI-OutboundReport: notjunk:1;M01:P0:+SRWw1k9GQc=;GIDyqiRUZma5LPloyuSW/U+7BaK
+ 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
 Received-SPF: pass client-ip=212.227.17.22; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
@@ -165,98 +167,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The SH4 FPSCR rounding-mode (RM) and denormal (DN) bits are not held
-only in env->fpscr: they are also reflected into the derived
-env->fp_status via set_float_rounding_mode()/set_flush_to_zero(). The
-guest keeps the two in sync by routing every write to FPSCR through
-helper_ld_fpscr().
+The init_main_thread() prototype is needed only by code internal to
+linux-user/, so it doesn't need to be in qemu.h (which is also pulled
+in by various files outside linux-user/).
 
-restore_sigcontext() wrote the saved value straight into env->fpscr and
-never touched env->fp_status, so on sigreturn the interrupted code
-resumed with whatever FP rounding mode and flush-to-zero setting the
-signal handler last installed. (regs->flags =3D 0 forces the FR/SZ/PR TB
-flags to be recomputed, but fp_status is runtime float state, not a TB
-flag, so it was left stale.) This is the FP analogue of the T/M/Q bit
-problem just fixed for the integer status register.
+Move the prototype to user-internals.h, and give it a documentation
+comment.
 
-Factor the FPSCR -> fp_status synchronisation out of helper_ld_fpscr()
-into cpu_load_fpscr() and use it from restore_sigcontext() so the
-rounding mode round-trips correctly across signal delivery.
-
-Fixes: c3b5bc8ab3 ("SH4: Signal handling for the user space emulator, by M=
-agnus Damm.")
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
 =2D--
- linux-user/sh4/signal.c | 7 ++++++-
- target/sh4/cpu.h        | 3 +++
- target/sh4/op_helper.c  | 7 ++++++-
- 3 files changed, 15 insertions(+), 2 deletions(-)
+ linux-user/qemu.h           |  2 --
+ linux-user/user-internals.h | 15 +++++++++++++++
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
-index cc36425c49..00290d6e40 100644
-=2D-- a/linux-user/sh4/signal.c
-+++ b/linux-user/sh4/signal.c
-@@ -173,7 +173,12 @@ static void restore_sigcontext(CPUSH4State *regs, str=
-uct target_sigcontext *sc)
-     for (i=3D0; i<16; i++) {
-         __get_user(regs->fregs[i], &sc->sc_fpregs[i]);
-     }
--    __get_user(regs->fpscr, &sc->sc_fpscr);
-+    /* Resync the derived float_status state, not just env->fpscr. */
-+    {
-+        uint32_t fpscr;
-+        __get_user(fpscr, &sc->sc_fpscr);
-+        cpu_load_fpscr(regs, fpscr);
-+    }
-     __get_user(regs->fpul, &sc->sc_fpul);
+diff --git a/linux-user/qemu.h b/linux-user/qemu.h
+index 7f98fb2607..474489f046 100644
+=2D-- a/linux-user/qemu.h
++++ b/linux-user/qemu.h
+@@ -371,6 +371,4 @@ void *lock_user_string(abi_ulong guest_addr);
+ /* Clone cpu state */
+ CPUArchState *cpu_copy(CPUArchState *env);
 =20
-     regs->tra =3D -1;         /* disable syscall checks */
-diff --git a/target/sh4/cpu.h b/target/sh4/cpu.h
-index 4b0f3f6d97..3302702376 100644
-=2D-- a/target/sh4/cpu.h
-+++ b/target/sh4/cpu.h
-@@ -379,4 +379,7 @@ static inline void cpu_write_sr(CPUSH4State *env, uint=
-32_t sr)
-     env->sr =3D sr & ~((1u << SR_M) | (1u << SR_Q) | (1u << SR_T));
- }
-=20
-+/* Set FPSCR and the derived float_status rounding/flush-to-zero state. *=
-/
-+void cpu_load_fpscr(CPUSH4State *env, uint32_t val);
-+
- #endif /* SH4_CPU_H */
-diff --git a/target/sh4/op_helper.c b/target/sh4/op_helper.c
-index 669bc84cb6..cf0f80e4a5 100644
-=2D-- a/target/sh4/op_helper.c
-+++ b/target/sh4/op_helper.c
-@@ -204,7 +204,7 @@ void helper_macw(CPUSH4State *env, int32_t arg0, int32=
-_t arg1)
+-void init_main_thread(CPUState *cs, struct image_info *info);
+-
+ #endif /* QEMU_H */
+diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
+index 21daf422b7..fbfd12237f 100644
+=2D-- a/linux-user/user-internals.h
++++ b/linux-user/user-internals.h
+@@ -194,6 +194,21 @@ static inline void begin_parallel_context(CPUState *c=
+s)
      }
  }
 =20
--void helper_ld_fpscr(CPUSH4State *env, uint32_t val)
-+void cpu_load_fpscr(CPUSH4State *env, uint32_t val)
- {
-     env->fpscr =3D val & FPSCR_MASK;
-     if ((val & FPSCR_RM_MASK) =3D=3D FPSCR_RM_ZERO) {
-@@ -215,6 +215,11 @@ void helper_ld_fpscr(CPUSH4State *env, uint32_t val)
-     set_flush_to_zero((val & FPSCR_DN) !=3D 0, &env->fp_status);
- }
-=20
-+void helper_ld_fpscr(CPUSH4State *env, uint32_t val)
-+{
-+    cpu_load_fpscr(env, val);
-+}
++/**
++ * init_main_thread: Set CPU state for main thread
++ * @cs: CPU context to set
++ * @info: information about the image being loaded
++ *
++ * This function must be provided by the per-target code. It should
++ * set the initial CPU state based on the information about the
++ * starting binary in @image_info. This will be at a minimum setting
++ * the initial guest program counter and stack pointer; it should
++ * also set up any other guest register values where the Linux ABI
++ * defines that they start set to some other value than what the
++ * guest CPU architecture gives you out of reset.
++ */
++void init_main_thread(CPUState *cs, struct image_info *info);
 +
- static void update_fpscr(CPUSH4State *env, uintptr_t retaddr)
- {
-     int xcpt, cause, enable;
+ /*
+  * Include target-specific struct and function definitions;
+  * they may need access to the target-independent structures
 =2D-=20
 2.54.0
 
