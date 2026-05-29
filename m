@@ -4,52 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 658EDCD6E45
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 06:54:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D542CD6E49
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 07:05:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSr6H-0006cU-0T; Fri, 29 May 2026 02:53:45 -0400
+	id 1wSrGu-0000W5-MB; Fri, 29 May 2026 03:04:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cyan@cyano.uk>) id 1wSr6F-0006c5-Dc
- for qemu-devel@nongnu.org; Fri, 29 May 2026 02:53:43 -0400
-Received: from jupiter.guys.cyano.uk ([45.63.120.176])
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1wSrGl-0000VX-Qw
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 03:04:35 -0400
+Received: from [115.124.30.124] (helo=out30-124.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cyan@cyano.uk>) id 1wSr6D-0005LZ-KS
- for qemu-devel@nongnu.org; Fri, 29 May 2026 02:53:43 -0400
-From: Xinhui Yang <cyan@cyano.uk>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cyano.uk; s=dkim;
- t=1780037616;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=oqWAzJ+LaDcWgrSzT3g0KnrahAMaamZaFE775dWfvQM=;
- b=Y78cbS3ABO3s0+qoYIuIWPFG9jwQEquzMbJRj8SmTHKJKhRsJh1IINwmIEZ1vZnMhY2MNI
- sLP7Htbe1qB1V0399yFhIwPF8xDJNLRx7ORYpaEcZ/Ao2rXJW5ltMBDvdSzTYeW89SqCY+
- tUK6//dvjkOQmM9mwDaWIipLuRockFNgQRhltCtnZ/dMk2a0Uyu+ewmMTdLh4LhdjJkNjn
- LC2N6X0igvbRMf5+u9hUpDixxIXI388LEsx7fsOhEhyZC3P68ELTiUa4TPQvdR3mWUM5xc
- BYRczSBPa/j1QUhg9mbfL5PdjzwVFuDa88wJkSiBVTdGxOKey8iQ1jy+ymfPkg==
-Authentication-Results: jupiter.guys.cyano.uk;
- auth=pass smtp.mailfrom=cyan@cyano.uk
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1wSrGj-0008B9-2e
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 03:04:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1780038250; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=2nCwX2iqKB9bsAFbLUnoxcGES800omXU8YiCiCVJoBQ=;
+ b=nQd4ym59/znPsoCOR+89ufYH7S5eNL/v/p+SNi3DhIRMCzmbaGS5REoNuGJ97MxmTvMGlEOnzOGcjU3rkotShURNDQGjPLGnOhc9QpTCYBpNa2ndVRbPHAsq+lIra6+LsMKFVabcNq3SiH+zn5JHtyVV7mmgEVSxmQh2+7LRXCk=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R291e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045133197;
+ MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=4; SR=0;
+ TI=SMTPD_---0X3odXVr_1780038249; 
+Received: from localhost(mailfrom:guobin@linux.alibaba.com
+ fp:SMTPD_---0X3odXVr_1780038249 cluster:ay36) by smtp.aliyun-inc.com;
+ Fri, 29 May 2026 15:04:10 +0800
+From: Bin Guo <guobin@linux.alibaba.com>
 To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Mingcong Bai <jeffbai@aosc.io>, Xinhui Yang <cyan@cyano.uk>
-Subject: [PATCH v3 0/2] linux-user: implement fsmount(2) series of syscalls
-Date: Fri, 29 May 2026 14:53:19 +0800
-Message-ID: <cover.1780036891.git.cyan@cyano.uk>
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Li Zhijian <lizhijian@fujitsu.com>
+Subject: [PATCH 0/2] migration/rdma: fix blocking readv and zero-page
+ accounting
+Date: Fri, 29 May 2026 15:04:06 +0800
+Message-ID: <20260529070408.92651-1-guobin@linux.alibaba.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: +
-Received-SPF: pass client-ip=45.63.120.176; envelope-from=cyan@cyano.uk;
- helo=jupiter.guys.cyano.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.124 (deferred)
+Received-SPF: pass client-ip=115.124.30.124;
+ envelope-from=guobin@linux.alibaba.com;
+ helo=out30-124.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,48 +70,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The motivation of the implementation is to allow any foreign guest OSes
-with systemd v259+ to boot using systemd-nspawn(1), otherwise any
-systemd service requiring importing credentials will fail, including
-journald, D-Bus service and getty. We used to work around this issue by
-patching systemd to retry the clone() without CLONE_NEWNS, which is not
-and can not be implemented in QEMU user emulation.
+This small series fixes two independent issues in the RDMA migration
+code path that were noticed while reviewing the QIOChannelRDMA behavior
+and migration statistics during RDMA live migration.
 
-mount(8) from util-linux worked prior to this patch because it will
-fallback to the old mount(2) syscall if fsmount(8) series of syscalls
-is not available.
+Patch 1 makes QIOChannelRDMA's readv honor the blocking flag set via
+io_set_blocking().  Previously, in blocking mode it returned immediately
+when the receive buffer could not satisfy the request, diverging from
+other QIOChannel implementations.  The fix loops on
+qemu_rdma_exchange_recv() while the channel is in blocking mode, and
+removes the now-stale XXX comments about unimplemented blocking
+support.
 
-Tested good on an x86-64 host, with:
+Patch 2 fixes transfer accounting for the RDMA zero page compression
+path.  When a zero page is detected, an RDMA_CONTROL_COMPRESS message
+is sent instead of an RDMA Write, but mig_stats.rdma_bytes and
+ram_transferred_add() were never updated, so migration progress and
+bandwidth were undercounted.  The patch accounts the wire cost
+(RDMAControlHeader + RDMACompress payload), matching how the non-RDMA
+path accounts for zero page markers.
 
-- an AOSC OS mips64r6el guest, which boots successfully with full systemd
-  support using systemd-nspawn(1).
-- a Gentoo ppc (big endian) guest, which boots successfully with full
-  systemd support, using systemd-nspawn(1).
+Both patches are small and self-contained; no behavior change is
+expected outside the RDMA migration path.
 
-Changes from v2:
+Bin Guo (2):
+  migration/rdma: honor blocking mode in QIOChannelRDMA readv
+  migration/rdma: account transferred bytes for zero page compression
 
-* Apply the review from Pierrick Bouvier[1], making sure that the buffer
-  is unlocked before returning error in the fsconfig handler.
-* Clearify some comments in syscall.c.
-
-Changes from v1:
-
-* Add missing guard for FSCONFIG_CMD_CREATE_EXCL in strace.c, since it is
-  only available since 6.6.
-* Fix some wording issues in the cover letter.
-
-[1]: https://lists.nongnu.org/archive/html/qemu-devel/2026-05/msg07794.html
-
-Xinhui Yang (2):
-  linux-user: implement fsmount(2) series of syscalls
-  linux-user/strace: add fsmount series of syscalls
-
- linux-user/strace.c    | 105 +++++++++++++++++++++++++++++++++++++++++
- linux-user/strace.list |  15 ++++++
- linux-user/syscall.c   |  91 +++++++++++++++++++++++++++++++++++
- 3 files changed, 211 insertions(+)
+ migration/rdma.c | 62 ++++++++++++++++++++++--------------------------
+ 1 file changed, 29 insertions(+), 33 deletions(-)
 
 -- 
-2.52.0
+2.50.1 (Apple Git-155)
 
 
