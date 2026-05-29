@@ -4,92 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E74F7CD6E45
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 08:47:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4864DCD6E45
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 08:51:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSsrk-0000a1-5P; Fri, 29 May 2026 04:46:52 -0400
+	id 1wSsvK-0001Zc-Rv; Fri, 29 May 2026 04:50:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSsrj-0000Yv-7E
- for qemu-devel@nongnu.org; Fri, 29 May 2026 04:46:51 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wSsvD-0001Yd-IS
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 04:50:28 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSsrh-0001tY-MC
- for qemu-devel@nongnu.org; Fri, 29 May 2026 04:46:50 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-bd4d7f4fa02so2322726866b.3
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 01:46:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wSsvA-0003CV-Fp
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 04:50:27 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-7dc2b658544so16241827b3.2
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 01:50:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780044622; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Tfaqpi0ca+Z9esPiUwAXfwteJmM5hEV8qolcFPQACTjYibErV9YcaYGP16bgkOtiAq
+ zvr/9O/na82PuukiuwvECh40rU24iSoub+X8nt165batavIhMwaexsCY/osnP4jz3v4K
+ M3boh5BjdeddlytVoUxnPGIR/s4SdaU+Wexp9KO1kxjRVYzaa92AoXEfZe3rs+5yB/ZQ
+ H138NBAS1f69YS/UmlEdkIiB+xwZJ70ZWTTHqrXDM7d9FVobPqjqqF4oyUMQdxDqO2My
+ C2gFFJMbS49jKan5f0kf5uvB5hQ1gcVeeERa+dnLp/5bS5ggPul+1YWo2PQ92+Tnkx0I
+ BtGQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=DrVOr67pBSyoz+W7dxZk6XghmFcY56Frp1nv3yrTup8=;
+ fh=waM909xNckwKm7pPQFH3nLBAWEC+k9YWzSA1XeTt6rM=;
+ b=def864xgc+YvyBxEQJyYOZCdg3JK7tc7fOZajcDV56TgyrH6q54ZwAhZYmera2wQjX
+ 73fSmJgXsWq4qhJgEvsEPd+dqcfEOKukF5URLQoSlmYlxgYwnrOowyB9zmLpKu1wfCiA
+ RHBxhp6jjFMuSNlkf9l20HaFfbytpsJSJCuYGQNvPNUMm7OUcIzj3BQ8S7QSaKuowRfz
+ LDcubRf8VGaMLzM+djWElgtJUIoU2pQX/npsc+d6Q0EDxrzCc4T+gnHCm8Q5RVM6i59b
+ rV8NDtrAmI8I8TGkgVvOyY08VpOyLJ81kZA9z/5srDdIzZnfW8z9qnZZRNqcSv1O8GjM
+ VPjA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780044406; x=1780649206; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=O6PqvvwEUHi+azGAQwwZuD9staGNK/d/4ItdLLxqb14=;
- b=cfdK/qMi8Ir2S7hEZHj3u+3XEVgXqi3IbP0kQtys02ARNK6ThqR7pL+Ans+wSj7GFh
- NGXdJLn1XbAIspkjZHxXT1wHkF9l2TW0Qi03UhIuwrHXz5gT//o70XeAMHX4OybSI1pb
- nUfcU3Lva1dO88UoGVXiH2XkEhkEBJ+fCpZZwkZ38Vns3ojiimDELHiDEIYwzMpMatle
- oc34TTq5ZTPBqejChuFg9x7ql83WR0TaaTrr0X431qHwvkBz5j1j5XkjrurCMrW3wWod
- s4KZUX6zOraur3sBBPlsnPWIg95YrhdYKb1M0N4JsQkLmSRYdlNnmL3LzVXdSUzvNRjJ
- 8+Zw==
+ d=linaro.org; s=google; t=1780044622; x=1780649422; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DrVOr67pBSyoz+W7dxZk6XghmFcY56Frp1nv3yrTup8=;
+ b=gFzyYNjnZl4/N/x1sGe54Ueky2tZl27RFyRGGrmJg/RkDxdFWFEDT7BcljHTNvwebM
+ Njaf81zqI2tD71+oimJ0HRA1pLQjZHEPYvWcOfqYanA0zQtJyyHOkyURCbIzmW2nuO/k
+ 0AlROKImQ/jzvrIeghKYo6m5DJCMOuJzWCssjUaXFjc6IyUZ/IfnPvCJ7fn1mwUV3v27
+ UPFmCFmA5jIfdWWyPbF+kFGPpl06XTMxfTS70Ti/thU8a/DriaR4Ks79ySWhdycivDUQ
+ bxx5PleAbDgAmcvwNmbittQUYR7uCJBssrm8LNRDIKGHeP6+ZeNTcJOQ87qon5Y1dbAc
+ BOpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780044406; x=1780649206;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=O6PqvvwEUHi+azGAQwwZuD9staGNK/d/4ItdLLxqb14=;
- b=XZ4asrbxx5Z/g3QNbpDz8nkOXgZPuHop3UFLWgme1en9UZV4VHlbcdb/KxR072+qEm
- MvjEzvJi2oPxS3/1TYnlNpnp7DE14UORAf2bY0x46F7thDX5eN+YBKqjFXxD8SrRjj7l
- 4ZwBoctmdj1nphMNeidcfub+I5RWXLBBiR+zKLyhNoK5HGzVhAxGp0D8k2wNZd+tyO6u
- lsVA015euCajf7B1JVZdfl3xKocsicvl/QjZ9dtrovfWJh5OsWEiYWQy4TxEmZrFnIvh
- nAhdnUagC6uwdB9X5A5dGupPK7Gyy9WnBaUGagS5OiVqA1RmmMjTw2RMnfnPL/ZlI5Go
- vn/Q==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8EWZYHM8ljzdnJJsslhxg0O/rtGmAqrF4S1egTudTY0kq4CEDSkmbrjeNwJyVRCHqA6yaJAOl4uL6M@nongnu.org
-X-Gm-Message-State: AOJu0YzZfYpEfjLPYJUbgrDoXYjM3gO75ehaPAFf+pQXnOOBjQp6m7rs
- JQKf/DPofonwKCwTKea8pUnkyDK/NvTS86wwLDBOsBFqCpQhTAnwB7jmB4a168Ip6EA8Grcowa0
- f21s8Y/smJQ==
-X-Gm-Gg: Acq92OEpl1JhoNWyDU/3briPRo20enOiIzPQry3Djo0F9KkbyQjHvqiy8IZQuas1VFg
- IHUd2pOEqLIUr4/rZTFzMCBXoEmpno1pX3CjZZJzvxMqBta728U9qx2dFndfgh+bplXWJyNiVT3
- 5GSGstnE6F6gtccaVtLIUA2lD9YuQcFQUiRvStmbYPkVllITqhI90NXjsSApP4sShGy90u4TRfw
- lSHy7jpt9zRjWj+qgjxoLl/iNP4eTYF3ye9F6HXLOpvQRtKxwjvxZ319hAwqI64cMRfmFC5kPZ/
- tNLQxTt0ekNnNq2MsUSsX5FXNsuDCWnmtDyiMWbfKCBu3UR6tkIRHmmpLV3uOP0u+UJ4X688NJR
- 9dvDxIKG+o0WZ4o+V5fLIZXrN1SIY09nsGIkWiu4uC1fehkn9vHOWZOqF6EndqHRvSN4hFpFFEL
- jDiqt3WWVcXqzEV7Vhd+D2ggBCftOPk8d13q7R1HbQp6CT63bbKFmfOLsY4No5L2Lqbzi75ySDB
- SNfb76VZw==
-X-Received: by 2002:a05:600c:41d2:b0:490:46bf:17ab with SMTP id
- 5b1f17b1804b1-4909c0cebbamr20992915e9.29.1780043985687; 
- Fri, 29 May 2026 01:39:45 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ef356a4c4sm1899041f8f.31.2026.05.29.01.39.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 May 2026 01:39:45 -0700 (PDT)
-Message-ID: <cac90947-4f58-4fa4-aecf-44ead131c57c@linaro.org>
-Date: Fri, 29 May 2026 10:39:44 +0200
+ d=1e100.net; s=20251104; t=1780044622; x=1780649422;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=DrVOr67pBSyoz+W7dxZk6XghmFcY56Frp1nv3yrTup8=;
+ b=Z9Vk8r/vlD8nwvJYrRJQyzaDUS2I+fIsEb8tPsRgoh6wr0bTyKssi8SGC5FwiEL9Yn
+ PgVpJ2u5RortrLu3G70jKuptzjU1nWWh6VTSoAeS/s5LC2S2yeWK8RGdRFfIgNQKd+HR
+ S5/hWZZzaF53KdA8tzyTxtAEst+75/dQvg4jkSOzcfrrKBa6tpuCmZeaWlHkspPLR7Y1
+ OO18gcULvE5EtTPLeBYO8GUwuIvMoST9/9PsX/wn3xlSdXQEYyQZPZ18G+a3m0+gSenF
+ 9PmKdfFLf8R1qZjtcbHJ9UErLBvudIZArYFs6RX1QSttoeWfbds2hjVuR7ghugCJXVR5
+ McVA==
+X-Gm-Message-State: AOJu0Yx02BcwfeNNz9YL7U+kdlUsfCQtsBA6Y65CFePVqDpaev8zf6kC
+ AKrCcv0fNapo8sVbqxP45ZEcs0JplqLRaElaz0gSid0IVKhMi/WjvEAcy2qJzmp+Q8Mod0kf7GA
+ NbyMuiIDMoPBxoxqY6HeHkJx2wefKVor9kH5UhXIjkw==
+X-Gm-Gg: Acq92OEB/WqvKPgf5yPQ9H2XEQgMjzE9JPlW2RKn7L1kCdd6+p9NTGuqPdXNOs7xDOA
+ ax0QhdBV39Dkjtp0sr+lHWCh/wAFCwm3Z56S78Dq0ey/FiojuRbnaeVZd0ShTK3gdG7ob9ZQJdp
+ Y3iV4dfW9yoQ23rOmRXTFKRNad316A4nptB42uBvkmkUK4HithSpS127BDL4crNtQ6dcATsav2/
+ pRZuUluXFRItshjZhJTuR1PdVuC3LsonTKfYbgcf2Lcb74tB+06I2bxl84b4Meg4d7ygDRuv5eM
+ zM3gQYjEOStb9a0lr/aFWTVXiHgZK7sGMXvGL4fOsvFtxY8O+rJwlV7/xqU4UtTXUBLDupYItHV
+ fWQ==
+X-Received: by 2002:a05:690c:62c1:b0:7b8:3b51:c9b2 with SMTP id
+ 00721157ae682-7de48f927ecmr15334657b3.23.1780044622455; Fri, 29 May 2026
+ 01:50:22 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] util/cutils: drop qemu_strnlen() in favor of strnlen()
-Content-Language: en-US
-To: Bin Guo <guobin@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: imp@bsdimp.com, kevans@freebsd.org, laurent@vivier.eu, deller@gmx.de,
- pierrick.bouvier@oss.qualcomm.com
-References: <20260529072803.99475-1-guobin@linux.alibaba.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260529072803.99475-1-guobin@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
+References: <cover.1779986496.git.matyas.bobek@gmail.com>
+ <51fe163b259b9ff315377b952d38665a18351b0d.1779986496.git.matyas.bobek@gmail.com>
+In-Reply-To: <51fe163b259b9ff315377b952d38665a18351b0d.1779986496.git.matyas.bobek@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 29 May 2026 09:50:09 +0100
+X-Gm-Features: AVHnY4IhWjWRG4X4tVHkplq8_jXuu7_G_MkTucshARgDb-mSR8JD7TvUkrwM51A
+Message-ID: <CAFEAcA8RM1i3-ixhkOPVRPsyEEYepXL+QjWAY_V32EpPEOux0A@mail.gmail.com>
+Subject: Re: [PATCH v4 4/7] hw/net/can/flexcan: NXP FlexCAN core emulation
+To: =?UTF-8?B?TWF0ecOhxaEgQm9iZWs=?= <matyas.bobek@gmail.com>
+Cc: qemu-devel@nongnu.org, Matyas Bobek <bobekmat@fel.cvut.cz>, 
+ Pavel Pisa <pisa@fel.cvut.cz>, Bernhard Beschow <shentey@gmail.com>,
+ qemu-arm@nongnu.org, Marc Kleine-Budde <mkl@pengutronix.de>,
+ Oliver Hartkopp <socketcan@hartkopp.net>, 
+ Nikita Ostrenkov <n.ostrenkov@gmail.com>, Andrey Volkov <andrey@volkov.fr>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,42 +121,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/5/26 09:28, Bin Guo wrote:
-> There are only three call sites, and strnlen() is available on all
-> supported platforms (POSIX.1-2008, Windows via UCRT, MinGW).  Remove
-> the hand-rolled wrapper and use the standard function directly.
-> 
-> While here, align bsd-user/uaccess.c to use size_t for max_len/len,
-> matching linux-user/uaccess.c and eliminating a signed/unsigned mismatch.
-> 
-> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
-> ---
->   bsd-user/uaccess.c    |  4 ++--
->   include/qemu/cutils.h | 16 ----------------
->   linux-user/uaccess.c  |  2 +-
->   util/cutils.c         | 15 +--------------
->   4 files changed, 4 insertions(+), 33 deletions(-)
+On Thu, 28 May 2026 at 18:17, Maty=C3=A1=C5=A1 Bobek <matyas.bobek@gmail.co=
+m> wrote:
+>
+> Added the FlexCAN2 emulator implementation core, with
+> CAN_FLEXCAN Kconfig flag and MAINTAINERS entry.
+>
+> FlexCAN2 version can be found in i.MX6 SoCs and others.
+>
+> More information about the implementation can be found in [1].
+>
+> Some macro and struct defintions were borrowed from the Linux kernel.
+> The original authors agreed with relicensing them to GPL-2.0-or-later on
+> the qemu-devel mailing list.
+>
+> [1] http://dspace.cvut.cz/bitstream/handle/10467/122654/F3-BP-2025-Bobek-=
+Matyas-BP_Bobek_FlexCAN_final_4.pdf
+>
+> Signed-off-by: Maty=C3=A1=C5=A1 Bobek <matyas.bobek@gmail.com>
+> Signed-off-by: Pavel Pisa <pisa@fel.cvut.cz>
+> Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
+> Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+> Reviewed-by: Pavel Pisa <pisa@fel.cvut.cz>
 
 
-> diff --git a/util/cutils.c b/util/cutils.c
-> index 76a9442085..a89213966e 100644
-> --- a/util/cutils.c
-> +++ b/util/cutils.c
-> @@ -54,7 +54,7 @@
->   
->   void strpadcpy(char *buf, int buf_size, const char *str, char pad)
->   {
-> -    int len = qemu_strnlen(str, buf_size);
-> +    int len = strnlen(str, buf_size);
 
-Using size_t here and removing the line in docs/devel/style.rst:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> +/**
+> + * The following macros were originally written for the Linux kernel by:
+> + *   Andrey Volkov <andrey@volkov.fr>
+> + *   Sascha Hauer <s.hauer@pengutronix.de>
+> + *   Marc Kleine-Budde <mkl@pengutronix.de>
+> + *   David Jander <david@protonic.nl>
+> + */
 
-Thanks!
+For clarity, we should add a line to this comment:
+"and they have agreed to license them under GPL-2.0-or-later".
 
->       memcpy(buf, str, len);
->       memset(buf + len, pad, buf_size - len);
->   }
-
+thanks
+-- PMM
 
