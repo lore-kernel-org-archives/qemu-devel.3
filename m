@@ -4,92 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3898DCD6E45
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 06:25:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8463BCD6E45
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 06:41:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSqeI-0003Ce-6w; Fri, 29 May 2026 02:24:50 -0400
+	id 1wSquH-0007Zj-9t; Fri, 29 May 2026 02:41:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSqeH-0003CF-Eu
- for qemu-devel@nongnu.org; Fri, 29 May 2026 02:24:49 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wSqeF-0005EZ-Nn
- for qemu-devel@nongnu.org; Fri, 29 May 2026 02:24:49 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4905e190c71so61158865e9.3
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 23:24:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780035886; x=1780640686; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=UttrV+Y46j2doUg2FXZJijeRKo77/G3MfeXT0Gz2Ztk=;
- b=PBMj6iIWnVXMLhkQfpLGrmxuGmbZJOWl+hr8Hg3LzeDqz7AWn9Xz3g12AkNSJ3HVWy
- dO09E2/mJehVBgR7Gx8VGUX5Swh8wphMaZd0aore9SRLOgd4bDpgb/2iM9QBYLg0FcUA
- LgDd6GQHc1fGx29KvPoeDR3t85NNQaE+Adta403qGYd6jikTxXl9PNmnr8Xr0oGbupWf
- 3S/AqCecWsnRfZj1BRf4WaSjzExdiOGYORcedpjffRW372SShScyyuc+g/uwSubH4/gx
- IJY4UbsFOprQpMbJn5iDscq/6A5KdAwZQE/Zn0qF8FVc6KWkJIJiKlQQQr1CstP0Bwwy
- ST7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780035886; x=1780640686;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=UttrV+Y46j2doUg2FXZJijeRKo77/G3MfeXT0Gz2Ztk=;
- b=NJQ+s06MaIptV1L9hFAhIvwPHY46fk8rMgHO9zm3d0u9jKptbI7kFBgfXj065j3P3h
- uQc6SHInE1VQhWH0uXFDBfSA7vaxhH273albWu6JWz7LrhOtTse4nhoTr3uKZuRGuDYf
- fiVlbWU3EhwHcsnoCCkXwzCR/M5miefv79/DfZWxlUXGiyeovywRr576k5Kdtw6CalOo
- NlSFOhJTkkHb5yktVsQACgGFfHRVefuajvpc0YSFv1ohEMR2n506xCSsuDOpM9hNhEly
- kwZFKWNl/QRDsQJkx929WA+Dpu0YkpiZokurY81VjJtPje9uK2BIhit/OebAUgUOwoxT
- rshA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9U4yeomo3vqMky6h2uuvXakSnkGchgLCMv2j8FHNgSw2r4mw4VWzmb90W4h0y8tnFJhtROwZcxs8We@nongnu.org
-X-Gm-Message-State: AOJu0YwLPYjU5IUf5r0ntKl24lxov2U5Rgdht0kug0VDhvmqgYbn5c+8
- qnmHR334+Oo3f7H7jwcVkw6dpuAJ+UYaumBFo4QY+u2MFZE1/WriD4YWP7+26MWpt2Y=
-X-Gm-Gg: Acq92OGSzqUz/a97tUZpfzFtHkyf3dyXDv9EUTQaKILX1LeOSzHClzGJOBCq0tPlrhw
- BnTeN6sV22dXka8cgsijmiWubYWbAJpUw2mJwJRpbcthN3ZOBgOATW7Wp19b/J7x463/YIweJ7g
- FD4zFpglIMq6npC7emgg/Q8NNjq7/sm/o0IY/wgk7ku7gJIjnEiDAvTLS/mpdhA+EjTNnxF5Q4h
- 08BZjX9tn26dvt7buBFCKkQ/DUBRZ2AmA4qVT4YXwlk1s97azZ2ZSRtsJGEdRSkwN9omVy9OF3L
- FPuazUaKUxneNvg3jrpB/N2uL6O7TZxAG/EtO1nky3S89OoUGlQAdyq1ECwPZAuWf8doTmORM2o
- 4ZMfGz/frSXXORvp0VHs6kWgpbdDsedIQ7bqMguVis8M65MSN3FOn1XBRFpAut8OlbyahGuQXma
- PAJN4UcMnLmpUP7k2pfIbEsbgXuxPt4vgNbGpJfMmKppAUt7oSYApjecl6etz0imv1gGECtQ1CL
- u/ncYRICW8Ro/Y=
-X-Received: by 2002:a05:600d:8497:20b0:490:601f:d775 with SMTP id
- 5b1f17b1804b1-4909c0773d2mr17060675e9.5.1780035885564; 
- Thu, 28 May 2026 23:24:45 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4909d6f35f8sm14553315e9.13.2026.05.28.23.24.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 May 2026 23:24:44 -0700 (PDT)
-Message-ID: <71168e41-ad83-4a80-aa3d-3a40f042a8ad@linaro.org>
-Date: Fri, 29 May 2026 08:24:44 +0200
+ (Exim 4.90_1) (envelope-from <cyan@cyano.uk>) id 1wSquB-0007UA-L3
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 02:41:15 -0400
+Received: from jupiter.guys.cyano.uk ([45.63.120.176])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cyan@cyano.uk>) id 1wSqu8-0001qQ-KN
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 02:41:14 -0400
+Message-ID: <e2e3f06b-e7b6-4ea1-ab4e-06b0f38438e6@cyano.uk>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cyano.uk; s=dkim;
+ t=1780036861;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ziQsKgToYXlNnX5biXLHq1B9454ruJ5nsJ2a09YkIBo=;
+ b=eP79rLxI/iWOPEndaAnulv4CJMwxuI8Le1HckuT/OXBoTDTNir0hbYmSyhrrOks+0IRW4d
+ ANVSFWAybtQSVfggfJlToT8bCvPpi7y23lZ4d3YYVBTzSLdWZ30euneIs7SRR1/8FDjiRK
+ pWghJ5ZPDWbPOV1mygOoFyyPJ4uuELsjl1OCDm/LlGjn+XR3PmXzo2fTsrKYbBijqCuMSO
+ Z4dL8T2PpfWjm486o7WmG5t2/mh3TDNtR/Hsl6N5Nayro5PpmYx/ChVGTii7TCa/Bbf+oQ
+ whj2KoFWgkJVhbqJTlBrKClo7eLzaRewnsgiOPXO0T2lZw/BZPNMEBK+csASyw==
+Authentication-Results: jupiter.guys.cyano.uk;
+ auth=pass smtp.mailfrom=cyan@cyano.uk
+Date: Fri, 29 May 2026 14:40:54 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] hw/i3c: fix CMD/data FIFO depth reset values to match
- real silicon
+Subject: Re: [PATCH v2 1/2] linux-user: implement fsmount(2) series of syscalls
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Mingcong Bai <jeffbai@aosc.io>
+References: <cover.1779876076.git.cyan@cyano.uk>
+ <cec3a2d387f87cd9a8b03d864c7accd804d698ce.1779876076.git.cyan@cyano.uk>
+ <77a000e4-04dd-4abe-95ac-0c411e8e0575@oss.qualcomm.com>
 Content-Language: en-US
-To: Jithu Joseph <jithu.joseph@oss.qualcomm.com>, clg@kaod.org,
- jamin_lin@aspeedtech.com, komlodi@google.com
-Cc: nabihestefan@google.com, qemu-devel@nongnu.org
-References: <20260529014034.864722-1-jithu.joseph@oss.qualcomm.com>
- <20260529014034.864722-2-jithu.joseph@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260529014034.864722-2-jithu.joseph@oss.qualcomm.com>
+From: Xinhui Yang <cyan@cyano.uk>
+In-Reply-To: <77a000e4-04dd-4abe-95ac-0c411e8e0575@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Content-Transfer-Encoding: 8bit
+X-Spamd-Bar: /
+Received-SPF: pass client-ip=45.63.120.176; envelope-from=cyan@cyano.uk;
+ helo=jupiter.guys.cyano.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,54 +71,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/5/26 03:40, Jithu Joseph wrote:
-> The Linux DW-I3C master driver infers controller queue depths at probe
-> by reading two status registers that report free queue slots, which at
-> probe (queues empty) equals the full depth.  It then uses those values
-> to gate every I3C transfer -- any batch whose word count exceeds the
-> advertised depth is rejected with -EOPNOTSUPP.
-> 
->    QUEUE_STATUS_LEVEL        (0x4c) [7:0] -> cmdfifodepth  (cmd slots)
->    DATA_BUFFER_STATUS_LEVEL  (0x50) [7:0] -> datafifodepth (32-bit words)
-> 
-> Per the AST2600 datasheet the reset values are 0x10 and 0x40 (16 cmd
-> slots, 64 words = 256 B).  QEMU was advertising 0x02 and 0x10, making
-> the kernel believe the controller can only do 64-byte transfers.  The
-> visible symptom was -EOPNOTSUPP on any I3C transfer whose payload
-> exceeded 64 B (datafifodepth = 0x10 = 16 words = 64 B).
-> 
-> The underlying FIFOs in QEMU were already allocated at the right size
-> (fifo32_create takes word counts; the existing defaults give 16 cmd
-> slots and 64 data words).  Only the advertised reset values were
-> wrong.  With this fix the guest sees datafifodepth=64 words and
-> accepts transfers up to 256 B.
-> 
-> Fixes: e974c6957576 ("hw/i3c/dw-i3c: Add more reset values")
-> Signed-off-by: Jithu Joseph <jithu.joseph@oss.qualcomm.com>
-> ---
->   hw/i3c/dw-i3c.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c
-> index 17ff484c5df1..e1bcf083210b 100644
-> --- a/hw/i3c/dw-i3c.c
-> +++ b/hw/i3c/dw-i3c.c
-> @@ -282,8 +282,8 @@ static const uint32_t dw_i3c_resets[DW_I3C_NR_REGS] = {
->       [R_QUEUE_THLD_CTRL]             = 0x01000101,
->       [R_DATA_BUFFER_THLD_CTRL]       = 0x01010100,
->       [R_SLV_EVENT_CTRL]              = 0x0000000b,
-> -    [R_QUEUE_STATUS_LEVEL]          = 0x00000002,
-> -    [R_DATA_BUFFER_STATUS_LEVEL]    = 0x00000010,
-> +    [R_QUEUE_STATUS_LEVEL]          = 0x00000010,
-> +    [R_DATA_BUFFER_STATUS_LEVEL]    = 0x00000040,
+Hi,
 
-[R_QUEUE_STATUS_LEVEL] = s->cfg.cmd_resp_queue_capacity_words;
-[R_DATA_BUFFER_STATUS_LEVEL] = s->cfg.tx_rx_queue_capacity_words;
+在 2026/5/29 03:07, Pierrick Bouvier 写道:
+> On 5/27/2026 3:11 AM, Xinhui Yang wrote:
+>> This series of syscalls replaces the old mount(2) syscall with a series
+>> of syscalls that operates around a filesystem context. This series of
+>> syscalls is available since Linux 5.2 and glibc 2.36+.
+>>
+>> Their users include systemd since v259 and libmount from util-linux, and
+>> possibly other widely used projects.
+>>
+>> Preliminary checks are implemented to ensure the validity of the
+>> interface.
+>>
+>> Signed-off-by: Xinhui Yang <cyan@cyano.uk>
+>> ---
+>>   linux-user/syscall.c | 81 ++++++++++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 81 insertions(+)
+>>
+>> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+>> index 7d7a7b489c..2ff80f4dfa 100644
+>> --- a/linux-user/syscall.c
+>> +++ b/linux-user/syscall.c
+>> @@ -14412,6 +14412,87 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+>>           return do_map_shadow_stack(cpu_env, arg1, arg2, arg3);
+>>   #endif
+>>   
+>> +#if defined(TARGET_NR_fsopen)
+>> +    case TARGET_NR_fsopen:
+>> +        {
+>> +            p = lock_user_string(arg1);
+>> +            if (!p) {
+>> +                return -TARGET_EFAULT;
+>> +            }
+>> +            ret = get_errno(fsopen(p, arg2));
+>> +            unlock_user(p, arg1, 0);
+>> +        }
+>> +        return ret;
+>> +    case TARGET_NR_fsconfig:
+>> +        {
+>> +            /*
+>> +             * fsconfig(int, int, char *, void *, int)
+>> +             * NOTE: p4 is nullable and its type might not be a string.
+>> +             */
+>> +            void *p3, *p4;
+>> +            int cmd = (int) arg2;
+>> +            switch (cmd) {
+>> +            case FSCONFIG_SET_BINARY:
+>> +            case FSCONFIG_SET_STRING:
+>> +            case FSCONFIG_SET_PATH:
+>> +            case FSCONFIG_SET_PATH_EMPTY:
+>> +                p3 = lock_user_string(arg3);
+>> +                if (cmd != FSCONFIG_SET_BINARY) {
+>> +                    /* key and value must be strings. */
+>> +                    p4 = lock_user_string(arg4);
+>> +                } else {
+>> +                    /* Otherise the value must be a raw buffer. */
+>> +                    p4 = lock_user(VERIFY_READ, arg4, arg5, 1);
+>> +                }
+>> +                if (!p3 || !p4) {
+>> +                    return -TARGET_EFAULT;
+>> +                }
+> 
+> Might leave with locked p3 is p4 fails.
+> You can add another early return just after p3 and unlock p3 in this if.
+> 
 
-?
+Thanks! Sending v3.
 
->       [R_PRESENT_STATE]               = 0x00000003,
->       [R_I3C_VER_ID]                  = 0x3130302a,
->       [R_I3C_VER_TYPE]                = 0x6c633033,
+>> +                ret = get_errno(fsconfig(arg1, arg2, p3, p4, arg5));
+>> +                unlock_user(p3, arg3, 0);
+>> +                unlock_user(p4, arg4, 0);
+>> +                break;
+>> +
+>> +            case FSCONFIG_SET_FLAG:
+>> +            case FSCONFIG_SET_FD:
+>> +                /* value must be NULL. */
+>> +                p3 = lock_user_string(arg3);
+>> +                if (!p3 || arg4) {
+>> +                    return -TARGET_EFAULT;
+>> +                }
+>> +                ret = get_errno(fsconfig(arg1, arg2, p3, NULL, arg5));
+> 
+> Similar to above (if arg4) { unlock... }
+> 
+>> +                unlock_user(p3, arg3, 0);
+>> +                break;
+>> +            case FSCONFIG_CMD_CREATE:
+>> +            case FSCONFIG_CMD_RECONFIGURE:
+>> +#ifdef FSCONFIG_CMD_CREATE_EXCL
+>> +            /*
+>> +             * FSCONFIG_CMD_CREATE_EXCL is only available since Linux
+>> +             * 6.6. Guarding it to allow building with pre-6.6 headers.
+>> +             */
+>> +            case FSCONFIG_CMD_CREATE_EXCL:
+>> +#endif
+>> +                /* key and value must be NULL, aux must be 0. */
+>> +                if (arg3 || arg4 || arg5) {
+>> +                    return -TARGET_EFAULT;
+>> +                }
+>> +                ret = get_errno(fsconfig(arg1, arg2, NULL, NULL, 0));
+>> +                break;
+>> +            default:
+>> +                return -TARGET_EFAULT;
+>> +            }
+>> +        }
+>> +        return ret;
+>> +    case TARGET_NR_fsmount:
+>> +        ret = get_errno(fsmount(arg1, arg2, arg3));
+>> +        return ret;
+>> +    case TARGET_NR_fspick:
+>> +        {
+>> +            p = lock_user_string(arg2);
+>> +            ret = get_errno(fspick(arg1, p, arg3));
+>> +            unlock_user(p, arg2, 0);
+>> +        }
+>> +        return ret;
+>> +#endif
+>>       default:
+>>           qemu_log_mask(LOG_UNIMP, "Unsupported syscall: %d\n", num);
+>>           return -TARGET_ENOSYS;
+> 
 
+Xinhui
 
