@@ -4,127 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B5B6CD6E43
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 01:41:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AF9ECD6E43
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 01:41:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSmDT-00080k-El; Thu, 28 May 2026 21:40:51 -0400
+	id 1wSmDU-00082e-G2; Thu, 28 May 2026 21:40:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jithu.joseph@oss.qualcomm.com>)
- id 1wSmDQ-0007yv-22
+ id 1wSmDQ-0007yz-71
  for qemu-devel@nongnu.org; Thu, 28 May 2026 21:40:48 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jithu.joseph@oss.qualcomm.com>)
- id 1wSmDL-0002YY-0Q
+ id 1wSmDM-0002YX-Ic
  for qemu-devel@nongnu.org; Thu, 28 May 2026 21:40:46 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64SKlLeM3126057
+ 64SKkVrI1540472
  for <qemu-devel@nongnu.org>; Fri, 29 May 2026 01:40:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=CihwX+LEtjb
- Ocy3TH865wxQKkAKDEh/GC3QpvkImCL4=; b=Nh+jGGUb1PEZsseKVzY6MvzGyYw
- dztOul9T1WZW09T6HXYACvptTwB188dLYNeCg3W6vYKtVnhnZOu/pXDU5OxuF32r
- YPGJLCTm6s0v6zmSllLcnPP2nrvbFCpLFX9Lhya25F/yZ5qx9yVBUmFRj1W7Hudr
- FHiSdl7tpSqiFx9ZUDfp8aANlwyIpD5o8BBXX5glQjVIincPoY6k+pD2SEfT48uU
- dNl5+DrQQSSSP4elstGSx3Ew229W+XmarbOrQlmhv5YovpM2E3UNQxu/85un9LAo
- vs5/uQU0BVXqGHk4Lv5AxAujBSUsmTLJbtElOOg7Im1yN6HHRnRpuFGgZmQ==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ee7y2wsbm-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=hc/4XavwDnE
+ 9cden9W2CP6uolLGP4NfepAX7g8ga/NA=; b=jtK+s/glntFbGffDDfAPW2jOASO
+ fxcG/XIu/PNylJGwdNyS5n8a7/ZNRrMnACK5twBkNfa7LGlgVUKs8Yw1uJCKF6qf
+ Gpa9BujkYrXKZC64Bj/V7qoAWN2eeUAF4qXMfemWqVKQqqJF7dQueltg4bgMztqm
+ MjMJr1t4ttDHX/0BLXHcAoGI1omzfia6EWfXnjRik9AG04y/Ty1nJl2+3xu+XjAs
+ vdtwEkECBzECfFP9bOH4ynHvbNnyMKysT7T6gO00J21lx0oX8rYzTi3GSOF7o5H3
+ n/BH853F/diyLvQTu8I4mVdDuITJDlYHl8WxSb60SOG9mRlnx5PJ8VrF4JA==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eety4sns2-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
  for <qemu-devel@nongnu.org>; Fri, 29 May 2026 01:40:38 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-304d8e9563eso465382eec.0
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 18:40:38 -0700 (PDT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-304df51ff3eso1060707eec.0
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 18:40:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1780018838; x=1780623638; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1780018837; x=1780623637; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CihwX+LEtjbOcy3TH865wxQKkAKDEh/GC3QpvkImCL4=;
- b=JQEy1vCTrPe4yLzA4GSICs879GXifRp7kg4Ht0dy/x3tSfB6QW8/ooFjiYwLV3J8Z4
- PfermBkCblXx5rn0Pntv7LlPJny7spRGVofEEYhiRT+hm95l4ODB6zJhuaLc1lKzkdAj
- dS/c995qHTFP0Kh85q4G5VWmtkFqlLORgEhyhm8OXO/leRJRuOh37PIUHQOz8EBWl+6p
- 5QF6hm8tGq+VpWUs5y2mx/vDYro7iGPFP97r4QAxSJfTBoN1WuJWzNBKM9s3D1cKQ0Uc
- VNAREpiUjLsrHQxBD56P/cbet55pZoq7yNbAXuGg87th0sIKZz0jA+RT6/oxKRyaJwhU
- clsQ==
+ bh=hc/4XavwDnE9cden9W2CP6uolLGP4NfepAX7g8ga/NA=;
+ b=T5/iYF6MQrNw0q61WuwJ2SJrzQi+kgToa9vdTaD2NblECMJ+/uFXDHoipWMb9w9T/V
+ YoyoMzUZDMqhQKdBGoBLjl+QUiK1RcZurm9Mw/q1Rdu3HrK6AzmNxN3IyJcft1gHSXx/
+ mmaJHEJsvSePMoPXKJ3hZlLfdgdanP2J3EOZvI/9xzBkUD+DRzzEEy0l1OYga+82wDMZ
+ Wl6KUPTkt3MgbIXCJfwMZC/kUfoTuI3hj8z/UZRWvIlw9Xvi/tjomL7eKZuDamRmAnRE
+ 6qsM0axqrru5TDaK5RcI2m5ktwWw513G5m5ybNK8xLbu65lVZmgTRublBS226iMeR1uN
+ nr0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780018838; x=1780623638;
+ d=1e100.net; s=20251104; t=1780018837; x=1780623637;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=CihwX+LEtjbOcy3TH865wxQKkAKDEh/GC3QpvkImCL4=;
- b=Ub2EWRGQLK4PZsigUuFpFCIsigX96rLuq2Np9E6nkvK9YZJpeJeN46oVhPRywRzrhN
- HjKLnCXjUmRri0Uxo98QhcDJKQMSAwxNM5Zoq10A2QS4Ww91czP6Por/Oifqdqb1Kc/y
- Vz3x9OtqF8VHtL3hNYCLE7NJJCK0ZiGKPMaVOr3d7nDaLKsXWVF1TrUqRKay0cDW8xxQ
- podqv5asUU056Ebi4us6b5+IviBmLg82CNJO8cs3BMqHkR+WJpHt2ndWFoMAmEUIyxnx
- HLwMzstUM6WjdaB8092IYapFtzhaOLzOG7Ujj0pU9d1W6T1v0Gxjgd7HjmpqTrks685u
- mK4w==
+ bh=hc/4XavwDnE9cden9W2CP6uolLGP4NfepAX7g8ga/NA=;
+ b=kYXPeMtzUThqFBibF/DtVPW1J5gEOGwAfbOTMKug70GwDlD5ldQ+xbgQPZaMe3Ectj
+ zu7MD0ozNKP1dVu5dXT1ojSrmH1ttPR4qTcaeVlS/wYd7i+mZOioQiTWC2nRJtoDDt99
+ kFFN5FRsefDn+5IHwSr4zMxVGeRpHV+XW12a8iJs/oiOeuLsd00G2aVOW9jHy3LJQi5b
+ Alrwu3GAacL3GZ+rpb2iDCDilQd+yD9yBPyc6qOyccgnoLYvCqm1WR0YN6e5iIRXr1YN
+ BIZx31Sy8OHuVsySpI7slTRTwSIPDvNSKSi70Jxj4efQc00hXBxyoRkpV1ALj6Cl4agI
+ 6rDQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/156kat3zmGpH2OaCpyDEmqFMfsPXREdjQNeIJpmrKIzHqxLQ4kbu1e45781NHZAPMaiMTWfkUDvAC@nongnu.org
-X-Gm-Message-State: AOJu0Yxb9BkL8JCb2xNXT7ePw+iU38oXIvSlOOAEY9/GtIIdnF8g+0X6
- nu16/XuGKQUl8dZLMjOySxpSMgGxGVfqN9+69Qxb6lJ+Qq25/4fJtTi4TiKIGR27xPN+L4TBoIo
- 2KpVYaMHLThY0NF68iYAewn0SaL0qNhKq3O5xAeL36MzMWWuwpOm3GsSNIA==
-X-Gm-Gg: Acq92OEW8pRgoraiKGdPan+AT7kFGiHoEIKkCjCojA4fQmi3XUxeRgGGlC6QCxjASb5
- Vkzqk9PV+AAjuU7i0NbRPWN2o5/87xY4P0yrHf2+i1/jz1eUAyzpQoqzcAXAML/skCRBGqizpdl
- mw/Qdl7rxe7ubSVi0Zrm4dbY12fZNpKmLjABL0d7sF3KssqaaXxhP8qy0iNpGh64KFzau+udcoI
- D5Xy62CqP4V9CMsFKkWDIVNBTuRiCUvnK8jsaaOC8zpSsqE1Pc0yvgONOuWShLy5exuQDNTdCpm
- wibmQ10qdjdgdTDU2xE030XnzV81D02JzgRvMtfcNtAPtwlTPKdMp8s9kPxzKiqg6ptSDfPkRPh
- QXqd74Jo7BYsoelkwufoms1ekw8MRAl662XlcouHw3zCl/JdhFYQiyDi4WELeeA9H/RmoN+eY/p
- WO40nE89nbgEs=
-X-Received: by 2002:a05:7301:fa0d:b0:2c1:6676:5ebd with SMTP id
- 5a478bee46e88-304eb1121f3mr490927eec.10.1780018837925; 
+ AFNElJ+Vg9SM8tMbPkUnGHBwAmLVPH8tvNnFGPB4MNzz8a5w+zAa+b0xeX18PxpEFf8GDpl7Bh/dH3dWNd0M@nongnu.org
+X-Gm-Message-State: AOJu0Yx1KUde3M0Nik2jDreRpIENiYUY6yPgvI7CaFYvrlNCE/QpyMgL
+ xfw0fj/gbD1mLouUOOm88ca+RQuIj1QtJIBhSYSThqB9NRJ8ZzC8POK0LMEO39JXKlxInMscE81
+ ebKqz+oH57Bbj1HyaKqiH4pL9RpybyAWPTmsXIhIoaGY1P4x9rE7q0hfY1Q==
+X-Gm-Gg: Acq92OHd08CCNUNLUmPfDt+v4UY9t4qIN/os4iZgi5a+LsK0TujAupbK8L3gb1j3f+T
+ /fPNxcjYnsdrt9B4Un/8qgr6A7snrkX7YTBAslMDUcoZuifwrqOmAE+LixU1miybcEDeHJI978f
+ rXWNYQYkfsWbO3EMIyEao4/hBZTz+qjmf06l/G+7KOLigxVPfZEAHu0TzT8ew5KtwuL8f/ZCmix
+ MpKLFFirajFA5txMioCkq3zEdktDbUjrzJnrCUKPE6W7wayh8HjBxB+4tOWXy3d9NPfC79Hxxsp
+ BGKOLcKhTyhG1xggETSXqtgx7qPhtMbup1sTf2+40nJl+lqHktmn57fcCcozNgu4/V3qTGKy0gc
+ 2nC5tU84J2U7T0Ohia/HHjZkQdyVQurRoPBpXYBKdkfrlBtCARkMk5RUjTOwtzwlNvr7BG9uTWC
+ 2Y7H4oJuqMBxo=
+X-Received: by 2002:a05:7300:5710:b0:304:de43:130 with SMTP id
+ 5a478bee46e88-304ead928bamr423654eec.2.1780018837110; 
  Thu, 28 May 2026 18:40:37 -0700 (PDT)
-X-Received: by 2002:a05:7301:fa0d:b0:2c1:6676:5ebd with SMTP id
- 5a478bee46e88-304eb1121f3mr490914eec.10.1780018837431; 
- Thu, 28 May 2026 18:40:37 -0700 (PDT)
+X-Received: by 2002:a05:7300:5710:b0:304:de43:130 with SMTP id
+ 5a478bee46e88-304ead928bamr423644eec.2.1780018836547; 
+ Thu, 28 May 2026 18:40:36 -0700 (PDT)
 Received: from hu-jithjose-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-304ed2c120csm237263eec.4.2026.05.28.18.40.36
+ 5a478bee46e88-304ed2c120csm237263eec.4.2026.05.28.18.40.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Thu, 28 May 2026 18:40:36 -0700 (PDT)
 From: Jithu Joseph <jithu.joseph@oss.qualcomm.com>
 To: clg@kaod.org, jamin_lin@aspeedtech.com, komlodi@google.com
 Cc: nabihestefan@google.com, jithu.joseph@oss.qualcomm.com,
  qemu-devel@nongnu.org
-Subject: [PATCH 2/2] hw/i3c: rename DW-I3C queue capacity fields from _bytes
- to _words
-Date: Thu, 28 May 2026 18:40:34 -0700
-Message-ID: <20260529014034.864722-3-jithu.joseph@oss.qualcomm.com>
+Subject: [PATCH 1/2] hw/i3c: fix CMD/data FIFO depth reset values to match
+ real silicon
+Date: Thu, 28 May 2026 18:40:33 -0700
+Message-ID: <20260529014034.864722-2-jithu.joseph@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260529014034.864722-1-jithu.joseph@oss.qualcomm.com>
 References: <20260529014034.864722-1-jithu.joseph@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=VeXH+lp9 c=1 sm=1 tr=0 ts=6a18ee96 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-ORIG-GUID: Kcp7F3vXb5Dau6NBVOaODLyhJPOR9zrZ
+X-Proofpoint-GUID: Kcp7F3vXb5Dau6NBVOaODLyhJPOR9zrZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI5MDAxMyBTYWx0ZWRfX3zbsZVOd7YM+
+ 5hNs0FS9wDUqjp1lCStjTQjzjz5dPFAlVj2v4wjqZJET53wnfQOs8Cx8vQTPpTKIJIR9N+/tuGp
+ 6il0KxUv3ZQcQVDDqjBE89/vqtpkyeiQZrqRssdgtuyhkRThJJJz8num1rIxBd63X12b9fxrbHw
+ ThSMQkKY7mx/APQ1l2EfVX7kfhkoWM0Q2kvLZkc6Md7ZyyPKdQhTdtix4FNNr7pH8w5e2OrMZ+2
+ BiCPjIJ5Wj5mgZtkvdNndx4C+tmJhnojZU/c2Mk5kv/XbG+kmRCqcjuIbt8avQneWYczFyKhiNc
+ Q8OJ9CPFhmmsOiXSi5W1yFgsDB2VwanNoOcymPHGfsDh+ZIG9zSKgYyj6QYCoxQW9IRsDYNDb9S
+ 3TcXfauzlL9kKAJHEMV4dvlKxBevYcqhXIM7nXcQKxQ43kS5nfDojh9idOH8kG7pYuAAztfmgye
+ kDNWZUl2pdbMPqIQlAg==
+X-Authority-Analysis: v=2.4 cv=S+TpBosP c=1 sm=1 tr=0 ts=6a18ee96 cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=EUspDBNiAAAA:8
- a=kff4k8yNmoXuUS8ddVwA:9 a=6Ab_bkdmUrQuMsNx7PHu:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI5MDAxMyBTYWx0ZWRfXyzrXaIcyyWny
- RrkBWtq27uKvbfSIJsAXGptf0IxtEdhW0HD5ZbFJQ/vYf3uVusNCjApOVBptGm0QljkZ09NNZVi
- wxYOxF45JhPnTsbKFYnQJSZ4+gjDKoQOZSHxivyNCLUsSUkXliFfLT8XGN4LkYa35rHEOrznCij
- oX53T4gByfX2OiCp2KDfrAvqxrMJSiqaa1V+zzbOULBSTU+CUzkXuZQ74g09WqSJhiuVJjmAXiI
- KtDyEVJBsSR51jTsKS1egAAHjCYOZgWAilPFLenxpZSyR8Fydm9CqryR4rOqx+8vosm4e/ZP+ZV
- /r4SMXHrCPuo0UA3btsdndQqwwL+3vmBXmVMyJ12lMGb3/DUYZ40r3NhYV6+uUCXfDsnJw8qlO8
- Vf2NLA/luzSMzmbQBMHRtoDVMhGrEA==
-X-Proofpoint-GUID: RV5vHrAE27UbdN_r_Ol1iBFlVPVaeMUc
-X-Proofpoint-ORIG-GUID: RV5vHrAE27UbdN_r_Ol1iBFlVPVaeMUc
+ a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=EUspDBNiAAAA:8
+ a=elZh02Osp3llZ84QUAUA:9 a=scEy_gLbYbu1JhEsrz4S:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-05-28_07,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 suspectscore=0 adultscore=0 phishscore=0
- lowpriorityscore=0 malwarescore=0 classifier=typeunknown authscore=0 authtc=
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.22.0-2605210000 definitions=main-2605290013
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=jithu.joseph@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ phishscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0 spamscore=0
+ adultscore=0 clxscore=1011 impostorscore=0 priorityscore=1501 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605290013
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=jithu.joseph@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -147,92 +148,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The cmd/resp, tx/rx, and IBI queue capacity values are passed straight
-to fifo32_create(), which interprets its capacity argument as a 32-bit
-word count.  The fields and device properties were therefore misnamed.
+The Linux DW-I3C master driver infers controller queue depths at probe
+by reading two status registers that report free queue slots, which at
+probe (queues empty) equals the full depth.  It then uses those values
+to gate every I3C transfer -- any batch whose word count exceeds the
+advertised depth is rejected with -EOPNOTSUPP.
 
-Rename the three struct fields and matching device-property strings:
+  QUEUE_STATUS_LEVEL        (0x4c) [7:0] -> cmdfifodepth  (cmd slots)
+  DATA_BUFFER_STATUS_LEVEL  (0x50) [7:0] -> datafifodepth (32-bit words)
 
-  cmd_resp_queue_capacity_bytes  -> cmd_resp_queue_capacity_words
-  tx_rx_queue_capacity_bytes     -> tx_rx_queue_capacity_words
-  ibi_queue_capacity_bytes       -> ibi_queue_capacity_words
+Per the AST2600 datasheet the reset values are 0x10 and 0x40 (16 cmd
+slots, 64 words = 256 B).  QEMU was advertising 0x02 and 0x10, making
+the kernel believe the controller can only do 64-byte transfers.  The
+visible symptom was -EOPNOTSUPP on any I3C transfer whose payload
+exceeded 64 B (datafifodepth = 0x10 = 16 words = 64 B).
 
-Defaults are unchanged (0x10 / 0x40 / 0x10) -- they were being
-interpreted correctly by fifo32_create all along, just under a
-misleading label.  No behavioral change.
+The underlying FIFOs in QEMU were already allocated at the right size
+(fifo32_create takes word counts; the existing defaults give 16 cmd
+slots and 64 data words).  Only the advertised reset values were
+wrong.  With this fix the guest sees datafifodepth=64 words and
+accepts transfers up to 256 B.
 
-aspeed_i3c.c only sets "device-id" on its child DWI3C objects and
-nothing else references these properties in the tree, so no external
-callers need updating.  vmstate_dw_i3c migrates only the regs[] array,
-not cfg.*, so there are no migration-compat concerns either.
-
+Fixes: e974c6957576 ("hw/i3c/dw-i3c: Add more reset values")
 Signed-off-by: Jithu Joseph <jithu.joseph@oss.qualcomm.com>
 ---
- include/hw/i3c/dw-i3c.h |  6 +++---
- hw/i3c/dw-i3c.c         | 24 ++++++++++++------------
- 2 files changed, 15 insertions(+), 15 deletions(-)
+ hw/i3c/dw-i3c.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/i3c/dw-i3c.h b/include/hw/i3c/dw-i3c.h
-index d26f60580f02..391470207c43 100644
---- a/include/hw/i3c/dw-i3c.h
-+++ b/include/hw/i3c/dw-i3c.h
-@@ -181,9 +181,9 @@ struct DWI3C {
- 
-     struct {
-         uint8_t id;
--        uint8_t cmd_resp_queue_capacity_bytes;
--        uint16_t tx_rx_queue_capacity_bytes;
--        uint8_t ibi_queue_capacity_bytes;
-+        uint8_t cmd_resp_queue_capacity_words;
-+        uint16_t tx_rx_queue_capacity_words;
-+        uint8_t ibi_queue_capacity_words;
-         uint8_t num_addressable_devices;
-         uint16_t dev_addr_table_pointer;
-         uint16_t dev_addr_table_depth;
 diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c
-index e1bcf083210b..4ea80e8352c6 100644
+index 17ff484c5df1..e1bcf083210b 100644
 --- a/hw/i3c/dw-i3c.c
 +++ b/hw/i3c/dw-i3c.c
-@@ -1806,14 +1806,14 @@ static void dw_i3c_realize(DeviceState *dev, Error **errp)
-                           DW_I3C_NR_REGS << 2);
-     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);
- 
--    fifo32_create(&s->cmd_queue, s->cfg.cmd_resp_queue_capacity_bytes);
--    fifo32_create(&s->resp_queue, s->cfg.cmd_resp_queue_capacity_bytes);
--    fifo32_create(&s->tx_queue, s->cfg.tx_rx_queue_capacity_bytes);
--    fifo32_create(&s->rx_queue, s->cfg.tx_rx_queue_capacity_bytes);
--    fifo32_create(&s->ibi_queue, s->cfg.ibi_queue_capacity_bytes);
-+    fifo32_create(&s->cmd_queue, s->cfg.cmd_resp_queue_capacity_words);
-+    fifo32_create(&s->resp_queue, s->cfg.cmd_resp_queue_capacity_words);
-+    fifo32_create(&s->tx_queue, s->cfg.tx_rx_queue_capacity_words);
-+    fifo32_create(&s->rx_queue, s->cfg.tx_rx_queue_capacity_words);
-+    fifo32_create(&s->ibi_queue, s->cfg.ibi_queue_capacity_words);
-     /* Arbitrarily large enough to not be an issue. */
-     fifo8_create(&s->ibi_data.ibi_intermediate_queue,
--                 s->cfg.ibi_queue_capacity_bytes * 8);
-+                 s->cfg.ibi_queue_capacity_words * 8);
- 
-     s->bus = i3c_init_bus(DEVICE(s), name);
-     I3CBusClass *bc = I3C_BUS_GET_CLASS(s->bus);
-@@ -1824,12 +1824,12 @@ static void dw_i3c_realize(DeviceState *dev, Error **errp)
- 
- static const Property dw_i3c_properties[] = {
-     DEFINE_PROP_UINT8("device-id", DWI3C, cfg.id, 0),
--    DEFINE_PROP_UINT8("command-response-queue-capacity-bytes", DWI3C,
--                      cfg.cmd_resp_queue_capacity_bytes, 0x10),
--    DEFINE_PROP_UINT16("tx-rx-queue-capacity-bytes", DWI3C,
--                      cfg.tx_rx_queue_capacity_bytes, 0x40),
--    DEFINE_PROP_UINT8("ibi-queue-capacity-bytes", DWI3C,
--                      cfg.ibi_queue_capacity_bytes, 0x10),
-+    DEFINE_PROP_UINT8("command-response-queue-capacity-words", DWI3C,
-+                      cfg.cmd_resp_queue_capacity_words, 0x10),
-+    DEFINE_PROP_UINT16("tx-rx-queue-capacity-words", DWI3C,
-+                      cfg.tx_rx_queue_capacity_words, 0x40),
-+    DEFINE_PROP_UINT8("ibi-queue-capacity-words", DWI3C,
-+                      cfg.ibi_queue_capacity_words, 0x10),
-     DEFINE_PROP_UINT8("num-addressable-devices", DWI3C,
-                       cfg.num_addressable_devices, 8),
-     DEFINE_PROP_UINT16("dev-addr-table-pointer", DWI3C,
+@@ -282,8 +282,8 @@ static const uint32_t dw_i3c_resets[DW_I3C_NR_REGS] = {
+     [R_QUEUE_THLD_CTRL]             = 0x01000101,
+     [R_DATA_BUFFER_THLD_CTRL]       = 0x01010100,
+     [R_SLV_EVENT_CTRL]              = 0x0000000b,
+-    [R_QUEUE_STATUS_LEVEL]          = 0x00000002,
+-    [R_DATA_BUFFER_STATUS_LEVEL]    = 0x00000010,
++    [R_QUEUE_STATUS_LEVEL]          = 0x00000010,
++    [R_DATA_BUFFER_STATUS_LEVEL]    = 0x00000040,
+     [R_PRESENT_STATE]               = 0x00000003,
+     [R_I3C_VER_ID]                  = 0x3130302a,
+     [R_I3C_VER_TYPE]                = 0x6c633033,
 -- 
 2.43.0
 
