@@ -4,112 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67384CD6E45
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 09:47:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D127CD6E45
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 09:52:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wStnT-0005Ja-DI; Fri, 29 May 2026 05:46:31 -0400
+	id 1wStt9-0007Fb-Mn; Fri, 29 May 2026 05:52:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wStnR-0005JP-WB
- for qemu-devel@nongnu.org; Fri, 29 May 2026 05:46:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wStt7-0007FG-K2; Fri, 29 May 2026 05:52:21 -0400
+Received: from fhigh-b3-smtp.messagingengine.com ([202.12.124.154])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wStnP-0002hJ-70
- for qemu-devel@nongnu.org; Fri, 29 May 2026 05:46:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780047985;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=kzqInxwxXJ1cwZ6r3yGa98ZFsQnezNuI3cjD2WwrZhg=;
- b=iV3YXp354y7YSbWIcmaHW1INyja2jj7kkBNXuu3LPZoGgbcw3nAwETnKvaL2mDdZyMlwLV
- lVSOrytByCQ/tO33FFB5jkEsgkjvYImFFnjDmDnlOEULepAHBgtFZwI/FC8lKwe3E3j0fe
- Dic5Nx0v/mB1W+EZeK0B+XV5elC+iKM=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-407-ja5kKR40M_eTKe5kPQGJOw-1; Fri, 29 May 2026 05:46:23 -0400
-X-MC-Unique: ja5kKR40M_eTKe5kPQGJOw-1
-X-Mimecast-MFC-AGG-ID: ja5kKR40M_eTKe5kPQGJOw_1780047982
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4909e29e78fso2794525e9.3
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 02:46:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780047982; x=1780652782; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=kzqInxwxXJ1cwZ6r3yGa98ZFsQnezNuI3cjD2WwrZhg=;
- b=FJaDsSc3nVlfVhKCKIgEDHHQLdZGKqvz2Q8S/Q5o5F6ZB3bWLYeZp1vxr6pV0nXByY
- ++ZC4zuDS51ZrIbT4vuGjmdS192SOtm8ktJ02FfGDsTVAW64p9Zshc6dNI4ZbkmK3cpQ
- Cof02FncF5jNQ4ZwIrjmODs1TknwshcljFeBtvTbtg4USkkyLhsZwvKJqf6LwzH/JjTD
- n1Xv5TFzkibwULlCgXeqRvxdHOCIOfLO7kkjWV0tpPMfAWAP2w0dgmaHnLJBWQ4V2WDN
- SbKM7oiXplL04uAAas3wkeVdOEcV82A7M/QrnBcsVffP7EwIA2sEDHwsq/AVJ4Br8Ztw
- OixQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780047982; x=1780652782;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kzqInxwxXJ1cwZ6r3yGa98ZFsQnezNuI3cjD2WwrZhg=;
- b=GF4nOU0v8DHKj2ODTFSuJDFLKKQdPHeiiohdc/8yKdq1d4V/17QXL0oKzGs017rg37
- ZWrPrn1sIXOCjRy+6swQhzEEQ+1wAwPy3wLkrD3ZPYugrvRpWOmUP3khTGQ+aNpczpLC
- vKuI22skozr979GdhdWBF+Yv1h+BqT9VZ9uCEjd0aW7h5BLHkRiY/EsAhDNfhKHxWcwy
- wDnjzCd+pLgrTvJPOrU6DyIWCxMGHOQnGkwGplvjOMmQvTHXKxEQyhYSj/JjVF5dQeyK
- dH+lrtxEziQ3dSzZ6tFwRKSRQMV2BlpjTyxdCzJl6hHC2NBaowNaDRRv/oAt8a8yQ9Fm
- XsDA==
-X-Gm-Message-State: AOJu0Ywx4Bf1LhW1PtKn113En5cjUkzLd+uZFsaC0Xd5tkloqIvMN3IX
- TxK9lfI4Mz8r3h6WU8fEboFMfT1Ebcf/c8rzCQyZCHdg54pewiDcR+PNuh6hBznaVtbPZYR0Q7z
- GlTCbqKyFl9WGeGMku3soEJkC0EJekURprBO0T4xSD4NYpsDdQswVEVDLvM88jKw3tjhvt5wI6F
- E2U2NY777ZQzp6aCK/DPbOVcnf+cn8JNYBRyjMXUZJ
-X-Gm-Gg: Acq92OGUHRP5oxR9sgBylQqsNntLHPSYL+J1sAFJNwhWWZs74gUaeMFZYugfieo3u79
- cZ48J/mvp99Ml2mqH+1K2rruBdhmwg0cPCYHDLjRQBhFIHEqMbdFlrV0Y0T0RefeNqR/yhpF99F
- WNuxoJzhHwGJmgmNsIGyUIEVn5QJXDkzMHCcyke2pMR0C5k1rNd8B+M0doVkzTJeu76euEwoewq
- bl7PROmW8nW/IBbPlVkAK4thFU/xbg9mOG6A0KZJ5KALef6IDqdKVIRVAV2zou5+rSrFwD1Z+ou
- YenKiDMB1wRrfDKrWgirkITQDCFcDDb8zoMQKltNUpUV7WorfEJ2WPBFW1cKrxthxDQSBAxCQ0C
- iJOf/C7NDFve3RajZ79uAHnlDRpwkv+Ds1ZkM90kHVEsXWblDCPYcrPkCpnMkpEdi2JiNwQiSgB
- B2BY4glTqTdzsIjQoWogy+BUF3BJ7we/gpg2kPgA==
-X-Received: by 2002:a05:600c:1994:b0:490:48df:2793 with SMTP id
- 5b1f17b1804b1-4909c0e77d6mr38576655e9.26.1780047982145; 
- Fri, 29 May 2026 02:46:22 -0700 (PDT)
-X-Received: by 2002:a05:600c:1994:b0:490:48df:2793 with SMTP id
- 5b1f17b1804b1-4909c0e77d6mr38576075e9.26.1780047981516; 
- Fri, 29 May 2026 02:46:21 -0700 (PDT)
-Received: from [192.168.10.48] ([151.49.251.208])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4909c09acd3sm10798205e9.4.2026.05.29.02.46.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 May 2026 02:46:20 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <bonzini@gnu.org>
-Subject: [PATCH v2] docs/devel: relax policy on AI-generated contributions
-Date: Fri, 29 May 2026 11:46:19 +0200
-Message-ID: <20260529094619.1034458-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.54.0
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wStt5-00046s-5s; Fri, 29 May 2026 05:52:21 -0400
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 374AE7A00C2;
+ Fri, 29 May 2026 05:52:15 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-04.internal (MEProxy); Fri, 29 May 2026 05:52:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm2; t=1780048334; x=
+ 1780134734; bh=oS3CnN5bjhCdVRAOgaVrN3vSOyLa7KFkCbhg9dfB6YI=; b=3
+ SUENijVtzRarA4gCcKN/goupOVxzAZ/KWiLmXQAap4dsEWNeuz35W0vTcpVilTA8
+ aCCNDQfh4sUwaQtZqgryxi93Xvdw1TTk3w34j1btxkxqk7Al+mRuLxOL+b2lWi1f
+ szaO/sgkA+dIeDdrISPLWaAgMosTJGs1cIVmoNTv40Cm5N29LctaSB++ClsGfL3o
+ CMeqHoi9oUb3bgz2Gubmg1gdYwpInhAsqlqS8yQ989iKoGbpI+mMTN0dS/erhb7E
+ WAu7/gpX5yGCWrOggackgJw1tvU/h08J92a0mTudf//hE3JAlLkFLH0dZPXK0FLK
+ ELhABuQWpkzW+sVuuy77A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+ 1780048334; x=1780134734; bh=oS3CnN5bjhCdVRAOgaVrN3vSOyLa7KFkCbh
+ g9dfB6YI=; b=jGaERkYtMviP5hsgeIt8i3ce862O6L/bQN8V2G4+O7pSl+8OUOX
+ BELCb+0AEZUBJQ36zR4WxTh+wqOX8Jn3wviRobrV6IpWJkaagkw0S8Bt3ed14u4K
+ N7a9Dcj2pP/ckY5263zdIuZgvRs22z9h0hAmyEjR41XykQwL+rA91GLntwFHS2kP
+ bP3S063yCDJnovJoVRZAmJAZ5RmttLx8ATUeiueWuLweOtJ6AS2YwjdsZO9TGkfO
+ veHoZlze7dDckISl8HphcnaRCYWO88DBeHVK1arLZv9/ocOi+GToj7MxMzREhREo
+ 236OGeWx5LWbuEL8WoLgU+HuLe+S7hV/CIg==
+X-ME-Sender: <xms:zWEZal-kipjlLda0mcX2d9S_MjZL7_B_bXdg5WM18uQRs6WVldHAPQ>
+ <xme:zWEZakp1efvIm6N6X6rLho6BtjLzED0Fuvq0KPCOaUiJ7mW4eQ6T9TuDniczD6kW8
+ UuPuT7zsvoLMMXsTkZOUbdAZA9pzDxONVYDDBFO3WtSv_jCo_7YnII>
+X-ME-Received: <xmr:zWEZaiDjV4y-0gpUtBu3g3ryf2wdKlgzEMsXNpuB4XUXk_upusKs1LUsUmXdW6_77Py59PahtZWbiDCNjBzF0M788z2h8kI>
+X-ME-Proxy-Cause: dmFkZTEfEuZDCnRHDOOMzwSeDAE4CI4unmPDhWzVpEiB0jPs4WHSONBFYIWe/4viKw2tCp
+ ZI7FE61YazB8i0Lwpt+n0dWi8WzFa9Cs9ZxHM+Rl/OZpJoGM+mK7yOUK/J8AdNbtionizj
+ R6ypmHJCfBGcKywl3QcF/7zwtZpxwOgypaNCckOB2BRucNC+qHudGLJCCw+SUaO2qUJEiU
+ AT1lwsmHPFGvOxGlYXu7pb6uRuZ0Yuh0x13HfV4rz2f4a0NWtED4hyLLs5rhy7BVk/gjS9
+ DrUoDh+NLmw3iR+ZVLN1PAnkV6R4iO/KZxQFDkJx11urtVew/7NrGcdTSUEq85OB3b5IIo
+ ZcBVL44qgN9gRzuVxvHLbiIqcdPNsASPXYPBanEOvzClV59vB1iOJsDVZ4qy4RQH8kc0Sq
+ UnJSwOLm/z32jwL6yRX5VoT0BDTjqxN3t7xM0bu9/6dnUGv+WB1rCNRPFBtLwhOA3jiOeI
+ Qi9X3GYQ2RBtHulA8R6qRJ9Ue+S4ydblnB/vdBE+kpyHQuGbIWkdtSea6XV2SssJe8D19e
+ jP/KV4wLYyTv7ekzRHnbT0CFiDwObVWUPz+gK241Xyov1vdQIQNj0HJdoItKhfeGdKZkMg
+ AwLLlAEn/4KD9Mu4MB84h0LSK/qHgPOfwE+/4hkB2UbmWCvAWpFQZFNGvw1g
+X-ME-Proxy: <xmx:zWEZaux4yNc1Jftv3E8LR-Y1FUdUjsi7uB03L0rxsrnHEAxMukAHrQ>
+ <xmx:zWEZan1g0wn-d-bIBUGKk1SC7elsaSoirE935mRpfUPriivaXTFNPA>
+ <xmx:zWEZamzRm_93TUNLPEL16Cl2ATh5xVAU_fTSVdJJJZ1gFwUU2NhFng>
+ <xmx:zWEZamEHxNJf9T4R5RgutNqO9qb1hiBuZ9oROkKRnd-_k6fUJjaPDw>
+ <xmx:zmEZaqe94R3bpimI0rVQQss-E-PlSdlF4t_k9G3dMqzCE41c-hHkSndt>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 29 May 2026 05:52:13 -0400 (EDT)
+Date: Fri, 29 May 2026 11:52:11 +0200
+From: Klaus Jensen <its@irrelevant.dk>
+To: Jesper Devantier <foss@defmacro.it>
+Cc: qemu-devel@nongnu.org, Keith Busch <kbusch@kernel.org>,
+ jaeyeong <fin@spl.team>, qemu-block@nongnu.org,
+ Jesper Wendel Devantier <j.devantier@samsung.com>
+Subject: Re: [PATCH] hw/nvme: FDP set FDP events - fixes
+Message-ID: <ahlhy1QdldQe-1dg@AALNPWKJENSEN.aal.scsc.local>
+References: <20260520-patch-review-20260518131523-654-v1-1-ea64f249177c@samsung.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="wzLc6EUyHB7BXaBr"
+Content-Disposition: inline
+In-Reply-To: <20260520-patch-review-20260518131523-654-v1-1-ea64f249177c@samsung.com>
+Received-SPF: pass client-ip=202.12.124.154; envelope-from=its@irrelevant.dk;
+ helo=fhigh-b3-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,247 +106,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Until now QEMU's code provenance policy declined any contribution
-believed to include or derive from AI-generated content.  A blanket ban
-was easy to maintain while LLM output was rarely usable on its own, but
-as the tools improved an absolute prohibition has become harder to
-justify.
 
-The concern that motivated the policy is unchanged, and it is worth stating
-precisely: the DCO is about whether the submitter has the legal right to
-contribute the code, not about "creative expression".  While the status of
-LLM output seems to be converging towards non-copyrightability, questions
-around unintentional reproduction of copyrighted code are still open.
-What has shifted is the balance of risk:
+--wzLc6EUyHB7BXaBr
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-- projects accepting AI-assisted content have not run into serious
-  legal trouble so far, which suggests the probability of the risk
-  materializing is not high;
+On May 20 09:35, Jesper Devantier wrote:
+> From: Jesper Wendel Devantier <j.devantier@samsung.com>
+>=20
+> Addresses an issue reported whereby user-provided event type values
+> could trigger two issues:
+>=20
+>  1. if provided event_type =3D=3D 0xff -> out-of-bounds access
+>=20
+>  2. if provided event_type > 7 -> generate a value too large for the
+>     u8 event mask.
+>=20
+> This patch fixes (1) by correctly adjusting the length of the look-up
+> array to be 256 values.
+> This patch fixes (2) by:
+>   a. changing the event_type mask to 64bit, matching
+>      NvmeRuHandle.event_filter
+>   b. Matching the behavior of Get Feature - FDP Events by skipping
+>      event type values which we do not support.
+>      5.2.26.1.21 of the 2.3 Base specification does not explicitly
+>      tell us to reject unsupported event type values.
+>   c. Documenting in the event type lookup table, that supporting
+>      event types greater than 63 requires refactoring the masking
+>      code.
+>=20
+> Reported-by: jaeyeong <fin@spl.team>
+> Signed-off-by: Jesper Wendel Devantier <foss@defmacro.it>
+> ---
+> Adresses issues raised by Jaeyeong (thanks!) regarding the
+> handling of the user-supplied list of event types to track.
+>=20
+> As reported, the event mask is much too small to cover the legal
+> range of 256 values (0-255) and would fail even for event types
+> 0x80 and 0x81 which caused shifts of 32 and 33 places - beyond
+> the limit of the u8 event mask.
+>=20
+> Secondarily, the report also pointed out that unsupported event
+> types would cause a lookup in the bit-shift table to return 0,
+> meaning unsupported events would effectively toggle the
+> tracking of the event type 0x0 (RU not fully written).
+>=20
+> This patch skips processing of unsupported event types,
+> increases the event filter mask size to accommodate currently
+> supported event types and documents behavior in the lookup
+> table.
+>=20
+> Signed-off-by: Jesper Wendel Devantier <j.devantier@samsung.com>
 
-- other organizations, such as Red Hat[1], have assessed the risk as
-  acceptable -- though a community of individual developers does not
-  have the legal backing of a company, and even an unfounded dispute
-  would be a long-lasting distraction from work on QEMU.
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
 
-Nevertheless, even Red Hat mentions that "the possibility of occasional
-replication cannot be ignored".  In QEMU's view, attentiveness and
-oversight are not a practical way to address this; yet as a copyleft
-project, copyright and code provenance are of utmost importance to us.
-Therefore, it remains prudent to only permit AI assistance where the
-ramifications of copyright violations are at least easy to revert and
-unlikely to spread: tests, documentation, mechanical changes, and small
-bug fixes.  Core code that other things depend on, and that cannot
-simply be thrown away once a problem is noticed long after the fact,
-stays off-limits without prior agreement from a maintainer.
+> ---
+>  hw/nvme/ctrl.c | 22 ++++++++++++++++------
+>  hw/nvme/nvme.h |  9 ++++++++-
+>  2 files changed, 24 insertions(+), 7 deletions(-)
+>=20
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index 815f39173c..d60a680dbc 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
+> @@ -6244,10 +6244,6 @@ static uint16_t nvme_get_feature_fdp_events(NvmeCt=
+rl *n, NvmeNamespace *ns,
+>      for (uint8_t event_type =3D 0; event_type < FDP_EVT_MAX; event_type+=
++) {
+>          uint8_t shift =3D nvme_fdp_evf_shifts[event_type];
+>          if (!shift && event_type) {
+> -            /*
+> -             * only first entry (event_type =3D=3D 0) has a shift value =
+of 0
+> -             * other entries are simply unpopulated.
+> -             */
+>              continue;
+>          }
+> =20
+> @@ -6492,9 +6488,9 @@ static uint16_t nvme_set_feature_fdp_events(NvmeCtr=
+l *n, NvmeNamespace *ns,
+>      uint8_t noet =3D (cdw11 >> 16) & 0xff;
+>      uint16_t ret, ruhid;
+>      uint8_t enable =3D le32_to_cpu(cmd->cdw12) & 0x1;
+> -    uint8_t event_mask =3D 0;
+> +    uint64_t event_mask =3D 0;
+>      unsigned int i;
+> -    g_autofree uint8_t *events =3D g_malloc0(noet);
+> +    g_autofree uint8_t *events =3D NULL;
+>      NvmeRuHandle *ruh =3D NULL;
+> =20
+>      assert(ns);
+> @@ -6507,15 +6503,29 @@ static uint16_t nvme_set_feature_fdp_events(NvmeC=
+trl *n, NvmeNamespace *ns,
+>          return NVME_INVALID_FIELD | NVME_DNR;
+>      }
+> =20
+> +    if (unlikely(noet =3D=3D 0)) {
+> +        return NVME_SUCCESS;
+> +    }
+> +
+>      ruhid =3D ns->fdp.phs[ph];
+>      ruh =3D &n->subsys->endgrp.fdp.ruhs[ruhid];
+> =20
+> +    events =3D g_malloc0(noet);
+> +
+>      ret =3D nvme_h2c(n, events, noet, req);
+>      if (ret) {
+>          return ret;
+>      }
+> =20
+>      for (i =3D 0; i < noet; i++) {
+> +        /*
+> +         * We ignore requests to enable tracking of unsupported FDP even=
+t types
+> +         */
+> +        uint8_t event_type =3D events[i];
+> +        uint8_t shift =3D nvme_fdp_evf_shifts[event_type];
+> +        if (!shift && event_type) {
+> +            continue;
+> +        }
+>          event_mask |=3D (1 << nvme_fdp_evf_shifts[events[i]]);
+>      }
+> =20
+> diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
+> index 5ef3ebee29..9de9f347c5 100644
+> --- a/hw/nvme/nvme.h
+> +++ b/hw/nvme/nvme.h
+> @@ -160,7 +160,14 @@ typedef struct NvmeZone {
+>  #define NVME_FDP_MAX_NS_RUHS 32u
+>  #define FDPVSS 0
+> =20
+> -static const uint8_t nvme_fdp_evf_shifts[FDP_EVT_MAX] =3D {
+> +/*
+> + * NOTE: Apart from event type 0, any event type with a shift value of 0=
+ is
+> + * considered unsupported and thus skipped in get/set features calls.
+> + *
+> + * NOTE: NvmeRuHandle uses a 64bit event mask - refactor to support even=
+t types
+> + *       of 63 or greater.
+> + */
+> +static const uint8_t nvme_fdp_evf_shifts[FDP_EVT_MAX + 1] =3D {
+>      /* Host events */
+>      [FDP_EVT_RU_NOT_FULLY_WRITTEN]      =3D 0,
+>      [FDP_EVT_RU_ATL_EXCEEDED]           =3D 1,
+>=20
+> ---
+> base-commit: 91190a4303223c7971856f6b37f221cc91c62689
+> change-id: 20260519-patch-review-20260518131523-654-6799b6319f8e
+>=20
+> Best regards,
+> --=20
+> Jesper Wendel Devantier <j.devantier@samsung.com>
+>=20
+>=20
 
-Related to this, and already visible in the incredible uptick in
-security reports, is the question of maintainer burnout and the shift in
-effort from the author to the reviewer of the code.  AI lowers the cost of
-producing a patch but does nothing to lower the cost of understanding and
-reviewing one; if anything it raises it, since a reviewer can no longer
-assume that the submitter has reasoned through every line.  The limits
-above work just as much to keep the volume of review work sustainable.
+--wzLc6EUyHB7BXaBr
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Revise the policy according to the above considerations, and introduce the
-"AI-used-for:" trailer as a record of where AI was used.  The standard is
-slightly different from the more usual "Assisted-by"; the intention is for
-the metadata to provide more information for reviewers to judge the result.
+-----BEGIN PGP SIGNATURE-----
 
-In any case, use of AI does not relax any other contribution requirement:
-authors still comply with the DCO and take responsibility for the whole
-patch via Signed-off-by.
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmoZYcgACgkQTeGvMW1P
+Demj8gf+J8ZoJAqLKzCbWo0mvbPCFga/NWDaVuec1dA0xBBXHhjl7EAZwMLElPLC
+6hfVRAsaplD08g9+DL01PSJFI8lfi1iE8sydirFHIiwk/0Aip/uIKBwrbMvFI33p
+vkVFbVNED+2b2CEPFTuS2+/JntHWSnxkyPUl3pkUOLObDFMT7OK3MTOZ8ooxpoxf
+At1fnLOK83IIvWGO6qL5NNXLBHmEJaYUkNXVNU7n3ky+miiN5KWOXmPozScXIybp
+CIYWCI9jJD4YG2iwGPgQHybQNeI4lkm1z6jY0HJpJe6NG3IZHrGchPGTu8crIUYJ
+M0ADiel7am1wTiarw/LQrYXuDQc47A==
+=1mVl
+-----END PGP SIGNATURE-----
 
-[Commit message largely based on
- https://lore.kernel.org/qemu-devel/ahXbxzB4C_lr6b0N@redhat.com/, by
- Kevin Wolf. - Paolo]
-
-[1] https://www.redhat.com/en/blog/ai-assisted-development-and-open-source-navigating-legal-issues
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Cc: Alex Bennée <alex.bennee@linaro.org>
-Cc: Alistair Francis <alistair.francis@wdc.com>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>
-Cc: Kevin Wolf <kwolf@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Cc: Warner Losh <imp@bsdimp.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260524083329-mutt-send-email-mst@kernel.org/T/
-Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
----
- docs/devel/code-provenance.rst | 142 ++++++++++++++++++++++-----------
- 1 file changed, 94 insertions(+), 48 deletions(-)
-
-diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
-index 65b8f232a08..857588c43ba 100644
---- a/docs/devel/code-provenance.rst
-+++ b/docs/devel/code-provenance.rst
-@@ -1,7 +1,7 @@
- .. _code-provenance:
- 
--Code provenance
--===============
-+Code provenance and AI usage
-+============================
- 
- Certifying patch submissions
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-@@ -288,62 +288,108 @@ content generators below.
- Use of AI-generated content
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
--TL;DR:
-+.. warning::
- 
--  **Current QEMU project policy is to DECLINE any contributions which are
--  believed to include or derive from AI generated content. This includes
--  ChatGPT, Claude, Copilot, Llama and similar tools.**
-+   Please read the below policy before using AI to contribute code or
-+   documentation to QEMU.  This applies to ChatGPT, Claude, Copilot,
-+   Llama, and similar tools.**
- 
--  **This policy does not apply to other uses of AI, such as researching APIs
--  or algorithms, static analysis, or debugging, provided their output is not
--  included in contributions.**
-+The increasing prevalence of AI-assisted software development,
-+and especially the use of content generated by `Large Language Models
-+<https://en.wikipedia.org/wiki/Large_language_model>`__ (LLMs),
-+poses a number of difficult questions.
- 
--The increasing prevalence of AI-assisted software development results in a
--number of difficult legal questions and risks for software projects, including
--QEMU.  Of particular concern is content generated by `Large Language Models
--<https://en.wikipedia.org/wiki/Large_language_model>`__ (LLMs).
-+Risks to open source projects include maintainer burnout from an
-+increased number of contributions, as well as the risk to the project
-+from unintentional inclusion of copyrighted material in the LLM's output.
-+In order to mitigate these risks, the QEMU project currently allows
-+using AI/LLM tools to produce patches in a limited set of scenarios:
- 
--The QEMU community requires that contributors certify their patch submissions
--are made in accordance with the rules of the `Developer's Certificate of
--Origin (DCO) <dco>`.
-+**Mechanical changes**
-+  If you can use a deterministic tool, it is preferred that you use it
-+  and not replace it with AI. If you don't know how to do the change
-+  deterministically, you can ask the AI for help.
- 
--To satisfy the DCO, the patch contributor has to fully understand the
--copyright and license status of content they are contributing to QEMU. With AI
--content generators, the copyright and license status of the output is
--ill-defined with no generally accepted, settled legal foundation.
-+**Small bug fixes**
-+  These should be limited to 20 lines of code or less, not including
-+  tests.  You are still expected to :ref:`understand and explain your changes
-+  <write_a_meaningful_commit_message>` and the rationale behind them.
- 
--Where the training material is known, it is common for it to include large
--volumes of material under restrictive licensing/copyright terms. Even where
--the training material is all known to be under open source licenses, it is
--likely to be under a variety of terms, not all of which will be compatible
--with QEMU's licensing requirements.
-+**Documentation and code comments**
-+  While AI can help draft text, it still requires significant human
-+  oversight.  Pay attention to the organization and flow of the generated
-+  text, and strictly fact-check all technical details as LLMs are prone
-+  to being confidently wrong.
- 
--How contributors could comply with DCO terms (b) or (c) for the output of AI
--content generators commonly available today is unclear.  The QEMU project is
--not willing or able to accept the legal risks of non-compliance.
-+**Tests**
-+  Note that you must still confirm that each test actually exercises
-+  the intended behavior including, for regression tests, that it
-+  fails without the code under test and passes for the right reason.
- 
--The QEMU project thus requires that contributors refrain from using AI content
--generators on patches intended to be submitted to the project, and will
--decline any contribution if use of AI is either known or suspected.
-+These boundaries do not apply to other uses of AI, such as researching
-+APIs or algorithms, static analysis, or debugging, provided the model's
-+output is not included in contributions.
- 
--Examples of tools impacted by this policy includes GitHub's CoPilot, OpenAI's
--ChatGPT, Anthropic's Claude, and Meta's Code Llama, and code/content
--generation agents which are built on top of such tools.
-+If you wish to send large amounts of AI-generated changes, or any other
-+contribution not in the above categories, please get in touch with the
-+maintainer beforehand.  These can be treated as experiments, at the
-+discretion of the maintainer and the community, with no obligation
-+to accept them.
- 
--This policy may evolve as AI tools mature and the legal situation is
--clarified.
-+**Use of AI does not remove the need for authors to comply with all
-+other requirements for contribution.**  In particular, the
-+``Signed-off-by`` label in a patch submission is a statement that
-+the author takes responsibility for the entire contents of the patch,
-+certifying that their patch submission is made in accordance with the
-+rules of the `Developer's Certificate of Origin (DCO) <dco>`.
- 
--Exceptions
--^^^^^^^^^^
-+Commit messages for AI-assisted changes
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- 
--The QEMU project welcomes discussion on any exceptions to this policy,
--or more general revisions. This can be done by contacting the qemu-devel
--mailing list with details of a proposed tool, model, usage scenario, etc.
--that is beneficial to QEMU, while still mitigating issues around compliance
--with the DCO.  After discussion, any exception will be listed below.
-+When AI/LLM tools produce or substantively shape your patch, add an
-+``AI-used-for:`` line before ``Signed-off-by``, as a reminder of your
-+DCO obligations and a guide to reviewers.  The text is one or more of
-+``code``, ``tests``, ``docs``, ``research``, possibly followed by an
-+explanation in parentheses:
- 
--Exceptions do not remove the need for authors to comply with all other
--requirements for contribution.  In particular, the "Signed-off-by"
--label in a patch submission is a statement that the author takes
--responsibility for the entire contents of the patch, including any parts
--that were generated or assisted by AI tools or other tools.
-+.. code-block:: none
-+
-+     AI-used-for: tests, docs
-+     AI-used-for: code
-+     AI-used-for: code (refactoring)
-+     AI-used-for: code (prototype)
-+     AI-used-for: research
-+
-+``AI-used-for`` should not be included for "background" usage such as
-+autocomplete or obtaining a pre-review of the patch.
-+
-+There is no requirement to include your prompts or summarize the
-+conversation in the commit message or cover letter, but you may do so
-+if you think it helps a reviewer judge the result.  For example:
-+
-+**Helpful prompts**
-+  These describe concrete constraints or instructions, making it easy for a
-+  reviewer to see how the tool's output was guided:
-+
-+  * "move field ``foo`` from ``struct aa`` to ``struct bb``.  If a
-+    function already has a local variable or parameter of type ``struct
-+    bb``, use it instead of accessing ``aa.bb``"
-+
-+  * "add an implementation of the trait for ``Mutex<T: MyTrait>``; it
-+    takes the lock around the calls and forwards to ``T``"
-+
-+**Unhelpful prompts**
-+  These are too generic to provide meaningful context.  You can of course
-+  use them in the context of a complex interaction with the LLM, but they
-+  should not be included in the commit message:
-+
-+  * "write user-facing documentation for the new tool"
-+
-+  * "write testcases for the new functions"
-+
-+QEMU does *not* use ``Assisted-by``, ``Co-authored-by`` or ``Generated-by``
-+trailers to indicate AI usage.  In particular, it is not necessary to
-+specify the exact AI model or tool used to create the commit.
-+
-+Deterministic tooling (sed, coccinelle, formatters) is out of scope for
-+the trailer, but should be mentioned in the commit message.
--- 
-2.54.0
-
+--wzLc6EUyHB7BXaBr--
 
