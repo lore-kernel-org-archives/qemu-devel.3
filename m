@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 398F1CD6E49
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 05:36:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA3C3CD6E45
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 05:40:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSpt6-0000cd-ET; Fri, 29 May 2026 01:36:04 -0400
+	id 1wSpx8-00022W-2I; Fri, 29 May 2026 01:40:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <antonb@tenstorrent.com>)
- id 1wSpt1-0000bB-8m
- for qemu-devel@nongnu.org; Fri, 29 May 2026 01:35:59 -0400
-Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wSpwd-0001qq-LY
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 01:39:49 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <antonb@tenstorrent.com>)
- id 1wSpsz-0001Ut-19
- for qemu-devel@nongnu.org; Fri, 29 May 2026 01:35:58 -0400
-Received: by mail-ot1-x32b.google.com with SMTP id
- 46e09a7af769-7e6061b3fd7so3876459a34.2
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 22:35:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wSpwb-00025F-MJ
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 01:39:43 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4905529b933so51279655e9.0
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 22:39:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1780032956; x=1780637756; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780033179; x=1780637979; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GZWpgE7C1GVlusaJBkGbSPYhr5f5uVmFrg4V7xjHwEY=;
- b=go+TQp9P99uaz2hZK0gmmCQ3jwR+T0nkx3iJBiRgjiXJk8Mtrs1MS4lpiimMJGVFYN
- cgkPX/wgdgqqm3g9JDy8IJJ4yjEbbu/45Vyex8n0N0bqXeCJBvnEwozhWmLISdLUD9tZ
- 6JON8y7yyx44IhjdO7FcvyZAYaI9dM+5V1Uv8uAaLkz7Ea1CKCM+JX1dYWMtZBF5au/d
- Vz8RTtZr2FQ1h3hh3ICnoVgDbxI2FTvdCu/smqMT0QryVh5js6vKBVQStJDUcypr6lh5
- hE/+2INNT7d0N49QeABs4TtjB7CaPvzeUxxBj+2M/yAa7diC7wInddVanUONo+FLc+Be
- 1Grw==
+ bh=PInaLkLsSHxr2Zu4FVhXd24CuOUOBCp9L2ktyQui7Rg=;
+ b=FMNyi1HI24Z81ibesR1i406AlrA/0DldPIc4LvOiXPTdjKw2Bzkczo6+VC62ukHXjT
+ CJ+kMr6TRCYz2cauKIKf46HWX/j/+mF/HF9IIMCmgf76eWhfYJ8ZR044w4dPTnM+KnZ0
+ ShxMbIoctxzfnRM/rLckzrAPacokCJf3ygwhn5kssCxMuXyBiKyJMBCjqTfufQ+eOpJT
+ Kfk8e+vkcqSAROdkMS7jtjrOsOCQR9qb+fGun3HgSV7VQ1cWH/2uYgqU7rY16bxt+okN
+ TSya7Q325fobvdC8vh9KRfeRsgx++/Lmg3yoJlpTo9TdfHWQvKvgmuor0kWW0BxW8kFo
+ ushg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780032956; x=1780637756;
+ d=1e100.net; s=20251104; t=1780033179; x=1780637979;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=GZWpgE7C1GVlusaJBkGbSPYhr5f5uVmFrg4V7xjHwEY=;
- b=mODoqWX3NtuJUZtU7ZjX5h5QJBrxhDofa9VxYwwIkSMSn1GaWv/c3gdkcSEndo7Hkp
- GrqUUfNHXR8MM3bLpr5l0XcRwxlV1vQu371WSP1+evztdHaTPRJsCXvc29vJl1j6zn5k
- DjPnypbUAioTFEHEuxEg7vCg+bngsqNW8Va4k4j2aAvYdxsDuLuFBDumGD0RUApUehfV
- xsLVhRjL4SSMu1m0q3sr4R/linPabGAwP17W8pIhQrPl7YNLK0G9xgRgi/bj1uxUbCOP
- Tl6nKfbbUzkzwrrOccyCxfPHtdjrZ7p467JTOcu+0cizpEe5aQVKia7kiHJHqwAA5xML
- 6zTQ==
-X-Gm-Message-State: AOJu0YzVdvp6q0EgWCtok3UNuf4tDphmOC/kziEzcdrEssWSMnzrcfCn
- lzmifTsKWCpgk+rJNWjNPH4CtyxwBwQzg9HTjve4/Ari3GdT6pVqRk622tkGOb9tGEMgxPd1DvS
- jfKx7Nhw=
-X-Gm-Gg: Acq92OEH+nqxagGYzaEWNAOjIUr089nzqrWUvXKldv/4P8HFZbKLfsQs8ZuF4TBcJEv
- J8xv3nW7y3+7GOeBcgJ18kAw3YjGV2HDCx16LdvoPKsD7jMlYIXHoER3HSJG4McG19gAkWBxOCJ
- qmK8ypKc7nzFjCGrVMZQWNIGDmI1/HAgYseiHaj6f1V3qN8eaQrrsqHc/4VnZu8NyKh0b3y8GKP
- 8TNPnM/TWWC4kbrgS28GktW744wruoJV6LIChPEQGpvA55+VPm1SWqw8Bzkym5Z+5T0chcs7FFk
- 4RucMcdMfi6I+FH3yLlEA1ZXI7sVI6Gp/29oD6u0f37NbKLcdEmfJIhETIGrfE7sK00efHgMgij
- A2OP9K2vf5/lijMcuT0YuZ8BoUouChFWDMP3iSqpFVwYleOIP5LCxgMM9mO+Gv9tWJpSX5aRa4b
- T1BazPUGixQc8E1jAV0NvoUZHqQnG3jxAcfOsA6w/R9qYayUZdOGHxpRTkZ3c564ptU+G8m5Gof
- NpjfTQ=
-X-Received: by 2002:a05:6830:67cf:b0:7d7:e57a:bcd with SMTP id
- 46e09a7af769-7e694d484c4mr948045a34.20.1780032955804; 
- Thu, 28 May 2026 22:35:55 -0700 (PDT)
-Received: from ausc-rvsw-c-01-anton.tail89d63.ts.net ([38.104.49.66])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e695d4726dsm742428a34.19.2026.05.28.22.35.53
+ bh=PInaLkLsSHxr2Zu4FVhXd24CuOUOBCp9L2ktyQui7Rg=;
+ b=s3lxNVOAWIxgvIUoyxnrsmaf9JZ+OBEWKaaz1tI1bm4LnUkhICs33CE/oSVxe9fpWf
+ I4xRJEgOpMiTccbKzuWAV9Hwzu4Tg1RNtYIzQqImRS+d62WkR+Kwc6Hk6uEw2jAwBpem
+ jDmp7mo63AXvwqT2LS9cqM8f7LObv0cZWZ0HPUIbDgDli3SzgnPfa3luFMpgGQMDfehS
+ bN5otXCOCNrmp+TtiUVLxYnOOlHYoiJbnA9ujLtjg/UtzY+gmxLgBHW12JI+DXcRH9Td
+ uYbpx1qSIJ53pbs/lutMmkqv3OZvw2eEF5/QpyVAd1PekYAu2RhswGWn/TYUX2KvwX8F
+ THsw==
+X-Gm-Message-State: AOJu0YxG22SJnNw8cYHQrUndqm6hou9fCthROP6753CU/fRvdlP4DApH
+ s2JfJ/PFLC4igHJuqa0w3+ZcArQJS0jP9hzdZK/8dkZzpPgSgddZDvAW9OShOUoircWWKfcnSgv
+ zxIlb
+X-Gm-Gg: Acq92OE/0cRyAdVLS3norxWHdP/4eem7q1lAu1Fz9ZUSYRzDBq+ErrIPrl23IFdMDOv
+ UC83QCouY9oP5t0AsBtJEizW8jd4lr4KIHQITkU8JaFTe4LiH7cdorlEkSg3mVQal4aN3gI1xqW
+ 52Bvt+Qs7L1xgSAlLjjXgx0mFLLrzfrQLCmVhZcfNHW5y89DoW2zkjGxE9ZuQravpdhZJls9zL2
+ mzqrfLclCE/RUb+jmFqC+2IZlL60K0jdvn2AY2mPv3tona3xYPzwgIQCXc9dXNjgGVyFFRfTAxv
+ H2qbmWe3hG+lzJ1OfWASVqeSbDKle203CuZHls4RQiGHfHBcFKlMn42DILLWC8FqCb0WfT1CH0N
+ WJ3w8rd+dmhR3uQ1SB7uqPN6Njnmwhh/Yi0JMKbcsVJVTImIOgZ6AIpwTcNrqdmwlBEnIl/fy95
+ 3fNCG8M7FZ7rbr+cGXNYJtpRSas2iJ3m+lhADVRfZqPbFe
+X-Received: by 2002:a05:600c:c3cd:10b0:490:469c:556b with SMTP id
+ 5b1f17b1804b1-4909c08763fmr16497825e9.12.1780033179474; 
+ Thu, 28 May 2026 22:39:39 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4909ca6575csm35023525e9.4.2026.05.28.22.39.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 May 2026 22:35:54 -0700 (PDT)
-From: Anton Blanchard <antonb@tenstorrent.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: alistair.francis@wdc.com, daniel.barboza@oss.qualcomm.com,
- palmer@dabbelt.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- chao.liu.zevorn@gmail.com, Anton Blanchard <antonb@tenstorrent.com>
-Subject: [PATCH 2/2] target/riscv: Improve alignment in riscv_cpu_dump_state
-Date: Fri, 29 May 2026 05:35:19 +0000
-Message-Id: <20260529053519.1224019-2-antonb@tenstorrent.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260529053519.1224019-1-antonb@tenstorrent.com>
-References: <20260529053519.1224019-1-antonb@tenstorrent.com>
+ Thu, 28 May 2026 22:39:36 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 624F360335;
+ Fri, 29 May 2026 06:39:32 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 05/13] ci: drop cirrus MacOS build
+Date: Fri, 29 May 2026 06:39:23 +0100
+Message-ID: <20260529053931.283970-6-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260529053931.283970-1-alex.bennee@linaro.org>
+References: <20260529053931.283970-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32b;
- envelope-from=antonb@tenstorrent.com; helo=mail-ot1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,54 +106,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Align all the CSR values. mcountinhibit is the longest CSR name at
-13 characters, so use that width for PC, implicit state, and CSR names.
-Also remove the redundant '=' from the implicit state lines.t
+CirrusCI is closing down soon so time to migrate.
 
-Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
----
- target/riscv/cpu.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260526110243.470002-6-alex.bennee@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-This makes it easier to read the output in my eyes, but I wasn't sure if the
-format is set in stone. Feel free to drop it if so.
-
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index b38ddc39ea..883aa906a1 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -575,7 +575,7 @@ static void riscv_dump_csr(CPURISCVState *env, int csrno, FILE *f)
-      * to do the filtering of the registers that are present.
-      */
-     if (res == RISCV_EXCP_NONE) {
--        qemu_fprintf(f, " %-8s " TARGET_FMT_lx "\n",
-+        qemu_fprintf(f, " %-13s " TARGET_FMT_lx "\n",
-                      csr_ops[csrno].name, val);
-     }
- }
-@@ -604,17 +604,17 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-     uint8_t *p;
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index 365435b0d70..4be6a9261ee 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -301,7 +301,6 @@ try:
+     # Cirrus packages lists for GitLab
+     #
+     generate_cirrus("freebsd-14")
+-    generate_cirrus("macos-14")
  
- #if !defined(CONFIG_USER_ONLY)
--    qemu_fprintf(f, " %s %s\n", "priv   =  ", riscv_priv_str(env->priv));
-+    qemu_fprintf(f, " %-13s %s\n", "priv", riscv_priv_str(env->priv));
- 
-     if (riscv_has_ext(env, RVH)) {
--        qemu_fprintf(f, " %s %d\n", "V      =  ", env->virt_enabled);
-+        qemu_fprintf(f, " %-13s %d\n", "V", env->virt_enabled);
-     }
- 
-     if (cpu->cfg.ext_zicfilp) {
--        qemu_fprintf(f, " %s %d\n", "elp    =  ", env->elp);
-+        qemu_fprintf(f, " %-13s %d\n", "elp", env->elp);
-     }
- #endif
--    qemu_fprintf(f, " %s %" PRIx64 "\n", "pc      ", env->pc);
-+    qemu_fprintf(f, " %-13s %" PRIx64 "\n", "pc", env->pc);
- #ifndef CONFIG_USER_ONLY
-     for (i = 0; i < ARRAY_SIZE(csr_ops); i++) {
-         int csrno = i;
+     #
+     # VM packages lists
+diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
+index f2a9a64b76a..b71ab090b65 100644
+--- a/.gitlab-ci.d/cirrus.yml
++++ b/.gitlab-ci.d/cirrus.yml
+@@ -44,17 +44,3 @@ x64-freebsd-14-build:
+     INSTALL_COMMAND: pkg install -y
+     CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,mips64el-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4eb-softmmu,xtensa-softmmu --enable-rust
+     TEST_TARGETS: check
+-
+-aarch64-macos-build:
+-  extends: .cirrus_build_job
+-  variables:
+-    NAME: macos-14
+-    CIRRUS_VM_INSTANCE_TYPE: macos_instance
+-    CIRRUS_VM_IMAGE_SELECTOR: image
+-    CIRRUS_VM_IMAGE_NAME: ghcr.io/cirruslabs/macos-runner:sonoma
+-    UPDATE_COMMAND: brew update
+-    INSTALL_COMMAND: brew install
+-    PATH_EXTRA: /opt/homebrew/ccache/libexec:/opt/homebrew/gettext/bin
+-    PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
+-    CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,mips64-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4-softmmu,xtensaeb-softmmu --enable-rust
+-    TEST_TARGETS: check-unit check-block check-qapi-schema check-softfloat check-qtest-x86_64
+diff --git a/.gitlab-ci.d/cirrus/macos-14.vars b/.gitlab-ci.d/cirrus/macos-14.vars
+deleted file mode 100644
+index def77cfdea5..00000000000
+--- a/.gitlab-ci.d/cirrus/macos-14.vars
++++ /dev/null
+@@ -1,16 +0,0 @@
+-# THIS FILE WAS AUTO-GENERATED
+-#
+-#  $ lcitool variables macos-14 qemu
+-#
+-# https://gitlab.com/libvirt/libvirt-ci
+-
+-CCACHE='/opt/homebrew/bin/ccache'
+-CPAN_PKGS=''
+-CROSS_PKGS=''
+-MAKE='/opt/homebrew/bin/gmake'
+-NINJA='/opt/homebrew/bin/ninja'
+-PACKAGING_COMMAND='brew'
+-PIP3='/opt/homebrew/bin/pip3'
+-PKGS='bash bc bindgen bison bzip2 capstone ccache cmocka coreutils ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 gtk-vnc jemalloc jpeg-turbo json-c libcbor libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python-setuptools python3 rpm2cpio rust sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 vulkan-tools xorriso zlib zstd'
+-PYPI_PKGS='PyYAML numpy pillow sphinx sphinx-rtd-theme tomli'
+-PYTHON='/opt/homebrew/bin/python3'
 -- 
-2.34.1
+2.47.3
 
 
