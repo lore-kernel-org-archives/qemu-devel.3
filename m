@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C7B3CD6E4C
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 10:15:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FEEACD6E43
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 10:16:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSuEp-0002yr-RO; Fri, 29 May 2026 06:14:47 -0400
+	id 1wSuEs-00030a-Qe; Fri, 29 May 2026 06:14:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSuEo-0002xz-8N
- for qemu-devel@nongnu.org; Fri, 29 May 2026 06:14:46 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1wSuEq-0002zc-JV
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 06:14:48 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wSuEl-00014Z-BT
- for qemu-devel@nongnu.org; Fri, 29 May 2026 06:14:45 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-45e9f4a3510so4612464f8f.1
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 03:14:42 -0700 (PDT)
+ id 1wSuEo-000157-1H
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 06:14:48 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4891c0620bcso88685685e9.1
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 03:14:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780049681; x=1780654481; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780049684; x=1780654484; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eMMFe0yvVmEzgfmkcxW/z0D7RgLYHXLz9oPQn8R7iKk=;
- b=F9+Iur/4bnwGGtaAviTbJFPoWs1/3ds0bfS+GWoQZNR/bVEo7EJfD3tdLtsS8lNzs9
- Yt+6j/AG8hDde4uVn5CNIQ0SCm+7jeac5WiQ7xOZaKt4efXdhQKBD/ITOhCBfrFqiu6v
- 2Z6il0pDFn35HROyFz/OTrsLvCiBkFkqJn2hzYDPuGP5C+dR7KRJOn0vapDPOhCBVdus
- 60gMaZh/tP7t5mgvwrs6GTjVrtXmlTwlHJfG1GMj5SMjEYl6whZ1EOIe98AU6vXxCooS
- fUMBp8XYgCqFdZeKonQMgwxGtJxqlfwxHTqayJwdOeIX3xoAzYn9g/hAYvvcz+nCwtsJ
- 2cNQ==
+ bh=dJbmDwD7QY2sbhCAix0thNW2SHXGqsh5Qn1ZgDCmTzU=;
+ b=WfyRO/CUxhQ7t5sIHwm9y7WqF15+noqfljLyeZPNXwi2dpd2Ql/Amsnn+0EftdUEt/
+ s+rGUEb6aCAN56i/SYPomgZiifZQBBCyTzlb9F1NfYT2fckibTrCC6JsnzlE0ofoybgw
+ PDotpBjl31+Y4SQac8JYG3KjpAip7ltkhWUHtp9iJLTQzAK2oVjghia6zFTah1/oZc4J
+ sSWIvn0Z4vtjgi9+z1z+8RvtJ0kR2hnr+QfXy1cJQ5GvITdz5sPG91arB2uTPA10Zv6c
+ kjN1+2p2PvpAjMOtGAhkwBbXHeDq88tuHLYpHxxAGloleLvR4AjpN8YRc69XLOnuaWo6
+ n+Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780049681; x=1780654481;
+ d=1e100.net; s=20251104; t=1780049684; x=1780654484;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=eMMFe0yvVmEzgfmkcxW/z0D7RgLYHXLz9oPQn8R7iKk=;
- b=o8iBlgWCRvAqGrgq72NtM2gBtv53WuHWW/gMFf9q1/HaKm4GkCAuNrLGIbiKvknAQg
- X+HMnwDEx9YK6QT+z0fG0xU+NBZJJzC1ZYTIbiy3C8OFY7Go5jdgr6o0OZ18FS+7Kh2s
- b048S6jA/yNB5ldkeIyeBEp9UvgO06j53tXR7NSQUr3AN9c+IuC5NbmfzMA1MYn1dpvt
- XkZi5E5JQy06KEZx+zylE0iyJRKg7sgapHeMrzdc4k4EQwC2bMpuBxilFiDSyCBNIw0y
- X7Xq7RQM2jw7WrGs3DLgQQQfyswxgGDt3XJb3RJVq4zqWzhBC2iRBBMyyQWdZC6fHwpP
- WNfg==
-X-Gm-Message-State: AOJu0YyIoTbxZnYCbTWY7mKVZ0D1OSwxILVpfkWqy7mePCDsaHGyGB2O
- FD1WYdW2bqtS2ES74JWSkP6vN4IP/+wFbYpJVn0mkv5fr5560gQDmaRVvYI8Gd5iE8E=
-X-Gm-Gg: Acq92OEI4leDMtyj49IwOSBWQdIqA3euUkuPR9ZgZNE965GOxb/na3ygFNPX3+KHffe
- oFkyFBlTVpV9L8LtV0N7aqsw0ZONiplncrTeCJg+lyvbdvVxQZSGihcVrkvrBcWdo3Oh9pruyT7
- f5ddl3JGakXrTZiN48QfOg4672Voj+2ykUUPPsA9XHgq3VfQgCgExPWF6O7ZxpKJIibdZM/Z/PT
- laBLpyHushYaMh2TQoFGZjGwu7dGiHP+AmwPgYbyBaXKvoexwXDgJcmyJo4DkmFvquO/HKLOuHa
- n9Cbc8Ccje04qaIRPtt+CUgZARUfp5EVmht1b1J8ggGDBkoWbMGo0sM3d1u9zBN/OOx2pLb4qVu
- GC9RdEdrY1lR1kTT3qs2UUEZs/dCLQ64G5YCBF6dXLp9KS5XXZ/YBt2RBw7xomVCqCKi3If+6aN
- CJAEwKfwBhjLrkny61h15sDt9ACVVpLFhOcA==
-X-Received: by 2002:a05:6000:481c:b0:43d:733f:aee6 with SMTP id
- ffacd0b85a97d-45ef13f840fmr3855159f8f.10.1780049681293; 
- Fri, 29 May 2026 03:14:41 -0700 (PDT)
+ bh=dJbmDwD7QY2sbhCAix0thNW2SHXGqsh5Qn1ZgDCmTzU=;
+ b=rizHyWi8Q4+4I1EHsqHgR4RC3+9ScnHAvFkSe6V3liepWEdlbcgq/HYdOFIBNf9yMd
+ Nm01smQpDB20b6c7u688kXKGa4s2uceTeIvT6flmrjqaw0Cq7k8wKqwlmwrMM8NoyfTu
+ Xg3IlotC6yhl5hf4njFT9W5n29OSAtfSOV9vgseq+z4HibV0/Bqyf/yKrOFKPtYE64bC
+ xa0utgn6DUEg1+qfgSlUSvdud9jZ9qWPxyxHOqbGSVfkWVadGLhoSFOPs50V4pFfPQr2
+ cXX0fAw3hFBqF27EIn7qS+YnO/ZRhdlSMzuYazfkzvJSVTS3bSjc/HPFljN8iRVai6TT
+ TkGA==
+X-Gm-Message-State: AOJu0YyFJ9oDxIcEw0NIC0qejcw8CBS+sfvddkzKgED6G0JdTMa4l4o5
+ NQ7vw2vU0BEDQe30cBIDofNR8moSg0ztgQCG+zKyyG7rzLrYFEuUFgwhrshHMRiiZek=
+X-Gm-Gg: Acq92OE3yFoBA5z9dW4fyJtlO4dniLVi3eGg6z0SiO/U91s5ZfmQ4JUD0SVsnA7ldOk
+ 1Htd1PkkCVrxrgLQyC99urUZ+5Ig4rj5uEtnytOiAPv71bzee7rZe/8A5sSelmlBABzNQE3OfUk
+ OQqzQN9SGk0qmCdOX4Enm9IEj0TZDrCjRy30wC+Yh97U2Lf1Kq38uJfy06zoq0nGHS1HTfDnDRc
+ J+HoYoNNBlvYGbU/uGGWwyLBfz5atMJm5fwlfObdo1pbgGlj0qODE3bFpsXOOSUzuZhbCLpMWT9
+ doo7GaL4qmaSzr5Wnh11PwamUS13hVLuDv7TEbDEzdt4hsp6Az38i3bg8GNPWzjSejn2cJGGztB
+ /Bmlgg69xGpmwH7SKDAQ5OBkQpo+I7P4iJm0TMivMgg6Sx0//Rn2elLPJm+EcjdFD/xgr06OTfg
+ h1SnAfHRAwaYvN95lu5l+P5BGCUqdGWaSYiQ==
+X-Received: by 2002:a05:600c:3212:b0:48e:5d91:cfe3 with SMTP id
+ 5b1f17b1804b1-4909c078fd4mr25092935e9.1.1780049684008; 
+ Fri, 29 May 2026 03:14:44 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ef358c07bsm2447017f8f.36.2026.05.29.03.14.38
+ 5b1f17b1804b1-4909c0ad269sm11787915e9.11.2026.05.29.03.14.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 May 2026 03:14:39 -0700 (PDT)
+ Fri, 29 May 2026 03:14:41 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id F2EE3602E1;
- Fri, 29 May 2026 11:14:37 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 470EB604BD;
+ Fri, 29 May 2026 11:14:38 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v4 03/12] AGENTS.md: expand with information on skills,
- layout and style
-Date: Fri, 29 May 2026 11:14:28 +0100
-Message-ID: <20260529101437.410181-4-alex.bennee@linaro.org>
+ Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>
+Subject: [PATCH v4 06/12] .agents/skills: add qemu-build skill (caveman)
+Date: Fri, 29 May 2026 11:14:31 +0100
+Message-ID: <20260529101437.410181-7-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260529101437.410181-1-alex.bennee@linaro.org>
 References: <20260529101437.410181-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,101 +105,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To be efficient in navigating the code base inform the agents of the
-basics of the repo layout, where skills can be found and a very quick
-overview of the source code, coding and commit styles.
+This provides basic instructions for building QEMU.
 
+Tested-by: Chao Liu <chao.liu.zevorn@gmail.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
 ---
+caveman
+  - cavemanned
 v3
-  - split AGENTS.md into two commits
+  - add builds to gitignore
+v2
+  - drop ECA/qemu-helper-agent sub-agent language
+  - mention configure --help
+  - drop mention of full paths - not needed for compilation
+  - moved earlier is series so code-reviewer can refer to it
 ---
- .gitignore |  1 +
- AGENTS.md  | 61 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 62 insertions(+)
+ .agents/skills/qemu-build/SKILL.md | 49 ++++++++++++++++++++++++++++++
+ .gitignore                         |  1 +
+ AGENTS.md                          |  1 +
+ 3 files changed, 51 insertions(+)
+ create mode 100644 .agents/skills/qemu-build/SKILL.md
 
+diff --git a/.agents/skills/qemu-build/SKILL.md b/.agents/skills/qemu-build/SKILL.md
+new file mode 100644
+index 00000000000..a19010d70c2
+--- /dev/null
++++ b/.agents/skills/qemu-build/SKILL.md
+@@ -0,0 +1,49 @@
++---
++name: qemu-build
++description: Step-by-step configure and build QEMU. Trigger when user asks build QEMU or debug build failures. Includes build dir reuse and spawning sub-agents.
++license: GPL-2.0-or-later
++---
++
++# Instructions
++
++## Check and Reuse Build Dirs
++Check if existing build dir reusable before new one. QEMU uses out-of-tree builds (often `build` or `builds/`).
++
++1. **Check configs**: Read `config.log` in existing build dir. Run `head -n 2 builds/<dir>/config.log` to get full configure command.
++2. **Reuse and Reconfigure**: Reuse general-purpose dirs (like `builds/debug`). Reconfigure same flags with new `--target-list` if needed:
++   ```bash
++   cd builds/debug
++   ../../configure <old-flags> --target-list=<new-targets>
++   ```
++
++## Launch Builds via Sub-Agent
++**CRITICAL**: NEVER build in main agent context. ALWAYS spawn sub-agent.
++Pass exact build commands and directory in sub-agent `task` argument. Instruct sub-agent what to verify and report.
++Example: `task: "Go to builds/debug, run ninja. If fail, report exact compiler errors."`
++
++## Configure New Build
++If no good dir exists, make new.
++
++1. **Make dir**: `mkdir -p builds/test-target; cd builds/test-target`
++2. **Configure**: `../../configure --target-list=[targets]`
++   - Targets: `x86_64-softmmu`, `aarch64-softmmu`, `riscv64-softmmu`, `x86_64-linux-user`.
++3. **Common flags**:
++   - `--enable-debug-info`: Symbols.
++   - `--enable-debug`: Assertions.
++4. **Sanitizers**:
++   - `--enable-asan`: Address Sanitizer.
++   - `--enable-tsan`: Thread Sanitizer.
++   - `--enable-ubsan`: Undefined Behavior Sanitizer.
++5. **Help**:
++   - `--help`: All options.
++
++## Build
++**Important**: Re-build after modifying source code.
++
++## Report Results
++**CRITICAL**: Provide concise build summary to user.
++1. **Summary**: Success or failure.
++2. **Failures**: Include exact compiler/linker error log excerpt if fail.
++
++## Debug
++- **Verbose**: `V=1` for full output.
 diff --git a/.gitignore b/.gitignore
-index 61fa39967b5..4ccba871d16 100644
+index 4ccba871d16..83bdf3df59c 100644
 --- a/.gitignore
 +++ b/.gitignore
-@@ -8,6 +8,7 @@
- .git-submodule-status
- .clang-format
- .gdb_history
-+.plan
- cscope.*
- tags
- TAGS
+@@ -1,5 +1,6 @@
+ /GNUmakefile
+ /build/
++/builds/
+ /.cache/
+ /.vscode/
+ *.pyc
 diff --git a/AGENTS.md b/AGENTS.md
-index bd18ddfd8dc..8ceffde4ebb 100644
+index c751652babf..207a0075ed8 100644
 --- a/AGENTS.md
 +++ b/AGENTS.md
-@@ -37,3 +37,64 @@ are treated as security vulnerabilities. In brief these are:
- - **Common devices for Virtualization**: e.g. VirtIO and platform devices
+@@ -47,6 +47,7 @@ If unsure read the linked `security.rst` document for further guidance.
+ ## Agent Skills (see `.agents/skills`)
+ You should use the following specialized skills for common tasks:
+ - `qemu-code-explorer`: For finding where things are defined, how they're used, or understanding a specific subsystem.
++- `qemu-build`: For configuring and building QEMU (including debug and sanitizer builds).
  
- If unsure read the linked `security.rst` document for further guidance.
-+
-+## Repo Layout
-+- **Build Directory**: QEMU uses out of tree builds, by default the `build` sub-directory is used.
-+- **Multiple Builds**: Developers might create a `builds` directory with different configurations in subdirs (e.g. `builds/debug`, `builds/asan`).
-+- **Documentation**: Developer docs live in `docs/devel`.
-+- **Plan Files**: Plan files should be placed in `.plan`, they are not included in commits. Use them to track complex multi-step tasks.
-+
-+## Agent Skills (see `.agents/skills`)
-+You should use the following specialized skills for common tasks:
-+
-+## Source Code Layout (see `docs/devel/codebase.rst`)
-+- **`accel/`**: Hardware accelerators (KVM, TCG, HVF, Xen, etc.) and architecture-agnostic acceleration code.
-+- **`audio/`**: Host audio backends.
-+- **`authz/`**: QEMU Authorization framework.
-+- **`backends/`**: Host resource backends (RNG, memory, crypto).
-+- **`block/`**: Block layer, image formats (qcow2, raw), and protocol drivers.
-+- **`chardev/`**: Character device backends (TCP, serial, mux, etc.).
-+- **`crypto/`**: Cryptographic algorithms and framework.
-+- **`disas/`**: Disassembler support for various architectures.
-+- **`dump/`**: Guest memory dump implementation.
-+- **`ebpf/`**: eBPF program support (e.g. for virtio-net RSS).
-+- **`fpu/`**: Software floating-point emulation.
-+- **`gdbstub/`**: Remote GDB protocol support.
-+- **`hw/`**: Hardware device emulation, organized by type (e.g., `hw/net`, `hw/pci`) or architecture.
-+- **`include/`**: Global header files, mirroring the source tree layout.
-+- **`io/`**: I/O channels framework.
-+- **`linux-user/` & `bsd-user/`**: User-space process emulation.
-+- **`migration/`**: VM migration framework.
-+- **`monitor/`**: HMP and QMP monitor implementations.
-+- **`nbd/`**: Network Block Device server and client code.
-+- **`net/`**: Networking stack and host backends.
-+- **`plugins/`**: TCG introspection plugins core.
-+- **`qapi/`**: QAPI schema and code generation infrastructure.
-+- **`qga/`**: QEMU Guest Agent.
-+- **`qom/`**: QEMU Object Model implementation.
-+- **`replay/`**: Deterministic record/replay support.
-+- **`rust/`**: Rust integration and Rust-based device models.
-+- **`scripts/`**: Build system helpers, `checkpatch.pl`, `tracetool`, etc.
-+- **`system/`**: Core system-level emulation logic (replaces `softmmu`).
-+- **`target/`**: CPU-specific emulation (ISA translation, CPU state).
-+- **`tcg/`**: The Tiny Code Generator (JIT) backends.
-+- **`tests/`**: Test suites (qtest, unit, functional, tcg).
-+- **`ui/`**: User interface backends (GTK, SDL, VNC, Spice).
-+- **`util/`**: Low-level utility functions and data structures.
-+
-+## Code Style (see `docs/devel/style.rst`)
-+- **Formatting**: 4-space indents, NO tabs, 80-char line limit (max 100).
-+- **C Braces**: Mandatory for all blocks (if/while/for). Open brace on same line (except functions).
-+- **C Includes**: `#include "qemu/osdep.h"` MUST be the first include in every `.c` file.
-+- **C Comments**: Use `/* ... */` only. No `//` comments.
-+- **Naming**: `snake_case` for variables/functions; `CamelCase` for types/enums.
-+- **Memory**: Use GLib (`g_malloc`, `g_free`, `g_autofree`) or QEMU (`qemu_memalign`). No `malloc`.
-+- **Errors**: Use `error_report()` or `error_setg()`. Avoid `printf` for errors.
-+- **Lints**: Run `./scripts/checkpatch.pl` on C patches. Use `make clippy` for Rust.
-+
-+## Commit Style
-+- **Small Commits**: Favour small discreet commits changing one thing.
-+- **Maintain Bisectability**: Each commit must compile and pass basic tests.
-+- **Separate Refactoring**: Split code movement or style fixes from functional changes.
-+- **Commit Messages**: Use a concise subject line, followed by a body explaining "why" (not just "what").
-+- **Signed-off-by**: Every commit must have a `Signed-off-by` line.
+ ## Source Code Layout (see `docs/devel/codebase.rst`)
+ - **`accel/`**: Hardware accelerators (KVM, TCG, HVF, Xen, etc.) and architecture-agnostic acceleration code.
 -- 
 2.47.3
 
